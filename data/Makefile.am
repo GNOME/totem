@@ -1,4 +1,6 @@
 
+man_MANS = totem.1
+
 stuffdir = $(datadir)/totem/
 stuff_DATA =				\
 	filmholes.png			\
@@ -82,7 +84,7 @@ else
 install-data-local:
 endif
 
-EXTRA_DIST = $(stuff_DATA) $(desktop_in_files_all) $(keys_DATA) $(app_DATA) $(server_in_files) totem.schemas.in lirc_example schemas.sh
+EXTRA_DIST = $(stuff_DATA) $(desktop_in_files_all) $(keys_DATA) $(app_DATA) $(server_in_files) totem.schemas.in lirc_example schemas.sh $(man_MANS)
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(desktop_DATA) $(schema_DATA)
 
