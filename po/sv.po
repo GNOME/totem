@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-07 13:17+0100\n"
-"PO-Revision-Date: 2005-01-07 13:17+0100\n"
+"POT-Creation-Date: 2005-01-09 12:18+0100\n"
+"PO-Revision-Date: 2005-01-09 12:18+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -695,8 +695,8 @@ msgid "_Repeat Mode"
 msgstr "_Upprepningsläge"
 
 #: data/totem.glade.h:138
-msgid "_Reset defaults"
-msgstr "_Återställ standardalternativ"
+msgid "_Reset To Defaults"
+msgstr "_Återställ till standardalternativ"
 
 #: data/totem.glade.h:139
 msgid "_Resize 1:2"
@@ -886,7 +886,7 @@ msgstr "Öppna från URI"
 msgid "Save File"
 msgstr "Spara fil"
 
-#: data/vanity.glade.h:2 src/vanity.c:262
+#: data/vanity.glade.h:2 src/vanity.c:256
 msgid "Vanity"
 msgstr "Vanity"
 
@@ -938,11 +938,11 @@ msgstr "Spela filmer och låtar"
 msgid "Unnamed CDROM"
 msgstr "Namnlös cd-rom"
 
-#: src/bacon-video-widget-gst.c:54
+#: src/bacon-video-widget-gst.c:55
 msgid "Totem Video Window"
 msgstr "Totem-videofönster"
 
-#: src/bacon-video-widget-gst.c:2535
+#: src/bacon-video-widget-gst.c:2703
 msgid "Failed to create a GStreamer play object"
 msgstr "Misslyckades med att skapa ett GStreamer-spelobjekt"
 
@@ -1480,17 +1480,17 @@ msgstr "Totem kunde inte visa hjälpinnehållet."
 msgid "Movie Player using %s"
 msgstr "Filmspelare som använder %s"
 
-#: src/totem.c:1929
+#: src/totem.c:1929 src/vanity.c:258
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Copyright © 2002-2005 Bastien Nocera"
 
-#: src/totem.c:1934
+#: src/totem.c:1934 src/vanity.c:263
 msgid "translator-credits"
 msgstr ""
 "Christian Rose\n"
 "Skicka synpunkter på översättningen till sv@li.org"
 
-#: src/totem.c:1967 src/totem.c:1975 src/vanity.c:300 src/vanity.c:308
+#: src/totem.c:1967 src/totem.c:1975 src/vanity.c:296 src/vanity.c:304
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem kunde inte ta en skärmdump från den filmen."
 
@@ -1535,26 +1535,20 @@ msgstr "Kunde inte läsa in huvudgränssnittet (totem.glade)."
 msgid "Couldn't load the interface for the playlist."
 msgstr "Kunde inte läsa in gränssnittet för spellistan."
 
-#: src/vanity.c:63
+#: src/vanity.c:66
 msgid "Debug mode on"
 msgstr "Felsökningsläge på"
 
-#: src/vanity.c:235
-msgid "translator_credits"
-msgstr ""
-"Christian Rose\n"
-"Skicka synpunkter på översättningen till sv@li.org"
-
-#: src/vanity.c:259
+#: src/vanity.c:252
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "Webbkameraverktyg som använder %s"
 
-#: src/vanity.c:308
+#: src/vanity.c:304
 msgid "Please file a bug, this isn't supposed to happen"
 msgstr "Skicka en felrapport. Detta ska inte hända"
 
-#: src/vanity.c:551
+#: src/vanity.c:547
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1563,11 +1557,11 @@ msgstr ""
 "Vanity kunde inte starta:\n"
 "%s"
 
-#: src/vanity.c:552
+#: src/vanity.c:548
 msgid "No reason"
 msgstr "Ingen orsak"
 
-#: src/vanity.c:590
+#: src/vanity.c:586
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1576,7 +1570,7 @@ msgstr ""
 "Vanity kunde inte kontakta webbkameran.\n"
 "Orsak: %s"
 
-#: src/vanity.c:606
+#: src/vanity.c:602
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1585,11 +1579,11 @@ msgstr ""
 "Vanity kunde inte spela video från webbkameran.\n"
 "Orsak: %s"
 
-#: src/vanity.c:642
+#: src/vanity.c:638
 msgid "Vanity Webcam Utility"
 msgstr "Webbkameraverktyget Vanity"
 
-#: src/vanity.c:647
+#: src/vanity.c:643
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1597,7 +1591,7 @@ msgstr ""
 "Kunde inte initiera de trådsäkra biblioteken.\n"
 "Kontrollera din systeminstallation. Vanity kommer nu att avslutas."
 
-#: src/vanity.c:672
+#: src/vanity.c:668
 #, c-format
 msgid ""
 "Vanity couln't initialise the \n"
@@ -1608,7 +1602,7 @@ msgstr ""
 "konfigurationsmotorn:\n"
 "%s"
 
-#: src/vanity.c:692 src/vanity.c:707
+#: src/vanity.c:688 src/vanity.c:703
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
@@ -1654,6 +1648,17 @@ msgstr "%s, %s"
 #, c-format
 msgid "%s"
 msgstr "%s"
+
+#~ msgid "_Reset to Defaults"
+#~ msgstr "_Återställ till standardalternativ"
+
+#~ msgid "_Reset Defaults"
+#~ msgstr "_Återställ standardalternativ"
+
+#~ msgid "translator_credits"
+#~ msgstr ""
+#~ "Christian Rose\n"
+#~ "Skicka synpunkter på översättningen till sv@li.org"
 
 #~ msgid "No File"
 #~ msgstr "Ingen fil"
