@@ -24,8 +24,11 @@
 #include <gdk/gdkx.h>
 #include <X11/Xproto.h>
 #include <X11/Xlib.h>
+
+#ifdef HAVE_RANDR
 #include <X11/extensions/Xrandr.h>
 #include <X11/extensions/Xrender.h>
+#endif
 
 gboolean
 bacon_resize_init (void)
