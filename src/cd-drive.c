@@ -45,6 +45,27 @@
 #include "cd-drive.h"
 
 #ifdef __linux__
+
+#ifdef USE_STABLE_LIBGNOMEUI
+static gboolean
+g_str_has_prefix (gchar *haystack, gchar *needle)
+{
+	if (haystack == NULL && needle == NULL) {
+		return TRUE;
+	}
+
+	if (haystack == NULL || needle == NULL) {
+		return FALSE;
+	}
+
+	if (strncmp (haystack, needle, strlen (needle)) == 0) {
+		return TRUE;
+	}
+
+	return FALSE;
+}
+#endif /* USE_STABLE_LIBGNOMEUI */
+
 static char **
 read_lines (char *filename)
 {
