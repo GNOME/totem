@@ -1,5 +1,12 @@
 2005-01-30  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_languages): Patch from Nickolay V. Shmyrev
+	<nshmyrev@yandex.ru> to handle unnamed sound channels, for multi-audio
+	AVI files (Closes: #164741)
+
+2005-01-30  Bastien Nocera  <hadess@hadess.net>
+
 	* NEWS: upd
 	* data/uri.glade: change the name of the history ID to totem
 	* src/totem.c: (on_open_location1_activate): save the used URI in
