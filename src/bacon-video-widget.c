@@ -200,8 +200,9 @@ bacon_video_widget_get_type (void)
 			(GInstanceInitFunc) bacon_video_widget_instance_init,
 		};
 
-		bacon_video_widget_type = g_type_register_static (GTK_TYPE_WIDGET,
-				"BaconVideoWidget", &bacon_video_widget_info, (GTypeFlags)0);
+		bacon_video_widget_type = g_type_register_static
+			(GTK_TYPE_WIDGET, "BaconVideoWidget",
+			 &bacon_video_widget_info, (GTypeFlags)0);
 	}
 
 	return bacon_video_widget_type;
