@@ -39,31 +39,13 @@
 
 typedef struct _GstVideoWidget GstVideoWidget;
 typedef struct _GstVideoWidgetClass GstVideoWidgetClass;
-
+typedef struct _GstVideoWidgetPrivate  GstVideoWidgetPrivate;
+	
 struct _GstVideoWidget {
 	
 	GtkWidget parent;
 
-	GdkWindow *event_window;
-	GdkWindow *video_window;
-
-	GdkPixbuf *logo_pixbuf;
-	
-	gulong xembed_xid;
-	
-	gint source_width;
-	gint source_height;
-	
-	/*gfloat x_align;
-	gfloat y_align; */
-	
-	gboolean cursor_visible;
-	gboolean event_catcher;
-	gboolean logo_focused;
-	
-	gboolean scale_override;
-	gfloat scale_factor;
-	
+	GstVideoWidgetPrivate *priv;
 };
 	
 struct _GstVideoWidgetClass {
@@ -84,6 +66,14 @@ gboolean gst_video_widget_set_source_size	(	GstVideoWidget *vw,
 gboolean gst_video_widget_get_source_size	(	GstVideoWidget *vw,
 											gint *width, gint *height);
 
+/* Set/Get minimum video widget size */
+
+gboolean gst_video_widget_set_minimum_size	(	GstVideoWidget *vw,
+											gint width, gint height);
+
+gboolean gst_video_widget_get_minimum_size	(	GstVideoWidget *vw,
+											gint *width, gint *height);
+
 /* Set/Get mouse pointer visible or not */
 
 gboolean gst_video_widget_set_cursor_visible (	GstVideoWidget *vw,
@@ -101,6 +91,11 @@ gboolean gst_video_widget_get_logo_focus (GstVideoWidget *vw);
 gboolean gst_video_widget_set_event_catcher (	GstVideoWidget *vw,
 												gboolean event_catcher);
 gboolean gst_video_widget_get_event_catcher (GstVideoWidget *vw);
+
+/* Set/Get auto resize mode used by the widget */
+
+gboolean gst_video_widget_set_auto_resize (GstVideoWidget *vw, gboolean resize);
+gboolean gst_video_widget_get_auto_resize (GstVideoWidget *vw);
 
 /* Set/Get scale factor used by the widget */
 
