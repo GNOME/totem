@@ -18,7 +18,7 @@ stuff_DATA =				\
 	playlist.glade			\
 	properties.glade		\
 	uri.glade			\
-	totem_logo.mpv
+	totem_logo.png
 
 pixmapdir = $(datadir)/pixmaps
 pixmap_DATA = media-player-48.png

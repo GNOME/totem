@@ -1,3 +1,12 @@
+2003-03-24  Bastien Nocera  <hadess@hadess.net>
+
+	* data/Makefile.am:
+	* data/totem_logo.mpv: removed
+	* data/totem_logo.png: added
+	* src/Makefile.am:
+	* src/gtk-playlist.c: (gtk_playlist_add_mrl): use a PNG logo now that
+	xine supports it, it's easier to generate
+
 2003-03-20  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-video-widget.c: (size_changed_cb): fix stupid crash when
