@@ -65,7 +65,7 @@ static const GtkTargetEntry target_table[] = {
 };
 
 static const GtkTargetEntry source_table[] = {
-	{ "_NETSCAPE_URL", 0, 0 },
+//	{ "_NETSCAPE_URL", 0, 0 },
 	{ "text/uri-list", 0, 1 },
 };
 
@@ -780,6 +780,8 @@ drag_video_cb (GtkWidget *widget,
 		return;
 
 	text = gnome_vfs_get_uri_from_local_path (totem->mrl);
+	if (text == NULL)
+		text = g_strdup (totem->mrl);
 	len = strlen (text);
 
 	g_print ("info: %d text: %s len: %d\n", info, text, len);

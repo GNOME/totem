@@ -1,3 +1,8 @@
+2003-03-03  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem.c: (drag_video_cb): fix a crash when the file's mrl was not
+	a local filename but a full-fledged URI (start for #106970)
+
 2003-02-28  Bastien Nocera  <hadess@hadess.net>
 
 	* data/Makefile.am: don't distribute the
