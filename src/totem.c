@@ -404,7 +404,8 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		gtk_widget_set_sensitive (widget, TRUE);
 
 		/* Control popup */
-		gtk_widget_set_sensitive (totem->fs_seek, TRUE);
+		gtk_widget_set_sensitive (totem->fs_seek, 
+                gtk_xine_is_seekable(GTK_XINE (totem->gtx)));
 		gtk_widget_set_sensitive (totem->fs_pp_button, TRUE);
 		widget = glade_xml_get_widget (totem->xml,
 				"fs_previous_button"); 
@@ -703,14 +704,14 @@ seek_cb (GtkWidget *widget, gpointer user_data)
 		totem->seek_lock = TRUE;
 		if (GTK_WIDGET(widget) == totem->fs_seek)
 		{
-			totem_action_play (totem, (gint) totem->seekadj->value);
+			totem_action_play (totem, (gint) totem->fs_seekadj->value);
 			/* Update the seek adjustment */
 			gtk_adjustment_set_value (totem->seekadj,
 					gtk_adjustment_get_value
 					(totem->fs_seekadj));
 		} else {
 			totem_action_play (totem,
-					(gint) totem->fs_seekadj->value);
+					(gint) totem->seekadj->value);
 			/* Update the fullscreen seek adjustment */
 			gtk_adjustment_set_value (totem->fs_seekadj,
 					gtk_adjustment_get_value
