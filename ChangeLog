@@ -1,3 +1,15 @@
+2003-02-12  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget.c: (dest_size_cb), (frame_output_cb),
+	(bacon_video_widget_set_fullscreen),
+	(bacon_video_widget_ratio_fits_screen):
+	* src/totem.c: (totem_action_fullscreen_toggle),
+	(totem_action_fullscreen), (totem_action_handle_key),
+	(totem_action_handle_scroll), (on_window_key_press_event):
+	use monitor information when possible instead of screen info (more
+	fixes for Xinerama), fixes fulllscreen switching bugs for very high
+	key repeat rates
+
 2003-02-12  Yuriy Syrota  <rasta renome.rovno.ua>
 
 	* configure.in: Added "uk" (Ukrainian) to ALL_LINGUAS.

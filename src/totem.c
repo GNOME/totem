@@ -43,6 +43,8 @@
 
 #include "debug.h"
 
+#define KEYBOARD_HYSTERISIS_TIMEOUT 500
+
 #define SEEK_FORWARD_OFFSET 60000
 #define SEEK_BACKWARD_OFFSET -15000
 
@@ -106,6 +108,7 @@ struct Totem {
 	TotemRemote *remote;
 	BaconMessageConnection *conn;
 	int action;
+	guint32 keypress_time;
 };
 
 static const GtkTargetEntry target_table[] = {
@@ -355,8 +358,11 @@ totem_action_fullscreen_toggle (Totem *totem)
 {
 	gboolean new_state;
 
-	new_state = !bacon_video_widget_is_fullscreen (BACON_VIDEO_WIDGET (totem->bvw));
-	bacon_video_widget_set_fullscreen (BACON_VIDEO_WIDGET (totem->bvw), new_state);
+	new_state = !bacon_video_widget_is_fullscreen (BACON_VIDEO_WIDGET
+			(totem->bvw));
+	bacon_video_widget_set_fullscreen (BACON_VIDEO_WIDGET (totem->bvw),
+			new_state);
+
 	/* Hide the popup when switching fullscreen off */
 	if (new_state == FALSE)
 		popup_hide (totem);
@@ -365,7 +371,8 @@ totem_action_fullscreen_toggle (Totem *totem)
 void
 totem_action_fullscreen (Totem *totem, gboolean state)
 {
-	if (bacon_video_widget_is_fullscreen (BACON_VIDEO_WIDGET (totem->bvw)) == state)
+	if (bacon_video_widget_is_fullscreen
+			(BACON_VIDEO_WIDGET (totem->bvw)) == state)
 		return;
 
 	totem_action_fullscreen_toggle (totem);
@@ -1986,12 +1993,12 @@ on_error_event (GtkWidget *bvw, BaconVideoWidgetError error, const char *message
 }
 
 static gboolean
-totem_action_handle_key (Totem *totem, guint keyval)
+totem_action_handle_key (Totem *totem, GdkEventKey *event)
 {
 	gboolean retval = TRUE;
 
 	/* Alphabetical */
-	switch (keyval) {
+	switch (event->keyval) {
 	case GDK_A:
 	case GDK_a:
 		totem_action_toggle_aspect_ratio (totem);
@@ -2016,7 +2023,12 @@ totem_action_handle_key (Totem *totem, guint keyval)
 		break;
 	case GDK_f:
 	case GDK_F:
-		totem_action_fullscreen_toggle (totem);
+		if (event->time - totem->keypress_time
+				>= KEYBOARD_HYSTERISIS_TIMEOUT)
+			totem_action_fullscreen_toggle (totem);
+
+		totem->keypress_time = event->time;
+
 		break;
 	case GDK_i:
 	case GDK_I:
@@ -2027,7 +2039,8 @@ totem_action_handle_key (Totem *totem, guint keyval)
 		break;
 	case GDK_M:
 	case GDK_m:
-		bacon_video_widget_dvd_event (BACON_VIDEO_WIDGET (totem->bvw), BVW_DVD_ROOT_MENU);
+		bacon_video_widget_dvd_event (BACON_VIDEO_WIDGET (totem->bvw),
+				BVW_DVD_ROOT_MENU);
 		break;
 	case XF86XK_AudioNext:
 	case GDK_N:
@@ -2106,10 +2119,12 @@ totem_action_handle_scroll (Totem *totem, GdkScrollDirection direction)
 
 	switch (direction) {
 		case GDK_SCROLL_UP:
-			totem_action_seek_relative (totem, SEEK_FORWARD_SHORT_OFFSET);
+			totem_action_seek_relative
+				(totem, SEEK_FORWARD_SHORT_OFFSET);
 			break;
 		case GDK_SCROLL_DOWN:
-			totem_action_seek_relative (totem, SEEK_BACKWARD_SHORT_OFFSET);
+			totem_action_seek_relative
+				(totem, SEEK_BACKWARD_SHORT_OFFSET);
 			break;
 		default:
 			retval = FALSE;
@@ -2135,7 +2150,7 @@ on_window_key_press_event (GtkWidget *win, GdkEventKey *event,
 			|| (event->state & GDK_MOD5_MASK)))
 		return FALSE;
 
-	return totem_action_handle_key (totem, event->keyval);
+	return totem_action_handle_key (totem, event);
 }
 
 static int

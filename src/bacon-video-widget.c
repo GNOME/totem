@@ -136,6 +136,7 @@ struct BaconVideoWidgetPrivate {
 	/* fullscreen stuff */
 	gboolean fullscreen_mode;
 	GdkWindow *fullscreen_window;
+	GdkRectangle fullscreen_rect;
 	gboolean cursor_shown;
 	gboolean pml;
 };
@@ -384,8 +385,8 @@ dest_size_cb (void *bvw_gen,
 
 	if (bvw->priv->fullscreen_mode)
 	{
-		*dest_width = gdk_screen_width ();
-		*dest_height = gdk_screen_height ();
+		*dest_width = bvw->priv->fullscreen_rect.width;
+		*dest_height = bvw->priv->fullscreen_rect.height;
 	} else {
 		*dest_width = bvw->widget.allocation.width;
 		*dest_height = bvw->widget.allocation.height;
@@ -423,8 +424,8 @@ frame_output_cb (void *bvw_gen,
 
 	if (bvw->priv->fullscreen_mode)
 	{
-		*dest_width = gdk_screen_width ();
-		*dest_height = gdk_screen_height ();
+		*dest_width = bvw->priv->fullscreen_rect.width;
+		*dest_height = bvw->priv->fullscreen_rect.height;
 	} else {
 		*dest_width = bvw->widget.allocation.width;
 		*dest_height = bvw->widget.allocation.height;
@@ -1437,7 +1438,6 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 	{
 		GdkWindow *parent;
 		GdkWindowAttr attr;
-		GdkRectangle rect;
 
 		parent = gdk_window_get_toplevel (bvw->widget.window);
 
@@ -1445,12 +1445,12 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 				gdk_screen_get_monitor_at_window
 				(gdk_screen_get_default (),
 				 bvw->priv->video_window),
-				&rect);
+				&bvw->priv->fullscreen_rect);
 
-		attr.x = rect.x;
-		attr.y = rect.y;
-		attr.width = rect.width;
-		attr.height = rect.height;
+		attr.x = bvw->priv->fullscreen_rect.x;
+		attr.y = bvw->priv->fullscreen_rect.y;
+		attr.width = bvw->priv->fullscreen_rect.width;
+		attr.height = bvw->priv->fullscreen_rect.height;
 		attr.window_type = GDK_WINDOW_TOPLEVEL;
 		attr.wclass = GDK_INPUT_OUTPUT;
 		attr.event_mask = gtk_widget_get_events (GTK_WIDGET (bvw))
@@ -1762,8 +1762,8 @@ bacon_video_widget_ratio_fits_screen (BaconVideoWidget *bvw, gfloat ratio)
 	new_w = bvw->priv->video_width * ratio;
 	new_h = bvw->priv->video_height * ratio;
 
-	if (new_w > (gdk_screen_width () - 128) ||
-			new_h > (gdk_screen_height () - 128))
+	if (new_w > (bvw->priv->fullscreen_rect.width - 128) ||
+			new_h > (bvw->priv->fullscreen_rect.height - 128))
 	{
 		return FALSE;
 	}
