@@ -50,7 +50,6 @@ void bacon_v4l_selection_set_device		   (BaconV4lSelection *bvs,
 						    const char *device);
 const char *bacon_v4l_selection_get_device	   (BaconV4lSelection *bvs);
 const char *bacon_v4l_selection_get_default_device (BaconV4lSelection *bvs);
-const VideoDev *bacon_v4l_selection_get_v4l_device (BaconV4lSelection *bvs);
 const VideoDev *bacon_v4l_selection_get_video_device (BaconV4lSelection *bvs);
 G_END_DECLS
 

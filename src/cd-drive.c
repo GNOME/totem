@@ -36,6 +36,10 @@
 #include <fcntl.h>
 #include <math.h>
 
+#ifdef USE_HAL
+#include <libhal.h>
+#endif
+
 #ifdef __linux__
 #include <scsi/scsi.h>
 #include <scsi/sg.h>
@@ -62,11 +66,158 @@ static struct {
 	{ "IOMEGA - CDRW9602EXT-B", TRUE, TRUE, FALSE, FALSE },
 };
 
+#ifdef USE_HAL
+
+static void
+hal_scan_add_whitelist (CDDrive *cdrom)
+{
+	guint i;
+
+	for (i = 0; i < G_N_ELEMENTS (recorder_whitelist); i++) {
+		if (!strcmp (cdrom->display_name, recorder_whitelist[i].name)) {
+			if (recorder_whitelist[i].can_write_cdr) {
+				cdrom->type |= CDDRIVE_TYPE_CD_RECORDER;
+			}
+			if (recorder_whitelist[i].can_write_cdrw) {
+				cdrom->type |= CDDRIVE_TYPE_CDRW_RECORDER;
+			}
+			if (recorder_whitelist[i].can_write_dvdr) {
+				cdrom->type |= CDDRIVE_TYPE_DVD_RW_RECORDER;
+			}
+			if (recorder_whitelist[i].can_write_dvdram) {
+				cdrom->type |= CDDRIVE_TYPE_DVD_RAM_RECORDER;
+			}
+		}
+	}
+}
+
+#define GET_BOOL_PROP(x) (hal_device_property_exists (device_names[i], x) && hal_device_get_property_bool (device_names[i], x))
+#define CD_ROM_SPEED 176
+
+static GList *
+hal_scan (gboolean recorder_only)
+{
+	GList *cdroms = NULL;
+	LibHalFunctions hal_functions = {
+		NULL, /* mainloop integration */
+		NULL, /* device_added */
+		NULL, /* device_removed */
+		NULL, /* device_new_capability */
+		NULL, /* property_modified */
+		NULL, /* device_condition */
+	};
+	int i;
+	int num_devices;
+	char** device_names;
+
+	if (hal_initialize (&hal_functions, FALSE)) {
+		return NULL;
+	}
+
+	device_names = hal_get_all_devices (&num_devices);
+	if (device_names == NULL)
+	{
+		hal_shutdown ();
+		return NULL;
+	}
+
+	for (i = 0; i < num_devices; i++)
+	{
+		CDDrive *cdrom;
+		char *string;
+		gboolean is_cdr;
+
+		/* Is it a removable drive? */
+		if (!GET_BOOL_PROP ("storage.removable")) {
+			continue;
+		}
+
+		/* Is it a CD drive? */
+		string = hal_device_get_property_string (device_names[i],
+				"storage.media");
+		if (string == NULL || strcmp (string, "cdrom") != 0) {
+			g_free (string);
+			continue;
+		}
+		g_free (string);
+
+		/* Is it the CD-drive, or a volume on the media? */
+		if (GET_BOOL_PROP ("block.is_volume") != FALSE) {
+			continue;
+		}
+
+		/* Is it a CD burner? */
+		is_cdr = GET_BOOL_PROP ("storage.cdr");
+		if (recorder_only && is_cdr == FALSE) {
+			continue;
+		}
+
+		cdrom = g_new0 (CDDrive, 1);
+		cdrom->type = CDDRIVE_TYPE_CD_DRIVE;
+		if (is_cdr != FALSE) {
+			cdrom->type |= CDDRIVE_TYPE_CD_RECORDER;
+		}
+		if (GET_BOOL_PROP ("storage.cdrw")) {
+			cdrom->type |= CDDRIVE_TYPE_CDRW_RECORDER;
+		}
+		if (GET_BOOL_PROP ("storage.dvd")) {
+			cdrom->type |= CDDRIVE_TYPE_DVD_DRIVE;
+
+			if (GET_BOOL_PROP ("storage.dvdram")) {
+				cdrom->type |= CDDRIVE_TYPE_DVD_RAM_RECORDER;
+			}
+			if (GET_BOOL_PROP ("storage.dvdr")) {
+				cdrom->type |= CDDRIVE_TYPE_DVD_RW_RECORDER;
+			}
+			if (GET_BOOL_PROP ("storage.dvd")) {
+				cdrom->type |= CDDRIVE_TYPE_DVD_DRIVE;
+			}
+			if (GET_BOOL_PROP ("storage.dvdplusr")) {
+				cdrom->type |= CDDRIVE_TYPE_DVD_PLUS_R_RECORDER;
+			}
+			if (GET_BOOL_PROP ("storage.dvdplusrw")) {
+				cdrom->type |= CDDRIVE_TYPE_DVD_PLUS_RW_RECORDER;
+			}
+		}
+
+		cdrom->device = hal_device_get_property_string (device_names[i],
+				"block.device");
+		cdrom->cdrecord_id = g_strdup (cdrom->device);
+
+		string = hal_device_get_property_string (device_names[i],
+				"storage.model");
+		if (string != NULL) {
+			cdrom->display_name = string;
+		} else {
+			cdrom->display_name = g_strdup_printf ("Unnamed CD-ROM (%s)", cdrom->device);
+		}
+
+		cdrom->max_speed_read = hal_device_get_property_int
+			(device_names[i], "storage.cdrom.read_speed")
+			/ CD_ROM_SPEED;
+
+		if (hal_device_property_exists (device_names[i], "storage.cdrom.write_speed")) {
+			cdrom->max_speed_write = hal_device_get_property_int
+				(device_names[i], "storage.cdrom.write_speed")
+				/ CD_ROM_SPEED;
+		}
+
+		hal_scan_add_whitelist (cdrom);
+
+		cdroms = g_list_prepend (cdroms, cdrom);
+	}
+
+	cdroms = g_list_reverse (cdroms);
+
+	return cdroms;
+}
+#endif /* USE_HAL */
+
 #if defined(__linux__) || defined(__FreeBSD__)
 
 /* For dvd_plus_rw_utils.cpp */
 int get_dvd_r_rw_profile (const char *name);
-int get_mmc_profile (void *fd);
+int get_mmc_profile (int fd);
 
 static void
 add_dvd_plus (CDDrive *cdrom)
@@ -103,7 +254,7 @@ linux_bsd_media_type (const char *device)
 		return CD_MEDIA_TYPE_ERROR;
 	}
 
-	mmc_profile = get_mmc_profile ((void *)&fd);
+	mmc_profile = get_mmc_profile (fd);
 	close (fd);
 
 	switch (mmc_profile) {
@@ -366,14 +517,14 @@ get_device_max_speed (char *id)
 	argv[i++] = NULL;
 
 	if (g_spawn_sync (NULL,
-			  (char **)argv,
-			  NULL,
-			  G_SPAWN_SEARCH_PATH | G_SPAWN_STDERR_TO_DEV_NULL,
-			  NULL, NULL,
-			  &stdout_data,
-			  NULL,
-			  NULL,
-			  NULL)) {
+				(char **)argv,
+				NULL,
+				G_SPAWN_SEARCH_PATH | G_SPAWN_STDERR_TO_DEV_NULL,
+				NULL, NULL,
+				&stdout_data,
+				NULL,
+				NULL,
+				NULL)) {
 		speed = strstr (stdout_data, "Maximum write speed in kB/s:");
 		if (speed != NULL) {
 			speed += strlen ("Maximum write speed in kB/s:");
@@ -391,7 +542,6 @@ get_device_max_speed (char *id)
 	g_free (dev_str);
 	return max_speed;
 }
-
 
 static char *
 get_scsi_cd_name (int bus, int id, int lun, const char *dev,
@@ -962,13 +1112,19 @@ scan_for_cdroms (gboolean recorder_only, gboolean add_image)
 	CDDrive *cdrom;
 	GList *cdroms = NULL;
 
+#ifdef USE_HAL
+	cdroms = hal_scan (recorder_only);
+#endif
+
+	if (cdroms == NULL) {
 #ifdef __linux__
-	cdroms = linux_scan (recorder_only);
+		cdroms = linux_scan (recorder_only);
 #endif
 
 #ifdef __FreeBSD__
-	cdroms = freebsd_scan (recorder_only);
+		cdroms = freebsd_scan (recorder_only);
 #endif
+	}
 
 	if (add_image) {
 		/* File */

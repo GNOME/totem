@@ -113,79 +113,58 @@ bail:
 }
 
 extern "C"
-int get_mmc_profile (void *fd)
-{ Scsi_Command cmd(fd);
-  unsigned char buf[8];
-  int profile=-1,once=1;
-  unsigned int len;
-  unsigned char formats[260];
+int get_mmc_profile (int fd)
+{
+  Scsi_Command cmd(fd);
+  int retval = -1;
+  unsigned char page[20];
+  unsigned char *sense=cmd.sense();
+  int i;
 
-    do {
-	cmd[0] = 0x46;
-	cmd[8] = sizeof(buf);
-	cmd[9] = 0;
-	if (cmd.transport(READ,buf,sizeof(buf)))
-	    /* perror (":-( unable to GET CONFIGURATION, non-MMC unit?"), */
-	    return -1;
+  cmd[0]=0x46;
+  cmd[1]=2;
+  cmd[8]=8;
+  cmd[9]=0;
+  if (cmd.transport(READ,page,8))
+  {    /* if (sense[0]==0) perror("Unable to ioctl");
+	  else             fprintf(stderr,"GET CONFIGURATION failed with "
+			  "SK=%xh/ASC=%02xh/ASCQ=%02xh\n",
+			  sense[2]&0xF,sense[12],sense[13]); */
+	  goto bail;
+  }
 
-        if ((profile = buf[6]<<8|buf[7]) || !once) break;
+  // See if it's 2 gen drive by checking if DVD+R profile is an option
+  {
+    int len=4+(page[0]<<24|page[1]<<16|page[2]<<8|page[3]);
+    if (len>264)
+    {
+      /* fprintf (stderr,"insane profile list length [%d].\n",len); */
+      goto bail;
+    }
+    unsigned char *list=new unsigned char[len];
 
-	// no media?
-	cmd[0] = 0;		// TEST UNIT READY
-	cmd[5] = 0;
-	if ((cmd.transport()&0xFFF00) != 0x23A00) break;
-
-	// try to load tray...
-	cmd[0] = 0x1B;	// START/STOP UNIT
-	cmd[1] = 0x1;	// "IMMED"
-	cmd[4] = 0x3;	// "Load"
-	cmd[5] = 0;
-	if (cmd.transport ())
-	    /* perror (":-( unable to LOAD TRAY"), */
-	    return -1;
-
-	wait_for_unit (cmd);
-    } while (once--);
-
-    if (profile)
-    {	cmd[0] = 0x1B;	// START/STOP UNIT
-	cmd[4] = 1;	// "Spin-up"
-	cmd[5] = 0;
-	if (cmd.transport ())
-	    /* perror (":-( unable to START UNIT"), */
-	    return -1;
-
-	handle_events (cmd);
+    cmd[0]=0x46;
+    cmd[1]=2;
+    cmd[7]=len>>8;
+    cmd[8]=len;
+    cmd[9]=0;
+    if (cmd.transport(READ,list,len))
+    {
+      /* fprintf(stderr,"GET CONFIGURATION failed with "
+		      "SK=%xh/ASC=%02xh/ASCQ=%02xh\n",
+		      sense[2]&0xF,sense[12],sense[13]); */
+      goto bail;
     }
 
-    if (profile != 0x1A && profile != 0x13)
-	return profile;
+    delete list;
+  }
 
-    cmd[0] = 0x23;	// READ FORMAT CAPACITIES
-    cmd[8] = 12;
-    cmd[9] = 0;
-    if (cmd.transport (READ,formats,12))
-	/* perror (":-( unable to READ FORMAT CAPACITIES"), */
-	return -1;
+  return page[6]<<8|page[7];
 
-    len = formats[3];
-    if (len&7 || len<16)
-	/* fprintf (stderr,":-( FORMAT allocaion length isn't sane"), */
-	return -1;
+bail:
 
-    cmd[0] = 0x23;	// READ FORMAT CAPACITIES
-    cmd[7] = (4+len)>>8;
-    cmd[8] = (4+len)&0xFF;
-    cmd[9] = 0;
-    if (cmd.transport (READ,formats,4+len))
-	/* perror (":-( unable to READ FORMAT CAPACITIES"), */
-	return -1;
+  return retval;
 
-    if (len != formats[3])
-	/* fprintf (stderr,":-( parameter length inconsistency\n"), */
-	return -1;
-
-  return profile;
 }
 
 #endif /* defined(__linux__ || __FreeBSD__) */
