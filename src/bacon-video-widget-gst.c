@@ -775,6 +775,28 @@ got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * bvw)
                  seekable);
 }
 
+static void
+got_source (GObject    *play,
+	    GParamSpec *pspec,
+	    BaconVideoWidget *bvw)
+{
+  GObject *source = NULL;
+  GObjectClass *klass;
+
+  if (!bvw->priv->media_device)
+    return;
+
+  g_object_get (play, "source", &source, NULL);
+  if (!source)
+    return;
+
+  klass = G_OBJECT_GET_CLASS (source);
+  if (!g_object_class_find_property (klass, "device"))
+    return;
+
+  g_object_set (source, "device", bvw->priv->media_device, NULL);
+}
+
 static gboolean
 cb_iterate (BaconVideoWidget *bvw)
 {
@@ -2410,6 +2432,8 @@ bacon_video_widget_new (int width, int height,
 		    G_CALLBACK (got_error), (gpointer) bvw);
   g_signal_connect (G_OBJECT (bvw->priv->play), "buffering",
 		    G_CALLBACK (got_buffering), (gpointer) bvw);
+  g_signal_connect (G_OBJECT (bvw->priv->play), "notify::source",
+		    G_CALLBACK (got_source), (gpointer) bvw);
 
   /* We try to get an element supporting XOverlay interface */
   if (!null_out && GST_IS_BIN (bvw->priv->play)) {
