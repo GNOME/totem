@@ -1,3 +1,35 @@
+2004-12-29  Bastien Nocera  <hadess@hadess.net>
+
+	* data/Makefile.am: upd
+	* data/properties.glade: upd
+	* data/skip_to.glade: added
+	* data/totem.glade: removed the "Skip to" dialog
+	* src/Makefile.am: updated
+	* src/bacon-video-widget-properties.c:
+	(bacon_video_widget_properties_reset),
+	(bacon_video_widget_properties_set_from_current): hide the
+	video properties if the file is an audio-only one (Closes: #153174)
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_open),
+	(bacon_video_widget_get_metadata_string): fix setting the album,
+	I wonder for how long it was broken. Don't refuse to play audio-only
+	files when we're getting their metadata
+	* src/metadata-test.c: (main): error checking
+	* src/totem-playlist.c: (totem_playlist_key_press): escape closes the
+	playlist window
+	* src/totem-private.h:
+	* src/totem-properties-page.c: (totem_properties_page_init),
+	(set_property): show verbose errors on the command-line for debugging
+	purposes
+	* src/totem-skipto.[ch]: split out the skipto dialog
+	* src/totem.c: (update_skip_to),
+	(totem_action_set_mrl_with_warning), (on_recent_file_activate),
+	(on_about1_activate), (on_take_screenshot1_activate),
+	(on_properties1_activate), (commit_hide_skip_to),
+	(on_skip_to1_activate), (totem_callback_connect):
+	Use the new TotemSkipto dialog, and only instance one if we need to,
+	fix a leak of a GError when playing back a file for which we don't
+	want errors
+
 2004-12-28  Bastien Nocera  <hadess@hadess.net>
 
 	* README: upd

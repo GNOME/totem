@@ -83,6 +83,8 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 {
 	GtkWidget *item;
 
+	item = glade_xml_get_widget (props->priv->xml, "video_vbox");
+	gtk_widget_show (item);
 	item = glade_xml_get_widget (props->priv->xml, "video");
 	gtk_widget_set_sensitive (item, FALSE);
 	item = glade_xml_get_widget (props->priv->xml, "audio");
@@ -167,8 +169,11 @@ bacon_video_widget_properties_set_from_current
 	gtk_widget_set_sensitive (item, has_type);
 	g_value_unset (&value);
 
+	item = glade_xml_get_widget (props->priv->xml, "video_vbox");
+
 	if (has_type != FALSE)
 	{
+		gtk_widget_show (item);
 		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
 				BVW_INFO_DIMENSION_X, &value);
 		x = g_value_get_int (&value);
@@ -197,6 +202,8 @@ bacon_video_widget_properties_set_from_current
 		bacon_video_widget_properties_set_label
 			(props, "framerate", string);
 		g_free (string);
+	} else {
+		gtk_widget_hide (item);
 	}
 
 	/* Audio */

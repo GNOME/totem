@@ -661,11 +661,8 @@ totem_action_restore_pl (Totem *totem)
 static void
 update_skip_to (Totem *totem, gint64 time)
 {
-	GtkWidget *widget;
-
-	widget = glade_xml_get_widget (totem->xml, "tstw_skip_spinbutton");
-	gtk_spin_button_set_range (GTK_SPIN_BUTTON (widget),
-			0, (gdouble) time / 1000);
+	if (totem->skipto != NULL)
+		totem_skipto_update_range (totem->skipto, time);
 }
 
 static void
@@ -856,13 +853,12 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 			msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
 			g_free (disp);
 			totem_action_error (msg, err->message, totem);
-
 			g_free (msg);
-			g_error_free (err);
 		}
 
 		if (retval == FALSE)
 		{
+			g_error_free (err);
 			g_free (totem->mrl);
 			totem->mrl = NULL;
 			play_pause_set_label (totem, STATE_STOPPED);
@@ -1272,7 +1268,7 @@ on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
 		totem_playlist_set_at_end (totem->playlist);
 		mrl = totem_playlist_get_current_mrl (totem->playlist);
 		totem_action_set_mrl_and_play (totem, mrl);
-		g_free (mrl);   
+		g_free (mrl);
 	}
 
 	g_free (uri);
@@ -2032,7 +2028,6 @@ on_help_activate (GtkButton *button, Totem *totem)
 static void
 on_about1_activate (GtkButton *button, Totem *totem)
 {
-	static GtkWidget *about = NULL;
 	GdkPixbuf *pixbuf = NULL;
 	const gchar *authors[] =
 	{
@@ -2046,10 +2041,9 @@ on_about1_activate (GtkButton *button, Totem *totem)
 	const gchar *translator_credits = _("translator_credits");
 	char *backend_version, *description;
 
-	if (about != NULL)
+	if (totem->about != NULL)
 	{
-		gdk_window_raise (about->window);
-		gdk_window_show (about->window);
+		gtk_window_present (GTK_WINDOW (totem->about));
 		return;
 	}
 
@@ -2072,7 +2066,7 @@ on_about1_activate (GtkButton *button, Totem *totem)
 	description = g_strdup_printf (_("Movie Player using %s"),
 				backend_version);
 
-	about = gnome_about_new(_("Totem"), VERSION,
+	totem->about = gnome_about_new(_("Totem"), VERSION,
 			"Copyright \xc2\xa9 2002-2004 Bastien Nocera",
 			(const char *)description,
 			(const char **)authors,
@@ -2086,13 +2080,12 @@ on_about1_activate (GtkButton *button, Totem *totem)
 	if (pixbuf != NULL)
 		gdk_pixbuf_unref (pixbuf);
 
-	g_signal_connect (G_OBJECT (about), "destroy", G_CALLBACK
-			(gtk_widget_destroyed), &about);
-	g_object_add_weak_pointer (G_OBJECT (about), (gpointer *)&about);
-	gtk_window_set_transient_for (GTK_WINDOW (about),
+	g_object_add_weak_pointer (G_OBJECT (totem->about),
+			(gpointer *)&totem->about);
+	gtk_window_set_transient_for (GTK_WINDOW (totem->about),
 			GTK_WINDOW (totem->win));
 
-	gtk_widget_show(about);
+	gtk_widget_show(totem->about);
 }
 #endif /* !HAVE_GTK_ONLY */
 
@@ -2123,9 +2116,9 @@ on_take_screenshot1_activate (GtkButton *button, Totem *totem)
 
 	filename = g_build_filename (DATADIR,
 			"totem", "screenshot.glade", NULL);
-
 	dialog = totem_screenshot_new (filename, pixbuf);
 	g_free (filename);
+
 	gtk_dialog_run (GTK_DIALOG (dialog));
 	gtk_widget_destroy (dialog);
 	gdk_pixbuf_unref (pixbuf);
@@ -2150,7 +2143,7 @@ on_properties1_activate (GtkButton *button, Totem *totem)
 
 	if (dialog != NULL)
 	{
-		gtk_widget_show_all (dialog);
+		gtk_widget_show (dialog);
 		return;
 	}
 
@@ -2168,7 +2161,7 @@ on_properties1_activate (GtkButton *button, Totem *totem)
 			G_CALLBACK (hide_props_dialog), NULL);
 	g_signal_connect (G_OBJECT (dialog), "delete-event",
 			G_CALLBACK (hide_props_dialog), NULL);
-	gtk_widget_show_all (dialog);
+	gtk_widget_show (dialog);
 }
 
 static void
@@ -2211,18 +2204,17 @@ static void
 commit_hide_skip_to (GtkDialog *dialog, gint response, Totem *totem)
 {
 	GError *err = NULL;
-	GtkWidget *spin;
-	int sec;
 
 	gtk_widget_hide (GTK_WIDGET (dialog));
 
 	if (response != GTK_RESPONSE_OK)
 		return;
 
-	spin = glade_xml_get_widget (totem->xml, "tstw_skip_spinbutton");
-	sec = (int) gtk_spin_button_get_value (GTK_SPIN_BUTTON (spin));
+	bacon_video_widget_seek_time (totem->bvw,
+			totem_skipto_get_range (totem->skipto), &err);
 
-	bacon_video_widget_seek_time (totem->bvw, sec * 1000, &err);
+	gtk_widget_destroy (GTK_WIDGET (totem->skipto));
+	totem->skipto = NULL;
 
 	if (err != NULL)
 	{
@@ -2242,36 +2234,33 @@ commit_hide_skip_to (GtkDialog *dialog, gint response, Totem *totem)
 }
 
 static void
-hide_skip_to (GtkWidget *widget, GdkEvent *event, gpointer user_data)
-{
-	gtk_widget_hide (widget);
-}
-
-static void
-spin_button_value_changed_cb (GtkSpinButton *spinbutton, Totem *totem)
-{
-	GtkWidget *label;
-	int sec;
-	char *str;
-
-	sec = (int) gtk_spin_button_get_value (GTK_SPIN_BUTTON (spinbutton));
-	label = glade_xml_get_widget (totem->xml, "tstw_position_label");
-	str = totem_time_to_string_text (sec * 1000);
-	gtk_label_set_text (GTK_LABEL (label), str);
-	g_free (str);
-}
-
-static void
 on_skip_to1_activate (GtkButton *button, Totem *totem)
 {
-	GtkWidget *dialog;
+	char *filename;
 
 	if (totem->seekable == FALSE)
 		return;
 
-	dialog = glade_xml_get_widget (totem->xml, "totem_skip_to_window");
-	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-	gtk_widget_show (dialog);
+	if (totem->skipto != NULL)
+	{
+		gtk_window_present (GTK_WINDOW (totem->skipto));
+		return;
+	}
+
+	filename = g_build_filename (DATADIR,
+			"totem", "skip_to.glade", NULL);
+	totem->skipto = TOTEM_SKIPTO (totem_skipto_new (filename));
+	g_free (filename);
+
+	g_signal_connect (G_OBJECT (totem->skipto),
+			"delete-event", G_CALLBACK (gtk_widget_destroy), NULL);
+	g_signal_connect (G_OBJECT (totem->skipto), "response",
+			G_CALLBACK (commit_hide_skip_to), totem);
+	g_object_add_weak_pointer (G_OBJECT (totem->skipto),
+			(gpointer *)&totem->skipto);
+	gtk_window_set_transient_for (GTK_WINDOW (totem->skipto),
+			GTK_WINDOW (totem->win));
+	gtk_widget_show (GTK_WIDGET (totem->skipto));
 }
 
 static void
@@ -3537,16 +3526,6 @@ totem_callback_connect (Totem *totem)
 			"tmw_skip_backwards_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_skip_backwards1_activate), totem);
-
-	/* Skip dialog */
-	item = glade_xml_get_widget (totem->xml, "totem_skip_to_window");
-	g_signal_connect (G_OBJECT (item), "response",
-			G_CALLBACK (commit_hide_skip_to), totem);
-	g_signal_connect (G_OBJECT (item), "delete-event",
-			G_CALLBACK (hide_skip_to), totem);
-	item = glade_xml_get_widget (totem->xml, "tstw_skip_spinbutton");
-	g_signal_connect (G_OBJECT (item), "value-changed",
-			G_CALLBACK (spin_button_value_changed_cb), totem);
 
 	/* Subtitle and Languages submenu */
 	item = glade_xml_get_widget (totem->xml, "tmw_menu_languages");

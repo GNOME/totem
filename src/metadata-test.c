@@ -129,12 +129,12 @@ int main (int argc, char **argv)
 			G_CALLBACK (on_got_metadata_event),
 			NULL);
 
-	if (bacon_video_widget_open (bvw, argv[1], NULL) == FALSE) {
-		g_print ("Can't open %s\n", argv[1]);
+	if (bacon_video_widget_open (bvw, argv[1], &error) == FALSE) {
+		g_print ("Can't open %s: %s\n", argv[1], error->message);
 		return 1;
 	}
-	if (bacon_video_widget_play (bvw, NULL) == FALSE) {
-		g_print ("Can't play %s\n", argv[1]);
+	if (bacon_video_widget_play (bvw, &error) == FALSE) {
+		g_print ("Can't play %s: %s\n", argv[1], error->message);
 		return 1;
 	}
 

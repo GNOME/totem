@@ -114,7 +114,7 @@ totem_properties_page_init(TotemPropertiesPage *props)
 			props);
 
 	props->vbox = bacon_video_widget_properties_new ();
-	gtk_widget_show_all (props->vbox);
+	gtk_widget_show (props->vbox);
 	props->props = BACON_VIDEO_WIDGET_PROPERTIES (props->vbox);
 
 	bonobo_control_construct (BONOBO_CONTROL (props), props->vbox);
@@ -166,14 +166,21 @@ set_property(BonoboPropertyBag *bag,
 	     TotemPropertiesPage *props)
 {
 	if (arg_id == PROP_URI) {
+		GError *error = NULL;
+
 		g_free(props->location);
 		bacon_video_widget_close (props->bvw);
 		props->location = g_strdup(BONOBO_ARG_GET_STRING(arg));
 		bacon_video_widget_properties_update (props->props,
 				props->bvw, TRUE);
-		if (bacon_video_widget_open (props->bvw, props->location, NULL) == FALSE)
+		if (bacon_video_widget_open (props->bvw, props->location, &error) == FALSE) {
+			g_warning ("Couldn't open %s: %s", props->location, error->message);
+			g_error_free (error);
 			return;
-		if (bacon_video_widget_play (props->bvw, NULL) == FALSE) {
+		}
+		if (bacon_video_widget_play (props->bvw, &error) == FALSE) {
+			g_warning ("Couldn't play %s: %s", props->location, error->message);
+			g_error_free (error);
 			bacon_video_widget_close (props->bvw);
 		}
 	}

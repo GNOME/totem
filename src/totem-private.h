@@ -29,6 +29,7 @@
 #include "totem-playlist.h"
 #include "bacon-message-connection.h"
 #include "bacon-video-widget.h"
+#include "totem-skipto.h"
 
 typedef enum {
 	TOTEM_CONTROLS_VISIBLE,
@@ -48,8 +49,12 @@ struct Totem {
 	GtkWidget *win;
 	BaconVideoWidget *bvw;
 	GtkWidget *prefs;
-	GtkWidget *properties;
 	GtkWidget *statusbar;
+
+	/* Separate Dialogs */
+	GtkWidget *properties;
+	TotemSkipto *skipto;
+	GtkWidget *about;
 
 	/* Play/Pause */
 	GtkWidget *pp_button;

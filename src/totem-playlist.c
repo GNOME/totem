@@ -1028,6 +1028,9 @@ totem_playlist_key_press (GtkWidget *win, GdkEventKey *event, TotemPlaylist *pla
 	{
 		totem_playlist_remove_files (NULL, playlist);
 		return TRUE;
+	} else if (event->keyval == GDK_Escape) {
+		gtk_dialog_response (GTK_DIALOG (playlist),
+				GTK_RESPONSE_CLOSE);
 	}
 
 	return FALSE;

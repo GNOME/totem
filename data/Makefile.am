@@ -19,8 +19,9 @@ stuff_DATA =				\
 	stock-tool-brightness-contrast-22.png	\
 	totem.glade			\
 	playlist.glade			\
-	mozilla-viewer.glade			\
+	mozilla-viewer.glade		\
 	properties.glade		\
+	skip_to.glade			\
 	uri.glade			\
 	screenshot.glade		\
 	totem_logo.png			\

@@ -1974,6 +1974,7 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const char *mrl,
 
 	if (xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_HAS_VIDEO) == FALSE
+		&& bvw->priv->type != BVW_USE_TYPE_METADATA
 		&& bvw->priv->ao_driver == NULL)
 	{
 		bacon_video_widget_close (bvw);
@@ -3187,6 +3188,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetM
 	case BVW_INFO_ALBUM:
 		string = xine_get_meta_info (bvw->priv->stream,
 				XINE_META_INFO_ALBUM);
+		break;
 	case BVW_INFO_YEAR:
 		string = xine_get_meta_info (bvw->priv->stream,
 				XINE_META_INFO_YEAR);

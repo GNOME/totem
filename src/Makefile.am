@@ -94,6 +94,7 @@ totem_SOURCES = 					\
 	totem-playlist.c totem-playlist.h \
 	totem-screenshot.c		\
 	totem-screenshot.h		\
+	totem-skipto.c totem-skipto.h	\
 	totem-time-label.c totem-time-label.h \
 	rb-ellipsizing-label.c		\
 	rb-ellipsizing-label.h		\
