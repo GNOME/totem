@@ -87,7 +87,6 @@ totem_SOURCES = 					\
 	totem-menu.c totem-menu.h	\
 	totem-time-label.c totem-time-label.h \
 	totem-uri.c totem-uri.h		\
-	debug.h				\
 	totem-statusbar.c		\
 	totem-statusbar.h		\
 	totem-gromit.c totem-gromit.h

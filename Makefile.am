@@ -18,5 +18,7 @@ EXTRA_DIST =			\
 
 CLEANFILES = totem.spec totem-plparser.pc
 
+DISTCLEANFILES = intltool-extract intltool-merge intltool-update
+
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = totem-plparser.pc

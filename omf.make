@@ -29,6 +29,7 @@
 
 omf_dest_dir=$(datadir)/omf/@PACKAGE@
 scrollkeeper_localstate_dir = $(localstatedir)/scrollkeeper
+CLEANFILES += $(omffile:.omf=.omf.out)
 
 omf: omf_timestamp
 
