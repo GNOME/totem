@@ -1294,12 +1294,72 @@ static void
 bacon_video_widget_set_property (GObject * object, guint property_id,
                                  const GValue * value, GParamSpec * pspec)
 {
+  BaconVideoWidget *bvw;
+
+  bvw = BACON_VIDEO_WIDGET (object);
+
+  switch (property_id)
+    {
+    case PROP_LOGO_MODE:
+      bacon_video_widget_set_logo_mode (bvw,
+	  g_value_get_boolean (value));
+      break;
+    case PROP_SHOWCURSOR:
+      bacon_video_widget_set_show_cursor (bvw,
+	  g_value_get_boolean (value));
+      break;
+    case PROP_MEDIADEV:
+      bacon_video_widget_set_media_device (bvw,
+	  g_value_get_string (value));
+      break;
+    case PROP_SHOW_VISUALS:
+      bacon_video_widget_set_show_visuals (bvw,
+	  g_value_get_boolean (value));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    }
 }
 
 static void
 bacon_video_widget_get_property (GObject * object, guint property_id,
                                  GValue * value, GParamSpec * pspec)
 {
+  BaconVideoWidget *bvw;
+
+  bvw = BACON_VIDEO_WIDGET (object);
+
+  switch (property_id)
+    {
+      case PROP_LOGO_MODE:
+	g_value_set_boolean (value,
+	    bacon_video_widget_get_logo_mode (bvw));
+	break;
+      case PROP_POSITION:
+	g_value_set_int64 (value, bacon_video_widget_get_position (bvw));
+	break;
+      case PROP_STREAM_LENGTH:
+	g_value_set_int64 (value,
+	    bacon_video_widget_get_stream_length (bvw));
+	break;
+      case PROP_PLAYING:
+	g_value_set_boolean (value,
+	    bacon_video_widget_is_playing (bvw));
+	break;
+      case PROP_SEEKABLE:
+	g_value_set_boolean (value,
+	    bacon_video_widget_is_seekable (bvw));
+	break;
+      case PROP_SHOWCURSOR:
+	g_value_set_boolean (value,
+	    bacon_video_widget_get_show_cursor (bvw));
+	break;
+      case PROP_MEDIADEV:
+	g_value_take_string (value, bvw->priv->media_device);
+	break;
+      default:
+	G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    }
 }
 
 /* ============================================================= */
@@ -2031,12 +2091,6 @@ bacon_video_widget_get_show_cursor (BaconVideoWidget * bvw)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 
   return bvw->priv->cursor_shown;
-}
-
-static const char *
-bacon_video_widget_get_media_device (BaconVideoWidget * bvw)
-{
-  return bvw->priv->media_device;
 }
 
 void

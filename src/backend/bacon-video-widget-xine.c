@@ -1412,7 +1412,6 @@ xine_error (BaconVideoWidget *bvw, GError **error)
 	 * xine_open() */
 	while ((data = g_async_queue_try_pop (bvw->priv->queue)) != NULL)
 	{
-		g_message ("data->signal %d", data->signal);
 		g_assert (data->signal == MESSAGE_ASYNC
 				|| data->signal == BUFFERING_ASYNC
 				|| data->signal == REDIRECT_ASYNC
@@ -2160,8 +2159,6 @@ bacon_video_widget_set_property (GObject *object, guint property_id,
 {
 	BaconVideoWidget *bvw;
 
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET (object));
-
 	bvw = BACON_VIDEO_WIDGET (object);
 
 	switch (property_id)
@@ -2193,8 +2190,6 @@ bacon_video_widget_get_property (GObject *object, guint property_id,
 {
 	BaconVideoWidget *bvw;
 
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET (object));
-
 	bvw = BACON_VIDEO_WIDGET (object);
 
 	switch (property_id)
@@ -2225,6 +2220,7 @@ bacon_video_widget_get_property (GObject *object, guint property_id,
 	case PROP_MEDIADEV:
 		g_value_take_string (value,
 				bacon_video_widget_get_media_device (bvw));
+		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 	}

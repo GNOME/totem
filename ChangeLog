@@ -1,3 +1,14 @@
+2005-03-25  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst.c:
+	(bacon_video_widget_set_property),
+	(bacon_video_widget_get_property): add get/set property implementation
+	to allow eject to work with the GStreamer backend
+	* src/backend/bacon-video-widget-xine.c: (xine_error),
+	(bacon_video_widget_set_property),
+	(bacon_video_widget_get_property): remove unneeded debug, and fix
+	setting the mediadev property because of a missing break;
+
 2005-03-24  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.glade:
