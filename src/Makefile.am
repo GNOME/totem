@@ -6,17 +6,35 @@ else
 VANITY=
 endif
 
-bin_PROGRAMS = totem totem-video-thumbnailer $(VANITY)
-
-if TOTEM_GST
-MM=	bacon-video-widget-gst.c \
-	gstvideowidget.c \
-	gstvideowidget.h
+if HAVE_GNOME
+TOTEM_PROPERTIES_PAGE = totem-properties-page
 else
-MM=bacon-video-widget-xine.c
+TOTEM_PROPERTIES_PAGE =
 endif
 
-MARSHALFILES = baconvideowidget-marshal.h baconvideowidget-marshal.c totemplparser-marshal.c totemplparser-marshal.h
+if HAVE_MOZILLA
+TOTEM_MOZILLA_VIEWER = totem-mozilla-viewer
+TOTEM_MOZILLA_PLUGIN = libtotem_mozilla.la
+else
+TOTEM_MOZILLA_VIEWER = 
+TOTEM_MOZILLA_PLUGIN =
+endif
+
+bin_PROGRAMS = totem totem-video-thumbnailer $(VANITY)
+libexec_PROGRAMS = $(TOTEM_MOZILLA_VIEWER) $(TOTEM_PROPERTIES_PAGE)
+plugin_LTLIBRARIES = $(TOTEM_MOZILLA_PLUGIN)
+
+if TOTEM_GST
+MM =	bacon-video-widget-gst.c	\
+	gstvideowidget.c		\
+	gstvideowidget.h
+else
+MM = bacon-video-widget-xine.c
+endif
+
+BVWMARSHALFILES = baconvideowidget-marshal.h baconvideowidget-marshal.c
+PLPARSERMARSHALFILES = totemplparser-marshal.c totemplparser-marshal.h
+MARSHALFILES = $(BVWMARSHALFILES) $(PLPARSERMARSHALFILES)
 GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
 
 baconvideowidget-marshal.h: baconvideowidget-marshal.list
@@ -64,12 +82,13 @@ regenerate-built-sources:
 	EGGFILES="$(BACON_CD_SELECTION)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
 	EGGFILES="$(BACON_V4L_SELECTION)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
 
-VIDEOWIDGET = baconvideowidget-marshal.list totemplparser-marshal.list $(MARSHALFILES) $(MM) bacon-video-widget.h bacon-resize.h bacon-resize.c video-utils.c video-utils.h debug.h
+VIDEOWIDGET = baconvideowidget-marshal.list totemplparser-marshal.list $(BVWMARSHALFILES) $(MM) bacon-video-widget.h bacon-resize.h bacon-resize.c video-utils.c video-utils.h debug.h
 
 totem_SOURCES = 					\
 	$(EGG_RECENT_FILES)				\
 	$(BACON_CD_SELECTION)				\
 	$(VIDEOWIDGET)					\
+	$(PLPARSERMARSHALFILES)				\
 	totem.c totem.h					\
 	totem-remote.c totem-remote.h			\
 	totem-preferences.c totem-preferences.h		\
@@ -93,16 +112,25 @@ totem_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) $(RANDR
 totem_video_thumbnailer_SOURCES = $(VIDEOWIDGET) totem-video-thumbnailer.c
 totem_video_thumbnailer_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)  $(NVTV_LIBS)
 
-#FIXME for gtk+ only version
-#if HAVE_GNOME
-libexec_PROGRAMS = totem-properties-page
 totem_properties_page_SOURCES =		\
 	$(VIDEOWIDGET)			\
 	bacon-video-widget-properties.c	\
 	bacon-video-widget-properties.h	\
 	totem-properties-page.c
 totem_properties_page_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)  $(NVTV_LIBS)
-#endif
+
+libtotem_mozilla_la_LDFLAGS = $(GTK_LIBS) $(module_flags)
+libtotem_mozilla_la_SOURCES = totem-mozilla-plugin.c
+
+totem_mozilla_viewer_SOURCES = 		\
+	$(VIDEOWIDGET)			\
+	bacon-video-widget-properties.c	\
+	bacon-video-widget-properties.h	\
+	totem-mozilla-viewer.c
+totem_mozilla_viewer_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS) $(NVTV_LIBS)
+
+plugindir = $(libdir)/mozilla/plugins/
+module_flags = -export_dynamic -avoid-version
 
 vanity_SOURCES =					\
 	$(VIDEOWIDGET)					\
@@ -118,10 +146,12 @@ bvw_test_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)  $(NVTV_LIBS)
 INCLUDES = 						\
 	-D_REENTRANT					\
 	$(EXTRA_GNOME_CFLAGS)				\
-	$(NVTV_CFLAGS) \
+	$(MOZILLA_CFLAGS)				\
+	$(NVTV_CFLAGS)					\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
 	-DGCONF_PREFIX=\""/apps/totem"\"		\
 	-DDATADIR=\""$(datadir)"\"			\
+	-DLIBDIR=\""$(libdir)"\"			\
 	-DLOGO_PATH=DATADIR\"\"G_DIR_SEPARATOR_S\"totem\"G_DIR_SEPARATOR_S\"totem_logo.png\"
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(MARSHALFILES) $(desktop_DATA)
@@ -130,5 +160,7 @@ EXTRA_DIST =	bacon-video-widget-xine.c \
 		gstvideowidget.c \
 		gstvideowidget.h \
 		$(BACON_V4L_SELECTION) \
-		vanity.c
+		vanity.c \
+		totem-mozilla-viewer.c \
+		totem-mozilla-plugin.c
 

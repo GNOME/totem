@@ -1,3 +1,23 @@
+2004-04-19  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in:
+	* data/Makefile.am:
+	* data/mozilla-viewer.glade:
+	* src/Makefile.am:
+	* src/totem-mozilla-plugin.c: (totem_plugin_fork),
+	(totem_plugin_new_instance), (totem_plugin_destroy_instance),
+	(totem_plugin_set_window), (totem_plugin_new_stream),
+	(totem_plugin_destroy_stream), (totem_plugin_write_ready),
+	(totem_plugin_write), (totem_plugin_stream_as_file),
+	(totem_plugin_url_notify), (totem_plugin_get_value),
+	(totem_plugin_set_value), (NP_GetValue), (NP_GetMIMEDescription),
+	(NP_Initialize), (NP_Shutdown):
+	* src/totem-mozilla-viewer.c: (totem_embedded_error_and_exit),
+	(totem_embedded_open), (totem_embedded_add_children), (embedded),
+	(main): Fix the GTK+ only build, disable vanity building by default
+	(we need to finish it first...), commit the first version (slightly
+	broken *cough*understatement*cough*) of the Mozilla plugin
+
 ============ Version 0.99.11
 
 2004-04-18  Bastien Nocera  <hadess@hadess.net>
