@@ -500,7 +500,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 }
 
 static void
-bacon_video_widget_instance_init (BaconVideoWidget * bvw)
+bacon_video_widget_init (BaconVideoWidget * bvw)
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -1890,32 +1890,7 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
 /*                                             */
 /* =========================================== */
 
-GType
-bacon_video_widget_get_type (void)
-{
-  static GType bacon_video_widget_type = 0;
-
-  if (!bacon_video_widget_type)
-    {
-      static const GTypeInfo bacon_video_widget_info = {
-	sizeof (BaconVideoWidgetClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) bacon_video_widget_class_init,
-	(GClassFinalizeFunc) NULL,
-	NULL /* class_data */ ,
-	sizeof (BaconVideoWidget),
-	0 /* n_preallocs */ ,
-	(GInstanceInitFunc) bacon_video_widget_instance_init,
-      };
-
-      bacon_video_widget_type = g_type_register_static
-	(GTK_TYPE_BOX, "BaconVideoWidget",
-	 &bacon_video_widget_info, (GTypeFlags) 0);
-    }
-
-  return bacon_video_widget_type;
-}
+G_DEFINE_TYPE(BaconVideoWidget, bacon_video_widget, GTK_TYPE_BOX)
 
 struct poptOption *
 bacon_video_widget_get_popt_table (void)

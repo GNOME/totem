@@ -80,32 +80,7 @@ static char
   return NULL;
 }
 
-GType      
-totem_statusbar_get_type (void)
-{
-  static GType statusbar_type = 0;
-
-  if (!statusbar_type)
-    {
-      static const GTypeInfo statusbar_info =
-      {
-        sizeof (TotemStatusbarClass),
-	NULL,		/* base_init */
-	NULL,		/* base_finalize */
-        (GClassInitFunc) totem_statusbar_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data */
-        sizeof (TotemStatusbar),
-	0,		/* n_preallocs */
-        (GInstanceInitFunc) totem_statusbar_init,
-      };
-
-      statusbar_type = g_type_register_static (GTK_TYPE_HBOX, "TotemStatusbar",
-					       &statusbar_info, 0);
-    }
-
-  return statusbar_type;
-}
+G_DEFINE_TYPE(TotemStatusbar, totem_statusbar, GTK_TYPE_HBOX)
 
 static void
 totem_statusbar_class_init (TotemStatusbarClass *class)

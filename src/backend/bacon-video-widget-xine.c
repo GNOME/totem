@@ -217,7 +217,7 @@ static const char *demux_strategies_str[] = {
 };
 
 static void bacon_video_widget_class_init (BaconVideoWidgetClass *klass);
-static void bacon_video_widget_instance_init (BaconVideoWidget *bvw);
+static void bacon_video_widget_init (BaconVideoWidget *bvw);
 
 static void setup_config (BaconVideoWidget *bvw);
 
@@ -255,31 +255,7 @@ static void show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals);
 
 static int bvw_table_signals[LAST_SIGNAL] = { 0 };
 
-GType
-bacon_video_widget_get_type (void)
-{
-	static GType bacon_video_widget_type = 0;
-
-	if (!bacon_video_widget_type) {
-		static const GTypeInfo bacon_video_widget_info = {
-			sizeof (BaconVideoWidgetClass),
-			(GBaseInitFunc) NULL,
-			(GBaseFinalizeFunc) NULL,
-			(GClassInitFunc) bacon_video_widget_class_init,
-			(GClassFinalizeFunc) NULL,
-			NULL /* class_data */,
-			sizeof (BaconVideoWidget),
-			0 /* n_preallocs */,
-			(GInstanceInitFunc) bacon_video_widget_instance_init,
-		};
-
-		bacon_video_widget_type = g_type_register_static
-			(GTK_TYPE_BOX, "BaconVideoWidget",
-			 &bacon_video_widget_info, (GTypeFlags)0);
-	}
-
-	return bacon_video_widget_type;
-}
+G_DEFINE_TYPE(BaconVideoWidget, bacon_video_widget, GTK_TYPE_BOX)
 
 static void
 bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
@@ -407,7 +383,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 }
 
 static void
-bacon_video_widget_instance_init (BaconVideoWidget *bvw)
+bacon_video_widget_init (BaconVideoWidget *bvw)
 {
 	const char *const *autoplug_list;
 	int i = 0;

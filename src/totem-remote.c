@@ -56,6 +56,8 @@ static guint totem_remote_signals[LAST_SIGNAL] = { 0 };
 static GIOChannel *lirc_channel = NULL;
 static GList *listeners = NULL;
 
+G_DEFINE_TYPE(TotemRemote, totem_remote, G_TYPE_OBJECT)
+
 static TotemRemoteCommand
 totem_lirc_to_command (const gchar *str)
 {
@@ -172,7 +174,7 @@ totem_remote_finalize (GObject *object)
 }
 
 static void
-totem_remote_class_init (TotemRemote *klass)
+totem_remote_class_init (TotemRemoteClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -219,33 +221,6 @@ totem_remote_init (TotemRemote *remote)
 	}
 
 	listeners = g_list_prepend (listeners, remote);
-}
-
-GType
-totem_remote_get_type (void)
-{
-	static GType type = 0;
-                                                                              
-	if (type == 0)
-	{ 
-		static GTypeInfo info =
-		{
-			sizeof (TotemRemoteClass),
-			NULL, 
-			NULL,
-			(GClassInitFunc) totem_remote_class_init, 
-			NULL,
-			NULL, 
-			sizeof (TotemRemote),
-			0,
-			(GInstanceInitFunc) totem_remote_init
-		};
-		
-		type = g_type_register_static (G_TYPE_OBJECT, "TotemRemote",
-					       &info, 0);
-	}
-
-	return type;
 }
 
 TotemRemote *
