@@ -23,7 +23,7 @@
 #include <config.h>
 
 /* libgstplay */
-#include <gst/play/gstplay.h>
+#include <gst/play/play.h>
 
 /* gstgconf */
 #include <gst/gconf/gconf.h>
@@ -286,6 +286,8 @@ bacon_video_widget_motion_notify_callback (GtkWidget *widget,
                                            GdkEventMotion *event,
                                            BaconVideoWidget *bvw)
 {
+  gboolean return_code;
+  
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   
@@ -305,7 +307,9 @@ bacon_video_widget_motion_notify_callback (GtkWidget *widget,
                                      event->x, event->y);
   }
 
-  return TRUE;
+  g_signal_emit_by_name (G_OBJECT (bvw), "motion-notify-event", event, &return_code);
+  
+  return return_code;
 }
 
 static void
@@ -497,7 +501,7 @@ bacon_video_widget_instance_init (BaconVideoWidget * bvw)
   gst_init (&argc, &argv);
   
   /* Using opt as default scheduler */
-  gst_scheduler_factory_set_default_name ("basicgthread");
+  gst_scheduler_factory_set_default_name ("opt");
 
   bvw->priv = g_new0 (BaconVideoWidgetPrivate, 1);
   
@@ -897,7 +901,7 @@ bacon_video_widget_open (BaconVideoWidget * bvw, const gchar * mrl,
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
   g_return_val_if_fail (bvw->priv->mrl == NULL, FALSE);
-
+  
   bvw->priv->mrl = g_strdup (mrl);
 
   /* Resetting last_error_message to NULL */
@@ -1848,7 +1852,7 @@ bacon_video_widget_new (int width, int height,
   bvw->priv->metadata_hash =
     g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
 
-  bvw->priv->play = gst_play_new ();
+  bvw->priv->play = gst_play_new (NULL);
 
   bvw->priv->init_width = bvw->priv->init_height = 0;
 
