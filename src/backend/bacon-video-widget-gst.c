@@ -61,6 +61,7 @@ enum {
 	EOS,
 	TITLE_CHANGE,
 	TICK,
+	GOT_METADATA,
 	LAST_SIGNAL
 };
 
@@ -96,16 +97,17 @@ struct BaconVideoWidgetPrivate {
 	gboolean media_has_video;
 	
 	guint stream_length;
+	gint64 current_time_nanos;
 	
-	/* Configuration */
-	gboolean null_out;
-
+	GHashTable *metadata_hash;
+	
 	/* X stuff */
 	Display *display;
 	int screen;
 	GdkWindow *video_window;
 
 	/* Visual effects */
+	GList *vis_plugins_list;
 	char *mrl;
 	gboolean show_vfx;
 	gboolean using_vfx;
@@ -120,6 +122,10 @@ struct BaconVideoWidgetPrivate {
 
 	/* fullscreen stuff */
 	gboolean fullscreen_mode;
+	
+	/* Signal handlers we want to keep */
+	gulong vis_sig_handler;
+	gboolean vis_signal_blocked;
 };
 
 static void bacon_video_widget_set_property (GObject *object, guint property_id,
@@ -247,6 +253,14 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 				NULL, NULL,
 				g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
+	bvw_table_signals[GOT_METADATA] =
+		g_signal_new ("got_metadata",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (BaconVideoWidgetClass, got_metadata),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
+
 	bvw_table_signals[TITLE_CHANGE] =
 		g_signal_new ("title-change",
 				G_TYPE_FROM_CLASS (object_class),
@@ -256,6 +270,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 				NULL, NULL,
 				g_cclosure_marshal_VOID__STRING,
 				G_TYPE_NONE, 1, G_TYPE_STRING);
+				
 	bvw_table_signals[TICK] =
 		g_signal_new ("tick",
 				G_TYPE_FROM_CLASS (object_class),
@@ -292,6 +307,18 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 }
 
 static void
+update_vis_xid (GstPlay* play, gint xid, BaconVideoWidget *bvw)
+{
+	g_return_if_fail(bvw != NULL);
+	g_return_if_fail(BACON_IS_VIDEO_WIDGET(bvw));
+
+	g_message ("update_vis_xid");
+	if ( (bvw->priv->vw) && (!bvw->priv->media_has_video) )
+		gst_video_widget_set_xembed_xid(bvw->priv->vw, xid);
+	
+}
+
+static void
 update_xid (GstPlay* play, gint xid, BaconVideoWidget *bvw)
 {
 	g_return_if_fail(bvw != NULL);
@@ -303,20 +330,14 @@ update_xid (GstPlay* play, gint xid, BaconVideoWidget *bvw)
 	
 	gst_play_connect_visualisation ( bvw->priv->play, FALSE);
 	
-	if (bvw->priv->vw)
-		gst_video_widget_set_xembed_xid(bvw->priv->vw, xid);
-}
-
-static void
-update_vis_xid (GstPlay* play, gint xid, BaconVideoWidget *bvw)
-{
-	g_return_if_fail(bvw != NULL);
-	g_return_if_fail(BACON_IS_VIDEO_WIDGET(bvw));
-
-	g_message ("update_vis_xid");
-	if (bvw->priv->vw)
-		gst_video_widget_set_xembed_xid(bvw->priv->vw, xid);
+	if (!bvw->priv->vis_signal_blocked) {
+		g_signal_handler_block (	G_OBJECT(bvw->priv->play),
+									bvw->priv->vis_sig_handler);
+		bvw->priv->vis_signal_blocked = TRUE;
+	}
 	
+	if (bvw->priv->vw)
+		gst_video_widget_set_xembed_xid(bvw->priv->vw, xid);
 }
 
 static void
@@ -360,6 +381,8 @@ got_time_tick (GstPlay* play, gint64 time_nanos, BaconVideoWidget *bvw)
 	g_return_if_fail(bvw != NULL);
 	g_return_if_fail(BACON_IS_VIDEO_WIDGET(bvw));
 
+	bvw->priv->current_time_nanos = time_nanos;
+	
 	current_time = (time_nanos / GST_MSECOND);
 
 	if (bvw->priv->stream_length == 0)
@@ -379,6 +402,17 @@ bacon_video_widget_finalize (GObject *object)
 {
 	BaconVideoWidget *bvw = (BaconVideoWidget *) object;
 
+	if (bvw->priv->metadata_hash) {
+		g_hash_table_destroy (bvw->priv->metadata_hash);
+		bvw->priv->metadata_hash = NULL;
+	}
+	
+	if (bvw->priv->vis_plugins_list) {
+		g_list_foreach (bvw->priv->vis_plugins_list, (GFunc) g_free, NULL);
+		g_list_free (bvw->priv->vis_plugins_list);
+		bvw->priv->vis_plugins_list = NULL;
+	}
+		
 	if (bvw->priv->play != NULL && GST_IS_PLAY (bvw->priv->play))
 		gst_play_set_state (bvw->priv->play, GST_STATE_READY);
 
@@ -521,6 +555,12 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 	g_message ("bacon_video_widget_open: %s", mrl);
 	bvw->priv->mrl = g_strdup (mrl);
 
+	if (bvw->priv->vis_signal_blocked) {
+		g_signal_handler_unblock (	G_OBJECT(bvw->priv->play),
+									bvw->priv->vis_sig_handler);
+		bvw->priv->vis_signal_blocked = FALSE;
+	}
+	
 	gst_play_connect_visualisation ( bvw->priv->play, TRUE);
 
 	gst_play_need_new_video_window ( bvw->priv->play);
@@ -770,6 +810,103 @@ bacon_video_widget_set_show_visuals (BaconVideoWidget *bvw,
 	return TRUE;
 }
 
+GList *
+bacon_video_widget_get_visuals_list (BaconVideoWidget *bvw)
+{
+	GList *pool_registries = NULL, *registries = NULL, *vis_plugins_list = NULL;
+	GList *plugins = NULL, *features = NULL;
+	
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
+	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
+	
+	/* Cache */
+	if (bvw->priv->vis_plugins_list) { 
+		return bvw->priv->vis_plugins_list;
+	}
+	
+	pool_registries = gst_registry_pool_list ();
+	
+	registries = pool_registries;
+	
+	while (registries) {
+		GstRegistry *registry = GST_REGISTRY(registries->data);
+		
+		plugins = registry->plugins;
+		
+		while (plugins) {
+			GstPlugin *plugin = GST_PLUGIN(plugins->data);
+		
+			features = gst_plugin_get_feature_list (plugin);
+		
+			while (features) {
+				GstPluginFeature *feature = GST_PLUGIN_FEATURE (features->data);
+			
+				if (GST_IS_ELEMENT_FACTORY (feature)) {
+					GstElementFactory *factory = GST_ELEMENT_FACTORY (feature);
+					if (g_strrstr (factory->details->klass, "Visualization")) {
+						vis_plugins_list = g_list_append (vis_plugins_list,
+										(char *) g_strdup(GST_OBJECT_NAME (factory)));
+					}
+    			}
+				features = g_list_next (features);
+			}
+		
+			plugins = g_list_next (plugins);
+		}
+		
+		registries = g_list_next (registries);
+	}
+	
+	g_list_free (pool_registries);
+	pool_registries = NULL;
+	
+	bvw->priv->vis_plugins_list = vis_plugins_list;
+	
+	return vis_plugins_list;
+}
+
+gboolean
+bacon_video_widget_set_visuals (BaconVideoWidget *bvw, const char *name)
+{
+	GstElement *vis_element = NULL;
+	gboolean paused = FALSE;
+	
+	g_return_val_if_fail (bvw != NULL, FALSE);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET(bvw), FALSE);
+	g_return_val_if_fail (GST_IS_PLAY(bvw->priv->play), FALSE);
+	
+	g_message ("setting visuals to %s", name);
+	
+	if (gst_play_get_state (bvw->priv->play) == GST_STATE_PLAYING) {
+		gst_play_set_state (bvw->priv->play, GST_STATE_PAUSED);
+		paused = TRUE;
+	}
+	
+	vis_element = gst_element_factory_make ( name, "vis_plugin_element");
+	if (GST_IS_ELEMENT (vis_element)) {
+		gst_play_set_visualisation_element (bvw->priv->play, vis_element);
+		if (paused) {
+			gst_play_seek_to_time (	bvw->priv->play,
+									bvw->priv->current_time_nanos);
+			gst_play_set_state (bvw->priv->play, GST_STATE_PLAYING);
+		}
+		
+		return FALSE;
+	}
+	else {
+		g_message ("Failed loading visualization plugin %s", name);
+		return FALSE;
+	}
+}
+
+void
+bacon_video_widget_set_visuals_quality (BaconVideoWidget *bvw,
+										VisualsQuality quality)
+{
+	
+}
+
 void
 bacon_video_widget_set_auto_resize (BaconVideoWidget *bvw, gboolean auto_resize)
 {
@@ -864,6 +1001,171 @@ bacon_video_widget_get_mrls (BaconVideoWidget *bvw, MediaType type)
 	return NULL;
 }
 
+static void
+bacon_video_widget_information (GstPlay *play,
+								GstObject* object,
+								GParamSpec *param,
+								BaconVideoWidget *bvw)
+{
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
+	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
+	g_return_if_fail (object != NULL);
+	
+	GValue value = { 0, };
+	GstCaps *metadata;
+	GstProps *props;
+	GList *p;
+	
+	if (strcmp (param->name, "metadata") == 0) {
+		g_message ("got metadata");
+		g_value_init (&value, param->value_type);
+		g_object_get_property (G_OBJECT (object), param->name, &value);
+		metadata = g_value_peek_pointer (&value);
+		props = gst_caps_get_props (metadata);
+		p = props->properties;
+		while (p) {
+			const gchar *name;
+			const gchar *val;
+			GstPropsEntry *entry = (GstPropsEntry *) p->data;
+			name = gst_props_entry_get_name (entry);
+			gst_props_entry_get_string (entry, &val);
+			g_hash_table_replace (	bvw->priv->metadata_hash,
+									g_ascii_strdown(name, -1), (char *) val);
+			p = g_list_next (p);
+		}
+	}
+}
+
+static void
+bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetMetadataType type,
+		GValue *value)
+{
+	const char *string = NULL;
+
+	g_value_init (value, G_TYPE_STRING);
+
+/*	if (bvw->priv->play == NULL)
+	{*/
+		g_value_set_string (value, "");
+		return;
+/*	}
+
+	switch (type)
+	{
+	case BVW_INFO_TITLE:
+		string = xine_get_meta_info (bvw->priv->stream,
+				XINE_META_INFO_TITLE);
+		break;
+	case BVW_INFO_ARTIST:
+		string = xine_get_meta_info (bvw->priv->stream,
+				XINE_META_INFO_ARTIST);
+		break;
+	case BVW_INFO_YEAR:
+		string = xine_get_meta_info (bvw->priv->stream,
+				XINE_META_INFO_YEAR);
+		break;
+	case BVW_INFO_VIDEO_CODEC:
+		string = xine_get_meta_info (bvw->priv->stream,
+				XINE_META_INFO_VIDEOCODEC);
+		break;
+	case BVW_INFO_AUDIO_CODEC:
+		string = xine_get_meta_info (bvw->priv->stream,
+				XINE_META_INFO_AUDIOCODEC);
+		break;
+	default:
+		g_assert_not_reached ();
+	}
+
+	g_value_set_string (value, string);
+
+	return;*/
+}
+
+static void
+bacon_video_widget_get_metadata_int (BaconVideoWidget *bvw, BaconVideoWidgetMetadataType type,
+		GValue *value)
+{
+	int integer = 0;
+
+	g_value_init (value, G_TYPE_INT);
+
+/*	if (bvw->priv->play == NULL)
+	{*/
+		g_value_set_int (value, 0);
+		return;
+/*	}
+
+	switch (type)
+	{
+	case BVW_INFO_DURATION:
+		integer = bacon_video_widget_get_stream_length (bvw) / 1000;
+		break;
+	case BVW_INFO_DIMENSION_X:
+		integer = xine_get_stream_info (bvw->priv->stream,
+				XINE_STREAM_INFO_VIDEO_WIDTH);
+		break;
+	case BVW_INFO_DIMENSION_Y:
+		integer = xine_get_stream_info (bvw->priv->stream,
+				XINE_STREAM_INFO_VIDEO_HEIGHT);
+		break;
+	case BVW_INFO_FPS:
+		if (xine_get_stream_info (bvw->priv->stream,
+					XINE_STREAM_INFO_FRAME_DURATION) != 0)
+		{
+			integer = 90000 / xine_get_stream_info
+				(bvw->priv->stream,
+				 XINE_STREAM_INFO_FRAME_DURATION);
+		} else {
+			integer = 0;
+		}
+		break;
+	 case BVW_INFO_BITRATE:
+		integer = xine_get_stream_info (bvw->priv->stream,
+				XINE_STREAM_INFO_AUDIO_BITRATE) / 1000;
+		break;
+	 default:
+		g_assert_not_reached ();
+	 }
+
+	 g_value_set_int (value, integer);
+
+	 return;*/
+}
+
+static void
+bacon_video_widget_get_metadata_bool (BaconVideoWidget *bvw,
+		BaconVideoWidgetMetadataType type, GValue *value)
+{
+	gboolean boolean = FALSE;
+
+	g_value_init (value, G_TYPE_BOOLEAN);
+
+/*	if (bvw->priv->play == NULL)
+	{*/
+		g_value_set_boolean (value, FALSE);
+		return;
+/*	}
+
+	switch (type)
+	{
+	case BVW_INFO_HAS_VIDEO:
+		boolean = xine_get_stream_info (bvw->priv->stream,
+				XINE_STREAM_INFO_HAS_VIDEO);
+		break;
+	case BVW_INFO_HAS_AUDIO:
+		boolean = xine_get_stream_info (bvw->priv->stream,
+				XINE_STREAM_INFO_HAS_AUDIO);
+		break;
+	default:
+		g_assert_not_reached ();
+	}
+
+	g_value_set_boolean (value, boolean);
+
+	return;*/
+}
+
 void
 bacon_video_widget_get_metadata (BaconVideoWidget *bvw,
 		BaconVideoWidgetMetadataType type,
@@ -872,6 +1174,32 @@ bacon_video_widget_get_metadata (BaconVideoWidget *bvw,
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
 	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
+	
+	switch (type)
+	{
+	case BVW_INFO_TITLE:
+	case BVW_INFO_ARTIST:
+	case BVW_INFO_YEAR:
+	case BVW_INFO_VIDEO_CODEC:
+	case BVW_INFO_AUDIO_CODEC:
+		bacon_video_widget_get_metadata_string (bvw, type, value);
+		break;
+	case BVW_INFO_DURATION:
+	case BVW_INFO_DIMENSION_X:
+	case BVW_INFO_DIMENSION_Y:
+	case BVW_INFO_FPS:
+	case BVW_INFO_BITRATE:
+		bacon_video_widget_get_metadata_int (bvw, type, value);
+		break;
+	case BVW_INFO_HAS_VIDEO:
+	case BVW_INFO_HAS_AUDIO:
+		bacon_video_widget_get_metadata_bool (bvw, type, value);
+		break;
+	default:
+		g_assert_not_reached ();
+	}
+
+	return;
 }
 
 /* Screenshot functions */
@@ -935,6 +1263,8 @@ bacon_video_widget_new (int width, int height,
 	bvw = BACON_VIDEO_WIDGET (g_object_new
 			(bacon_video_widget_get_type (), NULL));
 
+	bvw->priv->metadata_hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
+	
 	bvw->priv->play = gst_play_new (GST_PLAY_PIPE_VIDEO_VISUALISATION, err);
 
 	//FIXME
@@ -961,29 +1291,37 @@ bacon_video_widget_new (int width, int height,
 		g_message ("failed to render default video sink from gconf for vis");
 		return NULL;
 	}
-	vis_element = gst_gconf_get_default_visualisation_element ();
+	/* vis_element = gst_gconf_get_default_visualisation_element ();
 	if (!GST_IS_ELEMENT (vis_element))
 	{
 		g_message ("failed to render default visualisation element from gconf");
 		return NULL;
-	}
+	}*/
 
 	gst_play_set_video_sink (bvw->priv->play, video_sink);
 	gst_play_set_audio_sink (bvw->priv->play, audio_sink);
 	gst_play_set_visualisation_video_sink (bvw->priv->play, vis_video_sink);
-	gst_play_set_visualisation_element (bvw->priv->play, vis_element);
+	/*gst_play_set_visualisation_element (bvw->priv->play, vis_element);*/
 
+	bvw->priv->vis_plugins_list = NULL;
+	
 	g_signal_connect (G_OBJECT (bvw->priv->play),
 			"have_xid", (GtkSignalFunc) update_xid, (gpointer) bvw);
-	g_signal_connect (G_OBJECT (bvw->priv->play),
-			"have_vis_xid", (GtkSignalFunc) update_vis_xid,
-			(gpointer) bvw);
+	
+	bvw->priv->vis_sig_handler = g_signal_connect (G_OBJECT (bvw->priv->play),
+												"have_vis_xid",
+												(GtkSignalFunc) update_vis_xid,
+												(gpointer) bvw);
+	bvw->priv->vis_signal_blocked = FALSE;
+	
 	g_signal_connect (G_OBJECT (bvw->priv->play),
 			"have_video_size", (GtkSignalFunc) got_video_size, (gpointer) bvw);
 	g_signal_connect (G_OBJECT (bvw->priv->play),
 			"stream_end", (GtkSignalFunc) got_eos, (gpointer) bvw);
 	g_signal_connect (G_OBJECT (bvw->priv->play),
 			"stream_length", (GtkSignalFunc) got_stream_length, (gpointer) bvw);
+	g_signal_connect (G_OBJECT (bvw->priv->play), "information",
+			(GtkSignalFunc) bacon_video_widget_information, (gpointer) bvw);
 	g_signal_connect (G_OBJECT (bvw->priv->play),
 			"time_tick", (GtkSignalFunc) got_time_tick, (gpointer) bvw);
 			

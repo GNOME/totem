@@ -1,3 +1,19 @@
+2003-05-07  Julien MOUTTE  <julien@moutte.net>
+
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_class_init),
+	(update_vis_xid), (update_xid), (got_time_tick),
+	(bacon_video_widget_finalize), (bacon_video_widget_open),
+	(bacon_video_widget_get_visuals_list),
+	(bacon_video_widget_set_visuals),
+	(bacon_video_widget_set_visuals_quality),
+	(bacon_video_widget_information),
+	(bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_metadata_int),
+	(bacon_video_widget_get_metadata_bool),
+	(bacon_video_widget_get_metadata), (bacon_video_widget_new):
+	Implementing metadata hashtable, visuals plugin list, on the fly
+	visualization plugin change, got_metadata signal.
+
 2003-05-07  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-video-widget-xine.c: (bacon_video_widget_finalize),
