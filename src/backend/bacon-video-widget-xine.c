@@ -1093,7 +1093,7 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 	case XINE_MSG_GENERAL_WARNING:
 		break;
 	case XINE_MSG_UNKNOWN_HOST:
-		message = g_strdup_printf (_("The server you are trying to connect to (%s) is not known."), (char *) data + data->parameters);
+		message = g_strdup_printf (_("The server you are trying to connect to is not known."));
 		break;
 	case XINE_MSG_UNKNOWN_DEVICE:
 		message = g_strdup_printf (_("The device name you specified (%s) seems to be invalid."), (char *) data + data->parameters);
@@ -1175,7 +1175,8 @@ xine_event (void *user_data, const xine_event_t *event)
 		break;
 	case XINE_EVENT_MRL_REFERENCE:
 		ref = event->data;
-		D("ref mrl detected: %s", ref->mrl);
+		bacon_video_widget_close (bvw);
+		bacon_video_widget_open (bvw, ref->mrl, NULL);
 		break;
 	case XINE_EVENT_UI_MESSAGE:
 		xine_event_message (bvw, (xine_ui_message_data_t *)event->data);

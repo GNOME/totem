@@ -1,3 +1,13 @@
+2003-06-27  Bastien Nocera  <hadess@hadess.net>
+
+	* README: upd
+	* src/bacon-video-widget-xine.c: (xine_event_message),
+	(xine_event): change the message when a destination doesn't resolve,
+	implement reference MRLs as close/open calls
+	* src/gtk-playlist.c: (gtk_playlist_add_m3u): patch from Ofer Achler
+	to allow Totem to read Winamp m3u files with SMB locations
+	(Closes: #110129)
+
 2003-06-25  Bastien Nocera  <hadess@hadess.net>
 
 	* README: upd

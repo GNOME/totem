@@ -1327,6 +1327,7 @@ gtk_playlist_add_m3u (GtkPlaylist *playlist, const char *mrl, gpointer data)
 	gboolean retval = FALSE;
 	char *contents, **lines;
 	int size, i;
+	char *split_char;
 
 	if (my_eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
@@ -1334,12 +1335,18 @@ gtk_playlist_add_m3u (GtkPlaylist *playlist, const char *mrl, gpointer data)
 	contents = g_realloc (contents, size + 1);
 	contents[size] = '\0';
 
-	lines = g_strsplit (contents, "\n", 0);
+	/* figure out whether we're a unix m3u or dos m3u */
+	if ( strstr(contents,"\x0d") == NULL )
+                split_char = "\n";
+	else
+       	        split_char = "\x0d\n";
+
+	lines = g_strsplit (contents, split_char, 0);
 	g_free (contents);
 
 	for (i = 0; lines[i] != NULL; i++)
 	{
-		/* Either it's a URI, or it has a proper path */
+		/* Either it's a URI, or it has a proper path ... */
 		if (strstr(lines[i], "://") != NULL
 				|| lines[i][0] == G_DIR_SEPARATOR)
 		{
@@ -1349,6 +1356,24 @@ gtk_playlist_add_m3u (GtkPlaylist *playlist, const char *mrl, gpointer data)
 						lines[i], NULL) == TRUE)
 				retval = TRUE;
 		}
+                else
+	     	/* ... Or it's in the windows smb form (\\machine\share\filename) */
+	       	/* Note drive names (C:\ D:\ etc) are unhandled (unknown base for 
+	       	/* drive letters) */
+		if (lines[i][1] == '\\' && lines[i][0] == '\\')
+		{
+		        char *tmpmrl, **tmplist;
+
+			lines[i] = g_strdelimit (lines[i], "\\", '/');
+			tmpmrl = g_strjoin (NULL, "smb:", lines[i], NULL);
+
+			if (gtk_playlist_add_one_mrl
+			    (playlist, tmpmrl, NULL) == TRUE)
+				retval = TRUE;
+
+			g_free (tmpmrl);
+		}
+
 	}
 
 	g_strfreev (lines);
