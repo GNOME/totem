@@ -709,6 +709,11 @@ bacon_video_widget_play (BaconVideoWidget * bvw,
       seek_time = (gint64) (length_nanos * pos / 65535);
       gst_play_seek_to_time (bvw->priv->play, seek_time);
     }
+  else if (start_time)
+    {
+      seek_time = (gint64) (start_time * GST_MSECOND);
+      gst_play_seek_to_time (bvw->priv->play, seek_time);
+    }
   else
     {
       gst_play_set_state (bvw->priv->play, GST_STATE_PLAYING);
