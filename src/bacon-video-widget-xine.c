@@ -149,6 +149,7 @@ struct BaconVideoWidgetPrivate {
 	gboolean can_dvd, can_vcd, can_cdda;
 	gboolean logo_mode;
 	guint tick_id;
+	gboolean have_xrandr;
 	gboolean auto_resize;
 	int volume;
 	TvOutType tvout;
@@ -514,7 +515,8 @@ frame_output_cb (void *bvw_gen,
 			g_idle_add ((GSourceFunc)
 					bacon_video_widget_idle_signal, bvw);
 		} else if (bvw->priv->auto_resize != FALSE
-				&& bvw->priv->fullscreen_mode == TRUE) {
+				&& bvw->priv->have_xrandr != FALSE
+				&& bvw->priv->fullscreen_mode != FALSE) {
 			bacon_resize (video_height, video_width);
 		}
 	}
@@ -1044,7 +1046,7 @@ bacon_video_widget_realize (GtkWidget *widget)
 				&bvw->priv->ao_driver, &bvw->priv->vo_driver);
 	}
 
-	bacon_resize_init ();
+	bvw->priv->have_xrandr = bacon_resize_init ();
 	bvw->priv->stream = xine_stream_new (bvw->priv->xine,
 			bvw->priv->ao_driver, bvw->priv->vo_driver);
 	setup_config_stream (bvw);
@@ -2072,6 +2074,11 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 	if (bvw->priv->auto_resize == FALSE)
 		return;
 
+	bvw->priv->fullscreen_mode = fullscreen;
+
+	if (bvw->priv->have_xrandr == FALSE)
+		return;
+
 	if (fullscreen == FALSE)
 	{
 		bacon_restore (bvw->priv->screenid);
@@ -2080,7 +2087,6 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 		bacon_resize (bvw->priv->video_height,
 				bvw->priv->video_width);
 	} 
-	bvw->priv->fullscreen_mode = fullscreen;
 }
 
 void

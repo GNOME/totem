@@ -1,3 +1,10 @@
+2003-10-14  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-xine.c: (frame_output_cb),
+	(bacon_video_widget_realize), (bacon_video_widget_set_fullscreen):
+	take into account the return value from bacon_resize_init before
+	calling bacon_resize itself
+
 2003-10-13  Bastien Nocera  <hadess@hadess.net>
 
 	* README: upd
