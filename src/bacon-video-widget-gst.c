@@ -804,6 +804,7 @@ static void
 state_change (GstElement *play, GstElementState old_state,
 	      GstElementState new_state, BaconVideoWidget *bvw)
 {
+g_print ("From state %d to state %d\n", old_state, new_state);
   if (old_state == GST_STATE_PLAYING) {
     if (bvw->priv->update_id != 0) {
       g_source_remove (bvw->priv->update_id);
@@ -834,17 +835,19 @@ state_change (GstElement *play, GstElementState old_state,
       if (strstr (val->value_name, "AUDIO")) {
         bvw->priv->media_has_audio = TRUE;
       } else if (strstr (val->value_name, "VIDEO")) {
-        GstPad *pad;
+        GstPad *pad = NULL;
 
         g_object_get (info, "object", &pad, NULL);
-        g_assert (GST_IS_PAD (pad));
+        if (pad != NULL && GST_PAD_REALIZE (pad) != NULL) {
+          g_assert (GST_IS_PAD (pad));
 
-        /* handle explicit caps as well - they're set later */
-        if (GST_PAD_CAPS (pad))
-          caps_set (G_OBJECT (pad), NULL, bvw);
-        else
-          g_signal_connect (pad, "notify::caps",
-              G_CALLBACK (caps_set), bvw);
+          /* handle explicit caps as well - they're set later */
+          if (GST_PAD_REALIZE (pad)->link != NULL && GST_PAD_CAPS (pad))
+            caps_set (G_OBJECT (pad), NULL, bvw);
+          else
+            g_signal_connect (pad, "notify::caps",
+                G_CALLBACK (caps_set), bvw);
+        }
 
         bvw->priv->media_has_video = TRUE;
       }
@@ -864,6 +867,7 @@ state_change (GstElement *play, GstElementState old_state,
     bvw->priv->video_width = 0;
     bvw->priv->video_height = 0;
   }
+g_print ("done\n");
 }
 
 static void
