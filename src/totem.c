@@ -765,6 +765,11 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		widget = glade_xml_get_widget (totem->xml, "tcw_volume_hbox");
 		gtk_widget_set_sensitive (widget, FALSE);
 
+		/* Take a screenshot */
+		widget = glade_xml_get_widget (totem->xml,
+				"tmw_take_screenshot_menu_item");
+		gtk_widget_set_sensitive (widget, FALSE);
+
 		/* Set the logo */
 		totem->mrl = g_strdup(LOGO_PATH);
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
@@ -803,6 +808,11 @@ try_open_again:
 		gtk_widget_set_sensitive (widget, caps);
 		widget = glade_xml_get_widget (totem->xml, "tcw_volume_hbox");
 		gtk_widget_set_sensitive (widget, caps);
+
+		/* Take a screenshot */
+		widget = glade_xml_get_widget (totem->xml,
+				"tmw_take_screenshot_menu_item");
+		gtk_widget_set_sensitive (widget, retval);
 
 		/* Set the playlist */
 		totem_playlist_set_playing (totem->playlist, retval);
