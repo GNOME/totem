@@ -31,7 +31,6 @@
 #include <X11/Xlib.h>
 #include <X11/extensions/XShm.h>
 #include <X11/keysym.h>
-#include <X11/cursorfont.h>
 /* gtk+/gnome */
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
@@ -121,8 +120,9 @@ struct GtkXinePrivate {
 	/* fullscreen stuff */
 	gboolean fullscreen_mode;
 	int fullscreen_width, fullscreen_height;
-	Window fullscreen_window, toplevel;
-	Cursor no_cursor;
+	Window toplevel;
+	GdkWindow *fullscreen_window;
+	//Window fullscreen_window, toplevel;
 	GtkWidget *invisible;
 	gboolean cursor_shown;
 };
@@ -347,9 +347,8 @@ load_video_out_driver (GtkXine *gtx)
 	res_v = gdk_screen_width () * 1000 / gdk_screen_width_mm ();
 	vis.display_ratio = res_h / res_v;
 
-	if (fabs (vis.display_ratio - 1.0) < 0.01) {
+	if (fabs (vis.display_ratio - 1.0) < 0.01)
 		vis.display_ratio = 1.0;
-	}
 
 	vis.dest_size_cb = dest_size_cb;
 	vis.frame_output_cb = frame_output_cb;
@@ -365,21 +364,22 @@ load_video_out_driver (GtkXine *gtx)
 						"video driver to use",
 						NULL, NULL, NULL);
 
-	if (!strcmp (video_driver_id, "auto")) {
+	if (strcmp (video_driver_id, "auto") == 0)
+	{
+		vo_driver = xine_load_video_output_plugin (gtx->priv->config,
+				video_driver_id,
+				VISUAL_TYPE_X11,
+				(void *) &vis);
 
-		vo_driver =
-		    xine_load_video_output_plugin (gtx->priv->config,
-						   video_driver_id,
-						   VISUAL_TYPE_X11,
-						   (void *) &vis);
-		if (vo_driver) {
+		if (vo_driver != NULL)
+		{
 			g_strfreev (driver_ids);
 			return vo_driver;
 		}
 	}
 
 	i = 0;
-	while (driver_ids[i])
+	while (driver_ids[i] != NULL)
 	{
 		video_driver_id = driver_ids[i];
 
@@ -406,14 +406,16 @@ static ao_driver_t *
 load_audio_out_driver (GtkXine * gtx, char *audio_driver_id)
 {
 	ao_driver_t *ao_driver = NULL;
-	char **driver_ids = xine_list_audio_output_plugins ();
+	char **driver_ids;
 	int i = 0;
 
-	if (strcmp (audio_driver_id, "auto"))
+	if (strcmp (audio_driver_id, "auto") == 0)
 		return xine_load_audio_output_plugin (gtx->priv->config,
 						      audio_driver_id);
 
-	while (driver_ids[i])
+	driver_ids = xine_list_audio_output_plugins ();
+
+	while (driver_ids[i] != NULL)
 	{
 		audio_driver_id = driver_ids[i];
 
@@ -429,11 +431,13 @@ load_audio_out_driver (GtkXine * gtx, char *audio_driver_id)
 							  "audio.driver",
 							  audio_driver_id);
 
+			g_strfreev (driver_ids);
 			return ao_driver;
 		}
 		i++;
 	}
 
+	g_strfreev (driver_ids);
 	return ao_driver;
 }
 
@@ -586,7 +590,8 @@ gtk_xine_realize (GtkWidget * widget)
 {
 	GtkXine *gtx;
 	XGCValues values;
-	Pixmap bm_no;
+	GdkPixmap *bm_no;
+	GdkColor fg, bg;
 	char *configfile;
 
 	g_return_if_fail (widget != NULL);
@@ -611,8 +616,7 @@ gtk_xine_realize (GtkWidget * widget)
 	gtx->priv->fullscreen_width = gdk_screen_width ();
 	gtx->priv->fullscreen_height = gdk_screen_height ();
 
-	gtx->priv->toplevel =
-	    GDK_WINDOW_XWINDOW (gdk_window_get_toplevel
+	gtx->priv->toplevel = GDK_WINDOW_XWINDOW (gdk_window_get_toplevel
 				(gtk_widget_get_parent_window (widget)));
 
 	/* track configure events of toplevel window */
@@ -643,7 +647,8 @@ gtk_xine_realize (GtkWidget * widget)
 
 	gtx->priv->screen = DefaultScreen (gtx->priv->display);
 
-	if (XShmQueryExtension (gtx->priv->display) == True) {
+	if (XShmQueryExtension (gtx->priv->display) == True)
+	{
 		gtx->priv->completion_event =
 		    XShmGetEventBase (gtx->priv->display) + ShmCompletion;
 	} else {
@@ -688,15 +693,6 @@ gtk_xine_realize (GtkWidget * widget)
 		       (GCForeground | GCBackground), &values);
 
 	XUnlockDisplay (gtx->priv->display);
-
-	/* create mouse cursors */
-	bm_no = XCreateBitmapFromData (gtx->priv->display,
-				       gtx->priv->video_window,
-				       bm_no_data, 8, 8);
-	gtx->priv->no_cursor =
-	    XCreatePixmapCursor (gtx->priv->display, bm_no, bm_no,
-				 (XColor *) & BLACK_PIXEL,
-				 (XColor *) & BLACK_PIXEL, 0, 0);
 
 	/* Setup xine events and codec reporting */
 	xine_register_event_listener (gtx->priv->xine, xine_event,
@@ -1087,13 +1083,8 @@ motion_notify_event_cb (GtkWidget * widget, GdkEventMotion * event,
 }
 
 void
-gtk_xine_set_fullscreen (GtkXine * gtx, gboolean fullscreen)
+gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 {
-	XSizeHints hint;
-	Atom prop;
-	XEvent xev;
-	GdkWindow *win;
-
 	g_return_if_fail (gtx != NULL);
 	g_return_if_fail (GTK_IS_XINE (gtx));
 	g_return_if_fail (gtx->priv->xine != NULL);
@@ -1107,78 +1098,61 @@ gtk_xine_set_fullscreen (GtkXine * gtx, gboolean fullscreen)
 
 	if (gtx->priv->fullscreen_mode)
 	{
-		hint.x = 0;
-		hint.y = 0;
-		hint.width = gtx->priv->fullscreen_width;
-		hint.height = gtx->priv->fullscreen_height;
+		GdkWindowAttr *attr;
 
-		gtx->priv->fullscreen_window =
-		    XCreateSimpleWindow (gtx->priv->display,
-				    GDK_ROOT_WINDOW (),
-				    0, 0,
-				    gtx->priv->fullscreen_width,
-				    gtx->priv->fullscreen_height, 1,
-				    BLACK_PIXEL, BLACK_PIXEL);
+		attr = g_new0 (GdkWindowAttr, 1);
+		attr->title = DEFAULT_TITLE;
+		attr->event_mask = GDK_STRUCTURE_MASK | GDK_EXPOSURE_MASK
+			| GDK_FOCUS_CHANGE_MASK;
+		attr->x = 0;
+		attr->y = 0;
+		attr->width = gtx->priv->fullscreen_width;
+		attr->height = gtx->priv->fullscreen_height;
+		attr->wclass = GDK_INPUT_OUTPUT;
+		attr->window_type = GDK_WINDOW_TOPLEVEL;
 
-		hint.win_gravity = StaticGravity;
-		hint.flags = PPosition | PSize | PWinGravity;
+		gtx->priv->fullscreen_window = gdk_window_new
+			(gdk_get_default_root_window (), attr,
+			 GDK_WA_TITLE | GDK_WA_X | GDK_WA_Y);
 
-		XSetStandardProperties (gtx->priv->display,
-					gtx->priv->fullscreen_window,
-					DEFAULT_TITLE, DEFAULT_TITLE, None,
-					NULL, 0, 0);
-
-		XSetWMNormalHints (gtx->priv->display,
-				   gtx->priv->fullscreen_window, &hint);
-
-		XSelectInput (gtx->priv->display,
-			      gtx->priv->fullscreen_window,
-			      StructureNotifyMask | ExposureMask |
-			      FocusChangeMask);
-
-		xwindow_set_fullscreen (gtx->priv->display,
-				gtx->priv->fullscreen_window);
+		gdk_window_set_fullscreen (gtx->priv->fullscreen_window);
 
 		/* Map window. */
-		XMapRaised (gtx->priv->display,
-			    gtx->priv->fullscreen_window);
+		gdk_window_show (gtx->priv->fullscreen_window);
+		gdk_window_raise (gtx->priv->fullscreen_window);
 
-		XFlush (gtx->priv->display);
-
-		/* Wait for map. */
-		do {
-			XMaskEvent (gtx->priv->display,
-				    StructureNotifyMask, &xev);
-		} while (xev.type != MapNotify
-			 || xev.xmap.event != gtx->priv->fullscreen_window);
-
-		XSetInputFocus (gtx->priv->display,
+/*FIXME		XSetInputFocus (gtx->priv->display,
 				gtx->priv->toplevel, RevertToNone,
-				CurrentTime);
-		XMoveWindow (gtx->priv->display,
-			     gtx->priv->fullscreen_window, 0, 0);
+				CurrentTime);*/
+
+		/* Wait for map */
+		while (gdk_window_is_visible
+				(gtx->priv->fullscreen_window) == FALSE)
+			usleep (5000);
+
+		gdk_window_move (gtx->priv->fullscreen_window, 0, 0);
 
 		gtx->priv->vo_driver->gui_data_exchange
 			(gtx->priv->vo_driver,
 			 GUI_DATA_EX_DRAWABLE_CHANGED,
-			 (void *) gtx->priv->fullscreen_window);
+			 (void*) GDK_WINDOW_XID (gtx->priv->fullscreen_window));
 
 		/* switch off mouse cursor */
 		gtk_xine_set_show_cursor (gtx, FALSE);
 
 		/* setup the mouse motion stuff */
-		win = gdk_window_foreign_new (gtx->priv->fullscreen_window);
 		gtx->priv->invisible = gtk_invisible_new ();
 		gtk_widget_show (gtx->priv->invisible);
-		gdk_window_set_user_data (win,
+		gdk_window_set_user_data (gtx->priv->fullscreen_window,
 				gtx->priv->invisible);
-		gdk_window_set_events (win,
+		gdk_window_set_events (gtx->priv->fullscreen_window,
 				GDK_POINTER_MOTION_MASK);
 
 		g_signal_connect (GTK_OBJECT (gtx->priv->invisible),
 				"motion-notify-event",
 				GTK_SIGNAL_FUNC (motion_notify_event_cb), gtx);
 
+		/* Disable the screen saver */
 		scrsaver_disable (gtx->priv->display);
 	} else {
 		gtx->priv->vo_driver->gui_data_exchange
@@ -1186,8 +1160,8 @@ gtk_xine_set_fullscreen (GtkXine * gtx, gboolean fullscreen)
 			 GUI_DATA_EX_DRAWABLE_CHANGED,
 			 (void *) gtx->priv->video_window);
 
-		XDestroyWindow (gtx->priv->display,
-				gtx->priv->fullscreen_window);
+		gdk_window_destroy (gtx->priv->fullscreen_window);
+		gtk_widget_destroy (gtx->priv->invisible);
 		gtx->priv->invisible = NULL;
 
 		scrsaver_enable (gtx->priv->display);
@@ -1277,19 +1251,13 @@ gtk_xine_set_show_cursor (GtkXine *gtx, gboolean show_cursor)
 	if (gtk_xine_is_fullscreen (gtx) == FALSE)
 		return;
 
-	gdk_error_trap_push ();
 	if (show_cursor == FALSE)
 	{
-		XDefineCursor (gtx->priv->display,
-				gtx->priv->fullscreen_window,
-				gtx->priv->no_cursor);
+		eel_gdk_window_set_invisible_cursor
+			(gtx->priv->fullscreen_window);
 	} else {
-		XUndefineCursor (gtx->priv->display,
-				gtx->priv->fullscreen_window);
+		gdk_window_set_cursor (gtx->priv->fullscreen_window, NULL);
 	}
-	XFlush (gtx->priv->display);
-	gdk_flush ();
-	gdk_error_trap_pop ();
 
 	gtx->priv->cursor_shown = show_cursor;
 }
