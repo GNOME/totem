@@ -199,6 +199,9 @@ totem_statusbar_update_time (TotemStatusbar *statusbar)
 {
   char *time, *length, *label;
 
+  if (statusbar->pushed == 1)
+    return;
+
   time = time_to_string (statusbar->time);
 
   if (statusbar->length < 0) {
@@ -231,6 +234,52 @@ totem_statusbar_set_time (TotemStatusbar *statusbar, gint time)
   statusbar->time = time;
 
   totem_statusbar_update_time (statusbar);
+}
+
+static gboolean
+totem_statusbar_timeout_pop (TotemStatusbar *statusbar)
+{
+  gtk_label_set_text (GTK_LABEL (statusbar->label), statusbar->saved_label);
+  g_free (statusbar->saved_label);
+  statusbar->saved_label = NULL;
+  statusbar->pushed = 0;
+  totem_statusbar_update_time (statusbar);
+
+  return FALSE;
+}
+
+void
+totem_statusbar_push (TotemStatusbar *statusbar, guint percentage)
+{
+  char *label;
+  statusbar->pushed = 1;
+
+  if (statusbar->timeout != 0)
+  {
+    g_source_remove (statusbar->timeout);
+  }
+
+  if (statusbar->saved_label == NULL)
+  {
+    statusbar->saved_label = g_strdup
+	    (gtk_label_get_text (GTK_LABEL (statusbar->label)));
+  }
+
+  gtk_label_set_text (GTK_LABEL (statusbar->label), _("Buffering"));
+
+  /* eg: 75 % */
+  label = g_strdup_printf (_("%d %%"), percentage);
+  gtk_label_set_text (GTK_LABEL (statusbar->time_label), label);
+  g_free (label);
+
+  statusbar->timeout = g_timeout_add (3000,
+		  (GSourceFunc) totem_statusbar_timeout_pop, statusbar);
+}
+
+void
+totem_statusbar_pop (TotemStatusbar *statusbar)
+{
+  statusbar->pushed = 0;
 }
 
 void

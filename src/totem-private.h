@@ -68,10 +68,6 @@ struct Totem {
 	/* exit fullscreen Popup */
 	GtkWidget *exit_popup;
 
-	/* buffering dialog */
-	GtkWidget *buffer_dialog;
-	GtkWidget *buffer_label;
-
 	/* controls management */
 	ControlsVisibility controls_visibility;
 

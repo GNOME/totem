@@ -189,13 +189,6 @@ totem_action_error (char *title, char *reason, Totem *totem)
 			(gtk_widget_destroy), error_dialog);
 	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
 
-	if (totem->buffer_dialog != NULL)
-	{
-		gtk_widget_destroy (totem->buffer_dialog);
-		totem->buffer_dialog = NULL;
-		totem->buffer_label = NULL;
-	}
-
 	gtk_widget_show (error_dialog);
 }
 
@@ -1237,22 +1230,6 @@ on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 	g_free (name);
 }
 
-static int
-on_buffering_cancel_event (GtkWidget *dialog, int response, Totem *totem)
-{
-	bacon_video_widget_close (totem->bvw);
-	play_pause_set_label (totem, STATE_PAUSED);
-
-	gtk_widget_destroy (dialog);
-	totem->buffer_dialog = NULL;
-	totem->buffer_label = NULL;
-
-	g_free (totem->mrl);
-	totem->mrl = NULL;
-
-	return TRUE;
-}
-
 static void
 on_error_event (BaconVideoWidget *bvw, char *message,
                 gboolean playback_stopped, Totem *totem)
@@ -1271,60 +1248,7 @@ on_speed_warning_event (BaconVideoWidget *bvw, Totem *totem)
 static void
 on_buffering_event (BaconVideoWidget *bvw, int percentage, Totem *totem)
 {
-	char *msg;
-
-	if (percentage > 0 && percentage < 100 && totem->buffer_dialog == NULL)
-	{
-		GtkWidget *image, *hbox;
-
-		totem->buffer_dialog = gtk_dialog_new_with_buttons (_("Buffering"),
-				GTK_WINDOW (totem->win),
-				GTK_DIALOG_DESTROY_WITH_PARENT,
-				GTK_STOCK_CANCEL,
-				GTK_RESPONSE_REJECT,
-				NULL);
-		gtk_dialog_set_has_separator (GTK_DIALOG(totem->buffer_dialog),
-				FALSE);
-		gtk_window_set_modal (GTK_WINDOW (totem->buffer_dialog), TRUE);
-		gtk_container_set_border_width
-			(GTK_CONTAINER (GTK_DIALOG(totem->buffer_dialog)->vbox),
-			 8);
-		hbox = gtk_hbox_new (FALSE, 12);
-		gtk_container_add
-			(GTK_CONTAINER (GTK_DIALOG(totem->buffer_dialog)->vbox),
-			 hbox);
-
-		image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_INFO,
-				GTK_ICON_SIZE_DIALOG);
-		gtk_container_add (GTK_CONTAINER (hbox), image);
-
-		msg = g_strdup_printf (_("Buffering: %d%%"), percentage);
-		totem->buffer_label = gtk_label_new (msg);
-		g_free (msg);
-		gtk_container_add (GTK_CONTAINER(hbox), totem->buffer_label);
-
-		g_signal_connect (G_OBJECT (totem->buffer_dialog),
-				"response",
-				G_CALLBACK (on_buffering_cancel_event),
-				totem);
-		g_signal_connect (G_OBJECT (totem->buffer_dialog),
-				"delete-event",
-				G_CALLBACK (on_buffering_cancel_event),
-				totem);
-
-		gtk_widget_show_all (totem->buffer_dialog);
-		long_action ();
-	} else if (percentage == 100) {
-		if (totem->buffer_dialog != NULL)
-			gtk_widget_destroy (totem->buffer_dialog);
-		totem->buffer_dialog = NULL;
-		totem->buffer_label = NULL;
-	} else if (totem->buffer_label != NULL) {
-		msg = g_strdup_printf (_("Buffering: %d%%"), percentage);
-		gtk_label_set_text (GTK_LABEL (totem->buffer_label), msg);
-		g_free (msg);
-		long_action ();
-	}
+	totem_statusbar_push (TOTEM_STATUSBAR (totem->statusbar), percentage);
 }
 
 static void

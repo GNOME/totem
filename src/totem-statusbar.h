@@ -56,10 +56,13 @@ struct _TotemStatusbar
 
   gint time;
   gint length;
+  char *saved_label;
+  guint timeout;
 
   GdkWindow *grip_window;
   
   guint has_resize_grip : 1;
+  guint pushed : 1;
 };
 
 struct _TotemStatusbarClass
@@ -78,6 +81,9 @@ void       totem_statusbar_set_time_and_length	(TotemStatusbar *statusbar,
 
 void       totem_statusbar_set_text             (TotemStatusbar *statusbar,
 						 const char *label);
+void	   totem_statusbar_push			(TotemStatusbar *statusbar,
+						 guint percentage);
+void       totem_statusbar_pop			(TotemStatusbar *statusbar);
 
 void     totem_statusbar_set_has_resize_grip (TotemStatusbar *statusbar,
 					    gboolean      setting);
