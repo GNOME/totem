@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-31 15:07+0100\n"
-"PO-Revision-Date: 2004-01-31 15:08+0100\n"
+"POT-Creation-Date: 2004-02-07 14:53+0100\n"
+"PO-Revision-Date: 2004-02-07 14:53+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -103,7 +103,7 @@ msgstr "Bilderate:"
 msgid "N/A"
 msgstr "I/T"
 
-#: data/properties.glade.h:16 src/totem.c:2134
+#: data/properties.glade.h:16 src/totem.c:2149
 msgid "Properties"
 msgstr "Egenskaper"
 
@@ -151,7 +151,7 @@ msgstr "Spill av filmer og sanger"
 
 #. Title
 #: data/totem.desktop.in.h:2 data/totem.glade.h:97 src/totem.c:739
-#: src/totem.c:3677
+#: src/totem.c:3693
 msgid "Totem Movie Player"
 msgstr "Totem filmavspiller"
 
@@ -1045,12 +1045,12 @@ msgstr "Ingen video å fange"
 msgid "Video codec is not handled"
 msgstr "Videotypen er ikke støttet"
 
-#: src/cd-drive.c:404
+#: src/cd-drive.c:554
 #, c-format
 msgid "Unnamed SCSI CD-ROM (%s)"
 msgstr "SCSI CD-ROM uten navn (%s)"
 
-#: src/cd-drive.c:976
+#: src/cd-drive.c:1132
 msgid "File image"
 msgstr "CD-bilde"
 
@@ -1097,7 +1097,7 @@ msgstr "Husk dette passordet"
 msgid "Could not save the playlist"
 msgstr "Kunne ikke lagre spillelisten"
 
-#: src/totem-playlist.c:475 src/totem.c:1553
+#: src/totem-playlist.c:475 src/totem.c:1571
 msgid "Select files"
 msgstr "Velg filer"
 
@@ -1188,12 +1188,16 @@ msgstr "0:00 / 0:00"
 msgid "%s (Streaming)"
 msgstr "%s (streaming)"
 
-#: src/totem-statusbar.c:274
+#: src/totem-statusbar.c:216
+msgid "Seek to"
+msgstr "Søk til"
+
+#: src/totem-statusbar.c:278
 msgid "Buffering"
 msgstr "Henter data"
 
 #. eg: 75 %
-#: src/totem-statusbar.c:277
+#: src/totem-statusbar.c:281
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
@@ -1307,11 +1311,11 @@ msgstr ""
 msgid "%s - Totem Movie Player"
 msgstr "%s - Totem filmavspiller"
 
-#: src/totem.c:728 src/totem.c:3518
+#: src/totem.c:728 src/totem.c:3535
 msgid "No file"
 msgstr "Ingen fil"
 
-#: src/totem.c:764 src/totem.c:1906
+#: src/totem.c:764 src/totem.c:1924
 msgid "Totem"
 msgstr "Totem"
 
@@ -1319,104 +1323,104 @@ msgstr "Totem"
 msgid "An error occured"
 msgstr "En feil oppsto"
 
-#: src/totem.c:1618 src/totem.c:1626
+#: src/totem.c:1636 src/totem.c:1644
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "Kunne ikke laste grensesnitt for 'Åpne lokasjon'."
 
-#: src/totem.c:1618 src/totem.c:1626 src/totem.c:3708 src/totem.c:3733
-#: src/totem.c:3756
+#: src/totem.c:1636 src/totem.c:1644 src/totem.c:3724 src/totem.c:3749
+#: src/totem.c:3772
 msgid "Make sure that Totem is properly installed."
 msgstr "Sjekk at Totem er korrekt installert."
 
-#: src/totem.c:1859
+#: src/totem.c:1877
 msgid "Totem could not display the help contents."
 msgstr "Totem kunne ikke vise hjelpinnhold."
 
-#: src/totem.c:1877 src/vanity.c:219
+#: src/totem.c:1895 src/vanity.c:219
 msgid "translator_credits"
 msgstr "Kjartan Maraas <kmaraas@gnome.org>"
 
-#: src/totem.c:1903
+#: src/totem.c:1921
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Filmavspiller bruker %s"
 
-#: src/totem.c:1992 src/totem.c:2003 src/vanity.c:307 src/vanity.c:318
+#: src/totem.c:2007 src/totem.c:2018 src/vanity.c:305 src/vanity.c:316
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Skjermdump%d.png"
 
-#: src/totem.c:2054 src/totem.c:2062
+#: src/totem.c:2069 src/totem.c:2077
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem kunne ikke ta et skjermdump av denne filmen."
 
-#: src/totem.c:2062
+#: src/totem.c:2077
 msgid "Please file a bug, this isn't supposed to happen"
 msgstr "Vær snill å rapportere dette da det ikke skal skje"
 
-#: src/totem.c:2090
+#: src/totem.c:2105
 #, c-format
 msgid "File '%s' already exists."
 msgstr "Filen «%s» eksisterer allerede."
 
-#: src/totem.c:2091
+#: src/totem.c:2106
 msgid "The screenshot was not saved"
 msgstr "Skjermdumpet ble ikke lagret."
 
-#: src/totem.c:2101
+#: src/totem.c:2116
 msgid "There was an error saving the screenshot."
 msgstr "Det oppsto en feil under lagring av skjermdump."
 
-#: src/totem.c:2124
+#: src/totem.c:2139
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem kunne ikke laste vindu for egenskaper for filmen."
 
-#: src/totem.c:2124
+#: src/totem.c:2139
 msgid "Make sure that Totem is correctly installed."
 msgstr "Sjekk at Totem er korrekt installert."
 
-#: src/totem.c:2210
+#: src/totem.c:2225
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem kunne ikke søke i «%s»."
 
-#: src/totem.c:2965 src/totem.c:2987
+#: src/totem.c:2980 src/totem.c:3002
 msgid "None"
 msgstr "Ingen"
 
-#: src/totem.c:2969 src/totem.c:2990
+#: src/totem.c:2984 src/totem.c:3005
 msgid "Auto"
 msgstr "Auto"
 
-#: src/totem.c:3423
+#: src/totem.c:3440
 msgid "Totem could not startup."
 msgstr "Totem kunne ikke starte opp."
 
-#: src/totem.c:3423
+#: src/totem.c:3440
 msgid "No reason."
 msgstr "Ingen årsak."
 
-#: src/totem.c:3682
+#: src/totem.c:3698
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Kunne ikke initiere trådsikre biblioteker."
 
-#: src/totem.c:3682
+#: src/totem.c:3698
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Sjekk systeminstallasjonen. Totem avslutter nå."
 
-#: src/totem.c:3699
+#: src/totem.c:3715
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem kunne ikke initiere konfigurasjonsmotoren."
 
-#: src/totem.c:3699
+#: src/totem.c:3715
 msgid "Make sure that GNOME is properly installed."
 msgstr "Sjekk at GNOME er korrekt installert."
 
-#: src/totem.c:3708 src/totem.c:3733
+#: src/totem.c:3724 src/totem.c:3749
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "Kunne ikke laste hovedgrensesnittet (totem.glade)."
 
-#: src/totem.c:3756
+#: src/totem.c:3772
 msgid "Couldn't load the interface for the playlist."
 msgstr "Kunne ikke laste grensesnitt for spillelisten."
 
@@ -1429,7 +1433,7 @@ msgstr "Feilsøkingsmodus aktivert"
 msgid "Webcam utility using %s"
 msgstr "Webkameraverktøy bruker %s"
 
-#: src/vanity.c:550
+#: src/vanity.c:548
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1438,11 +1442,11 @@ msgstr ""
 "Vanity kunne ikke starte opp:\n"
 "%s"
 
-#: src/vanity.c:551
+#: src/vanity.c:549
 msgid "No reason"
 msgstr "Ingen årsak"
 
-#: src/vanity.c:589
+#: src/vanity.c:587
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1451,7 +1455,7 @@ msgstr ""
 "Vanity kunne ikke kontakte webkameraet.\n"
 "Årsak: %s."
 
-#: src/vanity.c:605
+#: src/vanity.c:603
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1460,11 +1464,11 @@ msgstr ""
 "Totem kunne ikke spille av video fra webkameraet.\n"
 "Årsak: %s"
 
-#: src/vanity.c:641
+#: src/vanity.c:639
 msgid "Vanity Webcam Utility"
 msgstr "Vanity webkameraverktøy"
 
-#: src/vanity.c:646
+#: src/vanity.c:644
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1472,7 +1476,7 @@ msgstr ""
 "Kunne ikke initiere trådsikre biblioteker.\n"
 "Sjekk systeminstallasjonen. Vanity avslutter nå."
 
-#: src/vanity.c:668
+#: src/vanity.c:666
 #, c-format
 msgid ""
 "Vanity couln't initialise the \n"
@@ -1483,7 +1487,7 @@ msgstr ""
 "konfigurasjonsmotoren:\n"
 "%s"
 
-#: src/vanity.c:682 src/vanity.c:697
+#: src/vanity.c:680 src/vanity.c:695
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
