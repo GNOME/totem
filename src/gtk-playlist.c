@@ -900,12 +900,8 @@ gtk_playlist_add_m3u (GtkPlaylist *playlist, const char *mrl)
 	if (eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
 
-	if (strstr (contents, "\n") == NULL)
-	{
-		retval = gtk_playlist_add_one_mrl (playlist, contents, NULL);
-		g_free (contents);
-		return retval;
-	}
+	contents = g_realloc (contents, size + 1);
+	contents[size] = '\0';
 
 	lines = g_strsplit (contents, "\n", 0);
 	g_free (contents);
@@ -936,6 +932,9 @@ gtk_playlist_add_pls (GtkPlaylist *playlist, const char *mrl)
 
 	if (eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
+
+	contents = g_realloc (contents, size + 1);
+	contents[size] = '\0';
 
 	lines = g_strsplit (contents, "\n", 0);
 	g_free (contents);

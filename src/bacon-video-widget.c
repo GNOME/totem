@@ -68,7 +68,8 @@ enum {
 
 /* Enum for none-signal stuff that needs to go through the AsyncQueue */
 enum {
-	RATIO = LAST_SIGNAL
+	RATIO,
+	PROGRESS,
 };
 
 /* Arguments */
@@ -436,10 +437,8 @@ frame_output_cb (void *bvw_gen,
 			if (bvw->priv->auto_resize == TRUE
 					&& bvw->priv->logo_mode == FALSE)
 			{
-				char *chunk;
-
-				chunk = g_malloc (1);
-				g_async_queue_push (bvw->priv->queue, chunk);
+				g_async_queue_push (bvw->priv->queue,
+						GINT_TO_POINTER (RATIO));
 				g_idle_add ((GSourceFunc)
 						bacon_video_widget_idle_signal,
 						bvw);
@@ -850,9 +849,20 @@ bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 		return FALSE;
 
 	TE ();
-	bacon_video_widget_set_scale_ratio (bvw, 0);
-	g_free (i);
-	queue_length = g_async_queue_length (bvw->priv->queue);
+
+	switch (GPOINTER_TO_INT (i))
+	{
+	case RATIO:
+		bacon_video_widget_set_scale_ratio (bvw, 0);
+		queue_length = g_async_queue_length (bvw->priv->queue);
+		break;
+	case PROGRESS:
+		while (gtk_events_pending ())
+			gtk_main_iteration ();
+		//FIXME
+		break;
+	}
+
 	TL ();
 
 	return (queue_length > 0);
@@ -863,6 +873,8 @@ xine_event (void *user_data, const xine_event_t *event)
 {
 	BaconVideoWidget *bvw = (BaconVideoWidget *) user_data;
 	xine_ui_data_t *ui_data;
+	xine_progress_data_t *prg;
+	xine_mrl_reference_data_t *ref;
 
 	switch (event->type)
 	{
@@ -871,10 +883,24 @@ xine_event (void *user_data, const xine_event_t *event)
 				bvw_table_signals[EOS], 0, NULL);
 		break;
 	case XINE_EVENT_UI_SET_TITLE:
-		ui_data = (xine_ui_data_t *) event->data;
+		ui_data = event->data;
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[TITLE_CHANGE],
 				0, ui_data->str);
+		break;
+	case XINE_EVENT_PROGRESS:
+		prg = event->data;
+
+		g_async_queue_push (bvw->priv->queue,
+				GINT_TO_POINTER (PROGRESS));
+		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
+
+		g_message ("pct: %d msg: %s", prg->percent, prg->description);
+		break;
+	case XINE_EVENT_MRL_REFERENCE:
+		ref = event->data;
+
+		g_message ("ref mrl detected: %s", ref->mrl);
 		break;
 	}
 }

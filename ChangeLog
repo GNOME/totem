@@ -1,3 +1,12 @@
+2003-02-26  Bastien Nocera  <hadess@hadess.net>
+
+	* README: updated
+	* src/bacon-video-widget.c: (frame_output_cb),
+	(bacon_video_widget_idle_signal), (xine_event): starting adding
+	support for the progress event and reference MRLs
+	* src/gtk-playlist.c: (gtk_playlist_add_m3u),
+	(gtk_playlist_add_pls): null-terminate the strings we read from eel
+
 ============ Version 0.95.1
 
 2003-02-26  Bastien Nocera  <hadess@hadess.net>
