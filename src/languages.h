@@ -5,9 +5,9 @@ static struct {
 	const char *language;
 } languages[] = {
 	{ " de", "Deutsch" },
-	{ " es", "Espanol" },		/* Espanol */
+	{ " es", "Espa\xC3\xB1ol" },		/* Espanol */
 	{ " en", "English" },
-	{ " fr", "Francais" },		/* Francais */
+	{ " fr", "Fran""\xC3\xA7""ais" },	/* Francais */
 	{ " it", "Italiano" },
 	{ " nl", "Nederlands" },
 	{ NULL, NULL },

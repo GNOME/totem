@@ -880,7 +880,6 @@ bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 	{
 	case RATIO:
 		bacon_video_widget_set_scale_ratio (bvw, 0);
-		queue_length = g_async_queue_length (bvw->priv->queue);
 		break;
 	case PROGRESS:
 		g_message ("%s", data->msg);
@@ -1994,8 +1993,6 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 	gtk_widget_set_size_request (gtk_widget_get_parent (GTK_WIDGET (bvw)),
 			new_w, new_h);
 	gtk_widget_queue_resize (gtk_widget_get_parent (GTK_WIDGET (bvw)));
-	while (gtk_events_pending ())
-		gtk_main_iteration ();
 	gtk_window_set_resizable (toplevel, TRUE);
 }
 

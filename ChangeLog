@@ -1,3 +1,14 @@
+2003-04-01  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget.c: (bacon_video_widget_idle_signal),
+	(bacon_video_widget_set_scale_ratio): upd, removed unneeded call to
+	the main loop
+	* src/languages.h: updated to use the real letters for French and
+	Spanish. It should work.
+	* src/totem.c: (totem_create_full_path), (totem_action_open_files),
+	(process_command_line): make sure that the file paths are full ones,
+	not relative ones, which would end up confusing the playlist
+
 2003-03-31  Bastien Nocera  <hadess@hadess.net>
 
 	* README: upd

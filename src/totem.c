@@ -132,6 +132,27 @@ totem_g_list_deep_free (GList *list)
 	g_list_free (list);
 }
 
+static char*
+totem_create_full_path (const char *path)
+{
+	char *retval, *curdir, *curdir_withslash;
+
+	g_return_val_if_fail (path != NULL, NULL);
+
+	if (strstr (path, "://") != NULL)
+		return g_strdup (path);
+
+	if (path[0] == '/')
+		return g_strdup (path);
+
+	curdir = g_get_current_dir ();
+	curdir_withslash = g_strdup_printf ("%s%s", curdir, G_DIR_SEPARATOR_S);
+	g_free (curdir);
+	retval = gnome_vfs_uri_make_full_from_relative (curdir_withslash, path);        g_free (curdir_withslash);
+
+	return retval;
+}
+
 void
 totem_action_error (char *msg, GtkWindow *parent)
 {
@@ -1063,7 +1084,8 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 	{
 		char *filename, *subtitle;
 
-		filename = g_strdup (list[i]);
+		/* Get the subtitle part out for our tests */
+		filename = totem_create_full_path (list[i]);
 		subtitle = strrchr (filename, '#');
 		if (subtitle != NULL)
 		{
@@ -1071,8 +1093,7 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 			subtitle++;
 		}
 
-		if (g_file_test (filename, G_FILE_TEST_IS_REGULAR
-					| G_FILE_TEST_EXISTS)
+		if (g_file_test (filename, G_FILE_TEST_IS_REGULAR)
 				|| strstr (filename, "://") != NULL
 				|| strncmp (filename, "dvd:", 4) == 0
 				|| strncmp (filename, "vcd:", 4) == 0
@@ -1080,6 +1101,7 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 				|| strncmp (filename, "cd:", 3) == 0)
 		{
 			g_free (filename);
+			filename = totem_create_full_path (list[i]);
 
 			if (cleared == FALSE)
 			{
@@ -1103,16 +1125,13 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 				totem_action_play_media (totem, MEDIA_CDDA);
 				continue;
 			} else if (gtk_playlist_add_mrl (totem->playlist,
-						list[i], NULL) == TRUE)
-                        {
+						filename, NULL) == TRUE)
+			{
                                 char *uri;
                                 EggRecentItem *item;
 
-				if (list[i][0] != G_DIR_SEPARATOR)
-					continue;
-
 				uri = gnome_vfs_get_uri_from_local_path
-					(list[i]);
+					(filename);
 
 				if (uri == NULL) {
 					/* ok, if this fails, then it was
@@ -1129,9 +1148,9 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 
 				g_free (uri);
 			}
-		} else {
-			g_free (filename);
 		}
+
+		g_free (filename);
 	}
 
 	/* ... and reconnect because we're nice people */
@@ -2753,28 +2772,6 @@ totem_message_connection_receive_cb (const char *msg, Totem *totem)
 	g_free (url);
 }
 
-static char*
-create_full_path (const char *path)
-{
-	char *retval, *curdir, *curdir_withslash;
-
-	g_return_val_if_fail (path != NULL, NULL);
-
-	if (strstr (path, "://") != NULL)
-		return g_strdup (path);
-
-	if (path[0] == '/')
-		return g_strdup (path);
-
-	curdir = g_get_current_dir ();
-	curdir_withslash = g_strdup_printf ("%s%s", curdir, G_DIR_SEPARATOR_S);
-	g_free (curdir);
-	retval = gnome_vfs_uri_make_full_from_relative (curdir_withslash, path);
-	g_free (curdir_withslash);
-
-	return retval;
-}
-
 static void
 process_command_line (BaconMessageConnection *conn, int argc, char **argv)
 {
@@ -2832,7 +2829,7 @@ process_command_line (BaconMessageConnection *conn, int argc, char **argv)
 				replace_done == TRUE)
 			command = TOTEM_REMOTE_COMMAND_ENQUEUE;
 
-		full_path = create_full_path (argv[i]);
+		full_path = totem_create_full_path (argv[i]);
 		line = g_strdup_printf ("%03d %s", command, full_path);
 		bacon_message_connection_send (conn, line);
 		g_free (line);
