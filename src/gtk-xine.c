@@ -498,6 +498,27 @@ load_config_from_gconf (GtkXine *gtx)
 	 */
 }
 
+static gboolean
+x_window_is_visible(Display *display, Window window)
+{
+	XWindowAttributes  wattr;
+	Status             status;
+
+	if((display == NULL) || (window == None))
+		return FALSE;
+
+	XLockDisplay (display);
+	status = XGetWindowAttributes(display, window, &wattr);
+	XUnlockDisplay(display);
+
+	if((status != BadDrawable)
+			&& (status != BadWindow)
+			&& (wattr.map_state == IsViewable))
+		return TRUE;
+
+	return FALSE;
+}
+
 static void *
 xine_thread (void *gtx_gen)
 {
@@ -520,12 +541,16 @@ xine_thread (void *gtx_gen)
 				 GUI_DATA_EX_EXPOSE_EVENT, &event);
 			break;
 		case FocusIn:
-			/* happens only in fullscreen mode */
-			XLockDisplay (gtx->priv->display);
+			/* happens only in fullscreen mode
+			 * wait for the window to get visible first
+			 * to avoid BadMatch problems */
+			while (x_window_is_visible (gtx->priv->display,
+						gtx->priv->toplevel) == FALSE)
+				usleep(5000);
+
 			XSetInputFocus (gtx->priv->display,
 					gtx->priv->toplevel, RevertToNone,
 					CurrentTime);
-			XUnlockDisplay (gtx->priv->display);
 			break;
 		}
 
@@ -814,8 +839,10 @@ gtk_xine_unrealize (GtkWidget * widget)
 
 	gtx = GTK_XINE (widget);
 
-	/* save configuration */
-	gtx->priv->config->save (gtx->priv->config);
+	/* We don't need to save the configuration,
+	 * It's overriden in the load by either GConf values or
+	 * hard-coded values
+	 gtx->priv->config->save (gtx->priv->config); */
 
 	/* stop event thread */
 	xine_exit (gtx->priv->xine);
@@ -1401,7 +1428,7 @@ gtk_xine_get_video_property (GtkXine * gtx, gint property)
 }
 #endif
 void
-gtk_xine_toggle_aspect_ratio (GtkXine * gtx)
+gtk_xine_toggle_aspect_ratio (GtkXine *gtx)
 {
 	int tmp;
 
@@ -1414,6 +1441,12 @@ gtk_xine_toggle_aspect_ratio (GtkXine * gtx)
 	gtx->priv->vo_driver->set_property (gtx->priv->vo_driver,
 			VO_PROP_ASPECT_RATIO, tmp + 1);
 }
+
+void
+gtk_xine_set_scale_ratio (GtkXine *gtx, gfloat ratio)
+{
+}
+
 #if 0
 gint
 gtk_xine_get_log_section_count (GtkXine * gtx)

@@ -86,7 +86,8 @@ void gtk_xine_set_video_property       (GtkXine *gtx,
 				        gint property, gint value);
 gint gtk_xine_get_video_property       (GtkXine *gtx, gint property);
 #endif
-void gtk_xine_toggle_aspect_ratio      (GtkXine * gtx);
+void gtk_xine_toggle_aspect_ratio      (GtkXine *gtx);
+void gtk_xine_set_scale_ratio          (GtkXine *gtx, gfloat ratio);
 
 gint gtk_xine_get_position             (GtkXine *gtx);
 gint gtk_xine_get_current_time         (GtkXine *gtx);
