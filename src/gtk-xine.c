@@ -526,7 +526,7 @@ load_audio_out_driver (GtkXine *gtx)
 		return xine_open_audio_driver (gtx->priv->xine, NULL, NULL);
 
 	/* no autoprobe */
-	ao_driver =  xine_open_audio_driver (gtx->priv->xine,
+	ao_driver = xine_open_audio_driver (gtx->priv->xine,
 			audio_driver_id, NULL);
 
 	/* if it failed without autoprobe, probe */
@@ -596,7 +596,7 @@ load_config_from_gconf (GtkXine *gtx)
 }
 
 static gboolean
-video_window_translate_point(GtkXine *gtx, int gui_x, int gui_y,
+video_window_translate_point (GtkXine *gtx, int gui_x, int gui_y,
 		int *video_x, int *video_y)
 {
 	x11_rectangle_t rect;
@@ -1241,10 +1241,7 @@ gtk_xine_play (GtkXine *gtx, guint pos, guint start_time)
 		audio_source = xine_get_audio_source (gtx->priv->stream);
 		if (xine_post_wire_audio_port (audio_source,
 					gtx->priv->ao_driver))
-		{
 			gtx->priv->using_vfx = FALSE;
-			g_message ("not using goom");
-		}
 	} else if (has_video == FALSE && gtx->priv->show_vfx == TRUE
 			&& gtx->priv->using_vfx == FALSE
 			&& gtx->priv->vis != NULL)
@@ -1252,10 +1249,7 @@ gtk_xine_play (GtkXine *gtx, guint pos, guint start_time)
 		audio_source = xine_get_audio_source (gtx->priv->stream);
 		if (xine_post_wire_audio_port (audio_source,
 					gtx->priv->vis->audio_input[0]))
-		{
 			gtx->priv->using_vfx = TRUE;
-			g_message ("using goom");
-		}
 	}
 
 	length = gtk_xine_get_stream_length (gtx);
