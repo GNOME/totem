@@ -1,5 +1,13 @@
 2005-03-27  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-menu.c: (on_recent_file_activate):
+	* src/totem-private.h:
+	* src/totem-session.c: move the totem_signal_(un)block_by_data helpers
+	to totem-private.h, prevent double-open when activating files from
+	the recent-files menu
+
+2005-03-27  Bastien Nocera  <hadess@hadess.net>
+
 	* data/properties.glade:
 	* src/backend/bacon-video-widget-gst.c:
 	(bacon_video_widget_get_metadata_int),

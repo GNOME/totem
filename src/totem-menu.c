@@ -208,9 +208,13 @@ on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
 
 	uri = egg_recent_item_get_uri (item);
 
+	totem_signal_block_by_data (totem->playlist, totem);
+
 	end = totem_playlist_get_last (totem->playlist);
 	playlist_changed = totem_playlist_add_mrl (totem->playlist, uri, NULL);
 	egg_recent_model_add_full (totem->recent_model, item);
+
+	totem_signal_unblock_by_data (totem->playlist, totem);
 
 	if (playlist_changed)
 	{
