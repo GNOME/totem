@@ -175,7 +175,7 @@ time_monitor (gpointer data)
 	g_print ("totem-video-thumbnailer couln't thumbnail file: '%s'\n"
 			"Reason: Took too much time to thumbnail.\n",
 			(const char *) data);
-	exit (1);
+	exit (0);
 }
 
 int main (int argc, char *argv[])
