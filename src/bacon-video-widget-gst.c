@@ -268,11 +268,7 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
 			GST_IS_X_OVERLAY (bvw->priv->xoverlay),
 			FALSE);
 
-  if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED) {
-    window = GDK_WINDOW_XWINDOW (bvw->priv->video_window);
-  } else {
-    window = 0;
-  }
+  window = GDK_WINDOW_XWINDOW (bvw->priv->video_window);
 
   gdk_draw_rectangle (widget->window, widget->style->black_gc, TRUE, 0, 0,
 		      widget->allocation.width, widget->allocation.height);
