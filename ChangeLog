@@ -1,3 +1,15 @@
+2004-06-08  Bastien Nocera  <hadess@hadess.net>
+
+	* README: upd
+	* src/bacon-video-widget-xine.c: (xine_event_message),
+	(xine_error): fix a problem where filenames containing escape codes
+	(for example file:///foo%20bar) could cause the reason of an error
+	not to appear in the dialog
+	* src/totem.c: (totem_action_error), (action_toggle_playlist),
+	(totem_action_set_mrl), (on_show_playlist1_activate),
+	(totem_action_handle_key), (on_window_key_press_event):
+	Handle Ctrl+P for the playlist even in hidden controls mode
+
 ============ Version 0.99.12
 
 2004-06-04  Bastien Nocera  <hadess@hadess.net>

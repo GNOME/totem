@@ -1284,7 +1284,7 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 	case XINE_MSG_GENERAL_WARNING:
 		break;
 	case XINE_MSG_UNKNOWN_HOST:
-		message = g_strdup_printf (_("The server you are trying to connect to is not known."));
+		message = g_strdup (_("The server you are trying to connect to is not known."));
 		break;
 	case XINE_MSG_UNKNOWN_DEVICE:
 		message = g_strdup_printf (_("The device name you specified (%s) seems to be invalid."), (char *) data + data->parameters);
@@ -1293,13 +1293,13 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		message = g_strdup_printf (_("The server you are trying to connect to (%s) is unreachable."), (char *) data + data->parameters);
 		break;
 	case XINE_MSG_CONNECTION_REFUSED:
-		message = g_strdup_printf (_("The connection to this server was refused."));
+		message = g_strdup (_("The connection to this server was refused."));
 		break;
 	case XINE_MSG_FILE_NOT_FOUND:
-		message = g_strdup_printf (_("The specified movie '%s' could not be found."), (char *) data + data->parameters);
+		message = g_strdup (_("The specified movie could not be found."));
 		break;
 	case XINE_MSG_READ_ERROR:
-		message = g_strdup_printf (_("The movie '%s' could not be read."), (char *) data + data->parameters);
+		message = g_strdup (_("The movie could not be read."));
 		break;
 	case XINE_MSG_LIBRARY_LOAD_ERROR:
 		message = g_strdup_printf (_("A problem occured while loading a library or a decoder (%s)."), (char *) data + data->parameters);
@@ -1432,7 +1432,7 @@ xine_error (BaconVideoWidget *bvw, GError **error)
 
 	if (save_data != NULL)
 	{
-		g_set_error (error, 0, 0, save_data->msg);
+		g_set_error (error, 0, 0, "%s", save_data->msg);
 		g_free (save_data->msg);
 		g_free (save_data);
 

@@ -167,6 +167,9 @@ totem_action_error (char *title, char *reason, Totem *totem)
 	GtkWidget *parent, *error_dialog;
 	char *title_esc, *reason_esc;
 
+	if (reason == NULL)
+		g_warning ("totem_action_error called with reason == NULL");
+
 	if (totem == NULL)
 		parent = NULL;
 	else
@@ -274,6 +277,18 @@ totem_action_exit (Totem *totem)
 	}
 
 	exit (0);
+}
+
+static void
+action_toggle_playlist (Totem *totem)
+{
+	GtkWidget *toggle;
+	gboolean state;
+
+	toggle = glade_xml_get_widget (totem->xml, "tmw_playlist_button");
+
+	state = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), !state);
 }
 
 static gboolean
@@ -816,10 +831,9 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 			msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
 			g_free (disp);
 			totem_action_error (msg, err->message, totem);
-			g_free (msg);
 
+			g_free (msg);
 			g_error_free (err);
-			retval = FALSE;
 		}
 	}
 	update_buttons (totem);
@@ -1760,13 +1774,7 @@ on_aspect_ratio_dvb_activate (GtkButton *button, Totem *totem)
 static void
 on_show_playlist1_activate (GtkButton *button, Totem *totem)
 {
-	GtkWidget *toggle;
-	gboolean state;
-
-	toggle = glade_xml_get_widget (totem->xml, "tmw_playlist_button");
-
-	state = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), !state);
+	action_toggle_playlist (totem);
 }
 
 static void
@@ -2606,7 +2614,11 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 #endif /* HAVE_XFREE */
 	case GDK_p:
 	case GDK_P:
-		totem_action_play_pause (totem);
+		/* Playlist keyboard shortcut? */
+		if (event->state & GDK_CONTROL_MASK)
+			action_toggle_playlist (totem);
+		else
+			totem_action_play_pause (totem);
 		break;
 	case GDK_q:
 	case GDK_Q:
@@ -2713,6 +2725,12 @@ totem_action_handle_volume_scroll (Totem *totem, GdkScrollDirection direction)
 static int
 on_window_key_press_event (GtkWidget *win, GdkEventKey *event, Totem *totem)
 {
+	/* Special case the Playlist keyboard shortcut */
+	if (event->state != 0
+			&& (event->state &GDK_CONTROL_MASK)
+			&& ((event->keyval == GDK_p) || event->keyval == GDK_P))
+		return totem_action_handle_key (totem, event);
+
 	/* If we have modifiers, and either Ctrl, Mod1 (Alt), or any
 	 * of Mod3 to Mod5 (Mod2 is num-lock...) are pressed, we
 	 * let Gtk+ handle the key */
