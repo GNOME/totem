@@ -841,10 +841,8 @@ setup_config_stream (BaconVideoWidget *bvw)
 			value = 65535 / 2;
 		}
 
-		g_message ("value %d %s", value, video_props_str[i]);
-
 		/* avoid black screens */
-		if (value == 0 && error != NULL)
+		if (value == 0 || error != NULL)
 			value = 65535 / 2;
 
 		tmp = xine_get_param (bvw->priv->stream, video_props[i]);
@@ -852,7 +850,6 @@ setup_config_stream (BaconVideoWidget *bvw)
 		{
 			xine_set_param (bvw->priv->stream,
 					video_props[i], value);
-			g_message ("setting value %d %s", value, video_props_str[i]);
 		}
 
 		if (error != NULL)
