@@ -32,7 +32,6 @@ struct Totem {
 	/* Control window */
 	GladeXML *xml;
 	GtkWidget *win;
-	GtkWidget *treeview;
 	BaconVideoWidget *bvw;
 	GtkWidget *prefs;
 	GtkWidget *properties;
