@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem cs\n"
-"POT-Creation-Date: 2003-04-09 23:33+0100\n"
-"PO-Revision-Date: 2003-03-31 13:15+0200\n"
+"POT-Creation-Date: 2003-04-10 12:34+0200\n"
+"PO-Revision-Date: 2003-04-10 19:32+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr "Režim opakování"
 
 #: data/playlist.glade.h:3
 msgid "_Add..."
-msgstr ""
+msgstr "_Přidat..."
 
 #: data/properties.glade.h:1 src/bacon-video-widget-properties.c:184
 msgid "0 frames per second"
@@ -63,32 +63,26 @@ msgid "<b>Video</b>"
 msgstr "<b>Video</b>"
 
 #: data/properties.glade.h:9
-#, fuzzy
 msgid "Artist:"
-msgstr "Umělec: "
+msgstr "Umělec:"
 
 #: data/properties.glade.h:10
-#, fuzzy
 msgid "Bitrate:"
-msgstr "Bitová rychlost: "
+msgstr "Bitová rychlost:"
 
 #: data/properties.glade.h:11
-#, fuzzy
 msgid "Codec:"
-msgstr "Kodex: "
+msgstr "Kodek:"
 
 #: data/properties.glade.h:12
-#, fuzzy
 msgid "Dimensions:"
-msgstr "Rozměry: "
+msgstr "Rozměry:"
 
 #: data/properties.glade.h:13
-#, fuzzy
 msgid "Duration:"
-msgstr "Trvání: "
+msgstr "Trvání:"
 
 #: data/properties.glade.h:14
-#, fuzzy
 msgid "Framerate:"
 msgstr "Snímků:"
 
@@ -109,9 +103,8 @@ msgid "Properties"
 msgstr "Vlastnosti"
 
 #: data/properties.glade.h:18
-#, fuzzy
 msgid "Title:"
-msgstr "Titul: "
+msgstr "Titul:"
 
 #. Title
 #: data/properties.glade.h:19 src/bacon-video-widget-properties.c:171
@@ -124,9 +117,8 @@ msgid "Unknown"
 msgstr "Neznámý"
 
 #: data/properties.glade.h:20
-#, fuzzy
 msgid "Year:"
-msgstr "Rok: "
+msgstr "Rok:"
 
 #: data/totem.desktop.in.h:1
 msgid "Play movies and songs"
@@ -233,9 +225,8 @@ msgid "DVD menu"
 msgstr "Menu DVD"
 
 #: data/totem.glade.h:26
-#, fuzzy
 msgid "Exit Fullscreen"
-msgstr "Zrušit celoobrazovkový režim"
+msgstr "Opustit celoobrazovkový režim"
 
 #: data/totem.glade.h:27
 msgid "File name"
@@ -390,9 +381,8 @@ msgid "Skip to a specific time"
 msgstr "Přeskočit na konkrétní čas"
 
 #: data/totem.glade.h:65
-#, fuzzy
 msgid "Skip to:"
-msgstr "Přeskočit na: "
+msgstr "Přeskočit na:"
 
 #: data/totem.glade.h:66
 msgid "Subtitles"
@@ -415,9 +405,8 @@ msgid "Take a screenshot"
 msgstr "Sejmout obrazovku"
 
 #: data/totem.glade.h:71
-#, fuzzy
 msgid "Time:"
-msgstr "Čas: "
+msgstr "Čas:"
 
 #: data/totem.glade.h:72
 msgid "Title menu"
@@ -474,7 +463,7 @@ msgstr "Zvětšit na velikost jedna k jedné"
 
 #: data/totem.glade.h:85
 msgid "_Eject"
-msgstr ""
+msgstr "_Vysunout"
 
 #: data/totem.glade.h:86
 msgid "_Fullscreen"
@@ -513,9 +502,8 @@ msgid "_Zoom 1:2"
 msgstr "_Zvětšení 1:2"
 
 #: data/totem.glade.h:95
-#, fuzzy
 msgid "seconds"
-msgstr " sekund"
+msgstr "sekund"
 
 #: data/totem.schemas.in.h:1
 msgid "Path to the optical media device"
@@ -705,7 +693,7 @@ msgstr ""
 
 #: src/totem.c:1362
 msgid "Totem could not eject the optical media."
-msgstr ""
+msgstr "Totem nemohl vysunout optické médium."
 
 #: src/totem.c:1454
 msgid "translator_credits"
@@ -860,24 +848,24 @@ msgstr "Toto umístění není platné"
 msgid "Generic Error"
 msgstr "Obecná chyba"
 
-#: src/bacon-video-widget.c:1292
+#: src/bacon-video-widget.c:1294
 #, c-format
 msgid "Video type '%s' is not handled"
 msgstr "Typ videa '%s' není obsloužen"
 
-#: src/bacon-video-widget.c:2269
+#: src/bacon-video-widget.c:2271
 msgid "Movie is not playing"
 msgstr "Film se nepřehrává"
 
-#: src/bacon-video-widget.c:2277
+#: src/bacon-video-widget.c:2279
 msgid "No video to capture"
 msgstr "Žádné video k zachycení"
 
-#: src/bacon-video-widget.c:2284
+#: src/bacon-video-widget.c:2286
 msgid "Video codec is not handled"
 msgstr "Kodek videa '%s' není obsloužen"
 
-#: src/bacon-video-widget.c:2295
+#: src/bacon-video-widget.c:2297
 msgid "Height or width of the video is 0. Please file a bug."
 msgstr "Výška nebo šířka videa je 0. Ohlaste prosím chybu."
 
@@ -955,16 +943,6 @@ msgstr "%d kbps"
 
 #~ msgid "Could not find a suitable video output."
 #~ msgstr "Nelze nalézt vhodný výstup pro video."
-
-#~ msgid ""
-#~ "There is no plugin for Totem to handle '%s'.\n"
-#~ "Totem will not be able to play it."
-#~ msgstr ""
-#~ "V Totemu není přítomen žádný zásuvný modul, který by zpracoval '%s'.\n"
-#~ "Totem nebude schopen toto přehrát."
-
-#~ msgid "Only start if there isn't already a Totem application running"
-#~ msgstr "Spustit se pouze v případě, že ještě neběží jiná aplikace Totem"
 
 #~ msgid "Time: %s "
 #~ msgstr "Čas: %s "
