@@ -200,15 +200,20 @@ totem_statusbar_update_time (TotemStatusbar *statusbar)
   char *time, *length, *label;
 
   time = time_to_string (statusbar->time);
-  length = time_to_string (statusbar->length);
+
+  if (statusbar->length == 0) {
+    label = g_strdup_printf (_("%s (Streaming)"), time);
+  } else {
+  length = time_to_string (statusbar->length == -1 ? 0 : statusbar->length);
 
   //FIXME LTR/RTL
   label = g_strdup_printf ("%s / %s", time, length);
+  g_free (length);
+  }
 
   gtk_label_set_text (GTK_LABEL (statusbar->time_label), label);
 
   g_free (time);
-  g_free (length);
   g_free (label);
 }
 

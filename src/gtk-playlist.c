@@ -1752,8 +1752,10 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 
 	if (strncmp ("audio/", mimetype, 6) != 0
 			&& strncmp ("video/", mimetype, 6) != 0
-			&& strncmp ("application/x-ogg", mimetype, 17) != 0
-			&& strncmp ("image/png", mimetype, 9) != 0)
+			&& strcmp ("application/x-ogg", mimetype) != 0
+			&& strcmp ("application/ogg", mimetype) != 0
+			&& strcmp ("image/png", mimetype) != 0
+			&& strcmp ("application/octet-stream", mimetype) != 0)
 	{
 		//FIXME error message
 		D("not adding '%s' with mimetype '%s'",

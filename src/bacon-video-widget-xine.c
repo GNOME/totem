@@ -883,7 +883,7 @@ bacon_video_widget_realize (GtkWidget *widget)
 	//FIXME
 	g_assert (bvw->priv->vo_driver != NULL);
 
-	if (bvw->priv->null_out == FALSE)
+	if (bvw->priv->null_out == FALSE && bvw->priv->ao_driver != NULL)
 		bvw->priv->vis = xine_post_init (bvw->priv->xine,
 				bvw->priv->vis_name, 0,
 				&bvw->priv->ao_driver, &bvw->priv->vo_driver);

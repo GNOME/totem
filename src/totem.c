@@ -559,7 +559,7 @@ update_mrl_label (Totem *totem, const char *name)
 		g_free (text);
 	} else {
 		totem_statusbar_set_time_and_length (TOTEM_STATUSBAR
-				(totem->statusbar), 0, 0);
+				(totem->statusbar), 0, -1);
 
 		widget = glade_xml_get_widget (totem->xml, "spinbutton1");
 		gtk_spin_button_set_range (GTK_SPIN_BUTTON (widget), 0, 0);
@@ -1097,8 +1097,16 @@ static void
 update_current_time (BaconVideoWidget *bvw, int current_time, int stream_length,
 		int current_position, Totem *totem)
 {
-	totem_statusbar_set_time_and_length (TOTEM_STATUSBAR (totem->statusbar),
+	if (bacon_video_widget_get_logo_mode (totem->bvw) == TRUE)
+	{
+		totem_statusbar_set_time_and_length
+			(TOTEM_STATUSBAR (totem->statusbar),
+			 current_time / 1000, -1);
+	} else {
+		totem_statusbar_set_time_and_length
+			(TOTEM_STATUSBAR (totem->statusbar),
 			current_time / 1000, stream_length / 1000);
+	}
 
 	if (totem->seek_lock == FALSE)
 	{
