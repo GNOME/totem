@@ -45,10 +45,10 @@ main (gint   argc,
   gnome_vfs_init ();
 
   if (g_file_test (argv[1], G_FILE_TEST_IS_DIR) != FALSE) {
-    type = cd_detect_type_from_dir (argv[1], &url, &error);
+    type = totem_cd_detect_type_from_dir (argv[1], &url, &error);
     is_dir = TRUE;
   } else {
-    type = cd_detect_type (argv[1], &error);
+    type = totem_cd_detect_type (argv[1], &error);
   }
 
   switch (type) {

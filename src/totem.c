@@ -1,5 +1,5 @@
 /* 
- * Copyright (C) 2001,2002,2003 Bastien Nocera <hadess@hadess.net>
+ * Copyright (C) 2001-2004 Bastien Nocera <hadess@hadess.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,10 @@
 #include "bacon-cd-selection.h"
 #include "totem-statusbar.h"
 #include "totem-time-label.h"
+#include "totem-session.h"
 #include "totem-screenshot.h"
+#include "totem-options.h"
+#include "totem-uri.h"
 #include "video-utils.h"
 
 #include "egg-recent-view.h"
@@ -84,24 +87,6 @@ static const GtkTargetEntry source_table[] = {
 	{ "text/uri-list", 0, 0 },
 };
 
-static struct poptOption options[] = {
-	{NULL, '\0', POPT_ARG_INCLUDE_TABLE, NULL, 0, N_("Backend options"), NULL},
-	{"debug", '\0', POPT_ARG_NONE, NULL, 0, N_("Enable debug"), NULL},
-	{"play-pause", '\0', POPT_ARG_NONE, NULL, 0, N_("Play/Pause"), NULL},
-	{"next", '\0', POPT_ARG_NONE, NULL, 0, N_("Next"), NULL},
-	{"previous", '\0', POPT_ARG_NONE, NULL, 0, N_("Previous"), NULL},
-	{"seek-fwd", '\0', POPT_ARG_NONE, NULL, 0, N_("Seek Forwards"), NULL},
-	{"seek-bwd", '\0', POPT_ARG_NONE, NULL, 0, N_("Seek Backwards"), NULL},
-	{"volume-up", '\0', POPT_ARG_NONE, NULL, 0, N_("Volume Up"), NULL},
-	{"volume-down", '\0', POPT_ARG_NONE, NULL, 0, N_("Volume Down"), NULL},
-	{"fullscreen", '\0', POPT_ARG_NONE, NULL, 0, N_("Toggle Fullscreen"), NULL},
-	{"toggle-controls", '\0', POPT_ARG_NONE, NULL, 0, N_("Show/Hide Controls"), NULL},
-	{"quit", '\0', POPT_ARG_NONE, NULL, 0, N_("Quit"), NULL},
-	{"enqueue", '\0', POPT_ARG_NONE, NULL, 0, N_("Enqueue"), NULL},
-	{"replace", '\0', POPT_ARG_NONE, NULL, 0, N_("Replace"), NULL},
-	{NULL, '\0', 0, NULL, 0} /* end the list */
-};
-
 static gboolean totem_action_open_files (Totem *totem, char **list);
 static gboolean totem_action_open_files_list (Totem *totem, GSList *list);
 static void update_fullscreen_size (Totem *totem);
@@ -113,7 +98,6 @@ static void update_seekable (Totem *totem, gboolean force_false);
 static void on_play_pause_button_clicked (GtkToggleButton *button,
 		Totem *totem);
 static void playlist_changed_cb (GtkWidget *playlist, Totem *totem);
-static gboolean totem_is_media (const char *mrl); 
 static void show_controls (Totem *totem, gboolean was_fullscreen);
 static gboolean totem_is_fullscreen (Totem *totem);
 static void play_pause_set_label (Totem *totem, TotemStates state);
@@ -135,43 +119,6 @@ totem_g_list_deep_free (GList *list)
 	for (l = list; l != NULL; l = l->next)
 		g_free (l->data);
 	g_list_free (list);
-}
-
-static char*
-totem_create_full_path (const char *path)
-{
-	char *retval, *curdir, *curdir_withslash, *escaped;
-
-	g_return_val_if_fail (path != NULL, NULL);
-
-	if (strstr (path, "://") != NULL)
-		return g_strdup (path);
-	if (totem_is_media (path) != FALSE)
-		return g_strdup (path);
-
-	if (path[0] == '/')
-	{
-		escaped = gnome_vfs_escape_path_string (path);
-
-		retval = g_strdup_printf ("file://%s", escaped);
-		g_free (escaped);
-		return retval;
-	}
-
-	curdir = g_get_current_dir ();
-	escaped = gnome_vfs_escape_path_string (curdir);
-	curdir_withslash = g_strdup_printf ("file://%s%s",
-			escaped, G_DIR_SEPARATOR_S);
-	g_free (escaped);
-	g_free (curdir);
-
-	escaped = gnome_vfs_escape_path_string (path);
-	retval = gnome_vfs_uri_make_full_from_relative
-		(curdir_withslash, escaped);
-	g_free (curdir_withslash);
-	g_free (escaped);
-
-	return retval;
 }
 
 void
@@ -441,24 +388,6 @@ totem_action_set_mrl_and_play (Totem *totem, char *mrl)
 		totem_action_play (totem);
 }
 
-static char *
-totem_action_get_media_string (MediaType type)
-{
-	switch (type)
-	{
-	case MEDIA_TYPE_CDDA:
-		return N_("Audio CD");
-	case MEDIA_TYPE_VCD:
-		return N_("Video CD");
-	case MEDIA_TYPE_DVD:
-		return N_("DVD");
-	default:
-		g_assert_not_reached ();
-	}
-
-	return NULL;
-}
-
 static gboolean
 totem_action_load_media (Totem *totem, MediaType type)
 {
@@ -467,7 +396,7 @@ totem_action_load_media (Totem *totem, MediaType type)
 
 	if (bacon_video_widget_can_play (totem->bvw, type) == FALSE)
 	{
-		msg = g_strdup_printf (_("Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."), _(totem_action_get_media_string (type)));
+		msg = g_strdup_printf (_("Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."), _(totem_cd_get_human_readable_name (type)));
 		totem_action_error (msg, _("Please install the necessary plugins and restart Totem to be able to play this media."), totem);
 		g_free (msg);
 		return FALSE;
@@ -476,7 +405,7 @@ totem_action_load_media (Totem *totem, MediaType type)
 	mrls = bacon_video_widget_get_mrls (totem->bvw, type);
 	if (mrls == NULL)
 	{
-		msg = g_strdup_printf (_("Totem could not play this media (%s) although a plugin is present to handle it."), _(totem_action_get_media_string (type)));
+		msg = g_strdup_printf (_("Totem could not play this media (%s) although a plugin is present to handle it."), _(totem_cd_get_human_readable_name (type)));
 		totem_action_error (msg, _("You might want to check that a disc is present in the drive and that it is correctly configured."), totem);
 		g_free (msg);
 		return FALSE;
@@ -880,33 +809,6 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 }
 
 static gboolean
-totem_playing_dvd (Totem *totem)
-{
-	if (totem->mrl == NULL)
-		return FALSE;
-
-	return g_str_has_prefix (totem->mrl, "dvd:/");
-}
-
-static gboolean
-totem_is_media (const char *mrl)
-{
-	if (mrl == NULL)
-		return FALSE;
-
-	if (g_str_has_prefix (mrl, "cdda:") != FALSE)
-		return TRUE;
-	if (g_str_has_prefix (mrl, "dvd:") != FALSE)
-		return TRUE;
-	if (g_str_has_prefix (mrl, "vcd:") != FALSE)
-		return TRUE;
-	if (g_str_has_prefix (mrl, "cd:") != FALSE)
-		return TRUE;
-
-	return FALSE;
-}
-
-static gboolean
 totem_time_within_seconds (Totem *totem)
 {
 	gint64 time;
@@ -916,17 +818,20 @@ totem_time_within_seconds (Totem *totem)
 	return (time < REWIND_OR_PREVIOUS);
 }
 
+//FIXME
+//merge totem_action_previous/_next
+
 void
 totem_action_previous (Totem *totem)
 {
 	char *mrl;
 
-	if (totem_playing_dvd (totem) == FALSE &&
+	if (totem_playing_dvd (totem->mrl) == FALSE &&
 		totem_playlist_has_previous_mrl (totem->playlist) == FALSE
 		&& totem_playlist_get_repeat (totem->playlist) == FALSE)
 		return;
 
-        if (totem_playing_dvd (totem) != FALSE)
+        if (totem_playing_dvd (totem->mrl) != FALSE)
         {
                 bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_PREV_CHAPTER);
         } else {
@@ -947,12 +852,12 @@ totem_action_next (Totem *totem)
 {
 	char *mrl;
 
-	if (totem_playing_dvd (totem) == FALSE &&
+	if (totem_playing_dvd (totem->mrl) == FALSE &&
 			totem_playlist_has_next_mrl (totem->playlist) == FALSE
 			&& totem_playlist_get_repeat (totem->playlist) == FALSE)
 		return;
 
-	if (totem_playing_dvd (totem) != FALSE)
+	if (totem_playing_dvd (totem->mrl) != FALSE)
 	{
 		bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_NEXT_CHAPTER);
 	} else {
@@ -1029,7 +934,7 @@ totem_action_toggle_aspect_ratio (Totem *totem)
 {		
 	GtkWidget  *item;
 	int  tmp;
-	static char *widgets[] = {
+	const char const *widgets[] = {
 		"tmw_aspect_ratio_auto_menu_item",
 		"tmw_aspect_ratio_square_menu_item",
 		"tmw_aspect_ratio_fbt_menu_item",
@@ -1372,8 +1277,8 @@ update_seekable (Totem *totem, gboolean seekable)
 	gtk_widget_set_sensitive (widget, seekable);
 	widget = glade_xml_get_widget (totem->xml, "tmw_skip_to_menu_item");
 	gtk_widget_set_sensitive (widget, seekable);
-	widget = glade_xml_get_widget (totem->xml, "tstw_ok_button");
-	gtk_widget_set_sensitive (widget, seekable);
+	if (totem->skipto)
+		totem_skipto_set_seekable (totem->skipto, seekable);
 
 	totem->seekable = seekable;
 }
@@ -1719,6 +1624,7 @@ on_open1_activate (GtkButton *button, Totem *totem)
 	gtk_widget_destroy (fs);
 }
 
+//FIXME move the URI to a separate widget
 static void
 on_open_location1_activate (GtkButton *button, Totem *totem)
 {
@@ -1781,7 +1687,7 @@ on_play_disc1_activate (GtkButton *button, Totem *totem)
 
 	device = gconf_client_get_string (totem->gc,
 					  GCONF_PREFIX"/mediadev", NULL);
-	type = cd_detect_type (device, &error);
+	type = totem_cd_detect_type (device, &error);
 	switch (type) {
 		case MEDIA_TYPE_ERROR:
 			totem_action_error ("Failed to play Audio/Video Disc",
@@ -2006,10 +1912,21 @@ on_show_controls1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 static void
 on_show_controls2_activate (GtkMenuItem *menuitem, Totem *totem)
 {
+	totem_action_toggle_controls (totem);
+}
+
+void
+totem_action_toggle_controls (Totem *totem)
+{
 	GtkWidget *item;
+	gboolean state;
+
+	if (totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN)
+		return;
 
 	item = glade_xml_get_widget (totem->xml, "tmw_show_controls_menu_item");
-	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), TRUE);
+	state = gtk_check_menu_item_get_active (GTK_CHECK_MENU_ITEM (item));
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), !state);
 }
 
 #ifndef HAVE_GTK_ONLY
@@ -2949,7 +2866,7 @@ update_media_menu_items (Totem *totem)
         GtkWidget *item;
         gboolean playing;
 
-	playing = totem_playing_dvd (totem);
+	playing = totem_playing_dvd (totem->mrl);
 
 	item = glade_xml_get_widget (totem->xml, "tmw_dvd_root_menu_item");
 	gtk_widget_set_sensitive (item, playing);
@@ -2976,7 +2893,7 @@ update_buttons (Totem *totem)
 
 	/* Previous */
 	/* FIXME Need way to detect if DVD Title is at first chapter */
-	if (totem_playing_dvd (totem) != FALSE)
+	if (totem_playing_dvd (totem->mrl) != FALSE)
 	{
 		has_item = TRUE;
 	} else {
@@ -2995,7 +2912,7 @@ update_buttons (Totem *totem)
 
 	/* Next */
 	/* FIXME Need way to detect if DVD Title has no more chapters */
-	if (totem_playing_dvd (totem) != FALSE)
+	if (totem_playing_dvd (totem->mrl) != FALSE)
 	{
 		has_item = TRUE;
 	} else {
@@ -3749,143 +3666,6 @@ totem_message_connection_receive_cb (const char *msg, Totem *totem)
 	g_free (url);
 }
 
-static void
-process_options (Totem *totem, int *argc, char ***argv)
-{
-	int i;
-	guint options = 0;
-	char **args = *argv;
-
-	if (*argc == 1) {
-		*argc = 0;
-		*argv = *argv + 1;
-		return;
-	}
-
-	for (i = 1; i < *argc; i++)
-	{
-		if (strcmp (args[i], "--debug") == 0)
-		{
-			options++;
-		} else if (strcmp (args[i], "--fullscreen") == 0) {
-			totem_action_fullscreen_toggle (totem);
-			options++;
-		} else if (strcmp (args[i], "--toggle-controls") == 0) {
-			if (totem->controls_visibility != TOTEM_CONTROLS_FULLSCREEN)
-			{
-				GtkCheckMenuItem *item;
-				gboolean value;
-
-				item = GTK_CHECK_MENU_ITEM
-					(glade_xml_get_widget
-					 (totem->xml,
-					  "tmw_show_controls_menu_item"));
-				value = gtk_check_menu_item_get_active (item);
-				gtk_check_menu_item_set_active (item, !value);
-			}
-		} else if (g_str_has_prefix (args[i], "--") != FALSE) {
-			printf (_("Option '%s' is unknown and was ignored\n"),
-					args[i]);
-			options++;
-		}
-	}
-
-	*argc = *argc - options;
-	*argv = *argv + options + 1;
-}
-
-static void
-process_command_line_early (GConfClient *gc, int argc, char **argv)
-{
-	int i;
-
-	if (argc == 1)
-		return;
-
-	for (i = 1; i < argc; i++)
-	{
-		if (strcmp (argv[i], "--debug") == 0)
-		{
-			gconf_client_set_bool (gc, GCONF_PREFIX"/debug",
-					TRUE, NULL);
-		} else if (strcmp (argv[i], "--quit") == 0) {
-			/* If --quit is one of the commands, just quit */
-			gdk_notify_startup_complete ();
-			exit (0);
-		}
-	}
-}
-
-static void
-process_command_line (BaconMessageConnection *conn, int argc, char **argv)
-{
-	int i, command;
-	char *line, *full_path;
-
-	if (argc == 1)
-	{
-		/* Just show totem if there aren't any arguments */
-		line = g_strdup_printf ("%03d ", TOTEM_REMOTE_COMMAND_SHOW);
-		bacon_message_connection_send (conn, line);
-		g_free (line);
-
-		return;
-	}
-
-	i = 2;
-
-	if (strlen (argv[1]) > 3 && g_str_has_prefix (argv[1], "--") == FALSE)
-	{
-		command = TOTEM_REMOTE_COMMAND_REPLACE;
-		i = 1;
-	} else if (strcmp (argv[1], "--play-pause") == 0) {
-		command = TOTEM_REMOTE_COMMAND_PAUSE;
-	} else if (strcmp (argv[1], "--next") == 0) {
-		command = TOTEM_REMOTE_COMMAND_NEXT;
-	} else if (strcmp (argv[1], "--previous") == 0) {
-		command = TOTEM_REMOTE_COMMAND_PREVIOUS;
-	} else if (strcmp (argv[1], "--seek-fwd") == 0) {
-		command = TOTEM_REMOTE_COMMAND_SEEK_FORWARD;
-	} else if (strcmp (argv[1], "--seek-bwd") == 0) {
-		command = TOTEM_REMOTE_COMMAND_SEEK_BACKWARD;
-	} else if (strcmp (argv[1], "--volume-up") == 0) {
-		command = TOTEM_REMOTE_COMMAND_VOLUME_UP;
-	} else if (strcmp (argv[1], "--volume-down") == 0) {
-		command = TOTEM_REMOTE_COMMAND_VOLUME_DOWN;
-	} else if (strcmp (argv[1], "--fullscreen") == 0) {
-		command = TOTEM_REMOTE_COMMAND_FULLSCREEN;
-	} else if (strcmp (argv[1], "--quit") == 0) {
-		command = TOTEM_REMOTE_COMMAND_QUIT;
-	} else if (strcmp (argv[1], "--enqueue") == 0) {
-		command = TOTEM_REMOTE_COMMAND_ENQUEUE;
-	} else if (strcmp (argv[1], "--replace") == 0) {
-		command = TOTEM_REMOTE_COMMAND_REPLACE;
-	} else if (strcmp (argv[1], "--toggle-controls") == 0) {
-		command = TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS;
-	} else {
-		return;
-	}
-
-	if (command != TOTEM_REMOTE_COMMAND_ENQUEUE
-				&& command != TOTEM_REMOTE_COMMAND_REPLACE)
-	{
-		line = g_strdup_printf ("%03d ", command);
-		bacon_message_connection_send (conn, line);
-		g_free (line);
-		return;
-	}
-
-	for (; argv[i] != NULL; i++)
-	{
-		full_path = totem_create_full_path (argv[i]);
-		line = g_strdup_printf ("%03d %s", command, full_path);
-		bacon_message_connection_send (conn, line);
-		g_free (line);
-		g_free (full_path);
-		command = TOTEM_REMOTE_COMMAND_ENQUEUE;
-	}
-}
-
 int
 main (int argc, char **argv)
 {
@@ -3911,13 +3691,12 @@ main (int argc, char **argv)
 
 	gtk_init (&argc, &argv);
 
-	options[0].arg = bacon_video_widget_get_popt_table ();
 #ifndef HAVE_GTK_ONLY
 	gnome_program_init ("totem", VERSION,
 			LIBGNOMEUI_MODULE,
 			argc, argv,
 			GNOME_PARAM_APP_DATADIR, DATADIR,
-			GNOME_PARAM_POPT_TABLE, options,
+			GNOME_PARAM_POPT_TABLE, totem_options_get_options (),
 			GNOME_PARAM_NONE);
 #endif /* !HAVE_GTK_ONLY */
 
@@ -3950,13 +3729,13 @@ main (int argc, char **argv)
 	totem->conn = bacon_message_connection_new (GETTEXT_PACKAGE);
 	if (bacon_message_connection_get_is_server (totem->conn) == FALSE)
 	{
-		process_command_line (totem->conn, argc, argv);
+		totem_options_process_for_server (totem->conn, argc, argv);
 		bacon_message_connection_free (totem->conn);
 		g_free (totem);
 		gdk_notify_startup_complete ();
 		exit (0);
 	} else {
-		process_command_line_early (gc, argc, argv);
+		totem_options_process_early (gc, argc, argv);
 	}
 
 	/* Init totem itself */
@@ -4033,6 +3812,7 @@ main (int argc, char **argv)
 	/* Properties */
 	totem->properties = bacon_video_widget_properties_new ();
 
+	totem_session_setup (totem, argv);
 	totem_setup_recent (totem);
 	totem_callback_connect (totem);
 	totem_setup_window (totem);
@@ -4053,7 +3833,7 @@ main (int argc, char **argv)
 	totem_setup_preferences (totem);
 
 	/* Command-line handling */
-	process_options (totem, &argc, &argv);
+	totem_options_process_late (totem, &argc, &argv);
 
 	if (argc >= 1)
 	{

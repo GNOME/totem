@@ -1,7 +1,7 @@
 /* Totem Disc Content Detection
  * (c) 2004 Ronald Bultje <rbultje@ronald.bitfreak.net>
  *
- * disc.h: media content detection
+ * totem-disc.h: media content detection
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -19,8 +19,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __DISC_H__
-#define __DISC_H__
+#ifndef TOTEM_DISC_H
+#define TOTEM_DISC_H
 
 #include <glib.h>
 
@@ -34,12 +34,13 @@ typedef enum {
   MEDIA_TYPE_DVD
 } MediaType;
 
-MediaType	cd_detect_type	(const char *device,
-				 GError     **error);
-MediaType	cd_detect_type_from_dir (const char *dir,
+MediaType	totem_cd_detect_type	(const char *device,
+					 GError     **error);
+MediaType	totem_cd_detect_type_from_dir (const char *dir,
 					 char      **url, 
 					 GError    **error);
+const char *	totem_cd_get_human_readable_name (MediaType type);
 
 G_END_DECLS
 
-#endif /* __DISC_H__ */
+#endif /* TOTEM_DISC_H */

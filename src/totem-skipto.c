@@ -41,6 +41,7 @@ struct TotemSkiptoPrivate
 	GladeXML *xml;
 	GtkWidget *label;
 	GtkWidget *spinbutton;
+	GtkWidget *okbutton;
 	gint64 time;
 };
 
@@ -52,15 +53,6 @@ static void totem_skipto_init       (TotemSkipto      *skipto);
 G_DEFINE_TYPE(TotemSkipto, totem_skipto, GTK_TYPE_DIALOG)
 
 static void
-totem_skipto_response (TotemSkipto *skipto, int response)
-{
-	if (response == GTK_RESPONSE_OK)
-	{
-		//
-	}
-}
-
-static void
 totem_skipto_init (TotemSkipto *skipto)
 {
 	skipto->_priv = g_new0 (TotemSkiptoPrivate, 1);
@@ -70,8 +62,6 @@ totem_skipto_init (TotemSkipto *skipto)
 static void
 totem_skipto_finalize (GObject *object)
 {
-	//TotemSkipto *skipto = TOTEM_SKIPTO (object);
-
 	g_return_if_fail (object != NULL);
 
 	if (G_OBJECT_CLASS (parent_class)->finalize != NULL) {
@@ -98,6 +88,12 @@ totem_skipto_get_range (TotemSkipto *skipto)
 	time = gtk_spin_button_get_value (GTK_SPIN_BUTTON (skipto->_priv->spinbutton)) * 1000;
 
 	return time;
+}
+
+void
+totem_skipto_set_seekable (TotemSkipto *skipto, gboolean seekable)
+{
+	gtk_widget_set_sensitive (skipto->_priv->okbutton, seekable);
 }
 
 static void
@@ -138,6 +134,8 @@ totem_skipto_new (const char *glade_filename)
 		(skipto->_priv->xml, "tstw_position_label");
 	skipto->_priv->spinbutton = glade_xml_get_widget
 		(skipto->_priv->xml, "tstw_skip_spinbutton");
+	skipto->_priv->okbutton = glade_xml_get_widget
+		(skipto->_priv->xml, "tstw_ok_button");
 
 	gtk_window_set_title (GTK_WINDOW (skipto), _("Skip to"));
 	gtk_dialog_set_has_separator (GTK_DIALOG (skipto), FALSE);
@@ -145,9 +143,6 @@ totem_skipto_new (const char *glade_filename)
 			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			GTK_STOCK_OK, GTK_RESPONSE_OK,
 			NULL);
-	g_signal_connect (G_OBJECT (skipto), "response",
-			G_CALLBACK (totem_skipto_response),
-			skipto);
 
 	/* Skipto dialog */
 	item = glade_xml_get_widget (skipto->_priv->xml,

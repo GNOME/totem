@@ -19,6 +19,7 @@
 
 #include <config.h>
 #include <gtk/gtkmessagedialog.h>
+#include <glib/gi18n.h>
 #include <string.h>
 #include <stdio.h>
 #include <sys/stat.h>

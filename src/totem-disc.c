@@ -481,7 +481,7 @@ cd_cache_disc_is_dvd (CdCache *cache,
 }
 
 MediaType
-cd_detect_type_from_dir (const char *dir, char **url, GError **error)
+totem_cd_detect_type_from_dir (const char *dir, char **url, GError **error)
 {
   CdCache *cache;
   MediaType type;
@@ -529,8 +529,8 @@ cd_detect_type_from_dir (const char *dir, char **url, GError **error)
 }
 
 MediaType
-cd_detect_type (const char *device,
-		GError     **error)
+totem_cd_detect_type (const char *device,
+    		      GError     **error)
 {
   CdCache *cache;
   MediaType type;
@@ -545,6 +545,24 @@ cd_detect_type (const char *device,
   cd_cache_free (cache);
 
   return type;
+}
+
+const char *
+totem_cd_get_human_readable_name (MediaType type)
+{
+  switch (type)
+  {
+  case MEDIA_TYPE_CDDA:
+    return N_("Audio CD");
+  case MEDIA_TYPE_VCD:
+    return N_("Video CD");
+  case MEDIA_TYPE_DVD:
+    return N_("DVD");
+  default:
+    g_assert_not_reached ();
+  }
+
+  return NULL;
 }
 
 /*

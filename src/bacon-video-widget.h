@@ -199,7 +199,6 @@ void bacon_video_widget_get_metadata		 (BaconVideoWidget *bvw,
 						  BaconVideoWidgetMetadataType
 						  type,
 						  GValue *value);
-char *bacon_video_widget_properties_get_title	 (BaconVideoWidget *bvw);
 
 /* Visualisation functions */
 typedef enum {

@@ -21,7 +21,8 @@
 #define __TOTEM_PRIVATE_H__
 
 #include <glade/glade.h>
-#include <glib/gi18n.h>
+#include <gconf/gconf-client.h>
+
 #include "totem-remote.h"
 #include "scrsaver.h"
 #include "egg-recent-model.h"
@@ -105,6 +106,7 @@ struct Totem {
 
 	/* other */
 	char *mrl;
+	char *argv0;
 	TotemPlaylist *playlist;
 	GConfClient *gc;
 	TotemRemote *remote;

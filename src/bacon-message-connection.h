@@ -17,7 +17,12 @@
  *
  */
 
+#ifndef BACON_MESSAGE_CONNECTION_H
+#define BACON_MESSAGE_CONNECTION_H
+
 #include <glib.h>
+
+G_BEGIN_DECLS
 
 typedef void (*BaconMessageReceivedFunc) (const char *message,
 					  gpointer user_data);
@@ -34,3 +39,6 @@ void bacon_message_connection_send			(BaconMessageConnection *conn,
 							 const char *message);
 gboolean bacon_message_connection_get_is_server		(BaconMessageConnection *conn);
 
+G_END_DECLS
+
+#endif /* BACON_MESSAGE_CONNECTION_H */

@@ -1292,7 +1292,7 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 	char *media_url;
 
 	if (parser->priv->recurse_level == 1) {
-		type = cd_detect_type_from_dir (url, &media_url, NULL);
+		type = totem_cd_detect_type_from_dir (url, &media_url, NULL);
 		if (type != MEDIA_TYPE_DATA && type != MEDIA_TYPE_ERROR) {
 			if (media_url != NULL) {
 				totem_pl_parser_add_one_url (parser, media_url, NULL);

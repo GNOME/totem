@@ -3353,27 +3353,6 @@ bacon_video_widget_get_metadata (BaconVideoWidget *bvw,
 	return;
 }
 
-char
-*bacon_video_widget_properties_get_title (BaconVideoWidget *bvw)
-{
-	const char *short_title, *artist;
-
-	artist = xine_get_meta_info (bvw->priv->stream, XINE_META_INFO_ARTIST);
-	short_title = xine_get_meta_info (bvw->priv->stream,
-			XINE_META_INFO_TITLE);
-
-	if (artist == NULL && short_title == NULL)
-		return NULL;
-
-	if (artist == NULL && short_title != NULL)
-		return g_strdup (short_title);
-
-	if (artist != NULL && short_title != NULL)
-		return g_strdup_printf ("%s - %s", artist, short_title);
-
-	return NULL;
-}
-
 GList
 *bacon_video_widget_get_languages (BaconVideoWidget *bvw)
 {

@@ -90,12 +90,15 @@ totem_SOURCES = 					\
 	bacon-video-widget-properties.c	\
 	bacon-video-widget-properties.h	\
 	scrsaver.c scrsaver.h		\
+	totem-options.c totem-options.h	\
 	totem-pl-parser.c totem-pl-parser.h \
 	totem-playlist.c totem-playlist.h \
 	totem-screenshot.c		\
 	totem-screenshot.h		\
+	totem-session.c totem-session.h	\
 	totem-skipto.c totem-skipto.h	\
 	totem-time-label.c totem-time-label.h \
+	totem-uri.c totem-uri.h		\
 	rb-ellipsizing-label.c		\
 	rb-ellipsizing-label.h		\
 	debug.h				\

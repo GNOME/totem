@@ -1,3 +1,34 @@
+2004-12-30  Bastien Nocera  <hadess@hadess.net>
+
+	* src/Makefile.am: upd
+	* src/bacon-message-connection.h: update from libbacon
+	* src/bacon-video-widget-xine.c:
+	* src/bacon-video-widget.h: remove
+	bacon_video_widget_properties_get_title which nothing used
+	* src/disc-test.c: (main): upd
+	* src/totem-disc.c: (totem_cd_detect_type_from_dir),
+	(totem_cd_detect_type), (totem_cd_get_human_readable_name):
+	* src/totem-disc.h: change namespace from cd_ to totem_cd_
+	* src/totem-options.[ch]: moved from totem.c
+	* src/totem-pl-parser.c: (totem_pl_parser_add_directory): upd
+	* src/totem-preferences.c: upd
+	* src/totem-private.h: upd
+	* src/totem-session.[ch]: start of some session support
+	* src/totem-skipto.c: (totem_skipto_finalize),
+	(totem_skipto_set_seekable), (totem_skipto_new):
+	* src/totem-skipto.h: Set the OK button disabled when the stream
+	isn't seekable (as before moving the TotemSkipto to a separate
+	widget)
+	* src/totem-uri.[ch]: move from totem.c
+	* src/totem-video-thumbnailer.c: fix compilation warning
+	* src/totem.c: (totem_action_exit), (totem_action_load_media),
+	(totem_action_previous), (totem_action_next),
+	(totem_action_toggle_aspect_ratio), (update_seekable),
+	(on_play_disc1_activate), (on_show_controls2_activate),
+	(totem_action_toggle_controls), (update_media_menu_items),
+	(update_buttons), (main):
+	* src/totem.h: Fix compilation of the GTK+-only front-end
+
 2004-12-29  Bastien Nocera  <hadess@hadess.net>
 
 	* data/Makefile.am: upd
