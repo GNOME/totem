@@ -139,6 +139,7 @@ struct BaconVideoWidgetPrivate {
 	GdkRectangle fullscreen_rect;
 	gboolean cursor_shown;
 	gboolean pml;
+	ScreenSaver *scr;
 };
 
 static const char *mms_bandwidth_strs[]={"14.4 Kbps (Modem)",
@@ -831,7 +832,7 @@ bacon_video_widget_realize (GtkWidget *widget)
 			"configure-event",
 			G_CALLBACK (configure_cb), bvw);
 
-	scrsaver_init (GDK_DISPLAY ());
+	bvw->priv->scr = scrsaver_new (GDK_DISPLAY ());
 
 	/* Now onto the video out driver */
 	bvw->priv->display = XOpenDisplay (gdk_display_get_name
@@ -992,12 +993,15 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	g_return_if_fail (widget != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (widget));
 
+	bvw = BACON_VIDEO_WIDGET (widget);
+
+	/* Kill the Screesaver */
+	scrsaver_free (bvw->priv->scr);
+
 	/* Hide all windows */
 	if (GTK_WIDGET_MAPPED (widget))
 		gtk_widget_unmap (widget);
 	GTK_WIDGET_UNSET_FLAGS (widget, GTK_MAPPED);
-
-	bvw = BACON_VIDEO_WIDGET (widget);
 
 	/* stop the playback */
 	xine_close (bvw->priv->stream);
@@ -1599,7 +1603,7 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 		/* switch off mouse cursor */
 		bacon_video_widget_set_show_cursor (bvw, FALSE);
 
-		scrsaver_disable (bvw->priv->display);
+		scrsaver_disable (bvw->priv->scr);
 
 		/* Set the icon and the name */
 		if (bvw->priv->icon != NULL)
@@ -1624,7 +1628,7 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 		gdk_window_destroy (bvw->priv->fullscreen_window);
 		bvw->priv->fullscreen_window = NULL;
 
-		scrsaver_enable (bvw->priv->display);
+		scrsaver_enable (bvw->priv->scr);
 
 		gdk_window_focus (gdk_window_get_toplevel
 				(gtk_widget_get_parent_window

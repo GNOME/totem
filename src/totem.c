@@ -153,31 +153,35 @@ totem_create_full_path (const char *path)
 }
 
 void
-totem_action_error (char *msg, GtkWindow *parent)
+totem_action_error (char *msg, Totem *totem)
 {
-	//FIXME
-	static GtkWidget *error_dialog = NULL;
+	GtkWidget *parent;
 
-	if (error_dialog != NULL)
+	if (totem->error_dialog != NULL)
 		return;
 
-	error_dialog =
-		gtk_message_dialog_new (parent,
+	if (totem == NULL)
+		parent = NULL;
+	else
+		parent = totem->win;
+
+	totem->error_dialog =
+		gtk_message_dialog_new (GTK_WINDOW (totem->win),
 				GTK_DIALOG_MODAL,
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK,
 				"%s", msg);
-	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
+	gtk_dialog_set_default_response (GTK_DIALOG (totem->error_dialog),
 			GTK_RESPONSE_OK);
-	g_signal_connect (G_OBJECT (error_dialog), "destroy", G_CALLBACK
-			(gtk_widget_destroy), error_dialog);
-	g_signal_connect (G_OBJECT (error_dialog), "response", G_CALLBACK
-			(gtk_widget_destroy), error_dialog);
-	g_object_add_weak_pointer (G_OBJECT (error_dialog),
-			(void**)&(error_dialog));
-	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
+	g_signal_connect (G_OBJECT (totem->error_dialog), "destroy", G_CALLBACK
+			(gtk_widget_destroy), totem->error_dialog);
+	g_signal_connect (G_OBJECT (totem->error_dialog), "response", G_CALLBACK
+			(gtk_widget_destroy), totem->error_dialog);
+	g_object_add_weak_pointer (G_OBJECT (totem->error_dialog),
+			(void**)&(totem->error_dialog));
+	gtk_window_set_modal (GTK_WINDOW (totem->error_dialog), TRUE);
 
-	gtk_widget_show (error_dialog);
+	gtk_widget_show (totem->error_dialog);
 }
 
 void
@@ -320,7 +324,7 @@ totem_action_play (Totem *totem, int offset)
 				totem->mrl,
 				err->message);
 		gtk_playlist_set_playing (totem->playlist, FALSE);
-		totem_action_error (msg, GTK_WINDOW (totem->win));
+		totem_action_error (msg, totem);
 		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
 			totem_action_stop (totem);
 		g_free (msg);
@@ -345,7 +349,7 @@ totem_action_play_media (Totem *totem, MediaType type)
 	if (bacon_video_widget_can_play (totem->bvw, type) == FALSE)
 	{
 		totem_action_error (_("Totem cannot play this type of media because you do not have the appropriate plugins to handle it.\n"
-					"Install the necessary plugins and restart Totem to be able to play this media."), GTK_WINDOW (totem->win));
+					"Install the necessary plugins and restart Totem to be able to play this media."), totem);
 		return;
 	}
 
@@ -354,7 +358,7 @@ totem_action_play_media (Totem *totem, MediaType type)
 	{
 		totem_action_error (_("Totem could not play this media although a plugin is present to handle it.\n"
 					"You might want to check that a disc is present in the drive and that it is correctly configured."),
-				GTK_WINDOW (totem->win));
+				totem);
 		return;
 	}
 
@@ -675,7 +679,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 						"You might need to install additional plugins to be able to play some types of movies."),
 					mrl,
 					err->message);
-			totem_action_error (msg, GTK_WINDOW (totem->win));
+			totem_action_error (msg, totem);
 			g_free (msg);
 		}
 	}
@@ -782,7 +786,7 @@ totem_action_seek_relative (Totem *totem, int off_sec)
 		gtk_playlist_set_playing (totem->playlist, FALSE);
 		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
 			totem_action_stop (totem);
-		totem_action_error (msg, GTK_WINDOW (totem->win));
+		totem_action_error (msg, totem);
 		g_free (msg);
 	}
 }
@@ -1333,7 +1337,7 @@ on_open_location1_activate (GtkButton *button, Totem *totem)
 		totem_action_error (_("Couldn't load the 'Open Location...'"
 					" interface.\nMake sure that Totem"
 					" is properly installed."),
-				GTK_WINDOW (totem->win));
+				totem);
 		return;
 	}
 
@@ -1344,7 +1348,7 @@ on_open_location1_activate (GtkButton *button, Totem *totem)
 		totem_action_error (_("Couldn't load the 'Open Location...'"
 					" interface.\nMake sure that Totem"
 					" is properly installed."),
-				GTK_WINDOW (totem->win));
+				totem);
 		return;
 	}
 
@@ -1403,7 +1407,7 @@ on_eject1_activate (GtkButton *button, Totem *totem)
 		char *msg;
 
 		msg = _("Totem could not eject the optical media.");
-		totem_action_error (msg, GTK_WINDOW (totem->win));
+		totem_action_error (msg, totem);
 	}
 }
 
@@ -1687,7 +1691,7 @@ on_take_screenshot1_activate (GtkButton *button, Totem *totem)
 
 		msg = g_strdup_printf (_("Totem could not get a screenshot of that film.\nReason: %s."), err->message);
 		g_error_free (err);
-		totem_action_error (msg, GTK_WINDOW (totem->win));
+		totem_action_error (msg, totem);
 		g_free (msg);
 		return;
 	}
@@ -1695,7 +1699,7 @@ on_take_screenshot1_activate (GtkButton *button, Totem *totem)
 	pixbuf = bacon_video_widget_get_current_frame (totem->bvw);
 	if (pixbuf == NULL)
 	{
-		totem_action_error (_("Totem could not get a screenshot of that film.\nPlease file a bug, this isn't supposed to happen"), GTK_WINDOW (totem->win));
+		totem_action_error (_("Totem could not get a screenshot of that film.\nPlease file a bug, this isn't supposed to happen"), totem);
 		return;
 	}
 
@@ -1721,7 +1725,7 @@ on_take_screenshot1_activate (GtkButton *button, Totem *totem)
 		filename = screenshot_make_filename (totem);
 		if (g_file_test (filename, G_FILE_TEST_EXISTS) == TRUE)
 		{
-			totem_action_error (_("File '%s' already exists.\nThe screenshot was not saved."), GTK_WINDOW (totem->win));
+			totem_action_error (_("File '%s' already exists.\nThe screenshot was not saved."), totem);
 			gdk_pixbuf_unref (pixbuf);
 			g_free (filename);
 			return;
@@ -1733,7 +1737,7 @@ on_take_screenshot1_activate (GtkButton *button, Totem *totem)
 			char *msg;
 
 			msg = g_strdup_printf (_("There was an error saving the screenshot.\nDetails: %s"), err->message);
-			totem_action_error (msg, GTK_WINDOW (totem->win));
+			totem_action_error (msg, totem);
 			g_free (msg);
 			g_error_free (err);
 		}
@@ -1751,7 +1755,7 @@ on_properties1_activate (GtkButton *button, Totem *totem)
 	{
 		totem_action_error (_("Totem couldn't show the movie properties window.\n"
 					"Make sure that Totem is correctly installed."),
-				GTK_WINDOW (totem->win));
+				totem);
 		return;
 	}
 
@@ -1826,7 +1830,7 @@ commit_hide_skip_to (GtkDialog *dialog, gint response, Totem *totem)
 		gtk_playlist_set_playing (totem->playlist, FALSE);
 		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
 			totem_action_stop (totem);
-		totem_action_error (msg, GTK_WINDOW (totem->win));
+		totem_action_error (msg, totem);
 		g_free (msg);
 	}
 }
@@ -2064,17 +2068,15 @@ static gboolean
 on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 		Totem *totem)
 {
-	//FIXME
-	static gboolean in_progress = FALSE;
 	int width;
 
 	if (bacon_video_widget_is_fullscreen (totem->bvw) == FALSE)
 		return FALSE;
 
-	if (in_progress == TRUE)
+	if (totem->popup_in_progress == TRUE)
 		return FALSE;
 
-	in_progress = TRUE;
+	totem->popup_in_progress = TRUE;
 	if (totem->popup_timeout != 0)
 	{
 		gtk_timeout_remove (totem->popup_timeout);
@@ -2097,7 +2099,7 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 
 	totem->popup_timeout = gtk_timeout_add (2000,
 			(GtkFunction) popup_hide, totem);
-	in_progress = FALSE;
+	totem->popup_in_progress = FALSE;
 
 	return FALSE;
 }

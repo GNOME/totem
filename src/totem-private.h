@@ -62,6 +62,9 @@ struct Totem {
 	/* exit fullscreen Popup */
 	GtkWidget *exit_popup;
 
+	/* error dialog */
+	GtkWidget *error_dialog;
+
 	/* control fullscreen Popup */
 	GtkWidget *control_popup;
 	GtkWidget *fs_seek;
@@ -71,6 +74,7 @@ struct Totem {
 	gint control_popup_height;
 
 	guint popup_timeout;
+	gboolean popup_in_progress;
 	GdkRectangle fullscreen_rect;
 
 	/* recent file stuff */

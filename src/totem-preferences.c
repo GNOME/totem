@@ -124,7 +124,7 @@ on_checkbutton2_toggled (GtkToggleButton *togglebutton, Totem *totem)
 		totem_action_error (_("The change of this setting will only "
 					"take effect for the next movie, or "
 					"when Totem is restarted"),
-				GTK_WINDOW (totem->win));
+				totem);
 	}
 }
 
@@ -226,7 +226,7 @@ on_button1_clicked (GtkButton *button, Totem *totem)
 		char *msg;
 
 		msg = g_strdup_printf ("Totem could not start the file manager\nReason: %s.", err->message);
-		totem_action_error (msg, GTK_WINDOW (totem->win));
+		totem_action_error (msg, totem);
 		g_free (msg);
 		g_error_free (err);
 	}

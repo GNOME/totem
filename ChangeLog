@@ -1,5 +1,25 @@
 2003-04-24  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_realize),
+	(bacon_video_widget_unrealize),
+	(bacon_video_widget_set_fullscreen):
+	* src/scrsaver.c: (fake_event), (scrsaver_new), (scrsaver_disable),
+	(scrsaver_enable), (scrsaver_free):
+	* src/scrsaver.h:
+	* src/totem-preferences.c: (on_checkbutton2_toggled),
+	(on_button1_clicked):
+	* src/totem-private.h:
+	* src/totem.c: (totem_action_error), (totem_action_play),
+	(totem_action_play_media), (totem_action_set_mrl),
+	(totem_action_seek_relative), (on_open_location1_activate),
+	(on_eject1_activate), (on_take_screenshot1_activate),
+	(on_properties1_activate), (commit_hide_skip_to),
+	(on_video_motion_notify_event):
+	* src/totem.h: remove usage of a bunch of static variables, transform
+	the screensaver into an "object", and some cleanups
+
+2003-04-24  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_action_exit): don't crash on exit if the totem is
 	NULL (early start)
 
