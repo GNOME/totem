@@ -146,7 +146,7 @@ bacon_cd_selection_instance_init (BaconCdSelection *bcs)
 {
 	bcs->priv = g_new0 (BaconCdSelectionPrivate, 1);
 
-#ifdef __linux__
+#if defined (__linux__) || defined (__FreeBSD__)
 	bcs->priv->is_entry = FALSE;
 #else
 	bcs->priv->is_entry = TRUE;
@@ -432,6 +432,29 @@ bacon_cd_selection_get_device (BaconCdSelection *bcs)
 		drive = get_drive (bcs, i);
 
 		return drive ? drive->device : NULL;
+	}
+
+	return NULL;
+}
+
+const CDDrive *
+bacon_cd_selection_get_cdrom (BaconCdSelection *bcs)
+{
+	CDDrive *drive;
+	int i;
+
+	g_return_val_if_fail (bcs != NULL, NULL);
+	g_return_val_if_fail (BACON_IS_CD_SELECTION (bcs), NULL);
+
+	if (bcs->priv->is_entry == TRUE)
+	{
+		return NULL;
+	} else {
+		i = gtk_option_menu_get_history (GTK_OPTION_MENU
+				(bcs->priv->widget));
+		drive = get_drive (bcs, i);
+
+		return drive;
 	}
 
 	return NULL;

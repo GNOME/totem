@@ -51,6 +51,67 @@
 
 #include "cd-drive.h"
 
+#if defined(__linux__) || defined(__FreeBSD__)
+
+/* For dvd_plus_rw_utils.cpp */
+int get_dvd_r_rw_profile (const char *name);
+int get_mmc_profile (void *fd);
+
+static void
+add_dvd_plus (CDDrive *cdrom)
+{
+	int caps;
+
+	caps = get_dvd_r_rw_profile (cdrom->device);
+
+	if (caps == -1) {
+		return;
+	}
+
+	if (caps == 2) {
+		cdrom->type |= CDDRIVE_TYPE_DVD_PLUS_RW_RECORDER;
+		cdrom->type |= CDDRIVE_TYPE_DVD_PLUS_R_RECORDER;
+	} else if (caps == 0) {
+		cdrom->type |= CDDRIVE_TYPE_DVD_PLUS_R_RECORDER;
+	} else if (caps == 1) {
+		cdrom->type |= CDDRIVE_TYPE_DVD_PLUS_RW_RECORDER;
+	}
+}
+
+static CDBlankMediaType
+linux_bsd_media_type (const char *device)
+{
+	int fd;
+	int mmc_profile;
+
+	fd = open (device, O_RDONLY);
+	if (fd < 0) {
+		return CD_BLANK_MEDIA_TYPE_UNKNOWN;
+	}
+
+	mmc_profile = get_mmc_profile ((void *)fd);
+	close (fd);
+
+	switch (mmc_profile) {
+	case -1:        /* Couldn't get the data about the media */
+		return CD_BLANK_MEDIA_TYPE_UNKNOWN;
+	case 0x9:	/* CD-R                         */
+		return CD_BLANK_MEDIA_TYPE_CD;
+	case 0x11:      /* DVD-R                        */
+	case 0x13:      /* DVD-RW Restricted Overwrite  */
+	case 0x14:      /* DVD-RW Sequential            */
+		return CD_BLANK_MEDIA_TYPE_DVDR;
+	case 0x1B:      /* DVD+R                        */
+	case 0x1A:      /* DVD+RW                       */
+		return CD_BLANK_MEDIA_TYPE_DVD_PLUS_R;
+	case 0x12:      /* DVD-RAM                      */
+	default:
+		return CD_BLANK_MEDIA_TYPE_UNKNOWN;
+	}
+}
+
+#endif /* __linux__ || __FreeBSD__ */
+
 #ifdef __linux__
 
 #ifdef USE_STABLE_LIBGLIB
@@ -348,6 +409,8 @@ add_linux_cd_recorder (GList *cdroms,
 
 	cdrom = g_new0 (CDDrive, 1);
 
+	cdrom->type = CDDRIVE_TYPE_CD_DRIVE;
+
 	if (cdrom_s->device[0] == 's') {
 		cdrom->display_name = cdrom_get_name (cdrom_s, scsi_units,
 				n_scsi_units);
@@ -356,22 +419,38 @@ add_linux_cd_recorder (GList *cdroms,
 		}
 		cdrom->cdrecord_id = g_strdup_printf ("%d,%d,%d",
 				bus, id, lun);
-		cdrom->max_speed_write = get_device_max_speed (cdrom->cdrecord_id);
+		cdrom->max_speed_write = get_device_max_speed
+			(cdrom->cdrecord_id);
 	} else {
 		/* kernel >=2.5 can write cd w/o ide-scsi */
-		cdrom->display_name = cdrom_get_name(cdrom_s, scsi_units, n_scsi_units);
+		cdrom->display_name = cdrom_get_name (cdrom_s,
+				scsi_units, n_scsi_units);
 		cdrom->cdrecord_id = g_strdup_printf (cdrom_s->device);
-		cdrom->max_speed_write = get_device_max_speed (cdrom->cdrecord_id);
+		cdrom->max_speed_write = get_device_max_speed
+			(cdrom->cdrecord_id);
 	}
 	cdrom->device = g_strdup_printf ("/dev/%s", cdrom_s->device);
-	cdrom->max_speed_read = cdrom_s->speed; 
-	if (cdrom_s->can_write_dvdr
-	    || cdrom_s->can_write_dvdram) {
-		cdrom->type = CDDRIVE_TYPE_DVD_RECORDER;
-	} else {
-		cdrom->type = CDDRIVE_TYPE_CD_RECORDER;
+	cdrom->max_speed_read = cdrom_s->speed;
+	if (cdrom_s->can_write_dvdr) {
+		cdrom->type |= CDDRIVE_TYPE_DVD_RW_RECORDER;
 	}
-	
+
+	if (cdrom_s->can_write_dvdram) {
+		cdrom->type |= CDDRIVE_TYPE_DVD_RAM_RECORDER;
+	}
+
+	if (cdrom_s->can_write_cdr) {
+		cdrom->type |= CDDRIVE_TYPE_CD_RECORDER;
+	}
+	if (cdrom_s->can_write_cdrw) {
+		cdrom->type |= CDDRIVE_TYPE_CDRW_RECORDER;
+	}
+	if (cdrom_s->can_read_dvd) {
+		cdrom->type |= CDDRIVE_TYPE_DVD_DRIVE;
+	}
+
+	add_dvd_plus (cdrom);
+
 	return g_list_append (cdroms, cdrom);
 }
 
@@ -382,17 +461,16 @@ add_linux_cd_drive (GList *cdroms, struct cdrom_unit *cdrom_s,
 	CDDrive *cdrom;
 
 	cdrom = g_new0 (CDDrive, 1);
+	cdrom->type = CDDRIVE_TYPE_CD_DRIVE;
 	cdrom->cdrecord_id = NULL;
 	cdrom->display_name = cdrom_get_name (cdrom_s, scsi_units, n_scsi_units);
 	cdrom->device = g_strdup_printf ("/dev/%s", cdrom_s->device);
 	cdrom->max_speed_write = 0; /* Can't write */
 	cdrom->max_speed_read = cdrom_s->speed;
 	if (cdrom_s->can_read_dvd) {
-		cdrom->type = CDDRIVE_TYPE_DVD_DRIVE;
-	} else {
-		cdrom->type = CDDRIVE_TYPE_CD_DRIVE;
+		cdrom->type |= CDDRIVE_TYPE_DVD_DRIVE;
 	}
-	
+
 	return g_list_append (cdroms, cdrom);
 }
 
@@ -630,6 +708,7 @@ freebsd_scan (gboolean recorder_only)
 		gchar *cam_path, *dev;
 		struct cam_device *cam_dev;
 
+		type = 0;
 		cam_path = g_strdup_printf ("/dev/%s%dc", dev_type, i);
 
 		if (!g_file_test (cam_path, G_FILE_TEST_EXISTS)) {
@@ -659,14 +738,17 @@ freebsd_scan (gboolean recorder_only)
 			continue;
 		}
 
-		type = CDDRIVE_TYPE_CD_RECORDER;
-		if (ioctl (fd, CDRIOCWRITESPEED, &max_speed) < 0) {
-			type = CDDRIVE_TYPE_CD_DRIVE;
+		type |= CDDRIVE_TYPE_CD_DRIVE;
+		if (ioctl (fd, CDRIOCWRITESPEED, &max_speed) >= 0) {
+			/* XXX is it CD-R or CD-RW ? */
+			type |= CDDRIVE_TYPE_CD_RECORDER;
 		}
 
 		close (fd);
 
-		if (type == CDDRIVE_TYPE_CD_RECORDER || recorder_only == FALSE) {
+		if (type & CDDRIVE_TYPE_CD_RECORDER
+				|| type & CDDRIVE_TYPE_CDRW_RECORDER
+				|| recorder_only == FALSE) {
 			cdrom = g_new0 (CDDrive, 1);
 			cdrom->display_name = g_strdup_printf ("%s %s", cam_dev->inq_data.vendor, cam_dev->inq_data.revision);
 			cdrom->device = g_strdup (dev);
@@ -674,6 +756,8 @@ freebsd_scan (gboolean recorder_only)
 			cdrom->max_speed_write = speed;
 			cdrom->cdrecord_id = g_strdup_printf ("%d,%d,%d", cam_dev->path_id, cam_dev->target_id, cam_dev->target_lun);
 			cdrom->type = type;
+
+			add_dvd_plus (cdrom);
 
 			cdroms_list = g_list_append (cdroms_list, cdrom);
 		}
@@ -724,5 +808,15 @@ cd_drive_free (CDDrive *drive)
 	g_free (drive->display_name);
 	g_free (drive->cdrecord_id);
 	g_free (drive->device);
+}
+
+CDBlankMediaType
+guess_media_type (const char *device_path)
+{
+#if defined(__linux__) || defined(__FreeBSD__)
+	return linux_bsd_media_type (device_path);
+#else
+	return CD_BLANK_MEDIA_TYPE_UNKNOWN;
+#endif
 }
 

@@ -282,7 +282,7 @@ egg_recent_model_read_raw (EggRecentModel *model, FILE *file)
 
 	rewind (file);
 
-	string = g_string_new ("");
+	string = g_string_new (NULL);
 	while (fgets (buf, EGG_RECENT_MODEL_BUFFER_SIZE, file)) {
 		string = g_string_append (string, buf);
 	}

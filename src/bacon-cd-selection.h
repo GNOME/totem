@@ -22,6 +22,7 @@
 #define HAVE_BACON_CD_SELECTION_H
 
 #include <gtk/gtkwidget.h>
+#include <cd-drive.h>
 
 G_BEGIN_DECLS
 
@@ -45,10 +46,11 @@ typedef struct {
 GtkType bacon_cd_selection_get_type              (void);
 GtkWidget *bacon_cd_selection_new                (void);
 
-void bacon_cd_selection_set_device		 (BaconCdSelection *tcs,
+void bacon_cd_selection_set_device		 (BaconCdSelection *bcs,
 						  const char *device);
-const char *bacon_cd_selection_get_device	 (BaconCdSelection *tcs);
-const char *bacon_cd_selection_get_default_device (BaconCdSelection *tcs);
+const char *bacon_cd_selection_get_device	 (BaconCdSelection *bcs);
+const char *bacon_cd_selection_get_default_device (BaconCdSelection *bcs);
+const CDDrive *bacon_cd_selection_get_cdrom       (BaconCdSelection *bcs);
 
 G_END_DECLS
 

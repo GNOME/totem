@@ -1,3 +1,14 @@
+2003-07-07  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/bacon-cd-selection.[ch]:
+	* src/cd-drive.[ch]:
+	* src/dvd_plus_rw_utils.cpp:
+	* src/egg-recent-model.c: (egg_recent_model_read_raw): memleak fix
+	from Kjartan Maraas, upd from libegg
+	* src/transport.hxx: updated from libbacon
+
 2003-07-06  Gil "Dolfin" Osher <dolfin@rpg.org.il>
 
 	* configure.in: Added "he" (Hebrew) to ALL_LINGUAS.

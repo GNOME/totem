@@ -28,12 +28,25 @@
 
 #include <glib.h>
 
+/* Type of blank media grouped by burning tool used */
 typedef enum {
-	CDDRIVE_TYPE_FILE,
-	CDDRIVE_TYPE_CD_RECORDER,
-	CDDRIVE_TYPE_DVD_RECORDER,
-	CDDRIVE_TYPE_CD_DRIVE,
-	CDDRIVE_TYPE_DVD_DRIVE,
+	CD_BLANK_MEDIA_TYPE_UNKNOWN,
+	CD_BLANK_MEDIA_TYPE_CD,
+	CD_BLANK_MEDIA_TYPE_DVDR,
+	CD_BLANK_MEDIA_TYPE_DVD_PLUS_R,
+} CDBlankMediaType;
+
+typedef enum {
+	CDDRIVE_TYPE_FILE                   = 1 << 0,
+	CDDRIVE_TYPE_CD_RECORDER            = 1 << 1,
+	CDDRIVE_TYPE_CDRW_RECORDER          = 1 << 2,
+	CDDRIVE_TYPE_DVD_RAM_RECORDER       = 1 << 3,
+	/* Drives are usually DVD-R and DVD-RW */
+	CDDRIVE_TYPE_DVD_RW_RECORDER        = 1 << 4,
+	CDDRIVE_TYPE_DVD_PLUS_R_RECORDER    = 1 << 5,
+	CDDRIVE_TYPE_DVD_PLUS_RW_RECORDER   = 1 << 6,
+	CDDRIVE_TYPE_CD_DRIVE               = 1 << 7,
+	CDDRIVE_TYPE_DVD_DRIVE              = 1 << 8,
 } CDDriveType;
 
 typedef struct {
@@ -48,5 +61,6 @@ typedef struct {
 /* Returns a list of CDDrive structs */
 GList *scan_for_cdroms (gboolean recorder_only, gboolean add_image);
 void cd_drive_free (CDDrive *drive);
+CDBlankMediaType guess_media_type (const char *device_path);
 
 #endif
