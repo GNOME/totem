@@ -91,7 +91,7 @@ struct Totem {
 	gboolean popup_in_progress;
 	GdkRectangle fullscreen_rect;
 
-	ScreenSaver *scr;
+	TotemScrsaver *scr;
 
 	/* recent file stuff */
 	EggRecentModel *recent_model;

@@ -79,7 +79,7 @@ GQuark totem_pl_parser_error_quark (void);
 
 typedef void (*TotemPlParserIterFunc) (GtkTreeModel *model, GtkTreeIter *iter, char **uri, char **title);
 
-GtkType    totem_pl_parser_get_type (void);
+GType    totem_pl_parser_get_type (void);
 
 gboolean   totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
 				  TotemPlParserIterFunc func,

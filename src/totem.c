@@ -524,7 +524,7 @@ totem_action_fullscreen_toggle (Totem *totem)
 		bacon_video_widget_set_fullscreen (totem->bvw, FALSE);
 		gtk_window_unfullscreen (GTK_WINDOW(totem->win));
 		bacon_video_widget_set_show_cursor (totem->bvw, TRUE);
-		scrsaver_enable (totem->scr);
+		totem_scrsaver_enable (totem->scr);
 
 		if (totem->controls_visibility != TOTEM_CONTROLS_VISIBLE)
 		{
@@ -549,7 +549,7 @@ totem_action_fullscreen_toggle (Totem *totem)
 		bacon_video_widget_set_fullscreen (totem->bvw, TRUE);
 		bacon_video_widget_set_show_cursor (totem->bvw, FALSE);
 		gtk_window_fullscreen (GTK_WINDOW(totem->win));
-		scrsaver_disable (totem->scr);
+		totem_scrsaver_disable (totem->scr);
 
 		totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
 		show_controls (totem, FALSE, TRUE);
@@ -3426,7 +3426,7 @@ video_widget_create (Totem *totem)
 	GtkWidget *container;
 	int w, h;
 
-	totem->scr = scrsaver_new ();
+	totem->scr = totem_scrsaver_new ();
 
 	w = gconf_client_get_int (totem->gc, GCONF_PREFIX"/window_w", NULL);
 	h = gconf_client_get_int (totem->gc, GCONF_PREFIX"/window_h", NULL);

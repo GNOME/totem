@@ -1,5 +1,18 @@
 2004-10-31  Bastien Nocera  <hadess@hadess.net>
 
+	* src/scrsaver.c: (totem_scrsaver_class_init),
+	(totem_scrsaver_new), (fake_event), (totem_scrsaver_init),
+	(totem_scrsaver_disable), (totem_scrsaver_enable),
+	(totem_scrsaver_finalize):
+	* src/scrsaver.h:
+	* src/totem-pl-parser.h:
+	* src/totem-private.h:
+	* src/totem.c: (totem_action_fullscreen_toggle),
+	(video_widget_create): turn the ScreenSaver struct into the
+	TotemScrsaver GObject
+
+2004-10-31  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-playlist.c: (treeview_row_changed): when double-clicking
 	we need to to reactivate the drop target after the row activation so
 	that drag'n'drop works again (Closes: #155702)
