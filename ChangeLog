@@ -1,5 +1,12 @@
 2002-11-13  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-playlist.c: (gtk_playlist_new):
+	* src/gtk-playlist.h:
+	* src/totem.c: (main): don't set the playlist as a transient of the
+	main window
+
+2002-11-13  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-xine.c: (gtk_xine_instance_init),
 	(gtk_xine_properties_dialog_get), (gtk_xine_properties_update):
 	fix what's shown in the properties dialog when the logo is loaded

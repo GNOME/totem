@@ -1863,8 +1863,7 @@ main (int argc, char **argv)
 
 	totem->win = glade_xml_get_widget (totem->xml, "app1");
 
-	totem->playlist = GTK_PLAYLIST
-		(gtk_playlist_new (GTK_WINDOW (totem->win)));
+	totem->playlist = GTK_PLAYLIST (gtk_playlist_new ());
 	if (totem->playlist == NULL)
 	{
 		totem_action_error (_("Couldn't load the interface for the playlist."

@@ -740,7 +740,7 @@ gtk_playlist_realize (GtkWidget *widget)
 }
 
 GtkWidget*
-gtk_playlist_new (GtkWindow *parent)
+gtk_playlist_new (void)
 {
 	GtkPlaylist *playlist;
 	GtkWidget *container, *item;
@@ -800,9 +800,6 @@ gtk_playlist_new (GtkWindow *parent)
 
 	/* The configuration */
 	init_config (playlist);
-
-	if (parent != NULL)
-		gtk_window_set_transient_for (GTK_WINDOW (playlist), parent);
 
 	filename = gnome_program_locate_file (NULL,
 			GNOME_FILE_DOMAIN_APP_DATADIR,
