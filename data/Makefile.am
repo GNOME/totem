@@ -34,9 +34,9 @@ pixmap_DATA = media-player-48.png vanity.png
 desktop_in_in_files_all = totem.desktop.in.in.in vanity.desktop.in.in
 desktop_in_files_all = totem.desktop.in.in vanity.desktop.in
 if TOTEM_VANITY
-desktop_in_files = totem.desktop.in vanity.desktop.in
+desktop_in_files = totem.desktop.in.in vanity.desktop.in
 else
-desktop_in_files = totem.desktop.in
+desktop_in_files = totem.desktop.in.in
 endif
 
 desktopdir = $(datadir)/applications/

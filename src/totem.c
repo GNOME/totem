@@ -2669,11 +2669,9 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 		break;
 	case GDK_F10:
 		if (event->state & GDK_SHIFT_MASK)
-		{
 			totem_action_menu_popup (totem, 0);
-		} else {
+		else
 			retval = FALSE;
-		}
 		break;
 	default:
 		retval = FALSE;
@@ -2729,7 +2727,8 @@ totem_action_handle_volume_scroll (Totem *totem, GdkScrollDirection direction)
 static int
 on_window_key_press_event (GtkWidget *win, GdkEventKey *event, Totem *totem)
 {
-	/* Special case the Playlist and Eject keyboard shortcuts */
+	/* Special case the Playlist, Eject, Open, Open URI and
+	 * seeking keyboard shortcuts */
 	if (event->state != 0
 			&& (event->state & GDK_CONTROL_MASK))
 	{
