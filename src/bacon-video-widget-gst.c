@@ -1865,7 +1865,7 @@ bacon_video_widget_new (int width, int height,
 
   bvw->priv->play = gst_play_new (err);
   
-  if (err != NULL) {
+  if (*err != NULL) {
     return NULL;
   }
   
