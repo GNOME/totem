@@ -14,19 +14,18 @@ if HAVE_X86
 TOTEM_DOWNLOAD = totem-download.c totem-download.h
 endif
 
-MARSHALFILES = baconvideowidget-marshal.h baconvideowidget-marshal.c
+MARSHALFILES = baconvideowidget-marshal.h baconvideowidget-marshal.c totemplparser-marshal.c totemplparser-marshal.h
 GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
 
 baconvideowidget-marshal.h: baconvideowidget-marshal.list
-	( $(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal baconvideowidget-marshal.list \
-	  --header > baconvideowidget-marshal.tmp \
-	  && mv baconvideowidget-marshal.tmp baconvideowidget-marshal.h ) \
-	|| ( rm -f baconvideowidget-marshal.tmp && exit 1 )
+	( $(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal baconvideowidget-marshal.list --header > baconvideowidget-marshal.h )
 baconvideowidget-marshal.c: baconvideowidget-marshal.h
-	( $(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal baconvideowidget-marshal.list \
-	  --body > baconvideowidget-marshal.tmp \
-	  && mv baconvideowidget-marshal.tmp baconvideowidget-marshal.c ) \
-	|| ( rm -f baconvideowidget-marshal.tmp && exit 1 )
+	( $(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal baconvideowidget-marshal.list --body > baconvideowidget-marshal.tmp )
+totemplparser-marshal.c: totemplparser-marshal.h
+	 ( $(GLIB_GENMARSHAL) --prefix=totemplparser_marshal totemplparser-marshal.list --header --body > totemplparser-marshal.c )
+totemplparser-marshal.h: totemplparser-marshal.list
+	( $(GLIB_GENMARSHAL) --prefix=totemplparser_marshal totemplparser-marshal.list --header > totemplparser-marshal.h )
+
 
 EGG_RECENT_FILES =                      \
 	egg-recent-model.c              \
@@ -63,7 +62,7 @@ regenerate-built-sources:
 	EGGFILES="$(BACON_CD_SELECTION)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
 	EGGFILES="$(BACON_V4L_SELECTION)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
 
-VIDEOWIDGET = baconvideowidget-marshal.list $(MARSHALFILES) $(MM) bacon-video-widget.h bacon-resize.h bacon-resize.c video-utils.c video-utils.h debug.h
+VIDEOWIDGET = baconvideowidget-marshal.list totemplparser-marshal.list $(MARSHALFILES) $(MM) bacon-video-widget.h bacon-resize.h bacon-resize.c video-utils.c video-utils.h debug.h
 
 totem_SOURCES = 					\
 	$(EGG_RECENT_FILES)				\
@@ -77,6 +76,7 @@ totem_SOURCES = 					\
 	bacon-video-widget-properties.c	\
 	bacon-video-widget-properties.h	\
 	scrsaver.c scrsaver.h		\
+	totem-pl-parser.c totem-pl-parser.h \
 	totem-playlist.c totem-playlist.h \
 	rb-ellipsizing-label.c		\
 	rb-ellipsizing-label.h		\

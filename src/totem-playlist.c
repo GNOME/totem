@@ -35,6 +35,7 @@
 #include <string.h>
 #include <libgnome/gnome-i18n.h>
 
+#include "totem-pl-parser.h"
 #include "debug.h"
 
 #define READ_CHUNK_SIZE 8192
@@ -42,6 +43,7 @@
 #define PL_LEN (gtk_tree_model_iter_n_children (playlist->_priv->model, NULL))
 
 static void ensure_shuffled (TotemPlaylist *playlist, gboolean shuffle);
+static gboolean totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl, const char *display_name);
 
 typedef gboolean (*PlaylistCallback) (TotemPlaylist *playlist, const char *mrl,
 		gpointer data);
@@ -58,6 +60,7 @@ struct TotemPlaylistPrivate
 	GtkWidget *treeview;
 	GtkTreeModel *model;
 	GtkTreePath *current;
+	TotemPlParser *parser;
 
 	/* This is the playing icon */
 	GdkPixbuf *icon;
@@ -211,7 +214,7 @@ totem_playlist_mrl_to_title (const gchar *mrl)
 
 	return filename_for_display;
 }
-
+#if 0
 static const char *
 my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data)
 {
@@ -269,7 +272,7 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data)
 
 	return mimetype;
 }
-
+#endif
 static gboolean
 write_string (GnomeVFSHandle *handle, const char *buf)
 {
@@ -388,7 +391,7 @@ gtk_tree_selection_has_selected (GtkTreeSelection *selection)
 
 	return retval;
 }
-
+#if 0
 static GnomeVFSResult
 my_eel_read_entire_file (const char *uri,
 		int *file_size,
@@ -524,7 +527,7 @@ read_ini_line_string (char **lines, const char *key)
 
 	return retval;
 }
-
+#endif
 static void
 drop_cb (GtkWidget     *widget,
          GdkDragContext     *context, 
@@ -1314,9 +1317,23 @@ init_config (TotemPlaylist *playlist)
 }
 
 static void
+totem_playlist_entry_parsed (TotemPlParser *parser,
+		const char *uri, const char *title,
+		const char *genre, TotemPlaylist *playlist)
+{
+	totem_playlist_add_one_mrl (playlist, uri, title);
+}
+
+static void
 totem_playlist_init (TotemPlaylist *playlist)
 {
 	playlist->_priv = g_new0 (TotemPlaylistPrivate, 1);
+	playlist->_priv->parser = totem_pl_parser_new ();
+
+	g_signal_connect (G_OBJECT (playlist->_priv->parser),
+			"entry",
+			G_CALLBACK (totem_playlist_entry_parsed),
+			playlist);
 }
 
 static void
@@ -1330,6 +1347,7 @@ totem_playlist_finalize (GObject *object)
 		gtk_tree_path_free (playlist->_priv->current);
 	if (playlist->_priv->icon != NULL)
 		gdk_pixbuf_unref (playlist->_priv->icon);
+	g_object_unref (playlist->_priv->parser);
 
 	if (G_OBJECT_CLASS (parent_class)->finalize != NULL) {
 		(* G_OBJECT_CLASS (parent_class)->finalize) (object);
@@ -1529,6 +1547,7 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 	return TRUE;
 }
 
+#if 0
 static gboolean
 totem_playlist_add_m3u (TotemPlaylist *playlist, const char *mrl, gpointer data)
 {
@@ -2115,78 +2134,16 @@ totem_playlist_add_mrl_with_data (TotemPlaylist *playlist, const char *mrl,
 
 	return totem_playlist_add_one_mrl (playlist, mrl, display_name);
 }
-
+#endif
 gboolean
 totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl,
 		const char *display_name)
 {
-	const char *mimetype;
-	guint i;
-	gboolean found;
-
 	g_return_val_if_fail (mrl != NULL, FALSE);
 
-	for (i = 0; i < G_N_ELEMENTS(ignore_mime); i++)
-	{
-		if (strncmp (mrl, ignore_mime[i], strlen (ignore_mime[i])) == 0)
-		{
-			return totem_playlist_add_one_mrl (playlist,
-					mrl, display_name);
-		}
-	}
-
-	mimetype = gnome_vfs_get_file_mime_type (mrl, NULL, TRUE);
-	found = FALSE;
-	for (i = 0; i < G_N_ELEMENTS (special_types) && mimetype != NULL; i++)
-	{
-		if (strcmp (special_types[i].mimetype, mimetype) == 0)
-		{
-			found = TRUE;
-			break;
-		}
-	}
-
-	if (found == FALSE && mimetype != NULL)
-	{
-		for (i = 0; i < G_N_ELEMENTS (dual_types); i++)
-		{
-			if (strcmp (special_types[i].mimetype, mimetype) == 0)
-			{
-				found = TRUE;
-				break;
-			}
-		}
-	}
-
-	if (mimetype != NULL && found == FALSE)
-	{
+	if (totem_pl_parser_parse (playlist->_priv->parser, mrl) == FALSE)
 		return totem_playlist_add_one_mrl (playlist, mrl, display_name);
-	}
-
-	mimetype = gnome_vfs_get_mime_type (mrl);
-
-	if (mimetype == NULL)
-	{
-		return totem_playlist_add_mrl_with_data (playlist,
-				mrl, display_name);
-	}
-
-	for (i = 0; i < G_N_ELEMENTS(special_types); i++)
-	{
-		if (strcmp (special_types[i].mimetype, mimetype) == 0)
-			return (* special_types[i].func) (playlist, mrl, NULL);
-	}
-
-	for (i = 0; i < G_N_ELEMENTS(dual_types); i++)
-	{
-		if (strcmp (dual_types[i].mimetype, mimetype) == 0)
-		{
-			return totem_playlist_add_mrl_with_data (playlist,
-					mrl, NULL);
-		}
-	}
-
-	return totem_playlist_add_one_mrl (playlist, mrl, display_name);
+	return TRUE;
 }
 
 void

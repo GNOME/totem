@@ -1,5 +1,17 @@
 2003-10-10  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: added gnome-vfs-module as a dep (urgh!)
+	* src/.cvsignore: upd
+	* src/Makefile.am: upd
+	* src/totem-pl-parser.[ch]: build from Colin Walters' work on
+	splitting out the parsing code from the playlist to another object
+	* src/totem-playlist.c: (totem_playlist_entry_parsed),
+	(totem_playlist_init), (totem_playlist_finalize),
+	(totem_playlist_add_mrl): updated the playlist to use the new parser
+	* src/totemplparser-marshal.list: added
+
+2003-10-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c: (bacon_video_widget_tick_send):
 	oopsie, the tick wasn't sent when there wasn't a logo ;)
 
