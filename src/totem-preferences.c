@@ -88,9 +88,6 @@ auto_resize_changed_cb (GConfClient *client, guint cnxn_id,
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
 			gconf_client_get_bool (totem->gc,
 				GCONF_PREFIX"/auto_resize", NULL));
-
-	g_signal_connect (G_OBJECT (item), "toggled",
-			G_CALLBACK (on_checkbutton1_toggled), totem);
 }
 
 static void
@@ -138,6 +135,17 @@ mediadev_changed_cb (GConfClient *client, guint cnxn_id,
 			G_CALLBACK (on_combo_entry1_changed), totem);
 }
 
+static void
+option_menu_connection_changed (GtkOptionMenu *option_menu, gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+	int i;
+
+	i = gtk_option_menu_get_history (option_menu);
+	bacon_video_widget_set_connection_speed
+		(BACON_VIDEO_WIDGET (totem->bvw), i);
+}
+
 GtkWidget *
 bacon_cd_selection_create (void)
 {
@@ -155,6 +163,7 @@ totem_setup_preferences (Totem *totem)
 	GtkWidget *item;
 	const char *mediadev;
 	gboolean show_visuals, auto_resize;
+	int connection_speed;
 
 	g_return_if_fail (totem->gc != NULL);
 
@@ -214,5 +223,12 @@ totem_setup_preferences (Totem *totem)
 			(totem->gc, GCONF_PREFIX"/mediadev", NULL));
 	g_signal_connect (G_OBJECT (item), "device-changed",
 			G_CALLBACK (on_combo_entry1_changed), totem);
+
+	connection_speed = bacon_video_widget_get_connection_speed (totem->bvw);
+	item = glade_xml_get_widget (totem->xml, "optionmenu1");
+	gtk_option_menu_set_history (GTK_OPTION_MENU (item),
+			connection_speed);
+	g_signal_connect (item, "changed",
+			(GCallback)option_menu_connection_changed, totem);
 }
 

@@ -135,6 +135,14 @@ struct BaconVideoWidgetPrivate {
 	gboolean pml;
 };
 
+static const char *mms_bandwidth_strs[]={"14.4 Kbps (Modem)",
+	"19.2 Kbps (Modem)", "28.8 Kbps (Modem)",
+	"33.6 Kbps (Modem)", "34.4 Kbps (Modem)",
+	"57.6 Kbps (Modem)", "115.2 Kbps (ISDN)",
+	"262.2 Kbps (Cable/DSL)", "393.2 Kbps (Cable/DSL)",
+	"524.3 Kbps (Cable/DSL)", "1.5 Mbps (T1)",
+	"10.5 Mbps (LAN)", NULL};
+
 static void bacon_video_widget_class_init (BaconVideoWidgetClass *klass);
 static void bacon_video_widget_instance_init (BaconVideoWidget *bvw);
 
@@ -577,7 +585,7 @@ setup_config (BaconVideoWidget *bvw)
 {
 	char *configfile;
 	xine_cfg_entry_t entry;
-	char *demux_strategies[] = {"default", "reverse", "content",
+	const char *demux_strategies[] = {"default", "reverse", "content",
 		"extension", NULL};
 
 	configfile = g_build_path (G_DIR_SEPARATOR_S,
@@ -589,7 +597,7 @@ setup_config (BaconVideoWidget *bvw)
 	xine_config_register_enum (bvw->priv->xine,
 			"misc.demux_strategy",
 			0,
-			demux_strategies,
+			(char **) demux_strategies,
 			 "media format detection strategy",
 			 NULL, 10, NULL, NULL);
 
@@ -1641,7 +1649,50 @@ bacon_video_widget_set_media_device (BaconVideoWidget *bvw, const char *path)
 }
 
 void
-bacon_video_widget_set_show_visuals (BaconVideoWidget *bvw, gboolean show_visuals)
+bacon_video_widget_set_connection_speed (BaconVideoWidget *bvw, int speed)
+{
+	xine_cfg_entry_t entry;
+
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
+	g_return_if_fail (speed > 0 || speed < 10);
+
+	xine_config_register_enum (bvw->priv->xine,
+			"input.mms_network_bandwidth",
+			6,
+			(char **) mms_bandwidth_strs,
+			"Network bandwidth",
+			NULL, 0, NULL, NULL);
+
+	xine_config_lookup_entry (bvw->priv->xine,
+			"input.mms_network_bandwidth", &entry);
+	entry.num_value = speed;
+	xine_config_update_entry (bvw->priv->xine, &entry);
+}
+
+int
+bacon_video_widget_get_connection_speed (BaconVideoWidget *bvw)
+{
+	xine_cfg_entry_t entry;
+	int i = 0;
+
+	xine_config_register_enum (bvw->priv->xine,
+			"input.mms_network_bandwidth",
+			6,
+			(char **) mms_bandwidth_strs,
+			"Network bandwidth",
+			NULL, 0, NULL, NULL);
+
+	xine_config_lookup_entry (bvw->priv->xine,
+			"input.mms_network_bandwidth", &entry);
+
+	return entry.num_value;
+}
+
+void
+bacon_video_widget_set_show_visuals (BaconVideoWidget *bvw,
+		gboolean show_visuals)
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));

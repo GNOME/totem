@@ -144,6 +144,10 @@ void bacon_video_widget_set_show_visuals	 (BaconVideoWidget *bvw,
 void bacon_video_widget_set_auto_resize		 (BaconVideoWidget *bvw,
 						  gboolean auto_resize);
 
+void bacon_video_widget_set_connection_speed     (BaconVideoWidget *bvw,
+						  int speed);
+int bacon_video_widget_get_connection_speed      (BaconVideoWidget *bvw);
+
 void bacon_video_widget_toggle_aspect_ratio      (BaconVideoWidget *bvw);
 void bacon_video_widget_set_scale_ratio          (BaconVideoWidget *bvw,
 						  gfloat ratio);

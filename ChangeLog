@@ -1,5 +1,18 @@
 2003-03-04  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.glade: updated
+	* src/bacon-video-widget.c: (setup_config),
+	(bacon_video_widget_set_connection_speed),
+	(bacon_video_widget_get_connection_speed),
+	(bacon_video_widget_set_show_visuals):
+	* src/bacon-video-widget.h:
+	* src/totem-preferences.c: (auto_resize_changed_cb),
+	(option_menu_connection_changed), (totem_setup_preferences):
+	added support for setting the network connection speed
+	* README: updated
+
+2003-03-04  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.glade: adding a connection speed dropdown to the
 	preferences dialog
 
