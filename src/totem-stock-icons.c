@@ -83,7 +83,7 @@ totem_default_theme_changed (GtkIconTheme *theme, Totem *totem)
 void
 totem_set_default_icons (Totem *totem)
 {
-	GtkWidget *item, *image;
+	GtkWidget *item;
 
 	/* Play button */
 	item = glade_xml_get_widget (totem->xml, "tmw_play_pause_button_image");
@@ -91,7 +91,7 @@ totem_set_default_icons (Totem *totem)
 			totem->state == STATE_PLAYING
 			? PIXBUF_FOR_ID("stock-media-pause")
 			: PIXBUF_FOR_ID("stock-media-play"));
-	image = glade_xml_get_widget (totem->xml, "tcw_pp_button_image");
+	item = glade_xml_get_widget (totem->xml, "tcw_pp_button_image");
 	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
 			totem->state == STATE_PLAYING
 			? PIXBUF_FOR_ID("stock-media-pause")
@@ -112,16 +112,42 @@ totem_set_default_icons (Totem *totem)
 			PIXBUF_FOR_ID("stock-media-next"));
 	/* Screenshot button */
 	item = glade_xml_get_widget (totem->xml,
-			"tmw_take_screenshot_menu_item");
-	image = gtk_image_new_from_pixbuf (PIXBUF_FOR_ID("panel-screenshot"));
-	gtk_widget_show (image);
-	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item), image);
+			"tmw_take_screenshot_menu_item_image");
+	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
+			PIXBUF_FOR_ID("panel-screenshot"));
+
+	/* Playlist button */
+	item = glade_xml_get_widget (totem->xml,
+			"tmw_playlist_button_image");
+	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
+			PIXBUF_FOR_ID("stock_playlist"));
+	item = glade_xml_get_widget (totem->xml,
+			"tmw_show_playlist_menu_item_image");
+	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
+			PIXBUF_FOR_ID("stock_playlist"));
+	gtk_window_set_icon (GTK_WINDOW (totem->playlist),
+			PIXBUF_FOR_ID("stock_playlist"));
 }
 
 GdkPixbuf *
 totem_get_named_icon_for_id (const char *id)
 {
 	return PIXBUF_FOR_ID(id);
+}
+
+static GdkPixbuf *
+totem_get_pixbuf_from_totem_install (const char *filename)
+{
+	GdkPixbuf *pixbuf;
+	char *path, *fn;
+
+	fn = g_strconcat (filename, ".png", NULL);
+	path = g_build_filename (DATADIR, "totem", fn, NULL);
+	g_free (fn);
+	pixbuf = gdk_pixbuf_new_from_file (path, NULL);
+	g_free (path);
+
+	return pixbuf;
 }
 
 void
@@ -140,6 +166,7 @@ totem_named_icons_init (Totem *totem, gboolean refresh)
 		{ "stock-media-prev", "stock_media-prev", "stock_media_previous" },
 		{ "stock-media-next", "stock_media-next", "stock_media_next" },
 		{ "panel-screenshot", "stock-panel-screenshot", "gnome-screenshot" },
+		{ "stock_playlist", "playlist-24", NULL },
 	};
 
 	if (refresh == FALSE) {
@@ -170,13 +197,13 @@ totem_named_icons_init (Totem *totem, gboolean refresh)
 		}
 
 		if (pixbuf == NULL) {
-			char *path, *fn;
+			pixbuf = totem_get_pixbuf_from_totem_install
+				(items[i].fn1);
+		}
 
-			fn = g_strconcat (items[i].fn1, ".png", NULL);
-			path = g_build_filename (DATADIR, "totem", fn, NULL);
-			g_free (fn);
-			pixbuf = gdk_pixbuf_new_from_file (path, NULL);
-			g_free (path);
+		if (pixbuf == NULL) {
+			pixbuf = totem_get_pixbuf_from_totem_install
+				(items[i].fn2);
 		}
 
 		if (pixbuf == NULL) {
