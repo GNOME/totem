@@ -361,7 +361,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 static void
 bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 {
-	GtkWidget *widget = (GtkWidget *) bvw;
 	const char *const *autoplug_list;
 	int i = 0;
 
@@ -1438,8 +1437,7 @@ static void
 bacon_video_widget_size_request (GtkWidget *widget, GtkRequisition *requisition)
 {
 	BaconVideoWidget *bvw;
-	GtkRequisition child_requisition;
-	
+
 	g_return_if_fail(widget != NULL);
 	g_return_if_fail(BACON_IS_VIDEO_WIDGET(widget));
 
@@ -1747,9 +1745,9 @@ bacon_video_widget_close (BaconVideoWidget *bvw)
 gboolean
 bacon_video_widget_eject (BaconVideoWidget *bvw)
 {
-	g_return_if_fail (bvw != NULL);
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-	g_return_if_fail (bvw->priv->stream != NULL);
+	g_return_val_if_fail (bvw != NULL, FALSE);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+	g_return_val_if_fail (bvw->priv->stream != NULL, FALSE);
 
 	bacon_video_widget_close (bvw);
 	return xine_eject (bvw->priv->stream);
@@ -2372,9 +2370,9 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget *bvw,
 gboolean
 bacon_video_widget_get_auto_resize (BaconVideoWidget *bvw)
 {
-	g_return_if_fail (bvw != NULL);
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-	g_return_if_fail (bvw->priv->xine != NULL);
+	g_return_val_if_fail (bvw != NULL, FALSE);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
 
 	return bvw->priv->auto_resize;
 }
@@ -2637,9 +2635,10 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
 BaconVideoWidgetAudioOutType
 bacon_video_widget_get_audio_out_type (BaconVideoWidget *bvw)
 {
-	g_return_if_fail (bvw != NULL);
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-	g_return_if_fail (bvw->priv->xine != NULL);
+	g_return_val_if_fail (bvw != NULL, BVW_AUDIO_SOUND_STEREO);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw),
+			BVW_AUDIO_SOUND_STEREO);
+	g_return_val_if_fail (bvw->priv->xine != NULL, BVW_AUDIO_SOUND_STEREO);
 
 	return gconf_client_get_int (bvw->priv->gc,
 			GCONF_PREFIX"/audio_output_type", NULL);

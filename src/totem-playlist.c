@@ -1342,7 +1342,7 @@ totem_playlist_add_m3u (TotemPlaylist *playlist, const char *mrl, gpointer data)
 	gboolean retval = FALSE;
 	char *contents, **lines;
 	int size, i;
-	char *split_char, *base;
+	char *split_char;
 
 	if (my_eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
@@ -1924,7 +1924,6 @@ totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl,
 		const char *display_name)
 {
 	const char *mimetype;
-	gboolean retval = FALSE;
 	int i;
 
 	g_return_val_if_fail (mrl != NULL, FALSE);

@@ -120,7 +120,7 @@ linux_add_video_dev (const char *name)
 {
 	VideoDev *dev;
 	char *proc;
-	char **lines, *tmp, *display_name, *filename;
+	char **lines, *tmp, *filename;
 
 	filename = linux_get_device_path (name);
 	if (filename == NULL) {

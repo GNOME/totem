@@ -18,6 +18,8 @@
 #endif /* HAVE_XTEST */
 #include <X11/keysym.h>
 
+#define XSCREENSAVER_MIN_TIMEOUT 60
+
 struct ScreenSaver {
 	/* Whether the screensaver is disabled */
 	gboolean disabled;
@@ -90,10 +92,14 @@ scrsaver_disable (ScreenSaver *scr)
 		XUnlockDisplay (GDK_DISPLAY());
 
 		if (scr->timeout != 0)
+		{
 			g_timeout_add (scr->timeout / 2 * 1000,
 					(GSourceFunc) fake_event, scr);
+		} else {
+			g_timeout_add (XSCREENSAVER_MIN_TIMEOUT / 2 * 1000,
+					(GSourceFunc) fake_event, scr);
+		}
 
-		scr->disabled = TRUE;
 		return;
 	}
 #endif /* HAVE_XTEST */
@@ -118,9 +124,7 @@ scrsaver_enable (ScreenSaver *scr)
 #ifdef HAVE_XTEST
 	if (scr->have_xtest == True)
 	{
-		if (scr->timeout != 0)
-			g_source_remove_by_user_data (scr);
-
+		g_source_remove_by_user_data (scr);
 		return;
 	}
 

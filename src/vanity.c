@@ -62,7 +62,7 @@ long_action (void)
 	while (gtk_events_pending ())
 		gtk_main_iteration ();
 }
-
+#if 0
 static void
 vanity_action_error (char *msg, Vanity *vanity)
 {
@@ -91,7 +91,7 @@ vanity_action_error (char *msg, Vanity *vanity)
 
 	gtk_widget_show (error_dialog);
 }
-
+#endif
 static void
 vanity_action_error_and_exit (char *msg, Vanity *vanity)
 {
@@ -151,9 +151,10 @@ drag_video_cb (GtkWidget *widget,
 		guint32 time,
 		gpointer callback_data)
 {
+#if 0
 	Vanity *vanity = (Vanity *) callback_data;
 	//FIXME the trick would be to create a file like gnome-panel-screenshot does
-#if 0
+
 	char *text;
 	int len;
 

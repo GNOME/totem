@@ -71,19 +71,6 @@ typedef struct {
 } TotemDownload;
 
 static void
-sleep_with_long_action (guint length)
-{
-	guint i;
-
-	for (i = 0 ; i < length ; i = i + 1000)
-	{
-		while (gtk_events_pending ())
-			gtk_main_iteration ();
-		usleep (1000);
-	}
-}
-
-static void
 set_label (TotemDownload *td, Labels label, gboolean done)
 {
 	GtkWidget *image;
@@ -339,9 +326,8 @@ static int
 cab_download (TotemDownload *td)
 {
 	int retval;
-	int i;
 	char *filepath;
-	char *msg, *template;
+	char *template;
 
 	retval = 0;
 
@@ -383,8 +369,7 @@ totem_download_from_fourcc (GtkWindow *parent,
 {
 	GladeXML *xml;
 	TotemDownload *td;
-	GtkWidget *hbox, *image;
-	char *filename, *msg;
+	char *filename;
 	int retval;
 
 	filename = gnome_program_locate_file (NULL,

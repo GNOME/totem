@@ -39,6 +39,7 @@
 #include "rb-ellipsizing-label.h"
 #include "bacon-cd-selection.h"
 #include "totem-statusbar.h"
+#include "totem-download.h"
 #include "video-utils.h"
 
 #include "egg-recent-view.h"
@@ -211,7 +212,7 @@ totem_action_error_try_download (char *msg, Totem *totem)
 	if (audio_fcc == 0 && video_fcc == 0)
 	{
 		totem_action_error (msg, totem);
-		return;
+		return FALSE;
 	}
 
 	error_dialog =
@@ -418,7 +419,7 @@ static gboolean
 totem_action_load_media (Totem *totem, MediaType type)
 {
 	const char **mrls;
-	char *mrl, *msg;
+	char *msg;
 
 	if (bacon_video_widget_can_play (totem->bvw, type) == FALSE)
 	{
@@ -2878,8 +2879,6 @@ create_submenu (Totem *totem, GList *list, int current, gboolean is_lang)
 
 	for (l = list; l != NULL; l = l->next)
 	{
-		char *lang;
-
 		if (menu == NULL)
 		{
 			menu = gtk_menu_new ();
@@ -2907,7 +2906,6 @@ static void
 update_dvd_menu_sub_lang (Totem *totem)
 {
 	GtkWidget *item, *submenu;
-	gboolean playing_dvd;
 	GtkWidget *lang_menu, *sub_menu;
 	GList *list;
 	int current;

@@ -7,6 +7,8 @@
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 /* Code taken from:
  * transcode Copyright (C) Thomas Oestreich - June 2001

@@ -41,10 +41,9 @@ int main(int argc, char *argv[])
 	gdk_threads_init ();
 
 	win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_widget_set_usize(GTK_WIDGET(win),width,height);
+	gtk_window_set_default_size (GTK_WINDOW (win), width, height);
 
-	xine = bacon_video_widget_new (-1, -1, FALSE, NULL);
-	gtk_widget_set_usize(GTK_WIDGET(xine),width,height);
+	xine = bacon_video_widget_new (width, height, FALSE, NULL);
 
 	gtk_container_add(GTK_CONTAINER(win),xine);
 

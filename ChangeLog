@@ -1,3 +1,30 @@
+2003-09-04  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-cd-selection.h:
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_instance_init),
+	(bacon_video_widget_size_request), (bacon_video_widget_eject),
+	(bacon_video_widget_get_auto_resize),
+	(bacon_video_widget_get_audio_out_type):
+	* src/bvw-test.c: (main):
+	* src/scrsaver.c: (scrsaver_disable), (scrsaver_enable):
+	* src/totem-download.c: (cab_download),
+	(totem_download_from_fourcc):
+	* src/totem-playlist.c: (totem_playlist_add_m3u),
+	(totem_playlist_add_mrl):
+	* src/totem-preferences.c: (on_checkbutton2_toggled),
+	(on_button1_clicked), (totem_setup_preferences),
+	(totem_preferences_tvout_setup):
+	* src/totem.c: (totem_action_error_try_download),
+	(totem_action_load_media), (create_submenu),
+	(update_dvd_menu_sub_lang):
+	* src/vanity.c: (drag_video_cb):
+	* src/video-dev.c: (linux_add_video_dev):
+	* src/video-utils.c:
+
+	Updated everything from libbacon, remove all the -Wall warnings,
+	Work-around xscreensaver not using XSetScreenSaver (Closes: #121473)
+
 ============ Version 0.99.4
 
 2003-09-03  Bastien Nocera  <hadess@hadess.net>

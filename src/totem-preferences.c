@@ -21,6 +21,9 @@
 #include <libgnome/gnome-i18n.h>
 #include <gtk/gtkmessagedialog.h>
 #include <string.h>
+#include <stdio.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 #include "totem.h"
 #include "totem-private.h"
@@ -138,7 +141,6 @@ totem_prefs_set_show_visuals (Totem *totem, gboolean value, gboolean warn)
 static void
 on_checkbutton2_toggled (GtkToggleButton *togglebutton, Totem *totem)
 {
-	GtkWidget *item;
 	gboolean value;
 
 	value = gtk_toggle_button_get_active (togglebutton);
@@ -293,7 +295,7 @@ on_button1_clicked (GtkButton *button, Totem *totem)
 	GError *err = NULL;
 	char *path, *cmd, *filemanager;
 
-	path = path = g_build_path (G_DIR_SEPARATOR_S,
+	path = g_build_path (G_DIR_SEPARATOR_S,
 			g_get_home_dir (), PROPRIETARY_PLUGINS, NULL);
 
 	if (g_getenv ("KDE_STARTUP_ENV") && (filemanager = g_find_program_in_path("konqueror"))) {
@@ -502,7 +504,7 @@ totem_setup_preferences (Totem *totem)
 	if (visual == NULL || strcmp (visual, "") == 0)
 		visual = g_strdup ("goom");
 
-	i = 0;
+	i = found = 0;
 	for (l = list; l != NULL; l = l->next)
 	{
 		const char *name = l->data;
@@ -597,6 +599,7 @@ totem_preferences_tvout_setup (Totem *totem)
 		break;
 	default:
 		g_assert_not_reached ();
+		name = NULL;
 	}
 
 	item = glade_xml_get_widget (totem->xml, name);
