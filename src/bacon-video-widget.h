@@ -170,8 +170,6 @@ void bacon_video_widget_get_metadata		 (BaconVideoWidget *bvw,
 						  BaconVideoWidgetMetadataType type,
 						  GValue *value);
 
-char *bacon_video_widget_get_nice_title          (BaconVideoWidget *bvw);
-
 /* Screenshot functions */
 gboolean bacon_video_widget_can_get_frames       (BaconVideoWidget *bvw);
 GdkPixbuf * bacon_video_widget_get_current_frame (BaconVideoWidget *bvw);

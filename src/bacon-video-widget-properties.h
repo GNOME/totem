@@ -49,7 +49,7 @@ GtkType    bacon_video_widget_properties_get_type	(void);
 GtkWidget *bacon_video_widget_properties_new	();
 
 void bacon_video_widget_properties_update		(BaconVideoWidgetProperties *props,
-					 BaconVideoWidget *bvw, gboolean reset);
+					 BaconVideoWidget *bvw, const char *name, gboolean reset);
 
 char      *bacon_video_widget_properties_time_to_string
 					(int time);

@@ -449,7 +449,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		/* Reset the properties */
 		bacon_video_widget_properties_update
 			(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
-			 BACON_VIDEO_WIDGET (totem->bvw), TRUE);
+			 BACON_VIDEO_WIDGET (totem->bvw), NULL, TRUE);
 	} else {
 		char *title, *name;
 		int time;
@@ -493,7 +493,9 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		/* Update the properties */
 		bacon_video_widget_properties_update
 			(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
-			 BACON_VIDEO_WIDGET (totem->bvw), FALSE);
+			 BACON_VIDEO_WIDGET (totem->bvw), name, FALSE);
+
+		g_free (name);
 	}
 	update_buttons (totem);
 	update_dvd_menu_items (totem);
@@ -1451,7 +1453,7 @@ on_properties1_activate (GtkButton *button, gpointer user_data)
 		return;
 	}
 
-	gtk_widget_show_all (totem->properties);
+	gtk_widget_show (totem->properties);
 	gtk_window_set_transient_for (GTK_WINDOW (totem->properties),
 			GTK_WINDOW (totem->win));
 }

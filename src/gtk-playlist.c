@@ -1423,18 +1423,30 @@ gtk_playlist_set_at_end (GtkPlaylist *playlist)
 gchar *
 gtk_playlist_mrl_to_title (const gchar *mrl)
 {
-	char *filename_for_display, *filename, *unescaped;
+	char *filename_for_display, *with_suffix, *filename, *unescaped;
 
 	filename = g_path_get_basename (mrl);
 	unescaped = gnome_vfs_unescape_string_for_display (filename);
 	g_free (filename);
-	filename_for_display = g_filename_to_utf8 (unescaped,
+	with_suffix = g_filename_to_utf8 (unescaped,
 			-1,             /* length */
 			NULL,           /* bytes_read */
 			NULL,           /* bytes_written */
 			NULL);          /* error */
 
 	g_free (unescaped);
+
+	if (strrchr (with_suffix, '.')
+			&& strlen (strrchr (with_suffix, '.')) < 5)
+	{
+		filename_for_display = g_strndup (with_suffix,
+				strlen (with_suffix)
+				- strlen (strrchr (with_suffix, '.')));
+	} else {
+		filename_for_display = g_strdup (with_suffix);
+	}
+
+	g_free (with_suffix);
 
 	return filename_for_display;
 }

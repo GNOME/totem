@@ -24,6 +24,7 @@
 #include "bacon-video-widget-properties.h"
 
 #include <gtk/gtk.h>
+#include <libgnomeui/gnome-href.h>
 #include <glade/glade.h>
 #include <libgnome/gnome-i18n.h>
 #include <string.h>
@@ -38,11 +39,10 @@ struct BaconVideoWidgetPropertiesPrivate
 
 static GtkWidgetClass *parent_class = NULL;
 
-static void bacon_video_widget_properties_class_init (BaconVideoWidgetPropertiesClass *class);
-static void bacon_video_widget_properties_init       (BaconVideoWidgetProperties      *label);
-
-static void init_treeview (GtkWidget *treeview, BaconVideoWidgetProperties *playlist);
-static gboolean bacon_video_widget_properties_unset_playing (BaconVideoWidgetProperties *playlist);
+static void bacon_video_widget_properties_class_init
+	(BaconVideoWidgetPropertiesClass *class);
+static void bacon_video_widget_properties_init
+	(BaconVideoWidgetProperties *props);
 
 GtkType
 bacon_video_widget_properties_get_type (void)
@@ -71,11 +71,11 @@ bacon_video_widget_properties_get_type (void)
 }
 
 static void
-bacon_video_widget_properties_init (BaconVideoWidgetProperties *playlist)
+bacon_video_widget_properties_init (BaconVideoWidgetProperties *props)
 {
-	playlist->priv = g_new0 (BaconVideoWidgetPropertiesPrivate, 1);
-	playlist->priv->xml = NULL;
-	playlist->priv->vbox = NULL;
+	props->priv = g_new0 (BaconVideoWidgetPropertiesPrivate, 1);
+	props->priv->xml = NULL;
+	props->priv->vbox = NULL;
 }
 
 static void
@@ -186,10 +186,14 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 	bacon_video_widget_properties_set_label (props, "bitrate", _("0 kbps"));
 	/* Audio Codec */
 	bacon_video_widget_properties_set_label (props, "acodec", _("N/A"));
+
+	item = glade_xml_get_widget (props->priv->xml, "href1");
+	gtk_widget_set_sensitive (item, FALSE);
+	gnome_href_set_text (GNOME_HREF (item), _("No Link"));
 }
 
 static void
-bacon_video_widget_properties_set_from_current (BaconVideoWidgetProperties *props, BaconVideoWidget *bvw)
+bacon_video_widget_properties_set_from_current (BaconVideoWidgetProperties *props, BaconVideoWidget *bvw, const char *name)
 {
 	GtkWidget *item;
 	GValue value = { 0, };
@@ -197,57 +201,67 @@ bacon_video_widget_properties_set_from_current (BaconVideoWidgetProperties *prop
 	int x, y;
 
 	/* General */
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_TITLE, &value);
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_TITLE, &value);
 	bacon_video_widget_properties_set_label (props, "title",
 			g_value_get_string (&value)
 			? g_value_get_string (&value)
 			: _("Unknown"));
 	g_value_unset (&value);
 
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_ARTIST, &value);
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_ARTIST, &value);
 	bacon_video_widget_properties_set_label (props, "artist",
 			g_value_get_string (&value)
 			? g_value_get_string (&value) : _("Unknown"));
 	g_value_unset (&value);
 
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_YEAR, &value);
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_YEAR, &value);
 	bacon_video_widget_properties_set_label (props, "year",
 			g_value_get_string (&value)
 			? g_value_get_string (&value) : _("N/A"));
 	g_value_unset (&value);
 
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_DURATION, &value);
-	string = bacon_video_widget_properties_time_to_string (g_value_get_int (&value));
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_DURATION, &value);
+	string = bacon_video_widget_properties_time_to_string
+		(g_value_get_int (&value));
 	bacon_video_widget_properties_set_label (props, "duration", string);
 	g_free (string);
 	g_value_unset (&value);
 
 	/* Video */
 	item = glade_xml_get_widget (props->priv->xml, "video");
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_HAS_VIDEO, &value);
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_HAS_VIDEO, &value);
 	if (g_value_get_boolean (&value) == FALSE)
 		gtk_widget_set_sensitive (item, FALSE);
 	else
 		gtk_widget_set_sensitive (item, TRUE);
 	g_value_unset (&value);
 
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_DIMENSION_X, &value);
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_DIMENSION_X, &value);
 	x = g_value_get_int (&value);
 	g_value_unset (&value);
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_DIMENSION_Y, &value);
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_DIMENSION_Y, &value);
 	y = g_value_get_int (&value);
 	g_value_unset (&value);
 	string = g_strdup_printf ("%d x %d", x, y);
 	bacon_video_widget_properties_set_label (props, "dimensions", string);
 	g_free (string);
 
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_VIDEO_CODEC, &value);
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_VIDEO_CODEC, &value);
 	bacon_video_widget_properties_set_label (props, "vcodec",
 			g_value_get_string (&value)
 			? g_value_get_string (&value) : _("N/A"));
 	g_value_unset (&value);
 
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_FPS, &value);
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_FPS, &value);
 	string = g_strdup_printf (_("%d frames per second"),
 			g_value_get_int (&value));
 	bacon_video_widget_properties_set_label (props, "framerate", string);
@@ -256,29 +270,41 @@ bacon_video_widget_properties_set_from_current (BaconVideoWidgetProperties *prop
 
 	/* Audio */
 	item = glade_xml_get_widget (props->priv->xml, "audio");
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_HAS_AUDIO, &value);
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_HAS_AUDIO, &value);
 	if (g_value_get_boolean (&value) == FALSE)
 		gtk_widget_set_sensitive (item, FALSE);
 	else
 		gtk_widget_set_sensitive (item, TRUE);
 	g_value_unset (&value);
 
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_BITRATE, &value);
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_BITRATE, &value);
 	string = g_strdup_printf (_("%d kbps"), g_value_get_int (&value));
 	bacon_video_widget_properties_set_label (props, "bitrate", string);
 	g_free (string);
 	g_value_unset (&value);
 
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_AUDIO_CODEC, &value);
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_AUDIO_CODEC, &value);
 	bacon_video_widget_properties_set_label (props, "acodec",
 			g_value_get_string (&value)
 			? g_value_get_string (&value) : _("N/A"));
 	g_value_unset (&value);
+
+	item = glade_xml_get_widget (props->priv->xml, "href1");
+	gtk_widget_set_sensitive (item, TRUE);
+	string = g_strdup_printf ("http://us.imdb.com/Tsearch?title=%s", name);
+	gnome_href_set_url (GNOME_HREF (item), string);
+	gnome_href_set_text (GNOME_HREF (item), name);
+	g_free (string);
 }
 
 void
-bacon_video_widget_properties_update (BaconVideoWidgetProperties *props, BaconVideoWidget *bvw,
-			    gboolean reset)
+bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
+		BaconVideoWidget *bvw,
+		const char *name,
+		gboolean reset)
 {
 	g_return_if_fail (props != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
@@ -288,7 +314,8 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props, BaconVi
 		bacon_video_widget_properties_reset (props);
 	} else {
 		g_return_if_fail (bvw != NULL);
-		bacon_video_widget_properties_set_from_current (props, bvw);
+		g_return_if_fail (name != NULL);
+		bacon_video_widget_properties_set_from_current (props, bvw, name);
 	}
 }
 
@@ -335,9 +362,9 @@ bacon_video_widget_properties_new (void)
 	g_signal_connect (G_OBJECT (props), "delete-event",
 			G_CALLBACK (hide_dialog), NULL);
 
-	bacon_video_widget_properties_update (props, NULL, TRUE);
+	bacon_video_widget_properties_update (props, NULL, NULL, TRUE);
 
-	gtk_widget_show_all (GTK_DIALOG (props)->vbox);
+	gtk_widget_show (GTK_DIALOG (props)->vbox);
 
 	return GTK_WIDGET (props);
 }

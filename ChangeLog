@@ -1,5 +1,21 @@
 2003-02-18  Bastien Nocera  <hadess@hadess.net>
 
+	* data/properties.glade:
+	* src/bacon-video-widget-properties.c:
+	(bacon_video_widget_properties_init),
+	(bacon_video_widget_properties_reset),
+	(bacon_video_widget_properties_set_from_current),
+	(bacon_video_widget_properties_update),
+	(bacon_video_widget_properties_new):
+	* src/bacon-video-widget-properties.h:
+	* src/bacon-video-widget.h:
+	* src/gtk-playlist.c: (gtk_playlist_mrl_to_title):
+	* src/totem.c: (totem_action_set_mrl), (on_properties1_activate):
+	Added a Link to IMDB depending on the video name, but it doesn't work
+	properly, don't count on it
+
+2003-02-18  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-playlist.c: (gtk_playlist_add_m3u),
 	(gtk_playlist_add_ra), (gtk_playlist_add_mrl): add support for .ra
 	files, we require an updated gnome-mime-data for the playlist files
