@@ -6,11 +6,15 @@ Totem is simple movie player for the Gnome desktop based on xine. It features a
 simple playlist, a full-screen mode, seek and volume controls, as well as
 a pretty complete keyboard navigation.
 
+Read the previous release notes if you encounter problems:
+http://lists.gnome.org/archives/gnome-announce-list/2003-May/msg00096.html
+
 News
 ====
 
-1.0 (?):
+0.99.1:
 * Added a automatic downloader for the DLLs on x86 machines
+* Added a brightness and contrast preferences
 * Fixed display of filenames in non-UTF-8 encodings without warnings
 * Many behavioural fixes for the GStreamer backend
 * HIG fixes for most of the dialogues
@@ -272,6 +276,24 @@ TODO
   http://devedge.netscape.com/library/manuals/2002/plugin/1.0/preface.html
 - check that the fake event is generated more often, depending on the
   intervals of the screensaver
+
+GStreamer backend TODO
+======================
+- brightness/contrast
+- bacon_video_widget_get_current_frame
+- audio cd playback, with cddb
+- VCD playback
+- DVD playback with menus
+- fps, bitrate, fourcc information
+- fix visual quality to match those of the xine backend
+- detect properly if there's a sound device
+- proprietary plugins?
+- deinterlacing
+- network connection speed (mmsh://, http://, rtsp://...)
+- subtitles and languages (not only DVD, ogg/ogm as well)
+- better error messages (see xine backend for examples)
+- aspect ratio changes
+- make time-based seeking work
 
 Bugs should be lodged in Gnome's Bugzilla:
 http://bugzilla.gnome.org/enter_bug.cgi?product=totem

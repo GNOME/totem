@@ -47,7 +47,7 @@ appdir = $(datadir)/application-registry
 serverdir = $(libdir)/bonobo/servers
 server_DATA = Totem_properties.server
 server_in_files = Totem_properties.server.in.in._1 Totem_properties.server.in.in._3 servers.sh
-Totem_properties.server.in.in._2: $(server_in_files)
+Totem_properties.server.in.in._2: $(server_in_files) servers.sh totem.keys
 	$(srcdir)/servers.sh $(srcdir)/totem.keys		\
 	> Totem_properties.server.in.in._2
 Totem_properties.server.in.in: $(server_in_files) Totem_properties.server.in.in._2
@@ -61,7 +61,7 @@ Totem_properties.server.in: Totem_properties.server.in.in
 
 update-gconf.sh: totem-video-thumbnail.schemas.in
 
-totem-video-thumbnail.schemas.in: schemas.sh
+totem-video-thumbnail.schemas.in: schemas.sh totem.keys
 	$(srcdir)/schemas.sh $(srcdir)/totem.keys $(bindir)	\
 	> totem-video-thumbnail.schemas.in			\
 	2> update-gconf.sh
