@@ -158,6 +158,7 @@ enum {
   ASYNC_VIDEO_SIZE,
   ASYNC_ERROR,
   ASYNC_FOUND_TAG,
+  ASYNC_CLEAR_TAGS,
   ASYNC_EOS,
   ASYNC_BUFFERING
 };
@@ -759,6 +760,14 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
 			 0, NULL);
           break;
         }
+      case ASYNC_CLEAR_TAGS:
+        {
+          gst_tag_list_free (bvw->priv->tagcache);
+          bvw->priv->tagcache = NULL;
+          g_signal_emit (G_OBJECT (bvw),
+			 bvw_table_signals[SIGNAL_GOT_METADATA], 0, NULL);
+          break;
+        }
       case ASYNC_EOS:
         {
           gst_element_set_state (GST_ELEMENT (bvw->priv->play),
@@ -795,6 +804,22 @@ got_found_tag (GstElement *play, GstElement *source,
   signal->signal_id = ASYNC_FOUND_TAG;
   signal->signal_data.found_tag.source = source;
   signal->signal_data.found_tag.tag_list = gst_tag_list_copy (tag_list);
+
+  g_async_queue_push (bvw->priv->queue, signal);
+
+  g_idle_add ((GSourceFunc) bacon_video_widget_signal_idler, bvw);
+}
+
+static void
+group_switch (GstElement *play, BaconVideoWidget *bvw)
+{
+  BVWSignal *signal;
+
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  signal = g_new0 (BVWSignal, 1);
+  signal->signal_id = ASYNC_CLEAR_TAGS;
 
   g_async_queue_push (bvw->priv->queue, signal);
 
@@ -1488,8 +1513,17 @@ bacon_video_widget_open (BaconVideoWidget * bvw, const gchar * mrl,
   bvw->priv->media_has_video = FALSE;
   bvw->priv->stream_length = 0;
 
-  g_object_set (G_OBJECT (bvw->priv->play), "uri",
-		bvw->priv->mrl, NULL);
+  if (g_strrstr (bvw->priv->mrl, "#subtitle:")) {
+    gchar **uris;
+
+    uris = g_strsplit (bvw->priv->mrl, "#subtitle:", 2);
+    g_object_set (G_OBJECT (bvw->priv->play), "uri",
+                  uris[0], "suburi", uris[1], NULL);
+    g_strfreev (uris);
+  } else {
+    g_object_set (G_OBJECT (bvw->priv->play), "uri",
+		  bvw->priv->mrl, "suburi", NULL, NULL);
+  }
 
   ret = (gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED) ==
       GST_STATE_SUCCESS);
@@ -2826,6 +2860,8 @@ bacon_video_widget_new (int width, int height,
 		    G_CALLBACK (got_buffering), (gpointer) bvw);
   g_signal_connect (G_OBJECT (bvw->priv->play), "notify::source",
 		    G_CALLBACK (got_source), (gpointer) bvw);
+  g_signal_connect (G_OBJECT (bvw->priv->play), "group-switch",
+		    G_CALLBACK (group_switch), (gpointer) bvw);
 
   /* We try to get an element supporting XOverlay interface */
   if (type == BVW_USE_TYPE_VIDEO && GST_IS_BIN (bvw->priv->play)) {
