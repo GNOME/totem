@@ -2218,6 +2218,8 @@ bacon_video_widget_new (int width, int height,
     g_object_unref (G_OBJECT (bvw));
     return NULL;
   }
+  /* somehow, alsa hangs? */
+  gst_element_set_state (audio_sink, GST_STATE_NULL);
   g_signal_handler_disconnect (video_sink, sig1);
   g_signal_handler_disconnect (audio_sink, sig2);
   g_object_set (G_OBJECT (bvw->priv->play), "video-sink",
