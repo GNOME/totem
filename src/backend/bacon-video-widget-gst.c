@@ -40,6 +40,7 @@
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
+#include <gconf/gconf-client.h>
 
 #include "bacon-video-widget.h"
 #include "baconvideowidget-marshal.h"
@@ -85,6 +86,13 @@ enum
   PROP_SHOWCURSOR,
   PROP_MEDIADEV,
   PROP_SHOW_VISUALS
+};
+
+static char *video_props_str[4] = {
+	GCONF_PREFIX"/brightness",
+	GCONF_PREFIX"/contrast",
+	GCONF_PREFIX"/saturation",
+	GCONF_PREFIX"/hue"
 };
 
 struct BaconVideoWidgetPrivate
@@ -139,6 +147,10 @@ struct BaconVideoWidgetPrivate
   char *media_device;
 
   BaconVideoWidgetAudioOutType speakersetup;
+  TvOutType tv_out_type;
+  gint connection_speed;
+
+  GConfClient *gc;
 };
 
 enum {
@@ -1090,12 +1102,21 @@ bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
 int
 bacon_video_widget_get_connection_speed (BaconVideoWidget * bvw)
 {
-  return 0;
+  g_return_val_if_fail (bvw != NULL, 0);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
+
+  return bvw->priv->connection_speed;
 }
 
 void
 bacon_video_widget_set_connection_speed (BaconVideoWidget * bvw, int speed)
 {
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  bvw->priv->connection_speed = speed;
+  gconf_client_set_int (bvw->priv->gc,
+       GCONF_PREFIX"/connection_speed", speed, NULL);
 }
 
 void
@@ -1113,13 +1134,23 @@ bacon_video_widget_get_deinterlacing (BaconVideoWidget * bvw)
 gboolean
 bacon_video_widget_set_tv_out (BaconVideoWidget * bvw, TvOutType tvout)
 {
-  return FALSE;
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+
+  bvw->priv->tv_out_type = tvout;
+  gconf_client_set_int (bvw->priv->gc,
+      GCONF_PREFIX"/tv_out_type", tvout, NULL);
+
+  return TRUE;
 }
 
 TvOutType
 bacon_video_widget_get_tv_out (BaconVideoWidget * bvw)
 {
-  return TV_OUT_NONE;
+  g_return_val_if_fail (bvw != NULL, 0);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
+
+  return bvw->priv->tv_out_type;
 }
 
 static GstCaps *
@@ -1245,6 +1276,8 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
     return;
 
   bvw->priv->speakersetup = type;
+  gconf_client_set_int (bvw->priv->gc,
+      GCONF_PREFIX"/audio_output_type", type, NULL);
 
   g_object_get (G_OBJECT (bvw->priv->play), "audio-sink", &audiosink, NULL);
   if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED) {
@@ -1707,6 +1740,8 @@ bacon_video_widget_set_show_visuals (BaconVideoWidget * bvw,
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
   bvw->priv->show_vfx = show_visuals;
+  gconf_client_set_bool (bvw->priv->gc,
+      GCONF_PREFIX"/enable_visualization", TRUE, NULL);
 
   setup_vis (bvw);
 
@@ -1797,6 +1832,9 @@ bacon_video_widget_set_visuals (BaconVideoWidget * bvw, const char *name)
   g_signal_connect (gst_element_get_pad (bvw->priv->vis_element, "src"),
 		    "fixate", G_CALLBACK (fixate_visualization), bvw);
 
+  gconf_client_set_string (bvw->priv->gc,
+      GCONF_PREFIX"/visualization_element", name, NULL);
+
   setup_vis (bvw);
   if (old_vis) {
     gst_object_unref (GST_OBJECT (old_vis));
@@ -1816,6 +1854,8 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget * bvw,
   if (bvw->priv->visq == quality)
     return;
   bvw->priv->visq = quality;
+  gconf_client_set_int (bvw->priv->gc,
+      GCONF_PREFIX"/visualization_quality", quality, NULL);
 
   if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED) {
     //gst_pad_renegotiate (gst_element_get_pad (bvw->priv->vis_element, "src"));
@@ -2028,6 +2068,9 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
           g_object_unref (found_channel);
         }
     }
+
+  /* save in gconf */
+  gconf_client_set_int (bvw->priv->gc, video_props_str[type], value, NULL);
 }
 
 float
@@ -2477,9 +2520,11 @@ GtkWidget *
 bacon_video_widget_new (int width, int height,
 			BvwUseType type, GError ** err)
 {
+  GConfValue *confvalue;
   BaconVideoWidget *bvw;
   GstElement *audio_sink = NULL, *video_sink = NULL;
   gulong sig1, sig2;
+  gint i;
 
   bvw = BACON_VIDEO_WIDGET (g_object_new
                             (bacon_video_widget_get_type (), NULL));
@@ -2496,6 +2541,11 @@ bacon_video_widget_new (int width, int height,
   bvw->priv->media_device = g_strdup ("/dev/dvd");
   bvw->priv->init_width = 240;
   bvw->priv->init_height = 180;
+  bvw->priv->visq = VISUAL_SMALL;
+  bvw->priv->show_vfx = FALSE;
+  bvw->priv->vis_element = NULL;
+  bvw->priv->tv_out_type = TV_OUT_NONE;
+  bvw->priv->connection_speed = 0;
 
   bvw->priv->cursor_shown = TRUE;
   bvw->priv->logo_mode = TRUE;
@@ -2622,6 +2672,59 @@ bacon_video_widget_new (int width, int height,
         bvw->priv->balance = GST_COLOR_BALANCE (element);
       }
   }
-  
+
+  /* gconf setting in backend */
+  bvw->priv->gc = gconf_client_get_default ();
+
+  /* Setup brightness and contrast */
+  for (i = 0; i < 4; i++) {
+    confvalue = gconf_client_get_without_default (bvw->priv->gc,
+        video_props_str[i], NULL);
+    if (confvalue != NULL) {
+      bacon_video_widget_set_video_property (bvw, i,
+        gconf_value_get_int (confvalue));
+    }
+  }
+
+  /* audio out, if any */
+  confvalue = gconf_client_get_without_default (bvw->priv->gc,
+      GCONF_PREFIX"/audio_output_type", NULL);
+  if (confvalue != NULL) {
+    bvw->priv->speakersetup = gconf_value_get_int (confvalue);
+  }
+
+  /* visualization */
+  confvalue = gconf_client_get_without_default (bvw->priv->gc,
+      GCONF_PREFIX"/enable_visualization", NULL);
+  if (confvalue != NULL) {
+    bvw->priv->show_vfx = gconf_value_get_bool (confvalue);
+  }
+  confvalue = gconf_client_get_without_default (bvw->priv->gc,
+      GCONF_PREFIX"/visualization_quality", NULL);
+  if (confvalue != NULL) {
+    bvw->priv->visq = gconf_value_get_int (confvalue);
+  }
+#if 0
+  confvalue = gconf_client_get_without_default (bvw->priv->gc,
+      GCONF_PREFIX"/visualization_element", NULL);
+  if (confvalue != NULL) {
+    bvw->priv->vis_element = 
+        gst_element_factory_make (gconf_value_get_string (confvalue), NULL);
+  }
+#endif
+  setup_vis (bvw);
+
+  /* tv/conn (not used yet) */
+  confvalue = gconf_client_get_without_default (bvw->priv->gc,
+      GCONF_PREFIX"/tv_out_type", NULL);
+  if (confvalue != NULL) {
+    bvw->priv->tv_out_type = gconf_value_get_int (confvalue);
+  }
+  confvalue = gconf_client_get_without_default (bvw->priv->gc,
+      GCONF_PREFIX"/connection_speed", NULL);
+  if (confvalue != NULL) {
+    bvw->priv->connection_speed = gconf_value_get_int (confvalue);
+  }
+
   return GTK_WIDGET (bvw);
 }
