@@ -19,6 +19,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include "mozilla-config.h"
+
 #include "config.h"
 
 #include <stdio.h>
@@ -36,8 +38,6 @@
 #include "totem-mozilla-options.h"
 #include "totem-mozilla-scriptable.h"
 
-//#define XP_UNIX 1
-#define MOZ_X11 1
 #include "npapi.h"
 #include "npupp.h"
 
@@ -399,10 +399,6 @@ totem_plugin_get_value (NPP instance, NPPVariable variable,
 
 	printf ("plugin_get_value %d\n", variable);
 
-        if (instance == NULL)
-                return NPERR_GENERIC_ERROR;
-        plugin = (TotemPlugin *) instance->pdata;
-
 	switch (variable) {
 	case NPPVpluginNameString:
 		*((char **)value) = "Totem Mozilla Plugin";
@@ -428,11 +424,18 @@ totem_plugin_get_value (NPP instance, NPPVariable variable,
 		break;
 	}
 	case NPPVpluginScriptableInstance: {
-		NS_ADDREF (plugin->iface);
-		plugin->iface->QueryInterface (NS_GET_IID (nsISupports),
-					       (void **) value);
-//		* (nsISupports **) value = static_cast<totemMozillaScript *>(plugin->iface);
-		g_print ("Returning instance %p\n", plugin->iface);
+	        if (instance == NULL) {
+			err = NPERR_GENERIC_ERROR;
+		} else {
+		        plugin = (TotemPlugin *) instance->pdata;
+			NS_ENSURE_TRUE (plugin && plugin->iface, NPERR_INVALID_INSTANCE_ERROR);
+
+			NS_ADDREF (plugin->iface);
+			plugin->iface->QueryInterface (NS_GET_IID (nsISupports),
+						       (void **) value);
+//			* (nsISupports **) value = static_cast<totemMozillaScript *>(plugin->iface);
+			g_print ("Returning instance %p\n", plugin->iface);
+		}
 		break;
 	}
 	default:

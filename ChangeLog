@@ -1,3 +1,14 @@
+2005-03-31  Christian Persch  <chpe@cvs.gnome.org>
+
+	* src/totem-mozilla-plugin.cpp: (totem_plugin_get_value):
+	  Don't return early if the instance is NULL, since that prevents the
+	  name and description from being displayed in about:plugins.
+	  Since the check is only required in the NPPVpluginScriptableInstance
+	  case, move it there (#172271).
+	* src/totem-mozilla-plugin.cpp:
+	* src/totem-mozilla-scriptable.cpp:
+	  Include mozilla-config.h.
+
 2005-03-30  Adi Attar  <aattar@cvs.gnome.org>
 
 	* configure.in: Added "xh" to ALL_LINGUAS.
