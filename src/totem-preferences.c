@@ -480,8 +480,8 @@ totem_setup_preferences (Totem *totem)
 	if (mediadev == NULL || (strcmp (mediadev, "") == 0)
 			|| (strcmp (mediadev, "auto") == 0))
 	{
-		mediadev = bacon_cd_selection_get_default_device
-			(BACON_CD_SELECTION (item));
+		mediadev = g_strdup (bacon_cd_selection_get_default_device
+				     (BACON_CD_SELECTION (item)));
 		gconf_client_set_string (totem->gc, GCONF_PREFIX"/mediadev",
 				mediadev, NULL);
 	}
@@ -492,6 +492,7 @@ totem_setup_preferences (Totem *totem)
 			G_CALLBACK (on_combo_entry1_changed), totem);
 
 	bacon_cd_selection_set_device (BACON_CD_SELECTION (item), mediadev);
+	g_free (mediadev);
 
 	/* Connection Speed */
 	connection_speed = bacon_video_widget_get_connection_speed (totem->bvw);

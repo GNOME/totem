@@ -114,7 +114,7 @@ totem_pl_parser_new (void)
 	return TOTEM_PL_PARSER (g_object_new (TOTEM_TYPE_PL_PARSER, NULL));
 }
 
-static const char *
+static char *
 my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data)
 {
 	GnomeVFSResult result;
@@ -169,7 +169,7 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data)
 	*data = g_realloc (buffer, total_bytes_read);
 	mimetype = gnome_vfs_get_mime_type_for_data (*data, total_bytes_read);
 
-	return mimetype;
+	return g_strdup (mimetype);
 }
 
 static char*
@@ -1435,6 +1435,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	for (i = 0; i < G_N_ELEMENTS(dual_types); i++) {
 		if (strcmp (dual_types[i].mimetype, mimetype) == 0) {
 			if (data == NULL) {
+				g_free (mimetype);
 				mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data);
 			}
 			ret = (* dual_types[i].func) (parser, url, data);
@@ -1442,6 +1443,8 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 			break;
 		}
 	}
+
+	g_free (mimetype);
 
 	if (ret == FALSE && parser->priv->fallback) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
