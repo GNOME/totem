@@ -1,3 +1,12 @@
+2003-03-19  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget.c: (setup_config),
+	(bacon_video_widget_unrealize),
+	(bacon_video_widget_can_set_volume),
+	(bacon_video_widget_set_volume), (bacon_video_widget_get_volume),
+	(bacon_video_widget_get_metadata_bool): make the BaconVideoWidget
+	modify an internal amp instead of touching the system volume
+
 2003-03-18  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.glade: updated the preferences window to respect the HIG

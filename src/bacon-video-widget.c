@@ -123,6 +123,7 @@ struct BaconVideoWidgetPrivate {
 	guint tick_id;
 	gboolean auto_resize;
 	GdkPixbuf *icon;
+	gint volume;
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
@@ -606,6 +607,13 @@ setup_config (BaconVideoWidget *bvw)
 			"misc.demux_strategy", &entry);
 	entry.num_value = 0;
 	xine_config_update_entry (bvw->priv->xine, &entry);
+
+	/* The volume */
+	xine_config_register_range (bvw->priv->xine,
+			"misc.amp_level",
+			50, 0, 100, "amp volume level",
+			NULL, 10, NULL, NULL);
+	bvw->priv->volume = -1;
 }
 
 static gboolean
@@ -949,6 +957,7 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 {
 	BaconVideoWidget *bvw;
 	char *configfile;
+	xine_cfg_entry_t entry;
 
 	g_return_if_fail (widget != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (widget));
@@ -968,11 +977,18 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	xine_dispose (bvw->priv->stream);
 	bvw->priv->stream = NULL;
 
+	/* Put the current volume in the config system */
+	xine_config_lookup_entry (bvw->priv->xine, "misc.amp_level", &entry);
+	entry.num_value = bvw->priv->volume;
+	xine_config_update_entry (bvw->priv->xine, &entry);
+
 	/* Kill the drivers */
 	if (bvw->priv->vo_driver != NULL)
-		xine_close_video_driver (bvw->priv->xine, bvw->priv->vo_driver);
+		xine_close_video_driver (bvw->priv->xine,
+				bvw->priv->vo_driver);
 	if (bvw->priv->ao_driver != NULL)
-		xine_close_audio_driver (bvw->priv->xine, bvw->priv->ao_driver);
+		xine_close_audio_driver (bvw->priv->xine,
+				bvw->priv->ao_driver);
 
 	/* save config */
 	configfile = g_build_path (G_DIR_SEPARATOR_S,
@@ -1569,8 +1585,7 @@ bacon_video_widget_can_set_volume (BaconVideoWidget *bvw)
 				XINE_PARAM_AUDIO_CHANNEL_LOGICAL) == -2)
 		return FALSE;
 
-	return xine_get_stream_info (bvw->priv->stream,
-			XINE_STREAM_INFO_HAS_AUDIO);
+	return TRUE;
 }
 
 void
@@ -1583,16 +1598,15 @@ bacon_video_widget_set_volume (BaconVideoWidget *bvw, int volume)
 	if (bacon_video_widget_can_set_volume (bvw) == TRUE)
 	{
 		volume = CLAMP (volume, 0, 100);
-		xine_set_param (bvw->priv->stream, XINE_PARAM_AUDIO_VOLUME,
-				volume);
+		xine_set_param (bvw->priv->stream,
+				XINE_PARAM_AUDIO_AMP_LEVEL, volume);
+		bvw->priv->volume = volume;
 	}
 }
 
 int
 bacon_video_widget_get_volume (BaconVideoWidget *bvw)
 {
-	int volume = 0;
-
 	g_return_val_if_fail (bvw != NULL, 0);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
 	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
@@ -1600,10 +1614,19 @@ bacon_video_widget_get_volume (BaconVideoWidget *bvw)
 	if (bacon_video_widget_can_set_volume (bvw) == FALSE)
 		return 0;
 
-	volume = xine_get_param (bvw->priv->stream,
-			XINE_PARAM_AUDIO_VOLUME);
+	if (bvw->priv->volume == -1)
+	{
+		xine_cfg_entry_t entry;
 
-	return volume;
+		xine_config_lookup_entry (bvw->priv->xine,
+				"misc.amp_level", &entry);
+		bvw->priv->volume = entry.num_value;
+
+		xine_set_param (bvw->priv->stream,
+				XINE_PARAM_AUDIO_AMP_LEVEL, bvw->priv->volume);
+	}
+
+	return bvw->priv->volume;
 }
 
 void
@@ -2028,8 +2051,8 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget *bvw, BaconVideoWidgetMeta
 }
 
 static void
-bacon_video_widget_get_metadata_bool (BaconVideoWidget *bvw, BaconVideoWidgetMetadataType type,
-		GValue *value)
+bacon_video_widget_get_metadata_bool (BaconVideoWidget *bvw,
+		BaconVideoWidgetMetadataType type, GValue *value)
 {
 	gboolean boolean = FALSE;
 
