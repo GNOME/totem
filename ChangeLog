@@ -1,3 +1,8 @@
+2002-11-24  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem.c: (totem_action_open_files): fix double free that would
+	crash totem on startup, bad bad
+
 2002-11-22  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.desktop.in: added StartupNotify=true

@@ -872,9 +872,9 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 
 				g_free (uri);
 			}
+		} else {
+			g_free (filename);
 		}
-
-		g_free (filename);
 	}
 
 	/* ... and reconnect because we're nice people */
