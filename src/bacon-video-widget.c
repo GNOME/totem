@@ -1115,7 +1115,8 @@ bacon_video_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 static gboolean
 bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 {
-	int i, current_time, stream_length, current_position;
+	int i = 0;
+	int current_time, stream_length, current_position;
 	gboolean ret = TRUE;
 
 	if (bvw->priv->stream == NULL)
@@ -1147,6 +1148,7 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[TICK], 0,
 				current_time, stream_length, current_position);
+	return ret;
 }
 
 static char *
