@@ -138,20 +138,18 @@ gst_video_widget_reorder_windows (GstVideoWidget * vw)
       gdk_window_hide (vw->priv->video_window);
     }
   else if ((!vw->priv->logo_focused) &&
-	   (GDK_IS_WINDOW (vw->priv->video_window)))
+           (GDK_IS_WINDOW (vw->priv->video_window)))
     {
       gdk_window_show (vw->priv->video_window);
     }
 
+  if (GDK_IS_WINDOW (vw->priv->video_window))
+    gdk_window_raise (vw->priv->video_window);
+  
   if (vw->priv->event_catcher)
     {
       if (GDK_IS_WINDOW (vw->priv->event_window))
-	gdk_window_raise (vw->priv->event_window);
-    }
-  else
-    {
-      if (GDK_IS_WINDOW (vw->priv->video_window))
-	gdk_window_raise (vw->priv->video_window);
+        gdk_window_raise (vw->priv->event_window);
     }
   
   gtk_widget_queue_draw (GTK_WIDGET (vw));
@@ -772,7 +770,8 @@ gst_video_widget_init (GstVideoWidget * vw)
   vw->priv = g_new0 (GstVideoWidgetPrivate, 1);
 
   GTK_WIDGET_SET_FLAGS (GTK_WIDGET (vw), GTK_CAN_FOCUS);
-
+  GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (vw), GTK_DOUBLE_BUFFERED);
+  
   vw->priv->source_width = 0;
   vw->priv->source_height = 0;
   vw->priv->width_mini = 0;
@@ -782,7 +781,7 @@ gst_video_widget_init (GstVideoWidget * vw)
   vw->priv->scale_override = FALSE;
   vw->priv->cursor_visible = TRUE;
   vw->priv->event_catcher = TRUE;
-  vw->priv->logo_focused = TRUE;
+  vw->priv->logo_focused = FALSE;
   vw->priv->event_window = NULL;
   vw->priv->video_window = NULL;
   vw->priv->logo_pixbuf = NULL;
