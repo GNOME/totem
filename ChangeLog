@@ -1,5 +1,11 @@
 2005-01-24  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c: (totem_playlist_clear_with_compare): Don't
+	generate a current-removed event if we didn't remove any items
+	(Closes: #153209)
+
+2005-01-24  Bastien Nocera  <hadess@hadess.net>
+
 	* NEWS: upd
 	* data/.cvsignore: upd
 	* src/metadata-test.c: (main): set the right program name

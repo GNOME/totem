@@ -1644,6 +1644,7 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist, GCompareFunc func,
 {
 	GList *list = NULL, *l;
 	guint num_items, i;
+	gboolean has_items;
 
 	num_items = PL_LEN;
 	if (num_items == 0)
@@ -1683,6 +1684,8 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist, GCompareFunc func,
 		g_free (mrl);
 	}
 
+	has_items = (list != NULL);
+
 	for (l = list; l != NULL; l = l->next)
 	{
 		GtkTreePath *path;
@@ -1697,14 +1700,16 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist, GCompareFunc func,
 	}
 	g_list_free (list);
 
-	playlist->_priv->current_shuffled = -1;
+	if (has_items != FALSE) {
+		playlist->_priv->current_shuffled = -1;
 
-	ensure_shuffled (playlist, playlist->_priv->shuffle);
-	gtk_tree_path_free (playlist->_priv->current);
-	playlist->_priv->current = NULL;
-	g_signal_emit (G_OBJECT (playlist),
-			totem_playlist_table_signals[CURRENT_REMOVED],
-			0, NULL);
+		ensure_shuffled (playlist, playlist->_priv->shuffle);
+		gtk_tree_path_free (playlist->_priv->current);
+		playlist->_priv->current = NULL;
+		g_signal_emit (G_OBJECT (playlist),
+				totem_playlist_table_signals[CURRENT_REMOVED],
+				0, NULL);
+	}
 }
 
 static int
