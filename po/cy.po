@@ -8,15 +8,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-21 15:42+0100\n"
-"PO-Revision-Date: 2003-09-21 15:55+0100\n"
-"Last-Translator: Dafydd Harries <daf@parnassus.ath.cx>\n"
+"POT-Creation-Date: 2005-03-03 22:39+0100\n"
+"PO-Revision-Date: 2005-03-06 08:09+0000\n"
+"Last-Translator: Rhys Jones <rhys@sucs.org>\n"
 "Language-Team: Cymraeg <gnome-cy@pengwyn.linux.org.uk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1)?1:(n==2)?2:(n==8||n==11)?3:0;\n"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1264
+#: data/playlist.glade.h:1
+#: src/totem-playlist.c:1510
 msgid "Playlist"
 msgstr "Rhestr Chwarae"
 
@@ -25,37 +27,123 @@ msgid "Repeat _mode"
 msgstr "_Modd ailadrodd"
 
 #: data/playlist.glade.h:3
+msgid "Shuf_fle mode"
+msgstr "Modd _shifflo"
+
+#: data/playlist.glade.h:4
 msgid "_Add..."
 msgstr "_Ychwanegu..."
 
-#: data/playlist.glade.h:4
+#: data/playlist.glade.h:5
+msgid "_Copy Location"
+msgstr "Copïo _Lleoliad"
+
+#: data/playlist.glade.h:6
 msgid "_Save..."
 msgstr "_Cadw..."
 
-#: data/properties.glade.h:1 data/totem.glade.h:1
+#: data/popup.glade.h:1
+#: data/totem.glade.h:48
+msgid "Next chapter or movie"
+msgstr "Pennod neu ffilm nesaf"
+
+#: data/popup.glade.h:2
+#: data/totem.glade.h:53
+msgid "Play / Pa_use"
+msgstr "_Chwarae / Oedi"
+
+#: data/popup.glade.h:3
+#: data/totem.glade.h:56
+msgid "Play or pause the movie"
+msgstr "Chwarae neu seibio'r ffilm"
+
+#: data/popup.glade.h:4
+#: data/totem.glade.h:59
+msgid "Previous chapter or movie"
+msgstr "Y penawd neu film Blaenorol"
+
+#: data/popup.glade.h:5
+#: data/totem.glade.h:75
+msgid "Show _Controls"
+msgstr "Dangos _Rheolyddion"
+
+#: data/popup.glade.h:6
+#: data/totem.glade.h:77
+msgid "Show controls"
+msgstr "Dangos rheolyddion"
+
+#: data/popup.glade.h:7
+#: data/totem.glade.h:81
+msgid "Skip _Backwards"
+msgstr "Neidio yn Ô_l"
+
+#: data/popup.glade.h:8
+#: data/totem.glade.h:82
+msgid "Skip _Forward"
+msgstr "Neidio _Ymlaen"
+
+#: data/popup.glade.h:9
+#: data/totem.glade.h:83
+msgid "Skip backwards"
+msgstr "Neidio yn Ôl"
+
+#: data/popup.glade.h:10
+#: data/totem.glade.h:84
+msgid "Skip forward"
+msgstr "Neidio ymlaen"
+
+#: data/popup.glade.h:11
+#: data/totem.glade.h:107
+msgid "Volume _Down"
+msgstr "Lefel Sain i _Lawr"
+
+#: data/popup.glade.h:12
+#: data/totem.glade.h:108
+msgid "Volume _Up"
+msgstr "Lefel Sain i _Fyny"
+
+#: data/popup.glade.h:13
+#: data/totem.glade.h:110
+msgid "Volume up"
+msgstr "Lefel sain i fyny"
+
+#: data/popup.glade.h:14
+#: data/totem.glade.h:133
+msgid "_Next Chapter/Movie"
+msgstr "Pennod/Ffilm _Nesaf"
+
+#: data/popup.glade.h:15
+#: data/totem.glade.h:136
+msgid "_Previous Chapter/Movie"
+msgstr "Penawd/Ffilm _Blaenorol"
+
+#: data/properties.glade.h:1
+#: data/screenshot.glade.h:1
+#: data/totem.glade.h:1
 msgid "    "
 msgstr "    "
 
-#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:170
-#: src/totem-properties-page.c:164
+#: data/properties.glade.h:2
+#: src/bacon-video-widget-properties.c:109
 msgid "0 frames per second"
 msgstr "0 ffrâm bob eiliad"
 
 #. Bitrate
-#: data/properties.glade.h:3 src/bacon-video-widget-properties.c:172
-#: src/totem-properties-page.c:166
+#: data/properties.glade.h:3
+#: src/bacon-video-widget-properties.c:111
 msgid "0 kbps"
 msgstr "0 cb/e"
 
 #. 0 seconds
-#: data/properties.glade.h:4 data/totem.glade.h:3
-#: src/bacon-video-widget-properties.c:126 src/totem-properties-page.c:120
+#: data/properties.glade.h:4
+#: data/skip_to.glade.h:1
+#: src/video-utils.c:310
 msgid "0 seconds"
 msgstr "0 eiliad"
 
 #. Dimensions
-#: data/properties.glade.h:5 src/bacon-video-widget-properties.c:165
-#: src/totem-properties-page.c:159
+#: data/properties.glade.h:5
+#: src/bacon-video-widget-properties.c:104
 msgid "0 x 0"
 msgstr "0 x 0"
 
@@ -72,211 +160,225 @@ msgid "<b>Video</b>"
 msgstr "<b>Fideo</b>"
 
 #: data/properties.glade.h:9
+msgid "Album:"
+msgstr "Record:"
+
+#: data/properties.glade.h:10
 msgid "Artist:"
 msgstr "Artist:"
 
-#: data/properties.glade.h:10
+#: data/properties.glade.h:11
 msgid "Bitrate:"
 msgstr "Cyfradd did:"
 
-#: data/properties.glade.h:11
+#: data/properties.glade.h:12
 msgid "Codec:"
 msgstr "Codec:"
 
-#: data/properties.glade.h:12
+#: data/properties.glade.h:13
 msgid "Dimensions:"
 msgstr "Dimensiynau:"
 
-#: data/properties.glade.h:13
+#: data/properties.glade.h:14
 msgid "Duration:"
 msgstr "Hyd:"
 
-#: data/properties.glade.h:14
+#: data/properties.glade.h:15
 msgid "Framerate:"
 msgstr "Cyfradd ffrâm:"
 
 #. Video Codec
-#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:167
-#: src/bacon-video-widget-properties.c:174
-#: src/bacon-video-widget-properties.c:243
-#: src/bacon-video-widget-properties.c:275 src/totem-properties-page.c:161
-#: src/totem-properties-page.c:168 src/totem-properties-page.c:237
-#: src/totem-properties-page.c:269
+#: data/properties.glade.h:16
+#: src/bacon-video-widget-properties.c:106
+#: src/bacon-video-widget-properties.c:113
+#: src/bacon-video-widget-properties.c:194
+#: src/bacon-video-widget-properties.c:232
 msgid "N/A"
 msgstr "Amherthnasol"
 
-#: data/properties.glade.h:16 src/bacon-video-widget-properties.c:324
+#: data/properties.glade.h:17
+#: src/totem.c:1986
 msgid "Properties"
 msgstr "Priodweddau"
 
-#: data/properties.glade.h:17
+#: data/properties.glade.h:18
 msgid "Title:"
 msgstr "Teitl:"
 
 #. Title
-#: data/properties.glade.h:18 src/bacon-video-widget-properties.c:157
-#: src/bacon-video-widget-properties.c:159
-#: src/bacon-video-widget-properties.c:161
-#: src/bacon-video-widget-properties.c:192
-#: src/bacon-video-widget-properties.c:199
-#: src/bacon-video-widget-properties.c:206 src/totem-properties-page.c:151
-#: src/totem-properties-page.c:153 src/totem-properties-page.c:155
-#: src/totem-properties-page.c:186 src/totem-properties-page.c:193
-#: src/totem-properties-page.c:200
+#. Album
+#: data/properties.glade.h:19
+#: src/bacon-video-widget-properties.c:94
+#: src/bacon-video-widget-properties.c:96
+#: src/bacon-video-widget-properties.c:98
+#: src/bacon-video-widget-properties.c:100
+#: src/bacon-video-widget-properties.c:132
+#: src/bacon-video-widget-properties.c:139
+#: src/bacon-video-widget-properties.c:146
+#: src/bacon-video-widget-properties.c:153
 msgid "Unknown"
 msgstr "Anhysbys"
 
-#: data/properties.glade.h:19
+#: data/properties.glade.h:20
 msgid "Year:"
 msgstr "Blwyddyn:"
 
-#: data/totem-download.glade.h:1
-msgid "Connecting to the server"
-msgstr "Yn cysylltu gyda'r gweinydd"
-
-#: data/totem-download.glade.h:2
-msgid "Done"
-msgstr "Wedi Gorffen"
-
-#: data/totem-download.glade.h:3
-msgid "Downloading the plug-ins"
-msgstr "Yn lawrlwytho'r ategion"
-
-#: data/totem-download.glade.h:4
-msgid "Installing the plug-ins"
-msgstr "Yn sefydlu'r ategion"
-
-#: data/totem-download.glade.h:5
-msgid "Plug-ins Download"
-msgstr "Lawrlwythiad Ategion"
-
-#: data/totem.desktop.in.h:1
-msgid "Play movies and songs"
-msgstr "Chwarae ffilmiau a chaneuon"
-
-#: data/totem.desktop.in.h:2 src/totem.c:3552
-msgid "Totem Movie Player"
-msgstr "Chwaraewr Ffilmiau Totem"
-
-#: data/totem.glade.h:2 data/uri.glade.h:1
+#: data/screenshot.glade.h:2
+#: data/uri.glade.h:1
 msgid "*"
 msgstr "*"
 
-#: data/totem.glade.h:4
-msgid "1.5 Mbps T1/Intranet/LAN"
-msgstr "T1/Intranet/LAN 1.5 Mb/e"
-
-#: data/totem.glade.h:5
-msgid "112 Kbps Dual ISDN/DSL"
-msgstr "ISDN Dyblyg/DSL 112 cb/e"
-
-#: data/totem.glade.h:6
-msgid "14.4 Kbps Modem"
-msgstr "Modem 14.4 cb/e"
-
-#: data/totem.glade.h:7
-msgid "19.2 Kbps Modem"
-msgstr "Modem 19.2 cb/e"
-
-#: data/totem.glade.h:8
-msgid "256 Kbps DSL/Cable"
-msgstr "DSL/Cêbl 256 cb/e"
-
-#: data/totem.glade.h:9
-msgid "28.8 Kbps Modem"
-msgstr "Modem 28.8 cb/e"
-
-#: data/totem.glade.h:10
-msgid "33.6 Kbps Modem"
-msgstr "Modem 33.6 cb/e"
-
-#: data/totem.glade.h:11
-msgid "34.4 Kbps Modem"
-msgstr "Modem 34.4 cb/e"
-
-#: data/totem.glade.h:12
-msgid "384 Kbps DSL/Cable"
-msgstr "DSL/Cêbl 384 cb/e"
-
-#: data/totem.glade.h:13
-msgid "4-channel"
-msgstr "4 sianel"
-
-#: data/totem.glade.h:14
-msgid "5.0-channel"
-msgstr "5.0 sianel"
-
-#: data/totem.glade.h:15
-msgid "5.1-channel"
-msgstr "5.1 sianel"
-
-#: data/totem.glade.h:16
-msgid "512 Kbps DSL/Cable"
-msgstr "DSL/Cêbl 512 cb/e"
-
-#: data/totem.glade.h:17
-msgid "56 Kbps Modem/ISDN"
-msgstr "Modem/ISDN 56 cb/e"
-
-#: data/totem.glade.h:18
-msgid "<b>Audio Output</b>"
-msgstr "<b>Allbwn Sain</b>"
-
-#: data/totem.glade.h:19
-msgid "<b>Brightness/Contrast</b>"
-msgstr "<b>Disgleirdeb/Cyferbyniad</b>"
-
-#: data/totem.glade.h:20
-msgid "<b>Display</b>"
-msgstr "<b>Dangosiad</b>"
-
-#: data/totem.glade.h:21
-msgid "<b>Networking</b>"
-msgstr "<b>Rhwydweithio</b>"
-
-#: data/totem.glade.h:22
-msgid "<b>Optical Device</b>"
-msgstr "<b>Dyfais Optegol</b>"
-
-#: data/totem.glade.h:23
+#: data/screenshot.glade.h:3
 msgid "<b>Preview</b>"
 msgstr "<b>Rhagolwg</b>"
 
-#: data/totem.glade.h:24
+#: data/screenshot.glade.h:4
+#: src/totem-screenshot.c:346
+msgid "Save Screenshot"
+msgstr "Cadw'r Sgrînlun"
+
+#: data/screenshot.glade.h:5
+msgid "Save screenshot"
+msgstr "Cadw'r sgrînlun"
+
+#: data/screenshot.glade.h:6
+msgid "Save screenshot to _desktop"
+msgstr "Cadw'r sgrînlun i'r _penbwrdd"
+
+#: data/screenshot.glade.h:7
+msgid "Save screenshot to _file:"
+msgstr "Cadw'r Sgrînlun i _ffeil:"
+
+#: data/skip_to.glade.h:2
+#: src/totem-skipto.c:140
+msgid "Skip to"
+msgstr "Neidio i"
+
+#: data/skip_to.glade.h:3
+msgid "_Skip to:"
+msgstr "_Neidio i:"
+
+#: data/skip_to.glade.h:4
+msgid "seconds"
+msgstr "eiliadau"
+
+#: data/totem.desktop.in.in.in.h:1
+msgid "Play movies and songs"
+msgstr "Chwarae ffilmiau a chaneuon"
+
+#. Title
+#: data/totem.desktop.in.in.in.h:2
+#: data/totem.glade.h:102
+#: src/totem.c:580
+#: src/totem.c:3398
+msgid "Totem Movie Player"
+msgstr "Chwaraewr Ffilmiau Totem"
+
+#: data/totem.glade.h:2
+msgid ""
+"14.4 Kbps Modem\n"
+"19.2 Kbps Modem\n"
+"28.8 Kbps Modem\n"
+"33.6 Kbps Modem\n"
+"34.4 Kbps Modem\n"
+"56 Kbps Modem/ISDN\n"
+"112 Kbps Dual ISDN/DSL\n"
+"256 Kbps DSL/Cable\n"
+"384 Kbps DSL/Cable\n"
+"512 Kbps DSL/Cable\n"
+"1.5 Mbps T1/Intranet/LAN\n"
+"Intranet/LAN"
+msgstr ""
+"Modem 14.4 Kdye\n"
+"Modem 19.2 Kdye\n"
+"Modem 28.8 Kdye\n"
+"Modem 33.6 Kdye\n"
+"Modem 34.4 Kdye\n"
+"Modem/ISDN 56 Kdye\n"
+"ISDN Deuol/DSL 112 Kdye\n"
+"DSL/Cebl 256 Kdye\n"
+"DSL/Cebl 384 Kdye\n"
+"DSL/Cebl 512 Kdye\n"
+"T1/Mewnrwyd/LAN 1.5 Mdye\n"
+"Mewnrwyd/LAN"
+
+#: data/totem.glade.h:14
+msgid "16:9 (Widescreen)"
+msgstr "16:9 (Sgrîn Lydan)"
+
+#: data/totem.glade.h:15
+msgid "2.11:1 (DVB)"
+msgstr "2.11:1 (DVB)"
+
+#: data/totem.glade.h:16
+msgid "4:3 (TV)"
+msgstr "4:3 (Teledu)"
+
+#: data/totem.glade.h:17
+msgid "<b>Audio Output</b>"
+msgstr "<b>Allbwn Sain</b>"
+
+#: data/totem.glade.h:18
+msgid "<b>Color balance</b>"
+msgstr "<b>Cydbwysedd lliw</b>"
+
+#: data/totem.glade.h:19
+msgid "<b>Display</b>"
+msgstr "<b>Dangosiad</b>"
+
+#: data/totem.glade.h:20
+msgid "<b>Networking</b>"
+msgstr "<b>Rhwydweithio</b>"
+
+#: data/totem.glade.h:21
+msgid "<b>Optical Device</b>"
+msgstr "<b>Dyfais Optegol</b>"
+
+#: data/totem.glade.h:22
 msgid "<b>Proprietary Plugins</b>"
 msgstr "<b>Ategion Perchenogol</b>"
 
-#: data/totem.glade.h:25
+#: data/totem.glade.h:23
 msgid "<b>TV-Out</b>"
 msgstr "<b>TV-Out</b>"
 
-#: data/totem.glade.h:26
+#: data/totem.glade.h:24
 msgid "<b>Visual Effects</b>"
 msgstr "<b>Effeithiau Gweledol</b>"
 
-#: data/totem.glade.h:27
-msgid "AC3 Passthrough"
-msgstr "Pasio Drwy AC3"
+#: data/totem.glade.h:25
+msgid "<span size=\"medium\"><b>No File</b></span>"
+msgstr "<span size=\"medium\"><b>Dim Ffeil</b></span>"
 
-#: data/totem.glade.h:28
+#: data/totem.glade.h:26
+msgid "<span size=\"medium\"><b>No file</b></span>"
+msgstr "<span size=\"medium\"><b>Dim ffeil</b></span>"
+
+#: data/totem.glade.h:27
 msgid "A_udio Menu"
 msgstr "Dewislen_Sain"
 
-#: data/totem.glade.h:29
+#: data/totem.glade.h:28
 msgid "Always on _Top"
 msgstr "Wastad ar y _Pen"
 
-#: data/totem.glade.h:30
+#: data/totem.glade.h:29
 msgid "Always on top"
 msgstr "Wastad ar y Pen"
 
-#: data/totem.glade.h:31
+#: data/totem.glade.h:30
 msgid "Audio"
 msgstr "Sain"
 
+#: data/totem.glade.h:31
+#: src/totem-sublang.c:112
+#: src/totem-sublang.c:133
+msgid "Auto"
+msgstr "Awtomatig"
+
 #: data/totem.glade.h:32
 msgid "Automatically _resize the window when a new video is loaded"
-msgstr "Newid _maint y ffenstr yn awtomatig pan caiff fideo newydd ei lwytho"
+msgstr "Newid _maint y ffenstr yn awtomatig pan gaiff fideo newydd ei lwytho"
 
 #: data/totem.glade.h:33
 msgid "Co_ntrast:"
@@ -296,381 +398,362 @@ msgstr "Dangos"
 
 #: data/totem.glade.h:37
 msgid "Exit Fullscreen"
-msgstr "Gadael y Modd Llenwi'r Sgrîn"
+msgstr "Gadael y Modd Sgrîn Lawn"
 
 #: data/totem.glade.h:38
-msgid "Extra Large"
-msgstr "Mawr Iawn"
+msgid "Fit Window to Movie"
+msgstr "Ffitio'r Ffenest i'r Fideo"
 
 #: data/totem.glade.h:39
-msgid "File name"
-msgstr "Enw ffeil"
-
-#: data/totem.glade.h:40
 msgid "General"
 msgstr "Cyffredinol"
 
-#: data/totem.glade.h:41
+#: data/totem.glade.h:40
 msgid "Go to the DVD menu"
-msgstr "Mynd i'r dewislen DVD"
+msgstr "Mynd i'r ddewislen DVD"
+
+#: data/totem.glade.h:41
+msgid "Go to the angle menu"
+msgstr "Mynd i'r ddewislen ongl"
 
 #: data/totem.glade.h:42
-msgid "Go to the angle menu"
-msgstr "Mynd i'r dewislen ongl"
+msgid "Go to the audio menu"
+msgstr "Mynd i'r ddewislen sain"
 
 #: data/totem.glade.h:43
-msgid "Go to the audio menu"
-msgstr "Mynd i'r dewislen sain"
+msgid "Go to the chapter menu"
+msgstr "Mynd i'r ddewislen pennod"
 
 #: data/totem.glade.h:44
-msgid "Go to the chapter menu"
-msgstr "Mynd i'r dewislen pennod"
+msgid "Go to the title menu"
+msgstr "Mynd i'r ddewislen teitl"
 
 #: data/totem.glade.h:45
-msgid "Go to the title menu"
-msgstr "Mynd i'r dewislen teitl"
+msgid "Help contents"
+msgstr "Cynnwys cymorth"
 
-# msgstr "Mewnrwyd/RhAL"
 #: data/totem.glade.h:46
-msgid "Intranet/LAN"
-msgstr "Intranet/LAN"
-
-#: data/totem.glade.h:47
 msgid "Languages"
 msgstr "Ieithoedd"
 
-#: data/totem.glade.h:48
-msgid "Large"
-msgstr "Mawr"
-
-#: data/totem.glade.h:49 src/totem.c:80
+#: data/totem.glade.h:47
+#: src/totem-options.c:39
 msgid "Next"
 msgstr "Nesaf"
 
-#: data/totem.glade.h:50
-msgid "Next chapter or movie"
-msgstr "Pennod neu ffilm nesaf"
-
-#: data/totem.glade.h:51
+#: data/totem.glade.h:49
 msgid "No Language Selection Available"
 msgstr "Does Dim Dewis Iaith Ar Gael"
 
-#: data/totem.glade.h:52
+#: data/totem.glade.h:50
 msgid "No subtitles selection available"
 msgstr "Does dim dewis isdeitl ar gael"
 
-#: data/totem.glade.h:53
-msgid "Normal"
-msgstr "Arferol"
-
-#: data/totem.glade.h:54
+#: data/totem.glade.h:51
 msgid "Open _Location..."
 msgstr "Agor _Lleoliad..."
 
-#: data/totem.glade.h:55
+#: data/totem.glade.h:52
 msgid "Open a non-local file"
 msgstr "Agorwch ffeil allanol"
 
-#: data/totem.glade.h:56
-msgid "Play / Pa_use"
-msgstr "_Chwarae / Oedi"
+#: data/totem.glade.h:54
+msgid "Play _Disc"
+msgstr "Chwarae _Disg"
+
+#: data/totem.glade.h:55
+msgid "Play a Video or Audio Disc"
+msgstr "Chwarae Disg Sain neu Fideo"
 
 #: data/totem.glade.h:57
-msgid "Play _Audio CD"
-msgstr "Chwarae CD _Sain"
-
-#: data/totem.glade.h:58
-msgid "Play _DVD"
-msgstr "Chwarae _DVD"
-
-#: data/totem.glade.h:59
-msgid "Play _VCD"
-msgstr "Chwarae _VCD"
-
-#: data/totem.glade.h:60
-msgid "Play a Video CD"
-msgstr "Chwarae CD Fideo"
-
-#: data/totem.glade.h:61
-msgid "Play a Video DVD"
-msgstr "Chwarae DVD Fideo"
-
-#: data/totem.glade.h:62
-msgid "Play an audio CD"
-msgstr "Chwarae CD sain"
-
-#: data/totem.glade.h:63
-msgid "Play or pause the movie"
-msgstr "Chwarae neu seibio'r ffilm"
-
-#: data/totem.glade.h:64 src/totem.c:79
+#: src/totem-options.c:38
 msgid "Play/Pause"
 msgstr "Chwarae/Seibio"
 
-#: data/totem.glade.h:65 src/totem.c:81
+#: data/totem.glade.h:58
+#: src/totem-options.c:40
 msgid "Previous"
 msgstr "Blaenorol"
 
-#: data/totem.glade.h:66
-msgid "Previous chapter or movie"
-msgstr "Y penawd neu film Blaenorol"
+#: data/totem.glade.h:60
+msgid "Resize _1:1"
+msgstr "Newid maint i _1:1"
 
-#: data/totem.glade.h:67
+#: data/totem.glade.h:61
+msgid "Resize _2:1"
+msgstr "Newid maint i _1:1"
+
+#: data/totem.glade.h:62
+msgid "Resize to half the video size"
+msgstr "Newid maint i hanner maint y fideo"
+
+#: data/totem.glade.h:63
+msgid "Resize to twice the video size"
+msgstr "Newid maint i ddwywaith maint y fideo"
+
+#: data/totem.glade.h:64
+msgid "Resize to video size"
+msgstr "Newid maint i faint y fideo"
+
+#: data/totem.glade.h:65
 msgid "S_ubtitles"
 msgstr "_Isdeitlau"
 
+#: data/totem.glade.h:66
+msgid "Sat_uration:"
+msgstr "_Dirlawnder:"
+
+#: data/totem.glade.h:67
+msgid "Set the aspect ratio"
+msgstr "Gosod y gymhareb agwedd"
+
 #: data/totem.glade.h:68
-msgid "Save Screenshot"
-msgstr "Cadw'r Sgrînlun"
-
-#: data/totem.glade.h:69
-msgid "Save screenshot to _file:"
-msgstr "Cadw'r Sgrînlun i _ffeil:"
-
-#: data/totem.glade.h:70
-msgid "Save screenshot to the _desktop"
-msgstr "Cadw'r Sgrînlun i'r _penbwrdd"
-
-#: data/totem.glade.h:71
 msgid "Set the repeat mode"
 msgstr "Gosod y modd ailadrodd"
 
+#: data/totem.glade.h:69
+msgid "Set the shuffle mode"
+msgstr "Gosod y modd sifflo"
+
+#: data/totem.glade.h:70
+msgid "Sets 16:9 (Anamorphic) aspect ratio"
+msgstr "Gosod cymhareb agwedd (16:9) anamorffaidd"
+
+#: data/totem.glade.h:71
+msgid "Sets 2.11:1 (DVB) aspect ratio"
+msgstr "Gosod cymhareb agwedd 2.11:1 (DVB)"
+
 #: data/totem.glade.h:72
-msgid "Show _Controls"
-msgstr "Dangos _Rheolyddion"
+msgid "Sets 4:3 (TV) aspect ratio"
+msgstr "Gosod cymhareb agwedd 4:3 (teledu)"
 
 #: data/totem.glade.h:73
+msgid "Sets automatic aspect ratio"
+msgstr "Gosod cymhareb agwedd awtomatig"
+
+#: data/totem.glade.h:74
+msgid "Sets square aspect ratio"
+msgstr "Gosod cymhareb agwedd sgwâr"
+
+#: data/totem.glade.h:76
 msgid "Show _visual effects when an audio file is played"
 msgstr "Dangos _effeithiau gweledig pan mae ffeil sain yn cael ei chwarae"
 
-#: data/totem.glade.h:74
-msgid "Show controls"
-msgstr "Dangos rheolyddion"
-
-#: data/totem.glade.h:75
+#: data/totem.glade.h:78
 msgid "Show or hide the playlist"
 msgstr "Dangos neu guddio'r rhestr chwarae"
 
-#: data/totem.glade.h:76
+#: data/totem.glade.h:79
 msgid "Show/Hide Playlist"
 msgstr "Dangos/Cuddio'r Rhestr Chwarae"
 
-#: data/totem.glade.h:77
-msgid "Skip _Backwards"
-msgstr "Nedio yn Ô_l"
-
-#: data/totem.glade.h:78
-msgid "Skip _Forward"
-msgstr "Neidio _Ymlaen"
-
-#: data/totem.glade.h:79
-msgid "Skip backwards"
-msgstr "Niedio yn ôl"
-
 #: data/totem.glade.h:80
-msgid "Skip forward"
-msgstr "Neidio ymlaen"
-
-#: data/totem.glade.h:81
-msgid "Skip to"
-msgstr "Neidio i"
-
-#: data/totem.glade.h:82
-msgid "Skip to a specific time"
-msgstr "Neidio i eitem penodol"
-
-#: data/totem.glade.h:83
-msgid "Small"
-msgstr "Bach"
-
-#: data/totem.glade.h:84
-msgid "Stereo"
-msgstr "Stereo"
+msgid "Shuff_le Mode"
+msgstr "Modd _shifflo"
 
 #: data/totem.glade.h:85
+msgid "Skip to a specific time"
+msgstr "Neidio i eitem benodol"
+
+#: data/totem.glade.h:86
+msgid ""
+"Small\n"
+"Normal\n"
+"Large\n"
+"Extra Large"
+msgstr ""
+"Bach\n"
+"Normal\n"
+"Mawr\n"
+"Mawr Iawn"
+
+#: data/totem.glade.h:90
+msgid "Square"
+msgstr "Sgwâr"
+
+#: data/totem.glade.h:91
+msgid ""
+"Stereo\n"
+"4-channel\n"
+"4.1-channel\n"
+"5.0-channel\n"
+"5.1-channel\n"
+"AC3 Passthrough"
+msgstr ""
+"Stereo\n"
+"4-sianel\n"
+"4.1-sianel\n"
+"5.0-sianel\n"
+"5.1-sianel\n"
+"AC3 pasio drwyddo"
+
+#: data/totem.glade.h:97
 msgid "Subtitles"
 msgstr "Isdeitlau"
 
-#: data/totem.glade.h:86
-msgid "Switch to double size"
-msgstr "Newid i faint dwbl"
-
-#: data/totem.glade.h:87
+#: data/totem.glade.h:98
 msgid "Switch to fullscreen"
 msgstr "Newid i lenwi'r sgrîn"
 
-#: data/totem.glade.h:88
+#: data/totem.glade.h:99
 msgid "Take _Screenshot"
 msgstr "Creu _Sgrînlun"
 
-#: data/totem.glade.h:89
+#: data/totem.glade.h:100
 msgid "Take a screenshot"
 msgstr "Creu sgrînlun"
 
-#: data/totem.glade.h:90
+#: data/totem.glade.h:101
 msgid "Time:"
 msgstr "Amser:"
 
-#: data/totem.glade.h:91
-msgid "Toggle _Aspect Ratio"
-msgstr "Newid Cymhareb _Agwedd"
-
-#: data/totem.glade.h:92
-msgid "Toggle the aspect ratio"
-msgstr "Newid y gymhareb agwedd"
-
-#. Title
-#: data/totem.glade.h:93 src/totem.c:695 src/totem.c:722 src/totem.c:1849
-msgid "Totem"
-msgstr "Totem"
-
-#: data/totem.glade.h:94
+#: data/totem.glade.h:103
 msgid "Totem Preferences"
 msgstr "Hoffterau Totem"
 
-#: data/totem.glade.h:95
+#: data/totem.glade.h:104
+msgid "Tv-out in fullscreen by Nvidia (NTSC)"
+msgstr "Teledu allan mewn sgrîn lawn gan Nvidia (NTSC)"
+
+#: data/totem.glade.h:105
+msgid "Tv-out in fullscreen by Nvidia (PAL)"
+msgstr "Teledu allan mewn sgrîn lawn gan Nvidia (PAL)"
+
+#: data/totem.glade.h:106
 msgid "Visualisation _size:"
 msgstr "_Maint delweddu:"
 
-#: data/totem.glade.h:96
-msgid "Volume _Down"
-msgstr "Lefel Sain i _Lawr"
-
-#: data/totem.glade.h:97
-msgid "Volume _Up"
-msgstr "Lefel Sain i _Fyny"
-
-#: data/totem.glade.h:98
+#: data/totem.glade.h:109
 msgid "Volume down"
 msgstr "Lefel sain i lawr"
 
-#: data/totem.glade.h:99
-msgid "Volume up"
-msgstr "Lefel sain i fyny"
+#: data/totem.glade.h:111
+msgid "Zoom In"
+msgstr "Chwyddo"
 
-#: data/totem.glade.h:100 data/vanity.glade.h:7
-msgid "Zoom _1:1"
-msgstr "Chwyddo _1:1"
+#: data/totem.glade.h:112
+msgid "Zoom Out"
+msgstr "Crebachu"
 
-#: data/totem.glade.h:101 data/vanity.glade.h:8
-msgid "Zoom _2:1"
-msgstr "Chwyddo _2:1"
+#: data/totem.glade.h:113
+msgid "Zoom Reset"
+msgstr "Ailosod Chwyddo"
 
-#: data/totem.glade.h:102
-msgid "Zoom to half size"
-msgstr "Chwyddo i hanner maint"
+#: data/totem.glade.h:114
+msgid "Zoom in"
+msgstr "Chwyddo"
 
-#: data/totem.glade.h:103
-msgid "Zoom to one for one size"
-msgstr "Chwyddo i maint un i un"
+#: data/totem.glade.h:115
+msgid "Zoom out"
+msgstr "Crebachu"
 
-#: data/totem.glade.h:104
+#: data/totem.glade.h:116
+msgid "Zoom reset"
+msgstr "Ailosod chwyddo"
+
+#: data/totem.glade.h:117
 msgid "_Add Proprietary Plugins..."
 msgstr "_Ywchwanegu Ategion Perchenogol..."
 
-#: data/totem.glade.h:105
+#: data/totem.glade.h:118
 msgid "_Angle Menu"
 msgstr "Dewislen _Ongl"
 
-#: data/totem.glade.h:106
+#: data/totem.glade.h:119
+msgid "_Aspect Ratio"
+msgstr "Cymhareb _Agwedd"
+
+#: data/totem.glade.h:120
 msgid "_Audio output type:"
 msgstr "Math allbwn _sain:"
 
-#: data/totem.glade.h:107
+#: data/totem.glade.h:121
 msgid "_Brightness:"
 msgstr "_Disgleirdeb:"
 
-#: data/totem.glade.h:108
+#: data/totem.glade.h:122
 msgid "_Chapter Menu"
 msgstr "Dewislen _Pennod"
 
-#: data/totem.glade.h:109
+#: data/totem.glade.h:123
+msgid "_Contents"
+msgstr "_Cynnwys:"
+
+#: data/totem.glade.h:124
 msgid "_DVD Menu"
 msgstr "Dewislen _DVD"
 
-#: data/totem.glade.h:110
+#: data/totem.glade.h:125
 msgid "_DXR3 TV-out"
 msgstr "TV-out _DXR3"
 
-#: data/totem.glade.h:111
+#: data/totem.glade.h:126
 msgid "_Deinterlace"
 msgstr "_Datblethu"
 
-#: data/totem.glade.h:112
+#: data/totem.glade.h:127
 msgid "_Eject"
 msgstr "_Allfwrw"
 
-#: data/totem.glade.h:113
+#: data/totem.glade.h:128
 msgid "_Fullscreen"
 msgstr "_Llenwi'r Sgrîn"
 
-#: data/totem.glade.h:114
+#: data/totem.glade.h:129
 msgid "_Go"
 msgstr "_Mynd"
 
-#: data/totem.glade.h:115
+#: data/totem.glade.h:130
+msgid "_Hue:"
+msgstr "_Arlliw:"
+
+#: data/totem.glade.h:131
 msgid "_Languages"
 msgstr "_Ieithoedd"
 
-#: data/totem.glade.h:116
+#: data/totem.glade.h:132
 msgid "_Movie"
 msgstr "_Ffilm"
 
-#: data/totem.glade.h:117
-msgid "_Next Chapter/Movie"
-msgstr "Pennod/Ffilm _Nesaf"
-
-#: data/totem.glade.h:118
+#: data/totem.glade.h:134
 msgid "_No TV-out"
 msgstr "_Dim TV-out"
 
-#: data/totem.glade.h:119
+#: data/totem.glade.h:135
 msgid "_Optical device path:"
 msgstr "Llwybr dyfais _optegol:"
 
-#: data/totem.glade.h:120
-msgid "_Previous Chapter/Movie"
-msgstr "Penawd/Ffilm _Blaenorol"
-
-#: data/totem.glade.h:121
+#: data/totem.glade.h:137
 msgid "_Repeat Mode"
 msgstr "Modd _Ailadrodd"
 
-#: data/totem.glade.h:122
+#: data/totem.glade.h:138
+msgid "_Reset To Defaults"
+msgstr "_Nôl i'r Gosodiadau Rhagosodedig"
+
+#: data/totem.glade.h:139
+msgid "_Resize 1:2"
+msgstr "_Newid maint 1:2"
+
+#: data/totem.glade.h:140
 msgid "_Show/Hide Playlist"
 msgstr "_Dangos/Cuddio'r Rhestr Chwarae"
 
-#: data/totem.glade.h:123
+#: data/totem.glade.h:141
 msgid "_Skip to..."
 msgstr "_Neidio i..."
 
-#: data/totem.glade.h:124
-msgid "_Skip to:"
-msgstr "_Neidio i:"
-
-#: data/totem.glade.h:125
+#: data/totem.glade.h:142
 msgid "_Sound"
 msgstr "_Sain"
 
-#: data/totem.glade.h:126
-msgid "_TV-out mode"
-msgstr "Modd _TV-out"
-
-#: data/totem.glade.h:127
+#: data/totem.glade.h:143
 msgid "_Title Menu"
 msgstr "Dewislen _Teitl"
 
-#: data/totem.glade.h:128
+#: data/totem.glade.h:144
 msgid "_Type of visualisation:"
 msgstr "_Math o ddewleddu:"
-
-#: data/totem.glade.h:129 data/vanity.glade.h:10
-msgid "_Zoom 1:2"
-msgstr "_Chwyddo 1:2"
-
-#: data/totem.glade.h:130
-msgid "seconds"
-msgstr "eiliadau"
 
 #: data/totem.schemas.in.h:1
 msgid "Enable deinterlacing"
@@ -678,7 +761,7 @@ msgstr "Galluogi datblethu"
 
 #: data/totem.schemas.in.h:2
 msgid "Enable deinterlacing."
-msgstr "Galluogi dadblethu."
+msgstr "Galluogi datblethu."
 
 #: data/totem.schemas.in.h:3
 msgid "Height of the video widget"
@@ -725,84 +808,110 @@ msgid "Show visual effects when playing an audio only file."
 msgstr "Ddangos effeithiau gweledol wrth chwarae ffeil sain yn unig"
 
 #: data/totem.schemas.in.h:14
+msgid "Shuffle mode"
+msgstr "Modd sifflo"
+
+#: data/totem.schemas.in.h:15
+msgid "Shuffle mode."
+msgstr "Modd shifflo."
+
+#: data/totem.schemas.in.h:16
+msgid "Sound volume"
+msgstr "Lefel sain"
+
+#: data/totem.schemas.in.h:17
+msgid "Sound volume, in percent, between 0 and 100"
+msgstr "Lefel sain, fel canran, rhwng 0 a 100"
+
+#: data/totem.schemas.in.h:18
 msgid "The brightness of the video"
 msgstr "Disgleirdeb y fideo"
 
-#: data/totem.schemas.in.h:15
+#: data/totem.schemas.in.h:19
 msgid "The brightness of the video."
 msgstr "Disgleirdeb y fideo."
 
-#: data/totem.schemas.in.h:16
+#: data/totem.schemas.in.h:20
 msgid "The contrast of the video"
 msgstr "Cyferbyniad y fideo"
 
-#: data/totem.schemas.in.h:17
+#: data/totem.schemas.in.h:21
 msgid "The contrast of the video."
 msgstr "Cyferbyniad y fideo."
 
-#: data/totem.schemas.in.h:18
+#: data/totem.schemas.in.h:22
+msgid "The hue of the video"
+msgstr "Arlliw'r fideo"
+
+#: data/totem.schemas.in.h:23
+msgid "The hue of the video."
+msgstr "Arlliw'r fideo."
+
+#: data/totem.schemas.in.h:24
+msgid "The saturation of the video"
+msgstr "Dirlawnder y fideo"
+
+#: data/totem.schemas.in.h:25
+msgid "The saturation of the video."
+msgstr "Dirlawnder y fideo."
+
+#: data/totem.schemas.in.h:26
 msgid "Type of audio output to use"
 msgstr "Y math o allbwn sain i'w ddefnyddio"
 
-#: data/totem.schemas.in.h:19
-msgid ""
-"Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
-"\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
-"Passthrough."
-msgstr ""
-"Y math o allbwn sain i'w ddefnyddio: \"0\" am stereo, \"1\" am allbwn 4 "
-"sianel,\"2\" am allbwn 5.0 sianel, \"3\" am allbwn 5.1 sianel, \"4\" ar "
-"gyfer Pasio Drwy AC3."
+#: data/totem.schemas.in.h:27
+msgid "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, \"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 Passthrough."
+msgstr "Y math o allbwn sain i'w ddefnyddio: \"0\" am stereo, \"1\" am allbwn 4 sianel,\"2\" am allbwn 5.0 sianel, \"3\" am allbwn 5.1 sianel, \"4\" ar gyfer Pasio Drwy AC3."
 
-#: data/totem.schemas.in.h:20
+#: data/totem.schemas.in.h:28
 msgid "Whether the main window should stay on top"
-msgstr "A ddylai'r prif ffenest aros ar y pen"
+msgstr "A ddylai'r brif ffenest aros ar y pen"
 
-#: data/totem.schemas.in.h:21
+#: data/totem.schemas.in.h:29
 msgid "Whether the main window should stay on top of the other ones"
-msgstr "A ddylai'r prif ffenest aros ar ben ffenestri eraill"
+msgstr "A ddylai'r brif ffenest aros ar ben ffenestri eraill"
 
-#: data/totem.schemas.in.h:22
+#: data/totem.schemas.in.h:30
 msgid "Whether to enable debug for the playback engine"
-msgstr "A ddylid galluogi dadnamu ar gyfer y peiriant chwarae"
+msgstr "A ddylid galluogi datblethu ar gyfer y peiriant chwarae"
 
-#: data/totem.schemas.in.h:23
+#: data/totem.schemas.in.h:31
 msgid "Whether to enable debug for the playback engine."
-msgstr "A ddylid galluogi dadnamu ar gyfer y peiriant chwarae."
+msgstr "A ddylid galluogi datblethu ar gyfer y peiriant chwarae."
 
-#: data/totem.schemas.in.h:24
+#: data/totem.schemas.in.h:32
 msgid "Width of the video widget"
 msgstr "Lled y teclyn fideo"
 
-#: data/totem.schemas.in.h:25
+#: data/totem.schemas.in.h:33
 msgid "X coordinate for the Playlist"
 msgstr "Cyfesuryn X ar gyfer y Rhestr Chwarae"
 
-#: data/totem.schemas.in.h:26
+#: data/totem.schemas.in.h:34
 msgid "X coordinate for the Playlist."
 msgstr "Cyfesuryn X ar gyfer y Rhestr Chwarae."
 
-#: data/totem.schemas.in.h:27
+#: data/totem.schemas.in.h:35
 msgid "Y coordinate for the Playlist"
 msgstr "Cyfesuryn Y ar gyfer y Rhestr Chwarae"
 
-#: data/totem.schemas.in.h:28
+#: data/totem.schemas.in.h:36
 msgid "Y coordinate for the Playlist."
 msgstr "Cyfesuryn Y ar gyfer y Rhestr Chwarae."
 
 #: data/uri.glade.h:2
 msgid "Enter the _location (URI) of the file you would like to open:"
-msgstr "Rhowch _lleeliad (URI) y ffeil rhydych chi eisiau ei agor:"
+msgstr "Rhowch _lleoliad (URI) y ffeil rydych chi eisiau ei agor:"
 
 #: data/uri.glade.h:3
 msgid "Open from URI"
 msgstr "Agor o URI"
 
-#: data/vanity.desktop.in.h:1
+#: data/vanity.desktop.in.in.h:1
 msgid "Vanity Webcam utility"
 msgstr "Cyfleuster Camera Gwe Vanity"
 
-#: data/vanity.desktop.in.h:2
+#: data/vanity.desktop.in.in.h:2
 msgid "View live webcam and upload pictures"
 msgstr "Gweld camera gwe byw a lanlwytho lluniau"
 
@@ -810,7 +919,8 @@ msgstr "Gweld camera gwe byw a lanlwytho lluniau"
 msgid "Save File"
 msgstr "Cadw Ffeil"
 
-#: data/vanity.glade.h:2 src/vanity.c:248
+#: data/vanity.glade.h:2
+#: src/vanity.c:259
 msgid "Vanity"
 msgstr "Vanity"
 
@@ -830,535 +940,632 @@ msgstr "Chwyddo 1:2"
 msgid "Zoom 2:1"
 msgstr "Chwyddo 2:1"
 
+#: data/vanity.glade.h:7
+msgid "Zoom _1:1"
+msgstr "Chwyddo _1:1"
+
+#: data/vanity.glade.h:8
+msgid "Zoom _2:1"
+msgstr "Chwyddo _2:1"
+
 #: data/vanity.glade.h:9
 msgid "_Picture"
 msgstr "_Llun"
 
-#: src/bacon-cd-selection.c:234
+#: data/vanity.glade.h:10
+msgid "_Zoom 1:2"
+msgstr "_Chwyddo 1:2"
+
+#: src/bacon-v4l-selection.c:191
 msgid "Unnamed CDROM"
 msgstr "CDROM Dienw"
 
-#: src/bacon-cd-selection.c:276 src/bacon-v4l-selection.c:275
-msgid "Select the drive"
-msgstr "Dewiswch y gyriant"
-
-#: src/bacon-v4l-selection.c:233
-msgid "Unnamed Video Device"
-msgstr "Dyfais Fideo Dienw"
-
-#: src/bacon-video-widget-gst.c:56
+#: src/bacon-video-widget-gst.c:68
 msgid "Totem Video Window"
 msgstr "Ffenstr Fideo Totem"
 
-#: src/bacon-video-widget-properties.c:106 src/totem-properties-page.c:100
-#, fuzzy, c-format
-msgid "%d hour"
-msgid_plural "%d hours"
-msgstr[0] "%d awr"
-msgstr[1] "%d awr"
-
-#: src/bacon-video-widget-properties.c:108 src/totem-properties-page.c:102
-#, fuzzy, c-format
-msgid "%d minute"
-msgid_plural "%d minutes"
-msgstr[0] "%d munud"
-msgstr[1] "%d munud"
-
-#: src/bacon-video-widget-properties.c:111 src/totem-properties-page.c:105
-#, fuzzy, c-format
-msgid "%d second"
-msgid_plural "%d seconds"
-msgstr[0] "%d eiliad"
-msgstr[1] "%d eiliad"
-
-#. hour:minutes:seconds
-#: src/bacon-video-widget-properties.c:117 src/totem-properties-page.c:111
-#, c-format
-msgid "%s %s %s"
-msgstr "%s %s %s"
-
-#. minutes:seconds
-#: src/bacon-video-widget-properties.c:120 src/totem-properties-page.c:114
-#, c-format
-msgid "%s %s"
-msgstr "%s %s"
-
-#. seconds
-#: src/bacon-video-widget-properties.c:123 src/totem-properties-page.c:117
-#, c-format
-msgid "%s"
-msgstr "%s"
+#: src/bacon-video-widget-gst.c:2913
+msgid "Failed to create a GStreamer play object"
+msgstr "Methwyd creu gwrthrych chwarae GStreamer"
 
 #. Duration
-#: src/bacon-video-widget-properties.c:163 src/totem-properties-page.c:157
+#: src/bacon-video-widget-properties.c:102
 msgid "0 second"
 msgstr "0 eiliad"
 
-#: src/bacon-video-widget-properties.c:248 src/totem-properties-page.c:242
+#: src/bacon-video-widget-properties.c:199
 #, c-format
 msgid "%d frames per second"
 msgstr "%d ffrâm bob eiliad"
 
-#: src/bacon-video-widget-properties.c:266 src/totem-properties-page.c:260
+#: src/bacon-video-widget-properties.c:221
 #, c-format
 msgid "%d kbps"
 msgstr "%d cb/s"
 
-#: src/bacon-video-widget-xine.c:619
+#: src/bacon-video-widget-xine.c:657
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
 "Check that the device is not busy."
 msgstr ""
 "Methwyd llwytho'r gyrrydd sain '%s'\n"
-"Gwiriwch nad yw'r dyfais yn brysur."
+"Gwiriwch nad yw'r ddyfais yn brysur."
 
-#: src/bacon-video-widget-xine.c:1125
+#: src/bacon-video-widget-xine.c:1109
+#: src/bacon-video-widget-xine.c:1614
+msgid "No video output is available. Make sure that the program is correctly installed."
+msgstr "Dim allbwn fideo ar gael. Sicrhewch fod y rhaglen wedi ei ymsefydlu yn gywir."
+
+#: src/bacon-video-widget-xine.c:1225
 msgid "The server you are trying to connect to is not known."
 msgstr "Mae'r gweinydd rydych eisiau cysylltu ag ef yn anhysbys."
 
-#: src/bacon-video-widget-xine.c:1128
+#: src/bacon-video-widget-xine.c:1229
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "Ymddengys fod yr enw dyfais penodoch chi (%s) yn annilys."
 
-#: src/bacon-video-widget-xine.c:1131
+#: src/bacon-video-widget-xine.c:1233
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "Ni ellir cyrraedd y gweinydd rydych chi'n ceisio cysylltu af ef (%s)."
 
-#: src/bacon-video-widget-xine.c:1134
+#: src/bacon-video-widget-xine.c:1237
 msgid "The connection to this server was refused."
 msgstr "Gwrthodwyd y cysylltiad i'r gweinydd hwn."
 
-#: src/bacon-video-widget-xine.c:1137
-#, c-format
-msgid "The specified movie '%s' could not be found."
-msgstr "Methwyd canfod y ffilm '%s' a benodwyd."
+#: src/bacon-video-widget-xine.c:1241
+msgid "The specified movie could not be found."
+msgstr "Methwyd canfod y ffilm benodol."
 
-#: src/bacon-video-widget-xine.c:1140
-#, c-format
-msgid "The movie '%s' could not be read."
-msgstr "Ni ellid darllen y ffilm '%s'."
+#: src/bacon-video-widget-xine.c:1247
+#: src/bacon-video-widget-xine.c:1265
+msgid "The source seems encrypted, and can't be read. Are you trying to play an encrypted DVD without libdvdcss?"
+msgstr "Ymddengys bod y tardd wedi cael ei amgryptio, a ni ellir ei ddarllen. A ydych chi'n ceisio chwarae DVD wedi'i amgryptio heb libdvdcss?"
 
-#: src/bacon-video-widget-xine.c:1143
+#: src/bacon-video-widget-xine.c:1250
+msgid "The movie could not be read."
+msgstr "Ni ellid darllen y ffilm."
+
+#: src/bacon-video-widget-xine.c:1259
 #, c-format
 msgid "A problem occured while loading a library or a decoder (%s)."
 msgstr "Digwyddodd gwall wrth lwytho llyfrgell neu ddatgodiwr (%s)."
 
-#: src/bacon-video-widget-xine.c:1146
-msgid ""
-"The source seems encrypted, and can't be read. Are you trying to play an "
-"encrypted DVD without libdvdcss?"
-msgstr ""
-"Ymddengys bod yr tardd wedi cael ei amgryptio, a ni ellir ei ddarllen. A "
-"ydych chi'n ceisio chwarae DVD wedi'i amgryptio heb libdvdcss?"
+#: src/bacon-video-widget-xine.c:1268
+msgid "This file is encrypted and cannot be played back."
+msgstr "Mae'r ffilm wedi ei hamgryptio ac ni ellir ei chwarae yn ôl."
 
-#: src/bacon-video-widget-xine.c:1229
-msgid "There is no plugin to handle this movie"
-msgstr "Does ddim ategyn i ymdrin a'r ffilm hwn"
+#: src/bacon-video-widget-xine.c:1273
+msgid "For security reasons, this movie can not be played back."
+msgstr "Am resymau diogelwch, ni ellir chwarae'r ffilm."
 
-#: src/bacon-video-widget-xine.c:1233
-msgid "This movie is broken and can not be played further"
-msgstr "Mae'r ffilm wedi torri a ni ellir ei chwarae yn bellach"
+#: src/bacon-video-widget-xine.c:1278
+msgid "The audio device is busy. Is another application using it?"
+msgstr "Mae'r ddyfais sain yn brysur. A oes rhaglen arall yn ei defnyddio?"
 
-#: src/bacon-video-widget-xine.c:1237
-msgid "This location is not a valid one"
-msgstr "Nid yw'r lleoliad hwn yn un dilys"
+#: src/bacon-video-widget-xine.c:1283
+msgid "You are not allowed to open this file."
+msgstr "Does dim hawl gyda chi i agor y ffeil hon."
 
-#: src/bacon-video-widget-xine.c:1241
-msgid "This movie could not be opened"
-msgstr "Nid ellid agor y ffilm hwn"
+#: src/bacon-video-widget-xine.c:1285
+msgid "The server refused access to this file or stream."
+msgstr "Gwrthododd y gweinydd fynediad i'r ffeil neu'r ffrwd."
 
-#: src/bacon-video-widget-xine.c:1244
-msgid "Generic Error"
-msgstr "Gwall Cyffredinol"
+#: src/bacon-video-widget-xine.c:1425
+msgid "There is no plugin to handle this movie."
+msgstr "Does ddim ategyn i ymdrin â'r ffilm hon."
 
-#: src/bacon-video-widget-xine.c:1623
+#: src/bacon-video-widget-xine.c:1429
+msgid "This movie is broken and can not be played further."
+msgstr "Mae'r ffilm wedi torri ac ni ellir ei chwarae yn bellach."
+
+#: src/bacon-video-widget-xine.c:1433
+msgid "This location is not a valid one."
+msgstr "Nid yw'r lleoliad yn un dilys."
+
+#: src/bacon-video-widget-xine.c:1437
+msgid "This movie could not be opened."
+msgstr "Nid ellid agor y ffilm hon."
+
+#: src/bacon-video-widget-xine.c:1441
+msgid "Generic Error."
+msgstr "Gwall Cyffredinol."
+
+#: src/bacon-video-widget-xine.c:1911
+msgid "This movie is a still image. You can open it with an image viewer."
+msgstr "Un ddelwedd yw'r ffilm. Gallwch ei hagor gyda gwelydd delwedd."
+
+#: src/bacon-video-widget-xine.c:1935
 #, c-format
-msgid ""
-"Video codec '%s' is not handled. You might need to install additional "
-"plugins to be able to play some types of movies"
-msgstr ""
-"Ni thrinir a'r codec fideo '%s'. Efallai bydd angen i chi sefydlu ategion "
-"ychwanegol er mwyn gallu chwarae rhai mathau o ffilmiau."
+msgid "Video codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"
+msgstr "Ni thrinnir a'r codec fideo '%s'. Efallai bydd angen i chi sefydlu ategion ychwanegol er mwyn gallu chwarae rhai mathau o ffilmiau."
 
-#: src/bacon-video-widget-xine.c:1642
-msgid "This is an audio-only file, and there is no audio output available"
-msgstr "Mae hwn yn ffeil sain yn unig, a does dim allbwn sain ar gael"
-
-#: src/bacon-video-widget-xine.c:2932
-msgid "Movie is not playing"
-msgstr "Nid yw'r ffilm yn chwarae"
-
-#: src/bacon-video-widget-xine.c:2940
-msgid "No video to capture"
-msgstr "Does dim vidio i'w gipio"
-
-#: src/bacon-video-widget-xine.c:2947
-msgid "Video codec is not handled"
-msgstr "Ni thrinir y codec fideo"
-
-#: src/cd-drive.c:362
+#: src/bacon-video-widget-xine.c:1939
 #, c-format
-msgid "Unnamed SCSI CD-ROM (%s)"
-msgstr "CD-ROM SCSI Dienw (%s)"
+msgid "Audio codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"
+msgstr "Ni thrinnir a'r codec sain '%s'. Efallai bydd angen i chi sefydlu ategion ychwanegol er mwyn gallu chwarae rhai mathau o ffilmiau"
 
-#: src/cd-drive.c:815
-msgid "File image"
-msgstr "Delwedd ffeil"
+#: src/bacon-video-widget-xine.c:1955
+msgid "This is an audio-only file, and there is no audio output available."
+msgstr "Ffeil sain yn unig yw hon, a does dim allbwn sain ar gael."
 
-#: src/gnome-authn-manager.c:60
-msgid "Your HTTP Proxy requires you to log in.\n"
-msgstr "Mae'r dirprwy HTTP yn mynnu eich bod chi'n mewngofnodi.\n"
-
-#: src/gnome-authn-manager.c:61
+#: src/bacon-video-widget-xine.c:3369
 #, c-format
-msgid ""
-"You must log in to access \"%s\".\n"
-"\n"
-"%s"
-msgstr ""
-"Mae rhaid i chi fewngofnodi i gyrchu \"%s\".\n"
-"\n"
-"%s"
+msgid "Language %d"
+msgstr "Iaith %d"
 
-#: src/gnome-authn-manager.c:64
-msgid "Your password will be transmitted unencrypted."
-msgstr "Caiff eich cyfrinair ei ddarlledu heb ei amgryptio."
+#: src/bacon-video-widget-xine.c:3452
+msgid "Movie is not playing."
+msgstr "Nid yw'r ffilm yn chwarae."
 
-#: src/gnome-authn-manager.c:65
-msgid "Your password will be transmitted encrypted."
-msgstr "Caiff eich cyfrinair ei ddarlledu wedi ei amgryptio."
+#: src/bacon-video-widget-xine.c:3461
+msgid "No video to capture."
+msgstr "Does dim fideo i'w gipio."
 
-#: src/gnome-authn-manager.c:68
-msgid "Authentication Required"
-msgstr "Angen Gwirio"
+#: src/bacon-video-widget-xine.c:3469
+msgid "Video codec is not handled."
+msgstr "Ni thrinnir y codec fideo."
 
-#: src/gnome-password-dialog.c:227
-msgid "_Username:"
-msgstr "_Enw Defnyddiwr:"
+#: src/totem-disc.c:114
+#, c-format
+msgid "Failed to find real device node for %s: %s"
+msgstr "Methwyd darganfod nod dyfais iawn ar gyfer %s: %s"
 
-#: src/gnome-password-dialog.c:234
-msgid "_Password:"
-msgstr "_Cyfrinair:"
+#: src/totem-disc.c:125
+#, c-format
+msgid "Failed to read symbolic link %s: %s"
+msgstr "Methwyd darllen cyswllt symbolaidd %s: %s"
 
-#: src/gnome-password-dialog.c:261
-msgid "Remember this password"
-msgstr "Cofio'r cyfrinair jwm"
+#: src/totem-disc.c:209
+#, c-format
+msgid "Failed to find mountpoint for device %s in /etc/fstab"
+msgstr "Methwyd darganfod pwynt mowntio ar gyfer dyfais %s yn /etc/fstab"
 
-#: src/totem-playlist.c:636 src/totem.c:1529
-msgid "Select files"
-msgstr "Dewis ffeiliau"
+#: src/totem-disc.c:247
+msgid "Please check that a disc is present in the drive."
+msgstr "Gwiriwch fod disg yn bresennol yn y gyriant a'i fod wedi ei gyflunio'n gywir."
 
-#: src/totem-playlist.c:795
+#: src/totem-disc.c:250
+#, c-format
+msgid "Failed to open device %s for reading: %s"
+msgstr "Methwyd agor dyfais %s ar gyfer darllen: %s"
+
+#: src/totem-disc.c:261
+#, c-format
+msgid "Failed to retrieve capabilities of device %s: %s"
+msgstr "Methwyd cyrchu galluoedd dyfais %s: %s"
+
+#: src/totem-disc.c:294
+#, c-format
+msgid "Drive status 0x%x (%s) - check disc"
+msgstr "Statws gyrrydd 0x%x (%s) - gwiriwch y disg"
+
+#: src/totem-disc.c:327
+#, c-format
+msgid "Unexpected error status %d while mounting %s"
+msgstr "Statws gwall annisgwyl %d wrth fowntio %s"
+
+#: src/totem-disc.c:379
+#, c-format
+msgid "Error getting %s disc status: %s"
+msgstr "Gwall yn cael statws disg %s: %s"
+
+#: src/totem-disc.c:408
+#, c-format
+msgid "Unexpected/unknown cd type 0x%x (%s)"
+msgstr "Math CD annisgwyl/anhysbys 0x%x (%s)"
+
+#: src/totem-disc.c:572
+msgid "Audio CD"
+msgstr "CD Sain"
+
+#: src/totem-disc.c:574
+msgid "Video CD"
+msgstr "CD Fideo"
+
+#: src/totem-disc.c:576
+msgid "DVD"
+msgstr "DVD"
+
+#: src/totem-interface.c:112
+#, c-format
+msgid "Couldn't load the '%s' interface."
+msgstr "Methu llwytho'r rhyngwyneb '%s'."
+
+#: src/totem-interface.c:114
+#: src/totem-interface.c:116
+msgid "Make sure that Totem is properly installed."
+msgstr "Sicrhewch fod Totem wedi ei ymsefydlu yn gywir."
+
+#. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+#: src/totem-mozilla-viewer.c:59
+#: src/totem.c:312
+#: src/totem.c:339
+#: src/totem.c:713
+#: src/totem.c:818
+#, c-format
+msgid "Totem could not play '%s'."
+msgstr "Methodd Totem chwarae '%s'."
+
+#: src/totem-mozilla-viewer.c:91
+#: src/totem-mozilla-viewer.c:98
+msgid "Couldn't load the main interface (mozilla-viewer.glade)."
+msgstr "Methu llwytho'r prif ryngwyneb (mozilla-viewer.glade)."
+
+#: src/totem-mozilla-viewer.c:91
+#: src/totem-mozilla-viewer.c:98
+msgid "Make sure that the Totem plugin is properly installed."
+msgstr "Sicrhewch fod ategyn Totem wedi ei ymsefydlu yn gywir."
+
+#: src/totem-mozilla-viewer.c:109
+msgid "The Totem plugin could not startup."
+msgstr "Methodd yr ategyn Totem gychwyn."
+
+#: src/totem-mozilla-viewer.c:109
+#: src/totem.c:3222
+msgid "No reason."
+msgstr "Dim rheswm."
+
+#: src/totem-mozilla-viewer.c:141
+#: src/totem.c:3403
+msgid "Could not initialise the thread-safe libraries."
+msgstr "Methwyd ymgychwyn y llyfrgelloedd edefyn-ddiogel."
+
+#: src/totem-mozilla-viewer.c:141
+msgid "Verify your system installation. The Totem plugin will now exit."
+msgstr "Gwiriwch eich ymsefydliad system. Mi fydd Totem yn terfynu nawr."
+
+#: src/totem-options.c:36
+msgid "Backend options"
+msgstr "Opsiynau'r grombil"
+
+#: src/totem-options.c:37
+msgid "Enable debug"
+msgstr "Galluogi datnamu"
+
+#: src/totem-options.c:41
+msgid "Seek Forwards"
+msgstr "Chwilio Ymlaen"
+
+#: src/totem-options.c:42
+msgid "Seek Backwards"
+msgstr "Chwilio yn ôl"
+
+#: src/totem-options.c:43
+msgid "Volume Up"
+msgstr "Lefel Sain i Fyny"
+
+#: src/totem-options.c:44
+msgid "Volume Down"
+msgstr "Lefel Sain i Lawr"
+
+#: src/totem-options.c:45
+msgid "Toggle Fullscreen"
+msgstr "Toglu Llenwi'r Sgrîn"
+
+#: src/totem-options.c:46
+msgid "Show/Hide Controls"
+msgstr "Dangos/Cuddio Rheolyddion"
+
+#: src/totem-options.c:47
+msgid "Quit"
+msgstr "Gadael"
+
+#: src/totem-options.c:48
+msgid "Enqueue"
+msgstr "Rhestri"
+
+#: src/totem-options.c:49
+msgid "Replace"
+msgstr "Amnewid"
+
+#: src/totem-options.c:110
+#, c-format
+msgid "Option '%s' is unknown and was ignored\n"
+msgstr "Roedd opsiwn '%s' yn anhysbys ac fe'i anwybyddwyd\n"
+
+#: src/totem-pl-parser.c:215
+#, c-format
+msgid "Couldn't write parser: %s"
+msgstr "Methu ysgrifennu gramadegydd: %s"
+
+#: src/totem-pl-parser.c:321
+#: src/totem-pl-parser.c:444
+#, c-format
+msgid "Couldn't open file '%s': %s"
+msgstr "Methu agor ffeil '%s': %s"
+
+#: src/totem-playlist.c:299
+msgid "Could not save the playlist"
+msgstr "Methu cadw'r rhestr chwarae"
+
+#: src/totem-playlist.c:631
+msgid "Select Movies or Playlists"
+msgstr "Dewis Ffilmiau neu Restrau Chwarae"
+
+#: src/totem-playlist.c:808
 msgid "Save playlist"
 msgstr "Cadw'r rhestr chwarae"
 
-#: src/totem-playlist.c:833
-#, c-format
-msgid ""
-"A file named '%s' already exists.\n"
-"Are you sure you want to overwrite it?"
-msgstr ""
-"Mae ffeil o'r enw '%s' yn bodoli eisioes.\n"
-"A ydych chi'n siwr eich bod eisiau ysgrifennu drosto?"
+#: src/totem-playlist.c:853
+msgid "Overwrite file?"
+msgstr "Trosysgrifo'r ffeil?"
 
-#: src/totem-playlist.c:1016
+#: src/totem-playlist.c:855
+#, c-format
+msgid "A file named '%s' already exists.  Are you sure you want to overwrite it?"
+msgstr "Mae ffeil o'r enw '%s' yn bodoli eisoes. Ydych chi'n siŵr eich bod am ysgrifennu drosti?"
+
+#: src/totem-playlist.c:1054
 msgid "Filename"
 msgstr "Enw Ffeil"
 
-#: src/totem-preferences.c:110
+#: src/totem-playlist.c:1501
+msgid "playlist"
+msgstr "Rhestr Chwarae"
+
+#: src/totem-playlist.c:1645
+msgid "Playlist error"
+msgstr "Gwall Rhestr Chwarae"
+
+#: src/totem-playlist.c:1645
+#, c-format
+msgid "The playlist '%s' could not be parsed, it might be damaged."
+msgstr "Ni ellid darllen y rhestr chwarae '%s', hwyrach cafodd ei ddifrodi."
+
+#: src/totem-preferences.c:87
+msgid "Enable visual effects?"
+msgstr "Galluogi effeithiau gweledol?"
+
+#: src/totem-preferences.c:89
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
 msgstr ""
 "Ymddengys eich bod chi'n rhedeg Totem o bell.\n"
-"A ydych chi'n siwr eich bod am alluogi'r effaithiau gweledol?"
+"A ydych chi'n siŵr eich bod am alluogi'r effeithiau gweledol?"
 
-#: src/totem-preferences.c:162
-msgid ""
-"The change of this setting will only take effect for the next movie, or when "
-"Totem is restarted"
-msgstr ""
-"Bydd newid y gosodiad hwn ond yn dod i rym ar gyfer y ffilm nesaf, neu pan "
-"mae Totem wedi ei ailgychwyn"
+#: src/totem-preferences.c:142
+msgid "The change of this setting will only take effect for the next movie, or when Totem is restarted."
+msgstr "Bydd newid y gosodiad hwn ond yn dod i rym ar gyfer y ffilm nesaf, neu pan fydd Totem wedi ei ailgychwyn."
 
-#: src/totem-preferences.c:206
-msgid ""
-"Switching on or off this type of TV-Out requires a restart to take effect."
-msgstr ""
-"Mae troi y math yma o TV-Out ymlaen neu bant yn gofyn ailgychwyniad er mwyn "
-"cymryd grym."
+#: src/totem-preferences.c:186
+msgid "Switching on or off this type of TV-Out requires a restart to take effect."
+msgstr "Mae troi'r math yma o TV-Out ymlaen neu bant yn gofyn ailgychwyniad er mwyn cymryd grym."
 
-#: src/totem-preferences.c:339
+#: src/totem-preferences.c:336
 msgid "Totem could not start the file manager."
 msgstr "Ni allodd Totem gychwyn y trefnydd ffeiliau."
 
-#: src/totem-preferences.c:367
+#: src/totem-preferences.c:364
 msgid "Changing the visuals effect type will require a restart to take effect."
-msgstr ""
-"Mae newid y math effaith gweledol yn gofyn ailgychwyniad er mwyn cymryd grym."
+msgstr "Mae newid y math effaith gweledol yn gofyn ailgychwyniad er mwyn cymryd grym."
 
-#: src/totem-properties-page.c:331
-msgid "URI currently displayed"
-msgstr "Y URI a ddangosir yn gyfredol"
+#: src/totem-preferences.c:457
+msgid "The change of audio output type will only take effect when Totem is restarted."
+msgstr "Bydd newid y math allbwn sain ond yn dod i rym pan fydd Totem wedi ei ailgychwyn."
 
-#: src/totem-properties-page.c:397
-msgid "Video and Audio information properties page"
-msgstr "Tudalen priodweddau gwybodaeth Fideo a Sain"
+#: src/totem-properties-main.c:112
+msgid "Audio/Video"
+msgstr "Sain/Video"
 
-#: src/totem-statusbar.c:138
-msgid "Shadow type"
-msgstr "Math cysgod"
-
-#: src/totem-statusbar.c:139
-msgid "Style of bevel around the statusbar text"
-msgstr "Y math o befel o gwmpas testun y bar statws"
-
-#: src/totem-statusbar.c:171 src/totem.c:347
-msgid "Stopped"
-msgstr "Ataliwyd"
-
-#: src/totem-statusbar.c:180
-msgid "0:00 / 0:00"
-msgstr "0:00 / 0:00"
-
-#: src/totem-statusbar.c:205
-#, c-format
-msgid "%s (Streaming)"
-msgstr "%s (Llifol)"
-
-#: src/totem.c:82
-msgid "Seek Forwards"
-msgstr "Chwilio Ymlaen"
-
-#: src/totem.c:83
-msgid "Seek Backwards"
-msgstr "Chwilio Yn Ôl"
-
-#: src/totem.c:84
-msgid "Volume Up"
-msgstr "Lefel Sain i Fyny"
-
-#: src/totem.c:85
-msgid "Volume Down"
-msgstr "Lefel Sain i Lawr"
-
-#: src/totem.c:87
-msgid "Toggle Fullscreen"
-msgstr "Toglu Llenwi'r Sgrîn"
-
-#: src/totem.c:88
-msgid "Quit"
-msgstr "Gadael"
-
-#: src/totem.c:89
-msgid "Enqueue"
-msgstr "Rhestri"
-
-#: src/totem.c:90
-msgid "Replace"
-msgstr "Amnewid"
-
-#: src/totem.c:228
-msgid "Download"
-msgstr "Lawrlwytho"
-
-#: src/totem.c:333
-msgid "Playing"
-msgstr "Yn Chwarae"
-
-#: src/totem.c:340
-msgid "Paused"
-msgstr "Seibio"
-
-#: src/totem.c:377
-msgid "Totem could not eject the optical media."
-msgstr "Ni allodd Totem allfwrw'r cyfrwng optegol."
-
-#: src/totem.c:377
-msgid "No reason given"
-msgstr "Rhoddwyd dim rheswm"
-
-#: src/totem.c:398 src/totem.c:820 src/totem.c:941
-#, c-format
-msgid "Totem could not play '%s'."
-msgstr "Methodd Totem chwarae '%s'."
-
-#: src/totem.c:418
-msgid "DVD"
-msgstr "DVD"
-
-#: src/totem.c:419
-msgid "Video CD"
-msgstr "CD Fideo"
-
-#: src/totem.c:420
-msgid "Audio CD"
-msgstr "CD Sain"
-
-#: src/totem.c:431
-#, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because you do not have the "
-"appropriate plugins to handle it."
-msgstr ""
-"Ni all Totem chwarae'r math yma o gyfrwng (%s) oherwydd nad oes gennych y "
-"ategion priodol i ymddelio ag ef."
-
-#: src/totem.c:432
-msgid ""
-"Please install the necessary plugins and restart Totem to be able to play "
-"this media."
-msgstr ""
-"Os gwelwch yn dda, sefydlwch yr ategion anghenrheidol ac ailgychwynwch Totem "
-"er mwyn gallu chwarae'r cyfrwng yma."
-
-#: src/totem.c:440
-#, c-format
-msgid ""
-"Totem could not play this media (%s) although a plugin is present to handle "
-"it."
-msgstr ""
-"Methodd Totem chwarae'r cyfrwng yma (%s) er mae ategyn yn bresennol i "
-"ymddelio ag ef."
-
-#: src/totem.c:441
-msgid ""
-"You might want to check that a disc is present in the drive and that it is "
-"correctly configured."
-msgstr ""
-"Efallai hoffech wirio fod disg yn bresennol yn y gyriant a mae wedi cael ei "
-"gyflunio'n gywir."
-
-#. Title
-#: src/totem.c:671
-#, c-format
-msgid "%s - Totem"
-msgstr "%s - Totem"
-
-#: src/totem.c:684 src/totem.c:3391
-msgid "No file"
-msgstr "Dim ffeil"
-
-#: src/totem.c:1230
-msgid "An error occured"
-msgstr "Digwyddodd gwall"
-
-#: src/totem.c:1242
-msgid "Buffering"
-msgstr "Byfferu:"
-
-#: src/totem.c:1263 src/totem.c:1285
-#, c-format
-msgid "Buffering: %d%%"
-msgstr "Byffro: %d%%"
-
-#: src/totem.c:1580 src/totem.c:1588
-msgid "Couldn't load the 'Open Location...' interface."
-msgstr "Methwyd llwytho'r rhyngwyneb 'Agor Lleoliad...'."
-
-#: src/totem.c:1580 src/totem.c:1588 src/totem.c:3584 src/totem.c:3609
-#: src/totem.c:3632
-msgid "Make sure that Totem is properly installed."
-msgstr "Sicrhewch fod Totem wedi ei ymsefydlu yn gywir."
-
-#: src/totem.c:1820 src/vanity.c:219
-msgid "translator_credits"
-msgstr "Steve Griff,\nDafydd Harries <daf@parnassus.ath.cx>"
-
-#: src/totem.c:1846
-#, c-format
-msgid "Movie Player using %s"
-msgstr "Chwaraewr Ffilmiau sy'n defnyddio %s"
-
-#: src/totem.c:1936 src/totem.c:1947 src/vanity.c:307 src/vanity.c:318
+#: src/totem-screenshot.c:151
+#: src/totem-screenshot.c:162
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Sgrînlun%d.png"
 
-#: src/totem.c:1998 src/totem.c:2006
-msgid "Totem could not get a screenshot of that film."
-msgstr "Methodd Totem gael sgrînlun o'r ffilm hwnnw."
-
-#: src/totem.c:2006
-msgid "Please file a bug, this isn't supposed to happen"
-msgstr "Cyflwynwch ardoddiad nam os gwelwdd yn dda, ni ddylai hyn digwydd"
-
-#: src/totem.c:2034
+#: src/totem-screenshot.c:204
 #, c-format
 msgid "File '%s' already exists."
-msgstr "Mae'r ffeil '%s' yn bodoli eisioes."
+msgstr "Mae'r ffeil '%s' yn bodoli eisoes."
 
-#: src/totem.c:2035
+#: src/totem-screenshot.c:206
 msgid "The screenshot was not saved"
-msgstr "Ni gafodd y sgrînlun ei gadw."
+msgstr "Ni chafodd y sgrînlun ei gadw."
 
-#: src/totem.c:2045
+#: src/totem-screenshot.c:217
 msgid "There was an error saving the screenshot."
 msgstr "Roedd gwall wrth gadw'r sgrînlun."
 
-#: src/totem.c:2060
+#: src/totem-screenshot.c:250
+msgid "Screenshot.png"
+msgstr "Sgrînlun.png"
+
+#: src/totem-statusbar.c:91
+msgid "Shadow type"
+msgstr "Math cysgod"
+
+#: src/totem-statusbar.c:92
+msgid "Style of bevel around the statusbar text"
+msgstr "Y math o fefel o gwmpas testun y bar statws"
+
+#: src/totem-statusbar.c:124
+#: src/totem.c:251
+#: src/totem.c:564
+msgid "Stopped"
+msgstr "Ataliwyd"
+
+#: src/totem-statusbar.c:141
+msgid "0:00 / 0:00"
+msgstr "0:00 / 0:00"
+
+#: src/totem-statusbar.c:166
+#, c-format
+msgid "%s (Streaming)"
+msgstr "%s (Llifol)"
+
+#. Elapsed / Total Length
+#: src/totem-statusbar.c:173
+#: src/totem-time-label.c:70
+#, c-format
+msgid "%s / %s"
+msgstr "%s / %s"
+
+#. Seeking to Time / Total Length
+#: src/totem-statusbar.c:176
+#, c-format
+msgid "Seek to %s / %s"
+msgstr "Cyrchu hyd %s / %s"
+
+#: src/totem-statusbar.c:234
+msgid "Buffering"
+msgstr "Byfferu:"
+
+#. eg: 75 %
+#: src/totem-statusbar.c:237
+#, c-format
+msgid "%d %%"
+msgstr "%d %%"
+
+#: src/totem-sublang.c:108
+#: src/totem-sublang.c:130
+msgid "None"
+msgstr "Dim"
+
+#: src/totem.c:241
+msgid "Playing"
+msgstr "Yn Chwarae"
+
+#: src/totem.c:246
+msgid "Paused"
+msgstr "Seibio"
+
+#: src/totem.c:287
+msgid "Totem could not eject the optical media."
+msgstr "Ni allodd Totem allfwrw'r cyfrwng optegol."
+
+#: src/totem.c:365
+#, c-format
+msgid "Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."
+msgstr "Ni all Totem chwarae'r math yma o gyfrwng (%s) oherwydd nad oes gennych yr ategion priodol i ymddelio ag ef."
+
+#: src/totem.c:366
+msgid "Please install the necessary plugins and restart Totem to be able to play this media."
+msgstr "Os gwelwch yn dda, sefydlwch yr ategion angenrheidiol ac ailgychwynnwch Totem er mwyn gallu chwarae'r cyfrwng yma."
+
+#: src/totem.c:374
+#, c-format
+msgid "Totem could not play this media (%s) although a plugin is present to handle it."
+msgstr "Methodd Totem chwarae'r cyfrwng yma (%s) er mae ategyn yn bresennol i ymddelio ag ef."
+
+#: src/totem.c:375
+msgid "You might want to check that a disc is present in the drive and that it is correctly configured."
+msgstr "Efallai hoffech wirio fod disg yn bresennol yn y gyriant ac mae wedi cael ei gyflunio'n gywir."
+
+#. Title
+#: src/totem.c:557
+#, c-format
+msgid "%s - Totem Movie Player"
+msgstr "%s - Chwaraewr Ffilmiau Totem"
+
+#: src/totem.c:571
+msgid "No file"
+msgstr "Dim ffeil"
+
+#: src/totem.c:607
+#: src/totem.c:1901
+msgid "Totem"
+msgstr "Totem"
+
+#: src/totem.c:1158
+#: src/totem.c:1160
+msgid "An error occured"
+msgstr "Digwyddodd gwall"
+
+#: src/totem.c:1492
+msgid "Select files"
+msgstr "Dewis ffeiliau"
+
+#: src/totem.c:1563
+msgid "Open Location..."
+msgstr "Agor Lleoliad..."
+
+#: src/totem.c:1859
+msgid "Totem could not display the help contents."
+msgstr "Methodd Totem ddangos y rhestr gynnwys."
+
+#: src/totem.c:1897
+#, c-format
+msgid "Movie Player using %s"
+msgstr "Chwaraewr Ffilmiau sy'n defnyddio %s"
+
+#: src/totem.c:1903
+#: src/vanity.c:261
+msgid "Copyright Â© 2002-2005 Bastien Nocera"
+msgstr "Hawlfraint Â© 2002-2005 Bastien Nocera"
+
+#: src/totem.c:1908
+#: src/vanity.c:266
+msgid "translator-credits"
+msgstr ""
+"Steve Griff,\n"
+"Dafydd Harries <daf@parnassus.ath.cx>\n"
+"Rhys Jones <rhys@sucs.org>"
+
+#: src/totem.c:1941
+#: src/totem.c:1949
+#: src/vanity.c:299
+#: src/vanity.c:307
+msgid "Totem could not get a screenshot of that film."
+msgstr "Methodd Totem gael sgrînlun o'r ffilm honno."
+
+#: src/totem.c:1949
+msgid "Please file a bug, this isn't supposed to happen."
+msgstr "Anfonwch adroddiad nam: ni ddylai hyn ddigwydd."
+
+#: src/totem.c:1976
 msgid "Totem couldn't show the movie properties window."
 msgstr "Methodd Totem ddangos y ffenest priodweddau ffilm."
 
-#: src/totem.c:2060
+#: src/totem.c:1976
 msgid "Make sure that Totem is correctly installed."
 msgstr "Sicrhewch fod Totem wedi ei ymsefydlu yn gywir."
 
-#: src/totem.c:2128
+#: src/totem.c:2062
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Methodd Totem chwilio yn '%s'."
 
-#: src/totem.c:2859 src/totem.c:2881
-msgid "None"
-msgstr "Dim"
-
-#: src/totem.c:2863 src/totem.c:2884
-msgid "Auto"
-msgstr "Awtomatig"
-
-#: src/totem.c:3300
+#: src/totem.c:3222
 msgid "Totem could not startup."
 msgstr "Methodd Totem gychwyn."
 
-#: src/totem.c:3300 src/vanity.c:551
-msgid "No reason"
-msgstr "Dim rheswm"
-
-#: src/totem.c:3557
-msgid "Could not initialise the thread-safe libraries."
-msgstr "Methwyd ymgychwyn y llyfrgellau edefyn-ddiogel."
-
-#: src/totem.c:3557
+#: src/totem.c:3403
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Gwiriwch eich ymsefydliad system. Mi fydd Totem yn terfynu nawr."
 
-#: src/totem.c:3574
+#: src/totem.c:3423
 msgid "Totem couln't initialise the configuration engine."
-msgstr ""
-"Ni allodd Totem ymgychwyn y peiriant cyfluniad."
+msgstr "Ni allodd Totem ymgychwyn y peiriant cyfluniad."
 
-#: src/totem.c:3584 src/totem.c:3609
-msgid "Couldn't load the main interface (totem.glade)."
-msgstr ""
-"Methwyd lwytho'r prif rhyngwyneb (totem.glade)."
+#: src/totem.c:3423
+msgid "Make sure that GNOME is properly installed."
+msgstr "Sicrhewch fod GNOME wedi ei ymsefydlu yn gywir."
 
-#: src/totem.c:3632
-msgid "Couldn't load the interface for the playlist."
-msgstr ""
-"Methwyd llwytho'r rhyngwyneb ar gyfer y rhestr chwarae."
+#. Main window
+#: src/totem.c:3450
+msgid "main window"
+msgstr "prif ffenest"
 
-#: src/vanity.c:55
+#: src/totem.c:3455
+msgid "video popup menu"
+msgstr "naidlen fideo"
+
+#: src/vanity.c:75
 msgid "Debug mode on"
 msgstr "Modd dadnamu ymlaen"
 
-#: src/vanity.c:245
+#: src/vanity.c:255
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "Cyfleuster camera gwe sy'n defnyddio %s"
+
+#: src/vanity.c:307
+msgid "Please file a bug, this isn't supposed to happen"
+msgstr "Cyflwynwch ardoddiad nam os gwelwdd yn dda, ni ddylai hyn digwydd"
 
 #: src/vanity.c:550
 #, c-format
@@ -1368,6 +1575,10 @@ msgid ""
 msgstr ""
 "Methodd Vanity gychwyn:\n"
 "%s"
+
+#: src/vanity.c:551
+msgid "No reason"
+msgstr "Dim rheswm"
 
 #: src/vanity.c:589
 #, c-format
@@ -1391,7 +1602,7 @@ msgstr ""
 msgid "Vanity Webcam Utility"
 msgstr "Cyfleuster Camera Gwe Vanity"
 
-#: src/vanity.c:647
+#: src/vanity.c:646
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1399,7 +1610,7 @@ msgstr ""
 "Methwyd ymgychwyn y llyfrgelloedd edefyn-ddiogel.\n"
 "Gwiriwch eich sefydliad system. Mi fydd Vanity yn terfynu yn awr."
 
-#: src/vanity.c:669
+#: src/vanity.c:671
 #, c-format
 msgid ""
 "Vanity couln't initialise the \n"
@@ -1410,25 +1621,57 @@ msgstr ""
 "y peiriant cyfluniad:\n"
 "%s"
 
-#: src/vanity.c:683 src/vanity.c:698
+#: src/vanity.c:691
+#: src/vanity.c:706
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
 msgstr ""
-"Methwyd llywtho'r prif rhyngwyneb (vanity.glade).\n"
+"Methwyd llwytho'r prif ryngwyneb (vanity.glade).\n"
 "Sicrhewch fod Vanity wedi ei sefydlu'n gywir."
 
-#~ msgid "Mute"
-#~ msgstr "Distaw"
+#: src/video-utils.c:290
+#, c-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d awr"
+msgstr[1] "%d awr"
+msgstr[2] "%d awr"
+msgstr[3] "%d awr"
 
-#~ msgid "Mute sound"
-#~ msgstr "Distawu'r sain"
+#: src/video-utils.c:292
+#, c-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d munud"
+msgstr[1] "%d funud"
+msgstr[2] "%d funud"
+msgstr[3] "%d munud"
 
-#~ msgid "%d hours"
-#~ msgstr "%d awr"
+#: src/video-utils.c:295
+#, c-format
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "%d eiliad"
+msgstr[1] "%d eiliad"
+msgstr[2] "%d eiliad"
+msgstr[3] "%d eiliad"
 
-#~ msgid "%d minutes"
-#~ msgstr "%d munud"
+#. hour:minutes:seconds
+#: src/video-utils.c:301
+#, c-format
+msgid "%s %s %s"
+msgstr "%s %s %s"
 
-#~ msgid "%d seconds"
-#~ msgstr "%d eiliad"
+#. minutes:seconds
+#: src/video-utils.c:304
+#, c-format
+msgid "%s %s"
+msgstr "%s %s"
+
+#. seconds
+#: src/video-utils.c:307
+#, c-format
+msgid "%s"
+msgstr "%s"
+
