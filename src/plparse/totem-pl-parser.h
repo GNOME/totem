@@ -68,9 +68,10 @@ typedef void (*TotemPlParserIterFunc) (GtkTreeModel *model, GtkTreeIter *iter, c
 GtkType    totem_pl_parser_get_type (void);
 
 gboolean   totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
-			      TotemPlParserIterFunc func,
-			      const char *output, GError **error);
-
+				  TotemPlParserIterFunc func,
+				  const char *output, GError **error);
+void	   totem_pl_parser_add_ignored_scheme (TotemPlParser *parser,
+					       const char *scheme);
 gboolean   totem_pl_parser_parse (TotemPlParser *parser, const char *url);
 
 TotemPlParser *totem_pl_parser_new (void);

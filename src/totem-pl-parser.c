@@ -46,7 +46,7 @@
 #define MIME_READ_CHUNK_SIZE 1024
 
 typedef gboolean (*PlaylistCallback) (TotemPlParser *parser, const char *url, gpointer data);
-static gboolean totem_pl_parser_ignore (const char *url);
+static gboolean totem_pl_parser_ignore (TotemPlParser *parser, const char *url);
 
 typedef struct {
 	char *mimetype;
@@ -55,9 +55,7 @@ typedef struct {
 
 struct TotemPlParserPrivate
 {
-	GladeXML *xml;
-
-	int x, y;
+	GList *ignore_schemes;
 };
 
 /* Signals */
@@ -216,17 +214,48 @@ write_string (GnomeVFSHandle *handle, const char *buf, GError **error)
 	return TRUE;
 }
 
+static int
+totem_pl_parser_num_entries (TotemPlParser *parser, GtkTreeModel *model,
+			     TotemPlParserIterFunc func)
+{
+	int num_entries, i, ignored;
+
+	num_entries = gtk_tree_model_iter_n_children (model, NULL);
+	ignored = 0;
+
+	for (i = 1; i <= num_entries; i++)
+	{
+		GtkTreeIter iter;
+		char *path, *url, *title;
+
+		path = g_strdup_printf ("%d", i - 1);
+		gtk_tree_model_get_iter_from_string (model, &iter, path);
+		g_free (path);
+
+		func (model, &iter, &url, &title);
+		if (totem_pl_parser_ignore (parser, url) != FALSE)
+			ignored++;
+
+		g_free (url);
+		g_free (title);
+	}
+
+	return num_entries - ignored;
+}
+
 gboolean
 totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
 		   TotemPlParserIterFunc func, const char *output, GError **error)
 {
 	GnomeVFSHandle *handle;
 	GnomeVFSResult res;
-	int num_entries, i;
+	int num_entries_total, num_entries, i;
 	char *buf;
 	gboolean success;
 
+	num_entries_total = totem_pl_parser_num_entries (parser, model, func);
 	num_entries = gtk_tree_model_iter_n_children (model, NULL);
+
 	res = gnome_vfs_open (&handle, output, GNOME_VFS_OPEN_WRITE);
 	if (res == GNOME_VFS_ERROR_NOT_FOUND) {
 		res = gnome_vfs_create (&handle, output,
@@ -251,23 +280,30 @@ totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
 	if (success == FALSE)
 		return FALSE;
 
-	buf = g_strdup_printf ("numberofentries=%d\n", num_entries);
+	buf = g_strdup_printf ("NumberOfEntries=%d\n", num_entries);
 	success = write_string (handle, buf, error);
 	g_free (buf);
 	if (success == FALSE)
 		return FALSE;
 
-	for (i = 1; i <= num_entries; i++) {
+	for (i = 1; i <= num_entries_total; i++) {
 		GtkTreeIter iter;
 		char *path, *url, *title;
 
 		path = g_strdup_printf ("%d", i - 1);
 		gtk_tree_model_get_iter_from_string (model, &iter, path);
 		g_free (path);
-		
+
 		func (model, &iter, &url, &title);
 
-		buf = g_strdup_printf ("file%d=%s\n", i, url);
+		if (totem_pl_parser_ignore (parser, url) != FALSE)
+		{
+			g_free (url);
+			g_free (title);
+			continue;
+		}
+
+		buf = g_strdup_printf ("File%d=%s\n", i, url);
 		success = write_string (handle, buf, error);
 		g_free (buf);
 		g_free (url);
@@ -277,7 +313,7 @@ totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
 			return FALSE;
 		}
 
-		buf = g_strdup_printf ("title%d=%s\n", i, title);
+		buf = g_strdup_printf ("Title%d=%s\n", i, title);
 		success = write_string (handle, buf, error);
 		g_free (buf);
 		g_free (title);
@@ -439,6 +475,8 @@ totem_pl_parser_finalize (GObject *object)
 
 	g_return_if_fail (object != NULL);
 	g_return_if_fail (parser->priv != NULL);
+
+	g_list_foreach (parser->priv->ignore_schemes, (GFunc) g_free, NULL);
 
 	if (G_OBJECT_CLASS (parent_class)->finalize != NULL) {
 		(* G_OBJECT_CLASS (parent_class)->finalize) (object);
@@ -934,7 +972,7 @@ totem_pl_parser_add_desktop (TotemPlParser *parser, const char *url, gpointer da
 	retval = TRUE;
 
 	display_name = gnome_desktop_item_get_localestring (ditem, "Name");
-	if (totem_pl_parser_ignore (path) == FALSE) {
+	if (totem_pl_parser_ignore (parser, path) == FALSE) {
 		totem_pl_parser_add_one_url (parser, path, display_name);
 	} else {
 		if (totem_pl_parser_parse (parser, path) == FALSE)
@@ -1000,7 +1038,8 @@ static PlaylistTypes special_types[] = {
 	{ "application/x-gnome-app-info", totem_pl_parser_add_desktop },
 #endif	
 	{ "x-directory/normal", totem_pl_parser_add_directory },
-	{ "video/x-ms-wvx", totem_pl_parser_add_asf_parser },
+	{ "video/x-ms-wvx", totem_pl_parser_add_asx },
+	{ "audio/x-ms-wax", totem_pl_parser_add_asx },
 };
 
 /* These ones are "dual" types, might be a video, might be a parser */
@@ -1014,7 +1053,25 @@ static PlaylistTypes dual_types[] = {
 	{ "video/x-ms-wmv", totem_pl_parser_add_asf },
 };
 
-static char * ignore_mime[] = { "cdda:", "dvd:", "vcd:" };
+static gboolean
+totem_pl_parser_scheme_is_ignored (TotemPlParser *parser, const char *url)
+{
+	GList *l;
+
+	if (parser->priv->ignore_schemes == NULL)
+		return FALSE;
+
+	for (l = parser->priv->ignore_schemes; l != NULL; l = l->next)
+	{
+		const char *scheme = l->data;
+		if (strncmp (url, scheme, strlen (scheme)) == 0)
+			return TRUE;
+	}
+
+	return FALSE;
+}
+
+//static char * ignore_schemes[] = { "cdda:", "dvd:", "vcd:" };
 
 static gboolean
 totem_pl_parser_add_url_from_data (TotemPlParser *parser, const char *url)
@@ -1052,14 +1109,13 @@ totem_pl_parser_add_url_from_data (TotemPlParser *parser, const char *url)
 }
 
 static gboolean
-totem_pl_parser_ignore (const char *url)
+totem_pl_parser_ignore (TotemPlParser *parser, const char *url)
 {
 	const char *mimetype;
 	guint i;
 
-	for (i = 0; i < G_N_ELEMENTS(ignore_mime); i++)
-		if (strncmp (url, ignore_mime[i], strlen (ignore_mime[i])) == 0)
-			return TRUE;
+	if (totem_pl_parser_scheme_is_ignored (parser, url) != FALSE)
+		return TRUE;
 
 	mimetype = gnome_vfs_get_file_mime_type (url, NULL, TRUE);
 	if (mimetype == NULL || strcmp (mimetype, "application/octet-stream") == 0)
@@ -1082,9 +1138,10 @@ totem_pl_parser_parse (TotemPlParser *parser, const char *url)
 	const char *mimetype;
 	guint i;
 
+	g_return_val_if_fail (TOTEM_IS_PL_PARSER (parser), FALSE);
 	g_return_val_if_fail (url != NULL, FALSE);
 
-	if (totem_pl_parser_ignore (url) != FALSE)
+	if (totem_pl_parser_ignore (parser, url) != FALSE)
 		return FALSE;
 
 	mimetype = gnome_vfs_get_mime_type (url);
@@ -1103,4 +1160,15 @@ totem_pl_parser_parse (TotemPlParser *parser, const char *url)
 	totem_pl_parser_add_one_url (parser, url, NULL);
 	return TRUE;
 }
+
+void
+totem_pl_parser_add_ignored_scheme (TotemPlParser *parser,
+		const char *scheme)
+{
+	g_return_if_fail (TOTEM_IS_PL_PARSER (parser));
+
+	parser->priv->ignore_schemes = g_list_prepend
+		(parser->priv->ignore_schemes, g_strdup (scheme));
+}
+
 

@@ -1,3 +1,15 @@
+2003-11-20  Bastien Nocera  <hadess@hadess.net>
+
+	* README: upd
+	* configure.in: fix build (bah!)
+	* data/totem.applications:
+	* data/totem.keys: added support for audio/x-ms-wax
+	* src/totem-pl-parser.c:
+	* src/totem-pl-parser.h:
+	* src/totem-playlist.c: (totem_playlist_init): move the schemes to
+	ignore out of the playlist parser, don't save playlist items with
+	schemes to ignore (Closes: #125201)
+
 2003-11-17  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.applications:

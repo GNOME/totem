@@ -1097,6 +1097,10 @@ totem_playlist_init (TotemPlaylist *playlist)
 	playlist->_priv = g_new0 (TotemPlaylistPrivate, 1);
 	playlist->_priv->parser = totem_pl_parser_new ();
 
+	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "dvd:");
+	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "cdda:");
+	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "vcd:");
+
 	g_signal_connect (G_OBJECT (playlist->_priv->parser),
 			"entry",
 			G_CALLBACK (totem_playlist_entry_parsed),
