@@ -1,5 +1,13 @@
 2002-10-28  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (dest_size_cb), (frame_output_cb),
+	(load_video_out_driver), (generate_mouse_event), (xine_thread),
+	(gtk_xine_realize), (gtk_xine_set_speed), (gtk_xine_is_playing):
+	fix the mouse event generation, the speed setting, and the
+	display_ratio setting (int v. double)
+
+2002-10-28  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-xine.c: (gtk_xine_instance_init),
 	(load_video_out_driver), (load_audio_out_driver), (xine_thread),
 	(gtk_xine_realize), (gtk_xine_check), (gtk_xine_open),

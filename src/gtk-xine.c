@@ -109,7 +109,7 @@ struct GtkXinePrivate {
 	xine_ao_driver_t *ao_driver;
 	pthread_t thread;
 	xine_event_queue_t *ev_queue;
-	int display_ratio;
+	double display_ratio;
 
 	/* X stuff */
 	Display *display;
@@ -347,6 +347,8 @@ dest_size_cb (void *gtx_gen,
 		*dest_width = gtx->widget.allocation.width;
 		*dest_height = gtx->widget.allocation.height;
 	}
+
+	*dest_pixel_aspect = gtx->priv->display_ratio;
 }
 
 static void
@@ -361,12 +363,12 @@ frame_output_cb (void *gtx_gen,
 	GtkXine *gtx = (GtkXine *) gtx_gen;
 
 	/* correct size with video_pixel_aspect */
-	  if (video_pixel_aspect >= gtx->priv->display_ratio)
-		  video_width = video_width * video_pixel_aspect
-			  / gtx->priv->display_ratio + .5;
-	  else
-		  video_height = video_height * gtx->priv->display_ratio
-			  / video_pixel_aspect + .5;
+	if (video_pixel_aspect >= gtx->priv->display_ratio)
+		video_width = video_width * video_pixel_aspect
+			/ gtx->priv->display_ratio + .5;
+	else
+		video_height = video_height * gtx->priv->display_ratio
+			/ video_pixel_aspect + .5;
 
 	*dest_x = 0;
 	*dest_y = 0;
@@ -406,6 +408,8 @@ frame_output_cb (void *gtx_gen,
 			}
 		}
 	}
+
+	*dest_pixel_aspect = gtx->priv->display_ratio;
 }
 
 static xine_vo_driver_t *
@@ -439,8 +443,6 @@ load_video_out_driver (GtkXine *gtx)
 	video_driver_id = xine_config_register_string (gtx->priv->xine,
 			"video.driver", "auto", "video driver to use",
 			NULL, 10, NULL, NULL);
-
-	g_message ("load_video_out_driver: %s", video_driver_id);
 
 	if (strcmp (video_driver_id, "auto") != 0)
 	{
@@ -587,21 +589,26 @@ generate_mouse_event (GtkXine *gtx, XEvent *event, gboolean is_motion)
 
 	if (retval == TRUE)
 	{
-		xine_input_data_t xine_event;
+		xine_event_t event;
+		xine_input_data_t input;
 
 		if (is_motion == TRUE)
 		{
-			xine_event.event.type = XINE_EVENT_INPUT_MOUSE_MOVE;
-			xine_event.button = 0; /* Just motion. */
+			event.type = XINE_EVENT_INPUT_MOUSE_MOVE;
+			input.button = 0; /* Just motion. */
 		} else {
-			xine_event.event.type = XINE_EVENT_INPUT_MOUSE_BUTTON;
-			xine_event.button = 1;
+			event.type = XINE_EVENT_INPUT_MOUSE_BUTTON;
+			input.button = 1;
 		}
 
-		xine_event.x = x;
-		xine_event.y = y;
+		input.x = x;
+		input.y = y;
+		event.stream = gtx->priv->stream;
+		event.data = &input;
+		event.data_length = sizeof(input);
+
 		xine_event_send (gtx->priv->stream,
-				(xine_event_t *) (&xine_event));
+				(xine_event_t *) (&event));
 	}
 }
 
@@ -622,7 +629,6 @@ xine_thread (void *gtx_gen)
 		case Expose:
 			if (event.xexpose.count != 0)
 				break;
-g_message ("new event");
 			xine_gui_send_vo_data (gtx->priv->stream,
 					XINE_GUI_SEND_EXPOSE_EVENT,
 					&event);
@@ -693,12 +699,8 @@ gtk_xine_realize (GtkWidget *widget)
 	const char *const *autoplug_list;
 	int i = 0;
 
-	g_message ("gtk_xine_realize");
-
 	g_return_if_fail (widget != NULL);
 	g_return_if_fail (GTK_IS_XINE (widget));
-
-	g_message ("gtk_xine_realize");
 
 	gtx = GTK_XINE (widget);
 
@@ -757,7 +759,6 @@ gtk_xine_realize (GtkWidget *widget)
 	if (!gtx->priv->vo_driver)
 	{
 		XUnlockDisplay (gtx->priv->display);
-		g_message ("foooo");
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[ERROR], 0,
 				GTX_STARTUP,
@@ -767,18 +768,18 @@ gtk_xine_realize (GtkWidget *widget)
 
 	gtx->priv->stream = xine_stream_new (gtx->priv->xine,
 			gtx->priv->ao_driver, gtx->priv->vo_driver);
-//	gtx->priv->ev_queue = xine_event_new_queue (gtx->priv->stream);
+	gtx->priv->ev_queue = xine_event_new_queue (gtx->priv->stream);
 
 	XUnlockDisplay (gtx->priv->display);
 
 	/* Setup xine events and codec reporting */
-//	xine_event_create_listener_thread (gtx->priv->ev_queue,
-//			xine_event, (void *) gtx);
+	xine_event_create_listener_thread (gtx->priv->ev_queue,
+			xine_event, (void *) gtx);
 //	xine_register_report_codec_cb(gtx->priv->xine, codec_reporting,
 //			(void *) gtx);
 
 	scrsaver_init (gtx->priv->display);
-#if 0
+
 	/* Can we play DVDs and VCDs ? */
 	autoplug_list = xine_get_autoplay_input_plugin_ids (gtx->priv->xine);
 	while (autoplug_list[i])
@@ -789,7 +790,7 @@ gtk_xine_realize (GtkWidget *widget)
 			gtx->priv->can_dvd = TRUE;
 		i++;
 	}
-#endif
+
 	/* now, create a xine thread */
 	pthread_create (&gtx->priv->thread, NULL, xine_thread, gtx);
 
@@ -1154,7 +1155,10 @@ gtk_xine_set_speed (GtkXine *gtx, gint speed)
 	g_return_if_fail (GTK_IS_XINE (gtx));
 	g_return_if_fail (gtx->priv->xine != NULL);
 
-	xine_set_param (gtx->priv->stream, XINE_PARAM_SPEED, speed);
+	if (speed == SPEED_NORMAL)
+		xine_set_param (gtx->priv->stream, XINE_PARAM_SPEED, 100);
+	else if (speed == SPEED_PAUSE)
+		xine_set_param (gtx->priv->stream, XINE_PARAM_SPEED, 0);
 }
 
 gint
@@ -1441,7 +1445,6 @@ gtk_xine_is_playing (GtkXine *gtx)
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
 	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
 
-	//FIXME
 	if (gtx->priv->stream == NULL)
 		return FALSE;
 
