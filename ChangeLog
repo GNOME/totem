@@ -1,5 +1,22 @@
 2004-03-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-gst.c:
+	(bacon_video_widget_fullscreen_mode_available):
+	oops, forgot to add
+	an argument to this function (thanks to Johan for spotting it)
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_finalize),
+	(bacon_video_widget_realize), (bacon_video_widget_new):
+	show a nice error when there's no video output plugin available
+	* src/totem-playlist.c: (totem_playlist_error),
+	(totem_playlist_save_files), (totem_playlist_init):
+	* src/totem-preferences.c: (totem_action_info), (ask_show_visuals):
+	* src/totem.c: (totem_action_error), (totem_action_error_and_exit),
+	(on_properties1_activate):
+	don't set off the separator after constructing the dialogs, fixes
+	a bunch of run-time warnings
+
+2004-03-10  Bastien Nocera  <hadess@hadess.net>
+
 	* NEWS:
 	* src/bacon-video-widget-xine.c: (bacon_video_widget_play):
 	patch from Fabio Bonelli <fabiobonelli@libero.it> to restore

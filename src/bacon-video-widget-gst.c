@@ -1198,7 +1198,8 @@ bacon_video_widget_get_volume (BaconVideoWidget * bvw)
 }
 
 gboolean
-bacon_video_widget_fullscreen_mode_available (TvOutType tvout) 
+bacon_video_widget_fullscreen_mode_available (BaconVideoWidget *bvw,
+		TvOutType tvout) 
 {
 	switch(tvout) {
 	case TV_OUT_NONE:

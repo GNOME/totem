@@ -439,10 +439,15 @@ bacon_video_widget_finalize (GObject *object)
 {
 	BaconVideoWidget *bvw = (BaconVideoWidget *) object;
 
+	if (bvw->priv->xine != NULL) {
+		xine_exit (bvw->priv->xine);
+	}
+	g_free (bvw->priv->vis_name);
+	g_object_unref (G_OBJECT (bvw->priv->gc));
+
 	g_list_foreach (bvw->priv->visuals, (GFunc) g_free, NULL);
 	g_list_free (bvw->priv->visuals);
 
-	/* Should put here what needs to be destroyed */
 	g_idle_remove_by_data (bvw);
 	g_async_queue_unref (bvw->priv->queue);
 	G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -1003,7 +1008,8 @@ bacon_video_widget_realize (GtkWidget *widget)
 	xine_close (bvw->priv->stream);
 	xine_event_dispose_queue (bvw->priv->ev_queue);
 	xine_dispose (bvw->priv->stream);
-	xine_close_video_driver(bvw->priv->xine, bvw->priv->vo_driver);
+	if (bvw->priv->vo_driver != NULL)
+		xine_close_video_driver(bvw->priv->xine, bvw->priv->vo_driver);
 
 	/* Create the widget's window */
 	attr.x = widget->allocation.x;
@@ -1405,8 +1411,32 @@ bacon_video_widget_new (int width, int height, gboolean null_out, GError **err)
 		return NULL;
 
 	bvw->priv->vo_driver = load_video_out_driver (bvw, TRUE);
-	//FIXME
-	g_assert (bvw->priv->vo_driver != NULL);
+
+	/* Be extra careful about exiting out nicely when a video output
+	 * isn't available */
+	if (bvw->priv->vo_driver == NULL)
+	{
+		/* Close the xine stuff */
+		if (bvw->priv->ao_driver != NULL) {
+			xine_close_audio_driver (bvw->priv->xine,
+					bvw->priv->ao_driver);
+		}
+		xine_exit (bvw->priv->xine);
+
+		/* get rid of all our crappety crap */
+		g_source_remove (bvw->priv->tick_id);
+		g_idle_remove_by_data (bvw);
+		g_async_queue_unref (bvw->priv->queue);
+		g_free (bvw->priv->vis_name);
+		g_object_unref (G_OBJECT (bvw->priv->gc));
+		g_free (bvw->priv->vis_name);
+		g_free (bvw->priv);
+		g_free (bvw);
+
+		g_set_error (err, 0, 0,
+				_("No video output is available. Make sure that the program is correctly installed."));
+		return NULL;
+	}
 
 	if (bvw->priv->null_out != FALSE)
 	{

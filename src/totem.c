@@ -180,7 +180,6 @@ totem_action_error (char *title, char *reason, Totem *totem)
 	g_free (title_esc);
 	g_free (reason_esc);
 
-	gtk_dialog_set_has_separator (GTK_DIALOG (error_dialog), FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
 			GTK_RESPONSE_OK);
@@ -201,11 +200,10 @@ totem_action_error_and_exit (char *title, char *reason, Totem *totem)
 
 	error_dialog =
 		gtk_message_dialog_new (NULL,
-				GTK_DIALOG_MODAL,
+				GTK_DIALOG_MODAL | GTK_DIALOG_NO_SEPARATOR,
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK,
 				"<b>%s</b>\n%s", title, reason);
-	gtk_dialog_set_has_separator (GTK_DIALOG (error_dialog), FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
 	gtk_label_set_use_markup (GTK_LABEL (GTK_MESSAGE_DIALOG (error_dialog)->label), TRUE);
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
@@ -2115,13 +2113,12 @@ on_properties1_activate (GtkButton *button, Totem *totem)
 
 	dialog = gtk_dialog_new_with_buttons (_("Properties"),
 			GTK_WINDOW (totem->win),
-			GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+			GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_NO_SEPARATOR,
 			GTK_STOCK_CLOSE,
 			GTK_RESPONSE_ACCEPT,
 			NULL);
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
 			totem->properties, TRUE, TRUE, 0);
-	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
 	g_signal_connect (G_OBJECT (dialog), "response",
 			G_CALLBACK (hide_props_dialog), NULL);

@@ -197,7 +197,6 @@ totem_playlist_error (char *title, char *reason, TotemPlaylist *playlist)
 				"<b>%s</b>\n%s.", title_esc, reason_esc);
 	g_free (title_esc);
 	g_free (reason_esc);
-	gtk_dialog_set_has_separator (GTK_DIALOG (error_dialog), FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
 			GTK_RESPONSE_OK);
@@ -698,7 +697,6 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 				 GTK_BUTTONS_NONE,
 				 _("A file named '%s' already exists.\nAre you sure you want to overwrite it?"),
 				 filename);
-			gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 			gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
 			gtk_dialog_add_buttons (GTK_DIALOG (dialog),
 					GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
@@ -1181,7 +1179,6 @@ totem_playlist_init (TotemPlaylist *playlist)
 			G_CALLBACK (totem_playlist_entry_parsed),
 			playlist);
 
-	gtk_dialog_set_has_separator (GTK_DIALOG (playlist), FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (playlist), 5);
 }
 
