@@ -1,5 +1,14 @@
 2005-03-14  Bastien Nocera  <hadess@hadess.net>
 
+	* data/Makefile.am:
+	* data/totem-video-thumbnailer.1:
+	* data/totem-video-thumbnailer.pod: add a man page for
+	totem-video-thumbnailer, from Zack Cerza <zcerza@coe.neu.edu>
+	The man page is generated off-line, and the copy stored in CVS, to
+	avoid needing pod2man at compile-time
+
+2005-03-14  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-mozilla-plugin.c: (totem_plugin_write_ready): we don't
 	need any more data when we've closed the stdin
 

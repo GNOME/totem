@@ -1,5 +1,5 @@
 
-man_MANS = totem.1
+man_MANS = totem.1 totem-video-thumbnailer.1
 
 stuffdir = $(datadir)/totem/
 stuff_DATA =				\
@@ -74,6 +74,9 @@ schemadir = $(GCONF_SCHEMA_FILE_DIR)
 schema_DATA = $(schema_in_files:.schemas.in=.schemas)
 @INTLTOOL_SCHEMAS_RULE@
 
+totem-video-thumbnailer.1: totem-video-thumbnailer.pod
+	pod2man -c "" -s 1 -q none -n totem-video-thumbnailer -r GNOME totem-video-thumbnailer.pod > totem-video-thumbnailer.1
+
 if GCONF_SCHEMAS_INSTALL
 install-data-local:
 	-GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(srcdir)/$(schema_DATA)
@@ -81,7 +84,7 @@ else
 install-data-local:
 endif
 
-EXTRA_DIST = $(stuff_DATA) $(desktop_in_in_files_all) totem.schemas.in lirc_example schemas.sh desktop.sh handlers.sh $(man_MANS) mime-type-list.txt mime-type-include.sh
+EXTRA_DIST = $(stuff_DATA) $(desktop_in_in_files_all) totem.schemas.in lirc_example schemas.sh desktop.sh handlers.sh $(man_MANS) mime-type-list.txt mime-type-include.sh totem-video-thumbnailer.1
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(desktop_DATA) $(schema_DATA) $(desktop_in_files_all)
 
