@@ -3494,12 +3494,8 @@ main (int argc, char **argv)
 
 	/* IPC stuff */
 	totem->conn = bacon_message_connection_new (GETTEXT_PACKAGE);
-	if (bacon_message_connection_get_is_server (totem->conn) == TRUE)
+	if (bacon_message_connection_get_is_server (totem->conn) == FALSE)
 	{
-		bacon_message_connection_set_callback (totem->conn,
-				(BaconMessageReceivedFunc)
-				totem_message_connection_receive_cb, totem);
-	} else {
 		process_command_line (totem->conn, argc, argv);
 		bacon_message_connection_free (totem->conn);
 		g_free (totem);
@@ -3602,6 +3598,13 @@ main (int argc, char **argv)
 			totem_action_set_mrl (totem, NULL);
 	} else {
 		totem_action_restore_pl (totem);
+	}
+
+	if (bacon_message_connection_get_is_server (totem->conn) == TRUE)
+	{
+		bacon_message_connection_set_callback (totem->conn,
+				(BaconMessageReceivedFunc)
+				totem_message_connection_receive_cb, totem);
 	}
 
 #ifdef HAVE_REMOTE

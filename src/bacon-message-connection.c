@@ -125,8 +125,6 @@ try_server (BaconMessageConnection *conn)
 		return FALSE;
 	}
 
-	g_io_add_watch (conn->chan, G_IO_IN, server_cb, conn);
-
 	return TRUE;
 }
 
@@ -222,6 +220,8 @@ bacon_message_connection_set_callback (BaconMessageConnection *conn,
 {
 	g_return_if_fail (conn != NULL);
 	g_assert (conn->is_server == TRUE);
+
+	g_io_add_watch (conn->chan, G_IO_IN, server_cb, conn);
 
 	conn->func = func;
 	conn->data = user_data;

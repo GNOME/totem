@@ -1,3 +1,11 @@
+2003-06-11  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-message-connection.c: (try_server),
+	(bacon_message_connection_set_callback): updated from libbacon
+	* src/totem.c: (main): if we're a server, only listen to changes
+	after the application is fully started, fixes a crash on startup
+	when launching 2 videos from nautilus at the same time
+
 2003-06-10  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in:
