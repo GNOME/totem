@@ -1,3 +1,9 @@
+2004-11-18  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-pl-parser.c: (totem_pl_parser_base_url),
+	(totem_pl_parser_relative): Don't crash if we can't get a GnomeVFSURI
+	when saving the playlist (Closes: #158228)
+
 2004-11-16  Christian Schaller <uraeus@gnome.org>
 
 	* src/Makefile.am: Remove reference to removed header file

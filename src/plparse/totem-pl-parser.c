@@ -180,6 +180,9 @@ totem_pl_parser_base_url (const char *url)
 	char *base;
 
 	uri = gnome_vfs_uri_new (url);
+	if (uri == NULL)
+		return NULL;
+
 	parent = gnome_vfs_uri_get_parent (uri);
 	if (!parent) {
 		parent = uri;
@@ -253,6 +256,9 @@ totem_pl_parser_relative (const char *url, const char *output)
 
 	base = NULL;
 	url_base = totem_pl_parser_base_url (url);
+	if (url_base == NULL)
+		return NULL;
+
 	output_base = totem_pl_parser_base_url (output);
 
 	needle = strstr (url_base, output_base);
