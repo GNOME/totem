@@ -92,6 +92,7 @@ bacon_cd_selection_get_type (void)
 			sizeof (BaconCdSelection),
 			0 /* n_preallocs */,
 			(GInstanceInitFunc) bacon_cd_selection_instance_init,
+			NULL
 		};
 
 		bacon_cd_selection_type = g_type_register_static

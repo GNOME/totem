@@ -121,38 +121,43 @@ struct cdrom_unit {
 };
 
 static void
-parse_sg_line (char *device_str, char *devices, struct scsi_unit *scsi_unit)
+get_scsi_units (char **device_str, char **devices, struct scsi_unit *scsi_units)
 {
 	char vendor[9], model[17], rev[5];
 	int host_no, access_count, queue_depth, device_busy, online, channel;
-	
-	scsi_unit->exist = FALSE;
-	
-	if (strcmp (device_str, "<no active device>") == 0) {
-		scsi_unit->exist = FALSE;
-		return;
-	}
-	if (sscanf (device_str, "%8c\t%16c\t%4c", vendor, model, rev) != 3) {
-		g_warning ("Couldn't match line in /proc/scsi/sg/device_strs\n");
-		return;
-	}
-	vendor[8] = 0; model[16] = 0; rev[4] = 0;
+	int i, j;
 
-	scsi_unit->vendor = g_strdup (g_strstrip (vendor));
-	scsi_unit->model = g_strdup (g_strstrip (model));
-	scsi_unit->rev = g_strdup (g_strstrip (rev));
-	
-	if (sscanf (devices, "%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d",
-		    &host_no,
-		    &channel, &scsi_unit->id, &scsi_unit->lun, &scsi_unit->type,
-		    &access_count, &queue_depth, &device_busy,
-		    &online) != 9) {
+	for (i = 0, j = 0; device_str[i] != NULL && devices[i] != NULL; i++) {
+		if (strcmp (device_str[i], "<no active device>") == 0) {
+			scsi_units[i].exist = FALSE;
+			continue;
+		}
+		if (sscanf (devices[i], "%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d",
+			    &host_no,
+			    &channel, &scsi_units[j].id, &scsi_units[j].lun, 
+				&scsi_units[j].type, &access_count, &queue_depth,
+				&device_busy, &online) != 9) {
 		
-		g_warning ("Couldn't match line in /proc/scsi/sg/devices\n");
-		return;
+			g_warning ("Couldn't match line in /proc/scsi/sg/devices\n");
+			continue;
+		}
+		if (scsi_units[j].type == 5) { /* TYPE_ROM (include/scsi/scsi.h) */
+			if (sscanf (device_str[i], "%8c\t%16c\t%4c", 
+						vendor, model, rev) != 3) {
+				g_warning ("Couldn't match line /proc/scsi/sg/device_strs\n");
+				continue;
+			}
+			vendor[8] = '\0'; model[16] = '\0'; rev[4] = '\0';
+
+			scsi_units[j].vendor = g_strdup (g_strstrip (vendor));
+			scsi_units[j].model = g_strdup (g_strstrip (model));
+			scsi_units[j].rev = g_strdup (g_strstrip (rev));
+			scsi_units[j].bus = host_no;
+			scsi_units[j].exist = TRUE;
+			j++;
+		}
 	}
-	scsi_unit->bus = host_no;
-	scsi_unit->exist = TRUE;
+	
 }
 
 static int
@@ -279,55 +284,32 @@ get_scsi_cd_name (int bus, int id, int lun, const char *dev,
 				scsi_unit->model);
 }
 
-static GList *
-add_linux_cd_recorder (GList *cdroms,
-		       struct cdrom_unit *cdrom_s,
-		       struct scsi_unit *scsi_units,
-		       int n_scsi_units)
-{
-	int bus, id, lun;
-	CDDrive *cdrom;
-
-	if (!get_cd_scsi_id (cdrom_s->device, &bus, &id, &lun)) {
-		return cdroms;
-	}
-
-	cdrom = g_new0 (CDDrive, 1);
-	cdrom->device = g_strdup_printf ("/dev/%s", cdrom_s->device);
-	cdrom->cdrecord_id = g_strdup_printf ("%d,%d,%d",
-					      bus, id, lun);
-	cdrom->display_name = get_scsi_cd_name (bus, id, lun, cdrom_s->device, scsi_units, n_scsi_units);
-	cdrom->max_speed_write = get_device_max_speed (cdrom->cdrecord_id);
-	cdrom->max_speed_read = cdrom_s->speed; 
-	if (cdrom_s->can_write_dvdr
-	    || cdrom_s->can_write_dvdram) {
-		cdrom->type = CDDRIVE_TYPE_DVD_RECORDER;
-	} else {
-		cdrom->type = CDDRIVE_TYPE_CD_RECORDER;
-	}
-	
-	return g_list_append (cdroms, cdrom);
-}
-
 static char *
 cdrom_get_name (struct cdrom_unit *cdrom, struct scsi_unit *scsi_units, int n_scsi_units)
 {
 	char *filename, *line, *retval;
+	char stdname[4], devfsname[15];
 	int bus, id, lun, i;
 
 	g_return_val_if_fail (cdrom != NULL, FALSE);
 
-	if ((cdrom->device[0] == 's' &&
-	    cdrom->device[1] == 'r') ||
-	    (cdrom->device[0] == 's' &&
-	    cdrom->device[1] == 'c' &&
-	    cdrom->device[2] == 'd')) {
+	/* clean up the string again if we have devfs */
+	i = sscanf(cdrom->device, "%4s %14s", stdname, devfsname);
+	if (i < 1) { /* should never happen */
+		g_warning("cdrom_get_name: cdrom->device string broken!");
+		return NULL;
+	}
+	if (i == 2) {
+		cdrom->device = g_strdup(devfsname);
+	}
+	stdname[3] = '\0'; devfsname[14] = '\0'; /* just in case */
+	
+	if (stdname[0] == 's') {
 		get_cd_scsi_id (cdrom->device, &bus, &id, &lun);
-
-		retval = get_scsi_cd_name (bus, id, lun, cdrom->device, scsi_units, n_scsi_units);
+		retval = get_scsi_cd_name (bus, id, lun, cdrom->device, scsi_units,
+			   n_scsi_units);
 	} else {
-		filename = g_strdup_printf ("/proc/ide/%s/model",
-					    cdrom->device);
+		filename = g_strdup_printf ("/proc/ide/%s/model", stdname);
 		if (!g_file_get_contents (filename, &line, NULL, NULL) ||
 		    line == NULL) {
 			g_free (filename);
@@ -349,6 +331,44 @@ cdrom_get_name (struct cdrom_unit *cdrom, struct scsi_unit *scsi_units, int n_sc
 }
 
 static GList *
+add_linux_cd_recorder (GList *cdroms,
+		       struct cdrom_unit *cdrom_s,
+		       struct scsi_unit *scsi_units,
+		       int n_scsi_units)
+{
+	int bus, id, lun;
+	CDDrive *cdrom;
+
+	cdrom = g_new0 (CDDrive, 1);
+
+	if (cdrom_s->device[0] == 's') {
+		cdrom->display_name = cdrom_get_name (cdrom_s, scsi_units,
+				n_scsi_units);
+		if (!get_cd_scsi_id (cdrom_s->device, &bus, &id, &lun)) {
+			return cdroms;
+		}
+		cdrom->cdrecord_id = g_strdup_printf ("%d,%d,%d",
+				bus, id, lun);
+		cdrom->max_speed_write = get_device_max_speed (cdrom->cdrecord_id);
+	} else {
+		/* kernel >=2.5 can write cd w/o ide-scsi */
+		cdrom->display_name = cdrom_get_name(cdrom_s, scsi_units, n_scsi_units);
+		cdrom->cdrecord_id = g_strdup_printf (cdrom_s->device);
+		cdrom->max_speed_write = get_device_max_speed (cdrom->cdrecord_id);
+	}
+	cdrom->device = g_strdup_printf ("/dev/%s", cdrom_s->device);
+	cdrom->max_speed_read = cdrom_s->speed; 
+	if (cdrom_s->can_write_dvdr
+	    || cdrom_s->can_write_dvdram) {
+		cdrom->type = CDDRIVE_TYPE_DVD_RECORDER;
+	} else {
+		cdrom->type = CDDRIVE_TYPE_CD_RECORDER;
+	}
+	
+	return g_list_append (cdroms, cdrom);
+}
+
+static GList *
 add_linux_cd_drive (GList *cdroms, struct cdrom_unit *cdrom_s,
 		    struct scsi_unit *scsi_units, int n_scsi_units)
 {
@@ -356,8 +376,8 @@ add_linux_cd_drive (GList *cdroms, struct cdrom_unit *cdrom_s,
 
 	cdrom = g_new0 (CDDrive, 1);
 	cdrom->cdrecord_id = NULL;
-	cdrom->device = g_strdup_printf ("/dev/%s", cdrom_s->device);
 	cdrom->display_name = cdrom_get_name (cdrom_s, scsi_units, n_scsi_units);
+	cdrom->device = g_strdup_printf ("/dev/%s", cdrom_s->device);
 	cdrom->max_speed_write = 0; /* Can't write */
 	cdrom->max_speed_read = cdrom_s->speed;
 	if (cdrom_s->can_read_dvd) {
@@ -374,7 +394,7 @@ get_cd_device_file (const char *str)
 {
 	char *devname;
 	
-	if (str[0] == 's' && str[1] == 'r') {
+	if (str[0] == 's') {
 		devname = g_strdup_printf ("/dev/scd%c", str[2]);
 		if (g_file_test (devname, G_FILE_TEST_EXISTS)) {
 			g_free (devname);
@@ -393,53 +413,27 @@ linux_scan (gboolean recorder_only)
 	struct scsi_unit *scsi_units;
 	struct cdrom_unit *cdroms;
 	char *p, *t;
-	int n_scsi_units, n_cdroms, i, j;
+	int n_cdroms, maj, min, i, j;
+	int n_scsi_units = 0;
 	int fd;
 	GList *cdroms_list;
+	gboolean have_devfs = FALSE;
 
-	/* Open /dev/sg0 to force loading of the sg module if not loaded yet */
-	fd = open ("/dev/sg0", O_RDONLY);
-	if (fd != -1) {
-		close (fd);
+	/* devfs creates and populates the /dev/cdroms directory when its mounted
+	 * the 'old style names' are matched with devfs names below.
+	 * The cdroms.device string gets cleaned up again in cdrom_get_name()
+	 * we need the oldstyle name to get device->display_name for ide.
+	 */
+	if (g_file_test("/dev/.devfsd", G_FILE_TEST_EXISTS)) {
+		have_devfs = TRUE;
 	}
-
-	devices = read_lines ("/proc/scsi/sg/devices");
-	if (devices != NULL) {
-		device_str = read_lines ("/proc/scsi/sg/device_strs");
-		if (device_str == NULL) {
-			g_warning ("Can't read /proc/scsi/sg/device_strs");
-			g_strfreev (devices);
-			return NULL;
-		}
-
-		/* Count the number of scsi units, DO NOT REMOVE */
-		for (n_scsi_units = 0;
-		     device_str[n_scsi_units] != NULL && devices[n_scsi_units] != NULL;
-		     n_scsi_units++) {
-			/* Nothing */
-		}
-
-		scsi_units = g_new0 (struct scsi_unit, n_scsi_units);
-		for (i = 0; i < n_scsi_units; i++) {
-			parse_sg_line (device_str[i], devices[i], &scsi_units[i]);
-		}
-
-		g_strfreev (device_str);
-		g_strfreev (devices);
-	} else {
-		scsi_units = NULL;
-		n_scsi_units = 0;
-	}
-
+	
 	cdrom_info = read_lines ("/proc/sys/dev/cdrom/info");
 	if (cdrom_info == NULL || cdrom_info[0] == NULL || cdrom_info[1] == NULL) {
 		g_warning ("Couldn't read /proc/sys/dev/cdrom/info");
-		g_free (scsi_units);
 		return NULL;
 	}
-
 	if (!g_str_has_prefix (cdrom_info[2], "drive name:\t")) {
-		g_free (scsi_units);
 		return NULL;
 	}
 	p = cdrom_info[2] + strlen ("drive name:\t");
@@ -460,6 +454,40 @@ linux_scan (gboolean recorder_only)
 		}
 	}
 
+	/* we only have to check the first char, since only ide or scsi 	
+	 * devices are listed in /proc/sys/dev/cdrom/info. It will always
+	 * be 'h' or 's'
+	 */
+	for (i = 0; i < n_cdroms; i++) {
+		if (cdroms[i].device[0] == 's') {
+			n_scsi_units++;
+		}
+	}
+
+	if (n_scsi_units > 0) {
+		/* open /dev/sg0 to force loading of the sg module if not loaded yet */
+		fd = open ("/dev/sg0", O_RDONLY);
+		if (fd != -1) {
+			close (fd);
+		}
+		
+		devices = read_lines ("/proc/scsi/sg/devices");
+		device_str = read_lines ("/proc/scsi/sg/device_strs");
+		if (device_str == NULL) {
+			g_warning ("Can't read /proc/scsi/sg/device_strs");
+			g_strfreev (devices);
+			return NULL;
+		}
+		
+		scsi_units = g_new0 (struct scsi_unit, n_scsi_units);
+		get_scsi_units (device_str, devices, scsi_units);
+
+		g_strfreev (device_str);
+		g_strfreev (devices);
+	} else {
+		scsi_units = NULL;
+	}
+	
 	for (i = 3; cdrom_info[i] != NULL; i++) {
 		if (g_str_has_prefix (cdrom_info[i], "Can write CD-R:")) {
 			p = cdrom_info[i] + strlen ("Can write CD-R:");
@@ -536,15 +564,33 @@ linux_scan (gboolean recorder_only)
 	}
 	g_strfreev (cdrom_info);
 
+	/* get kernel major.minor version */
+	(FILE *) fd = fopen("/proc/sys/kernel/osrelease", "r");
+	if ((FILE *) fd == NULL || fscanf((FILE *) fd, "%d.%d", &maj, &min) != 2) {
+		g_warning("Could not get kernel version.");
+		maj = min = 0;
+	}
+	fclose((FILE *) fd);
+	
 	cdroms_list = NULL;
-	for (i = 0; i < n_cdroms; i++) {
-		if (cdroms[i].can_write_cdr ||
+	for (i = n_cdroms - 1, j = 0; i >= 0; i--) {
+		if ((cdroms[i].can_write_cdr ||
 		    cdroms[i].can_write_cdrw ||
 		    cdroms[i].can_write_dvdr ||
-		    cdroms[i].can_write_dvdram) {
+		    cdroms[i].can_write_dvdram) &&
+			(cdroms[i].device[0] == 's' ||
+			(maj > 2) || (maj == 2 && min >= 5))) {
+			if (have_devfs) {
+				cdroms[i].device = g_strdup_printf("%s cdroms/cdrom%d",
+						cdroms[i].device,  j++);
+			}
 			cdroms_list = add_linux_cd_recorder (cdroms_list,
 					&cdroms[i], scsi_units, n_scsi_units);
 		} else if (!recorder_only) {
+			if (have_devfs) {
+				cdroms[i].device = g_strdup_printf("%s cdroms/cdrom%d",
+						cdroms[i].device,  j++);
+			}
 			cdroms_list = add_linux_cd_drive (cdroms_list,
 					&cdroms[i], scsi_units, n_scsi_units);
 		}
