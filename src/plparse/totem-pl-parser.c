@@ -1155,8 +1155,6 @@ totem_pl_parser_scheme_is_ignored (TotemPlParser *parser, const char *url)
 	return FALSE;
 }
 
-//static char * ignore_schemes[] = { "cdda:", "dvd:", "vcd:" };
-
 static gboolean
 totem_pl_parser_add_url_from_data (TotemPlParser *parser, const char *url)
 {

@@ -2023,7 +2023,8 @@ on_take_screenshot1_activate (GtkButton *button, Totem *totem)
 	height = 200;
 	width = height * gdk_pixbuf_get_width (pixbuf)
 		/ gdk_pixbuf_get_height (pixbuf);
-	scaled = gnome_thumbnail_scale_down_pixbuf (pixbuf, width, height);
+	scaled = gdk_pixbuf_scale_simple (pixbuf,
+			width, height, GDK_INTERP_BILINEAR);
 
 	dialog = glade_xml_get_widget (totem->xml, "totem_screenshot_window");
 	image = glade_xml_get_widget (totem->xml, "tsw_shot_image");
