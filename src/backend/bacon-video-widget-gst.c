@@ -1035,6 +1035,9 @@ caps_set (GObject * obj,
   g_signal_handlers_disconnect_by_func (pad, caps_set, bvw);
 }
 
+static GstCaps * fixate_visualization (GstPad *pad, const GstCaps *in_caps,
+				       BaconVideoWidget *bvw);
+
 static void
 parse_stream_info (BaconVideoWidget *bvw)
 {
@@ -1085,6 +1088,8 @@ parse_stream_info (BaconVideoWidget *bvw)
     else
       g_signal_connect (real, "notify::caps",
           G_CALLBACK (caps_set), bvw);
+  } else if (bvw->priv->show_vfx && bvw->priv->vis_element) {
+    fixate_visualization (NULL, NULL, bvw);
   }
   g_list_foreach (streaminfo, (GFunc) g_object_unref, NULL);
   g_list_free (streaminfo);
@@ -1992,6 +1997,11 @@ fixate_visualization (GstPad *pad, const GstCaps *in_caps,
       fps = w = h = 0;
       g_assert_not_reached ();
   }
+
+  bvw->priv->video_width = w;
+  bvw->priv->video_height = h;
+  if (!in_caps)
+    return NULL;
 
   /* simple please */
   if (gst_caps_get_size (in_caps) > 1)
