@@ -1,7 +1,7 @@
 #!/bin/sh
 
 OWNER=totem
-COMMAND="$2/totem-video-thumbnailer %u %o"
+COMMAND="$2/totem-video-thumbnailer -s %s %u %o"
 
 upd_schema()
 {
