@@ -5,46 +5,6 @@
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
-#include <X11/Xatom.h>
-
-static void
-wmspec_change_state (gboolean   add,
-		GdkWindow *window,
-		GdkAtom    state1,
-		GdkAtom    state2)
-{
-	XEvent xev;
-
-#define _NET_WM_STATE_REMOVE        0    /* remove/unset property */
-#define _NET_WM_STATE_ADD           1    /* add/set property */
-#define _NET_WM_STATE_TOGGLE        2    /* toggle property  */  
-
-	xev.xclient.type = ClientMessage;
-	xev.xclient.serial = 0;
-	xev.xclient.send_event = True;
-	xev.xclient.display = gdk_display;
-	xev.xclient.window = GDK_WINDOW_XID (window);
-	xev.xclient.message_type = gdk_x11_get_xatom_by_name ("_NET_WM_STATE");
-	xev.xclient.format = 32;
-	xev.xclient.data.l[0] = add ? _NET_WM_STATE_ADD : _NET_WM_STATE_REMOVE;
-	xev.xclient.data.l[1] = gdk_x11_atom_to_xatom (state1);
-	xev.xclient.data.l[2] = gdk_x11_atom_to_xatom (state2);
-
-	XSendEvent (gdk_display,
-			GDK_ROOT_WINDOW (),
-			False,
-			SubstructureRedirectMask | SubstructureNotifyMask,
-			&xev);
-}
-
-void
-window_set_fullscreen (GdkWindow *window, gboolean set)
-{
-	/* Set full-screen hint */
-	wmspec_change_state (set, window,
-			gdk_atom_intern ("_NET_WM_STATE_FULLSCREEN", FALSE),
-			GDK_NONE);
-}
 
 void
 eel_gdk_window_set_invisible_cursor (GdkWindow *window)

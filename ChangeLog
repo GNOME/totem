@@ -1,5 +1,12 @@
 2003-01-13  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (gtk_xine_set_fullscreen):
+	* src/video-utils.c:
+	* src/video-utils.h: remove the custom set_fullscreen stuff and use
+	what's in gdk 2.2 for us
+
+2003-01-13  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am:
 	* src/gnome-authn-manager.c:
 	* src/gnome-authn-manager.h:

@@ -1531,7 +1531,7 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 		gtx->priv->fullscreen_window = gdk_window_new
 			(NULL, &attr, GDK_WA_X | GDK_WA_Y);
 		gdk_window_show (gtx->priv->fullscreen_window);
-		window_set_fullscreen (gtx->priv->fullscreen_window, TRUE);
+		gdk_window_fullscreen (gtx->priv->fullscreen_window);
 		/* Flush, so that the window is really shown */
 		gdk_flush ();
 
@@ -1553,7 +1553,6 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 			 (void *) GDK_WINDOW_XID (gtx->priv->video_window));
 
 		/* Hide the window */
-		window_set_fullscreen (gtx->priv->fullscreen_window, FALSE);
 		gdk_window_destroy (gtx->priv->fullscreen_window);
 		gtx->priv->fullscreen_window = NULL;
 
