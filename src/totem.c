@@ -92,8 +92,8 @@ static void update_buttons (Totem *totem);
 static void update_dvd_menu_items (Totem *totem);
 static void update_seekable (Totem *totem, gboolean force_false);
 static void on_play_pause_button_clicked (GtkToggleButton *button,
-		gpointer user_data);
-static void playlist_changed_cb (GtkWidget *playlist, gpointer user_data);
+		Totem *totem);
+static void playlist_changed_cb (GtkWidget *playlist, Totem *totem);
 
 static void
 long_action (void)
@@ -146,10 +146,8 @@ totem_action_exit (Totem *totem)
 }
 
 gboolean
-main_window_destroy_cb (GtkWidget *widget, GdkEvent *event, gpointer user_data)
+main_window_destroy_cb (GtkWidget *widget, GdkEvent *event, Totem *totem)
 {
-	Totem *totem = (Totem *)user_data;
-
 	totem_action_exit (totem);
 
 	return FALSE;
@@ -740,9 +738,8 @@ drop_video_cb (GtkWidget     *widget,
 	 GtkSelectionData   *data,
 	 guint               info,
 	 guint               time,
-	 gpointer            user_data)
+	 Totem              *totem)
 {
-	Totem *totem = (Totem *)user_data;
 	gboolean retval;
 
 	retval = totem_action_drop_files (totem, data, TRUE);
@@ -757,9 +754,8 @@ drop_playlist_cb (GtkWidget     *widget,
 	       GtkSelectionData   *data,
 	       guint               info,
 	       guint               time,
-	       gpointer            user_data)
+	       Totem              *totem)
 {
-	Totem *totem = (Totem *)user_data;
 	gboolean retval;
 
 	retval = totem_action_drop_files (totem, data, FALSE);
@@ -796,34 +792,27 @@ drag_video_cb (GtkWidget *widget,
 }
 
 static void
-on_play_pause_button_clicked (GtkToggleButton *button, gpointer user_data)
+on_play_pause_button_clicked (GtkToggleButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	totem_action_play_pause (totem);
 }
 
 static void
-on_previous_button_clicked (GtkButton *button, gpointer user_data)
+on_previous_button_clicked (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	totem_action_previous (totem);
 }
 
 static void
-on_next_button_clicked (GtkButton *button, gpointer user_data)
+on_next_button_clicked (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	totem_action_next (totem);
 }
 
 static void
-on_playlist_button_toggled (GtkToggleButton *button, gpointer user_data)
+on_playlist_button_toggled (GtkToggleButton *button, Totem *totem)
 {
 	gboolean state;
-	Totem *totem = (Totem *) user_data;
 
 	state = gtk_toggle_button_get_active (button);
 	if (state == TRUE)
@@ -859,10 +848,8 @@ on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
 
 /* This is only called when we are playing a DVD */
 static void
-on_title_change_event (GtkWidget *win, const char *string, gpointer user_data)
+on_title_change_event (GtkWidget *win, const char *string, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	update_mrl_label (totem, string);
 	gtk_playlist_set_title (GTK_PLAYLIST (totem->playlist), string);
 }
@@ -894,10 +881,8 @@ update_seekable (Totem *totem, gboolean force_false)
 
 static void
 update_current_time (BaconVideoWidget *bvw, int current_time, int stream_length,
-		int current_position, gpointer user_data)
+		int current_position, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	totem_statusbar_set_time_and_length (TOTEM_STATUSBAR (totem->statusbar),
 			current_time / 1000, stream_length / 1000);
 
@@ -937,46 +922,37 @@ update_volume_sliders (Totem *totem)
 }
 
 static int
-update_cb_often (gpointer user_data)
+update_cb_often (Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	if (totem->bvw == NULL)
 		return TRUE;
 
-	update_volume_sliders (user_data);
+	update_volume_sliders (totem);
 
 	return TRUE;
 }
 
 static int
-update_cb_rare (gpointer user_data)
+update_cb_rare (Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	if (totem->bvw == NULL)
 		return TRUE;
 
-	update_seekable (user_data, FALSE);
+	update_seekable (totem, FALSE);
 
 	return TRUE;
 }
 
 static gboolean
-seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event,
-		gpointer user_data)
+seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
 	totem->seek_lock = TRUE;
 	return FALSE;
 }
 
 static gboolean
-seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event,
-		gpointer user_data)
+seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	if (GTK_WIDGET(widget) == totem->fs_seek)
 	{
 		totem_action_play (totem,
@@ -999,10 +975,8 @@ seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event,
 }
 
 static void
-vol_cb (GtkWidget *widget, gpointer user_data)
+vol_cb (GtkWidget *widget, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	if (totem->vol_lock == FALSE)
 	{
 		totem->vol_lock = TRUE;
@@ -1125,9 +1099,8 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 }
 
 static void
-on_open1_activate (GtkButton *button, gpointer user_data)
+on_open1_activate (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
 	GtkWidget *fs;
 	int response;
 	static char *path = NULL;
@@ -1170,82 +1143,63 @@ on_open1_activate (GtkButton *button, gpointer user_data)
 }
 
 static void
-on_play_dvd1_activate (GtkButton *button, gpointer user_data)
+on_play_dvd1_activate (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	totem_action_play_media (totem, MEDIA_DVD);
 }
 
 static void
-on_play_vcd1_activate (GtkButton *button, gpointer user_data)
+on_play_vcd1_activate (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	totem_action_play_media (totem, MEDIA_VCD);
 }
 
 static void
-on_play_cd1_activate (GtkButton *button, gpointer user_data)
+on_play_cd1_activate (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	totem_action_play_media (totem, MEDIA_CDDA);
 }
 
 static void
-on_play1_activate (GtkButton *button, gpointer user_data)
+on_play1_activate (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	totem_action_play_pause (totem);
 }
 
 static void
-on_full_screen1_activate (GtkButton *button, gpointer user_data)
+on_full_screen1_activate (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	totem_action_fullscreen_toggle (totem);
 }
 
 static void
-on_zoom_1_2_activate (GtkButton *button, gpointer user_data)
+on_zoom_1_2_activate (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	totem_action_set_scale_ratio (totem, 0.5); 
 }
 
 static void
-on_zoom_1_1_activate (GtkButton *button, gpointer user_data)
+on_zoom_1_1_activate (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	totem_action_set_scale_ratio (totem, 1);
 }
 
 static void
-on_zoom_2_1_activate (GtkButton *button, gpointer user_data)
+on_zoom_2_1_activate (GtkButton *button, Totem *totem)
 {                       
-	Totem *totem = (Totem *) user_data;
-
 	totem_action_set_scale_ratio (totem, 2);
 }
 
 
 static void
-on_toggle_aspect_ratio1_activate (GtkButton *button, gpointer user_data)
+on_toggle_aspect_ratio1_activate (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	totem_action_toggle_aspect_ratio (totem);
 }
 
 static void
-on_show_playlist1_activate (GtkButton *button, gpointer user_data)
+on_show_playlist1_activate (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
 	GtkWidget *toggle;
 	gboolean state;
 
@@ -1256,33 +1210,28 @@ on_show_playlist1_activate (GtkButton *button, gpointer user_data)
 }
 
 static void
-on_fs_exit1_activate (GtkButton *button, gpointer user_data)
+on_fs_exit1_activate (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	totem_action_fullscreen_toggle (totem);
 }
 
 static void
-on_quit1_activate (GtkButton *button, gpointer user_data)
+on_quit1_activate (GtkButton *button, Totem *totem)
 {
-	totem_action_exit ((Totem *) user_data);
+	totem_action_exit (totem);
 }
 
 static void
-on_repeat_mode1_toggled (GtkCheckMenuItem *checkmenuitem, gpointer user_data)
+on_repeat_mode1_toggled (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	gtk_playlist_set_repeat (totem->playlist,
 			gtk_check_menu_item_get_active (checkmenuitem));
 }
 
 static void
-on_about1_activate (GtkButton *button, gpointer user_data)
+on_about1_activate (GtkButton *button, Totem *totem)
 {
 	static GtkWidget *about = NULL;
-	Totem *totem = (Totem *) user_data;
 	GdkPixbuf *pixbuf = NULL;
 	const gchar *authors[] =
 	{
@@ -1400,10 +1349,8 @@ screenshot_make_filename (Totem *totem)
 }
 
 static void
-on_radiobutton_shot_toggled (GtkToggleButton *togglebutton,
-		gpointer user_data)
+on_radiobutton_shot_toggled (GtkToggleButton *togglebutton, Totem *totem)
 {	
-	Totem *totem = (Totem *)user_data;
 	GtkWidget *radiobutton, *entry;
 
 	radiobutton = glade_xml_get_widget (totem->xml, "radiobutton1");
@@ -1413,9 +1360,8 @@ on_radiobutton_shot_toggled (GtkToggleButton *togglebutton,
 }
 
 static void
-hide_screenshot (GtkWidget *widget, int trash, gpointer user_data)
+hide_screenshot (GtkWidget *widget, int trash, Totem *totem)
 {
-	Totem *totem = (Totem *)user_data;
 	GtkWidget *dialog;
 
 	dialog = glade_xml_get_widget (totem->xml, "dialog2");
@@ -1423,9 +1369,8 @@ hide_screenshot (GtkWidget *widget, int trash, gpointer user_data)
 }
 
 static void
-on_take_screenshot1_activate (GtkButton *button, gpointer user_data)
+on_take_screenshot1_activate (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *)user_data;
 	GdkPixbuf *pixbuf, *scaled;
 	GtkWidget *dialog, *image, *entry;
 	int response, width, height;
@@ -1499,10 +1444,8 @@ on_take_screenshot1_activate (GtkButton *button, gpointer user_data)
 }
 
 static void
-on_properties1_activate (GtkButton *button, gpointer user_data)
+on_properties1_activate (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *)user_data;
-
 	if (totem->properties == NULL)
 	{
 		totem_action_error (_("Totem couldn't show the movie properties window.\n"
@@ -1517,53 +1460,45 @@ on_properties1_activate (GtkButton *button, gpointer user_data)
 }
 
 static void
-on_preferences1_activate (GtkButton *button, gpointer user_data)
+on_preferences1_activate (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *)user_data;
-
 	gtk_widget_show (totem->prefs);
 }
 
 static void
-on_dvd_root_menu1_activate (GtkButton *button, gpointer user_data)
+on_dvd_root_menu1_activate (GtkButton *button, Totem *totem)
 {
-        Totem *totem = (Totem *)user_data;
         bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU);
 }
 
 static void
-on_dvd_title_menu1_activate (GtkButton *button, gpointer user_data)
+on_dvd_title_menu1_activate (GtkButton *button, Totem *totem)
 {
-        Totem *totem = (Totem *)user_data;
         bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_TITLE_MENU);
 }
 
 static void
-on_dvd_audio_menu1_activate (GtkButton *button, gpointer user_data)
+on_dvd_audio_menu1_activate (GtkButton *button, Totem *totem)
 {
-        Totem *totem = (Totem *)user_data;
         bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_AUDIO_MENU);
 }
 
 static void
-on_dvd_angle_menu1_activate (GtkButton *button, gpointer user_data)
+on_dvd_angle_menu1_activate (GtkButton *button, Totem *totem)
 {
-        Totem *totem = (Totem *)user_data;
         bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ANGLE_MENU);
 }
 
 static void
-on_dvd_chapter_menu1_activate (GtkButton *button, gpointer user_data)
+on_dvd_chapter_menu1_activate (GtkButton *button, Totem *totem)
 {
-        Totem *totem = (Totem *)user_data;
         bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_CHAPTER_MENU);
 }
 
 static void
-commit_hide_skip_to (GtkDialog *dialog, gint response, gpointer user_data)
+commit_hide_skip_to (GtkDialog *dialog, gint response, Totem *totem)
 
 {
-	Totem *totem = (Totem *)user_data;
 	GError *err = NULL;
 	GtkWidget *spin;
 	int sec;
@@ -1600,9 +1535,8 @@ hide_skip_to (GtkWidget *widget, GdkEvent *event, gpointer user_data)
 }
 
 static void
-spin_button_value_changed_cb (GtkSpinButton *spinbutton, gpointer user_data)
+spin_button_value_changed_cb (GtkSpinButton *spinbutton, Totem *totem)
 {
-	Totem *totem = (Totem *)user_data;
 	GtkWidget *label;
 	int sec;
 	char *str;
@@ -1615,9 +1549,8 @@ spin_button_value_changed_cb (GtkSpinButton *spinbutton, gpointer user_data)
 }
 
 static void
-on_skip_to1_activate (GtkButton *button, gpointer user_data)
+on_skip_to1_activate (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *)user_data;
 	GtkWidget *dialog;
 
 	dialog = glade_xml_get_widget (totem->xml, "dialog3");
@@ -1625,34 +1558,26 @@ on_skip_to1_activate (GtkButton *button, gpointer user_data)
 }
 
 static void
-on_skip_forward1_activate (GtkButton *button, gpointer user_data)
+on_skip_forward1_activate (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *)user_data;
-
 	totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET);
 }
 
 static void
-on_skip_backwards1_activate (GtkButton *button, gpointer user_data)
+on_skip_backwards1_activate (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *)user_data;
-
 	totem_action_seek_relative (totem, SEEK_BACKWARD_OFFSET);
 }
 
 static void
-on_volume_up1_activate (GtkButton *button, gpointer user_data)
+on_volume_up1_activate (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *)user_data;
-
 	totem_action_volume_relative (totem, 8);
 }
 
 static void
-on_volume_down1_activate (GtkButton *button, gpointer user_data)
+on_volume_down1_activate (GtkButton *button, Totem *totem)
 {
-	Totem *totem = (Totem *)user_data;
-
 	totem_action_volume_relative (totem, -8);
 }
 
@@ -1715,10 +1640,8 @@ totem_button_pressed_remote_cb (TotemRemote *remote, TotemRemoteCommand cmd,
 }
 
 static int
-toggle_playlist_from_playlist (GtkWidget *playlist, int trash,
-		gpointer user_data)
+toggle_playlist_from_playlist (GtkWidget *playlist, int trash, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
 	GtkWidget *button;
 
 	button = glade_xml_get_widget (totem->xml, "playlist_button");
@@ -1728,9 +1651,8 @@ toggle_playlist_from_playlist (GtkWidget *playlist, int trash,
 }
 
 static void
-playlist_changed_cb (GtkWidget *playlist, gpointer user_data)
+playlist_changed_cb (GtkWidget *playlist, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
 	char *mrl;
 
 	update_buttons (totem);
@@ -1749,9 +1671,8 @@ playlist_changed_cb (GtkWidget *playlist, gpointer user_data)
 }
 
 static void
-current_removed_cb (GtkWidget *playlist, gpointer user_data)
+current_removed_cb (GtkWidget *playlist, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
 	char *mrl;
 
 	/* Set play button status */
@@ -1764,10 +1685,8 @@ current_removed_cb (GtkWidget *playlist, gpointer user_data)
 }
 
 void
-playlist_repeat_toggle_cb (GtkPlaylist *playlist, gboolean repeat,
-		gpointer user_data)
+playlist_repeat_toggle_cb (GtkPlaylist *playlist, gboolean repeat, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
 	GtkWidget *item;
 
 	item = glade_xml_get_widget (totem->xml, "repeat_mode1");
@@ -1792,9 +1711,8 @@ update_fullscreen_size (Totem *totem)
 }
 
 static void
-size_changed_cb (GdkScreen *screen, gpointer user_data)
+size_changed_cb (GdkScreen *screen, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
 	update_fullscreen_size (totem);
 
 	gtk_window_move (GTK_WINDOW (totem->exit_popup),
@@ -1827,10 +1745,8 @@ popup_hide (Totem *totem)
 }
 
 static void
-on_mouse_click_fullscreen (GtkWidget *widget, gpointer user_data)
+on_mouse_click_fullscreen (GtkWidget *widget, Totem *totem)
 {
-	Totem *totem = (Totem *)user_data;
-
 	if (totem->popup_timeout != 0)
 	{
 		gtk_timeout_remove (totem->popup_timeout);
@@ -1843,10 +1759,9 @@ on_mouse_click_fullscreen (GtkWidget *widget, gpointer user_data)
 
 static gboolean
 on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
-		gpointer user_data)
+		Totem *totem)
 {
 	static gboolean in_progress = FALSE;
-	Totem *totem = (Totem *) user_data;
 
 	if (bacon_video_widget_is_fullscreen (totem->bvw) == FALSE)
 		return FALSE;
@@ -1881,10 +1796,8 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 }
 
 static gboolean
-on_eos_event (GtkWidget *widget, gpointer user_data)
+on_eos_event (GtkWidget *widget, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	if (strcmp (totem->mrl, LOGO_PATH) == 0)
 		return FALSE;
 
@@ -2048,11 +1961,8 @@ totem_action_handle_scroll (Totem *totem, GdkScrollDirection direction)
 }
 
 static int
-on_window_key_press_event (GtkWidget *win, GdkEventKey *event,
-		                gpointer user_data)
+on_window_key_press_event (GtkWidget *win, GdkEventKey *event, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
-
 	/* If we have modifiers, and either Ctrl, Mod1 (Alt), or any
 	 * of Mod3 to Mod5 (Mod2 is num-lock...) are pressed, we
 	 * let Gtk+ handle the key */
@@ -2068,10 +1978,8 @@ on_window_key_press_event (GtkWidget *win, GdkEventKey *event,
 }
 
 static int
-on_window_scroll_event (GtkWidget *win, GdkEventScroll *event,
-				gpointer user_data)
+on_window_scroll_event (GtkWidget *win, GdkEventScroll *event, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
 	return totem_action_handle_scroll (totem, event->direction);
 }
 
@@ -2375,8 +2283,8 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (spin_button_value_changed_cb), totem);
 
 	/* Update the UI */
-	gtk_timeout_add (600, update_cb_often, totem);
-	gtk_timeout_add (1200, update_cb_rare, totem);
+	gtk_timeout_add (600, (GtkFunction) update_cb_often, totem);
+	gtk_timeout_add (1200, (GtkFunction) update_cb_rare, totem);
 }
 
 static void
@@ -2422,6 +2330,12 @@ video_widget_create (Totem *totem)
 			"tick",
 			G_CALLBACK (update_current_time),
 			totem);
+
+	/* Events for the widget video window as well */
+	gtk_widget_add_events (GTK_WIDGET (totem->bvw), GDK_KEY_PRESS_MASK);
+	g_signal_connect (G_OBJECT(totem->bvw), "key_press_event",
+			G_CALLBACK (on_window_key_press_event), totem);
+
 
 	g_signal_connect (G_OBJECT (totem->bvw), "drag_data_received",
 			G_CALLBACK (drop_video_cb), totem);
@@ -2512,9 +2426,8 @@ totem_get_gconf_client (Totem *totem)
 }
 
 static void
-totem_message_connection_receive_cb (const char *msg, gpointer user_data)
+totem_message_connection_receive_cb (const char *msg, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
 	char *command_str, *url;
 	int command;
 
@@ -2680,8 +2593,8 @@ main (int argc, char **argv)
 	if (bacon_message_connection_get_is_server (totem->conn) == TRUE)
 	{
 		bacon_message_connection_set_callback (totem->conn,
-				totem_message_connection_receive_cb,
-				totem);
+				(BaconMessageReceivedFunc)
+				totem_message_connection_receive_cb, totem);
 	} else {
 		process_command_line (totem->conn, argc, argv);
 		bacon_message_connection_free (totem->conn);

@@ -1,5 +1,40 @@
 2003-02-26  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (main_window_destroy_cb), (drop_video_cb),
+	(drop_playlist_cb), (on_play_pause_button_clicked),
+	(on_previous_button_clicked), (on_next_button_clicked),
+	(on_playlist_button_toggled), (on_title_change_event),
+	(update_current_time), (update_cb_often), (update_cb_rare),
+	(seek_slider_pressed_cb), (seek_slider_released_cb), (vol_cb),
+	(on_open1_activate), (on_play_dvd1_activate),
+	(on_play_vcd1_activate), (on_play_cd1_activate),
+	(on_play1_activate), (on_full_screen1_activate),
+	(on_zoom_1_2_activate), (on_zoom_1_1_activate),
+	(on_zoom_2_1_activate), (on_toggle_aspect_ratio1_activate),
+	(on_show_playlist1_activate), (on_fs_exit1_activate),
+	(on_quit1_activate), (on_repeat_mode1_toggled),
+	(on_about1_activate), (on_radiobutton_shot_toggled),
+	(hide_screenshot), (on_take_screenshot1_activate),
+	(on_properties1_activate), (on_preferences1_activate),
+	(on_dvd_root_menu1_activate), (on_dvd_title_menu1_activate),
+	(on_dvd_audio_menu1_activate), (on_dvd_angle_menu1_activate),
+	(on_dvd_chapter_menu1_activate), (commit_hide_skip_to),
+	(spin_button_value_changed_cb), (on_skip_to1_activate),
+	(on_skip_forward1_activate), (on_skip_backwards1_activate),
+	(on_volume_up1_activate), (on_volume_down1_activate),
+	(toggle_playlist_from_playlist), (playlist_changed_cb),
+	(current_removed_cb), (playlist_repeat_toggle_cb),
+	(size_changed_cb), (on_mouse_click_fullscreen),
+	(on_video_motion_notify_event), (on_eos_event),
+	(on_window_key_press_event), (on_window_scroll_event),
+	(totem_callback_connect), (video_widget_create),
+	(totem_message_connection_receive_cb), (main): modify all the
+	callbacks so they get a Totem * directly rather than a gpointer, so we
+	don't have to cast that much. Get the keybindings working again in
+	fullscreen mode
+
+2003-02-26  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (size_changed_cb): move the popups when the screen
 	size changes
 
