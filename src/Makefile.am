@@ -26,6 +26,8 @@ plugin_LTLIBRARIES = $(TOTEM_MOZILLA_PLUGIN)
 
 if TOTEM_GST
 MM = bacon-video-widget-gst.c \
+	gstscreenshot.c \
+	gstscreenshot.h \
 	gststreaminfo.h
 else
 MM = bacon-video-widget-xine.c
@@ -103,7 +105,7 @@ totem_SOURCES = 					\
 totem_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) $(RANDR_LIBS)  $(NVTV_LIBS)
 
 totem_video_thumbnailer_SOURCES = $(VIDEOWIDGET) totem-video-thumbnailer.c
-totem_video_thumbnailer_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)  $(NVTV_LIBS)
+totem_video_thumbnailer_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)  $(NVTV_LIBS) $(EXTRA_GNOME_LIBS)
 
 totem_properties_page_SOURCES =		\
 	$(VIDEOWIDGET)			\
@@ -156,6 +158,8 @@ INCLUDES = 						\
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(MARSHALFILES) $(desktop_DATA)
 EXTRA_DIST =	bacon-video-widget-xine.c \
 		bacon-video-widget-gst.c \
+		gstscreenshot.c \
+		gstscreenshot.h \
 		gststreaminfo.h \
 		$(BACON_V4L_SELECTION) \
 		vanity.c \

@@ -7,6 +7,8 @@
 #include <gtk/gtk.h>
 #endif
 
+#include <popt.h>
+
 #include <string.h>
 #include <unistd.h>
 #include "bacon-video-widget.h"
@@ -17,13 +19,6 @@
 #define MIN_LEN_FOR_SEEK 25000
 
 gboolean finished = FALSE;
-
-static void
-print_usage (void)
-{
-	g_print ("usage: totem-video-thumbnailer [-s <size>] <infile> <outfile>\n");
-	exit (1);
-}
 
 #ifdef THUMB_DEBUG
 static void
@@ -297,30 +292,42 @@ time_monitor (gpointer data)
 
 int main (int argc, char *argv[])
 {
+	static struct poptOption options[] = {
+		{NULL, '\0', POPT_ARG_INCLUDE_TABLE, NULL, 0,
+			N_("Backend options"), NULL},
+		{NULL, '\0', 0, NULL, 0} /* end the list */
+	};
 	GError *err = NULL;
 	BaconVideoWidget *bvw;
 	GdkPixbuf *pixbuf;
 	int i, length, size;
 	char *input, *output;
 
+	if (strcmp (argv[1], "-h") == 0 ||
+	    strcmp (argv[1], "--help") == 0) {
+		g_print ("Usage: %s [-s <size>] <input> <output> [backend options]\n", argv[0]);
+		return -1;
+	}
+
 	nice (20);
 
 	g_thread_init (NULL);
 
+	options[0].arg = bacon_video_widget_get_popt_table ();
+#ifndef HAVE_GTK_ONLY
+	gnome_program_init ("totem-video-thumbnailer", VERSION,
+			LIBGNOME_MODULE, argc, argv,
+			GNOME_PARAM_APP_DATADIR, DATADIR,
+			GNOME_PARAM_POPT_TABLE, options,
+			GNOME_PARAM_NONE);
+#else /* !HAVE_GTK_ONLY */
 	gtk_init (&argc, &argv);
+#endif /* !HAVE_GTK_ONLY */
 
-	if (argc != 3 && argc != 5)
-		print_usage ();
-
-	if (argc == 5)
-	{
-		if (strcmp (argv[1], "-s") != 0)
-		{
-			print_usage ();
-		}
+	if (!strcmp (argv[1], "-s")) {
 		input = argv[3];
 		output = argv[4];
-		size = (int) g_strtod (argv[2], NULL);
+		size = g_strtod (argv[2], NULL);
 	} else {
 		input = argv[1];
 		output = argv[2];
@@ -404,9 +411,9 @@ int main (int argc, char *argv[])
 	/* 10 seconds! */
 	i = 0;
 	pixbuf = bacon_video_widget_get_current_frame (bvw);
-	while (pixbuf == NULL && i < 10)
+	while (pixbuf == NULL && i < 20)
 	{
-		usleep (1000000);
+		usleep (500000);
 		pixbuf = bacon_video_widget_get_current_frame (bvw);
 		i++;
 	}

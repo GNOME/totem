@@ -46,6 +46,7 @@
 #include "scrsaver.h"
 #include "video-utils.h"
 #include "gststreaminfo.h"
+#include "gstscreenshot.h"
 
 #define DEFAULT_HEIGHT 420
 #define DEFAULT_WIDTH 315
@@ -549,31 +550,6 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
     {
       case ASYNC_VIDEO_SIZE:
         {
-          GList *streaminfo = NULL;
-
-          g_object_get (G_OBJECT (bvw->priv->play), "stream-info",
-			&streaminfo, NULL);
-          for ( ; streaminfo != NULL; streaminfo = streaminfo->next) {
-            GstStreamInfo *info = streaminfo->data;
-
-            switch (info->type) {
-              case GST_STREAM_TYPE_VIDEO: {
-                GstStructure *s;
-
-                s = gst_caps_get_structure (GST_PAD_CAPS (info->pad), 0);
-                if (s) {
-                  gst_structure_get_double (s, "framerate", &bvw->priv->video_fps);
-                  gst_structure_get_int (s, "width", &bvw->priv->video_width);
-                  gst_structure_get_int (s, "height", &bvw->priv->video_height);
-                  /* FIXME: a-s-r */
-                }
-                break;
-              }
-              default:
-                break;
-            }
-          }
-
           g_signal_emit (G_OBJECT (bvw), bvw_table_signals[SIGNAL_GOT_METADATA], 0, NULL);
 
           if (bvw->priv->auto_resize) {
@@ -688,7 +664,7 @@ got_video_size (GstElement * play, guint width, guint height,
   
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  
+
   signal = g_new0 (BVWSignal, 1);
   signal->signal_id = ASYNC_VIDEO_SIZE;
   signal->signal_data.video_size.width = width;
@@ -794,6 +770,39 @@ cb_iterate (BaconVideoWidget *bvw)
 }
 
 static void
+caps_set (GObject * obj,
+    GParamSpec * pspec, BaconVideoWidget * bvw)
+{
+  GstPad *pad = GST_PAD (obj);
+  GstStructure *s;
+
+  if (!GST_PAD_CAPS (pad))
+    return;
+
+  s = gst_caps_get_structure (GST_PAD_CAPS (pad), 0);
+  if (s) {
+    const GValue *par;
+
+    gst_structure_get_double (s, "framerate", &bvw->priv->video_fps);
+    gst_structure_get_int (s, "width", &bvw->priv->video_width);
+    gst_structure_get_int (s, "height", &bvw->priv->video_height);
+    if ((par = gst_structure_get_value (s,
+                   "pixel-aspect-ratio"))) {
+      gint num = gst_value_get_fraction_numerator (par),
+          den = gst_value_get_fraction_denominator (par);
+
+      if (num > den)
+        bvw->priv->video_width *= (gfloat) num / den;
+      else
+        bvw->priv->video_height *= (gfloat) den / num;
+    }
+  }
+
+  /* and disable ourselves */
+  g_signal_handlers_disconnect_by_func (pad, caps_set, bvw);
+}
+
+static void
 state_change (GstElement *play, GstElementState old_state,
 	      GstElementState new_state, BaconVideoWidget *bvw)
 {
@@ -821,9 +830,18 @@ state_change (GstElement *play, GstElementState old_state,
         case GST_STREAM_TYPE_AUDIO:
           bvw->priv->media_has_audio = TRUE;
           break;
-        case GST_STREAM_TYPE_VIDEO:
+        case GST_STREAM_TYPE_VIDEO: {
+
+          /* handle explicit caps as well - they're set later */
+          if (GST_PAD_CAPS (info->pad))
+            caps_set (G_OBJECT (info->pad), NULL, bvw);
+          else
+            g_signal_connect (info->pad, "notify::caps",
+                G_CALLBACK (caps_set), bvw);
+
           bvw->priv->media_has_video = TRUE;
           break;
+        }
         default:
           break;
       }
@@ -839,6 +857,9 @@ state_change (GstElement *play, GstElementState old_state,
         gst_tag_list_free (bvw->priv->tagcache);
         bvw->priv->tagcache = NULL;
       }
+
+    bvw->priv->video_width = 0;
+    bvw->priv->video_height = 0;
   }
 }
 
@@ -1936,16 +1957,88 @@ bacon_video_widget_can_get_frames (BaconVideoWidget * bvw, GError ** error)
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
-  return FALSE;
+
+  /* check for version */
+  if (!g_object_class_find_property (
+           G_OBJECT_GET_CLASS (bvw->priv->play), "frame"))
+    return FALSE;
+
+  /* check for video */
+  return bvw->priv->media_has_video;
+}
+
+static void
+destroy_pixbuf (guchar *pix, gpointer data)
+{
+  gst_buffer_unref (GST_BUFFER (data));
 }
 
 GdkPixbuf *
 bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
 {
+  GstBuffer *buf = NULL;
+  const GList *streaminfo = NULL;
+  GstCaps *from = NULL;
+  GdkPixbuf *pixbuf;
+
   g_return_val_if_fail (bvw != NULL, NULL);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), NULL);
-  return NULL;
+
+  /* no video info */
+  if (!bvw->priv->video_width || !bvw->priv->video_height)
+    return NULL;
+
+  /* get frame */
+  g_object_get (G_OBJECT (bvw->priv->play), "frame", &buf, NULL);
+  if (!buf)
+    return NULL;
+
+  /* take our own reference, because we will eat it */
+  gst_buffer_ref (buf);
+
+  /* get video size etc. */
+  g_object_get (G_OBJECT (bvw->priv->play),
+      "stream-info", &streaminfo, NULL);
+  for (; streaminfo != NULL; streaminfo = streaminfo->next) {
+    GstStreamInfo *info = streaminfo->data;
+
+    if (info->type == GST_STREAM_TYPE_VIDEO) {
+      from = gst_caps_copy (GST_PAD_CAPS (info->pad));
+      break;
+    }
+  }
+  if (!from)
+    return NULL;
+
+  /* convert to our own wanted format */
+  buf = bvw_frame_conv_convert (buf, from,
+      gst_caps_new_simple ("video/x-raw-rgb",
+          "bpp", G_TYPE_INT, 24,
+          "depth", G_TYPE_INT, 24,
+          "width", G_TYPE_INT, bvw->priv->video_width,
+          "height", G_TYPE_INT, bvw->priv->video_height,
+          "framerate", G_TYPE_DOUBLE, bvw->priv->video_fps,
+          "pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
+          "endianness", G_TYPE_INT, G_BIG_ENDIAN,
+          "red_mask", G_TYPE_INT, 0xff0000,
+          "green_mask", G_TYPE_INT, 0x00ff00,
+          "blue_mask", G_TYPE_INT, 0x0000ff, NULL));
+  if (!buf)
+    return NULL;
+
+  /* create pixbuf from that - use our own destroy function */
+  pixbuf = gdk_pixbuf_new_from_data (GST_BUFFER_DATA (buf),
+			GDK_COLORSPACE_RGB, FALSE,
+			8, bvw->priv->video_width,
+			bvw->priv->video_height,
+			3 * bvw->priv->video_width,
+			destroy_pixbuf, buf);
+  if (!pixbuf)
+    gst_buffer_unref (buf);
+
+  /* that's all */
+  return pixbuf;
 }
 
 /* =========================================== */
@@ -2000,18 +2093,23 @@ bacon_video_widget_new (int width, int height,
   bvw->priv->logo_mode = TRUE;
   bvw->priv->auto_resize = TRUE;
 
-  audio_sink = gst_gconf_get_default_audio_sink ();
-  if (!GST_IS_ELEMENT (audio_sink))
-    {
-      g_message ("failed to render default audio sink from gconf");
-      return NULL;
-    }
-  video_sink = gst_gconf_get_default_video_sink ();
-  if (!GST_IS_ELEMENT (video_sink))
-    {
-      g_message ("failed to render default video sink from gconf");
-      return NULL;
-    }
+  if (!null_out) {
+    audio_sink = gst_gconf_get_default_audio_sink ();
+    if (!GST_IS_ELEMENT (audio_sink))
+      {
+        g_message ("failed to render default audio sink from gconf");
+        return NULL;
+      }
+    video_sink = gst_gconf_get_default_video_sink ();
+    if (!GST_IS_ELEMENT (video_sink))
+      {
+        g_message ("failed to render default video sink from gconf");
+        return NULL;
+      }
+  } else {
+    video_sink = gst_element_factory_make ("fakesink", "fakevideosink");
+    audio_sink = gst_element_factory_make ("fakesink", "fakeaudiosink");
+  }
 
   g_object_set (G_OBJECT (bvw->priv->play), "video-sink",
 		video_sink, NULL);
@@ -2030,7 +2128,7 @@ bacon_video_widget_new (int width, int height,
 		    (GtkSignalFunc) got_error, (gpointer) bvw);
 
   /* We try to get an element supporting XOverlay interface */
-  if (GST_IS_BIN (bvw->priv->play)) {
+  if (!null_out && GST_IS_BIN (bvw->priv->play)) {
     GstElement *element = NULL;
     GList *elements = NULL, *l_elements = NULL;
     
