@@ -1,3 +1,4 @@
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* gtk-playlist.c
 
    Copyright (C) 2002, 2003 Bastien Nocera
@@ -165,23 +166,19 @@ static void
 totem_playlist_error (char *title, char *reason, TotemPlaylist *playlist)
 {
 	GtkWidget *error_dialog;
-	char *title_esc, *reason_esc;
-
-	title_esc = g_markup_escape_text (title, -1);
-	reason_esc = g_markup_escape_text (reason, -1);
 
 	error_dialog =
 		gtk_message_dialog_new (GTK_WINDOW (playlist),
 				GTK_DIALOG_MODAL,
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK,
-				"<b>%s</b>\n%s.", title_esc, reason_esc);
-	g_free (title_esc);
-	g_free (reason_esc);
+				title);
+	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (error_dialog),
+						  reason);
+
 	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
 			GTK_RESPONSE_OK);
-	gtk_label_set_use_markup (GTK_LABEL (GTK_MESSAGE_DIALOG (error_dialog)->label), TRUE);
 	g_signal_connect (G_OBJECT (error_dialog), "destroy", G_CALLBACK
 			(gtk_widget_destroy), error_dialog);
 	g_signal_connect (G_OBJECT (error_dialog), "response", G_CALLBACK
@@ -851,8 +848,11 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 				 GTK_DIALOG_MODAL,
 				 GTK_MESSAGE_QUESTION,
 				 GTK_BUTTONS_NONE,
-				 _("A file named '%s' already exists.\nAre you sure you want to overwrite it?"),
-				 filename);
+				 _("Overwrite file?"));
+			gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+								  _("A file named '%s' already exists.  Are you sure you want to overwrite it?"),
+								  filename);
+
 			gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
 			gtk_dialog_add_buttons (GTK_DIALOG (dialog),
 					GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,

@@ -1,3 +1,13 @@
+2005-01-10  William Jon McCann  <mccann@jhu.edu>
+
+	* src/vanity.c (vanity_action_error): 
+	* src/totem.c (totem_action_error, totem_action_error_and_exit): 
+	* src/totem-screenshot.c (totem_screenshot_action_error): 
+	* src/totem-preferences.c (ask_show_visuals): 
+	* src/totem-playlist.c (totem_playlist_error) 
+	(totem_playlist_save_files):
+	Use GTK 2.5 HIG message dialog API.
+
 2005-01-11  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/Makefile.am:

@@ -1,3 +1,4 @@
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * Copyright (C) 2001-2004 Bastien Nocera <hadess@hadess.net>
  *
@@ -112,7 +113,6 @@ void
 totem_action_error (char *title, char *reason, Totem *totem)
 {
 	GtkWidget *parent, *error_dialog;
-	char *title_esc, *reason_esc;
 
 	if (reason == NULL)
 		g_warning ("totem_action_error called with reason == NULL");
@@ -122,22 +122,18 @@ totem_action_error (char *title, char *reason, Totem *totem)
 	else
 		parent = totem->win;
 
-	title_esc = g_markup_escape_text (title, -1);
-	reason_esc = g_markup_escape_text (reason, -1);
-
 	error_dialog =
 		gtk_message_dialog_new (GTK_WINDOW (parent),
 				GTK_DIALOG_MODAL,
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK,
-				"<b>%s</b>\n%s", title_esc, reason_esc);
-	g_free (title_esc);
-	g_free (reason_esc);
+				title);
+	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (error_dialog),
+						  reason);
 
 	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
 			GTK_RESPONSE_OK);
-	gtk_label_set_use_markup (GTK_LABEL (GTK_MESSAGE_DIALOG (error_dialog)->label), TRUE);
 	g_signal_connect (G_OBJECT (error_dialog), "destroy", G_CALLBACK
 			(gtk_widget_destroy), error_dialog);
 	g_signal_connect (G_OBJECT (error_dialog), "response", G_CALLBACK
@@ -157,9 +153,10 @@ totem_action_error_and_exit (char *title, char *reason, Totem *totem)
 				GTK_DIALOG_MODAL,
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK,
-				"<b>%s</b>\n%s", title, reason);
+				title);
+	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (error_dialog),
+						  reason);
 	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
-	gtk_label_set_use_markup (GTK_LABEL (GTK_MESSAGE_DIALOG (error_dialog)->label), TRUE);
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
 			GTK_RESPONSE_OK);
 	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);

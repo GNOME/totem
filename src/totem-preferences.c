@@ -1,3 +1,4 @@
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
  * Copyright (C) 2001,2002,2003 Bastien Nocera <hadess@hadess.net>
  *
@@ -74,9 +75,11 @@ ask_show_visuals (Totem *totem)
 				GTK_DIALOG_MODAL,
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_YES_NO,
-				_("It seems you are running Totem remotely.\n"
-				"Are you sure you want to enable the visual "
-				"effects?"));
+				_("Enable visual effects?"));
+	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+						  _("It seems you are running Totem remotely.\n"
+						    "Are you sure you want to enable the visual "
+						    "effects?"));
 	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog),
 			GTK_RESPONSE_NO);
