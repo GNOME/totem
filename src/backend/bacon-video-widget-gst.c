@@ -1561,11 +1561,20 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
-#if 0
-  gst_video_widget_set_scale (bvw->priv->vw, ratio);
-  gst_video_widget_set_scale_override (bvw->priv->vw, TRUE);
-#endif
   get_media_size (bvw, &w, &h);
+  if (ratio == 0) {
+    if (totem_ratio_fits_screen (bvw->priv->video_window, w, h, 2.0))
+      ratio = 2.0;
+    else if (totem_ratio_fits_screen (bvw->priv->video_window, w, h, 1.0))
+      ratio = 1.0;
+    else if (totem_ratio_fits_screen (bvw->priv->video_window, w, h, 0.5))
+      ratio = 0.5;
+    else
+      return;
+  } else {
+    if (!totem_ratio_fits_screen (bvw->priv->video_window, w, h, ratio))
+      return;
+  }
   w = (gfloat) w * ratio;
   h = (gfloat) h * ratio;
   shrink_toplevel (bvw);
