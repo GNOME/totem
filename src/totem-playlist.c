@@ -953,6 +953,15 @@ totem_playlist_down_files (GtkWidget *widget, TotemPlaylist *playlist)
 static int
 totem_playlist_key_press (GtkWidget *win, GdkEventKey *event, TotemPlaylist *playlist)
 {
+	/* Special case some shortcuts */
+	if (event->state != 0
+			&& (event->state &GDK_CONTROL_MASK))
+	{
+		switch (event->keyval)
+		case GDK_a:
+			gtk_tree_selection_select_all (playlist->_priv->selection);
+			return TRUE;
+	}
 	/* If we have modifiers, and either Ctrl, Mod1 (Alt), or any
 	 * of Mod3 to Mod5 (Mod2 is num-lock...) are pressed, we
 	 * let Gtk+ handle the key */
