@@ -299,7 +299,7 @@ on_button1_clicked (GtkButton *button, Totem *totem)
 	path = g_build_path (G_DIR_SEPARATOR_S,
 			g_get_home_dir (), PROPRIETARY_PLUGINS, NULL);
 
-	if (g_getenv ("KDE_STARTUP_ENV") && (filemanager = g_find_program_in_path("konqueror"))) {
+	if ((g_getenv ("KDE_STARTUP_ENV") || g_getenv("KDE_FULL_SESSION")) && (filemanager = g_find_program_in_path("konqueror"))) {
 		cmd = g_strconcat (filemanager, " ", path, NULL);
 		g_free (filemanager);
 	} else {
