@@ -187,7 +187,7 @@ totem_named_icons_init (Totem *totem, gboolean refresh)
 	}
 
 	if (icons_table == NULL) {
-		icons_table = g_hash_table_new (NULL, g_str_equal);
+		icons_table = g_hash_table_new (g_str_hash, g_str_equal);
 	}
 
 	for (i = 0; i < (int) G_N_ELEMENTS (items); i++) {

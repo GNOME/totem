@@ -1,5 +1,11 @@
 2004-07-19  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-stock-icons.c: (totem_named_icons_init): Use g_str_hash
+	not g_str_equal (fixes stock items not appearing on some platforms)
+	(patch from Brian Cameron <rian.cameron@sun.com>) (Closes: #147920)
+
+2004-07-19  Bastien Nocera  <hadess@hadess.net>
+
 	* src/debug.h: fix compilation on Solaris (patch from Brian Cameron
 	<rian.cameron@sun.com>) (Closes: #147739)
 
