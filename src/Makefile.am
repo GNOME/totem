@@ -18,13 +18,13 @@ MARSHALFILES = baconvideowidget-marshal.h baconvideowidget-marshal.c totemplpars
 GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
 
 baconvideowidget-marshal.h: baconvideowidget-marshal.list
-	( $(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal baconvideowidget-marshal.list --header > baconvideowidget-marshal.h )
+	( $(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal $(srcdir)/baconvideowidget-marshal.list --header > baconvideowidget-marshal.h )
 baconvideowidget-marshal.c: baconvideowidget-marshal.h
-	( $(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal baconvideowidget-marshal.list --body > baconvideowidget-marshal.tmp )
+	( $(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal $(srcdir)/baconvideowidget-marshal.list --body > baconvideowidget-marshal.c )
 totemplparser-marshal.c: totemplparser-marshal.h
-	 ( $(GLIB_GENMARSHAL) --prefix=totemplparser_marshal totemplparser-marshal.list --header --body > totemplparser-marshal.c )
+	 ( $(GLIB_GENMARSHAL) --prefix=totemplparser_marshal $(srcdir)/totemplparser-marshal.list --header --body > totemplparser-marshal.c )
 totemplparser-marshal.h: totemplparser-marshal.list
-	( $(GLIB_GENMARSHAL) --prefix=totemplparser_marshal totemplparser-marshal.list --header > totemplparser-marshal.h )
+	( $(GLIB_GENMARSHAL) --prefix=totemplparser_marshal $(srcdir)/totemplparser-marshal.list --header > totemplparser-marshal.h )
 
 
 EGG_RECENT_FILES =                      \
