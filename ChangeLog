@@ -1,5 +1,12 @@
 2003-04-05  Bastien Nocera  <hadess@hadess.net>
 
+	* README: updated
+	* src/gtk-playlist.c: (gtk_playlist_add_m3u),
+	(gtk_playlist_add_ra): differentiate video files from the playlists
+	with the same mime-type
+
+2003-04-05  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-playlist.c: (my_eel_read_entire_file),
 	(gtk_playlist_add_asx), (parse_smil_entry),
 	(gtk_playlist_add_smil): try to recover nicely from broken XML files

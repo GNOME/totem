@@ -1008,7 +1008,9 @@ gtk_playlist_add_m3u (GtkPlaylist *playlist, const char *mrl)
 		if (strstr(lines[i], "://") != NULL
 				|| lines[i][0] == G_DIR_SEPARATOR)
 		{
-			if (gtk_playlist_add_one_mrl (playlist,
+			/* We use the same code for .ram and m3u playlists,
+			 * and .ram files can contain .smil entries */
+			if (gtk_playlist_add_mrl (playlist,
 						lines[i], NULL) == TRUE)
 				retval = TRUE;
 		}
@@ -1204,8 +1206,13 @@ gtk_playlist_add_asx (GtkPlaylist *playlist, const char *mrl)
 static gboolean
 gtk_playlist_add_ra (GtkPlaylist *playlist, const char *mrl, gpointer data)
 {
-	//FIXME we need to have some way to differentiate the playlists
-	//and the videos
+	if (data == NULL
+			|| (strncmp (data, "http://", strlen ("http://")) != 0
+			&& strncmp (data, "rtsp://", strlen ("rtsp://")) != 0
+			&& strncmp (data, "pnm://", strlen ("pnm://")) != 0))
+	{
+		return gtk_playlist_add_one_mrl (playlist, mrl, NULL);
+	}
 
 	/* How nice, same format as m3u it seems */
 	return gtk_playlist_add_m3u (playlist, mrl);
