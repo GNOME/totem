@@ -844,6 +844,9 @@ state_change (GstElement *play, GstElementState old_state,
         GstPad *pad = NULL;
 
         g_object_get (info, "object", &pad, NULL);
+        /* hack for 0.8.5 */
+        if (!pad)
+          g_object_get (info, "pad", &pad, NULL);
         if (pad != NULL && GST_PAD_REALIZE (pad) != NULL) {
           g_assert (GST_IS_PAD (pad));
 
@@ -2092,11 +2095,14 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
     g_object_get (info, "type", &type, NULL);
     pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
     val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
-                                                                                
+
     if (strstr (val->value_name, "VIDEO")) {
-      GstPad *pad;
+      GstPad *pad = NULL;
 
       g_object_get (info, "object", &pad, NULL);
+      /* hack for 0.8.5 */
+      if (!pad)
+        g_object_get (info, "pad", &pad, NULL);
       g_assert (GST_IS_PAD (pad));
       from = gst_caps_copy (GST_PAD_CAPS (pad));
     }
