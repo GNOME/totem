@@ -836,6 +836,8 @@ totem_is_media (const char *mrl)
 		return TRUE;
 	if (strncmp ("vcd:", mrl, strlen ("vcd:")) == 0)
 		return TRUE;
+	if (strncmp ("cd:", mrl, strlen ("cd:")) == 0)
+		return TRUE;
 
 	return FALSE;
 }
