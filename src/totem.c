@@ -701,22 +701,22 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
                                 char *uri;
                                 EggRecentItem *item;
 
-                                uri = gnome_vfs_get_uri_from_local_path (list[i]);
-                                if (uri == NULL) {
-                                        /* ok, if this fails, then it was
-                                         * something like dvd:/// and we don't
-                                         * want to add it
-                                         */
-                                        continue;
-                                }
+				uri = gnome_vfs_get_uri_from_local_path (list[i]);
+				if (uri == NULL) {
+					/* ok, if this fails, then it was
+					 * something like dvd:/// and we don't
+					 * want to add it
+					 */
+					continue;
+				}
 
-                                item = egg_recent_item_new_from_uri (uri);
-                                egg_recent_item_add_group (item, "Totem");
-                                egg_recent_model_add_full (totem->recent_model,
-                                                           item);
+				item = egg_recent_item_new_from_uri (uri);
+				egg_recent_item_add_group (item, "Totem");
+				egg_recent_model_add_full (totem->recent_model,
+						item);
 
-                                g_free (uri);
-                        }
+				g_free (uri);
+			}
 		}
 	}
 

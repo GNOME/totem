@@ -26,9 +26,12 @@
 #include <gnome.h>
 #include <glade/glade.h>
 #include <libgnomevfs/gnome-vfs.h>
+#include <libgnomevfs/gnome-vfs-mime-utils.h>
 #include <string.h>
 
 #include "debug.h"
+
+#define PATH_MAX_LENGTH 1024
 
 struct GtkPlaylistPrivate
 {
@@ -162,7 +165,8 @@ drop_cb (GtkWidget     *widget,
 		return;
 	}
 
-	for (p = file_list; p != NULL; p = p->next) {
+	for (p = file_list; p != NULL; p = p->next)
+	{
 		char *filename;
 
 		filename = gnome_vfs_get_local_path_from_uri (p->data);
@@ -538,17 +542,17 @@ gtk_playlist_new (GtkWindow *parent)
 	return GTK_WIDGET (playlist);
 }
 
-gboolean
-gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl)
+static gboolean
+gtk_playlist_add_one_mrl (GtkPlaylist *playlist, const char *mrl)
 {
 	GtkListStore *store;
 	GtkTreeIter iter;
 	char *filename_utf8, *filename;
 
-	D("gtk_playlist_add_mrl");
-
 	g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), FALSE);
 	g_return_val_if_fail (mrl != NULL, FALSE);
+
+	D("gtk_playlist_add_one_mrl: %s", mrl);
 
 	filename = g_path_get_basename (mrl);
 	filename_utf8 = g_filename_to_utf8 (filename,
@@ -574,6 +578,83 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl)
 	g_signal_emit (G_OBJECT (playlist),
 			gtk_playlist_table_signals[CHANGED], 0,
 			NULL);
+}
+
+/* FIXME use gnome_vfs instead of local file shite */
+static gboolean
+gtk_playlist_add_m3u (GtkPlaylist *playlist, const char *mrl)
+{
+	FILE *input;
+	gboolean retval = FALSE;
+	char *filename;
+
+	D("gtk_playlist_add_m3u: %s", mrl);
+
+	if (strstr (mrl, "://") != NULL)
+		filename = gnome_vfs_get_local_path_from_uri (mrl);
+	else
+		filename = g_strdup (mrl);
+
+	if (filename == NULL)
+	{
+		D("gtk_playlist_add_m3u: filename is NULL");
+		return FALSE;
+	}
+
+	input = fopen(filename, "r");
+
+	if (input == NULL)
+	{
+		D("gtk_playlist_add_m3u: couldn't open %s", filename);
+		return FALSE;
+	}
+
+	while (!feof(input))
+	{
+		gchar *get_res, *line;
+
+		line = g_malloc (PATH_MAX_LENGTH);
+
+		if (fgets(line, PATH_MAX_LENGTH, input) != NULL)
+		{
+			gboolean result;
+
+			D("gtk_playlist_add_m3u: line %s", line);
+
+			line = g_strchomp(line);
+			result = gtk_playlist_add_one_mrl (playlist, line);
+			if (retval == FALSE && result == TRUE)
+				retval = TRUE;
+		}
+	}
+	fclose(input);
+	g_free (filename);
+
+	return retval;
+}
+
+gboolean
+gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl)
+{
+	gboolean retval = FALSE;
+	const char *mimetype;
+
+	g_return_val_if_fail (mrl != NULL, FALSE);
+
+	mimetype = gnome_vfs_get_mime_type (mrl);
+	D("gtk_playlist_add_mrl: adding %s (%s)", mrl, mimetype);
+	if (mimetype == NULL)
+	{
+		retval = gtk_playlist_add_one_mrl (playlist, mrl);
+	} else if (strcmp ("audio/x-mpegurl", mimetype) == 0) {
+		return gtk_playlist_add_m3u (playlist, mrl);
+	} else if (strcmp ("audio/x-scpls", mimetype) == 0) {
+		//What's that look like ?
+	} else if (strcmp ("x-directory/normal", mimetype) == 0) {
+		//Load all the files in the dir ?
+	}
+
+	return gtk_playlist_add_one_mrl (playlist, mrl);
 }
 
 void
