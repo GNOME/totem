@@ -1760,6 +1760,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 		const gchar * mrl, const gchar *subtitle_uri, GError ** error)
 {
   gboolean ret;
+  gchar buf[256];
 
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (mrl != NULL, FALSE);
@@ -1771,8 +1772,22 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   if (bvw->priv->mrl && !strcmp (bvw->priv->mrl, mrl))
     return TRUE;
 
+  /* this allows non-URI type of files in the thumbnailer and so on */
   g_free (bvw->priv->mrl);
-  bvw->priv->mrl = g_strdup (mrl);
+  if (mrl[0] == '/') {
+    bvw->priv->mrl = g_strdup_printf ("file://%s", mrl);
+  } else {
+    if (strchr (mrl, ':')) {
+      bvw->priv->mrl = g_strdup (mrl);
+    } else {
+      if (!getcwd (buf, 255)) {
+	g_set_error (error, 0, 0,
+	     _("Failed to retrieve working directory"));
+	return FALSE;
+      }
+      bvw->priv->mrl = g_strdup_printf ("file://%s/%s", buf, mrl);
+    }
+  }
 
   gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_READY);
 
