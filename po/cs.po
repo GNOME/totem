@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Totem for GNOME 2.x\n"
-"POT-Creation-Date: 2002-12-07 23:14+0000\n"
-"PO-Revision-Date: 2002-11-18 12:01GMT\n"
+"POT-Creation-Date: 2002-12-14 14:44+0100\n"
+"PO-Revision-Date: 2002-12-14 14:43GMT\n"
 "Last-Translator: Michal Bukovjan <bukm@centrum.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,22 +23,22 @@ msgstr "Seznam skladeb"
 msgid "Repeat Mode"
 msgstr "Režim opakování"
 
-#: data/properties.glade.h:1 src/gtk-xine.c:1857
+#: data/properties.glade.h:1 src/gtk-xine.c:1863
 msgid "0 frames per second"
 msgstr "0 snímků za sekundu"
 
 #. Bitrate
-#: data/properties.glade.h:2 src/gtk-xine.c:1859
+#: data/properties.glade.h:2 src/gtk-xine.c:1865
 msgid "0 kbps"
 msgstr "0 kbps"
 
 #. 0 seconds
-#: data/properties.glade.h:3 src/gtk-xine.c:1793
+#: data/properties.glade.h:3 src/gtk-xine.c:1799
 msgid "0 seconds"
 msgstr "0 sekund"
 
 #. Dimensions
-#: data/properties.glade.h:4 src/gtk-xine.c:1852
+#: data/properties.glade.h:4 src/gtk-xine.c:1858
 msgid "0 x 0"
 msgstr "0 × 0"
 
@@ -79,9 +79,9 @@ msgid "Framerate: "
 msgstr "Snímků:"
 
 #. Year
-#: data/properties.glade.h:14 src/gtk-xine.c:1848 src/gtk-xine.c:1854
-#: src/gtk-xine.c:1861 src/gtk-xine.c:1883 src/gtk-xine.c:1908
-#: src/gtk-xine.c:1939
+#: data/properties.glade.h:14 src/gtk-xine.c:1854 src/gtk-xine.c:1860
+#: src/gtk-xine.c:1867 src/gtk-xine.c:1889 src/gtk-xine.c:1914
+#: src/gtk-xine.c:1945
 msgid "N/A"
 msgstr "---"
 
@@ -94,8 +94,8 @@ msgid "Title: "
 msgstr "Titul: "
 
 #. Title
-#: data/properties.glade.h:17 src/gtk-xine.c:1844 src/gtk-xine.c:1846
-#: src/gtk-xine.c:1875 src/gtk-xine.c:1879
+#: data/properties.glade.h:17 src/gtk-xine.c:1850 src/gtk-xine.c:1852
+#: src/gtk-xine.c:1881 src/gtk-xine.c:1885
 msgid "Unknown"
 msgstr "Neznámý"
 
@@ -113,11 +113,11 @@ msgstr "Přehrávač filmů Totem"
 
 #: data/totem.glade.h:1
 msgid "Angle menu"
-msgstr ""
+msgstr "Menu úhlů"
 
 #: data/totem.glade.h:2
 msgid "Audio menu"
-msgstr ""
+msgstr "Menu zvuku"
 
 #: data/totem.glade.h:3
 msgid "Automatically _resize the window when a new video is loaded"
@@ -125,11 +125,11 @@ msgstr "Automaticky změnit velikost okna po načtení nového video soubo_ru"
 
 #: data/totem.glade.h:4
 msgid "Chapter menu"
-msgstr ""
+msgstr "Menu kapitol"
 
 #: data/totem.glade.h:5
 msgid "DVD menu"
-msgstr ""
+msgstr "Menu DVD"
 
 #: data/totem.glade.h:6
 msgid "Exit fullscreen"
@@ -145,7 +145,7 @@ msgstr "Následující"
 
 #: data/totem.glade.h:9
 msgid "Next Chapter/Movie"
-msgstr ""
+msgstr "Následující kapitola/film"
 
 #: data/totem.glade.h:10
 msgid "Optical Device _Path: "
@@ -168,9 +168,8 @@ msgid "Previous"
 msgstr "Předchozí"
 
 #: data/totem.glade.h:15
-#, fuzzy
 msgid "Previous Chapter/Movie"
-msgstr "Předchozí kanál"
+msgstr "Předchozí kapitola/film"
 
 #: data/totem.glade.h:16
 msgid "Show/Hide Playlist"
@@ -189,9 +188,8 @@ msgid "Time: "
 msgstr "Čas: "
 
 #: data/totem.glade.h:20
-#, fuzzy
 msgid "Title menu"
-msgstr "Titul: "
+msgstr "Menu titulků"
 
 #: data/totem.glade.h:21
 msgid "Toggle Aspect Ratio"
@@ -227,7 +225,7 @@ msgstr "_Celá obrazovka"
 
 #: data/totem.glade.h:29
 msgid "_Go"
-msgstr ""
+msgstr "_Jdi"
 
 #: data/totem.glade.h:30
 msgid "_Movie"
@@ -277,6 +275,14 @@ msgstr "Souřadnice X pro seznam skladeb"
 msgid "Y coordinate for the Playlist"
 msgstr "Souřadnice Y pro seznam skladeb"
 
+#: src/cd-drive.c:330
+msgid "Unnamed Drive"
+msgstr "Nepojmenované zařízení"
+
+#: src/cd-drive.c:559
+msgid "File image"
+msgstr "Soubor s obrazem"
+
 #: src/gtk-playlist.c:410 src/totem.c:1025
 msgid "Select files"
 msgstr "Vyberte soubory"
@@ -289,7 +295,7 @@ msgstr "Název souboru"
 msgid "Totem Video Window"
 msgstr "Video okno aplikace Totem"
 
-#: src/gtk-xine.c:834
+#: src/gtk-xine.c:838
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
@@ -297,75 +303,75 @@ msgstr ""
 "Nelze inicializovat podporu vláken.\n"
 "Měli byste nainstalovat knihovnu Xlib se zabezpečením vláken."
 
-#: src/gtk-xine.c:866
+#: src/gtk-xine.c:870
 msgid "Could not find a suitable video output."
 msgstr "Nelze nalézt vhodný výstup pro video."
 
 #. One hour
-#: src/gtk-xine.c:1762
+#: src/gtk-xine.c:1768
 #, c-format
 msgid "%d hour"
 msgstr "%d hodina"
 
 #. Multiple hours
-#: src/gtk-xine.c:1765
+#: src/gtk-xine.c:1771
 #, c-format
 msgid "%d hours"
 msgstr "%d hodin(y)"
 
 #. One minute
-#: src/gtk-xine.c:1769
+#: src/gtk-xine.c:1775
 #, c-format
 msgid "%d minute"
 msgstr "%d minuta"
 
 #. Multiple minutes
-#: src/gtk-xine.c:1772
+#: src/gtk-xine.c:1778
 #, c-format
 msgid "%d minutes"
 msgstr "%d minut(y)"
 
 #. One second
-#: src/gtk-xine.c:1776
+#: src/gtk-xine.c:1782
 #, c-format
 msgid "%d second"
 msgstr "%d sekunda"
 
 #. Multiple seconds
-#: src/gtk-xine.c:1779
+#: src/gtk-xine.c:1785
 #, c-format
 msgid "%d seconds"
 msgstr "%d sekund(y)"
 
 #. hour:minutes:seconds
-#: src/gtk-xine.c:1784
+#: src/gtk-xine.c:1790
 #, c-format
 msgid "%s %s %s"
 msgstr "%s:%s:%s"
 
 #. minutes:seconds
-#: src/gtk-xine.c:1787
+#: src/gtk-xine.c:1793
 #, c-format
 msgid "%s %s"
 msgstr "%s:%s"
 
 #. seconds
-#: src/gtk-xine.c:1790
+#: src/gtk-xine.c:1796
 #, c-format
 msgid "%s"
 msgstr "%s"
 
 #. Duration
-#: src/gtk-xine.c:1850
+#: src/gtk-xine.c:1856
 msgid "0 second"
 msgstr "0 sekund"
 
-#: src/gtk-xine.c:1918
+#: src/gtk-xine.c:1924
 #, c-format
 msgid "%d frames per second"
 msgstr "%d snímků za sekundu"
 
-#: src/gtk-xine.c:1930
+#: src/gtk-xine.c:1936
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
@@ -399,15 +405,15 @@ msgstr "Žádný soubor"
 
 #. Title
 #: src/totem.c:427 src/totem.c:760
-#, fuzzy, c-format
+#, c-format
 msgid "%s - Totem"
-msgstr "Totem"
+msgstr "%s - Totem"
 
 #. Make the new label
 #: src/totem.c:799
-#, fuzzy, c-format
+#, c-format
 msgid "Time: %s "
-msgstr "Čas: "
+msgstr "Čas: %s "
 
 #: src/totem.c:1169
 msgid "translator_credits"
@@ -489,10 +495,9 @@ msgstr ""
 "Nelze načíst rozhraní pro seznam skladeb.\n"
 "Ujistěte se, že je aplikace Totem řádně nainstalovaná."
 
-#: src/totem-cd-selection.c:251
-#, fuzzy
+#: src/totem-cd-selection.c:260
 msgid "Select the drive"
-msgstr "Vyberte soubory"
+msgstr "Vyberte zařízení"
 
 #~ msgid "*"
 #~ msgstr "*"
