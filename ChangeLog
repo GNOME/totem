@@ -1,3 +1,21 @@
+2003-09-26  Bastien Nocera  <hadess@hadess.net>
+
+	* data/playlist.glade:
+	* data/totem.glade:
+	* data/totem.schemas.in:
+	* src/totem-playlist.c: (totem_playlist_save_current_playlist),
+	(totem_playlist_remove_files), (shuffle_button_toggled),
+	(update_shuffle_cb), (init_config), (totem_playlist_init),
+	(totem_playlist_add_one_mrl), (parse_asx_entry),
+	(totem_playlist_set_previous), (totem_playlist_get_shuffle),
+	(totem_playlist_set_shuffle), (totem_playlist_set_at_end),
+	(totem_playlist_class_init):
+	* src/totem-playlist.h:
+	* src/totem.c: (on_shuffle_mode1_toggled),
+	(playlist_shuffle_toggle_cb), (totem_callback_connect):
+	starts of a shuffle playlist, fix parsing of ASX playlists (fixes
+	playback of sr.se)
+
 2003-09-24  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c: (totem_action_save_size), (totem_action_exit),

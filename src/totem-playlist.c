@@ -53,7 +53,7 @@ struct TotemPlaylistPrivate
 	GladeXML *xml;
 
 	GtkWidget *treeview;
-	GtkTreeModel *model;
+	GtkTreeModel *model, *shuffled;
 	GtkTreePath *current;
 
 	/* This is the playing icon */
@@ -66,12 +66,14 @@ struct TotemPlaylistPrivate
 	char *path;
 	char *save_path;
 
-	/* Repeat mode */
+	/* Repeat and Suffle modes */
 	gboolean repeat;
+	gboolean shuffle;
 
 	GConfClient *gc;
 
 	int x, y;
+	guint nb_childs;
 };
 
 /* Signals */
@@ -79,6 +81,7 @@ enum {
 	CHANGED,
 	CURRENT_REMOVED,
 	REPEAT_TOGGLED,
+	SHUFFLE_TOGGLED,
 	LAST_SIGNAL
 };
 
@@ -290,8 +293,8 @@ totem_playlist_save_current_playlist (TotemPlaylist *playlist, const char *outpu
 	char *buf;
 	gboolean success;
 
-	num_entries = gtk_tree_model_iter_n_children
-		(playlist->_priv->model, NULL);
+	num_entries = playlist->_priv->nb_childs;
+
 	res = gnome_vfs_open (&handle, output, GNOME_VFS_OPEN_WRITE);
 	if (res == GNOME_VFS_ERROR_NOT_FOUND)
 	{
@@ -736,6 +739,7 @@ totem_playlist_remove_files (GtkWidget *widget, TotemPlaylist *playlist)
 		gtk_tree_path_free (path);
 		gtk_list_store_remove (GTK_LIST_STORE (playlist->_priv->model),
 				&iter);
+		playlist->_priv->nb_childs--;
 
 		gtk_tree_row_reference_free
 			((GtkTreeRowReference *)(playlist->_priv->list->data));
@@ -1120,28 +1124,81 @@ update_repeat_cb (GConfClient *client, guint cnxn_id,
 }
 
 static void
+shuffle_button_toggled (GtkToggleButton *togglebutton, TotemPlaylist *playlist)
+{
+	gboolean shuffle;
+
+	shuffle = gtk_toggle_button_get_active (togglebutton);
+	gconf_client_set_bool (playlist->_priv->gc, GCONF_PREFIX"/shuffle",
+			shuffle, NULL);
+	playlist->_priv->shuffle = shuffle;
+
+	g_signal_emit (G_OBJECT (playlist),
+			totem_playlist_table_signals[REPEAT_TOGGLED], 0,
+			shuffle, NULL);
+}
+
+static void
+update_shuffle_cb (GConfClient *client, guint cnxn_id,
+		GConfEntry *entry, TotemPlaylist *playlist)
+{
+	GtkWidget *button;
+	gboolean shuffle;
+
+	shuffle = gconf_client_get_bool (client,
+			GCONF_PREFIX"/shuffle", NULL);
+	button = glade_xml_get_widget (playlist->_priv->xml, "shuffle_button");
+	g_signal_handlers_disconnect_by_func (G_OBJECT (button),
+			shuffle_button_toggled, playlist);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), shuffle);
+	playlist->_priv->shuffle = shuffle;
+	g_signal_connect (G_OBJECT (button), "toggled",
+			G_CALLBACK (shuffle_button_toggled),
+			(gpointer) playlist);
+
+	g_signal_emit (G_OBJECT (playlist),
+			totem_playlist_table_signals[CHANGED], 0,
+			NULL);
+	g_signal_emit (G_OBJECT (playlist),
+			totem_playlist_table_signals[SHUFFLE_TOGGLED], 0,
+			shuffle, NULL);
+}
+
+static void
 init_config (TotemPlaylist *playlist)
 {
 	GtkWidget *button;
-	gboolean repeat;
+	gboolean repeat, shuffle;
 
-	button = glade_xml_get_widget (playlist->_priv->xml, "repeat_button");
 	playlist->_priv->gc = gconf_client_get_default ();
 
+	button = glade_xml_get_widget (playlist->_priv->xml, "repeat_button");
 	repeat = gconf_client_get_bool (playlist->_priv->gc,
 			GCONF_PREFIX"/repeat", NULL);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), repeat);
+	g_signal_connect (G_OBJECT (button), "toggled",
+			G_CALLBACK (repeat_button_toggled),
+			(gpointer) playlist);
+
+	button = glade_xml_get_widget (playlist->_priv->xml, "shuffle_button");
+	shuffle = gconf_client_get_bool (playlist->_priv->gc,
+			GCONF_PREFIX"/shuffle", NULL);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), shuffle);
+	g_signal_connect (G_OBJECT (button), "toggled",
+			G_CALLBACK (shuffle_button_toggled),
+			(gpointer) playlist);
 
 	gconf_client_add_dir (playlist->_priv->gc, GCONF_PREFIX,
 			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
 	gconf_client_notify_add (playlist->_priv->gc, GCONF_PREFIX"/repeat",
 			(GConfClientNotifyFunc) update_repeat_cb,
 			playlist, NULL, NULL);
-	g_signal_connect (G_OBJECT (button), "toggled",
-			G_CALLBACK (repeat_button_toggled),
-			(gpointer) playlist);
+	gconf_client_notify_add (playlist->_priv->gc, GCONF_PREFIX"/shuffle",
+			(GConfClientNotifyFunc) update_shuffle_cb,
+			playlist, NULL, NULL);
 
 	playlist->_priv->repeat = repeat;
+	playlist->_priv->shuffle = shuffle;
 }
 
 static void
@@ -1152,6 +1209,7 @@ totem_playlist_init (TotemPlaylist *playlist)
 	playlist->_priv->icon = NULL;
 	playlist->_priv->path = NULL;
 	playlist->_priv->repeat = FALSE;
+	playlist->_priv->shuffle = FALSE;
 	playlist->_priv->gc = NULL;
 }
 
@@ -1350,6 +1408,7 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 			URI_COL, mrl,
 			TITLE_CUSTOM_COL, display_name ? TRUE : FALSE,
 			-1);
+	playlist->_priv->nb_childs++;
 
 	g_free (filename_for_display);
 
@@ -1548,6 +1607,9 @@ parse_asx_entry (TotemPlaylist *playlist, char *base, xmlDocPtr doc,
 		if (g_ascii_strcasecmp (node->name, "ref") == 0)
 		{
 			url = xmlGetProp (node, "href");
+			if (url == NULL)
+				url = xmlGetProp (node, "HREF");
+
 			continue;
 		}
 
@@ -2174,7 +2236,7 @@ totem_playlist_set_previous (TotemPlaylist *playlist)
 	char *path;
 
 	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
-	
+
 	if (totem_playlist_has_previous_mrl (playlist) == FALSE)
 		return;
 
@@ -2241,6 +2303,25 @@ totem_playlist_set_repeat (TotemPlaylist *playlist, gboolean repeat)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), repeat);
 }
 
+gboolean
+totem_playlist_get_shuffle (TotemPlaylist *playlist)
+{
+	g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), FALSE);
+
+	return playlist->_priv->shuffle;
+}
+
+void
+totem_playlist_set_shuffle (TotemPlaylist *playlist, gboolean shuffle)
+{
+	GtkWidget *button;
+
+	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
+
+	button = glade_xml_get_widget (playlist->_priv->xml, "shuffle_button");
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), shuffle);
+}
+
 void
 totem_playlist_set_at_start (TotemPlaylist *playlist)
 {
@@ -2259,13 +2340,9 @@ totem_playlist_set_at_start (TotemPlaylist *playlist)
 static void
 totem_playlist_set_at_end (TotemPlaylist *playlist)
 {
-	gint nb_childs = 0;
 	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
-	
+
 	totem_playlist_unset_playing (playlist);
-	
-	nb_childs = gtk_tree_model_iter_n_children (playlist->_priv->model,
-			NULL);
 
 	if (playlist->_priv->current != NULL)
 	{
@@ -2273,10 +2350,10 @@ totem_playlist_set_at_end (TotemPlaylist *playlist)
 		playlist->_priv->current = NULL;
 	}
 
-	if (nb_childs)
+	if (playlist->_priv->nb_childs)
 	{
 		playlist->_priv->current = gtk_tree_path_new_from_indices
-			(nb_childs-1, -1);
+			(playlist->_priv->nb_childs-1, -1);
 	}
 }
 
@@ -2314,6 +2391,15 @@ totem_playlist_class_init (TotemPlaylistClass *klass)
 				G_SIGNAL_RUN_LAST,
 				G_STRUCT_OFFSET (TotemPlaylistClass,
 					repeat_toggled),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__BOOLEAN,
+				G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
+	totem_playlist_table_signals[SHUFFLE_TOGGLED] =
+		g_signal_new ("shuffle-toggled",
+				G_TYPE_FROM_CLASS (klass),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (TotemPlaylistClass,
+					shuffle_toggled),
 				NULL, NULL,
 				g_cclosure_marshal_VOID__BOOLEAN,
 				G_TYPE_NONE, 1, G_TYPE_BOOLEAN);

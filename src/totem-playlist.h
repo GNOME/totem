@@ -48,6 +48,7 @@ struct TotemPlaylistClass {
 	void (*changed) (TotemPlaylist *playlist);
 	void (*current_removed) (TotemPlaylist *playlist);
 	void (*repeat_toggled) (TotemPlaylist *playlist, gboolean repeat);
+	void (*shuffle_toggled) (TotemPlaylist *playlist, gboolean toggled);
 };
 
 GtkType    totem_playlist_get_type (void);
@@ -82,6 +83,10 @@ void       totem_playlist_set_next (TotemPlaylist *playlist);
 
 gboolean   totem_playlist_get_repeat (TotemPlaylist *playlist);
 void       totem_playlist_set_repeat (TotemPlaylist *playlist, gboolean repeat);
+
+gboolean   totem_playlist_get_suffle (TotemPlaylist *playlist);
+void       totem_playlist_set_shuffle (TotemPlaylist *playlist,
+				       gboolean shuffle);
 
 gboolean   totem_playlist_set_playing (TotemPlaylist *playlist, gboolean state);
 

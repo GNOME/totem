@@ -1737,6 +1737,13 @@ on_repeat_mode1_toggled (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 }
 
 static void
+on_shuffle_mode1_toggled (GtkCheckMenuItem *checkmenuitem, Totem *totem)
+{
+	totem_playlist_set_shuffle (totem->playlist,
+			gtk_check_menu_item_get_active (checkmenuitem));
+}
+
+static void
 on_always_on_top1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 {
 	totem_gdk_window_set_always_on_top (GTK_WIDGET (totem->win)->window,
@@ -2343,7 +2350,7 @@ current_removed_cb (GtkWidget *playlist, Totem *totem)
 	g_free (mrl);
 }
 
-void
+static void
 playlist_repeat_toggle_cb (TotemPlaylist *playlist, gboolean repeat, Totem *totem)
 {
 	GtkWidget *item;
@@ -2357,6 +2364,22 @@ playlist_repeat_toggle_cb (TotemPlaylist *playlist, gboolean repeat, Totem *tote
 
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_repeat_mode1_toggled), totem);
+}
+
+static void
+playlist_shuffle_toggle_cb (TotemPlaylist *playlist, gboolean shuffle, Totem *totem)
+{
+	GtkWidget *item;
+
+	item = glade_xml_get_widget (totem->xml, "tmw_shuffle_mode_menu_item");
+
+	g_signal_handlers_disconnect_by_func (G_OBJECT (item),
+			on_shuffle_mode1_toggled, totem);
+
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), shuffle);
+
+	g_signal_connect (G_OBJECT (item), "toggled",
+			G_CALLBACK (on_shuffle_mode1_toggled), totem);
 }
 
 static void
@@ -3039,6 +3062,11 @@ totem_callback_connect (Totem *totem)
 			totem_playlist_get_repeat (totem->playlist));
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_repeat_mode1_toggled), totem);
+	item = glade_xml_get_widget (totem->xml, "tmw_shuffle_mode_menu_item");
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
+			totem_playlist_get_shuffle (totem->playlist));
+	g_signal_connect (G_OBJECT (item), "toggled",
+			G_CALLBACK (on_shuffle_mode1_toggled), totem);
 	item = glade_xml_get_widget (totem->xml, "tmw_quit_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_quit1_activate), totem);
@@ -3247,6 +3275,10 @@ totem_callback_connect (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->playlist),
 			"repeat-toggled",
 			G_CALLBACK (playlist_repeat_toggle_cb),
+			totem);
+	g_signal_connect (G_OBJECT (totem->playlist),
+			"shuffle-toggled",
+			G_CALLBACK (playlist_shuffle_toggle_cb),
 			totem);
 
 	/* DVD menu callbacks */
