@@ -57,14 +57,6 @@
 #define CONFIG_FILE ".gnome2"G_DIR_SEPARATOR_S"totem_config"
 #define DEFAULT_TITLE _("Totem Video Window")
 
-/* this struct is used to decouple signals coming out of the Xine threads */
-typedef struct
-{
-	int type;		/* one of the signals in the following enum */
-	BaconVideoWidgetError error_type;
-	char *message;		/* or NULL */
-} BaconVideoWidgetSignal;
-
 /* Signals */
 enum {
 	ERROR,
@@ -168,7 +160,8 @@ static void bacon_video_widget_size_allocate (GtkWidget *widget,
 		GtkAllocation *allocation);
 static xine_vo_driver_t * load_video_out_driver (BaconVideoWidget *bvw,
 		gboolean null_out);
-static xine_ao_driver_t * load_audio_out_driver (BaconVideoWidget *bvw);
+static xine_ao_driver_t * load_audio_out_driver (BaconVideoWidget *bvw,
+		GError **error);
 static gboolean bacon_video_widget_tick_send (BaconVideoWidget *bvw);
 
 static GtkWidgetClass *parent_class = NULL;
@@ -270,8 +263,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 				G_SIGNAL_RUN_LAST,
 				G_STRUCT_OFFSET (BaconVideoWidgetClass, error),
 				NULL, NULL,
-				baconvideowidget_marshal_VOID__INT_STRING,
-				G_TYPE_NONE, 2, G_TYPE_INT, G_TYPE_STRING);
+				g_cclosure_marshal_VOID__STRING,
+				G_TYPE_NONE, 1, G_TYPE_STRING);
 
 	bvw_table_signals[EOS] =
 		g_signal_new ("eos",
@@ -437,11 +430,10 @@ frame_output_cb (void *bvw_gen,
 			if (bvw->priv->auto_resize == TRUE
 					&& bvw->priv->logo_mode == FALSE)
 			{
-				BaconVideoWidgetSignal *signal;
+				char *chunk;
 
-				signal = g_new0 (BaconVideoWidgetSignal, 1);
-				signal->type = RATIO;
-				g_async_queue_push (bvw->priv->queue, signal);
+				chunk = g_malloc (1);
+				g_async_queue_push (bvw->priv->queue, chunk);
 				g_idle_add ((GSourceFunc)
 						bacon_video_widget_idle_signal,
 						bvw);
@@ -507,7 +499,7 @@ load_video_out_driver (BaconVideoWidget *bvw, gboolean null_out)
 }
 
 static xine_ao_driver_t *
-load_audio_out_driver (BaconVideoWidget *bvw)
+load_audio_out_driver (BaconVideoWidget *bvw, GError **err)
 {
 	xine_ao_driver_t *ao_driver;
 	const char *audio_driver_id;
@@ -542,15 +534,11 @@ load_audio_out_driver (BaconVideoWidget *bvw)
 
 	if (ao_driver == NULL)
 	{
-		char *msg;
-
-		msg = g_strdup_printf (_("Couldn't load the '%s' audio driver\n"
+		g_set_error (err, 0, 0,
+				_("Couldn't load the '%s' audio driver\n"
 					"Check that the device is not busy."),
 				audio_driver_id ? audio_driver_id : "auto" );
-		g_signal_emit (G_OBJECT (bvw),
-				bvw_table_signals[ERROR], 0,
-				0, msg);
-		g_free (msg);
+		return NULL;
 	}
 
 	return ao_driver;
@@ -819,14 +807,7 @@ bacon_video_widget_realize (GtkWidget *widget)
 	/* load the video driver */
 	bvw->priv->vo_driver = load_video_out_driver (bvw, bvw->priv->null_out);
 
-	if (bvw->priv->vo_driver == NULL)
-	{
-		g_signal_emit (G_OBJECT (bvw),
-				bvw_table_signals[ERROR], 0,
-				BVW_STARTUP,
-				_("Could not find a suitable video output."));
-		return;
-	}
+	g_assert (bvw->priv->vo_driver != NULL);
 
 	if (bvw->priv->null_out == FALSE)
 		bvw->priv->vis = xine_post_init (bvw->priv->xine, "goom", 0,
@@ -853,34 +834,16 @@ bacon_video_widget_realize (GtkWidget *widget)
 static gboolean
 bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 {
-	BaconVideoWidgetSignal *signal;
 	int queue_length;
+	char *i;
 
-	signal = g_async_queue_try_pop (bvw->priv->queue);
-	if (signal == NULL)
+	i = g_async_queue_try_pop (bvw->priv->queue);
+	if (i == NULL)
 		return FALSE;
 
 	TE ();
-	switch (signal->type)
-	{
-	case ERROR:
-		/* We don't emit the ERROR signal when in fullscreen mode */
-		if (bvw->priv->fullscreen_mode == TRUE)
-			break;
-
-		g_signal_emit (G_OBJECT (bvw),
-				bvw_table_signals[ERROR], 0,
-				signal->error_type, signal->message);
-		break;
-	/* A bit of cheating right here */
-	case RATIO:
-		bacon_video_widget_set_scale_ratio (bvw, 0);
-		break;
-	}
-
-	g_free (signal->message);
-	g_free (signal);
-
+	bacon_video_widget_set_scale_ratio (bvw, 0);
+	g_free (i);
 	queue_length = g_async_queue_length (bvw->priv->queue);
 	TL ();
 
@@ -909,38 +872,32 @@ xine_event (void *user_data, const xine_event_t *event)
 }
 
 static void
-xine_error (BaconVideoWidget *bvw)
+xine_error (BaconVideoWidget *bvw, GError **error)
 {
-	BaconVideoWidgetSignal *signal;
-	int error;
+	int err;
 
-	error = xine_get_error (bvw->priv->stream);
-	if (error == XINE_ERROR_NONE)
+	err = xine_get_error (bvw->priv->stream);
+	if (err == XINE_ERROR_NONE)
 		return;
 
-	signal = g_new0 (BaconVideoWidgetSignal, 1);
-	signal->type = ERROR;
-
-	switch (error)
+	switch (err)
 	{
 	case XINE_ERROR_NO_INPUT_PLUGIN:
-		signal->error_type = BVW_NO_INPUT_PLUGIN;
-		break;
 	case XINE_ERROR_NO_DEMUX_PLUGIN:
-		signal->error_type = BVW_NO_DEMUXER_PLUGIN;
+		g_set_error (error, 0, 0, _("There is no plugin to handle this"
+					" movie"));
 		break;
 	case XINE_ERROR_DEMUX_FAILED:
-		signal->error_type = BVW_DEMUXER_FAILED;
+		g_set_error (error, 0, 0, _("This movie is broken and can not "
+					"be played further"));
 		break;
 	case XINE_ERROR_MALFORMED_MRL:
-		signal->error_type = BVW_MALFORMED_MRL;
+		g_set_error (error, 0, 0, _("This location is not "
+					"a valid one"));
 		break;
 	default:
 		break;
 	}
-
-	g_async_queue_push (bvw->priv->queue, signal);
-	g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
 }
 
 static void
@@ -993,11 +950,12 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 }
 
 GtkWidget *
-bacon_video_widget_new (int width, int height, gboolean null_out)
+bacon_video_widget_new (int width, int height, gboolean null_out, GError **err)
 {
 	BaconVideoWidget *bvw;
 
-	bvw = BACON_VIDEO_WIDGET (g_object_new (bacon_video_widget_get_type (), NULL));
+	bvw = BACON_VIDEO_WIDGET (g_object_new
+			(bacon_video_widget_get_type (), NULL));
 
 	bvw->priv->null_out = null_out;
 
@@ -1019,7 +977,13 @@ bacon_video_widget_new (int width, int height, gboolean null_out)
 	bvw->widget.requisition.height = height;
 
 	/* load the video drivers */
-	bvw->priv->ao_driver = load_audio_out_driver (bvw);
+	bvw->priv->ao_driver = load_audio_out_driver (bvw, err);
+	if (*err != NULL)
+	{
+		//FIXME
+		return NULL;
+	}
+
 	bvw->priv->vo_driver = load_video_out_driver (bvw, TRUE);
 
 	bvw->priv->stream = xine_stream_new (bvw->priv->xine,
@@ -1113,7 +1077,6 @@ bacon_video_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 static gboolean
 bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 {
-	int i = 0;
 	int current_time, stream_length, current_position;
 	gboolean ret = TRUE;
 
@@ -1130,16 +1093,6 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 				&current_position,
 				&current_time,
 				&stream_length);
-
-		while (ret == FALSE && i < 10)
-		{
-			usleep (100000);
-			ret = xine_get_pos_length (bvw->priv->stream,
-					&current_position,
-					&current_time,
-					&stream_length);
-			i++;
-		}
 	}
 
 	if (ret == TRUE)
@@ -1177,7 +1130,8 @@ get_fourcc_string (uint32_t f)
 }
 
 gboolean
-bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl)
+bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
+		GError **gerror)
 {
 	int error;
 	gboolean has_video;
@@ -1195,16 +1149,17 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl)
 	if (error == 0)
 	{
 		bacon_video_widget_close (bvw);
-		xine_error (bvw);
+		xine_error (bvw, gerror);
 		return FALSE;
 	}
 
 	if (xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_VIDEO_HANDLED) == FALSE
-		&& xine_get_stream_info (bvw->priv->stream,
-				XINE_STREAM_INFO_AUDIO_HANDLED) == FALSE)
+			|| (xine_get_stream_info (bvw->priv->stream,
+					XINE_STREAM_INFO_HAS_VIDEO) == FALSE
+				&& xine_get_stream_info (bvw->priv->stream,
+				XINE_STREAM_INFO_AUDIO_HANDLED) == FALSE))
 	{
-		BaconVideoWidgetSignal *signal;
 		uint32_t fourcc;
 		char *fourcc_str, *name;
 
@@ -1216,12 +1171,9 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl)
 
 		bacon_video_widget_close (bvw);
 
-		signal = g_new0 (BaconVideoWidgetSignal, 1);
-		signal->type = ERROR;
-		signal->error_type = BVW_NO_CODEC;
-		signal->message = g_strdup_printf (_("Reason: Video type '%s' is not handled."), name ? name : fourcc_str);
-		g_async_queue_push (bvw->priv->queue, signal);
-		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
+		g_set_error (gerror, 0, 0,
+				_("Video type '%s' is not handled"),
+				name ? name : fourcc_str);
 
 		g_free (fourcc_str);
 		g_free (name);
@@ -1252,7 +1204,8 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl)
 }
 
 gboolean
-bacon_video_widget_play (BaconVideoWidget *bvw, guint pos, guint start_time)
+bacon_video_widget_play (BaconVideoWidget *bvw, guint pos,
+		guint start_time, GError **gerror)
 {
 	int error, length;
 
@@ -1267,7 +1220,7 @@ bacon_video_widget_play (BaconVideoWidget *bvw, guint pos, guint start_time)
 
 	if (error == 0)
 	{
-		xine_error (bvw);
+		xine_error (bvw, gerror);
 		return FALSE;
 	}
 	return TRUE;

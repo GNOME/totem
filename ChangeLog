@@ -1,5 +1,21 @@
 2003-02-21  Bastien Nocera  <hadess@hadess.net>
 
+	* README: updated
+	* configure.in: added warnings
+	* src/bacon-video-widget.c: (bacon_video_widget_class_init),
+	(frame_output_cb), (load_audio_out_driver),
+	(bacon_video_widget_realize), (bacon_video_widget_idle_signal),
+	(xine_error), (bacon_video_widget_new), (bacon_video_widget_open),
+	(bacon_video_widget_play):
+	* src/bacon-video-widget.h:
+	* src/totem-video-thumbnailer.c: (main):
+	* src/totem.c: (totem_action_play), (totem_action_set_mrl),
+	(totem_action_seek_relative), (commit_hide_skip_to),
+	(on_error_event), (video_widget_create): more use of GError,
+	plenty of code cleanup following, faster response to errors :)
+
+2003-02-21  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget.c: (xine_event),
 	(bacon_video_widget_motion_notify),
 	(bacon_video_widget_button_press),

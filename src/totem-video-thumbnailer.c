@@ -78,17 +78,34 @@ int main (int argc, char *argv[])
 	if (argc != 3)
 		print_usage ();
 
-	bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (-1, -1, TRUE));
-
-	if (bacon_video_widget_open (bvw, argv[1]) == FALSE)
+	bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (-1, -1, TRUE, &err));
+	if (err != NULL)
 	{
-		g_print ("totem-video-thumbnailer couln't open file '%s'\n",
-					argv[1]);
+		g_print ("totem-video-thumbnailer couln't create the video "
+				"widget.\nReason: %s.\n", err->message);
+		g_error_free (err);
+		exit (1);
+	}
+
+	if (bacon_video_widget_open (bvw, argv[1], &err) == FALSE)
+	{
+		g_print ("totem-video-thumbnailer couln't open file '%s'\n"
+				"Reason: %s.\n",
+				argv[1], err->message);
+		g_error_free (err);
 		exit (1);
 	}
 
 	/* A 3rd into the file */
-	bacon_video_widget_play (bvw, (int) (65535 / 3), 0);
+	bacon_video_widget_play (bvw, (int) (65535 / 3), 0, &err);
+	if (err != NULL)
+	{
+		g_print ("totem-video-thumbnailer couln't play file: '%s'\n",
+				"Reason: %s.",
+				argv[1], err->message);
+		g_error_free (err);
+		exit (1);
+	}
 
 	if (bacon_video_widget_can_get_frames (bvw, &err) == FALSE)
 	{

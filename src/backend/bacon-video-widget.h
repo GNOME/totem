@@ -34,15 +34,6 @@ typedef enum {
 } Speeds;
 
 typedef enum {
-	BVW_STARTUP,
-	BVW_NO_INPUT_PLUGIN,
-	BVW_NO_DEMUXER_PLUGIN,
-	BVW_DEMUXER_FAILED,
-	BVW_NO_CODEC,
-	BVW_MALFORMED_MRL,
-} BaconVideoWidgetError;
-
-typedef enum {
 	BVW_DVD_ROOT_MENU,
 	BVW_DVD_TITLE_MENU,
 	BVW_DVD_SUBPICTURE_MENU,
@@ -95,7 +86,7 @@ typedef struct {
 typedef struct {
 	GtkWidgetClass parent_class;
 
-	void (*error) (GtkWidget *bvw, BaconVideoWidgetError error, const char *message);
+	void (*error) (GtkWidget *bvw, const char *message);
 	void (*eos) (GtkWidget *bvw);
 	void (*title_change) (GtkWidget *bvw, const char *title);
 	void (*tick) (GtkWidget *bvw, int current_time, int stream_length,
@@ -104,18 +95,21 @@ typedef struct {
 
 GType bacon_video_widget_get_type                (void);
 GtkWidget *bacon_video_widget_new		 (int width, int height,
-						  gboolean null_video_out);
+						  gboolean null_video_out,
+						  GError **error);
 
 /* Actions */
 gboolean bacon_video_widget_open		 (BaconVideoWidget *bvw,
-						  const gchar *mrl);
+						  const gchar *mrl,
+						  GError **error);
 
 /* This is used for seeking:
  * @pos is used for seeking, from 0 (start) to 65535 (end)
  * @start_time is in milliseconds */
 gboolean bacon_video_widget_play                 (BaconVideoWidget *bvw,
 						  guint pos,
-						  guint start_time);
+						  guint start_time,
+						  GError **error);
 void bacon_video_widget_stop                     (BaconVideoWidget *bvw);
 void bacon_video_widget_close                    (BaconVideoWidget *bvw);
 

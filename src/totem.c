@@ -212,13 +212,26 @@ volume_set_image (Totem *totem, int vol)
 void
 totem_action_play (Totem *totem, int offset)
 {
+	GError *err = NULL;
 	int retval;
 
 	if (totem->mrl == NULL)
 		return;
 
-	retval = bacon_video_widget_play (totem->bvw, offset , 0);
+	retval = bacon_video_widget_play (totem->bvw, offset , 0, &err);
 	play_pause_set_label (totem, retval ? STATE_PLAYING : STATE_STOPPED);
+	if (retval == FALSE)
+	{
+		char *msg;
+
+		msg = g_strdup_printf(_("Totem could not play '%s'.\n"
+					"Reason: %s."),
+				totem->mrl,
+				err->message);
+		gtk_playlist_set_playing (totem->playlist, FALSE);
+		totem_action_error (msg, GTK_WINDOW (totem->win));
+		g_free (msg);
+	}
 }
 
 void
@@ -432,8 +445,11 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		/* Set the logo */
 		totem->mrl = g_strdup (LOGO_PATH);
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
-		if (bacon_video_widget_open (totem->bvw, totem->mrl) == TRUE)
-			bacon_video_widget_play (totem->bvw, 0 , 0);
+		if (bacon_video_widget_open
+				(totem->bvw, totem->mrl, NULL) == TRUE)
+		{
+			bacon_video_widget_play (totem->bvw, 0 , 0, NULL);
+		}
 
 		/* Reset the properties */
 		bacon_video_widget_properties_update
@@ -442,11 +458,11 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 	} else {
 		char *name;
 		gboolean caps;
+		GError *err = NULL;
 
 		bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
 
-		retval = bacon_video_widget_open (totem->bvw, mrl);
-
+		retval = bacon_video_widget_open (totem->bvw, mrl, &err);
 		totem->mrl = g_strdup (mrl);
 		name = gtk_playlist_mrl_to_title (mrl);
 
@@ -473,7 +489,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		gtk_widget_set_sensitive (widget, caps);
 
 		/* Set the playlist */
-		gtk_playlist_set_playing (totem->playlist, TRUE);
+		gtk_playlist_set_playing (totem->playlist, retval);
 
 		/* Update the properties */
 		bacon_video_widget_properties_update
@@ -481,6 +497,19 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 			 totem->bvw, name, FALSE);
 
 		g_free (name);
+
+		if (retval == FALSE)
+		{
+			char *msg;
+
+			msg = g_strdup_printf(_("Totem could not play '%s'.\n"
+						"Reason: %s."),
+					mrl,
+					err->message);
+			gtk_playlist_set_playing (totem->playlist, FALSE);
+			totem_action_error (msg, GTK_WINDOW (totem->win));
+			g_free (msg);
+		}
 	}
 	update_buttons (totem);
 	update_dvd_menu_items (totem);
@@ -543,6 +572,7 @@ totem_action_next (Totem *totem)
 void
 totem_action_seek_relative (Totem *totem, int off_sec)
 {
+	GError *err = NULL;
 	int oldsec,  sec;
 
 	if (bacon_video_widget_is_seekable (totem->bvw) == FALSE)
@@ -556,8 +586,20 @@ totem_action_seek_relative (Totem *totem, int off_sec)
 	else
 		sec = oldsec + off_sec;
 
-	bacon_video_widget_play (totem->bvw, 0, sec);
+	bacon_video_widget_play (totem->bvw, 0, sec, &err);
 	play_pause_set_label (totem, STATE_PLAYING);
+	if (err != NULL)
+	{
+		char *msg;
+
+		msg = g_strdup_printf(_("Totem could not play '%s'.\n"
+					"Reason: %s."),
+				totem->mrl,
+				err->message);
+		gtk_playlist_set_playing (totem->playlist, FALSE);
+		totem_action_error (msg, GTK_WINDOW (totem->win));
+		g_free (msg);
+	}
 }
 
 void
@@ -1488,6 +1530,7 @@ commit_hide_skip_to (GtkDialog *dialog, gint response, gpointer user_data)
 
 {
 	Totem *totem = (Totem *)user_data;
+	GError *err = NULL;
 	GtkWidget *spin;
 	int sec;
 
@@ -1501,7 +1544,20 @@ commit_hide_skip_to (GtkDialog *dialog, gint response, gpointer user_data)
 
 	g_message ("commit_hide_skip_to: %d", sec);
 
-	bacon_video_widget_play (totem->bvw, 0, sec * 1000);
+	bacon_video_widget_play (totem->bvw, 0, sec * 1000, &err);
+	if (err != NULL)
+	{
+		char *msg;
+
+		msg = g_strdup_printf(_("Totem could not seek in '%s'.\n"
+					"Reason: %s."),
+				totem->mrl,
+				err->message);
+		totem_action_stop (totem);
+		gtk_playlist_set_playing (totem->playlist, FALSE);
+		totem_action_error (msg, GTK_WINDOW (totem->win));
+		g_free (msg);
+	}
 }
 
 static void
@@ -1783,57 +1839,6 @@ on_eos_event (GtkWidget *widget, gpointer user_data)
 	}
 
 	return FALSE;
-}
-
-static void
-on_error_event (GtkWidget *bvw, BaconVideoWidgetError error, const char *message,
-		gpointer user_data)
-{
-	Totem *totem = (Totem *) user_data;
-	char *msg = NULL;
-	gboolean crap_out = FALSE;
-
-	/* We show errors all the time, and don't skip to the next */
-
-	switch (error)
-	{
-	case BVW_STARTUP:
-		msg = g_strdup_printf (_("Totem could not startup:\n%s"),
-				message);
-		crap_out = TRUE;
-		break;
-	case BVW_NO_INPUT_PLUGIN:
-	case BVW_NO_DEMUXER_PLUGIN:
-		msg = g_strdup_printf (_("There is no plugin for Totem to "
-					"handle '%s'.\nTotem will not be able "
-					"to play it."), totem->mrl);
-		totem_action_stop (totem);
-		break;
-	case BVW_DEMUXER_FAILED:
-		msg = g_strdup_printf (_("'%s' is broken, and Totem can not "
-					"play it further."), totem->mrl);
-		totem_action_stop (totem);
-		break;
-	case BVW_NO_CODEC:
-		msg = g_strdup_printf(_("Totem could not play '%s':\n%s"),
-				totem->mrl, message);
-		totem_action_stop (totem);
-		break;
-	case BVW_MALFORMED_MRL:
-		msg = g_strdup_printf(_("Totem could not play '%s'.\n"
-					"This location is not a valid one."),
-					totem->mrl);
-		break;
-	default:
-		g_assert_not_reached ();
-	}
-
-	totem_action_error (msg, GTK_WINDOW (totem->win));
-	g_free (msg);
-	gtk_playlist_set_playing (totem->playlist, FALSE);
-
-	if (crap_out == TRUE)
-		totem_action_exit (totem);
 }
 
 static gboolean
@@ -2303,10 +2308,26 @@ totem_callback_connect (Totem *totem)
 static void
 video_widget_create (Totem *totem) 
 {
+	GError *err = NULL;
 	GtkWidget *container;
 
 	totem->bvw = BACON_VIDEO_WIDGET
-		(bacon_video_widget_new (-1, -1, FALSE));
+		(bacon_video_widget_new (-1, -1, FALSE, &err));
+
+	if (totem->bvw == NULL)
+	{
+		char *msg;
+
+		msg = g_strdup_printf (_("Totem could not startup:\n%s"),
+				err->message);
+		gtk_playlist_set_playing (totem->playlist, FALSE);
+		g_error_free (err);
+		totem_action_error (msg, GTK_WINDOW (totem->win));
+		g_free (msg);
+
+		totem_action_exit (totem);
+	}
+
 	container = glade_xml_get_widget (totem->xml, "frame2");
 	gtk_container_add (GTK_CONTAINER (container),
 			GTK_WIDGET (totem->bvw));
@@ -2318,10 +2339,6 @@ video_widget_create (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->bvw),
 			"eos",
 			G_CALLBACK (on_eos_event),
-			totem);
-	g_signal_connect (G_OBJECT (totem->bvw),
-			"error",
-			G_CALLBACK (on_error_event),
 			totem);
 	g_signal_connect (G_OBJECT(totem->bvw),
 			"title-change",

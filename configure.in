@@ -12,6 +12,8 @@ AC_SUBST(GETTEXT_PACKAGE)
 
 AC_PROG_INTLTOOL([0.20])
 
+GNOME_COMPILE_WARNINGS
+
 dnl Seems that the order matters because libtool blows
 PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= 2.1.0 libgnomeui-2.0 >= 2.1.1 libglade-2.0 gnome-vfs-2.0 >= 2.1.6 libxine >= 1.0.0)
 AC_SUBST(EXTRA_GNOME_CFLAGS)
