@@ -1,5 +1,11 @@
 2003-10-12  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-pl-parser.c: (totem_pl_parser_add_directory): oopsie,
+	if the file is not special, then we need the directory parser to add
+	it manually by itself, not discard it
+
+2003-10-12  Bastien Nocera  <hadess@hadess.net>
+
 	* README:
 	* src/totem-statusbar.c: (totem_statusbar_update_time):
 	* src/totem.c: (update_mrl_label): sort out the 0 length vs.

@@ -941,7 +941,7 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 	info = gnome_vfs_file_info_new ();
 	res = gnome_vfs_directory_read_next (handle, info);
 	while (res == GNOME_VFS_OK) {
-		char *fullpath;
+		char *str, *fullpath;
 
 		if (info->name != NULL && (strcmp (info->name, ".") == 0
 					|| strcmp (info->name, "..") == 0)) {
@@ -949,13 +949,18 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 			continue;
 		}
 
-		fullpath = g_build_filename (G_DIR_SEPARATOR_S,
+		str = g_build_filename (G_DIR_SEPARATOR_S,
 					     url, info->name, NULL);
-		if (totem_pl_parser_parse (parser, strstr (fullpath, "://")
-				       ? fullpath + 1 : fullpath) != FALSE) {
-			retval = TRUE;
-		}
-		g_free (fullpath);
+		if (strstr (str, "://") != NULL)
+			fullpath = str + 1;
+		else
+			fullpath = str;
+
+		if (totem_pl_parser_parse (parser, fullpath) == FALSE)
+			totem_pl_parser_add_one_url (parser, fullpath, NULL);
+
+		retval = TRUE;
+		g_free (str);
 		res = gnome_vfs_directory_read_next (handle, info);
 	}
 
