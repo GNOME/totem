@@ -1,5 +1,12 @@
 2004-05-06  Bastien Nocera  <hadess@hadess.net>
 
+	* NEWS: upd
+	* src/bacon-video-widget-gst.c:
+	(bacon_video_widget_get_metadata_string): avoid a possible crash
+	when we actually use the Musicbrainz CD Index
+
+2004-05-06  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-pl-parser.c: (totem_pl_parser_dir_compare),
 	(totem_pl_parser_add_directory): sort the files when adding a whole
 	directory in the playlist (Closes: #131171)

@@ -1744,6 +1744,9 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
     case BVW_INFO_AUDIO_CODEC:
       string = g_hash_table_lookup (bvw->priv->metadata_hash, "audio-codec");
       break;
+    case BVW_INFO_CDINDEX:
+      string = NULL;
+      break;
     default:
       g_assert_not_reached ();
     }
