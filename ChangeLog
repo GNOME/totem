@@ -1,5 +1,11 @@
 2004-12-12  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.glade: Really fix chpe's bug, by setting the popups to
+	be non-resizeable, so that they go to the tightest fit
+	(Closes: #148942)
+
+2004-12-12  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (theme_changed_cb), (totem_callback_connect): Catch
 	theme changes so that we can place the popup windows properly
 	(Closes: #148942)
