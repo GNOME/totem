@@ -1,3 +1,9 @@
+2005-01-17  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/bacon-video-widget-gst.c: (setup_vis):
+	  Refcounting fixes for visualization element since we keep our
+	  own pointer as well.
+
 2005-01-16  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
 
 	* COPYING.LIB: Add LGPL license file, to indicate that
