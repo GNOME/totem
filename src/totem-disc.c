@@ -74,17 +74,24 @@ typedef struct _CdCache {
 static char *
 totem_disc_resolve_link (const char *dev, const char *buf)
 {
-  char *parent, *new;
+  char *parent, *new, *result;
 
   /* is it an absolute path? */
-  if (g_path_is_absolute (buf) != FALSE)
-    return g_strdup (buf);
+  if (g_path_is_absolute (buf) != FALSE) {
+    result = realpath (buf, NULL);
+    if (result == NULL)
+      result = g_strdup (buf);
+  } else {
+    parent = g_path_get_dirname (dev);
+    new = g_build_filename (parent, buf, NULL);
+    result = realpath (new, NULL);
+    if (result == NULL)
+      result = g_strdup (new);
+    g_free (new);
+    g_free (parent);
+  }
 
-  parent = g_path_get_dirname (dev);
-  new = g_build_filename (parent, buf, NULL);
-  g_free (parent);
-
-  return new;
+  return result;
 }
 
 /*
