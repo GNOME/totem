@@ -2551,10 +2551,18 @@ bacon_video_widget_can_get_frames (BaconVideoWidget * bvw, GError ** error)
 
   /* check for version */
   if (!g_object_class_find_property (
-           G_OBJECT_GET_CLASS (bvw->priv->play), "frame"))
+           G_OBJECT_GET_CLASS (bvw->priv->play), "frame")) {
+    g_set_error (error, 0, 0,
+        "Too old version of GStreamer installed");
     return FALSE;
+  }
 
   /* check for video */
+  if (!bvw->priv->media_has_video) {
+    g_set_error (error, 0, 0,
+        "Media contains no supported video streams");
+  }
+
   return bvw->priv->media_has_video;
 }
 
