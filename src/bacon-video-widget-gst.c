@@ -1915,9 +1915,24 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
       else
         integer = bvw->priv->video_fps;
       break;
-    case BVW_INFO_BITRATE:
+    case BVW_INFO_BITRATE: {
+      gint num, t;
+
       integer = 0;
+      for (num = 0; ; num++) {
+        if (!gst_tag_list_get_uint_index (bvw->priv->tagcache,
+					  GST_TAG_BITRATE, num, &t))
+          break;
+        integer += t;
+      }
+      for (num = 0; ; num++) {
+        if (!gst_tag_list_get_uint_index (bvw->priv->tagcache,
+					  GST_TAG_NOMINAL_BITRATE, num, &t))
+          break;
+        integer += t;
+      }
       break;
+    }
     default:
       g_assert_not_reached ();
     }
