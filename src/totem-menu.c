@@ -374,6 +374,9 @@ on_movie_menu_select (GtkMenuItem *movie_menuitem, Totem *totem)
 	GnomeVFSVolumeMonitor *mon;
 	GList *devices, *volumes, *drives, *i;
 
+	if (totem->drives_changed == FALSE)
+		return;
+
 	menu = GTK_MENU (glade_xml_get_widget (totem->xml, "tmw_menu_movie"));
 	g_assert (menu != NULL);
 
@@ -434,6 +437,14 @@ on_movie_menu_select (GtkMenuItem *movie_menuitem, Totem *totem)
 	g_list_free (devices);
 }
 
+static void
+on_gnome_vfs_monitor_event (GnomeVFSVolumeMonitor *monitor,
+		GnomeVFSDrive *drive,
+		Totem *totem)
+{
+	totem->drives_changed = TRUE;
+}
+
 void
 totem_setup_play_disc (Totem *totem)
 {
@@ -442,5 +453,20 @@ totem_setup_play_disc (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "tmw_menu_item_movie");
 	g_signal_connect (G_OBJECT (item), "select",
 			G_CALLBACK (on_movie_menu_select), totem);
+
+	g_signal_connect (G_OBJECT (totem->monitor),
+			"drive-connected",
+			G_CALLBACK (on_gnome_vfs_monitor_event), totem);
+	g_signal_connect (G_OBJECT (totem->monitor),
+			"drive-disconnected",
+			G_CALLBACK (on_gnome_vfs_monitor_event), totem);
+	g_signal_connect (G_OBJECT (totem->monitor),
+			"volume-mounted",
+			G_CALLBACK (on_gnome_vfs_monitor_event), totem);
+	g_signal_connect (G_OBJECT (totem->monitor),
+			"volume-unmounted",
+			G_CALLBACK (on_gnome_vfs_monitor_event), totem);
+
+	totem->drives_changed = TRUE;
 }
 

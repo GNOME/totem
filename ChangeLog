@@ -1,5 +1,13 @@
 2005-03-22  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-menu.c: (on_movie_menu_select),
+	(on_gnome_vfs_monitor_event), (totem_setup_play_disc):
+	* src/totem-private.h:
+	* src/totem.c: (main): Only update the Play Disc menu items if required
+	which should speed up the menu appearing for trigger-happy users
+
+2005-03-22  Bastien Nocera  <hadess@hadess.net>
+
 	* src/.cvsignore:
 	* src/Makefile.am: upd
 

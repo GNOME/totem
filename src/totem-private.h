@@ -114,8 +114,9 @@ struct Totem {
 	EggRecentModel *recent_model;
 	EggRecentViewGtk *recent_view;
 
-	/* Monitor to automatically unmount */
+	/* Monitor for playlist unmounts and drives/volumes monitoring */
 	GnomeVFSVolumeMonitor *monitor;
+	gboolean drives_changed;
 
 	/* session */
 	const char *argv0;

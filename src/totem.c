@@ -3411,10 +3411,10 @@ main (int argc, char **argv)
 
 	totem_session_setup (totem, argv);
 	totem_setup_recent (totem);
+	totem_setup_file_monitoring (totem);
 	totem_setup_play_disc (totem);
 	totem_callback_connect (totem);
 	totem_setup_window (totem);
-	totem_setup_file_monitoring (totem);
 
 	/* Show ! gtk_main_iteration trickery to show all the widgets
 	 * we have so far */
