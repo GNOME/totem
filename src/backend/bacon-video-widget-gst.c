@@ -171,7 +171,8 @@ struct _BVWSignal
     struct
     {
       GstElement *element;
-      char *error;
+      GError *error;
+      char *debug_message;
     } error;
     struct
     {
@@ -588,7 +589,7 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
           gboolean emit = TRUE;
           
           if (signal->signal_data.error.error)
-            error_message = signal->signal_data.error.error;
+            error_message = signal->signal_data.error.error->message;
 
           if (bvw->priv->last_error_message) {
             /* Let's check the latest error message */
@@ -600,10 +601,19 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
           if (emit) {
             g_signal_emit (G_OBJECT (bvw),
                            bvw_table_signals[ERROR], 0, error_message, TRUE);
+            
+            /* Keep a copy of the last emitted message */
             if (bvw->priv->last_error_message)
               g_free (bvw->priv->last_error_message);
             bvw->priv->last_error_message = g_strdup (error_message);
           }
+          
+          /* Cleaning the error infos */
+          if (signal->signal_data.error.error)
+            g_error_free (signal->signal_data.error.error);
+          if (signal->signal_data.error.debug_message)
+            g_free (signal->signal_data.error.debug_message);
+          
           break;
         }
       case ASYNC_FOUND_TAG:
@@ -728,8 +738,8 @@ got_time_tick (GstPlay * play, gint64 time_nanos, BaconVideoWidget * bvw)
 }
 
 static void
-got_error (GstPlay * play, GstElement * orig,
-           char *error_message, BaconVideoWidget * bvw)
+got_error (GstPlay *play, GstElement *orig, GError *error,
+           gchar *debug, BaconVideoWidget * bvw)
 {
   BVWSignal *signal;
   
@@ -739,7 +749,9 @@ got_error (GstPlay * play, GstElement * orig,
   signal = g_new0 (BVWSignal, 1);
   signal->signal_id = ASYNC_ERROR;
   signal->signal_data.error.element = orig;
-  signal->signal_data.error.error = g_strdup (error_message);
+  signal->signal_data.error.error = g_error_copy (error);
+  if (debug)
+    signal->signal_data.error.debug_message = g_strdup (debug);
 
   g_async_queue_push (bvw->priv->queue, signal);
 
