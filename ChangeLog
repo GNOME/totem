@@ -1,3 +1,10 @@
+2003-02-21  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget.c: (bacon_video_widget_instance_init),
+	(setup_config): the demux strategy used to be a string, but it's an
+	enum now, makes it possible to play elementary MPEG streams that would
+	be misdetected as program streams before (Closes: #106664)
+
 2003-02-18  Bastien Nocera  <hadess@hadess.net>
 
 	* data/properties.glade:

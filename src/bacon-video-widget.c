@@ -310,7 +310,6 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 	GtkWidget *widget = (GtkWidget *) bvw;
 	const char *const *autoplug_list;
 	int i = 0;
-	char *configfile;
 
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -328,12 +327,7 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 
 	bvw->priv->queue = g_async_queue_new ();
 
-	/* generate and init configuration  */
-	configfile = g_build_path (G_DIR_SEPARATOR_S,
-			g_get_home_dir (), CONFIG_FILE, NULL);
-	xine_config_load (bvw->priv->xine, configfile);
-	g_free (configfile);
-
+	/* init configuration  */
 	setup_config (bvw);
 
 	xine_init (bvw->priv->xine);
@@ -588,12 +582,28 @@ size_changed_cb (GdkScreen *screen, gpointer user_data)
 static void
 setup_config (BaconVideoWidget *bvw)
 {
+	char *configfile;
+	xine_cfg_entry_t entry;
+	char *demux_strategies[] = {"default", "reverse", "content",
+		"extension", NULL};
+
+	configfile = g_build_path (G_DIR_SEPARATOR_S,
+			g_get_home_dir (), CONFIG_FILE, NULL);
+	xine_config_load (bvw->priv->xine, configfile);
+	g_free (configfile);
+
 	/* default demux strategy */
-	xine_config_register_string (bvw->priv->xine,
-			"misc.demux_strategy", "reverse",
-			"demuxer selection strategy",
-			"{ default  reverse  content  extension }, default: 0",
-			10, NULL, NULL);
+	xine_config_register_enum (bvw->priv->xine,
+			"misc.demux_strategy",
+			0,
+			demux_strategies,
+			 "media format detection strategy",
+			 NULL, 10, NULL, NULL);
+
+	xine_config_lookup_entry (bvw->priv->xine,
+			"misc.demux_strategy", &entry);
+	entry.num_value = 0;
+	xine_config_update_entry (bvw->priv->xine, &entry);
 }
 
 static gboolean
