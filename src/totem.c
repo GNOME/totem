@@ -103,6 +103,7 @@ static void playlist_changed_cb (GtkWidget *playlist, Totem *totem);
 static gboolean totem_is_media (const char *mrl); 
 static void show_controls (Totem *totem, gboolean visible, gboolean fullscreen_behaviour);
 static gboolean totem_is_fullscreen (Totem *totem);
+static void play_pause_set_label (Totem *totem, TotemStates state);
 
 static void
 long_action (void)
@@ -201,7 +202,11 @@ totem_action_error (char *msg, Totem *totem)
 		totem->buffer_dialog = NULL;
 		totem->buffer_label = NULL;
 	}
-
+    
+    /* FIXME : error signal should indicate wether or
+    not playback status changed */
+    play_pause_set_label (totem, STATE_STOPPED);
+    
 	gtk_widget_show (error_dialog);
 }
 
@@ -1189,9 +1194,14 @@ on_channels_change_event (BaconVideoWidget *bvw, Totem *totem)
 static void
 on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 {
+    char *name = NULL;
 	bacon_video_widget_properties_update
 		(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
 		 totem->bvw, FALSE);
+    name = totem_get_nice_name_for_stream (totem);
+    update_mrl_label (totem, name);
+    if (name)
+        g_free (name);
 }
 
 static int

@@ -1,5 +1,14 @@
 2003-06-15  Julien MOUTTE <julien@moutte.net>
 
+	* src/bacon-video-widget-gst.c: (update_vis_xid), (update_xid),
+	(bacon_video_widget_open), (bacon_video_widget_play),
+	(bacon_video_widget_set_visuals), (bacon_video_widget_information):
+	Removing some unneeded debug messages.
+	* src/totem.c: (totem_action_error), (on_got_metadata_event): Updating
+	title label on got_metadata event, changing play_pause label on error.
+
+2003-06-15  Julien MOUTTE <julien@moutte.net>
+
 	* src/bacon-video-widget-gst.c: Fixed indentation, cleaning hash table
 	that has metadata, emit the got_metadata signal on get_length, other
 	fixes

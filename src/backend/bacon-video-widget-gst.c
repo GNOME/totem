@@ -365,7 +365,6 @@ update_vis_xid (GstPlay * play, gint xid, BaconVideoWidget * bvw)
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-  g_message ("update_vis_xid");
   if ((bvw->priv->vw) && (!bvw->priv->media_has_video))
     {
       gst_video_widget_set_xembed_xid (bvw->priv->vw, xid);
@@ -378,8 +377,6 @@ update_xid (GstPlay * play, gint xid, BaconVideoWidget * bvw)
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-
-  g_message ("update_xid");
 
   bvw->priv->media_has_video = TRUE;
 
@@ -643,7 +640,6 @@ bacon_video_widget_open (BaconVideoWidget * bvw, const gchar * mrl,
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
   g_return_val_if_fail (bvw->priv->mrl == NULL, FALSE);
 
-  g_message ("bacon_video_widget_open: %s", mrl);
   bvw->priv->mrl = g_strdup (mrl);
 
   /* Resetting last_error_message to NULL */
@@ -700,9 +696,6 @@ bacon_video_widget_play (BaconVideoWidget * bvw,
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_PLAY (bvw->priv->play), FALSE);
 
-  //FIXME
-  g_message ("bacon_video_widget_play %d %d", pos, start_time);
-
   /* Resetting last_error_message to NULL */
   if (bvw->priv->last_error_message)
     {
@@ -714,7 +707,6 @@ bacon_video_widget_play (BaconVideoWidget * bvw,
     {
       length_nanos = (gint64) (bvw->priv->stream_length * GST_MSECOND);
       seek_time = (gint64) (length_nanos * pos / 65535);
-      g_message ("seeking to %d", seek_time);
       gst_play_seek_to_time (bvw->priv->play, seek_time);
     }
   else
@@ -986,8 +978,6 @@ bacon_video_widget_set_visuals (BaconVideoWidget * bvw, const char *name)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_PLAY (bvw->priv->play), FALSE);
 
-  g_message ("setting visuals to %s", name);
-
   if (gst_play_get_state (bvw->priv->play) == GST_STATE_PLAYING)
     {
       gst_play_set_state (bvw->priv->play, GST_STATE_PAUSED);
@@ -1189,7 +1179,6 @@ bacon_video_widget_information (GstPlay * play,
 
   if (strcmp (param->name, "metadata") == 0)
     {
-      g_message ("got metadata");
       g_value_init (&value, param->value_type);
       g_object_get_property (G_OBJECT (object), param->name, &value);
       metadata = g_value_peek_pointer (&value);
