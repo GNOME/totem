@@ -1,6 +1,16 @@
 2003-01-25  Bastien Nocera  <hadess@hadess.net>
 
 	* src/gtk-xine.c: (gtk_xine_class_init), (load_config_from_gconf),
+	(gtk_xine_set_property), (gtk_xine_set_media_device),
+	(gtk_xine_set_show_visuals):
+	* src/gtk-xine.h:
+	* src/totem.c: (on_checkbutton2_toggled),
+	(totem_setup_preferences), (main): remove gconf dependency for the
+	show visuals pref
+
+2003-01-25  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-xine.c: (gtk_xine_class_init), (load_config_from_gconf),
 	(gtk_xine_realize), (gtk_xine_set_property),
 	(gtk_xine_set_media_device), (gtk_xine_get_mrls):
 	* src/gtk-xine.h:

@@ -93,6 +93,7 @@ enum {
 	PROP_SEEKABLE,
 	PROP_SHOWCURSOR,
 	PROP_MEDIADEV,
+	PROP_SHOW_VISUALS,
 };
 
 static int speeds[2] = {
@@ -257,6 +258,9 @@ gtk_xine_class_init (GtkXineClass *klass)
 				FALSE, G_PARAM_READWRITE));
 	g_object_class_install_property (object_class, PROP_MEDIADEV,
 			g_param_spec_string ("mediadev", NULL, NULL,
+				FALSE, G_PARAM_WRITABLE));
+	g_object_class_install_property (object_class, PROP_SHOW_VISUALS,
+			g_param_spec_boolean ("showvisuals", NULL, NULL,
 				FALSE, G_PARAM_WRITABLE));
 
 	/* Signals */
@@ -554,16 +558,6 @@ load_audio_out_driver (GtkXine *gtx)
 	return ao_driver;
 }
 
-static void             
-show_vfx_changed_cb (GConfClient *client, guint cnxn_id,
-		                GConfEntry *entry, gpointer user_data)
-{
-	GtkXine *gtx = (GtkXine *) user_data;
-
-	gtx->priv->show_vfx = gconf_client_get_bool (client,
-			GCONF_PREFIX"/show_vfx", NULL);
-}
-
 static void
 load_config_from_gconf (GtkXine *gtx)
 {
@@ -575,15 +569,6 @@ load_config_from_gconf (GtkXine *gtx)
 			"demuxer selection strategy",
 			"{ default  reverse  content  extension }, default: 0",
 			10, NULL, NULL);
-
-	conf = gconf_client_get_default ();
-
-	gconf_client_add_dir (conf, "/apps/totem",
-			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
-	gconf_client_notify_add (conf, GCONF_PREFIX"/show_vfx",
-			show_vfx_changed_cb, gtx, NULL, NULL);
-	gtx->priv->show_vfx = gconf_client_get_bool (conf,
-			GCONF_PREFIX"/show_vfx", NULL);
 }
 
 static gboolean
@@ -1329,6 +1314,9 @@ gtk_xine_set_property (GObject *object, guint property_id,
 	case PROP_MEDIADEV:
 		gtk_xine_set_media_device (gtx, g_value_get_string (value));
 		break;
+	case PROP_SHOW_VISUALS:
+		gtk_xine_set_show_visuals (gtx, g_value_get_boolean (value));
+		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 	}
@@ -1655,6 +1643,16 @@ gtk_xine_set_media_device (GtkXine *gtx, const char *path)
 			"input.vcd_device", path,
 			"device used for cdrom drive",
 			NULL, 10, NULL, NULL);
+}
+
+void
+gtk_xine_set_show_visuals (GtkXine *gtx, gboolean show_visuals)
+{
+	g_return_if_fail (gtx != NULL);
+	g_return_if_fail (GTK_IS_XINE (gtx));
+	g_return_if_fail (gtx->priv->xine != NULL);
+
+	gtx->priv->show_vfx = show_visuals;
 }
 
 gint

@@ -1608,8 +1608,8 @@ on_checkbutton2_toggled (GtkToggleButton *togglebutton, gpointer user_data)
 	gboolean value;
 
 	value = gtk_toggle_button_get_active (togglebutton);
-	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/show_vfx",
-			value, NULL);
+	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/show_vfx", value, NULL);
+	gtk_xine_set_show_visuals (GTK_XINE (totem->gtx), value);
 }
 
 static void
@@ -2459,6 +2459,7 @@ totem_setup_preferences (Totem *totem)
 {
 	GtkWidget *item;
 	const char *mediadev;
+	gboolean show_visuals;
 
 	g_return_if_fail (totem->gc != NULL);
 
@@ -2486,9 +2487,10 @@ totem_setup_preferences (Totem *totem)
 			G_CALLBACK (on_checkbutton1_toggled), totem);
 
 	item = glade_xml_get_widget (totem->xml, "checkbutton2");
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
-			gconf_client_get_bool (totem->gc,
-				GCONF_PREFIX"/show_vfx", NULL));
+	show_visuals = gconf_client_get_bool (totem->gc,
+			GCONF_PREFIX"/show_vfx", NULL);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), show_visuals);
+	gtk_xine_set_show_visuals (GTK_XINE (totem->gtx), show_visuals);
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_checkbutton2_toggled), totem);
 
@@ -2659,7 +2661,6 @@ main (int argc, char **argv)
 			&width, &totem->control_popup_height);
 
 	totem_setup_recent (totem);
-	totem_setup_preferences (totem);
 	totem_callback_connect (totem);
 
 	/* Show ! gtk_main_iteration trickery to show all the widgets
@@ -2669,6 +2670,9 @@ main (int argc, char **argv)
 
 	/* Show ! (again) the video widget this time. */
 	video_widget_create (totem);
+
+	/* The prefs after the video widget is connected */
+	totem_setup_preferences (totem);
 
 	if (argc > 1)
 	{
