@@ -2616,6 +2616,16 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 	case GDK_2:
 		totem_action_set_scale_ratio (totem, 2);
 		break;
+	case GDK_F10:
+		if (event->state & GDK_SHIFT_MASK)
+		{
+			GtkWidget *menu;
+			menu = glade_xml_get_widget (totem->xml,
+					"totem_right_click_menu");
+			gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
+					0, event->time);
+		}
+		break;
 	default:
 		retval = FALSE;
 	}
