@@ -50,7 +50,7 @@ totem_SOURCES = 					\
 	totem-private.h			\
 	baconvideowidget-marshal.list	\
 	$(MARSHALFILES)			\
-	bacon-video-widget.c		\
+	bacon-video-widget-xine.c	\
 	bacon-video-widget.h		\
 	bacon-video-widget-properties.c	\
 	bacon-video-widget-properties.h	\
@@ -71,12 +71,12 @@ totem_SOURCES = 					\
 
 totem_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS)
 
-totem_video_thumbnailer_SOURCES =	\
-	baconvideowidget-marshal.list		\
-	$(MARSHALFILES)			\
-	bacon-video-widget.c bacon-video-widget.h		\
-	scrsaver.c  scrsaver.h          \
-	video-utils.c video-utils.h     \
+totem_video_thumbnailer_SOURCES =				\
+	baconvideowidget-marshal.list				\
+	$(MARSHALFILES)						\
+	bacon-video-widget-xine.c bacon-video-widget.h		\
+	scrsaver.c  scrsaver.h          			\
+	video-utils.c video-utils.h     			\
 	totem-video-thumbnailer.c
 
 totem_video_thumbnailer_LDADD = $(GTK_LIBS) $(XTEST_LIBS)
