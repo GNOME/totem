@@ -867,7 +867,9 @@ bacon_video_widget_new (int width, int height,
 	bvw = BACON_VIDEO_WIDGET (g_object_new
 			(bacon_video_widget_get_type (), NULL));
 
-	bvw->priv->play = gst_play_new (GST_PLAY_PIPE_VIDEO_VISUALISATION, err);
+	//FIXME 0.6.1
+	//bvw->priv->play = gst_play_new (GST_PLAY_PIPE_VIDEO_VISUALISATION, err);
+	bvw->priv->play = gst_play_new (GST_PLAY_PIPE_VIDEO, err);
 	//FIXME
 	if (*err != NULL)
 	{
