@@ -234,10 +234,19 @@ totem_action_play_media (Totem *totem, MediaType type)
 	const char **mrls;
 	char *mrl;
 
+	if (gtk_xine_can_play (GTK_XINE (totem->gtx), type) == FALSE)
+	{
+		totem_action_error (_("Totem cannot play this type of media because you do not have the appropriate plugins to handle it.\n"
+					"Install the necessary plugins and restart Totem to be able to play this media."), GTK_WINDOW (totem->win));
+		return;
+	}
+
 	mrls = gtk_xine_get_mrls (GTK_XINE (totem->gtx), type);
 	if (mrls == NULL)
 	{
-		//FIXME print out something
+		totem_action_error (_("Totem could not play this media although a plugin is present to handle it.\n"
+					"You might want to check that a disc is present in the drive and that it is correctly configured."),
+				GTK_WINDOW (totem->win));
 		return;
 	}
 
@@ -1600,17 +1609,6 @@ video_widget_create (Totem *totem)
 
 	gtk_widget_realize (totem->gtx);
 	gtk_widget_show (totem->gtx);
-
-	if (gtk_xine_can_play (GTK_XINE (totem->gtx), MEDIA_DVD))
-	{
-		widget = glade_xml_get_widget (totem->xml, "play_dvd1");
-		gtk_widget_set_sensitive (widget, TRUE);
-	}
-	if (gtk_xine_can_play (GTK_XINE (totem->gtx), MEDIA_VCD))
-	{
-		widget = glade_xml_get_widget (totem->xml, "play_vcd1");
-		gtk_widget_set_sensitive (widget, TRUE);
-	}
 }
 
 GtkWidget

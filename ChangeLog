@@ -1,5 +1,13 @@
 2002-11-07  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.glade:
+	* src/totem.c: (totem_action_play_media), (video_widget_create):
+	make the VCD and DVD menu items easier on the users. Now the menu
+	items are always sensitive, and a helpful error message appears when
+	there's a problem
+
+2002-11-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-xine.c: (gtk_xine_play), (gtk_xine_set_speed):
 	* src/gtk-xine.h:
 	* src/totem.c: (totem_button_pressed_remote_cb),

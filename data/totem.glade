@@ -48,7 +48,6 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="play_dvd1">
 			  <property name="visible">True</property>
-			  <property name="sensitive">False</property>
 			  <property name="label" translatable="yes">Play DVD</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_play_dvd1_activate" last_modification_time="Fri, 09 Aug 2002 22:46:45 GMT"/>
@@ -70,7 +69,6 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="play_vcd1">
 			  <property name="visible">True</property>
-			  <property name="sensitive">False</property>
 			  <property name="label" translatable="yes">Play VCD</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_play_vcd1_activate" last_modification_time="Fri, 09 Aug 2002 22:46:45 GMT"/>
@@ -1221,8 +1219,8 @@
 		      <property name="invisible_char" translatable="yes">*</property>
 		      <property name="activates_default">False</property>
 		      <accessibility>
-			<atkrelation target="label8" type="controller-for"/>
 			<atkrelation target="label8" type="labelled-by"/>
+			<atkrelation target="label8" type="controller-for"/>
 		      </accessibility>
 		    </widget>
 		  </child>
