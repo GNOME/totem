@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Totem for Gnome2\n"
-"POT-Creation-Date: 2002-09-19 06:36+0200\n"
-"PO-Revision-Date: 2002-09-19 18:06+0700\n"
+"POT-Creation-Date: 2002-09-25 05:55+0200\n"
+"PO-Revision-Date: 2002-09-25 19:33+0700\n"
 "Last-Translator: Trinh Minh Thanh <tmthanh@linuxmail.org>\n"
 "Language-Team: Gnome-Vi Team <Gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -17,6 +17,14 @@ msgstr ""
 #: data/playlist.glade.h:1 src/gtk-playlist.c:485
 msgid "Playlist"
 msgstr "Danh sách chơi"
+
+#: data/totem.desktop.in.h:1
+msgid "Play movies and songs"
+msgstr "Chơi phim và nhạc"
+
+#: data/totem.desktop.in.h:2
+msgid "Totem Movie Player"
+msgstr "Trình Chơi Phim Totem"
 
 #: data/totem.glade.h:1
 msgid "Exit fullscreen"
@@ -67,48 +75,48 @@ msgid "Skip forward"
 msgstr "Nhảy qua tiến lên"
 
 #: data/totem.glade.h:13
-msgid "Sound"
-msgstr "Âm thanh"
-
-#: data/totem.glade.h:14
 msgid "Toggle Aspect Ratio"
 msgstr "Cố định tỷ lệ bề ngoài"
 
-#: data/totem.glade.h:15 src/totem.c:900
+#: data/totem.glade.h:14 src/totem.c:906
 msgid "Totem"
 msgstr "Totem"
 
-#: data/totem.glade.h:16
+#: data/totem.glade.h:15
 msgid "Volume Down"
 msgstr "Giảm âm"
 
-#: data/totem.glade.h:17
+#: data/totem.glade.h:16
 msgid "Volume Up"
 msgstr "Tăng âm"
 
-#: data/totem.glade.h:18
+#: data/totem.glade.h:17
 msgid "Zoom _1:1"
 msgstr "Zoom _1:1"
 
-#: data/totem.glade.h:19
+#: data/totem.glade.h:18
 msgid "Zoom _2:1"
 msgstr "Zoom _2:1"
 
-#: data/totem.glade.h:20
+#: data/totem.glade.h:19
 msgid "_Fullscreen"
 msgstr "T_oàn màn hình"
 
-#: data/totem.glade.h:21
+#: data/totem.glade.h:20
 msgid "_Movie"
 msgstr "_Phim"
 
-#: data/totem.glade.h:22
+#: data/totem.glade.h:21
 msgid "_Play / Pause"
 msgstr "_Chơi / Tạm dừng"
 
-#: data/totem.glade.h:23
+#: data/totem.glade.h:22
 msgid "_Show/Hide Playlist"
 msgstr "_Hiện/Ẩn danh sách chơi"
+
+#: data/totem.glade.h:23
+msgid "_Sound"
+msgstr "Â_m thanh"
 
 #: data/totem.glade.h:24
 msgid "_Zoom 1:2"
@@ -122,7 +130,7 @@ msgstr "Driver mặc định của đầu ra âm thanh"
 msgid "Resize the canvas automatically on file load"
 msgstr "Tự động đặt lại lích thước canvas khi nạp tập tin"
 
-#: src/gtk-playlist.c:222 src/totem.c:732
+#: src/gtk-playlist.c:222 src/totem.c:738
 msgid "Select files"
 msgstr "Chọn tập tin"
 
@@ -163,23 +171,23 @@ msgstr "Không thể tìm thấy đầu ra video thích hợp."
 msgid "No video plugin available to decode '%s'."
 msgstr "Hiện không có video plugin để giải mã '%s'."
 
-#: src/totem.c:328 src/totem.c:1349
+#: src/totem.c:329 src/totem.c:1404
 msgid "<span size=\"medium\"><b>No file</b></span>"
 msgstr "<span size=\"medium\"><b>Không có tập tin</b></span>"
 
-#: src/totem.c:876
+#: src/totem.c:882
 msgid "translator_credits"
 msgstr "đóng góp dịch thuật"
 
-#: src/totem.c:901
+#: src/totem.c:907
 msgid "(C) 2002 Bastien Nocera"
 msgstr "(C) 2002 Bastien Nocera"
 
-#: src/totem.c:902
+#: src/totem.c:908
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Trình chiếu phim (dựa trên thư viện của Xine)"
 
-#: src/totem.c:1055
+#: src/totem.c:1110
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -188,7 +196,7 @@ msgstr ""
 "Totem không thể khởi chạy:\n"
 "%s"
 
-#: src/totem.c:1060
+#: src/totem.c:1115
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'\n"
@@ -197,12 +205,12 @@ msgstr ""
 "Không có plugin cho Totem để xử lý '%s'\n"
 "Totem sẽ không thể chơi nó."
 
-#: src/totem.c:1063
+#: src/totem.c:1118
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "'%s' bị gẫy, Totem không thể chơi thêm nữa."
 
-#: src/totem.c:1066
+#: src/totem.c:1121
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -211,7 +219,7 @@ msgstr ""
 "Totem không thể chơi '%s':\n"
 "%s"
 
-#: src/totem.c:1428 src/totem.c:1436
+#: src/totem.c:1483 src/totem.c:1491
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -219,7 +227,7 @@ msgstr ""
 "Không thể nạp giao diện chính (totem, glade).\n"
 "Kiểm tra xem Totem được cài đặt chuẩn chưa."
 
-#: src/totem.c:1449
+#: src/totem.c:1504
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
