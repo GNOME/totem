@@ -4,7 +4,7 @@
 #include <gnome.h>
 #include "bacon-video-widget.h"
 
-/* #define THUMB_DEBUG */
+#define THUMB_DEBUG
 
 static void
 print_usage (void)
@@ -29,48 +29,87 @@ show_pixbuf (GdkPixbuf *pix)
 	gtk_main ();
 }
 #endif
-
-static GdkPixbuf *
-add_emblem_to_pixbuf (GdkPixbuf *pixbuf, int width, int height)
+#if 0
+static void
+gdk_pixbuf_mirror (GdkPixbuf *pixbuf)
 {
-	GdkPixbuf *emblem, *tmp;
+	int i, j, rowstride, offset, right;
+	guchar *pixels;
+	int width, height, size;
+	guint32 tmp;
+
+	pixels = gdk_pixbuf_get_pixels (pixbuf);
+	g_return_if_fail (pixels != NULL);
+
+	width = gdk_pixbuf_get_width (pixbuf);
+	height = gdk_pixbuf_get_height (pixbuf);
+	rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+	size = (height -1) * rowstride + height * sizeof (guint32);
+
+	for (i = 0; i < size; i += rowstride)
+	{
+		for (j = 0; j < rowstride; j += sizeof(guint32))
+		{
+			offset = i + j;
+			right = i + (width * sizeof(guint32) - j);
+
+			g_message ("size: %d offset: %d right: %d",
+					size, offset, right);
+
+			if (right <= offset)
+				break;
+
+			memcpy (&tmp, pixels + offset, sizeof(guint32));
+			memcpy (pixels + offset, pixels + right,
+					sizeof(guint32));
+			memcpy (pixels + right, &tmp, sizeof(guint32));
+		}
+	}
+}
+#endif
+static GdkPixbuf *
+add_holes_to_pixbuf (GdkPixbuf *pixbuf, int width, int height)
+{
+	GdkPixbuf *holes, *tmp;
 	char *filename;
 	int i;
 
 	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
 			"totem", "filmholes.png", NULL);
-	emblem = gdk_pixbuf_new_from_file (filename, NULL);
+	holes = gdk_pixbuf_new_from_file (filename, NULL);
 	g_free (filename);
 
-	if (emblem == NULL)
+	if (holes == NULL)
 	{
 		gdk_pixbuf_ref (pixbuf);
 		return pixbuf;
 	}
 
 	g_assert (gdk_pixbuf_get_has_alpha (pixbuf) == FALSE);
+	g_assert (gdk_pixbuf_get_has_alpha (holes) == TRUE);
 	tmp = gdk_pixbuf_add_alpha (pixbuf, FALSE, 0, 0, 0);
 
-	for (i = 0; i < height; i += gdk_pixbuf_get_height (emblem))
+	for (i = 0; i < height; i += gdk_pixbuf_get_height (holes))
 	{
-		gdk_pixbuf_composite (emblem, tmp, 0, i,
-				MIN (width, gdk_pixbuf_get_width (emblem)),
-				MIN (height-i, gdk_pixbuf_get_height (emblem)),
+		gdk_pixbuf_composite (holes, tmp, 0, i,
+				MIN (width, gdk_pixbuf_get_width (holes)),
+				MIN (height-i, gdk_pixbuf_get_height (holes)),
 				0, i, 1, 1, GDK_INTERP_NEAREST, 255);
 	}
-
-	//FIXME we need to mirror the pixbuf eheh
-	for (i = 0; i < height; i += gdk_pixbuf_get_height (emblem))
+#if 0
+	gdk_pixbuf_mirror (holes);
+#endif
+	for (i = 0; i < height; i += gdk_pixbuf_get_height (holes))
 	{
-		gdk_pixbuf_composite (emblem, tmp,
-				width - gdk_pixbuf_get_width (emblem), i,
-				MIN (width, gdk_pixbuf_get_width (emblem)),
-				MIN (height-i, gdk_pixbuf_get_height (emblem)),
-				width - gdk_pixbuf_get_width (emblem), i,
+		gdk_pixbuf_composite (holes, tmp,
+				width - gdk_pixbuf_get_width (holes), i,
+				MIN (width, gdk_pixbuf_get_width (holes)),
+				MIN (height-i, gdk_pixbuf_get_height (holes)),
+				width - gdk_pixbuf_get_width (holes), i,
 				1, 1, GDK_INTERP_NEAREST, 255);
 	}
 
-	gdk_pixbuf_unref (emblem);
+	gdk_pixbuf_unref (holes);
 
 	return tmp;
 }
@@ -78,7 +117,7 @@ add_emblem_to_pixbuf (GdkPixbuf *pixbuf, int width, int height)
 static void
 save_pixbuf (GdkPixbuf *pixbuf, const char *path, const char *video_path)
 {
-	GdkPixbuf *small, *with_emblem;
+	GdkPixbuf *small, *with_holes;
 	int width, height, d_width, d_height;
 	GError *err = NULL;
 
@@ -97,11 +136,11 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path, const char *video_path)
 	small = gdk_pixbuf_scale_simple (pixbuf, d_width, d_height,
 			GDK_INTERP_TILES);
 
-	with_emblem = add_emblem_to_pixbuf (small, d_width, d_height);
-	g_return_if_fail (with_emblem != NULL);
+	with_holes = add_holes_to_pixbuf (small, d_width, d_height);
+	g_return_if_fail (with_holes != NULL);
 	gdk_pixbuf_unref (small);
 
-	if (gdk_pixbuf_save (with_emblem, path, "png", &err, NULL) == FALSE)
+	if (gdk_pixbuf_save (with_holes, path, "png", &err, NULL) == FALSE)
 	{
 		if (err != NULL)
 		{
@@ -111,15 +150,15 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path, const char *video_path)
 			g_print ("totem-video-thumbnailer couln't write the thumbnail '%s' for video '%s'\n", path, video_path);
 		}
 
-		gdk_pixbuf_unref (with_emblem);
+		gdk_pixbuf_unref (with_holes);
 		return;
 	}
 
 #ifdef THUMB_DEBUG
-	show_pixbuf (with_emblem);
+	show_pixbuf (with_holes);
 #endif
 
-	gdk_pixbuf_unref (with_emblem);
+	gdk_pixbuf_unref (with_holes);
 }
 
 int main (int argc, char *argv[])
