@@ -1484,13 +1484,20 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 	{
 		GdkWindow *parent;
 		GdkWindowAttr attr;
+		GdkRectangle rect;
 
 		parent = gdk_window_get_toplevel (gtx->widget.window);
 
-		attr.x = 0;
-		attr.y = 0;
-		attr.width = gdk_screen_width ();
-		attr.height = gdk_screen_height ();
+		gdk_screen_get_monitor_geometry (gdk_screen_get_default (),
+				gdk_screen_get_monitor_at_window
+				(gdk_screen_get_default (),
+				 gtx->priv->video_window),
+				&rect);
+
+		attr.x = rect.x;
+		attr.y = rect.y;
+		attr.width = rect.width;
+		attr.height = rect.height;
 		attr.window_type = GDK_WINDOW_TOPLEVEL;
 		attr.wclass = GDK_INPUT_OUTPUT;
 		attr.event_mask = gtk_widget_get_events (GTK_WIDGET (gtx))
