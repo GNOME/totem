@@ -2,22 +2,23 @@
 # Copyright (C) 2004 Free Software Foundation, Inc.
 # This file is distributed under the same license as the totem package.
 # Artūras Šlajus <x11@h2o.pieva.net>, 2004.
+# Žygimantas Beručka <uid0@akl.lt>, 2004.
 # 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-26 18:10+0200\n"
-"PO-Revision-Date: 2004-03-26 18:13+0200\n"
+"POT-Creation-Date: 2004-04-24 14:45+0300\n"
+"PO-Revision-Date: 2004-04-24 14:55+0300\n"
 "Last-Translator: Žygimantas Beručka <uid0@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1291
+#: data/playlist.glade.h:1 src/totem-playlist.c:1444
 msgid "Playlist"
 msgstr "Grojaraštis"
 
@@ -34,6 +35,10 @@ msgid "_Add..."
 msgstr "_Pridėti..."
 
 #: data/playlist.glade.h:5
+msgid "_Copy Location"
+msgstr "_Kopijuoti vietą"
+
+#: data/playlist.glade.h:6
 msgid "_Save..."
 msgstr "Iš_saugoti..."
 
@@ -41,26 +46,26 @@ msgstr "Iš_saugoti..."
 msgid "    "
 msgstr "    "
 
-#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:170
+#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:186
 msgid "0 frames per second"
 msgstr "0 kadrų per sekundę"
 
 #  Bitrate
 #. Bitrate
-#: data/properties.glade.h:3 src/bacon-video-widget-properties.c:172
+#: data/properties.glade.h:3 src/bacon-video-widget-properties.c:188
 msgid "0 kbps"
 msgstr "0 kbps"
 
 #  0 seconds
 #. 0 seconds
 #: data/properties.glade.h:4 data/totem.glade.h:2
-#: src/bacon-video-widget-properties.c:126
+#: src/bacon-video-widget-properties.c:142
 msgid "0 seconds"
 msgstr "0 sekundžių"
 
 #  Dimensions
 #. Dimensions
-#: data/properties.glade.h:5 src/bacon-video-widget-properties.c:165
+#: data/properties.glade.h:5 src/bacon-video-widget-properties.c:181
 msgid "0 x 0"
 msgstr "0 x 0"
 
@@ -104,14 +109,14 @@ msgstr "Kadrų dažnis:"
 #  Audio Codec
 #. Video Codec
 #. Audio Codec
-#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:167
-#: src/bacon-video-widget-properties.c:174
-#: src/bacon-video-widget-properties.c:243
-#: src/bacon-video-widget-properties.c:275
+#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:183
+#: src/bacon-video-widget-properties.c:190
+#: src/bacon-video-widget-properties.c:259
+#: src/bacon-video-widget-properties.c:291
 msgid "N/A"
 msgstr "N/A"
 
-#: data/properties.glade.h:16 src/totem.c:1965
+#: data/properties.glade.h:16 src/totem.c:2030
 msgid "Properties"
 msgstr "Savybės"
 
@@ -125,12 +130,12 @@ msgstr "Pavadinimas:"
 #. Title
 #. Artist
 #. Year
-#: data/properties.glade.h:18 src/bacon-video-widget-properties.c:157
-#: src/bacon-video-widget-properties.c:159
-#: src/bacon-video-widget-properties.c:161
-#: src/bacon-video-widget-properties.c:192
-#: src/bacon-video-widget-properties.c:199
-#: src/bacon-video-widget-properties.c:206
+#: data/properties.glade.h:18 src/bacon-video-widget-properties.c:173
+#: src/bacon-video-widget-properties.c:175
+#: src/bacon-video-widget-properties.c:177
+#: src/bacon-video-widget-properties.c:208
+#: src/bacon-video-widget-properties.c:215
+#: src/bacon-video-widget-properties.c:222
 msgid "Unknown"
 msgstr "Nežinoma"
 
@@ -146,17 +151,21 @@ msgstr "*"
 msgid "<b>Preview</b>"
 msgstr "<b>Peržiūra</b>"
 
-#: data/screenshot.glade.h:4 src/totem-screenshot.c:292
+#: data/screenshot.glade.h:4 src/totem-screenshot.c:308
 msgid "Save Screenshot"
 msgstr "Išsaugoti ekrano nuotrauką"
 
 #: data/screenshot.glade.h:5
-msgid "Save screenshot to _file:"
-msgstr "Išsaugoti ekrano nuotrauką į _bylą:"
+msgid "Save screenshot"
+msgstr "Išsaugoti ekrano nuotrauką"
 
 #: data/screenshot.glade.h:6
-msgid "Save screenshot to the _desktop"
+msgid "Save screenshot to _desktop"
 msgstr "Išsaugoti ekrano nuotrauką _darbalaukyje"
+
+#: data/screenshot.glade.h:7
+msgid "Save screenshot to _file:"
+msgstr "Išsaugoti ekrano nuotrauką į _bylą:"
 
 #: data/totem.desktop.in.h:1
 msgid "Play movies and songs"
@@ -164,8 +173,8 @@ msgstr "Groti filmus ir dainas"
 
 #  Title
 #. Title
-#: data/totem.desktop.in.h:2 data/totem.glade.h:92 src/totem.c:679
-#: src/totem.c:3498
+#: data/totem.desktop.in.h:2 data/totem.glade.h:101 src/totem.c:694
+#: src/totem.c:3637
 msgid "Totem Movie Player"
 msgstr "Totem filmų grotuvas"
 
@@ -182,510 +191,550 @@ msgid "14.4 Kbps Modem"
 msgstr "14.4 Kbps modemas"
 
 #: data/totem.glade.h:6
+msgid "16:9 (Widescreen)"
+msgstr "16:9 (Plačiaekranis)"
+
+#: data/totem.glade.h:7
 msgid "19.2 Kbps Modem"
 msgstr "19.2 Kbps modemas"
 
-#: data/totem.glade.h:7
+#: data/totem.glade.h:8
+msgid "2.11:1 (DVB)"
+msgstr "2.11:1 (DVB)"
+
+#: data/totem.glade.h:9
 msgid "256 Kbps DSL/Cable"
 msgstr "256 Kbps DSL/Kabelinis internetas"
 
-#: data/totem.glade.h:8
+#: data/totem.glade.h:10
 msgid "28.8 Kbps Modem"
 msgstr "28.8 Kbps modemas"
 
-#: data/totem.glade.h:9
+#: data/totem.glade.h:11
 msgid "33.6 Kbps Modem"
 msgstr "33.6 Kbps modemas"
 
-#: data/totem.glade.h:10
+#: data/totem.glade.h:12
 msgid "34.4 Kbps Modem"
 msgstr "34.4 Kbps modemas"
 
-#: data/totem.glade.h:11
+#: data/totem.glade.h:13
 msgid "384 Kbps DSL/Cable"
 msgstr "384 Kbps DSL/Kabelinis internetas"
 
-#: data/totem.glade.h:12
+#: data/totem.glade.h:14
 msgid "4-channel"
 msgstr "4 kanalų"
 
-#: data/totem.glade.h:13
+#: data/totem.glade.h:15
+msgid "4:3 (TV)"
+msgstr "4:3 (TV)"
+
+#: data/totem.glade.h:16
 msgid "5.0-channel"
 msgstr "5.0 kanalų"
 
-#: data/totem.glade.h:14
+#: data/totem.glade.h:17
 msgid "5.1-channel"
 msgstr "5.1 kanalų"
 
-#: data/totem.glade.h:15
+#: data/totem.glade.h:18
 msgid "512 Kbps DSL/Cable"
 msgstr "512 Kbps DSL/Kabelinis internetas"
 
-#: data/totem.glade.h:16
+#: data/totem.glade.h:19
 msgid "56 Kbps Modem/ISDN"
 msgstr "56 Kbps modemas/ISDN"
 
-#: data/totem.glade.h:17
+#: data/totem.glade.h:20
 msgid "<b>Audio Output</b>"
 msgstr "<b>Garso išvestis</b>"
 
-#: data/totem.glade.h:18
+#: data/totem.glade.h:21
 msgid "<b>Color balance</b>"
 msgstr "<b>Spalvų balansas</b>"
 
-#: data/totem.glade.h:19
+#: data/totem.glade.h:22
 msgid "<b>Display</b>"
 msgstr "<b>Ekranas</b>"
 
-#: data/totem.glade.h:20
+#: data/totem.glade.h:23
 msgid "<b>Networking</b>"
 msgstr "<b>Tinklas</b>"
 
-#: data/totem.glade.h:21
+#: data/totem.glade.h:24
 msgid "<b>Optical Device</b>"
 msgstr "<b>Optinis įrenginys</b>"
 
-#: data/totem.glade.h:22
+#: data/totem.glade.h:25
 msgid "<b>Proprietary Plugins</b>"
 msgstr "<b>Savarankiški priedai</b>"
 
-#: data/totem.glade.h:23
+#: data/totem.glade.h:26
 msgid "<b>TV-Out</b>"
 msgstr "<b>TV išvestis</b>"
 
-#: data/totem.glade.h:24
+#: data/totem.glade.h:27
 msgid "<b>Visual Effects</b>"
 msgstr "<b>Vaizdo efektai</b>"
 
-#: data/totem.glade.h:25
+#: data/totem.glade.h:28
 msgid "AC3 Passthrough"
 msgstr "AC3 perėjimas"
 
-#: data/totem.glade.h:26
+#: data/totem.glade.h:29
 msgid "A_udio Menu"
 msgstr "Garso meni_u"
 
-#: data/totem.glade.h:27
+#: data/totem.glade.h:30
 msgid "Always on _Top"
 msgstr "Visada _viršuje"
 
-#: data/totem.glade.h:28
+#: data/totem.glade.h:31
 msgid "Always on top"
 msgstr "Visada viršuje"
 
-#: data/totem.glade.h:29
+#: data/totem.glade.h:32
 msgid "Audio"
 msgstr "Garsas"
 
-#: data/totem.glade.h:30
+#: data/totem.glade.h:33 src/totem.c:2879 src/totem.c:2900
+msgid "Auto"
+msgstr "Auto"
+
+#: data/totem.glade.h:34
 msgid "Automatically _resize the window when a new video is loaded"
 msgstr "Automatiškai pakeisti lango dydį, kai užk_raunamas naujas filmas"
 
-#: data/totem.glade.h:31
+#: data/totem.glade.h:35
 msgid "Co_ntrast:"
 msgstr "Ko_ntrastas:"
 
-#: data/totem.glade.h:32
+#: data/totem.glade.h:36
 msgid "Connection _speed:"
 msgstr "_Susijungimo greitis:"
 
-#: data/totem.glade.h:33
+#: data/totem.glade.h:37
 msgid "Deinterlace"
 msgstr "Pašalinti linijas"
 
-#: data/totem.glade.h:34
+#: data/totem.glade.h:38
 msgid "Display"
 msgstr "Ekranas"
 
-#: data/totem.glade.h:35
+#: data/totem.glade.h:39
 msgid "Exit Fullscreen"
 msgstr "Išeiti iš pilnaekranio režimo"
 
-#: data/totem.glade.h:36
+#: data/totem.glade.h:40
 msgid "Extra Large"
 msgstr "Labai didelis"
 
-#: data/totem.glade.h:37
+#: data/totem.glade.h:41
 msgid "File name"
 msgstr "Bylos vardas"
 
-#: data/totem.glade.h:38
+#: data/totem.glade.h:42
 msgid "General"
 msgstr "Bendri"
 
-#: data/totem.glade.h:39
+#: data/totem.glade.h:43
 msgid "Go to the DVD menu"
 msgstr "Eiti į DVD meniu"
 
-#: data/totem.glade.h:40
+#: data/totem.glade.h:44
 msgid "Go to the angle menu"
 msgstr "Eiti į kampų meniu"
 
-#: data/totem.glade.h:41
+#: data/totem.glade.h:45
 msgid "Go to the audio menu"
 msgstr "Eiti į audio meniu"
 
-#: data/totem.glade.h:42
+#: data/totem.glade.h:46
 msgid "Go to the chapter menu"
 msgstr "Eiti į skyriaus menu"
 
-#: data/totem.glade.h:43
+#: data/totem.glade.h:47
 msgid "Go to the title menu"
 msgstr "Eiti į pavadinimo meniu"
 
-#: data/totem.glade.h:44
+#: data/totem.glade.h:48
 msgid "Help contents"
 msgstr "Pagalbos turinys"
 
-#: data/totem.glade.h:45
+#: data/totem.glade.h:49
 msgid "Intranet/LAN"
 msgstr "Vietinis tinklas"
 
-#: data/totem.glade.h:46
+#: data/totem.glade.h:50
 msgid "Languages"
 msgstr "Kalbos"
 
-#: data/totem.glade.h:47
+#: data/totem.glade.h:51
 msgid "Large"
 msgstr "Didelis"
 
-#: data/totem.glade.h:48 src/totem.c:72
+#: data/totem.glade.h:52 src/totem.c:81
 msgid "Next"
 msgstr "Sekantis"
 
-#: data/totem.glade.h:49
+#: data/totem.glade.h:53
 msgid "Next chapter or movie"
 msgstr "Sekantis skyrius arba filmas"
 
-#: data/totem.glade.h:50
+#: data/totem.glade.h:54
 msgid "No Language Selection Available"
 msgstr "Kalbos pasirinkimas neprieinamas"
 
-#: data/totem.glade.h:51
+#: data/totem.glade.h:55
 msgid "No subtitles selection available"
 msgstr "Subtitrų pasirinkimas neprieinamas"
 
-#: data/totem.glade.h:52
+#: data/totem.glade.h:56
 msgid "Normal"
 msgstr "Normalus"
 
-#: data/totem.glade.h:53
+#: data/totem.glade.h:57
 msgid "Open _Location..."
 msgstr "Atidaryti _vietą..."
 
-#: data/totem.glade.h:54
+#: data/totem.glade.h:58
 msgid "Open a non-local file"
 msgstr "Atidaryti nevietinę bylą"
 
-#: data/totem.glade.h:55
+#: data/totem.glade.h:59
 msgid "Play / Pa_use"
 msgstr "Groti / Pa_uzė"
 
-#: data/totem.glade.h:56
+#: data/totem.glade.h:60
 msgid "Play _Audio CD"
 msgstr "Groti _muzikinį CD"
 
-#: data/totem.glade.h:57
+#: data/totem.glade.h:61
 msgid "Play _DVD"
 msgstr "Groti _DVD"
 
-#: data/totem.glade.h:58
+#: data/totem.glade.h:62
 msgid "Play _VCD"
 msgstr "Groti _VCD"
 
-#: data/totem.glade.h:59
+#: data/totem.glade.h:63
 msgid "Play a Video CD"
 msgstr "Groti Video CD"
 
-#: data/totem.glade.h:60
+#: data/totem.glade.h:64
 msgid "Play a Video DVD"
 msgstr "Groti Video DVD"
 
-#: data/totem.glade.h:61
+#: data/totem.glade.h:65
 msgid "Play an audio CD"
 msgstr "Groti muzikinį CD"
 
-#: data/totem.glade.h:62
+#: data/totem.glade.h:66
 msgid "Play or pause the movie"
 msgstr "Groti arba pristabdyti filmą"
 
-#: data/totem.glade.h:63 src/totem.c:71
+#: data/totem.glade.h:67 src/totem.c:80
 msgid "Play/Pause"
 msgstr "Groti/Pauzė"
 
-#: data/totem.glade.h:64 src/totem.c:73
+#: data/totem.glade.h:68 src/totem.c:82
 msgid "Previous"
 msgstr "Ankstesnis"
 
-#: data/totem.glade.h:65
+#: data/totem.glade.h:69
 msgid "Previous chapter or movie"
 msgstr "Ankstesnis skyrius arba filmas"
 
-#: data/totem.glade.h:66
+#: data/totem.glade.h:70
 msgid "S_ubtitles"
 msgstr "S_ubtitrai"
 
-#: data/totem.glade.h:67
+#: data/totem.glade.h:71
 msgid "Sat_uration:"
 msgstr "Spalvų sot_umas:"
 
-#: data/totem.glade.h:68
+#: data/totem.glade.h:72
+msgid "Set the aspect ratio"
+msgstr "Perjungti vaizdo proporciją"
+
+#: data/totem.glade.h:73
 msgid "Set the repeat mode"
 msgstr "Nustatyti kartojimo režimą"
 
-#: data/totem.glade.h:69
+#: data/totem.glade.h:74
 msgid "Set the shuffle mode"
 msgstr "Nustatyti maišymo režimą"
 
-#: data/totem.glade.h:70
+#: data/totem.glade.h:75
+msgid "Sets 16:9 (Anamorphic) aspect ratio"
+msgstr "Nustato 16:9 (Anamorfinis) vaizdo proporciją"
+
+#: data/totem.glade.h:76
+msgid "Sets 2.11:1 (DVB) aspect ratio"
+msgstr "Nustato 2.11:1 (DVB) vaizdo proporciją"
+
+#: data/totem.glade.h:77
+msgid "Sets 4:3 (TV) aspect ratio"
+msgstr "Nustato 4:3 (TV) vaizdo proporciją"
+
+#: data/totem.glade.h:78
+msgid "Sets automatic aspect ratio"
+msgstr "Automatiškai nustato vaizdo proporciją"
+
+#: data/totem.glade.h:79
+msgid "Sets square aspect ratio"
+msgstr "Nustato kvadratinę vaizdo proporciją"
+
+#: data/totem.glade.h:80
 msgid "Show _Controls"
 msgstr "Rodyti valdymo _elementus"
 
-#: data/totem.glade.h:71
+#: data/totem.glade.h:81
 msgid "Show _visual effects when an audio file is played"
 msgstr "Rodyti _vizualius efektus kai grojama audio byla"
 
-#: data/totem.glade.h:72
+#: data/totem.glade.h:82
 msgid "Show controls"
 msgstr "Rodyti valdymo elementus"
 
-#: data/totem.glade.h:73
+#: data/totem.glade.h:83
 msgid "Show or hide the playlist"
 msgstr "Rodyti arba slėpti grojaraštį"
 
-#: data/totem.glade.h:74
+#: data/totem.glade.h:84
 msgid "Show/Hide Playlist"
 msgstr "Rodyti/Slėpti grojaraštį"
 
-#: data/totem.glade.h:75
+#: data/totem.glade.h:85
 msgid "Shuff_le Mode"
 msgstr "_Maišymo režimas"
 
-#: data/totem.glade.h:76
+#: data/totem.glade.h:86
 msgid "Skip _Backwards"
 msgstr "Prašokti _atgal"
 
-#: data/totem.glade.h:77
+#: data/totem.glade.h:87
 msgid "Skip _Forward"
 msgstr "Prašokti į _priekį"
 
-#: data/totem.glade.h:78
+#: data/totem.glade.h:88
 msgid "Skip backwards"
 msgstr "Prašokti atgal"
 
-#: data/totem.glade.h:79
+#: data/totem.glade.h:89
 msgid "Skip forward"
 msgstr "Prašokti į priekį"
 
-#: data/totem.glade.h:80
+#: data/totem.glade.h:90
 msgid "Skip to"
 msgstr "Prašokti iki"
 
-#: data/totem.glade.h:81
+#: data/totem.glade.h:91
 msgid "Skip to a specific time"
 msgstr "Prašokti iki tam tikro laiko"
 
-#: data/totem.glade.h:82
+#: data/totem.glade.h:92
 msgid "Small"
 msgstr "Mažas"
 
-#: data/totem.glade.h:83
+#: data/totem.glade.h:93
+msgid "Square"
+msgstr "Kvadratas"
+
+#: data/totem.glade.h:94
 msgid "Stereo"
 msgstr "Stereo"
 
-#: data/totem.glade.h:84
+#: data/totem.glade.h:95
 msgid "Subtitles"
 msgstr "Subtitrai"
 
-#: data/totem.glade.h:85
+#: data/totem.glade.h:96
 msgid "Switch to double size"
 msgstr "Rodyti dvigubo dydžiu"
 
-#: data/totem.glade.h:86
+#: data/totem.glade.h:97
 msgid "Switch to fullscreen"
 msgstr "Rodyti visame ekrane"
 
-#: data/totem.glade.h:87
+#: data/totem.glade.h:98
 msgid "Take _Screenshot"
 msgstr "Padaryti ekrano _nuotrauką"
 
-#: data/totem.glade.h:88
+#: data/totem.glade.h:99
 msgid "Take a screenshot"
 msgstr "Padaryti ekrano nuotrauką"
 
-#: data/totem.glade.h:89
+#: data/totem.glade.h:100
 msgid "Time:"
 msgstr "Laikas:"
 
-#: data/totem.glade.h:90
-msgid "Toggle _Aspect Ratio"
-msgstr "Perjungti _vaizdo proporciją"
-
-#: data/totem.glade.h:91
-msgid "Toggle the aspect ratio"
-msgstr "Perjungti vaizdo proporciją"
-
-#: data/totem.glade.h:93
+#: data/totem.glade.h:102
 msgid "Totem Preferences"
 msgstr "Totem nustatymai"
 
-#: data/totem.glade.h:94
+#: data/totem.glade.h:103
 msgid "Tv-out in fullscreen by Nvidia (NTSC)"
 msgstr "Nvidia TV išvestis pilname ekrane (NTSC)"
 
-#: data/totem.glade.h:95
+#: data/totem.glade.h:104
 msgid "Tv-out in fullscreen by Nvidia (PAL)"
 msgstr "Nvidia TV išvestis pilname ekrane (PAL)"
 
-#: data/totem.glade.h:96
+#: data/totem.glade.h:105
 msgid "Visualisation _size:"
 msgstr "Vizualių efektų dydi_s:"
 
-#: data/totem.glade.h:97
+#: data/totem.glade.h:106
 msgid "Volume _Down"
 msgstr "_Mažinti garsumą"
 
-#: data/totem.glade.h:98
+#: data/totem.glade.h:107
 msgid "Volume _Up"
 msgstr "_Didinti garsumą"
 
-#: data/totem.glade.h:99
+#: data/totem.glade.h:108
 msgid "Volume down"
 msgstr "Mažinti garsumą"
 
-#: data/totem.glade.h:100
+#: data/totem.glade.h:109
 msgid "Volume up"
 msgstr "Didinti garsumą"
 
-#: data/totem.glade.h:101 data/vanity.glade.h:7
+#: data/totem.glade.h:110 data/vanity.glade.h:7
 msgid "Zoom _1:1"
 msgstr "Santykis _1:1"
 
-#: data/totem.glade.h:102 data/vanity.glade.h:8
+#: data/totem.glade.h:111 data/vanity.glade.h:8
 msgid "Zoom _2:1"
 msgstr "Santykis _2:1"
 
-#: data/totem.glade.h:103
+#: data/totem.glade.h:112
 msgid "Zoom to half size"
 msgstr "Rodyti pusės dydžio vaizdą"
 
-#: data/totem.glade.h:104
+#: data/totem.glade.h:113
 msgid "Zoom to one for one size"
 msgstr "Rodyti originalaus dydžio vaizdą"
 
-#: data/totem.glade.h:105
+#: data/totem.glade.h:114
 msgid "_Add Proprietary Plugins..."
 msgstr "Pridėti s_avarankiškus priedus..."
 
-#: data/totem.glade.h:106
+#: data/totem.glade.h:115
 msgid "_Angle Menu"
 msgstr "K_ampo meniu"
 
-#: data/totem.glade.h:107
+#: data/totem.glade.h:116
+msgid "_Aspect Ratio"
+msgstr "V_aizdo proporciją"
+
+#: data/totem.glade.h:117
 msgid "_Audio output type:"
 msgstr "_Audio išvesties tipas:"
 
-#: data/totem.glade.h:108
+#: data/totem.glade.h:118
 msgid "_Brightness:"
 msgstr "_Ryškumas:"
 
-#: data/totem.glade.h:109
+#: data/totem.glade.h:119
 msgid "_Chapter Menu"
 msgstr "_Skyriaus meniu"
 
-#: data/totem.glade.h:110
+#: data/totem.glade.h:120
 msgid "_Contents"
 msgstr "_Turinys"
 
-#: data/totem.glade.h:111
+#: data/totem.glade.h:121
 msgid "_DVD Menu"
 msgstr "_DVD meniu"
 
-#: data/totem.glade.h:112
+#: data/totem.glade.h:122
 msgid "_DXR3 TV-out"
 msgstr "_DXR3 TV išvestis"
 
-#: data/totem.glade.h:113
+#: data/totem.glade.h:123
 msgid "_Deinterlace"
 msgstr "Pašalinti _linijas"
 
-#: data/totem.glade.h:114
+#: data/totem.glade.h:124
 msgid "_Eject"
 msgstr "_Išmesti"
 
-#: data/totem.glade.h:115
+#: data/totem.glade.h:125
 msgid "_Fullscreen"
 msgstr "_Visas ekranas"
 
-#: data/totem.glade.h:116
+#: data/totem.glade.h:126
 msgid "_Go"
 msgstr "_Eiti"
 
-#: data/totem.glade.h:117
+#: data/totem.glade.h:127
 msgid "_Hue:"
 msgstr "_Atspalvis:"
 
-#: data/totem.glade.h:118
+#: data/totem.glade.h:128
 msgid "_Languages"
 msgstr "Ka_lbos"
 
-#: data/totem.glade.h:119
+#: data/totem.glade.h:129
 msgid "_Movie"
 msgstr "_Filmas"
 
-#: data/totem.glade.h:120
+#: data/totem.glade.h:130
 msgid "_Next Chapter/Movie"
 msgstr "_Sekantis skyrius/filmas"
 
-#: data/totem.glade.h:121
+#: data/totem.glade.h:131
 msgid "_No TV-out"
 msgstr "_Nėra TV išvesties"
 
-#: data/totem.glade.h:122
+#: data/totem.glade.h:132
 msgid "_Optical device path:"
 msgstr "_Optinio įrenginio kelias:"
 
-#: data/totem.glade.h:123
+#: data/totem.glade.h:133
 msgid "_Previous Chapter/Movie"
 msgstr "_Ankstesnis skyrius/filmas"
 
-#: data/totem.glade.h:124
+#: data/totem.glade.h:134
 msgid "_Repeat Mode"
 msgstr "Ka_rtojimo režimas"
 
-#: data/totem.glade.h:125
+#: data/totem.glade.h:135
 msgid "_Reset defaults"
 msgstr "Nustatyti standa_rtinius nustatymus"
 
-#: data/totem.glade.h:126
+#: data/totem.glade.h:136
 msgid "_Show/Hide Playlist"
 msgstr "Rodyti/_slėpti grojaraštį"
 
-#: data/totem.glade.h:127
+#: data/totem.glade.h:137
 msgid "_Skip to..."
 msgstr "Praš_okti iki..."
 
-#: data/totem.glade.h:128
+#: data/totem.glade.h:138
 msgid "_Skip to:"
 msgstr "Praš_okti iki:"
 
-#: data/totem.glade.h:129
+#: data/totem.glade.h:139
 msgid "_Sound"
 msgstr "Gar_sas"
 
-#: data/totem.glade.h:130
+#: data/totem.glade.h:140
 msgid "_Title Menu"
 msgstr "_Pavadinimo meniu"
 
-#: data/totem.glade.h:131
+#: data/totem.glade.h:141
 msgid "_Type of visualisation:"
 msgstr "Vizualių efektų _tipas:"
 
-#: data/totem.glade.h:132 data/vanity.glade.h:10
+#: data/totem.glade.h:142 data/vanity.glade.h:10
 msgid "_Zoom 1:2"
 msgstr "_Santykis 1:2"
 
-#: data/totem.glade.h:133
+#: data/totem.glade.h:143
 msgid "seconds"
 msgstr "sekundės"
 
@@ -850,7 +899,7 @@ msgstr "Žiūrėti interneto kamerą gyvai ir siųsti paveikslėlius"
 msgid "Save File"
 msgstr "Išsaugoti bylą"
 
-#: data/vanity.glade.h:2 src/vanity.c:255
+#: data/vanity.glade.h:2 src/vanity.c:278
 msgid "Vanity"
 msgstr "Vanity"
 
@@ -874,15 +923,15 @@ msgstr "Santykis 2:1"
 msgid "_Picture"
 msgstr "_Paveikslėlis"
 
-#: src/bacon-cd-selection.c:234
+#: src/bacon-cd-selection.c:257
 msgid "Unnamed CDROM"
 msgstr "Nepavadintas CDROM"
 
-#: src/bacon-cd-selection.c:276 src/bacon-v4l-selection.c:275
+#: src/bacon-cd-selection.c:302 src/bacon-v4l-selection.c:299
 msgid "Select the drive"
 msgstr "Išsirinkite įrenginį"
 
-#: src/bacon-v4l-selection.c:233
+#: src/bacon-v4l-selection.c:254
 msgid "Unnamed Video Device"
 msgstr "Nepavadintas vaizdo įrenginys"
 
@@ -890,7 +939,7 @@ msgstr "Nepavadintas vaizdo įrenginys"
 msgid "Totem Video Window"
 msgstr "Totem vaizdo langas"
 
-#: src/bacon-video-widget-properties.c:106
+#: src/bacon-video-widget-properties.c:122
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -898,7 +947,7 @@ msgstr[0] "%d valanda"
 msgstr[1] "%d valandos"
 msgstr[2] "%d valandų"
 
-#: src/bacon-video-widget-properties.c:108
+#: src/bacon-video-widget-properties.c:124
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -907,7 +956,7 @@ msgstr[1] "%d minutės"
 msgstr[2] "%d minučių"
 
 #  Duration
-#: src/bacon-video-widget-properties.c:111
+#: src/bacon-video-widget-properties.c:127
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -917,37 +966,37 @@ msgstr[2] "%d sekundžių"
 
 #  hour:minutes:seconds
 #. hour:minutes:seconds
-#: src/bacon-video-widget-properties.c:117
+#: src/bacon-video-widget-properties.c:133
 #, c-format
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #  minutes:seconds
 #. minutes:seconds
-#: src/bacon-video-widget-properties.c:120
+#: src/bacon-video-widget-properties.c:136
 #, c-format
 msgid "%s %s"
 msgstr "%s %s"
 
 #  seconds
 #. seconds
-#: src/bacon-video-widget-properties.c:123
+#: src/bacon-video-widget-properties.c:139
 #, c-format
 msgid "%s"
 msgstr "%s"
 
 #  Duration
 #. Duration
-#: src/bacon-video-widget-properties.c:163
+#: src/bacon-video-widget-properties.c:179
 msgid "0 second"
 msgstr "0 sekundžių"
 
-#: src/bacon-video-widget-properties.c:248
+#: src/bacon-video-widget-properties.c:264
 #, c-format
 msgid "%d frames per second"
 msgstr "%d kadrų per sekundę"
 
-#: src/bacon-video-widget-properties.c:266
+#: src/bacon-video-widget-properties.c:282
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
@@ -961,40 +1010,47 @@ msgstr ""
 "Negaliu užkrauti '%s' garso valdyklės\n"
 "Patikrinkite ar įrenginys nėra užimtas."
 
-#: src/bacon-video-widget-xine.c:1229
+#: src/bacon-video-widget-xine.c:1130 src/bacon-video-widget-xine.c:1542
+msgid ""
+"No video output is available. Make sure that the program is correctly "
+"installed."
+msgstr ""
+"Vaizdo išvestis negalima. Įsitikinkite, jog programa teisingai įdiegta."
+
+#: src/bacon-video-widget-xine.c:1237
 msgid "The server you are trying to connect to is not known."
 msgstr "Serveris, prie kurio jūs bandote jungtis, yra nežinomas."
 
-#: src/bacon-video-widget-xine.c:1232
+#: src/bacon-video-widget-xine.c:1240
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "Įrenginio vardas, kurį jūs nurodėte (%s), ko gero neteisingas."
 
-#: src/bacon-video-widget-xine.c:1235
+#: src/bacon-video-widget-xine.c:1243
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "Serveris, prie kurio jūs bandote prisijungti (%s), yra nepasiekiamas."
 
-#: src/bacon-video-widget-xine.c:1238
+#: src/bacon-video-widget-xine.c:1246
 msgid "The connection to this server was refused."
 msgstr "Susijungimas su serveriu buvo atmestas."
 
-#: src/bacon-video-widget-xine.c:1241
+#: src/bacon-video-widget-xine.c:1249
 #, c-format
 msgid "The specified movie '%s' could not be found."
 msgstr "Nurodytas filmas „%s“ nerastas."
 
-#: src/bacon-video-widget-xine.c:1244
+#: src/bacon-video-widget-xine.c:1252
 #, c-format
 msgid "The movie '%s' could not be read."
 msgstr "Filmas „%s“ negali būti perskaitytas."
 
-#: src/bacon-video-widget-xine.c:1247
+#: src/bacon-video-widget-xine.c:1255
 #, c-format
 msgid "A problem occured while loading a library or a decoder (%s)."
 msgstr "Įkeliant biblioteką arba vaizdo dekoderį (%s) iškilo problema."
 
-#: src/bacon-video-widget-xine.c:1251
+#: src/bacon-video-widget-xine.c:1259
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -1002,42 +1058,47 @@ msgstr ""
 "Atrodo, jog šaltinis yra užšifruotas ir negali būti perskaitytas. Ar Jūs "
 "bandote groti užšifruotą DVD be libdvdcss bibliotekos?"
 
-#: src/bacon-video-widget-xine.c:1253
+#: src/bacon-video-widget-xine.c:1261
 msgid "This file is encrypted and cannot be played back."
 msgstr "Ši byla yra užšifruota ir negali būti grojama."
 
-#: src/bacon-video-widget-xine.c:1256
+#: src/bacon-video-widget-xine.c:1264
 msgid "For security reasons, this movie can not be played back."
 msgstr "Dėl saugumo priežasčių šis filmas negali būti grojamas."
 
-#: src/bacon-video-widget-xine.c:1348
-msgid "There is no plugin to handle this movie"
-msgstr "Nėra tokio priedo, kuris galėtų apdoroti šį filmą."
+#: src/bacon-video-widget-xine.c:1268
+msgid "The audio device is busy. Is another application using it?"
+msgstr "Audio įrenginys yra užimtas. Ar jį naudoja kita programa?"
 
-#: src/bacon-video-widget-xine.c:1352
-msgid "This movie is broken and can not be played further"
-msgstr "Šis filmas yra sugadintas ir negali būti grojamas toliau"
+#: src/bacon-video-widget-xine.c:1272
+msgid "You are not allowed to open this file."
+msgstr "Jums neleista atidaryti šios bylos."
 
-#: src/bacon-video-widget-xine.c:1356
-msgid "This location is not a valid one"
-msgstr "Ši vieta nėra tinkama"
+#: src/bacon-video-widget-xine.c:1274
+msgid "The server refused access to this file or stream."
+msgstr "Serveris atmetė priėjimą prie šios bylos ar srauto."
 
-#: src/bacon-video-widget-xine.c:1360
-msgid "This movie could not be opened"
-msgstr "Šis filmas negali būti atidarytas"
+#: src/bacon-video-widget-xine.c:1381
+msgid "There is no plugin to handle this movie."
+msgstr "Nėra tokio įskiepio, kuris galėtų apdoroti šį filmą."
 
-#: src/bacon-video-widget-xine.c:1363
-msgid "Generic Error"
-msgstr "Bendra klaida"
+#: src/bacon-video-widget-xine.c:1385
+msgid "This movie is broken and can not be played further."
+msgstr "Šis filmas yra sugadintas ir negali būti grojamas toliau."
 
-#: src/bacon-video-widget-xine.c:1509
-msgid ""
-"No video output is available. Make sure that the program is correctly "
-"installed."
-msgstr ""
-"Vaizdo išvestis negalima. Įsitikinkite, jog programa teisingai įdiegta."
+#: src/bacon-video-widget-xine.c:1389
+msgid "This location is not a valid one."
+msgstr "Ši vieta nėra tinkama."
 
-#: src/bacon-video-widget-xine.c:1798
+#: src/bacon-video-widget-xine.c:1393
+msgid "This movie could not be opened."
+msgstr "Šis filmas negalėjo būti atidarytas."
+
+#: src/bacon-video-widget-xine.c:1396
+msgid "Generic Error."
+msgstr "Bendra klaida."
+
+#: src/bacon-video-widget-xine.c:1840
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1046,44 +1107,44 @@ msgstr ""
 "Vaizdo kodavimas „%s“ neapdorojamas. Galbūt reikia įdiegti papildomus "
 "priedus tam, kad galėtumėte groti kai kurių tipų filmus."
 
-#: src/bacon-video-widget-xine.c:1817
-msgid "This is an audio-only file, and there is no audio output available"
-msgstr "Tai yra vien tik garso byla ir joje nėra jokios garso išvesties"
+#: src/bacon-video-widget-xine.c:1859
+msgid "This is an audio-only file, and there is no audio output available."
+msgstr "Tai yra vien tik garso byla ir joje nėra jokios garso išvesties."
 
-#: src/bacon-video-widget-xine.c:3268
-msgid "Movie is not playing"
-msgstr "Filmas negrojamas"
+#: src/bacon-video-widget-xine.c:3322
+msgid "Movie is not playing."
+msgstr "Filmas nerodomas."
 
-#: src/bacon-video-widget-xine.c:3276
-msgid "No video to capture"
-msgstr "Nėra vaizdo, kurį galima būtų išsaugoti"
+#: src/bacon-video-widget-xine.c:3330
+msgid "No video to capture."
+msgstr "Nėra vaizdo, kurį galima būtų išsaugoti."
 
-#: src/bacon-video-widget-xine.c:3283
-msgid "Video codec is not handled"
-msgstr "Vaizdo kodavimas neapdorojamas"
+#: src/bacon-video-widget-xine.c:3337
+msgid "Video codec is not handled."
+msgstr "Vaizdo kodavimas neapdorojamas."
 
-#: src/cd-drive.c:554
+#: src/cd-drive.c:573
 #, c-format
 msgid "Unnamed SCSI CD-ROM (%s)"
 msgstr "Nepavadintas SCSI CD-ROM (%s)"
 
-#: src/cd-drive.c:1132
+#: src/cd-drive.c:1151
 msgid "File image"
 msgstr "Bylos atvaizdas"
 
-#: src/totem-playlist.c:320
+#: src/totem-playlist.c:339
 msgid "Could not save the playlist"
 msgstr "Negalima išsaugoti grojaraščio"
 
-#: src/totem-playlist.c:475 src/totem.c:1520
+#: src/totem-playlist.c:613 src/totem.c:1560
 msgid "Select files"
 msgstr "Pasirinkit bylas"
 
-#: src/totem-playlist.c:655
+#: src/totem-playlist.c:794
 msgid "Save playlist"
 msgstr "Išsaugoti grojaraštį"
 
-#: src/totem-playlist.c:698
+#: src/totem-playlist.c:839
 #, c-format
 msgid ""
 "A file named '%s' already exists.\n"
@@ -1092,21 +1153,21 @@ msgstr ""
 "Byla vardu „%s„ jau egzistuoja. \n"
 "Ar iš tikro norite ją perrašyti?"
 
-#: src/totem-playlist.c:883
+#: src/totem-playlist.c:1024
 msgid "Filename"
 msgstr "Bylos vardas"
 
-#: src/totem-pl-parser.c:209
+#: src/totem-pl-parser.c:225
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "Nesigauna įrašyti apdoroklio: %s"
 
-#: src/totem-pl-parser.c:273
+#: src/totem-pl-parser.c:289
 #, c-format
 msgid "Couldn't open parser: %s"
 msgstr "Nesigauna atidaryti apdoroklio: %s"
 
-#: src/totem-preferences.c:83
+#: src/totem-preferences.c:82
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1114,7 +1175,7 @@ msgstr ""
 "Atrodo jog Totem yra paleistas nutolusiame kompiuteryje. \n"
 "Ar iš tikro norite įjungti vizualius efektus?"
 
-#: src/totem-preferences.c:136
+#: src/totem-preferences.c:135
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted"
@@ -1122,18 +1183,18 @@ msgstr ""
 "Šio nustatymo pakeitimas įsigalios tik pradėjus žiūrėti kitą filmą arba iš "
 "naujo paleidus Totem"
 
-#: src/totem-preferences.c:180
+#: src/totem-preferences.c:179
 msgid ""
 "Switching on or off this type of TV-Out requires a restart to take effect."
 msgstr ""
 "Įjungus arba išjungus šio tipo TV išvestį, pakeitimai įsigalios tik "
 "perstartavus."
 
-#: src/totem-preferences.c:313
+#: src/totem-preferences.c:312
 msgid "Totem could not start the file manager."
 msgstr "Totem negalėjo paleisti bylų tvarkyklės."
 
-#: src/totem-preferences.c:341
+#: src/totem-preferences.c:340
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr "Vizualių efektų tipo pakeitimas reikalauja perstartavimo."
 
@@ -1145,130 +1206,134 @@ msgstr "Dabar rodomas URI"
 msgid "Video and Audio information properties page"
 msgstr "Vaizdo ir garso informacijos nustatymų puslapis"
 
-#: src/totem-screenshot.c:170 src/totem-screenshot.c:181
+#: src/totem-screenshot.c:186 src/totem-screenshot.c:197
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Nuotrauka%d.png"
 
-#: src/totem-screenshot.c:223
+#: src/totem-screenshot.c:239
 #, c-format
 msgid "File '%s' already exists."
 msgstr "Byla „%s“ jau egzistuoja."
 
-#: src/totem-screenshot.c:225
+#: src/totem-screenshot.c:241
 msgid "The screenshot was not saved"
 msgstr "Ekrano nuotrauka nebuvo išsaugota"
 
-#: src/totem-screenshot.c:236
+#: src/totem-screenshot.c:252
 msgid "There was an error saving the screenshot."
 msgstr "Išsaugant ekrano nuotrauką įvyko klaida."
 
-#: src/totem-statusbar.c:138
+#: src/totem-statusbar.c:154
 msgid "Shadow type"
 msgstr "Šešėlio tipas"
 
-#: src/totem-statusbar.c:139
+#: src/totem-statusbar.c:155
 msgid "Style of bevel around the statusbar text"
 msgstr "Rėmelio apie būklės juostos tekstą stilius"
 
-#: src/totem-statusbar.c:171 src/totem.c:299
+#: src/totem-statusbar.c:187 src/totem.c:307 src/totem.c:676
 msgid "Stopped"
 msgstr "Sustabdytas"
 
-#: src/totem-statusbar.c:180
+#: src/totem-statusbar.c:196
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: src/totem-statusbar.c:208
+#: src/totem-statusbar.c:224
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (Transliuojamas)"
 
-#: src/totem-statusbar.c:216
+#: src/totem-statusbar.c:232
 msgid "Seek to"
 msgstr "Šokti į"
 
-#: src/totem-statusbar.c:278
+#: src/totem-statusbar.c:294
 msgid "Buffering"
 msgstr "Buferizuojama"
 
 #  eg: 75 %
 #. eg: 75 %
-#: src/totem-statusbar.c:281
+#: src/totem-statusbar.c:297
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
 
-#: src/totem.c:70
+#: src/totem.c:78
 msgid "Backend options"
 msgstr "Backend'o nustatymai"
 
-#: src/totem.c:74
+#: src/totem.c:79
+msgid "Enable debug"
+msgstr "Įjungti derinimą"
+
+#: src/totem.c:83
 msgid "Seek Forwards"
 msgstr "Šokti į priekį"
 
-#: src/totem.c:75
+#: src/totem.c:84
 msgid "Seek Backwards"
 msgstr "Šokti atgal"
 
-#: src/totem.c:76
+#: src/totem.c:85
 msgid "Volume Up"
 msgstr "Didinti garsumą"
 
-#: src/totem.c:77
+#: src/totem.c:86
 msgid "Volume Down"
 msgstr "Mažinti garsumą"
 
-#: src/totem.c:78
+#: src/totem.c:87
 msgid "Toggle Fullscreen"
 msgstr "Perjungti pilno ekrano režimą"
 
-#: src/totem.c:79
+#: src/totem.c:88
 msgid "Quit"
 msgstr "Išeiti"
 
-#: src/totem.c:80
+#: src/totem.c:89
 msgid "Enqueue"
 msgstr "Pridėti"
 
-#: src/totem.c:81
+#: src/totem.c:90
 msgid "Replace"
 msgstr "Pakeisti"
 
-#: src/totem.c:289
+#: src/totem.c:297
 msgid "Playing"
 msgstr "Grojama"
 
-#: src/totem.c:294
+#: src/totem.c:302
 msgid "Paused"
 msgstr "Pristabdyta"
 
-#: src/totem.c:329
+#: src/totem.c:342
 msgid "Totem could not eject the optical media."
 msgstr "Totem negalėjo išmesti optinio disko."
 
-#: src/totem.c:329
-msgid "No reason given"
-msgstr "Nenurodyta priežastis"
+#: src/totem.c:342
+msgid "No reason given."
+msgstr "Priežastis nenurodyta."
 
-#: src/totem.c:350 src/totem.c:378 src/totem.c:799 src/totem.c:906
+#: src/totem.c:363 src/totem.c:391 src/totem.c:816 src/totem.c:925
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem negalėjo groti „%s“."
 
-#: src/totem.c:398
+#: src/totem.c:411
 msgid "DVD"
 msgstr "DVD"
 
-#: src/totem.c:399
+#: src/totem.c:412
 msgid "Video CD"
 msgstr "Video CD"
 
-#: src/totem.c:400
+#: src/totem.c:413
 msgid "Audio CD"
 msgstr "Garso CD"
 
-#: src/totem.c:411
+#: src/totem.c:424
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1277,7 +1342,7 @@ msgstr ""
 "Totem negalėjo groti šio tipo duomenų (%s), nes jūs neturite tinkamų priedų "
 "jiems apdoroti."
 
-#: src/totem.c:412
+#: src/totem.c:425
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1285,7 +1350,7 @@ msgstr ""
 "Prašome įdiegti reikiamus priedus ir perstartuoti Totem, jog galėtumėte "
 "groti šiuos duomenis."
 
-#: src/totem.c:420
+#: src/totem.c:433
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1294,7 +1359,7 @@ msgstr ""
 "Totem negalėjo groti šių duomenų (%s) nors jiems apdoroti atitinkamas "
 "priedas ir yra."
 
-#: src/totem.c:421
+#: src/totem.c:434
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1304,116 +1369,123 @@ msgstr ""
 
 #  Title
 #. Title
-#: src/totem.c:656
+#: src/totem.c:669
 #, c-format
 msgid "%s - Totem Movie Player"
 msgstr "%s - Totem filmų grotuvas"
 
-#: src/totem.c:668 src/totem.c:3338
+#: src/totem.c:683 src/totem.c:3442
 msgid "No file"
 msgstr "Nėra bylos"
 
-#: src/totem.c:704 src/totem.c:1884
+#: src/totem.c:720 src/totem.c:1948
 msgid "Totem"
 msgstr "Totem"
 
-#: src/totem.c:1180
+#: src/totem.c:1228
 msgid "An error occured"
 msgstr "Įvyko klaida"
 
-#: src/totem.c:1596 src/totem.c:1604
+#: src/totem.c:1637 src/totem.c:1645
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "Negalėjau įkelti „Atidaryti vietą...“ sąsajos."
 
-#: src/totem.c:1596 src/totem.c:1604 src/totem.c:3532 src/totem.c:3557
-#: src/totem.c:3582
+#: src/totem.c:1637 src/totem.c:1645 src/totem.c:3677 src/totem.c:3702
+#: src/totem.c:3727
 msgid "Make sure that Totem is properly installed."
 msgstr "Įsitikinkite, jog Totem deramai įdiegtas."
 
-#: src/totem.c:1837
+#: src/totem.c:1901
 msgid "Totem could not display the help contents."
 msgstr "Totem negalėjo parodyti pagalbos turinio."
 
-#: src/totem.c:1855 src/vanity.c:226
+#: src/totem.c:1919 src/vanity.c:251
 msgid "translator_credits"
-msgstr "Artūras Šlajus <x11@h2o.pieva.net>"
+msgstr ""
+"Artūras Šlajus <x11@h2o.pieva.net>,\n"
+"Žygimantas Beručka <uid0@akl.lt>."
 
-#: src/totem.c:1881
+#: src/totem.c:1945
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Filmų grotuvas naudojantis %s"
 
-#: src/totem.c:1920 src/totem.c:1928 src/vanity.c:292 src/vanity.c:300
+#: src/totem.c:1985 src/totem.c:1993 src/vanity.c:316 src/vanity.c:324
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem negalėjo padaryti to filmo vaizdo nuotraukos."
 
-#: src/totem.c:1928 src/vanity.c:300
-msgid "Please file a bug, this isn't supposed to happen"
+#: src/totem.c:1993
+msgid "Please file a bug, this isn't supposed to happen."
 msgstr "Prašome praneši apie klaidą programoje. To neturėjo nutikti."
 
-#: src/totem.c:1955
+#: src/totem.c:2020
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem negalėjo parodyti filmo savybių lango."
 
-#: src/totem.c:1955
+#: src/totem.c:2020
 msgid "Make sure that Totem is correctly installed."
 msgstr "Įsitikinkite, jog Totem deramai įdiegtas."
 
-#: src/totem.c:2040
+#: src/totem.c:2105
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem negalėjo peršokti „%s“."
 
-#: src/totem.c:2795 src/totem.c:2817
+#: src/totem.c:2875 src/totem.c:2897
 msgid "None"
 msgstr "Nėra"
 
-#: src/totem.c:2799 src/totem.c:2820
-msgid "Auto"
-msgstr "Auto"
-
-#: src/totem.c:3243
+#: src/totem.c:3347
 msgid "Totem could not startup."
 msgstr "Totem negalėjo startuoti."
 
-#: src/totem.c:3243
+#: src/totem.c:3347
 msgid "No reason."
 msgstr "Jokios priežasties."
 
-#: src/totem.c:3503
+#: src/totem.c:3547
+#, c-format
+msgid "Option '%s' is unknown and was ignored\n"
+msgstr "Parametras „%s“ yra nežinomas ir buvo ignoruotas\n"
+
+#: src/totem.c:3642
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Negalėjau įnicializuoti saugių gijų bibliotekų."
 
-#: src/totem.c:3503
+#: src/totem.c:3642
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Patikrinkite savo sistemos įdiegimą. Totem dabar užsidarys."
 
-#: src/totem.c:3524
+#: src/totem.c:3665
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem negalėjo inicializuoti konfigūracijos varikliuko."
 
-#: src/totem.c:3524
+#: src/totem.c:3665
 msgid "Make sure that GNOME is properly installed."
 msgstr "Įsitikinkite, jog GNOME deramai įdiegtas."
 
-#: src/totem.c:3532 src/totem.c:3557
+#: src/totem.c:3677 src/totem.c:3702
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "Negalėjau užkrauti pagrindinės vartotojo sąsajos (totem.glade)."
 
-#: src/totem.c:3582
+#: src/totem.c:3727
 msgid "Couldn't load the interface for the playlist."
 msgstr "Negalėjau užkrauti sąsajos grojaraščiui."
 
-#: src/vanity.c:55
+#: src/vanity.c:79
 msgid "Debug mode on"
 msgstr "Derinimo režimas įjungtas"
 
-#: src/vanity.c:252
+#: src/vanity.c:275
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "Interneto kameros pagalbinė programa naudojanti %s"
 
-#: src/vanity.c:531
+#: src/vanity.c:324
+msgid "Please file a bug, this isn't supposed to happen"
+msgstr "Prašome praneši apie klaidą programoje. To neturėjo nutikti."
+
+#: src/vanity.c:567
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1422,11 +1494,11 @@ msgstr ""
 "Vanity negalėjo pradėti darbo: \n"
 "%s"
 
-#: src/vanity.c:532
+#: src/vanity.c:568
 msgid "No reason"
 msgstr "Jokios priežasties"
 
-#: src/vanity.c:570
+#: src/vanity.c:606
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1435,7 +1507,7 @@ msgstr ""
 "Vanity negalėjo susijungti su interneto kamera. \n"
 "Priežastis: %s"
 
-#: src/vanity.c:586
+#: src/vanity.c:622
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1444,11 +1516,11 @@ msgstr ""
 "Vanity negalėjo groti vaizdo iš interneto kameros.\n"
 "Priežastis: %s"
 
-#: src/vanity.c:622
+#: src/vanity.c:658
 msgid "Vanity Webcam Utility"
 msgstr "Vanity interneto kamerų pagalbinė programa"
 
-#: src/vanity.c:627
+#: src/vanity.c:663
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1456,7 +1528,7 @@ msgstr ""
 "Negaliu inicializuoti saugių gijų bibliotekų. \n"
 "Patikrinkite savo sistemos įdiegimą. Vanity dabar užsidarys."
 
-#: src/vanity.c:649
+#: src/vanity.c:688
 #, c-format
 msgid ""
 "Vanity couln't initialise the \n"
@@ -1467,10 +1539,11 @@ msgstr ""
 "konfigūracijos varikliuko: \n"
 "%s"
 
-#: src/vanity.c:663 src/vanity.c:678
+#: src/vanity.c:705 src/vanity.c:720
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
 msgstr ""
 "Negalima užkrauti pagrindinės vartotojo sąsajos (vanity.glade). \n"
 "Įsitikinkite, jog Vanity teisingai įdiegtas."
+
