@@ -320,7 +320,6 @@ gtk_xine_instance_init (GtkXine *gtx)
 	char *configfile;
 
 	GTK_WIDGET_SET_FLAGS (GTK_WIDGET (gtx), GTK_CAN_FOCUS);
-	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (gtx), GTK_DOUBLE_BUFFERED);
 
 	/* Set the default size to be a 4:3 ratio */
 	gtx->widget.requisition.width = DEFAULT_HEIGHT;
@@ -570,7 +569,8 @@ load_audio_out_driver (GtkXine *gtx)
 		char *msg;
 
 		msg = g_strdup_printf (_("Couldn't load the '%s' audio driver\n"
-					"Check that the device is not busy."));
+					"Check that the device is not busy."),
+				audio_driver_id ? audio_driver_id : "auto" );
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[ERROR], 0,
 				0, msg);
