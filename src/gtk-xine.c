@@ -119,8 +119,7 @@ struct GtkXinePrivate {
 
 	/* fullscreen stuff */
 	gboolean fullscreen_mode;
-	int fullscreen_width, fullscreen_height;
-	Window toplevel;
+//	Window toplevel;
 	GdkWindow *fullscreen_window;
 	//Window fullscreen_window, toplevel;
 	GtkWidget *invisible;
@@ -299,8 +298,8 @@ dest_size_cb (void *gtx_gen,
 
 	if (gtx->priv->fullscreen_mode)
 	{
-		*dest_width = gtx->priv->fullscreen_width;
-		*dest_height = gtx->priv->fullscreen_height;
+		*dest_width = gdk_screen_width ();
+		*dest_height = gdk_screen_height ();
 	} else {
 		*dest_width = gtx->widget.allocation.width;
 		*dest_height = gtx->widget.allocation.height;
@@ -322,8 +321,8 @@ frame_output_cb (void *gtx_gen,
 
 	if (gtx->priv->fullscreen_mode)
 	{
-		*dest_width = gtx->priv->fullscreen_width;
-		*dest_height = gtx->priv->fullscreen_height;
+		*dest_width = gdk_screen_width ();
+		*dest_height = gdk_screen_height ();
 	} else {
 		*dest_width = gtx->widget.allocation.width;
 		*dest_height = gtx->widget.allocation.height;
@@ -549,13 +548,13 @@ xine_thread (void *gtx_gen)
 			/* happens only in fullscreen mode
 			 * wait for the window to get visible first
 			 * to avoid BadMatch problems */
-			while (x_window_is_visible (gtx->priv->display,
+/*			while (x_window_is_visible (gtx->priv->display,
 						gtx->priv->toplevel) == FALSE)
-				usleep(5000);
+				usleep(5000);*/
 
-			XSetInputFocus (gtx->priv->display,
+/*			XSetInputFocus (gtx->priv->display,
 					gtx->priv->toplevel, RevertToNone,
-					CurrentTime);
+					CurrentTime);*/
 			break;
 		}
 
@@ -583,15 +582,11 @@ configure_cb (GtkWidget * widget,
 	return FALSE;
 }
 
-static unsigned char bm_no_data[] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-
 static void
 gtk_xine_realize (GtkWidget * widget)
 {
 	GtkXine *gtx;
 	XGCValues values;
-	GdkPixmap *bm_no;
-	GdkColor fg, bg;
 	char *configfile;
 
 	g_return_if_fail (widget != NULL);
@@ -613,11 +608,8 @@ gtk_xine_realize (GtkWidget * widget)
 	widget->window = gdk_window_foreign_new (gtx->priv->video_window);
 
 	/* prepare for fullscreen playback */
-	gtx->priv->fullscreen_width = gdk_screen_width ();
-	gtx->priv->fullscreen_height = gdk_screen_height ();
-
-	gtx->priv->toplevel = GDK_WINDOW_XWINDOW (gdk_window_get_toplevel
-				(gtk_widget_get_parent_window (widget)));
+/*	gtx->priv->toplevel = GDK_WINDOW_XWINDOW (gdk_window_get_toplevel
+				(gtk_widget_get_parent_window (widget)));*/
 
 	/* track configure events of toplevel window */
 	g_signal_connect (GTK_OBJECT (gtk_widget_get_toplevel (widget)),
@@ -1106,31 +1098,34 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 			| GDK_FOCUS_CHANGE_MASK;
 		attr->x = 0;
 		attr->y = 0;
-		attr->width = gtx->priv->fullscreen_width;
-		attr->height = gtx->priv->fullscreen_height;
+		attr->width = gdk_screen_width ();
+		attr->height = gdk_screen_height ();
 		attr->wclass = GDK_INPUT_OUTPUT;
 		attr->window_type = GDK_WINDOW_TOPLEVEL;
+		attr->override_redirect = FALSE;
 
 		gtx->priv->fullscreen_window = gdk_window_new
 			(gdk_get_default_root_window (), attr,
 			 GDK_WA_TITLE | GDK_WA_X | GDK_WA_Y);
 
-		gdk_window_set_fullscreen (gtx->priv->fullscreen_window);
+		g_free (attr);
+
+		/* TODO add check for full-screen from fullscreen_callback
+		 * in terminal-window.c (profterm) */
+		gdk_window_set_fullscreen (gtx->priv->fullscreen_window, TRUE);
 
 		/* Map window. */
 		gdk_window_show (gtx->priv->fullscreen_window);
 		gdk_window_raise (gtx->priv->fullscreen_window);
 
-/*FIXME		XSetInputFocus (gtx->priv->display,
+/*FIXME	 	XSetInputFocus (gtx->priv->display,
 				gtx->priv->toplevel, RevertToNone,
-				CurrentTime);*/
+				CurrentTime); */
 
 		/* Wait for map */
 		while (gdk_window_is_visible
 				(gtx->priv->fullscreen_window) == FALSE)
 			usleep (5000);
-
-		gdk_window_move (gtx->priv->fullscreen_window, 0, 0);
 
 		gtx->priv->vo_driver->gui_data_exchange
 			(gtx->priv->vo_driver,
@@ -1155,14 +1150,16 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 		/* Disable the screen saver */
 		scrsaver_disable (gtx->priv->display);
 	} else {
-		gtx->priv->vo_driver->gui_data_exchange
-			(gtx->priv->vo_driver,
-			 GUI_DATA_EX_DRAWABLE_CHANGED,
-			 (void *) gtx->priv->video_window);
+		gdk_window_set_fullscreen (gtx->priv->fullscreen_window, FALSE);
 
 		gdk_window_destroy (gtx->priv->fullscreen_window);
 		gtk_widget_destroy (gtx->priv->invisible);
 		gtx->priv->invisible = NULL;
+
+		gtx->priv->vo_driver->gui_data_exchange
+			(gtx->priv->vo_driver,
+			 GUI_DATA_EX_DRAWABLE_CHANGED,
+			 (void *) gtx->priv->video_window);
 
 		scrsaver_enable (gtx->priv->display);
 	}
@@ -1377,13 +1374,16 @@ gtk_xine_set_scale_ratio (GtkXine *gtx, gfloat ratio)
 	toplevel = GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (gtx)));
 
 	gtk_window_set_resizable (toplevel, FALSE);
+
 	gtx->widget.allocation.width = new_w;
 	gtx->widget.allocation.height = new_h;
 	gtk_widget_set_size_request (gtk_widget_get_parent (GTK_WIDGET (gtx)),
 			new_w, new_h);
 	gtk_widget_queue_resize (gtk_widget_get_parent (GTK_WIDGET (gtx)));
+
 	while (gtk_events_pending ())
 		gtk_main_iteration ();
+
 	gtk_window_set_resizable (toplevel, TRUE);
 }
 

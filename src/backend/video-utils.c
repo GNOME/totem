@@ -17,52 +17,73 @@ typedef struct {
 } MWMHints;
 
 static void
-wmspec_change_xwindow_state (Window window, GdkAtom state1, GdkAtom state2)
+wmspec_change_state (gboolean   add,
+		GdkWindow *window,
+		GdkAtom    state1,
+		GdkAtom    state2)
 {
 	XEvent xev;
 
-#define _NET_WM_STATE_REMOVE        0   /* remove/unset property */
-#define _NET_WM_STATE_ADD           1   /* add/set property */
-#define _NET_WM_STATE_TOGGLE        2   /* toggle property  */
+#define _NET_WM_STATE_REMOVE        0    /* remove/unset property */
+#define _NET_WM_STATE_ADD           1    /* add/set property */
+#define _NET_WM_STATE_TOGGLE        2    /* toggle property  */  
 
 	xev.xclient.type = ClientMessage;
 	xev.xclient.serial = 0;
 	xev.xclient.send_event = True;
 	xev.xclient.display = gdk_display;
-	xev.xclient.window = window;
-	xev.xclient.message_type =
-		gdk_x11_get_xatom_by_name ("_NET_WM_STATE");
+	xev.xclient.window = GDK_WINDOW_XID (window);
+	xev.xclient.message_type = gdk_x11_get_xatom_by_name ("_NET_WM_STATE");
 	xev.xclient.format = 32;
-	xev.xclient.data.l[0] = _NET_WM_STATE_ADD;
+	xev.xclient.data.l[0] = add ? _NET_WM_STATE_ADD : _NET_WM_STATE_REMOVE;
 	xev.xclient.data.l[1] = gdk_x11_atom_to_xatom (state1);
 	xev.xclient.data.l[2] = gdk_x11_atom_to_xatom (state2);
 
-	XSendEvent (gdk_display,
-			GDK_WINDOW_XID (gdk_get_default_root_window ()),
+	XSendEvent (gdk_display, GDK_WINDOW_XID
+			(gdk_get_default_root_window ()),
 			False,
 			SubstructureRedirectMask | SubstructureNotifyMask,
 			&xev);
 }
 
-void xwindow_set_fullscreen (Display *display, Window window)
+void
+gdk_window_set_fullscreen (GdkWindow *window, gboolean set)
 {
-	MWMHints mwmhints;
-	Atom prop;
+	gdk_window_set_decorations (window, set ? 0 : 1);
+	if (set == TRUE)
+		gdk_window_raise (window);
 
-	/* wm, no borders please */
-	prop = XInternAtom (display, "_MOTIF_WM_HINTS", False);
-	mwmhints.flags = MWM_HINTS_DECORATIONS;
-	mwmhints.decorations = 0;
-	XChangeProperty (display, window, prop, prop,
-			32, PropModeReplace,
-			(unsigned char *) &mwmhints,
-			PROP_MWM_HINTS_ELEMENTS);
-
-	XSetTransientForHint (display, window, None);
-	XRaiseWindow (display, window);
-
-	wmspec_change_xwindow_state (window,
-			gdk_atom_intern ("_NET_WM_STATE_FULLSCREEN", FALSE),
+	/* Set full-screen hint */
+	wmspec_change_state (set, window,
+			gdk_atom_intern
+			("_NET_WM_STATE_FULLSCREEN", FALSE),
 			GDK_NONE);
+}
+
+void
+eel_gdk_window_set_invisible_cursor (GdkWindow *window)
+{
+	GdkBitmap *empty_bitmap;
+	GdkCursor *cursor;
+	GdkColor useless;
+	char invisible_cursor_bits[] = { 0x0 }; 
+
+	useless.red = useless.green = useless.blue = 0;
+	useless.pixel = 0;
+
+	empty_bitmap = gdk_bitmap_create_from_data (window,
+			invisible_cursor_bits,
+			1, 1);
+
+	cursor = gdk_cursor_new_from_pixmap (empty_bitmap,
+			empty_bitmap,
+			&useless,
+			&useless, 0, 0);
+
+	gdk_window_set_cursor (window, cursor);
+
+	gdk_cursor_unref (cursor);
+
+	g_object_unref (empty_bitmap);
 }
 

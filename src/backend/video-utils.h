@@ -1,6 +1,6 @@
 
-#include <X11/X.h>
-#include <X11/Xlib.h>
+#include <gdk/gdk.h>
 
-void xwindow_set_fullscreen (Display *display, Window window);
+void gdk_window_set_fullscreen (GdkWindow *window, gboolean set);
+void eel_gdk_window_set_invisible_cursor (GdkWindow *window);
 
