@@ -1,3 +1,14 @@
+2002-10-11  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-playlist.c: (eel_read_entire_file), (drop_cb),
+	(gtk_playlist_add_files), (gtk_playlist_add_one_mrl),
+	(gtk_playlist_add_m3u), (gtk_playlist_add_pls),
+	(gtk_playlist_add_mrl):
+	* src/gtk-playlist.h:
+	* src/totem.c: (drop_cb), (on_recent_file_activate),
+	(totem_action_open_files): m3u working on http URIs, possibility to
+	set a display name already, when adding an mrl
+
 2002-10-10  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.applications:

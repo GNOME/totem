@@ -31,7 +31,7 @@
 
 #include "debug.h"
 
-#define PATH_MAX_LENGTH 1024
+#define READ_CHUNK_SIZE 8192
 
 struct GtkPlaylistPrivate
 {
@@ -122,6 +122,65 @@ gtk_tree_model_iter_previous (GtkTreeModel *tree_model, GtkTreeIter *iter)
 	return ret;
 }
 
+static GnomeVFSResult
+eel_read_entire_file (const char *uri,
+		int *file_size,
+		char **file_contents)
+{
+	GnomeVFSResult result;
+	GnomeVFSHandle *handle;
+	char *buffer;
+	GnomeVFSFileSize total_bytes_read;
+	GnomeVFSFileSize bytes_read;
+
+	*file_size = 0;
+	*file_contents = NULL;
+
+	/* Open the file. */
+	result = gnome_vfs_open (&handle, uri, GNOME_VFS_OPEN_READ);
+	if (result != GNOME_VFS_OK) {
+		return result;
+	}
+
+	/* Read the whole thing. */
+	buffer = NULL;
+	total_bytes_read = 0;
+	do {
+		buffer = g_realloc (buffer, total_bytes_read + READ_CHUNK_SIZE);
+		result = gnome_vfs_read (handle,
+				buffer + total_bytes_read,
+				READ_CHUNK_SIZE,
+				&bytes_read);
+		if (result != GNOME_VFS_OK && result != GNOME_VFS_ERROR_EOF) {
+			g_free (buffer);
+			gnome_vfs_close (handle);
+			return result;
+		}
+
+		/* Check for overflow. */
+		if (total_bytes_read + bytes_read < total_bytes_read) {
+			g_free (buffer);
+			gnome_vfs_close (handle);
+			return GNOME_VFS_ERROR_TOO_BIG;
+		}
+
+		total_bytes_read += bytes_read;
+	} while (result == GNOME_VFS_OK);
+
+	/* Close the file. */
+	result = gnome_vfs_close (handle);
+	if (result != GNOME_VFS_OK) {
+		g_free (buffer);
+		return result;
+	}
+
+	/* Return the file. */
+	*file_size = total_bytes_read;
+	*file_contents = g_realloc (buffer, total_bytes_read);
+	return GNOME_VFS_OK;
+}
+
+
 static void
 drop_cb (GtkWidget     *widget,
          GdkDragContext     *context, 
@@ -176,7 +235,7 @@ drop_cb (GtkWidget     *widget,
 					| G_FILE_TEST_EXISTS)
 				 || strstr (filename, "://") != NULL))
 		{
-			gtk_playlist_add_mrl (playlist, filename);
+			gtk_playlist_add_mrl (playlist, filename, NULL);
 		}
 		g_free (filename);
 		g_free (p->data);
@@ -258,7 +317,7 @@ gtk_playlist_add_files (GtkWidget *widget, gpointer user_data)
 		}
 
 		for (i = 0; filenames[i] != NULL; i++)
-			gtk_playlist_add_mrl (playlist, filenames[i]);
+			gtk_playlist_add_mrl (playlist, filenames[i], NULL);
 
 		g_strfreev (filenames);
 	}
@@ -543,7 +602,8 @@ gtk_playlist_new (GtkWindow *parent)
 }
 
 static gboolean
-gtk_playlist_add_one_mrl (GtkPlaylist *playlist, const char *mrl)
+gtk_playlist_add_one_mrl (GtkPlaylist *playlist, const char *mrl,
+		const char *display_name)
 {
 	GtkListStore *store;
 	GtkTreeIter iter;
@@ -554,12 +614,17 @@ gtk_playlist_add_one_mrl (GtkPlaylist *playlist, const char *mrl)
 
 	D("gtk_playlist_add_one_mrl: %s", mrl);
 
-	filename = g_path_get_basename (mrl);
-	filename_utf8 = g_filename_to_utf8 (filename,
-			-1,		/* length */
-			NULL,		/* bytes_read */
-			NULL,		/* bytes_written */
-			NULL);		/* error */
+	if (display_name == NULL)
+	{
+		filename = g_path_get_basename (mrl);
+		filename_utf8 = g_filename_to_utf8 (filename,
+				-1,		/* length */
+				NULL,		/* bytes_read */
+				NULL,		/* bytes_written */
+				NULL);		/* error */
+	} else {
+		filename_utf8 = g_strdup (display_name);
+	}
 
 	store = GTK_LIST_STORE (playlist->_priv->model);
 	gtk_list_store_append (store, &iter);
@@ -580,61 +645,49 @@ gtk_playlist_add_one_mrl (GtkPlaylist *playlist, const char *mrl)
 			NULL);
 }
 
-/* FIXME use gnome_vfs instead of local file shite */
 static gboolean
 gtk_playlist_add_m3u (GtkPlaylist *playlist, const char *mrl)
 {
-	FILE *input;
 	gboolean retval = FALSE;
-	char *filename;
+	char *contents, **lines;
+	int size, i;
 
 	D("gtk_playlist_add_m3u: %s", mrl);
 
-	if (strstr (mrl, "://") != NULL)
-		filename = gnome_vfs_get_local_path_from_uri (mrl);
-	else
-		filename = g_strdup (mrl);
-
-	if (filename == NULL)
-	{
-		D("gtk_playlist_add_m3u: filename is NULL");
+	if (eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
-	}
 
-	input = fopen(filename, "r");
+	lines = g_strsplit (contents, "\n", 0);
 
-	if (input == NULL)
+	for (i = 0; lines[i] != NULL; i++)
 	{
-		D("gtk_playlist_add_m3u: couldn't open %s", filename);
-		return FALSE;
-	}
+		D("gtk_playlist_add_m3u: line %s", lines[i]);
 
-	while (!feof(input))
-	{
-		gchar *get_res, *line;
-
-		line = g_malloc (PATH_MAX_LENGTH);
-
-		if (fgets(line, PATH_MAX_LENGTH, input) != NULL)
+		/* Either it's a URI, or it has a proper path */
+		if (strstr(lines[i], "://") != NULL
+				|| lines[i][0] == G_DIR_SEPARATOR)
 		{
-			gboolean result;
-
-			D("gtk_playlist_add_m3u: line %s", line);
-
-			line = g_strchomp(line);
-			result = gtk_playlist_add_one_mrl (playlist, line);
-			if (retval == FALSE && result == TRUE)
+			if (gtk_playlist_add_one_mrl (playlist,
+						lines[i], NULL) == TRUE)
 				retval = TRUE;
 		}
 	}
-	fclose(input);
-	g_free (filename);
+
+	g_strfreev (lines);
 
 	return retval;
 }
 
+static gboolean
+gtk_playlist_add_pls (GtkPlaylist *playlist, const char *mrl)
+{
+	//FIXME implement
+	return FALSE;
+}
+
 gboolean
-gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl)
+gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
+		const char *display_name)
 {
 	gboolean retval = FALSE;
 	const char *mimetype;
@@ -645,7 +698,7 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl)
 	D("gtk_playlist_add_mrl: adding %s (%s)", mrl, mimetype);
 	if (mimetype == NULL)
 	{
-		retval = gtk_playlist_add_one_mrl (playlist, mrl);
+		retval = gtk_playlist_add_one_mrl (playlist, mrl, display_name);
 	} else if (strcmp ("audio/x-mpegurl", mimetype) == 0) {
 		return gtk_playlist_add_m3u (playlist, mrl);
 	} else if (strcmp ("audio/x-scpls", mimetype) == 0) {
@@ -654,7 +707,7 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl)
 		//Load all the files in the dir ?
 	}
 
-	return gtk_playlist_add_one_mrl (playlist, mrl);
+	return gtk_playlist_add_one_mrl (playlist, mrl, display_name);
 }
 
 void

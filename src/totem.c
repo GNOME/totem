@@ -528,7 +528,7 @@ drop_cb (GtkWidget     *widget,
 				gtk_playlist_clear (totem->playlist);
 				cleared = TRUE;
 			}
-			gtk_playlist_add_mrl (totem->playlist, filename); 
+			gtk_playlist_add_mrl (totem->playlist, filename, NULL); 
 		}
 		g_free (filename);
 		g_free (p->data);
@@ -605,7 +605,7 @@ on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
 	filename = g_filename_from_uri (uri, NULL, NULL);
 	g_return_if_fail (filename != NULL);
 	
-	gtk_playlist_add_mrl (totem->playlist, filename);
+	gtk_playlist_add_mrl (totem->playlist, filename, NULL);
 
 	egg_recent_model_add_full (totem->recent_model, item);
 
@@ -695,7 +695,7 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 				gtk_playlist_clear (totem->playlist);
 				cleared = TRUE;
 			}
-			gtk_playlist_add_mrl (totem->playlist, list[i]);
+			gtk_playlist_add_mrl (totem->playlist, list[i], NULL);
 
                         {
                                 char *uri;

@@ -50,8 +50,13 @@ struct GtkPlaylistClass {
 GtkType    gtk_playlist_get_type (void);
 GtkWidget *gtk_playlist_new      (GtkWindow *parent);
 
-/* The application is responsible for checking that the mrl is correct */
-gboolean   gtk_playlist_add_mrl  (GtkPlaylist *playlist, const char *mrl);
+/* The application is responsible for checking that the mrl is correct
+ * Handles directories, m3u playlists, and shoutcast playlists
+ * @display_name is if you have a preferred display string for the mrl,
+ * NULL otherwise
+ */
+gboolean   gtk_playlist_add_mrl  (GtkPlaylist *playlist, const char *mrl,
+		const char *display_name);
 
 /* gtk_playlist_clear doesn't emit the current_removed signal, even if it does
  * because the caller should know what to do after it's done with clearing */
