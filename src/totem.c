@@ -433,12 +433,7 @@ totem_action_play_pause (Totem *totem)
 void
 totem_action_fullscreen_toggle (Totem *totem)
 {
-	static gboolean state = FALSE;	
-	gboolean new_state;
-	
-	new_state = !state;
-
-	if (new_state == FALSE)
+	if (totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN)
 	{
 		gboolean auto_resize;
 
@@ -480,8 +475,6 @@ totem_action_fullscreen_toggle (Totem *totem)
 			show_controls (totem, FALSE);
 		totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
 	}
-
-	state = new_state;
 }
 
 void
@@ -1673,6 +1666,7 @@ static void
 show_controls (Totem *totem, gboolean visible)
 {
 	GtkWidget *menubar, *controlbar, *statusbar, *item, *bvw_vbox;
+	GtkRequisition requisition;
 	
 	menubar = glade_xml_get_widget (totem->xml, "tmw_bonobodockitem");
 	controlbar = glade_xml_get_widget (totem->xml, "tmw_controls_vbox");
@@ -1694,39 +1688,26 @@ show_controls (Totem *totem, gboolean visible)
 		gtk_widget_hide (item);
 		gtk_container_set_border_width (GTK_CONTAINER (bvw_vbox), 0);
 	}
+	
+	gtk_widget_size_request (totem->win, &requisition);
+	gtk_window_resize (GTK_WINDOW(totem->win), requisition.width, requisition.height);
+	
 }
 
 static void
 on_show_controls1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 {
 	gboolean show;
-	int w, h;
 
 	show = gtk_check_menu_item_get_active (checkmenuitem);
-
-	gdk_drawable_get_size
-		(GDK_DRAWABLE (GTK_WIDGET (totem->bvw)->window),
-		 &w, &h);
 
 	show_controls (totem, show);
 
 	/* Let's update our controls visibility */
 	if (show)
 	{
-		int win_w, win_h, wid_w, wid_h;
-
-		long_action();
-		wid_w = GTK_WIDGET(totem->bvw)->allocation.width;
-		wid_h = GTK_WIDGET(totem->bvw)->allocation.height;
-		gdk_drawable_get_size
-			(GDK_DRAWABLE (GTK_WIDGET (totem->win)->window),
-			 &win_w, &win_h);
-
-		gtk_window_resize (GTK_WINDOW (totem->win),
-				win_w - wid_w + w, win_h - wid_h + h);
 		totem->controls_visibility = TOTEM_CONTROLS_VISIBLE;
 	} else {
-		gtk_window_resize (GTK_WINDOW (totem->win), w, h);
 		totem->controls_visibility = TOTEM_CONTROLS_HIDDEN;
 	}
 }
