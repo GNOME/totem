@@ -1317,6 +1317,8 @@ update_seekable (Totem *totem, gboolean seekable)
 	gtk_widget_set_sensitive (widget, seekable);
 	widget = glade_xml_get_widget (totem->xml, "tstw_ok_button");
 	gtk_widget_set_sensitive (widget, seekable);
+
+	totem->seekable = seekable;
 }
 
 static void
@@ -2189,6 +2191,9 @@ static void
 on_skip_to1_activate (GtkButton *button, Totem *totem)
 {
 	GtkWidget *dialog;
+
+	if (totem->seekable == FALSE)
+		return;
 
 	dialog = glade_xml_get_widget (totem->xml, "totem_skip_to_window");
 	gtk_widget_show (dialog);

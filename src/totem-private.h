@@ -60,6 +60,7 @@ struct Totem {
 	GtkWidget *seek;
 	GtkAdjustment *seekadj;
 	gboolean seek_lock;
+	gboolean seekable;
 
 	/* Volume */
 	GtkWidget *volume;
