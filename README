@@ -57,7 +57,8 @@ Q:
 Copyright
 =========
 
-gtk-xine.[ch] from gnome-xine, with the following enhancements by myself:
+gtk-xine.[ch] from gnome-xine by Guenter Bartsch <guenter@users.sourceforge.net>
+with the following enhancements by myself:
 - port to Gtk+ 2.0
 - real full-screen mode for _NET_WM aware window managers (metacity, sawfish2,
   kwin > 2.2, etc.)
@@ -78,8 +79,8 @@ Q: Totem doesn't appear in the applications to open videos in Nautilus.
 A: You probably installed Totem in a different prefix. Here is how to fix it.
    $ cd /where/the/totem/sources/are/
    $ mkdir -p ~/.gnome/application-registry ~/.gnome/mime-info/
-   $ cp src/totem.applications ~/.gnome/application-registry
-   $ cp src/totem.keys ~/.gnome/mime-info/
+   $ cp src/totem.applications ~/.gnome/application-registry ; \
+   	cp src/totem.keys ~/.gnome/mime-info/
 
    And it should now. Enjoy.
 
@@ -95,7 +96,7 @@ TODO
 - first startup video
 - work on remote displays
 - stop one-broken-file long playlists from looping over and over (using xine_register_report_codec())
-- 
+- fix up configuration (demux_strategy, audio out, default movie, etc.)
 
 Contact
 =======

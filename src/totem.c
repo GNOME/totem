@@ -194,6 +194,14 @@ action_play (Totem *totem, int offset)
 }
 
 static void
+action_stop (Totem *totem)
+{
+	D("action_pause");
+
+	gtk_xine_stop (GTK_XINE (totem->gtx));
+}
+
+static void
 action_play_pause (Totem *totem)
 {
 	D("action_play_pause");
@@ -350,6 +358,7 @@ action_previous (Totem *totem)
 	update_buttons (totem);
 	mrl = gtk_playlist_get_current_mrl (totem->playlist);
 	action_set_mrl (totem, mrl);
+//	action_play (totem, 0);
 	g_free (mrl);
 }
 
@@ -362,6 +371,7 @@ action_next (Totem *totem)
 	update_buttons (totem);
 	mrl = gtk_playlist_get_current_mrl (totem->playlist);
 	action_set_mrl (totem, mrl);
+//	action_play (totem, 0);
 	g_free (mrl);
 }
 
@@ -669,11 +679,17 @@ on_about1_activate (GtkButton * button, gpointer user_data)
 	static GtkWidget *about = NULL;
 	Totem *totem = (Totem *) user_data;
 	GdkPixbuf *pixbuf = NULL;
-	const gchar *authors[] = {"Bastien Nocera", NULL};
+	const gchar *authors[] =
+	{
+		"Bastien Nocera <hadess@hadess.net>",
+		"Guenter Bartsch <guenter@users.sourceforge.net>",
+		NULL
+	};
 	const gchar *documenters[] = { NULL };
 	const gchar *translator_credits = _("translator_credits");
 
-	if (about != NULL) {
+	if (about != NULL)
+	{
 		gdk_window_raise (about->window);
 		gdk_window_show (about->window);
 		return;
@@ -704,6 +720,8 @@ on_about1_activate (GtkButton * button, gpointer user_data)
 
 	g_signal_connect (G_OBJECT (about), "destroy", G_CALLBACK
 			(gtk_widget_destroyed), &about);
+	g_object_add_weak_pointer (G_OBJECT (about),
+			(void**)&(about));
 	gtk_window_set_transient_for (GTK_WINDOW (about),
 			GTK_WINDOW (totem->win));
 
@@ -739,6 +757,7 @@ playlist_changed_cb (GtkWidget *playlist, gpointer user_data)
 		g_free (totem->mrl);
 		totem->mrl = NULL;
 		action_set_mrl (totem, mrl);
+//		action_play (totem, 0);
 	} else if (totem->mrl != NULL) {
 		gtk_playlist_set_playing (totem->playlist, TRUE);
 	}
@@ -1131,7 +1150,7 @@ main (int argc, char **argv)
 	{
 		action_error (_("Couldn't load the main Glade file"
 					" (totem.glade).\nMake sure that Totem"
-					"is properly installed."));
+					" is properly installed."));
 		exit (1);
 	}
 	g_free (filename);
@@ -1145,7 +1164,7 @@ main (int argc, char **argv)
 	{
 		action_error (_("Couldn't load the interface for the playlist."
 					"\nMake sure that Totem"
-					"is properly installed."));
+					" is properly installed."));
 		exit (1);
 	}
 

@@ -34,9 +34,9 @@
 #include <X11/cursorfont.h>
 /* gtk+/gnome */
 #include <gdk/gdk.h>
+#include <gdk/gdkx.h>
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkmain.h>
-#include <gdk/gdkx.h>
 #include <gtk/gtkinvisible.h>
 #include <libgnome/gnome-i18n.h>
 /* xine */
@@ -619,7 +619,6 @@ xine_error (GtkXine *gtx)
 	int error;
 
 	error = xine_get_error (gtx->priv->xine);
-	g_message ("ERROR: %d", error);
 	switch (error)
 	{
 	case XINE_ERROR_NONE:
