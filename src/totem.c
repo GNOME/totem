@@ -1190,11 +1190,21 @@ on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
                          Totem *totem)
 {
 	char *uri;
+	gboolean playlist_changed;
 
 	uri = egg_recent_item_get_uri (item);
 
-	totem_playlist_add_mrl (totem->playlist, uri, NULL);
+	playlist_changed = totem_playlist_add_mrl (totem->playlist, uri, NULL);
 	egg_recent_model_add_full (totem->recent_model, item);
+	
+	if (playlist_changed)
+	{
+		char *mrl;
+		totem_playlist_set_at_end (totem->playlist);
+		mrl = totem_playlist_get_current_mrl (totem->playlist);
+		totem_action_set_mrl_and_play (totem, mrl);
+		g_free (mrl);   
+	}
 
 	g_free (uri);
 }

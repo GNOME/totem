@@ -111,7 +111,7 @@ static void totem_playlist_init       (TotemPlaylist      *playlist);
 
 static void init_treeview (GtkWidget *treeview, TotemPlaylist *playlist);
 static gboolean totem_playlist_unset_playing (TotemPlaylist *playlist);
-static void totem_playlist_set_at_end (TotemPlaylist *playlist);
+void totem_playlist_set_at_end (TotemPlaylist *playlist);
 
 GtkType
 totem_playlist_get_type (void)
@@ -1723,7 +1723,7 @@ totem_playlist_set_at_start (TotemPlaylist *playlist)
 	update_current_from_playlist (playlist);
 }
 
-static void
+void
 totem_playlist_set_at_end (TotemPlaylist *playlist)
 {
 	int indice;
