@@ -1,3 +1,17 @@
+2003-10-07  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-xine.c: (setup_config),
+	(bacon_video_widget_tick_send), (bacon_video_widget_play),
+	(bacon_video_widget_pause): fix a possible crash when setting the
+	GError in bacon_video_widget_play, do a xine_play when the stream
+	is paused *and* not playing, stop live streams on pause
+	(Closes: #123557)
+	* src/debug.h: fix warning
+	* src/totem.c: (on_play_pause_button_clicked),
+	(on_previous_button_clicked), (on_next_button_clicked),
+	(on_buffering_event): add profiling to a couple of totem functions, 
+	only create a buffering dialog if the buffering is below 100%
+
 2003-10-06  Bastien Nocera  <hadess@hadess.net>
 
 	* README: updated

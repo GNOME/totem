@@ -1145,19 +1145,19 @@ drag_video_cb (GtkWidget *widget,
 static void
 on_play_pause_button_clicked (GtkToggleButton *button, Totem *totem)
 {
-	totem_action_play_pause (totem);
+	TOTEM_PROFILE (totem_action_play_pause (totem));
 }
 
 static void
 on_previous_button_clicked (GtkButton *button, Totem *totem)
 {
-	totem_action_previous (totem);
+	TOTEM_PROFILE (totem_action_previous (totem));
 }
 
 static void
 on_next_button_clicked (GtkButton *button, Totem *totem)
 {
-	totem_action_next (totem);
+	TOTEM_PROFILE (totem_action_next (totem));
 }
 
 static void
@@ -1256,7 +1256,7 @@ on_buffering_event (BaconVideoWidget *bvw, int percentage, Totem *totem)
 {
 	char *msg;
 
-	if (percentage > 0 && totem->buffer_dialog == NULL)
+	if (percentage > 0 && percentage < 100 && totem->buffer_dialog == NULL)
 	{
 		GtkWidget *image, *hbox;
 

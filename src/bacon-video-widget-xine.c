@@ -151,6 +151,7 @@ struct BaconVideoWidgetPrivate {
 	int volume;
 	TvOutType tvout;
 	guint32 video_fcc, audio_fcc;
+	gboolean is_live;
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
@@ -704,7 +705,6 @@ setup_config (BaconVideoWidget *bvw)
 			"input.http_proxy_host", "", &entry);
 	entry.str_value = gconf_client_get_string (bvw->priv->gc,
 			"/system/http_proxy/host", NULL);
-	g_message ("str value: %s", entry.str_value);
 	xine_config_update_entry (bvw->priv->xine, &entry);
 
 	bvw_config_help_num (bvw->priv->xine,
@@ -1500,6 +1500,11 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 		current_position_f = (float) current_position / 65535;
 	}
 
+	if (stream_length > 0)
+		bvw->priv->is_live = FALSE;
+	else
+		bvw->priv->is_live = TRUE;
+
 	if (ret == TRUE)
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[TICK], 0,
@@ -1678,6 +1683,7 @@ bacon_video_widget_play (BaconVideoWidget *bvw, GError **gerror)
 	g_return_val_if_fail (bvw->priv->xine != NULL, -1);
 
 	bvw->priv->started = TRUE;
+	error = 1;
 
 	if (bvw->priv->seeking == 1)
 	{
@@ -1689,14 +1695,14 @@ bacon_video_widget_play (BaconVideoWidget *bvw, GError **gerror)
 				bvw->priv->seek_dest_time);
 		bvw->priv->seeking = 0;
 	} else {
-		int speed;
+		int speed, status;
 
 		speed = xine_get_param (bvw->priv->stream, XINE_PARAM_SPEED);
-		if (speed == XINE_SPEED_PAUSE)
+		status = xine_get_status (bvw->priv->stream);
+		if (speed != XINE_SPEED_NORMAL && status == XINE_STATUS_PLAY)
 		{
 			xine_set_param (bvw->priv->stream,
 					XINE_PARAM_SPEED, XINE_SPEED_NORMAL);
-			error = 0;
 		} else {
 			error = xine_play (bvw->priv->stream, 0, 0);
 		}
@@ -1925,6 +1931,9 @@ bacon_video_widget_pause (BaconVideoWidget *bvw)
 	g_return_if_fail (bvw->priv->xine != NULL);
 
 	xine_set_param (bvw->priv->stream, XINE_PARAM_SPEED, XINE_SPEED_PAUSE);
+
+	if (bvw->priv->is_live != FALSE)
+		xine_stop (bvw->priv->stream);
 
 #ifdef HAVE_XINE_CLOSE
 	/* Close the audio device when on pause */
