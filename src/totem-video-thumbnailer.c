@@ -21,7 +21,7 @@ gboolean finished = FALSE;
 static void
 print_usage (void)
 {
-	g_print ("usage: totem-video-thumbnailer <infile> <outfile>\n");
+	g_print ("usage: totem-video-thumbnailer [-s <size>] <infile> <outfile>\n");
 	exit (1);
 }
 
@@ -43,7 +43,7 @@ show_pixbuf (GdkPixbuf *pix)
 #endif
 
 static GdkPixbuf *
-add_holes_to_pixbuf (GdkPixbuf *pixbuf, int width, int height)
+add_holes_to_pixbuf_small (GdkPixbuf *pixbuf, int width, int height)
 {
 	GdkPixbuf *holes, *tmp;
 	char *filename;
@@ -88,8 +88,80 @@ add_holes_to_pixbuf (GdkPixbuf *pixbuf, int width, int height)
 	return tmp;
 }
 
+static GdkPixbuf *
+add_holes_to_pixbuf_large (GdkPixbuf *pixbuf, int width, int height)
+{
+	char *filename;
+	int lh, lw, rh, rw, i;
+	GdkPixbuf *left, *right, *small;
+	double ratio;
+
+	filename = g_build_filename (DATADIR, "totem",
+			"filmholes-big-left.png", NULL);
+	left = gdk_pixbuf_new_from_file (filename, NULL);
+	g_free (filename);
+
+	if (left == NULL)
+	{
+		gdk_pixbuf_ref (pixbuf);
+		return pixbuf;
+	}
+
+	filename = g_build_filename (DATADIR, "totem",
+			"filmholes-big-right.png", NULL);
+	right = gdk_pixbuf_new_from_file (filename, NULL);
+	g_free (filename);
+
+	if (right == NULL)
+	{
+		gdk_pixbuf_unref (left);
+		gdk_pixbuf_ref (pixbuf);
+		return pixbuf;
+	}
+
+	lh = gdk_pixbuf_get_height (left);
+	lw = gdk_pixbuf_get_width (left);
+	rh = gdk_pixbuf_get_height (right);
+	rw = gdk_pixbuf_get_width (right);
+	g_assert (lh == rh);
+	g_assert (lw == rw);
+
+	small = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, width, height);
+	gdk_pixbuf_fill (small, 0x000000ff);
+	ratio = ((double)(width - lw - rw) /
+			(double) gdk_pixbuf_get_width (pixbuf));
+	gdk_pixbuf_scale (pixbuf, small, lw, lw,
+			width - lw - rw, height - lw -lw,
+			lw, lw, ratio, ratio, GDK_INTERP_NEAREST);
+
+	/* Left side holes */
+	for (i = 0; i < height; i += lh)
+	{
+		gdk_pixbuf_composite (left, small, 0, i,
+				MIN (width, lw),
+				MIN (height-i, lh),
+				0, i, 1, 1, GDK_INTERP_NEAREST, 255);
+	}
+
+	/* Right side holes */
+	for (i = 0; i < height; i += rh)
+	{
+		gdk_pixbuf_composite (right, small,
+				width - rw, i,
+				MIN (width, rw),
+				MIN (height-i, rh),
+				width - rw, i,
+				1, 1, GDK_INTERP_NEAREST, 255);
+	}
+
+	/* TODO Add a border of 0x33333300 all around */
+
+	return small;
+}
+
 static void
-save_pixbuf (GdkPixbuf *pixbuf, const char *path, const char *video_path)
+save_pixbuf (GdkPixbuf *pixbuf, const char *path,
+	     const char *video_path, int size)
 {
 	GdkPixbuf *small, *with_holes;
 	int width, height, d_width, d_height;
@@ -100,19 +172,25 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path, const char *video_path)
 
 	if (width > height)
 	{
-		d_width = 128;
-		d_height = 128 * height / width;
+		d_width = size;
+		d_height = size * height / width;
 	} else {
-		d_height = 128;
-		d_width = 128 * width / height;
+		d_height = size;
+		d_width = size * width / height;
 	}
 
-	small = gdk_pixbuf_scale_simple (pixbuf, d_width, d_height,
-			GDK_INTERP_TILES);
+	if (size <= 128)
+	{
+		small = gdk_pixbuf_scale_simple (pixbuf, d_width, d_height,
+				GDK_INTERP_TILES);
 
-	with_holes = add_holes_to_pixbuf (small, d_width, d_height);
-	g_return_if_fail (with_holes != NULL);
-	gdk_pixbuf_unref (small);
+		with_holes = add_holes_to_pixbuf_small (small, d_width, d_height);
+		g_return_if_fail (with_holes != NULL);
+		gdk_pixbuf_unref (small);
+	} else {
+		with_holes = add_holes_to_pixbuf_large (pixbuf, d_width, d_height);
+		g_return_if_fail (with_holes != NULL);
+	}
 
 	if (gdk_pixbuf_save (with_holes, path, "png", &err, NULL) == FALSE)
 	{
@@ -154,7 +232,8 @@ int main (int argc, char *argv[])
 	GError *err = NULL;
 	BaconVideoWidget *bvw;
 	GdkPixbuf *pixbuf;
-	int i, length;
+	int i, length, size;
+	char *input, *output;
 
 	nice (20);
 
@@ -162,8 +241,23 @@ int main (int argc, char *argv[])
 
 	gtk_init (&argc, &argv);
 
-	if (argc != 3)
+	if (argc != 3 && argc != 5)
 		print_usage ();
+
+	if (argc == 5)
+	{
+		if (strcmp (argv[1], "-s") != 0)
+		{
+			print_usage ();
+		}
+		input = argv[3];
+		output = argv[4];
+		size = (int) g_strtod (argv[2], NULL);
+	} else {
+		input = argv[1];
+		output = argv[2];
+		size = 128;
+	}
 
 	bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (-1, -1, TRUE, &err));
 	if (err != NULL)
@@ -174,13 +268,13 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	g_thread_create (time_monitor, (gpointer) argv[1], FALSE, NULL);
+	g_thread_create (time_monitor, (gpointer) input, FALSE, NULL);
 
-	if (bacon_video_widget_open (bvw, argv[1], &err) == FALSE)
+	if (bacon_video_widget_open (bvw, input, &err) == FALSE)
 	{
 		g_print ("totem-video-thumbnailer couln't open file '%s'\n"
 				"Reason: %s.\n",
-				argv[1], err->message);
+				input, err->message);
 		g_error_free (err);
 		exit (1);
 	}
@@ -190,7 +284,7 @@ int main (int argc, char *argv[])
 	{
 		g_print ("totem-video-thumbnailer couln't play file: '%s'\n"
 				"Reason: %s.\n",
-				argv[1], err->message);
+				input, err->message);
 		g_error_free (err);
 		exit (1);
 	}
@@ -212,7 +306,7 @@ int main (int argc, char *argv[])
 	{
 		g_print ("totem-video-thumbnailer: '%s' isn't thumbnailable\n"
 				"Reason: %s\n",
-				argv[1], err ? err->message : "programming error");
+				input, err ? err->message : "programming error");
 		bacon_video_widget_close (bvw);
 		gtk_widget_destroy (GTK_WIDGET (bvw));
 		g_error_free (err);
@@ -237,11 +331,11 @@ int main (int argc, char *argv[])
 	if (pixbuf == NULL)
 	{
 		g_print ("totem-video-thumbnailer couln't get a picture from "
-					"'%s'\n", argv[1]);
+					"'%s'\n", input);
 		exit (1);
 	}
 
-	save_pixbuf (pixbuf, argv[2], argv[1]);
+	save_pixbuf (pixbuf, output, input, size);
 	gdk_pixbuf_unref (pixbuf);
 
 	return 0;

@@ -4,6 +4,8 @@ man_MANS = totem.1
 stuffdir = $(datadir)/totem/
 stuff_DATA =				\
 	filmholes.png			\
+	filmholes-big-left.png		\
+	filmholes-big-right.png		\
 	media-player-48.png		\
 	stock_media_next.png		\
 	stock_media_previous.png	\

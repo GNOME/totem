@@ -1,5 +1,15 @@
 2004-07-04  Bastien Nocera  <hadess@hadess.net>
 
+	* data/Makefile.am:
+	* data/filmholes-big-left.png:
+	* data/filmholes-big-right.png:
+	* src/totem-video-thumbnailer.c: (print_usage),
+	(add_holes_to_pixbuf_small), (add_holes_to_pixbuf_large),
+	(save_pixbuf), (main): added better holes for bigger thumbnail sizes,
+	add an option to the thumnailer for bigger sizes
+
+2004-07-04  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-properties.c:
 	(bacon_video_widget_properties_set_from_current):
 	* src/totem-private.h:
