@@ -1,3 +1,9 @@
+2004-10-30  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_init),
+	(setup_config): move the debug before xine_init() so that we can
+	debug the plugins loading for example
+
 2004-10-28  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.desktop.in.in: tell the mime DB we support URLs

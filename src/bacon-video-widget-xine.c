@@ -416,18 +416,6 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
 
 	xine_init (bvw->priv->xine);
 
-	/* Debug configuration */
-	if (gconf_client_get_bool (bvw->priv->gc, GCONF_PREFIX"/debug", NULL) == FALSE)
-	{
-		xine_engine_set_param (bvw->priv->xine,
-				XINE_ENGINE_PARAM_VERBOSITY,
-				XINE_VERBOSITY_NONE);
-	} else {
-		xine_engine_set_param (bvw->priv->xine,
-				XINE_ENGINE_PARAM_VERBOSITY,
-				XINE_VERBOSITY_DEBUG);
-	}
-
 	/* Can we play DVDs and VCDs ? */
 	autoplug_list = xine_get_autoplay_input_plugin_ids (bvw->priv->xine);
 	while (autoplug_list && autoplug_list[i])
@@ -747,6 +735,19 @@ setup_config (BaconVideoWidget *bvw)
 	if (bvw->priv->gc == NULL) {
 		g_warning ("GConf not available, broken installation?");
 		return;
+	}
+
+	/* Debug configuration */
+	if (gconf_client_get_bool (bvw->priv->gc,
+				GCONF_PREFIX"/debug", NULL) == FALSE)
+	{
+		xine_engine_set_param (bvw->priv->xine,
+				XINE_ENGINE_PARAM_VERBOSITY,
+				XINE_VERBOSITY_NONE);
+	} else {
+		xine_engine_set_param (bvw->priv->xine,
+				XINE_ENGINE_PARAM_VERBOSITY,
+				0xff);
 	}
 
 	/* Proxy configuration */
