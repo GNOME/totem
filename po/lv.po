@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2003-01-21 04:16+0100\n"
-"PO-Revision-Date: 2003-01-21 10:46+0200\n"
+"POT-Creation-Date: 2003-01-23 19:16+0100\n"
+"PO-Revision-Date: 2003-01-23 23:06+0200\n"
 "Last-Translator: Artis Trops <hornet@navigator.lv>\n"
 "Language-Team: Latvian <ll10nt@os.lv>\n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: data/playlist.glade.h:1
-#: src/gtk-playlist.c:804
+#: src/gtk-playlist.c:799
 msgid "Playlist"
 msgstr "Repertuārs"
 
@@ -413,28 +413,28 @@ msgstr "Izvēlieties failus"
 msgid "Filename"
 msgstr "Faila nosaukums"
 
-#: src/gtk-xine.c:75
+#: src/gtk-xine.c:59
 msgid "Totem Video Window"
 msgstr "Totem Video Logs"
 
-#: src/gtk-xine.c:528
+#: src/gtk-xine.c:512
 #, c-format
 msgid "Couldn't load the '%s' audio driver\n"
 "Check that the device is not busy."
 msgstr "Nevarēju ielādēt '%s' audio draiveri\n"
 "Pārbaudiet, vai iekārta nav aizņemta."
 
-#: src/gtk-xine.c:843
+#: src/gtk-xine.c:827
 msgid "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
 msgstr "Nevarēju inicializēt sazarojuma atbalstu.\n"
 "Jums vajadzētu uzstādīt sazarojumdrošu Xlib."
 
-#: src/gtk-xine.c:871
+#: src/gtk-xine.c:855
 msgid "Could not find a suitable video output."
 msgstr "Nevarēju atrast lietojamu video izvadi."
 
-#: src/gtk-xine.c:1238
+#: src/gtk-xine.c:1224
 #, c-format
 msgid "Reason: Video type '%s' is not handled."
 msgstr "Iemesls: Video tips '%s' netiek apdarināts."
@@ -540,7 +540,7 @@ msgid "%s - Totem"
 msgstr "%s - Totem"
 
 #: src/totem.c:400
-#: src/totem.c:2385
+#: src/totem.c:2388
 msgid "No file"
 msgstr "Nav faila"
 
@@ -585,33 +585,40 @@ msgid "Totem couldn't show the movie properties window.\n"
 msgstr "Totem nevarēja parādīt filmas rekvizītu logu.\n"
 "Pārliecinieties, vai Totem ir pareizi uzinstalēts."
 
-#: src/totem.c:1889
+#: src/totem.c:1885
 #, c-format
 msgid "Totem could not startup:\n"
 "%s"
 msgstr "Totem nevarēja palaist:\n"
 "%s"
 
-#: src/totem.c:1895
+#: src/totem.c:1891
 #, c-format
 msgid "There is no plugin for Totem to handle '%s'.\n"
 "Totem will not be able to play it."
 msgstr "Nav iespraudņa priekš Totem, lai apstrādātu '%s'\n"
 "Totem nevarēs to nospēlēt."
 
-#: src/totem.c:1900
+#: src/totem.c:1897
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "'%s' ir sabojāts, un Totem nevar spēlēt to tālāk."
 
-#: src/totem.c:1904
+#: src/totem.c:1902
 #, c-format
 msgid "Totem could not play '%s':\n"
 "%s"
 msgstr "Totem nevarēja nospēlēt '%s':\n"
 "%s"
 
-#: src/totem.c:2547
+#: src/totem.c:1907
+#, c-format
+msgid "Totem could not play '%s'.\n"
+"This location is not a valid one."
+msgstr "Totem nevarēja nospēlēt '%s'.\n"
+"Šī lokācija ir nederīga."
+
+#: src/totem.c:2550
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -622,14 +629,14 @@ msgstr ""
 "konfigurācijas dzinēju:\n"
 "%s"
 
-#: src/totem.c:2562
-#: src/totem.c:2592
+#: src/totem.c:2565
+#: src/totem.c:2595
 msgid "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
 msgstr "Nevarēju ielādēt galveno saskarni (totem.glade).\n"
 "Pārliecinieties vai Totem ir pareizi uzstādīts."
 
-#: src/totem.c:2614
+#: src/totem.c:2617
 msgid "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
 msgstr "Nevarēju ielādēt saskarni repertuāram.\n"
