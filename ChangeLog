@@ -1,3 +1,9 @@
+2004-12-03  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/bacon-video-widget-gst.c: (state_change):
+	  GST_PAD_CAPS() will not work on ghostpads, which we're working on
+	  here. So explicitely realize pad.
+
 2004-12-03  Bastien Nocera  <hadess@hadess.net>
 
 	* data/handlers.sh: add support for Winamp's uvox:// URLs

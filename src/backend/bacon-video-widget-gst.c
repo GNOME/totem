@@ -895,15 +895,14 @@ state_change (GstElement *play, GstElementState old_state,
       }
     }
 
-    if (videopad && GST_PAD_REALIZE (videopad)) {
-      g_assert (GST_IS_PAD (videopad));
+    if (videopad) {
+      GstPad *real = (GstPad *) GST_PAD_REALIZE (videopad);
 
       /* handle explicit caps as well - they're set later */
-      if (GST_PAD_REALIZE (videopad)->link != NULL &&
-          GST_PAD_CAPS (videopad))
-        caps_set (G_OBJECT (videopad), NULL, bvw);
+      if (((GstRealPad *) real)->link != NULL && GST_PAD_CAPS (real))
+        caps_set (G_OBJECT (real), NULL, bvw);
       else
-        g_signal_connect (videopad, "notify::caps",
+        g_signal_connect (real, "notify::caps",
             G_CALLBACK (caps_set), bvw);
     }
   } else if (new_state <= GST_STATE_READY &&
