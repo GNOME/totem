@@ -8,8 +8,6 @@
 #include "config.h"
 #endif
 
-#if defined(__linux__) || defined(__FreeBSD__)
-
 #ifndef _LARGEFILE_SOURCE
 #define _LARGEFILE_SOURCE 
 #endif
@@ -208,4 +206,3 @@ bail:
 
 }
 
-#endif /* defined(__linux__ || __FreeBSD__) */

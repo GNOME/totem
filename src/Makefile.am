@@ -80,7 +80,6 @@ BACONDIR=$(srcdir)/../../nautilus-cd-burner/
 regenerate-built-sources:
 	EGGFILES="$(EGG_RECENT_FILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh || true
 	EGGFILES="$(BACON_CD_SELECTION)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
-	EGGFILES="$(BACON_V4L_SELECTION)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
 
 VIDEOWIDGET = baconvideowidget-marshal.list totemplparser-marshal.list $(BVWMARSHALFILES) $(MM) bacon-video-widget.h bacon-resize.h bacon-resize.c video-utils.c video-utils.h debug.h
 
