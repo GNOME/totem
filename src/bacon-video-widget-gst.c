@@ -1969,8 +1969,6 @@ bacon_video_widget_new (int width, int height,
     if (GST_IS_COLOR_BALANCE (element))
       {
         bvw->priv->balance = GST_COLOR_BALANCE (element);
-        g_message ("using colorbalance from element %s",
-                   gst_element_get_name (element));
       }
       
     /* Get them all and prefer software one */
@@ -2009,8 +2007,6 @@ bacon_video_widget_new (int width, int height,
     
     if (GST_IS_MIXER (element)) {
       const GList *tracks;
-      g_message ("using mixer from element %s",
-                 gst_element_get_name (element));
       bvw->priv->mixer = GST_MIXER (element);
       tracks = gst_mixer_list_tracks (GST_MIXER (element));
       if (tracks)

@@ -1,3 +1,12 @@
+2004-01-16  Julien MOUTTE <julien@moutte.net>
+
+	* data/totem.schemas.in: Adding hue and saturation gconf keys.
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_new): Removing
+	some debugging g_message.
+	* src/bacon-video-widget-xine.c: (setup_config_stream): Fixing my own
+	stupidity... i will write a 1000 times "i should not commit before
+	having compiled with --enable-xine at least only once."
+
 2004-01-15  Julien MOUTTE <julien@moutte.net>
 
 	* data/totem.glade: Adding saturation and hue slider transforming the

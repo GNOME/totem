@@ -102,15 +102,17 @@ enum {
 	PROP_SHOW_VISUALS
 };
 
-static int video_props[2] = {
+static int video_props[4] = {
 	XINE_PARAM_VO_BRIGHTNESS,
-	XINE_PARAM_VO_CONTRAST
+	XINE_PARAM_VO_CONTRAST,
 	XINE_PARAM_VO_SATURATION,
 	XINE_PARAM_VO_HUE
 };
-static char *video_props_str[2] = {
+static char *video_props_str[4] = {
 	GCONF_PREFIX"/brightness",
-	GCONF_PREFIX"/contrast"
+	GCONF_PREFIX"/contrast",
+	GCONF_PREFIX"/saturation",
+	GCONF_PREFIX"/hue"
 };
 
 struct BaconVideoWidgetPrivate {
@@ -780,7 +782,7 @@ setup_config_stream (BaconVideoWidget *bvw)
 		return;
 
 	/* Setup brightness and contrast */
-	for (i = 0; i < 2; i++)
+	for (i = 0; i < 4; i++)
 	{
 		value = gconf_client_get_int (bvw->priv->gc, video_props_str[i], NULL);
 		/* avoid black screens */
