@@ -1441,6 +1441,7 @@ totem_playlist_new (const char *glade_filename, GdkPixbuf *playing_pix)
 		return NULL;
 	}
 
+	gtk_dialog_set_has_separator (GTK_DIALOG (playlist), FALSE);
 	gtk_window_set_title (GTK_WINDOW (playlist), _("Playlist"));
 	gtk_dialog_add_buttons (GTK_DIALOG (playlist),
 			GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,

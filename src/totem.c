@@ -2029,7 +2029,8 @@ on_properties1_activate (GtkButton *button, Totem *totem)
 
 	dialog = gtk_dialog_new_with_buttons (_("Properties"),
 			GTK_WINDOW (totem->win),
-			GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+			GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT
+			| GTK_DIALOG_NO_SEPARATOR,
 			GTK_STOCK_CLOSE,
 			GTK_RESPONSE_ACCEPT,
 			NULL);
