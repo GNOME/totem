@@ -331,6 +331,7 @@ my_eel_read_entire_file (const char *uri,
 	/* Return the file. */
 	*file_size = total_bytes_read;
 	*file_contents = g_realloc (buffer, total_bytes_read);
+
 	return GNOME_VFS_OK;
 }
 
@@ -1162,13 +1163,19 @@ gtk_playlist_add_asx (GtkPlaylist *playlist, const char *mrl)
 	if (my_eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
 
-	doc = xmlParseMemory(contents, size);
+	contents = g_realloc (contents, size + 1);
+	contents[size] = '\0';
+
+	doc = xmlParseMemory (contents, size);
+	if (doc == NULL)
+		doc = xmlRecoverMemory (contents, size);
 	g_free (contents);
 
 	/* If the document has no root, or no name */
-	if(!doc->children || !doc->children->name)
+	if(!doc || !doc->children || !doc->children->name)
 	{
-		xmlFreeDoc(doc);
+		if (doc != NULL)
+			xmlFreeDoc(doc);
 		return FALSE;
 	}
 
@@ -1249,12 +1256,19 @@ parse_smil_entry (GtkPlaylist *playlist, char *base, xmlDocPtr doc,
 
 			if (url != NULL)
 			{
-				retval = parse_smil_video_entry (playlist,
-						base, url, title);
+				if (parse_smil_video_entry (playlist,
+						base, url, title) == TRUE)
+					retval = TRUE;
 			}
 
 			g_free (title);
 			g_free (url);
+		} else {
+			if (parse_smil_entry (playlist,
+						base, doc, node) == TRUE)
+			{
+				retval = TRUE;
+			}
 		}
 	}
 
@@ -1299,16 +1313,22 @@ gtk_playlist_add_smil (GtkPlaylist *playlist, const char *mrl)
 	if (my_eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
 
-	doc = xmlParseMemory(contents, size);
+	contents = g_realloc (contents, size + 1);
+	contents[size] = '\0';
+
+	doc = xmlParseMemory (contents, size);
+	if (doc == NULL)
+		doc = xmlRecoverMemory (contents, size);
 	g_free (contents);
 
 	/* If the document has no root, or no name */
-	if(!doc->children
+	if(!doc || !doc->children
 			|| !doc->children->name
 			|| g_ascii_strcasecmp (doc->children->name,
 				"smil") != 0)
 	{
-		xmlFreeDoc(doc);
+		if (doc != NULL)
+			xmlFreeDoc(doc);
 		return FALSE;
 	}
 

@@ -1,5 +1,12 @@
 2003-04-05  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-playlist.c: (my_eel_read_entire_file),
+	(gtk_playlist_add_asx), (parse_smil_entry),
+	(gtk_playlist_add_smil): try to recover nicely from broken XML files
+	used in XMIL and ASX playlists (Closes: #109953)
+
+2003-04-05  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget.c: (bacon_video_widget_class_init),
 	(update_fullscreen_size), (video_window_translate_point):
 	* src/debug.h:
