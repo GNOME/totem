@@ -37,6 +37,7 @@
 #include "rb-ellipsizing-label.h"
 #include "bacon-cd-selection.h"
 #include "totem-statusbar.h"
+#include "video-utils.h"
 
 #include "egg-recent-view.h"
 
@@ -1234,6 +1235,13 @@ on_repeat_mode1_toggled (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 }
 
 static void
+on_always_on_top1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
+{
+	totem_gdk_window_set_always_on_top (GTK_WIDGET (totem->win)->window,
+			gtk_check_menu_item_get_active (checkmenuitem));
+}
+
+static void
 on_about1_activate (GtkButton *button, Totem *totem)
 {
 	static GtkWidget *about = NULL;
@@ -2114,7 +2122,10 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "volume_down1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_volume_down1_activate), totem);
-
+	item = glade_xml_get_widget (totem->xml, "always_on_top1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_always_on_top1_activate), totem);
+	
 	/* Screenshot dialog */
 	item = glade_xml_get_widget (totem->xml, "dialog2");
 	g_signal_connect (G_OBJECT (item), "delete-event",
