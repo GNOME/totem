@@ -1837,7 +1837,6 @@ totem_playlist_add_directory (TotemPlaylist *playlist, const char *mrl,
 
 		fullpath = g_build_filename (G_DIR_SEPARATOR_S,
 				mrl, info->name, NULL);
-		g_message ("foo: %s", fullpath);
 		if (totem_playlist_add_mrl (playlist,
 					strstr (fullpath, "://") ? fullpath + 1 : fullpath,
 					NULL) != FALSE)
