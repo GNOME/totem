@@ -146,7 +146,7 @@ disc_test_LDADD = $(GTK_LIBS) $(EXTRA_GNOME_LIBS)
 list_v4l_SOURCES = list_v4l.c $(BACON_V4L_SELECTION)
 list_v4l_LDADD = $(GTK_LIBS)
 
-test_parser_SOURCES = test-parser.c $(PLPARSERMARSHALFILES)
+test_parser_SOURCES = test-parser.c totem-disc.c totem-disc.h $(PLPARSERMARSHALFILES)
 test_parser_LDADD = $(EXTRA_GNOME_LIBS)
 
 INCLUDES = 						\

@@ -1,5 +1,19 @@
 2004-10-27  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am: upd
+	* src/test-parser.c: (header), (test_relative_real),
+	(test_relative), (entry_added), (test_parsing_real), (push_parser),
+	(test_parsing), (main): add parsing tests to the relative paths ones
+	* src/totem-disc.c: (cd_cache_open_mountpoint),
+	(cd_cache_file_exists), (cd_cache_disc_is_vcd),
+	(cd_cache_disc_is_dvd): speed up DVD and VCD checking by stat()'ing
+	for filenames, instead of parsing the subdirectories
+	* src/totem-pl-parser.c: (totem_pl_parser_add_directory),
+	(totem_pl_parser_parse_internal): check if a directory is a VCD or
+	DVD, so that we can launch "totem /path/to/disk/dvd" (Closes: #153750)
+
+2004-10-27  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c: (xine_event_message): fix a warning
 	when a plugin couldn't be loaded because it doesn't exist
 

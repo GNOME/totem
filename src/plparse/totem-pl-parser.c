@@ -1,7 +1,7 @@
 /* 
    arch-tag: Implementation of Rhythmbox playlist parser
 
-   Copyright (C) 2002, 2003 Bastien Nocera
+   Copyright (C) 2002, 2003, 2004 Bastien Nocera
    Copyright (C) 2003,2004 Colin Walters <walters@rhythmbox.org>
 
    The Gnome Library is free software; you can redistribute it and/or
@@ -26,6 +26,7 @@
 #include "totem-pl-parser.h"
 
 #include "totemplparser-marshal.h"
+#include "totem-disc.h"
 
 #include <glib.h>
 #include <glib/gi18n.h>
@@ -41,6 +42,7 @@
 
 #define READ_CHUNK_SIZE 8192
 #define MIME_READ_CHUNK_SIZE 1024
+#define RECURSE_LEVEL_MAX 4
 
 typedef TotemPlParserResult (*PlaylistCallback) (TotemPlParser *parser, const char *url, gpointer data);
 static gboolean totem_pl_parser_scheme_is_ignored (TotemPlParser *parser, const char *url);
@@ -1277,6 +1279,17 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 {
 	GList *list, *l;
 	GnomeVFSResult res;
+	char *media_url;
+
+	if (parser->priv->recurse_level == 1) {
+		if (cd_detect_type_from_dir (url, &media_url, NULL) != MEDIA_TYPE_DATA) {
+			if (media_url != NULL) {
+				totem_pl_parser_add_one_url (parser, media_url, NULL);
+				g_free (media_url);
+				return TOTEM_PL_PARSER_RESULT_SUCCESS;
+			}
+		}
+	}
 
 	res = gnome_vfs_directory_list_load (&list, url,
 			GNOME_VFS_FILE_INFO_DEFAULT);
@@ -1396,7 +1409,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	gpointer data = NULL;
 	gboolean ret = FALSE;
 
-	if (parser->priv->recurse_level > 4)
+	if (parser->priv->recurse_level > RECURSE_LEVEL_MAX)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	parser->priv->recurse_level++;

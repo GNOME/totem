@@ -272,13 +272,13 @@ cd_cache_open_device (CdCache *cache,
   return TRUE;
 }
 
-static GDir *
+static gboolean
 cd_cache_open_mountpoint (CdCache *cache,
 			  GError **error)
 {
   /* already opened? */
   if (cache->mounted || cache->is_media == FALSE)
-    goto opendir;
+    return TRUE;
 
   /* check for mounting - assume we'll mount ourselves */
   cache->self_mounted = !gnome_vfs_drive_is_mounted (cache->drive);
@@ -292,21 +292,19 @@ cd_cache_open_mountpoint (CdCache *cache,
     if (!g_spawn_command_line_sync (command,
              NULL, NULL, &status, error)) {
       g_free (command);
-      return NULL;
+      return FALSE;
     }
     g_free (command);
     if (status != 0) {
       g_set_error (error, 0, 0,
           _("Unexpected error status %d while mounting %s"),
           status, cache->mountpoint);
-      return NULL;
+      return FALSE;
     }
   }
 
   cache->mounted = TRUE;
-
-opendir:
-  return g_dir_open (cache->mountpoint, 0, error);
+  return TRUE;
 }
 
 static void
@@ -389,93 +387,85 @@ cd_cache_disc_is_cdda (CdCache *cache,
   return type;
 }
 
+static gboolean
+cd_cache_file_exists (CdCache *cache, const char *subdir, const char *filename)
+{
+  char *path, *dir;
+  gboolean ret;
+
+  dir = NULL;
+
+  /* Check whether the directory exists, for a start */
+  path = g_build_filename (cache->mountpoint, subdir, NULL);
+  ret = g_file_test (path, G_FILE_TEST_IS_DIR);
+  if (ret == FALSE) {
+    char *subdir_low;
+
+    g_free (path);
+    subdir_low = g_ascii_strdown (subdir, -1);
+    path = g_build_filename (cache->mountpoint, subdir_low, NULL);
+    ret = g_file_test (path, G_FILE_TEST_IS_DIR);
+    g_free (path);
+    if (ret) {
+      dir = subdir_low;
+    } else {
+      g_free (subdir_low);
+      return FALSE;
+    }
+  } else {
+    g_free (path);
+    dir = g_strdup (subdir);
+  }
+
+  /* And now the file */
+  path = g_build_filename (cache->mountpoint, dir, filename, NULL);
+  ret = g_file_test (path, G_FILE_TEST_IS_REGULAR);
+  if (ret == FALSE) {
+    char *fname_low;
+
+    g_free (path);
+    fname_low = g_ascii_strdown (filename, -1);
+    path = g_build_filename (cache->mountpoint, dir, fname_low, NULL);
+    ret = g_file_test (path, G_FILE_TEST_IS_REGULAR);
+    g_free (fname_low);
+  }
+
+  g_free (dir);
+  g_free (path);
+
+  return ret;
+}
+
 static MediaType
 cd_cache_disc_is_vcd (CdCache *cache,
                       GError **error)
 {
-  GDir *dir;
-  const char *name;
-  gboolean have_mpegav = FALSE, have_avseq = FALSE;
-
   /* open disc and open mount */
-  if (!cd_cache_open_device (cache, error) ||
-      !(dir = cd_cache_open_mountpoint (cache, error)))
+  if (!cd_cache_open_device (cache, error))
     return MEDIA_TYPE_ERROR;
-  if (!(dir = cd_cache_open_mountpoint (cache, error)))
+  if (!cd_cache_open_mountpoint (cache, error))
     return MEDIA_TYPE_ERROR;
+  if (cd_cache_file_exists (cache, "MPEGAV", "AVSEQ01.DAT"))
+    return MEDIA_TYPE_VCD;
 
-  /* check directory structure */
-  while ((name = g_dir_read_name (dir)) != NULL) {
-    if (g_ascii_strcasecmp (name, "mpegav") == 0) {
-      GDir *subdir;
-      char *subdirname = g_build_path (G_DIR_SEPARATOR_S,
-		      	       cache->mountpoint, name, NULL);
-
-      have_mpegav = TRUE;
-      if (!(subdir = g_dir_open (subdirname, 0, error))) {
-        g_dir_close (dir);
-        return MEDIA_TYPE_ERROR;
-      }
-      while ((name = g_dir_read_name (subdir)) != NULL) {
-        if (g_ascii_strcasecmp (name, "avseq01.dat") == 0) {
-	  have_avseq = TRUE;
-	  break;
-	}
-      }
-      g_dir_close (subdir);
-      g_free (subdirname);
-      break;
-    }
-  }
-  g_dir_close (dir);
-
-  return (have_mpegav && have_avseq) ?
-      MEDIA_TYPE_VCD : MEDIA_TYPE_DATA;
+  return MEDIA_TYPE_DATA;
 }
 
 static MediaType
 cd_cache_disc_is_dvd (CdCache *cache,
 		      GError **error)
 {
-  GDir *dir;
-  const char *name;
-  gboolean have_vts = FALSE, have_vtsifo = FALSE;
-
   /* open disc, check capabilities and open mount */
   if (!cd_cache_open_device (cache, error))
     return MEDIA_TYPE_ERROR;
   if (!(cache->cap & CDC_DVD))
     return MEDIA_TYPE_DATA;
-  if (!(dir = cd_cache_open_mountpoint (cache, error)))
+  if (!cd_cache_open_mountpoint (cache, error))
     return MEDIA_TYPE_ERROR;
+  if (cd_cache_file_exists (cache, "VIDEO_TS", "VIDEO_TS.IFO"))
+    return MEDIA_TYPE_DVD;
 
-  /* check directory structure */
-  while ((name = g_dir_read_name (dir)) != NULL) {
-    if (g_ascii_strcasecmp (name, "VIDEO_TS") == 0) {
-      GDir *subdir;
-      char *subdirname = g_build_path (G_DIR_SEPARATOR_S,
-                               cache->mountpoint, name, NULL);
-
-      have_vts = TRUE;
-      if (!(subdir = g_dir_open (subdirname, 0, error))) {
-        g_dir_close (dir);
-        return MEDIA_TYPE_ERROR;
-      }
-      while ((name = g_dir_read_name (subdir)) != NULL) {
-        if (g_ascii_strcasecmp (name, "VIDEO_TS.IFO") == 0) {
-          have_vtsifo = TRUE;
-	  break;
-	}
-      }
-      g_dir_close (subdir);
-      g_free (subdirname);
-      break;
-    }
-  }
-  g_dir_close (dir);
-
-  return (have_vts && have_vtsifo) ?
-      MEDIA_TYPE_DVD : MEDIA_TYPE_DATA;
+  return MEDIA_TYPE_DATA;
 }
 
 MediaType
