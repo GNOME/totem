@@ -25,7 +25,6 @@
 
 /* system */
 #include <math.h>
-#include <pthread.h>
 #include <string.h>
 #include <stdio.h>
 /* X11 */
@@ -352,7 +351,7 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 		i++;
 	}
 
-	bvw->priv->tick_id = g_timeout_add (200,
+	bvw->priv->tick_id = g_timeout_add (70,
 			(GSourceFunc) bacon_video_widget_tick_send, bvw);
 
 	bvw->priv->icon = gdk_pixbuf_new_from_file (ICON_PATH, NULL);
@@ -1350,6 +1349,17 @@ bacon_video_widget_close (BaconVideoWidget *bvw)
 	xine_close (bvw->priv->stream);
 	g_free (bvw->priv->mrl);
 	bvw->priv->mrl = NULL;
+}
+
+gboolean
+bacon_video_widget_eject (BaconVideoWidget *bvw)
+{
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->stream != NULL);
+
+	bacon_video_widget_close (bvw);
+	return xine_eject (bvw->priv->stream);
 }
 
 /* Properties */

@@ -17,6 +17,7 @@ News
 * Make it possible to make screenshots of the vis plugins, and switch them
   off and on on-the-fly
 * Add 'Always on Top' functionality
+* Added an Eject button
 * Add SMIL playlist support, and differentiate Real Video playlists from the
   actual video files
 * Thumbnails now have "film-like" holes on their sides, like cells
@@ -213,6 +214,11 @@ TODO
 - "Vaniy"-like secondary application ?
 - Read the URI in .desktop files and add that to the playlist (otherwise we
   can't drop stuff we dragged from Totem)
+- cdda:1 should be cdda:/1 or cdda:///1, we should get the mimetype for it
+  (playlist)
+- only the first stream gets to the already running gui, not all of the ones
+  specified on the cli
+- have a "progress" thing going when adding more than a couple of files
 
 Bugs should be lodged in Gnome's Bugzilla:
 http://bugzilla.gnome.org/enter_bug.cgi?product=totem

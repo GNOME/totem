@@ -97,13 +97,15 @@ gboolean bacon_video_widget_play                 (BaconVideoWidget *bvw,
 						  GError **error);
 void bacon_video_widget_stop                     (BaconVideoWidget *bvw);
 void bacon_video_widget_close                    (BaconVideoWidget *bvw);
+gboolean bacon_video_widget_eject                (BaconVideoWidget *bvw);
 
 /* Properties */
 void  bacon_video_widget_set_logo_mode		 (BaconVideoWidget *bvw,
 						  gboolean logo_mode);
 gboolean bacon_video_widget_get_logo_mode	 (BaconVideoWidget *bvw);
 
-void bacon_video_widget_set_speed                (BaconVideoWidget *bvw, Speeds speed);
+void bacon_video_widget_set_speed                (BaconVideoWidget *bvw,
+		                                  Speeds speed);
 int bacon_video_widget_get_speed                 (BaconVideoWidget *bvw);
 
 void bacon_video_widget_set_fullscreen           (BaconVideoWidget *bvw,

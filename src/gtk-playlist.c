@@ -167,30 +167,18 @@ gtk_tree_path_equals (GtkTreePath *path1, GtkTreePath *path2)
 static char *
 gtk_playlist_mrl_to_title (const gchar *mrl)
 {
-	char *filename_for_display, *with_suffix, *filename, *unescaped;
+	char *filename_for_display, *filename, *unescaped;
 
 	filename = g_path_get_basename (mrl);
 	unescaped = gnome_vfs_unescape_string_for_display (filename);
 	g_free (filename);
-	with_suffix = g_filename_to_utf8 (unescaped,
+	filename_for_display = g_filename_to_utf8 (unescaped,
 			-1,             /* length */
 			NULL,           /* bytes_read */
 			NULL,           /* bytes_written */
 			NULL);          /* error */
 
 	g_free (unescaped);
-
-	if (strrchr (with_suffix, '.')
-			&& strlen (strrchr (with_suffix, '.')) < 5)
-	{
-		filename_for_display = g_strndup (with_suffix,
-				strlen (with_suffix)
-				- strlen (strrchr (with_suffix, '.')));
-	} else {
-		filename_for_display = g_strdup (with_suffix);
-	}
-
-	g_free (with_suffix);
 
 	return filename_for_display;
 }
@@ -1022,6 +1010,23 @@ gtk_playlist_add_m3u (GtkPlaylist *playlist, const char *mrl)
 }
 
 static gboolean
+gtk_playlist_add_asf_playlist (GtkPlaylist *playlist, const char *mrl)
+{
+	gboolean retval = FALSE;
+	char *contents, **lines;
+#if 0
+	if (my_eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
+		return FALSE;
+
+	contents = g_realloc (contents, size + 1);
+	contents[size] = '\0';
+
+	lines = g_strsplit (contents, "\n", 0);
+	g_free (contents);
+#endif
+}
+
+static gboolean
 gtk_playlist_add_pls (GtkPlaylist *playlist, const char *mrl)
 {
 	gboolean retval = FALSE;
@@ -1359,12 +1364,20 @@ gtk_playlist_add_smil (GtkPlaylist *playlist, const char *mrl)
 	return FALSE;
 }
 
-#if 0 //FIXME
 static gboolean
-gtk_playlist_add_wmv (GtkPlaylist *playlist, const char *mrl)
+gtk_playlist_add_asf (GtkPlaylist *playlist, const char *mrl, gpointer data)
 {
-}
+#if 0
+	if (data == NULL)
+		return gtk_playlist_add_one_mrl (playlist, mrl);
+
+	if (strncmp (data, "[Reference]", strlen ("[Reference]")) != 0)
+			return gtk_playlist_add_one_mrl (playlist, mrl);
+
+	return gtk_playlist_add_asf_playlist (playlist, mrl);
 #endif
+}
+
 gboolean
 gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 		const char *display_name)
@@ -1389,11 +1402,18 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 		g_free (data);
 		return gtk_playlist_add_pls (playlist, mrl);
 	} else if (strcmp ("audio/x-ms-asx", mimetype) == 0) {
-		//FIXME
 		return gtk_playlist_add_asx (playlist, mrl);
 	} else if (strcmp ("audio/x-real-audio", mimetype) == 0
-			|| strcmp ("audio/x-pn-realaudio", mimetype) == 0) {
+			|| strcmp ("audio/x-pn-realaudio", mimetype) == 0
+			|| strcmp ("application/vnd.rn-realmedia",
+				mimetype) == 0
+			|| strcmp ("audio/x-pn-realaudio-plugin",
+				mimetype) == 0) {
 		retval = gtk_playlist_add_ra (playlist, mrl, data);
+		g_free (data);
+		return retval;
+	} else if (strcmp ("video/x-ms-asf", mimetype) == 0) {
+		retval = gtk_playlist_add_asf (playlist, mrl, data);
 		g_free (data);
 		return retval;
 	} else if (strcmp ("application/x-smil", mimetype) == 0) {

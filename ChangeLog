@@ -1,3 +1,25 @@
+2003-04-09  Bastien Nocera  <hadess@hadess.net>
+
+	* README: upd
+	* data/playlist.glade:
+	* data/properties.glade:
+	* data/totem.glade:
+	* data/uri.glade:
+	* src/bacon-video-widget-properties.c:
+	(bacon_video_widget_properties_reset),
+	(bacon_video_widget_properties_set_from_current):
+	* src/bacon-video-widget.c: (bacon_video_widget_instance_init),
+	(bacon_video_widget_close), (bacon_video_widget_eject):
+	* src/bacon-video-widget.h:
+	* src/gtk-playlist.c: (gtk_playlist_mrl_to_title),
+	(gtk_playlist_add_asf_playlist), (gtk_playlist_add_asf),
+	(gtk_playlist_add_mrl):
+	* src/totem.c: (totem_action_set_mrl), (totem_playing_dvd),
+	(totem_playing_media), (on_eject1_activate),
+	(update_media_menu_items), (totem_callback_connect):
+	Added Eject button, applied bits of patches from Christian Neumair,
+	Update the time display every 7 100th of a second
+
 2003-04-05  Bastien Nocera  <hadess@hadess.net>
 
 	* README: updated

@@ -172,7 +172,7 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 	/* Artist */
 	bacon_video_widget_properties_set_label (props, "artist", _("Unknown"));
 	/* Year */
-	bacon_video_widget_properties_set_label (props, "year", _("N/A"));
+	bacon_video_widget_properties_set_label (props, "year", _("Unknown"));
 	/* Duration */
 	bacon_video_widget_properties_set_label (props, "duration", _("0 second"));
 	/* Dimensions */
@@ -220,7 +220,7 @@ bacon_video_widget_properties_set_from_current (BaconVideoWidgetProperties *prop
 			BVW_INFO_YEAR, &value);
 	bacon_video_widget_properties_set_label (props, "year",
 			g_value_get_string (&value)
-			? g_value_get_string (&value) : _("N/A"));
+			? g_value_get_string (&value) : _("Unknown"));
 	g_value_unset (&value);
 
 	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),

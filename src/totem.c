@@ -93,7 +93,7 @@ static const struct poptOption options[] = {
 static void update_fullscreen_size (Totem *totem);
 static gboolean popup_hide (Totem *totem);
 static void update_buttons (Totem *totem);
-static void update_dvd_menu_items (Totem *totem);
+static void update_media_menu_items (Totem *totem);
 static void update_dvd_menu_sub_lang (Totem *totem); 
 static void update_seekable (Totem *totem, gboolean force_false);
 static void on_play_pause_button_clicked (GtkToggleButton *button,
@@ -640,7 +640,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		}
 	}
 	update_buttons (totem);
-	update_dvd_menu_items (totem);
+	update_media_menu_items (totem);
 
 	return retval;
 }
@@ -649,9 +649,25 @@ static gboolean
 totem_playing_dvd (Totem *totem)
 {
 	if (totem->mrl == NULL)
-	    return FALSE;
+		return FALSE;
 
 	return !strcmp("dvd:/", totem->mrl);
+}
+
+static gboolean
+totem_playing_media (Totem *totem)
+{
+	if (totem->mrl == NULL)
+		return FALSE;
+
+	if (strncmp ("cdda:", totem->mrl, strlen ("cdda:")) == 0)
+		return TRUE;
+	if (strncmp ("dvd:", totem->mrl, strlen ("dvd:")) == 0)
+		return TRUE;
+	if (strncmp ("vcd:", totem->mrl, strlen ("vcd:")) == 0)
+		return TRUE;
+
+	return FALSE;
 }
 
 void
@@ -1331,6 +1347,20 @@ static void
 on_play_cd1_activate (GtkButton *button, Totem *totem)
 {
 	totem_action_play_media (totem, MEDIA_CDDA);
+}
+
+static void
+on_eject1_activate (GtkButton *button, Totem *totem)
+{
+	gtk_playlist_set_playing (totem->playlist, FALSE);
+
+	if (bacon_video_widget_eject (totem->bvw) == FALSE)
+	{
+		char *msg;
+
+		msg = _("Totem could not eject the optical media.");
+		totem_action_error (msg, GTK_WINDOW (totem->win));
+	}
 }
 
 static void
@@ -2191,23 +2221,28 @@ on_volume_scroll_event (GtkWidget *win, GdkEventScroll *event, Totem *totem)
 }
 
 static void
-update_dvd_menu_items (Totem *totem)
+update_media_menu_items (Totem *totem)
 {
         GtkWidget *item;
-        gboolean playing_dvd;
+        gboolean playing;
 
-	playing_dvd = totem_playing_dvd (totem);
+	playing = totem_playing_dvd (totem);
 
         item = glade_xml_get_widget (totem->xml, "dvd_root_menu");
-	gtk_widget_set_sensitive (item, playing_dvd);
+	gtk_widget_set_sensitive (item, playing);
         item = glade_xml_get_widget (totem->xml, "dvd_title_menu");
-	gtk_widget_set_sensitive (item, playing_dvd);
+	gtk_widget_set_sensitive (item, playing);
         item = glade_xml_get_widget (totem->xml, "dvd_audio_menu");
-	gtk_widget_set_sensitive (item, playing_dvd);
+	gtk_widget_set_sensitive (item, playing);
         item = glade_xml_get_widget (totem->xml, "dvd_angle_menu");
-	gtk_widget_set_sensitive (item, playing_dvd);
+	gtk_widget_set_sensitive (item, playing);
         item = glade_xml_get_widget (totem->xml, "dvd_chapter_menu");
-	gtk_widget_set_sensitive (item, playing_dvd);
+	gtk_widget_set_sensitive (item, playing);
+
+	playing = totem_playing_media (totem);
+
+	item = glade_xml_get_widget (totem->xml, "eject1");
+	gtk_widget_set_sensitive (item, playing);
 }
 
 static void
@@ -2412,6 +2447,9 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "play_audio_cd1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_play_cd1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "eject1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_eject1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "play1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_play1_activate), totem);
