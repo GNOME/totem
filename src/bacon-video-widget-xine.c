@@ -61,6 +61,7 @@ enum {
 	EOS,
 	TITLE_CHANGE,
 	TICK,
+	GOT_METADATA,
 	LAST_SIGNAL
 };
 
@@ -291,6 +292,14 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 				G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST,
 				G_STRUCT_OFFSET (BaconVideoWidgetClass, eos),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
+				
+	bvw_table_signals[GOT_METADATA] =
+		g_signal_new ("got_metadata",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (BaconVideoWidgetClass, got_metadata),
 				NULL, NULL,
 				g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 

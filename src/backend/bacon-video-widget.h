@@ -79,6 +79,7 @@ typedef struct {
 
 	void (*error) (GtkWidget *bvw, const char *message);
 	void (*eos) (GtkWidget *bvw);
+	void (*got_metadata) (GtkWidget *bvw);
 	void (*title_change) (GtkWidget *bvw, const char *title);
 	void (*tick) (GtkWidget *bvw, int current_time, int stream_length,
 			int current_position);

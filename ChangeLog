@@ -1,3 +1,10 @@
+2003-05-07  Julien MOUTTE  <julien@moutte.net>
+
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_class_init):
+	adding a "got_metadata" signal, so that the gst backend can inform
+	totem when metadata are available.
+	* src/bacon-video-widget.h:
+
 2003-05-06  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-properties-page.c: (totem_properties_page_init),
