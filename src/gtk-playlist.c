@@ -83,7 +83,7 @@ static const GtkTargetEntry target_table[] = {
 static GtkWidgetClass *parent_class = NULL;
 
 static void gtk_playlist_class_init (GtkPlaylistClass *class);
-static void gtk_playlist_init       (GtkPlaylist      *label);
+static void gtk_playlist_init       (GtkPlaylist      *playlist);
 
 static void init_treeview (GtkWidget *treeview, GtkPlaylist *playlist);
 static gboolean gtk_playlist_unset_playing (GtkPlaylist *playlist);

@@ -25,6 +25,8 @@
 
 #include <gtk/gtkdialog.h>
 
+G_BEGIN_DECLS
+
 #define GTK_TYPE_PLAYLIST            (gtk_playlist_get_type ())
 #define GTK_PLAYLIST(obj)            (GTK_CHECK_CAST ((obj), GTK_TYPE_PLAYLIST, GtkPlaylist))
 #define GTK_PLAYLIST_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GTK_TYPE_PLAYLIST, GtkPlaylistClass))
@@ -48,7 +50,7 @@ struct GtkPlaylistClass {
 };
 
 GtkType    gtk_playlist_get_type (void);
-GtkWidget *gtk_playlist_new      ();
+GtkWidget *gtk_playlist_new      (void);
 
 /* The application is responsible for checking that the mrl is correct
  * Handles directories, m3u playlists, and shoutcast playlists
@@ -77,5 +79,6 @@ void       gtk_playlist_set_at_start (GtkPlaylist *playlist);
 
 gchar *     gtk_playlist_mrl_to_title (const gchar *mrl);
 
+G_END_DECLS
 
 #endif /* GTK_PLAYLIST_H */
