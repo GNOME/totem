@@ -12,19 +12,31 @@ http://lists.gnome.org/archives/gnome-announce-list/2003-May/msg00096.html
 News
 ====
 
-1.0(?):
+0.99.3:
 * On-the-fly switching between visual effects plugins
 * Allow AC3 passthrough sound
 * Fix races when getting errors on startup
 * Fix vanity compilation
 * Better error messages
+* Implement recursive directory loading in the playlist
+* Update the playlist title when playing a CD with CDDB
 * Check that we could get tracks before trying to playback optical media
 * Don't tell nautilus we can't thumbnail a file if it just takes a long time
+* Don't show the window in the current workspace when enqueuing songs
+* Remember "Always On Top" setting, and video widget size across sessions
+* Added Startup Notification for files opened from Nautilus
+* Use Konqueror when clicking on the "Add proprietary plugins" button when KDE
+  is running
+* Make the screenshot menu item unsensitive when no file is playing
+* Save screenshots to the right place when "desktop directory is selected", and
+  the home directory is the desktop
 * Make the CD selector work on FreeBSD
+* Hide the popups when changing workspaces
 * Fixup argument parsing
 * Fix a memleak in the recent files
 * Make lirc silent on startup
 * Detect libcurl version properly
+* Build fixes for XRandR
 
 0.99.2:
 * Fixed XFree86 lockup on start bug (see http://bugs.xfree86.org/cgi-bin/bugzilla/show_bug.cgi?id=260 for the patch)
