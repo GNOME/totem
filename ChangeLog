@@ -1,3 +1,8 @@
+2005-04-01  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem.c: (main): don't call g_set_application_name before
+       gtk_init (spotted by Frederic Crozat)
+
 2005-04-01  Steve Murphy  <murf@e-tools.com>
 
         * configure.in: Added "rw" to ALL_LINGUAS.
