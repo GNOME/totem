@@ -132,6 +132,7 @@ struct BaconVideoWidgetPrivate
   GstTagList *tagcache;
 
   char *last_error_message;
+  gboolean got_redirect;
 
   GdkWindow *video_window;
   GtkAllocation video_window_allocation;
@@ -174,7 +175,8 @@ enum {
   ASYNC_FOUND_TAG,
   ASYNC_NOTIFY_STREAMINFO,
   ASYNC_EOS,
-  ASYNC_BUFFERING
+  ASYNC_BUFFERING,
+  ASYNC_REDIRECT
 };
 
 typedef struct _BVWSignal BVWSignal;
@@ -204,6 +206,10 @@ struct _BVWSignal
     {
       gint percent;
     } buffering;
+    struct
+    {
+      gchar *new_location;
+    } redirect;
   } signal_data;
 };
 
@@ -831,6 +837,13 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
 			 0, signal->signal_data.buffering.percent);
           break;
         }
+      case ASYNC_REDIRECT:
+	{
+	  g_signal_emit (G_OBJECT (bvw), bvw_table_signals[SIGNAL_REDIRECT],
+			 0, signal->signal_data.redirect.new_location);
+	  g_free (signal->signal_data.redirect.new_location);
+	  break;
+	}
       default:
         break;
     }
@@ -873,6 +886,26 @@ group_switch (GstElement *play, BaconVideoWidget *bvw)
 
   signal = g_new0 (BVWSignal, 1);
   signal->signal_id = ASYNC_NOTIFY_STREAMINFO;
+
+  g_async_queue_push (bvw->priv->queue, signal);
+
+  g_idle_add ((GSourceFunc) bacon_video_widget_signal_idler, bvw);
+}
+
+static void
+got_redirect (GstElement *play, const gchar * new_location,
+	      BaconVideoWidget *bvw)
+{
+  BVWSignal *signal;
+
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  bvw->priv->got_redirect = TRUE;
+
+  signal = g_new0 (BVWSignal, 1);
+  signal->signal_id = ASYNC_REDIRECT;
+  signal->signal_data.redirect.new_location = g_strdup (new_location);
 
   g_async_queue_push (bvw->priv->queue, signal);
 
@@ -1627,7 +1660,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
       g_free (bvw->priv->last_error_message);
       bvw->priv->last_error_message = NULL;
     }
-
+  bvw->priv->got_redirect = FALSE;
 
   bvw->priv->media_has_video = FALSE;
   bvw->priv->stream_length = 0;
@@ -1646,7 +1679,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 
   ret = (gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED) ==
       GST_STATE_SUCCESS);
-  if (!ret)
+  if (!ret && !bvw->priv->got_redirect)
     {
       g_set_error (error, 0, 0, "%s", bvw->priv->last_error_message ?
           bvw->priv->last_error_message : "Failed to open; reason unknown");
@@ -1654,9 +1687,10 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
       bvw->priv->mrl = NULL;
     }
 
-  g_signal_emit (bvw, bvw_table_signals[SIGNAL_CHANNELS_CHANGE], 0);
+  if (ret)
+    g_signal_emit (bvw, bvw_table_signals[SIGNAL_CHANNELS_CHANGE], 0);
 
-  return ret;
+  return ret || bvw->priv->got_redirect;
 }
 
 gboolean
@@ -3038,6 +3072,8 @@ bacon_video_widget_new (int width, int height,
 		    G_CALLBACK (stream_info_set), (gpointer) bvw);
   g_signal_connect (G_OBJECT (bvw->priv->play), "group-switch",
 		    G_CALLBACK (group_switch), (gpointer) bvw);
+  g_signal_connect (G_OBJECT (bvw->priv->play), "got-redirect",
+		    G_CALLBACK (got_redirect), (gpointer) bvw);
 
   /* We try to get an element supporting XOverlay interface */
   if (type == BVW_USE_TYPE_VIDEO && GST_IS_BIN (bvw->priv->play)) {
