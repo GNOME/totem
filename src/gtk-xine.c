@@ -1240,6 +1240,19 @@ gtk_xine_get_video_property (GtkXine * gtx, gint property)
 						   property);
 }
 
+void
+gtk_xine_toggle_aspect_ratio (GtkXine * gtx)
+{
+	int tmp;
+
+	g_return_if_fail (gtx != NULL);
+	g_return_if_fail (GTK_IS_XINE (gtx));
+	g_return_if_fail (gtx->priv->xine != NULL);
+
+	tmp = gtk_xine_get_video_property (gtx, VO_PROP_ASPECT_RATIO);
+	gtk_xine_set_video_property (gtx, VO_PROP_ASPECT_RATIO, tmp + 1);
+}
+
 gint
 gtk_xine_get_log_section_count (GtkXine * gtx)
 {

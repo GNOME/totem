@@ -129,10 +129,7 @@ disable_error_output (void)
 static void
 action_exit (Totem *totem)
 {
-	gtk_xine_stop (GTK_XINE (totem->gtx));
 	gtk_main_quit ();
-	//FIXME gtk_widget_unrealize (totem->gtx);
-	//FIXME gtk_widget_destroy (totem->win);
 	exit (0);
 }
 
@@ -155,7 +152,7 @@ play_pause_toggle_disconnected (Totem *totem)
 	action_play_pause (totem);
 	totem->pp_handler = g_signal_connect
 		(GTK_OBJECT (totem->pp_button), "toggled",
-		 GTK_SIGNAL_FUNC (on_play_pause_button_toggled), totem);
+		 G_CALLBACK (on_play_pause_button_toggled), totem);
 }
 
 static void
@@ -343,6 +340,12 @@ action_volume_relative (Totem *totem, int off_pct)
 
 	vol = gtk_xine_get_volume (GTK_XINE (totem->gtx));
 	gtk_xine_set_volume (GTK_XINE (totem->gtx), vol + off_pct);
+}
+
+static void
+action_toggle_aspect_ratio (Totem *totem)
+{
+	gtk_xine_toggle_aspect_ratio (GTK_XINE (totem->gtx));
 }
 
 static void
@@ -589,6 +592,14 @@ on_full_screen1_activate (GtkButton * button, gpointer user_data)
 }
 
 static void
+on_toggle_aspect_ratio1_activate (GtkButton * button, gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+
+	action_toggle_aspect_ratio (totem);
+}
+
+static void
 on_show_playlist1_activate (GtkButton * button, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
@@ -637,7 +648,7 @@ on_about1_activate (GtkButton * button, gpointer user_data)
 
 		filename = gnome_program_locate_file (NULL,
 				GNOME_FILE_DOMAIN_APP_DATADIR,
-				"media-player-48.png",
+				"totem/media-player-48.png",
 				TRUE, NULL);
 
 		if (filename != NULL)
@@ -655,7 +666,7 @@ on_about1_activate (GtkButton * button, gpointer user_data)
 			strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
 			pixbuf);
 
-	g_signal_connect (GTK_OBJECT (about), "destroy", GTK_SIGNAL_FUNC
+	g_signal_connect (GTK_OBJECT (about), "destroy", G_CALLBACK
 			(gtk_widget_destroyed), &about);
 	gtk_window_set_transient_for (GTK_WINDOW (about),
 			GTK_WINDOW (totem->win));
@@ -809,6 +820,11 @@ on_window_key_press_event (GtkWidget *win, GdkEventKey *event,
 		action_volume_relative (totem, -8);
 		retval = TRUE;
 		break;
+	case GDK_A:
+	case GDK_a:
+		action_toggle_aspect_ratio (totem);
+		retval = TRUE;
+		break;
 	case GDK_B:
 	case GDK_b:
 		action_previous (totem);
@@ -861,11 +877,11 @@ video_widget_create (Totem *totem)
 
 	g_signal_connect (GTK_OBJECT (totem->gtx),
 			"mouse-motion",
-			GTK_SIGNAL_FUNC (on_mouse_motion_event),
+			G_CALLBACK (on_mouse_motion_event),
 			totem);
 	g_signal_connect (GTK_OBJECT (totem->gtx),
 			"eos",
-			GTK_SIGNAL_FUNC (on_eos_event),
+			G_CALLBACK (on_eos_event),
 			totem);
 
 	gtk_widget_realize (totem->gtx);
@@ -880,72 +896,76 @@ totem_callback_connect (Totem *totem)
 	/* Menu items */
 	item = glade_xml_get_widget (totem->xml, "open1");
 	g_signal_connect (GTK_OBJECT (item), "activate",
-			GTK_SIGNAL_FUNC (on_open1_activate), totem);
+			G_CALLBACK (on_open1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "play1");
 	g_signal_connect (GTK_OBJECT (item), "activate",
-			GTK_SIGNAL_FUNC (on_play1_activate), totem);
+			G_CALLBACK (on_play1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "fullscreen1");
 	g_signal_connect (GTK_OBJECT (item), "activate",
-			GTK_SIGNAL_FUNC (on_full_screen1_activate), totem);
+			G_CALLBACK (on_full_screen1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "toggle_aspect_ratio1");
+	g_signal_connect (GTK_OBJECT (item), "activate",
+			G_CALLBACK (on_toggle_aspect_ratio1_activate),
+			totem);
 	item = glade_xml_get_widget (totem->xml, "show_playlist1");
 	g_signal_connect (GTK_OBJECT (item), "activate",
-			GTK_SIGNAL_FUNC (on_show_playlist1_activate), totem);
+			G_CALLBACK (on_show_playlist1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "quit1");
 	g_signal_connect (GTK_OBJECT (item), "activate",
-			GTK_SIGNAL_FUNC (on_quit1_activate), totem);
+			G_CALLBACK (on_quit1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "about1");
 	g_signal_connect (GTK_OBJECT (item), "activate",
-			GTK_SIGNAL_FUNC (on_about1_activate), totem);
+			G_CALLBACK (on_about1_activate), totem);
 
 	/* Controls */
 	totem->pp_button = glade_xml_get_widget
 		(totem->xml, "play_pause_button");
 	totem->pp_handler = g_signal_connect (GTK_OBJECT (totem->pp_button),
-			"toggled",
-			GTK_SIGNAL_FUNC (on_play_pause_button_toggled), totem);
+			"toggled", G_CALLBACK (on_play_pause_button_toggled),
+			totem);
 	item = glade_xml_get_widget (totem->xml, "previous_button");
 	g_signal_connect (GTK_OBJECT (item), "clicked",
-			GTK_SIGNAL_FUNC (on_previous_button_clicked), totem);
+			G_CALLBACK (on_previous_button_clicked), totem);
 	item = glade_xml_get_widget (totem->xml, "next_button");
 	g_signal_connect (GTK_OBJECT (item), "clicked", 
-			GTK_SIGNAL_FUNC (on_next_button_clicked), totem);
+			G_CALLBACK (on_next_button_clicked), totem);
 	item = glade_xml_get_widget (totem->xml, "playlist_button");
 	g_signal_connect (GTK_OBJECT (item), "clicked",
-			GTK_SIGNAL_FUNC (on_playlist_button_toggled), totem);
+			G_CALLBACK (on_playlist_button_toggled), totem);
 
 	/* Drag'n'Drop */
 	item = glade_xml_get_widget (totem->xml, "frame1");
 	g_signal_connect (GTK_OBJECT (item), "drag_data_received",
-			GTK_SIGNAL_FUNC (drop_cb), totem);
+			G_CALLBACK (drop_cb), totem);
 	gtk_drag_dest_set (item, GTK_DEST_DEFAULT_ALL,
 			target_table, 1, GDK_ACTION_COPY);
 #if 0
 	g_signal_connect (GTK_OBJECT (totem->treeview), "drag_data_received",
-			GTK_SIGNAL_FUNC (drop_cb), totem);
+			G_CALLBACK (drop_cb), totem);
 	gtk_drag_dest_set (totem->treeview, GTK_DEST_DEFAULT_ALL,
 			target_table, 1, GDK_ACTION_COPY);
 #endif
 	/* Exit */
 	g_signal_connect (GTK_OBJECT (totem->win), "delete_event",
-			GTK_SIGNAL_FUNC (action_exit), totem);
+			G_CALLBACK (action_exit), totem);
 	g_signal_connect (GTK_OBJECT (totem->win), "destroy_event",
-			GTK_SIGNAL_FUNC (action_exit), totem);
+			G_CALLBACK (action_exit), totem);
 
 	/* Popup */
 	item = glade_xml_get_widget (totem->xml, "fs_exit1");
 	g_signal_connect (GTK_OBJECT (item), "clicked",
-			GTK_SIGNAL_FUNC (on_fs_exit1_activate), totem);
+			G_CALLBACK (on_fs_exit1_activate), totem);
 
 	/* Connect the keys */
 	gtk_widget_add_events (totem->win, GDK_KEY_RELEASE_MASK);
 	g_signal_connect (GTK_OBJECT(totem->win), "key_press_event",
-			GTK_SIGNAL_FUNC(on_window_key_press_event), totem);
+			G_CALLBACK(on_window_key_press_event), totem);
 
 	/* Sliders */
 	g_signal_connect (GTK_OBJECT (totem->seek), "value-changed",
-			GTK_SIGNAL_FUNC (seek_cb), totem);
+			G_CALLBACK (seek_cb), totem);
 	g_signal_connect (GTK_OBJECT (totem->volume), "value-changed",
-			GTK_SIGNAL_FUNC (vol_cb), totem);
+			G_CALLBACK (vol_cb), totem);
 	gtk_timeout_add (500, update_sliders_cb, totem);
 
 	/* Playlist Disappearance, woop woop */
@@ -1012,7 +1032,7 @@ main (int argc, char **argv)
 
 	filename = gnome_program_locate_file (NULL,
 			GNOME_FILE_DOMAIN_APP_DATADIR,
-			"totem.glade", TRUE, NULL);
+			"totem/totem.glade", TRUE, NULL);
 	if (filename == NULL)
 	{
 		action_error (_("Couldn't load the main Glade file"
@@ -1030,6 +1050,9 @@ main (int argc, char **argv)
 	}
 	g_free (filename);
 
+	video_widget_create (totem);
+	totem->win = glade_xml_get_widget (totem->xml, "app1");
+
 	totem->playlist = GTK_PLAYLIST
 		(gtk_playlist_new (GTK_WINDOW (totem->win)));
 	if (totem->playlist == NULL)
@@ -1039,8 +1062,7 @@ main (int argc, char **argv)
 					"is properly installed."));
 		exit (1);
 	}
-	video_widget_create (totem);
-	totem->win = glade_xml_get_widget (totem->xml, "app1");
+
 	totem->seek = glade_xml_get_widget (totem->xml, "hscale1");
 	totem->seekadj = gtk_range_get_adjustment (GTK_RANGE (totem->seek));
 	totem->volume = glade_xml_get_widget (totem->xml, "hscale2");

@@ -1,3 +1,18 @@
+2002-08-01  Bastien Nocera  <hadess@hadess.net>
+
+	* README:
+	* src/Makefile.am:
+	* src/gtk-playlist.c: (init_columns), (gtk_playlist_new):
+	* src/gtk-xine.c: (gtk_xine_toggle_aspect_ratio):
+	* src/gtk-xine.h:
+	* src/totem.c: (action_exit), (play_pause_toggle_disconnected),
+	(action_toggle_aspect_ratio), (on_toggle_aspect_ratio1_activate),
+	(on_about1_activate), (on_window_key_press_event),
+	(video_widget_create), (totem_callback_connect), (main):
+	s/GTK_SIGNAL_FUNC/G_CALLBACK/g, added aspect ratio toggling (wishlisted
+	by Michele Campeotto), use locate_file correctly
+	* src/totem.glade: GUI for aspect ratio toggling
+
 2002-07-31  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: added --disable-debug flag

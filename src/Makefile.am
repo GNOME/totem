@@ -13,7 +13,7 @@ INCLUDES = 						\
 	$(EXTRA_GNOME_CFLAGS)				\
 	$(XINE_CFLAGS)					\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-DDATADIR=\""$(datadir)/totem/"\"		\
+	-DDATADIR=\""$(datadir)"\"			\
 	-DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED	\
 	-DGTK_DISABLE_DEPRECATED -DGNOME_DISABLE_DEPRECATED
 
@@ -40,4 +40,4 @@ keysdir = $(datadir)/mime-info/
 
 EXTRA_DIST = $(stuff_DATA) $(desktop_DATA) $(keys_DATA)
 
-CLEANFILES = *.bak *.gladep
+CLEANFILES = *.bak *.gladep core*

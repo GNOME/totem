@@ -252,7 +252,7 @@ init_columns (GtkTreeView *treeview)
 	renderer = gtk_cell_renderer_pixbuf_new ();
 	filename = gnome_program_locate_file (NULL,
 			GNOME_FILE_DOMAIN_APP_DATADIR,
-			"playlist-16.png", TRUE, NULL);
+			"totem/playlist-16.png", TRUE, NULL);
 	header = gtk_image_new_from_file (filename);
 	g_free (filename);
 	gtk_widget_show (header);
@@ -339,7 +339,7 @@ gtk_playlist_new (GtkWindow *parent)
 
 	filename = gnome_program_locate_file (NULL,
 			GNOME_FILE_DOMAIN_APP_DATADIR,
-			"playlist.glade", TRUE, NULL);
+			"totem/playlist.glade", TRUE, NULL);
 	if (filename == NULL)
 	{
 		gtk_playlist_finalize (G_OBJECT (playlist));
@@ -392,7 +392,7 @@ gtk_playlist_new (GtkWindow *parent)
 
 	filename = gnome_program_locate_file (NULL,
 			GNOME_FILE_DOMAIN_APP_DATADIR,
-			"playlist-playing.png", TRUE, NULL);
+			"totem/playlist-playing.png", TRUE, NULL);
 	if (filename != NULL)
 	{
 		playlist->_priv->icon = gdk_pixbuf_new_from_file
