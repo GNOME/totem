@@ -1,3 +1,14 @@
+2002-10-23  Bastien Nocera  <hadess@hadess.net>
+
+	* src/debug.h: remove debug for threads_enter/_leave
+	* src/gtk-message.c: (gtk_message_make_selection_name): remove debug
+	* src/gtk-xine.c: (gtk_xine_instance_init),
+	(gtk_xine_set_fullscreen): move the Poor Man's Lock to the object,
+	create and delete the window when entering/leaving fullscreen
+	* src/totem.c: (totem_action_play), (on_mouse_click_fullscreen),
+	(totem_callback_connect): more patching from John McCutchan
+	<ttb@tentacle.dhs.org> for the fullscreen controls
+
 2002-10-21  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.glade: use a FileEntry instead of a simple entry

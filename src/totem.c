@@ -241,6 +241,12 @@ totem_action_play (Totem *totem, int offset)
 
 	retval = gtk_xine_play (GTK_XINE (totem->gtx), totem->mrl, offset , 0);
 	play_pause_set_label (totem, retval);
+
+	/* FIXME remove when we're gone to 0.9.14 */
+	gtk_widget_set_sensitive (totem->fs_seek,
+			gtk_xine_is_seekable(GTK_XINE (totem->gtx)));
+	gtk_widget_set_sensitive (totem->seek,
+			gtk_xine_is_seekable(GTK_XINE (totem->gtx)));
 }
 
 void
@@ -1166,6 +1172,21 @@ popup_hide (Totem *totem)
 	return FALSE;
 }
 
+static void
+on_mouse_click_fullscreen (GtkWidget *widget, gpointer user_data)
+{
+	Totem *totem = (Totem *)user_data;
+
+	if (totem->popup_timeout != 0)
+	{
+		gtk_timeout_remove (totem->popup_timeout);
+		totem->popup_timeout;
+	}
+
+	totem->popup_timeout = gtk_timeout_add (2000,
+		(GtkFunction) popup_hide, totem);
+}
+
 static gboolean
 on_mouse_motion_event (GtkWidget *widget, gpointer user_data)
 {
@@ -1455,8 +1476,6 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (main_window_destroy_cb), totem);
 	g_signal_connect (G_OBJECT (totem->win), "destroy",
 			G_CALLBACK (main_window_destroy_cb), totem);
-//	g_object_add_weak_pointer (G_OBJECT (totem->win),
-//			(void**)&(totem->win));
 
 	/* Motion notify for the Popups */
 	item = glade_xml_get_widget (totem->xml, "window1");
@@ -1478,25 +1497,27 @@ totem_callback_connect (Totem *totem)
 	/* Control Popup */
 	g_signal_connect (G_OBJECT (totem->fs_pp_button), "clicked",
 			G_CALLBACK (on_play_pause_button_clicked), totem);
+	g_signal_connect (G_OBJECT (totem->fs_pp_button), "clicked",
+			G_CALLBACK (on_mouse_click_fullscreen), totem);
+
 	item = glade_xml_get_widget (totem->xml, "fs_previous_button");
 	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (on_previous_button_clicked), totem);
+	g_signal_connect (G_OBJECT (item), "clicked",
+			G_CALLBACK (on_mouse_click_fullscreen), totem);
+
 	item = glade_xml_get_widget (totem->xml, "fs_next_button");
 	g_signal_connect (G_OBJECT (item), "clicked", 
 			G_CALLBACK (on_next_button_clicked), totem);
+	g_signal_connect (G_OBJECT (item), "clicked",
+			G_CALLBACK (on_mouse_click_fullscreen), totem);
 
 	/* Control Popup Sliders */
 	g_signal_connect (G_OBJECT(totem->fs_seek), "value-changed",
 			G_CALLBACK (seek_cb), totem);
+
 	g_signal_connect (G_OBJECT(totem->fs_volume), "value-changed",
 			G_CALLBACK (vol_cb), totem);
-	//FIXME this doesn't seem to have any effect
-	gtk_widget_add_events (totem->fs_seek, GDK_POINTER_MOTION_MASK);
-	gtk_widget_add_events (totem->fs_volume, GDK_POINTER_MOTION_MASK);
-	g_signal_connect (G_OBJECT (totem->fs_seek), "motion-notify-event",
-			G_CALLBACK (on_motion_notify_event), totem);
-	g_signal_connect (G_OBJECT (totem->fs_volume), "motion-notify-event",
-			G_CALLBACK (on_motion_notify_event), totem);
 
 	/* Connect the keys */
 	gtk_widget_add_events (totem->win, GDK_KEY_PRESS_MASK);
@@ -1517,8 +1538,6 @@ totem_callback_connect (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->playlist), "delete-event",
 			G_CALLBACK (toggle_playlist_from_playlist),
 			(gpointer) totem);
-//	g_object_add_weak_pointer (G_OBJECT (totem->playlist),
-//			(void**)&(totem->playlist));
 
 	/* Playlist */
 	g_signal_connect (G_OBJECT (totem->playlist),

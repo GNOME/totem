@@ -20,9 +20,6 @@ static char *selection_name = NULL;
 
 static gchar* gtk_message_make_selection_name (const gchar *unique_id);
 
-
-
-
 GtkMessage *
 gtk_message_new (char *message_id, GType type, gpointer data)
 {
@@ -174,8 +171,6 @@ gtk_message_make_selection_name (const gchar *unique_id)
 	upper_name = g_ascii_strup (unique_id, -1);
 	retval = g_strdup_printf ("_%s_SELECTION", upper_name);
 	g_free (upper_name);
-
-	g_message ("gtk_message_make_selection_name: %s", retval);
 
 	return retval;
 }
