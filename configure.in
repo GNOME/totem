@@ -10,52 +10,12 @@ AC_DEFINE(GETTEXT_PACKAGE, "AC_PACKAGE_NAME", [foo])
 GETTEXT_PACKAGE=AC_PACKAGE_NAME
 AC_SUBST(GETTEXT_PACKAGE)
 
-dnl libtool foo for the gnome-vfs plugin
-AM_DISABLE_STATIC
-AM_PROG_LIBTOOL
-
-AC_ARG_ENABLE(fpic,
-[  --disable-fpic          Disable -fPIC on shared libs (default on x86)],
-no_fpic=yes, no_fpic=no)
-
-case "$host_or_hostalias" in
-	i386-*-freebsd*)
-	no_fpic="yes"
-	;;
-	i?86-*-linux* | i386-*-solaris* | i?86-* | k?-* | athlon-*)
-	no_fpic="yes"
-	;;
-esac
-
-if test x"$enable_fpic" != x; then
-	case "${enable_fpic}" in
-	yes)
-	no_fpic="no"
-	;;
-	*)
-	no_fpic="yes"
-	;;
-	esac
-fi
-
-if test x$no_fpic = "xyes"; then
-  cat libtool | sed -e 's/^pic_flag=/#pic_flag=/' > libtool-nofpic
-else
-  cat libtool > libtool-nofpic
-fi
-
-chmod +x libtool-nofpic
-
 AC_PROG_INTLTOOL([0.20])
 
 dnl Seems that the order matters because libtool blows
 PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= 2.1.0 libgnomeui-2.0 >= 2.1.1 libglade-2.0 gnome-vfs-2.0 libxine >= 1.0.0)
 AC_SUBST(EXTRA_GNOME_CFLAGS)
 AC_SUBST(EXTRA_GNOME_LIBS)
-
-PKG_CHECK_MODULES(VFS, libxine >= 1.0.0 gnome-vfs-2.0)
-AC_SUBST(VFS_CFLAGS)
-AC_SUBST(VFS_LIBS)
 
 PKG_CHECK_MODULES(GTK, gconf-2.0 gtk+-2.0 libxine >= 1.0.0 libglade-2.0)
 AC_SUBST(GTK_CFLAGS)

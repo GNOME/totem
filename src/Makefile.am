@@ -71,7 +71,7 @@ totem_video_thumbnailer_SOURCES =	\
 totem_video_thumbnailer_LDADD = $(GTK_LIBS) $(XTEST_LIBS)
 
 INCLUDES = 						\
-	-D_REENTRANT -D_FILE_OFFSET_BITS=64		\
+	-D_REENTRANT					\
 	$(EXTRA_GNOME_CFLAGS)				\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
 	-DGCONF_PREFIX=\""/apps/totem/"\"		\
@@ -82,13 +82,4 @@ INCLUDES = 						\
 	-DGNOME_DISABLE_DEPRECATED
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(MARSHALFILES) $(desktop_DATA)
-
-LIBTOOL = $(SHELL) $(top_builddir)/libtool-nofpic
-
-libdir = ${exec_prefix}/lib/xine/plugins
-lib_LTLIBRARIES = xineplug_inp_gnomevfs.la
-
-xineplug_inp_gnomevfs_la_SOURCES = input_gnomevfs.c
-xineplug_inp_gnomevfs_la_LIBADD = $(VFS_LIBS)
-xineplug_inp_gnomevfs_la_LDFLAGS = -avoid-version -module
 
