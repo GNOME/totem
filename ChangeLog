@@ -1,5 +1,23 @@
 2002-10-28  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (gtk_xine_instance_init),
+	(load_video_out_driver), (load_audio_out_driver), (xine_thread),
+	(gtk_xine_realize), (gtk_xine_check), (gtk_xine_open),
+	(gtk_xine_play), (gtk_xine_stop), (gtk_xine_set_speed),
+	(gtk_xine_get_speed), (gtk_xine_get_position),
+	(gtk_xine_set_audio_channel), (gtk_xine_can_set_volume),
+	(gtk_xine_set_volume), (gtk_xine_get_volume),
+	(gtk_xine_get_current_time), (gtk_xine_get_stream_length),
+	(gtk_xine_is_playing), (gtk_xine_is_seekable):
+	* src/gtk-xine.h:
+	* src/totem.c: (volume_set_image), (totem_action_play),
+	(totem_action_set_mrl), (totem_action_seek_relative),
+	(on_mouse_click_fullscreen), (on_mouse_motion_event),
+	(video_widget_create): much more work on the port, add gtk_xine_open
+	function, change semantics of the gtk_xine_play function
+
+2002-10-28  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: require 0.9.14
 	* src/Makefile.am: remove -lxineutils
 	* src/gtk-xine.c: 

@@ -225,7 +225,7 @@ volume_set_image (Totem *totem, int vol)
 			FALSE, NULL);
 	image = glade_xml_get_widget (totem->xml, "volume_image");
 	gtk_image_set_from_file (GTK_IMAGE (image), path);
-    image = glade_xml_get_widget (totem->xml, "fs_volume_image");
+	image = glade_xml_get_widget (totem->xml, "fs_volume_image");
 	gtk_image_set_from_file (GTK_IMAGE (image), path);
 	g_free (path);
 }
@@ -240,13 +240,13 @@ totem_action_play (Totem *totem, int offset)
 	if (totem->mrl == NULL)
 		return;
 
-	retval = gtk_xine_play (GTK_XINE (totem->gtx), totem->mrl, offset , 0);
+	retval = gtk_xine_play (GTK_XINE (totem->gtx), offset , 0);
 	play_pause_set_label (totem, retval);
 
 	/* FIXME remove when we're gone to 0.9.14 */
-	if (offset != 0)
-		return;
-
+//	if (offset != 0)
+//		return;
+#if 0
 	gtk_widget_set_sensitive (totem->fs_seek,
 			gtk_xine_is_seekable(GTK_XINE (totem->gtx)));
 	gtk_widget_set_sensitive (totem->seek,
@@ -269,6 +269,7 @@ totem_action_play (Totem *totem, int offset)
 		g_free (time_text);
 		g_free (name);
 	}
+#endif
 }
 
 void
@@ -363,8 +364,9 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 	char *text;
 
 	g_free (totem->mrl);
+	gtk_xine_stop (GTK_XINE (totem->gtx));
 
-	if (mrl == NULL) 
+	if (mrl == NULL)
 	{
 		totem->mrl = NULL;
 
@@ -409,6 +411,8 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 	} else {
 		char *title, *time_text, *name;
 		int time;
+
+		gtk_xine_open (GTK_XINE (totem->gtx), mrl);
 
 		totem->mrl = g_strdup (mrl);
 		name = gtk_playlist_mrl_to_title (mrl);
@@ -512,7 +516,7 @@ totem_action_seek_relative (Totem *totem, int off_sec)
 	else
 		sec = oldsec + off_sec;
 
-	gtk_xine_play (GTK_XINE(totem->gtx), totem->mrl, 0, sec);
+	gtk_xine_play (GTK_XINE(totem->gtx), 0, sec);
 	play_pause_set_label (totem, TRUE);
 }
 
@@ -1202,7 +1206,7 @@ on_mouse_click_fullscreen (GtkWidget *widget, gpointer user_data)
 	if (totem->popup_timeout != 0)
 	{
 		gtk_timeout_remove (totem->popup_timeout);
-		totem->popup_timeout;
+		totem->popup_timeout = 0;
 	}
 
 	totem->popup_timeout = gtk_timeout_add (2000,
@@ -1225,7 +1229,7 @@ on_mouse_motion_event (GtkWidget *widget, gpointer user_data)
 		totem->popup_timeout = 0;
 	}
 
-	gtk_widget_set_uposition (totem->control_popup, 0, 
+	gtk_window_move (GTK_WINDOW (totem->control_popup), 0,
 			gdk_screen_height () - totem->control_popup_height);
 	gtk_widget_show (totem->exit_popup);
 	gtk_widget_show (totem->control_popup);
@@ -1574,6 +1578,8 @@ static void
 video_widget_create (Totem *totem) 
 {
 	GtkWidget *container, *widget;
+
+	g_message ("video_widget_create");
 
 	totem->gtx = gtk_xine_new(-1, -1);
 	container = glade_xml_get_widget (totem->xml, "frame2");
