@@ -212,6 +212,7 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 
 	if (totem_embedded_open (emb) != FALSE)
 		totem_embedded_play (emb);
+g_print ("open result\n");
 }
 
 static gboolean
@@ -414,7 +415,7 @@ int main (int argc, char **argv)
 
 	g_thread_init (NULL);
 	bacon_video_widget_init_backend (NULL, NULL);
-	gdk_threads_init ();
+	//gdk_threads_init ();
 
 	gtk_init (&argc, &argv);
 
@@ -490,9 +491,9 @@ int main (int argc, char **argv)
 
 	if (totem_embedded_open (emb) != FALSE)
 		totem_embedded_play (emb);
-
+g_print ("enter mainloop\n");
 	gtk_main ();
-
+g_print ("exit\n");
 	return 0;
 }
 

@@ -38,9 +38,16 @@ totemMozillaObject::totemMozillaObject (TotemPlugin * _tm)
 
 totemMozillaObject::~totemMozillaObject ()
 {
+  g_print ("Die scriptable instance\n");
 }
 
 NS_IMPL_ISUPPORTS2(totemMozillaObject, totemMozillaScript, nsIClassInfo)
+
+void
+totemMozillaObject::invalidatePlugin ()
+{
+  this->tm = NULL;
+}
 
 /*
  * Waiting for response.
@@ -51,9 +58,11 @@ totemMozillaObject::wait ()
 {
   gchar *msg;
 
-  while (!this->tm->last_msg) {
+  while (this->tm && !this->tm->last_msg) {
     g_main_context_iteration (NULL, FALSE);
   }
+  if (!this->tm)
+    return NULL;
 
   msg = this->tm->last_msg;
   this->tm->last_msg = NULL;
@@ -68,6 +77,9 @@ totemMozillaObject::wait ()
 NS_IMETHODIMP
 totemMozillaObject::Play ()
 {
+  if (!this->tm)
+    return NS_ERROR_FAILURE;
+
   g_message ("play");
 
   bacon_message_connection_send (this->tm->conn, "PLAY");
@@ -81,6 +93,9 @@ totemMozillaObject::Play ()
 NS_IMETHODIMP
 totemMozillaObject::Rewind ()
 {
+  if (!this->tm)
+    return NS_ERROR_FAILURE;
+
   g_message ("stop");
 
   bacon_message_connection_send (this->tm->conn, "STOP");
@@ -94,6 +109,9 @@ totemMozillaObject::Rewind ()
 NS_IMETHODIMP
 totemMozillaObject::Stop ()
 {
+  if (!this->tm)
+    return NS_ERROR_FAILURE;
+
   g_message ("pause");
 
   bacon_message_connection_send (this->tm->conn, "PAUSE");

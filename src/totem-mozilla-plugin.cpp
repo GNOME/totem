@@ -161,7 +161,7 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 		return NPERR_OUT_OF_MEMORY_ERROR;
 	}
 	bacon_message_connection_set_callback (plugin->conn, cb_data, plugin);
-	NS_ADDREF (plugin->iface);
+	//NS_ADDREF (plugin->iface);
 
 	/* mode is NP_EMBED, NP_FULL, or NP_BACKGROUND (see npapi.h) */
 	printf("mode %d\n",mode);
@@ -225,6 +225,9 @@ static NPError totem_plugin_destroy_instance (NPP instance, NPSavedData **save)
 	if (plugin == NULL)
 		return NPERR_NO_ERROR;
 
+	plugin->iface->invalidatePlugin ();
+	NS_RELEASE (plugin->iface);
+
 	if (plugin->send_fd >= 0)
 		close(plugin->send_fd);
 
@@ -233,8 +236,6 @@ static NPError totem_plugin_destroy_instance (NPP instance, NPSavedData **save)
 		waitpid (plugin->player_pid, NULL, 0);
 	}
 
-	NS_RELEASE (plugin->iface);
-	delete plugin->iface;
 	bacon_message_connection_free (plugin->conn);
 	g_free (plugin->last_msg);
 	mozilla_functions.memfree (instance->pdata);
@@ -462,7 +463,7 @@ NP_GetValue(void *future, NPPVariable variable, void *value)
 	return totem_plugin_get_value (NULL, variable, value);
 }
 
-#define NUM_MIME_TYPES 4
+#define NUM_MIME_TYPES 5
 static struct {
 	const char *mime_type;
 	const char *extensions;
@@ -471,7 +472,8 @@ static struct {
 	{ "video/quicktime", "mov" },
 	{ "application/x-mplayer2", "avi, wma, wmv", "video/x-msvideo" },
 	{ "video/mpeg", "mpg, mpeg, mpe" },
-	{ "video/x-ms-asf-plugin", "asf, wmv", "video/x-ms-asf" }
+	{ "video/x-ms-asf-plugin", "asf, wmv", "video/x-ms-asf" },
+	{ "application/ogg", "ogg" }
 };
 
 char *NP_GetMIMEDescription(void)

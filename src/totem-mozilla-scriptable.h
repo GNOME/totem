@@ -80,6 +80,7 @@ public:
 
   totemMozillaObject (TotemPlugin *tm);
   ~totemMozillaObject ();
+  void invalidatePlugin ();
 
   gchar *wait ();
 

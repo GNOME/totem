@@ -43,7 +43,7 @@ struct BaconMessageConnection {
 
 	/* FD is for the connection, serverfd is for the server socket,
 	 * it accepts incoming connections. */
-	int fd, serverfd;
+	int fd, serverfd, server_conn_id, conn_id;
 	GIOChannel *chan;
 
 	/* callback */
@@ -76,7 +76,7 @@ setup_connection (BaconMessageConnection *conn)
 		return FALSE;
 	}
 	g_io_channel_set_line_term (conn->chan, "\n", 1);
-	g_io_add_watch (conn->chan, G_IO_IN, server_cb, conn);
+	conn->conn_id = g_io_add_watch (conn->chan, G_IO_IN, server_cb, conn);
 
 	return TRUE;
 }
@@ -87,18 +87,18 @@ server_cb (GIOChannel *source, GIOCondition condition, gpointer data)
 	BaconMessageConnection *conn = (BaconMessageConnection *)data;
 	char *message, *subs, buf;
 	int cd, alen, rc, offset;
-	gboolean finished, serverconn = FALSE;
+	gboolean finished;
 
-	message = g_malloc (1);
+	g_print ("Server-cb\n");
 	offset = 0;
 	if (conn->serverfd == g_io_channel_unix_get_fd (source)) {
 		cd = accept (conn->serverfd, NULL, &alen);
 		conn->fd = cd;
 		setup_connection (conn);
-		serverconn = TRUE;
-	} else {
-		cd = conn->fd;
+		return TRUE;
 	}
+	message = g_malloc (1);
+	cd = conn->fd;
 	rc = read (cd, &buf, 1);
 	while (rc > 0 && buf != '\n')
 	{
@@ -107,15 +107,16 @@ server_cb (GIOChannel *source, GIOCondition condition, gpointer data)
 		offset = offset + rc;
 		rc = read (cd, &buf, 1);
 	}
-	if (rc == 0) {
+	if (rc <= 0) {
 		g_io_channel_shutdown (conn->chan, FALSE, NULL);
 		g_io_channel_unref (conn->chan);
 		conn->chan = NULL;
 		close (conn->fd);
 		conn->fd = -1;
 		g_free (message);
+		conn->conn_id = 0;
 
-		return serverconn;
+		return FALSE;
 	}
 	message[offset] = '\0';
 
@@ -173,7 +174,10 @@ try_server (BaconMessageConnection *conn)
 	}
 	listen (conn->fd, 5);
 
-	return setup_connection (conn);
+	if (!setup_connection (conn))
+		return FALSE;
+	conn->server_conn_id = conn->conn_id;
+	return TRUE;
 }
 
 static gboolean
@@ -242,6 +246,14 @@ bacon_message_connection_free (BaconMessageConnection *conn)
 	g_return_if_fail (conn != NULL);
 	g_return_if_fail (conn->path != NULL);
 
+	if (conn->server_conn_id) {
+		g_source_remove (conn->server_conn_id);
+		conn->server_conn_id = 0;
+	}
+	if (conn->conn_id) {
+		g_source_remove (conn->conn_id);
+		conn->conn_id = 0;
+	}
 	if (conn->chan) {
 		g_io_channel_shutdown (conn->chan, FALSE, NULL);
 		g_io_channel_unref (conn->chan);

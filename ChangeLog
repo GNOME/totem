@@ -1,3 +1,21 @@
+2005-04-04  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/bacon-message-connection.c: (setup_connection), (server_cb),
+	(try_server), (bacon_message_connection_free):
+	  Close left-over connections better.
+	* src/totem-mozilla-plugin.cpp:
+	* src/totem-mozilla-scriptable.cpp:
+	* src/totem-mozilla-scriptable.h:
+	  Better shutdown handling. Makes it virtually possible to open
+	  the plugin, go to another webpage with more media etc. without
+	  murdering your children. Should fix (and does, for me) #172476,
+	  and includes the fix in #172473 from Christian Persch
+	  <chpe@gnome.org> for releasing references to scriptable
+	  instances at the right time.
+	* src/totem-mozilla-viewer.c: (on_got_redirect), (main):
+	  Don't call gdk_threads_init() because for some reason it
+	  hangs my mozilla at some point.
+
 2005-04-03  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/backend/bacon-video-widget-gst.c:
