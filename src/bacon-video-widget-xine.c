@@ -2464,8 +2464,8 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetM
 }
 
 static void
-bacon_video_widget_get_metadata_int (BaconVideoWidget *bvw, BaconVideoWidgetMetadataType type,
-		GValue *value)
+bacon_video_widget_get_metadata_int (BaconVideoWidget *bvw,
+		BaconVideoWidgetMetadataType type, GValue *value)
 {
 	int integer = 0;
 
@@ -2554,11 +2554,13 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget *bvw,
 }
 
 void
-bacon_video_widget_get_metadata (BaconVideoWidget *bvw, BaconVideoWidgetMetadataType type, GValue *value)
+bacon_video_widget_get_metadata (BaconVideoWidget *bvw,
+		BaconVideoWidgetMetadataType type, GValue *value)
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
+	g_return_if_fail (value != NULL);
 
 	switch (type)
 	{

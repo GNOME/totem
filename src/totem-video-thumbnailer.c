@@ -182,6 +182,9 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
+	//FIXME create a new thread that will watch over these 2 next
+	//calls so that we know they won't take longer than 30 secs
+
 	if (bacon_video_widget_open (bvw, argv[1], &err) == FALSE)
 	{
 		g_print ("totem-video-thumbnailer couln't open file '%s'\n"

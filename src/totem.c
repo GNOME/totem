@@ -209,7 +209,7 @@ static void
 totem_action_error_try_download (char *msg, Totem *totem)
 {
 	GtkWidget *error_dialog;
-	GValue value;
+	GValue value = { 0, };
 	guint32 audio_fcc, video_fcc;
 	int res;
 
