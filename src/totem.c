@@ -2338,7 +2338,7 @@ move_popups (Totem *totem)
 	if (gtk_widget_get_direction (totem->exit_popup) == GTK_TEXT_DIR_RTL)
 	{
 		gtk_window_move (GTK_WINDOW (totem->exit_popup),
-				totem->fullscreen_rect.width - exit_width,
+				totem->fullscreen_rect.x,
 				totem->fullscreen_rect.y);
 		gtk_window_move (GTK_WINDOW (totem->control_popup),
 				totem->fullscreen_rect.width - control_width,
@@ -2346,7 +2346,7 @@ move_popups (Totem *totem)
 				- control_height);
 	} else {
 		gtk_window_move (GTK_WINDOW (totem->exit_popup),
-				totem->fullscreen_rect.x,
+				totem->fullscreen_rect.width - exit_width,
 				totem->fullscreen_rect.y);
 		gtk_window_move (GTK_WINDOW (totem->control_popup),
 				totem->fullscreen_rect.x,
