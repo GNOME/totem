@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-12 16:15-0500\n"
-"PO-Revision-Date: 2005-01-12 19:41-0400\n"
+"POT-Creation-Date: 2005-01-13 01:32-0500\n"
+"PO-Revision-Date: 2005-01-13 19:41-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -546,7 +546,7 @@ msgstr "Time:"
 
 #. Title
 #: data/totem.glade.h:102 data/totem.desktop.in.in.in.h:2 src/totem.c:563
-#: src/totem.c:3371
+#: src/totem.c:3372
 msgid "Totem Movie Player"
 msgstr "Totem Movie Player"
 
@@ -1150,6 +1150,15 @@ msgstr "Video CD"
 msgid "DVD"
 msgstr "DVD"
 
+#: src/totem-interface.c:103
+#, c-format
+msgid "Couldn't load the '%s' interface."
+msgstr "Could not load the '%s' interface."
+
+#: src/totem-interface.c:105 src/totem-interface.c:107
+msgid "Make sure that Totem is properly installed."
+msgstr "Make sure that Totem is properly installed."
+
 #. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
 #: src/totem-mozilla-viewer.c:59 src/totem.c:301 src/totem.c:328
 #: src/totem.c:692 src/totem.c:797
@@ -1169,11 +1178,11 @@ msgstr "Make sure that the Totem plugin is properly installed."
 msgid "The Totem plugin could not startup."
 msgstr "The Totem plugin could not startup."
 
-#: src/totem-mozilla-viewer.c:109 src/totem.c:3195
+#: src/totem-mozilla-viewer.c:109 src/totem.c:3196
 msgid "No reason."
 msgstr "No reason."
 
-#: src/totem-mozilla-viewer.c:141 src/totem.c:3376
+#: src/totem-mozilla-viewer.c:141 src/totem.c:3377
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Could not initialise the thread-safe libraries."
 
@@ -1492,19 +1501,19 @@ msgstr "Make sure that Totem is correctly installed."
 msgid "Totem could not seek in '%s'."
 msgstr "Totem could not seek in '%s'."
 
-#: src/totem.c:3195
+#: src/totem.c:3196
 msgid "Totem could not startup."
 msgstr "Totem could not startup."
 
-#: src/totem.c:3376
+#: src/totem.c:3377
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verify your system installation. Totem will now exit."
 
-#: src/totem.c:3397
+#: src/totem.c:3398
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem couln't initialise the configuration engine."
 
-#: src/totem.c:3397
+#: src/totem.c:3398
 msgid "Make sure that GNOME is properly installed."
 msgstr "Make sure that GNOME is properly installed."
 
