@@ -1,5 +1,14 @@
 2003-10-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c: (totem_playlist_mrl_to_title),
+	(totem_playlist_save_get_iter_func),
+	(totem_playlist_save_current_playlist),
+	(gtk_tree_selection_has_selected): do the saving using the parser
+	as well, nifty (not tested obviously, i'm so dazed by the visuals
+	of my running version that i won't stop it)
+
+2003-10-10  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: added gnome-vfs-module as a dep (urgh!)
 	* src/.cvsignore: upd
 	* src/Makefile.am: upd
