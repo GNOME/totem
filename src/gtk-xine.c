@@ -375,6 +375,7 @@ gtk_xine_finalize (GObject *object)
 	GtkXine *gtx = (GtkXine *) object;
 
 	/* Should put here what needs to be destroyed */
+	g_idle_remove_by_data (gtx);
 	g_async_queue_unref (gtx->priv->queue);
 	if (gtx->priv->dialog != NULL)
 		gtk_widget_destroy (gtx->priv->dialog);
@@ -1110,7 +1111,7 @@ gtk_xine_unrealize (GtkWidget *widget)
 
 	g_return_if_fail (widget != NULL);
 	g_return_if_fail (GTK_IS_XINE (widget));
-//FIXME need to empty the async queue
+
 	/* Hide all windows */
 	if (GTK_WIDGET_MAPPED (widget))
 		gtk_widget_unmap (widget);
@@ -2102,10 +2103,9 @@ gtk_xine_can_get_frames (GtkXine *gtx)
 	if (gtk_xine_is_playing (gtx) == FALSE)
 		return FALSE;
 	
-//FIXME this doesn't work properly
-//	if (xine_get_stream_info (gtx->priv->stream,
-//				XINE_STREAM_INFO_VIDEO_HANDLED) == FALSE)
-//		return FALSE;
+	if (xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_VIDEO_HANDLED) == FALSE)
+		return FALSE;
 
 	return TRUE;
 }
