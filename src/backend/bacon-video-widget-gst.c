@@ -1495,7 +1495,7 @@ bacon_video_widget_open (BaconVideoWidget * bvw, const gchar * mrl,
       GST_STATE_SUCCESS);
   if (!ret)
     {
-      g_set_error (error, 0, 0, bvw->priv->last_error_message ?
+      g_set_error (error, 0, 0, "%s", bvw->priv->last_error_message ?
           bvw->priv->last_error_message : "Failed to open; reason unknown");
       g_free (bvw->priv->mrl);
       bvw->priv->mrl = NULL;
@@ -1526,7 +1526,7 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
       GST_STATE_PLAYING) == GST_STATE_SUCCESS);
   if (!ret)
     {
-      g_set_error (error, 0, 0, bvw->priv->last_error_message ?
+      g_set_error (error, 0, 0, "%s", bvw->priv->last_error_message ?
           bvw->priv->last_error_message : "Failed to play; reason unknown");
     }
 

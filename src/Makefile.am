@@ -140,7 +140,7 @@ bvw_test_SOURCES = $(VIDEOWIDGET) bvw-test.c
 bvw_test_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS)  $(NVTV_LIBS)
 
 metadata_test_SOURCES = $(VIDEOWIDGET) metadata-test.c
-metadata_test_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS)  $(NVTV_LIBS)
+metadata_test_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS)  $(NVTV_LIBS) $(EXTRA_GNOME_LIBS)
 
 disc_test_SOURCES = disc-test.c
 disc_test_LDADD = \
