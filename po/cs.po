@@ -1,16 +1,16 @@
 # Czech translation for totem.
 # Copyright (C) 2002 Free Software Foundation
-# Copyright (C) 2003 Miloslav Trmac <mitr@volny.cz>
+# Copyright (C) 2003, 2004 Miloslav Trmac <mitr@volny.cz>
 # This file is distributed under the same license as the totem package.
 # Michal Bukovjan <bukm@centrum.cz>, 2002,2003.
-# Miloslav Trmac <mitr@volny.cz>, 2003.
+# Miloslav Trmac <mitr@volny.cz>, 2003, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-12-30 20:47+0100\n"
-"PO-Revision-Date: 2003-12-30 22:36+0100\n"
+"POT-Creation-Date: 2004-01-21 05:11+0100\n"
+"PO-Revision-Date: 2004-01-21 19:19+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1272
+#: data/playlist.glade.h:1 src/totem-playlist.c:1271
 msgid "Playlist"
 msgstr "Seznam skladeb"
 
@@ -100,6 +100,7 @@ msgid "Framerate:"
 msgstr "Snímků:"
 
 #. Video Codec
+#. Audio Codec
 #: data/properties.glade.h:15 src/bacon-video-widget-properties.c:167
 #: src/bacon-video-widget-properties.c:174
 #: src/bacon-video-widget-properties.c:243
@@ -107,7 +108,7 @@ msgstr "Snímků:"
 msgid "N/A"
 msgstr "---"
 
-#: data/properties.glade.h:16 src/totem.c:2103
+#: data/properties.glade.h:16 src/totem.c:2134
 msgid "Properties"
 msgstr "Vlastnosti"
 
@@ -116,6 +117,8 @@ msgid "Title:"
 msgstr "Titul:"
 
 #. Title
+#. Artist
+#. Year
 #: data/properties.glade.h:18 src/bacon-video-widget-properties.c:157
 #: src/bacon-video-widget-properties.c:159
 #: src/bacon-video-widget-properties.c:161
@@ -154,8 +157,8 @@ msgid "Play movies and songs"
 msgstr "Přehrávání filmů a písniček"
 
 #. Title
-#: data/totem.desktop.in.h:2 data/totem.glade.h:96 src/totem.c:742
-#: src/totem.c:3640
+#: data/totem.desktop.in.h:2 data/totem.glade.h:97 src/totem.c:739
+#: src/totem.c:3677
 msgid "Totem Movie Player"
 msgstr "Přehrávač filmů Totem"
 
@@ -224,8 +227,8 @@ msgid "<b>Audio Output</b>"
 msgstr "<b>Zvukový výstup</b>"
 
 #: data/totem.glade.h:19
-msgid "<b>Brightness/Contrast</b>"
-msgstr "<b>Jas/kontrast</b>"
+msgid "<b>Color balance</b>"
+msgstr "<b>Vyrovnání barev</b>"
 
 #: data/totem.glade.h:20
 msgid "<b>Display</b>"
@@ -347,7 +350,7 @@ msgstr "Jazyky"
 msgid "Large"
 msgstr "Velké"
 
-#: data/totem.glade.h:50 src/totem.c:80
+#: data/totem.glade.h:50 src/totem.c:77
 msgid "Next"
 msgstr "Následující"
 
@@ -407,11 +410,11 @@ msgstr "Přehrát zvukové CD"
 msgid "Play or pause the movie"
 msgstr "Přehrávat nebo pozadavit film"
 
-#: data/totem.glade.h:65 src/totem.c:79
+#: data/totem.glade.h:65 src/totem.c:76
 msgid "Play/Pause"
 msgstr "Hrát/Pozastavit"
 
-#: data/totem.glade.h:66 src/totem.c:81
+#: data/totem.glade.h:66 src/totem.c:78
 msgid "Previous"
 msgstr "Předchozí"
 
@@ -424,262 +427,270 @@ msgid "S_ubtitles"
 msgstr "_Titulky"
 
 #: data/totem.glade.h:69
+msgid "Sat_uration:"
+msgstr "_Sytost:"
+
+#: data/totem.glade.h:70
 msgid "Save Screenshot"
 msgstr "Snímek obrazovky"
 
-#: data/totem.glade.h:70
+#: data/totem.glade.h:71
 msgid "Save screenshot to _file:"
 msgstr "Uložit snímek obrazovky do _souboru: "
 
-#: data/totem.glade.h:71
+#: data/totem.glade.h:72
 msgid "Save screenshot to the _desktop"
 msgstr "Sejmout obrazovku na _pracovní plochu"
 
-#: data/totem.glade.h:72
+#: data/totem.glade.h:73
 msgid "Set the repeat mode"
 msgstr "Nastavit režim opakování"
 
-#: data/totem.glade.h:73
+#: data/totem.glade.h:74
 msgid "Set the shuffle mode"
 msgstr "Nastavit náhodný režim"
 
-#: data/totem.glade.h:74
+#: data/totem.glade.h:75
 msgid "Show _Controls"
 msgstr "Zobrazit _ovládací prvky"
 
-#: data/totem.glade.h:75
+#: data/totem.glade.h:76
 msgid "Show _visual effects when an audio file is played"
 msgstr "Zobrazovat _vizuální efekty při přehrávání zvukového souboru"
 
-#: data/totem.glade.h:76
+#: data/totem.glade.h:77
 msgid "Show controls"
 msgstr "Zobrazit ovládací prvky"
 
-#: data/totem.glade.h:77
+#: data/totem.glade.h:78
 msgid "Show or hide the playlist"
 msgstr "Zobrazit nebo skrýt seznam skladeb"
 
-#: data/totem.glade.h:78
+#: data/totem.glade.h:79
 msgid "Show/Hide Playlist"
 msgstr "Zobrazit/skrýt seznam skladeb"
 
-#: data/totem.glade.h:79
+#: data/totem.glade.h:80
 msgid "Shuff_le Mode"
 msgstr "_Náhodný režim"
 
-#: data/totem.glade.h:80
+#: data/totem.glade.h:81
 msgid "Skip _Backwards"
 msgstr "Přeskočit _zpět"
 
-#: data/totem.glade.h:81
+#: data/totem.glade.h:82
 msgid "Skip _Forward"
 msgstr "Přeskočit _vpřed"
 
-#: data/totem.glade.h:82
+#: data/totem.glade.h:83
 msgid "Skip backwards"
 msgstr "Přeskočit zpět"
 
-#: data/totem.glade.h:83
+#: data/totem.glade.h:84
 msgid "Skip forward"
 msgstr "Přeskočit vpřed"
 
-#: data/totem.glade.h:84
+#: data/totem.glade.h:85
 msgid "Skip to"
 msgstr "Přeskočit na"
 
-#: data/totem.glade.h:85
+#: data/totem.glade.h:86
 msgid "Skip to a specific time"
 msgstr "Přeskočit na konkrétní čas"
 
-#: data/totem.glade.h:86
+#: data/totem.glade.h:87
 msgid "Small"
 msgstr "Malé"
 
-#: data/totem.glade.h:87
+#: data/totem.glade.h:88
 msgid "Stereo"
 msgstr "Stereo"
 
-#: data/totem.glade.h:88
+#: data/totem.glade.h:89
 msgid "Subtitles"
 msgstr "Titulky"
 
-#: data/totem.glade.h:89
+#: data/totem.glade.h:90
 msgid "Switch to double size"
 msgstr "Přepnout na dvojnásobnou velikost"
 
-#: data/totem.glade.h:90
+#: data/totem.glade.h:91
 msgid "Switch to fullscreen"
 msgstr "Přepnout do celoobrazovkového režimu"
 
-#: data/totem.glade.h:91
+#: data/totem.glade.h:92
 msgid "Take _Screenshot"
 msgstr "_Sejmout obrazovku"
 
-#: data/totem.glade.h:92
+#: data/totem.glade.h:93
 msgid "Take a screenshot"
 msgstr "Sejmout obrazovku"
 
-#: data/totem.glade.h:93
+#: data/totem.glade.h:94
 msgid "Time:"
 msgstr "Čas:"
 
-#: data/totem.glade.h:94
+#: data/totem.glade.h:95
 msgid "Toggle _Aspect Ratio"
 msgstr "Přepnout _poměr stran"
 
-#: data/totem.glade.h:95
+#: data/totem.glade.h:96
 msgid "Toggle the aspect ratio"
 msgstr "Přepnout poměr stran"
 
-#: data/totem.glade.h:97
+#: data/totem.glade.h:98
 msgid "Totem Preferences"
 msgstr "Nastavení Totemu"
 
-#: data/totem.glade.h:98
+#: data/totem.glade.h:99
 msgid "Visualisation _size:"
 msgstr "_Velikost vizualizace: "
 
-#: data/totem.glade.h:99
+#: data/totem.glade.h:100
 msgid "Volume _Down"
 msgstr "S_nížit hlasitost"
 
-#: data/totem.glade.h:100
+#: data/totem.glade.h:101
 msgid "Volume _Up"
 msgstr "Z_výšit hlasitost"
 
-#: data/totem.glade.h:101
+#: data/totem.glade.h:102
 msgid "Volume down"
 msgstr "Snížit hlasitost"
 
-#: data/totem.glade.h:102
+#: data/totem.glade.h:103
 msgid "Volume up"
 msgstr "Zvýšit hlasitost"
 
-#: data/totem.glade.h:103 data/vanity.glade.h:7
+#: data/totem.glade.h:104 data/vanity.glade.h:7
 msgid "Zoom _1:1"
 msgstr "Zvětšení _1:1"
 
-#: data/totem.glade.h:104 data/vanity.glade.h:8
+#: data/totem.glade.h:105 data/vanity.glade.h:8
 msgid "Zoom _2:1"
 msgstr "Zvětšení _2:1"
 
-#: data/totem.glade.h:105
+#: data/totem.glade.h:106
 msgid "Zoom to half size"
 msgstr "Změnšit na poloviční velikost"
 
-#: data/totem.glade.h:106
+#: data/totem.glade.h:107
 msgid "Zoom to one for one size"
 msgstr "Zvětšit na velikost jedna k jedné"
 
-#: data/totem.glade.h:107
+#: data/totem.glade.h:108
 msgid "_Add Proprietary Plugins..."
 msgstr "_Přidat proprietární zásuvné moduly..."
 
-#: data/totem.glade.h:108
+#: data/totem.glade.h:109
 msgid "_Angle Menu"
 msgstr "Menu _úhlů"
 
-#: data/totem.glade.h:109
+#: data/totem.glade.h:110
 msgid "_Audio output type:"
 msgstr "_Typ zvukového výstupu:"
 
-#: data/totem.glade.h:110
+#: data/totem.glade.h:111
 msgid "_Brightness:"
 msgstr "_Jas:"
 
-#: data/totem.glade.h:111
+#: data/totem.glade.h:112
 msgid "_Chapter Menu"
 msgstr "Menu _kapitol"
 
-#: data/totem.glade.h:112
+#: data/totem.glade.h:113
 msgid "_Contents"
 msgstr "_Obsah"
 
-#: data/totem.glade.h:113
+#: data/totem.glade.h:114
 msgid "_DVD Menu"
 msgstr "Menu _DVD"
 
-#: data/totem.glade.h:114
+#: data/totem.glade.h:115
 msgid "_DXR3 TV-out"
 msgstr "_DXR3 TV-out"
 
-#: data/totem.glade.h:115
+#: data/totem.glade.h:116
 msgid "_Deinterlace"
 msgstr "_Eliminovat prokládání"
 
-#: data/totem.glade.h:116
+#: data/totem.glade.h:117
 msgid "_Eject"
 msgstr "_Vysunout"
 
-#: data/totem.glade.h:117
+#: data/totem.glade.h:118
 msgid "_Fullscreen"
 msgstr "_Celá obrazovka"
 
-#: data/totem.glade.h:118
+#: data/totem.glade.h:119
 msgid "_Go"
 msgstr "_Jdi"
 
-#: data/totem.glade.h:119
+#: data/totem.glade.h:120
+msgid "_Hue:"
+msgstr "_Odstín:"
+
+#: data/totem.glade.h:121
 msgid "_Languages"
 msgstr "_Jazyky"
 
-#: data/totem.glade.h:120
+#: data/totem.glade.h:122
 msgid "_Movie"
 msgstr "_Film"
 
-#: data/totem.glade.h:121
+#: data/totem.glade.h:123
 msgid "_Next Chapter/Movie"
 msgstr "_Následující kapitola/film"
 
-#: data/totem.glade.h:122
+#: data/totem.glade.h:124
 msgid "_No TV-out"
 msgstr "_Žádný TV-Out"
 
-#: data/totem.glade.h:123
+#: data/totem.glade.h:125
 msgid "_Optical device path:"
 msgstr "_Cesta k optickému zařízení:"
 
-#: data/totem.glade.h:124
+#: data/totem.glade.h:126
 msgid "_Previous Chapter/Movie"
 msgstr "_Předchozí kapitola/film"
 
-#: data/totem.glade.h:125
+#: data/totem.glade.h:127
 msgid "_Repeat Mode"
 msgstr "Režim _opakování"
 
-#: data/totem.glade.h:126
+#: data/totem.glade.h:128
 msgid "_Show/Hide Playlist"
 msgstr "Zobrazit/_Skrýt seznam skladeb"
 
-#: data/totem.glade.h:127
+#: data/totem.glade.h:129
 msgid "_Skip to..."
 msgstr "_Přeskočit na..."
 
-#: data/totem.glade.h:128
+#: data/totem.glade.h:130
 msgid "_Skip to:"
 msgstr "_Přeskočit na:"
 
-#: data/totem.glade.h:129
+#: data/totem.glade.h:131
 msgid "_Sound"
 msgstr "_Zvuk"
 
-#: data/totem.glade.h:130
+#: data/totem.glade.h:132
 msgid "_TV-out mode"
 msgstr "Režim _TV-Out"
 
-#: data/totem.glade.h:131
+#: data/totem.glade.h:133
 msgid "_Title Menu"
 msgstr "Menu _titulků"
 
-#: data/totem.glade.h:132
+#: data/totem.glade.h:134
 msgid "_Type of visualisation:"
 msgstr "_Typ vizualizace: "
 
-#: data/totem.glade.h:133 data/vanity.glade.h:10
+#: data/totem.glade.h:135 data/vanity.glade.h:10
 msgid "_Zoom 1:2"
 msgstr "_Zvětšení 1:2"
 
-#: data/totem.glade.h:134
+#: data/totem.glade.h:136
 msgid "seconds"
 msgstr "sekund"
 
@@ -745,7 +756,7 @@ msgstr "Náhodný režim."
 
 #: data/totem.schemas.in.h:16
 msgid "The brightness of the video"
-msgstr "Jas vydea"
+msgstr "Jas videa"
 
 #: data/totem.schemas.in.h:17
 msgid "The brightness of the video."
@@ -760,10 +771,26 @@ msgid "The contrast of the video."
 msgstr "Kontrast videa."
 
 #: data/totem.schemas.in.h:20
+msgid "The hue of the video"
+msgstr "Odstín videa"
+
+#: data/totem.schemas.in.h:21
+msgid "The hue of the video."
+msgstr "Odstín videa."
+
+#: data/totem.schemas.in.h:22
+msgid "The saturation of the video"
+msgstr "Sytost videa"
+
+#: data/totem.schemas.in.h:23
+msgid "The saturation of the video."
+msgstr "Sytost videa."
+
+#: data/totem.schemas.in.h:24
 msgid "Type of audio output to use"
 msgstr "Typ zvukového výstupu, který používat"
 
-#: data/totem.schemas.in.h:21
+#: data/totem.schemas.in.h:25
 msgid ""
 "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
 "\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
@@ -773,39 +800,39 @@ msgstr ""
 "čtyřkanálový výstup, \"2\" pro 5.0-kanálový výstup, \"3\" pro 5.1-kanálový "
 "výstup, \"4\" pro předání AC3."
 
-#: data/totem.schemas.in.h:22
+#: data/totem.schemas.in.h:26
 msgid "Whether the main window should stay on top"
 msgstr "Jestli má hlavní okno zůstat navrchu"
 
-#: data/totem.schemas.in.h:23
+#: data/totem.schemas.in.h:27
 msgid "Whether the main window should stay on top of the other ones"
 msgstr "Jestli má hlavní okno zůstat nad ostatními okny"
 
-#: data/totem.schemas.in.h:24
+#: data/totem.schemas.in.h:28
 msgid "Whether to enable debug for the playback engine"
 msgstr "Jestli povolit ladění přehrávacího engine"
 
-#: data/totem.schemas.in.h:25
+#: data/totem.schemas.in.h:29
 msgid "Whether to enable debug for the playback engine."
 msgstr "Jestli povolit ladění přehrávacího engine."
 
-#: data/totem.schemas.in.h:26
+#: data/totem.schemas.in.h:30
 msgid "Width of the video widget"
 msgstr "Šířka widgetu videa"
 
-#: data/totem.schemas.in.h:27
+#: data/totem.schemas.in.h:31
 msgid "X coordinate for the Playlist"
 msgstr "Souřadnice X pro seznam skladeb"
 
-#: data/totem.schemas.in.h:28
+#: data/totem.schemas.in.h:32
 msgid "X coordinate for the Playlist."
 msgstr "Souřadnice X pro seznam skladeb."
 
-#: data/totem.schemas.in.h:29
+#: data/totem.schemas.in.h:33
 msgid "Y coordinate for the Playlist"
 msgstr "Souřadnice Y pro seznam skladeb"
 
-#: data/totem.schemas.in.h:30
+#: data/totem.schemas.in.h:34
 msgid "Y coordinate for the Playlist."
 msgstr "Souřadnice Y pro seznam skladeb."
 
@@ -865,7 +892,7 @@ msgstr "Vyberte zařízení"
 msgid "Unnamed Video Device"
 msgstr "Nepojmenované video zařízení"
 
-#: src/bacon-video-widget-gst.c:61
+#: src/bacon-video-widget-gst.c:62
 msgid "Totem Video Window"
 msgstr "Video okno Totemu"
 
@@ -926,7 +953,7 @@ msgstr "%d snímků za sekundu"
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/bacon-video-widget-xine.c:637
+#: src/bacon-video-widget-xine.c:636
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -935,40 +962,40 @@ msgstr ""
 "Nelze načíst ovladač zvuku '%s'.\n"
 "Ověřte prosím, zda není zařízení obsazeno."
 
-#: src/bacon-video-widget-xine.c:1147
+#: src/bacon-video-widget-xine.c:1146
 msgid "The server you are trying to connect to is not known."
 msgstr "Server, ke kterému se pokoušíte připojit, není znám."
 
-#: src/bacon-video-widget-xine.c:1150
+#: src/bacon-video-widget-xine.c:1149
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "Název zařízení, který jste zadali (%s), zřejmě není platný."
 
-#: src/bacon-video-widget-xine.c:1153
+#: src/bacon-video-widget-xine.c:1152
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "Server, ke kterému se pokoušíte připojit (%s), není dostupný."
 
-#: src/bacon-video-widget-xine.c:1156
+#: src/bacon-video-widget-xine.c:1155
 msgid "The connection to this server was refused."
 msgstr "Připojení k tomuto serveru bylo odmítnuto."
 
-#: src/bacon-video-widget-xine.c:1159
+#: src/bacon-video-widget-xine.c:1158
 #, c-format
 msgid "The specified movie '%s' could not be found."
 msgstr "Určený film '%s' nebyl nalezen."
 
-#: src/bacon-video-widget-xine.c:1162
+#: src/bacon-video-widget-xine.c:1161
 #, c-format
 msgid "The movie '%s' could not be read."
 msgstr "Film '%s' nelze číst."
 
-#: src/bacon-video-widget-xine.c:1165
+#: src/bacon-video-widget-xine.c:1164
 #, c-format
 msgid "A problem occured while loading a library or a decoder (%s)."
 msgstr "Při načítání knihovny nebo dekodéru došlo k problému (%s)."
 
-#: src/bacon-video-widget-xine.c:1169
+#: src/bacon-video-widget-xine.c:1168
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -976,35 +1003,35 @@ msgstr ""
 "Zdroj je zřejmě zašifrovaný a nelze jej číst. Pokoušíte se přehrávat "
 "zašifrované DVD bez libdvdcss?"
 
-#: src/bacon-video-widget-xine.c:1171
+#: src/bacon-video-widget-xine.c:1170
 msgid "This file is encrypted and cannot be played back."
 msgstr "Tento soubor je šifrován a nelze jej přehrávat."
 
-#: src/bacon-video-widget-xine.c:1174
+#: src/bacon-video-widget-xine.c:1173
 msgid "For security reasons, this movie can not be played back."
 msgstr "Tento nelze přehrávat z důvodů zabezpečení."
 
-#: src/bacon-video-widget-xine.c:1264
+#: src/bacon-video-widget-xine.c:1263
 msgid "There is no plugin to handle this movie"
 msgstr "Pro obsluhu tohoto filmu chybí zásuvný modul"
 
-#: src/bacon-video-widget-xine.c:1268
+#: src/bacon-video-widget-xine.c:1267
 msgid "This movie is broken and can not be played further"
 msgstr "Tento film je poškozen a nelze jej dále přehrávat"
 
-#: src/bacon-video-widget-xine.c:1272
+#: src/bacon-video-widget-xine.c:1271
 msgid "This location is not a valid one"
 msgstr "Toto umístění není platné"
 
-#: src/bacon-video-widget-xine.c:1276
+#: src/bacon-video-widget-xine.c:1275
 msgid "This movie could not be opened"
 msgstr "Tento film nelze otevřít"
 
-#: src/bacon-video-widget-xine.c:1279
+#: src/bacon-video-widget-xine.c:1278
 msgid "Generic Error"
 msgstr "Obecná chyba"
 
-#: src/bacon-video-widget-xine.c:1695
+#: src/bacon-video-widget-xine.c:1693
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1013,7 +1040,7 @@ msgstr ""
 "Video kodek '%s' není obsloužen. Pro přehrávání některých typů filmů budete "
 "možná muset nainstalovat přídavné zásuvné moduly."
 
-#: src/bacon-video-widget-xine.c:1714
+#: src/bacon-video-widget-xine.c:1712
 msgid "This is an audio-only file, and there is no audio output available"
 msgstr "Tento soubor obsahuje jen zvuk a zvukový výstup není k dispozici"
 
@@ -1029,12 +1056,12 @@ msgstr "Žádné video k zachycení"
 msgid "Video codec is not handled"
 msgstr "Kodek videa '%s' není obsloužen"
 
-#: src/cd-drive.c:400
+#: src/cd-drive.c:404
 #, c-format
 msgid "Unnamed SCSI CD-ROM (%s)"
 msgstr "Nepojmenovaná SCSI CD-ROM (%s)"
 
-#: src/cd-drive.c:883
+#: src/cd-drive.c:976
 msgid "File image"
 msgstr "Soubor s obrazem"
 
@@ -1077,19 +1104,19 @@ msgstr "_Heslo:"
 msgid "Remember this password"
 msgstr "Zapamatovat si toto heslo"
 
-#: src/totem-playlist.c:321
+#: src/totem-playlist.c:320
 msgid "Could not save the playlist"
 msgstr "Nemohu uložit seznam skladeb"
 
-#: src/totem-playlist.c:476 src/totem.c:1536
+#: src/totem-playlist.c:475 src/totem.c:1553
 msgid "Select files"
 msgstr "Vyberte soubory"
 
-#: src/totem-playlist.c:641
+#: src/totem-playlist.c:640
 msgid "Save playlist"
 msgstr "Uložit seznam skladeb"
 
-#: src/totem-playlist.c:679
+#: src/totem-playlist.c:678
 #, c-format
 msgid ""
 "A file named '%s' already exists.\n"
@@ -1098,7 +1125,7 @@ msgstr ""
 "Soubor pojmenovaný '%s' již existuje.\n"
 "Jste si jisti, že jej chcete přepsat?"
 
-#: src/totem-playlist.c:864
+#: src/totem-playlist.c:863
 msgid "Filename"
 msgstr "Název souboru"
 
@@ -1156,7 +1183,7 @@ msgstr "Typ stínování"
 msgid "Style of bevel around the statusbar text"
 msgstr "Styl ohraničení okolo textu ve stavové liště"
 
-#: src/totem-statusbar.c:171 src/totem.c:363
+#: src/totem-statusbar.c:171 src/totem.c:360
 msgid "Stopped"
 msgstr "Zastaveno"
 
@@ -1179,76 +1206,76 @@ msgstr "Ukládám do vyrovnávací paměti"
 msgid "%d %%"
 msgstr "%d %%"
 
-#: src/totem.c:82
+#: src/totem.c:79
 msgid "Seek Forwards"
 msgstr "Přeskočit vpřed"
 
-#: src/totem.c:83
+#: src/totem.c:80
 msgid "Seek Backwards"
 msgstr "Přeskočit zpět"
 
-#: src/totem.c:84
+#: src/totem.c:81
 msgid "Volume Up"
 msgstr "Zvýšit hlasitost"
 
-#: src/totem.c:85
+#: src/totem.c:82
 msgid "Volume Down"
 msgstr "Snížit hlasitost"
 
-#: src/totem.c:87
+#: src/totem.c:84
 msgid "Toggle Fullscreen"
 msgstr "Celá obrazovka"
 
-#: src/totem.c:88
+#: src/totem.c:85
 msgid "Quit"
 msgstr "Konec"
 
-#: src/totem.c:89
+#: src/totem.c:86
 msgid "Enqueue"
 msgstr "Zařadit do fronty"
 
-#: src/totem.c:90
+#: src/totem.c:87
 msgid "Replace"
 msgstr "Nahradit"
 
-#: src/totem.c:234
+#: src/totem.c:231
 msgid "Download"
 msgstr "Stáhnout"
 
-#: src/totem.c:349
+#: src/totem.c:346
 msgid "Playing"
 msgstr "Přehrává se"
 
-#: src/totem.c:356
+#: src/totem.c:353
 msgid "Paused"
 msgstr "Pozastaveno"
 
-#: src/totem.c:392
+#: src/totem.c:389
 msgid "Totem could not eject the optical media."
 msgstr "Totem nemohl vysunout optické médium."
 
-#: src/totem.c:392
+#: src/totem.c:389
 msgid "No reason given"
 msgstr "Žádný důvod neuveden"
 
-#: src/totem.c:413 src/totem.c:441 src/totem.c:865 src/totem.c:984
+#: src/totem.c:410 src/totem.c:438 src/totem.c:862 src/totem.c:981
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem nemohl přehrát '%s'."
 
-#: src/totem.c:461
+#: src/totem.c:458
 msgid "DVD"
 msgstr "DVD"
 
-#: src/totem.c:462
+#: src/totem.c:459
 msgid "Video CD"
 msgstr "Video CD"
 
-#: src/totem.c:463
+#: src/totem.c:460
 msgid "Audio CD"
 msgstr "Zvukové CD"
 
-#: src/totem.c:474
+#: src/totem.c:471
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1257,7 +1284,7 @@ msgstr ""
 "Totem nemůže přehrávat tento typ médií (%s), protože nemáte zásuvné moduly "
 "potřebné pro jeho zpracování."
 
-#: src/totem.c:475
+#: src/totem.c:472
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1265,7 +1292,7 @@ msgstr ""
 "Aby Totem mohl tento typ médií přehrávat, nainstalujte prosím odpovídající "
 "zásuvné moduly a znovu spusťte Totem."
 
-#: src/totem.c:483
+#: src/totem.c:480
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1274,7 +1301,7 @@ msgstr ""
 "Totem nemohl přehrát tento typ médií (%s), přestože je nainstalován zásuvný "
 "modul, který umí tento typ médií zpracovat."
 
-#: src/totem.c:484
+#: src/totem.c:481
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1283,124 +1310,124 @@ msgstr ""
 "zařízení správně nastaveno."
 
 #. Title
-#: src/totem.c:719
+#: src/totem.c:716
 #, c-format
 msgid "%s - Totem Movie Player"
 msgstr "%s - Přehrávač filmů Totem"
 
-#: src/totem.c:731 src/totem.c:3481
+#: src/totem.c:728 src/totem.c:3518
 msgid "No file"
 msgstr "Žádný soubor"
 
-#: src/totem.c:767 src/totem.c:1875
+#: src/totem.c:764 src/totem.c:1906
 msgid "Totem"
 msgstr "Totem"
 
-#: src/totem.c:1248
+#: src/totem.c:1255
 msgid "An error occured"
 msgstr "Došlo k chybě"
 
-#: src/totem.c:1587 src/totem.c:1595
+#: src/totem.c:1618 src/totem.c:1626
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "Nemohu načíst rozhraní 'Otevřít umístění...'."
 
-#: src/totem.c:1587 src/totem.c:1595 src/totem.c:3671 src/totem.c:3696
-#: src/totem.c:3719
+#: src/totem.c:1618 src/totem.c:1626 src/totem.c:3708 src/totem.c:3733
+#: src/totem.c:3756
 msgid "Make sure that Totem is properly installed."
 msgstr "Ujistěte se, že je Totem správně nainstalován."
 
-#: src/totem.c:1828
+#: src/totem.c:1859
 msgid "Totem could not display the help contents."
 msgstr "Totem nemohl zobrazit obsah nápovědy."
 
-#: src/totem.c:1846 src/vanity.c:219
+#: src/totem.c:1877 src/vanity.c:219
 msgid "translator_credits"
 msgstr ""
 "Michal Bukovjan <bukm@centrum.cz>\n"
 "Miloslav Trmač <mitr@volny.cz>"
 
-#: src/totem.c:1872
+#: src/totem.c:1903
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Přehrávač filmů používající %s"
 
-#: src/totem.c:1961 src/totem.c:1972 src/vanity.c:307 src/vanity.c:318
+#: src/totem.c:1992 src/totem.c:2003 src/vanity.c:307 src/vanity.c:318
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Obrazovka%d.png"
 
-#: src/totem.c:2023 src/totem.c:2031
+#: src/totem.c:2054 src/totem.c:2062
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem nemohl zachytit obrazovku s tímto filmem."
 
-#: src/totem.c:2031
+#: src/totem.c:2062
 msgid "Please file a bug, this isn't supposed to happen"
 msgstr "Ohlašte prosím chybu, toto by se nemělo stát"
 
-#: src/totem.c:2059
+#: src/totem.c:2090
 #, c-format
 msgid "File '%s' already exists."
 msgstr "Soubor '%s' již existuje."
 
-#: src/totem.c:2060
+#: src/totem.c:2091
 msgid "The screenshot was not saved"
 msgstr "Obrazovka nebyla uložena"
 
-#: src/totem.c:2070
+#: src/totem.c:2101
 msgid "There was an error saving the screenshot."
 msgstr "Při ukládání obrazovky došlo k chybě."
 
-#: src/totem.c:2093
+#: src/totem.c:2124
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem nemohl zobrazit okno vlastností filmu."
 
-#: src/totem.c:2093
+#: src/totem.c:2124
 msgid "Make sure that Totem is correctly installed."
 msgstr "Ujistěte se, že je Totem správně nainstalován."
 
-#: src/totem.c:2179
+#: src/totem.c:2210
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem se nemohl posouvat v '%s'."
 
-#: src/totem.c:2928 src/totem.c:2950
+#: src/totem.c:2965 src/totem.c:2987
 msgid "None"
 msgstr "Žádný"
 
-#: src/totem.c:2932 src/totem.c:2953
+#: src/totem.c:2969 src/totem.c:2990
 msgid "Auto"
 msgstr "Auto"
 
-#: src/totem.c:3386
+#: src/totem.c:3423
 msgid "Totem could not startup."
 msgstr "Totem se nemohl spustit."
 
 # :-)
-#: src/totem.c:3386
+#: src/totem.c:3423
 msgid "No reason."
 msgstr "Žádný důvod."
 
-#: src/totem.c:3645
+#: src/totem.c:3682
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Nemohu inicializovat knihovny podporující thready."
 
-#: src/totem.c:3645
+#: src/totem.c:3682
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Zkontrolujte svou instalaci systému. Totem nyní skončí."
 
-#: src/totem.c:3662
+#: src/totem.c:3699
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem nemohl inicializovat rozhraní pro nastavení."
 
-#: src/totem.c:3662
+#: src/totem.c:3699
 msgid "Make sure that GNOME is properly installed."
 msgstr "Ujistěte se, že je GNOME správně nainstalováno."
 
-#: src/totem.c:3671 src/totem.c:3696
+#: src/totem.c:3708 src/totem.c:3733
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "Nemohu načíst hlavní rozhraní (totem.glade)."
 
-#: src/totem.c:3719
+#: src/totem.c:3756
 msgid "Couldn't load the interface for the playlist."
 msgstr "Nemohu načíst rozhraní pro seznam skladeb."
 
@@ -1475,9 +1502,6 @@ msgid ""
 msgstr ""
 "Nemohu načíst hlavní rozhraní (vanity.glade).\n"
 "Ujistěte se, že je Vanity řádně nainstalována."
-
-#~ msgid "Buffering: %d%%"
-#~ msgstr "Ukládám do vyrovnávací paměti: %d%%"
 
 #~ msgid "Mute"
 #~ msgstr "Umlčet"
