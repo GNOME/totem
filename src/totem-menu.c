@@ -32,6 +32,131 @@
 #include "bacon-video-widget.h"
 #include "egg-recent-view.h"
 
+/* ISO-639 helpers */
+static GHashTable *lang_table;
+
+static void
+totem_lang_table_free (void)
+{
+	g_hash_table_destroy (lang_table);
+	lang_table = NULL;
+}
+
+static void
+totem_lang_table_parse_start_tag (GMarkupParseContext *ctx,
+		const gchar         *element_name,
+		const gchar        **attr_names,
+		const gchar        **attr_values,
+		gpointer             data,
+		GError             **error)
+{
+	const char *ccode, *lang_name;
+
+	if (!g_str_equal (element_name, "iso_639_entry")
+			|| attr_names == NULL
+			|| attr_values == NULL)
+		return;
+
+	ccode = NULL;
+	lang_name = NULL;
+
+	while (*attr_names && *attr_values)
+	{
+		if (g_str_equal (*attr_names, "iso_639_1_code"))
+		{
+			/* skip if empty */
+			if (**attr_values)
+			{
+				g_return_if_fail (strlen (*attr_values) == 2);
+				ccode = *attr_values;
+			}
+		}
+		else if (g_str_equal (*attr_names, "name"))
+		{
+			lang_name = *attr_values;
+		}
+
+		++attr_names;
+		++attr_values;
+	}
+
+	if (ccode && lang_name)
+	{
+		/* th_log ("lang_table: added %s => %s\n", ccode, lang_name); */
+		g_hash_table_insert (lang_table,
+				g_strdup (ccode),
+				g_strdup (lang_name));
+	}
+}
+
+#define ISO_CODES_DATADIR ISO_CODES_PREFIX"/share/xml/iso-codes"
+
+static void
+totem_lang_table_init (void)
+{
+	GError *err = NULL;
+	char *buf;
+	gsize buf_len;
+
+	lang_table = g_hash_table_new_full
+		(g_str_hash, g_str_equal, g_free, g_free);
+
+	g_atexit (totem_lang_table_free);
+
+	if (g_file_get_contents (ISO_CODES_DATADIR "/iso_639.xml",
+				&buf, &buf_len, &err))
+	{
+		GMarkupParseContext *ctx;
+		GMarkupParser parser =
+		{ totem_lang_table_parse_start_tag, NULL, NULL, NULL, NULL };
+
+		ctx = g_markup_parse_context_new (&parser, 0, NULL, NULL);
+
+		if (!g_markup_parse_context_parse (ctx, buf, buf_len, &err))
+		{
+			g_warning ("Failed to parse '%s': %s\n",
+					ISO_CODES_DATADIR"/iso_639.xml",
+					err->message);
+			g_error_free (err);
+		}
+
+		g_markup_parse_context_free (ctx);
+		g_free (buf);
+	} else {
+		g_warning ("Failed to load '%s': %s\n",
+				ISO_CODES_DATADIR"/iso_639.xml", err->message);
+		g_error_free (err);
+	}
+}
+
+static const char *
+totem_lang_get_full (const char *lang)
+{
+	static gchar  lang_code[3];
+	const gchar  *lang_name;
+
+	g_return_val_if_fail (lang != NULL, NULL);
+
+	if (strlen (lang) != 2)
+		return NULL;
+	if (lang_table == NULL)
+		totem_lang_table_init ();
+
+	lang_name = (const gchar*) g_hash_table_lookup (lang_table, lang);
+
+	if (lang_name)
+		return dgettext (GETTEXT_PACKAGE "_iso_639", lang_name);
+
+	g_return_val_if_fail (g_utf8_validate (lang, -1, NULL), NULL);
+
+	/* if we have a country code but no language name,
+	 *          *  at least return the country code - better than
+	 *                   *  nothing or 'Default language' */
+	g_snprintf (lang_code, sizeof (lang_code), "%s", lang);
+
+	return lang_code;
+}
+
 /* Subtitle and language menus */
 static void
 totem_g_list_deep_free (GList *list)
@@ -75,8 +200,12 @@ add_item_to_menu (Totem *totem, GtkWidget *menu, const char *lang,
 		GSList *group)
 {
 	GtkWidget *item;
+	const char *full_lang;
 
-	item = gtk_radio_menu_item_new_with_label (group, lang);
+	full_lang = totem_lang_get_full (lang);
+	item = gtk_radio_menu_item_new_with_label (group,
+			full_lang ? full_lang : lang);
+
 	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
 			current_lang == selection ? TRUE : FALSE);
 	gtk_widget_show (item);

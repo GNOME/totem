@@ -254,7 +254,6 @@ static GtkWidgetClass *parent_class = NULL;
 static void xine_event (void *user_data, const xine_event_t *event);
 static gboolean bacon_video_widget_idle_signal (BaconVideoWidget *bvw);
 static void show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals);
-static char *bacon_video_widget_get_media_device (BaconVideoWidget *bvw);
 
 static int bvw_table_signals[LAST_SIGNAL] = { 0 };
 
@@ -3399,6 +3398,11 @@ GList
 
 		if (xine_get_audio_lang(bvw->priv->stream, i, lang) == 1)
 		{
+			char *nospace = lang;
+
+			while (g_ascii_isspace (*nospace) != FALSE)
+				nospace++;
+
 			list = g_list_prepend (list,
 					(gpointer) g_strdup (lang));
 		} else {
@@ -3451,6 +3455,11 @@ GList
 
 		if (xine_get_spu_lang (bvw->priv->stream, i, lang) == 1)
 		{
+			char *nospace = lang;
+
+			while (g_ascii_isspace (*nospace) != FALSE)
+				nospace++;
+
 			list = g_list_prepend (list,
 					(gpointer) g_strdup (lang));
 		}

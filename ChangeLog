@@ -1,3 +1,17 @@
+2005-04-01  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: add dependency on iso-codes
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_languages),
+	(bacon_video_widget_get_subtitles):
+	* src/totem-menu.c: (totem_lang_table_free),
+	(totem_lang_table_parse_start_tag), (totem_lang_table_init),
+	(totem_lang_get_full), (add_item_to_menu):
+
+	Add a dependency on iso-codes, to get the translation for DVD audio
+	track and subtitle languages, iso-codes XML parsing code by Tim Müller
+	<t.i.m@zen.co.uk> (Closes: #172293)
+
 2005-03-31  Steve Murphy  <murf@e-tools.com>
 
         * configure.in: Added "rw" to ALL_LINGUAS.
