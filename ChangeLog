@@ -1,3 +1,11 @@
+2002-11-02  Bastien Nocera  <hadess@hadess.net>
+
+	* src/input_gnomevfs.c: (gnomevfs_plugin_get_capabilities),
+	(gnomevfs_plugin_read), (gnomevfs_plugin_read_block),
+	(gnomevfs_plugin_get_mrl), (gnomevfs_plugin_get_optional_data),
+	(gnomevfs_klass_open): fix gnomevfs_klass_open (this->fh was never
+	assigned the file handle), clean up the rest of the file
+
 2002-10-31  Bastien Nocera  <hadess@hadess.net>
 
 	* data/playlist-playing.png:

@@ -32,9 +32,7 @@
 #define D(x...) g_message (x)
 #define LOG
 
-#define PREVIEW_SIZE 2200
-//#define PREVIEW_SIZE 16384
-#define BUFSIZE 1024
+#define PREVIEW_SIZE 16384
 
 #include <xine/xine_internal.h>
 #include <xine/xineutils.h>
@@ -86,28 +84,9 @@ typedef struct {
 static off_t gnomevfs_plugin_get_current_pos (input_plugin_t *this_gen);
 
 
-static gboolean
-scheme_can_seek (GnomeVFSHandle *handle)
-{
-	//FIXME to implement
-	return TRUE;
-}
-
 static uint32_t
 gnomevfs_plugin_get_capabilities (input_plugin_t *this_gen)
 {
-	gnomevfs_input_t *this = (gnomevfs_input_t *) this_gen;
-
-	D("gnomevfs_plugin_get_capabilities: %s", this->mrl);
-
-	if (this->fh)
-	{
-		if (scheme_can_seek (this->fh) == TRUE)
-			return INPUT_CAP_SEEKABLE | INPUT_CAP_SPULANG;
-		else
-			return INPUT_CAP_SPULANG;
-	}
-
 	return INPUT_CAP_SEEKABLE | INPUT_CAP_SPULANG;
 }
 
@@ -123,48 +102,26 @@ gnomevfs_plugin_read (input_plugin_t *this_gen, char *buf, off_t len)
 
 	while (num_bytes < len)
 	{
-#if 0
-		if (this->preview_pos < this->preview_size)
+		GnomeVFSResult res;
+
+		res = gnome_vfs_read (this->fh, &buf[num_bytes],
+				(GnomeVFSFileSize) (len - num_bytes),
+				(GnomeVFSFileSize *)&n);
+
+		D("gnomevfs_plugin_read: read %ld from gnome-vfs",
+				(long int) n);
+
+		if (res != GNOME_VFS_OK)
 		{
-			n = this->preview_size - this->preview_pos;
-			if (n > (len - num_bytes))
-				n = len - num_bytes;
-#ifdef LOG
-			printf ("stdin: %lld bytes from preview "
-					"(which has %lld bytes)\n",
-					n, this->preview_size);
-#endif
-
-			memcpy (&buf[num_bytes],
-					&this->preview[this->preview_pos], n);
-
-			this->preview_pos += n;
-
-			D("gnomevfs_plugin_read: read from preview");
-		} else {
-#endif
-		{
-			GnomeVFSResult res;
-
-			res = gnome_vfs_read (this->fh, &buf[num_bytes],
-					(GnomeVFSFileSize) (len - num_bytes),
-					(GnomeVFSFileSize *)&n);
-
-			D("gnomevfs_plugin_read: read %ld from gnome-vfs",
-					(long int) n);
-
-			if (res != GNOME_VFS_OK)
-			{
-				D("gnomevfs_plugin_read: gnome_vfs_read returns %s",
-						gnome_vfs_result_to_string (res));
-				return 0;
-			}
+			D("gnomevfs_plugin_read: gnome_vfs_read returns %s",
+					gnome_vfs_result_to_string (res));
+			return 0;
 		}
 
 		if (n <= 0)
 		{
-//			xine_log (this->xine, XINE_LOG_MSG,
-//					_("input_gnomevfs: read error\n"));
+			xine_log (this->xine, XINE_LOG_MSG,
+					_("input_gnomevfs: read error\n"));
 		}
 
 		num_bytes += n;
@@ -191,7 +148,6 @@ gnomevfs_plugin_read_block (input_plugin_t *this_gen, fifo_buffer_t *fifo,
 		off_t todo)
 {
 	off_t total_bytes;
-	gnomevfs_input_t *this = (gnomevfs_input_t *) this_gen;
 	buf_element_t *buf = fifo->buffer_pool_alloc (fifo);
 
 	pthread_setcancelstate (PTHREAD_CANCEL_ENABLE,NULL);
@@ -291,31 +247,7 @@ gnomevfs_plugin_get_mrl (input_plugin_t *this_gen)
 
 	return this->mrl;
 }
-#if 0
-static void
-gnomevfs_plugin_close (input_plugin_t *this_gen)
-{
-	gnomevfs_input_t *this = (gnomevfs_input_t *) this_gen;
 
-	if (this->fh)
-	{
-		gnome_vfs_close (this->fh);
-		this->fh = NULL;
-	}
-
-	if (this->sub)
-	{
-		gnome_vfs_close (this->sub);
-		this->sub = NULL;
-	}
-}
-
-static void
-gnomevfs_plugin_stop (input_plugin_t *this_gen)
-{
-	gnomevfs_plugin_close(this_gen);
-}
-#endif
 static char
 *gnomevfs_klass_get_description (input_class_t *this_gen)
 {
@@ -333,13 +265,13 @@ gnomevfs_plugin_get_optional_data (input_plugin_t *this_gen,
 		void *data, int data_type)
 {
 	gnomevfs_input_t *this = (gnomevfs_input_t *) this_gen;
-#if 0
+
 #ifdef LOG
 	LOG_MSG (this->xine,
 		_("input_gnomevfs: get optional data, type %08x, sub %p\n"),
 		data_type, this->sub);
 #endif
-#endif
+
 	switch (data_type) {
 	case INPUT_OPTIONAL_DATA_TEXTSPU0:
 		if(this->sub)
@@ -447,6 +379,7 @@ gnomevfs_klass_open (input_class_t *klass_gen, xine_stream_t *stream,
 
 	this = g_new0 (gnomevfs_input_t, 1);
 	this->stream = stream;
+	this->fh = fh;
 	this->mrl = g_strdup (mrl);
 	this->sub = sub;
 
@@ -463,12 +396,7 @@ gnomevfs_klass_open (input_class_t *klass_gen, xine_stream_t *stream,
 	this->input_plugin.dispose           = gnomevfs_plugin_dispose;
 	this->input_plugin.input_class       = klass_gen;
 
-	D("gnomevfs_klass_open: filling up preview");
-//	this->preview_size = gnomevfs_plugin_read (&this->input_class,
-//			this->preview, PREVIEW_SIZE);
-//	this->preview_pos  = 0;
-
-	return (input_plugin_t *) this;
+	return &this->input_plugin;
 }
 
 static void
