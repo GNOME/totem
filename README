@@ -13,7 +13,12 @@ News
 ====
 
 1.0(?):
+* Fixed XFree86 lockup on start bug (see http://bugs.xfree86.org/cgi-bin/bugzilla/show_bug.cgi?id=260 for the patch)
+* Automatic resolution switching when going to fullscreen with auto-resize
+enabled (useful for TV output)
 * Audio output selection: stereo, 4.0, 5.0 or 5.1 channels
+* Changed default command-line action to replace, not enqueue
+* Plenty of small bug fixes (see ChangeLog)
 
 0.99.1:
 * Added a automatic downloader for the DLLs on x86 machines
@@ -293,6 +298,7 @@ http://article.gmane.org/gmane.comp.video.xine.devel/3456/match=+api+addition+su
 - remove the processed gtk+/glib command-line parameters from the argv
 - implement recursive loading for directories in the playlist only for local directories
 - enhance the look of the controls popup in fullscreen
+- fix the skip to spinner's range not getting updated (see update_mrl_label)
 
 From Iain:
 > if (position_in_file > 1second) {

@@ -3379,7 +3379,7 @@ process_command_line (BaconMessageConnection *conn, int argc, char **argv)
 
 	if (strlen (argv[1]) > 3 && strncmp (argv[1], "--", 2) != 0)
 	{
-		command = TOTEM_REMOTE_COMMAND_ENQUEUE;
+		command = TOTEM_REMOTE_COMMAND_REPLACE;
 		i = 1;
 	} else if (strcmp (argv[1], "--play-pause") == 0) {
 		command = TOTEM_REMOTE_COMMAND_PAUSE;
@@ -3440,13 +3440,8 @@ main (int argc, char **argv)
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
-	/* Please also translate your language into its native language
-	 * in src/languages.h
-	 * for example: French -> Francais
-	 * use C UTF-8 strings */
 	g_set_application_name (_("Totem Movie Player"));
 
-	/* FIXME See http://bugzilla.gnome.org/show_bug.cgi?id=111349 */
 	if (XInitThreads () == 0)
 	{
 		gtk_init (&argc, &argv);

@@ -1,6 +1,13 @@
 2003-06-29  Bastien Nocera  <hadess@hadess.net>
 
 	* README: upd
+	* src/totem.c: (process_command_line), (main): removed FIXME about the
+	libXi bug, it's fixed now, changed default command-line action to
+	replace, not enqueue (Closes: #107997)
+
+2003-06-29  Bastien Nocera  <hadess@hadess.net>
+
+	* README: upd
 	* src/Makefile.am: remove languages.h
 	* src/bacon-resize.[ch]: added
 	* src/bacon-video-widget-xine.c: (frame_output_cb), (setup_osd),
@@ -8,7 +15,7 @@
 	(bacon_video_widget_play), (bacon_video_widget_set_fullscreen):
 	change the screen resolution automatically depending on the movie
 	dimensions when switching to fullscreen, uses the auto resize setting,
-	takes aspect ratio into account
+	takes aspect ratio into account (Closes: #113193)
 	disable all the OSD stuff for now
 	* src/languages.h: removed
 	* src/totem-video-thumbnailer.c: (time_monitor), (main): fixed seeking
