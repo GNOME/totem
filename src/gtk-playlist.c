@@ -180,6 +180,67 @@ eel_read_entire_file (const char *uri,
 	return GNOME_VFS_OK;
 }
 
+static int
+read_ini_line_int (char **lines, const char *key)
+{
+	int retval = -1;
+	int i;
+
+	if (lines == NULL || key == NULL)
+		return -1;
+
+	for (i = 0; (lines[i] != NULL && retval == -1); i++)
+	{
+		if (g_ascii_strncasecmp (lines[i], key, strlen (key)) == 0)
+		{
+			char **bits;
+
+			bits = g_strsplit (lines[i], "=", 2);
+			if (bits[0] == NULL || bits [1] == NULL)
+			{
+				g_strfreev (bits);
+				return -1;
+			}
+
+			retval = (gint) g_strtod (bits[1], NULL);
+			D("read_ini_line_string: %d", retval);
+			g_strfreev (bits);
+		}
+	}
+
+	return retval;
+}
+
+static char*
+read_ini_line_string (char **lines, const char *key)
+{
+	char *retval = NULL;
+	int i;
+
+	if (lines == NULL || key == NULL)
+		return NULL;
+
+	for (i = 0; (lines[i] != NULL && retval == NULL); i++)
+	{
+		if (g_ascii_strncasecmp (lines[i], key, strlen (key)) == 0)
+		{
+			char **bits;
+
+			bits = g_strsplit (lines[i], "=", 2);
+			if (bits[0] == NULL || bits [1] == NULL)
+			{
+				g_strfreev (bits);
+				return NULL;
+			}
+
+			retval = g_strdup (bits[1]);
+			D("read_ini_line_string: %s", retval);
+			g_strfreev (bits);
+		}
+	}
+
+	return retval;
+}
 
 static void
 drop_cb (GtkWidget     *widget,
@@ -658,6 +719,7 @@ gtk_playlist_add_m3u (GtkPlaylist *playlist, const char *mrl)
 		return FALSE;
 
 	lines = g_strsplit (contents, "\n", 0);
+	g_free (contents);
 
 	for (i = 0; lines[i] != NULL; i++)
 	{
@@ -681,8 +743,65 @@ gtk_playlist_add_m3u (GtkPlaylist *playlist, const char *mrl)
 static gboolean
 gtk_playlist_add_pls (GtkPlaylist *playlist, const char *mrl)
 {
-	//FIXME implement
-	return FALSE;
+	gboolean retval = FALSE;
+	char *contents, **lines;
+	int size, i, num_entries;
+
+	D("gtk_playlist_add_pls: %s", mrl);
+
+	if (eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
+		return FALSE;
+
+	D("gtk_playlist_add_pls: %s", contents);
+	lines = g_strsplit (contents, "\n", 0);
+	g_free (contents);
+
+	/* [playlist] */
+	if (g_ascii_strncasecmp (lines[0], "[playlist]",
+				(gsize)strlen ("[playlist]")) != 0)
+	{
+		D("gtk_playlist_add_pls: not a playlist");
+		goto bail;
+	}
+
+	/* numberofentries=? */
+	num_entries = read_ini_line_int (lines, "numberofentries");
+	D("gtk_playlist_add_pls: num_entries: %d", num_entries);
+	if (num_entries == -1)
+		goto bail;
+
+	for (i = 1; i <= num_entries; i++)
+	{
+		char *file, *title;
+		char *file_key, *title_key;
+
+		file_key = g_strdup_printf ("file%d", i);
+		title_key = g_strdup_printf ("title%d", i);
+
+		file = read_ini_line_string (lines, (const char*)file_key);
+		title = read_ini_line_string (lines, (const char*)title_key);
+
+		g_free (file_key);
+		g_free (title_key);
+
+		D("gtk_playlist_add_pls: %s -> %s", title, file);
+
+		if (file != NULL)
+		{
+			if (gtk_playlist_add_one_mrl (playlist,
+						file, title) == TRUE)
+				retval = TRUE;
+			g_free (file);
+			g_free (title);
+		} else {
+			g_free (title);
+		}
+	}
+
+bail:
+	g_strfreev (lines);
+
+	return retval;
 }
 
 gboolean
@@ -702,7 +821,7 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 	} else if (strcmp ("audio/x-mpegurl", mimetype) == 0) {
 		return gtk_playlist_add_m3u (playlist, mrl);
 	} else if (strcmp ("audio/x-scpls", mimetype) == 0) {
-		//What's that look like ?
+		return gtk_playlist_add_pls (playlist, mrl);
 	} else if (strcmp ("x-directory/normal", mimetype) == 0) {
 		//Load all the files in the dir ?
 	}

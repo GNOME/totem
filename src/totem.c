@@ -108,7 +108,10 @@ long_action (void)
 static void
 totem_action_error (char *msg, GtkWindow *parent)
 {
-	GtkWidget *error_dialog;
+	static GtkWidget *error_dialog = NULL;
+
+	if (error_dialog != NULL)
+		return;
 
 	error_dialog =
 		gtk_message_dialog_new (parent,
@@ -121,6 +124,7 @@ totem_action_error (char *msg, GtkWindow *parent)
 	gtk_widget_show (error_dialog);
 	gtk_dialog_run (GTK_DIALOG (error_dialog));
 	gtk_widget_destroy (error_dialog);
+	error_dialog = NULL;
 }
 
 #ifndef TOTEM_DEBUG
@@ -1105,7 +1109,10 @@ on_error_event (GtkWidget *gtx, GtkXineError error, const char *message,
 	D("play_error");
 
 	if (gtk_playlist_has_next_mrl (totem->playlist))
+	{
 		totem_action_next (totem);
+		return;
+	}
 
 	switch (error)
 	{
