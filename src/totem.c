@@ -3105,7 +3105,7 @@ main (int argc, char **argv)
 	{
 		g_warning (_("Could not initialise the thread-safe libraries.\n"
 					"Verify your system installation. Totem"
-					"will now exit."));
+					" will now exit."));
 		exit (1);
 	}
 #endif
