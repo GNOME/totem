@@ -1061,6 +1061,20 @@
 		  </child>
 
 		  <child>
+		    <widget class="GtkHBox" id="tmw_empty_hbox">
+		      <property name="visible">False</property>
+		      <property name="sensitive">False</property>
+		      <property name="homogeneous">False</property>
+		      <property name="spacing">0</property>
+                    </widget>
+                    <packing>
+		      <property name="padding">0</property>
+		      <property name="expand">True</property>
+		      <property name="fill">False</property>
+		    </packing>
+		  </child>
+
+                  <child>
 		    <widget class="GtkHBox" id="tmw_volume_hbox">
 		      <property name="visible">True</property>
 		      <property name="sensitive">False</property>
@@ -1105,8 +1119,8 @@
 			</widget>
 			<packing>
 			  <property name="padding">0</property>
-			  <property name="expand">True</property>
-			  <property name="fill">True</property>
+			  <property name="expand">False</property>
+			  <property name="fill">False</property>
 			</packing>
 		      </child>
 
@@ -1136,15 +1150,15 @@
 		    </widget>
 		    <packing>
 		      <property name="padding">0</property>
-		      <property name="expand">True</property>
-		      <property name="fill">True</property>
+		      <property name="expand">False</property>
+		      <property name="fill">False</property>
 		    </packing>
 		  </child>
 		</widget>
 		<packing>
 		  <property name="padding">0</property>
 		  <property name="expand">True</property>
-		  <property name="fill">True</property>
+		  <property name="fill">False</property>
 		</packing>
 	      </child>
 	    </widget>

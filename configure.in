@@ -190,7 +190,7 @@ AC_CHECK_LIB(Xtst, XTestFakeKeyEvent,
 		XTEST_LIBS="-lX11 -lXtst -L$x_libraries"
 		AC_DEFINE(HAVE_XTEST, 1, [defined if you have XTest library]),
 		,
-		"-L$x_libraries")
+		-L$x_libraries)
 AC_SUBST(XTEST_LIBS)
 
 have_randr=no
@@ -200,7 +200,7 @@ AC_CHECK_LIB(Xrandr, XRRUpdateConfiguration,
 		RANDR_LIBS="-lX11 -lXrandr -lXrender"
 		AC_DEFINE(HAVE_RANDR, 1, Have the Xrandr extension library),
 		:, [#include <X11/Xlib.h>])], : ,
-	"-L$x_libraries -lXrandr -lXrender")
+	-L$x_libraries -lXrandr -lXrender)
 AM_CONDITIONAL(HAVE_RANDR, [test $have_randr = yes])
 AC_SUBST(RANDR_LIBS)
 
