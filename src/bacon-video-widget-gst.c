@@ -703,6 +703,13 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
           } else {
             bacon_video_widget_size_allocate (GTK_WIDGET (bvw),
 					      &GTK_WIDGET (bvw)->allocation);
+
+	    /* Uhm, so this ugly hack here makes media loading work for
+	     * weird laptops with NVIDIA graphics cards... Dunno what the
+	     * bug is really, but hey, it works. :). */
+	    gdk_window_hide (GTK_WIDGET (bvw)->window);
+	    gdk_window_show (GTK_WIDGET (bvw)->window);
+
             bacon_video_widget_expose_event (GTK_WIDGET (bvw), NULL);
           }
 
