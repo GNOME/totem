@@ -1,5 +1,15 @@
 2003-01-15  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine-properties.c: (gtk_xine_properties_init),
+	(gtk_xine_properties_set_from_current),
+	(gtk_xine_properties_update), (gtk_xine_properties_new): port the
+	metadata fetching to gtk_xine_get_metadata()
+	* src/gtk-xine.c: (gtk_xine_get_metadata_int): fix getting dimensions
+	* src/totem-remote.c: (totem_remote_read_code),
+	(totem_remote_init): don't use warnings for these errors
+
+2003-01-15  Bastien Nocera  <hadess@hadess.net>
+
 	* data/schemas.sh: don't try to thumbnail audio files, you dummy
 	(Well spotted Anders :)
 

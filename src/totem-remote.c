@@ -107,12 +107,12 @@ totem_remote_read_code (GIOChannel *source, GIOCondition condition,
 	 * a config struct around for more than one use.
 	 */
 	if (lirc_readconfig (NULL, &config, NULL) != 0) {
-		g_warning ("Couldn't read lirc config.");
+		g_message ("Couldn't read lirc config.");
 		return FALSE;
 	}
 
 	if (lirc_code2char (config, code, &str) != 0) {
-		g_warning ("Couldn't convert lirc code to string.");
+		g_message ("Couldn't convert lirc code to string.");
 		lirc_freeconfig (config);
 		return TRUE;
 	}
@@ -201,7 +201,7 @@ totem_remote_init (TotemRemote *remote)
 		fd = lirc_init ("Totem", 1);
 
 		if (fd < 0) {
-			g_warning ("Couldn't initialize lirc.\n");
+			g_message ("Couldn't initialize lirc.\n");
 			return;
 		}
 			

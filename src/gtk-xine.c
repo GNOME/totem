@@ -1875,11 +1875,11 @@ gtk_xine_get_metadata_int (GtkXine *gtx, GtkXineMetadataType type,
 		integer = gtk_xine_get_stream_length (gtx) / 1000;
 		break;
 	case GTX_INFO_DIMENSION_X:
-		xine_get_stream_info (gtx->priv->stream,
+		integer = xine_get_stream_info (gtx->priv->stream,
 				XINE_STREAM_INFO_VIDEO_WIDTH);
 		break;
 	case GTX_INFO_DIMENSION_Y:
-		xine_get_stream_info (gtx->priv->stream,
+		integer = xine_get_stream_info (gtx->priv->stream,
 				XINE_STREAM_INFO_VIDEO_HEIGHT);
 		break;
 	case GTX_INFO_FPS:

@@ -34,7 +34,6 @@ struct GtkXinePropertiesPrivate
 {
 	GladeXML *xml;
 	GtkWidget *vbox;
-	gboolean properties_reset_state;
 };
 
 static GtkWidgetClass *parent_class = NULL;
@@ -77,7 +76,6 @@ gtk_xine_properties_init (GtkXineProperties *playlist)
 	playlist->priv = g_new0 (GtkXinePropertiesPrivate, 1);
 	playlist->priv->xml = NULL;
 	playlist->priv->vbox = NULL;
-	playlist->priv->properties_reset_state = FALSE;
 }
 
 static void
@@ -194,79 +192,88 @@ static void
 gtk_xine_properties_set_from_current (GtkXineProperties *props, GtkXine *gtx)
 {
 	GtkWidget *item;
-	const char *text;
+	GValue value = { 0, };
 	char *string;
-	int fps;
-#if 0
+	int x, y;
+
 	/* General */
-	text = xine_get_meta_info (gtx->priv->stream, XINE_META_INFO_TITLE);
-	gtk_xine_properties_set_label (gtx, "title",
-			text ? text : _("Unknown"));
+	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_TITLE, &value);
+	gtk_xine_properties_set_label (props, "title",
+			g_value_get_string (&value)
+			? g_value_get_string (&value)
+			: _("Unknown"));
+	g_value_unset (&value);
 
-	text = xine_get_meta_info (gtx->priv->stream, XINE_META_INFO_ARTIST);
-	gtk_xine_properties_set_label (gtx, "artist",
-			text ? text : _("Unknown"));
+	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_ARTIST, &value);
+	gtk_xine_properties_set_label (props, "artist",
+			g_value_get_string (&value)
+			? g_value_get_string (&value) : _("Unknown"));
+	g_value_unset (&value);
 
-	text = xine_get_meta_info (gtx->priv->stream, XINE_META_INFO_YEAR);
-	gtk_xine_properties_set_label (gtx, "year",
-			text ? text : _("N/A"));
+	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_YEAR, &value);
+	gtk_xine_properties_set_label (props, "year",
+			g_value_get_string (&value)
+			? g_value_get_string (&value) : _("N/A"));
+	g_value_unset (&value);
 
-	string = time_to_string (gtk_xine_get_stream_length (gtx) / 1000);
-	gtk_xine_properties_set_label (gtx, "duration", string);
+	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_DURATION, &value);
+	string = time_to_string (g_value_get_int (&value));
+	gtk_xine_properties_set_label (props, "duration", string);
 	g_free (string);
+	g_value_unset (&value);
 
 	/* Video */
-	item = glade_xml_get_widget (gtx->priv->xml, "video");
-	if (xine_get_stream_info (gtx->priv->stream,
-				XINE_STREAM_INFO_HAS_VIDEO) == FALSE)
+	item = glade_xml_get_widget (props->priv->xml, "video");
+	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_HAS_VIDEO, &value);
+	if (g_value_get_boolean (&value) == FALSE)
 		gtk_widget_set_sensitive (item, FALSE);
 	else
 		gtk_widget_set_sensitive (item, TRUE);
+	g_value_unset (&value);
 
-	string = g_strdup_printf ("%d x %d",
-			xine_get_stream_info (gtx->priv->stream,
-				XINE_STREAM_INFO_VIDEO_WIDTH),
-			xine_get_stream_info (gtx->priv->stream,
-				XINE_STREAM_INFO_VIDEO_HEIGHT));
-	gtk_xine_properties_set_label (gtx, "dimensions", string);
+	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_DIMENSION_X, &value);
+	x = g_value_get_int (&value);
+	g_value_unset (&value);
+	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_DIMENSION_Y, &value);
+	y = g_value_get_int (&value);
+	g_value_unset (&value);
+	string = g_strdup_printf ("%d x %d", x, y);
+	gtk_xine_properties_set_label (props, "dimensions", string);
 	g_free (string);
 
-	text = xine_get_meta_info (gtx->priv->stream,
-			XINE_META_INFO_VIDEOCODEC);
-	gtk_xine_properties_set_label (gtx, "vcodec",
-			text ? text : _("N/A"));
+	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_VIDEO_CODEC, &value);
+	gtk_xine_properties_set_label (props, "vcodec",
+			g_value_get_string (&value)
+			? g_value_get_string (&value) : _("N/A"));
+	g_value_unset (&value);
 
-	if (xine_get_stream_info (gtx->priv->stream,
-				XINE_STREAM_INFO_FRAME_DURATION) != 0)
-	{
-		fps = 90000 / xine_get_stream_info (gtx->priv->stream,
-				XINE_STREAM_INFO_FRAME_DURATION);
-	} else {
-		fps = 0;
-	}
-	string = g_strdup_printf (_("%d frames per second"), fps);
-	gtk_xine_properties_set_label (gtx, "framerate", string);
+	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_FPS, &value);
+	string = g_strdup_printf (_("%d frames per second"),
+			g_value_get_int (&value));
+	gtk_xine_properties_set_label (props, "framerate", string);
 	g_free (string);
+	g_value_unset (&value);
 
 	/* Audio */
-	item = glade_xml_get_widget (gtx->priv->xml, "audio");
-	if (xine_get_stream_info (gtx->priv->stream,
-				XINE_STREAM_INFO_HAS_AUDIO) == FALSE)
+	item = glade_xml_get_widget (props->priv->xml, "audio");
+	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_HAS_AUDIO, &value);
+	if (g_value_get_boolean (&value) == FALSE)
 		gtk_widget_set_sensitive (item, FALSE);
 	else
 		gtk_widget_set_sensitive (item, TRUE);
+	g_value_unset (&value);
 
-	string = g_strdup_printf (_("%d kbps"),
-			xine_get_stream_info (gtx->priv->stream,
-				XINE_STREAM_INFO_AUDIO_BITRATE) / 1000);
-	gtk_xine_properties_set_label (gtx, "bitrate", string);
+	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_BITRATE, &value);
+	string = g_strdup_printf (_("%d kbps"), g_value_get_int (&value));
+	gtk_xine_properties_set_label (props, "bitrate", string);
 	g_free (string);
+	g_value_unset (&value);
 
-	text = xine_get_meta_info (gtx->priv->stream,
-			XINE_META_INFO_AUDIOCODEC);
-	gtk_xine_properties_set_label (gtx, "acodec",
-			text ? text : _("N/A"));
-#endif
+	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_AUDIO_CODEC, &value);
+	gtk_xine_properties_set_label (props, "acodec",
+			g_value_get_string (&value)
+			? g_value_get_string (&value) : _("N/A"));
+	g_value_unset (&value);
 }
 
 void
@@ -275,8 +282,6 @@ gtk_xine_properties_update (GtkXineProperties *props, GtkXine *gtx,
 {
 	g_return_if_fail (props != NULL);
 	g_return_if_fail (GTK_IS_XINE_PROPERTIES (props));
-
-	props->priv->properties_reset_state = reset;
 
 	if (reset == TRUE)
 	{
@@ -330,7 +335,7 @@ gtk_xine_properties_new (void)
 	g_signal_connect (G_OBJECT (props), "delete-event",
 			G_CALLBACK (hide_dialog), NULL);
 
-	gtk_xine_properties_update (props, NULL, FALSE);
+	gtk_xine_properties_update (props, NULL, TRUE);
 
 	gtk_widget_show_all (GTK_DIALOG (props)->vbox);
 
