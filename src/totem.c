@@ -303,6 +303,9 @@ totem_action_play (Totem *totem)
 	if (totem->mrl == NULL)
 		return;
 
+	if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
+		return;
+
 	retval = bacon_video_widget_play (totem->bvw,  &err);
 	play_pause_set_label (totem, retval ? STATE_PLAYING : STATE_STOPPED);
 	if (totem_is_fullscreen (totem) != FALSE)
@@ -432,6 +435,17 @@ totem_action_play_pause (Totem *totem)
 		if (totem_is_fullscreen (totem) != FALSE)
 			totem_scrsaver_disable (totem->scr);
 	} else {
+		bacon_video_widget_pause (totem->bvw);
+		play_pause_set_label (totem, STATE_PAUSED);
+		totem_scrsaver_enable (totem->scr);
+	}
+}
+
+void
+totem_action_pause (Totem *totem)
+{
+	if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
+	{
 		bacon_video_widget_pause (totem->bvw);
 		play_pause_set_label (totem, STATE_PAUSED);
 		totem_scrsaver_enable (totem->scr);
@@ -2089,8 +2103,11 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 	case TOTEM_REMOTE_COMMAND_PLAY:
 		totem_action_play (totem);
 		break;
-	case TOTEM_REMOTE_COMMAND_PAUSE:
+	case TOTEM_REMOTE_COMMAND_PLAYPAUSE:
 		totem_action_play_pause (totem);
+		break;
+	case TOTEM_REMOTE_COMMAND_PAUSE:
+		totem_action_pause (totem);
 		break;
 	case TOTEM_REMOTE_COMMAND_SEEK_FORWARD:
 		totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET);

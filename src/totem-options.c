@@ -36,6 +36,8 @@ static struct poptOption options[] = {
 	{NULL, '\0', POPT_ARG_INCLUDE_TABLE, NULL, 0, N_("Backend options"), NULL},
 	{"debug", '\0', POPT_ARG_NONE, NULL, 0, N_("Enable debug"), NULL},
 	{"play-pause", '\0', POPT_ARG_NONE, NULL, 0, N_("Play/Pause"), NULL},
+	{"play", '\0', POPT_ARG_NONE, NULL, 0, N_("Play"), NULL},
+	{"pause", '\0', POPT_ARG_NONE, NULL, 0, N_("Pause"), NULL},
 	{"next", '\0', POPT_ARG_NONE, NULL, 0, N_("Next"), NULL},
 	{"previous", '\0', POPT_ARG_NONE, NULL, 0, N_("Previous"), NULL},
 	{"seek-fwd", '\0', POPT_ARG_NONE, NULL, 0, N_("Seek Forwards"), NULL},
@@ -165,6 +167,10 @@ totem_options_process_for_server (BaconMessageConnection *conn,
 		command = TOTEM_REMOTE_COMMAND_REPLACE;
 		i = 1;
 	} else if (strcmp (argv[1], "--play-pause") == 0) {
+		command = TOTEM_REMOTE_COMMAND_PLAYPAUSE;
+	} else if (strcmp (argv[1], "--play") == 0) {
+		command = TOTEM_REMOTE_COMMAND_PLAY;
+	} else if (strcmp (argv[1], "--pause") == 0) {
 		command = TOTEM_REMOTE_COMMAND_PAUSE;
 	} else if (strcmp (argv[1], "--next") == 0) {
 		command = TOTEM_REMOTE_COMMAND_NEXT;

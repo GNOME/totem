@@ -40,6 +40,7 @@ void	totem_action_exit			(Totem *totem);
 void	totem_action_play			(Totem *totem);
 void	totem_action_stop			(Totem *totem);
 void	totem_action_play_pause			(Totem *totem);
+void	totem_action_pause			(Totem *totem);
 void	totem_action_fullscreen_toggle		(Totem *totem);
 void	totem_action_fullscreen			(Totem *totem, gboolean state);
 void	totem_action_next			(Totem *totem);

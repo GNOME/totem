@@ -1,5 +1,14 @@
 2005-03-27  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-options.c: (totem_options_process_for_server):
+	* src/totem-remote.h:
+	* src/totem.c: (totem_action_play), (totem_action_pause),
+	(totem_action_remote):
+	* src/totem.h: add --play and --pause command-line options
+	(Closes: #165160)
+
+2005-03-27  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-menu.c: (on_recent_file_activate):
 	* src/totem-private.h:
 	* src/totem-session.c: move the totem_signal_(un)block_by_data helpers
