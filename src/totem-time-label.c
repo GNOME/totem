@@ -6,6 +6,11 @@
 static void totem_time_label_class_init (TotemTimeLabelClass *class);
 static void totem_time_label_init       (TotemTimeLabel      *label);
 
+struct TotemTimeLabelPrivate {
+	gint64 time;
+	gint64 length;
+};
+
 static GObjectClass *parent_class = NULL;
 
 G_DEFINE_TYPE (TotemTimeLabel, totem_time_label, GTK_TYPE_LABEL)
@@ -14,9 +19,14 @@ static void
 totem_time_label_init (TotemTimeLabel *label)
 {
 	char *time;
+
 	time = totem_time_to_string (0);
 	gtk_label_set_text (GTK_LABEL (label), time);
 	g_free (time);
+
+	label->priv = g_new0 (TotemTimeLabelPrivate, 1);
+	label->priv->time = 0;
+	label->priv->length = -1;
 }
 
 GtkWidget*
@@ -44,6 +54,10 @@ totem_time_label_set_time (TotemTimeLabel *label, gint64 time, gint64 length)
 {
 	char *label_str;
 
+	if (time / 1000 == label->priv->time / 1000
+			&& length / 1000 == label->priv->length / 1000)
+		return;
+
 	if (length < 0)
 	{
 		label_str = totem_time_to_string (time);
@@ -57,8 +71,11 @@ totem_time_label_set_time (TotemTimeLabel *label, gint64 time, gint64 length)
 		g_free (time_str);
 		g_free (length_str);
 	}
-		
+
 	gtk_label_set_text (GTK_LABEL (label), label_str);
 	g_free (label_str);
+
+	label->priv->time = time;
+	label->priv->length = length;
 }
 

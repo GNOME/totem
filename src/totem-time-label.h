@@ -12,9 +12,11 @@
 
 typedef struct TotemTimeLabel	      TotemTimeLabel;
 typedef struct TotemTimeLabelClass    TotemTimeLabelClass;
+typedef struct TotemTimeLabelPrivate  TotemTimeLabelPrivate;
 
 struct TotemTimeLabel {
 	GtkLabel parent;
+	TotemTimeLabelPrivate *priv;
 };
 
 struct TotemTimeLabelClass {
