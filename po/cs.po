@@ -1,16 +1,16 @@
 # Czech translation for totem.
 # Copyright (C) 2002 Free Software Foundation
-# Copyright (C) 2003, 2004 Miloslav Trmac <mitr@volny.cz>
+# Copyright (C) 2003, 2004, 2005 Miloslav Trmac <mitr@volny.cz>
 # This file is distributed under the same license as the totem package.
 # Michal Bukovjan <bukm@centrum.cz>, 2002,2003.
-# Miloslav Trmac <mitr@volny.cz>, 2003, 2004.
+# Miloslav Trmac <mitr@volny.cz>, 2003, 2004, 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-06 12:29+0100\n"
-"PO-Revision-Date: 2005-01-06 20:51+0100\n"
+"POT-Creation-Date: 2005-01-09 12:28+0100\n"
+"PO-Revision-Date: 2005-01-09 15:04+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -115,7 +115,7 @@ msgstr "Snímků:"
 msgid "N/A"
 msgstr "---"
 
-#: data/properties.glade.h:17 src/totem.c:2008
+#: data/properties.glade.h:17 src/totem.c:2012
 msgid "Properties"
 msgstr "Vlastnosti"
 
@@ -547,8 +547,8 @@ msgid "Time:"
 msgstr "Čas:"
 
 #. Title
-#: data/totem.glade.h:102 data/totem.desktop.in.in.in.h:2 src/totem.c:603
-#: src/totem.c:3419
+#: data/totem.glade.h:102 data/totem.desktop.in.in.in.h:2 src/totem.c:605
+#: src/totem.c:3424
 msgid "Totem Movie Player"
 msgstr "Přehrávač filmů Totem"
 
@@ -693,7 +693,7 @@ msgid "_Repeat Mode"
 msgstr "Režim _opakování"
 
 #: data/totem.glade.h:138
-msgid "_Reset defaults"
+msgid "_Reset To Defaults"
 msgstr "Vrátit _implicitní"
 
 #: data/totem.glade.h:139
@@ -882,7 +882,7 @@ msgstr "Otevřít z URI"
 msgid "Save File"
 msgstr "Uložit soubor"
 
-#: data/vanity.glade.h:2 src/vanity.c:262
+#: data/vanity.glade.h:2 src/vanity.c:256
 msgid "Vanity"
 msgstr "Vanity"
 
@@ -934,11 +934,11 @@ msgstr "Přehrávání filmů a písniček"
 msgid "Unnamed CDROM"
 msgstr "Nepojmenovaná CDROM"
 
-#: src/bacon-video-widget-gst.c:53
+#: src/bacon-video-widget-gst.c:55
 msgid "Totem Video Window"
 msgstr "Video okno Totemu"
 
-#: src/bacon-video-widget-gst.c:2490
+#: src/bacon-video-widget-gst.c:2703
 msgid "Failed to create a GStreamer play object"
 msgstr "Nemohu vytvořit objekt GStreamer pro přehrávání"
 
@@ -1154,8 +1154,8 @@ msgid "DVD"
 msgstr "DVD"
 
 #. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
-#: src/totem-mozilla-viewer.c:59 src/totem.c:341 src/totem.c:368
-#: src/totem.c:729 src/totem.c:834
+#: src/totem-mozilla-viewer.c:59 src/totem.c:343 src/totem.c:370
+#: src/totem.c:731 src/totem.c:836
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem nemohl přehrát '%s'."
@@ -1173,11 +1173,11 @@ msgid "The Totem plugin could not startup."
 msgstr "Zásuvný model Totem se nemohl spustit."
 
 # :-)
-#: src/totem-mozilla-viewer.c:109 src/totem.c:3242
+#: src/totem-mozilla-viewer.c:109 src/totem.c:3247
 msgid "No reason."
 msgstr "Žádný důvod."
 
-#: src/totem-mozilla-viewer.c:141 src/totem.c:3424
+#: src/totem-mozilla-viewer.c:141 src/totem.c:3429
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Nemohu inicializovat knihovny podporující thready."
 
@@ -1278,7 +1278,7 @@ msgstr "Nemohu zapsat parser: %s"
 msgid "Couldn't open file '%s': %s"
 msgstr "Nemohu otevřít soubor '%s': %s"
 
-#: src/totem-preferences.c:83
+#: src/totem-preferences.c:77
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1286,23 +1286,23 @@ msgstr ""
 "Zdá se, že Totem spouštíte vzdáleně.\n"
 "Jste si jisti, že chcete povolit vizuální efekty?"
 
-#: src/totem-preferences.c:136
+#: src/totem-preferences.c:130
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted"
 msgstr ""
 "Změna tohoto nastavení se projeví až na dalším filmu nebo po restartu Totemu."
 
-#: src/totem-preferences.c:180
+#: src/totem-preferences.c:174
 msgid ""
 "Switching on or off this type of TV-Out requires a restart to take effect."
 msgstr "Zapnutí nebo vypnutí tohoto typu TV-Out se projeví až po restartu."
 
-#: src/totem-preferences.c:313
+#: src/totem-preferences.c:307
 msgid "Totem could not start the file manager."
 msgstr "Totem nemohl spustit správce souborů."
 
-#: src/totem-preferences.c:341
+#: src/totem-preferences.c:335
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr "Změna typu vizuálu se projeví až po restartu."
 
@@ -1344,7 +1344,7 @@ msgstr "Typ stínování"
 msgid "Style of bevel around the statusbar text"
 msgstr "Styl ohraničení okolo textu ve stavové liště"
 
-#: src/totem-statusbar.c:124 src/totem.c:283 src/totem.c:587
+#: src/totem-statusbar.c:124 src/totem.c:285 src/totem.c:589
 msgid "Stopped"
 msgstr "Zastaveno"
 
@@ -1358,7 +1358,7 @@ msgid "%s (Streaming)"
 msgstr "%s (Streaming)"
 
 #. Elapsed / Total Length
-#: src/totem-statusbar.c:173 src/totem-time-label.c:56
+#: src/totem-statusbar.c:173 src/totem-time-label.c:70
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
@@ -1369,12 +1369,12 @@ msgstr "%s / %s"
 msgid "Seek to %s / %s"
 msgstr "Přeskočit na %s / %s"
 
-#: src/totem-statusbar.c:232
+#: src/totem-statusbar.c:234
 msgid "Buffering"
 msgstr "Ukládám do vyrovnávací paměti"
 
 #. eg: 75 %
-#: src/totem-statusbar.c:235
+#: src/totem-statusbar.c:237
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
@@ -1383,19 +1383,19 @@ msgstr "%d %%"
 msgid "None"
 msgstr "Žádný"
 
-#: src/totem.c:273
+#: src/totem.c:275
 msgid "Playing"
 msgstr "Přehrává se"
 
-#: src/totem.c:278
+#: src/totem.c:280
 msgid "Paused"
 msgstr "Pozastaveno"
 
-#: src/totem.c:319
+#: src/totem.c:321
 msgid "Totem could not eject the optical media."
 msgstr "Totem nemohl vysunout optické médium."
 
-#: src/totem.c:394
+#: src/totem.c:396
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1404,7 +1404,7 @@ msgstr ""
 "Totem nemůže přehrávat tento typ médií (%s), protože nemáte zásuvné moduly "
 "potřebné pro jeho zpracování."
 
-#: src/totem.c:395
+#: src/totem.c:397
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1412,7 +1412,7 @@ msgstr ""
 "Aby Totem mohl tento typ médií přehrávat, nainstalujte prosím odpovídající "
 "zásuvné moduly a znovu spusťte Totem."
 
-#: src/totem.c:403
+#: src/totem.c:405
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1421,7 +1421,7 @@ msgstr ""
 "Totem nemohl přehrát tento typ médií (%s), přestože je nainstalován zásuvný "
 "modul, který umí tento typ médií zpracovat."
 
-#: src/totem.c:404
+#: src/totem.c:406
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1430,120 +1430,114 @@ msgstr ""
 "zařízení správně nastaveno."
 
 #. Title
-#: src/totem.c:580
+#: src/totem.c:582
 #, c-format
 msgid "%s - Totem Movie Player"
 msgstr "%s - Přehrávač filmů Totem"
 
-#: src/totem.c:594
+#: src/totem.c:596
 msgid "No file"
 msgstr "Žádný soubor"
 
-#: src/totem.c:630 src/totem.c:1923
+#: src/totem.c:632 src/totem.c:1927
 msgid "Totem"
 msgstr "Totem"
 
-#: src/totem.c:1174 src/totem.c:1176
+#: src/totem.c:1176 src/totem.c:1178
 msgid "An error occured"
 msgstr "Došlo k chybě"
 
-#: src/totem.c:1506
+#: src/totem.c:1509
 msgid "Select files"
 msgstr "Vyberte soubory"
 
-#: src/totem.c:1582 src/totem.c:1590
+#: src/totem.c:1585 src/totem.c:1593
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "Nemohu načíst rozhraní 'Otevřít umístění...'."
 
-#: src/totem.c:1582 src/totem.c:1590 src/totem.c:3461 src/totem.c:3488
-#: src/totem.c:3513
+#: src/totem.c:1585 src/totem.c:1593 src/totem.c:3466 src/totem.c:3493
+#: src/totem.c:3518
 msgid "Make sure that Totem is properly installed."
 msgstr "Ujistěte se, že je Totem správně nainstalován."
 
-#: src/totem.c:1881
+#: src/totem.c:1885
 msgid "Totem could not display the help contents."
 msgstr "Totem nemohl zobrazit obsah nápovědy."
 
-#: src/totem.c:1919
+#: src/totem.c:1923
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Přehrávač filmů používající %s"
 
-#: src/totem.c:1925
+#: src/totem.c:1929 src/vanity.c:258
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Copyright © 2002-2005 Bastien Nocera"
 
-#: src/totem.c:1930
+#: src/totem.c:1934 src/vanity.c:263
 msgid "translator-credits"
 msgstr ""
 "Michal Bukovjan <bukm@centrum.cz>\n"
 "Miloslav Trmač <mitr@volny.cz>"
 
-#: src/totem.c:1963 src/totem.c:1971 src/vanity.c:300 src/vanity.c:308
+#: src/totem.c:1967 src/totem.c:1975 src/vanity.c:296 src/vanity.c:304
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem nemohl zachytit obrazovku s tímto filmem."
 
-#: src/totem.c:1971
+#: src/totem.c:1975
 msgid "Please file a bug, this isn't supposed to happen."
 msgstr "Ohlaste prosím chybu, toto by se nemělo stát."
 
-#: src/totem.c:1998
+#: src/totem.c:2002
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem nemohl zobrazit okno vlastností filmu."
 
-#: src/totem.c:1998
+#: src/totem.c:2002
 msgid "Make sure that Totem is correctly installed."
 msgstr "Ujistěte se, že je Totem správně nainstalován."
 
-#: src/totem.c:2084
+#: src/totem.c:2088
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem se nemohl posouvat v '%s'."
 
-#: src/totem.c:3242
+#: src/totem.c:3247
 msgid "Totem could not startup."
 msgstr "Totem se nemohl spustit."
 
-#: src/totem.c:3424
+#: src/totem.c:3429
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Zkontrolujte svou instalaci systému. Totem nyní skončí."
 
-#: src/totem.c:3445
+#: src/totem.c:3450
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem nemohl inicializovat rozhraní pro nastavení."
 
-#: src/totem.c:3445
+#: src/totem.c:3450
 msgid "Make sure that GNOME is properly installed."
 msgstr "Ujistěte se, že je GNOME správně nainstalováno."
 
-#: src/totem.c:3461 src/totem.c:3488
+#: src/totem.c:3466 src/totem.c:3493
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "Nemohu načíst hlavní rozhraní (totem.glade)."
 
-#: src/totem.c:3513
+#: src/totem.c:3518
 msgid "Couldn't load the interface for the playlist."
 msgstr "Nemohu načíst rozhraní pro seznam skladeb."
 
-#: src/vanity.c:63
+#: src/vanity.c:66
 msgid "Debug mode on"
 msgstr "Ladicí režim zapnut"
 
-#: src/vanity.c:235
-msgid "translator_credits"
-msgstr ""
-"Michal Bukovjan <bukm@centrum.cz>\n"
-"Miloslav Trmač <mitr@volny.cz>"
-
-#: src/vanity.c:259
+#: src/vanity.c:252
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "Nástroj pro WWW kamery používající %s"
 
-#: src/vanity.c:308
+#: src/vanity.c:304
 msgid "Please file a bug, this isn't supposed to happen"
 msgstr "Ohlaste prosím chybu, toto by se nemělo stát"
 
-#: src/vanity.c:551
+#: src/vanity.c:547
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1553,11 +1547,11 @@ msgstr ""
 "%s"
 
 # :-)
-#: src/vanity.c:552
+#: src/vanity.c:548
 msgid "No reason"
 msgstr "Žádný důvod"
 
-#: src/vanity.c:590
+#: src/vanity.c:586
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1566,7 +1560,7 @@ msgstr ""
 "Vanity nemohla kontaktovat WWW kameru.\n"
 "Důvod: %s."
 
-#: src/vanity.c:606
+#: src/vanity.c:602
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1575,11 +1569,11 @@ msgstr ""
 "Vanity nemohla přehrávat video z WWW kamery.\n"
 "Důvod: %s"
 
-#: src/vanity.c:642
+#: src/vanity.c:638
 msgid "Vanity Webcam Utility"
 msgstr "Nástroj pro WWW kamery Vanity"
 
-#: src/vanity.c:647
+#: src/vanity.c:643
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1587,7 +1581,7 @@ msgstr ""
 "Nemohu inicializovat knihovny podporující thready.\n"
 "Zkontrolujte svou instalaci systému. Vanity nyní skončí."
 
-#: src/vanity.c:672
+#: src/vanity.c:668
 #, c-format
 msgid ""
 "Vanity couln't initialise the \n"
@@ -1598,7 +1592,7 @@ msgstr ""
 "rozhraní pro nastavení:\n"
 "%s"
 
-#: src/vanity.c:692 src/vanity.c:707
+#: src/vanity.c:688 src/vanity.c:703
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
@@ -1647,3 +1641,8 @@ msgstr "%s %s"
 #, c-format
 msgid "%s"
 msgstr "%s"
+
+#~ msgid "translator_credits"
+#~ msgstr ""
+#~ "Michal Bukovjan <bukm@centrum.cz>\n"
+#~ "Miloslav Trmač <mitr@volny.cz>"
