@@ -1873,6 +1873,10 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
       res = gst_tag_list_get_string (bvw->priv->tagcache,
 				     GST_TAG_DATE, &string);
       break;
+    case BVW_INFO_ALBUM:
+      res = gst_tag_list_get_string (bvw->priv->tagcache,
+		      		     GST_TAG_ALBUM, &string);
+      break;
     case BVW_INFO_VIDEO_CODEC:
       res = gst_tag_list_get_string (bvw->priv->tagcache,
 				     GST_TAG_VIDEO_CODEC, &string);
@@ -2006,6 +2010,7 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
     case BVW_INFO_TITLE:
     case BVW_INFO_ARTIST:
     case BVW_INFO_YEAR:
+    case BVW_INFO_ALBUM:
     case BVW_INFO_VIDEO_CODEC:
     case BVW_INFO_AUDIO_CODEC:
       bacon_video_widget_get_metadata_string (bvw, type, value);
