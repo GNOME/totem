@@ -524,7 +524,7 @@ bacon_video_widget_finalize (GObject * object)
       bvw->priv->vw = NULL;
     }
 
-  if ((bvw->priv->play) && GST_IS_PLAY (bvw->priv->play))
+  if ((bvw->priv->play) && G_IS_OBJECT (bvw->priv->play))
     {
       g_object_unref (bvw->priv->play);
       bvw->priv->play = NULL;
