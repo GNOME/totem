@@ -120,9 +120,6 @@ struct BaconVideoWidgetPrivate {
 	xine_vo_driver_t *vo_driver;
 	xine_ao_driver_t *ao_driver;
 	xine_event_queue_t *ev_queue;
-#if 0
-	xine_osd_t *osd;
-#endif
 	double display_ratio;
 	gboolean started;
 
@@ -142,6 +139,7 @@ struct BaconVideoWidgetPrivate {
 	gboolean using_vfx;
 	xine_post_t *vis;
 	GList *visuals;
+	char *queued_vis;
 
 	/* Other stuff */
 	int xpos, ypos;
@@ -750,20 +748,6 @@ setup_config_video (BaconVideoWidget *bvw)
 		xine_config_update_entry (bvw->priv->xine, &entry);
 	}
 }
-#if 0
-static void
-setup_osd (BaconVideoWidget *bvw)
-{
-	int fonth = 20;
-
-	bvw->priv->osd = xine_osd_new(bvw->priv->stream,
-			0, 0, 900, (fonth * 6) + (5 * 3));
-	xine_osd_set_font(bvw->priv->osd, "/home/hadess/.fonts/helvetica.ttf", fonth * 10);
-	xine_osd_set_text_palette(bvw->priv->osd,
-			XINE_TEXTPALETTE_WHITE_NONE_TRANSPARENT,
-			XINE_OSD_TEXT1);
-}
-#endif
 
 static void
 setup_config_stream (BaconVideoWidget *bvw)
@@ -1046,9 +1030,6 @@ bacon_video_widget_realize (GtkWidget *widget)
 	bvw->priv->stream = xine_stream_new (bvw->priv->xine,
 			bvw->priv->ao_driver, bvw->priv->vo_driver);
 	setup_config_stream (bvw);
-#if 0
-	setup_osd (bvw);
-#endif
 	bvw->priv->ev_queue = xine_event_new_queue (bvw->priv->stream);
 
 	/* Setup xine events */
@@ -1282,12 +1263,6 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	if (GTK_WIDGET_MAPPED (widget))
 		gtk_widget_unmap (widget);
 	GTK_WIDGET_UNSET_FLAGS (widget, GTK_MAPPED);
-
-	/* Kill the OSD */
-#if 0
-	xine_osd_hide (bvw->priv->osd, 0);
-	xine_osd_free (bvw->priv->osd);
-#endif
 
 	/* Get rid of the rest of the stream */
 	xine_event_dispose_queue (bvw->priv->ev_queue);
@@ -1691,26 +1666,14 @@ bacon_video_widget_play (BaconVideoWidget *bvw, guint pos,
 		xine_error (bvw, gerror);
 		return FALSE;
 	}
-#if 0
-	if (pos == 0 && start_time == 0 && bvw->priv->using_vfx == TRUE)
+
+	if (bvw->priv->queued_vis != NULL)
 	{
-		char *name;
-
-		name = g_strdup_printf ("%s - %s",
-				xine_get_meta_info (bvw->priv->stream,
-					XINE_META_INFO_ARTIST),
-				xine_get_meta_info (bvw->priv->stream,
-					XINE_META_INFO_TITLE));
-
-		xine_osd_clear (bvw->priv->osd);
-		xine_osd_draw_text (bvw->priv->osd, 0, 0, name, XINE_OSD_TEXT1);
-		xine_osd_set_position(bvw->priv->osd, 20, 10 + 30);
-		xine_osd_show(bvw->priv->osd, 0);
-		/* Hide in... vpts is in 1/90000 sec */
-		//FIXME
-		//xine_osd_hide (bvw->priv->osd, 90000 * 8);
+		bacon_video_widget_set_visuals (bvw, bvw->priv->queued_vis);
+		g_free (bvw->priv->queued_vis);
+		bvw->priv->queued_vis = NULL;
 	}
-#endif
+
 	return TRUE;
 }
 
@@ -1880,6 +1843,14 @@ bacon_video_widget_set_speed (BaconVideoWidget *bvw, Speeds speed)
 		xine_set_param (bvw->priv->stream,
 				XINE_PARAM_AUDIO_CLOSE_DEVICE, 1);
 #endif
+
+	if (bvw->priv->queued_vis != NULL)
+	{
+		g_message ("removing %s from the queue (set_speed)", bvw->priv->queued_vis);
+		bacon_video_widget_set_visuals (bvw, bvw->priv->queued_vis);
+		g_free (bvw->priv->queued_vis);
+		bvw->priv->queued_vis = NULL;
+	}
 }
 
 int
@@ -2250,6 +2221,7 @@ gboolean
 bacon_video_widget_set_visuals (BaconVideoWidget *bvw, const char *name)
 {
 	xine_post_t *newvis;
+	int speed;
 
 	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
@@ -2262,6 +2234,19 @@ bacon_video_widget_set_visuals (BaconVideoWidget *bvw, const char *name)
 	{
 		g_free (bvw->priv->vis_name);
 		bvw->priv->vis_name = g_strdup (name);
+		return FALSE;
+	}
+
+	speed = xine_get_param (bvw->priv->stream, XINE_PARAM_SPEED);
+	if (speed == XINE_SPEED_PAUSE && bvw->priv->using_vfx == TRUE)
+	{
+		g_free (bvw->priv->queued_vis);
+		if (strcmp (name, bvw->priv->vis_name) == 0)
+		{
+			bvw->priv->queued_vis = NULL;
+		} else {
+			bvw->priv->queued_vis = g_strdup (name);
+		}
 		return FALSE;
 	}
 
@@ -2283,30 +2268,9 @@ bacon_video_widget_set_visuals (BaconVideoWidget *bvw, const char *name)
 
 			if (bvw->priv->using_vfx == TRUE)
 			{
-				//FIXME kludgy hack to avoid locking up
-				//when switching plugins and paused
-#if 1
-				Speeds speed;
-
-				speed = bacon_video_widget_get_speed (bvw);
-				if (speed == SPEED_PAUSE)
-				{
-					xine_set_param (bvw->priv->stream,
-							XINE_PARAM_SPEED,
-							XINE_SPEED_SLOW_4);
-				}
-#endif
 				show_vfx_update (bvw, FALSE);
 				show_vfx_update (bvw, TRUE);
-#if 1
-				if (speed == SPEED_PAUSE)
-				{
-					bacon_video_widget_set_speed (bvw,
-							SPEED_PAUSE);
-				}
-#endif
 			}
-
 			xine_post_dispose (bvw->priv->xine, oldvis);
 		} else {
 			bvw->priv->vis = newvis;

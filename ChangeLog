@@ -1,5 +1,13 @@
 2003-09-05  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-xine.c: (setup_config_video),
+	(bacon_video_widget_realize), (bacon_video_widget_unrealize),
+	(bacon_video_widget_play), (bacon_video_widget_set_speed),
+	(bacon_video_widget_set_visuals): better solution for changing
+	visual plugins when the engine is paused, still avoiding the lockup
+
+2003-09-05  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_action_exit),
 	(totem_action_fullscreen_toggle): save the video widget's size on
 	exit, not when switching to fullscreen (thanks to Sebastien Bacher
