@@ -163,6 +163,9 @@ static gboolean gtk_xine_key_press (GtkWidget *widget, GdkEventKey *event);
 
 static void gtk_xine_size_allocate (GtkWidget *widget,
 				    GtkAllocation *allocation);
+static xine_vo_driver_t * load_video_out_driver (GtkXine *gtx,
+						 gboolean null_out);
+static xine_ao_driver_t * load_audio_out_driver (GtkXine *gtx);
 
 static GtkWidgetClass *parent_class = NULL;
 
@@ -287,14 +290,20 @@ gtk_xine_class_init (GtkXineClass *klass)
 static void
 gtk_xine_instance_init (GtkXine *gtx)
 {
+	GtkWidget *widget = (GtkWidget *) gtx;
+	const char *const *autoplug_list;
+	int i = 0;
 	char *configfile;
+
+	g_return_if_fail (gtx != NULL);
+	g_return_if_fail (GTK_IS_XINE (gtx));
 
 	GTK_WIDGET_SET_FLAGS (GTK_WIDGET (gtx), GTK_CAN_FOCUS);
 	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (gtx), GTK_DOUBLE_BUFFERED);
 
 	/* Set the default size to be a 4:3 ratio */
-	gtx->widget.requisition.width = DEFAULT_HEIGHT;
-	gtx->widget.requisition.height = DEFAULT_WIDTH;
+	widget->requisition.width = DEFAULT_HEIGHT;
+	widget->requisition.height = DEFAULT_WIDTH;
 
 	gtx->priv = g_new0 (GtkXinePrivate, 1);
 	gtx->priv->xine = xine_new ();
@@ -311,6 +320,19 @@ gtk_xine_instance_init (GtkXine *gtx)
 	load_config_from_gconf (gtx);
 
 	xine_init (gtx->priv->xine);
+
+	/* Can we play DVDs and VCDs ? */
+	autoplug_list = xine_get_autoplay_input_plugin_ids (gtx->priv->xine);
+	while (autoplug_list && autoplug_list[i])
+	{
+		if (g_ascii_strcasecmp (autoplug_list[i], "VCD") == 0)
+			gtx->priv->can_vcd = TRUE;
+		else if (g_ascii_strcasecmp (autoplug_list[i], "DVD") == 0)
+			gtx->priv->can_dvd = TRUE;
+		else if (g_ascii_strcasecmp (autoplug_list[i], "CDDA") == 0)
+			gtx->priv->can_cdda = TRUE;
+		i++;
+	}
 }
 
 static void
@@ -420,14 +442,14 @@ frame_output_cb (void *gtx_gen,
 }
 
 static xine_vo_driver_t *
-load_video_out_driver (GtkXine *gtx)
+load_video_out_driver (GtkXine *gtx, gboolean null_out)
 {
 	double res_h, res_v;
 	x11_visual_t vis;
 	const char *video_driver_id;
 	xine_vo_driver_t *vo_driver;
 
-	if (gtx->priv->null_out == TRUE)
+	if (null_out == TRUE)
 	{
 		return xine_open_video_driver (gtx->priv->xine,
 				"none", XINE_VISUAL_TYPE_NONE, NULL);
@@ -787,18 +809,18 @@ configure_cb (GtkWidget *widget, GdkEventConfigure *event, gpointer user_data)
 static void
 gtk_xine_realize (GtkWidget *widget)
 {
-	GtkXine *gtx;
-	const char *const *autoplug_list;
-	int i = 0;
 	GdkWindowAttr attr;
-
-	g_return_if_fail (widget != NULL);
-	g_return_if_fail (GTK_IS_XINE (widget));
+	GtkXine *gtx;
 
 	gtx = GTK_XINE (widget);
 
 	/* set realized flag */
 	GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
+
+	xine_close (gtx->priv->stream);
+	xine_event_dispose_queue (gtx->priv->ev_queue);
+	xine_dispose (gtx->priv->stream);
+	xine_close_video_driver(gtx->priv->xine, gtx->priv->vo_driver);
 
 	attr.x = widget->allocation.x;
 	attr.y = widget->allocation.y;
@@ -820,8 +842,8 @@ gtk_xine_realize (GtkWidget *widget)
 
 	/* track configure events of toplevel window */
 	g_signal_connect (GTK_OBJECT (gtk_widget_get_toplevel (widget)),
-			  "configure-event",
-			  GTK_SIGNAL_FUNC (configure_cb), gtx);
+			"configure-event",
+			GTK_SIGNAL_FUNC (configure_cb), gtx);
 
 	/* Init threads in X and setup the needed X stuff */
 	if (!XInitThreads ())
@@ -830,7 +852,7 @@ gtk_xine_realize (GtkWidget *widget)
 				gtx_table_signals[ERROR], 0,
 				0,
 				_("Could not initialise the threads support.\n"
-				"You should install a thread-safe Xlib."));
+					"You should install a thread-safe Xlib."));
 		return;
 	}
 
@@ -847,9 +869,8 @@ gtk_xine_realize (GtkWidget *widget)
 		gtx->priv->completion_event = -1;
 	}
 
-	/* load audio, video drivers */
-	gtx->priv->ao_driver = load_audio_out_driver (gtx);
-	gtx->priv->vo_driver = load_video_out_driver (gtx);
+	/* load the video driver */
+	gtx->priv->vo_driver = load_video_out_driver (gtx, gtx->priv->null_out);
 
 	if (gtx->priv->vo_driver == NULL)
 	{
@@ -876,19 +897,6 @@ gtk_xine_realize (GtkWidget *widget)
 	scrsaver_init (gtx->priv->display);
 
 	XUnlockDisplay (gtx->priv->display);
-
-	/* Can we play DVDs and VCDs ? */
-	autoplug_list = xine_get_autoplay_input_plugin_ids (gtx->priv->xine);
-	while (autoplug_list && autoplug_list[i])
-	{
-		if (g_ascii_strcasecmp (autoplug_list[i], "VCD") == 0)
-			gtx->priv->can_vcd = TRUE;
-		else if (g_ascii_strcasecmp (autoplug_list[i], "DVD") == 0)
-			gtx->priv->can_dvd = TRUE;
-		else if (g_ascii_strcasecmp (autoplug_list[i], "CDDA") == 0)
-			gtx->priv->can_cdda = TRUE;
-		i++;
-	}
 
 	/* now, create a xine thread */
 	pthread_create (&gtx->priv->thread, NULL, xine_thread, gtx);
@@ -1046,25 +1054,38 @@ gtk_xine_unrealize (GtkWidget *widget)
 GtkWidget *
 gtk_xine_new (int width, int height, gboolean null_out)
 {
-	GtkWidget *gtx;
+	GtkXine *gtx;
 
-	gtx = GTK_WIDGET (g_object_new (gtk_xine_get_type (), NULL));
+	gtx = GTK_XINE (g_object_new (gtk_xine_get_type (), NULL));
 
-	GTK_XINE (gtx)->priv->null_out = null_out;
+	gtx->priv->null_out = null_out;
 
 	/* defaults are fine if both are negative */
-	if (width <= 0 && height <= 0)
-		return gtx;
-	/* figure out the missing measure from the other one with a 4:3 ratio */
-	if (width <= 0)
-		width = (int) (height * 4 / 3);
-	if (height <= 0)
-		height = (int) (width * 3 / 4);
+	if (width > 0 && height > 0)
+	{
+		/* figure out the missing measure from the other one
+		 * with a 4:3 ratio */
+		if (width <= 0)
+			width = (int) (height * 4 / 3);
+		if (height <= 0)
+			height = (int) (width * 3 / 4);
+	} else {
+		width = 0;
+		height = 0;
+	}
 
-	GTK_XINE (gtx)->widget.requisition.width = width;
-	GTK_XINE (gtx)->widget.requisition.height = height;
+	gtx->widget.requisition.width = width;
+	gtx->widget.requisition.height = height;
 
-	return gtx;
+	/* load the video drivers */
+	gtx->priv->ao_driver = load_audio_out_driver (gtx);
+	gtx->priv->vo_driver = load_video_out_driver (gtx, TRUE);
+
+	gtx->priv->stream = xine_stream_new (gtx->priv->xine,
+			gtx->priv->ao_driver, gtx->priv->vo_driver);
+	gtx->priv->ev_queue = xine_event_new_queue (gtx->priv->stream);
+
+	return GTK_WIDGET (gtx);
 }
 
 static gboolean

@@ -1,5 +1,14 @@
 2003-01-24  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (gtk_xine_instance_init),
+	(load_video_out_driver), (gtk_xine_realize), (gtk_xine_new):
+	so we actually init the engine in gtk_xine_new, and we only init the
+	video engine in the realize
+	* src/totem-video-thumbnailer.c: (main): fix it, and make it simpler
+	good stuff
+
+2003-01-24  Bastien Nocera  <hadess@hadess.net>
+
 	* data/playlist.glade:
 	* data/properties.glade:
 	* data/totem.glade: remove separators from the dialogs

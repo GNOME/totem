@@ -80,13 +80,7 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	toplevel = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtx = gtk_xine_new (-1, -1, TRUE);
-	gtk_container_add (GTK_CONTAINER (toplevel), gtx);
-	gtk_widget_realize (gtx);
-
-	while (gtk_xine_check (GTK_XINE (gtx)) == FALSE)
-		usleep (100000);
 
 	if (gtk_xine_open (GTK_XINE (gtx), argv[1]) == FALSE)
 	{
@@ -96,7 +90,7 @@ int main (int argc, char *argv[])
 	}
 
 	/* A 3rd into the file */
-	gtk_xine_play (GTK_XINE (gtx), 21845, 0);
+	gtk_xine_play (GTK_XINE (gtx), (int) (65535 / 3), 0);
 
 	if (gtk_xine_can_get_frames (GTK_XINE (gtx)) == FALSE)
 	{
@@ -122,9 +116,7 @@ int main (int argc, char *argv[])
 
 	/* Cleanup */
 	gtk_xine_close (GTK_XINE (gtx));
-	gtk_widget_unrealize (gtx);
 	gtk_widget_destroy (gtx);
-	gtk_widget_destroy (toplevel);
 
 	if (pixbuf == NULL)
 	{
