@@ -52,11 +52,11 @@
 
 #define KEYBOARD_HYSTERISIS_TIMEOUT 500
 
-#define SEEK_FORWARD_OFFSET 60000
-#define SEEK_BACKWARD_OFFSET -15000
+#define SEEK_FORWARD_OFFSET 60
+#define SEEK_BACKWARD_OFFSET -15
 
-#define SEEK_FORWARD_SHORT_OFFSET 20000
-#define SEEK_BACKWARD_SHORT_OFFSET -20000
+#define SEEK_FORWARD_SHORT_OFFSET 20
+#define SEEK_BACKWARD_SHORT_OFFSET -20
 
 #define VOLUME_DOWN_OFFSET -8
 #define VOLUME_UP_OFFSET 8
@@ -970,10 +970,7 @@ totem_action_seek_relative (Totem *totem, int off_sec)
 
 	off_msec = off_sec * 1000;
 	oldsec = bacon_video_widget_get_current_time (totem->bvw);
-	if ((oldsec + off_msec) < 0)
-		sec = 0;
-	else
-		sec = oldsec + off_sec;
+	sec = MAX (0, oldsec + off_msec);
 
 	bacon_video_widget_seek_time (totem->bvw, sec, &err);
 
