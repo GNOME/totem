@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem 0.8\n"
-"POT-Creation-Date: 2002-08-04 19:21+0200\n"
+"POT-Creation-Date: 2002-08-24 14:33+0100\n"
 "PO-Revision-Date: 2002-08-04 19:26+0200\n"
 "Last-Translator: Christophe Fergeau <teuf@users.sourceforge.net>\n"
 "Language-Team:  GNOME French Team <gnomefr@traduc.org>\n"
@@ -14,61 +14,109 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/totem.c:278 src/totem.c:1083
-msgid "<span size=\"medium\"><b>No file</b></span>"
-msgstr "<span size=\"medium\"><b>Aucun fichier</b></span>"
+#: data/playlist.glade.h:1 src/gtk-playlist.c:462
+msgid "Playlist"
+msgstr "Liste de lecture"
 
-#: src/totem.c:594 src/gtk-playlist.c:219
-msgid "Select files"
-msgstr "Sélectionner les fichiers"
+#: data/totem.glade.h:1
+msgid "Exit fullscreen"
+msgstr "Quitter le mode plein écran"
 
-#: src/totem.c:674
-msgid "translator_credits"
-msgstr "Christophe Fergeau <teuf@users.sourceforge.net>"
+#: data/totem.glade.h:2
+msgid "File name"
+msgstr "Nom du fichier"
 
-#: src/totem.c:697 src/totem.glade.h:13
+#: data/totem.glade.h:3
+msgid "Next"
+msgstr "Suivant"
+
+#: data/totem.glade.h:4
+msgid "Next stream"
+msgstr "Flux suivant"
+
+#: data/totem.glade.h:5
+msgid "Play DVD"
+msgstr ""
+
+#: data/totem.glade.h:6
+msgid "Play VCD"
+msgstr ""
+
+#: data/totem.glade.h:7
+msgid "Play/Pause"
+msgstr "Lecture/Pause"
+
+#: data/totem.glade.h:8
+msgid "Previous"
+msgstr "Précédent"
+
+#: data/totem.glade.h:9
+msgid "Previous stream"
+msgstr "Flux précédent"
+
+#: data/totem.glade.h:10
+msgid "Show/Hide Playlist"
+msgstr "Afficher/cacher la liste de lecture"
+
+#: data/totem.glade.h:11
+msgid "Skip backwards"
+msgstr "Retour rapide"
+
+#: data/totem.glade.h:12
+msgid "Skip forward"
+msgstr "Avance rapide"
+
+#: data/totem.glade.h:13
+msgid "Sound"
+msgstr ""
+
+#: data/totem.glade.h:14
+msgid "Toggle Aspect Ratio"
+msgstr "Basculer le rapport d'affichage"
+
+#: data/totem.glade.h:15 src/totem.c:785
 msgid "Totem"
 msgstr "Totem"
 
-#: src/totem.c:698
-msgid "(C) 2002 Bastien Nocera"
-msgstr "© 2002 Bastien Nocera"
-
-#: src/totem.c:699
-msgid "Movie Player (based on the Xine libraries)"
-msgstr "Lecteur de fichiers multimédias (basé sur les bibliothèques Xine)"
-
-#: src/totem.c:1124 src/totem.c:1132
-msgid ""
-"Couldn't load the main Glade file (totem.glade).\n"
-"Make sure that Totem is properly installed."
+#: data/totem.glade.h:16
+msgid "Volume Down"
 msgstr ""
-"Impossible de charger le fichier Glaed principal (totem.glade).\n"
-"Veuillez vérifier que Totem est installé correctement."
 
-#: src/totem.c:1146
-msgid ""
-"Couldn't load the interface for the playlist.\n"
-"Make sure that Totem is properly installed."
+#: data/totem.glade.h:17
+msgid "Volume Up"
 msgstr ""
-"Impossible de charger l'interface pour la liste de lecture.\n"
-"Veuillez vous assurer que Totem est installé correctement."
 
-#: src/gtk-xine.c:514
-msgid ""
-"Could not initialise the threads support\n"
-"You should install a thread-safe Xlib."
+#: data/totem.glade.h:18
+msgid "Zoom _1:1"
 msgstr ""
-"Impossible d'initialiser le support des threads.\n"
-"Vous devriez installer une version de la Xlib supportant les threads."
 
-#: src/gtk-xine.c:526
-msgid "Failed to open the display\n"
-msgstr "Impossible d'ouvrir le display\n"
+#: data/totem.glade.h:19
+msgid "Zoom _2:1"
+msgstr ""
 
-#: src/gtk-xine.c:557
-msgid "couldn't open video driver"
-msgstr "Impossible d'ouvrir le pilote vidéo"
+#: data/totem.glade.h:20
+msgid "_Fullscreen"
+msgstr "_Plein écran"
+
+#: data/totem.glade.h:21
+msgid "_Movie"
+msgstr "_Film"
+
+#: data/totem.glade.h:22
+msgid "_Play / Pause"
+msgstr "_Lecture/Pause"
+
+#: data/totem.glade.h:23
+msgid "_Show/Hide Playlist"
+msgstr "_Afficher/Cacher la liste de lecture"
+
+#: data/totem.glade.h:24
+msgid "_Zoom 1:2"
+msgstr ""
+
+#: src/gtk-playlist.c:219 src/totem.c:648
+msgid "Select files"
+msgstr "Sélectionner les fichiers"
 
 #: src/gtk-playlist.c:356
 msgid "Playing"
@@ -78,71 +126,96 @@ msgstr "Lecture en cours"
 msgid "Filename"
 msgstr "Nom du fichier"
 
-#: src/gtk-playlist.c:462 src/playlist.glade.h:1
-msgid "Playlist"
-msgstr "Liste de lecture"
+#: src/gtk-xine.c:453
+msgid ""
+"The configuration system is not initialised.\n"
+"The defaults will be used."
+msgstr ""
 
-#: src/totem.glade.h:1
-msgid "Exit fullscreen"
-msgstr "Quitter le mode plein écran"
+#: src/gtk-xine.c:633
+#, fuzzy
+msgid ""
+"Could not initialise the threads support.\n"
+"You should install a thread-safe Xlib."
+msgstr ""
+"Impossible d'initialiser le support des threads.\n"
+"Vous devriez installer une version de la Xlib supportant les threads."
 
-#: src/totem.glade.h:2
-msgid "File name"
-msgstr "Nom du fichier"
+#: src/gtk-xine.c:644
+#, fuzzy
+msgid "Failed to open the display."
+msgstr "Impossible d'ouvrir le display\n"
 
-#: src/totem.glade.h:3
-msgid "Next"
-msgstr "Suivant"
+#: src/gtk-xine.c:677
+msgid "Could not find a suitable video output."
+msgstr ""
 
-#: src/totem.glade.h:4
-msgid "Next stream"
-msgstr "Flux suivant"
+#: src/gtk-xine.c:799
+#, c-format
+msgid "No video plugin available to decode '%s'."
+msgstr ""
 
-#: src/totem.glade.h:5
-msgid "Open _DVD..."
-msgstr "Ouvrir un _DVD..."
+#: src/totem.c:293 src/totem.c:1206
+msgid "<span size=\"medium\"><b>No file</b></span>"
+msgstr "<span size=\"medium\"><b>Aucun fichier</b></span>"
 
-#: src/totem.glade.h:6
-msgid "Play/Pause"
-msgstr "Lecture/Pause"
+#: src/totem.c:761
+msgid "translator_credits"
+msgstr "Christophe Fergeau <teuf@users.sourceforge.net>"
 
-#: src/totem.glade.h:7
-msgid "Previous"
-msgstr "Précédent"
+#: src/totem.c:786
+msgid "(C) 2002 Bastien Nocera"
+msgstr "© 2002 Bastien Nocera"
 
-#: src/totem.glade.h:8
-msgid "Previous stream"
-msgstr "Flux précédent"
+#: src/totem.c:787
+msgid "Movie Player (based on the Xine libraries)"
+msgstr "Lecteur de fichiers multimédias (basé sur les bibliothèques Xine)"
 
-#: src/totem.glade.h:9
-msgid "Show/Hide Playlist"
-msgstr "Afficher/cacher la liste de lecture"
+#: src/totem.c:938
+#, c-format
+msgid ""
+"Totem could not startup:\n"
+"%s"
+msgstr ""
 
-#: src/totem.glade.h:10
-msgid "Skip backwards"
-msgstr "Retour rapide"
+#: src/totem.c:943
+#, c-format
+msgid ""
+"There is no plugin for Totem to handle '%s'\n"
+"Totem will not be able to play it."
+msgstr ""
 
-#: src/totem.glade.h:11
-msgid "Skip forward"
-msgstr "Avance rapide"
+#: src/totem.c:946
+#, c-format
+msgid "'%s' is broken, and Totem can not play it further."
+msgstr ""
 
-#: src/totem.glade.h:12
-msgid "Toggle Aspect Ratio"
-msgstr "Basculer le rapport d'affichage"
+#: src/totem.c:949
+#, c-format
+msgid ""
+"Totem could not play '%s':\n"
+"%s"
+msgstr ""
 
-#: src/totem.glade.h:14
-msgid "_Fullscreen"
-msgstr "_Plein écran"
+#: src/totem.c:1248 src/totem.c:1256
+#, fuzzy
+msgid ""
+"Couldn't load the main interface (totem.glade).\n"
+"Make sure that Totem is properly installed."
+msgstr ""
+"Impossible de charger le fichier Glaed principal (totem.glade).\n"
+"Veuillez vérifier que Totem est installé correctement."
 
-#: src/totem.glade.h:15
-msgid "_Movie"
-msgstr "_Film"
+#: src/totem.c:1269
+msgid ""
+"Couldn't load the interface for the playlist.\n"
+"Make sure that Totem is properly installed."
+msgstr ""
+"Impossible de charger l'interface pour la liste de lecture.\n"
+"Veuillez vous assurer que Totem est installé correctement."
 
-#: src/totem.glade.h:16
-msgid "_Play / Pause"
-msgstr "_Lecture/Pause"
+#~ msgid "couldn't open video driver"
+#~ msgstr "Impossible d'ouvrir le pilote vidéo"
 
-#: src/totem.glade.h:17
-msgid "_Show/Hide Playlist"
-msgstr "_Afficher/Cacher la liste de lecture"
-
+#~ msgid "Open _DVD..."
+#~ msgstr "Ouvrir un _DVD..."
