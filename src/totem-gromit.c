@@ -32,7 +32,7 @@
 
 #define INTERVAL 10000
 
-static const char *start_cmd[] =	{ NULL, NULL };
+static const char *start_cmd[] =	{ NULL, "-a", "-k", "none", NULL };
 static const char *toggle_cmd[] =	{ NULL, "-t", NULL };
 static const char *clear_cmd[] =	{ NULL, "-c", NULL };
 static const char *visibility_cmd[] =	{ NULL, "-v", NULL };
@@ -142,22 +142,12 @@ totem_gromit_toggle (void)
 
 	/* Not started */
 	if (pid == -1) {
-		int i = 5;
 		if (g_spawn_async (NULL,
 				(char **)start_cmd, NULL, 0, NULL, NULL,
 				&pid, NULL) == FALSE) {
 			g_printerr ("Couldn't start gromit");
 			return;
 		}
-		/* FIXME kludge, should be about 1 sec */
-		while (gtk_events_pending () || i > 0) {
-			gtk_main_iteration ();
-			usleep (100000);
-			i--;
-			if (i < 0)
-				break;
-		}
-		launch (toggle_cmd);
 	} else if (id == -1) { /* Started but disabled */
 		g_source_remove (id);
 		id = -1;
