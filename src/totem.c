@@ -1009,79 +1009,82 @@ on_error_event (GtkWidget *gtx, GtkXineError error, const char *message,
 		action_exit (totem);
 }
 
-static int
-on_window_key_press_event (GtkWidget *win, GdkEventKey *event,
-		gpointer user_data)
+static gboolean
+action_handle_key (Totem *totem, guint keyval)
 {
-	Totem *totem = (Totem *) user_data;
-	gboolean retval = FALSE;
+	gboolean retval = TRUE;
 
-	switch (event->keyval) {
+	switch (keyval) {
 	case GDK_p:
 	case GDK_P:
 		action_play_pause (totem);
-		retval = TRUE;
 		break;
 	case GDK_Escape:
 		action_fullscreen (totem, FALSE);
-		retval = TRUE;
 		break;
 	case GDK_f:
 	case GDK_F:
 		action_fullscreen_toggle (totem);
-		retval = TRUE;
 		break;
 	case GDK_Left:
 		action_seek_relative (totem, -15);
-		retval = TRUE;
 		break;
 	case GDK_Right:
 		action_seek_relative (totem, 60);
-		retval = TRUE;
 		break;
 	case GDK_Up:
 		action_volume_relative (totem, 8);
-		retval = TRUE;
 		break;
 	case GDK_Down:
 		action_volume_relative (totem, -8);
-		retval = TRUE;
 		break;
 	case GDK_A:
 	case GDK_a:
 		action_toggle_aspect_ratio (totem);
-		retval = TRUE;
 		break;
 	case GDK_B:
 	case GDK_b:
 		action_previous (totem);
-		retval = TRUE;
 		break;
 	case GDK_N:
 	case GDK_n:
 		action_next (totem);
-		retval = TRUE;
 		break;
 	case GDK_q:
 	case GDK_Q:
 		action_exit (totem);
-		retval = TRUE;
 		break;
 	case GDK_0:
 		action_set_scale_ratio (totem, 0.5);
-		retval = TRUE;
 		break;
 	case GDK_1:
 		action_set_scale_ratio (totem, 1);
-		retval = TRUE;
 		break;
 	case GDK_2:
 		action_set_scale_ratio (totem, 2);
-		retval = TRUE;
 		break;
+	default:
+		retval = FALSE;
 	}
 
 	return retval;
+}
+
+static int
+on_video_key_press_event (GtkWidget *win, guint keyval, gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+
+	return action_handle_key (totem, keyval);
+}
+
+static int
+on_window_key_press_event (GtkWidget *win, GdkEventKey *event,
+		                gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+
+	return action_handle_key (totem, event->keyval);
 }
 
 static void
@@ -1109,6 +1112,7 @@ static void
 totem_callback_connect (Totem *totem)
 {
 	GtkWidget *item;
+	int mask;
 
 	/* Menu items */
 	item = glade_xml_get_widget (totem->xml, "open1");
@@ -1185,7 +1189,7 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (on_fs_exit1_activate), totem);
 
 	/* Connect the keys */
-	gtk_widget_add_events (totem->win, GDK_KEY_RELEASE_MASK);
+	gtk_widget_add_events (totem->win, GDK_KEY_PRESS_MASK);
 	g_signal_connect (G_OBJECT(totem->win), "key_press_event",
 			G_CALLBACK (on_window_key_press_event), totem);
 
@@ -1239,7 +1243,7 @@ video_widget_create (Totem *totem)
 			totem);
 	g_signal_connect (G_OBJECT(totem->gtx),
 			"key-press",
-			G_CALLBACK (on_window_key_press_event),
+			G_CALLBACK (on_video_key_press_event),
 			totem);
 
 	g_object_add_weak_pointer (G_OBJECT (totem->gtx),
