@@ -68,7 +68,7 @@ static void totem_plugin_fork (TotemPlugin *plugin)
 				G_FILE_TEST_EXISTS) != FALSE) {
 		argv[argc++] = g_strdup ("./totem-mozilla-viewer");
 	} else {
-		argv[argc++] = g_strdup (LIBDIR"/totem/totem-mozilla-viewer");
+		argv[argc++] = g_strdup (LIBEXECDIR"/totem-mozilla-viewer");
 	}
 
 	argv[argc++] = g_strdup ("--xid");
@@ -103,7 +103,6 @@ static void totem_plugin_fork (TotemPlugin *plugin)
 
 	if (g_spawn_async_with_pipes (NULL, argv, NULL,
 				G_SPAWN_DO_NOT_REAP_CHILD,
-//				| G_SPAWN_STDOUT_TO_DEV_NULL,
 				NULL, NULL, &plugin->player_pid,
 				&plugin->send_fd, NULL, NULL, &err) == FALSE)
 	{

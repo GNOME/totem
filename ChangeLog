@@ -1,5 +1,13 @@
 2005-03-15  Bastien Nocera  <hadess@hadess.net>
 
+	* data/mozilla-viewer.glade: make the buttons smaller, more room
+	for the video itself
+	* src/Makefile.am:
+	* src/totem-mozilla-plugin.c: (totem_plugin_fork):
+	Make sure that the viewer is called from where it's actually installed
+
+2005-03-15  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-pl-parser.c: (totem_pl_parser_add_ram),
 	(totem_pl_parser_add_m3u), (totem_pl_parser_add_asf_parser),
 	(totem_pl_parser_add_pls), (totem_pl_parser_add_asx),
