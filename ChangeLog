@@ -1,5 +1,14 @@
 2005-03-20  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-mozilla-viewer.c: (totem_embedded_set_state),
+	(totem_embedded_open), (on_got_redirect),
+	(on_video_button_press_event), (on_eos_event),
+	(totem_embedded_create_cursor), (embedded), (main): on EOS, we're
+	not paused, but stopped. When we have an HREF attribute, set the
+	cursor to be a play icon, so people know they need to click to play
+
+2005-03-20  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-interface.c: (totem_interface_error_blocking):
 	* src/totem-mozilla-viewer.c: (totem_embedded_open):
 	Fix weird behaviour when a file can't be played (Mala Educacion trailer

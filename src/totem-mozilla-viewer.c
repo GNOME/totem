@@ -46,16 +46,16 @@ typedef enum {
 struct TotemEmbedded {
 	GtkWidget *window;
 	GladeXML *xml;
-	int xid, width, height;
+	int width, height;
 	const char *orig_filename;
 	char *filename, *href;
 	BaconVideoWidget *bvw;
 	gboolean controller_hidden;
+	TotemStates state;
+	GdkCursor *cursor;
 
 	/* XEmbed */
-	gboolean use_xembed;
 	gboolean embedded_done;
-	TotemStates state;
 };
 
 static void
@@ -78,13 +78,18 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 {
 	const char *id = NULL;
 	GtkWidget *image;
+	GdkCursor *cursor;
 
 	if (state == emb->state)
 		return;
 
+	cursor = NULL;
+
 	switch (state) {
 	case STATE_STOPPED:
 		id = GTK_STOCK_MEDIA_PLAY;
+		if (emb->href != NULL)
+			cursor = emb->cursor;
 		break;
 	case STATE_PAUSED:
 		id = GTK_STOCK_MEDIA_PLAY;
@@ -98,11 +103,12 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 
 	image = glade_xml_get_widget (emb->xml, "emb_pp_button_image");
 	gtk_image_set_from_stock (GTK_IMAGE (image), id, GTK_ICON_SIZE_MENU);
+	gdk_window_set_cursor (GTK_WIDGET (emb->bvw)->window, cursor);
 
 	emb->state = state;
 }
 
-static void
+static gboolean
 totem_embedded_open (TotemEmbedded *emb)
 {
 	GError *err = NULL;
@@ -129,13 +135,11 @@ totem_embedded_open (TotemEmbedded *emb)
 		g_free (msg);
 
 		g_error_free (err);
-		retval = FALSE;
 	} else {
 		totem_embedded_set_state (emb, STATE_PLAYING);
 	}
 
-	return;
-//	return retval;
+	return retval;
 }
 
 static void
@@ -173,8 +177,8 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 	emb->filename = new_mrl;
 	bacon_video_widget_close (emb->bvw);
 
-	totem_embedded_open (emb);
-	bacon_video_widget_play (emb->bvw, NULL);
+	if (totem_embedded_open (emb) != FALSE)
+		bacon_video_widget_play (emb->bvw, NULL);
 }
 
 static gboolean
@@ -190,8 +194,8 @@ on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 		emb->href = NULL;
 		bacon_video_widget_close (emb->bvw);
 
-		totem_embedded_open (emb);
-		bacon_video_widget_play (emb->bvw, NULL);
+		if (totem_embedded_open (emb) != FALSE)
+			bacon_video_widget_play (emb->bvw, NULL);
 
 		return TRUE;
 	}
@@ -202,7 +206,7 @@ on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 static void
 on_eos_event (GtkWidget *bvw, TotemEmbedded *emb)
 {
-	totem_embedded_set_state (emb, STATE_PAUSED);
+	totem_embedded_set_state (emb, STATE_STOPPED);
 }
 
 static void
@@ -257,20 +261,34 @@ totem_embedded_add_children (TotemEmbedded *emb)
 	}
 }
 
+static void
+totem_embedded_create_cursor (TotemEmbedded *emb)
+{
+	GtkWidget *label;
+	GdkPixbuf *icon;
+
+	label = gtk_label_new ("");
+	icon = gtk_widget_render_icon (label, GTK_STOCK_MEDIA_PLAY,
+			GTK_ICON_SIZE_BUTTON, NULL);
+	gtk_widget_destroy (label);
+	emb->cursor = gdk_cursor_new_from_pixbuf (gdk_display_get_default (),
+			icon,
+			gdk_pixbuf_get_width (icon) / 2,
+			gdk_pixbuf_get_height (icon) / 2);
+	gdk_pixbuf_unref (icon);
+}
+
 static void embedded (GtkPlug *plug, TotemEmbedded *emb)
 {
-	printf("EMBEDDED!\n");
 	emb->embedded_done = TRUE;
-//	gtk_widget_show_all((GtkWidget *)data);
 }
 
 int main (int argc, char **argv)
 {
 	TotemEmbedded *emb;
-	int i;
+	int i, xid;
 
 	emb = g_new0 (TotemEmbedded, 1);
-	emb->use_xembed = TRUE;
 	emb->width = emb->height = -1;
 	emb->state = STATE_STOPPED;
 
@@ -292,12 +310,13 @@ int main (int argc, char **argv)
 	}
 	g_print ("\n");
 
+	xid = 0;
 	/* TODO Add popt options */
 	for (i = 1; i < argc; i++) {
 		if (OPTION_IS (TOTEM_OPTION_XID)) {
 			if (i + 1 < argc) {
 				i++;
-				emb->xid = atoi (argv[i]);
+				xid = atoi (argv[i]);
 			}
 		} else if (OPTION_IS (TOTEM_OPTION_WIDTH)) {
 			if (i + 1 < argc) {
@@ -327,11 +346,11 @@ int main (int argc, char **argv)
 	}
 
 	/* XEMBED or stand-alone */
-	if (emb->xid != 0) {
+	if (xid != 0) {
 		GtkWidget *window;
 
 		/* The miraculous XEMBED protocol */
-		window = gtk_plug_new ((GdkNativeWindow)emb->xid);
+		window = gtk_plug_new ((GdkNativeWindow)xid);
 		gtk_signal_connect(GTK_OBJECT(window), "embedded",
 				G_CALLBACK (embedded), NULL);
 		gtk_widget_realize (window);
@@ -343,11 +362,11 @@ int main (int argc, char **argv)
 	}
 
 	totem_embedded_add_children (emb);
-
+	totem_embedded_create_cursor (emb);
 	gtk_widget_show (emb->window);
 
 	/* wait until we're embedded if we're to be, or shown */
-	if (emb->xid != 0) {
+	if (xid != 0) {
 		while (emb->embedded_done == FALSE && gtk_events_pending ())
 			gtk_main_iteration ();
 	} else {
@@ -355,8 +374,8 @@ int main (int argc, char **argv)
 			gtk_main_iteration ();
 	}
 
-	totem_embedded_open (emb);
-	bacon_video_widget_play (emb->bvw, NULL);
+	if (totem_embedded_open (emb) != FALSE)
+		bacon_video_widget_play (emb->bvw, NULL);
 
 	gtk_main ();
 
