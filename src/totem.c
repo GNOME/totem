@@ -68,7 +68,7 @@ struct Totem {
 	GtkAdjustment *voladj;
 	gboolean vol_lock;
 	gfloat prev_volume;
-    int volume_first_time;
+	int volume_first_time;
 
 	/* exit fullscreen Popup */
 	GtkWidget *exit_popup;
@@ -167,6 +167,9 @@ totem_action_exit (Totem *totem)
 	gtk_message_queue_unref (totem->queue);
 
 	gtk_main_quit ();
+
+	gtk_widget_hide (totem->win);
+	gtk_widget_hide (GTK_WIDGET (totem->playlist));
 
 	gtk_widget_destroy (totem->gtx);
 	gtk_widget_destroy (GTK_WIDGET (totem->playlist));

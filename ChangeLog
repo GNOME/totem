@@ -1,5 +1,13 @@
 2002-12-16  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (xine_thread), (gtk_xine_unrealize):
+	* src/scrsaver.c: (scrsaver_init), (scrsaver_disable),
+	(scrsaver_enable):
+	* src/totem.c: (totem_action_exit): exit fixes, should fix the very
+	slow exits (Closes: #101299, #101258)
+
+2002-12-16  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (update_sliders), (main): fix up volume being at 0
 	on startup (patch by John McCutchan <ttb@tentacle.dhs.org>)
 	(Closes: #101298)

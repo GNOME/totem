@@ -727,7 +727,7 @@ xine_thread (void *gtx_gen)
 
 	gtx->priv->init_finished = TRUE;
 
-	while (gtx->priv->display)
+	while (gtx->priv->display != NULL && gtx->priv->stream != NULL)
 	{
 		XNextEvent (gtx->priv->display, &event);
 
@@ -1038,9 +1038,9 @@ gtk_xine_unrealize (GtkWidget *widget)
 	xine_dispose (gtx->priv->stream);
 	gtx->priv->stream = NULL;
 
-	/* stop the event thread */
+	/* stop the event thread, generating an event to get out of it */
 	pthread_cancel (gtx->priv->thread);
-	pthread_join (gtx->priv->thread, NULL);
+	/* we shouldn't need pthread_join here */
 
 	/* Kill the drivers */
 	if (gtx->priv->vo_driver != NULL)

@@ -12,7 +12,9 @@
 #include "scrsaver.h"
 
 #include <glib.h>
+#ifdef HAVE_XTEST
 #include <X11/extensions/XTest.h>
+#endif /* HAVE_XTEST */
 #include <X11/keysym.h>
 
 static int disabled;
@@ -34,7 +36,7 @@ static gboolean fake_event (gpointer data)
 
 	return TRUE;
 }
-#endif
+#endif /* HAVE_XTEST */
 
 void scrsaver_init (Display *display)
 {
@@ -46,7 +48,7 @@ void scrsaver_init (Display *display)
 		keycode = XKeysymToKeycode (display, XK_Shift_L);
 		g_timeout_add (15000, (GSourceFunc)fake_event, display);
 	}
-#endif
+#endif /* HAVE_XTEST */
 }
 
 void scrsaver_disable(Display *display)
@@ -57,7 +59,7 @@ void scrsaver_disable(Display *display)
 		disabled = 1;
 		return;
 	}
-#endif
+#endif /* HAVE_XTEST */
 	if(disabled == 0)
 	{
 		XGetScreenSaver(display, &timeout, &interval,
@@ -77,7 +79,7 @@ void scrsaver_enable(Display *display)
 		disabled = 0;
 		return;
 	}
-#endif
+#endif /* HAVE_XTEST */
 	if(disabled)
 	{
 		XSetScreenSaver(display, timeout, interval,
