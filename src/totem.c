@@ -2539,7 +2539,7 @@ totem_setup_recent (Totem *totem)
 
 	totem->recent_view = egg_recent_view_gtk_new (menu, menu_item);
 	egg_recent_view_gtk_show_icons (EGG_RECENT_VIEW_GTK
-						(totem->recent_view), TRUE);
+						(totem->recent_view), FALSE);
 	egg_recent_view_set_model (EGG_RECENT_VIEW (totem->recent_view),
 			totem->recent_model);
 	egg_recent_view_gtk_set_trailing_sep (totem->recent_view, TRUE);
