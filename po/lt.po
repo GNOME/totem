@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-23 22:54+0200\n"
-"PO-Revision-Date: 2005-02-23 22:55+0200\n"
+"POT-Creation-Date: 2005-03-04 15:18+0200\n"
+"PO-Revision-Date: 2005-03-04 15:19+0200\n"
 "Last-Translator: Žygimantas Beručka <uid0@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -280,9 +280,9 @@ msgstr ""
 "34.4 Kbps modemas\n"
 "56 Kbps modemas/ISDN\n"
 "112 Kbps dviguba ISDN/DSL\n"
-"256 Kbps DSL/kabelininis internetas\n"
-"384 Kbps DSL/kabelininis internetas\n"
-"512 Kbps DSL/kabelininis internetas\n"
+"256 Kbps DSL/kabelinis internetas\n"
+"384 Kbps DSL/kabelinis internetas\n"
+"512 Kbps DSL/kabelinis internetas\n"
 "1.5 Mbps T1/Intranetas/LAN\n"
 "Intranetas/LAN"
 
@@ -765,11 +765,11 @@ msgstr "Kelias iki optinio įrenginio."
 
 #: ../data/totem.schemas.in.h:8
 msgid "Repeat mode"
-msgstr "Kartojimo režimas"
+msgstr "Kartojimo veiksena"
 
 #: ../data/totem.schemas.in.h:9
 msgid "Repeat mode."
-msgstr "Kartojimo režimas."
+msgstr "Kartojimo veiksena."
 
 #: ../data/totem.schemas.in.h:10
 msgid "Resize the canvas automatically on file load"
@@ -785,7 +785,7 @@ msgstr "Rodyti vizualius efektus kai nerodomas vaizdas"
 
 #: ../data/totem.schemas.in.h:13
 msgid "Show visual effects when playing an audio only file."
-msgstr "Rodyti vizualius efektus kai grojama vien garso byla."
+msgstr "Rodyti vizualius efektus, kai grojama garso byla."
 
 #: ../data/totem.schemas.in.h:14
 msgid "Shuffle mode"
@@ -801,7 +801,7 @@ msgstr "Garsumas"
 
 #: ../data/totem.schemas.in.h:17
 msgid "Sound volume, in percent, between 0 and 100"
-msgstr "Garsumas procentais, tarp 0 ir 100"
+msgstr "Garsumas procentais (tarp 0 ir 100)"
 
 #: ../data/totem.schemas.in.h:18
 msgid "The brightness of the video"
@@ -854,15 +854,15 @@ msgstr "Ar pagrindinis langas turėtų likti viršuje"
 
 #: ../data/totem.schemas.in.h:29
 msgid "Whether the main window should stay on top of the other ones"
-msgstr "Ar pagrindis langas turėtų likti virš kitų langų"
+msgstr "Ar pagrindinis langas turėtų likti virš kitų langų"
 
 #: ../data/totem.schemas.in.h:30
 msgid "Whether to enable debug for the playback engine"
-msgstr "Ar įjungti grojimo varikliuko derinimą"
+msgstr "Ar įjungti grojimo posistemės derinimą"
 
 #: ../data/totem.schemas.in.h:31
 msgid "Whether to enable debug for the playback engine."
-msgstr "Ar įjungti grojimo varikliuko derinimą."
+msgstr "Ar įjungti grojimo posistemės derinimą."
 
 #: ../data/totem.schemas.in.h:32
 msgid "Width of the video widget"
@@ -886,7 +886,7 @@ msgstr "Grojaraščio Y koordinatė."
 
 #: ../data/uri.glade.h:2
 msgid "Enter the _location (URI) of the file you would like to open:"
-msgstr "Įveskite vietą (URI) by_los, kurią Jūs norėtumėte atidaryti:"
+msgstr "Įveskite vietą (URI) by_los, kurią norėtumėte atidaryti:"
 
 #: ../data/uri.glade.h:3
 msgid "Open from URI"
@@ -948,7 +948,7 @@ msgstr "Nepavadintas CDROM"
 msgid "Totem Video Window"
 msgstr "Totem vaizdo langas"
 
-#: ../src/bacon-video-widget-gst.c:2908
+#: ../src/bacon-video-widget-gst.c:2913
 msgid "Failed to create a GStreamer play object"
 msgstr "Nepavyko sukurti GStreamer grojimo obekto"
 
@@ -974,7 +974,7 @@ msgid ""
 "Couldn't load the '%s' audio driver\n"
 "Check that the device is not busy."
 msgstr ""
-"Negaliu užkrauti '%s' garso valdyklės\n"
+"Nepavyko įkelti „%s“ garso valdyklės\n"
 "Patikrinkite ar įrenginys nėra užimtas."
 
 #: ../src/bacon-video-widget-xine.c:1109 ../src/bacon-video-widget-xine.c:1614
@@ -986,17 +986,17 @@ msgstr ""
 
 #: ../src/bacon-video-widget-xine.c:1225
 msgid "The server you are trying to connect to is not known."
-msgstr "Serveris, prie kurio jūs bandote jungtis, yra nežinomas."
+msgstr "Serveris, prie kurio bandote jungtis, nežinomas."
 
 #: ../src/bacon-video-widget-xine.c:1229
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
-msgstr "Įrenginio vardas, kurį jūs nurodėte (%s), ko gero neteisingas."
+msgstr "Nurodytas įrenginio vardas (%s) greičiausiai netaisyklingas."
 
 #: ../src/bacon-video-widget-xine.c:1233
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
-msgstr "Serveris, prie kurio jūs bandote prisijungti (%s), yra nepasiekiamas."
+msgstr "Serveris, prie kurio bandote prisijungti (%s), nepasiekiamas."
 
 #: ../src/bacon-video-widget-xine.c:1237
 msgid "The connection to this server was refused."
@@ -1011,8 +1011,8 @@ msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
 msgstr ""
-"Atrodo, jog šaltinis yra užšifruotas ir negali būti perskaitytas. Ar Jūs "
-"bandote groti užšifruotą DVD be libdvdcss bibliotekos?"
+"Atrodo, jog šaltinis užšifruotas ir negali būti perskaitytas. Gal bandote "
+"groti užšifruotą DVD be libdvdcss bibliotekos?"
 
 #: ../src/bacon-video-widget-xine.c:1250
 msgid "The movie could not be read."
@@ -1021,7 +1021,7 @@ msgstr "Filmas negali būti perskaitytas."
 #: ../src/bacon-video-widget-xine.c:1259
 #, c-format
 msgid "A problem occured while loading a library or a decoder (%s)."
-msgstr "Įkeliant biblioteką arba vaizdo dekoderį (%s) iškilo problema."
+msgstr "Įkeliant biblioteką arba vaizdo dekoderį (%s) kilo problema."
 
 #: ../src/bacon-video-widget-xine.c:1268
 msgid "This file is encrypted and cannot be played back."
@@ -1033,7 +1033,7 @@ msgstr "Dėl saugumo priežasčių šis filmas negali būti grojamas."
 
 #: ../src/bacon-video-widget-xine.c:1278
 msgid "The audio device is busy. Is another application using it?"
-msgstr "Audio įrenginys yra užimtas. Ar jį naudoja kita programa?"
+msgstr "Audio įrenginys yra užimtas. Gal jį naudoja kita programa?"
 
 #: ../src/bacon-video-widget-xine.c:1283
 msgid "You are not allowed to open this file."
@@ -1066,8 +1066,8 @@ msgstr "Bendra klaida."
 #: ../src/bacon-video-widget-xine.c:1911
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr ""
-"Šis filmas yra nejudantis paveikslėlis. Jūs galite jį atidaryti su "
-"paveikslėlių žiūrykle."
+"Šis filmas yra nejudantis paveikslėlis. Galite jį atidaryti su paveikslėlių "
+"žiūrykle."
 
 #: ../src/bacon-video-widget-xine.c:1935
 #, c-format
@@ -1089,7 +1089,7 @@ msgstr ""
 
 #: ../src/bacon-video-widget-xine.c:1955
 msgid "This is an audio-only file, and there is no audio output available."
-msgstr "Tai yra vien tik garso byla ir joje nėra jokios garso išvesties."
+msgstr "Tai yra garso byla, bet nėra nurodyta jokios garso išvesties."
 
 #: ../src/bacon-video-widget-xine.c:3369
 #, c-format
@@ -1111,7 +1111,7 @@ msgstr "Vaizdo kodavimas neapdorojamas."
 #: ../src/totem-disc.c:114
 #, c-format
 msgid "Failed to find real device node for %s: %s"
-msgstr "Nepavyko rasti tikro įrenginio mazgo reikalingo %s: %s"
+msgstr "Nepavyko rasti tikro įrenginio mazgo, reikalingo %s: %s"
 
 #: ../src/totem-disc.c:125
 #, c-format
@@ -1125,7 +1125,7 @@ msgstr "Nepavyko /etc/fstab byloje rasti įrenginio %s prijungimo taško"
 
 #: ../src/totem-disc.c:247
 msgid "Please check that a disc is present in the drive."
-msgstr "Patikrinkit ar diskas yra įdėtas į įrenginį."
+msgstr "Patikrinkite, ar diskas įdėtas į įrenginį."
 
 #: ../src/totem-disc.c:250
 #, c-format
@@ -1140,7 +1140,7 @@ msgstr "Nepavyko aptikti įrenginio %s galimybių: %s"
 #: ../src/totem-disc.c:294
 #, c-format
 msgid "Drive status 0x%x (%s) - check disc"
-msgstr "Disko būsena 0x%x (%s) - patikrinkit diską"
+msgstr "Disko būsena 0x%x (%s) - patikrinkite diską"
 
 #: ../src/totem-disc.c:327
 #, c-format
@@ -1442,7 +1442,7 @@ msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
 "appropriate plugins to handle it."
 msgstr ""
-"Totem negalėjo groti šio tipo duomenų (%s), nes jūs neturite tinkamų priedų "
+"Totem negalėjo groti šio tipo duomenų (%s), nes neturite tinkamų priedų "
 "jiems apdoroti."
 
 #: ../src/totem.c:366
@@ -1450,8 +1450,8 @@ msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
 msgstr ""
-"Prašome įdiegti reikiamus priedus ir perstartuoti Totem, jog galėtumėte "
-"groti šiuos duomenis."
+"Įdiekite reikiamus priedus ir iš naujo paleisti Totem, jog galėtumėte groti "
+"šiuos duomenis."
 
 #: ../src/totem.c:374
 #, c-format
@@ -1460,15 +1460,15 @@ msgid ""
 "it."
 msgstr ""
 "Totem negalėjo groti šių duomenų (%s) nors jiems apdoroti atitinkamas "
-"priedas ir yra."
+"priedas ir įdiegtas."
 
 #: ../src/totem.c:375
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr ""
-"Galbūt jūs norėtumėte patikrinti ar diskas įdėtas į įrenginį ir ar šis "
-"teisingai sukonfigūruotas."
+"Patikrinkite, ar diskas įdėtas į įrenginį ir ar įrenginys teisingai "
+"sukonfigūruotas."
 
 #  Title
 #. Title
@@ -1491,7 +1491,7 @@ msgstr "Įvyko klaida"
 
 #: ../src/totem.c:1492
 msgid "Select files"
-msgstr "Pasirinkit bylas"
+msgstr "Pasirinkite bylas"
 
 #: ../src/totem.c:1563
 msgid "Open Location..."
@@ -1504,7 +1504,7 @@ msgstr "Totem nepavyko parodyti pagalbos turinio."
 #: ../src/totem.c:1897
 #, c-format
 msgid "Movie Player using %s"
-msgstr "Filmų grotuvas naudojantis %s"
+msgstr "Filmų grotuvas, naudojantis %s"
 
 #: ../src/totem.c:1903 ../src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
@@ -1519,7 +1519,7 @@ msgstr ""
 #: ../src/totem.c:1941 ../src/totem.c:1949 ../src/vanity.c:299
 #: ../src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
-msgstr "Totem negalėjo padaryti to filmo vaizdo nuotraukos."
+msgstr "Totem negalėjo padaryti filmo vaizdo nuotraukos."
 
 #: ../src/totem.c:1949
 msgid "Please file a bug, this isn't supposed to happen."
@@ -1536,7 +1536,7 @@ msgstr "Įsitikinkite, jog Totem deramai įdiegtas."
 #: ../src/totem.c:2062
 #, c-format
 msgid "Totem could not seek in '%s'."
-msgstr "Totem negalėjo peršokti „%s“."
+msgstr "Totem negalėjo peršokti byloje „%s“."
 
 #: ../src/totem.c:3222
 msgid "Totem could not startup."
@@ -1565,16 +1565,16 @@ msgstr "iššokantis video meniu"
 
 #: ../src/vanity.c:75
 msgid "Debug mode on"
-msgstr "Derinimo režimas įjungtas"
+msgstr "Derinimo veiksena įjungta"
 
 #: ../src/vanity.c:255
 #, c-format
 msgid "Webcam utility using %s"
-msgstr "Interneto kameros pagalbinė programa naudojanti %s"
+msgstr "Interneto kameros pagalbinė programa, naudojanti %s"
 
 #: ../src/vanity.c:307
 msgid "Please file a bug, this isn't supposed to happen"
-msgstr "Prašome praneši apie klaidą programoje. To neturėjo nutikti."
+msgstr "Prašome pranešti apie klaidą programoje. To neturėjo nutikti."
 
 #: ../src/vanity.c:550
 #, c-format
@@ -1617,7 +1617,7 @@ msgid ""
 "Verify your system installation. Vanity will now exit."
 msgstr ""
 "Negaliu inicializuoti saugių gijų bibliotekų. \n"
-"Patikrinkite savo sistemos įdiegimą. Vanity dabar užsidarys."
+"Patikrinkite, ar sistema teisingai įdiegta. Vanity dabar užsidarys."
 
 #: ../src/vanity.c:671
 #, c-format
@@ -1627,7 +1627,7 @@ msgid ""
 "%s"
 msgstr ""
 "Vanity negalėjo inicializuoti \n"
-"konfigūracijos varikliuko: \n"
+"konfigūracijos posistemės: \n"
 "%s"
 
 #: ../src/vanity.c:691 ../src/vanity.c:706
@@ -1635,7 +1635,7 @@ msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
 msgstr ""
-"Negalima užkrauti pagrindinės vartotojo sąsajos (vanity.glade). \n"
+"Nepavyko įkelti pagrindinės vartotojo sąsajos (vanity.glade). \n"
 "Įsitikinkite, jog Vanity teisingai įdiegtas."
 
 #: ../src/video-utils.c:290
@@ -1683,84 +1683,3 @@ msgstr "%s %s"
 #, c-format
 msgid "%s"
 msgstr "%s"
-
-#~ msgid "URI currently displayed"
-#~ msgstr "Dabar rodomas URI"
-
-#~ msgid "Video and Audio information properties page"
-#~ msgstr "Vaizdo ir garso informacijos nustatymų puslapis"
-
-#~ msgid "Couldn't load the main interface (totem.glade)."
-#~ msgstr "Negalėjau užkrauti pagrindinės vartotojo sąsajos (totem.glade)."
-
-#~ msgid "Couldn't load the interface for the playlist."
-#~ msgstr "Negalėjau užkrauti sąsajos grojaraščiui."
-
-#~ msgid "1.5 Mbps T1/Intranet/LAN"
-#~ msgstr "1.5 Mbps T1/Lokalus tinklas"
-
-#~ msgid "112 Kbps Dual ISDN/DSL"
-#~ msgstr "112 Kbps dvigubas ISDN/DSL"
-
-#~ msgid "14.4 Kbps Modem"
-#~ msgstr "14.4 Kbps modemas"
-
-#~ msgid "19.2 Kbps Modem"
-#~ msgstr "19.2 Kbps modemas"
-
-#~ msgid "256 Kbps DSL/Cable"
-#~ msgstr "256 Kbps DSL/Kabelinis internetas"
-
-#~ msgid "28.8 Kbps Modem"
-#~ msgstr "28.8 Kbps modemas"
-
-#~ msgid "33.6 Kbps Modem"
-#~ msgstr "33.6 Kbps modemas"
-
-#~ msgid "34.4 Kbps Modem"
-#~ msgstr "34.4 Kbps modemas"
-
-#~ msgid "384 Kbps DSL/Cable"
-#~ msgstr "384 Kbps DSL/Kabelinis internetas"
-
-#~ msgid "4-channel"
-#~ msgstr "4 kanalų"
-
-#~ msgid "4.1-channel"
-#~ msgstr "4.1 kanalų"
-
-#~ msgid "5.0-channel"
-#~ msgstr "5.0 kanalų"
-
-#~ msgid "5.1-channel"
-#~ msgstr "5.1 kanalų"
-
-#~ msgid "512 Kbps DSL/Cable"
-#~ msgstr "512 Kbps DSL/Kabelinis internetas"
-
-#~ msgid "56 Kbps Modem/ISDN"
-#~ msgstr "56 Kbps modemas/ISDN"
-
-#~ msgid "AC3 Passthrough"
-#~ msgstr "AC3 perėjimas"
-
-#~ msgid "Extra Large"
-#~ msgstr "Labai didelis"
-
-#~ msgid "File name"
-#~ msgstr "Bylos vardas"
-
-#~ msgid "Intranet/LAN"
-#~ msgstr "Vietinis tinklas"
-
-#~ msgid "Large"
-#~ msgstr "Didelis"
-
-#~ msgid "Normal"
-#~ msgstr "Normalus"
-
-#~ msgid "Small"
-#~ msgstr "Mažas"
-
-#~ msgid "Stereo"
-#~ msgstr "Stereo"
