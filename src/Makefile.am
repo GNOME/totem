@@ -82,10 +82,6 @@ totem_SOURCES = 					\
 	rb-ellipsizing-label.c		\
 	rb-ellipsizing-label.h		\
 	debug.h				\
-	gnome-caption-table.c		\
-	gnome-caption-table.h		\
-	gnome-password-dialog.c		\
-	gnome-password-dialog.h		\
 	totem-statusbar.c		\
 	totem-statusbar.h
 
@@ -106,8 +102,6 @@ totem_properties_page_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RAND
 vanity_SOURCES =					\
 	$(VIDEOWIDGET)					\
 	$(BACON_V4L_SELECTION)				\
-	gnome-caption-table.c gnome-caption-table.h	\
-	gnome-password-dialog.c gnome-password-dialog.h	\
 	vanity.c
 
 vanity_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)

@@ -86,6 +86,9 @@ static struct poptOption options[] = {
 	{NULL, '\0', 0, NULL, 0} /* end the list */
 };
 
+static gboolean totem_action_open_files (Totem *totem, char **list,
+		gboolean ignore_first);
+static gboolean totem_action_open_files_list (Totem *totem, GSList *list);
 static void update_fullscreen_size (Totem *totem);
 static gboolean popup_hide (Totem *totem);
 static void update_buttons (Totem *totem);
@@ -1411,24 +1414,47 @@ totem_add_cd_track_name (Totem *totem, const char *filename)
 	g_free (name);
 }
 
-gboolean
+static gboolean
 totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 {
-	int i;
-	gboolean cleared = FALSE;
+	GSList *slist = NULL;
+	int i, retval;
 
 	i = (ignore_first ? 1 : 0 );
 
 	for ( ; list[i] != NULL; i++)
+		slist = g_slist_prepend (slist, list[i]);
+
+	slist = g_slist_reverse (slist);
+	retval = totem_action_open_files_list (totem, slist);
+	g_slist_free (slist);
+
+	return retval;
+}
+
+static gboolean
+totem_action_open_files_list (Totem *totem, GSList *list)
+{
+	GSList *l;
+	gboolean cleared = FALSE;
+
+	if (list == NULL)
+		return cleared;
+
+	for (l = list ; l->next != NULL; l = l->next)
 	{
 		char *filename, *local_path;
+		char *data = l->data;
+
+		if (data == NULL)
+			continue;
 
 		/* Ignore relatives paths that start with "--", tough luck */
-		if (list[i][0] == '-' && list[i][1] == '-')
+		if (data[0] == '-' && data[1] == '-')
 			continue;
 
 		/* Get the subtitle part out for our tests */
-		filename = totem_create_full_path (list[i]);
+		filename = totem_create_full_path (data);
 		local_path = gnome_vfs_get_local_path_from_uri (filename);
 		if (local_path != NULL && g_file_test (local_path, G_FILE_TEST_IS_DIR))
 		{
@@ -1461,12 +1487,12 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 				cleared = TRUE;
 			}
 
-			if (strcmp (list[i], "dvd:") == 0)
+			if (strcmp (data, "dvd:") == 0)
 			{
 				totem_action_load_media (totem, MEDIA_DVD);
-			} else if (strcmp (list[i], "vcd:") == 0) {
+			} else if (strcmp (data, "vcd:") == 0) {
 				totem_action_load_media (totem, MEDIA_VCD);
-			} else if (strcmp (list[i], "cd:") == 0) {
+			} else if (strcmp (data, "cd:") == 0) {
 				totem_action_load_media (totem, MEDIA_CDDA);
 			} else if (strstr (filename, "cdda:/") != NULL) {
 				totem_add_cd_track_name (totem, filename);
@@ -1497,47 +1523,56 @@ on_open1_activate (GtkButton *button, Totem *totem)
 	int response;
 	static char *path = NULL;
 
-	fs = gtk_file_selection_new (_("Select files"));
-	gtk_file_selection_set_select_multiple (GTK_FILE_SELECTION (fs), TRUE);
+	fs = gtk_file_chooser_dialog_new (_("Select files"),
+			GTK_WINDOW (totem->win), GTK_FILE_CHOOSER_ACTION_OPEN,
+			GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			NULL);
+	gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (fs), TRUE);
+
 	if (path != NULL)
 	{
-		gtk_file_selection_set_filename (GTK_FILE_SELECTION (fs),
-				path);
+		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (fs), path);
 		g_free (path);
 		path = NULL;
 	}
 
 	while (1)
 	{
-		char **filenames, *mrl;
+		GSList *filenames;
+		char *mrl;
 		gboolean playlist_modified;
 
 		response = gtk_dialog_run (GTK_DIALOG (fs));
-		if (response != GTK_RESPONSE_OK)
+		if (response != GTK_RESPONSE_ACCEPT)
 			break;
 
-		filenames = gtk_file_selection_get_selections
-			(GTK_FILE_SELECTION (fs));
-		playlist_modified = totem_action_open_files (totem,
-				filenames, FALSE);
+		filenames = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (fs));
+		if (filenames == NULL)
+			continue;
+
+		playlist_modified = totem_action_open_files_list (totem,
+				filenames);
 		if (playlist_modified == FALSE)
 		{
-			g_strfreev (filenames);
+			g_slist_foreach (filenames, (GFunc) g_free, NULL);
+			g_slist_free (filenames);
 			continue;
 		}
 
 		/* Hide the selection widget only if playlist is modified */
 		gtk_widget_hide (fs);
 
-		if (filenames[0] != NULL)
+		if (filenames->data != NULL)
 		{
 			char *tmp;
 
-			tmp = g_path_get_dirname (filenames[0]);
+			tmp = g_path_get_dirname (filenames->data);
 			path = g_strconcat (tmp, G_DIR_SEPARATOR_S, NULL);
 			g_free (tmp);
 		}
-		g_strfreev (filenames);
+		g_slist_foreach (filenames, (GFunc) g_free, NULL);
+		g_slist_free (filenames);
 
 		mrl = totem_playlist_get_current_mrl (totem->playlist);
 		totem_action_set_mrl_and_play (totem, mrl);
@@ -1577,6 +1612,7 @@ on_open_location1_activate (GtkButton *button, Totem *totem)
 	g_free (filename);
 	dialog = glade_xml_get_widget (glade, "open_uri_dialog");
 	entry = glade_xml_get_widget (glade, "uri");
+
 	response = gtk_dialog_run (GTK_DIALOG (dialog));
 
 	if (response == GTK_RESPONSE_OK)
@@ -1599,7 +1635,6 @@ on_open_location1_activate (GtkButton *button, Totem *totem)
 
 	gtk_widget_destroy (dialog);
 	g_object_unref (glade);
-	return;
 }
 
 static void
