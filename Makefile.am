@@ -14,3 +14,5 @@ EXTRA_DIST =			\
 
 CLEANFILES = totem.spec
 
+CONFIG_CLEAN_FILES = libtool-nofpic
+

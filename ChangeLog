@@ -1,3 +1,28 @@
+2002-10-19  Bastien Nocera  <hadess@hadess.net>
+
+	* Makefile.am: added the gnome-vfs xine plugin
+	* configure.in: libtool-fu
+	* data/totem.applications: we can do URIs any day
+	* data/totem.glade: controls popup
+	* src/Makefile.am: upd
+	* src/gtk-playlist.c: (gtk_playlist_add_one_mrl),
+	(gtk_playlist_mrl_to_title): remove escapes from filenames before
+	showing them
+	* src/gtk-xine.c: (gtk_xine_instance_init), (frame_output_cb),
+	(gtk_xine_set_fullscreen), (gtk_xine_is_seekable): cleanups, if stream
+	length is 0, don't set it as seekable
+	* src/input_gnomevfs.c: added, not functional yet because of build
+	problems
+	* src/totem.c: (play_pause_set_label), (volume_set_image),
+	(totem_action_fullscreen_toggle), (totem_action_set_mrl),
+	(totem_action_previous), (totem_action_next), (update_sliders_cb),
+	(seek_cb), (vol_cb), (popup_hide), (on_mouse_motion_event),
+	(on_motion_notify_event), (update_buttons),
+	(totem_callback_connect), (main): merge patch by John McCutchan
+	<ttb@tentacle.dhs.org> to show a controls popup in fullscreen mode,
+	cleanup the patch, catch motion events on the popups so they don't
+	flicker when moving the mouse over them
+
 2002-10-12  Bastien Nocera  <hadess@hadess.net>
 
 	* src/gtk-playlist.c: (gtk_playlist_add_mrl): add the files only once,

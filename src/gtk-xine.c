@@ -292,7 +292,8 @@ gtk_xine_instance_init (GtkXine * gtx)
 	gtx->priv->mixer = -1;
 	gtx->priv->init_finished = FALSE;
 	gtx->priv->cursor_shown = TRUE;
-	gtx->priv->can_dvd = gtx->priv->can_vcd = FALSE;
+	gtx->priv->can_dvd = FALSE;
+	gtx->priv->can_vcd = FALSE;
 
 	gtx->priv->queue = g_async_queue_new ();
 }
@@ -365,7 +366,7 @@ frame_output_cb (void *gtx_gen,
 				signal = g_new0 (GtkXineSignal, 1);
 				signal->type = RATIO;
 				g_async_queue_push (gtx->priv->queue, signal);
-				g_idle_add ((GSourceFunc)gtk_xine_idle_signal,
+				g_idle_add ((GSourceFunc) gtk_xine_idle_signal,
 						gtx);
 			}
 		}
@@ -1270,8 +1271,7 @@ gtk_xine_set_fullscreen (GtkXine * gtx, gboolean fullscreen)
 			 GUI_DATA_EX_DRAWABLE_CHANGED,
 			 (void *) gtx->priv->video_window);
 
-		/* Destroy the window, the invisible is destroyed at the same
-		 * time */
+		/* Destroy the window */
 		XDestroyWindow (gtx->priv->display,
 				GDK_WINDOW_XID (gtx->priv->fullscreen_window));
 
@@ -1425,6 +1425,9 @@ gtk_xine_is_seekable (GtkXine *gtx)
 	g_return_val_if_fail (gtx != NULL, 0);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
 	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
+
+	if (gtk_xine_get_stream_length (gtx) == 0)
+		return FALSE;
 
 	return xine_is_stream_seekable (gtx->priv->xine);
 }

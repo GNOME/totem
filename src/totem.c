@@ -36,6 +36,8 @@ struct Totem {
 
 	/* Play/Pause */
 	GtkWidget *pp_button;
+	/* fullscreen Play/Pause */
+	GtkWidget *fs_pp_button;
 
 	/* Seek */
 	GtkWidget *seek;
@@ -47,8 +49,17 @@ struct Totem {
 	GtkAdjustment *voladj;
 	gboolean vol_lock;
 
-	/* fullscreen Popup */
-	GtkWidget *popup;
+	/* exit fullscreen Popup */
+	GtkWidget *exit_popup;
+
+	/* control fullscreen Popup */
+	GtkWidget *control_popup;
+	GtkWidget *fs_seek;
+	GtkAdjustment *fs_seekadj;
+	GtkWidget *fs_volume;
+	GtkAdjustment *fs_voladj;
+	gint control_popup_height;
+
 	guint popup_timeout;
 
 	/* recent file stuff */
@@ -172,7 +183,6 @@ play_pause_set_label (Totem *totem, gboolean playing)
 	GtkWidget *image;
 	char *image_path;
 
-	image = glade_xml_get_widget (totem->xml, "pp_image");
 
 	if (playing == TRUE)
 	{
@@ -184,6 +194,9 @@ play_pause_set_label (Totem *totem, gboolean playing)
 				GNOME_FILE_DOMAIN_APP_DATADIR,
 				"totem/stock_media_play.png", FALSE, NULL);
 	}
+	image = glade_xml_get_widget (totem->xml, "pp_image");
+	gtk_image_set_from_file (GTK_IMAGE (image), image_path);
+	image = glade_xml_get_widget (totem->xml, "fs_pp_image");
 	gtk_image_set_from_file (GTK_IMAGE (image), image_path);
 	g_free (image_path);
 }
@@ -194,7 +207,6 @@ volume_set_image (Totem *totem, int vol)
 	GtkWidget *image;
 	char *filename, *path;
 
-	image = glade_xml_get_widget (totem->xml, "volume_image");
 	vol = CLAMP (vol, 0, 100);
 	if (vol == 0)
 		filename = "totem/rhythmbox-volume-zero.png";
@@ -209,6 +221,9 @@ volume_set_image (Totem *totem, int vol)
 			GNOME_FILE_DOMAIN_APP_DATADIR,
 			filename,
 			FALSE, NULL);
+	image = glade_xml_get_widget (totem->xml, "volume_image");
+	gtk_image_set_from_file (GTK_IMAGE (image), path);
+    image = glade_xml_get_widget (totem->xml, "fs_volume_image");
 	gtk_image_set_from_file (GTK_IMAGE (image), path);
 	g_free (path);
 }
@@ -298,6 +313,9 @@ totem_action_fullscreen_toggle (Totem *totem)
 
 	new_state = !gtk_xine_is_fullscreen (GTK_XINE (totem->gtx));
 	gtk_xine_set_fullscreen (GTK_XINE (totem->gtx), new_state);
+	/* Hide the popup when switching fullscreen off */
+	if (new_state == FALSE)
+		popup_hide (totem);
 }
 
 void
@@ -348,6 +366,18 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		/* Volume */
 		widget = glade_xml_get_widget (totem->xml, "volume_hbox");
 		gtk_widget_set_sensitive (widget, FALSE);
+
+		/* Control popup */
+
+		gtk_widget_set_sensitive (totem->fs_seek, FALSE);
+		gtk_widget_set_sensitive (totem->fs_volume, FALSE);
+
+		gtk_widget_set_sensitive (totem->fs_pp_button, FALSE);
+		widget = glade_xml_get_widget (totem->xml,
+				"fs_previous_button"); 
+		gtk_widget_set_sensitive (widget, FALSE);
+		widget = glade_xml_get_widget (totem->xml, "fs_next_button"); 
+		gtk_widget_set_sensitive (widget, FALSE);
 	} else {
 		char *title, *time_text, *name;
 		int time;
@@ -371,6 +401,15 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		widget = glade_xml_get_widget (totem->xml, "skip_forward1");
 		gtk_widget_set_sensitive (widget, TRUE);
 		widget = glade_xml_get_widget (totem->xml, "skip_backwards1");
+		gtk_widget_set_sensitive (widget, TRUE);
+
+		/* Control popup */
+		gtk_widget_set_sensitive (totem->fs_seek, TRUE);
+		gtk_widget_set_sensitive (totem->fs_pp_button, TRUE);
+		widget = glade_xml_get_widget (totem->xml,
+				"fs_previous_button"); 
+		gtk_widget_set_sensitive (widget, TRUE);
+		widget = glade_xml_get_widget (totem->xml, "fs_next_button"); 
 		gtk_widget_set_sensitive (widget, TRUE);
 
 		/* Volume */
@@ -401,6 +440,9 @@ totem_action_previous (Totem *totem)
 {
 	char *mrl;
 
+	if (gtk_playlist_has_previous_mrl (totem->playlist) == FALSE)
+		return;
+
 	gtk_playlist_set_previous (totem->playlist);
 	update_buttons (totem);
 	mrl = gtk_playlist_get_current_mrl (totem->playlist);
@@ -413,6 +455,9 @@ void
 totem_action_next (Totem *totem)
 {
 	char *mrl;
+
+	if (gtk_playlist_has_next_mrl (totem->playlist) == FALSE)
+		                return;
 
 	gtk_playlist_set_next (totem->playlist);
 	update_buttons (totem);
@@ -631,6 +676,7 @@ update_sliders_cb (gpointer user_data)
 		totem->seek_lock = TRUE;
 		pos = (gfloat) gtk_xine_get_position (GTK_XINE (totem->gtx));
 		gtk_adjustment_set_value (totem->seekadj, pos);
+		gtk_adjustment_set_value (totem->fs_seekadj, pos);
 		totem->seek_lock = FALSE;
 	}
 
@@ -639,6 +685,7 @@ update_sliders_cb (gpointer user_data)
 		totem->vol_lock = TRUE;
 		pos = (gfloat) gtk_xine_get_volume (GTK_XINE (totem->gtx));
 		gtk_adjustment_set_value (totem->voladj, pos);
+		gtk_adjustment_set_value (totem->fs_voladj, pos);
 		volume_set_image (totem, (gint) pos);
 		totem->vol_lock = FALSE;
 	}
@@ -654,7 +701,21 @@ seek_cb (GtkWidget *widget, gpointer user_data)
 	if (totem->seek_lock == FALSE)
 	{
 		totem->seek_lock = TRUE;
-		totem_action_play (totem, (gint) totem->seekadj->value);
+		if (GTK_WIDGET(widget) == totem->fs_seek)
+		{
+			totem_action_play (totem, (gint) totem->seekadj->value);
+			/* Update the seek adjustment */
+			gtk_adjustment_set_value (totem->seekadj,
+					gtk_adjustment_get_value
+					(totem->fs_seekadj));
+		} else {
+			totem_action_play (totem,
+					(gint) totem->fs_seekadj->value);
+			/* Update the fullscreen seek adjustment */
+			gtk_adjustment_set_value (totem->fs_seekadj,
+					gtk_adjustment_get_value
+					(totem->seekadj));
+		}
 		totem->seek_lock = FALSE;
 	}
 }
@@ -667,9 +728,26 @@ vol_cb (GtkWidget *widget, gpointer user_data)
 	if (totem->vol_lock == FALSE)
 	{
 		totem->vol_lock = TRUE;
-		gtk_xine_set_volume (GTK_XINE (totem->gtx),
-				(gint) totem->voladj->value);
-		volume_set_image (totem, (gint) totem->voladj->value);
+        if (GTK_WIDGET(widget) == totem->fs_volume)
+        {
+            gtk_xine_set_volume (GTK_XINE (totem->gtx),
+                    (gint) totem->fs_voladj->value);
+
+            /* Update the volume adjustment */
+            gtk_adjustment_set_value(totem->voladj, 
+                    gtk_adjustment_get_value(totem->fs_voladj));
+        }
+        else
+        {
+            gtk_xine_set_volume (GTK_XINE (totem->gtx),
+                    (gint) totem->voladj->value);
+            /* Update the fullscreen volume adjustment */
+            gtk_adjustment_set_value(totem->fs_voladj, 
+                    gtk_adjustment_get_value(totem->voladj));
+
+        }
+
+        volume_set_image (totem, (gint) totem->voladj->value);
 		totem->vol_lock = FALSE;
 	}
 }
@@ -1043,7 +1121,9 @@ current_removed_cb (GtkWidget *playlist, gpointer user_data)
 static gboolean
 popup_hide (Totem *totem)
 {
-	gtk_widget_hide (totem->popup);
+	D("POPUP HIDE");
+	gtk_widget_hide (GTK_WIDGET (totem->exit_popup));
+	gtk_widget_hide (GTK_WIDGET (totem->control_popup));
 	totem->popup_timeout = 0;
 
 	gtk_xine_set_show_cursor (GTK_XINE (totem->gtx), FALSE);
@@ -1067,7 +1147,10 @@ on_mouse_motion_event (GtkWidget *widget, gpointer user_data)
 		totem->popup_timeout = 0;
 	}
 
-	gtk_widget_show (totem->popup);
+	gtk_widget_set_uposition (totem->control_popup, 0, 
+			gdk_screen_height () - totem->control_popup_height);
+	gtk_widget_show (totem->exit_popup);
+	gtk_widget_show (totem->control_popup);
 	gtk_xine_set_show_cursor (GTK_XINE (totem->gtx), TRUE);
 
 	totem->popup_timeout = gtk_timeout_add (2000,
@@ -1075,6 +1158,14 @@ on_mouse_motion_event (GtkWidget *widget, gpointer user_data)
 	in_progress = FALSE;
 
 	return TRUE;
+}
+
+static gboolean
+on_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
+		gpointer user_data)
+{
+	g_message ("******************************** on_motion_notify_event");
+	return on_mouse_motion_event (widget, user_data);
 }
 
 static gboolean
@@ -1242,12 +1333,16 @@ update_buttons (Totem *totem)
 	has_item = gtk_playlist_has_previous_mrl (totem->playlist);
 	item = glade_xml_get_widget (totem->xml, "previous_button");
 	gtk_widget_set_sensitive (item, has_item);
+    item = glade_xml_get_widget (totem->xml, "fs_previous_button");
+	gtk_widget_set_sensitive (item, has_item);
 	item = glade_xml_get_widget (totem->xml, "previous_stream1");
 	gtk_widget_set_sensitive (item, has_item);
 
 	/* Next */
 	has_item = gtk_playlist_has_next_mrl (totem->playlist);
 	item = glade_xml_get_widget (totem->xml, "next_button");
+	gtk_widget_set_sensitive (item, has_item);
+	item = glade_xml_get_widget (totem->xml, "fs_next_button");
 	gtk_widget_set_sensitive (item, has_item);
 	item = glade_xml_get_widget (totem->xml, "next_stream1");
 	gtk_widget_set_sensitive (item, has_item);
@@ -1327,10 +1422,45 @@ totem_callback_connect (Totem *totem)
 	g_object_add_weak_pointer (G_OBJECT (totem->win),
 			(void**)&(totem->win));
 
+	/* Motion notify for the Popups */
+	item = glade_xml_get_widget (totem->xml, "window1");
+	gtk_widget_add_events (item, GDK_POINTER_MOTION_MASK);
+	g_signal_connect (G_OBJECT (item), "motion-notify-event",
+			G_CALLBACK (on_motion_notify_event), totem);
+	item = glade_xml_get_widget (totem->xml, "window2");
+	gtk_widget_add_events (item, GDK_POINTER_MOTION_MASK);
+	g_signal_connect (G_OBJECT (item), "motion-notify-event",
+			G_CALLBACK (on_motion_notify_event), totem);
+
 	/* Popup */
 	item = glade_xml_get_widget (totem->xml, "fs_exit1");
 	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (on_fs_exit1_activate), totem);
+	g_signal_connect (G_OBJECT (item), "motion-notify-event",
+			G_CALLBACK (on_motion_notify_event), totem);
+
+	/* Control Popup */
+	g_signal_connect (G_OBJECT (totem->fs_pp_button), "clicked",
+			G_CALLBACK (on_play_pause_button_clicked), totem);
+	item = glade_xml_get_widget (totem->xml, "fs_previous_button");
+	g_signal_connect (G_OBJECT (item), "clicked",
+			G_CALLBACK (on_previous_button_clicked), totem);
+	item = glade_xml_get_widget (totem->xml, "fs_next_button");
+	g_signal_connect (G_OBJECT (item), "clicked", 
+			G_CALLBACK (on_next_button_clicked), totem);
+
+	/* Control Popup Sliders */
+	g_signal_connect (G_OBJECT(totem->fs_seek), "value-changed",
+			G_CALLBACK (seek_cb), totem);
+	g_signal_connect (G_OBJECT(totem->fs_volume), "value-changed",
+			G_CALLBACK (vol_cb), totem);
+	//FIXME this doesn't seem to have any effect
+	gtk_widget_add_events (totem->fs_seek, GDK_POINTER_MOTION_MASK);
+	gtk_widget_add_events (totem->fs_volume, GDK_POINTER_MOTION_MASK);
+	g_signal_connect (G_OBJECT (totem->fs_seek), "motion-notify-event",
+			G_CALLBACK (on_motion_notify_event), totem);
+	g_signal_connect (G_OBJECT (totem->fs_volume), "motion-notify-event",
+			G_CALLBACK (on_motion_notify_event), totem);
 
 	/* Connect the keys */
 	gtk_widget_add_events (totem->win, GDK_KEY_PRESS_MASK);
@@ -1470,6 +1600,7 @@ main (int argc, char **argv)
 {
 	Totem *totem;
 	char *filename;
+	int width = 0;
 	GConfClient *gc;
 	GError *err = NULL;
 
@@ -1504,6 +1635,7 @@ main (int argc, char **argv)
 			&& gconf_client_get_bool
 			(gc, "/apps/totem/launch_once", NULL) == TRUE)
 	{
+		//FIXME
 		g_message ("Send message to the existing GUI");
 		return 0;
 	}
@@ -1557,7 +1689,20 @@ main (int argc, char **argv)
 	totem->seekadj = gtk_range_get_adjustment (GTK_RANGE (totem->seek));
 	totem->volume = glade_xml_get_widget (totem->xml, "hscale2");
 	totem->voladj = gtk_range_get_adjustment (GTK_RANGE (totem->volume));
-	totem->popup = glade_xml_get_widget (totem->xml, "window1");
+	totem->exit_popup = glade_xml_get_widget (totem->xml, "window1");
+	totem->control_popup = glade_xml_get_widget (totem->xml, "window2");
+	totem->fs_seek = glade_xml_get_widget (totem->xml, "hscale4");
+	totem->fs_seekadj = gtk_range_get_adjustment
+		(GTK_RANGE (totem->fs_seek));
+	totem->fs_volume     = glade_xml_get_widget (totem->xml, "hscale5");
+	totem->fs_voladj = gtk_range_get_adjustment
+		(GTK_RANGE (totem->fs_volume));
+	totem->fs_pp_button = glade_xml_get_widget(totem->xml, "fs_pp_button");
+
+	/* Calculate the height of the control popup window */
+	gtk_window_get_size (GTK_WINDOW (totem->control_popup),
+			&width, &totem->control_popup_height);
+
 	totem_setup_recent (totem);
 	totem_callback_connect (totem);
 

@@ -7,7 +7,7 @@ GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
 gtkxine-marshal.h: gtkxine-marshal.list
 	( $(GLIB_GENMARSHAL) --prefix=gtkxine_marshal gtkxine-marshal.list \
 	  --header > gtkxine-marshal.tmp \
-  	&& mv gtkxine-marshal.tmp gtkxine-marshal.h ) \
+	  && mv gtkxine-marshal.tmp gtkxine-marshal.h ) \
 	|| ( rm -f gtkxine-marshal.tmp && exit 1 )
 gtkxine-marshal.c: gtkxine-marshal.h
 	( $(GLIB_GENMARSHAL) --prefix=gtkxine_marshal gtkxine-marshal.list \
@@ -63,4 +63,13 @@ INCLUDES = 						\
 	-DUSE_STABLE_LIBGNOMEUI
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(MARSHALFILES) $(desktop_DATA)
+
+LIBTOOL = $(SHELL) $(top_builddir)/libtool-nofpic
+
+libdir = ${exec_prefix}/lib/xine/plugins
+lib_LTLIBRARIES = xineplug_inp_gnomevfs.la
+
+xineplug_inp_gnomevfs_la_SOURCES = input_gnomevfs.c
+xineplug_inp_gnomevfs_la_LIBADD = -lxine
+xineplug_inp_gnomevfs_la_LDFLAGS = -avoid-version -module $(VFS_LIBS)
 

@@ -668,7 +668,7 @@ gtk_playlist_add_one_mrl (GtkPlaylist *playlist, const char *mrl,
 {
 	GtkListStore *store;
 	GtkTreeIter iter;
-	char *filename_utf8, *filename;
+	char *filename_for_display;
 
 	g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), FALSE);
 	g_return_val_if_fail (mrl != NULL, FALSE);
@@ -677,25 +677,30 @@ gtk_playlist_add_one_mrl (GtkPlaylist *playlist, const char *mrl,
 
 	if (display_name == NULL)
 	{
+		char *filename, *unescaped;
+
 		filename = g_path_get_basename (mrl);
-		filename_utf8 = g_filename_to_utf8 (filename,
+		unescaped = gnome_vfs_unescape_string_for_display (filename);
+		g_free (filename);
+		filename_for_display = g_filename_to_utf8 (unescaped,
 				-1,		/* length */
 				NULL,		/* bytes_read */
 				NULL,		/* bytes_written */
 				NULL);		/* error */
+		g_free (unescaped);
 	} else {
-		filename_utf8 = g_strdup (display_name);
+		filename_for_display = g_strdup (display_name);
 	}
 
 	store = GTK_LIST_STORE (playlist->_priv->model);
 	gtk_list_store_append (store, &iter);
 	gtk_list_store_set (store, &iter,
 			PIX_COL, NULL,
-			FILENAME_COL, filename_utf8,
+			FILENAME_COL, filename_for_display,
 			URI_COL, mrl,
 			-1);
 
-	g_free (filename_utf8);
+	g_free (filename_for_display);
 
 	if (playlist->_priv->current == NULL)
 		playlist->_priv->current = gtk_tree_model_get_path
@@ -1042,20 +1047,20 @@ gtk_playlist_set_at_start (GtkPlaylist *playlist)
 gchar *
 gtk_playlist_mrl_to_title (const gchar *mrl)
 {
-	char *string;
+	char *filename_for_display, *filename, *unescaped;
 
-	string = g_path_get_basename (mrl);
+	filename = g_path_get_basename (mrl);
+	unescaped = gnome_vfs_unescape_string_for_display (filename);
+	g_free (filename);
+	filename_for_display = g_filename_to_utf8 (unescaped,
+			-1,             /* length */
+			NULL,           /* bytes_read */
+			NULL,           /* bytes_written */
+			NULL);          /* error */
 
-	if (g_utf8_validate (string, -1, NULL) == FALSE)
-	{
-		char *utf8;
+	g_free (unescaped);
 
-		utf8 = g_locale_to_utf8 (string, -1, NULL, NULL, NULL);
-		g_free (string);
-		string = utf8;
-	}
-
-	return string;
+	return filename_for_display;
 }
 
 static void

@@ -10,11 +10,30 @@ AC_DEFINE(GETTEXT_PACKAGE, "AC_PACKAGE_NAME", [foo])
 GETTEXT_PACKAGE=AC_PACKAGE_NAME
 AC_SUBST(GETTEXT_PACKAGE)
 
+dnl libtool foo for the gnome-vfs plugin
+AM_PROG_LIBTOOL
+
+AC_ARG_ENABLE(fpic,
+[  --disable-fpic          Disable -fPIC on shared libs (default on x86)],
+no_fpic=yes, no_fpic=no)
+
+if test x$no_fpic = "xyes"; then
+  cat libtool | sed -e 's/^pic_flag=/#pic_flag=/' > libtool-nofpic
+else
+  cat libtool > libtool-nofpic
+fi
+
+chmod +x libtool-nofpic
+
 AC_PROG_INTLTOOL([0.20])
 
 PKG_CHECK_MODULES(EXTRA_GNOME, libgnomeui-2.0 libglade-2.0 gnome-vfs-2.0)
 AC_SUBST(EXTRA_GNOME_CFLAGS)
 AC_SUBST(EXTRA_GNOME_LIBS)
+
+PKG_CHECK_MODULES(VFS, gnome-vfs-2.0)
+AC_SUBST(VFS_CFLAGS)
+AC_SUBST(VFS_LIBS)
 
 AM_PATH_XINE(0.9.13,, AC_MSG_ERROR(*** You should install xine-lib >= 0.9.13 first ***))
 
