@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2003-05-28 20:20+0200\n"
-"PO-Revision-Date: 2003-05-28 20:21+0200\n"
+"POT-Creation-Date: 2003-05-29 10:29+0200\n"
+"PO-Revision-Date: 2003-05-29 10:30+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -32,22 +32,25 @@ msgid "_Save..."
 msgstr "_Spara..."
 
 #: data/properties.glade.h:1 src/bacon-video-widget-properties.c:183
+#: src/totem-properties-page.c:177
 msgid "0 frames per second"
 msgstr "0 ramar per sekund"
 
 #. Bitrate
 #: data/properties.glade.h:2 src/bacon-video-widget-properties.c:185
+#: src/totem-properties-page.c:179
 msgid "0 kbps"
 msgstr "0 kb/s"
 
 #. 0 seconds
 #: data/properties.glade.h:3 data/totem.glade.h:2
-#: src/bacon-video-widget-properties.c:139
+#: src/bacon-video-widget-properties.c:139 src/totem-properties-page.c:133
 msgid "0 seconds"
 msgstr "0 sekunder"
 
 #. Dimensions
 #: data/properties.glade.h:4 src/bacon-video-widget-properties.c:178
+#: src/totem-properties-page.c:172
 msgid "0 x 0"
 msgstr "0 × 0"
 
@@ -91,7 +94,9 @@ msgstr "Ramhastighet:"
 #: data/properties.glade.h:14 src/bacon-video-widget-properties.c:180
 #: src/bacon-video-widget-properties.c:187
 #: src/bacon-video-widget-properties.c:256
-#: src/bacon-video-widget-properties.c:288
+#: src/bacon-video-widget-properties.c:288 src/totem-properties-page.c:174
+#: src/totem-properties-page.c:181 src/totem-properties-page.c:250
+#: src/totem-properties-page.c:282
 msgid "N/A"
 msgstr "-"
 
@@ -109,7 +114,10 @@ msgstr "Titel:"
 #: src/bacon-video-widget-properties.c:174
 #: src/bacon-video-widget-properties.c:205
 #: src/bacon-video-widget-properties.c:212
-#: src/bacon-video-widget-properties.c:219
+#: src/bacon-video-widget-properties.c:219 src/totem-properties-page.c:164
+#: src/totem-properties-page.c:166 src/totem-properties-page.c:168
+#: src/totem-properties-page.c:199 src/totem-properties-page.c:206
+#: src/totem-properties-page.c:213
 msgid "Unknown"
 msgstr "Okänd"
 
@@ -681,70 +689,70 @@ msgid "Totem Video Window"
 msgstr "Totem-videofönster"
 
 #. One hour
-#: src/bacon-video-widget-properties.c:108
+#: src/bacon-video-widget-properties.c:108 src/totem-properties-page.c:102
 #, c-format
 msgid "%d hour"
 msgstr "%d timme"
 
 #. Multiple hours
-#: src/bacon-video-widget-properties.c:111
+#: src/bacon-video-widget-properties.c:111 src/totem-properties-page.c:105
 #, c-format
 msgid "%d hours"
 msgstr "%d timmar"
 
 #. One minute
-#: src/bacon-video-widget-properties.c:115
+#: src/bacon-video-widget-properties.c:115 src/totem-properties-page.c:109
 #, c-format
 msgid "%d minute"
 msgstr "%d minut"
 
 #. Multiple minutes
-#: src/bacon-video-widget-properties.c:118
+#: src/bacon-video-widget-properties.c:118 src/totem-properties-page.c:112
 #, c-format
 msgid "%d minutes"
 msgstr "%d minuter"
 
 #. One second
-#: src/bacon-video-widget-properties.c:122
+#: src/bacon-video-widget-properties.c:122 src/totem-properties-page.c:116
 #, c-format
 msgid "%d second"
 msgstr "%d sekund"
 
 #. Multiple seconds
-#: src/bacon-video-widget-properties.c:125
+#: src/bacon-video-widget-properties.c:125 src/totem-properties-page.c:119
 #, c-format
 msgid "%d seconds"
 msgstr "%d sekunder"
 
 #. hour:minutes:seconds
-#: src/bacon-video-widget-properties.c:130
+#: src/bacon-video-widget-properties.c:130 src/totem-properties-page.c:124
 #, c-format
 msgid "%s %s %s"
 msgstr "%s, %s, %s"
 
 #. minutes:seconds
-#: src/bacon-video-widget-properties.c:133
+#: src/bacon-video-widget-properties.c:133 src/totem-properties-page.c:127
 #, c-format
 msgid "%s %s"
 msgstr "%s, %s"
 
 #. seconds
-#: src/bacon-video-widget-properties.c:136
+#: src/bacon-video-widget-properties.c:136 src/totem-properties-page.c:130
 #, c-format
 msgid "%s"
 msgstr "%s"
 
 #. Duration
-#: src/bacon-video-widget-properties.c:176
+#: src/bacon-video-widget-properties.c:176 src/totem-properties-page.c:170
 msgid "0 second"
 msgstr "0 sekunder"
 
-#: src/bacon-video-widget-properties.c:261
+#: src/bacon-video-widget-properties.c:261 src/totem-properties-page.c:255
 #, c-format
 msgid "%d frames per second"
 msgstr "%d ramar per sekund"
 
-#: src/bacon-video-widget-properties.c:279
+#: src/bacon-video-widget-properties.c:279 src/totem-properties-page.c:273
 #, c-format
 msgid "%d kbps"
 msgstr "%d kb/s"
@@ -789,9 +797,9 @@ msgstr "Filmen \"%s\" kunde inte läsas."
 
 #: src/bacon-video-widget-xine.c:1068
 #, c-format
-msgid "A problem occur while loading a library or a decoder (%s)."
+msgid "A problem occured while loading a library or a decoder (%s)."
 msgstr ""
-"Ett fel inträffa vid inläsning av ett bibliotek eller en avkodare (%s)."
+"Ett problem inträffade vid inläsning av ett bibliotek eller en avkodare (%s)."
 
 #: src/bacon-video-widget-xine.c:1071
 msgid ""
@@ -919,6 +927,64 @@ msgstr ""
 msgid "Filename"
 msgstr "Filnamn"
 
+#: src/totem-preferences.c:79
+msgid ""
+"It seems you are running Totem remotely.\n"
+"Are you sure you want to enable the visual effects?"
+msgstr ""
+"Det verkar som om du kör Totem från en annan dator.\n"
+"Är du säker på att du vill aktivera de visuella effekterna?"
+
+#: src/totem-preferences.c:135
+msgid ""
+"The change of this setting will only take effect for the next movie, or when "
+"Totem is restarted"
+msgstr ""
+"Ändringen av denna inställning kommer att börja gälla först under nästa "
+"film, eller när Totem startas om"
+
+#: src/totem-preferences.c:158
+msgid ""
+"Switching on or off this type of TV-Out requires a restart to take effect."
+msgstr ""
+"Att slå på eller stänga av denna typ av TV-ut kräver en omstart för att "
+"börja gälla."
+
+#: src/totem-preferences.c:318
+msgid "Changing the visuals effect type will require a restart to take effect."
+msgstr ""
+"Att ändra typen av visuella effekter kommer att kräva en omstart för att "
+"börja gälla."
+
+#: src/totem-properties-page.c:344
+msgid "URI currently displayed"
+msgstr "URI som visas för tillfället"
+
+#: src/totem-properties-page.c:410
+msgid "Video and Audio information properties page"
+msgstr "Egenskapssida för video- och ljudinformation"
+
+#: src/totem-statusbar.c:138
+msgid "Shadow type"
+msgstr "Skuggtyp"
+
+#: src/totem-statusbar.c:139
+msgid "Style of bevel around the statusbar text"
+msgstr "Stil på kanten runt statusradstexten"
+
+#: src/totem-statusbar.c:171 src/totem.c:294
+msgid "Stopped"
+msgstr "Stoppad"
+
+#: src/totem-statusbar.c:180
+msgid "0:00 / 0:00"
+msgstr "0:00 / 0:00"
+
+#: src/totem-statusbar.c:205
+#, c-format
+msgid "%s (Streaming)"
+msgstr "%s (Direktuppspelning)"
+
 #: src/totem.c:82
 msgid "Seek Forwards"
 msgstr "Spola framlänges"
@@ -950,10 +1016,6 @@ msgstr "Spelar"
 #: src/totem.c:287
 msgid "Paused"
 msgstr "Gör paus"
-
-#: src/totem.c:294 src/totem-statusbar.c:171
-msgid "Stopped"
-msgstr "Stoppad"
 
 #: src/totem.c:352 src/totem.c:773 src/totem.c:877
 #, c-format
@@ -1138,52 +1200,6 @@ msgstr ""
 "Kunde inte läsa in gränssnittet för spellistan.\n"
 "Försäkra dig om att Totem är korrekt installerat."
 
-#: src/totem-preferences.c:79
-msgid ""
-"It seems you are running Totem remotely.\n"
-"Are you sure you want to enable the visual effects?"
-msgstr ""
-"Det verkar som om du kör Totem från en annan dator.\n"
-"Är du säker på att du vill aktivera de visuella effekterna?"
-
-#: src/totem-preferences.c:135
-msgid ""
-"The change of this setting will only take effect for the next movie, or when "
-"Totem is restarted"
-msgstr ""
-"Ändringen av denna inställning kommer att börja gälla först under nästa "
-"film, eller när Totem startas om"
-
-#: src/totem-preferences.c:158
-msgid ""
-"Switching on or off this type of TV-Out requires a restart to take effect."
-msgstr ""
-"Att slå på eller stänga av denna typ av TV-ut kräver en omstart för att "
-"börja gälla."
-
-#: src/totem-preferences.c:318
-msgid "Changing the visuals effect type will require a restart to take effect."
-msgstr ""
-"Att ändra typen av visuella effekter kommer att kräva en omstart för att "
-"börja gälla."
-
-#: src/totem-statusbar.c:138
-msgid "Shadow type"
-msgstr "Skuggtyp"
-
-#: src/totem-statusbar.c:139
-msgid "Style of bevel around the statusbar text"
-msgstr "Stil på kanten runt statusradstexten"
-
-#: src/totem-statusbar.c:180
-msgid "0:00 / 0:00"
-msgstr "0:00 / 0:00"
-
-#: src/totem-statusbar.c:205
-#, c-format
-msgid "%s (Streaming)"
-msgstr "%s (Direktuppspelning)"
-
 #: src/vanity.c:55
 msgid "Debug mode on"
 msgstr "Felsökningsläge på"
@@ -1251,9 +1267,15 @@ msgstr ""
 "Kunde inte läsa in huvudgränssnittet (vanity.glade).\n"
 "Försäkra dig om att Vanity är korrekt installerat."
 
-#~ msgid "A problem occurred while loading a library or a decoder (%s)."
+#~ msgid "Video and Audio properties page"
+#~ msgstr "Egenskapssida för video och ljud"
+
+#~ msgid "Video and Audio information page"
+#~ msgstr "Informationssida för video och ljud"
+
+#~ msgid "A problem occur while loading a library or a decoder (%s)."
 #~ msgstr ""
-#~ "Ett fel inträffade vid inläsning av ett bibliotek eller en avkodare (%s)."
+#~ "Ett fel inträffa vid inläsning av ett bibliotek eller en avkodare (%s)."
 
 #~ msgid "Wether to enable debug for the playback engine"
 #~ msgstr "Huruvida felsökning för uppspelningsmotorn ska aktiveras"
