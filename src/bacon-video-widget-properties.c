@@ -103,26 +103,13 @@ bacon_video_widget_properties_time_to_string (int time)
 	time = time - (min * 60);
 	hour = time / (60*60);
 
-	if (hour == 1)
-		/* One hour */
-		hours = g_strdup_printf (_("%d hour"), hour);
-	else
-		/* Multiple hours */
-		hours = g_strdup_printf (_("%d hours"), hour);
+	hours = g_strdup_printf (ngettext ("%d hour", "%d hours", hour), hour);
 
-	if (min == 1)
-		/* One minute */
-		mins = g_strdup_printf (_("%d minute"), min);
-	else
-		/* Multiple minutes */
-		mins = g_strdup_printf (_("%d minutes"), min);
+	mins = g_strdup_printf (ngettext ("%d minute",
+					  "%d minutes", min), min);
 
-	if (sec == 1)
-		/* One second */
-		secs = g_strdup_printf (_("%d second"), sec);
-	else
-		/* Multiple seconds */
-		secs = g_strdup_printf (_("%d seconds"), sec);
+	secs = g_strdup_printf (ngettext ("%d second",
+					  "%d seconds", sec), sec);
 
 	if (hour > 0)
 	{
