@@ -68,7 +68,6 @@ launch (const char **cmd)
 static void
 gromit_exit (void)
 {
-	g_message ("Killing possible gromit");
 	/* Nothing to do */
 	if (pid == -1) {
 		if (id != -1) {
@@ -85,7 +84,6 @@ gromit_exit (void)
 static gboolean
 gromit_timeout_cb (gpointer data)
 {
-	g_message ("Timeout, killing gromit");
 	id = -1;
 	gromit_exit ();
 	return FALSE;
@@ -102,7 +100,6 @@ totem_gromit_toggle (void)
 	/* Not started */
 	if (pid == -1) {
 		int i = 5;
-		g_message ("Launching gromit");
 		if (g_spawn_async (NULL,
 				(char **)start_cmd, NULL, 0, NULL, NULL,
 				&pid, NULL) == FALSE) {
@@ -119,13 +116,11 @@ totem_gromit_toggle (void)
 		}
 		launch (toggle_cmd);
 	} else if (id == -1) { /* Started but disabled */
-		g_message ("Don't kill gromit, and show it");
 		g_source_remove (id);
 		id = -1;
 		launch (toggle_cmd);
 	} else {
 		/* Started and visible */
-		g_message ("Disable drawing of gromit");
 		g_source_remove (id);
 		id = -1;
 		launch (toggle_cmd);
@@ -147,7 +142,6 @@ totem_gromit_clear (gboolean now)
 		return;
 	}
 
-	g_message ("Clearing and hiding gromit");
 	launch (visibility_cmd);
 	launch (clear_cmd);
 	id = g_timeout_add (INTERVAL, gromit_timeout_cb, NULL);

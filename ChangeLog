@@ -1,5 +1,11 @@
 2004-11-19  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-gromit.c: (gromit_exit), (gromit_timeout_cb),
+	(totem_gromit_toggle), (totem_gromit_clear): remove debug from
+	the gromit interface, it seems to be working fine
+
+2004-11-19  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (process_options): make --toggle-controls work on
 	startup (Closes: #153059)
 
