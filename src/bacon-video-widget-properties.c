@@ -43,31 +43,7 @@ static void bacon_video_widget_properties_class_init
 static void bacon_video_widget_properties_init
 	(BaconVideoWidgetProperties *props);
 
-GtkType
-bacon_video_widget_properties_get_type (void)
-{
-	static GtkType bacon_video_widget_properties_type = 0;
-
-	if (!bacon_video_widget_properties_type) {
-		static const GTypeInfo bacon_video_widget_properties_info = {
-			sizeof (BaconVideoWidgetPropertiesClass),
-			(GBaseInitFunc) NULL,
-			(GBaseFinalizeFunc) NULL,
-			(GClassInitFunc) bacon_video_widget_properties_class_init,
-			(GClassFinalizeFunc) NULL,
-			NULL /* class_data */,
-			sizeof (BaconVideoWidgetProperties),
-			0 /* n_preallocs */,
-			(GInstanceInitFunc) bacon_video_widget_properties_init,
-		};
-
-		bacon_video_widget_properties_type = g_type_register_static
-			(GTK_TYPE_VBOX, "BaconVideoWidgetProperties",
-			 &bacon_video_widget_properties_info, (GTypeFlags)0);
-	}
-
-	return bacon_video_widget_properties_type;
-}
+G_DEFINE_TYPE(BaconVideoWidgetProperties, bacon_video_widget_properties, GTK_TYPE_VBOX)
 
 static void
 bacon_video_widget_properties_init (BaconVideoWidgetProperties *props)

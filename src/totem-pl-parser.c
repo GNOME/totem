@@ -73,31 +73,7 @@ static void totem_pl_parser_class_init (TotemPlParserClass *class);
 static void totem_pl_parser_init       (TotemPlParser      *parser);
 static void totem_pl_parser_finalize   (GObject *object);
 
-GtkType
-totem_pl_parser_get_type (void)
-{
-	static GtkType totem_pl_parser_type = 0;
-
-	if (!totem_pl_parser_type) {
-		static const GTypeInfo totem_pl_parser_info = {
-			sizeof (TotemPlParserClass),
-			(GBaseInitFunc) NULL,
-			(GBaseFinalizeFunc) NULL,
-			(GClassInitFunc) totem_pl_parser_class_init,
-			(GClassFinalizeFunc) NULL,
-			NULL /* class_data */,
-			sizeof (TotemPlParser),
-			0 /* n_preallocs */,
-			(GInstanceInitFunc) totem_pl_parser_init,
-		};
-
-		totem_pl_parser_type = g_type_register_static (G_TYPE_OBJECT,
-							   "TotemPlParser", &totem_pl_parser_info,
-							   (GTypeFlags)0);
-	}
-
-	return totem_pl_parser_type;
-}
+G_DEFINE_TYPE(TotemPlParser, totem_pl_parser, G_TYPE_OBJECT)
 
 static void
 totem_pl_parser_class_init (TotemPlParserClass *klass)

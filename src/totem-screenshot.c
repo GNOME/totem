@@ -46,31 +46,7 @@ static GtkWidgetClass *parent_class = NULL;
 static void totem_screenshot_class_init (TotemScreenshotClass *class);
 static void totem_screenshot_init       (TotemScreenshot      *screenshot);
 
-GtkType
-totem_screenshot_get_type (void)
-{
-	static GtkType totem_screenshot_type = 0;
-
-	if (!totem_screenshot_type) {
-		static const GTypeInfo totem_screenshot_info = {
-			sizeof (TotemScreenshotClass),
-			(GBaseInitFunc) NULL,
-			(GBaseFinalizeFunc) NULL,
-			(GClassInitFunc) totem_screenshot_class_init,
-			(GClassFinalizeFunc) NULL,
-			NULL /* class_data */,
-			sizeof (TotemScreenshot),
-			0 /* n_preallocs */,
-			(GInstanceInitFunc) totem_screenshot_init,
-		};
-
-		totem_screenshot_type = g_type_register_static (GTK_TYPE_DIALOG,
-				"TotemScreenshot", &totem_screenshot_info,
-				(GTypeFlags)0);
-	}
-
-	return totem_screenshot_type;
-}
+G_DEFINE_TYPE(TotemScreenshot, totem_screenshot, GTK_TYPE_DIALOG)
 
 static void
 totem_screenshot_action_error (char *title, char *reason,

@@ -115,31 +115,7 @@ static void totem_playlist_init       (TotemPlaylist      *playlist);
 static void init_treeview (GtkWidget *treeview, TotemPlaylist *playlist);
 static gboolean totem_playlist_unset_playing (TotemPlaylist *playlist);
 
-GtkType
-totem_playlist_get_type (void)
-{
-	static GtkType totem_playlist_type = 0;
-
-	if (!totem_playlist_type) {
-		static const GTypeInfo totem_playlist_info = {
-			sizeof (TotemPlaylistClass),
-			(GBaseInitFunc) NULL,
-			(GBaseFinalizeFunc) NULL,
-			(GClassInitFunc) totem_playlist_class_init,
-			(GClassFinalizeFunc) NULL,
-			NULL /* class_data */,
-			sizeof (TotemPlaylist),
-			0 /* n_preallocs */,
-			(GInstanceInitFunc) totem_playlist_init,
-		};
-
-		totem_playlist_type = g_type_register_static (GTK_TYPE_DIALOG,
-				"TotemPlaylist", &totem_playlist_info,
-				(GTypeFlags)0);
-	}
-
-	return totem_playlist_type;
-}
+G_DEFINE_TYPE(TotemPlaylist, totem_playlist, GTK_TYPE_DIALOG)
 
 /* Helper functions */
 static gboolean

@@ -53,7 +53,7 @@ struct BaconV4lSelectionPrivate {
 
 
 static void bacon_v4l_selection_class_init (BaconV4lSelectionClass *klass);
-static void bacon_v4l_selection_instance_init (BaconV4lSelection *bvs);
+static void bacon_v4l_selection_init (BaconV4lSelection *bvs);
 
 static void bacon_v4l_selection_set_property (GObject *object, guint property_id,
 		const GValue *value, GParamSpec *pspec);
@@ -80,34 +80,7 @@ get_drive (BaconV4lSelection *bvs, int nr)
 		return item->data;
 }
 
-
-GtkType
-bacon_v4l_selection_get_type (void)
-{
-	static GtkType bacon_v4l_selection_type = 0;
-
-	if (!bacon_v4l_selection_type) {
-		static const GTypeInfo bacon_v4l_selection_info = {
-			sizeof (BaconV4lSelectionClass),
-			(GBaseInitFunc) NULL,
-			(GBaseFinalizeFunc) NULL,
-			(GClassInitFunc) bacon_v4l_selection_class_init,
-			(GClassFinalizeFunc) NULL,
-			NULL /* class_data */,
-			sizeof (BaconV4lSelection),
-			0 /* n_preallocs */,
-			(GInstanceInitFunc) bacon_v4l_selection_instance_init,
-			NULL
-		};
-
-		bacon_v4l_selection_type = g_type_register_static
-			(GTK_TYPE_VBOX,
-			 "BaconV4lSelection", &bacon_v4l_selection_info,
-			 (GTypeFlags)0);
-	}
-
-	return bacon_v4l_selection_type;
-}
+G_DEFINE_TYPE(BaconV4lSelection, bacon_v4l_selection, GTK_TYPE_VBOX)
 
 static void
 bacon_v4l_selection_class_init (BaconV4lSelectionClass *klass)
@@ -147,7 +120,7 @@ bacon_v4l_selection_class_init (BaconV4lSelectionClass *klass)
 }
 
 static void
-bacon_v4l_selection_instance_init (BaconV4lSelection *bvs)
+bacon_v4l_selection_init (BaconV4lSelection *bvs)
 {
 	bvs->priv = g_new0 (BaconV4lSelectionPrivate, 1);
 
