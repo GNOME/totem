@@ -113,7 +113,8 @@ static void totem_playlist_class_init (TotemPlaylistClass *class);
 static void totem_playlist_init       (TotemPlaylist      *playlist);
 
 static void init_treeview (GtkWidget *treeview, TotemPlaylist *playlist);
-static gboolean totem_playlist_unset_playing (TotemPlaylist *playlist);
+
+#define totem_playlist_unset_playing(x) totem_playlist_set_playing(x, FALSE)
 
 G_DEFINE_TYPE(TotemPlaylist, totem_playlist, GTK_TYPE_DIALOG)
 
@@ -534,9 +535,9 @@ selection_changed (GtkTreeSelection *treeselection, TotemPlaylist *playlist)
 	gtk_widget_set_sensitive (down_button, sensitivity);
 }
 
-/* This function checks if the current item is NULL, and try to update it as the
- * first item of the playlist if so. It returns TRUE if there is a current
- * item */
+/* This function checks if the current item is NULL, and try to update it
+ * as the first item of the playlist if so. It returns TRUE if there is a
+ * current item */
 static gboolean
 update_current_from_playlist (TotemPlaylist *playlist)
 {
@@ -1121,7 +1122,7 @@ typedef struct {
 	int random;
 	int index;
 } RandomData;
-                                                                                
+
 static int
 compare_random (gconstpointer ptr_a, gconstpointer ptr_b)
 {
@@ -1691,8 +1692,7 @@ totem_playlist_set_playing (TotemPlaylist *playlist, gboolean state)
 			&iter,
 			playlist->_priv->current);
 
-	if (&iter == NULL)
-		return FALSE;
+	g_return_val_if_fail (&iter != NULL, FALSE);
 
 	if (state != FALSE)
 		gtk_list_store_set (store, &iter,
@@ -1702,29 +1702,6 @@ totem_playlist_set_playing (TotemPlaylist *playlist, gboolean state)
 		gtk_list_store_set (store, &iter,
 				PIX_COL, NULL,
 				-1);
-	return TRUE;
-}
-
-static gboolean
-totem_playlist_unset_playing (TotemPlaylist *playlist)
-{
-	GtkListStore *store;
-	GtkTreeIter iter;
-
-	if (update_current_from_playlist (playlist) == FALSE)
-		return FALSE;
-
-	store = GTK_LIST_STORE (playlist->_priv->model);
-	gtk_tree_model_get_iter (playlist->_priv->model,
-			&iter,
-			playlist->_priv->current);
-
-	if (&iter == NULL)
-		return FALSE;
-
-	gtk_list_store_set (store, &iter,
-			PIX_COL, NULL,
-			-1);
 	return TRUE;
 }
 
