@@ -1562,39 +1562,40 @@ on_open1_activate (GtkButton *button, Totem *totem)
 
 	while (1)
 	{
+		char **filenames, *mrl;
+		gboolean playlist_modified;
+
 		response = gtk_dialog_run (GTK_DIALOG (fs));
-		if (response == GTK_RESPONSE_OK)
-		{
-			char **filenames, *mrl;
-			gboolean playlist_modified;
-
-			filenames = gtk_file_selection_get_selections
-					(GTK_FILE_SELECTION (fs));
-			playlist_modified = totem_action_open_files (totem, filenames, FALSE);
-			if (playlist_modified == FALSE)
-			{
-				g_strfreev (filenames);
-				continue;
-			}
-			/* Hide the selection widget only if
-			 * playlist is modified */
-			gtk_widget_hide (fs);
-
-			if (filenames[0] != NULL)
-			{
-				char *tmp;
-
-				tmp = g_path_get_dirname (filenames[0]);
-				path = g_strconcat (tmp, G_DIR_SEPARATOR_S, NULL);
-				g_free (tmp);
-			}
-			g_strfreev (filenames);
-
-			mrl = totem_playlist_get_current_mrl (totem->playlist);
-			totem_action_set_mrl_and_play (totem, mrl);
-			g_free (mrl);
+		if (response != GTK_RESPONSE_OK)
 			break;
+
+		filenames = gtk_file_selection_get_selections
+			(GTK_FILE_SELECTION (fs));
+		playlist_modified = totem_action_open_files (totem,
+				filenames, FALSE);
+		if (playlist_modified == FALSE)
+		{
+			g_strfreev (filenames);
+			continue;
 		}
+
+		/* Hide the selection widget only if playlist is modified */
+		gtk_widget_hide (fs);
+
+		if (filenames[0] != NULL)
+		{
+			char *tmp;
+
+			tmp = g_path_get_dirname (filenames[0]);
+			path = g_strconcat (tmp, G_DIR_SEPARATOR_S, NULL);
+			g_free (tmp);
+		}
+		g_strfreev (filenames);
+
+		mrl = totem_playlist_get_current_mrl (totem->playlist);
+		totem_action_set_mrl_and_play (totem, mrl);
+		g_free (mrl);
+		break;
 	}
 
 	gtk_widget_destroy (fs);
