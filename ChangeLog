@@ -1,5 +1,11 @@
 2005-03-07  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-pl-parser.c: (totem_pl_parser_check_utf8),
+	(totem_pl_parser_add_one_url), (totem_pl_parser_add_one_url_ext):
+	Don't pass on the titles if they're not in UTF-8 (Closes: #168968)
+
+2005-03-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (update_seekable): set the seekable member properly,
 	makes the "Skip to..." dialog work again (Closes: #169255)
 

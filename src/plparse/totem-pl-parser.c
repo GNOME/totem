@@ -657,19 +657,30 @@ totem_pl_parser_finalize (GObject *object)
 	}
 }
 
+static gboolean
+totem_pl_parser_check_utf8 (const char *title)
+{
+	printf ("Title %s\n", title);
+	return g_utf8_validate (title, -1, NULL);
+}
+
 static void
 totem_pl_parser_add_one_url (TotemPlParser *parser, const char *url, const char *title)
 {
 	g_signal_emit (G_OBJECT (parser), totem_pl_parser_table_signals[ENTRY],
-		       0, url, title, NULL);
+		       0, url,
+		       totem_pl_parser_check_utf8 (title) ? title : NULL,
+		       NULL);
 }
 
 static void
-totem_pl_parser_add_one_url_ext (TotemPlParser *parser, const char *url, const char *title,
-			     const char *genre)
+totem_pl_parser_add_one_url_ext (TotemPlParser *parser, const char *url,
+		const char *title, const char *genre)
 {
 	g_signal_emit (G_OBJECT (parser), totem_pl_parser_table_signals[ENTRY],
-		       0, url, title, genre);
+		       0, url,
+		       totem_pl_parser_check_utf8 (title) ? title : NULL,
+		       genre);
 }
 
 static TotemPlParserResult
