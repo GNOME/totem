@@ -39,6 +39,9 @@
 
 #define READ_CHUNK_SIZE 8192
 #define MIME_READ_CHUNK_SIZE 1024
+#define PL_LEN (gtk_tree_model_iter_n_children (playlist->_priv->model, NULL))
+
+static void ensure_shuffled (TotemPlaylist *playlist, gboolean shuffle);
 
 typedef gboolean (*PlaylistCallback) (TotemPlaylist *playlist, const char *mrl,
 		gpointer data);
@@ -53,7 +56,7 @@ struct TotemPlaylistPrivate
 	GladeXML *xml;
 
 	GtkWidget *treeview;
-	GtkTreeModel *model, *shuffled;
+	GtkTreeModel *model;
 	GtkTreePath *current;
 
 	/* This is the playing icon */
@@ -66,14 +69,17 @@ struct TotemPlaylistPrivate
 	char *path;
 	char *save_path;
 
-	/* Repeat and Suffle modes */
+	/* Repeat mode */
 	gboolean repeat;
+
+	/* Shuffle mode */
 	gboolean shuffle;
+	int *shuffled;
+	int current_shuffled, shuffle_len;
 
 	GConfClient *gc;
 
 	int x, y;
-	guint nb_childs;
 };
 
 /* Signals */
@@ -293,7 +299,7 @@ totem_playlist_save_current_playlist (TotemPlaylist *playlist, const char *outpu
 	char *buf;
 	gboolean success;
 
-	num_entries = playlist->_priv->nb_childs;
+	num_entries = PL_LEN;
 
 	res = gnome_vfs_open (&handle, output, GNOME_VFS_OPEN_WRITE);
 	if (res == GNOME_VFS_ERROR_NOT_FOUND)
@@ -616,17 +622,24 @@ selection_changed (GtkTreeSelection *treeselection, TotemPlaylist *playlist)
 static gboolean
 update_current_from_playlist (TotemPlaylist *playlist)
 {
-	if (playlist->_priv->current == NULL)
+	int indice;
+
+	if (playlist->_priv->current != NULL)
+		return TRUE;
+
+	if (PL_LEN != 0)
 	{
-		if (gtk_tree_model_iter_n_children (playlist->_priv->model,
-					NULL) != 0)
-		{
-			playlist->_priv->current =
-				gtk_tree_path_new_from_string ("0");
-		} else {
-			return FALSE;
-		}
+		if (playlist->_priv->shuffle == FALSE)
+			indice = 0;
+		else
+			indice = playlist->_priv->shuffled[0];
+
+		playlist->_priv->current = gtk_tree_path_new_from_indices
+			(indice, -1);
+	} else {
+		return FALSE;
 	}
+
 	return TRUE;
 }
 
@@ -739,7 +752,6 @@ totem_playlist_remove_files (GtkWidget *widget, TotemPlaylist *playlist)
 		gtk_tree_path_free (path);
 		gtk_list_store_remove (GTK_LIST_STORE (playlist->_priv->model),
 				&iter);
-		playlist->_priv->nb_childs--;
 
 		gtk_tree_row_reference_free
 			((GtkTreeRowReference *)(playlist->_priv->list->data));
@@ -773,6 +785,9 @@ totem_playlist_remove_files (GtkWidget *widget, TotemPlaylist *playlist)
 			playlist->_priv->current = NULL;
 		}
 
+		playlist->_priv->current_shuffled = -1;
+		ensure_shuffled (playlist, playlist->_priv->shuffle);
+
 		g_signal_emit (G_OBJECT (playlist),
 				totem_playlist_table_signals[CURRENT_REMOVED],
 				0, NULL);
@@ -784,6 +799,9 @@ totem_playlist_remove_files (GtkWidget *widget, TotemPlaylist *playlist)
 				gtk_tree_row_reference_get_path (ref);
 			gtk_tree_row_reference_free (ref);
 		}
+
+		ensure_shuffled (playlist, playlist->_priv->shuffle);
+
 		g_signal_emit (G_OBJECT (playlist),
 				totem_playlist_table_signals[CHANGED], 0,
 				NULL);
@@ -1123,6 +1141,73 @@ update_repeat_cb (GConfClient *client, guint cnxn_id,
 			repeat, NULL);
 }
 
+typedef struct {
+	int random;
+	int index;
+} RandomData;
+                                                                                
+static int
+compare_random (gconstpointer ptr_a, gconstpointer ptr_b)
+{
+	RandomData *a = (RandomData *) ptr_a;
+	RandomData *b = (RandomData *) ptr_b;
+
+	if (a->random < b->random)
+		return -1;
+	else if (a->random > b->random)
+		return 1;
+	else
+		return 0;
+}
+
+static void
+ensure_shuffled (TotemPlaylist *playlist, gboolean shuffle)
+{
+	RandomData data;
+	GArray *array;
+	int i, len, current;
+	int *indices;
+
+	if (shuffle == FALSE || PL_LEN != playlist->_priv->shuffle_len)
+	{
+		g_free (playlist->_priv->shuffled);
+		playlist->_priv->shuffled = NULL;
+	}
+
+	if (shuffle == FALSE)
+		return;
+
+	indices = gtk_tree_path_get_indices (playlist->_priv->current);
+	current = indices[0];
+
+	playlist->_priv->shuffled = g_new (int, PL_LEN);
+	playlist->_priv->shuffle_len = PL_LEN;
+
+	array = g_array_sized_new (FALSE, FALSE,
+			sizeof (RandomData), PL_LEN);
+
+	for (i = 0; i < PL_LEN; i++)
+	{
+		data.random = g_random_int_range (0, PL_LEN);
+		data.index = i;
+
+		g_array_append_val (array, data);
+	}
+
+	g_array_sort (array, compare_random);
+
+	for (i = 0; i < PL_LEN; i++)
+	{
+		playlist->_priv->shuffled[i]
+			= g_array_index (array, RandomData, i).index;
+
+		if (playlist->_priv->shuffled[i] == current)
+			playlist->_priv->current_shuffled = i;
+	}
+
+	g_array_free (array, TRUE);
+}
+
 static void
 shuffle_button_toggled (GtkToggleButton *togglebutton, TotemPlaylist *playlist)
 {
@@ -1132,9 +1217,10 @@ shuffle_button_toggled (GtkToggleButton *togglebutton, TotemPlaylist *playlist)
 	gconf_client_set_bool (playlist->_priv->gc, GCONF_PREFIX"/shuffle",
 			shuffle, NULL);
 	playlist->_priv->shuffle = shuffle;
+	ensure_shuffled (playlist, shuffle);
 
 	g_signal_emit (G_OBJECT (playlist),
-			totem_playlist_table_signals[REPEAT_TOGGLED], 0,
+			totem_playlist_table_signals[SHUFFLE_TOGGLED], 0,
 			shuffle, NULL);
 }
 
@@ -1408,13 +1494,14 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 			URI_COL, mrl,
 			TITLE_CUSTOM_COL, display_name ? TRUE : FALSE,
 			-1);
-	playlist->_priv->nb_childs++;
 
 	g_free (filename_for_display);
 
 	if (playlist->_priv->current == NULL)
 		playlist->_priv->current = gtk_tree_model_get_path
 			(playlist->_priv->model, &iter);
+
+	ensure_shuffled (playlist, playlist->_priv->shuffle);
 
 	g_signal_emit (G_OBJECT (playlist),
 			totem_playlist_table_signals[CHANGED], 0,
@@ -1964,6 +2051,8 @@ static PlaylistTypes dual_types[] = {
 	{ "video/x-ms-wmv", totem_playlist_add_asf },
 };
 
+static char * ignore_mime[] = { "cdda:", "dvd:", "vcd:" };
+
 gboolean
 totem_playlist_add_mrl_with_data (TotemPlaylist *playlist, const char *mrl,
 		const char *display_name)
@@ -2017,12 +2106,16 @@ totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl,
 
 	g_return_val_if_fail (mrl != NULL, FALSE);
 
-	/* Hack around the gnome-vfs cdda: method, crappety crap */
-	if (strncmp (mrl, "cdda:", 5) == 0)
-		return totem_playlist_add_one_mrl (playlist, mrl, display_name);
+	for (i = 0; i < G_N_ELEMENTS(ignore_mime); i++)
+	{
+		if (strncmp (mrl, ignore_mime[i], strlen (ignore_mime[i])) == 0)
+		{
+			totem_playlist_add_one_mrl (playlist,
+					mrl, display_name);
+		}
+	}
 
 	mimetype = gnome_vfs_get_mime_type (mrl);
-	D("totem_playlist_add_mrl adding %s, type %s", mrl, mimetype);
 
 	if (mimetype == NULL)
 	{
@@ -2123,11 +2216,20 @@ totem_playlist_has_previous_mrl (TotemPlaylist *playlist)
 	if (playlist->_priv->repeat == TRUE)
 		return TRUE;
 
-	gtk_tree_model_get_iter (playlist->_priv->model,
-			&iter,
-			playlist->_priv->current);
+	if (playlist->_priv->shuffle == FALSE)
+	{
+		gtk_tree_model_get_iter (playlist->_priv->model,
+				&iter,
+				playlist->_priv->current);
 
-	return gtk_tree_model_iter_previous (playlist->_priv->model, &iter);
+		return gtk_tree_model_iter_previous
+			(playlist->_priv->model, &iter);
+	} else {
+		if (playlist->_priv->current_shuffled == 0)
+			return FALSE;
+	}
+
+	return TRUE;
 }
 
 gboolean
@@ -2143,11 +2245,19 @@ totem_playlist_has_next_mrl (TotemPlaylist *playlist)
 	if (playlist->_priv->repeat == TRUE)
 		return TRUE;
 
-	gtk_tree_model_get_iter (playlist->_priv->model,
-			&iter,
-			playlist->_priv->current);
+	if (playlist->_priv->shuffle == FALSE)
+	{
+		gtk_tree_model_get_iter (playlist->_priv->model,
+				&iter,
+				playlist->_priv->current);
 
-	return gtk_tree_model_iter_next (playlist->_priv->model, &iter);
+		return gtk_tree_model_iter_next (playlist->_priv->model, &iter);
+	} else {
+		if (playlist->_priv->current_shuffled == PL_LEN - 1)
+			return FALSE;
+	}
+
+	return TRUE;
 }
 
 gboolean
@@ -2246,17 +2356,31 @@ totem_playlist_set_previous (TotemPlaylist *playlist)
 	if (strcmp (path, "0") == 0)
 	{
 		totem_playlist_set_at_end (playlist);
+		g_free (path);
 		return;
 	}
 
-	gtk_tree_model_get_iter (playlist->_priv->model,
-			&iter,
-			playlist->_priv->current);
+	g_free (path);
 
-	gtk_tree_model_iter_previous (playlist->_priv->model, &iter);
-	gtk_tree_path_free (playlist->_priv->current);
-	playlist->_priv->current = gtk_tree_model_get_path
-		(playlist->_priv->model, &iter);
+	if (playlist->_priv->shuffle == FALSE)
+	{
+		gtk_tree_model_get_iter (playlist->_priv->model,
+				&iter,
+				playlist->_priv->current);
+
+		gtk_tree_model_iter_previous (playlist->_priv->model, &iter);
+		gtk_tree_path_free (playlist->_priv->current);
+		playlist->_priv->current = gtk_tree_model_get_path
+			(playlist->_priv->model, &iter);
+	} else {
+		int indice;
+
+		gtk_tree_path_free (playlist->_priv->current);
+		playlist->_priv->current_shuffled--;
+		indice = playlist->_priv->shuffled[playlist->_priv->current_shuffled];
+		playlist->_priv->current = gtk_tree_path_new_from_indices
+			(indice, -1);
+	}
 }
 
 void
@@ -2274,14 +2398,25 @@ totem_playlist_set_next (TotemPlaylist *playlist)
 
 	totem_playlist_unset_playing (playlist);
 
-	gtk_tree_model_get_iter (playlist->_priv->model,
-			&iter,
-			playlist->_priv->current);
+	if (playlist->_priv->shuffle == FALSE)
+	{
+		gtk_tree_model_get_iter (playlist->_priv->model,
+				&iter,
+				playlist->_priv->current);
 
-	gtk_tree_model_iter_next (playlist->_priv->model, &iter);
-	gtk_tree_path_free (playlist->_priv->current);
-	playlist->_priv->current = gtk_tree_model_get_path
-		(playlist->_priv->model, &iter);
+		gtk_tree_model_iter_next (playlist->_priv->model, &iter);
+		gtk_tree_path_free (playlist->_priv->current);
+		playlist->_priv->current = gtk_tree_model_get_path
+			(playlist->_priv->model, &iter);
+	} else {
+		int indice;
+
+		gtk_tree_path_free (playlist->_priv->current);
+		playlist->_priv->current_shuffled++;
+		indice = playlist->_priv->shuffled[playlist->_priv->current_shuffled];
+		playlist->_priv->current = gtk_tree_path_new_from_indices
+			                        (indice, -1);
+	}
 }
 
 gboolean
@@ -2340,6 +2475,8 @@ totem_playlist_set_at_start (TotemPlaylist *playlist)
 static void
 totem_playlist_set_at_end (TotemPlaylist *playlist)
 {
+	int indice;
+
 	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
 
 	totem_playlist_unset_playing (playlist);
@@ -2350,10 +2487,15 @@ totem_playlist_set_at_end (TotemPlaylist *playlist)
 		playlist->_priv->current = NULL;
 	}
 
-	if (playlist->_priv->nb_childs)
+	if (PL_LEN)
 	{
+		if (playlist->_priv->shuffle == FALSE)
+			indice = PL_LEN - 1;
+		else
+			indice = playlist->_priv->shuffled[PL_LEN - 1];
+
 		playlist->_priv->current = gtk_tree_path_new_from_indices
-			(playlist->_priv->nb_childs-1, -1);
+			(indice, -1);
 	}
 }
 
