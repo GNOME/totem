@@ -35,7 +35,6 @@
 /* gtk+/gnome */
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
-#include <gconf/gconf-client.h>
 /* xine */
 #include <xine.h>
 
@@ -129,6 +128,7 @@ struct BaconVideoWidgetPrivate {
 	gboolean can_dvd, can_vcd, can_cdda;
 	gboolean logo_mode;
 	guint tick_id;
+	gboolean auto_resize;
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
@@ -144,7 +144,7 @@ struct BaconVideoWidgetPrivate {
 static void bacon_video_widget_class_init (BaconVideoWidgetClass *klass);
 static void bacon_video_widget_instance_init (BaconVideoWidget *bvw);
 
-static void load_config_from_gconf (BaconVideoWidget *bvw);
+static void setup_config (BaconVideoWidget *bvw);
 
 static void bacon_video_widget_set_property (GObject *object, guint property_id,
 		const GValue *value, GParamSpec *pspec);
@@ -334,7 +334,7 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 	xine_config_load (bvw->priv->xine, configfile);
 	g_free (configfile);
 
-	load_config_from_gconf (bvw);
+	setup_config (bvw);
 
 	xine_init (bvw->priv->xine);
 
@@ -437,14 +437,10 @@ frame_output_cb (void *bvw_gen,
 		if (bvw->priv->video_width != video_width
 				|| bvw->priv->video_height != video_height)
 		{
-			GConfClient *gc;
-
 			bvw->priv->video_width = video_width;
 			bvw->priv->video_height = video_height;
 
-			gc = gconf_client_get_default ();
-
-			if (gconf_client_get_bool (gc, GCONF_PREFIX"/auto_resize", NULL) == TRUE
+			if (bvw->priv->auto_resize == TRUE
 					&& bvw->priv->logo_mode == FALSE)
 			{
 				BaconVideoWidgetSignal *signal;
@@ -452,7 +448,8 @@ frame_output_cb (void *bvw_gen,
 				signal = g_new0 (BaconVideoWidgetSignal, 1);
 				signal->type = RATIO;
 				g_async_queue_push (bvw->priv->queue, signal);
-				g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal,
+				g_idle_add ((GSourceFunc)
+						bacon_video_widget_idle_signal,
 						bvw);
 			}
 		}
@@ -589,10 +586,8 @@ size_changed_cb (GdkScreen *screen, gpointer user_data)
 }
 
 static void
-load_config_from_gconf (BaconVideoWidget *bvw)
+setup_config (BaconVideoWidget *bvw)
 {
-	GConfClient *conf;
-
 	/* default demux strategy */
 	xine_config_register_string (bvw->priv->xine,
 			"misc.demux_strategy", "reverse",
@@ -1641,6 +1636,16 @@ bacon_video_widget_set_show_visuals (BaconVideoWidget *bvw, gboolean show_visual
 	g_return_if_fail (bvw->priv->xine != NULL);
 
 	bvw->priv->show_vfx = show_visuals;
+}
+
+void
+bacon_video_widget_set_auto_resize (BaconVideoWidget *bvw, gboolean auto_resize)
+{
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
+
+	bvw->priv->auto_resize = auto_resize;
 }
 
 int

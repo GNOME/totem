@@ -2,7 +2,6 @@
 #include "config.h"
 
 #include <gnome.h>
-#include <gconf/gconf-client.h>
 #include "bacon-video-widget.h"
 
 static void
@@ -75,14 +74,6 @@ int main (int argc, char *argv[])
 
 	if (argc != 3)
 		print_usage ();
-
-	gconf_init (argc, argv, &err);
-	if (err != NULL)
-	{
-		g_print ("totem-video-thumbnailer couln't initialise the "
-				"configuration engine:\n%s", err->message);
-		exit (1);
-	}
 
 	bvw = bacon_video_widget_new (-1, -1, TRUE);
 

@@ -1,5 +1,19 @@
 2003-02-17  Bastien Nocera  <hadess@hadess.net>
 
+	* README: upd
+	* configure.in: upd
+	* src/bacon-video-widget.c: (bacon_video_widget_instance_init),
+	(frame_output_cb), (setup_config),
+	(bacon_video_widget_set_show_visuals),
+	(bacon_video_widget_set_auto_resize):
+	* src/bacon-video-widget.h:
+	* src/totem-preferences.c: (on_checkbutton1_toggled),
+	(totem_setup_preferences):
+	* src/totem-video-thumbnailer.c: (main): removed gconf dependency in
+	the BaconVideoWidget, removed linking to gconf for the thumbnailer
+
+2003-02-17  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.schemas.in: updated
 	* src/bacon-video-widget.c: (load_audio_out_driver): remove audio
 	driver from gconf, we use automatic stuff, or xine's config

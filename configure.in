@@ -17,7 +17,7 @@ PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= 2.1.0 libgnomeui-2.0 >= 2.1.1 libglad
 AC_SUBST(EXTRA_GNOME_CFLAGS)
 AC_SUBST(EXTRA_GNOME_LIBS)
 
-PKG_CHECK_MODULES(GTK, gconf-2.0 gtk+-2.0 libxine >= 1.0.0 libglade-2.0)
+PKG_CHECK_MODULES(GTK, gtk+-2.0 libxine >= 1.0.0 gthread-2.0)
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
 

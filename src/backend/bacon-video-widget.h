@@ -103,44 +103,56 @@ typedef struct {
 } BaconVideoWidgetClass;
 
 GType bacon_video_widget_get_type                (void);
-GtkWidget *bacon_video_widget_new		       (int width, int height,
-					gboolean null_video_out);
+GtkWidget *bacon_video_widget_new		 (int width, int height,
+						  gboolean null_video_out);
 
 /* Actions */
-gboolean bacon_video_widget_open                (BaconVideoWidget *bvw, const gchar *mrl);
+gboolean bacon_video_widget_open		 (BaconVideoWidget *bvw,
+						  const gchar *mrl);
 
 /* This is used for seeking:
  * @pos is used for seeking, from 0 (start) to 65535 (end)
  * @start_time is in milliseconds */
-gboolean bacon_video_widget_play                 (BaconVideoWidget *bvw, guint pos,
-		                        guint start_time);
+gboolean bacon_video_widget_play                 (BaconVideoWidget *bvw,
+						  guint pos,
+						  guint start_time);
 void bacon_video_widget_stop                     (BaconVideoWidget *bvw);
 void bacon_video_widget_close                    (BaconVideoWidget *bvw);
 
-void bacon_video_widget_dvd_event                (BaconVideoWidget *bvw, BaconVideoWidgetDVDEvent type);
+void bacon_video_widget_dvd_event                (BaconVideoWidget *bvw,
+						  BaconVideoWidgetDVDEvent type);
 
 /* Properties */
-void  bacon_video_widget_set_logo_mode	       (BaconVideoWidget *bvw, gboolean logo_mode);
-gboolean bacon_video_widget_get_logo_mode	       (BaconVideoWidget *bvw);
+void  bacon_video_widget_set_logo_mode		 (BaconVideoWidget *bvw,
+						  gboolean logo_mode);
+gboolean bacon_video_widget_get_logo_mode	 (BaconVideoWidget *bvw);
 
 void bacon_video_widget_set_speed                (BaconVideoWidget *bvw, Speeds speed);
 int bacon_video_widget_get_speed                 (BaconVideoWidget *bvw);
 
-void bacon_video_widget_set_fullscreen           (BaconVideoWidget *bvw, gboolean fullscreen);
+void bacon_video_widget_set_fullscreen           (BaconVideoWidget *bvw,
+						  gboolean fullscreen);
 gboolean bacon_video_widget_is_fullscreen        (BaconVideoWidget *bvw);
 
 gboolean bacon_video_widget_can_set_volume       (BaconVideoWidget *bvw);
-void bacon_video_widget_set_volume               (BaconVideoWidget *bvw, int volume);
+void bacon_video_widget_set_volume               (BaconVideoWidget *bvw,
+						  int volume);
 int bacon_video_widget_get_volume                (BaconVideoWidget *bvw);
 
-void bacon_video_widget_set_show_cursor          (BaconVideoWidget *bvw, gboolean use_cursor);
+void bacon_video_widget_set_show_cursor          (BaconVideoWidget *bvw,
+						  gboolean use_cursor);
 gboolean bacon_video_widget_get_show_cursor      (BaconVideoWidget *bvw);
 
-void bacon_video_widget_set_media_device	       (BaconVideoWidget *bvw, const char *path);
-void bacon_video_widget_set_show_visuals	       (BaconVideoWidget *bvw, gboolean show_visuals);
+void bacon_video_widget_set_media_device	 (BaconVideoWidget *bvw,
+						  const char *path);
+void bacon_video_widget_set_show_visuals	 (BaconVideoWidget *bvw,
+						  gboolean show_visuals);
+void bacon_video_widget_set_auto_resize		 (BaconVideoWidget *bvw,
+						  gboolean auto_resize);
 
 void bacon_video_widget_toggle_aspect_ratio      (BaconVideoWidget *bvw);
-void bacon_video_widget_set_scale_ratio          (BaconVideoWidget *bvw, gfloat ratio);
+void bacon_video_widget_set_scale_ratio          (BaconVideoWidget *bvw,
+						  gfloat ratio);
 
 int bacon_video_widget_get_position              (BaconVideoWidget *bvw);
 int bacon_video_widget_get_current_time          (BaconVideoWidget *bvw);
@@ -148,12 +160,15 @@ int bacon_video_widget_get_stream_length         (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_is_playing           (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_is_seekable          (BaconVideoWidget *bvw);
 
-gboolean bacon_video_widget_can_play             (BaconVideoWidget *bvw, MediaType type);
+gboolean bacon_video_widget_can_play             (BaconVideoWidget *bvw,
+						  MediaType type);
 G_CONST_RETURN gchar **bacon_video_widget_get_mrls
-                                       (BaconVideoWidget *bvw, MediaType type);
+						 (BaconVideoWidget *bvw,
+						  MediaType type);
 
-void bacon_video_widget_get_metadata	       (BaconVideoWidget *bvw, BaconVideoWidgetMetadataType type,
-					GValue *value);
+void bacon_video_widget_get_metadata		 (BaconVideoWidget *bvw,
+						  BaconVideoWidgetMetadataType type,
+						  GValue *value);
 
 char *bacon_video_widget_get_nice_title          (BaconVideoWidget *bvw);
 

@@ -42,6 +42,8 @@ on_checkbutton1_toggled (GtkToggleButton *togglebutton, gpointer user_data)
 	value = gtk_toggle_button_get_active (togglebutton);
 	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/auto_resize",
 			value, NULL);
+	bacon_video_widget_set_auto_resize
+		(BACON_VIDEO_WIDGET (totem->bvw), value);
 }
 
 static void              
@@ -149,7 +151,7 @@ totem_setup_preferences (Totem *totem)
 {
 	GtkWidget *item;
 	const char *mediadev;
-	gboolean show_visuals;
+	gboolean show_visuals, auto_resize;
 
 	g_return_if_fail (totem->gc != NULL);
 
@@ -169,12 +171,14 @@ totem_setup_preferences (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->prefs), "delete-event",
 			G_CALLBACK (hide_prefs), (gpointer) totem);
 
+	auto_resize = gconf_client_get_bool (totem->gc,
+			GCONF_PREFIX"/auto_resize", NULL);
 	item = glade_xml_get_widget (totem->xml, "checkbutton1");
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
-			gconf_client_get_bool (totem->gc,
-				GCONF_PREFIX"/auto_resize", NULL));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), auto_resize);
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_checkbutton1_toggled), totem);
+	bacon_video_widget_set_auto_resize
+		(BACON_VIDEO_WIDGET (totem->bvw), auto_resize);
 
 	item = glade_xml_get_widget (totem->xml, "checkbutton2");
 	show_visuals = gconf_client_get_bool (totem->gc,
