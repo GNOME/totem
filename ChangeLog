@@ -1,5 +1,10 @@
 2003-05-22  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (on_buffering_event): create the dialog when the
+	buffering is > 0 so it doesn't get in the way of possible errors
+
+2003-05-22  Bastien Nocera  <hadess@hadess.net>
+
 	* README: removed TODO item
 	* src/gtk-playlist.c: (gtk_playlist_add_nsv),
 	(gtk_playlist_add_mrl): move the nsv work-around to another function

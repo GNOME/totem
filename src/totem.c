@@ -1152,7 +1152,7 @@ on_buffering_event (BaconVideoWidget *bvw, int percentage, Totem *totem)
 {
 	char *msg;
 
-	if (percentage == 0)
+	if (percentage > 0 && totem->buffer_dialog == NULL)
 	{
 		GtkWidget *image, *hbox;
 
@@ -1200,10 +1200,7 @@ on_buffering_event (BaconVideoWidget *bvw, int percentage, Totem *totem)
 			gtk_widget_destroy (totem->buffer_dialog);
 		totem->buffer_dialog = NULL;
 		totem->buffer_label = NULL;
-	} else {
-		if (totem->buffer_label == NULL)
-			return;
-
+	} else if (totem->buffer_label != NULL) {
 		msg = g_strdup_printf (_("Buffering: %d%%"), percentage);
 		gtk_label_set_text (GTK_LABEL (totem->buffer_label), msg);
 		g_free (msg);
