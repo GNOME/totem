@@ -371,7 +371,6 @@ on_movie_menu_select (GtkMenuItem *movie_menuitem, Totem *totem)
 	GList *menuitems;
 	gint position;
 
-	GnomeVFSVolumeMonitor *mon;
 	GList *devices, *volumes, *drives, *i;
 
 	if (totem->drives_changed == FALSE)
@@ -399,9 +398,9 @@ on_movie_menu_select (GtkMenuItem *movie_menuitem, Totem *totem)
 
 	/* Create a list of suitable devices */
 	devices = NULL;
-	mon = gnome_vfs_get_volume_monitor ();
 
-	volumes = gnome_vfs_volume_monitor_get_mounted_volumes (mon);
+	volumes = gnome_vfs_volume_monitor_get_mounted_volumes
+		(totem->monitor);
 	for (i = volumes; i != NULL; i = i->next) {
 		if (gnome_vfs_volume_get_device_type (i->data) != GNOME_VFS_DEVICE_TYPE_CDROM)
 			continue;
@@ -411,7 +410,7 @@ on_movie_menu_select (GtkMenuItem *movie_menuitem, Totem *totem)
 	}
 	gnome_vfs_drive_volume_list_free (volumes);
 
-	drives = gnome_vfs_volume_monitor_get_connected_drives (mon);
+	drives = gnome_vfs_volume_monitor_get_connected_drives (totem->monitor);
 	for (i = drives; i != NULL; i = i->next) {
 		if (gnome_vfs_drive_get_device_type (i->data) != GNOME_VFS_DEVICE_TYPE_CDROM)
 			continue;

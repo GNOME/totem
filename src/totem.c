@@ -3329,7 +3329,8 @@ main (int argc, char **argv)
 
 	gnome_vfs_init ();
 
-	if ((gc = gconf_client_get_default ()) == NULL)
+	gc = gconf_client_get_default ();
+	if (gc == NULL)
 	{
 		totem_action_error_and_exit (_("Totem couln't initialise the configuration engine."), _("Make sure that GNOME is properly installed."), NULL);
 	}
