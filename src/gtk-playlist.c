@@ -783,6 +783,28 @@ gtk_playlist_set_at_start (GtkPlaylist *playlist)
 	update_current_from_playlist (playlist);
 }
 
+/* This one returns a new string, in UTF8 even if the mrl is encoded
+ * in the locale's encoding
+ */
+gchar *
+gtk_playlist_mrl_to_title (const gchar *mrl)
+{
+	char *string;
+
+	string = g_path_get_basename (mrl);
+
+	if (g_utf8_validate (string, -1, NULL) == FALSE)
+	{
+		char *utf8;
+
+		utf8 = g_locale_to_utf8 (string, -1, NULL, NULL, NULL);
+		g_free (string);
+		string = utf8;
+	}
+
+	return string;
+}
+
 static void
 gtk_playlist_class_init (GtkPlaylistClass *klass)
 {

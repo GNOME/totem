@@ -68,4 +68,7 @@ gboolean   gtk_playlist_set_playing (GtkPlaylist *playlist, gboolean state);
 
 void       gtk_playlist_set_at_start (GtkPlaylist *playlist);
 
+gchar *     gtk_playlist_mrl_to_title (const gchar *mrl);
+
+
 #endif /* GTK_PLAYLIST_H */

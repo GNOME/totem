@@ -345,10 +345,11 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		widget = glade_xml_get_widget (totem->xml, "volume_hbox");
 		gtk_widget_set_sensitive (widget, FALSE);
 	} else {
-		char *title, *time_text;
+		char *title, *time_text, *name;
 		int time;
 
 		totem->mrl = g_strdup (mrl);
+		name = gtk_playlist_mrl_to_title (mrl);
 
 		/* Play/Pause */
 		gtk_widget_set_sensitive (totem->pp_button, TRUE);
@@ -356,7 +357,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		gtk_widget_set_sensitive (widget, TRUE);
 
 		/* Title */
-		title = g_strdup_printf ("%s - Totem", g_basename (mrl));
+		title = g_strdup_printf ("%s - Totem", name);
 		gtk_window_set_title (GTK_WINDOW (totem->win), title);
 		g_free (title);
 
@@ -382,11 +383,12 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		time_text = time_to_string (time);
 		text = g_strdup_printf
 			("<span size=\"medium\"><b>%s (%s)</b></span>",
-			 g_basename (mrl), time_text);
+			 name, time_text);
 		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
 				text);
 		g_free (text);
 		g_free (time_text);
+		g_free (name);
 	}
 }
 
@@ -505,7 +507,7 @@ drop_cb (GtkWidget     *widget,
 
 	for (p = file_list; p != NULL; p = p->next)
 	{
-		char *filename;
+		char *tmp, *filename;
 
 		filename = gnome_vfs_get_local_path_from_uri (p->data);
 		D("dropped URI: %s filename: %s", p->data, filename);
