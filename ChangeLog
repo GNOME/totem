@@ -1,5 +1,11 @@
 2005-03-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-pl-parser.c: (parse_asx_entries): fix parsing of ASX
+	entries where there's no <ENTRY> tag at the top-level
+	(Closes: #169839)
+
+2005-03-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am:
 	* src/bacon-video-widget-gst.c:
 	* src/bacon-video-widget-xine.c:

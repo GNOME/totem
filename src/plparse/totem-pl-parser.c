@@ -1068,6 +1068,11 @@ parse_asx_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 			if (parse_asx_entry (parser, base, doc, parent, title) != FALSE)
 				retval = TRUE;
 		}
+		if (g_ascii_strcasecmp (node->name, "repeat") == 0) {
+			/* Repeat at the top-level */
+			if (parse_asx_entries (parser, base, doc, node) != FALSE)
+				retval = TRUE;
+		}
 	}
 
 	g_free (title);
