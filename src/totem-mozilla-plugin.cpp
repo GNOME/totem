@@ -397,7 +397,7 @@ totem_plugin_get_value (NPP instance, NPPVariable variable,
 	TotemPlugin *plugin;
 	NPError err = NPERR_NO_ERROR;
 
-	DEBUG("plugin_get_value");
+	printf ("plugin_get_value %d\n", variable);
 
         if (instance == NULL)
                 return NPERR_GENERIC_ERROR;
@@ -459,7 +459,7 @@ NP_GetValue(void *future, NPPVariable variable, void *value)
 	return totem_plugin_get_value (NULL, variable, value);
 }
 
-#define NUM_MIME_TYPES 3 //FIXME no realaudio just yet
+#define NUM_MIME_TYPES 4
 static struct {
 	const char *mime_type;
 	const char *extensions;
@@ -468,7 +468,7 @@ static struct {
 	{ "video/quicktime", "mov" },
 	{ "application/x-mplayer2", "avi, wma, wmv", "video/x-msvideo" },
 	{ "video/mpeg", "mpg, mpeg, mpe" },
-	{ "audio/x-pn-realaudio-plugin", "rpm", "audio/x-pn-realaudio" }
+	{ "video/x-ms-asf-plugin", "asf, wmv", "video/x-ms-asf" }
 };
 
 char *NP_GetMIMEDescription(void)

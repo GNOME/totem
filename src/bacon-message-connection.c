@@ -124,7 +124,6 @@ server_cb (GIOChannel *source, GIOCondition condition, gpointer data)
 
 	while (*subs != '\0' && finished == FALSE)
 	{
-		g_message ("subs '%x'", *subs);
 		if (message != NULL && conn->func != NULL)
 			(*conn->func) (subs, conn->data);
 

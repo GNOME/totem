@@ -59,17 +59,17 @@ public:
 
   // The rest of the methods can safely return error codes...
   NS_IMETHOD GetInterfaces(PRUint32 *count, nsIID * **array)
-    {return NS_ERROR_NOT_IMPLEMENTED;}
+    {g_message ("GetInterfaces"); return NS_ERROR_NOT_IMPLEMENTED;}
   NS_IMETHOD GetHelperForLanguage(PRUint32 language, nsISupports **_retval)
-    {return NS_ERROR_NOT_IMPLEMENTED;}
+    {g_message ("GetHelperForLanguage"); return NS_ERROR_NOT_IMPLEMENTED;}
   NS_IMETHOD GetContractID(char * *aContractID)
-    {return NS_ERROR_NOT_IMPLEMENTED;}
+    {g_message ("GetContractID"); return NS_ERROR_NOT_IMPLEMENTED;}
   NS_IMETHOD GetClassDescription(char * *aClassDescription)
-    {return NS_ERROR_NOT_IMPLEMENTED;}
+    {g_message ("GetClassDescription"); return NS_ERROR_NOT_IMPLEMENTED;}
   NS_IMETHOD GetClassID(nsCID * *aClassID)
-    {return NS_ERROR_NOT_IMPLEMENTED;}
+    {g_message ("GetClassID"); return NS_ERROR_NOT_IMPLEMENTED;}
   NS_IMETHOD GetClassIDNoAlloc(nsCID *aClassIDNoAlloc)
-    {return NS_ERROR_NOT_IMPLEMENTED;}
+    {g_message ("GetClassIDNoAlloc"); return NS_ERROR_NOT_IMPLEMENTED;}
 };
 
 class totemMozillaObject : public totemMozillaScript,
