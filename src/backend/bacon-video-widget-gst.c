@@ -2731,10 +2731,12 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
 					   GST_TAG_ARTIST, 0, &string);
       break;
     case BVW_INFO_YEAR: {
-      guint year;
-      res = gst_tag_list_get_uint (bvw->priv->tagcache,
-				   GST_TAG_DATE, &year);
-      string = g_strdup_printf ("%u", year);
+      guint julian;
+      if (res = gst_tag_list_get_uint (bvw->priv->tagcache,
+				       GST_TAG_DATE, &julian)) {
+	GDate *d = g_date_new_julian (julian);
+	string = g_strdup_printf ("%s", g_date_get_year (d));
+      }
       break;
     }
     case BVW_INFO_ALBUM:

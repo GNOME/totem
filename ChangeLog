@@ -1,5 +1,11 @@
 2005-03-30  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
+	* src/backend/bacon-video-widget-gst.c:
+	(bacon_video_widget_get_metadata_string):
+	  Use julian-date representation to fix year metadata (#170306).
+
+2005-03-30  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
 	* src/backend/bacon-video-widget-gst.c: (bacon_video_widget_init),
 	(bacon_video_widget_signal_idler), (group_switch), (got_source),
 	(state_change), (bacon_video_widget_finalize),
