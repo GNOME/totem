@@ -319,9 +319,7 @@ visual_menu_changed (GtkOptionMenu *option_menu, Totem *totem)
 		if (bacon_video_widget_set_visuals (totem->bvw, name) == TRUE)
 			totem_action_error (_("Changing the visuals effect type will require a restart to take effect."), totem);
 	}
-
-	g_list_foreach (list, (GFunc) g_free, NULL);
-	g_list_free (list);
+	
 }
 
 static void
@@ -468,9 +466,6 @@ totem_setup_preferences (Totem *totem)
 		i++;
 	}
 
-	g_list_foreach (list, (GFunc) g_free, NULL);
-	g_list_free (list);
-
 	/* Visualisation quality */
 	i = gconf_client_get_int (totem->gc,
 			GCONF_PREFIX"/visual_quality", NULL);
@@ -556,4 +551,3 @@ totem_preferences_visuals_setup (Totem *totem)
 	
 	bacon_video_widget_set_visuals (totem->bvw, visual);
 }
-
