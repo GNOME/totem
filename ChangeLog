@@ -1,3 +1,12 @@
+2004-03-13  Bastien Nocera  <hadess@hadess.net>
+
+	* NEWS: updated
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_instance_init), (setup_config_stream),
+	(xine_event): don't set the image settings if they already are set
+	(possibly Close: #133011)
+	remove the white artifacts work-around, doesn't work properly
+
 2004-03-12  Ronald Bultje  <rbultje@ronald.bitfreak.net>
 
 	* configure.in:

@@ -387,8 +387,9 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
 	GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_CAN_FOCUS);
-	/* We work around white artifacts by using a double-buffered widget
-	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED); */
+	/* We work around white artifacts by using a double-buffered widget */
+	/* FIXME, this work-around breaks exposes */
+	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
 
 	bvw->priv = g_new0 (BaconVideoWidgetPrivate, 1);
 	bvw->priv->xine = xine_new ();
@@ -423,6 +424,8 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 	while (autoplug_list && autoplug_list[i])
 	{
 		if (g_ascii_strcasecmp (autoplug_list[i], "VCD") == 0)
+			bvw->priv->can_vcd = TRUE;
+		else if (g_ascii_strcasecmp (autoplug_list[i], "VCDO") == 0)
 			bvw->priv->can_vcd = TRUE;
 		else if (g_ascii_strcasecmp (autoplug_list[i], "DVD") == 0)
 			bvw->priv->can_dvd = TRUE;
@@ -795,11 +798,25 @@ setup_config_stream (BaconVideoWidget *bvw)
 	/* Setup brightness and contrast */
 	for (i = 0; i < 4; i++)
 	{
-		value = gconf_client_get_int (bvw->priv->gc, video_props_str[i], NULL);
+		GError *error = NULL;
+		int tmp;
+
+		value = gconf_client_get_int (bvw->priv->gc,
+				video_props_str[i], &error);
+
 		/* avoid black screens */
-		if (value == 0)
+		if (value == 0 && error != NULL)
 			value = 65535 / 2;
-		xine_set_param (bvw->priv->stream, video_props[i], value);
+
+		tmp = xine_get_param (bvw->priv->stream, video_props[i]);
+		if (value != tmp)
+		{
+			xine_set_param (bvw->priv->stream,
+					video_props[i], value);
+		}
+
+		if (error != NULL)
+			g_error_free (error);
 	}
 }
 
@@ -1262,6 +1279,9 @@ xine_event (void *user_data, const xine_event_t *event)
 		data->signal = SPEED_WARNING_ASYNC;
 		g_async_queue_push (bvw->priv->queue, data);
 		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
+		break;
+	case XINE_EVENT_AUDIO_LEVEL:
+		/* Unhandled, we use the software mixer, not the hardware one */
 		break;
 	}
 }
