@@ -45,6 +45,10 @@ struct Vanity {
 	gboolean debug;
 };
 
+static const GtkTargetEntry source_table[] = {
+	{ "text/uri-list", 0, 0 },
+};
+
 static void vanity_action_exit (Vanity *vanity);
 
 static const struct poptOption options[] = {
@@ -139,7 +143,6 @@ vanity_action_set_scale_ratio (Vanity *vanity, gfloat ratio)
 	bacon_video_widget_set_scale_ratio (vanity->bvw, ratio);
 }
 
-#if 0
 static void
 drag_video_cb (GtkWidget *widget,
 		GdkDragContext *context,
@@ -148,7 +151,9 @@ drag_video_cb (GtkWidget *widget,
 		guint32 time,
 		gpointer callback_data)
 {
-	Vanity *vanity = (Totem *) callback_data;
+	Vanity *vanity = (Vanity *) callback_data;
+	//FIXME the trick would be to create a file like gnome-panel-screenshot does
+#if 0
 	char *text;
 	int len;
 
@@ -171,53 +176,8 @@ drag_video_cb (GtkWidget *widget,
 			8, (guchar *) text, len);
 
 	g_free (text);
-}
 #endif
-#if 0
-static void
-on_open1_activate (GtkButton *button, Vanity *vanity)
-{
-	GtkWidget *fs;
-	int response;
-	static char *path = NULL;
-
-	fs = gtk_file_selection_new (_("Select files"));
-	gtk_file_selection_set_select_multiple (GTK_FILE_SELECTION (fs), TRUE);
-	if (path != NULL)
-	{
-		gtk_file_selection_set_filename (GTK_FILE_SELECTION (fs),
-				path);
-		g_free (path);
-		path = NULL;
-	}
-	response = gtk_dialog_run (GTK_DIALOG (fs));
-	gtk_widget_hide (fs);
-
-	if (response == GTK_RESPONSE_OK)
-	{
-		char **filenames, *mrl;
-
-		filenames = gtk_file_selection_get_selections
-			(GTK_FILE_SELECTION (fs));
-		vanity_action_open_files (vanity, filenames, FALSE);
-		if (filenames[0] != NULL)
-		{
-			char *tmp;
-
-			tmp = g_path_get_dirname (filenames[0]);
-			path = g_strconcat (tmp, G_DIR_SEPARATOR_S, NULL);
-			g_free (tmp);
-		}
-		g_strfreev (filenames);
-
-		mrl = gtk_playlist_get_current_mrl (vanity->playlist);
-		vanity_action_set_mrl_and_play (vanity, mrl);
-		g_free (mrl);
-	}
-
-	gtk_widget_destroy (fs);
 }
-#endif
 
 static void
 on_zoom_1_2_activate (GtkButton *button, Vanity *vanity)
@@ -604,14 +564,14 @@ video_widget_create (Vanity *vanity)
 	gtk_widget_add_events (GTK_WIDGET (vanity->bvw), GDK_KEY_PRESS_MASK);
 	g_signal_connect (G_OBJECT(vanity->bvw), "key_press_event",
 			G_CALLBACK (on_window_key_press_event), vanity);
-#if 0
+
 	g_signal_connect (G_OBJECT (vanity->bvw), "drag_data_get",
 			G_CALLBACK (drag_video_cb), vanity);
 	gtk_drag_source_set (GTK_WIDGET (vanity->bvw),
 			GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
 			source_table, G_N_ELEMENTS (source_table),
 			GDK_ACTION_LINK);
-#endif
+
 	g_object_add_weak_pointer (G_OBJECT (vanity->bvw),
 			(void**)&(vanity->bvw));
 
@@ -627,7 +587,6 @@ video_widget_create (Vanity *vanity)
 
 			msg = g_strdup_printf (_("Vanity could not contact the webcam.\nReason: %s"), err->message);
 			g_error_free (err);
-			gtk_widget_hide (vanity->win);
 			vanity_action_error_and_exit (msg, vanity);
 		}
 	} else {
@@ -637,7 +596,7 @@ video_widget_create (Vanity *vanity)
 	}
 
 	bacon_video_widget_play (vanity->bvw, 0, 0, &err);
-#if 0
+
 	if (err != NULL)
 	{
 		char *msg;
@@ -647,7 +606,7 @@ video_widget_create (Vanity *vanity)
 		gtk_widget_hide (vanity->win);
 		vanity_action_error_and_exit (msg, vanity);
 	}
-#endif
+
 	gtk_widget_set_size_request (container, -1, -1);
 }
 
@@ -767,3 +726,4 @@ main (int argc, char **argv)
 
 	return 0;
 }
+

@@ -195,6 +195,13 @@ totem_action_error (char *msg, Totem *totem)
 			(gtk_widget_destroy), error_dialog);
 	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
 
+	if (totem->buffer_dialog != NULL)
+	{
+		gtk_widget_destroy (totem->buffer_dialog);
+		totem->buffer_dialog = NULL;
+		totem->buffer_label = NULL;
+	}
+
 	gtk_widget_show (error_dialog);
 }
 
@@ -472,10 +479,9 @@ totem_action_fullscreen_toggle (Totem *totem)
 		scrsaver_disable (totem->scr);
 
 		if (totem->controls_visibility == TOTEM_CONTROLS_VISIBLE) {
-			totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;	
+			totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
 			show_controls (totem, FALSE, FALSE);
-		}
-		else {
+		} else {
 			totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
 		}
 	}
@@ -702,8 +708,8 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 
 		/* Set the logo */
 		totem->mrl = g_strdup(LOGO_PATH);
-		bacon_video_widget_set_logo (totem->bvw, totem->mrl);
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
+		bacon_video_widget_set_logo (totem->bvw, totem->mrl);
 
 		update_mrl_label (totem, NULL);
 	} else {

@@ -1,5 +1,17 @@
 2003-05-22  Bastien Nocera  <hadess@hadess.net>
 
+	* README: removed TODO item
+	* src/gtk-playlist.c: (gtk_playlist_add_nsv),
+	(gtk_playlist_add_mrl): move the nsv work-around to another function
+	* src/totem.c: (totem_action_error),
+	(totem_action_fullscreen_toggle), (totem_action_set_mrl): set the logo
+	mode before launching it or we'll get auto-resized on logo load,
+	remove the buffering dialog if we get an error
+	* src/vanity.c: (drag_video_cb), (video_widget_create): don't hide
+	the main window if we get an error on startup
+
+2003-05-22  Bastien Nocera  <hadess@hadess.net>
+
 	* README: added TODO item
 	* src/gtk-playlist.c: (gtk_playlist_add_mrl): added work-around for
 	the nullsoft user-agent verifier

@@ -1745,6 +1745,18 @@ gtk_playlist_add_desktop (GtkPlaylist *playlist, const char *mrl)
 	return retval;
 }
 
+static gboolean
+gtk_playlist_add_nsv (GtkPlaylist *playlist, const char *mrl,
+		const char *display_name)
+{
+	/* Work around NSV streaming filter from Nullsoft */
+	if (strcmp ((char *)mrl + strlen (mrl) - 4, ".nsv") == 0)
+		return gtk_playlist_add_one_mrl (playlist,
+				mrl, display_name);
+
+	return FALSE;
+}
+
 gboolean
 gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 		const char *display_name)
@@ -1793,12 +1805,7 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 		return gtk_playlist_add_desktop (playlist, mrl);
 	} else if (strcmp ("text/plain", mimetype) == 0) {
 		g_free (data);
-		/* Work around NSV streaming filter from Nullsoft */
-		if (strcmp (mrl + strlen (mrl) - 4, ".nsv") == 0)
-			return gtk_playlist_add_one_mrl (playlist,
-					mrl, display_name);
-		else
-			return FALSE;
+		return gtk_playlist_add_nsv (playlist, mrl, display_name);
 	}
 
 	g_free (data);
@@ -1809,7 +1816,7 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 			&& strcmp ("application/x-ogg", mimetype) != 0
 			&& strcmp ("application/ogg", mimetype) != 0
 			&& strcmp ("application/x-flac", mimetype) != 0
-			&& strcmp ("application/x-shockwave-flash", mimetype != 0)
+			&& strcmp ("application/x-shockwave-flash", mimetype) != 0
 			&& strcmp ("image/png", mimetype) != 0)
 	{
 		//FIXME error message
