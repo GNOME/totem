@@ -1,5 +1,12 @@
 2002-10-12  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-playlist.c: (gtk_playlist_add_mrl): add the files only once,
+	not twice and buggily
+	* src/totem.c: (totem_action_open_files): only add to recent files if
+	we could add it to the playlist
+
+2002-10-12  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-playlist.c: (read_ini_line_int), (read_ini_line_string),
 	(gtk_playlist_add_m3u), (gtk_playlist_add_pls),
 	(gtk_playlist_add_mrl): added code to support shoutcast playlists

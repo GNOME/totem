@@ -699,13 +699,18 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 				gtk_playlist_clear (totem->playlist);
 				cleared = TRUE;
 			}
-			gtk_playlist_add_mrl (totem->playlist, list[i], NULL);
-
+			if (gtk_playlist_add_mrl (totem->playlist, list[i],
+						NULL) == TRUE)
                         {
                                 char *uri;
                                 EggRecentItem *item;
 
-				uri = gnome_vfs_get_uri_from_local_path (list[i]);
+				if (list[i][0] != G_DIR_SEPARATOR)
+					continue;
+
+				uri = gnome_vfs_get_uri_from_local_path
+					(list[i]);
+
 				if (uri == NULL) {
 					/* ok, if this fails, then it was
 					 * something like dvd:/// and we don't

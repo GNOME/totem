@@ -808,16 +808,16 @@ gboolean
 gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 		const char *display_name)
 {
-	gboolean retval = FALSE;
 	const char *mimetype;
 
 	g_return_val_if_fail (mrl != NULL, FALSE);
 
 	mimetype = gnome_vfs_get_mime_type (mrl);
 	D("gtk_playlist_add_mrl: adding %s (%s)", mrl, mimetype);
+
 	if (mimetype == NULL)
 	{
-		retval = gtk_playlist_add_one_mrl (playlist, mrl, display_name);
+		return gtk_playlist_add_one_mrl (playlist, mrl, display_name);
 	} else if (strcmp ("audio/x-mpegurl", mimetype) == 0) {
 		return gtk_playlist_add_m3u (playlist, mrl);
 	} else if (strcmp ("audio/x-scpls", mimetype) == 0) {
