@@ -1,5 +1,11 @@
 2003-10-11  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-pl-parser.c: (totem_pl_parser_parse): add the ignore
+	mimetypes from the playlist rather than from the parser to keep
+	the title unchanged (yet another Audio CD fix)
+
+2003-10-11  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-pl-parser.c: (totem_pl_parser_add_m3u): ignore empty lines
 	in m3u files (fixes parsing of the magnatune playlists)
 

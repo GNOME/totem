@@ -1057,10 +1057,7 @@ totem_pl_parser_parse (TotemPlParser *parser, const char *url)
 	g_return_val_if_fail (url != NULL, FALSE);
 
 	if (totem_pl_parser_ignore (url) != FALSE)
-	{
-		totem_pl_parser_add_one_url (parser, url, NULL);
-		return TRUE;
-	}
+		return FALSE;
 
 	mimetype = gnome_vfs_get_mime_type (url);
 
