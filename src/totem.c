@@ -2659,6 +2659,12 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 			totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET);
 		}
 		break;
+	case GDK_space:
+		if (totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN)
+			totem_action_play_pause (totem);
+		else
+			retval = FALSE;
+		break;
 	case GDK_Up:
 		totem_action_volume_relative (totem, VOLUME_UP_OFFSET);
 		break;
