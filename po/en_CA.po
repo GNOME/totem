@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-19 11:54-0500\n"
-"PO-Revision-Date: 2004-11-19 19:41-0400\n"
+"POT-Creation-Date: 2004-11-20 15:49-0500\n"
+"PO-Revision-Date: 2004-11-20 19:41-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -45,12 +45,12 @@ msgstr "_Save..."
 msgid "    "
 msgstr "    "
 
-#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:105
+#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:107
 msgid "0 frames per second"
 msgstr "0 frames per second"
 
 #. Bitrate
-#: data/properties.glade.h:3 src/bacon-video-widget-properties.c:107
+#: data/properties.glade.h:3 src/bacon-video-widget-properties.c:109
 msgid "0 kbps"
 msgstr "0 kbps"
 
@@ -60,7 +60,7 @@ msgid "0 seconds"
 msgstr "0 seconds"
 
 #. Dimensions
-#: data/properties.glade.h:5 src/bacon-video-widget-properties.c:100
+#: data/properties.glade.h:5 src/bacon-video-widget-properties.c:102
 msgid "0 x 0"
 msgstr "0 x 0"
 
@@ -77,59 +77,66 @@ msgid "<b>Video</b>"
 msgstr "<b>Video</b>"
 
 #: data/properties.glade.h:9
+msgid "Album:"
+msgstr "Album:"
+
+#: data/properties.glade.h:10
 msgid "Artist:"
 msgstr "Artist:"
 
-#: data/properties.glade.h:10
+#: data/properties.glade.h:11
 msgid "Bitrate:"
 msgstr "Bitrate:"
 
-#: data/properties.glade.h:11
+#: data/properties.glade.h:12
 msgid "Codec:"
 msgstr "Codec:"
 
-#: data/properties.glade.h:12
+#: data/properties.glade.h:13
 msgid "Dimensions:"
 msgstr "Dimensions:"
 
-#: data/properties.glade.h:13
+#: data/properties.glade.h:14
 msgid "Duration:"
 msgstr "Duration:"
 
-#: data/properties.glade.h:14
+#: data/properties.glade.h:15
 msgid "Framerate:"
 msgstr "Framerate:"
 
 #. Video Codec
 #. Audio Codec
-#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:102
-#: src/bacon-video-widget-properties.c:109
-#: src/bacon-video-widget-properties.c:180
-#: src/bacon-video-widget-properties.c:216
+#: data/properties.glade.h:16 src/bacon-video-widget-properties.c:104
+#: src/bacon-video-widget-properties.c:111
+#: src/bacon-video-widget-properties.c:189
+#: src/bacon-video-widget-properties.c:225
 msgid "N/A"
 msgstr "N/A"
 
-#: data/properties.glade.h:16 src/totem.c:2115
+#: data/properties.glade.h:17 src/totem.c:2115
 msgid "Properties"
 msgstr "Properties"
 
-#: data/properties.glade.h:17
+#: data/properties.glade.h:18
 msgid "Title:"
 msgstr "Title:"
 
 #. Title
 #. Artist
+#. Album
 #. Year
-#: data/properties.glade.h:18 src/bacon-video-widget-properties.c:92
+#: data/properties.glade.h:19 src/bacon-video-widget-properties.c:92
 #: src/bacon-video-widget-properties.c:94
 #: src/bacon-video-widget-properties.c:96
-#: src/bacon-video-widget-properties.c:128
-#: src/bacon-video-widget-properties.c:135
-#: src/bacon-video-widget-properties.c:142
+#: src/bacon-video-widget-properties.c:98
+#: src/bacon-video-widget-properties.c:130
+#: src/bacon-video-widget-properties.c:137
+#: src/bacon-video-widget-properties.c:144
+#: src/bacon-video-widget-properties.c:151
 msgid "Unknown"
 msgstr "Unknown"
 
-#: data/properties.glade.h:19
+#: data/properties.glade.h:20
 msgid "Year:"
 msgstr "Year:"
 
@@ -163,7 +170,7 @@ msgstr "Play movies and songs"
 
 #. Title
 #: data/totem.desktop.in.in.h:2 data/totem.glade.h:97 src/totem.c:731
-#: src/totem.c:3804
+#: src/totem.c:3817
 msgid "Totem Movie Player"
 msgstr "Totem Movie Player"
 
@@ -910,16 +917,16 @@ msgid "Failed to create a GStreamer play object"
 msgstr "Failed to create a GStreamer play object"
 
 #. Duration
-#: src/bacon-video-widget-properties.c:98
+#: src/bacon-video-widget-properties.c:100
 msgid "0 second"
 msgstr "0 second"
 
-#: src/bacon-video-widget-properties.c:185
+#: src/bacon-video-widget-properties.c:194
 #, c-format
 msgid "%d frames per second"
 msgstr "%d frames per second"
 
-#: src/bacon-video-widget-properties.c:205
+#: src/bacon-video-widget-properties.c:214
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
@@ -933,7 +940,7 @@ msgstr ""
 "Couldn't load the '%s' audio driver\n"
 "Check that the device is not busy."
 
-#: src/bacon-video-widget-xine.c:1141 src/bacon-video-widget-xine.c:1599
+#: src/bacon-video-widget-xine.c:1149 src/bacon-video-widget-xine.c:1607
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -941,29 +948,29 @@ msgstr ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
 
-#: src/bacon-video-widget-xine.c:1257
+#: src/bacon-video-widget-xine.c:1265
 msgid "The server you are trying to connect to is not known."
 msgstr "The server you are trying to connect to is not known."
 
-#: src/bacon-video-widget-xine.c:1261
+#: src/bacon-video-widget-xine.c:1269
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "The device name you specified (%s) seems to be invalid."
 
-#: src/bacon-video-widget-xine.c:1265
+#: src/bacon-video-widget-xine.c:1273
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "The server you are trying to connect to (%s) is unreachable."
 
-#: src/bacon-video-widget-xine.c:1269
+#: src/bacon-video-widget-xine.c:1277
 msgid "The connection to this server was refused."
 msgstr "The connection to this server was refused."
 
-#: src/bacon-video-widget-xine.c:1273
+#: src/bacon-video-widget-xine.c:1281
 msgid "The specified movie could not be found."
 msgstr "The specified movie could not be found."
 
-#: src/bacon-video-widget-xine.c:1279 src/bacon-video-widget-xine.c:1297
+#: src/bacon-video-widget-xine.c:1287 src/bacon-video-widget-xine.c:1305
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -971,60 +978,60 @@ msgstr ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
 
-#: src/bacon-video-widget-xine.c:1282
+#: src/bacon-video-widget-xine.c:1290
 msgid "The movie could not be read."
 msgstr "The movie could not be read."
 
-#: src/bacon-video-widget-xine.c:1291
+#: src/bacon-video-widget-xine.c:1299
 #, c-format
 msgid "A problem occured while loading a library or a decoder (%s)."
 msgstr "A problem occured while loading a library or a decoder (%s)."
 
-#: src/bacon-video-widget-xine.c:1300
+#: src/bacon-video-widget-xine.c:1308
 msgid "This file is encrypted and cannot be played back."
 msgstr "This file is encrypted and cannot be played back."
 
-#: src/bacon-video-widget-xine.c:1305
+#: src/bacon-video-widget-xine.c:1313
 msgid "For security reasons, this movie can not be played back."
 msgstr "For security reasons, this movie can not be played back."
 
-#: src/bacon-video-widget-xine.c:1310
+#: src/bacon-video-widget-xine.c:1318
 msgid "The audio device is busy. Is another application using it?"
 msgstr "The audio device is busy. Is another application using it?"
 
-#: src/bacon-video-widget-xine.c:1315
+#: src/bacon-video-widget-xine.c:1323
 msgid "You are not allowed to open this file."
 msgstr "You are not allowed to open this file."
 
-#: src/bacon-video-widget-xine.c:1317
+#: src/bacon-video-widget-xine.c:1325
 msgid "The server refused access to this file or stream."
 msgstr "The server refused access to this file or stream."
 
-#: src/bacon-video-widget-xine.c:1443
+#: src/bacon-video-widget-xine.c:1451
 msgid "There is no plugin to handle this movie."
 msgstr "There is no plugin to handle this movie."
 
-#: src/bacon-video-widget-xine.c:1447
+#: src/bacon-video-widget-xine.c:1455
 msgid "This movie is broken and can not be played further."
 msgstr "This movie is broken and can not be played further."
 
-#: src/bacon-video-widget-xine.c:1451
+#: src/bacon-video-widget-xine.c:1459
 msgid "This location is not a valid one."
 msgstr "This location is not a valid one."
 
-#: src/bacon-video-widget-xine.c:1455
+#: src/bacon-video-widget-xine.c:1463
 msgid "This movie could not be opened."
 msgstr "This movie could not be opened."
 
-#: src/bacon-video-widget-xine.c:1459
+#: src/bacon-video-widget-xine.c:1467
 msgid "Generic Error."
 msgstr "Generic Error."
 
-#: src/bacon-video-widget-xine.c:1946
+#: src/bacon-video-widget-xine.c:1954
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr "This movie is a still image. You can open it with an image viewer."
 
-#: src/bacon-video-widget-xine.c:1973
+#: src/bacon-video-widget-xine.c:1981
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1033,7 +1040,7 @@ msgstr ""
 "Video codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 
-#: src/bacon-video-widget-xine.c:1977
+#: src/bacon-video-widget-xine.c:1985
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1042,19 +1049,19 @@ msgstr ""
 "Audio codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 
-#: src/bacon-video-widget-xine.c:1996
+#: src/bacon-video-widget-xine.c:2004
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "This is an audio-only file, and there is no audio output available."
 
-#: src/bacon-video-widget-xine.c:3444
+#: src/bacon-video-widget-xine.c:3452
 msgid "Movie is not playing."
 msgstr "Movie is not playing."
 
-#: src/bacon-video-widget-xine.c:3453
+#: src/bacon-video-widget-xine.c:3461
 msgid "No video to capture."
 msgstr "No video to capture."
 
-#: src/bacon-video-widget-xine.c:3461
+#: src/bacon-video-widget-xine.c:3469
 msgid "Video codec is not handled."
 msgstr "Video codec is not handled."
 
@@ -1130,7 +1137,7 @@ msgstr "The Totem plugin could not startup."
 msgid "No reason."
 msgstr "No reason."
 
-#: src/totem-mozilla-viewer.c:141 src/totem.c:3809
+#: src/totem-mozilla-viewer.c:141 src/totem.c:3822
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Could not initialise the thread-safe libraries."
 
@@ -1414,8 +1421,8 @@ msgstr "Select files"
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "Couldn't load the 'Open Location...' interface."
 
-#: src/totem.c:1716 src/totem.c:1724 src/totem.c:3847 src/totem.c:3874
-#: src/totem.c:3899
+#: src/totem.c:1716 src/totem.c:1724 src/totem.c:3860 src/totem.c:3887
+#: src/totem.c:3912
 msgid "Make sure that Totem is properly installed."
 msgstr "Make sure that Totem is properly installed."
 
@@ -1463,28 +1470,28 @@ msgstr "None"
 msgid "Totem could not startup."
 msgstr "Totem could not startup."
 
-#: src/totem.c:3690
+#: src/totem.c:3703
 #, c-format
 msgid "Option '%s' is unknown and was ignored\n"
 msgstr "Option '%s' is unknown and was ignored\n"
 
-#: src/totem.c:3809
+#: src/totem.c:3822
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verify your system installation. Totem will now exit."
 
-#: src/totem.c:3831
+#: src/totem.c:3844
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem couln't initialise the configuration engine."
 
-#: src/totem.c:3831
+#: src/totem.c:3844
 msgid "Make sure that GNOME is properly installed."
 msgstr "Make sure that GNOME is properly installed."
 
-#: src/totem.c:3847 src/totem.c:3874
+#: src/totem.c:3860 src/totem.c:3887
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "Couldn't load the main interface (totem.glade)."
 
-#: src/totem.c:3899
+#: src/totem.c:3912
 msgid "Couldn't load the interface for the playlist."
 msgstr "Couldn't load the interface for the playlist."
 
