@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2003-04-16 23:29+0200\n"
-"PO-Revision-Date: 2003-04-16 23:30+0200\n"
+"POT-Creation-Date: 2003-04-17 00:29+0200\n"
+"PO-Revision-Date: 2003-04-17 00:30+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -125,7 +125,7 @@ msgstr "År:"
 msgid "Play movies and songs"
 msgstr "Spela filmer och låtar"
 
-#: data/totem.desktop.in.h:2 src/totem.c:2945
+#: data/totem.desktop.in.h:2 src/totem.c:2944
 msgid "Totem Movie Player"
 msgstr "Filmspelaren Totem"
 
@@ -422,7 +422,7 @@ msgid "Toggle the aspect ratio"
 msgstr "Växla proportionerna"
 
 #. Title
-#: data/totem.glade.h:75 src/totem.c:509 src/totem.c:531 src/totem.c:1479
+#: data/totem.glade.h:75 src/totem.c:509 src/totem.c:531 src/totem.c:1478
 msgid "Totem"
 msgstr "Totem"
 
@@ -680,7 +680,7 @@ msgstr ""
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:498 src/totem.c:2791
+#: src/totem.c:498 src/totem.c:2790
 msgid "No file"
 msgstr "Ingen fil"
 
@@ -703,19 +703,16 @@ msgstr ""
 "Skicka synpunkter på översättningen till sv@li.org"
 
 #: src/totem.c:1475
-msgid "Movie Player"
-msgstr "Filmspelare"
+#, c-format
+msgid "Movie Player using %s"
+msgstr "Filmspelare som använder %s"
 
-#: src/totem.c:1476
-msgid "using backend :"
-msgstr "använder bakände:"
-
-#: src/totem.c:1538 src/totem.c:1549
+#: src/totem.c:1537 src/totem.c:1548
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Skärmdump%d.png"
 
-#: src/totem.c:1602
+#: src/totem.c:1601
 #, c-format
 msgid ""
 "Totem could not get a screenshot of that film.\n"
@@ -724,7 +721,7 @@ msgstr ""
 "Totem kunde inte ta en skärmdump från den filmen.\n"
 "Orsak: %s."
 
-#: src/totem.c:1612
+#: src/totem.c:1611
 msgid ""
 "Totem could not get a screenshot of that film.\n"
 "Please file a bug, this isn't supposed to happen"
@@ -732,7 +729,7 @@ msgstr ""
 "Totem kunde inte ta en skärmdump från den filmen.\n"
 "Skicka en felrapport. Detta ska inte hända"
 
-#: src/totem.c:1638
+#: src/totem.c:1637
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
@@ -741,7 +738,7 @@ msgstr ""
 "Filen \"%s\" finns redan.\n"
 "Skärmdumpen sparades inte."
 
-#: src/totem.c:1649
+#: src/totem.c:1648
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -750,7 +747,7 @@ msgstr ""
 "Ett fel uppstod vid sparandet av skärmdumpen.\n"
 "Detaljer: %s"
 
-#: src/totem.c:1666
+#: src/totem.c:1665
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -758,7 +755,7 @@ msgstr ""
 "Totem kunde inte visa filmegenskapsfönstret.\n"
 "Försäkra dig om att Totem är korrekt installerat."
 
-#: src/totem.c:1735
+#: src/totem.c:1734
 #, c-format
 msgid ""
 "Totem could not seek in '%s'.\n"
@@ -767,11 +764,11 @@ msgstr ""
 "Totem kunde inte spola i \"%s\".\n"
 "Orsak: %s."
 
-#: src/totem.c:2369
+#: src/totem.c:2368
 msgid "Auto"
 msgstr "Auto"
 
-#: src/totem.c:2721
+#: src/totem.c:2720
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -780,7 +777,7 @@ msgstr ""
 "Totem kunde inte starta:\n"
 "%s"
 
-#: src/totem.c:2963
+#: src/totem.c:2962
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -791,7 +788,7 @@ msgstr ""
 "konfigurationsmotorn:\n"
 "%s"
 
-#: src/totem.c:2978 src/totem.c:3010
+#: src/totem.c:2977 src/totem.c:3009
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -799,7 +796,7 @@ msgstr ""
 "Kunde inte läsa in huvudgränssnittet (totem.glade).\n"
 "Försäkra dig om att Totem är korrekt installerat."
 
-#: src/totem.c:3036
+#: src/totem.c:3035
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
@@ -946,8 +943,11 @@ msgstr "%d ramar per sekund"
 msgid "%d kbps"
 msgstr "%d kb/s"
 
-#~ msgid "Movie Player using backend:"
-#~ msgstr "Filmspelare som använder bakänden:"
+#~ msgid "Movie Player"
+#~ msgstr "Filmspelare"
+
+#~ msgid "using backend :"
+#~ msgstr "använder bakände:"
 
 #~ msgid "using backend:"
 #~ msgstr "använder bakände:"
