@@ -6,15 +6,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem 0.11.0\n"
-"POT-Creation-Date: 2002-11-09 17:46+0100\n"
-"PO-Revision-Date: 2002-11-09 19:12+0100\n"
+"POT-Creation-Date: 2002-11-20 09:39+0100\n"
+"PO-Revision-Date: 2002-11-19 17:38+0100\n"
 "Last-Translator: Jordi Mallach <jordi@sindominio.net>\n"
 "Language-Team: Catalan <ca@dodds.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/playlist.glade.h:1 src/gtk-playlist.c:779
+#: data/playlist.glade.h:1 src/gtk-playlist.c:767
 msgid "Playlist"
 msgstr "Llista de reproducció"
 
@@ -22,74 +22,83 @@ msgstr "Llista de reproducció"
 msgid "Repeat Mode"
 msgstr "Mode de repetició"
 
-#: data/properties.glade.h:1 src/gtk-xine.c:1664
+#: data/properties.glade.h:1 src/gtk-xine.c:1729
 msgid "0 frames per second"
 msgstr "0 quadres per segón"
 
 #. Bitrate
-#: data/properties.glade.h:2 src/gtk-xine.c:1666
+#: data/properties.glade.h:2 src/gtk-xine.c:1731
 msgid "0 kbps"
 msgstr "0 kbps"
 
+#. 0 seconds
+#: data/properties.glade.h:3 src/gtk-xine.c:1665
+msgid "0 seconds"
+msgstr "0 segons"
+
 #. Dimensions
-#: data/properties.glade.h:3 src/gtk-xine.c:1659
+#: data/properties.glade.h:4 src/gtk-xine.c:1724
 msgid "0 x 0"
 msgstr "0 x 0"
 
-#: data/properties.glade.h:4
+#: data/properties.glade.h:5
 msgid "<b>Audio</b>"
 msgstr "<b>Àudio</b>"
 
-#: data/properties.glade.h:5
+#: data/properties.glade.h:6
 msgid "<b>General</b>"
 msgstr "<b>General</b>"
 
-#: data/properties.glade.h:6
+#: data/properties.glade.h:7
 msgid "<b>Video</b>"
 msgstr "<b>Vídeo</b>"
 
-#: data/properties.glade.h:7
+#: data/properties.glade.h:8
 msgid "Artist: "
 msgstr "Artista: "
 
-#: data/properties.glade.h:8
+#: data/properties.glade.h:9
 msgid "Bitrate: "
 msgstr "Ritme de bit: "
 
-#: data/properties.glade.h:9
+#: data/properties.glade.h:10
 msgid "Codec: "
 msgstr "Còdec: "
 
-#: data/properties.glade.h:10
+#: data/properties.glade.h:11
 msgid "Dimensions: "
 msgstr "Dimensions: "
 
-#: data/properties.glade.h:11
+#: data/properties.glade.h:12
+msgid "Duration: "
+msgstr "Duració: "
+
+#: data/properties.glade.h:13
 msgid "Framerate: "
 msgstr "Freqüència de quadre: "
 
 #. Year
-#: data/properties.glade.h:12 src/gtk-xine.c:1657 src/gtk-xine.c:1661
-#: src/gtk-xine.c:1668 src/gtk-xine.c:1690 src/gtk-xine.c:1711
-#: src/gtk-xine.c:1742
+#: data/properties.glade.h:14 src/gtk-xine.c:1720 src/gtk-xine.c:1726
+#: src/gtk-xine.c:1733 src/gtk-xine.c:1755 src/gtk-xine.c:1780
+#: src/gtk-xine.c:1811
 msgid "N/A"
 msgstr "N/D"
 
-#: data/properties.glade.h:13
+#: data/properties.glade.h:15
 msgid "Properties"
 msgstr "Propietats"
 
-#: data/properties.glade.h:14
+#: data/properties.glade.h:16
 msgid "Title: "
 msgstr "Títol: "
 
 #. Title
-#: data/properties.glade.h:15 src/gtk-xine.c:1653 src/gtk-xine.c:1655
-#: src/gtk-xine.c:1682 src/gtk-xine.c:1686
+#: data/properties.glade.h:17 src/gtk-xine.c:1716 src/gtk-xine.c:1718
+#: src/gtk-xine.c:1747 src/gtk-xine.c:1751
 msgid "Unknown"
 msgstr "Desconegut"
 
-#: data/properties.glade.h:16
+#: data/properties.glade.h:18
 msgid "Year: "
 msgstr "Any: "
 
@@ -162,68 +171,60 @@ msgid "Skip forward"
 msgstr "Salta endavant"
 
 #: data/totem.glade.h:16
+msgid "Time: "
+msgstr "Hora: "
+
+#: data/totem.glade.h:17
 msgid "Toggle Aspect Ratio"
 msgstr "Canvia el ràtio de l'aspecte"
 
-#: data/totem.glade.h:17 src/totem.c:1043
+#: data/totem.glade.h:18 src/totem.c:362 src/totem.c:1066
 msgid "Totem"
 msgstr "Totem"
 
-#: data/totem.glade.h:18
+#: data/totem.glade.h:19
 msgid "Totem Preferences"
 msgstr "Preferències de Totem"
 
-#: data/totem.glade.h:19
+#: data/totem.glade.h:20
 msgid "Volume Down"
 msgstr "Baixa el volum"
 
-#: data/totem.glade.h:20
+#: data/totem.glade.h:21
 msgid "Volume Up"
 msgstr "Puja el volum"
 
-#: data/totem.glade.h:21
+#: data/totem.glade.h:22
 msgid "Zoom _1:1"
 msgstr "Zoom _1:1"
 
-#: data/totem.glade.h:22
+#: data/totem.glade.h:23
 msgid "Zoom _2:1"
 msgstr "Zoom _2:1"
 
-#: data/totem.glade.h:23
+#: data/totem.glade.h:24
 msgid "_Fullscreen"
 msgstr "Pantalla _sencera"
 
-#: data/totem.glade.h:24
+#: data/totem.glade.h:25
 msgid "_Movie"
 msgstr "_Pel·lícula"
 
-#: data/totem.glade.h:25
+#: data/totem.glade.h:26
 msgid "_Play / Pause"
 msgstr "_Reprodueix / Pausa"
 
-#: data/totem.glade.h:26
+#: data/totem.glade.h:27
 msgid "_Show/Hide Playlist"
 msgstr "_Mostra/Amaga la llista de reproducció"
 
-#: data/totem.glade.h:27
+#: data/totem.glade.h:28
 msgid "_Sound"
 msgstr "_Só"
 
-#: data/totem.glade.h:28
+#: data/totem.glade.h:29
 msgid "_Zoom 1:2"
 msgstr "_Zoom 1:2"
-
-#: data/totem.glade.h:29
-msgid "button3"
-msgstr "botó3"
-
-#: data/totem.glade.h:30
-msgid "button4"
-msgstr "botó4"
-
-#: data/totem.glade.h:31
-msgid "button5"
-msgstr "botó5"
 
 #: data/totem.schemas.in.h:1
 msgid "Default audio output driver"
@@ -253,23 +254,19 @@ msgstr "Coordenada X per a la llista de reproducció"
 msgid "Y coordinate for the Playlist"
 msgstr "Coordenada Y per a la llista de reproducció"
 
-#: src/gtk-playlist.c:410 src/totem.c:875
+#: src/gtk-playlist.c:410 src/totem.c:898
 msgid "Select files"
 msgstr "Seleccioneu fitxers"
 
-#: src/gtk-playlist.c:550
-msgid "Playing"
-msgstr "Reproduïnt"
-
-#: src/gtk-playlist.c:561
+#: src/gtk-playlist.c:546
 msgid "Filename"
 msgstr "Nom de fitxer"
 
-#: src/gtk-xine.c:52
+#: src/gtk-xine.c:53
 msgid "Totem Video Window"
 msgstr "Finestra de vídeo de Totem"
 
-#: src/gtk-xine.c:733
+#: src/gtk-xine.c:736
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
@@ -277,21 +274,80 @@ msgstr ""
 "No s'ha pogut iniciar el suport de fils.\n"
 "Haurieu d'instal·lar una Xlib amb suport per a fils."
 
-#: src/gtk-xine.c:765
+#: src/gtk-xine.c:768
 msgid "Could not find a suitable video output."
 msgstr "No s'ha trobat una eixida de vídeo convenient."
 
-#: src/gtk-xine.c:1721
+#. One hour
+#: src/gtk-xine.c:1634
+#, c-format
+msgid "%d hour"
+msgstr "%d hora"
+
+#. Multiple hours
+#: src/gtk-xine.c:1637
+#, c-format
+msgid "%d hours"
+msgstr "%d hores"
+
+#. One minute
+#: src/gtk-xine.c:1641
+#, c-format
+msgid "%d minute"
+msgstr "%d minut"
+
+#. Multiple minutes
+#: src/gtk-xine.c:1644
+#, c-format
+msgid "%d minutes"
+msgstr "%d minuts"
+
+#. One second
+#: src/gtk-xine.c:1648
+#, c-format
+msgid "%d second"
+msgstr "%d segón"
+
+#. Multiple seconds
+#: src/gtk-xine.c:1651
+#, c-format
+msgid "%d seconds"
+msgstr "%d segons"
+
+#. hour:minutes:seconds
+#: src/gtk-xine.c:1656
+#, c-format
+msgid "%s %s %s"
+msgstr "%s %s %s"
+
+#. minutes:seconds
+#: src/gtk-xine.c:1659
+#, c-format
+msgid "%s %s"
+msgstr "%s %s"
+
+#. seconds
+#: src/gtk-xine.c:1662
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#. Duration
+#: src/gtk-xine.c:1722
+msgid "0 second"
+msgstr "0 segons"
+
+#: src/gtk-xine.c:1790
 #, c-format
 msgid "%d frames per second"
 msgstr "%d quadres per segón"
 
-#: src/gtk-xine.c:1733
+#: src/gtk-xine.c:1802
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/totem.c:257
+#: src/totem.c:260
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -303,7 +359,7 @@ msgstr ""
 "Instal·leu el connector necessari i reinicieu Totem per a poder reproduir "
 "aquest medi."
 
-#: src/totem.c:265
+#: src/totem.c:268
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -314,23 +370,23 @@ msgstr ""
 "Pot ser voldreu comprovar que hi ha un disc en la unitat i que està "
 "correctament configurada."
 
-#: src/totem.c:369 src/totem.c:1713
+#: src/totem.c:373 src/totem.c:1737
 msgid "No file"
 msgstr "Cap fitxer"
 
-#: src/totem.c:1019
+#: src/totem.c:1042
 msgid "translator_credits"
 msgstr "Jordi Mallach <jordi@sindominio.net>"
 
-#: src/totem.c:1044
+#: src/totem.c:1067
 msgid "Copyright (c) 2002 Bastien Nocera"
 msgstr "Copyright © 2002 Bastien Nocera"
 
-#: src/totem.c:1045
+#: src/totem.c:1068
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Reproductor de películes (basat en les biblioteques de Xine)"
 
-#: src/totem.c:1070
+#: src/totem.c:1093
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -338,7 +394,7 @@ msgstr ""
 "Totem no ha pogut mostrar la finestra de propietats de la pel·lícula.\n"
 "Assegureu-vos que Totem està instal·lat correctament."
 
-#: src/totem.c:1381
+#: src/totem.c:1405
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -347,7 +403,7 @@ msgstr ""
 "Totem no ha pogut executar-se:\n"
 "%s"
 
-#: src/totem.c:1387
+#: src/totem.c:1411
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'.\n"
@@ -356,12 +412,12 @@ msgstr ""
 "No hi ha cap connector de Totem per a gestionar «%s».\n"
 "Totem no podrà reproduir-ho."
 
-#: src/totem.c:1392
+#: src/totem.c:1416
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "«%s» està trencat i Totem no pot continuar reproduint-lo."
 
-#: src/totem.c:1396
+#: src/totem.c:1420
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -370,7 +426,7 @@ msgstr ""
 "Totem no ha pogut reproduir «%s»:\n"
 "%s"
 
-#: src/totem.c:1816
+#: src/totem.c:1854
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -381,7 +437,7 @@ msgstr ""
 "motor de configuració:\n"
 "%s"
 
-#: src/totem.c:1848 src/totem.c:1857
+#: src/totem.c:1884 src/totem.c:1893
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -389,13 +445,25 @@ msgstr ""
 "No s'ha pogut carregar la interfície principal (totem.glade).\n"
 "Assegureu-vos que Totem està instal·lat correctament."
 
-#: src/totem.c:1870
+#: src/totem.c:1905
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
 msgstr ""
 "No s'ha pogut carregar la interfície per a la llista de reproducció.\n"
 "Assegureu-vos que Totem està instal·lat correctament."
+
+#~ msgid "button3"
+#~ msgstr "botó3"
+
+#~ msgid "button4"
+#~ msgstr "botó4"
+
+#~ msgid "button5"
+#~ msgstr "botó5"
+
+#~ msgid "Playing"
+#~ msgstr "Reproduïnt"
 
 #~ msgid "Codec:"
 #~ msgstr "Còdec:"
