@@ -554,16 +554,28 @@ load_audio_out_driver (GtkXine *gtx)
 
 	/* auto probe */
 	if (strcmp (audio_driver_id, "auto") == 0)
-		return xine_open_audio_driver (gtx->priv->xine, NULL, NULL);
-
-	/* no autoprobe */
-	ao_driver = xine_open_audio_driver (gtx->priv->xine,
-			audio_driver_id, NULL);
-
-	/* if it failed without autoprobe, probe */
-	if (ao_driver == NULL)
 		ao_driver = xine_open_audio_driver (gtx->priv->xine,
 				NULL, NULL);
+	else
+		ao_driver = xine_open_audio_driver (gtx->priv->xine,
+				audio_driver_id, NULL);
+
+	/* if it failed without autoprobe, probe */
+	if (ao_driver == NULL && strcmp (audio_driver_id, "auto") != 0)
+		ao_driver = xine_open_audio_driver (gtx->priv->xine,
+				NULL, NULL);
+
+	if (ao_driver == NULL)
+	{
+		char *msg;
+
+		msg = g_strdup_printf (_("Couldn't load the '%s' audio driver\n"
+					"Check that the device is not busy."));
+		g_signal_emit (G_OBJECT (gtx),
+				gtx_table_signals[ERROR], 0,
+				0, msg);
+		g_free (msg);
+	}
 
 	g_free (audio_driver_id);
 

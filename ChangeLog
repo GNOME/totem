@@ -1,5 +1,10 @@
 2003-01-12  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (load_audio_out_driver): add an error if we can't
+	get a working driver, for the benefit of RhythmBox
+
+2003-01-12  Bastien Nocera  <hadess@hadess.net>
+
 	* src/video-utils.c: (wmspec_change_state):
 	* src/video-utils.h: removed the old compat fullscreen function
 	(get a decent WM, thank you)
