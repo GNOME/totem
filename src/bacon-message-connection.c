@@ -173,13 +173,15 @@ bacon_message_connection_free (BaconMessageConnection *conn)
 	g_return_if_fail (conn != NULL);
 	g_return_if_fail (conn->path != NULL);
 
-	close (conn->fd);
 	if (conn->is_server == TRUE)
 	{
 		g_io_channel_shutdown (conn->chan, FALSE, NULL);
 		g_io_channel_unref (conn->chan);
 		unlink (conn->path);
+	} else {
+		close (conn->fd);
 	}
+
 	g_free (conn->path);
 	g_free (conn);
 }

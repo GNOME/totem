@@ -1,5 +1,17 @@
 2003-02-07  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.schemas.in:
+	* src/bacon-message-connection.c: (bacon_message_connection_free):
+	updated from libbacon
+	* src/totem.c: (totem_action_exit), (totem_action_remote),
+	(totem_button_pressed_remote_cb),
+	(totem_message_connection_receive_cb), (process_command_line),
+	(main): added plenty of command-line options to control an already
+	launched totem, enqueue is the default action, only one instance of
+	totem can be launched at a time (Closes: #94410)
+
+2003-02-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am:
 	* src/bacon-message-connection.[ch]:
 	* src/totem-remote.h:

@@ -117,6 +117,23 @@ static const GtkTargetEntry source_table[] = {
 	{ "text/uri-list", 0, 1 },
 };
 
+static const struct poptOption options[] = {
+	{"play-pause", '\0', POPT_ARG_NONE, NULL, 0, N_("Play/Pause"), NULL},
+	{"next", '\0', POPT_ARG_NONE, NULL, 0, N_("Next"), NULL},
+	{"previous", '\0', POPT_ARG_NONE, NULL, 0, N_("Previous"), NULL},
+	{"seek-fwd", '\0', POPT_ARG_NONE, NULL, 0, N_("Seek Forwards"), NULL},
+	{"seek-bwd", '\0', POPT_ARG_NONE, NULL, 0, N_("Seek Backwards"), NULL},
+	{"volume-up", '\0', POPT_ARG_NONE, NULL, 0, N_("Volume Up"), NULL},
+	{"volume-down", '\0', POPT_ARG_NONE, NULL, 0, N_("Volume Down"), NULL},
+	{"fullscreen", '\0', POPT_ARG_NONE, NULL, 0,
+		N_("Toggle Fullscreen"), NULL},
+	{"quit", '\0', POPT_ARG_NONE, NULL, 0, N_("Quit"), NULL},
+	{"enqueue", '\0', POPT_ARG_NONE, NULL, 0, N_("Enqueue"), NULL},
+	{"replace", '\0', POPT_ARG_NONE, NULL, 0, N_("Replace"), NULL},
+
+	{NULL, '\0', 0, NULL, 0} /* end the list */
+};
+
 static gboolean popup_hide (Totem *totem);
 static void update_buttons (Totem *totem);
 static void update_dvd_menu_items (Totem *totem);
@@ -158,6 +175,8 @@ void
 totem_action_exit (Totem *totem)
 {
 	gtk_main_quit ();
+
+	bacon_message_connection_free (totem->conn);
 
 	gtk_widget_hide (totem->win);
 	gtk_widget_hide (GTK_WIDGET (totem->playlist));
@@ -1689,53 +1708,61 @@ mediadev_changed_cb (GConfClient *client, guint cnxn_id,
 }
 
 void
-totem_button_pressed_remote_cb (TotemRemote *remote, TotemRemoteCommand cmd,
-				Totem *totem)
+totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 {
 	switch (cmd) {
-		case TOTEM_REMOTE_COMMAND_PLAY:
-			totem_action_play (totem, 0);
+	case TOTEM_REMOTE_COMMAND_PLAY:
+		totem_action_play (totem, 0);
 		break;
-		
-		case TOTEM_REMOTE_COMMAND_PAUSE:
-			totem_action_play_pause (totem);
+	case TOTEM_REMOTE_COMMAND_PAUSE:
+		totem_action_play_pause (totem);
 		break;
-		
-		case TOTEM_REMOTE_COMMAND_SEEK_FORWARD:
-			totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET);
+	case TOTEM_REMOTE_COMMAND_SEEK_FORWARD:
+		totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET);
 		break;
-		
-		case TOTEM_REMOTE_COMMAND_SEEK_BACKWARD:
-			totem_action_seek_relative (totem,
-					SEEK_BACKWARD_OFFSET);
+	case TOTEM_REMOTE_COMMAND_SEEK_BACKWARD:
+		totem_action_seek_relative (totem,
+				SEEK_BACKWARD_OFFSET);
 		break;
-		
-		case TOTEM_REMOTE_COMMAND_VOLUME_UP:
-			totem_action_volume_relative (totem, 8);
+	case TOTEM_REMOTE_COMMAND_VOLUME_UP:
+		totem_action_volume_relative (totem, 8);
 		break;
-		
-		case TOTEM_REMOTE_COMMAND_VOLUME_DOWN:
-			totem_action_volume_relative (totem, -8);
+	case TOTEM_REMOTE_COMMAND_VOLUME_DOWN:
+		totem_action_volume_relative (totem, -8);
 		break;
-
-		case TOTEM_REMOTE_COMMAND_NEXT:
-			totem_action_next (totem);
+	case TOTEM_REMOTE_COMMAND_NEXT:
+		totem_action_next (totem);
 		break;
-
-		case TOTEM_REMOTE_COMMAND_PREVIOUS:
-			totem_action_previous (totem);
+	case TOTEM_REMOTE_COMMAND_PREVIOUS:
+		totem_action_previous (totem);
 		break;
-
-		case TOTEM_REMOTE_COMMAND_FULLSCREEN:
-			totem_action_fullscreen_toggle (totem);
+	case TOTEM_REMOTE_COMMAND_FULLSCREEN:
+		totem_action_fullscreen_toggle (totem);
 		break;
-
-		case TOTEM_REMOTE_COMMAND_QUIT:
-			totem_action_exit (totem);
+	case TOTEM_REMOTE_COMMAND_QUIT:
+		totem_action_exit (totem);
 		break;
-		default:
+	case TOTEM_REMOTE_COMMAND_ENQUEUE:
+		if (url != NULL)
+			gtk_playlist_add_mrl (totem->playlist, url, NULL);
+		break;
+	case TOTEM_REMOTE_COMMAND_REPLACE:
+		if (url != NULL)
+		{
+			gtk_playlist_clear (totem->playlist);
+			gtk_playlist_add_mrl (totem->playlist, url, NULL);
+		}
+		break;
+	default:
 		break;
 	}
+}
+
+void
+totem_button_pressed_remote_cb (TotemRemote *remote, TotemRemoteCommand cmd,
+		Totem *totem)
+{
+	totem_action_remote (totem, cmd, NULL);
 }
 
 static int
@@ -2574,8 +2601,25 @@ totem_get_gconf_client (Totem *totem)
 static void
 totem_message_connection_receive_cb (const char *msg, gpointer user_data)
 {
-	//FIXME
-	g_print ("msg: %s\n", msg);
+	Totem *totem = (Totem *) user_data;
+	char *command_str, *url;
+	int command;
+
+	if (strlen (msg) < 4)
+		return;
+
+	command_str = g_strndup (msg, 3);
+	sscanf (command_str, "%d", &command);
+	g_free (command_str);
+
+	if (msg[4] != '\0')
+		url = g_strdup (msg + 4);
+	else
+		url = NULL;
+
+	totem_action_remote (totem, command, url);
+
+	g_free (url);
 }
 
 static void
@@ -2592,7 +2636,7 @@ process_command_line (BaconMessageConnection *conn, int argc, char **argv)
 		command = TOTEM_REMOTE_COMMAND_ENQUEUE;
 		i = 1;
 	} else if (strcmp (argv[1], "--play-pause") == 0) {
-		command = TOTEM_REMOTE_COMMAND_PLAY;
+		command = TOTEM_REMOTE_COMMAND_PAUSE;
 	} else if (strcmp (argv[1], "--next") == 0) {
 		command = TOTEM_REMOTE_COMMAND_NEXT;
 	} else if (strcmp (argv[1], "--previous") == 0) {
@@ -2655,7 +2699,8 @@ main (int argc, char **argv)
 			LIBGNOMEUI_MODULE,
 			argc, argv,
 			GNOME_PARAM_APP_DATADIR, DATADIR,
-			NULL);
+			GNOME_PARAM_POPT_TABLE, options,
+			GNOME_PARAM_NONE);
 
 	glade_gnome_init ();
 	gnome_vfs_init ();
@@ -2687,23 +2732,17 @@ main (int argc, char **argv)
 	totem = g_new (Totem, 1);
 
 	/* IPC stuff */
-	if (gconf_client_get_bool
-			(gc, GCONF_PREFIX"/launch_once", NULL) == TRUE)
+	totem->conn = bacon_message_connection_new (GETTEXT_PACKAGE);
+	if (bacon_message_connection_get_is_server (totem->conn) == TRUE)
 	{
-		BaconMessageConnection *conn;
-
-		conn = bacon_message_connection_new (GETTEXT_PACKAGE);
-		if (bacon_message_connection_get_is_server (conn) == TRUE)
-		{
-			bacon_message_connection_set_callback (conn,
-					totem_message_connection_receive_cb,
-					totem);
-		} else {
-			process_command_line (conn, argc, argv);
-			bacon_message_connection_free (conn);
-			g_free (totem);
-			exit (0);
-		}
+		bacon_message_connection_set_callback (totem->conn,
+				totem_message_connection_receive_cb,
+				totem);
+	} else {
+		process_command_line (totem->conn, argc, argv);
+		bacon_message_connection_free (totem->conn);
+		g_free (totem);
+		exit (0);
 	}
 
 	/* Init totem itself */
