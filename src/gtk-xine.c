@@ -1222,6 +1222,33 @@ gtk_xine_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	}
 }
 
+static char *
+get_fourcc_string (uint32_t f)
+{
+	char fcc[5];
+
+	memset(&fcc, 0, sizeof(fcc));
+
+	/* Should we take care about endianess ? */
+	fcc[0] = f     | 0xFFFFFF00;
+	fcc[1] = f>>8  | 0xFFFFFF00;
+	fcc[2] = f>>16 | 0xFFFFFF00;
+	fcc[3] = f>>24 | 0xFFFFFF00;
+	fcc[4] = 0;
+
+	if(f <= 0xFFFF)
+		sprintf(fcc, "0x%x", f);
+
+	if((fcc[0] == 'm') && (fcc[1] == 's'))
+	{
+		if((fcc[2] = 0x0) && (fcc[3] == 0x55))
+			*(uint32_t *) fcc = 0x33706d2e; /* Force to '.mp3' */
+	}
+
+	return g_strdup (&fcc[0]);
+}
+
+
 gboolean
 gtk_xine_open (GtkXine *gtx, const gchar *mrl)
 {
@@ -1247,14 +1274,26 @@ gtk_xine_open (GtkXine *gtx, const gchar *mrl)
 				XINE_STREAM_INFO_AUDIO_HANDLED) == FALSE)
 	{
 		GtkXineSignal *signal;
+		uint32_t fourcc;
+		char *fourcc_str;
+		const char *name;
+
+		fourcc = xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_VIDEO_FOURCC);
+		fourcc_str = get_fourcc_string (fourcc);
+		name = xine_get_meta_info (gtx->priv->stream,
+				XINE_META_INFO_VIDEOCODEC);
 
 		gtk_xine_close (gtx);
 
 		signal = g_new0 (GtkXineSignal, 1);
 		signal->type = ERROR;
 		signal->error_type = GTX_NO_CODEC;
+		signal->message = g_strdup_printf (_("Reason: Video type '%s' isn not handled."), name ? name : fourcc_str );
 		g_async_queue_push (gtx->priv->queue, signal);
 		g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
+
+		g_free (fourcc_str);
 
 		return FALSE;
 	}
