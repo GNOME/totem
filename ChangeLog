@@ -1,3 +1,21 @@
+2002-09-23  James Willcox  <jwillcox@gnome.org>
+
+	Moved to lirc instead of irman for remote stuff.  New TotemRemote
+	object.
+
+	* acconfig.h:  s/TOTEM_IRMAN/TOTEM_REMOTE/
+	* configure.in: check for lirc
+	* src/Makefile.am:  remove totem-irman.[ch], add totem-remote.[ch]
+	* src/totem-irman.c:  bye bye
+	* src/totem-irman.h:
+	* src/totem-remote.c: (totem_lirc_to_command),
+	(totem_remote_read_code), (totem_remote_finalize),
+	(totem_remote_class_init), (totem_remote_init),
+	(totem_remote_get_type), (totem_remote_new):
+	* src/totem-remote.h:
+	* src/totem.c: (on_recent_file_activate),
+	(totem_button_pressed_remote_cb), (totem_setup_recent), (main):
+
 2002-09-23  Peteris Krisjanis <peteris.krisjanis@os.lv>
 
 	* configure.in: Added Latvian (lv) to ALL_LINGUAS.

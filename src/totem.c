@@ -15,7 +15,7 @@
 #include "egg-recent-view-gtk.h"
 
 #include "totem.h"
-#include "totem-irman.h"
+#include "totem-remote.h"
 
 #include "debug.h"
 
@@ -58,6 +58,7 @@ struct Totem {
 	char *mrl;
 	GtkPlaylist *playlist;
 	GConfClient *gc;
+	TotemRemote *remote;
 };
 
 static const GtkTargetEntry target_table[] = {
@@ -592,16 +593,21 @@ on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
                          Totem *totem)
 {
 	gchar *uri;
+	gchar *filename;
 
 	uri = egg_recent_item_get_uri (item);
 
 	D ("on_recent_file_activate URI: %s", uri);
 
-	gtk_playlist_add_mrl (totem->playlist, uri);
+	filename = g_filename_from_uri (uri, NULL, NULL);
+	g_return_if_fail (filename != NULL);
+	
+	gtk_playlist_add_mrl (totem->playlist, filename);
 
 	egg_recent_model_add_full (totem->recent_model, item);
 
 	g_free (uri);
+	g_free (filename);
 }
 
 static int
@@ -913,6 +919,55 @@ on_about1_activate (GtkButton *button, gpointer user_data)
 			GTK_WINDOW (totem->win));
 
 	gtk_widget_show(about);
+}
+
+void
+totem_button_pressed_remote_cb (TotemRemote *remote, TotemRemoteCommand cmd,
+				Totem *totem)
+{
+	switch (cmd) {
+		case TOTEM_REMOTE_COMMAND_PLAY:
+			totem_action_play (totem, 0);
+		break;
+		
+		case TOTEM_REMOTE_COMMAND_PAUSE:
+			totem_action_play_pause (totem);
+		break;
+		
+		case TOTEM_REMOTE_COMMAND_SEEK_FORWARD:
+			totem_action_seek_relative (totem, 60);
+		break;
+		
+		case TOTEM_REMOTE_COMMAND_SEEK_BACKWARD:
+			totem_action_seek_relative (totem, -15);
+		break;
+		
+		case TOTEM_REMOTE_COMMAND_VOLUME_UP:
+			totem_action_volume_relative (totem, 8);
+		break;
+		
+		case TOTEM_REMOTE_COMMAND_VOLUME_DOWN:
+			totem_action_volume_relative (totem, -8);
+		break;
+
+		case TOTEM_REMOTE_COMMAND_NEXT:
+			totem_action_next (totem);
+		break;
+
+		case TOTEM_REMOTE_COMMAND_PREVIOUS:
+			totem_action_previous (totem);
+		break;
+
+		case TOTEM_REMOTE_COMMAND_FULLSCREEN:
+			totem_action_fullscreen_toggle (totem);
+		break;
+
+		case TOTEM_REMOTE_COMMAND_QUIT:
+			totem_action_exit (totem);
+		break;
+		default:
+		break;
+	}
 }
 
 static int
@@ -1366,8 +1421,8 @@ totem_setup_recent (Totem *totem)
 	g_return_if_fail (menu != NULL);
 	g_return_if_fail (menu_item != NULL);
 
-	totem->recent_model = egg_recent_model_new
-		(EGG_RECENT_MODEL_SORT_MRU, 10);
+	totem->recent_model = egg_recent_model_new (EGG_RECENT_MODEL_SORT_MRU,
+						    10);
 
 	/* it would be better if we just filtered by mime-type, but there
 	 * doesn't seem to be an easy way to figure out which mime-types we
@@ -1479,7 +1534,11 @@ main (int argc, char **argv)
 		totem_action_play_pause (totem);
 	}
 
-	totem_irman_init (totem);
+#ifdef HAVE_REMOTE
+	totem->remote = totem_remote_new ();
+	g_signal_connect (totem->remote, "button_pressed",
+			  G_CALLBACK (totem_button_pressed_remote_cb), totem);
+#endif
 
 	gtk_main ();
 

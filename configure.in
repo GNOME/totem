@@ -29,13 +29,13 @@ AC_SUBST(XTEST_LIBS)
 
 AC_CHECK_HEADER(irman.h,,)
 
-IRMAN_LIBS=""
-AC_CHECK_LIB(irman, ir_init,
-		[ AC_CHECK_HEADER(irman.h,
-			[ IRMAN_LIBS="-lirman"
-			AC_DEFINE(HAVE_IRMAN)]
-			,,) ] ,)
-AC_SUBST(IRMAN_LIBS)
+REMOTE_LIBS=""
+AC_CHECK_LIB(lirc_client, lirc_init,
+                [ AC_CHECK_HEADER(lirc/lirc_client.h,
+                        [ REMOTE_LIBS="-llirc_client"
+                        AC_DEFINE(HAVE_REMOTE)]
+                        ,,) ] ,)
+AC_SUBST(REMOTE_LIBS)
 
 
 AC_MSG_CHECKING(for broken old architecture)

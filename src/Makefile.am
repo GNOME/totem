@@ -34,8 +34,8 @@ regenerate-built-sources:
 totem_SOURCES = 			\
 	totem.c				\
 	totem.h				\
-	totem-irman.c			\
-	totem-irman.h			\
+	totem-remote.c			\
+	totem-remote.h			\
 	gtkxine-marshal.list		\
 	$(MARSHALFILES)			\
 	gtk-xine.c gtk-xine.h		\
@@ -47,7 +47,7 @@ totem_SOURCES = 			\
         debug.h                         \
         $(EGG_RECENT_FILES)
 
-totem_LDADD = $(EXTRA_GNOME_LIBS) $(XINE_LIBS) $(XTEST_LIBS) $(IRMAN_LIBS)
+totem_LDADD = $(EXTRA_GNOME_LIBS) $(XINE_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS)
 totem_LDFLAGS = -export-dynamic
 INCLUDES = 						\
 	$(EXTRA_GNOME_CFLAGS)				\
