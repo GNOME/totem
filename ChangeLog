@@ -1,3 +1,21 @@
+2005-01-10  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-playlist.c: (totem_playlist_clear_with_compare),
+	(totem_playlist_compare_with_prefix),
+	(totem_playlist_clear_with_prefix),
+	(totem_playlist_compare_with_volume),
+	(totem_playlist_clear_with_gnome_vfs_volume):
+	Create a generic playlist clearing function that takes a GCompareFunc
+	to match playlist items
+	* src/totem-playlist.h:
+	* src/totem-private.h:
+	* src/totem-uri.c: (totem_create_full_path),
+	(totem_action_on_unmount), (totem_setup_file_monitoring):
+	* src/totem-uri.h:
+	* src/totem.c: (totem_action_exit), (main):
+	Remove from the playlist all the items that are on a volume that's
+	getting unmounted (Closes: #153209)
+
 2005-01-10  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_get_metadata):

@@ -27,6 +27,7 @@
 #include <libgnomevfs/gnome-vfs-utils.h>
 
 #include "totem-uri.h"
+#include "totem-private.h"
 
 gboolean
 totem_playing_dvd (const char *uri)
@@ -90,5 +91,23 @@ totem_create_full_path (const char *path)
 	g_free (escaped);
 
 	return retval;
+}
+
+static void
+totem_action_on_unmount (GnomeVFSVolumeMonitor *vfsvolumemonitor,
+		GnomeVFSVolume *volume, Totem *totem)
+{
+	totem_playlist_clear_with_gnome_vfs_volume (totem->playlist, volume);
+}
+
+void
+totem_setup_file_monitoring (Totem *totem)
+{
+	totem->monitor = gnome_vfs_get_volume_monitor ();
+
+	g_signal_connect (G_OBJECT (totem->monitor),
+			"volume_pre_unmount",
+			G_CALLBACK (totem_action_on_unmount),
+			totem);
 }
 

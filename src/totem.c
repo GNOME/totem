@@ -28,8 +28,6 @@
 #include <stdlib.h>
 #endif /* !HAVE_GTK_ONLY */
 
-#include <libgnomevfs/gnome-vfs.h>
-#include <gconf/gconf-client.h>
 #include <string.h>
 
 /* X11 headers */
@@ -224,6 +222,8 @@ totem_action_exit (Totem *totem)
 		gtk_widget_destroy (GTK_WIDGET (totem->playlist));
 	if (totem->win)
 		gtk_widget_destroy (GTK_WIDGET (totem->win));
+
+	gnome_vfs_shutdown ();
 
 	exit (0);
 }
@@ -3559,6 +3559,7 @@ main (int argc, char **argv)
 	totem_setup_recent (totem);
 	totem_callback_connect (totem);
 	totem_setup_window (totem);
+	totem_setup_file_monitoring (totem);
 
 	/* Show ! gtk_main_iteration trickery to show all the widgets
 	 * we have so far */

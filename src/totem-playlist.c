@@ -1631,21 +1631,9 @@ totem_playlist_clear (TotemPlaylist *playlist)
 	playlist->_priv->current = NULL;
 }
 
-static gboolean
-totem_playlist_current_has_prefix (TotemPlaylist *playlist,
-		const char *prefix)
-{
-	char *current;
-	gboolean retval;
-
-	current = totem_playlist_get_current_mrl (playlist);
-	retval = g_str_has_prefix (current, prefix);
-	g_free (current);
-	return retval;
-}
-
-void
-totem_playlist_clear_with_prefix (TotemPlaylist *playlist, const char *prefix)
+static void
+totem_playlist_clear_with_compare (TotemPlaylist *playlist, GCompareFunc func,
+		gconstpointer data)
 {
 	GList *list = NULL, *l;
 	guint num_items, i;
@@ -1653,12 +1641,6 @@ totem_playlist_clear_with_prefix (TotemPlaylist *playlist, const char *prefix)
 	num_items = PL_LEN;
 	if (num_items == 0)
 		return;
-
-	if (totem_playlist_current_has_prefix (playlist, prefix) == FALSE)
-	{
-		g_warning ("totem_playlist_clear_with_prefix called while current mrl doesn't have prefix '%s'", prefix);
-		return;
-	}
 
 	for (i = 0; i < num_items; i++)
 	{
@@ -1679,7 +1661,7 @@ totem_playlist_clear_with_prefix (TotemPlaylist *playlist, const char *prefix)
 		gtk_tree_model_get (playlist->_priv->model, &iter,
 				URI_COL, &mrl, -1);
 
-		if (g_str_has_prefix (mrl, prefix) != FALSE)
+		if ((* func) (mrl, data) != FALSE)
 		{
 			GtkTreePath *path;
 			GtkTreeRowReference *ref;
@@ -1693,7 +1675,6 @@ totem_playlist_clear_with_prefix (TotemPlaylist *playlist, const char *prefix)
 
 		g_free (mrl);
 	}
-
 
 	for (l = list; l != NULL; l = l->next)
 	{
@@ -1717,6 +1698,61 @@ totem_playlist_clear_with_prefix (TotemPlaylist *playlist, const char *prefix)
 	g_signal_emit (G_OBJECT (playlist),
 			totem_playlist_table_signals[CURRENT_REMOVED],
 			0, NULL);
+}
+
+static int
+totem_playlist_compare_with_prefix (gconstpointer a, gconstpointer b)
+{
+	const char *mrl = (const char *) a;
+	const char *prefix = (const char *) b;
+
+	return g_str_has_prefix (mrl, prefix);
+}
+
+void
+totem_playlist_clear_with_prefix (TotemPlaylist *playlist, const char *prefix)
+{
+	totem_playlist_clear_with_compare (playlist,
+			(GCompareFunc) totem_playlist_compare_with_prefix,
+			(void *)prefix);
+}
+
+static int
+totem_playlist_compare_with_volume (gpointer a, gpointer b)
+{
+	GnomeVFSVolume *clear_volume = (GnomeVFSVolume *) b;
+	const char *mrl = (const char *) a;
+
+	char *filename;
+	GnomeVFSVolume *volume;
+	GnomeVFSVolumeMonitor *monitor;
+	gboolean retval = FALSE;
+
+	if (g_str_has_prefix (mrl, "file:///") == FALSE)
+		return FALSE;
+
+	monitor = gnome_vfs_get_volume_monitor ();
+
+	filename = g_filename_from_uri (mrl, NULL, NULL);
+	volume = gnome_vfs_volume_monitor_get_volume_for_path
+		(monitor, filename);
+	g_free (filename);
+
+	if (volume == clear_volume)
+		retval = TRUE;
+
+	gnome_vfs_volume_unref (volume);
+
+	return retval;
+}
+
+void
+totem_playlist_clear_with_gnome_vfs_volume (TotemPlaylist *playlist,
+		GnomeVFSVolume *volume)
+{
+	totem_playlist_clear_with_compare (playlist,
+			(GCompareFunc) totem_playlist_compare_with_volume,
+			volume);
 }
 
 char

@@ -23,11 +23,14 @@
 #ifndef TOTEM_URI_H
 #define TOTEM_URI_H
 
+#include "totem.h"
+
 G_BEGIN_DECLS
 
 char*		totem_create_full_path	(const char *path);
 gboolean	totem_is_media		(const char *uri);
 gboolean	totem_playing_dvd	(const char *uri);
+void		totem_setup_file_monitoring (Totem *totem);
 
 G_END_DECLS
 

@@ -22,6 +22,7 @@
 
 #include <glade/glade.h>
 #include <gconf/gconf-client.h>
+#include <libgnomevfs/gnome-vfs.h>
 
 #include "totem-remote.h"
 #include "scrsaver.h"
@@ -103,6 +104,9 @@ struct Totem {
 	/* recent file stuff */
 	EggRecentModel *recent_model;
 	EggRecentViewGtk *recent_view;
+
+	/* Monitor to automatically unmount */
+	GnomeVFSVolumeMonitor *monitor;
 
 	/* session */
 	const char *argv0;
