@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem cs\n"
-"POT-Creation-Date: 2003-03-20 12:27+0100\n"
-"PO-Revision-Date: 2003-03-20 20:05+0100\n"
+"POT-Creation-Date: 2003-03-21 12:42+0100\n"
+"PO-Revision-Date: 2003-03-21 13:09+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -489,125 +489,6 @@ msgstr "Vyberte soubory"
 msgid "Filename"
 msgstr "Název souboru"
 
-#: src/bacon-video-widget.c:58
-msgid "Totem Video Window"
-msgstr "Video okno aplikace Totem"
-
-#: src/bacon-video-widget.c:553
-#, c-format
-msgid ""
-"Couldn't load the '%s' audio driver\n"
-"Check that the device is not busy."
-msgstr ""
-"Nelze načíst ovladač zvuku '%s'.\n"
-"Ověřte prosím, zda není zařízení obsazeno."
-
-#: src/bacon-video-widget.c:938
-msgid "There is no plugin to handle this movie"
-msgstr "Pro obsluhu tohoto filmu chybí zásuvný modul"
-
-#: src/bacon-video-widget.c:942
-msgid "This movie is broken and can not be played further"
-msgstr "Tento film je poškozen a nelze jej dále přehrávat"
-
-#: src/bacon-video-widget.c:946
-msgid "This location is not a valid one"
-msgstr "Toto umístění není platné"
-
-#: src/bacon-video-widget.c:950
-msgid "Generic Error"
-msgstr "Obecná chyba"
-
-#: src/bacon-video-widget.c:1266
-#, c-format
-msgid "Video type '%s' is not handled"
-msgstr "Typ videa '%s' není obsloužen"
-
-#: src/bacon-video-widget.c:2150
-msgid "Movie is not playing"
-msgstr "Film se nepřehrává"
-
-#: src/bacon-video-widget.c:2158
-msgid "No video to capture"
-msgstr "Žádné video k zachycení"
-
-#: src/bacon-video-widget.c:2165
-msgid "Video codec is not handled"
-msgstr "Kodek videa '%s' není obsloužen"
-
-#: src/bacon-video-widget.c:2176
-msgid "Height or width of the video is 0. Please file a bug."
-msgstr "Výška nebo šířka videa je 0. Ohlaste prosím chybu."
-
-#. One hour
-#: src/bacon-video-widget-properties.c:109
-#, c-format
-msgid "%d hour"
-msgstr "%d hodina"
-
-#. Multiple hours
-#: src/bacon-video-widget-properties.c:112
-#, c-format
-msgid "%d hours"
-msgstr "%d hodin(y)"
-
-#. One minute
-#: src/bacon-video-widget-properties.c:116
-#, c-format
-msgid "%d minute"
-msgstr "%d minuta"
-
-#. Multiple minutes
-#: src/bacon-video-widget-properties.c:119
-#, c-format
-msgid "%d minutes"
-msgstr "%d minut(y)"
-
-#. One second
-#: src/bacon-video-widget-properties.c:123
-#, c-format
-msgid "%d second"
-msgstr "%d sekunda"
-
-#. Multiple seconds
-#: src/bacon-video-widget-properties.c:126
-#, c-format
-msgid "%d seconds"
-msgstr "%d sekund(y)"
-
-#. hour:minutes:seconds
-#: src/bacon-video-widget-properties.c:131
-#, c-format
-msgid "%s %s %s"
-msgstr "%s:%s:%s"
-
-#. minutes:seconds
-#: src/bacon-video-widget-properties.c:134
-#, c-format
-msgid "%s %s"
-msgstr "%s:%s"
-
-#. seconds
-#: src/bacon-video-widget-properties.c:137
-#, c-format
-msgid "%s"
-msgstr "%s"
-
-#. Duration
-#: src/bacon-video-widget-properties.c:177
-msgid "0 second"
-msgstr "0 sekund"
-
-#: src/bacon-video-widget-properties.c:265
-#, c-format
-msgid "%d frames per second"
-msgstr "%d snímků za sekundu"
-
-#: src/bacon-video-widget-properties.c:283
-#, c-format
-msgid "%d kbps"
-msgstr "%d kbps"
-
 #: src/totem.c:79
 msgid "Seek Forwards"
 msgstr "Přeskočit dopředu"
@@ -747,7 +628,7 @@ msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
 msgstr ""
-"Totem nemůže zobrazit okno se svými vlastnostmi.\n"
+"Totem nemůže zobrazit okno vlastností filmu.\n"
 "Ujistěte se, že je tato aplikace správně nainstalovaná."
 
 #: src/totem.c:1604
@@ -795,6 +676,13 @@ msgstr ""
 "Nelze načíst rozhraní pro seznam skladeb.\n"
 "Ujistěte se, že je Totem řádně nainstalován."
 
+#: src/totem-preferences.c:63
+msgid ""
+"The change of this setting will only take effect for the next movie, or when "
+"Totem is restarted"
+msgstr ""
+"Změna tohoto nastavení se projeví až na dalším filmu nebo po restartu Totemu."
+
 #: src/totem-statusbar.c:138
 msgid "Shadow type"
 msgstr "Typ stínování"
@@ -806,6 +694,125 @@ msgstr "Styl ohraničení okolo textu ve stavové liště"
 #: src/totem-statusbar.c:180
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
+
+#: src/bacon-video-widget.c:58
+msgid "Totem Video Window"
+msgstr "Video okno aplikace Totem"
+
+#: src/bacon-video-widget.c:553
+#, c-format
+msgid ""
+"Couldn't load the '%s' audio driver\n"
+"Check that the device is not busy."
+msgstr ""
+"Nelze načíst ovladač zvuku '%s'.\n"
+"Ověřte prosím, zda není zařízení obsazeno."
+
+#: src/bacon-video-widget.c:937
+msgid "There is no plugin to handle this movie"
+msgstr "Pro obsluhu tohoto filmu chybí zásuvný modul"
+
+#: src/bacon-video-widget.c:941
+msgid "This movie is broken and can not be played further"
+msgstr "Tento film je poškozen a nelze jej dále přehrávat"
+
+#: src/bacon-video-widget.c:945
+msgid "This location is not a valid one"
+msgstr "Toto umístění není platné"
+
+#: src/bacon-video-widget.c:949
+msgid "Generic Error"
+msgstr "Obecná chyba"
+
+#: src/bacon-video-widget.c:1265
+#, c-format
+msgid "Video type '%s' is not handled"
+msgstr "Typ videa '%s' není obsloužen"
+
+#: src/bacon-video-widget.c:2149
+msgid "Movie is not playing"
+msgstr "Film se nepřehrává"
+
+#: src/bacon-video-widget.c:2157
+msgid "No video to capture"
+msgstr "Žádné video k zachycení"
+
+#: src/bacon-video-widget.c:2164
+msgid "Video codec is not handled"
+msgstr "Kodek videa '%s' není obsloužen"
+
+#: src/bacon-video-widget.c:2175
+msgid "Height or width of the video is 0. Please file a bug."
+msgstr "Výška nebo šířka videa je 0. Ohlaste prosím chybu."
+
+#. One hour
+#: src/bacon-video-widget-properties.c:109
+#, c-format
+msgid "%d hour"
+msgstr "%d hodina"
+
+#. Multiple hours
+#: src/bacon-video-widget-properties.c:112
+#, c-format
+msgid "%d hours"
+msgstr "%d hodin(y)"
+
+#. One minute
+#: src/bacon-video-widget-properties.c:116
+#, c-format
+msgid "%d minute"
+msgstr "%d minuta"
+
+#. Multiple minutes
+#: src/bacon-video-widget-properties.c:119
+#, c-format
+msgid "%d minutes"
+msgstr "%d minut(y)"
+
+#. One second
+#: src/bacon-video-widget-properties.c:123
+#, c-format
+msgid "%d second"
+msgstr "%d sekunda"
+
+#. Multiple seconds
+#: src/bacon-video-widget-properties.c:126
+#, c-format
+msgid "%d seconds"
+msgstr "%d sekund(y)"
+
+#. hour:minutes:seconds
+#: src/bacon-video-widget-properties.c:131
+#, c-format
+msgid "%s %s %s"
+msgstr "%s:%s:%s"
+
+#. minutes:seconds
+#: src/bacon-video-widget-properties.c:134
+#, c-format
+msgid "%s %s"
+msgstr "%s:%s"
+
+#. seconds
+#: src/bacon-video-widget-properties.c:137
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#. Duration
+#: src/bacon-video-widget-properties.c:177
+msgid "0 second"
+msgstr "0 sekund"
+
+#: src/bacon-video-widget-properties.c:265
+#, c-format
+msgid "%d frames per second"
+msgstr "%d snímků za sekundu"
+
+#: src/bacon-video-widget-properties.c:283
+#, c-format
+msgid "%d kbps"
+msgstr "%d kbps"
 
 #~ msgid "Can't capture visual effects"
 #~ msgstr "Nemohu zachytit vizuální efekty"
