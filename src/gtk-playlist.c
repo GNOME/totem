@@ -191,10 +191,14 @@ gtk_playlist_new (GtkWindow *parent)
 	filename = gnome_program_locate_file (NULL,
 			GNOME_FILE_DOMAIN_APP_DATADIR,
 			"playlist-playing.png", TRUE, NULL);
-	//FIXME check if NULL
-	playlist->details->icon = gdk_pixbuf_new_from_file (filename,
-			NULL);
-	g_free (filename);
+	if (filename != NULL)
+	{
+		playlist->details->icon = gdk_pixbuf_new_from_file
+			(filename, NULL);
+		g_free (filename);
+	} else {
+		playlist->details->icon = NULL;
+	}
 
 	gtk_widget_show_all (GTK_DIALOG (playlist)->vbox);
 
@@ -299,7 +303,7 @@ gtk_playlist_unset_playing (GtkPlaylist *playlist)
 	GtkListStore *store;
 	GtkTreeIter iter;
 
-	g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), FALSE);
+	/* No type-checking, it's supposed to be safe here */
 
 	store = GTK_LIST_STORE (playlist->details->model);
 	gtk_tree_model_get_iter (playlist->details->model,
@@ -357,6 +361,19 @@ gtk_playlist_set_next (GtkPlaylist *playlist)
 	gtk_tree_path_free (playlist->details->current);
 	playlist->details->current = gtk_tree_model_get_path
 		(playlist->details->model, &iter);
+}
+
+void
+gtk_playlist_set_at_start (GtkPlaylist *playlist)
+{
+	GtkTreeIter iter;
+
+	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
+
+	gtk_playlist_unset_playing (playlist);
+
+	gtk_tree_path_free (playlist->details->current);
+	playlist->details->current = gtk_tree_path_new_from_string ("0");
 }
 
 static void

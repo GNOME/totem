@@ -1,4 +1,17 @@
-2002-07-27  Bastien Nocera,,,  <hadess@hadess.net>
+2002-07-28  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-playlist.c: (gtk_playlist_new),
+	(gtk_playlist_unset_playing), (gtk_playlist_set_next),
+	(gtk_playlist_set_at_start):
+	* src/gtk-playlist.h:
+	* src/totem.c: (play_pause_toggle_disconnected),
+	(action_play_pause_real), (action_set_mrl), (action_previous),
+	(action_next), (on_eos_event), (totem_callback_connect), (main):
+	more playlist/eos work, now eo playlist and eo stream is handled
+	correctly, all the deadlocks (that happened because of some nasty
+	signals/threads interaction) are gone
+
+2002-07-27  Bastien Nocera  <hadess@hadess.net>
 
 	* src/Makefile.am:
 	* src/gtk-playlist.c: (gtk_playlist_new), (gtk_playlist_add_mrl),

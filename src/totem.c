@@ -37,6 +37,7 @@ static const GtkTargetEntry target_table[] = {
 	{ "text/uri-list", 0, 0 },
 };
 
+static void action_set_mrl (Totem *totem, const char *mrl);
 static gboolean popup_hide (Totem *totem);
 static void update_buttons (Totem *totem);
 static void on_play_pause_button_toggled (GtkToggleButton *button,
@@ -96,13 +97,11 @@ static void
 play_pause_toggle_disconnected (Totem *totem)
 {
 	/* Avoid loops by disconnecting the callback first */
-	g_signal_handler_disconnect
-		(GTK_OBJECT (totem->pp_button),
+	g_signal_handler_disconnect (GTK_OBJECT (totem->pp_button),
 		 totem->pp_handler);
 	action_play_pause (totem);
 	totem->pp_handler = g_signal_connect
-		(GTK_OBJECT (totem->pp_button),
-		 "toggled",
+		(GTK_OBJECT (totem->pp_button), "toggled",
 		 GTK_SIGNAL_FUNC (on_play_pause_button_toggled), totem);
 }
 
@@ -111,8 +110,19 @@ action_play_pause_real (Totem *totem, int pos)
 {
 	if (totem->mrl == NULL)
 	{
-		play_pause_toggle_disconnected (totem);
-		return;
+		char *mrl;
+
+		/* Try to pull an mrl from the playlist */
+		mrl = gtk_playlist_get_current_mrl (totem->playlist);
+		if (mrl == NULL)
+		{
+			play_pause_toggle_disconnected (totem);
+			return;
+		} else {
+			action_set_mrl (totem, mrl);
+			g_free (mrl);
+			return;
+		}
 	}
 
 	if (!gtk_xine_is_playing(GTK_XINE(totem->gtx))) {
@@ -187,6 +197,10 @@ action_set_mrl (Totem *totem, const char *mrl)
 			/* Make sure it will actually work first */
 			action_play_pause (totem);
 		}
+		/* Force play button status */
+		if (gtk_toggle_button_get_active
+				(GTK_TOGGLE_BUTTON(totem->pp_button)) == FALSE)
+			play_pause_toggle_disconnected (totem);
 
 		/* Play/Pause */
 		gtk_widget_set_sensitive (totem->pp_button, TRUE);
@@ -222,11 +236,11 @@ action_previous (Totem *totem)
 {
 	char *mrl;
 
-	action_play_pause (totem);
 	gtk_playlist_set_previous (totem->playlist);
 	update_buttons (totem);
 	mrl = gtk_playlist_get_current_mrl (totem->playlist);
 	action_set_mrl (totem, mrl);
+	g_free (mrl);
 }
 
 static void
@@ -234,12 +248,11 @@ action_next (Totem *totem)
 {
 	char *mrl;
 
-	action_play_pause (totem);
 	gtk_playlist_set_next (totem->playlist);
 	update_buttons (totem);
 	mrl = gtk_playlist_get_current_mrl (totem->playlist);
-	g_message ("mrl we set as next is: %s", mrl);
 	action_set_mrl (totem, mrl);
+	g_free (mrl);
 }
 
 static void
@@ -559,16 +572,34 @@ on_eos_event (GtkWidget *widget, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 
-	g_signal_handler_disconnect (totem->pp_button, totem->pp_handler);
-	g_message ("EOS disconnect");
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(totem->pp_button),
-			FALSE);
-	totem->pp_handler = g_signal_connect (GTK_OBJECT (totem->pp_button),
-			"toggled",
-			GTK_SIGNAL_FUNC (on_play_pause_button_toggled), totem);
-	g_message ("EOS connect");
+	gdk_threads_enter ();
 
-	return TRUE;
+	g_message ("1");
+	if (!gtk_playlist_has_next_mrl (totem->playlist))
+	{
+		char *mrl;
+
+		long_action ();
+		g_message ("2");
+		/* Force play button status */
+		if (gtk_toggle_button_get_active
+				(GTK_TOGGLE_BUTTON(totem->pp_button)) == TRUE)
+			play_pause_toggle_disconnected (totem);
+		gtk_playlist_set_at_start (totem->playlist);
+		update_buttons (totem);
+		mrl = gtk_playlist_get_current_mrl (totem->playlist);
+		action_set_mrl (totem, mrl);
+		long_action ();
+		action_play_pause (totem);
+		g_free (mrl);
+	} else {
+		g_message ("3");
+		action_next (totem);
+	}
+
+	gdk_threads_leave ();
+
+	return FALSE;
 }
 
 static int
@@ -711,10 +742,6 @@ totem_callback_connect (Totem *totem)
 			GTK_SIGNAL_FUNC (drop_cb), totem);
 	gtk_drag_dest_set (totem->treeview, GTK_DEST_DEFAULT_ALL,
 			target_table, 1, GDK_ACTION_COPY);
-
-	item = glade_xml_get_widget (totem->xml, "toggle_button");
-	g_signal_connect (GTK_OBJECT (item), "toggled",
-			GTK_SIGNAL_FUNC (toggle_playlist), totem);
 #endif
 	/* Exit */
 	g_signal_connect (GTK_OBJECT (totem->win), "delete_event",
@@ -769,6 +796,8 @@ main (int argc, char *argv[])
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
+	g_thread_init (NULL);
+	gdk_threads_init ();
 	gnome_program_init ("totem", VERSION,
 			LIBGNOMEUI_MODULE,
 			argc, argv,

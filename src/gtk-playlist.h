@@ -61,4 +61,6 @@ void       gtk_playlist_set_next (GtkPlaylist *playlist);
 
 gboolean   gtk_playlist_set_playing (GtkPlaylist *playlist);
 
+void       gtk_playlist_set_at_start (GtkPlaylist *playlist);
+
 #endif /* GTK_PLAYLIST_H */
