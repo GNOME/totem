@@ -1,3 +1,14 @@
+2004-11-25  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/totem-properties-page.c: (totem_properties_page_init),
+	(set_property), (main):
+	  Fix up properties page for GStreamer backend. Mostly a matter of
+	  calling _init() through getting and using the popt tables, and
+	  explicitely re-setting the metadata after playing, because the
+	  GStreamer backend will call got-metadata in an idle loop which
+	  requires a GMainLoop in order to be executed and - yeah! - that's
+	  not the case here.
+
 2004-11-25  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.keys: add application/x-extension-mp4 as a supported

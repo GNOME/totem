@@ -26,6 +26,7 @@
 #include <fcntl.h>
 
 #include <gtk/gtk.h>
+#include <gnome.h>
 #include <libgnome/gnome-i18n.h>
 #include <bonobo.h>
 #include <libgnomevfs/gnome-vfs.h>
@@ -103,6 +104,8 @@ totem_properties_page_init(TotemPropertiesPage *props)
 
 	props->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new
 			(-1, -1, TRUE, &err));
+	if (!props->bvw)
+		g_error ("Error: %s", err ? err->message : "bla");
 	//FIXME
 
 	g_signal_connect (G_OBJECT (props->bvw),
@@ -170,6 +173,8 @@ set_property(BonoboPropertyBag *bag,
 				props->bvw, TRUE);
 		bacon_video_widget_open (props->bvw, props->location, NULL);
 		bacon_video_widget_play (props->bvw, NULL);
+		bacon_video_widget_properties_update (props->props,
+				props->bvw, FALSE);
 	}
 }
 
@@ -186,6 +191,19 @@ view_factory(BonoboGenericFactory *this_factory,
 int
 main(int argc, char *argv[])
 {
+	static struct poptOption options[] = {
+		{NULL, '\0', POPT_ARG_INCLUDE_TABLE, NULL, 0,
+			N_("Backend options"), NULL},
+		{NULL, '\0', 0, NULL, 0} /* end the list */
+	};
+
+	options[0].arg = bacon_video_widget_get_popt_table ();
+	gnome_program_init ("totem-video-thumbnailer", VERSION,
+			LIBGNOME_MODULE, argc, argv,
+			GNOME_PARAM_APP_DATADIR, DATADIR,
+			GNOME_PARAM_POPT_TABLE, options,
+			GNOME_PARAM_NONE);
+
 	bindtextdomain(GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 	textdomain(GETTEXT_PACKAGE);
