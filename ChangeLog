@@ -1,3 +1,12 @@
+2003-04-22  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in:
+	* src/totem.c: (totem_action_error), (totem_action_error_and_exit),
+	(totem_action_exit), (video_widget_create), (main): deactivate the
+	XInitThreads when starting up with the GStreamer backend to work-around
+	#111349, manage to show the error messages when the video widget
+	couldn't be initialised, Gst needs more error handling
+
 2003-04-21  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: debug is disabled by default

@@ -155,6 +155,7 @@ totem_create_full_path (const char *path)
 void
 totem_action_error (char *msg, GtkWindow *parent)
 {
+	//FIXME
 	static GtkWidget *error_dialog = NULL;
 
 	if (error_dialog != NULL)
@@ -180,14 +181,38 @@ totem_action_error (char *msg, GtkWindow *parent)
 }
 
 void
+totem_action_error_and_exit (char *msg, Totem *totem)
+{
+	//FIXME
+	GtkWidget *error_dialog;
+
+	error_dialog =
+		gtk_message_dialog_new (NULL,
+				GTK_DIALOG_MODAL,
+				GTK_MESSAGE_ERROR,
+				GTK_BUTTONS_OK,
+				"%s", msg);
+	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
+			GTK_RESPONSE_OK);
+	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
+	gtk_dialog_run (GTK_DIALOG (error_dialog));
+
+	totem_action_exit (totem);
+}
+
+void
 totem_action_exit (Totem *totem)
 {
-	gtk_main_quit ();
+	if (gtk_main_level () > 0)
+		gtk_main_quit ();
 
 	bacon_message_connection_free (totem->conn);
 
-	gtk_widget_hide (totem->win);
-	gtk_widget_hide (GTK_WIDGET (totem->playlist));
+	if (totem->win)
+		gtk_widget_hide (totem->win);
+
+	if (totem->playlist)
+		gtk_widget_hide (GTK_WIDGET (totem->playlist));
 
 	if (totem->bvw)
 		gtk_widget_destroy (GTK_WIDGET (totem->bvw));
@@ -2841,13 +2866,16 @@ video_widget_create (Totem *totem)
 		char *msg;
 
 		msg = g_strdup_printf (_("Totem could not startup:\n%s"),
-				err->message);
+				err != NULL ? err->message : _("No reason"));
 		gtk_playlist_set_playing (totem->playlist, FALSE);
-		g_error_free (err);
-		totem_action_error (msg, GTK_WINDOW (totem->win));
-		g_free (msg);
 
-		totem_action_exit (totem);
+		if (err != NULL)
+			g_error_free (err);
+
+		gtk_widget_hide (totem->win);
+
+		totem_action_error_and_exit (msg, totem);
+		g_free (msg);
 	}
 
 	container = glade_xml_get_widget (totem->xml, "frame2");
@@ -3072,7 +3100,12 @@ main (int argc, char **argv)
 
 	g_thread_init (NULL);
 	gdk_threads_init ();
+
+	/* FIXME This should be enabled all the time, and needs to be
+	 * removed when 111349 is closed */
+#ifdef HAVE_XINE
 	XInitThreads ();
+#endif
 
 	gnome_program_init ("totem", VERSION,
 			LIBGNOMEUI_MODULE,

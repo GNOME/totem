@@ -63,6 +63,9 @@ dnl Give error and exit if we don't have gstreamer
 else
 	MM="libxine >= $XINE_REQS"
 	AC_MSG_RESULT(xine)
+
+	dnl FIXME for bug 111349
+	AC_DEFINE(HAVE_XINE, 1, [defined if you have xine installed])
 fi
 AM_CONDITIONAL(TOTEM_GST, test x$ENABLE_GST = "xyes")
 
