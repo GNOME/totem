@@ -819,7 +819,8 @@ setup_config_video (BaconVideoWidget *bvw)
 static void
 setup_config_stream (BaconVideoWidget *bvw)
 {
-	int value, i;
+	GConfValue *confvalue;
+	int value, i, tmp;
 
 	if (bvw->priv->gc == NULL)
 		return;
@@ -828,10 +829,19 @@ setup_config_stream (BaconVideoWidget *bvw)
 	for (i = 0; i < 4; i++)
 	{
 		GError *error = NULL;
-		int tmp;
 
-		value = gconf_client_get_int (bvw->priv->gc,
+		confvalue = gconf_client_get_without_default (bvw->priv->gc,
 				video_props_str[i], &error);
+
+		if (confvalue != NULL)
+		{
+			value = gconf_value_get_int (confvalue);
+			gconf_value_free (confvalue);
+		} else {
+			value = 65535 / 2;
+		}
+
+		g_message ("value %d %s", value, video_props_str[i]);
 
 		/* avoid black screens */
 		if (value == 0 && error != NULL)
@@ -842,6 +852,7 @@ setup_config_stream (BaconVideoWidget *bvw)
 		{
 			xine_set_param (bvw->priv->stream,
 					video_props[i], value);
+			g_message ("setting value %d %s", value, video_props_str[i]);
 		}
 
 		if (error != NULL)
