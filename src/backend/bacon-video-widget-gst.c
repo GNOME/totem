@@ -923,12 +923,12 @@ cb_iterate (BaconVideoWidget *bvw)
   }
 
   /* check length/pos of stream */
-  if (!bvw->priv->stream_length) {
-    if (gst_element_query (GST_ELEMENT (bvw->priv->play),
-			   GST_QUERY_TOTAL, &fmt, &value)) {
-      got_stream_length (GST_ELEMENT (bvw->priv->play),
-			 value, bvw);
-    }
+  if (gst_element_query (GST_ELEMENT (bvw->priv->play),
+			 GST_QUERY_TOTAL, &fmt, &value) &
+      GST_CLOCK_TIME_IS_VALID (value) &&
+      value / GST_MSECOND != bvw->priv->stream_length) {
+    got_stream_length (GST_ELEMENT (bvw->priv->play),
+		       value, bvw);
   }
   if (gst_element_query (GST_ELEMENT (bvw->priv->play),
 			 GST_QUERY_POSITION, &fmt, &value)) {
