@@ -654,7 +654,7 @@ setup_config_video (BaconVideoWidget *bvw)
 	if (xine_config_lookup_entry (bvw->priv->xine,
 				"video.xv_colorkey", &entry))
 	{
-		entry.num_value = 1;
+		entry.num_value = 30;
 		xine_config_update_entry (bvw->priv->xine, &entry);
 	}
 }
