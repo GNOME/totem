@@ -1,5 +1,11 @@
 2002-10-19  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (gtk_xine_set_fullscreen),
+	(gtk_xine_set_show_cursor): just show/hide a window instead of
+	creating a new one each time (Closes: #91892)
+
+2002-10-19  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (popup_hide): disconnect the "popup_hide" callback
 	before hiding the popup (Closes: #91836)
 
