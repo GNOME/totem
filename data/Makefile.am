@@ -84,7 +84,7 @@ else
 install-data-local:
 endif
 
-EXTRA_DIST = $(stuff_DATA) $(desktop_in_in_files_all) totem.schemas.in lirc_example schemas.sh desktop.sh handlers.sh $(man_MANS) mime-type-list.txt mime-type-include.sh totem-video-thumbnailer.1
+EXTRA_DIST = $(stuff_DATA) $(desktop_in_in_files_all) totem.schemas.in lirc_example schemas.sh desktop.sh handlers.sh $(man_MANS) mime-type-list.txt mime-type-include.sh totem-video-thumbnailer.1 totem-video-thumbnailer.pod
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(desktop_DATA) $(schema_DATA) $(desktop_in_files_all)
 
