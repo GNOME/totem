@@ -274,6 +274,8 @@ bacon_cd_selection_new (void)
 	{
 		bcs->priv->widget = gnome_file_entry_new (NULL,
 					_("Select the drive"));
+		g_object_set (G_OBJECT (bcs->priv->widget),
+				"use_filechooser", TRUE, NULL);
 		g_signal_connect (G_OBJECT (bcs->priv->widget), "changed",
 				G_CALLBACK (on_combo_entry_changed), bcs);
 
