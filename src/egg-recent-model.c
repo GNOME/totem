@@ -1392,14 +1392,15 @@ egg_recent_model_get_list (EggRecentModel *model)
 	GList *list=NULL;
 
 	file = egg_recent_model_open_file (model);
-	g_return_val_if_fail (file != NULL, FALSE);
+	g_return_val_if_fail (file != NULL, NULL);
 	
 	if (egg_recent_model_lock_file (file)) {
 		list = egg_recent_model_read (model, file);
 		
 	} else {
 		g_warning ("Failed to lock:  %s", strerror (errno));
-		return FALSE;
+		fclose (file);
+		return NULL;
 	}
 
 	if (!egg_recent_model_unlock_file (file))

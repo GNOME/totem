@@ -424,7 +424,7 @@ linux_scan (gboolean recorder_only)
 	 * The cdroms.device string gets cleaned up again in cdrom_get_name()
 	 * we need the oldstyle name to get device->display_name for ide.
 	 */
-	if (g_file_test("/dev/.devfsd", G_FILE_TEST_EXISTS)) {
+	if (g_file_test ("/dev/cdroms", G_FILE_TEST_IS_DIR)) {
 		have_devfs = TRUE;
 	}
 	
@@ -573,7 +573,7 @@ linux_scan (gboolean recorder_only)
 	fclose((FILE *) fd);
 	
 	cdroms_list = NULL;
-	for (i = n_cdroms - 1, j = 0; i >= 0; i--) {
+	for (i = n_cdroms - 1, j = 0; i >= 0; i--, j++) {
 		if ((cdroms[i].can_write_cdr ||
 		    cdroms[i].can_write_cdrw ||
 		    cdroms[i].can_write_dvdr ||
@@ -582,14 +582,14 @@ linux_scan (gboolean recorder_only)
 			(maj > 2) || (maj == 2 && min >= 5))) {
 			if (have_devfs) {
 				cdroms[i].device = g_strdup_printf("%s cdroms/cdrom%d",
-						cdroms[i].device,  j++);
+						cdroms[i].device,  j);
 			}
 			cdroms_list = add_linux_cd_recorder (cdroms_list,
 					&cdroms[i], scsi_units, n_scsi_units);
 		} else if (!recorder_only) {
 			if (have_devfs) {
 				cdroms[i].device = g_strdup_printf("%s cdroms/cdrom%d",
-						cdroms[i].device,  j++);
+						cdroms[i].device,  j);
 			}
 			cdroms_list = add_linux_cd_drive (cdroms_list,
 					&cdroms[i], scsi_units, n_scsi_units);

@@ -68,7 +68,7 @@ fi
 AM_CONDITIONAL(TOTEM_GST, test x$ENABLE_GST = "xyes")
 
 dnl Seems that the order matters because libtool blows
-PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= 2.1.0 libgnomeui-2.0 >= 2.1.1 libglade-2.0 gnome-vfs-2.0 >= 2.1.6 gnome-desktop-2.0 >= 2.2.0 $MM)
+PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= 2.1.0 libgnomeui-2.0 >= 2.1.1 libglade-2.0 gnome-vfs-2.0 >= 2.1.6 gnome-desktop-2.0 >= 2.1.5 $MM)
 EXTRA_GNOME_CFLAGS="$EXTRA_GNOME_CFLAGS"
 EXTRA_GNOME_LIBS="$EXTRA_GNOME_LIBS"
 AC_SUBST(EXTRA_GNOME_CFLAGS)
