@@ -1,3 +1,13 @@
+2004-03-20  Bastien Nocera  <hadess@hadess.net>
+
+	* NEWS: removed duplicate entry
+	* src/bacon-video-widget-xine.c: (load_video_out_driver):
+	* src/totem-preferences.c: (on_checkbutton2_toggled),
+	(totem_setup_preferences):
+	* src/video-utils.c: (totem_display_is_local):
+	* src/video-utils.h: move totem_display_is_local to the video-utils
+	and use it before probing for the Xv driver
+
 2004-03-18  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: detect bad taste in TV series (Closes: #137526)

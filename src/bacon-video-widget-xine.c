@@ -580,6 +580,14 @@ load_video_out_driver (BaconVideoWidget *bvw, gboolean null_out)
 			"video.driver", "auto", "video driver to use",
 			NULL, 10, NULL, NULL);
 
+	/* Don't try to load anything but the xshm plugin if we're not
+	 * on a local display */
+	if (totem_display_is_local () == FALSE)
+	{
+		return xine_open_video_driver (bvw->priv->xine, "xshm",
+				XINE_VISUAL_TYPE_X11, (void *) &vis); 
+	}
+
 	if (strcmp (video_driver_id, "auto") != 0)
 	{
 		vo_driver = xine_open_video_driver (bvw->priv->xine,

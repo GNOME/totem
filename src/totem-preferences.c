@@ -62,35 +62,6 @@ totem_action_info (char *reason, Totem *totem)
 	gtk_widget_show (error_dialog);
 }
 
-
-static gboolean
-totem_display_is_local (Totem *totem)
-{
-	const char *name, *work;
-	int display, screen;
-
-	name = gdk_display_get_name (gdk_display_get_default ());
-	if (name == NULL)
-		return TRUE;
-
-	work = strstr (name, ":");
-	if (work == NULL)
-		return TRUE;
-
-	/* Get to the character after the colon */
-	work++;
-	if (work == NULL)
-		return TRUE;
-
-	if (sscanf (work, "%d.%d", &display, &screen) != 2)
-		return TRUE;
-
-	if (display < 10)
-		return TRUE;
-
-	return FALSE;
-}
-
 static void
 hide_prefs (GtkWidget *widget, int trash, Totem *totem)
 {
@@ -175,7 +146,7 @@ on_checkbutton2_toggled (GtkToggleButton *togglebutton, Totem *totem)
 
 	value = gtk_toggle_button_get_active (togglebutton);
 
-	if (value != FALSE && totem_display_is_local (totem) == FALSE)
+	if (value != FALSE && totem_display_is_local () == FALSE)
 	{
 		if (ask_show_visuals (totem) == FALSE)
 		{
@@ -453,7 +424,7 @@ totem_setup_preferences (Totem *totem)
 
 	g_return_if_fail (totem->gc != NULL);
 
-	is_local = totem_display_is_local (totem);
+	is_local = totem_display_is_local ();
 
 	gconf_client_add_dir (totem->gc, "/apps/totem",
 			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
