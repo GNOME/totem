@@ -55,14 +55,14 @@ totem_LDFLAGS = -export-dynamic
 INCLUDES = 						\
 	-Wall						\
 	-D_REENTRANT -D_FILE_OFFSET_BITS=64		\
+	$(GNOMEUI_UNSTABLE)				\
 	$(EXTRA_GNOME_CFLAGS)				\
 	$(XINE_CFLAGS)					\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
 	-DDATADIR=\""$(datadir)"\"			\
 	-DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED	\
 	-DGTK_DISABLE_DEPRECATED			\
-	-DGNOME_DISABLE_DEPRECATED			\
-	-DUSE_STABLE_LIBGNOMEUI
+	-DGNOME_DISABLE_DEPRECATED
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(MARSHALFILES) $(desktop_DATA)
 

@@ -39,26 +39,6 @@
 #include <xine/compat.h>
 #include <xine/input_plugin.h>
 
-#ifdef __GNUC__
-#define LOG_MSG_STDERR(xine, message, args...) {                     \
-    xine_log(xine, XINE_LOG_MSG, message, ##args);                 \
-    fprintf(stderr, message, ##args);                                \
-  }
-#define LOG_MSG(xine, message, args...) {                            \
-    xine_log(xine, XINE_LOG_MSG, message, ##args);                 \
-    printf(message, ##args);                                         \
-  }
-#else
-#define LOG_MSG_STDERR(xine, ...) {                                  \
-    xine_log(xine, XINE_LOG_MSG, __VA_ARGS__);                     \
-    fprintf(stderr, __VA_ARGS__);                                    \
-  }
-#define LOG_MSG(xine, ...) {                                         \
-    xine_log(xine, XINE_LOG_MSG, __VA_ARGS__);                     \
-    printf(__VA_ARGS__);                                             \
-  }
-#endif
-
 typedef struct {
 	input_class_t input_class;
 	xine_t *xine;
@@ -120,8 +100,7 @@ gnomevfs_plugin_read (input_plugin_t *this_gen, char *buf, off_t len)
 
 		if (n <= 0)
 		{
-			xine_log (this->xine, XINE_LOG_MSG,
-					_("input_gnomevfs: read error\n"));
+			g_warning ("input_gnomevfs: read error");
 		}
 
 		num_bytes += n;
@@ -266,11 +245,8 @@ gnomevfs_plugin_get_optional_data (input_plugin_t *this_gen,
 {
 	gnomevfs_input_t *this = (gnomevfs_input_t *) this_gen;
 
-#ifdef LOG
-	LOG_MSG (this->xine,
-		_("input_gnomevfs: get optional data, type %08x, sub %p\n"),
-		data_type, this->sub);
-#endif
+	D ("input_gnomevfs: get optional data, type %08x, sub %p\n",
+			data_type, this->sub);
 
 	switch (data_type) {
 	case INPUT_OPTIONAL_DATA_TEXTSPU0:
@@ -327,7 +303,6 @@ static input_plugin_t *
 gnomevfs_klass_open (input_class_t *klass_gen, xine_stream_t *stream,
 		const char *mrl)
 {
-	gnomevfs_input_class_t *klass = (gnomevfs_input_class_t *) klass_gen;
 	gnomevfs_input_t *this;
 	GnomeVFSHandle *fh, *sub;
 	const char *subtitle_file;
@@ -355,15 +330,12 @@ gnomevfs_klass_open (input_class_t *klass_gen, xine_stream_t *stream,
 				subtitle_file);
 		g_free (subtitle_path);
 
-		LOG_MSG (klass->xine,
-			_("input_file: trying to open subtitle file '%s'\n"),
-			subtitle);
+		D("input_file: trying to open subtitle file '%s'\n",
+				subtitle);
 
 		if (gnome_vfs_open (&sub, subtitle, GNOME_VFS_OPEN_READ)
 				!= GNOME_VFS_OK)
-			LOG_MSG (klass->xine,
-					_("input_file: failed to open subtitle "
-						"file '%s'\n"),
+			D("input_file: failed to open subtitle file '%s'\n",
 					subtitle);
 	} else {
 		sub = NULL;
