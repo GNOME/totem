@@ -1,5 +1,18 @@
 2003-01-14  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am:
+	* src/gtk-playlist.c:
+	* src/gtk-xine-properties.c:
+	(gtk_xine_properties_class_init):
+	* src/gtk-xine-properties.h:
+	* src/gtk-xine.c:
+	* src/gtk-xine.h:
+	* src/totem.c: Work on moving the Properties window into its own
+	widget, to remove the libglade dependency in GtkXine
+	("To be continued..."-style hacking)
+
+2003-01-14  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-xine.c: (load_video_out_driver), (gtk_xine_unrealize),
 	(gtk_xine_open), (gtk_xine_get_metadata_string),
 	(gtk_xine_get_metadata_int), (gtk_xine_get_metadata_bool),

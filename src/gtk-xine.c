@@ -2011,9 +2011,6 @@ GtkWidget
 	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
 			"totem", "properties.glade", NULL);
 
-	if (filename == NULL)
-		return NULL;
-
 	gtx->priv->xml = glade_xml_new (filename, NULL, NULL);
 	g_free (filename);
 

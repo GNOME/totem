@@ -115,6 +115,8 @@ gboolean gtk_xine_play                 (GtkXine *gtx, guint pos,
 void gtk_xine_stop                     (GtkXine *gtx);
 void gtk_xine_close                    (GtkXine *gtx);
 
+void gtk_xine_dvd_event                (GtkXine *gtx, GtkXineDVDEvent type);
+
 /* Properties */
 void gtk_xine_set_speed                (GtkXine *gtx, Speeds speed);
 gint gtk_xine_get_speed                (GtkXine *gtx);
@@ -148,12 +150,7 @@ G_CONST_RETURN gchar **gtk_xine_get_mrls
 void gtk_xine_get_metadata	       (GtkXine *gtx, GtkXineMetadataType type,
 					GValue *value);
 
-GtkWidget *gtk_xine_properties_dialog_get
-                                       (GtkXine *gtx);
-char *gtk_xine_properties_get_title    (GtkXine *gtx);
-void gtk_xine_properties_update        (GtkXine *gtx, gboolean reset);
-
-void gtk_xine_dvd_event		       (GtkXine *gtx, GtkXineDVDEvent type);
+char *gtk_xine_get_nice_title          (GtkXine *gtx);
 
 /* Screenshot functions */
 gboolean gtk_xine_can_get_frames       (GtkXine *gtx);

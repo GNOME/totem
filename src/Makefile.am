@@ -49,6 +49,8 @@ totem_SOURCES = 			\
 	gtkxine-marshal.list		\
 	$(MARSHALFILES)			\
 	gtk-xine.c gtk-xine.h		\
+	gtk-xine-properties.c		\
+	gtk-xine-properties.h		\
 	gtk-playlist.c	gtk-playlist.h	\
 	rb-ellipsizing-label.c		\
 	rb-ellipsizing-label.h		\

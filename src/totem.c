@@ -1276,7 +1276,8 @@ on_properties1_activate (GtkButton *button, gpointer user_data)
 {
 	Totem *totem = (Totem *)user_data;
 	GtkWidget *dialog;
-
+	//FIXME
+#if 0
 	dialog = gtk_xine_properties_dialog_get (GTK_XINE (totem->gtx));
 	if (dialog == NULL)
 	{
@@ -1289,6 +1290,7 @@ on_properties1_activate (GtkButton *button, gpointer user_data)
 	gtk_widget_show_all (dialog);
 	gtk_window_set_transient_for (GTK_WINDOW (dialog),
 			GTK_WINDOW (totem->win));
+#endif
 }
 
 static void

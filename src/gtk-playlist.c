@@ -23,7 +23,7 @@
 #include "config.h"
 #include "gtk-playlist.h"
 
-#include <gnome.h>
+#include <gtk/gtk.h>
 #include <libxml/tree.h>
 #include <libxml/parser.h>
 #include <glade/glade.h>
@@ -31,6 +31,7 @@
 #include <libgnomevfs/gnome-vfs.h>
 #include <libgnomevfs/gnome-vfs-mime-utils.h>
 #include <string.h>
+#include <libgnome/gnome-i18n.h>
 
 #include "debug.h"
 
@@ -747,14 +748,9 @@ gtk_playlist_new (void)
 
 	playlist = GTK_PLAYLIST (g_object_new (GTK_TYPE_PLAYLIST, NULL));
 
-	filename = gnome_program_locate_file (NULL,
-			GNOME_FILE_DOMAIN_APP_DATADIR,
-			"totem/playlist.glade", TRUE, NULL);
-	if (filename == NULL)
-	{
-		gtk_playlist_finalize (G_OBJECT (playlist));
-		return NULL;
-	}
+	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
+			"totem", "playlist.glade", NULL);
+
 	playlist->_priv->xml = glade_xml_new (filename, "vbox4", NULL);
 	if (playlist->_priv->xml == NULL)
 	{
@@ -800,17 +796,10 @@ gtk_playlist_new (void)
 	/* The configuration */
 	init_config (playlist);
 
-	filename = gnome_program_locate_file (NULL,
-			GNOME_FILE_DOMAIN_APP_DATADIR,
-			"totem/playlist-playing.png", TRUE, NULL);
-	if (filename != NULL)
-	{
-		playlist->_priv->icon = gdk_pixbuf_new_from_file
-			(filename, NULL);
-		g_free (filename);
-	} else {
-		playlist->_priv->icon = NULL;
-	}
+	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
+			"totem", "playlist-playing.png", NULL);
+	playlist->_priv->icon = gdk_pixbuf_new_from_file (filename, NULL);
+	g_free (filename);
 
 	gtk_widget_show_all (GTK_DIALOG (playlist)->vbox);
 
