@@ -25,6 +25,7 @@
 
 #include <sys/types.h>
 #include <signal.h>
+#include <fcntl.h>
 #include <unistd.h>
 
 #include "totem-gromit.h"
@@ -41,6 +42,46 @@ static char *path = NULL;
 static int id = -1;
 static GPid pid = -1;
 
+#define DEFAULT_CONFIG							\
+"#Default gromit configuration for Totem's telestrator mode		\n\
+\"red Pen\" = PEN (size=5 color=\"red\");				\n\
+\"blue Pen\" = \"red Pen\" (color=\"blue\");				\n\
+\"yellow Pen\" = \"red Pen\" (color=\"yellow\");			\n\
+\"green Marker\" = PEN (size=6 color=\"green\" arrowsize=1);		\n\
+									\n\
+\"Eraser\" = ERASER (size = 100);					\n\
+									\n\
+\"Core Pointer\" = \"red Pen\";						\n\
+\"Core Pointer\"[SHIFT] = \"blue Pen\";					\n\
+\"Core Pointer\"[CONTROL] = \"yellow Pen\";				\n\
+\"Core Pointer\"[2] = \"green Marker\";					\n\
+\"Core Pointer\"[Button3] = \"Eraser\";					\n\
+\n"
+
+static void
+totem_gromit_ensure_config_file (void)
+{
+	char *path;
+	int fd;
+
+	path = g_build_filename (g_get_home_dir (), ".gromitrc", NULL);
+	if (g_file_test (path, G_FILE_TEST_EXISTS) != FALSE) {
+		g_free (path);
+		return;
+	}
+
+	g_message ("%s doesn't exist", path);
+
+	fd = creat (path, 0755);
+	g_free (path);
+	if (fd < 0) {
+		return;
+	}
+
+	write (fd, DEFAULT_CONFIG, sizeof (DEFAULT_CONFIG));
+	close (fd);
+}
+
 gboolean
 totem_gromit_available (void)
 {
@@ -54,7 +95,9 @@ totem_gromit_available (void)
 	if (path != NULL) {
 		start_cmd[0] = toggle_cmd[0] = clear_cmd[0] =
 			visibility_cmd[0] = path;
+		totem_gromit_ensure_config_file ();
 	}
+
 	return gromit_available;
 }
 
