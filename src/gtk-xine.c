@@ -1609,6 +1609,61 @@ GtkWidget
 	return gtx->priv->dialog;
 }
 
+static char
+*time_to_string (int time)
+{
+	char *secs, *mins, *hours, *string;
+	int sec, min, hour;
+
+	sec = time % 60;
+	time = time - sec;
+	min = (time % (60*60)) / 60;
+	time = time - (min * 60);
+	hour = time / (60*60);
+
+	if (hour == 1)
+		/* One hour */
+		hours = g_strdup_printf (_("%d hour"), hour);
+	else
+		/* Multiple hours */
+		hours = g_strdup_printf (_("%d hours"), hour);
+
+	if (min == 1)
+		/* One minute */
+		mins = g_strdup_printf (_("%d minute"), min);
+	else
+		/* Multiple minutes */
+		mins = g_strdup_printf (_("%d minutes"), min);
+
+	if (sec == 1)
+		/* One second */
+		secs = g_strdup_printf (_("%d second"), sec);
+	else
+		/* Multiple seconds */
+		secs = g_strdup_printf (_("%d seconds"), sec);
+
+	if (hour > 0)
+	{
+		/* hour:minutes:seconds */
+		string = g_strdup_printf (_("%s %s %s"), hours, mins, secs);
+	} else if (min > 0) {
+		/* minutes:seconds */
+		string = g_strdup_printf (_("%s %s"), mins, secs);
+	} else if (sec > 0) {
+		/* seconds */
+		string = g_strdup_printf (_("%s"), secs);
+	} else {
+		/* 0 second */
+		string = g_strdup (_("0 second"));
+	}
+
+	g_free (hours);
+	g_free (mins);
+	g_free (secs);
+
+	return string;
+}
+
 char
 *gtk_xine_properties_get_title (GtkXine *gtx)
 {
@@ -1648,13 +1703,15 @@ gtk_xine_properties_reset (GtkXine *gtx)
 	gtk_widget_set_sensitive (item, FALSE);
 	item = glade_xml_get_widget (gtx->priv->xml, "audio");
 	gtk_widget_set_sensitive (item, FALSE);
-	
+
 	/* Title */
 	gtk_xine_properties_set_label (gtx, "title", _("Unknown"));
 	/* Artist */
 	gtk_xine_properties_set_label (gtx, "artist", _("Unknown"));
 	/* Year */
 	gtk_xine_properties_set_label (gtx, "year", _("N/A"));
+	/* Duration */
+	gtk_xine_properties_set_label (gtx, "duration", _("0 second"));
 	/* Dimensions */
 	gtk_xine_properties_set_label (gtx, "dimensions", _("0 x 0"));
 	/* Video Codec */
@@ -1688,6 +1745,10 @@ gtk_xine_properties_set_from_current (GtkXine *gtx)
 	text = xine_get_meta_info (gtx->priv->stream, XINE_META_INFO_YEAR);
 	gtk_xine_properties_set_label (gtx, "year",
 			text ? text : _("N/A"));
+
+	string = time_to_string (gtk_xine_get_stream_length (gtx) / 1000);
+	gtk_xine_properties_set_label (gtx, "duration", string);
+	g_free (string);
 
 	/* Video */
 	item = glade_xml_get_widget (gtx->priv->xml, "video");
