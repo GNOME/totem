@@ -25,6 +25,7 @@ stuff_DATA =				\
 pixmapdir = $(datadir)/pixmaps
 pixmap_DATA = media-player-48.png vanity.png
 
+desktop_in_files_all = totem.desktop.in vanity.desktop.in
 if HAVE_LINUX
 desktop_in_files = totem.desktop.in vanity.desktop.in
 else
@@ -40,6 +41,21 @@ keysdir = $(datadir)/mime-info/
 
 app_DATA = totem.applications
 appdir = $(datadir)/application-registry
+
+serverdir = $(libdir)/bonobo/servers
+server_DATA = Totem_properties.server
+server_in_files = Totem_properties.server.in.in._1 Totem_properties.server.in.in._3 servers.sh
+Totem_properties.server.in.in._2: $(server_in_files)
+	$(srcdir)/servers.sh $(srcdir)/totem.keys		\
+	> Totem_properties.server.in.in._2
+Totem_properties.server.in.in: $(server_in_files) Totem_properties.server.in.in._2
+	cat Totem_properties.server.in.in._1			\
+	Totem_properties.server.in.in._2			\
+	Totem_properties.server.in.in._3			\
+	> Totem_properties.server.in.in
+Totem_properties.server.in: Totem_properties.server.in.in
+	sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" $< > $@
+@INTLTOOL_SERVER_RULE@
 
 update-gconf.sh: totem-video-thumbnail.schemas.in
 
@@ -62,7 +78,7 @@ user-install: $(app_DATA) $(keys_DATA)
 install-data-local:
 	-GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(srcdir)/$(schema_DATA)
 
-EXTRA_DIST = $(stuff_DATA) $(desktop_in_files) $(keys_DATA) $(app_DATA) totem.schemas.in lirc_example schemas.sh totem-random.pl
+EXTRA_DIST = $(stuff_DATA) $(desktop_in_files_all) $(keys_DATA) $(app_DATA) $(server_in_files) totem.schemas.in lirc_example schemas.sh totem-random.pl
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(desktop_DATA) $(schema_DATA)
 

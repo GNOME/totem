@@ -1,0 +1,21 @@
+<?xml version="1.0"?> <!--*- mode: xml -*-->
+
+<oaf_info>
+  <oaf_server iid="OAFIID:Totem_PropertiesPage_Factory"
+              type="exe" location="@LIBEXECDIR@/totem-properties-page">
+    <oaf_attribute name="repo_ids" type="stringv">
+      <item value="IDL:GNOME/ObjectFactory:1.0" />
+    </oaf_attribute>
+    <oaf_attribute name="name" type="string" _value="Audio and Video properties page factory" />
+    <oaf_attribute name="description" type="string" _value="Factory for Audio and Video properties_page" />
+  </oaf_server>
+
+  <oaf_server iid="OAFIID:Totem_PropertiesPage"
+              type="factory" location="OAFIID:Totem_PropertiesPage_Factory">
+    <oaf_attribute name="repo_ids" type="stringv">
+      <item value="IDL:Bonobo/Unknown:1.0" />
+      <item value="IDL:Bonobo/Control:1.0" />
+    </oaf_attribute>
+    <oaf_attribute name="name" type="string" _value="Audio and Video properties page" />
+    <oaf_attribute name="description" type="string" _value="Audio And Video properties page" />
+    <oaf_attribute name="bonobo:supported_mime_types" type="stringv">
