@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Totem HEAD\n"
-"POT-Creation-Date: 2003-04-01 01:37+0800\n"
+"POT-Creation-Date: 2003-04-09 23:33+0100\n"
 "PO-Revision-Date: 2003-04-01 01:37+0800\n"
 "Last-Translator: Hasbullah Bin Pit <sebol@ikhlas.com>\n"
 "Language-Team: Projek Gabai <gabai-penyumbang@lists.sourceforge.org>\n"
@@ -13,13 +13,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/playlist.glade.h:1 src/gtk-playlist.c:808
+#: data/playlist.glade.h:1 src/gtk-playlist.c:893
 msgid "Playlist"
 msgstr "Senaraimain"
 
 #: data/playlist.glade.h:2
 msgid "Repeat Mode"
 msgstr "Mod Ulangan"
+
+#: data/playlist.glade.h:3
+msgid "_Add..."
+msgstr ""
 
 #: data/properties.glade.h:1 src/bacon-video-widget-properties.c:184
 msgid "0 frames per second"
@@ -31,7 +35,7 @@ msgid "0 kbps"
 msgstr "0 kbps"
 
 #. 0 seconds
-#: data/properties.glade.h:3 data/totem.glade.h:3
+#: data/properties.glade.h:3 data/totem.glade.h:2
 #: src/bacon-video-widget-properties.c:140
 msgid "0 seconds"
 msgstr "0 saat"
@@ -58,34 +62,38 @@ msgid "<b>Video</b>"
 msgstr "<b>Video</b>"
 
 #: data/properties.glade.h:9
-msgid "Artist: "
+#, fuzzy
+msgid "Artist:"
 msgstr "Artis: "
 
 #: data/properties.glade.h:10
-msgid "Bitrate: "
+#, fuzzy
+msgid "Bitrate:"
 msgstr "Kadar bit: "
 
 #: data/properties.glade.h:11
-msgid "Codec: "
+#, fuzzy
+msgid "Codec:"
 msgstr "Codec: "
 
 #: data/properties.glade.h:12
-msgid "Dimensions: "
+#, fuzzy
+msgid "Dimensions:"
 msgstr "Dimensi: "
 
 #: data/properties.glade.h:13
-msgid "Duration: "
+#, fuzzy
+msgid "Duration:"
 msgstr "Tempoh"
 
 #: data/properties.glade.h:14
-msgid "Framerate: "
+#, fuzzy
+msgid "Framerate:"
 msgstr "Kadar kerangka"
 
-#. Year
-#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:175
-#: src/bacon-video-widget-properties.c:181
+#. Video Codec
+#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:181
 #: src/bacon-video-widget-properties.c:188
-#: src/bacon-video-widget-properties.c:223
 #: src/bacon-video-widget-properties.c:260
 #: src/bacon-video-widget-properties.c:292
 msgid "N/A"
@@ -95,370 +103,377 @@ msgstr "TIADA"
 msgid "No Link"
 msgstr "Tiada Pautan"
 
-#: data/properties.glade.h:17 src/bacon-video-widget-properties.c:350
+#: data/properties.glade.h:17 src/bacon-video-widget-properties.c:353
 msgid "Properties"
 msgstr "Ciri-ciri"
 
 #: data/properties.glade.h:18
-msgid "Title: "
+#, fuzzy
+msgid "Title:"
 msgstr "Tajuk:"
 
 #. Title
 #: data/properties.glade.h:19 src/bacon-video-widget-properties.c:171
 #: src/bacon-video-widget-properties.c:173
+#: src/bacon-video-widget-properties.c:175
 #: src/bacon-video-widget-properties.c:209
 #: src/bacon-video-widget-properties.c:216
+#: src/bacon-video-widget-properties.c:223
 msgid "Unknown"
 msgstr "Entah"
 
 #: data/properties.glade.h:20
-msgid "Year: "
+#, fuzzy
+msgid "Year:"
 msgstr "Tahun:"
 
 #: data/totem.desktop.in.h:1
 msgid "Play movies and songs"
 msgstr "Mainkan cereka dan lagu"
 
-#: data/totem.desktop.in.h:2 src/totem.c:2858
+#: data/totem.desktop.in.h:2 src/totem.c:2938
 msgid "Totem Movie Player"
 msgstr "Pemain Cereka Totem"
 
-#: data/totem.glade.h:1
-msgid " seconds"
-msgstr " saat"
-
-#: data/totem.glade.h:2 data/uri.glade.h:1
+#: data/totem.glade.h:1 data/uri.glade.h:1
 msgid "*"
 msgstr "*"
 
-#: data/totem.glade.h:4
+#: data/totem.glade.h:3
 msgid "1.5 Mbps T1/Intranet/LAN"
 msgstr "1.5 Mbps T1/Intranet/LAN"
 
-#: data/totem.glade.h:5
+#: data/totem.glade.h:4
 msgid "112 Kbps Dual ISDN/DSL"
 msgstr "112 Kbps Dwi ISDN/DSL"
 
-#: data/totem.glade.h:6
+#: data/totem.glade.h:5
 msgid "14.4 Kbps Modem"
 msgstr "14.4 Kbps Modem"
 
-#: data/totem.glade.h:7
+#: data/totem.glade.h:6
 msgid "19.2 Kbps Modem"
 msgstr "19.2 Kbps Modem"
 
-#: data/totem.glade.h:8
+#: data/totem.glade.h:7
 msgid "256 Kbps DSL/Cable"
 msgstr "256 Kbps DSL/Kabel"
 
-#: data/totem.glade.h:9
+#: data/totem.glade.h:8
 msgid "28.8 Kbps Modem"
 msgstr "28.8 Kbps Modem"
 
-#: data/totem.glade.h:10
+#: data/totem.glade.h:9
 msgid "33.6 Kbps Modem"
 msgstr "33.6 Kbps Modem"
 
-#: data/totem.glade.h:11
+#: data/totem.glade.h:10
 msgid "34.4 Kbps Modem"
 msgstr "34.4 Kbps Modem"
 
-#: data/totem.glade.h:12
+#: data/totem.glade.h:11
 msgid "384 Kbps DSL/Cable"
 msgstr "384 Kbps DSL/Kabel"
 
-#: data/totem.glade.h:13
+#: data/totem.glade.h:12
 msgid "512 Kbps DSL/Cable"
 msgstr "512 Kbps DSL/Kabel"
 
-#: data/totem.glade.h:14
+#: data/totem.glade.h:13
 msgid "56 Kbps Modem/ISDN"
 msgstr "56 Kbps Modem/ISDN"
 
-#: data/totem.glade.h:15
+#: data/totem.glade.h:14
 msgid "<b>Display</b>"
 msgstr "<b>Papar</b>"
 
-#: data/totem.glade.h:16
+#: data/totem.glade.h:15
 msgid "<b>Networking</b>"
 msgstr "<b>Rangkaian</b>"
 
-#: data/totem.glade.h:17
+#: data/totem.glade.h:16
 msgid "<b>Optical Device</b>"
 msgstr "<b>Peranti Optikal</b>"
 
-#: data/totem.glade.h:18
+#: data/totem.glade.h:17
 msgid "<b>Preview</b>"
 msgstr "<b>Prebiu</b>"
 
-#: data/totem.glade.h:19
+#: data/totem.glade.h:18
 msgid "Always On _Top"
 msgstr "Sentiasa Di _Atas"
 
-#: data/totem.glade.h:20
+#: data/totem.glade.h:19
 msgid "Always on top"
 msgstr "Sentiasa di atas"
 
-#: data/totem.glade.h:21
+#: data/totem.glade.h:20
 msgid "Angle menu"
 msgstr "Menu sudut"
 
-#: data/totem.glade.h:22
+#: data/totem.glade.h:21
 msgid "Audio menu"
 msgstr "Menu audio"
 
-#: data/totem.glade.h:23
+#: data/totem.glade.h:22
 msgid "Automatically _resize the window when a new video is loaded"
 msgstr "Automatik _ubahsaiz tetingkap bila video baru dimuatkan"
 
-#: data/totem.glade.h:24
+#: data/totem.glade.h:23
 msgid "Chapter menu"
 msgstr "Menu Bab"
 
-#: data/totem.glade.h:25
+#: data/totem.glade.h:24
 msgid "Connection Speed: "
 msgstr "Kelajuan Sambungan: "
 
-#: data/totem.glade.h:26
+#: data/totem.glade.h:25
 msgid "DVD menu"
 msgstr "Menu DVD"
 
-#: data/totem.glade.h:27
-msgid "Exit fullscreen"
+#: data/totem.glade.h:26
+#, fuzzy
+msgid "Exit Fullscreen"
 msgstr "Keluar skrinpenuh"
 
-#: data/totem.glade.h:28
+#: data/totem.glade.h:27
 msgid "File name"
 msgstr "Nama fail"
 
-#: data/totem.glade.h:29
+#: data/totem.glade.h:28
 msgid "Go to the DVD menu"
 msgstr "Pergi ke menu DVD"
 
-#: data/totem.glade.h:30
+#: data/totem.glade.h:29
 msgid "Go to the angle menu"
 msgstr "Pergi ke menu sudut"
 
-#: data/totem.glade.h:31
+#: data/totem.glade.h:30
 msgid "Go to the audio menu"
 msgstr "Pergi ke menu audio"
 
-#: data/totem.glade.h:32
+#: data/totem.glade.h:31
 msgid "Go to the chapter menu"
 msgstr "Pergi ke menu bab"
 
-#: data/totem.glade.h:33
+#: data/totem.glade.h:32
 msgid "Go to the title menu"
 msgstr "Pergi ke menu tajuk"
 
-#: data/totem.glade.h:34
+#: data/totem.glade.h:33
 msgid "Intranet/LAN"
 msgstr "Intranet/LAN"
 
-#: data/totem.glade.h:35
+#: data/totem.glade.h:34
 msgid "Languages"
 msgstr "Bahasa"
 
-#: data/totem.glade.h:36 src/totem.c:78
+#: data/totem.glade.h:35 src/totem.c:78
 msgid "Next"
 msgstr "Seterusnya"
 
-#: data/totem.glade.h:37
+#: data/totem.glade.h:36
 msgid "Next Chapter/Movie"
 msgstr "Bab/Cereka Berikutnya"
 
-#: data/totem.glade.h:38
+#: data/totem.glade.h:37
 msgid "Next chapter or movie"
 msgstr "Cereka atau bab berikutnya"
 
-#: data/totem.glade.h:39
+#: data/totem.glade.h:38
 msgid "No langage selection available"
 msgstr "Tiada pemilihan bahasa yang ada"
 
-#: data/totem.glade.h:40
+#: data/totem.glade.h:39
 msgid "No subtitles selection available"
 msgstr "Tiada pemilihan subtajuk yang ada"
 
-#: data/totem.glade.h:41
+#: data/totem.glade.h:40
 msgid "Open _Location..."
 msgstr "Buka _Lokasi ..."
 
-#: data/totem.glade.h:42
+#: data/totem.glade.h:41
 msgid "Open a non-local file"
 msgstr "Buka fail bukan-lokal"
 
-#: data/totem.glade.h:43
+#: data/totem.glade.h:42
 msgid "Optical Device _Path: "
 msgstr "_Path Peranti Opsyenal: "
 
-#: data/totem.glade.h:44
+#: data/totem.glade.h:43
 msgid "Play _Audio CD"
 msgstr "Mainkan CD _Audio"
 
-#: data/totem.glade.h:45
+#: data/totem.glade.h:44
 msgid "Play _DVD"
 msgstr "Mainkan _DVD"
 
-#: data/totem.glade.h:46
+#: data/totem.glade.h:45
 msgid "Play _VCD"
 msgstr "Mainkan _VCD"
 
-#: data/totem.glade.h:47
+#: data/totem.glade.h:46
 msgid "Play a Video CD"
 msgstr "Mainkan CD Video"
 
-#: data/totem.glade.h:48
+#: data/totem.glade.h:47
 msgid "Play a Video DVD"
 msgstr "Mainkan DVD Video"
 
-#: data/totem.glade.h:49
+#: data/totem.glade.h:48
 msgid "Play an audio CD"
 msgstr "Mainkan CD audio"
 
-#: data/totem.glade.h:50
+#: data/totem.glade.h:49
 msgid "Play or pause the movie"
 msgstr "Main atau kakukan careka"
 
-#: data/totem.glade.h:51 src/totem.c:77
+#: data/totem.glade.h:50 src/totem.c:77
 msgid "Play/Pause"
 msgstr "Main/Kaku"
 
-#: data/totem.glade.h:52 src/totem.c:79
+#: data/totem.glade.h:51 src/totem.c:79
 msgid "Previous"
 msgstr "Terdahulu"
 
-#: data/totem.glade.h:53
+#: data/totem.glade.h:52
 msgid "Previous Chapter/Movie"
 msgstr "Bab/Cereka Terdahulu"
 
-#: data/totem.glade.h:54
+#: data/totem.glade.h:53
 msgid "Previous chapter or movie"
 msgstr "Cereka dan bab  terdahulu"
 
-#: data/totem.glade.h:55
+#: data/totem.glade.h:54
 msgid "Save Screenshot"
 msgstr "Simpan Cekupanskrin"
 
-#: data/totem.glade.h:56
+#: data/totem.glade.h:55
 msgid "Save screenshot to _file: "
 msgstr "Simpan cekupanskrin ke _fail: "
 
-#: data/totem.glade.h:57
+#: data/totem.glade.h:56
 msgid "Save screenshot to the _desktop"
 msgstr "Simpan cekupanskrin ke _desktop"
 
-#: data/totem.glade.h:58
+#: data/totem.glade.h:57
 msgid "Set the repeat mode"
 msgstr "tetapkan mod ulangan"
 
-#: data/totem.glade.h:59
+#: data/totem.glade.h:58
 msgid "Show or hide the playlist"
 msgstr "Papar atau sorok senaraimain"
 
-#: data/totem.glade.h:60
+#: data/totem.glade.h:59
 msgid "Show visual effects when an audio file is played"
 msgstr "Papar kesan visual bila fail audio dimainkan"
 
-#: data/totem.glade.h:61
+#: data/totem.glade.h:60
 msgid "Show/Hide Playlist"
 msgstr "Papar/Sorok Senaraimain"
 
-#: data/totem.glade.h:62
+#: data/totem.glade.h:61
 msgid "Skip backwards"
 msgstr "Langkah mengundur"
 
-#: data/totem.glade.h:63
+#: data/totem.glade.h:62
 msgid "Skip forward"
 msgstr "Langkah maju"
 
-#: data/totem.glade.h:64
+#: data/totem.glade.h:63
 msgid "Skip to"
 msgstr "Langkah ke"
 
-#: data/totem.glade.h:65
+#: data/totem.glade.h:64
 msgid "Skip to a specific time"
 msgstr "Langkah ke masa tertentu"
 
-#: data/totem.glade.h:66
-msgid "Skip to: "
+#: data/totem.glade.h:65
+#, fuzzy
+msgid "Skip to:"
 msgstr "Langkah ke: "
 
-#: data/totem.glade.h:67
+#: data/totem.glade.h:66
 msgid "Subtitles"
 msgstr ""
 
-#: data/totem.glade.h:68
+#: data/totem.glade.h:67
 msgid "Switch to double size"
 msgstr "Bertukar ke saiz berganda 2"
 
-#: data/totem.glade.h:69
+#: data/totem.glade.h:68
 msgid "Switch to fullscreen"
 msgstr "Bertukar ke skrinpenuh"
 
-#: data/totem.glade.h:70
+#: data/totem.glade.h:69
 msgid "Take _Screenshot"
 msgstr "Tangkap _Cekupansktin"
 
-#: data/totem.glade.h:71
+#: data/totem.glade.h:70
 msgid "Take a screenshot"
 msgstr "Tangkap cekupanskrin"
 
-#: data/totem.glade.h:72
-msgid "Time: "
+#: data/totem.glade.h:71
+#, fuzzy
+msgid "Time:"
 msgstr "Masa:"
 
-#: data/totem.glade.h:73
+#: data/totem.glade.h:72
 msgid "Title menu"
 msgstr "Menu tajuk"
 
-#: data/totem.glade.h:74
+#: data/totem.glade.h:73
 msgid "Toggle _Aspect Ratio"
 msgstr "Togol Nisbah _Aspek"
 
-#: data/totem.glade.h:75
+#: data/totem.glade.h:74
 msgid "Toggle the aspect ratio"
 msgstr "Togol nisbah aspek"
 
 #. Title
-#: data/totem.glade.h:76 src/totem.c:455 src/totem.c:477 src/totem.c:1380
+#: data/totem.glade.h:75 src/totem.c:510 src/totem.c:532 src/totem.c:1478
 msgid "Totem"
 msgstr "Totem"
 
-#: data/totem.glade.h:77
+#: data/totem.glade.h:76
 msgid "Totem Preferences"
 msgstr "Keutamaan Totem"
 
-#: data/totem.glade.h:78 src/totem.c:83
+#: data/totem.glade.h:77 src/totem.c:83
 msgid "Volume Down"
 msgstr "Volum Turun"
 
-#: data/totem.glade.h:79 src/totem.c:82
+#: data/totem.glade.h:78 src/totem.c:82
 msgid "Volume Up"
 msgstr "Volum Naik"
 
-#: data/totem.glade.h:80
+#: data/totem.glade.h:79
 msgid "Volume down"
 msgstr "Volum turun"
 
-#: data/totem.glade.h:81
+#: data/totem.glade.h:80
 msgid "Volume up"
 msgstr "Volum naik"
 
-#: data/totem.glade.h:82
+#: data/totem.glade.h:81
 msgid "Zoom _1:1"
 msgstr "Zoom _1:1"
 
-#: data/totem.glade.h:83
+#: data/totem.glade.h:82
 msgid "Zoom _2:1"
 msgstr "Zoom _2:1"
 
-#: data/totem.glade.h:84
+#: data/totem.glade.h:83
 msgid "Zoom to half size"
 msgstr "Zum ke saiz separuh"
 
-#: data/totem.glade.h:85
+#: data/totem.glade.h:84
 msgid "Zoom to one for one size"
 msgstr "Zum ke saiz satu ke satu"
+
+#: data/totem.glade.h:85
+msgid "_Eject"
+msgstr ""
 
 #: data/totem.glade.h:86
 msgid "_Fullscreen"
@@ -495,6 +510,11 @@ msgstr "_Bunyi"
 #: data/totem.glade.h:94
 msgid "_Zoom 1:2"
 msgstr "_Zoom 1:2"
+
+#: data/totem.glade.h:95
+#, fuzzy
+msgid "seconds"
+msgstr " saat"
 
 #: data/totem.schemas.in.h:1
 msgid "Path to the optical media device"
@@ -588,11 +608,11 @@ msgstr "_Katalaluan:"
 msgid "Remember this password"
 msgstr "Ingat katalaluan ini"
 
-#: src/gtk-playlist.c:422 src/totem.c:1155
+#: src/gtk-playlist.c:506 src/totem.c:1239
 msgid "Select files"
 msgstr "Semua fail"
 
-#: src/gtk-playlist.c:558
+#: src/gtk-playlist.c:642
 msgid "Filename"
 msgstr "Namafail"
 
@@ -620,19 +640,19 @@ msgstr ""
 msgid "Replace"
 msgstr "Ganti"
 
-#: src/totem.c:196
+#: src/totem.c:217
 msgid "Playing"
 msgstr "Bermain"
 
-#: src/totem.c:203
+#: src/totem.c:224
 msgid "Paused"
 msgstr "Dikaku"
 
-#: src/totem.c:210 src/totem-statusbar.c:171
+#: src/totem.c:231 src/totem-statusbar.c:171
 msgid "Stopped"
 msgstr "Berhenti"
 
-#: src/totem.c:268 src/totem.c:568 src/totem.c:656
+#: src/totem.c:289 src/totem.c:635 src/totem.c:739
 #, c-format
 msgid ""
 "Totem could not play '%s'.\n"
@@ -641,7 +661,7 @@ msgstr ""
 "Totem tak dapat memainkan '%s':\n"
 "Alasan: %s"
 
-#: src/totem.c:297
+#: src/totem.c:318
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -653,7 +673,7 @@ msgstr ""
 " Pasang plugin yang diperlukan dan ulanghidup Totem supaya boleh memainkan "
 "media ini."
 
-#: src/totem.c:305
+#: src/totem.c:326
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -665,16 +685,16 @@ msgstr ""
 "betul."
 
 #. Title
-#: src/totem.c:431
+#: src/totem.c:486
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:444 src/totem.c:2677
+#: src/totem.c:499 src/totem.c:2783
 msgid "No file"
 msgstr "Tiada fail"
 
-#: src/totem.c:1206 src/totem.c:1217
+#: src/totem.c:1290 src/totem.c:1301
 msgid ""
 "Couldn't load the 'Open Location...' interface.\n"
 "Make sure that Totem is properly installed."
@@ -682,20 +702,24 @@ msgstr ""
 "Tak dapat memuatkan antaramuka 'Buka Lokasi...'.\n"
 "Pastikan Totem dipasang dengan betul."
 
-#: src/totem.c:1356
+#: src/totem.c:1362
+msgid "Totem could not eject the optical media."
+msgstr ""
+
+#: src/totem.c:1454
 msgid "translator_credits"
 msgstr "Hasbullah Bin Pit <sebol@ikhlas.com>, Merlimau."
 
-#: src/totem.c:1382
+#: src/totem.c:1480
 msgid "Movie Player (based on the xine libraries)"
 msgstr "Pemain Cereka (berdasarkan pustaka xine)"
 
-#: src/totem.c:1436 src/totem.c:1447
+#: src/totem.c:1534 src/totem.c:1545
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Cekupanskrin-%d.png"
 
-#: src/totem.c:1500
+#: src/totem.c:1598
 #, c-format
 msgid ""
 "Totem could not get a screenshot of that film.\n"
@@ -704,7 +728,7 @@ msgstr ""
 "Totem tak dapat memperolehi cekupanskrin filem itu.\n"
 "Alasan: %s."
 
-#: src/totem.c:1510
+#: src/totem.c:1608
 msgid ""
 "Totem could not get a screenshot of that film.\n"
 "Please file a bug, this isn't supposed to happen"
@@ -712,7 +736,7 @@ msgstr ""
 "Totem tak dapat memperolehi cekupanskrin filem itu.\n"
 "Sila failkan pepijat, Ini tidak sepatutnya berlaku"
 
-#: src/totem.c:1536
+#: src/totem.c:1634
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
@@ -721,7 +745,7 @@ msgstr ""
 "Fail '%s' tersedia wujud.\n"
 "Cekupanskrin tidak akan disimpan."
 
-#: src/totem.c:1547
+#: src/totem.c:1645
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -730,7 +754,7 @@ msgstr ""
 "Terdapat ralat menyimpan cekupanskrin.\n"
 "Perincian: %s"
 
-#: src/totem.c:1564
+#: src/totem.c:1662
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -738,7 +762,7 @@ msgstr ""
 "Tak dapat memapar tetingkap ciri-ciri Cereka.\n"
 "Pastikan Totem dipasang dengan betul."
 
-#: src/totem.c:1633
+#: src/totem.c:1731
 #, c-format
 msgid ""
 "Totem could not seek in '%s'.\n"
@@ -747,11 +771,11 @@ msgstr ""
 "Totem tak dapat mencari di '%s'.\n"
 "Alasan: %s."
 
-#: src/totem.c:2258
+#: src/totem.c:2361
 msgid "Auto"
 msgstr "Auto"
 
-#: src/totem.c:2607
+#: src/totem.c:2713
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -760,7 +784,7 @@ msgstr ""
 "Totem tak dapat memulakan:\n"
 "%s"
 
-#: src/totem.c:2874
+#: src/totem.c:2957
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -771,7 +795,7 @@ msgstr ""
 " jentera konfigurasi\n"
 "%s"
 
-#: src/totem.c:2889 src/totem.c:2921
+#: src/totem.c:2972 src/totem.c:3004
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -779,7 +803,7 @@ msgstr ""
 "Tak dapat memuatkan antaramuka utama (totem.glade).\n"
 "Pastikan Totem dipasang dengan betul."
 
-#: src/totem.c:2947
+#: src/totem.c:3030
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
@@ -805,51 +829,51 @@ msgstr "Gaya bevel sekeliling teks bar status"
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: src/bacon-video-widget.c:58
+#: src/bacon-video-widget.c:56
 msgid "Totem Video Window"
 msgstr "Tetingkap Video Totem"
 
-#: src/bacon-video-widget.c:563
+#: src/bacon-video-widget.c:555
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
 "Check that the device is not busy."
 msgstr ""
 
-#: src/bacon-video-widget.c:971
+#: src/bacon-video-widget.c:968
 msgid "There is no plugin to handle this movie"
 msgstr "Tiada plugin untuk mengendali cereka ini"
 
-#: src/bacon-video-widget.c:975
+#: src/bacon-video-widget.c:972
 msgid "This movie is broken and can not be played further"
 msgstr "cereka ini rosak dan tak dapat memainkannya lagi"
 
-#: src/bacon-video-widget.c:979
+#: src/bacon-video-widget.c:976
 msgid "This location is not a valid one"
 msgstr "Lokasi ini adalah tidak sah"
 
-#: src/bacon-video-widget.c:983
+#: src/bacon-video-widget.c:980
 msgid "Generic Error"
 msgstr "Ralat generik"
 
-#: src/bacon-video-widget.c:1293
+#: src/bacon-video-widget.c:1292
 #, c-format
 msgid "Video type '%s' is not handled"
 msgstr "Jenis video '%s'tidak ditangani"
 
-#: src/bacon-video-widget.c:2259
+#: src/bacon-video-widget.c:2269
 msgid "Movie is not playing"
 msgstr "cereka tidak dimainkan"
 
-#: src/bacon-video-widget.c:2267
+#: src/bacon-video-widget.c:2277
 msgid "No video to capture"
 msgstr "Tiada video untuk dicekup"
 
-#: src/bacon-video-widget.c:2274
+#: src/bacon-video-widget.c:2284
 msgid "Video codec is not handled"
 msgstr "Codec video tidak ditangani"
 
-#: src/bacon-video-widget.c:2285
+#: src/bacon-video-widget.c:2295
 msgid "Height or width of the video is 0. Please file a bug."
 msgstr ""
 

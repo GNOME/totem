@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2003-02-26 20:23+0000\n"
+"POT-Creation-Date: 2003-04-09 23:33+0100\n"
 "PO-Revision-Date: 2003-02-08 10:49+EDT\n"
 "Last-Translator: Ge'ez Frontier Foundation <locales@geez.org>\n"
 "Language-Team: Amharic <locales@geez.org>\n"
@@ -15,12 +15,16 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/playlist.glade.h:1 src/gtk-playlist.c:800
+#: data/playlist.glade.h:1 src/gtk-playlist.c:893
 msgid "Playlist"
 msgstr ""
 
 #: data/playlist.glade.h:2
 msgid "Repeat Mode"
+msgstr ""
+
+#: data/playlist.glade.h:3
+msgid "_Add..."
 msgstr ""
 
 #: data/properties.glade.h:1 src/bacon-video-widget-properties.c:184
@@ -33,7 +37,7 @@ msgid "0 kbps"
 msgstr "0 kbps"
 
 #. 0 seconds
-#: data/properties.glade.h:3 data/totem.glade.h:3
+#: data/properties.glade.h:3 data/totem.glade.h:2
 #: src/bacon-video-widget-properties.c:140
 msgid "0 seconds"
 msgstr "0 ሴኮንዶች"
@@ -61,34 +65,33 @@ msgid "<b>Video</b>"
 msgstr "<b>ቪዲዮ</b>"
 
 #: data/properties.glade.h:9
-msgid "Artist: "
+#, fuzzy
+msgid "Artist:"
 msgstr "ድምፃዊ፦ "
 
 #: data/properties.glade.h:10
-msgid "Bitrate: "
+msgid "Bitrate:"
 msgstr ""
 
 #: data/properties.glade.h:11
-msgid "Codec: "
+msgid "Codec:"
 msgstr ""
 
 #: data/properties.glade.h:12
-msgid "Dimensions: "
+msgid "Dimensions:"
 msgstr ""
 
 #: data/properties.glade.h:13
-msgid "Duration: "
+msgid "Duration:"
 msgstr ""
 
 #: data/properties.glade.h:14
-msgid "Framerate: "
+msgid "Framerate:"
 msgstr ""
 
-#. Year
-#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:175
-#: src/bacon-video-widget-properties.c:181
+#. Video Codec
+#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:181
 #: src/bacon-video-widget-properties.c:188
-#: src/bacon-video-widget-properties.c:223
 #: src/bacon-video-widget-properties.c:260
 #: src/bacon-video-widget-properties.c:292
 msgid "N/A"
@@ -98,226 +101,422 @@ msgstr "N/A"
 msgid "No Link"
 msgstr ""
 
-#: data/properties.glade.h:17 src/bacon-video-widget-properties.c:350
+#: data/properties.glade.h:17 src/bacon-video-widget-properties.c:353
 msgid "Properties"
 msgstr "ምርጫዎች"
 
 #: data/properties.glade.h:18
-msgid "Title: "
+#, fuzzy
+msgid "Title:"
 msgstr "አርእስት፦ "
 
 #. Title
 #: data/properties.glade.h:19 src/bacon-video-widget-properties.c:171
 #: src/bacon-video-widget-properties.c:173
+#: src/bacon-video-widget-properties.c:175
 #: src/bacon-video-widget-properties.c:209
 #: src/bacon-video-widget-properties.c:216
+#: src/bacon-video-widget-properties.c:223
 msgid "Unknown"
 msgstr "ያልታወቀ"
 
 #: data/properties.glade.h:20
-msgid "Year: "
+#, fuzzy
+msgid "Year:"
 msgstr "ዓመት፦ "
 
 #: data/totem.desktop.in.h:1
 msgid "Play movies and songs"
 msgstr ""
 
-#: data/totem.desktop.in.h:2
+#: data/totem.desktop.in.h:2 src/totem.c:2938
 msgid "Totem Movie Player"
 msgstr ""
 
-#: data/totem.glade.h:1
-msgid " seconds"
-msgstr " ሴኮንዶች"
-
-#: data/totem.glade.h:2
+#: data/totem.glade.h:1 data/uri.glade.h:1
 msgid "*"
 msgstr "*"
 
+#: data/totem.glade.h:3
+msgid "1.5 Mbps T1/Intranet/LAN"
+msgstr ""
+
 #: data/totem.glade.h:4
-msgid "<b>Preview</b>"
-msgstr "<b>ቅድመ ዕይታ</b>"
+msgid "112 Kbps Dual ISDN/DSL"
+msgstr ""
 
 #: data/totem.glade.h:5
-msgid "Angle menu"
+msgid "14.4 Kbps Modem"
 msgstr ""
 
 #: data/totem.glade.h:6
-msgid "Audio menu"
-msgstr "የድምፅ ሜኑ"
+msgid "19.2 Kbps Modem"
+msgstr ""
 
 #: data/totem.glade.h:7
-msgid "Automatically _resize the window when a new video is loaded"
+msgid "256 Kbps DSL/Cable"
 msgstr ""
 
 #: data/totem.glade.h:8
-msgid "Chapter menu"
+msgid "28.8 Kbps Modem"
 msgstr ""
 
 #: data/totem.glade.h:9
-msgid "DVD menu"
-msgstr "የDVD ሜኑ"
+msgid "33.6 Kbps Modem"
+msgstr ""
 
 #: data/totem.glade.h:10
-msgid "Exit fullscreen"
+msgid "34.4 Kbps Modem"
 msgstr ""
 
 #: data/totem.glade.h:11
-msgid "File name"
-msgstr "የፋይል ስም"
+msgid "384 Kbps DSL/Cable"
+msgstr ""
 
-#: data/totem.glade.h:12 src/totem.c:74
-msgid "Next"
-msgstr "የሚቀጥለው"
+#: data/totem.glade.h:12
+msgid "512 Kbps DSL/Cable"
+msgstr ""
 
 #: data/totem.glade.h:13
-msgid "Next Chapter/Movie"
+msgid "56 Kbps Modem/ISDN"
 msgstr ""
 
 #: data/totem.glade.h:14
-msgid "Optical Device _Path: "
-msgstr ""
+#, fuzzy
+msgid "<b>Display</b>"
+msgstr "<b>ድምፅ</b>"
 
 #: data/totem.glade.h:15
-msgid "Play _Audio CD"
-msgstr ""
+#, fuzzy
+msgid "<b>Networking</b>"
+msgstr "<b>ቪዲዮ</b>"
 
 #: data/totem.glade.h:16
-msgid "Play _DVD"
-msgstr ""
+#, fuzzy
+msgid "<b>Optical Device</b>"
+msgstr "<b>ቅድመ ዕይታ</b>"
 
 #: data/totem.glade.h:17
-msgid "Play _VCD"
+msgid "<b>Preview</b>"
+msgstr "<b>ቅድመ ዕይታ</b>"
+
+#: data/totem.glade.h:18
+msgid "Always On _Top"
 msgstr ""
 
-#: data/totem.glade.h:18 src/totem.c:73
-msgid "Play/Pause"
-msgstr "አጫውት ለአጭር ጊዜ አሳርፍ"
-
-#: data/totem.glade.h:19 src/totem.c:75
-msgid "Previous"
-msgstr "የቀድሞው"
+#: data/totem.glade.h:19
+msgid "Always on top"
+msgstr ""
 
 #: data/totem.glade.h:20
-msgid "Previous Chapter/Movie"
+msgid "Angle menu"
 msgstr ""
 
 #: data/totem.glade.h:21
-msgid "Save Screenshot"
-msgstr "እስክሪን ፎቶ አስቀምጥ"
+msgid "Audio menu"
+msgstr "የድምፅ ሜኑ"
 
 #: data/totem.glade.h:22
-msgid "Save screenshot to _file: "
+msgid "Automatically _resize the window when a new video is loaded"
 msgstr ""
 
 #: data/totem.glade.h:23
-msgid "Save screenshot to the _desktop"
+msgid "Chapter menu"
 msgstr ""
 
 #: data/totem.glade.h:24
-msgid "Show visual effects when an audio file is played"
+msgid "Connection Speed: "
 msgstr ""
 
 #: data/totem.glade.h:25
-msgid "Show/Hide Playlist"
-msgstr ""
+msgid "DVD menu"
+msgstr "የDVD ሜኑ"
 
 #: data/totem.glade.h:26
-msgid "Skip backwards"
-msgstr ""
+#, fuzzy
+msgid "Exit Fullscreen"
+msgstr "ሙሉ እስክሪን (_F)"
 
 #: data/totem.glade.h:27
-msgid "Skip forward"
-msgstr ""
+msgid "File name"
+msgstr "የፋይል ስም"
 
 #: data/totem.glade.h:28
-msgid "Skip to"
-msgstr ""
+#, fuzzy
+msgid "Go to the DVD menu"
+msgstr "የDVD ሜኑ"
 
 #: data/totem.glade.h:29
-msgid "Skip to: "
+msgid "Go to the angle menu"
 msgstr ""
 
 #: data/totem.glade.h:30
-msgid "Take Screenshot"
+msgid "Go to the audio menu"
 msgstr ""
 
 #: data/totem.glade.h:31
-msgid "Take _Screenshot"
+msgid "Go to the chapter menu"
 msgstr ""
 
 #: data/totem.glade.h:32
-msgid "Time: "
-msgstr "ሰዓት፦ "
+msgid "Go to the title menu"
+msgstr ""
 
 #: data/totem.glade.h:33
-msgid "Title menu"
-msgstr "የአርእስት ሜኑ"
+msgid "Intranet/LAN"
+msgstr ""
 
 #: data/totem.glade.h:34
-msgid "Toggle _Aspect Ratio"
+msgid "Languages"
 msgstr ""
 
-#. Title
-#: data/totem.glade.h:35 src/totem.c:414 src/totem.c:436 src/totem.c:1267
-msgid "Totem"
-msgstr "ቶተም"
+#: data/totem.glade.h:35 src/totem.c:78
+msgid "Next"
+msgstr "የሚቀጥለው"
 
 #: data/totem.glade.h:36
-msgid "Totem Preferences"
-msgstr "የቶተም ምርጫዎች"
-
-#: data/totem.glade.h:37 src/totem.c:79
-msgid "Volume Down"
+msgid "Next Chapter/Movie"
 msgstr ""
 
-#: data/totem.glade.h:38 src/totem.c:78
-msgid "Volume Up"
+#: data/totem.glade.h:37
+msgid "Next chapter or movie"
+msgstr ""
+
+#: data/totem.glade.h:38
+msgid "No langage selection available"
 msgstr ""
 
 #: data/totem.glade.h:39
-msgid "Zoom _1:1"
-msgstr "በቅርበት አሳይ"
+msgid "No subtitles selection available"
+msgstr ""
 
 #: data/totem.glade.h:40
-msgid "Zoom _2:1"
-msgstr "በቅርበት አሳይ"
+msgid "Open _Location..."
+msgstr ""
 
 #: data/totem.glade.h:41
-msgid "_Fullscreen"
-msgstr "ሙሉ እስክሪን (_F)"
+msgid "Open a non-local file"
+msgstr ""
 
 #: data/totem.glade.h:42
-msgid "_Go"
-msgstr "ሂድ ወደ (_G)"
+msgid "Optical Device _Path: "
+msgstr ""
 
 #: data/totem.glade.h:43
-msgid "_Movie"
-msgstr "ፊልም (_M)"
+msgid "Play _Audio CD"
+msgstr ""
 
 #: data/totem.glade.h:44
-msgid "_Play / Pause"
-msgstr "አጫውት / ለአጭር ጊዜ አሳርፍ (_P)"
+msgid "Play _DVD"
+msgstr ""
 
 #: data/totem.glade.h:45
-msgid "_Repeat Mode"
+msgid "Play _VCD"
 msgstr ""
 
 #: data/totem.glade.h:46
-msgid "_Show/Hide Playlist"
+msgid "Play a Video CD"
 msgstr ""
 
 #: data/totem.glade.h:47
-msgid "_Skip to..."
+msgid "Play a Video DVD"
 msgstr ""
 
 #: data/totem.glade.h:48
+msgid "Play an audio CD"
+msgstr ""
+
+#: data/totem.glade.h:49
+msgid "Play or pause the movie"
+msgstr ""
+
+#: data/totem.glade.h:50 src/totem.c:77
+msgid "Play/Pause"
+msgstr "አጫውት ለአጭር ጊዜ አሳርፍ"
+
+#: data/totem.glade.h:51 src/totem.c:79
+msgid "Previous"
+msgstr "የቀድሞው"
+
+#: data/totem.glade.h:52
+msgid "Previous Chapter/Movie"
+msgstr ""
+
+#: data/totem.glade.h:53
+msgid "Previous chapter or movie"
+msgstr ""
+
+#: data/totem.glade.h:54
+msgid "Save Screenshot"
+msgstr "እስክሪን ፎቶ አስቀምጥ"
+
+#: data/totem.glade.h:55
+msgid "Save screenshot to _file: "
+msgstr ""
+
+#: data/totem.glade.h:56
+msgid "Save screenshot to the _desktop"
+msgstr ""
+
+#: data/totem.glade.h:57
+msgid "Set the repeat mode"
+msgstr ""
+
+#: data/totem.glade.h:58
+msgid "Show or hide the playlist"
+msgstr ""
+
+#: data/totem.glade.h:59
+msgid "Show visual effects when an audio file is played"
+msgstr ""
+
+#: data/totem.glade.h:60
+msgid "Show/Hide Playlist"
+msgstr ""
+
+#: data/totem.glade.h:61
+msgid "Skip backwards"
+msgstr ""
+
+#: data/totem.glade.h:62
+msgid "Skip forward"
+msgstr ""
+
+#: data/totem.glade.h:63
+msgid "Skip to"
+msgstr ""
+
+#: data/totem.glade.h:64
+msgid "Skip to a specific time"
+msgstr ""
+
+#: data/totem.glade.h:65
+msgid "Skip to:"
+msgstr ""
+
+#: data/totem.glade.h:66
+msgid "Subtitles"
+msgstr ""
+
+#: data/totem.glade.h:67
+msgid "Switch to double size"
+msgstr ""
+
+#: data/totem.glade.h:68
+msgid "Switch to fullscreen"
+msgstr ""
+
+#: data/totem.glade.h:69
+msgid "Take _Screenshot"
+msgstr ""
+
+#: data/totem.glade.h:70
+#, fuzzy
+msgid "Take a screenshot"
+msgstr "እስክሪን ፎቶ አስቀምጥ"
+
+#: data/totem.glade.h:71
+#, fuzzy
+msgid "Time:"
+msgstr "ሰዓት፦ "
+
+#: data/totem.glade.h:72
+msgid "Title menu"
+msgstr "የአርእስት ሜኑ"
+
+#: data/totem.glade.h:73
+msgid "Toggle _Aspect Ratio"
+msgstr ""
+
+#: data/totem.glade.h:74
+msgid "Toggle the aspect ratio"
+msgstr ""
+
+#. Title
+#: data/totem.glade.h:75 src/totem.c:510 src/totem.c:532 src/totem.c:1478
+msgid "Totem"
+msgstr "ቶተም"
+
+#: data/totem.glade.h:76
+msgid "Totem Preferences"
+msgstr "የቶተም ምርጫዎች"
+
+#: data/totem.glade.h:77 src/totem.c:83
+msgid "Volume Down"
+msgstr ""
+
+#: data/totem.glade.h:78 src/totem.c:82
+msgid "Volume Up"
+msgstr ""
+
+#: data/totem.glade.h:79
+msgid "Volume down"
+msgstr ""
+
+#: data/totem.glade.h:80
+msgid "Volume up"
+msgstr ""
+
+#: data/totem.glade.h:81
+msgid "Zoom _1:1"
+msgstr "በቅርበት አሳይ"
+
+#: data/totem.glade.h:82
+msgid "Zoom _2:1"
+msgstr "በቅርበት አሳይ"
+
+#: data/totem.glade.h:83
+msgid "Zoom to half size"
+msgstr ""
+
+#: data/totem.glade.h:84
+msgid "Zoom to one for one size"
+msgstr ""
+
+#: data/totem.glade.h:85
+msgid "_Eject"
+msgstr ""
+
+#: data/totem.glade.h:86
+msgid "_Fullscreen"
+msgstr "ሙሉ እስክሪን (_F)"
+
+#: data/totem.glade.h:87
+msgid "_Go"
+msgstr "ሂድ ወደ (_G)"
+
+#: data/totem.glade.h:88
+msgid "_Movie"
+msgstr "ፊልም (_M)"
+
+#: data/totem.glade.h:89
+msgid "_Play / Pause"
+msgstr "አጫውት / ለአጭር ጊዜ አሳርፍ (_P)"
+
+#: data/totem.glade.h:90
+msgid "_Repeat Mode"
+msgstr ""
+
+#: data/totem.glade.h:91
+msgid "_Show/Hide Playlist"
+msgstr ""
+
+#: data/totem.glade.h:92
+msgid "_Skip to..."
+msgstr ""
+
+#: data/totem.glade.h:93
 msgid "_Sound"
 msgstr "ድምፅ (_S)"
 
-#: data/totem.glade.h:49
+#: data/totem.glade.h:94
 msgid "_Zoom 1:2"
 msgstr "በቅርበት አሳይ (_Z)"
+
+#: data/totem.glade.h:95
+#, fuzzy
+msgid "seconds"
+msgstr " ሴኮንዶች"
 
 #: data/totem.schemas.in.h:1
 msgid "Path to the optical media device"
@@ -345,6 +544,14 @@ msgstr ""
 
 #: data/totem.schemas.in.h:7
 msgid "Y coordinate for the Playlist"
+msgstr ""
+
+#: data/uri.glade.h:2
+msgid "Enter the _location (URI) of the file you would like to open:"
+msgstr ""
+
+#: data/uri.glade.h:3
+msgid "Open from URI"
 msgstr ""
 
 #: src/bacon-cd-selection.c:233
@@ -400,56 +607,240 @@ msgstr "ሚስጢራዊ ቃል፦ (_P)"
 msgid "Remember this password"
 msgstr "ይህንን ሚስጢራዊ ቃል አስታውሱ"
 
-#: src/gtk-playlist.c:414 src/totem.c:1108
+#: src/gtk-playlist.c:506 src/totem.c:1239
 msgid "Select files"
 msgstr "ፋይሎችን ምረጡ"
 
-#: src/gtk-playlist.c:550
+#: src/gtk-playlist.c:642
 msgid "Filename"
 msgstr "የፋይል ስም"
 
-#: src/bacon-video-widget.c:58
+#: src/totem.c:80
+msgid "Seek Forwards"
+msgstr ""
+
+#: src/totem.c:81
+msgid "Seek Backwards"
+msgstr ""
+
+#: src/totem.c:85
+msgid "Toggle Fullscreen"
+msgstr "ሙሉ እስክሪን ቀያያር"
+
+#: src/totem.c:86
+msgid "Quit"
+msgstr "ውጣ"
+
+#: src/totem.c:87
+msgid "Enqueue"
+msgstr ""
+
+#: src/totem.c:88
+msgid "Replace"
+msgstr ""
+
+#: src/totem.c:217
+msgid "Playing"
+msgstr ""
+
+#: src/totem.c:224
+msgid "Paused"
+msgstr ""
+
+#: src/totem.c:231 src/totem-statusbar.c:171
+msgid "Stopped"
+msgstr ""
+
+#: src/totem.c:289 src/totem.c:635 src/totem.c:739
+#, c-format
+msgid ""
+"Totem could not play '%s'.\n"
+"Reason: %s."
+msgstr ""
+
+#: src/totem.c:318
+msgid ""
+"Totem cannot play this type of media because you do not have the appropriate "
+"plugins to handle it.\n"
+"Install the necessary plugins and restart Totem to be able to play this "
+"media."
+msgstr ""
+
+#: src/totem.c:326
+msgid ""
+"Totem could not play this media although a plugin is present to handle it.\n"
+"You might want to check that a disc is present in the drive and that it is "
+"correctly configured."
+msgstr ""
+
+#. Title
+#: src/totem.c:486
+#, c-format
+msgid "%s - Totem"
+msgstr "%s - ቶተም"
+
+#: src/totem.c:499 src/totem.c:2783
+msgid "No file"
+msgstr "ፋይል የለም"
+
+#: src/totem.c:1290 src/totem.c:1301
+msgid ""
+"Couldn't load the 'Open Location...' interface.\n"
+"Make sure that Totem is properly installed."
+msgstr ""
+
+#: src/totem.c:1362
+msgid "Totem could not eject the optical media."
+msgstr ""
+
+#: src/totem.c:1454
+msgid "translator_credits"
+msgstr "ዘግዕዝ Frontier Foundation"
+
+#: src/totem.c:1480
+msgid "Movie Player (based on the xine libraries)"
+msgstr ""
+
+#: src/totem.c:1534 src/totem.c:1545
+#, c-format
+msgid "Screenshot%d.png"
+msgstr "እስክሪንፎቶ%d.png"
+
+#: src/totem.c:1598
+#, c-format
+msgid ""
+"Totem could not get a screenshot of that film.\n"
+"Reason: %s."
+msgstr ""
+
+#: src/totem.c:1608
+msgid ""
+"Totem could not get a screenshot of that film.\n"
+"Please file a bug, this isn't supposed to happen"
+msgstr ""
+
+#: src/totem.c:1634
+#, c-format
+msgid ""
+"File '%s' already exists.\n"
+"The screenshot was not saved."
+msgstr ""
+
+#: src/totem.c:1645
+#, c-format
+msgid ""
+"There was an error saving the screenshot.\n"
+"Details: %s"
+msgstr ""
+
+#: src/totem.c:1662
+msgid ""
+"Totem couldn't show the movie properties window.\n"
+"Make sure that Totem is correctly installed."
+msgstr ""
+
+#: src/totem.c:1731
+#, c-format
+msgid ""
+"Totem could not seek in '%s'.\n"
+"Reason: %s."
+msgstr ""
+
+#: src/totem.c:2361
+msgid "Auto"
+msgstr ""
+
+#: src/totem.c:2713
+#, c-format
+msgid ""
+"Totem could not startup:\n"
+"%s"
+msgstr ""
+
+#: src/totem.c:2957
+#, c-format
+msgid ""
+"Totem couln't initialise the \n"
+"configuration engine:\n"
+"%s"
+msgstr ""
+
+#: src/totem.c:2972 src/totem.c:3004
+msgid ""
+"Couldn't load the main interface (totem.glade).\n"
+"Make sure that Totem is properly installed."
+msgstr ""
+
+#: src/totem.c:3030
+msgid ""
+"Couldn't load the interface for the playlist.\n"
+"Make sure that Totem is properly installed."
+msgstr ""
+
+#: src/totem-preferences.c:63
+msgid ""
+"The change of this setting will only take effect for the next movie, or when "
+"Totem is restarted"
+msgstr ""
+
+#: src/totem-statusbar.c:138
+msgid "Shadow type"
+msgstr ""
+
+#: src/totem-statusbar.c:139
+msgid "Style of bevel around the statusbar text"
+msgstr ""
+
+#: src/totem-statusbar.c:180
+msgid "0:00 / 0:00"
+msgstr "0:00 / 0:00"
+
+#: src/bacon-video-widget.c:56
 msgid "Totem Video Window"
 msgstr "የቶተም ቪዲዮ መስኮት"
 
-#: src/bacon-video-widget.c:544
+#: src/bacon-video-widget.c:555
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
 "Check that the device is not busy."
 msgstr ""
 
-#: src/bacon-video-widget.c:895
+#: src/bacon-video-widget.c:968
 msgid "There is no plugin to handle this movie"
 msgstr ""
 
-#: src/bacon-video-widget.c:899
+#: src/bacon-video-widget.c:972
 msgid "This movie is broken and can not be played further"
 msgstr ""
 
-#: src/bacon-video-widget.c:903
+#: src/bacon-video-widget.c:976
 msgid "This location is not a valid one"
 msgstr ""
 
-#: src/bacon-video-widget.c:1183
+#: src/bacon-video-widget.c:980
+msgid "Generic Error"
+msgstr ""
+
+#: src/bacon-video-widget.c:1292
 #, c-format
 msgid "Video type '%s' is not handled"
 msgstr ""
 
-#: src/bacon-video-widget.c:2038
+#: src/bacon-video-widget.c:2269
 msgid "Movie is not playing"
 msgstr ""
 
-#: src/bacon-video-widget.c:2046
-msgid "Can't capture visual effects"
-msgstr ""
-
-#: src/bacon-video-widget.c:2047
+#: src/bacon-video-widget.c:2277
 msgid "No video to capture"
 msgstr ""
 
-#: src/bacon-video-widget.c:2054
+#: src/bacon-video-widget.c:2284
 msgid "Video codec is not handled"
+msgstr ""
+
+#: src/bacon-video-widget.c:2295
+msgid "Height or width of the video is 0. Please file a bug."
 msgstr ""
 
 #. One hour
@@ -520,163 +911,3 @@ msgstr ""
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
-
-#: src/totem.c:76
-msgid "Seek Forwards"
-msgstr ""
-
-#: src/totem.c:77
-msgid "Seek Backwards"
-msgstr ""
-
-#: src/totem.c:81
-msgid "Toggle Fullscreen"
-msgstr "ሙሉ እስክሪን ቀያያር"
-
-#: src/totem.c:82
-msgid "Quit"
-msgstr "ውጣ"
-
-#: src/totem.c:83
-msgid "Enqueue"
-msgstr ""
-
-#: src/totem.c:84
-msgid "Replace"
-msgstr ""
-
-#: src/totem.c:166
-msgid "Playing"
-msgstr ""
-
-#: src/totem.c:173
-msgid "Paused"
-msgstr ""
-
-#: src/totem.c:180 src/totem-statusbar.c:171
-msgid "Stopped"
-msgstr ""
-
-#: src/totem.c:238 src/totem.c:527 src/totem.c:616
-#, c-format
-msgid ""
-"Totem could not play '%s'.\n"
-"Reason: %s."
-msgstr ""
-
-#: src/totem.c:263
-msgid ""
-"Totem cannot play this type of media because you do not have the appropriate "
-"plugins to handle it.\n"
-"Install the necessary plugins and restart Totem to be able to play this "
-"media."
-msgstr ""
-
-#: src/totem.c:271
-msgid ""
-"Totem could not play this media although a plugin is present to handle it.\n"
-"You might want to check that a disc is present in the drive and that it is "
-"correctly configured."
-msgstr ""
-
-#. Title
-#: src/totem.c:390
-#, c-format
-msgid "%s - Totem"
-msgstr "%s - ቶተም"
-
-#: src/totem.c:403 src/totem.c:2373
-msgid "No file"
-msgstr "ፋይል የለም"
-
-#: src/totem.c:1243
-msgid "translator_credits"
-msgstr "ዘግዕዝ Frontier Foundation"
-
-#: src/totem.c:1269
-msgid "Movie Player (based on the xine libraries)"
-msgstr ""
-
-#: src/totem.c:1323 src/totem.c:1334
-#, c-format
-msgid "Screenshot%d.png"
-msgstr "እስክሪንፎቶ%d.png"
-
-#: src/totem.c:1387
-#, c-format
-msgid ""
-"Totem could not get a screenshot of that film.\n"
-"Reason: %s."
-msgstr ""
-
-#: src/totem.c:1397
-msgid ""
-"Totem could not get a screenshot of that film.\n"
-"Please file a bug, this isn't supposed to happen"
-msgstr ""
-
-#: src/totem.c:1423
-#, c-format
-msgid ""
-"File '%s' already exists.\n"
-"The screenshot was not saved."
-msgstr ""
-
-#: src/totem.c:1434
-#, c-format
-msgid ""
-"There was an error saving the screenshot.\n"
-"Details: %s"
-msgstr ""
-
-#: src/totem.c:1451
-msgid ""
-"Totem couldn't show the movie properties window.\n"
-"Make sure that Totem is correctly installed."
-msgstr ""
-
-#: src/totem.c:1520
-#, c-format
-msgid ""
-"Totem could not seek in '%s'.\n"
-"Reason: %s."
-msgstr ""
-
-#: src/totem.c:2303
-#, c-format
-msgid ""
-"Totem could not startup:\n"
-"%s"
-msgstr ""
-
-#: src/totem.c:2568
-#, c-format
-msgid ""
-"Totem couln't initialise the \n"
-"configuration engine:\n"
-"%s"
-msgstr ""
-
-#: src/totem.c:2583 src/totem.c:2615
-msgid ""
-"Couldn't load the main interface (totem.glade).\n"
-"Make sure that Totem is properly installed."
-msgstr ""
-
-#: src/totem.c:2641
-msgid ""
-"Couldn't load the interface for the playlist.\n"
-"Make sure that Totem is properly installed."
-msgstr ""
-
-#: src/totem-statusbar.c:138
-msgid "Shadow type"
-msgstr ""
-
-#: src/totem-statusbar.c:139
-msgid "Style of bevel around the statusbar text"
-msgstr ""
-
-#: src/totem-statusbar.c:180
-msgid "0:00 / 0:00"
-msgstr "0:00 / 0:00"
