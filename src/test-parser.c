@@ -65,7 +65,21 @@ entry_added (TotemPlParser *parser, const char *uri, const char *title,
 static void
 test_parsing_real (TotemPlParser *pl, const char *url)
 {
-	totem_pl_parser_parse (pl, url, FALSE);
+	TotemPlParserResult res;
+
+	res = totem_pl_parser_parse (pl, url, FALSE);
+	if (res != TOTEM_PL_PARSER_RESULT_SUCCESS) {
+		switch (res) {
+		case TOTEM_PL_PARSER_RESULT_UNHANDLED:
+			g_print ("url '%s' unhandled\n", url);
+			break;
+		case TOTEM_PL_PARSER_RESULT_ERROR:
+			g_print ("error handling url '%s'\n", url);
+			break;
+		default:
+			;;
+		}
+	}
 }
 
 static gboolean
@@ -73,6 +87,7 @@ push_parser (gpointer data)
 {
 	TotemPlParser *pl = (TotemPlParser *)data;
 	test_parsing_real (pl, "/mnt/cdrom");
+	test_parsing_real (pl, "http://live.hujjat.org:7860/main");
 	g_main_loop_quit (loop);
 	return FALSE;
 }

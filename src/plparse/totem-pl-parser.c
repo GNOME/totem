@@ -1279,12 +1279,14 @@ static TotemPlParserResult
 totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 			   gpointer data)
 {
+	MediaType type;
 	GList *list, *l;
 	GnomeVFSResult res;
 	char *media_url;
 
 	if (parser->priv->recurse_level == 1) {
-		if (cd_detect_type_from_dir (url, &media_url, NULL) != MEDIA_TYPE_DATA) {
+		type = cd_detect_type_from_dir (url, &media_url, NULL);
+		if (type != MEDIA_TYPE_DATA && type != MEDIA_TYPE_ERROR) {
 			if (media_url != NULL) {
 				totem_pl_parser_add_one_url (parser, media_url, NULL);
 				g_free (media_url);
