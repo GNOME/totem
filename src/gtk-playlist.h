@@ -62,6 +62,9 @@ GtkWidget *gtk_playlist_new      (const char *glade_filename,
 gboolean   gtk_playlist_add_mrl  (GtkPlaylist *playlist, const char *mrl,
 		const char *display_name);
 
+void gtk_playlist_save_current_playlist (GtkPlaylist *playlist,
+		const char *output);
+
 /* gtk_playlist_clear doesn't emit the current_removed signal, even if it does
  * because the caller should know what to do after it's done with clearing */
 void       gtk_playlist_clear (GtkPlaylist *playlist);

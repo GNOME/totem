@@ -52,8 +52,9 @@ struct GtkPlaylistPrivate
 	/* This is a scratch list for when we're removing files */
 	GList *list;
 
-	/* This is the current path for the file selector */
+	/* These is the current paths for the file selectors */
 	char *path;
+	char *save_path;
 
 	/* Repeat mode */
 	gboolean repeat;
@@ -240,6 +241,103 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data)
 	mimetype = gnome_vfs_get_mime_type_for_data (*data, total_bytes_read);
 
 	return mimetype;
+}
+
+static gboolean
+write_string (GnomeVFSHandle *handle, const char *buf)
+{
+	GnomeVFSResult res;
+	GnomeVFSFileSize written;
+	int len;
+
+	len = strlen (buf);
+	res = gnome_vfs_write (handle, buf, len, &written);
+	if (res != GNOME_VFS_OK || written < len)
+	{
+		//FIXME
+		g_message ("write_string: %s", gnome_vfs_result_to_string (res));
+		gnome_vfs_close (handle);
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+void
+gtk_playlist_save_current_playlist (GtkPlaylist *playlist, const char *output)
+{
+	GnomeVFSHandle *handle;
+	GnomeVFSResult res;
+	int num_entries, i, written, len;
+	char *buf;
+	gboolean success;
+
+	num_entries = gtk_tree_model_iter_n_children
+		(playlist->_priv->model, NULL);
+	res = gnome_vfs_open (&handle, output, GNOME_VFS_OPEN_WRITE);
+	if (res == GNOME_VFS_ERROR_NOT_FOUND)
+	{
+		res = gnome_vfs_create (&handle, output,
+				GNOME_VFS_OPEN_WRITE, FALSE,
+				GNOME_VFS_PERM_USER_WRITE
+				| GNOME_VFS_PERM_USER_READ
+				| GNOME_VFS_PERM_GROUP_READ);
+	}
+
+	if (res != GNOME_VFS_OK)
+	{
+		g_message ("gtk_playlist_save_current_playlist: %s", gnome_vfs_result_to_string (res));
+		//FIXME
+		return;
+	}
+
+	buf = g_strdup ("[playlist]\n");
+	success = write_string (handle, buf);
+	g_free (buf);
+	if (success == FALSE)
+		return;
+
+	buf = g_strdup_printf ("numberofentries=%d\n", num_entries);
+	success = write_string (handle, buf);
+	g_free (buf);
+	if (success == FALSE)
+		return;
+
+	for (i = 1; i <= num_entries; i++)
+	{
+		GtkTreeIter iter;
+		char *path, *mrl, *title;
+
+		path = g_strdup_printf ("%d", i - 1);
+		gtk_tree_model_get_iter_from_string (playlist->_priv->model,
+				&iter, path);
+		g_free (path);
+
+		gtk_tree_model_get (playlist->_priv->model,
+				&iter,
+				URI_COL, &mrl,
+				FILENAME_COL, &title,
+				-1);
+
+		buf = g_strdup_printf ("file%d=%s\n", i, mrl);
+		success = write_string (handle, buf);
+		g_free (buf);
+		g_free (mrl);
+		if (success == FALSE)
+		{
+			g_free (title);
+			return;
+		}
+
+		buf = g_strdup_printf ("title%d=%s\n", i, title);
+		success = write_string (handle, buf);
+		g_free (buf);
+		g_free (title);
+		if (success == FALSE)
+			return;
+	}
+
+	gnome_vfs_close (handle);
 }
 
 static void
@@ -506,14 +604,12 @@ gtk_playlist_add_files (GtkWidget *widget, GtkPlaylist *playlist)
 	{
 		gtk_file_selection_set_filename (GTK_FILE_SELECTION (fs),
 				playlist->_priv->path);
-		g_free (playlist->_priv->path);
-		playlist->_priv->path = NULL;
 	}
 	response = gtk_dialog_run (GTK_DIALOG (fs));
 	gtk_widget_hide (fs);
 	while (gtk_events_pending())
 		gtk_main_iteration();
-	
+
 	if (response == GTK_RESPONSE_OK)
 	{
 		char **filenames;
@@ -527,6 +623,7 @@ gtk_playlist_add_files (GtkWidget *widget, GtkPlaylist *playlist)
 			char *tmp;
 
 			tmp = g_path_get_dirname (filenames[0]);
+			g_free (playlist->_priv->path);
 			playlist->_priv->path = g_strconcat (tmp,
 					G_DIR_SEPARATOR_S, NULL);
 			g_free (tmp);
@@ -655,6 +752,72 @@ gtk_playlist_remove_files (GtkWidget *widget, GtkPlaylist *playlist)
 }
 
 static void
+gtk_playlist_save_files (GtkWidget *widget, GtkPlaylist *playlist)
+{
+	GtkWidget *fs;
+	int response;
+
+	fs = gtk_file_selection_new (_("Save playlist"));
+	if (playlist->_priv->save_path != NULL)
+	{
+		gtk_file_selection_set_filename (GTK_FILE_SELECTION (fs),
+				playlist->_priv->save_path);
+	}
+
+	response = gtk_dialog_run (GTK_DIALOG (fs));
+	gtk_widget_hide (fs);
+	while (gtk_events_pending())
+		gtk_main_iteration();
+
+	if (response == GTK_RESPONSE_OK)
+	{
+		const char *filename;
+
+		filename = gtk_file_selection_get_filename
+			(GTK_FILE_SELECTION (fs));
+		if (filename != NULL)
+		{
+			char *tmp;
+
+			tmp = g_path_get_dirname (filename);
+			g_free (playlist->_priv->save_path);
+			playlist->_priv->save_path = g_strconcat (tmp,
+					G_DIR_SEPARATOR_S, NULL);
+			g_free (tmp);
+		}
+
+		if (g_file_test (filename, G_FILE_TEST_EXISTS) == TRUE)
+		{
+			GtkWidget *dialog;
+
+			dialog = gtk_message_dialog_new
+				(GTK_WINDOW (playlist),
+				 GTK_DIALOG_MODAL,
+				 GTK_MESSAGE_QUESTION,
+				 GTK_BUTTONS_NONE,
+				 _("A file named '%s' already exists.\nAre you sure you want to overwrite it?"),
+				 filename);
+			gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+					GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
+					GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+					NULL);
+
+			response = gtk_dialog_run (GTK_DIALOG (dialog));
+			gtk_widget_destroy (dialog);
+			if (response != GTK_RESPONSE_ACCEPT)
+			{
+				gtk_widget_destroy (fs);
+				return;
+			}
+		}
+
+		gtk_playlist_save_current_playlist (playlist, filename);
+	}
+
+	gtk_widget_destroy (fs);
+}
+
+static void
 gtk_playlist_move_files (GtkPlaylist *playlist, gboolean direction_up)
 {
 	GtkTreeSelection *selection;
@@ -769,8 +932,7 @@ gtk_playlist_move_files (GtkPlaylist *playlist, gboolean direction_up)
 }
 
 static void
-gtk_playlist_up_files (GtkWidget *widget, GtkPlaylist *playlist,
-		gboolean direction_up)
+gtk_playlist_up_files (GtkWidget *widget, GtkPlaylist *playlist)
 {
 	gtk_playlist_move_files (playlist, TRUE);
 }
@@ -1060,6 +1222,10 @@ gtk_playlist_new (const char *glade_filename, GdkPixbuf *playing_pix)
 	item = glade_xml_get_widget (playlist->_priv->xml, "remove_button");
 	g_signal_connect (GTK_OBJECT (item), "clicked",
 			G_CALLBACK (gtk_playlist_remove_files),
+			playlist);
+	item = glade_xml_get_widget (playlist->_priv->xml, "save_button");
+	g_signal_connect (GTK_OBJECT (item), "clicked",
+			G_CALLBACK (gtk_playlist_save_files),
 			playlist);
 	item = glade_xml_get_widget (playlist->_priv->xml, "up_button");
 	g_signal_connect (GTK_OBJECT (item), "clicked",

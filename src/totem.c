@@ -211,17 +211,26 @@ totem_action_exit (Totem *totem)
 
 	bacon_message_connection_free (totem->conn);
 
-	if (totem->win)
-		gtk_widget_hide (totem->win);
-
 	if (totem->playlist)
 		gtk_widget_hide (GTK_WIDGET (totem->playlist));
+
+	if (totem->win)
+		gtk_widget_hide (totem->win);
 
 	if (totem->bvw)
 		gtk_widget_destroy (GTK_WIDGET (totem->bvw));
 
 	if (totem->playlist)
+	{
+		char *path;
+
+		path = g_build_filename (G_DIR_SEPARATOR_S, g_get_home_dir (),
+				".gnome2", "totem.pls", NULL);
+		gtk_playlist_save_current_playlist (totem->playlist, path);
+		g_free (path);
+
 		gtk_widget_destroy (GTK_WIDGET (totem->playlist));
+	}
 
 	exit (0);
 }

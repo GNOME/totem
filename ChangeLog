@@ -1,3 +1,16 @@
+2003-04-29  Bastien Nocera  <hadess@hadess.net>
+
+	* data/playlist.glade: added save button
+	* src/gtk-playlist.c: (write_string),
+	(gtk_playlist_save_current_playlist), (gtk_playlist_add_files),
+	(gtk_playlist_save_files), (gtk_playlist_up_files),
+	(gtk_playlist_new):
+	* src/gtk-playlist.h:
+	* src/totem.c: (totem_action_exit): added playlist saving feature
+	(Closes: #111666), the playlist is automatically saved to
+	~/.gnome2/totem.pls on exit, keep the fileselector's paths even if we
+	cancel the add/save
+
 2003-04-27  Bastien Nocera  <hadess@hadess.net>
 
 	* README: updated
