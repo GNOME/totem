@@ -1,5 +1,10 @@
 2003-10-07  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (on_take_screenshot1_activate): scale down using
+	gnome_thumbnail_scale_down_pixbuf instead of gdk_pixbuf_scale_simple
+
+2003-10-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_class_init):
 	* src/bacon-video-widget-xine.c: (bacon_video_widget_class_init),
 	(bacon_video_widget_idle_signal), (xine_event):
