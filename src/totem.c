@@ -2037,10 +2037,15 @@ on_window_key_press_event (GtkWidget *win, GdkEventKey *event,
 {
 	Totem *totem = (Totem *) user_data;
 
-	if ((event->state | GDK_SHIFT_MASK) != event->state
-			&& (event->state | GDK_LOCK_MASK) != event->state
-			&& (event->state | GDK_SHIFT_MASK | GDK_LOCK_MASK)
-			!= event->state)
+	/* If we have modifiers, and either Ctrl, Mod1 (Alt), or any
+	 * of Mod3 to Mod5 (Mod2 is num-lock...) are pressed, we
+	 * let Gtk+ handle the key */
+	if (event->state != 0
+			&& ((event->state & GDK_CONTROL_MASK)
+			|| (event->state & GDK_MOD1_MASK)
+			|| (event->state & GDK_MOD3_MASK)
+			|| (event->state & GDK_MOD4_MASK)
+			|| (event->state & GDK_MOD5_MASK)))
 		return FALSE;
 
 	return totem_action_handle_key (totem, event->keyval);

@@ -1,5 +1,11 @@
 2003-01-29  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (on_window_key_press_event): If we have modifiers, and
+	either Ctrl, Mod1 (Alt), or any of Mod3 to Mod5 (Mod2 is num-lock...)
+	are pressed, we let Gtk+ handle the key (Closes: #104675)
+
+2003-01-29  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-xine.c: (gtk_xine_get_current_frame): really fix the
 	screenshot aspect bug (it only worked because the test video was
 	square, haha) (Closes: #104605)
