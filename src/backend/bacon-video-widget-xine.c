@@ -2447,6 +2447,10 @@ bacon_video_widget_set_media_device (BaconVideoWidget *bvw, const char *path)
 {
 	xine_cfg_entry_t entry;
 
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (path != NULL);
+
 	/* DVD device */
 	bvw_config_helper_string (bvw->priv->xine, "media.dvd.device",
 			path, &entry);

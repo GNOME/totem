@@ -212,6 +212,9 @@ on_combo_entry1_changed (NautilusBurnDriveSelection *bcs, char *device, Totem *t
 	const char *str;
 
 	str = nautilus_burn_drive_selection_get_device (bcs);
+	if (str == NULL)
+		str = "";
+
 	gconf_client_set_string (totem->gc, GCONF_PREFIX"/mediadev", str, NULL);
 	bacon_video_widget_set_media_device
 		(BACON_VIDEO_WIDGET (totem->bvw), str);
