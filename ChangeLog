@@ -1,5 +1,16 @@
 2003-01-20  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.glade:
+	* src/totem.c: (totem_action_set_mrl_and_play),
+	(totem_action_set_mrl), (on_skip_to1_activate),
+	(on_skip_forward1_activate), (on_skip_backwards1_activate),
+	(on_volume_up1_activate), (on_volume_down1_activate),
+	(update_buttons), (totem_callback_connect): added a "Skip To..." menu
+	item, made the menus items for skip and volume changes actually work
+	(and nobody even noticed they weren't working ;)
+
+2003-01-20  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am:
 	* src/gtk-playlist.c: (repeat_button_toggled), (update_repeat_cb),
 	(init_config), (gtk_playlist_unrealize), (gtk_playlist_unmap),

@@ -258,9 +258,6 @@ totem_action_play (Totem *totem, int offset)
 void
 totem_action_set_mrl_and_play (Totem *totem, char *mrl)
 {
-	if (mrl == NULL)
-		totem_action_set_mrl (totem, mrl);
-
 	if (totem_action_set_mrl (totem, mrl) == TRUE)
 		totem_action_play (totem, 0);
 }
@@ -425,6 +422,8 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 
 	if (mrl == NULL)
 	{
+		retval = FALSE;
+
 		gtk_window_set_title (GTK_WINDOW (totem->win), _("Totem"));
 
 		/* Play/Pause */
@@ -437,12 +436,18 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		/* Seek bar and seek buttons */
 		gtk_widget_set_sensitive (totem->seek, FALSE);
 		widget = glade_xml_get_widget (totem->xml, "skip_forward1");
-		gtk_widget_set_sensitive (totem->seek, FALSE);
+		gtk_widget_set_sensitive (widget, FALSE);
 		widget = glade_xml_get_widget (totem->xml, "skip_backwards1");
-		gtk_widget_set_sensitive (totem->seek, FALSE);
+		gtk_widget_set_sensitive (widget, FALSE);
+		widget = glade_xml_get_widget (totem->xml, "skip_to1");
+		gtk_widget_set_sensitive (widget, FALSE);
 
 		/* Volume */
 		widget = glade_xml_get_widget (totem->xml, "volume_hbox");
+		gtk_widget_set_sensitive (widget, FALSE);
+		widget = glade_xml_get_widget (totem->xml, "volume_up1");
+		gtk_widget_set_sensitive (widget, FALSE);
+		widget = glade_xml_get_widget (totem->xml, "volume_down1");
 		gtk_widget_set_sensitive (widget, FALSE);
 
 		/* Control popup */
@@ -468,6 +473,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 	} else {
 		char *title, *name;
 		int time;
+		gboolean caps;
 
 		retval = gtk_xine_open (GTK_XINE (totem->gtx), mrl);
 
@@ -478,29 +484,31 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		gtk_widget_set_sensitive (totem->pp_button, TRUE);
 		widget = glade_xml_get_widget (totem->xml, "play1");
 		gtk_widget_set_sensitive (widget, TRUE);
+		gtk_widget_set_sensitive (totem->fs_pp_button, TRUE);
 
 		update_mrl_label (totem, name);
 
 		/* Seek bar */
-		gtk_widget_set_sensitive (totem->seek,
-				gtk_xine_is_seekable (GTK_XINE (totem->gtx)));
+		caps = gtk_xine_is_seekable (GTK_XINE (totem->gtx));
+		gtk_widget_set_sensitive (totem->seek, caps);
 		widget = glade_xml_get_widget (totem->xml, "skip_forward1");
-		gtk_widget_set_sensitive (widget, TRUE);
+		gtk_widget_set_sensitive (widget, caps);
 		widget = glade_xml_get_widget (totem->xml, "skip_backwards1");
-		gtk_widget_set_sensitive (widget, TRUE);
-
-		/* Control popup */
-		gtk_widget_set_sensitive (totem->fs_seek,
-				gtk_xine_is_seekable (GTK_XINE (totem->gtx)));
-		gtk_widget_set_sensitive (totem->fs_pp_button, TRUE);
-		widget = glade_xml_get_widget (totem->xml, "fs_volume_hbox");
-		gtk_widget_set_sensitive (widget, gtk_xine_can_set_volume
-				(GTK_XINE (totem->gtx)));
+		gtk_widget_set_sensitive (widget, caps);
+		widget = glade_xml_get_widget (totem->xml, "skip_to1");
+		gtk_widget_set_sensitive (widget, caps);
+		gtk_widget_set_sensitive (totem->fs_seek, caps);
 
 		/* Volume */
+		caps = gtk_xine_can_set_volume (GTK_XINE (totem->gtx));
 		widget = glade_xml_get_widget (totem->xml, "volume_hbox");
-		gtk_widget_set_sensitive (widget, gtk_xine_can_set_volume
-				(GTK_XINE (totem->gtx)));
+		gtk_widget_set_sensitive (widget, caps);
+		widget = glade_xml_get_widget (totem->xml, "volume_up1");
+		gtk_widget_set_sensitive (widget, caps);
+		widget = glade_xml_get_widget (totem->xml, "volume_down1");
+		gtk_widget_set_sensitive (widget, caps);
+		widget = glade_xml_get_widget (totem->xml, "fs_volume_hbox");
+		gtk_widget_set_sensitive (widget, caps);
 
 		/* Set the playlist */
 		gtk_playlist_set_playing (totem->playlist, TRUE);
@@ -1481,6 +1489,46 @@ on_dvd_chapter_menu1_activate (GtkButton *button, gpointer user_data)
 }
 
 static void
+on_skip_to1_activate (GtkButton *button, gpointer user_data)
+{
+	Totem *totem = (Totem *)user_data;
+
+	//FIXME show seek thingo
+}
+
+static void
+on_skip_forward1_activate (GtkButton *button, gpointer user_data)
+{
+	Totem *totem = (Totem *)user_data;
+
+	totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET);
+}
+
+static void
+on_skip_backwards1_activate (GtkButton *button, gpointer user_data)
+{
+	Totem *totem = (Totem *)user_data;
+
+	totem_action_seek_relative (totem, SEEK_BACKWARD_OFFSET);
+}
+
+static void
+on_volume_up1_activate (GtkButton *button, gpointer user_data)
+{
+	Totem *totem = (Totem *)user_data;
+
+	totem_action_volume_relative (totem, 8);
+}
+
+static void
+on_volume_down1_activate (GtkButton *button, gpointer user_data)
+{
+	Totem *totem = (Totem *)user_data;
+
+	totem_action_volume_relative (totem, -8);
+}
+
+static void
 hide_prefs (GtkWidget *widget, int trash, gpointer user_data)
 {
 	Totem *totem = (Totem *)user_data;
@@ -1966,6 +2014,7 @@ update_buttons (Totem *totem)
                 has_item = TRUE;
         else
                 has_item = gtk_playlist_has_previous_mrl (totem->playlist);
+
 	item = glade_xml_get_widget (totem->xml, "previous_button");
 	gtk_widget_set_sensitive (item, has_item);
 	item = glade_xml_get_widget (totem->xml, "fs_previous_button");
@@ -1978,7 +2027,8 @@ update_buttons (Totem *totem)
         if (totem_playing_dvd (totem))
                 has_item = TRUE;
         else
-                has_item = gtk_playlist_has_next_mrl (totem->playlist);
+		has_item = gtk_playlist_has_next_mrl (totem->playlist);
+
 	item = glade_xml_get_widget (totem->xml, "next_button");
 	gtk_widget_set_sensitive (item, has_item);
 	item = glade_xml_get_widget (totem->xml, "fs_next_button");
@@ -2041,6 +2091,12 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "properties1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_properties1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "volume_up1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_volume_up1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "volume_down1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_volume_down1_activate), totem);
 
 	/* Screenshot dialog */
 	item = glade_xml_get_widget (totem->xml, "dialog2");
@@ -2159,31 +2215,40 @@ totem_callback_connect (Totem *totem)
 			(gpointer) totem);
 
 
-        /* DVD menu callbacks */
-        item = glade_xml_get_widget (totem->xml, "dvd_root_menu");
-        g_signal_connect (G_OBJECT (item), "activate",
-                        G_CALLBACK (on_dvd_root_menu1_activate), totem);
-        item = glade_xml_get_widget (totem->xml, "dvd_title_menu");
-        g_signal_connect (G_OBJECT (item), "activate",
-                        G_CALLBACK (on_dvd_title_menu1_activate), totem);
-        item = glade_xml_get_widget (totem->xml, "dvd_audio_menu");
-        g_signal_connect (G_OBJECT (item), "activate",
-                        G_CALLBACK (on_dvd_audio_menu1_activate), totem);
-        item = glade_xml_get_widget (totem->xml, "dvd_audio_menu");
-        g_signal_connect (G_OBJECT (item), "activate",
-                        G_CALLBACK (on_dvd_audio_menu1_activate), totem);
-        item = glade_xml_get_widget (totem->xml, "dvd_angle_menu");
-        g_signal_connect (G_OBJECT (item), "activate",
-                        G_CALLBACK (on_dvd_angle_menu1_activate), totem);
-        item = glade_xml_get_widget (totem->xml, "dvd_chapter_menu");
-        g_signal_connect (G_OBJECT (item), "activate",
-                        G_CALLBACK (on_dvd_chapter_menu1_activate), totem);
-        item = glade_xml_get_widget (totem->xml, "next_chapter1");
-        g_signal_connect (G_OBJECT (item), "activate",
-                        G_CALLBACK (on_next_button_clicked), totem);
-        item = glade_xml_get_widget (totem->xml, "previous_chapter1");
-        g_signal_connect (G_OBJECT (item), "activate",
-                        G_CALLBACK (on_previous_button_clicked), totem);
+	/* DVD menu callbacks */
+	item = glade_xml_get_widget (totem->xml, "dvd_root_menu");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_dvd_root_menu1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "dvd_title_menu");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_dvd_title_menu1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "dvd_audio_menu");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_dvd_audio_menu1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "dvd_audio_menu");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_dvd_audio_menu1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "dvd_angle_menu");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_dvd_angle_menu1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "dvd_chapter_menu");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_dvd_chapter_menu1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "skip_to1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_skip_to1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "next_chapter1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_next_button_clicked), totem);
+	item = glade_xml_get_widget (totem->xml, "previous_chapter1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_previous_button_clicked), totem);
+	item = glade_xml_get_widget (totem->xml, "skip_forward1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_skip_forward1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "skip_backwards1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_skip_backwards1_activate), totem);
 
 	/* Update the UI */
 	gtk_timeout_add (600, update_cb_often, totem);
