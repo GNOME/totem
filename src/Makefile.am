@@ -44,6 +44,8 @@ totem_SOURCES = 			\
 	gtk-playlist.c	gtk-playlist.h	\
 	rb-ellipsizing-label.c		\
 	rb-ellipsizing-label.h		\
+	totem-cd-selection.c		\
+	totem-cd-selection.h		\
 	scrsaver.c  scrsaver.h		\
 	video-utils.c video-utils.h	\
 	gtk-message.c gtk-message.h	\

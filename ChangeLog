@@ -1,3 +1,21 @@
+2002-12-07  Bastien Nocera  <hadess@hadess.net>
+
+	* src/Makefile.am:
+	* src/cd-drive.c: (read_lines), (parse_sg_line), (count_strings),
+	(get_cd_scsi_id), (lookup_scsi_unit), (get_device_max_speed),
+	(add_linux_cd_recorder), (cdrom_get_name), (add_linux_cd_drive),
+	(linux_scan), (scan_for_cdroms):
+	* src/cd-drive.h:
+	* src/totem-cd-selection.c: (totem_cd_selection_get_type),
+	(totem_cd_selection_class_init),
+	(totem_cd_selection_instance_init), (totem_cd_selection_finalize),
+	(totem_cd_selection_idle_signal), (totem_cd_selection_new),
+	(totem_cd_selection_set_property),
+	(totem_cd_selection_get_property), (totem_cd_selection_set_speed):
+	* src/totem-cd-selection.h:
+	* src/totem.c: added the start of TotemCdSelection, and the
+	implementation of scan_for_cdroms ()
+
 2002-12-07  Christian Neumair  <chris@gnome-de.org>
 
 	* .cvsignore: Updated.

@@ -29,6 +29,7 @@
 #include "gtk-xine.h"
 #include "gtk-playlist.h"
 #include "rb-ellipsizing-label.h"
+#include "totem-cd-selection.h"
 
 #include "egg-recent-model.h"
 #include "egg-recent-view.h"
