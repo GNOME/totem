@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Totem HEAD\n"
-"POT-Creation-Date: 2002-08-24 18:24+0200\n"
-"PO-Revision-Date: 2002-08-24 18:24+0100\n"
+"POT-Creation-Date: 2002-08-28 13:47+0200\n"
+"PO-Revision-Date: 2002-08-28 13:47+0100\n"
 "Last-Translator: Christian Neumair <christian-neumair@web.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -76,7 +76,7 @@ msgid "Toggle Aspect Ratio"
 msgstr "Ansichtsverhältnis beibehalten"
 
 #: data/totem.glade.h:15
-#: src/totem.c:785
+#: src/totem.c:834
 msgid "Totem"
 msgstr "Totem"
 
@@ -121,7 +121,7 @@ msgid "Default audio output driver"
 msgstr "Vorgegebener Audio-Ausgabetreiber"
 
 #: src/gtk-playlist.c:219
-#: src/totem.c:648
+#: src/totem.c:681
 msgid "Select files"
 msgstr "Dateien auswählen"
 
@@ -133,82 +133,86 @@ msgstr "Wird abgespielt"
 msgid "Filename"
 msgstr "Dateiname"
 
-#: src/gtk-xine.c:455
+#: src/gtk-xine.c:56
+msgid "Totem Video Window"
+msgstr "Totem Video-Fenster"
+
+#: src/gtk-xine.c:476
 msgid "The configuration system is not initialised.\n"
 "The defaults will be used."
 msgstr "Das Konfigurationssystem ist nicht initialisiert.\n"
 "Die Vorgaben werden verwendet."
 
-#: src/gtk-xine.c:633
+#: src/gtk-xine.c:607
 msgid "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
 msgstr "Die Unterstützung für »threads« konnte nicht initialisiert werden.\n"
 "Sie sollten eine »thread«-sichere Xlib installieren."
 
-#: src/gtk-xine.c:644
+#: src/gtk-xine.c:618
 msgid "Failed to open the display."
 msgstr "Die Anzeige konnte nicht geöffnet werden"
 
-#: src/gtk-xine.c:677
+#: src/gtk-xine.c:651
 msgid "Could not find a suitable video output."
 msgstr "Es konnte keine passende Video-Ausgabe gefunden werden"
 
-#: src/gtk-xine.c:799
+#: src/gtk-xine.c:777
 #, c-format
 msgid "No video plugin available to decode '%s'."
 msgstr "Kein Video-Plugin zur Dekodierung von »%s« verfügbar"
 
-#: src/totem.c:293
-#: src/totem.c:1206
+#: src/totem.c:316
+#: src/totem.c:1276
 msgid "<span size=\"medium\"><b>No file</b></span>"
 msgstr "<span size=\"medium\"><b>Keine Datei</b></span>"
 
-#: src/totem.c:761
+#: src/totem.c:810
 msgid "translator_credits"
 msgstr "Christian Neumair <christian-neumair@web.de>"
 
-#: src/totem.c:786
+#: src/totem.c:835
 msgid "(C) 2002 Bastien Nocera"
 msgstr "(c) 2002 Bastien Nocera"
 
-#: src/totem.c:787
+#: src/totem.c:836
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Videos abspielen (basierend auf den Xine-Bibliotheken)"
 
-#: src/totem.c:938
+#: src/totem.c:987
 #, c-format
 msgid "Totem could not startup:\n"
 "%s"
 msgstr "Totem konnte nicht gestartet werden:\n"
 "%s"
 
-#: src/totem.c:943
+#: src/totem.c:992
 #, c-format
 msgid "There is no plugin for Totem to handle '%s'\n"
 "Totem will not be able to play it."
 msgstr "Es gibt kein Plugin für Totem zur Handhabung von »%s«\n"
 "Totem kann es nicht abspielen."
 
-#: src/totem.c:946
+#: src/totem.c:995
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "»%s« ist fehlerhaft und Totem kann es nicht weiter abspielen."
 
-#: src/totem.c:949
+#: src/totem.c:998
 #, c-format
 msgid "Totem could not play '%s':\n"
 "%s"
 msgstr "Totem konnte »%s« nicht abspielen:\n"
 "%s"
 
-#: src/totem.c:1248
-#: src/totem.c:1256
+#: src/totem.c:1318
+#: src/totem.c:1326
 msgid "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
 msgstr "Die Haupt-Oberfläche (totem.glade) konnte nicht geladen werden.\n"
 "Stellen Sie sicher, dass Totem korrekt installiert ist."
 
-#: src/totem.c:1269
+#: src/totem.c:1339
 msgid "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
 msgstr "Die Playlisten-Oberfläche konnte nicht geladen werden.\n"
