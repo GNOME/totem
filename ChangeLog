@@ -1,3 +1,12 @@
+2004-10-07  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_new),
+	(bacon_video_widget_size_request),
+	(bacon_video_widget_set_scale_ratio): use
+	totem_widget_set_preferred_size and only set the minimum size, so that
+	we can still shrink the toplevel window after zooming to a big size
+	(Closes: #125903)
+
 2004-10-07  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/bacon-video-widget-gst.c:

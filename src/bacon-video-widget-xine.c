@@ -1549,23 +1549,6 @@ bacon_video_widget_new (int width, int height,
 
 	bvw->priv->null_out = null_out;
 
-	/* defaults are fine if both are negative */
-	if (width > 0 && height > 0)
-	{
-		/* figure out the missing measure from the other one
-		 * with a 4:3 ratio */
-		if (width <= 0)
-			width = (int) (height * 4 / 3);
-		if (height <= 0)
-			height = (int) (width * 3 / 4);
-	} else {
-		width = 0;
-		height = 0;
-	}
-
-	GTK_WIDGET(bvw)->requisition.width = width;
-	GTK_WIDGET(bvw)->requisition.height = height;
-
 	bvw->priv->init_width = width;
 	bvw->priv->init_height = height;
 
@@ -1670,21 +1653,11 @@ bacon_video_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 static void
 bacon_video_widget_size_request (GtkWidget *widget, GtkRequisition *requisition)
 {
-	BaconVideoWidget *bvw;
-
 	g_return_if_fail(widget != NULL);
 	g_return_if_fail(BACON_IS_VIDEO_WIDGET(widget));
 
-	bvw = BACON_VIDEO_WIDGET (widget);
-	
-	if ((bvw->priv->init_width == 0) && (bvw->priv->init_height == 0)) {
-		requisition->width = DEFAULT_WIDTH;
-		requisition->height = DEFAULT_HEIGHT;
-	} else {
-		/* Requesting first allocation as a minimum */
-		requisition->width = bvw->priv->init_width;
-		requisition->height = bvw->priv->init_height;
-	}
+	requisition->width = 240;
+	requisition->height = 180;
 }
 
 static void
@@ -3032,7 +3005,8 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 				bvw->priv->video_height * ratio);
 	}
 
-	gtk_window_resize (GTK_WINDOW (toplevel), new_w, new_h);
+	gtk_window_resize (GTK_WINDOW (toplevel), 1, 1);
+	totem_widget_set_preferred_size (toplevel, new_w, new_h);
 }
 
 int
