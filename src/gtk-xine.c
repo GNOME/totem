@@ -181,8 +181,6 @@ static gboolean gtk_xine_motion_notify (GtkWidget *widget,
 static gboolean gtk_xine_button_press (GtkWidget *widget,
 				       GdkEventButton *event);
 static gboolean gtk_xine_key_press (GtkWidget *widget, GdkEventKey *event);
-static gboolean gtk_xine_configure (GtkWidget *widget,
-				    GdkEventConfigure *event);
 
 static void gtk_xine_size_allocate (GtkWidget *widget,
 				    GtkAllocation *allocation);
@@ -239,7 +237,6 @@ gtk_xine_class_init (GtkXineClass *klass)
 	widget_class->motion_notify_event = gtk_xine_motion_notify;
 	widget_class->button_press_event = gtk_xine_button_press;
 	widget_class->key_press_event = gtk_xine_key_press;
-	widget_class->configure_event = gtk_xine_configure;
 
 	/* GObject */
 	object_class->set_property = gtk_xine_set_property;
@@ -818,7 +815,7 @@ xine_thread (void *gtx_gen)
 	pthread_exit (NULL);
 	return NULL;
 }
-#if 0
+
 static gboolean
 configure_cb (GtkWidget *widget, GdkEventConfigure *event, gpointer user_data)
 {
@@ -829,7 +826,7 @@ configure_cb (GtkWidget *widget, GdkEventConfigure *event, gpointer user_data)
 
 	return FALSE;
 }
-#endif
+
 static void
 gtk_xine_realize (GtkWidget *widget)
 {
@@ -865,9 +862,9 @@ gtk_xine_realize (GtkWidget *widget)
 	gtx->priv->video_window = widget->window;
 
 	/* track configure events of toplevel window */
-//	g_signal_connect (GTK_OBJECT (gtk_widget_get_toplevel (widget)),
-//			  "configure-event",
-//			  GTK_SIGNAL_FUNC (configure_cb), gtx);
+	g_signal_connect (GTK_OBJECT (gtk_widget_get_toplevel (widget)),
+			  "configure-event",
+			  GTK_SIGNAL_FUNC (configure_cb), gtx);
 
 	/* Init threads in X and setup the needed X stuff */
 	if (!XInitThreads ())
@@ -936,22 +933,7 @@ gtk_xine_realize (GtkWidget *widget)
 
 	/* now, create a xine thread */
 	pthread_create (&gtx->priv->thread, NULL, xine_thread, gtx);
-#if 0
-	/* Send a configure event now */
-	{
-		GdkEventConfigure event;
 
-		event.type = GDK_CONFIGURE;
-		event.window = widget->window;
-		event.send_event = TRUE;
-		event.x = widget->allocation.x;
-		event.y = widget->allocation.y;
-		event.width = widget->allocation.width;
-		event.height = widget->allocation.height;
-
-		gtk_widget_event (widget, (GdkEvent*) &event);
-	}
-#endif
 	return;
 }
 
@@ -1201,17 +1183,6 @@ gtk_xine_key_press (GtkWidget *widget, GdkEventKey *event)
 {
 	if (GTK_WIDGET_CLASS (parent_class)->key_press_event != NULL)
 		(* GTK_WIDGET_CLASS (parent_class)->key_press_event) (widget, event);
-
-	return FALSE;
-}
-
-static gboolean
-gtk_xine_configure (GtkWidget *widget, GdkEventConfigure *event)
-{
-	GtkXine *gtx = (GtkXine *) widget;
-
-	gtx->priv->xpos = event->x;
-	gtx->priv->ypos = event->y;
 
 	return FALSE;
 }
@@ -1579,9 +1550,6 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 		gdk_flush ();
 
 		gdk_window_set_user_data (gtx->priv->fullscreen_window, gtx);
-
-		gdk_window_set_transient_for
-			(gtx->priv->fullscreen_window, parent);
 
 		xine_gui_send_vo_data (gtx->priv->stream,
 			 XINE_GUI_SEND_DRAWABLE_CHANGED,

@@ -1,5 +1,11 @@
 2003-01-13  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (gtk_xine_class_init), (gtk_xine_realize),
+	(gtk_xine_set_fullscreen): remove the gdk_window_set_transient_for
+	call, as it seems to break fullscreen. re-add our configure hack
+
+2003-01-13  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-xine.c: (gtk_xine_class_init), (generate_mouse_event),
 	(xine_thread), (gtk_xine_realize), (gtk_xine_unrealize),
 	(gtk_xine_motion_notify), (gtk_xine_button_press),
