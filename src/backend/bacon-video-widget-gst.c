@@ -310,8 +310,7 @@ update_xid (GstPlay* play, gint xid, BaconVideoWidget *bvw)
 	
 	bvw->priv->media_has_video = TRUE;
 	
-	/* 0.6.1 
-	gst_play_connect_visualisation ( bvw->priv->play, FALSE);*/
+	gst_play_connect_visualisation ( bvw->priv->play, FALSE);
 	
 	if (bvw->priv->vw)
 		gst_video_widget_set_xembed_xid(bvw->priv->vw, xid);
@@ -498,18 +497,17 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 	g_message ("bacon_video_widget_open: %s", mrl);
 	bvw->priv->mrl = g_strdup (mrl);
 
-	/* 0.6.1 
-	gst_play_connect_visualisation ( bvw->priv->play, TRUE);*/
-	
+	gst_play_connect_visualisation ( bvw->priv->play, TRUE);
+
 	gst_play_need_new_video_window ( bvw->priv->play);
 
-	if (g_file_test (mrl,G_FILE_TEST_EXISTS)) {
+	if (g_file_test (mrl,G_FILE_TEST_EXISTS))
+	{
 		datasrc = gst_element_factory_make ("filesrc", "source");
-	}
-	else {
+	} else {
 		datasrc = gst_element_factory_make ("gnomevfssrc", "source");
 	}
-	
+
 	if (GST_IS_ELEMENT(datasrc))
 		gst_play_set_data_src (bvw->priv->play, datasrc);
 	
@@ -537,14 +535,14 @@ bacon_video_widget_play	(BaconVideoWidget *bvw,
 
 	//FIXME
 	g_message ("bacon_video_widget_play %d %d", pos , start_time);
-	
-	if (pos) {
+
+	if (pos)
+	{
 		length_nanos = (gint64) (bvw->priv->stream_length * GST_MSECOND);
 		seek_time = (gint64) (length_nanos * pos / 65535);
 		g_message ("seeking to %d", seek_time);
 		gst_play_seek_to_time (bvw->priv->play, seek_time);
-	}
-	else {
+	} else {
 		gst_play_set_state (bvw->priv->play, GST_STATE_PLAYING);
 	}
 	return TRUE;
@@ -728,16 +726,14 @@ bacon_video_widget_set_show_visuals (BaconVideoWidget *bvw,
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
 	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
 
-	if (!bvw->priv->media_has_video) {
-		if (!show_visuals) {
+	if (!bvw->priv->media_has_video)
+	{
+		if (!show_visuals)
 			gst_video_widget_set_logo_focus (bvw->priv->vw,TRUE);
-		}
-		else {
+		else
 			gst_video_widget_set_logo_focus (bvw->priv->vw,FALSE);
-		}
-		
-		/* 0.6.1 
-		gst_play_connect_visualisation (bvw->priv->play, show_visuals); */
+
+		gst_play_connect_visualisation (bvw->priv->play, show_visuals);
 		
 	}
 	
@@ -801,9 +797,8 @@ bacon_video_widget_is_playing (BaconVideoWidget *bvw)
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET(bvw), FALSE);
 	g_return_val_if_fail (GST_IS_PLAY(bvw->priv->play), FALSE);
 	
-	if (gst_play_get_state(bvw->priv->play) == GST_STATE_PLAYING) {
+	if (gst_play_get_state(bvw->priv->play) == GST_STATE_PLAYING)
 		return TRUE;
-	}
 
 	return FALSE;
 }
@@ -910,9 +905,8 @@ bacon_video_widget_new (int width, int height,
 	bvw = BACON_VIDEO_WIDGET (g_object_new
 			(bacon_video_widget_get_type (), NULL));
 
-	//FIXME 0.6.1
-	//bvw->priv->play = gst_play_new (GST_PLAY_PIPE_VIDEO_VISUALISATION, err);
-	bvw->priv->play = gst_play_new (GST_PLAY_PIPE_VIDEO, err);
+	bvw->priv->play = gst_play_new (GST_PLAY_PIPE_VIDEO_VISUALISATION, err);
+
 	//FIXME
 	if (*err != NULL)
 	{
@@ -921,12 +915,14 @@ bacon_video_widget_new (int width, int height,
 	}
 
 	audio_sink = gst_gconf_get_default_audio_sink ();
-	if (!GST_IS_ELEMENT (audio_sink)) {
+	if (!GST_IS_ELEMENT (audio_sink))
+	{
 		g_message ("failed to render default audio sink from gconf");
 		return NULL;
 	}
 	video_sink = gst_gconf_get_default_video_sink ();
-	if (!GST_IS_ELEMENT (video_sink)) {
+	if (!GST_IS_ELEMENT (video_sink))
+	{
 		g_message ("failed to render default video sink from gconf");
 		return NULL;
 	}
@@ -935,24 +931,23 @@ bacon_video_widget_new (int width, int height,
 		g_message ("failed to render default video sink from gconf for vis");
 		return NULL;
 	}
-	/* 0.6.1 
 	vis_element = gst_gconf_get_default_visualisation_element ();
-	if (!GST_IS_ELEMENT (vis_element)) {
+	if (!GST_IS_ELEMENT (vis_element))
+	{
 		g_message ("failed to render default visualisation element from gconf");
 		return NULL;
-	}*/
+	}
 
 	gst_play_set_video_sink (bvw->priv->play, video_sink);
 	gst_play_set_audio_sink (bvw->priv->play, audio_sink);
-	/* 0.6.1 
 	gst_play_set_visualisation_video_sink (bvw->priv->play, vis_video_sink);
-	gst_play_set_visualisation_element (bvw->priv->play, vis_element);*/
+	gst_play_set_visualisation_element (bvw->priv->play, vis_element);
 
 	g_signal_connect (G_OBJECT (bvw->priv->play),
 			"have_xid", (GtkSignalFunc) update_xid, (gpointer) bvw);
-	/* 0.6.1 
 	g_signal_connect (G_OBJECT (bvw->priv->play),
-			"have_vis_xid", (GtkSignalFunc) update_vis_xid, (gpointer) bvw);*/
+			"have_vis_xid", (GtkSignalFunc) update_vis_xid,
+			(gpointer) bvw);
 	g_signal_connect (G_OBJECT (bvw->priv->play),
 			"have_video_size", (GtkSignalFunc) got_video_size, (gpointer) bvw);
 	g_signal_connect (G_OBJECT (bvw->priv->play),
