@@ -293,7 +293,7 @@ totem_playlist_save_current_playlist (TotemPlaylist *playlist, const char *outpu
 	retval = totem_pl_parser_write (playlist->_priv->parser,
 			playlist->_priv->model,
 			totem_playlist_save_get_iter_func,
-			output, &error);
+			output, TOTEM_PL_PARSER_PLS, &error);
 
 	if (retval == FALSE)
 	{

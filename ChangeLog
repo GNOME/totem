@@ -1,3 +1,17 @@
+2004-09-26  Bastien Nocera  <hadess@hadess.net>
+
+	* src/Makefile.am:
+	* src/test-parser.c: test for the absolute to relative path converter
+	and the Unix to DOS path converter
+	* src/totem-pl-parser.c: (totem_pl_parser_base_url),
+	(totem_pl_parser_write_pls), (totem_pl_parser_relative),
+	(totem_pl_parser_url_to_dos), (totem_pl_parser_write_m3u),
+	(totem_pl_parser_write), (my_eel_read_entire_file):
+	* src/totem-pl-parser.h:
+	* src/totem-playlist.c: (totem_playlist_save_current_playlist):
+	Add support for writing m3u files in DOS or Unix format
+	(Closes: #153344)
+
 2004-09-25  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c: (main): load the .glade file from the sources, if we

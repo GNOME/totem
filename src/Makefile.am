@@ -1,4 +1,4 @@
-noinst_PROGRAMS = bvw-test list_v4l
+noinst_PROGRAMS = bvw-test list_v4l test-parser
 
 if TOTEM_VANITY
 VANITY=vanity
@@ -139,6 +139,9 @@ bvw_test_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)  $(NVTV_LIBS)
 
 list_v4l_SOURCES = list_v4l.c $(BACON_V4L_SELECTION)
 list_v4l_LDADD = $(GTK_LIBS)
+
+test_parser_SOURCES = test-parser.c $(PLPARSERMARSHALFILES)
+test_parser_LDADD = $(EXTRA_GNOME_LIBS)
 
 INCLUDES = 						\
 	-D_REENTRANT					\
