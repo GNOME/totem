@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem cs\n"
-"POT-Creation-Date: 2003-04-29 20:41+0100\n"
-"PO-Revision-Date: 2003-04-30 15:26+0200\n"
+"POT-Creation-Date: 2003-05-01 12:50+0200\n"
+"PO-Revision-Date: 2003-05-01 14:59+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -285,7 +285,7 @@ msgstr "Intranet/LAN"
 msgid "Languages"
 msgstr "Jazyky"
 
-#: data/totem.glade.h:40 src/totem.c:78
+#: data/totem.glade.h:40 src/totem.c:78 src/vanity.c:50
 msgid "Next"
 msgstr "Následující"
 
@@ -349,11 +349,11 @@ msgstr "Přehrát zvukové CD"
 msgid "Play or pause the movie"
 msgstr "Přehrávat nebo pozadavit film"
 
-#: data/totem.glade.h:56 src/totem.c:77
+#: data/totem.glade.h:56 src/totem.c:77 src/vanity.c:49
 msgid "Play/Pause"
 msgstr "Hrát/Pozastavit"
 
-#: data/totem.glade.h:57 src/totem.c:79
+#: data/totem.glade.h:57 src/totem.c:79 src/vanity.c:51
 msgid "Previous"
 msgstr "Předchozí"
 
@@ -470,11 +470,11 @@ msgstr "Totem"
 msgid "Totem Preferences"
 msgstr "Vlastnosti aplikace Totem"
 
-#: data/totem.glade.h:86 src/totem.c:83
+#: data/totem.glade.h:86 src/totem.c:83 src/vanity.c:55
 msgid "Volume Down"
 msgstr "Snížit hlasitost"
 
-#: data/totem.glade.h:87 src/totem.c:82
+#: data/totem.glade.h:87 src/totem.c:82 src/vanity.c:54
 msgid "Volume Up"
 msgstr "Zvýšit hlasitost"
 
@@ -486,11 +486,11 @@ msgstr "Snížit hlasitost"
 msgid "Volume up"
 msgstr "Zvýšit hlasitost"
 
-#: data/totem.glade.h:90
+#: data/totem.glade.h:90 data/vanity.glade.h:7
 msgid "Zoom _1:1"
 msgstr "Zvětšení _1:1"
 
-#: data/totem.glade.h:91
+#: data/totem.glade.h:91 data/vanity.glade.h:8
 msgid "Zoom _2:1"
 msgstr "Zvětšení _2:1"
 
@@ -538,7 +538,7 @@ msgstr "_Přeskočit na..."
 msgid "_Sound"
 msgstr "_Zvuk"
 
-#: data/totem.glade.h:103
+#: data/totem.glade.h:103 data/vanity.glade.h:10
 msgid "_Zoom 1:2"
 msgstr "_Zvětšení 1:2"
 
@@ -586,6 +586,42 @@ msgstr "Vložte _umístění (URI) souboru, který chcete otevřít:"
 msgid "Open from URI"
 msgstr "Otevřít z URI"
 
+#: data/vanity.desktop.in.h:1
+msgid "Vanity Webcam utility"
+msgstr "Nástroj pro WWW kamery Vanity"
+
+#: data/vanity.desktop.in.h:2
+msgid "View live webcam and upload pictures"
+msgstr "Sledovat živě WWW kameru a posílat obrázky"
+
+#: data/vanity.glade.h:1
+msgid "Save File"
+msgstr "Uložit soubor"
+
+#: data/vanity.glade.h:2 src/vanity.c:297
+msgid "Vanity"
+msgstr "Vanity"
+
+#: data/vanity.glade.h:3
+msgid "Vanity Preferences"
+msgstr "Vlastnosti Vanity"
+
+#: data/vanity.glade.h:4
+msgid "Zoom 1:1"
+msgstr "Zvětšení 1:1"
+
+#: data/vanity.glade.h:5
+msgid "Zoom 1:2"
+msgstr "Zvětšení 1:2"
+
+#: data/vanity.glade.h:6
+msgid "Zoom 2:1"
+msgstr "Zvětšení 2:1"
+
+#: data/vanity.glade.h:9
+msgid "_Picture"
+msgstr "_Obrázek"
+
 #: src/bacon-cd-selection.c:233
 msgid "Unnamed CDROM"
 msgstr "Nepojmenovaná CDROM"
@@ -593,6 +629,133 @@ msgstr "Nepojmenovaná CDROM"
 #: src/bacon-cd-selection.c:275
 msgid "Select the drive"
 msgstr "Vyberte zařízení"
+
+#: src/bacon-video-widget-gst.c:56 src/bacon-video-widget-xine.c:56
+msgid "Totem Video Window"
+msgstr "Video okno aplikace Totem"
+
+#. One hour
+#: src/bacon-video-widget-properties.c:109
+#, c-format
+msgid "%d hour"
+msgstr "%d hodina"
+
+#. Multiple hours
+#: src/bacon-video-widget-properties.c:112
+#, c-format
+msgid "%d hours"
+msgstr "%d hodin(y)"
+
+#. One minute
+#: src/bacon-video-widget-properties.c:116
+#, c-format
+msgid "%d minute"
+msgstr "%d minuta"
+
+#. Multiple minutes
+#: src/bacon-video-widget-properties.c:119
+#, c-format
+msgid "%d minutes"
+msgstr "%d minut(y)"
+
+#. One second
+#: src/bacon-video-widget-properties.c:123
+#, c-format
+msgid "%d second"
+msgstr "%d sekunda"
+
+#. Multiple seconds
+#: src/bacon-video-widget-properties.c:126
+#, c-format
+msgid "%d seconds"
+msgstr "%d sekund(y)"
+
+#. hour:minutes:seconds
+#: src/bacon-video-widget-properties.c:131
+#, c-format
+msgid "%s %s %s"
+msgstr "%s:%s:%s"
+
+#. minutes:seconds
+#: src/bacon-video-widget-properties.c:134
+#, c-format
+msgid "%s %s"
+msgstr "%s:%s"
+
+#. seconds
+#: src/bacon-video-widget-properties.c:137
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#. Duration
+#: src/bacon-video-widget-properties.c:177
+msgid "0 second"
+msgstr "0 sekund"
+
+#: src/bacon-video-widget-properties.c:265
+#, c-format
+msgid "%d frames per second"
+msgstr "%d snímků za sekundu"
+
+#: src/bacon-video-widget-properties.c:283
+#, c-format
+msgid "%d kbps"
+msgstr "%d kbps"
+
+#: src/bacon-video-widget-xine.c:581
+#, c-format
+msgid ""
+"Couldn't load the '%s' audio driver\n"
+"Check that the device is not busy."
+msgstr ""
+"Nelze načíst ovladač zvuku '%s'.\n"
+"Ověřte prosím, zda není zařízení obsazeno."
+
+#: src/bacon-video-widget-xine.c:992
+msgid "There is no plugin to handle this movie"
+msgstr "Pro obsluhu tohoto filmu chybí zásuvný modul"
+
+#: src/bacon-video-widget-xine.c:996
+msgid "This movie is broken and can not be played further"
+msgstr "Tento film je poškozen a nelze jej dále přehrávat"
+
+#: src/bacon-video-widget-xine.c:1000
+msgid "This location is not a valid one"
+msgstr "Toto umístění není platné"
+
+#: src/bacon-video-widget-xine.c:1004
+msgid "Generic Error"
+msgstr "Obecná chyba"
+
+#: src/bacon-video-widget-xine.c:1333
+#, c-format
+msgid ""
+"Video codec '%s' is not handled. You might need to install additional "
+"plugins to be able to play some types of movies"
+msgstr ""
+"Video kodek '%s' není obsloužen. Pro přehrávání některých typů filmů budete "
+"možná muset nainstalovat přídavné zásuvné moduly."
+
+#: src/bacon-video-widget-xine.c:1349
+msgid "This is an audio-only file, and there is no audio output available"
+msgstr "Tento soubor obsahuje jen zvuk a zvukový výstup není k dispozici"
+
+#: src/bacon-video-widget-xine.c:2426
+msgid "Movie is not playing"
+msgstr "Film se nepřehrává"
+
+#: src/bacon-video-widget-xine.c:2434
+msgid "No video to capture"
+msgstr "Žádné video k zachycení"
+
+#: src/bacon-video-widget-xine.c:2441
+msgid "Video codec is not handled"
+msgstr "Kodek videa '%s' není obsloužen"
+
+#: src/bacon-video-widget-xine.c:2452
+msgid "Height or width of the video is 0. Please file a bug."
+msgstr "Výška nebo šířka videa je 0. Ohlaste prosím chybu."
 
 #: src/cd-drive.c:274
 #, c-format
@@ -642,7 +805,7 @@ msgstr "_Heslo:"
 msgid "Remember this password"
 msgstr "Zapamatovat si toto heslo"
 
-#: src/gtk-playlist.c:601 src/totem.c:1323
+#: src/gtk-playlist.c:601 src/totem.c:1323 src/vanity.c:194
 msgid "Select files"
 msgstr "Vyberte soubory"
 
@@ -663,27 +826,27 @@ msgstr ""
 msgid "Filename"
 msgstr "Název souboru"
 
-#: src/totem.c:80
+#: src/totem.c:80 src/vanity.c:52
 msgid "Seek Forwards"
 msgstr "Přeskočit dopředu"
 
-#: src/totem.c:81
+#: src/totem.c:81 src/vanity.c:53
 msgid "Seek Backwards"
 msgstr "Přeskočit zpět"
 
-#: src/totem.c:85
+#: src/totem.c:85 src/vanity.c:57
 msgid "Toggle Fullscreen"
 msgstr "Celá obrazovka"
 
-#: src/totem.c:86
+#: src/totem.c:86 src/vanity.c:58
 msgid "Quit"
 msgstr "Konec"
 
-#: src/totem.c:87
+#: src/totem.c:87 src/vanity.c:59
 msgid "Enqueue"
 msgstr "Zařadit do fronty"
 
-#: src/totem.c:88
+#: src/totem.c:88 src/vanity.c:60
 msgid "Replace"
 msgstr "Nahradit"
 
@@ -753,7 +916,7 @@ msgstr ""
 msgid "Totem could not eject the optical media."
 msgstr "Totem nemohl vysunout optické médium."
 
-#: src/totem.c:1577
+#: src/totem.c:1577 src/vanity.c:268
 msgid "translator_credits"
 msgstr "Michal Bukovjan <bukm@centrum.cz>"
 
@@ -762,7 +925,7 @@ msgstr "Michal Bukovjan <bukm@centrum.cz>"
 msgid "Movie Player using %s"
 msgstr "Přehrávač filmů používající %s"
 
-#: src/totem.c:1665 src/totem.c:1676
+#: src/totem.c:1665 src/totem.c:1676 src/vanity.c:356 src/vanity.c:367
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Obrazovka%d.png"
@@ -833,7 +996,7 @@ msgstr ""
 "%s"
 
 # :-)
-#: src/totem.c:2931
+#: src/totem.c:2931 src/vanity.c:601
 msgid "No reason"
 msgstr "Žádný důvod"
 
@@ -904,129 +1067,65 @@ msgstr "Styl ohraničení okolo textu ve stavové liště"
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: src/bacon-video-widget-xine.c:56 src/bacon-video-widget-gst.c:56
-msgid "Totem Video Window"
-msgstr "Video okno aplikace Totem"
+#: src/vanity.c:294
+#, c-format
+msgid "Webcam utility using %s"
+msgstr "Nástroj pro WWW kamery používající %s"
 
-#: src/bacon-video-widget-xine.c:581
+#: src/vanity.c:600
 #, c-format
 msgid ""
-"Couldn't load the '%s' audio driver\n"
-"Check that the device is not busy."
+"Vanity could not startup:\n"
+"%s"
 msgstr ""
-"Nelze načíst ovladač zvuku '%s'.\n"
-"Ověřte prosím, zda není zařízení obsazeno."
+"Vanity se nemohla spustit:\n"
+"%s"
 
-#: src/bacon-video-widget-xine.c:992
-msgid "There is no plugin to handle this movie"
-msgstr "Pro obsluhu tohoto filmu chybí zásuvný modul"
-
-#: src/bacon-video-widget-xine.c:996
-msgid "This movie is broken and can not be played further"
-msgstr "Tento film je poškozen a nelze jej dále přehrávat"
-
-#: src/bacon-video-widget-xine.c:1000
-msgid "This location is not a valid one"
-msgstr "Toto umístění není platné"
-
-#: src/bacon-video-widget-xine.c:1004
-msgid "Generic Error"
-msgstr "Obecná chyba"
-
-#: src/bacon-video-widget-xine.c:1333
+#: src/vanity.c:636
 #, c-format
 msgid ""
-"Video codec '%s' is not handled. You might need to install additional "
-"plugins to be able to play some types of movies"
+"Vanity could not contact the webcam.\n"
+"Reason: %s"
 msgstr ""
-"Video kodek '%s' není obsloužen. Pro přehrávání některých typů filmů budete "
-"možná muset nainstalovat přídavné zásuvné moduly."
+"Vanity nemohla kontakovat WWW kameru.\n"
+"Důvod: %s."
 
-#: src/bacon-video-widget-xine.c:1349
-msgid "This is an audio-only file, and there is no audio output available"
-msgstr "Tento soubor obsahuje jen zvuk a zvukový výstup není k dispozici"
-
-#: src/bacon-video-widget-xine.c:2426
-msgid "Movie is not playing"
-msgstr "Film se nepřehrává"
-
-#: src/bacon-video-widget-xine.c:2434
-msgid "No video to capture"
-msgstr "Žádné video k zachycení"
-
-#: src/bacon-video-widget-xine.c:2441
-msgid "Video codec is not handled"
-msgstr "Kodek videa '%s' není obsloužen"
-
-#: src/bacon-video-widget-xine.c:2452
-msgid "Height or width of the video is 0. Please file a bug."
-msgstr "Výška nebo šířka videa je 0. Ohlaste prosím chybu."
-
-#. One hour
-#: src/bacon-video-widget-properties.c:109
+#: src/vanity.c:647
 #, c-format
-msgid "%d hour"
-msgstr "%d hodina"
+msgid ""
+"Vanity could not play video from the webcam.\n"
+"Reason: %s"
+msgstr ""
+"Vanity nemohla přehrávat video z WWW kamery.\n"
+"Důvod: %s"
 
-#. Multiple hours
-#: src/bacon-video-widget-properties.c:112
+#: src/vanity.c:668
+msgid "Vanity Webcam Utility"
+msgstr "Nástroj pro WWW kamery Vanity"
+
+#: src/vanity.c:674
+msgid ""
+"Could not initialise the thread-safe libraries.\n"
+"Verify your system installation. Vanity will now exit."
+msgstr ""
+"Nemohu inicializovat knihovny podporující thready.\n"
+"Zkontrolujte svou instalaci systému. Vanity nyní skončí."
+
+#: src/vanity.c:696
 #, c-format
-msgid "%d hours"
-msgstr "%d hodin(y)"
+msgid ""
+"Vanity couln't initialise the \n"
+"configuration engine:\n"
+"%s"
+msgstr ""
+"Vanity nemohla inicializovat\n"
+"rozhraní pro nastavení:\n"
+"%s"
 
-#. One minute
-#: src/bacon-video-widget-properties.c:116
-#, c-format
-msgid "%d minute"
-msgstr "%d minuta"
-
-#. Multiple minutes
-#: src/bacon-video-widget-properties.c:119
-#, c-format
-msgid "%d minutes"
-msgstr "%d minut(y)"
-
-#. One second
-#: src/bacon-video-widget-properties.c:123
-#, c-format
-msgid "%d second"
-msgstr "%d sekunda"
-
-#. Multiple seconds
-#: src/bacon-video-widget-properties.c:126
-#, c-format
-msgid "%d seconds"
-msgstr "%d sekund(y)"
-
-#. hour:minutes:seconds
-#: src/bacon-video-widget-properties.c:131
-#, c-format
-msgid "%s %s %s"
-msgstr "%s:%s:%s"
-
-#. minutes:seconds
-#: src/bacon-video-widget-properties.c:134
-#, c-format
-msgid "%s %s"
-msgstr "%s:%s"
-
-#. seconds
-#: src/bacon-video-widget-properties.c:137
-#, c-format
-msgid "%s"
-msgstr "%s"
-
-#. Duration
-#: src/bacon-video-widget-properties.c:177
-msgid "0 second"
-msgstr "0 sekund"
-
-#: src/bacon-video-widget-properties.c:265
-#, c-format
-msgid "%d frames per second"
-msgstr "%d snímků za sekundu"
-
-#: src/bacon-video-widget-properties.c:283
-#, c-format
-msgid "%d kbps"
-msgstr "%d kbps"
+#: src/vanity.c:710 src/vanity.c:723
+msgid ""
+"Couldn't load the main interface (vanity.glade).\n"
+"Make sure that Vanity is properly installed."
+msgstr ""
+"Nemohu načíst hlavní rozhraní (vanity.glade).\n"
+"Ujistěte se, že je Vanity řádně nainstalována."
