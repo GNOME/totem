@@ -50,6 +50,8 @@ totem_action_info (char *reason, Totem *totem)
 				GTK_MESSAGE_INFO,
 				GTK_BUTTONS_OK,
 				"%s", reason);
+	gtk_dialog_set_has_separator (GTK_DIALOG (error_dialog), FALSE);
+	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
 			GTK_RESPONSE_OK);
 	g_signal_connect (G_OBJECT (error_dialog), "destroy", G_CALLBACK
@@ -110,6 +112,8 @@ ask_show_visuals (Totem *totem)
 				_("It seems you are running Totem remotely.\n"
 				"Are you sure you want to enable the visual "
 				"effects?"));
+	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
+	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog),
 			GTK_RESPONSE_NO);
 	answer = gtk_dialog_run (GTK_DIALOG (dialog));

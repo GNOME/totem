@@ -6,7 +6,7 @@
 <requires lib="bonobo"/>
 
 <widget class="GnomeApp" id="totem_main_window">
-  <property name="title" translatable="yes">Totem</property>
+  <property name="title" translatable="yes">Totem Movie Player</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
   <property name="modal">False</property>
@@ -789,28 +789,28 @@
 		  <child>
 		    <widget class="GtkMenu" id="tmw_menu_help">
 
- 		      <child>
- 			<widget class="GtkImageMenuItem" id="tmw_contents_menu_item">
- 			  <property name="visible">True</property>
- 			  <property name="tooltip" translatable="yes">Help contents</property>
- 			  <property name="label" translatable="yes">_Contents</property>
- 			  <property name="use_underline">True</property>
- 			  <signal name="activate" handler="on_contents1_activate" last_modification_time="Sun, 09 Nov 2003 00:49:26 GMT"/>
- 			  <accelerator key="F1" modifiers="0" signal="activate"/>
- 
- 			  <child internal-child="image">
- 			    <widget class="GtkImage" id="image69">
- 			      <property name="visible">True</property>
- 			      <property name="stock">gtk-help</property>
- 			      <property name="icon_size">1</property>
- 			      <property name="xalign">0.5</property>
- 			      <property name="yalign">0.5</property>
- 			      <property name="xpad">0</property>
- 			      <property name="ypad">0</property>
- 			    </widget>
- 			  </child>
- 			</widget>
- 		      </child>
+		      <child>
+			<widget class="GtkImageMenuItem" id="tmw_contents_menu_item">
+			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Help contents</property>
+			  <property name="label" translatable="yes">_Contents</property>
+			  <property name="use_underline">True</property>
+			  <signal name="activate" handler="on_contents1_activate" last_modification_time="Sun, 09 Nov 2003 00:49:26 GMT"/>
+			  <accelerator key="F1" modifiers="0" signal="activate"/>
+
+			  <child internal-child="image">
+			    <widget class="GtkImage" id="image69">
+			      <property name="visible">True</property>
+			      <property name="stock">gtk-help</property>
+			      <property name="icon_size">1</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
+			</widget>
+		      </child>
 
 		      <child>
 			<widget class="GtkImageMenuItem" id="tmw_about_menu_item">
@@ -2308,7 +2308,7 @@
 		    <widget class="GtkHBox" id="hbox14">
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
-		      <property name="spacing">0</property>
+		      <property name="spacing">4</property>
 
 		      <child>
 			<widget class="GtkImage" id="image7">
@@ -2320,7 +2320,7 @@
 			  <property name="ypad">0</property>
 			</widget>
 			<packing>
-			  <property name="padding">4</property>
+			  <property name="padding">0</property>
 			  <property name="expand">False</property>
 			  <property name="fill">True</property>
 			</packing>
@@ -2541,103 +2541,10 @@
 		  <property name="spacing">0</property>
 
 		  <child>
-		    <widget class="GtkTable" id="table3">
+		    <widget class="GtkVBox" id="vbox22">
 		      <property name="visible">True</property>
-		      <property name="n_rows">2</property>
-		      <property name="n_columns">2</property>
 		      <property name="homogeneous">False</property>
-		      <property name="row_spacing">6</property>
-		      <property name="column_spacing">12</property>
-
-		      <child>
-			<widget class="GtkLabel" id="tpw_audio_output_label">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">_Audio output type:</property>
-			  <property name="use_underline">True</property>
-			  <property name="use_markup">False</property>
-			  <property name="justify">GTK_JUSTIFY_LEFT</property>
-			  <property name="wrap">False</property>
-			  <property name="selectable">False</property>
-			  <property name="xalign">0</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
-			  <property name="mnemonic_widget">tpw_sound_output_optionmenu</property>
-			</widget>
-			<packing>
-			  <property name="left_attach">0</property>
-			  <property name="right_attach">1</property>
-			  <property name="top_attach">1</property>
-			  <property name="bottom_attach">2</property>
-			  <property name="x_options">fill</property>
-			  <property name="y_options"></property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkOptionMenu" id="tpw_sound_output_optionmenu">
-			  <property name="visible">True</property>
-			  <property name="can_focus">True</property>
-			  <property name="history">0</property>
-
-			  <child>
-			    <widget class="GtkMenu" id="menu1">
-
-			      <child>
-				<widget class="GtkMenuItem" id="stereo1">
-				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">Stereo</property>
-				  <property name="use_underline">True</property>
-				  <signal name="activate" handler="on_stereo1_activate" last_modification_time="Tue, 24 Jun 2003 09:41:35 GMT"/>
-				</widget>
-			      </child>
-
-			      <child>
-				<widget class="GtkMenuItem" id="4-channel1">
-				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">4-channel</property>
-				  <property name="use_underline">True</property>
-				  <signal name="activate" handler="on_4-channel1_activate" last_modification_time="Tue, 24 Jun 2003 09:41:35 GMT"/>
-				</widget>
-			      </child>
-
-			      <child>
-				<widget class="GtkMenuItem" id="50-channel1">
-				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">5.0-channel</property>
-				  <property name="use_underline">True</property>
-				  <signal name="activate" handler="on_50-channel1_activate" last_modification_time="Tue, 24 Jun 2003 10:49:27 GMT"/>
-				</widget>
-			      </child>
-
-			      <child>
-				<widget class="GtkMenuItem" id="51-channel1">
-				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">5.1-channel</property>
-				  <property name="use_underline">True</property>
-				  <signal name="activate" handler="on_51-channel1_activate" last_modification_time="Tue, 24 Jun 2003 09:41:35 GMT"/>
-				</widget>
-			      </child>
-
-			      <child>
-				<widget class="GtkMenuItem" id="ac3_passthrough1">
-				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">AC3 Passthrough</property>
-				  <property name="use_underline">True</property>
-				  <signal name="activate" handler="on_ac3_passthrough1_activate" last_modification_time="Fri, 11 Jul 2003 16:27:48 GMT"/>
-				</widget>
-			      </child>
-			    </widget>
-			  </child>
-			</widget>
-			<packing>
-			  <property name="left_attach">1</property>
-			  <property name="right_attach">2</property>
-			  <property name="top_attach">1</property>
-			  <property name="bottom_attach">2</property>
-			  <property name="y_options"></property>
-			</packing>
-		      </child>
+		      <property name="spacing">6</property>
 
 		      <child>
 			<widget class="GtkLabel" id="label12">
@@ -2654,12 +2561,141 @@
 			  <property name="ypad">0</property>
 			</widget>
 			<packing>
-			  <property name="left_attach">0</property>
-			  <property name="right_attach">2</property>
-			  <property name="top_attach">0</property>
-			  <property name="bottom_attach">1</property>
-			  <property name="x_options">fill</property>
-			  <property name="y_options"></property>
+			  <property name="padding">0</property>
+			  <property name="expand">False</property>
+			  <property name="fill">False</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkHBox" id="hbox21">
+			  <property name="visible">True</property>
+			  <property name="homogeneous">False</property>
+			  <property name="spacing">0</property>
+
+			  <child>
+			    <widget class="GtkLabel" id="label30">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">    </property>
+			      <property name="use_underline">False</property>
+			      <property name="use_markup">False</property>
+			      <property name="justify">GTK_JUSTIFY_LEFT</property>
+			      <property name="wrap">False</property>
+			      <property name="selectable">False</property>
+			      <property name="xalign">0</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			    <packing>
+			      <property name="padding">0</property>
+			      <property name="expand">False</property>
+			      <property name="fill">False</property>
+			    </packing>
+			  </child>
+
+			  <child>
+			    <widget class="GtkHBox" id="hbox22">
+			      <property name="visible">True</property>
+			      <property name="homogeneous">False</property>
+			      <property name="spacing">12</property>
+
+			      <child>
+				<widget class="GtkLabel" id="tpw_audio_output_label">
+				  <property name="visible">True</property>
+				  <property name="label" translatable="yes">_Audio output type:</property>
+				  <property name="use_underline">True</property>
+				  <property name="use_markup">False</property>
+				  <property name="justify">GTK_JUSTIFY_LEFT</property>
+				  <property name="wrap">False</property>
+				  <property name="selectable">False</property>
+				  <property name="xalign">0</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				  <property name="mnemonic_widget">tpw_sound_output_optionmenu</property>
+				</widget>
+				<packing>
+				  <property name="padding">0</property>
+				  <property name="expand">False</property>
+				  <property name="fill">False</property>
+				</packing>
+			      </child>
+
+			      <child>
+				<widget class="GtkOptionMenu" id="tpw_sound_output_optionmenu">
+				  <property name="visible">True</property>
+				  <property name="can_focus">True</property>
+				  <property name="history">0</property>
+
+				  <child>
+				    <widget class="GtkMenu" id="menu1">
+
+				      <child>
+					<widget class="GtkMenuItem" id="stereo1">
+					  <property name="visible">True</property>
+					  <property name="label" translatable="yes">Stereo</property>
+					  <property name="use_underline">True</property>
+					  <signal name="activate" handler="on_stereo1_activate" last_modification_time="Tue, 24 Jun 2003 09:41:35 GMT"/>
+					</widget>
+				      </child>
+
+				      <child>
+					<widget class="GtkMenuItem" id="4-channel1">
+					  <property name="visible">True</property>
+					  <property name="label" translatable="yes">4-channel</property>
+					  <property name="use_underline">True</property>
+					  <signal name="activate" handler="on_4-channel1_activate" last_modification_time="Tue, 24 Jun 2003 09:41:35 GMT"/>
+					</widget>
+				      </child>
+
+				      <child>
+					<widget class="GtkMenuItem" id="50-channel1">
+					  <property name="visible">True</property>
+					  <property name="label" translatable="yes">5.0-channel</property>
+					  <property name="use_underline">True</property>
+					  <signal name="activate" handler="on_50-channel1_activate" last_modification_time="Tue, 24 Jun 2003 10:49:27 GMT"/>
+					</widget>
+				      </child>
+
+				      <child>
+					<widget class="GtkMenuItem" id="51-channel1">
+					  <property name="visible">True</property>
+					  <property name="label" translatable="yes">5.1-channel</property>
+					  <property name="use_underline">True</property>
+					  <signal name="activate" handler="on_51-channel1_activate" last_modification_time="Tue, 24 Jun 2003 09:41:35 GMT"/>
+					</widget>
+				      </child>
+
+				      <child>
+					<widget class="GtkMenuItem" id="ac3_passthrough1">
+					  <property name="visible">True</property>
+					  <property name="label" translatable="yes">AC3 Passthrough</property>
+					  <property name="use_underline">True</property>
+					  <signal name="activate" handler="on_ac3_passthrough1_activate" last_modification_time="Fri, 11 Jul 2003 16:27:48 GMT"/>
+					</widget>
+				      </child>
+				    </widget>
+				  </child>
+				</widget>
+				<packing>
+				  <property name="padding">0</property>
+				  <property name="expand">True</property>
+				  <property name="fill">True</property>
+				</packing>
+			      </child>
+			    </widget>
+			    <packing>
+			      <property name="padding">0</property>
+			      <property name="expand">True</property>
+			      <property name="fill">True</property>
+			    </packing>
+			  </child>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">True</property>
+			  <property name="fill">True</property>
 			</packing>
 		      </child>
 		    </widget>

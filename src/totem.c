@@ -182,6 +182,8 @@ totem_action_error (char *title, char *reason, Totem *totem)
 	g_free (title_esc);
 	g_free (reason_esc);
 
+	gtk_dialog_set_has_separator (GTK_DIALOG (error_dialog), FALSE);
+	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
 			GTK_RESPONSE_OK);
 	gtk_label_set_use_markup (GTK_LABEL (GTK_MESSAGE_DIALOG (error_dialog)->label), TRUE);
@@ -224,6 +226,8 @@ totem_action_error_try_download (char *title, char *reason, Totem *totem)
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_NONE,
 				"<b>%s</b>\n%s.", title, reason);
+	gtk_dialog_set_has_separator (GTK_DIALOG (error_dialog), FALSE);
+	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
 	gtk_label_set_use_markup (GTK_LABEL (GTK_MESSAGE_DIALOG (error_dialog)->label), TRUE);
 	gtk_dialog_add_buttons (GTK_DIALOG (error_dialog),
 			GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
@@ -257,6 +261,8 @@ totem_action_error_and_exit (char *title, char *reason, Totem *totem)
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK,
 				"<b>%s</b>\n%s.", title, reason);
+	gtk_dialog_set_has_separator (GTK_DIALOG (error_dialog), FALSE);
+	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
 	gtk_label_set_use_markup (GTK_LABEL (GTK_MESSAGE_DIALOG (error_dialog)->label), TRUE);
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
 			GTK_RESPONSE_OK);
@@ -709,7 +715,7 @@ update_mrl_label (Totem *totem, const char *name)
 		g_free (text);
 
 		/* Title */
-		text = g_strdup_printf (_("%s - Totem"), name);
+		text = g_strdup_printf (_("%s - Totem Movie Player"), name);
 		gtk_window_set_title (GTK_WINDOW (totem->win), text);
 		g_free (text);
 	} else {
@@ -732,7 +738,7 @@ update_mrl_label (Totem *totem, const char *name)
 		g_free (text);
 
 		/* Title */
-		gtk_window_set_title (GTK_WINDOW (totem->win), _("Totem"));
+		gtk_window_set_title (GTK_WINDOW (totem->win), _("Totem Movie Player"));
 	}
 }
 
@@ -2103,6 +2109,7 @@ on_properties1_activate (GtkButton *button, Totem *totem)
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
 			totem->properties, TRUE, TRUE, 0);
 	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
+	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
 	g_signal_connect (G_OBJECT (dialog), "response",
 			G_CALLBACK (hide_props_dialog), NULL);
 	g_signal_connect (G_OBJECT (dialog), "delete-event",
