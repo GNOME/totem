@@ -1,3 +1,21 @@
+2002-11-30  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-playlist.c: (gtk_playlist_add_mrl),
+	(gtk_playlist_has_next_mrl), (gtk_playlist_set_title):
+	* src/gtk-playlist.h:
+	* src/gtk-xine.c: (gtk_xine_class_init), (gtk_xine_idle_signal),
+	(xine_event):
+	* src/gtk-xine.h:
+	* src/totem.c: (totem_action_set_mrl), (update_mrl_label),
+	(on_title_change_event), (update_seekable), (update_current_time),
+	(update_sliders), (update_cb), (totem_callback_connect),
+	(video_widget_create): patch from John McCutchan
+	<ttb@tentacle.dhs.org>, check if seekable every once in a while, set
+	the title to be the one from the DVD, get the right length for the DVD
+	chapters.
+	Added gtk_playlist_set_title () for GtkPlaylist, also set the window
+	title when setting the labels
+
 2002-11-28  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c: (update_sliders_cb): show the time next to the seek

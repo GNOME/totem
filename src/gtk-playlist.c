@@ -1092,7 +1092,7 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 	} else if (strcmp ("audio/x-ms-asx", mimetype) == 0) {
 		return gtk_playlist_add_asx (playlist, mrl);
 	} else if (strcmp ("x-directory/normal", mimetype) == 0) {
-		//Load all the files in the dir ?
+		//FIXME Load all the files in the dir ?
 	}
 
 	return gtk_playlist_add_one_mrl (playlist, mrl, display_name);
@@ -1169,6 +1169,32 @@ gtk_playlist_has_next_mrl (GtkPlaylist *playlist)
 			playlist->_priv->current);
 
 	return gtk_tree_model_iter_next (playlist->_priv->model, &iter);
+}
+
+gboolean
+gtk_playlist_set_title (GtkPlaylist *playlist, const gchar *title)
+{
+	GtkListStore *store;
+	GtkTreeIter iter;
+
+	g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), FALSE);
+
+	if (update_current_from_playlist (playlist) == FALSE)
+		return FALSE;
+
+	store = GTK_LIST_STORE (playlist->_priv->model);
+	gtk_tree_model_get_iter (playlist->_priv->model,
+			&iter,
+			playlist->_priv->current);
+
+	if (&iter == NULL)
+		return FALSE;
+
+	gtk_list_store_set (store, &iter,
+			FILENAME_COL, title,
+			-1);
+
+	return TRUE;
 }
 
 gboolean

@@ -426,7 +426,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		gtk_widget_set_sensitive (widget, TRUE);
 
 		/* Title */
-		title = g_strdup_printf ("%s - Totem", name);
+		title = g_strdup_printf (_("%s - Totem"), name);
 		gtk_window_set_title (GTK_WINDOW (totem->win), title);
 		g_free (title);
 
@@ -711,16 +711,86 @@ on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
 }
 
 static int
-update_sliders_cb (gpointer user_data)
+update_mrl_label(Totem *totem, const char *name)
+{
+	gint time;
+	char *time_text, *text;
+	GtkWidget *widget = NULL;
+
+	/* Get the length of the stream */
+	time = gtk_xine_get_stream_length (GTK_XINE (totem->gtx));
+	time_text = time_to_string (time/1000);
+
+	/* Update the mrl label */
+	text = g_strdup_printf
+		("<span size=\"medium\"><b>%s (%s)</b></span>",
+		 name, time_text);
+
+	widget = glade_xml_get_widget (totem->xml, "label1");
+	rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
+			text);
+	widget = glade_xml_get_widget (totem->xml, "custom2");
+	rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
+			text);
+
+	g_free (text);
+	g_free (time_text);
+
+	text = g_strdup_printf (_("%s - Totem"), name);
+	gtk_window_set_title (GTK_WINDOW (totem->win), text);
+	g_free (text);
+
+	return TRUE;
+}
+
+/* This is only called when xine is playing a DVD */
+static void
+on_title_change_event (GtkWidget *win, const char *string, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
-    char *time_text, *label_text;
-    gint time;
-    GtkWidget *widget = NULL;
-	gfloat pos;
 
-	if (totem->gtx == NULL)
-		return TRUE;
+	update_mrl_label (totem, string);
+	gtk_playlist_set_title (GTK_PLAYLIST (totem->playlist), string);
+}
+
+static void
+update_seekable (Totem *totem)
+{
+	/* Check if the stream is seekable */
+	gtk_widget_set_sensitive (totem->seek,
+			gtk_xine_is_seekable (GTK_XINE (totem->gtx)));
+	gtk_widget_set_sensitive (totem->fs_seek,
+			gtk_xine_is_seekable (GTK_XINE (totem->gtx)));
+}
+
+static void
+update_current_time (Totem *totem)
+{ 
+	GtkWidget *widget;
+	int time;
+	char *time_text, *label_text;
+
+	/* Get the length of the stream */
+	time = gtk_xine_get_current_time (GTK_XINE (totem->gtx));
+	time_text = time_to_string (time/1000);
+
+	/* Make the new label */
+	label_text = g_strdup_printf("Time: %s ", time_text);
+
+	/* Update the widgets */
+	widget = glade_xml_get_widget (totem->xml, "label9");
+	gtk_label_set_text (GTK_LABEL (widget), label_text);
+	widget = glade_xml_get_widget (totem->xml, "label10");
+	gtk_label_set_text (GTK_LABEL (widget), label_text);
+
+	g_free(label_text);
+	g_free(time_text);
+}
+
+static void
+update_sliders (Totem *totem)
+{
+	gfloat pos;
 
 	if (totem->seek_lock == FALSE)
 	{
@@ -740,19 +810,19 @@ update_sliders_cb (gpointer user_data)
 		volume_set_image (totem, (gint) pos);
 		totem->vol_lock = FALSE;
 	}
+}
 
-    time = gtk_xine_get_current_time (GTK_XINE (totem->gtx));
+static int
+update_cb (gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
 
-    time_text = time_to_string (time/1000);
+	if (totem->gtx == NULL)
+		return TRUE;
 
-    label_text = g_strdup_printf("Time: %s ", time_text);
-    widget = glade_xml_get_widget (totem->xml, "label9");
-    gtk_label_set_text (GTK_LABEL (widget), label_text);
-    widget = glade_xml_get_widget (totem->xml, "label10");
-    gtk_label_set_text (GTK_LABEL (widget), label_text);
-
-    g_free(label_text);
-    g_free(time_text);
+	update_seekable (user_data);
+	update_current_time (user_data);
+	update_sliders (user_data);
 
 	return TRUE;
 }
@@ -1522,6 +1592,7 @@ totem_action_handle_key (Totem *totem, guint keyval)
 	return retval;
 }
 
+
 static int
 on_video_key_press_event (GtkWidget *win, guint keyval, gpointer user_data)
 {
@@ -1693,7 +1764,6 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (seek_cb), totem);
 	g_signal_connect (G_OBJECT (totem->volume), "value-changed",
 			G_CALLBACK (vol_cb), totem);
-	gtk_timeout_add (500, update_sliders_cb, totem);
 
 	/* Playlist Disappearance, woop woop */
 	g_signal_connect (G_OBJECT (totem->playlist),
@@ -1710,6 +1780,9 @@ totem_callback_connect (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->playlist),
 			"current-removed", G_CALLBACK (current_removed_cb),
 			(gpointer) totem);
+
+	/* Update the UI */
+	gtk_timeout_add (500, update_cb, totem);
 }
 
 static void
@@ -1738,6 +1811,10 @@ video_widget_create (Totem *totem)
 	g_signal_connect (G_OBJECT(totem->gtx),
 			"key-press",
 			G_CALLBACK (on_video_key_press_event),
+			totem);
+	g_signal_connect (G_OBJECT(totem->gtx),
+			"title-change",
+			G_CALLBACK (on_title_change_event),
 			totem);
 
 	g_object_add_weak_pointer (G_OBJECT (totem->gtx),

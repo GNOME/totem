@@ -77,6 +77,7 @@ enum {
 	MOUSE_MOTION,
 	KEY_PRESS,
 	EOS,
+	TITLE_CHANGE,
 	LAST_SIGNAL
 };
 
@@ -276,6 +277,15 @@ gtk_xine_class_init (GtkXineClass *klass)
 				G_STRUCT_OFFSET (GtkXineClass, eos),
 				NULL, NULL,
 				g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
+
+	gtx_table_signals[TITLE_CHANGE] =
+		g_signal_new ("title-change",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (GtkXineClass, title_change),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__STRING,
+				G_TYPE_NONE, 1, G_TYPE_STRING);
 
 	if (!g_thread_supported ())
 		g_thread_init (NULL);
@@ -838,6 +848,11 @@ gtk_xine_idle_signal (GtkXine *gtx)
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[EOS], 0, NULL);
 		break;
+	case TITLE_CHANGE:
+		g_signal_emit (G_OBJECT (gtx),
+				gtx_table_signals[TITLE_CHANGE],
+				0, signal->message);
+		break;
 	/* A bit of cheating right here */
 	case RATIO:
 		gtk_xine_set_scale_ratio (gtx, 0);
@@ -858,15 +873,26 @@ static void
 xine_event (void *user_data, const xine_event_t *event)
 {
 	GtkXine *gtx = (GtkXine *) user_data;
+	GtkXineSignal *signal;
+	xine_ui_data_t *ui_data;
 
-	if (event->type == XINE_EVENT_UI_PLAYBACK_FINISHED)
+	switch (event->type)
 	{
-		GtkXineSignal *signal;
+	case XINE_EVENT_UI_PLAYBACK_FINISHED:
+			signal = g_new0 (GtkXineSignal, 1);
+			signal->type = EOS;
+			g_async_queue_push (gtx->priv->queue, signal);
+			g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
+			break;
+	case XINE_EVENT_UI_SET_TITLE:
+			ui_data = (xine_ui_data_t *) event->data;
 
-		signal = g_new0 (GtkXineSignal, 1);
-		signal->type = EOS;
-		g_async_queue_push (gtx->priv->queue, signal);
-		g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
+			signal = g_new0 (GtkXineSignal, 1);
+			signal->type = TITLE_CHANGE;
+			signal->message = g_strdup (ui_data->str);
+			g_async_queue_push (gtx->priv->queue, signal);
+			g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
+			break;
 	}
 }
 

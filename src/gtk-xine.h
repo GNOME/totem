@@ -65,6 +65,7 @@ typedef struct {
 	void (*mouse_motion) (GtkWidget *gtx);
 	void (*key_press) (GtkWidget *gtx, guint keyval);
 	void (*eos) (GtkWidget *gtx);
+	void (*title_change) (GtkWidget *gtx, const char *title);
 } GtkXineClass;
 
 GtkType gtk_xine_get_type              (void);
