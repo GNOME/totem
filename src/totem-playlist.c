@@ -571,7 +571,7 @@ totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist)
 	GtkWidget *fs;
 	int response;
 
-	fs = gtk_file_chooser_dialog_new (_("Select files"),
+	fs = gtk_file_chooser_dialog_new (_("Select Movies or Playlists"),
 			GTK_WINDOW (playlist), GTK_FILE_CHOOSER_ACTION_OPEN,
 			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			GTK_STOCK_ADD, GTK_RESPONSE_ACCEPT,
