@@ -146,14 +146,18 @@ else
        AC_MSG_RESULT(n334)
 fi
 
-case "$host" in
-	*linux*)
-	AM_CONDITIONAL(HAVE_LINUX, 1)
+AC_MSG_CHECKING(for Linux)
+case `uname` in
+	*Linux*)
+	AC_MSG_RESULT(yes)
+	IS_LINUX="yes"
 	;;
 	*)
-	AM_CONDITIONAL(HAVE_LINUX, 0)
+	AC_MSG_RESULT(no)
+	IS_LINUX="no"
 	;;
 esac
+AM_CONDITIONAL(HAVE_LINUX, `test x$IS_LINUX = xyes`)
 
 AC_PATH_PROG(GCONFTOOL, gconftool-2)
 AM_GCONF_SOURCE_2
