@@ -55,7 +55,6 @@
 #define DEFAULT_HEIGHT 315
 #define DEFAULT_WIDTH 420
 #define CONFIG_FILE ".gnome2"G_DIR_SEPARATOR_S"totem_config"
-#define DEFAULT_TITLE _("Totem Video Window")
 
 /* Signals */
 enum {
@@ -1268,6 +1267,7 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	bvw = BACON_VIDEO_WIDGET (widget);
 
 	/* stop the playback */
+	xine_stop (bvw->priv->stream);
 	xine_close (bvw->priv->stream);
 
 	/* Kill the TV out */

@@ -1,3 +1,15 @@
+2003-07-03  Bastien Nocera  <hadess@hadess.net>
+
+	* AUTHORS: added Julien
+	* README: updated
+	* configure.in: added a little echo to show which backend is used
+	when configure finished
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_unrealize):
+	xine_stop the stream before closing it, fixes the long time periods
+	when closing the application while something was playing
+	* src/totem-preferences.c: (totem_prefs_set_show_visuals): really
+	set the visuals in the video widget on startup
+
 2003-07-02  Bastien Nocera  <hadess@hadess.net>
 
 	* src/gtk-playlist.c: a real audio file starting with http:// will

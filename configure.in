@@ -250,3 +250,11 @@ src/Makefile
 data/Makefile
 po/Makefile.in
 ])
+
+echo
+if test x$ENABLE_GST = xno ; then
+	echo "Using the xine backend"
+else
+	echo "Using the GStreamer backend"
+fi
+echo

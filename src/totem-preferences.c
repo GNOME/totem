@@ -104,19 +104,26 @@ totem_prefs_set_show_visuals (Totem *totem, gboolean value, gboolean warn)
 {
 	GtkWidget *item;
 
-	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/show_vfx", value, NULL);
+	gconf_client_set_bool (totem->gc,
+			GCONF_PREFIX"/show_vfx", value, NULL);
 
 	item = glade_xml_get_widget (totem->xml, "tpw_visuals_type_label");
 	gtk_widget_set_sensitive (item, value);
-	item = glade_xml_get_widget (totem->xml, "tpw_visuals_type_optionmenu");
+	item = glade_xml_get_widget (totem->xml,
+			"tpw_visuals_type_optionmenu");
 	gtk_widget_set_sensitive (item, value);
 	item = glade_xml_get_widget (totem->xml, "tpw_visuals_size_label");
 	gtk_widget_set_sensitive (item, value);
-	item = glade_xml_get_widget (totem->xml, "tpw_visuals_size_optionmenu");
+	item = glade_xml_get_widget (totem->xml,
+			"tpw_visuals_size_optionmenu");
 	gtk_widget_set_sensitive (item, value);
 
 	if (warn == FALSE)
+	{
+		bacon_video_widget_set_show_visuals
+			(BACON_VIDEO_WIDGET (totem->bvw), value);
 		return;
+	}
 
 	if (bacon_video_widget_set_show_visuals
 			(BACON_VIDEO_WIDGET (totem->bvw), value) == FALSE)
