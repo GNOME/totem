@@ -31,12 +31,17 @@ stuff_DATA =				\
 pixmapdir = $(datadir)/pixmaps
 pixmap_DATA = media-player-48.png vanity.png
 
+# totem.desktop.in.in.in = original
+# totem.desktop.in.in = by configure, includes the X-Gnome-Bugzilla
+# totem.desktop.in = includes the mime-types
+# totem.desktop = intltool-ised
+
 desktop_in_in_files_all = totem.desktop.in.in.in vanity.desktop.in.in
 desktop_in_files_all = totem.desktop.in.in vanity.desktop.in
 if TOTEM_VANITY
-desktop_in_files = totem.desktop.in.in vanity.desktop.in
+desktop_in_files = totem.desktop.in vanity.desktop.in
 else
-desktop_in_files = totem.desktop.in.in
+desktop_in_files = totem.desktop.in
 endif
 
 desktopdir = $(datadir)/applications/
