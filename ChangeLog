@@ -1,5 +1,18 @@
 2003-05-03  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-xine.c: (setup_config_video),
+	(bacon_video_widget_realize): setup the colour key for Xv as dark dark
+	dark dark dark dark dark dark dark black, looks nicer
+	* src/totem-preferences.c: (visual_menu_changed): only whinge about
+	restarting totem if the visual is actually changed
+	* src/totem.c: (video_widget_create):
+	* src/vanity.c: (video_widget_create): remove the hard-coded size for
+	the frame containing the video widget so that we can resize to sizes
+	smaller than the default size, it would make some zoom settings look
+	like they weren't working
+
+2003-05-03  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: take the results of AC_PATH_X into account for the
 	tests for headers (Closes: #112015)
 

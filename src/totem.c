@@ -2990,6 +2990,8 @@ video_widget_create (Totem *totem)
 			(void**)&(totem->bvw));
 
 	gtk_widget_show (GTK_WIDGET (totem->bvw));
+
+	gtk_widget_set_size_request (container, 0, 0);
 }
 
 GtkWidget *

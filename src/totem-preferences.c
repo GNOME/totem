@@ -300,17 +300,25 @@ static void
 visual_menu_changed (GtkOptionMenu *option_menu, Totem *totem)
 {
 	GList *list;
+	const char *old_name;
 	char *name;
 	int i;
 
 	i = gtk_option_menu_get_history (GTK_OPTION_MENU (option_menu));
 	list = bacon_video_widget_get_visuals_list (totem->bvw);
 	name = g_list_nth_data (list, i);
-	gconf_client_set_string (totem->gc, GCONF_PREFIX"/visual",
-			name, NULL);
 
-	if (bacon_video_widget_set_visuals (totem->bvw, name) == TRUE)
-		totem_action_error (_("Changing the visuals effect type will require a restart to take effect."), totem);
+	old_name = gconf_client_get_string (totem->gc,
+			GCONF_PREFIX"/visual", NULL);
+
+	if (old_name == NULL || strcmp (old_name, name) != 0)
+	{
+		gconf_client_set_string (totem->gc, GCONF_PREFIX"/visual",
+				name, NULL);
+
+		if (bacon_video_widget_set_visuals (totem->bvw, name) == TRUE)
+			totem_action_error (_("Changing the visuals effect type will require a restart to take effect."), totem);
+	}
 
 	g_list_foreach (list, (GFunc) g_free, NULL);
 	g_list_free (list);

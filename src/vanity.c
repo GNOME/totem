@@ -388,7 +388,6 @@ on_preferences1_activate (GtkButton *button, Vanity *vanity)
 	gtk_widget_show (vanity->prefs);
 }
 
-
 static gboolean
 vanity_action_handle_key (Vanity *vanity, GdkEventKey *event)
 {
@@ -649,6 +648,8 @@ video_widget_create (Vanity *vanity)
 		gtk_widget_hide (vanity->win);
 		vanity_action_error_and_exit (msg, vanity);
 	}
+
+	gtk_widget_set_size_request (container, 0, 0);
 }
 
 int

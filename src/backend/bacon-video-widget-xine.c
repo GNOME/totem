@@ -645,6 +645,20 @@ setup_config (BaconVideoWidget *bvw)
 	bvw->priv->volume = -1;
 }
 
+static void
+setup_config_video (BaconVideoWidget *bvw)
+{
+	xine_cfg_entry_t entry;
+
+	/* Default xv colourkey */
+	if (xine_config_lookup_entry (bvw->priv->xine,
+				"video.xv_colorkey", &entry))
+	{
+		entry.num_value = 1;
+		xine_config_update_entry (bvw->priv->xine, &entry);
+	}
+}
+
 static gboolean
 video_window_translate_point (BaconVideoWidget *bvw, int gui_x, int gui_y,
 		int *video_x, int *video_y)
@@ -865,6 +879,7 @@ bacon_video_widget_realize (GtkWidget *widget)
 	bvw->priv->screen = DefaultScreen (bvw->priv->display);
 
 	bvw->priv->vo_driver = load_video_out_driver (bvw, bvw->priv->null_out);
+	setup_config_video (bvw);
 	//FIXME
 	g_assert (bvw->priv->vo_driver != NULL);
 
