@@ -270,10 +270,11 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 static void
 bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 {
-	g_return_if_fail (bvw != NULL);
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	int argc = 1;
 	char *argv[] = { "bacon_name", NULL };
+
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
 	GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_CAN_FOCUS);
 	GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_NO_WINDOW);
