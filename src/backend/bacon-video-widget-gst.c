@@ -129,7 +129,7 @@ struct BaconVideoWidgetPrivate
   gint64 current_time;
   float current_position;
 
-  GstTagList *tagcache;
+  GstTagList *tagcache, *audiotags, *videotags;
 
   char *last_error_message;
   gboolean got_redirect;
@@ -713,6 +713,7 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   bvw->priv->queue = g_async_queue_new ();
   bvw->priv->update_id = 0;
   bvw->priv->tagcache = NULL;
+  bvw->priv->audiotags = bvw->priv->videotags = NULL;
 }
 
 static void
@@ -803,15 +804,36 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
         {
           GstTagList *tag_list = signal->signal_data.found_tag.tag_list,
 		*result;
+          GstElementFactory *f;
 
           result = gst_tag_list_merge (bvw->priv->tagcache, tag_list,
 				       GST_TAG_MERGE_APPEND);
-          if (tag_list)
-            gst_tag_list_free (tag_list);
           if (bvw->priv->tagcache)
             gst_tag_list_free (bvw->priv->tagcache);
-
           bvw->priv->tagcache = result;
+
+	  if ((f = gst_element_get_factory (signal->signal_data.found_tag.source))) {
+            const gchar *klass = gst_element_factory_get_klass (f);
+	    GstTagList **cache = NULL;
+
+	    if (g_strrstr (klass, "Video")) {
+	      cache = &bvw->priv->videotags;
+	    } else if (g_strrstr (klass, "Audio")) {
+	      cache = &bvw->priv->audiotags;
+	    }
+
+	    if (cache) {
+	      result = gst_tag_list_merge (*cache, tag_list,
+					   GST_TAG_MERGE_APPEND);
+	      if (*cache)
+		gst_tag_list_free (*cache);
+	      *cache = result;
+	    }
+	  }
+
+          if (tag_list)
+            gst_tag_list_free (tag_list);
+
           g_signal_emit (G_OBJECT (bvw),
 			 bvw_table_signals[SIGNAL_GOT_METADATA],
 			 0, NULL);
@@ -881,8 +903,18 @@ group_switch (GstElement *play, BaconVideoWidget *bvw)
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-  gst_tag_list_free (bvw->priv->tagcache);
-  bvw->priv->tagcache = NULL;
+  if (bvw->priv->tagcache) {
+    gst_tag_list_free (bvw->priv->tagcache);
+    bvw->priv->tagcache = NULL;
+  }
+  if (bvw->priv->audiotags) {
+    gst_tag_list_free (bvw->priv->audiotags);
+    bvw->priv->audiotags = NULL;
+  }
+  if (bvw->priv->videotags) {
+    gst_tag_list_free (bvw->priv->videotags);
+    bvw->priv->videotags = NULL;
+  }
 
   signal = g_new0 (BVWSignal, 1);
   signal->signal_id = ASYNC_NOTIFY_STREAMINFO;
@@ -1023,6 +1055,14 @@ got_source (GObject    *play,
   if (bvw->priv->tagcache) {
     gst_tag_list_free (bvw->priv->tagcache);
     bvw->priv->tagcache = NULL;
+  }
+  if (bvw->priv->audiotags) {
+    gst_tag_list_free (bvw->priv->audiotags);
+    bvw->priv->audiotags = NULL;
+  }
+  if (bvw->priv->videotags) {
+    gst_tag_list_free (bvw->priv->videotags);
+    bvw->priv->videotags = NULL;
   }
 
   if (!bvw->priv->media_device)
@@ -1199,10 +1239,18 @@ state_change (GstElement *play, GstElementState old_state,
 
     /* clean metadata cache */
     if (bvw->priv->tagcache)
-      {
-        gst_tag_list_free (bvw->priv->tagcache);
-        bvw->priv->tagcache = NULL;
-      }
+    {
+      gst_tag_list_free (bvw->priv->tagcache);
+      bvw->priv->tagcache = NULL;
+    }
+    if (bvw->priv->audiotags) {
+      gst_tag_list_free (bvw->priv->audiotags);
+      bvw->priv->audiotags = NULL;
+    }
+    if (bvw->priv->videotags) {
+      gst_tag_list_free (bvw->priv->videotags);
+      bvw->priv->videotags = NULL;
+    }
 
     bvw->priv->video_width = 0;
     bvw->priv->video_height = 0;
@@ -1283,10 +1331,18 @@ bacon_video_widget_finalize (GObject * object)
     }
 
   if (bvw->priv->tagcache)
-    {
-      gst_tag_list_free (bvw->priv->tagcache);
-      bvw->priv->tagcache = NULL;
-    }
+  {
+    gst_tag_list_free (bvw->priv->tagcache);
+    bvw->priv->tagcache = NULL;
+  }
+  if (bvw->priv->audiotags) {
+    gst_tag_list_free (bvw->priv->audiotags);
+    bvw->priv->audiotags = NULL;
+  }
+  if (bvw->priv->videotags) {
+    gst_tag_list_free (bvw->priv->videotags);
+    bvw->priv->videotags = NULL;
+  }
   g_free (bvw->priv);
 }
 
@@ -2667,12 +2723,12 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
   switch (type)
     {
     case BVW_INFO_TITLE:
-      res = gst_tag_list_get_string (bvw->priv->tagcache,
-				     GST_TAG_TITLE, &string);
+      res = gst_tag_list_get_string_index (bvw->priv->tagcache,
+					   GST_TAG_TITLE, 0, &string);
       break;
     case BVW_INFO_ARTIST:
-      res = gst_tag_list_get_string (bvw->priv->tagcache,
-				     GST_TAG_ARTIST, &string);
+      res = gst_tag_list_get_string_index (bvw->priv->tagcache,
+					   GST_TAG_ARTIST, 0, &string);
       break;
     case BVW_INFO_YEAR: {
       guint year;
@@ -2682,8 +2738,8 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
       break;
     }
     case BVW_INFO_ALBUM:
-      res = gst_tag_list_get_string (bvw->priv->tagcache,
-		      		     GST_TAG_ALBUM, &string);
+      res = gst_tag_list_get_string_index (bvw->priv->tagcache,
+					   GST_TAG_ALBUM, 0, &string);
       break;
     case BVW_INFO_VIDEO_CODEC:
       res = gst_tag_list_get_string (bvw->priv->tagcache,
@@ -2741,25 +2797,20 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
       else
         integer = bvw->priv->video_fps;
       break;
-    case BVW_INFO_AUDIO_BITRATE: {
-      gint num, t;
-
-      integer = 0;
-      if (bvw->priv->tagcache == NULL)
+    case BVW_INFO_AUDIO_BITRATE:
+      if (bvw->priv->audiotags == NULL)
         break;
-      for (num = 0; ; num++) {
-        if (!gst_tag_list_get_uint_index (bvw->priv->tagcache,
-					  GST_TAG_BITRATE, num, &t))
-          break;
-        integer += t;
+      if (gst_tag_list_get_uint (bvw->priv->audiotags,
+				 GST_TAG_BITRATE, &integer)) {
+	integer /= 1000;
       }
-      /* kbps */
-      integer /= 1000;
-      break;
-    }
     case BVW_INFO_VIDEO_BITRATE:
-      g_message ("FIXME missing video bitrate");
-      integer = 0;
+      if (bvw->priv->videotags == NULL)
+	break;
+      if (gst_tag_list_get_uint (bvw->priv->videotags,
+				 GST_TAG_BITRATE, &integer)) {
+	integer /= 1000;
+      }
       break;
     default:
       g_assert_not_reached ();
@@ -2827,6 +2878,7 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
     case BVW_INFO_DIMENSION_Y:
     case BVW_INFO_FPS:
     case BVW_INFO_AUDIO_BITRATE:
+    case BVW_INFO_VIDEO_BITRATE:
       bacon_video_widget_get_metadata_int (bvw, type, value);
       break;
     case BVW_INFO_HAS_VIDEO:
