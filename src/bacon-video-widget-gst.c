@@ -594,7 +594,7 @@ bacon_video_widget_get_tv_out (BaconVideoWidget *bvw)
 
 gboolean
 bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
-		GError **error, guint32 *fourcc)
+		GError **error)
 {
 	GstElement *datasrc = NULL;
 	
@@ -603,8 +603,6 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 	g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 	g_return_val_if_fail (bvw->priv->mrl == NULL, FALSE);
-
-	*fourcc = 0;
 
 	g_message ("bacon_video_widget_open: %s", mrl);
 	bvw->priv->mrl = g_strdup (mrl);
