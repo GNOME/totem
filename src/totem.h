@@ -56,9 +56,6 @@ void	totem_action_set_scale_ratio		(Totem *totem, gfloat ratio);
 void    totem_action_error                      (char *title, char *reason,
 						 Totem *totem);
 
-GConfClient *totem_get_gconf_client		(Totem *totem);
-
-GtkWidget * label_create (void);
 GtkWidget * totem_statusbar_create (void);
 GtkWidget * totem_time_display_create (void);
 

@@ -1,5 +1,12 @@
 2005-01-04  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.glade: remove custom labels to use new GTK+ labels
+	* src/totem.c: (update_mrl_label), (totem_setup_recent):
+	* src/totem.h: remove unused totem_get_gconf_client() and custom
+	label creation
+
+2005-01-04  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: and remove floating point warnings, it seems only
 	some versions of gcc handle it (bugger) (Closes: #162943)
 

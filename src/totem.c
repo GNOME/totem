@@ -571,7 +571,7 @@ update_mrl_label (Totem *totem, const char *name)
 			("<span size=\"medium\"><b>%s</b></span>", escaped);
 		g_free (escaped);
 
-		widget = glade_xml_get_widget (totem->xml, "tcw_label_custom");
+		widget = glade_xml_get_widget (totem->xml, "tcw_title_label");
 		gtk_label_set_markup (GTK_LABEL (widget), text);
 		widget = glade_xml_get_widget (totem->xml, "tmw_title_label");
 		gtk_label_set_markup (GTK_LABEL (widget), text);
@@ -594,7 +594,7 @@ update_mrl_label (Totem *totem, const char *name)
 		text = g_strdup_printf
 			("<span size=\"medium\"><b>%s</b></span>",
 			 _("No file"));
-		widget = glade_xml_get_widget (totem->xml, "tcw_label_custom");
+		widget = glade_xml_get_widget (totem->xml, "tcw_title_label");
 		gtk_label_set_markup (GTK_LABEL (widget), text);
 		widget = glade_xml_get_widget (totem->xml, "tmw_title_label");
 		gtk_label_set_markup (GTK_LABEL (widget), text);
@@ -3329,29 +3329,6 @@ video_widget_create (Totem *totem)
 }
 
 GtkWidget *
-label_create (void)
-{
-	GtkWidget *label;
-	char *text;
-
-	label = gtk_label_new ("");
-	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-	gtk_label_set_selectable (GTK_LABEL (label), FALSE);
-	gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
-	gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_MIDDLE);
-	gtk_widget_show (label);
-
-	/* Set default */
-	text = g_strdup_printf
-		("<span size=\"medium\"><b>%s</b></span>",
-		 _("No file"));
-	gtk_label_set_markup (GTK_LABEL (label), text);
-	g_free (text);
-
-	return label;
-}
-
-GtkWidget *
 totem_statusbar_create (void)
 {
 	GtkWidget *widget;
@@ -3404,12 +3381,6 @@ totem_setup_recent (Totem *totem)
 
 	g_signal_connect (totem->recent_view, "activate",
 			G_CALLBACK (on_recent_file_activate), totem);
-}
-
-GConfClient *
-totem_get_gconf_client (Totem *totem)
-{
-	return totem->gc;
 }
 
 static void
