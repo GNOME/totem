@@ -218,6 +218,13 @@ on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 		bacon_video_widget_close (emb->bvw);
 		totem_embedded_set_state (emb, STATE_STOPPED);
 
+		if (emb->controller_hidden != FALSE) {
+			GtkWidget *controls;
+			controls = glade_xml_get_widget (emb->xml, "controls");
+			gtk_widget_show (controls);
+		}
+
+
 		if (totem_embedded_open (emb) != FALSE)
 			totem_embedded_play (emb);
 
