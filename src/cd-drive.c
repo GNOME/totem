@@ -581,3 +581,13 @@ scan_for_cdroms (gboolean recorder_only, gboolean add_image)
 	return cdroms;
 }
 
+void
+cd_drive_free (CDDrive *drive)
+{
+	g_return_if_fail (drive != NULL);
+
+	g_free (drive->display_name);
+	g_free (drive->cdrecord_id);
+	g_free (drive->device);
+}
+

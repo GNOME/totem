@@ -47,5 +47,6 @@ typedef struct {
 
 /* Returns a list of CDDrive structs */
 GList *scan_for_cdroms (gboolean recorder_only, gboolean add_image);
+void cd_drive_free (CDDrive *drive);
 
 #endif

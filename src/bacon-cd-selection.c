@@ -173,8 +173,22 @@ bacon_cd_selection_unrealize (GtkWidget *widget)
 static void
 bacon_cd_selection_finalize (GObject *object)
 {
+	GList *l;
+
 	BaconCdSelection *bcs = (BaconCdSelection *) object;
 	G_OBJECT_CLASS (parent_class)->finalize (object);
+
+	gtk_widget_destroy (bcs->priv->widget);
+
+	l = bcs->priv->cdroms;
+	while (l != NULL)
+	{
+		CDDrive *cdrom = l->data;
+
+		cd_drive_free (cdrom);
+		l = g_list_remove (l, cdrom);
+		g_free (cdrom);
+	}
 
 	bcs->priv = NULL;
 	bcs = NULL;
