@@ -1,5 +1,10 @@
 2004-10-14  Bastien Nocera  <hadess@hadess.net>
 
+	* src/video-utils.c: (totem_ratio_fits_screen): no warnings when
+	height or width == 0 (Closes: #155376)
+
+2004-10-14  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-disc.c: (totem_disc_resolve_link), (get_device):
 	* src/totem-disc.h: remove uses of gint and gchar, follow relative
 	symlinks when checking for the real device name

@@ -402,8 +402,8 @@ totem_ratio_fits_screen (GdkWindow *video_window, int video_width,
 	GdkRectangle fullscreen_rect;
 	int new_w, new_h;
 
-	g_return_val_if_fail (video_width > 0, FALSE);
-	g_return_val_if_fail (video_height > 0, FALSE);
+	if (video_width <= 0 || video_height <= 0)
+		return TRUE;
 
 	new_w = video_width * ratio;
 	new_h = video_height * ratio;
