@@ -163,7 +163,7 @@ enum {
   ASYNC_VIDEO_SIZE,
   ASYNC_ERROR,
   ASYNC_FOUND_TAG,
-  ASYNC_CLEAR_TAGS,
+  ASYNC_NOTIFY_STREAMINFO,
   ASYNC_EOS,
   ASYNC_BUFFERING
 };
@@ -792,12 +792,11 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
 			 0, NULL);
           break;
         }
-      case ASYNC_CLEAR_TAGS:
+      case ASYNC_NOTIFY_STREAMINFO:
         {
-          gst_tag_list_free (bvw->priv->tagcache);
-          bvw->priv->tagcache = NULL;
           g_signal_emit (G_OBJECT (bvw),
 			 bvw_table_signals[SIGNAL_GOT_METADATA], 0, NULL);
+          g_signal_emit (bvw, bvw_table_signals[SIGNAL_CHANNELS_CHANGE], 0);
           break;
         }
       case ASYNC_EOS:
@@ -850,8 +849,11 @@ group_switch (GstElement *play, BaconVideoWidget *bvw)
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
+  gst_tag_list_free (bvw->priv->tagcache);
+  bvw->priv->tagcache = NULL;
+
   signal = g_new0 (BVWSignal, 1);
-  signal->signal_id = ASYNC_CLEAR_TAGS;
+  signal->signal_id = ASYNC_NOTIFY_STREAMINFO;
 
   g_async_queue_push (bvw->priv->queue, signal);
 
@@ -1034,6 +1036,70 @@ caps_set (GObject * obj,
 }
 
 static void
+parse_stream_info (BaconVideoWidget *bvw)
+{
+  GList *streaminfo = NULL;
+  GstPad *videopad = NULL;
+
+  g_object_get (G_OBJECT (bvw->priv->play), "stream-info",
+		&streaminfo, NULL);
+  for ( ; streaminfo != NULL; streaminfo = streaminfo->next) {
+    GObject *info = streaminfo->data;
+    gint type;
+    GParamSpec *pspec;
+    GEnumValue *val;
+
+    g_object_get (info, "type", &type, NULL);
+    pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
+    val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
+
+    if (strstr (val->value_name, "AUDIO")) {
+      if (!bvw->priv->media_has_audio) {
+        bvw->priv->media_has_audio = TRUE;
+        if (!bvw->priv->media_has_video &&
+            bvw->priv->show_vfx && bvw->priv->vis_element) {
+          videopad = gst_element_get_pad (bvw->priv->vis_element, "src");
+        }
+      }
+    } else if (strstr (val->value_name, "VIDEO")) {
+      bvw->priv->media_has_video = TRUE;
+      if (!videopad) {
+        g_object_get (info, "object", &videopad, NULL);
+        /* hack for 0.8.5 */
+        if (!videopad)
+          g_object_get (info, "pad", &videopad, NULL);
+      }
+    }
+  }
+
+  if (videopad) {
+    GstPad *real = (GstPad *) GST_PAD_REALIZE (videopad);
+
+    /* handle explicit caps as well - they're set later */
+    if (((GstRealPad *) real)->link != NULL && GST_PAD_CAPS (real))
+      caps_set (G_OBJECT (real), NULL, bvw);
+    else
+      g_signal_connect (real, "notify::caps",
+          G_CALLBACK (caps_set), bvw);
+  }
+}
+
+static void
+stream_info_set (GObject * obj, GParamSpec * pspec, BaconVideoWidget * bvw)
+{
+  BVWSignal *signal;
+
+  parse_stream_info (bvw);
+
+  signal = g_new0 (BVWSignal, 1);
+  signal->signal_id = ASYNC_NOTIFY_STREAMINFO;
+
+  g_async_queue_push (bvw->priv->queue, signal);
+
+  g_idle_add ((GSourceFunc) bacon_video_widget_signal_idler, bvw);
+}
+
+static void
 state_change (GstElement *play, GstElementState old_state,
 	      GstElementState new_state, BaconVideoWidget *bvw)
 {
@@ -1050,52 +1116,7 @@ state_change (GstElement *play, GstElementState old_state,
 
   if (old_state <= GST_STATE_READY &&
       new_state >= GST_STATE_PAUSED) {
-    GList *streaminfo = NULL;
-    GstPad *videopad = NULL;
-
-    g_object_get (G_OBJECT (bvw->priv->play), "stream-info",
-		  &streaminfo, NULL);
-    for ( ; streaminfo != NULL; streaminfo = streaminfo->next) {
-      GObject *info = streaminfo->data;
-      gint type;
-      GParamSpec *pspec;
-      GEnumValue *val;
-
-      g_object_get (info, "type", &type, NULL);
-      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
-      val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
-
-      if (strstr (val->value_name, "AUDIO")) {
-        if (!bvw->priv->media_has_audio) {
-          bvw->priv->media_has_audio = TRUE;
-          if (!bvw->priv->media_has_video &&
-              bvw->priv->show_vfx && bvw->priv->vis_element) {
-            videopad = gst_element_get_pad (bvw->priv->vis_element, "src");
-          }
-        }
-      } else if (strstr (val->value_name, "VIDEO")) {
-        if (!bvw->priv->media_has_video) {
-          bvw->priv->media_has_video = TRUE;
-
-          videopad = NULL;
-          g_object_get (info, "object", &videopad, NULL);
-          /* hack for 0.8.5 */
-          if (!videopad)
-            g_object_get (info, "pad", &videopad, NULL);
-        }
-      }
-    }
-
-    if (videopad) {
-      GstPad *real = (GstPad *) GST_PAD_REALIZE (videopad);
-
-      /* handle explicit caps as well - they're set later */
-      if (((GstRealPad *) real)->link != NULL && GST_PAD_CAPS (real))
-        caps_set (G_OBJECT (real), NULL, bvw);
-      else
-        g_signal_connect (real, "notify::caps",
-            G_CALLBACK (caps_set), bvw);
-    }
+    parse_stream_info (bvw);
   } else if (new_state <= GST_STATE_READY &&
              old_state >= GST_STATE_PAUSED) {
     bvw->priv->media_has_video = FALSE;
@@ -2932,6 +2953,8 @@ bacon_video_widget_new (int width, int height,
 		    G_CALLBACK (got_buffering), (gpointer) bvw);
   g_signal_connect (G_OBJECT (bvw->priv->play), "notify::source",
 		    G_CALLBACK (got_source), (gpointer) bvw);
+  g_signal_connect (G_OBJECT (bvw->priv->play), "notify::stream-info",
+		    G_CALLBACK (stream_info_set), (gpointer) bvw);
   g_signal_connect (G_OBJECT (bvw->priv->play), "group-switch",
 		    G_CALLBACK (group_switch), (gpointer) bvw);
 
