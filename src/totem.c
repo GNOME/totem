@@ -2373,7 +2373,7 @@ popup_timeout_remove (Totem *totem)
 {
 	if (totem->popup_timeout != 0)
 	{
-		gtk_timeout_remove (totem->popup_timeout);
+		g_source_remove (totem->popup_timeout);
 		totem->popup_timeout = 0;
 	}
 }
@@ -2402,8 +2402,8 @@ on_mouse_click_fullscreen (GtkWidget *widget, Totem *totem)
 {
 	popup_timeout_remove (totem);
 
-	totem->popup_timeout = gtk_timeout_add (2000,
-		(GtkFunction) popup_hide, totem);
+	totem->popup_timeout = g_timeout_add (2000,
+		(GSourceFunc) popup_hide, totem);
 }
 
 static gboolean
@@ -2434,8 +2434,8 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 	gtk_widget_show_all (totem->control_popup);
 	bacon_video_widget_set_show_cursor (totem->bvw, TRUE);
 
-	totem->popup_timeout = gtk_timeout_add (5000,
-			(GtkFunction) popup_hide, totem);
+	totem->popup_timeout = g_timeout_add (5000,
+			(GSourceFunc) popup_hide, totem);
 	totem->popup_in_progress = FALSE;
 
 	return FALSE;
@@ -3181,7 +3181,7 @@ totem_callback_connect (Totem *totem)
 	totem_set_default_icons (totem);
 
 	/* Update the UI */
-	gtk_timeout_add (600, (GtkFunction) gui_update_cb, totem);
+	g_timeout_add (600, (GSourceFunc) gui_update_cb, totem);
 }
 
 static void
