@@ -33,9 +33,9 @@ G_BEGIN_DECLS
 #define GTK_IS_PLAYLIST(obj)         (GTK_CHECK_TYPE ((obj), GTK_TYPE_PLAYLIST))
 #define GTK_IS_PLAYLIST_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GTK_TYPE_PLAYLIST))
 
-typedef struct TotemPlaylist	      TotemPlaylist;
-typedef struct TotemPlaylistClass	      TotemPlaylistClass;
-typedef struct TotemPlaylistPrivate     TotemPlaylistPrivate;
+typedef struct TotemPlaylist	       TotemPlaylist;
+typedef struct TotemPlaylistClass      TotemPlaylistClass;
+typedef struct TotemPlaylistPrivate    TotemPlaylistPrivate;
 
 struct TotemPlaylist {
 	GtkDialog parent;
@@ -52,26 +52,27 @@ struct TotemPlaylistClass {
 
 GtkType    totem_playlist_get_type (void);
 GtkWidget *totem_playlist_new      (const char *glade_filename,
-				  GdkPixbuf *playing_pix);
+				    GdkPixbuf *playing_pix);
 
 /* The application is responsible for checking that the mrl is correct
  * Handles directories, m3u playlists, and shoutcast playlists
  * @display_name is if you have a preferred display string for the mrl,
  * NULL otherwise
  */
-gboolean   totem_playlist_add_mrl  (TotemPlaylist *playlist, const char *mrl,
-		const char *display_name);
+gboolean totem_playlist_add_mrl  (TotemPlaylist *playlist, const char *mrl,
+				  const char *display_name);
 
 void totem_playlist_save_current_playlist (TotemPlaylist *playlist,
-		const char *output);
+					   const char *output);
 
 /* totem_playlist_clear doesn't emit the current_removed signal, even if it does
  * because the caller should know what to do after it's done with clearing */
 void       totem_playlist_clear (TotemPlaylist *playlist);
 char      *totem_playlist_get_current_mrl (TotemPlaylist *playlist);
 char      *totem_playlist_get_current_title (TotemPlaylist *playlist,
-		gboolean *custom);
-gboolean   totem_playlist_set_title (TotemPlaylist *playlist, const gchar *title);
+					     gboolean *custom);
+gboolean   totem_playlist_set_title (TotemPlaylist *playlist,
+				     const gchar *title);
 
 gboolean   totem_playlist_has_previous_mrl (TotemPlaylist *playlist);
 gboolean   totem_playlist_has_next_mrl (TotemPlaylist *playlist);

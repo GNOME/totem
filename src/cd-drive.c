@@ -328,11 +328,11 @@ get_device_max_speed (char *id)
 			speed += strlen ("Maximum write speed in kB/s:");
 			max_speed = (int)floor (atol (speed) / 176.0 + 0.5);
 		}
+		g_free (stdout_data);
 	}
 
 	g_free (dev_str);
 	return max_speed;
-
 }
 
 
@@ -344,7 +344,7 @@ get_scsi_cd_name (int bus, int id, int lun, const char *dev,
 	
 	scsi_unit = lookup_scsi_unit (bus, id, lun, scsi_units, n_scsi_units);
 	if (scsi_unit == NULL) {
-		return g_strdup_printf (_("Unnamed SCSI CDROM (%s)"), dev);
+		return g_strdup_printf (_("Unnamed SCSI CD-ROM (%s)"), dev);
 	}
 
 	return g_strdup_printf ("%s - %s",
@@ -425,7 +425,8 @@ add_linux_cd_recorder (GList *cdroms,
 		/* kernel >=2.5 can write cd w/o ide-scsi */
 		cdrom->display_name = cdrom_get_name (cdrom_s,
 				scsi_units, n_scsi_units);
-		cdrom->cdrecord_id = g_strdup_printf (cdrom_s->device);
+		cdrom->cdrecord_id = g_strdup_printf ("/dev/%s",
+				cdrom_s->device);
 		cdrom->max_speed_write = get_device_max_speed
 			(cdrom->cdrecord_id);
 	}

@@ -216,10 +216,8 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data)
 
 	/* Open the file. */
 	result = gnome_vfs_open (&handle, uri, GNOME_VFS_OPEN_READ);
-	if (result != GNOME_VFS_OK) {
-		g_message ("uri : %s result: %s", uri, gnome_vfs_result_to_string (result));
+	if (result != GNOME_VFS_OK)
 		return NULL;
-	}
 
 	/* Read the whole thing. */
 	buffer = NULL;
@@ -771,8 +769,8 @@ totem_playlist_remove_files (GtkWidget *widget, TotemPlaylist *playlist)
 		}
 
 		g_signal_emit (G_OBJECT (playlist),
-				totem_playlist_table_signals[CURRENT_REMOVED], 0,
-				NULL);
+				totem_playlist_table_signals[CURRENT_REMOVED],
+				0, NULL);
 	} else {
 		if (ref != NULL)
 		{

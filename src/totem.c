@@ -1171,6 +1171,8 @@ on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 		name = totem_playlist_get_current_title
 			(totem->playlist,
 			 &custom);
+	} else {
+		custom = FALSE;
 	}
 
 	update_mrl_label (totem, name);
