@@ -3725,7 +3725,7 @@ main (int argc, char **argv)
 	totem_setup_preferences (totem);
 
 	/* Basic command-line handling at load-time. */
-	if (strlen (argv[1]) > 3 && strncmp (argv[1], "--", 2) == 0)
+	if ((argc > 1) && (strlen (argv[1]) > 3) && (strncmp (argv[1], "--", 2) == 0))
 	{
 		if (strcmp (argv[1], "--fullscreen") == 0) {
 			totem_action_fullscreen_toggle (totem);
