@@ -822,6 +822,9 @@ try_open_again:
 	update_buttons (totem);
 	update_media_menu_items (totem);
 
+	widget = glade_xml_get_widget (totem->xml, "tmw_properties_menu_item");
+	gtk_widget_set_sensitive (widget, retval);
+
 	return retval;
 }
 

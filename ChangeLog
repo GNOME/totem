@@ -1,3 +1,9 @@
+2003-09-20  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem.c: (totem_action_set_mrl): set the File->Properties
+	menu item unsensitive if we didn't manage to open a file, or we
+	opened the logo (Closes: #122794)
+
 2003-09-19  Frederic Crozat  <fcrozat@mandrakesoft.com>
 
 	* src/totem-playlist.c: (totem_playlist_add_directory):
