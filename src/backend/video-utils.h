@@ -3,3 +3,8 @@
 
 void eel_gdk_window_set_invisible_cursor (GdkWindow *window);
 
+void yuy2toyv12 (guint8 *y, guint8 *u, guint8 *v, guint8 *input,
+		int width, int height);
+guint8 *yv12torgb (guint8 *src_y, guint8 *src_u, guint8 *src_v,
+		int width, int height);
+
