@@ -33,10 +33,10 @@
 #include "bacon-video-widget.h"
 
 #define TOTEM_TYPE_PROPERTIES_PAGE		     (totem_properties_page_get_type ())
-#define NAUTILUS_RPM_PROPERTIES_PAGE(obj)	     (GTK_CHECK_CAST ((obj), TOTEM_TYPE_PROPERTIES_PAGE, TotemPropertiesPage))
-#define NAUTILUS_RPM_PROPERTIES_PAGE_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), TOTEM_TYPE_PROPERTIES_PAGE, TotemPropertiesPageClass))
-#define NAUTILUS_IS_RPM_PROPERTIES_PAGE(obj)	     (GTK_CHECK_TYPE ((obj), TOTEM_TYPE_PROPERTIES_PAGE))
-#define NAUTILUS_IS_RPM_PROPERTIES_PAGE_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), TOTEM_TYPE_PROPERTIES_PAGE))
+#define TOTEM_PROPERTIES_PAGE(obj)	     (GTK_CHECK_CAST ((obj), TOTEM_TYPE_PROPERTIES_PAGE, TotemPropertiesPage))
+#define TOTEM_PROPERTIES_PAGE_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), TOTEM_TYPE_PROPERTIES_PAGE, TotemPropertiesPageClass))
+#define TOTEM_IS_PROPERTIES_PAGE(obj)	     (GTK_CHECK_TYPE ((obj), TOTEM_TYPE_PROPERTIES_PAGE))
+#define TOTEM_IS_PROPERTIES_PAGE_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), TOTEM_TYPE_PROPERTIES_PAGE))
 
 typedef struct {
 	BonoboControl parent;
@@ -71,12 +71,12 @@ static void get_property (BonoboPropertyBag *bag,
 			  BonoboArg         *arg,
 			  guint              arg_id,
 			  CORBA_Environment *ev,
-			  TotemPropertiesPage *self);
+			  TotemPropertiesPage *props);
 static void set_property (BonoboPropertyBag *bag,
 			  const BonoboArg   *arg,
 			  guint              arg_id,
 			  CORBA_Environment *ev,
-			  TotemPropertiesPage *self);
+			  TotemPropertiesPage *props);
 
 static void
 totem_properties_page_class_init(TotemPropertiesPageClass *class)
@@ -84,54 +84,265 @@ totem_properties_page_class_init(TotemPropertiesPageClass *class)
 	parent_class = g_type_class_peek_parent(class);
 	G_OBJECT_CLASS(class)->finalize = totem_properties_page_finalize;
 }
-#if 0
-static GtkWidget *
-make_bold_label(const gchar *message)
+
+static char *
+bacon_video_widget_properties_time_to_string (int time)
 {
-	gchar *string;
-	GtkWidget *label;
+	char *secs, *mins, *hours, *string;
+	int sec, min, hour;
 
-	string = g_strconcat("<b>", message, "</b>", NULL);
-	label = gtk_label_new(string);
-	g_free(string);
- 
-	gtk_label_set_use_markup(GTK_LABEL(label), TRUE);
-	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
+	sec = time % 60;
+	time = time - sec;
+	min = (time % (60*60)) / 60;
+	time = time - (min * 60);
+	hour = time / (60*60);
 
-	return label;
+	if (hour == 1)
+		/* One hour */
+		hours = g_strdup_printf (_("%d hour"), hour);
+	else
+		/* Multiple hours */
+		hours = g_strdup_printf (_("%d hours"), hour);
+
+	if (min == 1)
+		/* One minute */
+		mins = g_strdup_printf (_("%d minute"), min);
+	else
+		/* Multiple minutes */
+		mins = g_strdup_printf (_("%d minutes"), min);
+
+	if (sec == 1)
+		/* One second */
+		secs = g_strdup_printf (_("%d second"), sec);
+	else
+		/* Multiple seconds */
+		secs = g_strdup_printf (_("%d seconds"), sec);
+
+	if (hour > 0)
+	{
+		/* hour:minutes:seconds */
+		string = g_strdup_printf (_("%s %s %s"), hours, mins, secs);
+	} else if (min > 0) {
+		/* minutes:seconds */
+		string = g_strdup_printf (_("%s %s"), mins, secs);
+	} else if (sec > 0) {
+		/* seconds */
+		string = g_strdup_printf (_("%s"), secs);
+	} else {
+		/* 0 seconds */
+		string = g_strdup (_("0 seconds"));
+	}
+
+	g_free (hours);
+	g_free (mins);
+	g_free (secs);
+
+	return string;
 }
-#endif
+
 static void
-totem_properties_page_init(TotemPropertiesPage *self)
+bacon_video_widget_properties_set_label (TotemPropertiesPage *props,
+			       const char *name, const char *text)
+{
+	GtkWidget *item;
+
+	item = glade_xml_get_widget (props->xml, name);
+	gtk_label_set_text (GTK_LABEL (item), text);
+}
+
+static void
+bacon_video_widget_properties_reset (TotemPropertiesPage *props)
+{
+	GtkWidget *item;
+
+	item = glade_xml_get_widget (props->xml, "video");
+	gtk_widget_set_sensitive (item, FALSE);
+	item = glade_xml_get_widget (props->xml, "audio");
+	gtk_widget_set_sensitive (item, FALSE);
+
+	/* Title */
+	bacon_video_widget_properties_set_label (props, "title", _("Unknown"));
+	/* Artist */
+	bacon_video_widget_properties_set_label (props, "artist", _("Unknown"));
+	/* Year */
+	bacon_video_widget_properties_set_label (props, "year", _("Unknown"));
+	/* Duration */
+	bacon_video_widget_properties_set_label (props, "duration", _("0 second"));
+	/* Dimensions */
+	bacon_video_widget_properties_set_label (props, "dimensions", _("0 x 0"));
+	/* Video Codec */
+	bacon_video_widget_properties_set_label (props, "vcodec", _("N/A"));
+	/* Framerate */
+	bacon_video_widget_properties_set_label (props, "framerate",
+			_("0 frames per second"));
+	/* Bitrate */
+	bacon_video_widget_properties_set_label (props, "bitrate", _("0 kbps"));
+	/* Audio Codec */
+	bacon_video_widget_properties_set_label (props, "acodec", _("N/A"));
+}
+
+static void
+bacon_video_widget_properties_set_from_current
+(TotemPropertiesPage *props, BaconVideoWidget *bvw)
+{
+	GtkWidget *item;
+	GValue value = { 0, };
+	char *string;
+	int x, y;
+
+	/* General */
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_TITLE, &value);
+	bacon_video_widget_properties_set_label (props, "title",
+			g_value_get_string (&value)
+			? g_value_get_string (&value)
+			: _("Unknown"));
+	g_value_unset (&value);
+
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_ARTIST, &value);
+	bacon_video_widget_properties_set_label (props, "artist",
+			g_value_get_string (&value)
+			? g_value_get_string (&value) : _("Unknown"));
+	g_value_unset (&value);
+
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_YEAR, &value);
+	bacon_video_widget_properties_set_label (props, "year",
+			g_value_get_string (&value)
+			? g_value_get_string (&value) : _("Unknown"));
+	g_value_unset (&value);
+
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_DURATION, &value);
+	string = bacon_video_widget_properties_time_to_string
+		(g_value_get_int (&value));
+	bacon_video_widget_properties_set_label (props, "duration", string);
+	g_free (string);
+	g_value_unset (&value);
+
+	/* Video */
+	item = glade_xml_get_widget (props->xml, "video");
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_HAS_VIDEO, &value);
+	if (g_value_get_boolean (&value) == FALSE)
+		gtk_widget_set_sensitive (item, FALSE);
+	else
+		gtk_widget_set_sensitive (item, TRUE);
+	g_value_unset (&value);
+
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_DIMENSION_X, &value);
+	x = g_value_get_int (&value);
+	g_value_unset (&value);
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_DIMENSION_Y, &value);
+	y = g_value_get_int (&value);
+	g_value_unset (&value);
+	string = g_strdup_printf ("%d x %d", x, y);
+	bacon_video_widget_properties_set_label (props, "dimensions", string);
+	g_free (string);
+
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_VIDEO_CODEC, &value);
+	bacon_video_widget_properties_set_label (props, "vcodec",
+			g_value_get_string (&value)
+			? g_value_get_string (&value) : _("N/A"));
+	g_value_unset (&value);
+
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_FPS, &value);
+	string = g_strdup_printf (_("%d frames per second"),
+			g_value_get_int (&value));
+	bacon_video_widget_properties_set_label (props, "framerate", string);
+	g_free (string);
+	g_value_unset (&value);
+
+	/* Audio */
+	item = glade_xml_get_widget (props->xml, "audio");
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_HAS_AUDIO, &value);
+	if (g_value_get_boolean (&value) == FALSE)
+		gtk_widget_set_sensitive (item, FALSE);
+	else
+		gtk_widget_set_sensitive (item, TRUE);
+	g_value_unset (&value);
+
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_BITRATE, &value);
+	string = g_strdup_printf (_("%d kbps"), g_value_get_int (&value));
+	bacon_video_widget_properties_set_label (props, "bitrate", string);
+	g_free (string);
+	g_value_unset (&value);
+
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_AUDIO_CODEC, &value);
+	bacon_video_widget_properties_set_label (props, "acodec",
+			g_value_get_string (&value)
+			? g_value_get_string (&value) : _("N/A"));
+	g_value_unset (&value);
+}
+
+static void
+bacon_video_widget_properties_update (TotemPropertiesPage *props,
+		BaconVideoWidget *bvw,
+		gboolean reset)
+{
+	g_return_if_fail (props != NULL);
+	g_return_if_fail ( (props));
+
+	if (reset == TRUE)
+	{
+		bacon_video_widget_properties_reset (props);
+	} else {
+		g_return_if_fail (bvw != NULL);
+		bacon_video_widget_properties_set_from_current (props, bvw);
+	}
+}
+
+static void
+on_got_metadata_event (BaconVideoWidget *bvw, TotemPropertiesPage *props)
+{
+	bacon_video_widget_properties_update
+		(props, props->bvw, FALSE);
+}
+
+static void
+totem_properties_page_init(TotemPropertiesPage *props)
 {
 	GtkWidget *vbox;
 	BonoboPropertyBag *pb;
 	GError *err = NULL;
 	char *filename;
 
-	self->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new
+	props->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new
 			(-1, -1, TRUE, &err));
 	//FIXME
 
+	g_signal_connect (G_OBJECT (props->bvw),
+			"got-metadata",
+			G_CALLBACK (on_got_metadata_event),
+			props);
+
 	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
 			"totem", "properties.glade", NULL);
-	self->xml = glade_xml_new (filename, "vbox1", NULL);
+	props->xml = glade_xml_new (filename, "vbox1", NULL);
 	g_free (filename);
 
-	if (self->xml == NULL)
+	if (props->xml == NULL)
 		return;
 
-	vbox = glade_xml_get_widget (self->xml, "vbox1");
+	vbox = glade_xml_get_widget (props->xml, "vbox1");
 	gtk_widget_show (vbox);
 
-	bonobo_control_construct (BONOBO_CONTROL (self), vbox);
+	bonobo_control_construct (BONOBO_CONTROL (props), vbox);
 
 	pb = bonobo_property_bag_new (
 			(BonoboPropertyGetFn) get_property,
-			(BonoboPropertySetFn) set_property, self);
+			(BonoboPropertySetFn) set_property, props);
 	bonobo_property_bag_add (pb, "URI", PROP_URI, BONOBO_ARG_STRING,
 			NULL, _("URI currently displayed"), 0);
-	bonobo_control_set_properties (BONOBO_CONTROL (self),
+	bonobo_control_set_properties (BONOBO_CONTROL (props),
 			BONOBO_OBJREF (pb), NULL);
 	bonobo_object_release_unref (BONOBO_OBJREF (pb), NULL);
 }
@@ -139,96 +350,16 @@ totem_properties_page_init(TotemPropertiesPage *self)
 static void
 totem_properties_page_finalize (GObject *object)
 {
-	TotemPropertiesPage *self;
+	TotemPropertiesPage *props;
 
-	self = NAUTILUS_RPM_PROPERTIES_PAGE (object);
+	props = TOTEM_PROPERTIES_PAGE (object);
 
-	g_free(self->location);
-	self->location = NULL;
-	g_object_unref (G_OBJECT (self->xml));
-	self->xml = NULL;
+	g_free(props->location);
+	props->location = NULL;
+	g_object_unref (G_OBJECT (props->xml));
+	props->xml = NULL;
 
 	parent_class->finalize(object);
-}
-
-static void
-load_location (TotemPropertiesPage *self,
-	       const char *location)
-{
-#if 0
-	gchar *filename = NULL;
-	GtkTextIter start, end;
-	rpmdb db = NULL;
-	rpmdbMatchIterator mi = NULL;
-	Header header;
-	gchar *value, *version, *release, *description;
-	gint32 *intval;
-	gint i;
-
-	g_assert (NAUTILUS_IS_RPM_PROPERTIES_PAGE (self));
-	g_assert (location != NULL);
-
-	/* clear out any existing info */
-	gtk_label_set_text(GTK_LABEL(self->pkg_name), _("<none>"));
-	gtk_label_set_text(GTK_LABEL(self->pkg_version), "");
-	gtk_label_set_text(GTK_LABEL(self->pkg_group), "");
-	gtk_label_set_text(GTK_LABEL(self->pkg_installdate), "");
-	gtk_text_buffer_get_bounds(self->pkg_description, &start, &end);
-	gtk_text_buffer_delete(self->pkg_description, &start, &end);
-
-	filename = gnome_vfs_get_local_path_from_uri(location);
-	if (rpmdbOpen(NULL, &db, O_RDONLY, 0644)) goto end;
-
-	mi = rpmdbInitIterator(db, RPMTAG_BASENAMES, filename, 0);
-	if (!mi) goto end;
-
-	header = rpmdbNextIterator(mi);
-	if (!header) goto end;
-
-	/* we now have the header structure for the first package
-	 * owning this file */
-	rpmHeaderGetEntry(header, RPMTAG_NAME, NULL, (void **)&value, NULL);
-	gtk_label_set_text(GTK_LABEL(self->pkg_name), value);
-
-	rpmHeaderGetEntry(header, RPMTAG_VERSION, NULL, (void **)&version, NULL);
-	rpmHeaderGetEntry(header, RPMTAG_RELEASE, NULL, (void **)&release, NULL);
-	value = g_strconcat(version, "-", release, NULL);
-	gtk_label_set_text(GTK_LABEL(self->pkg_version), value);
-	g_free(value);
-
-	rpmHeaderGetEntry(header, RPMTAG_GROUP, NULL, (void **)&value, NULL);
-	g_strchomp(value);
-	gtk_label_set_text(GTK_LABEL(self->pkg_group), value);
-
-	rpmHeaderGetEntry(header, RPMTAG_INSTALLTIME, NULL, (void **)&intval,NULL);
-	if (intval) {
-		gchar buf[100];
-		time_t tm = *intval;
-
-		strftime(buf, sizeof(buf), "%a %b %d %I:%M:%S %Z %Y", localtime(&tm));
-		gtk_label_set_label(GTK_LABEL(self->pkg_installdate), buf);
-	}
-
-	rpmHeaderGetEntry(header, RPMTAG_DESCRIPTION, NULL, (void **)&value, NULL);
-	description = g_strdup(value);
-	for (i = 0; description[i] != '\0'; i++) {
-		gboolean rewrap = (description[i] != ' ');
-
-		while (description[i] != '\n' && description[i] != '\0') i++;
-		if (description[i] == '\n') {
-			if (rewrap && description[i+1] != '\n')
-				description[i] = ' ';
-		}
-		i++;
-	}
-	gtk_text_buffer_set_text(self->pkg_description, description, -1);
-	g_free(description);
-
-end:
-	if (mi) rpmdbFreeIterator(mi);
-	rpmdbClose(db);
-	g_free(filename);
-#endif
 }
 
 static void
@@ -236,10 +367,10 @@ get_property(BonoboPropertyBag *bag,
 	     BonoboArg         *arg,
 	     guint              arg_id,
 	     CORBA_Environment *ev,
-	     TotemPropertiesPage *self)
+	     TotemPropertiesPage *props)
 {
 	if (arg_id == PROP_URI) {
-		BONOBO_ARG_SET_STRING(arg, self->location);
+		BONOBO_ARG_SET_STRING(arg, props->location);
 	}
 }
 
@@ -248,13 +379,14 @@ set_property(BonoboPropertyBag *bag,
 	     const BonoboArg   *arg,
 	     guint              arg_id,
 	     CORBA_Environment *ev,
-	     TotemPropertiesPage *self)
+	     TotemPropertiesPage *props)
 {
 	if (arg_id == PROP_URI) {
-		g_free(self->location);
-		self->location = g_strdup(BONOBO_ARG_GET_STRING(arg));
-
-		load_location(self, self->location);
+		g_free(props->location);
+		bacon_video_widget_close (props->bvw);
+		props->location = g_strdup(BONOBO_ARG_GET_STRING(arg));
+		//FIXME reset
+		bacon_video_widget_open (props->bvw, props->location, NULL);
 	}
 }
 
@@ -279,7 +411,7 @@ main(int argc, char *argv[])
 			VERSION, &argc, argv);
 
 	return bonobo_generic_factory_main
-		("OAFIID:Nautilus_Rpm_PropertiesPage_Factory",
+		("OAFIID:Totem_PropertiesPage_Factory",
 		 view_factory, NULL);
 }
 

@@ -1386,6 +1386,9 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 		uint32_t fourcc;
 		char *fourcc_str, *name;
 
+		g_signal_emit (G_OBJECT (bvw),
+				bvw_table_signals[GOT_METADATA], 0, NULL);
+
 		fourcc = xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_VIDEO_FOURCC);
 		fourcc_str = get_fourcc_string (fourcc);
@@ -1408,6 +1411,9 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 				XINE_STREAM_INFO_HAS_VIDEO) == FALSE
 		&& bvw->priv->ao_driver == NULL)
 	{
+		g_signal_emit (G_OBJECT (bvw),
+				bvw_table_signals[GOT_METADATA], 0, NULL);
+
 		bacon_video_widget_close (bvw);
 
 		g_set_error (gerror, 0, 0,

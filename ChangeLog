@@ -1,5 +1,19 @@
 2003-05-11  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_open): emit the
+	got-metadata signal before we close the file, if there are errors
+	* src/totem-properties-page.c:
+	(bacon_video_widget_properties_time_to_string),
+	(bacon_video_widget_properties_set_label),
+	(bacon_video_widget_properties_reset),
+	(bacon_video_widget_properties_set_from_current),
+	(bacon_video_widget_properties_update), (on_got_metadata_event),
+	(totem_properties_page_init), (totem_properties_page_finalize),
+	(get_property), (set_property), (main): implement the properties
+	loading and display (have it!)
+
+2003-05-11  Bastien Nocera  <hadess@hadess.net>
+
 	* README: upd
 	* src/gtk-playlist.c: (my_gnome_vfs_get_mime_type_with_data),
 	(gtk_playlist_add_asf_playlist), (gtk_playlist_add_asf):
