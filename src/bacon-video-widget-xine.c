@@ -71,6 +71,7 @@ enum {
 	PROGRESS,
 	TITLE_CHANGE_ASYNC,
 	EOS_ASYNC,
+	CHANNEL_CHANGE_ASYNC
 };
 
 typedef struct {
@@ -312,6 +313,16 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 				NULL, NULL,
 				g_cclosure_marshal_VOID__STRING,
 				G_TYPE_NONE, 1, G_TYPE_STRING);
+
+	bvw_table_signals[TITLE_CHANGE] =
+		g_signal_new ("channels-change",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (BaconVideoWidgetClass, channels_change),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__VOID,
+				G_TYPE_NONE, 0);
+
 	bvw_table_signals[TICK] =
 		g_signal_new ("tick",
 				G_TYPE_FROM_CLASS (object_class),
@@ -978,6 +989,15 @@ xine_event (void *user_data, const xine_event_t *event)
 		data->signal = EOS_ASYNC;
 		g_async_queue_push (bvw->priv->queue, data);
 		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
+		break;
+		//FIXME
+	case XINE_EVENT_UI_CHANNELS_CHANGED:
+#if 0
+		data = g_new0 (signal_data, 1);
+		data->signal = EOS_ASYNC;
+		g_async_queue_push (bvw->priv->queue, data);
+		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
+#endif
 		break;
 	case XINE_EVENT_UI_SET_TITLE:
 		ui_data = event->data;
@@ -2068,17 +2088,23 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget *bvw,
 		g_assert_not_reached ();
 	}
 
-	xine_config_lookup_entry (bvw->priv->xine, "post.goom_fps", &entry);
-	entry.num_value = fps;
-	xine_config_update_entry (bvw->priv->xine, &entry);
+	if (xine_config_lookup_entry (bvw->priv->xine, "post.goom_fps", &entry))
+	{
+		entry.num_value = fps;
+		xine_config_update_entry (bvw->priv->xine, &entry);
+	}
 
-	xine_config_lookup_entry (bvw->priv->xine, "post.goom_width", &entry);
-	entry.num_value = w;
-	xine_config_update_entry (bvw->priv->xine, &entry);
+	if (xine_config_lookup_entry (bvw->priv->xine, "post.goom_width", &entry))
+	{
+		entry.num_value = w;
+		xine_config_update_entry (bvw->priv->xine, &entry);
+	}
 
-	xine_config_lookup_entry (bvw->priv->xine, "post.goom_height", &entry);
-	entry.num_value = h;
-	xine_config_update_entry (bvw->priv->xine, &entry);
+	if (xine_config_lookup_entry (bvw->priv->xine, "post.goom_height", &entry))
+	{
+		entry.num_value = h;
+		xine_config_update_entry (bvw->priv->xine, &entry);
+	}
 }
 
 void

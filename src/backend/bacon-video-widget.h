@@ -81,6 +81,7 @@ typedef struct {
 	void (*eos) (GtkWidget *bvw);
 	void (*got_metadata) (GtkWidget *bvw);
 	void (*title_change) (GtkWidget *bvw, const char *title);
+	void (*channels_change) (GtkWidget *bvw);
 	void (*tick) (GtkWidget *bvw, int current_time, int stream_length,
 			int current_position);
 } BaconVideoWidgetClass;
