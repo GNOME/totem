@@ -46,6 +46,9 @@
 #include "gtk-xine.h"
 #include "gtkxine-marshal.h"
 
+#define DEFAULT_HEIGHT 420
+#define DEFAULT_WIDTH 315
+
 #define BLACK_PIXEL \
 	BlackPixel ((gtx->priv->display ? gtx->priv->display : gdk_display), \
 			gtx->priv->screen)
@@ -86,19 +89,24 @@ enum {
 };
 
 struct GtkXinePrivate {
+	/* Xine stuff */
 	xine_t *xine;
 	config_values_t *config;
 	vo_driver_t *vo_driver;
 	ao_driver_t *ao_driver;
+
+	/* X stuff */
 	Display *display;
 	int screen;
 	Window video_window;
 	GC gc;
+
+	/* Other stuff */
 	pthread_t thread;
 	int completion_event;
 	int mixer;
-
 	int xpos, ypos;
+	gboolean init_finished;
 
 	GAsyncQueue *queue;
 
@@ -245,8 +253,8 @@ static void
 gtk_xine_instance_init (GtkXine * gtx)
 {
 	/* Set the default size to be a 4:3 ratio */
-	gtx->widget.requisition.width = 420;
-	gtx->widget.requisition.height = 315;
+	gtx->widget.requisition.width = DEFAULT_HEIGHT;
+	gtx->widget.requisition.height = DEFAULT_WIDTH;
 
 	gtx->priv = g_new0 (GtkXinePrivate, 1);
 	gtx->priv->config = NULL;
@@ -256,6 +264,7 @@ gtk_xine_instance_init (GtkXine * gtx)
 	gtx->priv->display = NULL;
 	gtx->priv->fullscreen_mode = FALSE;
 	gtx->priv->mixer = -1;
+	gtx->priv->init_finished = FALSE;
 	gtx->priv->cursor_shown = TRUE;
 
 	gtx->priv->queue = g_async_queue_new ();
@@ -425,6 +434,8 @@ xine_thread (void *gtx_gen)
 {
 	GtkXine *gtx = (GtkXine *) gtx_gen;
 
+	gtx->priv->init_finished = TRUE;
+
 	while (1) {
 		XEvent event;
 
@@ -520,7 +531,7 @@ gtk_xine_realize (GtkWidget * widget)
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[ERROR], 0,
 				0,
-				_("Could not initialise the threads support\n"
+				_("Could not initialise the threads support.\n"
 				"You should install a thread-safe Xlib."));
 		return;
 	}
@@ -531,8 +542,7 @@ gtk_xine_realize (GtkWidget * widget)
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[ERROR], 0,
 				GTX_STARTUP,
-				_("Failed to open the display\n"));
-//FIXME					XOpenDisplay failed"));
+				_("Failed to open the display."));
 		return;
 	}
 
@@ -565,7 +575,7 @@ gtk_xine_realize (GtkWidget * widget)
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[ERROR], 0,
 				GTX_STARTUP,
-				_("couldn't open video driver"));
+				_("Could not find a suitable video output."));
 		return;
 	}
 
@@ -753,9 +763,25 @@ gtk_xine_unrealize (GtkWidget * widget)
 }
 
 GtkWidget *
-gtk_xine_new (void)
+gtk_xine_new (int width, int height)
 {
-	return GTK_WIDGET (gtk_type_new (gtk_xine_get_type ()));
+	GtkWidget *gtx;
+
+	gtx = GTK_WIDGET (gtk_type_new (gtk_xine_get_type ()));
+
+	/* defaults are fine if both are negative */
+	if (width <= 0 && height <= 0)
+		return gtx;
+	/* figure out the missing measure from the other one with a 4:3 ratio */
+	if (width <= 0)
+		width = (int) (height * 4 / 3);
+	if (height <= 0)
+		height = (int) (width * 3 / 4);
+
+	GTK_XINE (gtx)->widget.requisition.width = width;
+	GTK_XINE (gtx)->widget.requisition.height = height;
+
+	return gtx;
 }
 
 gboolean
@@ -764,7 +790,10 @@ gtk_xine_check (GtkXine *gtx)
 	g_return_val_if_fail (gtx != NULL, FALSE);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), FALSE);
 
-	return (gtx->priv->xine != NULL);
+	if (gtx->priv->xine == NULL)
+		return FALSE;
+
+	return gtx->priv->init_finished;
 }
 
 static gint

@@ -57,7 +57,7 @@ typedef struct {
 } GtkXineClass;
 
 GtkType gtk_xine_get_type              (void);
-GtkWidget *gtk_xine_new                (void);
+GtkWidget *gtk_xine_new                (int width, int height);
 gboolean  gtk_xine_check               (GtkXine *gtx);
 
 /* Actions */

@@ -82,12 +82,19 @@ static char
 }
 
 static void
-action_error (char * msg)
+long_action (void)
+{
+	while (gtk_events_pending ())
+		gtk_main_iteration ();
+}
+
+static void
+action_error (char *msg, GtkWindow *parent)
 {
 	GtkWidget *error_dialog;
 
 	error_dialog =
-		gtk_message_dialog_new (NULL,
+		gtk_message_dialog_new (parent,
 				GTK_DIALOG_MODAL,
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK,
@@ -179,6 +186,8 @@ action_play (Totem *totem, int offset)
 
 	D("action_play");
 
+	g_return_if_fail (totem->mrl != NULL);
+
 	retval = gtk_xine_play (GTK_XINE (totem->gtx), totem->mrl, offset , 0);
 	play_pause_set_label (totem, retval);
 }
@@ -209,17 +218,12 @@ action_play_pause (Totem *totem)
 		} else {
 			action_set_mrl (totem, mrl);
 			g_free (mrl);
-			return;
 		}
 	}
 
 	if (!gtk_xine_is_playing(GTK_XINE(totem->gtx)))
 	{
-		if (gtk_xine_play (GTK_XINE(totem->gtx), totem->mrl, 0, 0)
-				== FALSE)
-		{
-			play_pause_set_label (totem, FALSE);
-		}
+		action_play (totem, 0);
 	} else {
 		if (gtk_xine_get_speed (GTK_XINE(totem->gtx)) == SPEED_PAUSE)
 		{
@@ -239,7 +243,6 @@ action_fullscreen_toggle (Totem *totem)
 	gboolean new_state;
 
 	new_state = !gtk_xine_is_fullscreen (GTK_XINE (totem->gtx));
-
 	gtk_xine_set_fullscreen (GTK_XINE (totem->gtx), new_state);
 }
 
@@ -503,6 +506,9 @@ update_sliders_cb (gpointer user_data)
 	Totem *totem = (Totem *) user_data;
 	gfloat pos;
 
+	if (totem->gtx == NULL)
+		return TRUE;
+
 	if (totem->seek_lock == FALSE)
 	{
 		totem->seek_lock = TRUE;
@@ -565,12 +571,24 @@ action_open_files (Totem *totem, char **list, gboolean ignore_first)
 		{
 			if (cleared == FALSE)
 			{
+				/* The function that calls us knows better
+				 * if we should be doing something with the 
+				 * changed playlist ... */
+				g_signal_handlers_disconnect_by_func
+					(G_OBJECT (totem->playlist),
+					 playlist_changed_cb, (gpointer) totem);
 				gtk_playlist_clear (totem->playlist);
 				cleared = TRUE;
 			}
 			gtk_playlist_add_mrl (totem->playlist, list[i]);
 		}
 	}
+
+	/* ... and reconnect because we're nice people */
+	if (cleared == TRUE)
+		g_signal_connect (G_OBJECT (totem->playlist),
+				"changed", G_CALLBACK (playlist_changed_cb),
+				(gpointer) totem);
 }
 
 
@@ -833,21 +851,40 @@ on_error_event (GtkWidget *gtx, GtkXineError error, const char *message,
 		gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
+	char *msg;
+	gboolean crap_out = FALSE;
 
 	D("play_error");
 
-	if (!gtk_playlist_has_next_mrl (totem->playlist))
-	{
-		char *msg;
-
-		//FIXME
-		msg = g_strdup_printf("Error: %s %d", message, error);
-		action_error (msg);
-		g_free (msg);
-		gtk_playlist_set_playing (totem->playlist, FALSE);
-	} else {
+	if (gtk_playlist_has_next_mrl (totem->playlist))
 		action_next (totem);
+
+	switch (error)
+	{
+	case GTX_STARTUP:
+		msg = g_strdup_printf (_("Totem could not startup:\n%s"), message);
+		crap_out = TRUE;
+		break;
+	case GTX_NO_INPUT_PLUGIN:
+	case GTX_NO_DEMUXER_PLUGIN:
+		msg = g_strdup_printf (_("There is no plugin for Totem to handle '%s'\nTotem will not be able to play it."), totem->mrl);
+		break;
+	case GTX_DEMUXER_FAILED:
+		msg = g_strdup_printf (_("'%s' is broken, and Totem can not play it further."), totem->mrl);
+		break;
+	case GTX_NO_CODEC:
+		msg = g_strdup_printf(_("Totem could not play '%s':\n%s"), totem->mrl, message);
+		break;
+	default:
+		g_assert_not_reached ();
 	}
+
+	action_error (msg, GTK_WINDOW (totem->win));
+	g_free (msg);
+	gtk_playlist_set_playing (totem->playlist, FALSE);
+
+	if (crap_out == TRUE)
+		action_exit (totem);
 }
 
 static int
@@ -1034,8 +1071,7 @@ video_widget_create (Totem *totem)
 {
 	GtkWidget *container;
 
-	totem->gtx = gtk_xine_new();
-	//FIXME use gtk_xine_check();
+	totem->gtx = gtk_xine_new(-1, -1);
 	container = glade_xml_get_widget (totem->xml, "frame2");
 	gtk_container_add (GTK_CONTAINER (container), totem->gtx);
 
@@ -1104,23 +1140,24 @@ main (int argc, char **argv)
 	totem->seek_lock = FALSE;
 	totem->vol_lock = FALSE;
 	totem->popup_timeout = 0;
+	totem->gtx = NULL;
 
 	filename = gnome_program_locate_file (NULL,
 			GNOME_FILE_DOMAIN_APP_DATADIR,
 			"totem/totem.glade", TRUE, NULL);
 	if (filename == NULL)
 	{
-		action_error (_("Couldn't load the main Glade file"
+		action_error (_("Couldn't load the main interface"
 					" (totem.glade).\nMake sure that Totem"
-					" is properly installed."));
+					" is properly installed."), NULL);
 		exit (1);
 	}
 	totem->xml = glade_xml_new (filename, NULL, NULL);
 	if (totem->xml == NULL)
 	{
-		action_error (_("Couldn't load the main Glade file"
+		action_error (_("Couldn't load the main interface"
 					" (totem.glade).\nMake sure that Totem"
-					" is properly installed."));
+					" is properly installed."), NULL);
 		exit (1);
 	}
 	g_free (filename);
@@ -1133,7 +1170,8 @@ main (int argc, char **argv)
 	{
 		action_error (_("Couldn't load the interface for the playlist."
 					"\nMake sure that Totem"
-					" is properly installed."));
+					" is properly installed."),
+				GTK_WINDOW (totem->win));
 		exit (1);
 	}
 
@@ -1144,18 +1182,22 @@ main (int argc, char **argv)
 	totem->popup = glade_xml_get_widget (totem->xml, "window1");
 	totem_callback_connect (totem);
 
-	/* Show ! */
+	/* Show ! gtk_main_iteration trickery to show all the widgets
+	 * we have so far */
 	gtk_widget_show_all (totem->win);
+	long_action ();
 
+	/* Show ! (again) the video widget this time. */
 	video_widget_create (totem);
-	update_sliders_cb ((gpointer) totem);
-	while (gtk_events_pending ())
-		gtk_main_iteration ();
 
 	if (argc > 1)
 	{
+		/* Use gtk_xine_check to wait until xine has finished
+		 * initialising completely, otherwise this can turn up nasty */
+		while (gtk_xine_check (GTK_XINE (totem->gtx)) == FALSE)
+			usleep (100000);
 		action_open_files (totem, argv, TRUE);
-		action_play (totem, 0);
+		action_play_pause (totem);
 	}
 
 	gtk_main ();
