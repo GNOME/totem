@@ -140,7 +140,7 @@ cd_cache_new (const gchar *dev,
   }
   g_list_foreach (or, (GFunc) gnome_vfs_drive_unref, NULL);
   g_list_free (or);
-  gnome_vfs_volume_monitor_unref (mon);
+
   if (!mountpoint) {
     g_set_error (error, 0, 0,
         _("Failed to find mountpoint for device %s in /etc/fstab"),
