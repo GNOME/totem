@@ -56,7 +56,7 @@ PKG_CHECK_MODULES(VFS, gnome-vfs-2.0)
 AC_SUBST(VFS_CFLAGS)
 AC_SUBST(VFS_LIBS)
 
-AM_PATH_XINE(0.9.13,, AC_MSG_ERROR(*** You should install xine-lib >= 0.9.13 first ***))
+AM_PATH_XINE(0.9.14,, AC_MSG_ERROR(*** You should install xine-lib >= 0.9.14 first ***))
 
 AC_PATH_X
 XTEST_LIBS=""

@@ -53,6 +53,7 @@ totem_SOURCES = 			\
 totem_LDADD = $(EXTRA_GNOME_LIBS) $(XINE_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS)
 totem_LDFLAGS = -export-dynamic
 INCLUDES = 						\
+	-Wall						\
 	-D_REENTRANT -D_FILE_OFFSET_BITS=64		\
 	$(EXTRA_GNOME_CFLAGS)				\
 	$(XINE_CFLAGS)					\
@@ -72,5 +73,5 @@ lib_LTLIBRARIES = xineplug_inp_gnomevfs.la
 
 xineplug_inp_gnomevfs_la_SOURCES = input_gnomevfs.c
 xineplug_inp_gnomevfs_la_LIBADD = -lxine
-xineplug_inp_gnomevfs_la_LDFLAGS = -avoid-version -module -lxineutils $(VFS_LIBS)
+xineplug_inp_gnomevfs_la_LDFLAGS = -avoid-version -module $(VFS_LIBS)
 

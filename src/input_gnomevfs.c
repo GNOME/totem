@@ -62,9 +62,13 @@
 #endif
 
 typedef struct {
-	input_plugin_t input_plugin;
-
+	input_class_t input_class;
 	xine_t *xine;
+} gnomevfs_input_class_t;
+
+typedef struct {
+	input_plugin_t input_plugin;
+	xine_stream_t *stream;
 
 	/* File */
 	GnomeVFSHandle *fh;
@@ -77,11 +81,10 @@ typedef struct {
 	char preview[PREVIEW_SIZE];
 	off_t preview_size;
 	off_t preview_pos;
-} gnomevfs_input_plugin_t;
+} gnomevfs_input_t;
 
-static off_t gnomevfs_plugin_read (input_plugin_t *this_gen, char *buf,
-		off_t len);
 static off_t gnomevfs_plugin_get_current_pos (input_plugin_t *this_gen);
+
 
 static gboolean
 scheme_can_seek (GnomeVFSHandle *handle)
@@ -93,7 +96,7 @@ scheme_can_seek (GnomeVFSHandle *handle)
 static uint32_t
 gnomevfs_plugin_get_capabilities (input_plugin_t *this_gen)
 {
-	gnomevfs_input_plugin_t *this = (gnomevfs_input_plugin_t *) this_gen;
+	gnomevfs_input_t *this = (gnomevfs_input_t *) this_gen;
 
 	D("gnomevfs_plugin_get_capabilities: %s", this->mrl);
 
@@ -108,73 +111,10 @@ gnomevfs_plugin_get_capabilities (input_plugin_t *this_gen)
 	return INPUT_CAP_SEEKABLE | INPUT_CAP_SPULANG;
 }
 
-static int
-gnomevfs_plugin_open (input_plugin_t *this_gen, char *mrl)
-{
-	gnomevfs_input_plugin_t *this = (gnomevfs_input_plugin_t *) this_gen;
-	const char *subtitle_file;
-	char *subtitle_path, *subtitle;
-	GnomeVFSURI *uri;
-
-	D("gnomevfs_plugin_open: %s", mrl);
-
-	if (this->mrl)
-	{
-		g_free (this->mrl);
-		this->mrl = NULL;
-	}
-
-	this->mrl = g_strdup(mrl);
-
-	uri = gnome_vfs_uri_new (mrl);
-	if (uri == NULL)
-		return 0;
-
-	/* local files should be handled by the file input */
-	if (gnome_vfs_uri_is_local (uri) == TRUE)
-	{
-		gnome_vfs_uri_unref (uri);
-		return 0;
-	}
-
-	subtitle_file = gnome_vfs_uri_get_fragment_identifier (uri);
-	if (subtitle_file != NULL)
-	{
-		subtitle_path = gnome_vfs_uri_extract_dirname (uri);
-		subtitle = g_strdup_printf ("%s%s", subtitle_path,
-				subtitle_file);
-		g_free (subtitle_path);
-
-		LOG_MSG (this->xine,
-			_("input_file: trying to open subtitle file '%s'\n"),
-			subtitle);
-
-		if (gnome_vfs_open (&(this->sub), subtitle, GNOME_VFS_OPEN_READ)
-				!= GNOME_VFS_OK)
-			LOG_MSG (this->xine,
-					_("input_file: failed to open subtitle "
-						"file '%s'\n"),
-					subtitle);
-	} else {
-		this->sub = NULL;
-	}
-
-	if (gnome_vfs_open_uri (&(this->fh), uri, GNOME_VFS_OPEN_READ)
-			!= GNOME_VFS_OK)
-		return 0;
-
-	D("gnomevfs_plugin_open: filling up preview");
-	this->preview_size = gnomevfs_plugin_read (&this->input_plugin,
-			this->preview, PREVIEW_SIZE);
-	this->preview_pos  = 0;
-
-	return 1;
-}
-
 static off_t
 gnomevfs_plugin_read (input_plugin_t *this_gen, char *buf, off_t len)
 {
-	gnomevfs_input_plugin_t *this = (gnomevfs_input_plugin_t *) this_gen;
+	gnomevfs_input_t *this = (gnomevfs_input_t *) this_gen;
 	off_t n, num_bytes;
 
 	D("gnomevfs_plugin_read: %ld", (long int) len);
@@ -183,6 +123,7 @@ gnomevfs_plugin_read (input_plugin_t *this_gen, char *buf, off_t len)
 
 	while (num_bytes < len)
 	{
+#if 0
 		if (this->preview_pos < this->preview_size)
 		{
 			n = this->preview_size - this->preview_pos;
@@ -201,6 +142,8 @@ gnomevfs_plugin_read (input_plugin_t *this_gen, char *buf, off_t len)
 
 			D("gnomevfs_plugin_read: read from preview");
 		} else {
+#endif
+		{
 			GnomeVFSResult res;
 
 			res = gnome_vfs_read (this->fh, &buf[num_bytes],
@@ -220,8 +163,8 @@ gnomevfs_plugin_read (input_plugin_t *this_gen, char *buf, off_t len)
 
 		if (n <= 0)
 		{
-			xine_log (this->xine, XINE_LOG_MSG,
-					_("input_gnomevfs: read error\n"));
+//			xine_log (this->xine, XINE_LOG_MSG,
+//					_("input_gnomevfs: read error\n"));
 		}
 
 		num_bytes += n;
@@ -248,7 +191,7 @@ gnomevfs_plugin_read_block (input_plugin_t *this_gen, fifo_buffer_t *fifo,
 		off_t todo)
 {
 	off_t total_bytes;
-	gnomevfs_input_plugin_t *this = (gnomevfs_input_plugin_t *) this_gen;
+	gnomevfs_input_t *this = (gnomevfs_input_t *) this_gen;
 	buf_element_t *buf = fifo->buffer_pool_alloc (fifo);
 
 	pthread_setcancelstate (PTHREAD_CANCEL_ENABLE,NULL);
@@ -277,7 +220,7 @@ gnomevfs_plugin_read_block (input_plugin_t *this_gen, fifo_buffer_t *fifo,
 static off_t
 gnomevfs_plugin_seek (input_plugin_t *this_gen, off_t offset, int origin)
 {
-	gnomevfs_input_plugin_t *this = (gnomevfs_input_plugin_t *) this_gen;
+	gnomevfs_input_t *this = (gnomevfs_input_t *) this_gen;
 
 	if (gnome_vfs_seek (this->fh, origin, offset) == GNOME_VFS_OK)
 	{
@@ -290,7 +233,7 @@ gnomevfs_plugin_seek (input_plugin_t *this_gen, off_t offset, int origin)
 static off_t
 gnomevfs_plugin_get_current_pos (input_plugin_t *this_gen)
 {
-	gnomevfs_input_plugin_t *this = (gnomevfs_input_plugin_t *) this_gen;
+	gnomevfs_input_t *this = (gnomevfs_input_t *) this_gen;
 	GnomeVFSFileSize offset;
 
 	if (this->fh == NULL)
@@ -310,7 +253,7 @@ gnomevfs_plugin_get_current_pos (input_plugin_t *this_gen)
 static off_t
 gnomevfs_plugin_get_length (input_plugin_t *this_gen)
 {
-	gnomevfs_input_plugin_t *this = (gnomevfs_input_plugin_t *) this_gen;
+	gnomevfs_input_t *this = (gnomevfs_input_t *) this_gen;
 	GnomeVFSFileInfo info;
 
 	if (this->fh == NULL)
@@ -336,7 +279,7 @@ gnomevfs_plugin_get_blocksize (input_plugin_t *this_gen)
 }
 
 static int
-gnomevfs_plugin_eject_media (input_plugin_t *this_gen)
+gnomevfs_klass_eject_media (input_class_t *this_gen)
 {
 	return 1; /* doesn't make sense */
 }
@@ -344,15 +287,15 @@ gnomevfs_plugin_eject_media (input_plugin_t *this_gen)
 static char*
 gnomevfs_plugin_get_mrl (input_plugin_t *this_gen)
 {
-	gnomevfs_input_plugin_t *this = (gnomevfs_input_plugin_t *) this_gen;
+	gnomevfs_input_t *this = (gnomevfs_input_t *) this_gen;
 
 	return this->mrl;
 }
-
+#if 0
 static void
 gnomevfs_plugin_close (input_plugin_t *this_gen)
 {
-	gnomevfs_input_plugin_t *this = (gnomevfs_input_plugin_t *) this_gen;
+	gnomevfs_input_t *this = (gnomevfs_input_t *) this_gen;
 
 	if (this->fh)
 	{
@@ -372,15 +315,15 @@ gnomevfs_plugin_stop (input_plugin_t *this_gen)
 {
 	gnomevfs_plugin_close(this_gen);
 }
-
+#endif
 static char
-*gnomevfs_plugin_get_description (input_plugin_t *this_gen)
+*gnomevfs_klass_get_description (input_class_t *this_gen)
 {
 	return _("gnome-vfs input plugin as shipped with xine");
 }
 
 static char
-*gnomevfs_plugin_get_identifier (input_plugin_t *this_gen)
+*gnomevfs_klass_get_identifier (input_class_t *this_gen)
 {
 	return "gnomevfs";
 }
@@ -389,14 +332,14 @@ static int
 gnomevfs_plugin_get_optional_data (input_plugin_t *this_gen, 
 		void *data, int data_type)
 {
-	gnomevfs_input_plugin_t *this = (gnomevfs_input_plugin_t *) this_gen;
-
+	gnomevfs_input_t *this = (gnomevfs_input_t *) this_gen;
+#if 0
 #ifdef LOG
 	LOG_MSG (this->xine,
 		_("input_gnomevfs: get optional data, type %08x, sub %p\n"),
 		data_type, this->sub);
 #endif
-
+#endif
 	switch (data_type) {
 	case INPUT_OPTIONAL_DATA_TEXTSPU0:
 		if(this->sub)
@@ -428,67 +371,133 @@ gnomevfs_plugin_get_optional_data (input_plugin_t *this_gen,
 static void
 gnomevfs_plugin_dispose (input_plugin_t *this_gen )
 {
-	gnomevfs_input_plugin_t *this = (gnomevfs_input_plugin_t *) this_gen;
+	gnomevfs_input_t *this = (gnomevfs_input_t *) this_gen;
 
+	if (this->fh)
+		gnome_vfs_close (this->fh);
+	if (this->sub)
+		gnome_vfs_close (this->sub);
 	if (this->mrl)
 		g_free (this->mrl);
 
 	g_free (this);
 }
 
-input_plugin_t
-*init_input_plugin (int iface, xine_t *xine)
+static void
+gnomevfs_klass_dispose (input_class_t *this_gen)
 {
-	gnomevfs_input_plugin_t *this;
+	gnomevfs_input_class_t *this = (gnomevfs_input_class_t *) this_gen;
 
-	if (iface != 8)
+	g_free (this);
+}
+
+static input_plugin_t *
+gnomevfs_klass_open (input_class_t *klass_gen, xine_stream_t *stream,
+		const char *mrl)
+{
+	gnomevfs_input_class_t *klass = (gnomevfs_input_class_t *) klass_gen;
+	gnomevfs_input_t *this;
+	GnomeVFSHandle *fh, *sub;
+	const char *subtitle_file;
+	char *subtitle_path, *subtitle;
+	GnomeVFSURI *uri;
+
+	D("gnomevfs_klass_open: %s", mrl);
+
+	uri = gnome_vfs_uri_new (mrl);
+	if (uri == NULL)
+		return NULL;
+
+	/* local files should be handled by the file input */
+	if (gnome_vfs_uri_is_local (uri) == TRUE)
 	{
-		LOG_MSG(xine,
-			_("gnomevfs input plugin doesn't support plugin API "
-			"version %d.\nPLUGIN DISABLED.\n"
-			"This means there's a version mismatch between xine "
-			"and this input plugin.\n"
-			"Installing current input plugins should help.\n"),
-			iface);
-
+		gnome_vfs_uri_unref (uri);
 		return NULL;
 	}
+
+	subtitle_file = gnome_vfs_uri_get_fragment_identifier (uri);
+	if (subtitle_file != NULL)
+	{
+		subtitle_path = gnome_vfs_uri_extract_dirname (uri);
+		subtitle = g_strdup_printf ("%s%s", subtitle_path,
+				subtitle_file);
+		g_free (subtitle_path);
+
+		LOG_MSG (klass->xine,
+			_("input_file: trying to open subtitle file '%s'\n"),
+			subtitle);
+
+		if (gnome_vfs_open (&sub, subtitle, GNOME_VFS_OPEN_READ)
+				!= GNOME_VFS_OK)
+			LOG_MSG (klass->xine,
+					_("input_file: failed to open subtitle "
+						"file '%s'\n"),
+					subtitle);
+	} else {
+		sub = NULL;
+	}
+
+	if (gnome_vfs_open_uri (&fh, uri, GNOME_VFS_OPEN_READ)
+			!= GNOME_VFS_OK)
+	{
+		if (sub != NULL)
+			gnome_vfs_close (sub);
+		return NULL;
+	}
+
+	this = g_new0 (gnomevfs_input_t, 1);
+	this->stream = stream;
+	this->mrl = g_strdup (mrl);
+	this->sub = sub;
+
+	this->input_plugin.get_capabilities  = gnomevfs_plugin_get_capabilities;
+	this->input_plugin.read              = gnomevfs_plugin_read;
+	this->input_plugin.read_block        = gnomevfs_plugin_read_block;
+	this->input_plugin.seek              = gnomevfs_plugin_seek;
+	this->input_plugin.get_current_pos   = gnomevfs_plugin_get_current_pos;
+	this->input_plugin.get_length        = gnomevfs_plugin_get_length;
+	this->input_plugin.get_blocksize     = gnomevfs_plugin_get_blocksize;
+	this->input_plugin.get_mrl           = gnomevfs_plugin_get_mrl;
+	this->input_plugin.get_optional_data =
+		gnomevfs_plugin_get_optional_data;
+	this->input_plugin.dispose           = gnomevfs_plugin_dispose;
+	this->input_plugin.input_class       = klass_gen;
+
+	D("gnomevfs_klass_open: filling up preview");
+//	this->preview_size = gnomevfs_plugin_read (&this->input_class,
+//			this->preview, PREVIEW_SIZE);
+//	this->preview_pos  = 0;
+
+	return (input_plugin_t *) this;
+}
+
+static void
+*init_input_class (xine_t *xine, void *data)
+{
+	gnomevfs_input_class_t *this;
 
 	if (gnome_vfs_initialized () == FALSE)
 		gnome_vfs_init ();
 	if (!g_thread_supported ())
 		g_thread_init (NULL);
 
-	this = g_new0 (gnomevfs_input_plugin_t, 1);
+	this = g_new0 (gnomevfs_input_class_t, 1);
 	this->xine = xine;
 
-	this->input_plugin.interface_version  = INPUT_PLUGIN_IFACE_VERSION;
-	this->input_plugin.get_capabilities   =
-		gnomevfs_plugin_get_capabilities;
-	this->input_plugin.open               = gnomevfs_plugin_open;
-	this->input_plugin.read               = gnomevfs_plugin_read;
-	this->input_plugin.read_block         = gnomevfs_plugin_read_block;
-	this->input_plugin.seek               = gnomevfs_plugin_seek;
-	this->input_plugin.get_current_pos    = gnomevfs_plugin_get_current_pos;
-	this->input_plugin.get_length         = gnomevfs_plugin_get_length;
-	this->input_plugin.get_blocksize      = gnomevfs_plugin_get_blocksize;
-	this->input_plugin.get_dir            = NULL;
-	this->input_plugin.eject_media        = gnomevfs_plugin_eject_media;
-	this->input_plugin.get_mrl            = gnomevfs_plugin_get_mrl;
-	this->input_plugin.close              = gnomevfs_plugin_close;
-	this->input_plugin.stop               = gnomevfs_plugin_stop;
-	this->input_plugin.get_description    = gnomevfs_plugin_get_description;
-	this->input_plugin.get_identifier     = gnomevfs_plugin_get_identifier;
-	this->input_plugin.get_autoplay_list  = NULL;
-	this->input_plugin.get_optional_data  =
-		gnomevfs_plugin_get_optional_data;
-	this->input_plugin.dispose            = gnomevfs_plugin_dispose;
-	this->input_plugin.is_branch_possible = NULL;
+	this->input_class.open_plugin        = gnomevfs_klass_open;
+	this->input_class.get_identifier     = gnomevfs_klass_get_identifier;
+	this->input_class.get_description    = gnomevfs_klass_get_description;
+	this->input_class.get_dir            = NULL;
+	this->input_class.get_autoplay_list  = NULL;
+	this->input_class.dispose            = gnomevfs_klass_dispose;
+	this->input_class.eject_media        = gnomevfs_klass_eject_media;
 
-	this->fh                     = NULL;
-	this->sub                    = NULL;
-	this->mrl                    = NULL;
- 
-	return (input_plugin_t *) this;
+	return (input_class_t *) this;
 }
+
+plugin_info_t xine_plugin_info[] = {
+	{ PLUGIN_INPUT, 9, "gnomevfs", XINE_VERSION_CODE, NULL,
+		init_input_class },
+	{ PLUGIN_NONE, 0, "", 0, NULL, NULL }
+};
 
