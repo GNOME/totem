@@ -1,3 +1,11 @@
+2003-03-17  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget.c: (show_vfx_update),
+	(bacon_video_widget_open), (bacon_video_widget_set_show_visuals):
+	some work towards fixing #108595, the problem is that the xine
+	engine hangs if we rewire the audio outputs while it's playing,
+	disabled for now
+
 2003-03-16  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-message-connection.c: (bacon_message_connection_new):

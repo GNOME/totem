@@ -1147,6 +1147,49 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 	return TRUE;
 }
 
+static void
+show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals)
+{
+	xine_post_out_t *audio_source;
+	gboolean has_video;
+
+	has_video = xine_get_stream_info(bvw->priv->stream,
+			XINE_STREAM_INFO_HAS_VIDEO);
+
+g_message ("show_vfx_update: show_visuals: %d has_video: %d",
+		show_visuals, has_video);
+
+	if (has_video == TRUE && show_visuals == TRUE)
+	{
+		g_message ("has_video == TRUE && show_visuals == TRUE");
+		audio_source = xine_get_audio_source (bvw->priv->stream);
+		g_message ("audio_source: %p", audio_source);
+		if (xine_post_wire_audio_port (audio_source,
+					bvw->priv->ao_driver))
+		{
+			g_message ("bvw->priv->using_vfx = FALSE");
+			bvw->priv->using_vfx = FALSE;
+		}
+	} else if (has_video == FALSE && show_visuals == TRUE
+			&& bvw->priv->using_vfx == FALSE
+			&& bvw->priv->vis != NULL)
+	{
+		g_message ("has_video == FALSE && show_visuals == TRUE and more");
+		audio_source = xine_get_audio_source (bvw->priv->stream);
+		g_message ("audio_source: %p", audio_source);
+		if (xine_post_wire_audio_port (audio_source,
+					bvw->priv->vis->audio_input[0]))
+		{
+			g_message ("bvw->priv->vis->audio_input[0]");
+			bvw->priv->using_vfx = TRUE;
+		}
+	} else if (has_video == FALSE && show_visuals == FALSE) {
+		g_message ("has_video == FALSE && show_visuals == FALSE");
+		audio_source = xine_get_audio_source (bvw->priv->stream);
+		xine_post_wire_audio_port (audio_source, bvw->priv->ao_driver);
+	}
+}
+
 static char *
 get_fourcc_string (uint32_t f)
 {
@@ -1179,7 +1222,6 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 {
 	int error;
 	gboolean has_video;
-	xine_post_out_t *audio_source;
 
 	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (mrl != NULL, FALSE);
@@ -1225,24 +1267,7 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 		return FALSE;
 	}
 
-	has_video = xine_get_stream_info(bvw->priv->stream,
-			XINE_STREAM_INFO_HAS_VIDEO);
-
-	if (has_video == TRUE && bvw->priv->using_vfx == TRUE)
-	{
-		audio_source = xine_get_audio_source (bvw->priv->stream);
-		if (xine_post_wire_audio_port (audio_source,
-					bvw->priv->ao_driver))
-			bvw->priv->using_vfx = FALSE;
-	} else if (has_video == FALSE && bvw->priv->show_vfx == TRUE
-			&& bvw->priv->using_vfx == FALSE
-			&& bvw->priv->vis != NULL)
-	{
-		audio_source = xine_get_audio_source (bvw->priv->stream);
-		if (xine_post_wire_audio_port (audio_source,
-					bvw->priv->vis->audio_input[0]))
-			bvw->priv->using_vfx = TRUE;
-	}
+	show_vfx_update (bvw, bvw->priv->show_vfx);
 
 	return TRUE;
 }
@@ -1700,6 +1725,7 @@ bacon_video_widget_set_show_visuals (BaconVideoWidget *bvw,
 	g_return_if_fail (bvw->priv->xine != NULL);
 
 	bvw->priv->show_vfx = show_visuals;
+//FIXME	show_vfx_update (bvw, show_visuals);
 }
 
 void
