@@ -28,6 +28,15 @@ AC_CHECK_LIB(Xtst, XTestFakeKeyEvent,
 AC_SUBST(XTEST_LIBS)
 
 
+AC_CHECK_HEADER(irman.h,,)
+
+IRMAN_LIBS=""
+AC_CHECK_LIB(irman, ir_init,
+		AC_CHECK_HEADER(irman.h,IRMAN_LIBS="-lirman"
+		AC_DEFINE(HAVE_IRMAN),,),)
+AC_SUBST(IRMAN_LIBS)
+
+
 AC_MSG_CHECKING(for broken old architecture)
 if test "`uname -m`x" = "i686x" ; then
 	AC_MSG_RESULT(h0rk3d)

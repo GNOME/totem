@@ -33,6 +33,9 @@ regenerate-built-sources:
 
 totem_SOURCES = 			\
 	totem.c				\
+	totem.h				\
+	totem-irman.c			\
+	totem-irman.h			\
 	gtkxine-marshal.list		\
 	$(MARSHALFILES)			\
 	gtk-xine.c gtk-xine.h		\
@@ -41,10 +44,11 @@ totem_SOURCES = 			\
 	rb-ellipsizing-label.h		\
 	scrsaver.c  scrsaver.h		\
 	video-utils.c video-utils.h	\
+	yuv2rgb.c yuv2rgb.h		\
         debug.h                         \
         $(EGG_RECENT_FILES)
 
-totem_LDADD = $(EXTRA_GNOME_LIBS) $(XINE_LIBS) $(XTEST_LIBS)
+totem_LDADD = $(EXTRA_GNOME_LIBS) $(XINE_LIBS) $(XTEST_LIBS) $(IRMAN_LIBS)
 totem_LDFLAGS = -export-dynamic
 INCLUDES = 						\
 	$(EXTRA_GNOME_CFLAGS)				\
