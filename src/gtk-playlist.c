@@ -166,7 +166,7 @@ drop_cb (GtkWidget     *widget,
 		char *filename;
 
 		filename = gnome_vfs_get_local_path_from_uri (p->data);
-		D("dropped filename: %s", filename);
+
 		if (filename != NULL &&
 				(g_file_test (filename, G_FILE_TEST_IS_REGULAR
 					| G_FILE_TEST_EXISTS)

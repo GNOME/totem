@@ -1484,9 +1484,9 @@ gtk_xine_ratio_fits_screen (GtkXine *gtx, gfloat ratio)
 {
 	int new_w, new_h;
 
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
-	g_return_if_fail (gtx->priv->xine != NULL);
+	g_return_val_if_fail (gtx != NULL, FALSE);
+	g_return_val_if_fail (GTK_IS_XINE (gtx), FALSE);
+	g_return_val_if_fail (gtx->priv->xine != NULL, FALSE);
 
 	new_w = gtx->priv->video_width * ratio;
 	new_h = gtx->priv->video_height * ratio;

@@ -6,6 +6,7 @@
 #include <gconf/gconf-client.h>
 #include <string.h>
 
+#include "gtk-message.h"
 #include "gtk-xine.h"
 #include "gtk-playlist.h"
 #include "rb-ellipsizing-label.h"
@@ -289,7 +290,6 @@ totem_action_play_pause (Totem *totem)
 void
 totem_action_fullscreen_toggle (Totem *totem)
 {
-	GtkWidget *widget;
 	gboolean new_state;
 
 	new_state = !gtk_xine_is_fullscreen (GTK_XINE (totem->gtx));
@@ -476,7 +476,6 @@ drop_cb (GtkWidget     *widget,
 	Totem *totem = (Totem *)user_data;
 	GList *list, *p, *file_list;
 	gboolean cleared = FALSE;
-	int i;
 
 	list = gnome_vfs_uri_list_parse (data->data);
 
@@ -507,10 +506,12 @@ drop_cb (GtkWidget     *widget,
 
 	for (p = file_list; p != NULL; p = p->next)
 	{
-		char *tmp, *filename;
+		char *filename;
 
+		/* We can't use g_filename_from_uri, as we don't know if
+		 * the uri is in locale or UTF8 encoding */
 		filename = gnome_vfs_get_local_path_from_uri (p->data);
-		D("dropped URI: %s filename: %s", p->data, filename);
+
 		if (filename != NULL && 
 				(g_file_test (filename, G_FILE_TEST_IS_REGULAR
 					| G_FILE_TEST_EXISTS)
@@ -1098,7 +1099,7 @@ on_error_event (GtkWidget *gtx, GtkXineError error, const char *message,
 		gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
-	char *msg;
+	char *msg = NULL;
 	gboolean crap_out = FALSE;
 
 	D("play_error");
@@ -1109,18 +1110,24 @@ on_error_event (GtkWidget *gtx, GtkXineError error, const char *message,
 	switch (error)
 	{
 	case GTX_STARTUP:
-		msg = g_strdup_printf (_("Totem could not startup:\n%s"), message);
+		msg = g_strdup_printf (_("Totem could not startup:\n%s"),
+				message);
 		crap_out = TRUE;
 		break;
 	case GTX_NO_INPUT_PLUGIN:
 	case GTX_NO_DEMUXER_PLUGIN:
-		msg = g_strdup_printf (_("There is no plugin for Totem to handle '%s'\nTotem will not be able to play it."), totem->mrl);
+		msg = g_strdup_printf (_("There is no plugin for Totem to "
+					"handle '%s'\nTotem will not be able "
+					"to play it."), totem->mrl);
 		break;
 	case GTX_DEMUXER_FAILED:
-		msg = g_strdup_printf (_("'%s' is broken, and Totem can not play it further."), totem->mrl);
+		msg = g_strdup_printf (_("'%s' is broken, and Totem can not "
+					"play it further."), totem->mrl);
 		break;
 	case GTX_NO_CODEC:
-		msg = g_strdup_printf(_("Totem could not play '%s':\n%s"), totem->mrl, message);
+		msg = g_strdup_printf(_("Totem could not play '%s':\n%s"),
+				totem->mrl, message);
+		gtk_xine_stop (gtx);
 		break;
 	default:
 		g_assert_not_reached ();
@@ -1238,7 +1245,6 @@ static void
 totem_callback_connect (Totem *totem)
 {
 	GtkWidget *item;
-	int mask;
 
 	/* Menu items */
 	item = glade_xml_get_widget (totem->xml, "open1");
@@ -1452,6 +1458,8 @@ main (int argc, char **argv)
 {
 	Totem *totem;
 	char *filename;
+	GConfClient *gc;
+	GError *err = NULL;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -1465,6 +1473,28 @@ main (int argc, char **argv)
 
 	glade_gnome_init ();
 	gnome_vfs_init ();
+	gconf_init (argc, argv, &err);
+	if (err != NULL)
+	{
+		char *str;
+
+		str = g_strdup_printf (_("Totem couln't initialise the \n"
+					"configuration engine:\n%s"),
+				err->message);
+		totem_action_error (str, NULL);
+		g_free (str);
+		exit (1);
+	}
+
+	gc = gconf_client_get_default ();
+
+	if (gtk_program_register ("totem") == FALSE
+			&& gconf_client_get_bool
+			(gc, "/apps/totem/launch_once", NULL) == TRUE)
+	{
+		g_message ("Send message to the existing GUI");
+		return 0;
+	}
 
 #ifndef TOTEM_DEBUG
 	disable_error_output ();
@@ -1476,7 +1506,7 @@ main (int argc, char **argv)
 	totem->vol_lock = FALSE;
 	totem->popup_timeout = 0;
 	totem->gtx = NULL;
-	totem->gc = gconf_client_get_default ();
+	totem->gc = gc;
 
 	filename = gnome_program_locate_file (NULL,
 			GNOME_FILE_DOMAIN_APP_DATADIR,

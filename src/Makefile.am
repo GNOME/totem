@@ -46,6 +46,7 @@ totem_SOURCES = 			\
 	rb-ellipsizing-label.h		\
 	scrsaver.c  scrsaver.h		\
 	video-utils.c video-utils.h	\
+	gtk-message.c gtk-message.h	\
         debug.h                         \
         $(EGG_RECENT_FILES)
 
