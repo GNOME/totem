@@ -53,20 +53,9 @@ totem.desktop.in: totem.desktop.in.in mime-type-list.txt desktop.sh
 	$(srcdir)/desktop.sh $(srcdir)/mime-type-list.txt	\
 	>> totem.desktop.in
 
-serverdir = $(libdir)/bonobo/servers
-server_DATA = Totem_properties.server
-server_in_files = Totem_properties.server.in.in._1 Totem_properties.server.in.in._3 servers.sh
-Totem_properties.server.in.in._2: $(server_in_files) mime-type-list.txt
-	$(srcdir)/servers.sh $(srcdir)/mime-type-list.txt	\
-	> Totem_properties.server.in.in._2
-Totem_properties.server.in.in: $(server_in_files) Totem_properties.server.in.in._2
-	cat $(srcdir)/Totem_properties.server.in.in._1		\
-	Totem_properties.server.in.in._2			\
-	$(srcdir)/Totem_properties.server.in.in._3		\
-	> Totem_properties.server.in.in
-Totem_properties.server.in: Totem_properties.server.in.in
-	sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" $< > $@
-@INTLTOOL_SERVER_RULE@
+totem-mime-types.h: mime-type-include.sh mime-type-list.txt
+	$(srcdir)/mime-type-include.sh $(srcdir)/mime-type-list.txt	\
+	> totem-mime-types.h
 
 update-gconf.sh: totem-video-thumbnail.schemas.in
 
@@ -90,7 +79,7 @@ else
 install-data-local:
 endif
 
-EXTRA_DIST = $(stuff_DATA) $(desktop_in_in_files_all) $(keys_DATA) $(server_in_files) totem.schemas.in lirc_example schemas.sh desktop.sh handlers.sh $(man_MANS) mime-type-list.txt
+EXTRA_DIST = $(stuff_DATA) $(desktop_in_in_files_all) $(keys_DATA) totem.schemas.in lirc_example schemas.sh desktop.sh handlers.sh $(man_MANS) mime-type-list.txt mime-type-include.sh
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(desktop_DATA) $(schema_DATA) $(desktop_in_files_all)
 
