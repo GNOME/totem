@@ -21,6 +21,7 @@
 #define __TOTEM_H__
 
 #include <gconf/gconf-client.h>
+#include "bacon-video-widget.h"
 
 #define TOTEM_GCONF_PREFIX "/apps/totem"
 

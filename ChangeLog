@@ -1,5 +1,26 @@
 2003-02-17  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am:
+	* src/totem-preferences.c: (hide_prefs), (on_checkbutton1_toggled),
+	(on_checkbutton2_toggled), (on_combo_entry1_changed),
+	(auto_resize_changed_cb), (show_vfx_changed_cb),
+	(mediadev_changed_cb), (bacon_cd_selection_create),
+	(totem_setup_preferences):
+	* src/totem-preferences.h:
+	* src/totem.c: (totem_action_play), (totem_action_play_pause),
+	(update_mrl_label), (totem_action_set_mrl),
+	(totem_action_seek_relative), (totem_action_volume_relative),
+	(totem_action_toggle_aspect_ratio), (totem_action_set_scale_ratio),
+	(update_seekable), (update_sliders), (vol_cb),
+	(on_dvd_root_menu1_activate), (on_dvd_title_menu1_activate),
+	(on_dvd_angle_menu1_activate), (on_dvd_chapter_menu1_activate),
+	(popup_hide), (on_video_motion_notify_event),
+	(totem_action_handle_scroll), (totem_setup_recent):
+	* src/totem.h:
+	* src/totem-private.h: move all the prefs to its own files
+
+2003-02-17  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget.c: (update_fullscreen_size),
 	(size_changed_cb), (bacon_video_widget_realize),
 	(bacon_video_widget_set_fullscreen),

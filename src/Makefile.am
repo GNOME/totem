@@ -41,18 +41,19 @@ regenerate-built-sources:
 	EGGFILES="$(EGG_RECENT_FILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh || true
 	EGGFILES="$(BACON_CD_SELECTION)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
 
-totem_SOURCES = 			\
-	$(EGG_RECENT_FILES)		\
-	$(BACON_CD_SELECTION)		\
-	totem.c				\
-	totem.h				\
-	totem-remote.c			\
-	totem-remote.h			\
-	baconvideowidget-marshal.list		\
+totem_SOURCES = 					\
+	$(EGG_RECENT_FILES)				\
+	$(BACON_CD_SELECTION)				\
+	totem.c totem.h					\
+	totem-remote.c totem-remote.h			\
+	totem-preferences.c totem-preferences.h		\
+	totem-private.h			\
+	baconvideowidget-marshal.list	\
 	$(MARSHALFILES)			\
-	bacon-video-widget.c bacon-video-widget.h		\
-	bacon-video-widget-properties.c		\
-	bacon-video-widget-properties.h		\
+	bacon-video-widget.c		\
+	bacon-video-widget.h		\
+	bacon-video-widget-properties.c	\
+	bacon-video-widget-properties.h	\
 	gtk-playlist.c	gtk-playlist.h	\
 	rb-ellipsizing-label.c		\
 	rb-ellipsizing-label.h		\
