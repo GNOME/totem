@@ -2401,6 +2401,7 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
       g_assert (GST_IS_PAD (pad));
       real = (GstPad *) GST_PAD_REALIZE (pad);
       from = gst_caps_copy (GST_PAD_CAPS (real));
+      break;
     }
   }
   if (!from)
