@@ -3048,6 +3048,9 @@ cb_gconf (GConfClient * client,
   } else if (!strcmp (entry->key, "/apps/totem/buffer-size")) {
     g_object_set (G_OBJECT (bvw->priv->play), "queue-threshold",
         (guint64) GST_SECOND * gconf_value_get_float (entry->value), NULL);
+  } else if (!strcmp (entry->key, "/apps/totem/subtitle-font")) {
+    g_object_set (G_OBJECT (bvw->priv->play), "subtitle-font-desc",
+        gconf_value_get_string (entry->value), NULL);
   }
 }
 
@@ -3339,7 +3342,7 @@ bacon_video_widget_new (int width, int height,
     bvw->priv->connection_speed = gconf_value_get_int (confvalue);
   }
 
-  /* FIXME: document/viewer/controller model should be used here */
+  /* those are private to us, i.e. not Xine-compatible */
   confvalue = gconf_client_get_without_default (bvw->priv->gc,
       GCONF_PREFIX"/buffer-size", NULL);
   if (confvalue != NULL) {
@@ -3351,6 +3354,12 @@ bacon_video_widget_new (int width, int height,
   if (confvalue != NULL) {
     g_object_set (G_OBJECT (bvw->priv->play), "queue-threshold",
         (guint64) GST_SECOND * gconf_value_get_float (confvalue), NULL);
+  }
+  confvalue = gconf_client_get_without_default (bvw->priv->gc,
+      GCONF_PREFIX"/subtitle-font", NULL);
+  if (confvalue != NULL) {
+    g_object_set (G_OBJECT (bvw->priv->play), "subtitle-font-desc",
+        gconf_value_get_string (confvalue), NULL);
   }
 
   return GTK_WIDGET (bvw);
