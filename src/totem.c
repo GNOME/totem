@@ -3,6 +3,7 @@
 #include <gnome.h>
 #include <glade/glade.h>
 #include <libgnomevfs/gnome-vfs.h>
+#include <string.h>
 
 #include "gtk-xine.h"
 #include "gtk-playlist.h"
@@ -204,6 +205,22 @@ action_play (Totem *totem, int offset)
 
 	retval = gtk_xine_play (GTK_XINE (totem->gtx), totem->mrl, offset , 0);
 	play_pause_set_label (totem, retval);
+}
+
+static void
+action_play_media (Totem *totem, MediaType type)
+{
+	char **mrls, *mrl;
+
+	mrls = gtk_xine_get_mrls (GTK_XINE (totem->gtx), type);
+	if (mrls == NULL)
+		return;
+	g_strfreev (mrls);
+
+	mrl = gtk_playlist_get_current_mrl (totem->playlist);
+	action_set_mrl (totem, mrl);
+	g_free (mrl);
+	action_play (totem, 0);
 }
 
 static void
@@ -475,7 +492,8 @@ drop_cb (GtkWidget     *widget,
 
 		if (filename != NULL && 
 				g_file_test (filename, G_FILE_TEST_IS_REGULAR
-					| G_FILE_TEST_EXISTS))
+					| G_FILE_TEST_EXISTS)
+				|| strstr (filename, "://") != NULL)
 		{
 			if (cleared == FALSE)
 			{
@@ -619,7 +637,8 @@ action_open_files (Totem *totem, char **list, gboolean ignore_first)
 	for ( ; list[i] != NULL; i++)
 	{
 		if (g_file_test (list[i], G_FILE_TEST_IS_REGULAR
-					| G_FILE_TEST_EXISTS))
+					| G_FILE_TEST_EXISTS)
+				|| strstr (list[i], "://") != NULL)
 		{
 			if (cleared == FALSE)
 			{
@@ -674,6 +693,22 @@ on_open1_activate (GtkButton *button, gpointer user_data)
 	}
 
 	gtk_widget_destroy (fs);
+}
+
+static void
+on_play_dvd1_activate (GtkButton *button, gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+
+	action_play_media (totem, MEDIA_DVD);
+}
+
+static void
+on_play_vcd1_activate (GtkButton *button, gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+
+	action_play_media (totem, MEDIA_VCD);
 }
 
 static void
@@ -1073,6 +1108,12 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "open1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_open1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "play_dvd1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_play_dvd1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "play_vcd1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_play_vcd1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "play1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_play1_activate), totem);
@@ -1172,7 +1213,7 @@ totem_callback_connect (Totem *totem)
 static void
 video_widget_create (Totem *totem) 
 {
-	GtkWidget *container;
+	GtkWidget *container, *widget;
 
 	totem->gtx = gtk_xine_new(-1, -1);
 	container = glade_xml_get_widget (totem->xml, "frame2");
@@ -1200,6 +1241,17 @@ video_widget_create (Totem *totem)
 
 	gtk_widget_realize (totem->gtx);
 	gtk_widget_show (totem->gtx);
+
+	if (gtk_xine_can_play (GTK_XINE (totem->gtx), MEDIA_DVD))
+	{
+		widget = glade_xml_get_widget (totem->xml, "play_dvd1");
+		gtk_widget_set_sensitive (widget, TRUE);
+	}
+	if (gtk_xine_can_play (GTK_XINE (totem->gtx), MEDIA_VCD))
+	{
+		widget = glade_xml_get_widget (totem->xml, "play_vcd1");
+		gtk_widget_set_sensitive (widget, TRUE);
+	}
 }
 
 GtkWidget

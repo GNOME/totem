@@ -103,19 +103,20 @@ struct GtkXinePrivate {
 	config_values_t *config;
 	vo_driver_t *vo_driver;
 	ao_driver_t *ao_driver;
+	pthread_t thread;
+	int mixer;
 
 	/* X stuff */
 	Display *display;
 	int screen;
 	Window video_window;
 	GC gc;
+	int completion_event;
 
 	/* Other stuff */
-	pthread_t thread;
-	int completion_event;
-	int mixer;
 	int xpos, ypos;
 	gboolean init_finished;
+	gboolean can_dvd, can_vcd;
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
@@ -285,6 +286,7 @@ gtk_xine_instance_init (GtkXine * gtx)
 	gtx->priv->mixer = -1;
 	gtx->priv->init_finished = FALSE;
 	gtx->priv->cursor_shown = TRUE;
+	gtx->priv->can_dvd = gtx->priv->can_vcd = FALSE;
 
 	gtx->priv->queue = g_async_queue_new ();
 }
@@ -422,12 +424,14 @@ static ao_driver_t *
 load_audio_out_driver (GtkXine * gtx, char *audio_driver_id)
 {
 	ao_driver_t *ao_driver = NULL;
-	char **driver_ids = xine_list_audio_output_plugins ();
+	char **driver_ids;
 	int i = 0;
 
 	if (strcmp (audio_driver_id, "auto"))
 		return xine_load_audio_output_plugin (gtx->priv->config,
 						      audio_driver_id);
+
+	driver_ids = xine_list_audio_output_plugins ();
 
 	while (driver_ids[i])
 	{
@@ -435,20 +439,25 @@ load_audio_out_driver (GtkXine * gtx, char *audio_driver_id)
 
 		ao_driver =
 		    xine_load_audio_output_plugin (gtx->priv->config,
-						   driver_ids[i]);
+						   audio_driver_id);
 
-		if (ao_driver) {
+		if (ao_driver)
+		{
 			D ("main: ...worked, using '%s' audio driver.\n",
-			    driver_ids[i]);
+			    audio_driver_id);
 
 			gtx->priv->config->update_string (gtx->priv-> config,
 							  "audio.driver",
 							  audio_driver_id);
 
+			g_strfreev (driver_ids);
+
 			return ao_driver;
 		}
 		i++;
 	}
+
+	g_strfreev (driver_ids);
 
 	return ao_driver;
 }
@@ -565,7 +574,8 @@ gtk_xine_realize (GtkWidget * widget)
 {
 	GtkXine *gtx;
 	XGCValues values;
-	char *configfile;
+	char *configfile, **autoplug_list;
+	int i = 0;
 
 	g_return_if_fail (widget != NULL);
 	g_return_if_fail (GTK_IS_XINE (widget));
@@ -666,6 +676,19 @@ gtk_xine_realize (GtkWidget * widget)
 			(void *) gtx);
 
 	scrsaver_init (gtx->priv->display);
+
+	/* Can we play DVDs and VCDs ? */
+	autoplug_list = xine_get_autoplay_input_plugin_ids (gtx->priv->xine);
+	while (autoplug_list[i])
+	{
+		if (strcmp (autoplug_list[i], "VCD") == 0)
+			gtx->priv->can_vcd = TRUE;
+		else if (strcmp (autoplug_list[i], "NAV") == 0)
+			gtx->priv->can_dvd = TRUE;
+		i++;
+	}
+
+	g_strfreev (autoplug_list);
 
 	/* now, create a xine thread */
 	pthread_create (&gtx->priv->thread, NULL, xine_thread, gtx);
@@ -1172,7 +1195,6 @@ gtk_xine_set_fullscreen (GtkXine * gtx, gboolean fullscreen)
 gint
 gtk_xine_is_fullscreen (GtkXine * gtx)
 {
-
 	g_return_val_if_fail (gtx != NULL, 0);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
 	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
@@ -1273,19 +1295,8 @@ gtk_xine_get_show_cursor (GtkXine *gtx)
 	return gtx->priv->cursor_shown;
 }
 
-//FIXME
-gchar **
-gtk_xine_get_autoplay_plugins (GtkXine * gtx)
-{
-	g_return_val_if_fail (gtx != NULL, NULL);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), NULL);
-	g_return_val_if_fail (gtx->priv->xine != NULL, NULL);
-
-	return xine_get_autoplay_input_plugin_ids (gtx->priv->xine);
-}
-
 gint
-gtk_xine_get_current_time (GtkXine * gtx)
+gtk_xine_get_current_time (GtkXine *gtx)
 {
 	g_return_val_if_fail (gtx != NULL, 0);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
@@ -1295,7 +1306,7 @@ gtk_xine_get_current_time (GtkXine * gtx)
 }
 
 gint
-gtk_xine_get_stream_length (GtkXine * gtx)
+gtk_xine_get_stream_length (GtkXine *gtx)
 {
 	g_return_val_if_fail (gtx != NULL, 0);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
@@ -1305,7 +1316,7 @@ gtk_xine_get_stream_length (GtkXine * gtx)
 }
 
 gboolean
-gtk_xine_is_playing (GtkXine * gtx)
+gtk_xine_is_playing (GtkXine *gtx)
 {
 	g_return_val_if_fail (gtx != NULL, 0);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
@@ -1315,13 +1326,48 @@ gtk_xine_is_playing (GtkXine * gtx)
 }
 
 gboolean
-gtk_xine_is_seekable (GtkXine * gtx)
+gtk_xine_is_seekable (GtkXine *gtx)
 {
 	g_return_val_if_fail (gtx != NULL, 0);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
 	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
 
 	return xine_is_stream_seekable (gtx->priv->xine);
+}
+
+gboolean
+gtk_xine_can_play (GtkXine *gtx, MediaType type)
+{
+	switch (type)
+	{
+	case MEDIA_DVD:
+		return gtx->priv->can_dvd;
+	case MEDIA_VCD:
+		return gtx->priv->can_vcd;
+	default:
+		return FALSE;
+	}
+}
+
+gchar
+**gtk_xine_get_mrls (GtkXine *gtx, MediaType type)
+{
+	char *plugin_id;
+	int num_mrls;
+
+	g_return_val_if_fail (gtx != NULL, 0);
+	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
+	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
+
+	if (type == MEDIA_DVD)
+		plugin_id = "NAV";
+	else if (type == MEDIA_VCD)
+		plugin_id = "VCD";
+	else
+		return NULL;
+
+	return xine_get_autoplay_mrls
+		(gtx->priv->xine, plugin_id, &num_mrls);
 }
 
 void

@@ -1,5 +1,19 @@
 2002-08-27  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (gtk_xine_instance_init),
+	(load_audio_out_driver), (gtk_xine_realize),
+	(gtk_xine_is_fullscreen), (gtk_xine_get_current_time),
+	(gtk_xine_get_stream_length), (gtk_xine_is_playing),
+	(gtk_xine_is_seekable), (gtk_xine_can_play), (gtk_xine_get_mrls):
+	* src/gtk-xine.h:
+	* src/totem.c: (action_play_media), (drop_cb), (action_open_files),
+	(on_play_dvd1_activate), (on_play_vcd1_activate),
+	(totem_callback_connect), (video_widget_create):
+	We should now be able to play DVDs and VCDs, please test,
+	killed a bunch of mem leaks by the same token
+
+2002-08-27  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-xine.c: (frame_output_cb), (gtk_xine_set_scale_ratio):
 	fix the zooming so that it doesn't use xine_get_current_frame () (and
 	leak like mad ;)
@@ -36,7 +50,8 @@
 2002-08-26  Bastien Nocera  <hadess@hadess.net>
 
 	* README: add snippet about black fullscreen bug
-	* configure.in: added es to ALL_LINGUAS
+	* configure.in: added es to ALL_LINGUAS from Ricardo Mones Lastra
+	<mones@trasgu.aic.uniovi.es>
 	* src/gtk-xine.c: (load_config_from_gconf), (xine_thread),
 	(gtk_xine_realize), (gtk_xine_idle_signal),
 	(gtk_xine_set_fullscreen), (gtk_xine_set_scale_ratio):

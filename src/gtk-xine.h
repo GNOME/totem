@@ -40,6 +40,11 @@ typedef enum {
 	GTX_NO_CODEC,
 } GtkXineError;
 
+typedef enum {
+	MEDIA_DVD,
+	MEDIA_VCD,
+} MediaType;
+
 #define GTK_XINE(obj)              (GTK_CHECK_CAST ((obj), gtk_xine_get_type (), GtkXine))
 #define GTK_XINE_CLASS(klass)      (GTK_CHECK_CLASS_CAST ((klass), gtk_xine_get_type (), GtkXineClass))
 #define GTK_IS_XINE(obj)           (GTK_CHECK_TYPE (obj, gtk_xine_get_type ()))
@@ -66,7 +71,7 @@ GtkWidget *gtk_xine_new                (int width, int height);
 gboolean  gtk_xine_check               (GtkXine *gtx);
 
 /* Actions */
-gint gtk_xine_play                     (GtkXine *gtx, gchar * mrl, gint pos,
+gint gtk_xine_play                     (GtkXine *gtx, gchar *mrl, gint pos,
 		                        gint start_time);
 void gtk_xine_stop                     (GtkXine *gtx);
 
@@ -96,8 +101,8 @@ gint gtk_xine_get_stream_length        (GtkXine *gtx);
 gboolean gtk_xine_is_playing           (GtkXine *gtx);
 gboolean gtk_xine_is_seekable          (GtkXine *gtx);
 
-//gchar **gtk_xine_get_autoplay_plugins  (GtkXine *gtx);
-
+gboolean gtk_xine_can_play             (GtkXine *gtx, MediaType type);
+gchar **gtk_xine_get_mrls              (GtkXine *gtx, MediaType type);
 
 G_END_DECLS
 
