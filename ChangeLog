@@ -1,3 +1,11 @@
+2003-09-21  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-playlist.c: (totem_playlist_key_press),
+	(totem_playlist_new):
+	* src/totem.c: (totem_action_handle_key), (video_widget_create):
+	make it possible to delete playlist entries with the "Delete" key
+	(Closes: #122823), fix handling of F10+modifier other than Shift
+
 2003-09-20  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.glade: Added more access keys (Patch from Piers Cornwell

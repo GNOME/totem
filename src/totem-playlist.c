@@ -24,6 +24,7 @@
 #include "totem-playlist.h"
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 #include <libxml/tree.h>
 #include <libxml/parser.h>
 #include <glade/glade.h>
@@ -977,6 +978,29 @@ totem_playlist_down_files (GtkWidget *widget, TotemPlaylist *playlist)
 	totem_playlist_move_files (playlist, FALSE);
 }
 
+static int
+totem_playlist_key_press (GtkWidget *win, GdkEventKey *event, TotemPlaylist *playlist)
+{
+	/* If we have modifiers, and either Ctrl, Mod1 (Alt), or any
+	 * of Mod3 to Mod5 (Mod2 is num-lock...) are pressed, we
+	 * let Gtk+ handle the key */
+	if (event->state != 0
+			&& ((event->state & GDK_CONTROL_MASK)
+			|| (event->state & GDK_MOD1_MASK)
+			|| (event->state & GDK_MOD3_MASK)
+			|| (event->state & GDK_MOD4_MASK)
+			|| (event->state & GDK_MOD5_MASK)))
+		return FALSE;
+
+	if (event->keyval == GDK_Delete)
+	{
+		totem_playlist_remove_files (NULL, playlist);
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
 static void
 init_columns (GtkTreeView *treeview)
 {
@@ -1243,32 +1267,36 @@ totem_playlist_new (const char *glade_filename, GdkPixbuf *playing_pix)
 			NULL);
 	gtk_window_set_default_size (GTK_WINDOW (playlist),
 			300, 375);
-	g_signal_connect_object (GTK_OBJECT (playlist), "response",
+	g_signal_connect_object (G_OBJECT (playlist), "response",
 			G_CALLBACK (gtk_widget_hide), 
 			GTK_WIDGET (playlist),
 			0);
 
 	/* Connect the buttons */
 	item = glade_xml_get_widget (playlist->_priv->xml, "add_button");
-	g_signal_connect (GTK_OBJECT (item), "clicked",
+	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (totem_playlist_add_files),
 			playlist);
 	item = glade_xml_get_widget (playlist->_priv->xml, "remove_button");
-	g_signal_connect (GTK_OBJECT (item), "clicked",
+	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (totem_playlist_remove_files),
 			playlist);
 	item = glade_xml_get_widget (playlist->_priv->xml, "save_button");
-	g_signal_connect (GTK_OBJECT (item), "clicked",
+	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (totem_playlist_save_files),
 			playlist);
 	item = glade_xml_get_widget (playlist->_priv->xml, "up_button");
-	g_signal_connect (GTK_OBJECT (item), "clicked",
+	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (totem_playlist_up_files),
 			playlist);
 	item = glade_xml_get_widget (playlist->_priv->xml, "down_button");
-	g_signal_connect (GTK_OBJECT (item), "clicked",
+	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (totem_playlist_down_files),
 			playlist);
+
+	gtk_widget_add_events (GTK_WIDGET (playlist), GDK_KEY_PRESS_MASK);
+	g_signal_connect (G_OBJECT (playlist), "key_press_event",
+			G_CALLBACK (totem_playlist_key_press), playlist);
 
 	container = glade_xml_get_widget (playlist->_priv->xml, "vbox4");
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (playlist)->vbox),

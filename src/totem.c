@@ -2624,6 +2624,8 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 					"totem_right_click_menu");
 			gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
 					0, event->time);
+		} else {
+			retval = FALSE;
 		}
 		break;
 	default:
@@ -3337,7 +3339,6 @@ video_widget_create (Totem *totem)
 	gtk_widget_add_events (GTK_WIDGET (totem->bvw), GDK_KEY_PRESS_MASK);
 	g_signal_connect (G_OBJECT(totem->bvw), "key_press_event",
 			G_CALLBACK (on_window_key_press_event), totem);
-
 
 	g_signal_connect (G_OBJECT (totem->bvw), "drag_data_received",
 			G_CALLBACK (drop_video_cb), totem);
