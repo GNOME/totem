@@ -1226,6 +1226,8 @@ gboolean
 gtk_xine_open (GtkXine *gtx, const gchar *mrl)
 {
 	int error;
+	gboolean has_video;
+	xine_post_out_t *audio_source;
 
 	g_return_val_if_fail (gtx != NULL, -1);
 	g_return_val_if_fail (mrl != NULL, -1);
@@ -1239,21 +1241,25 @@ gtk_xine_open (GtkXine *gtx, const gchar *mrl)
 		return FALSE;
 	}
 
+	if (xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_VIDEO_HANDLED) == FALSE
+		&& xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_AUDIO_HANDLED) == FALSE)
+	{
+		GtkXineSignal *signal;
+
+		gtk_xine_close (gtx);
+
+		signal = g_new0 (GtkXineSignal, 1);
+		signal->type = ERROR;
+		signal->error_type = GTX_NO_CODEC;
+		g_async_queue_push (gtx->priv->queue, signal);
+		g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
+
+		return FALSE;
+	}
+
 	gtx->priv->mrl = g_strdup (mrl);
-
-	return TRUE;
-}
-
-gboolean
-gtk_xine_play (GtkXine *gtx, guint pos, guint start_time)
-{
-	int error, length;
-	xine_post_out_t *audio_source;
-	gboolean has_video;
-
-	g_return_val_if_fail (gtx != NULL, -1);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), -1);
-	g_return_val_if_fail (gtx->priv->xine != NULL, -1);
 
 	has_video = xine_get_stream_info(gtx->priv->stream,
 			XINE_STREAM_INFO_HAS_VIDEO);
@@ -1273,6 +1279,18 @@ gtk_xine_play (GtkXine *gtx, guint pos, guint start_time)
 					gtx->priv->vis->audio_input[0]))
 			gtx->priv->using_vfx = TRUE;
 	}
+
+	return TRUE;
+}
+
+gboolean
+gtk_xine_play (GtkXine *gtx, guint pos, guint start_time)
+{
+	int error, length;
+
+	g_return_val_if_fail (gtx != NULL, -1);
+	g_return_val_if_fail (GTK_IS_XINE (gtx), -1);
+	g_return_val_if_fail (gtx->priv->xine != NULL, -1);
 
 	length = gtk_xine_get_stream_length (gtx);
 	error = xine_play (gtx->priv->stream, pos,
