@@ -143,7 +143,8 @@ enum {
   ASYNC_VIDEO_SIZE,
   ASYNC_ERROR,
   ASYNC_FOUND_TAG,
-  ASYNC_EOS
+  ASYNC_EOS,
+  ASYNC_BUFFERING
 };
 
 typedef struct _BVWSignal BVWSignal;
@@ -169,6 +170,10 @@ struct _BVWSignal
       GstElement *source;
       GstTagList *tag_list;
     } found_tag;
+    struct
+    {
+      gint percent;
+    } buffering;
   } signal_data;
 };
 
@@ -638,6 +643,12 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
           g_signal_emit (G_OBJECT (bvw), bvw_table_signals[SIGNAL_EOS], 0, NULL);
           break;
         }
+      case ASYNC_BUFFERING:
+        {
+          g_signal_emit (G_OBJECT (bvw), bvw_table_signals[SIGNAL_BUFFERING],
+			 0, signal->signal_data.buffering.percent);
+          break;
+        }
       default:
         break;
     }
@@ -696,6 +707,24 @@ got_eos (GstElement * play, BaconVideoWidget * bvw)
   
   signal = g_new0 (BVWSignal, 1);
   signal->signal_id = ASYNC_EOS;
+
+  g_async_queue_push (bvw->priv->queue, signal);
+
+  g_idle_add ((GSourceFunc) bacon_video_widget_signal_idler, bvw);
+}
+
+static void
+got_buffering (GstElement * play, gint percentage,
+	       BaconVideoWidget * bvw)
+{
+  BVWSignal *signal;
+
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  signal = g_new0 (BVWSignal, 1);
+  signal->signal_id = ASYNC_BUFFERING;
+  signal->signal_data.buffering.percent = percentage;
 
   g_async_queue_push (bvw->priv->queue, signal);
 
@@ -2305,6 +2334,8 @@ bacon_video_widget_new (int width, int height,
 		    G_CALLBACK (got_found_tag), (gpointer) bvw);
   g_signal_connect (G_OBJECT (bvw->priv->play), "error",
 		    G_CALLBACK (got_error), (gpointer) bvw);
+  g_signal_connect (G_OBJECT (bvw->priv->play), "buffering",
+		    G_CALLBACK (got_buffering), (gpointer) bvw);
 
   /* We try to get an element supporting XOverlay interface */
   if (!null_out && GST_IS_BIN (bvw->priv->play)) {

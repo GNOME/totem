@@ -52,6 +52,7 @@ struct _TotemStatusbar
 
   GtkWidget *frame;
   GtkWidget *label;
+  GtkWidget *progress;
   GtkWidget *time_label;
 
   gint time;

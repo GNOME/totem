@@ -122,16 +122,24 @@ totem_statusbar_init (TotemStatusbar *statusbar)
   gtk_widget_show (hbox);
 
   statusbar->label = gtk_label_new (_("Stopped"));
-  gtk_misc_set_alignment (GTK_MISC (statusbar->label), 0.0, 0.0);
+  gtk_misc_set_alignment (GTK_MISC (statusbar->label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->label, FALSE, FALSE, 0);
   gtk_widget_show (statusbar->label);
+
+  /* progressbar for network streams */
+  statusbar->progress = gtk_progress_bar_new ();
+  gtk_progress_bar_set_orientation (GTK_PROGRESS_BAR (statusbar->progress),
+				    GTK_ORIENTATION_HORIZONTAL);
+  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (statusbar->progress), 0.);
+  gtk_box_pack_start (GTK_BOX (hbox), statusbar->progress, FALSE, FALSE, 0);
+  gtk_widget_hide (statusbar->progress);
 
   packer = gtk_vseparator_new ();
   gtk_box_pack_start (GTK_BOX (hbox), packer, FALSE, FALSE, 0);
   gtk_widget_show (packer);
 
   statusbar->time_label = gtk_label_new (_("0:00 / 0:00"));
-  gtk_misc_set_alignment (GTK_MISC (statusbar->label), 0.0, 0.0);
+  gtk_misc_set_alignment (GTK_MISC (statusbar->label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->time_label, FALSE, FALSE, 0);
   gtk_widget_show (statusbar->time_label);
 
@@ -151,9 +159,6 @@ static void
 totem_statusbar_update_time (TotemStatusbar *statusbar)
 {
   char *time, *length, *label;
-
-  if (statusbar->pushed == 1)
-    return;
 
   time = totem_time_to_string (statusbar->time * 1000);
 
@@ -202,7 +207,7 @@ totem_statusbar_timeout_pop (TotemStatusbar *statusbar)
   g_free (statusbar->saved_label);
   statusbar->saved_label = NULL;
   statusbar->pushed = 0;
-  totem_statusbar_update_time (statusbar);
+  gtk_widget_hide (statusbar->progress);
 
   return FALSE;
 }
@@ -218,12 +223,6 @@ totem_statusbar_push (TotemStatusbar *statusbar, guint percentage)
     g_source_remove (statusbar->timeout);
   }
 
-  if (percentage == 100)
-  {
-    totem_statusbar_timeout_pop (statusbar);
-    return;
-  }
-
   if (statusbar->saved_label == NULL)
   {
     statusbar->saved_label = g_strdup
@@ -234,8 +233,11 @@ totem_statusbar_push (TotemStatusbar *statusbar, guint percentage)
 
   /* eg: 75 % */
   label = g_strdup_printf (_("%d %%"), percentage);
-  gtk_label_set_text (GTK_LABEL (statusbar->time_label), label);
+  gtk_progress_bar_set_text (GTK_PROGRESS_BAR (statusbar->progress), label);
   g_free (label);
+  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (statusbar->progress),
+				 percentage / 100.);
+  gtk_widget_show (statusbar->progress);
 
   statusbar->timeout = g_timeout_add (3000,
 		  (GSourceFunc) totem_statusbar_timeout_pop, statusbar);

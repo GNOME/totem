@@ -1,5 +1,19 @@
 2004-11-26  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_signal_idler),
+	(got_buffering), (bacon_video_widget_new):
+	* src/totem-statusbar.c: (totem_statusbar_init),
+	(totem_statusbar_update_time), (totem_statusbar_timeout_pop),
+	(totem_statusbar_push):
+	* src/totem-statusbar.h:
+	* src/totem.c: (label_create), (main):
+	  Implement buffering for GStreamer backend as well. Show buffering
+	  in a progress bar rather than a label. Keep updated even when
+	  playing. Disappears automatically if not updated. Progressbar needs
+	  to be made smaller but I don't know how.
+
+2004-11-26  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
 	* src/bacon-video-widget-gst.c: (get_media_size),
 	(bacon_video_widget_expose_event),
 	(bacon_video_widget_size_allocate), (state_change),

@@ -3560,6 +3560,7 @@ label_create (void)
 	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
 	gtk_label_set_selectable (GTK_LABEL (label), FALSE);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0);
+	gtk_widget_show (label);
 
 	/* Set default */
 	text = g_strdup_printf
@@ -3945,7 +3946,7 @@ main (int argc, char **argv)
 
 	/* Show ! gtk_main_iteration trickery to show all the widgets
 	 * we have so far */
-	gtk_widget_show_all (totem->win);
+	gtk_widget_show (totem->win);
 	update_fullscreen_size (totem);
 	long_action ();
 
