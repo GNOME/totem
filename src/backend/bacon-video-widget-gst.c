@@ -100,7 +100,7 @@ struct BaconVideoWidgetPrivate
 
   gboolean media_has_video;
 
-  guint stream_length;
+  gint64 stream_length;
   gint64 current_time_nanos;
   gint64 current_time;
   float current_position;
@@ -228,11 +228,11 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 							 G_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_POSITION,
 				   g_param_spec_int ("position", NULL, NULL,
-						     0, 65535, 0,
+						     0, G_MAXINT, 0,
 						     G_PARAM_READABLE));
   g_object_class_install_property (object_class, PROP_STREAM_LENGTH,
-				   g_param_spec_int ("stream_length", NULL,
-						     NULL, 0, 65535, 0,
+				   g_param_spec_int64 ("stream_length", NULL,
+						     NULL, 0, G_MAXINT64, 0,
 						     G_PARAM_READABLE));
   g_object_class_install_property (object_class, PROP_PLAYING,
 				   g_param_spec_boolean ("playing", NULL,
@@ -433,8 +433,8 @@ got_stream_length (GstPlay * play, gint64 length_nanos,
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-  bvw->priv->stream_length = length_nanos / GST_MSECOND;
-
+  bvw->priv->stream_length = (gint64) length_nanos / GST_MSECOND;
+  
   g_signal_emit (G_OBJECT (bvw), bvw_table_signals[GOT_METADATA], 0, NULL);
 }
 
@@ -453,9 +453,11 @@ got_time_tick (GstPlay * play, gint64 time_nanos, BaconVideoWidget * bvw)
   else
     {
       bvw->priv->current_position =
-	(float) (bvw->priv->current_time / bvw->priv->stream_length);
+	(float) bvw->priv->current_time / bvw->priv->stream_length;
     }
 
+  g_message ("current time : %lld stream length : %lld current position : %f",
+             bvw->priv->current_time, bvw->priv->stream_length, bvw->priv->current_position);
   g_signal_emit (G_OBJECT (bvw),
 		 bvw_table_signals[TICK], 0,
 		 bvw->priv->current_time, bvw->priv->stream_length,
