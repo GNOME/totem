@@ -93,8 +93,16 @@ typedef enum {
 GQuark bacon_video_widget_error_quark		 (void) G_GNUC_CONST;
 GType bacon_video_widget_get_type                (void);
 struct poptOption *bacon_video_widget_get_popt_table    (void);
+
+typedef enum {
+	BVW_USE_TYPE_VIDEO,
+	BVW_USE_TYPE_AUDIO,
+	BVW_USE_TYPE_CAPTURE,
+	BVW_USE_TYPE_METADATA
+} BvwUseType;
+
 GtkWidget *bacon_video_widget_new		 (int width, int height,
-						  gboolean null_video_out,
+						  BvwUseType type,
 						  GError **error);
 
 char *bacon_video_widget_get_backend_name (BaconVideoWidget *bvw);

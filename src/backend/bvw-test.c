@@ -43,7 +43,8 @@ int main(int argc, char *argv[])
 	win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_default_size (GTK_WINDOW (win), width, height);
 
-	xine = bacon_video_widget_new (width, height, FALSE, NULL);
+	xine = bacon_video_widget_new (width, height,
+			BVW_USE_TYPE_VIDEO, NULL);
 
 	gtk_container_add(GTK_CONTAINER(win),xine);
 

@@ -3538,7 +3538,7 @@ video_widget_create (Totem *totem)
 	h = gconf_client_get_int (totem->gc, GCONF_PREFIX"/window_h", NULL);
 
 	totem->bvw = BACON_VIDEO_WIDGET
-		(bacon_video_widget_new (w, h, FALSE, &err));
+		(bacon_video_widget_new (w, h, BVW_USE_TYPE_VIDEO, &err));
 
 	if (totem->bvw == NULL)
 	{

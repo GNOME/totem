@@ -103,7 +103,7 @@ totem_properties_page_init(TotemPropertiesPage *props)
 	GError *err = NULL;
 
 	props->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new
-			(-1, -1, TRUE, &err));
+			(-1, -1, BVW_USE_TYPE_METADATA, &err));
 	if (!props->bvw)
 		g_error ("Error: %s", err ? err->message : "bla");
 	//FIXME

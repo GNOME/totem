@@ -135,8 +135,8 @@ struct BaconVideoWidgetPrivate {
 
 	/* Configuration */
 	GConfClient *gc;
-	gboolean null_out;
 	char *mrl;
+	BvwUseType type;
 
 	/* X stuff */
 	Display *display;
@@ -396,8 +396,6 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
 	GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_CAN_FOCUS);
-	/* We work around white artifacts by using a double-buffered widget */
-	/* FIXME, this work-around breaks exposes */
 	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
 
 	bvw->priv = g_new0 (BaconVideoWidgetPrivate, 1);
@@ -619,9 +617,6 @@ load_audio_out_driver (BaconVideoWidget *bvw, GError **error)
 {
 	xine_audio_port_t *ao_driver;
 	const char *audio_driver_id;
-
-	if (bvw->priv->null_out != FALSE)
-		return NULL;
 
 	audio_driver_id = xine_config_register_string (bvw->priv->xine,
 			"audio.driver", "auto", "audio driver to use",
@@ -1066,29 +1061,14 @@ bacon_video_widget_realize (GtkWidget *widget)
 	BaconVideoWidget *bvw;
 
 	bvw = BACON_VIDEO_WIDGET (widget);
-
-	if (bvw->priv->mrl != NULL) {
-		bacon_video_widget_close (bvw);
-		g_warning ("bvw->priv->mrl != NULL on open");
+	if (bvw->priv->type != BVW_USE_TYPE_VIDEO)
+	{
+		g_warning ("Use type isn't video but we realized the widget");
+		return;
 	}
 
 	/* set realized flag */
 	GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
-
-	/* Close the old stream */
-	xine_close (bvw->priv->stream);
-	xine_event_dispose_queue (bvw->priv->ev_queue);
-	xine_dispose (bvw->priv->stream);
-	bvw->priv->stream = NULL;
-
-	if (bvw->priv->vo_driver != NULL) {
-		xine_close_video_driver (bvw->priv->xine,
-				bvw->priv->vo_driver);
-	}
-	if (bvw->priv->ao_driver != NULL) {
-		xine_close_audio_driver (bvw->priv->xine,
-				bvw->priv->ao_driver);
-	}
 
 	/* Create the widget's window */
 	attr.x = widget->allocation.x;
@@ -1130,7 +1110,7 @@ bacon_video_widget_realize (GtkWidget *widget)
 	bvw->priv->screen = DefaultScreen (bvw->priv->display);
 
 	bvw->priv->vo_driver = load_video_out_driver
-		(bvw, bvw->priv->null_out);
+		(bvw, FALSE);
 
 	if (bvw->priv->vo_driver == NULL)
 	{
@@ -1152,7 +1132,8 @@ bacon_video_widget_realize (GtkWidget *widget)
 
 	setup_config_video (bvw);
 
-	if (bvw->priv->null_out == FALSE && bvw->priv->ao_driver != NULL)
+	if (bvw->priv->type == BVW_USE_TYPE_VIDEO
+			&& bvw->priv->ao_driver != NULL)
 	{
 		bvw->priv->vis = xine_post_init (bvw->priv->xine,
 				bvw->priv->vis_name, 0,
@@ -1581,7 +1562,7 @@ bacon_video_widget_error_quark (void)
 
 GtkWidget *
 bacon_video_widget_new (int width, int height,
-		gboolean null_out, GError **error)
+		BvwUseType type, GError **error)
 {
 	BaconVideoWidget *bvw;
 	xine_cfg_entry_t entry;
@@ -1589,21 +1570,39 @@ bacon_video_widget_new (int width, int height,
 	bvw = BACON_VIDEO_WIDGET (g_object_new
 			(bacon_video_widget_get_type (), NULL));
 
-	bvw->priv->null_out = null_out;
-
 	bvw->priv->init_width = width;
 	bvw->priv->init_height = height;
+	bvw->priv->type = type;
+
+	/* Don't load anything yet if we're looking for proper video
+	 * output */
+	if (type == BVW_USE_TYPE_VIDEO)
+	{
+		bvw_config_helper_num (bvw->priv->xine, "video.num_buffers",
+				500, &entry);
+		entry.num_value = 500;
+		xine_config_update_entry (bvw->priv->xine, &entry);
+		return GTK_WIDGET (bvw);
+	}
 
 	/* load the output drivers */
-	bvw->priv->ao_driver = load_audio_out_driver (bvw, error);
-	if (error != NULL && *error != NULL)
-		return NULL;
+	if (type == BVW_USE_TYPE_AUDIO)
+	{
+		bvw->priv->ao_driver = load_audio_out_driver (bvw, error);
+		if (error != NULL && *error != NULL)
+			return NULL;
+	}
 
-	bvw->priv->vo_driver = load_video_out_driver (bvw, TRUE);
+	/* We need to wait for the widget to realise if we want to
+	 * load a video output with screen output, and capture is the
+	 * only one actually needing a video output */
+	if (type == BVW_USE_TYPE_CAPTURE) {
+		bvw->priv->vo_driver = load_video_out_driver (bvw, TRUE);
+	}
 
 	/* Be extra careful about exiting out nicely when a video output
 	 * isn't available */
-	if (bvw->priv->vo_driver == NULL)
+	if (type == BVW_USE_TYPE_CAPTURE && bvw->priv->vo_driver == NULL)
 	{
 		/* Close the xine stuff */
 		if (bvw->priv->ao_driver != NULL) {
@@ -1627,16 +1626,9 @@ bacon_video_widget_new (int width, int height,
 		return NULL;
 	}
 
-	if (bvw->priv->null_out != FALSE)
-	{
-		bvw_config_helper_num (bvw->priv->xine, "video.num_buffers",
-				5, &entry);
-		entry.num_value = 5;
-	} else {
-		bvw_config_helper_num (bvw->priv->xine, "video.num_buffers",
-				500, &entry);
-		entry.num_value = 500;
-	}
+	bvw_config_helper_num (bvw->priv->xine, "video.num_buffers",
+			5, &entry);
+	entry.num_value = 5;
 	xine_config_update_entry (bvw->priv->xine, &entry);
 
 	bvw->priv->stream = xine_stream_new (bvw->priv->xine,
@@ -2015,8 +2007,7 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const char *mrl,
 
 	if (xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_HAS_VIDEO) == FALSE
-		&& bvw->priv->ao_driver == NULL
-		&& bvw->priv->null_out != FALSE)
+		&& bvw->priv->ao_driver == NULL)
 	{
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[GOT_METADATA], 0, NULL);
@@ -2739,7 +2730,7 @@ bacon_video_widget_set_visuals (BaconVideoWidget *bvw, const char *name)
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
 
-	if (bvw->priv->null_out != FALSE || bvw->priv->ao_driver == NULL)
+	if (bvw->priv->type != BVW_USE_TYPE_VIDEO)
 		return FALSE;
 
 	if (GTK_WIDGET_REALIZED (bvw) == FALSE)

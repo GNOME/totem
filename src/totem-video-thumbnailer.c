@@ -334,7 +334,7 @@ int main (int argc, char *argv[])
 		size = 128;
 	}
 
-	bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (-1, -1, TRUE, &err));
+	bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (-1, -1, BVW_USE_TYPE_CAPTURE, &err));
 	if (err != NULL)
 	{
 		g_print ("totem-video-thumbnailer couln't create the video "
