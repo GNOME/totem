@@ -2158,6 +2158,12 @@ bacon_video_widget_set_media_device (BaconVideoWidget *bvw, const char *path)
 	entry.str_value = g_strdup (path);
 	xine_config_update_entry (bvw->priv->xine, &entry);
 
+	/* VCD device for the new input plugin */
+	bvw_config_helper_string (bvw->priv->xine, "vcd.default_device",
+			path, &entry);
+	entry.str_value = g_strdup (path);
+	xine_config_update_entry (bvw->priv->xine, &entry);
+
 	/* CDDA device */
 	bvw_config_helper_string (bvw->priv->xine, "input.cdda_device",
 			path, &entry);
