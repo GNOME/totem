@@ -1062,6 +1062,8 @@ treeview_row_changed (GtkTreeView *treeview, GtkTreePath *arg1,
 	}
 
 	playlist->_priv->current = gtk_tree_path_copy (arg1);
+
+	if (playlist->_priv->shuffle != FALSE)
 	{
 		int *indices, indice, i;
 
