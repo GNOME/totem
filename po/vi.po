@@ -1,20 +1,20 @@
-# Totem in Vietnamese.
+# Vietnamese Translation for TOTEM.
 # Copyright (C) 2002 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# T.M.Thanh <tmthanh@yahoo.com>, 2002-2003.
+# This file is distributed under the same license as the TOTEM package.
+# T.M.Thanh <tmthanh@yahoo.com>, 2002 - 2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Totem for Gnome v.2.1.x\n"
-"POT-Creation-Date: 2003-01-27 04:17+0100\n"
-"PO-Revision-Date: 2003-01-27 22:12+0700\n"
+"Project-Id-Version: Totem for Gnome v.2.2\n"
+"POT-Creation-Date: 2003-02-03 04:26+0100\n"
+"PO-Revision-Date: 2003-02-03 20:58+0700\n"
 "Last-Translator: Trinh Minh Thanh <tmthanh@yahoo.com>\n"
 "Language-Team: Gnome-Vi <Gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/playlist.glade.h:1 src/gtk-playlist.c:799
+#: data/playlist.glade.h:1 src/gtk-playlist.c:800
 msgid "Playlist"
 msgstr "Danh sách chơi"
 
@@ -246,7 +246,7 @@ msgid "Toggle Aspect Ratio"
 msgstr "Cố định tỷ lệ bề ngoài"
 
 #. Title
-#: data/totem.glade.h:35 src/totem.c:411 src/totem.c:434 src/totem.c:1269
+#: data/totem.glade.h:35 src/totem.c:409 src/totem.c:432 src/totem.c:1272
 msgid "Totem"
 msgstr "Totem"
 
@@ -338,11 +338,11 @@ msgstr "X coordinate cho Danh sách chơi"
 msgid "Y coordinate for the Playlist"
 msgstr "Y coordinate cho Danh sách chơi"
 
-#: src/bacon-cd-selection.c:219
+#: src/bacon-cd-selection.c:233
 msgid "Unnamed CDROM"
 msgstr "CDROM chưa có tên"
 
-#: src/bacon-cd-selection.c:261
+#: src/bacon-cd-selection.c:275
 msgid "Select the drive"
 msgstr "Chọn drive"
 
@@ -394,11 +394,11 @@ msgstr "_Mật khẩu:"
 msgid "Remember this password"
 msgstr "Nhớ mật khẩu"
 
-#: src/gtk-playlist.c:413 src/totem.c:1094
+#: src/gtk-playlist.c:414 src/totem.c:1097
 msgid "Select files"
 msgstr "Chọn tập tin"
 
-#: src/gtk-playlist.c:549
+#: src/gtk-playlist.c:550
 msgid "Filename"
 msgstr "Tên tập tin"
 
@@ -406,7 +406,7 @@ msgstr "Tên tập tin"
 msgid "Totem Video Window"
 msgstr "Cửa sổ video của totem"
 
-#: src/gtk-xine.c:547
+#: src/gtk-xine.c:546
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -415,7 +415,7 @@ msgstr ""
 "Không thể nạp thiết bị âm '%s'\n"
 "Hãy kiểm tra xem thiết bị có được dùng bởi chương trình khác không."
 
-#: src/gtk-xine.c:819
+#: src/gtk-xine.c:816
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
@@ -423,11 +423,11 @@ msgstr ""
 "Không thể sơ khởi hỗ trợ đa luồng.\n"
 "Bạn nên cài đặt thread-safe Xlib."
 
-#: src/gtk-xine.c:846
+#: src/gtk-xine.c:843
 msgid "Could not find a suitable video output."
 msgstr "Không thể tìm thấy đầu ra video thích hợp."
 
-#: src/gtk-xine.c:1206
+#: src/gtk-xine.c:1204
 #, c-format
 msgid "Reason: Video type '%s' is not handled."
 msgstr "Nguyên nhân: Loại video '%s' không được xử lý."
@@ -501,19 +501,19 @@ msgstr "%d khung / giây"
 msgid "%d kbps"
 msgstr "%d Kb/giây"
 
-#: src/totem.c:191
+#: src/totem.c:189
 msgid "Playing"
 msgstr "Đang chơi"
 
-#: src/totem.c:198
+#: src/totem.c:196
 msgid "Paused"
 msgstr "Tạm dừng"
 
-#: src/totem.c:205 src/totem-statusbar.c:171
+#: src/totem.c:203 src/totem-statusbar.c:171
 msgid "Stopped"
 msgstr "Dừng"
 
-#: src/totem.c:273
+#: src/totem.c:271
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -524,7 +524,7 @@ msgstr ""
 "để xử lý.\n"
 "Hãy cài đặt plugin cần thiết và chạy lại Totem để chơi phương tiện này."
 
-#: src/totem.c:281
+#: src/totem.c:279
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -535,29 +535,29 @@ msgstr ""
 "hay chưa."
 
 #. Title
-#: src/totem.c:387
+#: src/totem.c:385
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:400 src/totem.c:2397
+#: src/totem.c:398 src/totem.c:2443
 msgid "No file"
 msgstr "Không có tập tin"
 
-#: src/totem.c:1245
+#: src/totem.c:1248
 msgid "translator_credits"
 msgstr "đóng góp dịch thuật"
 
-#: src/totem.c:1271
-msgid "Movie Player (based on the Xine libraries)"
-msgstr "Trình chiếu phim (dựa trên thư viện của Xine)"
+#: src/totem.c:1274
+msgid "Movie Player (based on the xine libraries)"
+msgstr "Chương trình chiếu phim (dựa trên thư viện của Xine)"
 
-#: src/totem.c:1325 src/totem.c:1336
+#: src/totem.c:1328 src/totem.c:1339
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Screenshot%d.png"
 
-#: src/totem.c:1389
+#: src/totem.c:1392
 msgid ""
 "Totem could not get a screenshot of that film.\n"
 "You might want to try again at another time."
@@ -565,7 +565,7 @@ msgstr ""
 "Totem không thể chụp screenshot của phim này.\n"
 "Bạn có lẽ cần thử lại vào thời điểm khác."
 
-#: src/totem.c:1415
+#: src/totem.c:1418
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
@@ -574,7 +574,7 @@ msgstr ""
 "Tập tin '%s' đã có rồi.\n"
 "Screenshot chưa được lưu."
 
-#: src/totem.c:1426
+#: src/totem.c:1429
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -583,7 +583,7 @@ msgstr ""
 "Lỗi lưu screenshot.\n"
 "Chi tiết: %s"
 
-#: src/totem.c:1447
+#: src/totem.c:1449
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -591,7 +591,7 @@ msgstr ""
 "Totem không thể hiển thị cửa sổ thuộc tính movie.\n"
 "Kiểm tra xem Totem được cài đặt chuẩn chưa."
 
-#: src/totem.c:1894
+#: src/totem.c:1897
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -600,7 +600,7 @@ msgstr ""
 "Totem không thể khởi chạy:\n"
 "%s"
 
-#: src/totem.c:1900
+#: src/totem.c:1903
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'.\n"
@@ -609,12 +609,12 @@ msgstr ""
 "Không có plugin cho Totem để xử lý '%s'.\n"
 "Totem sẽ không thể chơi nó."
 
-#: src/totem.c:1906
+#: src/totem.c:1909
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "'%s' bị gẫy, Totem không thể chơi thêm nữa."
 
-#: src/totem.c:1911
+#: src/totem.c:1914
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -623,7 +623,7 @@ msgstr ""
 "Totem không thể chơi '%s':\n"
 "%s"
 
-#: src/totem.c:1916
+#: src/totem.c:1919
 #, c-format
 msgid ""
 "Totem could not play '%s'.\n"
@@ -632,7 +632,7 @@ msgstr ""
 "Totem không thể chơi '%s'.\n"
 "Vị trí này không hợp lệ."
 
-#: src/totem.c:2562
+#: src/totem.c:2607
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -643,7 +643,7 @@ msgstr ""
 "engine cấu hình:\n"
 "%s"
 
-#: src/totem.c:2577 src/totem.c:2607
+#: src/totem.c:2622 src/totem.c:2650
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -651,7 +651,7 @@ msgstr ""
 "Không thể nạp giao diện chính (totem, glade).\n"
 "Kiểm tra xem Totem được cài đặt chuẩn chưa."
 
-#: src/totem.c:2629
+#: src/totem.c:2672
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
