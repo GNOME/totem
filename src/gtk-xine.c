@@ -432,12 +432,15 @@ load_video_out_driver (GtkXine *gtx)
 	{
 		video_driver_id = driver_ids[i];
 
+		g_message ("video_driver_id: %s", video_driver_id);
+
 		vo_driver =
 		    xine_load_video_output_plugin (gtx->priv->config,
 						   video_driver_id,
 						   VISUAL_TYPE_X11,
 						   (void *) &vis);
-		if (vo_driver) {
+		if (vo_driver)
+		{
 			gtx->priv->config->update_string
 				(gtx->priv->config, "video.driver",
 				 video_driver_id);

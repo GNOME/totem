@@ -1219,8 +1219,6 @@ gtk_playlist_unset_playing (GtkPlaylist *playlist)
 	if (update_current_from_playlist (playlist) == FALSE)
 		return FALSE;
 
-	/* No type-checking, it's supposed to be safe here */
-
 	store = GTK_LIST_STORE (playlist->_priv->model);
 	gtk_tree_model_get_iter (playlist->_priv->model,
 			&iter,
