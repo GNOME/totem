@@ -28,18 +28,28 @@
 #include <glade/glade.h>
 #include <gconf/gconf-client.h>
 #include <string.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 #include "debug.h"
 
 struct TotemScreenshotPrivate
 {
 	GladeXML *xml;
-	GdkPixbuf *pixbuf;
+	GdkPixbuf *pixbuf, *scaled;
+	char *temp_file;
 };
 
 static const GtkTargetEntry target_table[] = {
 	{ "text/uri-list", 0, 0 },
 };
+
+static GtkTargetEntry source_table[] = {
+	{ "text/uri-list", 0, 0 },
+};
+
 
 static GtkWidgetClass *parent_class = NULL;
 
@@ -227,17 +237,91 @@ totem_screenshot_init (TotemScreenshot *screenshot)
 }
 
 static void
+totem_screenshot_temp_file (TotemScreenshot *screenshot, gboolean create)
+{
+	if (create)
+	{
+		char *dir, *fulldir;
+
+		dir = g_strdup_printf ("totem-screenshot-%d", getpid ());
+		fulldir = g_build_filename (g_get_tmp_dir (), dir, NULL);
+		if (mkdir (fulldir, 0700) < 0) {
+			g_free (fulldir);
+			g_free (dir);
+			return;
+		}
+		screenshot->_priv->temp_file = g_build_filename
+			(g_get_tmp_dir (),
+			 dir, _("Screenshot.png"), NULL);
+	} else {
+		char *dirname;
+
+		if (screenshot->_priv->temp_file == NULL)
+			return;
+
+		unlink (screenshot->_priv->temp_file);
+		dirname = g_path_get_dirname (screenshot->_priv->temp_file);
+		rmdir (dirname);
+		g_free (dirname);
+
+		g_free (screenshot->_priv->temp_file);
+	}
+}
+
+static void
 totem_screenshot_finalize (GObject *object)
 {
 	TotemScreenshot *screenshot = TOTEM_SCREENSHOT (object);
 
 	g_return_if_fail (object != NULL);
 
+	totem_screenshot_temp_file (screenshot, FALSE);
+
 	if (screenshot->_priv->pixbuf != NULL)
 		gdk_pixbuf_unref (screenshot->_priv->pixbuf);
+	if (screenshot->_priv->scaled != NULL)
+		gdk_pixbuf_unref (screenshot->_priv->scaled);
 
 	if (G_OBJECT_CLASS (parent_class)->finalize != NULL) {
 		(* G_OBJECT_CLASS (parent_class)->finalize) (object);
+	}
+}
+
+static void
+drag_data_get (GtkWidget          *widget,
+	       GdkDragContext     *context,
+	       GtkSelectionData   *selection_data,
+	       guint               info,
+	       guint               time,
+	       TotemScreenshot    *screenshot)
+{
+	char *string;
+
+	/* FIXME We should cancel the drag */
+	if (screenshot->_priv->temp_file == NULL)
+		return;
+
+	string = g_strdup_printf ("file://%s\r\n",
+			screenshot->_priv->temp_file);
+	gtk_selection_data_set (selection_data,
+			selection_data->target,
+			8, string, strlen (string)+1);
+	g_free (string);
+}
+
+static void
+drag_begin (GtkWidget *widget, GdkDragContext *context,
+		TotemScreenshot *screenshot)
+{
+	if (screenshot->_priv->temp_file == NULL)
+	{
+		gtk_drag_set_icon_pixbuf (context, screenshot->_priv->scaled,
+				0, 0);
+		totem_screenshot_temp_file (screenshot, TRUE);
+		g_return_if_fail (screenshot->_priv->temp_file != NULL);
+		gdk_pixbuf_save (screenshot->_priv->pixbuf,
+				screenshot->_priv->temp_file, "png",
+				NULL, NULL);
 	}
 }
 
@@ -247,7 +331,6 @@ totem_screenshot_new (const char *glade_filename, GdkPixbuf *screen_image)
 	TotemScreenshot *screenshot;
 	GtkWidget *container, *item;
 	char *filename;
-	GdkPixbuf *scaled;
 	GtkWidget *dialog, *image, *entry;
 	int width, height;
 
@@ -296,14 +379,25 @@ totem_screenshot_new (const char *glade_filename, GdkPixbuf *screen_image)
 	height = 200;
 	width = height * gdk_pixbuf_get_width (screen_image)
 		/ gdk_pixbuf_get_height (screen_image);
-	scaled = gdk_pixbuf_scale_simple (screen_image,
+	screenshot->_priv->scaled = gdk_pixbuf_scale_simple (screen_image,
 			width, height, GDK_INTERP_BILINEAR);
 
 	dialog = glade_xml_get_widget (screenshot->_priv->xml,
 			"totem_screenshot_window");
 	image = glade_xml_get_widget (screenshot->_priv->xml, "tsw_shot_image");
-	gtk_image_set_from_pixbuf (GTK_IMAGE (image), scaled);
-	gdk_pixbuf_unref (scaled);
+	gtk_image_set_from_pixbuf (GTK_IMAGE (image),
+			screenshot->_priv->scaled);
+
+	/* Setup the DnD for the image */
+	g_signal_connect (G_OBJECT (screenshot), "drag_begin",
+			G_CALLBACK (drag_begin), screenshot);
+	g_signal_connect (G_OBJECT (screenshot), "drag_data_get",
+			G_CALLBACK (drag_data_get), screenshot);
+	gtk_drag_source_set (GTK_WIDGET (screenshot),
+			GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
+			source_table, G_N_ELEMENTS (source_table),
+			GDK_ACTION_COPY);
+
 	entry = glade_xml_get_widget (screenshot->_priv->xml,
 			"tsw_save2file_combo_entry");
 	gtk_entry_set_text (GTK_ENTRY (entry), filename);
@@ -318,7 +412,6 @@ totem_screenshot_new (const char *glade_filename, GdkPixbuf *screen_image)
 		g_object_set_property (G_OBJECT (item),
 				"filechooser-action", &value);
 	}
-
 
 	container = glade_xml_get_widget (screenshot->_priv->xml, "vbox11");
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (screenshot)->vbox),
