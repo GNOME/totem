@@ -28,6 +28,8 @@ News
 * Fix a crash when it was a URI being drag and not a local filename
 * Fix build system for the thumbnailer's schemas
 * Much less verbosity on the command line
+* Fix a problem with the "remote" API which would make Totem receive only
+  the first file of a list of them
 * Fix a crash when changing the resolution of the screen, in fullscreen mode
 
 0.95.1:
@@ -214,10 +216,6 @@ TODO
 - "Vaniy"-like secondary application ?
 - Read the URI in .desktop files and add that to the playlist (otherwise we
   can't drop stuff we dragged from Totem)
-- cdda:1 should be cdda:/1 or cdda:///1, we should get the mimetype for it
-  (playlist)
-- only the first stream gets to the already running gui, not all of the ones
-  specified on the cli
 - have a "progress" thing going when adding more than a couple of files
 
 Bugs should be lodged in Gnome's Bugzilla:

@@ -1,5 +1,15 @@
 2003-04-09  Bastien Nocera  <hadess@hadess.net>
 
+	* README: upd
+	* src/bacon-cd-selection.c: (bacon_cd_selection_get_device): update to
+	get a bug fix by Ross Burton
+	* src/bacon-message-connection.c: (server_cb),
+	(bacon_message_connection_send): fix a buf which would make Totem
+	receive only the first file of a list of them
+	* src/totem.c: (process_command_line): make it work (better)
+
+2003-04-09  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-playlist.c:
 	* src/totem.c: (totem_action_set_mrl): fix the setting of the custom
 	name being rather random

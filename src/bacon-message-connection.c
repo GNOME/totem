@@ -62,8 +62,9 @@ static gboolean
 server_cb (GIOChannel *source, GIOCondition condition, gpointer data)
 {
 	BaconMessageConnection *conn = (BaconMessageConnection *)data;
-	char *message, buf[BUF_SIZE];
+	char *message, *subs, buf[BUF_SIZE];
 	int cd, alen, rc, offset;
+	gboolean finished;
 
 	message = NULL;
 	offset = 0;
@@ -71,7 +72,7 @@ server_cb (GIOChannel *source, GIOCondition condition, gpointer data)
 
 	memset (buf, sizeof (buf), '\0');
 	rc = read (cd, buf, BUF_SIZE);
-
+//FIXME test for the actual errno
 	while (rc != 0)
 	{
 		message = g_realloc (message, rc + offset);
@@ -82,8 +83,18 @@ server_cb (GIOChannel *source, GIOCondition condition, gpointer data)
 		rc = read (cd, buf, BUF_SIZE);
 	}
 
-	if (message != NULL && conn->func != NULL)
-			(*conn->func) (message, conn->data);
+	subs = message;
+	finished = FALSE;
+
+	while (subs != '\0' && finished == FALSE)
+	{
+		if (message != NULL && conn->func != NULL)
+			(*conn->func) (subs, conn->data);
+
+		subs += strlen (subs) + 1;
+		if (subs - message >= offset)
+			finished = TRUE;
+	}
 
 	g_free (message);
 
@@ -222,7 +233,7 @@ bacon_message_connection_send (BaconMessageConnection *conn,
 {
 	g_return_if_fail (conn != NULL);
 	g_assert (conn->is_server == FALSE);
-
+//FIXME test short writes
 	write (conn->fd, message, strlen (message) + 1);
 }
 

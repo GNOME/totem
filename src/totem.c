@@ -2912,10 +2912,6 @@ process_command_line (BaconMessageConnection *conn, int argc, char **argv)
 
 	for (; argv[i] != NULL; i++)
 	{
-		if (command == TOTEM_REMOTE_COMMAND_REPLACE &&
-				replace_done == TRUE)
-			command = TOTEM_REMOTE_COMMAND_ENQUEUE;
-
 		full_path = totem_create_full_path (argv[i]);
 		line = g_strdup_printf ("%03d %s", command, full_path);
 		bacon_message_connection_send (conn, line);

@@ -430,7 +430,7 @@ bacon_cd_selection_get_device (BaconCdSelection *bcs)
 				(bcs->priv->widget));
 		drive = get_drive (bcs, i);
 
-		return drive->device;
+		return drive ? drive->device : NULL;
 	}
 
 	return NULL;
