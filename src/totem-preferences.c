@@ -173,7 +173,7 @@ on_tvout_toggled (GtkToggleButton *togglebutton, Totem *totem)
 	value = bacon_video_widget_set_tv_out
 		(BACON_VIDEO_WIDGET (totem->bvw), type);
 
-	if (value != FALSE)
+	if (value != FALSE && type == TV_OUT_DXR3)
 		totem_action_info (_("Switching on or off this type of TV-Out requires a restart to take effect."), totem);
 }
 
