@@ -49,9 +49,9 @@ Totem_properties.server.in.in._2: $(server_in_files)
 	$(srcdir)/servers.sh $(srcdir)/totem.keys		\
 	> Totem_properties.server.in.in._2
 Totem_properties.server.in.in: $(server_in_files) Totem_properties.server.in.in._2
-	cat Totem_properties.server.in.in._1			\
+	cat $(srcdir)/Totem_properties.server.in.in._1		\
 	Totem_properties.server.in.in._2			\
-	Totem_properties.server.in.in._3			\
+	$(srcdir)/Totem_properties.server.in.in._3		\
 	> Totem_properties.server.in.in
 Totem_properties.server.in: Totem_properties.server.in.in
 	sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" $< > $@

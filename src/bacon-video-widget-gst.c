@@ -60,8 +60,10 @@ enum {
 	ERROR,
 	EOS,
 	TITLE_CHANGE,
+	CHANNELS_CHANGE,
 	TICK,
 	GOT_METADATA,
+	BUFFERING,
 	LAST_SIGNAL
 };
 
@@ -257,7 +259,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 				g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
 	bvw_table_signals[GOT_METADATA] =
-		g_signal_new ("got_metadata",
+		g_signal_new ("got-metadata",
 				G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST,
 				G_STRUCT_OFFSET (BaconVideoWidgetClass, got_metadata),
@@ -273,7 +275,16 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 				NULL, NULL,
 				g_cclosure_marshal_VOID__STRING,
 				G_TYPE_NONE, 1, G_TYPE_STRING);
-				
+
+	bvw_table_signals[CHANNELS_CHANGE] =
+		g_signal_new ("channels-change",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (BaconVideoWidgetClass, channels_change),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__VOID,
+				G_TYPE_NONE, 0);
+
 	bvw_table_signals[TICK] =
 		g_signal_new ("tick",
 				G_TYPE_FROM_CLASS (object_class),
@@ -283,6 +294,15 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 				baconvideowidget_marshal_VOID__INT_INT_INT,
 				G_TYPE_NONE, 3, G_TYPE_INT, G_TYPE_INT,
 				G_TYPE_INT);
+
+	bvw_table_signals[BUFFERING] =
+		g_signal_new ("buffering",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (BaconVideoWidgetClass, buffering),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__INT,
+				G_TYPE_NONE, 1, G_TYPE_INT);
 }
 
 static void

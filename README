@@ -13,9 +13,16 @@ News
 * Added the Vanity webcam utility
 * Added a Nautilus properties page
 * Added options to configure the visual effects more precisely
-* Added a buffering dialog for when opening network files
+* Added a buffering dialog for when opening network files, statusbar now says
+  "Streaming" when streaming from the network
 * Really set the Real decoders' path, link the DLLs from /usr/lib/win32 on
   startup
+* Draw a black background on the video widget on startup
+* Fix resizing to sizes smaller than the default dimensions
+* Fix a crash when using the "Open Location..." dialog
+* Fix a crash in the error dialog
+* Don't start playback on startup when restoring playlists
+* Gstreamer backend updates
 
 0.97.0:
 * Experimental GStreamer backend (pass --enable-gstreamer to configure)
@@ -154,7 +161,7 @@ News
 Dependencies
 ============
 
-xine-lib 1.0 beta10 or newer:
+xine-lib 1.0 beta11 or newer:
 	http://xinehq.de
 GNOME 2.2 development platform:
 	http://www.gnome.org
@@ -229,7 +236,6 @@ TODO
   <hadess> if you dl_open'ed the libraries when they are needed, i would
   be 100 % with it
 - Play with OSD and stuff
-- Properties page for Nautilus ?
 - Browser plugin ? See for examples:
   http://lxr.mozilla.org/seamonkey/source/modules/plugin/samples/default/unix/ for examples
   http://devedge.netscape.com/library/manuals/2002/plugin/1.0/preface.html
