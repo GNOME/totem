@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-14 11:50+0100\n"
-"PO-Revision-Date: 2005-01-14 11:51+0100\n"
+"POT-Creation-Date: 2005-02-01 12:57+0100\n"
+"PO-Revision-Date: 2005-02-01 12:58+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -111,7 +111,7 @@ msgstr "Bilderate:"
 msgid "N/A"
 msgstr "I/T"
 
-#: data/properties.glade.h:17 src/totem.c:1960
+#: data/properties.glade.h:17 src/totem.c:1964
 msgid "Properties"
 msgstr "Egenskaper"
 
@@ -544,7 +544,7 @@ msgstr "Tid:"
 
 #. Title
 #: data/totem.glade.h:102 data/totem.desktop.in.in.in.h:2 src/totem.c:563
-#: src/totem.c:3372
+#: src/totem.c:3376
 msgid "Totem Movie Player"
 msgstr "Totem filmavspiller"
 
@@ -929,11 +929,11 @@ msgstr "Spill av filmer og sanger"
 msgid "Unnamed CDROM"
 msgstr "SCSI CD-ROM uten navn"
 
-#: src/bacon-video-widget-gst.c:55
+#: src/bacon-video-widget-gst.c:59
 msgid "Totem Video Window"
 msgstr "Totem videovindu"
 
-#: src/bacon-video-widget-gst.c:2754
+#: src/bacon-video-widget-gst.c:2882
 msgid "Failed to create a GStreamer play object"
 msgstr "Kunne ikke opprette et spilleobject for GStreamer"
 
@@ -952,7 +952,7 @@ msgstr "%d bilder per sekund"
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/bacon-video-widget-xine.c:643
+#: src/bacon-video-widget-xine.c:657
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -961,7 +961,7 @@ msgstr ""
 "Kunne ikke laste lyddriver «%s»\n"
 "Sjekk at enheten ikke er opptatt."
 
-#: src/bacon-video-widget-xine.c:1095 src/bacon-video-widget-xine.c:1589
+#: src/bacon-video-widget-xine.c:1109 src/bacon-video-widget-xine.c:1614
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -969,29 +969,29 @@ msgstr ""
 "Utdataenhet for bilde fungerer ikke. Sjekk at programmet er korrekt "
 "installert."
 
-#: src/bacon-video-widget-xine.c:1210
+#: src/bacon-video-widget-xine.c:1225
 msgid "The server you are trying to connect to is not known."
 msgstr "Tjeneren du prøver å koble til er ikke kjent."
 
-#: src/bacon-video-widget-xine.c:1214
+#: src/bacon-video-widget-xine.c:1229
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "Enhetsnavnet du oppga (%s) ser ut til å være ugyldig."
 
-#: src/bacon-video-widget-xine.c:1218
+#: src/bacon-video-widget-xine.c:1233
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "Tjeneren du prøver å koble til (%s) kan ikke nås."
 
-#: src/bacon-video-widget-xine.c:1222
+#: src/bacon-video-widget-xine.c:1237
 msgid "The connection to this server was refused."
 msgstr "Tilkobling til denne tjeneren ble nektet."
 
-#: src/bacon-video-widget-xine.c:1226
+#: src/bacon-video-widget-xine.c:1241
 msgid "The specified movie could not be found."
 msgstr "Angitt film ble ikke funnet."
 
-#: src/bacon-video-widget-xine.c:1232 src/bacon-video-widget-xine.c:1250
+#: src/bacon-video-widget-xine.c:1247 src/bacon-video-widget-xine.c:1265
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -999,61 +999,61 @@ msgstr ""
 "Kilden ser ut til å være kryptert, og kan ikke leses. Prøver du å spille av "
 "en DVD uten libdvdcss?"
 
-#: src/bacon-video-widget-xine.c:1235
+#: src/bacon-video-widget-xine.c:1250
 msgid "The movie could not be read."
 msgstr "Filmen kunne ikke leses."
 
-#: src/bacon-video-widget-xine.c:1244
+#: src/bacon-video-widget-xine.c:1259
 #, c-format
 msgid "A problem occured while loading a library or a decoder (%s)."
 msgstr "Et problem oppsto under lasting av et bibliotek eller en dekoder (%s)."
 
-#: src/bacon-video-widget-xine.c:1253
+#: src/bacon-video-widget-xine.c:1268
 msgid "This file is encrypted and cannot be played back."
 msgstr "Denne filen er kryptert og kan ikke spilles av."
 
-#: src/bacon-video-widget-xine.c:1258
+#: src/bacon-video-widget-xine.c:1273
 msgid "For security reasons, this movie can not be played back."
 msgstr "Denne filmen kan ikke spilles av sikkerhetsårsaker."
 
-#: src/bacon-video-widget-xine.c:1263
+#: src/bacon-video-widget-xine.c:1278
 msgid "The audio device is busy. Is another application using it?"
 msgstr "Lydenheten er opptatt. Brukes denne av en annen applikasjon?"
 
-#: src/bacon-video-widget-xine.c:1268
+#: src/bacon-video-widget-xine.c:1283
 msgid "You are not allowed to open this file."
 msgstr "Du har ikke rettigheter til å åpne denne filen."
 
-#: src/bacon-video-widget-xine.c:1270
+#: src/bacon-video-widget-xine.c:1285
 msgid "The server refused access to this file or stream."
 msgstr "Tjeneren nektet tilgang til denne filen eller strømmen."
 
-#: src/bacon-video-widget-xine.c:1410
+#: src/bacon-video-widget-xine.c:1425
 msgid "There is no plugin to handle this movie."
 msgstr "Det finnes ingen tillegg som håndterer denne filmen."
 
-#: src/bacon-video-widget-xine.c:1414
+#: src/bacon-video-widget-xine.c:1429
 msgid "This movie is broken and can not be played further."
 msgstr "Denne filmen er ødelagt og kan ikke spilles av videre."
 
-#: src/bacon-video-widget-xine.c:1418
+#: src/bacon-video-widget-xine.c:1433
 msgid "This location is not a valid one."
 msgstr "Denne lokasjonen er ikke gyldig."
 
-#: src/bacon-video-widget-xine.c:1422
+#: src/bacon-video-widget-xine.c:1437
 msgid "This movie could not be opened."
 msgstr "Kunne ikke åpne denne filmen."
 
-#: src/bacon-video-widget-xine.c:1426
+#: src/bacon-video-widget-xine.c:1441
 msgid "Generic Error."
 msgstr "Generisk feil."
 
-#: src/bacon-video-widget-xine.c:1886
+#: src/bacon-video-widget-xine.c:1911
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr ""
 "Denne filmen er et stillbilde. Du kan åpne den med et bildevisningsprogram."
 
-#: src/bacon-video-widget-xine.c:1910
+#: src/bacon-video-widget-xine.c:1935
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1062,7 +1062,7 @@ msgstr ""
 "Video-kodek «%s» håndteres ikke. Du vil kanskje måtte installere flere "
 "tillegg for å kunne spille av noen typer filmer"
 
-#: src/bacon-video-widget-xine.c:1914
+#: src/bacon-video-widget-xine.c:1939
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1071,20 +1071,25 @@ msgstr ""
 "Lyd-kodek «%s» håndteres ikke. Du vil kanskje måtte installere flere tillegg "
 "for å kunne spille av noen typer filmer"
 
-#: src/bacon-video-widget-xine.c:1930
+#: src/bacon-video-widget-xine.c:1955
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr ""
 "Dette er en lydfil, og det finnes innen mulighet for avspilling av lyd."
 
-#: src/bacon-video-widget-xine.c:3381
+#: src/bacon-video-widget-xine.c:3359
+#, c-format
+msgid "Language %d"
+msgstr "Språk %d"
+
+#: src/bacon-video-widget-xine.c:3430
 msgid "Movie is not playing."
 msgstr "Filmen spilles ikke av."
 
-#: src/bacon-video-widget-xine.c:3390
+#: src/bacon-video-widget-xine.c:3439
 msgid "No video to capture."
 msgstr "Ingen video å fange."
 
-#: src/bacon-video-widget-xine.c:3398
+#: src/bacon-video-widget-xine.c:3447
 msgid "Video codec is not handled."
 msgstr "Videotypen er ikke støttet."
 
@@ -1177,11 +1182,11 @@ msgstr "Sjekk at Totem-tillegget er korrekt installert."
 msgid "The Totem plugin could not startup."
 msgstr "Totem-tillegget kunne ikke starte opp."
 
-#: src/totem-mozilla-viewer.c:109 src/totem.c:3196
+#: src/totem-mozilla-viewer.c:109 src/totem.c:3200
 msgid "No reason."
 msgstr "Ingen årsak."
 
-#: src/totem-mozilla-viewer.c:141 src/totem.c:3377
+#: src/totem-mozilla-viewer.c:141 src/totem.c:3381
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Kunne ikke initiere trådsikre biblioteker."
 
@@ -1189,7 +1194,7 @@ msgstr "Kunne ikke initiere trådsikre biblioteker."
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Sjekk systeminstallasjonen. Totem-tillegget avsluttes nå."
 
-#: src/totem-options.c:36 src/totem-properties-main.c:122
+#: src/totem-options.c:36
 msgid "Backend options"
 msgstr "Alternativer for videomotor"
 
@@ -1258,7 +1263,9 @@ msgstr "Overskriv fil?"
 #, c-format
 msgid ""
 "A file named '%s' already exists.  Are you sure you want to overwrite it?"
-msgstr "En fil med navn «%s» eksisterer allerede. Er du sikker på at du vil overskrive den?"
+msgstr ""
+"En fil med navn «%s» eksisterer allerede. Er du sikker på at du vil "
+"overskrive den?"
 
 #: src/totem-playlist.c:1053
 msgid "Filename"
@@ -1273,12 +1280,12 @@ msgstr "Feil med spilleliste"
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "Spilleliste «%s» kunne ikke leses, den kan være ødelagt."
 
-#: src/totem-pl-parser.c:214
+#: src/totem-pl-parser.c:215
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "Kunne ikke skrive fortolker: %s"
 
-#: src/totem-pl-parser.c:320 src/totem-pl-parser.c:443
+#: src/totem-pl-parser.c:321 src/totem-pl-parser.c:444
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "Kunne ikke åpne fil «%s»: %s"
@@ -1298,10 +1305,8 @@ msgstr ""
 #: src/totem-preferences.c:133
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
-"Totem is restarted"
-msgstr ""
-"Endringer i denne innstillingen vil kun brukes for neste film, eller når "
-"Totem startes på nytt"
+"Totem is restarted."
+msgstr "Endringer i denne innstillingen vil kun brukes for neste film, eller når Totem startes på nytt."
 
 #: src/totem-preferences.c:177
 msgid ""
@@ -1317,6 +1322,12 @@ msgstr "Totem kunne ikke starte filhåndtereren."
 #: src/totem-preferences.c:338
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr "Endringer i visuelle effekttyper krever omstart."
+
+#: src/totem-preferences.c:431
+msgid ""
+"The change of audio output type will only take effect when Totem is "
+"restarted."
+msgstr "Endring som gjelder innstillingen for lydavspilling vil kun brukes for neste film, eller når Totem startes på nytt"
 
 #: src/totem-properties-main.c:103
 msgid "Audio/Video"
@@ -1447,7 +1458,7 @@ msgstr "%s - Totem filmavspiller"
 msgid "No file"
 msgstr "Ingen fil"
 
-#: src/totem.c:590 src/totem.c:1875
+#: src/totem.c:590 src/totem.c:1879
 msgid "Totem"
 msgstr "Totem"
 
@@ -1459,57 +1470,57 @@ msgstr "En feil oppsto"
 msgid "Select files"
 msgstr "Velg filer"
 
-#: src/totem.c:1833
+#: src/totem.c:1837
 msgid "Totem could not display the help contents."
 msgstr "Totem kunne ikke vise hjelpinnhold."
 
-#: src/totem.c:1871
+#: src/totem.c:1875
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Filmavspiller bruker %s"
 
-#: src/totem.c:1877 src/vanity.c:253
+#: src/totem.c:1881 src/vanity.c:253
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Opphavsrett © 2002-2005 Bastien Nocera"
 
-#: src/totem.c:1882 src/vanity.c:258
+#: src/totem.c:1886 src/vanity.c:258
 msgid "translator-credits"
 msgstr "Kjartan Maraas <kmaraas@gnome.org>"
 
-#: src/totem.c:1915 src/totem.c:1923 src/vanity.c:291 src/vanity.c:299
+#: src/totem.c:1919 src/totem.c:1927 src/vanity.c:291 src/vanity.c:299
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem kunne ikke ta et skjermdump av denne filmen."
 
-#: src/totem.c:1923
+#: src/totem.c:1927
 msgid "Please file a bug, this isn't supposed to happen."
 msgstr "Vær snill å rapporter en feil da dette ikke skulle skjedd.."
 
-#: src/totem.c:1950
+#: src/totem.c:1954
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem kunne ikke laste vindu for egenskaper for filmen."
 
-#: src/totem.c:1950
+#: src/totem.c:1954
 msgid "Make sure that Totem is correctly installed."
 msgstr "Sjekk at Totem er korrekt installert."
 
-#: src/totem.c:2036
+#: src/totem.c:2040
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem kunne ikke søke i «%s»."
 
-#: src/totem.c:3196
+#: src/totem.c:3200
 msgid "Totem could not startup."
 msgstr "Totem kunne ikke starte opp."
 
-#: src/totem.c:3377
+#: src/totem.c:3381
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Sjekk systeminstallasjonen. Totem avslutter nå."
 
-#: src/totem.c:3398
+#: src/totem.c:3402
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem kunne ikke initiere konfigurasjonsmotoren."
 
-#: src/totem.c:3398
+#: src/totem.c:3402
 msgid "Make sure that GNOME is properly installed."
 msgstr "Sjekk at GNOME er korrekt installert."
 
