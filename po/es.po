@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-28 19:37+0200\n"
-"PO-Revision-Date: 2004-03-28 19:38+0200\n"
+"POT-Creation-Date: 2004-04-08 10:56+0200\n"
+"PO-Revision-Date: 2004-04-08 10:57+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 "X-Generator: KBabel 1.3.1\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1291
+#: data/playlist.glade.h:1 src/totem-playlist.c:1361
 msgid "Playlist"
 msgstr "Lista de reproducción"
 
@@ -110,7 +110,7 @@ msgstr "Tasa de fotogramas:"
 msgid "N/A"
 msgstr "N/D"
 
-#: data/properties.glade.h:16 src/totem.c:1965
+#: data/properties.glade.h:16 src/totem.c:1961
 msgid "Properties"
 msgstr "Propiedades"
 
@@ -160,7 +160,7 @@ msgstr "Reproducir películas y canciones"
 
 #. Title
 #: data/totem.desktop.in.h:2 data/totem.glade.h:92 src/totem.c:679
-#: src/totem.c:3498
+#: src/totem.c:3529
 msgid "Totem Movie Player"
 msgstr "Reproductor de películas Totem"
 
@@ -344,7 +344,7 @@ msgstr "Idiomas"
 msgid "Large"
 msgstr "Grande"
 
-#: data/totem.glade.h:48 src/totem.c:72
+#: data/totem.glade.h:48 src/totem.c:73
 msgid "Next"
 msgstr "Siguiente"
 
@@ -404,11 +404,11 @@ msgstr "Reproducir CD de sonido"
 msgid "Play or pause the movie"
 msgstr "Reproducir o pausar la película"
 
-#: data/totem.glade.h:63 src/totem.c:71
+#: data/totem.glade.h:63 src/totem.c:72
 msgid "Play/Pause"
 msgstr "Reproducir/Pausar"
 
-#: data/totem.glade.h:64 src/totem.c:73
+#: data/totem.glade.h:64 src/totem.c:74
 msgid "Previous"
 msgstr "Anterior"
 
@@ -954,78 +954,7 @@ msgstr ""
 "No se ha podido cargar el controlador de sonido «%s»\n"
 "Verifique que el dispositivo no este ocupado."
 
-#: src/bacon-video-widget-xine.c:1229
-msgid "The server you are trying to connect to is not known."
-msgstr "El servidor al que está intentando conectar no es conocido."
-
-#: src/bacon-video-widget-xine.c:1232
-#, c-format
-msgid "The device name you specified (%s) seems to be invalid."
-msgstr "El nombre de dispositivo que especificó (%s) parece ser inválido."
-
-#: src/bacon-video-widget-xine.c:1235
-#, c-format
-msgid "The server you are trying to connect to (%s) is unreachable."
-msgstr "El servidor al que está intentando conectar (%s) es inalcanzable."
-
-#: src/bacon-video-widget-xine.c:1238
-msgid "The connection to this server was refused."
-msgstr "La conexión a este servidor fue rehusada"
-
-#: src/bacon-video-widget-xine.c:1241
-#, c-format
-msgid "The specified movie '%s' could not be found."
-msgstr "La película especificada «%s» no se pudo encontrar."
-
-#: src/bacon-video-widget-xine.c:1244
-#, c-format
-msgid "The movie '%s' could not be read."
-msgstr "La película «%s» no se pudo leer."
-
-#: src/bacon-video-widget-xine.c:1247
-#, c-format
-msgid "A problem occured while loading a library or a decoder (%s)."
-msgstr ""
-"Ocurrió un problema durante la carga de una biblioteca o un decodificador (%"
-"s)."
-
-#: src/bacon-video-widget-xine.c:1251
-msgid ""
-"The source seems encrypted, and can't be read. Are you trying to play an "
-"encrypted DVD without libdvdcss?"
-msgstr ""
-"La fuente parece encriptada, y no puede leerse. ¿Está intentando reproducir "
-"un DVD encriptado sin libdvdcss?"
-
-#: src/bacon-video-widget-xine.c:1253
-msgid "This file is encrypted and cannot be played back."
-msgstr "Este archivo está encriptado y no puede reproducirse."
-
-#: src/bacon-video-widget-xine.c:1256
-msgid "For security reasons, this movie can not be played back."
-msgstr "por razones de seguridad, esta película no puede reproducirse."
-
-#: src/bacon-video-widget-xine.c:1348
-msgid "There is no plugin to handle this movie"
-msgstr "No hay ningún complemento que pueda manejar esta película"
-
-#: src/bacon-video-widget-xine.c:1352
-msgid "This movie is broken and can not be played further"
-msgstr "Esta película está corrompida no se puede continuar reproduciendo"
-
-#: src/bacon-video-widget-xine.c:1356
-msgid "This location is not a valid one"
-msgstr "Esta ubicación no es válida."
-
-#: src/bacon-video-widget-xine.c:1360
-msgid "This movie could not be opened"
-msgstr "Esta película no pudo abrirse"
-
-#: src/bacon-video-widget-xine.c:1363
-msgid "Generic Error"
-msgstr "Error genérico"
-
-#: src/bacon-video-widget-xine.c:1509
+#: src/bacon-video-widget-xine.c:1130 src/bacon-video-widget-xine.c:1521
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -1033,7 +962,82 @@ msgstr ""
 "No hay salida de vídeo disponible. Asegúrese de que el programa está "
 "instalado correctamente."
 
-#: src/bacon-video-widget-xine.c:1798
+#: src/bacon-video-widget-xine.c:1237
+msgid "The server you are trying to connect to is not known."
+msgstr "El servidor al que está intentando conectar no es conocido."
+
+#: src/bacon-video-widget-xine.c:1240
+#, c-format
+msgid "The device name you specified (%s) seems to be invalid."
+msgstr "El nombre de dispositivo que especificó (%s) parece ser inválido."
+
+#: src/bacon-video-widget-xine.c:1243
+#, c-format
+msgid "The server you are trying to connect to (%s) is unreachable."
+msgstr "El servidor al que está intentando conectar (%s) es inalcanzable."
+
+#: src/bacon-video-widget-xine.c:1246
+msgid "The connection to this server was refused."
+msgstr "La conexión a este servidor fue rehusada"
+
+#: src/bacon-video-widget-xine.c:1249
+#, c-format
+msgid "The specified movie '%s' could not be found."
+msgstr "La película especificada «%s» no se pudo encontrar."
+
+#: src/bacon-video-widget-xine.c:1252
+#, c-format
+msgid "The movie '%s' could not be read."
+msgstr "La película «%s» no se pudo leer."
+
+#: src/bacon-video-widget-xine.c:1255
+#, c-format
+msgid "A problem occured while loading a library or a decoder (%s)."
+msgstr ""
+"Ocurrió un problema durante la carga de una biblioteca o un decodificador (%"
+"s)."
+
+#: src/bacon-video-widget-xine.c:1259
+msgid ""
+"The source seems encrypted, and can't be read. Are you trying to play an "
+"encrypted DVD without libdvdcss?"
+msgstr ""
+"La fuente parece encriptada, y no puede leerse. ¿Está intentando reproducir "
+"un DVD encriptado sin libdvdcss?"
+
+#: src/bacon-video-widget-xine.c:1261
+msgid "This file is encrypted and cannot be played back."
+msgstr "Este archivo está encriptado y no puede reproducirse."
+
+#: src/bacon-video-widget-xine.c:1264
+msgid "For security reasons, this movie can not be played back."
+msgstr "por razones de seguridad, esta película no puede reproducirse."
+
+#: src/bacon-video-widget-xine.c:1268
+msgid "The audio device is busy. Is another application using it?"
+msgstr "El dispositivo de sonido está ocupado. ¿Hay alguna otra aplicación usándolo?"
+
+#: src/bacon-video-widget-xine.c:1360
+msgid "There is no plugin to handle this movie"
+msgstr "No hay ningún complemento que pueda manejar esta película"
+
+#: src/bacon-video-widget-xine.c:1364
+msgid "This movie is broken and can not be played further"
+msgstr "Esta película está corrompida no se puede continuar reproduciendo"
+
+#: src/bacon-video-widget-xine.c:1368
+msgid "This location is not a valid one"
+msgstr "Esta ubicación no es válida."
+
+#: src/bacon-video-widget-xine.c:1372
+msgid "This movie could not be opened"
+msgstr "Esta película no pudo abrirse"
+
+#: src/bacon-video-widget-xine.c:1375
+msgid "Generic Error"
+msgstr "Error genérico"
+
+#: src/bacon-video-widget-xine.c:1817
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1043,44 +1047,44 @@ msgstr ""
 "complementos adicionales para ser capaz de reproducir algunos tipos de "
 "películas"
 
-#: src/bacon-video-widget-xine.c:1817
+#: src/bacon-video-widget-xine.c:1836
 msgid "This is an audio-only file, and there is no audio output available"
 msgstr "Este es un archivo que sólo tiene sonido, no hay salida de vídeo disponible"
 
-#: src/bacon-video-widget-xine.c:3268
+#: src/bacon-video-widget-xine.c:3293
 msgid "Movie is not playing"
 msgstr "La película no se está reproduciendo"
 
-#: src/bacon-video-widget-xine.c:3276
+#: src/bacon-video-widget-xine.c:3301
 msgid "No video to capture"
 msgstr "No hay vídeo para capturar"
 
-#: src/bacon-video-widget-xine.c:3283
+#: src/bacon-video-widget-xine.c:3308
 msgid "Video codec is not handled"
 msgstr "No es posible manejar el códec de vídeo"
 
-#: src/cd-drive.c:554
+#: src/cd-drive.c:573
 #, c-format
 msgid "Unnamed SCSI CD-ROM (%s)"
 msgstr "CD-ROM SCSI sin nombre (%s)"
 
-#: src/cd-drive.c:1132
+#: src/cd-drive.c:1151
 msgid "File image"
 msgstr "Archivo de imagen"
 
-#: src/totem-playlist.c:320
+#: src/totem-playlist.c:321
 msgid "Could not save the playlist"
 msgstr "No se pudo guardar la lista de reproducción"
 
-#: src/totem-playlist.c:475 src/totem.c:1520
+#: src/totem-playlist.c:538 src/totem.c:1516
 msgid "Select files"
 msgstr "Seleccionar archivos"
 
-#: src/totem-playlist.c:655
+#: src/totem-playlist.c:719
 msgid "Save playlist"
 msgstr "Guardar lista de reproducción"
 
-#: src/totem-playlist.c:698
+#: src/totem-playlist.c:764
 #, c-format
 msgid ""
 "A file named '%s' already exists.\n"
@@ -1089,7 +1093,7 @@ msgstr ""
 "El archivo «%s» ya existe.\n"
 "¿Está seguro de que quiere sobreescribirlo?"
 
-#: src/totem-playlist.c:883
+#: src/totem-playlist.c:949
 msgid "Filename"
 msgstr "Nombre del archivo"
 
@@ -1198,35 +1202,39 @@ msgstr "%d %%"
 msgid "Backend options"
 msgstr "Opciones del backend"
 
-#: src/totem.c:74
+#: src/totem.c:71
+msgid "Enable debug"
+msgstr "Activar depuración"
+
+#: src/totem.c:75
 msgid "Seek Forwards"
 msgstr "Saltar adelante"
 
-#: src/totem.c:75
+#: src/totem.c:76
 msgid "Seek Backwards"
 msgstr "Saltar atrás"
 
-#: src/totem.c:76
+#: src/totem.c:77
 msgid "Volume Up"
 msgstr "Subir volumen"
 
-#: src/totem.c:77
+#: src/totem.c:78
 msgid "Volume Down"
 msgstr "Bajar volumen"
 
-#: src/totem.c:78
+#: src/totem.c:79
 msgid "Toggle Fullscreen"
 msgstr "Pantalla completa"
 
-#: src/totem.c:79
+#: src/totem.c:80
 msgid "Quit"
 msgstr "Salir"
 
-#: src/totem.c:80
+#: src/totem.c:81
 msgid "Enqueue"
 msgstr "Encolar"
 
-#: src/totem.c:81
+#: src/totem.c:82
 msgid "Replace"
 msgstr "Reemplazar"
 
@@ -1246,7 +1254,7 @@ msgstr "Totem no pudo expulsar el soporte óptico."
 msgid "No reason given"
 msgstr "No se dio ninguna razón"
 
-#: src/totem.c:350 src/totem.c:378 src/totem.c:799 src/totem.c:906
+#: src/totem.c:350 src/totem.c:378 src/totem.c:800 src/totem.c:909
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem no pudo reproducir «%s»."
@@ -1303,32 +1311,32 @@ msgstr ""
 msgid "%s - Totem Movie Player"
 msgstr "%s - Reproductor de películas Totem"
 
-#: src/totem.c:668 src/totem.c:3338
+#: src/totem.c:668 src/totem.c:3334
 msgid "No file"
 msgstr "Ningún archivo"
 
-#: src/totem.c:704 src/totem.c:1884
+#: src/totem.c:704 src/totem.c:1880
 msgid "Totem"
 msgstr "Totem"
 
-#: src/totem.c:1180
+#: src/totem.c:1184
 msgid "An error occured"
 msgstr "Ha ocurrido un error"
 
-#: src/totem.c:1596 src/totem.c:1604
+#: src/totem.c:1593 src/totem.c:1601
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "No se pudo cargar la interfaz «Abrir ubicación...»."
 
-#: src/totem.c:1596 src/totem.c:1604 src/totem.c:3532 src/totem.c:3557
-#: src/totem.c:3582
+#: src/totem.c:1593 src/totem.c:1601 src/totem.c:3563 src/totem.c:3588
+#: src/totem.c:3613
 msgid "Make sure that Totem is properly installed."
 msgstr "Asegúrese de que Totem está instalado correctamente."
 
-#: src/totem.c:1837
+#: src/totem.c:1833
 msgid "Totem could not display the help contents."
 msgstr "Totem no pudo mostrar el contenido de la ayuda."
 
-#: src/totem.c:1855 src/vanity.c:226
+#: src/totem.c:1851 src/vanity.c:226
 msgid "translator_credits"
 msgstr ""
 "Ricardo Mones Lastra <mones@users.sourceforge.net>\n"
@@ -1336,69 +1344,74 @@ msgstr ""
 "Germán Poo Caamaño <gpoo@ubiobio.cl>\n"
 "Francisco J. Fernández <serrador@arrakis.es>"
 
-#: src/totem.c:1881
+#: src/totem.c:1877
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Reproductor de películas usando %s"
 
-#: src/totem.c:1920 src/totem.c:1928 src/vanity.c:292 src/vanity.c:300
+#: src/totem.c:1916 src/totem.c:1924 src/vanity.c:292 src/vanity.c:300
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem no puede obtener una captura de pantalla de esa película."
 
-#: src/totem.c:1928 src/vanity.c:300
+#: src/totem.c:1924 src/vanity.c:300
 msgid "Please file a bug, this isn't supposed to happen"
 msgstr "Por favor, mande un informe de fallo, esto no se supone que debe ocurrir."
 
-#: src/totem.c:1955
+#: src/totem.c:1951
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem no pudo mostrar la ventana de propiedades de la película."
 
-#: src/totem.c:1955
+#: src/totem.c:1951
 msgid "Make sure that Totem is correctly installed."
 msgstr "Asegúrese de que Totem está instalado correctamente."
 
-#: src/totem.c:2040
+#: src/totem.c:2036
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem no puede buscar en «%s»."
 
-#: src/totem.c:2795 src/totem.c:2817
+#: src/totem.c:2791 src/totem.c:2813
 msgid "None"
 msgstr "Ninguno"
 
-#: src/totem.c:2799 src/totem.c:2820
+#: src/totem.c:2795 src/totem.c:2816
 msgid "Auto"
 msgstr "Auto"
 
-#: src/totem.c:3243
+#: src/totem.c:3239
 msgid "Totem could not startup."
 msgstr "No se ha podido iniciar Totem."
 
-#: src/totem.c:3243
+#: src/totem.c:3239
 msgid "No reason."
 msgstr "No hay razón."
 
-#: src/totem.c:3503
+#: src/totem.c:3439
+#, c-format
+msgid "Option '%s' is unknown and was ignored\n"
+msgstr "La opción «%s» es desconocida y se ignoró\n"
+
+#: src/totem.c:3534
 msgid "Could not initialise the thread-safe libraries."
 msgstr "No se pudo inicializar el soporte de hilos seguro."
 
-#: src/totem.c:3503
+#: src/totem.c:3534
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verifique la instalación de su sistema. Totem ahora terminará."
 
-#: src/totem.c:3524
+#: src/totem.c:3555
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem no pudo inicializar el motor de configuración:"
 
-#: src/totem.c:3524
+#: src/totem.c:3555
 msgid "Make sure that GNOME is properly installed."
 msgstr "Asegúrese de que Gnome está instalado correctamente."
 
-#: src/totem.c:3532 src/totem.c:3557
+#: src/totem.c:3563 src/totem.c:3588
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "No se pudo cargar la interfaz principal (totem.glade)."
 
-#: src/totem.c:3582
+#: src/totem.c:3613
 msgid "Couldn't load the interface for the playlist."
 msgstr "No se pudo cargar el interfaz de la lista de reproducción."
 
@@ -1411,7 +1424,7 @@ msgstr "Modo de depuración activado"
 msgid "Webcam utility using %s"
 msgstr "Utilidad de cámara web usando %s"
 
-#: src/vanity.c:531
+#: src/vanity.c:537
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1420,11 +1433,11 @@ msgstr ""
 "No se ha podido iniciar Vanity:\n"
 "%s"
 
-#: src/vanity.c:532
+#: src/vanity.c:538
 msgid "No reason"
 msgstr "No hay razón"
 
-#: src/vanity.c:570
+#: src/vanity.c:576
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1433,7 +1446,7 @@ msgstr ""
 "Vanity no puede contactar con la cámara web.\n"
 "Razón: %s"
 
-#: src/vanity.c:586
+#: src/vanity.c:592
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1442,11 +1455,11 @@ msgstr ""
 "Vanity no puede reproducir vídeo desde la cámara web:\n"
 "Razón: %s"
 
-#: src/vanity.c:622
+#: src/vanity.c:628
 msgid "Vanity Webcam Utility"
 msgstr "Utilidad de cámara web Vanity"
 
-#: src/vanity.c:627
+#: src/vanity.c:633
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1454,7 +1467,7 @@ msgstr ""
 "No se pudo inicializar las bibliotecas de hilos seguras.\n"
 "Verifique la instalación de su sistema. Vanity terminará ahora."
 
-#: src/vanity.c:649
+#: src/vanity.c:655
 #, c-format
 msgid ""
 "Vanity couln't initialise the \n"
@@ -1465,7 +1478,7 @@ msgstr ""
 "motor de configuración:\n"
 "%s"
 
-#: src/vanity.c:663 src/vanity.c:678
+#: src/vanity.c:669 src/vanity.c:684
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
