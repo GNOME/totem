@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2002-11-14 07:42+0100\n"
-"PO-Revision-Date: 2002-11-14 07:44+0100\n"
+"POT-Creation-Date: 2002-11-26 18:03+0100\n"
+"PO-Revision-Date: 2002-11-26 18:03+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,21 +23,22 @@ msgstr "Spellista"
 msgid "Repeat Mode"
 msgstr "Upprepningsläge"
 
-#: data/properties.glade.h:1 src/gtk-xine.c:1724
+#: data/properties.glade.h:1 src/gtk-xine.c:1747
 msgid "0 frames per second"
 msgstr "0 ramar per sekund"
 
 #. Bitrate
-#: data/properties.glade.h:2 src/gtk-xine.c:1726
+#: data/properties.glade.h:2 src/gtk-xine.c:1749
 msgid "0 kbps"
 msgstr "0 kb/s"
 
-#: data/properties.glade.h:3
+#. 0 seconds
+#: data/properties.glade.h:3 src/gtk-xine.c:1683
 msgid "0 seconds"
 msgstr "0 sekunder"
 
 #. Dimensions
-#: data/properties.glade.h:4 src/gtk-xine.c:1719
+#: data/properties.glade.h:4 src/gtk-xine.c:1742
 msgid "0 x 0"
 msgstr "0 × 0"
 
@@ -78,9 +79,9 @@ msgid "Framerate: "
 msgstr "Ramhastighet: "
 
 #. Year
-#: data/properties.glade.h:14 src/gtk-xine.c:1715 src/gtk-xine.c:1721
-#: src/gtk-xine.c:1728 src/gtk-xine.c:1750 src/gtk-xine.c:1775
-#: src/gtk-xine.c:1806
+#: data/properties.glade.h:14 src/gtk-xine.c:1738 src/gtk-xine.c:1744
+#: src/gtk-xine.c:1751 src/gtk-xine.c:1773 src/gtk-xine.c:1798
+#: src/gtk-xine.c:1829
 msgid "N/A"
 msgstr "-"
 
@@ -93,8 +94,8 @@ msgid "Title: "
 msgstr "Titel: "
 
 #. Title
-#: data/properties.glade.h:17 src/gtk-xine.c:1711 src/gtk-xine.c:1713
-#: src/gtk-xine.c:1742 src/gtk-xine.c:1746
+#: data/properties.glade.h:17 src/gtk-xine.c:1734 src/gtk-xine.c:1736
+#: src/gtk-xine.c:1765 src/gtk-xine.c:1769
 msgid "Unknown"
 msgstr "Okänd"
 
@@ -131,8 +132,8 @@ msgid "Next"
 msgstr "Nästa"
 
 #: data/totem.glade.h:6
-msgid "Next stream"
-msgstr "Nästa ström"
+msgid "Next Movie"
+msgstr "Nästa film"
 
 #: data/totem.glade.h:7
 msgid "Optical Device _Path: "
@@ -155,8 +156,8 @@ msgid "Previous"
 msgstr "Föregående"
 
 #: data/totem.glade.h:12
-msgid "Previous stream"
-msgstr "Föregående ström"
+msgid "Previous Movie"
+msgstr "Föregående film"
 
 #: data/totem.glade.h:13
 msgid "Show/Hide Playlist"
@@ -178,7 +179,7 @@ msgstr "Tid: "
 msgid "Toggle Aspect Ratio"
 msgstr "Växla proportioner"
 
-#: data/totem.glade.h:18 src/totem.c:1044
+#: data/totem.glade.h:18 src/totem.c:363 src/totem.c:1067
 msgid "Totem"
 msgstr "Totem"
 
@@ -226,18 +227,6 @@ msgstr "_Ljud"
 msgid "_Zoom 1:2"
 msgstr "_Zooma 1:2"
 
-#: data/totem.glade.h:30
-msgid "button3"
-msgstr "knapp3"
-
-#: data/totem.glade.h:31
-msgid "button4"
-msgstr "knapp4"
-
-#: data/totem.glade.h:32
-msgid "button5"
-msgstr "knapp5"
-
 #: data/totem.schemas.in.h:1
 msgid "Default audio output driver"
 msgstr "Standarddrivrutin för ljudutmatning"
@@ -266,7 +255,7 @@ msgstr "X-koordinat för spellistan"
 msgid "Y coordinate for the Playlist"
 msgstr "Y-koordinat för spellistan"
 
-#: src/gtk-playlist.c:410 src/totem.c:876
+#: src/gtk-playlist.c:410 src/totem.c:899
 msgid "Select files"
 msgstr "Välj filer"
 
@@ -278,7 +267,7 @@ msgstr "Filnamn"
 msgid "Totem Video Window"
 msgstr "Totem-videofönster"
 
-#: src/gtk-xine.c:736
+#: src/gtk-xine.c:740
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
@@ -286,80 +275,80 @@ msgstr ""
 "Kunde inte initiera trådstödet.\n"
 "Du bör installera ett trådsäkert Xlib."
 
-#: src/gtk-xine.c:768
+#: src/gtk-xine.c:772
 msgid "Could not find a suitable video output."
 msgstr "Kunde inte hitta en lämplig videoutmatning."
 
 #. One hour
-#: src/gtk-xine.c:1629
+#: src/gtk-xine.c:1652
 #, c-format
 msgid "%d hour"
 msgstr "%d timme"
 
 #. Multiple hours
-#: src/gtk-xine.c:1632
+#: src/gtk-xine.c:1655
 #, c-format
 msgid "%d hours"
 msgstr "%d timmar"
 
 #. One minute
-#: src/gtk-xine.c:1636
+#: src/gtk-xine.c:1659
 #, c-format
 msgid "%d minute"
 msgstr "%d minut"
 
 #. Multiple minutes
-#: src/gtk-xine.c:1639
+#: src/gtk-xine.c:1662
 #, c-format
 msgid "%d minutes"
 msgstr "%d minuter"
 
 #. One second
-#: src/gtk-xine.c:1643
+#: src/gtk-xine.c:1666
 #, c-format
 msgid "%d second"
 msgstr "%d sekund"
 
 #. Multiple seconds
-#: src/gtk-xine.c:1646
+#: src/gtk-xine.c:1669
 #, c-format
 msgid "%d seconds"
 msgstr "%d sekunder"
 
 #. hour:minutes:seconds
-#: src/gtk-xine.c:1651
+#: src/gtk-xine.c:1674
 #, c-format
 msgid "%s %s %s"
 msgstr "%s, %s, %s"
 
 #. minutes:seconds
-#: src/gtk-xine.c:1654
+#: src/gtk-xine.c:1677
 #, c-format
 msgid "%s %s"
 msgstr "%s, %s"
 
 #. seconds
-#: src/gtk-xine.c:1657
+#: src/gtk-xine.c:1680
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#. 0 second
-#: src/gtk-xine.c:1660 src/gtk-xine.c:1717
+#. Duration
+#: src/gtk-xine.c:1740
 msgid "0 second"
 msgstr "0 sekunder"
 
-#: src/gtk-xine.c:1785
+#: src/gtk-xine.c:1808
 #, c-format
 msgid "%d frames per second"
 msgstr "%d ramar per sekund"
 
-#: src/gtk-xine.c:1797
+#: src/gtk-xine.c:1820
 #, c-format
 msgid "%d kbps"
 msgstr "%d kb/s"
 
-#: src/totem.c:257
+#: src/totem.c:261
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -371,7 +360,7 @@ msgstr ""
 "Installera de insticksmoduler som krävs och starta om Totem för att kunna "
 "spela denna typ av media."
 
-#: src/totem.c:265
+#: src/totem.c:269
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -382,25 +371,25 @@ msgstr ""
 "Du bör kontrollera om det finns en skiva i enheten och att den är korrekt "
 "konfigurerad."
 
-#: src/totem.c:369 src/totem.c:1717
+#: src/totem.c:374 src/totem.c:1747
 msgid "No file"
 msgstr "Ingen fil"
 
-#: src/totem.c:1020
+#: src/totem.c:1043
 msgid "translator_credits"
 msgstr ""
 "Christian Rose\n"
 "Skicka synpunkter på översättningen till sv@li.org"
 
-#: src/totem.c:1045
+#: src/totem.c:1068
 msgid "Copyright (c) 2002 Bastien Nocera"
 msgstr "Copyright © 2002 Bastien Nocera"
 
-#: src/totem.c:1046
+#: src/totem.c:1069
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Filmspelare (baserad på Xine-biblioteken)"
 
-#: src/totem.c:1071
+#: src/totem.c:1094
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -408,7 +397,7 @@ msgstr ""
 "Totem kunde inte visa filmegenskapsfönstret.\n"
 "Försäkra dig om att Totem är korrekt installerat."
 
-#: src/totem.c:1385
+#: src/totem.c:1406
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -417,7 +406,7 @@ msgstr ""
 "Totem kunde inte starta:\n"
 "%s"
 
-#: src/totem.c:1391
+#: src/totem.c:1412
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'.\n"
@@ -426,12 +415,12 @@ msgstr ""
 "Det finns ingen insticksmodul för Totem för hantering av \"%s\".\n"
 "Totem kommer inte att kunna spela det."
 
-#: src/totem.c:1396
+#: src/totem.c:1417
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "\"%s\" är trasig, och Totem kan inte spela den längre."
 
-#: src/totem.c:1400
+#: src/totem.c:1421
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -440,7 +429,7 @@ msgstr ""
 "Totem kunde inte spela \"%s\":\n"
 "%s"
 
-#: src/totem.c:1820
+#: src/totem.c:1864
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -451,7 +440,7 @@ msgstr ""
 "konfigurationsmotorn:\n"
 "%s"
 
-#: src/totem.c:1852 src/totem.c:1861
+#: src/totem.c:1878 src/totem.c:1905
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -459,13 +448,28 @@ msgstr ""
 "Kunde inte läsa in huvudgränssnittet (totem.glade).\n"
 "Försäkra dig om att Totem är korrekt installerat."
 
-#: src/totem.c:1873
+#: src/totem.c:1917
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
 msgstr ""
 "Kunde inte läsa in gränssnittet för spellistan.\n"
 "Försäkra dig om att Totem är korrekt installerat."
+
+#~ msgid "Next stream"
+#~ msgstr "Nästa ström"
+
+#~ msgid "Previous stream"
+#~ msgstr "Föregående ström"
+
+#~ msgid "button3"
+#~ msgstr "knapp3"
+
+#~ msgid "button4"
+#~ msgstr "knapp4"
+
+#~ msgid "button5"
+#~ msgstr "knapp5"
 
 #~ msgid "Playing"
 #~ msgstr "Spelar"
