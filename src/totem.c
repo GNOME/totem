@@ -2037,7 +2037,10 @@ on_window_key_press_event (GtkWidget *win, GdkEventKey *event,
 {
 	Totem *totem = (Totem *) user_data;
 
-	if (event->state != 0)
+	if ((event->state | GDK_SHIFT_MASK) != event->state
+			&& (event->state | GDK_LOCK_MASK) != event->state
+			&& (event->state | GDK_SHIFT_MASK | GDK_LOCK_MASK)
+			!= event->state)
 		return FALSE;
 
 	return totem_action_handle_key (totem, event->keyval);

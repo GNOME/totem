@@ -1,3 +1,10 @@
+2003-01-28  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-xine.c: (gtk_xine_get_current_frame): fix screenshot's aspect
+	ratio (Closes: #104605)
+	* src/totem.c: (on_window_key_press_event): we also process key presses
+	when numlock or capslock are on
+
 2003-01-25  Bastien Nocera  <hadess@hadess.net>
 
 	* src/gtk-xine.c: (gtk_xine_class_init), (load_config_from_gconf),

@@ -2070,6 +2070,7 @@ gtk_xine_get_current_frame (GtkXine *gtx)
 {
 	guchar *pixels;
 	gint width, height;
+	float ratio;
 	GdkPixbuf *pixbuf = NULL;
 
 	g_return_val_if_fail (gtx != NULL, NULL);
@@ -2077,12 +2078,28 @@ gtk_xine_get_current_frame (GtkXine *gtx)
 	g_return_val_if_fail (gtx->priv->xine != NULL, NULL);
 
 	pixels = gtk_xine_get_current_frame_rgb (gtx, &width, &height);
-	if (pixels != NULL)
+	if (pixels == NULL)
+		return NULL;
+
+	pixbuf = gdk_pixbuf_new_from_data (pixels,
+			GDK_COLORSPACE_RGB, FALSE,
+			8, width, height, 3 * width,
+			(GdkPixbufDestroyNotify) g_free, NULL);
+
+	/* MPEG streams have ratio information */
+	ratio = xine_get_stream_info (gtx->priv->stream,
+			XINE_STREAM_INFO_VIDEO_RATIO);
+
+	if (ratio != 1.0 && ratio != 0.0)
 	{
-		pixbuf = gdk_pixbuf_new_from_data (pixels,
-				GDK_COLORSPACE_RGB, FALSE,
-				8, width, height, 3 * width,
-				(GdkPixbufDestroyNotify) g_free, NULL);
+		GdkPixbuf *tmp;
+
+		tmp = gdk_pixbuf_scale_simple (pixbuf,
+				(int) (width * ratio / 10000), height,
+				GDK_INTERP_BILINEAR);
+		gdk_pixbuf_unref (pixbuf);
+
+		return tmp;
 	}
 
 	return pixbuf;
