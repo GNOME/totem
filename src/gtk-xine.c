@@ -881,6 +881,7 @@ gtk_xine_realize (GtkWidget *widget)
 
 	/* set realized flag */
 	GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
+
 #if 0
 	attr.x = widget->allocation.x;
 	attr.y = widget->allocation.y;
@@ -906,7 +907,6 @@ gtk_xine_realize (GtkWidget *widget)
 	widget->window = gdk_window_foreign_new (gtx->priv->video_window);
 	gdk_window_set_user_data (widget->window, gtx);
 #endif
-
 	/* track configure events of toplevel window */
 	g_signal_connect (GTK_OBJECT (gtk_widget_get_toplevel (widget)),
 			  "configure-event",
@@ -923,7 +923,8 @@ gtk_xine_realize (GtkWidget *widget)
 		return;
 	}
 
-	gtx->priv->display = XOpenDisplay (NULL);
+	gtx->priv->display = XOpenDisplay (gdk_display_get_name
+			(gdk_display_get_default ()));
 	XLockDisplay (gtx->priv->display);
 	gtx->priv->screen = DefaultScreen (gtx->priv->display);
 
@@ -962,8 +963,6 @@ gtk_xine_realize (GtkWidget *widget)
 			gtx->priv->ao_driver, gtx->priv->vo_driver);
 	gtx->priv->ev_queue = xine_event_new_queue (gtx->priv->stream);
 
-	XUnlockDisplay (gtx->priv->display);
-
 	/* Setup xine events, the screensaver and the event filter */
 	xine_event_create_listener_thread (gtx->priv->ev_queue,
 			xine_event, (void *) gtx);
@@ -980,6 +979,8 @@ gtk_xine_realize (GtkWidget *widget)
 			gtx->priv->can_dvd = TRUE;
 		i++;
 	}
+
+	XUnlockDisplay (gtx->priv->display);
 
 	/* now, create a xine thread */
 	pthread_create (&gtx->priv->thread, NULL, xine_thread, gtx);
