@@ -420,7 +420,7 @@ totem_action_set_mrl_and_play (Totem *totem, char *mrl)
 }
 
 void
-totem_action_play_media (Totem *totem, MediaType type)
+totem_action_load_media (Totem *totem, MediaType type)
 {
 	const char **mrls;
 	char *mrl;
@@ -442,6 +442,14 @@ totem_action_play_media (Totem *totem, MediaType type)
 	}
 
 	totem_action_open_files (totem, (char **)mrls, FALSE);
+}
+
+void
+totem_action_play_media (Totem *totem, MediaType type)
+{
+	char *mrl;
+
+	totem_action_load_media (totem, type);
 	mrl = gtk_playlist_get_current_mrl (totem->playlist);
 	totem_action_set_mrl_and_play (totem, mrl);
 	g_free (mrl);
@@ -1453,13 +1461,13 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 			}
 			if (strcmp (list[i], "dvd:") == 0)
 			{
-				totem_action_play_media (totem, MEDIA_DVD);
+				totem_action_load_media (totem, MEDIA_DVD);
 				continue;
 			} else if (strcmp (list[i], "vcd:") == 0) {
-				totem_action_play_media (totem, MEDIA_VCD);
+				totem_action_load_media (totem, MEDIA_VCD);
 				continue;
 			} else if (strcmp (list[i], "cd:") == 0) {
-				totem_action_play_media (totem, MEDIA_CDDA);
+				totem_action_load_media (totem, MEDIA_CDDA);
 				continue;
 			} else if (gtk_playlist_add_mrl (totem->playlist,
 						filename, NULL) == TRUE)

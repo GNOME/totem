@@ -1,5 +1,11 @@
 2003-06-09  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (totem_action_load_media),
+	(totem_action_play_media), (totem_action_open_files): don't start/stop
+	playing optical media files on startup (Closes: #113959)
+
+2003-06-09  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c:
 	(bacon_video_widget_get_metadata_int),
 	(bacon_video_widget_get_metadata): check for a null GValue
