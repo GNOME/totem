@@ -29,7 +29,7 @@
 #include "gtk-xine.h"
 #include "gtk-playlist.h"
 #include "rb-ellipsizing-label.h"
-#include "totem-cd-selection.h"
+#include "bacon-cd-selection.h"
 
 #include "egg-recent-model.h"
 #include "egg-recent-view.h"
@@ -1307,14 +1307,14 @@ on_checkbutton2_toggled (GtkToggleButton *togglebutton, gpointer user_data)
 }
 
 static void
-on_combo_entry1_changed (TotemCdSelection *tcs, char *device,
+on_combo_entry1_changed (BaconCdSelection *bcs, char *device,
 		gpointer user_data)
 {
 	Totem *totem = (Totem *)user_data;
 	const char *str;
 
 	D("on_combo_entry1_activate");
-	str = totem_cd_selection_get_device (tcs);
+	str = bacon_cd_selection_get_device (bcs);
 	gconf_client_set_string (totem->gc, GCONF_PREFIX"mediadev",
 			str, NULL);
 }
@@ -1368,7 +1368,7 @@ mediadev_changed_cb (GConfClient *client, guint cnxn_id,
 	g_signal_handlers_disconnect_by_func (G_OBJECT (item),
 			on_combo_entry1_changed, totem);
 
-	totem_cd_selection_set_device (TOTEM_CD_SELECTION (item),
+	bacon_cd_selection_set_device (BACON_CD_SELECTION (item),
 			gconf_client_get_string
 			(totem->gc, GCONF_PREFIX"mediadev", NULL));
 
@@ -2026,11 +2026,11 @@ label_create (void)
 }
 
 GtkWidget *
-totem_cd_selection_create (void)
+bacon_cd_selection_create (void)
 {
 	GtkWidget *widget;
 
-	widget = totem_cd_selection_new ();
+	widget = bacon_cd_selection_new ();
 	gtk_widget_show (widget);
 
 	return widget;
@@ -2111,13 +2111,13 @@ totem_setup_preferences (Totem *totem)
 	if (device == NULL || (strcmp (device, "") == 0)
 			|| (strcmp (device, "auto") == 0))
 	{
-		device = totem_cd_selection_get_default_device
-			(TOTEM_CD_SELECTION (item));
+		device = bacon_cd_selection_get_default_device
+			(BACON_CD_SELECTION (item));
 		gconf_client_set_string (totem->gc, GCONF_PREFIX"mediadev",
 				device, NULL);
 	}
 
-	totem_cd_selection_set_device (TOTEM_CD_SELECTION (item),
+	bacon_cd_selection_set_device (BACON_CD_SELECTION (item),
 			gconf_client_get_string
 			(totem->gc, GCONF_PREFIX"mediadev", NULL));
 	g_signal_connect (G_OBJECT (item), "device-changed",

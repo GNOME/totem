@@ -1,3 +1,16 @@
+2003-01-02  Bastien Nocera  <hadess@hadess.net>
+
+	* README_CVS:
+	* data/totem.glade:
+	* src/Makefile.am:
+	* src/cd-drive.c: removed
+	* src/cd-drive.h: ditto
+	* src/totem-cd-selection.c: ditto
+	* src/totem-cd-selection.h: ditto
+	* src/totem.c: (on_combo_entry1_changed), (mediadev_changed_cb),
+	(bacon_cd_selection_create), (totem_setup_preferences):
+	update everything wrt the new libbacon
+
 2002-12-30  Bastien Nocera  <hadess@hadess.net>
 
 	* src/input_gnomevfs.c: (gnomevfs_plugin_get_optional_data):

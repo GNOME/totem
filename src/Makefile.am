@@ -1,8 +1,6 @@
 
 bin_PROGRAMS = totem
 
-noinst_PROGRAMS = list_cddrives
-
 MARSHALFILES = gtkxine-marshal.h gtkxine-marshal.c
 GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
 
@@ -18,15 +16,15 @@ gtkxine-marshal.c: gtkxine-marshal.h
 	|| ( rm -f gtkxine-marshal.tmp && exit 1 )
 
 EGG_RECENT_FILES =                      \
-        egg-recent-model.c              \
+	egg-recent-model.c              \
         egg-recent-model.h              \
-        egg-recent-item.c               \
-        egg-recent-item.h               \
-        egg-recent-view.c               \
-        egg-recent-view.h               \
-        egg-recent-view-gtk.c           \
+	egg-recent-item.c               \
+	egg-recent-item.h               \
+	egg-recent-view.c               \
+	egg-recent-view.h               \
+	egg-recent-view-gtk.c           \
         egg-recent-view-gtk.h           \
-        egg-recent-util.c               \
+	egg-recent-util.c               \
 	egg-recent-util.h		\
 	egg-recent-vfs-utils.c		\
 	egg-recent-vfs-utils.h
@@ -43,12 +41,17 @@ egg-recent-util.h: regenerate-built-sources
 egg-recent-vfs-utils.c: regenerate-built-sources
 egg-recent-vfs-utils.h: regenerate-built-sources
 
+BACON_CD_SELECTION = 			\
+	cd-drive.c			\
+	cd-drive.h			\
+	bacon-cd-selection.c		\
+	bacon-cd-selection.h
+
 EGGDIR=$(srcdir)/../../libegg/libegg/recent-files/
+BACONDIR=$(srcdir)/../../libbacon/src/
 regenerate-built-sources:
 	EGGFILES="$(EGG_RECENT_FILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh
-
-list_cddrives_SOURCES = list_cddrives.c cd-drive.c cd-drive.h
-list_cddrives_LDADD = $(EXTRA_GNOME_LIBS)
+	EGGFILES="$(BACON_CD_SELECTION)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh
 
 totem_SOURCES = 			\
 	totem.c				\
@@ -61,20 +64,17 @@ totem_SOURCES = 			\
 	gtk-playlist.c	gtk-playlist.h	\
 	rb-ellipsizing-label.c		\
 	rb-ellipsizing-label.h		\
-	totem-cd-selection.c		\
-	totem-cd-selection.h		\
-	cd-drive.c cd-drive.h		\
 	scrsaver.c  scrsaver.h		\
 	video-utils.c video-utils.h	\
 	xdnd.c xdnd.h			\
 	gtk-message.c gtk-message.h	\
 	debug.h                         \
-	$(EGG_RECENT_FILES)
+	$(EGG_RECENT_FILES)		\
+	$(BACON_CD_SELECTION)
 
 totem_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS)
 totem_LDFLAGS = -export-dynamic
 INCLUDES = 						\
-	-Wall						\
 	-D_REENTRANT -D_FILE_OFFSET_BITS=64		\
 	$(GNOMEUI_UNSTABLE)				\
 	$(GLIB_UNSTABLE)				\
