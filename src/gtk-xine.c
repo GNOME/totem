@@ -83,6 +83,11 @@ enum {
 	LAST_SIGNAL
 };
 
+/* Enum for none-signal stuff that needs to go through the AsyncQueue */
+enum {
+	RATIO = LAST_SIGNAL
+};
+
 /* Arguments */
 enum {
 	PROP_0,
@@ -340,11 +345,29 @@ frame_output_cb (void *gtx_gen,
 		*dest_width = gtx->widget.allocation.width;
 		*dest_height = gtx->widget.allocation.height;
 
+		/* Size changed */
 		if (gtx->priv->video_width != video_width
 				|| gtx->priv->video_height != video_height)
 		{
+			GConfClient *gc;
+
 			gtx->priv->video_width = video_width;
 			gtx->priv->video_height = video_height;
+
+			gc = gconf_client_get_default ();
+
+			if (gconf_client_get_bool
+					(gc, GCONF_PREFIX"auto_resize", NULL)
+					== TRUE)
+			{
+				GtkXineSignal *signal;
+				        
+				signal = g_new0 (GtkXineSignal, 1);
+				signal->type = RATIO;
+				g_async_queue_push (gtx->priv->queue, signal);
+				g_idle_add ((GSourceFunc)gtk_xine_idle_signal,
+						gtx);
+			}
 		}
 	}
 }
@@ -819,6 +842,10 @@ gtk_xine_idle_signal (GtkXine *gtx)
 	case EOS:
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[EOS], 0, NULL);
+		break;
+	/* A bit of cheating right here */
+	case RATIO:
+		gtk_xine_set_scale_ratio (gtx, 0);
 		break;
 	default:
 	}
@@ -1452,23 +1479,61 @@ gtk_xine_toggle_aspect_ratio (GtkXine *gtx)
 			VO_PROP_ASPECT_RATIO, tmp + 1);
 }
 
+static gboolean
+gtk_xine_ratio_fits_screen (GtkXine *gtx, gfloat ratio)
+{
+	int new_w, new_h;
+
+	g_return_if_fail (gtx != NULL);
+	g_return_if_fail (GTK_IS_XINE (gtx));
+	g_return_if_fail (gtx->priv->xine != NULL);
+
+	new_w = gtx->priv->video_width * ratio;
+	new_h = gtx->priv->video_height * ratio;
+
+	if (new_w > (gdk_screen_width () - 128) ||
+			new_h > (gdk_screen_height () - 128))
+	{
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
 void
 gtk_xine_set_scale_ratio (GtkXine *gtx, gfloat ratio)
 {
 	GtkWindow *toplevel;
 	int new_w, new_h;
 
+	g_return_if_fail (gtx != NULL);
+	g_return_if_fail (GTK_IS_XINE (gtx));
+	g_return_if_fail (gtx->priv->xine != NULL);
+	g_return_if_fail (ratio >= 0);
+
 	if (gtx->priv->fullscreen_mode == TRUE)
 		return;
 
+	/* Try best fit for the screen */
+	if (ratio == 0)
+	{
+		if (gtk_xine_ratio_fits_screen (gtx, 2) == TRUE)
+			ratio = 2;
+		else if (gtk_xine_ratio_fits_screen (gtx, 1) == TRUE)
+			ratio = 1;
+		else if (gtk_xine_ratio_fits_screen (gtx, 0.5) == TRUE)
+			ratio = 0.5;
+		else
+			return;
+	} else {
+		/* don't scale to something bigger than the screen, and leave
+		 * us some room */
+		if (gtk_xine_ratio_fits_screen (gtx, ratio) == FALSE)
+			return;
+	}
+
 	new_w = gtx->priv->video_width * ratio;
 	new_h = gtx->priv->video_height * ratio;
-
-	/* don't scale to something bigger than the screen, and leave us
-	 * some room */
-	if (new_w > (gdk_screen_width () - 128) ||
-			new_h > (gdk_screen_height () - 128))
-		return;
 
 	toplevel = GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (gtx)));
 
