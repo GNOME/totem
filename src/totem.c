@@ -2224,6 +2224,9 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 			gtk_playlist_add_mrl (totem->playlist, url, NULL);
 		}
 		break;
+	case TOTEM_REMOTE_COMMAND_SHOW:
+		gtk_window_present (GTK_WINDOW (totem->win));
+		break;
 	default:
 		break;
 	}
@@ -3381,7 +3384,6 @@ totem_message_connection_receive_cb (const char *msg, Totem *totem)
 	else
 		url = NULL;
 
-	gtk_window_present (GTK_WINDOW (totem->win));
 	totem_action_remote (totem, command, url);
 
 	g_free (url);
@@ -3394,7 +3396,14 @@ process_command_line (BaconMessageConnection *conn, int argc, char **argv)
 	char *line, *full_path;
 
 	if (argc == 1)
+	{
+		/* Just show totem if there aren't any arguments */
+		line = g_strdup_printf ("%03d ", TOTEM_REMOTE_COMMAND_SHOW);
+		bacon_message_connection_send (conn, line);
+		g_free (line);
+
 		return;
+	}
 
 	i = 2;
 

@@ -1,3 +1,12 @@
+2003-07-13  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-remote.h:
+	* src/totem.c: (totem_action_remote),
+	(totem_message_connection_receive_cb), (process_command_line):
+	don't gtk_window_present when enqueuing or replacing items in the
+	playlist, but do so if totem is ran without any arguments (lost your
+	Totem window under your windows? :)
+
 2003-07-11  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c: (totem_action_load_media),
