@@ -1,3 +1,8 @@
+// This code is heavily based on code from dvd+rw-tools 
+// by Andy Polyakov <appro@fy.chalmers.se>
+//
+// For further details see http://fy.chalmers.se/~appro/linux/DVD+RW/
+//
 
 #if defined(__linux__) || defined(__FreeBSD__)
 
@@ -49,10 +54,10 @@ int get_dvd_r_rw_profile (const char *name)
   cmd[8]=8;
   cmd[9]=0;
   if (cmd.transport(READ,page,8))
-  {   if (sense[0]==0) perror("Unable to ioctl");
+  {   /* if (sense[0]==0) perror("Unable to ioctl");
 	  else             fprintf(stderr,"GET CONFIGURATION failed with "
 			  "SK=%xh/ASC=%02xh/ASCQ=%02xh\n",
-			  sense[2]&0xF,sense[12],sense[13]);
+			  sense[2]&0xF,sense[12],sense[13]); */
 	  goto bail;
   }
 

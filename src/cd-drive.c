@@ -51,6 +51,16 @@
 
 #include "cd-drive.h"
 
+static struct {
+	const char *name;
+	gboolean can_write_cdr;
+	gboolean can_write_cdrw;
+	gboolean can_write_dvdr;
+	gboolean can_write_dvdram;
+} recorder_whitelist[] = {
+	{ "IOMEGA - CDRW9602EXT-B", TRUE, TRUE, FALSE, FALSE },
+};
+
 #if defined(__linux__) || defined(__FreeBSD__)
 
 /* For dvd_plus_rw_utils.cpp */
@@ -86,7 +96,7 @@ linux_bsd_media_type (const char *device)
 
 	fd = open (device, O_RDONLY);
 	if (fd < 0) {
-		return CD_MEDIA_TYPE_UNKNOWN;
+		return CD_MEDIA_TYPE_ERROR;
 	}
 
 	mmc_profile = get_mmc_profile ((void *)fd);
@@ -187,6 +197,7 @@ struct scsi_unit {
 
 struct cdrom_unit {
 	char *device;
+	char *display_name;
 	int speed;
 	gboolean can_write_cdr;
 	gboolean can_write_cdrw;
@@ -194,6 +205,32 @@ struct cdrom_unit {
 	gboolean can_write_dvdram;
 	gboolean can_read_dvd;
 };
+
+static char *cdrom_get_name (struct cdrom_unit *cdrom, struct scsi_unit *scsi_units, int n_scsi_units);
+
+static void
+add_whitelist (struct cdrom_unit *cdrom_s,
+	       struct scsi_unit *scsi_units, int n_scsi_units)
+{
+	guint i;
+
+	for (i = 0; i < G_N_ELEMENTS (recorder_whitelist); i++) {
+		if (cdrom_s->display_name == NULL) {
+			continue;
+		}
+
+		if (!strcmp (cdrom_s->display_name, recorder_whitelist[i].name)) {
+			cdrom_s->can_write_cdr =
+				recorder_whitelist[i].can_write_cdr;
+			cdrom_s->can_write_cdrw =
+				recorder_whitelist[i].can_write_cdrw;
+			cdrom_s->can_write_dvdr =
+				recorder_whitelist[i].can_write_dvdr;
+			cdrom_s->can_write_dvdram =
+				recorder_whitelist[i].can_write_dvdram;
+		}
+	}
+}
 
 static void
 get_scsi_units (char **device_str, char **devices, struct scsi_unit *scsi_units)
@@ -314,7 +351,7 @@ get_device_max_speed (char *id)
 	const char *argv[20]; /* Shouldn't need more than 20 arguments */
 	char *dev_str, *stdout_data, *speed;
 
-	max_speed = 1;
+	max_speed = -1;
 
 	i = 0;
 	argv[i++] = "cdrecord";
@@ -426,19 +463,18 @@ add_linux_cd_recorder (GList *cdroms,
 	cdrom = g_new0 (CDDrive, 1);
 
 	cdrom->type = CDDRIVE_TYPE_CD_DRIVE;
+	cdrom->display_name = g_strdup (cdrom_s->display_name);
 
 	if (cdrom_s->device[0] == 's') {
-		cdrom->display_name = cdrom_get_name (cdrom_s, scsi_units,
-				n_scsi_units);
 		if (!get_cd_scsi_id (cdrom_s->device, &bus, &id, &lun)) {
+			g_free (cdrom->display_name);
+			g_free (cdrom);
 			return cdroms;
 		}
 		cdrom->cdrecord_id = g_strdup_printf ("%d,%d,%d",
 				bus, id, lun);
 	} else {
 		/* kernel >=2.5 can write cd w/o ide-scsi */
-		cdrom->display_name = cdrom_get_name (cdrom_s,
-				scsi_units, n_scsi_units);
 		cdrom->cdrecord_id = g_strdup_printf ("/dev/%s",
 				cdrom_s->device);
 	}
@@ -446,6 +482,9 @@ add_linux_cd_recorder (GList *cdroms,
 	if (recorder_only) {
 		cdrom->max_speed_write = get_device_max_speed
 			(cdrom->cdrecord_id);
+		if (cdrom->max_speed_write == -1) {
+			cdrom->max_speed_write = cdrom_s->speed;
+		}
 	} else {
 		/* Have a wild guess, the drive should actually correct us */
 		cdrom->max_speed_write = cdrom_s->speed;
@@ -485,7 +524,7 @@ add_linux_cd_drive (GList *cdroms, struct cdrom_unit *cdrom_s,
 	cdrom = g_new0 (CDDrive, 1);
 	cdrom->type = CDDRIVE_TYPE_CD_DRIVE;
 	cdrom->cdrecord_id = NULL;
-	cdrom->display_name = cdrom_get_name (cdrom_s, scsi_units, n_scsi_units);
+	cdrom->display_name = g_strdup (cdrom_s->display_name);
 	cdrom->device = g_strdup_printf ("/dev/%s", cdrom_s->device);
 	cdrom->max_speed_write = 0; /* Can't write */
 	cdrom->max_speed_read = cdrom_s->speed;
@@ -681,30 +720,34 @@ linux_scan (gboolean recorder_only)
 		maj = min = 0;
 	}
 	fclose(file);
-	
+
 	cdroms_list = NULL;
 	for (i = n_cdroms - 1, j = 0; i >= 0; i--, j++) {
+		if (have_devfs) {
+			cdroms[i].device = g_strdup_printf("%s cdroms/cdrom%d",
+					cdroms[i].device,  j);
+		}
+		cdroms[i].display_name = cdrom_get_name (&cdroms[i],
+				scsi_units, n_scsi_units);
+		add_whitelist (&cdroms[i], scsi_units, n_scsi_units);
+
 		if ((cdroms[i].can_write_cdr ||
 		    cdroms[i].can_write_cdrw ||
 		    cdroms[i].can_write_dvdr ||
 		    cdroms[i].can_write_dvdram) &&
 			(cdroms[i].device[0] == 's' ||
 			(maj > 2) || (maj == 2 && min >= 5))) {
-			if (have_devfs) {
-				cdroms[i].device = g_strdup_printf("%s cdroms/cdrom%d",
-						cdroms[i].device,  j);
-			}
 			cdroms_list = add_linux_cd_recorder (cdroms_list,
 					recorder_only, &cdroms[i],
 					scsi_units, n_scsi_units);
 		} else if (!recorder_only) {
-			if (have_devfs) {
-				cdroms[i].device = g_strdup_printf("%s cdroms/cdrom%d",
-						cdroms[i].device,  j);
-			}
 			cdroms_list = add_linux_cd_drive (cdroms_list,
 					&cdroms[i], scsi_units, n_scsi_units);
 		}
+	}
+
+	for (i = n_cdroms - 1; i >= 0; i--) {
+		g_free (cdroms[i].display_name);
 	}
 
 	g_free (scsi_units);
