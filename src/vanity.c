@@ -681,8 +681,11 @@ main (int argc, char **argv)
 	gnome_authentication_manager_init ();
 #endif /* !HAVE_GTK_ONLY */
 
-	filename = g_build_filename (DATADIR,
-			"totem", "vanity.glade", NULL);
+	if (g_file_test ("../data/vanity.glade", G_FILE_TEST_EXISTS) != FALSE)
+		filename = g_strdup ("../data/vanity.glade");
+	else
+		filename = g_build_filename (DATADIR,
+				"totem", "vanity.glade", NULL);
 
 	if (g_file_test (filename, G_FILE_TEST_EXISTS) == FALSE)
 	{
@@ -708,7 +711,7 @@ main (int argc, char **argv)
 	}
 	g_free (filename);
 
-	vanity->win = glade_xml_get_widget (vanity->xml, "app1");
+	vanity->win = glade_xml_get_widget (vanity->xml, "window1");
 	filename = g_build_filename (DATADIR, "totem", "vanity.png", NULL);
 	gtk_window_set_default_icon_from_file (filename, NULL);
 	g_free (filename);
