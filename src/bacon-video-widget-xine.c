@@ -3342,6 +3342,9 @@ GList
 	int i, num_channels;
 	char lang[XINE_LANG_MAX];
 
+	if (bvw->priv->mrl == NULL)
+		return NULL;
+
 	num_channels = xine_get_stream_info
 		(bvw->priv->stream, XINE_STREAM_INFO_MAX_AUDIO_CHANNEL);
 
@@ -3393,6 +3396,9 @@ GList
 	GList *list = NULL;
 	int i;
 	char lang[XINE_LANG_MAX];
+
+	if (bvw->priv->mrl == NULL)
+		return NULL;
 
 	for(i = 0; i < 32; i++)
 	{

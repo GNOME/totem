@@ -1,5 +1,28 @@
 2005-02-17  Bastien Nocera  <hadess@hadess.net>
 
+	* NEWS: upd
+	* data/Makefile.am:
+	* data/popup.glade: 
+	* data/totem.glade:
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_languages),
+	(bacon_video_widget_get_subtitles):
+	* src/totem-playlist.c: (totem_playlist_new):
+	* src/totem-private.h:
+	* src/totem.c: (totem_action_menu_popup),
+	(totem_action_set_mrl_with_warning), (update_seekable),
+	(on_open_location1_activate), (show_controls), (update_buttons),
+	(totem_callback_connect), (main):
+	Split off popup menu into its own glade file to work around the
+	accelerators not appearing in it (based on patch from William
+	Jon McCann <mccann@jhu.edu>) (Closes: #153594), mark the strings
+	used for the interface loading for translation, don't call
+	xine_get_spu_lang() when there's no file loaded to avoid a crash,
+	use the right stock icons in the popup menu, have the default
+	sensitivity in some popup menu items
+
+2005-02-17  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (main): remove gdk_threads_init() as we don't have
 	any gdk_threads_enter anywhere anyway, fixes hangs when file selector
 	bookmarks require authentication (Closes: #154796)

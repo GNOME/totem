@@ -20,6 +20,7 @@ stuff_DATA =				\
 	totem.glade			\
 	playlist.glade			\
 	mozilla-viewer.glade		\
+	popup.glade			\
 	properties.glade		\
 	skip_to.glade			\
 	uri.glade			\

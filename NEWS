@@ -3,9 +3,18 @@ New features and significant updates in version...
 ???:
 * NVidia TV-Out support (GStreamer)
 * Better overall metadata information (xine-lib)
-* Fix volume bars not reaching 100%
+* Fix volume bars not reaching 100% (all), or above 100% (GStreamer)
 * Fix history not getting saved when using the "Open Location..." dialog
+* Popup menu fixes (accelerators not appearing, wrong stock icons, wrong
+  sensitivity on some items)
+* Fix hangs opening the "Open..." dialog when a bookmark required authentication
 * Handle unnamed sound channels (xine-lib)
+* Don't allow the AC3 Passthrough audio output to set the volume (xine-lib)
+* Fix colour balance settings not being remembered (GStreamer)
+* Allow the thumbnailer to work without a display
+* Make the fullscreen button go to the edge of the screen, and move it to
+  the right hand-side as per the HIG
+* Fix "Play Disc" when devfs is used
 
 0.101:
 * Rise the controls when in fullscreen and a remote's button is pressed

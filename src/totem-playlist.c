@@ -1472,7 +1472,7 @@ totem_playlist_new (void)
 	playlist = TOTEM_PLAYLIST (g_object_new (GTK_TYPE_PLAYLIST, NULL));
 
 	playlist->_priv->xml = totem_interface_load ("playlist.glade",
-			"playlist", TRUE, NULL);
+			_("playlist"), TRUE, NULL);
 
 	if (playlist->_priv->xml == NULL)
 	{

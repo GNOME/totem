@@ -56,6 +56,7 @@ typedef enum {
 struct Totem {
 	/* Control window */
 	GladeXML *xml;
+	GladeXML *xml_popup;
 	GtkWidget *win;
 	BaconVideoWidget *bvw;
 	GtkWidget *prefs;
