@@ -1,5 +1,21 @@
 2004-12-26  Bastien Nocera  <hadess@hadess.net>
 
+	* NEWS: updates
+	* data/totem.glade: first try at updated controls popup
+	* src/totem-playlist.c: (treeview_row_changed): emit the
+	"changed" signal when double-clicking on an entry
+	* src/totem-time-label.c: (totem_time_label_init),
+	(totem_time_label_new): move most of new() code to init()
+	* src/totem.c: (totem_action_restore_pl),
+	(totem_action_set_mrl_with_warning), (totem_action_set_mrl),
+	(on_recent_file_activate), (playlist_changed_cb), (move_popups),
+	(on_video_motion_notify_event), (on_eos_event), (label_create):
+	don't show a warning when opening the file when rewinding, or
+	restoring a playlist, show an error message when trying to play
+	a file that can't be opened
+
+2004-12-26  Bastien Nocera  <hadess@hadess.net>
+
 	* help/ru/.cvsignore:
 	* src/.cvsignore: updated
 

@@ -114,6 +114,8 @@ static gboolean totem_is_media (const char *mrl);
 static void show_controls (Totem *totem, gboolean was_fullscreen);
 static gboolean totem_is_fullscreen (Totem *totem);
 static void play_pause_set_label (Totem *totem, TotemStates state);
+static gboolean totem_action_set_mrl_with_warning (Totem *totem,
+		const char *mrl, gboolean warn);
 
 static void
 long_action (void)
@@ -647,15 +649,7 @@ totem_action_restore_pl (Totem *totem)
 	play_pause_set_label (totem, STATE_PAUSED);
 
 	mrl = totem_playlist_get_current_mrl (totem->playlist);
-	if (totem->mrl == NULL
-			|| (totem->mrl != NULL && mrl != NULL
-				&& strcmp (totem->mrl, mrl) != 0))
-	{
-		totem_action_set_mrl (totem, mrl);
-	} else if (totem->mrl != NULL) {
-		totem_playlist_set_playing (totem->playlist, TRUE);
-	}
-
+	totem_action_set_mrl_with_warning (totem, mrl, FALSE);
 	g_free (mrl);
 
 	return;
@@ -734,8 +728,9 @@ update_mrl_label (Totem *totem, const char *name)
 	}
 }
 
-gboolean
-totem_action_set_mrl (Totem *totem, const char *mrl)
+static gboolean
+totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
+		gboolean warn)
 {
 	GtkWidget *widget;
 	gboolean retval = TRUE;
@@ -850,7 +845,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		/* Set the playlist */
 		totem_playlist_set_playing (totem->playlist, retval);
 
-		if (retval == FALSE)
+		if (retval == FALSE && warn != FALSE)
 		{
 			char *msg, *disp;
 
@@ -862,6 +857,13 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 			g_free (msg);
 			g_error_free (err);
 		}
+
+		if (retval == FALSE)
+		{
+			g_free (totem->mrl);
+			totem->mrl = NULL;
+			play_pause_set_label (totem, STATE_STOPPED);
+		}
 	}
 	update_buttons (totem);
 	update_media_menu_items (totem);
@@ -870,6 +872,12 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 	gtk_widget_set_sensitive (widget, retval);
 
 	return retval;
+}
+
+gboolean
+totem_action_set_mrl (Totem *totem, const char *mrl)
+{
+	return totem_action_set_mrl_with_warning (totem, mrl, TRUE);
 }
 
 static gboolean
@@ -1251,10 +1259,13 @@ on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
 
 	playlist_changed = totem_playlist_add_mrl (totem->playlist, uri, NULL);
 	egg_recent_model_add_full (totem->recent_model, item);
-	
+
 	if (playlist_changed)
 	{
 		char *mrl;
+
+		//FIXME this is wrong if a playlist, or directory with
+		//multiple files got added to the playlist
 		totem_playlist_set_at_end (totem->playlist);
 		mrl = totem_playlist_get_current_mrl (totem->playlist);
 		totem_action_set_mrl_and_play (totem, mrl);
@@ -2406,6 +2417,9 @@ playlist_changed_cb (GtkWidget *playlist, Totem *totem)
 	update_buttons (totem);
 	mrl = totem_playlist_get_current_mrl (totem->playlist);
 
+	if (mrl == NULL)
+		return;
+
 	if (totem->mrl == NULL
 			|| (totem->mrl != NULL && mrl != NULL
 			&& strcmp (totem->mrl, mrl) != 0))
@@ -2509,9 +2523,13 @@ move_popups (Totem *totem)
 				totem->fullscreen_rect.height
 				- control_height);
 	} else {
+		//FIXME
 		gtk_window_move (GTK_WINDOW (totem->exit_popup),
 				totem->fullscreen_rect.x,
 				totem->fullscreen_rect.y);
+		gtk_window_resize (GTK_WINDOW (totem->control_popup),
+				totem->fullscreen_rect.width,
+				control_height);
 		gtk_window_move (GTK_WINDOW (totem->control_popup),
 				totem->fullscreen_rect.x,
 				totem->fullscreen_rect.height
@@ -2592,7 +2610,7 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 		totem->popup_timeout = 0;
 	}
 
-	item = glade_xml_get_widget (totem->xml, "tcw_vbox");
+	item = glade_xml_get_widget (totem->xml, "tcw_hbox");
 	gtk_widget_show_all (item);
 	item = glade_xml_get_widget (totem->xml, "tmw_title_label");
 	gtk_widget_realize (item);
@@ -2647,7 +2665,7 @@ on_eos_event (GtkWidget *widget, Totem *totem)
 		update_buttons (totem);
 		mrl = totem_playlist_get_current_mrl (totem->playlist);
 		totem_action_stop (totem);
-		totem_action_set_mrl (totem, mrl);
+		totem_action_set_mrl_with_warning (totem, mrl, FALSE);
 		g_free (mrl);
 	} else {
 		totem_action_next (totem);
@@ -3643,7 +3661,7 @@ label_create (void)
 	label = rb_ellipsizing_label_new ("");
 	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
 	gtk_label_set_selectable (GTK_LABEL (label), FALSE);
-	gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
 	gtk_widget_show (label);
 
 	/* Set default */

@@ -1061,7 +1061,12 @@ treeview_row_changed (GtkTreeView *treeview, GtkTreePath *arg1,
 {
 	if (totem_playlist_gtk_tree_path_equals
 			(arg1, playlist->_priv->current) != FALSE)
+	{
+		g_signal_emit (G_OBJECT (playlist),
+				totem_playlist_table_signals[CHANGED], 0,
+				NULL);
 		return;
+	}
 
 	if (playlist->_priv->current != NULL)
 	{

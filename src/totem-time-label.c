@@ -13,18 +13,18 @@ G_DEFINE_TYPE (TotemTimeLabel, totem_time_label, GTK_TYPE_LABEL)
 static void
 totem_time_label_init (TotemTimeLabel *label)
 {
+	char *time;
+	time = totem_time_to_string (0);
+	gtk_label_set_text (GTK_LABEL (label), time);
+	g_free (time);
 }
 
 GtkWidget*
 totem_time_label_new (void)
 {
 	TotemTimeLabel *label;
-	char *time;
   
 	label = g_object_new (TOTEM_TYPE_TIME_LABEL, NULL);
-	time = totem_time_to_string (0);
-	gtk_label_set_text (GTK_LABEL (label), time);
-	g_free (time);
   
 	return GTK_WIDGET (label);
 }
