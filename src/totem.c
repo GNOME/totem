@@ -582,6 +582,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 
 		retval = bacon_video_widget_open (totem->bvw, mrl, &err);
 		totem->mrl = g_strdup (mrl);
+		custom = FALSE;
 		name = totem_get_nice_name_for_stream (totem);
 		if (name == NULL)
 		{

@@ -162,8 +162,8 @@ gtk_tree_path_equals (GtkTreePath *path1, GtkTreePath *path2)
 }
 
 /* This one returns a new string, in UTF8 even if the mrl is encoded
- *  * in the locale's encoding
- *   */
+ * in the locale's encoding
+ */
 static char *
 gtk_playlist_mrl_to_title (const gchar *mrl)
 {
