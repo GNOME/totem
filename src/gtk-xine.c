@@ -934,6 +934,9 @@ gtk_xine_realize (GtkWidget *widget)
 		return;
 	}
 
+	gtx->priv->vis = xine_post_init (gtx->priv->xine, "goom", 0,
+			&gtx->priv->ao_driver, &gtx->priv->vo_driver);
+
 	gtx->priv->stream = xine_stream_new (gtx->priv->xine,
 			gtx->priv->ao_driver, gtx->priv->vo_driver);
 	gtx->priv->ev_queue = xine_event_new_queue (gtx->priv->stream);
@@ -1233,21 +1236,26 @@ gtk_xine_play (GtkXine *gtx, guint pos, guint start_time)
 	has_video = xine_get_stream_info(gtx->priv->stream,
 			XINE_STREAM_INFO_HAS_VIDEO);
 
-	if ((has_video == TRUE || gtx->priv->show_vfx == TRUE)
-			&& gtx->priv->using_vfx == TRUE)
+	if (has_video == TRUE && gtx->priv->using_vfx == TRUE)
 	{
 		audio_source = xine_get_audio_source (gtx->priv->stream);
 		if (xine_post_wire_audio_port (audio_source,
 					gtx->priv->ao_driver))
+		{
 			gtx->priv->using_vfx = FALSE;
-	} else if (has_video == FALSE && gtx->priv->show_vfx == FALSE
+			g_message ("not using goom");
+		}
+	} else if (has_video == FALSE && gtx->priv->show_vfx == TRUE
 			&& gtx->priv->using_vfx == FALSE
-			&& gtx->priv->vis == NULL)
+			&& gtx->priv->vis != NULL)
 	{
 		audio_source = xine_get_audio_source (gtx->priv->stream);
 		if (xine_post_wire_audio_port (audio_source,
 					gtx->priv->vis->audio_input[0]))
+		{
 			gtx->priv->using_vfx = TRUE;
+			g_message ("using goom");
+		}
 	}
 
 	length = gtk_xine_get_stream_length (gtx);
