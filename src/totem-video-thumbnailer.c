@@ -205,6 +205,11 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
+	if (bacon_video_widget_is_playing (bvw) == FALSE)
+	{
+		bacon_video_widget_play (bvw, 1, 0, &err);
+	}
+
 	if (bacon_video_widget_can_get_frames (bvw, &err) == FALSE)
 	{
 		g_print ("totem-video-thumbnailer: '%s' isn't thumbnailable\n"

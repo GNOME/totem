@@ -1027,6 +1027,7 @@ bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 	return (queue_length > 0);
 }
 
+//FIXME this needs to be launched from the async handler
 static void
 xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 {
@@ -2708,18 +2709,6 @@ bacon_video_widget_can_get_frames (BaconVideoWidget *bvw, GError **error)
 		return FALSE;
 	}
 
-	if (bvw->priv->using_vfx == FALSE
-			&& (xine_get_stream_info (bvw->priv->stream,
-				XINE_STREAM_INFO_VIDEO_WIDTH) == 0
-			|| xine_get_stream_info (bvw->priv->stream,
-				XINE_STREAM_INFO_VIDEO_HEIGHT) == 0))
-	{
-		g_set_error (error, 0, 0,
-				_("Height or width of the video is 0. "
-					"Please file a bug."));
-		return FALSE;
-	}
-
 	return TRUE;
 }
 
@@ -2736,6 +2725,9 @@ bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 
 	if (xine_get_current_frame (bvw->priv->stream, &width, &height,
 			&ratio, &format, NULL) == 0)
+		return NULL;
+
+	if (width == 0 || height == 0)
 		return NULL;
 
 	yuv = malloc ((width + 8) * (height + 1) * 2);

@@ -229,8 +229,6 @@ totem_action_error_try_download (char *msg, Totem *totem)
 		return;
 	}
 
-	g_message ("download: msg %s", msg);
-
 	error_dialog =
 		gtk_message_dialog_new (GTK_WINDOW (totem->win),
 				GTK_DIALOG_MODAL,
@@ -246,12 +244,9 @@ totem_action_error_try_download (char *msg, Totem *totem)
 	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
 	res = gtk_dialog_run (GTK_DIALOG (error_dialog));
 	gtk_widget_destroy (error_dialog);
-	g_message ("res %d", res);
+
 	if (res != GTK_RESPONSE_ACCEPT)
 		return;
-
-	g_message ("video %d", (guint32) video_fcc);
-	g_message ("audio %d", (guint32) audio_fcc);
 
 	totem_download_from_fourcc (GTK_WINDOW (totem->win),
 			video_fcc, audio_fcc);
@@ -774,11 +769,13 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		update_mrl_label (totem, NULL);
 	} else {
 		char *name;
-		gboolean caps, custom;
+		gboolean caps, custom, first_try;
 		GError *err = NULL;
 
+		first_try = TRUE;
 		bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
 
+try_open_again:
 		retval = bacon_video_widget_open (totem->bvw, mrl, &err);
 		totem->mrl = g_strdup (mrl);
 		custom = FALSE;
@@ -824,7 +821,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 
 		g_free (name);
 
-		if (retval == FALSE)
+		if (retval == FALSE && first_try == TRUE)
 		{
 			char *msg;
 
@@ -834,10 +831,15 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 					err->message);
 #ifdef HAVE_X86
 			totem_action_error_try_download (msg, totem);
+			g_free (msg);
+			first_try = FALSE;
+			goto try_open_again;
 #else
 			totem_action_error (msg, totem);
 #endif
 			g_free (msg);
+		} else if (first_try == FALSE) {
+			retval = FALSE;
 		}
 	}
 	update_buttons (totem);
@@ -3325,7 +3327,7 @@ totem_setup_recent (Totem *totem)
 	totem->recent_view = egg_recent_view_gtk_new (menu, menu_item);
 	egg_recent_view_gtk_show_icons (EGG_RECENT_VIEW_GTK
 			(totem->recent_view), FALSE);
-	egg_recent_model_set_limit (EGG_RECENT_VIEW (totem->recent_view), 5);
+	egg_recent_model_set_limit (totem->recent_model, 5);
 	egg_recent_view_set_model (EGG_RECENT_VIEW (totem->recent_view),
 			totem->recent_model);
 	egg_recent_view_gtk_set_trailing_sep (totem->recent_view, TRUE);

@@ -1,5 +1,19 @@
 2003-06-11  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: fixes to get the HAVE_X86 #define right
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_can_get_frames),
+	(bacon_video_widget_get_current_frame): don't whinge on 0x0 dimensions,
+	probably an error, or fail later while getting the frame
+	* src/totem-video-thumbnailer.c: (main): try harder to capture small
+	streams, fixes thumbnailing real short films
+	* src/totem.c: (totem_action_set_mrl), (totem_setup_recent):
+	fix a crash on startup with setting the limit of the egg_recent stuff,
+	try to reopen the movie after downloading a new codec so it can be
+	played straight away, removed some unused debug
+
+2003-06-11  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-message-connection.c: (try_server),
 	(bacon_message_connection_set_callback): updated from libbacon
 	* src/totem.c: (main): if we're a server, only listen to changes

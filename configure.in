@@ -207,11 +207,9 @@ _system_is_x86="no"
 AC_CHECK_HEADER( asm/vm86.h, _system_is_x86="yes" )
 if `test "x$_system_is_x86" = "xyes" && test "x$CURL_CONFIG" != "xno"` ; then
 	HAVE_X86=1
+	AC_DEFINE(HAVE_X86, 1, [defined on x86 machines])
 else
 	HAVE_X86=0
-fi
-if $HAVE_X86 ; then
-  AC_DEFINE(HAVE_X86, 1, [defined on x86 machines])
 fi
 AM_CONDITIONAL(HAVE_X86, `test "x$_system_is_x86" = "xyes" && test "x$CURL_CONFIG" != "xno"`)
 
