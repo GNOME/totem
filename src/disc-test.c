@@ -35,6 +35,8 @@ main (gint   argc,
   const char *type_s = NULL;
   char *url = NULL;
   gboolean is_dir = FALSE;
+  GList *or, *list;
+  GnomeVFSVolumeMonitor *mon;
 
   if (argc != 2) {
     g_print ("Usage: %s <device>\n", argv[0]);
@@ -53,7 +55,20 @@ main (gint   argc,
 
   switch (type) {
     case MEDIA_TYPE_ERROR:
+      mon = gnome_vfs_get_volume_monitor ();
       g_print ("Error: %s\n", error ? error->message : "unknown reason");
+      g_print ("\n");
+      g_print ("List of connected drives:\n");
+      for (or = list = gnome_vfs_volume_monitor_get_connected_drives (mon);
+		      list != NULL; list = list->next) {
+        char *device;
+	device = gnome_vfs_drive_get_device_path ((GnomeVFSDrive *) list->data);
+        g_print ("%s\n", device);
+	g_free (device);
+      }
+      if (or == NULL)
+        g_print ("No connected drives!\n");
+
       return -1;
     case MEDIA_TYPE_DATA:
       type_s = "Data CD";
