@@ -1313,29 +1313,38 @@ update_current_time (BaconVideoWidget *bvw,
 	}
 }
 
+static gboolean
+vol_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
+{
+	totem->vol_lock = TRUE;
+	return FALSE;
+}
+
+static gboolean
+vol_slider_released_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
+{
+	totem->vol_lock = FALSE;
+	return FALSE;
+}
+
 static void
 update_volume_sliders (Totem *totem)
 {
-	if (totem->vol_lock == FALSE)
-	{
-		int volume;
+	int volume;
 
-		totem->vol_lock = TRUE;
-		volume = bacon_video_widget_get_volume (totem->bvw);
+	volume = bacon_video_widget_get_volume (totem->bvw);
 
-		if (totem->volume_first_time || (totem->prev_volume != volume &&
+	if (totem->volume_first_time || (totem->prev_volume != volume &&
 				totem->prev_volume != -1 && volume != -1))
-		{
-			totem->volume_first_time = 0;
-			gtk_adjustment_set_value (totem->voladj,
-					(float) volume);
-			gtk_adjustment_set_value (totem->fs_voladj,
-					(float) volume);
-		}
-
-		totem->prev_volume = volume;
-		totem->vol_lock = FALSE;
+	{
+		totem->volume_first_time = 0;
+		gtk_adjustment_set_value (totem->voladj,
+				(float) volume);
+		gtk_adjustment_set_value (totem->fs_voladj,
+				(float) volume);
 	}
+
+	totem->prev_volume = volume;
 }
 
 static int
@@ -2417,7 +2426,7 @@ popup_hide (Totem *totem)
 		return TRUE;
 	}
 
-	if (totem->seek_lock != FALSE)
+	if (totem->seek_lock != FALSE || totem->vol_lock != FALSE)
 		return TRUE;
 
 	gtk_widget_hide (GTK_WIDGET (totem->exit_popup));
@@ -3225,6 +3234,10 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (seek_slider_released_cb), totem);
 	g_signal_connect (G_OBJECT(totem->fs_volume), "value-changed",
 			G_CALLBACK (vol_cb), totem);
+	g_signal_connect (G_OBJECT(totem->fs_volume), "button_press_event",
+			G_CALLBACK (vol_slider_pressed_cb), totem);
+	g_signal_connect (G_OBJECT(totem->fs_volume), "button_release_event",
+			G_CALLBACK (vol_slider_released_cb), totem);
 
 	/* Connect the keys */
 	gtk_widget_add_events (totem->win, GDK_KEY_PRESS_MASK);

@@ -1,5 +1,16 @@
 2003-11-20  Bastien Nocera  <hadess@hadess.net>
 
+	* README: updated
+	* data/totem.applications: added "uses_gnomevfs" entry which should
+	allow Nautilus to know we can handle everything gnome-vfs does
+	(Closes: #126715)
+	* src/totem.c: (vol_slider_pressed_cb), (vol_slider_released_cb),
+	(update_volume_sliders), (popup_hide), (totem_callback_connect):
+	don't hide the popup window until we released the volume slider
+	(Closes: #125791)
+
+2003-11-20  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.applications:
 	* data/totem.keys: added video/dv support (Closes: #126023)
 
