@@ -1,3 +1,10 @@
+2003-02-18  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-playlist.c: (gtk_playlist_add_m3u),
+	(gtk_playlist_add_ra), (gtk_playlist_add_mrl): add support for .ra
+	files, we require an updated gnome-mime-data for the playlist files
+	detection (fixes bug reported by Ross Burton)
+
 2003-02-17  Bastien Nocera  <hadess@hadess.net>
 
 	* README: updated

@@ -900,6 +900,13 @@ gtk_playlist_add_m3u (GtkPlaylist *playlist, const char *mrl)
 	if (eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
 
+	if (strstr (contents, "\n") == NULL)
+	{
+		retval = gtk_playlist_add_one_mrl (playlist, contents, NULL);
+		g_free (contents);
+		return retval;
+	}
+
 	lines = g_strsplit (contents, "\n", 0);
 	g_free (contents);
 
@@ -1093,6 +1100,13 @@ gtk_playlist_add_asx (GtkPlaylist *playlist, const char *mrl)
 	return retval;
 }
 
+static gboolean
+gtk_playlist_add_ra (GtkPlaylist *playlist, const char *mrl)
+{
+	/* How nice, same format as m3u it seems */
+	return gtk_playlist_add_m3u (playlist, mrl);
+}
+
 gboolean
 gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 		const char *display_name)
@@ -1113,6 +1127,9 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 		return gtk_playlist_add_pls (playlist, mrl);
 	} else if (strcmp ("audio/x-ms-asx", mimetype) == 0) {
 		return gtk_playlist_add_asx (playlist, mrl);
+	} else if (strcmp ("audio/x-real-audio", mimetype) == 0
+			|| strcmp ("audio/x-pn-realaudio", mimetype) == 0) {
+		return gtk_playlist_add_ra (playlist, mrl);
 	} else if (strcmp ("x-directory/normal", mimetype) == 0) {
 		//FIXME Load all the files in the dir ?
 	}
