@@ -3567,8 +3567,7 @@ totem_setup_recent (Totem *totem)
 	/* it would be better if we just filtered by mime-type, but there
 	 * doesn't seem to be an easy way to figure out which mime-types we
 	 * can handle */
-	totem->recent_model = egg_recent_model_new ("Totem",
-			EGG_RECENT_MODEL_SORT_MRU);
+	totem->recent_model = egg_recent_model_new (EGG_RECENT_MODEL_SORT_MRU);
 
 	totem->recent_view = egg_recent_view_gtk_new (menu, menu_item);
 	egg_recent_view_gtk_show_icons (EGG_RECENT_VIEW_GTK
