@@ -3081,6 +3081,33 @@ totem_setup_window (Totem *totem)
 		gtk_widget_set_size_request (item, w, h);
 }
 
+static void
+totem_set_screenshot_icon (GtkWidget *item)
+{
+	GtkIconTheme *theme;
+	GtkIconInfo *icon;
+	GtkWidget *image;
+	const char *filename;
+	int width, height;
+	GdkPixbuf *pixbuf;
+
+	theme = gtk_icon_theme_get_default ();
+	gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
+	icon = gtk_icon_theme_lookup_icon (theme,
+			"gnome-screenshot", width, 0);
+	if (icon == NULL)
+		return;
+
+	filename = gtk_icon_info_get_filename (icon);
+	pixbuf = gdk_pixbuf_new_from_file_at_size (filename,
+			width, height, NULL);
+	image = gtk_image_new_from_pixbuf (pixbuf);
+	gdk_pixbuf_unref (pixbuf);
+	gtk_widget_show (image);
+	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item),
+			image);
+	gtk_icon_info_free (icon);
+}
 
 static void
 totem_callback_connect (Totem *totem)
@@ -3152,6 +3179,7 @@ totem_callback_connect (Totem *totem)
 			"tmw_take_screenshot_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_take_screenshot1_activate), totem);
+	totem_set_screenshot_icon (item);
 	item = glade_xml_get_widget (totem->xml, "tmw_preferences_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_preferences1_activate), totem);

@@ -1,5 +1,14 @@
 2004-02-19  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: require GTK+ 2.3
+	* src/totem.c: (totem_set_screenshot_icon),
+	(totem_callback_connect): Added a totem_set_screenshot_icon function
+	to use the proper icon for the screenshot function if the
+	gnome-screenshot.png file (from gnome-panel) is available
+	(Closes: #131708)
+
+2004-02-19  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (main): make the command-line options translated
 	(work-around #134483)
 
