@@ -3390,7 +3390,6 @@ main (int argc, char **argv)
 	}
 
 	g_thread_init (NULL);
-	gdk_threads_init ();
 
 #ifdef HAVE_GTK_ONLY
 	gtk_init (&argc, &argv);

@@ -1,5 +1,11 @@
 2005-02-17  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (main): remove gdk_threads_init() as we don't have
+	any gdk_threads_enter anywhere anyway, fixes hangs when file selector
+	bookmarks require authentication (Closes: #154796)
+
+2005-02-17  Bastien Nocera  <hadess@hadess.net>
+
 	* autogen.sh: require something somewhat newer than automake 1.4
 	* src/totem-disc.c: (totem_disc_resolve_link): canonicalise
 	the path names when resolving links (Adapted from a patch from
