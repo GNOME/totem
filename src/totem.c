@@ -492,6 +492,7 @@ drop_cb (GtkWidget     *widget,
 				(gpointer) totem);
 		mrl = gtk_playlist_get_current_mrl (totem->playlist);
 		action_set_mrl (totem, mrl);
+		update_buttons (totem);
 		g_free (mrl);
 		action_play (totem, 0);
 	}
@@ -623,9 +624,12 @@ action_open_files (Totem *totem, char **list, gboolean ignore_first)
 
 	/* ... and reconnect because we're nice people */
 	if (cleared == TRUE)
+	{
+		update_buttons (totem);
 		g_signal_connect (G_OBJECT (totem->playlist),
 				"changed", G_CALLBACK (playlist_changed_cb),
 				(gpointer) totem);
+	}
 }
 
 static void
