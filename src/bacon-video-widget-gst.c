@@ -800,22 +800,39 @@ bacon_video_widget_open (BaconVideoWidget * bvw, const gchar * mrl,
 
   gst_video_widget_set_source_size (GST_VIDEO_WIDGET (bvw->priv->vw), 1, 1);
 
+  bvw->priv->media_has_video = FALSE;
+  bvw->priv->stream_length = 0;
+  
   if (g_file_test (mrl, G_FILE_TEST_EXISTS))
     {
       datasrc = gst_element_factory_make ("filesrc", "source");
+      if (GST_IS_ELEMENT (datasrc))
+        gst_play_set_data_src (bvw->priv->play, datasrc);
+      gst_play_set_location (bvw->priv->play, mrl);
+    }
+  else if (g_str_has_prefix (mrl, "dvd://"))
+    {
+      datasrc = gst_element_factory_make ("dvdnavsrc", "source");
+      if (GST_IS_ELEMENT (datasrc))
+        gst_play_set_data_src (bvw->priv->play, datasrc);
+      gst_play_set_location (bvw->priv->play, "/dev/dvd");
+    }
+  else if (g_str_has_prefix (mrl, "v4l://"))
+    {
+      datasrc = gst_element_factory_make ("v4lsrc", "source");
+      if (GST_IS_ELEMENT (datasrc))
+        gst_play_set_data_src (bvw->priv->play, datasrc);
+      gst_play_set_location (bvw->priv->play, "/dev/video");
     }
   else
     {
       datasrc = gst_element_factory_make ("gnomevfssrc", "source");
+      if (GST_IS_ELEMENT (datasrc))
+        gst_play_set_data_src (bvw->priv->play, datasrc);
+      gst_play_set_location (bvw->priv->play, mrl);
     }
-
-  if (GST_IS_ELEMENT (datasrc))
-    gst_play_set_data_src (bvw->priv->play, datasrc);
-
-  bvw->priv->media_has_video = FALSE;
-  bvw->priv->stream_length = 0;
-
-  return gst_play_set_location (bvw->priv->play, mrl);
+    
+  return TRUE;
 }
 
 gboolean
@@ -1355,7 +1372,7 @@ bacon_video_widget_can_play (BaconVideoWidget * bvw, MediaType type)
   switch (type)
     {
       case MEDIA_DVD:
-        return FALSE;
+        return TRUE;
       case MEDIA_VCD:
         return FALSE;
       case MEDIA_CDDA:
@@ -1368,10 +1385,27 @@ bacon_video_widget_can_play (BaconVideoWidget * bvw, MediaType type)
 G_CONST_RETURN gchar **
 bacon_video_widget_get_mrls (BaconVideoWidget * bvw, MediaType type)
 {
+  const gchar **mrls;
+  
   g_return_val_if_fail (bvw != NULL, NULL);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
   g_return_val_if_fail (GST_IS_PLAY (bvw->priv->play), NULL);
-  return NULL;
+  
+  switch (type)
+    {
+      case MEDIA_DVD:
+        {
+          mrls = g_malloc (sizeof (char *) * 1);
+          mrls[0] = "dvd://";
+          return mrls;
+        }
+      case MEDIA_VCD:
+        return NULL;
+      case MEDIA_CDDA:
+        return NULL;
+      default:
+        return NULL;
+    }
 }
 
 static void
