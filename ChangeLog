@@ -1,5 +1,11 @@
 2003-04-26  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-playlist.c: (gtk_playlist_remove_files):
+	* src/totem.c: (current_removed_cb): play the item after the currently
+	removed one (Closes: #111239)
+
+2003-04-26  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c:
 	(bacon_video_widget_get_languages),
 	(bacon_video_widget_get_subtitles): look into 32 subchannels

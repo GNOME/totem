@@ -559,8 +559,9 @@ static void
 gtk_playlist_remove_files (GtkWidget *widget, GtkPlaylist *playlist)
 {
 	GtkTreeSelection *selection;
-	GtkTreeRowReference *ref = NULL;
+	GtkTreeRowReference *ref;
 	gboolean is_selected = FALSE;
+	int next_pos;
 
 	selection = gtk_tree_view_get_selection
 		(GTK_TREE_VIEW (playlist->_priv->treeview));
@@ -575,11 +576,20 @@ gtk_playlist_remove_files (GtkWidget *widget, GtkPlaylist *playlist)
 	 * reference to it, TreeIter and TreePath don't allow that */
 	if (playlist->_priv->current != NULL)
 	{
+		int *indices;
+
 		ref = gtk_tree_row_reference_new (playlist->_priv->model,
 				playlist->_priv->current);
 		is_selected = gtk_tree_selection_path_is_selected (selection,
 				playlist->_priv->current);
+
+		indices = gtk_tree_path_get_indices (playlist->_priv->current);
+		next_pos = indices[0];
+
 		gtk_tree_path_free (playlist->_priv->current);
+	} else {
+		ref = NULL;
+		next_pos = -1;
 	}
 
 	/* We destroy the items, one-by-one from the list built above */
@@ -606,7 +616,26 @@ gtk_playlist_remove_files (GtkWidget *widget, GtkPlaylist *playlist)
 	if (is_selected == TRUE)
 	{
 		/* The current item was removed from the playlist */
-		playlist->_priv->current = NULL;
+		if (next_pos != -1)
+		{
+			char *str;
+			GtkTreeIter iter;
+			GtkTreePath *cur;
+
+			str = g_strdup_printf ("%d", next_pos);
+			cur = gtk_tree_path_new_from_string (str);
+
+			if (gtk_tree_model_get_iter (playlist->_priv->model,
+						&iter, cur) == FALSE)
+			{
+				playlist->_priv->current = NULL;
+			} else {
+				playlist->_priv->current = cur;
+			}
+		} else {
+			playlist->_priv->current = NULL;
+		}
+
 		g_signal_emit (G_OBJECT (playlist),
 				gtk_playlist_table_signals[CURRENT_REMOVED], 0,
 				NULL);
@@ -1594,9 +1623,10 @@ char
 	if (update_current_from_playlist (playlist) == FALSE)
 		return NULL;
 
-	gtk_tree_model_get_iter (playlist->_priv->model,
-			&iter,
-			playlist->_priv->current);
+	if (gtk_tree_model_get_iter (playlist->_priv->model, &iter,
+			playlist->_priv->current) == FALSE)
+		return NULL;
+
 	gtk_tree_model_get (playlist->_priv->model,
 			&iter,
 			URI_COL, &path,

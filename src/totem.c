@@ -1980,9 +1980,17 @@ current_removed_cb (GtkWidget *playlist, Totem *totem)
 
 	/* Set play button status */
 	play_pause_set_label (totem, STATE_STOPPED);
-	gtk_playlist_set_at_start (totem->playlist);
-	update_buttons (totem);
 	mrl = gtk_playlist_get_current_mrl (totem->playlist);
+
+	if (mrl == NULL)
+	{
+		gtk_playlist_set_at_start (totem->playlist);
+		update_buttons (totem);
+		mrl = gtk_playlist_get_current_mrl (totem->playlist);
+	} else {
+		update_buttons (totem);
+	}
+
 	totem_action_set_mrl_and_play (totem, mrl);
 	g_free (mrl);
 }
