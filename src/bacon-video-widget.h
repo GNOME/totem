@@ -33,6 +33,7 @@ G_BEGIN_DECLS
 #define BACON_VIDEO_WIDGET_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), bacon_video_widget_get_type (), BaconVideoWidgetClass))
 #define BACON_IS_VIDEO_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_TYPE (obj, bacon_video_widget_get_type ()))
 #define BACON_IS_VIDEO_WIDGET_CLASS(klass)   (G_CHECK_INSTANCE_GET_CLASS ((klass), bacon_video_widget_get_type ()))
+#define BVW_ERROR bacon_video_widget_error_quark ()
 
 typedef struct BaconVideoWidgetPrivate BaconVideoWidgetPrivate;
 
@@ -56,6 +57,38 @@ typedef struct {
 	void (*speed_warning) (GtkWidget *bvw);
 } BaconVideoWidgetClass;
 
+typedef enum {
+	/* Plugins */
+	BVW_ERROR_AUDIO_PLUGIN,
+	BVW_ERROR_NO_PLUGIN_FOR_FILE,
+	BVW_ERROR_VIDEO_PLUGIN,
+	BVW_ERROR_AUDIO_BUSY,
+	/* File */
+	BVW_ERROR_BROKEN_FILE,
+	BVW_ERROR_FILE_GENERIC,
+	BVW_ERROR_FILE_PERMISSION,
+	BVW_ERROR_FILE_ENCRYPTED,
+	BVW_ERROR_FILE_NOT_FOUND,
+	BVW_ERROR_FILE_PERMISSION,
+	/* Devices */
+	BVW_ERROR_DVD_ENCRYPTED,
+	BVW_ERROR_INVALID_DEVICE,
+	/* Network */
+	BVW_ERROR_UNKNOWN_HOST,
+	BVW_ERROR_NETWORK_UNREACHABLE,
+	BVW_ERROR_CONNECTION_REFUSED,
+	/* Generic */
+	BVW_ERROR_UNVALID_LOCATION,
+	BVW_ERROR_GENERIC,
+	BVW_ERROR_CODEC_NOT_HANDLED,
+	BVW_ERROR_AUDIO_ONLY,
+	BVW_ERROR_CANNOT_CAPTURE,
+	BVW_ERROR_READ_ERROR,
+	BVW_ERROR_PLUGIN_LOAD,
+	BVW_ERROR_STILL_IMAGE
+} BvwError;
+
+GQuark bacon_video_widget_error_quark		 (void) G_GNUC_CONST;
 GType bacon_video_widget_get_type                (void);
 struct poptOption *bacon_video_widget_get_popt_table    (void);
 GtkWidget *bacon_video_widget_new		 (int width, int height,
@@ -203,7 +236,8 @@ gboolean bacon_video_widget_get_deinterlacing    (BaconVideoWidget *bvw);
 void bacon_video_widget_set_aspect_ratio         (BaconVideoWidget *bvw,
 						  BaconVideoWidgetAspectRatio
 						  ratio);
-int bacon_video_widget_get_aspect_ratio          (BaconVideoWidget *bvw);
+BaconVideoWidgetAspectRatio bacon_video_widget_get_aspect_ratio
+						 (BaconVideoWidget *bvw);
 
 void bacon_video_widget_set_scale_ratio          (BaconVideoWidget *bvw,
 						  gfloat ratio);

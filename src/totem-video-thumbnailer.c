@@ -237,6 +237,50 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 	gdk_pixbuf_unref (with_holes);
 }
 
+static void
+save_still_pixbuf (GdkPixbuf *pixbuf, const char *path,
+		const char *video_path, int size)
+{
+	GdkPixbuf *small;
+	int width, height, d_width, d_height;
+	GError *err = NULL;
+
+	height = gdk_pixbuf_get_height (pixbuf);
+	width = gdk_pixbuf_get_width (pixbuf);
+
+	if (width > height)
+	{
+		d_width = size;
+		d_height = size * height / width;
+	} else {
+		d_height = size;
+		d_width = size * width / height;
+	}
+
+	small = gdk_pixbuf_scale_simple (pixbuf, d_width, d_height,
+			GDK_INTERP_TILES);
+
+	if (gdk_pixbuf_save (small, path, "png", &err, NULL) == FALSE)
+	{
+		if (err != NULL)
+		{
+			g_print ("totem-video-thumbnailer couln't write the thumbnail '%s' for video '%s': %s\n", path, video_path, err->message);
+			g_error_free (err);
+		} else {
+			g_print ("totem-video-thumbnailer couln't write the thumbnail '%s' for video '%s'\n", path, video_path);
+		}
+
+		gdk_pixbuf_unref (small);
+		return;
+	}
+
+#ifdef THUMB_DEBUG
+	show_pixbuf (small);
+#endif
+
+	gdk_pixbuf_unref (small);
+}
+
 static gpointer
 time_monitor (gpointer data)
 {
@@ -296,6 +340,25 @@ int main (int argc, char *argv[])
 
 	if (bacon_video_widget_open (bvw, input, &err) == FALSE)
 	{
+		if (err->code == BVW_ERROR_STILL_IMAGE)
+		{
+			g_error_free (err);
+			err = NULL;
+			pixbuf = gdk_pixbuf_new_from_file (input, &err);
+			if (pixbuf != NULL)
+			{
+				save_still_pixbuf (pixbuf,
+						output, input, size);
+				gdk_pixbuf_unref (pixbuf);
+				g_error_free (err);
+				exit (0);
+			}
+			g_print ("totem-video-thumbnailer couln't open file '%s'\n"
+					"Reason: %s.\n", input, err->message);
+			g_error_free (err);
+			exit (1);
+		}
+
 		g_print ("totem-video-thumbnailer couln't open file '%s'\n"
 				"Reason: %s.\n",
 				input, err->message);

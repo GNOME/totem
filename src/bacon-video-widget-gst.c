@@ -1475,14 +1475,14 @@ bacon_video_widget_set_aspect_ratio (BaconVideoWidget *bvw,
   g_return_if_fail (GST_IS_PLAY (bvw->priv->play));
 }
 
-int
+BaconVideoWidgetAspectRatio
 bacon_video_widget_get_aspect_ratio (BaconVideoWidget *bvw)
 {
   g_return_val_if_fail (bvw != NULL, 0);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
   g_return_val_if_fail (GST_IS_PLAY (bvw->priv->play), 0);
 
-  return  0;
+  return BVW_RATIO_AUTO;
 }
 
 void
@@ -1900,6 +1900,16 @@ bacon_video_widget_get_popt_table (void)
   /* Initializing GStreamer backend and parse our options from the command 
      line options */
   return (struct poptOption *) gst_init_get_popt_table ();
+}
+
+GQuark
+bacon_video_widget_error_quark (void)
+{
+  static GQuark q = 0;
+  if (q == 0) {
+    q = g_quark_from_static_string ("bvw-error-quark");
+  }
+  return q;
 }
 
 GtkWidget *

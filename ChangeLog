@@ -1,5 +1,20 @@
 2004-07-22  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-gst.c:
+	(bacon_video_widget_get_aspect_ratio),
+	(bacon_video_widget_get_popt_table),
+	(bacon_video_widget_error_quark):
+	* src/bacon-video-widget-xine.c: (load_audio_out_driver),
+	(xine_event_message), (xine_error),
+	(bacon_video_widget_error_quark), (bacon_video_widget_new),
+	(bacon_video_widget_open), (bacon_video_widget_can_get_frames):
+	* src/bacon-video-widget.h:
+	* src/totem-video-thumbnailer.c: (save_still_pixbuf), (main):
+	Add Quarks to the GError the video widget generates, thumbnail
+	the file by hand if it's an image, and not a movie
+
+2004-07-22  Bastien Nocera  <hadess@hadess.net>
+
 	* data/Makefile.am:
 	* data/totem.desktop.in:
 	* data/totem.desktop.in.in: I'm the first kid on my block to add
