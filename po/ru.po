@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem 0.10\n"
-"POT-Creation-Date: 2002-09-02 01:28+0100\n"
+"POT-Creation-Date: 2002-12-07 23:14+0000\n"
 "PO-Revision-Date: 2002-09-16 13:13+3\n"
 "Last-Translator: Nail Abdrahmanov <nail@gella.com.ru>\n"
 "Language-Team: RU <none@none.none>\n"
@@ -15,103 +15,238 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/playlist.glade.h:1 src/gtk-playlist.c:485
+#: data/playlist.glade.h:1 src/gtk-playlist.c:767
 msgid "Playlist"
 msgstr "Список воспроизведения"
 
+#: data/playlist.glade.h:2
+msgid "Repeat Mode"
+msgstr ""
+
+#: data/properties.glade.h:1 src/gtk-xine.c:1857
+msgid "0 frames per second"
+msgstr ""
+
+#. Bitrate
+#: data/properties.glade.h:2 src/gtk-xine.c:1859
+msgid "0 kbps"
+msgstr ""
+
+#. 0 seconds
+#: data/properties.glade.h:3 src/gtk-xine.c:1793
+msgid "0 seconds"
+msgstr ""
+
+#. Dimensions
+#: data/properties.glade.h:4 src/gtk-xine.c:1852
+msgid "0 x 0"
+msgstr ""
+
+#: data/properties.glade.h:5
+msgid "<b>Audio</b>"
+msgstr ""
+
+#: data/properties.glade.h:6
+msgid "<b>General</b>"
+msgstr ""
+
+#: data/properties.glade.h:7
+msgid "<b>Video</b>"
+msgstr ""
+
+#: data/properties.glade.h:8
+msgid "Artist: "
+msgstr ""
+
+#: data/properties.glade.h:9
+msgid "Bitrate: "
+msgstr ""
+
+#: data/properties.glade.h:10
+msgid "Codec: "
+msgstr ""
+
+#: data/properties.glade.h:11
+msgid "Dimensions: "
+msgstr ""
+
+#: data/properties.glade.h:12
+msgid "Duration: "
+msgstr ""
+
+#: data/properties.glade.h:13
+msgid "Framerate: "
+msgstr ""
+
+#. Year
+#: data/properties.glade.h:14 src/gtk-xine.c:1848 src/gtk-xine.c:1854
+#: src/gtk-xine.c:1861 src/gtk-xine.c:1883 src/gtk-xine.c:1908
+#: src/gtk-xine.c:1939
+msgid "N/A"
+msgstr ""
+
+#: data/properties.glade.h:15
+msgid "Properties"
+msgstr ""
+
+#: data/properties.glade.h:16
+msgid "Title: "
+msgstr ""
+
+#. Title
+#: data/properties.glade.h:17 src/gtk-xine.c:1844 src/gtk-xine.c:1846
+#: src/gtk-xine.c:1875 src/gtk-xine.c:1879
+msgid "Unknown"
+msgstr ""
+
+#: data/properties.glade.h:18
+msgid "Year: "
+msgstr ""
+
+#: data/totem.desktop.in.h:1
+msgid "Play movies and songs"
+msgstr ""
+
+#: data/totem.desktop.in.h:2
+msgid "Totem Movie Player"
+msgstr ""
+
 #: data/totem.glade.h:1
+msgid "Angle menu"
+msgstr ""
+
+#: data/totem.glade.h:2
+msgid "Audio menu"
+msgstr ""
+
+#: data/totem.glade.h:3
+msgid "Automatically _resize the window when a new video is loaded"
+msgstr ""
+
+#: data/totem.glade.h:4
+msgid "Chapter menu"
+msgstr ""
+
+#: data/totem.glade.h:5
+msgid "DVD menu"
+msgstr ""
+
+#: data/totem.glade.h:6
 msgid "Exit fullscreen"
 msgstr "Выход из полноэкранного режима"
 
-#: data/totem.glade.h:2
+#: data/totem.glade.h:7
 msgid "File name"
 msgstr "Имя файла"
 
-#: data/totem.glade.h:3
+#: data/totem.glade.h:8
 msgid "Next"
 msgstr "Следующий"
 
-#: data/totem.glade.h:4
-msgid "Next stream"
-msgstr "Следующий поток"
+#: data/totem.glade.h:9
+msgid "Next Chapter/Movie"
+msgstr ""
 
-#: data/totem.glade.h:5
+#: data/totem.glade.h:10
+msgid "Optical Device _Path: "
+msgstr ""
+
+#: data/totem.glade.h:11
 msgid "Play DVD"
 msgstr "Воспроизвести DVD"
 
-#: data/totem.glade.h:6
+#: data/totem.glade.h:12
 msgid "Play VCD"
 msgstr "Воспроизвести VCD"
 
-#: data/totem.glade.h:7
+#: data/totem.glade.h:13
 msgid "Play/Pause"
 msgstr "Воспроизведение/Пауза"
 
-#: data/totem.glade.h:8
+#: data/totem.glade.h:14
 msgid "Previous"
 msgstr "Предыдущий"
 
-#: data/totem.glade.h:9
-msgid "Previous stream"
+#: data/totem.glade.h:15
+#, fuzzy
+msgid "Previous Chapter/Movie"
 msgstr "Предыдущий поток"
 
-#: data/totem.glade.h:10
+#: data/totem.glade.h:16
 msgid "Show/Hide Playlist"
 msgstr "Спрятать/Показать список воспроизведения"
 
-#: data/totem.glade.h:11
+#: data/totem.glade.h:17
 msgid "Skip backwards"
 msgstr "Пропустить назад"
 
-#: data/totem.glade.h:12
+#: data/totem.glade.h:18
 msgid "Skip forward"
 msgstr "Пропустить вперед"
 
-#: data/totem.glade.h:13
-msgid "Sound"
-msgstr "Звук"
+#: data/totem.glade.h:19
+msgid "Time: "
+msgstr ""
 
-#: data/totem.glade.h:14
+#: data/totem.glade.h:20
+#, fuzzy
+msgid "Title menu"
+msgstr "Имя файла"
+
+#: data/totem.glade.h:21
 msgid "Toggle Aspect Ratio"
 msgstr "Изменить формат экрана"
 
-#: data/totem.glade.h:15 src/totem.c:850
+#: data/totem.glade.h:22 src/totem.c:361 src/totem.c:1193
 msgid "Totem"
 msgstr "Totem"
 
-#: data/totem.glade.h:16
+#: data/totem.glade.h:23
+msgid "Totem Preferences"
+msgstr ""
+
+#: data/totem.glade.h:24
 msgid "Volume Down"
 msgstr "Уменьшить громкость"
 
-#: data/totem.glade.h:17
+#: data/totem.glade.h:25
 msgid "Volume Up"
 msgstr "Увеличить громкость"
 
-#: data/totem.glade.h:18
+#: data/totem.glade.h:26
 msgid "Zoom _1:1"
 msgstr "Увеличить _1:1"
 
-#: data/totem.glade.h:19
+#: data/totem.glade.h:27
 msgid "Zoom _2:1"
 msgstr "Увеличить _2:1"
 
-#: data/totem.glade.h:20
+#: data/totem.glade.h:28
 msgid "_Fullscreen"
 msgstr "_Во весь экран"
 
-#: data/totem.glade.h:21
+#: data/totem.glade.h:29
+msgid "_Go"
+msgstr ""
+
+#: data/totem.glade.h:30
 msgid "_Movie"
 msgstr "_Фильм"
 
-#: data/totem.glade.h:22
+#: data/totem.glade.h:31
 msgid "_Play / Pause"
 msgstr "В_оспроизведение/Пауза"
 
-#: data/totem.glade.h:23
+#: data/totem.glade.h:32
 msgid "_Show/Hide Playlist"
 msgstr "_Показать/Спрятать список воспроизведения"
 
-#: data/totem.glade.h:24
+#: data/totem.glade.h:33
+#, fuzzy
+msgid "_Sound"
+msgstr "Звук"
+
+#: data/totem.glade.h:34
 msgid "_Zoom 1:2"
 msgstr "_Увеличить 1:2"
 
@@ -119,31 +254,43 @@ msgstr "_Увеличить 1:2"
 msgid "Default audio output driver"
 msgstr "Используемый по умолчанию драйвер аудио"
 
-#: src/gtk-playlist.c:222 src/totem.c:682
+#: data/totem.schemas.in.h:2
+msgid "Only start if there isn't already a Totem application running"
+msgstr ""
+
+#: data/totem.schemas.in.h:3
+msgid "Path to the optical media device"
+msgstr ""
+
+#: data/totem.schemas.in.h:4
+msgid "Repeat mode"
+msgstr ""
+
+#: data/totem.schemas.in.h:5
+msgid "Resize the canvas automatically on file load"
+msgstr ""
+
+#: data/totem.schemas.in.h:6
+msgid "X coordinate for the Playlist"
+msgstr ""
+
+#: data/totem.schemas.in.h:7
+msgid "Y coordinate for the Playlist"
+msgstr ""
+
+#: src/gtk-playlist.c:410 src/totem.c:1025
 msgid "Select files"
 msgstr "Выбрать файлы"
 
-#: src/gtk-playlist.c:376
-msgid "Playing"
-msgstr "Воспроизведение"
-
-#: src/gtk-playlist.c:387
+#: src/gtk-playlist.c:546
 msgid "Filename"
 msgstr "Имя файла"
 
-#: src/gtk-xine.c:55
+#: src/gtk-xine.c:53
 msgid "Totem Video Window"
 msgstr "Totem видео окно"
 
-#: src/gtk-xine.c:481
-msgid ""
-"The configuration system is not initialised.\n"
-"The defaults will be used."
-msgstr ""
-"Система не сконфигурирована.\n"
-"Использую настройки по умолчанию."
-
-#: src/gtk-xine.c:711
+#: src/gtk-xine.c:834
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
@@ -151,32 +298,132 @@ msgstr ""
 "Не могу инициализировать поддержку потоков.\n"
 "Вы должны установить XLib с поддержкой потоков."
 
-#: src/gtk-xine.c:747
+#: src/gtk-xine.c:866
 msgid "Could not find a suitable video output."
 msgstr "Не могу найти сконфигурированный видео вывод."
 
-#: src/gtk-xine.c:875
+#. One hour
+#: src/gtk-xine.c:1762
 #, c-format
-msgid "No video plugin available to decode '%s'."
-msgstr "Нет видео плагина для декодирования '%s'."
+msgid "%d hour"
+msgstr ""
 
-#: src/totem.c:316 src/totem.c:1297
-msgid "<span size=\"medium\"><b>No file</b></span>"
-msgstr "<span size=\"medium\"><b>Нет файла</b></span>"
+#. Multiple hours
+#: src/gtk-xine.c:1765
+#, c-format
+msgid "%d hours"
+msgstr ""
 
-#: src/totem.c:826
+#. One minute
+#: src/gtk-xine.c:1769
+#, c-format
+msgid "%d minute"
+msgstr ""
+
+#. Multiple minutes
+#: src/gtk-xine.c:1772
+#, c-format
+msgid "%d minutes"
+msgstr ""
+
+#. One second
+#: src/gtk-xine.c:1776
+#, c-format
+msgid "%d second"
+msgstr ""
+
+#. Multiple seconds
+#: src/gtk-xine.c:1779
+#, c-format
+msgid "%d seconds"
+msgstr ""
+
+#. hour:minutes:seconds
+#: src/gtk-xine.c:1784
+#, c-format
+msgid "%s %s %s"
+msgstr ""
+
+#. minutes:seconds
+#: src/gtk-xine.c:1787
+#, c-format
+msgid "%s %s"
+msgstr ""
+
+#. seconds
+#: src/gtk-xine.c:1790
+#, c-format
+msgid "%s"
+msgstr ""
+
+#. Duration
+#: src/gtk-xine.c:1850
+msgid "0 second"
+msgstr ""
+
+#: src/gtk-xine.c:1918
+#, c-format
+msgid "%d frames per second"
+msgstr ""
+
+#: src/gtk-xine.c:1930
+#, c-format
+msgid "%d kbps"
+msgstr ""
+
+#: src/totem.c:259
+msgid ""
+"Totem cannot play this type of media because you do not have the appropriate "
+"plugins to handle it.\n"
+"Install the necessary plugins and restart Totem to be able to play this "
+"media."
+msgstr ""
+
+#: src/totem.c:267
+msgid ""
+"Totem could not play this media although a plugin is present to handle it.\n"
+"You might want to check that a disc is present in the drive and that it is "
+"correctly configured."
+msgstr ""
+
+#: src/totem.c:372 src/totem.c:1982
+msgid "No file"
+msgstr ""
+
+#. Title
+#: src/totem.c:427 src/totem.c:760
+#, fuzzy, c-format
+msgid "%s - Totem"
+msgstr "Totem"
+
+#. Make the new label
+#: src/totem.c:799
+#, c-format
+msgid "Time: %s "
+msgstr ""
+
+#: src/totem.c:1169
 msgid "translator_credits"
 msgstr ""
 
-#: src/totem.c:851
-msgid "(C) 2002 Bastien Nocera"
+#: src/totem.c:1194
+msgid "Copyright (c) 2002 Bastien Nocera"
 msgstr ""
 
-#: src/totem.c:852
+#: src/totem.c:1195
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Видео проигрыватель (основан на библиотеке Xine)"
 
-#: src/totem.c:1003
+#: src/totem.c:1220
+#, fuzzy
+msgid ""
+"Totem couldn't show the movie properties window.\n"
+"Make sure that Totem is correctly installed."
+msgstr ""
+"Не могу загрузить интерфейс для списка воспроизведения.\n"
+"Проверте правильность установки Totem."
+
+#: src/totem.c:1569
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -185,21 +432,21 @@ msgstr ""
 "Totem не может загрузиться:\n"
 "%s"
 
-#: src/totem.c:1008
-#, c-format
+#: src/totem.c:1575
+#, fuzzy, c-format
 msgid ""
-"There is no plugin for Totem to handle '%s'\n"
+"There is no plugin for Totem to handle '%s'.\n"
 "Totem will not be able to play it."
 msgstr ""
 "Нет плагина Totem для обработки '%s'\n"
 "Totem не может воспроизвести это. "
 
-#: src/totem.c:1011
+#: src/totem.c:1580
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "'%s' с ошибками и Totem не будет это воспроизводить. "
 
-#: src/totem.c:1014
+#: src/totem.c:1584
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -208,18 +455,50 @@ msgstr ""
 "Totem не может воспроизвести '%s':\n"
 "%s"
 
-#: src/totem.c:1339 src/totem.c:1347
+#: src/totem.c:2123
+#, c-format
+msgid ""
+"Totem couln't initialise the \n"
+"configuration engine:\n"
+"%s"
+msgstr ""
+
+#: src/totem.c:2137 src/totem.c:2165
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
 msgstr ""
-"Не могу загрузить основной интерфейс (totem.glade).\n "
-"Проверте правильность установки Totem."
+"Не могу загрузить основной интерфейс (totem.glade).\n"
+" Проверте правильность установки Totem."
 
-#: src/totem.c:1360
+#: src/totem.c:2177
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
 msgstr ""
 "Не могу загрузить интерфейс для списка воспроизведения.\n"
 "Проверте правильность установки Totem."
+
+#: src/totem-cd-selection.c:251
+#, fuzzy
+msgid "Select the drive"
+msgstr "Выбрать файлы"
+
+#~ msgid "Next stream"
+#~ msgstr "Следующий поток"
+
+#~ msgid "Playing"
+#~ msgstr "Воспроизведение"
+
+#~ msgid ""
+#~ "The configuration system is not initialised.\n"
+#~ "The defaults will be used."
+#~ msgstr ""
+#~ "Система не сконфигурирована.\n"
+#~ "Использую настройки по умолчанию."
+
+#~ msgid "No video plugin available to decode '%s'."
+#~ msgstr "Нет видео плагина для декодирования '%s'."
+
+#~ msgid "<span size=\"medium\"><b>No file</b></span>"
+#~ msgstr "<span size=\"medium\"><b>Нет файла</b></span>"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Totem HEAD\n"
-"POT-Creation-Date: 2002-11-16 23:25+0800\n"
+"POT-Creation-Date: 2002-12-07 23:14+0000\n"
 "PO-Revision-Date: 2002-11-16 23:25+0800\n"
 "Last-Translator: Hasbullah Bin Pit <sebol@ikhlas.com>\n"
 "Language-Team: Projek Gabai <gabai-penyumbang@lists.sourceforge.org>\n"
@@ -21,21 +21,22 @@ msgstr "Senaraimain"
 msgid "Repeat Mode"
 msgstr "Mod Ulangan"
 
-#: data/properties.glade.h:1 src/gtk-xine.c:1724
+#: data/properties.glade.h:1 src/gtk-xine.c:1857
 msgid "0 frames per second"
 msgstr "0 kerangka per saat"
 
 #. Bitrate
-#: data/properties.glade.h:2 src/gtk-xine.c:1726
+#: data/properties.glade.h:2 src/gtk-xine.c:1859
 msgid "0 kbps"
 msgstr "0 kbps"
 
-#: data/properties.glade.h:3
+#. 0 seconds
+#: data/properties.glade.h:3 src/gtk-xine.c:1793
 msgid "0 seconds"
 msgstr "0 saat"
 
 #. Dimensions
-#: data/properties.glade.h:4 src/gtk-xine.c:1719
+#: data/properties.glade.h:4 src/gtk-xine.c:1852
 msgid "0 x 0"
 msgstr "0 x 0"
 
@@ -76,9 +77,9 @@ msgid "Framerate: "
 msgstr "Kadar kerangka"
 
 #. Year
-#: data/properties.glade.h:14 src/gtk-xine.c:1715 src/gtk-xine.c:1721
-#: src/gtk-xine.c:1728 src/gtk-xine.c:1750 src/gtk-xine.c:1775
-#: src/gtk-xine.c:1806
+#: data/properties.glade.h:14 src/gtk-xine.c:1848 src/gtk-xine.c:1854
+#: src/gtk-xine.c:1861 src/gtk-xine.c:1883 src/gtk-xine.c:1908
+#: src/gtk-xine.c:1939
 msgid "N/A"
 msgstr "TIADA"
 
@@ -91,8 +92,8 @@ msgid "Title: "
 msgstr "Tajuk:"
 
 #. Title
-#: data/properties.glade.h:17 src/gtk-xine.c:1711 src/gtk-xine.c:1713
-#: src/gtk-xine.c:1742 src/gtk-xine.c:1746
+#: data/properties.glade.h:17 src/gtk-xine.c:1844 src/gtk-xine.c:1846
+#: src/gtk-xine.c:1875 src/gtk-xine.c:1879
 msgid "Unknown"
 msgstr "Entah"
 
@@ -109,118 +110,140 @@ msgid "Totem Movie Player"
 msgstr "Pemain Cereka Totem"
 
 #: data/totem.glade.h:1
-msgid "*"
-msgstr "*"
+msgid "Angle menu"
+msgstr ""
 
 #: data/totem.glade.h:2
+msgid "Audio menu"
+msgstr ""
+
+#: data/totem.glade.h:3
 msgid "Automatically _resize the window when a new video is loaded"
 msgstr "Automatik _ubahsaiz tetingkap bila video baru dimuatkan"
 
-#: data/totem.glade.h:3
+#: data/totem.glade.h:4
+msgid "Chapter menu"
+msgstr ""
+
+#: data/totem.glade.h:5
+msgid "DVD menu"
+msgstr ""
+
+#: data/totem.glade.h:6
 msgid "Exit fullscreen"
 msgstr "Keluar skrinpenuh"
 
-#: data/totem.glade.h:4
+#: data/totem.glade.h:7
 msgid "File name"
 msgstr "Nama fail"
 
-#: data/totem.glade.h:5
+#: data/totem.glade.h:8
 msgid "Next"
 msgstr "Seterusnya"
 
-#: data/totem.glade.h:6
-msgid "Next stream"
-msgstr "Aliran seterusnya"
+#: data/totem.glade.h:9
+msgid "Next Chapter/Movie"
+msgstr ""
 
-#: data/totem.glade.h:7
+#: data/totem.glade.h:10
 msgid "Optical Device _Path: "
 msgstr "_Path Peranti Opsyenal: "
 
-#: data/totem.glade.h:8
+#: data/totem.glade.h:11
 msgid "Play DVD"
 msgstr "Mainkan DVD"
 
-#: data/totem.glade.h:9
+#: data/totem.glade.h:12
 msgid "Play VCD"
 msgstr "Mainkan VCD"
 
-#: data/totem.glade.h:10
+#: data/totem.glade.h:13
 msgid "Play/Pause"
 msgstr "Main/Kaku"
 
-#: data/totem.glade.h:11
+#: data/totem.glade.h:14
 msgid "Previous"
 msgstr "Terdahulu"
 
-#: data/totem.glade.h:12
-msgid "Previous stream"
+#: data/totem.glade.h:15
+#, fuzzy
+msgid "Previous Chapter/Movie"
 msgstr "Aliran terdahulu"
 
-#: data/totem.glade.h:13
+#: data/totem.glade.h:16
 msgid "Show/Hide Playlist"
 msgstr "Papar/Sorok Senaraimain"
 
-#: data/totem.glade.h:14
+#: data/totem.glade.h:17
 msgid "Skip backwards"
 msgstr "Langkah mengundur"
 
-#: data/totem.glade.h:15
+#: data/totem.glade.h:18
 msgid "Skip forward"
 msgstr "Langkah maju"
 
-#: data/totem.glade.h:16
+#: data/totem.glade.h:19
 msgid "Time: "
 msgstr "Masa:"
 
-#: data/totem.glade.h:17
+#: data/totem.glade.h:20
+#, fuzzy
+msgid "Title menu"
+msgstr "Tajuk:"
+
+#: data/totem.glade.h:21
 msgid "Toggle Aspect Ratio"
 msgstr "Togol Nisbah Aspek"
 
-#: data/totem.glade.h:18 src/totem.c:364 src/totem.c:1054
+#: data/totem.glade.h:22 src/totem.c:361 src/totem.c:1193
 msgid "Totem"
 msgstr "Totem"
 
-#: data/totem.glade.h:19
+#: data/totem.glade.h:23
 msgid "Totem Preferences"
 msgstr "Keutamaan Totem"
 
-#: data/totem.glade.h:20
+#: data/totem.glade.h:24
 msgid "Volume Down"
 msgstr "Volum Turun"
 
-#: data/totem.glade.h:21
+#: data/totem.glade.h:25
 msgid "Volume Up"
 msgstr "Volum Naik"
 
-#: data/totem.glade.h:22
+#: data/totem.glade.h:26
 msgid "Zoom _1:1"
 msgstr "Zoom _1:1"
 
-#: data/totem.glade.h:23
+#: data/totem.glade.h:27
 msgid "Zoom _2:1"
 msgstr "Zoom _2:1"
 
-#: data/totem.glade.h:24
+#: data/totem.glade.h:28
 msgid "_Fullscreen"
 msgstr "_Skrinpenuh"
 
-#: data/totem.glade.h:25
+#: data/totem.glade.h:29
+msgid "_Go"
+msgstr ""
+
+#: data/totem.glade.h:30
 msgid "_Movie"
 msgstr "_Cereka"
 
-#: data/totem.glade.h:26
+#: data/totem.glade.h:31
 msgid "_Play / Pause"
 msgstr "_Main / Kaku"
 
-#: data/totem.glade.h:27
+#: data/totem.glade.h:32
 msgid "_Show/Hide Playlist"
 msgstr "_Papar/Sorok SenaraiMain"
 
-#: data/totem.glade.h:28
+#: data/totem.glade.h:33
 msgid "_Sound"
 msgstr "_Bunyi"
 
-#: data/totem.glade.h:29
+#: data/totem.glade.h:34
 msgid "_Zoom 1:2"
 msgstr "_Zoom 1:2"
 
@@ -252,7 +275,7 @@ msgstr "Kordinat X bagi Senaraimain"
 msgid "Y coordinate for the Playlist"
 msgstr "Kordinat Y bagi Senaraimain"
 
-#: src/gtk-playlist.c:410 src/totem.c:886
+#: src/gtk-playlist.c:410 src/totem.c:1025
 msgid "Select files"
 msgstr "Semua fail"
 
@@ -264,7 +287,7 @@ msgstr "Namafail"
 msgid "Totem Video Window"
 msgstr "Tetingkap Video Totem"
 
-#: src/gtk-xine.c:736
+#: src/gtk-xine.c:834
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
@@ -272,80 +295,80 @@ msgstr ""
 "Tak dapat menginitialisasikan sokongan threads.\n"
 "Anda patut pasang Xlib thread-safe."
 
-#: src/gtk-xine.c:768
+#: src/gtk-xine.c:866
 msgid "Could not find a suitable video output."
 msgstr "Tak menjumpai output video yang sesuai."
 
 #. One hour
-#: src/gtk-xine.c:1629
+#: src/gtk-xine.c:1762
 #, c-format
 msgid "%d hour"
 msgstr "%d jam"
 
 #. Multiple hours
-#: src/gtk-xine.c:1632
+#: src/gtk-xine.c:1765
 #, c-format
 msgid "%d hours"
 msgstr "%d jam"
 
 #. One minute
-#: src/gtk-xine.c:1636
+#: src/gtk-xine.c:1769
 #, c-format
 msgid "%d minute"
 msgstr "%d minit"
 
 #. Multiple minutes
-#: src/gtk-xine.c:1639
+#: src/gtk-xine.c:1772
 #, c-format
 msgid "%d minutes"
 msgstr "%d minit"
 
 #. One second
-#: src/gtk-xine.c:1643
+#: src/gtk-xine.c:1776
 #, c-format
 msgid "%d second"
 msgstr "%d saat"
 
 #. Multiple seconds
-#: src/gtk-xine.c:1646
+#: src/gtk-xine.c:1779
 #, c-format
 msgid "%d seconds"
 msgstr "%d saat"
 
 #. hour:minutes:seconds
-#: src/gtk-xine.c:1651
+#: src/gtk-xine.c:1784
 #, c-format
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. minutes:seconds
-#: src/gtk-xine.c:1654
+#: src/gtk-xine.c:1787
 #, c-format
 msgid "%s %s"
 msgstr "%s %s"
 
 #. seconds
-#: src/gtk-xine.c:1657
+#: src/gtk-xine.c:1790
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#. 0 second
-#: src/gtk-xine.c:1660 src/gtk-xine.c:1717
+#. Duration
+#: src/gtk-xine.c:1850
 msgid "0 second"
 msgstr "0 saat"
 
-#: src/gtk-xine.c:1785
+#: src/gtk-xine.c:1918
 #, c-format
 msgid "%d frames per second"
 msgstr "%d kerangka per saat"
 
-#: src/gtk-xine.c:1797
+#: src/gtk-xine.c:1930
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/totem.c:262
+#: src/totem.c:259
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -357,7 +380,7 @@ msgstr ""
 " Pasang plugin yang diperlukan dan ulanghidup Totem supaya boleh memainkan "
 "media ini."
 
-#: src/totem.c:270
+#: src/totem.c:267
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -368,23 +391,35 @@ msgstr ""
 " Anda mungkin perlu periksa cekera ada di pemacu dan dikonfigurasi dengan "
 "betul."
 
-#: src/totem.c:375 src/totem.c:1727
+#: src/totem.c:372 src/totem.c:1982
 msgid "No file"
 msgstr "Tiada fail"
 
-#: src/totem.c:1030
+#. Title
+#: src/totem.c:427 src/totem.c:760
+#, fuzzy, c-format
+msgid "%s - Totem"
+msgstr "Totem"
+
+#. Make the new label
+#: src/totem.c:799
+#, fuzzy, c-format
+msgid "Time: %s "
+msgstr "Masa:"
+
+#: src/totem.c:1169
 msgid "translator_credits"
 msgstr "Hasbullah Bin Pit <sebol@ikhlas.com>, Merlimau."
 
-#: src/totem.c:1055
+#: src/totem.c:1194
 msgid "Copyright (c) 2002 Bastien Nocera"
 msgstr "Hakcipta (c) 2002 Bastien Nocera"
 
-#: src/totem.c:1056
+#: src/totem.c:1195
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Pemain Cereka (berdasarkan pustaka Xine)"
 
-#: src/totem.c:1081
+#: src/totem.c:1220
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -392,7 +427,7 @@ msgstr ""
 "Tak dapat memapar tetingkap ciri-ciri Cereka.\n"
 "Pastikan Totem dipasang dengan betul."
 
-#: src/totem.c:1395
+#: src/totem.c:1569
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -401,7 +436,7 @@ msgstr ""
 "Totem tak dapat memulakan:\n"
 "%s"
 
-#: src/totem.c:1401
+#: src/totem.c:1575
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'.\n"
@@ -410,12 +445,12 @@ msgstr ""
 "Tiada plugin supaya Totem  mengendali '%s'.\n"
 "Totem tidak dapat memainkannya."
 
-#: src/totem.c:1406
+#: src/totem.c:1580
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "'%s' rosak, dan Totem tak dapat memainkannya lagi."
 
-#: src/totem.c:1410
+#: src/totem.c:1584
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -424,7 +459,7 @@ msgstr ""
 "Totem tak dapat memainkan '%s':\n"
 "%s"
 
-#: src/totem.c:1844
+#: src/totem.c:2123
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -435,7 +470,7 @@ msgstr ""
 " jentera konfigurasi\n"
 "%s"
 
-#: src/totem.c:1874 src/totem.c:1883
+#: src/totem.c:2137 src/totem.c:2165
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -443,10 +478,21 @@ msgstr ""
 "Tak dapat memuatkan antaramuka utama (totem.glade).\n"
 "Pastikan Totem dipasang dengan betul."
 
-#: src/totem.c:1895
+#: src/totem.c:2177
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
 msgstr ""
 "Tak dapat memuatkan antaramuka bagi senaraimain.\n"
 "Pastikan Totem dipasang dengan betul."
+
+#: src/totem-cd-selection.c:251
+#, fuzzy
+msgid "Select the drive"
+msgstr "Semua fail"
+
+#~ msgid "*"
+#~ msgstr "*"
+
+#~ msgid "Next stream"
+#~ msgstr "Aliran seterusnya"
