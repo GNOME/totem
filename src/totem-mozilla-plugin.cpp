@@ -79,7 +79,7 @@ static void totem_plugin_fork (TotemPlugin *plugin)
 				G_FILE_TEST_EXISTS) != FALSE) {
 		argv[argc++] = g_strdup ("./totem-mozilla-viewer");
 	} else {
-		argv[argc++] = g_strdup (LIBDIR"/totem-mozilla-viewer");
+		argv[argc++] = g_strdup (LIBDIR"/totem/totem-mozilla-viewer");
 	}
 
 	argv[argc++] = "--xid";
