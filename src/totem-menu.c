@@ -90,6 +90,7 @@ totem_lang_table_parse_start_tag (GMarkupParseContext *ctx,
 }
 
 #define ISO_CODES_DATADIR ISO_CODES_PREFIX"/share/xml/iso-codes"
+#define ISO_CODES_LOCALESDIR ISO_CODES_PREFIX"/share/locale"
 
 static void
 totem_lang_table_init (void)
@@ -102,6 +103,9 @@ totem_lang_table_init (void)
 		(g_str_hash, g_str_equal, g_free, g_free);
 
 	g_atexit (totem_lang_table_free);
+
+	bindtextdomain ("iso_639", ISO_CODES_LOCALESDIR);
+	bind_textdomain_codeset ("iso_639", "UTF-8");
 
 	if (g_file_get_contents (ISO_CODES_DATADIR "/iso_639.xml",
 				&buf, &buf_len, &err))
