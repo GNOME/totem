@@ -6,15 +6,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Totem HEAD\n"
-"POT-Creation-Date: 2003-01-20 23:06+0100\n"
-"PO-Revision-Date: 2003-01-20 17:07+0100\n"
+"POT-Creation-Date: 2003-01-29 15:52+0100\n"
+"PO-Revision-Date: 2003-01-26 17:07+0100\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/playlist.glade.h:1 src/gtk-playlist.c:804
+#: data/playlist.glade.h:1 src/gtk-playlist.c:799
 msgid "Playlist"
 msgstr "Playliste"
 
@@ -247,7 +247,7 @@ msgid "Toggle Aspect Ratio"
 msgstr "Ansichtsverhältnis beibehalten"
 
 #. Title
-#: data/totem.glade.h:35 src/totem.c:411 src/totem.c:434 src/totem.c:1266
+#: data/totem.glade.h:35 src/totem.c:411 src/totem.c:434 src/totem.c:1269
 msgid "Totem"
 msgstr "Totem"
 
@@ -341,7 +341,11 @@ msgstr "X-Koordinate der Playliste"
 msgid "Y coordinate for the Playlist"
 msgstr "Y-Koordinate der Playliste"
 
-#: src/bacon-cd-selection.c:257
+#: src/bacon-cd-selection.c:219
+msgid "Unnamed CDROM"
+msgstr "Namenloses CD-ROM"
+
+#: src/bacon-cd-selection.c:261
 msgid "Select the drive"
 msgstr "Wählen Sie ein Laufwerk"
 
@@ -350,7 +354,7 @@ msgstr "Wählen Sie ein Laufwerk"
 msgid "Unnamed SCSI CDROM (%s)"
 msgstr "Namenloses SCSI-CD-ROM (%s)"
 
-#: src/cd-drive.c:572
+#: src/cd-drive.c:573
 msgid "File image"
 msgstr "Datei-Abbild"
 
@@ -393,7 +397,7 @@ msgstr "_Passwort:"
 msgid "Remember this password"
 msgstr "Dieses Passwort speichern"
 
-#: src/gtk-playlist.c:413 src/totem.c:1091
+#: src/gtk-playlist.c:413 src/totem.c:1094
 msgid "Select files"
 msgstr "Dateien auswählen"
 
@@ -401,11 +405,11 @@ msgstr "Dateien auswählen"
 msgid "Filename"
 msgstr "Dateiname"
 
-#: src/gtk-xine.c:75
+#: src/gtk-xine.c:59
 msgid "Totem Video Window"
 msgstr "Totem Video-Fenster"
 
-#: src/gtk-xine.c:528
+#: src/gtk-xine.c:547
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -414,7 +418,7 @@ msgstr ""
 "Der Audio-Treiber »%s« konnte nicht geladen werden.\n"
 "Stellen Sie sicher, dass das Gerät nicht belegt ist."
 
-#: src/gtk-xine.c:843
+#: src/gtk-xine.c:819
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
@@ -422,11 +426,11 @@ msgstr ""
 "Die Unterstützung für »threads« konnte nicht initialisiert werden.\n"
 "Sie sollten eine »thread«-sichere Xlib installieren."
 
-#: src/gtk-xine.c:871
+#: src/gtk-xine.c:846
 msgid "Could not find a suitable video output."
 msgstr "Es konnte keine passende Video-Ausgabe gefunden werden"
 
-#: src/gtk-xine.c:1238
+#: src/gtk-xine.c:1206
 #, c-format
 msgid "Reason: Video type '%s' is not handled."
 msgstr "Grund: Videotyp »%s« wird nicht unterstützt."
@@ -541,24 +545,24 @@ msgstr ""
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:400 src/totem.c:2385
+#: src/totem.c:400 src/totem.c:2405
 msgid "No file"
 msgstr "Keine Datei"
 
-#: src/totem.c:1242
+#: src/totem.c:1245
 msgid "translator_credits"
 msgstr "Christian Neumair <chris@gnome-de.org>"
 
-#: src/totem.c:1268
+#: src/totem.c:1271
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Video-Wiedergabe (basierend auf den Xine-Bibliotheken)"
 
-#: src/totem.c:1322 src/totem.c:1333
+#: src/totem.c:1325 src/totem.c:1336
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Bildschirmfoto%d.png"
 
-#: src/totem.c:1386
+#: src/totem.c:1389
 msgid ""
 "Totem could not get a screenshot of that film.\n"
 "You might want to try again at another time."
@@ -566,7 +570,7 @@ msgstr ""
 "Es konnte kein Bildschirmfoto aus diesem Film erzeugt werden.\n"
 "Sie sollten es später noch einmal versuchen."
 
-#: src/totem.c:1412
+#: src/totem.c:1415
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
@@ -575,7 +579,7 @@ msgstr ""
 "Die Datei »%s« ist bereits vorhanden.\n"
 "Das Bildschirmfoto konnte daher nicht gespeichert werden."
 
-#: src/totem.c:1423
+#: src/totem.c:1426
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -584,7 +588,7 @@ msgstr ""
 "Beim Speichern des Bildschirmfotos ist ein Fehler aufgetreten.\n"
 "Details: %s"
 
-#: src/totem.c:1444
+#: src/totem.c:1447
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -592,7 +596,7 @@ msgstr ""
 "Das Eigenschaften-Fenster für das Video konnte nicht geladen werden.\n"
 "Stellen Sie sicher, dass Totem korrekt installiert ist."
 
-#: src/totem.c:1889
+#: src/totem.c:1894
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -601,7 +605,7 @@ msgstr ""
 "Totem konnte nicht gestartet werden:\n"
 "%s"
 
-#: src/totem.c:1895
+#: src/totem.c:1900
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'.\n"
@@ -610,12 +614,12 @@ msgstr ""
 "Es ist kein Plugin installiert, um »%s« zu verarbeiten.\n"
 "Totem kann es daher nicht wiedergeben."
 
-#: src/totem.c:1900
+#: src/totem.c:1906
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "»%s« ist fehlerhaft und Totem kann es nicht weiter wiedergeben."
 
-#: src/totem.c:1904
+#: src/totem.c:1911
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -624,7 +628,16 @@ msgstr ""
 "Totem konnte »%s« nicht wiedergeben:\n"
 "%s"
 
-#: src/totem.c:2547
+#: src/totem.c:1916
+#, c-format
+msgid ""
+"Totem could not play '%s'.\n"
+"This location is not a valid one."
+msgstr ""
+"Totem konnte »%s« nicht wiedergeben:\n"
+"Dieser Ort ist nicht gültig."
+
+#: src/totem.c:2570
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -636,7 +649,7 @@ msgstr ""
 "initialisiert werden:\n"
 "%s"
 
-#: src/totem.c:2562 src/totem.c:2592
+#: src/totem.c:2585 src/totem.c:2615
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -644,7 +657,7 @@ msgstr ""
 "Die Haupt-Oberfläche (totem.glade) konnte nicht geladen werden.\n"
 "Stellen Sie sicher, dass Totem korrekt installiert ist."
 
-#: src/totem.c:2614
+#: src/totem.c:2637
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
