@@ -487,7 +487,7 @@ totem_get_nice_name_for_stream (Totem *totem)
 static void
 totem_action_restore_pl (Totem *totem)
 {
-	char *path;
+	char *path, *mrl;
 
 	path = g_build_filename (G_DIR_SEPARATOR_S, g_get_home_dir (),
 			".gnome2", "totem.pls", NULL);
@@ -498,15 +498,39 @@ totem_action_restore_pl (Totem *totem)
 		return;
 	}
 
+	g_signal_handlers_disconnect_by_func
+		(G_OBJECT (totem->playlist),
+		 playlist_changed_cb, (gpointer) totem);
+
 	if (gtk_playlist_add_mrl (totem->playlist, path, NULL) == FALSE)
 	{
+		g_signal_connect (G_OBJECT (totem->playlist),
+				"changed", G_CALLBACK (playlist_changed_cb),
+				(gpointer) totem);
+
 		g_free (path);
 		totem_action_set_mrl (totem, NULL);
 		return;
 	}
 
+	g_signal_connect (G_OBJECT (totem->playlist),
+			"changed", G_CALLBACK (playlist_changed_cb),
+			(gpointer) totem);
+
 	g_free (path);
 	play_pause_set_label (totem, STATE_PAUSED);
+
+	mrl = gtk_playlist_get_current_mrl (totem->playlist);
+	if (totem->mrl == NULL
+			|| (totem->mrl != NULL && mrl != NULL
+				&& strcmp (totem->mrl, mrl) != 0))
+	{
+		totem_action_set_mrl (totem, mrl);
+	} else if (totem->mrl != NULL) {
+		gtk_playlist_set_playing (totem->playlist, TRUE);
+	}
+
+	g_free (mrl);
 
 	return;
 }
@@ -525,6 +549,7 @@ update_mrl_label (Totem *totem, const char *name)
 		/* Get the length of the stream */
 		time = bacon_video_widget_get_stream_length (totem->bvw);
 
+		//FIXME this doesn't work if the metadata arrives later
 		totem_statusbar_set_time_and_length (TOTEM_STATUSBAR
 				(totem->statusbar), 0, time / 1000);
 
