@@ -34,7 +34,7 @@ typedef enum {
   MEDIA_TYPE_DVD
 } MediaType;
 
-MediaType	cd_detect_type	(const gchar *device,
+MediaType	cd_detect_type	(const char *device,
 				 GError     **error);
 
 G_END_DECLS

@@ -41,14 +41,14 @@
 
 typedef struct _CdCache {
   /* device node and mountpoint */
-  gchar *device, *mountpoint;
+  char *device, *mountpoint;
   GnomeVFSDrive *drive;
 
   /* file descriptor to the device */
-  gint fd;
+  int fd;
 
   /* capabilities of the device */
-  gint cap;
+  int cap;
 
   /* indicates if we mounted this mountpoint ourselves or if it
    * was already mounted. */
@@ -56,20 +56,45 @@ typedef struct _CdCache {
   gboolean mounted;
 } CdCache;
 
+/* 
+ * Resolve relative paths
+ */
+
+static char *
+totem_disc_resolve_link (const char *dev, const char *buf, int read)
+{
+  char *parent, *new, *rel;
+
+  rel = g_strndup (buf, read);
+
+  /* is it an absolute path? */
+  if (buf[0] == '/')
+    return rel;
+
+  parent = g_path_get_dirname (dev);
+  new = g_build_filename (parent, rel, NULL);
+  g_free (parent);
+  g_free (rel);
+
+  return new;
+}
+
 /*
  * So, devices can be symlinks and that screws up.
  */
 
-static gchar *
-get_device (const gchar *device,
+static char *
+get_device (const char *device,
 	    GError     **error)
 {
-  gchar buf[256];
-  gchar *dev = g_strdup (device);
+  char buf[256];
+  char *dev = g_strdup (device);
   struct stat st;
-  gint read;
+  int read;
 
   while (1) {
+    char *new;
+
     if (lstat (dev, &st) != 0) {
       g_set_error (error, 0, 0,
           _("Failed to find real device node for %s: %s"),
@@ -88,19 +113,20 @@ get_device (const gchar *device,
       g_free (dev);
       return NULL;
     }
+    new = totem_disc_resolve_link (dev, buf, read);
     g_free (dev);
-    dev = g_strndup (buf, read);
+    dev = new;
   }
 
   return dev;
 }
 
 static CdCache *
-cd_cache_new (const gchar *dev,
+cd_cache_new (const char *dev,
 	      GError     **error)
 {
   CdCache *cache;
-  gchar *mountpoint = NULL, *device;
+  char *mountpoint = NULL, *device;
   GnomeVFSVolumeMonitor *mon;
   GnomeVFSDrive *drive = NULL;
   GList *list, *or;
@@ -112,7 +138,7 @@ cd_cache_new (const gchar *dev,
   mon = gnome_vfs_get_volume_monitor ();
   for (or = list = gnome_vfs_volume_monitor_get_connected_drives (mon);
        list != NULL; list = list->next) {
-    gchar *pdev, *pdev2;
+    char *pdev, *pdev2;
 
     drive = list->data;
     if (!(pdev = gnome_vfs_drive_get_device_path (drive)))
@@ -124,7 +150,7 @@ cd_cache_new (const gchar *dev,
     g_free (pdev);
 
     if (strcmp (pdev2, device) == 0) {
-      gchar *mnt;
+      char *mnt;
 
       mnt = gnome_vfs_drive_get_activation_uri (drive);
       g_free (pdev2);
@@ -195,7 +221,7 @@ cd_cache_open_device (CdCache *cache,
 
   /* is there a disc in the tray? */
   if ((drive = ioctl (cache->fd, CDROM_DRIVE_STATUS, NULL)) != CDS_DISC_OK) {
-    const gchar *drive_s;
+    const char *drive_s;
 
     close (cache->fd);
     cache->fd = -1;
@@ -242,8 +268,8 @@ cd_cache_open_mountpoint (CdCache *cache,
 
   /* mount if we have to */
   if (cache->self_mounted) {
-    gchar *command;
-    gint status;
+    char *command;
+    int status;
 
     command = g_strdup_printf ("mount %s", cache->mountpoint);
     if (!g_spawn_command_line_sync (command,
@@ -271,7 +297,7 @@ cd_cache_free (CdCache *cache)
 {
   /* umount if we mounted */
   if (cache->self_mounted && cache->mounted) {
-    gchar *command;
+    char *command;
 
     command = g_strdup_printf ("umount %s", cache->mountpoint);
     g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
@@ -295,8 +321,8 @@ cd_cache_disc_is_cdda (CdCache *cache,
 		       GError **error)
 {
   MediaType type = MEDIA_TYPE_DATA;
-  gint disc;
-  const gchar *disc_s;
+  int disc;
+  const char *disc_s;
 
   /* open disc and open mount */
   if (!cd_cache_open_device (cache, error))
@@ -361,7 +387,7 @@ cd_cache_disc_is_vcd (CdCache *cache,
   while ((name = g_dir_read_name (dir)) != NULL) {
     if (g_ascii_strcasecmp (name, "mpegav") == 0) {
       GDir *subdir;
-      gchar *subdirname = g_build_path (G_DIR_SEPARATOR_S,
+      char *subdirname = g_build_path (G_DIR_SEPARATOR_S,
 		      	       cache->mountpoint, name, NULL);
 
       have_mpegav = TRUE;
@@ -391,7 +417,7 @@ cd_cache_disc_is_dvd (CdCache *cache,
 		      GError **error)
 {
   GDir *dir;
-  const gchar *name;
+  const char *name;
   gboolean have_vts = FALSE, have_vtsifo = FALSE;
 
   /* open disc, check capabilities and open mount */
@@ -406,7 +432,7 @@ cd_cache_disc_is_dvd (CdCache *cache,
   while ((name = g_dir_read_name (dir)) != NULL) {
     if (g_ascii_strcasecmp (name, "VIDEO_TS") == 0) {
       GDir *subdir;
-      gchar *subdirname = g_build_path (G_DIR_SEPARATOR_S,
+      char *subdirname = g_build_path (G_DIR_SEPARATOR_S,
                                cache->mountpoint, name, NULL);
 
       have_vts = TRUE;
@@ -432,7 +458,7 @@ cd_cache_disc_is_dvd (CdCache *cache,
 }
 
 MediaType
-cd_detect_type (const gchar *device,
+cd_detect_type (const char *device,
 		GError     **error)
 {
   CdCache *cache;
