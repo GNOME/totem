@@ -1,5 +1,10 @@
 2003-10-17  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-statusbar.c: (totem_statusbar_push):
+	pop the old labels and progress when we reach 100% buffering
+
+2003-10-17  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-private.h:
 	* src/totem-statusbar.c: (totem_statusbar_update_time),
 	(totem_statusbar_set_time), (totem_statusbar_timeout_pop),

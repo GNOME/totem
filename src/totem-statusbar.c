@@ -259,6 +259,12 @@ totem_statusbar_push (TotemStatusbar *statusbar, guint percentage)
     g_source_remove (statusbar->timeout);
   }
 
+  if (percentage == 100)
+  {
+    totem_statusbar_timeout_pop (statusbar);
+    return;
+  }
+
   if (statusbar->saved_label == NULL)
   {
     statusbar->saved_label = g_strdup
