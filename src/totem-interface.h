@@ -34,6 +34,11 @@ GladeXML	*totem_interface_load		(const char *name,
 						 const char *display_name,
 						 gboolean fatal,
 						 GtkWindow *parent);
+GladeXML	*totem_interface_load_with_root (const char *name,
+						 const char *root_widget,
+						 const char *display_name,
+						 gboolean fatal,
+						 GtkWindow *parent);
 void		 totem_interface_error		(const char *title,
 						 const char *reason,
 						 GtkWindow *parent);

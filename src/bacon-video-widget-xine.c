@@ -59,6 +59,7 @@
 enum {
 	ERROR,
 	EOS,
+	REDIRECT,
 	TITLE_CHANGE,
 	CHANNELS_CHANGE,
 	TICK,
@@ -71,6 +72,7 @@ enum {
 /* Enum for none-signal stuff that needs to go through the AsyncQueue */
 enum {
 	RATIO_ASYNC,
+	REDIRECT_ASYNC,
 	TITLE_CHANGE_ASYNC,
 	EOS_ASYNC,
 	CHANNELS_CHANGE_ASYNC,
@@ -325,7 +327,16 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 				G_STRUCT_OFFSET (BaconVideoWidgetClass, eos),
 				NULL, NULL,
 				g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
-				
+
+	bvw_table_signals[REDIRECT] =
+		g_signal_new ("got-redirect",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (BaconVideoWidgetClass, got_redirect),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__STRING,
+				G_TYPE_NONE, 1, G_TYPE_STRING);
+
 	bvw_table_signals[GOT_METADATA] =
 		g_signal_new ("got-metadata",
 				G_TYPE_FROM_CLASS (object_class),
@@ -1161,6 +1172,11 @@ bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 	case RATIO_ASYNC:
 		bacon_video_widget_set_scale_ratio (bvw, 1);
 		break;
+	case REDIRECT_ASYNC:
+		g_signal_emit (G_OBJECT (bvw),
+				bvw_table_signals[REDIRECT],
+				0, data->msg);
+		break;
 	case TITLE_CHANGE_ASYNC:
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[TITLE_CHANGE],
@@ -1356,9 +1372,11 @@ xine_event (void *user_data, const xine_event_t *event)
 		break;
 	case XINE_EVENT_MRL_REFERENCE:
 		ref = event->data;
-		bacon_video_widget_close (bvw);
-		bacon_video_widget_open (bvw, ref->mrl, NULL);
-		bacon_video_widget_play (bvw, NULL);
+		data = g_new0 (signal_data, 1);
+		data->signal = REDIRECT_ASYNC;
+		data->msg = g_strdup (ref->mrl);
+		g_async_queue_push (bvw->priv->queue, data);
+		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
 		break;
 	case XINE_EVENT_UI_MESSAGE:
 		xine_event_message (bvw, (xine_ui_message_data_t *)event->data);
@@ -1388,10 +1406,13 @@ xine_error (BaconVideoWidget *bvw, GError **error)
 	 * xine_open() */
 	while ((data = g_async_queue_try_pop (bvw->priv->queue)) != NULL)
 	{
+		g_message ("data->signal %d", data->signal);
 		g_assert (data->signal == MESSAGE_ASYNC
-				|| data->signal == BUFFERING_ASYNC);
+				|| data->signal == BUFFERING_ASYNC
+				|| data->signal == REDIRECT_ASYNC
+				|| data->signal == EOS_ASYNC);
 
-		if (data->signal != BUFFERING_ASYNC)
+		if (data->signal == ERROR_ASYNC)
 		{
 			if (save_data != NULL)
 			{

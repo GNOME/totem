@@ -1103,6 +1103,16 @@ on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
 	g_free (uri);
 }
 
+static void
+on_got_redirect (BaconVideoWidget *bvw, const char *mrl, Totem *totem)
+{
+	g_message ("on_got_redirect %s", mrl);
+	//FIXME we need to check for relative paths here
+	bacon_video_widget_close (totem->bvw);
+	bacon_video_widget_open (totem->bvw, mrl, NULL);
+	bacon_video_widget_play (bvw, NULL);
+}
+
 /* This is only called when we are playing a DVD */
 static void
 on_title_change_event (BaconVideoWidget *bvw, const char *string, Totem *totem)
@@ -3243,6 +3253,10 @@ video_widget_create (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->bvw),
 			"eos",
 			G_CALLBACK (on_eos_event),
+			totem);
+	g_signal_connect (G_OBJECT (totem->bvw),
+			"got-redirect",
+			G_CALLBACK (on_got_redirect),
 			totem);
 	g_signal_connect (G_OBJECT(totem->bvw),
 			"title-change",

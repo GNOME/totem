@@ -1,5 +1,25 @@
 2005-03-13  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_class_init):
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_class_init),
+	(bacon_video_widget_idle_signal), (xine_event), (xine_error):
+	* src/bacon-video-widget.h:
+	Add a redirect signal, for MRL references, rather than handling it
+	inside the backend
+	* src/totem-interface.c: (totem_interface_load_with_root),
+	(totem_interface_load):
+	* src/totem-interface.h: add a totem_interface_load_with_root for the
+	benefit of the Mozilla plugin
+	* src/totem-mozilla-plugin.c: (totem_plugin_destroy_instance):
+	* src/totem-mozilla-viewer.c: (totem_embedded_exit),
+	(totem_embedded_error_and_exit), (totem_embedded_open),
+	(on_got_redirect), (totem_embedded_add_children), (main):
+	* src/totem.c: (on_got_redirect), (video_widget_create):
+	Handle the newly added redirect signal, so that we can handle
+	redirection to relative paths (although we haven't done it yet)
+
+2005-03-13  Bastien Nocera  <hadess@hadess.net>
+
 	* NEWS: updated
 	* src/totem-mozilla-plugin.c: (totem_plugin_fork),
 	(totem_plugin_destroy_instance), (totem_plugin_set_window):

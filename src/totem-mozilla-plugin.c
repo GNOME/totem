@@ -168,8 +168,8 @@ static NPError totem_plugin_destroy_instance (NPP instance, NPSavedData **save)
 	if (plugin == NULL)
 		return NPERR_NO_ERROR;
 
-//	close(plugin->send_fd);
-//	close(plugin->recv_fd);
+	close(plugin->send_fd);
+	close(plugin->recv_fd);
 
 	kill (plugin->player_pid, SIGKILL);
 	waitpid (plugin->player_pid, NULL, 0);

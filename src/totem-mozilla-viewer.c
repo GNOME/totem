@@ -8,6 +8,9 @@
 #include <glade/glade.h>
 
 #include "bacon-video-widget.h"
+#include "totem-interface.h"
+//FIXME damn build system!
+#include "totem-interface.c"
 
 typedef struct TotemEmbedded TotemEmbedded;
 
@@ -16,30 +19,24 @@ struct TotemEmbedded {
 	GladeXML *xml;
 	int xid, width, height;
 	gboolean use_xembed;
-	char *filename;
+	char *filename, *orig_filename;
 	BaconVideoWidget *bvw;
 	gboolean embedded_done;
 };
 
 static void
+totem_embedded_exit (TotemEmbedded *emb)
+{
+	//FIXME what happens when embedded, and we can't go on?
+	exit (1);
+}
+
+static void
 totem_embedded_error_and_exit (char *title, char *reason, TotemEmbedded *emb)
 {
-	GtkWidget *error_dialog;
-
-	error_dialog =
-		gtk_message_dialog_new (NULL,
-				GTK_DIALOG_MODAL,
-				GTK_MESSAGE_ERROR,
-				GTK_BUTTONS_OK,
-				"<b>%s</b>\n%s", title, reason);
-	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
-	gtk_label_set_use_markup (GTK_LABEL (GTK_MESSAGE_DIALOG (error_dialog)->label), TRUE);
-	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
-			GTK_RESPONSE_OK);
-	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
-	gtk_dialog_run (GTK_DIALOG (error_dialog));
-
-	exit (1);
+	totem_interface_error_blocking (title, reason,
+			GTK_WINDOW (emb->window));
+	totem_embedded_exit (emb);
 }
 
 static void
@@ -47,20 +44,23 @@ totem_embedded_open (TotemEmbedded *emb)
 {
 	GError *err = NULL;
 	gboolean retval;
-	gboolean caps;
+
+	g_message ("totem_embedded_open '%s'", emb->filename);
 
 	retval = bacon_video_widget_open (emb->bvw, emb->filename, &err);
 	if (retval == FALSE)
 	{
 		char *msg, *disp;
 
+		//FIXME if emb->filename is fd://0 or stdin:///
+		//we should use a better name than that
 		disp = g_strdup (emb->filename);
 		//disp = gnome_vfs_unescape_string_for_display (totem->mrl);
 		msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
 		g_free (disp);
 		if (err != NULL)
 			g_message ("error: %s", err->message);
-		//totem_action_error (msg, err->message, totem);
+		totem_embedded_error_and_exit (msg, err->message, emb);
 		g_free (msg);
 
 		g_error_free (err);
@@ -72,31 +72,45 @@ totem_embedded_open (TotemEmbedded *emb)
 }
 
 static void
+on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
+{
+	char *new_mrl;
+
+	g_message ("url: %s", emb->orig_filename);
+	g_message ("redirect: %s", mrl);
+
+	//FIXME write a proper one...
+	if (mrl[0] != '/') {
+		char *dir;
+
+		dir = g_path_get_dirname (emb->orig_filename);
+		new_mrl = g_strdup_printf ("%s/%s", dir, mrl);
+		g_free (dir);
+	} else {
+		new_mrl = g_strdup (mrl);
+	}
+
+	g_free (emb->filename);
+	emb->filename = new_mrl;
+	bacon_video_widget_close (emb->bvw);
+
+	totem_embedded_open (emb);
+	bacon_video_widget_play (emb->bvw, NULL);
+}
+
+static void
 totem_embedded_add_children (TotemEmbedded *emb)
 {
 	GtkWidget *child, *container;
-	char *filename;
 	GError *err = NULL;
 
-	filename = g_build_filename (DATADIR,
-			"totem", "mozilla-viewer.glade", NULL);
-	if (g_file_test (filename, G_FILE_TEST_EXISTS) == FALSE)
-	{
-		g_free (filename);
-		filename = g_build_filename ("..", "data", "mozilla-viewer.glade", NULL);
-	}
+	emb->xml = totem_interface_load_with_root ("mozilla-viewer.glade",
+			"vbox1", _("Plugin"), TRUE,
+			GTK_WINDOW (emb->window));
 
-	if (g_file_test (filename, G_FILE_TEST_EXISTS) == FALSE)
-	{
-		g_free (filename);
-		totem_embedded_error_and_exit (_("Couldn't load the main interface (mozilla-viewer.glade)."), _("Make sure that the Totem plugin is properly installed."), NULL);
-	}
-
-	emb->xml = glade_xml_new (filename, "vbox1", NULL);
 	if (emb->xml == NULL)
 	{
-		g_free (filename);
-		totem_embedded_error_and_exit (_("Couldn't load the main interface (mozilla-viewer.glade)."), _("Make sure that the Totem plugin is properly installed."), NULL);
+		totem_embedded_exit (emb);
 	}
 
 	child = glade_xml_get_widget (emb->xml, "vbox1");
@@ -111,6 +125,11 @@ totem_embedded_add_children (TotemEmbedded *emb)
 		if (err != NULL)
 			g_error_free (err);
 	}
+
+	g_signal_connect (G_OBJECT(emb->bvw),
+			"got-redirect",
+			G_CALLBACK (on_got_redirect),
+			emb);
 
 	container = glade_xml_get_widget (emb->xml, "hbox4");
 	gtk_container_add (GTK_CONTAINER (container), GTK_WIDGET (emb->bvw));
@@ -170,8 +189,13 @@ int main (int argc, char **argv)
 				i++;
 				emb->height = atoi (argv[i]);
 			}
+		} else if (strcmp (argv[i], "--url") == 0) {
+			if (i + 1 < argc) {
+				i++;
+				emb->orig_filename = argv[i];
+			}
 		} else if (i + 1 == argc) {
-			emb->filename = argv[i];
+			emb->filename = g_strdup (argv[i]);
 		}
 	}
 

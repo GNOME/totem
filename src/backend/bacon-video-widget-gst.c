@@ -639,6 +639,14 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 		  G_STRUCT_OFFSET (BaconVideoWidgetClass, got_metadata),
 		  NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
+  bvw_table_signals[REDIRECT] =
+    g_signal_new ("got-redirect",
+		  G_TYPE_FROM_CLASS (object_class),
+		  G_SIGNAL_RUN_LAST,
+		  G_STRUCT_OFFSET (BaconVideoWidgetClass, got_redirect),
+		  NULL, NULL, g_cclosure_marshal_VOID__STRING,
+		  G_TYPE_NONE, 1, G_TYPE_STRING);
+
   bvw_table_signals[SIGNAL_TITLE_CHANGE] =
     g_signal_new ("title-change",
 		  G_TYPE_FROM_CLASS (object_class),

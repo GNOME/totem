@@ -92,8 +92,8 @@ totem_interface_error_blocking (const char *title, const char *reason,
 }
 
 GladeXML *
-totem_interface_load (const char *name, const char *display_name,
-		gboolean fatal, GtkWindow *parent)
+totem_interface_load_with_root (const char *name, const char *root_widget,
+		const char *display_name, gboolean fatal, GtkWindow *parent)
 {
 	GladeXML *glade;
 	char *filename;
@@ -102,7 +102,7 @@ totem_interface_load (const char *name, const char *display_name,
 	filename = totem_interface_get_full_path (name);
 
 	if (filename != NULL)
-		glade = glade_xml_new (filename, NULL, NULL);
+		glade = glade_xml_new (filename, root_widget, NULL);
 	g_free (filename);
 
 	if (glade == NULL)
@@ -120,6 +120,14 @@ totem_interface_load (const char *name, const char *display_name,
 	}
 
 	return glade;
+}
+
+GladeXML *
+totem_interface_load (const char *name, const char *display_name,
+		gboolean fatal, GtkWindow *parent)
+{
+	return totem_interface_load_with_root (name, NULL, display_name,
+			fatal, parent);
 }
 
 GdkPixbuf*
