@@ -1370,7 +1370,7 @@ on_take_screenshot1_activate (GtkButton *button, gpointer user_data)
 		{
 			char *msg;
 
-			msg = g_strdup_printf (_("There was an error saving the screenshot as '%s'\nDetails: %s"), filename, err->message);
+			msg = g_strdup_printf (_("There was an error saving the screenshot.\nDetails: %s"), err->message);
 			totem_action_error (msg, GTK_WINDOW (totem->win));
 			g_free (msg);
 			g_error_free (err);
