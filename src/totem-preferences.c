@@ -341,6 +341,26 @@ bacon_cd_selection_create (void)
 	return widget;
 }
 
+static void
+brightness_changed (GtkRange *range, Totem *totem)
+{
+	gdouble i;
+
+	i = gtk_range_get_value (range);
+	bacon_video_widget_set_video_property (totem->bvw,
+			BVW_VIDEO_BRIGHTNESS, (int) i);
+}
+
+static void
+contrast_changed (GtkRange *range, Totem *totem)
+{
+	gdouble i;
+
+	i = gtk_range_get_value (range);
+	bacon_video_widget_set_video_property (totem->bvw,
+			BVW_VIDEO_CONTRAST, (int) i);
+}
+
 void
 totem_setup_preferences (Totem *totem)
 {
@@ -480,6 +500,20 @@ totem_setup_preferences (Totem *totem)
 	gtk_option_menu_set_history (GTK_OPTION_MENU (item), found);
 	g_signal_connect (G_OBJECT (item), "changed",
 			G_CALLBACK (visual_menu_changed), totem);
+
+	item = glade_xml_get_widget (totem->xml, "tpw_bright_scale");
+	i = bacon_video_widget_get_video_property (totem->bvw,
+			BVW_VIDEO_BRIGHTNESS);
+	gtk_range_set_value (GTK_RANGE (item), (gdouble) i);
+	g_signal_connect (G_OBJECT (item), "value-changed",
+			G_CALLBACK (brightness_changed), totem);
+
+	item = glade_xml_get_widget (totem->xml, "tpw_contrast_scale");
+	i = bacon_video_widget_get_video_property (totem->bvw,
+			BVW_VIDEO_CONTRAST);
+	gtk_range_set_value (GTK_RANGE (item), (gdouble) i);
+	g_signal_connect (G_OBJECT (item), "value-changed",
+			G_CALLBACK (contrast_changed), totem);
 
 	/* This one is for the deinterlacing menu, not really our dialog
 	 * but we do it anyway */

@@ -1,3 +1,16 @@
+2003-06-22  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem.glade: changed the names of the scales for brightness
+	and contrast
+	* src/bacon-video-widget-gst.c:
+	(bacon_video_widget_get_video_property),
+	(bacon_video_widget_set_video_property): added dummy functions
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_set_video_property): fixed an inverted test
+	* src/totem-preferences.c: (brightness_changed),
+	(contrast_changed), (totem_setup_preferences): change the brightness
+	and contrast when somebody wiggles these scales (Closes: #112788)
+
 2003-06-21  Bastien Nocera  <hadess@hadess.net>
 
 	* data/Makefile.am: upd
