@@ -55,7 +55,13 @@ totem_SOURCES = 			\
 	scrsaver.c  scrsaver.h		\
 	video-utils.c video-utils.h	\
 	gtk-message.c gtk-message.h	\
-	debug.h
+	debug.h				\
+	gnome-authn-manager.c		\
+	gnome-authn-manager.h		\
+	gnome-caption-table.c		\
+	gnome-caption-table.h		\
+	gnome-password-dialog.c		\
+	gnome-password-dialog.h
 
 totem_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS)
 totem_LDFLAGS = -export-dynamic

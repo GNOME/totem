@@ -1,5 +1,23 @@
 2003-01-13  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am:
+	* src/gnome-authn-manager.c:
+	* src/gnome-authn-manager.h:
+	* src/gnome-caption-table.c:
+	* src/gnome-caption-table.h:
+	* src/gnome-password-dialog.c:
+	* src/gnome-password-dialog.h: Added Gnome Authentication dialog
+	for the benefit of the playlist and the xine gnome-vfs plugin
+	* src/gtk-xine.c: (generate_mouse_event), (gtk_xine_realize),
+	(gtk_xine_idle_signal), (xine_event), (gtk_xine_motion_notify),
+	(gtk_xine_button_press):
+	* src/gtk-xine.h:
+	* src/totem.c: (on_video_motion_notify_event), (main): Fix the DVD
+	menus wrt mouse motion. Send the eos and title change events from
+	the xine thread directly, not using the idle signal generation
+
+2003-01-13  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-xine.c: (gtk_xine_class_init), (gtk_xine_realize),
 	(gtk_xine_set_fullscreen): remove the gdk_window_set_transient_for
 	call, as it seems to break fullscreen. re-add our configure hack

@@ -133,7 +133,7 @@ GtkWidget *gtk_xine_properties_dialog_get
 char *gtk_xine_properties_get_title    (GtkXine *gtx);
 void gtk_xine_properties_update        (GtkXine *gtx, gboolean reset);
 
-void gtk_xine_dvd_event (GtkXine *gtx, GtkXineDVDEvent type);
+void gtk_xine_dvd_event		       (GtkXine *gtx, GtkXineDVDEvent type);
 
 /* Screenshot functions */
 gboolean gtk_xine_can_get_frames       (GtkXine *gtx);

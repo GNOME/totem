@@ -32,7 +32,6 @@
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/extensions/XShm.h>
-#include <X11/keysym.h>
 /* gtk+/gnome */
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
@@ -744,7 +743,7 @@ generate_mouse_event (GtkXine *gtx, GdkEvent *event, gboolean is_motion)
 	int x, y;
 	gboolean retval;
 
-	if (is_motion == FALSE && bevent->button != Button1)
+	if (is_motion == FALSE && bevent->button != GDK_BUTTON_PRESS)
 		return FALSE;
 
 	if (is_motion == TRUE)
@@ -850,8 +849,8 @@ gtk_xine_realize (GtkWidget *widget)
 	attr.window_type = GDK_WINDOW_CHILD;
 	attr.wclass = GDK_INPUT_OUTPUT;
 	attr.event_mask = gtk_widget_get_events (widget) | GDK_EXPOSURE_MASK
-		| GDK_POINTER_MOTION_MASK | GDK_BUTTON_PRESS_MASK
-		| GDK_KEY_PRESS_MASK;
+		| GDK_POINTER_MOTION_MASK
+		| GDK_BUTTON_PRESS_MASK | GDK_KEY_PRESS_MASK;
 	widget->window = gdk_window_new (gtk_widget_get_parent_window (widget),
 			&attr, GDK_WA_X | GDK_WA_Y);
 	gdk_window_show (widget->window);
@@ -959,15 +958,6 @@ gtk_xine_idle_signal (GtkXine *gtx)
 				gtx_table_signals[ERROR], 0,
 				signal->error_type, signal->message);
 		break;
-	case EOS:
-		g_signal_emit (G_OBJECT (gtx),
-				gtx_table_signals[EOS], 0, NULL);
-		break;
-	case TITLE_CHANGE:
-		g_signal_emit (G_OBJECT (gtx),
-				gtx_table_signals[TITLE_CHANGE],
-				0, signal->message);
-		break;
 	/* A bit of cheating right here */
 	case RATIO:
 		gtk_xine_set_scale_ratio (gtx, 0);
@@ -994,20 +984,15 @@ xine_event (void *user_data, const xine_event_t *event)
 	switch (event->type)
 	{
 	case XINE_EVENT_UI_PLAYBACK_FINISHED:
-			signal = g_new0 (GtkXineSignal, 1);
-			signal->type = EOS;
-			g_async_queue_push (gtx->priv->queue, signal);
-			g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
-			break;
+		g_signal_emit (G_OBJECT (gtx),
+				gtx_table_signals[EOS], 0, NULL);
+		break;
 	case XINE_EVENT_UI_SET_TITLE:
-			ui_data = (xine_ui_data_t *) event->data;
-
-			signal = g_new0 (GtkXineSignal, 1);
-			signal->type = TITLE_CHANGE;
-			signal->message = g_strdup (ui_data->str);
-			g_async_queue_push (gtx->priv->queue, signal);
-			g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
-			break;
+		ui_data = (xine_ui_data_t *) event->data;
+		g_signal_emit (G_OBJECT (gtx),
+				gtx_table_signals[TITLE_CHANGE],
+				0, ui_data->str);
+		break;
 	}
 }
 
@@ -1155,6 +1140,7 @@ static gboolean
 gtk_xine_motion_notify (GtkWidget *widget, GdkEventMotion *event)
 {
 	GtkXine *gtx = (GtkXine *) widget;
+
 	generate_mouse_event (GTK_XINE (widget), (GdkEvent *)event, TRUE);
 
 	if (GTK_WIDGET_CLASS (parent_class)->motion_notify_event != NULL)

@@ -25,6 +25,7 @@
 #include <string.h>
 #include <X11/XF86keysym.h>
 
+#include "gnome-authn-manager.h"
 #include "gtk-message.h"
 #include "gtk-xine.h"
 #include "gtk-playlist.h"
@@ -1576,10 +1577,10 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 	Totem *totem = (Totem *) user_data;
 
 	if (gtk_xine_is_fullscreen (GTK_XINE (totem->gtx)) == FALSE)
-		return TRUE;
+		return FALSE;
 
 	if (in_progress == TRUE)
-		return TRUE;
+		return FALSE;
 
 	in_progress = TRUE;
 	if (totem->popup_timeout != 0)
@@ -1598,7 +1599,7 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 			(GtkFunction) popup_hide, totem);
 	in_progress = FALSE;
 
-	return TRUE;
+	return FALSE;
 }
 
 static gboolean
@@ -2212,6 +2213,7 @@ main (int argc, char **argv)
 		g_free (str);
 		exit (1);
 	}
+	gnome_authentication_manager_init ();
 
 	/* We need it right now for the queue */
 	filename = gnome_program_locate_file (NULL,
