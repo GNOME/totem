@@ -56,6 +56,7 @@ typedef struct {
                        gboolean playback_stopped, gboolean fatal);
 	void (*eos) (GtkWidget *bvw);
 	void (*got_metadata) (GtkWidget *bvw);
+	void (*got_redirect) (GtkWidget *bvw, const char *mrl);
 	void (*title_change) (GtkWidget *bvw, const char *title);
 	void (*channels_change) (GtkWidget *bvw);
 	void (*tick) (GtkWidget *bvw, gint64 current_time, gint64 stream_length,
