@@ -323,8 +323,6 @@ AM_CONDITIONAL(HAVE_X86, `test "x$_system_is_x86" = "xyes" && test "x$CURL_CONFI
 AC_PATH_PROG(GCONFTOOL, gconftool-2)
 AM_GCONF_SOURCE_2
 
-dnl check for glib (defines GLIB_MKENUMS)
-AM_PATH_GLIB_2_0
 dnl Check for packages for building libtotem-plparser.la
 PKG_CHECK_MODULES(TOTEM_PLPARSER, [gtk+-2.0 libxml-2.0 gnome-vfs-2.0
                                    gnome-vfs-module-2.0])

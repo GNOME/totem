@@ -228,6 +228,7 @@ libtotem_plparser_la_LDFLAGS =			\
 	$(TOTEM_PLPARSER_LIBS)
 
 
+GLIB_MKENUMS=`pkg-config --variable=glib_mkenums glib-2.0`
 totem-pl-parser-builtins.h: stamp-totem-pl-parser-builtins.h
 	@true
 
