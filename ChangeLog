@@ -1,3 +1,9 @@
+2005-01-09  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem.c: (video_widget_create): set the volume later so that
+	we're sure it can be set (fixes volume not in sync with slider with
+	the xine-lib backend)
+
 2005-01-09  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/bacon-video-widget-gst.c: (cb_iterate):

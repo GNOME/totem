@@ -3252,11 +3252,6 @@ video_widget_create (Totem *totem)
 	totem_preferences_tvout_setup (totem);
 	totem_preferences_visuals_setup (totem);
 
-	bacon_video_widget_set_volume (totem->bvw,
-			gconf_client_get_int (totem->gc,
-				GCONF_PREFIX"/volume", NULL));
-	update_volume_sliders (totem);
-
 	/* Let's set a name. Will make debugging easier */
 	gtk_widget_set_name (GTK_WIDGET(totem->bvw), "bvw");
 
@@ -3329,6 +3324,11 @@ video_widget_create (Totem *totem)
 	gtk_widget_show (GTK_WIDGET (totem->bvw));
 
 	gtk_widget_set_size_request (container, -1, -1);
+
+	bacon_video_widget_set_volume (totem->bvw,
+			gconf_client_get_int (totem->gc,
+				GCONF_PREFIX"/volume", NULL));
+	update_volume_sliders (totem);
 }
 
 GtkWidget *
