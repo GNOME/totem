@@ -216,6 +216,7 @@ gboolean totem_display_is_local (void)
 {
 	const char *name, *work;
 	int display, screen;
+	gboolean has_hostname;
 
 	name = gdk_display_get_name (gdk_display_get_default ());
 	if (name == NULL)
@@ -225,12 +226,17 @@ gboolean totem_display_is_local (void)
 	if (work == NULL)
 		return TRUE;
 
+	has_hostname = (work - name) > 0;
+
 	/* Get to the character after the colon */
 	work++;
 	if (work == NULL)
 		return TRUE;
 
 	if (sscanf (work, "%d.%d", &display, &screen) != 2)
+		return TRUE;
+
+	if (has_hostname == FALSE)
 		return TRUE;
 
 	if (display < 10)

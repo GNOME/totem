@@ -1,3 +1,9 @@
+2004-06-14  Bastien Nocera  <hadess@hadess.net>
+
+	* src/video-utils.c: (totem_display_is_local): only consider display
+	to be non-local if there is a hostname part of the display name
+	(Closes: #143810)
+
 2004-06-11  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-pl-parser.c: make it possible to stream samples from
