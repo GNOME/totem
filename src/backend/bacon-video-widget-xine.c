@@ -129,6 +129,7 @@ struct BaconVideoWidgetPrivate {
 	gboolean auto_resize;
 	GdkPixbuf *icon;
 	gint volume;
+	TvOutType tvout;
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
@@ -507,10 +508,24 @@ load_video_out_driver (BaconVideoWidget *bvw, gboolean null_out)
 						   XINE_VISUAL_TYPE_X11,
 						   (void *) &vis);
 		if (vo_driver)
+		{
+			if (strcmp (video_driver_id, "dxr3") == 0)
+				bvw->priv->tvout = TV_OUT_DXR3;
+
 			return vo_driver;
+		}
 	}
 
-	vo_driver = xine_open_video_driver (bvw->priv->xine, NULL,
+	/* If the video driver is not dxr3, or the dxr3 failed to load
+	 * we need to try loading the other ones, skipping dxr3 */
+
+	/* The types are hardcoded for now */
+	vo_driver = xine_open_video_driver (bvw->priv->xine, "xv",
+			XINE_VISUAL_TYPE_X11, (void *) &vis);
+	if (vo_driver)
+		return vo_driver;
+
+	vo_driver = xine_open_video_driver (bvw->priv->xine, "xshm",
 			XINE_VISUAL_TYPE_X11, (void *) &vis);
 
 	return vo_driver;
@@ -997,6 +1012,9 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 
 	/* Kill the Screesaver */
 	scrsaver_free (bvw->priv->scr);
+
+	/* Kill the TV out */
+	xine_tvmode_exit (bvw->priv->xine);
 
 	/* Hide all windows */
 	if (GTK_WIDGET_MAPPED (widget))
@@ -1856,6 +1874,49 @@ bacon_video_widget_get_deinterlacing (BaconVideoWidget *bvw)
 	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
 
 	return xine_get_param (bvw->priv->stream, XINE_PARAM_VO_DEINTERLACE);
+}
+
+gboolean
+bacon_video_widget_set_tv_out (BaconVideoWidget *bvw, TvOutType tvout)
+{
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
+
+	if (tvout == TV_OUT_DXR3 || bvw->priv->tvout == TV_OUT_DXR3)
+	{
+		xine_cfg_entry_t entry;
+
+		xine_config_lookup_entry (bvw->priv->xine,
+				"video.driver", &entry);
+		entry.str_value = g_strdup (tvout == TV_OUT_DXR3 ?
+				"dxr3" : "auto");
+		xine_config_update_entry (bvw->priv->xine, &entry);
+
+		bvw->priv->tvout = tvout;
+
+		return TRUE;
+	}
+
+	if (tvout == TV_OUT_TVMODE || bvw->priv->tvout == TV_OUT_TVMODE)
+	{
+		xine_tvmode_switch (bvw->priv->xine,
+				(tvout == TV_OUT_TVMODE), 0, 0, 0);
+	}
+
+	bvw->priv->tvout = tvout;
+
+	return FALSE;
+}
+
+TvOutType
+bacon_video_widget_get_tv_out (BaconVideoWidget *bvw)
+{
+	g_return_val_if_fail (bvw != NULL, 0);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
+	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
+
+	return bvw->priv->tvout;
 }
 
 gboolean

@@ -155,33 +155,30 @@ totem_create_full_path (const char *path)
 void
 totem_action_error (char *msg, Totem *totem)
 {
-	GtkWidget *parent;
-
-	if (totem->error_dialog != NULL)
-		return;
+	GtkWidget *parent, *error_dialog;
 
 	if (totem == NULL)
 		parent = NULL;
 	else
 		parent = totem->win;
 
-	totem->error_dialog =
+	error_dialog =
 		gtk_message_dialog_new (GTK_WINDOW (totem->win),
 				GTK_DIALOG_MODAL,
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK,
 				"%s", msg);
-	gtk_dialog_set_default_response (GTK_DIALOG (totem->error_dialog),
+	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
 			GTK_RESPONSE_OK);
-	g_signal_connect (G_OBJECT (totem->error_dialog), "destroy", G_CALLBACK
-			(gtk_widget_destroy), totem->error_dialog);
-	g_signal_connect (G_OBJECT (totem->error_dialog), "response", G_CALLBACK
-			(gtk_widget_destroy), totem->error_dialog);
-	g_object_add_weak_pointer (G_OBJECT (totem->error_dialog),
-			(void**)&(totem->error_dialog));
-	gtk_window_set_modal (GTK_WINDOW (totem->error_dialog), TRUE);
+	g_signal_connect (G_OBJECT (error_dialog), "destroy", G_CALLBACK
+			(gtk_widget_destroy), error_dialog);
+	g_signal_connect (G_OBJECT (error_dialog), "response", G_CALLBACK
+			(gtk_widget_destroy), error_dialog);
+	g_object_add_weak_pointer (G_OBJECT (error_dialog),
+			(void**)&(error_dialog));
+	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
 
-	gtk_widget_show (totem->error_dialog);
+	gtk_widget_show (error_dialog);
 }
 
 void
@@ -2249,7 +2246,6 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 	case GDK_S:
 		on_skip_to1_activate (NULL, totem);
 		break;
-	case GDK_t:
 	case GDK_T:
 		if (totem->action == 2)
 			totem->action++;
@@ -2942,8 +2938,9 @@ video_widget_create (Totem *totem)
 	g_object_add_weak_pointer (G_OBJECT (totem->bvw),
 			(void**)&(totem->bvw));
 
-	gtk_widget_realize (GTK_WIDGET (totem->bvw));
 	gtk_widget_show (GTK_WIDGET (totem->bvw));
+
+	totem_preferences_tvout_setup (totem);
 }
 
 GtkWidget *

@@ -1,3 +1,23 @@
+2003-04-25  Bastien Nocera  <hadess@hadess.net>
+
+	* README: upd
+	* data/totem.glade: upd
+	* src/bacon-video-widget-gst.c:
+	(bacon_video_widget_get_deinterlacing),
+	(bacon_video_widget_set_tv_out), (bacon_video_widget_get_tv_out):
+	* src/bacon-video-widget-xine.c: (load_video_out_driver),
+	(bacon_video_widget_unrealize),
+	(bacon_video_widget_get_deinterlacing),
+	(bacon_video_widget_set_tv_out), (bacon_video_widget_get_tv_out):
+	* src/bacon-video-widget.h:
+	* src/totem-preferences.c: (on_tvout_toggled),
+	(totem_setup_preferences), (totem_preferences_tvout_setup):
+	* src/totem-preferences.h:
+	* src/totem.c: (totem_action_error), (totem_action_handle_key),
+	(video_widget_create): implemented tv-out via DXR3 or nvtv, only
+	the dxr3 setting is actually saved, tv-out needs to be enabled at
+	run-time for nvtv
+
 2003-04-25  Julien MOUTTE  <julien@moutte.net>
 
 	* src/bacon-video-widget-gst.c: (got_time_tick),

@@ -149,6 +149,10 @@ void bacon_video_widget_set_deinterlacing	 (BaconVideoWidget *bvw,
 						  gboolean deinterlace);
 gboolean bacon_video_widget_get_deinterlacing	 (BaconVideoWidget *bvw);
 
+gboolean bacon_video_widget_set_tv_out		 (BaconVideoWidget *bvw,
+						  TvOutType tvout);
+TvOutType bacon_video_widget_get_tv_out		 (BaconVideoWidget *bvw);
+
 void bacon_video_widget_toggle_aspect_ratio      (BaconVideoWidget *bvw);
 void bacon_video_widget_set_scale_ratio          (BaconVideoWidget *bvw,
 						  gfloat ratio);

@@ -129,6 +129,25 @@ on_checkbutton2_toggled (GtkToggleButton *togglebutton, Totem *totem)
 }
 
 static void
+on_tvout_toggled (GtkToggleButton *togglebutton, Totem *totem)
+{
+	TvOutType type;
+	gboolean value;
+
+	value = gtk_toggle_button_get_active (togglebutton);
+	if (value == FALSE)
+		return;
+
+	type = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (togglebutton),
+				"tvout_type"));
+	value = bacon_video_widget_set_tv_out
+		(BACON_VIDEO_WIDGET (totem->bvw), type);
+
+	if (value == TRUE)
+		totem_action_error (_("Switching on or off this type of TV-Out requires a restart to take effect."), totem);
+}
+
+static void
 on_deinterlace1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 {
 	gboolean value;
@@ -383,5 +402,48 @@ totem_setup_preferences (Totem *totem)
 			totem, NULL, NULL);
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_deinterlace1_activate), totem);
+}
+
+void
+totem_preferences_tvout_setup (Totem *totem)
+{
+	GtkWidget *item;
+	TvOutType type;
+	const char *name;
+
+	type = bacon_video_widget_get_tv_out (totem->bvw);
+	switch (type)
+	{
+	case TV_OUT_NONE:
+		name = "notvout";
+		break;
+	case TV_OUT_TVMODE:
+		name = "tvoutmode";
+		break;
+	case TV_OUT_DXR3:
+		name = "dxr3tvout";
+		break;
+	default:
+		g_assert_not_reached ();
+	}
+
+	item = glade_xml_get_widget (totem->xml, name);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), TRUE);
+
+	item = glade_xml_get_widget (totem->xml, "notvout");
+	g_signal_connect (G_OBJECT (item), "toggled",
+			G_CALLBACK (on_tvout_toggled), totem);
+	g_object_set_data (G_OBJECT (item), "tvout_type",
+			GINT_TO_POINTER (TV_OUT_NONE));
+	item = glade_xml_get_widget (totem->xml, "tvoutmode");
+	g_signal_connect (G_OBJECT (item), "toggled",
+			G_CALLBACK (on_tvout_toggled), totem);
+	g_object_set_data (G_OBJECT (item), "tvout_type",
+			GINT_TO_POINTER (TV_OUT_TVMODE));
+	item = glade_xml_get_widget (totem->xml, "dxr3tvout");
+	g_signal_connect (G_OBJECT (item), "toggled",
+			G_CALLBACK (on_tvout_toggled), totem);
+	g_object_set_data (G_OBJECT (item), "tvout_type",
+			GINT_TO_POINTER (TV_OUT_DXR3));
 }
 

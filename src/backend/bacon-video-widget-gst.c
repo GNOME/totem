@@ -484,8 +484,21 @@ bacon_video_widget_set_deinterlacing (BaconVideoWidget *bvw,
 gboolean
 bacon_video_widget_get_deinterlacing (BaconVideoWidget *bvw)
 {
-	return 0;
+	return FALSE;
 }
+
+gboolean
+bacon_video_widget_set_tv_out (BaconVideoWidget *bvw, TvOutType tvout)
+{
+	return FALSE;
+}
+
+TvOutType
+bacon_video_widget_get_tv_out (BaconVideoWidget *bvw)
+{
+	return TV_OUT_NONE;
+}
+
 
 /* =========================================== */
 /*                                             */
