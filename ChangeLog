@@ -1,5 +1,13 @@
 2005-03-18  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
+	* src/bacon-video-widget-gst.c: (got_eos):
+	  Don't forward EOS on redirects...
+	* src/totem-mozilla-viewer.c: (on_eos_event),
+	(totem_embedded_add_children):
+	  Implement EOS handler so we can re-view trailers.
+
+2005-03-18  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
 	* src/video-dev.c: (linux_add_video_dev), (linux_scan):
 	  Fix for devices that don't export a 'model' file in /sys/. Base
 	  devices only export a 'name' file.

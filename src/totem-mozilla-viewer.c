@@ -1,3 +1,23 @@
+/* Totem Mozilla plugin
+ *
+ * Copyright (C) <2004> Bastien Nocera <hadess@hadess.net>
+ * Copyright (C) <2002> David A. Schleef <ds@schleef.org>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU Library General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
+ */
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
@@ -152,6 +172,12 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 }
 
 static void
+on_eos_event (GtkWidget *bvw, TotemEmbedded *emb)
+{
+	totem_embedded_set_state (emb, STATE_PAUSED);
+}
+
+static void
 totem_embedded_add_children (TotemEmbedded *emb)
 {
 	GtkWidget *child, *container, *pp_button;
@@ -183,6 +209,8 @@ totem_embedded_add_children (TotemEmbedded *emb)
 			"got-redirect",
 			G_CALLBACK (on_got_redirect),
 			emb);
+	g_signal_connect (G_OBJECT (emb->bvw),
+			  "eos", G_CALLBACK (on_eos_event), emb);
 
 	container = glade_xml_get_widget (emb->xml, "hbox4");
 	gtk_container_add (GTK_CONTAINER (container), GTK_WIDGET (emb->bvw));

@@ -938,7 +938,10 @@ got_eos (GstElement * play, BaconVideoWidget * bvw)
   
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  
+ 
+  if (bvw->priv->got_redirect)
+    return;
+
   signal = g_new0 (BVWSignal, 1);
   signal->signal_id = ASYNC_EOS;
 
