@@ -1,4 +1,5 @@
 
+noinst_PROGRAMS = bvw-test
 bin_PROGRAMS = totem totem-video-thumbnailer vanity
 
 if TOTEM_GST
@@ -93,12 +94,12 @@ totem_properties_page_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
 
 vanity_SOURCES =					\
 	$(VIDEOWIDGET)					\
-	gnome-authn-manager.c gnome-authn-manager.h	\
-	gnome-caption-table.c gnome-caption-table.h	\
-	gnome-password-dialog.c gnome-password-dialog.h	\
 	vanity.c
 
 vanity_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
+
+bvw_test_SOURCES = $(VIDEOWIDGET)  bvw-test.c
+bvw_test_LDADD = $(GTK_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
 
 INCLUDES = 						\
 	-D_REENTRANT					\

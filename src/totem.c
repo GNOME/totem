@@ -2401,8 +2401,11 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 		totem->popup_timeout = 0;
 	}
 
+	item = glade_xml_get_widget (totem->xml, "tcw_vbox");
+	gtk_widget_show_all (item);
 	item = glade_xml_get_widget (totem->xml, "tmw_title_label");
 	gtk_widget_realize (item);
+	gdk_flush ();
 
 	gtk_window_get_size (GTK_WINDOW (totem->control_popup),
 			&width, &totem->control_popup_height);

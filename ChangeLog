@@ -1,3 +1,13 @@
+2003-07-18  Bastien Nocera  <hadess@hadess.net>
+
+	* src/.cvsignore: upd
+	* src/Makefile.am: upd
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_unrealize),
+	(bacon_video_widget_new): fixed 2 potential crashes
+	* src/bvw-test.c: added a test program
+	* src/totem.c: (on_video_motion_notify_event): maybe fix the popup
+	placement issue for good?
+
 2003-07-16  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.glade: remove accelerators from the tab labels

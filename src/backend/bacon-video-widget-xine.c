@@ -1272,6 +1272,8 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 
 	bvw = BACON_VIDEO_WIDGET (widget);
 
+	g_source_remove (bvw->priv->tick_id);
+
 	/* stop the playback */
 	xine_stop (bvw->priv->stream);
 	xine_close (bvw->priv->stream);
@@ -1352,7 +1354,7 @@ bacon_video_widget_new (int width, int height, gboolean null_out, GError **err)
 
 	/* load the video drivers */
 	bvw->priv->ao_driver = load_audio_out_driver (bvw, err);
-	if (*err != NULL)
+	if (err != NULL && *err != NULL)
 		return NULL;
 
 	bvw->priv->vo_driver = load_video_out_driver (bvw, TRUE);
