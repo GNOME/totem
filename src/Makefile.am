@@ -184,6 +184,7 @@ test_parser_LDADD = \
 
 INCLUDES = 						\
 	-D_REENTRANT					\
+	-I$(top_srcdir)					\
 	$(EXTRA_GNOME_CFLAGS)				\
 	$(MOZILLA_CFLAGS)				\
 	$(NVTV_CFLAGS)					\
