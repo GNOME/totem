@@ -87,7 +87,21 @@ dnl CURL tests
 CURL_MAJOR_REQ=7
 CURL_MINOR_REQ=9
 CURL_MICRO_REQ=8
-AC_PATH_PROG(CURL_CONFIG, curl-config, no)
+
+AC_ARG_ENABLE(curl,     
+	AC_HELP_STRING([--disable-curl],[disable curl support]),
+		[case "${enableval}" in
+			yes) WANT_CURL=yes ;;
+			no)  WANT_CURL=no ;;
+			*) AC_MSG_ERROR(bad value ${enableval} for --enable-curl) ;;
+		esac],  
+		[WANT_CURL=yes]) dnl Default value
+if test x$WANT_CURL = xyes ; then
+	AC_PATH_PROG(CURL_CONFIG, curl-config, no)
+else
+	CURL_CONFIG=no
+fi
+
 AC_MSG_CHECKING(for curl)
 if test "$CURL_CONFIG" = "no" ; then
   AC_MSG_WARN(curl development libraries missing, no automatic DLL downloader)
