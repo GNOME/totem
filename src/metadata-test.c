@@ -116,7 +116,7 @@ int main (int argc, char **argv)
 {
 	static struct poptOption options[] = {
 		{NULL, '\0', POPT_ARG_INCLUDE_TABLE, NULL, 0,
-			N_("Backend options"), NULL},
+			"Backend options", NULL},
 		{NULL, '\0', 0, NULL, 0} /* end the list */
 	};
 	GtkWidget *widget;
