@@ -286,7 +286,7 @@ totem_action_exit (Totem *totem)
 
 		path = g_build_filename (G_DIR_SEPARATOR_S, g_get_home_dir (),
 				".gnome2", "totem.pls", NULL);
-		gtk_playlist_save_current_playlist (totem->playlist, path);
+		totem_playlist_save_current_playlist (totem->playlist, path);
 		g_free (path);
 
 		gtk_widget_destroy (GTK_WIDGET (totem->playlist));
@@ -391,7 +391,7 @@ totem_action_play (Totem *totem, int offset)
 				disp,
 				err->message);
 		g_free (disp);
-		gtk_playlist_set_playing (totem->playlist, FALSE);
+		totem_playlist_set_playing (totem->playlist, FALSE);
 		totem_action_error (msg, totem);
 		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
 			totem_action_stop (totem);
@@ -439,7 +439,7 @@ totem_action_play_media (Totem *totem, MediaType type)
 
 	if (totem_action_load_media (totem, type) != FALSE)
 	{
-		mrl = gtk_playlist_get_current_mrl (totem->playlist);
+		mrl = totem_playlist_get_current_mrl (totem->playlist);
 		totem_action_set_mrl_and_play (totem, mrl);
 		g_free (mrl);
 	}
@@ -459,7 +459,7 @@ totem_action_play_pause (Totem *totem)
 		char *mrl;
 
 		/* Try to pull an mrl from the playlist */
-		mrl = gtk_playlist_get_current_mrl (totem->playlist);
+		mrl = totem_playlist_get_current_mrl (totem->playlist);
 		if (mrl == NULL)
 		{
 			play_pause_set_label (totem, STATE_STOPPED);
@@ -583,7 +583,7 @@ totem_action_restore_pl (Totem *totem)
 		(G_OBJECT (totem->playlist),
 		 playlist_changed_cb, totem);
 
-	if (gtk_playlist_add_mrl (totem->playlist, path, NULL) == FALSE)
+	if (totem_playlist_add_mrl (totem->playlist, path, NULL) == FALSE)
 	{
 		g_signal_connect (G_OBJECT (totem->playlist),
 				"changed", G_CALLBACK (playlist_changed_cb),
@@ -601,14 +601,14 @@ totem_action_restore_pl (Totem *totem)
 	g_free (path);
 	play_pause_set_label (totem, STATE_PAUSED);
 
-	mrl = gtk_playlist_get_current_mrl (totem->playlist);
+	mrl = totem_playlist_get_current_mrl (totem->playlist);
 	if (totem->mrl == NULL
 			|| (totem->mrl != NULL && mrl != NULL
 				&& strcmp (totem->mrl, mrl) != 0))
 	{
 		totem_action_set_mrl (totem, mrl);
 	} else if (totem->mrl != NULL) {
-		gtk_playlist_set_playing (totem->playlist, TRUE);
+		totem_playlist_set_playing (totem->playlist, TRUE);
 	}
 
 	g_free (mrl);
@@ -784,7 +784,7 @@ try_open_again:
 		gtk_widget_set_sensitive (widget, caps);
 
 		/* Set the playlist */
-		gtk_playlist_set_playing (totem->playlist, retval);
+		totem_playlist_set_playing (totem->playlist, retval);
 
 		if (retval == FALSE && first_try == TRUE)
 		{
@@ -855,16 +855,16 @@ totem_action_previous (Totem *totem)
 	char *mrl;
 
 	if (totem_playing_dvd (totem) == FALSE &&
-		gtk_playlist_has_previous_mrl (totem->playlist) == FALSE
-		&& gtk_playlist_get_repeat (totem->playlist) == FALSE)
+		totem_playlist_has_previous_mrl (totem->playlist) == FALSE
+		&& totem_playlist_get_repeat (totem->playlist) == FALSE)
 		return;
 
         if (totem_playing_dvd (totem) == TRUE)
         {
                 bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_PREV_CHAPTER);
         } else {
-                gtk_playlist_set_previous (totem->playlist);
-                mrl = gtk_playlist_get_current_mrl (totem->playlist);
+                totem_playlist_set_previous (totem->playlist);
+                mrl = totem_playlist_get_current_mrl (totem->playlist);
                 totem_action_set_mrl_and_play (totem, mrl);
                 g_free (mrl);
         }
@@ -876,16 +876,16 @@ totem_action_next (Totem *totem)
 	char *mrl;
 
 	if (totem_playing_dvd (totem) == FALSE &&
-			gtk_playlist_has_next_mrl (totem->playlist) == FALSE
-			&& gtk_playlist_get_repeat (totem->playlist) == FALSE)
+			totem_playlist_has_next_mrl (totem->playlist) == FALSE
+			&& totem_playlist_get_repeat (totem->playlist) == FALSE)
 		return;
 
 	if (totem_playing_dvd (totem) == TRUE)
 	{
 		bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_NEXT_CHAPTER);
 	} else {
-		gtk_playlist_set_next (totem->playlist);
-		mrl = gtk_playlist_get_current_mrl (totem->playlist);
+		totem_playlist_set_next (totem->playlist);
+		mrl = totem_playlist_get_current_mrl (totem->playlist);
 		totem_action_set_mrl_and_play (totem, mrl);
 		g_free (mrl);
 	}
@@ -918,7 +918,7 @@ totem_action_seek_relative (Totem *totem, int off_sec)
 					"Reason: %s."),
 				totem->mrl,
 				err->message);
-		gtk_playlist_set_playing (totem->playlist, FALSE);
+		totem_playlist_set_playing (totem->playlist, FALSE);
 		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
 			totem_action_stop (totem);
 		totem_action_error (msg, totem);
@@ -1006,10 +1006,10 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 				g_signal_handlers_disconnect_by_func
 					(G_OBJECT (totem->playlist),
 					 playlist_changed_cb, totem);
-				gtk_playlist_clear (totem->playlist);
+				totem_playlist_clear (totem->playlist);
 				cleared = TRUE;
 			}
-			gtk_playlist_add_mrl (totem->playlist, filename, NULL); 
+			totem_playlist_add_mrl (totem->playlist, filename, NULL); 
 		}
 		g_free (filename);
 		g_free (p->data);
@@ -1025,7 +1025,7 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 		g_signal_connect (G_OBJECT (totem->playlist),
 				"changed", G_CALLBACK (playlist_changed_cb),
 				totem);
-		mrl = gtk_playlist_get_current_mrl (totem->playlist);
+		mrl = totem_playlist_get_current_mrl (totem->playlist);
 		totem_action_set_mrl_and_play (totem, mrl);
 		g_free (mrl);
 	}
@@ -1136,7 +1136,7 @@ on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
 
 	uri = egg_recent_item_get_uri (item);
 
-	gtk_playlist_add_mrl (totem->playlist, uri, NULL);
+	totem_playlist_add_mrl (totem->playlist, uri, NULL);
 	egg_recent_model_add_full (totem->recent_model, item);
 
 	g_free (uri);
@@ -1147,7 +1147,7 @@ static void
 on_title_change_event (GtkWidget *win, const char *string, Totem *totem)
 {
 	update_mrl_label (totem, string);
-	gtk_playlist_set_title (GTK_PLAYLIST (totem->playlist), string);
+	totem_playlist_set_title (TOTEM_PLAYLIST (totem->playlist), string);
 }
 
 static void
@@ -1168,7 +1168,7 @@ on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
         name = totem_get_nice_name_for_stream (totem);
 	if (name == NULL)
 	{
-		name = gtk_playlist_get_current_title
+		name = totem_playlist_get_current_title
 			(totem->playlist,
 			 &custom);
 	}
@@ -1176,7 +1176,7 @@ on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 	update_mrl_label (totem, name);
 
 	if (custom == FALSE)
-		gtk_playlist_set_title (GTK_PLAYLIST (totem->playlist), name);
+		totem_playlist_set_title (TOTEM_PLAYLIST (totem->playlist), name);
 	g_free (name);
 }
 
@@ -1464,7 +1464,7 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 				g_signal_handlers_disconnect_by_func
 					(G_OBJECT (totem->playlist),
 					 playlist_changed_cb, totem);
-				gtk_playlist_clear (totem->playlist);
+				totem_playlist_clear (totem->playlist);
 				cleared = TRUE;
 			}
 			if (strcmp (list[i], "dvd:") == 0)
@@ -1477,7 +1477,7 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 			} else if (strcmp (list[i], "cd:") == 0) {
 				totem_action_load_media (totem, MEDIA_CDDA);
 				continue;
-			} else if (gtk_playlist_add_mrl (totem->playlist,
+			} else if (totem_playlist_add_mrl (totem->playlist,
 						filename, NULL) == TRUE)
 			{
                                 EggRecentItem *item;
@@ -1542,7 +1542,7 @@ on_open1_activate (GtkButton *button, Totem *totem)
 		}
 		g_strfreev (filenames);
 
-		mrl = gtk_playlist_get_current_mrl (totem->playlist);
+		mrl = totem_playlist_get_current_mrl (totem->playlist);
 		totem_action_set_mrl_and_play (totem, mrl);
 		g_free (mrl);
 	}
@@ -1599,7 +1599,7 @@ on_open_location1_activate (GtkButton *button, Totem *totem)
 			totem_action_open_files (totem,
 					(char **) filenames, FALSE);
 
-			mrl = gtk_playlist_get_current_mrl (totem->playlist);
+			mrl = totem_playlist_get_current_mrl (totem->playlist);
 			totem_action_set_mrl_and_play (totem, mrl);
 			g_free (mrl);
 		}
@@ -1631,7 +1631,7 @@ on_play_cd1_activate (GtkButton *button, Totem *totem)
 static void
 on_eject1_activate (GtkButton *button, Totem *totem)
 {
-	gtk_playlist_set_playing (totem->playlist, FALSE);
+	totem_playlist_set_playing (totem->playlist, FALSE);
 
 	if (bacon_video_widget_eject (totem->bvw) == FALSE)
 	{
@@ -1706,7 +1706,7 @@ on_quit1_activate (GtkButton *button, Totem *totem)
 static void
 on_repeat_mode1_toggled (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 {
-	gtk_playlist_set_repeat (totem->playlist,
+	totem_playlist_set_repeat (totem->playlist,
 			gtk_check_menu_item_get_active (checkmenuitem));
 }
 
@@ -2126,7 +2126,7 @@ commit_hide_skip_to (GtkDialog *dialog, gint response, Totem *totem)
 				totem->mrl,
 				err->message);
 		totem_action_stop (totem);
-		gtk_playlist_set_playing (totem->playlist, FALSE);
+		totem_playlist_set_playing (totem->playlist, FALSE);
 		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
 			totem_action_stop (totem);
 		totem_action_error (msg, totem);
@@ -2224,13 +2224,13 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		break;
 	case TOTEM_REMOTE_COMMAND_ENQUEUE:
 		if (url != NULL)
-			gtk_playlist_add_mrl (totem->playlist, url, NULL);
+			totem_playlist_add_mrl (totem->playlist, url, NULL);
 		break;
 	case TOTEM_REMOTE_COMMAND_REPLACE:
 		if (url != NULL)
 		{
-			gtk_playlist_clear (totem->playlist);
-			gtk_playlist_add_mrl (totem->playlist, url, NULL);
+			totem_playlist_clear (totem->playlist);
+			totem_playlist_add_mrl (totem->playlist, url, NULL);
 		}
 		break;
 	case TOTEM_REMOTE_COMMAND_SHOW:
@@ -2265,7 +2265,7 @@ playlist_changed_cb (GtkWidget *playlist, Totem *totem)
 	char *mrl;
 
 	update_buttons (totem);
-	mrl = gtk_playlist_get_current_mrl (totem->playlist);
+	mrl = totem_playlist_get_current_mrl (totem->playlist);
 
 	if (totem->mrl == NULL
 			|| (totem->mrl != NULL && mrl != NULL
@@ -2273,7 +2273,7 @@ playlist_changed_cb (GtkWidget *playlist, Totem *totem)
 	{
 		totem_action_set_mrl_and_play (totem, mrl);
 	} else if (totem->mrl != NULL) {
-		gtk_playlist_set_playing (totem->playlist, TRUE);
+		totem_playlist_set_playing (totem->playlist, TRUE);
 	}
 
 	g_free (mrl);
@@ -2286,13 +2286,13 @@ current_removed_cb (GtkWidget *playlist, Totem *totem)
 
 	/* Set play button status */
 	play_pause_set_label (totem, STATE_STOPPED);
-	mrl = gtk_playlist_get_current_mrl (totem->playlist);
+	mrl = totem_playlist_get_current_mrl (totem->playlist);
 
 	if (mrl == NULL)
 	{
-		gtk_playlist_set_at_start (totem->playlist);
+		totem_playlist_set_at_start (totem->playlist);
 		update_buttons (totem);
-		mrl = gtk_playlist_get_current_mrl (totem->playlist);
+		mrl = totem_playlist_get_current_mrl (totem->playlist);
 	} else {
 		update_buttons (totem);
 	}
@@ -2302,7 +2302,7 @@ current_removed_cb (GtkWidget *playlist, Totem *totem)
 }
 
 void
-playlist_repeat_toggle_cb (GtkPlaylist *playlist, gboolean repeat, Totem *totem)
+playlist_repeat_toggle_cb (TotemPlaylist *playlist, gboolean repeat, Totem *totem)
 {
 	GtkWidget *item;
 
@@ -2452,16 +2452,16 @@ on_eos_event (GtkWidget *widget, Totem *totem)
 	if (strcmp (totem->mrl, LOGO_PATH) == 0)
 		return FALSE;
 
-	if (gtk_playlist_has_next_mrl (totem->playlist) == FALSE
-			&& gtk_playlist_get_repeat (totem->playlist) == FALSE)
+	if (totem_playlist_has_next_mrl (totem->playlist) == FALSE
+			&& totem_playlist_get_repeat (totem->playlist) == FALSE)
 	{
 		char *mrl;
 
 		/* Set play button status */
 		play_pause_set_label (totem, STATE_PAUSED);
-		gtk_playlist_set_at_start (totem->playlist);
+		totem_playlist_set_at_start (totem->playlist);
 		update_buttons (totem);
-		mrl = gtk_playlist_get_current_mrl (totem->playlist);
+		mrl = totem_playlist_get_current_mrl (totem->playlist);
 		totem_action_stop (totem);
 		totem_action_set_mrl (totem, mrl);
 		g_free (mrl);
@@ -2722,7 +2722,7 @@ update_buttons (Totem *totem)
 	{
 		has_item = TRUE;
 	} else {
-		has_item = gtk_playlist_has_previous_mrl (totem->playlist);
+		has_item = totem_playlist_has_previous_mrl (totem->playlist);
 	}
 
 	item = glade_xml_get_widget (totem->xml, "tmw_previous_button");
@@ -2741,7 +2741,7 @@ update_buttons (Totem *totem)
 	{
 		has_item = TRUE;
 	} else {
-		has_item = gtk_playlist_has_next_mrl (totem->playlist);
+		has_item = totem_playlist_has_next_mrl (totem->playlist);
 	}
 
 	item = glade_xml_get_widget (totem->xml, "tmw_next_button");
@@ -2958,7 +2958,7 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (on_show_playlist1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "tmw_repeat_mode_menu_item");
 	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
-			gtk_playlist_get_repeat (totem->playlist));
+			totem_playlist_get_repeat (totem->playlist));
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_repeat_mode1_toggled), totem);
 	item = glade_xml_get_widget (totem->xml, "tmw_quit_menu_item");
@@ -3224,7 +3224,7 @@ video_widget_create (Totem *totem)
 
 		msg = g_strdup_printf (_("Totem could not startup:\n%s"),
 				err != NULL ? err->message : _("No reason"));
-		gtk_playlist_set_playing (totem->playlist, FALSE);
+		totem_playlist_set_playing (totem->playlist, FALSE);
 
 		if (err != NULL)
 			g_error_free (err);
@@ -3572,7 +3572,7 @@ main (int argc, char **argv)
 
 	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
 			"totem", "playlist.glade", NULL);
-	totem->playlist = GTK_PLAYLIST (gtk_playlist_new (filename, pix));
+	totem->playlist = TOTEM_PLAYLIST (totem_playlist_new (filename, pix));
 	g_free (filename);
 
 	if (totem->playlist == NULL)

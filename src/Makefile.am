@@ -70,7 +70,7 @@ totem_SOURCES = 					\
 	bacon-video-widget-properties.c	\
 	bacon-video-widget-properties.h	\
 	scrsaver.c scrsaver.h		\
-	gtk-playlist.c gtk-playlist.h	\
+	totem-playlist.c totem-playlist.h \
 	rb-ellipsizing-label.c		\
 	rb-ellipsizing-label.h		\
 	debug.h				\

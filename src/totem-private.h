@@ -25,7 +25,7 @@
 #include "scrsaver.h"
 #include "egg-recent-model.h"
 #include "egg-recent-view-gtk.h"
-#include "gtk-playlist.h"
+#include "totem-playlist.h"
 #include "bacon-message-connection.h"
 #include "bacon-video-widget.h"
 
@@ -95,7 +95,7 @@ struct Totem {
 
 	/* other */
 	char *mrl;
-	GtkPlaylist *playlist;
+	TotemPlaylist *playlist;
 	GConfClient *gc;
 	TotemRemote *remote;
 	BaconMessageConnection *conn;
