@@ -2352,6 +2352,9 @@ size_changed_cb (GdkScreen *screen, Totem *totem)
 static gboolean
 popup_hide (Totem *totem)
 {
+	if (totem->bvw == NULL || totem->controls_visibility != TOTEM_CONTROLS_FULLSCREEN)
+		return TRUE;
+
 	if (totem->seek_lock == TRUE)
 		return TRUE;
 
@@ -3053,11 +3056,14 @@ totem_callback_connect (Totem *totem)
 	gtk_drag_dest_set (item, GTK_DEST_DEFAULT_ALL,
 			target_table, 1, GDK_ACTION_COPY);
 
-	/* Exit */
+	/* Main Window */
 	g_signal_connect (G_OBJECT (totem->win), "delete-event",
 			G_CALLBACK (main_window_destroy_cb), totem);
 	g_signal_connect (G_OBJECT (totem->win), "destroy",
 			G_CALLBACK (main_window_destroy_cb), totem);
+	g_object_notify (G_OBJECT (totem->win), "is-active");
+	g_signal_connect_swapped (G_OBJECT (totem->win), "notify",
+			G_CALLBACK (popup_hide), totem);
 
 	/* Screen size changes */
 	g_signal_connect (G_OBJECT (gdk_screen_get_default ()),
