@@ -260,7 +260,7 @@ totem_action_error_and_exit (char *title, char *reason, Totem *totem)
 				GTK_DIALOG_MODAL,
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK,
-				"<b>%s</b>\n%s.", title, reason);
+				"<b>%s</b>\n%s", title, reason);
 	gtk_dialog_set_has_separator (GTK_DIALOG (error_dialog), FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
 	gtk_label_set_use_markup (GTK_LABEL (GTK_MESSAGE_DIALOG (error_dialog)->label), TRUE);
@@ -3383,7 +3383,7 @@ video_widget_create (Totem *totem)
 
 		gtk_widget_hide (totem->win);
 
-		totem_action_error_and_exit (_("Totem could not startup."), err != NULL ? err->message : _("No reason"), totem);
+		totem_action_error_and_exit (_("Totem could not startup."), err != NULL ? err->message : _("No reason."), totem);
 		if (err != NULL)
 			g_error_free (err);
 	}
@@ -3631,7 +3631,6 @@ main (int argc, char **argv)
 	Totem *totem;
 	char *filename;
 	GConfClient *gc;
-	GError *err = NULL;
 	GdkPixbuf *pix;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
@@ -3660,8 +3659,7 @@ main (int argc, char **argv)
 	gnome_vfs_init ();
 	if ((gc = gconf_client_get_default ()) == NULL)
 	{
-		totem_action_error_and_exit (_("Totem couln't initialise the configuration engine."), err->message, NULL);
-		g_error_free (err);
+		totem_action_error_and_exit (_("Totem couln't initialise the configuration engine."), _("Make sure that GNOME is properly installed."), NULL);
 	}
 	gnome_authentication_manager_init ();
 

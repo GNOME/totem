@@ -1,5 +1,13 @@
 2003-12-29  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c: remove unused defines and includes
+	* src/totem.c: (totem_action_error_and_exit),
+	(video_widget_create), (main): make sure that we don't get an
+	extra period in error messages
+	* src/video-utils.c: remove unneeded stdint.h include (Closes: #129909)
+
+2003-12-29  Bastien Nocera  <hadess@hadess.net>
+
 	* NEWS: upd
 	* README: upd
 	* src/totem-preferences.c: (totem_setup_preferences):

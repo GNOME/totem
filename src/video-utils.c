@@ -1,9 +1,6 @@
 
 #include "video-utils.h"
 
-#ifndef __FreeBSD__
-#include <stdint.h>
-#endif
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>

@@ -25,8 +25,6 @@
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
-#include <libxml/tree.h>
-#include <libxml/parser.h>
 #include <glade/glade.h>
 #include <gconf/gconf-client.h>
 #include <libgnome/gnome-desktop-item.h>
@@ -38,8 +36,6 @@
 #include "totem-pl-parser.h"
 #include "debug.h"
 
-#define READ_CHUNK_SIZE 8192
-#define MIME_READ_CHUNK_SIZE 1024
 #define PL_LEN (gtk_tree_model_iter_n_children (playlist->_priv->model, NULL))
 
 static void ensure_shuffled (TotemPlaylist *playlist, gboolean shuffle);
