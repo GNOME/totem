@@ -7,6 +7,8 @@
 
 /* #define THUMB_DEBUG */
 
+#define MIN_LEN_FOR_SEEK 25000
+
 static void
 print_usage (void)
 {
@@ -164,7 +166,7 @@ int main (int argc, char *argv[])
 	GError *err = NULL;
 	BaconVideoWidget *bvw;
 	GdkPixbuf *pixbuf;
-	int i;
+	int i, length;
 
 	g_thread_init (NULL);
 
@@ -194,8 +196,7 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	/* A 3rd into the file */
-	bacon_video_widget_play (bvw, (int) (65535 / 3), 0, &err);
+	bacon_video_widget_play (bvw, 0, 0, &err);
 	if (err != NULL)
 	{
 		g_print ("totem-video-thumbnailer couln't play file: '%s'\n"
@@ -205,9 +206,11 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	if (bacon_video_widget_is_playing (bvw) == FALSE)
+	/* A 3rd into the file */
+	length = bacon_video_widget_get_stream_length (bvw);
+	if (length > MIN_LEN_FOR_SEEK)
 	{
-		bacon_video_widget_play (bvw, 1, 0, &err);
+		bacon_video_widget_play (bvw, 0, (int) (65535 / 3), NULL);
 	}
 
 	if (bacon_video_widget_can_get_frames (bvw, &err) == FALSE)
