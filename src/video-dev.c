@@ -135,13 +135,20 @@ linux_add_video_dev (const char *name)
 		}
 		tmp = tmp + 2;
 	} else {
-		proc = g_build_filename ("/sys/class/video4linux/",
+		proc = g_build_filename ("/sys/class/video4linux",
 				name, "model", NULL);
 		lines = read_lines (proc);
 		g_free (proc);
 
 		if (lines == NULL) {
-			return NULL;
+			proc = g_build_filename ("/sys/class/video4linux",
+						 name, "name", NULL);
+			lines = read_lines (proc);
+			g_free (proc);
+
+			if (lines == NULL) {
+				return NULL;
+			}
 		}
 
 		tmp = lines[0];
@@ -166,8 +173,8 @@ linux_scan (void)
 
 	if (g_file_test ("/proc/video/dev", G_FILE_TEST_IS_DIR) != FALSE) {
 		dir = g_dir_open ("/proc/video/dev", 0, NULL);
-	} else if (g_file_test ("/sys/class/video4linux/", G_FILE_TEST_IS_DIR) != FALSE) {
-		dir = g_dir_open ("/sys/class/video4linux/", 0, NULL);
+	} else if (g_file_test ("/sys/class/video4linux", G_FILE_TEST_IS_DIR) != FALSE) {
+		dir = g_dir_open ("/sys/class/video4linux", 0, NULL);
 	} else {
 		return NULL;
 	}

@@ -1,3 +1,9 @@
+2005-03-18  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/video-dev.c: (linux_add_video_dev), (linux_scan):
+	  Fix for devices that don't export a 'model' file in /sys/. Base
+	  devices only export a 'name' file.
+
 2005-03-17  Bastien Nocera  <hadess@hadess.net>
 
 	* NEWS: updated
