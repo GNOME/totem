@@ -61,7 +61,7 @@ dnl start with 0.8
 			gstreamer-$GST_MAJORMINOR >= $GST_REQS \
 			gstreamer-gconf-$GST_MAJORMINOR >= $GSTPLUG_REQS \
 			gstreamer-interfaces-$GST_MAJORMINOR >= $GSTPLUG_REQS,
-			HAVE_GSTREAMER=yes,HAVE_GSTREAMER=no)
+			HAVE_GSTREAMER=yes, HAVE_GSTREAMER=no)
 	MM="gstreamer-$GST_MAJORMINOR >= $GST_REQS gstreamer-gconf-$GST_MAJORMINOR >= $GSTPLUG_REQS gstreamer-interfaces-$GST_MAJORMINOR >= $GSTPLUG_REQS"
 
 dnl Give error and exit if we don't have gstreamer

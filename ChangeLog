@@ -1,3 +1,11 @@
+2004-10-09  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* configure.in:
+	  Apparently, a missing space causes issues on Gentoo...
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_signal_idler):
+	  Expose widget on new video if we're not set to auto-resize. This
+	  will re-expose the videosink internally.
+
 2004-10-08  Julien MOUTTE  <julien@moutte.net>
 
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_expose_event):
@@ -24,6 +32,13 @@
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_expose_event): 
 	That's plainly wrong. The video window has nothing to do with pipeline
 	states.
+
+2004-10-07  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	reviewed by: <delete if not using a buddy>
+
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_expose_event),
+	(bacon_video_widget_signal_idler):
 
 2004-10-07  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 

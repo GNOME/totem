@@ -562,6 +562,7 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
           } else {
             bacon_video_widget_size_allocate (GTK_WIDGET (bvw),
 					      &GTK_WIDGET (bvw)->allocation);
+            bacon_video_widget_expose_event (GTK_WIDGET (bvw), NULL);
           }
 
           break;
