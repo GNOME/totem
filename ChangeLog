@@ -1,5 +1,11 @@
 2002-11-21  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (gtk_xine_unrealize): dispose of the stream and
+	close both the audio and the video drivers before exiting, should fix
+	the crash on exit (again...)
+
+2002-11-21  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.desktop.in: added X-Bugzilla stuff
 	* src/gtk-xine.c: (gtk_xine_unrealize): unmap before stopping the xine
 	engine

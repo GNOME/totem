@@ -916,10 +916,19 @@ gtk_xine_unrealize (GtkWidget *widget)
 
 	/* stop the playback */
 	xine_close (gtx->priv->stream);
+	xine_dispose (gtx->priv->stream);
 	gtx->priv->stream = NULL;
 
 	/* stop the event thread */
 	pthread_cancel (gtx->priv->thread);
+
+	/* Kill the drivers */
+	if (gtx->priv->vo_driver != NULL)
+		xine_close_video_driver (gtx->priv->xine,
+				gtx->priv->vo_driver);
+	if (gtx->priv->vo_driver != NULL)
+		xine_close_audio_driver (gtx->priv->xine,
+				gtx->priv->ao_driver);
 
 	/* save config */
 	configfile = g_build_path (G_DIR_SEPARATOR_S,
