@@ -1905,7 +1905,7 @@ on_take_screenshot1_activate (GtkButton *button, Totem *totem)
 	pixbuf = bacon_video_widget_get_current_frame (totem->bvw);
 	if (pixbuf == NULL)
 	{
-		totem_action_error (_("Totem could not get a screenshot of that film."), _("Please file a bug, this isn't supposed to happen."), totem);
+		totem_action_error (_("Totem could not get a screenshot of that film."), _("This is not supposed to happen; please file a bug report."), totem);
 		return;
 	}
 
@@ -3330,7 +3330,7 @@ main (int argc, char **argv)
 	if (XInitThreads () == 0)
 	{
 		gtk_init (&argc, &argv);
-		totem_action_error_and_exit (_("Could not initialise the thread-safe libraries."), _("Verify your system installation. Totem will now exit."), NULL);
+		totem_action_error_and_exit (_("Could not initialize the thread-safe libraries."), _("Verify your system installation. Totem will now exit."), NULL);
 	}
 
 	g_thread_init (NULL);
@@ -3351,7 +3351,7 @@ main (int argc, char **argv)
 	gc = gconf_client_get_default ();
 	if (gc == NULL)
 	{
-		totem_action_error_and_exit (_("Totem couln't initialise the configuration engine."), _("Make sure that GNOME is properly installed."), NULL);
+		totem_action_error_and_exit (_("Totem could not initialize the configuration engine."), _("Make sure that GNOME is properly installed."), NULL);
 	}
 
 #ifndef HAVE_GTK_ONLY

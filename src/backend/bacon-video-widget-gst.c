@@ -46,6 +46,7 @@
 #include <gst/colorbalance/colorbalance.h>
 
 /* system */
+#include <unistd.h>
 #include <time.h>
 #include <string.h>
 #include <stdio.h>
@@ -2750,10 +2751,10 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
       break;
     case BVW_INFO_YEAR: {
       guint julian;
-      if (res = gst_tag_list_get_uint (bvw->priv->tagcache,
-				       GST_TAG_DATE, &julian)) {
+      if ((res = gst_tag_list_get_uint (bvw->priv->tagcache,
+					GST_TAG_DATE, &julian))) {
 	GDate *d = g_date_new_julian (julian);
-	string = g_strdup_printf ("%s", g_date_get_year (d));
+	string = g_strdup_printf ("%d", g_date_get_year (d));
       }
       break;
     }

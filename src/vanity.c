@@ -304,7 +304,7 @@ on_save1_activate (GtkButton *button, Vanity *vanity)
 	pixbuf = bacon_video_widget_get_current_frame (vanity->bvw);
 	if (pixbuf == NULL)
 	{
-		vanity_action_error (_("Totem could not get a screenshot of that film."), _("Please file a bug, this isn't supposed to happen"), vanity);
+		vanity_action_error (_("Totem could not get a screenshot of that film."), _("This is not supposed to happen; please file a bug report."), vanity);
 		return;
 	}
 
@@ -643,7 +643,7 @@ main (int argc, char **argv)
 	if (XInitThreads () == 0)
 	{
 		gtk_init (&argc, &argv);
-		vanity_action_error_and_exit (_("Could not initialise the "
+		vanity_action_error_and_exit (_("Could not initialize the "
 					"thread-safe libraries.\n"
 					"Verify your system installation. "
 					"Vanity will now exit."), NULL);
@@ -668,7 +668,7 @@ main (int argc, char **argv)
 	{
 		char *str;
 
-		str = g_strdup_printf (_("Vanity couln't initialise the \n"
+		str = g_strdup_printf (_("Vanity could not initialize the \n"
 					"configuration engine:\n%s"),
 				err->message);
 		vanity_action_error_and_exit (str, NULL);
