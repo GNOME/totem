@@ -26,6 +26,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/un.h>
+#include <errno.h>
 
 #include "bacon-message-connection.h"
 
@@ -37,10 +38,12 @@ struct BaconMessageConnection {
 	/* A server accepts connections */
 	gboolean is_server;
 
+	/* The socket path itself */
+	char *path;
+
 	/* FD is for the connection, serverfd is for the server socket,
 	 * it accepts incoming connections. */
 	int fd, serverfd;
-	char *path;
 	GIOChannel *chan;
 
 	/* callback */
@@ -134,11 +137,30 @@ server_cb (GIOChannel *source, GIOCondition condition, gpointer data)
 	return TRUE;
 }
 
+static char *
+socket_filename (const char *prefix)
+{
+	char *filename, *path;
+	const char *dir;
+
+	filename = g_strdup_printf (".%s.%s", prefix, g_get_user_name ());
+
+	dir = g_getenv ("BACON_SOCKET_DIR");
+	if (dir == NULL)
+	{
+		path = g_build_filename (g_get_home_dir (), filename, NULL);
+	} else {
+		path = g_build_filename (dir, filename, NULL);
+	}
+
+	g_free (filename);
+	return path;
+}
+
 static gboolean
 try_server (BaconMessageConnection *conn)
 {
 	struct sockaddr_un uaddr;
-	GError *err = NULL;
 
 	uaddr.sun_family = AF_UNIX;
 	strncpy (uaddr.sun_path, conn->path,
@@ -178,16 +200,11 @@ BaconMessageConnection *
 bacon_message_connection_new (const char *prefix)
 {
 	BaconMessageConnection *conn;
-	char *filename, *path;
 
 	g_return_val_if_fail (prefix != NULL, NULL);
 
-	filename = g_strdup_printf (".%s.%s", prefix, g_get_user_name ());
-	path = g_build_filename (g_get_home_dir (), filename, NULL);
-	g_free (filename);
-
 	conn = g_new0 (BaconMessageConnection, 1);
-	conn->path = path;
+	conn->path = socket_filename (prefix);
 
 	if (test_is_socket (conn->path) == FALSE)
 	{
@@ -203,7 +220,7 @@ bacon_message_connection_new (const char *prefix)
 
 	if (try_client (conn) == FALSE)
 	{
-		unlink (path);
+		unlink (conn->path);
 		try_server (conn);
 		if (conn->fd == -1)
 		{

@@ -1,5 +1,11 @@
 2005-03-27  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-message-connection.c: (socket_filename), (try_server),
+	(bacon_message_connection_new): update from libbacon to allow
+	the directory in which the socket is created to be overridden
+
+2005-03-27  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-options.c: (totem_options_process_for_server):
 	* src/totem-remote.h:
 	* src/totem.c: (totem_action_play), (totem_action_pause),
