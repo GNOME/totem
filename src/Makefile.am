@@ -27,8 +27,7 @@ plugin_LTLIBRARIES = $(TOTEM_MOZILLA_PLUGIN)
 if TOTEM_GST
 MM = bacon-video-widget-gst.c \
 	gstscreenshot.c \
-	gstscreenshot.h \
-	gststreaminfo.h
+	gstscreenshot.h
 else
 MM = bacon-video-widget-xine.c
 endif

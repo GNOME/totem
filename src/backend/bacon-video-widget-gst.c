@@ -45,7 +45,6 @@
 #include "baconvideowidget-marshal.h"
 #include "scrsaver.h"
 #include "video-utils.h"
-#include "gststreaminfo.h"
 #include "gstscreenshot.h"
 
 #define DEFAULT_HEIGHT 420
@@ -823,26 +822,31 @@ state_change (GstElement *play, GstElementState old_state,
     g_object_get (G_OBJECT (bvw->priv->play), "stream-info",
 		  &streaminfo, NULL);
     for ( ; streaminfo != NULL; streaminfo = streaminfo->next) {
-      GstStreamInfo *info = streaminfo->data;
+      GObject *info = streaminfo->data;
+      gint type;
+      GParamSpec *pspec;
+      GEnumValue *val;
 
-      switch (info->type) {
-        case GST_STREAM_TYPE_AUDIO:
-          bvw->priv->media_has_audio = TRUE;
-          break;
-        case GST_STREAM_TYPE_VIDEO: {
+      g_object_get (info, "type", &type, NULL);
+      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
+      val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
 
-          /* handle explicit caps as well - they're set later */
-          if (GST_PAD_CAPS (info->pad))
-            caps_set (G_OBJECT (info->pad), NULL, bvw);
-          else
-            g_signal_connect (info->pad, "notify::caps",
-                G_CALLBACK (caps_set), bvw);
+      if (strstr (val->value_name, "AUDIO")) {
+        bvw->priv->media_has_audio = TRUE;
+      } else if (strstr (val->value_name, "VIDEO")) {
+        GstPad *pad;
 
-          bvw->priv->media_has_video = TRUE;
-          break;
-        }
-        default:
-          break;
+        g_object_get (info, "object", &pad, NULL);
+        g_assert (GST_IS_PAD (pad));
+
+        /* handle explicit caps as well - they're set later */
+        if (GST_PAD_CAPS (pad))
+          caps_set (G_OBJECT (pad), NULL, bvw);
+        else
+          g_signal_connect (pad, "notify::caps",
+              G_CALLBACK (caps_set), bvw);
+
+        bvw->priv->media_has_video = TRUE;
       }
     }
   } else if (new_state <= GST_STATE_READY &&
@@ -2065,11 +2069,21 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
   g_object_get (G_OBJECT (bvw->priv->play),
       "stream-info", &streaminfo, NULL);
   for (; streaminfo != NULL; streaminfo = streaminfo->next) {
-    GstStreamInfo *info = streaminfo->data;
+    GObject *info = streaminfo->data;
+    gint type;
+    GParamSpec *pspec;
+    GEnumValue *val;
 
-    if (info->type == GST_STREAM_TYPE_VIDEO) {
-      from = gst_caps_copy (GST_PAD_CAPS (info->pad));
-      break;
+    g_object_get (info, "type", &type, NULL);
+    pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
+    val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
+                                                                                
+    if (strstr (val->value_name, "VIDEO")) {
+      GstPad *pad;
+
+      g_object_get (info, "object", &pad, NULL);
+      g_assert (GST_IS_PAD (pad));
+      from = gst_caps_copy (GST_PAD_CAPS (pad));
     }
   }
   if (!from)
@@ -2187,9 +2201,9 @@ bacon_video_widget_new (int width, int height,
   g_signal_connect (G_OBJECT (bvw->priv->play), "state-change",
 		    G_CALLBACK (state_change), (gpointer) bvw);
   g_signal_connect (G_OBJECT (bvw->priv->play), "found_tag",
-		    (GtkSignalFunc) got_found_tag, (gpointer) bvw);
+		    G_CALLBACK (got_found_tag), (gpointer) bvw);
   g_signal_connect (G_OBJECT (bvw->priv->play), "error",
-		    (GtkSignalFunc) got_error, (gpointer) bvw);
+		    G_CALLBACK (got_error), (gpointer) bvw);
 
   /* We try to get an element supporting XOverlay interface */
   if (!null_out && GST_IS_BIN (bvw->priv->play)) {
