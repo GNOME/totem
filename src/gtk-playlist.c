@@ -1117,7 +1117,8 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 	}
 
 	if (strncmp ("audio/", mimetype, 6) != 0
-			&& strncmp ("video/", mimetype, 6) != 0)
+			&& strncmp ("video/", mimetype, 6) != 0
+			&& strncmp ("application/x-ogg", mimetype, 17) != 0)
 	{
 		D("trying to add '%s' with mimetype '%s'",
 				mrl, mimetype);
