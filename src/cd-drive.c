@@ -64,7 +64,7 @@ g_str_has_prefix (gchar *haystack, gchar *needle)
 
 	return FALSE;
 }
-#endif /* USE_STABLE_LIBGNOMEUI */
+#endif /* USE_STABLE_LIBGLIB */
 
 static char **
 read_lines (char *filename)
