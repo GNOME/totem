@@ -660,7 +660,7 @@ totem_pl_parser_finalize (GObject *object)
 static gboolean
 totem_pl_parser_check_utf8 (const char *title)
 {
-	return g_utf8_validate (title, -1, NULL);
+	return title ? g_utf8_validate (title, -1, NULL) : FALSE;
 }
 
 static void

@@ -1,5 +1,10 @@
 2005-03-08  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-pl-parser.c: (totem_pl_parser_check_utf8): g_utf8_validate
+	can't take a NULL string... (Closes: #169558)
+
+2005-03-08  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-pl-parser.c: (totem_pl_parser_check_utf8): remove useless
 	debug
 
