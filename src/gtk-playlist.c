@@ -783,23 +783,18 @@ gtk_playlist_new (const char *glade_filename, GdkPixbuf *playing_pix)
 {
 	GtkPlaylist *playlist;
 	GtkWidget *container, *item;
-	char *filename;
 
 	if (glade_filename == NULL)
 		return NULL;
 
 	playlist = GTK_PLAYLIST (g_object_new (GTK_TYPE_PLAYLIST, NULL));
 
-	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
-			"totem", "playlist.glade", NULL);
-
-	playlist->_priv->xml = glade_xml_new (filename, "vbox4", NULL);
+	playlist->_priv->xml = glade_xml_new (glade_filename, "vbox4", NULL);
 	if (playlist->_priv->xml == NULL)
 	{
 		gtk_playlist_finalize (G_OBJECT (playlist));
 		return NULL;
 	}
-	g_free (filename);
 
 	gtk_window_set_title (GTK_WINDOW (playlist), _("Playlist"));
 	gtk_dialog_add_buttons (GTK_DIALOG (playlist),
