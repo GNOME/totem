@@ -1,5 +1,13 @@
 2005-04-01  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.glade:
+	* src/totem-preferences.c: (totem_setup_preferences):
+
+	Remove the proprietary plugins button, nobody uses it, and GStreamer
+	doesn't support it (Closes: #170892)
+
+2005-04-01  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-menu.c: (totem_sublang_equal_lists),
 	(totem_languages_update), (totem_subtitles_update),
 	(totem_sublang_update), (totem_sublang_exit):

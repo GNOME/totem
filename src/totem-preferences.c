@@ -275,32 +275,6 @@ connection_combobox_changed (GtkComboBox *combobox, Totem *totem)
 }
 
 static void
-on_button1_clicked (GtkButton *button, Totem *totem)
-{
-	GError *err = NULL;
-	char *path, *cmd, *filemanager;
-
-	path = g_build_path (G_DIR_SEPARATOR_S,
-			g_get_home_dir (), PROPRIETARY_PLUGINS, NULL);
-
-	if ((g_getenv ("KDE_STARTUP_ENV") || g_getenv("KDE_FULL_SESSION")) && (filemanager = g_find_program_in_path("konqueror"))) {
-		cmd = g_strconcat (filemanager, " ", path, NULL);
-		g_free (filemanager);
-	} else {
-		cmd = g_strdup_printf ("nautilus --no-default-window -no-desktop %s", path);
-	}
-	g_free (path);
-
-	if (g_spawn_command_line_async (cmd, &err) == FALSE)
-	{
-		totem_action_error (_("Totem could not start the file manager."), err->message, totem);
-		g_error_free (err);
-	}
-
-	g_free (cmd);
-}
-
-static void
 visual_menu_changed (GtkComboBox *combobox, Totem *totem)
 {
 	GList *list;
@@ -468,9 +442,6 @@ totem_setup_preferences (Totem *totem)
 			G_CALLBACK (connection_combobox_changed), totem);
 
 	/* Proprietary plugins */
-	item = glade_xml_get_widget (totem->xml, "tpw_plugins_button");
-	g_signal_connect (G_OBJECT (item), "clicked",
-			G_CALLBACK (on_button1_clicked), totem);
 	path = g_build_path (G_DIR_SEPARATOR_S,
 			g_get_home_dir (), PROPRIETARY_PLUGINS, NULL);
 	if (g_file_test (path, G_FILE_TEST_IS_DIR) == FALSE)
