@@ -1919,6 +1919,8 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
       gint num, t;
 
       integer = 0;
+      if (bvw->priv->tagcache == NULL)
+        break;
       for (num = 0; ; num++) {
         if (!gst_tag_list_get_uint_index (bvw->priv->tagcache,
 					  GST_TAG_BITRATE, num, &t))
