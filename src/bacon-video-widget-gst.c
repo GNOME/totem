@@ -79,7 +79,6 @@ enum
 {
   PROP_0,
   PROP_LOGO_MODE,
-  PROP_SPEED,
   PROP_POSITION,
   PROP_CURRENT_TIME,
   PROP_STREAM_LENGTH,
@@ -230,11 +229,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 				   g_param_spec_boolean ("logo_mode", NULL,
 							 NULL, FALSE,
 							 G_PARAM_READWRITE));
-  g_object_class_install_property (object_class, PROP_SPEED,
-				   g_param_spec_int ("speed", NULL, NULL,
-						     SPEED_PAUSE,
-						     SPEED_NORMAL, 0,
-						     G_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_POSITION,
 				   g_param_spec_int ("position", NULL, NULL,
 						     0, 65535, 0,
@@ -310,8 +304,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 		  G_SIGNAL_RUN_LAST,
 		  G_STRUCT_OFFSET (BaconVideoWidgetClass, tick),
 		  NULL, NULL,
-		  baconvideowidget_marshal_VOID__INT_INT_INT,
-		  G_TYPE_NONE, 3, G_TYPE_INT, G_TYPE_INT, G_TYPE_INT);
+		  baconvideowidget_marshal_VOID__INT64_INT64_FLOAT,
+		  G_TYPE_NONE, 3, G_TYPE_INT64, G_TYPE_INT64, G_TYPE_FLOAT);
 
   bvw_table_signals[BUFFERING] =
     g_signal_new ("buffering",
@@ -455,15 +449,14 @@ got_time_tick (GstPlay * play, gint64 time_nanos, BaconVideoWidget * bvw)
 
   bvw->priv->current_time_nanos = time_nanos;
 
-  bvw->priv->current_time = (time_nanos / GST_MSECOND);
+  bvw->priv->current_time = time_nanos / GST_MSECOND;
 
   if (bvw->priv->stream_length == 0)
     bvw->priv->current_position = 0;
   else
     {
       bvw->priv->current_position =
-	(long long) bvw->priv->current_time * 65535
-	/ bvw->priv->stream_length;
+	(gint64) bvw->priv->current_time / bvw->priv->stream_length;
     }
 
   g_signal_emit (G_OBJECT (bvw),
@@ -704,12 +697,8 @@ bacon_video_widget_open (BaconVideoWidget * bvw, const gchar * mrl,
   return gst_play_set_location (bvw->priv->play, mrl);;
 }
 
-/* This is used for seeking:
- * @pos is used for seeking, from 0 (start) to 65535 (end)
- * @start_time is in milliseconds */
 gboolean
-bacon_video_widget_play (BaconVideoWidget * bvw,
-			 guint pos, guint start_time, GError ** error)
+bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
 {
   gint64 seek_time;
   gint64 length_nanos;
@@ -725,22 +714,49 @@ bacon_video_widget_play (BaconVideoWidget * bvw,
       bvw->priv->last_error_message = NULL;
     }
 
-  if (pos)
-    {
-      length_nanos = (gint64) (bvw->priv->stream_length * GST_MSECOND);
-      seek_time = (gint64) (length_nanos * pos / 65535);
-      gst_play_seek_to_time (bvw->priv->play, seek_time);
-    }
-  else if (start_time)
-    {
-      seek_time = (gint64) (start_time * GST_MSECOND);
-      gst_play_seek_to_time (bvw->priv->play, seek_time);
-    }
-  else
-    {
-      gst_play_set_state (bvw->priv->play, GST_STATE_PLAYING);
-    }
+  gst_play_set_state (bvw->priv->play, GST_STATE_PLAYING);
+
   return TRUE;
+}
+
+gboolean bacon_video_widget_seek (BaconVideoWidget *bvw, float position,
+		GError **gerror)
+{
+  gint64 seek_time, length_nanos;
+
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_PLAY (bvw->priv->play));
+
+  /* Resetting last_error_message to NULL */
+  if (bvw->priv->last_error_message)
+    {
+      g_free (bvw->priv->last_error_message);
+      bvw->priv->last_error_message = NULL;
+    }
+
+  length_nanos = (gint64) (bvw->priv->stream_length * GST_MSECOND);
+  seek_time = (gint64) (length_nanos * position);
+  gst_play_seek_to_time (bvw->priv->play, seek_time);
+
+  return TRUE;
+}
+
+gboolean bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time,
+		GError **gerror)
+{
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_PLAY (bvw->priv->play));
+
+  /* Resetting last_error_message to NULL */
+  if (bvw->priv->last_error_message)
+    {
+      g_free (bvw->priv->last_error_message);
+      bvw->priv->last_error_message = NULL;
+    }
+
+  gst_play_seek_to_time (bvw->priv->play, time);
 }
 
 void
@@ -806,40 +822,13 @@ bacon_video_widget_get_logo_mode (BaconVideoWidget * bvw)
 }
 
 void
-bacon_video_widget_set_speed (BaconVideoWidget * bvw, Speeds speed)
+bacon_video_widget_pause (BaconVideoWidget * bvw)
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_PLAY (bvw->priv->play));
 
-  switch (speed)
-    {
-    case SPEED_PAUSE:
-      gst_play_set_state (bvw->priv->play, GST_STATE_PAUSED);
-      break;;
-    case SPEED_NORMAL:
-      gst_play_set_state (bvw->priv->play, GST_STATE_PLAYING);
-      break;;
-    default:
-      g_warning ("unsupported speed %d", speed);
-    }
-}
-
-int
-bacon_video_widget_get_speed (BaconVideoWidget * bvw)
-{
-  g_return_val_if_fail (bvw != NULL, -1);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -1);
-  g_return_val_if_fail (GST_IS_PLAY (bvw->priv->play), -1);
-
-  if (gst_play_get_state (bvw->priv->play) == GST_STATE_PAUSED)
-    return SPEED_PAUSE;
-  else if (gst_play_get_state (bvw->priv->play) == GST_STATE_PLAYING)
-    return SPEED_NORMAL;
-  else
-    g_assert ("pipeline is not in a known Bacon speed");
-
-  return -1;
+  gst_play_set_state (bvw->priv->play, GST_STATE_PAUSED);
 }
 
 void
@@ -1152,7 +1141,7 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
 	//FIXME
 }
 
-int
+float
 bacon_video_widget_get_position (BaconVideoWidget * bvw)
 {
   g_return_val_if_fail (bvw != NULL, -1);
@@ -1160,7 +1149,7 @@ bacon_video_widget_get_position (BaconVideoWidget * bvw)
   return bvw->priv->current_position;
 }
 
-int
+gint64
 bacon_video_widget_get_current_time (BaconVideoWidget * bvw)
 {
   g_return_val_if_fail (bvw != NULL, -1);
@@ -1168,7 +1157,7 @@ bacon_video_widget_get_current_time (BaconVideoWidget * bvw)
   return bvw->priv->current_time;
 }
 
-int
+gint64
 bacon_video_widget_get_stream_length (BaconVideoWidget * bvw)
 {
   g_return_val_if_fail (bvw != NULL, -1);
