@@ -126,6 +126,10 @@ on_got_metadata_event (BaconVideoWidget *bvw, gpointer data)
 				BVW_INFO_FPS, &value);
 		g_print ("Frames/sec: %d\n", g_value_get_int (&value));
 		g_value_unset (&value);
+		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+				BVW_INFO_VIDEO_BITRATE, &value);
+		g_print ("Video Bitrate: %d kbps\n", g_value_get_int (&value));
+		g_value_unset (&value);
 	}
 	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
 			BVW_INFO_HAS_AUDIO, &value);
@@ -135,8 +139,8 @@ on_got_metadata_event (BaconVideoWidget *bvw, gpointer data)
 
 	if (has_type) {
 		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-				BVW_INFO_BITRATE, &value);
-		g_print ("Bitrate: %d kbps\n", g_value_get_int (&value));
+				BVW_INFO_AUDIO_BITRATE, &value);
+		g_print ("Audio Bitrate: %d kbps\n", g_value_get_int (&value));
 		g_value_unset (&value);
 
 		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
@@ -168,15 +172,8 @@ int main (int argc, char **argv)
 	g_thread_init (NULL);
 	gdk_threads_init ();
 	options[0].arg = bacon_video_widget_get_popt_table ();
-#ifndef HAVE_GTK_ONLY
-	gnome_program_init ("metadata-test", VERSION,
-			LIBGNOME_MODULE, argc, argv,
-			GNOME_PARAM_APP_DATADIR, DATADIR,
-			GNOME_PARAM_POPT_TABLE, options,
-			GNOME_PARAM_NONE);
-#else /* !HAVE_GTK_ONLY */
-	gtk_init (&argc, &argv);
-#endif /* !HAVE_GTK_ONLY */
+	g_type_init ();
+	bacon_video_widget_init_backend (&argc, &argv);
 
 	widget = bacon_video_widget_new (-1, -1, BVW_USE_TYPE_METADATA, &error);
 	if (widget == NULL) {

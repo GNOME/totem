@@ -1,3 +1,20 @@
+2005-03-27  Bastien Nocera  <hadess@hadess.net>
+
+	* data/properties.glade:
+	* src/backend/bacon-video-widget-gst.c:
+	(bacon_video_widget_get_metadata_int),
+	(bacon_video_widget_get_metadata):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_metadata_int),
+	(bacon_video_widget_get_metadata):
+	* src/backend/bacon-video-widget.h:
+	* src/bacon-video-widget-properties.c:
+	(bacon_video_widget_properties_reset),
+	(bacon_video_widget_properties_set_from_current):
+	* src/metadata-test.c: (on_got_metadata_event), (main):
+
+	Add the Video bitrate property (Closes: #166780)
+
 2005-03-27  Pawan Chitrakar  <pawan@nplinux.org>
 
 	* configure.in: Added ne in ALL_LINGUAS

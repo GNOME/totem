@@ -2741,7 +2741,7 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
       else
         integer = bvw->priv->video_fps;
       break;
-    case BVW_INFO_BITRATE: {
+    case BVW_INFO_AUDIO_BITRATE: {
       gint num, t;
 
       integer = 0;
@@ -2757,6 +2757,10 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
       integer /= 1000;
       break;
     }
+    case BVW_INFO_VIDEO_BITRATE:
+      g_message ("FIXME missing video bitrate");
+      integer = 0;
+      break;
     default:
       g_assert_not_reached ();
     }
@@ -2822,7 +2826,7 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
     case BVW_INFO_DIMENSION_X:
     case BVW_INFO_DIMENSION_Y:
     case BVW_INFO_FPS:
-    case BVW_INFO_BITRATE:
+    case BVW_INFO_AUDIO_BITRATE:
       bacon_video_widget_get_metadata_int (bvw, type, value);
       break;
     case BVW_INFO_HAS_VIDEO:

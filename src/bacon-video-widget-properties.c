@@ -104,11 +104,15 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 	bacon_video_widget_properties_set_label (props, "dimensions", _("0 x 0"));
 	/* Video Codec */
 	bacon_video_widget_properties_set_label (props, "vcodec", _("N/A"));
+	/* Video Bitrate */
+	bacon_video_widget_properties_set_label (props, "video_bitrate",
+			_("0 kbps"));
 	/* Framerate */
 	bacon_video_widget_properties_set_label (props, "framerate",
 			_("0 frames per second"));
-	/* Bitrate */
-	bacon_video_widget_properties_set_label (props, "bitrate", _("0 kbps"));
+	/* Audio Bitrate */
+	bacon_video_widget_properties_set_label (props, "audio_bitrate",
+			_("0 kbps"));
 	/* Audio Codec */
 	bacon_video_widget_properties_set_label (props, "acodec", _("N/A"));
 }
@@ -202,6 +206,16 @@ bacon_video_widget_properties_set_from_current
 		bacon_video_widget_properties_set_label
 			(props, "framerate", string);
 		g_free (string);
+
+		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+				BVW_INFO_VIDEO_BITRATE, &value);
+		string = g_strdup_printf (_("%d kbps"),
+				g_value_get_int (&value));
+		g_value_unset (&value);
+		bacon_video_widget_properties_set_label
+			(props, "video_bitrate", string);
+		g_free (string);
+
 	} else {
 		gtk_widget_hide (item);
 	}
@@ -217,12 +231,12 @@ bacon_video_widget_properties_set_from_current
 	if (has_type != FALSE)
 	{
 		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-				BVW_INFO_BITRATE, &value);
+				BVW_INFO_AUDIO_BITRATE, &value);
 		string = g_strdup_printf (_("%d kbps"),
 				g_value_get_int (&value));
 		g_value_unset (&value);
 		bacon_video_widget_properties_set_label
-			(props, "bitrate", string);
+			(props, "audio_bitrate", string);
 		g_free (string);
 
 		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
