@@ -1,5 +1,19 @@
 2003-01-02  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am:
+	* src/gtk-xine.c: (gtk_xine_class_init), (gtk_xine_realize),
+	(gtk_xine_idle_signal):
+	* src/gtk-xine.h:
+	* src/totem.c: (totem_action_open_files), (totem_callback_connect),
+	(video_widget_create), (main):
+	* src/totem.h: if we create a GdkWindow and use that for xine, we can
+	get DND working. I need to create a test case and cook up some work
+	arounds for the expose handling in gdk
+	* src/xdnd.c:
+	* src/xdnd.h: removed
+
+2003-01-02  Bastien Nocera  <hadess@hadess.net>
+
 	* README: upd
 	* src/gtk-xine.c: (gtk_xine_class_init),
 	(gtk_xine_process_file_list), (gtk_xine_filter_events),

@@ -930,7 +930,7 @@ vol_cb (GtkWidget *widget, gpointer user_data)
 	}
 }
 
-void
+gboolean
 totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 {
 	int i;
@@ -1015,6 +1015,8 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 				"changed", G_CALLBACK (playlist_changed_cb),
 				(gpointer) totem);
 	}
+
+	return cleared;
 }
 
 static void
@@ -1906,7 +1908,7 @@ totem_callback_connect (Totem *totem)
 
 	/* Drag'n'Drop */
 	//FIXME
-	item = glade_xml_get_widget (totem->xml, "frame1");
+	item = glade_xml_get_widget (totem->xml, "playlist_button");
 	g_signal_connect (G_OBJECT (item), "drag_data_received",
 			G_CALLBACK (drop_cb), totem);
 	gtk_drag_dest_set (item, GTK_DEST_DEFAULT_ALL,
@@ -2054,6 +2056,12 @@ video_widget_create (Totem *totem)
 			"title-change",
 			G_CALLBACK (on_title_change_event),
 			totem);
+
+	g_signal_connect (G_OBJECT (totem->gtx), "drag_data_received",
+			G_CALLBACK (drop_cb), totem);
+	gtk_drag_dest_set (totem->gtx, GTK_DEST_DEFAULT_ALL,
+			target_table, 1, GDK_ACTION_COPY);
+
 
 	g_object_add_weak_pointer (G_OBJECT (totem->gtx),
 			(void**)&(totem->gtx));
@@ -2324,8 +2332,10 @@ main (int argc, char **argv)
 		 * initialising completely, otherwise this can turn up nasty */
 		while (gtk_xine_check (GTK_XINE (totem->gtx)) == FALSE)
 			usleep (100000);
-		totem_action_open_files (totem, argv, TRUE);
-		totem_action_play_pause (totem);
+		if (totem_action_open_files (totem, argv, TRUE))
+			totem_action_play_pause (totem);
+		else
+			totem_action_set_mrl (totem, NULL);
 	} else {
 		totem_action_set_mrl (totem, NULL);
 	}

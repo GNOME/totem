@@ -46,7 +46,6 @@
 #include "gtkxine-marshal.h"
 #include "scrsaver.h"
 #include "video-utils.h"
-#include "xdnd.h"
 
 #define DEFAULT_HEIGHT 420
 #define DEFAULT_WIDTH 315
@@ -69,7 +68,6 @@ typedef struct
 	GtkXineError error_type;
 	char *message;		/* or NULL */
 	guint keyval;		/* for KEY_PRESS events */
-	GList *list;		/* for the DND events */
 } GtkXineSignal;
 
 /* Signals */
@@ -77,7 +75,6 @@ enum {
 	ERROR,
 	MOUSE_MOTION,
 	KEY_PRESS,
-	DND,
 	EOS,
 	TITLE_CHANGE,
 	LAST_SIGNAL
@@ -277,15 +274,6 @@ gtk_xine_class_init (GtkXineClass *klass)
 				NULL, NULL,
 				g_cclosure_marshal_VOID__UINT,
 				G_TYPE_NONE, 1, G_TYPE_UINT);
-
-	gtx_table_signals[DND] =
-		g_signal_new ("dnd",
-				G_TYPE_FROM_CLASS (object_class),
-				G_SIGNAL_RUN_LAST,
-				G_STRUCT_OFFSET (GtkXineClass, dnd),
-				NULL, NULL,
-				g_cclosure_marshal_VOID__POINTER,
-				G_TYPE_NONE, 1, G_TYPE_POINTER);
 
 	gtx_table_signals[EOS] =
 		g_signal_new ("eos",
@@ -758,18 +746,6 @@ generate_mouse_event (GtkXine *gtx, XEvent *event, gboolean is_motion)
 	}
 }
 
-static void
-gtk_xine_process_file_list (GtkXine *gtx, GList *list)
-{
-	GtkXineSignal *signal;
-
-	signal = g_new0 (GtkXineSignal, 1);
-	signal->type = DND;
-	signal->list = list;
-	g_async_queue_push (gtx->priv->queue, signal);
-	g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
-}
-
 static void *
 xine_thread (void *gtx_gen)
 {
@@ -839,31 +815,6 @@ xine_thread (void *gtx_gen)
 	return NULL;
 }
 
-static GdkFilterReturn
-gtk_xine_filter_events (GdkXEvent *xevent, GdkEvent *event, gpointer data)
-{
-	XEvent *xev = (XEvent *) xevent;
-	GtkXine *gtx = (GtkXine *) data;
-	GList *list;
-
-	switch (xev->type)
-	{
-	case ClientMessage:
-		if (wXDNDProcessClientMessage (&(xev->xclient)) == False)
-			return GDK_FILTER_CONTINUE;
-		break;
-	case SelectionNotify:
-		list = wXDNDProcessSelection (gtx->priv->video_window, xev);
-		if (list != NULL)
-			gtk_xine_process_file_list (gtx, list);
-		break;
-	default:
-		return GDK_FILTER_CONTINUE;
-	}
-
-	return GDK_FILTER_REMOVE;
-}
-
 static gboolean
 configure_cb (GtkWidget *widget, GdkEventConfigure *event, gpointer user_data)
 {
@@ -881,6 +832,7 @@ gtk_xine_realize (GtkWidget *widget)
 	GtkXine *gtx;
 	const char *const *autoplug_list;
 	int i = 0;
+	GdkWindowAttr attr;
 
 	g_return_if_fail (widget != NULL);
 	g_return_if_fail (GTK_IS_XINE (widget));
@@ -889,8 +841,21 @@ gtk_xine_realize (GtkWidget *widget)
 
 	/* set realized flag */
 	GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
+#if 0
+	attr.x = widget->allocation.x;
+	attr.y = widget->allocation.y;
+	attr.width = widget->allocation.width;
+	attr.height = widget->allocation.height;
+	attr.window_type = GDK_WINDOW_CHILD;
+	attr.wclass = GDK_INPUT_OUTPUT;
+	attr.event_mask = gtk_widget_get_events (widget) | GDK_EXPOSURE_MASK;
+	widget->window = gdk_window_new (gtk_widget_get_parent_window (widget),
+			&attr, GDK_WA_X | GDK_WA_Y | GDK_WA_WMCLASS);
+	gdk_window_show (widget->window);
+	gdk_window_set_user_data (widget->window, gtx);
 
-	/* create our own video window */
+	gtx->priv->video_window = GDK_WINDOW_XWINDOW (widget->window);
+#else
 	gtx->priv->video_window = XCreateSimpleWindow
 		(gdk_display,
 		 GDK_WINDOW_XWINDOW (gtk_widget_get_parent_window (widget)),
@@ -899,6 +864,8 @@ gtk_xine_realize (GtkWidget *widget)
 		 1, BLACK_PIXEL, BLACK_PIXEL);
 
 	widget->window = gdk_window_foreign_new (gtx->priv->video_window);
+	gdk_window_set_user_data (widget->window, gtx);
+#endif
 
 	/* track configure events of toplevel window */
 	g_signal_connect (GTK_OBJECT (gtk_widget_get_toplevel (widget)),
@@ -933,10 +900,6 @@ gtk_xine_realize (GtkWidget *widget)
 		      | ButtonPressMask | PointerMotionMask
 		      | KeyPressMask | PropertyChangeMask);
 
-	/* Add the DND setup */
-	wXDNDInitialize ();
-	wXDNDMakeAwareness(gtx->priv->video_window);
-
 	/* load audio, video drivers */
 	gtx->priv->ao_driver = load_audio_out_driver (gtx);
 	gtx->priv->vo_driver = load_video_out_driver (gtx);
@@ -965,7 +928,6 @@ gtk_xine_realize (GtkWidget *widget)
 			xine_event, (void *) gtx);
 
 	scrsaver_init (gtx->priv->display);
-	gdk_window_add_filter (NULL, gtk_xine_filter_events, (gpointer) gtx);
 
 	/* Can we play DVDs and VCDs ? */
 	autoplug_list = xine_get_autoplay_input_plugin_ids (gtx->priv->xine);
@@ -1015,11 +977,6 @@ gtk_xine_idle_signal (GtkXine *gtx)
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[KEY_PRESS],
 				0, signal->keyval);
-		break;
-	case DND:
-		g_signal_emit (G_OBJECT (gtx),
-				gtx_table_signals[DND],
-				0, signal->list);
 		break;
 	case EOS:
 		g_signal_emit (G_OBJECT (gtx),

@@ -37,7 +37,7 @@ void	totem_action_next			(Totem *totem);
 void	totem_action_previous			(Totem *totem);
 void	totem_action_seek_relative		(Totem *totem, int off_sec);
 void	totem_action_volume_relative		(Totem *totem, int off_pct);
-void	totem_action_open_files			(Totem *totem, char **list,
+gboolean totem_action_open_files		(Totem *totem, char **list,
 						 gboolean ignore_first);
 void	totem_action_set_mrl			(Totem *totem, const char *mrl);
 
