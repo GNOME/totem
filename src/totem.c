@@ -22,8 +22,9 @@ typedef struct {
 	GtkWidget *win;
 	GtkWidget *treeview;
 	GtkWidget *gtx;
+
+	/* Play/Pause */
 	GtkWidget *pp_button;
-	guint pp_handler;
 
 	/* Seek */
 	GtkWidget *seek;
@@ -53,7 +54,6 @@ static gboolean popup_hide (Totem *totem);
 static void update_buttons (Totem *totem);
 static void on_play_pause_button_toggled (GtkToggleButton *button,
 		gpointer user_data);
-
 
 static char
 *time_to_string (int time)
@@ -134,29 +134,40 @@ action_exit (Totem *totem)
 }
 
 static void
+play_pause_set_label (Totem *totem, gboolean playing)
+{
+	GtkWidget *image;
+	char *image_path;
+
+	image = glade_xml_get_widget (totem->xml, "pp_image");
+
+	D("Setting button to %s", playing ? "Pause" : "Playing");
+
+	if (playing == TRUE)
+	{
+		image_path = gnome_program_locate_file (NULL,
+				GNOME_FILE_DOMAIN_APP_DATADIR,
+				"totem/stock_media_pause.png", FALSE, NULL);
+	} else {
+		image_path = gnome_program_locate_file (NULL,
+				GNOME_FILE_DOMAIN_APP_DATADIR,
+				"totem/stock_media_play.png", FALSE, NULL);
+	}
+	gtk_image_set_from_file (GTK_IMAGE (image), image_path);
+	g_free (image_path);
+}
+
+static void
+action_play (Totem *totem, int offset)
+{
+	int retval;
+
+	retval = gtk_xine_play (GTK_XINE (totem->gtx), totem->mrl, offset , 0);
+	play_pause_set_label (totem, retval);
+}
+
+static void
 action_play_pause (Totem *totem)
-{
-	GtkToggleButton *button = GTK_TOGGLE_BUTTON (totem->pp_button);
-	gboolean state;
-
-	state = gtk_toggle_button_get_active (button);
-	gtk_toggle_button_set_active (button, !state);
-}
-
-static void
-play_pause_toggle_disconnected (Totem *totem)
-{
-	/* Avoid loops by disconnecting the callback first */
-	g_signal_handler_disconnect (GTK_OBJECT (totem->pp_button),
-		 totem->pp_handler);
-	action_play_pause (totem);
-	totem->pp_handler = g_signal_connect
-		(GTK_OBJECT (totem->pp_button), "toggled",
-		 G_CALLBACK (on_play_pause_button_toggled), totem);
-}
-
-static void
-action_play_pause_real (Totem *totem, int pos)
 {
 	if (totem->mrl == NULL)
 	{
@@ -166,7 +177,7 @@ action_play_pause_real (Totem *totem, int pos)
 		mrl = gtk_playlist_get_current_mrl (totem->playlist);
 		if (mrl == NULL)
 		{
-			play_pause_toggle_disconnected (totem);
+			play_pause_set_label (totem, FALSE);
 			return;
 		} else {
 			action_set_mrl (totem, mrl);
@@ -176,17 +187,19 @@ action_play_pause_real (Totem *totem, int pos)
 	}
 
 	if (!gtk_xine_is_playing(GTK_XINE(totem->gtx))) {
-		if (gtk_xine_play (GTK_XINE(totem->gtx), totem->mrl, 0, pos)
+		if (gtk_xine_play (GTK_XINE(totem->gtx), totem->mrl, 0, 0)
 				== FALSE)
 		{
-			play_pause_toggle_disconnected (totem);
+			play_pause_set_label (totem, FALSE);
 		}
 	} else {
 		if (gtk_xine_get_speed (GTK_XINE(totem->gtx)) == SPEED_PAUSE)
 		{
 			gtk_xine_set_speed (GTK_XINE(totem->gtx), SPEED_NORMAL);
+			play_pause_set_label (totem, TRUE);
 		} else {
 			gtk_xine_set_speed (GTK_XINE(totem->gtx), SPEED_PAUSE);
+			play_pause_set_label (totem, FALSE);
 		}
 	}
 }
@@ -235,6 +248,10 @@ action_set_mrl (Totem *totem, const char *mrl)
 		/* Seek bar */
 		gtk_widget_set_sensitive (totem->seek, FALSE);
 
+		/* Volume */
+		widget = glade_xml_get_widget (totem->xml, "volume_hbox");
+		gtk_widget_set_sensitive (widget, FALSE);
+
 		/* Stop the playback */
 		gtk_xine_stop (GTK_XINE (totem->gtx));
 	} else {
@@ -245,15 +262,11 @@ action_set_mrl (Totem *totem, const char *mrl)
 
 		/* Otherwise we might never change the mrl in GtkXine */
 		if (gtk_xine_is_playing(GTK_XINE(totem->gtx))) {
-			gtk_xine_play (GTK_XINE(totem->gtx), totem->mrl, 0, 0);
+			action_play_pause (totem);
 		} else {
 			/* Make sure it will actually work first */
-			action_play_pause (totem);
+			action_play (totem, 0);
 		}
-		/* Force play button status */
-		if (gtk_toggle_button_get_active
-				(GTK_TOGGLE_BUTTON(totem->pp_button)) == FALSE)
-			play_pause_toggle_disconnected (totem);
 
 		/* Play/Pause */
 		gtk_widget_set_sensitive (totem->pp_button, TRUE);
@@ -267,6 +280,10 @@ action_set_mrl (Totem *totem, const char *mrl)
 		/* Seek bar */
 		gtk_widget_set_sensitive (totem->seek,
 				gtk_xine_is_seekable(GTK_XINE (totem->gtx)));
+
+		/* Volume */
+		widget = glade_xml_get_widget (totem->xml, "volume_hbox");
+		gtk_widget_set_sensitive (widget, TRUE);
 
 		/* Set the playlist */
 		gtk_playlist_set_playing (totem->playlist);
@@ -324,10 +341,11 @@ action_seek_relative (Totem *totem, int off_sec)
 	else
 		sec = oldsec + off_sec;
 
-	if (gtk_xine_is_playing(GTK_XINE(totem->gtx)) == FALSE)
-		action_play_pause (totem);
+//FIXME	if (gtk_xine_is_playing(GTK_XINE(totem->gtx)) == FALSE)
+//		action_play_pause (totem);
 
 	gtk_xine_play (GTK_XINE(totem->gtx), totem->mrl, 0, sec);
+	play_pause_set_label (totem, TRUE);
 }
 
 static void
@@ -429,7 +447,7 @@ on_play_pause_button_toggled (GtkToggleButton *button, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 
-	action_play_pause_real (totem, 0);
+	action_play_pause (totem);
 }
 
 static void
@@ -494,8 +512,7 @@ seek_cb (GtkWidget *widget, gpointer user_data)
 	if (totem->seek_lock == FALSE)
 	{
 		totem->seek_lock = TRUE;
-		gtk_xine_play (GTK_XINE (totem->gtx), totem->mrl,
-				(gint) totem->seekadj->value, 0);
+		action_play (totem, (gint) totem->seekadj->value);
 		totem->seek_lock = FALSE;
 	}
 }
@@ -699,10 +716,8 @@ current_removed_cb (GtkWidget *playlist, gpointer user_data)
 	Totem *totem = (Totem *) user_data;
 	char *mrl;
 
-	/* Force play button status */
-	if (gtk_toggle_button_get_active
-			(GTK_TOGGLE_BUTTON(totem->pp_button)) == TRUE)
-		play_pause_toggle_disconnected (totem);
+	/* Set play button status */
+	play_pause_set_label (totem, FALSE);
 	gtk_playlist_set_at_start (totem->playlist);
 	update_buttons (totem);
 	mrl = gtk_playlist_get_current_mrl (totem->playlist);
@@ -762,10 +777,8 @@ on_eos_event (GtkWidget *widget, gpointer user_data)
 		char *mrl;
 
 		long_action ();
-		/* Force play button status */
-		if (gtk_toggle_button_get_active
-				(GTK_TOGGLE_BUTTON(totem->pp_button)) == TRUE)
-			play_pause_toggle_disconnected (totem);
+		/* Set play button status */
+		play_pause_set_label (totem, FALSE);
 		gtk_playlist_set_at_start (totem->playlist);
 		update_buttons (totem);
 		mrl = gtk_playlist_get_current_mrl (totem->playlist);
@@ -920,9 +933,8 @@ totem_callback_connect (Totem *totem)
 	/* Controls */
 	totem->pp_button = glade_xml_get_widget
 		(totem->xml, "play_pause_button");
-	totem->pp_handler = g_signal_connect (GTK_OBJECT (totem->pp_button),
-			"toggled", G_CALLBACK (on_play_pause_button_toggled),
-			totem);
+	g_signal_connect (GTK_OBJECT (totem->pp_button), "clicked",
+			G_CALLBACK (on_play_pause_button_toggled), totem);
 	item = glade_xml_get_widget (totem->xml, "previous_button");
 	g_signal_connect (GTK_OBJECT (item), "clicked",
 			G_CALLBACK (on_previous_button_clicked), totem);
@@ -1027,7 +1039,6 @@ main (int argc, char **argv)
 	totem->mrl = NULL;
 	totem->seek_lock = FALSE;
 	totem->vol_lock = FALSE;
-	totem->pp_handler = 0;
 	totem->popup_timeout = 0;
 
 	filename = gnome_program_locate_file (NULL,

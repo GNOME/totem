@@ -1,5 +1,29 @@
 2002-08-01  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am: upd
+	* src/gtk-xine.c: (xine_thread): remove extraneous debug
+	* src/rhythmbox-volume-max.png:
+	* src/rhythmbox-volume-medium.png:
+	* src/rhythmbox-volume-min.png:
+	* src/rhythmbox-volume-zero.png: added
+	* src/stock_media_previous.png:
+	* src/stock_media_next.png: change style to fwd/rwd
+	* src/stock_media_pause.png:
+	* src/stock_media_play.png: added
+	* src/stock_media_play_pause.png:
+	* src/stock_media_play_pause.xcf: removed
+	* src/tb_volume.xpm:
+	* src/tb_volume_off.xpm: removed
+	* src/totem.c: (play_pause_set_label), (action_play),
+	(action_play_pause), (action_set_mrl), (action_seek_relative),
+	(on_play_pause_button_toggled), (seek_cb), (current_removed_cb),
+	(on_eos_event), (totem_callback_connect), (main):
+	* src/totem.glade: made the play/pause toggle a simple button and
+	change the image depending on the status, moved the buttons to be in
+	the same order as RB, started fixing the volume control
+
+2002-08-01  Bastien Nocera  <hadess@hadess.net>
+
 	* README:
 	* src/Makefile.am:
 	* src/gtk-playlist.c: (init_columns), (gtk_playlist_new):

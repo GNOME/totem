@@ -21,12 +21,16 @@ stuffdir = $(datadir)/totem/
 stuff_DATA =				\
 	media-player-48.png		\
 	stock_media_next.png		\
-	stock_media_play_pause.png	\
 	stock_media_previous.png	\
+	stock_media_pause.png		\
+	stock_media_play.png		\
 	playlist-16.png			\
 	playlist-24.png			\
 	playlist-playing.png		\
-	tb_volume_off.xpm tb_volume.xpm	\
+	rhythmbox-volume-max.png	\
+	rhythmbox-volume-medium.png	\
+	rhythmbox-volume-min.png	\
+	rhythmbox-volume-zero.png	\
 	totem.glade			\
 	playlist.glade
 

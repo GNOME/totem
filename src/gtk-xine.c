@@ -407,8 +407,6 @@ xine_thread (void *gtx_gen)
 
 		XNextEvent (gtx->priv->display, &event);
 
-		D("gtkxine: got an event (%d)", event.type);
-
 		switch (event.type) {
 		case Expose:
 			if (event.xexpose.count != 0)
@@ -428,12 +426,10 @@ xine_thread (void *gtx_gen)
 			break;
 		}
 
-		if (event.type == gtx->priv->completion_event) {
+		if (event.type == gtx->priv->completion_event)
 			gtx->priv->vo_driver->gui_data_exchange
 				(gtx->priv->vo_driver,
 				 GUI_DATA_EX_COMPLETION_EVENT, &event);
-			D("gtkxine: completion event");
-		}
 	}
 
 	pthread_exit (NULL);
