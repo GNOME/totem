@@ -140,7 +140,8 @@ totem_playlist_get_type (void)
 
 /* Helper functions */
 static gboolean
-gtk_tree_model_iter_previous (GtkTreeModel *tree_model, GtkTreeIter *iter)
+totem_playlist_gtk_tree_model_iter_previous (GtkTreeModel *tree_model,
+		GtkTreeIter *iter)
 {
 	GtkTreePath *path;
 	gboolean ret;
@@ -155,7 +156,7 @@ gtk_tree_model_iter_previous (GtkTreeModel *tree_model, GtkTreeIter *iter)
 }
 
 static gboolean
-gtk_tree_path_equals (GtkTreePath *path1, GtkTreePath *path2)
+totem_playlist_gtk_tree_path_equals (GtkTreePath *path1, GtkTreePath *path2)
 {
 	char *str1, *str2;
 	gboolean retval;
@@ -874,7 +875,8 @@ static void
 treeview_row_changed (GtkTreeView *treeview, GtkTreePath *arg1,
 		GtkTreeViewColumn *arg2, TotemPlaylist *playlist)
 {
-	if (gtk_tree_path_equals (arg1, playlist->_priv->current) != FALSE)
+	if (totem_playlist_gtk_tree_path_equals
+			(arg1, playlist->_priv->current) != FALSE)
 		return;
 
 	if (playlist->_priv->current != NULL)
@@ -1468,7 +1470,7 @@ totem_playlist_has_previous_mrl (TotemPlaylist *playlist)
 				&iter,
 				playlist->_priv->current);
 
-		return gtk_tree_model_iter_previous
+		return totem_playlist_gtk_tree_model_iter_previous
 			(playlist->_priv->model, &iter);
 	} else {
 		if (playlist->_priv->current_shuffled == 0)
@@ -1614,7 +1616,8 @@ totem_playlist_set_previous (TotemPlaylist *playlist)
 				&iter,
 				playlist->_priv->current);
 
-		gtk_tree_model_iter_previous (playlist->_priv->model, &iter);
+		totem_playlist_gtk_tree_model_iter_previous
+			(playlist->_priv->model, &iter);
 		gtk_tree_path_free (playlist->_priv->current);
 		playlist->_priv->current = gtk_tree_model_get_path
 			(playlist->_priv->model, &iter);

@@ -1,3 +1,15 @@
+============ Version 0.99.9
+
+2004-02-13  Bastien Nocera  <hadess@hadess.net>
+
+	* NEWS: updated
+	* configure.in: version 0.99.9
+	* src/totem-playlist.c:
+	(totem_playlist_gtk_tree_model_iter_previous),
+	(totem_playlist_gtk_tree_path_equals), (treeview_row_changed),
+	(totem_playlist_has_previous_mrl), (totem_playlist_set_previous):
+	Don't pollute the gtk namespace
+
 2004-02-13  Julien MOUTTE <julien@moutte.net>
 
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_signal_idler): Add
