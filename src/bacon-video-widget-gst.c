@@ -804,7 +804,6 @@ static void
 state_change (GstElement *play, GstElementState old_state,
 	      GstElementState new_state, BaconVideoWidget *bvw)
 {
-g_print ("From state %d to state %d\n", old_state, new_state);
   if (old_state == GST_STATE_PLAYING) {
     if (bvw->priv->update_id != 0) {
       g_source_remove (bvw->priv->update_id);
@@ -867,7 +866,6 @@ g_print ("From state %d to state %d\n", old_state, new_state);
     bvw->priv->video_width = 0;
     bvw->priv->video_height = 0;
   }
-g_print ("done\n");
 }
 
 static void
