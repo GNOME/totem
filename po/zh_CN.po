@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-01 04:23+0200\n"
-"PO-Revision-Date: 2004-05-01 15:20+0800\n"
+"POT-Creation-Date: 2004-05-15 15:49+0200\n"
+"PO-Revision-Date: 2004-05-16 02:12+0800\n"
 "Last-Translator: Funda Wang <fundawang@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1444
+#: data/playlist.glade.h:1 src/totem-playlist.c:1445
 msgid "Playlist"
 msgstr "播放列表"
 
@@ -165,7 +165,7 @@ msgstr "播放电影和歌曲"
 
 #. Title
 #: data/totem.desktop.in.h:2 data/totem.glade.h:101 src/totem.c:694
-#: src/totem.c:3637
+#: src/totem.c:3638
 msgid "Totem Movie Player"
 msgstr "Totem 电影播放机"
 
@@ -289,7 +289,7 @@ msgstr "常居顶端"
 msgid "Audio"
 msgstr "音频"
 
-#: data/totem.glade.h:33 src/totem.c:2879 src/totem.c:2900
+#: data/totem.glade.h:33 src/totem.c:2880 src/totem.c:2901
 msgid "Auto"
 msgstr "自动"
 
@@ -981,7 +981,7 @@ msgstr "%d 帧每秒"
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/bacon-video-widget-xine.c:655
+#: src/bacon-video-widget-xine.c:687
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -990,112 +990,112 @@ msgstr ""
 "无法装入“%s”音频驱动程序\n"
 "请检查设备是否处于空闲。"
 
-#: src/bacon-video-widget-xine.c:1130 src/bacon-video-widget-xine.c:1561
+#: src/bacon-video-widget-xine.c:1177 src/bacon-video-widget-xine.c:1608
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
 msgstr "没有可用的视频输出。请确保程序安装正确。"
 
-#: src/bacon-video-widget-xine.c:1237
+#: src/bacon-video-widget-xine.c:1284
 msgid "The server you are trying to connect to is not known."
 msgstr "您试图连接的服务器未知。"
 
-#: src/bacon-video-widget-xine.c:1240
+#: src/bacon-video-widget-xine.c:1287
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "您指定的设备名称(%s)似乎无效。"
 
-#: src/bacon-video-widget-xine.c:1243
+#: src/bacon-video-widget-xine.c:1290
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "您试图连接的服务器(%s)无法接通。"
 
-#: src/bacon-video-widget-xine.c:1246
+#: src/bacon-video-widget-xine.c:1293
 msgid "The connection to this server was refused."
 msgstr "到此服务器的连接被拒绝。"
 
-#: src/bacon-video-widget-xine.c:1249
+#: src/bacon-video-widget-xine.c:1296
 #, c-format
 msgid "The specified movie '%s' could not be found."
 msgstr "找不到指定电影“%s”。"
 
-#: src/bacon-video-widget-xine.c:1252
+#: src/bacon-video-widget-xine.c:1299
 #, c-format
 msgid "The movie '%s' could not be read."
 msgstr "无法读取电影“%s”。"
 
-#: src/bacon-video-widget-xine.c:1255
+#: src/bacon-video-widget-xine.c:1302
 #, c-format
 msgid "A problem occured while loading a library or a decoder (%s)."
 msgstr "装入库或解码器(%s)时发生问题。"
 
-#: src/bacon-video-widget-xine.c:1259
+#: src/bacon-video-widget-xine.c:1306
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
 msgstr ""
 "节目源似乎被加密，所以无法读取。您是否在没有 libdvdcss 的情况下播放加密 DVD？"
 
-#: src/bacon-video-widget-xine.c:1261
+#: src/bacon-video-widget-xine.c:1308
 msgid "This file is encrypted and cannot be played back."
 msgstr "此文件是加密的，无法继续播放。"
 
-#: src/bacon-video-widget-xine.c:1264
+#: src/bacon-video-widget-xine.c:1311
 msgid "For security reasons, this movie can not be played back."
 msgstr "基于安全原因，不能播放电影。"
 
-#: src/bacon-video-widget-xine.c:1268
+#: src/bacon-video-widget-xine.c:1315
 msgid "The audio device is busy. Is another application using it?"
 msgstr "音频设备忙。是否正有其它程序在使用该设备？"
 
-#: src/bacon-video-widget-xine.c:1272
+#: src/bacon-video-widget-xine.c:1319
 msgid "You are not allowed to open this file."
 msgstr "您不允许打开此文件。"
 
-#: src/bacon-video-widget-xine.c:1274
+#: src/bacon-video-widget-xine.c:1321
 msgid "The server refused access to this file or stream."
 msgstr "此服务器拒绝访问此文件或流。"
 
-#: src/bacon-video-widget-xine.c:1400
+#: src/bacon-video-widget-xine.c:1447
 msgid "There is no plugin to handle this movie."
 msgstr "没有可处理此电影的插件。"
 
-#: src/bacon-video-widget-xine.c:1404
+#: src/bacon-video-widget-xine.c:1451
 msgid "This movie is broken and can not be played further."
 msgstr "此电影已损坏，无法继续播放。"
 
-#: src/bacon-video-widget-xine.c:1408
+#: src/bacon-video-widget-xine.c:1455
 msgid "This location is not a valid one."
 msgstr "此位置无效。"
 
-#: src/bacon-video-widget-xine.c:1412
+#: src/bacon-video-widget-xine.c:1459
 msgid "This movie could not be opened."
 msgstr "无法打开此电影。"
 
-#: src/bacon-video-widget-xine.c:1415
+#: src/bacon-video-widget-xine.c:1462
 msgid "Generic Error."
 msgstr "常规错误。"
 
-#: src/bacon-video-widget-xine.c:1859
+#: src/bacon-video-widget-xine.c:1905
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr "视频编解码器“%s”未处理。您可能需要安装额外的插件才能播放某些类型的电影"
 
-#: src/bacon-video-widget-xine.c:1878
+#: src/bacon-video-widget-xine.c:1925
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "这是纯音频文件，而没有可用的音频输出。"
 
-#: src/bacon-video-widget-xine.c:3341
+#: src/bacon-video-widget-xine.c:3400
 msgid "Movie is not playing."
 msgstr "电影未在播放。"
 
-#: src/bacon-video-widget-xine.c:3349
+#: src/bacon-video-widget-xine.c:3408
 msgid "No video to capture."
 msgstr "没有可抓取的视频。"
 
-#: src/bacon-video-widget-xine.c:3356
+#: src/bacon-video-widget-xine.c:3415
 msgid "Video codec is not handled."
 msgstr "视频编解码器未处理。"
 
@@ -1107,6 +1107,37 @@ msgstr "未命名的 SCSI CDROM (%s)"
 #: src/cd-drive.c:1151
 msgid "File image"
 msgstr "文件映像"
+
+#. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+#: src/totem-mozilla-viewer.c:72 src/totem.c:363 src/totem.c:391
+#: src/totem.c:816 src/totem.c:925
+#, c-format
+msgid "Totem could not play '%s'."
+msgstr "Totem 无法播放“%s”。"
+
+#: src/totem-mozilla-viewer.c:104 src/totem-mozilla-viewer.c:111
+msgid "Couldn't load the main interface (mozilla-viewer.glade)."
+msgstr "无法装入主界面(mozilla-viewer.glade)。"
+
+#: src/totem-mozilla-viewer.c:104 src/totem-mozilla-viewer.c:111
+msgid "Make sure that the Totem plugin is properly installed."
+msgstr "请确保 Totem 插件已正确安装。"
+
+#: src/totem-mozilla-viewer.c:122
+msgid "The Totem plugin could not startup."
+msgstr "Totem 插件无法启动。"
+
+#: src/totem-mozilla-viewer.c:122 src/totem.c:3348
+msgid "No reason."
+msgstr "无原因。"
+
+#: src/totem-mozilla-viewer.c:154 src/totem.c:3643
+msgid "Could not initialise the thread-safe libraries."
+msgstr "无法初始化线程安全库。"
+
+#: src/totem-mozilla-viewer.c:154
+msgid "Verify your system installation. The Totem plugin will now exit."
+msgstr "请检查您的系统安装。Totem 插件现将退出。"
 
 #: src/totem-playlist.c:339
 msgid "Could not save the playlist"
@@ -1287,11 +1318,6 @@ msgstr "Totem 无法弹出光存储介质。"
 msgid "No reason given."
 msgstr "未给出原因。"
 
-#: src/totem.c:363 src/totem.c:391 src/totem.c:816 src/totem.c:925
-#, c-format
-msgid "Totem could not play '%s'."
-msgstr "Totem 无法播放“%s”。"
-
 #: src/totem.c:411
 msgid "DVD"
 msgstr "DVD"
@@ -1336,7 +1362,7 @@ msgstr "您可能想要检查盘片是否位于驱动器中，以及配置是否
 msgid "%s - Totem Movie Player"
 msgstr "%s - Totem 电影播放器"
 
-#: src/totem.c:683 src/totem.c:3442
+#: src/totem.c:683 src/totem.c:3443
 msgid "No file"
 msgstr "无文件"
 
@@ -1352,8 +1378,8 @@ msgstr "发生了一个错误"
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "无法装入“打开位置...”界面。"
 
-#: src/totem.c:1637 src/totem.c:1645 src/totem.c:3677 src/totem.c:3702
-#: src/totem.c:3727
+#: src/totem.c:1637 src/totem.c:1645 src/totem.c:3678 src/totem.c:3703
+#: src/totem.c:3728
 msgid "Make sure that Totem is properly installed."
 msgstr "请确保 Totem 已正确安装。"
 
@@ -1389,49 +1415,41 @@ msgstr "Totem 无法显示电影属性窗口。"
 msgid "Make sure that Totem is correctly installed."
 msgstr "请确保 Totem 已正确安装。"
 
-#: src/totem.c:2105
+#: src/totem.c:2106
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem 无法在“%s”中搜索。"
 
-#: src/totem.c:2875 src/totem.c:2897
+#: src/totem.c:2876 src/totem.c:2898
 msgid "None"
 msgstr "无"
 
-#: src/totem.c:3347
+#: src/totem.c:3348
 msgid "Totem could not startup."
 msgstr "Totem 无法启动。"
 
-#: src/totem.c:3347
-msgid "No reason."
-msgstr "无原因。"
-
-#: src/totem.c:3547
+#: src/totem.c:3548
 #, c-format
 msgid "Option '%s' is unknown and was ignored\n"
 msgstr "选项“%s”未知，已忽略\n"
 
-#: src/totem.c:3642
-msgid "Could not initialise the thread-safe libraries."
-msgstr "无法初始化线程安全库。"
-
-#: src/totem.c:3642
+#: src/totem.c:3643
 msgid "Verify your system installation. Totem will now exit."
 msgstr "请检查您的系统安装。Totem 现将退出。"
 
-#: src/totem.c:3665
+#: src/totem.c:3666
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem 无法初始化配置引擎。"
 
-#: src/totem.c:3665
+#: src/totem.c:3666
 msgid "Make sure that GNOME is properly installed."
 msgstr "请确认 GNOME 安装正确。"
 
-#: src/totem.c:3677 src/totem.c:3702
+#: src/totem.c:3678 src/totem.c:3703
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "无法装入主界面(totem.glade)。"
 
-#: src/totem.c:3727
+#: src/totem.c:3728
 msgid "Couldn't load the interface for the playlist."
 msgstr "无法装入播放列表界面。"
 
