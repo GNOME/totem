@@ -1,0 +1,51 @@
+
+Dependencies
+============
+
+xine-lib:
+	http://xine.sourceforge.net/
+
+
+Controls
+========
+
+Space / P:
+	Play/Pause
+Escape (in full screen mode):
+	Switch to windowed mode
+F:
+	Toggle full screen
+Left arrow:
+	Go back 60 seconds
+Right arrow:
+	Go forward 60 seconds
+B:
+	Previous stream (Back)
+N:
+	Next stream (Next)
+Q:
+	Quit
+
+Copyright
+=========
+
+gtk-xine.[ch] from gnome-xine, with the following enhancements:
+- port to Gtk+ 2.0
+- real full-screen mode for _NET_WM aware window managers (metacity, sawfish2,
+  kwin > 2.2, etc.)
+- use of signals
+- use of properties
+- loads of API cleanups
+- move all the internal data to a private structure
+
+TODO
+====
+
+- move dnd to the output ctrl
+- make dnd work
+- add volume control
+- think of what needs to be in the prefs
+- move to autoconf/autotools
+
+- use g_signal_handlers_disconnect_by_func ()
+  G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);

@@ -1,0 +1,42 @@
+AC_PREREQ(2.52)
+AC_INIT(totem, 0.1, http://bugzilla.gnome.org/enter_bug.cgi?product=totem)
+AC_CONFIG_SRCDIR(src/totem.c)
+AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
+AM_CONFIG_HEADER(config.h)
+
+AC_DEFINE(PACKAGE, AC_PACKAGE_NAME)
+AC_DEFINE(VERSION, AC_PACKAGE_VERSION)
+AC_DEFINE(GETTEXT_PACKAGE, "AC_PACKAGE_NAME", [foo])
+GETTEXT_PACKAGE=AC_PACKAGE_NAME
+AC_SUBST(GETTEXT_PACKAGE)
+
+AC_PROG_INTLTOOL([0.20])
+
+GOB2_CHECK()
+
+PKG_CHECK_MODULES(EXTRA_GNOME, libgnomeui-2.0 libglade-2.0 gnome-vfs-2.0 eel-2.0)
+AC_SUBST(EXTRA_GNOME_CFLAGS)
+AC_SUBST(EXTRA_GNOME_LIBS)
+
+AM_PATH_XINE(0.9.9,, AC_MSG_ERROR(*** You should install xine-lib first ***))
+
+AC_MSG_CHECKING(for broken old architecture)
+if test "`uname -m`x" = "i686x" ; then
+	AC_MSG_RESULT(h0rk3d)
+else
+	AC_MSG_RESULT(n334)
+fi
+
+AC_PATH_PROG(GCONFTOOL, gconftool-2)
+AM_GCONF_SOURCE_2
+
+dnl Add the languages which your application supports here.
+ALL_LINGUAS=""
+AM_GLIB_GNU_GETTEXT
+
+AC_OUTPUT([
+Makefile
+src/Makefile
+po/Makefile.in
+])
+
