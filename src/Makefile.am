@@ -139,7 +139,7 @@ libtotem_properties_page_la_LIBADD = \
 	libbaconvideowidget.la libbaconpropertiespage.la
 libtotem_properties_page_la_LDFLAGS = $(module_flags)
 
-libtotem_mozilla_la_LDFLAGS = $(GTK_LIBS) $(module_flags)
+libtotem_mozilla_la_LDFLAGS = $(MOZILLA_LIBS) $(module_flags)
 libtotem_mozilla_la_SOURCES = totem-mozilla-plugin.c
 
 totem_mozilla_viewer_SOURCES = 		\

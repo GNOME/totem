@@ -1,5 +1,17 @@
 2005-03-17  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* src/Makefile.am: only build the mozilla plugin if mozilla was enabled
+	and the necessary bits were detected
+	* src/totem-mozilla-plugin.c: (totem_plugin_new_instance),
+	(totem_plugin_set_window), (NP_GetMIMEDescription):
+	remove some unused code, add TODO items for the attributes, implement
+	NP_GetMIMEDescription properly
+	* src/totem-mozilla-viewer.c: (on_got_redirect): don't try our
+	crappy redirect if we get another mrl
+
+2005-03-17  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-mozilla-plugin.c: (totem_plugin_fork),
 	(totem_plugin_new_instance):
 	* src/totem-mozilla-viewer.c: (totem_embedded_add_children),

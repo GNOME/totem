@@ -133,7 +133,7 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 	g_message ("redirect: %s", mrl);
 
 	//FIXME write a proper one...
-	if (mrl[0] != '/') {
+	if (mrl[0] != '/' && strstr (mrl, "://") == NULL) {
 		char *dir;
 
 		dir = g_path_get_dirname (emb->orig_filename);

@@ -30,6 +30,8 @@
 
 #include <glib.h>
 #include <glib/gi18n.h>
+#include <libgnomevfs/gnome-vfs-mime-handlers.h>
+#include <libgnomevfs/gnome-vfs-mime-info.h>
 
 #define XP_UNIX 1
 #define MOZ_X11 1
@@ -151,26 +153,39 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 
 	for (i=0; i<argc; i++) {
 		printf ("argv[%d] %s %s\n", i, argn[i], argv[i]);
-		if (strcmp (argn[i],"width") == 0) {
+		if (g_ascii_strcasecmp (argn[i],"width") == 0) {
 			plugin->width = strtol (argv[i], NULL, 0);
 		}
-		if (strcmp (argn[i], "height") == 0) {
+		if (g_ascii_strcasecmp (argn[i], "height") == 0) {
 			plugin->height = strtol (argv[i], NULL, 0);
 		}
 		//FIXME we can have some relative paths here as well!
-		if (strcmp (argn[i], "src") == 0) {
+		if (g_ascii_strcasecmp (argn[i], "src") == 0) {
 			plugin->src = g_strdup (argv[i]);
 		}
-		if (strcmp (argn[i], "controller") == 0) {
-			if (strcmp (argv[i], "false") == 0) {
+		if (g_ascii_strcasecmp (argn[i], "controller") == 0) {
+			if (g_ascii_strcasecmp (argv[i], "false") == 0) {
 				plugin->controller_hidden = TRUE;
 			}
+			//FIXME see http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_CONTROLS.html
 		}
-
-		//Handle loop
+		if (g_ascii_strcasecmp (argn[i], "hidden") == 0) {
+			//FIXME
+		}
+		if (g_ascii_strcasecmp (argn[i], "autostart") == 0) {
+			//FIXME
+		}
+		if (g_ascii_strcasecmp (argn[i], "loop") == 0 ||
+				g_ascii_strcasecmp (argn[i], "playcount") == 0) {
+			//FIXME see http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_LOOP.html
+		}
+		if (g_ascii_strcasecmp (argn[i], "starttime") == 0) {
+			//FIXME see http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_STARTTIME.html
+		}
+		if (g_ascii_strcasecmp (argn[i], "endtime") == 0) {
+			//FIXME see above
+		}
 	}
-
-	//totem_plugin_fork(plugin, 0x32);
 
 	return NPERR_NO_ERROR;
 }
@@ -224,13 +239,9 @@ static NPError totem_plugin_set_window (NPP instance, NPWindow* window)
 			printf ("ack.  window changed!\n");
 		}
 	} else {
-		NPSetWindowCallbackStruct *ws_info;
-
 		DEBUG("about to fork");
 
-		ws_info = window->ws_info;
 		plugin->window = (Window) window->window;
-
 		totem_plugin_fork (plugin);
 
 		fcntl(plugin->send_fd, F_SETFL, O_NONBLOCK);
@@ -385,29 +396,43 @@ NP_GetValue(void *future, NPPVariable variable, void *value)
 	return totem_plugin_get_value (NULL, variable, value);
 }
 
+#define NUM_MIME_TYPES 3
+static struct {
+	const char *mime_type;
+	const char *extensions;
+	const char *mime_alias;
+} mime_types[] = {
+	{ "video/quicktime", "mov" },
+	{ "application/x-mplayer2", "avi, wma, wmv", "video/x-msvideo" },
+	{ "video/mpeg", "mpg, mpeg, mpe" }
+};
+
 char *NP_GetMIMEDescription(void)
 {
-	//FIXME i18n
+	GString *list;
+	char *mime_list;
+	guint i;
 
-	return
-		/* http://www.apple.com/trailers/ */
-		"video/quicktime:mov:QuickTime video;"
-		/* http://www.nbc.com/nbc/Late_Night_with_Conan_O'Brien/video/triumph.shtml */
-		"application/x-mplayer2::Window Media Plugin;"
-		"video/mpeg:mpg:MPEG video";
-/*
-    		"application/mpeg:mpg:MPEG video;"
-    		"audio/x-pn-windows-acm:wav:WAV audio;"
-    		"audio/x-wav:wav:WAV audio;"
-    		"audio/x-ogg:ogg:Ogg Vorbis audio;"
-    		"audio/basic:au:basic audio;"
-    		"audio/mpeg:mp1:MPEG audio;"
-    		"audio/mpeg:mp2:MPEG audio;"
-    		"audio/mpeg:mp3:MPEG audio;"
-		"video/mpeg:mpg:MPEG video;"
-		"video/mpeg:vob:MPEG video;"
-		"video/quicktime:mov:QuickTime video;"
-		"video/x-msvideo:avi:AVI video"; */
+	list = g_string_new (NULL);
+
+	for (i = 0; i < NUM_MIME_TYPES; i++) {
+		const char *desc;
+		char *item;
+
+		desc = gnome_vfs_mime_get_description (mime_types[i].mime_type);
+		if (desc == NULL) {
+			desc = gnome_vfs_mime_get_description
+				(mime_types[i].mime_alias);
+		}
+		item = g_strdup_printf ("%s:%s:%s;", mime_types[i].mime_type,
+				mime_types[i].extensions, desc);
+		list = g_string_append (list, item);
+		g_free (item);
+	}
+
+	mime_list = g_string_free (list, FALSE);
+
+	return mime_list;
 }
 
 NPError NP_Initialize (NPNetscapeFuncs * moz_funcs,

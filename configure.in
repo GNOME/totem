@@ -179,7 +179,7 @@ AC_ARG_ENABLE(mozilla,
 	[ENABLE_MOZILLA=no]) dnl Default value
 
 if test x$ENABLE_MOZILLA = "xyes" ; then
-	PKG_CHECK_MODULES(MOZILLA, gtk+-x11-2.0 $MM gthread-2.0 mozilla-plugin,
+	PKG_CHECK_MODULES(MOZILLA, gtk+-x11-2.0 $MM gthread-2.0 mozilla-plugin gnome-vfs-2.0,
 			[HAVE_MOZILLA=yes], [HAVE_MOZILLA=no])
 fi
 
@@ -188,7 +188,7 @@ AC_SUBST(MOZILLA_LIBS)
 if test x$HAVE_MOZILLA = "xyes"; then
 	AC_DEFINE(HAVE_MOZILLA, 1, [defined if you build the mozilla plugin])
 fi
-AM_CONDITIONAL(HAVE_MOZILLA, test x$ENABLE_MOZILLA = "xyes")
+AM_CONDITIONAL(HAVE_MOZILLA, test x$HAVE_MOZILLA = "xyes")
 
 dnl Check for Nautilus property page build
 AC_ARG_ENABLE(nautilus,
