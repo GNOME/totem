@@ -17,16 +17,21 @@ News
 * Make HTTP proxies work again
 * Fix scaling, fullscreen and visualisation in GStreamer backend
 * Get the title of all the tracks when playing an Audio CD
+* Plenty of fixes for streams playback (playback on start works, no network
+  activity when paused)
+* Much faster playlist parsing when the files contain known good extensions
 * Make properties menu unsensitive when we didn't manage to open a file, or
   the logo was shown
 * Fix restoration of the size on restart after exit in fullscreen
 * Remove selected entries from the playlist with 'Delete'
 * Use 'eject' to eject CDs and DVDs
-* Fix parsing of ASX playlists
+* Fix parsing of some ASX playlists
+* Ignore empty lines in .m3u files
 * Make Shift+F10 display a popup menu
 * Fix access keys
 * Fix drag and dropping local files with '%' in their name
 * Update the "skip to" spinner as time passes
+* Fix a hang on exit when playing back a song with visual effects on and paused
 * A lot of API changes in the BaocnVideoWidget, cleanups
 
 0.99.5:

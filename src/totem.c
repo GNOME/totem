@@ -712,7 +712,7 @@ update_mrl_label (Totem *totem, const char *name)
 		g_free (text);
 	} else {
 		totem_statusbar_set_time_and_length (TOTEM_STATUSBAR
-				(totem->statusbar), 0, -1);
+				(totem->statusbar), 0, 0);
 
 		update_skip_to (totem, 0);
 
