@@ -214,7 +214,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   object_class = (GObjectClass *) klass;
   widget_class = (GtkWidgetClass *) klass;
 
-  parent_class = gtk_type_class (gtk_vbox_get_type ());
+  parent_class = gtk_type_class (gtk_box_get_type ());
 
   /* GtkWidget */
   widget_class->size_request = bacon_video_widget_size_request;
@@ -652,7 +652,6 @@ bacon_video_widget_open (BaconVideoWidget * bvw, const gchar * mrl,
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
   g_return_val_if_fail (bvw->priv->mrl == NULL, FALSE);
 
-  g_message ("open %s", mrl);
   bvw->priv->mrl = g_strdup (mrl);
 
   /* Resetting last_error_message to NULL */
@@ -828,7 +827,7 @@ bacon_video_widget_get_speed (BaconVideoWidget * bvw)
   else if (gst_play_get_state (bvw->priv->play) == GST_STATE_PLAYING)
     return SPEED_NORMAL;
   else
-    g_message ("pipeline is not in a known Bacon speed");
+    g_assert ("pipeline is not in a known Bacon speed");
 
   return -1;
 }
@@ -1019,7 +1018,6 @@ bacon_video_widget_set_visuals (BaconVideoWidget * bvw, const char *name)
     }
   else
     {
-      g_message ("Failed loading visualization plugin %s", name);
       return FALSE;
     }
 }
@@ -1033,7 +1031,8 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget * bvw,
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_PLAY (bvw->priv->play));
 
-  g_message ("visual quality");
+  if (bvw->priv->vis_element == NULL)
+    return;
 
   switch (quality)
     {
@@ -1446,7 +1445,7 @@ bacon_video_widget_get_type (void)
       };
 
       bacon_video_widget_type = g_type_register_static
-	(GTK_TYPE_VBOX, "BaconVideoWidget",
+	(GTK_TYPE_BOX, "BaconVideoWidget",
 	 &bacon_video_widget_info, (GTypeFlags) 0);
     }
 

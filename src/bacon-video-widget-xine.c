@@ -149,7 +149,6 @@ struct BaconVideoWidgetPrivate {
 	gboolean logo_mode;
 	guint tick_id;
 	gboolean auto_resize;
-	GdkPixbuf *icon;
 	int volume;
 	TvOutType tvout;
 	guint32 video_fcc, audio_fcc;
@@ -231,7 +230,7 @@ bacon_video_widget_get_type (void)
 		};
 
 		bacon_video_widget_type = g_type_register_static
-			(GTK_TYPE_VBOX, "BaconVideoWidget",
+			(GTK_TYPE_BOX, "BaconVideoWidget",
 			 &bacon_video_widget_info, (GTypeFlags)0);
 	}
 
@@ -248,7 +247,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 	object_class = (GObjectClass *) klass;
 	widget_class = (GtkWidgetClass *) klass;
 
-	parent_class = gtk_type_class (gtk_vbox_get_type ());
+	parent_class = gtk_type_class (gtk_box_get_type ());
 
 	/* GtkWidget */
 	widget_class->realize = bacon_video_widget_realize;
@@ -415,8 +414,6 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 
 	bvw->priv->tick_id = g_timeout_add (140,
 			(GSourceFunc) bacon_video_widget_tick_send, bvw);
-
-	bvw->priv->icon = gdk_pixbuf_new_from_file (ICON_PATH, NULL);
 }
 
 static void
@@ -426,9 +423,6 @@ bacon_video_widget_finalize (GObject *object)
 
 	g_list_foreach (bvw->priv->visuals, (GFunc) g_free, NULL);
 	g_list_free (bvw->priv->visuals);
-
-	if (bvw->priv->icon != NULL)
-		gdk_pixbuf_unref (bvw->priv->icon);
 
 	/* Should put here what needs to be destroyed */
 	g_idle_remove_by_data (bvw);
@@ -477,11 +471,13 @@ frame_output_cb (void *bvw_gen,
 
 	/* correct size with video_pixel_aspect */
 	if (video_pixel_aspect >= bvw->priv->display_ratio)
+	{
 		video_width = video_width * video_pixel_aspect
 			/ bvw->priv->display_ratio + .5;
-	else
+	} else {
 		video_height = video_height * bvw->priv->display_ratio
 			/ video_pixel_aspect + .5;
+	}
 
 	*dest_x = 0;
 	*dest_y = 0;

@@ -1,5 +1,21 @@
 2003-08-26  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am: removed ICON_PATH from the CFLAGS
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_class_init),
+	(bacon_video_widget_open), (bacon_video_widget_get_speed),
+	(bacon_video_widget_set_visuals),
+	(bacon_video_widget_set_visuals_quality),
+	(bacon_video_widget_get_type): removed useless debug, fixed runtime
+	warning
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_get_type),
+	(bacon_video_widget_class_init),
+	(bacon_video_widget_instance_init), (bacon_video_widget_finalize),
+	(frame_output_cb): removed unused icon private member
+	* src/bacon-video-widget.h: make the video widget descend from a
+	GtkBox instead of a GtkVBox
+
+2003-08-26  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-cd-selection.h: upd from libbacon
 
 2003-08-07  Bastien Nocera  <hadess@hadess.net>

@@ -24,7 +24,7 @@
 #ifndef HAVE_BACON_VIDEO_WIDGET_H
 #define HAVE_BACON_VIDEO_WIDGET_H
 
-#include <gtk/gtkvbox.h>
+#include <gtk/gtkbox.h>
 
 G_BEGIN_DECLS
 
@@ -85,12 +85,12 @@ typedef enum {
 typedef struct BaconVideoWidgetPrivate BaconVideoWidgetPrivate;
 
 typedef struct {
-	GtkVBox parent;
+	GtkBox parent;
 	BaconVideoWidgetPrivate *priv;
 } BaconVideoWidget;
 
 typedef struct {
-	GtkVBoxClass parent_class;
+	GtkBoxClass parent_class;
 
 	void (*error) (GtkWidget *bvw, const char *message,
                        gboolean playback_stopped);
