@@ -2756,6 +2756,10 @@ on_window_key_press_event (GtkWidget *win, GdkEventKey *event, Totem *totem)
 		case GDK_P:
 		case GDK_E:
 		case GDK_e:
+		case GDK_O:
+		case GDK_o:
+		case GDK_L:
+		case GDK_l:
 			return totem_action_handle_key (totem, event);
 	}
 
