@@ -271,8 +271,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 		  G_SIGNAL_RUN_LAST,
 		  G_STRUCT_OFFSET (BaconVideoWidgetClass, error),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__STRING,
-		  G_TYPE_NONE, 1, G_TYPE_STRING);
+		  baconvideowidget_marshal_VOID__STRING_BOOLEAN,
+		  G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_BOOLEAN);
 
   bvw_table_signals[EOS] =
     g_signal_new ("eos",
@@ -473,7 +473,7 @@ got_error (GstPlay * play, GstElement * orig,
   if (emit)
     {
       g_signal_emit (G_OBJECT (bvw),
-		     bvw_table_signals[ERROR], 0, error_message);
+		     bvw_table_signals[ERROR], 0, error_message, TRUE);
       if (bvw->priv->last_error_message)
 	g_free (bvw->priv->last_error_message);
       bvw->priv->last_error_message = g_strdup (error_message);
@@ -1219,28 +1219,18 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
     {
     case BVW_INFO_TITLE:
       string = g_hash_table_lookup (bvw->priv->metadata_hash, "title");
-      if (!string)
-	string = g_strdup ("N/A");
       break;
     case BVW_INFO_ARTIST:
       string = g_hash_table_lookup (bvw->priv->metadata_hash, "artist");
-      if (!string)
-	string = g_strdup ("N/A");
       break;
     case BVW_INFO_YEAR:
       string = g_hash_table_lookup (bvw->priv->metadata_hash, "year");
-      if (!string)
-	string = g_strdup ("N/A");
       break;
     case BVW_INFO_VIDEO_CODEC:
       string = g_hash_table_lookup (bvw->priv->metadata_hash, "video-codec");
-      if (!string)
-	string = g_strdup ("N/A");
       break;
     case BVW_INFO_AUDIO_CODEC:
       string = g_hash_table_lookup (bvw->priv->metadata_hash, "audio-codec");
-      if (!string)
-	string = g_strdup ("N/A");
       break;
     default:
       g_assert_not_reached ();

@@ -287,8 +287,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 				G_SIGNAL_RUN_LAST,
 				G_STRUCT_OFFSET (BaconVideoWidgetClass, error),
 				NULL, NULL,
-				g_cclosure_marshal_VOID__STRING,
-				G_TYPE_NONE, 1, G_TYPE_STRING);
+				baconvideowidget_marshal_VOID__STRING_BOOLEAN,
+				G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_BOOLEAN);
 
 	bvw_table_signals[EOS] =
 		g_signal_new ("eos",
@@ -1083,7 +1083,7 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 
 	g_signal_emit (G_OBJECT (bvw),
 			bvw_table_signals[ERROR], 0,
-			message);
+			message, TRUE);
 
 	g_free (message);
 }

@@ -1,3 +1,16 @@
+2003-06-16  Julien MOUTTE <julien@moutte.net>
+
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_class_init),
+	(got_error), (bacon_video_widget_get_metadata_string): error signal
+	now indicates if playback has been stopped so that UI can update.
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_class_init),
+	(xine_event_message): Applied the same change to xine backend.
+	* src/bacon-video-widget.h: Changed signal prototype.
+	* src/baconvideowidget-marshal.list: Added a STRING_BOOLEAN.
+	* src/totem.c: (totem_action_error), (on_got_metadata_event),
+	(on_error_event): updating depending on error signal and changing
+	playlist title on metada event.
+
 2003-06-16  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_information):

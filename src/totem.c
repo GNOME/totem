@@ -202,11 +202,7 @@ totem_action_error (char *msg, Totem *totem)
 		totem->buffer_dialog = NULL;
 		totem->buffer_label = NULL;
 	}
-    
-    /* FIXME : error signal should indicate wether or
-    not playback status changed */
-    play_pause_set_label (totem, STATE_STOPPED);
-    
+        
 	gtk_widget_show (error_dialog);
 }
 
@@ -1194,14 +1190,16 @@ on_channels_change_event (BaconVideoWidget *bvw, Totem *totem)
 static void
 on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 {
-    char *name = NULL;
-	bacon_video_widget_properties_update
+        char *name = NULL;
+
+        bacon_video_widget_properties_update
 		(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
 		 totem->bvw, FALSE);
-    name = totem_get_nice_name_for_stream (totem);
-    update_mrl_label (totem, name);
-    if (name)
-        g_free (name);
+        name = totem_get_nice_name_for_stream (totem);
+        update_mrl_label (totem, name);
+        gtk_playlist_set_title (GTK_PLAYLIST (totem->playlist), name);
+        if (name)
+                g_free (name);
 }
 
 static int
@@ -1221,8 +1219,11 @@ on_buffering_cancel_event (GtkWidget *dialog, int response, Totem *totem)
 }
 
 static void
-on_error_event (BaconVideoWidget *bvw, char *message, Totem *totem)
+on_error_event (BaconVideoWidget *bvw, char *message,
+                gboolean playback_stopped, Totem *totem)
 {
+        if (playback_stopped)
+            play_pause_set_label (totem, STATE_STOPPED);
 	totem_action_error (message, totem);
 }
 

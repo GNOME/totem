@@ -79,7 +79,8 @@ typedef struct {
 typedef struct {
 	GtkVBoxClass parent_class;
 
-	void (*error) (GtkWidget *bvw, const char *message);
+	void (*error) (GtkWidget *bvw, const char *message,
+                       gboolean playback_stopped);
 	void (*eos) (GtkWidget *bvw);
 	void (*got_metadata) (GtkWidget *bvw);
 	void (*title_change) (GtkWidget *bvw, const char *title);
