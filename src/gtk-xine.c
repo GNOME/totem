@@ -155,8 +155,6 @@ static void gtk_xine_size_allocate (GtkWidget *widget,
 static GtkWidgetClass *parent_class = NULL;
 
 static void xine_event (void *user_data, const xine_event_t *event);
-//static void codec_reporting(void *user_data, int codec_type,
-//		uint32_t fourcc, char *description, int handled);
 static gboolean gtk_xine_idle_signal (GtkXine *gtx);
 
 static int gtx_table_signals[LAST_SIGNAL] = { 0 };
@@ -772,11 +770,9 @@ gtk_xine_realize (GtkWidget *widget)
 
 	XUnlockDisplay (gtx->priv->display);
 
-	/* Setup xine events and codec reporting */
+	/* Setup xine events */
 	xine_event_create_listener_thread (gtx->priv->ev_queue,
 			xine_event, (void *) gtx);
-//	xine_register_report_codec_cb(gtx->priv->xine, codec_reporting,
-//			(void *) gtx);
 
 	scrsaver_init (gtx->priv->display);
 

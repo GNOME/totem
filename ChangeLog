@@ -1,5 +1,11 @@
 2002-10-28  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-playlist.c: (drop_cb): fix dropping a file that's not local
+	* src/gtk-xine.c: (gtk_xine_realize): remove the codec reporting
+	* src/totem.c: (drop_cb): same as GtkPlaylist
+
+2002-10-28  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-playlist.c: (drop_cb), (init_config),
 	(gtk_playlist_add_one_mrl), (gtk_playlist_set_at_start):
 	fix all the crack warnings

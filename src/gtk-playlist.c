@@ -338,13 +338,19 @@ drop_cb (GtkWidget     *widget,
 	{
 		char *filename;
 
+		if (p->data == NULL)
+			continue;
+
 		filename = gnome_vfs_get_local_path_from_uri (p->data);
+		if (filename == NULL)
+			filename = g_strdup (p->data);
 
 		if (filename != NULL &&
 				(g_file_test (filename, G_FILE_TEST_IS_REGULAR
 					| G_FILE_TEST_EXISTS)
 				 || strstr (filename, "://") != NULL))
 		{
+			g_message ("drop_cb: adding %s", filename);
 			gtk_playlist_add_mrl (playlist, filename, NULL);
 		}
 		g_free (filename);
