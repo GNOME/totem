@@ -1,3 +1,22 @@
+2004-07-04  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem.glade: added a time label for the fullscreen controls
+	* src/Makefile.am: upd
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_open),
+	(bacon_video_widget_play), (bacon_video_widget_get_metadata_int),
+	(bacon_video_widget_get_metadata):
+	* src/bacon-video-widget.h: removed the unused FOURCC metadata, removed
+	unused struct members
+	* src/rb-ellipsizing-label.c: more G_DEFINE_TYPE
+	* src/totem-pl-parser.c: fix a warning
+	* src/totem-statusbar.c: (totem_statusbar_update_time): fix an LTR/RTL
+	issue with the time display, as well as a possible i18n problem
+	* src/totem-time-label.[ch]: new widget to display the current position,
+	not quite finished
+	* src/totem.c: (on_got_metadata_event), (totem_statusbar_create),
+	(totem_time_display_create): cleanups
+	* src/totem.h: TotemTimeTable creation
+
 2004-07-03  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-pl-parser.c: (totem_pl_parser_add_ram),

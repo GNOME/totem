@@ -115,6 +115,7 @@ static int video_props[4] = {
 	XINE_PARAM_VO_SATURATION,
 	XINE_PARAM_VO_HUE
 };
+
 static char *video_props_str[4] = {
 	GCONF_PREFIX"/brightness",
 	GCONF_PREFIX"/contrast",
@@ -130,7 +131,6 @@ struct BaconVideoWidgetPrivate {
 	xine_audio_port_t *ao_driver;
 	xine_event_queue_t *ev_queue;
 	double display_ratio;
-	gboolean started;
 
 	/* Configuration */
 	GConfClient *gc;
@@ -164,7 +164,6 @@ struct BaconVideoWidgetPrivate {
 	gboolean auto_resize;
 	int volume;
 	TvOutType tvout;
-	guint32 video_fcc, audio_fcc;
 	gboolean is_live;
 
 	GAsyncQueue *queue;
@@ -1853,9 +1852,6 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const char *mrl,
 	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
 	g_return_val_if_fail (bvw->priv->mrl == NULL, FALSE);
 
-	bvw->priv->video_fcc = 0;
-	bvw->priv->audio_fcc = 0;
-
 	error = xine_open (bvw->priv->stream, mrl);
 	if (error == 0)
 	{
@@ -1871,34 +1867,28 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const char *mrl,
 				&& xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_AUDIO_HANDLED) == FALSE))
 	{
-		char *fourcc_str, *name;
+		char *name;
 
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[GOT_METADATA], 0, NULL);
 
-		bvw->priv->video_fcc = xine_get_stream_info (bvw->priv->stream,
-				XINE_STREAM_INFO_VIDEO_FOURCC);
-		fourcc_str = get_fourcc_string (bvw->priv->video_fcc);
 		name = g_strdup (xine_get_meta_info (bvw->priv->stream,
 				XINE_META_INFO_VIDEOCODEC));
-
-		/* Only change the audio_fcc if we're on x86 */
-		if (xine_get_stream_info
-				(bvw->priv->stream,
-				 XINE_STREAM_INFO_AUDIO_HANDLED) == FALSE)
+		if (name == NULL)
 		{
-			bvw->priv->audio_fcc = xine_get_stream_info
-				(bvw->priv->stream,
-				 XINE_STREAM_INFO_AUDIO_FOURCC);
+			guint32 video_fcc;
+
+			video_fcc = xine_get_stream_info (bvw->priv->stream,
+					XINE_STREAM_INFO_VIDEO_FOURCC);
+			name = get_fourcc_string (video_fcc);
 		}
 
 		bacon_video_widget_close (bvw);
 
 		g_set_error (gerror, 0, 0,
 				_("Video codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"),
-				name ? name : fourcc_str);
+				name);
 
-		g_free (fourcc_str);
 		g_free (name);
 
 		return FALSE;
@@ -1939,7 +1929,6 @@ bacon_video_widget_play (BaconVideoWidget *bvw, GError **gerror)
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -1);
 	g_return_val_if_fail (bvw->priv->xine != NULL, -1);
 
-	bvw->priv->started = TRUE;
 	error = 1;
 
 	if (bvw->priv->seeking == 1)
@@ -3184,9 +3173,6 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget *bvw,
 		integer = xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_VIDEO_HEIGHT);
 		break;
-	case BVW_INFO_VIDEO_FOURCC:
-		integer = (guint32) bvw->priv->video_fcc;
-		break;
 	case BVW_INFO_FPS:
 		if (xine_get_stream_info (bvw->priv->stream,
 					XINE_STREAM_INFO_FRAME_DURATION) != 0)
@@ -3201,9 +3187,6 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget *bvw,
 	 case BVW_INFO_BITRATE:
 		integer = xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_AUDIO_BITRATE) / 1000;
-		break;
-	 case BVW_INFO_AUDIO_FOURCC:
-		integer = (guint32) bvw->priv->audio_fcc;
 		break;
 	 default:
 		g_assert_not_reached ();
@@ -3268,10 +3251,8 @@ bacon_video_widget_get_metadata (BaconVideoWidget *bvw,
 	case BVW_INFO_DURATION:
 	case BVW_INFO_DIMENSION_X:
 	case BVW_INFO_DIMENSION_Y:
-	case BVW_INFO_VIDEO_FOURCC:
 	case BVW_INFO_FPS:
 	case BVW_INFO_BITRATE:
-	case BVW_INFO_AUDIO_FOURCC:
 		bacon_video_widget_get_metadata_int (bvw, type, value);
 		break;
 	case BVW_INFO_HAS_VIDEO:

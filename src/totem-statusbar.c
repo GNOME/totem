@@ -184,11 +184,12 @@ totem_statusbar_update_time (TotemStatusbar *statusbar)
   } else {
     length = time_to_string (statusbar->length == -1 ? 0 : statusbar->length);
 
-    //FIXME LTR/RTL
     if (statusbar->seeking == FALSE)
-      label = g_strdup_printf ("%s / %s", time, length);
+      /* Elapsed / Total Length */
+      label = g_strdup_printf (_("%s / %s"), time, length);
     else
-      label = g_strdup_printf ("%s %s / %s", _("Seek to"), time, length);
+      /* Seeking to Time / Total Length */
+      label = g_strdup_printf (_("Seek to %s / %s"), time, length);
 
     g_free (length);
   }

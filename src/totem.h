@@ -53,5 +53,6 @@ GConfClient *totem_get_gconf_client		(Totem *totem);
 
 GtkWidget * label_create (void);
 GtkWidget * totem_statusbar_create (void);
+GtkWidget * totem_time_display_create (void);
 
 #endif /* __TOTEM_H__ */

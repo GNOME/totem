@@ -967,7 +967,7 @@ parse_smil_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 	return retval;
 }
 
-static gboolean
+static TotemPlParserResult
 totem_pl_parser_add_smil (TotemPlParser *parser, const char *url, gpointer data)
 {
 	xmlDocPtr doc;

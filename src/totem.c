@@ -43,6 +43,7 @@
 #include "rb-ellipsizing-label.h"
 #include "bacon-cd-selection.h"
 #include "totem-statusbar.h"
+#include "totem-time-label.h"
 #include "totem-screenshot.h"
 #include "video-utils.h"
 
@@ -1230,12 +1231,13 @@ on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
         bacon_video_widget_properties_update
 		(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
 		 totem->bvw, FALSE);
-        name = totem_get_nice_name_for_stream (totem);
+
+	name = totem_get_nice_name_for_stream (totem);
+
 	if (name == NULL)
 	{
 		name = totem_playlist_get_current_title
-			(totem->playlist,
-			 &custom);
+			(totem->playlist, &custom);
 		custom = TRUE;
 	} else {
 		custom = FALSE;
@@ -1244,7 +1246,9 @@ on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 	update_mrl_label (totem, name);
 
 	if (custom == FALSE)
-		totem_playlist_set_title (TOTEM_PLAYLIST (totem->playlist), name);
+		totem_playlist_set_title
+			(TOTEM_PLAYLIST (totem->playlist), name);
+
 	g_free (name);
 }
 
@@ -3492,6 +3496,17 @@ totem_statusbar_create (void)
 	GtkWidget *widget;
 
 	widget = totem_statusbar_new ();
+	gtk_widget_show (widget);
+
+	return widget;
+}
+
+GtkWidget *
+totem_time_display_create (void)
+{
+	GtkWidget *widget;
+
+	widget = totem_time_label_new ();
 	gtk_widget_show (widget);
 
 	return widget;

@@ -582,33 +582,7 @@ gul_pango_layout_set_text_ellipsized (PangoLayout  *layout,
 	g_free (s);
 }
 
-GType 
-rb_ellipsizing_label_get_type (void)
-{
-        static GType rb_ellipsizing_label_type = 0;
-
-        if (rb_ellipsizing_label_type == 0)
-        {
-                static const GTypeInfo our_info =
-                {
-                        sizeof (RBEllipsizingLabelClass),
-                        NULL, /* base_init */
-                        NULL, /* base_finalize */
-                        (GClassInitFunc) rb_ellipsizing_label_class_init,
-                        NULL,
-                        NULL, /* class_data */
-                        sizeof (RBEllipsizingLabel),
-                        0, /* n_preallocs */
-                        (GInstanceInitFunc) rb_ellipsizing_label_init
-                };
-
-                rb_ellipsizing_label_type = g_type_register_static (GTK_TYPE_LABEL,
-                                                             	     "RBEllipsizingLabel",
-                                                                     &our_info, 0);
-        }
-
-        return rb_ellipsizing_label_type;
-}
+G_DEFINE_TYPE (RBEllipsizingLabel, rb_ellipsizing_label, GTK_TYPE_LABEL)
 
 static void
 rb_ellipsizing_label_init (RBEllipsizingLabel *label)
