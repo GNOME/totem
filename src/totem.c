@@ -1859,11 +1859,23 @@ main (int argc, char **argv)
 		exit (1);
 	}
 
+	/* We need it right now for the queue */
+	filename = gnome_program_locate_file (NULL,
+			GNOME_FILE_DOMAIN_APP_DATADIR,
+			"totem/totem.glade", TRUE, NULL);
+	if (filename == NULL)
+	{
+		totem_action_error (_("Couldn't load the main interface"
+					" (totem.glade).\nMake sure that Totem"
+					" is properly installed."), NULL);
+		exit (1);
+	}
+
 	q = NULL;
 	if (gconf_client_get_bool
 			(gc, "/apps/totem/launch_once", NULL) == TRUE)
 	{
-		q = gtk_message_queue_new ("totem", argv[0]);
+		q = gtk_message_queue_new ("totem", filename);
 		process_queue (q, argv);
 	}
 
@@ -1876,16 +1888,6 @@ main (int argc, char **argv)
 	totem->gc = gc;
 	totem->queue = q;
 
-	filename = gnome_program_locate_file (NULL,
-			GNOME_FILE_DOMAIN_APP_DATADIR,
-			"totem/totem.glade", TRUE, NULL);
-	if (filename == NULL)
-	{
-		totem_action_error (_("Couldn't load the main interface"
-					" (totem.glade).\nMake sure that Totem"
-					" is properly installed."), NULL);
-		exit (1);
-	}
 	totem->xml = glade_xml_new (filename, NULL, NULL);
 	if (totem->xml == NULL)
 	{
