@@ -1,6 +1,15 @@
 2004-04-05  Bastien Nocera  <hadess@hadess.net>
 
 	* README: remove TODO item
+	* src/totem.c: (totem_action_load_media),
+	(totem_action_open_files), (on_open_location1_activate),
+	(process_options), (main): fix command-line when Totem is a "server",
+	add the --debug option, remove the now useless "ignore_first"
+	argument to totem_action_open_files()
+
+2004-04-05  Bastien Nocera  <hadess@hadess.net>
+
+	* README: remove TODO item
 	* src/totem.c: (totem_is_media): make "totem cd:" on the command-line
 	work again (Closes: #138791)
 

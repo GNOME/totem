@@ -68,6 +68,7 @@ static const GtkTargetEntry source_table[] = {
 
 static struct poptOption options[] = {
 	{NULL, '\0', POPT_ARG_INCLUDE_TABLE, NULL, 0, N_("Backend options"), NULL},
+	{"debug", '\0', POPT_ARG_NONE, NULL, 0, N_("Enable debug"), NULL},
 	{"play-pause", '\0', POPT_ARG_NONE, NULL, 0, N_("Play/Pause"), NULL},
 	{"next", '\0', POPT_ARG_NONE, NULL, 0, N_("Next"), NULL},
 	{"previous", '\0', POPT_ARG_NONE, NULL, 0, N_("Previous"), NULL},
@@ -82,8 +83,7 @@ static struct poptOption options[] = {
 	{NULL, '\0', 0, NULL, 0} /* end the list */
 };
 
-static gboolean totem_action_open_files (Totem *totem, char **list,
-		gboolean ignore_first);
+static gboolean totem_action_open_files (Totem *totem, char **list);
 static gboolean totem_action_open_files_list (Totem *totem, GSList *list);
 static void update_fullscreen_size (Totem *totem);
 static gboolean popup_hide (Totem *totem);
@@ -423,7 +423,7 @@ totem_action_load_media (Totem *totem, MediaType type)
 		return FALSE;
 	}
 
-	totem_action_open_files (totem, (char **)mrls, FALSE);
+	totem_action_open_files (totem, (char **)mrls);
 	return TRUE;
 }
 
@@ -1407,14 +1407,12 @@ totem_add_cd_track_name (Totem *totem, const char *filename)
 }
 
 static gboolean
-totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
+totem_action_open_files (Totem *totem, char **list)
 {
 	GSList *slist = NULL;
 	int i, retval;
 
-	i = (ignore_first ? 1 : 0 );
-
-	for ( ; list[i] != NULL; i++)
+	for (i =0 ; list[i] != NULL; i++)
 		slist = g_slist_prepend (slist, list[i]);
 
 	slist = g_slist_reverse (slist);
@@ -1619,8 +1617,7 @@ on_open_location1_activate (GtkButton *button, Totem *totem)
 		{
 			filenames[0] = uri;
 			filenames[1] = NULL;
-			totem_action_open_files (totem,
-					(char **) filenames, FALSE);
+			totem_action_open_files (totem, (char **) filenames);
 
 			mrl = totem_playlist_get_current_mrl (totem->playlist);
 			totem_action_set_mrl_and_play (totem, mrl);
@@ -3415,6 +3412,41 @@ totem_message_connection_receive_cb (const char *msg, Totem *totem)
 }
 
 static void
+process_options (Totem *totem, int *argc, char ***argv)
+{
+	int i;
+	guint options = 0;
+	char **args = *argv;
+
+	if (*argc == 1) {
+		*argc = 0;
+		*argv = *argv + 1;
+		return;
+	}
+
+	for (i = 1; i < *argc; i++)
+	{
+		if (strcmp (args[i], "--debug") == 0)
+		{
+			gconf_client_set_bool (totem->gc,
+					GCONF_PREFIX"/debug",
+					TRUE, NULL);
+			options++;
+		} else if (strcmp (args[i], "--fullscreen") == 0) {
+			totem_action_fullscreen_toggle (totem);
+			options++;
+		} else if (strncmp (args[i], "--", 2) == 0) {
+			printf (_("Option '%s' is unknown and was ignored\n"),
+					args[i]);
+			options++;
+		}
+	}
+
+	*argc = *argc - options;
+	*argv = *argv + options + 1;
+}
+
+static void
 process_command_line (BaconMessageConnection *conn, int argc, char **argv)
 {
 	int i, command;
@@ -3635,17 +3667,12 @@ main (int argc, char **argv)
 	/* The prefs after the video widget is connected */
 	totem_setup_preferences (totem);
 
-	/* Basic command-line handling at load-time. */
-	if ((argc > 1) && (strlen (argv[1]) > 3) && (strncmp (argv[1], "--", 2) == 0))
-	{
-		if (strcmp (argv[1], "--fullscreen") == 0) {
-			totem_action_fullscreen_toggle (totem);
-		}
-	}
+	/* Command-line handling */
+	process_options (totem, &argc, &argv);
 
-	if (argc > 1)
+	if (argc >= 1)
 	{
-		if (totem_action_open_files (totem, argv, TRUE))
+		if (totem_action_open_files (totem, argv))
 			totem_action_play_pause (totem);
 		else
 			totem_action_set_mrl (totem, NULL);
