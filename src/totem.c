@@ -888,7 +888,7 @@ update_sliders (Totem *totem)
 		if (totem->volume_first_time || (totem->prev_volume != pos &&
 				totem->prev_volume != -1 && pos != -1))
 		{
-            totem->volume_first_time = 0;
+			totem->volume_first_time = 0;
 			gtk_adjustment_set_value (totem->voladj, pos);
 			gtk_adjustment_set_value (totem->fs_voladj, pos);
 			volume_set_image (totem, (gint) pos);
@@ -1957,13 +1957,14 @@ totem_action_handle_key (Totem *totem, guint keyval)
 	case GDK_a:
 		totem_action_toggle_aspect_ratio (totem);
 		break;
-    case GDK_C:
-    case GDK_c:
-        gtk_xine_dvd_event (GTK_XINE (totem->gtx), GTX_DVD_CHAPTER_MENU);
-        break;
-    case GDK_M:
-    case GDK_m:
-        gtk_xine_dvd_event (GTK_XINE (totem->gtx), GTX_DVD_ROOT_MENU);
+	case GDK_C:
+	case GDK_c:
+		gtk_xine_dvd_event (GTK_XINE (totem->gtx),
+				GTX_DVD_CHAPTER_MENU);
+		break;
+	case GDK_M:
+	case GDK_m:
+		gtk_xine_dvd_event (GTK_XINE (totem->gtx), GTX_DVD_ROOT_MENU);
 	case XF86XK_AudioPrev:
 	case GDK_B:
 	case GDK_b:
@@ -1977,6 +1978,10 @@ totem_action_handle_key (Totem *totem, guint keyval)
 	case GDK_q:
 	case GDK_Q:
 		totem_action_exit (totem);
+		break;
+	case GDK_s:
+	case GDK_S:
+		on_skip_to1_activate (NULL, totem);
 		break;
 	case GDK_0:
 	case GDK_onehalf:
@@ -2019,6 +2024,9 @@ on_window_key_press_event (GtkWidget *win, GdkEventKey *event,
 		                gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
+
+	if (event->state != 0)
+		return FALSE;
 
 	return totem_action_handle_key (totem, event->keyval);
 }

@@ -1,5 +1,12 @@
 2003-01-20  Bastien Nocera  <hadess@hadess.net>
 
+	* README:
+	* src/totem.c: (update_sliders), (totem_action_handle_key),
+	(on_window_key_press_event): ignore key presses if there's a modifier,
+	add "S" as a shortcut for "Skip to" and update the README
+
+2003-01-20  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.glade:
 	* src/gtk-xine-properties.c: (gtk_xine_properties_time_to_string),
 	(gtk_xine_properties_set_from_current):
