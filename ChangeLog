@@ -1,3 +1,10 @@
+2003-04-18  Julien MOUTTE  <julien@moutte.net>
+
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_class_init): We do
+	no need those callbacks as the widget will forward those events.
+	* src/totem.c: (totem_action_exit): Added sanity checks before
+	destroying widgets that might not exist.
+
 2003-04-18  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in:

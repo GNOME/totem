@@ -131,12 +131,6 @@ static void bacon_video_widget_finalize (GObject *object);
 
 static gboolean bacon_video_widget_expose (GtkWidget *widget,
 		GdkEventExpose *event);
-static gboolean bacon_video_widget_motion_notify (GtkWidget *widget,
-		GdkEventMotion *event);
-static gboolean bacon_video_widget_button_press (GtkWidget *widget,
-		GdkEventButton *event);
-static gboolean bacon_video_widget_key_press (GtkWidget *widget,
-		GdkEventKey *event);
 
 
 static GtkWidgetClass *parent_class = NULL;
@@ -196,10 +190,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 	/* GtkWidget */
 	widget_class->size_request = bacon_video_widget_size_request;
 	widget_class->size_allocate = bacon_video_widget_size_allocate;
-//	widget_class->expose_event = bacon_video_widget_expose;
-//	widget_class->motion_notify_event = bacon_video_widget_motion_notify;
-//	widget_class->button_press_event = bacon_video_widget_button_press;
-//	widget_class->key_press_event = bacon_video_widget_key_press;
 
 	/* GObject */
 	object_class->set_property = bacon_video_widget_set_property;

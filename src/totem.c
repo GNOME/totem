@@ -189,8 +189,11 @@ totem_action_exit (Totem *totem)
 	gtk_widget_hide (totem->win);
 	gtk_widget_hide (GTK_WIDGET (totem->playlist));
 
-	gtk_widget_destroy (GTK_WIDGET (totem->bvw));
-	gtk_widget_destroy (GTK_WIDGET (totem->playlist));
+	if (totem->bvw)
+		gtk_widget_destroy (GTK_WIDGET (totem->bvw));
+	
+	if (totem->playlist)
+		gtk_widget_destroy (GTK_WIDGET (totem->playlist));
 
 	exit (0);
 }
