@@ -325,7 +325,7 @@ action_set_mrl (Totem *totem, const char *mrl)
 				(GTK_XINE (totem->gtx)));
 
 		/* Set the playlist */
-		gtk_playlist_set_playing (totem->playlist);
+		gtk_playlist_set_playing (totem->playlist, TRUE);
 
 		/* Label */
 		widget = glade_xml_get_widget (totem->xml, "label1");
@@ -740,7 +740,7 @@ playlist_changed_cb (GtkWidget *playlist, gpointer user_data)
 		totem->mrl = NULL;
 		action_set_mrl (totem, mrl);
 	} else if (totem->mrl != NULL) {
-		gtk_playlist_set_playing (totem->playlist);
+		gtk_playlist_set_playing (totem->playlist, TRUE);
 	}
 
 	g_free (mrl);
@@ -838,6 +838,26 @@ on_eos_event (GtkWidget *widget, gpointer user_data)
 	return FALSE;
 }
 
+static void
+on_play_error_event (GtkWidget *gtx, GtkXineError error, gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+
+	D("play_error");
+
+	if (!gtk_playlist_has_next_mrl (totem->playlist))
+	{
+		char *msg;
+
+		msg = g_strdup_printf("Error: %d", error);
+		action_error (msg);
+		g_free (msg);
+		gtk_playlist_set_playing (totem->playlist, FALSE);
+	} else {
+		action_next (totem);
+	}
+}
+
 static int
 on_window_key_press_event (GtkWidget *win, GdkEventKey *event,
 		gpointer user_data)
@@ -928,6 +948,7 @@ video_widget_create (Totem *totem)
 	GtkWidget *container;
 	
 	totem->gtx = gtk_xine_new();
+	//FIXME use gtk_xine_check();
 	container = glade_xml_get_widget (totem->xml, "frame2");
 	gtk_container_add (GTK_CONTAINER (container), totem->gtx);
 
@@ -939,6 +960,14 @@ video_widget_create (Totem *totem)
 			"eos",
 			G_CALLBACK (on_eos_event),
 			totem);
+	g_signal_connect (G_OBJECT (totem->gtx),
+			"play-error",
+			G_CALLBACK (on_play_error_event),
+			totem);
+/* FIXME	g_signal_connect (G_OBJECT (totem->gtx),
+			"error",
+			G_CALLBACK (on_error_event),
+			totem); */
 
 	gtk_widget_realize (totem->gtx);
 	gtk_widget_show (totem->gtx); 
@@ -1096,7 +1125,7 @@ main (int argc, char **argv)
 	{
 		action_error (_("Couldn't load the main Glade file"
 					" (totem.glade).\nMake sure that Totem"
-					"is properly installed."));
+					" is properly installed."));
 		exit (1);
 	}
 	totem->xml = glade_xml_new (filename, NULL, NULL);

@@ -59,6 +59,7 @@ enum {
 	ERROR,
 	MOUSE_MOTION,
 	EOS,
+	PLAY_ERROR,
 	LAST_SIGNAL
 };
 
@@ -223,6 +224,15 @@ gtk_xine_class_init (GtkXineClass * klass)
 				G_STRUCT_OFFSET (GtkXineClass, eos),
 				NULL, NULL,
 				g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
+
+	gtx_table_signals[PLAY_ERROR] =
+		g_signal_new ("play-error",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (GtkXineClass, error),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__INT,
+				G_TYPE_NONE, 1, G_TYPE_INT);
 }
 
 static void
@@ -496,9 +506,9 @@ gtk_xine_realize (GtkWidget * widget)
 
 	if (!XInitThreads ()) {
 		g_signal_emit (G_OBJECT (gtx),
-				gtx_table_signals[ERROR], 1,
-				_("XInitThreads failed - looks like you "
-					"don't have a thread-safe xlib."));
+				gtx_table_signals[ERROR], 0,
+				_("Could not initialise the threads support\n"
+				"You should install a thread-safe Xlib."));
 		return;
 	}
 
@@ -508,8 +518,9 @@ gtk_xine_realize (GtkWidget * widget)
 
 	if (!gtx->priv->display) {
 		g_signal_emit (G_OBJECT (gtx),
-				gtx_table_signals[ERROR], 1,
-				_("XOpenDisplay failed"));
+				gtx_table_signals[ERROR], 0,
+				_("Failed to open the display\n"));
+//FIXME					XOpenDisplay failed"));
 		return;
 	}
 
@@ -538,7 +549,7 @@ gtk_xine_realize (GtkWidget * widget)
 
 	if (!gtx->priv->vo_driver) {
 		g_signal_emit (G_OBJECT (gtx),
-				gtx_table_signals[ERROR], 1,
+				gtx_table_signals[ERROR], 0,
 				_("couldn't open video driver"));
 		return;
 	}
@@ -611,15 +622,21 @@ xine_error (GtkXine *gtx)
 		break;
 	case XINE_ERROR_NO_INPUT_PLUGIN:
 		g_message ("XINE_ERROR_NO_INPUT_PLUGIN");
-		//g_signal_emit
+		g_signal_emit (G_OBJECT (gtx),
+				gtx_table_signals[PLAY_ERROR], 0,
+				GTX_NO_INPUT_PLUGIN);
 		break;
 	case XINE_ERROR_NO_DEMUXER_PLUGIN:
 		g_message ("XINE_ERROR_NO_DEMUXER_PLUGIN");
-		//g_signal_emit
+		g_signal_emit (G_OBJECT (gtx),
+				gtx_table_signals[PLAY_ERROR], 0,
+				GTX_NO_DEMUXER_PLUGIN);
 		break;
 	case XINE_ERROR_DEMUXER_FAILED:
 		g_message ("XINE_ERROR_DEMUXER_FAILED");
-		//g_signal_emit
+		g_signal_emit (G_OBJECT (gtx),
+				gtx_table_signals[PLAY_ERROR], 0,
+				GTX_DEMUXER_FAILED);
 		break;
 	default:
 		break;

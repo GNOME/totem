@@ -633,7 +633,7 @@ gtk_playlist_has_next_mrl (GtkPlaylist *playlist)
 }
 
 gboolean
-gtk_playlist_set_playing (GtkPlaylist *playlist)
+gtk_playlist_set_playing (GtkPlaylist *playlist, gboolean state)
 {
 	GtkListStore *store;
 	GtkTreeIter iter;
@@ -653,9 +653,14 @@ gtk_playlist_set_playing (GtkPlaylist *playlist)
 	if (&iter == NULL)
 		return FALSE;
 
-	gtk_list_store_set (store, &iter,
-			PIX_COL, playlist->_priv->icon,
-			-1);
+	if (state == TRUE)
+		gtk_list_store_set (store, &iter,
+				PIX_COL, playlist->_priv->icon,
+				-1);
+	else
+		gtk_list_store_set (store, &iter,
+				PIX_COL, NULL,
+				-1);
 	return TRUE;
 }
 

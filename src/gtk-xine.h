@@ -28,6 +28,12 @@
 
 G_BEGIN_DECLS
 
+typedef enum {
+	GTX_NO_INPUT_PLUGIN,
+	GTX_NO_DEMUXER_PLUGIN,
+	GTX_DEMUXER_FAILED
+} GtkXineError;
+
 #define GTK_XINE(obj)              (GTK_CHECK_CAST ((obj), gtk_xine_get_type (), GtkXine))
 #define GTK_XINE_CLASS(klass)      (GTK_CHECK_CLASS_CAST ((klass), gtk_xine_get_type (), GtkXineClass))
 #define GTK_IS_XINE(obj)           (GTK_CHECK_TYPE (obj, gtk_xine_get_type ()))
@@ -46,13 +52,16 @@ typedef struct {
 	void (*error) (GtkWidget *gtx, const char *message);
 	void (*mouse_motion) (GtkWidget *gtx);
 	void (*eos) (GtkWidget *gtx);
+	void (*play_error) (GtkWidget *gtx, GtkXineError error);
 } GtkXineClass;
 
 GtkType gtk_xine_get_type (void);
 GtkWidget *gtk_xine_new (void);
+gboolean  gtk_xine_check (void);
 
-gint gtk_xine_play (GtkXine *gtx, gchar * mrl, gint pos, gint start_time);
-void gtk_xine_stop (GtkXine *gtx);
+gint gtk_xine_play                     (GtkXine *gtx, gchar * mrl, gint pos,
+		                        gint start_time);
+void gtk_xine_stop                     (GtkXine *gtx);
 
 /* Properties */
 void gtk_xine_set_speed                (GtkXine *gtx, gint speed);

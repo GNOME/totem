@@ -64,7 +64,7 @@ gboolean   gtk_playlist_has_next_mrl (GtkPlaylist *playlist);
 void       gtk_playlist_set_previous (GtkPlaylist *playlist);
 void       gtk_playlist_set_next (GtkPlaylist *playlist);
 
-gboolean   gtk_playlist_set_playing (GtkPlaylist *playlist);
+gboolean   gtk_playlist_set_playing (GtkPlaylist *playlist, gboolean state);
 
 void       gtk_playlist_set_at_start (GtkPlaylist *playlist);
 

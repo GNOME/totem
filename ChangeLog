@@ -1,6 +1,19 @@
 2002-08-02  Bastien Nocera  <hadess@hadess.net>
 
 	* README: upd
+	* src/gtk-playlist.c: (gtk_playlist_set_playing):
+	* src/gtk-playlist.h: change the args for gtk_playlist_set_playing
+	* src/gtk-xine.c: (gtk_xine_class_init), (gtk_xine_realize),
+	(xine_error):
+	* src/gtk-xine.h: add signals for the playing errors
+	* src/totem.c: (action_set_mrl), (playlist_changed_cb),
+	(on_play_error_event), (video_widget_create), (main):
+	add crude error reporting, upd against gtk_playlist_set_playing
+	API change
+
+2002-08-02  Bastien Nocera  <hadess@hadess.net>
+
+	* README: upd
 	* configure.in: v0.8
 	* src/Makefile.am: added totem.applications
 	* src/totem.applications: addded, fixing nautilus integration
