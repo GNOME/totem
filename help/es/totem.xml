@@ -1,0 +1,997 @@
+<?xml version="1.0"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appversion "0.997">
+  <!ENTITY manrevision "2.0">
+  <!ENTITY date "Noviembre 2003">
+  <!ENTITY app "Reproductor de películas Totem">
+  <!-- Information about the entities
+       The legal.xml file contains legal information, there is no need to edit the file. 
+       Use the appversion entity to specify the version of the application.
+       Use the manrevision entity to specify the revision number of this manual.
+       Use the date entity to specify the release date of this manual.
+       Use the app entity to specify the name of the application. -->
+]>
+
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Apr 11, 2002
+-->
+
+<!-- =============Document Header ============================= -->
+<article id="index" lang="es">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo> 
+    <title>Manual de <application>&app;</application> V&manrevision;</title>       
+    <copyright> 
+      <year>2003</year> 
+      <holder>Chee Bin HOH</holder> 
+    </copyright> 
+
+    <copyright>
+      <year>2004</year>
+      <holder>Francisco Javier F. Serrador (Traducción al español)</holder>
+    </copyright>
+
+
+<!-- An address can be added to the publisher information.  If a role is 
+     not specified, the publisher/author is the same for all versions of the 
+     document.  -->
+    <publisher> 
+      <publishername> Proyecto de Documentación de GNOME </publishername> 
+    </publisher> 
+
+    &legal;
+    <!-- This file  contains link to license for the documentation (GNU FDL), and 
+         other legal stuff such as "NO WARRANTY" statement. Please do not change 
+	 any of this. -->
+
+    <authorgroup> 
+      <author> 
+	<firstname>Chee Bin</firstname> 
+	<surname>HOH</surname> 
+	<affiliation> 
+  	  <orgname>GNOME Documentation Project</orgname> 
+	  <address> <email>cbhoh@gnome.org</email> </address> 
+	</affiliation> 
+      </author> 
+
+<!-- This is appropriate place for other contributors: translators,
+     maintainers,  etc. Commented out by default. -->
+      <othercredit role="translator">
+	<firstname>Francisco Javier</firstname> 
+	<surname>F. Serrador</surname> 
+	<affiliation> 
+          <orgname>Gnome Spanish Team</orgname> 
+  	  <address> <email>serrador@cvs.gnome.org</email> </address> 
+        </affiliation>
+        <contrib>Traducción al español</contrib>
+      </othercredit>
+    </authorgroup>
+
+<!-- According to GNU FDL, revision history is mandatory if you are -->
+<!-- modifying/reusing someone else's document.  If not, you can omit it. -->
+<!-- Remember to remove the &manrevision; entity from the revision entries other -->
+<!-- than the current revision. -->
+<!-- The revision numbering system for GNOME manuals is as follows: -->
+<!-- * the revision number consists of two components -->
+<!-- * the first component of the revision number reflects the release version of the GNOME desktop. -->
+<!-- * the second component of the revision number is a decimal unit that is incremented with each revision of the manual. -->
+<!-- For example, if the GNOME desktop release is V2.x, the first version of the manual that -->
+<!-- is written in that desktop timeframe is V2.0, the second version of the manual is V2.1, etc. -->
+<!-- When the desktop release version changes to V3.x, the revision number of the manual changes -->
+<!-- to V3.0, and so on. -->  
+    <revhistory>
+      <revision> 
+        <revnumber>&app; Manual V&manrevision;</revnumber> 
+	<date>&date;</date> 
+	<revdescription> 
+	  <para role="author">Chee Bin HOH
+	    <email>cbhoh@gnome.org</email>
+	  </para>
+	  <para role="publisher">GNOME Documentation Project</para>
+        </revdescription> 
+      </revision> 
+    </revhistory> 
+
+    <releaseinfo>This manual describes version &appversion; of &app;.
+    </releaseinfo> 
+    <legalnotice> 
+      <title>Feedback</title> 
+      <para>To report a bug or make a suggestion regarding the &app; application or
+        this manual, follow the directions in the 
+        <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. 
+      </para>
+<!-- Translators may also add here feedback address for translations -->
+    </legalnotice> 
+  </articleinfo> 
+
+  <indexterm zone="index"> 
+    <primary>&app;</primary> 
+  </indexterm> 
+  <indexterm zone="index"> 
+    <primary>totem</primary> 
+  </indexterm>
+
+
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+<!-- Use the Introduction section to give a brief overview of what
+     the application is and what it does. -->
+  <sect1 id="totem-introduction"> 
+    <title>Introducción</title> 
+    <para>La aplicación <application>&app;</application> es un
+reproductor de películas para el escritorio de Gnome basado en la
+biblioteca xine, que permite reproducir películas o canciones.
+    </para>
+    <para><application>&app;</application> proporciona las
+    características siguientes:</para>
+    <itemizedlist> 
+      <listitem> 
+	<para>Suporta una variadad de archivos y sonido y video.</para>
+      </listitem> 
+      <listitem> 
+	<para>Proporciona varios niveles de ampliación y proporciones,
+    y una vista a pantalla completa.
+        </para> 
+      </listitem>
+      <listitem>
+        <para>Controles de búsqueda y volumen.</para>
+      </listitem>
+      <listitem>
+        <para>Una lista de reproducción.</para>
+      </listitem>
+      <listitem>
+	<para>Navegación completa a través del teclado.</para>
+      </listitem>
+    </itemizedlist> 
+    <note>
+      <para><application>&app;</application> también viene con
+      funcionalidades adicionales como:
+      </para>
+      <itemizedlist>
+	<listitem>
+	  <para>Miniaturizador de vídeo para Gnome.</para>
+        </listitem>
+	<listitem>
+	  <para>Utilidad para cámaras web.</para>
+        </listitem>
+	<listitem>
+	  <para>Solapa de propiedades de Nautilus.</para>
+        </listitem>
+      </itemizedlist>
+    </note>
+  </sect1>
+<!-- =========== End of Introduction ========================= -->
+
+<!-- =========== Getting Started ============================= -->
+<!-- Use the Getting Started section to describe the steps required
+     to start the application and to describe the user interface components
+     of the application. If there is other information that it is important
+     for readers to know before they start using the application, you should
+     also include this information here. 
+     If the information about how to get started is very short, you can 
+     include it in the Introduction and omit this section. -->
+
+  <sect1 id="totem-getting-started"> 
+    <title>Inicio de la aplicación</title> 
+
+    <sect2 id="totem-start">
+      <title>Para iniciar &app;</title>
+      <para>Puede iniciar <application>&app;</application> de las
+      formas siguientes:
+      </para> 
+      <variablelist>
+	<varlistentry>
+	  <term>Menú <guimenu>Aplicaciones</guimenu></term>
+	  <listitem>
+	    <para>Elija  
+              <menuchoice>
+		<guisubmenu>Multimedia</guisubmenu>
+		<guimenuitem>&app;</guimenuitem>
+	      </menuchoice>. 
+            </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Línea de comandos</term>
+	  <listitem>
+	    <para>Para iniciar <application>&app;</application> desde
+    	      una línea de comandos, teclee el comando siguiente, y
+    	      después pulse <keycap>Retorno</keycap>:</para>
+	    <para> 
+            <command>totem</command> 
+            </para> 
+	    <tip>
+	      <para>Para ver otras opciones de la línea de comandos
+                que estén disponibles, teclee <command>totem
+                --help</command>, y después pulse <keycap>Intro</keycap>.
+              </para>
+	    </tip>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+    </sect2>
+
+    <sect2 id="totem-when-start">
+      <title>Cuando se inicia &app;</title>
+      <para>Al iniciarse <application>&app;</application>, se muestra
+      la ventana siguiente.</para>
+
+      <!-- ==== Figure ==== -->
+      <figure id="totem-start-fig"> 
+	<title>Ventana de inicio de &app;</title> 
+	<screenshot> 
+	  <mediaobject> 
+	    <imageobject>
+	      <imagedata fileref="figures/totem_start_window.png" format="PNG"/> 
+	    </imageobject>
+	    <!-- EPS versions of the figures are not required at the moment. -->
+<!-- 
+	    <imageobject>
+      	      <imagedata fileref="figures/image.eps" format="EPS"/>
+            </imageobject>
+-->
+	    <textobject> 
+	      <phrase>Muestra la ventana principal de
+	    <application>&app;</application>. Contiene una barra de
+	    menú, un área de visualización, un deslizador de tiempo
+	    transcurrido, botones de control de búsqueda, deslizador
+	    de volumen y barra de estado.
+              </phrase>
+	    </textobject> 
+	  </mediaobject> 
+	</screenshot> 
+      </figure>
+      <!-- ==== End of Figure ==== -->
+
+      <!-- Include any descriptions of the GUI immediately after the screenshot of the main UI, -->
+      <!-- for example, the items on the menubar and on the toolbar. This section is optional. -->
+      <para>La ventana de <application>&app;</application> contiene
+      los siguientes elementos:
+      </para>
+      <variablelist>
+	<varlistentry>
+	  <term>Barra de menú.</term>
+  	  <listitem>
+  	    <para>Los menús de la barra de menú contienen todos los
+            comandos que necesita usar en <application>&app;</application>.</para>
+ 	  </listitem>
+   	</varlistentry>
+	<varlistentry>
+	  <term>Área de visualización.</term>
+	  <listitem>
+	    <para>El área de visualización muestra películas o visualizaciones de canciones.
+            </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Marcador deslizante de tiempo.</term>
+	  <listitem>
+	    <para>El marcador deslizante de tiempo muestra el tiempo de la película o canción que se está reproduciendo.
+              También permita saltar adelante o atrás una canción o película.
+            </para>
+	  </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Botones de control de búsqueda.</term>
+          <listitem>
+            <para>Los controles de búsqueda permiten moverse a la siguiente o anterior pista, pausar o reproducir una  película o canción.
+            </para>
+	  </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Deslizador de volumen.</term>
+          <listitem>
+	    <para>El deslizador de volumen permite ajustar el volumen.</para>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Barra de estado.</term>
+	  <listitem>
+	    <para>La barra de estado muestra la información de estado acerca de la película o canción que se esté reproduciendo.</para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+    </sect2>
+  </sect1>
+<!-- =========== End of Getting Started ====================== -->
+
+<!-- =========== Usage ======================================= -->
+<!-- Use this section to describe how to use the application to perform the tasks for 
+  which the application is designed. -->
+  <sect1 id="totem-usage"> 
+    <title>Uso</title> 
+
+    <!-- ================ Usage Subsection ================================ -->
+    <sect2 id="totem-open-file"> 
+      <title>Para abrir un archivo</title> 
+      <para>Para abrir un arhivo de vídeo o sonido, elija
+        <menuchoice>
+	  <shortcut><keycombo><keycap>Ctrl</keycap><keycap>O</keycap></keycombo></shortcut>
+          <guimenu>Película</guimenu>
+	  <guisubmenu>Abrir</guisubmenu>
+        </menuchoice>.
+        Se muestra el diálogo <guilabel>Selección de archivos</guilabel>. Seleccione el archivo que quiere abrir y pulse 
+	<guibutton>Aceptar</guibutton>. 
+      </para>
+      <para>Puedes arrastrar un archivo desde otra aplicación como un gestor de archivos a la ventana del         <application>&app;</application>. La alplicación <application>&app;</application>
+        abrirá el archivo y reproducirá la película o canción. <application>&app;</application> 
+        Muestra el título de la película o canción bajo el área de visualización y en la barra de títulos de la ventana.
+      </para>
+      <para>Si intenta abrir un formato de archivo que <application>&app;</application> no reconoce, la aplicación muestra un mensaje de error.
+      </para>
+      <tip>
+	<para>Puede pulsar dos veces en un archivo de sonido o vídeo en el gestor de archivos <application>Nautilus</application>
+          para abrirlo en la ventana del <application>&app;</application>.
+        </para>
+      </tip>
+    </sect2> 
+
+    <sect2 id="totem-usage-open-location">
+      <title>Para abrir una dirección</title>
+      <para>Para abrir un archivo por dirección URI, elija
+        <menuchoice>
+	  <shortcut><keycombo><keycap>Ctrl</keycap><keycap>L</keycap></keycombo></shortcut>
+	  <guimenu>Película</guimenu>
+	  <guimenuitem>Abrir ubicación</guimenuitem>
+        </menuchoice>. Se muestra el diálogo <guilabel>Abrir desde URI</guilabel>. Use la caja de combinación desplegable para especificar una dirección URI del archivo que le gustaría abrir, después pulse en el botón <guibutton>Abrir</guibutton>.
+      </para>
+    </sect2>
+
+    <sect2 id="totem-usage-play">
+      <title>Para reproducir un DVD, VCD o CD</title>
+      <variablelist>
+        <varlistentry>
+  	  <term>Para reproducir un DVD</term>
+	  <listitem>
+            <para>Inserte el dVD en el dispositivo DVD de su equipo, después elija
+              <menuchoice>
+		<guimenu>Película</guimenu>
+		<guimenuitem>Reproducir DVD</guimenuitem>
+              </menuchoice>.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+  	  <term>Para reproducir un VCD</term>
+	  <listitem>
+            <para>Inserte el VCD en el dispositivo VCD de su equipo, después elija
+              <menuchoice>
+	        <guimenu>Película</guimenu>
+		<guimenuitem>Reproducir VCD</guimenuitem>
+              </menuchoice>.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+  	  <term>Para reproducir un CD</term>
+	  <listitem>
+            <para>Inserte el CD en el dispositivo CD de su equipo, después elija
+              <menuchoice>
+	        <guimenu>Película</guimenu>
+		<guimenuitem>Reproducir CD</guimenuitem>
+              </menuchoice>.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </sect2>
+
+    <sect2 id="totem-usage-eject">
+      <title>Para expulsar un DVD, VCD o CD</title>
+      <para>Para expulsar un DVD, VCD, o CD, elija 
+        <menuchoice>
+	  <shortcut><keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo></shortcut>
+	  <guimenu>Película</guimenu>
+	  <guimenuitem>Expulsar</guimenuitem>
+        </menuchoice>.
+      </para>
+    </sect2>
+
+    <sect2 id="totem-usage-pause">
+      <title>Para pausar una película o canción</title>
+      <para>Para pausar una película o canción que se esté reproduciendo, pulse en el botón
+        <inlinemediaobject>
+	  <imageobject><imagedata fileref="figures/totem_pause_button.png" format="PNG"/></imageobject>
+          <textobject><phrase>Muestra el botón de pausa.</phrase></textobject>
+        </inlinemediaobject> o elija 
+        <menuchoice>
+	  <shortcut><keycap>P</keycap></shortcut>
+	  <guimenu>Película</guimenu>
+          <guimenuitem>Reproducir / Pausar</guimenuitem>
+        </menuchoice>. Cuando pause una película o canción, la barra de estado muestra <guilabel>Pausado</guilabel>
+        y el tiempo transcurrido de la película o canción actual.
+      </para>
+      <para>Para continuar reproduciendo la película o canción, pulse en el botón
+        <inlinemediaobject>
+	  <imageobject><imagedata fileref="figures/totem_play_button.png" format="PNG"/></imageobject>
+          <textobject><phrase>Muestra el botón de reproducción.</phrase></textobject>
+        </inlinemediaobject> o elija  
+        <menuchoice>
+	  <shortcut><keycap>P</keycap></shortcut>
+	  <guimenu>Película</guimenu>
+          <guimenuitem>Reproducir / Pausa</guimenuitem>
+        </menuchoice>.
+      </para>
+    </sect2>
+
+    <sect2 id="totem-usage-view-properties">
+      <title>Para ver las propiedades de una película o canción</title>
+      <para>Para ver las propiedades de una canción o película , elija
+        <menuchoice>
+	  <guimenu>Película</guimenu>
+	  <guimenuitem>Propiedades</guimenuitem>
+        </menuchoice>. Se muestra el diálogo <guilabel>Propiedades</guilabel>. El diálogo contine la siguiente información:
+        <variablelist>
+	  <varlistentry>
+            <term>General</term>
+            <listitem>
+	      <para>Título, artista, año y duración de la película o canción.</para>
+            </listitem>
+          </varlistentry>
+	  <varlistentry>
+            <term>Video</term>
+            <listitem>
+              <para>Dimensiones del vídeo, códec y tasa de fotogramas.</para>
+            </listitem>
+          </varlistentry>
+	  <varlistentry>
+            <term>Sonido</term>
+            <listitem>
+              <para>Tasa de bists de sonido y códec.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </para>
+    </sect2>
+
+    <sect2 id="totem-usage-seek">
+      <title>Para buscar a lo largo de películas o canciones</title>
+      <para>Para buscar a lo largo de películas o canciones, puede usar los métodos siguientes:
+      </para>
+      <variablelist>
+	<varlistentry>
+	  <term>Para saltar adelante</term>
+	  <listitem>
+	    <para>Para saltar adelante una película o canción, elija
+              <menuchoice>
+		<shortcut><keycap>Derecha</keycap></shortcut>
+                <guimenu>Ir</guimenu>
+		<guimenuitem>Saltar adelante</guimenuitem>
+              </menuchoice>.
+            </para>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Para saltar atrás</term>
+	  <listitem>
+	    <para>Para saltar atrás una película o canción, elija
+              <menuchoice>
+		<shortcut><keycap>Izquierda</keycap></shortcut>
+                <guimenu>Ir</guimenu>
+		<guimenuitem>Saltar atrás</guimenuitem>
+              </menuchoice>.
+             </para>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Para saltar a un tiempo específico</term>
+	  <listitem>
+	    <para>Para saltar a un tiempo transcurrido específico, elija
+              <menuchoice>
+		<shortcut><keycap>S</keycap></shortcut>
+                <guimenu>Ir</guimenu>
+		<guimenuitem>Saltar a</guimenuitem>
+              </menuchoice>. Se muestra el diálogo <guilabel>Saltar a</guilabel>. Use la caja incrementable para 
+              especificar el tiempo transcurrido (en segundos) para saltar, después pulse
+              <guibutton>Aceptar</guibutton>.
+            </para>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Para meverse a la siguiente película o canción</term>
+	  <listitem>
+	    <para>Para moverse a la siguiente película o canción, elija 
+              <menuchoice>
+                <shortcut><keycap>N</keycap></shortcut>
+                <guimenu>Ir</guimenu>
+                <guimenuitem>Siguiente capítulo/película</guimenuitem>
+              </menuchoice> o pulse en el botón 
+              <inlinemediaobject> 
+	        <imageobject><imagedata fileref="figures/totem_next_button.png" format="PNG"/></imageobject>
+	        <textobject><phrase>Muestra un botón de siguiente búsqueda</phrase></textobject>
+              </inlinemediaobject>.
+            </para>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Para ir a la canción o película anterior</term>
+	  <listitem>
+	    <para>Para moverse a la anterior película o canción, elija 
+              <menuchoice>
+                <shortcut><keycap>B</keycap></shortcut>
+                <guimenu>Ir</guimenu>
+                <guimenuitem>Anterior capítulo/película</guimenuitem>
+              </menuchoice>, o pulse en el botón
+              <inlinemediaobject> 
+	        <imageobject><imagedata fileref="figures/totem_previous_button.png" format="PNG"/></imageobject>
+	        <textobject><phrase>Muestra un botón de búsqueda anterior</phrase></textobject>
+              </inlinemediaobject>.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </sect2>
+
+    <sect2 id="totem-usage-change-zoom">
+      <title>Para cambiar el factor de ampliación</title>
+      <para>Para cambiar el factor de ampliación del área de visualización, puede usar los métodos siguientes:
+      </para>
+      <itemizedlist>
+	<listitem>
+	  <para>Para ampliar al modo a pantalla completa, elija
+            <menuchoice>
+	      <shortcut><keycap>F</keycap></shortcut>
+	      <guimenu>Ver</guimenu>
+              <guimenuitem>Pantalla completa</guimenuitem>
+            </menuchoice>. Para salir del modo a pantalla completa, pulse en el botón <guibutton>Salir de pantalla completa</guibutton>
+            o pulse <keycap>Esc</keycap>.
+          </para>
+        </listitem>
+	<listitem>
+	  <para>Para poner el factor de ampliación a la mitad del tamaño de la película original (50%) o visualización, elija 
+            <menuchoice>
+	      <shortcut><keycap>0</keycap></shortcut>
+	      <guimenu>Ver</guimenu>
+              <guimenuitem>Ampliación 1:2</guimenuitem>
+            </menuchoice>.
+          </para>
+        </listitem>
+	<listitem>
+	  <para>Para ampliar al tamaño (100%) original de la pelicula o visualización elija 
+            <menuchoice>
+	      <shortcut><keycap>1</keycap></shortcut>
+	      <guimenu>Ver</guimenu>
+              <guimenuitem>Ampliación 1:1</guimenuitem>
+            </menuchoice>.
+          </para>
+        </listitem>
+	<listitem>
+	  <para>Para amplicar al tamaño doble (200%) del tamaño original de la película o visualización, elija
+            <menuchoice>
+	      <shortcut><keycap>2</keycap></shortcut>
+	      <guimenu>Ver</guimenu>
+              <guimenuitem>Ampliación 2:1</guimenuitem>
+            </menuchoice>.
+          </para>
+        </listitem>
+	<listitem>
+	  <para>Para cambiar entre disferentes proporciones, elija
+            <menuchoice>
+	      <shortcut><keycap>A</keycap></shortcut>
+	      <guimenu>Ver</guimenu>
+	      <guimenuitem>Conmutar proporción</guimenuitem>
+            </menuchoice>. Las proporciones soportadas son:
+            <itemizedlist>
+              <listitem><para>Apariencia automática</para></listitem>
+	      <listitem><para>Aspecto cuadrado (1:1)</para></listitem>
+              <listitem><para>Aspecto 4:3 (4:3)</para></listitem>
+              <listitem><para>ASpecto anamórfico (16:9)</para></listitem>
+              <listitem><para>Aspecto DVB (2.11:1)</para></listitem>
+            </itemizedlist>
+            <note>
+              <para>El aspecto predeterminado es Apariencia automática.
+              </para>
+            </note>
+          </para>
+        </listitem>
+      </itemizedlist>
+    </sect2>
+
+    <sect2 id="totem-usage-adjust-volume">
+      <title>Para ajustar el volumen</title>
+      <para>Para incrementar el volumen, elija 
+        <menuchoice>
+	  <shortcut><keycap>Arriba</keycap></shortcut>
+          <guimenu>Sonido</guimenu>
+          <guimenuitem>Subir volumen</guimenuitem>
+        </menuchoice> o mueva el deslizador del volumen a la derecha. 
+        Para decrementar el volúmen, elija 
+        <menuchoice>
+	  <shortcut><keycap>Abajo</keycap></shortcut>
+          <guimenu>Sonido</guimenu>
+          <guimenuitem>Bajar volumen</guimenuitem>
+        </menuchoice> o mueva el deslizador del volumen hacia la izquierda.         
+      </para>
+      <para>Para bajar el volumen al mínimo, pulse en el botón
+        <inlinemediaobject> 
+	  <imageobject><imagedata fileref="figures/totem_volume_mute_button.png" format="PNG"/></imageobject>
+	  <textobject><phrase>Muestra un botón silenciar</phrase></textobject>
+        </inlinemediaobject>.
+        Para subir el volumen al máximo, puñse en el botón
+        <inlinemediaobject> 
+	  <imageobject><imagedata fileref="figures/totem_volume_maximum_button.png" format="PNG"/></imageobject>
+	  <textobject><phrase>Muestra un botón de volúmen al máximo</phrase></textobject>
+        </inlinemediaobject>.
+      </para>
+    </sect2>
+
+    <sect2 id="totem-usage-on-top">
+      <title>Para hacer que la ventana siempre esté encima</title>
+      <para>Para hacer que la ventana de <application>&app;</application> esté siempre encima de otras ventanas de palicaciones, elija
+        <menuchoice>
+          <guimenu>Ver</guimenu>
+          <guimenuitem>Siempre encima</guimenuitem>
+        </menuchoice>.
+       </para>
+    </sect2>
+
+    <sect2 id="totem-usage-show-control">
+      <title>Para mostrar u oculatar los controles</title>
+      <para>Para ocultar los controles de ventana del <application>&app;</application>,  elija 
+        <menuchoice>
+	  <shortcut><keycap>H</keycap></shortcut>
+          <guimenu>Ver</guimenu>
+          <guimenuitem>Mostrar controles</guimenuitem>
+        </menuchoice> para deseleccionar la opción <guilabel>Mostrar controles</guilabel>. 
+        Para mostrar los controles en la ventana del <application>&app;</application>, 
+        pulse con el botón derecho en la ventana, después elija
+        <menuchoice>
+	  <shortcut><keycap>H</keycap></shortcut>
+	  <guimenuitem>Mostrar controles</guimenuitem>
+        </menuchoice> desde el menú emergente.
+      </para>
+      <para>Si se selecciona la opción <guilabel>Mostrar controles</guilabel>,
+        el <application>&app;</application> mostrará la barra de menús, deslizador de tiempo transcurrido, botones de control de búsqueda, deslizador de volumen y barra de estado en la ventana. Si la opción <guilabel>Mostrar controles</guilabel> está deseleccionada, la aplicación ocultará estos controles y mostrará sólo el área de visualización.
+      </para>
+    </sect2>
+
+    <sect2 id="totem-usage-playlist">
+      <title>Para gestionar una lista de reproducción</title>
+      <para>
+        <itemizedlist>
+	  <listitem>
+	    <para><xref linkend="totem-usage-playlist-show-hide"/></para>
+	  </listitem>
+	  <listitem>
+	    <para><xref linkend="totem-usage-playlist-manage"/></para>
+	  </listitem>
+	  <listitem>
+	    <para><xref linkend="totem-usage-playlist-repeat"/></para>
+	  </listitem>
+	  <listitem>
+	    <para><xref linkend="totem-usage-playlist-shuffle"/></para>
+	  </listitem>
+        </itemizedlist>
+      </para>
+
+      <sect3 id="totem-usage-playlist-show-hide">
+	<title>Para mostrar u ocultar una lista de reproducción</title>
+	<para>Para mostra runa lista de reproducción, elija 
+          <menuchoice>
+	    <guimenu>Ver</guimenu>
+	    <guimenuitem>Mostrar/Ocultar lista de reproducción</guimenuitem>
+          </menuchoice>, o pulse en el botón 
+          <inlinemediaobject>
+	    <imageobject><imagedata fileref="figures/totem_show_playlist_button.png" format="PNG"/></imageobject>
+            <textobject><phrase>Muestra un botón para mostrar/ocultar la lista de reproducción</phrase></textobject>
+          </inlinemediaobject>. Se muestra el diálogo <guilabel>Lista de reproducción</guilabel>. Para ocultar la lista de reproducción, elija
+          <menuchoice>
+	    <guimenu>Ver</guimenu>
+	    <guimenuitem>Mostrar/ocultar lista de reproducción</guimenuitem>
+          </menuchoice> o pulse en el botón
+          <inlinemediaobject>
+	    <imageobject><imagedata fileref="figures/totem_show_playlist_button.png" format="PNG"/></imageobject>
+            <textobject><phrase>Muestra un botón para mostrar/ocultar una lista de reproducción</phrase></textobject>
+          </inlinemediaobject> otra vez.
+        </para>
+      </sect3>
+
+      <sect3 id="totem-usage-playlist-manage">
+	<title>Manage a PlayList</title>
+	<para>You can use the <guilabel>Playlist</guilabel> dialog to do the following:
+          <variablelist>
+	    <varlistentry>
+	      <term>To add a track or movie</term>
+	      <listitem>
+		<para>To add a track or movie to the playlist, click on the <guibutton>Add</guibutton>
+                  button. The <guilabel>Select files</guilabel> dialog is displayed. Select the file that you 
+                  want to add to playlist, then click <guibutton>OK</guibutton>.
+                </para>
+              </listitem>
+            </varlistentry>
+	    <varlistentry>
+	      <term>To remove a track or movie</term>
+	      <listitem>
+		<para>To remove track or movie from the playlist, select the filenames from the
+                  <guilabel>filename</guilabel> list box, then click on the <guibutton>Remove</guibutton> button.
+                </para>
+              </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term>To save playlist to file</term>
+	      <listitem>
+		<para>To save playlist to file, click on the <guibutton>Save</guibutton>
+                  button. The <guilabel>Save playlist</guilabel> dialog is displayed, specify
+                  the filename that you want to save the playlist.
+                </para>
+              </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term>To move track or movie up the playlist</term>
+	      <listitem>
+		<para>To move track or movie up the playlist, select the filenames from the 
+                  <guilabel>filename</guilabel> list box, then click on the <guibutton>Up</guibutton> button.
+                </para>
+              </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term>To move track or movie down the playlist</term>
+	      <listitem>
+		<para>To move track or movie down the playlist, select the filenames from the 
+                  <guilabel>filename</guilabel> list box, then click on the <guibutton>Down</guibutton> button.
+                </para>
+              </listitem>
+	    </varlistentry>
+	    <varlistentry>
+              <term>To set repeat mode</term>
+	      <listitem>
+		<para>Select the <guilabel>Repeat mode</guilabel> option to play the movies or songs repeatedly.
+                </para>
+              </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term>To set shuffle mode</term>
+	      <listitem>
+		<para>Select the <guilabel>Shuffle mode</guilabel> option to play the movies or songs randomly.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </para>
+      </sect3>
+      <sect3 id="totem-usage-playlist-repeat">
+	<title>To Select or Unselect Repeat Mode</title>
+	<para>To select or unselect repeat mode, choose
+          <menuchoice>
+            <guimenu>View</guimenu>
+	    <guimenuitem>Repeat Mode</guimenuitem>
+	  </menuchoice>, or use the <guilabel>Repeat mode</guilabel> option from 
+          the <guilabel>Playlist</guilabel> dialog.
+        </para>
+      </sect3>
+      <sect3 id="totem-usage-playlist-shuffle">
+	<title>To Select or Unselect Shuffle Mode</title>
+	<para>To select or unselect shuffle mode, choose
+          <menuchoice>
+            <guimenu>View</guimenu>
+	    <guimenuitem>Shuffle Mode</guimenuitem>
+	  </menuchoice>, or use the <guilabel>Shuffle mode</guilabel> option from 
+          the <guilabel>Playlist</guilabel> dialog.
+        </para>
+      </sect3>
+    </sect2>
+
+    <sect2 id="totem-usage-take-screenshot">
+      <title>To Take Screenshot</title>
+      <para>To take screenshot of movie or visualisation of song that is playing, choose 
+        <menuchoice>
+          <guimenu>Edit</guimenu>
+          <guimenuitem>Take Screenshot</guimenuitem>
+        </menuchoice>. The <guilabel>Save Screenshot</guilabel> dialog is displayed, click
+        the <guibutton>Save</guibutton> button to save the screenshot.
+      </para>
+      <para>You can save a screenshot to
+        <itemizedlist>
+          <listitem>
+	    <para>File: select the <guilabel>Save screenshot to file</guilabel> option,
+              then click on the <guibutton>Browse</guibutton> button to specify a file to save
+              the screenshot.
+            </para>
+          </listitem>
+	  <listitem>
+	    <para>The desktop: select the <guilabel>Save screenshot to the desktop</guilabel> option.
+            </para>
+	  </listitem>
+        </itemizedlist>
+      </para>
+    </sect2>
+
+    <sect2 id="totem-usage-quit">
+      <title>To Quit &app;</title>
+      <para>To quit <application>&app;</application>, choose
+        <menuchoice>
+          <shortcut><keycombo><keycap>Ctrl</keycap><keycap>Q</keycap></keycombo></shortcut>
+          <guimenu>Movie</guimenu>
+	  <guimenuitem>Quit</guimenuitem>
+        </menuchoice>.
+      </para>
+    </sect2>
+  </sect1>
+
+<!-- =========== Usage ======================================= -->
+<!-- Use this section to describe how to customize the 
+     application. -->
+  <sect1 id="totem-prefs">
+    <title>Preferences</title>
+    <para>To modify the preferences of <application>&app;</application>, choose
+      <menuchoice>
+        <guimenu>Edit</guimenu>
+	<guimenuitem>Preferences</guimenuitem>
+      </menuchoice>. The 
+      <guilabel>Preferences</guilabel> dialog contains the following tabbed
+      sections:</para> 
+    <itemizedlist> 
+      <listitem> 
+	<para> 
+	  <xref linkend="totem-prefs-general"/>
+        </para> 
+      </listitem> 
+      <listitem> 
+        <para> 
+          <xref linkend="totem-prefs-display"/>
+        </para> 
+      </listitem> 
+      <listitem> 
+  	<para> 
+	  <xref linkend="totem-prefs-audio"/>
+        </para> 
+      </listitem> 
+    </itemizedlist>
+
+    <sect2 id="totem-prefs-general">
+      <title>General</title>
+      <variablelist>
+	<varlistentry>
+	  <term>Optical Device</term>
+	  <listitem>
+	    <para>Select optical device from the <guilabel>Optical device path</guilabel> drop-down
+              list box.
+            </para>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Networking</term>
+	  <listitem>
+	    <para>Select network connection speed from the <guilabel>Connection speed</guilabel> 
+              drop-down list box.
+            </para>
+          </listitem>
+        </varlistentry>	
+	<varlistentry>
+	  <term>TV-Out</term>
+	  <listitem>
+	    <itemizedlist>
+	      <listitem>
+                <para><guilabel>No TV-out</guilabel>: select this option if you have no TV-out connection.</para>
+              </listitem>
+	      <listitem>
+		<para><guilabel>TV-out mode</guilabel>: select this option if you want normal TV-out connection.</para>
+              </listitem>
+	      <listitem>
+		<para><guilabel>DXR3 TV-out</guilabel>: select this option if you want a DXR3 TV-out connection.</para>
+	      </listitem>
+            </itemizedlist>
+          </listitem>
+        </varlistentry>	
+	<varlistentry>
+	  <term>Proprietary Plugins</term>
+	  <listitem>
+	    <para>You can add proprietary plugins to handle additional movie or audio files.
+              To add proprietary plugins to <application>&app;</application>, click on the
+              <guibutton>Add Proprietary Plugins</guibutton> button. 
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </sect2>
+    <sect2 id="totem-prefs-display">
+      <title>Display</title>
+      <variablelist>
+	<varlistentry>
+	  <term>Display</term>
+	  <listitem>
+	    <para>Select the <guilabel>resize</guilabel> option if you want <application>&app;</application>
+              to automatically resize the window when a new video is loaded.
+            </para>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Visual Effects</term>
+	  <listitem>
+	    <itemizedlist>
+	      <listitem>
+                <para><guilabel>visual</guilabel>: select this option to show visual effects
+                  while an audio file is playing.
+                </para>
+              </listitem>
+	      <listitem>
+		<para><guilabel>Type of visualisation</guilabel>: select type of visualisation from the
+                  drop-down list box.
+                </para>
+              </listitem>
+	      <listitem>
+		<para><guilabel>Visualisation size</guilabel>: select visualisation size from the
+                  drop-down list box.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Brightness/Contrast</term>
+	  <listitem>
+	    <itemizedlist>
+	      <listitem>
+		<para><guilabel>Brightness</guilabel>: use the slider to specify the level of brightness.</para>
+              </listitem>
+	      <listitem>
+		<para><guilabel>Contrast</guilabel>: use the slider to specify the level of contrast.</para>
+              </listitem>
+	    </itemizedlist>
+          </listitem>
+	</varlistentry>
+      </variablelist>
+    </sect2>
+    <sect2 id="totem-prefs-audio">
+      <title>Audio</title>
+      <variablelist>
+	<varlistentry>
+	  <term>Audio Output</term>
+	  <listitem>
+	    <para>Select audio output type from the <guilabel>Audio output type</guilabel>
+              drop-down list.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </sect2>
+  </sect1>
+
+<!-- ============= Bugs ================================== -->
+<!-- This section is optional and is commented out by default. 
+     You can use it to describe known bugs and limitations of the 
+	  program if there are any - please be frank and list all
+     problems you know of. 
+  
+  <sect1 id="mayapp-bugs">
+  <title>Known Bugs and Limitations</title>
+  <para> </para>
+ </sect1>
+-->
+
+<!-- ============= About ================================== -->
+<!-- This section contains info about the program (not docs), such as
+      author's name(s), web page, license, feedback address. This
+      section is optional: primary place for this info is "About.." box of
+      the program. However, if you do wish to include this info in the
+      manual, this is the place to put it. Alternatively, you can put this information in the title page.-->
+  <sect1 id="totem-about"> 
+    <title>About <application>&app;</application></title> 
+    <para><application>&app;</application> is written by
+      Bastien Nocera (<email>hadess@hadess.net</email>),
+      Julien Moutte (<email>julien@moutte.net</email>) for GStreamer backend,
+      and Guenter Bartsch (<email>guenter@users.sourceforge.net</email>).
+      To find more information about <application>&app;</application>, please visit the 
+      <ulink url="http://www.hadess.net/totem.php3" type="http"><application>&app;</application> 
+      Home Page</ulink>. 
+    </para>
+    <para>
+      To report a bug or make a suggestion regarding this application or
+      this manual, follow the directions in this 
+      <ulink url="ghelp:gnome-feedback" type="help">document</ulink>.
+    </para>
+    <para> This program is distributed under the terms of the GNU
+      General Public license as published by the Free Software
+      Foundation; either version 2 of the License, or (at your option)
+      any later version. A copy of this license can be found at this
+      <ulink url="ghelp:gpl" type="help">link</ulink>, or in the file
+      COPYING included with the source code of this program. </para>
+  </sect1> 
+</article>
