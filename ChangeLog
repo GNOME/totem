@@ -1,5 +1,11 @@
 2004-11-18  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem_logo.png: for some reason, I get a nice staircase effect
+	when the width of the image is odd with xine-lib
+	* src/totem.c: (on_about1_activate): update Copyright notice
+
+2004-11-18  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-pl-parser.c: (totem_pl_parser_base_url),
 	(totem_pl_parser_relative): Don't crash if we can't get a GnomeVFSURI
 	when saving the playlist (Closes: #158228)

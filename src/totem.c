@@ -2015,7 +2015,7 @@ on_about1_activate (GtkButton *button, Totem *totem)
 				backend_version);
 
 	about = gnome_about_new(_("Totem"), VERSION,
-			"Copyright \xc2\xa9 2002-2003 Bastien Nocera",
+			"Copyright \xc2\xa9 2002-2004 Bastien Nocera",
 			(const char *)description,
 			(const char **)authors,
 			(const char **)documenters,
