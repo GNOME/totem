@@ -21,7 +21,7 @@
 
 
 #include "config.h"
-#include "scrsaver.h"
+#include "totem-scrsaver.h"
 
 #include <gdk/gdkx.h>
 

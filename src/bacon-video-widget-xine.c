@@ -48,7 +48,6 @@
 #include "debug.h"
 #include "bacon-video-widget.h"
 #include "baconvideowidget-marshal.h"
-#include "scrsaver.h"
 #include "video-utils.h"
 #include "bacon-resize.h"
 

@@ -33,7 +33,7 @@
 #include <libgnomevfs/gnome-vfs.h>
 
 #include "totem-remote.h"
-#include "scrsaver.h"
+#include "totem-scrsaver.h"
 #include "egg-recent-model.h"
 #include "egg-recent-view-gtk.h"
 #include "totem-playlist.h"

@@ -98,7 +98,8 @@ totem_SOURCES = 					\
 	totem-preferences.c totem-preferences.h		\
 	totem-stock-icons.c totem-stock-icons.h		\
 	totem-private.h			\
-	scrsaver.c scrsaver.h		\
+	totem-scrsaver.c		\
+	totem-scrsaver.h		\
 	totem-options.c totem-options.h	\
 	totem-interface.c		\
 	totem-interface.h		\
