@@ -1365,10 +1365,7 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget * bvw,
       /* shut up warnings */
       fps = w = h = 0;
       g_assert_not_reached ();
-    }
-
-  g_object_set (G_OBJECT (bvw->priv->vis_element),
-		"width", w, "height", h, "fps", fps, NULL);
+  }
 
 }
 
