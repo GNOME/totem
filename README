@@ -9,6 +9,25 @@ a pretty complete keyboard navigation.
 News
 ====
 
+0.13.0:
+* Plenty of small bug fixes
+* Detection and easier selection of the Optical Media Drive
+* Better DVD navigation (John McCutchan <ttb@tentacle.dhs.org>)
+* Fix wrong aspect ratio
+
+0.12.1:
+* Fix DVD playback from the menu item
+* Added the Real Media types to the list of handled files
+
+0.12.0:
+* Port to the new xine API (1.0 alpha)
+* New Properties window
+* Working preferences (whoo! stop asking about that one now)
+* Add support for more multimedia keys (grab ACME CVS to configure them</hint>)
+* Plenty of cleaning up (Daniel Caujolle-Bert, myself)
+* Some minor UI changes (icons and layout, by Luca Ferretti)
+* Be more helpful to the user about DVD and VCD playback
+
 0.11.0:
 * Fix 2 crasher bugs with the playlist (with help from Sebastien Bacher
 <seb128@debian.org>)
@@ -116,10 +135,7 @@ TODO
 ====
 
 - move dnd to the output ctrl
-- think of what needs to be in the prefs
 - finish the playlist
-- gtk_xine_get_stream_length only works while playing, that sucks
-- fix up configuration (demux_strategy, audio out, default movie, etc.)
 
 Bugs should be lodged in Gnome's Bugzilla:
 http://bugzilla.gnome.org/enter_bug.cgi?product=totem 
