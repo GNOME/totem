@@ -144,8 +144,10 @@ totem_create_full_path (const char *path)
 	}
 
 	curdir = g_get_current_dir ();
-	curdir_withslash = g_strdup_printf ("file:///%s%s",
-			curdir, G_DIR_SEPARATOR_S);
+	escaped = gnome_vfs_escape_path_string (curdir);
+	curdir_withslash = g_strdup_printf ("file://%s%s",
+			escaped, G_DIR_SEPARATOR_S);
+	g_free (escaped);
 	g_free (curdir);
 
 	escaped = gnome_vfs_escape_path_string (path);
