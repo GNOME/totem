@@ -531,19 +531,12 @@ load_audio_out_driver (GtkXine *gtx)
 }
 
 static void
-load_config_from_gconf (GtkXine *gtx)
+update_mediadev_conf (GtkXine *gtx)
 {
 	GConfClient *conf;
 	char *tmp;
 
 	conf = gconf_client_get_default ();
-
-	/* default demux strategy */
-	xine_config_register_string (gtx->priv->xine,
-			"misc.demux_strategy", "reverse",
-			"demuxer selection strategy",
-			"{ default  reverse  content  extension }, default: 0",
-			10, NULL, NULL);
 
 	/* DVD and VCD Device */
 	tmp = gconf_client_get_string (conf, GCONF_PREFIX"mediadev", NULL);
@@ -559,8 +552,19 @@ load_config_from_gconf (GtkXine *gtx)
 			"input.vcd_device", tmp,
 			"device used for cdrom drive",
 			NULL, 10, NULL, NULL);
+}
 
-	/* TODO skip by chapter for DVD */
+static void
+load_config_from_gconf (GtkXine *gtx)
+{
+	/* default demux strategy */
+	xine_config_register_string (gtx->priv->xine,
+			"misc.demux_strategy", "reverse",
+			"demuxer selection strategy",
+			"{ default  reverse  content  extension }, default: 0",
+			10, NULL, NULL);
+
+	update_mediadev_conf (gtx);
 }
 
 static gboolean
@@ -1617,6 +1621,8 @@ G_CONST_RETURN gchar
 		plugin_id = "VCD";
 	else
 		return NULL;
+
+	update_mediadev_conf (gtx);
 
 	return (G_CONST_RETURN gchar **) xine_get_autoplay_mrls
 		(gtx->priv->xine, plugin_id, &num_mrls);
