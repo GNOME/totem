@@ -2747,11 +2747,17 @@ totem_action_handle_volume_scroll (Totem *totem, GdkScrollDirection direction)
 static int
 on_window_key_press_event (GtkWidget *win, GdkEventKey *event, Totem *totem)
 {
-	/* Special case the Playlist keyboard shortcut */
+	/* Special case the Playlist and Eject keyboard shortcuts */
 	if (event->state != 0
-			&& (event->state &GDK_CONTROL_MASK)
-			&& ((event->keyval == GDK_p) || event->keyval == GDK_P))
-		return totem_action_handle_key (totem, event);
+			&& (event->state &GDK_CONTROL_MASK))
+	{
+		switch (event->keyval)
+		case GDK_p:
+		case GDK_P:
+		case GDK_E:
+		case GDK_e:
+			return totem_action_handle_key (totem, event);
+	}
 
 	/* If we have modifiers, and either Ctrl, Mod1 (Alt), or any
 	 * of Mod3 to Mod5 (Mod2 is num-lock...) are pressed, we
