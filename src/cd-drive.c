@@ -40,6 +40,12 @@
 #include <scsi/sg.h>
 #endif /* __linux__ */
 
+#ifdef __FreeBSD__
+#include <sys/cdio.h>
+#include <sys/cdrio.h>
+#include <camlib.h>
+#endif /* __FreeBSD__ */
+
 #include <glib.h>
 #include <libgnome/gnome-i18n.h>
 
@@ -100,7 +106,6 @@ read_lines (char *filename)
 }
 
 struct scsi_unit {
-	gboolean exist;
 	char *vendor;
 	char *model;
 	char *rev;
@@ -125,23 +130,22 @@ get_scsi_units (char **device_str, char **devices, struct scsi_unit *scsi_units)
 {
 	char vendor[9], model[17], rev[5];
 	int host_no, access_count, queue_depth, device_busy, online, channel;
+	int scsi_id, scsi_lun, scsi_type;
 	int i, j;
 
 	for (i = 0, j = 0; device_str[i] != NULL && devices[i] != NULL; i++) {
 		if (strcmp (device_str[i], "<no active device>") == 0) {
-			scsi_units[i].exist = FALSE;
 			continue;
 		}
 		if (sscanf (devices[i], "%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d",
 			    &host_no,
-			    &channel, &scsi_units[j].id, &scsi_units[j].lun, 
-				&scsi_units[j].type, &access_count, &queue_depth,
+			    &channel, &scsi_id, &scsi_lun, &scsi_type, &access_count, &queue_depth,
 				&device_busy, &online) != 9) {
 		
 			g_warning ("Couldn't match line in /proc/scsi/sg/devices\n");
 			continue;
 		}
-		if (scsi_units[j].type == 5) { /* TYPE_ROM (include/scsi/scsi.h) */
+		if (scsi_type == 5) { /* TYPE_ROM (include/scsi/scsi.h) */
 			if (sscanf (device_str[i], "%8c\t%16c\t%4c", 
 						vendor, model, rev) != 3) {
 				g_warning ("Couldn't match line /proc/scsi/sg/device_strs\n");
@@ -153,7 +157,10 @@ get_scsi_units (char **device_str, char **devices, struct scsi_unit *scsi_units)
 			scsi_units[j].model = g_strdup (g_strstrip (model));
 			scsi_units[j].rev = g_strdup (g_strstrip (rev));
 			scsi_units[j].bus = host_no;
-			scsi_units[j].exist = TRUE;
+			scsi_units[j].id = scsi_id;
+			scsi_units[j].lun = scsi_lun; 
+			scsi_units[j].type = scsi_type;
+			
 			j++;
 		}
 	}
@@ -414,16 +421,18 @@ linux_scan (gboolean recorder_only)
 	struct cdrom_unit *cdroms;
 	char *p, *t;
 	int n_cdroms, maj, min, i, j;
-	int n_scsi_units = 0;
+	int n_scsi_units;
 	int fd;
+	FILE *file;
 	GList *cdroms_list;
-	gboolean have_devfs = FALSE;
+	gboolean have_devfs;
 
 	/* devfs creates and populates the /dev/cdroms directory when its mounted
 	 * the 'old style names' are matched with devfs names below.
 	 * The cdroms.device string gets cleaned up again in cdrom_get_name()
 	 * we need the oldstyle name to get device->display_name for ide.
 	 */
+	have_devfs = FALSE;
 	if (g_file_test ("/dev/cdroms", G_FILE_TEST_IS_DIR)) {
 		have_devfs = TRUE;
 	}
@@ -458,6 +467,7 @@ linux_scan (gboolean recorder_only)
 	 * devices are listed in /proc/sys/dev/cdrom/info. It will always
 	 * be 'h' or 's'
 	 */
+	n_scsi_units = 0;
 	for (i = 0; i < n_cdroms; i++) {
 		if (cdroms[i].device[0] == 's') {
 			n_scsi_units++;
@@ -565,12 +575,12 @@ linux_scan (gboolean recorder_only)
 	g_strfreev (cdrom_info);
 
 	/* get kernel major.minor version */
-	(FILE *) fd = fopen("/proc/sys/kernel/osrelease", "r");
-	if ((FILE *) fd == NULL || fscanf((FILE *) fd, "%d.%d", &maj, &min) != 2) {
+	file = fopen("/proc/sys/kernel/osrelease", "r");
+	if (file == NULL || fscanf(file, "%d.%d", &maj, &min) != 2) {
 		g_warning("Could not get kernel version.");
 		maj = min = 0;
 	}
-	fclose((FILE *) fd);
+	fclose(file);
 	
 	cdroms_list = NULL;
 	for (i = n_cdroms - 1, j = 0; i >= 0; i--, j++) {
@@ -603,6 +613,81 @@ linux_scan (gboolean recorder_only)
 }
 #endif /* __linux__ */
 
+#ifdef __FreeBSD__
+static GList *
+freebsd_scan (gboolean recorder_only)
+{
+	GList *cdroms_list = NULL;
+	const char *dev_type = "cd";
+	int fd;
+	int speed = 16; /* XXX Hardcode the write speed for now. */
+	int max_speed = CDR_MAX_SPEED;
+	int i = 0;
+
+	while (1) {
+		CDDriveType type;
+		CDDrive *cdrom;
+		gchar *cam_path, *dev;
+		struct cam_device *cam_dev;
+
+		cam_path = g_strdup_printf ("/dev/%s%dc", dev_type, i);
+
+		if (!g_file_test (cam_path, G_FILE_TEST_EXISTS)) {
+			g_free (cam_path);
+			break;
+		}
+
+		if ((cam_dev = cam_open_spec_device (dev_type, i, O_RDWR, NULL)) == NULL) {
+			i++;
+			g_free (cam_path);
+			continue;
+		}
+
+		/* XXX Other controllers might need to be added. */
+		if ((strncmp (cam_dev->sim_name, "ata", 3)) == 0) {
+			dev = g_strdup_printf ("/dev/a%s%dc", dev_type, i);
+		} else {
+			dev = g_strdup (cam_path);
+		}
+
+		g_free (cam_path);
+
+		if ((fd = open (dev, O_RDWR, 0)) < 0) {
+			g_free (dev);
+			free (cam_dev);
+			i++;
+			continue;
+		}
+
+		type = CDDRIVE_TYPE_CD_RECORDER;
+		if (ioctl (fd, CDRIOCWRITESPEED, &max_speed) < 0) {
+			type = CDDRIVE_TYPE_CD_DRIVE;
+		}
+
+		close (fd);
+
+		if (type == CDDRIVE_TYPE_CD_RECORDER || recorder_only == FALSE) {
+			cdrom = g_new0 (CDDrive, 1);
+			cdrom->display_name = g_strdup_printf ("%s %s", cam_dev->inq_data.vendor, cam_dev->inq_data.revision);
+			cdrom->device = g_strdup (dev);
+			cdrom->max_speed_read = speed;
+			cdrom->max_speed_write = speed;
+			cdrom->cdrecord_id = g_strdup_printf ("%d,%d,%d", cam_dev->path_id, cam_dev->target_id, cam_dev->target_lun);
+			cdrom->type = type;
+
+			cdroms_list = g_list_append (cdroms_list, cdrom);
+		}
+
+		g_free (dev);
+		free (cam_dev);
+
+		i++;
+	}
+
+	return cdroms_list;
+}
+#endif /* __FreeBSD__ */
+
 GList *
 scan_for_cdroms (gboolean recorder_only, gboolean add_image)
 {
@@ -611,6 +696,10 @@ scan_for_cdroms (gboolean recorder_only, gboolean add_image)
 
 #ifdef __linux__
 	cdroms = linux_scan (recorder_only);
+#endif
+
+#ifdef __FreeBSD__
+	cdroms = freebsd_scan (recorder_only);
 #endif
 
 	if (add_image) {

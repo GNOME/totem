@@ -15,6 +15,9 @@ AC_PROG_INTLTOOL([0.20])
 
 GNOME_COMPILE_WARNINGS
 
+dnl FreeBSD support
+AC_CHECK_LIB(cam, cam_open_spec_device)
+
 dnl xine or gst ?
 
 GST_REQS=0.6.0.3
