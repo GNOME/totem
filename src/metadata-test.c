@@ -169,7 +169,7 @@ int main (int argc, char **argv)
 	gdk_threads_init ();
 	options[0].arg = bacon_video_widget_get_popt_table ();
 #ifndef HAVE_GTK_ONLY
-	gnome_program_init ("totem-video-thumbnailer", VERSION,
+	gnome_program_init ("metadata-test", VERSION,
 			LIBGNOME_MODULE, argc, argv,
 			GNOME_PARAM_APP_DATADIR, DATADIR,
 			GNOME_PARAM_POPT_TABLE, options,

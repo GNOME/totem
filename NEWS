@@ -4,10 +4,19 @@ New features and significant updates in version...
 * Rise the controls when in fullscreen and a remote's button is pressed
 * Speed up frequently called functions by checking the previous state before
   updating
-* Use GTK+ 2.6 widgets and features
+* Remove files from the playlist that are on a volume that's getting removed
+* Use GTK+ 2.6 widgets, features and icons
+* Port the Nautilus property pages to the GNOME 2.8 API from the Bonobo API
+* Avoid triggering the accessibility features of X when in fullscreen
 * Install the playlist parser as a library
 * Don't crash when a file fails to open (GStreamer)
+* Automatic subtitles support (GStreamer)
+* Mouse interactivity support (GStreamer)
 * Install Totem's .desktop file properly
+* Fix volume setting on startup
+* Fix the sound device not being released in some cases
+* Fix non-stereo audio playback (xine-lib)
+* Fix a bug parsing directories when filenames have '#' in their names
 
 0.100:
 * Implement session management support, remove automatic save/restore of the
