@@ -494,7 +494,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		/* Update the properties */
 		bacon_video_widget_properties_update
 			(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
-			 totem->bvw, name, FALSE);
+			 totem->bvw, name, !retval);
 
 		g_free (name);
 
@@ -506,7 +506,6 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 						"Reason: %s."),
 					mrl,
 					err->message);
-			gtk_playlist_set_playing (totem->playlist, FALSE);
 			totem_action_error (msg, GTK_WINDOW (totem->win));
 			g_free (msg);
 		}

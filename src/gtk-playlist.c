@@ -1106,7 +1106,12 @@ gtk_playlist_add_ra (GtkPlaylist *playlist, const char *mrl)
 	/* How nice, same format as m3u it seems */
 	return gtk_playlist_add_m3u (playlist, mrl);
 }
-
+#if 0 //FIXME
+static gboolean
+gtk_playlist_add_wmv (GtkPlaylist *playlist, const char *mrl)
+{
+}
+#endif
 gboolean
 gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 		const char *display_name)
