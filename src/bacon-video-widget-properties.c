@@ -92,6 +92,8 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 	bacon_video_widget_properties_set_label (props, "title", _("Unknown"));
 	/* Artist */
 	bacon_video_widget_properties_set_label (props, "artist", _("Unknown"));
+	/* Album */
+	bacon_video_widget_properties_set_label (props, "album", _("Unknown"));
 	/* Year */
 	bacon_video_widget_properties_set_label (props, "year", _("Unknown"));
 	/* Duration */
@@ -131,6 +133,13 @@ bacon_video_widget_properties_set_from_current
 	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
 			BVW_INFO_ARTIST, &value);
 	bacon_video_widget_properties_set_label (props, "artist",
+			g_value_get_string (&value)
+			? g_value_get_string (&value) : _("Unknown"));
+	g_value_unset (&value);
+
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_ALBUM, &value);
+	bacon_video_widget_properties_set_label (props, "album",
 			g_value_get_string (&value)
 			? g_value_get_string (&value) : _("Unknown"));
 	g_value_unset (&value);

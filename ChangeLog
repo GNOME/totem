@@ -1,5 +1,13 @@
 2004-11-20  Bastien Nocera  <hadess@hadess.net>
 
+	* data/properties.glade:
+	* src/bacon-video-widget-properties.c:
+	(bacon_video_widget_properties_reset),
+	(bacon_video_widget_properties_set_from_current): added album metadata
+	to the properties window (Closes: #153173)
+
+2004-11-20  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c: (setup_config_stream): remove
 	debug, fix setting of the default value if there was an error getting
 	it
