@@ -1,5 +1,17 @@
 2003-05-27  Bastien Nocera  <hadess@hadess.net>
 
+	* README: upd
+	* src/bacon-video-widget-xine.c: (xine_event_message),
+	(xine_event), (xine_error):
+	* src/totem.c: (on_recent_file_activate), (on_error_event),
+	(totem_action_open_files), (video_widget_create): add more error
+	handling from the xine engine (like "connection refused" dialogs, and
+	stuff), don't transform the uri into a local filename before feeding
+	it to the playlist when restoring from the recent files, remove the
+	work-arounds in adding recent files
+
+2003-05-27  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.schemas.in: s/Wether/Whether/ (Closes: #113833)
 	Thanks Menthos
 

@@ -1027,6 +1027,66 @@ bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 }
 
 static void
+xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
+{
+	char *message;
+
+	message = NULL;
+
+	if (!(data->explanation))
+	{
+		D("xine_event_message: UI message without an explanation\n"
+				"type: %d", msg->type);
+		return;
+	}
+
+	switch(data->type)
+	{
+	case XINE_MSG_NO_ERROR:
+		break;
+	case XINE_MSG_GENERAL_WARNING:
+		break;
+	case XINE_MSG_UNKNOWN_HOST:
+		message = g_strdup_printf (_("The server you are trying to connect to (%s) is not known."), (char *) data + data->parameters);
+		break;
+	case XINE_MSG_UNKNOWN_DEVICE:
+		message = g_strdup_printf (_("The device name you specified (%s) seems to be invalid."), (char *) data + data->parameters);
+		break;
+	case XINE_MSG_NETWORK_UNREACHABLE:
+		message = g_strdup_printf (_("The server you are trying to connect to (%s) is unreachable."), (char *) data + data->parameters);
+		break;
+	case XINE_MSG_CONNECTION_REFUSED:
+		message = g_strdup_printf (_("The connection to this server was refused."));
+		break;
+	case XINE_MSG_FILE_NOT_FOUND:
+		message = g_strdup_printf (_("The specified movie '%s' could not be found."), (char *) data + data->parameters);
+		break;
+	case XINE_MSG_READ_ERROR:
+		message = g_strdup_printf (_("The movie '%s' could not be read."), (char *) data + data->parameters);
+		break;
+	case XINE_MSG_LIBRARY_LOAD_ERROR:
+		message = g_strdup_printf (_("A problem occur while loading a library or a decoder (%s)."), (char *) data + data->parameters);
+		break;
+	case XINE_MSG_ENCRYPTED_SOURCE:
+		message = g_strdup_printf (_("The source seems encrypted, and can't be read. Are you trying to play an encrypted DVD without libdvdcss?"));
+		break;
+	}
+
+	if (message == NULL)
+	{
+		D("xine_event_message: unhandled error\n"
+				"type: %d", msg->type);
+		return;
+	}
+
+	g_signal_emit (G_OBJECT (bvw),
+			bvw_table_signals[ERROR], 0,
+			message);
+
+	g_free (message);
+}
+
+static void
 xine_event (void *user_data, const xine_event_t *event)
 {
 	BaconVideoWidget *bvw = (BaconVideoWidget *) user_data;
@@ -1069,9 +1129,10 @@ xine_event (void *user_data, const xine_event_t *event)
 		break;
 	case XINE_EVENT_MRL_REFERENCE:
 		ref = event->data;
-
-		//FIXME
-		g_message ("ref mrl detected: %s", ref->mrl);
+		D("ref mrl detected: %s", ref->mrl);
+		break;
+	case XINE_EVENT_UI_MESSAGE:
+		xine_event_message (bvw, (xine_ui_message_data_t *)event->data);
 		break;
 	}
 }
@@ -1099,6 +1160,9 @@ xine_error (BaconVideoWidget *bvw, GError **error)
 	case XINE_ERROR_MALFORMED_MRL:
 		g_set_error (error, 0, 0, _("This location is not "
 					"a valid one"));
+		break;
+	case XINE_ERROR_INPUT_FAILED:
+		g_set_error (error, 0, 0, _("This movie could not be opened"));
 		break;
 	default:
 		g_set_error (error, 0, 0, _("Generic Error"));

@@ -1092,23 +1092,14 @@ static void
 on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
                          Totem *totem)
 {
-	gchar *uri;
-	gchar *filename;
+	char *uri;
 
 	uri = egg_recent_item_get_uri (item);
 
-	filename = gnome_vfs_get_local_path_from_uri (uri);
-	if (filename == NULL)
-	{
-		g_free (uri);
-		return;
-	}
-
-	gtk_playlist_add_mrl (totem->playlist, filename, NULL);
+	gtk_playlist_add_mrl (totem->playlist, uri, NULL);
 	egg_recent_model_add_full (totem->recent_model, item);
 
 	g_free (uri);
-	g_free (filename);
 }
 
 /* This is only called when we are playing a DVD */
@@ -1147,6 +1138,12 @@ on_buffering_cancel_event (GtkWidget *dialog, int response, Totem *totem)
 	totem->mrl = NULL;
 
 	return TRUE;
+}
+
+static void
+on_error_event (BaconVideoWidget *bvw, const char *message, Totem *totem)
+{
+	totem_action_error (message, totem);
 }
 
 static void
@@ -1421,25 +1418,11 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 						filename, NULL) == TRUE)
 			{
                                 EggRecentItem *item;
-				char *local;
 
 				if (strstr (filename, "file:///") == NULL)
 					continue;
 
-				//FIXME another bug in egg, it seems
-				//to fuck up file:/// uri into file:////
-				local = g_filename_from_uri (filename,
-						NULL, NULL);
-
-				if (local == NULL)
-					continue;
-
-				//FIXME egg recent seems to unescape our
-				//pure and clean uri
-				//playing something with a # in the name
-				//won't get saved properly
-				item = egg_recent_item_new_from_uri (local);
-				g_free (local);
+				item = egg_recent_item_new_from_uri (filename);
 				egg_recent_item_add_group (item, "Totem");
 				egg_recent_model_add_full
 					(totem->recent_model, item);
@@ -3171,6 +3154,10 @@ video_widget_create (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->bvw),
 			"buffering",
 			G_CALLBACK (on_buffering_event),
+			totem);
+	g_signal_connect (G_OBJECT (totem->bvw),
+			"error",
+			G_CALLBACK (on_error_event),
 			totem);
 
 	/* Events for the widget video window as well */
