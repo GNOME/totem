@@ -907,6 +907,11 @@ gtk_xine_unrealize (GtkWidget *widget)
 	g_return_if_fail (widget != NULL);
 	g_return_if_fail (GTK_IS_XINE (widget));
 
+	/* Hide all windows */
+	if (GTK_WIDGET_MAPPED (widget))
+		gtk_widget_unmap (widget);
+	GTK_WIDGET_UNSET_FLAGS (widget, GTK_MAPPED);
+
 	gtx = GTK_XINE (widget);
 
 	/* stop the playback */
@@ -925,12 +930,6 @@ gtk_xine_unrealize (GtkWidget *widget)
 	/* stop event thread */
 	xine_exit (gtx->priv->xine);
 	gtx->priv->xine = NULL;
-
-	/* Hide all windows */
-	if (GTK_WIDGET_MAPPED (widget))
-		gtk_widget_unmap (widget);
-
-	GTK_WIDGET_UNSET_FLAGS (widget, GTK_MAPPED);
 
 	/* This destroys widget->window and unsets the realized flag */
 	if (GTK_WIDGET_CLASS (parent_class)->unrealize)
