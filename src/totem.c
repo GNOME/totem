@@ -20,7 +20,13 @@ typedef struct {
 
 	/* Seek */
 	GtkWidget *seek;
-	GtkAdjustment *adj;
+	GtkAdjustment *seekadj;
+	gboolean seek_lock;
+
+	/* Volume */
+	GtkWidget *volume;
+	GtkAdjustment *voladj;
+	gboolean vol_lock;
 
 	/* fullscreen Popup */
 	GtkWidget *popup;
@@ -28,8 +34,6 @@ typedef struct {
 
 	/* other */
 	char *mrl;
-	gboolean seek_lock;
-	guint handler;
 	GtkPlaylist *playlist;
 } Totem;
 
@@ -278,6 +282,18 @@ action_seek_relative (Totem *totem, int off_sec)
 }
 
 static void
+action_volume_relative (Totem *totem, int off_pct)
+{
+	int vol;
+
+	if (!gtk_xine_can_set_volume (GTK_XINE (totem->gtx)))
+		return;
+
+	vol = gtk_xine_get_volume (GTK_XINE (totem->gtx));
+	gtk_xine_set_volume (GTK_XINE (totem->gtx), vol + off_pct);
+}
+
+static void
 drop_cb (GtkWidget     *widget,
 	 GdkDragContext     *context,
 	 gint                x,
@@ -369,33 +385,55 @@ on_playlist_button_toggled (GtkToggleButton *button, gpointer user_data)
 }
 
 static int
-update_slider_cb (gpointer user_data)
+update_sliders_cb (gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 	gfloat pos;
 
-	pos = (gfloat) gtk_xine_get_position (GTK_XINE(totem->gtx));
+	if (totem->seek_lock == FALSE)
+	{
+		totem->seek_lock = TRUE;
+		pos = (gfloat) gtk_xine_get_position (GTK_XINE (totem->gtx));
+		gtk_adjustment_set_value (totem->seekadj, pos);
+		totem->seek_lock = FALSE;
+	}
 
-	if (totem->seek_lock == TRUE)
-		return TRUE;
-
-	totem->seek_lock = TRUE;
-	gtk_adjustment_set_value (totem->adj, pos);
-	totem->seek_lock = FALSE;
+	if (totem->vol_lock == FALSE)
+	{
+		totem->vol_lock = TRUE;
+		pos = (gfloat) gtk_xine_get_volume (GTK_XINE (totem->gtx));
+		gtk_adjustment_set_value (totem->voladj, pos);
+		totem->vol_lock = FALSE;
+	}
 
 	return TRUE;
 }
 
 static void
-seek_cb(GtkWidget* widget, gpointer user_data)
+seek_cb (GtkWidget *widget, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 
-	if (totem->seek_lock == FALSE) {
+	if (totem->seek_lock == FALSE)
+	{
 		totem->seek_lock = TRUE;
 		gtk_xine_play (GTK_XINE (totem->gtx), totem->mrl,
-				(gint) totem->adj->value, 0);
+				(gint) totem->seekadj->value, 0);
 		totem->seek_lock = FALSE;
+	}
+}
+
+static void
+vol_cb (GtkWidget *widget, gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+
+	if (totem->vol_lock == FALSE)
+	{
+		totem->vol_lock = TRUE;
+		gtk_xine_set_volume (GTK_XINE (totem->gtx),
+				(gint) totem->voladj->value);
+		totem->vol_lock = FALSE;
 	}
 }
 
@@ -420,7 +458,11 @@ on_open1_activate (GtkButton * button, gpointer user_data)
 
 		if (g_file_test (filename, G_FILE_TEST_IS_REGULAR
 					| G_FILE_TEST_EXISTS))
+		{
+			gtk_playlist_clear (totem->playlist);
+			gtk_playlist_add_mrl (totem->playlist, filename);
 			action_set_mrl (totem, filename);
+		}
 	}
 
 	gtk_widget_destroy (fs);
@@ -574,13 +616,11 @@ on_eos_event (GtkWidget *widget, gpointer user_data)
 
 	gdk_threads_enter ();
 
-	g_message ("1");
 	if (!gtk_playlist_has_next_mrl (totem->playlist))
 	{
 		char *mrl;
 
 		long_action ();
-		g_message ("2");
 		/* Force play button status */
 		if (gtk_toggle_button_get_active
 				(GTK_TOGGLE_BUTTON(totem->pp_button)) == TRUE)
@@ -593,7 +633,6 @@ on_eos_event (GtkWidget *widget, gpointer user_data)
 		action_play_pause (totem);
 		g_free (mrl);
 	} else {
-		g_message ("3");
 		action_next (totem);
 	}
 
@@ -625,11 +664,19 @@ on_window_key_press_event (GtkWidget *win, GdkEventKey *event,
 		retval = TRUE;
 		break;
 	case GDK_Left:
-		action_seek_relative (totem, -60);
+		action_seek_relative (totem, -15);
 		retval = TRUE;
 		break;
 	case GDK_Right:
 		action_seek_relative (totem, 60);
+		retval = TRUE;
+		break;
+	case GDK_Up:
+		action_volume_relative (totem, 8);
+		retval = TRUE;
+		break;
+	case GDK_Down:
+		action_volume_relative (totem, -8);
 		retval = TRUE;
 		break;
 	case GDK_B:
@@ -656,16 +703,21 @@ static void
 update_buttons (Totem *totem)
 {
 	GtkWidget *item;
+	gboolean has_item;
 
 	/* Previous */
+	has_item = gtk_playlist_has_previous_mrl (totem->playlist);
 	item = glade_xml_get_widget (totem->xml, "previous_button");
-	gtk_widget_set_sensitive (item,
-			gtk_playlist_has_previous_mrl (totem->playlist));
+	gtk_widget_set_sensitive (item, has_item);
+	item = glade_xml_get_widget (totem->xml, "previous_stream1");
+	gtk_widget_set_sensitive (item, has_item);
 
 	/* Next */
+	has_item = gtk_playlist_has_next_mrl (totem->playlist);
 	item = glade_xml_get_widget (totem->xml, "next_button");
-	gtk_widget_set_sensitive (item,
-			gtk_playlist_has_next_mrl (totem->playlist));
+	gtk_widget_set_sensitive (item, has_item);
+	item = glade_xml_get_widget (totem->xml, "next_stream1");
+	gtk_widget_set_sensitive (item, has_item);
 }
 
 static void
@@ -759,10 +811,12 @@ totem_callback_connect (Totem *totem)
 	g_signal_connect (GTK_OBJECT(totem->win), "key_press_event",
 			GTK_SIGNAL_FUNC(on_window_key_press_event), totem);
 
-	/* Slider */
+	/* Sliders */
 	g_signal_connect (GTK_OBJECT (totem->seek), "value-changed",
 			GTK_SIGNAL_FUNC (seek_cb), totem);
-	gtk_timeout_add (500, update_slider_cb, totem);
+	g_signal_connect (GTK_OBJECT (totem->volume), "value-changed",
+			GTK_SIGNAL_FUNC (vol_cb), totem);
+	gtk_timeout_add (500, update_sliders_cb, totem);
 
 	/* Playlist */
 	g_signal_connect (G_OBJECT (totem->playlist),
@@ -810,7 +864,8 @@ main (int argc, char *argv[])
 	totem = g_new (Totem, 1);
 	totem->mrl = NULL;
 	totem->seek_lock = FALSE;
-	totem->handler = 0;
+	totem->vol_lock = FALSE;
+	totem->pp_handler = 0;
 	totem->popup_timeout = 0;
 
 	filename = gnome_program_locate_file (NULL,
@@ -823,15 +878,18 @@ main (int argc, char *argv[])
 	video_widget_create (totem);
 	totem->win = glade_xml_get_widget (totem->xml, "app1");
 	totem->seek = glade_xml_get_widget (totem->xml, "hscale1");
-	totem->adj = gtk_range_get_adjustment (GTK_RANGE (totem->seek));
+	totem->seekadj = gtk_range_get_adjustment (GTK_RANGE (totem->seek));
+	totem->volume = glade_xml_get_widget (totem->xml, "hscale2");
+	totem->voladj = gtk_range_get_adjustment (GTK_RANGE (totem->volume));
 	totem->popup = glade_xml_get_widget (totem->xml, "window1");
 	totem->playlist = GTK_PLAYLIST
 		(gtk_playlist_new (GTK_WINDOW (totem->win)));
+	update_sliders_cb ((gpointer) totem);
 	totem_callback_connect (totem);
 
 	/* Show ! */
-	long_action ();
 	gtk_widget_show_all (totem->win);
+	long_action ();
 
 	if (argc > 1)
 	{

@@ -4,6 +4,8 @@ Dependencies
 
 xine-lib:
 	http://xine.sourceforge.net/
+gnome2 development platform:
+	http://www.gnome.org
 
 
 Controls
@@ -16,9 +18,13 @@ Escape (in full screen mode):
 F:
 	Toggle full screen
 Left arrow:
-	Go back 60 seconds
+	Go back 15 seconds
 Right arrow:
 	Go forward 60 seconds
+Up Arrow:
+	Increase the volume by 8%
+Down Arrow:
+	Decrease the volume by 8%
 B:
 	Previous stream (Back)
 N:
@@ -38,14 +44,16 @@ gtk-xine.[ch] from gnome-xine, with the following enhancements:
 - loads of API cleanups
 - move all the internal data to a private structure
 
+Nifty media player icon by Jakub Steiner <jimmac@ximian.com>
+
+UI help by Seth Nickell <snickell@stanford.edu>
+
 TODO
 ====
 
 - move dnd to the output ctrl
 - make dnd work
-- add volume control
 - think of what needs to be in the prefs
 - move to autoconf/autotools
 
-- use g_signal_handlers_disconnect_by_func ()
   G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);

@@ -50,7 +50,8 @@ GtkType    gtk_playlist_get_type (void);
 GtkWidget *gtk_playlist_new      (GtkWindow *parent);
 
 /* The application is responsible for checking that the mrl is correct */
-gboolean   gtk_playlist_add_mrl  (GtkPlaylist *playlist, char *mrl);
+gboolean   gtk_playlist_add_mrl  (GtkPlaylist *playlist, const char *mrl);
+void       gtk_playlist_clear (GtkPlaylist *playlist);
 char      *gtk_playlist_get_current_mrl (GtkPlaylist *playlist);
 
 gboolean   gtk_playlist_has_previous_mrl (GtkPlaylist *playlist);

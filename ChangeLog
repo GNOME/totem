@@ -1,3 +1,16 @@
+2002-07-31  Bastien Nocera  <hadess@hadess.net>
+
+	* README: upd
+	* src/gtk-playlist.c: (gtk_playlist_add_mrl), (gtk_playlist_clear):
+	* src/gtk-playlist.h: add gtk_playlist_clear()
+	* src/totem.c: (action_volume_relative), (update_sliders_cb),
+	(seek_cb), (vol_cb), (on_open1_activate), (on_eos_event),
+	(on_window_key_press_event), (update_buttons),
+	(totem_callback_connect), (main): add volume control, remove debug,
+	make open... work as it should (using the playlist), show the UI
+	properly before starting the playback, update the next/previous
+	buttons in the menus
+
 2002-07-28  Bastien Nocera  <hadess@hadess.net>
 
 	* src/gtk-playlist.c: (gtk_playlist_new),

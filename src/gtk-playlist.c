@@ -206,7 +206,7 @@ gtk_playlist_new (GtkWindow *parent)
 }
 
 gboolean
-gtk_playlist_add_mrl (GtkPlaylist *playlist, char *mrl)
+gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl)
 {
 	GtkListStore *store;
 	GtkTreeIter iter;
@@ -228,6 +228,17 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, char *mrl)
 	if (playlist->details->current == NULL)
 		playlist->details->current = gtk_tree_model_get_path
 			(playlist->details->model, &iter);
+}
+
+void
+gtk_playlist_clear (GtkPlaylist *playlist)
+{
+	GtkListStore *store;
+
+	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
+
+	store = GTK_LIST_STORE (playlist->details->model);
+	gtk_list_store_clear (store);
 }
 
 char
