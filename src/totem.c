@@ -244,6 +244,8 @@ totem_action_play (Totem *totem, int offset)
 				err->message);
 		gtk_playlist_set_playing (totem->playlist, FALSE);
 		totem_action_error (msg, GTK_WINDOW (totem->win));
+		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
+			totem_action_stop (totem);
 		g_free (msg);
 	}
 }
@@ -628,6 +630,8 @@ totem_action_seek_relative (Totem *totem, int off_sec)
 				totem->mrl,
 				err->message);
 		gtk_playlist_set_playing (totem->playlist, FALSE);
+		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
+			totem_action_stop (totem);
 		totem_action_error (msg, GTK_WINDOW (totem->win));
 		g_free (msg);
 	}
@@ -1544,6 +1548,8 @@ commit_hide_skip_to (GtkDialog *dialog, gint response, Totem *totem)
 				err->message);
 		totem_action_stop (totem);
 		gtk_playlist_set_playing (totem->playlist, FALSE);
+		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
+			totem_action_stop (totem);
 		totem_action_error (msg, GTK_WINDOW (totem->win));
 		g_free (msg);
 	}

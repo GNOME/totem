@@ -373,15 +373,23 @@ static void
 selection_changed (GtkTreeSelection *treeselection, gpointer user_data)
 {
 	GtkPlaylist *playlist = GTK_PLAYLIST (user_data);
-	GtkWidget *remove_button;
+	GtkWidget *remove_button, *up_button, *down_button;
+	gboolean sensitivity;
 
 	remove_button = glade_xml_get_widget (playlist->_priv->xml,
 			"remove_button");
+	up_button = glade_xml_get_widget (playlist->_priv->xml, "up_button");
+	down_button = glade_xml_get_widget (playlist->_priv->xml,
+			"down_button");
 
 	if (gtk_tree_selection_has_selected (treeselection))
-		gtk_widget_set_sensitive (remove_button, TRUE);
+		sensitivity = TRUE;
 	else
-		gtk_widget_set_sensitive (remove_button, FALSE);
+		sensitivity = FALSE;
+
+	gtk_widget_set_sensitive (remove_button, sensitivity);
+	gtk_widget_set_sensitive (up_button, sensitivity);
+	gtk_widget_set_sensitive (down_button, sensitivity);
 }
 
 /* This function checks if the current item is NULL, and try to update it as the
