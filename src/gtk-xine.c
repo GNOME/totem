@@ -118,6 +118,7 @@ struct GtkXinePrivate {
 	gboolean init_finished;
 
 	GAsyncQueue *queue;
+	int video_width, video_height;
 
 	/* fullscreen stuff */
 	gboolean fullscreen_mode;
@@ -335,6 +336,9 @@ frame_output_cb (void *gtx_gen,
 	} else {
 		*dest_width = gtx->widget.allocation.width;
 		*dest_height = gtx->widget.allocation.height;
+
+		gtx->priv->video_width = video_width;
+		gtx->priv->video_height = video_height;
 	}
 }
 
@@ -1339,31 +1343,13 @@ void
 gtk_xine_set_scale_ratio (GtkXine *gtx, gfloat ratio)
 {
 	GtkWindow *toplevel;
-	uint8_t *y, *u, *v;
-	int width, height, ratio_code, format;
 	int new_w, new_h;
-
-	y = u = v = NULL;
 
 	if (gtx->priv->fullscreen_mode == TRUE)
 		return;
 
-	if (xine_get_current_frame(gtx->priv->xine,
-				&width, &height, &ratio_code, &format,
-				&y, &u, &v) == 0)
-		return;
-
-	D ("Orig width: %d height: %d", width, height);
-
-	new_w = width * ratio;
-	new_h = height * ratio;
-
-	D ("New width: %d height: %d", new_w, new_h);
-
-	/* y, u and v don't need to be freed apparently */
-/*FIXME	g_free (y);
-	g_free (u);
-	g_free (v);*/
+	new_w = gtx->priv->video_width * ratio;
+	new_h = gtx->priv->video_height * ratio;
 
 	/* don't scale to something bigger than the screen, and leave us
 	 * some room */

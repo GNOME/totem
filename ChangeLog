@@ -1,5 +1,11 @@
 2002-08-27  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (frame_output_cb), (gtk_xine_set_scale_ratio):
+	fix the zooming so that it doesn't use xine_get_current_frame () (and
+	leak like mad ;)
+
+2002-08-27  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: pump up the minimum Xine version number to 0.9.13
 	* src/gtk-xine.c: (gtk_xine_class_init), (xine_thread),
 	(gtk_xine_realize), (key_press_event_cb),
