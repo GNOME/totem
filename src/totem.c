@@ -1196,7 +1196,7 @@ on_about1_activate (GtkButton *button, gpointer user_data)
 	}
 
 	about = gnome_about_new(_("Totem"), VERSION,
-			_("Copyright \xc2\xa9 2002 Bastien Nocera"),
+			"Copyright \xc2\xa9 2002 Bastien Nocera",
 			_("Movie Player (based on the Xine libraries)"),
 			(const char **)authors,
 			(const char **)documenters,
