@@ -1,5 +1,19 @@
 2003-05-11  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_class_init),
+	(bacon_video_widget_idle_signal), (xine_event):
+	* src/bacon-video-widget.h:
+	* src/totem-private.h:
+	* src/totem.c: (totem_action_restore_pl),
+	(totem_action_drop_files), (on_buffering_cancel_event),
+	(on_buffering_event), (totem_action_open_files),
+	(playlist_repeat_toggle_cb), (totem_action_handle_key),
+	(totem_callback_connect), (video_widget_create), (main): added a
+	buffering dialog when opening files from the network, it needs a bit
+	of HIG love, still
+
+2003-05-11  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c: (bacon_video_widget_open): emit the
 	got-metadata signal before we close the file, if there are errors
 	* src/totem-properties-page.c:

@@ -61,8 +61,9 @@ struct Totem {
 	/* exit fullscreen Popup */
 	GtkWidget *exit_popup;
 
-	/* error dialog */
-	GtkWidget *error_dialog;
+	/* buffering dialog */
+	GtkWidget *buffer_dialog;
+	GtkWidget *buffer_label;
 
 	/* control fullscreen Popup */
 	GtkWidget *control_popup;

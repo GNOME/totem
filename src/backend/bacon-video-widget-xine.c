@@ -63,21 +63,23 @@ enum {
 	CHANNELS_CHANGE,
 	TICK,
 	GOT_METADATA,
+	BUFFERING,
 	LAST_SIGNAL
 };
 
 /* Enum for none-signal stuff that needs to go through the AsyncQueue */
 enum {
 	RATIO,
-	PROGRESS,
 	TITLE_CHANGE_ASYNC,
 	EOS_ASYNC,
-	CHANNELS_CHANGE_ASYNC
+	CHANNELS_CHANGE_ASYNC,
+	BUFFERING_ASYNC
 };
 
 typedef struct {
 	int signal;
 	char *msg;
+	int num;
 } signal_data;
 
 /* Arguments */
@@ -334,6 +336,15 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 				baconvideowidget_marshal_VOID__INT_INT_INT,
 				G_TYPE_NONE, 3, G_TYPE_INT, G_TYPE_INT,
 				G_TYPE_INT);
+
+	bvw_table_signals[BUFFERING] =
+		g_signal_new ("buffering",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (BaconVideoWidgetClass, buffering),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__INT,
+				G_TYPE_NONE, 1, G_TYPE_INT);
 }
 
 static void
@@ -952,12 +963,6 @@ bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 	case RATIO:
 		bacon_video_widget_set_scale_ratio (bvw, 0);
 		break;
-	case PROGRESS:
-		g_message ("%s", data->msg);
-		while (gtk_events_pending ())
-			gtk_main_iteration ();
-		//FIXME
-		break;
 	case TITLE_CHANGE_ASYNC:
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[TITLE_CHANGE],
@@ -970,6 +975,11 @@ bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 	case CHANNELS_CHANGE_ASYNC:
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[CHANNELS_CHANGE], 0, NULL);
+		break;
+	case BUFFERING_ASYNC:
+		g_signal_emit (G_OBJECT (bvw),
+				bvw_table_signals[BUFFERING],
+				0, data->num);
 		break;
 	default:
 		g_assert_not_reached ();
@@ -1020,9 +1030,8 @@ xine_event (void *user_data, const xine_event_t *event)
 		prg = event->data;
 
 		data = g_new0 (signal_data, 1);
-		data->signal = PROGRESS;
-		data->msg = g_strdup_printf ("%s %d%%",
-				prg->description, prg->percent);
+		data->signal = BUFFERING_ASYNC;
+		data->num = prg->percent;
 		g_async_queue_push (bvw->priv->queue, data);
 		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
 		break;

@@ -508,13 +508,13 @@ totem_action_restore_pl (Totem *totem)
 
 	g_signal_handlers_disconnect_by_func
 		(G_OBJECT (totem->playlist),
-		 playlist_changed_cb, (gpointer) totem);
+		 playlist_changed_cb, totem);
 
 	if (gtk_playlist_add_mrl (totem->playlist, path, NULL) == FALSE)
 	{
 		g_signal_connect (G_OBJECT (totem->playlist),
 				"changed", G_CALLBACK (playlist_changed_cb),
-				(gpointer) totem);
+				totem);
 
 		g_free (path);
 		totem_action_set_mrl (totem, NULL);
@@ -523,7 +523,7 @@ totem_action_restore_pl (Totem *totem)
 
 	g_signal_connect (G_OBJECT (totem->playlist),
 			"changed", G_CALLBACK (playlist_changed_cb),
-			(gpointer) totem);
+			totem);
 
 	g_free (path);
 	play_pause_set_label (totem, STATE_PAUSED);
@@ -929,7 +929,7 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 				 * changed playlist ... */
 				g_signal_handlers_disconnect_by_func
 					(G_OBJECT (totem->playlist),
-					 playlist_changed_cb, (gpointer) totem);
+					 playlist_changed_cb, totem);
 				gtk_playlist_clear (totem->playlist);
 				cleared = TRUE;
 			}
@@ -948,7 +948,7 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 
 		g_signal_connect (G_OBJECT (totem->playlist),
 				"changed", G_CALLBACK (playlist_changed_cb),
-				(gpointer) totem);
+				totem);
 		mrl = gtk_playlist_get_current_mrl (totem->playlist);
 		totem_action_set_mrl_and_play (totem, mrl);
 		g_free (mrl);
@@ -1095,6 +1095,86 @@ on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 	bacon_video_widget_properties_update
 		(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
 		 totem->bvw, FALSE);
+}
+
+static int
+on_buffering_cancel_event (GtkWidget *dialog, int response, Totem *totem)
+{
+	bacon_video_widget_close (totem->bvw);
+	play_pause_set_label (totem, STATE_PAUSED);
+
+	gtk_widget_destroy (dialog);
+	totem->buffer_dialog = NULL;
+	totem->buffer_label = NULL;
+
+	g_free (totem->mrl);
+	totem->mrl = NULL;
+
+	return TRUE;
+}
+
+static void
+on_buffering_event (BaconVideoWidget *bvw, int percentage, Totem *totem)
+{
+	char *msg;
+
+	if (percentage == 0)
+	{
+		GtkWidget *image, *hbox;
+
+		totem->buffer_dialog = gtk_dialog_new_with_buttons (_("Buffering"),
+				GTK_WINDOW (totem->win),
+				GTK_DIALOG_DESTROY_WITH_PARENT,
+				GTK_STOCK_CANCEL,
+				GTK_RESPONSE_REJECT,
+				NULL);
+		gtk_dialog_set_has_separator (GTK_DIALOG(totem->buffer_dialog),
+				FALSE);
+		gtk_window_set_modal (GTK_WINDOW (totem->buffer_dialog), TRUE);
+		gtk_container_set_border_width
+			(GTK_CONTAINER (GTK_DIALOG(totem->buffer_dialog)->vbox),
+			 8);
+		hbox = gtk_hbox_new (FALSE, 12);
+		gtk_container_add
+			(GTK_CONTAINER (GTK_DIALOG(totem->buffer_dialog)->vbox),
+			 hbox);
+
+		image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_INFO,
+				GTK_ICON_SIZE_DIALOG);
+		gtk_container_add (GTK_CONTAINER (hbox), image);
+
+		msg = g_strdup_printf (_("Buffering: %d%%"), percentage);
+		totem->buffer_label = gtk_label_new (msg);
+		g_free (msg);
+		gtk_container_add (GTK_CONTAINER(hbox), totem->buffer_label);
+
+		g_signal_connect (G_OBJECT (totem->buffer_dialog),
+				"response",
+				G_CALLBACK (on_buffering_cancel_event),
+				totem);
+		g_signal_connect (G_OBJECT (totem->buffer_dialog),
+				"delete-event",
+				G_CALLBACK (on_buffering_cancel_event),
+				totem);
+
+		gtk_widget_show_all (totem->buffer_dialog);
+		long_action ();
+
+		//FIXME connect cancel
+	} else if (percentage == 100) {
+		if (totem->buffer_dialog != NULL)
+			gtk_widget_destroy (totem->buffer_dialog);
+		totem->buffer_dialog = NULL;
+		totem->buffer_label = NULL;
+	} else {
+		if (totem->buffer_label == NULL)
+			return;
+
+		msg = g_strdup_printf (_("Buffering: %d%%"), percentage);
+		gtk_label_set_text (GTK_LABEL (totem->buffer_label), msg);
+		g_free (msg);
+		long_action ();
+	}
 }
 
 static void
@@ -1290,7 +1370,7 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 				 * changed playlist ... */
 				g_signal_handlers_disconnect_by_func
 					(G_OBJECT (totem->playlist),
-					 playlist_changed_cb, (gpointer) totem);
+					 playlist_changed_cb, totem);
 				gtk_playlist_clear (totem->playlist);
 				cleared = TRUE;
 			}
@@ -1331,7 +1411,7 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 	{
 		g_signal_connect (G_OBJECT (totem->playlist),
 				"changed", G_CALLBACK (playlist_changed_cb),
-				(gpointer) totem);
+				totem);
 	}
 
 	return cleared;
@@ -2069,7 +2149,7 @@ playlist_repeat_toggle_cb (GtkPlaylist *playlist, gboolean repeat, Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "repeat_mode1");
 
 	g_signal_handlers_disconnect_by_func (G_OBJECT (item),
-			on_repeat_mode1_toggled, (gpointer) totem);
+			on_repeat_mode1_toggled, totem);
 
 	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), repeat);
 
@@ -2299,7 +2379,7 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 	case GDK_O:
 	case GDK_o:
 		totem_action_fullscreen (totem, FALSE);
-		on_open1_activate (NULL, (gpointer) totem);
+		on_open1_activate (NULL, totem);
 		if (totem->action == 4)
 			totem->action++;
 		else
@@ -2744,15 +2824,15 @@ totem_callback_connect (Totem *totem)
 	/* Screenshot dialog */
 	item = glade_xml_get_widget (totem->xml, "dialog2");
 	g_signal_connect (G_OBJECT (item), "delete-event",
-			G_CALLBACK (hide_screenshot), (gpointer) totem);
+			G_CALLBACK (hide_screenshot), totem);
 	item = glade_xml_get_widget (totem->xml, "radiobutton1");
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_radiobutton_shot_toggled),
-			(gpointer) totem);
+			totem);
 	item = glade_xml_get_widget (totem->xml, "radiobutton2");
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_radiobutton_shot_toggled),
-			(gpointer) totem);
+			totem);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), TRUE);
 
 	/* Controls */
@@ -2863,22 +2943,22 @@ totem_callback_connect (Totem *totem)
 	/* Playlist Disappearance, woop woop */
 	g_signal_connect (G_OBJECT (totem->playlist),
 			"response", G_CALLBACK (toggle_playlist_from_playlist),
-			(gpointer) totem);
+			totem);
 	g_signal_connect (G_OBJECT (totem->playlist), "delete-event",
 			G_CALLBACK (toggle_playlist_from_playlist),
-			(gpointer) totem);
+			totem);
 
 	/* Playlist */
 	g_signal_connect (G_OBJECT (totem->playlist),
 			"changed", G_CALLBACK (playlist_changed_cb),
-			(gpointer) totem);
+			totem);
 	g_signal_connect (G_OBJECT (totem->playlist),
 			"current-removed", G_CALLBACK (current_removed_cb),
-			(gpointer) totem);
+			totem);
 	g_signal_connect (G_OBJECT (totem->playlist),
 			"repeat-toggled",
 			G_CALLBACK (playlist_repeat_toggle_cb),
-			(gpointer) totem);
+			totem);
 
 	/* DVD menu callbacks */
 	item = glade_xml_get_widget (totem->xml, "dvd_root_menu");
@@ -2996,6 +3076,10 @@ video_widget_create (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->bvw),
 			"got-metadata",
 			G_CALLBACK (on_got_metadata_event),
+			totem);
+	g_signal_connect (G_OBJECT (totem->bvw),
+			"buffering",
+			G_CALLBACK (on_buffering_event),
 			totem);
 
 	/* Events for the widget video window as well */
@@ -3338,6 +3422,7 @@ main (int argc, char **argv)
 
 	/* Show ! (again) the video widget this time. */
 	video_widget_create (totem);
+	long_action ();
 
 	/* The prefs after the video widget is connected */
 	totem_setup_preferences (totem);
