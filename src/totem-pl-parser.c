@@ -597,6 +597,8 @@ totem_pl_parser_add_pls (TotemPlParser *parser, const char *url, gpointer data)
 	if (num_entries == -1)
 		goto bail;
 
+	retval = TRUE;
+
 	for (i = 1; i <= num_entries; i++) {
 		char *file, *title, *genre;
 		char *file_key, *title_key, *genre_key;
@@ -614,10 +616,9 @@ totem_pl_parser_add_pls (TotemPlParser *parser, const char *url, gpointer data)
 		g_free (title_key);
 		g_free (genre_key);
 
-		if (file != NULL) {
-			totem_pl_parser_add_one_url_ext (parser, file, title, genre);
-			retval = TRUE;
-		} 
+		if (file != NULL)
+			totem_pl_parser_add_one_url_ext (parser,
+					file, title, genre);
 
 		g_free (file);
 		g_free (title);
@@ -1030,8 +1031,10 @@ totem_pl_parser_ignore (const char *url)
 			return TRUE;
 
 	mimetype = gnome_vfs_get_file_mime_type (url, NULL, TRUE);
+	if (mimetype == NULL)
+		return TRUE;
 
-	for (i = 0; i < G_N_ELEMENTS (special_types) && mimetype != NULL; i++)
+	for (i = 0; i < G_N_ELEMENTS (special_types); i++)
 		if (strcmp (special_types[i].mimetype, mimetype) == 0)
 			return FALSE;
 
