@@ -1188,10 +1188,13 @@ gtk_xine_open (GtkXine *gtx, const gchar *mrl)
 	gboolean has_video;
 	xine_post_out_t *audio_source;
 
-	g_return_val_if_fail (gtx != NULL, -1);
-	g_return_val_if_fail (mrl != NULL, -1);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), -1);
-	g_return_val_if_fail (gtx->priv->xine != NULL, -1);
+	g_return_val_if_fail (gtx != NULL, FALSE);
+	g_return_val_if_fail (mrl != NULL, FALSE);
+	g_return_val_if_fail (GTK_IS_XINE (gtx), FALSE);
+	g_return_val_if_fail (gtx->priv->xine != NULL, FALSE);
+	g_return_val_if_fail (gtx->priv->mrl == NULL, FALSE);
+
+	gtx->priv->mrl = g_strdup (mrl);
 
 	error = xine_open (gtx->priv->stream, mrl);
 	if (error == 0)
@@ -1298,6 +1301,7 @@ gtk_xine_close (GtkXine *gtx)
 
 	xine_close (gtx->priv->stream);
 	g_free (gtx->priv->mrl);
+	gtx->priv->mrl = NULL;
 }
 
 /* Properties */

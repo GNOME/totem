@@ -1,5 +1,10 @@
 2003-01-23  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (gtk_xine_open), (gtk_xine_close): fix the crash
+	when navigating to an unsupported file for the second time
+
+2003-01-23  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-xine.c: (xine_error), (get_fourcc_string),
 	(gtk_xine_open):
 	* src/gtk-xine.h:
