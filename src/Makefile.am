@@ -22,6 +22,8 @@ endif
 
 bin_PROGRAMS = totem totem-video-thumbnailer $(VANITY)
 libexec_PROGRAMS = $(TOTEM_MOZILLA_VIEWER)
+noinst_LTLIBRARIES = \
+	libbaconvideowidget.la libbaconpropertiespage.la
 plugin_LTLIBRARIES = $(TOTEM_MOZILLA_PLUGIN)
 nautilus_LTLIBRARIES = $(TOTEM_PROPERTIES_PAGE)
 
@@ -78,19 +80,24 @@ regenerate-built-sources:
 	EGGFILES="$(EGG_RECENT_FILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh || true
 	EGGFILES="$(BACON_CD_SELECTION)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
 
-VIDEOWIDGET = baconvideowidget-marshal.list totemplparser-marshal.list $(BVWMARSHALFILES) $(MM) bacon-video-widget.h bacon-resize.h bacon-resize.c video-utils.c video-utils.h debug.h
+VIDEOWIDGET = \
+	baconvideowidget-marshal.list totemplparser-marshal.list \
+	$(BVWMARSHALFILES) $(MM) bacon-video-widget.h bacon-resize.h \
+	bacon-resize.c video-utils.c video-utils.h debug.h
+
+libbaconvideowidget_la_SOURCES = $(VIDEOWIDGET)
+libbaconpropertiespage_la_SOURCES = \
+	bacon-video-widget-properties.c \
+	bacon-video-widget-properties.h
 
 totem_SOURCES = 					\
 	$(EGG_RECENT_FILES)				\
 	$(BACON_CD_SELECTION)				\
-	$(VIDEOWIDGET)					\
 	totem.c totem.h					\
 	totem-remote.c totem-remote.h			\
 	totem-preferences.c totem-preferences.h		\
 	totem-stock-icons.c totem-stock-icons.h		\
 	totem-private.h			\
-	bacon-video-widget-properties.c	\
-	bacon-video-widget-properties.h	\
 	scrsaver.c scrsaver.h		\
 	totem-options.c totem-options.h	\
 	totem-playlist.c totem-playlist.h \
@@ -106,48 +113,59 @@ totem_SOURCES = 					\
 	totem-statusbar.h		\
 	totem-gromit.c totem-gromit.h
 
-totem_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS) libtotem-plparser.la
+totem_LDADD = \
+	$(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) \
+	$(XVIDMODE_LIBS) $(NVTV_LIBS) libtotem-plparser.la \
+	libbaconvideowidget.la libbaconpropertiespage.la
 
-totem_video_thumbnailer_SOURCES = $(VIDEOWIDGET) totem-video-thumbnailer.c
-totem_video_thumbnailer_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS) $(EXTRA_GNOME_LIBS)
+totem_video_thumbnailer_SOURCES = totem-video-thumbnailer.c
+totem_video_thumbnailer_LDADD = \
+	$(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) \
+	$(NVTV_LIBS) $(EXTRA_GNOME_LIBS) libbaconvideowidget.la
 
 nautilusdir = $(libdir)/nautilus/extensions-1.0/
+libtotem_properties_page_la_CFLAGS = -I$(top_srcdir)
 libtotem_properties_page_la_SOURCES = 	\
-	$(VIDEOWIDGET)			\
-	bacon-video-widget-properties.c	\
-	bacon-video-widget-properties.h	\
 	totem-properties-main.c		\
 	totem-properties-view.c		\
 	totem-properties-view.h
 
-libtotem_properties_page_la_LDFLAGS = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS) $(NAUTILUS_LIBS) $(module_flags)
+libtotem_properties_page_la_LIBADD = \
+	$(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) \
+	$(NVTV_LIBS) $(NAUTILUS_LIBS) \
+	libbaconvideowidget.la libbaconpropertiespage.la
+libtotem_properties_page_la_LDFLAGS = $(module_flags)
 
 libtotem_mozilla_la_LDFLAGS = $(GTK_LIBS) $(module_flags)
 libtotem_mozilla_la_SOURCES = totem-mozilla-plugin.c
 
 totem_mozilla_viewer_SOURCES = 		\
-	$(VIDEOWIDGET)			\
-	bacon-video-widget-properties.c	\
-	bacon-video-widget-properties.h	\
 	totem-mozilla-viewer.c
-totem_mozilla_viewer_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS)
+totem_mozilla_viewer_LDADD = \
+	$(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) \
+	$(NVTV_LIBS) libbaconvideowidget.la libbaconpropertiespage.la
 
 plugindir = $(libdir)/mozilla/plugins/
 module_flags = -export_dynamic -avoid-version
 
 vanity_SOURCES =					\
-	$(VIDEOWIDGET)					\
 	$(BACON_V4L_SELECTION)				\
 	totem-screenshot.c totem-screenshot.h		\
 	vanity.c
 
-vanity_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS)
+vanity_LDADD = \
+	$(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) \
+	$(NVTV_LIBS) libbaconvideowidget.la
 
-bvw_test_SOURCES = $(VIDEOWIDGET) bvw-test.c
-bvw_test_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS)
+bvw_test_SOURCES = bvw-test.c
+bvw_test_LDADD = \
+	$(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS) \
+	libbaconvideowidget.la
 
-metadata_test_SOURCES = $(VIDEOWIDGET) metadata-test.c
-metadata_test_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS) $(EXTRA_GNOME_LIBS)
+metadata_test_SOURCES = metadata-test.c
+metadata_test_LDADD = \
+	$(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS) \
+	$(EXTRA_GNOME_LIBS) libbaconvideowidget.la
 
 disc_test_SOURCES = disc-test.c
 disc_test_LDADD = \

@@ -1,4 +1,4 @@
-SUBDIRS = po src data help
+SUBDIRS = po data src help
 
 install-data-local:
 	@$(NORMAL_INSTALL)
