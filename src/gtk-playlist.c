@@ -24,6 +24,8 @@
 #include "gtk-playlist.h"
 
 #include <gnome.h>
+#include <libxml/tree.h>
+#include <libxml/parser.h>
 #include <glade/glade.h>
 #include <gconf/gconf-client.h>
 #include <libgnomevfs/gnome-vfs.h>
@@ -959,6 +961,124 @@ bail:
 	return retval;
 }
 
+static gboolean
+parse_entry (GtkPlaylist *playlist, char *base, xmlDocPtr doc,
+		xmlNodePtr parent)
+{
+	xmlNodePtr node;
+	char *title, *url;
+	gboolean retval = FALSE;
+
+	title = NULL;
+	url = NULL;
+
+	for (node = parent->children; node != NULL; node = node->next)
+	{
+		if (node->name == NULL)
+			continue;
+
+		/* ENTRY should only have one ref and one title nodes */
+		if (g_ascii_strcasecmp (node->name, "ref") == 0)
+		{
+			url = xmlGetProp (node, "href");
+			continue;
+		}
+
+		if (g_ascii_strcasecmp (node->name, "title") == 0)
+			title = xmlNodeListGetString(doc, node->children, 1);
+	}
+
+	if (url == NULL)
+	{
+		g_free (title);
+		return FALSE;
+	}
+
+	if (strstr (url, "://") != NULL || url[0] == '/')
+		retval = gtk_playlist_add_one_mrl (playlist, url, title);
+	else {
+		char *fullpath;
+
+		fullpath = g_strdup_printf ("%s/%s", base, url);
+		/* .asx files can contain references to other .asx files */
+		retval = gtk_playlist_add_mrl (playlist, fullpath, title);
+
+		g_free (fullpath);
+	}
+
+	g_free (title);
+	g_free (url);
+
+	return retval;
+}
+
+static gboolean
+parse_entries (GtkPlaylist *playlist, char *base, xmlDocPtr doc,
+		xmlNodePtr parent)
+{
+	xmlNodePtr node;
+	gboolean retval = FALSE;
+
+	for (node = parent->children; node != NULL; node = node->next)
+	{
+		if (node->name == NULL)
+			continue;
+
+		if (g_ascii_strcasecmp (node->name, "entry") == 0)
+		{
+			/* Whee found an entry here, find the REF and TITLE */
+			if (parse_entry (playlist, base, doc, node) == TRUE)
+				retval = TRUE;
+		}
+	}
+
+	return retval;
+}
+
+static gboolean
+gtk_playlist_add_asx (GtkPlaylist *playlist, const char *mrl)
+{
+	xmlDocPtr doc;
+	xmlNodePtr node;
+	char *contents = NULL, *base;
+	int size;
+	gboolean retval = FALSE;
+
+	if (eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
+		return FALSE;
+
+	doc = xmlParseMemory(contents, size);
+	g_free (contents);
+
+	/* If the document has no root, or no name */
+	if(!doc->children || !doc->children->name)
+	{
+		xmlFreeDoc(doc);
+		return FALSE;
+	}
+
+	/* Yay, let's reconstruct the base by hand */
+	{
+		GnomeVFSURI *uri, *parent;
+		uri = gnome_vfs_uri_new (mrl);
+		parent = gnome_vfs_uri_get_parent (uri);
+		base = gnome_vfs_uri_to_string (parent, 0);
+
+		gnome_vfs_uri_unref (uri);
+		gnome_vfs_uri_unref (parent);
+	}
+
+	for(node = doc->children; node != NULL; node = node->next)
+	{
+		if (parse_entries (playlist, base, doc, node) == TRUE)
+			retval = TRUE;
+	}
+
+	g_free (base);
+	xmlFreeDoc(doc);
+	return retval;
+}
+
 gboolean
 gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 		const char *display_name)
@@ -969,6 +1089,8 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 
 	mimetype = gnome_vfs_get_mime_type (mrl);
 
+	g_message ("trying to add %s (%s)", mrl, mimetype);
+
 	if (mimetype == NULL)
 	{
 		return gtk_playlist_add_one_mrl (playlist, mrl, display_name);
@@ -976,6 +1098,8 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 		return gtk_playlist_add_m3u (playlist, mrl);
 	} else if (strcmp ("audio/x-scpls", mimetype) == 0) {
 		return gtk_playlist_add_pls (playlist, mrl);
+	} else if (strcmp ("audio/x-ms-asx", mimetype) == 0) {
+		return gtk_playlist_add_asx (playlist, mrl);
 	} else if (strcmp ("x-directory/normal", mimetype) == 0) {
 		//Load all the files in the dir ?
 	}
