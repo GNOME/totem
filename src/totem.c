@@ -3124,7 +3124,8 @@ totem_callback_connect (Totem *totem)
 	g_signal_connect (G_OBJECT (item), "drag_data_received",
 			G_CALLBACK (drop_playlist_cb), totem);
 	gtk_drag_dest_set (item, GTK_DEST_DEFAULT_ALL,
-			target_table, 1, GDK_ACTION_COPY);
+			target_table, G_N_ELEMENTS (target_table),
+			GDK_ACTION_COPY);
 
 	/* Main Window */
 	g_signal_connect (G_OBJECT (totem->win), "delete-event",
@@ -3140,7 +3141,8 @@ totem_callback_connect (Totem *totem)
 			"size-changed", G_CALLBACK (size_changed_cb), totem);
 
 	/* Motion notify for the Popups */
-	item = glade_xml_get_widget (totem->xml, "totem_exit_fullscreen_window");
+	item = glade_xml_get_widget (totem->xml,
+			"totem_exit_fullscreen_window");
 	gtk_widget_add_events (item, GDK_POINTER_MOTION_MASK);
 	g_signal_connect (G_OBJECT (item), "motion-notify-event",
 			G_CALLBACK (on_video_motion_notify_event), totem);
@@ -3632,7 +3634,6 @@ main (int argc, char **argv)
 
 	options[0].arg = bacon_video_widget_get_popt_table ();
 #ifndef HAVE_GTK_ONLY
-#warning foo
 	gnome_program_init ("totem", VERSION,
 			LIBGNOMEUI_MODULE,
 			argc, argv,

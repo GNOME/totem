@@ -104,7 +104,7 @@ int get_dvd_r_rw_profile (const char *name)
     unsigned char *list=new unsigned char[len];
 
     /* For valgrind */
-    memset (list, 0, sizeof (list));
+    memset (list, 0, len);
 
     cmd[0]=0x46;
     cmd[1]=2;
@@ -119,7 +119,7 @@ int get_dvd_r_rw_profile (const char *name)
       goto bail;
     }
 
-    if (len < 12 || list[11] > len)
+    if (len <= 12 || list[11] > len)
     {
       /* fprintf(stderr, "GET CONFIGURATION with len %d, and list[11] %d\n",
                          len, list[11]); */

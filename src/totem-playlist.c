@@ -500,7 +500,7 @@ button_press_cb (GtkWidget *treeview, GdkEventButton *event, gpointer data)
 { 
 	
 	gtk_drag_dest_unset (treeview);
-	g_signal_handlers_block_by_func (treeview,&drop_cb, data);
+	g_signal_handlers_block_by_func (treeview, (GFunc) drop_cb, data);
 	gtk_tree_view_set_reorderable (GTK_TREE_VIEW (treeview), TRUE);
 	
 	return FALSE;
@@ -512,14 +512,17 @@ button_release_cb (GtkWidget *treeview, GdkEventButton *event, gpointer data)
 	TotemPlaylist *playlist = (TotemPlaylist *)data;
 
 	if (!playlist->_priv->drag_started)
-	 {
-		gtk_tree_view_set_reorderable (GTK_TREE_VIEW (treeview), FALSE);
-		gtk_drag_dest_set (treeview, GTK_DEST_DEFAULT_ALL, target_table,
-				G_N_ELEMENTS (target_table), GDK_ACTION_COPY);
+	{
+		gtk_tree_view_set_reorderable (GTK_TREE_VIEW (treeview),
+				FALSE);
+		gtk_drag_dest_set (treeview, GTK_DEST_DEFAULT_ALL,
+				target_table, G_N_ELEMENTS (target_table),
+				GDK_ACTION_COPY);
+
+		g_signal_handlers_unblock_by_func (treeview,
+				(GFunc) drop_cb, data);
 		
-		g_signal_handlers_unblock_by_func (treeview,&drop_cb, data );
-		
-	 }
+	}
 
 	return FALSE;
 }
@@ -527,28 +530,26 @@ button_release_cb (GtkWidget *treeview, GdkEventButton *event, gpointer data)
 static void 
 drag_begin_cb (GtkWidget *treeview, GdkDragContext *context, gpointer data)
 {
- 
-	 TotemPlaylist *playlist = (TotemPlaylist *)data;
+	TotemPlaylist *playlist = (TotemPlaylist *)data;
 
-	 playlist->_priv->drag_started= TRUE;
-	
+	playlist->_priv->drag_started= TRUE;
+
 	return;
 }
 
 static void 
 drag_end_cb (GtkWidget *treeview, GdkDragContext *context, gpointer data)
 {
-   
 	TotemPlaylist *playlist = (TotemPlaylist *)data;
 
 	playlist->_priv->drag_started = FALSE;
 	gtk_tree_view_set_reorderable (GTK_TREE_VIEW (treeview), FALSE); 
 	gtk_drag_dest_set (treeview, GTK_DEST_DEFAULT_ALL, target_table,
         		G_N_ELEMENTS (target_table), GDK_ACTION_COPY);
-	
-	g_signal_handlers_unblock_by_func(treeview, &drop_cb, data);
-    
-	 return;
+
+	g_signal_handlers_unblock_by_func (treeview, (GFunc) drop_cb, data);
+
+	return;
 }
 
 static void
