@@ -61,6 +61,23 @@ typedef enum {
 	MEDIA_VCD,
 } MediaType;
 
+typedef enum {
+	GTX_INFO_TITLE,
+	GTX_INFO_ARTIST,
+	GTX_INFO_YEAR,
+	GTX_INFO_DURATION,
+	/* Video */
+	GTX_INFO_HAS_VIDEO,
+	GTX_INFO_DIMENSION_X,
+	GTX_INFO_DIMENSION_Y,
+	GTX_INFO_VIDEO_CODEC,
+	GTX_INFO_FPS,
+	/* Audio */
+	GTX_INFO_HAS_AUDIO,
+	GTX_INFO_BITRATE,
+	GTX_INFO_AUDIO_CODEC
+} GtkXineMetadataType;
+
 #define GTK_XINE(obj)              (GTK_CHECK_CAST ((obj), gtk_xine_get_type (), GtkXine))
 #define GTK_XINE_CLASS(klass)      (GTK_CHECK_CLASS_CAST ((klass), gtk_xine_get_type (), GtkXineClass))
 #define GTK_IS_XINE(obj)           (GTK_CHECK_TYPE (obj, gtk_xine_get_type ()))
@@ -127,6 +144,9 @@ gboolean gtk_xine_is_seekable          (GtkXine *gtx);
 gboolean gtk_xine_can_play             (GtkXine *gtx, MediaType type);
 G_CONST_RETURN gchar **gtk_xine_get_mrls
                                        (GtkXine *gtx, MediaType type);
+
+void gtk_xine_get_metadata	       (GtkXine *gtx, GtkXineMetadataType type,
+					GValue *value);
 
 GtkWidget *gtk_xine_properties_dialog_get
                                        (GtkXine *gtx);

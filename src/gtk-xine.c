@@ -466,6 +466,12 @@ load_video_out_driver (GtkXine *gtx)
 	const char *video_driver_id;
 	xine_vo_driver_t *vo_driver;
 
+	if (gtx->priv->null_out == TRUE)
+	{
+		return xine_open_video_driver (gtx->priv->xine,
+				"none", XINE_VISUAL_TYPE_NONE, NULL);
+	}
+
 	vis.display = gtx->priv->display;
 	vis.screen = gtx->priv->screen;
 	vis.d = GDK_WINDOW_XID (gtx->priv->video_window);
@@ -489,16 +495,7 @@ load_video_out_driver (GtkXine *gtx)
 	video_driver_id = xine_config_register_string (gtx->priv->xine,
 			"video.driver", "auto", "video driver to use",
 			NULL, 10, NULL, NULL);
-	//FIXME
-#if 0
-	if (gtx->priv->null_out == TRUE)
-	{
-		vo_driver = xine_open_video_driver (gtx->priv->xine,
-				"none", XINE_VISUAL_TYPE_NONE, (void *) &vis);
 
-		return vo_driver;
-	}
-#endif
 	if (strcmp (video_driver_id, "auto") != 0)
 	{
 		vo_driver = xine_open_video_driver (gtx->priv->xine,
@@ -1047,16 +1044,16 @@ gtk_xine_unrealize (GtkWidget *widget)
 	/* stop the playback */
 	xine_close (gtx->priv->stream);
 
-	/* Kill the drivers */
-	if (gtx->priv->vo_driver != NULL)
-		xine_close_video_driver (gtx->priv->xine, gtx->priv->vo_driver);
-	if (gtx->priv->vo_driver != NULL)
-		xine_close_audio_driver (gtx->priv->xine, gtx->priv->ao_driver);
-
 	/* Get rid of the rest of the stream */
 	xine_event_dispose_queue (gtx->priv->ev_queue);
 	xine_dispose (gtx->priv->stream);
 	gtx->priv->stream = NULL;
+
+	/* Kill the drivers */
+	if (gtx->priv->vo_driver != NULL)
+		xine_close_video_driver (gtx->priv->xine, gtx->priv->vo_driver);
+	if (gtx->priv->ao_driver != NULL)
+		xine_close_audio_driver (gtx->priv->xine, gtx->priv->ao_driver);
 
 	/* stop the completion event thread */
 	pthread_cancel (gtx->priv->thread);
@@ -1238,7 +1235,7 @@ gtk_xine_open (GtkXine *gtx, const gchar *mrl)
 	g_return_val_if_fail (gtx->priv->xine != NULL, -1);
 
 	error = xine_open (gtx->priv->stream, mrl);
-	if (!error)
+	if (error == 0)
 	{
 		xine_error (gtx);
 		return FALSE;
@@ -1268,6 +1265,8 @@ gtk_xine_open (GtkXine *gtx, const gchar *mrl)
 		signal->message = g_strdup_printf (_("Reason: Video type '%s' is not handled."), name ? name : fourcc_str );
 		g_async_queue_push (gtx->priv->queue, signal);
 		g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
+
+		D("Reason: Video type '%s' is not handled.", name ? name : fourcc_str );
 
 		g_free (fourcc_str);
 
@@ -1853,6 +1852,147 @@ gtk_xine_set_scale_ratio (GtkXine *gtx, gfloat ratio)
 }
 
 static void
+gtk_xine_get_metadata_string (GtkXine *gtx, GtkXineMetadataType type,
+		GValue *value)
+{
+	const char *string;
+
+	g_value_init (value, G_TYPE_STRING);
+
+	switch (type)
+	{
+	case GTX_INFO_TITLE:
+		string = xine_get_meta_info (gtx->priv->stream,
+				XINE_META_INFO_TITLE);
+		break;
+	case GTX_INFO_ARTIST:
+		string = xine_get_meta_info (gtx->priv->stream,
+				XINE_META_INFO_ARTIST);
+		break;
+	case GTX_INFO_YEAR:
+		string = xine_get_meta_info (gtx->priv->stream,
+				XINE_META_INFO_YEAR);
+		break;
+	case GTX_INFO_VIDEO_CODEC:
+		string = xine_get_meta_info (gtx->priv->stream,
+				XINE_META_INFO_VIDEOCODEC);
+		break;
+	case GTX_INFO_AUDIO_CODEC:
+		string = xine_get_meta_info (gtx->priv->stream,
+				XINE_META_INFO_AUDIOCODEC);
+		break;
+	default:
+		g_assert_not_reached ();
+	}
+
+	g_value_set_string (value, string);
+
+	return;
+}
+
+static void
+gtk_xine_get_metadata_int (GtkXine *gtx, GtkXineMetadataType type,
+		GValue *value)
+{
+	int integer;
+
+	g_value_init (value, G_TYPE_INT);
+
+	switch (type)
+	{
+	case GTX_INFO_DURATION:
+		integer = gtk_xine_get_stream_length (gtx) / 1000;
+		break;
+	case GTX_INFO_DIMENSION_X:
+		xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_VIDEO_WIDTH);
+		break;
+	case GTX_INFO_DIMENSION_Y:
+		xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_VIDEO_HEIGHT);
+		break;
+	case GTX_INFO_FPS:
+		if (xine_get_stream_info (gtx->priv->stream,
+					XINE_STREAM_INFO_FRAME_DURATION) != 0)
+		{
+			integer = 90000 / xine_get_stream_info
+				(gtx->priv->stream,
+				 XINE_STREAM_INFO_FRAME_DURATION);
+		} else {
+			integer = 0;
+		}
+		break;
+	 case GTX_INFO_BITRATE:
+		integer = xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_AUDIO_BITRATE) / 1000;
+		break;
+	 default:
+		g_assert_not_reached ();
+	 }
+
+	 g_value_set_int (value, integer);
+
+	 return;
+}
+
+static void
+gtk_xine_get_metadata_bool (GtkXine *gtx, GtkXineMetadataType type,
+		GValue *value)
+{
+	gboolean boolean;
+
+	g_value_init (value, G_TYPE_BOOLEAN);
+
+	switch (type)
+	{
+	case GTX_INFO_HAS_VIDEO:
+		boolean = xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_HAS_VIDEO);
+		break;
+	case GTX_INFO_HAS_AUDIO:
+		boolean = xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_HAS_AUDIO);
+		break;
+	default:
+		g_assert_not_reached ();
+	}
+
+	g_value_set_boolean (value, boolean);
+
+	return;
+}
+
+void
+gtk_xine_get_metadata (GtkXine *gtx, GtkXineMetadataType type, GValue *value)
+{
+	switch (type)
+	{
+	case GTX_INFO_TITLE:
+	case GTX_INFO_ARTIST:
+	case GTX_INFO_YEAR:
+	case GTX_INFO_VIDEO_CODEC:
+	case GTX_INFO_AUDIO_CODEC:
+		gtk_xine_get_metadata_string (gtx, type, value);
+		break;
+	case GTX_INFO_DURATION:
+	case GTX_INFO_DIMENSION_X:
+	case GTX_INFO_DIMENSION_Y:
+	case GTX_INFO_FPS:
+	case GTX_INFO_BITRATE:
+		gtk_xine_get_metadata_int (gtx, type, value);
+		break;
+	case GTX_INFO_HAS_VIDEO:
+	case GTX_INFO_HAS_AUDIO:
+		gtk_xine_get_metadata_bool (gtx, type, value);
+		break;
+	default:
+		g_assert_not_reached ();
+	}
+
+	return;
+}
+
+static void
 hide_dialog (GtkWidget *widget, int trash, gpointer user_data)
 {
 	GtkXine *gtx = (GtkXine *) user_data;
@@ -2120,14 +2260,12 @@ gtk_xine_can_get_frames (GtkXine *gtx)
 	g_return_val_if_fail (gtx != NULL, FALSE);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), FALSE);
 	g_return_val_if_fail (gtx->priv->xine != NULL, FALSE);
+	g_return_val_if_fail (gtk_xine_is_playing (gtx) == TRUE, FALSE);
 
 	if (xine_get_stream_info (gtx->priv->stream,
 				XINE_STREAM_INFO_HAS_VIDEO) == FALSE)
 		return FALSE;
 
-	if (gtk_xine_is_playing (gtx) == FALSE)
-		return FALSE;
-	
 	if (xine_get_stream_info (gtx->priv->stream,
 				XINE_STREAM_INFO_VIDEO_HANDLED) == FALSE)
 		return FALSE;

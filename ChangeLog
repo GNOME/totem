@@ -1,3 +1,12 @@
+2003-01-14  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-xine.c: (load_video_out_driver), (gtk_xine_unrealize),
+	(gtk_xine_open), (gtk_xine_get_metadata_string),
+	(gtk_xine_get_metadata_int), (gtk_xine_get_metadata_bool),
+	(gtk_xine_get_metadata), (gtk_xine_can_get_frames):
+	* src/gtk-xine.h: added gtk_xine_get_metadata call, use the "none"
+	video driver by default, fix a crash on exit in totem-video-thumbnailer
+
 2003-01-13  Bastien Nocera  <hadess@hadess.net>
 
 	* src/gtk-xine.c: (gtk_xine_set_fullscreen):
