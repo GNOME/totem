@@ -105,6 +105,7 @@ struct Totem {
 	GConfClient *gc;
 	TotemRemote *remote;
 	GtkMessageQueue *queue;
+	int action;
 };
 
 static const GtkTargetEntry target_table[] = {
@@ -1934,24 +1935,85 @@ totem_action_handle_key (Totem *totem, guint keyval)
 {
 	gboolean retval = TRUE;
 
+	/* Alphabetical */
 	switch (keyval) {
+	case GDK_A:
+	case GDK_a:
+		totem_action_toggle_aspect_ratio (totem);
+		if (totem->action == 0)
+			totem->action++;
+		else
+			totem->action = 0;
+		break;
+	case XF86XK_AudioPrev:
+	case GDK_B:
+	case GDK_b:
+		totem_action_previous (totem);
+		break;
+	case GDK_C:
+	case GDK_c:
+		gtk_xine_dvd_event (GTK_XINE (totem->gtx),
+				GTX_DVD_CHAPTER_MENU);
+		if (totem->action == 1)
+			totem->action++;
+		else
+			totem->action = 0;
+		break;
+	case GDK_f:
+	case GDK_F:
+		totem_action_fullscreen_toggle (totem);
+		break;
+	case GDK_i:
+	case GDK_I:
+		if (totem->action == 3)
+			totem->action++;
+		else
+			totem->action = 0;
+		break;
+	case GDK_M:
+	case GDK_m:
+		gtk_xine_dvd_event (GTK_XINE (totem->gtx), GTX_DVD_ROOT_MENU);
+		break;
+	case XF86XK_AudioNext:
+	case GDK_N:
+	case GDK_n:
+		totem_action_next (totem);
+		if (totem->action == 5)
+			totem_action_set_mrl_and_play (totem, "v4l://");
+		totem->action = 0;
+		break;
+	case GDK_O:
+	case GDK_o:
+		totem_action_fullscreen (totem, FALSE);
+		on_open1_activate (NULL, (gpointer) totem);
+		if (totem->action == 4)
+			totem->action++;
+		else
+			totem->action = 0;
+		break;
 	case XF86XK_AudioPlay:
 	case XF86XK_AudioPause:
 	case GDK_p:
 	case GDK_P:
 		totem_action_play_pause (totem);
 		break;
+	case GDK_q:
+	case GDK_Q:
+		totem_action_exit (totem);
+		break;
+	case GDK_s:
+	case GDK_S:
+		on_skip_to1_activate (NULL, totem);
+		break;
+	case GDK_t:
+	case GDK_T:
+		if (totem->action == 2)
+			totem->action++;
+		else
+			totem->action = 0;
+		break;
 	case GDK_Escape:
 		totem_action_fullscreen (totem, FALSE);
-		break;
-	case GDK_f:
-	case GDK_F:
-		totem_action_fullscreen_toggle (totem);
-		break;
-	case GDK_O:
-	case GDK_o:
-		totem_action_fullscreen (totem, FALSE);
-		on_open1_activate (NULL, (gpointer) totem);
 		break;
 	case GDK_Left:
 		totem_action_seek_relative (totem, SEEK_BACKWARD_OFFSET);
@@ -1964,36 +2026,6 @@ totem_action_handle_key (Totem *totem, guint keyval)
 		break;
 	case GDK_Down:
 		totem_action_volume_relative (totem, -8);
-		break;
-	case GDK_A:
-	case GDK_a:
-		totem_action_toggle_aspect_ratio (totem);
-		break;
-	case GDK_C:
-	case GDK_c:
-		gtk_xine_dvd_event (GTK_XINE (totem->gtx),
-				GTX_DVD_CHAPTER_MENU);
-		break;
-	case GDK_M:
-	case GDK_m:
-		gtk_xine_dvd_event (GTK_XINE (totem->gtx), GTX_DVD_ROOT_MENU);
-	case XF86XK_AudioPrev:
-	case GDK_B:
-	case GDK_b:
-		totem_action_previous (totem);
-		break;
-	case XF86XK_AudioNext:
-	case GDK_N:
-	case GDK_n:
-		totem_action_next (totem);
-		break;
-	case GDK_q:
-	case GDK_Q:
-		totem_action_exit (totem);
-		break;
-	case GDK_s:
-	case GDK_S:
-		on_skip_to1_activate (NULL, totem);
 		break;
 	case GDK_0:
 	case GDK_onehalf:
