@@ -733,14 +733,12 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 	
 	if (fullscreen) {
 		
-		if (!bvw->priv->fs_window)
+		if ( (!bvw->priv->fs_window) && (!bvw->priv->fs_vbox) ) {
 			bvw->priv->fs_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-
-		if (!bvw->priv->fs_vbox)
 			bvw->priv->fs_vbox = gtk_vbox_new ( TRUE, 0);
-		
-		gtk_container_add (	GTK_CONTAINER(bvw->priv->fs_window),
-							bvw->priv->fs_vbox);
+			gtk_container_add ( GTK_CONTAINER(bvw->priv->fs_window),
+								bvw->priv->fs_vbox);
+		}
 		
 		gtk_widget_ref (GTK_WIDGET(bvw->priv->vw));
 		
@@ -755,7 +753,9 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 		
 		gdk_flush ();
 		
-		gdk_window_set_user_data (GDK_WINDOW(bvw->priv->fs_window->window), bvw);
+		gst_play_need_new_video_window (bvw->priv->play);
+		
+	//	gdk_window_set_user_data (GDK_WINDOW(bvw->priv->fs_window->window), bvw);
 		
 		gtk_window_fullscreen (GTK_WINDOW(bvw->priv->fs_window));
 		
@@ -780,6 +780,8 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 							GTK_WIDGET(bvw->priv->vw), TRUE, TRUE, 0);
 		
 		gtk_widget_unref (GTK_WIDGET(bvw->priv->vw));
+		
+		gst_play_need_new_video_window (bvw->priv->play);
 		
 		scrsaver_enable (bvw->priv->scr);
 	}
