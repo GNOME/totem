@@ -64,7 +64,7 @@ totem-video-thumbnail.schemas.in: schemas.sh totem.keys
 	2> update-gconf.sh
 
 schema_in_files = totem.schemas.in totem-video-thumbnail.schemas.in
-schemadir = $(sysconfdir)/gconf/schemas
+schemadir = $(GCONF_SCHEMA_FILE_DIR)
 schema_DATA = $(schema_in_files:.schemas.in=.schemas)
 @INTLTOOL_SCHEMAS_RULE@
 
@@ -74,8 +74,12 @@ user-install: $(app_DATA) $(keys_DATA)
 	cp $(app_DATA) $(HOME)/.gnome/application-registry
 	cp $(keys_DATA) $(HOME)/.gnome/mime-info/
 
+if GCONF_SCHEMAS_INSTALL
 install-data-local:
 	-GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(srcdir)/$(schema_DATA)
+else
+install-data-local:
+endif
 
 EXTRA_DIST = $(stuff_DATA) $(desktop_in_files_all) $(keys_DATA) $(app_DATA) $(server_in_files) totem.schemas.in lirc_example schemas.sh
 
