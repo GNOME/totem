@@ -1,3 +1,9 @@
+2003-07-15  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_idle_signal),
+	(xine_event_message): pass the error messages events through the async
+	handler (Closes: #117151, maybe)
+
 2003-07-14  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c: (totem_action_open_files): don't open files with

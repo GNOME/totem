@@ -65,7 +65,7 @@ enum {
 	TICK,
 	GOT_METADATA,
 	BUFFERING,
-	LAST_SIGNAL
+	LAST_SIGNAL,
 };
 
 /* Enum for none-signal stuff that needs to go through the AsyncQueue */
@@ -74,7 +74,8 @@ enum {
 	TITLE_CHANGE_ASYNC,
 	EOS_ASYNC,
 	CHANNELS_CHANGE_ASYNC,
-	BUFFERING_ASYNC
+	BUFFERING_ASYNC,
+	MESSAGE_ASYNC,
 };
 
 typedef struct {
@@ -1095,6 +1096,11 @@ bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 				bvw_table_signals[BUFFERING],
 				0, data->num);
 		break;
+	case MESSAGE_ASYNC:
+		g_signal_emit (G_OBJECT (bvw),
+				bvw_table_signals[ERROR],
+				0, data->msg, TRUE);
+		break;
 	default:
 		g_assert_not_reached ();
 	}
@@ -1108,11 +1114,11 @@ bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 	return (queue_length > 0);
 }
 
-//FIXME this needs to be launched from the async handler
 static void
 xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 {
 	char *message;
+	signal_data *sigdata;
 
 	message = NULL;
 
@@ -1162,11 +1168,11 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		return;
 	}
 
-	g_signal_emit (G_OBJECT (bvw),
-			bvw_table_signals[ERROR], 0,
-			message, TRUE);
-
-	g_free (message);
+	sigdata = g_new0 (signal_data, 1);
+	sigdata->signal = MESSAGE_ASYNC;
+	sigdata->msg = message;
+	g_async_queue_push (bvw->priv->queue, sigdata);
+	g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
 }
 
 static void
