@@ -3701,6 +3701,8 @@ main (int argc, char **argv)
 	g_thread_init (NULL);
 	gdk_threads_init ();
 
+	gtk_init (&argc, &argv);
+
 	options[0].arg = bacon_video_widget_get_popt_table ();
 	gnome_program_init ("totem", VERSION,
 			LIBGNOMEUI_MODULE,
