@@ -1359,22 +1359,25 @@ totem_setup_recent (Totem *totem)
 	GtkWidget *menu_item;
 	GtkWidget *menu;
 
-	menu = gtk_menu_new ();
-	menu_item = glade_xml_get_widget (totem->xml, "open_recent");
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menu_item), menu);
-	gtk_widget_show (menu);
+	menu_item = glade_xml_get_widget (totem->xml, "movie1");
+	menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu_item));
+	menu_item = glade_xml_get_widget (totem->xml, "recent_separator");
+
+	g_return_if_fail (menu != NULL);
+	g_return_if_fail (menu_item != NULL);
 
 	totem->recent_model = egg_recent_model_new
-		(EGG_RECENT_MODEL_SORT_MRU,10);
+		(EGG_RECENT_MODEL_SORT_MRU, 10);
 
 	/* it would be better if we just filtered by mime-type, but there
 	 * doesn't seem to be an easy way to figure out which mime-types we
 	 * can handle */
 	egg_recent_model_set_filter_groups (totem->recent_model, "Totem", NULL);
 
-	totem->recent_view = egg_recent_view_gtk_new (menu, NULL);
+	totem->recent_view = egg_recent_view_gtk_new (menu, menu_item);
 	egg_recent_view_set_model (EGG_RECENT_VIEW (totem->recent_view),
 			totem->recent_model);
+	egg_recent_view_gtk_set_trailing_sep (totem->recent_view, TRUE);
 
 	g_signal_connect (totem->recent_view, "activate",
 			G_CALLBACK (on_recent_file_activate), totem);

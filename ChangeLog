@@ -1,3 +1,11 @@
+2002-09-11  James Willcox  <jwillcox@gnome.org>
+
+	* data/totem.glade:  Removed the "Open Recent" submenu, and fixed a
+	typo for "Next Stream" and "Previous Stream" (the keybindings were
+	reversed)
+	* src/totem.c: (totem_setup_recent):  Put recent items directly
+	into the "Movie" menu, not in a submenu.
+
 2002-09-10  Gustavo Maciel Dias Vieira  <gdvieira@zaz.com.br>
 
 	* configure.in: Added pt_BR to ALL_LINGUAS.
