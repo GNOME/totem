@@ -477,8 +477,9 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 		  G_SIGNAL_RUN_LAST,
 		  G_STRUCT_OFFSET (BaconVideoWidgetClass, tick),
 		  NULL, NULL,
-		  baconvideowidget_marshal_VOID__INT64_INT64_FLOAT,
-		  G_TYPE_NONE, 3, G_TYPE_INT64, G_TYPE_INT64, G_TYPE_FLOAT);
+		  baconvideowidget_marshal_VOID__INT64_INT64_FLOAT_BOOLEAN,
+		  G_TYPE_NONE, 4, G_TYPE_INT64, G_TYPE_INT64, G_TYPE_FLOAT,
+                  G_TYPE_BOOLEAN);
 
   bvw_table_signals[BUFFERING] =
     g_signal_new ("buffering",
@@ -713,6 +714,8 @@ got_stream_length (GstPlay * play, gint64 length_nanos,
 static void
 got_time_tick (GstPlay * play, gint64 time_nanos, BaconVideoWidget * bvw)
 {
+  gboolean seekable;
+
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
@@ -730,11 +733,14 @@ got_time_tick (GstPlay * play, gint64 time_nanos, BaconVideoWidget * bvw)
       bvw->priv->current_position =
         (float) bvw->priv->current_time / bvw->priv->stream_length;
     }
+  
+  seekable = bacon_video_widget_is_seekable (bvw);
 
   g_signal_emit (G_OBJECT (bvw),
                  bvw_table_signals[TICK], 0,
                  bvw->priv->current_time, bvw->priv->stream_length,
-                 bvw->priv->current_position);
+                 bvw->priv->current_position,
+                 seekable);
 }
 
 static void
