@@ -32,9 +32,12 @@ keysdir = $(datadir)/mime-info/
 app_DATA = totem.applications
 appdir = $(datadir)/application-registry
 
+update-gconf.sh: totem-video-thumbnail.schemas.in
+
 totem-video-thumbnail.schemas.in: schemas.sh
-	$(srcdir)/schemas.sh $(srcdir)/totem.keys \
-	> totem-video-thumbnail.schemas.in
+	$(srcdir)/schemas.sh $(srcdir)/totem.keys $(bindir)	\
+	> totem-video-thumbnail.schemas.in			\
+	2> update-gconf.sh
 
 schema_in_files = totem.schemas.in totem-video-thumbnail.schemas.in
 schemadir = $(sysconfdir)/gconf/schemas

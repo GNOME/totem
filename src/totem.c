@@ -361,6 +361,7 @@ update_mrl_label (Totem *totem, const char *name)
 	{
 		/* Get the length of the stream */
 		time = gtk_xine_get_stream_length (GTK_XINE (totem->gtx));
+
 		totem_statusbar_set_time_and_length (TOTEM_STATUSBAR
 				(totem->statusbar), 0, time / 1000);
 
@@ -544,7 +545,6 @@ totem_action_previous (Totem *totem)
         } else {
                 gtk_playlist_set_previous (totem->playlist);
                 mrl = gtk_playlist_get_current_mrl (totem->playlist);
-		g_message ("totem_action_next: %s", mrl);
                 totem_action_set_mrl_and_play (totem, mrl);
                 g_free (mrl);
         }
@@ -561,17 +561,16 @@ totem_action_next (Totem *totem)
 			&& gtk_playlist_get_repeat (totem->playlist) == FALSE)
 		return;
 
-        if (totem_playing_dvd (totem) == TRUE)
-        {
-                gtk_xine_dvd_event (GTK_XINE (totem->gtx), 
-                                        GTX_DVD_NEXT_CHAPTER);
-        } else {
-                gtk_playlist_set_next (totem->playlist);
-                mrl = gtk_playlist_get_current_mrl (totem->playlist);
-		g_message ("totem_action_next: %s", mrl);
-                totem_action_set_mrl_and_play (totem, mrl);
-                g_free (mrl);
-        }
+	if (totem_playing_dvd (totem) == TRUE)
+	{
+		gtk_xine_dvd_event (GTK_XINE (totem->gtx), 
+				GTX_DVD_NEXT_CHAPTER);
+	} else {
+		gtk_playlist_set_next (totem->playlist);
+		mrl = gtk_playlist_get_current_mrl (totem->playlist);
+		totem_action_set_mrl_and_play (totem, mrl);
+		g_free (mrl);
+	}
 }
 
 void
@@ -862,14 +861,13 @@ update_seekable (Totem *totem, gboolean force_false)
 }
 
 static void
-update_current_time (Totem *totem)
-{ 
-	int time;
+update_current_time (GtkXine *gtx, int current_time, int stream_length,
+		int current_position, gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
 
-	/* Get the length of the stream */
-	time = gtk_xine_get_current_time (GTK_XINE (totem->gtx));
-	totem_statusbar_set_time (TOTEM_STATUSBAR (totem->statusbar),
-			time / 1000);
+	totem_statusbar_set_time_and_length (TOTEM_STATUSBAR (totem->statusbar),
+			current_time / 1000, stream_length / 1000);
 }
 
 static void
@@ -913,7 +911,6 @@ update_cb_often (gpointer user_data)
 	if (totem->gtx == NULL)
 		return TRUE;
 
-	update_current_time (user_data);
 	update_sliders (user_data);
 
 	return TRUE;
@@ -2406,6 +2403,10 @@ video_widget_create (Totem *totem)
 	g_signal_connect (G_OBJECT(totem->gtx),
 			"title-change",
 			G_CALLBACK (on_title_change_event),
+			totem);
+	g_signal_connect (G_OBJECT (totem->gtx),
+			"tick",
+			G_CALLBACK (update_current_time),
 			totem);
 
 	g_signal_connect (G_OBJECT (totem->gtx), "drag_data_received",

@@ -32,6 +32,7 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path, const char *video_path)
 {
 	GdkPixbuf *small;
 	int width, height, d_width, d_height;
+	GError *err = NULL;
 
 	height = gdk_pixbuf_get_height (pixbuf);
 	width = gdk_pixbuf_get_width (pixbuf);
@@ -49,10 +50,13 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path, const char *video_path)
 			GDK_INTERP_TILES);
 	gdk_pixbuf_unref (pixbuf);
 
-	if (gdk_pixbuf_save (small, path, "png", NULL, NULL) == FALSE)
+	if (gdk_pixbuf_save (small, path, "png", &err, NULL) == FALSE)
 	{
-		g_print ("totem-video-thumbnailer couln't write the thumbnail '%s' for video '%s'\n",
-				path, video_path);
+		if (err != NULL)
+			g_print ("totem-video-thumbnailer couln't write the thumbnail '%s' for video '%s': %s\n", path, video_path, err->message);
+		else
+			g_print ("totem-video-thumbnailer couln't write the thumbnail '%s' for video '%s'\n", path, video_path);
+
 		gdk_pixbuf_unref (small);
 		exit (0);
 	}

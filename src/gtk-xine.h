@@ -98,6 +98,8 @@ typedef struct {
 	void (*error) (GtkWidget *gtx, GtkXineError error, const char *message);
 	void (*eos) (GtkWidget *gtx);
 	void (*title_change) (GtkWidget *gtx, const char *title);
+	void (*tick) (GtkWidget *gtx, int current_time, int stream_length,
+			int current_position);
 } GtkXineClass;
 
 GtkType gtk_xine_get_type              (void);

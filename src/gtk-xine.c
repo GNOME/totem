@@ -71,6 +71,7 @@ enum {
 	ERROR,
 	EOS,
 	TITLE_CHANGE,
+	TICK,
 	LAST_SIGNAL
 };
 
@@ -107,7 +108,6 @@ struct GtkXinePrivate {
 	xine_stream_t *stream;
 	xine_vo_driver_t *vo_driver;
 	xine_ao_driver_t *ao_driver;
-	pthread_t thread;
 	xine_event_queue_t *ev_queue;
 	double display_ratio;
 
@@ -118,7 +118,6 @@ struct GtkXinePrivate {
 	Display *display;
 	int screen;
 	GdkWindow *video_window;
-	int completion_event;
 
 	/* Visual effects */
 	char *mrl;
@@ -130,6 +129,7 @@ struct GtkXinePrivate {
 	int xpos, ypos;
 	gboolean can_dvd, can_vcd, can_cdda;
 	gboolean logo_mode;
+	guint tick_id;
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
@@ -167,6 +167,7 @@ static void gtk_xine_size_allocate (GtkWidget *widget,
 static xine_vo_driver_t * load_video_out_driver (GtkXine *gtx,
 						 gboolean null_out);
 static xine_ao_driver_t * load_audio_out_driver (GtkXine *gtx);
+static gboolean gtk_xine_tick_send (GtkXine *gtx);
 
 static GtkWidgetClass *parent_class = NULL;
 
@@ -288,6 +289,15 @@ gtk_xine_class_init (GtkXineClass *klass)
 				NULL, NULL,
 				g_cclosure_marshal_VOID__STRING,
 				G_TYPE_NONE, 1, G_TYPE_STRING);
+	gtx_table_signals[TICK] =
+		g_signal_new ("tick",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (GtkXineClass, tick),
+				NULL, NULL,
+				gtkxine_marshal_VOID__INT_INT_INT,
+				G_TYPE_NONE, 3, G_TYPE_INT, G_TYPE_INT,
+				G_TYPE_INT);
 
 	if (!g_thread_supported ())
 		g_thread_init (NULL);
@@ -340,6 +350,9 @@ gtk_xine_instance_init (GtkXine *gtx)
 			gtx->priv->can_cdda = TRUE;
 		i++;
 	}
+
+	gtx->priv->tick_id = g_timeout_add (200,
+			(GSourceFunc) gtk_xine_tick_send, gtx);
 }
 
 static void
@@ -726,37 +739,6 @@ generate_mouse_event (GtkXine *gtx, GdkEvent *event, gboolean is_motion)
 	return FALSE;
 }
 
-static void *
-xine_thread (void *gtx_gen)
-{
-	GtkXine *gtx = (GtkXine *) gtx_gen;
-	XEvent event;
-
-	while (1)
-	{
-		if (gtx->priv->stream == NULL)
-			break;
-
-		if (XPending (gtx->priv->display))
-		{
-			XNextEvent (gtx->priv->display, &event);
-		} else {
-			usleep (100);
-			continue;
-		}
-
-		if (event.type == gtx->priv->completion_event)
-		{
-			xine_gui_send_vo_data (gtx->priv->stream,
-					XINE_GUI_SEND_COMPLETION_EVENT,
-					&event);
-		}
-	}
-
-	pthread_exit (NULL);
-	return NULL;
-}
-
 static gboolean
 configure_cb (GtkWidget *widget, GdkEventConfigure *event, gpointer user_data)
 {
@@ -823,14 +805,6 @@ gtk_xine_realize (GtkWidget *widget)
 	XLockDisplay (gtx->priv->display);
 	gtx->priv->screen = DefaultScreen (gtx->priv->display);
 
-	if (XShmQueryExtension (gtx->priv->display) == True)
-	{
-		gtx->priv->completion_event =
-			XShmGetEventBase (gtx->priv->display) + ShmCompletion;
-	} else {
-		gtx->priv->completion_event = -1;
-	}
-
 	/* load the video driver */
 	gtx->priv->vo_driver = load_video_out_driver (gtx, gtx->priv->null_out);
 
@@ -859,9 +833,6 @@ gtk_xine_realize (GtkWidget *widget)
 	scrsaver_init (gtx->priv->display);
 
 	XUnlockDisplay (gtx->priv->display);
-
-	/* now, create a xine thread */
-	pthread_create (&gtx->priv->thread, NULL, xine_thread, gtx);
 
 	return;
 }
@@ -989,10 +960,6 @@ gtk_xine_unrealize (GtkWidget *widget)
 		xine_close_video_driver (gtx->priv->xine, gtx->priv->vo_driver);
 	if (gtx->priv->ao_driver != NULL)
 		xine_close_audio_driver (gtx->priv->xine, gtx->priv->ao_driver);
-
-	/* stop the completion event thread */
-	pthread_cancel (gtx->priv->thread);
-	pthread_join (gtx->priv->thread, NULL);
 
 	/* save config */
 	configfile = g_build_path (G_DIR_SEPARATOR_S,
@@ -1132,6 +1099,43 @@ gtk_xine_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	}
 }
 
+static gboolean
+gtk_xine_tick_send (GtkXine *gtx)
+{
+	int i, current_time, stream_length, current_position;
+	gboolean ret = TRUE;
+
+	if (gtx->priv->stream == NULL)
+		return TRUE;
+
+	if (gtx->priv->mrl == NULL)
+	{
+		current_time = 0;
+		stream_length = 0;
+		current_position = 0;
+	} else {
+		ret = xine_get_pos_length (gtx->priv->stream,
+				&current_position,
+				&current_time,
+				&stream_length);
+
+		while (ret == FALSE && i < 10)
+		{
+			usleep (100000);
+			ret = xine_get_pos_length (gtx->priv->stream,
+					&current_position,
+					&current_time,
+					&stream_length);
+			i++;
+		}
+	}
+
+	if (ret == TRUE)
+		g_signal_emit (G_OBJECT (gtx),
+				gtx_table_signals[TICK], 0,
+				current_time, stream_length, current_position);
+}
+
 static char *
 get_fourcc_string (uint32_t f)
 {
@@ -1243,6 +1247,7 @@ gtk_xine_play (GtkXine *gtx, guint pos, guint start_time)
 	g_return_val_if_fail (gtx->priv->xine != NULL, -1);
 
 	length = gtk_xine_get_stream_length (gtx);
+
 	error = xine_play (gtx->priv->stream, pos,
 			CLAMP (start_time, 0, length));
 

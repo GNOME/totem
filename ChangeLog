@@ -1,3 +1,22 @@
+2003-02-05  Bastien Nocera  <hadess@hadess.net>
+
+	* README: updated requirements
+	* data/.cvsignore: updated
+	* data/Makefile.am:
+	* data/schemas.sh: added generation of a script to update an existing
+	gconf install
+	* src/gtk-xine.c: (gtk_xine_class_init), (gtk_xine_instance_init),
+	(gtk_xine_realize), (gtk_xine_unrealize), (gtk_xine_tick_send),
+	(gtk_xine_play):
+	* src/gtk-xine.h:
+	* src/gtkxine-marshal.list:
+	* src/totem-video-thumbnailer.c: (save_pixbuf):
+	* src/totem.c: (update_mrl_label), (totem_action_previous),
+	(totem_action_next), (update_current_time), (update_cb_often),
+	(video_widget_create): add support for a "tick" signal, remove X
+	completion event handling, it's now in the video output plugin, added
+	better error message for totem-video-thumbnailer
+
 2003-02-04  Zbigniew Chyla  <cyba@gnome.pl>
 
 	* configure.in (ALL_LINGUAS): Added pl (Polish).

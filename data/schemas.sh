@@ -1,7 +1,7 @@
 #!/bin/sh
 
 OWNER=totem
-COMMAND="totem-video-thumbnailer %u %o"
+COMMAND="$2/totem-video-thumbnailer %u %o"
 
 schema()
 {
@@ -18,6 +18,8 @@ schema()
 	echo "            </locale>";
 	echo "        </schema>";
 	echo;
+
+	echo gconftool-2 --set --type $TYPE /desktop/gnome/thumbnailers/$NAME \"$DEFAULT\" 1>&2
 }
 
 MIMETYPES=`cat $1 | grep -v short_list_application_ids_for_ | grep "\/" | grep -v audio`
