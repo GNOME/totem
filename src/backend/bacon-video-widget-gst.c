@@ -1097,13 +1097,22 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
 void
 bacon_video_widget_set_logo (BaconVideoWidget * bvw, gchar * filename)
 {
+  GError *error = NULL;
+  
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_VIDEO_WIDGET (bvw->priv->vw));
 
-  bvw->priv->logo_pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+  bvw->priv->logo_pixbuf = gdk_pixbuf_new_from_file (filename, &error);
 
-  gst_video_widget_set_logo (bvw->priv->vw, bvw->priv->logo_pixbuf);
+  if (error) {
+    g_warning ("An error occured trying to open logo %s: %s",
+               filename, error->message);
+    g_error_free (error);
+  }
+  else {
+    gst_video_widget_set_logo (bvw->priv->vw, bvw->priv->logo_pixbuf);
+  }
 }
 
 void
