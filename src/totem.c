@@ -1105,7 +1105,7 @@ on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
 
 /* This is only called when we are playing a DVD */
 static void
-on_title_change_event (GtkWidget *win, const char *string, Totem *totem)
+on_title_change_event (BaconVideoWidget *bvw, const char *string, Totem *totem)
 {
 	update_mrl_label (totem, string);
 	totem_playlist_set_title (TOTEM_PLAYLIST (totem->playlist), string);

@@ -1337,11 +1337,19 @@ get_list_of_type (BaconVideoWidget * bvw, const gchar * type_name)
 
 GList * bacon_video_widget_get_subtitles (BaconVideoWidget * bvw)
 {
+  g_return_val_if_fail (bvw != NULL, NULL);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
+  g_return_val_if_fail (bvw->priv->play != NULL, NULL);
+
   return get_list_of_type (bvw, "TEXT");
 }
 
 GList * bacon_video_widget_get_languages (BaconVideoWidget * bvw)
 {
+  g_return_val_if_fail (bvw != NULL, NULL);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
+  g_return_val_if_fail (bvw->priv->play != NULL, NULL);
+
   return get_list_of_type (bvw, "AUDIO");
 }
 

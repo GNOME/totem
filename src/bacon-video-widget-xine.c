@@ -3342,6 +3342,9 @@ GList
 	int i, num_channels;
 	char lang[XINE_LANG_MAX];
 
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
+	g_return_val_if_fail (bvw->priv->stream != NULL, NULL);
+
 	if (bvw->priv->mrl == NULL)
 		return NULL;
 
@@ -3397,6 +3400,9 @@ GList
 	int i;
 	char lang[XINE_LANG_MAX];
 
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
+	g_return_val_if_fail (bvw->priv->stream != NULL, NULL);
+
 	if (bvw->priv->mrl == NULL)
 		return NULL;
 
@@ -3417,12 +3423,18 @@ GList
 int
 bacon_video_widget_get_subtitle (BaconVideoWidget *bvw)
 {
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -2);
+	g_return_val_if_fail (bvw->priv->stream != NULL, -2);
+
 	return xine_get_param (bvw->priv->stream, XINE_PARAM_SPU_CHANNEL);
 }
 
 void
 bacon_video_widget_set_subtitle (BaconVideoWidget *bvw, int subtitle)
 {
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->stream != NULL);
+
 	xine_set_param (bvw->priv->stream, XINE_PARAM_SPU_CHANNEL, subtitle);
 }
 
