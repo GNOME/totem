@@ -4,7 +4,7 @@
 #include <gnome.h>
 #include "bacon-video-widget.h"
 
-#define THUMB_DEBUG
+/* #define THUMB_DEBUG */
 
 static void
 print_usage (void)
