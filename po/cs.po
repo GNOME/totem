@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-15 15:34+0200\n"
-"PO-Revision-Date: 2004-04-15 16:22+0200\n"
+"POT-Creation-Date: 2004-04-17 15:32+0200\n"
+"PO-Revision-Date: 2004-04-17 17:17+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -998,7 +998,7 @@ msgstr ""
 "Nelze načíst ovladač zvuku '%s'.\n"
 "Ověřte prosím, zda není zařízení obsazeno."
 
-#: src/bacon-video-widget-xine.c:1130 src/bacon-video-widget-xine.c:1530
+#: src/bacon-video-widget-xine.c:1130 src/bacon-video-widget-xine.c:1542
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -1059,35 +1059,35 @@ msgstr "Tento nelze přehrávat z důvodů zabezpečení."
 msgid "The audio device is busy. Is another application using it?"
 msgstr "Zvukové zařízení se používá. Používá je jiná aplikace?"
 
-#: src/bacon-video-widget-xine.c:1274
+#: src/bacon-video-widget-xine.c:1272
 msgid "You are not allowed to open this file."
 msgstr "Není vám dovoleno otevřít tento soubor."
 
-#: src/bacon-video-widget-xine.c:1276
+#: src/bacon-video-widget-xine.c:1274
 msgid "The server refused access to this file or stream."
 msgstr "Server odmítl přístup k tomuto souboru nebo proudu."
 
-#: src/bacon-video-widget-xine.c:1369
-msgid "There is no plugin to handle this movie"
-msgstr "Pro obsluhu tohoto filmu chybí zásuvný modul"
-
-#: src/bacon-video-widget-xine.c:1373
-msgid "This movie is broken and can not be played further"
-msgstr "Tento film je poškozen a nelze jej dále přehrávat"
-
-#: src/bacon-video-widget-xine.c:1377
-msgid "This location is not a valid one"
-msgstr "Toto umístění není platné"
-
 #: src/bacon-video-widget-xine.c:1381
-msgid "This movie could not be opened"
-msgstr "Tento film nelze otevřít"
+msgid "There is no plugin to handle this movie."
+msgstr "Pro obsluhu tohoto filmu chybí zásuvný modul."
 
-#: src/bacon-video-widget-xine.c:1384
-msgid "Generic Error"
-msgstr "Obecná chyba"
+#: src/bacon-video-widget-xine.c:1385
+msgid "This movie is broken and can not be played further."
+msgstr "Tento film je poškozen a nelze jej dále přehrávat."
 
-#: src/bacon-video-widget-xine.c:1828
+#: src/bacon-video-widget-xine.c:1389
+msgid "This location is not a valid one."
+msgstr "Toto umístění není platné."
+
+#: src/bacon-video-widget-xine.c:1393
+msgid "This movie could not be opened."
+msgstr "Tento film nelze otevřít."
+
+#: src/bacon-video-widget-xine.c:1396
+msgid "Generic Error."
+msgstr "Obecná chyba."
+
+#: src/bacon-video-widget-xine.c:1840
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1096,21 +1096,21 @@ msgstr ""
 "Video kodek '%s' není obsloužen. Pro přehrávání některých typů filmů budete "
 "možná muset nainstalovat přídavné zásuvné moduly."
 
-#: src/bacon-video-widget-xine.c:1847
-msgid "This is an audio-only file, and there is no audio output available"
-msgstr "Tento soubor obsahuje jen zvuk a zvukový výstup není k dispozici"
+#: src/bacon-video-widget-xine.c:1859
+msgid "This is an audio-only file, and there is no audio output available."
+msgstr "Tento soubor obsahuje jen zvuk a zvukový výstup není k dispozici."
 
-#: src/bacon-video-widget-xine.c:3312
-msgid "Movie is not playing"
-msgstr "Film se nepřehrává"
+#: src/bacon-video-widget-xine.c:3322
+msgid "Movie is not playing."
+msgstr "Film se nepřehrává."
 
-#: src/bacon-video-widget-xine.c:3320
-msgid "No video to capture"
-msgstr "Žádné video k zachycení"
+#: src/bacon-video-widget-xine.c:3330
+msgid "No video to capture."
+msgstr "Žádné video k zachycení."
 
-#: src/bacon-video-widget-xine.c:3327
-msgid "Video codec is not handled"
-msgstr "Kodek videa '%s' není obsloužen"
+#: src/bacon-video-widget-xine.c:3337
+msgid "Video codec is not handled."
+msgstr "Kodek videa není obsloužen."
 
 #: src/cd-drive.c:573
 #, c-format
@@ -1298,8 +1298,8 @@ msgid "Totem could not eject the optical media."
 msgstr "Totem nemohl vysunout optické médium."
 
 #: src/totem.c:342
-msgid "No reason given"
-msgstr "Žádný důvod neuveden"
+msgid "No reason given."
+msgstr "Žádný důvod neuveden."
 
 #: src/totem.c:363 src/totem.c:391 src/totem.c:816 src/totem.c:925
 #, c-format
@@ -1398,9 +1398,9 @@ msgstr "Přehrávač filmů používající %s"
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem nemohl zachytit obrazovku s tímto filmem."
 
-#: src/totem.c:1993 src/vanity.c:324
-msgid "Please file a bug, this isn't supposed to happen"
-msgstr "Ohlaste prosím chybu, toto by se nemělo stát"
+#: src/totem.c:1993
+msgid "Please file a bug, this isn't supposed to happen."
+msgstr "Ohlaste prosím chybu, toto by se nemělo stát."
 
 #: src/totem.c:2020
 msgid "Totem couldn't show the movie properties window."
@@ -1465,6 +1465,10 @@ msgstr "Ladicí režim zapnut"
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "Nástroj pro WWW kamery používající %s"
+
+#: src/vanity.c:324
+msgid "Please file a bug, this isn't supposed to happen"
+msgstr "Ohlaste prosím chybu, toto by se nemělo stát"
 
 #: src/vanity.c:567
 #, c-format
