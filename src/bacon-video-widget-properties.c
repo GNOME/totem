@@ -117,6 +117,7 @@ bacon_video_widget_properties_set_from_current
 	GValue value = { 0, };
 	char *string;
 	int x, y;
+	gboolean has_type;
 
 	/* General */
 	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
@@ -153,62 +154,68 @@ bacon_video_widget_properties_set_from_current
 	item = glade_xml_get_widget (props->priv->xml, "video");
 	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
 			BVW_INFO_HAS_VIDEO, &value);
-	if (g_value_get_boolean (&value) == FALSE)
-		gtk_widget_set_sensitive (item, FALSE);
-	else
-		gtk_widget_set_sensitive (item, TRUE);
+	has_type = g_value_get_boolean (&value);
+	gtk_widget_set_sensitive (item, has_type);
 	g_value_unset (&value);
 
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_DIMENSION_X, &value);
-	x = g_value_get_int (&value);
-	g_value_unset (&value);
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_DIMENSION_Y, &value);
-	y = g_value_get_int (&value);
-	g_value_unset (&value);
-	string = g_strdup_printf ("%d x %d", x, y);
-	bacon_video_widget_properties_set_label (props, "dimensions", string);
-	g_free (string);
+	if (has_type != FALSE)
+	{
+		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+				BVW_INFO_DIMENSION_X, &value);
+		x = g_value_get_int (&value);
+		g_value_unset (&value);
+		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+				BVW_INFO_DIMENSION_Y, &value);
+		y = g_value_get_int (&value);
+		g_value_unset (&value);
+		string = g_strdup_printf ("%d x %d", x, y);
+		bacon_video_widget_properties_set_label
+			(props, "dimensions", string);
+		g_free (string);
 
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_VIDEO_CODEC, &value);
-	bacon_video_widget_properties_set_label (props, "vcodec",
-			g_value_get_string (&value)
-			? g_value_get_string (&value) : _("N/A"));
-	g_value_unset (&value);
+		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+				BVW_INFO_VIDEO_CODEC, &value);
+		bacon_video_widget_properties_set_label (props, "vcodec",
+				g_value_get_string (&value)
+				? g_value_get_string (&value) : _("N/A"));
+		g_value_unset (&value);
 
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_FPS, &value);
-	string = g_strdup_printf (_("%d frames per second"),
-			g_value_get_int (&value));
-	bacon_video_widget_properties_set_label (props, "framerate", string);
-	g_free (string);
-	g_value_unset (&value);
+		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+				BVW_INFO_FPS, &value);
+		string = g_strdup_printf (_("%d frames per second"),
+				g_value_get_int (&value));
+		g_value_unset (&value);
+		bacon_video_widget_properties_set_label
+			(props, "framerate", string);
+		g_free (string);
+	}
 
 	/* Audio */
 	item = glade_xml_get_widget (props->priv->xml, "audio");
 	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
 			BVW_INFO_HAS_AUDIO, &value);
-	if (g_value_get_boolean (&value) == FALSE)
-		gtk_widget_set_sensitive (item, FALSE);
-	else
-		gtk_widget_set_sensitive (item, TRUE);
+	has_type = g_value_get_boolean (&value);
+	gtk_widget_set_sensitive (item, has_type);
 	g_value_unset (&value);
 
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_BITRATE, &value);
-	string = g_strdup_printf (_("%d kbps"), g_value_get_int (&value));
-	bacon_video_widget_properties_set_label (props, "bitrate", string);
-	g_free (string);
-	g_value_unset (&value);
+	if (has_type != FALSE)
+	{
+		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+				BVW_INFO_BITRATE, &value);
+		string = g_strdup_printf (_("%d kbps"),
+				g_value_get_int (&value));
+		g_value_unset (&value);
+		bacon_video_widget_properties_set_label
+			(props, "bitrate", string);
+		g_free (string);
 
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_AUDIO_CODEC, &value);
-	bacon_video_widget_properties_set_label (props, "acodec",
-			g_value_get_string (&value)
-			? g_value_get_string (&value) : _("N/A"));
-	g_value_unset (&value);
+		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+				BVW_INFO_AUDIO_CODEC, &value);
+		bacon_video_widget_properties_set_label (props, "acodec",
+				g_value_get_string (&value)
+				? g_value_get_string (&value) : _("N/A"));
+		g_value_unset (&value);
+	}
 }
 
 void
