@@ -2100,7 +2100,7 @@ update_dvd_menu_items (Totem *totem)
         GtkWidget *item;
         gboolean playing_dvd;
 
-        playing_dvd = totem_playing_dvd (totem);
+	playing_dvd = totem_playing_dvd (totem);
 
         item = glade_xml_get_widget (totem->xml, "dvd_root_menu");
 	gtk_widget_set_sensitive (item, playing_dvd);
@@ -2112,8 +2112,6 @@ update_dvd_menu_items (Totem *totem)
 	gtk_widget_set_sensitive (item, playing_dvd);
         item = glade_xml_get_widget (totem->xml, "dvd_chapter_menu");
 	gtk_widget_set_sensitive (item, playing_dvd);
-
-        return;
 }
 
 static void
@@ -2123,7 +2121,7 @@ update_buttons (Totem *totem)
 	gboolean has_item;
 
 	/* Previous */
-        /* FIXME Need way to detect if DVD Title is at first chapter */
+	/* FIXME Need way to detect if DVD Title is at first chapter */
 	if (totem_playing_dvd (totem) == TRUE)
 	{
 		has_item = TRUE;
@@ -2139,7 +2137,7 @@ update_buttons (Totem *totem)
 	gtk_widget_set_sensitive (item, has_item);
 
 	/* Next */
-        /* FIXME Need way to detect if DVD Title has no more chapters */
+	/* FIXME Need way to detect if DVD Title has no more chapters */
 	if (totem_playing_dvd (totem) == TRUE)
 	{
 		has_item = TRUE;

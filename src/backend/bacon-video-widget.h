@@ -34,21 +34,6 @@ typedef enum {
 } Speeds;
 
 typedef enum {
-	BVW_DVD_ROOT_MENU,
-	BVW_DVD_TITLE_MENU,
-	BVW_DVD_SUBPICTURE_MENU,
-	BVW_DVD_AUDIO_MENU,
-	BVW_DVD_ANGLE_MENU,
-	BVW_DVD_CHAPTER_MENU,
-	BVW_DVD_NEXT_CHAPTER,
-	BVW_DVD_PREV_CHAPTER,
-	BVW_DVD_NEXT_TITLE,
-	BVW_DVD_PREV_TITLE,
-	BVW_DVD_NEXT_ANGLE,
-	BVW_DVD_PREV_ANGLE
-} BaconVideoWidgetDVDEvent;
-
-typedef enum {
 	MEDIA_DVD,
 	MEDIA_VCD,
 	MEDIA_CDDA,
@@ -113,9 +98,6 @@ gboolean bacon_video_widget_play                 (BaconVideoWidget *bvw,
 void bacon_video_widget_stop                     (BaconVideoWidget *bvw);
 void bacon_video_widget_close                    (BaconVideoWidget *bvw);
 
-void bacon_video_widget_dvd_event                (BaconVideoWidget *bvw,
-						  BaconVideoWidgetDVDEvent type);
-
 /* Properties */
 void  bacon_video_widget_set_logo_mode		 (BaconVideoWidget *bvw,
 						  gboolean logo_mode);
@@ -165,8 +147,29 @@ G_CONST_RETURN gchar **bacon_video_widget_get_mrls
 						  MediaType type);
 
 void bacon_video_widget_get_metadata		 (BaconVideoWidget *bvw,
-						  BaconVideoWidgetMetadataType type,
+						  BaconVideoWidgetMetadataType
+						  type,
 						  GValue *value);
+
+/* DVD functions */
+typedef enum {
+	BVW_DVD_ROOT_MENU,
+	BVW_DVD_TITLE_MENU,
+	BVW_DVD_SUBPICTURE_MENU,
+	BVW_DVD_AUDIO_MENU,
+	BVW_DVD_ANGLE_MENU,
+	BVW_DVD_CHAPTER_MENU,
+	BVW_DVD_NEXT_CHAPTER,
+	BVW_DVD_PREV_CHAPTER,
+	BVW_DVD_NEXT_TITLE,
+	BVW_DVD_PREV_TITLE,
+	BVW_DVD_NEXT_ANGLE,
+	BVW_DVD_PREV_ANGLE
+} BaconVideoWidgetDVDEvent;
+
+void bacon_video_widget_dvd_event                (BaconVideoWidget *bvw,
+						  BaconVideoWidgetDVDEvent
+						  type);
 
 /* Screenshot functions */
 gboolean bacon_video_widget_can_get_frames       (BaconVideoWidget *bvw,

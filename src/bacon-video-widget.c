@@ -345,7 +345,7 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 			bvw->priv->can_vcd = TRUE;
 		else if (g_ascii_strcasecmp (autoplug_list[i], "DVD") == 0)
 			bvw->priv->can_dvd = TRUE;
-		else if (g_ascii_strcasecmp (autoplug_list[i], "CDDA") == 0)
+		else if (g_ascii_strcasecmp (autoplug_list[i], "CD") == 0)
 			bvw->priv->can_cdda = TRUE;
 		i++;
 	}
@@ -1185,13 +1185,10 @@ show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals)
 		if (xine_post_wire_audio_port (audio_source,
 					bvw->priv->vis->audio_input[0]))
 			bvw->priv->using_vfx = TRUE;
-	}
-#if 0
-	else if (has_video == FALSE && show_visuals == FALSE) {
+	} else if (has_video == FALSE && show_visuals == FALSE) {
 		audio_source = xine_get_audio_source (bvw->priv->stream);
 		xine_post_wire_audio_port (audio_source, bvw->priv->ao_driver);
 	}
-#endif
 }
 
 static char *
@@ -1338,22 +1335,27 @@ bacon_video_widget_set_property (GObject *object, guint property_id,
 	switch (property_id)
 	{
 	case PROP_LOGO_MODE:
-		bacon_video_widget_set_logo_mode (bvw, g_value_get_boolean (value));
+		bacon_video_widget_set_logo_mode (bvw,
+				g_value_get_boolean (value));
 		break;
 	case PROP_FULLSCREEN:
-		bacon_video_widget_set_fullscreen (bvw, g_value_get_boolean (value));
+		bacon_video_widget_set_fullscreen (bvw,
+				g_value_get_boolean (value));
 		break;
 	case PROP_SPEED:
 		bacon_video_widget_set_speed (bvw, g_value_get_int (value));
 		break;
 	case PROP_SHOWCURSOR:
-		bacon_video_widget_set_show_cursor (bvw, g_value_get_boolean (value));
+		bacon_video_widget_set_show_cursor (bvw,
+				g_value_get_boolean (value));
 		break;
 	case PROP_MEDIADEV:
-		bacon_video_widget_set_media_device (bvw, g_value_get_string (value));
+		bacon_video_widget_set_media_device (bvw,
+				g_value_get_string (value));
 		break;
 	case PROP_SHOW_VISUALS:
-		bacon_video_widget_set_show_visuals (bvw, g_value_get_boolean (value));
+		bacon_video_widget_set_show_visuals (bvw,
+				g_value_get_boolean (value));
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1373,10 +1375,12 @@ bacon_video_widget_get_property (GObject *object, guint property_id,
 	switch (property_id)
 	{
 	case PROP_LOGO_MODE:
-		g_value_set_boolean (value, bacon_video_widget_get_logo_mode (bvw));
+		g_value_set_boolean (value,
+				bacon_video_widget_get_logo_mode (bvw));
 		break;
 	case PROP_FULLSCREEN:
-		g_value_set_boolean (value, bacon_video_widget_is_fullscreen (bvw));
+		g_value_set_boolean (value,
+				bacon_video_widget_is_fullscreen (bvw));
 		break;
 	case PROP_SPEED:
 		g_value_set_int (value, bacon_video_widget_get_speed (bvw));
@@ -1385,16 +1389,20 @@ bacon_video_widget_get_property (GObject *object, guint property_id,
 		g_value_set_int (value, bacon_video_widget_get_position (bvw));
 		break;
 	case PROP_STREAM_LENGTH:
-		g_value_set_int (value, bacon_video_widget_get_stream_length (bvw));
+		g_value_set_int (value,
+				bacon_video_widget_get_stream_length (bvw));
 		break;
 	case PROP_PLAYING:
-		g_value_set_boolean (value, bacon_video_widget_is_playing (bvw));
+		g_value_set_boolean (value,
+				bacon_video_widget_is_playing (bvw));
 		break;
 	case PROP_SEEKABLE:
-		g_value_set_boolean (value, bacon_video_widget_is_seekable (bvw));
+		g_value_set_boolean (value,
+				bacon_video_widget_is_seekable (bvw));
 		break;
 	case PROP_SHOWCURSOR:
-		g_value_set_boolean (value, bacon_video_widget_get_show_cursor (bvw));
+		g_value_set_boolean (value,
+				bacon_video_widget_get_show_cursor (bvw));
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1683,6 +1691,16 @@ bacon_video_widget_set_media_device (BaconVideoWidget *bvw, const char *path)
 			"input.vcd_device", &entry);
 	entry.str_value = g_strdup (path);
 	xine_config_update_entry (bvw->priv->xine, &entry);
+
+	/* CDDA device */
+	xine_config_register_string (bvw->priv->xine,
+			"input.cdda_device", path,
+			"device used for cdrom drive",
+			NULL, 10, NULL, NULL);
+	xine_config_lookup_entry (bvw->priv->xine,
+			"input.cdda_device", &entry);
+	entry.str_value = g_strdup (path);
+	xine_config_update_entry (bvw->priv->xine, &entry);
 }
 
 void
@@ -1736,11 +1754,8 @@ bacon_video_widget_set_show_visuals (BaconVideoWidget *bvw,
 	g_return_if_fail (bvw->priv->xine != NULL);
 
 	bvw->priv->show_vfx = show_visuals;
-#if 0
 	show_vfx_update (bvw, show_visuals);
 	return TRUE;
-#endif
-	return FALSE;
 }
 
 void
@@ -1861,7 +1876,7 @@ G_CONST_RETURN gchar
 	else if (type == MEDIA_VCD)
 		plugin_id = "VCD";
 	else if (type == MEDIA_CDDA)
-		plugin_id = "CDDA";
+		plugin_id = "CD";
 	else
 		return NULL;
 

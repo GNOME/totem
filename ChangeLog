@@ -1,3 +1,16 @@
+2003-03-25  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget.c: (bacon_video_widget_instance_init),
+	(show_vfx_update), (bacon_video_widget_set_property),
+	(bacon_video_widget_get_property),
+	(bacon_video_widget_set_media_device),
+	(bacon_video_widget_set_show_visuals),
+	(bacon_video_widget_get_mrls): on-the-fly setting for the vis plugin
+	(Really Closes: #108595), use CD instead of CDDA for the xine CD
+	plugin, use the right device for the Audio CD
+	* src/bacon-video-widget.h:
+	* src/totem.c: (update_dvd_menu_items), (update_buttons): upd
+
 2003-03-24  Bastien Nocera  <hadess@hadess.net>
 
 	* data/Makefile.am:
