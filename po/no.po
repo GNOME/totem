@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-15 14:27+0100\n"
-"PO-Revision-Date: 2004-02-15 14:27+0100\n"
+"POT-Creation-Date: 2004-02-19 20:52+0100\n"
+"PO-Revision-Date: 2004-02-19 20:53+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -96,6 +96,7 @@ msgid "Framerate:"
 msgstr "Bilderate:"
 
 #. Video Codec
+#. Audio Codec
 #: data/properties.glade.h:15 src/bacon-video-widget-properties.c:167
 #: src/bacon-video-widget-properties.c:174
 #: src/bacon-video-widget-properties.c:243
@@ -103,7 +104,7 @@ msgstr "Bilderate:"
 msgid "N/A"
 msgstr "I/T"
 
-#: data/properties.glade.h:16 src/totem.c:2149
+#: data/properties.glade.h:16 src/totem.c:2078
 msgid "Properties"
 msgstr "Egenskaper"
 
@@ -112,6 +113,8 @@ msgid "Title:"
 msgstr "Tittel:"
 
 #. Title
+#. Artist
+#. Year
 #: data/properties.glade.h:18 src/bacon-video-widget-properties.c:157
 #: src/bacon-video-widget-properties.c:159
 #: src/bacon-video-widget-properties.c:161
@@ -125,33 +128,13 @@ msgstr "Ukjent"
 msgid "Year:"
 msgstr "År:"
 
-#: data/totem-download.glade.h:1
-msgid "Connecting to the server"
-msgstr "Kobler til tjener"
-
-#: data/totem-download.glade.h:2
-msgid "Done"
-msgstr "Ferdig"
-
-#: data/totem-download.glade.h:3
-msgid "Downloading the plug-ins"
-msgstr "Laster ned tillegg"
-
-#: data/totem-download.glade.h:4
-msgid "Installing the plug-ins"
-msgstr "Installerer tilleggene"
-
-#: data/totem-download.glade.h:5
-msgid "Plug-ins Download"
-msgstr "Nedlasting av tillegg"
-
 #: data/totem.desktop.in.h:1
 msgid "Play movies and songs"
 msgstr "Spill av filmer og sanger"
 
 #. Title
-#: data/totem.desktop.in.h:2 data/totem.glade.h:97 src/totem.c:739
-#: src/totem.c:3693
+#: data/totem.desktop.in.h:2 data/totem.glade.h:97 src/totem.c:683
+#: src/totem.c:3650
 msgid "Totem Movie Player"
 msgstr "Totem filmavspiller"
 
@@ -343,7 +326,7 @@ msgstr "Språk"
 msgid "Large"
 msgstr "Stor"
 
-#: data/totem.glade.h:50 src/totem.c:78
+#: data/totem.glade.h:50 src/totem.c:76
 msgid "Next"
 msgstr "Neste"
 
@@ -403,11 +386,11 @@ msgstr "Spill av lyd-CD"
 msgid "Play or pause the movie"
 msgstr "Spill av eller sett filmen på pause"
 
-#: data/totem.glade.h:65 src/totem.c:77
+#: data/totem.glade.h:65 src/totem.c:75
 msgid "Play/Pause"
 msgstr "Spill/pause"
 
-#: data/totem.glade.h:66 src/totem.c:79
+#: data/totem.glade.h:66 src/totem.c:77
 msgid "Previous"
 msgstr "Forrige"
 
@@ -848,7 +831,7 @@ msgstr "Vis live webkamera og last opp bilder"
 msgid "Save File"
 msgstr "Lagre fil"
 
-#: data/vanity.glade.h:2 src/vanity.c:248
+#: data/vanity.glade.h:2 src/vanity.c:247
 msgid "Vanity"
 msgstr "Vanity"
 
@@ -1054,33 +1037,6 @@ msgstr "SCSI CD-ROM uten navn (%s)"
 msgid "File image"
 msgstr "CD-bilde"
 
-#: src/gnome-authn-manager.c:60
-msgid "Your HTTP Proxy requires you to log in.\n"
-msgstr "Din HTTP-proxy krever at du logger inn.\n"
-
-#: src/gnome-authn-manager.c:61
-#, c-format
-msgid ""
-"You must log in to access \"%s\".\n"
-"\n"
-"%s"
-msgstr ""
-"Du må logge inn for å aksessere «%s».\n"
-"\n"
-"%s"
-
-#: src/gnome-authn-manager.c:64
-msgid "Your password will be transmitted unencrypted."
-msgstr "Ditt passord vil oversendes ukryptert."
-
-#: src/gnome-authn-manager.c:65
-msgid "Your password will be transmitted encrypted."
-msgstr "Ditt passord vil oversendes kryptert."
-
-#: src/gnome-authn-manager.c:68
-msgid "Authentication Required"
-msgstr "Autentisering kreves"
-
 #: src/gnome-password-dialog.c:227
 msgid "_Username:"
 msgstr "Br_ukernavn:"
@@ -1097,7 +1053,7 @@ msgstr "Husk dette passordet"
 msgid "Could not save the playlist"
 msgstr "Kunne ikke lagre spillelisten"
 
-#: src/totem-playlist.c:476 src/totem.c:1571
+#: src/totem-playlist.c:476 src/totem.c:1500
 msgid "Select files"
 msgstr "Velg filer"
 
@@ -1175,7 +1131,7 @@ msgstr "Skyggetype"
 msgid "Style of bevel around the statusbar text"
 msgstr "Stil på kant rundt statuslinjeteksten"
 
-#: src/totem-statusbar.c:171 src/totem.c:360
+#: src/totem-statusbar.c:171 src/totem.c:304
 msgid "Stopped"
 msgstr "Stoppet"
 
@@ -1202,80 +1158,76 @@ msgstr "Henter data"
 msgid "%d %%"
 msgstr "%d %%"
 
-#: src/totem.c:76
+#: src/totem.c:74
 msgid "Backend options"
 msgstr "Alternativer for videomotor"
 
-#: src/totem.c:80
+#: src/totem.c:78
 msgid "Seek Forwards"
 msgstr "Søk fremover"
 
-#: src/totem.c:81
+#: src/totem.c:79
 msgid "Seek Backwards"
 msgstr "Søk bakover"
 
-#: src/totem.c:82
+#: src/totem.c:80
 msgid "Volume Up"
 msgstr "Volum opp"
 
-#: src/totem.c:83
+#: src/totem.c:81
 msgid "Volume Down"
 msgstr "Volum ned"
 
-#: src/totem.c:84
+#: src/totem.c:82
 msgid "Toggle Fullscreen"
 msgstr "Slå av/på fullskjerm"
 
-#: src/totem.c:85
+#: src/totem.c:83
 msgid "Quit"
 msgstr "Avslutt"
 
-#: src/totem.c:86
+#: src/totem.c:84
 msgid "Enqueue"
 msgstr "Legg i kø"
 
-#: src/totem.c:87
+#: src/totem.c:85
 msgid "Replace"
 msgstr "Erstatt"
 
-#: src/totem.c:231
-msgid "Download"
-msgstr "Last ned"
-
-#: src/totem.c:346
+#: src/totem.c:290
 msgid "Playing"
 msgstr "Spiller"
 
-#: src/totem.c:353
+#: src/totem.c:297
 msgid "Paused"
 msgstr "Pause"
 
-#: src/totem.c:389
+#: src/totem.c:333
 msgid "Totem could not eject the optical media."
 msgstr "Totem kunne ikke løse ut det optiske mediet."
 
-#: src/totem.c:389
+#: src/totem.c:333
 msgid "No reason given"
 msgstr "Ingen årsak gitt"
 
-#: src/totem.c:410 src/totem.c:438 src/totem.c:862 src/totem.c:981
+#: src/totem.c:354 src/totem.c:382 src/totem.c:803 src/totem.c:910
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem kunne ikke spille av «%s»."
 
-#: src/totem.c:458
+#: src/totem.c:402
 msgid "DVD"
 msgstr "DVD"
 
-#: src/totem.c:459
+#: src/totem.c:403
 msgid "Video CD"
 msgstr "Video-CD"
 
-#: src/totem.c:460
+#: src/totem.c:404
 msgid "Audio CD"
 msgstr "Audio-CD"
 
-#: src/totem.c:471
+#: src/totem.c:415
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1284,7 +1236,7 @@ msgstr ""
 "Totem kan ikke spille av denne typen media (%s) fordi du ikke har tilleggene "
 "som  kreves for å håndtere det."
 
-#: src/totem.c:472
+#: src/totem.c:416
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1292,7 +1244,7 @@ msgstr ""
 "Installer de nødvendige tilleggene og start Totem på nytt for å kunne spille "
 "av dette mediet."
 
-#: src/totem.c:480
+#: src/totem.c:424
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1301,7 +1253,7 @@ msgstr ""
 "Totem kunne ikke spille av dette mediet (%s) selv om et tillegg finnes som "
 "skal håndtere det."
 
-#: src/totem.c:481
+#: src/totem.c:425
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1310,134 +1262,134 @@ msgstr ""
 "konfigurert."
 
 #. Title
-#: src/totem.c:716
+#: src/totem.c:660
 #, c-format
 msgid "%s - Totem Movie Player"
 msgstr "%s - Totem filmavspiller"
 
-#: src/totem.c:728 src/totem.c:3535
+#: src/totem.c:672 src/totem.c:3492
 msgid "No file"
 msgstr "Ingen fil"
 
-#: src/totem.c:764 src/totem.c:1924
+#: src/totem.c:708 src/totem.c:1853
 msgid "Totem"
 msgstr "Totem"
 
-#: src/totem.c:1255
+#: src/totem.c:1184
 msgid "An error occured"
 msgstr "En feil oppsto"
 
-#: src/totem.c:1636 src/totem.c:1644
+#: src/totem.c:1565 src/totem.c:1573
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "Kunne ikke laste grensesnitt for 'Åpne lokasjon'."
 
-#: src/totem.c:1636 src/totem.c:1644 src/totem.c:3724 src/totem.c:3749
-#: src/totem.c:3772
+#: src/totem.c:1565 src/totem.c:1573 src/totem.c:3683 src/totem.c:3708
+#: src/totem.c:3731
 msgid "Make sure that Totem is properly installed."
 msgstr "Sjekk at Totem er korrekt installert."
 
-#: src/totem.c:1877
+#: src/totem.c:1806
 msgid "Totem could not display the help contents."
 msgstr "Totem kunne ikke vise hjelpinnhold."
 
-#: src/totem.c:1895 src/vanity.c:219
+#: src/totem.c:1824 src/vanity.c:218
 msgid "translator_credits"
 msgstr "Kjartan Maraas <kmaraas@gnome.org>"
 
-#: src/totem.c:1921
+#: src/totem.c:1850
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Filmavspiller bruker %s"
 
-#: src/totem.c:2007 src/totem.c:2018 src/vanity.c:305 src/vanity.c:316
+#: src/totem.c:1936 src/totem.c:1947 src/vanity.c:304 src/vanity.c:315
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Skjermdump%d.png"
 
-#: src/totem.c:2069 src/totem.c:2077
+#: src/totem.c:1998 src/totem.c:2006
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem kunne ikke ta et skjermdump av denne filmen."
 
-#: src/totem.c:2077
+#: src/totem.c:2006
 msgid "Please file a bug, this isn't supposed to happen"
 msgstr "Vær snill å rapportere dette da det ikke skal skje"
 
-#: src/totem.c:2105
+#: src/totem.c:2034
 #, c-format
 msgid "File '%s' already exists."
 msgstr "Filen «%s» eksisterer allerede."
 
-#: src/totem.c:2106
+#: src/totem.c:2035
 msgid "The screenshot was not saved"
 msgstr "Skjermdumpet ble ikke lagret."
 
-#: src/totem.c:2116
+#: src/totem.c:2045
 msgid "There was an error saving the screenshot."
 msgstr "Det oppsto en feil under lagring av skjermdump."
 
-#: src/totem.c:2139
+#: src/totem.c:2068
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem kunne ikke laste vindu for egenskaper for filmen."
 
-#: src/totem.c:2139
+#: src/totem.c:2068
 msgid "Make sure that Totem is correctly installed."
 msgstr "Sjekk at Totem er korrekt installert."
 
-#: src/totem.c:2225
+#: src/totem.c:2154
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem kunne ikke søke i «%s»."
 
-#: src/totem.c:2980 src/totem.c:3002
+#: src/totem.c:2909 src/totem.c:2931
 msgid "None"
 msgstr "Ingen"
 
-#: src/totem.c:2984 src/totem.c:3005
+#: src/totem.c:2913 src/totem.c:2934
 msgid "Auto"
 msgstr "Auto"
 
-#: src/totem.c:3440
+#: src/totem.c:3397
 msgid "Totem could not startup."
 msgstr "Totem kunne ikke starte opp."
 
-#: src/totem.c:3440
+#: src/totem.c:3397
 msgid "No reason."
 msgstr "Ingen årsak."
 
-#: src/totem.c:3698
+#: src/totem.c:3655
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Kunne ikke initiere trådsikre biblioteker."
 
-#: src/totem.c:3698
+#: src/totem.c:3655
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Sjekk systeminstallasjonen. Totem avslutter nå."
 
-#: src/totem.c:3716
+#: src/totem.c:3675
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem kunne ikke initiere konfigurasjonsmotoren."
 
-#: src/totem.c:3716
+#: src/totem.c:3675
 msgid "Make sure that GNOME is properly installed."
 msgstr "Sjekk at GNOME er korrekt installert."
 
-#: src/totem.c:3724 src/totem.c:3749
+#: src/totem.c:3683 src/totem.c:3708
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "Kunne ikke laste hovedgrensesnittet (totem.glade)."
 
-#: src/totem.c:3772
+#: src/totem.c:3731
 msgid "Couldn't load the interface for the playlist."
 msgstr "Kunne ikke laste grensesnitt for spillelisten."
 
-#: src/vanity.c:55
+#: src/vanity.c:54
 msgid "Debug mode on"
 msgstr "Feilsøkingsmodus aktivert"
 
-#: src/vanity.c:245
+#: src/vanity.c:244
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "Webkameraverktøy bruker %s"
 
-#: src/vanity.c:548
+#: src/vanity.c:547
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1446,11 +1398,11 @@ msgstr ""
 "Vanity kunne ikke starte opp:\n"
 "%s"
 
-#: src/vanity.c:549
+#: src/vanity.c:548
 msgid "No reason"
 msgstr "Ingen årsak"
 
-#: src/vanity.c:587
+#: src/vanity.c:586
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1459,7 +1411,7 @@ msgstr ""
 "Vanity kunne ikke kontakte webkameraet.\n"
 "Årsak: %s."
 
-#: src/vanity.c:603
+#: src/vanity.c:602
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1468,11 +1420,11 @@ msgstr ""
 "Totem kunne ikke spille av video fra webkameraet.\n"
 "Årsak: %s"
 
-#: src/vanity.c:639
+#: src/vanity.c:638
 msgid "Vanity Webcam Utility"
 msgstr "Vanity webkameraverktøy"
 
-#: src/vanity.c:644
+#: src/vanity.c:643
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1480,7 +1432,7 @@ msgstr ""
 "Kunne ikke initiere trådsikre biblioteker.\n"
 "Sjekk systeminstallasjonen. Vanity avslutter nå."
 
-#: src/vanity.c:666
+#: src/vanity.c:665
 #, c-format
 msgid ""
 "Vanity couln't initialise the \n"
@@ -1491,10 +1443,69 @@ msgstr ""
 "konfigurasjonsmotoren:\n"
 "%s"
 
-#: src/vanity.c:680 src/vanity.c:695
+#: src/vanity.c:679 src/vanity.c:694
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
 msgstr ""
 "Kunne ikke laste hovedgrensesnittet (vanity.glade).\n"
 "Sjekk at Vanity er korrekt installert."
+
+#: data/Totem_properties.server.in.in.h:1
+msgid "Audio And Video properties page"
+msgstr "Side med egenskaper for lyd og bilde"
+
+#: data/Totem_properties.server.in.in.h:2
+msgid "Audio and Video properties page"
+msgstr "Side med egenskaper for lyd og bilde"
+
+#: data/Totem_properties.server.in.in.h:3
+msgid "Audio and Video properties page factory"
+msgstr "Fabrikk for side med egenskaper for lyd og bilde"
+
+#: data/Totem_properties.server.in.in.h:4
+msgid "Audio/Video"
+msgstr "Lyd/bilde"
+
+#: data/Totem_properties.server.in.in.h:5
+msgid "Factory for Audio and Video properties_page"
+msgstr "Fabrikk for side med egenskaper for lyd og bilde"
+
+#~ msgid "Connecting to the server"
+#~ msgstr "Kobler til tjener"
+
+#~ msgid "Done"
+#~ msgstr "Ferdig"
+
+#~ msgid "Downloading the plug-ins"
+#~ msgstr "Laster ned tillegg"
+
+#~ msgid "Installing the plug-ins"
+#~ msgstr "Installerer tilleggene"
+
+#~ msgid "Plug-ins Download"
+#~ msgstr "Nedlasting av tillegg"
+
+#~ msgid "Your HTTP Proxy requires you to log in.\n"
+#~ msgstr "Din HTTP-proxy krever at du logger inn.\n"
+
+#~ msgid ""
+#~ "You must log in to access \"%s\".\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Du må logge inn for å aksessere «%s».\n"
+#~ "\n"
+#~ "%s"
+
+#~ msgid "Your password will be transmitted unencrypted."
+#~ msgstr "Ditt passord vil oversendes ukryptert."
+
+#~ msgid "Your password will be transmitted encrypted."
+#~ msgstr "Ditt passord vil oversendes kryptert."
+
+#~ msgid "Authentication Required"
+#~ msgstr "Autentisering kreves"
+
+#~ msgid "Download"
+#~ msgstr "Last ned"
