@@ -604,9 +604,7 @@ video_widget_create (Vanity *vanity)
 			g_error_free (err);
 
 		gtk_widget_hide (vanity->win);
-
 		vanity_action_error_and_exit (msg, vanity);
-		g_free (msg);
 	}
 
 	container = glade_xml_get_widget (vanity->xml, "frame1");
@@ -630,9 +628,27 @@ video_widget_create (Vanity *vanity)
 
 	gtk_widget_show (GTK_WIDGET (vanity->bvw));
 
-	//FIXME
-	bacon_video_widget_open (vanity->bvw, "v4l:/", NULL);
-	bacon_video_widget_play (vanity->bvw, 0, 0, NULL);
+	bacon_video_widget_open (vanity->bvw, "v4l:/", &err);
+	if (err != NULL)
+	{
+		char *msg;
+
+		msg = g_strdup_printf (_("Vanity could not contact the webcam.\nReason: %s"), err->message);
+		g_error_free (err);
+		gtk_widget_hide (vanity->win);
+		vanity_action_error_and_exit (msg, vanity);
+	}
+
+	bacon_video_widget_play (vanity->bvw, 0, 0, &err);
+	if (err != NULL)
+	{
+		char *msg;
+
+		msg = g_strdup_printf (_("Vanity could not play video from the webcam.\nReason: %s"), err->message);
+		g_error_free (err);
+		gtk_widget_hide (vanity->win);
+		vanity_action_error_and_exit (msg, vanity);
+	}
 }
 
 int
