@@ -1270,6 +1270,51 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
+
+  switch (type) {
+    case BVW_DVD_ROOT_MENU:
+    case BVW_DVD_TITLE_MENU:
+    case BVW_DVD_SUBPICTURE_MENU:
+    case BVW_DVD_AUDIO_MENU:
+    case BVW_DVD_ANGLE_MENU:
+    case BVW_DVD_CHAPTER_MENU:
+      /* FIXME */
+      break;
+    case BVW_DVD_NEXT_CHAPTER:
+    case BVW_DVD_PREV_CHAPTER:
+    case BVW_DVD_NEXT_TITLE:
+    case BVW_DVD_PREV_TITLE:
+    case BVW_DVD_NEXT_ANGLE:
+    case BVW_DVD_PREV_ANGLE: {
+      GstFormat fmt;
+      gint64 val;
+      gint dir;
+
+      if (type == BVW_DVD_NEXT_CHAPTER ||
+          type == BVW_DVD_NEXT_TITLE ||
+          type == BVW_DVD_NEXT_ANGLE)
+        dir = 1;
+      else
+        dir = -1;
+
+      if (type == BVW_DVD_NEXT_CHAPTER || type == BVW_DVD_PREV_CHAPTER)
+        fmt = gst_format_get_by_nick ("chapter");
+      else if (type == BVW_DVD_NEXT_TITLE || type == BVW_DVD_PREV_TITLE)
+        fmt == gst_format_get_by_nick ("title");
+      else
+        fmt = gst_format_get_by_nick ("angle");
+
+      if (gst_element_query (bvw->priv->play,
+          GST_QUERY_POSITION, &fmt, &val)) {
+        val += dir;
+        gst_element_seek (bvw->priv->play,
+            fmt | GST_SEEK_METHOD_SET | GST_SEEK_FLAG_FLUSH, val);
+      }
+      break;
+    }
+    default:
+      break;
+  }
 }
 
 void
@@ -1879,9 +1924,9 @@ bacon_video_widget_can_play (BaconVideoWidget * bvw, MediaType type)
   switch (type) {
     case MEDIA_TYPE_CDDA:
     case MEDIA_TYPE_VCD:
+    case MEDIA_TYPE_DVD:
       res = TRUE;
       break;
-    case MEDIA_TYPE_DVD:
     default:
       res = FALSE;
       break;
