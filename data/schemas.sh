@@ -3,6 +3,11 @@
 OWNER=totem
 COMMAND="$2/totem-video-thumbnailer %u %o"
 
+upd_schema()
+{
+	echo "gconftool-2 --set --type $TYPE /desktop/gnome/thumbnailers/$NAME \"$DEFAULT\"" 1>&2
+}
+
 schema()
 {
 	echo ;
@@ -19,7 +24,7 @@ schema()
 	echo "        </schema>";
 	echo;
 
-	echo gconftool-2 --set --type $TYPE /desktop/gnome/thumbnailers/$NAME \"$DEFAULT\" 1>&2
+	upd_schema;
 }
 
 MIMETYPES=`cat $1 | grep -v short_list_application_ids_for_ | grep "\/" | grep -v audio`
@@ -40,6 +45,22 @@ for i in $MIMETYPES ; do
 	DEFAULT="$COMMAND";
 	schema;
 done
+
+MIMETYPES=`cat $1 | grep -v short_list_application_ids_for_ | grep "\/" | grep audio`
+
+for i in $MIMETYPES ; do
+	DIR=`echo $i | sed 's,/,@,'`
+	NAME="$DIR/enable";
+	TYPE="bool";
+	DEFAULT="false";
+	upd_schema;
+
+	NAME="$DIR/command";
+	TYPE="string";
+	DEFAULT="$COMMAND";
+	upd_schema;
+done
+	
 
 echo "    </schemalist>";
 echo "</gconfschemafile>"
