@@ -1,3 +1,12 @@
+2004-09-21  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_metadata):
+	* src/bacon-video-widget.h: add BVW_INFO_ALBUM metadata
+	* src/totem-pl-parser.c: (totem_pl_parser_parse_internal):
+	Fix parsing of Real audio playlists (Closes: #153263)
+
 2004-09-20  Bastien Nocera  <hadess@hadess.net>
 
 	* data/vanity.glade: remove Bonobo requirement

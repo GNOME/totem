@@ -1226,6 +1226,9 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 
 	for (i = 0; i < G_N_ELEMENTS(dual_types); i++) {
 		if (strcmp (dual_types[i].mimetype, mimetype) == 0) {
+			if (data == NULL) {
+				mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data);
+			}
 			ret = (* dual_types[i].func) (parser, url, data);
 			g_free (data);
 			break;
