@@ -70,18 +70,28 @@ else
 fi
 AM_CONDITIONAL(TOTEM_GST, test x$ENABLE_GST = "xyes")
 
-dnl CURL is now needed
+dnl CURL tests
+CURL_MAJOR_REQ=7
+CURL_MINOR_REQ=9
+CURL_MICRO_REQ=8
 AC_PATH_PROG(CURL_CONFIG, curl-config, no)
-no_esd=""
 AC_MSG_CHECKING(for curl)
 if test "$CURL_CONFIG" = "no" ; then
-  AC_MSG_ERROR(curl development libraries is required for Totem)
+  AC_MSG_WARN(curl development libraries missing, no automatic DLL downloader)
 else
-  AC_MSG_RESULT(found)
-  CURL_CFLAGS=`$CURL_CONFIG --cflags`
-  CURL_LIBS=`$CURL_CONFIG --libs`
-  AC_SUBST(CURL_CFLAGS)
-  AC_SUBST(CURL_LIBS)
+  curl_major=`curl-config --version | sed 's/libcurl\ \([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\1/'`
+  curl_minor=`curl-config --version | sed 's/libcurl\ \([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\2/'`
+  curl_micro=`curl-config --version | sed 's/libcurl\ \([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\3/'`
+  if `test $curl_major -lt $CURL_MAJOR_REQ || test $curl_minor -lt $CURL_MINOR_REQ || test $curl_micro -lt $CURL_MICRO_REQ ` ; then
+	 AC_MSG_WARN(curl development libraries not new enough ( >= $CURL_MAJOR_REQ.$CURL_MINOR_REQ.$CURL_MICRO_REQ, no automatic DLL downloader))
+	 CURL_CONFIG="no"
+  else 
+	AC_MSG_RESULT(found)
+	CURL_CFLAGS=`$CURL_CONFIG --cflags`
+	CURL_LIBS=`$CURL_CONFIG --libs`
+	AC_SUBST(CURL_CFLAGS)
+	AC_SUBST(CURL_LIBS)
+  fi
 fi
 
 
@@ -192,6 +202,18 @@ case `uname` in
 	;;
 esac
 AM_CONDITIONAL(HAVE_LINUX, `test x$IS_LINUX = xyes`)
+
+_system_is_x86="no"
+AC_CHECK_HEADER( asm/vm86.h, _system_is_x86="yes" )
+if `test "x$_system_is_x86" = "xyes" && test "x$CURL_CONFIG" != "xno"` ; then
+	HAVE_X86=1
+else
+	HAVE_X86=0
+fi
+if $HAVE_X86 ; then
+  AC_DEFINE(HAVE_X86, 1, [defined on x86 machines])
+fi
+AM_CONDITIONAL(HAVE_X86, `test "x$_system_is_x86" = "xyes" && test "x$CURL_CONFIG" != "xno"`)
 
 AC_PATH_PROG(GCONFTOOL, gconftool-2)
 AM_GCONF_SOURCE_2

@@ -9,6 +9,10 @@ else
 MM=bacon-video-widget-xine.c
 endif
 
+if HAVE_X86
+TOTEM_DOWNLOAD = totem-download.c totem-download.h
+endif
+
 MARSHALFILES = baconvideowidget-marshal.h baconvideowidget-marshal.c
 GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
 
@@ -55,6 +59,7 @@ totem_SOURCES = 					\
 	$(EGG_RECENT_FILES)				\
 	$(BACON_CD_SELECTION)				\
 	$(VIDEOWIDGET)					\
+	$(TOTEM_DOWNLOAD)				\
 	totem.c totem.h					\
 	totem-remote.c totem-remote.h			\
 	totem-preferences.c totem-preferences.h		\
@@ -72,9 +77,7 @@ totem_SOURCES = 					\
 	gnome-password-dialog.c		\
 	gnome-password-dialog.h		\
 	totem-statusbar.c		\
-	totem-statusbar.h		\
-	totem-download.c		\
-	totem-download.h
+	totem-statusbar.h
 
 totem_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) $(CURL_LIBS)
 
@@ -113,5 +116,7 @@ CLEANFILES = *.bak *.gladep core* *.orig *~ $(MARSHALFILES) $(desktop_DATA)
 EXTRA_DIST =	bacon-video-widget-xine.c \
 		bacon-video-widget-gst.c \
 		gstvideowidget.c \
-		gstvideowidget.h
+		gstvideowidget.h \
+		totem-download.c \
+		totem-download.h
 

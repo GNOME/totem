@@ -1,3 +1,12 @@
+2003-06-10  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_open):
+	* src/totem.c: (totem_action_set_mrl), (totem_setup_recent): only
+	try to auto-download codecs on x86 platforms with a recent enough
+	version of libcurl, only show 5 items in the recent files list
+
 2003-06-09  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.glade: moved all the display preferences to another tab of

@@ -1522,7 +1522,8 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 		fourcc_str = get_fourcc_string (bvw->priv->video_fcc);
 		name = g_strdup (xine_get_meta_info (bvw->priv->stream,
 				XINE_META_INFO_VIDEOCODEC));
-//FIXME only x86
+#ifdef HAVE_X86
+		/* Only change the audio_fcc if we're on x86 */
 		if (xine_get_stream_info
 				(bvw->priv->stream,
 				 XINE_STREAM_INFO_AUDIO_HANDLED) == FALSE)
@@ -1531,7 +1532,10 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 				(bvw->priv->stream,
 				 XINE_STREAM_INFO_AUDIO_FOURCC);
 		}
-//FIXME bvw->priv->video_fcc = 0; on non-x86
+#else
+		/* Reset video_fcc, and leave audio_fcc at 0 */
+		bvw->priv->video_fcc = 0;
+#endif
 
 		bacon_video_widget_close (bvw);
 

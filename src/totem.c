@@ -205,6 +205,7 @@ totem_action_error (char *msg, Totem *totem)
 	gtk_widget_show (error_dialog);
 }
 
+#ifdef HAVE_X86
 static void
 totem_action_error_try_download (char *msg, Totem *totem)
 {
@@ -255,6 +256,7 @@ totem_action_error_try_download (char *msg, Totem *totem)
 	totem_download_from_fourcc (GTK_WINDOW (totem->win),
 			video_fcc, audio_fcc);
 }
+#endif
 
 void
 totem_action_error_and_exit (char *msg, Totem *totem)
@@ -830,8 +832,11 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 						"Reason: %s."),
 					mrl,
 					err->message);
-
+#ifdef HAVE_X86
 			totem_action_error_try_download (msg, totem);
+#else
+			totem_action_error (msg, totem);
+#endif
 			g_free (msg);
 		}
 	}
@@ -3319,7 +3324,8 @@ totem_setup_recent (Totem *totem)
 
 	totem->recent_view = egg_recent_view_gtk_new (menu, menu_item);
 	egg_recent_view_gtk_show_icons (EGG_RECENT_VIEW_GTK
-						(totem->recent_view), FALSE);
+			(totem->recent_view), FALSE);
+	egg_recent_model_set_limit (EGG_RECENT_VIEW (totem->recent_view), 5);
 	egg_recent_view_set_model (EGG_RECENT_VIEW (totem->recent_view),
 			totem->recent_model);
 	egg_recent_view_gtk_set_trailing_sep (totem->recent_view, TRUE);
