@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.0\n"
-"POT-Creation-Date: 2003-02-22 18:25-0300\n"
+"POT-Creation-Date: 2003-02-26 20:23+0000\n"
 "PO-Revision-Date: 2003-02-22 16:45-0300\n"
 "Last-Translator: Alexandre Folle de Menezes <afmenez@terra.com.br>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -165,7 +165,7 @@ msgstr "Sair da tela cheia"
 msgid "File name"
 msgstr "Nome do arquivo"
 
-#: data/totem.glade.h:12 src/totem.c:67
+#: data/totem.glade.h:12 src/totem.c:74
 msgid "Next"
 msgstr "Próximo"
 
@@ -189,11 +189,11 @@ msgstr "Tocar _DVD"
 msgid "Play _VCD"
 msgstr "Tocar _VCD"
 
-#: data/totem.glade.h:18 src/totem.c:66
+#: data/totem.glade.h:18 src/totem.c:73
 msgid "Play/Pause"
 msgstr "Play/Pausa"
 
-#: data/totem.glade.h:19 src/totem.c:68
+#: data/totem.glade.h:19 src/totem.c:75
 msgid "Previous"
 msgstr "Anterior"
 
@@ -258,7 +258,7 @@ msgid "Toggle _Aspect Ratio"
 msgstr "Mudar Razão de Aspecto"
 
 #. Title
-#: data/totem.glade.h:35 src/totem.c:397 src/totem.c:419 src/totem.c:1300
+#: data/totem.glade.h:35 src/totem.c:414 src/totem.c:436 src/totem.c:1267
 msgid "Totem"
 msgstr "Totem"
 
@@ -266,11 +266,11 @@ msgstr "Totem"
 msgid "Totem Preferences"
 msgstr "Preferências do Totem"
 
-#: data/totem.glade.h:37 src/totem.c:72
+#: data/totem.glade.h:37 src/totem.c:79
 msgid "Volume Down"
 msgstr "Diminuir Volume"
 
-#: data/totem.glade.h:38 src/totem.c:71
+#: data/totem.glade.h:38 src/totem.c:78
 msgid "Volume Up"
 msgstr "Aumentar Volume"
 
@@ -402,7 +402,7 @@ msgstr "_Senha:"
 msgid "Remember this password"
 msgstr "Lembrar-se dessa senha"
 
-#: src/gtk-playlist.c:414 src/totem.c:1116
+#: src/gtk-playlist.c:414 src/totem.c:1108
 msgid "Select files"
 msgstr "Selecione arquivos"
 
@@ -414,7 +414,7 @@ msgstr "Nome do Arquivo"
 msgid "Totem Video Window"
 msgstr "Janela de Vídeo Totem"
 
-#: src/bacon-video-widget.c:538
+#: src/bacon-video-widget.c:544
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -423,21 +423,38 @@ msgstr ""
 "Impossível carregar o driver de áudio '%s'\n"
 "Verifique se o dispositivo não está ocupado."
 
-#: src/bacon-video-widget.c:887
+#: src/bacon-video-widget.c:895
 msgid "There is no plugin to handle this movie"
 msgstr "Não existe plugin para tratar este filme"
 
-#: src/bacon-video-widget.c:891
+#: src/bacon-video-widget.c:899
 msgid "This movie is broken and can not be played further"
 msgstr "Este filme está com defeito e não pode ser mais tocado"
 
-#: src/bacon-video-widget.c:895
+#: src/bacon-video-widget.c:903
 msgid "This location is not a valid one"
 msgstr "Essa localização não é válida."
 
-#: src/bacon-video-widget.c:1175
+#: src/bacon-video-widget.c:1183
 #, c-format
 msgid "Video type '%s' is not handled"
+msgstr "Tipo de vídeo '%s' não é suportado."
+
+#: src/bacon-video-widget.c:2038
+msgid "Movie is not playing"
+msgstr ""
+
+#: src/bacon-video-widget.c:2046
+msgid "Can't capture visual effects"
+msgstr ""
+
+#: src/bacon-video-widget.c:2047
+msgid "No video to capture"
+msgstr ""
+
+#: src/bacon-video-widget.c:2054
+#, fuzzy
+msgid "Video codec is not handled"
 msgstr "Tipo de vídeo '%s' não é suportado."
 
 #. One hour
@@ -509,43 +526,43 @@ msgstr "%d quadros por segundo"
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/totem.c:69
+#: src/totem.c:76
 msgid "Seek Forwards"
 msgstr "Procurar para Frente"
 
-#: src/totem.c:70
+#: src/totem.c:77
 msgid "Seek Backwards"
 msgstr "Procurar para _Trás"
 
-#: src/totem.c:74
+#: src/totem.c:81
 msgid "Toggle Fullscreen"
 msgstr "Mudar Tela Cheia"
 
-#: src/totem.c:75
+#: src/totem.c:82
 msgid "Quit"
 msgstr "Sair"
 
-#: src/totem.c:76
+#: src/totem.c:83
 msgid "Enqueue"
 msgstr "Enfileirar"
 
-#: src/totem.c:77
+#: src/totem.c:84
 msgid "Replace"
 msgstr "Substituir"
 
-#: src/totem.c:160
+#: src/totem.c:166
 msgid "Playing"
 msgstr "Reproduzindo"
 
-#: src/totem.c:167
+#: src/totem.c:173
 msgid "Paused"
 msgstr "Pausado"
 
-#: src/totem.c:174 src/totem-statusbar.c:171
+#: src/totem.c:180 src/totem-statusbar.c:171
 msgid "Stopped"
 msgstr "Parado"
 
-#: src/totem.c:232 src/totem.c:510 src/totem.c:599
+#: src/totem.c:238 src/totem.c:527 src/totem.c:616
 #, c-format
 msgid ""
 "Totem could not play '%s'.\n"
@@ -554,7 +571,7 @@ msgstr ""
 "O Totem não pode tocar '%s':\n"
 "Razão: %s."
 
-#: src/totem.c:257
+#: src/totem.c:263
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -566,7 +583,7 @@ msgstr ""
 "Instale os plugins necessários e reinicie o Totem para poder tocar este tipo "
 "de mídia."
 
-#: src/totem.c:265
+#: src/totem.c:271
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -578,29 +595,29 @@ msgstr ""
 "corretamente configurado."
 
 #. Title
-#: src/totem.c:373
+#: src/totem.c:390
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:386 src/totem.c:2403
+#: src/totem.c:403 src/totem.c:2373
 msgid "No file"
 msgstr "Nenhum arquivo"
 
-#: src/totem.c:1276
+#: src/totem.c:1243
 msgid "translator_credits"
 msgstr "Copyright (C) 2002 Alexandre Folle de Menezes"
 
-#: src/totem.c:1302
+#: src/totem.c:1269
 msgid "Movie Player (based on the xine libraries)"
 msgstr "Movie Player (baseado nas bibliotecas xine)"
 
-#: src/totem.c:1356 src/totem.c:1367
+#: src/totem.c:1323 src/totem.c:1334
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "CapturadeTela%d.png"
 
-#: src/totem.c:1421
+#: src/totem.c:1387
 #, c-format
 msgid ""
 "Totem could not get a screenshot of that film.\n"
@@ -609,7 +626,7 @@ msgstr ""
 "O Totem não pôde capturar um quadro do filme.\n"
 "Razão: %s."
 
-#: src/totem.c:1431
+#: src/totem.c:1397
 msgid ""
 "Totem could not get a screenshot of that film.\n"
 "Please file a bug, this isn't supposed to happen"
@@ -617,7 +634,7 @@ msgstr ""
 "O Totem não pôde capturar um quadro do filme.\n"
 "Por favor, informe sobre este problema, não deveria ter acontecido"
 
-#: src/totem.c:1457
+#: src/totem.c:1423
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
@@ -626,7 +643,7 @@ msgstr ""
 "O arquivo '%s' já existe.\n"
 "A captura de tela não foi salva."
 
-#: src/totem.c:1468
+#: src/totem.c:1434
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -635,7 +652,7 @@ msgstr ""
 "Ocorreu um erro ao salvar a captura de tela.\n"
 "Detalhes: %s"
 
-#: src/totem.c:1487
+#: src/totem.c:1451
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -643,7 +660,7 @@ msgstr ""
 "Impossível mostrar a janela de propriedades do filme.\n"
 "Certifique-se de que o Totem  está adequadamente instalado."
 
-#: src/totem.c:1564
+#: src/totem.c:1520
 #, c-format
 msgid ""
 "Totem could not seek in '%s'.\n"
@@ -652,7 +669,7 @@ msgstr ""
 "O Totem não pode buscar em '%s':\n"
 "Razão: %s."
 
-#: src/totem.c:2339
+#: src/totem.c:2303
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -661,7 +678,7 @@ msgstr ""
 "O Totem não pode iniciar:\n"
 "%s"
 
-#: src/totem.c:2595
+#: src/totem.c:2568
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -672,7 +689,7 @@ msgstr ""
 "o mecanismo de configuração:\n"
 "%s"
 
-#: src/totem.c:2610 src/totem.c:2641
+#: src/totem.c:2583 src/totem.c:2615
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -680,7 +697,7 @@ msgstr ""
 "Impossível carregar a interface principal (totem.glade).\n"
 "Certifique-se de que o Totem  está adequadamente instalado."
 
-#: src/totem.c:2663
+#: src/totem.c:2641
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."

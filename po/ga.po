@@ -3,13 +3,12 @@
 # This file is distributed under the same license as the Totem package.
 # Pól �? Dubhthaigh <dubhthach@zion.nuigalway.ie>,2003
 #
-
 msgid ""
 msgstr ""
 "Project-Id-Version: Totem HEAD\n"
-"POT-Creation-Date: 2003-02-19 04:21+0100\n"
+"POT-Creation-Date: 2003-02-26 20:23+0000\n"
 "PO-Revision-Date: 2003-02-21 14:37+0100\n"
-"Last-Translator: Pól �? Dubhthaigh <dubhthach@zion.nuigalway.ie>\n"
+"Last-Translator: Pól ? Dubhthaigh <dubhthach@zion.nuigalway.ie>\n"
 "Language-Team: Irish \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -165,10 +164,9 @@ msgstr ""
 msgid "File name"
 msgstr "Ainm an Comhad"
 
-#: data/totem.glade.h:12 src/totem.c:67
+#: data/totem.glade.h:12 src/totem.c:74
 msgid "Next"
 msgstr "Dul chun cinn"
-
 
 #: data/totem.glade.h:13
 msgid "Next Chapter/Movie"
@@ -190,11 +188,11 @@ msgstr "Cas _DVD"
 msgid "Play _VCD"
 msgstr "Cas _VCD"
 
-#: data/totem.glade.h:18 src/totem.c:66
+#: data/totem.glade.h:18 src/totem.c:73
 msgid "Play/Pause"
 msgstr "Cas/Stad"
 
-#: data/totem.glade.h:19 src/totem.c:68
+#: data/totem.glade.h:19 src/totem.c:75
 msgid "Previous"
 msgstr "Roimh ré"
 
@@ -259,7 +257,7 @@ msgid "Toggle _Aspect Ratio"
 msgstr ""
 
 #. Title
-#: data/totem.glade.h:35 src/totem.c:386 src/totem.c:409 src/totem.c:1273
+#: data/totem.glade.h:35 src/totem.c:414 src/totem.c:436 src/totem.c:1267
 msgid "Totem"
 msgstr "Totem"
 
@@ -267,11 +265,11 @@ msgstr "Totem"
 msgid "Totem Preferences"
 msgstr ""
 
-#: data/totem.glade.h:37 src/totem.c:72
+#: data/totem.glade.h:37 src/totem.c:79
 msgid "Volume Down"
 msgstr ""
 
-#: data/totem.glade.h:38 src/totem.c:71
+#: data/totem.glade.h:38 src/totem.c:78
 msgid "Volume Up"
 msgstr ""
 
@@ -400,7 +398,7 @@ msgstr "_Focal faire"
 msgid "Remember this password"
 msgstr "Cuimhnigh an focal faire seo"
 
-#: src/gtk-playlist.c:414 src/totem.c:1089
+#: src/gtk-playlist.c:414 src/totem.c:1108
 msgid "Select files"
 msgstr ""
 
@@ -412,20 +410,45 @@ msgstr "Ainm-Comhad"
 msgid "Totem Video Window"
 msgstr "Fuinneg an físean Totem"
 
-#: src/bacon-video-widget.c:553
+#: src/bacon-video-widget.c:544
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
 "Check that the device is not busy."
 msgstr ""
 
-#: src/bacon-video-widget.c:817
-msgid "Could not find a suitable video output."
+#: src/bacon-video-widget.c:895
+msgid "There is no plugin to handle this movie"
 msgstr ""
 
-#: src/bacon-video-widget.c:1211
+#: src/bacon-video-widget.c:899
+#, fuzzy
+msgid "This movie is broken and can not be played further"
+msgstr "Tá '%s' briste agus ní beidh Totem in ann e a senim níos mó."
+
+#: src/bacon-video-widget.c:903
+msgid "This location is not a valid one"
+msgstr ""
+
+#: src/bacon-video-widget.c:1183
 #, c-format
-msgid "Reason: Video type '%s' is not handled."
+msgid "Video type '%s' is not handled"
+msgstr ""
+
+#: src/bacon-video-widget.c:2038
+msgid "Movie is not playing"
+msgstr ""
+
+#: src/bacon-video-widget.c:2046
+msgid "Can't capture visual effects"
+msgstr ""
+
+#: src/bacon-video-widget.c:2047
+msgid "No video to capture"
+msgstr ""
+
+#: src/bacon-video-widget.c:2054
+msgid "Video codec is not handled"
 msgstr ""
 
 #. One hour
@@ -497,43 +520,52 @@ msgstr "%d frámaí gach soicind"
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/totem.c:69
+#: src/totem.c:76
 msgid "Seek Forwards"
 msgstr ""
 
-#: src/totem.c:70
+#: src/totem.c:77
 msgid "Seek Backwards"
 msgstr ""
 
-#: src/totem.c:74
+#: src/totem.c:81
 msgid "Toggle Fullscreen"
 msgstr ""
 
-#: src/totem.c:75
+#: src/totem.c:82
 msgid "Quit"
 msgstr "Ealu"
 
-#: src/totem.c:76
+#: src/totem.c:83
 msgid "Enqueue"
 msgstr "Enqueue"
 
-#: src/totem.c:77
+#: src/totem.c:84
 msgid "Replace"
 msgstr "Athchuir"
 
-#: src/totem.c:155
+#: src/totem.c:166
 msgid "Playing"
 msgstr "Ag Senim"
 
-#: src/totem.c:162
+#: src/totem.c:173
 msgid "Paused"
 msgstr "Ar Stad"
 
-#: src/totem.c:169 src/totem-statusbar.c:171
+#: src/totem.c:180 src/totem-statusbar.c:171
 msgid "Stopped"
 msgstr "Ar Stailc"
 
-#: src/totem.c:238
+#: src/totem.c:238 src/totem.c:527 src/totem.c:616
+#, fuzzy, c-format
+msgid ""
+"Totem could not play '%s'.\n"
+"Reason: %s."
+msgstr ""
+"Ní raibh Totem in an '%s' a senim:\n"
+"%s"
+
+#: src/totem.c:263
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -541,7 +573,7 @@ msgid ""
 "media."
 msgstr ""
 
-#: src/totem.c:246
+#: src/totem.c:271
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -549,43 +581,49 @@ msgid ""
 msgstr ""
 
 #. Title
-#: src/totem.c:362
+#: src/totem.c:390
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:375 src/totem.c:2392
+#: src/totem.c:403 src/totem.c:2373
 msgid "No file"
 msgstr "Níl aon Comhad"
 
-#: src/totem.c:1249
+#: src/totem.c:1243
 msgid "translator_credits"
 msgstr ""
 
-#: src/totem.c:1275
+#: src/totem.c:1269
 msgid "Movie Player (based on the xine libraries)"
 msgstr ""
 
-#: src/totem.c:1329 src/totem.c:1340
+#: src/totem.c:1323 src/totem.c:1334
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Radharcscáthán%d.png"
 
-#: src/totem.c:1393
+#: src/totem.c:1387
+#, c-format
 msgid ""
 "Totem could not get a screenshot of that film.\n"
-"You might want to try again at another time."
+"Reason: %s."
 msgstr ""
 
-#: src/totem.c:1419
+#: src/totem.c:1397
+msgid ""
+"Totem could not get a screenshot of that film.\n"
+"Please file a bug, this isn't supposed to happen"
+msgstr ""
+
+#: src/totem.c:1423
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
 "The screenshot was not saved."
 msgstr ""
 
-
-#: src/totem.c:1430
+#: src/totem.c:1434
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -594,13 +632,22 @@ msgstr ""
 "Bhí feadbh ag sábháil an radharcscáthán.\n"
 "Eolas:%s"
 
-#: src/totem.c:1450
+#: src/totem.c:1451
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
 msgstr ""
 
-#: src/totem.c:1826
+#: src/totem.c:1520
+#, fuzzy, c-format
+msgid ""
+"Totem could not seek in '%s'.\n"
+"Reason: %s."
+msgstr ""
+"Ní raibh Totem in an '%s' a senim:\n"
+"%s"
+
+#: src/totem.c:2303
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -609,36 +656,7 @@ msgstr ""
 "Ní raibh Totem in an tosaigh:\n"
 "%s"
 
-#: src/totem.c:1832
-#, c-format
-msgid ""
-"There is no plugin for Totem to handle '%s'.\n"
-"Totem will not be able to play it."
-msgstr "Ní aon breiseán le haighaid '%s'.\n"
-"Ní beidh Totem in ann e a senim."
-
-#: src/totem.c:1838
-#, c-format
-msgid "'%s' is broken, and Totem can not play it further."
-msgstr "Tá '%s' briste agus ní beidh Totem in ann e a senim níos mó."
-
-#: src/totem.c:1843
-#, c-format
-msgid ""
-"Totem could not play '%s':\n"
-"%s"
-msgstr ""
-"Ní raibh Totem in an '%s' a senim:\n"
-"%s"
-
-#: src/totem.c:1848
-#, c-format
-msgid ""
-"Totem could not play '%s'.\n"
-"This location is not a valid one."
-msgstr ""
-
-#: src/totem.c:2558
+#: src/totem.c:2568
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -646,13 +664,13 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/totem.c:2572 src/totem.c:2608
+#: src/totem.c:2583 src/totem.c:2615
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
 msgstr ""
 
-#: src/totem.c:2630
+#: src/totem.c:2641
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
@@ -669,3 +687,10 @@ msgstr ""
 #: src/totem-statusbar.c:180
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
+
+#~ msgid ""
+#~ "There is no plugin for Totem to handle '%s'.\n"
+#~ "Totem will not be able to play it."
+#~ msgstr ""
+#~ "Ní aon breiseán le haighaid '%s'.\n"
+#~ "Ní beidh Totem in ann e a senim."

@@ -2620,6 +2620,10 @@ main (int argc, char **argv)
 	g_free (filename);
 
 	totem->win = glade_xml_get_widget (totem->xml, "app1");
+	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
+			"totem", "media-player-48.png", NULL);
+	gtk_window_set_default_icon_from_file (filename, NULL);
+	g_free (filename);
 
 	/* The playlist */
 	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
@@ -2665,11 +2669,6 @@ main (int argc, char **argv)
 
 	/* Properties */
 	totem->properties = bacon_video_widget_properties_new ();
-	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
-			"totem", "media-player-48.png", NULL);
-	gtk_window_set_icon_from_file (GTK_WINDOW (totem->properties),
-			filename, NULL);
-	g_free (filename);
 
 	totem_setup_recent (totem);
 	totem_callback_connect (totem);

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.be\n"
-"POT-Creation-Date: 2003-02-21 20:23+0100\n"
+"POT-Creation-Date: 2003-02-26 20:23+0000\n"
 "PO-Revision-Date: 2003-02-25 01:06GMT+2\n"
 "Last-Translator: Vital Khilko <dojlid@mova.org>\n"
 "Language-Team: belarusian <i18n@mova.org>\n"
@@ -165,7 +165,7 @@ msgstr "На ўвесь экран"
 msgid "File name"
 msgstr "Назва файла"
 
-#: data/totem.glade.h:12 src/totem.c:67
+#: data/totem.glade.h:12 src/totem.c:74
 msgid "Next"
 msgstr "Наступная"
 
@@ -189,11 +189,11 @@ msgstr "Граць _DVD"
 msgid "Play _VCD"
 msgstr "Граць _VCD"
 
-#: data/totem.glade.h:18 src/totem.c:66
+#: data/totem.glade.h:18 src/totem.c:73
 msgid "Play/Pause"
 msgstr "Граць/Прыпыніць"
 
-#: data/totem.glade.h:19 src/totem.c:68
+#: data/totem.glade.h:19 src/totem.c:75
 msgid "Previous"
 msgstr "Папярэдняя"
 
@@ -258,7 +258,7 @@ msgid "Toggle _Aspect Ratio"
 msgstr "Пера_ключыць стасунак"
 
 #. Title
-#: data/totem.glade.h:35 src/totem.c:386 src/totem.c:409 src/totem.c:1273
+#: data/totem.glade.h:35 src/totem.c:414 src/totem.c:436 src/totem.c:1267
 msgid "Totem"
 msgstr "Татэм"
 
@@ -266,11 +266,11 @@ msgstr "Татэм"
 msgid "Totem Preferences"
 msgstr "Уласьцівасьці Totem"
 
-#: data/totem.glade.h:37 src/totem.c:72
+#: data/totem.glade.h:37 src/totem.c:79
 msgid "Volume Down"
 msgstr "Паменьшыць гучнасьць"
 
-#: data/totem.glade.h:38 src/totem.c:71
+#: data/totem.glade.h:38 src/totem.c:78
 msgid "Volume Up"
 msgstr "Павялічыць гучнасьць"
 
@@ -402,7 +402,7 @@ msgstr "_Пароль:"
 msgid "Remember this password"
 msgstr "Запомніць гэты пароль"
 
-#: src/gtk-playlist.c:414 src/totem.c:1089
+#: src/gtk-playlist.c:414 src/totem.c:1108
 msgid "Select files"
 msgstr "Выбярыце файл"
 
@@ -414,7 +414,7 @@ msgstr "Назва файлу"
 msgid "Totem Video Window"
 msgstr "Акно прайграваньня відыё - Totem"
 
-#: src/bacon-video-widget.c:547
+#: src/bacon-video-widget.c:544
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -423,13 +423,42 @@ msgstr ""
 "Немагчыма загрузіць драйвэр аўдыё '%s' \n"
 "Праверце ці не занята прылада."
 
-#: src/bacon-video-widget.c:827
-msgid "Could not find a suitable video output."
-msgstr "Немагчыма адшукаць падыходзячы вывад відыё."
+#: src/bacon-video-widget.c:895
+msgid "There is no plugin to handle this movie"
+msgstr ""
 
-#: src/bacon-video-widget.c:1221
-#, c-format
-msgid "Reason: Video type '%s' is not handled."
+#: src/bacon-video-widget.c:899
+#, fuzzy
+msgid "This movie is broken and can not be played further"
+msgstr "'%s' пашкоджаны, і Татэм ня можа яго далей прайграваць."
+
+#: src/bacon-video-widget.c:903
+#, fuzzy
+msgid "This location is not a valid one"
+msgstr ""
+"Totem ня можа граць '%s':\n"
+"Гэтае мейсца нярэчаіснае."
+
+#: src/bacon-video-widget.c:1183
+#, fuzzy, c-format
+msgid "Video type '%s' is not handled"
+msgstr "Прычына: Тып відэа '%s' не падтрымліваецца."
+
+#: src/bacon-video-widget.c:2038
+msgid "Movie is not playing"
+msgstr ""
+
+#: src/bacon-video-widget.c:2046
+msgid "Can't capture visual effects"
+msgstr ""
+
+#: src/bacon-video-widget.c:2047
+msgid "No video to capture"
+msgstr ""
+
+#: src/bacon-video-widget.c:2054
+#, fuzzy
+msgid "Video codec is not handled"
 msgstr "Прычына: Тып відэа '%s' не падтрымліваецца."
 
 #. One hour
@@ -501,43 +530,52 @@ msgstr "%d кадраў у сэкунду"
 msgid "%d kbps"
 msgstr "%d кб/сэк"
 
-#: src/totem.c:69
+#: src/totem.c:76
 msgid "Seek Forwards"
 msgstr "Праматаць наперад"
 
-#: src/totem.c:70
+#: src/totem.c:77
 msgid "Seek Backwards"
 msgstr "Адматаць назад"
 
-#: src/totem.c:74
+#: src/totem.c:81
 msgid "Toggle Fullscreen"
 msgstr "_Поўны экран"
 
-#: src/totem.c:75
+#: src/totem.c:82
 msgid "Quit"
 msgstr "Выйсьці"
 
-#: src/totem.c:76
+#: src/totem.c:83
 msgid "Enqueue"
 msgstr ""
 
-#: src/totem.c:77
+#: src/totem.c:84
 msgid "Replace"
 msgstr "Замяніць"
 
-#: src/totem.c:155
+#: src/totem.c:166
 msgid "Playing"
 msgstr "Прайграецца"
 
-#: src/totem.c:162
+#: src/totem.c:173
 msgid "Paused"
 msgstr "Прыпынена"
 
-#: src/totem.c:169 src/totem-statusbar.c:171
+#: src/totem.c:180 src/totem-statusbar.c:171
 msgid "Stopped"
 msgstr "Спынена"
 
-#: src/totem.c:238
+#: src/totem.c:238 src/totem.c:527 src/totem.c:616
+#, fuzzy, c-format
+msgid ""
+"Totem could not play '%s'.\n"
+"Reason: %s."
+msgstr ""
+"Totem ня можа граць '%s':\n"
+"%s"
+
+#: src/totem.c:263
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -548,7 +586,7 @@ msgstr ""
 "які падтрымлівае гэта.\n"
 "Усталюёце патрэбны дадатак і перазапусьціце Татэм, каб грацьгэтыя даньні."
 
-#: src/totem.c:246
+#: src/totem.c:271
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -560,40 +598,50 @@ msgstr ""
 "сканфігуравана."
 
 #. Title
-#: src/totem.c:362
+#: src/totem.c:390
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - ТатэмTotem"
 
-#: src/totem.c:375 src/totem.c:2392
+#: src/totem.c:403 src/totem.c:2373
 msgid "No file"
 msgstr "Няма файлу"
 
-#: src/totem.c:1249
+#: src/totem.c:1243
 msgid "translator_credits"
 msgstr ""
 "Belarusian Language Linux Team\n"
 "Web:    http://www.mova.linux.by\n"
 "E-mail: <i18n@mova.org>"
 
-#: src/totem.c:1275
+#: src/totem.c:1269
 msgid "Movie Player (based on the xine libraries)"
 msgstr "Прайгравальнік відэа (заснаваны на бібліятэках Xine)"
 
-#: src/totem.c:1329 src/totem.c:1340
+#: src/totem.c:1323 src/totem.c:1334
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Татэм_здымак_%d.png"
 
-#: src/totem.c:1393
+#: src/totem.c:1387
+#, fuzzy, c-format
 msgid ""
 "Totem could not get a screenshot of that film.\n"
-"You might want to try again at another time."
+"Reason: %s."
 msgstr ""
 "Татэм ня здолеў атрымаць здымак з экрана гэтага кіно.\n"
 "Вы мусіце паспрабаваць нанава праз пэўны час."
 
-#: src/totem.c:1419
+#: src/totem.c:1397
+#, fuzzy
+msgid ""
+"Totem could not get a screenshot of that film.\n"
+"Please file a bug, this isn't supposed to happen"
+msgstr ""
+"Татэм ня здолеў атрымаць здымак з экрана гэтага кіно.\n"
+"Вы мусіце паспрабаваць нанава праз пэўны час."
+
+#: src/totem.c:1423
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
@@ -602,7 +650,7 @@ msgstr ""
 "Файл '%s' ужо існуе.\n"
 "Здымак ня быў захаваны."
 
-#: src/totem.c:1430
+#: src/totem.c:1434
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -611,7 +659,7 @@ msgstr ""
 "Адбылася памылка пад час захаваньня здымка.\n"
 "Падрабязнасьці: %s"
 
-#: src/totem.c:1450
+#: src/totem.c:1451
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -619,7 +667,16 @@ msgstr ""
 "Татэм ня можа адлюстраваць акно ўласьцівасьцяў.\n"
 "Праверце ці правільна ўсталяваны Татэм."
 
-#: src/totem.c:1826
+#: src/totem.c:1520
+#, fuzzy, c-format
+msgid ""
+"Totem could not seek in '%s'.\n"
+"Reason: %s."
+msgstr ""
+"Totem ня можа граць '%s':\n"
+"%s"
+
+#: src/totem.c:2303
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -628,39 +685,7 @@ msgstr ""
 "Татэм ня можа запусьціцца:\n"
 "%s"
 
-#: src/totem.c:1832
-#, c-format
-msgid ""
-"There is no plugin for Totem to handle '%s'.\n"
-"Totem will not be able to play it."
-msgstr ""
-"Татэм ня мае дадатку для '%s'.\n"
-"Татэм ня можа прайграваць гэта."
-
-#: src/totem.c:1838
-#, c-format
-msgid "'%s' is broken, and Totem can not play it further."
-msgstr "'%s' пашкоджаны, і Татэм ня можа яго далей прайграваць."
-
-#: src/totem.c:1843
-#, c-format
-msgid ""
-"Totem could not play '%s':\n"
-"%s"
-msgstr ""
-"Totem ня можа граць '%s':\n"
-"%s"
-
-#: src/totem.c:1848
-#, c-format
-msgid ""
-"Totem could not play '%s'.\n"
-"This location is not a valid one."
-msgstr ""
-"Totem ня можа граць '%s':\n"
-"Гэтае мейсца нярэчаіснае."
-
-#: src/totem.c:2558
+#: src/totem.c:2568
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -671,7 +696,7 @@ msgstr ""
 "рухавік канфігурацыі:\n"
 "%s"
 
-#: src/totem.c:2572 src/totem.c:2608
+#: src/totem.c:2583 src/totem.c:2615
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -679,7 +704,7 @@ msgstr ""
 "Немагчыма загрузіць інтэрфэйс (totem.glade).\n"
 "Праверце ці правільна ўсталяваны Татэм."
 
-#: src/totem.c:2630
+#: src/totem.c:2641
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
@@ -698,6 +723,16 @@ msgstr "Стыль скоса вакол тэкста палоскі стану"
 #: src/totem-statusbar.c:180
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
+
+#~ msgid "Could not find a suitable video output."
+#~ msgstr "Немагчыма адшукаць падыходзячы вывад відыё."
+
+#~ msgid ""
+#~ "There is no plugin for Totem to handle '%s'.\n"
+#~ "Totem will not be able to play it."
+#~ msgstr ""
+#~ "Татэм ня мае дадатку для '%s'.\n"
+#~ "Татэм ня можа прайграваць гэта."
 
 #~ msgid "Default audio output driver"
 #~ msgstr "Дапомны драйвэр вываду гуку"
@@ -729,4 +764,3 @@ msgstr "0:00 / 0:00"
 
 #~ msgid "button5"
 #~ msgstr "кнопка 5"
-

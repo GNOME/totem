@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2003-02-09 19:26+0100\n"
+"POT-Creation-Date: 2003-02-26 20:23+0000\n"
 "PO-Revision-Date: 2003-02-09 22:45--300\n"
 "Last-Translator: Artis Trops <hornet@navigator.lv>\n"
 "Language-Team: Latvian <ll10nt@os.lv>\n"
@@ -14,8 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/playlist.glade.h:1
-#: src/gtk-playlist.c:800
+#: data/playlist.glade.h:1 src/gtk-playlist.c:800
 msgid "Playlist"
 msgstr "Repertuārs"
 
@@ -23,27 +22,23 @@ msgstr "Repertuārs"
 msgid "Repeat Mode"
 msgstr "Atkārtošanās Režīms"
 
-#: data/properties.glade.h:1
-#: src/gtk-xine-properties.c:184
+#: data/properties.glade.h:1 src/bacon-video-widget-properties.c:184
 msgid "0 frames per second"
 msgstr "0 kadri sekundē"
 
 #. Bitrate
-#: data/properties.glade.h:2
-#: src/gtk-xine-properties.c:186
+#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:186
 msgid "0 kbps"
 msgstr "0 kbps"
 
 #. 0 seconds
-#: data/properties.glade.h:3
-#: data/totem.glade.h:3
-#: src/gtk-xine-properties.c:140
+#: data/properties.glade.h:3 data/totem.glade.h:3
+#: src/bacon-video-widget-properties.c:140
 msgid "0 seconds"
 msgstr "0 sekundes"
 
 #. Dimensions
-#: data/properties.glade.h:4
-#: src/gtk-xine-properties.c:179
+#: data/properties.glade.h:4 src/bacon-video-widget-properties.c:179
 msgid "0 x 0"
 msgstr "0 x 0"
 
@@ -56,63 +51,69 @@ msgid "<b>General</b>"
 msgstr "<b>Vispārīgi</b>"
 
 #: data/properties.glade.h:7
+#, fuzzy
+msgid "<b>URL</b>"
+msgstr "<b>Audio</b>"
+
+#: data/properties.glade.h:8
 msgid "<b>Video</b>"
 msgstr "<b>Video</b>"
 
-#: data/properties.glade.h:8
+#: data/properties.glade.h:9
 msgid "Artist: "
 msgstr "Izpildītājs: "
 
-#: data/properties.glade.h:9
+#: data/properties.glade.h:10
 msgid "Bitrate: "
 msgstr "Bitātrums: "
 
-#: data/properties.glade.h:10
+#: data/properties.glade.h:11
 msgid "Codec: "
 msgstr "Kodeks: "
 
-#: data/properties.glade.h:11
+#: data/properties.glade.h:12
 msgid "Dimensions: "
 msgstr "Dimensijas: "
 
-#: data/properties.glade.h:12
+#: data/properties.glade.h:13
 msgid "Duration: "
 msgstr "Ilgums: "
 
-#: data/properties.glade.h:13
+#: data/properties.glade.h:14
 msgid "Framerate: "
 msgstr "Kadrātrums: "
 
 #. Year
-#: data/properties.glade.h:14
-#: src/gtk-xine-properties.c:175
-#: src/gtk-xine-properties.c:181
-#: src/gtk-xine-properties.c:188
-#: src/gtk-xine-properties.c:216
-#: src/gtk-xine-properties.c:247
-#: src/gtk-xine-properties.c:275
+#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:175
+#: src/bacon-video-widget-properties.c:181
+#: src/bacon-video-widget-properties.c:188
+#: src/bacon-video-widget-properties.c:223
+#: src/bacon-video-widget-properties.c:260
+#: src/bacon-video-widget-properties.c:292
 msgid "N/A"
 msgstr "N/P"
 
-#: data/properties.glade.h:15
-#: src/gtk-xine-properties.c:323
+#: data/properties.glade.h:16 src/bacon-video-widget-properties.c:192
+msgid "No Link"
+msgstr ""
+
+#: data/properties.glade.h:17 src/bacon-video-widget-properties.c:350
 msgid "Properties"
 msgstr "Rekvizīti"
 
-#: data/properties.glade.h:16
+#: data/properties.glade.h:18
 msgid "Title: "
 msgstr "Nosaukums: "
 
 #. Title
-#: data/properties.glade.h:17
-#: src/gtk-xine-properties.c:171
-#: src/gtk-xine-properties.c:173
-#: src/gtk-xine-properties.c:204
-#: src/gtk-xine-properties.c:210
+#: data/properties.glade.h:19 src/bacon-video-widget-properties.c:171
+#: src/bacon-video-widget-properties.c:173
+#: src/bacon-video-widget-properties.c:209
+#: src/bacon-video-widget-properties.c:216
 msgid "Unknown"
 msgstr "Nezināms"
 
-#: data/properties.glade.h:18
+#: data/properties.glade.h:20
 msgid "Year: "
 msgstr "Gads: "
 
@@ -164,8 +165,7 @@ msgstr "Iziet no pilnekrāna"
 msgid "File name"
 msgstr "Faila nosaukums"
 
-#: data/totem.glade.h:12
-#: src/totem.c:122
+#: data/totem.glade.h:12 src/totem.c:74
 msgid "Next"
 msgstr "Nākošā"
 
@@ -189,13 +189,11 @@ msgstr "Atskaņot _DVD"
 msgid "Play _VCD"
 msgstr "Atskaņot _VCD"
 
-#: data/totem.glade.h:18
-#: src/totem.c:121
+#: data/totem.glade.h:18 src/totem.c:73
 msgid "Play/Pause"
 msgstr "Spēlēt/Pauzēt"
 
-#: data/totem.glade.h:19
-#: src/totem.c:123
+#: data/totem.glade.h:19 src/totem.c:75
 msgid "Previous"
 msgstr "Iepriekšējā"
 
@@ -260,10 +258,7 @@ msgid "Toggle _Aspect Ratio"
 msgstr "Slēgt _Izskata Attiecību"
 
 #. Title
-#: data/totem.glade.h:35
-#: src/totem.c:431
-#: src/totem.c:454
-#: src/totem.c:1299
+#: data/totem.glade.h:35 src/totem.c:414 src/totem.c:436 src/totem.c:1267
 msgid "Totem"
 msgstr "Totem"
 
@@ -271,13 +266,11 @@ msgstr "Totem"
 msgid "Totem Preferences"
 msgstr "Totem Preferences"
 
-#: data/totem.glade.h:37
-#: src/totem.c:127
+#: data/totem.glade.h:37 src/totem.c:79
 msgid "Volume Down"
 msgstr "Klusāk"
 
-#: data/totem.glade.h:38
-#: src/totem.c:126
+#: data/totem.glade.h:38 src/totem.c:78
 msgid "Volume Up"
 msgstr "Skaļāk"
 
@@ -326,34 +319,30 @@ msgid "_Zoom 1:2"
 msgstr "_Palielināt 1:2"
 
 #: data/totem.schemas.in.h:1
-msgid "Default audio output driver"
-msgstr "Noklusētais audio izvades draiveris"
-
-#: data/totem.schemas.in.h:2
 msgid "Path to the optical media device"
 msgstr "Ceļš līdz optiskā medija iekārtai"
 
-#: data/totem.schemas.in.h:3
+#: data/totem.schemas.in.h:2
 msgid "Repeat mode"
 msgstr "Atkārtošanās režīms"
 
-#: data/totem.schemas.in.h:4
+#: data/totem.schemas.in.h:3
 msgid "Resize the canvas automatically on file load"
 msgstr "Mainīt audekla izmēru automātiski pie faila ielādes"
 
-#: data/totem.schemas.in.h:5
+#: data/totem.schemas.in.h:4
 msgid "Show visual effects when no video is displayed"
 msgstr "Parādīt vizuālos efektus, kad tiek parādīts video"
 
-#: data/totem.schemas.in.h:6
+#: data/totem.schemas.in.h:5
 msgid "Show visual effects when playing an audio only file"
 msgstr "Parādīt vizuālos efektus, kad tiek atskaņots tikai audio fails"
 
-#: data/totem.schemas.in.h:7
+#: data/totem.schemas.in.h:6
 msgid "X coordinate for the Playlist"
 msgstr "X koordinātes Repertuāram|"
 
-#: data/totem.schemas.in.h:8
+#: data/totem.schemas.in.h:7
 msgid "Y coordinate for the Playlist"
 msgstr "Y koordinātes Repertuāram"
 
@@ -413,8 +402,7 @@ msgstr "_Parole:"
 msgid "Remember this password"
 msgstr "Atcerēties šo paroli"
 
-#: src/gtk-playlist.c:414
-#: src/totem.c:1115
+#: src/gtk-playlist.c:414 src/totem.c:1108
 msgid "Select files"
 msgstr "Izvēlieties failus"
 
@@ -422,230 +410,281 @@ msgstr "Izvēlieties failus"
 msgid "Filename"
 msgstr "Faila nosaukums"
 
-#: src/gtk-xine.c:59
+#: src/bacon-video-widget.c:58
 msgid "Totem Video Window"
 msgstr "Totem Video Logs"
 
-#: src/gtk-xine.c:555
+#: src/bacon-video-widget.c:544
 #, c-format
-msgid "Couldn't load the '%s' audio driver\n"
+msgid ""
+"Couldn't load the '%s' audio driver\n"
 "Check that the device is not busy."
-msgstr "Nevarēju ielādēt '%s' audio draiveri\n"
+msgstr ""
+"Nevarēju ielādēt '%s' audio draiveri\n"
 "Pārbaudiet, vai iekārta nav aizņemta."
 
-#: src/gtk-xine.c:800
-msgid "Could not find a suitable video output."
-msgstr "Nevarēju atrast lietojamu video izvadi."
+#: src/bacon-video-widget.c:895
+msgid "There is no plugin to handle this movie"
+msgstr ""
 
-#: src/gtk-xine.c:1189
-#, c-format
-msgid "Reason: Video type '%s' is not handled."
+#: src/bacon-video-widget.c:899
+#, fuzzy
+msgid "This movie is broken and can not be played further"
+msgstr "'%s' ir sabojāts, un Totem nevar spēlēt to tālāk."
+
+#: src/bacon-video-widget.c:903
+#, fuzzy
+msgid "This location is not a valid one"
+msgstr ""
+"Totem nevarēja nospēlēt '%s'.\n"
+"Šī lokācija ir nederīga."
+
+#: src/bacon-video-widget.c:1183
+#, fuzzy, c-format
+msgid "Video type '%s' is not handled"
+msgstr "Iemesls: Video tips '%s' netiek apdarināts."
+
+#: src/bacon-video-widget.c:2038
+msgid "Movie is not playing"
+msgstr ""
+
+#: src/bacon-video-widget.c:2046
+msgid "Can't capture visual effects"
+msgstr ""
+
+#: src/bacon-video-widget.c:2047
+msgid "No video to capture"
+msgstr ""
+
+#: src/bacon-video-widget.c:2054
+#, fuzzy
+msgid "Video codec is not handled"
 msgstr "Iemesls: Video tips '%s' netiek apdarināts."
 
 #. One hour
-#: src/gtk-xine-properties.c:109
+#: src/bacon-video-widget-properties.c:109
 #, c-format
 msgid "%d hour"
 msgstr "%d stunda"
 
 #. Multiple hours
-#: src/gtk-xine-properties.c:112
+#: src/bacon-video-widget-properties.c:112
 #, c-format
 msgid "%d hours"
 msgstr "%d stundas"
 
 #. One minute
-#: src/gtk-xine-properties.c:116
+#: src/bacon-video-widget-properties.c:116
 #, c-format
 msgid "%d minute"
 msgstr "%d minūte"
 
 #. Multiple minutes
-#: src/gtk-xine-properties.c:119
+#: src/bacon-video-widget-properties.c:119
 #, c-format
 msgid "%d minutes"
 msgstr "%d minūtes"
 
 #. One second
-#: src/gtk-xine-properties.c:123
+#: src/bacon-video-widget-properties.c:123
 #, c-format
 msgid "%d second"
 msgstr "%d sekunde"
 
 #. Multiple seconds
-#: src/gtk-xine-properties.c:126
+#: src/bacon-video-widget-properties.c:126
 #, c-format
 msgid "%d seconds"
 msgstr "%d sekundes"
 
 #. hour:minutes:seconds
-#: src/gtk-xine-properties.c:131
+#: src/bacon-video-widget-properties.c:131
 #, c-format
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. minutes:seconds
-#: src/gtk-xine-properties.c:134
+#: src/bacon-video-widget-properties.c:134
 #, c-format
 msgid "%s %s"
 msgstr "%s %s"
 
 #. seconds
-#: src/gtk-xine-properties.c:137
+#: src/bacon-video-widget-properties.c:137
 #, c-format
 msgid "%s"
 msgstr "%s"
 
 #. Duration
-#: src/gtk-xine-properties.c:177
+#: src/bacon-video-widget-properties.c:177
 msgid "0 second"
 msgstr "0 sekundes"
 
-#: src/gtk-xine-properties.c:251
+#: src/bacon-video-widget-properties.c:265
 #, c-format
 msgid "%d frames per second"
 msgstr "%d kadri sekundē"
 
-#: src/gtk-xine-properties.c:267
+#: src/bacon-video-widget-properties.c:283
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/totem.c:124
+#: src/totem.c:76
 msgid "Seek Forwards"
 msgstr "Meklēt Uz priekšu"
 
-#: src/totem.c:125
+#: src/totem.c:77
 msgid "Seek Backwards"
 msgstr "Meklēt Atpakaļ"
 
-#: src/totem.c:129
+#: src/totem.c:81
 msgid "Toggle Fullscreen"
 msgstr "Slēgt Pilnekrānu"
 
-#: src/totem.c:130
+#: src/totem.c:82
 msgid "Quit"
 msgstr "Iziet"
 
-#: src/totem.c:131
+#: src/totem.c:83
 msgid "Enqueue"
 msgstr "Pievienot"
 
-#: src/totem.c:132
+#: src/totem.c:84
 msgid "Replace"
 msgstr "Aizvietot"
 
-#: src/totem.c:210
+#: src/totem.c:166
 msgid "Playing"
 msgstr "Atskaņoju"
 
-#: src/totem.c:217
+#: src/totem.c:173
 msgid "Paused"
 msgstr "Pauzēts"
 
-#: src/totem.c:224
-#: src/totem-statusbar.c:171
+#: src/totem.c:180 src/totem-statusbar.c:171
 msgid "Stopped"
 msgstr "Apturēts"
 
-#: src/totem.c:292
-msgid "Totem cannot play this type of media because you do not have the appropriate plugins to handle it.\n"
-"Install the necessary plugins and restart Totem to be able to play this media."
-msgstr "Totem nevar nospēlēt šo medija tipu, jo jums nav pienācīgo iespraudņu, lai to paveiktu.\n"
-"Uzinstalējiet nepieciešamos iespraudņus un pārstartējier Totem, lai varētu spēlēt šo mediju."
+#: src/totem.c:238 src/totem.c:527 src/totem.c:616
+#, fuzzy, c-format
+msgid ""
+"Totem could not play '%s'.\n"
+"Reason: %s."
+msgstr ""
+"Totem nevarēja nospēlēt '%s':\n"
+"%s"
 
-#: src/totem.c:300
-msgid "Totem could not play this media although a plugin is present to handle it.\n"
-"You might want to check that a disc is present in the drive and that it is correctly configured."
-msgstr "Totem nevarēja nospēlēt šo mediju, kaut arī ir iespraudnis, kas to spētu.\n"
-"Jūs varētu gribēt pārliecināties, vai disks ir iekārtā un ka tā ir pareizi nokonfigurēta."
+#: src/totem.c:263
+msgid ""
+"Totem cannot play this type of media because you do not have the appropriate "
+"plugins to handle it.\n"
+"Install the necessary plugins and restart Totem to be able to play this "
+"media."
+msgstr ""
+"Totem nevar nospēlēt šo medija tipu, jo jums nav pienācīgo iespraudņu, lai "
+"to paveiktu.\n"
+"Uzinstalējiet nepieciešamos iespraudņus un pārstartējier Totem, lai varētu "
+"spēlēt šo mediju."
+
+#: src/totem.c:271
+msgid ""
+"Totem could not play this media although a plugin is present to handle it.\n"
+"You might want to check that a disc is present in the drive and that it is "
+"correctly configured."
+msgstr ""
+"Totem nevarēja nospēlēt šo mediju, kaut arī ir iespraudnis, kas to spētu.\n"
+"Jūs varētu gribēt pārliecināties, vai disks ir iekārtā un ka tā ir pareizi "
+"nokonfigurēta."
 
 #. Title
-#: src/totem.c:407
+#: src/totem.c:390
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:420
-#: src/totem.c:2508
+#: src/totem.c:403 src/totem.c:2373
 msgid "No file"
 msgstr "Nav faila"
 
-#: src/totem.c:1275
+#: src/totem.c:1243
 msgid "translator_credits"
-msgstr "Pēteris Krišjānis <peteris.krisjanis@os.lv>\n"
+msgstr ""
+"Pēteris Krišjānis <peteris.krisjanis@os.lv>\n"
 "Artis Trops <hornet@navigator.lv>"
 
-#: src/totem.c:1301
+#: src/totem.c:1269
 msgid "Movie Player (based on the xine libraries)"
 msgstr "Filmu Spēlētājs (bāzēts uz xine bibliotēkām)"
 
-#: src/totem.c:1355
-#: src/totem.c:1366
+#: src/totem.c:1323 src/totem.c:1334
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Ekrānattēls%d.png"
 
-#: src/totem.c:1419
-msgid "Totem could not get a screenshot of that film.\n"
-"You might want to try again at another time."
-msgstr "Totem nevarēja dabūt ekrānattēlu no šīs filmas.\n"
+#: src/totem.c:1387
+#, fuzzy, c-format
+msgid ""
+"Totem could not get a screenshot of that film.\n"
+"Reason: %s."
+msgstr ""
+"Totem nevarēja dabūt ekrānattēlu no šīs filmas.\n"
 "Jūs varētu mēģināt citreiz."
 
-#: src/totem.c:1445
+#: src/totem.c:1397
+#, fuzzy
+msgid ""
+"Totem could not get a screenshot of that film.\n"
+"Please file a bug, this isn't supposed to happen"
+msgstr ""
+"Totem nevarēja dabūt ekrānattēlu no šīs filmas.\n"
+"Jūs varētu mēģināt citreiz."
+
+#: src/totem.c:1423
 #, c-format
-msgid "File '%s' already exists.\n"
+msgid ""
+"File '%s' already exists.\n"
 "The screenshot was not saved."
-msgstr "Fails '%s' jau eksistē.\n"
+msgstr ""
+"Fails '%s' jau eksistē.\n"
 "Ekrānattēls netika saglabāts."
 
-#: src/totem.c:1456
+#: src/totem.c:1434
 #, c-format
-msgid "There was an error saving the screenshot.\n"
+msgid ""
+"There was an error saving the screenshot.\n"
 "Details: %s"
-msgstr "Atgadījās kļūda, saglabājot ekrānattēlu.\n"
+msgstr ""
+"Atgadījās kļūda, saglabājot ekrānattēlu.\n"
 "Detaļas: %s"
 
-#: src/totem.c:1476
-msgid "Totem couldn't show the movie properties window.\n"
+#: src/totem.c:1451
+msgid ""
+"Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
-msgstr "Totem nevarēja parādīt filmas rekvizītu logu.\n"
+msgstr ""
+"Totem nevarēja parādīt filmas rekvizītu logu.\n"
 "Pārliecinieties, vai Totem ir pareizi uzinstalēts."
 
-#: src/totem.c:1950
-#, c-format
-msgid "Totem could not startup:\n"
-"%s"
-msgstr "Totem nevarēja palaist:\n"
-"%s"
-
-#: src/totem.c:1956
-#, c-format
-msgid "There is no plugin for Totem to handle '%s'.\n"
-"Totem will not be able to play it."
-msgstr "Nav iespraudņa priekš Totem, lai apstrādātu '%s'\n"
-"Totem nevarēs to nospēlēt."
-
-#: src/totem.c:1962
-#, c-format
-msgid "'%s' is broken, and Totem can not play it further."
-msgstr "'%s' ir sabojāts, un Totem nevar spēlēt to tālāk."
-
-#: src/totem.c:1967
-#, c-format
-msgid "Totem could not play '%s':\n"
-"%s"
-msgstr "Totem nevarēja nospēlēt '%s':\n"
+#: src/totem.c:1520
+#, fuzzy, c-format
+msgid ""
+"Totem could not seek in '%s'.\n"
+"Reason: %s."
+msgstr ""
+"Totem nevarēja nospēlēt '%s':\n"
 "%s"
 
-#: src/totem.c:1972
+#: src/totem.c:2303
 #, c-format
-msgid "Totem could not play '%s'.\n"
-"This location is not a valid one."
-msgstr "Totem nevarēja nospēlēt '%s'.\n"
-"Šī lokācija ir nederīga."
+msgid ""
+"Totem could not startup:\n"
+"%s"
+msgstr ""
+"Totem nevarēja palaist:\n"
+"%s"
 
-#: src/totem.c:2747
+#: src/totem.c:2568
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -656,17 +695,20 @@ msgstr ""
 "konfigurācijas dzinēju:\n"
 "%s"
 
-#: src/totem.c:2761
-#: src/totem.c:2797
-msgid "Couldn't load the main interface (totem.glade).\n"
+#: src/totem.c:2583 src/totem.c:2615
+msgid ""
+"Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
-msgstr "Nevarēju ielādēt galveno saskarni (totem.glade).\n"
+msgstr ""
+"Nevarēju ielādēt galveno saskarni (totem.glade).\n"
 "Pārliecinieties vai Totem ir pareizi uzstādīts."
 
-#: src/totem.c:2819
-msgid "Couldn't load the interface for the playlist.\n"
+#: src/totem.c:2641
+msgid ""
+"Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
-msgstr "Nevarēju ielādēt saskarni repertuāram.\n"
+msgstr ""
+"Nevarēju ielādēt saskarni repertuāram.\n"
 "Pārliecinieties vai Totem ir pareizi uzstādīts."
 
 #: src/totem-statusbar.c:138
@@ -681,3 +723,15 @@ msgstr "Konusa tips ap statusjoslas tekstu"
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
+#~ msgid "Default audio output driver"
+#~ msgstr "Noklusētais audio izvades draiveris"
+
+#~ msgid "Could not find a suitable video output."
+#~ msgstr "Nevarēju atrast lietojamu video izvadi."
+
+#~ msgid ""
+#~ "There is no plugin for Totem to handle '%s'.\n"
+#~ "Totem will not be able to play it."
+#~ msgstr ""
+#~ "Nav iespraudņa priekš Totem, lai apstrādātu '%s'\n"
+#~ "Totem nevarēs to nospēlēt."

@@ -121,6 +121,7 @@ struct BaconVideoWidgetPrivate {
 	gboolean logo_mode;
 	guint tick_id;
 	gboolean auto_resize;
+	GdkPixbuf *icon;
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
@@ -340,12 +341,17 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 
 	bvw->priv->tick_id = g_timeout_add (200,
 			(GSourceFunc) bacon_video_widget_tick_send, bvw);
+
+	bvw->priv->icon = gdk_pixbuf_new_from_file (ICON_PATH, NULL);
 }
 
 static void
 bacon_video_widget_finalize (GObject *object)
 {
 	BaconVideoWidget *bvw = (BaconVideoWidget *) object;
+
+	if (bvw->priv->icon != NULL)
+		gdk_pixbuf_unref (bvw->priv->icon);
 
 	/* Should put here what needs to be destroyed */
 	g_idle_remove_by_data (bvw);
@@ -1425,6 +1431,7 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 	{
 		GdkWindow *parent;
 		GdkWindowAttr attr;
+		GList *list = NULL;
 
 		parent = gdk_window_get_toplevel (bvw->widget.window);
 
@@ -1456,6 +1463,18 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 		bacon_video_widget_set_show_cursor (bvw, FALSE);
 
 		scrsaver_disable (bvw->priv->display);
+
+		/* Set the icon and the name */
+		{
+			GList *list;
+
+			list = g_list_append (list, bvw->priv->icon);
+			gdk_window_set_icon_list (bvw->priv->fullscreen_window,
+					list);
+			g_list_free (list);
+		}
+		gdk_window_set_title (bvw->priv->fullscreen_window,
+				DEFAULT_TITLE);
 	} else {
 		gdk_window_set_user_data (bvw->widget.window, bvw);
 
