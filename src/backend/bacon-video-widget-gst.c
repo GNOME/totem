@@ -1887,9 +1887,6 @@ bacon_video_widget_new (int width, int height,
 
   bvw = BACON_VIDEO_WIDGET (g_object_new
                             (bacon_video_widget_get_type (), NULL));
-
-  /* Using opt as default scheduler */
-  gst_scheduler_factory_set_default_name ("opt");
   
   bvw->priv->play = gst_play_new (err);
   
