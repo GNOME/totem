@@ -186,7 +186,8 @@ action_play (Totem *totem, int offset)
 
 	D("action_play");
 
-	g_return_if_fail (totem->mrl != NULL);
+	if (totem->mrl == NULL)
+		return;
 
 	retval = gtk_xine_play (GTK_XINE (totem->gtx), totem->mrl, offset , 0);
 	play_pause_set_label (totem, retval);
@@ -439,17 +440,24 @@ drop_cb (GtkWidget     *widget,
 		return;
 	}
 
-	for (p = file_list; p != NULL; p = p->next) {
+	for (p = file_list; p != NULL; p = p->next)
+	{
 		char *filename;
 
 		filename = g_filename_from_uri (p->data, NULL, NULL);
-		D("dropped filename: %s", filename);
+
 		if (filename != NULL && 
 				g_file_test (filename, G_FILE_TEST_IS_REGULAR
 					| G_FILE_TEST_EXISTS))
 		{
 			if (cleared == FALSE)
 			{
+				/* The function that calls us knows better
+				 * if we should be doing something with the 
+				 * changed playlist ... */
+				g_signal_handlers_disconnect_by_func
+					(G_OBJECT (totem->playlist),
+					 playlist_changed_cb, (gpointer) totem);
 				gtk_playlist_clear (totem->playlist);
 				cleared = TRUE;
 			}
@@ -460,6 +468,21 @@ drop_cb (GtkWidget     *widget,
 	}
 
 	g_list_free (file_list);
+
+	/* ... and reconnect because we're nice people */
+	if (cleared == TRUE)
+	{
+		char *mrl;
+
+		g_signal_connect (G_OBJECT (totem->playlist),
+				"changed", G_CALLBACK (playlist_changed_cb),
+				(gpointer) totem);
+		mrl = gtk_playlist_get_current_mrl (totem->playlist);
+		action_set_mrl (totem, mrl);
+		g_free (mrl);
+		action_play (totem, 0);
+	}
+
 	gtk_drag_finish (context, TRUE, FALSE, time);
 }
 
@@ -591,7 +614,6 @@ action_open_files (Totem *totem, char **list, gboolean ignore_first)
 				(gpointer) totem);
 }
 
-
 static void
 on_open1_activate (GtkButton * button, gpointer user_data)
 {
@@ -606,12 +628,17 @@ on_open1_activate (GtkButton * button, gpointer user_data)
 
 	if (response == GTK_RESPONSE_OK)
 	{
-		char **filenames;
+		char **filenames, *mrl;
 
 		filenames = gtk_file_selection_get_selections
 			(GTK_FILE_SELECTION (fs));
 		action_open_files (totem, filenames, FALSE);
 		g_strfreev (filenames);
+
+		mrl = gtk_playlist_get_current_mrl (totem->playlist);
+		action_set_mrl (totem, mrl);
+		g_free (mrl);
+		action_play (totem, 0);
 	}
 
 	gtk_widget_destroy (fs);
@@ -624,7 +651,6 @@ on_play1_activate (GtkButton * button, gpointer user_data)
 
 	action_play_pause (totem);
 }
-
 
 static void
 on_full_screen1_activate (GtkButton * button, gpointer user_data)
@@ -751,8 +777,6 @@ playlist_changed_cb (GtkWidget *playlist, gpointer user_data)
 			|| (totem->mrl != NULL && mrl != NULL
 			&& strcmp (totem->mrl, mrl) != 0))
 	{
-		g_free (totem->mrl);
-		totem->mrl = NULL;
 		action_set_mrl (totem, mrl);
 		action_play (totem, 0);
 	} else if (totem->mrl != NULL) {
