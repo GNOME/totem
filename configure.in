@@ -19,7 +19,7 @@ AC_CHECK_LIB(cam, cam_open_spec_device)
 
 dnl xine or gst ?
 
-GST_REQS=0.7.0.3
+GST_REQS=0.8
 XINE_REQS=1.0.0
 
 AC_ARG_ENABLE(nvtv, AC_HELP_STRING([--enable-nvtv],[Enable support for TV-output with nvtv]), enable_nvtv="$enableval", enable_nvtv=yes)
@@ -50,8 +50,8 @@ dnl Now we're ready to ask for gstreamer libs and cflags
 dnl And we can also ask for the right version of gstreamer
 	HAVE_GSTREAMER=no
 
-dnl start with 0.7
-	GST_MAJORMINOR=0.7
+dnl start with 0.8
+	GST_MAJORMINOR=0.8
 	PKG_CHECK_MODULES(GST, \
 			gstreamer-play-$GST_MAJORMINOR >= $GST_REQS \
 			gstreamer-gconf-$GST_MAJORMINOR >= $GST_REQS \

@@ -387,7 +387,8 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
 	GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_CAN_FOCUS);
-	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
+	/* We work around white artifacts by using a double-buffered widget
+	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED); */
 
 	bvw->priv = g_new0 (BaconVideoWidgetPrivate, 1);
 	bvw->priv->xine = xine_new ();
@@ -1008,6 +1009,7 @@ bacon_video_widget_realize (GtkWidget *widget)
 	xine_close (bvw->priv->stream);
 	xine_event_dispose_queue (bvw->priv->ev_queue);
 	xine_dispose (bvw->priv->stream);
+
 	if (bvw->priv->vo_driver != NULL)
 		xine_close_video_driver(bvw->priv->xine, bvw->priv->vo_driver);
 
@@ -1320,6 +1322,15 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	xine_stop (bvw->priv->stream);
 	xine_close (bvw->priv->stream);
 
+	/* Put the current volume in the config system */
+	if (bacon_video_widget_can_set_volume (bvw) != FALSE)
+	{
+		xine_config_lookup_entry (bvw->priv->xine,
+				"misc.amp_level", &entry);
+		entry.num_value = bvw->priv->volume;
+		xine_config_update_entry (bvw->priv->xine, &entry);
+	}
+
 	/* Kill the TV out */
 #ifdef HAVE_NVTV
         nvtv_simple_exit();
@@ -1334,11 +1345,6 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	xine_event_dispose_queue (bvw->priv->ev_queue);
 	xine_dispose (bvw->priv->stream);
 	bvw->priv->stream = NULL;
-
-	/* Put the current volume in the config system */
-	xine_config_lookup_entry (bvw->priv->xine, "misc.amp_level", &entry);
-	entry.num_value = bvw->priv->volume;
-	xine_config_update_entry (bvw->priv->xine, &entry);
 
 	/* save config */
 	configfile = g_build_path (G_DIR_SEPARATOR_S,
@@ -1465,13 +1471,6 @@ bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 
 	if (event->count != 0)
 		return FALSE;
-
-	if (bvw->priv->started == FALSE)
-	{
-		gdk_draw_rectangle (widget->window, widget->style->black_gc,
-				TRUE, event->area.x, event->area.y,
-				event->area.width, event->area.height);
-	}
 
 	expose = g_new0 (XExposeEvent, 1);
 	expose->count = event->count;
@@ -1726,7 +1725,7 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const char *mrl,
 		fourcc_str = get_fourcc_string (bvw->priv->video_fcc);
 		name = g_strdup (xine_get_meta_info (bvw->priv->stream,
 				XINE_META_INFO_VIDEOCODEC));
-#ifdef HAVE_X86
+
 		/* Only change the audio_fcc if we're on x86 */
 		if (xine_get_stream_info
 				(bvw->priv->stream,
@@ -1736,10 +1735,6 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const char *mrl,
 				(bvw->priv->stream,
 				 XINE_STREAM_INFO_AUDIO_FOURCC);
 		}
-#else
-		/* Reset video_fcc, and leave audio_fcc at 0 */
-		bvw->priv->video_fcc = 0;
-#endif
 
 		bacon_video_widget_close (bvw);
 

@@ -1,3 +1,14 @@
+2004-03-11  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: update to use GStreamer 0.8
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_instance_init), (bacon_video_widget_realize),
+	(bacon_video_widget_unrealize), (bacon_video_widget_expose),
+	(bacon_video_widget_open): work-around the white artifacts when
+	switching on to fullscreen, only save the volume if it's possible
+	to save the volume to avoid getting a '0' volume when we restart
+	with an audio output
+
 2004-03-10  Bastien Nocera  <hadess@hadess.net>
 
 	* NEWS: update the news
