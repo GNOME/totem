@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
-"POT-Creation-Date: 2003-02-06 11:32+0100\n"
+"POT-Creation-Date: 2003-02-08 04:15+0100\n"
 "PO-Revision-Date: 2003-02-07 05:44+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -154,7 +154,7 @@ msgstr "Zrušit celoobrazovkový režim"
 msgid "File name"
 msgstr "Název souboru"
 
-#: data/totem.glade.h:12
+#: data/totem.glade.h:12 src/totem.c:122
 msgid "Next"
 msgstr "Následující"
 
@@ -178,11 +178,11 @@ msgstr "Přehrát _DVD"
 msgid "Play _VCD"
 msgstr "Přehrát _VCD"
 
-#: data/totem.glade.h:18
+#: data/totem.glade.h:18 src/totem.c:121
 msgid "Play/Pause"
 msgstr "Hrát/Pozastavit"
 
-#: data/totem.glade.h:19
+#: data/totem.glade.h:19 src/totem.c:123
 msgid "Previous"
 msgstr "Předchozí"
 
@@ -243,11 +243,12 @@ msgid "Title menu"
 msgstr "Menu titulků"
 
 #: data/totem.glade.h:34
-msgid "Toggle Aspect Ratio"
+#, fuzzy
+msgid "Toggle _Aspect Ratio"
 msgstr "Přepnout poměr stran"
 
 #. Title
-#: data/totem.glade.h:35 src/totem.c:410 src/totem.c:433 src/totem.c:1269
+#: data/totem.glade.h:35 src/totem.c:431 src/totem.c:454 src/totem.c:1299
 msgid "Totem"
 msgstr "Totem"
 
@@ -255,11 +256,11 @@ msgstr "Totem"
 msgid "Totem Preferences"
 msgstr "Vlastnosti aplikace Totem"
 
-#: data/totem.glade.h:37
+#: data/totem.glade.h:37 src/totem.c:127
 msgid "Volume Down"
 msgstr "Snížit hlasitost"
 
-#: data/totem.glade.h:38
+#: data/totem.glade.h:38 src/totem.c:126
 msgid "Volume Up"
 msgstr "Zvýšit hlasitost"
 
@@ -288,18 +289,23 @@ msgid "_Play / Pause"
 msgstr "Hrát / _Pozastavit"
 
 #: data/totem.glade.h:45
+#, fuzzy
+msgid "_Repeat Mode"
+msgstr "Režim opakování"
+
+#: data/totem.glade.h:46
 msgid "_Show/Hide Playlist"
 msgstr "Zobrazit/_Skrýt seznam skladeb"
 
-#: data/totem.glade.h:46
+#: data/totem.glade.h:47
 msgid "_Skip to..."
 msgstr "_Přeskočit na..."
 
-#: data/totem.glade.h:47
+#: data/totem.glade.h:48
 msgid "_Sound"
 msgstr "_Zvuk"
 
-#: data/totem.glade.h:48
+#: data/totem.glade.h:49
 msgid "_Zoom 1:2"
 msgstr "_Zvětšení 1:2"
 
@@ -308,34 +314,30 @@ msgid "Default audio output driver"
 msgstr "Výchozí ovladač zvukového výstupu"
 
 #: data/totem.schemas.in.h:2
-msgid "Only start if there isn't already a Totem application running"
-msgstr "Spustit se pouze v případě, že ještě neběží jiná aplikace Totem"
-
-#: data/totem.schemas.in.h:3
 msgid "Path to the optical media device"
 msgstr "Cesta k zařízení pro optická média"
 
-#: data/totem.schemas.in.h:4
+#: data/totem.schemas.in.h:3
 msgid "Repeat mode"
 msgstr "Režim opakování"
 
-#: data/totem.schemas.in.h:5
+#: data/totem.schemas.in.h:4
 msgid "Resize the canvas automatically on file load"
 msgstr "Změnit velikost plátna automaticky po načtení souboru"
 
-#: data/totem.schemas.in.h:6
+#: data/totem.schemas.in.h:5
 msgid "Show visual effects when no video is displayed"
 msgstr "Zobrazit vizuální efekty, pokud není zobrazeno video"
 
-#: data/totem.schemas.in.h:7
+#: data/totem.schemas.in.h:6
 msgid "Show visual effects when playing an audio only file"
 msgstr "Zobrazit vizuální efekty, pokud se přehrává pouze zvukový soubor"
 
-#: data/totem.schemas.in.h:8
+#: data/totem.schemas.in.h:7
 msgid "X coordinate for the Playlist"
 msgstr "Souřadnice X pro seznam skladeb"
 
-#: data/totem.schemas.in.h:9
+#: data/totem.schemas.in.h:8
 msgid "Y coordinate for the Playlist"
 msgstr "Souřadnice Y pro seznam skladeb"
 
@@ -395,7 +397,7 @@ msgstr "_Heslo:"
 msgid "Remember this password"
 msgstr "Zapamatovat si toto heslo"
 
-#: src/gtk-playlist.c:414 src/totem.c:1094
+#: src/gtk-playlist.c:414 src/totem.c:1115
 msgid "Select files"
 msgstr "Vyberte soubory"
 
@@ -407,7 +409,7 @@ msgstr "Název souboru"
 msgid "Totem Video Window"
 msgstr "Video okno aplikace Totem"
 
-#: src/gtk-xine.c:559
+#: src/gtk-xine.c:555
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -416,19 +418,11 @@ msgstr ""
 "Nelze načíst ovladač zvuku '%s'.\n"
 "Ověřte prosím, zda není zařízení obsazeno."
 
-#: src/gtk-xine.c:798
-msgid ""
-"Could not initialise the threads support.\n"
-"You should install a thread-safe Xlib."
-msgstr ""
-"Nelze inicializovat podporu vláken.\n"
-"Měli byste nainstalovat knihovnu Xlib se zabezpečením vláken."
-
-#: src/gtk-xine.c:817
+#: src/gtk-xine.c:800
 msgid "Could not find a suitable video output."
 msgstr "Nelze nalézt vhodný výstup pro video."
 
-#: src/gtk-xine.c:1208
+#: src/gtk-xine.c:1189
 #, c-format
 msgid "Reason: Video type '%s' is not handled."
 msgstr "Důvod: Typ videa '%s' není možné zpracovat."
@@ -502,19 +496,46 @@ msgstr "%d snímků za sekundu"
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/totem.c:189
+#: src/totem.c:124
+#, fuzzy
+msgid "Seek Forwards"
+msgstr "Přeskočit dopředu"
+
+#: src/totem.c:125
+#, fuzzy
+msgid "Seek Backwards"
+msgstr "Přeskočit zpět"
+
+#: src/totem.c:129
+#, fuzzy
+msgid "Toggle Fullscreen"
+msgstr "_Celá obrazovka"
+
+#: src/totem.c:130
+msgid "Quit"
+msgstr ""
+
+#: src/totem.c:131
+msgid "Enqueue"
+msgstr ""
+
+#: src/totem.c:132
+msgid "Replace"
+msgstr ""
+
+#: src/totem.c:210
 msgid "Playing"
 msgstr "Přehrává se"
 
-#: src/totem.c:196
+#: src/totem.c:217
 msgid "Paused"
 msgstr "Pozastaveno"
 
-#: src/totem.c:203 src/totem-statusbar.c:171
+#: src/totem.c:224 src/totem-statusbar.c:171
 msgid "Stopped"
 msgstr "Zastaveno"
 
-#: src/totem.c:271
+#: src/totem.c:292
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -526,7 +547,7 @@ msgstr ""
 "Chcete -li tento typ médií přehrát, nainstalujte odpovídající zásuvný modul "
 "a znovu spusťte aplikaci Totem."
 
-#: src/totem.c:279
+#: src/totem.c:300
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -538,29 +559,29 @@ msgstr ""
 "zařízení správně nastaveno."
 
 #. Title
-#: src/totem.c:386
+#: src/totem.c:407
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:399 src/totem.c:2444
+#: src/totem.c:420 src/totem.c:2508
 msgid "No file"
 msgstr "Žádný soubor"
 
-#: src/totem.c:1245
+#: src/totem.c:1275
 msgid "translator_credits"
 msgstr "Michal Bukovjan <bukm@centrum.cz>"
 
-#: src/totem.c:1271
+#: src/totem.c:1301
 msgid "Movie Player (based on the xine libraries)"
 msgstr "Přehrávač filmů (založený na knihovnách xine)"
 
-#: src/totem.c:1325 src/totem.c:1336
+#: src/totem.c:1355 src/totem.c:1366
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Obrazovka%d.png"
 
-#: src/totem.c:1389
+#: src/totem.c:1419
 msgid ""
 "Totem could not get a screenshot of that film.\n"
 "You might want to try again at another time."
@@ -568,7 +589,7 @@ msgstr ""
 "Totem nebyl schopen sejmout obrazovku s tímto filmem.\n"
 "Můžete to zkusit znovu jindy."
 
-#: src/totem.c:1415
+#: src/totem.c:1445
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
@@ -577,7 +598,7 @@ msgstr ""
 "Soubor '%s' již existuje.\n"
 "Obrazovka nebyla uložena."
 
-#: src/totem.c:1426
+#: src/totem.c:1456
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -586,7 +607,7 @@ msgstr ""
 "Při ukládání obrazovky nastala chyba.\n"
 "Podrobnosti: %s"
 
-#: src/totem.c:1446
+#: src/totem.c:1476
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -594,7 +615,7 @@ msgstr ""
 "Aplikace Totem nemůže zobrazit okno se svými vlastnostmi.\n"
 "Ujistěte se, že je tato aplikace správně nainstalovaná."
 
-#: src/totem.c:1894
+#: src/totem.c:1950
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -603,7 +624,7 @@ msgstr ""
 "Aplikace Totem se nemohla spustit:\n"
 "%s"
 
-#: src/totem.c:1900
+#: src/totem.c:1956
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'.\n"
@@ -613,12 +634,12 @@ msgstr ""
 "s'.\n"
 "Aplikace Totem nebude schopna toto přehrát."
 
-#: src/totem.c:1906
+#: src/totem.c:1962
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "'%s' je poškozený a nelze jej již dále přehrávat."
 
-#: src/totem.c:1911
+#: src/totem.c:1967
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -627,7 +648,7 @@ msgstr ""
 "Aplikace Totem nemohla přehrát '%s':\n"
 "%s"
 
-#: src/totem.c:1916
+#: src/totem.c:1972
 #, c-format
 msgid ""
 "Totem could not play '%s'.\n"
@@ -636,7 +657,7 @@ msgstr ""
 "Aplikace Totem nemohla přehrát '%s'.\n"
 "Toto umístění není platné."
 
-#: src/totem.c:2608
+#: src/totem.c:2747
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -647,7 +668,7 @@ msgstr ""
 "rozhraní pro nastavení:\n"
 "%s"
 
-#: src/totem.c:2623 src/totem.c:2651
+#: src/totem.c:2761 src/totem.c:2797
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -655,7 +676,7 @@ msgstr ""
 "Nelze načíst hlavní rozhraní (totem.glade).\n"
 "Ujistěte se, že je aplikace Totem řádně nainstalovaná."
 
-#: src/totem.c:2673
+#: src/totem.c:2819
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
@@ -674,6 +695,16 @@ msgstr "Styl ohraničení okolo textu ve stavové liště"
 #: src/totem-statusbar.c:180
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
+
+#~ msgid "Only start if there isn't already a Totem application running"
+#~ msgstr "Spustit se pouze v případě, že ještě neběží jiná aplikace Totem"
+
+#~ msgid ""
+#~ "Could not initialise the threads support.\n"
+#~ "You should install a thread-safe Xlib."
+#~ msgstr ""
+#~ "Nelze inicializovat podporu vláken.\n"
+#~ "Měli byste nainstalovat knihovnu Xlib se zabezpečením vláken."
 
 #~ msgid "Time: %s "
 #~ msgstr "Čas: %s "
