@@ -244,6 +244,22 @@ totem_playlist_mrl_to_title (const gchar *mrl)
 	return filename_for_display;
 }
 
+static gboolean
+totem_playlist_is_media (const char *mrl)
+{
+	if (mrl == NULL)
+		return FALSE;
+
+	if (strncmp ("cdda:", mrl, strlen ("cdda:")) == 0)
+		return TRUE;
+	if (strncmp ("dvd:",mrl, strlen ("dvd:")) == 0)
+		return TRUE;
+	if (strncmp ("vcd:", mrl, strlen ("vcd:")) == 0)
+		return TRUE;
+
+	return FALSE;
+}
+
 static char*
 totem_playlist_create_full_path (const char *path)
 {
@@ -252,6 +268,8 @@ totem_playlist_create_full_path (const char *path)
 	g_return_val_if_fail (path != NULL, NULL);
 
 	if (strstr (path, "://") != NULL)
+		return g_strdup (path);
+	if (totem_playlist_is_media (path) != FALSE)
 		return g_strdup (path);
 
 	if (path[0] == '/')

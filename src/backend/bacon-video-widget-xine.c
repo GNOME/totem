@@ -1165,7 +1165,10 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		message = g_strdup_printf (_("A problem occured while loading a library or a decoder (%s)."), (char *) data + data->parameters);
 		break;
 	case XINE_MSG_ENCRYPTED_SOURCE:
-		message = g_strdup_printf (_("The source seems encrypted, and can't be read. Are you trying to play an encrypted DVD without libdvdcss?"));
+		if (strncmp (bvw->priv->mrl, "dvd:", 4) == 0)
+			message = g_strdup (_("The source seems encrypted, and can't be read. Are you trying to play an encrypted DVD without libdvdcss?"));
+		else
+			message = g_strdup (_("This file is encrypted and cannot be played back."));
 		break;
 	}
 
