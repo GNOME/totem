@@ -94,6 +94,9 @@ totem_properties_page_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
 
 vanity_SOURCES =					\
 	$(VIDEOWIDGET)					\
+	gnome-authn-manager.c gnome-authn-manager.h	\
+	gnome-caption-table.c gnome-caption-table.h	\
+	gnome-password-dialog.c gnome-password-dialog.h	\
 	vanity.c
 
 vanity_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
