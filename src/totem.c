@@ -1797,15 +1797,13 @@ size_changed_cb (GdkScreen *screen, gpointer user_data)
 	Totem *totem = (Totem *) user_data;
 	update_fullscreen_size (totem);
 
-	//FIXME
-#if 0
-	if (bvw->priv->fullscreen_mode)
-	{
-		gdk_window_resize (bvw->priv->fullscreen_window,
-				bvw->priv->fullscreen_rect.width,
-				bvw->priv->fullscreen_rect.height);
-	}
-#endif
+	gtk_window_move (GTK_WINDOW (totem->exit_popup),
+			totem->fullscreen_rect.x,
+			totem->fullscreen_rect.y);
+	gtk_window_move (GTK_WINDOW (totem->control_popup),
+			totem->fullscreen_rect.x,
+			totem->fullscreen_rect.height
+			- totem->control_popup_height);
 }
 
 static gboolean
