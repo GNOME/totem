@@ -297,6 +297,8 @@ play_pause_set_label (Totem *totem, TotemStates state)
 	case STATE_STOPPED:
 		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
 				_("Stopped"));
+		totem_statusbar_set_time_and_length
+			(TOTEM_STATUSBAR (totem->statusbar), 0, 0);
 		id = "stock-media-play";
 		break;
 	default:
@@ -319,9 +321,12 @@ totem_action_eject (Totem *totem)
 	char *cmd;
 
 	totem_playlist_set_playing (totem->playlist, FALSE);
-	play_pause_set_label (totem, STATE_PAUSED);
+	play_pause_set_label (totem, STATE_STOPPED);
 
 	bacon_video_widget_close (totem->bvw);
+	g_free (totem->mrl);
+	totem->mrl = NULL;
+
 	cmd = g_strdup_printf ("eject %s", gconf_client_get_string
 			(totem->gc, GCONF_PREFIX"/mediadev", NULL));
 	if (g_spawn_command_line_sync (cmd, NULL, NULL, NULL, NULL) == FALSE)
@@ -659,6 +664,8 @@ update_mrl_label (Totem *totem, const char *name)
 	} else {
 		totem_statusbar_set_time_and_length (TOTEM_STATUSBAR
 				(totem->statusbar), 0, 0);
+		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
+				_("Stopped"));
 
 		update_skip_to (totem, 0);
 
@@ -689,6 +696,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 	if (totem->mrl != NULL)
 	{
 		g_free (totem->mrl);
+		totem->mrl = NULL;
 		bacon_video_widget_close (totem->bvw);
 	}
 
@@ -1239,7 +1247,7 @@ update_current_time (BaconVideoWidget *bvw,
 
 	if (totem->seek_lock == FALSE)
 	{
-		if (stream_length == 0)
+		if (stream_length == 0 && totem->mrl != NULL)
 		{
 			totem_statusbar_set_time_and_length
 				(TOTEM_STATUSBAR (totem->statusbar),

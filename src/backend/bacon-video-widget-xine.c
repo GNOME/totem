@@ -1660,6 +1660,9 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 				&stream_length);
 	}
 
+	if (ret == FALSE)
+		return TRUE;
+
 	if (bvw->priv->seeking == 1)
 	{
 		current_position_f = bvw->priv->seek_dest;
@@ -1683,13 +1686,12 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 		seekable = FALSE;
 	}
 
-	if (ret != FALSE)
-		g_signal_emit (G_OBJECT (bvw),
-				bvw_table_signals[TICK], 0,
-				(gint64) (current_time),
-				(gint64) (stream_length),
-				current_position_f,
-				seekable);
+	g_signal_emit (G_OBJECT (bvw),
+			bvw_table_signals[TICK], 0,
+			(gint64) (current_time),
+			(gint64) (stream_length),
+			current_position_f,
+			seekable);
 
 	return TRUE;
 }

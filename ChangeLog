@@ -1,5 +1,18 @@
 2004-04-08  Bastien Nocera  <hadess@hadess.net>
 
+	* NEWS: updated
+	* README: removed TODO item
+	* configure.in: detect newer xine-lib versions, and require them
+	Update the version to 0.99.10
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_tick_send):
+	* src/totem.c: (play_pause_set_label), (totem_action_eject),
+	(update_mrl_label), (totem_action_set_mrl), (update_current_time):
+	Make sure that the statusbar label and time show that the playback
+	was completely stopped, don't show a "Paused" label when the logo is
+	displayed
+
+2004-04-08  Bastien Nocera  <hadess@hadess.net>
+
 	* data/Makefile.am:
 	* data/playlist.glade:
 	* data/totem.1:

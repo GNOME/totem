@@ -1,6 +1,6 @@
 New features and significant updates in version...
 
-???:
+0.99.10:
 * Use the new GtkFileChooser, and other GTK+ 2.4-related changes
 * Make NVidia TV-Out work again
 * Remove the (broken) automatic downloader and the CURL dependency
@@ -14,9 +14,12 @@ required
 * Make vanity support Linux 2.6
 * Stock icons support
 * Have the command-line options translated
+* Added context menu in the playlist to copy URLs/filenames to the clipboard
+* Added a man page for totem
 * Install handlers for mms, pnm and rtsp protocols in the xine-lib backend
 * Add a button to reset the colour balance settings
 * Make the fullscreen slider work again
+* Make "totem cd:" work again
 * Restore the default audio stream if a custom one is not available in the
 file that we're about to play
 * Don't crash when the "none" video output plugin isn't available
@@ -25,6 +28,7 @@ file that we're about to play
   on exit when using the ALSA audio output
 * Fix some bugs in ASX playlist parsing
 * Fix crash using Optical Media playback with the GStreamer backend
+* Statusbar is now right after ejecting an Optical Media
 
 0.99.9:
 * Extended Gstreamer 0.7.x support, DVD and Audio CD support, related bug fixes

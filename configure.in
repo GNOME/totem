@@ -1,5 +1,5 @@
 AC_PREREQ(2.52)
-AC_INIT(totem, 0.99.9, http://bugzilla.gnome.org/enter_bug.cgi?product=totem)
+AC_INIT(totem, 0.99.10, http://bugzilla.gnome.org/enter_bug.cgi?product=totem)
 AC_CONFIG_SRCDIR(src/totem.c)
 AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 AM_CONFIG_HEADER(config.h)
@@ -70,15 +70,13 @@ else
 	AC_MSG_RESULT(xine)
 
 	SAVE_CFLAGS="$CFLAGS"
-	CFLAGS="$RHYTHMBOX_CFLAGS"
 	SAVE_LIBS="$LIBS"
-	LIBS="$RHYTHMBOX_LIBS"
 	AC_TRY_COMPILE([
 		#include <xine.h>
 		],[
 		int arg = 0, foo;
-		foo = XINE_PARAM_AUDIO_CLOSE_DEVICE;
-		],(AC_DEFINE(HAVE_XINE_CLOSE,1,[Define if you have the audio device close feature in xine-lib])))
+		foo = XINE_MSG_AUDIO_OUT_UNAVAILABLE;
+		],,AC_MSG_ERROR(you need at least xine-lib 1.0rc3c installed !))
 	CFLAGS="$SAVE_CFLAGS"
 	LIBS="$SAVE_LIBS"
 fi
