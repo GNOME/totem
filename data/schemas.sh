@@ -27,7 +27,7 @@ schema()
 	upd_schema;
 }
 
-MIMETYPES=`cat $1 | grep -v short_list_application_ids_for_ | grep "\/" | grep -v audio`
+MIMETYPES=`cat $1 | grep -v short_list_application_ids_for_ | grep "\/" | grep -v audio | grep -v "application/x-flac"`
 
 echo "<gconfschemafile>";
 echo "    <schemalist>";
