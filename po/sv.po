@@ -7,17 +7,21 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2002-09-24 23:33+0200\n"
-"PO-Revision-Date: 2002-09-24 23:36+0200\n"
+"POT-Creation-Date: 2002-10-22 02:55+0200\n"
+"PO-Revision-Date: 2002-10-22 02:58+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/playlist.glade.h:1 src/gtk-playlist.c:485
+#: data/playlist.glade.h:1 src/gtk-playlist.c:732
 msgid "Playlist"
 msgstr "Spellista"
+
+#: data/playlist.glade.h:2
+msgid "Repeat Mode"
+msgstr "Upprepningsläge"
 
 #: data/totem.desktop.in.h:1
 msgid "Play movies and songs"
@@ -28,118 +32,158 @@ msgid "Totem Movie Player"
 msgstr "Filmspelaren Totem"
 
 #: data/totem.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: data/totem.glade.h:2
+msgid "Automatically _resize the window when a new video is loaded"
+msgstr "Ändra automatiskt storlek på fönstret när en ny video läses in"
+
+#: data/totem.glade.h:3
 msgid "Exit fullscreen"
 msgstr "Avsluta helskärm"
 
-#: data/totem.glade.h:2
+#: data/totem.glade.h:4
 msgid "File name"
 msgstr "Filnamn"
 
-#: data/totem.glade.h:3
+#: data/totem.glade.h:5
 msgid "Next"
 msgstr "Nästa"
 
-#: data/totem.glade.h:4
+#: data/totem.glade.h:6
 msgid "Next stream"
 msgstr "Nästa ström"
 
-#: data/totem.glade.h:5
+#: data/totem.glade.h:7
+msgid "Optical Device _Path: "
+msgstr "_Sökväg till optisk enhet: "
+
+#: data/totem.glade.h:8
 msgid "Play DVD"
 msgstr "Spela DVD"
 
-#: data/totem.glade.h:6
+#: data/totem.glade.h:9
 msgid "Play VCD"
 msgstr "Spela VCD"
 
-#: data/totem.glade.h:7
+#: data/totem.glade.h:10
 msgid "Play/Pause"
 msgstr "Spela/Gör paus"
 
-#: data/totem.glade.h:8
+#: data/totem.glade.h:11
 msgid "Previous"
 msgstr "Föregående"
 
-#: data/totem.glade.h:9
+#: data/totem.glade.h:12
 msgid "Previous stream"
 msgstr "Föregående ström"
 
-#: data/totem.glade.h:10
+#: data/totem.glade.h:13
 msgid "Show/Hide Playlist"
 msgstr "Visa/Dölj spellista"
 
-#: data/totem.glade.h:11
+#: data/totem.glade.h:14
 msgid "Skip backwards"
 msgstr "Hoppa över baklänges"
 
-#: data/totem.glade.h:12
+#: data/totem.glade.h:15
 msgid "Skip forward"
 msgstr "Hoppa över framlänges"
 
-#: data/totem.glade.h:13
+#: data/totem.glade.h:16
 msgid "Toggle Aspect Ratio"
 msgstr "Växla proportioner"
 
-#: data/totem.glade.h:14 src/totem.c:906
+#: data/totem.glade.h:17 src/totem.c:1009
 msgid "Totem"
 msgstr "Totem"
 
-#: data/totem.glade.h:15
+#: data/totem.glade.h:18
+msgid "Totem Preferences"
+msgstr "Inställningar för Totem"
+
+#: data/totem.glade.h:19
 msgid "Volume Down"
 msgstr "Volym ned"
 
-#: data/totem.glade.h:16
+#: data/totem.glade.h:20
 msgid "Volume Up"
 msgstr "Volym upp"
 
-#: data/totem.glade.h:17
+#: data/totem.glade.h:21
 msgid "Zoom _1:1"
 msgstr "Zooma _1:1"
 
-#: data/totem.glade.h:18
+#: data/totem.glade.h:22
 msgid "Zoom _2:1"
 msgstr "Zooma _2:1"
 
-#: data/totem.glade.h:19
+#: data/totem.glade.h:23
 msgid "_Fullscreen"
 msgstr "_Helskärm"
 
-#: data/totem.glade.h:20
+#: data/totem.glade.h:24
 msgid "_Movie"
 msgstr "_Film"
 
-#: data/totem.glade.h:21
+#: data/totem.glade.h:25
 msgid "_Play / Pause"
 msgstr "_Spela / Gör paus"
 
-#: data/totem.glade.h:22
+#: data/totem.glade.h:26
 msgid "_Show/Hide Playlist"
 msgstr "_Visa/Dölj spellista"
 
-#: data/totem.glade.h:23
+#: data/totem.glade.h:27
 msgid "_Sound"
 msgstr "_Ljud"
 
-#: data/totem.glade.h:24
+#: data/totem.glade.h:28
 msgid "_Zoom 1:2"
 msgstr "_Zooma 1:2"
+
+#: data/totem.glade.h:29
+msgid "button3"
+msgstr "knapp3"
+
+#: data/totem.glade.h:30
+msgid "button4"
+msgstr "knapp4"
+
+#: data/totem.glade.h:31
+msgid "button5"
+msgstr "knapp5"
 
 #: data/totem.schemas.in.h:1
 msgid "Default audio output driver"
 msgstr "Standarddrivrutin för ljudutmatning"
 
 #: data/totem.schemas.in.h:2
+msgid "Only start if there isn't already a Totem application running"
+msgstr "Starta endast om det inte redan finns ett Totem-program som kör"
+
+#: data/totem.schemas.in.h:3
+msgid "Path to the optical media device"
+msgstr "Sökväg till enheten för optisk media"
+
+#: data/totem.schemas.in.h:4
+msgid "Repeat mode"
+msgstr "Upprepningsläge"
+
+#: data/totem.schemas.in.h:5
 msgid "Resize the canvas automatically on file load"
 msgstr "Ändra storleken automatiskt vid filinläsning"
 
-#: src/gtk-playlist.c:222 src/totem.c:738
+#: src/gtk-playlist.c:403 src/totem.c:841
 msgid "Select files"
 msgstr "Välj filer"
 
-#: src/gtk-playlist.c:376
+#: src/gtk-playlist.c:543
 msgid "Playing"
 msgstr "Spelar"
 
-#: src/gtk-playlist.c:387
+#: src/gtk-playlist.c:554
 msgid "Filename"
 msgstr "Filnamn"
 
@@ -147,7 +191,7 @@ msgstr "Filnamn"
 msgid "Totem Video Window"
 msgstr "Totem-videofönster"
 
-#: src/gtk-xine.c:504
+#: src/gtk-xine.c:505
 msgid ""
 "The configuration system is not initialised.\n"
 "The defaults will be used."
@@ -155,7 +199,7 @@ msgstr ""
 "Konfigurationssystemet är inte initierat.\n"
 "Standardalternativen kommer att användas."
 
-#: src/gtk-xine.c:734
+#: src/gtk-xine.c:748
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
@@ -163,34 +207,71 @@ msgstr ""
 "Kunde inte initiera trådstödet.\n"
 "Du bör installera ett trådsäkert Xlib."
 
-#: src/gtk-xine.c:770
+#: src/gtk-xine.c:784
 msgid "Could not find a suitable video output."
 msgstr "Kunde inte hitta en lämplig videoutmatning."
 
-#: src/gtk-xine.c:902
+#: src/gtk-xine.c:916
 #, c-format
 msgid "No video plugin available to decode '%s'."
 msgstr "Ingen videoinsticksmodul tillgänglig för avkodning av \"%s\"."
 
-#: src/totem.c:329 src/totem.c:1404
+#: src/input_gnomevfs.c:149
+#, c-format
+msgid "input_file: trying to open subtitle file '%s'\n"
+msgstr "input_file: försöker att öppna undertitelfilen \"%s\"\n"
+
+#: src/input_gnomevfs.c:155
+#, c-format
+msgid "input_file: failed to open subtitle file '%s'\n"
+msgstr "input_file: misslyckades med att öppna undertitelfilen \"%s\"\n"
+
+#: src/input_gnomevfs.c:224
+msgid "input_gnomevfs: read error\n"
+msgstr "input_gnomevfs: läsfel\n"
+
+#: src/input_gnomevfs.c:376
+msgid "gnome-vfs input plugin as shipped with xine"
+msgstr "gnome-vfs-inmatningsinsticksmodul som den medföljer xine"
+
+#: src/input_gnomevfs.c:393
+#, c-format
+msgid "input_gnomevfs: get optional data, type %08x, sub %p\n"
+msgstr "input_gnomevfs: hämta valfri data, typ %08x, under %p\n"
+
+#: src/input_gnomevfs.c:444
+#, c-format
+msgid ""
+"gnomevfs input plugin doesn't support plugin API version %d.\n"
+"PLUGIN DISABLED.\n"
+"This means there's a version mismatch between xine and this input plugin.\n"
+"Installing current input plugins should help.\n"
+msgstr ""
+"gnomevfs-inmatningsinsticksmodulen stöder inte API-version %d för\n"
+"insticksmoduler.\n"
+"INSTICKSMODULEN INAKTIVERAD.\n"
+"Detta etyder att versionerna av xine och denna insticksmodul inte passar.\n"
+"Att installera aktuella insticksmoduler ör hjälpa.\n"
+
+#: src/totem.c:352 src/totem.c:1589
 msgid "<span size=\"medium\"><b>No file</b></span>"
 msgstr "<span size=\"medium\"><b>Ingen fil</b></span>"
 
-#: src/totem.c:882
+#: src/totem.c:985
 msgid "translator_credits"
 msgstr ""
 "Christian Rose\n"
 "Skicka synpunkter på översättningen till sv@li.org"
 
-#: src/totem.c:907
+#: src/totem.c:1010
 msgid "(C) 2002 Bastien Nocera"
 msgstr "© 2002 Bastien Nocera"
 
-#: src/totem.c:908
+#: src/totem.c:1011
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Filmspelare (baserad på Xine-biblioteken)"
 
-#: src/totem.c:1110
+#: src/totem.c:1250
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -199,7 +280,7 @@ msgstr ""
 "Totem kunde inte starta:\n"
 "%s"
 
-#: src/totem.c:1115
+#: src/totem.c:1256
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'\n"
@@ -208,12 +289,12 @@ msgstr ""
 "Det finns ingen insticksmodul för Totem för hantering av \"%s\"\n"
 "Totem kommer inte att kunna spela det."
 
-#: src/totem.c:1118
+#: src/totem.c:1261
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "\"%s\" är trasig, och Totem kan inte spela den längre."
 
-#: src/totem.c:1121
+#: src/totem.c:1265
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -222,7 +303,18 @@ msgstr ""
 "Totem kunde inte spela \"%s\":\n"
 "%s"
 
-#: src/totem.c:1483 src/totem.c:1491
+#: src/totem.c:1677
+#, c-format
+msgid ""
+"Totem couln't initialise the \n"
+"configuration engine:\n"
+"%s"
+msgstr ""
+"Totem kunde inte initiera\n"
+"konfigurationsmotorn:\n"
+"%s"
+
+#: src/totem.c:1713 src/totem.c:1721
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -230,7 +322,7 @@ msgstr ""
 "Kunde inte läsa in huvudgränssnittet (totem.glade).\n"
 "Försäkra dig om att Totem är korrekt installerat."
 
-#: src/totem.c:1504
+#: src/totem.c:1734
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
