@@ -26,6 +26,7 @@
 /* system */
 #include <math.h>
 #include <pthread.h>
+#include <string.h>
 /* X11 */
 #include <X11/X.h>
 #include <X11/Xlib.h>
@@ -136,6 +137,7 @@ struct GtkXinePrivate {
 	/* properties dialog */
 	GtkWidget *dialog;
 	GladeXML *xml;
+	gboolean properties_reset_state;
 };
 
 
@@ -306,6 +308,7 @@ gtk_xine_instance_init (GtkXine *gtx)
 	gtx->priv->pml = FALSE;
 	gtx->priv->dialog = NULL;
 	gtx->priv->xml = NULL;
+	gtx->priv->properties_reset_state = FALSE;
 
 	gtx->priv->queue = g_async_queue_new ();
 
@@ -1604,7 +1607,7 @@ GtkWidget
 	g_signal_connect (G_OBJECT (gtx->priv->dialog), "delete-event",
 			G_CALLBACK (hide_dialog), (gpointer) gtx);
 
-	gtk_xine_properties_update (gtx, FALSE);
+	gtk_xine_properties_update (gtx, gtx->priv->properties_reset_state);
 
 	return gtx->priv->dialog;
 }
@@ -1806,6 +1809,8 @@ gtk_xine_properties_set_from_current (GtkXine *gtx)
 void
 gtk_xine_properties_update (GtkXine *gtx, gboolean reset)
 {
+	gtx->priv->properties_reset_state = reset;
+
 	if (gtx->priv->dialog == NULL)
 		return;
 
