@@ -198,10 +198,10 @@ totem_remote_init (TotemRemote *remote)
 	
 	
 	if (lirc_channel == NULL) {
-		fd = lirc_init ("Totem", 1);
+		fd = lirc_init ("Totem", 0);
 
 		if (fd < 0) {
-			g_message ("Couldn't initialize lirc.\n");
+			/* g_message ("Couldn't initialize lirc.\n"); */
 			return;
 		}
 			

@@ -13,14 +13,17 @@ News
 ====
 
 1.0(?):
+* On-the-fly switching between visual effects plugins
 * Allow AC3 passthrough sound
 * Fix races when getting errors on startup
+* Fix vanity compilation
 * Better error messages
 * Check that we could get tracks before trying to playback optical media
 * Don't tell nautilus we can't thumbnail a file if it just takes a long time
 * Make the CD selector work on FreeBSD
 * Fixup argument parsing
 * Fix a memleak in the recent files
+* Make lirc silent on startup
 * Detect libcurl version properly
 
 0.99.2:
@@ -312,6 +315,7 @@ http://article.gmane.org/gmane.comp.video.xine.devel/3456/match=+api+addition+su
 - implement a subclass of the checkbox menu item that takes two strings as parameters and switche between the two depending on the state (eg. Lock/Unlock)
 - implement recursive loading for directories in the playlist only for local directories
 - enhance the look of the controls popup in fullscreen
+- popups should show only on the workspace totem is in
 - fix the skip to spinner's range not getting updated (see update_mrl_label)
 - register all the icons with the stock stuff (see bluecurve for what icons
 we could be getting)
