@@ -1,5 +1,11 @@
 2002-10-23  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: added more libtool fpic fu (from xine-lib)
+	* src/Makefile.am: added -D_REENTRANT -D_FILE_OFFSET_BITS=64 thus
+	making the gnome-vfs plugin actually work from totem itself, wheeee!
+
+2002-10-23  Bastien Nocera  <hadess@hadess.net>
+
 	* src/debug.h: remove debug for threads_enter/_leave
 	* src/gtk-message.c: (gtk_message_make_selection_name): remove debug
 	* src/gtk-xine.c: (gtk_xine_instance_init),
