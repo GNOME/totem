@@ -43,6 +43,8 @@ enum {
 };
 
 struct TotemCdSelectionPrivate {
+	gboolean is_entry;
+	GtkWidget *entry;
 };
 
 
@@ -54,8 +56,8 @@ static void totem_cd_selection_set_property (GObject *object, guint property_id,
 static void totem_cd_selection_get_property (GObject *object, guint property_id,
 		GValue *value, GParamSpec *pspec);
 
-//static void totem_cd_selection_realize (GtkWidget *widget);
-//static void totem_cd_selection_unrealize (GtkWidget *widget);
+static void totem_cd_selection_realize (GtkWidget *widget);
+static void totem_cd_selection_unrealize (GtkWidget *widget);
 static void totem_cd_selection_finalize (GObject *object);
 
 static GtkWidgetClass *parent_class = NULL;
@@ -81,7 +83,7 @@ totem_cd_selection_get_type (void)
 		};
 
 		totem_cd_selection_type = g_type_register_static
-			(GTK_TYPE_WIDGET,
+			(GTK_TYPE_VBOX,
 			 "TotemCdSelection", &totem_cd_selection_info,
 			 (GTypeFlags)0);
 	}
@@ -92,18 +94,17 @@ totem_cd_selection_get_type (void)
 static void
 totem_cd_selection_class_init (TotemCdSelectionClass *klass)
 {
-
 	GObjectClass *object_class;
 	GtkWidgetClass *widget_class;
 
 	object_class = (GObjectClass *) klass;
 	widget_class = (GtkWidgetClass *) klass;
 
-	parent_class = gtk_type_class (gtk_widget_get_type ());
+	parent_class = gtk_type_class (gtk_vbox_get_type ());
 
 	/* GtkWidget */
-//	widget_class->realize = totem_cd_selection_realize;
-//	widget_class->unrealize = totem_cd_selection_unrealize;
+	widget_class->realize = totem_cd_selection_realize;
+	widget_class->unrealize = totem_cd_selection_unrealize;
 
 	/* GObject */
 	object_class->set_property = totem_cd_selection_set_property;
@@ -131,6 +132,24 @@ static void
 totem_cd_selection_instance_init (TotemCdSelection *tcs)
 {
 	tcs->priv = g_new0 (TotemCdSelectionPrivate, 1);
+
+	tcs->priv->is_entry = TRUE;
+}
+
+static void
+totem_cd_selection_realize (GtkWidget *widget)
+{
+	if (GTK_WIDGET_CLASS (parent_class)->realize != NULL) {
+		(* GTK_WIDGET_CLASS (parent_class)->realize) (widget);
+	}
+}
+
+static void
+totem_cd_selection_unrealize (GtkWidget *widget)
+{
+	if (GTK_WIDGET_CLASS (parent_class)->unrealize != NULL) {
+		(* GTK_WIDGET_CLASS (parent_class)->unrealize) (widget);
+	}
 }
 
 static void
@@ -142,73 +161,51 @@ totem_cd_selection_finalize (GObject *object)
 	tcs->priv = NULL;
 	tcs = NULL;
 }
-#if 0
-static gboolean
-totem_cd_selection_idle_signal (TotemCdSelection *tcs)
+
+static void
+on_combo_entry_changed (GnomeFileEntry *entry, gpointer user_data)
 {
-	TotemCdSelectionSignal *signal;
-	int queue_length;
+	TotemCdSelection *tcs = (TotemCdSelection *) user_data;
+	const char *str;
+	GtkWidget *widget;
 
-	signal = g_async_queue_try_pop (tcs->priv->queue);
-	if (signal == NULL)
-		return FALSE;
+	widget = gnome_file_entry_gtk_entry (entry);
+	str = gtk_entry_get_text (GTK_ENTRY (widget));
 
-	TE ();
-	switch (signal->type)
-	{
-	case ERROR:
-		/* We don't emit the ERROR signal when in fullscreen mode */
-		if (tcs->priv->fullscreen_mode == TRUE)
-			break;
-
-		g_signal_emit (G_OBJECT (tcs),
-				tcs_table_signals[ERROR], 0,
-				signal->error_type, signal->message);
-		break;
-	case MOUSE_MOTION:
-		g_signal_emit (G_OBJECT (tcs),
-				tcs_table_signals[MOUSE_MOTION],
-				0, NULL);
-		break;
-	case KEY_PRESS:
-		g_signal_emit (G_OBJECT (tcs),
-				tcs_table_signals[KEY_PRESS],
-				0, signal->keyval);
-		break;
-	case EOS:
-		g_signal_emit (G_OBJECT (tcs),
-				tcs_table_signals[EOS], 0, NULL);
-		break;
-	case TITLE_CHANGE:
-		g_signal_emit (G_OBJECT (tcs),
-				tcs_table_signals[TITLE_CHANGE],
-				0, signal->message);
-		break;
-	/* A bit of cheating right here */
-	case RATIO:
-		totem_cd_selection_set_scale_ratio (tcs, 0);
-		break;
-	default:
-	}
-
-	g_free (signal->message);
-	g_free (signal);
-
-	queue_length = g_async_queue_length (tcs->priv->queue);
-	TL ();
-
-	return (queue_length > 0);
+	g_signal_emit (G_OBJECT (tcs),
+			tcs_table_signals[DEVICE_CHANGED],
+			0, str);
 }
-#endif
 
 GtkWidget *
-totem_cd_selection_new (int width, int height)
+totem_cd_selection_new (void)
 {
-	GtkWidget *tcs;
+	GtkWidget *widget;
+	TotemCdSelection *tcs;
 
-	tcs = GTK_WIDGET (g_object_new (totem_cd_selection_get_type (), NULL));
+	widget = GTK_WIDGET
+		(g_object_new (totem_cd_selection_get_type (), NULL));
+	tcs = TOTEM_CD_SELECTION (widget);
 
-	return tcs;
+	if (tcs->priv->is_entry)
+	{
+		tcs->priv->entry = gnome_file_entry_new (NULL,
+					_("Select the drive"));
+		g_signal_connect (G_OBJECT (tcs->priv->entry), "changed",
+				G_CALLBACK (on_combo_entry_changed), tcs);
+
+		gtk_box_pack_start (GTK_BOX (widget),
+				tcs->priv->entry,
+				TRUE,       /* expand */
+				TRUE,       /* fill */
+				0);         /* padding */
+
+		gtk_widget_show_all (tcs->priv->entry);
+	} else {
+		//FIXME
+	}
+
+	return widget;
 }
 
 /* Properties */
@@ -225,7 +222,7 @@ totem_cd_selection_set_property (GObject *object, guint property_id,
 	switch (property_id)
 	{
 	case PROP_DEVICE:
-		//totem_cd_selection_set_fullscreen (tcs, g_value_get_boolean (value));
+		totem_cd_selection_set_device (tcs, g_value_get_string (value));
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -245,12 +242,41 @@ totem_cd_selection_get_property (GObject *object, guint property_id,
 	switch (property_id)
 	{
 	case PROP_DEVICE:
-		//g_value_set_boolean (value, totem_cd_selection_is_fullscreen (tcs));
+		g_value_set_string (value, totem_cd_selection_get_device (tcs));
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 	}
 }
+
+void
+totem_cd_selection_set_device (TotemCdSelection *tcs, const char *device)
+{
+	if (tcs->priv->is_entry == TRUE)
+	{
+		GtkWidget *entry;
+
+		entry = gnome_file_entry_gtk_entry
+			(GNOME_FILE_ENTRY (tcs->priv->entry));
+		gtk_entry_set_text (GTK_ENTRY (entry), device);
+	}
+}
+
+const char *
+totem_cd_selection_get_device (TotemCdSelection *tcs)
+{
+	if (tcs->priv->is_entry == TRUE)
+	{
+		GtkWidget *entry;
+
+		entry = gnome_file_entry_gtk_entry
+			(GNOME_FILE_ENTRY (tcs->priv->entry));
+		return gtk_entry_get_text (GTK_ENTRY (entry));
+	}
+
+	return NULL;
+}
+
 #if 0
 void
 totem_cd_selection_set_speed (TotemCdSelection *tcs, Speeds speed)

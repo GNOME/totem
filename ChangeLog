@@ -1,5 +1,22 @@
 2002-12-07  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.glade:
+	* src/totem-cd-selection.c: (totem_cd_selection_get_type),
+	(totem_cd_selection_class_init),
+	(totem_cd_selection_instance_init), (totem_cd_selection_realize),
+	(totem_cd_selection_unrealize), (totem_cd_selection_finalize),
+	(on_combo_entry_changed), (totem_cd_selection_new),
+	(totem_cd_selection_set_property),
+	(totem_cd_selection_get_property), (totem_cd_selection_set_device),
+	(totem_cd_selection_get_device):
+	* src/totem-cd-selection.h:
+	* src/totem.c: (on_combo_entry1_changed), (mediadev_changed_cb),
+	(label_create), (totem_cd_selection_create),
+	(totem_setup_preferences): changes to use the new TotemCdSelection
+	widget, no implementation using the CDDrive stuff yet
+
+2002-12-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am:
 	* src/cd-drive.c: (read_lines), (parse_sg_line), (count_strings),
 	(get_cd_scsi_id), (lookup_scsi_unit), (get_device_max_speed),

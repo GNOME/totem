@@ -36,17 +36,21 @@ G_BEGIN_DECLS
 typedef struct TotemCdSelectionPrivate TotemCdSelectionPrivate;
 
 typedef struct {
-	GtkWidget widget;
+	GtkVBox widget;
 	TotemCdSelectionPrivate *priv;
 } TotemCdSelection;
 
 typedef struct {
-	GtkWidgetClass parent_class;
+	GtkVBoxClass parent_class;
 	void (*device_changed) (GtkWidget *gtx, const char *title);
 } TotemCdSelectionClass;
 
 GtkType totem_cd_selection_get_type              (void);
 GtkWidget *totem_cd_selection_new                ();
+
+void totem_cd_selection_set_device		 (TotemCdSelection *tcs,
+						  const char *device);
+const char *totem_cd_selection_get_device	 (TotemCdSelection *tcs);
 
 G_END_DECLS
 

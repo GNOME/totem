@@ -1292,13 +1292,14 @@ on_checkbutton1_toggled (GtkToggleButton *togglebutton, gpointer user_data)
 }
 
 static void
-on_combo_entry1_changed (GtkEntry *entry, gpointer user_data)
+on_combo_entry1_changed (TotemCdSelection *tcs, char *device,
+		gpointer user_data)
 {
 	Totem *totem = (Totem *)user_data;
 	const char *str;
 
 	D("on_combo_entry1_activate");
-	str = gtk_entry_get_text (entry);
+	str = totem_cd_selection_get_device (tcs);
 	gconf_client_set_string (totem->gc, "/apps/totem/mediadev",
 			str, NULL);
 }
@@ -1329,14 +1330,15 @@ mediadev_changed_cb (GConfClient *client, guint cnxn_id,
 	Totem *totem = (Totem *) user_data;
 	GtkWidget *item;
 
-	item = glade_xml_get_widget (totem->xml, "combo-entry1");
+	item = glade_xml_get_widget (totem->xml, "custom3");
 	g_signal_handlers_disconnect_by_func (G_OBJECT (item),
 			on_combo_entry1_changed, totem);
 
-	gtk_entry_set_text (GTK_ENTRY (item), gconf_client_get_string
+	totem_cd_selection_set_device (TOTEM_CD_SELECTION (item),
+			gconf_client_get_string
 			(totem->gc, "/apps/totem/mediadev", NULL));
 
-	g_signal_connect (G_OBJECT (item), "changed",
+	g_signal_connect (G_OBJECT (item), "device-changed",
 			G_CALLBACK (on_combo_entry1_changed), totem);
 }
 
@@ -1963,8 +1965,8 @@ video_widget_create (Totem *totem)
 	gtk_widget_show (totem->gtx);
 }
 
-GtkWidget
-*label_create (void)
+GtkWidget *
+label_create (void)
 {
 	GtkWidget *label;
 	char *text;
@@ -1982,6 +1984,17 @@ GtkWidget
 	g_free (text);
 
 	return label;
+}
+
+GtkWidget *
+totem_cd_selection_create (void)
+{
+	GtkWidget *widget;
+
+	widget = totem_cd_selection_new ();
+	gtk_widget_show (widget);
+
+	return widget;
 }
 
 static void
@@ -2043,10 +2056,11 @@ totem_setup_preferences (Totem *totem)
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_checkbutton1_toggled), totem);
 
-	item = glade_xml_get_widget (totem->xml, "combo-entry1");
-	gtk_entry_set_text (GTK_ENTRY (item), gconf_client_get_string
+	item = glade_xml_get_widget (totem->xml, "custom3");
+	totem_cd_selection_set_device (TOTEM_CD_SELECTION (item),
+			gconf_client_get_string
 			(totem->gc, "/apps/totem/mediadev", NULL));
-	g_signal_connect (G_OBJECT (item), "changed",
+	g_signal_connect (G_OBJECT (item), "device-changed",
 			G_CALLBACK (on_combo_entry1_changed), totem);
 }
 
