@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.0\n"
-"POT-Creation-Date: 2002-11-17 20:29-0200\n"
-"PO-Revision-Date: 2002-11-15 15:30-0300\n"
+"POT-Creation-Date: 2002-11-29 22:37-0200\n"
+"PO-Revision-Date: 2002-11-28 01:00-0300\n"
 "Last-Translator: Alexandre Folle de Menezes <afmenez@terra.com.br>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
@@ -22,21 +22,22 @@ msgstr "Lista de Reprodução"
 msgid "Repeat Mode"
 msgstr "Modo de Repetição"
 
-#: data/properties.glade.h:1 src/gtk-xine.c:1727
+#: data/properties.glade.h:1 src/gtk-xine.c:1750
 msgid "0 frames per second"
 msgstr "0 quadros por segundo"
 
 #. Bitrate
-#: data/properties.glade.h:2 src/gtk-xine.c:1729
+#: data/properties.glade.h:2 src/gtk-xine.c:1752
 msgid "0 kbps"
 msgstr "0 kbps"
 
-#: data/properties.glade.h:3
+#. 0 seconds
+#: data/properties.glade.h:3 src/gtk-xine.c:1686
 msgid "0 seconds"
 msgstr "0 segundos"
 
 #. Dimensions
-#: data/properties.glade.h:4 src/gtk-xine.c:1722
+#: data/properties.glade.h:4 src/gtk-xine.c:1745
 msgid "0 x 0"
 msgstr "0 x 0"
 
@@ -77,9 +78,9 @@ msgid "Framerate: "
 msgstr "Framerate: "
 
 #. Year
-#: data/properties.glade.h:14 src/gtk-xine.c:1718 src/gtk-xine.c:1724
-#: src/gtk-xine.c:1731 src/gtk-xine.c:1753 src/gtk-xine.c:1778
-#: src/gtk-xine.c:1809
+#: data/properties.glade.h:14 src/gtk-xine.c:1741 src/gtk-xine.c:1747
+#: src/gtk-xine.c:1754 src/gtk-xine.c:1776 src/gtk-xine.c:1801
+#: src/gtk-xine.c:1832
 msgid "N/A"
 msgstr "N/D"
 
@@ -92,8 +93,8 @@ msgid "Title: "
 msgstr "Título: "
 
 #. Title
-#: data/properties.glade.h:17 src/gtk-xine.c:1714 src/gtk-xine.c:1716
-#: src/gtk-xine.c:1745 src/gtk-xine.c:1749
+#: data/properties.glade.h:17 src/gtk-xine.c:1737 src/gtk-xine.c:1739
+#: src/gtk-xine.c:1768 src/gtk-xine.c:1772
 msgid "Unknown"
 msgstr "Desconhecido"
 
@@ -131,8 +132,8 @@ msgid "Next"
 msgstr "Próximo"
 
 #: data/totem.glade.h:6
-msgid "Next stream"
-msgstr "Próxima stream"
+msgid "Next Movie"
+msgstr "Próximo Filme"
 
 #: data/totem.glade.h:7
 msgid "Optical Device _Path: "
@@ -155,8 +156,8 @@ msgid "Previous"
 msgstr "Anterior"
 
 #: data/totem.glade.h:12
-msgid "Previous stream"
-msgstr "Stream Anterior"
+msgid "Previous Movie"
+msgstr "Filme Anterior"
 
 #: data/totem.glade.h:13
 msgid "Show/Hide Playlist"
@@ -178,7 +179,7 @@ msgstr "Tempo: "
 msgid "Toggle Aspect Ratio"
 msgstr "Mudar Taxa de Proporção"
 
-#: data/totem.glade.h:18 src/totem.c:362 src/totem.c:1052
+#: data/totem.glade.h:18 src/totem.c:363 src/totem.c:1084
 msgid "Totem"
 msgstr "Totem"
 
@@ -254,7 +255,7 @@ msgstr "Coordenada X para a Lista de Execução"
 msgid "Y coordinate for the Playlist"
 msgstr "Coordenada Y para a Lista de Execução"
 
-#: src/gtk-playlist.c:410 src/totem.c:884
+#: src/gtk-playlist.c:410 src/totem.c:916
 msgid "Select files"
 msgstr "Selecione arquivos"
 
@@ -266,7 +267,7 @@ msgstr "Nome do Arquivo"
 msgid "Totem Video Window"
 msgstr "Janela de Vídeo Totem"
 
-#: src/gtk-xine.c:736
+#: src/gtk-xine.c:740
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
@@ -274,80 +275,80 @@ msgstr ""
 "Impossível inicializar o suporte para threads.\n"
 "Uma Xlib compatível com threads deve ser instalada."
 
-#: src/gtk-xine.c:768
+#: src/gtk-xine.c:772
 msgid "Could not find a suitable video output."
 msgstr "Impossível encontrar uma saída de vídeo adequada."
 
 #. One hour
-#: src/gtk-xine.c:1632
+#: src/gtk-xine.c:1655
 #, c-format
 msgid "%d hour"
 msgstr "%d hora"
 
 #. Multiple hours
-#: src/gtk-xine.c:1635
+#: src/gtk-xine.c:1658
 #, c-format
 msgid "%d hours"
 msgstr "%d horas"
 
 #. One minute
-#: src/gtk-xine.c:1639
+#: src/gtk-xine.c:1662
 #, c-format
 msgid "%d minute"
 msgstr "%d minuto"
 
 #. Multiple minutes
-#: src/gtk-xine.c:1642
+#: src/gtk-xine.c:1665
 #, c-format
 msgid "%d minutes"
 msgstr "%d minutos"
 
 #. One second
-#: src/gtk-xine.c:1646
+#: src/gtk-xine.c:1669
 #, c-format
 msgid "%d second"
 msgstr "%d segundo"
 
 #. Multiple seconds
-#: src/gtk-xine.c:1649
+#: src/gtk-xine.c:1672
 #, c-format
 msgid "%d seconds"
 msgstr "%d segundos"
 
 #. hour:minutes:seconds
-#: src/gtk-xine.c:1654
+#: src/gtk-xine.c:1677
 #, c-format
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. minutes:seconds
-#: src/gtk-xine.c:1657
+#: src/gtk-xine.c:1680
 #, c-format
 msgid "%s %s"
 msgstr "%s %s"
 
 #. seconds
-#: src/gtk-xine.c:1660
+#: src/gtk-xine.c:1683
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#. 0 second
-#: src/gtk-xine.c:1663 src/gtk-xine.c:1720
+#. Duration
+#: src/gtk-xine.c:1743
 msgid "0 second"
 msgstr "0 segundos"
 
-#: src/gtk-xine.c:1788
+#: src/gtk-xine.c:1811
 #, c-format
 msgid "%d frames per second"
 msgstr "%d quadros por segundo"
 
-#: src/gtk-xine.c:1800
+#: src/gtk-xine.c:1823
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/totem.c:260
+#: src/totem.c:261
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -359,7 +360,7 @@ msgstr ""
 "Instale os plugins necessários e reinicie o Totem para poder tocar este tipo "
 "de mídia."
 
-#: src/totem.c:268
+#: src/totem.c:269
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -370,23 +371,23 @@ msgstr ""
 "Talvez você deva checar se algum disco está presente no drive e se ele está "
 "corretamente configurado."
 
-#: src/totem.c:373 src/totem.c:1723
+#: src/totem.c:374 src/totem.c:1764
 msgid "No file"
 msgstr "Nenhum arquivo"
 
-#: src/totem.c:1028
+#: src/totem.c:1060
 msgid "translator_credits"
 msgstr "Copyright (C) 2002 Alexandre Folle de Menezes"
 
-#: src/totem.c:1053
+#: src/totem.c:1085
 msgid "Copyright (c) 2002 Bastien Nocera"
 msgstr "Copyright (C) 2002 Bastien Nocera"
 
-#: src/totem.c:1054
+#: src/totem.c:1086
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Movie Player (baseado nas bibliotecas Xine)"
 
-#: src/totem.c:1079
+#: src/totem.c:1111
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -394,7 +395,7 @@ msgstr ""
 "Impossível mostrar a janela de propriedades do filme.\n"
 "Certifique-se de que o Totem  está adequadamente instalado."
 
-#: src/totem.c:1391
+#: src/totem.c:1423
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -403,7 +404,7 @@ msgstr ""
 "O Totem não pode iniciar:\n"
 "%s"
 
-#: src/totem.c:1397
+#: src/totem.c:1429
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'.\n"
@@ -412,12 +413,12 @@ msgstr ""
 "Nenhum plug-in para lidar com '%s'.\n"
 "O Totem não será capaz de tocá-lo."
 
-#: src/totem.c:1402
+#: src/totem.c:1434
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "'%s' está com defeito, e o Totem não pode prosseguir."
 
-#: src/totem.c:1406
+#: src/totem.c:1438
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -426,7 +427,7 @@ msgstr ""
 "O Totem não pode tocar '%s':\n"
 "%s"
 
-#: src/totem.c:1840
+#: src/totem.c:1881
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -437,7 +438,7 @@ msgstr ""
 "o mecanismo de configuração:\n"
 "%s"
 
-#: src/totem.c:1870 src/totem.c:1879
+#: src/totem.c:1895 src/totem.c:1922
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -445,7 +446,7 @@ msgstr ""
 "Impossível carregar a interface principal (totem.glade).\n"
 "Certifique-se de que o Totem  está adequadamente instalado."
 
-#: src/totem.c:1891
+#: src/totem.c:1934
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
