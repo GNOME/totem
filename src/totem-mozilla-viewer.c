@@ -162,6 +162,7 @@ int main (int argc, char **argv)
 	}
 
 	g_thread_init (NULL);
+	bacon_video_widget_init_backend (NULL, NULL);
 	gdk_threads_init ();
 
 	gtk_init (&argc, &argv);
