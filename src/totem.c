@@ -182,7 +182,7 @@ totem_action_error (char *msg, Totem *totem)
 		parent = totem->win;
 
 	error_dialog =
-		gtk_message_dialog_new (GTK_WINDOW (totem->win),
+		gtk_message_dialog_new (GTK_WINDOW (parent),
 				GTK_DIALOG_MODAL,
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK,
@@ -203,6 +203,57 @@ totem_action_error (char *msg, Totem *totem)
 	}
 
 	gtk_widget_show (error_dialog);
+}
+
+static void
+totem_action_error_try_download (char *msg, Totem *totem)
+{
+	GtkWidget *error_dialog;
+	GValue value;
+	guint32 audio_fcc, video_fcc;
+	int res;
+
+	bacon_video_widget_get_metadata (totem->bvw,
+			BVW_INFO_VIDEO_FOURCC, &value);
+	video_fcc = (guint32) g_value_get_int (&value);
+	g_value_unset (&value);
+
+	bacon_video_widget_get_metadata (totem->bvw,
+			BVW_INFO_AUDIO_FOURCC, &value);
+	audio_fcc = (guint32) g_value_get_int (&value);
+
+	if (audio_fcc == 0 && video_fcc == 0)
+	{
+		totem_action_error (msg, totem);
+		return;
+	}
+
+	g_message ("download: msg %s", msg);
+
+	error_dialog =
+		gtk_message_dialog_new (GTK_WINDOW (totem->win),
+				GTK_DIALOG_MODAL,
+				GTK_MESSAGE_ERROR,
+				GTK_BUTTONS_NONE,
+				"%s", msg);
+	gtk_dialog_add_buttons (GTK_DIALOG (error_dialog),
+			GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
+			_("Download"), GTK_RESPONSE_ACCEPT,
+			NULL);
+	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
+			GTK_RESPONSE_OK);
+	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
+	res = gtk_dialog_run (GTK_DIALOG (error_dialog));
+	gtk_widget_destroy (error_dialog);
+	g_message ("res %d", res);
+	if (res != GTK_RESPONSE_ACCEPT)
+		return;
+
+	g_message ("video %d", (guint32) video_fcc);
+	g_message ("audio %d", (guint32) audio_fcc);
+
+	totem_download_from_fourcc (GTK_WINDOW (totem->win),
+			video_fcc, audio_fcc);
 }
 
 void
@@ -774,7 +825,8 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 						"Reason: %s."),
 					mrl,
 					err->message);
-			totem_action_error (msg, totem);
+
+			totem_action_error_try_download (msg, totem);
 			g_free (msg);
 		}
 	}
@@ -1141,7 +1193,7 @@ on_buffering_cancel_event (GtkWidget *dialog, int response, Totem *totem)
 }
 
 static void
-on_error_event (BaconVideoWidget *bvw, const char *message, Totem *totem)
+on_error_event (BaconVideoWidget *bvw, char *message, Totem *totem)
 {
 	totem_action_error (message, totem);
 }
@@ -1192,8 +1244,6 @@ on_buffering_event (BaconVideoWidget *bvw, int percentage, Totem *totem)
 
 		gtk_widget_show_all (totem->buffer_dialog);
 		long_action ();
-
-		//FIXME connect cancel
 	} else if (percentage == 100) {
 		if (totem->buffer_dialog != NULL)
 			gtk_widget_destroy (totem->buffer_dialog);

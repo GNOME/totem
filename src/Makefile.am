@@ -72,9 +72,11 @@ totem_SOURCES = 					\
 	gnome-password-dialog.c		\
 	gnome-password-dialog.h		\
 	totem-statusbar.c		\
-	totem-statusbar.h
+	totem-statusbar.h		\
+	totem-download.c		\
+	totem-download.h
 
-totem_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS)
+totem_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) $(CURL_LIBS)
 
 totem_video_thumbnailer_SOURCES = $(VIDEOWIDGET) totem-video-thumbnailer.c
 totem_video_thumbnailer_LDADD = $(GTK_LIBS) $(XTEST_LIBS)
@@ -95,6 +97,7 @@ vanity_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS)
 INCLUDES = 						\
 	-D_REENTRANT					\
 	$(EXTRA_GNOME_CFLAGS)				\
+	$(CURL_CFLAGS)					\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
 	-DGCONF_PREFIX=\""/apps/totem"\"		\
 	-DDATADIR=\""$(datadir)"\"			\

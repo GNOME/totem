@@ -55,11 +55,13 @@ typedef enum {
 	BVW_INFO_DIMENSION_X,
 	BVW_INFO_DIMENSION_Y,
 	BVW_INFO_VIDEO_CODEC,
+	BVW_INFO_VIDEO_FOURCC,
 	BVW_INFO_FPS,
 	/* Audio */
 	BVW_INFO_HAS_AUDIO,
 	BVW_INFO_BITRATE,
-	BVW_INFO_AUDIO_CODEC
+	BVW_INFO_AUDIO_CODEC,
+	BVW_INFO_AUDIO_FOURCC,
 } BaconVideoWidgetMetadataType;
 
 #define BACON_VIDEO_WIDGET(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), bacon_video_widget_get_type (), BaconVideoWidget))

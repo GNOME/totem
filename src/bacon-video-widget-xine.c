@@ -138,6 +138,7 @@ struct BaconVideoWidgetPrivate {
 	GdkPixbuf *icon;
 	gint volume;
 	TvOutType tvout;
+	guint32 video_fcc, audio_fcc;
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
@@ -1036,7 +1037,7 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 	if (!(data->explanation))
 	{
 		D("xine_event_message: UI message without an explanation\n"
-				"type: %d", msg->type);
+				"type: %d", data->type);
 		return;
 	}
 
@@ -1075,7 +1076,7 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 	if (message == NULL)
 	{
 		D("xine_event_message: unhandled error\n"
-				"type: %d", msg->type);
+				"type: %d", data->type);
 		return;
 	}
 
@@ -1493,6 +1494,8 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 	g_return_val_if_fail (bvw->priv->mrl == NULL, FALSE);
 
 	bvw->priv->mrl = g_strdup (mrl);
+	bvw->priv->video_fcc = 0;
+	bvw->priv->audio_fcc = 0;
 
 	error = xine_open (bvw->priv->stream, mrl);
 	if (error == 0)
@@ -1509,17 +1512,26 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 				&& xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_AUDIO_HANDLED) == FALSE))
 	{
-		uint32_t fourcc;
 		char *fourcc_str, *name;
 
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[GOT_METADATA], 0, NULL);
 
-		fourcc = xine_get_stream_info (bvw->priv->stream,
+		bvw->priv->video_fcc = xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_VIDEO_FOURCC);
-		fourcc_str = get_fourcc_string (fourcc);
+		fourcc_str = get_fourcc_string (bvw->priv->video_fcc);
 		name = g_strdup (xine_get_meta_info (bvw->priv->stream,
 				XINE_META_INFO_VIDEOCODEC));
+//FIXME only x86
+		if (xine_get_stream_info
+				(bvw->priv->stream,
+				 XINE_STREAM_INFO_AUDIO_HANDLED) == FALSE)
+		{
+			bvw->priv->audio_fcc = xine_get_stream_info
+				(bvw->priv->stream,
+				 XINE_STREAM_INFO_AUDIO_FOURCC);
+		}
+//FIXME bvw->priv->video_fcc = 0; on non-x86
 
 		bacon_video_widget_close (bvw);
 
@@ -2478,6 +2490,9 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget *bvw, BaconVideoWidgetMeta
 		integer = xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_VIDEO_HEIGHT);
 		break;
+	case BVW_INFO_VIDEO_FOURCC:
+		integer = (guint32) bvw->priv->video_fcc;
+		break;
 	case BVW_INFO_FPS:
 		if (xine_get_stream_info (bvw->priv->stream,
 					XINE_STREAM_INFO_FRAME_DURATION) != 0)
@@ -2492,6 +2507,9 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget *bvw, BaconVideoWidgetMeta
 	 case BVW_INFO_BITRATE:
 		integer = xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_AUDIO_BITRATE) / 1000;
+		break;
+	 case BVW_INFO_AUDIO_FOURCC:
+		integer = (guint32) bvw->priv->audio_fcc;
 		break;
 	 default:
 		g_assert_not_reached ();
@@ -2554,8 +2572,10 @@ bacon_video_widget_get_metadata (BaconVideoWidget *bvw, BaconVideoWidgetMetadata
 	case BVW_INFO_DURATION:
 	case BVW_INFO_DIMENSION_X:
 	case BVW_INFO_DIMENSION_Y:
+	case BVW_INFO_VIDEO_FOURCC:
 	case BVW_INFO_FPS:
 	case BVW_INFO_BITRATE:
+	case BVW_INFO_AUDIO_FOURCC:
 		bacon_video_widget_get_metadata_int (bvw, type, value);
 		break;
 	case BVW_INFO_HAS_VIDEO:
