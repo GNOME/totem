@@ -97,8 +97,7 @@ int main (int argc, char *argv[])
 
 	/* A 3rd into the file */
 	gtk_xine_play (GTK_XINE (gtx), 21845, 0);
-	//FIXME
-#if 0
+
 	if (gtk_xine_can_get_frames (GTK_XINE (gtx)) == FALSE)
 	{
 		g_print ("totem-video-thumbnailer: '%s' isn't thumbnailable\n",
@@ -110,7 +109,7 @@ int main (int argc, char *argv[])
 
 		exit (1);
 	}
-#endif
+
 	/* 10 seconds! */
 	i = 0;
 	pixbuf = gtk_xine_get_current_frame (GTK_XINE (gtx));

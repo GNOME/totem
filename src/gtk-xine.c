@@ -2091,17 +2091,21 @@ static guchar *gtk_xine_get_current_frame_rgb (GtkXine *gtx, gint *width_ret,
 gboolean
 gtk_xine_can_get_frames (GtkXine *gtx)
 {
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
-	g_return_if_fail (gtx->priv->xine != NULL);
+	g_return_val_if_fail (gtx != NULL, FALSE);
+	g_return_val_if_fail (GTK_IS_XINE (gtx), FALSE);
+	g_return_val_if_fail (gtx->priv->xine != NULL, FALSE);
 
 	if (xine_get_stream_info (gtx->priv->stream,
 				XINE_STREAM_INFO_HAS_VIDEO) == FALSE)
 		return FALSE;
 
-	if (xine_get_stream_info (gtx->priv->stream,
-				XINE_STREAM_INFO_VIDEO_HANDLED) == FALSE)
+	if (gtk_xine_is_playing (gtx) == FALSE)
 		return FALSE;
+	
+//FIXME this doesn't work properly
+//	if (xine_get_stream_info (gtx->priv->stream,
+//				XINE_STREAM_INFO_VIDEO_HANDLED) == FALSE)
+//		return FALSE;
 
 	return TRUE;
 }

@@ -1,5 +1,12 @@
 2003-01-07  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (gtk_xine_can_get_frames):
+	XINE_STREAM_INFO_VIDEO_HANDLED is broken for now, disable it
+	* src/totem-video-thumbnailer.c: (main): reenable the check for
+	can_get_frames
+
+2003-01-07  Bastien Nocera  <hadess@hadess.net>
+
 	* README: add info about the thumbnailer
 	* configure.in: add some gtk+ only flags
 	* data/.cvsignore: upd
