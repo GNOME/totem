@@ -1,5 +1,12 @@
 2005-03-07  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-preferences.c: (mediadev_changed_cb),
+	(visual_menu_changed), (totem_setup_preferences),
+	(totem_preferences_visuals_setup): Fix memory leak, patch by Aivars
+	Kalvans <aivars.kalvans@inbox.lv> (Closes: #169425)
+
+2005-03-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-pl-parser.c: (totem_pl_parser_add_smil): Fix memory
 	leak, patch by Aivars Kalvans <aivars.kalvans@inbox.lv>
 	(Closes: #169431)

@@ -293,12 +293,15 @@ mediadev_changed_cb (GConfClient *client, guint cnxn_id,
 	mediadev = gconf_client_get_string (totem->gc,
 			GCONF_PREFIX"/mediadev", NULL);
 
-	if (mediadev == NULL || strcmp (mediadev, "") == 0)
+	if (mediadev == NULL || strcmp (mediadev, "") == 0) {
+		g_free (mediadev);
 		mediadev = g_strdup ("/dev/cdrom");
+	}
 
 	nautilus_burn_drive_selection_set_device (NAUTILUS_BURN_DRIVE_SELECTION (item), mediadev);
 	bacon_video_widget_set_media_device
 		(BACON_VIDEO_WIDGET (totem->bvw), mediadev);
+	g_free (mediadev);
 
 	g_signal_connect (G_OBJECT (item), "device-changed",
 			G_CALLBACK (on_combo_entry1_changed), totem);
@@ -363,6 +366,8 @@ visual_menu_changed (GtkComboBox *combobox, Totem *totem)
 		if (bacon_video_widget_set_visuals (totem->bvw, name) != FALSE)
 			totem_action_info (_("Changing the visuals effect type will require a restart to take effect."), totem);
 	}
+
+	g_free (old_name);
 }
 
 static void
@@ -520,6 +525,7 @@ totem_setup_preferences (Totem *totem)
 	if (mediadev == NULL || (strcmp (mediadev, "") == 0)
 			|| (strcmp (mediadev, "auto") == 0))
 	{
+		g_free (mediadev);
 		mediadev = g_strdup
 			(nautilus_burn_drive_selection_get_default_device
 				     (NAUTILUS_BURN_DRIVE_SELECTION (item)));
@@ -574,8 +580,10 @@ totem_setup_preferences (Totem *totem)
 
 	visual = gconf_client_get_string (totem->gc,
 			GCONF_PREFIX"/visual", NULL);
-	if (visual == NULL || strcmp (visual, "") == 0)
+	if (visual == NULL || strcmp (visual, "") == 0) {
+		g_free (visual);
 		visual = g_strdup ("goom");
+	}
 
 	item = glade_xml_get_widget (totem->xml, "tpw_visuals_type_combobox");
 	g_signal_connect (G_OBJECT (item), "changed",
@@ -747,8 +755,10 @@ totem_preferences_visuals_setup (Totem *totem)
 
 	visual = gconf_client_get_string (totem->gc,
 			GCONF_PREFIX"/visual", NULL);
-	if (visual == NULL || strcmp (visual, "") == 0)
+	if (visual == NULL || strcmp (visual, "") == 0) {
+		g_free (visual);
 		visual = g_strdup ("goom");
+	}
 
 	bacon_video_widget_set_visuals (totem->bvw, visual);
 	g_free (visual);
