@@ -370,8 +370,10 @@ cd_cache_disc_is_vcd (CdCache *cache,
         return MEDIA_TYPE_ERROR;
       }
       while ((name = g_dir_read_name (subdir)) != NULL) {
-        if (g_ascii_strcasecmp (name, "avseq01.dat") == 0)
+        if (g_ascii_strcasecmp (name, "avseq01.dat") == 0) {
 	  have_avseq = TRUE;
+	  break;
+	}
       }
       g_dir_close (subdir);
       g_free (subdirname);
@@ -390,7 +392,7 @@ cd_cache_disc_is_dvd (CdCache *cache,
 {
   GDir *dir;
   const gchar *name;
-  gboolean have_vts = FALSE, have_vtsifo = FALSE, have_ats = FALSE;
+  gboolean have_vts = FALSE, have_vtsifo = FALSE;
 
   /* open disc, check capabilities and open mount */
   if (!cd_cache_open_device (cache, error))
@@ -413,18 +415,19 @@ cd_cache_disc_is_dvd (CdCache *cache,
         return MEDIA_TYPE_ERROR;
       }
       while ((name = g_dir_read_name (subdir)) != NULL) {
-        if (g_ascii_strcasecmp (name, "VIDEO_TS.IFO") == 0)
+        if (g_ascii_strcasecmp (name, "VIDEO_TS.IFO") == 0) {
           have_vtsifo = TRUE;
+	  break;
+	}
       }
       g_dir_close (subdir);
       g_free (subdirname);
-    } else if (g_ascii_strcasecmp (name, "AUDIO_TS") == 0) {
-      have_ats = TRUE;
+      break;
     }
   }
   g_dir_close (dir);
 
-  return (have_vts && have_ats && have_vtsifo) ?
+  return (have_vts && have_vtsifo) ?
       MEDIA_TYPE_DVD : MEDIA_TYPE_DATA;
 }
 
