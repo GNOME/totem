@@ -270,7 +270,7 @@ gst_video_widget_expose(GtkWidget *widget, GdkEventExpose *event)
 	g_return_val_if_fail(widget != NULL, FALSE);
 	g_return_val_if_fail(GST_IS_VIDEO_WIDGET(widget), FALSE);
 	g_return_val_if_fail(event != NULL, FALSE);
-	
+
 	vw = GST_VIDEO_WIDGET (widget);
 		
 	if (GTK_WIDGET_VISIBLE (widget) && GTK_WIDGET_MAPPED (widget)) {

@@ -45,13 +45,13 @@ struct BaconVideoWidgetPropertiesClass {
 	GtkDialogClass parent_class;
 };
 
-GtkType    bacon_video_widget_properties_get_type	(void);
-GtkWidget *bacon_video_widget_properties_new	();
+GtkType bacon_video_widget_properties_get_type		(void);
+GtkWidget *bacon_video_widget_properties_new		();
 
 void bacon_video_widget_properties_update		(BaconVideoWidgetProperties *props,
-					 BaconVideoWidget *bvw, const char *name, gboolean reset);
+							BaconVideoWidget *bvw,
+							gboolean reset);
 
-char      *bacon_video_widget_properties_time_to_string
-					(int time);
+char *bacon_video_widget_properties_time_to_string	(int time);
 
 #endif /* BACON_VIDEO_WIDGET_PROPERTIES_H */

@@ -24,7 +24,6 @@
 #include "bacon-video-widget-properties.h"
 
 #include <gtk/gtk.h>
-#include <libgnomeui/gnome-href.h>
 #include <glade/glade.h>
 #include <libgnome/gnome-i18n.h>
 #include <string.h>
@@ -186,14 +185,11 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 	bacon_video_widget_properties_set_label (props, "bitrate", _("0 kbps"));
 	/* Audio Codec */
 	bacon_video_widget_properties_set_label (props, "acodec", _("N/A"));
-
-	item = glade_xml_get_widget (props->priv->xml, "href1");
-	gtk_widget_set_sensitive (item, FALSE);
-	gnome_href_set_text (GNOME_HREF (item), _("No Link"));
 }
 
 static void
-bacon_video_widget_properties_set_from_current (BaconVideoWidgetProperties *props, BaconVideoWidget *bvw, const char *name)
+bacon_video_widget_properties_set_from_current
+(BaconVideoWidgetProperties *props, BaconVideoWidget *bvw)
 {
 	GtkWidget *item;
 	GValue value = { 0, };
@@ -291,22 +287,11 @@ bacon_video_widget_properties_set_from_current (BaconVideoWidgetProperties *prop
 			g_value_get_string (&value)
 			? g_value_get_string (&value) : _("N/A"));
 	g_value_unset (&value);
-
-	item = glade_xml_get_widget (props->priv->xml, "href1");
-	gtk_widget_set_sensitive (item, TRUE);
-	string = g_strdup_printf ("http://us.imdb.com/Tsearch?title=%s", name);
-	gnome_href_set_url (GNOME_HREF (item), string);
-	g_free (string);
-
-	string = g_markup_escape_text (name, strlen (name));
-	gnome_href_set_text (GNOME_HREF (item), string);
-	g_free (string);
 }
 
 void
 bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 		BaconVideoWidget *bvw,
-		const char *name,
 		gboolean reset)
 {
 	g_return_if_fail (props != NULL);
@@ -317,8 +302,7 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 		bacon_video_widget_properties_reset (props);
 	} else {
 		g_return_if_fail (bvw != NULL);
-		g_return_if_fail (name != NULL);
-		bacon_video_widget_properties_set_from_current (props, bvw, name);
+		bacon_video_widget_properties_set_from_current (props, bvw);
 	}
 }
 
@@ -365,7 +349,7 @@ bacon_video_widget_properties_new (void)
 	g_signal_connect (G_OBJECT (props), "delete-event",
 			G_CALLBACK (hide_dialog), NULL);
 
-	bacon_video_widget_properties_update (props, NULL, NULL, TRUE);
+	bacon_video_widget_properties_update (props, NULL, TRUE);
 
 	gtk_widget_show (GTK_DIALOG (props)->vbox);
 

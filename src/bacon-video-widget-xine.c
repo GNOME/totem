@@ -60,6 +60,7 @@ enum {
 	ERROR,
 	EOS,
 	TITLE_CHANGE,
+	CHANNELS_CHANGE,
 	TICK,
 	GOT_METADATA,
 	LAST_SIGNAL
@@ -71,7 +72,7 @@ enum {
 	PROGRESS,
 	TITLE_CHANGE_ASYNC,
 	EOS_ASYNC,
-	CHANNEL_CHANGE_ASYNC
+	CHANNELS_CHANGE_ASYNC
 };
 
 typedef struct {
@@ -108,6 +109,7 @@ struct BaconVideoWidgetPrivate {
 	xine_ao_driver_t *ao_driver;
 	xine_event_queue_t *ev_queue;
 	double display_ratio;
+	gboolean started;
 
 	/* Configuration */
 	gboolean null_out;
@@ -314,7 +316,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 				g_cclosure_marshal_VOID__STRING,
 				G_TYPE_NONE, 1, G_TYPE_STRING);
 
-	bvw_table_signals[TITLE_CHANGE] =
+	bvw_table_signals[CHANNELS_CHANGE] =
 		g_signal_new ("channels-change",
 				G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST,
@@ -890,6 +892,11 @@ bacon_video_widget_realize (GtkWidget *widget)
 
 	bvw->priv->video_window = widget->window;
 
+	/* Set a black background */
+	gdk_draw_rectangle (widget->window, widget->style->black_gc, TRUE,
+			attr.x, attr.y,
+			attr.width, attr.height);
+
 	/* track configure events of toplevel window */
 	g_signal_connect (G_OBJECT (gtk_widget_get_toplevel (widget)),
 			"configure-event",
@@ -960,6 +967,10 @@ bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[EOS], 0, NULL);
 		break;
+	case CHANNELS_CHANGE_ASYNC:
+		g_signal_emit (G_OBJECT (bvw),
+				bvw_table_signals[CHANNELS_CHANGE], 0, NULL);
+		break;
 	default:
 		g_assert_not_reached ();
 	}
@@ -990,14 +1001,11 @@ xine_event (void *user_data, const xine_event_t *event)
 		g_async_queue_push (bvw->priv->queue, data);
 		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
 		break;
-		//FIXME
 	case XINE_EVENT_UI_CHANNELS_CHANGED:
-#if 0
 		data = g_new0 (signal_data, 1);
-		data->signal = EOS_ASYNC;
+		data->signal = CHANNELS_CHANGE_ASYNC;
 		g_async_queue_push (bvw->priv->queue, data);
 		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
-#endif
 		break;
 	case XINE_EVENT_UI_SET_TITLE:
 		ui_data = event->data;
@@ -1171,6 +1179,13 @@ bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 
 	if (event->count != 0)
 		return FALSE;
+
+	if (bvw->priv->started == FALSE)
+	{
+		gdk_draw_rectangle (widget->window, widget->style->black_gc,
+				TRUE, event->area.x, event->area.y,
+				event->area.width, event->area.height);
+	}
 
 	expose = g_new0 (XExposeEvent, 1);
 	expose->count = event->count;
@@ -1403,6 +1418,9 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 
 	show_vfx_update (bvw, bvw->priv->show_vfx);
 
+	g_signal_emit (G_OBJECT (bvw),
+			bvw_table_signals[GOT_METADATA], 0, NULL);
+
 	return TRUE;
 }
 
@@ -1415,6 +1433,8 @@ bacon_video_widget_play (BaconVideoWidget *bvw, guint pos,
 	g_return_val_if_fail (bvw != NULL, -1);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -1);
 	g_return_val_if_fail (bvw->priv->xine != NULL, -1);
+
+	bvw->priv->started = TRUE;
 
 	length = bacon_video_widget_get_stream_length (bvw);
 

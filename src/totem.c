@@ -334,8 +334,6 @@ totem_action_play (Totem *totem, int offset)
 			totem_action_stop (totem);
 		g_free (msg);
 	}
-
-	update_dvd_menu_sub_lang (totem);
 }
 
 void
@@ -615,6 +613,11 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		bacon_video_widget_close (totem->bvw);
 	}
 
+	/* Reset the properties and wait for the signal*/
+	bacon_video_widget_properties_update
+		(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
+		 totem->bvw, TRUE);
+
 	if (mrl == NULL)
 	{
 		retval = FALSE;
@@ -665,11 +668,6 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
 
 		update_mrl_label (totem, NULL);
-
-		/* Reset the properties */
-		bacon_video_widget_properties_update
-			(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
-			 totem->bvw, NULL, TRUE);
 	} else {
 		char *name;
 		gboolean caps, custom;
@@ -719,11 +717,6 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 
 		/* Set the playlist */
 		gtk_playlist_set_playing (totem->playlist, retval);
-
-		/* Update the properties */
-		bacon_video_widget_properties_update
-			(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
-			 totem->bvw, name, !retval);
 
 		g_free (name);
 
@@ -1078,9 +1071,20 @@ on_title_change_event (GtkWidget *win, const char *string, Totem *totem)
 {
 	update_mrl_label (totem, string);
 	gtk_playlist_set_title (GTK_PLAYLIST (totem->playlist), string);
+}
 
-	/* The DVD plugin changes the title when loading new bits */
+static void
+on_channels_change_event (BaconVideoWidget *bvw, Totem *totem)
+{
 	update_dvd_menu_sub_lang (totem);
+}
+
+static void
+on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
+{
+	bacon_video_widget_properties_update
+		(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
+		 totem->bvw, FALSE);
 }
 
 static void
@@ -2608,13 +2612,11 @@ update_dvd_menu_sub_lang (Totem *totem)
 
 		list = bacon_video_widget_get_languages (totem->bvw);
 		current = bacon_video_widget_get_language (totem->bvw);
-		g_message ("current_lang: %d", current);
 		lang_menu = create_submenu (totem, list, current, TRUE);
 		totem_g_list_deep_free (list);
 
 		list = bacon_video_widget_get_subtitles (totem->bvw);
 		current = bacon_video_widget_get_subtitle (totem->bvw);
-		g_message ("current_sub: %d", current);
 		sub_menu = create_submenu (totem, list, current, FALSE);
 		totem_g_list_deep_free (list);
 	}
@@ -2990,9 +2992,17 @@ video_widget_create (Totem *totem)
 			"title-change",
 			G_CALLBACK (on_title_change_event),
 			totem);
+	g_signal_connect (G_OBJECT(totem->bvw),
+			"channels-change",
+			G_CALLBACK (on_channels_change_event),
+			totem);
 	g_signal_connect (G_OBJECT (totem->bvw),
 			"tick",
 			G_CALLBACK (update_current_time),
+			totem);
+	g_signal_connect (G_OBJECT (totem->bvw),
+			"got-metadata",
+			G_CALLBACK (on_got_metadata_event),
 			totem);
 
 	/* Events for the widget video window as well */
