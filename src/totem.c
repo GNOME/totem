@@ -1195,6 +1195,9 @@ update_seekable (Totem *totem, gboolean seekable)
 {
 	GtkWidget *widget;
 
+	if (totem->seekable == seekable)
+		return;
+
 	/* Check if the stream is seekable */
 	gtk_widget_set_sensitive (totem->seek, seekable);
 	gtk_widget_set_sensitive (totem->fs_seek, seekable);
@@ -1219,8 +1222,6 @@ update_seekable (Totem *totem, gboolean seekable)
 	gtk_widget_set_sensitive (widget, seekable);
 	if (totem->skipto)
 		totem_skipto_set_seekable (totem->skipto, seekable);
-
-	totem->seekable = seekable;
 }
 
 static void

@@ -1,5 +1,11 @@
 2005-01-06  Bastien Nocera  <hadess@hadess.net>
 
+	* NEWS: upd
+	* src/totem.c: (update_seekable): only change the states of the
+	"seekable" widgets if the previous state was different
+
+2005-01-06  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-statusbar.c: (totem_statusbar_set_time): only update
 	the time label if the time actually changed
 
