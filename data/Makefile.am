@@ -15,6 +15,7 @@ stuff_DATA =				\
 	rhythmbox-volume-zero.png	\
 	totem.glade			\
 	playlist.glade			\
+	properties.glade		\
 	totem_logo.mpv
 
 pixmapdir = $(datadir)/pixmaps

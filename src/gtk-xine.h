@@ -115,7 +115,7 @@ G_CONST_RETURN gchar **gtk_xine_get_mrls
 GtkWidget *gtk_xine_properties_dialog_get
                                        (GtkXine *gtx);
 char *gtk_xine_properties_get_title    (GtkXine *gtx);
-void gtk_xine_properties_update        (GtkXine *gtx);
+void gtk_xine_properties_update        (GtkXine *gtx, gboolean reset);
 
 G_END_DECLS
 

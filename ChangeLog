@@ -1,5 +1,22 @@
 2002-11-08  Bastien Nocera  <hadess@hadess.net>
 
+	* data/Makefile.am:
+	* data/properties.glade:
+	* data/totem.glade:
+	* src/gtk-xine.c: (gtk_xine_instance_init), (gtk_xine_finalize),
+	(hide_dialog), (gtk_xine_properties_dialog_get),
+	(gtk_xine_properties_get_title), (gtk_xine_properties_set_label),
+	(gtk_xine_properties_reset),
+	(gtk_xine_properties_set_from_current),
+	(gtk_xine_properties_update):
+	* src/gtk-xine.h:
+	* src/totem.c: (totem_action_set_mrl), (on_about1_activate),
+	(on_properties1_activate), (hide_prefs), (totem_callback_connect),
+	(main): properties work (Closes: #92098), and fix the copyright notice
+	so that Jordi stops bugging me
+
+2002-11-08  Bastien Nocera  <hadess@hadess.net>
+
 	* data/properties.glade: added
 
 2002-11-08  Bastien Nocera  <hadess@hadess.net>

@@ -399,6 +399,9 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		/* Set the logo */
 		totem->mrl = g_strdup (LOGO_PATH);
 		gtk_xine_open (GTK_XINE (totem->gtx), totem->mrl);
+
+		/* Reset the properties */
+		gtk_xine_properties_update (GTK_XINE (totem->gtx), TRUE);
 	} else {
 		char *title, *time_text, *name;
 		int time;
@@ -456,6 +459,9 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		g_free (text);
 		g_free (time_text);
 		g_free (name);
+
+		/* Update the properties */
+		gtk_xine_properties_update (GTK_XINE (totem->gtx), FALSE);
 	}
 }
 
@@ -1035,7 +1041,7 @@ on_about1_activate (GtkButton *button, gpointer user_data)
 	}
 
 	about = gnome_about_new(_("Totem"), VERSION,
-			_("(c) Copyright 2002 Bastien Nocera"),
+			_("Copyright (c) 2002 Bastien Nocera"),
 			_("Movie Player (based on the Xine libraries)"),
 			(const char **)authors,
 			(const char **)documenters,
@@ -1053,6 +1059,24 @@ on_about1_activate (GtkButton *button, gpointer user_data)
 }
 
 static void
+on_properties1_activate (GtkButton *button, gpointer user_data)
+{
+	Totem *totem = (Totem *)user_data;
+	GtkWidget *dialog;
+
+	dialog = gtk_xine_properties_dialog_get (GTK_XINE (totem->gtx));
+	if (dialog == NULL)
+	{
+		//FIXME
+		return;
+	}
+
+	gtk_widget_show_all (dialog);
+	gtk_window_set_transient_for (GTK_WINDOW (dialog),
+			GTK_WINDOW (totem->win));
+}
+
+static void
 on_preferences1_activate (GtkButton *button, gpointer user_data)
 {
 	Totem *totem = (Totem *)user_data;
@@ -1061,7 +1085,7 @@ on_preferences1_activate (GtkButton *button, gpointer user_data)
 }
 
 static void
-hide_prefs (GtkWidget *playlist, int trash, gpointer user_data)
+hide_prefs (GtkWidget *widget, int trash, gpointer user_data)
 {
 	Totem *totem = (Totem *)user_data;
 
@@ -1532,6 +1556,9 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "preferences1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_preferences1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "properties1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_properties1_activate), totem);
 
 	/* Controls */
 	totem->pp_button = glade_xml_get_widget
@@ -1824,6 +1851,7 @@ main (int argc, char **argv)
 	totem->xml = glade_xml_new (filename, NULL, NULL);
 	if (totem->xml == NULL)
 	{
+		g_free (filename);
 		totem_action_error (_("Couldn't load the main interface"
 					" (totem.glade).\nMake sure that Totem"
 					" is properly installed."), NULL);
@@ -1856,7 +1884,7 @@ main (int argc, char **argv)
 	totem->fs_volume     = glade_xml_get_widget (totem->xml, "hscale5");
 	totem->fs_voladj = gtk_range_get_adjustment
 		(GTK_RANGE (totem->fs_volume));
-	totem->fs_pp_button = glade_xml_get_widget(totem->xml, "fs_pp_button");
+	totem->fs_pp_button = glade_xml_get_widget (totem->xml, "fs_pp_button");
 
 	/* Calculate the height of the control popup window */
 	gtk_window_get_size (GTK_WINDOW (totem->control_popup),
