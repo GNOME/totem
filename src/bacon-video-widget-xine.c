@@ -1287,11 +1287,12 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		}
 		break;
 	case XINE_MSG_LIBRARY_LOAD_ERROR:
-		num = BVW_ERROR_PLUGIN_LOAD;
 		params = (char *) data + data->parameters;
+		if (bacon_video_widget_plugin_exists (bvw, params) == FALSE)
+			return;
 		/* Only if the file could really not be loaded */
-		if (bacon_video_widget_plugin_exists (bvw, params) != FALSE)
-			message = g_strdup_printf (_("A problem occured while loading a library or a decoder (%s)."), params);
+		num = BVW_ERROR_PLUGIN_LOAD;
+		message = g_strdup_printf (_("A problem occured while loading a library or a decoder (%s)."), params);
 		break;
 	case XINE_MSG_ENCRYPTED_SOURCE:
 		if (g_str_has_prefix (bvw->priv->mrl, "dvd:") != FALSE)
