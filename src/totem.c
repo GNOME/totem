@@ -649,12 +649,11 @@ update_mrl_label (Totem *totem, const char *name)
 
 		/* Get the length of the stream */
 		time = bacon_video_widget_get_stream_length (totem->bvw);
-
-		//FIXME this doesn't work if the metadata arrives later
 		totem_statusbar_set_time_and_length (TOTEM_STATUSBAR
 				(totem->statusbar), 0, time / 1000);
 
-		widget = glade_xml_get_widget (totem->xml, "tstw_skip_spinbutton");
+		widget = glade_xml_get_widget (totem->xml,
+				"tstw_skip_spinbutton");
 		gtk_spin_button_set_range (GTK_SPIN_BUTTON (widget),
 				0, (gdouble) time / 1000);
 
@@ -1219,7 +1218,7 @@ on_error_event (BaconVideoWidget *bvw, char *message,
                 gboolean playback_stopped, Totem *totem)
 {
         if (playback_stopped)
-            play_pause_set_label (totem, STATE_STOPPED);
+		play_pause_set_label (totem, STATE_STOPPED);
 	totem_action_error (message, totem);
 }
 
@@ -1297,9 +1296,11 @@ update_seekable (Totem *totem, gboolean force_false)
 	gtk_widget_set_sensitive (totem->seek, caps);
 	gtk_widget_set_sensitive (totem->fs_seek, caps);
 
-	widget = glade_xml_get_widget (totem->xml, "tmw_skip_forward_menu_item");
+	widget = glade_xml_get_widget (totem->xml,
+			"tmw_skip_forward_menu_item");
 	gtk_widget_set_sensitive (widget, caps);
-	widget = glade_xml_get_widget (totem->xml, "tmw_skip_backwards_menu_item");
+	widget = glade_xml_get_widget (totem->xml,
+			"tmw_skip_backwards_menu_item");
 	gtk_widget_set_sensitive (widget, caps);
 	widget = glade_xml_get_widget (totem->xml, "trcm_skip_forward");
 	gtk_widget_set_sensitive (widget, caps);
@@ -1765,22 +1766,26 @@ show_controls (Totem *totem, gboolean visible, gboolean fullscreen_behaviour)
 	if (fullscreen_behaviour)
 		return;
 	
-	if (totem->controls_visibility == TOTEM_CONTROLS_HIDDEN) {
+	if (totem->controls_visibility == TOTEM_CONTROLS_HIDDEN)
+	{
 		gtk_window_resize (GTK_WINDOW(totem->win),
 			GTK_WIDGET(totem->bvw)->allocation.width,
 			GTK_WIDGET(totem->bvw)->allocation.height);
-	}
-	else if (totem->controls_visibility == TOTEM_CONTROLS_VISIBLE) {
+	} else if (totem->controls_visibility == TOTEM_CONTROLS_VISIBLE) {
 		/* We get GtkWindow requisition then we substract
 		bvw's requisition to get other widget's height and
 		use that to resize properly GtkWindow */
 		gtk_widget_size_request (totem->win, &requisition);
 		/* Getting controls requisition */
-		requisition.height = requisition.height - GTK_WIDGET(totem->bvw)->requisition.height;
-		requisition.width = requisition.width - GTK_WIDGET(totem->bvw)->requisition.width;
+		requisition.height = requisition.height
+			- GTK_WIDGET(totem->bvw)->requisition.height;
+		requisition.width = requisition.width
+			- GTK_WIDGET(totem->bvw)->requisition.width;
 		gtk_window_resize (GTK_WINDOW(totem->win),
-			GTK_WIDGET(totem->bvw)->allocation.width + requisition.width,
-			GTK_WIDGET(totem->bvw)->allocation.height + requisition.height);
+				GTK_WIDGET(totem->bvw)->allocation.width
+				+ requisition.width,
+				GTK_WIDGET(totem->bvw)->allocation.height
+				+ requisition.height);
 	}
 }
 
@@ -2318,10 +2323,9 @@ update_fullscreen_size (Totem *totem)
 }
 
 static gboolean
-totem_is_fullscreen (Totem *totem) {
-	if (totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN)
-		return TRUE;
-	return FALSE;
+totem_is_fullscreen (Totem *totem)
+{
+	return (totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN);
 }
 
 static void
@@ -2375,6 +2379,7 @@ static gboolean
 on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 		Totem *totem)
 {
+	GtkWidget *item;
 	int width;
 
 	if (totem_is_fullscreen (totem) == FALSE) 
@@ -2390,6 +2395,9 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 		gtk_timeout_remove (totem->popup_timeout);
 		totem->popup_timeout = 0;
 	}
+
+	item = glade_xml_get_widget (totem->xml, "tmw_title_label");
+	gtk_widget_realize (item);
 
 	gtk_window_get_size (GTK_WINDOW (totem->control_popup),
 			&width, &totem->control_popup_height);
@@ -3638,3 +3646,4 @@ main (int argc, char **argv)
 
 	return 0;
 }
+

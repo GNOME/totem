@@ -1,5 +1,14 @@
 2003-06-24  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-private.h:
+	* src/totem.c: (update_mrl_label), (on_error_event),
+	(update_seekable), (show_controls), (totem_is_fullscreen),
+	(on_video_motion_notify_event): plenty of code style cleanups,
+	fix the controls popup window not having the right position when first
+	appearing
+
+2003-06-24  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.glade: added a drop-down menu for the audio output
 	configuration
 	* data/totem.schemas.in: ditto

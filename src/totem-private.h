@@ -43,7 +43,7 @@ struct Totem {
 	GtkWidget *prefs;
 	GtkWidget *properties;
 	GtkWidget *statusbar;
-	
+
 	/* Play/Pause */
 	GtkWidget *pp_button;
 	/* fullscreen Play/Pause */
