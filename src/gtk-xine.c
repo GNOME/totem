@@ -1066,6 +1066,8 @@ gtk_xine_expose (GtkWidget *widget, GdkEventExpose *event)
 			XINE_GUI_SEND_EXPOSE_EVENT,
 			expose);
 
+	g_free (expose);
+
 	return FALSE;
 }
 
@@ -1208,8 +1210,6 @@ gtk_xine_open (GtkXine *gtx, const gchar *mrl)
 
 		return FALSE;
 	}
-
-	gtx->priv->mrl = g_strdup (mrl);
 
 	has_video = xine_get_stream_info(gtx->priv->stream,
 			XINE_STREAM_INFO_HAS_VIDEO);

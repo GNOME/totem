@@ -1,5 +1,11 @@
 2003-02-01  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (gtk_xine_expose), (gtk_xine_open): free the expose
+	event, removed an extraneous assignement for the mrl (Inspired by a
+	patch from xan <xan@dimensis.com>)
+
+2003-02-01  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (main): fix properties' window icon
 
 2003-02-01  Bastien Nocera  <hadess@hadess.net>
@@ -44,6 +50,8 @@
 2003-01-29  Bastien Nocera  <hadess@hadess.net>
 
 	* README: updated
+
+============ Version 0.90.0
 
 2003-01-29  Bastien Nocera  <hadess@hadess.net>
 
