@@ -46,6 +46,7 @@
 #include "gtkxine-marshal.h"
 #include "scrsaver.h"
 #include "video-utils.h"
+#include "xdnd.h"
 
 #define DEFAULT_HEIGHT 420
 #define DEFAULT_WIDTH 315
@@ -788,6 +789,37 @@ xine_thread (void *gtx_gen)
 	return NULL;
 }
 
+//FIXME
+static GdkFilterReturn
+gtk_xine_filter_events (GdkXEvent *xevent, GdkEvent *event, gpointer data)
+{
+#if 0
+	XEvent *xev = (XEvent *) xevent;
+	GtkXine *gtx = (GtkXine *) data;
+
+	g_message ("xev->type: %d", xev->type);
+
+	switch (xev->type)
+	{
+	case ClientMessage:
+		XLockDisplay (gtx->priv->display);
+		wXDNDProcessClientMessage (&(xev->xclient));
+		XUnlockDisplay (gtx->priv->display);
+		break;
+	case SelectionNotify:
+		XLockDisplay (gtx->priv->display);
+		wXDNDProcessSelection(xev);
+		XUnlockDisplay (gtx->priv->display);
+		break;
+	default:
+		return GDK_FILTER_CONTINUE;
+	}
+
+	return GDK_FILTER_REMOVE;
+#endif
+	return GDK_FILTER_CONTINUE;
+}
+
 static gboolean
 configure_cb (GtkWidget *widget, GdkEventConfigure *event, gpointer user_data)
 {
@@ -855,7 +887,11 @@ gtk_xine_realize (GtkWidget *widget)
 	XSelectInput (gtx->priv->display, gtx->priv->video_window,
 		      StructureNotifyMask | ExposureMask
 		      | ButtonPressMask | PointerMotionMask
-		      | KeyPressMask);
+		      | KeyPressMask | PropertyChangeMask);
+
+	/* Add the DND setup */
+	wXDNDInitializeAtoms ();
+	wXDNDMakeAwareness(gtx->priv->video_window);
 
 	/* load audio, video drivers */
 	gtx->priv->ao_driver = load_audio_out_driver (gtx);
@@ -877,11 +913,12 @@ gtk_xine_realize (GtkWidget *widget)
 
 	XUnlockDisplay (gtx->priv->display);
 
-	/* Setup xine events */
+	/* Setup xine events, the screensaver and the event filter */
 	xine_event_create_listener_thread (gtx->priv->ev_queue,
 			xine_event, (void *) gtx);
 
 	scrsaver_init (gtx->priv->display);
+	gdk_window_add_filter (NULL, gtk_xine_filter_events, (gpointer) gtx);
 
 	/* Can we play DVDs and VCDs ? */
 	autoplug_list = xine_get_autoplay_input_plugin_ids (gtx->priv->xine);

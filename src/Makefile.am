@@ -54,6 +54,7 @@ totem_SOURCES = 			\
 	cd-drive.c cd-drive.h		\
 	scrsaver.c  scrsaver.h		\
 	video-utils.c video-utils.h	\
+	xdnd.c xdnd.h			\
 	gtk-message.c gtk-message.h	\
 	debug.h                         \
 	$(EGG_RECENT_FILES)

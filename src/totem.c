@@ -1963,6 +1963,11 @@ video_widget_create (Totem *totem)
 			G_CALLBACK (on_title_change_event),
 			totem);
 
+	g_signal_connect (G_OBJECT (totem->gtx), "drag_data_received",
+			G_CALLBACK (drop_cb), totem);
+	gtk_drag_dest_set (totem->gtx, GTK_DEST_DEFAULT_ALL,
+			target_table, 1, GDK_ACTION_COPY);
+
 	g_object_add_weak_pointer (G_OBJECT (totem->gtx),
 			(void**)&(totem->gtx));
 

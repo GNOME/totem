@@ -1,3 +1,14 @@
+2002-12-24  Bastien Nocera  <hadess@hadess.net>
+
+	* src/Makefile.am:
+	* src/gtk-xine.c: (gtk_xine_filter_events), (gtk_xine_realize):
+	* src/totem.c: (video_widget_create):
+	* src/xdnd.c: (wXDNDInitializeAtoms), (wXDNDMakeAwareness),
+	(wXDNDClearAwareness), (wXDNDProcessSelection), (isAwareXDND),
+	(acceptXDND), (wXDNDProcessClientMessage):
+	* src/xdnd.h: some work towards getting DND to work on the playback
+	canvas itself, needs *more* work
+
 2002-12-23  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c: (on_about1_activate): change the (C) to a proper

@@ -1,0 +1,372 @@
+/* Many part of code are ripped of an example from JX's site */
+
+#include <gdk/gdkx.h>
+//#include "WindowMaker.h"
+//#include "window.h"
+//#include "dock.h"
+#include "xdnd.h"
+//#include "motif.h"
+
+//#include "workspace.h"
+
+#include <stdlib.h>
+#include <string.h>
+
+#include <X11/Xatom.h>
+
+
+#define XDND_VERSION 3L
+
+Atom _XA_XdndAware;
+Atom _XA_XdndEnter;
+Atom _XA_XdndLeave;
+Atom _XA_XdndDrop;
+Atom _XA_XdndPosition;
+Atom _XA_XdndStatus;
+Atom _XA_XdndActionCopy;
+Atom _XA_XdndSelection;
+Atom _XA_XdndFinished;
+Atom _XA_WINDOWMAKER_XDNDEXCHANGE;
+
+/*
+Atom _XA_MOTIF_DRAG_RECEIVER_INFO;
+Atom _XA_MOTIF_DRAG_AND_DROP_MESSAGE;
+*/
+
+Atom atom_support;
+
+void wXDNDInitializeAtoms(void)
+{
+
+    _XA_XdndAware = XInternAtom(gdk_display, "XdndAware", False);
+    _XA_XdndEnter = XInternAtom(gdk_display, "XdndEnter", False);
+    _XA_XdndLeave = XInternAtom(gdk_display, "XdndLeave", False);
+    _XA_XdndDrop = XInternAtom(gdk_display, "XdndDrop", False);
+    _XA_XdndPosition = XInternAtom(gdk_display, "XdndPosition", False);
+    _XA_XdndStatus = XInternAtom(gdk_display, "XdndStatus", False);
+    _XA_XdndActionCopy = XInternAtom(gdk_display, "XdndActionCopy", False);
+    _XA_XdndSelection = XInternAtom(gdk_display, "XdndSelection", False);
+    _XA_XdndFinished = XInternAtom(gdk_display, "XdndFinished", False);
+
+//    _XA_WINDOWMAKER_XDNDEXCHANGE = XInternAtom(gdk_display, "_WINDOWMAKER_XDNDEXCHANGE", False);
+
+    /*
+    _XA_MOTIF_DRAG_RECEIVER_INFO = XInternAtom(gdk_display, "_MOTIF_DRAG_RECEIVER_INFO",False);
+    _XA_MOTIF_DRAG_AND_DROP_MESSAGE = XInternAtom(gdk_display, "_MOTIF_DRAG_AND_DROP_MESSAGE", False);
+    */
+}
+
+void wXDNDMakeAwareness(Window window) {
+    long int xdnd_version = XDND_VERSION;
+    /*
+    MotifDragReceiverInfo info;
+    */
+    XChangeProperty (gdk_display, window, _XA_XdndAware, XA_ATOM,
+            32, PropModeAppend, (char *)&xdnd_version, 1);
+
+    /*** MOTIF ***
+    info.byte_order = '\0';
+    info.protocol_version = 0;
+    info.protocol_style = XmDRAG_DYNAMIC;
+    info.proxy_window = 0;
+    info.num_drop_sites = 0;
+    info.total_size = sizeof(info);
+
+    XChangeProperty (gdk_display, window,
+                   _XA_MOTIF_DRAG_RECEIVER_INFO,
+                   _XA_MOTIF_DRAG_RECEIVER_INFO,
+                   8, PropModeReplace,
+                   (unsigned char *)&info,
+                   sizeof (info));
+                   */
+}
+
+void wXDNDClearAwareness(Window window) {
+//    long int xdnd_version = XDND_VERSION;
+    XDeleteProperty (gdk_display, window, _XA_XdndAware);
+}
+
+#define MAX_DND_FILES 64
+Bool
+wXDNDProcessSelection(XEvent *event)
+{
+//    WScreen *scr = wScreenForWindow(event->xselection.requestor);
+    char *retain;
+    Atom ret_type;
+    int ret_format;
+    unsigned long ret_item;
+    unsigned long remain_byte;
+    char * delme;
+    XEvent xevent;
+    Window selowner = XGetSelectionOwner(gdk_display,_XA_XdndSelection);
+//    unsigned char *delme;
+//    WMArray *items;
+
+
+    XGetWindowProperty(gdk_display, event->xselection.requestor,
+            _XA_WINDOWMAKER_XDNDEXCHANGE,
+            0, 65536, True, atom_support, &ret_type, &ret_format,
+            &ret_item, &remain_byte, (unsigned char **)&delme);
+    if (delme){
+		delme=delme;
+    }
+
+    /*send finished*/
+    memset (&xevent, 0, sizeof(xevent));
+    xevent.xany.type = ClientMessage;
+    xevent.xany.display = gdk_display;
+    xevent.xclient.window = selowner;
+    xevent.xclient.message_type = _XA_XdndFinished;
+    xevent.xclient.format = 32;
+    XDND_FINISHED_TARGET_WIN(&xevent) = event->xselection.requestor;
+    XSendEvent(gdk_display, selowner, 0, 0, &xevent);
+
+    /*process dropping*/
+    if (delme) {
+#if 0
+        WMArrayIterator iter;
+        int length, str_size;
+        int total_size = 0;
+        char *tmp;
+
+        items = WMCreateArray(4);
+        retain = g_strdup(delme);
+        XFree(delme); /* since delme was created by Xlib */
+
+        length = strlen(retain);
+
+        /* search in string */
+        while (length--) {
+            if (retain[length] == '\r') { /* useless char, nuke it */
+                retain[length] = 0;
+            }
+            if (retain[length] == '\n') {
+                str_size = strlen(&retain[length + 1]);
+                if(str_size) {
+                    WMAddToArray(items, g_strdup(&retain[length + 1]));
+                    total_size += str_size + 3; /* reserve for " \"\"" */
+                    /* this is nonsense -- if (length)
+                        WMAppendArray(items, WMCreateArray(1));*/
+                }
+                retain[length] = 0;
+            }
+        }
+        /* final one */
+        WMAddToArray(items, g_strdup(retain));
+        total_size += strlen(retain) + 3;
+        g_free(retain);
+
+        /* now pack new string */
+        delme = g_malloc(total_size);
+        delme[0]=0; /* empty string */
+        WM_ETARETI_ARRAY(items, tmp, iter) {
+            if (!strncmp(tmp,"file:",5)) {
+                /* add more 2 chars while removing 5 is harmless */
+                strcat(delme, " \"");
+                strcat(delme, &tmp[5]);
+                strcat(delme, "\"");
+            } else {
+                /* unsupport object, still need more " ? tell ]d */
+                strcat(delme, &tmp[5]);
+            }
+            g_free(tmp);
+        }
+        WMFreeArray(items);
+//FIXME        wDockReceiveDNDDrop(scr,event);
+        /*
+        printf("free ");
+        puts(scr->delme);
+        */
+        g_free(scr->delme); /* this delme is not from Xlib (no XFree) */
+#endif
+	/* Handle dropped files */
+	char * retain = delme;
+	char * files[MAX_DND_FILES];
+	int num = 0;
+	// printf("Got: %s\n",delme);
+	while(retain < delme + ret_item) {
+		if (!strncmp(retain,"file:",5)) {
+			/* add more 2 chars while removing 5 is harmless */
+			retain+=5;
+		}
+
+		/* add the "retain" to the list */
+		files[num++]=retain;
+		printf ("files[num++]: %s\n", files[num]);
+
+		/* now check for special characters */
+		{
+			int newone = 0;
+			while(retain < (delme + ret_item)){
+				if(*retain == '\r' || *retain == '\n'){
+					*retain=0;
+					newone = 1;
+				} else {
+					if (newone)
+						break;
+				}
+				retain++;
+			}
+		}
+
+		if (num >= MAX_DND_FILES)
+			break;
+	}
+
+	/* Handle the files FIXME */
+	//if(wnd->DandDHandler){
+	//	wnd->DandDHandler(num,files);
+	//}
+    }
+
+    /* why doesn't this function return anything ? -Dan */
+}
+
+Bool
+isAwareXDND(Window window)
+{
+    Atom actual;
+    int format;
+    unsigned long count, remaining;
+    unsigned char *data=0;
+
+    if (!window) return False;
+    XGetWindowProperty (gdk_display, window, _XA_XdndAware,
+                    0, 0x8000000L, False, XA_ATOM,
+                    &actual, &format,
+                    &count, &remaining, &data);
+    if (actual != XA_ATOM || format != 32 || count == 0 || !data) {
+        if (data)
+            XFree (data);
+        return False;
+    }
+    if (data)
+        XFree (data);
+    return True;
+}
+#if 0
+Bool
+acceptXDND(Window window)
+{
+    WScreen *scr = wScreenForWindow(window);
+    WDock *dock;
+    int icon_pos,i;
+    
+    icon_pos = -1;
+    if ((dock = scr->dock)!=NULL) {
+        for (i=0; i<dock->max_icons; i++) {
+            if (dock->icon_array[i]
+                && dock->icon_array[i]->icon->core->window==window) {
+                icon_pos = i;
+                break;
+            }
+        }
+    }
+    if (icon_pos<0 && (dock = scr->workspaces[scr->current_workspace]->clip)!=NULL) {
+        for (i=0; i<dock->max_icons; i++) {
+            if (dock->icon_array[i]
+                && dock->icon_array[i]->icon->core->window==window) {
+                icon_pos = i;
+                break;
+            }
+        }
+    }
+    if (icon_pos<0) return False;
+    if (!dock) return False;
+    if (isAwareXDND(dock->icon_array[icon_pos]->icon->icon_win)) return False;
+    
+    if (dock->icon_array[icon_pos]->dnd_command!=NULL) return True;
+    
+    return False;
+}
+#endif
+Bool
+wXDNDProcessClientMessage(XClientMessageEvent *event)
+{
+    /* test */
+    {
+    char * name = XGetAtomName(gdk_display, event->message_type);
+    /*
+    printf("Get %s\n",name);
+    */
+    XFree(name);
+    }
+
+    /*
+    if (event->message_type == _XA_MOTIF_DRAG_AND_DROP_MESSAGE) {
+        printf("motif dnd msg %d\n",event->data.b[0]);
+        if (event->data.b[0] == XmDROP_START){
+            unsigned x_root, y_root, flags;
+            unsigned char reason;
+            unsigned long timestamp;
+            Atom atom;
+            Window source_window;
+            MotifDragInitiatorInfo *initiator_info;
+            Atom ret_type;
+            int ret_format;
+            unsigned long ret_item;
+            unsigned long remain_byte;
+
+            reason = event->data.b[0];
+            flags = event->data.s[1];
+            timestamp = event->data.l[1];
+            x_root = event->data.s[4];
+            y_root = event->data.s[5];
+            atom = event->data.l[3];
+            source_window = event->data.l[4];
+
+    XGetWindowProperty(gdk_display, source_window, atom,
+            0, sizeof(*initiator_info), True, atom_support,
+            &ret_type, &ret_format,
+            &ret_item, &remain_byte, (unsigned char **)&initiator_info);
+        }
+    }
+    else */
+    if (event->message_type == _XA_XdndEnter) {
+        if ((event->data.l[1] & 1) == 0){
+            atom_support = event->data.l[2];
+        }
+        /*
+        else puts("enter more than 3 types");
+        */
+        return True;
+    } else if (event->message_type == _XA_XdndLeave) {
+        return True;
+    } else if (event->message_type == _XA_XdndDrop) {
+        if (event->data.l[0] == XGetSelectionOwner(gdk_display, _XA_XdndSelection)){
+            XConvertSelection(gdk_display, _XA_XdndSelection, atom_support,
+                    _XA_WINDOWMAKER_XDNDEXCHANGE, event->window, CurrentTime);
+        }
+        else {
+            puts("wierd selection owner? QT?");
+            XConvertSelection(gdk_display, _XA_XdndSelection, atom_support,
+                    _XA_WINDOWMAKER_XDNDEXCHANGE, event->window, CurrentTime);
+        }
+        return True;
+    } else if (event->message_type == _XA_XdndPosition) {
+        XEvent xevent;
+        Window srcwin = event->data.l[0];
+        if (atom_support != XInternAtom(gdk_display, "text/uri-list", False)) {
+            return True;
+        }
+        {
+            memset (&xevent, 0, sizeof(xevent));
+            xevent.xany.type = ClientMessage;
+            xevent.xany.display = gdk_display;
+            xevent.xclient.window = srcwin;
+            xevent.xclient.message_type = _XA_XdndStatus;
+            xevent.xclient.format = 32; 
+
+            XDND_STATUS_TARGET_WIN (&xevent) = event->window;
+            XDND_STATUS_WILL_ACCEPT_SET (&xevent, True);
+            XDND_STATUS_WANT_POSITION_SET(&xevent, True);
+            XDND_STATUS_RECT_SET(&xevent, 0, 0, 1024,768);
+            XDND_STATUS_ACTION(&xevent) = _XA_XdndActionCopy;
+
+            XSendEvent(gdk_display, srcwin, 0, 0, &xevent);
+        }
+        return True;
+    }
+    return False;
+}
+
