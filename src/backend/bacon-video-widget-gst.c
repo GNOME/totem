@@ -3098,7 +3098,8 @@ bacon_video_widget_new (int width, int height,
   /* audio out, if any */
   confvalue = gconf_client_get_without_default (bvw->priv->gc,
       GCONF_PREFIX"/audio_output_type", NULL);
-  if (confvalue != NULL) {
+  if (confvalue != NULL &&
+      (type != BVW_USE_TYPE_METADATA && type != BVW_USE_TYPE_CAPTURE)) {
     bvw->priv->speakersetup = gconf_value_get_int (confvalue);
   }
 
