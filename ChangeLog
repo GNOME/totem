@@ -1,3 +1,10 @@
+2003-04-11  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem.c: (on_video_motion_notify_event), (main): take the height
+	of the control popup into account immediately when switching to
+	fullscreen. Fixes a bug when part of the popup would be invisible
+	when switching to fullscreen
+
 2003-04-11  Frederic Crozat  <fcrozat@mandrakesoft.com>
 
 	* src/Makefile.am:

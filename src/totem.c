@@ -86,7 +86,6 @@ static const struct poptOption options[] = {
 	{"quit", '\0', POPT_ARG_NONE, NULL, 0, N_("Quit"), NULL},
 	{"enqueue", '\0', POPT_ARG_NONE, NULL, 0, N_("Enqueue"), NULL},
 	{"replace", '\0', POPT_ARG_NONE, NULL, 0, N_("Replace"), NULL},
-
 	{NULL, '\0', 0, NULL, 0} /* end the list */
 };
 
@@ -1974,7 +1973,9 @@ static gboolean
 on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 		Totem *totem)
 {
+	//FIXME
 	static gboolean in_progress = FALSE;
+	int width;
 
 	if (bacon_video_widget_is_fullscreen (totem->bvw) == FALSE)
 		return FALSE;
@@ -1989,6 +1990,8 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 		totem->popup_timeout = 0;
 	}
 
+	gtk_window_get_size (GTK_WINDOW (totem->control_popup),
+			&width, &totem->control_popup_height);
 	gtk_window_move (GTK_WINDOW (totem->exit_popup),
 			totem->fullscreen_rect.x,
 			totem->fullscreen_rect.y);
@@ -2926,7 +2929,6 @@ main (int argc, char **argv)
 {
 	Totem *totem;
 	char *filename;
-	int width = 0;
 	GConfClient *gc;
 	GError *err = NULL;
 	GdkPixbuf *pix;
@@ -3072,11 +3074,6 @@ main (int argc, char **argv)
 
 	/* The prefs after the video widget is connected */
 	totem_setup_preferences (totem);
-
-	/* Setup the size stuff for fullscreen */
-	gtk_window_get_size (GTK_WINDOW (totem->control_popup),
-			&width, &totem->control_popup_height);
-	update_fullscreen_size (totem);
 
 	if (argc > 1)
 	{
