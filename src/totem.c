@@ -118,6 +118,7 @@ static const GtkTargetEntry source_table[] = {
 static gboolean popup_hide (Totem *totem);
 static void update_buttons (Totem *totem);
 static void update_dvd_menu_items (Totem *totem);
+static void update_seekable (Totem *totem, gboolean force_false);
 static void on_play_pause_button_clicked (GtkToggleButton *button,
 		gpointer user_data);
 static void playlist_changed_cb (GtkWidget *playlist, gpointer user_data);
@@ -438,13 +439,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		update_mrl_label (totem, NULL);
 
 		/* Seek bar and seek buttons */
-		gtk_widget_set_sensitive (totem->seek, FALSE);
-		widget = glade_xml_get_widget (totem->xml, "skip_forward1");
-		gtk_widget_set_sensitive (widget, FALSE);
-		widget = glade_xml_get_widget (totem->xml, "skip_backwards1");
-		gtk_widget_set_sensitive (widget, FALSE);
-		widget = glade_xml_get_widget (totem->xml, "skip_to1");
-		gtk_widget_set_sensitive (widget, FALSE);
+		update_seekable (totem, TRUE);
 
 		/* Volume */
 		widget = glade_xml_get_widget (totem->xml, "volume_hbox");
@@ -496,15 +491,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		update_mrl_label (totem, name);
 
 		/* Seek bar */
-		caps = gtk_xine_is_seekable (GTK_XINE (totem->gtx));
-		gtk_widget_set_sensitive (totem->seek, caps);
-		widget = glade_xml_get_widget (totem->xml, "skip_forward1");
-		gtk_widget_set_sensitive (widget, caps);
-		widget = glade_xml_get_widget (totem->xml, "skip_backwards1");
-		gtk_widget_set_sensitive (widget, caps);
-		widget = glade_xml_get_widget (totem->xml, "skip_to1");
-		gtk_widget_set_sensitive (widget, caps);
-		gtk_widget_set_sensitive (totem->fs_seek, caps);
+		update_seekable (totem, FALSE);
 
 		/* Volume */
 		caps = gtk_xine_can_set_volume (GTK_XINE (totem->gtx));
@@ -557,6 +544,7 @@ totem_action_previous (Totem *totem)
         } else {
                 gtk_playlist_set_previous (totem->playlist);
                 mrl = gtk_playlist_get_current_mrl (totem->playlist);
+		g_message ("totem_action_next: %s", mrl);
                 totem_action_set_mrl_and_play (totem, mrl);
                 g_free (mrl);
         }
@@ -580,6 +568,7 @@ totem_action_next (Totem *totem)
         } else {
                 gtk_playlist_set_next (totem->playlist);
                 mrl = gtk_playlist_get_current_mrl (totem->playlist);
+		g_message ("totem_action_next: %s", mrl);
                 totem_action_set_mrl_and_play (totem, mrl);
                 g_free (mrl);
         }
@@ -848,13 +837,28 @@ on_title_change_event (GtkWidget *win, const char *string, gpointer user_data)
 }
 
 static void
-update_seekable (Totem *totem)
+update_seekable (Totem *totem, gboolean force_false)
 {
+	GtkWidget *widget;
+	gboolean caps;
+
+	if (force_false == FALSE)
+		caps = gtk_xine_is_seekable (GTK_XINE (totem->gtx));
+	else
+		caps = FALSE;
+
 	/* Check if the stream is seekable */
-	gtk_widget_set_sensitive (totem->seek,
-			gtk_xine_is_seekable (GTK_XINE (totem->gtx)));
-	gtk_widget_set_sensitive (totem->fs_seek,
-			gtk_xine_is_seekable (GTK_XINE (totem->gtx)));
+	gtk_widget_set_sensitive (totem->seek, caps);
+	gtk_widget_set_sensitive (totem->fs_seek, caps);
+
+	widget = glade_xml_get_widget (totem->xml, "skip_forward1");
+	gtk_widget_set_sensitive (widget, caps);
+	widget = glade_xml_get_widget (totem->xml, "skip_backwards1");
+	gtk_widget_set_sensitive (widget, caps);
+	widget = glade_xml_get_widget (totem->xml, "skip_to1");
+	gtk_widget_set_sensitive (widget, caps);
+	widget = glade_xml_get_widget (totem->xml, "okbutton2");
+	gtk_set_sensitive (widget, caps);
 }
 
 static void
@@ -923,7 +927,7 @@ update_cb_rare (gpointer user_data)
 	if (totem->gtx == NULL)
 		return TRUE;
 
-	update_seekable (user_data);
+	update_seekable (user_data, FALSE);
 
 	return TRUE;
 }
@@ -2119,11 +2123,11 @@ update_buttons (Totem *totem)
 
 	/* Previous */
         /* FIXME Need way to detect if DVD Title is at first chapter */
-        if (totem_playing_dvd (totem) == TRUE)
+	if (totem_playing_dvd (totem) == TRUE)
 	{
-                has_item = TRUE;
+		has_item = TRUE;
 	} else {
-                has_item = gtk_playlist_has_previous_mrl (totem->playlist);
+		has_item = gtk_playlist_has_previous_mrl (totem->playlist);
 	}
 
 	item = glade_xml_get_widget (totem->xml, "previous_button");
@@ -2135,9 +2139,9 @@ update_buttons (Totem *totem)
 
 	/* Next */
         /* FIXME Need way to detect if DVD Title has no more chapters */
-        if (totem_playing_dvd (totem) == TRUE)
+	if (totem_playing_dvd (totem) == TRUE)
 	{
-                has_item = TRUE;
+		has_item = TRUE;
 	} else {
 		has_item = gtk_playlist_has_next_mrl (totem->playlist);
 	}
