@@ -45,28 +45,12 @@
 #include "scrsaver.h"
 #include "video-utils.h"
 
-#ifdef ENABLE_NLS
-#    include <libintl.h>
-#    ifdef BONOBO_EXPLICIT_TRANSLATION_DOMAIN
-#        undef _
-#        define _(String) dgettext (BONOBO_EXPLICIT_TRANSLATION_DOMAIN, String)
-#    else
-#        define _(String) gettext (String)
-#    endif
-#    ifdef gettext_noop
-#        define N_(String) gettext_noop (String)
-#    else
-#        define N_(String) (String)
-#    endif
+#include <libintl.h>
+#define _(String) gettext (String)
+#ifdef gettext_noop
+#   define N_(String) gettext_noop (String)
 #else
-/* Stubs that do something close enough.  */
-#    define textdomain(String) (String)
-#    define gettext(String) (String)
-#    define dgettext(Domain,Message) (Message)
-#    define dcgettext(Domain,Message,Type) (Message)
-#    define bindtextdomain(Domain,Directory) (Domain)
-#    define _(String) (String)
-#    define N_(String) (String)
+#   define N_(String) (String)
 #endif
 
 #define DEFAULT_HEIGHT 420
@@ -990,6 +974,9 @@ xine_error (GtkXine *gtx)
 	case XINE_ERROR_DEMUX_FAILED:
 		signal->error_type = GTX_DEMUXER_FAILED;
 		break;
+	case XINE_ERROR_MALFORMED_MRL:
+		signal->error_type = GTX_MALFORMED_MRL;
+		break;
 	default:
 		break;
 	}
@@ -1171,7 +1158,7 @@ gtk_xine_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 static char *
 get_fourcc_string (uint32_t f)
 {
-	static char fcc[5];
+	char fcc[5];
 
 	memset(&fcc, 0, sizeof(fcc));
 
@@ -1191,9 +1178,8 @@ get_fourcc_string (uint32_t f)
 			*(uint32_t *) fcc = 0x33706d2e; /* Force to '.mp3' */
 	}
 
-	return &fcc[0];
+	return g_strdup (fcc);
 }
-
 
 gboolean
 gtk_xine_open (GtkXine *gtx, const gchar *mrl)
@@ -1222,27 +1208,25 @@ gtk_xine_open (GtkXine *gtx, const gchar *mrl)
 	{
 		GtkXineSignal *signal;
 		uint32_t fourcc;
-		char *fourcc_str;
-		const char *name;
+		char *fourcc_str, *name;
 
 		fourcc = xine_get_stream_info (gtx->priv->stream,
 				XINE_STREAM_INFO_VIDEO_FOURCC);
 		fourcc_str = get_fourcc_string (fourcc);
-		name = xine_get_meta_info (gtx->priv->stream,
-				XINE_META_INFO_VIDEOCODEC);
+		name = g_strdup (xine_get_meta_info (gtx->priv->stream,
+				XINE_META_INFO_VIDEOCODEC));
 
 		gtk_xine_close (gtx);
 
 		signal = g_new0 (GtkXineSignal, 1);
 		signal->type = ERROR;
 		signal->error_type = GTX_NO_CODEC;
-		signal->message = g_strdup_printf (_("Reason: Video type '%s' is not handled."), name ? name : fourcc_str );
+		signal->message = g_strdup_printf (_("Reason: Video type '%s' is not handled."), name ? name : fourcc_str);
 		g_async_queue_push (gtx->priv->queue, signal);
 		g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
 
-		D("Reason: Video type '%s' is not handled.", name ? name : fourcc_str );
-
-//		g_free (fourcc_str);
+		g_free (fourcc_str);
+		g_free (name);
 
 		return FALSE;
 	}

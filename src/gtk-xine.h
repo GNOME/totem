@@ -39,6 +39,7 @@ typedef enum {
 	GTX_NO_DEMUXER_PLUGIN,
 	GTX_DEMUXER_FAILED,
 	GTX_NO_CODEC,
+	GTX_MALFORMED_MRL,
 } GtkXineError;
 
 typedef enum {

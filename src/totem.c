@@ -1903,6 +1903,11 @@ on_error_event (GtkWidget *gtx, GtkXineError error, const char *message,
 				totem->mrl, message);
 		totem_action_stop (totem);
 		break;
+	case GTX_MALFORMED_MRL:
+		msg = g_strdup_printf(_("Totem could not play '%s'.\n"
+					"This location is not a valid one."),
+					totem->mrl);
+		break;
 	default:
 		g_assert_not_reached ();
 	}
