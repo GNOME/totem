@@ -334,7 +334,14 @@ totem_action_fullscreen_toggle (Totem *totem)
 	/* Hide the popup when switching fullscreen off */
 	if (new_state == FALSE)
 	{
+		GtkWidget *item;
+
 		gtk_widget_show (totem->win);
+		item = glade_xml_get_widget (totem->xml, "always_on_top1");
+		totem_gdk_window_set_always_on_top
+			(GTK_WIDGET (totem->win)->window,
+			 gtk_check_menu_item_get_active
+			 (GTK_CHECK_MENU_ITEM (item)));
 		popup_hide (totem);
 	}
 
