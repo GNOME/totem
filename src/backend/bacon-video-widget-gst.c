@@ -1025,12 +1025,12 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget * bvw,
   switch (quality)
     {
     case VISUAL_SMALL:
-      fps = 25;
-      w = 160;
-      h = 120;
+      fps = 15;
+      w = 320;
+      h = 240;
       break;
     case VISUAL_NORMAL:
-      fps = 15;
+      fps = 25;
       w = 320;
       h = 240;
       break;
@@ -1040,9 +1040,9 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget * bvw,
       h = 480;
       break;
     case VISUAL_EXTRA_LARGE:
-      fps = 25;
-      w = 1024;
-      h = 768;
+      fps = 30;
+      w = 800;
+      h = 600;
       break;
     default:
       /* shut up warnings */
