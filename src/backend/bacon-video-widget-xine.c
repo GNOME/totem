@@ -3404,7 +3404,7 @@ GList
 				nospace++;
 
 			list = g_list_prepend (list,
-					(gpointer) g_strdup (lang));
+					(gpointer) g_strdup (nospace));
 		} else {
 			/* An unnamed language, for example 'Language 2' */
 			list = g_list_prepend (list,
@@ -3461,7 +3461,7 @@ GList
 				nospace++;
 
 			list = g_list_prepend (list,
-					(gpointer) g_strdup (lang));
+					(gpointer) g_strdup (nospace));
 		}
 	}
 
