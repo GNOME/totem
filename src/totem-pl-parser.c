@@ -1099,27 +1099,45 @@ totem_pl_parser_add_desktop (TotemPlParser *parser, const char *url, gpointer da
 }
 #endif
 
+static int
+totem_pl_parser_dir_compare (GnomeVFSFileInfo *a, GnomeVFSFileInfo *b)
+{
+	if (a->name == NULL) {
+		if (b->name == NULL)
+			return 0;
+		else
+			return -1;
+	} else {
+		if (b->name == NULL)
+			return 1;
+		else
+			return strcmp (a->name, b->name);
+	}
+}
+
 static gboolean
 totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 			   gpointer data)
 {
-	GnomeVFSDirectoryHandle *handle;
-	GnomeVFSFileInfo *info;
+	GList *list, *l;
 	GnomeVFSResult res;
 	gboolean retval = FALSE;
 
-	if (gnome_vfs_directory_open (&handle, url, GNOME_VFS_FILE_INFO_DEFAULT)
-	    != GNOME_VFS_OK)
+	res = gnome_vfs_directory_list_load (&list, url,
+			GNOME_VFS_FILE_INFO_DEFAULT);
+	if (res != GNOME_VFS_OK)
 		return FALSE;
 
-	info = gnome_vfs_file_info_new ();
-	res = gnome_vfs_directory_read_next (handle, info);
-	while (res == GNOME_VFS_OK) {
+	list = g_list_sort (list, (GCompareFunc) totem_pl_parser_dir_compare);
+	l = list;
+
+	while (l != NULL) {
 		char *str, *fullpath;
+		GnomeVFSFileInfo *info = l->data;
 
 		if (info->name != NULL && (strcmp (info->name, ".") == 0
 					|| strcmp (info->name, "..") == 0)) {
-			res = gnome_vfs_directory_read_next (handle, info);
+			l = l->next;
 			continue;
 		}
 
@@ -1134,11 +1152,12 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 
 		retval = TRUE;
 		g_free (str);
-		res = gnome_vfs_directory_read_next (handle, info);
+		l = l->next;
 	}
 
-	gnome_vfs_directory_close (handle);
-	gnome_vfs_file_info_unref (info);
+	g_list_foreach (list, (GFunc) gnome_vfs_file_info_unref, NULL);
+	g_list_free (list);
+
 	return retval;
 }
 
