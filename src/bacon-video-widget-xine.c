@@ -1259,8 +1259,14 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		message = g_strdup (_("The specified movie could not be found."));
 		break;
 	case XINE_MSG_READ_ERROR:
-		num = BVW_ERROR_READ_ERROR;
-		message = g_strdup (_("The movie could not be read."));
+		if (bvw->priv->mrl && g_str_has_prefix (bvw->priv->mrl, "dvd:") != FALSE)
+                {
+                        num = BVW_ERROR_DVD_ENCRYPTED;
+                        message = g_strdup (_("The source seems encrypted, and can't be read. Are you trying to play an encrypted DVD without libdvdcss?"));
+                } else {
+			num = BVW_ERROR_READ_ERROR;
+			message = g_strdup (_("The movie could not be read."));
+		}
 		break;
 	case XINE_MSG_LIBRARY_LOAD_ERROR:
 		num = BVW_ERROR_PLUGIN_LOAD;
@@ -2168,6 +2174,7 @@ bacon_video_widget_set_logo (BaconVideoWidget *bvw, char *filename)
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
+	g_return_if_fail (filename != NULL);
 
 	if (bacon_video_widget_open (bvw, filename, NULL) != FALSE) {
 		bacon_video_widget_play (bvw, NULL);

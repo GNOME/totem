@@ -1,3 +1,11 @@
+2004-09-15  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-xine.c: (xine_event_message),
+	(bacon_video_widget_set_logo): work-around a bug in xine-lib where
+	it wouldn't send the right error message if trying to play a DVD
+	without libdvdcss installed (Patch by Frederic Crozat
+	<fcrozat@mandrakesoft.com>)
+
 2004-09-14  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-remote.h:
