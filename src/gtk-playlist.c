@@ -1110,6 +1110,9 @@ gtk_playlist_add_asx (GtkPlaylist *playlist, const char *mrl)
 static gboolean
 gtk_playlist_add_ra (GtkPlaylist *playlist, const char *mrl)
 {
+	//FIXME we need to have some way to differentiate the playlists
+	//and the videos
+
 	/* How nice, same format as m3u it seems */
 	return gtk_playlist_add_m3u (playlist, mrl);
 }
@@ -1151,7 +1154,7 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 			&& strncmp ("application/x-ogg", mimetype, 17) != 0
 			&& strncmp ("image/png", mimetype, 9) != 0)
 	{
-		D("trying to add '%s' with mimetype '%s'",
+		D("not adding '%s' with mimetype '%s'",
 				mrl, mimetype);
 		return FALSE;
 	}

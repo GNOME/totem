@@ -1,3 +1,15 @@
+2003-04-02  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem.glade: add a separator between the volume control and
+	the playback controls
+	* src/bacon-video-widget.c: (video_window_translate_point),
+	(generate_mouse_event), (bacon_video_widget_set_scale_ratio): use
+	gtk_window_resize instead of the more error-prone queue_resize, fixes
+	a couple of possible lockups when the window is being resized quickly
+	* src/debug.h: more debug again
+	* src/gtk-playlist.c: (gtk_playlist_add_ra),
+	(gtk_playlist_add_mrl): add a few FIXMEs
+
 2003-04-01  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-video-widget.c: (bacon_video_widget_idle_signal),

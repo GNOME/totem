@@ -31,7 +31,6 @@
 /* X11 */
 #include <X11/X.h>
 #include <X11/Xlib.h>
-#include <X11/extensions/XShm.h>
 /* gtk+/gnome */
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
@@ -640,8 +639,8 @@ video_window_translate_point (BaconVideoWidget *bvw, int gui_x, int gui_y,
 				XINE_GUI_SEND_TRANSLATE_GUI_TO_VIDEO,
 				(void*)&rect) != -1)
 	{
-		/* the driver implements gui->video coordinate space translation
-		 * so we use it */
+		/* the driver implements gui->video coordinate space
+		 * translation so we use it */
 		*video_x = rect.x;
 		*video_y = rect.y;
 		return TRUE;
@@ -735,7 +734,8 @@ bacon_video_widget_dvd_event (BaconVideoWidget *bvw, BaconVideoWidgetDVDEvent ty
 }
 
 static gboolean
-generate_mouse_event (BaconVideoWidget *bvw, GdkEvent *event, gboolean is_motion)
+generate_mouse_event (BaconVideoWidget *bvw, GdkEvent *event,
+		gboolean is_motion)
 {
 	GdkEventMotion *mevent = (GdkEventMotion *) event;
 	GdkEventButton *bevent = (GdkEventButton *) event;
@@ -1953,8 +1953,8 @@ bacon_video_widget_ratio_fits_screen (BaconVideoWidget *bvw, gfloat ratio)
 void
 bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 {
-	GtkWindow *toplevel;
-	int new_w, new_h;
+	GtkWidget *toplevel;
+	int new_w, new_h, win_w, win_h;
 
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -1967,14 +1967,18 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 	/* Try best fit for the screen */
 	if (ratio == 0)
 	{
-		if (bacon_video_widget_ratio_fits_screen (bvw, 2) == TRUE)
+		if (bacon_video_widget_ratio_fits_screen (bvw, 2) != FALSE)
+		{
 			ratio = 2;
-		else if (bacon_video_widget_ratio_fits_screen (bvw, 1) == TRUE)
+		} else if (bacon_video_widget_ratio_fits_screen (bvw, 1)
+				!= FALSE) {
 			ratio = 1;
-		else if (bacon_video_widget_ratio_fits_screen (bvw, 0.5) == TRUE)
+		} else if (bacon_video_widget_ratio_fits_screen (bvw, 0.5)
+				!= FALSE) {
 			ratio = 0.5;
-		else
+		} else {
 			return;
+		}
 	} else {
 		/* don't scale to something bigger than the screen, and leave
 		 * us some room */
@@ -1982,18 +1986,20 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 			return;
 	}
 
-	new_w = bvw->priv->video_width * ratio;
-	new_h = bvw->priv->video_height * ratio;
+	toplevel = gtk_widget_get_toplevel (GTK_WIDGET (bvw));
 
-	toplevel = GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (bvw)));
+	/* Get the size of the toplevel window */
+	gdk_drawable_get_size (GDK_DRAWABLE (GTK_WIDGET (toplevel)->window),
+			&win_w, &win_h);
 
-	gtk_window_set_resizable (toplevel, FALSE);
-	bvw->widget.allocation.width = new_w;
-	bvw->widget.allocation.height = new_h;
-	gtk_widget_set_size_request (gtk_widget_get_parent (GTK_WIDGET (bvw)),
-			new_w, new_h);
-	gtk_widget_queue_resize (gtk_widget_get_parent (GTK_WIDGET (bvw)));
-	gtk_window_set_resizable (toplevel, TRUE);
+	/* Calculate the new size of the window, depending on the size of the
+	 * video widget, and the new size of the video */
+	new_w = win_w - bvw->widget.allocation.width +
+		(bvw->priv->video_width * ratio);
+	new_h = win_h - bvw->widget.allocation.height +
+		(bvw->priv->video_height * ratio);
+
+	gtk_window_resize (GTK_WINDOW (toplevel), new_w, new_h);
 }
 
 static void
