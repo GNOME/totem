@@ -911,6 +911,7 @@ gtk_xine_unrealize (GtkWidget *widget)
 
 	/* stop the playback */
 	xine_close (gtx->priv->stream);
+	gtx->priv->stream = NULL;
 
 	/* stop the event thread */
 	pthread_cancel (gtx->priv->thread);
@@ -923,6 +924,7 @@ gtk_xine_unrealize (GtkWidget *widget)
 
 	/* stop event thread */
 	xine_exit (gtx->priv->xine);
+	gtx->priv->xine = NULL;
 
 	/* Hide all windows */
 	if (GTK_WIDGET_MAPPED (widget))

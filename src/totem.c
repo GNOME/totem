@@ -809,12 +809,24 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 
 	for ( ; list[i] != NULL; i++)
 	{
-		if (g_file_test (list[i], G_FILE_TEST_IS_REGULAR
+		char *filename, *subtitle;
+
+		filename = g_strdup (list[i]);
+		subtitle = strrchr (filename, '?');
+		if (subtitle != NULL)
+		{
+			*subtitle = 0;
+			subtitle++;
+		}
+
+		if (g_file_test (filename, G_FILE_TEST_IS_REGULAR
 					| G_FILE_TEST_EXISTS)
 				|| strstr (list[i], "://") != NULL
 				|| strcmp (list[i], "dvd:") == 0
 				|| strcmp (list[i], "vcd:") == 0)
 		{
+			g_free (filename);
+
 			if (cleared == FALSE)
 			{
 				/* The function that calls us knows better
@@ -861,6 +873,8 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 				g_free (uri);
 			}
 		}
+
+		g_free (filename);
 	}
 
 	/* ... and reconnect because we're nice people */

@@ -1,3 +1,11 @@
+2002-11-18  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-xine.c: (gtk_xine_unrealize): try to zero the pointers of
+	the stream and the engine after closing them, yet another try at the
+	crash on exit
+	* src/totem.c: (totem_action_open_files): try to cut to the subtitle
+	before checking for existance of the files
+
 2002-11-17  Bastien Nocera  <hadess@hadess.net>
 
 	* src/gtk-xine.c: (gtk_xine_unrealize):
