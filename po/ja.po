@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-07 22:54+0900\n"
-"PO-Revision-Date: 2004-04-07 23:06+0900\n"
+"POT-Creation-Date: 2004-06-08 23:22+0900\n"
+"PO-Revision-Date: 2004-06-08 23:03+0900\n"
 "Last-Translator: Takayuki KUSANO <AE5T-KSN@asahi-net.or.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: KBabel 1.0beta2\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1294
+#: data/playlist.glade.h:1 src/totem-playlist.c:1445
 msgid "Playlist"
 msgstr "再生リスト"
 
@@ -37,6 +37,10 @@ msgid "_Add..."
 msgstr "追加(_A)..."
 
 #: data/playlist.glade.h:5
+msgid "_Copy Location"
+msgstr "場所のコピー(_C)"
+
+#: data/playlist.glade.h:6
 msgid "_Save..."
 msgstr "保存(_S)..."
 
@@ -44,23 +48,23 @@ msgstr "保存(_S)..."
 msgid "    "
 msgstr "    "
 
-#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:170
+#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:186
 msgid "0 frames per second"
 msgstr "0 フレーム/秒"
 
 #. Bitrate
-#: data/properties.glade.h:3 src/bacon-video-widget-properties.c:172
+#: data/properties.glade.h:3 src/bacon-video-widget-properties.c:188
 msgid "0 kbps"
 msgstr "0 Kビット/秒"
 
 #. 0 seconds
 #: data/properties.glade.h:4 data/totem.glade.h:2
-#: src/bacon-video-widget-properties.c:126
+#: src/bacon-video-widget-properties.c:142
 msgid "0 seconds"
 msgstr "0 秒"
 
 #. Dimensions
-#: data/properties.glade.h:5 src/bacon-video-widget-properties.c:165
+#: data/properties.glade.h:5 src/bacon-video-widget-properties.c:181
 msgid "0 x 0"
 msgstr "0 x 0"
 
@@ -102,14 +106,14 @@ msgstr "フレームレート:"
 
 #. Video Codec
 #. Audio Codec
-#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:167
-#: src/bacon-video-widget-properties.c:174
-#: src/bacon-video-widget-properties.c:243
-#: src/bacon-video-widget-properties.c:275
+#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:183
+#: src/bacon-video-widget-properties.c:190
+#: src/bacon-video-widget-properties.c:259
+#: src/bacon-video-widget-properties.c:291
 msgid "N/A"
 msgstr "N/A"
 
-#: data/properties.glade.h:16 src/totem.c:1961
+#: data/properties.glade.h:16 src/totem.c:2030
 msgid "Properties"
 msgstr "プロパティ"
 
@@ -120,12 +124,12 @@ msgstr "タイトル:"
 #. Title
 #. Artist
 #. Year
-#: data/properties.glade.h:18 src/bacon-video-widget-properties.c:157
-#: src/bacon-video-widget-properties.c:159
-#: src/bacon-video-widget-properties.c:161
-#: src/bacon-video-widget-properties.c:192
-#: src/bacon-video-widget-properties.c:199
-#: src/bacon-video-widget-properties.c:206
+#: data/properties.glade.h:18 src/bacon-video-widget-properties.c:173
+#: src/bacon-video-widget-properties.c:175
+#: src/bacon-video-widget-properties.c:177
+#: src/bacon-video-widget-properties.c:208
+#: src/bacon-video-widget-properties.c:215
+#: src/bacon-video-widget-properties.c:222
 msgid "Unknown"
 msgstr "不明"
 
@@ -141,25 +145,29 @@ msgstr "*"
 msgid "<b>Preview</b>"
 msgstr "<b>プレビュー</b>"
 
-#: data/screenshot.glade.h:4 src/totem-screenshot.c:292
+#: data/screenshot.glade.h:4 src/totem-screenshot.c:308
 msgid "Save Screenshot"
 msgstr "スクリーンショットの保存"
 
 #: data/screenshot.glade.h:5
-msgid "Save screenshot to _file:"
-msgstr "スクリーンショットを保存するファイル(_F):"
+msgid "Save screenshot"
+msgstr "スクリーンショットを保存します"
 
 #: data/screenshot.glade.h:6
-msgid "Save screenshot to the _desktop"
+msgid "Save screenshot to _desktop"
 msgstr "デスクトップの背景にセットする(_D)"
+
+#: data/screenshot.glade.h:7
+msgid "Save screenshot to _file:"
+msgstr "スクリーンショットを保存するファイル(_F):"
 
 #: data/totem.desktop.in.h:1
 msgid "Play movies and songs"
 msgstr "動画や音楽を再生します"
 
 #. Title
-#: data/totem.desktop.in.h:2 data/totem.glade.h:92 src/totem.c:679
-#: src/totem.c:3529
+#: data/totem.desktop.in.h:2 data/totem.glade.h:101 src/totem.c:694
+#: src/totem.c:3638
 msgid "Totem Movie Player"
 msgstr "Totem 動画プレーヤー"
 
@@ -176,510 +184,550 @@ msgid "14.4 Kbps Modem"
 msgstr "14.4 Kbps モデム"
 
 #: data/totem.glade.h:6
+msgid "16:9 (Widescreen)"
+msgstr "16:9 (ワイドスクリーン)"
+
+#: data/totem.glade.h:7
 msgid "19.2 Kbps Modem"
 msgstr "19.2 Kbps モデム"
 
-#: data/totem.glade.h:7
+#: data/totem.glade.h:8
+msgid "2.11:1 (DVB)"
+msgstr "2.11:1 (DVB)"
+
+#: data/totem.glade.h:9
 msgid "256 Kbps DSL/Cable"
 msgstr "256 Kbps DSL/ケーブル"
 
-#: data/totem.glade.h:8
+#: data/totem.glade.h:10
 msgid "28.8 Kbps Modem"
 msgstr "28.8 Kbps モデム"
 
-#: data/totem.glade.h:9
+#: data/totem.glade.h:11
 msgid "33.6 Kbps Modem"
 msgstr "33.6 Kbps モデム"
 
-#: data/totem.glade.h:10
+#: data/totem.glade.h:12
 msgid "34.4 Kbps Modem"
 msgstr "34.4 Kbps モデム"
 
-#: data/totem.glade.h:11
+#: data/totem.glade.h:13
 msgid "384 Kbps DSL/Cable"
 msgstr "384 Kbps DSL/ケーブル"
 
-#: data/totem.glade.h:12
+#: data/totem.glade.h:14
 msgid "4-channel"
 msgstr "4 チャンネル"
 
-#: data/totem.glade.h:13
+#: data/totem.glade.h:15
+msgid "4:3 (TV)"
+msgstr "4:3 (TV)"
+
+#: data/totem.glade.h:16
 msgid "5.0-channel"
 msgstr "5.0 チャンネル"
 
-#: data/totem.glade.h:14
+#: data/totem.glade.h:17
 msgid "5.1-channel"
 msgstr "5.1 チャンネル"
 
-#: data/totem.glade.h:15
+#: data/totem.glade.h:18
 msgid "512 Kbps DSL/Cable"
 msgstr "512 Kbps DSL/ケーブル"
 
-#: data/totem.glade.h:16
+#: data/totem.glade.h:19
 msgid "56 Kbps Modem/ISDN"
 msgstr "56 Kbps モデム/ISDN"
 
-#: data/totem.glade.h:17
+#: data/totem.glade.h:20
 msgid "<b>Audio Output</b>"
 msgstr "<b>オーディオ出力</b>"
 
-#: data/totem.glade.h:18
+#: data/totem.glade.h:21
 msgid "<b>Color balance</b>"
 msgstr "<b>色のバランス</b>"
 
-#: data/totem.glade.h:19
+#: data/totem.glade.h:22
 msgid "<b>Display</b>"
 msgstr "<b>表示</b>"
 
-#: data/totem.glade.h:20
+#: data/totem.glade.h:23
 msgid "<b>Networking</b>"
 msgstr "<b>ネットワーク</b>"
 
-#: data/totem.glade.h:21
+#: data/totem.glade.h:24
 msgid "<b>Optical Device</b>"
 msgstr "<b>光学デバイス</b>"
 
-#: data/totem.glade.h:22
+#: data/totem.glade.h:25
 msgid "<b>Proprietary Plugins</b>"
 msgstr "<b>プロプライエタリなプラグイン</b>"
 
-#: data/totem.glade.h:23
+#: data/totem.glade.h:26
 msgid "<b>TV-Out</b>"
 msgstr "<b>TV 出力</b>"
 
-#: data/totem.glade.h:24
+#: data/totem.glade.h:27
 msgid "<b>Visual Effects</b>"
 msgstr "<b>視覚効果</b>"
 
-#: data/totem.glade.h:25
+#: data/totem.glade.h:28
 msgid "AC3 Passthrough"
 msgstr "AC3 Passthrough"
 
-#: data/totem.glade.h:26
+#: data/totem.glade.h:29
 msgid "A_udio Menu"
 msgstr "オーディオ・メニュー(_U)"
 
-#: data/totem.glade.h:27
+#: data/totem.glade.h:30
 msgid "Always on _Top"
 msgstr "常に手前に表示(_T)"
 
-#: data/totem.glade.h:28
+#: data/totem.glade.h:31
 msgid "Always on top"
 msgstr "常に手前に表示します"
 
-#: data/totem.glade.h:29
+#: data/totem.glade.h:32
 msgid "Audio"
 msgstr "オーディオ"
 
-#: data/totem.glade.h:30
+#: data/totem.glade.h:33 src/totem.c:2880 src/totem.c:2901
+msgid "Auto"
+msgstr "自動"
+
+#: data/totem.glade.h:34
 msgid "Automatically _resize the window when a new video is loaded"
 msgstr "新しいビデオを読み込む際にウィンドウのサイズを自動的に変更する(_R)"
 
-#: data/totem.glade.h:31
+#: data/totem.glade.h:35
 msgid "Co_ntrast:"
 msgstr "コントラスト(_N):"
 
-#: data/totem.glade.h:32
+#: data/totem.glade.h:36
 msgid "Connection _speed:"
 msgstr "接続スピード(_S):"
 
-#: data/totem.glade.h:33
+#: data/totem.glade.h:37
 msgid "Deinterlace"
 msgstr "インタレース除去"
 
-#: data/totem.glade.h:34
+#: data/totem.glade.h:38
 msgid "Display"
 msgstr "表示"
 
-#: data/totem.glade.h:35
+#: data/totem.glade.h:39
 msgid "Exit Fullscreen"
 msgstr "フルスクリーン表示の終了"
 
-#: data/totem.glade.h:36
+#: data/totem.glade.h:40
 msgid "Extra Large"
 msgstr "特大"
 
-#: data/totem.glade.h:37
+#: data/totem.glade.h:41
 msgid "File name"
 msgstr "ファイル名"
 
-#: data/totem.glade.h:38
+#: data/totem.glade.h:42
 msgid "General"
 msgstr "全般"
 
-#: data/totem.glade.h:39
+#: data/totem.glade.h:43
 msgid "Go to the DVD menu"
 msgstr "DVD メニューへ移動します"
 
-#: data/totem.glade.h:40
+#: data/totem.glade.h:44
 msgid "Go to the angle menu"
 msgstr "カメラのアングル・メニューへ移動します"
 
-#: data/totem.glade.h:41
+#: data/totem.glade.h:45
 msgid "Go to the audio menu"
 msgstr "オーディオ・メニューへ移動します"
 
-#: data/totem.glade.h:42
+#: data/totem.glade.h:46
 msgid "Go to the chapter menu"
 msgstr "チャプター・メニューへ移動します"
 
-#: data/totem.glade.h:43
+#: data/totem.glade.h:47
 msgid "Go to the title menu"
 msgstr "タイトル・メニューへ移動します"
 
-#: data/totem.glade.h:44
+#: data/totem.glade.h:48
 msgid "Help contents"
 msgstr "ヘルプの目次です"
 
-#: data/totem.glade.h:45
+#: data/totem.glade.h:49
 msgid "Intranet/LAN"
 msgstr "イントラネット/LAN"
 
-#: data/totem.glade.h:46
+#: data/totem.glade.h:50
 msgid "Languages"
 msgstr "言語"
 
-#: data/totem.glade.h:47
+#: data/totem.glade.h:51
 msgid "Large"
 msgstr "大きい"
 
-#: data/totem.glade.h:48 src/totem.c:73
+#: data/totem.glade.h:52 src/totem.c:81
 msgid "Next"
 msgstr "次へ進みます"
 
-#: data/totem.glade.h:49
+#: data/totem.glade.h:53
 msgid "Next chapter or movie"
 msgstr "次のチャプターまたは動画に進みます"
 
-#: data/totem.glade.h:50
+#: data/totem.glade.h:54
 msgid "No Language Selection Available"
 msgstr "言語選択は利用できません"
 
-#: data/totem.glade.h:51
+#: data/totem.glade.h:55
 msgid "No subtitles selection available"
 msgstr "サブタイル選択は利用できません"
 
-#: data/totem.glade.h:52
+#: data/totem.glade.h:56
 msgid "Normal"
 msgstr "標準"
 
-#: data/totem.glade.h:53
+#: data/totem.glade.h:57
 msgid "Open _Location..."
 msgstr "場所を開く(_L)..."
 
-#: data/totem.glade.h:54
+#: data/totem.glade.h:58
 msgid "Open a non-local file"
 msgstr "リモート・サイトにあるファイルを開きます"
 
-#: data/totem.glade.h:55
+#: data/totem.glade.h:59
 msgid "Play / Pa_use"
 msgstr "再生 / 一時停止(_U)"
 
-#: data/totem.glade.h:56
+#: data/totem.glade.h:60
 msgid "Play _Audio CD"
 msgstr "オーディオ CD の再生(_A)"
 
-#: data/totem.glade.h:57
+#: data/totem.glade.h:61
 msgid "Play _DVD"
 msgstr "DVD の再生(_D)"
 
-#: data/totem.glade.h:58
+#: data/totem.glade.h:62
 msgid "Play _VCD"
 msgstr "VCD の再生(_V)"
 
-#: data/totem.glade.h:59
+#: data/totem.glade.h:63
 msgid "Play a Video CD"
 msgstr "ビデオ CD を再生します"
 
-#: data/totem.glade.h:60
+#: data/totem.glade.h:64
 msgid "Play a Video DVD"
 msgstr "ビデオ DVD を再生します"
 
-#: data/totem.glade.h:61
+#: data/totem.glade.h:65
 msgid "Play an audio CD"
 msgstr "オーディオ CD を再生します"
 
-#: data/totem.glade.h:62
+#: data/totem.glade.h:66
 msgid "Play or pause the movie"
 msgstr "動画を再生したり停止します"
 
-#: data/totem.glade.h:63 src/totem.c:72
+#: data/totem.glade.h:67 src/totem.c:80
 msgid "Play/Pause"
 msgstr "動画を再生または一時停止します"
 
-#: data/totem.glade.h:64 src/totem.c:74
+#: data/totem.glade.h:68 src/totem.c:82
 msgid "Previous"
 msgstr "前へ戻ります"
 
-#: data/totem.glade.h:65
+#: data/totem.glade.h:69
 msgid "Previous chapter or movie"
 msgstr "前のチャプターまたは動画に戻ります"
 
-#: data/totem.glade.h:66
+#: data/totem.glade.h:70
 msgid "S_ubtitles"
 msgstr "サブタイトル(_U)"
 
-#: data/totem.glade.h:67
+#: data/totem.glade.h:71
 msgid "Sat_uration:"
 msgstr "彩度(_U):"
 
-#: data/totem.glade.h:68
+#: data/totem.glade.h:72
+msgid "Set the aspect ratio"
+msgstr "アスペクト比率をセットします"
+
+#: data/totem.glade.h:73
 msgid "Set the repeat mode"
 msgstr "繰り返し再生モードにします"
 
-#: data/totem.glade.h:69
+#: data/totem.glade.h:74
 msgid "Set the shuffle mode"
 msgstr "シャッフル・モードにします"
 
-#: data/totem.glade.h:70
+#: data/totem.glade.h:75
+msgid "Sets 16:9 (Anamorphic) aspect ratio"
+msgstr "アスペクト比率を 16:9 (Anamorphic) にします"
+
+#: data/totem.glade.h:76
+msgid "Sets 2.11:1 (DVB) aspect ratio"
+msgstr "アスペクト比を 2.11:1 (DVB) にします"
+
+#: data/totem.glade.h:77
+msgid "Sets 4:3 (TV) aspect ratio"
+msgstr "アスペクト比を 4:3 (TV) にします"
+
+#: data/totem.glade.h:78
+msgid "Sets automatic aspect ratio"
+msgstr "アスペクト比を自動調節します"
+
+#: data/totem.glade.h:79
+msgid "Sets square aspect ratio"
+msgstr "アスペクト比を倍にします"
+
+#: data/totem.glade.h:80
 msgid "Show _Controls"
 msgstr "コントロールの表示(_C)"
 
-#: data/totem.glade.h:71
+#: data/totem.glade.h:81
 msgid "Show _visual effects when an audio file is played"
 msgstr "オーディオファイルを再生する時に視覚効果を表示する(_V)"
 
-#: data/totem.glade.h:72
+#: data/totem.glade.h:82
 msgid "Show controls"
 msgstr "コントロールを表示します"
 
-#: data/totem.glade.h:73
+#: data/totem.glade.h:83
 msgid "Show or hide the playlist"
 msgstr "再生リストの表示/非表示を切り替えます"
 
-#: data/totem.glade.h:74
+#: data/totem.glade.h:84
 msgid "Show/Hide Playlist"
 msgstr "再生リストの表示/非表示を切り替えます"
 
-#: data/totem.glade.h:75
+#: data/totem.glade.h:85
 msgid "Shuff_le Mode"
 msgstr "シャッフル・モード(_L)"
 
-#: data/totem.glade.h:76
+#: data/totem.glade.h:86
 msgid "Skip _Backwards"
 msgstr "後方へスキップ(_B)"
 
-#: data/totem.glade.h:77
+#: data/totem.glade.h:87
 msgid "Skip _Forward"
 msgstr "前方へスキップ(_F)"
 
-#: data/totem.glade.h:78
+#: data/totem.glade.h:88
 msgid "Skip backwards"
 msgstr "後方へスキップ"
 
-#: data/totem.glade.h:79
+#: data/totem.glade.h:89
 msgid "Skip forward"
 msgstr "前方へスキップ"
 
-#: data/totem.glade.h:80
+#: data/totem.glade.h:90
 msgid "Skip to"
 msgstr "スキップ"
 
-#: data/totem.glade.h:81
+#: data/totem.glade.h:91
 msgid "Skip to a specific time"
 msgstr "指定した時間までスキップします"
 
-#: data/totem.glade.h:82
+#: data/totem.glade.h:92
 msgid "Small"
 msgstr "小さい"
 
-#: data/totem.glade.h:83
+#: data/totem.glade.h:93
+msgid "Square"
+msgstr "矩形"
+
+#: data/totem.glade.h:94
 msgid "Stereo"
 msgstr "ステレオ"
 
-#: data/totem.glade.h:84
+#: data/totem.glade.h:95
 msgid "Subtitles"
 msgstr "サブタイトル"
 
-#: data/totem.glade.h:85
+#: data/totem.glade.h:96
 msgid "Switch to double size"
 msgstr "サイズを 2倍に拡大します"
 
-#: data/totem.glade.h:86
+#: data/totem.glade.h:97
 msgid "Switch to fullscreen"
 msgstr "フルスクリーン表示に切り替えます"
 
-#: data/totem.glade.h:87
+#: data/totem.glade.h:98
 msgid "Take _Screenshot"
 msgstr "スクリーンショットを撮る(_S)"
 
-#: data/totem.glade.h:88
+#: data/totem.glade.h:99
 msgid "Take a screenshot"
 msgstr "再生中のスクリーンショットを撮ります"
 
-#: data/totem.glade.h:89
+#: data/totem.glade.h:100
 msgid "Time:"
 msgstr "時間:"
 
-#: data/totem.glade.h:90
-msgid "Toggle _Aspect Ratio"
-msgstr "アスペクト比を切り替える(_A)"
-
-#: data/totem.glade.h:91
-msgid "Toggle the aspect ratio"
-msgstr "画面のアスペクト比を切り替えます"
-
-#: data/totem.glade.h:93
+#: data/totem.glade.h:102
 msgid "Totem Preferences"
 msgstr "Totem の設定"
 
-#: data/totem.glade.h:94
+#: data/totem.glade.h:103
 msgid "Tv-out in fullscreen by Nvidia (NTSC)"
 msgstr "NvidiaのTV出力で全画面表示 (NTSC)"
 
-#: data/totem.glade.h:95
+#: data/totem.glade.h:104
 msgid "Tv-out in fullscreen by Nvidia (PAL)"
 msgstr "NvidiaのTV出力で全画面表示 (PAL)"
 
-#: data/totem.glade.h:96
+#: data/totem.glade.h:105
 msgid "Visualisation _size:"
 msgstr "表示サイズ(_S):"
 
-#: data/totem.glade.h:97
+#: data/totem.glade.h:106
 msgid "Volume _Down"
 msgstr "音量を下げる(_D)"
 
-#: data/totem.glade.h:98
+#: data/totem.glade.h:107
 msgid "Volume _Up"
 msgstr "音量を上げる(_U)"
 
-#: data/totem.glade.h:99
+#: data/totem.glade.h:108
 msgid "Volume down"
 msgstr "音量を下げます"
 
-#: data/totem.glade.h:100
+#: data/totem.glade.h:109
 msgid "Volume up"
 msgstr "音量を上げます"
 
-#: data/totem.glade.h:101 data/vanity.glade.h:7
+#: data/totem.glade.h:110 data/vanity.glade.h:7
 msgid "Zoom _1:1"
 msgstr "1:1 にズーム(_1)"
 
-#: data/totem.glade.h:102 data/vanity.glade.h:8
+#: data/totem.glade.h:111 data/vanity.glade.h:8
 msgid "Zoom _2:1"
 msgstr "2:1 にズーム(_2)"
 
-#: data/totem.glade.h:103
+#: data/totem.glade.h:112
 msgid "Zoom to half size"
 msgstr "サイズを半分に縮小します"
 
-#: data/totem.glade.h:104
+#: data/totem.glade.h:113
 msgid "Zoom to one for one size"
 msgstr "1:1 のサイズに戻します"
 
-#: data/totem.glade.h:105
+#: data/totem.glade.h:114
 msgid "_Add Proprietary Plugins..."
 msgstr "プロプライエタリなプラグインの追加(_A)..."
 
-#: data/totem.glade.h:106
+#: data/totem.glade.h:115
 msgid "_Angle Menu"
 msgstr "アングル・メニュー(_A)"
 
-#: data/totem.glade.h:107
+#: data/totem.glade.h:116
+msgid "_Aspect Ratio"
+msgstr "アスペクト比(_A)"
+
+#: data/totem.glade.h:117
 msgid "_Audio output type:"
 msgstr "オーディオ出力の種類(_A):"
 
-#: data/totem.glade.h:108
+#: data/totem.glade.h:118
 msgid "_Brightness:"
 msgstr "明るさ(_B):"
 
-#: data/totem.glade.h:109
+#: data/totem.glade.h:119
 msgid "_Chapter Menu"
 msgstr "チャプタ・メニュー(_C)"
 
-#: data/totem.glade.h:110
+#: data/totem.glade.h:120
 msgid "_Contents"
 msgstr "目次(_C)"
 
-#: data/totem.glade.h:111
+#: data/totem.glade.h:121
 msgid "_DVD Menu"
 msgstr "DVD メニュー(_D)"
 
-#: data/totem.glade.h:112
+#: data/totem.glade.h:122
 msgid "_DXR3 TV-out"
 msgstr "DXR3 TV 出力(_D)"
 
-#: data/totem.glade.h:113
+#: data/totem.glade.h:123
 msgid "_Deinterlace"
 msgstr "インタレース除去(_D)"
 
-#: data/totem.glade.h:114
+#: data/totem.glade.h:124
 msgid "_Eject"
 msgstr "取り出し(_E)"
 
-#: data/totem.glade.h:115
+#: data/totem.glade.h:125
 msgid "_Fullscreen"
 msgstr "フルスクリーン(_F)"
 
-#: data/totem.glade.h:116
+#: data/totem.glade.h:126
 msgid "_Go"
 msgstr "移動(_G)"
 
-#: data/totem.glade.h:117
+#: data/totem.glade.h:127
 msgid "_Hue:"
 msgstr "色相(_H):"
 
-#: data/totem.glade.h:118
+#: data/totem.glade.h:128
 msgid "_Languages"
 msgstr "言語(_L)"
 
-#: data/totem.glade.h:119
+#: data/totem.glade.h:129
 msgid "_Movie"
 msgstr "動画(_M)"
 
-#: data/totem.glade.h:120
+#: data/totem.glade.h:130
 msgid "_Next Chapter/Movie"
 msgstr "次のチャプター/動画(_N)"
 
-#: data/totem.glade.h:121
+#: data/totem.glade.h:131
 msgid "_No TV-out"
 msgstr "TV 出力なし(_N)"
 
-#: data/totem.glade.h:122
+#: data/totem.glade.h:132
 msgid "_Optical device path:"
 msgstr "光学デバイスのパス(_O):"
 
-#: data/totem.glade.h:123
+#: data/totem.glade.h:133
 msgid "_Previous Chapter/Movie"
 msgstr "前のチャプター/動画(_P)"
 
-#: data/totem.glade.h:124
+#: data/totem.glade.h:134
 msgid "_Repeat Mode"
 msgstr "リピート・モード(_R)"
 
-#: data/totem.glade.h:125
+#: data/totem.glade.h:135
 msgid "_Reset defaults"
 msgstr "デフォルトに戻す(_R)"
 
-#: data/totem.glade.h:126
+#: data/totem.glade.h:136
 msgid "_Show/Hide Playlist"
 msgstr "再生リストの表示/非表示(_S)"
 
-#: data/totem.glade.h:127
+#: data/totem.glade.h:137
 msgid "_Skip to..."
 msgstr "スキップ(_S)..."
 
-#: data/totem.glade.h:128
+#: data/totem.glade.h:138
 msgid "_Skip to:"
 msgstr "スキップ先(_S):"
 
-#: data/totem.glade.h:129
+#: data/totem.glade.h:139
 msgid "_Sound"
 msgstr "サウンド(_S)"
 
-#: data/totem.glade.h:130
+#: data/totem.glade.h:140
 msgid "_Title Menu"
 msgstr "タイトル・メニュー(_T)"
 
-#: data/totem.glade.h:131
+#: data/totem.glade.h:141
 msgid "_Type of visualisation:"
 msgstr "視覚化の種類(_T):"
 
-#: data/totem.glade.h:132 data/vanity.glade.h:10
+#: data/totem.glade.h:142 data/vanity.glade.h:10
 msgid "_Zoom 1:2"
 msgstr "1:2 にズーム(_Z)"
 
-#: data/totem.glade.h:133
+#: data/totem.glade.h:143
 msgid "seconds"
 msgstr "秒"
 
@@ -845,7 +893,7 @@ msgstr "ライブ・ウェブカムを視聴したり画像をアップロード
 msgid "Save File"
 msgstr "ファイルの保存"
 
-#: data/vanity.glade.h:2 src/vanity.c:255
+#: data/vanity.glade.h:2 src/vanity.c:278
 msgid "Vanity"
 msgstr "Vanity"
 
@@ -869,15 +917,15 @@ msgstr "2:1 にズーム(_2)"
 msgid "_Picture"
 msgstr "画像(_P)"
 
-#: src/bacon-cd-selection.c:234
+#: src/bacon-cd-selection.c:257
 msgid "Unnamed CDROM"
 msgstr "名前なしの CD-ROM"
 
-#: src/bacon-cd-selection.c:276 src/bacon-v4l-selection.c:275
+#: src/bacon-cd-selection.c:302 src/bacon-v4l-selection.c:299
 msgid "Select the drive"
 msgstr "ドライブの選択"
 
-#: src/bacon-v4l-selection.c:233
+#: src/bacon-v4l-selection.c:254
 msgid "Unnamed Video Device"
 msgstr "名前なしのビデオ・デバイス"
 
@@ -885,21 +933,21 @@ msgstr "名前なしのビデオ・デバイス"
 msgid "Totem Video Window"
 msgstr "Totem ビデオ・ウィンドウ"
 
-#: src/bacon-video-widget-properties.c:106
+#: src/bacon-video-widget-properties.c:122
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d 時間"
 msgstr[1] "%d 時間"
 
-#: src/bacon-video-widget-properties.c:108
+#: src/bacon-video-widget-properties.c:124
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d 分"
 msgstr[1] "%d 分"
 
-#: src/bacon-video-widget-properties.c:111
+#: src/bacon-video-widget-properties.c:127
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -907,39 +955,39 @@ msgstr[0] "%d 秒"
 msgstr[1] "%d 秒"
 
 #. hour:minutes:seconds
-#: src/bacon-video-widget-properties.c:117
+#: src/bacon-video-widget-properties.c:133
 #, c-format
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. minutes:seconds
-#: src/bacon-video-widget-properties.c:120
+#: src/bacon-video-widget-properties.c:136
 #, c-format
 msgid "%s %s"
 msgstr "%s %s"
 
 #. seconds
-#: src/bacon-video-widget-properties.c:123
+#: src/bacon-video-widget-properties.c:139
 #, c-format
 msgid "%s"
 msgstr "%s"
 
 #. Duration
-#: src/bacon-video-widget-properties.c:163
+#: src/bacon-video-widget-properties.c:179
 msgid "0 second"
 msgstr "0 秒"
 
-#: src/bacon-video-widget-properties.c:248
+#: src/bacon-video-widget-properties.c:264
 #, c-format
 msgid "%d frames per second"
 msgstr "%d フレーム/秒"
 
-#: src/bacon-video-widget-properties.c:266
+#: src/bacon-video-widget-properties.c:282
 #, c-format
 msgid "%d kbps"
 msgstr "%d Kバイト/秒"
 
-#: src/bacon-video-widget-xine.c:655
+#: src/bacon-video-widget-xine.c:687
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -948,7 +996,7 @@ msgstr ""
 "オーディオ・ドライバ '%s' を読み込めませんでした。\n"
 "デバイスが使用中でないか確認して下さい。"
 
-#: src/bacon-video-widget-xine.c:1130 src/bacon-video-widget-xine.c:1521
+#: src/bacon-video-widget-xine.c:1180 src/bacon-video-widget-xine.c:1611
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -956,40 +1004,40 @@ msgstr ""
 "ビデオ出力を利用できません。プログラムが正しくインストールされているか確認し"
 "てください。"
 
-#: src/bacon-video-widget-xine.c:1237
+#: src/bacon-video-widget-xine.c:1287
 msgid "The server you are trying to connect to is not known."
 msgstr "接続しようとしているサーバが不明です。"
 
-#: src/bacon-video-widget-xine.c:1240
+#: src/bacon-video-widget-xine.c:1290
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "指定したデバイス名 (%s) が正しくないようです。"
 
-#: src/bacon-video-widget-xine.c:1243
+#: src/bacon-video-widget-xine.c:1293
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "接続しようとしているサーバ (%s) に届きません。"
 
-#: src/bacon-video-widget-xine.c:1246
+#: src/bacon-video-widget-xine.c:1296
 msgid "The connection to this server was refused."
 msgstr "このサーバへの接続が拒否されました。"
 
-#: src/bacon-video-widget-xine.c:1249
+#: src/bacon-video-widget-xine.c:1299
 #, c-format
 msgid "The specified movie '%s' could not be found."
 msgstr "指定した動画 '%s' が見つかりませんでした。"
 
-#: src/bacon-video-widget-xine.c:1252
+#: src/bacon-video-widget-xine.c:1302
 #, c-format
 msgid "The movie '%s' could not be read."
 msgstr "動画 '%s' が読めませんでした。"
 
-#: src/bacon-video-widget-xine.c:1255
+#: src/bacon-video-widget-xine.c:1305
 #, c-format
 msgid "A problem occured while loading a library or a decoder (%s)."
 msgstr "ライブラリまたはデコーダ (%s) を読み込む際に問題が発生しました。"
 
-#: src/bacon-video-widget-xine.c:1259
+#: src/bacon-video-widget-xine.c:1309
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -997,40 +1045,48 @@ msgstr ""
 "ソースは暗号化されていので読めません。libdvdcss なしで暗号化 DVD を再生してみ"
 "ますか？"
 
-#: src/bacon-video-widget-xine.c:1261
+#: src/bacon-video-widget-xine.c:1311
 msgid "This file is encrypted and cannot be played back."
 msgstr "このファイルは暗号化されているので再生できません。"
 
-#: src/bacon-video-widget-xine.c:1264
+#: src/bacon-video-widget-xine.c:1314
 msgid "For security reasons, this movie can not be played back."
 msgstr "セキュリティの理由により、この動画を再生することはできません。"
 
-#: src/bacon-video-widget-xine.c:1268
+#: src/bacon-video-widget-xine.c:1318
 msgid "The audio device is busy. Is another application using it?"
 msgstr ""
 "オーディオ・デバイスがビジーです。他のアプリケーションで使用していませんか?"
 
-#: src/bacon-video-widget-xine.c:1360
-msgid "There is no plugin to handle this movie"
-msgstr "この動画を扱うためのプラグインがありません。"
+#: src/bacon-video-widget-xine.c:1322
+msgid "You are not allowed to open this file."
+msgstr "このファイルを開く権限がありません。"
 
-#: src/bacon-video-widget-xine.c:1364
-msgid "This movie is broken and can not be played further"
-msgstr "この動画は破損しているようです。これ以上は再生できません。"
+#: src/bacon-video-widget-xine.c:1324
+msgid "The server refused access to this file or stream."
+msgstr "サーバがこのファイルまたはストリームへのアクセスを拒否しました。"
 
-#: src/bacon-video-widget-xine.c:1368
-msgid "This location is not a valid one"
+#: src/bacon-video-widget-xine.c:1450
+msgid "There is no plugin to handle this movie."
+msgstr "この動画を扱うプラグインではありません。"
+
+#: src/bacon-video-widget-xine.c:1454
+msgid "This movie is broken and can not be played further."
+msgstr "この動画は破損しているので、これ以上は再生できません。"
+
+#: src/bacon-video-widget-xine.c:1458
+msgid "This location is not a valid one."
 msgstr "この場所は適切ではありません。"
 
-#: src/bacon-video-widget-xine.c:1372
-msgid "This movie could not be opened"
+#: src/bacon-video-widget-xine.c:1462
+msgid "This movie could not be opened."
 msgstr "この動画を開けませんでした。"
 
-#: src/bacon-video-widget-xine.c:1375
-msgid "Generic Error"
-msgstr "一般的なエラー"
+#: src/bacon-video-widget-xine.c:1465
+msgid "Generic Error."
+msgstr "一般的なエラーです。"
 
-#: src/bacon-video-widget-xine.c:1817
+#: src/bacon-video-widget-xine.c:1908
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1039,23 +1095,23 @@ msgstr ""
 "ビデオ・コーデック '%s' は扱えません。いくつかの種類の動画を再生するには、追"
 "加プラグインをインストールする必要があるかも知れません。"
 
-#: src/bacon-video-widget-xine.c:1836
-msgid "This is an audio-only file, and there is no audio output available"
+#: src/bacon-video-widget-xine.c:1928
+msgid "This is an audio-only file, and there is no audio output available."
 msgstr ""
-"これは音声のみのファイルですが、使用できるオーディオ出力デバイスがありませ"
+"これはオーディオ・ファイルですが、利用可能なオーディオ出力デバイスがありませ"
 "ん。"
 
-#: src/bacon-video-widget-xine.c:3293
-msgid "Movie is not playing"
-msgstr "動画を再生していません"
+#: src/bacon-video-widget-xine.c:3403
+msgid "Movie is not playing."
+msgstr "動画を再生していません。"
 
-#: src/bacon-video-widget-xine.c:3301
-msgid "No video to capture"
-msgstr "キャプチャするビデオがありません"
+#: src/bacon-video-widget-xine.c:3411
+msgid "No video to capture."
+msgstr "キャプチャするビデオがありません。"
 
-#: src/bacon-video-widget-xine.c:3308
-msgid "Video codec is not handled"
-msgstr "ビデオ・コーデックは扱いません"
+#: src/bacon-video-widget-xine.c:3418
+msgid "Video codec is not handled."
+msgstr "ビデオ・コーデックは扱いません。"
 
 #: src/cd-drive.c:573
 #, c-format
@@ -1066,19 +1122,50 @@ msgstr "タイトルなし SCSI CD-ROM (%s)"
 msgid "File image"
 msgstr "ファイル・イメージ"
 
-#: src/totem-playlist.c:320
+#. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+#: src/totem-mozilla-viewer.c:72 src/totem.c:363 src/totem.c:391
+#: src/totem.c:816 src/totem.c:925
+#, c-format
+msgid "Totem could not play '%s'."
+msgstr "Totem は '%s' を再生できませんでした。"
+
+#: src/totem-mozilla-viewer.c:104 src/totem-mozilla-viewer.c:111
+msgid "Couldn't load the main interface (mozilla-viewer.glade)."
+msgstr "メイン・インタフェース (mozilla-viewer.glade) を読み込めませんでした。"
+
+#: src/totem-mozilla-viewer.c:104 src/totem-mozilla-viewer.c:111
+msgid "Make sure that the Totem plugin is properly installed."
+msgstr "Totem のプラグインが正しくインストールされているか確認して下さい。"
+
+#: src/totem-mozilla-viewer.c:122
+msgid "The Totem plugin could not startup."
+msgstr "Totem のプラグインを起動できませんでした。"
+
+#: src/totem-mozilla-viewer.c:122 src/totem.c:3348
+msgid "No reason."
+msgstr "理由はありません。"
+
+#: src/totem-mozilla-viewer.c:154 src/totem.c:3643
+msgid "Could not initialise the thread-safe libraries."
+msgstr "スレッドセーフなライグラリを初期化できませんでした。"
+
+#: src/totem-mozilla-viewer.c:154
+msgid "Verify your system installation. The Totem plugin will now exit."
+msgstr "システムのインストールを確認して下さい。Totem プラグインを終了します。"
+
+#: src/totem-playlist.c:339
 msgid "Could not save the playlist"
 msgstr "再生リストを保存できませんでした"
 
-#: src/totem-playlist.c:475 src/totem.c:1516
+#: src/totem-playlist.c:613 src/totem.c:1560
 msgid "Select files"
 msgstr "ファイルの選択"
 
-#: src/totem-playlist.c:656
+#: src/totem-playlist.c:794
 msgid "Save playlist"
 msgstr "再生リストの保存"
 
-#: src/totem-playlist.c:701
+#: src/totem-playlist.c:839
 #, c-format
 msgid ""
 "A file named '%s' already exists.\n"
@@ -1087,21 +1174,21 @@ msgstr ""
 "'%s' という名前のファイルは既に存在しています。\n"
 "このファイルを上書きしてもよろしいですか？"
 
-#: src/totem-playlist.c:886
+#: src/totem-playlist.c:1024
 msgid "Filename"
 msgstr "ファイル名"
 
-#: src/totem-pl-parser.c:209
+#: src/totem-pl-parser.c:225
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "パーサに書き込めませんでした: %s"
 
-#: src/totem-pl-parser.c:273
+#: src/totem-pl-parser.c:289
 #, c-format
 msgid "Couldn't open parser: %s"
 msgstr "パーサを開けませんでした: %s"
 
-#: src/totem-preferences.c:83
+#: src/totem-preferences.c:82
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1109,7 +1196,7 @@ msgstr ""
 "リモートから Totem を実行しているようです。\n"
 "視覚効果を有効にしますか？"
 
-#: src/totem-preferences.c:136
+#: src/totem-preferences.c:135
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted"
@@ -1117,16 +1204,16 @@ msgstr ""
 "この設定の変更は、次に再生される動画もしくは Totem を再起動したときに反映され"
 "ます"
 
-#: src/totem-preferences.c:180
+#: src/totem-preferences.c:179
 msgid ""
 "Switching on or off this type of TV-Out requires a restart to take effect."
 msgstr "この TV 出力の設定を適用するには再起動が必要です。"
 
-#: src/totem-preferences.c:313
+#: src/totem-preferences.c:312
 msgid "Totem could not start the file manager."
 msgstr "Totem はファイル・マネージャを起動できませんでした。"
 
-#: src/totem-preferences.c:341
+#: src/totem-preferences.c:340
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr "視覚効果の種類を適用するには再起動が必要です。"
 
@@ -1138,133 +1225,128 @@ msgstr "現在表示している URI"
 msgid "Video and Audio information properties page"
 msgstr "ビデオとオーディオの情報プロパティのページ"
 
-#: src/totem-screenshot.c:170 src/totem-screenshot.c:181
+#: src/totem-screenshot.c:186 src/totem-screenshot.c:197
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Screenshot%d.png"
 
-#: src/totem-screenshot.c:223
+#: src/totem-screenshot.c:239
 #, c-format
 msgid "File '%s' already exists."
 msgstr "ファイル '%s' は既に存在しています。"
 
-#: src/totem-screenshot.c:225
+#: src/totem-screenshot.c:241
 msgid "The screenshot was not saved"
 msgstr "スクリーンショットを保存しませんでした。"
 
-#: src/totem-screenshot.c:236
+#: src/totem-screenshot.c:252
 msgid "There was an error saving the screenshot."
 msgstr "スクリーンショットの保存中にエラーが発生しました。"
 
-#: src/totem-statusbar.c:138
+#: src/totem-statusbar.c:154
 msgid "Shadow type"
 msgstr "影の種類"
 
-#: src/totem-statusbar.c:139
+#: src/totem-statusbar.c:155
 msgid "Style of bevel around the statusbar text"
 msgstr "ステータスバー・テキスト周りのベベルのスタイル"
 
-#: src/totem-statusbar.c:171 src/totem.c:299
+#: src/totem-statusbar.c:187 src/totem.c:307 src/totem.c:676
 msgid "Stopped"
 msgstr "停止"
 
-#: src/totem-statusbar.c:180
+#: src/totem-statusbar.c:196
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: src/totem-statusbar.c:208
+#: src/totem-statusbar.c:224
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (ストリーミング)"
 
-#: src/totem-statusbar.c:216
+#: src/totem-statusbar.c:232
 msgid "Seek to"
 msgstr "スキップ"
 
-#: src/totem-statusbar.c:278
+#: src/totem-statusbar.c:294
 msgid "Buffering"
 msgstr "バッファリング中"
 
 #. eg: 75 %
-#: src/totem-statusbar.c:281
+#: src/totem-statusbar.c:297
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
 
-#: src/totem.c:70
+#: src/totem.c:78
 msgid "Backend options"
 msgstr "バックエンドのオプション"
 
-#: src/totem.c:71
+#: src/totem.c:79
 msgid "Enable debug"
 msgstr "デバッグモード"
 
-#: src/totem.c:75
+#: src/totem.c:83
 msgid "Seek Forwards"
 msgstr "前方へ移動"
 
-#: src/totem.c:76
+#: src/totem.c:84
 msgid "Seek Backwards"
 msgstr "後方へ移動"
 
-#: src/totem.c:77
+#: src/totem.c:85
 msgid "Volume Up"
 msgstr "音量を上げる"
 
-#: src/totem.c:78
+#: src/totem.c:86
 msgid "Volume Down"
 msgstr "音量を下げる"
 
-#: src/totem.c:79
+#: src/totem.c:87
 msgid "Toggle Fullscreen"
 msgstr "フルスクリーンの切り替え"
 
-#: src/totem.c:80
+#: src/totem.c:88
 msgid "Quit"
 msgstr "終了"
 
-#: src/totem.c:81
+#: src/totem.c:89
 msgid "Enqueue"
 msgstr "キューに追加"
 
-#: src/totem.c:82
+#: src/totem.c:90
 msgid "Replace"
 msgstr "置換"
 
-#: src/totem.c:289
+#: src/totem.c:297
 msgid "Playing"
 msgstr "再生中"
 
-#: src/totem.c:294
+#: src/totem.c:302
 msgid "Paused"
 msgstr "一時停止中"
 
-#: src/totem.c:329
+#: src/totem.c:342
 msgid "Totem could not eject the optical media."
 msgstr "Totem は光学メディアを取り出すことができませんでした。"
 
-#: src/totem.c:329
-msgid "No reason given"
-msgstr "原因は不明です"
+#: src/totem.c:342
+msgid "No reason given."
+msgstr "原因は不明です。"
 
-#: src/totem.c:350 src/totem.c:378 src/totem.c:800 src/totem.c:909
-#, c-format
-msgid "Totem could not play '%s'."
-msgstr "Totem は '%s' を再生できませんでした。"
-
-#: src/totem.c:398
+#: src/totem.c:411
 msgid "DVD"
 msgstr "DVD"
 
-#: src/totem.c:399
+#: src/totem.c:412
 msgid "Video CD"
 msgstr "ビデオ CD"
 
-#: src/totem.c:400
+#: src/totem.c:413
 msgid "Audio CD"
 msgstr "オーディオ CD"
 
-#: src/totem.c:411
+#: src/totem.c:424
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1273,7 +1355,7 @@ msgstr ""
 "この種類のメディア (%s) を操作する適切なプラグインがないため、Totem はそのメ"
 "ディアを再生できません。"
 
-#: src/totem.c:412
+#: src/totem.c:425
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1281,7 +1363,7 @@ msgstr ""
 "必要なプラグインをインストールして Totem を再起動すると、このメディアを再生で"
 "きます。"
 
-#: src/totem.c:420
+#: src/totem.c:433
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1290,7 +1372,7 @@ msgstr ""
 "このメディア (%s) を操作するプラグインはありますが、Totem はそのメディアを再"
 "生できませんでした。"
 
-#: src/totem.c:421
+#: src/totem.c:434
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1299,37 +1381,37 @@ msgstr ""
 "とを確認して下さい。"
 
 #. Title
-#: src/totem.c:656
+#: src/totem.c:669
 #, c-format
 msgid "%s - Totem Movie Player"
 msgstr "%s - Totem 動画プレーヤー"
 
-#: src/totem.c:668 src/totem.c:3334
+#: src/totem.c:683 src/totem.c:3443
 msgid "No file"
 msgstr "ファイルなし"
 
-#: src/totem.c:704 src/totem.c:1880
+#: src/totem.c:720 src/totem.c:1948
 msgid "Totem"
 msgstr "Totem"
 
-#: src/totem.c:1184
+#: src/totem.c:1228
 msgid "An error occured"
 msgstr "エラーが発生しました"
 
-#: src/totem.c:1593 src/totem.c:1601
+#: src/totem.c:1637 src/totem.c:1645
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "'場所を開く...' インタフェースを読み込めませんでした。"
 
-#: src/totem.c:1593 src/totem.c:1601 src/totem.c:3563 src/totem.c:3588
-#: src/totem.c:3613
+#: src/totem.c:1637 src/totem.c:1645 src/totem.c:3678 src/totem.c:3703
+#: src/totem.c:3728
 msgid "Make sure that Totem is properly installed."
 msgstr "Totem が正しくインストールされているか確認して下さい。"
 
-#: src/totem.c:1833
+#: src/totem.c:1901
 msgid "Totem could not display the help contents."
 msgstr "Totem はヘルプの目次を表示できませんでした。"
 
-#: src/totem.c:1851 src/vanity.c:226
+#: src/totem.c:1919 src/vanity.c:251
 msgid "translator_credits"
 msgstr ""
 "草野 貴之 <AE5T-KSN@asahi-net.or.jp>\n"
@@ -1338,87 +1420,79 @@ msgstr ""
 "James Hashida <khashida@redhat.com>\n"
 "日本GNOMEユーザー会 <http://www.gnome.gr.jp>"
 
-#: src/totem.c:1877
+#: src/totem.c:1945
 #, c-format
 msgid "Movie Player using %s"
 msgstr "%s を使った動画プレーヤです。"
 
-#: src/totem.c:1916 src/totem.c:1924 src/vanity.c:292 src/vanity.c:300
+#: src/totem.c:1985 src/totem.c:1993 src/vanity.c:316 src/vanity.c:324
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem はこの映像のスクリーンショットを撮れませんでした。"
 
-#: src/totem.c:1924 src/vanity.c:300
-msgid "Please file a bug, this isn't supposed to happen"
-msgstr "バグを報告して下さい。この現象は未サポートです。"
+#: src/totem.c:1993
+msgid "Please file a bug, this isn't supposed to happen."
+msgstr "バグを報告して下さい。この現象はサポートしていません。"
 
-#: src/totem.c:1951
+#: src/totem.c:2020
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem は動画プロパティ・ウィンドウを表示できませんでした。"
 
-#: src/totem.c:1951
+#: src/totem.c:2020
 msgid "Make sure that Totem is correctly installed."
 msgstr "Totem が正しくインストールされているか確認して下さい。"
 
-#: src/totem.c:2036
+#: src/totem.c:2106
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem は '%s' 中を検索できませんでした。 "
 
-#: src/totem.c:2791 src/totem.c:2813
+#: src/totem.c:2876 src/totem.c:2898
 msgid "None"
 msgstr "なし"
 
-#: src/totem.c:2795 src/totem.c:2816
-msgid "Auto"
-msgstr "自動"
-
-#: src/totem.c:3239
+#: src/totem.c:3348
 msgid "Totem could not startup."
 msgstr "Totem を起動できませんでした。"
 
-#: src/totem.c:3239
-msgid "No reason."
-msgstr "理由はありません。"
-
-#: src/totem.c:3439
+#: src/totem.c:3548
 #, c-format
 msgid "Option '%s' is unknown and was ignored\n"
 msgstr "オプション '%s' は認識できません。無視しました\n"
 
-#: src/totem.c:3534
-msgid "Could not initialise the thread-safe libraries."
-msgstr "スレッドセーフなライグラリを初期化できませんでした。"
-
-#: src/totem.c:3534
+#: src/totem.c:3643
 msgid "Verify your system installation. Totem will now exit."
 msgstr "システムのインストールを確認して下さい。Totem を終了します。"
 
-#: src/totem.c:3555
+#: src/totem.c:3666
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem は設定エンジンを初期化できませんでした。"
 
-#: src/totem.c:3555
+#: src/totem.c:3666
 msgid "Make sure that GNOME is properly installed."
 msgstr "GNOME が正しくインストールされているか確認して下さい。"
 
-#: src/totem.c:3563 src/totem.c:3588
+#: src/totem.c:3678 src/totem.c:3703
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "メイン・インタフェース (totem.glade) を読み込めませんでした。"
 
-#: src/totem.c:3613
+#: src/totem.c:3728
 msgid "Couldn't load the interface for the playlist."
 msgstr "再生リストのインタフェースをロードできませんでした。"
 
-#: src/vanity.c:55
+#: src/vanity.c:79
 msgid "Debug mode on"
 msgstr "デバッグモードを有効にする"
 
-#: src/vanity.c:252
+#: src/vanity.c:275
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "%s を使ったウェブカム・ユーティリティです。"
 
-#: src/vanity.c:537
+#: src/vanity.c:324
+msgid "Please file a bug, this isn't supposed to happen"
+msgstr "バグを報告して下さい。この現象は未サポートです。"
+
+#: src/vanity.c:567
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1427,11 +1501,11 @@ msgstr ""
 "Vanity を起動できませんでした:\n"
 "%s"
 
-#: src/vanity.c:538
+#: src/vanity.c:568
 msgid "No reason"
 msgstr "理由なし"
 
-#: src/vanity.c:576
+#: src/vanity.c:606
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1440,7 +1514,7 @@ msgstr ""
 "Vanity はウェブカムに接続できませんでした。\n"
 "理由: %s"
 
-#: src/vanity.c:592
+#: src/vanity.c:622
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1449,11 +1523,11 @@ msgstr ""
 "Vanity はウェブカムからの映像を再生できませんでした。\n"
 "理由: %s"
 
-#: src/vanity.c:628
+#: src/vanity.c:658
 msgid "Vanity Webcam Utility"
 msgstr "Vanity ウェブカム・ユーティリティ"
 
-#: src/vanity.c:633
+#: src/vanity.c:663
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1461,7 +1535,7 @@ msgstr ""
 "スレッドセーフなライブラリを初期化できませんでした。\n"
 "システムのインストールを確認して下さい。Vanity を終了します。"
 
-#: src/vanity.c:655
+#: src/vanity.c:688
 #, c-format
 msgid ""
 "Vanity couln't initialise the \n"
@@ -1472,61 +1546,10 @@ msgstr ""
 "初期化できませんでした:\n"
 "%s"
 
-#: src/vanity.c:669 src/vanity.c:684
+#: src/vanity.c:705 src/vanity.c:720
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
 msgstr ""
 "メイン・インタフェース (vanity.glade) をロードできませんでした。 \n"
 "Vanity が正しくインストールされているか確認して下さい。"
-
-#~ msgid "Connecting to the server"
-#~ msgstr "サーバに接続中"
-
-#~ msgid "Done"
-#~ msgstr "完了"
-
-#~ msgid "Downloading the plug-ins"
-#~ msgstr "プラグインのダウンロード中"
-
-#~ msgid "Installing the plug-ins"
-#~ msgstr "プラグインのインストール中"
-
-#~ msgid "Plug-ins Download"
-#~ msgstr "プラグインのダウンロード"
-
-#~ msgid "_TV-out mode"
-#~ msgstr "TV 出力モード(_T)"
-
-#~ msgid "Your HTTP Proxy requires you to log in.\n"
-#~ msgstr "HTTP プロキシがログインを要求しています。\n"
-
-#~ msgid ""
-#~ "You must log in to access \"%s\".\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "\"%s\" にアクセスするにはログインしなければなりません。\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Your password will be transmitted unencrypted."
-#~ msgstr "パスワードは暗号化されずに転送されます。"
-
-#~ msgid "Your password will be transmitted encrypted."
-#~ msgstr "パスワードは暗号化して転送されます。"
-
-#~ msgid "Authentication Required"
-#~ msgstr "認証が必要です"
-
-#~ msgid "_Username:"
-#~ msgstr "ユーザ名(_U):"
-
-#~ msgid "_Password:"
-#~ msgstr "パスワード(_P):"
-
-#~ msgid "Remember this password"
-#~ msgstr "パスワードを記憶する"
-
-#~ msgid "Download"
-#~ msgstr "ダウンロード"
