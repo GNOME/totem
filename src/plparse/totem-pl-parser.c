@@ -1370,6 +1370,7 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 /* These ones need a special treatment, mostly parser formats */
 static PlaylistTypes special_types[] = {
 	{ "audio/x-mpegurl", totem_pl_parser_add_m3u },
+	{ "audio/playlist", totem_pl_parser_add_m3u },
 	{ "audio/x-ms-asx", totem_pl_parser_add_asx },
 	{ "audio/x-scpls", totem_pl_parser_add_pls },
 	{ "application/x-smil", totem_pl_parser_add_smil },
