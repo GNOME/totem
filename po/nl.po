@@ -2,21 +2,23 @@
 # Copyright (C) 2002, 2003 Free Software Foundation, Inc.
 # Huib Kleinhout <huib@stack.nl>, 2002, 2003, 2004.
 # Tino Meinen <a.t.meinen@chello.nl>, 2004.
-#
+# Tino Meinen <a.t.meinen@chello.nl>, 2004.
+# 
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: Totem 06-09-2003 cvs\n"
+"Project-Id-Version: Totem 05-09-2004 cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-02 20:16+0200\n"
-"PO-Revision-Date: 2004-05-03 09:13+0200\n"
-"Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
-"Language-Team: Dutch <vertaling@nl.linux.org>\n"
+"POT-Creation-Date: 2004-09-05 04:19+0200\n"
+"PO-Revision-Date: 2004-09-05 11:48+0200\n"
+"Last-Translator: Huib Kleinhout <huib@stack.nl>\n"
+"Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1444
+#: data/playlist.glade.h:1 src/totem-playlist.c:1409
 msgid "Playlist"
 msgstr "Afspeellijst"
 
@@ -26,7 +28,7 @@ msgstr "_Herhalen"
 
 #: data/playlist.glade.h:3
 msgid "Shuf_fle mode"
-msgstr "Shuf_fle"
+msgstr "Wille_keurige volgorde"
 
 #: data/playlist.glade.h:4
 msgid "_Add..."
@@ -38,29 +40,28 @@ msgstr "Lokatie _kopiëren"
 
 #: data/playlist.glade.h:6
 msgid "_Save..."
-msgstr "_Opslaan..."
+msgstr "Op_slaan..."
 
 #: data/properties.glade.h:1 data/screenshot.glade.h:1 data/totem.glade.h:1
 msgid "    "
 msgstr "    "
 
-#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:186
+#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:105
 msgid "0 frames per second"
 msgstr "0 frames per seconde"
 
 #. Bitrate
-#: data/properties.glade.h:3 src/bacon-video-widget-properties.c:188
+#: data/properties.glade.h:3 src/bacon-video-widget-properties.c:107
 msgid "0 kbps"
 msgstr "0 kbps"
 
 #. 0 seconds
-#: data/properties.glade.h:4 data/totem.glade.h:2
-#: src/bacon-video-widget-properties.c:142
+#: data/properties.glade.h:4 data/totem.glade.h:2 src/video-utils.c:344
 msgid "0 seconds"
 msgstr "0 seconden"
 
 #. Dimensions
-#: data/properties.glade.h:5 src/bacon-video-widget-properties.c:181
+#: data/properties.glade.h:5 src/bacon-video-widget-properties.c:100
 msgid "0 x 0"
 msgstr "0 x 0"
 
@@ -102,14 +103,14 @@ msgstr "Beeldsnelheid:"
 
 #. Video Codec
 #. Audio Codec
-#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:183
-#: src/bacon-video-widget-properties.c:190
-#: src/bacon-video-widget-properties.c:259
-#: src/bacon-video-widget-properties.c:291
+#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:102
+#: src/bacon-video-widget-properties.c:109
+#: src/bacon-video-widget-properties.c:180
+#: src/bacon-video-widget-properties.c:216
 msgid "N/A"
 msgstr "Niet beschikbaar"
 
-#: data/properties.glade.h:16 src/totem.c:2030
+#: data/properties.glade.h:16 src/totem.c:2067
 msgid "Properties"
 msgstr "Eigenschappen"
 
@@ -120,12 +121,12 @@ msgstr "Titel:"
 #. Title
 #. Artist
 #. Year
-#: data/properties.glade.h:18 src/bacon-video-widget-properties.c:173
-#: src/bacon-video-widget-properties.c:175
-#: src/bacon-video-widget-properties.c:177
-#: src/bacon-video-widget-properties.c:208
-#: src/bacon-video-widget-properties.c:215
-#: src/bacon-video-widget-properties.c:222
+#: data/properties.glade.h:18 src/bacon-video-widget-properties.c:92
+#: src/bacon-video-widget-properties.c:94
+#: src/bacon-video-widget-properties.c:96
+#: src/bacon-video-widget-properties.c:128
+#: src/bacon-video-widget-properties.c:135
+#: src/bacon-video-widget-properties.c:142
 msgid "Unknown"
 msgstr "Onbekend"
 
@@ -141,7 +142,7 @@ msgstr "*"
 msgid "<b>Preview</b>"
 msgstr "<b>Voorbeeld</b>"
 
-#: data/screenshot.glade.h:4 src/totem-screenshot.c:308
+#: data/screenshot.glade.h:4 src/totem-screenshot.c:268
 msgid "Save Screenshot"
 msgstr "Schermafdruk opslaan"
 
@@ -157,13 +158,13 @@ msgstr "Schermafdruk op _bureaublad opslaan"
 msgid "Save screenshot to _file:"
 msgstr "Schermafdruk in bestand _opslaan:"
 
-#: data/totem.desktop.in.h:1
+#: data/totem.desktop.in.in.h:1
 msgid "Play movies and songs"
 msgstr "Films en liedjes afspelen"
 
 #. Title
-#: data/totem.desktop.in.h:2 data/totem.glade.h:101 src/totem.c:694
-#: src/totem.c:3637
+#: data/totem.desktop.in.in.h:2 data/totem.glade.h:101 src/totem.c:710
+#: src/totem.c:3699
 msgid "Totem Movie Player"
 msgstr "Totem filmafspeler"
 
@@ -288,7 +289,7 @@ msgstr "Altijd voorop"
 msgid "Audio"
 msgstr "Audio"
 
-#: data/totem.glade.h:33 src/totem.c:2879 src/totem.c:2900
+#: data/totem.glade.h:33 src/totem.c:2930 src/totem.c:2951
 msgid "Auto"
 msgstr "Automatisch"
 
@@ -365,7 +366,7 @@ msgstr "Talen"
 msgid "Large"
 msgstr "Groot"
 
-#: data/totem.glade.h:52 src/totem.c:81
+#: data/totem.glade.h:52 src/totem.c:83
 msgid "Next"
 msgstr "Volgende"
 
@@ -403,11 +404,11 @@ msgstr "_Audio-cd afspelen"
 
 #: data/totem.glade.h:61
 msgid "Play _DVD"
-msgstr "_Dvd afspelen"
+msgstr "_dvd afspelen"
 
 #: data/totem.glade.h:62
 msgid "Play _VCD"
-msgstr "_Vcd afspelen"
+msgstr "_vcd afspelen"
 
 #: data/totem.glade.h:63
 msgid "Play a Video CD"
@@ -425,11 +426,11 @@ msgstr "Een audio-cd afspelen"
 msgid "Play or pause the movie"
 msgstr "De film afspelen of pauzeren"
 
-#: data/totem.glade.h:67 src/totem.c:80
+#: data/totem.glade.h:67 src/totem.c:82
 msgid "Play/Pause"
 msgstr "Afspelen/pauzeren"
 
-#: data/totem.glade.h:68 src/totem.c:82
+#: data/totem.glade.h:68 src/totem.c:84
 msgid "Previous"
 msgstr "Vorige"
 
@@ -455,7 +456,7 @@ msgstr "Herhalen instellen"
 
 #: data/totem.glade.h:74
 msgid "Set the shuffle mode"
-msgstr "Shuffle instellen"
+msgstr "Willekeurige volgorde instellen"
 
 #: data/totem.glade.h:75
 msgid "Sets 16:9 (Anamorphic) aspect ratio"
@@ -499,7 +500,7 @@ msgstr "Afspeellijst weergeven/verbergen"
 
 #: data/totem.glade.h:85
 msgid "Shuff_le Mode"
-msgstr "Shu_ffle"
+msgstr "_Willekeurige volgorde"
 
 #: data/totem.glade.h:86
 msgid "Skip _Backwards"
@@ -579,11 +580,11 @@ msgstr "_Visualisatiegrootte:"
 
 #: data/totem.glade.h:106
 msgid "Volume _Down"
-msgstr "M_inder volume"
+msgstr "Geluid _harder"
 
 #: data/totem.glade.h:107
 msgid "Volume _Up"
-msgstr "M_eer volume"
+msgstr "Geluid _zachter"
 
 #: data/totem.glade.h:108
 msgid "Volume down"
@@ -786,11 +787,11 @@ msgstr ""
 
 #: data/totem.schemas.in.h:14
 msgid "Shuffle mode"
-msgstr "Shuffle-modus"
+msgstr "Modus voor willekeurige volgorde"
 
 #: data/totem.schemas.in.h:15
 msgid "Shuffle mode."
-msgstr "Shuffle-modus."
+msgstr "Willeurige volgorde-modus."
 
 #: data/totem.schemas.in.h:16
 msgid "The brightness of the video"
@@ -894,7 +895,7 @@ msgstr "Live webcambeelden bekijken en afbeeldingen uploaden"
 msgid "Save File"
 msgstr "Bestand opslaan"
 
-#: data/vanity.glade.h:2 src/vanity.c:278
+#: data/vanity.glade.h:2 src/vanity.c:262
 msgid "Vanity"
 msgstr "Vanity"
 
@@ -918,77 +919,30 @@ msgstr "Zoomen 2:1"
 msgid "_Picture"
 msgstr "_Afbeelding"
 
-#: src/bacon-cd-selection.c:257
+#: src/bacon-cd-selection.c:187 src/bacon-v4l-selection.c:182
 msgid "Unnamed CDROM"
 msgstr "Naamloze cd-rom"
-
-#: src/bacon-cd-selection.c:302 src/bacon-v4l-selection.c:299
-msgid "Select the drive"
-msgstr "Selecteer de schijf"
-
-#: src/bacon-v4l-selection.c:254
-msgid "Unnamed Video Device"
-msgstr "Naamloos videoapparaat"
 
 #: src/bacon-video-widget-gst.c:62
 msgid "Totem Video Window"
 msgstr "Totem videovenster"
 
-#: src/bacon-video-widget-properties.c:122
-#, c-format
-msgid "%d hour"
-msgid_plural "%d hours"
-msgstr[0] "%d uur"
-msgstr[1] "%d uren"
-
-#: src/bacon-video-widget-properties.c:124
-#, c-format
-msgid "%d minute"
-msgid_plural "%d minutes"
-msgstr[0] "%d minuut"
-msgstr[1] "%d minuten"
-
-#: src/bacon-video-widget-properties.c:127
-#, c-format
-msgid "%d second"
-msgid_plural "%d seconds"
-msgstr[0] "%d seconde"
-msgstr[1] "%d seconden"
-
-#. hour:minutes:seconds
-#: src/bacon-video-widget-properties.c:133
-#, c-format
-msgid "%s %s %s"
-msgstr "%s %s %s"
-
-#. minutes:seconds
-#: src/bacon-video-widget-properties.c:136
-#, c-format
-msgid "%s %s"
-msgstr "%s %s"
-
-#. seconds
-#: src/bacon-video-widget-properties.c:139
-#, c-format
-msgid "%s"
-msgstr "%s"
-
 #. Duration
-#: src/bacon-video-widget-properties.c:179
+#: src/bacon-video-widget-properties.c:98
 msgid "0 second"
 msgstr "0 seconden"
 
-#: src/bacon-video-widget-properties.c:264
+#: src/bacon-video-widget-properties.c:185
 #, c-format
 msgid "%d frames per second"
 msgstr "%d frames per seconde"
 
-#: src/bacon-video-widget-properties.c:282
+#: src/bacon-video-widget-properties.c:205
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/bacon-video-widget-xine.c:655
+#: src/bacon-video-widget-xine.c:665
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -997,7 +951,7 @@ msgstr ""
 "De '%s' audiodriver kan niet geladen worden\n"
 "Controleer of het apparaat niet bezet is."
 
-#: src/bacon-video-widget-xine.c:1130 src/bacon-video-widget-xine.c:1561
+#: src/bacon-video-widget-xine.c:1128 src/bacon-video-widget-xine.c:1595
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -1005,42 +959,40 @@ msgstr ""
 "Er is geen videoweergave beschikbaar. Controleer of het programma juist is "
 "geïnstalleerd."
 
-#: src/bacon-video-widget-xine.c:1237
+#: src/bacon-video-widget-xine.c:1243
 msgid "The server you are trying to connect to is not known."
 msgstr "De server waarmee u verbinding probeert te maken is niet bekend."
 
-#: src/bacon-video-widget-xine.c:1240
+#: src/bacon-video-widget-xine.c:1247
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "De apparaatnaam (%s) die u ingegeven hebt lijkt ongeldig te zijn."
 
-#: src/bacon-video-widget-xine.c:1243
+#: src/bacon-video-widget-xine.c:1251
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "server (%s) waarmee u verbinding probeert te maken is onbereikbaar."
 
-#: src/bacon-video-widget-xine.c:1246
+#: src/bacon-video-widget-xine.c:1255
 msgid "The connection to this server was refused."
 msgstr "De verbinding met de server is geweigerd."
 
-#: src/bacon-video-widget-xine.c:1249
-#, c-format
-msgid "The specified movie '%s' could not be found."
-msgstr "De ingegeven film '%s' kan niet gevonden worden."
+#: src/bacon-video-widget-xine.c:1259
+msgid "The specified movie could not be found."
+msgstr "De ingegeven film kan niet gevonden worden."
 
-#: src/bacon-video-widget-xine.c:1252
-#, c-format
-msgid "The movie '%s' could not be read."
-msgstr "De film '%s' kan niet gelezen worden."
+#: src/bacon-video-widget-xine.c:1263
+msgid "The movie could not be read."
+msgstr "De film kan niet gelezen worden."
 
-#: src/bacon-video-widget-xine.c:1255
+#: src/bacon-video-widget-xine.c:1267
 #, c-format
 msgid "A problem occured while loading a library or a decoder (%s)."
 msgstr ""
 "Er is een probleem opgetreden tijdens het laden van een bibliotheek of een "
 "decoder (%s)."
 
-#: src/bacon-video-widget-xine.c:1259
+#: src/bacon-video-widget-xine.c:1273
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -1048,47 +1000,53 @@ msgstr ""
 "De bron lijkt versleuteld te zijn en kan niet gelezen worden. Probeert u een "
 "versleutelde dvd af te spelen zonder libdvdcss?"
 
-#: src/bacon-video-widget-xine.c:1261
+#: src/bacon-video-widget-xine.c:1276
 msgid "This file is encrypted and cannot be played back."
 msgstr "Deze film is versleuteld en kan niet worden afgespeeld."
 
-#: src/bacon-video-widget-xine.c:1264
+#: src/bacon-video-widget-xine.c:1281
 msgid "For security reasons, this movie can not be played back."
 msgstr "Wegens beveiligingsredenen kan deze film niet worden afgespeeld."
 
-#: src/bacon-video-widget-xine.c:1268
+#: src/bacon-video-widget-xine.c:1286
 msgid "The audio device is busy. Is another application using it?"
-msgstr "Het audioapparaat is bezet. Wordt het door een andere toepassing gebruikt?"
+msgstr ""
+"Het audioapparaat is bezet. Wordt het door een andere toepassing gebruikt?"
 
-#: src/bacon-video-widget-xine.c:1272
+#: src/bacon-video-widget-xine.c:1291
 msgid "You are not allowed to open this file."
 msgstr "U heeft geen toestemming om dit bestand te openen."
 
-#: src/bacon-video-widget-xine.c:1274
+#: src/bacon-video-widget-xine.c:1293
 msgid "The server refused access to this file or stream."
 msgstr "De server heeft toegang tot dit bestand of deze stroom geweigerd."
 
-#: src/bacon-video-widget-xine.c:1400
+#: src/bacon-video-widget-xine.c:1422
 msgid "There is no plugin to handle this movie."
 msgstr "Er is geen plugin waarmee deze film afgespeeld kan worden."
 
-#: src/bacon-video-widget-xine.c:1404
+#: src/bacon-video-widget-xine.c:1426
 msgid "This movie is broken and can not be played further."
 msgstr "Deze film is beschadigd en kan niet verder worden afgespeeld."
 
-#: src/bacon-video-widget-xine.c:1408
+#: src/bacon-video-widget-xine.c:1430
 msgid "This location is not a valid one."
 msgstr "Deze lokatie is niet geldig."
 
-#: src/bacon-video-widget-xine.c:1412
+#: src/bacon-video-widget-xine.c:1434
 msgid "This movie could not be opened."
 msgstr "Deze film kon niet worden geopend."
 
-#: src/bacon-video-widget-xine.c:1415
+#: src/bacon-video-widget-xine.c:1438
 msgid "Generic Error."
 msgstr "Algemene fout."
 
-#: src/bacon-video-widget-xine.c:1859
+#: src/bacon-video-widget-xine.c:1862
+msgid "This movie is a still image. You can open it with an image viewer."
+msgstr "Deze film bestaat uit een niet-bewegende afbeelding. U kunt deze openen "
+"met een afbeeldingsweergave-programma."
+
+#: src/bacon-video-widget-xine.c:1893
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1097,48 +1055,79 @@ msgstr ""
 "Videocodec '%s' kan niet verwerkt worden. U zult wellicht extra plugins "
 "moeten installeren om bepaalde type films af te kunnen spelen."
 
-#: src/bacon-video-widget-xine.c:1878
+#: src/bacon-video-widget-xine.c:1912
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr ""
 "Dit is een bestand met alleen geluid en er is geen geluidsuitvoer "
 "beschikbaar."
 
 # de film wordt niet gedraaid?
-#: src/bacon-video-widget-xine.c:3341
+#: src/bacon-video-widget-xine.c:3379
 msgid "Movie is not playing."
 msgstr "De film wordt niet afgespeeld."
 
-#: src/bacon-video-widget-xine.c:3349
+#: src/bacon-video-widget-xine.c:3388
 msgid "No video to capture."
 msgstr "Geen video die opgeslagen kan worden."
 
 # videocodec kan niet worden afgespeeld?
-#: src/bacon-video-widget-xine.c:3356
+#: src/bacon-video-widget-xine.c:3396
 msgid "Video codec is not handled."
 msgstr "Videocodec kan niet worden verwerkt."
 
-#: src/cd-drive.c:573
+#: src/cd-drive.c:696
 #, c-format
 msgid "Unnamed SCSI CD-ROM (%s)"
 msgstr "Naamloze SCSI cd-rom (%s)"
 
-#: src/cd-drive.c:1151
+#: src/cd-drive.c:1256
 msgid "File image"
 msgstr "Bestandsafbeelding"
 
-#: src/totem-playlist.c:339
+#. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+#: src/totem-mozilla-viewer.c:59 src/totem.c:380 src/totem.c:408
+#: src/totem.c:832 src/totem.c:955
+#, c-format
+msgid "Totem could not play '%s'."
+msgstr "Totem kan '%s' niet afspelen."
+
+#: src/totem-mozilla-viewer.c:91 src/totem-mozilla-viewer.c:98
+msgid "Couldn't load the main interface (mozilla-viewer.glade)."
+msgstr "Het hoofdinterface kan niet worden geladen (mozilla-viewer.glade)."
+
+#: src/totem-mozilla-viewer.c:91 src/totem-mozilla-viewer.c:98
+msgid "Make sure that the Totem plugin is properly installed."
+msgstr "Controleer of de Totem-plugin juist is geïnstalleerd."
+
+#: src/totem-mozilla-viewer.c:109
+msgid "The Totem plugin could not startup."
+msgstr "De Totem-plugin kan niet worden opgestart."
+
+#: src/totem-mozilla-viewer.c:109 src/totem.c:3398
+msgid "No reason."
+msgstr "Geen reden."
+
+#: src/totem-mozilla-viewer.c:141 src/totem.c:3704
+msgid "Could not initialise the thread-safe libraries."
+msgstr "De thread-veilige bibliotheken kunnen niet worden geinitialiseerd."
+
+#: src/totem-mozilla-viewer.c:141
+msgid "Verify your system installation. The Totem plugin will now exit."
+msgstr "Verifieer uw systeeminstallatie. De Totem-plugin zal nu afsluiten."
+
+#: src/totem-playlist.c:300
 msgid "Could not save the playlist"
 msgstr "De afspeellijst kan niet worden opgeslagen"
 
-#: src/totem-playlist.c:613 src/totem.c:1560
-msgid "Select files"
-msgstr "Kies de bestanden"
+#: src/totem-playlist.c:574
+msgid "Select Movies or Playlists"
+msgstr "Films of afspeellijsten kiezen"
 
-#: src/totem-playlist.c:794
+#: src/totem-playlist.c:755
 msgid "Save playlist"
 msgstr "Afspeellijst opslaan"
 
-#: src/totem-playlist.c:839
+#: src/totem-playlist.c:803
 #, c-format
 msgid ""
 "A file named '%s' already exists.\n"
@@ -1147,19 +1136,28 @@ msgstr ""
 "Een bestand genaamd '%s'  bestaat al.\n"
 "Weet u zeker dat u het wilt overschrijven?"
 
-#: src/totem-playlist.c:1024
+#: src/totem-playlist.c:988
 msgid "Filename"
 msgstr "Bestandsnaam"
 
-#: src/totem-pl-parser.c:225
+#: src/totem-playlist.c:1539
+msgid "Playlist error"
+msgstr "Afspeellijst fout"
+
+#: src/totem-playlist.c:1539
+#, c-format
+msgid "The playlist '%s' could not be parsed, it might be damaged."
+msgstr "De film '%s' kan niet gelezen worden, mogelijk is deze beschadigd."
+
+#: src/totem-pl-parser.c:189
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "De parser kan niet worden geschreven: %s"
 
-#: src/totem-pl-parser.c:289
+#: src/totem-pl-parser.c:253
 #, c-format
-msgid "Couldn't open parser: %s"
-msgstr "De parses kan niet worden geopened: %s"
+msgid "Couldn't open file '%s': %s"
+msgstr "Bestand '%s':·%s kan niet geopend worden"
 
 #: src/totem-preferences.c:82
 msgid ""
@@ -1202,133 +1200,136 @@ msgstr "Huidig weergegeven URI"
 msgid "Video and Audio information properties page"
 msgstr "Video en audio informatie eigenschappen pagina"
 
-#: src/totem-screenshot.c:186 src/totem-screenshot.c:197
+#: src/totem-screenshot.c:146 src/totem-screenshot.c:157
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Schermafdruk%d.png"
 
-#: src/totem-screenshot.c:239
+#: src/totem-screenshot.c:199
 #, c-format
 msgid "File '%s' already exists."
 msgstr "Het bestand '%s' bestaat al."
 
-#: src/totem-screenshot.c:241
+#: src/totem-screenshot.c:201
 msgid "The screenshot was not saved"
 msgstr "De schermafdruk is niet opgeslagen."
 
-#: src/totem-screenshot.c:252
+#: src/totem-screenshot.c:212
 msgid "There was an error saving the screenshot."
 msgstr "Er is een fout opgetreden tijdens het opslaan van de schermafdruk."
 
-#: src/totem-statusbar.c:154
+#: src/totem-statusbar.c:91
 msgid "Shadow type"
 msgstr "Schaduw type"
 
-#: src/totem-statusbar.c:155
+#: src/totem-statusbar.c:92
 msgid "Style of bevel around the statusbar text"
 msgstr "Type schuine rand rondom de tekst in de statusbalk"
 
-#: src/totem-statusbar.c:187 src/totem.c:307 src/totem.c:676
+#: src/totem-statusbar.c:124 src/totem.c:324 src/totem.c:692
 msgid "Stopped"
 msgstr "Gestopt"
 
-#: src/totem-statusbar.c:196
+#: src/totem-statusbar.c:133
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: src/totem-statusbar.c:224
+#: src/totem-statusbar.c:161
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (Streaming)"
 
-#: src/totem-statusbar.c:232
-msgid "Seek to"
-msgstr "Verplaatsen naar"
+#. Elapsed / Total Length
+#: src/totem-statusbar.c:168 src/totem-time-label.c:56
+#, c-format
+msgid "%s / %s"
+msgstr "%s / %s"
 
-#: src/totem-statusbar.c:294
+#. Seeking to Time / Total Length
+#: src/totem-statusbar.c:171
+#, c-format
+msgid "Seek to %s / %s"
+msgstr "Verplaatsen naar %s·/·%s"
+
+#: src/totem-statusbar.c:233
 msgid "Buffering"
 msgstr "Bufferen"
 
 #. eg: 75 %
-#: src/totem-statusbar.c:297
+#: src/totem-statusbar.c:236
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
 
-#: src/totem.c:78
+#: src/totem.c:80
 msgid "Backend options"
 msgstr "Opties functionaliteitsmodule"
 
-#: src/totem.c:79
+#: src/totem.c:81
 msgid "Enable debug"
 msgstr "Debuggen aanzetten"
 
-#: src/totem.c:83
+#: src/totem.c:85
 msgid "Seek Forwards"
 msgstr "V_ooruitspoelen"
 
-#: src/totem.c:84
+#: src/totem.c:86
 msgid "Seek Backwards"
 msgstr "Ter_ugspoelen"
 
-#: src/totem.c:85
+#: src/totem.c:87
 msgid "Volume Up"
 msgstr "Meer volume"
 
-#: src/totem.c:86
+#: src/totem.c:88
 msgid "Volume Down"
 msgstr "Minder volume"
 
-#: src/totem.c:87
+#: src/totem.c:89
 msgid "Toggle Fullscreen"
 msgstr "Volledig scherm aan/uit"
 
-#: src/totem.c:88
+#: src/totem.c:90
 msgid "Quit"
 msgstr "Afsluiten"
 
-#: src/totem.c:89
+#: src/totem.c:91
 msgid "Enqueue"
 msgstr "In lijst plaatsen"
 
-#: src/totem.c:90
+#: src/totem.c:92
 msgid "Replace"
 msgstr "Vervangen"
 
-#: src/totem.c:297
+#: src/totem.c:314
 msgid "Playing"
 msgstr "Aan het afspelen"
 
-#: src/totem.c:302
+#: src/totem.c:319
 msgid "Paused"
 msgstr "Gepauzeerd"
 
-#: src/totem.c:342
+#: src/totem.c:359
 msgid "Totem could not eject the optical media."
 msgstr "Totem kan de optische media niet uitwerpen."
 
-#: src/totem.c:342
+#: src/totem.c:359
 msgid "No reason given."
 msgstr "Geen reden gegeven."
 
-#: src/totem.c:363 src/totem.c:391 src/totem.c:816 src/totem.c:925
-#, c-format
-msgid "Totem could not play '%s'."
-msgstr "Totem kan '%s' niet afspelen."
-
-#: src/totem.c:411
+#: src/totem.c:428
 msgid "DVD"
 msgstr "dvd"
 
-#: src/totem.c:412
+#: src/totem.c:429
 msgid "Video CD"
 msgstr "video-cd"
 
-#: src/totem.c:413
+#: src/totem.c:430
 msgid "Audio CD"
 msgstr "audio-cd"
 
-#: src/totem.c:424
+#: src/totem.c:441
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1337,7 +1338,7 @@ msgstr ""
 "Totem kan dit type media (%s) niet afspelen omdat u de geschikte plugin niet "
 "hebt."
 
-#: src/totem.c:425
+#: src/totem.c:442
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1345,7 +1346,7 @@ msgstr ""
 "Installeer de benodigde plugins en start Totem opnieuw op om deze media af "
 "te kunnen spelen."
 
-#: src/totem.c:433
+#: src/totem.c:450
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1354,7 +1355,7 @@ msgstr ""
 "Totem kan dit type media (%s) niet afspelen ondanks dat de juiste plugin "
 "beschikbaar is."
 
-#: src/totem.c:434
+#: src/totem.c:451
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1363,121 +1364,117 @@ msgstr ""
 "juist is geconfigureerd."
 
 #. Title
-#: src/totem.c:669
+#: src/totem.c:685
 #, c-format
 msgid "%s - Totem Movie Player"
 msgstr "%s - Totem filmafspeler"
 
-#: src/totem.c:683 src/totem.c:3442
+#: src/totem.c:699 src/totem.c:3493
 msgid "No file"
 msgstr "Geen bestand"
 
-#: src/totem.c:720 src/totem.c:1948
+#: src/totem.c:736 src/totem.c:1985
 msgid "Totem"
 msgstr "Totem"
 
-#: src/totem.c:1228
+#: src/totem.c:1263 src/totem.c:1265
 msgid "An error occured"
 msgstr "Er is een fout opgetreden"
 
-#: src/totem.c:1637 src/totem.c:1645
+#: src/totem.c:1603
+msgid "Select files"
+msgstr "Kies de bestanden"
+
+#: src/totem.c:1680 src/totem.c:1688
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "Het \"Lokatie openen...\"-interface kan niet worden geladen."
 
-#: src/totem.c:1637 src/totem.c:1645 src/totem.c:3677 src/totem.c:3702
-#: src/totem.c:3727
+#: src/totem.c:1680 src/totem.c:1688 src/totem.c:3739 src/totem.c:3764
+#: src/totem.c:3789
 msgid "Make sure that Totem is properly installed."
 msgstr "Controleer of Totem juist is geïnstalleerd."
 
-#: src/totem.c:1901
+#: src/totem.c:1938
 msgid "Totem could not display the help contents."
 msgstr "Totem kan de hulpinhoud niet weergeven."
 
-#: src/totem.c:1919 src/vanity.c:251
+#: src/totem.c:1956 src/vanity.c:235
 msgid "translator_credits"
 msgstr "Huib Kleinhout <huib@stack.nl>"
 
-#: src/totem.c:1945
+#: src/totem.c:1982
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Filmafspeler met behulp van %s"
 
-#: src/totem.c:1985 src/totem.c:1993 src/vanity.c:316 src/vanity.c:324
+#: src/totem.c:2022 src/totem.c:2030 src/vanity.c:300 src/vanity.c:308
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem kan van deze film geen schermafdruk maken."
 
-#: src/totem.c:1993
+#: src/totem.c:2030
 msgid "Please file a bug, this isn't supposed to happen."
 msgstr "Dit hoort niet te gebeuren, meld u deze fout alstublieft."
 
-#: src/totem.c:2020
+#: src/totem.c:2057
 msgid "Totem couldn't show the movie properties window."
 msgstr "Het venster met filmeigenschappen kan niet worden weergegeven."
 
-#: src/totem.c:2020
+#: src/totem.c:2057
 msgid "Make sure that Totem is correctly installed."
 msgstr "Controleer of Totem juist is geïnstalleerd."
 
-#: src/totem.c:2105
+#: src/totem.c:2143
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem kan niet zoeken in '%s'."
 
-#: src/totem.c:2875 src/totem.c:2897
+#: src/totem.c:2926 src/totem.c:2948
 msgid "None"
 msgstr "Geen"
 
-#: src/totem.c:3347
+#: src/totem.c:3398
 msgid "Totem could not startup."
 msgstr "Totem kan niet worden opgestart."
 
-#: src/totem.c:3347
-msgid "No reason."
-msgstr "Geen reden."
-
-#: src/totem.c:3547
+#: src/totem.c:3609
 #, c-format
 msgid "Option '%s' is unknown and was ignored\n"
 msgstr "Optie '%s' is onbekend en werd genegeerd\n"
 
-#: src/totem.c:3642
-msgid "Could not initialise the thread-safe libraries."
-msgstr "De thread-veilige bibliotheken kunnen niet worden geinitialiseerd."
-
-#: src/totem.c:3642
+#: src/totem.c:3704
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verifieer uw systeeminstallatie. Totem zal nu afsluiten."
 
-#: src/totem.c:3665
+#: src/totem.c:3727
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem kan het configuratiesysteem niet initialiseren."
 
-#: src/totem.c:3665
+#: src/totem.c:3727
 msgid "Make sure that GNOME is properly installed."
 msgstr "Controleer of GNOME juist is geïnstalleerd."
 
-#: src/totem.c:3677 src/totem.c:3702
+#: src/totem.c:3739 src/totem.c:3764
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "Het hoofdinterface kan niet worden geladen (totem.glade)."
 
-#: src/totem.c:3727
+#: src/totem.c:3789
 msgid "Couldn't load the interface for the playlist."
 msgstr "De interface voor de afspeellijst kan niet worden geladen."
 
-#: src/vanity.c:79
+#: src/vanity.c:63
 msgid "Debug mode on"
 msgstr "Debug modus aan"
 
-#: src/vanity.c:275
+#: src/vanity.c:259
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "Webcam hulpmiddel met behulp van %s"
 
-#: src/vanity.c:324
+#: src/vanity.c:308
 msgid "Please file a bug, this isn't supposed to happen"
 msgstr "Dit hoort niet te gebeuren, meld a.u.b deze fout."
 
-#: src/vanity.c:567
+#: src/vanity.c:551
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1486,11 +1483,11 @@ msgstr ""
 "Vanity kan niet worden opgestart:\n"
 "%s"
 
-#: src/vanity.c:568
+#: src/vanity.c:552
 msgid "No reason"
 msgstr "Geen reden"
 
-#: src/vanity.c:606
+#: src/vanity.c:590
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1499,7 +1496,7 @@ msgstr ""
 "Vanity kan geen contact met de webcam maken.\n"
 "Reden: %s."
 
-#: src/vanity.c:622
+#: src/vanity.c:606
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1508,11 +1505,11 @@ msgstr ""
 "Vanity kan geen video van de webcam afspelen.\n"
 "Reden: %s."
 
-#: src/vanity.c:658
+#: src/vanity.c:642
 msgid "Vanity Webcam Utility"
 msgstr "Vanity Webcam hulpmiddel"
 
-#: src/vanity.c:663
+#: src/vanity.c:647
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1520,7 +1517,7 @@ msgstr ""
 "De threads-veilige bibliotheken kunnen niet worden geinitialiseerd.\n"
 "Verifieer uw systeeminstallatie. Vanity zal nu afsluiten."
 
-#: src/vanity.c:688
+#: src/vanity.c:672
 #, c-format
 msgid ""
 "Vanity couln't initialise the \n"
@@ -1531,13 +1528,58 @@ msgstr ""
 "niet initialiseren:\n"
 "%s"
 
-#: src/vanity.c:705 src/vanity.c:720
+#: src/vanity.c:689 src/vanity.c:704
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
 msgstr ""
 "Het hoofdinterface kan niet worden geladen (vanity.glade)\n"
 "Controleer of Vanity juist is geïnstalleerd."
+
+#: src/video-utils.c:324
+#, c-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d uur"
+msgstr[1] "%d uren"
+
+#: src/video-utils.c:326
+#, c-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d minuut"
+msgstr[1] "%d minuten"
+
+#: src/video-utils.c:329
+#, c-format
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "%d seconde"
+msgstr[1] "%d seconden"
+
+#. hour:minutes:seconds
+#: src/video-utils.c:335
+#, c-format
+msgid "%s %s %s"
+msgstr "%s %s %s"
+
+#. minutes:seconds
+#: src/video-utils.c:338
+#, c-format
+msgid "%s %s"
+msgstr "%s %s"
+
+#. seconds
+#: src/video-utils.c:341
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#~ msgid "Select the drive"
+#~ msgstr "Selecteer de schijf"
+
+#~ msgid "Unnamed Video Device"
+#~ msgstr "Naamloos videoapparaat"
 
 #~ msgid "_TV-out mode"
 #~ msgstr "_tv-uit modus"
