@@ -248,6 +248,8 @@ totem_action_error_try_download (char *msg, Totem *totem)
 	if (res != GTK_RESPONSE_ACCEPT)
 		return;
 
+	//FIXME we need a return value for that so we don't try to open
+	//a movie twice for no reasons
 	totem_download_from_fourcc (GTK_WINDOW (totem->win),
 			video_fcc, audio_fcc);
 }
