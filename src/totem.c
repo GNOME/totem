@@ -110,10 +110,15 @@ totem_action_error (char *msg, GtkWindow *parent)
 				"%s", msg);
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
 			GTK_RESPONSE_OK);
+	g_signal_connect (G_OBJECT (error_dialog), "destroy", G_CALLBACK
+			(gtk_widget_destroy), error_dialog);
+	g_signal_connect (G_OBJECT (error_dialog), "response", G_CALLBACK
+			(gtk_widget_destroy), error_dialog);
+	g_object_add_weak_pointer (G_OBJECT (error_dialog),
+			(void**)&(error_dialog));
+	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
+
 	gtk_widget_show (error_dialog);
-	gtk_dialog_run (GTK_DIALOG (error_dialog));
-	gtk_widget_destroy (error_dialog);
-	error_dialog = NULL;
 }
 
 void

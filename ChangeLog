@@ -1,5 +1,11 @@
 2003-02-22  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (totem_action_error): fix deadlock when a file added
+	via the remote interface triggers an error, gtk_dialog_run is evil
+	in multi-threaded apps
+
+2003-02-22  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-playlist.c: (gtk_playlist_add_wmv): will need to see how to
 	handle this properly
 	* src/totem.c: (totem_action_set_mrl): small fixes
