@@ -460,7 +460,7 @@ load_video_out_driver (GtkXine *gtx)
 	res_v =
 	    (DisplayHeight (gtx->priv->display, gtx->priv->screen) * 1000 /
 	     DisplayHeightMM (gtx->priv->display, gtx->priv->screen));
-	gtx->priv->display_ratio = res_h / res_v;
+	gtx->priv->display_ratio = res_v / res_h;
 
 	if (fabs (gtx->priv->display_ratio - 1.0) < 0.01) {
 		gtx->priv->display_ratio = 1.0;
@@ -614,9 +614,9 @@ gtk_xine_dvd_event (GtkXine *gtx, GtkXineDVDEvent type)
 {
         xine_event_t event;
 
-	g_return_val_if_fail (gtx != NULL, 0);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
-	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
+	g_return_if_fail (gtx != NULL);
+	g_return_if_fail (GTK_IS_XINE (gtx));
+	g_return_if_fail (gtx->priv->xine != NULL);
 
         switch (type)
         {
