@@ -1167,15 +1167,15 @@ bacon_video_widget_information (GstPlay * play,
 				GstObject * object,
 				GParamSpec * param, BaconVideoWidget * bvw)
 {
-  g_return_if_fail (bvw != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  g_return_if_fail (GST_IS_PLAY (bvw->priv->play));
-  g_return_if_fail (object != NULL);
-
   GValue value = { 0, };
   GstCaps *metadata;
   GstProps *props;
   GList *p;
+
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_PLAY (bvw->priv->play));
+  g_return_if_fail (object != NULL);
 
   if (strcmp (param->name, "metadata") == 0)
     {
