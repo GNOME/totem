@@ -2143,7 +2143,7 @@ bacon_video_widget_set_show_visuals (BaconVideoWidget * bvw,
 
   bvw->priv->show_vfx = show_visuals;
   gconf_client_set_bool (bvw->priv->gc,
-      GCONF_PREFIX"/enable_visualization", TRUE, NULL);
+      GCONF_PREFIX"/show_vfx", TRUE, NULL);
 
   setup_vis (bvw);
 
@@ -2235,7 +2235,7 @@ bacon_video_widget_set_visuals (BaconVideoWidget * bvw, const char *name)
 		    "fixate", G_CALLBACK (fixate_visualization), bvw);
 
   gconf_client_set_string (bvw->priv->gc,
-      GCONF_PREFIX"/visualization_element", name, NULL);
+      GCONF_PREFIX"/visual", name, NULL);
 
   setup_vis (bvw);
   if (old_vis) {
@@ -2257,7 +2257,7 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget * bvw,
     return;
   bvw->priv->visq = quality;
   gconf_client_set_int (bvw->priv->gc,
-      GCONF_PREFIX"/visualization_quality", quality, NULL);
+      GCONF_PREFIX"/visual_quality", quality, NULL);
 
   if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED) {
     //gst_pad_renegotiate (gst_element_get_pad (bvw->priv->vis_element, "src"));
@@ -3152,18 +3152,18 @@ bacon_video_widget_new (int width, int height,
 
   /* visualization */
   confvalue = gconf_client_get_without_default (bvw->priv->gc,
-      GCONF_PREFIX"/enable_visualization", NULL);
+      GCONF_PREFIX"/show_vfx", NULL);
   if (confvalue != NULL) {
     bvw->priv->show_vfx = gconf_value_get_bool (confvalue);
   }
   confvalue = gconf_client_get_without_default (bvw->priv->gc,
-      GCONF_PREFIX"/visualization_quality", NULL);
+      GCONF_PREFIX"/visual_quality", NULL);
   if (confvalue != NULL) {
     bvw->priv->visq = gconf_value_get_int (confvalue);
   }
 #if 0
   confvalue = gconf_client_get_without_default (bvw->priv->gc,
-      GCONF_PREFIX"/visualization_element", NULL);
+      GCONF_PREFIX"/visual", NULL);
   if (confvalue != NULL) {
     bvw->priv->vis_element = 
         gst_element_factory_make (gconf_value_get_string (confvalue), NULL);
