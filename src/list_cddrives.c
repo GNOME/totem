@@ -13,10 +13,11 @@ list_cdroms (void)
 	for (l = cdroms; l != NULL; l = l->next)
 	{
 		cd = l->data;
-		g_print ("name: %s device: %s type: %d\n",
-				cd->name, cd->device, cd->type);
-		g_print ("CD-Recorder/SCSI devices only: max_speed: %d"
-				" id: %s\n", cd->max_speed, cd->id);
+		g_print ("name: %s device: %s type: %d max_speed_read: %d\n",
+				cd->name, cd->device, cd->type,
+				cd->max_speed_read);
+		g_print ("CD-Recorder/SCSI devices only: max_speed_write: %d"
+				" id: %s\n", cd->max_speed_write, cd->id);
 	}
 }
 
