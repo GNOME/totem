@@ -84,7 +84,7 @@ dnl Give error and exit if we don't have gstreamer
 	AC_MSG_RESULT(GStreamer)
 fi
 
-AM_CONDITIONAL(TOTEM_GST, test x$ENABLE_GST = "xyes")
+AM_CONDITIONAL(TOTEM_GST, test x$HAVE_GSTREAMER = "xyes")
 
 AC_ARG_ENABLE(vanity,
 	AC_HELP_STRING([--enable-vanity],[do not compile and install vanity]),
@@ -335,7 +335,7 @@ help/ru/Makefile
 ])
 
 echo
-if test x$ENABLE_GST = xno ; then
+if test x$HAVE_GSTREAMER = xno ; then
 	echo "Using the xine backend"
 else
 	echo "Using the GStreamer backend"
