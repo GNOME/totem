@@ -1,5 +1,12 @@
 2003-10-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c: (totem_playlist_add_one_mrl),
+	(totem_playlist_add_mrl): add a work-around for huge playlists so
+	that we try to guess by name first (that fixes loading the remote
+	playlists with ~500 entries on magnatune.com)
+
+2003-10-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c: (bacon_video_widget_unrealize):
 	only switch off the visual effects if we're not paused, fixes a
 	deadlock on exit

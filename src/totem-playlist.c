@@ -1515,7 +1515,7 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 			-1);
 
 	g_free (filename_for_display);
-	//FIXME shuffle
+
 	if (playlist->_priv->current == NULL
 			&& playlist->_priv->shuffle == FALSE)
 		playlist->_priv->current = gtk_tree_model_get_path
@@ -2122,6 +2122,7 @@ totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl,
 {
 	const char *mimetype;
 	guint i;
+	gboolean found;
 
 	g_return_val_if_fail (mrl != NULL, FALSE);
 
@@ -2132,6 +2133,34 @@ totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl,
 			return totem_playlist_add_one_mrl (playlist,
 					mrl, display_name);
 		}
+	}
+
+	mimetype = gnome_vfs_get_file_mime_type (mrl, NULL, TRUE);
+	found = FALSE;
+	for (i = 0; i < G_N_ELEMENTS (special_types) && mimetype != NULL; i++)
+	{
+		if (strcmp (special_types[i].mimetype, mimetype) == 0)
+		{
+			found = TRUE;
+			break;
+		}
+	}
+
+	if (found == FALSE && mimetype != NULL)
+	{
+		for (i = 0; i < G_N_ELEMENTS (dual_types); i++)
+		{
+			if (strcmp (special_types[i].mimetype, mimetype) == 0)
+			{
+				found = TRUE;
+				break;
+			}
+		}
+	}
+
+	if (mimetype != NULL && found == FALSE)
+	{
+		return totem_playlist_add_one_mrl (playlist, mrl, display_name);
 	}
 
 	mimetype = gnome_vfs_get_mime_type (mrl);
