@@ -1,6 +1,15 @@
 2005-01-05  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.glade:
+	* src/totem-preferences.c: (totem_prefs_set_show_visuals),
+	(connection_combobox_changed), (visual_menu_changed),
+	(visual_quality_menu_changed), (audio_out_menu_changed),
+	(totem_setup_preferences): Migrate the Option Menus in the preferences
+	dialog to Combo Boxes (Helps: #160807)
+
+2005-01-05  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem.glade:
 	* src/totem-stock-icons.c: (totem_set_default_icons),
 	(totem_named_icons_init):
 	* src/totem-stock-icons.h:

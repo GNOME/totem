@@ -392,123 +392,22 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkOptionMenu" id="tpw_speed_optionmenu">
+			    <widget class="GtkComboBox" id="tpw_speed_combobox">
 			      <property name="visible">True</property>
-			      <property name="can_focus">True</property>
-			      <property name="history">0</property>
-
-			      <child>
-				<widget class="GtkMenu" id="tpw_speed_menu">
-
-				  <child>
-				    <widget class="GtkMenuItem" id="tpw_speed_144_kbps_modem">
-				      <property name="visible">True</property>
-				      <property name="label" translatable="yes">14.4 Kbps Modem</property>
-				      <property name="use_underline">True</property>
-				      <signal name="activate" handler="on_288/336_kbps_modem1_activate" last_modification_time="Tue, 04 Mar 2003 19:00:26 GMT"/>
-				    </widget>
-				  </child>
-
-				  <child>
-				    <widget class="GtkMenuItem" id="tpw_speed_192_kbps_modem">
-				      <property name="visible">True</property>
-				      <property name="label" translatable="yes">19.2 Kbps Modem</property>
-				      <property name="use_underline">True</property>
-				      <signal name="activate" handler="on_192_kbps_modem1_activate" last_modification_time="Tue, 04 Mar 2003 20:35:02 GMT"/>
-				    </widget>
-				  </child>
-
-				  <child>
-				    <widget class="GtkMenuItem" id="tpw_speed_288_kbps_modem">
-				      <property name="visible">True</property>
-				      <property name="label" translatable="yes">28.8 Kbps Modem</property>
-				      <property name="use_underline">True</property>
-				      <signal name="activate" handler="on_288_kbps_modem1_activate" last_modification_time="Tue, 04 Mar 2003 20:35:02 GMT"/>
-				    </widget>
-				  </child>
-
-				  <child>
-				    <widget class="GtkMenuItem" id="tpw_speed_336_kbps_modem">
-				      <property name="visible">True</property>
-				      <property name="label" translatable="yes">33.6 Kbps Modem</property>
-				      <property name="use_underline">True</property>
-				      <signal name="activate" handler="on_336_kbps_modem1_activate" last_modification_time="Tue, 04 Mar 2003 20:35:02 GMT"/>
-				    </widget>
-				  </child>
-
-				  <child>
-				    <widget class="GtkMenuItem" id="tpw_speed_344_kbps_modem">
-				      <property name="visible">True</property>
-				      <property name="label" translatable="yes">34.4 Kbps Modem</property>
-				      <property name="use_underline">True</property>
-				      <signal name="activate" handler="on_344_kbps_modem1_activate" last_modification_time="Tue, 04 Mar 2003 20:35:02 GMT"/>
-				    </widget>
-				  </child>
-
-				  <child>
-				    <widget class="GtkMenuItem" id="tpw_speed_56_kbps_modem/isdn">
-				      <property name="visible">True</property>
-				      <property name="label" translatable="yes">56 Kbps Modem/ISDN</property>
-				      <property name="use_underline">True</property>
-				      <signal name="activate" handler="on_56_kbps_modem/isdn1_activate" last_modification_time="Tue, 04 Mar 2003 19:00:26 GMT"/>
-				    </widget>
-				  </child>
-
-				  <child>
-				    <widget class="GtkMenuItem" id="tpw_speed_112_kbps_dual_isdn/dsl">
-				      <property name="visible">True</property>
-				      <property name="label" translatable="yes">112 Kbps Dual ISDN/DSL</property>
-				      <property name="use_underline">True</property>
-				      <signal name="activate" handler="on_112_kbps_dual_isdn/dsl1_activate" last_modification_time="Tue, 04 Mar 2003 19:00:26 GMT"/>
-				    </widget>
-				  </child>
-
-				  <child>
-				    <widget class="GtkMenuItem" id="tpw_speed_256_kbps_dsl/cable">
-				      <property name="visible">True</property>
-				      <property name="label" translatable="yes">256 Kbps DSL/Cable</property>
-				      <property name="use_underline">True</property>
-				      <signal name="activate" handler="on_256_kbps_dsl/cable1_activate" last_modification_time="Tue, 04 Mar 2003 19:00:26 GMT"/>
-				    </widget>
-				  </child>
-
-				  <child>
-				    <widget class="GtkMenuItem" id="tpw_speed_384_kbps_dsl/cable">
-				      <property name="visible">True</property>
-				      <property name="label" translatable="yes">384 Kbps DSL/Cable</property>
-				      <property name="use_underline">True</property>
-				      <signal name="activate" handler="on_384_kbps_dsl/cable1_activate" last_modification_time="Tue, 04 Mar 2003 19:00:26 GMT"/>
-				    </widget>
-				  </child>
-
-				  <child>
-				    <widget class="GtkMenuItem" id="tpw_speed_512_kbps_dsl/cable">
-				      <property name="visible">True</property>
-				      <property name="label" translatable="yes">512 Kbps DSL/Cable</property>
-				      <property name="use_underline">True</property>
-				      <signal name="activate" handler="on_512_kbps_dsl/cable1_activate" last_modification_time="Tue, 04 Mar 2003 19:00:26 GMT"/>
-				    </widget>
-				  </child>
-
-				  <child>
-				    <widget class="GtkMenuItem" id="tpw_speed_15_mbps_t1/intranet/lan">
-				      <property name="visible">True</property>
-				      <property name="label" translatable="yes">1.5 Mbps T1/Intranet/LAN</property>
-				      <property name="use_underline">True</property>
-				      <signal name="activate" handler="on_15_mbps_t1/intranet/lan1_activate" last_modification_time="Tue, 04 Mar 2003 19:00:26 GMT"/>
-				    </widget>
-				  </child>
-
-				  <child>
-				    <widget class="GtkMenuItem" id="tpw_speed_intranet/lan">
-				      <property name="visible">True</property>
-				      <property name="label" translatable="yes">Intranet/LAN</property>
-				      <property name="use_underline">True</property>
-				      <signal name="activate" handler="on_intranet/lan1_activate" last_modification_time="Tue, 04 Mar 2003 19:00:26 GMT"/>
-				    </widget>
-				  </child>
-				</widget>
-			      </child>
+			      <property name="items" translatable="yes">14.4 Kbps Modem
+19.2 Kbps Modem
+28.8 Kbps Modem
+33.6 Kbps Modem
+34.4 Kbps Modem
+56 Kbps Modem/ISDN
+112 Kbps Dual ISDN/DSL
+256 Kbps DSL/Cable
+384 Kbps DSL/Cable
+512 Kbps DSL/Cable
+1.5 Mbps T1/Intranet/LAN
+Intranet/LAN</property>
+			      <property name="add_tearoffs">False</property>
+			      <property name="focus_on_click">True</property>
 			    </widget>
 			    <packing>
 			      <property name="padding">0</property>
@@ -1147,73 +1046,38 @@
 			      </child>
 
 			      <child>
-				<widget class="GtkOptionMenu" id="tpw_visuals_size_optionmenu">
+				<widget class="GtkComboBox" id="tpw_visuals_size_combobox">
 				  <property name="visible">True</property>
-				  <property name="can_focus">True</property>
-				  <property name="history">0</property>
-
-				  <child>
-				    <widget class="GtkMenu" id="tpw_visuals_size_menu">
-
-				      <child>
-					<widget class="GtkMenuItem" id="tpw_visuals_size_small">
-					  <property name="visible">True</property>
-					  <property name="label" translatable="yes">Small</property>
-					  <property name="use_underline">True</property>
-					  <signal name="activate" handler="on_small1_activate" last_modification_time="Fri, 02 May 2003 13:09:01 GMT"/>
-					</widget>
-				      </child>
-
-				      <child>
-					<widget class="GtkMenuItem" id="tpw_visuals_size_normal">
-					  <property name="visible">True</property>
-					  <property name="label" translatable="yes">Normal</property>
-					  <property name="use_underline">True</property>
-					  <signal name="activate" handler="on_normal1_activate" last_modification_time="Fri, 02 May 2003 13:09:01 GMT"/>
-					</widget>
-				      </child>
-
-				      <child>
-					<widget class="GtkMenuItem" id="tpw_visuals_size_large">
-					  <property name="visible">True</property>
-					  <property name="label" translatable="yes">Large</property>
-					  <property name="use_underline">True</property>
-					  <signal name="activate" handler="on_large1_activate" last_modification_time="Fri, 02 May 2003 13:09:01 GMT"/>
-					</widget>
-				      </child>
-
-				      <child>
-					<widget class="GtkMenuItem" id="tpw_visuals_size_extra_large">
-					  <property name="visible">True</property>
-					  <property name="label" translatable="yes">Extra Large</property>
-					  <property name="use_underline">True</property>
-					  <signal name="activate" handler="on_extra_large1_activate" last_modification_time="Fri, 02 May 2003 13:09:01 GMT"/>
-					</widget>
-				      </child>
-				    </widget>
-				  </child>
+				  <property name="items" translatable="yes">Small
+Normal
+Large
+Extra Large</property>
+				  <property name="add_tearoffs">False</property>
+				  <property name="focus_on_click">True</property>
 				</widget>
 				<packing>
 				  <property name="left_attach">1</property>
 				  <property name="right_attach">2</property>
 				  <property name="top_attach">1</property>
 				  <property name="bottom_attach">2</property>
-				  <property name="y_options"></property>
+				  <property name="x_options">fill</property>
+				  <property name="y_options">fill</property>
 				</packing>
 			      </child>
 
 			      <child>
-				<widget class="GtkOptionMenu" id="tpw_visuals_type_optionmenu">
+				<widget class="GtkComboBox" id="tpw_visuals_type_combobox">
 				  <property name="visible">True</property>
-				  <property name="can_focus">True</property>
-				  <property name="history">-1</property>
+				  <property name="add_tearoffs">False</property>
+				  <property name="focus_on_click">True</property>
+				  <property name="items" translatable="yes"></property>
 				</widget>
 				<packing>
 				  <property name="left_attach">1</property>
 				  <property name="right_attach">2</property>
 				  <property name="top_attach">0</property>
 				  <property name="bottom_attach">1</property>
-				  <property name="y_options"></property>
+				  <property name="y_options">fill</property>
 				</packing>
 			      </child>
 			    </widget>
@@ -1419,7 +1283,7 @@
 			      <property name="right_attach">2</property>
 			      <property name="top_attach">0</property>
 			      <property name="bottom_attach">1</property>
-			      <property name="y_options">fill</property>
+			      <property name="y_options"></property>
 			    </packing>
 			  </child>
 
@@ -1758,69 +1622,16 @@
 			      </child>
 
 			      <child>
-				<widget class="GtkOptionMenu" id="tpw_sound_output_optionmenu">
+				<widget class="GtkComboBox" id="tpw_sound_output_combobox">
 				  <property name="visible">True</property>
-				  <property name="can_focus">True</property>
-				  <property name="history">0</property>
-
-				  <child>
-				    <widget class="GtkMenu" id="menu1">
-
-				      <child>
-					<widget class="GtkMenuItem" id="stereo1">
-					  <property name="visible">True</property>
-					  <property name="label" translatable="yes">Stereo</property>
-					  <property name="use_underline">True</property>
-					  <signal name="activate" handler="on_stereo1_activate" last_modification_time="Tue, 24 Jun 2003 09:41:35 GMT"/>
-					</widget>
-				      </child>
-
-				      <child>
-					<widget class="GtkMenuItem" id="4-channel1">
-					  <property name="visible">True</property>
-					  <property name="label" translatable="yes">4-channel</property>
-					  <property name="use_underline">True</property>
-					  <signal name="activate" handler="on_4-channel1_activate" last_modification_time="Tue, 24 Jun 2003 09:41:35 GMT"/>
-					</widget>
-				      </child>
-
-				      <child>
-					<widget class="GtkMenuItem" id="41-channel1">
-					  <property name="visible">True</property>
-					  <property name="label" translatable="yes">4.1-channel</property>
-					  <property name="use_underline">True</property>
-					  <signal name="activate" handler="on_41-channel1_activate" last_modification_time="Fri, 26 Nov 2004 16:10:08 GMT"/>
-					</widget>
-				      </child>
-
-				      <child>
-					<widget class="GtkMenuItem" id="50-channel1">
-					  <property name="visible">True</property>
-					  <property name="label" translatable="yes">5.0-channel</property>
-					  <property name="use_underline">True</property>
-					  <signal name="activate" handler="on_50-channel1_activate" last_modification_time="Tue, 24 Jun 2003 10:49:27 GMT"/>
-					</widget>
-				      </child>
-
-				      <child>
-					<widget class="GtkMenuItem" id="51-channel1">
-					  <property name="visible">True</property>
-					  <property name="label" translatable="yes">5.1-channel</property>
-					  <property name="use_underline">True</property>
-					  <signal name="activate" handler="on_51-channel1_activate" last_modification_time="Tue, 24 Jun 2003 09:41:35 GMT"/>
-					</widget>
-				      </child>
-
-				      <child>
-					<widget class="GtkMenuItem" id="ac3_passthrough1">
-					  <property name="visible">True</property>
-					  <property name="label" translatable="yes">AC3 Passthrough</property>
-					  <property name="use_underline">True</property>
-					  <signal name="activate" handler="on_ac3_passthrough1_activate" last_modification_time="Fri, 11 Jul 2003 16:27:48 GMT"/>
-					</widget>
-				      </child>
-				    </widget>
-				  </child>
+				  <property name="items" translatable="yes">Stereo
+4-channel
+4.1-channel
+5.0-channel
+5.1-channel
+AC3 Passthrough</property>
+				  <property name="add_tearoffs">False</property>
+				  <property name="focus_on_click">True</property>
 				</widget>
 				<packing>
 				  <property name="padding">0</property>
@@ -2497,7 +2308,7 @@
 			<widget class="GtkImage" id="image161">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-media-play</property>
-			  <property name="icon_size">1</property>
+			  <property name="icon_size">4</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
@@ -3017,7 +2828,7 @@
 			<widget class="GtkImage" id="image170">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-media-next</property>
-			  <property name="icon_size">1</property>
+			  <property name="icon_size">4</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
@@ -3040,7 +2851,7 @@
 			<widget class="GtkImage" id="image171">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-media-previous</property>
-			  <property name="icon_size">1</property>
+			  <property name="icon_size">4</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
@@ -3094,7 +2905,7 @@
 			<widget class="GtkImage" id="image173">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-media-forward</property>
-			  <property name="icon_size">1</property>
+			  <property name="icon_size">4</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
@@ -3118,7 +2929,7 @@
 			<widget class="GtkImage" id="image174">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-media-rewind</property>
-			  <property name="icon_size">1</property>
+			  <property name="icon_size">4</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>

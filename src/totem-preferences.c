@@ -115,12 +115,12 @@ totem_prefs_set_show_visuals (Totem *totem, gboolean value, gboolean warn)
 	item = glade_xml_get_widget (totem->xml, "tpw_visuals_type_label");
 	gtk_widget_set_sensitive (item, value);
 	item = glade_xml_get_widget (totem->xml,
-			"tpw_visuals_type_optionmenu");
+			"tpw_visuals_type_combobox");
 	gtk_widget_set_sensitive (item, value);
 	item = glade_xml_get_widget (totem->xml, "tpw_visuals_size_label");
 	gtk_widget_set_sensitive (item, value);
 	item = glade_xml_get_widget (totem->xml,
-			"tpw_visuals_size_optionmenu");
+			"tpw_visuals_size_combobox");
 	gtk_widget_set_sensitive (item, value);
 
 	if (warn == FALSE)
@@ -282,11 +282,11 @@ mediadev_changed_cb (GConfClient *client, guint cnxn_id,
 }
 
 static void
-option_menu_connection_changed (GtkOptionMenu *option_menu, Totem *totem)
+connection_combobox_changed (GtkComboBox *combobox, Totem *totem)
 {
 	int i;
 
-	i = gtk_option_menu_get_history (option_menu);
+	i = gtk_combo_box_get_active (combobox);
 	bacon_video_widget_set_connection_speed
 		(BACON_VIDEO_WIDGET (totem->bvw), i);
 }
@@ -318,14 +318,14 @@ on_button1_clicked (GtkButton *button, Totem *totem)
 }
 
 static void
-visual_menu_changed (GtkOptionMenu *option_menu, Totem *totem)
+visual_menu_changed (GtkComboBox *combobox, Totem *totem)
 {
 	GList *list;
 	const char *old_name;
 	char *name;
 	int i;
 
-	i = gtk_option_menu_get_history (GTK_OPTION_MENU (option_menu));
+	i = gtk_combo_box_get_active (combobox);
 	list = bacon_video_widget_get_visuals_list (totem->bvw);
 	name = g_list_nth_data (list, i);
 
@@ -343,11 +343,11 @@ visual_menu_changed (GtkOptionMenu *option_menu, Totem *totem)
 }
 
 static void
-visual_quality_menu_changed (GtkOptionMenu *option_menu, Totem *totem)
+visual_quality_menu_changed (GtkComboBox *combobox, Totem *totem)
 {
 	int i;
 
-	i = gtk_option_menu_get_history (GTK_OPTION_MENU (option_menu));
+	i = gtk_combo_box_get_active (combobox);
 	gconf_client_set_int (totem->gc,
 			GCONF_PREFIX"/visual_quality", i, NULL);
 	bacon_video_widget_set_visuals_quality (totem->bvw, i);
@@ -423,10 +423,11 @@ on_tpw_color_reset_clicked (GtkButton *button, Totem *totem)
 }
 
 static void
-audio_out_menu_changed (GtkOptionMenu *option_menu, Totem *totem)
+audio_out_menu_changed (GtkComboBox *combobox, Totem *totem)
 {
 	BaconVideoWidgetAudioOutType audio_out;
-	audio_out = gtk_option_menu_get_history (GTK_OPTION_MENU (option_menu));
+
+	audio_out = gtk_combo_box_get_active (combobox);
 	bacon_video_widget_set_audio_out_type (totem->bvw, audio_out);
 }
 
@@ -435,7 +436,7 @@ totem_setup_preferences (Totem *totem)
 {
 	GtkWidget *item, *menu;
 	gboolean show_visuals, auto_resize, is_local, deinterlace;
-	int connection_speed, i, found;
+	int connection_speed, i;
 	char *path, *visual, *mediadev;
 	GList *list, *l;
 	BaconVideoWidgetAudioOutType audio_out;
@@ -496,11 +497,10 @@ totem_setup_preferences (Totem *totem)
 
 	/* Connection Speed */
 	connection_speed = bacon_video_widget_get_connection_speed (totem->bvw);
-	item = glade_xml_get_widget (totem->xml, "tpw_speed_optionmenu");
-	gtk_option_menu_set_history (GTK_OPTION_MENU (item),
-			connection_speed);
+	item = glade_xml_get_widget (totem->xml, "tpw_speed_combobox");
+	gtk_combo_box_set_active (GTK_COMBO_BOX (item), connection_speed);
 	g_signal_connect (item, "changed",
-			G_CALLBACK (option_menu_connection_changed), totem);
+			G_CALLBACK (connection_combobox_changed), totem);
 
 	/* Proprietary plugins */
 	item = glade_xml_get_widget (totem->xml, "tpw_plugins_button");
@@ -536,17 +536,19 @@ totem_setup_preferences (Totem *totem)
 	if (visual == NULL || strcmp (visual, "") == 0)
 		visual = g_strdup ("goom");
 
-	i = found = 0;
+	item = glade_xml_get_widget (totem->xml, "tpw_visuals_type_combobox");
+	g_signal_connect (G_OBJECT (item), "changed",
+			G_CALLBACK (visual_menu_changed), totem);
+
+	i = 0;
 	for (l = list; l != NULL; l = l->next)
 	{
 		const char *name = l->data;
 
-		item = gtk_menu_item_new_with_label (name);
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-		gtk_widget_show (item);
+		gtk_combo_box_append_text (GTK_COMBO_BOX (item), name);
 
 		if (strcmp (name, visual) == 0)
-			found = i;
+			gtk_combo_box_set_active (GTK_COMBO_BOX (item), i);
 
 		i++;
 	}
@@ -556,16 +558,10 @@ totem_setup_preferences (Totem *totem)
 	i = gconf_client_get_int (totem->gc,
 			GCONF_PREFIX"/visual_quality", NULL);
 	bacon_video_widget_set_visuals_quality (totem->bvw, i);
-	item = glade_xml_get_widget (totem->xml, "tpw_visuals_size_optionmenu");
-	gtk_option_menu_set_history (GTK_OPTION_MENU (item), i);
+	item = glade_xml_get_widget (totem->xml, "tpw_visuals_size_combobox");
+	gtk_combo_box_set_active (GTK_COMBO_BOX (item), i);
 	g_signal_connect (G_OBJECT (item), "changed",
 			G_CALLBACK (visual_quality_menu_changed), totem);
-
-	item = glade_xml_get_widget (totem->xml, "tpw_visuals_type_optionmenu");
-	gtk_option_menu_set_menu (GTK_OPTION_MENU (item), menu);
-	gtk_option_menu_set_history (GTK_OPTION_MENU (item), found);
-	g_signal_connect (G_OBJECT (item), "changed",
-			G_CALLBACK (visual_menu_changed), totem);
 
 	/* Brightness */
 	item = glade_xml_get_widget (totem->xml, "tpw_bright_scale");
@@ -605,9 +601,9 @@ totem_setup_preferences (Totem *totem)
 			G_CALLBACK (on_tpw_color_reset_clicked), totem);
 
 	/* Sound output type */
-	item = glade_xml_get_widget (totem->xml, "tpw_sound_output_optionmenu");
+	item = glade_xml_get_widget (totem->xml, "tpw_sound_output_combobox");
 	audio_out = bacon_video_widget_get_audio_out_type (totem->bvw);
-	gtk_option_menu_set_history (GTK_OPTION_MENU (item), audio_out);
+	gtk_combo_box_set_active (GTK_COMBO_BOX (item), audio_out);
 	g_signal_connect (G_OBJECT (item), "changed",
 			G_CALLBACK (audio_out_menu_changed), totem);
 
