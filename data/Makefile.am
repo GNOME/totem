@@ -14,6 +14,7 @@ stuff_DATA =				\
 	rhythmbox-volume-medium.png	\
 	rhythmbox-volume-min.png	\
 	rhythmbox-volume-zero.png	\
+	stock-tool-brightness-contrast-22.png	\
 	totem.glade			\
 	playlist.glade			\
 	properties.glade		\

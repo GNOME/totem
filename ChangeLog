@@ -1,5 +1,27 @@
 2003-06-21  Bastien Nocera  <hadess@hadess.net>
 
+	* data/Makefile.am: upd
+	* data/stock-tool-brightness-contrast-22.png: added
+	* data/totem.glade: added a nice brightness/contrast icon from the GIMP
+	* data/totem.schemas.in: added brightness and contrast
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_instance_init), (setup_config),
+	(setup_config_stream), (bacon_video_widget_realize),
+	(bacon_video_widget_open), (bacon_video_widget_set_logo),
+	(bacon_video_widget_set_visuals_quality),
+	(bacon_video_widget_get_mrls),
+	(bacon_video_widget_set_scale_ratio),
+	(bacon_video_widget_get_video_property),
+	(bacon_video_widget_set_video_property): added a widget-wide
+	GConfClient, configure the brightness and contrast on startup, tweaks
+	to get goom fast enough on a decent machine, 
+	* src/bacon-video-widget.h: added brightness and contrast functions
+	* src/totem.c: (totem_action_set_mrl), (screenshot_make_filename):
+	don't set the GError twice, try to write on ~/Desktop too, as it's the
+	new GNOME default
+
+2003-06-21  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-download.c: (cab_download_from_td_try): try downloading from
 	the 2 servers, not both times from the same one
 	* src/totem-video-thumbnailer.c: (main): try to playback from '0' if

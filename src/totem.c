@@ -822,7 +822,12 @@ try_open_again:
 			g_free (msg);
 			first_try = FALSE;
 			if (try_again != FALSE)
+			{
+				g_error_free (err);
+				err = NULL;
+
 				goto try_open_again;
+			}
 #else
 			totem_action_error (msg, totem);
 #endif
@@ -1899,9 +1904,16 @@ screenshot_make_filename (Totem *totem)
 
 	/* Test if we have a desktop directory */
 	fullpath = g_build_path (G_DIR_SEPARATOR_S, g_get_home_dir (),
-			".gnome-desktop", NULL);
+			"Desktop", NULL);
 	desktop_exists = g_file_test (fullpath, G_FILE_TEST_EXISTS);
 	g_free (fullpath);
+	if (desktop_exists == FALSE)
+	{
+		fullpath = g_build_path (G_DIR_SEPARATOR_S, g_get_home_dir (),
+				".gnome-desktop", NULL);
+		desktop_exists = g_file_test (fullpath, G_FILE_TEST_EXISTS);
+		g_free (fullpath);
+	}
 
 	if (on_desktop == TRUE)
 	{

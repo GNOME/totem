@@ -103,6 +103,15 @@ static int speeds[2] = {
 	XINE_SPEED_NORMAL,
 };
 
+static int video_props[2] = {
+	XINE_PARAM_VO_BRIGHTNESS,
+	XINE_PARAM_VO_CONTRAST,
+};
+static char *video_props_str[2] = {
+	GCONF_PREFIX"/brightness",
+	GCONF_PREFIX"/contrast",
+};
+
 struct BaconVideoWidgetPrivate {
 	/* Xine stuff */
 	xine_t *xine;
@@ -114,6 +123,7 @@ struct BaconVideoWidgetPrivate {
 	gboolean started;
 
 	/* Configuration */
+	GConfClient *gc;
 	gboolean null_out;
 	char *mrl;
 
@@ -350,7 +360,6 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 	GtkWidget *widget = (GtkWidget *) bvw;
 	const char *const *autoplug_list;
 	int i = 0;
-	GConfClient *gc;
 
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -374,8 +383,8 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 	xine_init (bvw->priv->xine);
 
 	/* Debug configuration */
-	gc = gconf_client_get_default ();
-	if (gconf_client_get_bool (gc, GCONF_PREFIX"/debug", NULL) == FALSE)
+	bvw->priv->gc = gconf_client_get_default ();
+	if (gconf_client_get_bool (bvw->priv->gc, GCONF_PREFIX"/debug", NULL) == FALSE)
 	{
 		xine_engine_set_param (bvw->priv->xine,
 				XINE_ENGINE_PARAM_VERBOSITY,
@@ -615,7 +624,6 @@ load_audio_out_driver (BaconVideoWidget *bvw, GError **err)
 static void
 setup_config (BaconVideoWidget *bvw)
 {
-	GConfClient *gc;
 	char *path;
 	xine_cfg_entry_t entry;
 	const char *demux_strategies[] = {"default", "reverse", "content",
@@ -647,13 +655,12 @@ setup_config (BaconVideoWidget *bvw)
 	bvw->priv->volume = -1;
 
 	/* Proxy configuration */
-	gc = gconf_client_get_default ();
-	if (gc == NULL)
+	if (bvw->priv->gc == NULL)
 		return;
 
 	memset (&entry, 0, sizeof (entry));
 
-	if (gconf_client_get_bool (gc, "/system/http_proxy/use_http_proxy", NULL) == FALSE)
+	if (gconf_client_get_bool (bvw->priv->gc, "/system/http_proxy/use_http_proxy", NULL) == FALSE)
 	{
 		if (xine_config_lookup_entry (bvw->priv->xine,
 				"input.http_proxy_host", &entry))
@@ -669,7 +676,7 @@ setup_config (BaconVideoWidget *bvw)
 	if (xine_config_lookup_entry (bvw->priv->xine,
 			"input.http_proxy_host", &entry))
 	{
-		entry.str_value = gconf_client_get_string (gc,
+		entry.str_value = gconf_client_get_string (bvw->priv->gc,
 				"/system/http_proxy/host", NULL);
 		xine_config_update_entry (bvw->priv->xine, &entry);
 	}
@@ -678,13 +685,13 @@ setup_config (BaconVideoWidget *bvw)
 	if (xine_config_lookup_entry (bvw->priv->xine,
 			"input.http_proxy_port", &entry))
 	{
-		entry.num_value = gconf_client_get_int (gc,
+		entry.num_value = gconf_client_get_int (bvw->priv->gc,
 				"/system/http_proxy/port", NULL);
 		xine_config_update_entry (bvw->priv->xine, &entry);
 	}
 
 	memset (&entry, 0, sizeof (entry));
-	if (gconf_client_get_bool (gc, "/system/http_proxy/use_authentication", NULL) == FALSE)
+	if (gconf_client_get_bool (bvw->priv->gc, "/system/http_proxy/use_authentication", NULL) == FALSE)
 	{
 		if (xine_config_lookup_entry (bvw->priv->xine,
 				"input.http_proxy_user", &entry))
@@ -704,9 +711,10 @@ setup_config (BaconVideoWidget *bvw)
 		if (xine_config_lookup_entry (bvw->priv->xine,
 				"input.http_proxy_user", &entry))
 		{
-			entry.str_value = gconf_client_get_string (gc,
-					"/system/http_proxy/authentication_user",
-					NULL);
+			entry.str_value = gconf_client_get_string
+				(bvw->priv->gc,
+				 "/system/http_proxy/authentication_user",
+				 NULL);
 			xine_config_update_entry (bvw->priv->xine, &entry);
 		}
 
@@ -714,9 +722,10 @@ setup_config (BaconVideoWidget *bvw)
 		if (xine_config_lookup_entry (bvw->priv->xine,
 				"input.http_proxy_password", &entry))
 		{
-			entry.str_value = gconf_client_get_string (gc,
-					"/system/http_proxy/authentication_password",
-					NULL);
+			entry.str_value = gconf_client_get_string
+				(bvw->priv->gc,
+				 "/system/http_proxy/authentication_password",
+				 NULL);
 			xine_config_update_entry (bvw->priv->xine, &entry);
 		}
 	}
@@ -733,6 +742,24 @@ setup_config_video (BaconVideoWidget *bvw)
 	{
 		entry.num_value = 30;
 		xine_config_update_entry (bvw->priv->xine, &entry);
+	}
+}
+
+static void
+setup_config_stream (BaconVideoWidget *bvw)
+{
+	int value, i;
+
+	if (bvw->priv->gc == NULL)
+		return;
+
+	for (i = 0; i < 2; i++)
+	{
+		value = gconf_client_get_int (bvw->priv->gc, video_props_str[i], NULL);
+		/* avoid black screens */
+		if (value == 0)
+			value = 65535 / 2;
+		xine_set_param (bvw->priv->stream, video_props[i], value);
 	}
 }
 
@@ -959,9 +986,9 @@ bacon_video_widget_realize (GtkWidget *widget)
 	bvw->priv->screen = DefaultScreen (bvw->priv->display);
 
 	bvw->priv->vo_driver = load_video_out_driver (bvw, bvw->priv->null_out);
-	setup_config_video (bvw);
 	//FIXME
 	g_assert (bvw->priv->vo_driver != NULL);
+	setup_config_video (bvw);
 
 	if (bvw->priv->null_out == FALSE && bvw->priv->ao_driver != NULL)
 		bvw->priv->vis = xine_post_init (bvw->priv->xine,
@@ -970,6 +997,7 @@ bacon_video_widget_realize (GtkWidget *widget)
 
 	bvw->priv->stream = xine_stream_new (bvw->priv->xine,
 			bvw->priv->ao_driver, bvw->priv->vo_driver);
+	setup_config_stream (bvw);
 	bvw->priv->ev_queue = xine_event_new_queue (bvw->priv->stream);
 
 	/* Setup xine events */
@@ -1483,7 +1511,7 @@ bacon_video_widget_get_backend_name (BaconVideoWidget *bvw)
 }
 
 gboolean
-bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
+bacon_video_widget_open (BaconVideoWidget *bvw, const char *mrl,
 		GError **gerror)
 {
 	int error;
@@ -1725,7 +1753,7 @@ bacon_video_widget_set_logo_mode (BaconVideoWidget *bvw, gboolean logo_mode)
 }
 
 void
-bacon_video_widget_set_logo (BaconVideoWidget *bvw, gchar *filename)
+bacon_video_widget_set_logo (BaconVideoWidget *bvw, char *filename)
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
@@ -2138,12 +2166,12 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget *bvw,
 	switch (quality)
 	{
 	case VISUAL_SMALL:
-		fps = 25;
-		w = 160;
-		h = 120;
+		fps = 15;
+		w = 320;
+		h = 240;
 		break;
 	case VISUAL_NORMAL:
-		fps = 15;
+		fps = 25;
 		w = 320;
 		h = 240;
 		break;
@@ -2153,9 +2181,9 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget *bvw,
 		h = 480;
 		break;
 	case VISUAL_EXTRA_LARGE:
-		fps = 25;
-		w = 1024;
-		h = 768;
+		fps = 30;
+		w = 800;
+		h = 600;
 		break;
 	default:
 		/* shut up warnings */
@@ -2295,7 +2323,7 @@ bacon_video_widget_can_play (BaconVideoWidget *bvw, MediaType type)
 	}
 }
 
-G_CONST_RETURN gchar
+G_CONST_RETURN char
 **bacon_video_widget_get_mrls (BaconVideoWidget *bvw, MediaType type)
 {
 	char *plugin_id;
@@ -2314,7 +2342,7 @@ G_CONST_RETURN gchar
 	else
 		return NULL;
 
-	return (G_CONST_RETURN gchar **) xine_get_autoplay_mrls
+	return (G_CONST_RETURN char **) xine_get_autoplay_mrls
 		(bvw->priv->xine, plugin_id, &num_mrls);
 }
 
@@ -2421,6 +2449,30 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 	}
 
 	gtk_window_resize (GTK_WINDOW (toplevel), new_w, new_h);
+}
+
+int
+bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
+		BaconVideoWidgetVideoProperty type)
+{
+	g_return_val_if_fail (bvw != NULL, 65535 / 2);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 65535 / 2);
+	g_return_val_if_fail (bvw->priv->xine != NULL, 65535 / 2);
+
+	return xine_get_param (bvw->priv->stream, video_props[type]);
+}
+
+void
+bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
+		BaconVideoWidgetVideoProperty type, int value)
+{
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
+	g_return_if_fail ((value > 65535 || value <0));
+
+	xine_set_param (bvw->priv->stream, video_props[type], value);
+	gconf_client_set_int (bvw->priv->gc, video_props_str[type], value, NULL);
 }
 
 static void

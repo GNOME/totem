@@ -28,14 +28,26 @@
       </schema>
 
       <schema>
-        <key>/schemas/apps/totem/visual_quality</key>
-	<applyto>/apps/totem/visual_quality</applyto>
+        <key>/schemas/apps/totem/brightness</key>
+	<applyto>/apps/totem/brightness</applyto>
 	<owner>totem</owner>
 	<type>int</type>
-	<default>1</default>
+	<default>32767</default>
 	<locale name="C">
-	  <short>The quality of the visuals when using goom</short>
-	  <long>The quality of the visuals when using goom</long>
+	  <short>The brightness of the video</short>
+	  <long>The brightness of the video</long>
+	</locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/totem/contrast</key>
+	<applyto>/apps/totem/contrast</applyto>
+	<owner>totem</owner>
+	<type>int</type>
+	<default>32767</default>
+	<locale name="C">
+	  <short>The contrast of the video</short>
+	  <long>The contrast of the video</long>
 	</locale>
       </schema>
 

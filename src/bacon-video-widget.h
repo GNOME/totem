@@ -64,6 +64,11 @@ typedef enum {
 	BVW_INFO_AUDIO_FOURCC,
 } BaconVideoWidgetMetadataType;
 
+typedef enum {
+	BVW_VIDEO_BRIGHTNESS,
+	BVW_VIDEO_CONTRAST,
+} BaconVideoWidgetVideoProperty;
+
 #define BACON_VIDEO_WIDGET(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), bacon_video_widget_get_type (), BaconVideoWidget))
 #define BACON_VIDEO_WIDGET_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), bacon_video_widget_get_type (), BaconVideoWidgetClass))
 #define BACON_IS_VIDEO_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_TYPE (obj, bacon_video_widget_get_type ()))
@@ -134,6 +139,7 @@ int bacon_video_widget_get_volume                (BaconVideoWidget *bvw);
 
 void bacon_video_widget_set_fullscreen		 (BaconVideoWidget *bvw,
 						  gboolean fullscreen);
+
 void bacon_video_widget_set_show_cursor          (BaconVideoWidget *bvw,
 						  gboolean use_cursor);
 gboolean bacon_video_widget_get_show_cursor      (BaconVideoWidget *bvw);
@@ -159,6 +165,14 @@ TvOutType bacon_video_widget_get_tv_out		 (BaconVideoWidget *bvw);
 void bacon_video_widget_toggle_aspect_ratio      (BaconVideoWidget *bvw);
 void bacon_video_widget_set_scale_ratio          (BaconVideoWidget *bvw,
 						  gfloat ratio);
+
+int bacon_video_widget_get_video_property	 (BaconVideoWidget *bvw,
+						  BaconVideoWidgetVideoProperty
+						  type);
+void bacon_video_widget_set_video_property	 (BaconVideoWidget *bvw,
+						  BaconVideoWidgetVideoProperty
+						  type,
+						  int value);
 
 int bacon_video_widget_get_position              (BaconVideoWidget *bvw);
 int bacon_video_widget_get_current_time          (BaconVideoWidget *bvw);
