@@ -10,6 +10,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "bacon-video-widget.h"
+#include "video-utils.h"
 
 /* #define THUMB_DEBUG */
 
@@ -41,40 +42,6 @@ show_pixbuf (GdkPixbuf *pix)
 }
 #endif
 
-static void
-gdk_pixbuf_mirror (GdkPixbuf *pixbuf)
-{
-	int i, j, rowstride, offset, right;
-	guchar *pixels;
-	int width, height, size;
-	guint32 tmp;
-
-	pixels = gdk_pixbuf_get_pixels (pixbuf);
-	g_return_if_fail (pixels != NULL);
-
-	width = gdk_pixbuf_get_width (pixbuf);
-	height = gdk_pixbuf_get_height (pixbuf);
-	rowstride = gdk_pixbuf_get_rowstride (pixbuf);
-	size = height * width * sizeof (guint32);
-
-	for (i = 0; i < size; i += rowstride)
-	{
-		for (j = 0; j < rowstride; j += sizeof(guint32))
-		{
-			offset = i + j;
-			right = i + (((width - 1) * sizeof(guint32)) - j);
-
-			if (right <= offset)
-				break;
-
-			memcpy (&tmp, pixels + offset, sizeof(guint32));
-			memcpy (pixels + offset, pixels + right,
-					sizeof(guint32));
-			memcpy (pixels + right, &tmp, sizeof(guint32));
-		}
-	}
-}
-
 static GdkPixbuf *
 add_holes_to_pixbuf (GdkPixbuf *pixbuf, int width, int height)
 {
@@ -104,7 +71,7 @@ add_holes_to_pixbuf (GdkPixbuf *pixbuf, int width, int height)
 				0, i, 1, 1, GDK_INTERP_NEAREST, 255);
 	}
 
-	gdk_pixbuf_mirror (holes);
+	totem_pixbuf_mirror (holes);
 
 	for (i = 0; i < height; i += gdk_pixbuf_get_height (holes))
 	{

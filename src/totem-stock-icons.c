@@ -29,6 +29,7 @@
 
 #include "totem-stock-icons.h"
 #include "totem-private.h"
+#include "video-utils.h"
 
 static GHashTable *icons_table = NULL;
 
@@ -104,48 +105,20 @@ totem_set_default_icons (Totem *totem)
 			: PIXBUF_FOR_ID("stock-media-play"));
 
 	/* Previous button */
-	if (gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_LTR)
-	{
-		item = glade_xml_get_widget (totem->xml,
-				"tmw_previous_button_image");
-		gtk_image_set_from_pixbuf (GTK_IMAGE (item),
-				PIXBUF_FOR_ID("stock-media-prev"));
-		item = glade_xml_get_widget (totem->xml,
-				"tcw_previous_button_image");
-		gtk_image_set_from_pixbuf (GTK_IMAGE (item),
-				PIXBUF_FOR_ID("stock-media-prev"));
-	} else {
-		item = glade_xml_get_widget (totem->xml,
-				"tmw_previous_button_image");
-		gtk_image_set_from_pixbuf (GTK_IMAGE (item),
-				PIXBUF_FOR_ID("stock-media-next"));
-		item = glade_xml_get_widget (totem->xml,
-				"tcw_previous_button_image");
-		gtk_image_set_from_pixbuf (GTK_IMAGE (item),
-				PIXBUF_FOR_ID("stock-media-next"));
-	}
+	item = glade_xml_get_widget (totem->xml, "tmw_previous_button_image");
+	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
+			PIXBUF_FOR_ID("stock-media-prev"));
+	item = glade_xml_get_widget (totem->xml, "tcw_previous_button_image");
+	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
+			PIXBUF_FOR_ID("stock-media-prev"));
 
 	/* Next button */
-	if (gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_LTR)
-	{
-		item = glade_xml_get_widget (totem->xml,
-				"tmw_next_button_image");
-		gtk_image_set_from_pixbuf (GTK_IMAGE (item),
-				PIXBUF_FOR_ID("stock-media-next"));
-		item = glade_xml_get_widget (totem->xml,
-				"tcw_next_button_image");
-		gtk_image_set_from_pixbuf (GTK_IMAGE (item),
-				PIXBUF_FOR_ID("stock-media-next"));
-	} else {
-		item = glade_xml_get_widget (totem->xml,
-				"tmw_next_button_image");
-		gtk_image_set_from_pixbuf (GTK_IMAGE (item),
-				PIXBUF_FOR_ID("stock-media-prev"));
-		item = glade_xml_get_widget (totem->xml,
-				"tcw_next_button_image");
-		gtk_image_set_from_pixbuf (GTK_IMAGE (item),
-				PIXBUF_FOR_ID("stock-media-prev"));
-	}
+	item = glade_xml_get_widget (totem->xml, "tmw_next_button_image");
+	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
+			PIXBUF_FOR_ID("stock-media-next"));
+	item = glade_xml_get_widget (totem->xml, "tcw_next_button_image");
+	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
+			PIXBUF_FOR_ID("stock-media-next"));
 
 	/* Screenshot button */
 	item = glade_xml_get_widget (totem->xml,
@@ -258,6 +231,14 @@ totem_named_icons_init (Totem *totem, gboolean refresh)
 		 * hash table */
 		g_hash_table_insert (icons_table, (gpointer) items[i].fn1,
 				(gpointer) pixbuf);
+	}
+
+	/* Switch direction of the Play icon if we're in Right-To-Left */
+	if (gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_RTL)
+	{
+		totem_pixbuf_mirror (PIXBUF_FOR_ID("stock-media-play"));
+		totem_pixbuf_mirror (PIXBUF_FOR_ID("stock-media-next"));
+		totem_pixbuf_mirror (PIXBUF_FOR_ID("stock-media-prev"));
 	}
 }
 

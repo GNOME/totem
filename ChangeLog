@@ -1,3 +1,16 @@
+2004-04-22  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-stock-icons.c: (totem_named_icons_init):
+	* src/totem-video-thumbnailer.c: (add_holes_to_pixbuf):
+	* src/totem.c: (main):
+	* src/video-utils.c: (totem_pixbuf_mirror):
+	* src/video-utils.h:
+	move our gdk_pixbuf_mirror function to video-utils.[ch] and rename
+	it totem_pixbuf_mirror(). Modify totem-video-thumbnailer to use
+	the new function, Mirror the Play button in RTL languages, and
+	simplify the Next/Prev button handling in RTL languages by using
+	the mirror function as well
+
 2004-04-21  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-stock-icons.c: (totem_set_default_icons):

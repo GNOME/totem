@@ -3703,13 +3703,13 @@ main (int argc, char **argv)
 	}
 	g_free (filename);
 
-	totem_named_icons_init (totem, FALSE);
-
 	totem->win = glade_xml_get_widget (totem->xml, "totem_main_window");
 	filename = g_build_filename (DATADIR,
 			"totem", "media-player-48.png", NULL);
 	gtk_window_set_default_icon_from_file (filename, NULL);
 	g_free (filename);
+
+	totem_named_icons_init (totem, FALSE);
 
 	/* The playlist */
 	filename = g_build_filename (DATADIR,
