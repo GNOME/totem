@@ -1,5 +1,12 @@
 2005-01-25  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
+	* src/bacon-video-widget-gst.c: (parse_stream_info),
+	(get_list_of_type), (bacon_video_widget_get_current_frame):
+	  Copy lists to decreases the theoretical change on crashing while
+	  we're switching groups.
+
+2005-01-25  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_signal_idler),
 	(group_switch), (parse_stream_info), (stream_info_set),
 	(state_change), (bacon_video_widget_new):

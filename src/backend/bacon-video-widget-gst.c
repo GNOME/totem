@@ -1043,6 +1043,8 @@ parse_stream_info (BaconVideoWidget *bvw)
 
   g_object_get (G_OBJECT (bvw->priv->play), "stream-info",
 		&streaminfo, NULL);
+  streaminfo = g_list_copy (streaminfo);
+  g_list_foreach (streaminfo, (GFunc) g_object_ref, NULL);
   for ( ; streaminfo != NULL; streaminfo = streaminfo->next) {
     GObject *info = streaminfo->data;
     gint type;
@@ -1082,6 +1084,8 @@ parse_stream_info (BaconVideoWidget *bvw)
       g_signal_connect (real, "notify::caps",
           G_CALLBACK (caps_set), bvw);
   }
+  g_list_foreach (streaminfo, (GFunc) g_object_unref, NULL);
+  g_list_free (streaminfo);
 }
 
 static void
@@ -1278,10 +1282,12 @@ bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
 static GList *
 get_list_of_type (BaconVideoWidget * bvw, const gchar * type_name)
 {
-  GList *streaminfo, *ret = NULL;
+  GList *streaminfo = NULL, *ret = NULL;
   gint num = 0;
 
   g_object_get (G_OBJECT (bvw->priv->play), "stream-info", &streaminfo, NULL);
+  streaminfo = g_list_copy (streaminfo);
+  g_list_foreach (streaminfo, (GFunc) g_object_ref, NULL);
   for ( ; streaminfo != NULL; streaminfo = streaminfo->next) {
     GObject *info = streaminfo->data;
     gint type;
@@ -1296,6 +1302,8 @@ get_list_of_type (BaconVideoWidget * bvw, const gchar * type_name)
       ret = g_list_prepend (ret, g_strdup_printf ("%s %d", type_name, num++));
     }
   }
+  g_list_foreach (streaminfo, (GFunc) g_object_unref, NULL);
+  g_list_free (streaminfo);
 
   return g_list_reverse (ret);
 }
@@ -2699,7 +2707,7 @@ GdkPixbuf *
 bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
 {
   GstBuffer *buf = NULL;
-  const GList *streaminfo = NULL;
+  GList *streaminfo = NULL;
   GstCaps *from = NULL;
   GdkPixbuf *pixbuf;
 
@@ -2722,6 +2730,8 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
   /* get video size etc. */
   g_object_get (G_OBJECT (bvw->priv->play),
       "stream-info", &streaminfo, NULL);
+  streaminfo = g_list_copy (streaminfo);
+  g_list_foreach (streaminfo, (GFunc) g_object_ref, NULL);
   for (; streaminfo != NULL; streaminfo = streaminfo->next) {
     GObject *info = streaminfo->data;
     GstPad *real;
@@ -2746,6 +2756,8 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
       break;
     }
   }
+  g_list_foreach (streaminfo, (GFunc) g_object_unref, NULL);
+  g_list_free (streaminfo);
   if (!from)
     return NULL;
 
