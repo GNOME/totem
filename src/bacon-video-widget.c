@@ -2013,22 +2013,26 @@ bacon_video_widget_can_get_frames (BaconVideoWidget *bvw, GError **error)
 	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
-	g_return_val_if_fail (bacon_video_widget_is_playing (bvw) == TRUE,
-			FALSE);
+
+	if (bacon_video_widget_is_playing (bvw) == FALSE)
+	{
+		g_set_error (error, 0, 0, _("Movie is not playing"));
+		return FALSE;
+	}
 
 	if (xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_HAS_VIDEO) == FALSE)
 	{
 		g_set_error (error, 0, 0, bvw->priv->using_vfx ?
-				"Can't capture visual effects"
-				: "No video to capture");
+				_("Can't capture visual effects")
+				: _("No video to capture"));
 		return FALSE;
 	}
 
 	if (xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_VIDEO_HANDLED) == FALSE)
 	{
-		g_set_error (error, 0, 0, "Video codec is not handled");
+		g_set_error (error, 0, 0, _("Video codec is not handled"));
 		return FALSE;
 	}
 

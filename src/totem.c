@@ -1418,6 +1418,9 @@ on_take_screenshot1_activate (GtkButton *button, gpointer user_data)
 	{
 		char *msg;
 
+		if (err == NULL)
+			return;
+
 		msg = g_strdup_printf (_("Totem could not get a screenshot of that film.\nReason: %s."), err->message);
 		g_error_free (err);
 		totem_action_error (msg, GTK_WINDOW (totem->win));
