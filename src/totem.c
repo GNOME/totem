@@ -33,6 +33,7 @@ struct Totem {
 	GtkWidget *win;
 	GtkWidget *treeview;
 	GtkWidget *gtx;
+	GtkWidget *prefs;
 
 	/* Play/Pause */
 	GtkWidget *pp_button;
@@ -1023,6 +1024,22 @@ on_about1_activate (GtkButton *button, gpointer user_data)
 	gtk_widget_show(about);
 }
 
+static void
+on_preferences1_activate (GtkButton *button, gpointer user_data)
+{
+	Totem *totem = (Totem *)user_data;
+
+	gtk_widget_show (totem->prefs);
+}
+
+static void
+hide_prefs (GtkWidget *playlist, int trash, gpointer user_data)
+{
+	Totem *totem = (Totem *)user_data;
+
+	gtk_widget_hide (totem->prefs);
+}
+
 void
 totem_button_pressed_remote_cb (TotemRemote *remote, TotemRemoteCommand cmd,
 				Totem *totem)
@@ -1350,7 +1367,7 @@ update_buttons (Totem *totem)
 	has_item = gtk_playlist_has_previous_mrl (totem->playlist);
 	item = glade_xml_get_widget (totem->xml, "previous_button");
 	gtk_widget_set_sensitive (item, has_item);
-    item = glade_xml_get_widget (totem->xml, "fs_previous_button");
+	item = glade_xml_get_widget (totem->xml, "fs_previous_button");
 	gtk_widget_set_sensitive (item, has_item);
 	item = glade_xml_get_widget (totem->xml, "previous_stream1");
 	gtk_widget_set_sensitive (item, has_item);
@@ -1397,8 +1414,7 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (on_zoom_2_1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "toggle_aspect_ratio1");
 	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_toggle_aspect_ratio1_activate),
-			totem);
+			G_CALLBACK (on_toggle_aspect_ratio1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "show_playlist1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_show_playlist1_activate), totem);
@@ -1408,6 +1424,9 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "about1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_about1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "preferences1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_preferences1_activate), totem);
 
 	/* Controls */
 	totem->pp_button = glade_xml_get_widget
@@ -1436,8 +1455,8 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (main_window_destroy_cb), totem);
 	g_signal_connect (G_OBJECT (totem->win), "destroy",
 			G_CALLBACK (main_window_destroy_cb), totem);
-	g_object_add_weak_pointer (G_OBJECT (totem->win),
-			(void**)&(totem->win));
+//	g_object_add_weak_pointer (G_OBJECT (totem->win),
+//			(void**)&(totem->win));
 
 	/* Motion notify for the Popups */
 	item = glade_xml_get_widget (totem->xml, "window1");
@@ -1495,12 +1514,11 @@ totem_callback_connect (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->playlist),
 			"response", G_CALLBACK (toggle_playlist_from_playlist),
 			(gpointer) totem);
-	g_signal_connect (G_OBJECT (totem->playlist),
-			"delete-event",
+	g_signal_connect (G_OBJECT (totem->playlist), "delete-event",
 			G_CALLBACK (toggle_playlist_from_playlist),
 			(gpointer) totem);
-	g_object_add_weak_pointer (G_OBJECT (totem->playlist),
-			(void**)&(totem->playlist));
+//	g_object_add_weak_pointer (G_OBJECT (totem->playlist),
+//			(void**)&(totem->playlist));
 
 	/* Playlist */
 	g_signal_connect (G_OBJECT (totem->playlist),
@@ -1604,6 +1622,16 @@ totem_setup_recent (Totem *totem)
 
 	g_signal_connect (totem->recent_view, "activate",
 			G_CALLBACK (on_recent_file_activate), totem);
+}
+
+static void
+totem_setup_preferences (Totem *totem)
+{
+	totem->prefs = glade_xml_get_widget (totem->xml, "dialog1");
+	g_signal_connect (G_OBJECT (totem->prefs),
+			"response", G_CALLBACK (hide_prefs), (gpointer) totem);
+	g_signal_connect (G_OBJECT (totem->prefs), "delete-event",
+			G_CALLBACK (hide_prefs), (gpointer) totem);
 }
 
 GConfClient *
@@ -1721,6 +1749,7 @@ main (int argc, char **argv)
 			&width, &totem->control_popup_height);
 
 	totem_setup_recent (totem);
+	totem_setup_preferences (totem);
 	totem_callback_connect (totem);
 
 	/* Show ! gtk_main_iteration trickery to show all the widgets
