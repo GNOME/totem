@@ -1255,24 +1255,129 @@ on_about1_activate (GtkButton *button, gpointer user_data)
 	gtk_widget_show(about);
 }
 
+static char *
+screenshot_make_filename (Totem *totem)
+{
+	GtkWidget *radiobutton, *entry;
+	gboolean on_desktop;
+	char *fullpath, *filename;
+	int i = 0;
+
+	radiobutton = glade_xml_get_widget (totem->xml, "radiobutton2");
+	on_desktop = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON
+			(radiobutton));
+
+	if (on_desktop == TRUE)
+	{
+		filename = g_strdup_printf (_("Screenshot%d.png"), i);
+		fullpath = g_build_filename (G_DIR_SEPARATOR_S,
+				g_get_home_dir (), ".gnome-desktop", filename,
+				NULL);
+
+		while (g_file_test (fullpath, G_FILE_TEST_EXISTS) == TRUE
+				&& i < G_MAXINT)
+		{
+			i++;
+			g_free (filename);
+			g_free (fullpath);
+			filename = g_strdup_printf (_("Screenshot%d.png"), i);
+			fullpath = g_build_filename (G_DIR_SEPARATOR_S,
+					g_get_home_dir (), ".gnome-desktop",
+					filename, NULL);
+		}
+
+		g_free (filename);
+	} else {
+		entry = glade_xml_get_widget (totem->xml, "combo-entry1");
+		if (gtk_entry_get_text (GTK_ENTRY (entry)) == NULL)
+			return NULL;
+
+		fullpath = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
+	}
+
+	return fullpath;
+}
+
+static void
+on_radiobutton_shot_toggled (GtkToggleButton *togglebutton,
+		gpointer user_data)
+{	
+	Totem *totem = (Totem *)user_data;
+	GtkWidget *radiobutton, *entry;
+
+	radiobutton = glade_xml_get_widget (totem->xml, "radiobutton1");
+	entry = glade_xml_get_widget (totem->xml, "fileentry1");
+	gtk_widget_set_sensitive (entry, gtk_toggle_button_get_active
+			(GTK_TOGGLE_BUTTON (radiobutton)));
+}
+
+static void
+hide_screenshot (GtkWidget *widget, int trash, gpointer user_data)
+{
+	Totem *totem = (Totem *)user_data;
+	GtkWidget *dialog;
+
+	dialog = glade_xml_get_widget (totem->xml, "dialog2");
+	gtk_widget_hide (dialog);
+}
+
 static void
 on_take_screenshot1_activate (GtkButton *button, gpointer user_data)
 {
 	Totem *totem = (Totem *)user_data;
-	GdkPixbuf *pixbuf;
+	GdkPixbuf *pixbuf, *scaled;
+	GtkWidget *dialog, *image, *entry;
+	int response, width, height;
+	char *filename;
+	GError *err = NULL;
 
 	pixbuf = gtk_xine_get_current_frame (GTK_XINE (totem->gtx));
 	if (pixbuf == NULL)
 	{
-		//FIXME error
+		totem_action_error (_("Totem could not get a screenshot of that film.\nYou might want to try again at another time."), GTK_WINDOW (totem->win));
 		return;
 	}
 
-	if (gdk_pixbuf_save (pixbuf, "/home/hadess/Pictures/foo.png", "png", NULL, NULL) == FALSE)
+	filename = screenshot_make_filename (totem);
+	height = 200;
+	width = height * gdk_pixbuf_get_width (pixbuf)
+		/ gdk_pixbuf_get_height (pixbuf);
+	scaled = gdk_pixbuf_scale_simple (pixbuf, width, height,
+			GDK_INTERP_BILINEAR);
+
+	dialog = glade_xml_get_widget (totem->xml, "dialog2");
+	image = glade_xml_get_widget (totem->xml, "image1072");
+	gtk_image_set_from_pixbuf (GTK_IMAGE (image), scaled);
+	gdk_pixbuf_unref (scaled);
+	entry = glade_xml_get_widget (totem->xml, "combo-entry1");
+	gtk_entry_set_text (GTK_ENTRY (entry), filename);
+	response = gtk_dialog_run (GTK_DIALOG (dialog));
+	gtk_widget_hide (dialog);
+
+	if (response == GTK_RESPONSE_OK)
 	{
-		//FIXME error
+		filename = screenshot_make_filename (totem);
+		if (g_file_test (filename, G_FILE_TEST_EXISTS) == TRUE)
+		{
+			totem_action_error (_("File '%s' already exists.\nThe screenshot was not saved."), GTK_WINDOW (totem->win));
+			gdk_pixbuf_unref (pixbuf);
+			g_free (filename);
+			return;
+		}
+
+		if (gdk_pixbuf_save (pixbuf, filename, "png", &err, NULL)
+				== FALSE)
+		{
+			char *msg;
+
+			msg = g_strdup_printf (_("There was an error saving the screenshot as '%s'\nDetails: %s"), filename, err->message);
+			totem_action_error (msg, GTK_WINDOW (totem->win));
+			g_free (msg);
+			g_error_free (err);
+		}
 	}
 
+	g_free (filename);
 	gdk_pixbuf_unref (pixbuf);
 }
 
@@ -1879,6 +1984,20 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "properties1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_properties1_activate), totem);
+
+	/* Screenshot dialog */
+	item = glade_xml_get_widget (totem->xml, "dialog2");
+	g_signal_connect (G_OBJECT (item), "delete-event",
+			G_CALLBACK (hide_screenshot), (gpointer) totem);
+	item = glade_xml_get_widget (totem->xml, "radiobutton1");
+	g_signal_connect (G_OBJECT (item), "toggled",
+			G_CALLBACK (on_radiobutton_shot_toggled),
+			(gpointer) totem);
+	item = glade_xml_get_widget (totem->xml, "radiobutton2");
+	g_signal_connect (G_OBJECT (item), "toggled",
+			G_CALLBACK (on_radiobutton_shot_toggled),
+			(gpointer) totem);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), TRUE);
 
 	/* Controls */
 	totem->pp_button = glade_xml_get_widget
