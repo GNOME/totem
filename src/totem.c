@@ -1071,6 +1071,7 @@ action_handle_key (Totem *totem, guint keyval)
 		action_exit (totem);
 		break;
 	case GDK_0:
+	case GDK_onehalf:
 		action_set_scale_ratio (totem, 0.5);
 		break;
 	case GDK_1:
