@@ -1,5 +1,15 @@
 2003-10-07  Bastien Nocera  <hadess@hadess.net>
 
+	* README: remove a TODO item
+	* src/bacon-video-widget-gst.c: (got_time_tick):
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_tick_send):
+	modify backends to only send ticks when playing back a movie
+	* src/totem.c: (update_skip_to), (update_mrl_label),
+	(update_current_time): update the skip to spinner as we receive
+	different stream lengths
+
+2003-10-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-playlist.c: (totem_playlist_add_mrl): oops, return when
 	a blacklisted scheme was used in the filename (fixes the audio CD
 	tracks appearing twice)

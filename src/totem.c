@@ -663,6 +663,17 @@ totem_action_restore_pl (Totem *totem)
 }
 
 static void
+update_skip_to (Totem *totem, gint64 time)
+{
+	GtkWidget *widget;
+
+	widget = glade_xml_get_widget (totem->xml, "tstw_skip_spinbutton");
+	gtk_spin_button_set_range (GTK_SPIN_BUTTON (widget),
+			0, (gdouble) time / 1000);
+}
+
+
+static void
 update_mrl_label (Totem *totem, const char *name)
 {
 	gint time;
@@ -678,10 +689,7 @@ update_mrl_label (Totem *totem, const char *name)
 		totem_statusbar_set_time_and_length (TOTEM_STATUSBAR
 				(totem->statusbar), 0, time / 1000);
 
-		widget = glade_xml_get_widget (totem->xml,
-				"tstw_skip_spinbutton");
-		gtk_spin_button_set_range (GTK_SPIN_BUTTON (widget),
-				0, (gdouble) time / 1000);
+		update_skip_to (totem, time);
 
 		/* Update the mrl label */
 		escaped = g_markup_escape_text (name, strlen (name));
@@ -706,8 +714,7 @@ update_mrl_label (Totem *totem, const char *name)
 		totem_statusbar_set_time_and_length (TOTEM_STATUSBAR
 				(totem->statusbar), 0, -1);
 
-		widget = glade_xml_get_widget (totem->xml, "tstw_skip_spinbutton");
-		gtk_spin_button_set_range (GTK_SPIN_BUTTON (widget), 0, 0);
+		update_skip_to (totem, 0);
 
 		/* Update the mrl label */
 		text = g_strdup_printf
@@ -1353,8 +1360,9 @@ update_current_time (BaconVideoWidget *bvw,
 		gint64 stream_length,
 		float current_position, Totem *totem)
 {
-	if (bacon_video_widget_get_logo_mode (totem->bvw) != FALSE
-			|| (current_time == 0 && stream_length == 0))
+	update_skip_to (totem, stream_length);
+
+	if (stream_length == 0)
 	{
 		totem_statusbar_set_time_and_length
 			(TOTEM_STATUSBAR (totem->statusbar),

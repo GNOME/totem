@@ -454,6 +454,9 @@ got_time_tick (GstPlay * play, gint64 time_nanos, BaconVideoWidget * bvw)
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
+  if (bvw->priv->logo_mode != FALSE)
+    return;
+
   bvw->priv->current_time_nanos = time_nanos;
 
   bvw->priv->current_time = (gint64) time_nanos / GST_MSECOND;
@@ -466,8 +469,6 @@ got_time_tick (GstPlay * play, gint64 time_nanos, BaconVideoWidget * bvw)
 	(float) bvw->priv->current_time / bvw->priv->stream_length;
     }
 
-  g_message ("current time : %lld stream length : %lld current position : %f",
-             bvw->priv->current_time, bvw->priv->stream_length, bvw->priv->current_position);
   g_signal_emit (G_OBJECT (bvw),
 		 bvw_table_signals[TICK], 0,
 		 bvw->priv->current_time, bvw->priv->stream_length,
