@@ -786,6 +786,8 @@ gtk_playlist_class_init (GtkPlaylistClass *klass)
 {
 	D("gtk_playlist_class_init");
 
+	parent_class = gtk_type_class (gtk_dialog_get_type ());
+
 	G_OBJECT_CLASS (klass)->finalize = gtk_playlist_finalize;
 
 	/* Signals */
