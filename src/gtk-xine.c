@@ -789,20 +789,8 @@ gtk_xine_realize (GtkWidget *widget)
 			"configure-event",
 			GTK_SIGNAL_FUNC (configure_cb), gtx);
 
-	/* Init threads in X and setup the needed X stuff */
-	if (!XInitThreads ())
-	{
-		g_signal_emit (G_OBJECT (gtx),
-				gtx_table_signals[ERROR], 0,
-				0,
-				_("Could not initialise the threads support.\n"
-				"You should install a thread-safe Xlib."));
-		return;
-	}
-
 	gtx->priv->display = XOpenDisplay (gdk_display_get_name
 			(gdk_display_get_default ()));
-	XLockDisplay (gtx->priv->display);
 	gtx->priv->screen = DefaultScreen (gtx->priv->display);
 
 	/* load the video driver */
@@ -810,7 +798,6 @@ gtk_xine_realize (GtkWidget *widget)
 
 	if (gtx->priv->vo_driver == NULL)
 	{
-		XUnlockDisplay (gtx->priv->display);
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[ERROR], 0,
 				GTX_STARTUP,
@@ -831,8 +818,6 @@ gtk_xine_realize (GtkWidget *widget)
 			xine_event, (void *) gtx);
 
 	scrsaver_init (gtx->priv->display);
-
-	XUnlockDisplay (gtx->priv->display);
 
 	return;
 }
@@ -1470,18 +1455,13 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 	g_return_if_fail (GTK_IS_XINE (gtx));
 	g_return_if_fail (gtx->priv->xine != NULL);
 
-	XLockDisplay (gtx->priv->display);
-
 	if (gtx->priv->pml == FALSE)
 		gtx->priv->pml = TRUE;
 	else
 		return;
 
 	if (fullscreen == gtx->priv->fullscreen_mode)
-	{
-		XUnlockDisplay (gtx->priv->display);
 		return;
-	}
 
 	gtx->priv->fullscreen_mode = fullscreen;
 
@@ -1544,7 +1524,6 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 	}
 
 	gtx->priv->pml = FALSE;
-	XUnlockDisplay (gtx->priv->display);
 }
 
 gboolean

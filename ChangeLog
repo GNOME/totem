@@ -1,3 +1,9 @@
+2003-02-06  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-xine.c: (gtk_xine_realize), (gtk_xine_set_fullscreen): we
+	don't need a thread-safe X, we have 2 connections to the X server,
+	remove all the extraneous locks
+
 2003-02-05  Bastien Nocera  <hadess@hadess.net>
 
 	* README:
