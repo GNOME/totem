@@ -1,23 +1,25 @@
+# translation of totem.HEAD.gu.po to Gujarati
 # translation of totem.HEAD.po to Gujarati
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
-# Ankit Patel <ankit@redhat.com>, 2004.
+# Ankit Patel <ankit@redhat.com>, 2004, 2005.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: totem.HEAD\n"
+"Project-Id-Version: totem.HEAD.gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-09 04:22+0200\n"
-"PO-Revision-Date: 2004-09-09 11:41+0530\n"
+"POT-Creation-Date: 2005-02-22 07:47+0100\n"
+"PO-Revision-Date: 2005-02-25 10:05+0530\n"
 "Last-Translator: Ankit Patel <ankit@redhat.com>\n"
-"Language-Team: Gujarati\n"
+"Language-Team: Gujarati <gu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
-"X-Generator: KBabel 1.3.1\n"
+"Plural-Forms: Plural-Forms: Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
+"\n"
+"X-Generator: KBabel 1.9.1\n"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1409
+#: data/playlist.glade.h:1 src/totem-playlist.c:1509
 msgid "Playlist"
 msgstr "વગાડવા માટેની યાદી"
 
@@ -41,26 +43,86 @@ msgstr "સ્થાનની નકલ કરો (_C)"
 msgid "_Save..."
 msgstr "સંગ્રહો (_S)..."
 
+#: data/popup.glade.h:1 data/totem.glade.h:48
+msgid "Next chapter or movie"
+msgstr "આગળનું પ્રકરણ અથવા ફિલ્મ"
+
+#: data/popup.glade.h:2 data/totem.glade.h:53
+msgid "Play / Pa_use"
+msgstr "વગાડો / અટકાવો (_u)"
+
+#: data/popup.glade.h:3 data/totem.glade.h:56
+msgid "Play or pause the movie"
+msgstr "ફિલ્મને વગાડો અથવા અટકાવો"
+
+#: data/popup.glade.h:4 data/totem.glade.h:59
+msgid "Previous chapter or movie"
+msgstr "પહેલાનું પ્રકરણ અથવા ફિલ્મ"
+
+#: data/popup.glade.h:5 data/totem.glade.h:75
+msgid "Show _Controls"
+msgstr "નિયંત્રકો બતાવો (_C)"
+
+#: data/popup.glade.h:6 data/totem.glade.h:77
+msgid "Show controls"
+msgstr "નિયંત્રકો બતાવો"
+
+#: data/popup.glade.h:7 data/totem.glade.h:81
+msgid "Skip _Backwards"
+msgstr "પાછા જવાનું રદ કરો (_B)"
+
+#: data/popup.glade.h:8 data/totem.glade.h:82
+msgid "Skip _Forward"
+msgstr "આગળ જવાનું રદ કરો (_F)"
+
+#: data/popup.glade.h:9 data/totem.glade.h:83
+msgid "Skip backwards"
+msgstr "પાછા જવાનું રદ કરો"
+
+#: data/popup.glade.h:10 data/totem.glade.h:84
+msgid "Skip forward"
+msgstr "આગળ જવાનું રદ કરો"
+
+#: data/popup.glade.h:11 data/totem.glade.h:107
+msgid "Volume _Down"
+msgstr "અવાજ નીચો (_D)"
+
+#: data/popup.glade.h:12 data/totem.glade.h:108
+msgid "Volume _Up"
+msgstr "અવાજ ઉપર (_U)"
+
+#: data/popup.glade.h:13 data/totem.glade.h:110
+msgid "Volume up"
+msgstr "અવાજ ઉપર"
+
+#: data/popup.glade.h:14 data/totem.glade.h:133
+msgid "_Next Chapter/Movie"
+msgstr "આગળનું પ્રકરણ/ફિલ્મ (_N)"
+
+#: data/popup.glade.h:15 data/totem.glade.h:136
+msgid "_Previous Chapter/Movie"
+msgstr "પહેલાનું પ્રકરણ/ફિલ્મ (_P)"
+
 #: data/properties.glade.h:1 data/screenshot.glade.h:1 data/totem.glade.h:1
 msgid "    "
 msgstr "    "
 
-#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:105
+#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:109
 msgid "0 frames per second"
 msgstr "સેકન્ડ પ્રતિ ૦ ચોકઠાઓ"
 
 #. Bitrate
-#: data/properties.glade.h:3 src/bacon-video-widget-properties.c:107
+#: data/properties.glade.h:3 src/bacon-video-widget-properties.c:111
 msgid "0 kbps"
 msgstr "0 kbps"
 
 #. 0 seconds
-#: data/properties.glade.h:4 data/totem.glade.h:2 src/video-utils.c:344
+#: data/properties.glade.h:4 data/skip_to.glade.h:1 src/video-utils.c:310
 msgid "0 seconds"
 msgstr "૦ સેકન્ડો"
 
 #. Dimensions
-#: data/properties.glade.h:5 src/bacon-video-widget-properties.c:100
+#: data/properties.glade.h:5 src/bacon-video-widget-properties.c:104
 msgid "0 x 0"
 msgstr "0 x 0"
 
@@ -77,59 +139,66 @@ msgid "<b>Video</b>"
 msgstr "<b>વિડીયો</b>"
 
 #: data/properties.glade.h:9
+msgid "Album:"
+msgstr "આલ્બમ:"
+
+#: data/properties.glade.h:10
 msgid "Artist:"
 msgstr "કલાકાર:"
 
-#: data/properties.glade.h:10
+#: data/properties.glade.h:11
 msgid "Bitrate:"
 msgstr "બીટનો દર:"
 
-#: data/properties.glade.h:11
+#: data/properties.glade.h:12
 msgid "Codec:"
 msgstr "કોડેક:"
 
-#: data/properties.glade.h:12
+#: data/properties.glade.h:13
 msgid "Dimensions:"
 msgstr "પરિમાણો:"
 
-#: data/properties.glade.h:13
+#: data/properties.glade.h:14
 msgid "Duration:"
 msgstr "સમયગાળો:"
 
-#: data/properties.glade.h:14
+#: data/properties.glade.h:15
 msgid "Framerate:"
 msgstr "ચોકઠાંનો દર:"
 
 #. Video Codec
 #. Audio Codec
-#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:102
-#: src/bacon-video-widget-properties.c:109
-#: src/bacon-video-widget-properties.c:180
-#: src/bacon-video-widget-properties.c:216
+#: data/properties.glade.h:16 src/bacon-video-widget-properties.c:106
+#: src/bacon-video-widget-properties.c:113
+#: src/bacon-video-widget-properties.c:194
+#: src/bacon-video-widget-properties.c:232
 msgid "N/A"
 msgstr "લાગુ પડતું નથી"
 
-#: data/properties.glade.h:16 src/totem.c:2067
+#: data/properties.glade.h:17 src/totem.c:1986
 msgid "Properties"
 msgstr "ગુણધર્મો"
 
-#: data/properties.glade.h:17
+#: data/properties.glade.h:18
 msgid "Title:"
 msgstr "શીર્ષક:"
 
 #. Title
 #. Artist
+#. Album
 #. Year
-#: data/properties.glade.h:18 src/bacon-video-widget-properties.c:92
-#: src/bacon-video-widget-properties.c:94
+#: data/properties.glade.h:19 src/bacon-video-widget-properties.c:94
 #: src/bacon-video-widget-properties.c:96
-#: src/bacon-video-widget-properties.c:128
-#: src/bacon-video-widget-properties.c:135
-#: src/bacon-video-widget-properties.c:142
+#: src/bacon-video-widget-properties.c:98
+#: src/bacon-video-widget-properties.c:100
+#: src/bacon-video-widget-properties.c:132
+#: src/bacon-video-widget-properties.c:139
+#: src/bacon-video-widget-properties.c:146
+#: src/bacon-video-widget-properties.c:153
 msgid "Unknown"
 msgstr "અજ્ઞાત"
 
-#: data/properties.glade.h:19
+#: data/properties.glade.h:20
 msgid "Year:"
 msgstr "વર્ષ:"
 
@@ -141,7 +210,7 @@ msgstr "*"
 msgid "<b>Preview</b>"
 msgstr "<b>પૂર્વદર્શન</b>"
 
-#: data/screenshot.glade.h:4 src/totem-screenshot.c:268
+#: data/screenshot.glade.h:4 src/totem-screenshot.c:346
 msgid "Save Screenshot"
 msgstr "સ્ક્રીનની છબી સંગ્રહો"
 
@@ -157,583 +226,511 @@ msgstr "સ્ક્રીનની છબીને ડેસ્કટોપ પ
 msgid "Save screenshot to _file:"
 msgstr "સ્ક્રીનની છબીને ફાઈલમાં સંગ્રહો (_f):"
 
-#: data/totem.desktop.in.in.h:1
+#: data/skip_to.glade.h:2 src/totem-skipto.c:140
+msgid "Skip to"
+msgstr "ને રદ કરો"
+
+#: data/skip_to.glade.h:3
+msgid "_Skip to:"
+msgstr "ને રદ કરો (_S):"
+
+#: data/skip_to.glade.h:4
+msgid "seconds"
+msgstr "સેકન્ડો"
+
+#: data/totem.desktop.in.in.in.h:1
 msgid "Play movies and songs"
 msgstr "ફિલ્મો અને ગીતો વગાડો"
 
 #. Title
-#: data/totem.desktop.in.in.h:2 data/totem.glade.h:101 src/totem.c:710
-#: src/totem.c:3699
+#: data/totem.desktop.in.in.in.h:2 data/totem.glade.h:102 src/totem.c:580
+#: src/totem.c:3398
 msgid "Totem Movie Player"
 msgstr "ટોટેમ મુવી પ્લેયર"
 
-#: data/totem.glade.h:3
-msgid "1.5 Mbps T1/Intranet/LAN"
-msgstr "1.5 Mbps T1/ઈન્ટ્રાનેટ/LAN"
+#: data/totem.glade.h:2
+msgid ""
+"14.4 Kbps Modem\n"
+"19.2 Kbps Modem\n"
+"28.8 Kbps Modem\n"
+"33.6 Kbps Modem\n"
+"34.4 Kbps Modem\n"
+"56 Kbps Modem/ISDN\n"
+"112 Kbps Dual ISDN/DSL\n"
+"256 Kbps DSL/Cable\n"
+"384 Kbps DSL/Cable\n"
+"512 Kbps DSL/Cable\n"
+"1.5 Mbps T1/Intranet/LAN\n"
+"Intranet/LAN"
+msgstr ""
+"14.4 Kbps મોડેમ\n"
+"19.2 Kbps મોડેમ\n"
+"28.8 Kbps મોડેમ\n"
+"33.6 Kbps મોડેમ\n"
+"34.4 Kbps મોડેમ\n"
+"56 Kbps મોડેમ/ISDN\n"
+"112 Kbps દ્વિ ISDN/DSL\n"
+"256 Kbps DSL/કેબલ\n"
+"384 Kbps DSL/કેબલ\n"
+"512 Kbps DSL/કેબલ\n"
+"1.5 Mbps T1/ઈન્ટ્રાનેટ/LAN\n"
+"ઈન્ટ્રાનેટ/LAN"
 
-#: data/totem.glade.h:4
-msgid "112 Kbps Dual ISDN/DSL"
-msgstr "112 Kbps Dual ISDN/DSL"
-
-#: data/totem.glade.h:5
-msgid "14.4 Kbps Modem"
-msgstr "14.4 Kbps મોડેમ"
-
-#: data/totem.glade.h:6
+#: data/totem.glade.h:14
 msgid "16:9 (Widescreen)"
 msgstr "16:9 (પહોળી સ્ક્રીન)"
 
-#: data/totem.glade.h:7
-msgid "19.2 Kbps Modem"
-msgstr "19.2 Kbps મોડેમ"
-
-#: data/totem.glade.h:8
+#: data/totem.glade.h:15
 msgid "2.11:1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: data/totem.glade.h:9
-msgid "256 Kbps DSL/Cable"
-msgstr "256 Kbps DSL/Cable"
-
-#: data/totem.glade.h:10
-msgid "28.8 Kbps Modem"
-msgstr "28.8 Kbps મોડેમ"
-
-#: data/totem.glade.h:11
-msgid "33.6 Kbps Modem"
-msgstr "33.6 Kbps મોડેમ"
-
-#: data/totem.glade.h:12
-msgid "34.4 Kbps Modem"
-msgstr "34.4 Kbps મોડેમ"
-
-#: data/totem.glade.h:13
-msgid "384 Kbps DSL/Cable"
-msgstr "384 Kbps DSL/Cable"
-
-#: data/totem.glade.h:14
-msgid "4-channel"
-msgstr "૪-ચેનલ"
-
-#: data/totem.glade.h:15
+#: data/totem.glade.h:16
 msgid "4:3 (TV)"
 msgstr "4:3 (TV)"
 
-#: data/totem.glade.h:16
-msgid "5.0-channel"
-msgstr "૫.૦-ચેનલ"
-
 #: data/totem.glade.h:17
-msgid "5.1-channel"
-msgstr "૫.૧-ચેનલ"
-
-#: data/totem.glade.h:18
-msgid "512 Kbps DSL/Cable"
-msgstr "512 Kbps DSL/Cable"
-
-#: data/totem.glade.h:19
-msgid "56 Kbps Modem/ISDN"
-msgstr "56 Kbps મોડેમ/ISDN"
-
-#: data/totem.glade.h:20
 msgid "<b>Audio Output</b>"
 msgstr "<b>ઓડિયો આઉટપુટ</b>"
 
-#: data/totem.glade.h:21
+#: data/totem.glade.h:18
 msgid "<b>Color balance</b>"
 msgstr "<b>રંગનું સમતોલન</b>"
 
-#: data/totem.glade.h:22
+#: data/totem.glade.h:19
 msgid "<b>Display</b>"
 msgstr "<b>ડિસ્પ્લે</b>"
 
-#: data/totem.glade.h:23
+#: data/totem.glade.h:20
 msgid "<b>Networking</b>"
 msgstr "<b>નેટવર્કીંગ</b>"
 
-#: data/totem.glade.h:24
+#: data/totem.glade.h:21
 msgid "<b>Optical Device</b>"
 msgstr "<b>ઓપ્ટીકલ ઉપકરણ</b>"
 
-#: data/totem.glade.h:25
+#: data/totem.glade.h:22
 msgid "<b>Proprietary Plugins</b>"
 msgstr "<b>જરુરી પ્લગઈનો</b>"
 
-#: data/totem.glade.h:26
+#: data/totem.glade.h:23
 msgid "<b>TV-Out</b>"
 msgstr "<b>TV-Out</b>"
 
-#: data/totem.glade.h:27
+#: data/totem.glade.h:24
 msgid "<b>Visual Effects</b>"
 msgstr "<b>દ્રશ્યની અસરો</b>"
 
-#: data/totem.glade.h:28
-msgid "AC3 Passthrough"
-msgstr "AC3 Passthrough"
+#: data/totem.glade.h:25
+msgid "<span size=\"medium\"><b>No File</b></span>"
+msgstr "<span size=\"medium\"><b>કોઈ ફાઈલ નથી</b></span>"
 
-#: data/totem.glade.h:29
+#: data/totem.glade.h:26
+msgid "<span size=\"medium\"><b>No file</b></span>"
+msgstr "<span size=\"medium\"><b>કોઈ ફાઈલ નથી</b></span>"
+
+#: data/totem.glade.h:27
 msgid "A_udio Menu"
 msgstr "ઓડિયો મેનુ (_u)"
 
-#: data/totem.glade.h:30
+#: data/totem.glade.h:28
 msgid "Always on _Top"
 msgstr "હંમેશા ઉપર રાખો (_T)"
 
-#: data/totem.glade.h:31
+#: data/totem.glade.h:29
 msgid "Always on top"
 msgstr "હંમેશા ઉપર રાખો"
 
-#: data/totem.glade.h:32
+#: data/totem.glade.h:30
 msgid "Audio"
 msgstr "ઓડિયો"
 
-#: data/totem.glade.h:33 src/totem.c:2930 src/totem.c:2951
+#: data/totem.glade.h:31 src/totem-sublang.c:112 src/totem-sublang.c:133
 msgid "Auto"
 msgstr "આપોઆપ"
 
-#: data/totem.glade.h:34
+#: data/totem.glade.h:32
 msgid "Automatically _resize the window when a new video is loaded"
 msgstr "જ્યારે નવી વિન્ડો લવાય ત્યારે આપોઆપ તેનું માપ બદલો (_r)"
 
-#: data/totem.glade.h:35
+#: data/totem.glade.h:33
 msgid "Co_ntrast:"
 msgstr "વિરોધાભાસ (_n):"
 
-#: data/totem.glade.h:36
+#: data/totem.glade.h:34
 msgid "Connection _speed:"
 msgstr "જોડાણની ઝડપ (_s):"
 
-#: data/totem.glade.h:37
+#: data/totem.glade.h:35
 msgid "Deinterlace"
-msgstr ""
+msgstr "ડીઈન્ટરલેસ"
 
-#: data/totem.glade.h:38
+#: data/totem.glade.h:36
 msgid "Display"
 msgstr "ડિસ્પ્લે"
 
-#: data/totem.glade.h:39
+#: data/totem.glade.h:37
 msgid "Exit Fullscreen"
 msgstr "પૂર્ણસ્ક્રીનમાંથી બહાર નીકળો"
 
-#: data/totem.glade.h:40
-msgid "Extra Large"
-msgstr "વધારે પડતું વિશાળ"
+#: data/totem.glade.h:38
+msgid "Fit Window to Movie"
+msgstr "ફિલ્મને વિન્ડોમાં બંધબેસાડો"
 
-#: data/totem.glade.h:41
-msgid "File name"
-msgstr "ફાઈલનું નામ"
-
-#: data/totem.glade.h:42
+#: data/totem.glade.h:39
 msgid "General"
 msgstr "સામાન્ય"
 
-#: data/totem.glade.h:43
+#: data/totem.glade.h:40
 msgid "Go to the DVD menu"
 msgstr "DVD મેનુમાં જાઓ"
 
-#: data/totem.glade.h:44
+#: data/totem.glade.h:41
 msgid "Go to the angle menu"
 msgstr "કોણ મેનુમાં જાઓ"
 
-#: data/totem.glade.h:45
+#: data/totem.glade.h:42
 msgid "Go to the audio menu"
 msgstr "ઓડિયો મેનુમાં જાઓ"
 
-#: data/totem.glade.h:46
+#: data/totem.glade.h:43
 msgid "Go to the chapter menu"
 msgstr "પ્રકરણ મેનુમાં જાઓ"
 
-#: data/totem.glade.h:47
+#: data/totem.glade.h:44
 msgid "Go to the title menu"
 msgstr "શીર્ષક મેનુમાં જાઓ"
 
-#: data/totem.glade.h:48
+#: data/totem.glade.h:45
 msgid "Help contents"
 msgstr "મદદના સમાવિષ્ટો"
 
-#: data/totem.glade.h:49
-msgid "Intranet/LAN"
-msgstr "ઈન્ટ્રાનેટ/LAN"
-
-#: data/totem.glade.h:50
+#: data/totem.glade.h:46
 msgid "Languages"
 msgstr "ભાષાઓ"
 
-#: data/totem.glade.h:51
-msgid "Large"
-msgstr "વિશાળ"
-
-#: data/totem.glade.h:52 src/totem.c:83
+#: data/totem.glade.h:47 src/totem-options.c:39
 msgid "Next"
 msgstr "આગળ વધો"
 
-#: data/totem.glade.h:53
-msgid "Next chapter or movie"
-msgstr "આગળનું પ્રકરણ અથવા ફિલ્મ"
-
-#: data/totem.glade.h:54
+#: data/totem.glade.h:49
 msgid "No Language Selection Available"
 msgstr "કોઈ ભાષા પસંદગી ઉપ્લબ્ધ નથી"
 
-#: data/totem.glade.h:55
+#: data/totem.glade.h:50
 msgid "No subtitles selection available"
 msgstr "કોઈ ઉપશીર્ષક પસંદગી ઉપ્લબ્ધ નથી"
 
-#: data/totem.glade.h:56
-msgid "Normal"
-msgstr "સામાન્ય"
-
-#: data/totem.glade.h:57
+#: data/totem.glade.h:51
 msgid "Open _Location..."
 msgstr "સ્થાન ખોલો (_L)..."
 
-#: data/totem.glade.h:58
+#: data/totem.glade.h:52
 msgid "Open a non-local file"
 msgstr "બિન-સ્થાનીય ફાઈલ ખોલો"
 
-#: data/totem.glade.h:59
-msgid "Play / Pa_use"
-msgstr "વગાડો / અટકાવો (_u)"
+#: data/totem.glade.h:54
+msgid "Play _Disc"
+msgstr "ડિસ્ક વગાડો (_D)"
 
-#: data/totem.glade.h:60
-msgid "Play _Audio CD"
-msgstr "ઓડિયો CD વગાડો (_A)"
+#: data/totem.glade.h:55
+msgid "Play a Video or Audio Disc"
+msgstr "વીડિયો અથવા ઓડિયો ડિસ્ક વગાડો"
 
-#: data/totem.glade.h:61
-msgid "Play _DVD"
-msgstr "_DVD વગાડો"
-
-#: data/totem.glade.h:62
-msgid "Play _VCD"
-msgstr "_VCD વગાડો"
-
-#: data/totem.glade.h:63
-msgid "Play a Video CD"
-msgstr "વિડીયો CD વગાડો"
-
-#: data/totem.glade.h:64
-msgid "Play a Video DVD"
-msgstr "વિડીયો DVD વગાડો"
-
-#: data/totem.glade.h:65
-msgid "Play an audio CD"
-msgstr "ઓડિયો CD વગાડો"
-
-#: data/totem.glade.h:66
-msgid "Play or pause the movie"
-msgstr "ફિલ્મને વગાડો અથવા અટકાવો"
-
-#: data/totem.glade.h:67 src/totem.c:82
+#: data/totem.glade.h:57 src/totem-options.c:38
 msgid "Play/Pause"
 msgstr "વગાડો/અટકાવો"
 
-#: data/totem.glade.h:68 src/totem.c:84
+#: data/totem.glade.h:58 src/totem-options.c:40
 msgid "Previous"
 msgstr "પહેલાનું"
 
-#: data/totem.glade.h:69
-msgid "Previous chapter or movie"
-msgstr "પહેલાનું પ્રકરણ અથવા ફિલ્મ"
+#: data/totem.glade.h:60
+msgid "Resize _1:1"
+msgstr "_૧:૧ માપ બદલો"
 
-#: data/totem.glade.h:70
+#: data/totem.glade.h:61
+msgid "Resize _2:1"
+msgstr "_૨:૧ માપ બદલો"
+
+#: data/totem.glade.h:62
+msgid "Resize to half the video size"
+msgstr "વીડિયોને અડધા માપમાં ફેરવો"
+
+#: data/totem.glade.h:63
+msgid "Resize to twice the video size"
+msgstr "વીડિયોનું માપ બમણું કરો"
+
+#: data/totem.glade.h:64
+msgid "Resize to video size"
+msgstr "વીડિયો માપ બદલો"
+
+#: data/totem.glade.h:65
 msgid "S_ubtitles"
 msgstr "ઉપશીર્ષકો (_u)"
 
-#: data/totem.glade.h:71
+#: data/totem.glade.h:66
 msgid "Sat_uration:"
 msgstr "સમતોલન (_u):"
 
-#: data/totem.glade.h:72
+#: data/totem.glade.h:67
 msgid "Set the aspect ratio"
 msgstr "એસ્પેક્ટ રેશિયો સુયોજિત કરો"
 
-#: data/totem.glade.h:73
+#: data/totem.glade.h:68
 msgid "Set the repeat mode"
 msgstr "પુનરાવર્તિત સ્થિતિ સુયોજિત કરો"
 
-#: data/totem.glade.h:74
+#: data/totem.glade.h:69
 msgid "Set the shuffle mode"
 msgstr "રેન્ડમ સ્થિતિ સુયોજિત કરો"
 
-#: data/totem.glade.h:75
+#: data/totem.glade.h:70
 msgid "Sets 16:9 (Anamorphic) aspect ratio"
 msgstr "એસ્પેક્ટ રેશિયો ૧૬:૯ સુયોજિત કરો (Anamorphic)"
 
-#: data/totem.glade.h:76
+#: data/totem.glade.h:71
 msgid "Sets 2.11:1 (DVB) aspect ratio"
 msgstr "એસ્પેક્ટ રેશિયો ૨.૧૧:૧ સુયોજિત કરો (DVB)"
 
-#: data/totem.glade.h:77
+#: data/totem.glade.h:72
 msgid "Sets 4:3 (TV) aspect ratio"
 msgstr "એસ્પેક્ટ રેશિયો ૪:૩ સુયોજિત કરે છે (TV)"
 
-#: data/totem.glade.h:78
+#: data/totem.glade.h:73
 msgid "Sets automatic aspect ratio"
 msgstr "આપોઆપ એસ્પેક્ટ રેશિયો સુયોજિત કરે છે"
 
-#: data/totem.glade.h:79
+#: data/totem.glade.h:74
 msgid "Sets square aspect ratio"
 msgstr "ચોરસ એસ્પેક્ટ રેશિયો સુયોજિત કરે છે"
 
-#: data/totem.glade.h:80
-msgid "Show _Controls"
-msgstr "નિયંત્રકો બતાવો (_C)"
-
-#: data/totem.glade.h:81
+#: data/totem.glade.h:76
 msgid "Show _visual effects when an audio file is played"
 msgstr "જ્યારે ઓડિયો ફાઈલ વગાડાય ત્યારે દ્રશ્ય અસરો બતાવો (_v)"
 
-#: data/totem.glade.h:82
-msgid "Show controls"
-msgstr "નિયંત્રકો બતાવો"
-
-#: data/totem.glade.h:83
+#: data/totem.glade.h:78
 msgid "Show or hide the playlist"
 msgstr "વગાડવાની યાદી બતાવો અથવા છુપાવો"
 
-#: data/totem.glade.h:84
+#: data/totem.glade.h:79
 msgid "Show/Hide Playlist"
 msgstr "વગાડવાની યાદી બતાવો/છુપાવો"
 
-#: data/totem.glade.h:85
+#: data/totem.glade.h:80
 msgid "Shuff_le Mode"
 msgstr "રેન્ડમ સ્થિતિ (_l)"
 
-#: data/totem.glade.h:86
-msgid "Skip _Backwards"
-msgstr "પાછા જવાનું રદ કરો (_B)"
-
-#: data/totem.glade.h:87
-msgid "Skip _Forward"
-msgstr "આગળ જવાનું રદ કરો (_F)"
-
-#: data/totem.glade.h:88
-msgid "Skip backwards"
-msgstr "પાછા જવાનું રદ કરો"
-
-#: data/totem.glade.h:89
-msgid "Skip forward"
-msgstr "આગળ જવાનું રદ કરો"
-
-#: data/totem.glade.h:90
-msgid "Skip to"
-msgstr "ને રદ કરો"
-
-#: data/totem.glade.h:91
+#: data/totem.glade.h:85
 msgid "Skip to a specific time"
 msgstr "ચોક્કસ સમયે રદ કરો"
 
-#: data/totem.glade.h:92
-msgid "Small"
-msgstr "નાનું"
+#: data/totem.glade.h:86
+msgid ""
+"Small\n"
+"Normal\n"
+"Large\n"
+"Extra Large"
+msgstr ""
+"નાનું\n"
+"સામાન્ય\n"
+"મોટું\n"
+"ખૂબ મોટું"
 
-#: data/totem.glade.h:93
+#: data/totem.glade.h:90
 msgid "Square"
 msgstr "ચોરસ"
 
-#: data/totem.glade.h:94
-msgid "Stereo"
-msgstr "સ્ટીરીયો"
+#: data/totem.glade.h:91
+msgid ""
+"Stereo\n"
+"4-channel\n"
+"4.1-channel\n"
+"5.0-channel\n"
+"5.1-channel\n"
+"AC3 Passthrough"
+msgstr ""
+"સ્ટીરીયો\n"
+"૪-ચેનલ\n"
+"૪.૧-ચેનલ\n"
+"૫.૦-ચેનલ\n"
+"૫.૧-ચેનલ\n"
+"AC3 પાસથ્રુ"
 
-#: data/totem.glade.h:95
+#: data/totem.glade.h:97
 msgid "Subtitles"
 msgstr "ઉપશીર્ષકો"
 
-#: data/totem.glade.h:96
-msgid "Switch to double size"
-msgstr "બમણા માપમાં ફેરબદલી કરો"
-
-#: data/totem.glade.h:97
+#: data/totem.glade.h:98
 msgid "Switch to fullscreen"
 msgstr "પૂર્ણ સ્ક્રીનમાં ફેરબદલી કરો"
 
-#: data/totem.glade.h:98
+#: data/totem.glade.h:99
 msgid "Take _Screenshot"
 msgstr "સ્ક્રીનની છબી લો (_S)"
 
-#: data/totem.glade.h:99
+#: data/totem.glade.h:100
 msgid "Take a screenshot"
 msgstr "સ્ક્રીનની છબી લો"
 
-#: data/totem.glade.h:100
+#: data/totem.glade.h:101
 msgid "Time:"
 msgstr "સમય:"
 
-#: data/totem.glade.h:102
+#: data/totem.glade.h:103
 msgid "Totem Preferences"
 msgstr "ટોટેમની પસંદગીઓ"
 
-#: data/totem.glade.h:103
+#: data/totem.glade.h:104
 msgid "Tv-out in fullscreen by Nvidia (NTSC)"
 msgstr "Tv-out એ પૂર્ણ સ્ક્રીનમાં Nvidia દ્વારા (NTSC)"
 
-#: data/totem.glade.h:104
+#: data/totem.glade.h:105
 msgid "Tv-out in fullscreen by Nvidia (PAL)"
 msgstr "Tv-out એ પૂર્ણ સ્ક્રીનમાં Nvidia દ્વારા (PAL)"
 
-#: data/totem.glade.h:105
+#: data/totem.glade.h:106
 msgid "Visualisation _size:"
 msgstr "વિઝ્યુઅલાઈઝેશન માપ (_s):"
 
-#: data/totem.glade.h:106
-msgid "Volume _Down"
-msgstr "અવાજ નીચો (_D)"
-
-#: data/totem.glade.h:107
-msgid "Volume _Up"
-msgstr "અવાજ ઉપર (_U)"
-
-#: data/totem.glade.h:108
+#: data/totem.glade.h:109
 msgid "Volume down"
 msgstr "અવાજ નીચો"
 
-#: data/totem.glade.h:109
-msgid "Volume up"
-msgstr "અવાજ ઉપર"
-
-#: data/totem.glade.h:110 data/vanity.glade.h:7
-msgid "Zoom _1:1"
-msgstr "_1:1 પ્રમાણમાં નાનુંમોટું કરો"
-
-#: data/totem.glade.h:111 data/vanity.glade.h:8
-msgid "Zoom _2:1"
-msgstr "_2:1 પ્રમાણમાં નાનુંમોટું કરો"
+#: data/totem.glade.h:111
+msgid "Zoom In"
+msgstr "મોટું કરો"
 
 #: data/totem.glade.h:112
-msgid "Zoom to half size"
-msgstr "અડધા માપમાં નાનુમોટું કરો"
+msgid "Zoom Out"
+msgstr "નાનું કરો"
 
 #: data/totem.glade.h:113
-msgid "Zoom to one for one size"
-msgstr "એક માપ માટે એક જેટલું નાનુમોટુ કરો"
+msgid "Zoom Reset"
+msgstr "ઝુમ પુનઃ સુયોજન"
 
 #: data/totem.glade.h:114
-msgid "_Add Proprietary Plugins..."
-msgstr ""
+msgid "Zoom in"
+msgstr "મોટું કરો"
 
 #: data/totem.glade.h:115
+msgid "Zoom out"
+msgstr "નાનું કરો"
+
+#: data/totem.glade.h:116
+msgid "Zoom reset"
+msgstr "ઝુમ પુનઃ સુયોજન"
+
+#: data/totem.glade.h:117
+msgid "_Add Proprietary Plugins..."
+msgstr "માલિકી પ્લગઈનો ઉમેરો (_A)..."
+
+#: data/totem.glade.h:118
 msgid "_Angle Menu"
 msgstr "કોણ મેનુ (_A)"
 
-#: data/totem.glade.h:116
+#: data/totem.glade.h:119
 msgid "_Aspect Ratio"
 msgstr "એસ્પેક્ટ રેશિયો (_A)"
 
-#: data/totem.glade.h:117
+#: data/totem.glade.h:120
 msgid "_Audio output type:"
 msgstr "ઓડિયો આઉટપુટ પ્રકાર (_A):"
 
-#: data/totem.glade.h:118
+#: data/totem.glade.h:121
 msgid "_Brightness:"
 msgstr "તેજસ્વીતા (_B):"
 
-#: data/totem.glade.h:119
+#: data/totem.glade.h:122
 msgid "_Chapter Menu"
 msgstr "પ્રકરણ મેનુ (_C)"
 
-#: data/totem.glade.h:120
+#: data/totem.glade.h:123
 msgid "_Contents"
 msgstr "સમાવિષ્ટો (_C)"
 
-#: data/totem.glade.h:121
+#: data/totem.glade.h:124
 msgid "_DVD Menu"
 msgstr "_DVD મેનુ"
 
-#: data/totem.glade.h:122
+#: data/totem.glade.h:125
 msgid "_DXR3 TV-out"
 msgstr "_DXR3 TV-out"
 
-#: data/totem.glade.h:123
+#: data/totem.glade.h:126
 msgid "_Deinterlace"
-msgstr ""
+msgstr "ડીઈન્ટરલેસ (_D)"
 
-#: data/totem.glade.h:124
+#: data/totem.glade.h:127
 msgid "_Eject"
 msgstr "બહાર કાઢો (_E)"
 
-#: data/totem.glade.h:125
+#: data/totem.glade.h:128
 msgid "_Fullscreen"
 msgstr "પૂર્ણ સ્ક્રીન (_F)"
 
-#: data/totem.glade.h:126
+#: data/totem.glade.h:129
 msgid "_Go"
 msgstr "જાઓ (_G)"
 
-#: data/totem.glade.h:127
+#: data/totem.glade.h:130
 msgid "_Hue:"
-msgstr ""
+msgstr "હ્યુ (_H):"
 
-#: data/totem.glade.h:128
+#: data/totem.glade.h:131
 msgid "_Languages"
 msgstr "ભાષાઓ (_L)"
 
-#: data/totem.glade.h:129
+#: data/totem.glade.h:132
 msgid "_Movie"
 msgstr "ફિલ્મ (_M)"
 
-#: data/totem.glade.h:130
-msgid "_Next Chapter/Movie"
-msgstr "આગળનું પ્રકરણ/ફિલ્મ (_N)"
-
-#: data/totem.glade.h:131
+#: data/totem.glade.h:134
 msgid "_No TV-out"
 msgstr "કોઈ TV-out નથી (_N)"
 
-#: data/totem.glade.h:132
+#: data/totem.glade.h:135
 msgid "_Optical device path:"
 msgstr "ઓપ્ટીકલ ઉપકરણ પથ (_O):"
 
-#: data/totem.glade.h:133
-msgid "_Previous Chapter/Movie"
-msgstr "પહેલાનું પ્રકરણ/ફિલ્મ (_P)"
-
-#: data/totem.glade.h:134
+#: data/totem.glade.h:137
 msgid "_Repeat Mode"
 msgstr "પુનરાવર્તિત સ્થિતિ (_R)"
 
-#: data/totem.glade.h:135
-msgid "_Reset defaults"
-msgstr "મૂળભુતો ફરીથી સુયોજિત કરો (_R)"
+#: data/totem.glade.h:138
+msgid "_Reset To Defaults"
+msgstr "મૂળભુતો ફરી સુયોજિત કરો (_R)"
 
-#: data/totem.glade.h:136
+#: data/totem.glade.h:139
+msgid "_Resize 1:2"
+msgstr "૧:૨ માપ બદલો (_R)"
+
+#: data/totem.glade.h:140
 msgid "_Show/Hide Playlist"
 msgstr "વગાડવાની યાદી બતાવો/છુપાવો (_S)"
 
-#: data/totem.glade.h:137
+#: data/totem.glade.h:141
 msgid "_Skip to..."
 msgstr "ને રદ કરો (_S)..."
 
-#: data/totem.glade.h:138
-msgid "_Skip to:"
-msgstr "ને રદ કરો (_S):"
-
-#: data/totem.glade.h:139
+#: data/totem.glade.h:142
 msgid "_Sound"
 msgstr "ધ્વનિ (_S)"
 
-#: data/totem.glade.h:140
+#: data/totem.glade.h:143
 msgid "_Title Menu"
 msgstr "શીર્ષક મેનુ (_T)"
 
-#: data/totem.glade.h:141
+#: data/totem.glade.h:144
 msgid "_Type of visualisation:"
 msgstr "વિઝ્યુઅલાઈઝેશનનો પ્રકાર (_T):"
 
-#: data/totem.glade.h:142 data/vanity.glade.h:10
-msgid "_Zoom 1:2"
-msgstr "1:2 જેટલા પ્રમાણમાં નાનુમોટુ કરો (_Z)"
-
-#: data/totem.glade.h:143
-msgid "seconds"
-msgstr "સેકન્ડો"
-
 #: data/totem.schemas.in.h:1
 msgid "Enable deinterlacing"
-msgstr ""
+msgstr "ડીઈન્ટરલેસીંગ સક્રિય કરો"
 
 #: data/totem.schemas.in.h:2
 msgid "Enable deinterlacing."
-msgstr ""
+msgstr "ડીઈન્ટરલેસીંગ સક્રિય કરો."
 
 #: data/totem.schemas.in.h:3
 msgid "Height of the video widget"
@@ -765,11 +762,11 @@ msgstr "પુનરાવર્તિત સ્થિતિ."
 
 #: data/totem.schemas.in.h:10
 msgid "Resize the canvas automatically on file load"
-msgstr ""
+msgstr "ફાઈલ લાવવા પર કેનવાસનું માપ આપોઆપ બદલો"
 
 #: data/totem.schemas.in.h:11
 msgid "Resize the canvas automatically on file load."
-msgstr ""
+msgstr "ફાઈલ લાવવા પર કેનવાસનું માપ આપોઆપ બદલો."
 
 #: data/totem.schemas.in.h:12
 msgid "Show visual effects when no video is displayed"
@@ -788,81 +785,89 @@ msgid "Shuffle mode."
 msgstr "રેન્ડમ સ્થિતિ."
 
 #: data/totem.schemas.in.h:16
+msgid "Sound volume"
+msgstr "સાઉન્ડ અવાજ"
+
+#: data/totem.schemas.in.h:17
+msgid "Sound volume, in percent, between 0 and 100"
+msgstr "સાઉન્ડ અવાજ, ટકામાં, ૦ અને ૧૦૦ ની વચ્ચે"
+
+#: data/totem.schemas.in.h:18
 msgid "The brightness of the video"
 msgstr "વિડીયોની તેજસ્વીતા"
 
-#: data/totem.schemas.in.h:17
+#: data/totem.schemas.in.h:19
 msgid "The brightness of the video."
 msgstr "વિડીયોની તેજસ્વીતા."
 
-#: data/totem.schemas.in.h:18
+#: data/totem.schemas.in.h:20
 msgid "The contrast of the video"
 msgstr "વિડીયોનો વિરોધાભાસ"
 
-#: data/totem.schemas.in.h:19
+#: data/totem.schemas.in.h:21
 msgid "The contrast of the video."
 msgstr "વિડીયોનો વિરોધાભાસ."
 
-#: data/totem.schemas.in.h:20
-msgid "The hue of the video"
-msgstr ""
-
-#: data/totem.schemas.in.h:21
-msgid "The hue of the video."
-msgstr ""
-
 #: data/totem.schemas.in.h:22
-msgid "The saturation of the video"
-msgstr ""
+msgid "The hue of the video"
+msgstr "વીડિયોનું હ્યુ"
 
 #: data/totem.schemas.in.h:23
-msgid "The saturation of the video."
-msgstr ""
+msgid "The hue of the video."
+msgstr "વીડિયોનું હ્યુ."
 
 #: data/totem.schemas.in.h:24
+msgid "The saturation of the video"
+msgstr "વીડિયોનું સેચ્યુરેશન"
+
+#: data/totem.schemas.in.h:25
+msgid "The saturation of the video."
+msgstr "વીડિયોનું સેચ્યુરેશન."
+
+#: data/totem.schemas.in.h:26
 msgid "Type of audio output to use"
 msgstr "વાપરવા માટેના ઓડિયો આઉટપુટનો પ્રકાર"
 
-#: data/totem.schemas.in.h:25
+#: data/totem.schemas.in.h:27
 msgid ""
 "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
 "\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
 "Passthrough."
-msgstr ""
+msgstr "વાપરવા માટેના ઓડિયો આઉટપુટનો પ્રકાર: સ્ટીરીયો માટે \"૦\", ૪-ચેનલ આઉટપુટ માટે \"૧\", ૫.૦ ચેનલ આઉટપુટ માટે \"૨\", ૫.૧ ચેનલ આઉટપુટ માટે \"૩\", AC3 પાસથ્રુ માટે \"૪\"."
 
-#: data/totem.schemas.in.h:26
+#: data/totem.schemas.in.h:28
 msgid "Whether the main window should stay on top"
 msgstr "શું મુખ્ય વિન્ડો ઉપર જ રહેશે"
 
-#: data/totem.schemas.in.h:27
+#: data/totem.schemas.in.h:29
 msgid "Whether the main window should stay on top of the other ones"
 msgstr "શું મુખ્ય વિન્ડો બીજી કોઈની ઉપર જ રહેશે"
 
-#: data/totem.schemas.in.h:28
-msgid "Whether to enable debug for the playback engine"
-msgstr ""
-
-#: data/totem.schemas.in.h:29
-msgid "Whether to enable debug for the playback engine."
-msgstr ""
-
 #: data/totem.schemas.in.h:30
+msgid "Whether to enable debug for the playback engine"
+msgstr "વગાડતા એંજિન માટે શું ડિબગ સક્રિય કરવું"
+
+#: data/totem.schemas.in.h:31
+msgid "Whether to enable debug for the playback engine."
+msgstr "વગાડતા એંજિન માટે શું ડિબગ સક્રિય કરવું."
+
+#: data/totem.schemas.in.h:32
 msgid "Width of the video widget"
 msgstr "વિડીયો વિજેટની પહોળાઈ"
 
-#: data/totem.schemas.in.h:31
+#: data/totem.schemas.in.h:33
 msgid "X coordinate for the Playlist"
 msgstr "વગાડવાની યાદી માટે X અક્ષ"
 
-#: data/totem.schemas.in.h:32
+#: data/totem.schemas.in.h:34
 msgid "X coordinate for the Playlist."
 msgstr "વગાડવાની યાદી માટે X અક્ષ."
 
-#: data/totem.schemas.in.h:33
+#: data/totem.schemas.in.h:35
 msgid "Y coordinate for the Playlist"
 msgstr "વગાડવાની યાદી માટે Y અક્ષ"
 
-#: data/totem.schemas.in.h:34
+#: data/totem.schemas.in.h:36
 msgid "Y coordinate for the Playlist."
 msgstr "વગાડવાની યાદી માટે Y અક્ષ."
 
@@ -874,11 +879,11 @@ msgstr "તમે જે ખોલવા માંગતા હોય તે (UR
 msgid "Open from URI"
 msgstr "URI માંથી ખોલો"
 
-#: data/vanity.desktop.in.h:1
+#: data/vanity.desktop.in.in.h:1
 msgid "Vanity Webcam utility"
 msgstr "વેનિટી વેબકેમ ઉપયોગિતા"
 
-#: data/vanity.desktop.in.h:2
+#: data/vanity.desktop.in.in.h:2
 msgid "View live webcam and upload pictures"
 msgstr "જીવંત વેબકેમ જુઓ અને ચિત્રો ઉપર મોકલો"
 
@@ -886,7 +891,7 @@ msgstr "જીવંત વેબકેમ જુઓ અને ચિત્ર�
 msgid "Save File"
 msgstr "ફાઈલ સંગ્રહો"
 
-#: data/vanity.glade.h:2 src/vanity.c:262
+#: data/vanity.glade.h:2 src/vanity.c:259
 msgid "Vanity"
 msgstr "વેનિટી"
 
@@ -906,34 +911,50 @@ msgstr "1:2 પ્રમાણમાં નાનુમોટુ કરો"
 msgid "Zoom 2:1"
 msgstr "2:1 પ્રમાણમા નાનુમોટુ કરો"
 
+#: data/vanity.glade.h:7
+msgid "Zoom _1:1"
+msgstr "_1:1 પ્રમાણમાં નાનુંમોટું કરો"
+
+#: data/vanity.glade.h:8
+msgid "Zoom _2:1"
+msgstr "_2:1 પ્રમાણમાં નાનુંમોટું કરો"
+
 #: data/vanity.glade.h:9
 msgid "_Picture"
 msgstr "ચિત્ર (_P)"
 
-#: src/bacon-cd-selection.c:187 src/bacon-v4l-selection.c:182
+#: data/vanity.glade.h:10
+msgid "_Zoom 1:2"
+msgstr "1:2 જેટલા પ્રમાણમાં નાનુમોટુ કરો (_Z)"
+
+#: src/bacon-v4l-selection.c:191
 msgid "Unnamed CDROM"
 msgstr "નામ વગરની CDROM"
 
-#: src/bacon-video-widget-gst.c:62
+#: src/bacon-video-widget-gst.c:68
 msgid "Totem Video Window"
 msgstr "ટોટેમ વિડીયો વિન્ડો"
 
+#: src/bacon-video-widget-gst.c:2914
+msgid "Failed to create a GStreamer play object"
+msgstr "જીસ્ટ્રીમર વગાડો ઓબ્જેક્ટ બનાવવામાં નિષ્ફળ"
+
 #. Duration
-#: src/bacon-video-widget-properties.c:98
+#: src/bacon-video-widget-properties.c:102
 msgid "0 second"
 msgstr "૦ સેકન્ડ"
 
-#: src/bacon-video-widget-properties.c:185
+#: src/bacon-video-widget-properties.c:199
 #, c-format
 msgid "%d frames per second"
 msgstr "સેકન્ડ પ્રતિ %d ચોકઠાઓ"
 
-#: src/bacon-video-widget-properties.c:205
+#: src/bacon-video-widget-properties.c:221
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/bacon-video-widget-xine.c:665
+#: src/bacon-video-widget-xine.c:657
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -942,130 +963,205 @@ msgstr ""
 "'%s' ઓડિયો ડ્રાઈવર લાવી શક્યા નહિં\n"
 "ચકાસો કે ઉપકરણ વ્યસ્ત નથી."
 
-#: src/bacon-video-widget-xine.c:1128 src/bacon-video-widget-xine.c:1595
+#: src/bacon-video-widget-xine.c:1109 src/bacon-video-widget-xine.c:1614
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
 msgstr "કોઈ વિડીયો આઉટપુટ ઉપ્લબ્ધ નથી. ખાતરી કરો કે કાર્યક્રમ યોગ્ય રીતે સ્થાપિત થયેલ છે."
 
-#: src/bacon-video-widget-xine.c:1243
+#: src/bacon-video-widget-xine.c:1225
 msgid "The server you are trying to connect to is not known."
 msgstr "તમે જેનો સંપર્ક કરવા માંગો છો તે સર્વર અજ્ઞાત છે."
 
-#: src/bacon-video-widget-xine.c:1247
+#: src/bacon-video-widget-xine.c:1229
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "તમે સ્પષ્ટ કરેલ ઉપકરણ નામ (%s) એ અયોગ્ય હોય એવું લાગે છે."
 
-#: src/bacon-video-widget-xine.c:1251
+#: src/bacon-video-widget-xine.c:1233
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "તમે જે સર્વર સાથે જોડાવાનો પ્રયત્ન કરી રહ્યા છો (%s) તે પહોંચી શકાય એમ નથી."
 
-#: src/bacon-video-widget-xine.c:1255
+#: src/bacon-video-widget-xine.c:1237
 msgid "The connection to this server was refused."
 msgstr "આ સર્વર સાથેનો સંપર્ક તુટી ગયો."
 
-#: src/bacon-video-widget-xine.c:1259
+#: src/bacon-video-widget-xine.c:1241
 msgid "The specified movie could not be found."
 msgstr "સ્પષ્ટ કરેલ ફિલ્મ શોધી શકાયું નહિં."
 
-#: src/bacon-video-widget-xine.c:1263
-msgid "The movie could not be read."
-msgstr "ફિલ્મ વાંચી શકાયું નહિં."
-
-#: src/bacon-video-widget-xine.c:1267
-#, c-format
-msgid "A problem occured while loading a library or a decoder (%s)."
-msgstr "જ્યારે લાઈબ્રેરી અથવા ડીકોડર લાવી રહ્યા હતા ત્યારે સમસ્યા ઉદ્દભવી (%s)."
-
-#: src/bacon-video-widget-xine.c:1273
+#: src/bacon-video-widget-xine.c:1247 src/bacon-video-widget-xine.c:1265
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
 msgstr ""
-"સ્રોત એનક્રિપ્ટ કરેલ હોય એમ લાગે છે, અને વાંચી શકાતું નથી. શું તમે "
-"એનક્રિપ્ટેડ DVD ને libdvdcss વગર વગાડવાનો પ્રયત્ન કરી રહ્યા છો?"
+"સ્રોત એનક્રિપ્ટ કરેલ હોય એમ લાગે છે, અને વાંચી શકાતું નથી. શું તમે એનક્રિપ્ટેડ DVD ને "
+"libdvdcss વગર વગાડવાનો પ્રયત્ન કરી રહ્યા છો?"
 
-#: src/bacon-video-widget-xine.c:1276
+#: src/bacon-video-widget-xine.c:1250
+msgid "The movie could not be read."
+msgstr "ફિલ્મ વાંચી શકાયું નહિં."
+
+#: src/bacon-video-widget-xine.c:1259
+#, c-format
+msgid "A problem occured while loading a library or a decoder (%s)."
+msgstr "જ્યારે લાઈબ્રેરી અથવા ડીકોડર લાવી રહ્યા હતા ત્યારે સમસ્યા ઉદ્દભવી (%s)."
+
+#: src/bacon-video-widget-xine.c:1268
 msgid "This file is encrypted and cannot be played back."
 msgstr "ફાઈલ એનક્રિપ્ટ થયેલ છે અને પાછી વગાડી શકાતી નથી."
 
-#: src/bacon-video-widget-xine.c:1281
+#: src/bacon-video-widget-xine.c:1273
 msgid "For security reasons, this movie can not be played back."
 msgstr "સુરક્ષાના કારણોસર, આ ફિલ્મ પાછી વગાડી શકાતી નથી."
 
-#: src/bacon-video-widget-xine.c:1286
+#: src/bacon-video-widget-xine.c:1278
 msgid "The audio device is busy. Is another application using it?"
 msgstr "ઓડિયો ઉપકરણ વ્યસ્ત છે. શું બીજો કાર્યક્રમ તેને વાપરી રહ્યો છે?"
 
-#: src/bacon-video-widget-xine.c:1291
+#: src/bacon-video-widget-xine.c:1283
 msgid "You are not allowed to open this file."
 msgstr "તમે આ ફાઈલ ખોલવા માટે માન્ય નથી."
 
-#: src/bacon-video-widget-xine.c:1293
+#: src/bacon-video-widget-xine.c:1285
 msgid "The server refused access to this file or stream."
 msgstr "સર્વરે આ ફાઈલ અથવા સ્ટ્રીમ સાથે જોડાણ તોડી નાંખ્યુ."
 
-#: src/bacon-video-widget-xine.c:1422
+#: src/bacon-video-widget-xine.c:1425
 msgid "There is no plugin to handle this movie."
 msgstr "આ ફિલ્મને નિયંત્રિત કરવા માટે ત્યાં કોઈ પ્લગઈન નથી."
 
-#: src/bacon-video-widget-xine.c:1426
+#: src/bacon-video-widget-xine.c:1429
 msgid "This movie is broken and can not be played further."
 msgstr "આ ફિલ્મ તૂટી ગયેલ છે અને પછીથી વગાડી શકાશે નહિં."
 
-#: src/bacon-video-widget-xine.c:1430
+#: src/bacon-video-widget-xine.c:1433
 msgid "This location is not a valid one."
 msgstr "આ જગ્યા યોગ્ય નથી."
 
-#: src/bacon-video-widget-xine.c:1434
+#: src/bacon-video-widget-xine.c:1437
 msgid "This movie could not be opened."
 msgstr "ફિલ્મ ખોલી શકાઈ નહિં."
 
-#: src/bacon-video-widget-xine.c:1438
+#: src/bacon-video-widget-xine.c:1441
 msgid "Generic Error."
 msgstr "સામાન્ય ભૂલ."
 
-#: src/bacon-video-widget-xine.c:1862
+#: src/bacon-video-widget-xine.c:1911
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr "આ ફિલ્મ હજુ ચિત્ર જ છે. તમે તેને ચિત્ર દર્શક વગર ખોલી શકતા નથી."
 
-#: src/bacon-video-widget-xine.c:1893
+#: src/bacon-video-widget-xine.c:1935
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
-msgstr "વિડીયો કોડેક '%s' એ નિયંત્રિત નથી. તમારે વધારાના પ્લગઈનો સ્થાપિત કરવાની જરુર છે અમુક પ્રકારના ફિલ્મોને વગાડવા માટે"
+msgstr ""
+"વિડીયો કોડેક '%s' એ નિયંત્રિત નથી. તમારે વધારાના પ્લગઈનો સ્થાપિત કરવાની જરુર છે અમુક "
+"પ્રકારના ફિલ્મોને વગાડવા માટે"
 
-#: src/bacon-video-widget-xine.c:1912
+#: src/bacon-video-widget-xine.c:1939
+#, c-format
+msgid ""
+"Audio codec '%s' is not handled. You might need to install additional "
+"plugins to be able to play some types of movies"
+msgstr "ઓડિયો કોડેક '%s' એ નિયંત્રિત નથી. અમુક પ્રકારના ફિલ્મોને વગાડવા માટે તમારે વધારાના પ્લગઈનો સ્થાપિત કરવાની જરૂર છે"
+
+#: src/bacon-video-widget-xine.c:1955
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "આ માત્ર ઓડિયો ફાઈલ છે, અને ત્યાં કોઈ ઓડિયો આઉટપુટ ઉપ્લબ્ધ નથી."
 
-#: src/bacon-video-widget-xine.c:3379
+#: src/bacon-video-widget-xine.c:3369
+#, c-format
+msgid "Language %d"
+msgstr "ભાષા %d"
+
+#: src/bacon-video-widget-xine.c:3452
 msgid "Movie is not playing."
 msgstr "ફિલ્મ વાગી રહ્યું નથી."
 
-#: src/bacon-video-widget-xine.c:3388
+#: src/bacon-video-widget-xine.c:3461
 msgid "No video to capture."
 msgstr "કોઈ વિડીયો મેળવાયું નથી."
 
-#: src/bacon-video-widget-xine.c:3396
+#: src/bacon-video-widget-xine.c:3469
 msgid "Video codec is not handled."
 msgstr "વિડીયો કોડેક એ નિયંત્રિત નથી."
 
-#: src/cd-drive.c:696
+#: src/totem-disc.c:114
 #, c-format
-msgid "Unnamed SCSI CD-ROM (%s)"
-msgstr "નામ વગરનું SCSI CD-ROM (%s)"
+msgid "Failed to find real device node for %s: %s"
+msgstr "%s માટે વાસ્તવિક ઉપકરણ નોડ શોધવામાં નિષ્ફળ: %s"
 
-#: src/cd-drive.c:1256
-msgid "File image"
-msgstr "ફાઈલ ચિત્ર"
+#: src/totem-disc.c:125
+#, c-format
+msgid "Failed to read symbolic link %s: %s"
+msgstr "સાંકેતિક કડી %s વાંચવામાં નિષ્ફળ: %s"
+
+#: src/totem-disc.c:209
+#, c-format
+msgid "Failed to find mountpoint for device %s in /etc/fstab"
+msgstr "ઉપકરણ %s માટે /etc/fstab માં માઉન્ટ બિંદુ શોધવામાં નિષ્ફળ"
+
+#: src/totem-disc.c:247
+msgid "Please check that a disc is present in the drive."
+msgstr "મહેરબાની કરીને ચકાસો કે ડિસ્ક તમારી ડ્રાઈવમાં હાજર છે."
+
+#: src/totem-disc.c:250
+#, c-format
+msgid "Failed to open device %s for reading: %s"
+msgstr "ઉપકરણ %s ને વાંચવામાં નિષ્ફળ: %s"
+
+#: src/totem-disc.c:261
+#, c-format
+msgid "Failed to retrieve capabilities of device %s: %s"
+msgstr "ઉપકરણ %s ની ક્ષમતાઓ મેળવવામાં નિષ્ફળ: %s"
+
+#: src/totem-disc.c:294
+#, c-format
+msgid "Drive status 0x%x (%s) - check disc"
+msgstr "ડ્રાઈવ સ્થિતિ 0x%x (%s) - ડિસ્ક ચકાસો"
+
+#: src/totem-disc.c:327
+#, c-format
+msgid "Unexpected error status %d while mounting %s"
+msgstr "અનિચ્છનીય ભૂલ સ્થિતિ %d જ્યારે %s ને માઉન્ટ કરી રહ્યા હોય"
+
+#: src/totem-disc.c:379
+#, c-format
+msgid "Error getting %s disc status: %s"
+msgstr "%s ડિસ્ક પરિસ્થિતિ મેળવવામાં ભૂલ: %s"
+
+#: src/totem-disc.c:408
+#, c-format
+msgid "Unexpected/unknown cd type 0x%x (%s)"
+msgstr "અનિચ્છનીય/અજ્ઞાત cd પ્રકાર 0x%x (%s)"
+
+#: src/totem-disc.c:572
+msgid "Audio CD"
+msgstr "ઓડિયો CD"
+
+#: src/totem-disc.c:574
+msgid "Video CD"
+msgstr "વિડીયો CD"
+
+#: src/totem-disc.c:576
+msgid "DVD"
+msgstr "DVD"
+
+#: src/totem-interface.c:112
+#, c-format
+msgid "Couldn't load the '%s' interface."
+msgstr "'%s' ઈન્ટરફેસ લાવી શક્યા નહિં."
+
+#: src/totem-interface.c:114 src/totem-interface.c:116
+msgid "Make sure that Totem is properly installed."
+msgstr "ખાતરી કરો કે ટોટેમ યોગ્ય રીતે સ્થાપિત થયેલ છે."
 
 #. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
-#: src/totem-mozilla-viewer.c:59 src/totem.c:380 src/totem.c:408
-#: src/totem.c:832 src/totem.c:955
+#: src/totem-mozilla-viewer.c:59 src/totem.c:312 src/totem.c:339
+#: src/totem.c:713 src/totem.c:818
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "ટોટેમ '%s' વગાડી શક્યું નહિં."
@@ -1082,11 +1178,11 @@ msgstr "ખાતરી કરો કે ટોટેમ પ્લગઈન ય�
 msgid "The Totem plugin could not startup."
 msgstr "ટોટેમ પ્લગઈન શરુ કરી શકાયું નહિં."
 
-#: src/totem-mozilla-viewer.c:109 src/totem.c:3398
+#: src/totem-mozilla-viewer.c:109 src/totem.c:3222
 msgid "No reason."
 msgstr "કોઈ કારણ નથી."
 
-#: src/totem-mozilla-viewer.c:141 src/totem.c:3704
+#: src/totem-mozilla-viewer.c:141 src/totem.c:3403
 msgid "Could not initialise the thread-safe libraries."
 msgstr "થ્રેડ-સુરક્ષિત લાઈબ્રેરીઓનો પ્રારંભ કરી શકાયો નહિં."
 
@@ -1094,51 +1190,108 @@ msgstr "થ્રેડ-સુરક્ષિત લાઈબ્રેરીઓ�
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "તમારું સિસ્ટમ સ્થાપન ચકાસો. ટોટેમ પ્લગઈન હમણાં બંધ થઈ જશે."
 
-#: src/totem-playlist.c:300
-msgid "Could not save the playlist"
-msgstr "વગાડવાની યાદી સંગ્રહી શક્યા નહિં"
+#: src/totem-options.c:36
+msgid "Backend options"
+msgstr "પાશ્વના વિકલ્પો"
 
-#: src/totem-playlist.c:574
-msgid "Select Movies or Playlists"
-msgstr "ફિલ્મો અને વગાડવાની યાદીઓ પસંદ કરો"
+#: src/totem-options.c:37
+msgid "Enable debug"
+msgstr "ભૂલ શોધવાનું સક્રિય કરો"
 
-#: src/totem-playlist.c:755
-msgid "Save playlist"
-msgstr "વગાડવાની યાદી સંગ્રહો"
+#: src/totem-options.c:41
+msgid "Seek Forwards"
+msgstr "આગળ જાઓ"
 
-#: src/totem-playlist.c:803
+#: src/totem-options.c:42
+msgid "Seek Backwards"
+msgstr "પાછળ જાઓ"
+
+#: src/totem-options.c:43
+msgid "Volume Up"
+msgstr "અવાજ ઉપર કરો"
+
+#: src/totem-options.c:44
+msgid "Volume Down"
+msgstr "અવાજ નીચો કરો"
+
+#: src/totem-options.c:45
+msgid "Toggle Fullscreen"
+msgstr "પૂર્ણ સ્ક્રીનમાં ફેરબદલી કરો"
+
+#: src/totem-options.c:46
+msgid "Show/Hide Controls"
+msgstr "નિયંત્રણો બતાવો/છુપાવો"
+
+#: src/totem-options.c:47
+msgid "Quit"
+msgstr "બહાર નીકળો"
+
+#: src/totem-options.c:48
+msgid "Enqueue"
+msgstr "એનક્યુ"
+
+#: src/totem-options.c:49
+msgid "Replace"
+msgstr "બદલો"
+
+#: src/totem-options.c:110
 #, c-format
-msgid ""
-"A file named '%s' already exists.\n"
-"Are you sure you want to overwrite it?"
-msgstr ""
-"'%s' નામવાળી યાદી પહેલાથી જ હાજર છે.\n"
-"શું તમે ખરેખર તેના પર ફરીથી લખો?"
+msgid "Option '%s' is unknown and was ignored\n"
+msgstr "વિકલ્પ '%s' એ અજ્ઞાત છે અને અવગણાયેલ છે\n"
 
-#: src/totem-playlist.c:988
-msgid "Filename"
-msgstr "ફાઈલનું નામ"
-
-#: src/totem-playlist.c:1539
-msgid "Playlist error"
-msgstr "વગાડવાની યાદીની ભૂલ"
-
-#: src/totem-playlist.c:1539
-#, c-format
-msgid "The playlist '%s' could not be parsed, it might be damaged."
-msgstr "વગાડવાની યાદી '%s' નું પદચ્છેદ કરી શક્યા નહિં, તે કદાચ બગડી ગયેલ છે."
-
-#: src/totem-pl-parser.c:189
+#: src/totem-pl-parser.c:215
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "પદચ્છેદ કરનાર લખી શક્યા નહિં: %s"
 
-#: src/totem-pl-parser.c:253
+#: src/totem-pl-parser.c:321 src/totem-pl-parser.c:444
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "ફાઈલ '%s' લખી શક્યા નહિં: %s"
 
-#: src/totem-preferences.c:82
+#: src/totem-playlist.c:299
+msgid "Could not save the playlist"
+msgstr "વગાડવાની યાદી સંગ્રહી શક્યા નહિં"
+
+#: src/totem-playlist.c:631
+msgid "Select Movies or Playlists"
+msgstr "ફિલ્મો અને વગાડવાની યાદીઓ પસંદ કરો"
+
+#: src/totem-playlist.c:807
+msgid "Save playlist"
+msgstr "વગાડવાની યાદી સંગ્રહો"
+
+#: src/totem-playlist.c:852
+msgid "Overwrite file?"
+msgstr "ફાઈલ પર ફરીથી લખવું છે?"
+
+#: src/totem-playlist.c:854
+#, c-format
+msgid "A file named '%s' already exists.  Are you sure you want to overwrite it?"
+msgstr "'%s' નામવાળી ફાઈલ પહેલાથી જ હાજર છે.  શું તમે એના પર ફરીથી લખવા માંગો છો?"
+
+#: src/totem-playlist.c:1053
+msgid "Filename"
+msgstr "ફાઈલનું નામ"
+
+#: src/totem-playlist.c:1500
+msgid "playlist"
+msgstr "વગાડવાની યાદી"
+
+#: src/totem-playlist.c:1644
+msgid "Playlist error"
+msgstr "વગાડવાની યાદીની ભૂલ"
+
+#: src/totem-playlist.c:1644
+#, c-format
+msgid "The playlist '%s' could not be parsed, it might be damaged."
+msgstr "વગાડવાની યાદી '%s' નું પદચ્છેદ કરી શક્યા નહિં, તે કદાચ બગડી ગયેલ છે."
+
+#: src/totem-preferences.c:87
+msgid "Enable visual effects?"
+msgstr "દ્રશ્ય અસરો સક્રિય કરવી છે?"
+
+#: src/totem-preferences.c:89
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1146,299 +1299,244 @@ msgstr ""
 "એવું લાગે છે કે તમે દૂરસ્થ રીતે ટોટેમ વગાડી રહ્યા છો.\n"
 "શું તમે ખરેખર દ્રશ્ય અસરો સક્રિય કરવા માંગો છો?"
 
-#: src/totem-preferences.c:135
+#: src/totem-preferences.c:142
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
-"Totem is restarted"
-msgstr ""
+"Totem is restarted."
+msgstr "આ સુયોજનોના બદલાવો માત્ર આગળના ફિલ્મ માટે જ અસર લાવશે, અથવા જ્યારે ટોટેમ ફરીથી શરૂ થાય ત્યારે."
 
-#: src/totem-preferences.c:179
+#: src/totem-preferences.c:186
 msgid "Switching on or off this type of TV-Out requires a restart to take effect."
-msgstr ""
+msgstr "આ પ્રકારના TV-Out ના ચાલુ અથવા બંધની ફેરબદલી કરવાને અસરમાં લાવવા માટે ફરી શરૂ કરવાની જરૂર છે."
 
-#: src/totem-preferences.c:312
+#: src/totem-preferences.c:336
 msgid "Totem could not start the file manager."
 msgstr "ટોટેમ ફાઈલ વ્યવસ્થાપક શરુ કરી શક્યું નહિં."
 
-#: src/totem-preferences.c:340
+#: src/totem-preferences.c:364
 msgid "Changing the visuals effect type will require a restart to take effect."
-msgstr ""
+msgstr "દ્રશ્ય અસરોના પ્રકારોના ફેરફારોને અસરમાં લાવવા માટે ફરીથી શરૂ કરવાની જરૂર છે."
 
-#: src/totem-properties-page.c:123
-msgid "URI currently displayed"
-msgstr "URI વર્તમાનમાં પ્રદર્શિત થયેલ છે"
+#: src/totem-preferences.c:457
+msgid ""
+"The change of audio output type will only take effect when Totem is "
+"restarted."
+msgstr "ઓડિયો આઉટપુટના પ્રકારનો બદલાવ માત્ર ત્યારે જ અસર કરશે જ્યારે ટોટેમ ફરીથી શરૂ થાય."
 
-#: src/totem-properties-page.c:193
-msgid "Video and Audio information properties page"
-msgstr "વિડીયો અને ઓડિયો જાણકારી ગુણધર્મો પાનું"
+#: src/totem-properties-main.c:112
+msgid "Audio/Video"
+msgstr "ઓડિયો/વીડિયો"
 
-#: src/totem-screenshot.c:146 src/totem-screenshot.c:157
+#: src/totem-screenshot.c:151 src/totem-screenshot.c:162
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "સ્ક્રીનનીછબી%d.png"
 
-#: src/totem-screenshot.c:199
+#: src/totem-screenshot.c:204
 #, c-format
 msgid "File '%s' already exists."
 msgstr "ફાઈલ '%s' પહેલાથી જ હાજર છે."
 
-#: src/totem-screenshot.c:201
+#: src/totem-screenshot.c:206
 msgid "The screenshot was not saved"
 msgstr "સ્ક્રીનની છબી સંગ્રહાયેલી નથી"
 
-#: src/totem-screenshot.c:212
+#: src/totem-screenshot.c:217
 msgid "There was an error saving the screenshot."
 msgstr "ત્યાં સ્ક્રીનની છબી સંગ્રહવામાં ભૂલ છે."
 
+#: src/totem-screenshot.c:250
+msgid "Screenshot.png"
+msgstr "ફોટો.png"
+
 #: src/totem-statusbar.c:91
 msgid "Shadow type"
-msgstr ""
+msgstr "પડછાયાનો પ્રકાર"
 
 #: src/totem-statusbar.c:92
 msgid "Style of bevel around the statusbar text"
-msgstr ""
+msgstr "સ્થિતિદર્શક પટ્ટી લખાણની ફરતે બેવેલની શૈલી"
 
-#: src/totem-statusbar.c:124 src/totem.c:324 src/totem.c:692
+#: src/totem-statusbar.c:124 src/totem.c:251 src/totem.c:564
 msgid "Stopped"
 msgstr "બંધ થયેલ છે"
 
-#: src/totem-statusbar.c:133
+#: src/totem-statusbar.c:141
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: src/totem-statusbar.c:161
+#: src/totem-statusbar.c:166
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (Streaming)"
 
 #. Elapsed / Total Length
-#: src/totem-statusbar.c:168 src/totem-time-label.c:56
+#: src/totem-statusbar.c:173 src/totem-time-label.c:70
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: src/totem-statusbar.c:171
+#: src/totem-statusbar.c:176
 #, c-format
 msgid "Seek to %s / %s"
-msgstr ""
+msgstr "%s / %s પર પહોંચો"
 
-#: src/totem-statusbar.c:233
+#: src/totem-statusbar.c:234
 msgid "Buffering"
-msgstr ""
+msgstr "બફરીંગ"
 
 #. eg: 75 %
-#: src/totem-statusbar.c:236
+#: src/totem-statusbar.c:237
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
 
-#: src/totem.c:80
-msgid "Backend options"
-msgstr "પાશ્વના વિકલ્પો"
+#: src/totem-sublang.c:108 src/totem-sublang.c:130
+msgid "None"
+msgstr "કંઈ નહિં"
 
-#: src/totem.c:81
-msgid "Enable debug"
-msgstr "ભૂલ શોધવાનું સક્રિય કરો"
-
-#: src/totem.c:85
-msgid "Seek Forwards"
-msgstr ""
-
-#: src/totem.c:86
-msgid "Seek Backwards"
-msgstr ""
-
-#: src/totem.c:87
-msgid "Volume Up"
-msgstr "અવાજ ઉપર કરો"
-
-#: src/totem.c:88
-msgid "Volume Down"
-msgstr "અવાજ નીચો કરો"
-
-#: src/totem.c:89
-msgid "Toggle Fullscreen"
-msgstr "પૂર્ણ સ્ક્રીનમાં ફેરબદલી કરો"
-
-#: src/totem.c:90
-msgid "Quit"
-msgstr "બહાર નીકળો"
-
-#: src/totem.c:91
-msgid "Enqueue"
-msgstr ""
-
-#: src/totem.c:92
-msgid "Replace"
-msgstr "બદલો"
-
-#: src/totem.c:314
+#: src/totem.c:241
 msgid "Playing"
 msgstr "વગાડી રહ્યા છીએ"
 
-#: src/totem.c:319
+#: src/totem.c:246
 msgid "Paused"
 msgstr "અટકાવાયેલ છે"
 
-#: src/totem.c:359
+#: src/totem.c:287
 msgid "Totem could not eject the optical media."
 msgstr "ટોટેમ ઓપ્ટીકલ માધ્યમને બહાર કાઢી શક્યું નહિં."
 
-#: src/totem.c:359
-msgid "No reason given."
-msgstr "કોઈ કારણ અપાયેલ નથી."
-
-#: src/totem.c:428
-msgid "DVD"
-msgstr "DVD"
-
-#: src/totem.c:429
-msgid "Video CD"
-msgstr "વિડીયો CD"
-
-#: src/totem.c:430
-msgid "Audio CD"
-msgstr "ઓડિયો CD"
-
-#: src/totem.c:441
+#: src/totem.c:365
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
 "appropriate plugins to handle it."
-msgstr ""
+msgstr "ટોટેમ આ પ્રકારની મીડિયા (%s) વગાડી શકતી નથી કારણ કે તમારી પાસે તેને નિયંત્રિત કરવા માટે યોગ્ય પ્લગઈનો નથી."
 
-#: src/totem.c:442
+#: src/totem.c:366
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
-msgstr ""
+msgstr "મહેરબાની કરીને જરૂરી પ્લગઈનો સ્થાપિત કરો અને આ મીડિયાને વગાડી શકે એના માટે ટોટેમને ફરીથી શરૂ કરો."
 
-#: src/totem.c:450
+#: src/totem.c:374
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
 "it."
-msgstr ""
+msgstr "ટોટેમ આ મીડિયા (%s) ને વગાડી શકી નહિં તેને નિયંત્રિત કરવા માટે તેના પ્લગઈન હાજર હોવા છતાં."
 
-#: src/totem.c:451
+#: src/totem.c:375
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
-msgstr ""
+msgstr "તમારે ચકાસવાની જરૂર છે કે ડિસ્ક તેની ડ્રાઈવમાં હાજર છે ને અને તે યોગ્ય રીતે રૂપરેખાંકિત છે."
 
 #. Title
-#: src/totem.c:685
+#: src/totem.c:557
 #, c-format
 msgid "%s - Totem Movie Player"
 msgstr "%s - ટોટેમ મુવી પ્લેયર"
 
-#: src/totem.c:699 src/totem.c:3493
+#: src/totem.c:571
 msgid "No file"
 msgstr "કોઈ ફાઈલ નથી"
 
-#: src/totem.c:736 src/totem.c:1985
+#: src/totem.c:607 src/totem.c:1901
 msgid "Totem"
 msgstr "ટોટેમ"
 
-#: src/totem.c:1263 src/totem.c:1265
+#: src/totem.c:1158 src/totem.c:1160
 msgid "An error occured"
 msgstr "ભૂલ ઉદ્દભવી"
 
-#: src/totem.c:1603
+#: src/totem.c:1492
 msgid "Select files"
 msgstr "ફાઈલો પસંદ કરો"
 
-#: src/totem.c:1680 src/totem.c:1688
-msgid "Couldn't load the 'Open Location...' interface."
-msgstr "'જગ્યા ખોલો...' ઈન્ટરફેસ લાવી શક્યા નહિં."
+#: src/totem.c:1563
+msgid "Open Location..."
+msgstr "જગ્યા ખોલો..."
 
-#: src/totem.c:1680 src/totem.c:1688 src/totem.c:3739 src/totem.c:3764
-#: src/totem.c:3789
-msgid "Make sure that Totem is properly installed."
-msgstr "ખાતરી કરો કે ટોટેમ યોગ્ય રીતે સ્થાપિત થયેલ છે."
-
-#: src/totem.c:1938
+#: src/totem.c:1859
 msgid "Totem could not display the help contents."
 msgstr "ટોટેમ મદદ સમાવિષ્ટો પ્રદર્શિત કરી શક્યું નહિં."
 
-#: src/totem.c:1956 src/vanity.c:235
-msgid "translator_credits"
-msgstr "અંકિત પટેલ <ankit@redhat.com>"
-
-#: src/totem.c:1982
+#: src/totem.c:1897
 #, c-format
 msgid "Movie Player using %s"
 msgstr "મુવી પ્લેયર %s વાપરી રહ્યા છીએ"
 
-#: src/totem.c:2022 src/totem.c:2030 src/vanity.c:300 src/vanity.c:308
+#: src/totem.c:1903 src/vanity.c:261
+msgid "Copyright © 2002-2005 Bastien Nocera"
+msgstr "Copyright © 2002-2005 Bastien Nocera"
+
+#: src/totem.c:1908 src/vanity.c:266
+msgid "translator-credits"
+msgstr "અંકિત પટેલ <ankit644@yahoo.com>"
+
+#: src/totem.c:1941 src/totem.c:1949 src/vanity.c:299 src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
 msgstr "ટોટેમ તે ફિલ્મની છબી લઈ શક્યું નહિં."
 
-#: src/totem.c:2030
+#: src/totem.c:1949
 msgid "Please file a bug, this isn't supposed to happen."
 msgstr "મહેરબાની કરીને ભૂલની નોંધ લો, આ બને તેમ લાગતું નથી."
 
-#: src/totem.c:2057
+#: src/totem.c:1976
 msgid "Totem couldn't show the movie properties window."
 msgstr "ટોટેમ ફિલ્મના ગુણધર્મો બતાવી શક્યું નહિં."
 
-#: src/totem.c:2057
+#: src/totem.c:1976
 msgid "Make sure that Totem is correctly installed."
 msgstr "ખાતરી કરો કે ટોટેમ વર્તમાનમાં સ્થાપિત છે."
 
-#: src/totem.c:2143
+#: src/totem.c:2062
 #, c-format
 msgid "Totem could not seek in '%s'."
-msgstr ""
+msgstr "ટોટેમ '%s' માં પહોંચી શક્યું નહિં."
 
-#: src/totem.c:2926 src/totem.c:2948
-msgid "None"
-msgstr "કંઈ નહિં"
-
-#: src/totem.c:3398
+#: src/totem.c:3222
 msgid "Totem could not startup."
 msgstr "ટોટેમ શરુ થઈ શક્યું નહિં."
 
-#: src/totem.c:3609
-#, c-format
-msgid "Option '%s' is unknown and was ignored\n"
-msgstr "વિકલ્પ '%s' એ અજ્ઞાત છે અને અવગણાયેલ છે\n"
-
-#: src/totem.c:3704
+#: src/totem.c:3403
 msgid "Verify your system installation. Totem will now exit."
 msgstr "તમારું સિસ્ટમ સ્થાપન ચકાસો. ટોટેમ હમણાં બંધ થઈ જશે."
 
-#: src/totem.c:3727
+#: src/totem.c:3423
 msgid "Totem couln't initialise the configuration engine."
 msgstr "ટોટેમ રુપરેખાંકન એંજિનનો પ્રારંભ કરી શક્યું નહિં."
 
-#: src/totem.c:3727
+#: src/totem.c:3423
 msgid "Make sure that GNOME is properly installed."
 msgstr "ખાતરી કરો કે જીનોમ યોગ્ય રીતે સ્થાપિત નથી."
 
-#: src/totem.c:3739 src/totem.c:3764
-msgid "Couldn't load the main interface (totem.glade)."
-msgstr "મુખ્ય ઈન્ટરફેસ લાવી શક્યા નહિં (totem.glade)."
+#. Main window
+#: src/totem.c:3450
+msgid "main window"
+msgstr "મુખ્ય વિન્ડો"
 
-#: src/totem.c:3789
-msgid "Couldn't load the interface for the playlist."
-msgstr "વગાડવાની યાદી માટે ઈન્ટરફેસ લાવી શક્યા નહિં."
+#: src/totem.c:3455
+msgid "video popup menu"
+msgstr "વીડિયો પોપઅપ મેનુ"
 
-#: src/vanity.c:63
+#: src/vanity.c:75
 msgid "Debug mode on"
 msgstr "પર ભૂલ શોધવાની સ્થિતિ"
 
-#: src/vanity.c:259
+#: src/vanity.c:255
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "વેબકેમ ઉપયોગિત %s વાપરી રહી છે"
 
-#: src/vanity.c:308
+#: src/vanity.c:307
 msgid "Please file a bug, this isn't supposed to happen"
 msgstr "મહેરબાની કરીને ભૂલની નોંધ લો, આ આધારભૂત બને એમ લાગતું નથી"
 
-#: src/vanity.c:551
+#: src/vanity.c:550
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1447,11 +1545,11 @@ msgstr ""
 "વેનિટી શરુ કરી શકાયું નહિં:\n"
 "%s"
 
-#: src/vanity.c:552
+#: src/vanity.c:551
 msgid "No reason"
 msgstr "કોઈ કારણ નથી"
 
-#: src/vanity.c:590
+#: src/vanity.c:589
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1460,7 +1558,7 @@ msgstr ""
 "વેનિટી વેબકેમનો સંપર્ક કરી શક્યું નહિં.\n"
 "કારણ: %s"
 
-#: src/vanity.c:606
+#: src/vanity.c:605
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1469,11 +1567,11 @@ msgstr ""
 "વેનિટી વેબકેમમાંથી વિડીયો વગાડી શક્ય્ું નહિં.\n"
 "કારણ: %s"
 
-#: src/vanity.c:642
+#: src/vanity.c:641
 msgid "Vanity Webcam Utility"
 msgstr "વેનિટી વેબકેમ ઉપયોગિતા"
 
-#: src/vanity.c:647
+#: src/vanity.c:646
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1481,7 +1579,7 @@ msgstr ""
 "થ્રેડ-સુરક્ષિત લાઈબ્રેરીઓનો પ્રારંભ કરી શક્યા નહિં.\n"
 "તમારું સિસ્ટમ સ્થાપન ચકાસો. વેનિટી હમણાં બંધ થઈ જશે."
 
-#: src/vanity.c:672
+#: src/vanity.c:671
 #, c-format
 msgid ""
 "Vanity couln't initialise the \n"
@@ -1492,7 +1590,7 @@ msgstr ""
 "રુપરેખાંકન એંજિન:\n"
 "%s"
 
-#: src/vanity.c:689 src/vanity.c:704
+#: src/vanity.c:691 src/vanity.c:706
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
@@ -1500,21 +1598,21 @@ msgstr ""
 "મુખ્ય ઈન્ટરફેસ લાવી શક્યા નહિં (vanity.glade).\n"
 "ખાતરી કરો કે વેનિટી યોગ્ય રીતે સ્થાપિત છે."
 
-#: src/video-utils.c:324
+#: src/video-utils.c:290
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d કલાક"
 msgstr[1] "%d કલાકો"
 
-#: src/video-utils.c:326
+#: src/video-utils.c:292
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d મિનિટ"
 msgstr[1] "%d મિનિટો"
 
-#: src/video-utils.c:329
+#: src/video-utils.c:295
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1522,19 +1620,19 @@ msgstr[0] "%d સેકન્ડ"
 msgstr[1] "%d સેકન્ડો"
 
 #. hour:minutes:seconds
-#: src/video-utils.c:335
+#: src/video-utils.c:301
 #, c-format
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. minutes:seconds
-#: src/video-utils.c:338
+#: src/video-utils.c:304
 #, c-format
 msgid "%s %s"
 msgstr "%s %s"
 
 #. seconds
-#: src/video-utils.c:341
+#: src/video-utils.c:307
 #, c-format
 msgid "%s"
 msgstr "%s"
