@@ -1,3 +1,10 @@
+2003-05-20  Julien MOUTTE  <julien@moutte.net>
+
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_size_request),
+	(bacon_video_widget_size_allocate), (bacon_video_widget_new): Throwing
+	away the first_alloc static var to use the same mechanism than
+	bvw-xine.
+
 2003-05-20  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-video-widget-xine.c: (bacon_video_widget_class_init),

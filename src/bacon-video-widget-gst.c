@@ -118,8 +118,11 @@ struct BaconVideoWidgetPrivate {
 	gboolean logo_mode;
 	gboolean auto_resize;
 
-	gint video_width;
-	gint video_height;
+	guint video_width;
+	guint video_height;
+	
+	guint init_width;
+	guint init_height;
 	
 	/* Signal handlers we want to keep */
 	gulong vis_sig_handler;
@@ -154,8 +157,6 @@ bacon_video_widget_size_request (GtkWidget *widget, GtkRequisition *requisition)
 	
 	gtk_widget_size_request (GTK_WIDGET(bvw->priv->vw), &child_requisition);
 	
-	/*g_message ("size request %d,%d", child_requisition.width, child_requisition.height);*/
-	
 	requisition->width = child_requisition.width;
 	requisition->height = child_requisition.height;
 }
@@ -165,14 +166,11 @@ bacon_video_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 {
 	BaconVideoWidget *bvw;
 	GtkAllocation child_allocation;
-	static gboolean first_alloc = TRUE;
 	
 	g_return_if_fail(widget != NULL);
 	g_return_if_fail(BACON_IS_VIDEO_WIDGET(widget));
 	
 	bvw = BACON_VIDEO_WIDGET (widget);
-	
-	/* g_message ("size allocate %d,%d", allocation->width, allocation->height);*/
 	
 	widget->allocation = *allocation;
 	
@@ -183,12 +181,13 @@ bacon_video_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	
 	gtk_widget_size_allocate (GTK_WIDGET(bvw->priv->vw), &child_allocation);
 	
-	if (first_alloc) {
-		/*g_message ("first alloc %d,%d", allocation->width,allocation->height);*/
+	if ( (bvw->priv->init_width == 0) && (bvw->priv->init_height == 0) ) {
+		bvw->priv->init_width = allocation->width;
+		bvw->priv->init_height = allocation->height;
 		gst_video_widget_set_minimum_size (bvw->priv->vw,
-																allocation->width,
-																allocation->height);
-		first_alloc = FALSE;
+																bvw->priv->init_width,
+																bvw->priv->init_height);
+	
 	}
 }
 
@@ -1269,6 +1268,8 @@ bacon_video_widget_new (int width, int height,
 	bvw->priv->metadata_hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
 	
 	bvw->priv->play = gst_play_new (GST_PLAY_PIPE_VIDEO_VISUALISATION, err);
+	
+	bvw->priv->init_width = bvw->priv->init_height = 0;
 
 	//FIXME
 	if (*err != NULL)
