@@ -2954,6 +2954,12 @@ G_CONST_RETURN char
 }
 
 void
+bacon_video_widget_set_subtitle_font (BaconVideoWidget *bvw, const char *font)
+{
+	//FIXME
+}
+
+void
 bacon_video_widget_set_video_device (BaconVideoWidget *bvw, const char *path)
 {
 	xine_cfg_entry_t entry;

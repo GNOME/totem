@@ -2045,6 +2045,17 @@ bacon_video_widget_set_proprietary_plugins_path (BaconVideoWidget * bvw,
 {
 }
 
+void
+bacon_video_widget_set_subtitle_font (BaconVideoWidget * bvw,
+    				      const gchar * font)
+{
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
+
+  g_object_set (G_OBJECT (bvw->priv->play), "subtitle-font-desc", font, NULL);
+}
+
 gboolean
 bacon_video_widget_can_set_volume (BaconVideoWidget * bvw)
 {
@@ -3048,9 +3059,6 @@ cb_gconf (GConfClient * client,
   } else if (!strcmp (entry->key, "/apps/totem/buffer-size")) {
     g_object_set (G_OBJECT (bvw->priv->play), "queue-threshold",
         (guint64) GST_SECOND * gconf_value_get_float (entry->value), NULL);
-  } else if (!strcmp (entry->key, "/apps/totem/subtitle-font")) {
-    g_object_set (G_OBJECT (bvw->priv->play), "subtitle-font-desc",
-        gconf_value_get_string (entry->value), NULL);
   }
 }
 
@@ -3354,12 +3362,6 @@ bacon_video_widget_new (int width, int height,
   if (confvalue != NULL) {
     g_object_set (G_OBJECT (bvw->priv->play), "queue-threshold",
         (guint64) GST_SECOND * gconf_value_get_float (confvalue), NULL);
-  }
-  confvalue = gconf_client_get_without_default (bvw->priv->gc,
-      GCONF_PREFIX"/subtitle-font", NULL);
-  if (confvalue != NULL) {
-    g_object_set (G_OBJECT (bvw->priv->play), "subtitle-font-desc",
-        gconf_value_get_string (confvalue), NULL);
   }
 
   return GTK_WIDGET (bvw);

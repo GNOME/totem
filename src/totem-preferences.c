@@ -386,13 +386,36 @@ audio_out_menu_changed (GtkComboBox *combobox, Totem *totem)
 
 }
 
+static void
+on_font_set (GtkFontButton * fb, Totem * totem)
+{
+	const gchar *font;
+
+	font = gtk_font_button_get_font_name (fb);
+	gconf_client_set_string (totem->gc, GCONF_PREFIX"/subtitle_font",
+				 font, NULL);
+}
+
+static void
+font_changed_cb (GConfClient *client, guint cnxn_id,
+		 GConfEntry *entry, Totem *totem)
+{
+	const gchar *font;
+	GtkWidget *item;
+
+	item = glade_xml_get_widget (totem->xml, "font_sel_button");
+	font = gconf_value_get_string (entry->value);
+	gtk_font_button_set_font_name (GTK_FONT_BUTTON (item), font);
+	bacon_video_widget_set_subtitle_font (totem->bvw, font);
+}
+
 void
 totem_setup_preferences (Totem *totem)
 {
 	GtkWidget *item, *menu;
 	gboolean show_visuals, auto_resize, is_local, deinterlace;
 	int connection_speed, i;
-	char *path, *visual;
+	char *path, *visual, *font;
 	GList *list, *l;
 	BaconVideoWidgetAudioOutType audio_out;
 
@@ -572,6 +595,22 @@ totem_setup_preferences (Totem *totem)
 			!gconf_client_get_bool (totem->gc,
 				"/desktop/gnome/lockdown/disable_save_to_disk",
 				NULL));
+
+	/* subtitle font selection */
+	item = glade_xml_get_widget (totem->xml, "font_sel_button");
+	g_signal_connect (item, "font-set", G_CALLBACK (on_font_set), totem);
+	gtk_font_button_set_title (GTK_FONT_BUTTON (item),
+				   _("Select subtitle rendering font"));
+	font = gconf_client_get_string (totem->gc,
+		GCONF_PREFIX"/subtitle_font", NULL);
+	if (font && strcmp (font, "") != 0) {
+		gtk_font_button_set_font_name (GTK_FONT_BUTTON (item), font);
+		bacon_video_widget_set_subtitle_font (totem->bvw, font);
+	}
+	g_free (font);
+	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/subtitle_font",
+			(GConfClientNotifyFunc) font_changed_cb,
+			totem, NULL, NULL);
 }
 
 void
