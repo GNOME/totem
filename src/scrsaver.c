@@ -48,6 +48,8 @@ void scrsaver_init (Display *display)
 		keycode = XKeysymToKeycode (display, XK_Shift_L);
 		g_timeout_add (15000, (GSourceFunc)fake_event, display);
 	}
+
+	XFlush (display);
 #endif /* HAVE_XTEST */
 }
 

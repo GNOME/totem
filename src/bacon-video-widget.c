@@ -772,11 +772,13 @@ bacon_video_widget_realize (GtkWidget *widget)
 	/* set realized flag */
 	GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
 
+	/* Close the old stream */
 	xine_close (bvw->priv->stream);
 	xine_event_dispose_queue (bvw->priv->ev_queue);
 	xine_dispose (bvw->priv->stream);
 	xine_close_video_driver(bvw->priv->xine, bvw->priv->vo_driver);
 
+	/* Create the widget's window */
 	attr.x = widget->allocation.x;
 	attr.y = widget->allocation.y;
 	attr.width = widget->allocation.width;
@@ -800,11 +802,13 @@ bacon_video_widget_realize (GtkWidget *widget)
 			"configure-event",
 			G_CALLBACK (configure_cb), bvw);
 
+	scrsaver_init (GDK_DISPLAY ());
+
+	/* Now onto the video out driver */
 	bvw->priv->display = XOpenDisplay (gdk_display_get_name
 			(gdk_display_get_default ()));
 	bvw->priv->screen = DefaultScreen (bvw->priv->display);
 
-	/* load the video driver */
 	bvw->priv->vo_driver = load_video_out_driver (bvw, bvw->priv->null_out);
 
 	g_assert (bvw->priv->vo_driver != NULL);
@@ -817,7 +821,7 @@ bacon_video_widget_realize (GtkWidget *widget)
 			bvw->priv->ao_driver, bvw->priv->vo_driver);
 	bvw->priv->ev_queue = xine_event_new_queue (bvw->priv->stream);
 
-	/* Setup xine events, the screensaver and the event filter */
+	/* Setup xine events */
 	xine_event_create_listener_thread (bvw->priv->ev_queue,
 			xine_event, (void *) bvw);
 
@@ -825,8 +829,6 @@ bacon_video_widget_realize (GtkWidget *widget)
 	update_fullscreen_size (bvw);
 	g_signal_connect (G_OBJECT (gdk_screen_get_default ()),
 			"size-changed", G_CALLBACK (size_changed_cb), bvw);
-
-	scrsaver_init (bvw->priv->display);
 
 	return;
 }
