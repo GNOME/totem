@@ -34,8 +34,7 @@
 #include <X11/keysym.h>
 /* gtk+/gnome */
 #include <gdk/gdkx.h>
-#include <gnome.h>
-#include <libgnome/gnome-i18n.h>
+#include <gtk/gtk.h>
 #include <gconf/gconf-client.h>
 #include <glade/glade.h>
 /* xine */
@@ -46,6 +45,30 @@
 #include "gtkxine-marshal.h"
 #include "scrsaver.h"
 #include "video-utils.h"
+
+#ifdef ENABLE_NLS
+#    include <libintl.h>
+#    ifdef BONOBO_EXPLICIT_TRANSLATION_DOMAIN
+#        undef _
+#        define _(String) dgettext (BONOBO_EXPLICIT_TRANSLATION_DOMAIN, String)
+#    else
+#        define _(String) gettext (String)
+#    endif
+#    ifdef gettext_noop
+#        define N_(String) gettext_noop (String)
+#    else
+#        define N_(String) (String)
+#    endif
+#else
+/* Stubs that do something close enough.  */
+#    define textdomain(String) (String)
+#    define gettext(String) (String)
+#    define dgettext(Domain,Message) (Message)
+#    define dcgettext(Domain,Message,Type) (Message)
+#    define bindtextdomain(Domain,Directory) (Domain)
+#    define _(String) (String)
+#    define N_(String) (String)
+#endif
 
 #define DEFAULT_HEIGHT 420
 #define DEFAULT_WIDTH 315
@@ -486,6 +509,7 @@ load_video_out_driver (GtkXine *gtx)
 	video_driver_id = xine_config_register_string (gtx->priv->xine,
 			"video.driver", "auto", "video driver to use",
 			NULL, 10, NULL, NULL);
+	//FIXME
 #if 0
 	if (gtx->priv->null_out == TRUE)
 	{
@@ -929,8 +953,9 @@ gtk_xine_realize (GtkWidget *widget)
 		return;
 	}
 
-	gtx->priv->vis = xine_post_init (gtx->priv->xine, "goom", 0,
-			&gtx->priv->ao_driver, &gtx->priv->vo_driver);
+	if (gtx->priv->null_out == FALSE)
+		gtx->priv->vis = xine_post_init (gtx->priv->xine, "goom", 0,
+				&gtx->priv->ao_driver, &gtx->priv->vo_driver);
 
 	gtx->priv->stream = xine_stream_new (gtx->priv->xine,
 			gtx->priv->ao_driver, gtx->priv->vo_driver);
@@ -1085,7 +1110,7 @@ gtk_xine_unrealize (GtkWidget *widget)
 
 	g_return_if_fail (widget != NULL);
 	g_return_if_fail (GTK_IS_XINE (widget));
-
+//FIXME need to empty the async queue
 	/* Hide all windows */
 	if (GTK_WIDGET_MAPPED (widget))
 		gtk_widget_unmap (widget);
@@ -1377,7 +1402,7 @@ gtk_xine_get_speed (GtkXine *gtx)
 
 	return xine_get_param (gtx->priv->stream, XINE_PARAM_SPEED);
 }
-
+//FIXME
 gint
 gtk_xine_get_position (GtkXine *gtx)
 {
@@ -1390,8 +1415,9 @@ gtk_xine_get_position (GtkXine *gtx)
 	if (gtk_xine_is_playing (gtx) == FALSE)
 		return 0;
 
-	xine_get_pos_length (gtx->priv->stream, &pos_stream,
-			&pos_time, &length_time);
+	if (xine_get_pos_length (gtx->priv->stream, &pos_stream,
+			&pos_time, &length_time) == FALSE)
+		return -1;
 
 	return pos_stream;
 }
@@ -1621,7 +1647,7 @@ gtk_xine_get_show_cursor (GtkXine *gtx)
 
 	return gtx->priv->cursor_shown;
 }
-
+//FIXME
 gint
 gtk_xine_get_current_time (GtkXine *gtx)
 {
@@ -1631,12 +1657,13 @@ gtk_xine_get_current_time (GtkXine *gtx)
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
 	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
 
-	xine_get_pos_length (gtx->priv->stream, &pos_stream,
-			&pos_time, &length_time);
+	if (xine_get_pos_length (gtx->priv->stream, &pos_stream,
+			&pos_time, &length_time) == FALSE)
+		return -1;
 
 	return pos_time;
 }
-
+//FIXME
 gint
 gtk_xine_get_stream_length (GtkXine *gtx)
 {
@@ -1646,8 +1673,9 @@ gtk_xine_get_stream_length (GtkXine *gtx)
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
 	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
 
-	xine_get_pos_length (gtx->priv->stream, &pos_stream,
-			&pos_time, &length_time);
+	if (xine_get_pos_length (gtx->priv->stream, &pos_stream,
+			&pos_time, &length_time) == FALSE)
+		return -1;
 
 	return length_time;
 }
@@ -1814,9 +1842,8 @@ GtkWidget
 	if (gtx->priv->dialog != NULL)
 		return gtx->priv->dialog;
 
-	filename = gnome_program_locate_file (NULL,
-			GNOME_FILE_DOMAIN_APP_DATADIR,
-			"totem/properties.glade", TRUE, NULL);
+	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
+			"totem", "properties.glade", NULL);
 
 	if (filename == NULL)
 		return NULL;
@@ -2056,8 +2083,28 @@ gtk_xine_properties_update (GtkXine *gtx, gboolean reset)
  *  For screen shot. Nicked from pornview which is in turn nicked from xine-ui.
  */
 
+#define PIXSZ 3
+
 static guchar *gtk_xine_get_current_frame_rgb (GtkXine *gtx, gint *width_ret,
 					       gint * height_ret);
+
+gboolean
+gtk_xine_can_get_frames (GtkXine *gtx)
+{
+	g_return_if_fail (gtx != NULL);
+	g_return_if_fail (GTK_IS_XINE (gtx));
+	g_return_if_fail (gtx->priv->xine != NULL);
+
+	if (xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_HAS_VIDEO) == FALSE)
+		return FALSE;
+
+	if (xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_VIDEO_HANDLED) == FALSE)
+		return FALSE;
+
+	return TRUE;
+}
 
 GdkPixbuf *
 gtk_xine_get_current_frame (GtkXine *gtx)
@@ -2071,17 +2118,13 @@ gtk_xine_get_current_frame (GtkXine *gtx)
 	g_return_if_fail (gtx->priv->xine != NULL);
 
 	pixels = gtk_xine_get_current_frame_rgb (gtx, &width, &height);
-	if (pixels)
+	if (pixels != NULL)
 	{
 		pixbuf = gdk_pixbuf_new_from_data (pixels,
 				GDK_COLORSPACE_RGB, FALSE,
 				8, width, height, 3 * width,
 				(GdkPixbufDestroyNotify) g_free, NULL);
-
-		g_message ("gtk_xine_get_current_frame found frame");
 	}
-
-	g_message ("gtk_xine_get_current_frame found NO frame");
 
 	return pixbuf;
 }
@@ -2108,8 +2151,6 @@ struct prvt_image_s
 };
 
 static guchar *xine_frame_to_rgb (struct prvt_image_s *image);
-#define PIXSZ 3
-#define BIT_DEPTH 8
 
 static guchar *
 gtk_xine_get_current_frame_rgb (GtkXine * gtx, gint * width_ret,
@@ -3004,6 +3045,7 @@ xine_frame_to_rgb (struct prvt_image_s *image)
 	  break;
 
       default:
+	  g_warning ("Image format %d not supported");
 	  return NULL;
     }
 

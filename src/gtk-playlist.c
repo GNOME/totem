@@ -350,7 +350,6 @@ drop_cb (GtkWidget     *widget,
 					| G_FILE_TEST_EXISTS)
 				 || strstr (filename, "://") != NULL))
 		{
-			g_message ("drop_cb: adding %s", filename);
 			gtk_playlist_add_mrl (playlist, filename, NULL);
 		}
 		g_free (filename);
@@ -1082,7 +1081,7 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 
 	if (mimetype == NULL)
 	{
-		g_message ("trying to add '%s' with no mimetype", mrl);
+		D("trying to add '%s' with no mimetype", mrl);
 		return gtk_playlist_add_one_mrl (playlist, mrl, display_name);
 	} else if (strcmp ("audio/x-mpegurl", mimetype) == 0) {
 		return gtk_playlist_add_m3u (playlist, mrl);
@@ -1097,7 +1096,7 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 	if (strncmp ("audio/", mimetype, 6) != 0
 			&& strncmp ("video/", mimetype, 6) != 0)
 	{
-		g_message ("trying to add '%s' with mimetype '%s'",
+		D("trying to add '%s' with mimetype '%s'",
 				mrl, mimetype);
 		return FALSE;
 	}

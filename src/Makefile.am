@@ -25,9 +25,7 @@ EGG_RECENT_FILES =                      \
 	egg-recent-view-gtk.c           \
         egg-recent-view-gtk.h           \
 	egg-recent-util.c               \
-	egg-recent-util.h		\
-	egg-recent-vfs-utils.c		\
-	egg-recent-vfs-utils.h
+	egg-recent-util.h
 
 egg-recent-model.c: regenerate-built-sources
 egg-recent-model.h: regenerate-built-sources
@@ -38,8 +36,6 @@ egg-recent-view-gtk.c: regenerate-built-sources
 egg-recent-view-gtk.h: regenerate-built-sources
 egg-recent-util.c: regenerate-built-sources
 egg-recent-util.h: regenerate-built-sources
-egg-recent-vfs-utils.c: regenerate-built-sources
-egg-recent-vfs-utils.h: regenerate-built-sources
 
 BACON_CD_SELECTION = 			\
 	cd-drive.c			\
@@ -87,8 +83,7 @@ totem_video_thumbnailer_SOURCES =	\
 	video-utils.c video-utils.h     \
 	totem-video-thumbnailer.c
 
-totem_video_thumbnailer_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS)
-totem_video_thumbnailer_LDFLAGS = -export-dynamic
+totem_video_thumbnailer_LDADD = $(GTK_LIBS) $(XTEST_LIBS)
 
 INCLUDES = 						\
 	-D_REENTRANT -D_FILE_OFFSET_BITS=64		\

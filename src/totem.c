@@ -1214,6 +1214,28 @@ on_about1_activate (GtkButton *button, gpointer user_data)
 }
 
 static void
+on_take_screenshot1_activate (GtkButton *button, gpointer user_data)
+{
+	Totem *totem = (Totem *)user_data;
+	GdkPixbuf *pixbuf;
+
+	pixbuf = gtk_xine_get_current_frame (GTK_XINE (totem->gtx));
+	if (pixbuf == NULL)
+	{
+		//FIXME error
+		return;
+	}
+
+	if (gdk_pixbuf_save (pixbuf, "/home/hadess/Pictures/foo.png", "png", NULL, NULL) == FALSE)
+	{
+		//FIXME error
+	}
+
+	gdk_pixbuf_unref (pixbuf);
+}
+
+
+static void
 on_properties1_activate (GtkButton *button, gpointer user_data)
 {
 	Totem *totem = (Totem *)user_data;
@@ -1826,6 +1848,9 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "about1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_about1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "take_screenshot1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_take_screenshot1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "preferences1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_preferences1_activate), totem);
@@ -1967,8 +1992,6 @@ static void
 video_widget_create (Totem *totem) 
 {
 	GtkWidget *container;
-
-	g_message ("video_widget_create");
 
 	totem->gtx = gtk_xine_new (-1, -1, FALSE);
 	container = glade_xml_get_widget (totem->xml, "frame2");

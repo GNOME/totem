@@ -137,6 +137,8 @@ void gtk_xine_properties_update        (GtkXine *gtx, gboolean reset);
 
 void gtk_xine_dvd_event (GtkXine *gtx, GtkXineDVDEvent type);
 
+/* Screenshot functions */
+gboolean gtk_xine_can_get_frames       (GtkXine *gtx);
 GdkPixbuf * gtk_xine_get_current_frame (GtkXine *gtx);
 
 G_END_DECLS

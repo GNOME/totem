@@ -51,7 +51,7 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path, const char *video_path)
 
 	if (gdk_pixbuf_save (small, path, "png", NULL, NULL) == FALSE)
 	{
-		g_print (_("totem-video-thumbnailer couln't write the thumbnail '%s' for video '%s'\n"),
+		g_print ("totem-video-thumbnailer couln't write the thumbnail '%s' for video '%s'\n",
 				path, video_path);
 		gdk_pixbuf_unref (small);
 		exit (1);
@@ -65,12 +65,9 @@ int main (int argc, char *argv[])
 	GError *err = NULL;
 	GtkWidget *gtx, *toplevel;
 	GdkPixbuf *pixbuf;
+	int i;
 
-	gnome_program_init ("totem-video-thumbnailer", VERSION,
-			LIBGNOMEUI_MODULE,
-			argc, argv,
-			GNOME_PARAM_APP_DATADIR, DATADIR,
-			NULL);
+	gtk_init (&argc, &argv);
 
 	if (argc != 3)
 		print_usage ();
@@ -78,8 +75,8 @@ int main (int argc, char *argv[])
 	gconf_init (argc, argv, &err);
 	if (err != NULL)
 	{
-		g_print (_("totem-video-thumbnailer couln't initialise the "
-				"configuration engine:\n%s"), err->message);
+		g_print ("totem-video-thumbnailer couln't initialise the "
+				"configuration engine:\n%s", err->message);
 		exit (1);
 	}
 
@@ -93,26 +90,47 @@ int main (int argc, char *argv[])
 
 	if (gtk_xine_open (GTK_XINE (gtx), argv[1]) == FALSE)
 	{
-		g_print (_("totem-video-thumbnailer couln't open file '%s'\n"),
+		g_print ("totem-video-thumbnailer couln't open file '%s'\n",
 					argv[1]);
 		exit (1);
 	}
 
+	/* A 3rd into the file */
 	gtk_xine_play (GTK_XINE (gtx), 21845, 0);
-	gtk_xine_set_speed (GTK_XINE (gtx), SPEED_PAUSE);
+	//FIXME
+#if 0
+	if (gtk_xine_can_get_frames (GTK_XINE (gtx)) == FALSE)
+	{
+		g_print ("totem-video-thumbnailer: '%s' isn't thumbnailable\n",
+				argv[1]);
+		gtk_xine_close (GTK_XINE (gtx));
+		gtk_widget_unrealize (gtx);
+		gtk_widget_destroy (gtx);
+		gtk_widget_destroy (toplevel);
 
+		exit (1);
+	}
+#endif
+	/* 10 seconds! */
+	i = 0;
 	pixbuf = gtk_xine_get_current_frame (GTK_XINE (gtx));
-	gdk_pixbuf_ref (pixbuf);
+	while (pixbuf == NULL && i < 10)
+	{
+		usleep (1000000);
+		pixbuf = gtk_xine_get_current_frame (GTK_XINE (gtx));
+		i++;
+	}
 
 	/* Cleanup */
+	gtk_xine_close (GTK_XINE (gtx));
 	gtk_widget_unrealize (gtx);
 	gtk_widget_destroy (gtx);
 	gtk_widget_destroy (toplevel);
 
 	if (pixbuf == NULL)
 	{
-		g_print (_("totem-video-thumbnailer couln't get a picture from "
-					"'%s'\n"), argv[1]);
+		g_print ("totem-video-thumbnailer couln't get a picture from "
+					"'%s'\n", argv[1]);
 		exit (1);
 	}
 
@@ -123,5 +141,4 @@ int main (int argc, char *argv[])
 
 	return 0;
 }
-
 

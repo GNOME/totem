@@ -1,3 +1,28 @@
+2003-01-07  Bastien Nocera  <hadess@hadess.net>
+
+	* README: add info about the thumbnailer
+	* configure.in: add some gtk+ only flags
+	* data/.cvsignore: upd
+	* data/totem.glade: add the screenshot menu item
+	* src/Makefile.am: upd
+	* src/egg-recent-vfs-utils.[ch]: add these files in (I'm pretty sure
+	Totem doesn't compile anymore on stable GNOME...)
+	* src/gtk-playlist.c: (drop_cb), (gtk_playlist_add_mrl): removed
+	useless debug
+	* src/gtk-xine.c: (load_video_out_driver), (gtk_xine_realize),
+	(gtk_xine_unrealize), (gtk_xine_get_position),
+	(gtk_xine_get_current_time), (gtk_xine_get_stream_length),
+	(gtk_xine_properties_dialog_get), (gtk_xine_can_get_frames),
+	(gtk_xine_get_current_frame), (xine_frame_to_rgb): remove debug,
+	add some FIXMEs, remove gnome dependency, more work on the thumbnailer
+	side
+	* src/gtk-xine.h: upd
+	* src/list_cddrives.c: removed, it's in libbacon now
+	* src/totem-video-thumbnailer.c: (save_pixbuf), (main): more work
+	* src/totem.c: (on_take_screenshot1_activate),
+	(totem_callback_connect), (video_widget_create): remove debug, started
+	adding the screenshot function
+
 2003-01-06  Bastien Nocera  <hadess@hadess.net>
 
 	* src/Makefile.am: upd
