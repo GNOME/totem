@@ -1100,7 +1100,6 @@ bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
 {
 	g_return_val_if_fail (bvw != NULL, 65535 / 2);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 65535 / 2);
-	g_return_val_if_fail (bvw->priv->xine != NULL, 65535 / 2);
 
 	//FIXME
 	return 65535 / 2;
@@ -1112,7 +1111,6 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-	g_return_if_fail (bvw->priv->xine != NULL);
 	g_return_if_fail ((value < 65535 && value > 0));
 
 	//FIXME
