@@ -1,3 +1,10 @@
+2003-04-21  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem.c: (main): call XInitThreads very early on, before we
+	even remotely touch the X server connection. Fixes the possible
+	(async reply) lockups. Thanks to Owen Taylor for his quick diagnosis
+	to the symptoms
+
 2003-04-18  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-preferences.c: (totem_display_is_local),

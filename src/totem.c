@@ -3071,6 +3071,7 @@ main (int argc, char **argv)
 
 	g_thread_init (NULL);
 	gdk_threads_init ();
+	XInitThreads ();
 
 	gnome_program_init ("totem", VERSION,
 			LIBGNOMEUI_MODULE,
