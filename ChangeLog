@@ -1,3 +1,14 @@
+2004-01-08  Bastien Nocera  <hadess@hadess.net>
+
+	* NEWS: updated
+	* configure.in: removed checks for the Sun keysym headers
+	* data/Makefile.am:
+	* src/Makefile.am: more work on making vanity optional, fix build
+	(working around an automake dependency calculation bug)
+	* src/totem.c: (totem_action_handle_key): don't use the XFree86
+	multimedia keysyms if we're not building against XFree86
+	(patch by Harsh Jaitly <hjaitly@novell.com>) (Closes: #130169)
+
 2004-01-07  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in:

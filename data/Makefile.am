@@ -26,7 +26,7 @@ pixmapdir = $(datadir)/pixmaps
 pixmap_DATA = media-player-48.png vanity.png
 
 desktop_in_files_all = totem.desktop.in vanity.desktop.in
-if HAVE_LINUX
+if TOTEM_VANITY
 desktop_in_files = totem.desktop.in vanity.desktop.in
 else
 desktop_in_files = totem.desktop.in

@@ -83,7 +83,27 @@ AC_ARG_ENABLE(vanity,
 	esac],
 	[ENABLE_VANITY=yes]) dnl Default value
 
-AM_CONDITIONAL(TOTEM_VANITY, test x$ENABLE_VANITY = "xyes")
+AC_MSG_CHECKING(for Linux)
+case `uname` in
+        *Linux*)
+	AC_MSG_RESULT(yes)
+	IS_LINUX="yes"
+	;;
+	*)
+	AC_MSG_RESULT(no)
+        IS_LINUX="no"
+	;;
+esac
+
+if test x$ENABLE_VANITY = "xyes" -a x$IS_LINUX = "xyes"; then
+	COMPILE_VANITY=yes
+else
+	COMPILE_VANITY=no
+fi
+
+AM_CONDITIONAL(TOTEM_VANITY, test x$COMPILE_VANITY = "xyes")
+AC_MSG_CHECKING(whether to compile vanity)
+AC_MSG_RESULT($COMPILE_VANITY);
 
 dnl CURL tests
 CURL_MAJOR_REQ=7
@@ -201,25 +221,6 @@ if test x"$have_xfree" = "xyes" ; then
 	AC_DEFINE(HAVE_XFREE, 1, [defined if you have X11/XF86keysym.h])
 fi
 
-have_xsun=no
-AC_COMPILE_IFELSE([
-	#include <X11/Sunkeysym.h>
-	int main(int argc,char **argv) {
-	return 0;
-	}
-	],
-	have_xsun=yes
-)
-AC_MSG_CHECKING(for X11 Sun headers)
-AC_MSG_RESULT($have_xsun)
-if test x"$have_xsun" = "xyes" ; then
-	AC_DEFINE(HAVE_XSUN, 1, [defined if you have X11/Sunkeysym.h])
-fi
-
-if test x"$have_xsun" = "xno" && test x"$have_xfree" = "xno" ; then
-	AC_MSG_ERROR(Your system doesn't have any headers for multimedia buttons)
-fi
-
 AC_MSG_CHECKING(for broken old architecture)
 if test "`uname -m`x" = "i686x" ; then
        AC_MSG_RESULT(h0rk3d)
@@ -232,19 +233,6 @@ if test "`whoami`x" = "hadessx" ; then
 else
        AC_MSG_RESULT(n334)
 fi
-
-AC_MSG_CHECKING(for Linux)
-case `uname` in
-	*Linux*)
-	AC_MSG_RESULT(yes)
-	IS_LINUX="yes"
-	;;
-	*)
-	AC_MSG_RESULT(no)
-	IS_LINUX="no"
-	;;
-esac
-AM_CONDITIONAL(HAVE_LINUX, `test x$IS_LINUX = xyes`)
 
 _system_is_x86="no"
 AC_CHECK_HEADER( asm/vm86.h, _system_is_x86="yes" )

@@ -29,9 +29,6 @@
 #ifdef HAVE_XFREE
 #include <X11/XF86keysym.h>
 #endif
-#ifdef HAVE_XSUN
-#include <X11/Sunkeysym.h>
-#endif
 
 #include "gnome-authn-manager.h"
 #include "bacon-video-widget.h"
@@ -2612,7 +2609,9 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 		else
 			totem->action = 0;
 		break;
+#ifdef HAVE_XFREE
 	case XF86XK_AudioPrev:
+#endif /* HAVE_XFREE */
 	case GDK_B:
 	case GDK_b:
 		totem_action_previous (totem);
@@ -2670,7 +2669,9 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 	case GDK_m:
 		bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU);
 		break;
+#ifdef HAVE_XFREE
 	case XF86XK_AudioNext:
+#endif /* HAVE_XFREE */
 	case GDK_N:
 	case GDK_n:
 		totem_action_next (totem);
@@ -2687,8 +2688,10 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 		else
 			totem->action = 0;
 		break;
+#ifdef HAVE_XFREE
 	case XF86XK_AudioPlay:
 	case XF86XK_AudioPause:
+#endif /* HAVE_XFREE */
 	case GDK_p:
 	case GDK_P:
 		totem_action_play_pause (totem);
