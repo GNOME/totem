@@ -19,7 +19,14 @@
 
 #include <config.h>
 #include <X11/Xlib.h>
+#ifndef HAVE_GTK_ONLY
 #include <gnome.h>
+#else
+#include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
+#include <stdlib.h>
+#endif /* !HAVE_GTK_ONLY */
+
 #include <glade/glade.h>
 #include <libgnomevfs/gnome-vfs.h>
 #include <gconf/gconf-client.h>
@@ -29,6 +36,23 @@
 #include "totem-screenshot.h"
 
 #include "debug.h"
+
+#ifdef HAVE_GTK_ONLY
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext(GETTEXT_PACKAGE,String)
+#ifdef gettext_noop
+#define N_(String) gettext_noop(String)
+#else
+#define N_(String) (String)
+#endif /* gettext_noop */
+#else
+#define _(String) (String)
+#define N_(String) (String)
+#endif /* ENABLE_NLS */
+#else
+#include <libgnome/gnome-i18n.h>
+#endif /* HAVE_GTK_ONLY */
 
 typedef struct Vanity Vanity;
 
@@ -212,6 +236,7 @@ on_quit1_activate (GtkButton *button, Vanity *vanity)
 	vanity_action_exit (vanity);
 }
 
+#ifndef HAVE_GTK_ONLY
 static void
 on_about1_activate (GtkButton *button, Vanity *vanity)
 {
@@ -236,12 +261,10 @@ on_about1_activate (GtkButton *button, Vanity *vanity)
 	{
 		char *filename = NULL;
 
-		filename = gnome_program_locate_file (NULL,
-				GNOME_FILE_DOMAIN_APP_DATADIR,
-				"totem/vanity.png",
-				TRUE, NULL);
+		filename = g_build_filename (DATADIR,
+			"totem", "vanity.png", NULL);
 
-		if (filename != NULL)
+		if (g_file_test (filename, G_FILE_TEST_EXISTS) == FALSE)
 		{
 			pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
 			g_free (filename);
@@ -275,6 +298,7 @@ on_about1_activate (GtkButton *button, Vanity *vanity)
 
 	gtk_widget_show(about);
 }
+#endif /* !HAVE_GTK_ONLY */
 
 static void
 on_save1_activate (GtkButton *button, Vanity *vanity)
@@ -496,9 +520,15 @@ vanity_callback_connect (Vanity *vanity)
 	item = glade_xml_get_widget (vanity->xml, "quit1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_quit1_activate), vanity);
+#ifndef HAVE_GTK_ONLY
 	item = glade_xml_get_widget (vanity->xml, "about1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_about1_activate), vanity);
+#else
+	item = glade_xml_get_widget (vanity->xml, "help1");
+	gtk_widget_hide (item);
+#endif /* !HAVE_GTK_ONLY */
+
 	item = glade_xml_get_widget (vanity->xml, "preferences1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_preferences1_activate), vanity);
@@ -639,12 +669,15 @@ main (int argc, char **argv)
 	g_thread_init (NULL);
 	gdk_threads_init ();
 
+	gtk_init (&argc, &argv);
+#ifndef HAVE_GTK_ONLY
 	gnome_program_init ("vanity", VERSION,
 			LIBGNOMEUI_MODULE,
 			argc, argv,
 			GNOME_PARAM_APP_DATADIR, DATADIR,
 			GNOME_PARAM_POPT_TABLE, options,
 			GNOME_PARAM_NONE);
+#endif /* !HAVE_GTK_ONLY */
 
 	glade_init ();
 	gnome_vfs_init ();
@@ -659,12 +692,15 @@ main (int argc, char **argv)
 		g_error_free (err);
 		g_free (str);
 	}
-	gnome_authentication_manager_init ();
 
-	filename = gnome_program_locate_file (NULL,
-			GNOME_FILE_DOMAIN_APP_DATADIR,
-			"totem/vanity.glade", TRUE, NULL);
-	if (filename == NULL)
+#ifndef HAVE_GTK_ONLY
+	gnome_authentication_manager_init ();
+#endif /* !HAVE_GTK_ONLY */
+
+	filename = g_build_filename (DATADIR,
+			"totem", "vanity.glade", NULL);
+
+	if (g_file_test (filename, G_FILE_TEST_EXISTS) == FALSE)
 	{
 		vanity_action_error_and_exit (_("Couldn't load the main "
 					"interface (vanity.glade).\n"

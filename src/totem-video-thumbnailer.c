@@ -1,7 +1,12 @@
 
 #include "config.h"
 
+#ifndef HAVE_GTK_ONLY
 #include <gnome.h>
+#else
+#include <gtk/gtk.h>
+#endif
+
 #include <string.h>
 #include <unistd.h>
 #include "bacon-video-widget.h"

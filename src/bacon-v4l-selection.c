@@ -23,7 +23,28 @@
 #include <config.h>
 
 #include <string.h>
+#ifndef HAVE_GTK_ONLY
 #include <gnome.h>
+#else
+#include <gtk/gtk.h>
+#endif /* !HAVE_GTK_ONLY */
+
+#ifdef HAVE_GTK_ONLY
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext(GETTEXT_PACKAGE,String)
+#ifdef gettext_noop
+#define N_(String) gettext_noop(String)
+#else
+#define N_(String) (String)
+#endif /* gettext_noop */
+#else
+#define _(String) (String)
+#define N_(String) (String)
+#endif /* ENABLE_NLS */
+#else
+#include <libgnome/gnome-i18n.h>
+#endif /* HAVE_GTK_ONLY */
 
 #include "bacon-v4l-selection.h"
 
@@ -244,6 +265,7 @@ video_dev_option_menu (BaconV4lSelection *bvs)
 	return option_menu;
 }
 
+#ifndef HAVE_GTK_ONLY
 static void
 on_combo_entry_changed (GnomeFileEntry *entry, gpointer user_data)
 {
@@ -258,6 +280,7 @@ on_combo_entry_changed (GnomeFileEntry *entry, gpointer user_data)
 			bvs_table_signals[DEVICE_CHANGED],
 			0, str);
 }
+#endif /* !HAVE_GTK_ONLY */
 
 GtkWidget *
 bacon_v4l_selection_new (void)
@@ -269,6 +292,7 @@ bacon_v4l_selection_new (void)
 		(g_object_new (bacon_v4l_selection_get_type (), NULL));
 	bvs = BACON_V4L_SELECTION (widget);
 
+#ifndef HAVE_GTK_ONLY
 	if (bvs->priv->is_entry)
 	{
 		bvs->priv->widget = gnome_file_entry_new (NULL,
@@ -281,7 +305,9 @@ bacon_v4l_selection_new (void)
 				TRUE,       /* expand */
 				TRUE,       /* fill */
 				0);         /* padding */
-	} else {
+	} else
+#endif /* !HAVE_GTK_ONLY */
+	{
 		bvs->priv->widget = video_dev_option_menu (bvs);
 
 		g_signal_connect (bvs->priv->widget, "changed",
@@ -358,7 +384,6 @@ bacon_v4l_selection_get_default_device (BaconV4lSelection *bvs)
 void
 bacon_v4l_selection_set_device (BaconV4lSelection *bvs, const char *device)
 {
-	GtkWidget *entry;
 	GList *l;
 	VideoDev *drive;
 	gboolean found;
@@ -367,12 +392,17 @@ bacon_v4l_selection_set_device (BaconV4lSelection *bvs, const char *device)
 	g_return_if_fail (bvs != NULL);
 	g_return_if_fail (BACON_IS_CD_SELECTION (bvs));
 
+#ifndef HAVE_GTK_ONLY
 	if (bvs->priv->is_entry != FALSE)
 	{
+		GtkWidget *entry;
+
 		entry = gnome_file_entry_gtk_entry
 			(GNOME_FILE_ENTRY (bvs->priv->widget));
 		gtk_entry_set_text (GTK_ENTRY (entry), device);
-	} else {
+	} else
+#endif /* !HAVE_GTK_ONLY */
+	{
 		i = -1;
 		found = FALSE;
 
@@ -413,19 +443,23 @@ bacon_v4l_selection_set_device (BaconV4lSelection *bvs, const char *device)
 const char *
 bacon_v4l_selection_get_device (BaconV4lSelection *bvs)
 {
-	GtkWidget *entry;
 	VideoDev *drive;
 	int i;
 
 	g_return_val_if_fail (bvs != NULL, NULL);
 	g_return_val_if_fail (BACON_IS_CD_SELECTION (bvs), NULL);
 
+#ifndef HAVE_GTK_ONLY
 	if (bvs->priv->is_entry != FALSE)
 	{
+		GtkWidget *entry;
+
 		entry = gnome_file_entry_gtk_entry
 			(GNOME_FILE_ENTRY (bvs->priv->widget));
 		return gtk_entry_get_text (GTK_ENTRY (entry));
-	} else {
+	} else
+#endif /* !HAVE_GTK_ONLY */
+	{
 		i = gtk_option_menu_get_history (GTK_OPTION_MENU
 				(bvs->priv->widget));
 		drive = get_drive (bvs, i);

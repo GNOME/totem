@@ -17,8 +17,16 @@
  *
  */
 
-#include <config.h>
+#include "config.h"
+
+#ifndef HAVE_GTK_ONLY
 #include <gnome.h>
+#else
+#include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
+#include <stdlib.h>
+#endif /* !HAVE_GTK_ONLY */
+
 #include <libgnomevfs/gnome-vfs.h>
 #include <gconf/gconf-client.h>
 #include <string.h>
@@ -1621,11 +1629,11 @@ on_open_location1_activate (GtkButton *button, Totem *totem)
 	int response;
 	const char *filenames[2];
 
-	filename = gnome_program_locate_file (NULL,
-			GNOME_FILE_DOMAIN_APP_DATADIR,
-			"totem/uri.glade", TRUE, NULL);
-	if (filename == NULL)
+	filename = g_build_filename (DATADIR,
+			"totem", "uri.glade", NULL);
+	if (g_file_test (filename, G_FILE_TEST_EXISTS) == FALSE)
 	{
+		g_free (filename);
 		totem_action_error (_("Couldn't load the 'Open Location...' interface."), _("Make sure that Totem is properly installed."), totem);
 		return;
 	}
@@ -1882,6 +1890,7 @@ on_show_controls2_activate (GtkMenuItem *menuitem, Totem *totem)
 	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), TRUE);
 }
 
+#ifndef HAVE_GTK_ONLY
 static void
 on_help_activate (GtkButton *button, Totem *totem)
 {
@@ -1958,6 +1967,7 @@ on_about1_activate (GtkButton *button, Totem *totem)
 
 	gtk_widget_show(about);
 }
+#endif /* !HAVE_GTK_ONLY */
 
 static void
 on_take_screenshot1_activate (GtkButton *button, Totem *totem)
@@ -3027,12 +3037,18 @@ totem_callback_connect (Totem *totem)
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_quit1_activate), totem);
 
+#ifndef HAVE_GTK_ONLY
 	item = glade_xml_get_widget (totem->xml, "tmw_contents_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_help_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "tmw_about_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_about1_activate), totem);
+#else
+	item = glade_xml_get_widget (totem->xml, "tmw_menu_item_help");
+	gtk_widget_hide (item);
+#endif /* !HAVE_GTK_ONLY */
+
 	item = glade_xml_get_widget (totem->xml,
 			"tmw_take_screenshot_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
@@ -3615,12 +3631,15 @@ main (int argc, char **argv)
 	gtk_init (&argc, &argv);
 
 	options[0].arg = bacon_video_widget_get_popt_table ();
+#ifndef HAVE_GTK_ONLY
+#warning foo
 	gnome_program_init ("totem", VERSION,
 			LIBGNOMEUI_MODULE,
 			argc, argv,
 			GNOME_PARAM_APP_DATADIR, DATADIR,
 			GNOME_PARAM_POPT_TABLE, options,
 			GNOME_PARAM_NONE);
+#endif /* !HAVE_GTK_ONLY */
 
 	glade_init ();
 	gnome_vfs_init ();
@@ -3629,12 +3648,16 @@ main (int argc, char **argv)
 	{
 		totem_action_error_and_exit (_("Totem couln't initialise the configuration engine."), _("Make sure that GNOME is properly installed."), NULL);
 	}
+
+#ifndef HAVE_GTK_ONLY
 	gnome_authentication_manager_init ();
-	filename = gnome_program_locate_file (NULL,
-			GNOME_FILE_DOMAIN_APP_DATADIR,
-			"totem/totem.glade", TRUE, NULL);
-	if (filename == NULL)
+#endif /* !HAVE_GTK_ONLY */
+
+	filename = g_build_filename (DATADIR,
+			"totem", "totem.glade", NULL);
+	if (g_file_test (filename, G_FILE_TEST_EXISTS) == FALSE)
 	{
+		g_free (filename);
 		totem_action_error_and_exit (_("Couldn't load the main interface (totem.glade)."), _("Make sure that Totem is properly installed."), NULL);
 	}
 

@@ -1,3 +1,40 @@
+2004-04-10  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in:
+	* data/totem.glade:
+	* src/Makefile.am:
+	* src/bacon-cd-selection.c: (bacon_cd_selection_new),
+	(bacon_cd_selection_set_device), (bacon_cd_selection_get_device):
+	* src/bacon-cd-selection.h:
+	* src/bacon-v4l-selection.c: (bacon_v4l_selection_new),
+	(bacon_v4l_selection_set_device), (bacon_v4l_selection_get_device):
+	* src/bacon-video-widget-properties.c:
+	* src/egg-recent-item.c: (egg_recent_item_new),
+	(egg_recent_item_set_private), (egg_recent_item_get_private):
+	* src/egg-recent-item.h:
+	* src/egg-recent-util.c:
+	* src/egg-recent-view.h:
+	* src/totem-pl-parser.c:
+	* src/totem-playlist.c: (button_press_cb), (button_release_cb),
+	(drag_begin_cb), (drag_end_cb), (init_treeview):
+	* src/totem-preferences.c:
+	* src/totem-private.h:
+	* src/totem-screenshot.c:
+	* src/totem-statusbar.c:
+	* src/totem-stock-icons.c:
+	* src/totem-video-thumbnailer.c:
+	* src/totem.c: (on_open_location1_activate),
+	(totem_callback_connect), (main):
+	* src/vanity.c: (on_about1_activate), (vanity_callback_connect),
+	(main):
+	* src/video-dev.c:
+	Loads of changes for the start of the GTK+ only build,
+	Glade files are still broken, and the Nautilus properties page
+	is built unconditionally because of what I suspect is a make bug
+	Also committed a patch by Sanjay Kumar .J <vjsanjay_signed@yahoo.com>
+	to allow DND reordering in the playlist, doesn't work on my machine
+	I think I found another libXi bug (Closes: #121275)
+
 2004-04-09  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.glade:

@@ -21,7 +21,7 @@
 #ifndef HAVE_BACON_CD_SELECTION_H
 #define HAVE_BACON_CD_SELECTION_H
 
-#include <gtk/gtkwidget.h>
+#include <gtk/gtkvbox.h>
 #include <cd-drive.h>
 
 G_BEGIN_DECLS

@@ -18,7 +18,6 @@
  */
 
 #include <config.h>
-#include <libgnome/gnome-i18n.h>
 #include <gtk/gtkmessagedialog.h>
 #include <string.h>
 #include <stdio.h>

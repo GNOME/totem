@@ -35,7 +35,19 @@
 #include <math.h>
 
 #include <glib.h>
-#include <libgnome/gnome-i18n.h>
+
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext(GETTEXT_PACKAGE,String)
+#ifdef gettext_noop
+#define N_(String) gettext_noop(String)
+#else
+#define N_(String) (String)
+#endif /* gettext_noop */
+#else
+#define _(String) (String)
+#define N_(String) (String)
+#endif /* ENABLE_NLS */
 
 #include "video-dev.h"
 

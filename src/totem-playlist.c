@@ -27,14 +27,29 @@
 #include <gdk/gdkkeysyms.h>
 #include <glade/glade.h>
 #include <gconf/gconf-client.h>
-#include <libgnome/gnome-desktop-item.h>
 #include <libgnomevfs/gnome-vfs.h>
 #include <libgnomevfs/gnome-vfs-mime-utils.h>
 #include <string.h>
-#include <libgnome/gnome-i18n.h>
 
 #include "totem-pl-parser.h"
 #include "debug.h"
+
+#ifdef HAVE_GTK_ONLY
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext(GETTEXT_PACKAGE,String)
+#ifdef gettext_noop
+#define N_(String) gettext_noop(String)
+#else
+#define N_(String) (String)
+#endif /* gettext_noop */
+#else
+#define _(String) (String)
+#define N_(String) (String)
+#endif /* ENABLE_NLS */
+#else
+#include <libgnome/gnome-i18n.h>
+#endif /* HAVE_GTK_ONLY */
 
 #define PL_LEN (gtk_tree_model_iter_n_children (playlist->_priv->model, NULL))
 
@@ -71,6 +86,9 @@ struct TotemPlaylistPrivate
 
 	/* Repeat mode */
 	gboolean repeat;
+
+	/* Reorder Flag */
+	gboolean drag_started;
 
 	/* Shuffle mode */
 	gboolean shuffle;
@@ -475,6 +493,62 @@ treeview_button_pressed (GtkTreeView *treeview, GdkEventButton *event,
 			event->button, event->time);
 
 	return TRUE;
+}
+
+static gboolean 
+button_press_cb (GtkWidget *treeview, GdkEventButton *event, gpointer data)
+{ 
+	
+	gtk_drag_dest_unset (treeview);
+	g_signal_handlers_block_by_func (treeview,&drop_cb, data);
+	gtk_tree_view_set_reorderable (GTK_TREE_VIEW (treeview), TRUE);
+	
+	return FALSE;
+}
+
+static gboolean 
+button_release_cb (GtkWidget *treeview, GdkEventButton *event, gpointer data)
+{
+	TotemPlaylist *playlist = (TotemPlaylist *)data;
+
+	if (!playlist->_priv->drag_started)
+	 {
+		gtk_tree_view_set_reorderable (GTK_TREE_VIEW (treeview), FALSE);
+		gtk_drag_dest_set (treeview, GTK_DEST_DEFAULT_ALL, target_table,
+				G_N_ELEMENTS (target_table), GDK_ACTION_COPY);
+		
+		g_signal_handlers_unblock_by_func (treeview,&drop_cb, data );
+		
+	 }
+
+	return FALSE;
+}
+
+static void 
+drag_begin_cb (GtkWidget *treeview, GdkDragContext *context, gpointer data)
+{
+ 
+	 TotemPlaylist *playlist = (TotemPlaylist *)data;
+
+	 playlist->_priv->drag_started= TRUE;
+	
+	return;
+}
+
+static void 
+drag_end_cb (GtkWidget *treeview, GdkDragContext *context, gpointer data)
+{
+   
+	TotemPlaylist *playlist = (TotemPlaylist *)data;
+
+	playlist->_priv->drag_started = FALSE;
+	gtk_tree_view_set_reorderable (GTK_TREE_VIEW (treeview), FALSE); 
+	gtk_drag_dest_set (treeview, GTK_DEST_DEFAULT_ALL, target_table,
+        		G_N_ELEMENTS (target_table), GDK_ACTION_COPY);
+	
+	g_signal_handlers_unblock_by_func(treeview, &drop_cb, data);
+    
+	 return;
 }
 
 static void
@@ -1025,6 +1099,14 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 	/* Drag'n'Drop */
 	g_signal_connect (G_OBJECT (treeview), "drag_data_received",
 			G_CALLBACK (drop_cb), playlist);
+        g_signal_connect (G_OBJECT (treeview), "button_press_event",
+			G_CALLBACK (button_press_cb), playlist);
+        g_signal_connect (G_OBJECT (treeview), "button_release_event",
+			G_CALLBACK (button_release_cb), playlist);
+	g_signal_connect (G_OBJECT (treeview), "drag_begin",
+                        G_CALLBACK (drag_begin_cb), playlist);
+         g_signal_connect (G_OBJECT (treeview), "drag_end",
+                        G_CALLBACK (drag_end_cb), playlist);
 	gtk_drag_dest_set (treeview, GTK_DEST_DEFAULT_ALL,
 			target_table, 1, GDK_ACTION_COPY);
 
