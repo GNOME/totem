@@ -1,5 +1,15 @@
 2003-07-30  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.schemas.in: added window_w and window_h entries
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_new),
+	(bacon_video_widget_size_allocate): fix first widget size allocation
+	when a widget size has been given specifically
+	* src/totem.c: (totem_action_fullscreen_toggle),
+	(totem_setup_window), (video_widget_create), (main): save and restore
+	the size of the video widget across sessions (Closes: #118526)
+
+2003-07-30  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.schemas.in: added "window_on_top" item, updated docs
 	for the audio output
 	* src/totem-preferences.c: (totem_setup_preferences):

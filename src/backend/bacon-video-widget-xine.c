@@ -1354,6 +1354,9 @@ bacon_video_widget_new (int width, int height, gboolean null_out, GError **err)
 	GTK_WIDGET(bvw)->requisition.width = width;
 	GTK_WIDGET(bvw)->requisition.height = height;
 
+	bvw->priv->init_width = width;
+	bvw->priv->init_height = height;
+
 	/* load the video drivers */
 	bvw->priv->ao_driver = load_audio_out_driver (bvw, err);
 	if (err != NULL && *err != NULL)
@@ -1469,7 +1472,7 @@ bacon_video_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	widget->allocation = *allocation;
 	bvw->priv->xpos = allocation->x;
 	bvw->priv->ypos = allocation->y;
-	
+
 	if ( (bvw->priv->init_width == 0) && (bvw->priv->init_height == 0) ) {
 		/* First allocation, saving values */
 		bvw->priv->init_width = allocation->width;

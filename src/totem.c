@@ -517,6 +517,14 @@ totem_action_fullscreen_toggle (Totem *totem)
 			}
 		}
 	} else {
+		/* Save the size of the video widget */
+		gconf_client_set_int (totem->gc,
+				GCONF_PREFIX"/window_w",
+				GTK_WIDGET(totem->bvw)->allocation.width, NULL);                gconf_client_set_int (totem->gc,
+				GCONF_PREFIX"/window_h",
+				GTK_WIDGET(totem->bvw)->allocation.height,
+				NULL);
+
 		update_fullscreen_size (totem);
 		bacon_video_widget_set_fullscreen (totem->bvw, TRUE);
 		bacon_video_widget_set_show_cursor (totem->bvw, FALSE);
@@ -2919,6 +2927,22 @@ update_dvd_menu_sub_lang (Totem *totem)
 }
 
 static void
+totem_setup_window (Totem *totem)
+{
+	GtkWidget *item;
+	int w, h;
+
+	w = gconf_client_get_int (totem->gc, GCONF_PREFIX"/window_w", NULL);
+	h = gconf_client_get_int (totem->gc, GCONF_PREFIX"/window_h", NULL);
+
+	item = glade_xml_get_widget (totem->xml, "tmw_bvw_vbox");
+
+	if (w > 0 && h > 0)
+		gtk_widget_set_size_request (item, w, h);
+}
+
+
+static void
 totem_callback_connect (Totem *totem)
 {
 	GtkWidget *item;
@@ -3225,11 +3249,15 @@ video_widget_create (Totem *totem)
 {
 	GError *err = NULL;
 	GtkWidget *container;
+	int w, h;
 
 	totem->scr = scrsaver_new ();
 
+	w = gconf_client_get_int (totem->gc, GCONF_PREFIX"/window_w", NULL);
+	h = gconf_client_get_int (totem->gc, GCONF_PREFIX"/window_h", NULL);
+
 	totem->bvw = BACON_VIDEO_WIDGET
-		(bacon_video_widget_new (-1, -1, FALSE, &err));
+		(bacon_video_widget_new (w, h, FALSE, &err));
 
 	if (totem->bvw == NULL)
 	{
@@ -3629,6 +3657,7 @@ main (int argc, char **argv)
 
 	totem_setup_recent (totem);
 	totem_callback_connect (totem);
+	totem_setup_window (totem);
 
 	/* Show ! gtk_main_iteration trickery to show all the widgets
 	 * we have so far */
