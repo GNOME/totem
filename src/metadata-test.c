@@ -1,6 +1,15 @@
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+#ifndef HAVE_GTK_ONLY
+#include <gnome.h>
+#else
+#include <gtk/gtk.h>
+#include <glib/gi18n.h>
+#endif
 
 #include <bacon-video-widget.h>
-#include <gtk/gtk.h>
 #include <glib/gthread.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -105,6 +114,11 @@ on_got_metadata_event (BaconVideoWidget *bvw, gpointer data)
 
 int main (int argc, char **argv)
 {
+	static struct poptOption options[] = {
+		{NULL, '\0', POPT_ARG_INCLUDE_TABLE, NULL, 0,
+			N_("Backend options"), NULL},
+		{NULL, '\0', 0, NULL, 0} /* end the list */
+	};
 	GtkWidget *widget;
 	BaconVideoWidget *bvw;
 	GError *error = NULL;
@@ -116,7 +130,16 @@ int main (int argc, char **argv)
 
 	g_thread_init (NULL);
 	gdk_threads_init ();
+	options[0].arg = bacon_video_widget_get_popt_table ();
+#ifndef HAVE_GTK_ONLY
+	gnome_program_init ("totem-video-thumbnailer", VERSION,
+			LIBGNOME_MODULE, argc, argv,
+			GNOME_PARAM_APP_DATADIR, DATADIR,
+			GNOME_PARAM_POPT_TABLE, options,
+			GNOME_PARAM_NONE);
+#else /* !HAVE_GTK_ONLY */
 	gtk_init (&argc, &argv);
+#endif /* !HAVE_GTK_ONLY */
 
 	widget = bacon_video_widget_new (-1, -1, BVW_USE_TYPE_METADATA, &error);
 	if (widget == NULL) {
