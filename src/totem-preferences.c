@@ -56,8 +56,6 @@ totem_display_is_local (Totem *totem)
 	if (display < 10)
 		return TRUE;
 
-	g_message ("name: %s", work);
-
 	return FALSE;
 }
 
@@ -86,7 +84,7 @@ ask_show_visuals (Totem *totem)
 	answer = gtk_dialog_run (GTK_DIALOG (dialog));
 	gtk_widget_destroy (dialog);
 
-	return (answer == GTK_RESPONSE_YES);
+	return (answer == GTK_RESPONSE_YES ? TRUE : FALSE);
 }
 
 static void
@@ -114,6 +112,7 @@ on_checkbutton2_toggled (GtkToggleButton *togglebutton, Totem *totem)
 		{
 			gconf_client_set_bool (totem->gc,
 					GCONF_PREFIX"/show_vfx", FALSE, NULL);
+			gtk_toggle_button_set_active (togglebutton, FALSE);
 			return;
 		}
 	}
@@ -258,7 +257,6 @@ totem_setup_preferences (Totem *totem)
 	g_return_if_fail (totem->gc != NULL);
 
 	is_local = totem_display_is_local (totem);
-	g_message ("display is %s", is_local ? "local" : "remote");
 
 	gconf_client_add_dir (totem->gc, "/apps/totem",
 			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);

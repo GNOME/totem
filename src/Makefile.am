@@ -90,7 +90,7 @@ totem_video_thumbnailer_SOURCES =				\
 totem_video_thumbnailer_LDADD = $(GTK_LIBS) $(XTEST_LIBS)
 
 INCLUDES = 						\
-	-D_REENTRANT					\
+-g	-D_REENTRANT					\
 	$(EXTRA_GNOME_CFLAGS)				\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
 	-DGCONF_PREFIX=\""/apps/totem"\"		\

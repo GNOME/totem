@@ -3100,7 +3100,7 @@ main (int argc, char **argv)
 
 	/* FIXME This should be enabled all the time, and needs to be
 	 * removed when 111349 is closed */
-#ifdef HAVE_XINE
+#if 0
 	if (XInitThreads () == 0)
 	{
 		g_warning (_("Could not initialise the thread-safe libraries.\n"
