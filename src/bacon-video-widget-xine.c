@@ -1450,8 +1450,7 @@ bacon_video_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 {
 	BaconVideoWidget *bvw = (BaconVideoWidget *) widget;
 
-	if (generate_mouse_event (bvw, (GdkEvent *)event, FALSE) == TRUE)
-		return FALSE;
+	generate_mouse_event (bvw, (GdkEvent *)event, FALSE);
 
 	if (GTK_WIDGET_CLASS (parent_class)->button_press_event != NULL)
 		                (* GTK_WIDGET_CLASS (parent_class)->button_press_event) (widget, event);
