@@ -108,7 +108,7 @@ static void on_play_pause_button_clicked (GtkToggleButton *button,
 		Totem *totem);
 static void playlist_changed_cb (GtkWidget *playlist, Totem *totem);
 static gboolean totem_is_media (const char *mrl); 
-static void show_controls (Totem *totem, gboolean visible, gboolean fullscreen_behaviour);
+static void show_controls (Totem *totem, gboolean was_fullscreen);
 static gboolean totem_is_fullscreen (Totem *totem);
 static void play_pause_set_label (Totem *totem, TotemStates state);
 
@@ -433,11 +433,23 @@ totem_action_set_mrl_and_play (Totem *totem, char *mrl)
 		totem_action_play (totem);
 }
 
-static char *media_strings[] = {
-	N_("DVD"),
-	N_("Video CD"),
-	N_("Audio CD")
-};
+static char *
+totem_action_get_media_string (MediaType type)
+{
+	switch (type)
+	{
+	case MEDIA_TYPE_CDDA:
+		return N_("Audio CD");
+	case MEDIA_TYPE_VCD:
+		return N_("Video CD");
+	case MEDIA_TYPE_DVD:
+		return N_("DVD");
+	default:
+		g_assert_not_reached ();
+	}
+
+	return NULL;
+}
 
 static gboolean
 totem_action_load_media (Totem *totem, MediaType type)
@@ -447,7 +459,7 @@ totem_action_load_media (Totem *totem, MediaType type)
 
 	if (bacon_video_widget_can_play (totem->bvw, type) == FALSE)
 	{
-		msg = g_strdup_printf (_("Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."), _(media_strings[type]));
+		msg = g_strdup_printf (_("Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."), _(totem_action_get_media_string (type)));
 		totem_action_error (msg, _("Please install the necessary plugins and restart Totem to be able to play this media."), totem);
 		g_free (msg);
 		return FALSE;
@@ -456,7 +468,7 @@ totem_action_load_media (Totem *totem, MediaType type)
 	mrls = bacon_video_widget_get_mrls (totem->bvw, type);
 	if (mrls == NULL)
 	{
-		msg = g_strdup_printf (_("Totem could not play this media (%s) although a plugin is present to handle it."), _(media_strings[type]));
+		msg = g_strdup_printf (_("Totem could not play this media (%s) although a plugin is present to handle it."), _(totem_action_get_media_string (type)));
 		totem_action_error (msg, _("You might want to check that a disc is present in the drive and that it is correctly configured."), totem);
 		g_free (msg);
 		return FALSE;
@@ -520,28 +532,27 @@ totem_action_fullscreen_toggle (Totem *totem)
 {
 	if (totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN)
 	{
+		GtkWidget *item;
+
 		popup_hide (totem);
 		bacon_video_widget_set_fullscreen (totem->bvw, FALSE);
 		gtk_window_unfullscreen (GTK_WINDOW(totem->win));
 		bacon_video_widget_set_show_cursor (totem->bvw, TRUE);
 		totem_scrsaver_enable (totem->scr);
 
-		if (totem->controls_visibility != TOTEM_CONTROLS_VISIBLE)
+		totem->controls_visibility = TOTEM_CONTROLS_VISIBLE;
+
+		item = glade_xml_get_widget
+			(totem->xml, "tmw_show_controls_menu_item");
+
+		if (gtk_check_menu_item_get_active
+				(GTK_CHECK_MENU_ITEM (item)))
 		{
-			GtkWidget *item;
-			item = glade_xml_get_widget
-				(totem->xml, "tmw_show_controls_menu_item");
-			if (gtk_check_menu_item_get_active
-					(GTK_CHECK_MENU_ITEM (item)))
-			{
-				totem->controls_visibility =
-					TOTEM_CONTROLS_VISIBLE;
-				show_controls (totem, TRUE, TRUE);
-			} else {
-				totem->controls_visibility =
-					TOTEM_CONTROLS_HIDDEN;
-				show_controls (totem, FALSE, TRUE);
-			}
+			totem->controls_visibility = TOTEM_CONTROLS_VISIBLE;
+			show_controls (totem, TRUE);
+		} else {
+			totem->controls_visibility = TOTEM_CONTROLS_HIDDEN;
+			show_controls (totem, TRUE);
 		}
 	} else {
 		totem_action_save_size (totem);
@@ -552,7 +563,7 @@ totem_action_fullscreen_toggle (Totem *totem)
 		totem_scrsaver_disable (totem->scr);
 
 		totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
-		show_controls (totem, FALSE, TRUE);
+		show_controls (totem, FALSE);
 	}
 }
 
@@ -1865,9 +1876,10 @@ on_always_on_top1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 }
 
 static void
-show_controls (Totem *totem, gboolean visible, gboolean fullscreen_behaviour)
+show_controls (Totem *totem, gboolean was_fullscreen)
 {
 	GtkWidget *menubar, *controlbar, *statusbar, *item, *bvw_vbox, *widget;
+	int width = 0, height = 0;
 
 	menubar = glade_xml_get_widget (totem->xml, "tmw_menubar");
 	controlbar = glade_xml_get_widget (totem->xml, "tmw_controls_vbox");
@@ -1876,20 +1888,26 @@ show_controls (Totem *totem, gboolean visible, gboolean fullscreen_behaviour)
 	bvw_vbox = glade_xml_get_widget (totem->xml, "tmw_bvw_vbox");
 	widget = GTK_WIDGET (totem->bvw);
 
-	if (visible)
+	if (totem->controls_visibility == TOTEM_CONTROLS_VISIBLE)
 	{
+		if (was_fullscreen == FALSE)
+		{
+			height = widget->allocation.height;
+			width =	widget->allocation.width;
+		}
+
 		gtk_widget_show (menubar);
 		gtk_widget_show (controlbar);
 		gtk_widget_show (statusbar);
 		gtk_widget_hide (item);
 		gtk_container_set_border_width (GTK_CONTAINER (bvw_vbox), 1);
 
-		totem_widget_set_preferred_size (widget,
-				widget->allocation.width,
-				widget->allocation.height);
+		if (was_fullscreen == FALSE)
+		{
+			totem_widget_set_preferred_size (widget,
+					width, height);
+		}
 	} else {
-		int width = 0, height = 0;
-
 		if (totem->controls_visibility == TOTEM_CONTROLS_HIDDEN)
 		{
 			width = widget->allocation.width;
@@ -1924,12 +1942,11 @@ on_show_controls1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 
 	/* Let's update our controls visibility */
 	if (show)
-	{
 		totem->controls_visibility = TOTEM_CONTROLS_VISIBLE;
-	} else {
+	else
 		totem->controls_visibility = TOTEM_CONTROLS_HIDDEN;
-	}
-	show_controls (totem, show, FALSE);
+
+	show_controls (totem, FALSE);
 }
 
 static void
