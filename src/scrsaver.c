@@ -12,20 +12,25 @@
 #include "scrsaver.h"
 
 #include <glib.h>
+#include <gdk/gdkx.h>
 #ifdef HAVE_XTEST
 #include <X11/extensions/XTest.h>
 #endif /* HAVE_XTEST */
 #include <X11/keysym.h>
 
 struct ScreenSaver {
-	Display *display;
-	int disabled;
+	/* Whether the screensaver is disabled */
+	gboolean disabled;
+
+	/* To save the screensaver info */
 	int timeout;
 	int interval;
 	int prefer_blanking;
 	int allow_exposures;
+
+	/* For use with XTest */
 	int keycode;
-	Bool xtest;
+	Bool have_xtest;
 };
 
 #ifdef HAVE_XTEST
@@ -34,12 +39,12 @@ fake_event (ScreenSaver *scr)
 {
 	if (scr->disabled)
 	{
-		XLockDisplay (scr->display);
-		XTestFakeKeyEvent (scr->display, scr->keycode,
+		XLockDisplay (GDK_DISPLAY());
+		XTestFakeKeyEvent (GDK_DISPLAY(), scr->keycode,
 				True, CurrentTime);
-		XTestFakeKeyEvent (scr->display, scr->keycode,
+		XTestFakeKeyEvent (GDK_DISPLAY(), scr->keycode,
 				False, CurrentTime);
-		XUnlockDisplay (scr->display);
+		XUnlockDisplay (GDK_DISPLAY());
 	}
 
 	return TRUE;
@@ -47,29 +52,21 @@ fake_event (ScreenSaver *scr)
 #endif /* HAVE_XTEST */
 
 ScreenSaver
-*scrsaver_new (Display *display)
+*scrsaver_new (void)
 {
 	ScreenSaver *scr;
 	int a, b, c, d;
 
 	scr = g_new0 (ScreenSaver, 1);
-	scr->display = display;
 
 #ifdef HAVE_XTEST
-	XLockDisplay (display);
-	scr->xtest = XTestQueryExtension (display, &a, &b, &c, &d);
-	if(scr->xtest == True)
+	XLockDisplay (GDK_DISPLAY());
+	scr->have_xtest = XTestQueryExtension (GDK_DISPLAY(), &a, &b, &c, &d);
+	if(scr->have_xtest == True)
 	{
-		scr->keycode = XKeysymToKeycode (display, XK_Shift_L);
-		XGetScreenSaver (scr->display, &scr->timeout,
-				&scr->interval,
-				&scr->prefer_blanking,
-				&scr->allow_exposures);
-		g_timeout_add (scr->timeout / 2 * 1000,
-				(GSourceFunc) fake_event, scr);
+		scr->keycode = XKeysymToKeycode (GDK_DISPLAY(), XK_Shift_L);
 	}
-	XSync (display, False);
-	XUnlockDisplay (display);
+	XUnlockDisplay (GDK_DISPLAY());
 #endif /* HAVE_XTEST */
 
 	return scr;
@@ -78,48 +75,63 @@ ScreenSaver
 void
 scrsaver_disable (ScreenSaver *scr)
 {
+	g_return_if_fail (scr->disabled == FALSE);
+
+	scr->disabled = TRUE;
+
 #ifdef HAVE_XTEST
-	if (scr->xtest == True)
+	if (scr->have_xtest == True)
 	{
-		scr->disabled = 1;
-		return;
-	}
-#endif /* HAVE_XTEST */
-	if (!scr->disabled)
-	{
-		XLockDisplay (scr->display);
-		XGetScreenSaver(scr->display, &scr->timeout,
+		XLockDisplay (GDK_DISPLAY());
+		XGetScreenSaver(GDK_DISPLAY(), &scr->timeout,
 				&scr->interval,
 				&scr->prefer_blanking,
 				&scr->allow_exposures);
-		XSetScreenSaver(scr->display, 0, 0,
-				DontPreferBlanking, DontAllowExposures);
-		XUnlockDisplay (scr->display);
-		scr->disabled = 1;
+		XUnlockDisplay (GDK_DISPLAY());
+
+		if (scr->timeout != 0)
+			g_timeout_add (scr->timeout / 2 * 1000,
+					(GSourceFunc) fake_event, scr);
+
+		scr->disabled = TRUE;
+		return;
 	}
+#endif /* HAVE_XTEST */
+
+	XLockDisplay (GDK_DISPLAY());
+	XGetScreenSaver(GDK_DISPLAY(), &scr->timeout,
+			&scr->interval,
+			&scr->prefer_blanking,
+			&scr->allow_exposures);
+	XSetScreenSaver(GDK_DISPLAY(), 0, 0,
+			DontPreferBlanking, DontAllowExposures);
+	XUnlockDisplay (GDK_DISPLAY());
 }
 
 void
 scrsaver_enable (ScreenSaver *scr)
 {
+	g_return_if_fail (scr->disabled == TRUE);
+
+	scr->disabled = FALSE;
+
 #ifdef HAVE_XTEST
-	if(scr->xtest == True)
+	if (scr->have_xtest == True)
 	{
-		scr->disabled = 0;
+		if (scr->timeout != 0)
+			g_source_remove_by_user_data (scr);
+
 		return;
 	}
+
 #endif /* HAVE_XTEST */
-	if(scr->disabled)
-	{
-		XLockDisplay (scr->display);
-		XSetScreenSaver(scr->display,
-				scr->timeout,
-				scr->interval,
-				scr->prefer_blanking,
-				scr->allow_exposures);
-		XUnlockDisplay (scr->display);
-		scr->disabled = 0;
-	}
+	XLockDisplay (GDK_DISPLAY());
+	XSetScreenSaver (GDK_DISPLAY(),
+			scr->timeout,
+			scr->interval,
+			scr->prefer_blanking,
+			scr->allow_exposures);
+	XUnlockDisplay (GDK_DISPLAY());
 }
 
 void scrsaver_free(ScreenSaver *scr)

@@ -13,7 +13,7 @@
 
 typedef struct ScreenSaver ScreenSaver;
 
-ScreenSaver *scrsaver_new(Display *display);
+ScreenSaver *scrsaver_new (void);
 void scrsaver_enable(ScreenSaver *scr);
 void scrsaver_disable(ScreenSaver *scr);
 void scrsaver_free(ScreenSaver *scr);

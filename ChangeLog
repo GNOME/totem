@@ -1,5 +1,17 @@
 2003-07-02  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am: now it's totem depending on scrscaver, not the
+	whole video widget
+	* src/scrsaver.c: (fake_event), (scrsaver_new), (scrsaver_disable),
+	(scrsaver_enable): rewrite most bits so the locking is correct,
+	don't try to set g_timeout_adds of 0, get the screensaver intervals
+	when disabling/enabling it
+	* src/scrsaver.h: don't need the display
+	* src/totem.c: (video_widget_create): re-enable the screensaver stuff
+	This all fixes the "Why don't I get my expose events" bug
+
+2003-07-02  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-resize.c: (bacon_resize_init): lock the display before
 	testing for existence of the extension
 	* src/scrsaver.c: (scrsaver_new): the screensaver timeout is in seconds

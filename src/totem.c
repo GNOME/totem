@@ -3193,8 +3193,7 @@ video_widget_create (Totem *totem)
 	GError *err = NULL;
 	GtkWidget *container;
 
-//FIXME this seems to break pretty badly
-//	totem->scr = scrsaver_new (GDK_DISPLAY ());
+	totem->scr = scrsaver_new ();
 
 	totem->bvw = BACON_VIDEO_WIDGET
 		(bacon_video_widget_new (-1, -1, FALSE, &err));
