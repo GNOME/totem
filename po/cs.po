@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-24 05:14+0100\n"
-"PO-Revision-Date: 2004-01-27 18:04+0100\n"
+"POT-Creation-Date: 2004-02-02 15:47+0100\n"
+"PO-Revision-Date: 2004-02-02 19:10+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -108,7 +108,7 @@ msgstr "Snímků:"
 msgid "N/A"
 msgstr "---"
 
-#: data/properties.glade.h:16 src/totem.c:2134
+#: data/properties.glade.h:16 src/totem.c:2149
 msgid "Properties"
 msgstr "Vlastnosti"
 
@@ -158,7 +158,7 @@ msgstr "Přehrávání filmů a písniček"
 
 #. Title
 #: data/totem.desktop.in.h:2 data/totem.glade.h:97 src/totem.c:739
-#: src/totem.c:3677
+#: src/totem.c:3694
 msgid "Totem Movie Player"
 msgstr "Přehrávač filmů Totem"
 
@@ -1108,7 +1108,7 @@ msgstr "Zapamatovat si toto heslo"
 msgid "Could not save the playlist"
 msgstr "Nemohu uložit seznam skladeb"
 
-#: src/totem-playlist.c:475 src/totem.c:1553
+#: src/totem-playlist.c:475 src/totem.c:1571
 msgid "Select files"
 msgstr "Vyberte soubory"
 
@@ -1196,12 +1196,16 @@ msgstr "0:00 / 0:00"
 msgid "%s (Streaming)"
 msgstr "%s (Streaming)"
 
-#: src/totem-statusbar.c:274
+#: src/totem-statusbar.c:216
+msgid "Seek to"
+msgstr "Přeskočit na"
+
+#: src/totem-statusbar.c:278
 msgid "Buffering"
 msgstr "Ukládám do vyrovnávací paměti"
 
 #. eg: 75 %
-#: src/totem-statusbar.c:277
+#: src/totem-statusbar.c:281
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
@@ -1315,11 +1319,11 @@ msgstr ""
 msgid "%s - Totem Movie Player"
 msgstr "%s - Přehrávač filmů Totem"
 
-#: src/totem.c:728 src/totem.c:3518
+#: src/totem.c:728 src/totem.c:3535
 msgid "No file"
 msgstr "Žádný soubor"
 
-#: src/totem.c:764 src/totem.c:1906
+#: src/totem.c:764 src/totem.c:1924
 msgid "Totem"
 msgstr "Totem"
 
@@ -1327,107 +1331,107 @@ msgstr "Totem"
 msgid "An error occured"
 msgstr "Došlo k chybě"
 
-#: src/totem.c:1618 src/totem.c:1626
+#: src/totem.c:1636 src/totem.c:1644
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "Nemohu načíst rozhraní 'Otevřít umístění...'."
 
-#: src/totem.c:1618 src/totem.c:1626 src/totem.c:3708 src/totem.c:3733
-#: src/totem.c:3756
+#: src/totem.c:1636 src/totem.c:1644 src/totem.c:3725 src/totem.c:3750
+#: src/totem.c:3773
 msgid "Make sure that Totem is properly installed."
 msgstr "Ujistěte se, že je Totem správně nainstalován."
 
-#: src/totem.c:1859
+#: src/totem.c:1877
 msgid "Totem could not display the help contents."
 msgstr "Totem nemohl zobrazit obsah nápovědy."
 
-#: src/totem.c:1877 src/vanity.c:219
+#: src/totem.c:1895 src/vanity.c:219
 msgid "translator_credits"
 msgstr ""
 "Michal Bukovjan <bukm@centrum.cz>\n"
 "Miloslav Trmač <mitr@volny.cz>"
 
-#: src/totem.c:1903
+#: src/totem.c:1921
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Přehrávač filmů používající %s"
 
-#: src/totem.c:1992 src/totem.c:2003 src/vanity.c:307 src/vanity.c:318
+#: src/totem.c:2007 src/totem.c:2018 src/vanity.c:305 src/vanity.c:316
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Obrazovka%d.png"
 
-#: src/totem.c:2054 src/totem.c:2062
+#: src/totem.c:2069 src/totem.c:2077
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem nemohl zachytit obrazovku s tímto filmem."
 
-#: src/totem.c:2062
+#: src/totem.c:2077
 msgid "Please file a bug, this isn't supposed to happen"
 msgstr "Ohlaste prosím chybu, toto by se nemělo stát"
 
-#: src/totem.c:2090
+#: src/totem.c:2105
 #, c-format
 msgid "File '%s' already exists."
 msgstr "Soubor '%s' již existuje."
 
-#: src/totem.c:2091
+#: src/totem.c:2106
 msgid "The screenshot was not saved"
 msgstr "Obrazovka nebyla uložena"
 
-#: src/totem.c:2101
+#: src/totem.c:2116
 msgid "There was an error saving the screenshot."
 msgstr "Při ukládání obrazovky došlo k chybě."
 
-#: src/totem.c:2124
+#: src/totem.c:2139
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem nemohl zobrazit okno vlastností filmu."
 
-#: src/totem.c:2124
+#: src/totem.c:2139
 msgid "Make sure that Totem is correctly installed."
 msgstr "Ujistěte se, že je Totem správně nainstalován."
 
-#: src/totem.c:2210
+#: src/totem.c:2225
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem se nemohl posouvat v '%s'."
 
-#: src/totem.c:2965 src/totem.c:2987
+#: src/totem.c:2980 src/totem.c:3002
 msgid "None"
 msgstr "Žádný"
 
-#: src/totem.c:2969 src/totem.c:2990
+#: src/totem.c:2984 src/totem.c:3005
 msgid "Auto"
 msgstr "Auto"
 
-#: src/totem.c:3423
+#: src/totem.c:3440
 msgid "Totem could not startup."
 msgstr "Totem se nemohl spustit."
 
 # :-)
-#: src/totem.c:3423
+#: src/totem.c:3440
 msgid "No reason."
 msgstr "Žádný důvod."
 
-#: src/totem.c:3682
+#: src/totem.c:3699
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Nemohu inicializovat knihovny podporující thready."
 
-#: src/totem.c:3682
+#: src/totem.c:3699
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Zkontrolujte svou instalaci systému. Totem nyní skončí."
 
-#: src/totem.c:3699
+#: src/totem.c:3716
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem nemohl inicializovat rozhraní pro nastavení."
 
-#: src/totem.c:3699
+#: src/totem.c:3716
 msgid "Make sure that GNOME is properly installed."
 msgstr "Ujistěte se, že je GNOME správně nainstalováno."
 
-#: src/totem.c:3708 src/totem.c:3733
+#: src/totem.c:3725 src/totem.c:3750
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "Nemohu načíst hlavní rozhraní (totem.glade)."
 
-#: src/totem.c:3756
+#: src/totem.c:3773
 msgid "Couldn't load the interface for the playlist."
 msgstr "Nemohu načíst rozhraní pro seznam skladeb."
 
@@ -1440,7 +1444,7 @@ msgstr "Ladicí režim zapnut"
 msgid "Webcam utility using %s"
 msgstr "Nástroj pro WWW kamery používající %s"
 
-#: src/vanity.c:550
+#: src/vanity.c:548
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1450,11 +1454,11 @@ msgstr ""
 "%s"
 
 # :-)
-#: src/vanity.c:551
+#: src/vanity.c:549
 msgid "No reason"
 msgstr "Žádný důvod"
 
-#: src/vanity.c:589
+#: src/vanity.c:587
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1463,7 +1467,7 @@ msgstr ""
 "Vanity nemohla kontaktovat WWW kameru.\n"
 "Důvod: %s."
 
-#: src/vanity.c:605
+#: src/vanity.c:603
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1472,11 +1476,11 @@ msgstr ""
 "Vanity nemohla přehrávat video z WWW kamery.\n"
 "Důvod: %s"
 
-#: src/vanity.c:641
+#: src/vanity.c:639
 msgid "Vanity Webcam Utility"
 msgstr "Nástroj pro WWW kamery Vanity"
 
-#: src/vanity.c:646
+#: src/vanity.c:644
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1484,7 +1488,7 @@ msgstr ""
 "Nemohu inicializovat knihovny podporující thready.\n"
 "Zkontrolujte svou instalaci systému. Vanity nyní skončí."
 
-#: src/vanity.c:668
+#: src/vanity.c:666
 #, c-format
 msgid ""
 "Vanity couln't initialise the \n"
@@ -1495,7 +1499,7 @@ msgstr ""
 "rozhraní pro nastavení:\n"
 "%s"
 
-#: src/vanity.c:682 src/vanity.c:697
+#: src/vanity.c:680 src/vanity.c:695
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
