@@ -1,3 +1,14 @@
+2003-05-10  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_set_proprietary_plugins_path):
+	* src/totem-preferences.c: (on_button1_clicked),
+	(totem_setup_preferences):
+	* src/video-utils.c: (totem_create_symlinks):
+	* src/video-utils.h: oops, we used to set the win32 path twice, and
+	never for the Real .so files. On startup, create links from
+	/usr/lib/win32 to ~/.gnome2/totem-addons/ (Closes: #112677)
+
 2003-05-08  Julien MOUTTE,,,  <julien@moutte.net>
 
 	* src/bacon-video-widget-gst.c:

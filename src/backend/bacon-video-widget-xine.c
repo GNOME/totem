@@ -1851,11 +1851,15 @@ bacon_video_widget_set_proprietary_plugins_path (BaconVideoWidget *bvw,
 
 	memset (&entry, 0, sizeof (entry));
 	if (xine_config_lookup_entry (bvw->priv->xine,
-				"codec.win32_path", &entry))
+				"codec.real_codecs_path", &entry))
 	{
 		entry.str_value = g_strdup (path);
 		xine_config_update_entry (bvw->priv->xine, &entry);
 	}
+
+	/* And we try and create symlinks from /usr/lib/win32 to
+	 * the local user path */
+	totem_create_symlinks ("/usr/lib/win32", path);
 }
 
 void

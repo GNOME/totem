@@ -176,3 +176,36 @@ eel_gdk_window_set_invisible_cursor (GdkWindow *window)
 	g_object_unref (empty_bitmap);
 }
 
+void totem_create_symlinks (const char *orig, const char *dest)
+{
+	GDir *dir;
+	const char *name;
+
+	dir = g_dir_open (orig, 0, NULL);
+	if (dir == NULL)
+		return;
+
+	if (g_file_test (dest, G_FILE_TEST_IS_DIR) == FALSE)
+		return;
+
+	name = g_dir_read_name (dir);
+	while (name != NULL)
+	{
+		char *orig_full, *dest_full;
+
+		orig_full = g_build_path (G_DIR_SEPARATOR_S, orig, name, NULL);
+		dest_full = g_build_path (G_DIR_SEPARATOR_S, dest, name, NULL);
+
+		/* We don't check the return value, that's normal,
+		 * we're very silent people */
+		symlink (orig_full, dest_full);
+
+		g_free (orig_full);
+		g_free (dest_full);
+
+		name = g_dir_read_name (dir);
+	}
+
+	g_dir_close (dir);
+}
+

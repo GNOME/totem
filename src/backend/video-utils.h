@@ -10,3 +10,5 @@ void yuy2toyv12 (guint8 *y, guint8 *u, guint8 *v, guint8 *input,
 guint8 *yv12torgb (guint8 *src_y, guint8 *src_u, guint8 *src_v,
 		int width, int height);
 
+void totem_create_symlinks (const char *orig, const char *dest);
+

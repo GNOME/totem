@@ -277,8 +277,6 @@ on_button1_clicked (GtkButton *button, Totem *totem)
 
 	path = path = g_build_path (G_DIR_SEPARATOR_S,
 			g_get_home_dir (), PROPRIETARY_PLUGINS, NULL);
-	if (g_file_test (path, G_FILE_TEST_IS_DIR) == FALSE)
-		mkdir (path, 0775);
 
 	cmd = g_strdup_printf ("nautilus --no-default-window %s", path);
 	g_free (path);
@@ -423,6 +421,8 @@ totem_setup_preferences (Totem *totem)
 			G_CALLBACK (on_button1_clicked), totem);
 	path = g_build_path (G_DIR_SEPARATOR_S,
 			g_get_home_dir (), PROPRIETARY_PLUGINS, NULL);
+	if (g_file_test (path, G_FILE_TEST_IS_DIR) == FALSE)
+		mkdir (path, 0775);
 	bacon_video_widget_set_proprietary_plugins_path (totem->bvw, path);
 	g_free (path);
 
