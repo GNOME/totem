@@ -1523,8 +1523,9 @@ on_open1_activate (GtkButton *button, Totem *totem)
 			GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
 			NULL);
 	gtk_dialog_set_default_response (GTK_DIALOG (fs), GTK_RESPONSE_ACCEPT);
-	
+
 	gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (fs), TRUE);
+	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
 
 	if (path != NULL)
 	{

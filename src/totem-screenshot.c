@@ -332,6 +332,16 @@ totem_screenshot_new (const char *glade_filename, GdkPixbuf *screen_image)
 	gtk_entry_set_text (GTK_ENTRY (entry), filename);
 	g_free (filename);
 
+	item = glade_xml_get_widget (screenshot->_priv->xml,
+			"tsw_save2file_fileentry");
+	{
+		GValue value = { 0, };
+		g_value_init (&value, G_TYPE_BOOLEAN);
+		g_value_set_boolean (&value, TRUE);
+		g_object_set_property (G_OBJECT (item),
+				"use_filechooser", &value);
+	}
+
 	container = glade_xml_get_widget (screenshot->_priv->xml, "vbox11");
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (screenshot)->vbox),
 			container,
