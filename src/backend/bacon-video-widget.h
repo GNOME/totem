@@ -28,50 +28,6 @@
 
 G_BEGIN_DECLS
 
-typedef enum {
-	MEDIA_DVD,
-	MEDIA_VCD,
-	MEDIA_CDDA,
-} MediaType;
-
-typedef enum {
-	TV_OUT_NONE,
-	TV_OUT_DXR3,
-	TV_OUT_TVMODE,
-} TvOutType;
-
-typedef enum {
-	BVW_INFO_TITLE,
-	BVW_INFO_ARTIST,
-	BVW_INFO_YEAR,
-	BVW_INFO_DURATION,
-	/* Video */
-	BVW_INFO_HAS_VIDEO,
-	BVW_INFO_DIMENSION_X,
-	BVW_INFO_DIMENSION_Y,
-	BVW_INFO_VIDEO_CODEC,
-	BVW_INFO_VIDEO_FOURCC,
-	BVW_INFO_FPS,
-	/* Audio */
-	BVW_INFO_HAS_AUDIO,
-	BVW_INFO_BITRATE,
-	BVW_INFO_AUDIO_CODEC,
-	BVW_INFO_AUDIO_FOURCC,
-} BaconVideoWidgetMetadataType;
-
-typedef enum {
-	BVW_VIDEO_BRIGHTNESS,
-	BVW_VIDEO_CONTRAST,
-} BaconVideoWidgetVideoProperty;
-
-typedef enum {
-	BVW_AUDIO_SOUND_STEREO,
-	BVW_AUDIO_SOUND_4CHANNEL,
-	BVW_AUDIO_SOUND_5CHANNEL,
-	BVW_AUDIO_SOUND_51CHANNEL,
-	BVW_AUDIO_SOUND_AC3PASSTHRU,
-} BaconVideoWidgetAudioOutType;
-
 #define BACON_VIDEO_WIDGET(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), bacon_video_widget_get_type (), BaconVideoWidget))
 #define BACON_VIDEO_WIDGET_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), bacon_video_widget_get_type (), BaconVideoWidgetClass))
 #define BACON_IS_VIDEO_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_TYPE (obj, bacon_video_widget_get_type ()))
@@ -110,18 +66,31 @@ char *bacon_video_widget_get_backend_name (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_open		 (BaconVideoWidget *bvw,
 						  const char *mrl,
 						  GError **error);
-
 gboolean bacon_video_widget_play                 (BaconVideoWidget *bvw,
 						  GError **error);
 void bacon_video_widget_pause			 (BaconVideoWidget *bvw);
+gboolean bacon_video_widget_is_playing           (BaconVideoWidget *bvw);
+
+/* Seeking and length */
+gboolean bacon_video_widget_is_seekable          (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_seek		 (BaconVideoWidget *bvw,
 						  float position,
 						  GError **error);
 gboolean bacon_video_widget_seek_time		 (BaconVideoWidget *bvw,
 						  gint64 time,
 						  GError **error);
+float bacon_video_widget_get_position            (BaconVideoWidget *bvw);
+gint64 bacon_video_widget_get_current_time       (BaconVideoWidget *bvw);
+gint64 bacon_video_widget_get_stream_length      (BaconVideoWidget *bvw);
+
 void bacon_video_widget_stop                     (BaconVideoWidget *bvw);
 void bacon_video_widget_close                    (BaconVideoWidget *bvw);
+
+/* Audio volume */
+gboolean bacon_video_widget_can_set_volume       (BaconVideoWidget *bvw);
+void bacon_video_widget_set_volume               (BaconVideoWidget *bvw,
+						  int volume);
+int bacon_video_widget_get_volume                (BaconVideoWidget *bvw);
 
 /* Properties */
 void bacon_video_widget_set_logo		 (BaconVideoWidget *bvw,
@@ -134,11 +103,6 @@ void bacon_video_widget_set_proprietary_plugins_path
 						 (BaconVideoWidget *bvw,
 				                  const char *path);
 
-gboolean bacon_video_widget_can_set_volume       (BaconVideoWidget *bvw);
-void bacon_video_widget_set_volume               (BaconVideoWidget *bvw,
-						  int volume);
-int bacon_video_widget_get_volume                (BaconVideoWidget *bvw);
-
 void bacon_video_widget_set_fullscreen		 (BaconVideoWidget *bvw,
 						  gboolean fullscreen);
 
@@ -146,9 +110,7 @@ void bacon_video_widget_set_show_cursor          (BaconVideoWidget *bvw,
 						  gboolean use_cursor);
 gboolean bacon_video_widget_get_show_cursor      (BaconVideoWidget *bvw);
 
-void bacon_video_widget_set_media_device	 (BaconVideoWidget *bvw,
-						  const char *path);
-gboolean bacon_video_widget_get_auto_resize (BaconVideoWidget *bvw);
+gboolean bacon_video_widget_get_auto_resize	 (BaconVideoWidget *bvw);
 void bacon_video_widget_set_auto_resize		 (BaconVideoWidget *bvw,
 						  gboolean auto_resize);
 
@@ -156,49 +118,46 @@ void bacon_video_widget_set_connection_speed     (BaconVideoWidget *bvw,
 						  int speed);
 int bacon_video_widget_get_connection_speed      (BaconVideoWidget *bvw);
 
-void bacon_video_widget_set_deinterlacing	 (BaconVideoWidget *bvw,
-						  gboolean deinterlace);
-gboolean bacon_video_widget_get_deinterlacing	 (BaconVideoWidget *bvw);
+/* Optical devices */
+typedef enum {
+	MEDIA_DVD,
+	MEDIA_VCD,
+	MEDIA_CDDA,
+} MediaType;
 
-gboolean bacon_video_widget_set_tv_out		 (BaconVideoWidget *bvw,
-						  TvOutType tvout);
-TvOutType bacon_video_widget_get_tv_out		 (BaconVideoWidget *bvw);
-
-void bacon_video_widget_toggle_aspect_ratio      (BaconVideoWidget *bvw);
-void bacon_video_widget_set_scale_ratio          (BaconVideoWidget *bvw,
-						  gfloat ratio);
-
-int bacon_video_widget_get_video_property	 (BaconVideoWidget *bvw,
-						  BaconVideoWidgetVideoProperty
-						  type);
-void bacon_video_widget_set_video_property	 (BaconVideoWidget *bvw,
-						  BaconVideoWidgetVideoProperty
-						  type,
-						  int value);
-
-BaconVideoWidgetAudioOutType bacon_video_widget_get_audio_out_type
-						 (BaconVideoWidget *bvw);
-void bacon_video_widget_set_audio_out_type	 (BaconVideoWidget *bvw,
-						  BaconVideoWidgetAudioOutType
-						  type);
-float bacon_video_widget_get_position            (BaconVideoWidget *bvw);
-gint64 bacon_video_widget_get_current_time       (BaconVideoWidget *bvw);
-gint64 bacon_video_widget_get_stream_length      (BaconVideoWidget *bvw);
-gboolean bacon_video_widget_is_playing           (BaconVideoWidget *bvw);
-gboolean bacon_video_widget_is_seekable          (BaconVideoWidget *bvw);
-
+void bacon_video_widget_set_media_device         (BaconVideoWidget *bvw,
+						  const char *path);
 gboolean bacon_video_widget_can_play             (BaconVideoWidget *bvw,
 						  MediaType type);
 G_CONST_RETURN gchar **bacon_video_widget_get_mrls
 						 (BaconVideoWidget *bvw,
 						  MediaType type);
 
+/* Metadata */
+typedef enum {
+	BVW_INFO_TITLE,
+	BVW_INFO_ARTIST,
+	BVW_INFO_YEAR,
+	BVW_INFO_DURATION,
+	/* Video */
+	BVW_INFO_HAS_VIDEO,
+	BVW_INFO_DIMENSION_X,
+	BVW_INFO_DIMENSION_Y,
+	BVW_INFO_VIDEO_CODEC,
+	BVW_INFO_VIDEO_FOURCC,
+	BVW_INFO_FPS,
+	/* Audio */
+	BVW_INFO_HAS_AUDIO,
+	BVW_INFO_BITRATE,
+	BVW_INFO_AUDIO_CODEC,
+	BVW_INFO_AUDIO_FOURCC,
+} BaconVideoWidgetMetadataType;
+
 void bacon_video_widget_get_metadata		 (BaconVideoWidget *bvw,
 						  BaconVideoWidgetMetadataType
 						  type,
 						  GValue *value);
 char *bacon_video_widget_properties_get_title	 (BaconVideoWidget *bvw);
-
 
 /* Visualisation functions */
 typedef enum {
@@ -215,6 +174,28 @@ gboolean bacon_video_widget_set_visuals		  (BaconVideoWidget *bvw,
 						   const char *name);
 void bacon_video_widget_set_visuals_quality	  (BaconVideoWidget *bvw,
 						   VisualsQuality quality);
+
+/* Picture settings */
+typedef enum {
+	BVW_VIDEO_BRIGHTNESS,
+	BVW_VIDEO_CONTRAST,
+} BaconVideoWidgetVideoProperty;
+
+void bacon_video_widget_set_deinterlacing        (BaconVideoWidget *bvw,
+						  gboolean deinterlace);
+gboolean bacon_video_widget_get_deinterlacing    (BaconVideoWidget *bvw);
+
+void bacon_video_widget_toggle_aspect_ratio      (BaconVideoWidget *bvw);
+void bacon_video_widget_set_scale_ratio          (BaconVideoWidget *bvw,
+						  gfloat ratio);
+
+int bacon_video_widget_get_video_property        (BaconVideoWidget *bvw,
+						  BaconVideoWidgetVideoProperty
+						  type);
+void bacon_video_widget_set_video_property       (BaconVideoWidget *bvw,
+						  BaconVideoWidgetVideoProperty
+						  type,
+						  int value);
 
 /* DVD functions */
 typedef enum {
@@ -249,6 +230,32 @@ void bacon_video_widget_set_subtitle             (BaconVideoWidget *bvw,
 gboolean bacon_video_widget_can_get_frames       (BaconVideoWidget *bvw,
 						  GError **error);
 GdkPixbuf *bacon_video_widget_get_current_frame (BaconVideoWidget *bvw);
+
+/* TV-Out functions */
+typedef enum {
+	TV_OUT_NONE,
+	TV_OUT_DXR3,
+	TV_OUT_TVMODE,
+} TvOutType;
+
+gboolean bacon_video_widget_set_tv_out           (BaconVideoWidget *bvw,
+						  TvOutType tvout);
+TvOutType bacon_video_widget_get_tv_out          (BaconVideoWidget *bvw);
+
+/* Audio-out functions */
+typedef enum {
+	BVW_AUDIO_SOUND_STEREO,
+	BVW_AUDIO_SOUND_4CHANNEL,
+	BVW_AUDIO_SOUND_5CHANNEL,
+	BVW_AUDIO_SOUND_51CHANNEL,
+	BVW_AUDIO_SOUND_AC3PASSTHRU,
+} BaconVideoWidgetAudioOutType;
+
+BaconVideoWidgetAudioOutType bacon_video_widget_get_audio_out_type
+						 (BaconVideoWidget *bvw);
+void bacon_video_widget_set_audio_out_type       (BaconVideoWidget *bvw,
+						  BaconVideoWidgetAudioOutType
+						  type);
 
 G_END_DECLS
 
