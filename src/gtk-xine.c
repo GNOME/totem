@@ -52,7 +52,6 @@
 #define DEFAULT_WIDTH 315
 #define CONFIG_FILE ".gnome2"G_DIR_SEPARATOR_S"totem_config"
 #define DEFAULT_TITLE _("Totem Video Window")
-#define GCONF_PREFIX "/apps/totem/"
 
 #define BLACK_PIXEL \
 	BlackPixel ((gtx->priv->display ? gtx->priv->display : gdk_display), \
@@ -137,6 +136,7 @@ struct GtkXinePrivate {
 	gboolean pml;
 
 	/* properties dialog */
+	char *mrl;
 	GtkWidget *dialog;
 	GladeXML *xml;
 	gboolean properties_reset_state;
@@ -317,6 +317,7 @@ gtk_xine_instance_init (GtkXine *gtx)
 	gtx->priv->can_dvd = FALSE;
 	gtx->priv->can_vcd = FALSE;
 	gtx->priv->pml = FALSE;
+	gtx->priv->mrl = NULL;
 	gtx->priv->dialog = NULL;
 	gtx->priv->xml = NULL;
 	gtx->priv->properties_reset_state = FALSE;
@@ -426,12 +427,11 @@ frame_output_cb (void *gtx_gen,
 
 			gc = gconf_client_get_default ();
 
-			if (gconf_client_get_bool
-					(gc, GCONF_PREFIX"auto_resize", NULL)
-					== TRUE)
+			if (gconf_client_get_bool (gc, GCONF_PREFIX"auto_resize", NULL) == TRUE
+					&& strcmp (gtx->priv->mrl, LOGO_PATH) != 0)
 			{
 				GtkXineSignal *signal;
-				        
+
 				signal = g_new0 (GtkXineSignal, 1);
 				signal->type = RATIO;
 				g_async_queue_push (gtx->priv->queue, signal);
@@ -1186,6 +1186,9 @@ gtk_xine_open (GtkXine *gtx, const gchar *mrl)
 		xine_error (gtx);
 		return FALSE;
 	}
+
+	gtx->priv->mrl = g_strdup (mrl);
+
 	return TRUE;
 }
 
@@ -1234,6 +1237,7 @@ gtk_xine_close (GtkXine *gtx)
 		return;
 
 	xine_close (gtx->priv->stream);
+	g_free (gtx->priv->mrl);
 }
 
 /* Properties */

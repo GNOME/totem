@@ -1,5 +1,17 @@
 2002-12-27  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am:
+	* src/gtk-xine.c: (gtk_xine_instance_init), (frame_output_cb),
+	(gtk_xine_open), (gtk_xine_close):
+	* src/totem.c: (totem_action_set_mrl), (on_checkbutton1_toggled),
+	(on_combo_entry1_changed), (auto_resize_changed_cb),
+	(mediadev_changed_cb), (totem_setup_preferences), (main):
+	only resize the video if it's not the logo we're going to be showing,
+	add the mrl to the GtkXine widget, use GCONF_PREFIX, cleanups
+	(Closes: #101475)
+
+2002-12-27  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am: added some targets to remove the need for a manual
 	regenerate-build-sources line
 

@@ -81,7 +81,9 @@ INCLUDES = 						\
 	$(EXTRA_GNOME_CFLAGS)				\
 	$(XINE_CFLAGS)					\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
+	-DGCONF_PREFIX=\""/apps/totem/"\"		\
 	-DDATADIR=\""$(datadir)"\"			\
+	-DLOGO_PATH=DATADIR\"\"G_DIR_SEPARATOR_S\"totem\"G_DIR_SEPARATOR_S\"totem_logo.mpv\"						\
 	-DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED	\
 	-DGTK_DISABLE_DEPRECATED			\
 	-DGNOME_DISABLE_DEPRECATED

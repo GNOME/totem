@@ -40,8 +40,6 @@
 
 #include "debug.h"
 
-#define TOTEM_GCONF_PREFIX "/apps/totem"
-#define LOGO_PATH DATADIR""G_DIR_SEPARATOR_S"totem"G_DIR_SEPARATOR_S"totem_logo.mpv"
 #define SEEK_FORWARD_OFFSET 60000
 #define SEEK_BACKWARD_OFFSET -15000
 
@@ -409,10 +407,10 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		/* Set the logo */
 		totem->mrl = g_strdup (LOGO_PATH);
 		gtk_xine_open (GTK_XINE (totem->gtx), totem->mrl);
+		gtk_xine_play (GTK_XINE (totem->gtx), 0 , 0);
 
 		/* Reset the properties */
 		gtk_xine_properties_update (GTK_XINE (totem->gtx), TRUE);
-		gtk_xine_play (GTK_XINE (totem->gtx), 0 , 0);
 	} else {
 		char *title, *time_text, *name;
 		int time;
@@ -1292,7 +1290,7 @@ on_checkbutton1_toggled (GtkToggleButton *togglebutton, gpointer user_data)
 
 	D("on_checkbutton1_toggled");
 	value = gtk_toggle_button_get_active (togglebutton);
-	gconf_client_set_bool (totem->gc, "/apps/totem/auto_resize",
+	gconf_client_set_bool (totem->gc, GCONF_PREFIX"auto_resize",
 			value, NULL);
 }
 
@@ -1305,7 +1303,7 @@ on_combo_entry1_changed (TotemCdSelection *tcs, char *device,
 
 	D("on_combo_entry1_activate");
 	str = totem_cd_selection_get_device (tcs);
-	gconf_client_set_string (totem->gc, "/apps/totem/mediadev",
+	gconf_client_set_string (totem->gc, GCONF_PREFIX"mediadev",
 			str, NULL);
 }
 
@@ -1322,7 +1320,7 @@ auto_resize_changed_cb (GConfClient *client, guint cnxn_id,
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
 			gconf_client_get_bool (totem->gc,
-				"/apps/totem/auto_resize", NULL));
+				GCONF_PREFIX"auto_resize", NULL));
 
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_checkbutton1_toggled), totem);
@@ -1341,7 +1339,7 @@ mediadev_changed_cb (GConfClient *client, guint cnxn_id,
 
 	totem_cd_selection_set_device (TOTEM_CD_SELECTION (item),
 			gconf_client_get_string
-			(totem->gc, "/apps/totem/mediadev", NULL));
+			(totem->gc, GCONF_PREFIX"mediadev", NULL));
 
 	g_signal_connect (G_OBJECT (item), "device-changed",
 			G_CALLBACK (on_combo_entry1_changed), totem);
@@ -2048,9 +2046,9 @@ totem_setup_preferences (Totem *totem)
 
 	gconf_client_add_dir (totem->gc, "/apps/totem",
 			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
-	gconf_client_notify_add (totem->gc, "/apps/totem/auto_resize",
+	gconf_client_notify_add (totem->gc, GCONF_PREFIX"auto_resize",
 			auto_resize_changed_cb, totem, NULL, NULL);
-	gconf_client_notify_add (totem->gc, "/apps/totem/mediadev",
+	gconf_client_notify_add (totem->gc, GCONF_PREFIX"mediadev",
 			mediadev_changed_cb, totem, NULL, NULL);
 
 	totem->prefs = glade_xml_get_widget (totem->xml, "dialog1");
@@ -2063,25 +2061,25 @@ totem_setup_preferences (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "checkbutton1");
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
 			gconf_client_get_bool (totem->gc,
-				"/apps/totem/auto_resize", NULL));
+				GCONF_PREFIX"auto_resize", NULL));
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_checkbutton1_toggled), totem);
 
 	item = glade_xml_get_widget (totem->xml, "custom3");
 	device = gconf_client_get_string
-		(totem->gc, "/apps/totem/mediadev", NULL);
+		(totem->gc, GCONF_PREFIX"mediadev", NULL);
 	if (device == NULL || (strcmp (device, "") == 0)
 			|| (strcmp (device, "auto") == 0))
 	{
 		device = totem_cd_selection_get_default_device
 			(TOTEM_CD_SELECTION (item));
-		gconf_client_set_string (totem->gc, "/apps/totem/mediadev",
+		gconf_client_set_string (totem->gc, GCONF_PREFIX"mediadev",
 				device, NULL);
 	}
 
 	totem_cd_selection_set_device (TOTEM_CD_SELECTION (item),
 			gconf_client_get_string
-			(totem->gc, "/apps/totem/mediadev", NULL));
+			(totem->gc, GCONF_PREFIX"mediadev", NULL));
 	g_signal_connect (G_OBJECT (item), "device-changed",
 			G_CALLBACK (on_combo_entry1_changed), totem);
 }
@@ -2152,7 +2150,7 @@ main (int argc, char **argv)
 
 	q = NULL;
 	if (gconf_client_get_bool
-			(gc, "/apps/totem/launch_once", NULL) == TRUE)
+			(gc, GCONF_PREFIX"launch_once", NULL) == TRUE)
 	{
 		q = gtk_message_queue_new ("totem", filename);
 		process_queue (q, argv);
