@@ -1,5 +1,5 @@
 
-bin_PROGRAMS = totem totem-video-thumbnailer
+bin_PROGRAMS = totem totem-video-thumbnailer vanity
 
 if TOTEM_GST
 MM=	bacon-video-widget-gst.c \
@@ -49,24 +49,21 @@ regenerate-built-sources:
 	EGGFILES="$(EGG_RECENT_FILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh || true
 	EGGFILES="$(BACON_CD_SELECTION)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
 
+VIDEOWIDGET = baconvideowidget-marshal.list $(MARSHALFILES) $(MM) bacon-video-widget.h scrsaver.c scrsaver.h video-utils.c video-utils.h debug.h
+
 totem_SOURCES = 					\
 	$(EGG_RECENT_FILES)				\
 	$(BACON_CD_SELECTION)				\
+	$(VIDEOWIDGET)					\
 	totem.c totem.h					\
 	totem-remote.c totem-remote.h			\
 	totem-preferences.c totem-preferences.h		\
 	totem-private.h			\
-	baconvideowidget-marshal.list	\
-	$(MARSHALFILES)			\
-	$(MM)				\
-	bacon-video-widget.h		\
 	bacon-video-widget-properties.c	\
 	bacon-video-widget-properties.h	\
-	gtk-playlist.c	gtk-playlist.h	\
+	gtk-playlist.c gtk-playlist.h	\
 	rb-ellipsizing-label.c		\
 	rb-ellipsizing-label.h		\
-	scrsaver.c  scrsaver.h		\
-	video-utils.c video-utils.h	\
 	debug.h	languages.h		\
 	gnome-authn-manager.c		\
 	gnome-authn-manager.h		\
@@ -79,18 +76,20 @@ totem_SOURCES = 					\
 
 totem_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS)
 
-totem_video_thumbnailer_SOURCES =				\
-	baconvideowidget-marshal.list				\
-	$(MARSHALFILES)	$(MM)					\
-	bacon-video-widget.h					\
-	scrsaver.c  scrsaver.h          			\
-	video-utils.c video-utils.h     			\
-	totem-video-thumbnailer.c
-
+totem_video_thumbnailer_SOURCES = $(VIDEOWIDGET) totem-video-thumbnailer.c
 totem_video_thumbnailer_LDADD = $(GTK_LIBS) $(XTEST_LIBS)
 
+vanity_SOURCES =					\
+	$(VIDEOWIDGET)					\
+	gnome-authn-manager.c gnome-authn-manager.h	\
+	gnome-caption-table.c gnome-caption-table.h	\
+	gnome-password-dialog.c gnome-password-dialog.h	\
+	vanity.c
+
+vanity_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS)
+
 INCLUDES = 						\
--g	-D_REENTRANT					\
+	-D_REENTRANT					\
 	$(EXTRA_GNOME_CFLAGS)				\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
 	-DGCONF_PREFIX=\""/apps/totem"\"		\

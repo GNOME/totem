@@ -2268,7 +2268,7 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 	case GDK_n:
 		totem_action_next (totem);
 		if (totem->action == 5)
-			totem_action_set_mrl_and_play (totem, "v4l://");
+			totem_action_set_mrl_and_play (totem, "v4l:/");
 		totem->action = 0;
 		break;
 	case GDK_O:
