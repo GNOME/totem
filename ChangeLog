@@ -1,3 +1,10 @@
+2004-11-19  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-playlist.c: (totem_playlist_set_reorderable),
+	(button_press_cb), (button_release_cb), (drag_end_cb): work-around
+	the GtkTreeRowReference not surviving a drag'n'drop (bug #72043)
+	and keep track of the ->currently playing file (Closes: #157066)
+
 2004-11-19  Frederic Crozat  <fcrozat@mandrakesoft.com>
 
 	* data/totem.keys:

@@ -472,14 +472,59 @@ treeview_button_pressed (GtkTreeView *treeview, GdkEventButton *event,
 	return TRUE;
 }
 
+static void
+totem_playlist_set_reorderable (TotemPlaylist *playlist, gboolean set)
+{
+	guint num_items, i;
+
+	gtk_tree_view_set_reorderable
+		(GTK_TREE_VIEW (playlist->_priv->treeview), set);
+
+	if (set != FALSE)
+		return;
+
+	num_items = PL_LEN;
+	for (i = 0; i < num_items; i++)
+	{
+		GtkTreeIter iter;
+		char *index;
+		GdkPixbuf *pixbuf;
+
+		index = g_strdup_printf ("%d", i);
+		if (gtk_tree_model_get_iter_from_string
+				(playlist->_priv->model,
+				 &iter, index) == FALSE)
+		{
+			g_free (index);
+			continue;
+		}
+		g_free (index);
+
+		gtk_tree_model_get (playlist->_priv->model, &iter,
+				PIX_COL, &pixbuf, -1);
+
+		if (pixbuf == NULL)
+			continue;
+
+		gdk_pixbuf_unref (pixbuf);
+		gtk_tree_path_free (playlist->_priv->current);
+		playlist->_priv->current = gtk_tree_path_new_from_indices (i, -1);
+		g_signal_emit (G_OBJECT (playlist),
+				totem_playlist_table_signals[CHANGED],
+				0, NULL);
+
+		break;
+	}
+}
+
 static gboolean 
 button_press_cb (GtkWidget *treeview, GdkEventButton *event, gpointer data)
 { 
-	
 	gtk_drag_dest_unset (treeview);
 	g_signal_handlers_block_by_func (treeview, (GFunc) drop_cb, data);
-	gtk_tree_view_set_reorderable (GTK_TREE_VIEW (treeview), TRUE);
-	
+
+	totem_playlist_set_reorderable ((TotemPlaylist *) data, TRUE);
+
 	return FALSE;
 }
 
@@ -490,15 +535,13 @@ button_release_cb (GtkWidget *treeview, GdkEventButton *event, gpointer data)
 
 	if (!playlist->_priv->drag_started)
 	{
-		gtk_tree_view_set_reorderable (GTK_TREE_VIEW (treeview),
-				FALSE);
+		totem_playlist_set_reorderable (playlist, FALSE);
 		gtk_drag_dest_set (treeview, GTK_DEST_DEFAULT_ALL,
 				target_table, G_N_ELEMENTS (target_table),
 				GDK_ACTION_COPY);
 
 		g_signal_handlers_unblock_by_func (treeview,
 				(GFunc) drop_cb, data);
-		
 	}
 
 	return FALSE;
@@ -520,7 +563,7 @@ drag_end_cb (GtkWidget *treeview, GdkDragContext *context, gpointer data)
 	TotemPlaylist *playlist = (TotemPlaylist *)data;
 
 	playlist->_priv->drag_started = FALSE;
-	gtk_tree_view_set_reorderable (GTK_TREE_VIEW (treeview), FALSE); 
+	totem_playlist_set_reorderable (playlist, FALSE);
 	gtk_drag_dest_set (treeview, GTK_DEST_DEFAULT_ALL, target_table,
         		G_N_ELEMENTS (target_table), GDK_ACTION_COPY);
 
