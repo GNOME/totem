@@ -1,3 +1,17 @@
+2003-02-26  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: added detection for XSun headers (Closes: #107115)
+	* src/totem-private.h:
+	* src/totem.c: (totem_action_fullscreen_toggle),
+	(on_fs_exit1_activate), (update_fullscreen_size),
+	(size_changed_cb), (on_video_motion_notify_event),
+	(totem_callback_connect), (totem_message_connection_receive_cb),
+	(process_command_line), (main): place the popups properly on multihead
+	displays and when the screen size changes (Closes: #101149), present
+	the window when we receive an event, fix a segfault when launch totem
+	without any arguments in client mode, finish with the startup
+	notification when we're in client mode
+
 2003-02-25  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: added Korean

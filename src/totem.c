@@ -22,7 +22,14 @@
 #include <libgnomevfs/gnome-vfs.h>
 #include <gconf/gconf-client.h>
 #include <string.h>
+
+/* X11 headers */
+#ifdef HAVE_XFREE
 #include <X11/XF86keysym.h>
+#endif
+#ifdef HAVE_XSUN
+#include <X11/Sunkeysym.h>
+#endif
 
 #include "gnome-authn-manager.h"
 #include "bacon-video-widget.h"
@@ -79,6 +86,7 @@ static const struct poptOption options[] = {
 	{NULL, '\0', 0, NULL, 0} /* end the list */
 };
 
+static void update_fullscreen_size (Totem *totem);
 static gboolean popup_hide (Totem *totem);
 static void update_buttons (Totem *totem);
 static void update_dvd_menu_items (Totem *totem);
@@ -321,11 +329,22 @@ totem_action_fullscreen_toggle (Totem *totem)
 	gboolean new_state;
 
 	new_state = !bacon_video_widget_is_fullscreen (totem->bvw);
-	bacon_video_widget_set_fullscreen (totem->bvw, new_state);
 
 	/* Hide the popup when switching fullscreen off */
 	if (new_state == FALSE)
+	{
+		gtk_widget_show (totem->win);
 		popup_hide (totem);
+	}
+
+	bacon_video_widget_set_fullscreen (totem->bvw, new_state);
+
+	/* Hide the window when switching fullscreen on */
+	if (new_state == TRUE)
+	{
+		update_fullscreen_size (totem);
+		gtk_widget_hide (totem->win);
+	}
 }
 
 void
@@ -1241,7 +1260,6 @@ on_fs_exit1_activate (GtkButton *button, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 
-	popup_hide (totem);
 	totem_action_fullscreen_toggle (totem);
 }
 
@@ -1763,6 +1781,33 @@ playlist_repeat_toggle_cb (GtkPlaylist *playlist, gboolean repeat,
 			G_CALLBACK (on_repeat_mode1_toggled), totem);
 }
 
+static void
+update_fullscreen_size (Totem *totem)
+{
+	gdk_screen_get_monitor_geometry (gdk_screen_get_default (),
+			gdk_screen_get_monitor_at_window
+			(gdk_screen_get_default (),
+			 totem->win->window),
+			&totem->fullscreen_rect);
+}
+
+static void
+size_changed_cb (GdkScreen *screen, gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+	update_fullscreen_size (totem);
+
+	//FIXME
+#if 0
+	if (bvw->priv->fullscreen_mode)
+	{
+		gdk_window_resize (bvw->priv->fullscreen_window,
+				bvw->priv->fullscreen_rect.width,
+				bvw->priv->fullscreen_rect.height);
+	}
+#endif
+}
+
 static gboolean
 popup_hide (Totem *totem)
 {
@@ -1818,8 +1863,14 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 		totem->popup_timeout = 0;
 	}
 
-	gtk_window_move (GTK_WINDOW (totem->control_popup), 0,
-			gdk_screen_height () - totem->control_popup_height);
+	gtk_window_move (GTK_WINDOW (totem->exit_popup),
+			totem->fullscreen_rect.x,
+			totem->fullscreen_rect.y);
+	gtk_window_move (GTK_WINDOW (totem->control_popup),
+			totem->fullscreen_rect.x,
+			totem->fullscreen_rect.height
+			- totem->control_popup_height);
+
 	gtk_widget_show_all (totem->exit_popup);
 	gtk_widget_show_all (totem->control_popup);
 	bacon_video_widget_set_show_cursor (totem->bvw, TRUE);
@@ -2195,6 +2246,10 @@ totem_callback_connect (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->win), "destroy",
 			G_CALLBACK (main_window_destroy_cb), totem);
 
+	/* Screen size changes */
+	g_signal_connect (G_OBJECT (gdk_screen_get_default ()),
+			"size-changed", G_CALLBACK (size_changed_cb), totem);
+
 	/* Motion notify for the Popups */
 	item = glade_xml_get_widget (totem->xml, "window1");
 	gtk_widget_add_events (item, GDK_POINTER_MOTION_MASK);
@@ -2477,6 +2532,7 @@ totem_message_connection_receive_cb (const char *msg, gpointer user_data)
 	else
 		url = NULL;
 
+	gtk_window_present (GTK_WINDOW (totem->win));
 	totem_action_remote (totem, command, url);
 
 	g_free (url);
@@ -2510,6 +2566,9 @@ process_command_line (BaconMessageConnection *conn, int argc, char **argv)
 	int i, command;
 	gboolean replace_done = FALSE;
 	char *line, *full_path;
+
+	if (argc == 1)
+		return;
 
 	i = 2;
 
@@ -2629,6 +2688,7 @@ main (int argc, char **argv)
 		process_command_line (totem->conn, argc, argv);
 		bacon_message_connection_free (totem->conn);
 		g_free (totem);
+		gdk_notify_startup_complete ();
 		exit (0);
 	}
 
@@ -2700,16 +2760,13 @@ main (int argc, char **argv)
 			filename, NULL);
 	g_free (filename);
 
-	/* Calculate the height of the control popup window */
-	gtk_window_get_size (GTK_WINDOW (totem->control_popup),
-			&width, &totem->control_popup_height);
-
 	totem_setup_recent (totem);
 	totem_callback_connect (totem);
 
 	/* Show ! gtk_main_iteration trickery to show all the widgets
 	 * we have so far */
 	gtk_widget_show_all (totem->win);
+	update_fullscreen_size (totem);
 	long_action ();
 
 	/* Show ! (again) the video widget this time. */
@@ -2717,6 +2774,11 @@ main (int argc, char **argv)
 
 	/* The prefs after the video widget is connected */
 	totem_setup_preferences (totem);
+
+	/* Setup the size stuff for fullscreen */
+	gtk_window_get_size (GTK_WINDOW (totem->control_popup),
+			&width, &totem->control_popup_height);
+	update_fullscreen_size (totem);
 
 	if (argc > 1)
 	{

@@ -43,6 +43,39 @@ AC_CHECK_LIB(lirc_client, lirc_init, [
 ])
 AC_SUBST(REMOTE_LIBS)
 
+dnl Multimedia keys
+have_xfree=no
+AC_TRY_COMPILE([
+	#include <X11/XF86keysym.h>
+	],[
+	int arg = 0;
+	],[
+	have_xfree=yes
+])
+AC_MSG_CHECKING(for X11 XFree86 headers)
+AC_MSG_RESULT($have_xfree)
+if test x"$have_xfree" = "xyes" ; then
+	AC_DEFINE(HAVE_XFREE, 1, [defined if you have X11/XF86keysym.h])
+fi
+
+have_xsun=no
+AC_TRY_COMPILE([
+	#include <X11/Sunkeysym.h>
+	],[
+	int arg = 0;
+	],[
+	have_xsun=yes
+])
+AC_MSG_CHECKING(for X11 Sun headers)
+AC_MSG_RESULT($have_xsun)
+if test x"$have_xsun" = "xyes" ; then
+	AC_DEFINE(HAVE_XSUN, 1, [defined if you have X11/Sunkeysym.h])
+fi
+
+if test x"$have_xsun" = "xno" && test x"$have_xfree" = "xno" ; then
+	AC_MSG_ERROR(Your system doesn't have any headers for multimedia buttons)
+fi
+
 AC_MSG_CHECKING(for broken old architecture)
 if test "`uname -m`x" = "i686x" ; then
        AC_MSG_RESULT(h0rk3d)

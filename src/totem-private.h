@@ -67,6 +67,7 @@ struct Totem {
 	gint control_popup_height;
 
 	guint popup_timeout;
+	GdkRectangle fullscreen_rect;
 
 	/* recent file stuff */
 	EggRecentModel *recent_model;
