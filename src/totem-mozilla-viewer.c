@@ -349,10 +349,32 @@ static void
 cb_data (const char * msg, gpointer user_data)
 {
 	TotemEmbedded *emb = user_data;
+	GError *err = NULL;
+	gboolean res = TRUE;
 
 	g_print ("Got message: %s\n", msg);
 
-	bacon_message_connection_send (emb->conn, "OK");
+	if (!strcmp (msg, "PLAY")) {
+		res = bacon_video_widget_play (emb->bvw, &err);
+	} else if (!strcmp (msg, "PAUSE")) {
+		bacon_video_widget_pause (emb->bvw);
+	} else if (!strcmp (msg, "STOP")) {
+		bacon_video_widget_stop (emb->bvw);
+	} else {
+		g_set_error (&err, 0, 0, _("Unknown command"));
+		res = FALSE;
+	}
+
+	if (res) {
+		bacon_message_connection_send (emb->conn, "OK");
+	} else {
+		gchar *err_str;
+
+		err_str = g_strdup_printf ("ERROR: %s",
+			   err ? err->message : _("Programming error"));
+		bacon_message_connection_send (emb->conn, err_str);
+		g_free (err_str);
+	}
 }
 
 int main (int argc, char **argv)
