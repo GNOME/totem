@@ -1,5 +1,13 @@
 2003-02-01  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am: removed -export-dynamic (not needed)
+	* src/gtk-message.c:
+	* src/gtk-message.h: removed, we'll use something else
+	* src/totem.c: (totem_action_exit), (main): upd for gtk-message.[ch]'s
+	removal
+
+2003-02-01  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.glade: add the window icon
 	* src/gtk-xine.c: (gtk_xine_get_current_frame): fix screenshot when
 	ratio is 1.0

@@ -26,7 +26,6 @@
 #include <X11/XF86keysym.h>
 
 #include "gnome-authn-manager.h"
-#include "gtk-message.h"
 #include "gtk-xine.h"
 #include "gtk-xine-properties.h"
 #include "gtk-playlist.h"
@@ -104,7 +103,6 @@ struct Totem {
 	GtkPlaylist *playlist;
 	GConfClient *gc;
 	TotemRemote *remote;
-	GtkMessageQueue *queue;
 	int action;
 };
 
@@ -156,8 +154,6 @@ totem_action_error (char *msg, GtkWindow *parent)
 void
 totem_action_exit (Totem *totem)
 {
-	gtk_message_queue_unref (totem->queue);
-
 	gtk_main_quit ();
 
 	gtk_widget_hide (totem->win);
@@ -2559,7 +2555,7 @@ totem_get_gconf_client (Totem *totem)
 {
 	return totem->gc;
 }
-
+#if 0
 static void
 process_queue (GtkMessageQueue *queue, char **argv)
 {
@@ -2570,7 +2566,7 @@ process_queue (GtkMessageQueue *queue, char **argv)
 		g_message ("setup the server thingo");
 	}
 }
-
+#endif
 int
 main (int argc, char **argv)
 {
@@ -2578,7 +2574,6 @@ main (int argc, char **argv)
 	char *filename;
 	int width = 0;
 	GConfClient *gc;
-	GtkMessageQueue *q;
 	GError *err = NULL;
 	GdkPixbuf *pix;
 
@@ -2620,7 +2615,6 @@ main (int argc, char **argv)
 		exit (1);
 	}
 
-	q = NULL;
 #if 0
 	if (gconf_client_get_bool
 			(gc, GCONF_PREFIX"/launch_once", NULL) == TRUE)
@@ -2637,7 +2631,6 @@ main (int argc, char **argv)
 	totem->popup_timeout = 0;
 	totem->gtx = NULL;
 	totem->gc = gc;
-	totem->queue = q;
 
 	/* Main window */
 	totem->xml = glade_xml_new (filename, NULL, NULL);
