@@ -1,3 +1,12 @@
+2002-11-04  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-xine.c: (load_config_from_gconf),
+	(gtk_xine_set_fullscreen): remove gconf_is_initalized checks,
+	fullscreen cleanups
+	* src/video-utils.c: (wmspec_change_state),
+	(old_wmspec_set_fullscreen), (window_set_fullscreen):
+	* src/video-utils.h: fullscreen cleanups
+
 2002-11-03  Bastien Nocera  <hadess@hadess.net>
 
 	* src/gtk-xine.c: (load_config_from_gconf):

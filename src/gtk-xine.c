@@ -507,15 +507,6 @@ load_config_from_gconf (GtkXine *gtx)
 	GConfClient *conf;
 	char *tmp;
 
-	//FIXME move to totem.c
-	if (!gconf_is_initialized ())
-	{
-		g_signal_emit (G_OBJECT (gtx),
-				gtx_table_signals[ERROR], 0,
-				GTX_STARTUP,
-				_("The configuration system is not initialised.\nThe defaults will be used."));
-		return;
-	}
 	conf = gconf_client_get_default ();
 
 	/* default demux strategy */
@@ -1216,6 +1207,8 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 		XSizeHints hint;
 		GdkWindow *parent;
 
+		parent = gdk_window_get_toplevel (gtx->widget.window);
+
 		hint.x = 0;
 		hint.y = 0;
 		hint.width = gdk_screen_width ();
@@ -1234,7 +1227,15 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 				DEFAULT_TITLE, DEFAULT_TITLE, None,
 				NULL, 0, 0);
 
-		XSetWMNormalHints (gtx->priv->display, win, &hint); 
+		XSetWMNormalHints (gtx->priv->display, win, &hint);
+
+		old_wmspec_set_fullscreen (win);
+		/* TODO add check for full-screen from
+		 * fullscreen_callback
+		 * in terminal-window.c (profterm) */
+		window_set_fullscreen (win, TRUE);
+		XRaiseWindow(gtx->priv->display, win);
+
 		XSelectInput (gtx->priv->display, win,
 				StructureNotifyMask | ExposureMask
 				| FocusChangeMask | ButtonPressMask
@@ -1242,7 +1243,6 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 
 		/* Map window */
 		XMapRaised (gtx->priv->display, win);
-
 		XFlush (gtx->priv->display);
 
 		/* Wait for map */
@@ -1251,19 +1251,13 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 					StructureNotifyMask, &xev);
 		} while (xev.type != MapNotify || xev.xmap.event != win);
 
+		XMoveWindow (gtx->priv->display, win, 0, 0);
+
+		/* FIXME Why does this sometimes return NULL ? */
 		gtx->priv->fullscreen_window =
 			gdk_window_foreign_new (win);
-		/* TODO add check for full-screen from
-		 * fullscreen_callback
-		 * in terminal-window.c (profterm) */
-		gdk_window_set_fullscreen
-			(gtx->priv->fullscreen_window, TRUE);
-
-		parent = gdk_window_get_toplevel (gtx->widget.window);
 		gdk_window_set_transient_for
 			(gtx->priv->fullscreen_window, parent);
-
-		XMoveWindow (gtx->priv->display, win, 0, 0);
 
 		xine_gui_send_vo_data (gtx->priv->stream,
 			 XINE_GUI_SEND_DRAWABLE_CHANGED,
@@ -1273,6 +1267,7 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 		gtk_xine_set_show_cursor (gtx, FALSE);
 
 		scrsaver_disable (gtx->priv->display);
+		XFlush(gtx->priv->display);
 	} else {
 		xine_gui_send_vo_data (gtx->priv->stream,
 			 XINE_GUI_SEND_DRAWABLE_CHANGED,

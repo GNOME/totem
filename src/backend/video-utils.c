@@ -19,7 +19,7 @@ typedef struct {
 
 static void
 wmspec_change_state (gboolean   add,
-		GdkWindow *window,
+		Window     window,
 		GdkAtom    state1,
 		GdkAtom    state2)
 {
@@ -33,7 +33,7 @@ wmspec_change_state (gboolean   add,
 	xev.xclient.serial = 0;
 	xev.xclient.send_event = True;
 	xev.xclient.display = gdk_display;
-	xev.xclient.window = GDK_WINDOW_XID (window);
+	xev.xclient.window = window;
 	xev.xclient.message_type = gdk_x11_get_xatom_by_name ("_NET_WM_STATE");
 	xev.xclient.format = 32;
 	xev.xclient.data.l[0] = add ? _NET_WM_STATE_ADD : _NET_WM_STATE_REMOVE;
@@ -41,48 +41,47 @@ wmspec_change_state (gboolean   add,
 	xev.xclient.data.l[2] = gdk_x11_atom_to_xatom (state2);
 
 	XSendEvent (gdk_display,
-			GDK_WINDOW_XID (gdk_get_default_root_window ()),
+			GDK_ROOT_WINDOW (),
 			False,
 			SubstructureRedirectMask | SubstructureNotifyMask,
 			&xev);
 }
 
-static void
-old_wmspec_set_fullscreen (GdkWindow *window)
+void
+old_wmspec_set_fullscreen (Window window)
 {
 	Atom XA_WIN_LAYER = None;
 	long propvalue[1];
+	MWMHints mwmhints;
+	Atom prop;
 
-	XA_WIN_LAYER = XInternAtom(GDK_DISPLAY (), "_WIN_LAYER", False);
+	if (XA_WIN_LAYER == None)
+		XA_WIN_LAYER = XInternAtom(GDK_DISPLAY (), "_WIN_LAYER", False);
 
 	/* layer above most other things, like gnome panel
 	 * WIN_LAYER_ABOVE_DOCK = 10 */
 	propvalue[0] = 10;
 
-	XChangeProperty (GDK_DISPLAY (), GDK_WINDOW_XID (window), XA_WIN_LAYER,
+	XChangeProperty (GDK_DISPLAY (), window, XA_WIN_LAYER,
 			XA_CARDINAL, 32, PropModeReplace,
 			(unsigned char *) propvalue, 1);
+
+	/* Now set the decorations hints */
+	prop = XInternAtom (GDK_DISPLAY (), "_MOTIF_WM_HINTS", False);
+	mwmhints.flags = MWM_HINTS_DECORATIONS;
+	mwmhints.decorations = 0;
+	XChangeProperty (GDK_DISPLAY (), window, prop, prop, 32,
+			PropModeReplace, (unsigned char *) &mwmhints,
+			PROP_MWM_HINTS_ELEMENTS);
 }
 
 void
-gdk_window_set_fullscreen (GdkWindow *window, gboolean set)
+window_set_fullscreen (Window window, gboolean set)
 {
-	gdk_window_set_decorations (window, set ? 0 : 1);
-
-	if (set == TRUE)
-		old_wmspec_set_fullscreen (window);
-
 	/* Set full-screen hint */
 	wmspec_change_state (set, window,
 			gdk_atom_intern ("_NET_WM_STATE_FULLSCREEN", FALSE),
 			GDK_NONE);
-	wmspec_change_state (set, window,
-			gdk_atom_intern ("_NET_WM_STATE_MAXIMIZED_HORZ", FALSE),
-			GDK_NONE);
-	wmspec_change_state (set, window,
-			gdk_atom_intern ("_NET_WM_MAXIMIZED_VERT", FALSE),
-			GDK_NONE);
-	gdk_window_maximize (window);
 }
 
 void
