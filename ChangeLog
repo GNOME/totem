@@ -1,5 +1,17 @@
 2003-01-13  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (gtk_xine_class_init), (generate_mouse_event),
+	(xine_thread), (gtk_xine_realize), (gtk_xine_unrealize),
+	(gtk_xine_motion_notify), (gtk_xine_button_press),
+	(gtk_xine_key_press), (gtk_xine_configure),
+	(gtk_xine_size_allocate), (gtk_xine_set_fullscreen):
+	* src/totem.c: (on_video_motion_notify_event),
+	(totem_callback_connect), (video_widget_create): move all the
+	signal handling out of the Gdk event filter, and update totem
+	to take it into account
+
+2003-01-13  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-xine.c: (gtk_xine_instance_init),
 	(gtk_xine_filter_events), (gtk_xine_expose),
 	(gtk_xine_set_fullscreen): move the expose event handling from the

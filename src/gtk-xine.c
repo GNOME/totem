@@ -82,14 +82,11 @@ typedef struct
 	gint type;		/* one of the signals in the following enum */
 	GtkXineError error_type;
 	char *message;		/* or NULL */
-	guint keyval;		/* for KEY_PRESS events */
 } GtkXineSignal;
 
 /* Signals */
 enum {
 	ERROR,
-	MOUSE_MOTION,
-	KEY_PRESS,
 	EOS,
 	TITLE_CHANGE,
 	LAST_SIGNAL
@@ -179,6 +176,13 @@ static void gtk_xine_unrealize (GtkWidget *widget);
 static void gtk_xine_finalize (GObject *object);
 
 static gboolean gtk_xine_expose (GtkWidget *widget, GdkEventExpose *event);
+static gboolean gtk_xine_motion_notify (GtkWidget *widget,
+				        GdkEventMotion *event);
+static gboolean gtk_xine_button_press (GtkWidget *widget,
+				       GdkEventButton *event);
+static gboolean gtk_xine_key_press (GtkWidget *widget, GdkEventKey *event);
+static gboolean gtk_xine_configure (GtkWidget *widget,
+				    GdkEventConfigure *event);
 
 static void gtk_xine_size_allocate (GtkWidget *widget,
 				    GtkAllocation *allocation);
@@ -232,6 +236,10 @@ gtk_xine_class_init (GtkXineClass *klass)
 	widget_class->unrealize = gtk_xine_unrealize;
 	widget_class->size_allocate = gtk_xine_size_allocate;
 	widget_class->expose_event = gtk_xine_expose;
+	widget_class->motion_notify_event = gtk_xine_motion_notify;
+	widget_class->button_press_event = gtk_xine_button_press;
+	widget_class->key_press_event = gtk_xine_key_press;
+	widget_class->configure_event = gtk_xine_configure;
 
 	/* GObject */
 	object_class->set_property = gtk_xine_set_property;
@@ -274,23 +282,6 @@ gtk_xine_class_init (GtkXineClass *klass)
 				NULL, NULL,
 				gtkxine_marshal_VOID__INT_STRING,
 				G_TYPE_NONE, 2, G_TYPE_INT, G_TYPE_STRING);
-
-	gtx_table_signals[MOUSE_MOTION] =
-		g_signal_new ("mouse-motion",
-				G_TYPE_FROM_CLASS (object_class),
-				G_SIGNAL_RUN_LAST,
-				G_STRUCT_OFFSET (GtkXineClass, mouse_motion),
-				NULL, NULL,
-				g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
-
-	gtx_table_signals[KEY_PRESS] =
-		g_signal_new ("key-press",
-				G_TYPE_FROM_CLASS (object_class),
-				G_SIGNAL_RUN_LAST,
-				G_STRUCT_OFFSET (GtkXineClass, key_press),
-				NULL, NULL,
-				g_cclosure_marshal_VOID__UINT,
-				G_TYPE_NONE, 1, G_TYPE_UINT);
 
 	gtx_table_signals[EOS] =
 		g_signal_new ("eos",
@@ -749,10 +740,10 @@ gtk_xine_dvd_event (GtkXine *gtx, GtkXineDVDEvent type)
 }
 
 static gboolean
-generate_mouse_event (GtkXine *gtx, XEvent *event, gboolean is_motion)
+generate_mouse_event (GtkXine *gtx, GdkEvent *event, gboolean is_motion)
 {
-	XMotionEvent *mevent = (XMotionEvent *) event;
-	XButtonEvent *bevent = (XButtonEvent *) event;
+	GdkEventMotion *mevent = (GdkEventMotion *) event;
+	GdkEventButton *bevent = (GdkEventButton *) event;
 	int x, y;
 	gboolean retval;
 
@@ -803,9 +794,18 @@ xine_thread (void *gtx_gen)
 
 	gtx->priv->init_finished = TRUE;
 
-	while (gtx->priv->display != NULL && gtx->priv->stream != NULL)
+	while (1)
 	{
-		XNextEvent (gtx->priv->display, &event);
+		if (gtx->priv->stream == NULL)
+			break;
+
+		if (XPending (gtx->priv->display))
+		{
+			XNextEvent (gtx->priv->display, &event);
+		} else {
+			usleep (100);
+			continue;
+		}
 
 		if (event.type == gtx->priv->completion_event)
 		{
@@ -818,61 +818,7 @@ xine_thread (void *gtx_gen)
 	pthread_exit (NULL);
 	return NULL;
 }
-
-static GdkFilterReturn
-gtk_xine_filter_events (GdkXEvent *xevent, GdkEvent *event, gpointer data)
-{
-	GtkXine *gtx = (GtkXine *) data;
-	XEvent *xev = (XEvent *) xevent;
-	XKeyEvent *key = (XKeyEvent *) xevent;
-	GtkXineSignal *signal;
-	gboolean retval;
-
-	switch (xev->type)
-	{
-	case MotionNotify:
-		D("MotionNotify:");
-		retval = generate_mouse_event (gtx, xevent, TRUE);
-		if (gtx->priv->fullscreen_mode == TRUE)
-		{
-			signal = g_new0 (GtkXineSignal, 1);
-			signal->type = MOUSE_MOTION;
-			g_async_queue_push (gtx->priv->queue, signal);
-			g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
-		}
-
-		if (retval == TRUE)
-			return GDK_FILTER_REMOVE;
-		break;
-	case ButtonPress:
-		D("ButtonPress:");
-		if (generate_mouse_event (gtx, xevent, FALSE) == TRUE)
-			return GDK_FILTER_REMOVE;
-		break;
-	case KeyPress:
-		D("KeyPress:");
-		if (gtx->priv->fullscreen_mode == TRUE)
-		{
-			char buf[16];
-			KeySym keysym;
-			static XComposeStatus compose;
-
-			signal = g_new0 (GtkXineSignal, 1);
-			signal->type = KEY_PRESS;
-			XLookupString (key, buf, 16,
-					&keysym, &compose);
-			signal->keyval = keysym;
-			g_async_queue_push (gtx->priv->queue, signal);
-			g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
-
-			return GDK_FILTER_REMOVE;
-		}
-		break;
-	}
-
-	return GDK_FILTER_CONTINUE;
-}
-
+#if 0
 static gboolean
 configure_cb (GtkWidget *widget, GdkEventConfigure *event, gpointer user_data)
 {
@@ -883,7 +829,7 @@ configure_cb (GtkWidget *widget, GdkEventConfigure *event, gpointer user_data)
 
 	return FALSE;
 }
-
+#endif
 static void
 gtk_xine_realize (GtkWidget *widget)
 {
@@ -919,9 +865,9 @@ gtk_xine_realize (GtkWidget *widget)
 	gtx->priv->video_window = widget->window;
 
 	/* track configure events of toplevel window */
-	g_signal_connect (GTK_OBJECT (gtk_widget_get_toplevel (widget)),
-			  "configure-event",
-			  GTK_SIGNAL_FUNC (configure_cb), gtx);
+//	g_signal_connect (GTK_OBJECT (gtk_widget_get_toplevel (widget)),
+//			  "configure-event",
+//			  GTK_SIGNAL_FUNC (configure_cb), gtx);
 
 	/* Init threads in X and setup the needed X stuff */
 	if (!XInitThreads ())
@@ -975,9 +921,6 @@ gtk_xine_realize (GtkWidget *widget)
 
 	scrsaver_init (gtx->priv->display);
 
-	gdk_window_add_filter (widget->window,
-			gtk_xine_filter_events, (gpointer) gtx);
-
 	XUnlockDisplay (gtx->priv->display);
 
 	/* Can we play DVDs and VCDs ? */
@@ -993,7 +936,22 @@ gtk_xine_realize (GtkWidget *widget)
 
 	/* now, create a xine thread */
 	pthread_create (&gtx->priv->thread, NULL, xine_thread, gtx);
+#if 0
+	/* Send a configure event now */
+	{
+		GdkEventConfigure event;
 
+		event.type = GDK_CONFIGURE;
+		event.window = widget->window;
+		event.send_event = TRUE;
+		event.x = widget->allocation.x;
+		event.y = widget->allocation.y;
+		event.width = widget->allocation.width;
+		event.height = widget->allocation.height;
+
+		gtk_widget_event (widget, (GdkEvent*) &event);
+	}
+#endif
 	return;
 }
 
@@ -1018,16 +976,6 @@ gtk_xine_idle_signal (GtkXine *gtx)
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[ERROR], 0,
 				signal->error_type, signal->message);
-		break;
-	case MOUSE_MOTION:
-		g_signal_emit (G_OBJECT (gtx),
-				gtx_table_signals[MOUSE_MOTION],
-				0, NULL);
-		break;
-	case KEY_PRESS:
-		g_signal_emit (G_OBJECT (gtx),
-				gtx_table_signals[KEY_PRESS],
-				0, signal->keyval);
 		break;
 	case EOS:
 		g_signal_emit (G_OBJECT (gtx),
@@ -1131,21 +1079,21 @@ gtk_xine_unrealize (GtkWidget *widget)
 
 	/* stop the playback */
 	xine_close (gtx->priv->stream);
+
+	/* Kill the drivers */
+	if (gtx->priv->vo_driver != NULL)
+		xine_close_video_driver (gtx->priv->xine, gtx->priv->vo_driver);
+	if (gtx->priv->vo_driver != NULL)
+		xine_close_audio_driver (gtx->priv->xine, gtx->priv->ao_driver);
+
+	/* Get rid of the rest of the stream */
 	xine_event_dispose_queue (gtx->priv->ev_queue);
 	xine_dispose (gtx->priv->stream);
 	gtx->priv->stream = NULL;
 
-	/* stop the event thread, generating an event to get out of it */
+	/* stop the completion event thread */
 	pthread_cancel (gtx->priv->thread);
-	/* we shouldn't need pthread_join here */
-
-	/* Kill the drivers */
-	if (gtx->priv->vo_driver != NULL)
-		xine_close_video_driver (gtx->priv->xine,
-				gtx->priv->vo_driver);
-	if (gtx->priv->vo_driver != NULL)
-		xine_close_audio_driver (gtx->priv->xine,
-				gtx->priv->ao_driver);
+	pthread_join (gtx->priv->thread, NULL);
 
 	/* save config */
 	configfile = g_build_path (G_DIR_SEPARATOR_S,
@@ -1159,7 +1107,7 @@ gtk_xine_unrealize (GtkWidget *widget)
 
 	/* Finally, kill the left-over windows */
 	if (gtx->priv->fullscreen_window != NULL)
-		g_object_unref (GDK_DRAWABLE (gtx->priv->fullscreen_window));
+		gdk_window_destroy (gtx->priv->fullscreen_window);
 
 	/* This destroys widget->window and unsets the realized flag */
 	if (GTK_WIDGET_CLASS (parent_class)->unrealize)
@@ -1218,7 +1166,54 @@ gtk_xine_expose (GtkWidget *widget, GdkEventExpose *event)
 			XINE_GUI_SEND_EXPOSE_EVENT,
 			expose);
 
-	return TRUE;
+	return FALSE;
+}
+
+static gboolean
+gtk_xine_motion_notify (GtkWidget *widget, GdkEventMotion *event)
+{
+	GtkXine *gtx = (GtkXine *) widget;
+	generate_mouse_event (GTK_XINE (widget), (GdkEvent *)event, TRUE);
+
+	if (GTK_WIDGET_CLASS (parent_class)->motion_notify_event != NULL)
+		(* GTK_WIDGET_CLASS (parent_class)->motion_notify_event) (widget, event);
+
+	return FALSE;
+}
+
+static gboolean
+gtk_xine_button_press (GtkWidget *widget, GdkEventButton *event)
+{
+	GtkXine *gtx = (GtkXine *) widget;
+
+	if (generate_mouse_event (GTK_XINE (widget), (GdkEvent *)event,
+				FALSE) == TRUE)
+		return FALSE;
+
+	if (GTK_WIDGET_CLASS (parent_class)->button_press_event != NULL)
+		                (* GTK_WIDGET_CLASS (parent_class)->button_press_event) (widget, event);
+
+	return FALSE;
+}
+
+static gboolean
+gtk_xine_key_press (GtkWidget *widget, GdkEventKey *event)
+{
+	if (GTK_WIDGET_CLASS (parent_class)->key_press_event != NULL)
+		(* GTK_WIDGET_CLASS (parent_class)->key_press_event) (widget, event);
+
+	return FALSE;
+}
+
+static gboolean
+gtk_xine_configure (GtkWidget *widget, GdkEventConfigure *event)
+{
+	GtkXine *gtx = (GtkXine *) widget;
+
+	gtx->priv->xpos = event->x;
+	gtx->priv->ypos = event->y;
+
+	return FALSE;
 }
 
 static void
@@ -1239,8 +1234,8 @@ gtk_xine_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	{
 		/* HACK it seems to be 1 pixel off, weird */
 		gdk_window_move_resize (widget->window,
-					allocation->x - 1,
-					allocation->y - 1,
+					allocation->x,
+					allocation->y,
 					allocation->width,
 					allocation->height);
 	}
@@ -1583,8 +1578,6 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 		/* Flush, so that the window is really shown */
 		gdk_flush ();
 
-		gdk_window_add_filter (gtx->priv->fullscreen_window,
-				gtk_xine_filter_events, (gpointer) gtx);
 		gdk_window_set_user_data (gtx->priv->fullscreen_window, gtx);
 
 		gdk_window_set_transient_for
@@ -1599,8 +1592,6 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 
 		scrsaver_disable (gtx->priv->display);
 	} else {
-		gdk_window_remove_filter (gtx->priv->fullscreen_window,
-				gtk_xine_filter_events, (gpointer) gtx);
 		gdk_window_set_user_data (gtx->widget.window, gtx);
 
 		xine_gui_send_vo_data (gtx->priv->stream,

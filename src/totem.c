@@ -1569,10 +1569,14 @@ on_mouse_click_fullscreen (GtkWidget *widget, gpointer user_data)
 }
 
 static gboolean
-on_mouse_motion_event (GtkWidget *widget, gpointer user_data)
+on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
+		gpointer user_data)
 {
 	static gboolean in_progress = FALSE;
 	Totem *totem = (Totem *) user_data;
+
+	if (gtk_xine_is_fullscreen (GTK_XINE (totem->gtx)) == FALSE)
+		return TRUE;
 
 	if (in_progress == TRUE)
 		return TRUE;
@@ -1595,13 +1599,6 @@ on_mouse_motion_event (GtkWidget *widget, gpointer user_data)
 	in_progress = FALSE;
 
 	return TRUE;
-}
-
-static gboolean
-on_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
-		gpointer user_data)
-{
-	return on_mouse_motion_event (widget, user_data);
 }
 
 static gboolean
@@ -1761,15 +1758,6 @@ totem_action_handle_key (Totem *totem, guint keyval)
 	return retval;
 }
 
-
-static int
-on_video_key_press_event (GtkWidget *win, guint keyval, gpointer user_data)
-{
-	Totem *totem = (Totem *) user_data;
-
-	return totem_action_handle_key (totem, keyval);
-}
-
 static int
 on_window_key_press_event (GtkWidget *win, GdkEventKey *event,
 		                gpointer user_data)
@@ -1918,18 +1906,18 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "window1");
 	gtk_widget_add_events (item, GDK_POINTER_MOTION_MASK);
 	g_signal_connect (G_OBJECT (item), "motion-notify-event",
-			G_CALLBACK (on_motion_notify_event), totem);
+			G_CALLBACK (on_video_motion_notify_event), totem);
 	item = glade_xml_get_widget (totem->xml, "window2");
 	gtk_widget_add_events (item, GDK_POINTER_MOTION_MASK);
 	g_signal_connect (G_OBJECT (item), "motion-notify-event",
-			G_CALLBACK (on_motion_notify_event), totem);
+			G_CALLBACK (on_video_motion_notify_event), totem);
 
 	/* Popup */
 	item = glade_xml_get_widget (totem->xml, "fs_exit1");
 	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (on_fs_exit1_activate), totem);
 	g_signal_connect (G_OBJECT (item), "motion-notify-event",
-			G_CALLBACK (on_motion_notify_event), totem);
+			G_CALLBACK (on_video_motion_notify_event), totem);
 
 	/* Control Popup */
 	g_signal_connect (G_OBJECT (totem->fs_pp_button), "clicked",
@@ -2025,8 +2013,8 @@ video_widget_create (Totem *totem)
 	gtk_container_add (GTK_CONTAINER (container), totem->gtx);
 
 	g_signal_connect (G_OBJECT (totem->gtx),
-			"mouse-motion",
-			G_CALLBACK (on_mouse_motion_event),
+			"motion-notify-event",
+			G_CALLBACK (on_video_motion_notify_event),
 			totem);
 	g_signal_connect (G_OBJECT (totem->gtx),
 			"eos",
@@ -2035,10 +2023,6 @@ video_widget_create (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->gtx),
 			"error",
 			G_CALLBACK (on_error_event),
-			totem);
-	g_signal_connect (G_OBJECT (totem->gtx),
-			"key-press",
-			G_CALLBACK (on_video_key_press_event),
 			totem);
 	g_signal_connect (G_OBJECT(totem->gtx),
 			"title-change",
@@ -2242,13 +2226,14 @@ main (int argc, char **argv)
 	}
 
 	q = NULL;
+#if 0
 	if (gconf_client_get_bool
 			(gc, GCONF_PREFIX"launch_once", NULL) == TRUE)
 	{
 		q = gtk_message_queue_new ("totem", filename);
 		process_queue (q, argv);
 	}
-
+#endif
 	totem = g_new (Totem, 1);
 	totem->mrl = NULL;
 	totem->seek_lock = FALSE;
