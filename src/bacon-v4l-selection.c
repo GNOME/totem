@@ -18,6 +18,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  * Authors: Bastien Nocera <hadess@hadess.net>
+ *
+ * The Totem project hereby grant permission for non-gpl compatible GStreamer
+ * plugins to be used and distributed together with GStreamer and Totem. This
+ * permission are above and beyond the permissions granted by the GPL license
+ * Totem is covered by.
+ *
+ * Monday 7th February 2005: Christian Schaller: Add excemption clause.
+ * See license_change file for details.
+ *
  */
 
 #ifdef HAVE_CONFIG_H
