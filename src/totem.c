@@ -2116,8 +2116,8 @@ on_skip_to1_activate (GtkButton *button, Totem *totem)
 	totem->skipto = TOTEM_SKIPTO (totem_skipto_new (filename));
 	g_free (filename);
 
-	g_signal_connect (G_OBJECT (totem->skipto),
-			"delete-event", G_CALLBACK (gtk_widget_destroy), NULL);
+	g_signal_connect (G_OBJECT (totem->skipto), "delete-event",
+			G_CALLBACK (gtk_widget_destroy), NULL);
 	g_signal_connect (G_OBJECT (totem->skipto), "response",
 			G_CALLBACK (commit_hide_skip_to), totem);
 	g_object_add_weak_pointer (G_OBJECT (totem->skipto),
@@ -2166,6 +2166,8 @@ on_volume_max_button (GtkButton *button, Totem *totem)
 static void
 totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 {
+	gboolean handled = TRUE;
+
 	switch (cmd) {
 	case TOTEM_REMOTE_COMMAND_PLAY:
 		totem_action_play (totem);
@@ -2238,8 +2240,12 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		}
 		break;
 	default:
+		handled = FALSE;
 		break;
 	}
+
+	if (handled != FALSE)
+		on_video_motion_notify_event (NULL, NULL, totem);
 }
 
 #ifdef HAVE_REMOTE

@@ -1,5 +1,11 @@
 2005-01-03  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (on_skip_to1_activate), (totem_action_remote):
+	Rise the controls when in fullscreen and using LIRC, or the Totem
+	remote commands (Closes: #162843)
+
+2005-01-03  Bastien Nocera  <hadess@hadess.net>
+
 	* data/Makefile.am: create the .desktop file properly for Totem
 	and install the totem.desktop, not something else (Closes: #162838)
 
