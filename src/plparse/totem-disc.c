@@ -24,7 +24,6 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <errno.h>
 #include <mntent.h>
 #include <string.h>
@@ -50,6 +49,9 @@ typedef struct _CdCache {
   /* capabilities of the device */
   int cap;
 
+  /* if we're checking a media, or a dir */
+  gboolean is_media;
+
   /* indicates if we mounted this mountpoint ourselves or if it
    * was already mounted. */
   gboolean self_mounted;
@@ -61,20 +63,17 @@ typedef struct _CdCache {
  */
 
 static char *
-totem_disc_resolve_link (const char *dev, const char *buf, int read)
+totem_disc_resolve_link (const char *dev, const char *buf)
 {
-  char *parent, *new, *rel;
-
-  rel = g_strndup (buf, read);
+  char *parent, *new;
 
   /* is it an absolute path? */
-  if (buf[0] == '/')
-    return rel;
+  if (buf != NULL && buf[0] == '/')
+    return g_strdup (buf);
 
   parent = g_path_get_dirname (dev);
-  new = g_build_filename (parent, rel, NULL);
+  new = g_build_filename (parent, buf, NULL);
   g_free (parent);
-  g_free (rel);
 
   return new;
 }
@@ -87,10 +86,9 @@ static char *
 get_device (const char *device,
 	    GError     **error)
 {
-  char buf[256];
+  char *buf;
   char *dev = g_strdup (device);
   struct stat st;
-  int read;
 
   while (1) {
     char *new;
@@ -106,15 +104,16 @@ get_device (const char *device,
     if (!S_ISLNK (st.st_mode))
       break;
 
-    if ((read = readlink (dev, buf, 255)) < 0) {
+    if (!(buf = g_file_read_link (dev, NULL))) {
       g_set_error (error, 0, 0,
           _("Failed to read symbolic link %s: %s"),
           dev, g_strerror (errno));
       g_free (dev);
       return NULL;
     }
-    new = totem_disc_resolve_link (dev, buf, read);
+    new = totem_disc_resolve_link (dev, buf);
     g_free (dev);
+    g_free (buf);
     dev = new;
   }
 
@@ -130,6 +129,17 @@ cd_cache_new (const char *dev,
   GnomeVFSVolumeMonitor *mon;
   GnomeVFSDrive *drive = NULL;
   GList *list, *or;
+  gboolean is_dir;
+
+  is_dir = g_file_test (dev, G_FILE_TEST_IS_DIR & G_FILE_TEST_EXISTS);
+  if (is_dir) {
+    cache = g_new0 (CdCache, 1);
+    cache->mountpoint = g_strdup (dev);
+    cache->fd = -1;
+    cache->is_media = FALSE;
+
+    return cache;
+  }
 
   /* retrieve mountpoint (/etc/fstab). We could also use HAL for this,
    * I think (gnome-volume-manager does that). */
@@ -181,6 +191,7 @@ cd_cache_new (const char *dev,
   cache->fd = -1;
   cache->self_mounted = FALSE;
   cache->drive = drive;
+  cache->is_media = TRUE;
 
   return cache;
 }
@@ -190,6 +201,12 @@ cd_cache_open_device (CdCache *cache,
 		      GError **error)
 {
   int drive, err;
+
+  /* not a medium? */
+  if (cache->is_media == FALSE) {
+    cache->cap = CDC_DVD;
+    return TRUE;
+  }
 
   /* already open? */
   if (cache->fd > 0)
@@ -260,7 +277,7 @@ cd_cache_open_mountpoint (CdCache *cache,
 			  GError **error)
 {
   /* already opened? */
-  if (cache->mounted)
+  if (cache->mounted || cache->is_media == FALSE)
     goto opendir;
 
   /* check for mounting - assume we'll mount ourselves */
@@ -323,6 +340,10 @@ cd_cache_disc_is_cdda (CdCache *cache,
   MediaType type = MEDIA_TYPE_DATA;
   int disc;
   const char *disc_s;
+
+  /* We can't have audio CDs on disc, yet */
+  if (cache->is_media == FALSE)
+    return type;
 
   /* open disc and open mount */
   if (!cd_cache_open_device (cache, error))
@@ -456,6 +477,23 @@ cd_cache_disc_is_dvd (CdCache *cache,
   return (have_vts && have_vtsifo) ?
       MEDIA_TYPE_DVD : MEDIA_TYPE_DATA;
 }
+MediaType
+cd_detect_type_from_dir (const char *dir, GError    **error)
+{
+  CdCache *cache;
+  MediaType type;
+
+  if (!(cache = cd_cache_new (dir, error)))
+    return MEDIA_TYPE_ERROR;
+  if ((type = cd_cache_disc_is_cdda (cache, error)) == MEDIA_TYPE_DATA &&
+      (type = cd_cache_disc_is_vcd (cache, error)) == MEDIA_TYPE_DATA &&
+      (type = cd_cache_disc_is_dvd (cache, error)) == MEDIA_TYPE_DATA) {
+    /* crap, nothing found */
+  }
+  cd_cache_free (cache);
+
+  return type;
+}
 
 MediaType
 cd_detect_type (const char *device,
@@ -475,3 +513,7 @@ cd_detect_type (const char *device,
 
   return type;
 }
+
+/*
+ * vim: sw=2 ts=8 cindent noai bs=2
+ */

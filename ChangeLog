@@ -1,5 +1,14 @@
 2004-10-14  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-disc.c: (totem_disc_resolve_link), (get_device),
+	(cd_cache_new), (cd_cache_open_device), (cd_cache_open_mountpoint),
+	(cd_cache_disc_is_cdda), (cd_detect_type_from_dir):
+	* src/totem-disc.h: add a cd_detect_type_from_dir() to be able to
+	tell whether a particular directory is a DVD, or VCD, use
+	g_file_read_link instead of readlink
+
+2004-10-14  Bastien Nocera  <hadess@hadess.net>
+
 	* src/video-utils.c: (totem_ratio_fits_screen): no warnings when
 	height or width == 0 (Closes: #155376)
 
