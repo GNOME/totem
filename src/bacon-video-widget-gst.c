@@ -93,7 +93,7 @@ enum
   PROP_SEEKABLE,
   PROP_SHOWCURSOR,
   PROP_MEDIADEV,
-  PROP_SHOW_VISUALS,
+  PROP_SHOW_VISUALS
 };
 
 struct BaconVideoWidgetPrivate
@@ -1445,6 +1445,18 @@ bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
               g_object_ref (channel);
               found_channel = channel;
             }
+          else if (type == BVW_VIDEO_SATURATION && channel &&
+              g_strrstr (channel->label, "SATURATION"))
+            {
+              g_object_ref (channel);
+              found_channel = channel;
+            }
+          else if (type == BVW_VIDEO_HUE && channel &&
+              g_strrstr (channel->label, "HUE"))
+            {
+              g_object_ref (channel);
+              found_channel = channel;
+            }
           channels_list = g_list_next (channels_list);
         }
         
@@ -1452,7 +1464,8 @@ bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
         {
           value = gst_color_balance_get_value (bvw->priv->balance,
                                                found_channel);
-          value = (value - found_channel->min_value) * 65535 / (found_channel->max_value - found_channel->min_value);
+          value = ((double) value - found_channel->min_value) * 65535 /
+                  ((double) found_channel->max_value - found_channel->min_value);
           g_object_unref (found_channel);
         }
     }
@@ -1493,12 +1506,24 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
               g_object_ref (channel);
               found_channel = channel;
             }
+          else if (type == BVW_VIDEO_SATURATION && channel &&
+              g_strrstr (channel->label, "SATURATION"))
+            {
+              g_object_ref (channel);
+              found_channel = channel;
+            }
+          else if (type == BVW_VIDEO_HUE && channel &&
+              g_strrstr (channel->label, "HUE"))
+            {
+              g_object_ref (channel);
+              found_channel = channel;
+            }
           channels_list = g_list_next (channels_list);
         }
         
       if (GST_IS_COLOR_BALANCE_CHANNEL (found_channel))
         {
-          value = value * (found_channel->max_value - found_channel->min_value) / 65535 + found_channel->min_value;
+          value = value * ((double) found_channel->max_value - found_channel->min_value) / 65535 + found_channel->min_value;
           gst_color_balance_set_value (bvw->priv->balance, found_channel,
                                        value);
           g_object_unref (found_channel);
@@ -1900,25 +1925,96 @@ bacon_video_widget_new (int width, int height,
   /* We try to get an element supporting XOverlay interface */
   if (GST_IS_BIN (bvw->priv->play)) {
     GstElement *element = NULL;
+    GList *elements = NULL, *l_elements = NULL;
     
     element = gst_bin_get_by_interface (GST_BIN (bvw->priv->play),
                                         GST_TYPE_X_OVERLAY);
     if (GST_IS_X_OVERLAY (element))
       bvw->priv->xoverlay = GST_X_OVERLAY (element);
     
-    element = gst_bin_get_by_interface (GST_BIN (bvw->priv->play),
-                                        GST_TYPE_COLOR_BALANCE);
+    /* Get them all and prefer hardware one */
+    elements = gst_bin_get_all_by_interface (GST_BIN (bvw->priv->play),
+                                             GST_TYPE_COLOR_BALANCE);
+    l_elements = elements;
+    
+    /* We take the first one */
+    if (elements && GST_IS_COLOR_BALANCE (elements->data))
+      element = GST_ELEMENT (elements->data);
+    
+    while (elements)
+      {
+        GstElement *local_element = NULL;
+        GstColorBalanceClass *cb_class = NULL;
+        
+        if (elements->data && GST_IS_COLOR_BALANCE (elements->data))
+          {
+            local_element = GST_ELEMENT (elements->data);
+            cb_class = GST_COLOR_BALANCE_GET_CLASS (elements->data);
+        
+            /* If one of them is hardware type we use that one then */
+            if (GST_COLOR_BALANCE_TYPE (cb_class) == GST_COLOR_BALANCE_HARDWARE)
+              {
+                element = local_element;
+              }
+          }
+          
+        elements = g_list_next (elements);
+      }
+    
+    if (l_elements)
+      g_list_free (l_elements);
+    
+    elements = l_elements = NULL;
     
     if (GST_IS_COLOR_BALANCE (element))
-      bvw->priv->balance = GST_COLOR_BALANCE (element);
+      {
+        bvw->priv->balance = GST_COLOR_BALANCE (element);
+        g_message ("using colorbalance from element %s",
+                   gst_element_get_name (element));
+      }
+      
+    /* Get them all and prefer software one */
+    elements = gst_bin_get_all_by_interface (GST_BIN (bvw->priv->play),
+                                             GST_TYPE_MIXER);
+    l_elements = elements;
     
-    element = gst_bin_get_by_interface (GST_BIN (bvw->priv->play),
-                                        GST_TYPE_MIXER);
+    /* We take the first one */
+    if (elements && GST_IS_MIXER (elements->data))
+      element = GST_ELEMENT (elements->data);
+    
+    while (elements)
+      {
+        GstElement *local_element = NULL;
+        GstMixerClass *m_class = NULL;
+        
+        if (elements->data && GST_IS_MIXER (elements->data))
+          {
+            local_element = GST_ELEMENT (elements->data);
+            m_class = GST_MIXER_GET_CLASS (elements->data);
+        
+            /* If one of them is hardware type we use that one then */
+            if (GST_MIXER_TYPE (m_class) == GST_MIXER_SOFTWARE)
+              {
+                element = local_element;
+              }
+          }
+          
+        elements = g_list_next (elements);
+      }
+    
+    if (l_elements)
+      g_list_free (l_elements);
+    
+    elements = l_elements = NULL;
+    
     if (GST_IS_MIXER (element)) {
       const GList *tracks;
+      g_message ("using mixer from element %s",
+                 gst_element_get_name (element));
       bvw->priv->mixer = GST_MIXER (element);
       tracks = gst_mixer_list_tracks (GST_MIXER (element));
-      bvw->priv->mixer_track = GST_MIXER_TRACK (tracks->data);
+      if (tracks)
+        bvw->priv->mixer_track = GST_MIXER_TRACK (tracks->data);
     }
     else
       g_warning ("can't find any mixer element, no volume.");

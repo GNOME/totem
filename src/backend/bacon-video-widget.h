@@ -122,7 +122,7 @@ int bacon_video_widget_get_connection_speed      (BaconVideoWidget *bvw);
 typedef enum {
 	MEDIA_DVD,
 	MEDIA_VCD,
-	MEDIA_CDDA,
+	MEDIA_CDDA
 } MediaType;
 
 void bacon_video_widget_set_media_device         (BaconVideoWidget *bvw,
@@ -150,7 +150,7 @@ typedef enum {
 	BVW_INFO_HAS_AUDIO,
 	BVW_INFO_BITRATE,
 	BVW_INFO_AUDIO_CODEC,
-	BVW_INFO_AUDIO_FOURCC,
+	BVW_INFO_AUDIO_FOURCC
 } BaconVideoWidgetMetadataType;
 
 void bacon_video_widget_get_metadata		 (BaconVideoWidget *bvw,
@@ -164,7 +164,7 @@ typedef enum {
 	VISUAL_SMALL,
 	VISUAL_NORMAL,
 	VISUAL_LARGE,
-	VISUAL_EXTRA_LARGE,
+	VISUAL_EXTRA_LARGE
 } VisualsQuality;
 
 gboolean bacon_video_widget_set_show_visuals	  (BaconVideoWidget *bvw,
@@ -179,6 +179,8 @@ void bacon_video_widget_set_visuals_quality	  (BaconVideoWidget *bvw,
 typedef enum {
 	BVW_VIDEO_BRIGHTNESS,
 	BVW_VIDEO_CONTRAST,
+	BVW_VIDEO_SATURATION,
+	BVW_VIDEO_HUE
 } BaconVideoWidgetVideoProperty;
 
 void bacon_video_widget_set_deinterlacing        (BaconVideoWidget *bvw,
@@ -235,7 +237,7 @@ GdkPixbuf *bacon_video_widget_get_current_frame (BaconVideoWidget *bvw);
 typedef enum {
 	TV_OUT_NONE,
 	TV_OUT_DXR3,
-	TV_OUT_TVMODE,
+	TV_OUT_TVMODE
 } TvOutType;
 
 gboolean bacon_video_widget_set_tv_out           (BaconVideoWidget *bvw,
@@ -248,7 +250,7 @@ typedef enum {
 	BVW_AUDIO_SOUND_4CHANNEL,
 	BVW_AUDIO_SOUND_5CHANNEL,
 	BVW_AUDIO_SOUND_51CHANNEL,
-	BVW_AUDIO_SOUND_AC3PASSTHRU,
+	BVW_AUDIO_SOUND_AC3PASSTHRU
 } BaconVideoWidgetAudioOutType;
 
 BaconVideoWidgetAudioOutType bacon_video_widget_get_audio_out_type

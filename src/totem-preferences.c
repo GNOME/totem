@@ -415,6 +415,26 @@ contrast_changed (GtkRange *range, Totem *totem)
 }
 
 static void
+saturation_changed (GtkRange *range, Totem *totem)
+{
+	gdouble i;
+
+	i = gtk_range_get_value (range);
+	bacon_video_widget_set_video_property (totem->bvw,
+			BVW_VIDEO_SATURATION, (int) i);
+}
+
+static void
+hue_changed (GtkRange *range, Totem *totem)
+{
+	gdouble i;
+
+	i = gtk_range_get_value (range);
+	bacon_video_widget_set_video_property (totem->bvw,
+			BVW_VIDEO_HUE, (int) i);
+}
+
+static void
 audio_out_menu_changed (GtkOptionMenu *option_menu, Totem *totem)
 {
 	BaconVideoWidgetAudioOutType audio_out;
@@ -576,6 +596,22 @@ totem_setup_preferences (Totem *totem)
 	g_signal_connect (G_OBJECT (item), "value-changed",
 			G_CALLBACK (contrast_changed), totem);
 
+	/* Saturation */
+	item = glade_xml_get_widget (totem->xml, "tpw_saturation_scale");
+	i = bacon_video_widget_get_video_property (totem->bvw,
+			BVW_VIDEO_SATURATION);
+	gtk_range_set_value (GTK_RANGE (item), (gdouble) i);
+	g_signal_connect (G_OBJECT (item), "value-changed",
+			G_CALLBACK (saturation_changed), totem);
+
+	/* Hue */
+	item = glade_xml_get_widget (totem->xml, "tpw_hue_scale");
+	i = bacon_video_widget_get_video_property (totem->bvw,
+			BVW_VIDEO_HUE);
+	gtk_range_set_value (GTK_RANGE (item), (gdouble) i);
+	g_signal_connect (G_OBJECT (item), "value-changed",
+			G_CALLBACK (hue_changed), totem);
+
 	/* Sound output type */
 	item = glade_xml_get_widget (totem->xml, "tpw_sound_output_optionmenu");
 	audio_out = bacon_video_widget_get_audio_out_type (totem->bvw);
@@ -660,4 +696,3 @@ totem_preferences_visuals_setup (Totem *totem)
 
 	bacon_video_widget_set_visuals (totem->bvw, visual);
 }
-

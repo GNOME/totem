@@ -1,3 +1,17 @@
+2004-01-15  Julien MOUTTE <julien@moutte.net>
+
+	* data/totem.glade: Adding saturation and hue slider transforming the
+	display notebook in a real colorbalance configuration interface.
+	* src/bacon-video-widget-gst.c:
+	(bacon_video_widget_get_video_property),
+	(bacon_video_widget_set_video_property), (bacon_video_widget_new):
+	Implementing colorbalance and software sound mixer.
+	* src/bacon-video-widget-xine.c: Implementing hue and saturation.
+	* src/bacon-video-widget.h: Adding hue and saturation.
+	* src/totem-preferences.c: (saturation_changed), (hue_changed),
+	(totem_setup_preferences), (totem_preferences_visuals_setup):
+	Integrating the 2 new sliders for hue and saturation.
+
 2004-01-13  Bastien Nocera  <hadess@hadess.net>
 
 	* NEWS: updated

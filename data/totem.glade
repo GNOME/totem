@@ -2330,7 +2330,7 @@
 		      <child>
 			<widget class="GtkLabel" id="label1">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">&lt;b&gt;Brightness/Contrast&lt;/b&gt;</property>
+			  <property name="label" translatable="yes">&lt;b&gt;Color balance&lt;/b&gt;</property>
 			  <property name="use_underline">False</property>
 			  <property name="use_markup">True</property>
 			  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -2385,7 +2385,7 @@
 		      <child>
 			<widget class="GtkTable" id="table2">
 			  <property name="visible">True</property>
-			  <property name="n_rows">2</property>
+			  <property name="n_rows">4</property>
 			  <property name="n_columns">2</property>
 			  <property name="homogeneous">False</property>
 			  <property name="row_spacing">6</property>
@@ -2477,6 +2477,98 @@
 			      <property name="right_attach">2</property>
 			      <property name="top_attach">1</property>
 			      <property name="bottom_attach">2</property>
+			      <property name="x_options">fill</property>
+			      <property name="y_options">fill</property>
+			    </packing>
+			  </child>
+
+			  <child>
+			    <widget class="GtkLabel" id="tpw_saturation_label">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">Sat_uration:</property>
+			      <property name="use_underline">True</property>
+			      <property name="use_markup">False</property>
+			      <property name="justify">GTK_JUSTIFY_LEFT</property>
+			      <property name="wrap">False</property>
+			      <property name="selectable">False</property>
+			      <property name="xalign">0</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			      <property name="mnemonic_widget">tpw_contrast_scale</property>
+			    </widget>
+			    <packing>
+			      <property name="left_attach">0</property>
+			      <property name="right_attach">1</property>
+			      <property name="top_attach">2</property>
+			      <property name="bottom_attach">3</property>
+			      <property name="x_options">fill</property>
+			      <property name="y_options"></property>
+			    </packing>
+			  </child>
+
+			  <child>
+			    <widget class="GtkLabel" id="tpw_hue_label">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">_Hue:</property>
+			      <property name="use_underline">True</property>
+			      <property name="use_markup">False</property>
+			      <property name="justify">GTK_JUSTIFY_LEFT</property>
+			      <property name="wrap">False</property>
+			      <property name="selectable">False</property>
+			      <property name="xalign">0</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			      <property name="mnemonic_widget">tpw_contrast_scale</property>
+			    </widget>
+			    <packing>
+			      <property name="left_attach">0</property>
+			      <property name="right_attach">1</property>
+			      <property name="top_attach">3</property>
+			      <property name="bottom_attach">4</property>
+			      <property name="x_options">fill</property>
+			      <property name="y_options"></property>
+			    </packing>
+			  </child>
+
+			  <child>
+			    <widget class="GtkHScale" id="tpw_saturation_scale">
+			      <property name="visible">True</property>
+			      <property name="can_focus">True</property>
+			      <property name="draw_value">False</property>
+			      <property name="value_pos">GTK_POS_TOP</property>
+			      <property name="digits">1</property>
+			      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+			      <property name="inverted">False</property>
+			      <property name="adjustment">32767 0 65535 0 0 0</property>
+			    </widget>
+			    <packing>
+			      <property name="left_attach">1</property>
+			      <property name="right_attach">2</property>
+			      <property name="top_attach">2</property>
+			      <property name="bottom_attach">3</property>
+			      <property name="x_options">fill</property>
+			      <property name="y_options">fill</property>
+			    </packing>
+			  </child>
+
+			  <child>
+			    <widget class="GtkHScale" id="tpw_hue_scale">
+			      <property name="visible">True</property>
+			      <property name="can_focus">True</property>
+			      <property name="draw_value">False</property>
+			      <property name="value_pos">GTK_POS_TOP</property>
+			      <property name="digits">1</property>
+			      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+			      <property name="inverted">False</property>
+			      <property name="adjustment">32767 0 65535 0 0 0</property>
+			    </widget>
+			    <packing>
+			      <property name="left_attach">1</property>
+			      <property name="right_attach">2</property>
+			      <property name="top_attach">3</property>
+			      <property name="bottom_attach">4</property>
 			      <property name="x_options">fill</property>
 			      <property name="y_options">fill</property>
 			    </packing>

@@ -67,7 +67,7 @@ enum {
 	GOT_METADATA,
 	BUFFERING,
 	SPEED_WARNING,
-	LAST_SIGNAL,
+	LAST_SIGNAL
 };
 
 /* Enum for none-signal stuff that needs to go through the AsyncQueue */
@@ -78,7 +78,7 @@ enum {
 	CHANNELS_CHANGE_ASYNC,
 	BUFFERING_ASYNC,
 	MESSAGE_ASYNC,
-	SPEED_WARNING_ASYNC,
+	SPEED_WARNING_ASYNC
 };
 
 typedef struct {
@@ -99,16 +99,18 @@ enum {
 	PROP_SEEKABLE,
 	PROP_SHOWCURSOR,
 	PROP_MEDIADEV,
-	PROP_SHOW_VISUALS,
+	PROP_SHOW_VISUALS
 };
 
 static int video_props[2] = {
 	XINE_PARAM_VO_BRIGHTNESS,
-	XINE_PARAM_VO_CONTRAST,
+	XINE_PARAM_VO_CONTRAST
+	XINE_PARAM_VO_SATURATION,
+	XINE_PARAM_VO_HUE
 };
 static char *video_props_str[2] = {
 	GCONF_PREFIX"/brightness",
-	GCONF_PREFIX"/contrast",
+	GCONF_PREFIX"/contrast"
 };
 
 struct BaconVideoWidgetPrivate {
