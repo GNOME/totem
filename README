@@ -10,7 +10,12 @@ News
 ====
 
 0.99.0:
+* Fixed playbacks of DVDs and other media in the movie menu
+* Worked around a bug in egg-recent that would add a '/' to local filenames
 * devfs support and misc. parsing fixes for the CD selection widget
+* moved fullscreen code out of the video widget and into totem (enables
+  fullscreen to work on the gstreamer backend)
+* added a --disable-lirc argument to configure
 
 0.98.0:
 * Added the Vanity webcam utility
