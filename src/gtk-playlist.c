@@ -199,7 +199,7 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data)
 	/* Open the file. */
 	result = gnome_vfs_open (&handle, uri, GNOME_VFS_OPEN_READ);
 	if (result != GNOME_VFS_OK) {
-		g_message ("result: %s", gnome_vfs_result_to_string (result));
+		g_message ("uri : %s result: %s", uri, gnome_vfs_result_to_string (result));
 		return NULL;
 	}
 
@@ -1340,6 +1340,7 @@ gtk_playlist_add_asf_playlist (GtkPlaylist *playlist, const char *mrl)
 {
 	gboolean retval = FALSE;
 	char *contents, **lines;
+
 #if 0
 	if (my_eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
@@ -1694,6 +1695,7 @@ gtk_playlist_add_smil (GtkPlaylist *playlist, const char *mrl)
 static gboolean
 gtk_playlist_add_asf (GtkPlaylist *playlist, const char *mrl, gpointer data)
 {
+	return gtk_playlist_add_one_mrl (playlist, mrl, NULL);
 #if 0
 	if (data == NULL)
 		return gtk_playlist_add_one_mrl (playlist, mrl);

@@ -1,5 +1,16 @@
 2003-05-11  Bastien Nocera  <hadess@hadess.net>
 
+	* README: upd
+	* src/gtk-playlist.c: (my_gnome_vfs_get_mime_type_with_data),
+	(gtk_playlist_add_asf_playlist), (gtk_playlist_add_asf):
+	* src/totem.c: (totem_create_full_path), (totem_action_open_files),
+	(on_open_location1_activate): load x-ms-asf videos (need to finish the
+	asf playlist loading), some fixes to always put uris in the playlist,
+	NULL-terminate the array used to store the "open location" uri
+	(Closes: #112761)
+
+2003-05-11  Bastien Nocera  <hadess@hadess.net>
+
 	* data/properties.glade: removed the unused url widget
 	* src/bacon-video-widget-properties.c:
 	(bacon_video_widget_properties_reset),

@@ -135,7 +135,7 @@ totem_g_list_deep_free (GList *list)
 static char*
 totem_create_full_path (const char *path)
 {
-	char *retval, *curdir, *curdir_withslash;
+	char *retval, *curdir, *curdir_withslash, *escaped;
 
 	g_return_val_if_fail (path != NULL, NULL);
 
@@ -143,12 +143,22 @@ totem_create_full_path (const char *path)
 		return g_strdup (path);
 
 	if (path[0] == '/')
-		return g_strdup (path);
+	{
+		escaped = gnome_vfs_escape_path_string (path);
+		retval = g_strdup_printf ("file://%s", escaped);
+		g_free (escaped);
+		return retval;
+	}
 
 	curdir = g_get_current_dir ();
-	curdir_withslash = g_strdup_printf ("%s%s", curdir, G_DIR_SEPARATOR_S);
+	curdir_withslash = g_strdup_printf ("file:///%s%s", curdir, G_DIR_SEPARATOR_S);
 	g_free (curdir);
-	retval = gnome_vfs_uri_make_full_from_relative (curdir_withslash, path);        g_free (curdir_withslash);
+
+	escaped = gnome_vfs_escape_path_string (path);
+	retval = gnome_vfs_uri_make_full_from_relative (curdir_withslash,
+			escaped);
+	g_free (curdir_withslash);
+	g_free (escaped);
 
 	return retval;
 }
@@ -1260,27 +1270,19 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 
 	for ( ; list[i] != NULL; i++)
 	{
-		char *filename, *subtitle;
+		char *filename;
 
 		/* Get the subtitle part out for our tests */
 		filename = totem_create_full_path (list[i]);
-		subtitle = strrchr (filename, '#');
-		if (subtitle != NULL)
-		{
-			*subtitle = 0;
-			subtitle++;
-		}
 
 		if (g_file_test (filename, G_FILE_TEST_IS_REGULAR)
+				|| strstr (filename, "#") != NULL
 				|| strstr (filename, "://") != NULL
 				|| strncmp (filename, "dvd:", 4) == 0
 				|| strncmp (filename, "vcd:", 4) == 0
 				|| strncmp (filename, "cdda:", 5) == 0
 				|| strncmp (filename, "cd:", 3) == 0)
 		{
-			g_free (filename);
-			filename = totem_create_full_path (list[i]);
-
 			if (cleared == FALSE)
 			{
 				/* The function that calls us knows better
@@ -1305,29 +1307,19 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 			} else if (gtk_playlist_add_mrl (totem->playlist,
 						filename, NULL) == TRUE)
 			{
-                                char *uri;
                                 EggRecentItem *item;
 
-				if (filename[0] != '/')
+				if (strstr (filename, "file:///") == NULL)
 					continue;
 
-				uri = gnome_vfs_get_uri_from_local_path
-					(filename);
-
-				if (uri == NULL) {
-					/* ok, if this fails, then it was
-					 * something like dvd:/// and we don't
-					 * want to add it
-					 */
-					continue;
-				}
-
-				item = egg_recent_item_new_from_uri (uri);
+				//FIXME egg recent seems to unescape our
+				//pure and clean uri
+				//playing something with a # in the name
+				//won't get saved properly
+				item = egg_recent_item_new_from_uri (filename);
 				egg_recent_item_add_group (item, "Totem");
 				egg_recent_model_add_full (totem->recent_model,
 						item);
-
-				g_free (uri);
 			}
 		}
 
@@ -1396,7 +1388,7 @@ on_open_location1_activate (GtkButton *button, Totem *totem)
 	char *filename, *mrl;
 	GtkWidget *dialog, *entry;
 	int response;
-	const char *filenames[1];
+	const char *filenames[2];
 
 	filename = gnome_program_locate_file (NULL,
 			GNOME_FILE_DOMAIN_APP_DATADIR,
@@ -1434,6 +1426,7 @@ on_open_location1_activate (GtkButton *button, Totem *totem)
 		if (uri != NULL && strcmp (uri, "") != 0)
 		{
 			filenames[0] = uri;
+			filenames[1] = NULL;
 			totem_action_open_files (totem,
 					(char **) filenames, FALSE);
 
