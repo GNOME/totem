@@ -1678,8 +1678,7 @@ show_controls (Totem *totem, gboolean visible)
 	item = glade_xml_get_widget (totem->xml, "trcm_show_controls");
 	bvw_vbox = glade_xml_get_widget (totem->xml, "tmw_bvw_vbox");
 
-	//FIXME
-	//gtk_window_set_resizable (GTK_WINDOW (totem->win), TRUE);
+	gtk_window_set_resizable (GTK_WINDOW (totem->win), TRUE);
 
 	if (visible)
 	{
@@ -1696,7 +1695,7 @@ show_controls (Totem *totem, gboolean visible)
 		gtk_container_set_border_width (GTK_CONTAINER (bvw_vbox), 0);
 	}
 
-	//gtk_window_set_resizable (GTK_WINDOW (totem->win), FALSE);
+	gtk_window_set_resizable (GTK_WINDOW (totem->win), FALSE);
 }
 
 static void
@@ -3171,7 +3170,7 @@ video_widget_create (Totem *totem)
 
 	gtk_widget_show (GTK_WIDGET (totem->bvw));
 
-	gtk_widget_set_size_request (container, 0, 0);
+	gtk_widget_set_size_request (container, -1, -1);
 }
 
 GtkWidget *

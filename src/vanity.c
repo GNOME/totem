@@ -648,7 +648,7 @@ video_widget_create (Vanity *vanity)
 		vanity_action_error_and_exit (msg, vanity);
 	}
 #endif
-	gtk_widget_set_size_request (container, 0, 0);
+	gtk_widget_set_size_request (container, -1, -1);
 }
 
 static void
