@@ -1861,14 +1861,20 @@ bacon_video_widget_new (int width, int height,
   GstElement *audio_sink = NULL, *video_sink = NULL;
 
   bvw = BACON_VIDEO_WIDGET (g_object_new
-			    (bacon_video_widget_get_type (), NULL));
+                            (bacon_video_widget_get_type (), NULL));
 
+  bvw->priv->play = gst_play_new (err);
+  
+  if (err != NULL) {
+    return NULL;
+  }
+  
   bvw->priv->media_device = g_strdup ("/dev/dvd");
   
   bvw->priv->metadata_hash =
     g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
 
-  bvw->priv->play = gst_play_new (NULL);
+  
 
   bvw->priv->init_width = bvw->priv->init_height = 0;
 
