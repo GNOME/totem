@@ -1278,6 +1278,9 @@ gtk_playlist_add_one_mrl (GtkPlaylist *playlist, const char *mrl,
 		filename_for_display = g_strdup (display_name);
 	}
 
+	D("gtk_playlist_add_one_mrl (): %s %s %s\n",
+				filename_for_display, mrl, display_name);
+
 	store = GTK_LIST_STORE (playlist->_priv->model);
 	gtk_list_store_append (store, &iter);
 	gtk_list_store_set (store, &iter,
