@@ -1931,6 +1931,8 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
           break;
         integer += t;
       }
+      /* kbps */
+      integer /= 1000;
       break;
     }
     default:
