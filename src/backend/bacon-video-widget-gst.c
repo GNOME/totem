@@ -1744,6 +1744,31 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
   totem_widget_set_preferred_size (GTK_WIDGET (bvw), w, h);
 }
 
+gboolean
+bacon_video_widget_can_set_zoom (BaconVideoWidget *bvw)
+{
+  return FALSE;
+}
+
+void
+bacon_video_widget_set_zoom (BaconVideoWidget *bvw,
+			     int               zoom)
+{
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  /* implement me */
+}
+
+int
+bacon_video_widget_get_zoom (BaconVideoWidget *bvw)
+{
+  g_return_val_if_fail (bvw != NULL, 100);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 100);
+
+  return 100;
+}
+
 int
 bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
                                        BaconVideoWidgetVideoProperty type)
