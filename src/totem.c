@@ -376,7 +376,6 @@ totem_action_eject (Totem *totem)
 	totem_playlist_set_playing (totem->playlist, FALSE);
 	play_pause_set_label (totem, STATE_PAUSED);
 
-	bacon_video_widget_stop (totem->bvw);
 	bacon_video_widget_close (totem->bvw);
 	cmd = g_strdup_printf ("eject %s", gconf_client_get_string
 			(totem->gc, GCONF_PREFIX"/mediadev", NULL));
@@ -388,7 +387,7 @@ totem_action_eject (Totem *totem)
 }
 
 void
-totem_action_play (Totem *totem, int offset)
+totem_action_play (Totem *totem)
 {
 	GError *err = NULL;
 	int retval;
@@ -396,8 +395,36 @@ totem_action_play (Totem *totem, int offset)
 	if (totem->mrl == NULL)
 		return;
 
-	retval = bacon_video_widget_play (totem->bvw, offset , 0, &err);
+	retval = bacon_video_widget_play (totem->bvw,  &err);
 	play_pause_set_label (totem, retval ? STATE_PLAYING : STATE_STOPPED);
+	if (retval == FALSE)
+	{
+		char *msg, *disp;
+
+		disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+		msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
+		g_free (disp);
+
+		totem_playlist_set_playing (totem->playlist, FALSE);
+		totem_action_error (msg, err->message, totem);
+		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
+			totem_action_stop (totem);
+		g_free (msg);
+		g_error_free (err);
+	}
+}
+
+static void
+totem_action_seek (Totem *totem, double pos)
+{
+	GError *err = NULL;
+	int retval;
+
+	if (totem->mrl == NULL)
+		return;
+
+	retval = bacon_video_widget_seek (totem->bvw, pos, &err);
+
 	if (retval == FALSE)
 	{
 		char *msg, *disp;
@@ -419,7 +446,7 @@ void
 totem_action_set_mrl_and_play (Totem *totem, char *mrl)
 {
 	if (totem_action_set_mrl (totem, mrl) != FALSE)
-		totem_action_play (totem, 0);
+		totem_action_play (totem);
 }
 
 static char *media_strings[] = {
@@ -496,7 +523,7 @@ totem_action_play_pause (Totem *totem)
 
 	if (bacon_video_widget_is_playing (totem->bvw) == FALSE)
 	{
-		totem_action_play (totem, 0);
+		totem_action_play (totem);
 	} else {
 		if (bacon_video_widget_get_speed (totem->bvw) == SPEED_PAUSE)
 		{
@@ -710,8 +737,6 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 {
 	GtkWidget *widget;
 	gboolean retval = TRUE;
-
-	bacon_video_widget_stop (totem->bvw);
 
 	if (totem->mrl != NULL)
 	{
@@ -927,21 +952,22 @@ void
 totem_action_seek_relative (Totem *totem, int off_sec)
 {
 	GError *err = NULL;
-	int oldsec,  sec;
+	gint64 off_msec, oldsec, sec;
 
 	if (bacon_video_widget_is_seekable (totem->bvw) == FALSE)
 		return;
 	if (totem->mrl == NULL)
 		return;
 
+	off_msec = off_sec * 1000;
 	oldsec = bacon_video_widget_get_current_time (totem->bvw);
-	if ((oldsec + off_sec) < 0)
+	if ((oldsec + off_msec) < 0)
 		sec = 0;
 	else
 		sec = oldsec + off_sec;
 
-	bacon_video_widget_play (totem->bvw, 0, sec, &err);
-	play_pause_set_label (totem, STATE_PLAYING);
+	bacon_video_widget_seek_time (totem->bvw, sec, &err);
+
 	if (err != NULL)
 	{
 		char *msg, *disp;
@@ -1330,27 +1356,30 @@ update_seekable (Totem *totem, gboolean force_false)
 }
 
 static void
-update_current_time (BaconVideoWidget *bvw, int current_time, int stream_length,
-		int current_position, Totem *totem)
+update_current_time (BaconVideoWidget *bvw,
+		gint64 current_time,
+		gint64 stream_length,
+		float current_position, Totem *totem)
 {
 	if (bacon_video_widget_get_logo_mode (totem->bvw) != FALSE
 			|| (current_time == 0 && stream_length == 0))
 	{
 		totem_statusbar_set_time_and_length
 			(TOTEM_STATUSBAR (totem->statusbar),
-			 current_time / 1000, -1);
+			 (int) (current_time / 1000), -1);
 	} else {
 		totem_statusbar_set_time_and_length
 			(TOTEM_STATUSBAR (totem->statusbar),
-			current_time / 1000, stream_length / 1000);
+			(int) (current_time / 1000),
+			(int) (stream_length / 1000));
 	}
 
 	if (totem->seek_lock == FALSE)
 	{
 		gtk_adjustment_set_value (totem->seekadj,
-				(float) current_position);
+				current_position * 65535);
 		gtk_adjustment_set_value (totem->fs_seekadj,
-				(float) current_position);
+				current_position * 65535);
 	}
 }
 
@@ -1403,15 +1432,15 @@ seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 {
 	if (GTK_WIDGET(widget) == totem->fs_seek)
 	{
-		totem_action_play (totem,
-				(gint) totem->fs_seekadj->value);
+		totem_action_seek (totem,
+				gtk_adjustment_get_value (totem->fs_seekadj) / 65535);
 		/* Update the seek adjustment */
 		gtk_adjustment_set_value (totem->seekadj,
 				gtk_adjustment_get_value
 				(totem->fs_seekadj));
 	} else {
-		totem_action_play (totem,
-				(gint) totem->seekadj->value);
+		totem_action_seek (totem,
+				gtk_adjustment_get_value (totem->seekadj) / 65535);
 		/* Update the fullscreen seek adjustment */
 		gtk_adjustment_set_value (totem->fs_seekadj,
 				gtk_adjustment_get_value
@@ -1512,7 +1541,6 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 					(G_OBJECT (totem->playlist),
 					 playlist_changed_cb, totem);
 				totem_playlist_clear (totem->playlist);
-				bacon_video_widget_stop (totem->bvw);
 				bacon_video_widget_close (totem->bvw);
 				cleared = TRUE;
 			}
@@ -2152,7 +2180,7 @@ commit_hide_skip_to (GtkDialog *dialog, gint response, Totem *totem)
 	spin = glade_xml_get_widget (totem->xml, "tstw_skip_spinbutton");
 	sec = (int) gtk_spin_button_get_value (GTK_SPIN_BUTTON (spin));
 
-	bacon_video_widget_play (totem->bvw, 0, sec * 1000, &err);
+	bacon_video_widget_seek_time (totem->bvw, sec * 1000, &err);
 
 	if (err != NULL)
 	{
@@ -2241,7 +2269,7 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 {
 	switch (cmd) {
 	case TOTEM_REMOTE_COMMAND_PLAY:
-		totem_action_play (totem, 0);
+		totem_action_play (totem);
 		break;
 	case TOTEM_REMOTE_COMMAND_PAUSE:
 		totem_action_play_pause (totem);

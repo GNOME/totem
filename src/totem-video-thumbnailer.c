@@ -214,7 +214,7 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	bacon_video_widget_play (bvw, 0, 0, &err);
+	bacon_video_widget_play (bvw, &err);
 	if (err != NULL)
 	{
 		g_print ("totem-video-thumbnailer couln't play file: '%s'\n"
@@ -228,10 +228,10 @@ int main (int argc, char *argv[])
 	length = bacon_video_widget_get_stream_length (bvw);
 	if (length > MIN_LEN_FOR_SEEK)
 	{
-		if (bacon_video_widget_play
-				(bvw, (int) (65535 / 3), 0, NULL) == FALSE)
+		if (bacon_video_widget_seek
+				(bvw, (1 / 3), NULL) == FALSE)
 		{
-			bacon_video_widget_play (bvw, 0, 0, NULL);
+			bacon_video_widget_play (bvw, NULL);
 		}
 	}
 

@@ -29,7 +29,7 @@
 typedef struct Totem Totem;
 
 void	totem_action_exit			(Totem *totem);
-void	totem_action_play			(Totem *totem, int offset);
+void	totem_action_play			(Totem *totem);
 void	totem_action_stop			(Totem *totem);
 void	totem_action_play_pause			(Totem *totem);
 void	totem_action_fullscreen_toggle		(Totem *totem);

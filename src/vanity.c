@@ -596,7 +596,7 @@ video_widget_create (Vanity *vanity)
 		g_message ("%s", LOGO_PATH);
 	}
 
-	bacon_video_widget_play (vanity->bvw, 0, 0, &err);
+	bacon_video_widget_play (vanity->bvw, &err);
 
 	if (err != NULL)
 	{
@@ -621,7 +621,7 @@ process_command_line (Vanity *vanity, int argc, char **argv)
 
 	for (i = 0; i < argc; i++)
 	{
-		if (strcmp (argv[1], "--debug") == 0)
+		if (strcmp (argv[i], "--debug") == 0)
 			vanity->debug = TRUE;
 	}
 }
@@ -640,7 +640,6 @@ main (int argc, char **argv)
 
 	g_set_application_name (_("Vanity Webcam Utility"));
 
-	/* FIXME See http://bugzilla.gnome.org/show_bug.cgi?id=111349 */
 	if (XInitThreads () == 0)
 	{
 		gtk_init (&argc, &argv);

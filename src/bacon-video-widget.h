@@ -98,8 +98,9 @@ typedef struct {
 	void (*got_metadata) (GtkWidget *bvw);
 	void (*title_change) (GtkWidget *bvw, const char *title);
 	void (*channels_change) (GtkWidget *bvw);
-	void (*tick) (GtkWidget *bvw, int current_time, int stream_length,
-			int current_position);
+	void (*tick) (GtkWidget *bvw, gint64 current_time,
+			gint64 stream_length,
+			float current_position);
 	void (*buffering) (GtkWidget *bvw, guint progress);
 } BaconVideoWidgetClass;
 
@@ -112,15 +113,16 @@ char *bacon_video_widget_get_backend_name (BaconVideoWidget *bvw);
 
 /* Actions */
 gboolean bacon_video_widget_open		 (BaconVideoWidget *bvw,
-						  const gchar *mrl,
+						  const char *mrl,
 						  GError **error);
 
-/* This is used for seeking:
- * @pos is used for seeking, from 0 (start) to 65535 (end)
- * @start_time is in milliseconds */
 gboolean bacon_video_widget_play                 (BaconVideoWidget *bvw,
-						  guint pos,
-						  guint start_time,
+						  GError **error);
+gboolean bacon_video_widget_seek		 (BaconVideoWidget *bvw,
+						  float position,
+						  GError **error);
+gboolean bacon_video_widget_seek_time		 (BaconVideoWidget *bvw,
+						  gint64 time,
 						  GError **error);
 void bacon_video_widget_stop                     (BaconVideoWidget *bvw);
 void bacon_video_widget_close                    (BaconVideoWidget *bvw);
@@ -186,10 +188,10 @@ BaconVideoWidgetAudioOutType bacon_video_widget_get_audio_out_type
 void bacon_video_widget_set_audio_out_type	 (BaconVideoWidget *bvw,
 						  BaconVideoWidgetAudioOutType
 						  type);
-
-int bacon_video_widget_get_position              (BaconVideoWidget *bvw);
-int bacon_video_widget_get_current_time          (BaconVideoWidget *bvw);
-int bacon_video_widget_get_stream_length         (BaconVideoWidget *bvw);
+//FIXME
+float bacon_video_widget_get_position            (BaconVideoWidget *bvw);
+gint64 bacon_video_widget_get_current_time       (BaconVideoWidget *bvw);
+gint64 bacon_video_widget_get_stream_length      (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_is_playing           (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_is_seekable          (BaconVideoWidget *bvw);
 

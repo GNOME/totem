@@ -22,7 +22,7 @@ void on_eos_event(GtkWidget *widget, gpointer user_data)
 
 	test_xine_set_mrl(argument);
 
-	bacon_video_widget_play (BACON_VIDEO_WIDGET (xine), 0, 0, NULL);
+	bacon_video_widget_play (BACON_VIDEO_WIDGET (xine), NULL);
 }
 
 int main(int argc, char *argv[])
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 	mrl = NULL;
 	test_xine_set_mrl(argv[1]);
 	argument = g_strdup (argv[1]);
-	bacon_video_widget_play (BACON_VIDEO_WIDGET (xine), 0, 0, NULL);
+	bacon_video_widget_play (BACON_VIDEO_WIDGET (xine), NULL);
 	gtk_main();
 
 	return 0;
