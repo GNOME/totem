@@ -2364,8 +2364,7 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 		Totem *totem)
 {
 	int width;
-	gint pointer_x, pointer_y;
-	GdkModifierType state;
+
 	if (totem_is_fullscreen (totem) == FALSE) 
 		return FALSE;
 
@@ -2373,6 +2372,7 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 		return FALSE;
 
 	totem->popup_in_progress = TRUE;
+
 	if (totem->popup_timeout != 0)
 	{
 		gtk_timeout_remove (totem->popup_timeout);
@@ -2396,7 +2396,6 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 	totem->popup_timeout = gtk_timeout_add (5000,
 			(GtkFunction) popup_hide, totem);
 	totem->popup_in_progress = FALSE;
-	gdk_window_get_pointer (widget->window, &pointer_x, &pointer_y, &state);
 
 	return FALSE;
 }

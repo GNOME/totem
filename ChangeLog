@@ -1,5 +1,10 @@
 2003-06-20  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (on_video_motion_notify_event): fix a crash when
+	using the mousewheel in fullscreen (Closes: #115463)
+
+2003-06-20  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_action_set_mrl), (on_got_metadata_event),
 	(update_dvd_menu_sub_lang): set the labels and playlist items when
 	we get the metadata properly, fixes setting the labels with both
