@@ -1289,7 +1289,7 @@ gtk_xine_open (GtkXine *gtx, const gchar *mrl)
 		signal = g_new0 (GtkXineSignal, 1);
 		signal->type = ERROR;
 		signal->error_type = GTX_NO_CODEC;
-		signal->message = g_strdup_printf (_("Reason: Video type '%s' isn not handled."), name ? name : fourcc_str );
+		signal->message = g_strdup_printf (_("Reason: Video type '%s' is not handled."), name ? name : fourcc_str );
 		g_async_queue_push (gtx->priv->queue, signal);
 		g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
 

@@ -1,5 +1,16 @@
 2003-01-08  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (gtk_xine_open):
+	* src/totem.c: (totem_action_set_mrl_and_play),
+	(totem_action_play_media), (totem_action_play_pause),
+	(totem_action_set_mrl), (totem_action_previous),
+	(totem_action_next), (drop_cb), (on_open1_activate),
+	(playlist_changed_cb), (current_removed_cb), (main):
+	* src/totem.h: removed debug, fixed typo in the decoder error
+	(Closes: #102851), handle failed open better than we do now
+
+2003-01-08  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-cd-selection.c:
 	* src/bacon-cd-selection.h:
 	* src/cd-drive.c:

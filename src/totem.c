@@ -251,6 +251,16 @@ totem_action_play (Totem *totem, int offset)
 }
 
 void
+totem_action_set_mrl_and_play (Totem *totem, char *mrl)
+{
+	if (mrl == NULL)
+		totem_action_set_mrl (totem, mrl);
+
+	if (totem_action_set_mrl (totem, mrl) == TRUE)
+		totem_action_play (totem, 0);
+}
+
+void
 totem_action_play_media (Totem *totem, MediaType type)
 {
 	const char **mrls;
@@ -274,9 +284,8 @@ totem_action_play_media (Totem *totem, MediaType type)
 
 	totem_action_open_files (totem, (char **)mrls, FALSE);
 	mrl = gtk_playlist_get_current_mrl (totem->playlist);
-	totem_action_set_mrl (totem, mrl);
+	totem_action_set_mrl_and_play (totem, mrl);
 	g_free (mrl);
-	totem_action_play (totem, 0);
 }
 
 void
@@ -303,8 +312,9 @@ totem_action_play_pause (Totem *totem)
 			play_pause_set_label (totem, FALSE);
 			return;
 		} else {
-			totem_action_set_mrl (totem, mrl);
+			totem_action_set_mrl_and_play (totem, mrl);
 			g_free (mrl);
+			return;
 		}
 	}
 
@@ -344,11 +354,12 @@ totem_action_fullscreen (Totem *totem, gboolean state)
 	totem_action_fullscreen_toggle (totem);
 }
 
-void
+gboolean
 totem_action_set_mrl (Totem *totem, const char *mrl)
 {
 	GtkWidget *widget;
 	char *text;
+	gboolean retval = TRUE;
 
 	gtk_xine_stop (GTK_XINE (totem->gtx));
 
@@ -406,8 +417,8 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 
 		/* Set the logo */
 		totem->mrl = g_strdup (LOGO_PATH);
-		gtk_xine_open (GTK_XINE (totem->gtx), totem->mrl);
-		gtk_xine_play (GTK_XINE (totem->gtx), 0 , 0);
+		if (gtk_xine_open (GTK_XINE (totem->gtx), totem->mrl) == TRUE)
+			gtk_xine_play (GTK_XINE (totem->gtx), 0 , 0);
 
 		/* Reset the properties */
 		gtk_xine_properties_update (GTK_XINE (totem->gtx), TRUE);
@@ -415,7 +426,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		char *title, *time_text, *name;
 		int time;
 
-		gtk_xine_open (GTK_XINE (totem->gtx), mrl);
+		retval = gtk_xine_open (GTK_XINE (totem->gtx), mrl);
 
 		totem->mrl = g_strdup (mrl);
 		name = gtk_playlist_mrl_to_title (mrl);
@@ -473,8 +484,10 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		/* Update the properties */
 		gtk_xine_properties_update (GTK_XINE (totem->gtx), FALSE);
 	}
-        update_buttons (totem);
-        update_dvd_menu_items (totem);
+	update_buttons (totem);
+	update_dvd_menu_items (totem);
+
+	return retval;
 }
 
 static gboolean
@@ -502,8 +515,7 @@ totem_action_previous (Totem *totem)
         } else { 
                 gtk_playlist_set_previous (totem->playlist);
                 mrl = gtk_playlist_get_current_mrl (totem->playlist);
-                totem_action_set_mrl (totem, mrl);
-                totem_action_play (totem, 0);
+                totem_action_set_mrl_and_play (totem, mrl);
                 g_free (mrl);
         }
 
@@ -525,8 +537,7 @@ totem_action_next (Totem *totem)
         } else {
                 gtk_playlist_set_next (totem->playlist);
                 mrl = gtk_playlist_get_current_mrl (totem->playlist);
-                totem_action_set_mrl (totem, mrl);
-                totem_action_play (totem, 0);
+                totem_action_set_mrl_and_play (totem, mrl);
                 g_free (mrl);
         }
 }
@@ -663,9 +674,8 @@ drop_cb (GtkWidget     *widget,
 				"changed", G_CALLBACK (playlist_changed_cb),
 				(gpointer) totem);
 		mrl = gtk_playlist_get_current_mrl (totem->playlist);
-		totem_action_set_mrl (totem, mrl);
+		totem_action_set_mrl_and_play (totem, mrl);
 		g_free (mrl);
-		totem_action_play (totem, 0);
 	}
 
 	gtk_drag_finish (context, TRUE, FALSE, time);
@@ -1057,9 +1067,8 @@ on_open1_activate (GtkButton *button, gpointer user_data)
 		g_strfreev (filenames);
 
 		mrl = gtk_playlist_get_current_mrl (totem->playlist);
-		totem_action_set_mrl (totem, mrl);
+		totem_action_set_mrl_and_play (totem, mrl);
 		g_free (mrl);
-		totem_action_play (totem, 0);
 	}
 
 	gtk_widget_destroy (fs);
@@ -1481,8 +1490,7 @@ playlist_changed_cb (GtkWidget *playlist, gpointer user_data)
 			|| (totem->mrl != NULL && mrl != NULL
 			&& strcmp (totem->mrl, mrl) != 0))
 	{
-		totem_action_set_mrl (totem, mrl);
-		totem_action_play (totem, 0);
+		totem_action_set_mrl_and_play (totem, mrl);
 	} else if (totem->mrl != NULL) {
 		gtk_playlist_set_playing (totem->playlist, TRUE);
 	}
@@ -1496,19 +1504,13 @@ current_removed_cb (GtkWidget *playlist, gpointer user_data)
 	Totem *totem = (Totem *) user_data;
 	char *mrl;
 
-	D("current_removed_cb");
-
 	/* Set play button status */
 	play_pause_set_label (totem, FALSE);
 	gtk_playlist_set_at_start (totem->playlist);
 	update_buttons (totem);
 	mrl = gtk_playlist_get_current_mrl (totem->playlist);
-	totem_action_set_mrl (totem, mrl);
-	if (mrl != NULL)
-	{
-		totem_action_play (totem, 0);
-		g_free (mrl);
-	}
+	totem_action_set_mrl_and_play (totem, mrl);
+	g_free (mrl);
 }
 
 static gboolean
@@ -2271,7 +2273,7 @@ main (int argc, char **argv)
 	totem->fs_volume     = glade_xml_get_widget (totem->xml, "hscale5");
 	totem->fs_voladj = gtk_range_get_adjustment
 		(GTK_RANGE (totem->fs_volume));
-    totem->volume_first_time = 1;
+	totem->volume_first_time = 1;
 	totem->fs_pp_button = glade_xml_get_widget (totem->xml, "fs_pp_button");
 
 	/* Calculate the height of the control popup window */
