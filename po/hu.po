@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-20 12:20+0200\n"
-"PO-Revision-Date: 2004-08-20 17:53+0200\n"
+"POT-Creation-Date: 2004-09-17 04:25+0200\n"
+"PO-Revision-Date: 2004-09-17 11:35+0200\n"
 "Last-Translator: Laszlo Dvornik <dvornik@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1409
+#: data/playlist.glade.h:1 src/totem-playlist.c:1418
 msgid "Playlist"
 msgstr "Lejátszólista"
 
@@ -103,12 +103,12 @@ msgstr "Képkockaráta:"
 #. Audio Codec
 #: data/properties.glade.h:15 src/bacon-video-widget-properties.c:102
 #: src/bacon-video-widget-properties.c:109
-#: src/bacon-video-widget-properties.c:178
-#: src/bacon-video-widget-properties.c:210
+#: src/bacon-video-widget-properties.c:180
+#: src/bacon-video-widget-properties.c:216
 msgid "N/A"
 msgstr "N/A"
 
-#: data/properties.glade.h:16 src/totem.c:2067
+#: data/properties.glade.h:16 src/totem.c:2071
 msgid "Properties"
 msgstr "Tulajdonságok"
 
@@ -122,9 +122,9 @@ msgstr "Cím:"
 #: data/properties.glade.h:18 src/bacon-video-widget-properties.c:92
 #: src/bacon-video-widget-properties.c:94
 #: src/bacon-video-widget-properties.c:96
-#: src/bacon-video-widget-properties.c:127
-#: src/bacon-video-widget-properties.c:134
-#: src/bacon-video-widget-properties.c:141
+#: src/bacon-video-widget-properties.c:128
+#: src/bacon-video-widget-properties.c:135
+#: src/bacon-video-widget-properties.c:142
 msgid "Unknown"
 msgstr "Ismeretlen"
 
@@ -161,8 +161,8 @@ msgid "Play movies and songs"
 msgstr "Filmek és dalok lejátszása"
 
 #. Title
-#: data/totem.desktop.in.in.h:2 data/totem.glade.h:101 src/totem.c:710
-#: src/totem.c:3699
+#: data/totem.desktop.in.in.h:2 data/totem.glade.h:101 src/totem.c:714
+#: src/totem.c:3752
 msgid "Totem Movie Player"
 msgstr "Totem filmlejátszó"
 
@@ -286,7 +286,7 @@ msgstr "Mindig legfelül"
 msgid "Audio"
 msgstr "Audio"
 
-#: data/totem.glade.h:33 src/totem.c:2930 src/totem.c:2951
+#: data/totem.glade.h:33 src/totem.c:2962 src/totem.c:2983
 msgid "Auto"
 msgstr "Auto"
 
@@ -925,12 +925,12 @@ msgstr "Totem videoablak"
 msgid "0 second"
 msgstr "0 másodperc"
 
-#: src/bacon-video-widget-properties.c:183
+#: src/bacon-video-widget-properties.c:185
 #, c-format
 msgid "%d frames per second"
 msgstr "%d képkocka másodpercenként"
 
-#: src/bacon-video-widget-properties.c:201
+#: src/bacon-video-widget-properties.c:205
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
@@ -944,7 +944,7 @@ msgstr ""
 "Nem lehet betölteni a(z) '%s' audiomeghajtót\n"
 "Ellenőrizze, hogy az eszköz nem foglalt-e."
 
-#: src/bacon-video-widget-xine.c:1128 src/bacon-video-widget-xine.c:1595
+#: src/bacon-video-widget-xine.c:1128 src/bacon-video-widget-xine.c:1601
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -974,17 +974,7 @@ msgstr "Az ehhez a kiszolgálóhoz való kapcsolódás vissza lett utasítva."
 msgid "The specified movie could not be found."
 msgstr "A megadott film nem található."
 
-#: src/bacon-video-widget-xine.c:1263
-msgid "The movie could not be read."
-msgstr "A filmet nem lehet beolvasni."
-
-#: src/bacon-video-widget-xine.c:1267
-#, c-format
-msgid "A problem occured while loading a library or a decoder (%s)."
-msgstr ""
-"Hiba történt egy programkönyvtár vagy egy dekódoló (%s) betöltése közben."
-
-#: src/bacon-video-widget-xine.c:1273
+#: src/bacon-video-widget-xine.c:1265 src/bacon-video-widget-xine.c:1279
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -992,52 +982,62 @@ msgstr ""
 "A forrás úgy tűnik, hogy titkosított, és nem lehet olvasni. Titkosított DVD-"
 "t próbált lejátszani libdvdcss nélkül?"
 
-#: src/bacon-video-widget-xine.c:1276
+#: src/bacon-video-widget-xine.c:1268
+msgid "The movie could not be read."
+msgstr "A filmet nem lehet beolvasni."
+
+#: src/bacon-video-widget-xine.c:1273
+#, c-format
+msgid "A problem occured while loading a library or a decoder (%s)."
+msgstr ""
+"Hiba történt egy programkönyvtár vagy egy dekódoló (%s) betöltése közben."
+
+#: src/bacon-video-widget-xine.c:1282
 msgid "This file is encrypted and cannot be played back."
 msgstr "A fájl titkosított és nem lehet lejátszani."
 
-#: src/bacon-video-widget-xine.c:1281
+#: src/bacon-video-widget-xine.c:1287
 msgid "For security reasons, this movie can not be played back."
 msgstr "Biztonsági okokból nem lehet lejátszani a filmet."
 
-#: src/bacon-video-widget-xine.c:1286
+#: src/bacon-video-widget-xine.c:1292
 msgid "The audio device is busy. Is another application using it?"
 msgstr "Az audioeszköz foglalt. Egy másik alkalmazás használja?"
 
-#: src/bacon-video-widget-xine.c:1291
+#: src/bacon-video-widget-xine.c:1297
 msgid "You are not allowed to open this file."
 msgstr "Nincs engedélye ezen fájl megnyitásához."
 
-#: src/bacon-video-widget-xine.c:1293
+#: src/bacon-video-widget-xine.c:1299
 msgid "The server refused access to this file or stream."
 msgstr ""
 "A kiszolgáló visszautasította a hozzáférést ehhez a fájlhoz vagy folyamhoz."
 
-#: src/bacon-video-widget-xine.c:1422
+#: src/bacon-video-widget-xine.c:1428
 msgid "There is no plugin to handle this movie."
 msgstr "A film kezeléséhez nincs bővítmény."
 
-#: src/bacon-video-widget-xine.c:1426
+#: src/bacon-video-widget-xine.c:1432
 msgid "This movie is broken and can not be played further."
 msgstr "A film sérült és tovább már nem játszható le."
 
-#: src/bacon-video-widget-xine.c:1430
+#: src/bacon-video-widget-xine.c:1436
 msgid "This location is not a valid one."
 msgstr "A hely érvénytelen."
 
-#: src/bacon-video-widget-xine.c:1434
+#: src/bacon-video-widget-xine.c:1440
 msgid "This movie could not be opened."
 msgstr "A filmet nem lehet megnyitni."
 
-#: src/bacon-video-widget-xine.c:1438
+#: src/bacon-video-widget-xine.c:1444
 msgid "Generic Error."
 msgstr "Általános hiba."
 
-#: src/bacon-video-widget-xine.c:1862
+#: src/bacon-video-widget-xine.c:1868
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr "Ez a film egy állókép. Megnyithatja egy képnézővel."
 
-#: src/bacon-video-widget-xine.c:1892
+#: src/bacon-video-widget-xine.c:1899
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1046,19 +1046,19 @@ msgstr ""
 "A(z) '%s' videokodek nincs kezelve. További bővítményeket kell telepítenie "
 "néhány filmtípus lejátszásához"
 
-#: src/bacon-video-widget-xine.c:1911
+#: src/bacon-video-widget-xine.c:1918
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Ez egy hangfájl, és nem érhető el audio kimenet."
 
-#: src/bacon-video-widget-xine.c:3378
+#: src/bacon-video-widget-xine.c:3386
 msgid "Movie is not playing."
 msgstr "Filmlejátszás áll."
 
-#: src/bacon-video-widget-xine.c:3387
+#: src/bacon-video-widget-xine.c:3395
 msgid "No video to capture."
 msgstr "Nincs rögzítendő video."
 
-#: src/bacon-video-widget-xine.c:3395
+#: src/bacon-video-widget-xine.c:3403
 msgid "Video codec is not handled."
 msgstr "A videokodek nincs kezelve."
 
@@ -1072,8 +1072,8 @@ msgid "File image"
 msgstr "Lemezképfájl"
 
 #. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
-#: src/totem-mozilla-viewer.c:59 src/totem.c:380 src/totem.c:408
-#: src/totem.c:832 src/totem.c:955
+#: src/totem-mozilla-viewer.c:59 src/totem.c:384 src/totem.c:412
+#: src/totem.c:836 src/totem.c:959
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "A Totem nem tudja lejátszani a(z) '%s'-t."
@@ -1090,11 +1090,11 @@ msgstr "Győződjön meg róla, hogy a Totem bővítmény megfelelően van telep
 msgid "The Totem plugin could not startup."
 msgstr "A Totem bővítmény nem tud elindulni."
 
-#: src/totem-mozilla-viewer.c:109 src/totem.c:3398
+#: src/totem-mozilla-viewer.c:109 src/totem.c:3430
 msgid "No reason."
 msgstr "Nincs ok."
 
-#: src/totem-mozilla-viewer.c:141 src/totem.c:3704
+#: src/totem-mozilla-viewer.c:141 src/totem.c:3757
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Nem lehet inicializálni a thread-safe programkönyvtárakat."
 
@@ -1123,15 +1123,15 @@ msgstr ""
 "Egy '%s' nevű fájl már létezik.\n"
 "Biztos felülírja?"
 
-#: src/totem-playlist.c:988
+#: src/totem-playlist.c:997
 msgid "Filename"
 msgstr "Fájlnév"
 
-#: src/totem-playlist.c:1539
+#: src/totem-playlist.c:1548
 msgid "Playlist error"
 msgstr "Lejátszólista hiba"
 
-#: src/totem-playlist.c:1539
+#: src/totem-playlist.c:1548
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "Nem lehet értelmezni a(z) '%s' lejátszólistát, lehet, hogy sérült."
@@ -1213,7 +1213,7 @@ msgstr "Árnyék típusa"
 msgid "Style of bevel around the statusbar text"
 msgstr "Az állapotsor szövege körüli fazetta stílusa"
 
-#: src/totem-statusbar.c:124 src/totem.c:324 src/totem.c:692
+#: src/totem-statusbar.c:124 src/totem.c:325 src/totem.c:696
 msgid "Stopped"
 msgstr "Leállítva"
 
@@ -1277,46 +1277,46 @@ msgid "Toggle Fullscreen"
 msgstr "Teljes képernyő"
 
 #: src/totem.c:90
+msgid "Show/Hide Controls"
+msgstr "Vezérlés megjelenítése/elrejtése"
+
+#: src/totem.c:91
 msgid "Quit"
 msgstr "Kilépés"
 
-#: src/totem.c:91
+#: src/totem.c:92
 msgid "Enqueue"
 msgstr "Betevés a lejátszólistába"
 
-#: src/totem.c:92
+#: src/totem.c:93
 msgid "Replace"
 msgstr "Csere"
 
-#: src/totem.c:314
+#: src/totem.c:315
 msgid "Playing"
 msgstr "Lejátszás"
 
-#: src/totem.c:319
+#: src/totem.c:320
 msgid "Paused"
 msgstr "Szüneteltetve"
 
-#: src/totem.c:359
+#: src/totem.c:362
 msgid "Totem could not eject the optical media."
 msgstr "A Totem nem tudja kiadni az optikai adathordozót."
 
-#: src/totem.c:359
-msgid "No reason given."
-msgstr "Nincs ok."
-
-#: src/totem.c:428
+#: src/totem.c:432
 msgid "DVD"
 msgstr "DVD"
 
-#: src/totem.c:429
+#: src/totem.c:433
 msgid "Video CD"
 msgstr "Video CD"
 
-#: src/totem.c:430
+#: src/totem.c:434
 msgid "Audio CD"
 msgstr "Audio CD"
 
-#: src/totem.c:441
+#: src/totem.c:445
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1325,7 +1325,7 @@ msgstr ""
 "A Totem nem tudja lejátszani ezt a típusú médiát (%s), mert nincs megfelelő "
 "bővítmény a kezeléséhez."
 
-#: src/totem.c:442
+#: src/totem.c:446
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1333,7 +1333,7 @@ msgstr ""
 "Telepítse a szükséges bővítményeket és indítsa újra a Totem-et ezen média "
 "lejátszásához."
 
-#: src/totem.c:450
+#: src/totem.c:454
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1342,7 +1342,7 @@ msgstr ""
 "A Totem nem tudja lejátszani ezen médiát (%s), habár van bővítmény a "
 "kezeléséhez."
 
-#: src/totem.c:451
+#: src/totem.c:455
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1351,100 +1351,100 @@ msgstr ""
 "állítva."
 
 #. Title
-#: src/totem.c:685
+#: src/totem.c:689
 #, c-format
 msgid "%s - Totem Movie Player"
 msgstr "%s - Totem filmlejátszó"
 
-#: src/totem.c:699 src/totem.c:3493
+#: src/totem.c:703 src/totem.c:3525
 msgid "No file"
 msgstr "Nincs fájl"
 
-#: src/totem.c:736 src/totem.c:1985
+#: src/totem.c:740 src/totem.c:1989
 msgid "Totem"
 msgstr "Totem"
 
-#: src/totem.c:1263 src/totem.c:1265
+#: src/totem.c:1267 src/totem.c:1269
 msgid "An error occured"
 msgstr "Hiba történt"
 
-#: src/totem.c:1603
+#: src/totem.c:1607
 msgid "Select files"
 msgstr "Fájlok kiválasztása"
 
-#: src/totem.c:1680 src/totem.c:1688
+#: src/totem.c:1684 src/totem.c:1692
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "Nem lehet betölteni a 'Hely megnyitása...' felületet."
 
-#: src/totem.c:1680 src/totem.c:1688 src/totem.c:3739 src/totem.c:3764
-#: src/totem.c:3789
+#: src/totem.c:1684 src/totem.c:1692 src/totem.c:3792 src/totem.c:3819
+#: src/totem.c:3844
 msgid "Make sure that Totem is properly installed."
 msgstr "Győződjön meg róla, hogy a Totem megfelelően van telepítve."
 
-#: src/totem.c:1938
+#: src/totem.c:1942
 msgid "Totem could not display the help contents."
 msgstr "A Totem nem tudja megjeleníteni a súgótartalmat."
 
-#: src/totem.c:1956 src/vanity.c:235
+#: src/totem.c:1960 src/vanity.c:235
 msgid "translator_credits"
 msgstr "Dvornik László <dvornik@gnome.hu>"
 
-#: src/totem.c:1982
+#: src/totem.c:1986
 #, c-format
 msgid "Movie Player using %s"
 msgstr "%s-t használó filmlejátszó"
 
-#: src/totem.c:2022 src/totem.c:2030 src/vanity.c:300 src/vanity.c:308
+#: src/totem.c:2026 src/totem.c:2034 src/vanity.c:300 src/vanity.c:308
 msgid "Totem could not get a screenshot of that film."
 msgstr "A Totem nem tud képernyőképet szerezni a filmről."
 
-#: src/totem.c:2030
+#: src/totem.c:2034
 msgid "Please file a bug, this isn't supposed to happen."
 msgstr "Küldjön hibajelentést, mert ez nem történhetne meg."
 
-#: src/totem.c:2057
+#: src/totem.c:2061
 msgid "Totem couldn't show the movie properties window."
 msgstr "A Totem nem tudja megjeleníteni a film tulajdonságai ablakot."
 
-#: src/totem.c:2057
+#: src/totem.c:2061
 msgid "Make sure that Totem is correctly installed."
 msgstr "Győződjön meg róla, hogy a Totem megfelelően van telepítve."
 
-#: src/totem.c:2143
+#: src/totem.c:2147
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "A Totem nem tud pozicionálni ebben: '%s'."
 
-#: src/totem.c:2926 src/totem.c:2948
+#: src/totem.c:2958 src/totem.c:2980
 msgid "None"
 msgstr "Nincs"
 
-#: src/totem.c:3398
+#: src/totem.c:3430
 msgid "Totem could not startup."
 msgstr "A Totem nem tud elindulni."
 
-#: src/totem.c:3609
+#: src/totem.c:3638
 #, c-format
 msgid "Option '%s' is unknown and was ignored\n"
 msgstr "A(z) '%s' opció ismeretlen és figyelmen kívül lett hagyva\n"
 
-#: src/totem.c:3704
+#: src/totem.c:3757
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Ellenőrizze a rendszer telepítését. A Totem most kilép."
 
-#: src/totem.c:3727
+#: src/totem.c:3780
 msgid "Totem couln't initialise the configuration engine."
 msgstr "A Totem nem tudja inicializálni a beállítómotort."
 
-#: src/totem.c:3727
+#: src/totem.c:3780
 msgid "Make sure that GNOME is properly installed."
 msgstr "Győződjön meg róla, hogy a GNOME megfelelően van telepítve."
 
-#: src/totem.c:3739 src/totem.c:3764
+#: src/totem.c:3792 src/totem.c:3819
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "Nem lehet betölteni a fő felületet (totem.glade)."
 
-#: src/totem.c:3789
+#: src/totem.c:3844
 msgid "Couldn't load the interface for the playlist."
 msgstr "Nem lehet felületet betölteni a lejátszólistához."
 
