@@ -179,7 +179,7 @@ static GtkWidgetClass *parent_class = NULL;
 
 static void xine_event (void *user_data, const xine_event_t *event);
 static gboolean bacon_video_widget_idle_signal (BaconVideoWidget *bvw);
-static void size_changed_cb (GdkScreen *screen, gpointer user_data);
+static void size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw);
 
 static int bvw_table_signals[LAST_SIGNAL] = { 0 };
 
@@ -570,9 +570,8 @@ update_fullscreen_size (BaconVideoWidget *bvw)
 }
 
 static void
-size_changed_cb (GdkScreen *screen, gpointer user_data)
+size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw)
 {
-	BaconVideoWidget *bvw = (BaconVideoWidget *) bvw;
 	update_fullscreen_size (bvw);
 	if (bvw->priv->fullscreen_mode)
 	{
