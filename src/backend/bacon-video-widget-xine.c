@@ -1898,8 +1898,6 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const char *mrl,
 		return FALSE;
 	}
 
-	g_message ("XINE_META_INFO_SYSTEMLAYER: %s", xine_get_meta_info (bvw->priv->stream, XINE_META_INFO_SYSTEMLAYER));
-
 	if (xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_VIDEO_HANDLED) == FALSE
 			|| (xine_get_stream_info (bvw->priv->stream,

@@ -49,6 +49,7 @@ typedef TotemPlParserResult (*PlaylistCallback) (TotemPlParser *parser, const ch
 static gboolean totem_pl_parser_scheme_is_ignored (TotemPlParser *parser, const char *url);
 static gboolean totem_pl_parser_ignore (TotemPlParser *parser, const char *url);
 static TotemPlParserResult totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url);
+static TotemPlParserResult totem_pl_parser_add_asx (TotemPlParser *parser, const char *url, gpointer data);
 
 typedef struct {
 	char *mimetype;
@@ -663,8 +664,10 @@ totem_pl_parser_add_asf_parser (TotemPlParser *parser, const char *url,
 
 	ref = read_ini_line_string (lines, "Ref1", FALSE);
 
-	if (ref == NULL)
-		goto bail;
+	if (ref == NULL) {
+		g_strfreev (lines);
+		return totem_pl_parser_add_asx (parser, url, data);
+	}
 
 	/* change http to mms, thanks Microsoft */
 	if (strncmp ("http", ref, 4) == 0)
@@ -674,7 +677,6 @@ totem_pl_parser_add_asf_parser (TotemPlParser *parser, const char *url,
 	retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 	g_free (ref);
 
-bail:
 	g_strfreev (lines);
 
 	return retval;
@@ -1011,12 +1013,8 @@ totem_pl_parser_add_smil (TotemPlParser *parser, const char *url, gpointer data)
 static TotemPlParserResult
 totem_pl_parser_add_asf (TotemPlParser *parser, const char *url, gpointer data)
 {
-	if (data == NULL) {
-		totem_pl_parser_add_one_url (parser, url, NULL);
-		return TOTEM_PL_PARSER_RESULT_SUCCESS;
-	}
-
-	if (strncmp (data, "[Reference]", strlen ("[Reference]")) != 0) {
+	if (data != NULL &&
+		strncmp (data, "[Reference]", strlen ("[Reference]")) != 0) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
