@@ -1,6 +1,12 @@
-
 noinst_PROGRAMS = bvw-test
-bin_PROGRAMS = totem totem-video-thumbnailer vanity
+
+if TOTEM_VANITY
+VANITY=vanity
+else
+VANITY=
+endif
+
+bin_PROGRAMS = totem totem-video-thumbnailer $(VANITY)
 
 if TOTEM_GST
 MM=	bacon-video-widget-gst.c \
@@ -104,6 +110,7 @@ totem_properties_page_SOURCES =		\
 
 totem_properties_page_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
 
+if TOTEM_VANITY
 vanity_SOURCES =					\
 	$(VIDEOWIDGET)					\
 	$(BACON_V4L_SELECTION)				\
@@ -113,6 +120,10 @@ vanity_SOURCES =					\
 	vanity.c
 
 vanity_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
+else
+vanity_SOURCES =
+vanity_LDADD =
+endif
 
 bvw_test_SOURCES = $(VIDEOWIDGET)  bvw-test.c
 bvw_test_LDADD = $(GTK_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
@@ -132,5 +143,7 @@ EXTRA_DIST =	bacon-video-widget-xine.c \
 		gstvideowidget.c \
 		gstvideowidget.h \
 		totem-download.c \
-		totem-download.h
+		totem-download.h \
+		$(BACON_V4L_SELECTION) \
+		vanity.c
 

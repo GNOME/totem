@@ -8,13 +8,13 @@ GtkWidget *win;
 GtkWidget *xine;
 char *mrl, *argument;
 
-void test_xine_set_mrl(char *path)
+static void test_xine_set_mrl(char *path)
 {
 	mrl=g_strdup(path);
 	bacon_video_widget_open (BACON_VIDEO_WIDGET (xine), mrl, NULL);
 }
 
-void on_eos_event(GtkWidget *widget, gpointer user_data)
+static void on_eos_event(GtkWidget *widget, gpointer user_data)
 {
 	bacon_video_widget_stop (BACON_VIDEO_WIDGET (xine));
 	bacon_video_widget_close(BACON_VIDEO_WIDGET (xine));

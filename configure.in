@@ -74,6 +74,17 @@ fi
 
 AM_CONDITIONAL(TOTEM_GST, test x$ENABLE_GST = "xyes")
 
+AC_ARG_ENABLE(vanity,
+	AC_HELP_STRING([--enable-vanity],[do not compile and install vanity]),
+	[case "${enableval}" in
+	yes) ENABLE_VANITY=yes ;;
+	no) ENABLE_VANITY=no ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --disable-vanity) ;;
+	esac],
+	[ENABLE_VANITY=yes]) dnl Default value
+
+AM_CONDITIONAL(TOTEM_VANITY, test x$ENABLE_VANITY = "xyes")
+
 dnl CURL tests
 CURL_MAJOR_REQ=7
 CURL_MINOR_REQ=9

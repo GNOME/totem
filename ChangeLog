@@ -1,5 +1,12 @@
 2004-01-07  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* src/Makefile.am: make vanity optional via --enable-vanity, patch
+	most from Harsh Jaitly <hjaitly@novell.com> (Closes: #130467)
+	* src/bvw-test.c: (test_xine_set_mrl), (on_eos_event): fix warnings
+
+2004-01-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/cd-drive.[ch]:
 	* src/transport.hxx: FreeBSD fixes from libbacon
 	* src/totem-playlist.c:
