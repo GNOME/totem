@@ -6,15 +6,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2003-01-28 17:49+0100\n"
-"PO-Revision-Date: 2003-01-28 17:49+0100\n"
+"POT-Creation-Date: 2003-02-11 19:51+0100\n"
+"PO-Revision-Date: 2003-02-11 19:53+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/playlist.glade.h:1 src/gtk-playlist.c:799
+#: data/playlist.glade.h:1 src/gtk-playlist.c:800
 msgid "Playlist"
 msgstr "Afspilningsliste"
 
@@ -153,7 +153,7 @@ msgstr "Afslut fuldskærm"
 msgid "File name"
 msgstr "Filnavn"
 
-#: data/totem.glade.h:12
+#: data/totem.glade.h:12 src/totem.c:122
 msgid "Next"
 msgstr "Næste"
 
@@ -177,11 +177,11 @@ msgstr "Afspil _dvd"
 msgid "Play _VCD"
 msgstr "Afspil _video-cd"
 
-#: data/totem.glade.h:18
+#: data/totem.glade.h:18 src/totem.c:121
 msgid "Play/Pause"
 msgstr "Afspil/pause"
 
-#: data/totem.glade.h:19
+#: data/totem.glade.h:19 src/totem.c:123
 msgid "Previous"
 msgstr "Forrige"
 
@@ -242,11 +242,11 @@ msgid "Title menu"
 msgstr "Titelmenu"
 
 #: data/totem.glade.h:34
-msgid "Toggle Aspect Ratio"
-msgstr "Følg formatforholdet"
+msgid "Toggle _Aspect Ratio"
+msgstr "_Formatforhold"
 
 #. Title
-#: data/totem.glade.h:35 src/totem.c:411 src/totem.c:434 src/totem.c:1269
+#: data/totem.glade.h:35 src/totem.c:431 src/totem.c:454 src/totem.c:1299
 msgid "Totem"
 msgstr "Totem"
 
@@ -254,11 +254,11 @@ msgstr "Totem"
 msgid "Totem Preferences"
 msgstr "Totem-indstillinger"
 
-#: data/totem.glade.h:37
+#: data/totem.glade.h:37 src/totem.c:127
 msgid "Volume Down"
 msgstr "Lydstyrke ned"
 
-#: data/totem.glade.h:38
+#: data/totem.glade.h:38 src/totem.c:126
 msgid "Volume Up"
 msgstr "Lydstyrke op"
 
@@ -287,18 +287,22 @@ msgid "_Play / Pause"
 msgstr "_Afspil/pause"
 
 #: data/totem.glade.h:45
+msgid "_Repeat Mode"
+msgstr "_Gentagelsestilstand"
+
+#: data/totem.glade.h:46
 msgid "_Show/Hide Playlist"
 msgstr "_Vis/skjul afspilningsliste"
 
-#: data/totem.glade.h:46
+#: data/totem.glade.h:47
 msgid "_Skip to..."
 msgstr "_Spring til..."
 
-#: data/totem.glade.h:47
+#: data/totem.glade.h:48
 msgid "_Sound"
 msgstr "_Lyd"
 
-#: data/totem.glade.h:48
+#: data/totem.glade.h:49
 msgid "_Zoom 1:2"
 msgstr "_Zoom 1:2"
 
@@ -307,42 +311,38 @@ msgid "Default audio output driver"
 msgstr "Forvalgt lyduddataenhed"
 
 #: data/totem.schemas.in.h:2
-msgid "Only start if there isn't already a Totem application running"
-msgstr "Start kun hvis der ikke allerede kører en udgave af Totem"
-
-#: data/totem.schemas.in.h:3
 msgid "Path to the optical media device"
 msgstr "Sti til den optiske medieenhed"
 
-#: data/totem.schemas.in.h:4
+#: data/totem.schemas.in.h:3
 msgid "Repeat mode"
 msgstr "Gentagelsestilstand"
 
-#: data/totem.schemas.in.h:5
+#: data/totem.schemas.in.h:4
 msgid "Resize the canvas automatically on file load"
 msgstr "Ændr størrelsen af lærredet automatisk ved filåbninger"
 
-#: data/totem.schemas.in.h:6
+#: data/totem.schemas.in.h:5
 msgid "Show visual effects when no video is displayed"
 msgstr "Vis visuelle effekter når der ikke afspilles en video"
 
-#: data/totem.schemas.in.h:7
+#: data/totem.schemas.in.h:6
 msgid "Show visual effects when playing an audio only file"
 msgstr "Vis visuelle effekter når en fil med kun lyd afspilles"
 
-#: data/totem.schemas.in.h:8
+#: data/totem.schemas.in.h:7
 msgid "X coordinate for the Playlist"
 msgstr "x-koordinat for afspilningslisten"
 
-#: data/totem.schemas.in.h:9
+#: data/totem.schemas.in.h:8
 msgid "Y coordinate for the Playlist"
 msgstr "y-koordinat for afspilningslisten"
 
-#: src/bacon-cd-selection.c:219
+#: src/bacon-cd-selection.c:233
 msgid "Unnamed CDROM"
 msgstr "Unavngiven cd-rom"
 
-#: src/bacon-cd-selection.c:261
+#: src/bacon-cd-selection.c:275
 msgid "Select the drive"
 msgstr "Vælg drevet"
 
@@ -394,11 +394,11 @@ msgstr "_Adgangskode:"
 msgid "Remember this password"
 msgstr "Husk denne adgangskode"
 
-#: src/gtk-playlist.c:413 src/totem.c:1094
+#: src/gtk-playlist.c:414 src/totem.c:1115
 msgid "Select files"
 msgstr "Vælg filer"
 
-#: src/gtk-playlist.c:549
+#: src/gtk-playlist.c:550
 msgid "Filename"
 msgstr "Filnavn"
 
@@ -406,7 +406,7 @@ msgstr "Filnavn"
 msgid "Totem Video Window"
 msgstr "Totem-videovindue"
 
-#: src/gtk-xine.c:547
+#: src/gtk-xine.c:555
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -415,19 +415,11 @@ msgstr ""
 "Kunne ikke indlæse lyddriveren '%s'.\n"
 "Kontrollér at enheden ikke benyttes af et andet program."
 
-#: src/gtk-xine.c:819
-msgid ""
-"Could not initialise the threads support.\n"
-"You should install a thread-safe Xlib."
-msgstr ""
-"Kunne ikke klargøre trådunderstøttelsen.\n"
-"Installér et multitråd-sikkert Xlib."
-
-#: src/gtk-xine.c:846
+#: src/gtk-xine.c:800
 msgid "Could not find a suitable video output."
 msgstr "Kunne ikke finde en passende video uddataenhed."
 
-#: src/gtk-xine.c:1206
+#: src/gtk-xine.c:1189
 #, c-format
 msgid "Reason: Video type '%s' is not handled."
 msgstr "Begrundelse: Videotypen '%s' kan ikke håndteres."
@@ -501,19 +493,43 @@ msgstr "%d billeder pr. sekund"
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/totem.c:191
+#: src/totem.c:124
+msgid "Seek Forwards"
+msgstr "Søg fremad"
+
+#: src/totem.c:125
+msgid "Seek Backwards"
+msgstr "Søg tilbage"
+
+#: src/totem.c:129
+msgid "Toggle Fullscreen"
+msgstr "Fuldskærm"
+
+#: src/totem.c:130
+msgid "Quit"
+msgstr "Afslut"
+
+#: src/totem.c:131
+msgid "Enqueue"
+msgstr "Sæt i kø"
+
+#: src/totem.c:132
+msgid "Replace"
+msgstr "Erstat"
+
+#: src/totem.c:210
 msgid "Playing"
 msgstr "Afspiller"
 
-#: src/totem.c:198
+#: src/totem.c:217
 msgid "Paused"
 msgstr "På pause"
 
-#: src/totem.c:205 src/totem-statusbar.c:171
+#: src/totem.c:224 src/totem-statusbar.c:171
 msgid "Stopped"
 msgstr "Stoppet"
 
-#: src/totem.c:273
+#: src/totem.c:292
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -525,7 +541,7 @@ msgstr ""
 "Installér de nødvendige moduler og genstart Totem hvis du vil afspille denne "
 "type."
 
-#: src/totem.c:281
+#: src/totem.c:300
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -536,29 +552,29 @@ msgstr ""
 "Kontrollér at disken sidder i drevet og at det er korrekt konfigureret."
 
 #. Title
-#: src/totem.c:387
+#: src/totem.c:407
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:400 src/totem.c:2397
+#: src/totem.c:420 src/totem.c:2508
 msgid "No file"
 msgstr "Ingen fil"
 
-#: src/totem.c:1245
+#: src/totem.c:1275
 msgid "translator_credits"
 msgstr "Ole Laursen <olau@hardworking.dk>"
 
-#: src/totem.c:1271
-msgid "Movie Player (based on the Xine libraries)"
+#: src/totem.c:1301
+msgid "Movie Player (based on the xine libraries)"
 msgstr "Videoafspiller (baseret på Xine-bibliotekerne)."
 
-#: src/totem.c:1325 src/totem.c:1336
+#: src/totem.c:1355 src/totem.c:1366
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Skærmbillede-%d.png"
 
-#: src/totem.c:1389
+#: src/totem.c:1419
 msgid ""
 "Totem could not get a screenshot of that film.\n"
 "You might want to try again at another time."
@@ -566,7 +582,7 @@ msgstr ""
 "Totem kunne ikke skaffe et skærmbillede af den film.\n"
 "Du kan evt. prøve igen på et andet tidspunkt."
 
-#: src/totem.c:1415
+#: src/totem.c:1445
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
@@ -575,7 +591,7 @@ msgstr ""
 "Filen '%s' eksisterer allerede.\n"
 "Skærmbilledet blev ikke gemt."
 
-#: src/totem.c:1426
+#: src/totem.c:1456
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -584,7 +600,7 @@ msgstr ""
 "Der opstod en fejl ved gemning af fejlbilledet.\n"
 "Detaljer: %s"
 
-#: src/totem.c:1447
+#: src/totem.c:1476
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -592,7 +608,7 @@ msgstr ""
 "Kunne ikke vise filmegenskabsvinduet.\n"
 "Kontrollér at Totem er korrekt installeret."
 
-#: src/totem.c:1894
+#: src/totem.c:1950
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -601,7 +617,7 @@ msgstr ""
 "Totem kunne ikke starte:\n"
 "%s"
 
-#: src/totem.c:1900
+#: src/totem.c:1956
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'.\n"
@@ -610,12 +626,12 @@ msgstr ""
 "Der er ikke nogen moduler til rådighed for Totem til at \n"
 "håndtere '%s' som derfor ikke kan afspilles."
 
-#: src/totem.c:1906
+#: src/totem.c:1962
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "'%s' er ødelagt og kan ikke afspilles yderligere."
 
-#: src/totem.c:1911
+#: src/totem.c:1967
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -624,7 +640,7 @@ msgstr ""
 "Totem kunne ikke afspille '%s':\n"
 "%s"
 
-#: src/totem.c:1916
+#: src/totem.c:1972
 #, c-format
 msgid ""
 "Totem could not play '%s'.\n"
@@ -633,7 +649,7 @@ msgstr ""
 "Totem kunne ikke afspille '%s'.\n"
 "Placeringen af filen er ikke gyldig."
 
-#: src/totem.c:2562
+#: src/totem.c:2747
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -644,7 +660,7 @@ msgstr ""
 "konfigurationsmotoren:\n"
 "%s"
 
-#: src/totem.c:2577 src/totem.c:2607
+#: src/totem.c:2761 src/totem.c:2797
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -652,7 +668,7 @@ msgstr ""
 "Kunne ikke indlæse hovedgrænsefladen (totem.glade).\n"
 "Sikr dig at Totem er korrekt installeret."
 
-#: src/totem.c:2629
+#: src/totem.c:2819
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
@@ -671,6 +687,16 @@ msgstr "Afrundingstypen omkring statuslinjeteksten"
 #: src/totem-statusbar.c:180
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
+
+#~ msgid "Only start if there isn't already a Totem application running"
+#~ msgstr "Start kun hvis der ikke allerede kører en udgave af Totem"
+
+#~ msgid ""
+#~ "Could not initialise the threads support.\n"
+#~ "You should install a thread-safe Xlib."
+#~ msgstr ""
+#~ "Kunne ikke klargøre trådunderstøttelsen.\n"
+#~ "Installér et multitråd-sikkert Xlib."
 
 #~ msgid "Unnamed Drive"
 #~ msgstr "Unavngivet drev"
