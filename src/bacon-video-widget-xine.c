@@ -188,19 +188,19 @@ static const char *mms_bandwidth_strs[] = {
 };
 
 static const char *audio_out_types_strs[] = {
-	"Mono",
-	"Stereo",
-	"Headphones",
-	"A52_Passthru",
-	"Surround21",
-	"Surround3",
-	"Surround4",
-	"Surround41",
-	"Surround5",
-	"Surround51",
-	"Surround6",
-	"Surround61",
-	"Surround71",
+	"Mono 1.0",
+	"Stereo 2.0",
+	"Headphones 2.0",
+	"Stereo 2.1",
+	"Surround 3.0",
+	"Surround 4.0",
+	"Surround 4.1",
+	"Surround 5.0",
+	"Surround 5.1",
+	"Surround 6.0",
+	"Surround 6.1",
+	"Surround 7.1",
+	"Pass Through",
 	NULL
 };
 
@@ -3076,19 +3076,19 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 		value = 1;
 		break;
 	case BVW_AUDIO_SOUND_4CHANNEL:
-		value = 6;
+		value = 5;
 		break;
 	case BVW_AUDIO_SOUND_41CHANNEL:
-		value = 7;
+		value = 6;
 		break;
 	case BVW_AUDIO_SOUND_5CHANNEL:
-		value = 8;
+		value = 7;
 		break;
 	case BVW_AUDIO_SOUND_51CHANNEL:
-		value = 9;
+		value = 8;
 		break;
 	case BVW_AUDIO_SOUND_AC3PASSTHRU:
-		value = 3;
+		value = 12;
 		break;
 	default:
 		value = 1;
