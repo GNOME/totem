@@ -24,9 +24,12 @@ struct TotemEmbedded {
 	GtkWidget *window;
 	GladeXML *xml;
 	int xid, width, height;
-	gboolean use_xembed;
 	char *filename, *orig_filename;
 	BaconVideoWidget *bvw;
+	gboolean controller_hidden;
+
+	/* XEmbed */
+	gboolean use_xembed;
 	gboolean embedded_done;
 	TotemStates state;
 };
@@ -191,6 +194,12 @@ totem_embedded_add_children (TotemEmbedded *emb)
 
 	gtk_widget_realize (emb->window);
 	gtk_widget_set_size_request (emb->window, emb->width, emb->height);
+
+	if (emb->controller_hidden != FALSE) {
+		child = glade_xml_get_widget (emb->xml, "controls");
+		gtk_widget_hide (child);
+	}
+
 }
 
 static void embedded (GtkPlug *plug, TotemEmbedded *emb)
@@ -250,6 +259,8 @@ int main (int argc, char **argv)
 				i++;
 				emb->orig_filename = argv[i];
 			}
+		} else if (strcmp (argv[i], "--nocontrols") == 0) {
+			emb->controller_hidden = TRUE;
 		} else if (i + 1 == argc) {
 			emb->filename = g_strdup (argv[i]);
 		}

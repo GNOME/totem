@@ -47,6 +47,7 @@ typedef struct {
 	int width, height;
 	int send_fd;
 	int player_pid;
+	gboolean controller_hidden;
 
 	GByteArray *bytes;
 } TotemPlugin;
@@ -54,7 +55,7 @@ typedef struct {
 static NPNetscapeFuncs mozilla_functions;
 
 /* You don't update, you die! */
-#define MAX_ARGV_LEN 11
+#define MAX_ARGV_LEN 12
 
 static void totem_plugin_fork (TotemPlugin *plugin)
 {
@@ -87,6 +88,10 @@ static void totem_plugin_fork (TotemPlugin *plugin)
 	if (plugin->src) {
 		argv[argc++] = g_strdup ("--url");
 		argv[argc++] = g_strdup (plugin->src);
+	}
+
+	if (plugin->controller_hidden) {
+		argv[argc++] = g_strdup ("--nocontrols");
 	}
 
 	argv[argc++] = g_strdup ("fd://0");
@@ -155,6 +160,11 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 		//FIXME we can have some relative paths here as well!
 		if (strcmp (argn[i], "src") == 0) {
 			plugin->src = g_strdup (argv[i]);
+		}
+		if (strcmp (argn[i], "controller") == 0) {
+			if (strcmp (argv[i], "false") == 0) {
+				plugin->controller_hidden = TRUE;
+			}
 		}
 
 		//Handle loop
