@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2003-04-18 21:57+0200\n"
-"PO-Revision-Date: 2003-04-18 21:58+0200\n"
+"POT-Creation-Date: 2003-04-23 22:22+0200\n"
+"PO-Revision-Date: 2003-04-23 22:23+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -125,7 +125,7 @@ msgstr "År:"
 msgid "Play movies and songs"
 msgstr "Spela filmer och låtar"
 
-#: data/totem.desktop.in.h:2 src/totem.c:3070
+#: data/totem.desktop.in.h:2 src/totem.c:3099
 msgid "Totem Movie Player"
 msgstr "Filmspelaren Totem"
 
@@ -438,7 +438,7 @@ msgid "Toggle the aspect ratio"
 msgstr "Växla proportionerna"
 
 #. Title
-#: data/totem.glade.h:79 src/totem.c:512 src/totem.c:534 src/totem.c:1537
+#: data/totem.glade.h:79 src/totem.c:536 src/totem.c:558 src/totem.c:1562
 msgid "Totem"
 msgstr "Totem"
 
@@ -614,7 +614,7 @@ msgstr "_Lösenord:"
 msgid "Remember this password"
 msgstr "Kom ihåg detta lösenord"
 
-#: src/gtk-playlist.c:506 src/totem.c:1254
+#: src/gtk-playlist.c:506 src/totem.c:1279
 msgid "Select files"
 msgstr "Välj filer"
 
@@ -646,19 +646,19 @@ msgstr "Kölägg"
 msgid "Replace"
 msgstr "Ersätt"
 
-#: src/totem.c:219
+#: src/totem.c:243
 msgid "Playing"
 msgstr "Spelar"
 
-#: src/totem.c:226
+#: src/totem.c:250
 msgid "Paused"
 msgstr "Gör paus"
 
-#: src/totem.c:233 src/totem-statusbar.c:171
+#: src/totem.c:257 src/totem-statusbar.c:171
 msgid "Stopped"
 msgstr "Stoppad"
 
-#: src/totem.c:291 src/totem.c:646 src/totem.c:750
+#: src/totem.c:315 src/totem.c:775
 #, c-format
 msgid ""
 "Totem could not play '%s'.\n"
@@ -667,7 +667,7 @@ msgstr ""
 "Totem kunde inte spela \"%s\".\n"
 "Orsak: %s."
 
-#: src/totem.c:320
+#: src/totem.c:344
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -679,7 +679,7 @@ msgstr ""
 "Installera de insticksmoduler som krävs och starta om Totem för att kunna "
 "spela denna typ av media."
 
-#: src/totem.c:328
+#: src/totem.c:352
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -691,16 +691,29 @@ msgstr ""
 "konfigurerad."
 
 #. Title
-#: src/totem.c:488
+#: src/totem.c:512
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:501 src/totem.c:2916
+#: src/totem.c:525 src/totem.c:2944
 msgid "No file"
 msgstr "Ingen fil"
 
-#: src/totem.c:1305 src/totem.c:1316
+#: src/totem.c:670
+#, c-format
+msgid ""
+"Totem could not play '%s'.\n"
+"Reason: %s.\n"
+"You might need to install additional plugins to be able to play some types "
+"of movies."
+msgstr ""
+"Totem kunde inte spela \"%s\".\n"
+"Orsak: %s.\n"
+"Du kan behöva installera ytterligare insticksmoduler för att kunna spela en "
+"del typer av filmer."
+
+#: src/totem.c:1330 src/totem.c:1341
 msgid ""
 "Couldn't load the 'Open Location...' interface.\n"
 "Make sure that Totem is properly installed."
@@ -708,27 +721,27 @@ msgstr ""
 "Kunde inte läsa in gränssnittet för \"Öppna plats...\".\n"
 "Försäkra dig om att Totem är korrekt installerat."
 
-#: src/totem.c:1377
+#: src/totem.c:1402
 msgid "Totem could not eject the optical media."
 msgstr "Totem kunde inte mata ut det optiska mediumet."
 
-#: src/totem.c:1508
+#: src/totem.c:1533
 msgid "translator_credits"
 msgstr ""
 "Christian Rose\n"
 "Skicka synpunkter på översättningen till sv@li.org"
 
-#: src/totem.c:1534
+#: src/totem.c:1559
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Filmspelare som använder %s"
 
-#: src/totem.c:1596 src/totem.c:1607
+#: src/totem.c:1621 src/totem.c:1632
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Skärmdump%d.png"
 
-#: src/totem.c:1660
+#: src/totem.c:1685
 #, c-format
 msgid ""
 "Totem could not get a screenshot of that film.\n"
@@ -737,7 +750,7 @@ msgstr ""
 "Totem kunde inte ta en skärmdump från den filmen.\n"
 "Orsak: %s."
 
-#: src/totem.c:1670
+#: src/totem.c:1695
 msgid ""
 "Totem could not get a screenshot of that film.\n"
 "Please file a bug, this isn't supposed to happen"
@@ -745,7 +758,7 @@ msgstr ""
 "Totem kunde inte ta en skärmdump från den filmen.\n"
 "Skicka en felrapport. Detta ska inte hända"
 
-#: src/totem.c:1696
+#: src/totem.c:1721
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
@@ -754,7 +767,7 @@ msgstr ""
 "Filen \"%s\" finns redan.\n"
 "Skärmdumpen sparades inte."
 
-#: src/totem.c:1707
+#: src/totem.c:1732
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -763,7 +776,7 @@ msgstr ""
 "Ett fel uppstod vid sparandet av skärmdumpen.\n"
 "Detaljer: %s"
 
-#: src/totem.c:1724
+#: src/totem.c:1749
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -771,7 +784,7 @@ msgstr ""
 "Totem kunde inte visa filmegenskapsfönstret.\n"
 "Försäkra dig om att Totem är korrekt installerat."
 
-#: src/totem.c:1793
+#: src/totem.c:1818
 #, c-format
 msgid ""
 "Totem could not seek in '%s'.\n"
@@ -780,11 +793,11 @@ msgstr ""
 "Totem kunde inte spola i \"%s\".\n"
 "Orsak: %s."
 
-#: src/totem.c:2461
+#: src/totem.c:2486
 msgid "Auto"
 msgstr "Auto"
 
-#: src/totem.c:2842
+#: src/totem.c:2867
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -793,7 +806,23 @@ msgstr ""
 "Totem kunde inte starta:\n"
 "%s"
 
-#: src/totem.c:3088
+#: src/totem.c:2868
+msgid "No reason"
+msgstr "Ingen orsak"
+
+#: src/totem.c:3106
+msgid ""
+"Could not initialise the thread-safe libraries.\n"
+"Verify your system installation. Totem"
+msgstr ""
+"Kunde inte initiera de trådsäkra biblioteken.\n"
+"Kontrollera din systeminstallation. Totem"
+
+#: src/totem.c:3107
+msgid "));"
+msgstr "));"
+
+#: src/totem.c:3128
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -804,7 +833,7 @@ msgstr ""
 "konfigurationsmotorn:\n"
 "%s"
 
-#: src/totem.c:3103 src/totem.c:3135
+#: src/totem.c:3142 src/totem.c:3174
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -812,7 +841,7 @@ msgstr ""
 "Kunde inte läsa in huvudgränssnittet (totem.glade).\n"
 "Försäkra dig om att Totem är korrekt installerat."
 
-#: src/totem.c:3161
+#: src/totem.c:3200
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
@@ -820,7 +849,15 @@ msgstr ""
 "Kunde inte läsa in gränssnittet för spellistan.\n"
 "Försäkra dig om att Totem är korrekt installerat."
 
-#: src/totem-preferences.c:91
+#: src/totem-preferences.c:81
+msgid ""
+"It seems you are running Totem remotely.\n"
+"Are you sure you want to enable the visual effects?"
+msgstr ""
+"Det verkar som om du kör Totem från en annan dator.\n"
+"Är du säker på att du vill aktivera de visuella effekterna?"
+
+#: src/totem-preferences.c:125
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted"
@@ -871,8 +908,8 @@ msgstr "Allmänt fel"
 
 #: src/bacon-video-widget-xine.c:1303
 #, c-format
-msgid "Video type '%s' is not handled"
-msgstr "Videotypen \"%s\" stöds inte"
+msgid "Video codec '%s' is not handled"
+msgstr "Videokomprimeringsmetoden \"%s\" hanteras inte"
 
 #: src/bacon-video-widget-xine.c:2315
 msgid "Movie is not playing"
@@ -958,6 +995,29 @@ msgstr "%d ramar per sekund"
 #, c-format
 msgid "%d kbps"
 msgstr "%d kb/s"
+
+#~ msgid "Reason"
+#~ msgstr "Orsak"
+
+#~ msgid "Reason:"
+#~ msgstr "Orsak:"
+
+#~ msgid ""
+#~ "Could not initialise the thread-safe libraries.\n"
+#~ "Verify your system installation."
+#~ msgstr ""
+#~ "Kunde inte initiera de trådsäkra biblioteken.\n"
+#~ "Kontrollera din systeminstallation"
+
+#~ msgid ""
+#~ "Could not initialise the thread-safe libraries.\n"
+#~ "Verify your system installation. Totem will now exit."
+#~ msgstr ""
+#~ "Kunde inte initiera de trådsäkra biblioteken.\n"
+#~ "Kontrollera din systeminstallation. Totem kommer nu att avslutas."
+
+#~ msgid "Video type '%s' is not handled"
+#~ msgstr "Videotypen \"%s\" stöds inte"
 
 #~ msgid "Proprietary Plugins"
 #~ msgstr "Proprietära insticksmoduler"
@@ -1073,13 +1133,6 @@ msgstr "%d kb/s"
 
 #~ msgid "Only start if there isn't already a Totem application running"
 #~ msgstr "Starta endast om det inte redan finns ett Totem-program som kör"
-
-#~ msgid ""
-#~ "Could not initialise the threads support.\n"
-#~ "You should install a thread-safe Xlib."
-#~ msgstr ""
-#~ "Kunde inte initiera trådstödet.\n"
-#~ "Du bör installera ett trådsäkert Xlib."
 
 #~ msgid "Play VCD"
 #~ msgstr "Spela VCD"
