@@ -96,7 +96,6 @@ gboolean gtk_xine_is_seekable          (GtkXine *gtx);
 
 //gchar **gtk_xine_get_autoplay_plugins  (GtkXine *gtx);
 
-//void gtk_xine_save_config              (GtkXine *gtx);
 #if 0
 gint gtk_xine_get_log_section_count    (GtkXine *gtx);
 gchar **gtk_xine_get_log_names         (GtkXine *gtx);

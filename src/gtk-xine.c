@@ -1380,17 +1380,7 @@ gtk_xine_is_seekable (GtkXine * gtx)
 
 	return xine_is_stream_seekable (gtx->priv->xine);
 }
-#if 0
-void
-gtk_xine_save_config (GtkXine * gtx)
-{
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
-	g_return_if_fail (gtx->priv->xine != NULL);
 
-	gtx->priv->config->save (gtx->priv->config);
-}
-#endif
 #if 0
 static void
 gtk_xine_set_video_property (GtkXine * gtx, gint property, gint value)
