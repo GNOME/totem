@@ -83,6 +83,8 @@
 #define ZOOM_IN_OFFSET 1
 #define ZOOM_OUT_OFFSET -1
 
+#define FULLSCREEN_POPUP_TIMEOUT 5 * 1000
+
 #define BVW_VBOX_BORDER_WIDTH 1
 
 static const GtkTargetEntry target_table[] = {
@@ -2359,7 +2361,7 @@ on_mouse_click_fullscreen (GtkWidget *widget, Totem *totem)
 {
 	popup_timeout_remove (totem);
 
-	totem->popup_timeout = g_timeout_add (2000,
+	totem->popup_timeout = g_timeout_add (FULLSCREEN_POPUP_TIMEOUT,
 		(GSourceFunc) popup_hide, totem);
 }
 
@@ -2391,7 +2393,7 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 	gtk_widget_show_all (totem->control_popup);
 	bacon_video_widget_set_show_cursor (totem->bvw, TRUE);
 
-	totem->popup_timeout = g_timeout_add (5000,
+	totem->popup_timeout = g_timeout_add (FULLSCREEN_POPUP_TIMEOUT,
 			(GSourceFunc) popup_hide, totem);
 	totem->popup_in_progress = FALSE;
 
