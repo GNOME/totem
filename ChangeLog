@@ -1,5 +1,21 @@
 2002-12-07  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am: upd
+	* src/cd-drive.c: (cdrom_get_name): fixed getting the name
+	* src/list_cddrives.c: (list_cdroms), (main): added test case
+	* src/totem-cd-selection.c: (get_drive),
+	(totem_cd_selection_instance_init), (option_menu_device_changed),
+	(cdrom_option_menu), (totem_cd_selection_new),
+	(totem_cd_selection_get_default_device),
+	(totem_cd_selection_set_device), (totem_cd_selection_get_device):
+	* src/totem-cd-selection.h: added the implementation for the option
+	menu selection
+	* src/totem.c: (totem_setup_preferences): updated
+	* data/totem.schemas.in: changed the default mediadev to "auto"
+	(Closes: #95653)
+
+2002-12-07  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.glade:
 	* src/totem-cd-selection.c: (totem_cd_selection_get_type),
 	(totem_cd_selection_class_init),

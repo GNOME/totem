@@ -2032,6 +2032,7 @@ static void
 totem_setup_preferences (Totem *totem)
 {
 	GtkWidget *item;
+	const char *device;
 
 	g_return_if_fail (totem->gc != NULL);
 
@@ -2057,6 +2058,17 @@ totem_setup_preferences (Totem *totem)
 			G_CALLBACK (on_checkbutton1_toggled), totem);
 
 	item = glade_xml_get_widget (totem->xml, "custom3");
+	device = gconf_client_get_string
+		(totem->gc, "/apps/totem/mediadev", NULL);
+	if (device == NULL || (strcmp (device, "") == 0)
+			|| (strcmp (device, "auto") == 0))
+	{
+		device = totem_cd_selection_get_default_device
+			(TOTEM_CD_SELECTION (item));
+		gconf_client_set_string (totem->gc, "/apps/totem/mediadev",
+				device, NULL);
+	}
+
 	totem_cd_selection_set_device (TOTEM_CD_SELECTION (item),
 			gconf_client_get_string
 			(totem->gc, "/apps/totem/mediadev", NULL));

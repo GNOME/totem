@@ -1,6 +1,8 @@
 
 bin_PROGRAMS = totem
 
+noinst_PROGRAMS = list_cddrives
+
 MARSHALFILES = gtkxine-marshal.h gtkxine-marshal.c
 GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
 
@@ -33,6 +35,9 @@ EGGDIR=$(srcdir)/../../libegg/libegg/recent-files/
 regenerate-built-sources:
 	EGGFILES="$(EGG_RECENT_FILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh
 
+list_cddrives_SOURCES = list_cddrives.c cd-drive.c cd-drive.h
+list_cddrives_LDADD = $(EXTRA_GNOME_LIBS)
+
 totem_SOURCES = 			\
 	totem.c				\
 	totem.h				\
@@ -46,11 +51,12 @@ totem_SOURCES = 			\
 	rb-ellipsizing-label.h		\
 	totem-cd-selection.c		\
 	totem-cd-selection.h		\
+	cd-drive.c cd-drive.h		\
 	scrsaver.c  scrsaver.h		\
 	video-utils.c video-utils.h	\
 	gtk-message.c gtk-message.h	\
-        debug.h                         \
-        $(EGG_RECENT_FILES)
+	debug.h                         \
+	$(EGG_RECENT_FILES)
 
 totem_LDADD = $(EXTRA_GNOME_LIBS) $(XINE_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS)
 totem_LDFLAGS = -export-dynamic

@@ -1,6 +1,5 @@
 /* 
- * Copyright (C) 2001-2002 the xine project
- * 	Heavily modified by Bastien Nocera <hadess@hadess.net>
+ * Copyright (C) 2002 Bastien Nocera <hadess@hadess.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +17,7 @@
  *
  * $Id$
  *
- * the xine engine in a widget - header
+ * Authors: Bastien Nocera <hadess@hadess.net>
  */
 
 #ifndef HAVE_TOTEM_CD_SELECTION_H
@@ -51,6 +50,7 @@ GtkWidget *totem_cd_selection_new                ();
 void totem_cd_selection_set_device		 (TotemCdSelection *tcs,
 						  const char *device);
 const char *totem_cd_selection_get_device	 (TotemCdSelection *tcs);
+const char *totem_cd_selection_get_default_device (TotemCdSelection *tcs);
 
 G_END_DECLS
 

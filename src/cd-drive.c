@@ -28,6 +28,7 @@
 #ifdef __linux__
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/ioctl.h>
@@ -287,10 +288,9 @@ add_linux_cd_recorder (GList *cdroms,
 static char *
 cdrom_get_name (struct cdrom_unit *cdrom, struct scsi_unit *units, int n_units)
 {
-	char *filename, line[2048], *retval;
-	FILE *fd;
+	char *filename, *line, *retval;
 	struct scsi_unit *unit;
-	int bus, id, lun;
+	int bus, id, lun, i;
 
 	g_return_val_if_fail (cdrom != NULL, FALSE);
 
@@ -310,17 +310,20 @@ cdrom_get_name (struct cdrom_unit *cdrom, struct scsi_unit *units, int n_units)
 	} else {
 		filename = g_strdup_printf ("/proc/ide/%s/model",
 				cdrom->device);
-		fd = fopen (filename, "r");
-		g_free (filename);
-
-		if (fd == NULL) {
+		if (!g_file_get_contents (filename, &line, NULL, NULL)
+				|| line == NULL) {
+			g_free (filename);
 			return NULL;
 		}
+		g_free (filename);
 
-		fscanf (fd, "%s", line);
-		retval = g_strdup_printf (line);
+		i = strlen (line);
+		if (line[i-1] != '\n')
+			retval = g_strdup (line);
+		else
+			retval = strndup (line, i - 1);
 
-		fclose (fd);
+		g_free (line);
 	}
 
 	return retval;

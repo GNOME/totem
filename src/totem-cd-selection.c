@@ -1,6 +1,7 @@
 /* 
- * Copyright (C) 2001-2002 the xine project
- * 	Heavily modified by Bastien Nocera <hadess@hadess.net>
+ * Copyright (C) 2002 Bastien Nocera <hadess@hadess.net>
+ *
+ * totem-cd-selection.c
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
  *
  * $Id$
  *
- * the xine engine in a widget - implementation
+ * Authors: Bastien Nocera <hadess@hadess.net>
  */
 
 #include <config.h>
@@ -44,7 +45,8 @@ enum {
 
 struct TotemCdSelectionPrivate {
 	gboolean is_entry;
-	GtkWidget *entry;
+	GtkWidget *widget;
+	GList *cdroms;
 };
 
 
@@ -63,6 +65,13 @@ static void totem_cd_selection_finalize (GObject *object);
 static GtkWidgetClass *parent_class = NULL;
 
 static int tcs_table_signals[LAST_SIGNAL] = { 0 };
+
+static CDDrive *
+get_drive (TotemCdSelection *tcs, int nr)
+{
+	return g_list_nth (tcs->priv->cdroms, nr)->data;
+}
+
 
 GtkType
 totem_cd_selection_get_type (void)
@@ -133,7 +142,13 @@ totem_cd_selection_instance_init (TotemCdSelection *tcs)
 {
 	tcs->priv = g_new0 (TotemCdSelectionPrivate, 1);
 
+#ifdef __linux__
+	tcs->priv->is_entry = FALSE;
+#else
 	tcs->priv->is_entry = TRUE;
+#endif
+
+	tcs->priv->cdroms = NULL;
 }
 
 static void
@@ -163,6 +178,49 @@ totem_cd_selection_finalize (GObject *object)
 }
 
 static void
+option_menu_device_changed (GtkOptionMenu *option_menu, gpointer user_data)
+{
+	TotemCdSelection *tcs = (TotemCdSelection *) user_data;
+	CDDrive *drive;
+	int i;
+
+	i = gtk_option_menu_get_history (GTK_OPTION_MENU (option_menu));
+	drive = get_drive (tcs, i);
+
+	g_signal_emit (G_OBJECT (tcs),
+			tcs_table_signals[DEVICE_CHANGED],
+			0, drive->device);
+}
+
+static GtkWidget *
+cdrom_option_menu (TotemCdSelection *tcs)
+{
+	GList *l;
+	GtkWidget *option_menu, *menu, *item;
+	CDDrive *cdrom;
+
+	tcs->priv->cdroms = scan_for_cdroms (FALSE, FALSE);
+
+	menu = gtk_menu_new();
+	gtk_widget_show(menu);
+
+	option_menu = gtk_option_menu_new ();
+
+	for (l = tcs->priv->cdroms; l != NULL; l = l->next)
+	{
+		cdrom = l->data;
+		item = gtk_menu_item_new_with_label (cdrom->name);
+		gtk_widget_show (item);
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+	}
+	gtk_option_menu_set_history (GTK_OPTION_MENU (option_menu), 0);
+
+	gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
+
+	return option_menu;
+}
+
+static void
 on_combo_entry_changed (GnomeFileEntry *entry, gpointer user_data)
 {
 	TotemCdSelection *tcs = (TotemCdSelection *) user_data;
@@ -189,21 +247,30 @@ totem_cd_selection_new (void)
 
 	if (tcs->priv->is_entry)
 	{
-		tcs->priv->entry = gnome_file_entry_new (NULL,
+		tcs->priv->widget = gnome_file_entry_new (NULL,
 					_("Select the drive"));
-		g_signal_connect (G_OBJECT (tcs->priv->entry), "changed",
+		g_signal_connect (G_OBJECT (tcs->priv->widget), "changed",
 				G_CALLBACK (on_combo_entry_changed), tcs);
 
 		gtk_box_pack_start (GTK_BOX (widget),
-				tcs->priv->entry,
+				tcs->priv->widget,
 				TRUE,       /* expand */
 				TRUE,       /* fill */
 				0);         /* padding */
-
-		gtk_widget_show_all (tcs->priv->entry);
 	} else {
-		//FIXME
+		tcs->priv->widget = cdrom_option_menu (tcs);
+
+		g_signal_connect (tcs->priv->widget, "changed",
+				(GCallback)option_menu_device_changed, tcs);
+
+		gtk_box_pack_start (GTK_BOX (widget),
+				tcs->priv->widget,
+				TRUE,       /* expand */
+				TRUE,       /* fill */
+				0);         /* padding */
 	}
+
+	gtk_widget_show_all (tcs->priv->widget);
 
 	return widget;
 }
@@ -249,43 +316,81 @@ totem_cd_selection_get_property (GObject *object, guint property_id,
 	}
 }
 
+const char *
+totem_cd_selection_get_default_device (TotemCdSelection *tcs)
+{
+	GList *l;
+	CDDrive *drive;
+
+	l = tcs->priv->cdroms;
+	if (tcs->priv->cdroms == NULL)
+		return "/dev/cdrom";
+
+	drive = l->data;
+
+	return drive->device;
+}
+
 void
 totem_cd_selection_set_device (TotemCdSelection *tcs, const char *device)
 {
+	GtkWidget *entry;
+	GList *l;
+	CDDrive *drive;
+	gboolean found;
+	int i;
+
+	g_return_if_fail (tcs != NULL);
+	g_return_if_fail (TOTEM_IS_CD_SELECTION (tcs));
+
 	if (tcs->priv->is_entry == TRUE)
 	{
-		GtkWidget *entry;
-
 		entry = gnome_file_entry_gtk_entry
-			(GNOME_FILE_ENTRY (tcs->priv->entry));
+			(GNOME_FILE_ENTRY (tcs->priv->widget));
 		gtk_entry_set_text (GTK_ENTRY (entry), device);
+	} else {
+		i = 0;
+		found = FALSE;
+
+		for (l = tcs->priv->cdroms; l != NULL && found == FALSE;
+				l = l->next)
+		{
+			drive = l->data;
+
+			if (strcmp (drive->device, device) == 0)
+				found = TRUE;
+		}
+
+		g_return_if_fail (found);
+
+		gtk_option_menu_set_history (GTK_OPTION_MENU
+				(tcs->priv->widget), i);
 	}
 }
 
 const char *
 totem_cd_selection_get_device (TotemCdSelection *tcs)
 {
+	GtkWidget *entry;
+	CDDrive *drive;
+	int i;
+
+	g_return_val_if_fail (tcs != NULL, NULL);
+	g_return_val_if_fail (TOTEM_IS_CD_SELECTION (tcs), NULL);
+
 	if (tcs->priv->is_entry == TRUE)
 	{
-		GtkWidget *entry;
-
 		entry = gnome_file_entry_gtk_entry
-			(GNOME_FILE_ENTRY (tcs->priv->entry));
+			(GNOME_FILE_ENTRY (tcs->priv->widget));
 		return gtk_entry_get_text (GTK_ENTRY (entry));
+	} else {
+		i = gtk_option_menu_get_history (GTK_OPTION_MENU
+				(tcs->priv->widget));
+		drive = get_drive (tcs, i);
+
+		return drive->device;
 	}
 
 	return NULL;
 }
-
-#if 0
-void
-totem_cd_selection_set_speed (TotemCdSelection *tcs, Speeds speed)
-{
-	g_return_if_fail (tcs != NULL);
-	g_return_if_fail (TOTEM_IS_CD_SELECTION (tcs));
-	g_return_if_fail (tcs->priv->xine != NULL);
-
-	xine_set_param (tcs->priv->stream, XINE_PARAM_SPEED, speeds[speed]);
-}
-#endif
 
