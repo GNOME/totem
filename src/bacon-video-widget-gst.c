@@ -1392,6 +1392,14 @@ bacon_video_widget_set_tv_out (BaconVideoWidget * bvw, TvOutType tvout)
   gconf_client_set_int (bvw->priv->gc,
       GCONF_PREFIX"/tv_out_type", tvout, NULL);
 
+#ifdef HAVE_NVTV
+  if (tvout == TV_OUT_NVTV_PAL) {
+    nvtv_simple_set_tvsystem(NVTV_SIMPLE_TVSYSTEM_PAL);
+  } else if (tvout == TV_OUT_NVTV_NTSC) {
+    nvtv_simple_set_tvsystem(NVTV_SIMPLE_TVSYSTEM_NTSC);
+  }
+#endif
+
   return FALSE;
 }
 
