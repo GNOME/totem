@@ -1954,6 +1954,7 @@ on_about1_activate (GtkButton *button, Totem *totem)
 		"Bastien Nocera <hadess@hadess.net>",
 		"Julien Moutte <julien@moutte.net> (GStreamer backend)",
 		"Guenter Bartsch <guenter@users.sourceforge.net>",
+		"Ronald Bultje <rbultje@ronald.bitfreak.net>",
 		NULL
 	};
 	const gchar *documenters[] = { NULL };
