@@ -7,15 +7,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2002-10-22 02:55+0200\n"
-"PO-Revision-Date: 2002-10-22 02:58+0200\n"
+"POT-Creation-Date: 2002-10-26 02:16+0200\n"
+"PO-Revision-Date: 2002-10-26 02:20+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/playlist.glade.h:1 src/gtk-playlist.c:732
+#: data/playlist.glade.h:1 src/gtk-playlist.c:775
 msgid "Playlist"
 msgstr "Spellista"
 
@@ -95,7 +95,7 @@ msgstr "Hoppa över framlänges"
 msgid "Toggle Aspect Ratio"
 msgstr "Växla proportioner"
 
-#: data/totem.glade.h:17 src/totem.c:1009
+#: data/totem.glade.h:17 src/totem.c:1037
 msgid "Totem"
 msgstr "Totem"
 
@@ -175,15 +175,23 @@ msgstr "Upprepningsläge"
 msgid "Resize the canvas automatically on file load"
 msgstr "Ändra storleken automatiskt vid filinläsning"
 
-#: src/gtk-playlist.c:403 src/totem.c:841
+#: data/totem.schemas.in.h:6
+msgid "X coordinate for the Playlist"
+msgstr "X-koordinat för spellistan"
+
+#: data/totem.schemas.in.h:7
+msgid "Y coordinate for the Playlist"
+msgstr "Y-koordinat för spellistan"
+
+#: src/gtk-playlist.c:405 src/totem.c:869
 msgid "Select files"
 msgstr "Välj filer"
 
-#: src/gtk-playlist.c:543
+#: src/gtk-playlist.c:545
 msgid "Playing"
 msgstr "Spelar"
 
-#: src/gtk-playlist.c:554
+#: src/gtk-playlist.c:556
 msgid "Filename"
 msgstr "Filnamn"
 
@@ -191,7 +199,7 @@ msgstr "Filnamn"
 msgid "Totem Video Window"
 msgstr "Totem-videofönster"
 
-#: src/gtk-xine.c:505
+#: src/gtk-xine.c:507
 msgid ""
 "The configuration system is not initialised.\n"
 "The defaults will be used."
@@ -199,7 +207,7 @@ msgstr ""
 "Konfigurationssystemet är inte initierat.\n"
 "Standardalternativen kommer att användas."
 
-#: src/gtk-xine.c:748
+#: src/gtk-xine.c:749
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
@@ -207,71 +215,34 @@ msgstr ""
 "Kunde inte initiera trådstödet.\n"
 "Du bör installera ett trådsäkert Xlib."
 
-#: src/gtk-xine.c:784
+#: src/gtk-xine.c:785
 msgid "Could not find a suitable video output."
 msgstr "Kunde inte hitta en lämplig videoutmatning."
 
-#: src/gtk-xine.c:916
+#: src/gtk-xine.c:917
 #, c-format
 msgid "No video plugin available to decode '%s'."
 msgstr "Ingen videoinsticksmodul tillgänglig för avkodning av \"%s\"."
 
-#: src/input_gnomevfs.c:149
-#, c-format
-msgid "input_file: trying to open subtitle file '%s'\n"
-msgstr "input_file: försöker att öppna undertitelfilen \"%s\"\n"
-
-#: src/input_gnomevfs.c:155
-#, c-format
-msgid "input_file: failed to open subtitle file '%s'\n"
-msgstr "input_file: misslyckades med att öppna undertitelfilen \"%s\"\n"
-
-#: src/input_gnomevfs.c:224
-msgid "input_gnomevfs: read error\n"
-msgstr "input_gnomevfs: läsfel\n"
-
-#: src/input_gnomevfs.c:376
-msgid "gnome-vfs input plugin as shipped with xine"
-msgstr "gnome-vfs-inmatningsinsticksmodul som den medföljer xine"
-
-#: src/input_gnomevfs.c:393
-#, c-format
-msgid "input_gnomevfs: get optional data, type %08x, sub %p\n"
-msgstr "input_gnomevfs: hämta valfri data, typ %08x, under %p\n"
-
-#: src/input_gnomevfs.c:444
-#, c-format
-msgid ""
-"gnomevfs input plugin doesn't support plugin API version %d.\n"
-"PLUGIN DISABLED.\n"
-"This means there's a version mismatch between xine and this input plugin.\n"
-"Installing current input plugins should help.\n"
-msgstr ""
-"gnomevfs-inmatningsinsticksmodulen stöder inte API-version %d för\n"
-"insticksmoduler.\n"
-"INSTICKSMODULEN INAKTIVERAD.\n"
-"Detta etyder att versionerna av xine och denna insticksmodul inte passar.\n"
-"Att installera aktuella insticksmoduler ör hjälpa.\n"
-
-#: src/totem.c:352 src/totem.c:1589
+#: src/totem.c:380 src/totem.c:1630
 msgid "<span size=\"medium\"><b>No file</b></span>"
 msgstr "<span size=\"medium\"><b>Ingen fil</b></span>"
 
-#: src/totem.c:985
+#: src/totem.c:1013
 msgid "translator_credits"
 msgstr ""
 "Christian Rose\n"
 "Skicka synpunkter på översättningen till sv@li.org"
 
-#: src/totem.c:1010
+#: src/totem.c:1038
 msgid "(C) 2002 Bastien Nocera"
 msgstr "© 2002 Bastien Nocera"
 
-#: src/totem.c:1011
+#: src/totem.c:1039
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Filmspelare (baserad på Xine-biblioteken)"
 
-#: src/totem.c:1250
+#: src/totem.c:1293
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -280,7 +251,7 @@ msgstr ""
 "Totem kunde inte starta:\n"
 "%s"
 
-#: src/totem.c:1256
+#: src/totem.c:1299
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'\n"
@@ -289,12 +260,12 @@ msgstr ""
 "Det finns ingen insticksmodul för Totem för hantering av \"%s\"\n"
 "Totem kommer inte att kunna spela det."
 
-#: src/totem.c:1261
+#: src/totem.c:1304
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "\"%s\" är trasig, och Totem kan inte spela den längre."
 
-#: src/totem.c:1265
+#: src/totem.c:1308
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -303,7 +274,7 @@ msgstr ""
 "Totem kunde inte spela \"%s\":\n"
 "%s"
 
-#: src/totem.c:1677
+#: src/totem.c:1718
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -314,7 +285,7 @@ msgstr ""
 "konfigurationsmotorn:\n"
 "%s"
 
-#: src/totem.c:1713 src/totem.c:1721
+#: src/totem.c:1754 src/totem.c:1762
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -322,13 +293,42 @@ msgstr ""
 "Kunde inte läsa in huvudgränssnittet (totem.glade).\n"
 "Försäkra dig om att Totem är korrekt installerat."
 
-#: src/totem.c:1734
+#: src/totem.c:1775
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
 msgstr ""
 "Kunde inte läsa in gränssnittet för spellistan.\n"
 "Försäkra dig om att Totem är korrekt installerat."
+
+#~ msgid "input_file: trying to open subtitle file '%s'\n"
+#~ msgstr "input_file: försöker att öppna undertitelfilen \"%s\"\n"
+
+#~ msgid "input_file: failed to open subtitle file '%s'\n"
+#~ msgstr "input_file: misslyckades med att öppna undertitelfilen \"%s\"\n"
+
+#~ msgid "input_gnomevfs: read error\n"
+#~ msgstr "input_gnomevfs: läsfel\n"
+
+#~ msgid "gnome-vfs input plugin as shipped with xine"
+#~ msgstr "gnome-vfs-inmatningsinsticksmodul som den medföljer xine"
+
+#~ msgid "input_gnomevfs: get optional data, type %08x, sub %p\n"
+#~ msgstr "input_gnomevfs: hämta valfri data, typ %08x, under %p\n"
+
+#~ msgid ""
+#~ "gnomevfs input plugin doesn't support plugin API version %d.\n"
+#~ "PLUGIN DISABLED.\n"
+#~ "This means there's a version mismatch between xine and this input "
+#~ "plugin.\n"
+#~ "Installing current input plugins should help.\n"
+#~ msgstr ""
+#~ "gnomevfs-inmatningsinsticksmodulen stöder inte API-version %d för\n"
+#~ "insticksmoduler.\n"
+#~ "INSTICKSMODULEN INAKTIVERAD.\n"
+#~ "Detta etyder att versionerna av xine och denna insticksmodul inte "
+#~ "passar.\n"
+#~ "Att installera aktuella insticksmoduler ör hjälpa.\n"
 
 #~ msgid "Movie Player"
 #~ msgstr "Filmspelare"
