@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem cs\n"
-"POT-Creation-Date: 2003-04-10 12:34+0200\n"
-"PO-Revision-Date: 2003-04-10 19:32+0200\n"
+"POT-Creation-Date: 2003-04-18 12:38+0200\n"
+"PO-Revision-Date: 2003-04-18 12:59+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -124,7 +124,7 @@ msgstr "Rok:"
 msgid "Play movies and songs"
 msgstr "Přehrávání filmů a písniček"
 
-#: data/totem.desktop.in.h:2 src/totem.c:2938
+#: data/totem.desktop.in.h:2 src/totem.c:2944
 msgid "Totem Movie Player"
 msgstr "Přehrávač filmů Totem"
 
@@ -421,7 +421,7 @@ msgid "Toggle the aspect ratio"
 msgstr "Přepnout poměr stran"
 
 #. Title
-#: data/totem.glade.h:75 src/totem.c:510 src/totem.c:532 src/totem.c:1478
+#: data/totem.glade.h:75 src/totem.c:509 src/totem.c:531 src/totem.c:1478
 msgid "Totem"
 msgstr "Totem"
 
@@ -597,7 +597,7 @@ msgstr "_Heslo:"
 msgid "Remember this password"
 msgstr "Zapamatovat si toto heslo"
 
-#: src/gtk-playlist.c:506 src/totem.c:1239
+#: src/gtk-playlist.c:506 src/totem.c:1234
 msgid "Select files"
 msgstr "Vyberte soubory"
 
@@ -629,19 +629,19 @@ msgstr "Zařadit do fronty"
 msgid "Replace"
 msgstr "Nahradit"
 
-#: src/totem.c:217
+#: src/totem.c:216
 msgid "Playing"
 msgstr "Přehrává se"
 
-#: src/totem.c:224
+#: src/totem.c:223
 msgid "Paused"
 msgstr "Pozastaveno"
 
-#: src/totem.c:231 src/totem-statusbar.c:171
+#: src/totem.c:230 src/totem-statusbar.c:171
 msgid "Stopped"
 msgstr "Zastaveno"
 
-#: src/totem.c:289 src/totem.c:635 src/totem.c:739
+#: src/totem.c:288 src/totem.c:630 src/totem.c:734
 #, c-format
 msgid ""
 "Totem could not play '%s'.\n"
@@ -650,7 +650,7 @@ msgstr ""
 "Totem nemohl přehrát '%s'.\n"
 "Důvod: %s"
 
-#: src/totem.c:318
+#: src/totem.c:317
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -662,7 +662,7 @@ msgstr ""
 "Chcete -li tento typ médií přehrát, nainstalujte odpovídající zásuvný modul "
 "a znovu spusťte Totem."
 
-#: src/totem.c:326
+#: src/totem.c:325
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -674,16 +674,16 @@ msgstr ""
 "zařízení správně nastaveno."
 
 #. Title
-#: src/totem.c:486
+#: src/totem.c:485
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:499 src/totem.c:2783
+#: src/totem.c:498 src/totem.c:2790
 msgid "No file"
 msgstr "Žádný soubor"
 
-#: src/totem.c:1290 src/totem.c:1301
+#: src/totem.c:1285 src/totem.c:1296
 msgid ""
 "Couldn't load the 'Open Location...' interface.\n"
 "Make sure that Totem is properly installed."
@@ -691,24 +691,25 @@ msgstr ""
 "Nelze načíst rozhraní 'Otevřít umístění...'.\n"
 "Ujistěte se, že je Totem řádně nainstalován."
 
-#: src/totem.c:1362
+#: src/totem.c:1357
 msgid "Totem could not eject the optical media."
 msgstr "Totem nemohl vysunout optické médium."
 
-#: src/totem.c:1454
+#: src/totem.c:1449
 msgid "translator_credits"
 msgstr "Michal Bukovjan <bukm@centrum.cz>"
 
-#: src/totem.c:1480
-msgid "Movie Player (based on the xine libraries)"
-msgstr "Přehrávač filmů (založený na knihovnách xine)"
+#: src/totem.c:1475
+#, c-format
+msgid "Movie Player using %s"
+msgstr "Přehrávač filmů používající %s"
 
-#: src/totem.c:1534 src/totem.c:1545
+#: src/totem.c:1537 src/totem.c:1548
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Obrazovka%d.png"
 
-#: src/totem.c:1598
+#: src/totem.c:1601
 #, c-format
 msgid ""
 "Totem could not get a screenshot of that film.\n"
@@ -717,7 +718,7 @@ msgstr ""
 "Totem nebyl schopen zachytit obrazovku s tímto filmem.\n"
 "Důvod: %s."
 
-#: src/totem.c:1608
+#: src/totem.c:1611
 msgid ""
 "Totem could not get a screenshot of that film.\n"
 "Please file a bug, this isn't supposed to happen"
@@ -725,7 +726,7 @@ msgstr ""
 "Totem nebyl schopen zachytit obrazovku s tímto filmem.\n"
 "Ohlašte prosím chybu, toto by se nemělo stát"
 
-#: src/totem.c:1634
+#: src/totem.c:1637
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
@@ -734,7 +735,7 @@ msgstr ""
 "Soubor '%s' již existuje.\n"
 "Obrazovka nebyla uložena."
 
-#: src/totem.c:1645
+#: src/totem.c:1648
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -743,7 +744,7 @@ msgstr ""
 "Při ukládání obrazovky nastala chyba.\n"
 "Podrobnosti: %s"
 
-#: src/totem.c:1662
+#: src/totem.c:1665
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -751,7 +752,7 @@ msgstr ""
 "Totem nemůže zobrazit okno vlastností filmu.\n"
 "Ujistěte se, že je tato aplikace správně nainstalovaná."
 
-#: src/totem.c:1731
+#: src/totem.c:1734
 #, c-format
 msgid ""
 "Totem could not seek in '%s'.\n"
@@ -760,11 +761,11 @@ msgstr ""
 "Totem se nemohl posouvat v '%s':\n"
 "Důvod: %s"
 
-#: src/totem.c:2361
+#: src/totem.c:2368
 msgid "Auto"
 msgstr "Auto"
 
-#: src/totem.c:2713
+#: src/totem.c:2720
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -773,7 +774,7 @@ msgstr ""
 "Totem se nemohl spustit:\n"
 "%s"
 
-#: src/totem.c:2957
+#: src/totem.c:2962
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -784,7 +785,7 @@ msgstr ""
 "rozhraní pro nastavení:\n"
 "%s"
 
-#: src/totem.c:2972 src/totem.c:3004
+#: src/totem.c:2977 src/totem.c:3009
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -792,7 +793,7 @@ msgstr ""
 "Nelze načíst hlavní rozhraní (totem.glade).\n"
 "Ujistěte se, že je Totem řádně nainstalován."
 
-#: src/totem.c:3030
+#: src/totem.c:3035
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
@@ -819,11 +820,11 @@ msgstr "Styl ohraničení okolo textu ve stavové liště"
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: src/bacon-video-widget.c:56
+#: src/bacon-video-widget-xine.c:56 src/bacon-video-widget-gst.c:56
 msgid "Totem Video Window"
 msgstr "Video okno aplikace Totem"
 
-#: src/bacon-video-widget.c:555
+#: src/bacon-video-widget-xine.c:555
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -832,40 +833,40 @@ msgstr ""
 "Nelze načíst ovladač zvuku '%s'.\n"
 "Ověřte prosím, zda není zařízení obsazeno."
 
-#: src/bacon-video-widget.c:968
+#: src/bacon-video-widget-xine.c:968
 msgid "There is no plugin to handle this movie"
 msgstr "Pro obsluhu tohoto filmu chybí zásuvný modul"
 
-#: src/bacon-video-widget.c:972
+#: src/bacon-video-widget-xine.c:972
 msgid "This movie is broken and can not be played further"
 msgstr "Tento film je poškozen a nelze jej dále přehrávat"
 
-#: src/bacon-video-widget.c:976
+#: src/bacon-video-widget-xine.c:976
 msgid "This location is not a valid one"
 msgstr "Toto umístění není platné"
 
-#: src/bacon-video-widget.c:980
+#: src/bacon-video-widget-xine.c:980
 msgid "Generic Error"
 msgstr "Obecná chyba"
 
-#: src/bacon-video-widget.c:1294
+#: src/bacon-video-widget-xine.c:1303
 #, c-format
 msgid "Video type '%s' is not handled"
 msgstr "Typ videa '%s' není obsloužen"
 
-#: src/bacon-video-widget.c:2271
+#: src/bacon-video-widget-xine.c:2293
 msgid "Movie is not playing"
 msgstr "Film se nepřehrává"
 
-#: src/bacon-video-widget.c:2279
+#: src/bacon-video-widget-xine.c:2301
 msgid "No video to capture"
 msgstr "Žádné video k zachycení"
 
-#: src/bacon-video-widget.c:2286
+#: src/bacon-video-widget-xine.c:2308
 msgid "Video codec is not handled"
 msgstr "Kodek videa '%s' není obsloužen"
 
-#: src/bacon-video-widget.c:2297
+#: src/bacon-video-widget-xine.c:2319
 msgid "Height or width of the video is 0. Please file a bug."
 msgstr "Výška nebo šířka videa je 0. Ohlaste prosím chybu."
 
@@ -943,6 +944,3 @@ msgstr "%d kbps"
 
 #~ msgid "Could not find a suitable video output."
 #~ msgstr "Nelze nalézt vhodný výstup pro video."
-
-#~ msgid "Time: %s "
-#~ msgstr "Čas: %s "
