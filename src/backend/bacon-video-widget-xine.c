@@ -122,6 +122,7 @@ struct BaconVideoWidgetPrivate {
 	gboolean show_vfx;
 	gboolean using_vfx;
 	xine_post_t *vis;
+	GList *visuals;
 
 	/* Other stuff */
 	int xpos, ypos;
@@ -384,6 +385,9 @@ static void
 bacon_video_widget_finalize (GObject *object)
 {
 	BaconVideoWidget *bvw = (BaconVideoWidget *) object;
+
+	g_list_foreach (bvw->priv->visuals, (GFunc) g_free, NULL);
+	g_list_free (bvw->priv->visuals);
 
 	if (bvw->priv->icon != NULL)
 		gdk_pixbuf_unref (bvw->priv->icon);
@@ -1984,24 +1988,27 @@ GList *
 bacon_video_widget_get_visuals_list (BaconVideoWidget *bvw)
 {
 	const char * const* plugins;
-	GList *list = NULL;
 	int i;
 
 	g_return_val_if_fail (bvw != NULL, NULL);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
 	g_return_val_if_fail (bvw->priv->xine != NULL, NULL);
 
+	if (bvw->priv->visuals != NULL)
+		return bvw->priv->visuals;
+
 	plugins = xine_list_post_plugins_typed (bvw->priv->xine,
 			XINE_POST_TYPE_AUDIO_VISUALIZATION);
 
 	for (i = 0; plugins[i] != NULL; i++)
 	{
-		list = g_list_prepend (list, g_strdup (plugins[i]));
+		bvw->priv->visuals = g_list_prepend
+			(bvw->priv->visuals, g_strdup (plugins[i]));
 	}
 
-	list = g_list_reverse (list);
+	bvw->priv->visuals = g_list_reverse (bvw->priv->visuals);
 
-	return list;
+	return bvw->priv->visuals;
 }
 
 gboolean

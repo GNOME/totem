@@ -40,27 +40,16 @@ struct Vanity {
 	/* Prefs */
 	GtkWidget *prefs;
 	GConfClient *gc;
+
+	gboolean debug;
 };
 
 static void vanity_action_exit (Vanity *vanity);
 
-#if 0
 static const struct poptOption options[] = {
-	{"play-pause", '\0', POPT_ARG_NONE, NULL, 0, N_("Play/Pause"), NULL},
-	{"next", '\0', POPT_ARG_NONE, NULL, 0, N_("Next"), NULL},
-	{"previous", '\0', POPT_ARG_NONE, NULL, 0, N_("Previous"), NULL},
-	{"seek-fwd", '\0', POPT_ARG_NONE, NULL, 0, N_("Seek Forwards"), NULL},
-	{"seek-bwd", '\0', POPT_ARG_NONE, NULL, 0, N_("Seek Backwards"), NULL},
-	{"volume-up", '\0', POPT_ARG_NONE, NULL, 0, N_("Volume Up"), NULL},
-	{"volume-down", '\0', POPT_ARG_NONE, NULL, 0, N_("Volume Down"), NULL},
-	{"fullscreen", '\0', POPT_ARG_NONE, NULL, 0,
-		N_("Toggle Fullscreen"), NULL},
-	{"quit", '\0', POPT_ARG_NONE, NULL, 0, N_("Quit"), NULL},
-	{"enqueue", '\0', POPT_ARG_NONE, NULL, 0, N_("Enqueue"), NULL},
-	{"replace", '\0', POPT_ARG_NONE, NULL, 0, N_("Replace"), NULL},
+	{"debug", '\0', POPT_ARG_NONE, NULL, 0, N_("Debug mode on"), NULL},
 	{NULL, '\0', 0, NULL, 0} /* end the list */
 };
-#endif
 
 static void
 long_action (void)
@@ -627,18 +616,27 @@ video_widget_create (Vanity *vanity)
 
 	gtk_widget_show (GTK_WIDGET (vanity->bvw));
 
-	bacon_video_widget_open (vanity->bvw, "v4l:/", &err);
-	if (err != NULL)
+	if (vanity->debug == FALSE)
 	{
-		char *msg;
+		bacon_video_widget_open (vanity->bvw, "v4l:/", &err);
 
-		msg = g_strdup_printf (_("Vanity could not contact the webcam.\nReason: %s"), err->message);
-		g_error_free (err);
-		gtk_widget_hide (vanity->win);
-		vanity_action_error_and_exit (msg, vanity);
+		if (err != NULL)
+		{
+			char *msg;
+
+			msg = g_strdup_printf (_("Vanity could not contact the webcam.\nReason: %s"), err->message);
+			g_error_free (err);
+			gtk_widget_hide (vanity->win);
+			vanity_action_error_and_exit (msg, vanity);
+		}
+	} else {
+		bacon_video_widget_set_logo (vanity->bvw, LOGO_PATH);
+		bacon_video_widget_set_logo_mode (vanity->bvw, TRUE);
+		g_message ("%s", LOGO_PATH);
 	}
 
 	bacon_video_widget_play (vanity->bvw, 0, 0, &err);
+#if 0
 	if (err != NULL)
 	{
 		char *msg;
@@ -648,8 +646,23 @@ video_widget_create (Vanity *vanity)
 		gtk_widget_hide (vanity->win);
 		vanity_action_error_and_exit (msg, vanity);
 	}
-
+#endif
 	gtk_widget_set_size_request (container, 0, 0);
+}
+
+static void
+process_command_line (Vanity *vanity, int argc, char **argv)
+{
+	int i;
+
+	if (argc == 1)
+		return;
+
+	for (i = 0; i < argc; i++)
+	{
+		if (strcmp (argv[1], "--debug") == 0)
+			vanity->debug = TRUE;
+	}
 }
 
 int
@@ -685,7 +698,7 @@ main (int argc, char **argv)
 			LIBGNOMEUI_MODULE,
 			argc, argv,
 			GNOME_PARAM_APP_DATADIR, DATADIR,
-//			GNOME_PARAM_POPT_TABLE, options,
+			GNOME_PARAM_POPT_TABLE, options,
 			GNOME_PARAM_NONE);
 
 	glade_init ();
@@ -715,6 +728,8 @@ main (int argc, char **argv)
 	}
 
 	vanity = g_new0 (Vanity, 1);
+
+	process_command_line (vanity, argc, argv);
 
 	/* Main window */
 	vanity->xml = glade_xml_new (filename, NULL, NULL);

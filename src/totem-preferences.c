@@ -319,7 +319,6 @@ visual_menu_changed (GtkOptionMenu *option_menu, Totem *totem)
 		if (bacon_video_widget_set_visuals (totem->bvw, name) == TRUE)
 			totem_action_error (_("Changing the visuals effect type will require a restart to take effect."), totem);
 	}
-	
 }
 
 static void
@@ -548,6 +547,7 @@ totem_preferences_visuals_setup (Totem *totem)
 			GCONF_PREFIX"/visual", NULL);
 	if (visual == NULL || strcmp (visual, "") == 0)
 		visual = g_strdup ("goom");
-	
+
 	bacon_video_widget_set_visuals (totem->bvw, visual);
 }
+
