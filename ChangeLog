@@ -1,5 +1,11 @@
 2004-01-05  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-xine.c: (load_video_out_driver):
+	Don't try to load the XvMC plugin, as it's broken for most
+	purposes (Closes: #129783)
+
+2004-01-05  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_action_open_files), (on_open1_activate):
 	Patch to avoid being able to select directories in the main window
 	file selector (Closes: #129459)
