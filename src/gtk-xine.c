@@ -1348,6 +1348,9 @@ gtk_xine_can_set_volume (GtkXine *gtx)
 	if (gtx->priv->stream == NULL)
 		return FALSE;
 
+	if (xine_get_param (gtx->priv->stream, XINE_PARAM_AUDIO_VOLUME) == -1)
+		return FALSE;
+
 	if (xine_get_param (gtx->priv->stream,
 				XINE_PARAM_AUDIO_CHANNEL_LOGICAL) == -2)
 		return FALSE;

@@ -751,7 +751,8 @@ seek_cb (GtkWidget *widget, gpointer user_data)
 		totem->seek_lock = TRUE;
 		if (GTK_WIDGET(widget) == totem->fs_seek)
 		{
-			totem_action_play (totem, (gint) totem->fs_seekadj->value);
+			totem_action_play (totem,
+					(gint) totem->fs_seekadj->value);
 			/* Update the seek adjustment */
 			gtk_adjustment_set_value (totem->seekadj,
 					gtk_adjustment_get_value

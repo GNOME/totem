@@ -1,3 +1,9 @@
+2002-11-28  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-xine.c: (gtk_xine_can_set_volume): if the volume is -1, we
+	can't set the volume (the OSS output plugin doesn't seem to support
+	setting the volume, weird) (Closes: #99757)
+
 2002-11-27  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c: (totem_action_open_files): removed debug message
