@@ -1,5 +1,11 @@
 2003-04-23  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-xine.c: (configure_cb): add borders from
+	the widget itself
+	* src/totem.c: (main): fix a bug with quotes (Closes: #111459)
+
+2003-04-23  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-preferences.c: (ask_show_visuals),
 	(on_checkbutton2_toggled), (totem_setup_preferences):
 	* src/totem.c: (totem_action_error_and_exit), (main): ask the user if he

@@ -3103,8 +3103,9 @@ main (int argc, char **argv)
 #ifdef HAVE_XINE
 	if (XInitThreads () == 0)
 	{
-		g_warning (_("Could not initialise the thread-safe libraries.\n"                                        "Verify your system installation. Totem
-					will now exit."));
+		g_warning (_("Could not initialise the thread-safe libraries.\n"
+					"Verify your system installation. Totem"
+					"will now exit."));
 		exit (1);
 	}
 #endif

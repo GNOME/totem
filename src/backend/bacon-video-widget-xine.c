@@ -784,8 +784,8 @@ configure_cb (GtkWidget *widget, GdkEventConfigure *event, gpointer user_data)
 {
 	BaconVideoWidget *bvw = (BaconVideoWidget *) user_data;
 
-	bvw->priv->xpos = event->x;
-	bvw->priv->ypos = event->y;
+	bvw->priv->xpos = event->x + GTK_WIDGET (bvw)->allocation.x;
+	bvw->priv->ypos = event->y + GTK_WIDGET (bvw)->allocation.y;
 
 	return FALSE;
 }
