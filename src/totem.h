@@ -53,7 +53,8 @@ int	totem_action_get_aspect_ratio		(Totem *totem);
 void	totem_action_toggle_controls		(Totem *totem);
 
 void	totem_action_set_scale_ratio		(Totem *totem, gfloat ratio);
-void    totem_action_error                      (char *title, char *reason,
+void    totem_action_error                      (const char *title,
+						 const char *reason,
 						 Totem *totem);
 
 GtkWidget * totem_statusbar_create (void);

@@ -100,6 +100,8 @@ totem_SOURCES = 					\
 	totem-private.h			\
 	scrsaver.c scrsaver.h		\
 	totem-options.c totem-options.h	\
+	totem-interface.c		\
+	totem-interface.h		\
 	totem-playlist.c totem-playlist.h \
 	totem-screenshot.c		\
 	totem-screenshot.h		\

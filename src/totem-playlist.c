@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
-/* gtk-playlist.c
+/* totem-playlist.c
 
-   Copyright (C) 2002, 2003 Bastien Nocera
+   Copyright (C) 2002, 2003, 2004, 2005 Bastien Nocera
 
    The Gnome Library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public License as
@@ -33,6 +33,7 @@
 #include <libgnomevfs/gnome-vfs-mime-utils.h>
 #include <string.h>
 
+#include "totem-interface.h"
 #include "totem-pl-parser.h"
 #include "debug.h"
 
@@ -1462,16 +1463,17 @@ totem_playlist_realize (GtkWidget *widget)
 }
 
 GtkWidget*
-totem_playlist_new (const char *glade_filename, GdkPixbuf *playing_pix)
+totem_playlist_new (void)
 {
 	TotemPlaylist *playlist;
 	GtkWidget *container, *item;
-
-	g_return_val_if_fail (glade_filename != NULL, NULL);
+	char *filename;
 
 	playlist = TOTEM_PLAYLIST (g_object_new (GTK_TYPE_PLAYLIST, NULL));
 
-	playlist->_priv->xml = glade_xml_new (glade_filename, NULL, NULL);
+	playlist->_priv->xml = totem_interface_load ("playlist.glade",
+			"playlist", TRUE, NULL);
+
 	if (playlist->_priv->xml == NULL)
 	{
 		totem_playlist_finalize (G_OBJECT (playlist));
@@ -1541,7 +1543,12 @@ totem_playlist_new (const char *glade_filename, GdkPixbuf *playing_pix)
 	/* The configuration */
 	init_config (playlist);
 
-	playlist->_priv->icon = playing_pix;
+	playlist->_priv->icon =
+		totem_interface_load_pixbuf ("playlist-playing.png");
+
+	filename = totem_interface_get_full_path ("playlist-24.png");
+	gtk_window_set_icon_from_file (GTK_WINDOW (playlist), filename, NULL);
+	g_free (filename);
 
 	gtk_widget_show_all (GTK_DIALOG (playlist)->vbox);
 

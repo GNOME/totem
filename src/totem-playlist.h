@@ -58,8 +58,7 @@ struct TotemPlaylistClass {
 };
 
 GtkType    totem_playlist_get_type (void);
-GtkWidget *totem_playlist_new      (const char *glade_filename,
-				    GdkPixbuf *playing_pix);
+GtkWidget *totem_playlist_new      (void);
 
 /* The application is responsible for checking that the mrl is correct
  * Handles directories, m3u playlists, and shoutcast playlists

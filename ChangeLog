@@ -1,5 +1,22 @@
 2005-01-12  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am:
+	* src/bacon-video-widget-gst.c:
+	* src/totem-interface.c: (totem_interface_error_dialog),
+	(totem_interface_error), (totem_interface_error_blocking),
+	(totem_interface_load), (totem_interface_load_pixbuf),
+	(totem_interface_get_full_path):
+	* src/totem-interface.h:
+	* src/totem-playlist.c: (totem_playlist_new):
+	* src/totem-playlist.h:
+	* src/totem-uri.h:
+	* src/totem.c: (totem_action_error), (totem_action_error_and_exit),
+	(on_open_location1_activate), (main):
+	* src/totem.h: add interface helpers for glade files, and images,
+	Add vim bits to the gst widget
+
+2005-01-12  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-gst.c:
 	(bacon_video_widget_open_with_subtitle):
 	* src/bacon-video-widget-xine.c:

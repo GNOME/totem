@@ -2969,3 +2969,7 @@ bacon_video_widget_new (int width, int height,
 
   return GTK_WIDGET (bvw);
 }
+
+/*
+ * vim: sw=2 ts=8 cindent noai bs=2
+ */

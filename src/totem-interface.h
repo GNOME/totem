@@ -1,6 +1,6 @@
-/* totem-uri.h
+/* totem-interface.h
 
-   Copyright (C) 2004 Bastien Nocera <hadess@hadess.net>
+   Copyright (C) 2005 Bastien Nocera <hadess@hadess.net>
 
    The Gnome Library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public License as
@@ -20,19 +20,27 @@
    Author: Bastien Nocera <hadess@hadess.net>
  */
 
-#ifndef TOTEM_URI_H
-#define TOTEM_URI_H
+#ifndef TOTEM_INTERFACE_H
+#define TOTEM_INTERFACE_H
 
-#include "totem.h"
+#include <glade/glade.h>
+#include <gtk/gtkwindow.h>
 
 G_BEGIN_DECLS
 
-char*		totem_create_full_path	(const char *path);
-gboolean	totem_is_media		(const char *uri);
-gboolean	totem_playing_dvd	(const char *uri);
-void		totem_setup_file_monitoring (Totem *totem);
-char*		totem_uri_get_subtitle_uri (const char *uri);
+GdkPixbuf	*totem_interface_load_pixbuf	(const char *name);
+char		*totem_interface_get_full_path	(const char *name);
+GladeXML	*totem_interface_load		(const char *name,
+						 const char *display_name,
+						 gboolean fatal,
+						 GtkWindow *parent);
+void		 totem_interface_error		(const char *title,
+						 const char *reason,
+						 GtkWindow *parent);
+void		 totem_interface_error_blocking	(const char *title,
+						 const char *reason,
+						 GtkWindow *parent);
 
 G_END_DECLS
 
-#endif /* TOTEM_URI_H */
+#endif /* TOTEM_INTERFACE_H */

@@ -47,6 +47,7 @@
 #include "totem-sublang.h"
 #include "totem-options.h"
 #include "totem-uri.h"
+#include "totem-interface.h"
 #include "video-utils.h"
 
 #include "egg-recent-view.h"
@@ -110,58 +111,18 @@ long_action (void)
 }
 
 void
-totem_action_error (char *title, char *reason, Totem *totem)
+totem_action_error (const char *title, const char *reason, Totem *totem)
 {
-	GtkWidget *parent, *error_dialog;
-
-	if (reason == NULL)
-		g_warning ("totem_action_error called with reason == NULL");
-
-	if (totem == NULL)
-		parent = NULL;
-	else
-		parent = totem->win;
-
-	error_dialog =
-		gtk_message_dialog_new (GTK_WINDOW (parent),
-				GTK_DIALOG_MODAL,
-				GTK_MESSAGE_ERROR,
-				GTK_BUTTONS_OK,
-				title);
-	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (error_dialog),
-						  reason);
-
-	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
-	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
-			GTK_RESPONSE_OK);
-	g_signal_connect (G_OBJECT (error_dialog), "destroy", G_CALLBACK
-			(gtk_widget_destroy), error_dialog);
-	g_signal_connect (G_OBJECT (error_dialog), "response", G_CALLBACK
-			(gtk_widget_destroy), error_dialog);
-	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
-
-	gtk_widget_show (error_dialog);
+	totem_interface_error (title, reason,
+			GTK_WINDOW (totem->win));
 }
 
 static void
-totem_action_error_and_exit (char *title, char *reason, Totem *totem)
+totem_action_error_and_exit (const char *title,
+		const char *reason, Totem *totem)
 {
-	GtkWidget *error_dialog;
-
-	error_dialog =
-		gtk_message_dialog_new (NULL,
-				GTK_DIALOG_MODAL,
-				GTK_MESSAGE_ERROR,
-				GTK_BUTTONS_OK,
-				title);
-	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (error_dialog),
-						  reason);
-	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
-	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
-			GTK_RESPONSE_OK);
-	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
-	gtk_dialog_run (GTK_DIALOG (error_dialog));
-
+	totem_interface_error_blocking (title, reason,
+			GTK_WINDOW (totem->win));
 	totem_action_exit (totem);
 }
 
@@ -1572,29 +1533,16 @@ static void
 on_open_location1_activate (GtkButton *button, Totem *totem)
 {
 	GladeXML *glade;
-	char *filename, *mrl;
+	char *mrl;
 	GtkWidget *dialog, *entry;
 	int response;
 	const char *filenames[2];
 
-	filename = g_build_filename (DATADIR,
-			"totem", "uri.glade", NULL);
-	if (g_file_test (filename, G_FILE_TEST_EXISTS) == FALSE)
-	{
-		g_free (filename);
-		totem_action_error (_("Couldn't load the 'Open Location...' interface."), _("Make sure that Totem is properly installed."), totem);
-		return;
-	}
-
-	glade = glade_xml_new (filename, NULL, NULL);
+	glade = totem_interface_load ("uri.glade", "Open Location...",
+			FALSE, GTK_WINDOW (totem->win));
 	if (glade == NULL)
-	{
-		g_free (filename);
-		totem_action_error (_("Couldn't load the 'Open Location...' interface."), _("Make sure that Totem is properly installed."), totem);
 		return;
-	}
 
-	g_free (filename);
 	dialog = glade_xml_get_widget (glade, "open_uri_dialog");
 	entry = glade_xml_get_widget (glade, "uri");
 
@@ -3415,7 +3363,6 @@ main (int argc, char **argv)
 	Totem *totem;
 	char *filename;
 	GConfClient *gc;
-	GdkPixbuf *pix;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -3454,18 +3401,6 @@ main (int argc, char **argv)
 	gnome_authentication_manager_init ();
 #endif /* !HAVE_GTK_ONLY */
 
-	if (g_file_test ("../data/totem.glade", G_FILE_TEST_EXISTS) != FALSE)
-		filename = g_strdup ("../data/totem.glade");
-	else
-		filename = g_build_filename (DATADIR,
-				"totem", "totem.glade", NULL);
-
-	if (g_file_test (filename, G_FILE_TEST_EXISTS) == FALSE)
-	{
-		g_free (filename);
-		totem_action_error_and_exit (_("Couldn't load the main interface (totem.glade)."), _("Make sure that Totem is properly installed."), NULL);
-	}
-
 	totem = g_new0 (Totem, 1);
 
 	/* IPC stuff */
@@ -3486,42 +3421,23 @@ main (int argc, char **argv)
 	totem->gc = gc;
 
 	/* Main window */
-	totem->xml = glade_xml_new (filename, NULL, NULL);
+	totem->xml = totem_interface_load ("totem.glade", "main window",
+			TRUE, NULL);
 	if (totem->xml == NULL)
-	{
-		g_free (filename);
-		totem_action_error_and_exit (_("Couldn't load the main interface (totem.glade)."), _("Make sure that Totem is properly installed."), NULL);
-	}
-	g_free (filename);
+		totem_action_exit (NULL);
 
 	totem->win = glade_xml_get_widget (totem->xml, "totem_main_window");
-	filename = g_build_filename (DATADIR,
-			"totem", "media-player-48.png", NULL);
+	filename = totem_interface_get_full_path ("media-player-48.png");
 	gtk_window_set_default_icon_from_file (filename, NULL);
 	g_free (filename);
 
 	totem_named_icons_init (totem, FALSE);
 
 	/* The playlist */
-	filename = g_build_filename (DATADIR,
-			"totem", "playlist-playing.png", NULL);
-	pix = gdk_pixbuf_new_from_file (filename, NULL);
-	g_free (filename);
-
-	filename = g_build_filename (DATADIR,
-			"totem", "playlist.glade", NULL);
-	totem->playlist = TOTEM_PLAYLIST (totem_playlist_new (filename, pix));
-	g_free (filename);
+	totem->playlist = TOTEM_PLAYLIST (totem_playlist_new ());
 
 	if (totem->playlist == NULL)
-	{
-		totem_action_error_and_exit (_("Couldn't load the interface for the playlist."), _("Make sure that Totem is properly installed."), totem);
-	}
-	filename = g_build_filename (DATADIR,
-			"totem", "playlist-24.png", NULL);
-	gtk_window_set_icon_from_file (GTK_WINDOW (totem->playlist),
-			filename, NULL);
-	g_free (filename);
+		totem_action_exit (totem);
 
 	/* The rest of the widgets */
 	totem->state = STATE_STOPPED;
