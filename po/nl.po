@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Totem 06-09-2003 cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-07 04:28+0100\n"
+"POT-Creation-Date: 2004-03-10 04:29+0100\n"
 "PO-Revision-Date: 2004-03-07 10:58+0100\n"
 "Last-Translator: Huib Kleinhout <huib@stack.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
-
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 #: data/playlist.glade.h:1 src/totem-playlist.c:1293
 msgid "Playlist"
 msgstr "Afspeellijst"
@@ -104,7 +104,7 @@ msgstr "Beeldsnelheid:"
 msgid "N/A"
 msgstr "Niet beschikbaar"
 
-#: data/properties.glade.h:16 src/totem.c:2113
+#: data/properties.glade.h:16 src/totem.c:2114
 msgid "Properties"
 msgstr "Eigenschappen"
 
@@ -134,7 +134,7 @@ msgstr "Films en liedjes afspelen"
 
 #. Title
 #: data/totem.desktop.in.h:2 data/totem.glade.h:97 src/totem.c:686
-#: src/totem.c:3685
+#: src/totem.c:3688
 msgid "Totem Movie Player"
 msgstr "Totem filmafspeler"
 
@@ -883,17 +883,23 @@ msgstr "Totem videovenster"
 #: src/bacon-video-widget-properties.c:106
 #, c-format
 msgid "%d hour"
-msgstr "%d uur"
+msgid_plural "%d hours"
+msgstr[0] "%d uur"
+msgstr[1] "%d uren"
 
 #: src/bacon-video-widget-properties.c:108
 #, c-format
 msgid "%d minute"
-msgstr "%d minuut"
+msgid_plural "%d minutes"
+msgstr[0] "%d minuut"
+msgstr[1] "%d minuten"
 
 #: src/bacon-video-widget-properties.c:111
 #, c-format
 msgid "%d second"
-msgstr "%d seconde"
+msgid_plural "%d seconds"
+msgstr[0] "%d seconde"
+msgstr[1] "%d seconden"
 
 #. hour:minutes:seconds
 #: src/bacon-video-widget-properties.c:117
@@ -1048,7 +1054,7 @@ msgstr "Bestandsafbeelding"
 msgid "Could not save the playlist"
 msgstr "De afspeellijst kan niet worden opgeslagen"
 
-#: src/totem-playlist.c:476 src/totem.c:1526
+#: src/totem-playlist.c:476 src/totem.c:1527
 msgid "Select files"
 msgstr "Kies de bestanden"
 
@@ -1264,11 +1270,11 @@ msgstr ""
 msgid "%s - Totem Movie Player"
 msgstr "%s·-·Totem·filmafspeler"
 
-#: src/totem.c:675 src/totem.c:3527
+#: src/totem.c:675 src/totem.c:3528
 msgid "No file"
 msgstr "Geen bestand"
 
-#: src/totem.c:711 src/totem.c:1888
+#: src/totem.c:711 src/totem.c:1889
 msgid "Totem"
 msgstr "Totem"
 
@@ -1276,104 +1282,104 @@ msgstr "Totem"
 msgid "An error occured"
 msgstr "Er is een fout opgetreden"
 
-#: src/totem.c:1600 src/totem.c:1608
+#: src/totem.c:1601 src/totem.c:1609
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "Het \"Lokatie openen...\"-interface kan niet worden geladen."
 
-#: src/totem.c:1600 src/totem.c:1608 src/totem.c:3718 src/totem.c:3743
-#: src/totem.c:3766
+#: src/totem.c:1601 src/totem.c:1609 src/totem.c:3721 src/totem.c:3746
+#: src/totem.c:3769
 msgid "Make sure that Totem is properly installed."
 msgstr "Controleer of Totem juist is geïnstalleerd."
 
-#: src/totem.c:1841
+#: src/totem.c:1842
 msgid "Totem could not display the help contents."
 msgstr "Totem kan de hulpinhoud niet weergeven."
 
-#: src/totem.c:1859 src/vanity.c:218
+#: src/totem.c:1860 src/vanity.c:218
 msgid "translator_credits"
 msgstr "Huib Kleinhout <huib@stack.nl>"
 
-#: src/totem.c:1885
+#: src/totem.c:1886
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Filmafspeler met behulp van %s"
 
-#: src/totem.c:1971 src/totem.c:1982 src/vanity.c:304 src/vanity.c:315
+#: src/totem.c:1972 src/totem.c:1983 src/vanity.c:304 src/vanity.c:315
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Schermafdruk%d.png"
 
-#: src/totem.c:2033 src/totem.c:2041
+#: src/totem.c:2034 src/totem.c:2042
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem kan van deze film geen schermafdruk maken."
 
-#: src/totem.c:2041
+#: src/totem.c:2042
 msgid "Please file a bug, this isn't supposed to happen"
 msgstr "Dit hoort niet te gebeuren, meld a.u.b deze fout."
 
-#: src/totem.c:2069
+#: src/totem.c:2070
 #, c-format
 msgid "File '%s' already exists."
 msgstr "Het bestand '%s' bestaat al."
 
-#: src/totem.c:2070
+#: src/totem.c:2071
 msgid "The screenshot was not saved"
 msgstr "De schermafdruk is niet opgeslagen."
 
-#: src/totem.c:2080
+#: src/totem.c:2081
 msgid "There was an error saving the screenshot."
 msgstr "Er is een fout opgetreden tijdens het opslaan van de schermafdruk."
 
-#: src/totem.c:2103
+#: src/totem.c:2104
 msgid "Totem couldn't show the movie properties window."
 msgstr "Het venster met filmeigenschappen kan niet worden weergegeven."
 
-#: src/totem.c:2103
+#: src/totem.c:2104
 msgid "Make sure that Totem is correctly installed."
 msgstr "Controleer of Totem juist is geïnstalleerd."
 
-#: src/totem.c:2189
+#: src/totem.c:2190
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem kan niet zoeken in '%s'."
 
-#: src/totem.c:2944 src/totem.c:2966
+#: src/totem.c:2945 src/totem.c:2967
 msgid "None"
 msgstr "Geen"
 
-#: src/totem.c:2948 src/totem.c:2969
+#: src/totem.c:2949 src/totem.c:2970
 msgid "Auto"
 msgstr "Automatisch"
 
-#: src/totem.c:3432
+#: src/totem.c:3433
 msgid "Totem could not startup."
 msgstr "Totem kan niet worden opgestart."
 
-#: src/totem.c:3432
+#: src/totem.c:3433
 msgid "No reason."
 msgstr "Geen reden."
 
-#: src/totem.c:3690
+#: src/totem.c:3693
 msgid "Could not initialise the thread-safe libraries."
 msgstr "De thread-veilige bibliotheken kunnen niet worden geinitialiseerd."
 
-#: src/totem.c:3690
+#: src/totem.c:3693
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verifieer uw systeeminstallatie. Totem zal nu afsluiten."
 
-#: src/totem.c:3710
+#: src/totem.c:3713
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem kan het configuratiesysteem niet initialiseren."
 
-#: src/totem.c:3710
+#: src/totem.c:3713
 msgid "Make sure that GNOME is properly installed."
 msgstr "Controleer of GNOME juist is geïnstalleerd."
 
-#: src/totem.c:3718 src/totem.c:3743
+#: src/totem.c:3721 src/totem.c:3746
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "Het hoofdinterface kan niet worden geladen (totem.glade)."
 
-#: src/totem.c:3766
+#: src/totem.c:3769
 msgid "Couldn't load the interface for the playlist."
 msgstr "De interface voor de afspeellijst kan niet worden geladen."
 
