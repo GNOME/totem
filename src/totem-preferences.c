@@ -347,8 +347,7 @@ static void
 visual_menu_changed (GtkComboBox *combobox, Totem *totem)
 {
 	GList *list;
-	const char *old_name;
-	char *name;
+	char *old_name, *name;
 	int i;
 
 	i = gtk_combo_box_get_active (combobox);
