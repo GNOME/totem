@@ -434,7 +434,7 @@ read_ini_line_string (char **lines, const char *key, gboolean dos_mode)
 				retval[len-2] = '\n';
 				retval[len-1] = '\0';
 			}
-			    
+
 			g_strfreev (bits);
 		}
 	}
@@ -466,7 +466,6 @@ totem_pl_parser_finalize (GObject *object)
 static void
 totem_pl_parser_add_one_url (TotemPlParser *parser, const char *url, const char *title)
 {
-	
 	g_signal_emit (G_OBJECT (parser), totem_pl_parser_table_signals[ENTRY],
 		       0, url, title, NULL);
 }
@@ -704,8 +703,9 @@ totem_pl_parser_add_pls (TotemPlParser *parser, const char *url, gpointer data)
 
 	/* figure out whether we're a unix pls or dos pls */
 	if (strstr(contents,"\x0d") == NULL)
+	{
 		split_char = "\n";
-	else {
+	} else {
 		split_char = "\x0d\n";
 		dos_mode = TRUE;
 	}
@@ -1147,7 +1147,6 @@ static PlaylistTypes dual_types[] = {
 	{ "text/plain", totem_pl_parser_add_ra },
 	{ "video/x-ms-asf", totem_pl_parser_add_asf },
 	{ "video/x-ms-wmv", totem_pl_parser_add_asf },
-	{ "audio/x-mp3", totem_pl_parser_add_m3u },
 };
 
 static gboolean
@@ -1189,6 +1188,13 @@ totem_pl_parser_ignore (TotemPlParser *parser, const char *url)
 		if (strcmp (dual_types[i].mimetype, mimetype) == 0)
 			return FALSE;
 
+	/* It's a remote file that could be an m3u file */
+	if (strcmp (mimetype, "audio/x-mp3") == 0)
+	{
+		if (strstr (url, "m3u") != NULL)
+			return FALSE;
+	}
+
 	return TRUE;
 }
 
@@ -1198,7 +1204,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	const char *mimetype;
 	guint i;
 	gpointer data = NULL;
-	gboolean ret;
+	gboolean ret = FALSE;
 
 	if (parser->priv->recurse_level > 3)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
@@ -1230,11 +1236,12 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 			break;
 		}
 	}
-	
-	if (parser->priv->fallback) {
+
+	if (ret == FALSE && parser->priv->fallback) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
+
 	if (ret)
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	else
@@ -1262,3 +1269,4 @@ totem_pl_parser_add_ignored_scheme (TotemPlParser *parser,
 	parser->priv->ignore_schemes = g_list_prepend
 		(parser->priv->ignore_schemes, g_strdup (scheme));
 }
+

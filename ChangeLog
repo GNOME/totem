@@ -1,3 +1,13 @@
+2004-07-02  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-pl-parser.c: (read_ini_line_string),
+	(totem_pl_parser_add_one_url), (totem_pl_parser_add_pls),
+	(totem_pl_parser_ignore), (totem_pl_parser_parse_internal):
+	only use fallback if we can't actually parse the playlist,
+	don't try to open all audio/x-mp3 as m3u playlists (dah!),
+	small special case to enable playback from allofmp3s.com
+	(Closes: #145278)
+
 2004-07-01  Bastien Nocera  <hadess@hadess.net>
 
 	* help/es/.cvsignore: are we in spring?
