@@ -291,12 +291,17 @@ static void
 on_button1_clicked (GtkButton *button, Totem *totem)
 {
 	GError *err = NULL;
-	char *path, *cmd;
+	char *path, *cmd, *filemanager;
 
 	path = path = g_build_path (G_DIR_SEPARATOR_S,
 			g_get_home_dir (), PROPRIETARY_PLUGINS, NULL);
 
-	cmd = g_strdup_printf ("nautilus --no-default-window %s", path);
+	if (g_getenv ("KDE_STARTUP_ENV") && (filemanager = g_find_program_in_path("konqueror"))) {
+		cmd = g_strconcat (filemanager, " ", path, NULL);
+		g_free (filemanager);
+	} else {
+		cmd = g_strdup_printf ("nautilus --no-default-window -no-desktop %s", path);
+	}
 	g_free (path);
 
 	if (g_spawn_command_line_async (cmd, &err) == FALSE)
