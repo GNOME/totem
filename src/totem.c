@@ -35,7 +35,6 @@
 #include "rb-ellipsizing-label.h"
 #include "bacon-cd-selection.h"
 #include "totem-statusbar.h"
-#include "totem-download.h"
 #include "video-utils.h"
 
 #include "egg-recent-view.h"
@@ -191,60 +190,6 @@ totem_action_error (char *title, char *reason, Totem *totem)
 
 	gtk_widget_show (error_dialog);
 }
-
-#ifdef HAVE_X86
-static gboolean
-totem_action_error_try_download (char *title, char *reason, Totem *totem)
-{
-	GtkWidget *error_dialog;
-	GValue value = { 0, };
-	guint32 audio_fcc, video_fcc;
-	int res;
-
-	bacon_video_widget_get_metadata (totem->bvw,
-			BVW_INFO_VIDEO_FOURCC, &value);
-	video_fcc = (guint32) g_value_get_int (&value);
-	g_value_unset (&value);
-
-	bacon_video_widget_get_metadata (totem->bvw,
-			BVW_INFO_AUDIO_FOURCC, &value);
-	audio_fcc = (guint32) g_value_get_int (&value);
-
-	if (audio_fcc == 0 && video_fcc == 0)
-	{
-		totem_action_error (title, reason, totem);
-		return FALSE;
-	}
-
-	error_dialog =
-		gtk_message_dialog_new (GTK_WINDOW (totem->win),
-				GTK_DIALOG_MODAL,
-				GTK_MESSAGE_ERROR,
-				GTK_BUTTONS_NONE,
-				"<b>%s</b>\n%s.", title, reason);
-	gtk_dialog_set_has_separator (GTK_DIALOG (error_dialog), FALSE);
-	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
-	gtk_label_set_use_markup (GTK_LABEL (GTK_MESSAGE_DIALOG (error_dialog)->label), TRUE);
-	gtk_dialog_add_buttons (GTK_DIALOG (error_dialog),
-			GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
-			_("Download"), GTK_RESPONSE_ACCEPT,
-			NULL);
-	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
-			GTK_RESPONSE_OK);
-	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
-	res = gtk_dialog_run (GTK_DIALOG (error_dialog));
-	gtk_widget_destroy (error_dialog);
-
-	if (res != GTK_RESPONSE_ACCEPT)
-		return FALSE;
-
-	if (totem_download_from_fourcc (GTK_WINDOW (totem->win),
-				video_fcc, audio_fcc) < 0)
-		return FALSE;
-
-	return TRUE;
-}
-#endif
 
 static void
 totem_action_error_and_exit (char *title, char *reason, Totem *totem)
@@ -812,13 +757,11 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 
 		update_mrl_label (totem, NULL);
 	} else {
-		gboolean caps, first_try;
+		gboolean caps;
 		GError *err = NULL;
 
-		first_try = TRUE;
 		bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
 
-try_open_again:
 		retval = bacon_video_widget_open (totem->bvw, mrl, &err);
 		totem->mrl = g_strdup (mrl);
 
@@ -852,29 +795,16 @@ try_open_again:
 		/* Set the playlist */
 		totem_playlist_set_playing (totem->playlist, retval);
 
-		if (retval == FALSE && first_try != FALSE)
+		if (retval == FALSE)
 		{
 			char *msg, *disp;
-			gboolean try_again;
 
 			disp = gnome_vfs_unescape_string_for_display (totem->mrl);
 			msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
 			g_free (disp);
-#ifdef HAVE_X86
-			try_again = totem_action_error_try_download (msg, err->message, totem);
-			g_free (msg);
-			first_try = FALSE;
-			if (try_again != FALSE)
-			{
-				g_error_free (err);
-				err = NULL;
-
-				goto try_open_again;
-			}
-#else
 			totem_action_error (msg, err->message, totem);
 			g_free (msg);
-#endif
+
 			g_error_free (err);
 			retval = FALSE;
 		}

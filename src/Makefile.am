@@ -16,10 +16,6 @@ else
 MM=bacon-video-widget-xine.c
 endif
 
-if HAVE_X86
-TOTEM_DOWNLOAD = totem-download.c totem-download.h
-endif
-
 MARSHALFILES = baconvideowidget-marshal.h baconvideowidget-marshal.c totemplparser-marshal.c totemplparser-marshal.h
 GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
 
@@ -74,7 +70,6 @@ totem_SOURCES = 					\
 	$(EGG_RECENT_FILES)				\
 	$(BACON_CD_SELECTION)				\
 	$(VIDEOWIDGET)					\
-	$(TOTEM_DOWNLOAD)				\
 	totem.c totem.h					\
 	totem-remote.c totem-remote.h			\
 	totem-preferences.c totem-preferences.h		\
@@ -94,7 +89,7 @@ totem_SOURCES = 					\
 	totem-statusbar.c		\
 	totem-statusbar.h
 
-totem_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) $(CURL_LIBS) $(RANDR_LIBS)
+totem_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) $(RANDR_LIBS)
 
 totem_video_thumbnailer_SOURCES = $(VIDEOWIDGET) totem-video-thumbnailer.c
 totem_video_thumbnailer_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
@@ -123,7 +118,6 @@ bvw_test_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
 INCLUDES = 						\
 	-D_REENTRANT					\
 	$(EXTRA_GNOME_CFLAGS)				\
-	$(CURL_CFLAGS)					\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
 	-DGCONF_PREFIX=\""/apps/totem"\"		\
 	-DDATADIR=\""$(datadir)"\"			\
@@ -134,8 +128,6 @@ EXTRA_DIST =	bacon-video-widget-xine.c \
 		bacon-video-widget-gst.c \
 		gstvideowidget.c \
 		gstvideowidget.h \
-		totem-download.c \
-		totem-download.h \
 		$(BACON_V4L_SELECTION) \
 		vanity.c
 

@@ -1,5 +1,18 @@
 2004-02-19  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* data/Makefile.am:
+	* data/totem-download.glade:
+	* src/Makefile.am:
+	* src/totem-download.c:
+	* src/totem-download.h:
+	* src/totem.c: (totem_action_set_mrl): remove the automatic download
+	of Windows DLLs as there weren't any useful downloadable DLLs, and that
+	we don't want Microsoft to sue us.
+	Removes the dependency on CURL
+
+2004-02-19  Bastien Nocera  <hadess@hadess.net>
+
 	* NEWS: updated
 	* data/Makefile.am:
 	* data/totem-random.pl: removed the useless random script, the
