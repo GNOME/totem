@@ -39,7 +39,6 @@ dnl And we can also ask for the right version of gstreamer
 dnl start with 0.7
 	GST_MAJORMINOR=0.7
 	PKG_CHECK_MODULES(GST, \
-			gstreamer-libs-$GST_MAJORMINOR >= $GST_REQS \
 			gstreamer-play-$GST_MAJORMINOR >= $GST_REQS \
 			gstreamer-gconf-$GST_MAJORMINOR >= $GST_REQS,
 			HAVE_GSTREAMER=yes,HAVE_GSTREAMER=no)
@@ -48,7 +47,6 @@ dnl try 0.6
 	if test "x$HAVE_GSTREAMER" = "xno"; then
 		GST_MAJORMINOR=0.6
 		PKG_CHECK_MODULES(GST, \
-			gstreamer-libs-$GST_MAJORMINOR >= $GST_REQS \
 			gstreamer-play-$GST_MAJORMINOR >= $GST_REQS \
 			gstreamer-gconf-$GST_MAJORMINOR >= $GST_REQS,
 			HAVE_GSTREAMER=yes,HAVE_GSTREAMER=no)
