@@ -30,8 +30,10 @@ static gboolean fake_event (gpointer data)
 
 	if(disabled)
 	{
+		XLockDisplay (display);
 		XTestFakeKeyEvent (display, keycode, True, CurrentTime);
 		XTestFakeKeyEvent (display, keycode, False, CurrentTime);
+		XUnlockDisplay (display);
 	}
 
 	return TRUE;
@@ -42,14 +44,16 @@ void scrsaver_init (Display *display)
 {
 #ifdef HAVE_XTEST
 	int a, b, c, d;
+
+	XLockDisplay (display);
 	xtest = XTestQueryExtension (display, &a, &b, &c, &d);
 	if(xtest == True)
 	{
 		keycode = XKeysymToKeycode (display, XK_Shift_L);
 		g_timeout_add (15000, (GSourceFunc)fake_event, display);
 	}
-
-	XFlush (display);
+	XSync (display, False);
+	XUnlockDisplay (display);
 #endif /* HAVE_XTEST */
 }
 
@@ -64,10 +68,12 @@ void scrsaver_disable(Display *display)
 #endif /* HAVE_XTEST */
 	if(disabled == 0)
 	{
+		XLockDisplay (display);
 		XGetScreenSaver(display, &timeout, &interval,
 				&prefer_blanking, &allow_exposures);
 		XSetScreenSaver(display, 0, 0,
 				DontPreferBlanking, DontAllowExposures);
+		XUnlockDisplay (display);
 		disabled = 1;
 	}
 }
@@ -84,8 +90,10 @@ void scrsaver_enable(Display *display)
 #endif /* HAVE_XTEST */
 	if(disabled)
 	{
+		XLockDisplay (display);
 		XSetScreenSaver(display, timeout, interval,
 				prefer_blanking, allow_exposures);
+		XUnlockDisplay (display);
 		disabled = 0;
 	}
 }

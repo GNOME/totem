@@ -1,5 +1,12 @@
 2003-04-18  Bastien Nocera  <hadess@hadess.net>
 
+	* src/scrsaver.c: (fake_event), (scrsaver_init),
+	(scrsaver_disable), (scrsaver_enable): plenty of display locking around
+	all that, and use XSync, not XFlush
+	* src/totem-video-thumbnailer.c: (main): enable threads all the time
+
+2003-04-18  Bastien Nocera  <hadess@hadess.net>
+
 	* README: updated
 	* data/totem.glade:
 	* src/totem.c: (totem_action_exit), (on_show_controls1_activate),
