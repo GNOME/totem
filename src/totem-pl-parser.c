@@ -1232,6 +1232,7 @@ totem_pl_parser_add_smil (TotemPlParser *parser, const char *url, gpointer data)
 		if (parse_smil_entries (parser, base, doc, node) != FALSE)
 			retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 
+	g_free (base);
 	xmlFreeDoc (doc);
 
 	return retval;
