@@ -178,7 +178,7 @@ cd_cache_open_device (CdCache *cache,
     } else {
       g_set_error (error, 0, 0,
           _("Failed to open device %s for reading: %s"),
-        cache->device, g_strerror (errno));
+        cache->device, g_strerror (err));
     }
     return FALSE;
   }
