@@ -1877,10 +1877,11 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const char *mrl,
 
 		name = g_strdup (xine_get_meta_info (bvw->priv->stream,
 				XINE_META_INFO_VIDEOCODEC));
-		if (name == NULL)
+		if (name == NULL || name[0] == '\0')
 		{
 			guint32 video_fcc;
 
+			g_free (name);
 			video_fcc = xine_get_stream_info (bvw->priv->stream,
 					XINE_STREAM_INFO_VIDEO_FOURCC);
 			name = get_fourcc_string (video_fcc);
