@@ -1535,7 +1535,7 @@ bacon_video_widget_get_audio_out_type (BaconVideoWidget *bvw)
   return bvw->priv->speakersetup;
 }
 
-void
+gboolean
 bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
                                        BaconVideoWidgetAudioOutType type)
 {
@@ -1545,7 +1545,7 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
   if (type == bvw->priv->speakersetup)
-    return;
+    return FALSE;
 
   bvw->priv->speakersetup = type;
   gconf_client_set_int (bvw->priv->gc,
@@ -1555,6 +1555,8 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
   if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED) {
     //gst_pad_renegotiate (gst_element_get_pad (audiosink, "sink"));
   }
+
+  return FALSE;
 }
 
 /* =========================================== */

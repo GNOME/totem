@@ -323,7 +323,7 @@ typedef enum {
 
 BaconVideoWidgetAudioOutType bacon_video_widget_get_audio_out_type
 						 (BaconVideoWidget *bvw);
-void bacon_video_widget_set_audio_out_type       (BaconVideoWidget *bvw,
+gboolean bacon_video_widget_set_audio_out_type   (BaconVideoWidget *bvw,
 						  BaconVideoWidgetAudioOutType
 						  type);
 

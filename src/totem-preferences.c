@@ -132,7 +132,7 @@ totem_prefs_set_show_visuals (Totem *totem, gboolean value, gboolean warn)
 	{
 		totem_action_info (_("The change of this setting will only "
 					"take effect for the next movie, or "
-					"when Totem is restarted"),
+					"when Totem is restarted."),
 				totem);
 	}
 }
@@ -423,9 +423,17 @@ static void
 audio_out_menu_changed (GtkComboBox *combobox, Totem *totem)
 {
 	BaconVideoWidgetAudioOutType audio_out;
+	gboolean need_restart;
 
 	audio_out = gtk_combo_box_get_active (combobox);
-	bacon_video_widget_set_audio_out_type (totem->bvw, audio_out);
+	need_restart = bacon_video_widget_set_audio_out_type (totem->bvw, audio_out);
+	if (need_restart != FALSE) {
+		totem_action_info (_("The change of audio output type will "
+					"only take effect when Totem is "
+					"restarted."),
+				totem);
+	}
+
 }
 
 void

@@ -1,5 +1,21 @@
 2005-01-30  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-gst.c:
+	(bacon_video_widget_set_audio_out_type):
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_can_set_volume),
+	(bacon_video_widget_set_audio_out_type):
+	* src/bacon-video-widget.h:
+	* src/totem-preferences.c: (totem_prefs_set_show_visuals),
+	(audio_out_menu_changed):
+
+	Make bacon_video_widget_set_audio_out_type return whether the
+	application needs to restart for this to take effect, the xine-lib
+	backend also now knows that the AC3 passthrough output can't set
+	the volume (Closes: #122580)
+
+2005-01-30  Bastien Nocera  <hadess@hadess.net>
+
 	* NEWS: upd
 	* configure.in: fix typo that made the nautilus-extension test
 	useless (Closes: #165630)

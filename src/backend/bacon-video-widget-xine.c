@@ -159,6 +159,7 @@ struct BaconVideoWidgetPrivate {
 	gboolean have_xvidmode;
 	gboolean auto_resize;
 	int volume;
+	BaconVideoWidgetAudioOutType audio_out_type;
 	TvOutType tvout;
 	gboolean is_live;
 	char *codecs_path;
@@ -2296,6 +2297,9 @@ bacon_video_widget_can_set_volume (BaconVideoWidget *bvw)
 	if (bvw->priv->ao_driver == NULL || bvw->priv->ao_driver_none != FALSE)
 		return FALSE;
 
+	if (bvw->priv->audio_out_type == BVW_AUDIO_SOUND_AC3PASSTHRU)
+		return FALSE;
+
 	if (xine_get_param (bvw->priv->stream,
 				XINE_PARAM_AUDIO_CHANNEL_LOGICAL) == -2)
 		return FALSE;
@@ -3076,16 +3080,20 @@ bacon_video_widget_get_audio_out_type (BaconVideoWidget *bvw)
 			GCONF_PREFIX"/audio_output_type", NULL);
 }
 
-void
+gboolean
 bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 		BaconVideoWidgetAudioOutType type)
 {
 	xine_cfg_entry_t entry;
 	int value;
+	gboolean need_restart = FALSE;
 
-	g_return_if_fail (bvw != NULL);
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-	g_return_if_fail (bvw->priv->xine != NULL);
+	g_return_val_if_fail (bvw != NULL, FALSE);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
+
+	if (type == bvw->priv->audio_out_type)
+		return FALSE;
 
 	xine_config_register_enum (bvw->priv->xine,
 			"audio.output.speaker_arrangement",
@@ -3116,6 +3124,7 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 		break;
 	case BVW_AUDIO_SOUND_AC3PASSTHRU:
 		value = 12;
+		need_restart = TRUE;
 		break;
 	default:
 		value = 1;
@@ -3126,6 +3135,8 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 			"audio.output.speaker_arrangement", &entry);
 	entry.num_value = value;
 	xine_config_update_entry (bvw->priv->xine, &entry);
+
+	return need_restart;
 }
 
 static void
