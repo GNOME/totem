@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Totem HEAD\n"
-"POT-Creation-Date: 2003-01-17 15:21+0100\n"
+"POT-Creation-Date: 2003-01-18 22:53+0100\n"
 "PO-Revision-Date: 2002-01-17 15:21+0100\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -29,7 +29,7 @@ msgstr "0"
 #. Bitrate
 #: data/properties.glade.h:2 src/gtk-xine-properties.c:186
 msgid "0 kbps"
-msgstr "0 kB/s"
+msgstr "0 kb/s"
 
 #. 0 seconds
 #: data/properties.glade.h:3 src/gtk-xine-properties.c:140
@@ -229,7 +229,8 @@ msgstr "Titel-Menü"
 msgid "Toggle Aspect Ratio"
 msgstr "Ansichtsverhältnis beibehalten"
 
-#: data/totem.glade.h:30 src/totem.c:380 src/totem.c:1240
+#. Title
+#: data/totem.glade.h:30 src/totem.c:408 src/totem.c:429 src/totem.c:1211
 msgid "Totem"
 msgstr "Totem"
 
@@ -370,7 +371,7 @@ msgstr "_Passwort:"
 msgid "Remember this password"
 msgstr "Dieses Passwort speichern"
 
-#: src/gtk-playlist.c:410 src/totem.c:1073
+#: src/gtk-playlist.c:410 src/totem.c:1044
 msgid "Select files"
 msgstr "Dateien auswählen"
 
@@ -475,9 +476,21 @@ msgstr "%d"
 #: src/gtk-xine-properties.c:267
 #, c-format
 msgid "%d kbps"
-msgstr "%d kB/s"
+msgstr "%d kb/s"
 
-#: src/totem.c:277
+#: src/totem.c:186
+msgid "Playing"
+msgstr "Wiedergabe"
+
+#: src/totem.c:193
+msgid "Paused"
+msgstr "Pause"
+
+#: src/totem.c:200 src/totem-statusbar.c:171
+msgid "Stopped"
+msgstr "Angehalten"
+
+#: src/totem.c:273
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -489,7 +502,7 @@ msgstr ""
 "Installieren Sie dieses und starten Sie Totem neu, um dieses Medium "
 "wiedergeben zu können."
 
-#: src/totem.c:285
+#: src/totem.c:281
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -500,36 +513,30 @@ msgstr ""
 "Stellen Sie sicher, dass sich ein Medium im Laufwerk befindet und dieses "
 "korrekt konfiguriert ist."
 
-#: src/totem.c:391 src/totem.c:2218
-msgid "No file"
-msgstr "Keine Datei"
-
 #. Title
-#: src/totem.c:448 src/totem.c:805
+#: src/totem.c:387
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#. Make the new label
-#: src/totem.c:844
-#, c-format
-msgid "Time: %s "
-msgstr "Verstrichen: %s"
+#: src/totem.c:397 src/totem.c:2189
+msgid "No file"
+msgstr "Keine Datei"
 
-#: src/totem.c:1216
+#: src/totem.c:1187
 msgid "translator_credits"
 msgstr "Christian Neumair <chris@gnome-de.org>"
 
-#: src/totem.c:1242
+#: src/totem.c:1213
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Video-Wiedergabe (basierend auf den Xine-Bibliotheken)"
 
-#: src/totem.c:1275 src/totem.c:1286
+#: src/totem.c:1246 src/totem.c:1257
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Bildschirmfoto%d.png"
 
-#: src/totem.c:1340
+#: src/totem.c:1311
 msgid ""
 "Totem could not get a screenshot of that film.\n"
 "You might want to try again at another time."
@@ -537,7 +544,7 @@ msgstr ""
 "Es konnte kein Bildschirmfoto aus diesem Film erzeugt werden.\n"
 "Sie sollten es später noch einmal versuchen."
 
-#: src/totem.c:1365
+#: src/totem.c:1336
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
@@ -546,7 +553,7 @@ msgstr ""
 "Die Datei »%s« ist bereits vorhanden.\n"
 "Das Bildschirmfoto konnte daher nicht gespeichert werden."
 
-#: src/totem.c:1376
+#: src/totem.c:1347
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -555,7 +562,7 @@ msgstr ""
 "Beim Speichern des Bildschirmfotos ist ein Fehler aufgetreten.\n"
 "Details: %s"
 
-#: src/totem.c:1396
+#: src/totem.c:1367
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -563,7 +570,7 @@ msgstr ""
 "Das Eigenschaften-Fenster für das Video konnte nicht geladen werden.\n"
 "Stellen Sie sicher, dass Totem korrekt installiert ist."
 
-#: src/totem.c:1766
+#: src/totem.c:1737
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -572,7 +579,7 @@ msgstr ""
 "Totem konnte nicht gestartet werden:\n"
 "%s"
 
-#: src/totem.c:1772
+#: src/totem.c:1743
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'.\n"
@@ -581,12 +588,12 @@ msgstr ""
 "Es ist kein Plugin installiert, um »%s« zu verarbeiten.\n"
 "Totem kann es daher nicht wiedergeben."
 
-#: src/totem.c:1777
+#: src/totem.c:1748
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "»%s« ist fehlerhaft und Totem kann es nicht weiter wiedergeben."
 
-#: src/totem.c:1781
+#: src/totem.c:1752
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -595,7 +602,7 @@ msgstr ""
 "Totem konnte »%s« nicht wiedergeben:\n"
 "%s"
 
-#: src/totem.c:2368
+#: src/totem.c:2350
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -607,7 +614,7 @@ msgstr ""
 "initialisiert werden:\n"
 "%s"
 
-#: src/totem.c:2383 src/totem.c:2412
+#: src/totem.c:2365 src/totem.c:2394
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -615,13 +622,28 @@ msgstr ""
 "Die Haupt-Oberfläche (totem.glade) konnte nicht geladen werden.\n"
 "Stellen Sie sicher, dass Totem korrekt installiert ist."
 
-#: src/totem.c:2424
+#: src/totem.c:2406
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
 msgstr ""
 "Die Playlisten-Oberfläche konnte nicht geladen werden.\n"
 "Stellen Sie sicher, dass Totem korrekt installiert ist."
+
+#: src/totem-statusbar.c:138
+msgid "Shadow type"
+msgstr "Schattentyp"
+
+#: src/totem-statusbar.c:139
+msgid "Style of bevel around the statusbar text"
+msgstr "Stil der Fase um den Text in der Statusleiste"
+
+#: src/totem-statusbar.c:180
+msgid "0:00 / 0:00"
+msgstr "0:00 / 0:00"
+
+#~ msgid "Time: %s "
+#~ msgstr "Verstrichen: %s"
 
 #~ msgid "Unnamed SCSI CDROM (%s)"
 #~ msgstr "Namenloses SCSI-CD-ROM (%s)"
