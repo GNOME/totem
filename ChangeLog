@@ -1,5 +1,11 @@
 2003-02-22  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (create_full_path), (process_command_line): when the
+	file passed via remote isn't a fully qualified path or uri, we make it
+	so
+
+2003-02-22  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_action_error): fix deadlock when a file added
 	via the remote interface triggers an error, gtk_dialog_run is evil
 	in multi-threaded apps

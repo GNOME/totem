@@ -2465,12 +2465,34 @@ totem_message_connection_receive_cb (const char *msg, gpointer user_data)
 	g_free (url);
 }
 
+static char*
+create_full_path (const char *path)
+{
+	char *retval, *curdir, *curdir_withslash;
+
+	g_return_val_if_fail (path != NULL, NULL);
+
+	if (strstr (path, "://") != NULL)
+		return g_strdup (path);
+
+	if (path[0] == '/')
+		return g_strdup (path);
+
+	curdir = g_get_current_dir ();
+	curdir_withslash = g_strdup_printf ("%s%s", curdir, G_DIR_SEPARATOR_S);
+	g_free (curdir);
+	retval = gnome_vfs_uri_make_full_from_relative (curdir_withslash, path);
+	g_free (curdir_withslash);
+
+	return retval;
+}
+
 static void
 process_command_line (BaconMessageConnection *conn, int argc, char **argv)
 {
 	int i, command;
 	gboolean replace_done = FALSE;
-	char *line;
+	char *line, *full_path;
 
 	i = 2;
 
@@ -2519,9 +2541,11 @@ process_command_line (BaconMessageConnection *conn, int argc, char **argv)
 				replace_done == TRUE)
 			command = TOTEM_REMOTE_COMMAND_ENQUEUE;
 
-		line = g_strdup_printf ("%03d %s", command, argv[i]);
+		full_path = create_full_path (argv[i]);
+		line = g_strdup_printf ("%03d %s", command, full_path);
 		bacon_message_connection_send (conn, line);
 		g_free (line);
+		g_free (full_path);
 		command = TOTEM_REMOTE_COMMAND_ENQUEUE;
 	}
 }
