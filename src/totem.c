@@ -1895,9 +1895,16 @@ on_about1_activate (GtkButton *button, Totem *totem)
 }
 
 static char *
-screenshot_make_filename_helper (char *filename, gboolean desktop_exists)
+screenshot_make_filename_helper (Totem *totem, char *filename,
+		gboolean desktop_exists)
 {
-	if (desktop_exists == TRUE)
+	gboolean home_as_desktop;
+
+	home_as_desktop = gconf_client_get_bool (totem->gc,
+			"/apps/nautilus/preferences/desktop_is_home_dir",
+			NULL);
+
+	if (desktop_exists == TRUE && home_as_desktop == FALSE)
 	{
 		char *fullpath;
 
@@ -1951,7 +1958,7 @@ screenshot_make_filename (Totem *totem)
 	if (on_desktop == TRUE)
 	{
 		filename = g_strdup_printf (_("Screenshot%d.png"), i);
-		fullpath = screenshot_make_filename_helper (filename,
+		fullpath = screenshot_make_filename_helper (totem, filename,
 				desktop_exists);
 
 		while (g_file_test (fullpath, G_FILE_TEST_EXISTS) == TRUE
@@ -1962,8 +1969,8 @@ screenshot_make_filename (Totem *totem)
 			g_free (fullpath);
 
 			filename = g_strdup_printf (_("Screenshot%d.png"), i);
-			fullpath = screenshot_make_filename_helper (filename,
-					desktop_exists);
+			fullpath = screenshot_make_filename_helper (totem,
+					filename, desktop_exists);
 		}
 
 		g_free (filename);

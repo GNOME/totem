@@ -1,5 +1,12 @@
 2003-08-31  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (screenshot_make_filename_helper),
+	(screenshot_make_filename): take into account the "Home dir as Desktop"
+	preference when saving the screenshots to the desktop (thanks to
+	Ross Burton for pointing it out)
+
+2003-08-31  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_action_set_mrl): set the take screenshot menu
 	item unsensitive if no file has been opened (Closes: #119901)
 
