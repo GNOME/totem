@@ -1,3 +1,16 @@
+2003-09-11  Bastien Nocera  <hadess@hadess.net>
+
+	* README: updated
+	* src/totem.c: (totem_action_set_mrl_and_play),
+	(totem_action_set_mrl), (totem_action_previous),
+	(totem_action_next), (totem_action_drop_files),
+	(on_playlist_button_toggled), (update_current_time),
+	(totem_action_open_files), (screenshot_make_filename_helper),
+	(screenshot_make_filename), (on_take_screenshot1_activate),
+	(popup_hide), (on_video_motion_notify_event), (update_buttons),
+	(main): s/== TRUE/!= FALSE/, and fixed double-free that might end
+	up with mighty weird hangs in _int_malloc
+
 2003-09-07  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-playlist.c: (totem_playlist_add_mrl): work-around the

@@ -416,7 +416,7 @@ totem_action_play (Totem *totem, int offset)
 void
 totem_action_set_mrl_and_play (Totem *totem, char *mrl)
 {
-	if (totem_action_set_mrl (totem, mrl) == TRUE)
+	if (totem_action_set_mrl (totem, mrl) != FALSE)
 		totem_action_play (totem, 0);
 }
 
@@ -821,7 +821,7 @@ try_open_again:
 		/* Set the playlist */
 		totem_playlist_set_playing (totem->playlist, retval);
 
-		if (retval == FALSE && first_try == TRUE)
+		if (retval == FALSE && first_try != FALSE)
 		{
 			char *msg, *disp;
 			gboolean try_again;
@@ -830,8 +830,7 @@ try_open_again:
 				(totem->mrl);
 			msg = g_strdup_printf(_("Totem could not play '%s'.\n"
 						"Reason: %s."),
-					disp,
-					err->message);
+					disp, err->message);
 			g_free (disp);
 #ifdef HAVE_X86
 			try_again = totem_action_error_try_download
@@ -847,9 +846,8 @@ try_open_again:
 			}
 #else
 			totem_action_error (msg, totem);
-#endif
 			g_free (msg);
-		} else if (first_try == FALSE) {
+#endif
 			retval = FALSE;
 		}
 	}
@@ -894,7 +892,7 @@ totem_action_previous (Totem *totem)
 		&& totem_playlist_get_repeat (totem->playlist) == FALSE)
 		return;
 
-        if (totem_playing_dvd (totem) == TRUE)
+        if (totem_playing_dvd (totem) != FALSE)
         {
                 bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_PREV_CHAPTER);
         } else {
@@ -915,7 +913,7 @@ totem_action_next (Totem *totem)
 			&& totem_playlist_get_repeat (totem->playlist) == FALSE)
 		return;
 
-	if (totem_playing_dvd (totem) == TRUE)
+	if (totem_playing_dvd (totem) != FALSE)
 	{
 		bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_NEXT_CHAPTER);
 	} else {
@@ -1033,7 +1031,7 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 					| G_FILE_TEST_EXISTS)
 				|| strstr (filename, "://") != NULL))
 		{
-			if (empty_pl == TRUE && cleared == FALSE)
+			if (empty_pl != FALSE && cleared == FALSE)
 			{
 				/* The function that calls us knows better
 				 * if we should be doing something with the 
@@ -1053,7 +1051,7 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 	g_list_free (file_list);
 
 	/* ... and reconnect because we're nice people */
-	if (cleared == TRUE)
+	if (cleared != FALSE)
 	{
 		char *mrl;
 
@@ -1157,7 +1155,7 @@ on_playlist_button_toggled (GtkToggleButton *button, Totem *totem)
 	gboolean state;
 
 	state = gtk_toggle_button_get_active (button);
-	if (state == TRUE)
+	if (state != FALSE)
 		gtk_widget_show (GTK_WIDGET (totem->playlist));
 	else
 		gtk_widget_hide (GTK_WIDGET (totem->playlist));
@@ -1336,7 +1334,7 @@ static void
 update_current_time (BaconVideoWidget *bvw, int current_time, int stream_length,
 		int current_position, Totem *totem)
 {
-	if (bacon_video_widget_get_logo_mode (totem->bvw) == TRUE
+	if (bacon_video_widget_get_logo_mode (totem->bvw) != FALSE
 			|| (current_time == 0 && stream_length == 0))
 	{
 		totem_statusbar_set_time_and_length
@@ -1505,7 +1503,7 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 				totem_action_load_media (totem, MEDIA_CDDA);
 				continue;
 			} else if (totem_playlist_add_mrl (totem->playlist,
-						filename, NULL) == TRUE)
+						filename, NULL) != FALSE)
 			{
                                 EggRecentItem *item;
 
@@ -1523,7 +1521,7 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 	}
 
 	/* ... and reconnect because we're nice people */
-	if (cleared == TRUE)
+	if (cleared != FALSE)
 	{
 		g_signal_connect (G_OBJECT (totem->playlist),
 				"changed", G_CALLBACK (playlist_changed_cb),
@@ -1908,7 +1906,7 @@ screenshot_make_filename_helper (Totem *totem, char *filename,
 			"/apps/nautilus/preferences/desktop_is_home_dir",
 			NULL);
 
-	if (desktop_exists == TRUE && home_as_desktop == FALSE)
+	if (desktop_exists != FALSE && home_as_desktop == FALSE)
 	{
 		char *fullpath;
 
@@ -1917,7 +1915,7 @@ screenshot_make_filename_helper (Totem *totem, char *filename,
 		desktop_exists = g_file_test (fullpath, G_FILE_TEST_EXISTS);
 		g_free (fullpath);
 
-		if (desktop_exists == TRUE)
+		if (desktop_exists != FALSE)
 		{
 			return g_build_filename (G_DIR_SEPARATOR_S,
 					g_get_home_dir (), "Desktop",
@@ -1959,13 +1957,13 @@ screenshot_make_filename (Totem *totem)
 		g_free (fullpath);
 	}
 
-	if (on_desktop == TRUE)
+	if (on_desktop != FALSE)
 	{
 		filename = g_strdup_printf (_("Screenshot%d.png"), i);
 		fullpath = screenshot_make_filename_helper (totem, filename,
 				desktop_exists);
 
-		while (g_file_test (fullpath, G_FILE_TEST_EXISTS) == TRUE
+		while (g_file_test (fullpath, G_FILE_TEST_EXISTS) != FALSE
 				&& i < G_MAXINT)
 		{
 			i++;
@@ -2059,7 +2057,7 @@ on_take_screenshot1_activate (GtkButton *button, Totem *totem)
 	if (response == GTK_RESPONSE_OK)
 	{
 		filename = screenshot_make_filename (totem);
-		if (g_file_test (filename, G_FILE_TEST_EXISTS) == TRUE)
+		if (g_file_test (filename, G_FILE_TEST_EXISTS) != FALSE)
 		{
 			totem_action_error (_("File '%s' already exists.\nThe screenshot was not saved."), totem);
 			gdk_pixbuf_unref (pixbuf);
@@ -2394,7 +2392,7 @@ popup_hide (Totem *totem)
 		return TRUE;
 	}
 
-	if (totem->seek_lock == TRUE)
+	if (totem->seek_lock != FALSE)
 		return TRUE;
 
 	gtk_widget_hide (GTK_WIDGET (totem->exit_popup));
@@ -2434,7 +2432,7 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 	if (totem_is_fullscreen (totem) == FALSE) 
 		return FALSE;
 
-	if (totem->popup_in_progress == TRUE)
+	if (totem->popup_in_progress != FALSE)
 		return FALSE;
 
 	totem->popup_in_progress = TRUE;
@@ -2765,7 +2763,7 @@ update_buttons (Totem *totem)
 
 	/* Previous */
 	/* FIXME Need way to detect if DVD Title is at first chapter */
-	if (totem_playing_dvd (totem) == TRUE)
+	if (totem_playing_dvd (totem) != FALSE)
 	{
 		has_item = TRUE;
 	} else {
@@ -2784,7 +2782,7 @@ update_buttons (Totem *totem)
 
 	/* Next */
 	/* FIXME Need way to detect if DVD Title has no more chapters */
-	if (totem_playing_dvd (totem) == TRUE)
+	if (totem_playing_dvd (totem) != FALSE)
 	{
 		has_item = TRUE;
 	} else {
@@ -3713,7 +3711,7 @@ main (int argc, char **argv)
 		totem_action_restore_pl (totem);
 	}
 
-	if (bacon_message_connection_get_is_server (totem->conn) == TRUE)
+	if (bacon_message_connection_get_is_server (totem->conn) != FALSE)
 	{
 		bacon_message_connection_set_callback (totem->conn,
 				(BaconMessageReceivedFunc)
