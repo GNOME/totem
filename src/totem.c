@@ -940,8 +940,36 @@ totem_action_volume_relative (Totem *totem, int off_pct)
 
 void
 totem_action_toggle_aspect_ratio (Totem *totem)
+{		
+	GtkWidget  *item;
+	int  tmp;
+	static char *widgets[] = {
+		"tmw_aspect_ratio_auto_menu_item",
+		"tmw_aspect_ratio_square_menu_item",
+		"tmw_aspect_ratio_fbt_menu_item",
+		"tmw_aspect_ratio_anamorphic_menu_item",
+		"tmw_aspect_ratio_dvb_menu_item",
+	};
+
+	tmp = totem_action_get_aspect_ratio (totem);
+	tmp++;
+	if (tmp > 4)
+		tmp = 0;
+
+	item = glade_xml_get_widget (totem->xml, widgets[tmp]);
+	gtk_check_menu_item_set_active ((GtkCheckMenuItem *) item, TRUE);
+}
+
+void
+totem_action_set_aspect_ratio (Totem *totem, int  ratio)
 {
-	bacon_video_widget_toggle_aspect_ratio (totem->bvw);
+	bacon_video_widget_set_aspect_ratio (totem->bvw, ratio);
+}
+
+int
+totem_action_get_aspect_ratio (Totem *totem)
+{
+	return (bacon_video_widget_get_aspect_ratio (totem->bvw));
 }
 
 void
@@ -1691,11 +1719,34 @@ on_zoom_2_1_activate (GtkButton *button, Totem *totem)
 	totem_action_set_scale_ratio (totem, 2);
 }
 
+static void
+on_aspect_ratio_auto_activate (GtkButton *button, Totem *totem)
+{
+	totem_action_set_aspect_ratio (totem, BVW_RATIO_AUTO);
+}
 
 static void
-on_toggle_aspect_ratio1_activate (GtkButton *button, Totem *totem)
+on_aspect_ratio_square_activate (GtkButton *button, Totem *totem)
 {
-	totem_action_toggle_aspect_ratio (totem);
+	totem_action_set_aspect_ratio (totem, BVW_RATIO_SQUARE);
+}
+
+static void
+on_aspect_ratio_fbt_activate (GtkButton *button, Totem *totem)
+{
+	totem_action_set_aspect_ratio (totem, BVW_RATIO_FOURBYTHREE);
+}
+
+static void
+on_aspect_anamorphic_activate (GtkButton *button, Totem *totem)
+{
+	totem_action_set_aspect_ratio (totem, BVW_RATIO_ANAMORPHIC);
+}
+
+static void
+on_aspect_ratio_dvb_activate (GtkButton *button, Totem *totem)
+{
+	totem_action_set_aspect_ratio (totem, BVW_RATIO_DVB);
 }
 
 static void
@@ -2940,9 +2991,25 @@ totem_callback_connect (Totem *totem)
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_zoom_2_1_activate), totem);
 	item = glade_xml_get_widget (totem->xml,
-			"tmw_toggle_aspect_ratio_menu_item");
+			"tmw_aspect_ratio_auto_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_toggle_aspect_ratio1_activate), totem);
+			G_CALLBACK (on_aspect_ratio_auto_activate), totem);
+	item = glade_xml_get_widget (totem->xml,
+			"tmw_aspect_ratio_square_menu_item");
+        g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_aspect_ratio_square_activate), totem);
+	item = glade_xml_get_widget (totem->xml,
+			"tmw_aspect_ratio_fbt_menu_item");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_aspect_ratio_fbt_activate), totem);
+	item = glade_xml_get_widget (totem->xml,
+			"tmw_aspect_ratio_anamorphic_menu_item");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_aspect_anamorphic_activate), totem);
+	item = glade_xml_get_widget (totem->xml,
+			"tmw_aspect_ratio_dvb_menu_item");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_aspect_ratio_dvb_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "tmw_show_playlist_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_show_playlist1_activate), totem);

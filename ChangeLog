@@ -1,3 +1,22 @@
+2004-04-09  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem.glade:
+	* src/bacon-video-widget-gst.c:
+	(bacon_video_widget_set_aspect_ratio),
+	(bacon_video_widget_get_aspect_ratio):
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_set_aspect_ratio),
+	(bacon_video_widget_get_aspect_ratio):
+	* src/bacon-video-widget.h:
+	* src/totem.c: (totem_action_toggle_aspect_ratio),
+	(totem_action_set_aspect_ratio), (totem_action_get_aspect_ratio),
+	(on_aspect_ratio_auto_activate), (on_aspect_ratio_square_activate),
+	(on_aspect_ratio_fbt_activate), (on_aspect_anamorphic_activate),
+	(on_aspect_ratio_dvb_activate), (totem_callback_connect):
+	* src/totem.h: implement aspect ratio changing via a menu, adapted
+	from patch by Sanjay Kumar .J <vjsanjay_signed@yahoo.com>
+	(Closes: #119897)
+
 ============ Version 0.99.10
 
 2004-04-08  Bastien Nocera  <hadess@hadess.net>

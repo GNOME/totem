@@ -2803,16 +2803,24 @@ G_CONST_RETURN char
 }
 
 void
-bacon_video_widget_toggle_aspect_ratio (BaconVideoWidget *bvw)
+bacon_video_widget_set_aspect_ratio (BaconVideoWidget *bvw,
+		BaconVideoWidgetAspectRatio ratio)
 {
-	int tmp;
-
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
 
-	tmp = xine_get_param (bvw->priv->stream, XINE_PARAM_VO_ASPECT_RATIO);
-	xine_set_param (bvw->priv->stream, XINE_PARAM_VO_ASPECT_RATIO, tmp + 1);
+	xine_set_param (bvw->priv->stream, XINE_PARAM_VO_ASPECT_RATIO, ratio);
+}
+
+int
+bacon_video_widget_get_aspect_ratio (BaconVideoWidget *bvw)
+{
+	g_return_val_if_fail (bvw != NULL, 0);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
+	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
+
+	return xine_get_param (bvw->priv->stream, XINE_PARAM_VO_ASPECT_RATIO);
 }
 
 static gboolean

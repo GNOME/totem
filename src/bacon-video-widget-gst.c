@@ -1465,11 +1465,22 @@ bacon_video_widget_set_auto_resize (BaconVideoWidget * bvw,
 }
 
 void
-bacon_video_widget_toggle_aspect_ratio (BaconVideoWidget * bvw)
+bacon_video_widget_set_aspect_ratio (BaconVideoWidget *bvw,
+				BaconVideoWidgetAspectRatio ratio)
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_PLAY (bvw->priv->play));
+}
+
+int
+bacon_video_widget_get_aspect_ratio (BaconVideoWidget *bvw)
+{
+  g_return_val_if_fail (bvw != NULL, 0);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
+  g_return_val_if_fail (GST_IS_PLAY (bvw->priv->play), 0);
+
+  return  0;
 }
 
 void

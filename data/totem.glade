@@ -342,27 +342,78 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="tmw_toggle_aspect_ratio_menu_item">
+			<widget class="GtkMenuItem" id="tmw_aspect_ratio_menu_item">
 			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">Toggle the aspect ratio</property>
-			  <property name="label" translatable="yes">Toggle _Aspect Ratio</property>
+			  <property name="tooltip" translatable="yes">Set the aspect ratio</property>
+			  <property name="label" translatable="yes">_Aspect Ratio</property>
 			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_toggle_aspect_ratio1_activate" last_modification_time="Thu, 01 Aug 2002 17:44:43 GMT"/>
-			  <accelerator key="A" modifiers="0" signal="activate"/>
+			  <signal name="activate" handler="on_aspect_ratio1_activate" last_modification_time="Sun, 07 Mar 2004 22:28:14 GMT"/>
+			 
+        		  <child>
+			    <widget class="GtkMenu" id="tmw_menu_aspect">
 
-			  <child internal-child="image">
-			    <widget class="GtkImage" id="tmw_toggle_aspect_ratio_menu_item_image">
-			      <property name="visible">True</property>
-			      <property name="stock">gnome-stock-table-fill</property>
-			      <property name="icon_size">1</property>
-			      <property name="xalign">0.5</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
-			    </widget>
-			  </child>
-			</widget>
-		      </child>
+   			      <child>
+				<widget class="GtkRadioMenuItem" id="tmw_aspect_ratio_auto_menu_item">
+				  <property name="visible">True</property>
+				  <property name="tooltip" translatable="yes">Sets automatic aspect ratio</property>
+				  <property name="label" translatable="yes">Auto</property>
+				  <property name="use_underline">True</property>
+				  <property name="active">True</property>
+				  <signal name="activate" handler="on_aspect_ratio_auto_activate" last_modification_time="Sun, 07 Mar 2004 22:28:14 GMT"/>
+				</widget>
+			      </child>
+
+			      <child>
+				<widget class="GtkRadioMenuItem" id="tmw_aspect_ratio_square_menu_item">
+				  <property name="visible">True</property>
+				  <property name="tooltip" translatable="yes">Sets square aspect ratio</property>
+				  <property name="label" translatable="yes">Square</property>
+				  <property name="use_underline">True</property>
+				  <property name="active">False</property>
+				  <property name="group">tmw_aspect_ratio_auto_menu_item</property>
+				  <signal name="activate" handler="on_aspect_ratio_square_activate" last_modification_time="Sun, 07 Mar 2004 22:28:14 GMT"/>
+				</widget>
+			      </child>
+
+			      <child>
+				<widget class="GtkRadioMenuItem" id="tmw_aspect_ratio_fbt_menu_item">
+				  <property name="visible">True</property>
+				  <property name="tooltip" translatable="yes">Sets 4:3 (TV) aspect ratio</property>
+				  <property name="label" translatable="yes">4:3 (TV)</property>
+				  <property name="use_underline">True</property>
+				  <property name="active">False</property>
+				  <property name="group">tmw_aspect_ratio_auto_menu_item</property>
+				  <signal name="activate" handler="on_aspect_ratio_fbt_activate" last_modification_time="Sun, 07 Mar 2004 22:28:14 GMT"/>
+				</widget>
+			      </child>
+
+			      <child>
+				<widget class="GtkRadioMenuItem" id="tmw_aspect_ratio_anamorphic_menu_item">
+				  <property name="visible">True</property>
+				  <property name="tooltip" translatable="yes">Sets 16:9 (Anamorphic) aspect ratio</property>
+				  <property name="label" translatable="yes">16:9 (Widescreen)</property>
+				  <property name="use_underline">True</property>
+				  <property name="active">False</property>
+				  <property name="group">tmw_aspect_ratio_auto_menu_item</property>
+				  <signal name="activate" handler="on_aspect_anamorphic_activate" last_modification_time="Sun, 07 Mar 2004 22:28:14 GMT"/>
+				</widget>
+			      </child>
+
+			      <child>
+				<widget class="GtkRadioMenuItem" id="tmw_aspect_ratio_dvb_menu_item">
+				  <property name="visible">True</property>
+				  <property name="tooltip" translatable="yes">Sets 2.11:1 (DVB) aspect ratio</property>
+				  <property name="label" translatable="yes">2.11:1 (DVB)</property>
+				  <property name="use_underline">True</property>
+				  <property name="active">False</property>
+				  <property name="group">tmw_aspect_ratio_auto_menu_item</property>
+				  <signal name="activate" handler="on_aspect_ratio_dvb_activate" last_modification_time="Sun, 07 Mar 2004 22:28:14 GMT"/>
+				</widget>
+			      </child>
+                            </widget>
+                          </child>
+                        </widget>
+                      </child>
 
 		      <child>
 			<widget class="GtkCheckMenuItem" id="tmw_deinterlace_menu_item">

@@ -185,11 +185,23 @@ typedef enum {
 	BVW_VIDEO_HUE
 } BaconVideoWidgetVideoProperty;
 
+typedef enum {
+	BVW_RATIO_AUTO,
+	BVW_RATIO_SQUARE,
+	BVW_RATIO_FOURBYTHREE,
+	BVW_RATIO_ANAMORPHIC,
+	BVW_RATIO_DVB
+} BaconVideoWidgetAspectRatio;
+
 void bacon_video_widget_set_deinterlacing        (BaconVideoWidget *bvw,
 						  gboolean deinterlace);
 gboolean bacon_video_widget_get_deinterlacing    (BaconVideoWidget *bvw);
 
-void bacon_video_widget_toggle_aspect_ratio      (BaconVideoWidget *bvw);
+void bacon_video_widget_set_aspect_ratio         (BaconVideoWidget *bvw,
+						  BaconVideoWidgetAspectRatio
+						  ratio);
+int bacon_video_widget_get_aspect_ratio          (BaconVideoWidget *bvw);
+
 void bacon_video_widget_set_scale_ratio          (BaconVideoWidget *bvw,
 						  gfloat ratio);
 

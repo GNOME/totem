@@ -43,6 +43,8 @@ gboolean totem_action_set_mrl			(Totem *totem, const char *mrl);
 void	totem_action_play_media			(Totem *totem, MediaType type);
 
 void	totem_action_toggle_aspect_ratio	(Totem *totem);
+void	totem_action_set_aspect_ratio		(Totem *totem, int ratio);
+int	totem_action_get_aspect_ratio		(Totem *totem);
 void	totem_action_set_scale_ratio		(Totem *totem, gfloat ratio);
 void    totem_action_error                      (char *title, char *reason,
 						 Totem *totem);
