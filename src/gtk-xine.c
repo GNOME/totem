@@ -27,6 +27,7 @@
 #include <math.h>
 #include <pthread.h>
 #include <string.h>
+#include <stdio.h>
 /* X11 */
 #include <X11/X.h>
 #include <X11/Xlib.h>
@@ -74,15 +75,6 @@
 #define DEFAULT_WIDTH 315
 #define CONFIG_FILE ".gnome2"G_DIR_SEPARATOR_S"totem_config"
 #define DEFAULT_TITLE _("Totem Video Window")
-
-#define BLACK_PIXEL \
-	BlackPixel ((gtx->priv->display ? gtx->priv->display : gdk_display), \
-			gtx->priv->screen)
-
-/* missing stuff from X includes */
-#ifndef XShmGetEventBase
-extern int XShmGetEventBase (Display *);
-#endif
 
 /* this struct is used to decouple signals coming out of the Xine threads */
 typedef struct
@@ -840,8 +832,6 @@ gtk_xine_filter_events (GdkXEvent *xevent, GdkEvent *event, gpointer data)
 		retval = generate_mouse_event (gtx, xevent, TRUE);
 		if (gtx->priv->fullscreen_mode == TRUE)
 		{
-			GtkXineSignal *signal;
-
 			signal = g_new0 (GtkXineSignal, 1);
 			signal->type = MOUSE_MOTION;
 			g_async_queue_push (gtx->priv->queue, signal);
@@ -860,7 +850,6 @@ gtk_xine_filter_events (GdkXEvent *xevent, GdkEvent *event, gpointer data)
 		D("KeyPress:");
 		if (gtx->priv->fullscreen_mode == TRUE)
 		{
-			GtkXineSignal *signal;
 			char buf[16];
 			KeySym keysym;
 			static XComposeStatus compose;
@@ -950,7 +939,7 @@ gtk_xine_realize (GtkWidget *widget)
 	if (XShmQueryExtension (gtx->priv->display) == True)
 	{
 		gtx->priv->completion_event =
-		    XShmGetEventBase (gtx->priv->display) + ShmCompletion;
+			XShmGetEventBase (gtx->priv->display) + ShmCompletion;
 	} else {
 		gtx->priv->completion_event = -1;
 	}
@@ -2191,9 +2180,9 @@ gtk_xine_get_current_frame (GtkXine *gtx)
 	gint width, height;
 	GdkPixbuf *pixbuf = NULL;
 
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
-	g_return_if_fail (gtx->priv->xine != NULL);
+	g_return_val_if_fail (gtx != NULL, NULL);
+	g_return_val_if_fail (GTK_IS_XINE (gtx), NULL);
+	g_return_val_if_fail (gtx->priv->xine != NULL, NULL);
 
 	pixels = gtk_xine_get_current_frame_rgb (gtx, &width, &height);
 	if (pixels != NULL)
@@ -2309,7 +2298,7 @@ gtk_xine_get_current_frame_rgb (GtkXine * gtx, gint * width_ret,
     *width_ret = image->width;
     *height_ret = image->height;
 
-    free (image->img);
+    g_free (image->img);
     g_free (image);
 
     return rgb;
@@ -3123,7 +3112,7 @@ xine_frame_to_rgb (struct prvt_image_s *image)
 	  break;
 
       default:
-	  g_warning ("Image format %d not supported");
+	  g_warning ("Image format %d not supported", image->format);
 	  return NULL;
     }
 
