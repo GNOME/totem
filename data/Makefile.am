@@ -30,7 +30,7 @@ stuff_DATA =				\
 pixmapdir = $(datadir)/pixmaps
 pixmap_DATA = media-player-48.png vanity.png
 
-desktop_in_files_all = totem.desktop.in vanity.desktop.in
+desktop_in_files_all = totem.desktop.in.in vanity.desktop.in
 if TOTEM_VANITY
 desktop_in_files = totem.desktop.in vanity.desktop.in
 else
@@ -47,10 +47,15 @@ keysdir = $(datadir)/mime-info/
 app_DATA = totem.applications
 appdir = $(datadir)/application-registry
 
+totem.desktop.in: totem.desktop.in.in totem.keys desktop.sh
+	cat $(srcdir)/totem.desktop.in.in > totem.desktop.in &&\
+	$(srcdir)/desktop.sh $(srcdir)/totem.keys		\
+	>> totem.desktop.in
+
 serverdir = $(libdir)/bonobo/servers
 server_DATA = Totem_properties.server
 server_in_files = Totem_properties.server.in.in._1 Totem_properties.server.in.in._3 servers.sh
-Totem_properties.server.in.in._2: $(server_in_files) servers.sh totem.keys
+Totem_properties.server.in.in._2: $(server_in_files) totem.keys
 	$(srcdir)/servers.sh $(srcdir)/totem.keys		\
 	> Totem_properties.server.in.in._2
 Totem_properties.server.in.in: $(server_in_files) Totem_properties.server.in.in._2
@@ -87,7 +92,7 @@ else
 install-data-local:
 endif
 
-EXTRA_DIST = $(stuff_DATA) $(desktop_in_files_all) $(keys_DATA) $(app_DATA) $(server_in_files) totem.schemas.in lirc_example schemas.sh $(man_MANS)
+EXTRA_DIST = $(stuff_DATA) $(desktop_in_files_all) $(keys_DATA) $(app_DATA) $(server_in_files) totem.schemas.in lirc_example schemas.sh desktop.sh $(man_MANS)
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(desktop_DATA) $(schema_DATA)
 
