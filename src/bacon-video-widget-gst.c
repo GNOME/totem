@@ -1305,6 +1305,9 @@ get_list_of_type (BaconVideoWidget * bvw, const gchar * type_name)
   GList *streaminfo = NULL, *ret = NULL;
   gint num = 0;
 
+  if (bvw->priv->play == NULL || bvw->priv->mrl == NULL)
+    return NULL;
+
   g_object_get (G_OBJECT (bvw->priv->play), "stream-info", &streaminfo, NULL);
   streaminfo = g_list_copy (streaminfo);
   g_list_foreach (streaminfo, (GFunc) g_object_ref, NULL);
