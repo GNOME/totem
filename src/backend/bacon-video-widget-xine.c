@@ -1267,7 +1267,7 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		message = g_strdup_printf (_("A problem occured while loading a library or a decoder (%s)."), (char *) data + data->parameters);
 		break;
 	case XINE_MSG_ENCRYPTED_SOURCE:
-		if (strncmp (bvw->priv->mrl, "dvd:", 4) == 0)
+		if (g_str_has_prefix (bvw->priv->mrl, "dvd:") != FALSE)
 		{
 			num = BVW_ERROR_DVD_ENCRYPTED;
 			message = g_strdup (_("The source seems encrypted, and can't be read. Are you trying to play an encrypted DVD without libdvdcss?"));
@@ -1287,7 +1287,7 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		break;
 	case XINE_MSG_PERMISSION_ERROR:
 		num = BVW_ERROR_FILE_PERMISSION;
-		if (strncmp (bvw->priv->mrl, "file:", 5) == 0)
+		if (g_str_has_prefix (bvw->priv->mrl, "file:") != FALSE)
 			message = g_strdup (_("You are not allowed to open this file."));
 		else
 			message = g_strdup (_("The server refused access to this file or stream."));

@@ -227,11 +227,11 @@ totem_playlist_is_media (const char *mrl)
 	if (mrl == NULL)
 		return FALSE;
 
-	if (strncmp ("cdda:", mrl, strlen ("cdda:")) == 0)
+	if (g_str_has_prefix (mrl, "cdda:") != FALSE)
 		return TRUE;
-	if (strncmp ("dvd:",mrl, strlen ("dvd:")) == 0)
+	if (g_str_has_prefix (mrl, "dvd:") != FALSE)
 		return TRUE;
-	if (strncmp ("vcd:", mrl, strlen ("vcd:")) == 0)
+	if (g_str_has_prefix (mrl, "vcd:") != FALSE)
 		return TRUE;
 
 	return FALSE;

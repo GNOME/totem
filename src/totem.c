@@ -852,7 +852,7 @@ totem_playing_dvd (Totem *totem)
 	if (totem->mrl == NULL)
 		return FALSE;
 
-	return (strncmp("dvd:/", totem->mrl, strlen ("dvd:/")) == 0);
+	return g_str_has_prefix (totem->mrl, "dvd:/");
 }
 
 static gboolean
@@ -861,13 +861,13 @@ totem_is_media (const char *mrl)
 	if (mrl == NULL)
 		return FALSE;
 
-	if (strncmp ("cdda:", mrl, strlen ("cdda:")) == 0)
+	if (g_str_has_prefix (mrl, "cdda:") != FALSE)
 		return TRUE;
-	if (strncmp ("dvd:",mrl, strlen ("dvd:")) == 0)
+	if (g_str_has_prefix (mrl, "dvd:") != FALSE)
 		return TRUE;
-	if (strncmp ("vcd:", mrl, strlen ("vcd:")) == 0)
+	if (g_str_has_prefix (mrl, "vcd:") != FALSE)
 		return TRUE;
-	if (strncmp ("cd:", mrl, strlen ("cd:")) == 0)
+	if (g_str_has_prefix (mrl, "cd:") != FALSE)
 		return TRUE;
 
 	return FALSE;
@@ -1546,10 +1546,10 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 		if (g_file_test (filename, G_FILE_TEST_IS_REGULAR)
 				|| strstr (filename, "#") != NULL
 				|| strstr (filename, "://") != NULL
-				|| strncmp (filename, "dvd:", 4) == 0
-				|| strncmp (filename, "vcd:", 4) == 0
-				|| strncmp (filename, "cdda:", 5) == 0
-				|| strncmp (filename, "cd:", 3) == 0)
+				|| g_str_has_prefix (filename, "dvd:") != FALSE
+				|| g_str_has_prefix (filename, "vcd:") != FALSE
+				|| g_str_has_prefix (filename, "cdda:") != FALSE
+				|| g_str_has_prefix (filename, "cd:") != FALSE)
 		{
 			if (cleared == FALSE)
 			{
@@ -3605,7 +3605,7 @@ process_options (Totem *totem, int *argc, char ***argv)
 		} else if (strcmp (args[i], "--fullscreen") == 0) {
 			totem_action_fullscreen_toggle (totem);
 			options++;
-		} else if (strncmp (args[i], "--", 2) == 0) {
+		} else if (g_str_has_prefix (args[i], "--") != FALSE) {
 			printf (_("Option '%s' is unknown and was ignored\n"),
 					args[i]);
 			options++;
@@ -3634,7 +3634,7 @@ process_command_line (BaconMessageConnection *conn, int argc, char **argv)
 
 	i = 2;
 
-	if (strlen (argv[1]) > 3 && strncmp (argv[1], "--", 2) != 0)
+	if (strlen (argv[1]) > 3 && g_str_has_prefix (argv[1], "--") == FALSE)
 	{
 		command = TOTEM_REMOTE_COMMAND_REPLACE;
 		i = 1;

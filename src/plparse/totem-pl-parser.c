@@ -670,7 +670,7 @@ totem_pl_parser_add_asf_parser (TotemPlParser *parser, const char *url,
 	}
 
 	/* change http to mms, thanks Microsoft */
-	if (strncmp ("http", ref, 4) == 0)
+	if (g_str_has_prefix (ref, "http") != FALSE)
 		memcpy(ref, "mmsh", 4);
 
 	totem_pl_parser_add_one_url (parser, ref, NULL);
@@ -880,9 +880,9 @@ static TotemPlParserResult
 totem_pl_parser_add_ra (TotemPlParser *parser, const char *url, gpointer data)
 {
 	if (data == NULL
-			|| (strncmp (data, "http://", strlen ("http://")) != 0
-			&& strncmp (data, "rtsp://", strlen ("rtsp://")) != 0
-			    && strncmp (data, "pnm://", strlen ("pnm://")) != 0)) {
+			|| (g_str_has_prefix (data, "http://") == FALSE
+			&& g_str_has_prefix (data, "rtsp://") == FALSE
+			&& g_str_has_prefix (data, "pnm://") == FALSE)) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
@@ -1014,7 +1014,7 @@ static TotemPlParserResult
 totem_pl_parser_add_asf (TotemPlParser *parser, const char *url, gpointer data)
 {
 	if (data != NULL &&
-		strncmp (data, "[Reference]", strlen ("[Reference]")) != 0) {
+		g_str_has_prefix (data, "[Reference]") == FALSE) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
@@ -1155,7 +1155,7 @@ totem_pl_parser_scheme_is_ignored (TotemPlParser *parser, const char *url)
 	for (l = parser->priv->ignore_schemes; l != NULL; l = l->next)
 	{
 		const char *scheme = l->data;
-		if (strncmp (url, scheme, strlen (scheme)) == 0)
+		if (g_str_has_prefix (url, scheme) != FALSE)
 			return TRUE;
 	}
 
