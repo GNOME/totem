@@ -700,36 +700,6 @@ bvw_config_helper_num (xine_t *xine, const char *id, int val,
 }
 
 static void
-setup_url_handlers (BaconVideoWidget *bvw, const char *protocol)
-{
-	char *key, *url;
-
-	key = g_strdup_printf ("/desktop/gnome/url-handlers/%s/command",
-			protocol);
-	url = gconf_client_get_string (bvw->priv->gc, key, NULL);
-
-	if (url == NULL)
-	{
-		gconf_client_set_string (bvw->priv->gc, key,
-				"totem \"%s\"", NULL);
-		g_free (key);
-
-		key = g_strdup_printf
-			("/desktop/gnome/url-handlers/%s/need-terminal",
-			 protocol);
-		gconf_client_set_bool (bvw->priv->gc, key, FALSE, NULL);
-		g_free (key);
-
-		key =  g_strdup_printf
-			("/desktop/gnome/url-handlers/%s/enabled", protocol);
-		gconf_client_set_bool (bvw->priv->gc, key, TRUE, NULL);
-		g_free (key);
-	}
-
-	g_free (url);
-}
-
-static void
 setup_config (BaconVideoWidget *bvw)
 {
 	char *path;
@@ -773,11 +743,6 @@ setup_config (BaconVideoWidget *bvw)
 		g_warning ("GConf not available, broken installation?");
 		return;
 	}
-
-	/* Setup the protocol handlers for our funky stuff */
-	setup_url_handlers (bvw, "pnm");
-	setup_url_handlers (bvw, "mms");
-	setup_url_handlers (bvw, "rtsp");
 
 	/* Proxy configuration */
 	if (gconf_client_get_bool (bvw->priv->gc, "/system/http_proxy/use_http_proxy", NULL) == FALSE)
