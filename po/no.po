@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem 0.5\n"
-"POT-Creation-Date: 2003-01-21 11:30+0100\n"
-"PO-Revision-Date: 2003-01-21 11:34+0100\n"
+"POT-Creation-Date: 2003-01-25 00:50+0100\n"
+"PO-Revision-Date: 2003-01-25 00:51+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -245,7 +245,7 @@ msgid "Toggle Aspect Ratio"
 msgstr "Slå av/på høyde-/breddeforhold"
 
 #. Title
-#: data/totem.glade.h:35 src/totem.c:411 src/totem.c:434 src/totem.c:1266
+#: data/totem.glade.h:35 src/totem.c:411 src/totem.c:434 src/totem.c:1269
 msgid "Totem"
 msgstr "Totem"
 
@@ -337,7 +337,11 @@ msgstr "X-koordinat for spillelisten"
 msgid "Y coordinate for the Playlist"
 msgstr "Y-koordinat for spillelisten"
 
-#: src/bacon-cd-selection.c:257
+#: src/bacon-cd-selection.c:219
+msgid "Unnamed CDROM"
+msgstr "SCSI CD-ROM uten navn"
+
+#: src/bacon-cd-selection.c:261
 msgid "Select the drive"
 msgstr "Velg stasjon"
 
@@ -346,7 +350,7 @@ msgstr "Velg stasjon"
 msgid "Unnamed SCSI CDROM (%s)"
 msgstr "SCSI CD-ROM uten navn (%s)"
 
-#: src/cd-drive.c:572
+#: src/cd-drive.c:573
 msgid "File image"
 msgstr "CD-bilde"
 
@@ -389,7 +393,7 @@ msgstr "_Passord:"
 msgid "Remember this password"
 msgstr "Husk dette passordet"
 
-#: src/gtk-playlist.c:413 src/totem.c:1091
+#: src/gtk-playlist.c:413 src/totem.c:1094
 msgid "Select files"
 msgstr "Velg filer"
 
@@ -397,11 +401,11 @@ msgstr "Velg filer"
 msgid "Filename"
 msgstr "Filnavn"
 
-#: src/gtk-xine.c:75
+#: src/gtk-xine.c:59
 msgid "Totem Video Window"
 msgstr "Totem videovindu"
 
-#: src/gtk-xine.c:528
+#: src/gtk-xine.c:539
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -410,7 +414,7 @@ msgstr ""
 "Kunne ikke laste lyddriver «%s»\n"
 "Sjekk at enheten ikke er opptatt."
 
-#: src/gtk-xine.c:843
+#: src/gtk-xine.c:854
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
@@ -418,11 +422,11 @@ msgstr ""
 "Kunne ikke initiere støtte for tråder.\n"
 "Du bør installere Xlib med støtte for tråder."
 
-#: src/gtk-xine.c:871
+#: src/gtk-xine.c:881
 msgid "Could not find a suitable video output."
 msgstr "Kunne ikke finne en passende videotype."
 
-#: src/gtk-xine.c:1238
+#: src/gtk-xine.c:1241
 #, c-format
 msgid "Reason: Video type '%s' is not handled."
 msgstr "Årsak: Videotype «%s» er ikke støttet."
@@ -537,24 +541,24 @@ msgstr ""
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:400 src/totem.c:2385
+#: src/totem.c:400 src/totem.c:2391
 msgid "No file"
 msgstr "Ingen fil"
 
-#: src/totem.c:1242
+#: src/totem.c:1245
 msgid "translator_credits"
 msgstr "Kjartan Maraas <kmaraas@gnome.org>"
 
-#: src/totem.c:1268
+#: src/totem.c:1271
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Multimediaspiller (basert på Xine-bibliotekene)"
 
-#: src/totem.c:1322 src/totem.c:1333
+#: src/totem.c:1325 src/totem.c:1336
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Skjermdump%d.png"
 
-#: src/totem.c:1386
+#: src/totem.c:1389
 msgid ""
 "Totem could not get a screenshot of that film.\n"
 "You might want to try again at another time."
@@ -562,7 +566,7 @@ msgstr ""
 "Totem kunne ikke ta et skjermdump av denne filmen.\n"
 "Du kan prøve igjen en annen gang."
 
-#: src/totem.c:1412
+#: src/totem.c:1415
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
@@ -571,7 +575,7 @@ msgstr ""
 "Filen «%s» eksisterer allerede.\n"
 "Skjermdumpet ble ikke lagret."
 
-#: src/totem.c:1423
+#: src/totem.c:1426
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -580,7 +584,7 @@ msgstr ""
 "Det oppsto en feil under lagring av skjermdump.\n"
 "Detaljer: %s"
 
-#: src/totem.c:1444
+#: src/totem.c:1447
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -588,7 +592,7 @@ msgstr ""
 "Totem kunne ikke laste vindu for egenskaper for filmen.\n"
 "Sjekk at Totem er korrekt installert."
 
-#: src/totem.c:1889
+#: src/totem.c:1888
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -597,7 +601,7 @@ msgstr ""
 "Totem kunne ikke starte opp:\n"
 "%s"
 
-#: src/totem.c:1895
+#: src/totem.c:1894
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'.\n"
@@ -611,7 +615,7 @@ msgstr ""
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "«%s» er ødelagt, og Totem kan ikke spille av mer av den."
 
-#: src/totem.c:1904
+#: src/totem.c:1905
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -620,7 +624,16 @@ msgstr ""
 "Totem kunne ikke spille av «%s»:\n"
 "%s"
 
-#: src/totem.c:2547
+#: src/totem.c:1910
+#, c-format
+msgid ""
+"Totem could not play '%s'.\n"
+"This location is not a valid one."
+msgstr ""
+"Totem kunne ikke spille av «%s».\n"
+"Denne lokasjonen er ikke gyldig."
+
+#: src/totem.c:2553
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -631,7 +644,7 @@ msgstr ""
 "konfigurasjonsmotoren:\n"
 "%s"
 
-#: src/totem.c:2562 src/totem.c:2592
+#: src/totem.c:2568 src/totem.c:2598
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -639,7 +652,7 @@ msgstr ""
 "Kunne ikke laste hovedgrensesnittet (totem.glade).\n"
 "Sjekk at Totem er korrekt installert."
 
-#: src/totem.c:2614
+#: src/totem.c:2620
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
