@@ -33,6 +33,11 @@ G_BEGIN_DECLS
 #define GTK_IS_PLAYLIST(obj)         (GTK_CHECK_TYPE ((obj), GTK_TYPE_PLAYLIST))
 #define GTK_IS_PLAYLIST_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GTK_TYPE_PLAYLIST))
 
+typedef enum {
+	TOTEM_PLAYLIST_DIRECTION_NEXT,
+	TOTEM_PLAYLIST_DIRECTION_PREVIOUS
+} TotemPlaylistDirection;
+
 typedef struct TotemPlaylist	       TotemPlaylist;
 typedef struct TotemPlaylistClass      TotemPlaylistClass;
 typedef struct TotemPlaylistPrivate    TotemPlaylistPrivate;
@@ -77,9 +82,11 @@ char      *totem_playlist_get_current_title (TotemPlaylist *playlist,
 gboolean   totem_playlist_set_title (TotemPlaylist *playlist,
 				     const gchar *title);
 
+#define    totem_playlist_has_direction(playlist, direction) (direction == TOTEM_PLAYLIST_DIRECTION_NEXT ? totem_playlist_has_next_mrl (playlist) : totem_playlist_has_previous_mrl (playlist))
 gboolean   totem_playlist_has_previous_mrl (TotemPlaylist *playlist);
 gboolean   totem_playlist_has_next_mrl (TotemPlaylist *playlist);
 
+#define    totem_playlist_set_direction(playlist, direction) (direction == TOTEM_PLAYLIST_DIRECTION_NEXT ? totem_playlist_set_next (playlist) : totem_playlist_set_previous (playlist))
 void       totem_playlist_set_previous (TotemPlaylist *playlist);
 void       totem_playlist_set_next (TotemPlaylist *playlist);
 

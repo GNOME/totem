@@ -1,5 +1,13 @@
 2005-01-03  Bastien Nocera  <hadess@hadess.net>
 
+	* NEWS:
+	* src/totem-playlist.h:
+	* src/totem.c: (totem_action_direction), (totem_action_previous),
+	(totem_action_next): merge totem_action_previous and
+	totem_action_next into totem_action_direction
+
+2005-01-03  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c: (setup_config_stream):
 	* src/totem.c: (totem_action_exit), (video_widget_create): save
 	the volume from the front-end, not the backend

@@ -772,54 +772,48 @@ totem_time_within_seconds (Totem *totem)
 	return (time < REWIND_OR_PREVIOUS);
 }
 
-//FIXME
-//merge totem_action_previous/_next
+static void
+totem_action_direction (Totem *totem, TotemPlaylistDirection dir)
+{
+	if (totem_playing_dvd (totem->mrl) == FALSE &&
+		totem_playlist_has_direction (totem->playlist, dir) == FALSE
+		&& totem_playlist_get_repeat (totem->playlist) == FALSE)
+		return;
+
+	if (totem_playing_dvd (totem->mrl) != FALSE)
+	{
+		bacon_video_widget_dvd_event (totem->bvw,
+				dir == TOTEM_PLAYLIST_DIRECTION_NEXT ?
+				BVW_DVD_NEXT_CHAPTER :
+				BVW_DVD_PREV_CHAPTER);
+		return;
+	}
+	
+	if (dir == TOTEM_PLAYLIST_DIRECTION_NEXT
+			|| bacon_video_widget_is_seekable (totem->bvw) == FALSE
+			|| totem_time_within_seconds (totem) != FALSE)
+	{
+		char *mrl;
+
+		totem_playlist_set_direction (totem->playlist, dir);
+		mrl = totem_playlist_get_current_mrl (totem->playlist);
+		totem_action_set_mrl_and_play (totem, mrl);
+		g_free (mrl);
+	} else {
+		totem_action_seek (totem, 0);
+	}
+}
 
 void
 totem_action_previous (Totem *totem)
 {
-	char *mrl;
-
-	if (totem_playing_dvd (totem->mrl) == FALSE &&
-		totem_playlist_has_previous_mrl (totem->playlist) == FALSE
-		&& totem_playlist_get_repeat (totem->playlist) == FALSE)
-		return;
-
-        if (totem_playing_dvd (totem->mrl) != FALSE)
-        {
-                bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_PREV_CHAPTER);
-        } else {
-		if (bacon_video_widget_is_seekable (totem->bvw) == FALSE
-				|| totem_time_within_seconds (totem) != FALSE) {
-			totem_playlist_set_previous (totem->playlist);
-			mrl = totem_playlist_get_current_mrl (totem->playlist);
-			totem_action_set_mrl_and_play (totem, mrl);
-			g_free (mrl);
-		} else {
-			totem_action_seek (totem, 0);
-		}
-	}
+	totem_action_direction (totem, TOTEM_PLAYLIST_DIRECTION_PREVIOUS);
 }
 
 void
 totem_action_next (Totem *totem)
 {
-	char *mrl;
-
-	if (totem_playing_dvd (totem->mrl) == FALSE &&
-			totem_playlist_has_next_mrl (totem->playlist) == FALSE
-			&& totem_playlist_get_repeat (totem->playlist) == FALSE)
-		return;
-
-	if (totem_playing_dvd (totem->mrl) != FALSE)
-	{
-		bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_NEXT_CHAPTER);
-	} else {
-		totem_playlist_set_next (totem->playlist);
-		mrl = totem_playlist_get_current_mrl (totem->playlist);
-		totem_action_set_mrl_and_play (totem, mrl);
-		g_free (mrl);
-	}
+	totem_action_direction (totem, TOTEM_PLAYLIST_DIRECTION_NEXT);
 }
 
 void
