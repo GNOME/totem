@@ -2086,11 +2086,11 @@ gtk_xine_get_current_frame (GtkXine *gtx)
 	ratio = xine_get_stream_info (gtx->priv->stream,
 			XINE_STREAM_INFO_VIDEO_RATIO);
 
-	if (ratio != 1.0 && ratio != 0.0)
+	if (ratio != 10000.0 && ratio != 0.0)
 	{
 		GdkPixbuf *tmp;
 
-		if (ratio > 1.0)
+		if (ratio > 10000.0)
 			tmp = gdk_pixbuf_scale_simple (pixbuf,
 					(int) (height * ratio / 10000), height,
 					GDK_INTERP_BILINEAR);
