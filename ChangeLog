@@ -1,3 +1,10 @@
+2005-03-14  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-mozilla-plugin.c: (totem_plugin_fork),
+	(totem_plugin_new_instance): pass the src as the url to the
+	viewer, data still doesn't seem to get through when embedded into
+	Mozilla
+
 2005-03-13  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_class_init):

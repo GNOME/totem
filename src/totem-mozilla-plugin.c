@@ -43,6 +43,7 @@ typedef struct {
 	NPP instance;
 	guint32 window;
 
+	char *src;
 	int width, height;
 	int recv_fd, send_fd;
 	int player_pid;
@@ -53,7 +54,7 @@ typedef struct {
 static NPNetscapeFuncs mozilla_functions;
 
 /* You don't update, you die! */
-#define MAX_ARGV_LEN 10
+#define MAX_ARGV_LEN 11
 
 static void totem_plugin_fork (TotemPlugin *plugin)
 {
@@ -81,6 +82,11 @@ static void totem_plugin_fork (TotemPlugin *plugin)
 	if (plugin->height) {
 		argv[argc++] = g_strdup ("--height");
 		argv[argc++] = g_strdup_printf ("%d", plugin->height);
+	}
+
+	if (plugin->src) {
+		argv[argc++] = g_strdup ("--url");
+		argv[argc++] = g_strdup (plugin->src);
 	}
 
 	argv[argc++] = g_strdup ("fd://0");
@@ -145,6 +151,9 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 		}
 		if (strcmp (argn[i], "height") == 0) {
 			plugin->height = strtol (argv[i], NULL, 0);
+		}
+		if (strcmp (argn[i], "src") == 0) {
+			plugin->src = g_strdup (argv[i]);
 		}
 
 		//Handle loop
