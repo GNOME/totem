@@ -1301,6 +1301,9 @@ gtk_xine_stop (GtkXine *gtx)
 	if (gtx->priv->stream == NULL)
 		return;
 
+	if (gtk_xine_is_playing (gtx) == FALSE)
+		return;
+
 	xine_stop (gtx->priv->stream);
 }
 

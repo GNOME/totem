@@ -1,5 +1,10 @@
 2003-01-22  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (gtk_xine_stop): fix a deadlock when there is no
+	demuxer for the video/audio we're trying to play
+
+2003-01-22  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-playlist.c: (gtk_playlist_add_mrl): make it so we can add
 	application/x-ogg files as well
 
