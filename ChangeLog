@@ -1,5 +1,12 @@
 2005-03-25  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_finalize), (bacon_video_widget_get_property),
+	(bacon_video_widget_set_media_device): don't read the media device
+	configuration from the xine configuration file
+
+2005-03-25  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst.c:
 	(bacon_video_widget_set_property),
 	(bacon_video_widget_get_property): add get/set property implementation

@@ -133,6 +133,7 @@ struct BaconVideoWidgetPrivate {
 	GConfClient *gc;
 	char *mrl;
 	BvwUseType type;
+	char *mediadev;
 
 	/* X stuff */
 	Display *display;
@@ -451,6 +452,7 @@ bacon_video_widget_finalize (GObject *object)
 		xine_exit (bvw->priv->xine);
 	}
 	g_free (bvw->priv->vis_name);
+	g_free (bvw->priv->mediadev);
 	g_object_unref (G_OBJECT (bvw->priv->gc));
 	g_free (bvw->priv->codecs_path);
 
@@ -2218,8 +2220,7 @@ bacon_video_widget_get_property (GObject *object, guint property_id,
 				bacon_video_widget_get_show_cursor (bvw));
 		break;
 	case PROP_MEDIADEV:
-		g_value_take_string (value,
-				bacon_video_widget_get_media_device (bvw));
+		g_value_set_string (value, bvw->priv->mediadev);
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -2472,17 +2473,6 @@ bacon_video_widget_get_show_cursor (BaconVideoWidget *bvw)
 	return bvw->priv->cursor_shown;
 }
 
-static char *
-bacon_video_widget_get_media_device (BaconVideoWidget *bvw)
-{
-	xine_cfg_entry_t entry;
-
-	if (!xine_config_lookup_entry (bvw->priv->xine,
-				"media.dvd.device", &entry))
-		return g_strdup ("");
-	return g_strdup (entry.str_value);
-}
-
 void
 bacon_video_widget_set_media_device (BaconVideoWidget *bvw, const char *path)
 {
@@ -2491,6 +2481,8 @@ bacon_video_widget_set_media_device (BaconVideoWidget *bvw, const char *path)
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (path != NULL);
+
+	g_free (bvw->priv->mediadev);
 
 	/* DVD device */
 	bvw_config_helper_string (bvw->priv->xine, "media.dvd.device",
@@ -2515,6 +2507,8 @@ bacon_video_widget_set_media_device (BaconVideoWidget *bvw, const char *path)
 			path, &entry);
 	entry.str_value = (char *) path;
 	xine_config_update_entry (bvw->priv->xine, &entry);
+
+	bvw->priv->mediadev = g_strdup (path);
 }
 
 void
