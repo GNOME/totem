@@ -314,7 +314,7 @@ totem_action_exit (Totem *totem)
 	{
 		char *path;
 
-		path = g_build_filename (G_DIR_SEPARATOR_S, g_get_home_dir (),
+		path = g_build_filename (g_get_home_dir (),
 				".gnome2", "totem.pls", NULL);
 		totem_playlist_save_current_playlist (totem->playlist, path);
 		g_free (path);
@@ -621,7 +621,7 @@ totem_action_restore_pl (Totem *totem)
 {
 	char *path, *mrl;
 
-	path = g_build_filename (G_DIR_SEPARATOR_S, g_get_home_dir (),
+	path = g_build_filename (g_get_home_dir (),
 			".gnome2", "totem.pls", NULL);
 
 	if (g_file_test (path, G_FILE_TEST_EXISTS) == FALSE)
@@ -1965,17 +1965,14 @@ screenshot_make_filename_helper (Totem *totem, char *filename,
 
 		if (desktop_exists != FALSE)
 		{
-			return g_build_filename (G_DIR_SEPARATOR_S,
-					g_get_home_dir (), "Desktop",
-					filename, NULL);
+			return g_build_filename (g_get_home_dir (),
+					"Desktop", filename, NULL);
 		} else {
-			return g_build_filename (G_DIR_SEPARATOR_S,
-					g_get_home_dir (), ".gnome-desktop",
-					filename, NULL);
+			return g_build_filename (g_get_home_dir (),
+					 ".gnome-desktop", filename, NULL);
 		}
 	} else {
-		return g_build_filename (G_DIR_SEPARATOR_S,
-				g_get_home_dir (), filename, NULL);
+		return g_build_filename (g_get_home_dir (), filename, NULL);
 	}
 }
 
@@ -3755,18 +3752,18 @@ main (int argc, char **argv)
 	g_free (filename);
 
 	totem->win = glade_xml_get_widget (totem->xml, "totem_main_window");
-	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
+	filename = g_build_filename (DATADIR,
 			"totem", "media-player-48.png", NULL);
 	gtk_window_set_default_icon_from_file (filename, NULL);
 	g_free (filename);
 
 	/* The playlist */
-	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
+	filename = g_build_filename (DATADIR,
 			"totem", "playlist-playing.png", NULL);
 	pix = gdk_pixbuf_new_from_file (filename, NULL);
 	g_free (filename);
 
-	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
+	filename = g_build_filename (DATADIR,
 			"totem", "playlist.glade", NULL);
 	totem->playlist = TOTEM_PLAYLIST (totem_playlist_new (filename, pix));
 	g_free (filename);
@@ -3775,7 +3772,7 @@ main (int argc, char **argv)
 	{
 		totem_action_error_and_exit (_("Couldn't load the interface for the playlist."), _("Make sure that Totem is properly installed."), totem);
 	}
-	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
+	filename = g_build_filename (DATADIR,
 			"totem", "playlist-24.png", NULL);
 	gtk_window_set_icon_from_file (GTK_WINDOW (totem->playlist),
 			filename, NULL);

@@ -1,3 +1,29 @@
+2004-01-31  Jon Trowbridge <trow@ximian.com>
+
+	* src/bacon-message-connection.c:
+	* src/bacon-video-widget-properties.c:
+	* src/totem-download.c:
+	* src/totem-pl-parser.c:
+	* src/totem-video-thumbnailer.c:
+	* src/totem.c:
+	* src/vanity.c:
+	* src/video-dev.c: Corrected usage of g_build_filename.  This
+	fixes bug #132674.
+
+	* src/totem.c (seek_slider_pressed_cb): Set seeking to TRUE
+	in the status bar.
+	(seek_slider_changed_cb): Added.  If we are dragging the seek
+	slider, put the current seek position in the status bar.
+	(seek_slider_released_cb): Set seeking to FALSE in the status
+	bar.
+	(totem_callback_connect): Connect seek_slider_changed_cb
+	to the adjustment's "value_changed" signal.
+
+	* src/totem-statusbar.c (totem_statusbar_set_seeking): Added.
+	Controls the seeking flag.
+	(totem_statusbar_update_time): If the seeking flag is set,
+	append 'Seeking to' to the status bar label.
+
 2004-01-30  Jon Trowbridge <trow@ximian.com>
 
 	* src/bacon-video-widget-gst.c (bacon_video_widget_seek_time):

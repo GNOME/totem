@@ -156,8 +156,7 @@ bacon_message_connection_new (const char *prefix)
 	g_return_val_if_fail (prefix != NULL, NULL);
 
 	filename = g_strdup_printf (".%s.%s", prefix, g_get_user_name ());
-	path = g_build_filename (G_DIR_SEPARATOR_S, g_get_home_dir (),
-			filename, NULL);
+	path = g_build_filename (g_get_home_dir (), filename, NULL);
 	g_free (filename);
 
 	conn = g_new0 (BaconMessageConnection, 1);

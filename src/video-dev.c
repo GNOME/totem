@@ -98,15 +98,13 @@ linux_get_device_path (const char *name)
 {
 	char *filename;
 
-	filename = g_build_filename (G_DIR_SEPARATOR_S,
-			"/dev", name, NULL);
+	filename = g_build_filename ("/dev", name, NULL);
 	if (g_file_test (filename, G_FILE_TEST_EXISTS) != FALSE) {
 		return filename;
 	}
 
 	g_free (filename);
-	filename = g_build_filename (G_DIR_SEPARATOR_S,
-			"/dev/v4l", name, NULL);
+	filename = g_build_filename ("/dev/v4l", name, NULL);
 	if (g_file_test (filename, G_FILE_TEST_EXISTS) != FALSE) {
 		return filename;
 	}
@@ -127,8 +125,7 @@ linux_add_video_dev (const char *name)
 		return NULL;
 	}
 
-	proc = g_build_filename (G_DIR_SEPARATOR_S,
-			"/proc/video/dev", name, NULL);
+	proc = g_build_filename ("/proc/video/dev", name, NULL);
 	lines = read_lines (proc);
 	g_free (proc);
 

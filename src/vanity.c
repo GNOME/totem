@@ -274,12 +274,10 @@ screenshot_make_filename_helper (char *filename, gboolean desktop_exists)
 {
 	if (desktop_exists == TRUE)
 	{
-		return g_build_filename (G_DIR_SEPARATOR_S,
-				g_get_home_dir (), ".gnome-desktop",
+		return g_build_filename (g_get_home_dir (), ".gnome-desktop",
 				filename, NULL);
 	} else {
-		return g_build_filename (G_DIR_SEPARATOR_S,
-				g_get_home_dir (), filename, NULL);
+		return g_build_filename (g_get_home_dir (), filename, NULL);
 	}
 }
 
@@ -702,8 +700,7 @@ main (int argc, char **argv)
 	g_free (filename);
 
 	vanity->win = glade_xml_get_widget (vanity->xml, "app1");
-	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
-			"totem", "vanity.png", NULL);
+	filename = g_build_filename (DATADIR, "totem", "vanity.png", NULL);
 	gtk_window_set_default_icon_from_file (filename, NULL);
 	g_free (filename);
 

@@ -153,8 +153,7 @@ cab_extract (TotemDownload *td, const char *path)
 	if (dir == NULL)
 		return -1;
 
-	destdir = g_build_filename (G_DIR_SEPARATOR_S,
-			g_get_home_dir (),
+	destdir = g_build_filename (g_get_home_dir (),
 			".gnome2", "totem-addons", NULL);
 
 	name = g_dir_read_name (dir);
@@ -162,8 +161,7 @@ cab_extract (TotemDownload *td, const char *path)
 	{
 		char *filename;
 
-		filename = g_build_filename (G_DIR_SEPARATOR_S,
-				td->dirpath, name, NULL);
+		filename = g_build_filename (td->dirpath, name, NULL);
 
 		/* This is not solid, but MS only knows DOS-like 8.3
 		 * filenames anyway */
@@ -175,8 +173,7 @@ cab_extract (TotemDownload *td, const char *path)
 			char *destfile;
 			GnomeVFSURI *origuri, *desturi;
 
-			destfile = g_build_filename (G_DIR_SEPARATOR_S,
-					destdir, name, NULL);
+			destfile = g_build_filename (destdir, name, NULL);
 
 			origuri = gnome_vfs_uri_new (filename);
 			desturi = gnome_vfs_uri_new (destfile);
@@ -333,16 +330,14 @@ cab_download (TotemDownload *td)
 
 	retval = 0;
 
-	template = g_build_filename (G_DIR_SEPARATOR_S, g_get_tmp_dir (),
-			"totemXXXXXX", NULL);
+	template = g_build_filename (g_get_tmp_dir (), "totemXXXXXX", NULL);
 	td->dirpath = mktemp (template);
 	if (mkdir (td->dirpath, 0700) == -1)
 		return -1;
 
 	if (td->video_fcc != 0)
 	{
-		filepath = g_build_filename (G_DIR_SEPARATOR_S, td->dirpath,
-				"totem_v.cab", NULL);
+		filepath = g_build_filename (td->dirpath, "totem_v.cab", NULL);
 		if (cab_download_from_td_try (td, filepath, td->video_fcc) < 0)
 			retval = -1;
 		g_free (filepath);
@@ -350,8 +345,7 @@ cab_download (TotemDownload *td)
 
 	if (td->audio_fcc != 0)
 	{
-		filepath = g_build_filename (G_DIR_SEPARATOR_S, td->dirpath,
-				"totem_a.cab", NULL);
+		filepath = g_build_filename (td->dirpath, "totem_a.cab", NULL);
 		if (cab_download_from_td_try (td, filepath, td->audio_fcc) < 0)
 		{
 			if (retval == 0)

@@ -1099,8 +1099,7 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 			continue;
 		}
 
-		str = g_build_filename (G_DIR_SEPARATOR_S,
-					     url, info->name, NULL);
+		str = g_build_filename (url, info->name, NULL);
 		if (strstr (str, "://") != NULL)
 			fullpath = str + 1;
 		else

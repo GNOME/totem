@@ -301,7 +301,7 @@ bacon_video_widget_properties_new (void)
 	char *filename;
 	GtkWidget *vbox;
 
-	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
+	filename = g_build_filename (DATADIR,
 			"totem", "properties.glade", NULL);
 
 	xml = glade_xml_new (filename, "vbox1", NULL);

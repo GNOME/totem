@@ -77,8 +77,7 @@ add_holes_to_pixbuf (GdkPixbuf *pixbuf, int width, int height)
 	char *filename;
 	int i;
 
-	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
-			"totem", "filmholes.png", NULL);
+	filename = g_build_filename (DATADIR, "totem", "filmholes.png", NULL);
 	holes = gdk_pixbuf_new_from_file (filename, NULL);
 	g_free (filename);
 
