@@ -3432,16 +3432,16 @@ main (int argc, char **argv)
 	g_thread_init (NULL);
 	gdk_threads_init ();
 
+#ifdef HAVE_GTK_ONLY
 	gtk_init (&argc, &argv);
-
-#ifndef HAVE_GTK_ONLY
+#else
 	gnome_program_init ("totem", VERSION,
 			LIBGNOMEUI_MODULE,
 			argc, argv,
 			GNOME_PARAM_APP_DATADIR, DATADIR,
 			GNOME_PARAM_POPT_TABLE, totem_options_get_options (),
 			GNOME_PARAM_NONE);
-#endif /* !HAVE_GTK_ONLY */
+#endif /* HAVE_GTK_ONLY */
 
 	gnome_vfs_init ();
 

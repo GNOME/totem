@@ -1,4 +1,4 @@
-/* gtk-xine-properties.h: Properties dialog for BaconVideoWidget
+/* bacon-video-widget-properties.h: Properties dialog for BaconVideoWidget
 
    Copyright (C) 2002 Bastien Nocera <hadess@hadess.net>
 

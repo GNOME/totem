@@ -1,5 +1,5 @@
 /* 
- * Copyright (C) 2001-2002 the xine project
+ * Copyright (C) 2001-2005 the xine project
  * 	Heavily modified by Bastien Nocera <hadess@hadess.net>
  *
  * This program is free software; you can redistribute it and/or modify

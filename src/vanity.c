@@ -50,6 +50,9 @@ struct Vanity {
 	GtkWidget *prefs;
 	GConfClient *gc;
 
+	/* Widgets */
+	GtkAboutDialog *about;
+
 	gboolean debug;
 };
 
@@ -220,52 +223,46 @@ on_quit1_activate (GtkButton *button, Vanity *vanity)
 	vanity_action_exit (vanity);
 }
 
-#ifndef HAVE_GTK_ONLY
 static void
 on_about1_activate (GtkButton *button, Vanity *vanity)
 {
-	static GtkWidget *about = NULL;
 	GdkPixbuf *pixbuf = NULL;
-	const gchar *authors[] =
+	const char *authors[] =
 	{
 		"Bastien Nocera <hadess@hadess.net>",
 		NULL
 	};
-	const gchar *documenters[] = { NULL };
-	const gchar *translator_credits = _("translator_credits");
+	const char *artists[] = { NULL };
+	const char *documenters[] = { NULL };
 	char *backend_version, *description;
+	char *filename;
 
-	if (about != NULL)
+	if (vanity->about != NULL)
 	{
-		gdk_window_raise (about->window);
-		gdk_window_show (about->window);
+		gtk_window_present (GTK_WINDOW (vanity->about));
 		return;
 	}
 
-	{
-		char *filename = NULL;
-
-		filename = g_build_filename (DATADIR,
+	filename = g_build_filename (DATADIR,
 			"totem", "vanity.png", NULL);
-
-		if (g_file_test (filename, G_FILE_TEST_EXISTS) == FALSE)
-		{
-			pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
-			g_free (filename);
-		}
-	}
+	pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+	g_free (filename);
 
 	backend_version = bacon_video_widget_get_backend_name (vanity->bvw);
 	description = g_strdup_printf (_("Webcam utility using %s"),
 				backend_version);
 
-	about = gnome_about_new(_("Vanity"), VERSION,
-			"Copyright \xc2\xa9 2001,2002,2003 Bastien Nocera",
-			(const char *)description,
-			(const char **)authors,
-			(const char **)documenters,
-			strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
-			pixbuf);
+	vanity->about = g_object_new (GTK_TYPE_ABOUT_DIALOG,
+			"name", _("Vanity"),
+			"version", VERSION,
+			"copyright", _("Copyright \xc2\xa9 2002-2005 Bastien Nocera"),
+			"comments", description,
+			"authors", authors,
+			"documenters", documenters,
+			"artists", artists, 
+			"translator-credits", _("translator-credits"),
+			"logo", pixbuf,
+			NULL);
 
 	g_free (backend_version);
 	g_free (description);
@@ -273,16 +270,15 @@ on_about1_activate (GtkButton *button, Vanity *vanity)
 	if (pixbuf != NULL)
 		gdk_pixbuf_unref (pixbuf);
 
-	g_signal_connect (G_OBJECT (about), "destroy", G_CALLBACK
-			(gtk_widget_destroyed), &about);
-	g_object_add_weak_pointer (G_OBJECT (about),
-			(void**)&(about));
-	gtk_window_set_transient_for (GTK_WINDOW (about),
+	g_object_add_weak_pointer (G_OBJECT (vanity->about),
+			(gpointer *)&vanity->about);
+	gtk_window_set_transient_for (GTK_WINDOW (vanity->about),
 			GTK_WINDOW (vanity->win));
+	g_signal_connect (G_OBJECT (vanity->about), "response",
+			G_CALLBACK (gtk_widget_destroy), NULL);
 
-	gtk_widget_show(about);
+	gtk_widget_show(GTK_WIDGET (vanity->about));
 }
-#endif /* !HAVE_GTK_ONLY */
 
 static void
 on_save1_activate (GtkButton *button, Vanity *vanity)
