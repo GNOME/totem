@@ -1227,13 +1227,6 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 
 	message = NULL;
 
-	if (!(data->explanation))
-	{
-		D("xine_event_message: UI message without an explanation\n"
-				"type: %d", data->type);
-		return;
-	}
-
 	switch(data->type)
 	{
 	case XINE_MSG_NO_ERROR:
@@ -1269,6 +1262,10 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		break;
 	case XINE_MSG_SECURITY:
 		message = g_strdup (_("For security reasons, this movie can not be played back."));
+		break;
+	case XINE_MSG_AUDIO_OUT_UNAVAILABLE:
+		xine_stop (bvw->priv->stream);
+		message = g_strdup (_("The audio device is busy. Is another application using it?"));
 		break;
 	}
 
@@ -1423,8 +1420,8 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	GTK_WIDGET_UNSET_FLAGS (widget, GTK_MAPPED);
 
 	/* Get rid of the rest of the stream */
-	xine_event_dispose_queue (bvw->priv->ev_queue);
 	xine_dispose (bvw->priv->stream);
+	xine_event_dispose_queue (bvw->priv->ev_queue);
 	bvw->priv->stream = NULL;
 
 	/* save config */
@@ -3290,7 +3287,8 @@ bacon_video_widget_can_get_frames (BaconVideoWidget *bvw, GError **error)
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
 
-	if (xine_get_status (bvw->priv->stream) != XINE_STATUS_PLAY)
+	if (xine_get_status (bvw->priv->stream) != XINE_STATUS_PLAY
+			&& bvw->priv->logo_mode == FALSE)
 	{
 		g_set_error (error, 0, 0, _("Movie is not playing"));
 		return FALSE;

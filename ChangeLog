@@ -1,3 +1,18 @@
+2004-04-05  Bastien Nocera  <hadess@hadess.net>
+
+	* NEWS: updated
+	* README: removed TODO item
+	* src/bacon-video-widget-xine.c: (xine_event_message),
+	(bacon_video_widget_unrealize),
+	(bacon_video_widget_can_get_frames): handle events from xine-lib
+	even if the explanation field is empty (Closes: #130774)
+	Handle the XINE_MSG_AUDIO_OUT_UNAVAILABLE event (Closes: #111602)
+	Destroy event queues in the right order, make it possible to take
+	a screenshot of the logo
+	* src/dvd_plus_rw_utils.cpp: valgrind fixes from libbacon
+	* src/vanity.c: (vanity_callback_connect), (video_widget_create):
+	make the --debug mode work again
+
 2004-04-05  Julien MOUTTE <julien@moutte.net>
 
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_set_logo):

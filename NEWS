@@ -4,21 +4,27 @@ New features and significant updates in version...
 * Use the new GtkFileChooser, and other GTK+ 2.4-related changes
 * Make NVidia TV-Out work again
 * Remove the (broken) automatic downloader and the CURL dependency
+* Show an error message when the audio output isn't available (dependent on
+  the version of xine-lib)
 * Better error handling in the GStreamer backend
 * Fix a bug in directory loading with newer glib versions
 * Remove the builtin authentication manager to use the one provided
-by the GNOME libraries
+by the GNOME libraries, fix a deadlock on startup when authentication is
+required
 * Make vanity support Linux 2.6
 * Stock icons support
 * Have the command-line options translated
 * Install handlers for mms, pnm and rtsp protocols in the xine-lib backend
+* Add a button to reset the colour balance settings
 * Make the fullscreen slider work again
 * Restore the default audio stream if a custom one is not available in the
 file that we're about to play
-* Don't crash when the video output plugin isn't available
+* Don't crash when the "none" video output plugin isn't available
 * Don't probe for the Xv video driver on remote connections
 * Disable the ALSA mixer event thread as we don't need it, fixes a crash/hang
   on exit when using the ALSA audio output
+* Fix some bugs in ASX playlist parsing
+* Fix crash using Optical Media playback with the GStreamer backend
 
 0.99.9:
 * Extended Gstreamer 0.7.x support, DVD and Audio CD support, related bug fixes

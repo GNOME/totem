@@ -4,6 +4,10 @@
 // For further details see http://fy.chalmers.se/~appro/linux/DVD+RW/
 //
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #if defined(__linux__) || defined(__FreeBSD__)
 
 #ifndef _LARGEFILE_SOURCE
@@ -31,6 +35,31 @@
 
 #include "transport.hxx"
 
+#ifdef LIBSTDCXX_HACK
+/* Some C++ stuff needed when we not link to libstdc++ */
+void *operator new (size_t sz)
+{
+	void *ret = malloc (sz);
+	if (ret == NULL)
+	{
+		fputs ("libnautilus-burn memory allocation failed\n", stderr);
+		exit (1);
+	}
+	return ret;
+}
+
+void *operator new[] (size_t sz)
+{
+	return ::operator new(sz);
+}
+
+void
+operator delete (void *ptr)
+{
+	free (ptr);
+}
+#endif /* LIBSTDCXX_HACK */
+
 /* Returns:
  * -1: not a DVD+RW or DVD+R
  * 0: DVD+R
@@ -48,6 +77,9 @@ int get_dvd_r_rw_profile (const char *name)
 
   if (!cmd.associate((char *)name))
       return -1;
+
+  /* For valgrind */
+  memset (&page, 1, sizeof (page));
 
   cmd[0]=0x46;
   cmd[1]=2;
@@ -70,6 +102,9 @@ int get_dvd_r_rw_profile (const char *name)
       goto bail;
     }
     unsigned char *list=new unsigned char[len];
+
+    /* For valgrind */
+    memset (&list, 1, sizeof (list));
 
     cmd[0]=0x46;
     cmd[1]=2;
@@ -103,8 +138,6 @@ int get_dvd_r_rw_profile (const char *name)
           retval = 1;
       }
     }
-
-    delete list;
   }
 
 bail:
@@ -158,8 +191,6 @@ int get_mmc_profile (int fd)
 		      sense[2]&0xF,sense[12],sense[13]); */
       goto bail;
     }
-
-    //delete list;
   }
 
   return page[6]<<8|page[7];

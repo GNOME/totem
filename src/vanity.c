@@ -503,6 +503,12 @@ vanity_callback_connect (Vanity *vanity)
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_preferences1_activate), vanity);
 
+	/* The toolbar */
+#if 0
+	item = glade_xml_get_widget (vanity->xml, "save_button");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_save1_activate), vanity);
+#endif
 	/* Exit */
 	g_signal_connect (G_OBJECT (vanity->win), "delete-event",
 			G_CALLBACK (main_window_destroy_cb), vanity);
@@ -571,13 +577,13 @@ video_widget_create (Vanity *vanity)
 			g_error_free (err);
 			vanity_action_error_and_exit (msg, vanity);
 		}
+
+		bacon_video_widget_play (vanity->bvw, &err);
 	} else {
-		bacon_video_widget_set_logo (vanity->bvw, LOGO_PATH);
 		bacon_video_widget_set_logo_mode (vanity->bvw, TRUE);
+		bacon_video_widget_set_logo (vanity->bvw, LOGO_PATH);
 		g_message ("%s", LOGO_PATH);
 	}
-
-	bacon_video_widget_play (vanity->bvw, &err);
 
 	if (err != NULL)
 	{

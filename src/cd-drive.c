@@ -23,7 +23,9 @@
    Bastien Nocera <hadess@hadess.net>
 */
 
+#ifdef HAVE_CONFIG_H
 #include "config.h"
+#endif
 
 #include <errno.h>
 #include <stdio.h>
@@ -38,7 +40,7 @@
 
 #ifdef USE_HAL
 #include <libhal.h>
-#endif
+#endif /* USE_HAL */
 
 #ifdef __linux__
 #include <scsi/scsi.h>
@@ -52,7 +54,19 @@
 #endif /* __FreeBSD__ */
 
 #include <glib.h>
-#include <libgnome/gnome-i18n.h>
+
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext(GETTEXT_PACKAGE,String)
+#ifdef gettext_noop
+#define N_(String) gettext_noop(String)
+#else
+#define N_(String) (String)
+#endif /* gettext_noop */
+#else
+#define _(String) (String)
+#define N_(String) (String)
+#endif /* ENABLE_NLS */
 
 #include "cd-drive.h"
 
