@@ -2,9 +2,12 @@
                          _|_ __|_ _ ._ _  
 			  |_(_)|_(/_| | | 
 
-Totem is movie player for the Gnome desktop based on xine. It features a
-playlist, a full-screen mode, seek and volume controls, as well as
-complete keyboard navigation.
+Totem is movie player for the Gnome desktop based on xine or GStreamer.
+It features a playlist, a full-screen mode, seek and volume controls,
+as well as complete keyboard navigation.
+
+Apart from a movie player, it also iuncludes a mozilla plugin and a
+nautilus thumbnailer and properties page.
 
 News
 ====
@@ -90,9 +93,6 @@ TODO
 - broadcasting and network client
 - Play with OSD and stuff
 - ports to other windowing system/OSes?
-- Browser plugin ? See for examples:
-  http://lxr.mozilla.org/seamonkey/source/modules/plugin/samples/default/unix/ for examples
-  http://devedge.netscape.com/library/manuals/2002/plugin/1.0/preface.html
 - OO.o plugin?
   http://www.openoffice.org/issues/show_bug.cgi?id=41419
 - split the baconvideowidget into a GtkWidget and a GObject (use a GInterface)?
@@ -110,10 +110,9 @@ http://www.live.com/liveMedia/#testProgs
 GStreamer backend TODO
 ======================
 - DVD menus
-- bitrate display could use some fixes
 - deinterlacing
 - network connection speed (mmsh://, http://, rtsp://...)
-- subtitles and languages
+- subtitle/audio-languages names
 - aspect ratio changes
 
 BUGS
