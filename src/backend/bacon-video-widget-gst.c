@@ -518,29 +518,25 @@ shrink_toplevel (BaconVideoWidget * bvw)
 }
 
 static void
-print_tag (const GstTagList *list, const gchar *tag, gpointer unused)
+store_tag (const GstTagList *list, const gchar *tag, gpointer data)
 {
-  gint i, count;
+  BaconVideoWidget *bvw = NULL;
+  char *str = NULL;
 
-  count = gst_tag_list_get_tag_size (list, tag);
-
-  for (i = 0; i < count; i++) {
-    gchar *str;
-    
-    if (gst_tag_get_type (tag) == G_TYPE_STRING) {
-      g_assert (gst_tag_list_get_string_index (list, tag, i, &str));
-    } else {
-      str = g_strdup_value_contents (
-	      gst_tag_list_get_value_index (list, tag, i));
-    }
+  if (data && BACON_IS_VIDEO_WIDGET (data))
+    bvw = BACON_VIDEO_WIDGET (data);
   
-    if (i == 0) {
-      g_print ("%15s: %s\n", gst_tag_get_nick (tag), str);
-    } else {
-      g_print ("               : %s\n", str);
+  if (gst_tag_list_get_tag_size (list, tag)) {
+    if (gst_tag_get_type (tag) == G_TYPE_STRING) {
+      g_assert (gst_tag_list_get_string_index (list, tag, 0, &str));
     }
-
-    g_free (str);
+    else {
+      str = g_strdup_value_contents (
+	      gst_tag_list_get_value_index (list, tag, 0));
+    }
+    
+    g_hash_table_replace (bvw->priv->metadata_hash,
+                          g_strdup (gst_tag_get_nick (tag)), str);
   }
 }
 
@@ -605,8 +601,10 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
       case FOUND_TAG:
         {
           GstTagList *tag_list = signal->signal_data.found_tag.tag_list;
-          gst_tag_list_foreach (tag_list, print_tag, NULL);
+          gst_tag_list_foreach (tag_list, store_tag, bvw);
           gst_tag_list_free (tag_list);
+          g_signal_emit (G_OBJECT (bvw), bvw_table_signals[GOT_METADATA],
+                         0, NULL);
           break;
         }
       default:
