@@ -1,3 +1,12 @@
+2003-04-05  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget.c: (bacon_video_widget_class_init),
+	(update_fullscreen_size), (video_window_translate_point):
+	* src/debug.h:
+	* src/totem.c: (main): add some locks around getting the screen size,
+	this should fix an "Xlib async reply" problem when resizing,
+	especially on startup
+
 2003-04-04  Bastien Nocera  <hadess@hadess.net>
 
 	* src/gtk-playlist.c: (my_gnome_vfs_get_mime_type_with_data),

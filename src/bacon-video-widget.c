@@ -309,10 +309,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 				baconvideowidget_marshal_VOID__INT_INT_INT,
 				G_TYPE_NONE, 3, G_TYPE_INT, G_TYPE_INT,
 				G_TYPE_INT);
-
-	if (!g_thread_supported ())
-		g_thread_init (NULL);
-	gdk_threads_init ();
 }
 
 static void
@@ -569,11 +565,13 @@ load_audio_out_driver (BaconVideoWidget *bvw, GError **err)
 static void
 update_fullscreen_size (BaconVideoWidget *bvw)
 {
+	XLockDisplay (bvw->priv->display);
 	gdk_screen_get_monitor_geometry (gdk_screen_get_default (),
 			gdk_screen_get_monitor_at_window
 			(gdk_screen_get_default (),
 			 bvw->priv->video_window),
 			&bvw->priv->fullscreen_rect);
+	XUnlockDisplay (bvw->priv->display);
 }
 
 static void
@@ -626,6 +624,7 @@ static gboolean
 video_window_translate_point (BaconVideoWidget *bvw, int gui_x, int gui_y,
 		int *video_x, int *video_y)
 {
+	int res;
 	x11_rectangle_t rect;
 
 	rect.x = gui_x;
@@ -633,9 +632,11 @@ video_window_translate_point (BaconVideoWidget *bvw, int gui_x, int gui_y,
 	rect.w = 0;
 	rect.h = 0;
 
-	if (xine_gui_send_vo_data (bvw->priv->stream,
+	res = xine_gui_send_vo_data (bvw->priv->stream,
 				XINE_GUI_SEND_TRANSLATE_GUI_TO_VIDEO,
-				(void*)&rect) != -1)
+				(void*)&rect);
+
+	if (res != -1)
 	{
 		/* the driver implements gui->video coordinate space
 		 * translation so we use it */
