@@ -1,3 +1,9 @@
+2003-05-28  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-playlist.c: (gtk_playlist_mrl_to_title):
+	if the filename isn't in UTF-8, try to transform it from the current
+	locale, fixed filenames not showing up on older systems
+
 2003-05-27  Bastien Nocera  <hadess@hadess.net>
 
 	* README: upd

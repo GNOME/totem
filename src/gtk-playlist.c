@@ -181,12 +181,21 @@ gtk_playlist_mrl_to_title (const gchar *mrl)
 
 	filename = g_path_get_basename (mrl);
 	unescaped = gnome_vfs_unescape_string_for_display (filename);
+
 	g_free (filename);
 	filename_for_display = g_filename_to_utf8 (unescaped,
 			-1,             /* length */
 			NULL,           /* bytes_read */
 			NULL,           /* bytes_written */
 			NULL);          /* error */
+
+	if (filename_for_display == NULL)
+	{
+		filename_for_display = g_locale_to_utf8 (unescaped,
+				-1, NULL, NULL, NULL);
+		if (filename_for_display == NULL)
+			return unescaped;
+	}
 
 	g_free (unescaped);
 
