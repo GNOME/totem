@@ -91,7 +91,6 @@ totem_SOURCES = 					\
 	bacon-video-widget-properties.h	\
 	scrsaver.c scrsaver.h		\
 	totem-options.c totem-options.h	\
-	totem-pl-parser.c totem-pl-parser.h \
 	totem-playlist.c totem-playlist.h \
 	totem-screenshot.c		\
 	totem-screenshot.h		\
@@ -103,10 +102,9 @@ totem_SOURCES = 					\
 	debug.h				\
 	totem-statusbar.c		\
 	totem-statusbar.h		\
-	totem-disc.c totem-disc.h	\
 	totem-gromit.c totem-gromit.h
 
-totem_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) $(XVIDMODE_LIBS)  $(NVTV_LIBS)
+totem_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) $(XVIDMODE_LIBS)  $(NVTV_LIBS) libtotem-plparser.la
 
 totem_video_thumbnailer_SOURCES = $(VIDEOWIDGET) totem-video-thumbnailer.c
 totem_video_thumbnailer_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS)  $(NVTV_LIBS) $(EXTRA_GNOME_LIBS)
@@ -175,3 +173,54 @@ EXTRA_DIST =	bacon-video-widget-xine.c \
 		totem-mozilla-viewer.c \
 		totem-mozilla-plugin.c
 
+## libtotem-plparser.la
+
+lib_LTLIBRARIES = libtotem-plparser.la
+
+libtotem_plparser_la_SOURCES =			\
+	totem-pl-parser-builtins.c		\
+	totemplparser-marshal.c			\
+	totemplparser-marshal.h			\
+	totem-disc.c				\
+	totem-pl-parser.c
+
+plparserincludedir = $(includedir)/totem/1/plparser
+plparserinclude_HEADERS =			\
+	totem-pl-parser-builtins.h		\
+	totem-disc.h				\
+	totem-pl-parser.h
+
+libtotem_plparser_la_LDFLAGS =			\
+	-version-info $(PLPARSER_LT_VERSION)	\
+	-no-undefined				\
+	$(TOTEM_PLPARSER_LIBS)
+
+
+totem-pl-parser-builtins.h: stamp-totem-pl-parser-builtins.h
+	@true
+
+stamp-totem-pl-parser-builtins.h: totem-pl-parser.h Makefile
+	(cd $(srcdir) && $(GLIB_MKENUMS) \
+			--fhead "#ifndef __TOTEM_PL_PARSER_BUILTINS_H__\n#define __TOTEM_PL_PARSER_BUILTINS_H__\n\n#include <glib-object.h>\n\nG_BEGIN_DECLS\n" \
+			--fprod "/* enumerations from \"@filename@\" */\n" \
+			--vhead "GType @enum_name@_get_type (void) G_GNUC_CONST;\n#define TOTEM_TYPE_@ENUMSHORT@ (@enum_name@_get_type())\n" \
+			--ftail "G_END_DECLS\n\n#endif /* __TOTEM_PL_PARSER_BUILTINS_H__ */" totem-pl-parser.h) >> xgen-gtbh \
+	&& (cmp -s xgen-gtbh totem-pl-parser-builtins.h || cp xgen-gtbh totem-pl-parser-builtins.h ) \
+	&& rm -f xgen-gtbh \
+	&& echo timestamp > $(@F)
+
+totem-pl-parser-builtins.c: totem-pl-parser.h Makefile totem-pl-parser-builtins.h
+	(cd $(srcdir) && $(GLIB_MKENUMS) \
+			--fhead "#include \"totem-pl-parser.h\"" \
+			--fprod "\n/* enumerations from \"@filename@\" */" \
+			--vhead "GType\n@enum_name@_get_type (void)\n{\n  static GType etype = 0;\n  if (etype == 0) {\n    static const G@Type@Value values[] = {" \
+			--vprod "      { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
+			--vtail "      { 0, NULL, NULL }\n    };\n    etype = g_@type@_register_static (\"@EnumName@\", values);\n  }\n  return etype;\n}\n" \
+		totem-pl-parser.h ) > xgen-gtbc \
+	&& cp xgen-gtbc totem-pl-parser-builtins.c  \
+	&& rm -f xgen-gtbc
+
+CLEANFILES += \
+	totem-pl-parser-builtins.h \
+	totem-pl-parser-builtins.c \
+	stamp-totem-pl-parser-builtins.h

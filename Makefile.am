@@ -12,7 +12,10 @@ EXTRA_DIST =			\
 	totem.spec.in		\
 	totem.spec		\
 	omf.make		\
+	totem-plparser.pc.in	\
 	xmldocs.make
 
-CLEANFILES = totem.spec
+CLEANFILES = totem.spec totem-plparser.pc
 
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = totem-plparser.pc

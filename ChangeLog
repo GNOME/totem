@@ -1,3 +1,24 @@
+2005-01-04  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
+
+	* totem-plparser.pc.in: Add .pc file for totem-plparser library.
+	
+	* Makefile.am: Install totem-plparser.pc.
+
+	* configure.in: Define PLPARSER_LT_VERSION, to specify libtool
+	version for libtotem-plparser.la.  Look for packages required for
+	plparser, define TOTEM_PLPARSER_(CFLAGS|LIBS).  Write
+	totem-plparser.pc.
+
+	* src/Makefile.am: Generate totem-pl-parser-builtins.[ch], for
+	registering enums.  Build and install a library,
+	libtotem-plparser.la, which includes the totem playlist parser.
+	Also install the corresponding header files to
+	$(includedir)/totem/1/plparser.  Make the main binary, totem, link
+	to this library and remove the duplicate sources.
+	PS: Changes based on the work of Tiago Cogumbreiro.
+
+	Fixes #162741.  Reviewed by Bastien Nocera.
+
 2005-01-03  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in:
