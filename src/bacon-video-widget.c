@@ -2109,11 +2109,10 @@ bacon_video_widget_can_get_frames (BaconVideoWidget *bvw, GError **error)
 	}
 
 	if (xine_get_stream_info (bvw->priv->stream,
-				XINE_STREAM_INFO_HAS_VIDEO) == FALSE)
+				XINE_STREAM_INFO_HAS_VIDEO) == FALSE
+			&& bvw->priv->using_vfx == FALSE)
 	{
-		g_set_error (error, 0, 0, bvw->priv->using_vfx ?
-				_("Can't capture visual effects")
-				: _("No video to capture"));
+		g_set_error (error, 0, 0, _("No video to capture"));
 		return FALSE;
 	}
 
@@ -2121,6 +2120,17 @@ bacon_video_widget_can_get_frames (BaconVideoWidget *bvw, GError **error)
 				XINE_STREAM_INFO_VIDEO_HANDLED) == FALSE)
 	{
 		g_set_error (error, 0, 0, _("Video codec is not handled"));
+		return FALSE;
+	}
+
+	if (xine_get_stream_info (bvw->priv->stream,
+				XINE_STREAM_INFO_VIDEO_WIDTH) == 0 ||
+			xine_get_stream_info (bvw->priv->stream,
+				XINE_STREAM_INFO_VIDEO_HEIGHT) == 0)
+	{
+		g_set_error (error, 0, 0,
+				_("Height or width of the video is 0. "
+					"Please file a bug."));
 		return FALSE;
 	}
 
