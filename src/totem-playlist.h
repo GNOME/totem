@@ -91,6 +91,7 @@ void       totem_playlist_set_shuffle (TotemPlaylist *playlist,
 gboolean   totem_playlist_set_playing (TotemPlaylist *playlist, gboolean state);
 
 void       totem_playlist_set_at_start (TotemPlaylist *playlist);
+void       totem_playlist_set_at_end (TotemPlaylist *playlist);
 
 G_END_DECLS
 

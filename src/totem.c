@@ -1397,14 +1397,14 @@ seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 	{
 		totem_action_seek (totem,
 				gtk_adjustment_get_value (totem->fs_seekadj) / 65535);
-		/* Update the seek adjustment */
+		/* Update the fullscreen seek adjustment */
 		gtk_adjustment_set_value (totem->seekadj,
 				gtk_adjustment_get_value
 				(totem->fs_seekadj));
 	} else {
 		totem_action_seek (totem,
 				gtk_adjustment_get_value (totem->seekadj) / 65535);
-		/* Update the fullscreen seek adjustment */
+		/* Update the seek adjustment */
 		gtk_adjustment_set_value (totem->fs_seekadj,
 				gtk_adjustment_get_value
 				(totem->seekadj));
@@ -1425,14 +1425,14 @@ vol_cb (GtkWidget *widget, Totem *totem)
 			bacon_video_widget_set_volume
 				(totem->bvw, (gint) totem->fs_voladj->value);
 
-			/* Update the volume adjustment */
+			/* Update the fullscreen volume adjustment */
 			gtk_adjustment_set_value (totem->voladj, 
 					gtk_adjustment_get_value
 					(totem->fs_voladj));
 		} else {
 			bacon_video_widget_set_volume
 				(totem->bvw, (gint) totem->voladj->value);
-			/* Update the fullscreen volume adjustment */
+			/* Update the volume adjustment */
 			gtk_adjustment_set_value (totem->fs_voladj, 
 					gtk_adjustment_get_value
 					(totem->voladj));
@@ -1486,7 +1486,11 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 		/* Get the subtitle part out for our tests */
 		filename = totem_create_full_path (list[i]);
 		local_path = gnome_vfs_get_local_path_from_uri (filename);
-		if (g_file_test (local_path, G_FILE_TEST_IS_DIR))
+		if (local_path != NULL && g_file_test (local_path, G_FILE_TEST_IS_DIR))
+		{
+			g_free (local_path);
+			continue;
+		} else if (local_path != NULL && g_file_test (local_path, G_FILE_TEST_EXISTS) == FALSE)
 		{
 			g_free (local_path);
 			continue;
@@ -1575,13 +1579,14 @@ on_open1_activate (GtkButton *button, Totem *totem)
 				g_strfreev (filenames);
 				continue;
 			}
-		/* Hide the selection widget only if playlist is modified */
+			/* Hide the selection widget only if
+			 * playlist is modified */
 			gtk_widget_hide (fs);
 
 			if (filenames[0] != NULL)
 			{
 				char *tmp;
-	
+
 				tmp = g_path_get_dirname (filenames[0]);
 				path = g_strconcat (tmp, G_DIR_SEPARATOR_S, NULL);
 				g_free (tmp);

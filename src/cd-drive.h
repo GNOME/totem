@@ -29,6 +29,7 @@
 #include <glib.h>
 
 typedef enum {
+	CD_MEDIA_TYPE_BUSY,
 	CD_MEDIA_TYPE_ERROR,
 	CD_MEDIA_TYPE_UNKNOWN,
 	CD_MEDIA_TYPE_CD,

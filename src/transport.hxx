@@ -91,7 +91,7 @@ public:
     int associate (char *file,struct stat *isb=NULL)
     { struct stat sb;
 
-	if ((fd=open (file,O_RDONLY|O_NONBLOCK)) < 0)	return 0;
+	if ((fd=open (file,O_RDONLY|O_NONBLOCK|O_EXCL)) < 0)	return 0;
 	if (fstat(fd,&sb) < 0)				return 0;
 	if (!S_ISBLK(sb.st_mode))	{ errno=ENOTBLK;return 0; }
 

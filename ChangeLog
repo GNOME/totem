@@ -1,3 +1,16 @@
+2004-01-07  Bastien Nocera  <hadess@hadess.net>
+
+	* src/cd-drive.[ch]:
+	* src/transport.hxx: FreeBSD fixes from libbacon
+	* src/totem-playlist.c:
+	* src/totem-playlist.h: make set_at_end public and declare it in the
+	header
+	* src/totem.c: (seek_slider_released_cb), (vol_cb),
+	(totem_action_open_files), (on_open1_activate):
+	Make sure that non-existant local files don't get added to the
+	playlist, fix handling of non-local files (unbreaks the Open URL
+	support) (Closes: #130689)
+
 2004-01-05  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.applications:
