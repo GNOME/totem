@@ -271,19 +271,19 @@ play_pause_set_label (Totem *totem, TotemStates state)
 	case STATE_PLAYING:
 		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
 				_("Playing"));
-		id = "stock-media-pause";
+		id = GTK_STOCK_MEDIA_PAUSE;
 		break;
 	case STATE_PAUSED:
 		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
 				_("Paused"));
-		id = "stock-media-play";
+		id = GTK_STOCK_MEDIA_PLAY;
 		break;
 	case STATE_STOPPED:
 		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
 				_("Stopped"));
 		totem_statusbar_set_time_and_length
 			(TOTEM_STATUSBAR (totem->statusbar), 0, 0);
-		id = "stock-media-play";
+		id = GTK_STOCK_MEDIA_PLAY;
 		break;
 	default:
 		return;
@@ -291,11 +291,9 @@ play_pause_set_label (Totem *totem, TotemStates state)
 
 	image = glade_xml_get_widget (totem->xml,
 			"tmw_play_pause_button_image");
-	gtk_image_set_from_pixbuf (GTK_IMAGE (image),
-			totem_get_named_icon_for_id (id));
+	gtk_image_set_from_stock (GTK_IMAGE (image), id, GTK_ICON_SIZE_BUTTON);
 	image = glade_xml_get_widget (totem->xml, "tcw_pp_button_image");
-	gtk_image_set_from_pixbuf (GTK_IMAGE (image),
-			totem_get_named_icon_for_id (id));
+	gtk_image_set_from_stock (GTK_IMAGE (image), id, GTK_ICON_SIZE_BUTTON);
 
 	totem->state = state;
 }

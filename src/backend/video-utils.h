@@ -12,7 +12,6 @@ guint8 *yv12torgb (guint8 *src_y, guint8 *src_u, guint8 *src_v,
 
 void totem_create_symlinks (const char *orig, const char *dest);
 gboolean totem_display_is_local (void);
-void totem_pixbuf_mirror (GdkPixbuf *pixbuf);
 
 char *totem_time_to_string (gint64 msecs);
 char *totem_time_to_string_text (gint64 msecs);

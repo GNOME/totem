@@ -29,10 +29,8 @@
 #include <popt.h>
 
 #include <string.h>
-#include <unistd.h>
 #include <stdlib.h>
 #include "bacon-video-widget.h"
-#include "video-utils.h"
 
 /* #define THUMB_DEBUG */
 
@@ -60,7 +58,7 @@ show_pixbuf (GdkPixbuf *pix)
 static GdkPixbuf *
 add_holes_to_pixbuf_small (GdkPixbuf *pixbuf, int width, int height)
 {
-	GdkPixbuf *holes, *tmp;
+	GdkPixbuf *holes, *tmp, *target;
 	char *filename;
 	int i;
 
@@ -76,21 +74,23 @@ add_holes_to_pixbuf_small (GdkPixbuf *pixbuf, int width, int height)
 
 	g_assert (gdk_pixbuf_get_has_alpha (pixbuf) == FALSE);
 	g_assert (gdk_pixbuf_get_has_alpha (holes) != FALSE);
-	tmp = gdk_pixbuf_add_alpha (pixbuf, FALSE, 0, 0, 0);
+	target = gdk_pixbuf_add_alpha (pixbuf, FALSE, 0, 0, 0);
 
 	for (i = 0; i < height; i += gdk_pixbuf_get_height (holes))
 	{
-		gdk_pixbuf_composite (holes, tmp, 0, i,
+		gdk_pixbuf_composite (holes, target, 0, i,
 				MIN (width, gdk_pixbuf_get_width (holes)),
 				MIN (height-i, gdk_pixbuf_get_height (holes)),
 				0, i, 1, 1, GDK_INTERP_NEAREST, 255);
 	}
 
-	totem_pixbuf_mirror (holes);
+	tmp = gdk_pixbuf_flip (holes, FALSE);
+	gdk_pixbuf_unref (holes);
+	holes = tmp;
 
 	for (i = 0; i < height; i += gdk_pixbuf_get_height (holes))
 	{
-		gdk_pixbuf_composite (holes, tmp,
+		gdk_pixbuf_composite (holes, target,
 				width - gdk_pixbuf_get_width (holes), i,
 				MIN (width, gdk_pixbuf_get_width (holes)),
 				MIN (height-i, gdk_pixbuf_get_height (holes)),
@@ -100,7 +100,7 @@ add_holes_to_pixbuf_small (GdkPixbuf *pixbuf, int width, int height)
 
 	gdk_pixbuf_unref (holes);
 
-	return tmp;
+	return target;
 }
 
 static GdkPixbuf *
@@ -432,7 +432,7 @@ int main (int argc, char *argv[])
 	pixbuf = bacon_video_widget_get_current_frame (bvw);
 	while (pixbuf == NULL && i < 20)
 	{
-		usleep (500000);
+		g_usleep (500000);
 		pixbuf = bacon_video_widget_get_current_frame (bvw);
 		i++;
 	}

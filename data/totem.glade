@@ -1936,9 +1936,10 @@
 	      <property name="focus_on_click">True</property>
 
 	      <child>
-		<widget class="GtkImage" id="tcw_previous_button_image">
+		<widget class="GtkImage" id="image124">
 		  <property name="visible">True</property>
-		  <property name="pixbuf">stock_media_previous.png</property>
+		  <property name="stock">gtk-media-previous</property>
+		  <property name="icon_size">4</property>
 		  <property name="xalign">0.5</property>
 		  <property name="yalign">0.5</property>
 		  <property name="xpad">0</property>
@@ -1965,7 +1966,8 @@
 	      <child>
 		<widget class="GtkImage" id="tcw_pp_button_image">
 		  <property name="visible">True</property>
-		  <property name="pixbuf">stock_media_play.png</property>
+		  <property name="stock">gtk-media-play</property>
+		  <property name="icon_size">4</property>
 		  <property name="xalign">0.5</property>
 		  <property name="yalign">0.5</property>
 		  <property name="xpad">0</property>
@@ -1990,9 +1992,10 @@
 	      <property name="focus_on_click">True</property>
 
 	      <child>
-		<widget class="GtkImage" id="tcw_next_button_image">
+		<widget class="GtkImage" id="image123">
 		  <property name="visible">True</property>
-		  <property name="pixbuf">stock_media_next.png</property>
+		  <property name="stock">gtk-media-next</property>
+		  <property name="icon_size">4</property>
 		  <property name="xalign">0.5</property>
 		  <property name="yalign">0.5</property>
 		  <property name="xpad">0</property>
@@ -2432,7 +2435,7 @@
 		      <signal name="activate" handler="on_play_disc1_activate" last_modification_time="Fri, 09 Aug 2002 22:46:45 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image102">
+			<widget class="GtkImage" id="image160">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-cdrom</property>
 			  <property name="icon_size">1</property>
@@ -2482,13 +2485,25 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkMenuItem" id="tmw_play_menu_item">
+		    <widget class="GtkImageMenuItem" id="tmw_play_menu_item">
 		      <property name="visible">True</property>
 		      <property name="sensitive">False</property>
 		      <property name="tooltip" translatable="yes">Play or pause the movie</property>
 		      <property name="label" translatable="yes">Play / Pa_use</property>
 		      <property name="use_underline">True</property>
 		      <accelerator key="P" modifiers="0" signal="activate"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image161">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-media-play</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
 		    </widget>
 		  </child>
 
@@ -2576,7 +2591,7 @@
 		      <accelerator key="F" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image104">
+			<widget class="GtkImage" id="image163">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-zoom-fit</property>
 			  <property name="icon_size">1</property>
@@ -2645,7 +2660,7 @@
 		      <accelerator key="R" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image105">
+			<widget class="GtkImage" id="image164">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-zoom-in</property>
 			  <property name="icon_size">1</property>
@@ -2667,7 +2682,7 @@
 		      <signal name="activate" handler="on_tmw_zoom_reset_menu_item_activate" last_modification_time="Fri, 03 Dec 2004 20:15:06 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image106">
+			<widget class="GtkImage" id="image165">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-zoom-100</property>
 			  <property name="icon_size">1</property>
@@ -2690,7 +2705,7 @@
 		      <accelerator key="T" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image107">
+			<widget class="GtkImage" id="image166">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-zoom-out</property>
 			  <property name="icon_size">1</property>
@@ -2917,7 +2932,7 @@
 		      <accelerator key="m" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image109">
+			<widget class="GtkImage" id="image168">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-index</property>
 			  <property name="icon_size">1</property>
@@ -2970,7 +2985,7 @@
 		      <accelerator key="c" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image110">
+			<widget class="GtkImage" id="image169">
 			  <property name="visible">True</property>
 			  <property name="stock">gnome-stock-text-numbered-list</property>
 			  <property name="icon_size">1</property>
@@ -2999,9 +3014,9 @@
 		      <accelerator key="n" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image111">
+			<widget class="GtkImage" id="image170">
 			  <property name="visible">True</property>
-			  <property name="stock">gtk-goto-last</property>
+			  <property name="stock">gtk-media-next</property>
 			  <property name="icon_size">1</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
@@ -3022,9 +3037,9 @@
 		      <accelerator key="b" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image112">
+			<widget class="GtkImage" id="image171">
 			  <property name="visible">True</property>
-			  <property name="stock">gtk-goto-first</property>
+			  <property name="stock">gtk-media-previous</property>
 			  <property name="icon_size">1</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
@@ -3052,7 +3067,7 @@
 		      <accelerator key="S" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image113">
+			<widget class="GtkImage" id="image172">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-jump-to</property>
 			  <property name="icon_size">1</property>
@@ -3076,9 +3091,9 @@
 		      <accelerator key="Right" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image114">
+			<widget class="GtkImage" id="image173">
 			  <property name="visible">True</property>
-			  <property name="stock">gtk-go-forward</property>
+			  <property name="stock">gtk-media-forward</property>
 			  <property name="icon_size">1</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
@@ -3100,9 +3115,9 @@
 		      <accelerator key="Left" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image115">
+			<widget class="GtkImage" id="image174">
 			  <property name="visible">True</property>
-			  <property name="stock">gtk-go-back</property>
+			  <property name="stock">gtk-media-rewind</property>
 			  <property name="icon_size">1</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
@@ -3161,7 +3176,7 @@
 		      <accelerator key="Up" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image116">
+			<widget class="GtkImage" id="image175">
 			  <property name="visible">True</property>
 			  <property name="stock">gnome-stock-volume</property>
 			  <property name="icon_size">1</property>
@@ -3184,7 +3199,7 @@
 		      <accelerator key="Down" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image117">
+			<widget class="GtkImage" id="image176">
 			  <property name="visible">True</property>
 			  <property name="stock">gnome-stock-volume</property>
 			  <property name="icon_size">1</property>
@@ -3219,7 +3234,7 @@
 		      <accelerator key="F1" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image118">
+			<widget class="GtkImage" id="image177">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-help</property>
 			  <property name="icon_size">1</property>
@@ -3382,9 +3397,10 @@
 		      <property name="focus_on_click">True</property>
 
 		      <child>
-			<widget class="GtkImage" id="tmw_previous_button_image">
+			<widget class="GtkImage" id="image121">
 			  <property name="visible">True</property>
-			  <property name="pixbuf">stock_media_previous.png</property>
+			  <property name="stock">gtk-media-previous</property>
+			  <property name="icon_size">4</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
@@ -3411,7 +3427,8 @@
 		      <child>
 			<widget class="GtkImage" id="tmw_play_pause_button_image">
 			  <property name="visible">True</property>
-			  <property name="pixbuf">stock_media_play.png</property>
+			  <property name="stock">gtk-media-play</property>
+			  <property name="icon_size">4</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
@@ -3436,9 +3453,10 @@
 		      <property name="focus_on_click">True</property>
 
 		      <child>
-			<widget class="GtkImage" id="tmw_next_button_image">
+			<widget class="GtkImage" id="image120">
 			  <property name="visible">True</property>
-			  <property name="pixbuf">stock_media_next.png</property>
+			  <property name="stock">gtk-media-next</property>
+			  <property name="icon_size">4</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>

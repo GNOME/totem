@@ -27,7 +27,6 @@ G_BEGIN_DECLS
 
 void       totem_named_icons_init		(Totem *totem,
 						 gboolean refresh);
-GdkPixbuf *totem_get_named_icon_for_id		(const char *id);
 void       totem_named_icons_dispose		(Totem *totem);
 void       totem_set_default_icons		(Totem *totem);
 

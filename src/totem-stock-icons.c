@@ -91,35 +91,6 @@ totem_set_default_icons (Totem *totem)
 {
 	GtkWidget *item;
 
-	/* Play button */
-	item = glade_xml_get_widget (totem->xml,
-			"tmw_play_pause_button_image");
-	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
-			totem->state == STATE_PLAYING
-			? PIXBUF_FOR_ID("stock-media-pause")
-			: PIXBUF_FOR_ID("stock-media-play"));
-	item = glade_xml_get_widget (totem->xml, "tcw_pp_button_image");
-	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
-			totem->state == STATE_PLAYING
-			? PIXBUF_FOR_ID("stock-media-pause")
-			: PIXBUF_FOR_ID("stock-media-play"));
-
-	/* Previous button */
-	item = glade_xml_get_widget (totem->xml, "tmw_previous_button_image");
-	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
-			PIXBUF_FOR_ID("stock-media-prev"));
-	item = glade_xml_get_widget (totem->xml, "tcw_previous_button_image");
-	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
-			PIXBUF_FOR_ID("stock-media-prev"));
-
-	/* Next button */
-	item = glade_xml_get_widget (totem->xml, "tmw_next_button_image");
-	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
-			PIXBUF_FOR_ID("stock-media-next"));
-	item = glade_xml_get_widget (totem->xml, "tcw_next_button_image");
-	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
-			PIXBUF_FOR_ID("stock-media-next"));
-
 	/* Screenshot button */
 	item = glade_xml_get_widget (totem->xml,
 			"tmw_take_screenshot_menu_item_image");
@@ -137,12 +108,6 @@ totem_set_default_icons (Totem *totem)
 			PIXBUF_FOR_ID("stock_playlist"));
 	gtk_window_set_icon (GTK_WINDOW (totem->playlist),
 			PIXBUF_FOR_ID("stock_playlist"));
-}
-
-GdkPixbuf *
-totem_get_named_icon_for_id (const char *id)
-{
-	return PIXBUF_FOR_ID(id);
 }
 
 static GdkPixbuf *
@@ -166,10 +131,6 @@ totem_named_icons_init (Totem *totem, gboolean refresh)
 	GtkIconTheme *theme;
 	int i;
 	char *items[][4] = {
-		{ "stock-media-play", "stock_media-play", "stock_media_play", NULL },
-		{ "stock-media-pause", "stock_media-pause", "stock_media_pause", NULL },
-		{ "stock-media-prev", "stock_media-prev", "stock_media_previous", NULL },
-		{ "stock-media-next", "stock_media-next", "stock_media_next", NULL },
 		{ "panel-screenshot", "stock-panel-screenshot", "gnome-screenshot", "applets-screenshooter" },
 		{ "stock_playlist", "playlist-24", NULL, NULL },
 	};
@@ -219,14 +180,6 @@ totem_named_icons_init (Totem *totem, gboolean refresh)
 		 * hash table */
 		g_hash_table_insert (icons_table, (gpointer) items[i][0],
 				(gpointer) pixbuf);
-	}
-
-	/* Switch direction of the Play icon if we're in Right-To-Left */
-	if (gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_RTL)
-	{
-		totem_pixbuf_mirror (PIXBUF_FOR_ID("stock-media-play"));
-		totem_pixbuf_mirror (PIXBUF_FOR_ID("stock-media-next"));
-		totem_pixbuf_mirror (PIXBUF_FOR_ID("stock-media-prev"));
 	}
 }
 

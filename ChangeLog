@@ -1,5 +1,21 @@
 2005-01-05  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.glade:
+	* src/totem-stock-icons.c: (totem_set_default_icons),
+	(totem_named_icons_init):
+	* src/totem-stock-icons.h:
+	* src/totem-video-thumbnailer.c: (add_holes_to_pixbuf_small),
+	(main):
+	* src/totem.c: (play_pause_set_label):
+	* src/video-utils.c:
+	* src/video-utils.h:
+
+	Use the media icons from GTK+, including the forward/rewind buttons,
+	use gdk_pixbuf_flip instead of our home-grown, use the thread-safe
+	g_usleep instead of usleep in the thumbnailer
+
+2005-01-05  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am: include totem-pl-parser-builtins.h from the .c
 	to avoid compile-time warnings
 
