@@ -202,7 +202,7 @@ AC_SUBST(NAUTILUS_LIBS)
 if test x$HAVE_NAUTILUS = "xyes"; then
 	AC_DEFINE(HAVE_NAUTILUS, 1, [defined if you build the nautilus plugin])
 fi
-AM_CONDITIONAL(HAVE_NAUTILUS, test x$ENABLE_NAUTILUS = "xyes")
+AM_CONDITIONAL(HAVE_NAUTILUS, test x$HAVE_NAUTILUS = "xyes")
 
 
 dnl LIRC
