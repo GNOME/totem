@@ -1,5 +1,12 @@
 2004-10-11  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-disc.c: (cd_cache_open_device), (cd_cache_disc_is_vcd),
+	(cd_cache_disc_is_dvd): better error when no medium is found,
+	fix a leak when the subdir can't be opened in the DVD detection,
+	add VCD detection (Closes: #131814)
+
+2004-10-11  Bastien Nocera  <hadess@hadess.net>
+
 	* src/.cvsignore: updated
 
 2004-10-11  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>

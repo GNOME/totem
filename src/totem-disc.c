@@ -163,7 +163,7 @@ static gboolean
 cd_cache_open_device (CdCache *cache,
 		      GError **error)
 {
-  gint drive;
+  int drive, err;
 
   /* already open? */
   if (cache->fd > 0)
@@ -171,9 +171,15 @@ cd_cache_open_device (CdCache *cache,
 
   /* try to open the CD before creating anything */
   if ((cache->fd = open (cache->device, O_RDONLY)) < 0) {
-    g_set_error (error, 0, 0,
-        _("Failed to open device %s for reading: %s"),
+    err = errno;
+    if (err == ENOMEDIUM) {
+      g_set_error (error, 0, 0,
+          _("Please check that a disc is present in the drive."));
+    } else {
+      g_set_error (error, 0, 0,
+          _("Failed to open device %s for reading: %s"),
         cache->device, g_strerror (errno));
+    }
     return FALSE;
   }
 
@@ -341,18 +347,41 @@ cd_cache_disc_is_vcd (CdCache *cache,
                       GError **error)
 {
   GDir *dir;
-  MediaType type = MEDIA_TYPE_DATA;
+  const char *name;
+  gboolean have_mpegav = FALSE, have_avseq = FALSE;
 
   /* open disc and open mount */
   if (!cd_cache_open_device (cache, error) ||
       !(dir = cd_cache_open_mountpoint (cache, error)))
     return MEDIA_TYPE_ERROR;
+  if (!(dir = cd_cache_open_mountpoint (cache, error)))
+    return MEDIA_TYPE_ERROR;
 
-  //..
+  /* check directory structure */
+  while ((name = g_dir_read_name (dir)) != NULL) {
+    if (g_ascii_strcasecmp (name, "mpegav") == 0) {
+      GDir *subdir;
+      gchar *subdirname = g_build_path (G_DIR_SEPARATOR_S,
+		      	       cache->mountpoint, name, NULL);
 
+      have_mpegav = TRUE;
+      if (!(subdir = g_dir_open (subdirname, 0, error))) {
+        g_dir_close (dir);
+        return MEDIA_TYPE_ERROR;
+      }
+      while ((name = g_dir_read_name (subdir)) != NULL) {
+        if (g_ascii_strcasecmp (name, "avseq01.dat") == 0)
+	  have_avseq = TRUE;
+      }
+      g_dir_close (subdir);
+      g_free (subdirname);
+      break;
+    }
+  }
   g_dir_close (dir);
 
-  return type;
+  return (have_mpegav && have_avseq) ?
+      MEDIA_TYPE_VCD : MEDIA_TYPE_DATA;
 }
 
 static MediaType
@@ -379,8 +408,10 @@ cd_cache_disc_is_dvd (CdCache *cache,
                                cache->mountpoint, name, NULL);
 
       have_vts = TRUE;
-      if (!(subdir = g_dir_open (subdirname, 0, error)))
+      if (!(subdir = g_dir_open (subdirname, 0, error))) {
+        g_dir_close (dir);
         return MEDIA_TYPE_ERROR;
+      }
       while ((name = g_dir_read_name (subdir)) != NULL) {
         if (g_ascii_strcasecmp (name, "VIDEO_TS.IFO") == 0)
           have_vtsifo = TRUE;
