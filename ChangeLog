@@ -1,3 +1,13 @@
+2004-07-03  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-pl-parser.c: (totem_pl_parser_add_ram),
+	(totem_pl_parser_add_m3u), (totem_pl_parser_add_asf_parser),
+	(totem_pl_parser_add_pls), (totem_pl_parser_add_asx),
+	(totem_pl_parser_add_ra), (totem_pl_parser_add_smil),
+	(totem_pl_parser_add_asf), (totem_pl_parser_add_desktop),
+	(totem_pl_parser_add_directory): More work on better error message
+	from the playlist, also fix a memleak in the SMIL parser
+
 2004-07-02  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-playlist.c: (totem_playlist_add_mrl): show an error
