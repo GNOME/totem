@@ -140,10 +140,11 @@ libtotem_properties_page_la_LIBADD = \
 libtotem_properties_page_la_LDFLAGS = $(module_flags)
 
 libtotem_mozilla_la_LDFLAGS = $(MOZILLA_LIBS) $(module_flags)
-libtotem_mozilla_la_SOURCES = totem-mozilla-plugin.c
+libtotem_mozilla_la_SOURCES = totem-mozilla-plugin.c totem-mozilla-options.h
 
 totem_mozilla_viewer_SOURCES = 		\
-	totem-mozilla-viewer.c
+	totem-mozilla-viewer.c		\
+	totem-mozilla-options.h
 totem_mozilla_viewer_LDADD = \
 	$(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) \
 	$(NVTV_LIBS) libbaconvideowidget.la libbaconpropertiespage.la
