@@ -1,5 +1,11 @@
 2002-07-31  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (action_error), (main): added more checks for the
+	interface loading, so that we fail gracefully if it doesn't work
+	Thanks thomasvs for pushing me into doing it
+
+2002-07-31  Bastien Nocera  <hadess@hadess.net>
+
 	* Makefile.am:
 	* README, NEWS, AUTHORS: upd
 	* src/Makefile.am: forgot to add totem.keys

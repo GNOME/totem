@@ -88,6 +88,25 @@ long_action (void)
 		gtk_main_iteration ();
 }
 
+static void
+action_error (char * msg)
+{
+	GtkWidget *error_dialog;
+
+	error_dialog =
+		gtk_message_dialog_new (NULL,
+				GTK_DIALOG_MODAL,
+				GTK_MESSAGE_ERROR,
+				GTK_BUTTONS_OK,
+				"%s", msg);
+	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
+			GTK_RESPONSE_OK);
+	gtk_widget_show (error_dialog);
+	gtk_dialog_run (GTK_DIALOG (error_dialog));
+	gtk_widget_destroy (error_dialog);
+}
+
+
 #ifndef TOTEM_DEBUG
 /* Nicked from aaxine */
 static void
@@ -994,10 +1013,32 @@ main (int argc, char **argv)
 	filename = gnome_program_locate_file (NULL,
 			GNOME_FILE_DOMAIN_APP_DATADIR,
 			"totem.glade", TRUE, NULL);
+	if (filename == NULL)
+	{
+		action_error (_("Couldn't load the main Glade file"
+					" (totem.glade).\nMake sure that Totem"
+					"is properly installed."));
+		exit (1);
+	}
 	totem->xml = glade_xml_new (filename, NULL, NULL);
-	//FIXME check xml
+	if (xml == NULL)
+	{
+		action_error (_("Couldn't load the main Glade file"
+					" (totem.glade).\nMake sure that Totem"
+					"is properly installed."));
+		exit (1);
+	}
 	g_free (filename);
 
+	totem->playlist = GTK_PLAYLIST
+		(gtk_playlist_new (GTK_WINDOW (totem->win)));
+	if (totem->playlist == NULL)
+	{
+		action_error (_("Couldn't load the interface for the playlist."
+					"\nMake sure that Totem"
+					"is properly installed."));
+		exit (1);
+	}
 	video_widget_create (totem);
 	totem->win = glade_xml_get_widget (totem->xml, "app1");
 	totem->seek = glade_xml_get_widget (totem->xml, "hscale1");
@@ -1005,8 +1046,6 @@ main (int argc, char **argv)
 	totem->volume = glade_xml_get_widget (totem->xml, "hscale2");
 	totem->voladj = gtk_range_get_adjustment (GTK_RANGE (totem->volume));
 	totem->popup = glade_xml_get_widget (totem->xml, "window1");
-	totem->playlist = GTK_PLAYLIST
-		(gtk_playlist_new (GTK_WINDOW (totem->win)));
 	update_sliders_cb ((gpointer) totem);
 	totem_callback_connect (totem);
 
