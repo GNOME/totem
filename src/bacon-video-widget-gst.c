@@ -150,9 +150,10 @@ struct BaconVideoWidgetPrivate
 };
 
 enum {
-  VIDEO_SIZE,
-  GST_ERROR,
-  FOUND_TAG
+  ASYNC_VIDEO_SIZE,
+  ASYNC_ERROR,
+  ASYNC_FOUND_TAG,
+  ASYNC_EOS
 };
 
 typedef struct _BVWSignal BVWSignal;
@@ -562,7 +563,7 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
   
   switch (signal->signal_id)
     {
-      case VIDEO_SIZE:
+      case ASYNC_VIDEO_SIZE:
         {
           gint width, height;
           width = signal->signal_data.video_size.width;
@@ -581,7 +582,7 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
           }
           break;
         }
-      case GST_ERROR:
+      case ASYNC_ERROR:
         {
           char *error_message = NULL;
           gboolean emit = TRUE;
@@ -605,7 +606,7 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
           }
           break;
         }
-      case FOUND_TAG:
+      case ASYNC_FOUND_TAG:
         {
           GstTagList *tag_list = signal->signal_data.found_tag.tag_list;
           if (GST_IS_TAG_LIST (tag_list)) {
@@ -614,6 +615,13 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
             g_signal_emit (G_OBJECT (bvw), bvw_table_signals[GOT_METADATA],
                            0, NULL);
           }
+          break;
+        }
+      case ASYNC_EOS:
+        {
+          gst_element_set_state (GST_ELEMENT (bvw->priv->play),
+                                 GST_STATE_READY);
+          g_signal_emit (G_OBJECT (bvw), bvw_table_signals[EOS], 0, NULL);
           break;
         }
       default:
@@ -636,7 +644,7 @@ got_found_tag (GstPlay *play, GstElement *source,
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   
   signal = g_new0 (BVWSignal, 1);
-  signal->signal_id = FOUND_TAG;
+  signal->signal_id = ASYNC_FOUND_TAG;
   signal->signal_data.found_tag.source = source;
   signal->signal_data.found_tag.tag_list = gst_tag_list_copy (tag_list);
 
@@ -655,7 +663,7 @@ got_video_size (GstPlay * play, gint width, gint height,
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   
   signal = g_new0 (BVWSignal, 1);
-  signal->signal_id = VIDEO_SIZE;
+  signal->signal_id = ASYNC_VIDEO_SIZE;
   signal->signal_data.video_size.width = width;
   signal->signal_data.video_size.height = height;
 
@@ -667,9 +675,17 @@ got_video_size (GstPlay * play, gint width, gint height,
 static void
 got_eos (GstPlay * play, BaconVideoWidget * bvw)
 {
+  BVWSignal *signal;
+  
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  g_signal_emit (G_OBJECT (bvw), bvw_table_signals[EOS], 0, NULL);
+  
+  signal = g_new0 (BVWSignal, 1);
+  signal->signal_id = ASYNC_EOS;
+
+  g_async_queue_push (bvw->priv->queue, signal);
+
+  g_idle_add ((GSourceFunc) bacon_video_widget_signal_idler, bvw);
 }
 
 static void
@@ -721,7 +737,7 @@ got_error (GstPlay * play, GstElement * orig,
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   
   signal = g_new0 (BVWSignal, 1);
-  signal->signal_id = GST_ERROR;
+  signal->signal_id = ASYNC_ERROR;
   signal->signal_data.error.element = orig;
   signal->signal_data.error.error = g_strdup (error_message);
 
