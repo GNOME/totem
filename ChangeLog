@@ -1,3 +1,9 @@
+2005-03-14  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-playlist.c: (totem_playlist_add_one_mrl): use
+	gtk_list_store_insert_with_values instead of separate
+	gtk_list_store_insert() and gtk_list_store_set
+
 2005-03-14  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_class_init):

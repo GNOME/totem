@@ -1605,8 +1605,7 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 				filename_for_display, uri, display_name);
 
 	store = GTK_LIST_STORE (playlist->_priv->model);
-	gtk_list_store_append (store, &iter);
-	gtk_list_store_set (store, &iter,
+	gtk_list_store_insert_with_values (store, &iter, G_MAXINT32,
 			PIX_COL, NULL,
 			FILENAME_COL, filename_for_display,
 			URI_COL, uri,
