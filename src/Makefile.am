@@ -63,7 +63,9 @@ totem_SOURCES = 			\
 	gnome-caption-table.c		\
 	gnome-caption-table.h		\
 	gnome-password-dialog.c		\
-	gnome-password-dialog.h
+	gnome-password-dialog.h		\
+	totem-statusbar.c		\
+	totem-statusbar.h
 
 totem_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS)
 totem_LDFLAGS = -export-dynamic

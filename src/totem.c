@@ -32,6 +32,7 @@
 #include "gtk-playlist.h"
 #include "rb-ellipsizing-label.h"
 #include "bacon-cd-selection.h"
+#include "totem-statusbar.h"
 
 #include "egg-recent-model.h"
 #include "egg-recent-view.h"
@@ -48,6 +49,12 @@
 #define SEEK_FORWARD_SHORT_OFFSET 20000
 #define SEEK_BACKWARD_SHORT_OFFSET -20000
 
+typedef enum {
+	STATE_PLAYING,
+	STATE_PAUSED,
+	STATE_STOPPED
+} TotemStates;
+
 struct Totem {
 	/* Control window */
 	GladeXML *xml;
@@ -56,6 +63,7 @@ struct Totem {
 	GtkWidget *gtx;
 	GtkWidget *prefs;
 	GtkWidget *properties;
+	GtkWidget *statusbar;
 
 	/* Play/Pause */
 	GtkWidget *pp_button;
@@ -109,32 +117,6 @@ static void update_dvd_menu_items (Totem *totem);
 static void on_play_pause_button_clicked (GtkToggleButton *button,
 		gpointer user_data);
 static void playlist_changed_cb (GtkWidget *playlist, gpointer user_data);
-
-static char
-*time_to_string (int time)
-{
-	int sec, min, hour;
-
-	sec = time % 60;
-	time = time - sec;
-	min = (time % (60*60)) / 60;
-	time = time - (min * 60);
-	hour = time / (60*60);
-
-	if (hour > 0)
-	{
-		/* hour:minutes:seconds */
-		return g_strdup_printf ("%d:%02d:%02d", hour, min, sec);
-	} else if (min > 0) {
-		/* minutes:seconds */
-		return g_strdup_printf ("%d:%02d", min, sec);
-	} else {
-		/* seconds */
-		return g_strdup_printf ("%d sec", sec);
-	}
-
-	return NULL;
-}
 
 static void
 long_action (void)
@@ -192,22 +174,36 @@ main_window_destroy_cb (GtkWidget *widget, GdkEvent *event, gpointer user_data)
 }
 
 static void
-play_pause_set_label (Totem *totem, gboolean playing)
+play_pause_set_label (Totem *totem, TotemStates state)
 {
 	GtkWidget *image;
 	char *image_path;
 
-
-	if (playing == TRUE)
+	switch (state)
 	{
+	case STATE_PLAYING:
+		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
+				_("Playing"));
 		image_path = gnome_program_locate_file (NULL,
 				GNOME_FILE_DOMAIN_APP_DATADIR,
 				"totem/stock_media_pause.png", FALSE, NULL);
-	} else {
+		break;
+	case STATE_PAUSED:
+		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
+				_("Paused"));
 		image_path = gnome_program_locate_file (NULL,
 				GNOME_FILE_DOMAIN_APP_DATADIR,
 				"totem/stock_media_play.png", FALSE, NULL);
+		break;
+	case STATE_STOPPED:
+		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
+				_("Stopped"));
+		image_path = gnome_program_locate_file (NULL,
+				GNOME_FILE_DOMAIN_APP_DATADIR,
+				"totem/stock_media_play.png", FALSE, NULL);
+		break;
 	}
+
 	image = glade_xml_get_widget (totem->xml, "pp_image");
 	gtk_image_set_from_file (GTK_IMAGE (image), image_path);
 	image = glade_xml_get_widget (totem->xml, "fs_pp_image");
@@ -253,7 +249,7 @@ totem_action_play (Totem *totem, int offset)
 		return;
 
 	retval = gtk_xine_play (GTK_XINE (totem->gtx), offset , 0);
-	play_pause_set_label (totem, retval);
+	play_pause_set_label (totem, retval ? STATE_PLAYING : STATE_STOPPED);
 }
 
 void
@@ -315,7 +311,7 @@ totem_action_play_pause (Totem *totem)
 		mrl = gtk_playlist_get_current_mrl (totem->playlist);
 		if (mrl == NULL)
 		{
-			play_pause_set_label (totem, FALSE);
+			play_pause_set_label (totem, STATE_STOPPED);
 			return;
 		} else {
 			totem_action_set_mrl_and_play (totem, mrl);
@@ -331,10 +327,10 @@ totem_action_play_pause (Totem *totem)
 		if (gtk_xine_get_speed (GTK_XINE(totem->gtx)) == SPEED_PAUSE)
 		{
 			gtk_xine_set_speed (GTK_XINE(totem->gtx), SPEED_NORMAL);
-			play_pause_set_label (totem, TRUE);
+			play_pause_set_label (totem, STATE_PLAYING);
 		} else {
 			gtk_xine_set_speed (GTK_XINE(totem->gtx), SPEED_PAUSE);
-			play_pause_set_label (totem, FALSE);
+			play_pause_set_label (totem, STATE_PAUSED);
 		}
 	}
 }
@@ -358,6 +354,59 @@ totem_action_fullscreen (Totem *totem, gboolean state)
 		return;
 
 	totem_action_fullscreen_toggle (totem);
+}
+
+static void
+update_mrl_label (Totem *totem, const char *name)
+{
+	gint time;
+	char *text;
+	GtkWidget *widget = NULL;
+
+	if (name != NULL)
+	{
+		/* Get the length of the stream */
+		time = gtk_xine_get_stream_length (GTK_XINE (totem->gtx));
+		totem_statusbar_set_time_and_length (TOTEM_STATUSBAR
+				(totem->statusbar), 0, time / 1000);
+
+		/* Update the mrl label */
+		text = g_strdup_printf
+			("<span size=\"medium\"><b>%s</b></span>", name);
+
+		widget = glade_xml_get_widget (totem->xml, "label1");
+		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
+				text);
+		widget = glade_xml_get_widget (totem->xml, "custom2");
+		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
+				text);
+
+		g_free (text);
+
+		/* Title */
+		text = g_strdup_printf (_("%s - Totem"), name);
+		gtk_window_set_title (GTK_WINDOW (totem->win), text);
+		g_free (text);
+	} else {
+		totem_statusbar_set_time_and_length (TOTEM_STATUSBAR
+				(totem->statusbar), 0, 0);
+
+		/* Update the mrl label */
+		text = g_strdup_printf
+			("<span size=\"medium\"><b>%s</b></span>",
+			 _("No file"));
+		widget = glade_xml_get_widget (totem->xml, "label1");
+		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
+				text);
+		widget = glade_xml_get_widget (totem->xml, "custom2");
+		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
+				text);
+
+		g_free (text);
+
+		/* Title */
+		gtk_window_set_title (GTK_WINDOW (totem->win), _("Totem"));
+	}
 }
 
 gboolean
@@ -384,20 +433,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		widget = glade_xml_get_widget (totem->xml, "play1");
 		gtk_widget_set_sensitive (widget, FALSE);
 
-		/* Label */
-		widget = glade_xml_get_widget (totem->xml, "label1");
-		text = g_strdup_printf
-			("<span size=\"medium\"><b>%s</b></span>",
-			 _("No file"));
-		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
-				text);
-		widget = glade_xml_get_widget (totem->xml, "custom2");
-		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
-				text);
-		g_free (text);
-
-		/* Title */
-		gtk_window_set_title (GTK_WINDOW (totem->win), "Totem");
+		update_mrl_label (totem, NULL);
 
 		/* Seek bar and seek buttons */
 		gtk_widget_set_sensitive (totem->seek, FALSE);
@@ -431,7 +467,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 			(GTK_XINE_PROPERTIES (totem->properties),
 			 GTK_XINE (totem->gtx), TRUE);
 	} else {
-		char *title, *time_text, *name;
+		char *title, *name;
 		int time;
 
 		retval = gtk_xine_open (GTK_XINE (totem->gtx), mrl);
@@ -444,10 +480,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		widget = glade_xml_get_widget (totem->xml, "play1");
 		gtk_widget_set_sensitive (widget, TRUE);
 
-		/* Title */
-		title = g_strdup_printf (_("%s - Totem"), name);
-		gtk_window_set_title (GTK_WINDOW (totem->win), title);
-		g_free (title);
+		update_mrl_label (totem, name);
 
 		/* Seek bar */
 		gtk_widget_set_sensitive (totem->seek,
@@ -472,22 +505,6 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 
 		/* Set the playlist */
 		gtk_playlist_set_playing (totem->playlist, TRUE);
-
-		/* Label */
-		widget = glade_xml_get_widget (totem->xml, "label1");
-		time = gtk_xine_get_stream_length (GTK_XINE (totem->gtx));
-		time_text = time_to_string (time/1000);
-		text = g_strdup_printf
-			("<span size=\"medium\"><b>%s (%s)</b></span>",
-			 name, time_text);
-		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
-				text);
-		widget = glade_xml_get_widget (totem->xml, "custom2");
-		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
-				text);
-		g_free (text);
-		g_free (time_text);
-		g_free (name);
 
 		/* Update the properties */
 		gtk_xine_properties_update
@@ -569,7 +586,7 @@ totem_action_seek_relative (Totem *totem, int off_sec)
 		sec = oldsec + off_sec;
 
 	gtk_xine_play (GTK_XINE(totem->gtx), 0, sec);
-	play_pause_set_label (totem, TRUE);
+	play_pause_set_label (totem, STATE_PLAYING);
 }
 
 void
@@ -776,39 +793,6 @@ on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
 	g_free (filename);
 }
 
-static int
-update_mrl_label(Totem *totem, const char *name)
-{
-	gint time;
-	char *time_text, *text;
-	GtkWidget *widget = NULL;
-
-	/* Get the length of the stream */
-	time = gtk_xine_get_stream_length (GTK_XINE (totem->gtx));
-	time_text = time_to_string (time/1000);
-
-	/* Update the mrl label */
-	text = g_strdup_printf
-		("<span size=\"medium\"><b>%s (%s)</b></span>",
-		 name, time_text);
-
-	widget = glade_xml_get_widget (totem->xml, "label1");
-	rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
-			text);
-	widget = glade_xml_get_widget (totem->xml, "custom2");
-	rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
-			text);
-
-	g_free (text);
-	g_free (time_text);
-
-	text = g_strdup_printf (_("%s - Totem"), name);
-	gtk_window_set_title (GTK_WINDOW (totem->win), text);
-	g_free (text);
-
-	return TRUE;
-}
-
 /* This is only called when xine is playing a DVD */
 static void
 on_title_change_event (GtkWidget *win, const char *string, gpointer user_data)
@@ -832,25 +816,12 @@ update_seekable (Totem *totem)
 static void
 update_current_time (Totem *totem)
 { 
-	GtkWidget *widget;
 	int time;
-	char *time_text, *label_text;
 
 	/* Get the length of the stream */
 	time = gtk_xine_get_current_time (GTK_XINE (totem->gtx));
-	time_text = time_to_string (time/1000);
-
-	/* Make the new label */
-	label_text = g_strdup_printf(_("Time: %s "), time_text);
-
-	/* Update the widgets */
-	widget = glade_xml_get_widget (totem->xml, "label9");
-	gtk_label_set_text (GTK_LABEL (widget), label_text);
-	widget = glade_xml_get_widget (totem->xml, "label10");
-	gtk_label_set_text (GTK_LABEL (widget), label_text);
-
-	g_free(label_text);
-	g_free(time_text);
+	totem_statusbar_set_time (TOTEM_STATUSBAR (totem->statusbar),
+			time / 1000);
 }
 
 static void
@@ -1642,7 +1613,7 @@ current_removed_cb (GtkWidget *playlist, gpointer user_data)
 	char *mrl;
 
 	/* Set play button status */
-	play_pause_set_label (totem, FALSE);
+	play_pause_set_label (totem, STATE_STOPPED);
 	gtk_playlist_set_at_start (totem->playlist);
 	update_buttons (totem);
 	mrl = gtk_playlist_get_current_mrl (totem->playlist);
@@ -1730,7 +1701,7 @@ on_eos_event (GtkWidget *widget, gpointer user_data)
 		char *mrl;
 
 		/* Set play button status */
-		play_pause_set_label (totem, FALSE);
+		play_pause_set_label (totem, STATE_PAUSED);
 		gtk_playlist_set_at_start (totem->playlist);
 		update_buttons (totem);
 		mrl = gtk_playlist_get_current_mrl (totem->playlist);
@@ -2233,6 +2204,17 @@ bacon_cd_selection_create (void)
 	return widget;
 }
 
+GtkWidget *
+totem_statusbar_create (void)
+{
+	GtkWidget *widget;
+
+	widget = totem_statusbar_new ();
+	gtk_widget_show (widget);
+
+	return widget;
+}
+
 static void
 totem_setup_recent (Totem *totem)
 {
@@ -2443,6 +2425,7 @@ main (int argc, char **argv)
 	totem->volume_first_time = 1;
 	totem->fs_pp_button = glade_xml_get_widget (totem->xml, "fs_pp_button");
 	totem->properties = gtk_xine_properties_new ();
+	totem->statusbar = glade_xml_get_widget (totem->xml, "custom4");
 
 	/* Calculate the height of the control popup window */
 	gtk_window_get_size (GTK_WINDOW (totem->control_popup),

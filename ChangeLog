@@ -1,3 +1,28 @@
+2003-01-18  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem.glade:
+	* src/Makefile.am:
+	* src/totem-statusbar.c: (time_to_string),
+	(totem_statusbar_get_type), (totem_statusbar_class_init),
+	(totem_statusbar_init), (totem_statusbar_new),
+	(totem_statusbar_update_time), (totem_statusbar_set_text),
+	(totem_statusbar_set_time), (totem_statusbar_set_time_and_length),
+	(totem_statusbar_set_has_resize_grip),
+	(totem_statusbar_get_has_resize_grip), (totem_statusbar_destroy),
+	(get_grip_edge), (get_grip_rect), (totem_statusbar_create_window),
+	(totem_statusbar_destroy_window), (totem_statusbar_realize),
+	(totem_statusbar_unrealize), (totem_statusbar_map),
+	(totem_statusbar_unmap), (totem_statusbar_button_press),
+	(totem_statusbar_expose_event), (totem_statusbar_size_request),
+	(totem_statusbar_size_allocate):
+	* src/totem-statusbar.h:
+	* src/totem.c: (play_pause_set_label), (totem_action_play),
+	(totem_action_play_pause), (update_mrl_label),
+	(totem_action_set_mrl), (totem_action_seek_relative),
+	(update_current_time), (current_removed_cb), (on_eos_event),
+	(totem_statusbar_create), (main): add a statusbar and move the
+	time/length displays to it
+
 2003-01-17  Bastien Nocera  <hadess@hadess.net>
 
 	* README:
