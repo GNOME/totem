@@ -6,11 +6,11 @@ totem_SOURCES = 			\
 	gtk-xine.c gtk-xine.h		\
 	gtk-playlist.c	gtk-playlist.h
 
-totem_LDADD = $(EXTRA_GNOME_LIBS) @XINE_LIBS@
+totem_LDADD = $(EXTRA_GNOME_LIBS) $(XINE_LIBS)
 totem_LDFLAGS = -export-dynamic
 INCLUDES = 						\
 	$(EXTRA_GNOME_CFLAGS)				\
-	@CFLAGS@					\
+	$(XINE_CFLAGS)					\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
 	-DDATADIR=\""$(datadir)/totem/"\"		\
 	-DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED	\
