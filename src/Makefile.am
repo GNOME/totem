@@ -56,8 +56,6 @@ regenerate-built-sources:
 
 totem_SOURCES = 			\
 	$(EGG_RECENT_FILES)		\
-	egg-recent-vfs-utils.c		\
-	egg-recent-vfs-utils.h		\
 	$(BACON_CD_SELECTION)		\
 	totem.c				\
 	totem.h				\
