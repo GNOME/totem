@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem 0.11.0\n"
-"POT-Creation-Date: 2002-11-04 15:55+0100\n"
-"PO-Revision-Date: 2002-11-04 15:52+0100\n"
+"POT-Creation-Date: 2002-11-08 00:40+0100\n"
+"PO-Revision-Date: 2002-11-08 23:52+0100\n"
 "Last-Translator: Jordi Mallach <jordi@sindominio.net>\n"
 "Language-Team: Catalan <ca@dodds.net>\n"
 "MIME-Version: 1.0\n"
@@ -94,7 +94,7 @@ msgstr "Salta endavant"
 msgid "Toggle Aspect Ratio"
 msgstr "Canvia el ràtio de l'aspecte"
 
-#: data/totem.glade.h:17 src/totem.c:1007
+#: data/totem.glade.h:17 src/totem.c:1037
 msgid "Totem"
 msgstr "Totem"
 
@@ -142,18 +142,6 @@ msgstr "_Só"
 msgid "_Zoom 1:2"
 msgstr "_Zoom 1:2"
 
-#: data/totem.glade.h:29
-msgid "button3"
-msgstr "botó3"
-
-#: data/totem.glade.h:30
-msgid "button4"
-msgstr "botó4"
-
-#: data/totem.glade.h:31
-msgid "button5"
-msgstr "botó5"
-
 #: data/totem.schemas.in.h:1
 msgid "Default audio output driver"
 msgstr "Controlador per defecte d'eixida d'audio"
@@ -182,7 +170,7 @@ msgstr "Coordenada X per a la llista de reproducció"
 msgid "Y coordinate for the Playlist"
 msgstr "Coordenada Y per a la llista de reproducció"
 
-#: src/gtk-playlist.c:410 src/totem.c:839
+#: src/gtk-playlist.c:410 src/totem.c:869
 msgid "Select files"
 msgstr "Seleccioneu fitxers"
 
@@ -198,7 +186,7 @@ msgstr "Nom de fitxer"
 msgid "Totem Video Window"
 msgstr "Finestra de vídeo de Totem"
 
-#: src/gtk-xine.c:721
+#: src/gtk-xine.c:726
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
@@ -206,27 +194,46 @@ msgstr ""
 "No s'ha pogut iniciar el suport de fils.\n"
 "Haurieu d'instal·lar una Xlib amb suport per a fils."
 
-#: src/gtk-xine.c:753
+#: src/gtk-xine.c:758
 msgid "Could not find a suitable video output."
 msgstr "No s'ha trobat una eixida de vídeo convenient."
 
-#: src/totem.c:339 src/totem.c:1602
-msgid "<span size=\"medium\"><b>No file</b></span>"
-msgstr "<span size=\"medium\"><b>Cap fitxer</b></span>"
+#: src/totem.c:257
+msgid ""
+"Totem cannot play this type of media because you do not have the appropriate "
+"plugins to handle it.\n"
+"Install the necessary plugins and restart Totem to be able to play this "
+"media."
+msgstr ""
+"Totem no pot reproduir aquest tipus de medi perque no teniu el connector apropiat per a gestionar-ho.\n"
+"Instal·leu el connector necessari i reinicieu Totem per a poder reproduir aquest medi."
 
-#: src/totem.c:983
+#: src/totem.c:265
+msgid ""
+"Totem could not play this media although a plugin is present to handle it.\n"
+"You might want to check that a disc is present in the drive and that it is "
+"correctly configured."
+msgstr ""
+"Totem no ha pogut reproduir aquest medi encara que hi ha un connector per a gestionar-ho.\n"
+"Pot ser voldreu comprovar que hi ha un disc en la unitat i que està correctament configurada."
+
+#: src/totem.c:369 src/totem.c:1684
+msgid "No file"
+msgstr "Cap fitxer"
+
+#: src/totem.c:1013
 msgid "translator_credits"
 msgstr "Jordi Mallach <jordi@sindominio.net>"
 
-#: src/totem.c:1008
-msgid "(C) 2002 Bastien Nocera"
-msgstr "© 2002 Bastien Nocera"
+#: src/totem.c:1038
+msgid "(c) Copyright 2002 Bastien Nocera"
+msgstr "© Copyright 2002 Bastien Nocera"
 
-#: src/totem.c:1009
+#: src/totem.c:1039
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Reproductor de películes (basat en les biblioteques de Xine)"
 
-#: src/totem.c:1263
+#: src/totem.c:1355
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -235,21 +242,21 @@ msgstr ""
 "Totem no ha pogut executar-se:\n"
 "%s"
 
-#: src/totem.c:1269
+#: src/totem.c:1361
 #, c-format
 msgid ""
-"There is no plugin for Totem to handle '%s'\n"
+"There is no plugin for Totem to handle '%s'.\n"
 "Totem will not be able to play it."
 msgstr ""
 "No hi ha cap connector de Totem per a gestionar «%s».\n"
 "Totem no podrà reproduir-ho."
 
-#: src/totem.c:1274
+#: src/totem.c:1366
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "«%s» està trencat i Totem no pot continuar reproduint-lo."
 
-#: src/totem.c:1278
+#: src/totem.c:1370
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -258,7 +265,7 @@ msgstr ""
 "Totem no ha pogut reproduir «%s»:\n"
 "%s"
 
-#: src/totem.c:1690
+#: src/totem.c:1787
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -269,7 +276,7 @@ msgstr ""
 "motor de configuració:\n"
 "%s"
 
-#: src/totem.c:1722 src/totem.c:1730
+#: src/totem.c:1819 src/totem.c:1827
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -277,7 +284,7 @@ msgstr ""
 "No s'ha pogut carregar la interfície principal (totem.glade).\n"
 "Assegureu-vos que Totem està instal·lat correctament."
 
-#: src/totem.c:1743
+#: src/totem.c:1840
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
