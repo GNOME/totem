@@ -66,6 +66,9 @@
 #define SEEK_FORWARD_SHORT_OFFSET 15
 #define SEEK_BACKWARD_SHORT_OFFSET -5
 
+#define SEEK_FORWARD_LONG_OFFSET 10*60
+#define SEEK_BACKWARD_LONG_OFFSET -3*60
+
 #define VOLUME_DOWN_OFFSET -8
 #define VOLUME_UP_OFFSET 8
 
@@ -2206,7 +2209,6 @@ on_dvd_chapter_menu1_activate (GtkButton *button, Totem *totem)
 
 static void
 commit_hide_skip_to (GtkDialog *dialog, gint response, Totem *totem)
-
 {
 	GError *err = NULL;
 	GtkWidget *spin;
@@ -2268,6 +2270,7 @@ on_skip_to1_activate (GtkButton *button, Totem *totem)
 		return;
 
 	dialog = glade_xml_get_widget (totem->xml, "totem_skip_to_window");
+	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 	gtk_widget_show (dialog);
 }
 
@@ -2513,6 +2516,11 @@ move_popups (Totem *totem)
 	gtk_window_get_size (GTK_WINDOW (totem->exit_popup),
 			&exit_width, &exit_height);
 
+	/* We take the full width of the screen */
+	gtk_window_resize (GTK_WINDOW (totem->control_popup),
+			totem->fullscreen_rect.width,
+			control_height);
+
 	if (gtk_widget_get_direction (totem->exit_popup) == GTK_TEXT_DIR_RTL)
 	{
 		gtk_window_move (GTK_WINDOW (totem->exit_popup),
@@ -2523,13 +2531,9 @@ move_popups (Totem *totem)
 				totem->fullscreen_rect.height
 				- control_height);
 	} else {
-		//FIXME
 		gtk_window_move (GTK_WINDOW (totem->exit_popup),
 				totem->fullscreen_rect.x,
 				totem->fullscreen_rect.y);
-		gtk_window_resize (GTK_WINDOW (totem->control_popup),
-				totem->fullscreen_rect.width,
-				control_height);
 		gtk_window_move (GTK_WINDOW (totem->control_popup),
 				totem->fullscreen_rect.x,
 				totem->fullscreen_rect.height
@@ -2798,6 +2802,9 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 		{
 			totem_action_seek_relative (totem,
 					SEEK_BACKWARD_SHORT_OFFSET);
+		} else if (event->state & GDK_CONTROL_MASK) {
+			totem_action_seek_relative (totem,
+					SEEK_BACKWARD_LONG_OFFSET);
 		} else {
 			totem_action_seek_relative (totem,
 					SEEK_BACKWARD_OFFSET);
@@ -2808,6 +2815,9 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 		{
 			totem_action_seek_relative (totem,
 					SEEK_FORWARD_SHORT_OFFSET);
+		} else if (event->state & GDK_CONTROL_MASK) {
+			totem_action_seek_relative (totem,
+					SEEK_FORWARD_LONG_OFFSET);
 		} else {
 			totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET);
 		}
@@ -2902,7 +2912,7 @@ on_window_key_press_event (GtkWidget *win, GdkEventKey *event, Totem *totem)
 {
 	/* Special case the Playlist and Eject keyboard shortcuts */
 	if (event->state != 0
-			&& (event->state &GDK_CONTROL_MASK))
+			&& (event->state & GDK_CONTROL_MASK))
 	{
 		switch (event->keyval)
 		case GDK_p:
@@ -2913,6 +2923,8 @@ on_window_key_press_event (GtkWidget *win, GdkEventKey *event, Totem *totem)
 		case GDK_o:
 		case GDK_L:
 		case GDK_l:
+		case GDK_Right:
+		case GDK_Left:
 			return totem_action_handle_key (totem, event);
 	}
 

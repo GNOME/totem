@@ -1,6 +1,6 @@
-/* gtk-screenshot.h: Simple screenshot dialog
+/* totem-screenshot.h: Simple screenshot dialog
 
-   Copyright (C) 2002, 2003 Bastien Nocera <hadess@hadess.net>
+   Copyright (C) 2004 Bastien Nocera <hadess@hadess.net>
 
    The Gnome Library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public License as
@@ -48,7 +48,7 @@ struct TotemScreenshotClass {
 
 GtkType    totem_screenshot_get_type (void);
 GtkWidget *totem_screenshot_new      (const char *glade_filename,
-				    GdkPixbuf *playing_pix);
+				      GdkPixbuf *playing_pix);
 
 G_END_DECLS
 
