@@ -116,11 +116,11 @@ libtotem_properties_page_la_LIBADD = \
 	backend/libbaconvideowidget.la libbaconpropertiespage.la
 libtotem_properties_page_la_LDFLAGS = $(module_flags)
 
+if HAVE_MOZILLA
+
 BUILT_SOURCES = \
 	totem_mozilla_scripting.h \
 	libtotem_mozilla.xpt
-
-if HAVE_MOZILLA
 
 totem_mozilla_scripting.h: totem_mozilla_scripting.idl
 	$(MOZILLA_XPIDL) -m header -I $(MOZILLA_XPCFLAGS) $(srcdir)/totem_mozilla_scripting.idl
@@ -152,6 +152,10 @@ totem_mozilla_viewer_LDADD = \
 	libbaconmessageconnection.la
 
 module_flags = -export_dynamic -avoid-version
+
+else
+
+BUILT_SOURCES = 
 
 endif
 
