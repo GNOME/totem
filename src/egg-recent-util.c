@@ -128,6 +128,10 @@ egg_recent_util_get_icon (GnomeIconTheme *theme, const gchar *uri,
 						 &base_size);
 	g_free (icon);
 
+	if (filename == NULL) {
+		return NULL;
+	}
+
 	pixbuf = load_icon_file (filename, base_size, size);
 	g_free (filename);
 	

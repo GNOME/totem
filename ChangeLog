@@ -1,3 +1,10 @@
+2004-03-09  Bastien Nocera  <hadess@hadess.net>
+
+	* src/egg-recent-util.c: (egg_recent_util_get_icon):
+	* src/totem.c: (totem_action_add_recent), (totem_setup_recent):
+	update recent-files from libegg (fixes run-time warnings)
+	Don't forget to set the groups in recent-files (Closes: #131094)
+
 2004-03-09  Anders Carlsson  <andersca@gnome.org>
 
 	* src/totem-playlist.c: (totem_playlist_add_files),

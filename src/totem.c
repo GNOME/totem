@@ -1399,6 +1399,7 @@ totem_action_add_recent (Totem *totem, const char *filename)
 		return;
 
 	item = egg_recent_item_new_from_uri (filename);
+	egg_recent_item_add_group (item, "Totem");
 	egg_recent_model_add_full (totem->recent_model, item);
 }
 
@@ -3567,6 +3568,8 @@ totem_setup_recent (Totem *totem)
 	egg_recent_model_set_limit (totem->recent_model, 5);
 	egg_recent_view_set_model (EGG_RECENT_VIEW (totem->recent_view),
 			totem->recent_model);
+	egg_recent_model_set_filter_groups (totem->recent_model,
+			"Totem", NULL);
 	egg_recent_view_gtk_set_trailing_sep (totem->recent_view, TRUE);
 
 	g_signal_connect (totem->recent_view, "activate",
