@@ -1422,8 +1422,6 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	if (parser->priv->recurse_level > RECURSE_LEVEL_MAX)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
-	parser->priv->recurse_level++;
-
 	if (totem_pl_parser_ignore (parser, url) != FALSE)
 		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
 
@@ -1433,6 +1431,8 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 
 	if (mimetype == NULL)
 		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
+
+	parser->priv->recurse_level++;
 
 	for (i = 0; i < G_N_ELEMENTS(special_types); i++) {
 		if (strcmp (special_types[i].mimetype, mimetype) == 0) {
@@ -1452,6 +1452,8 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 			break;
 		}
 	}
+
+	parser->priv->recurse_level--;
 
 	if (ret == FALSE && parser->priv->fallback) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
