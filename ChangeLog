@@ -1,3 +1,16 @@
+2003-05-18  Julien MOUTTE  <julien@moutte.net>
+
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_size_request),
+	(bacon_video_widget_size_allocate): Adding debug for fixing the
+	allocation problem
+	* src/gstvideowidget.c: (gst_video_widget_expose),
+	(gst_video_widget_size_request), (gst_video_widget_allocate): Fixed
+	some bugs with minimum size and putting some debug for allocation
+	problem
+	* src/totem.c: (totem_action_fullscreen_toggle),
+	(video_widget_create): Added a name to bvw, changed fullscreen
+	behaviour to disbable auto_resize
+
 2003-05-17  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: really fix --disable-lirc

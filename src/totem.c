@@ -439,11 +439,18 @@ totem_action_fullscreen_toggle (Totem *totem)
 
 	if (new_state == FALSE)
 	{
+		gboolean auto_resize;
 		popup_hide (totem);
 		gtk_window_unfullscreen (GTK_WINDOW(totem->win));
 		bacon_video_widget_set_show_cursor (totem->bvw, TRUE);
 		scrsaver_enable (totem->scr);
-
+		
+		/* Auto-resize */
+		auto_resize = gconf_client_get_bool (totem->gc,
+								GCONF_PREFIX"/auto_resize", NULL);
+		
+		bacon_video_widget_set_auto_resize (totem->bvw, auto_resize);
+		
 		if (totem->controls_visibility != TOTEM_CONTROLS_VISIBLE)
 		{
 			GtkWidget *item;
@@ -461,10 +468,11 @@ totem_action_fullscreen_toggle (Totem *totem)
 		}
 	} else {
 		update_fullscreen_size (totem);
-		gtk_window_fullscreen (GTK_WINDOW(totem->win));
+		bacon_video_widget_set_auto_resize (totem->bvw, FALSE);
 		bacon_video_widget_set_show_cursor (totem->bvw, FALSE);
+		gtk_window_fullscreen (GTK_WINDOW(totem->win));
 		scrsaver_disable (totem->scr);
-
+		
 		if (totem->controls_visibility == TOTEM_CONTROLS_VISIBLE)
 			show_controls (totem, FALSE);
 		totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
@@ -3089,6 +3097,9 @@ video_widget_create (Totem *totem)
 	totem_preferences_tvout_setup (totem);
 	totem_preferences_visuals_setup (totem);
 
+	/* Let's set a name. Will make debugging easier */
+	gtk_widget_set_name (GTK_WIDGET(totem->bvw), "bvw");
+	
 	container = glade_xml_get_widget (totem->xml, "tmw_bvw_vbox");
 	gtk_container_add (GTK_CONTAINER (container),
 			GTK_WIDGET (totem->bvw));

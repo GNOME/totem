@@ -272,6 +272,8 @@ gst_video_widget_expose(GtkWidget *widget, GdkEventExpose *event)
 	g_return_val_if_fail(event != NULL, FALSE);
 
 	vw = GST_VIDEO_WIDGET (widget);
+	
+	/* g_message ("expose %d,%d",event->area.width, event->area.height);*/
 		
 	if (GTK_WIDGET_VISIBLE (widget) && GTK_WIDGET_MAPPED (widget)) {
 		
@@ -361,8 +363,9 @@ gst_video_widget_size_request (GtkWidget *widget, GtkRequisition *requisition)
 	vw = GST_VIDEO_WIDGET (widget);
 	
 	if (!vw->priv->auto_resize) {
-		requisition->width = 1;
-		requisition->height = 1;
+		requisition->width = vw->priv->width_mini;
+		requisition->height = vw->priv->height_mini;
+		/* g_message ("requesting %d,%d", requisition->width, requisition->height);*/
 		return;
 	}
 	
@@ -397,7 +400,7 @@ gst_video_widget_size_request (GtkWidget *widget, GtkRequisition *requisition)
 			height = 100;
 		}
 	}
-	
+	/* g_message ("requesting %d,%d", width, height);*/
 	requisition->width = width;
 	requisition->height = height;
 }
@@ -450,14 +453,23 @@ gst_video_widget_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	temp = (scale_factor * vw->priv->source_height + 0.5);
 	height = (gint) temp > G_MAXINT ? G_MAXINT : (gint) temp;
 
+	/* If auto resize is set we check that video size is
+	bigger than minimum size */
 	if (vw->priv->auto_resize) {
-		if (width < vw->priv->width_mini)
-			width = vw->priv->width_mini;
-		if (height < vw->priv->height_mini)
+		if (width < vw->priv->width_mini) {
+			width = vw->priv->width_mini;	
+		}
+		if (height < vw->priv->height_mini) {
 			height = vw->priv->height_mini;
-		
+		}
 		allocation->width = width;
 		allocation->height = height;
+	} /* If not auto resizing we check that allocation is bigger */
+	else { /* than minimum size */
+		if (allocation->width < vw->priv->width_mini)
+			allocation->width = vw->priv->width_mini;
+		if (allocation->height < vw->priv->height_mini)
+			allocation->height = vw->priv->height_mini;
 	}
 	
 	widget->allocation = *allocation;
@@ -465,7 +477,7 @@ gst_video_widget_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	/* g_message ("allocation now is %d, %d", allocation->width, allocation->height); */
 	
 	if (GTK_WIDGET_REALIZED (widget)) {
-		/* g_message ("source %d, %d size %d, %d auto %d scale %f", vw->priv->source_width, vw->priv->source_height, width, height, vw->priv->auto_resize, vw->priv->scale_factor); */
+		/* g_message ("source %d, %d size %d, %d auto %d scale %f", vw->priv->source_width, vw->priv->source_height, width,height, vw->priv->auto_resize, vw->priv->scale_factor); */
 		gdk_window_move_resize (	widget->window,
 									allocation->x, 
 									allocation->y,
