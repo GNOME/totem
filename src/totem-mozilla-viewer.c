@@ -167,7 +167,7 @@ int main (int argc, char **argv)
 	gtk_init (&argc, &argv);
 
 	g_print ("CMD line: ");
-	for (i = 1; i < argc; i++) {
+	for (i = 0; i < argc; i++) {
 		g_print ("%s ", argv[i]);
 	}
 	g_print ("\n");
@@ -219,10 +219,14 @@ int main (int argc, char **argv)
 
 	gtk_widget_show (emb->window);
 
-	/* wait until we're embedded if we're to be */
-	if (emb->xid != 0)
+	/* wait until we're embedded if we're to be, or shown */
+	if (emb->xid != 0) {
 		while (emb->embedded_done == FALSE && gtk_events_pending ())
 			gtk_main_iteration ();
+	} else {
+		while (gtk_events_pending ())
+			gtk_main_iteration ();
+	}
 
 	totem_embedded_open (emb);
 	bacon_video_widget_play (emb->bvw, NULL);

@@ -45,7 +45,7 @@ typedef struct {
 
 	char *src;
 	int width, height;
-	int recv_fd, send_fd;
+	int send_fd;
 	int player_pid;
 
 	GByteArray *bytes;
@@ -143,6 +143,7 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 	printf("mode %d\n",mode);
 	//printf("mime type: %s\n",pluginType);
 	plugin->instance = instance;
+	plugin->send_fd = -1;
 
 	for (i=0; i<argc; i++) {
 		printf ("argv[%d] %s %s\n", i, argn[i], argv[i]);
@@ -152,6 +153,7 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 		if (strcmp (argn[i], "height") == 0) {
 			plugin->height = strtol (argv[i], NULL, 0);
 		}
+		//FIXME we can have some relative paths here as well!
 		if (strcmp (argn[i], "src") == 0) {
 			plugin->src = g_strdup (argv[i]);
 		}
@@ -177,8 +179,8 @@ static NPError totem_plugin_destroy_instance (NPP instance, NPSavedData **save)
 	if (plugin == NULL)
 		return NPERR_NO_ERROR;
 
-	close(plugin->send_fd);
-	close(plugin->recv_fd);
+	if (plugin->send_fd >= 0)
+		close(plugin->send_fd);
 
 	kill (plugin->player_pid, SIGKILL);
 	waitpid (plugin->player_pid, NULL, 0);
@@ -244,7 +246,19 @@ static NPError totem_plugin_new_stream (NPP instance, NPMIMEType type,
 static NPError totem_plugin_destroy_stream (NPP instance, NPStream* stream,
 		NPError reason)
 {
+	TotemPlugin *plugin;
+
 	DEBUG("plugin_destroy_stream");
+
+	if (instance == NULL) {
+		DEBUG("totem_plugin_destroy_stream instance is NULL");
+		return NPERR_NO_ERROR;
+	}
+
+	plugin = (TotemPlugin *) instance->pdata;
+
+	close(plugin->send_fd);
+	plugin->send_fd = -1;
 
 	return NPERR_NO_ERROR;
 }
@@ -285,9 +299,11 @@ static int32 totem_plugin_write (NPP instance, NPStream *stream, int32 offset,
 	if (!plugin->player_pid)
 		return 0;
 
+	g_message ("write %d %p %d", plugin->send_fd, buffer, len);
 	ret = write (plugin->send_fd, buffer, len);
 	if (ret < 0)
 		ret = 0;
+	g_message ("ret %d", ret);
 
 	return ret;
 }
@@ -366,7 +382,8 @@ char *NP_GetMIMEDescription(void)
 		/* http://www.apple.com/trailers/ */
 		"video/quicktime:mov:QuickTime video;"
 		/* http://www.nbc.com/nbc/Late_Night_with_Conan_O'Brien/video/triumph.shtml */
-		"application/x-mplayer2::Window Media Plugin;";
+		"application/x-mplayer2::Window Media Plugin;"
+		"video/mpeg:mpg:MPEG video";
 /*
     		"application/mpeg:mpg:MPEG video;"
     		"audio/x-pn-windows-acm:wav:WAV audio;"
