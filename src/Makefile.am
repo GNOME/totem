@@ -1,5 +1,5 @@
 
-bin_PROGRAMS = totem
+bin_PROGRAMS = totem totem-video-thumbnailer
 
 MARSHALFILES = gtkxine-marshal.h gtkxine-marshal.c
 GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
@@ -78,6 +78,18 @@ totem_SOURCES = 			\
 
 totem_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS)
 totem_LDFLAGS = -export-dynamic
+
+totem_video_thumbnailer_SOURCES =	\
+	gtkxine-marshal.list		\
+	$(MARSHALFILES)			\
+	gtk-xine.c gtk-xine.h		\
+	scrsaver.c  scrsaver.h          \
+	video-utils.c video-utils.h     \
+	totem-video-thumbnailer.c
+
+totem_video_thumbnailer_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS)
+totem_video_thumbnailer_LDFLAGS = -export-dynamic
+
 INCLUDES = 						\
 	-D_REENTRANT -D_FILE_OFFSET_BITS=64		\
 	$(GNOMEUI_UNSTABLE)				\

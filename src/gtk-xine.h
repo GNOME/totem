@@ -84,7 +84,9 @@ typedef struct {
 } GtkXineClass;
 
 GtkType gtk_xine_get_type              (void);
-GtkWidget *gtk_xine_new                (int width, int height);
+GtkWidget *gtk_xine_new		       (int width, int height,
+					gboolean null_video_out);
+
 gboolean  gtk_xine_check               (GtkXine *gtx);
 
 /* Actions */
@@ -134,6 +136,8 @@ char *gtk_xine_properties_get_title    (GtkXine *gtx);
 void gtk_xine_properties_update        (GtkXine *gtx, gboolean reset);
 
 void gtk_xine_dvd_event (GtkXine *gtx, GtkXineDVDEvent type);
+
+GdkPixbuf * gtk_xine_get_current_frame (GtkXine *gtx);
 
 G_END_DECLS
 

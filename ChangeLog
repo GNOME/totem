@@ -1,5 +1,21 @@
 2003-01-06  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am: upd
+	* src/gtk-xine.c: (gtk_xine_instance_init),
+	(load_video_out_driver), (load_audio_out_driver), (gtk_xine_new),
+	(gtk_xine_properties_update), (gtk_xine_get_current_frame),
+	(gtk_xine_get_current_frame_rgb), (scale_line_1_1),
+	(scale_line_45_64), (scale_line_15_16), (scale_image),
+	(yuy2toyv12), (yuy2_fudge), (yv12_2_rgb), (xine_frame_to_rgb): nick a
+	lot of functions from http://pornview.sf.net to add screenshooting
+	capability
+	* src/gtk-xine.h: upd
+	* src/totem-video-thumbnailer.c: (print_usage), (show_pixbuf),
+	(save_pixbuf), (main): added
+	* src/totem.c: (video_widget_create): some runtime fixes
+
+2003-01-06  Bastien Nocera  <hadess@hadess.net>
+
 	* src/.cvsignore: upd
 
 2003-01-02  Bastien Nocera  <hadess@hadess.net>
