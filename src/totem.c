@@ -795,7 +795,7 @@ update_current_time (Totem *totem)
 	time_text = time_to_string (time/1000);
 
 	/* Make the new label */
-	label_text = g_strdup_printf("Time: %s ", time_text);
+	label_text = g_strdup_printf(_("Time: %s "), time_text);
 
 	/* Update the widgets */
 	widget = glade_xml_get_widget (totem->xml, "label9");
