@@ -83,7 +83,7 @@ GtkWidget *bacon_video_widget_new		 (int width, int height,
 						  gboolean null_video_out,
 						  GError **error);
 
-const gchar *bacon_video_widget_get_backend_name (BaconVideoWidget *bvw);
+char *bacon_video_widget_get_backend_name (BaconVideoWidget *bvw);
 
 /* Actions */
 gboolean bacon_video_widget_open		 (BaconVideoWidget *bvw,

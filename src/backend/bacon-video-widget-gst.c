@@ -389,7 +389,7 @@ bacon_video_widget_get_property (GObject *object, guint property_id,
 /*                                                               */
 /* ============================================================= */
 
-const gchar *
+char *
 bacon_video_widget_get_backend_name (BaconVideoWidget *bvw)
 {
 	guint major, minor, micro;
@@ -548,7 +548,7 @@ bacon_video_widget_set_logo (BaconVideoWidget *bvw, gchar *filename)
 	
 	bvw->priv->logo_pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
 	
-	gst_video_widget_set_logo (	bvw->priv->vw, bvw->priv->logo_pixbuf);
+	gst_video_widget_set_logo (bvw->priv->vw, bvw->priv->logo_pixbuf);
 }
 
 void

@@ -1249,13 +1249,13 @@ get_fourcc_string (uint32_t f)
 	return g_strdup (fcc);
 }
 
-const gchar *
+char *
 bacon_video_widget_get_backend_name (BaconVideoWidget *bvw)
 {	
-	return g_strdup_printf (	"xine-lib version %d.%d.%d",
-								XINE_MAJOR_VERSION,
-								XINE_MINOR_VERSION,
-								XINE_SUB_VERSION);
+	return g_strdup_printf ("xine-lib version %d.%d.%d",
+			XINE_MAJOR_VERSION,
+			XINE_MINOR_VERSION,
+			XINE_SUB_VERSION);
 }
 
 gboolean
@@ -1477,7 +1477,7 @@ bacon_video_widget_set_logo (BaconVideoWidget *bvw, gchar *filename)
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
-	
+
 	if (bacon_video_widget_open (bvw, filename, NULL) == TRUE) {
 		bacon_video_widget_play (bvw, 0 , 0, NULL);
 	}
