@@ -19,7 +19,7 @@ schema()
 	echo;
 }
 
-SCHEMES="pnm mms rtsp mmsh"
+SCHEMES="pnm mms rtsp mmsh uvox"
 
 echo "<gconfschemafile>";
 echo "    <schemalist>";
