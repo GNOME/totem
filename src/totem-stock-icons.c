@@ -165,18 +165,13 @@ totem_named_icons_init (Totem *totem, gboolean refresh)
 {
 	GtkIconTheme *theme;
 	int i;
-
-	struct {
-		const char *fn1;
-		const char *fn2;
-		const char *fn3;
-	} items[] = {
-		{ "stock-media-play", "stock_media-play", "stock_media_play" },
-		{ "stock-media-pause", "stock_media-pause", "stock_media_pause" },
-		{ "stock-media-prev", "stock_media-prev", "stock_media_previous" },
-		{ "stock-media-next", "stock_media-next", "stock_media_next" },
-		{ "panel-screenshot", "stock-panel-screenshot", "gnome-screenshot" },
-		{ "stock_playlist", "playlist-24", NULL },
+	char *items[][4] = {
+		{ "stock-media-play", "stock_media-play", "stock_media_play", NULL },
+		{ "stock-media-pause", "stock_media-pause", "stock_media_pause", NULL },
+		{ "stock-media-prev", "stock_media-prev", "stock_media_previous", NULL },
+		{ "stock-media-next", "stock_media-next", "stock_media_next", NULL },
+		{ "panel-screenshot", "stock-panel-screenshot", "gnome-screenshot", "applets-screenshooter" },
+		{ "stock_playlist", "playlist-24", NULL, NULL },
 	};
 
 	if (refresh == FALSE) {
@@ -192,44 +187,37 @@ totem_named_icons_init (Totem *totem, gboolean refresh)
 
 	for (i = 0; i < (int) G_N_ELEMENTS (items); i++) {
 		GdkPixbuf *pixbuf = NULL;
+		int size;
+		int j;
 
-		pixbuf = totem_get_icon_from_theme (items[i].fn1,
-				GTK_ICON_SIZE_BUTTON);
+		size = G_N_ELEMENTS (items[i]);
 
-		if (pixbuf == NULL && items[i].fn2 != NULL) {
-			pixbuf = totem_get_icon_from_theme (items[i].fn2,
-					GTK_ICON_SIZE_BUTTON);
-		}
-
-		if (pixbuf == NULL && items[i].fn3 != NULL) {
-			pixbuf = totem_get_icon_from_theme (items[i].fn3,
-					GTK_ICON_SIZE_BUTTON);
-		}
-
-		if (pixbuf == NULL && items[i].fn3 != NULL) {
-			pixbuf = totem_get_pixbuf_from_totem_install
-				(items[i].fn3);
+		for (j = 0; j < size && items[i][j] != NULL; j++) {
+			pixbuf = totem_get_icon_from_theme
+				(items[i][j],
+				 GTK_ICON_SIZE_BUTTON);
+			if (pixbuf != NULL)
+				break;
 		}
 
 		if (pixbuf == NULL) {
-			pixbuf = totem_get_pixbuf_from_totem_install
-				(items[i].fn2);
-		}
-
-		if (pixbuf == NULL) {
-			pixbuf = totem_get_pixbuf_from_totem_install
-				(items[i].fn1);
+			for (j = 0; j < size && items[i][j] != NULL; j++) {
+				pixbuf = totem_get_pixbuf_from_totem_install
+					(items[i][j]);
+				if (pixbuf != NULL)
+					break;
+			}
 		}
 
 		if (pixbuf == NULL) {
 			g_warning ("Couldn't find themed icon for \"%s\"",
-					items[i].fn1);
+					items[i][0]);
 			continue;
 		}
 
 		/* The pixbuf will be unref'ed when we destroy the 
 		 * hash table */
-		g_hash_table_insert (icons_table, (gpointer) items[i].fn1,
+		g_hash_table_insert (icons_table, (gpointer) items[i][0],
 				(gpointer) pixbuf);
 	}
 
