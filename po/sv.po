@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 12:18+0100\n"
-"PO-Revision-Date: 2005-01-09 12:18+0100\n"
+"POT-Creation-Date: 2005-01-13 17:50+0100\n"
+"PO-Revision-Date: 2005-01-13 17:50+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1482
+#: data/playlist.glade.h:1 src/totem-playlist.c:1484
 msgid "Playlist"
 msgstr "Spellista"
 
@@ -113,7 +113,7 @@ msgstr "Ramhastighet:"
 msgid "N/A"
 msgstr "-"
 
-#: data/properties.glade.h:17 src/totem.c:2012
+#: data/properties.glade.h:17 src/totem.c:1960
 msgid "Properties"
 msgstr "Egenskaper"
 
@@ -148,7 +148,7 @@ msgstr "*"
 msgid "<b>Preview</b>"
 msgstr "<b>Förhandsgranskning</b>"
 
-#: data/screenshot.glade.h:4 src/totem-screenshot.c:351
+#: data/screenshot.glade.h:4 src/totem-screenshot.c:346
 msgid "Save Screenshot"
 msgstr "Spara skärmdump"
 
@@ -548,8 +548,8 @@ msgid "Time:"
 msgstr "Tid:"
 
 #. Title
-#: data/totem.glade.h:102 data/totem.desktop.in.in.in.h:2 src/totem.c:605
-#: src/totem.c:3424
+#: data/totem.glade.h:102 data/totem.desktop.in.in.in.h:2 src/totem.c:563
+#: src/totem.c:3372
 msgid "Totem Movie Player"
 msgstr "Filmspelaren Totem"
 
@@ -886,7 +886,7 @@ msgstr "Öppna från URI"
 msgid "Save File"
 msgstr "Spara fil"
 
-#: data/vanity.glade.h:2 src/vanity.c:256
+#: data/vanity.glade.h:2 src/vanity.c:251
 msgid "Vanity"
 msgstr "Vanity"
 
@@ -942,7 +942,7 @@ msgstr "Namnlös cd-rom"
 msgid "Totem Video Window"
 msgstr "Totem-videofönster"
 
-#: src/bacon-video-widget-gst.c:2703
+#: src/bacon-video-widget-gst.c:2754
 msgid "Failed to create a GStreamer play object"
 msgstr "Misslyckades med att skapa ett GStreamer-spelobjekt"
 
@@ -970,7 +970,7 @@ msgstr ""
 "Kunde inte läsa in ljuddrivrutinen \"%s\"\n"
 "Kontrollera att enheten inte är upptagen."
 
-#: src/bacon-video-widget-xine.c:1092 src/bacon-video-widget-xine.c:1586
+#: src/bacon-video-widget-xine.c:1095 src/bacon-video-widget-xine.c:1589
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -978,29 +978,29 @@ msgstr ""
 "Ingen videoutmatning är tillgänglig. Försäkra dig om att programmet är "
 "korrekt installerat."
 
-#: src/bacon-video-widget-xine.c:1207
+#: src/bacon-video-widget-xine.c:1210
 msgid "The server you are trying to connect to is not known."
 msgstr "Servern du försöker ansluta till är inte känd."
 
-#: src/bacon-video-widget-xine.c:1211
+#: src/bacon-video-widget-xine.c:1214
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "Enhetsnamnet du angav (%s) verkar vara ogiltigt."
 
-#: src/bacon-video-widget-xine.c:1215
+#: src/bacon-video-widget-xine.c:1218
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "Servern du försöker ansluta till (%s) är onåbar."
 
-#: src/bacon-video-widget-xine.c:1219
+#: src/bacon-video-widget-xine.c:1222
 msgid "The connection to this server was refused."
 msgstr "Anslutning till denna server nekades."
 
-#: src/bacon-video-widget-xine.c:1223
+#: src/bacon-video-widget-xine.c:1226
 msgid "The specified movie could not be found."
 msgstr "Den angivna filmen kunde inte hittas."
 
-#: src/bacon-video-widget-xine.c:1229 src/bacon-video-widget-xine.c:1247
+#: src/bacon-video-widget-xine.c:1232 src/bacon-video-widget-xine.c:1250
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -1008,61 +1008,61 @@ msgstr ""
 "Källan verkar krypterad och kan inte läsas. Försöker du spela en krypterad "
 "DVD utan libdvdcss?"
 
-#: src/bacon-video-widget-xine.c:1232
+#: src/bacon-video-widget-xine.c:1235
 msgid "The movie could not be read."
 msgstr "Filmen kunde inte läsas."
 
-#: src/bacon-video-widget-xine.c:1241
+#: src/bacon-video-widget-xine.c:1244
 #, c-format
 msgid "A problem occured while loading a library or a decoder (%s)."
 msgstr ""
 "Ett problem inträffade vid inläsning av ett bibliotek eller en avkodare (%s)."
 
-#: src/bacon-video-widget-xine.c:1250
+#: src/bacon-video-widget-xine.c:1253
 msgid "This file is encrypted and cannot be played back."
 msgstr "Denna film är krypterad och kan inte spelas."
 
-#: src/bacon-video-widget-xine.c:1255
+#: src/bacon-video-widget-xine.c:1258
 msgid "For security reasons, this movie can not be played back."
 msgstr "Denna film kan inte spelas av säkerhetsskäl."
 
-#: src/bacon-video-widget-xine.c:1260
+#: src/bacon-video-widget-xine.c:1263
 msgid "The audio device is busy. Is another application using it?"
 msgstr "Ljudenheten är upptagen. Använder ett annat program den?"
 
-#: src/bacon-video-widget-xine.c:1265
+#: src/bacon-video-widget-xine.c:1268
 msgid "You are not allowed to open this file."
 msgstr "Du får inte öppna denna fil."
 
-#: src/bacon-video-widget-xine.c:1267
+#: src/bacon-video-widget-xine.c:1270
 msgid "The server refused access to this file or stream."
 msgstr "Servern vägrade åtkomst till denna fil eller detta flöde."
 
-#: src/bacon-video-widget-xine.c:1407
+#: src/bacon-video-widget-xine.c:1410
 msgid "There is no plugin to handle this movie."
 msgstr "Det finns ingen insticksmodul för att hantera denna film."
 
-#: src/bacon-video-widget-xine.c:1411
+#: src/bacon-video-widget-xine.c:1414
 msgid "This movie is broken and can not be played further."
 msgstr "Denna film är trasig och kan inte spelas längre."
 
-#: src/bacon-video-widget-xine.c:1415
+#: src/bacon-video-widget-xine.c:1418
 msgid "This location is not a valid one."
 msgstr "Denna plats är inte giltig."
 
-#: src/bacon-video-widget-xine.c:1419
+#: src/bacon-video-widget-xine.c:1422
 msgid "This movie could not be opened."
 msgstr "Denna film kunde inte öppnas."
 
-#: src/bacon-video-widget-xine.c:1423
+#: src/bacon-video-widget-xine.c:1426
 msgid "Generic Error."
 msgstr "Allmänt fel."
 
-#: src/bacon-video-widget-xine.c:1931
+#: src/bacon-video-widget-xine.c:1886
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr "Denna film är en stillbild. Du kan öppna den med en bildvisare."
 
-#: src/bacon-video-widget-xine.c:1955
+#: src/bacon-video-widget-xine.c:1910
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1071,7 +1071,7 @@ msgstr ""
 "Videokomprimeringsmetoden \"%s\" hanteras inte. Du kan behöva installera "
 "ytterligare insticksmoduler för att kunna spela en del typer av filmer"
 
-#: src/bacon-video-widget-xine.c:1959
+#: src/bacon-video-widget-xine.c:1914
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1080,19 +1080,19 @@ msgstr ""
 "Videokomprimeringsmetoden \"%s\" hanteras inte. Du kan behöva installera "
 "ytterligare insticksmoduler för att kunna spela en del typer av filmer"
 
-#: src/bacon-video-widget-xine.c:1975
+#: src/bacon-video-widget-xine.c:1930
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Detta är en fil med endast ljud, och ingen ljuddata är tillgänglig."
 
-#: src/bacon-video-widget-xine.c:3426
+#: src/bacon-video-widget-xine.c:3381
 msgid "Movie is not playing."
 msgstr "Filmen spelas inte."
 
-#: src/bacon-video-widget-xine.c:3435
+#: src/bacon-video-widget-xine.c:3390
 msgid "No video to capture."
 msgstr "Ingen video att fånga."
 
-#: src/bacon-video-widget-xine.c:3443
+#: src/bacon-video-widget-xine.c:3398
 msgid "Video codec is not handled."
 msgstr "Videokomprimeringsmetoden hanteras inte."
 
@@ -1158,9 +1158,18 @@ msgstr "Video-cd"
 msgid "DVD"
 msgstr "DVD"
 
+#: src/totem-interface.c:103
+#, c-format
+msgid "Couldn't load the '%s' interface."
+msgstr "Kunde inte läsa in gränssnittet för \"%s\"."
+
+#: src/totem-interface.c:105 src/totem-interface.c:107
+msgid "Make sure that Totem is properly installed."
+msgstr "Försäkra dig om att Totem är korrekt installerat."
+
 #. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
-#: src/totem-mozilla-viewer.c:59 src/totem.c:343 src/totem.c:370
-#: src/totem.c:731 src/totem.c:836
+#: src/totem-mozilla-viewer.c:59 src/totem.c:301 src/totem.c:328
+#: src/totem.c:692 src/totem.c:797
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem kunde inte spela \"%s\"."
@@ -1177,11 +1186,11 @@ msgstr "Försäkra dig om att Totem-insticksmodulen är korrekt installerad."
 msgid "The Totem plugin could not startup."
 msgstr "Totem-insticksmodulen kunde inte starta."
 
-#: src/totem-mozilla-viewer.c:109 src/totem.c:3247
+#: src/totem-mozilla-viewer.c:109 src/totem.c:3196
 msgid "No reason."
 msgstr "Ingen orsak."
 
-#: src/totem-mozilla-viewer.c:141 src/totem.c:3429
+#: src/totem-mozilla-viewer.c:141 src/totem.c:3377
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Kunde inte initiera de trådsäkra biblioteken."
 
@@ -1191,7 +1200,7 @@ msgstr ""
 "Kontrollera din systeminstallation. Totem-insticksmodulen kommer nu att "
 "avslutas."
 
-#: src/totem-options.c:36 src/totem-properties-page.c:204
+#: src/totem-options.c:36 src/totem-properties-main.c:122
 msgid "Backend options"
 msgstr "Bakändesalternativ"
 
@@ -1240,36 +1249,39 @@ msgstr "Ersätt"
 msgid "Option '%s' is unknown and was ignored\n"
 msgstr "Flaggan \"%s\" är okänd och ignorerades\n"
 
-#: src/totem-playlist.c:301
+#: src/totem-playlist.c:299
 msgid "Could not save the playlist"
 msgstr "Kunde inte spara spellistan"
 
-#: src/totem-playlist.c:633
+#: src/totem-playlist.c:631
 msgid "Select Movies or Playlists"
 msgstr "Välj filmer eller spellistor"
 
-#: src/totem-playlist.c:809
+#: src/totem-playlist.c:807
 msgid "Save playlist"
 msgstr "Spara spellista"
+
+#: src/totem-playlist.c:852
+msgid "Overwrite file?"
+msgstr "Skriv över fil?"
 
 #: src/totem-playlist.c:854
 #, c-format
 msgid ""
-"A file named '%s' already exists.\n"
-"Are you sure you want to overwrite it?"
+"A file named '%s' already exists.  Are you sure you want to overwrite it?"
 msgstr ""
-"En fil med namnet \"%s\" finns redan.\n"
-"Är du säker på att du vill skriva över den?"
+"En fil med namnet \"%s\" finns redan. Är du säker på att du vill skriva över "
+"den?"
 
-#: src/totem-playlist.c:1052
+#: src/totem-playlist.c:1053
 msgid "Filename"
 msgstr "Filnamn"
 
-#: src/totem-playlist.c:1612
+#: src/totem-playlist.c:1619
 msgid "Playlist error"
 msgstr "Fel i spellista"
 
-#: src/totem-playlist.c:1612
+#: src/totem-playlist.c:1619
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "Spellistan \"%s\" kunde inte tolkas. Den kan vara skadad."
@@ -1284,7 +1296,11 @@ msgstr "Kunde inte skriva tolk: %s"
 msgid "Couldn't open file '%s': %s"
 msgstr "Kunde inte öppna filen \"%s\": %s"
 
-#: src/totem-preferences.c:77
+#: src/totem-preferences.c:78
+msgid "Enable visual effects?"
+msgstr "Aktivera visuella effekter?"
+
+#: src/totem-preferences.c:80
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1292,7 +1308,7 @@ msgstr ""
 "Det verkar som om du kör Totem från en annan dator.\n"
 "Är du säker på att du vill aktivera de visuella effekterna?"
 
-#: src/totem-preferences.c:130
+#: src/totem-preferences.c:133
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted"
@@ -1300,50 +1316,46 @@ msgstr ""
 "Ändringen av denna inställning kommer att börja gälla först under nästa "
 "film, eller när Totem startas om"
 
-#: src/totem-preferences.c:174
+#: src/totem-preferences.c:177
 msgid ""
 "Switching on or off this type of TV-Out requires a restart to take effect."
 msgstr ""
 "Att slå på eller stänga av denna typ av TV-ut kräver en omstart för att "
 "börja gälla."
 
-#: src/totem-preferences.c:307
+#: src/totem-preferences.c:310
 msgid "Totem could not start the file manager."
 msgstr "Totem kunde inte starta filhanteraren."
 
-#: src/totem-preferences.c:335
+#: src/totem-preferences.c:338
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr ""
 "Att ändra typen av visuella effekter kommer att kräva en omstart för att "
 "börja gälla."
 
-#: src/totem-properties-page.c:126
-msgid "URI currently displayed"
-msgstr "URI som visas för tillfället"
+#: src/totem-properties-main.c:103
+msgid "Audio/Video"
+msgstr "Ljud/Video"
 
-#: src/totem-properties-page.c:219
-msgid "Video and Audio information properties page"
-msgstr "Egenskapssida för video- och ljudinformation"
-
-#: src/totem-screenshot.c:156 src/totem-screenshot.c:167
+#: src/totem-screenshot.c:151 src/totem-screenshot.c:162
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Skärmdump%d.png"
 
-#: src/totem-screenshot.c:209
+#: src/totem-screenshot.c:204
 #, c-format
 msgid "File '%s' already exists."
 msgstr "Filen \"%s\" finns redan."
 
-#: src/totem-screenshot.c:211
+#: src/totem-screenshot.c:206
 msgid "The screenshot was not saved"
 msgstr "Skärmdumpen sparades inte"
 
-#: src/totem-screenshot.c:222
+#: src/totem-screenshot.c:217
 msgid "There was an error saving the screenshot."
 msgstr "Ett fel uppstod vid sparandet av skärmdumpen."
 
-#: src/totem-screenshot.c:255
+#: src/totem-screenshot.c:250
 msgid "Screenshot.png"
 msgstr "Skärmdump.png"
 
@@ -1355,7 +1367,7 @@ msgstr "Skuggtyp"
 msgid "Style of bevel around the statusbar text"
 msgstr "Stil på kanten runt statusradstexten"
 
-#: src/totem-statusbar.c:124 src/totem.c:285 src/totem.c:589
+#: src/totem-statusbar.c:124 src/totem.c:243 src/totem.c:547
 msgid "Stopped"
 msgstr "Stoppad"
 
@@ -1394,19 +1406,19 @@ msgstr "%d%%"
 msgid "None"
 msgstr "Ingen"
 
-#: src/totem.c:275
+#: src/totem.c:233
 msgid "Playing"
 msgstr "Spelar"
 
-#: src/totem.c:280
+#: src/totem.c:238
 msgid "Paused"
 msgstr "Gör paus"
 
-#: src/totem.c:321
+#: src/totem.c:279
 msgid "Totem could not eject the optical media."
 msgstr "Totem kunde inte mata ut det optiska mediumet."
 
-#: src/totem.c:396
+#: src/totem.c:354
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1415,7 +1427,7 @@ msgstr ""
 "Totem kan inte spela denna typ av media (%s) eftersom du saknar lämpliga "
 "insticksmoduler för att hantera den."
 
-#: src/totem.c:397
+#: src/totem.c:355
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1423,7 +1435,7 @@ msgstr ""
 "Installera de insticksmoduler som krävs och starta om Totem för att kunna "
 "spela denna typ av media."
 
-#: src/totem.c:405
+#: src/totem.c:363
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1432,7 +1444,7 @@ msgstr ""
 "Totem kunde inte spela denna media (%s) trots att en insticksmodul som "
 "hanterar den är installerad."
 
-#: src/totem.c:406
+#: src/totem.c:364
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1441,114 +1453,97 @@ msgstr ""
 "konfigurerad."
 
 #. Title
-#: src/totem.c:582
+#: src/totem.c:540
 #, c-format
 msgid "%s - Totem Movie Player"
 msgstr "%s - Filmspelaren Totem"
 
-#: src/totem.c:596
+#: src/totem.c:554
 msgid "No file"
 msgstr "Ingen fil"
 
-#: src/totem.c:632 src/totem.c:1927
+#: src/totem.c:590 src/totem.c:1875
 msgid "Totem"
 msgstr "Totem"
 
-#: src/totem.c:1176 src/totem.c:1178
+#: src/totem.c:1137 src/totem.c:1139
 msgid "An error occured"
 msgstr "Ett fel inträffade"
 
-#: src/totem.c:1509
+#: src/totem.c:1470
 msgid "Select files"
 msgstr "Välj filer"
 
-#: src/totem.c:1585 src/totem.c:1593
-msgid "Couldn't load the 'Open Location...' interface."
-msgstr "Kunde inte läsa in gränssnittet för \"Öppna plats...\"."
-
-#: src/totem.c:1585 src/totem.c:1593 src/totem.c:3466 src/totem.c:3493
-#: src/totem.c:3518
-msgid "Make sure that Totem is properly installed."
-msgstr "Försäkra dig om att Totem är korrekt installerat."
-
-#: src/totem.c:1885
+#: src/totem.c:1833
 msgid "Totem could not display the help contents."
 msgstr "Totem kunde inte visa hjälpinnehållet."
 
-#: src/totem.c:1923
+#: src/totem.c:1871
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Filmspelare som använder %s"
 
-#: src/totem.c:1929 src/vanity.c:258
+#: src/totem.c:1877 src/vanity.c:253
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Copyright © 2002-2005 Bastien Nocera"
 
-#: src/totem.c:1934 src/vanity.c:263
+#: src/totem.c:1882 src/vanity.c:258
 msgid "translator-credits"
 msgstr ""
 "Christian Rose\n"
 "Skicka synpunkter på översättningen till sv@li.org"
 
-#: src/totem.c:1967 src/totem.c:1975 src/vanity.c:296 src/vanity.c:304
+#: src/totem.c:1915 src/totem.c:1923 src/vanity.c:291 src/vanity.c:299
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem kunde inte ta en skärmdump från den filmen."
 
-#: src/totem.c:1975
+#: src/totem.c:1923
 msgid "Please file a bug, this isn't supposed to happen."
 msgstr "Skicka en felrapport. Detta ska inte hända."
 
-#: src/totem.c:2002
+#: src/totem.c:1950
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem kunde inte visa filmegenskapsfönstret."
 
-#: src/totem.c:2002
+#: src/totem.c:1950
 msgid "Make sure that Totem is correctly installed."
 msgstr "Försäkra dig om att Totem är korrekt installerat."
 
-#: src/totem.c:2088
+#: src/totem.c:2036
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem kunde inte spola i \"%s\"."
 
-#: src/totem.c:3247
+#: src/totem.c:3196
 msgid "Totem could not startup."
 msgstr "Totem kunde inte starta."
 
-#: src/totem.c:3429
+#: src/totem.c:3377
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Kontrollera din systeminstallation. Totem kommer nu att avslutas."
 
-#: src/totem.c:3450
+#: src/totem.c:3398
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem kunde inte initierakonfigurationsmotorn."
 
-#: src/totem.c:3450
+#: src/totem.c:3398
 msgid "Make sure that GNOME is properly installed."
 msgstr "Försäkra dig om att GNOME är korrekt installerat."
 
-#: src/totem.c:3466 src/totem.c:3493
-msgid "Couldn't load the main interface (totem.glade)."
-msgstr "Kunde inte läsa in huvudgränssnittet (totem.glade)."
-
-#: src/totem.c:3518
-msgid "Couldn't load the interface for the playlist."
-msgstr "Kunde inte läsa in gränssnittet för spellistan."
-
-#: src/vanity.c:66
+#: src/vanity.c:67
 msgid "Debug mode on"
 msgstr "Felsökningsläge på"
 
-#: src/vanity.c:252
+#: src/vanity.c:247
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "Webbkameraverktyg som använder %s"
 
-#: src/vanity.c:304
+#: src/vanity.c:299
 msgid "Please file a bug, this isn't supposed to happen"
 msgstr "Skicka en felrapport. Detta ska inte hända"
 
-#: src/vanity.c:547
+#: src/vanity.c:542
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1557,11 +1552,11 @@ msgstr ""
 "Vanity kunde inte starta:\n"
 "%s"
 
-#: src/vanity.c:548
+#: src/vanity.c:543
 msgid "No reason"
 msgstr "Ingen orsak"
 
-#: src/vanity.c:586
+#: src/vanity.c:581
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1570,7 +1565,7 @@ msgstr ""
 "Vanity kunde inte kontakta webbkameran.\n"
 "Orsak: %s"
 
-#: src/vanity.c:602
+#: src/vanity.c:597
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1579,11 +1574,11 @@ msgstr ""
 "Vanity kunde inte spela video från webbkameran.\n"
 "Orsak: %s"
 
-#: src/vanity.c:638
+#: src/vanity.c:633
 msgid "Vanity Webcam Utility"
 msgstr "Webbkameraverktyget Vanity"
 
-#: src/vanity.c:643
+#: src/vanity.c:638
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1591,7 +1586,7 @@ msgstr ""
 "Kunde inte initiera de trådsäkra biblioteken.\n"
 "Kontrollera din systeminstallation. Vanity kommer nu att avslutas."
 
-#: src/vanity.c:668
+#: src/vanity.c:663
 #, c-format
 msgid ""
 "Vanity couln't initialise the \n"
@@ -1602,7 +1597,7 @@ msgstr ""
 "konfigurationsmotorn:\n"
 "%s"
 
-#: src/vanity.c:688 src/vanity.c:703
+#: src/vanity.c:683 src/vanity.c:698
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
@@ -1648,6 +1643,30 @@ msgstr "%s, %s"
 #, c-format
 msgid "%s"
 msgstr "%s"
+
+#~ msgid "Enable visual effects"
+#~ msgstr "Aktivera visuella effekter"
+
+#~ msgid "Visual effects"
+#~ msgstr "Visuella effekter"
+
+#~ msgid "Visual Effects"
+#~ msgstr "Visuella effekter"
+
+#~ msgid "Video"
+#~ msgstr "Video"
+
+#~ msgid "URI currently displayed"
+#~ msgstr "URI som visas för tillfället"
+
+#~ msgid "Video and Audio information properties page"
+#~ msgstr "Egenskapssida för video- och ljudinformation"
+
+#~ msgid "Couldn't load the main interface (totem.glade)."
+#~ msgstr "Kunde inte läsa in huvudgränssnittet (totem.glade)."
+
+#~ msgid "Couldn't load the interface for the playlist."
+#~ msgstr "Kunde inte läsa in gränssnittet för spellistan."
 
 #~ msgid "_Reset to Defaults"
 #~ msgstr "_Återställ till standardalternativ"
@@ -2130,9 +2149,6 @@ msgstr "%s"
 
 #~ msgid "No Link"
 #~ msgstr "Ingen länk"
-
-#~ msgid "Visual Effects"
-#~ msgstr "Visuella effekter"
 
 #~ msgid "The quality of the visual effects when using goom"
 #~ msgstr "Kvaliteten på de visuella effekterna då goom används"
