@@ -1217,7 +1217,9 @@ show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals)
 			bvw->priv->using_vfx = TRUE;
 	} else if (has_video == FALSE && show_visuals == FALSE) {
 		audio_source = xine_get_audio_source (bvw->priv->stream);
-		xine_post_wire_audio_port (audio_source, bvw->priv->ao_driver);
+		if (xine_post_wire_audio_port (audio_source,
+					bvw->priv->ao_driver))
+			bvw->priv->using_vfx = FALSE;
 	}
 }
 
