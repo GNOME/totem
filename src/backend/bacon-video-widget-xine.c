@@ -1499,7 +1499,7 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 	float current_position_f;
 	gboolean ret = TRUE;
 
-	if (bvw->priv->stream == NULL || bvw->priv->logo_mode != TRUE)
+	if (bvw->priv->stream == NULL || bvw->priv->logo_mode != FALSE)
 		return TRUE;
 
 	if (bvw->priv->mrl == NULL)
