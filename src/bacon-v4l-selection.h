@@ -22,7 +22,6 @@
 #define HAVE_BACON_V4L_SELECTION_H
 
 #include <gtk/gtkcomboboxentry.h>
-#include <cd-drive.h>
 
 G_BEGIN_DECLS
 

@@ -41,7 +41,6 @@
 
 #include "bacon-video-widget.h"
 #include "bacon-video-widget-properties.h"
-#include "bacon-cd-selection.h"
 #include "totem-statusbar.h"
 #include "totem-time-label.h"
 #include "totem-session.h"
