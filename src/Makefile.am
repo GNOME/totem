@@ -211,7 +211,7 @@ stamp-totem-pl-parser-builtins.h: totem-pl-parser.h Makefile
 
 totem-pl-parser-builtins.c: totem-pl-parser.h Makefile totem-pl-parser-builtins.h
 	(cd $(srcdir) && $(GLIB_MKENUMS) \
-			--fhead "#include \"totem-pl-parser.h\"" \
+			--fhead "#include \"totem-pl-parser.h\"\n#include \"totem-pl-parser-builtins.h\"" \
 			--fprod "\n/* enumerations from \"@filename@\" */" \
 			--vhead "GType\n@enum_name@_get_type (void)\n{\n  static GType etype = 0;\n  if (etype == 0) {\n    static const G@Type@Value values[] = {" \
 			--vprod "      { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
