@@ -1,5 +1,12 @@
 2005-01-11  Bastien Nocera  <hadess@hadess.net>
 
+	* src/scrsaver.c: (fake_event), (totem_scrsaver_init):
+	use alternatively the left control and the left shift fake keys
+	to avoid the screensaver triggering, to avoid the accessibility
+	features to be triggered in X
+
+2005-01-11  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c: (setup_config_stream):
 	don't setup the video bits if we don't have a video output
 	* src/totem-properties-main.c:

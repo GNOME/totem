@@ -13,9 +13,6 @@
 
 #include <gdk/gdkx.h>
 
-//#include <X11/X.h>
-//#include <X11/Xlib.h>
-
 #ifdef HAVE_XTEST
 #include <X11/extensions/XTest.h>
 #endif /* HAVE_XTEST */
@@ -40,7 +37,8 @@ struct TotemScrsaverPrivate {
 	int allow_exposures;
 
 	/* For use with XTest */
-	int keycode;
+	int keycode1, keycode2;
+	int *keycode;
 	Bool have_xtest;
 };
 
@@ -69,11 +67,16 @@ fake_event (TotemScrsaver *scr)
 	if (scr->priv->disabled)
 	{
 		XLockDisplay (GDK_DISPLAY());
-		XTestFakeKeyEvent (GDK_DISPLAY(), scr->priv->keycode,
+		XTestFakeKeyEvent (GDK_DISPLAY(), *scr->priv->keycode,
 				True, CurrentTime);
-		XTestFakeKeyEvent (GDK_DISPLAY(), scr->priv->keycode,
+		XTestFakeKeyEvent (GDK_DISPLAY(), *scr->priv->keycode,
 				False, CurrentTime);
 		XUnlockDisplay (GDK_DISPLAY());
+		/* Swap the keycode */
+		if (scr->priv->keycode == &scr->priv->keycode1)
+			scr->priv->keycode = &scr->priv->keycode2;
+		else
+			scr->priv->keycode = &scr->priv->keycode1;
 	}
 
 	return TRUE;
@@ -92,7 +95,9 @@ totem_scrsaver_init (TotemScrsaver *scr)
 	scr->priv->have_xtest = XTestQueryExtension (GDK_DISPLAY(), &a, &b, &c, &d);
 	if(scr->priv->have_xtest == True)
 	{
-		scr->priv->keycode = XKeysymToKeycode (GDK_DISPLAY(), XK_Shift_L);
+		scr->priv->keycode1 = XKeysymToKeycode (GDK_DISPLAY(), XK_Shift_L);
+		scr->priv->keycode2 = XKeysymToKeycode (GDK_DISPLAY(), XK_Control_L);
+		scr->priv->keycode = &scr->priv->keycode1;
 	}
 	XUnlockDisplay (GDK_DISPLAY());
 #endif /* HAVE_XTEST */
