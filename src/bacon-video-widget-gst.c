@@ -2146,12 +2146,23 @@ bacon_video_widget_error_quark (void)
   return q;
 }
 
+static void
+out_error (GstElement *el, GstElement *src,
+	   GError *err, gchar *debug,
+	   gpointer data)
+{
+  if (data && !*((GError **) data)) {
+    *((GError **) data) = g_error_copy (err);
+  }
+}
+
 GtkWidget *
 bacon_video_widget_new (int width, int height,
 			gboolean null_out, GError ** err)
 {
   BaconVideoWidget *bvw;
   GstElement *audio_sink = NULL, *video_sink = NULL;
+  gulong sig1, sig2;
 
   bvw = BACON_VIDEO_WIDGET (g_object_new
                             (bacon_video_widget_get_type (), NULL));
@@ -2190,6 +2201,25 @@ bacon_video_widget_new (int width, int height,
     audio_sink = gst_element_factory_make ("fakesink", "fakeaudiosink");
   }
 
+  sig1 = g_signal_connect (video_sink, "error", G_CALLBACK (out_error), err);
+  sig2 = g_signal_connect (audio_sink, "error", G_CALLBACK (out_error), err);
+  if (gst_element_set_state (video_sink,
+			     GST_STATE_READY) != GST_STATE_SUCCESS ||
+      gst_element_set_state (audio_sink,
+			     GST_STATE_READY) != GST_STATE_SUCCESS) {
+    if (err && !*err) {
+      g_set_error (err, 0, 0,
+		   "Failed to intialize %s output; check your configuration",
+		   GST_STATE (video_sink) == GST_STATE_NULL ?
+		   "video" : "audio");
+    }
+    gst_object_unref (GST_OBJECT (video_sink));
+    gst_object_unref (GST_OBJECT (audio_sink));
+    g_object_unref (G_OBJECT (bvw));
+    return NULL;
+  }
+  g_signal_handler_disconnect (video_sink, sig1);
+  g_signal_handler_disconnect (audio_sink, sig2);
   g_object_set (G_OBJECT (bvw->priv->play), "video-sink",
 		video_sink, NULL);
   g_object_set (G_OBJECT (bvw->priv->play), "audio-sink",

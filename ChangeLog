@@ -1,3 +1,10 @@
+2004-11-10  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/bacon-video-widget-gst.c: (out_error),
+	(bacon_video_widget_new):
+	  Open device for instant error reporting on busy audio device.
+	  Also makes some more exotic video sinks work.
+
 2004-11-10  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-video-thumbnailer.c: (main): fix crash when no arguments
