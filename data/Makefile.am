@@ -23,9 +23,9 @@ stuff_DATA =				\
 	vanity.png
 
 pixmapdir = $(datadir)/pixmaps
-pixmap_DATA = media-player-48.png
+pixmap_DATA = media-player-48.png vanity.png
 
-desktop_in_files = totem.desktop.in
+desktop_in_files = totem.desktop.in vanity.desktop.in
 desktopdir = $(datadir)/applications/
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@

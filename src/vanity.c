@@ -635,12 +635,6 @@ video_widget_create (Vanity *vanity)
 	bacon_video_widget_play (vanity->bvw, 0, 0, NULL);
 }
 
-GConfClient *
-vanity_get_gconf_client (Vanity *vanity)
-{
-	return vanity->gc;
-}
-
 int
 main (int argc, char **argv)
 {
@@ -724,23 +718,7 @@ main (int argc, char **argv)
 	g_free (filename);
 
 	/* The rest of the widgets */
-#if 0
-	vanity->seek = glade_xml_get_widget (vanity->xml, "hscale1");
-	vanity->seekadj = gtk_range_get_adjustment (GTK_RANGE (vanity->seek));
-	vanity->volume = glade_xml_get_widget (vanity->xml, "hscale2");
-	vanity->voladj = gtk_range_get_adjustment (GTK_RANGE (vanity->volume));
-	vanity->exit_popup = glade_xml_get_widget (vanity->xml, "window1");
-	vanity->control_popup = glade_xml_get_widget (vanity->xml, "window2");
-	vanity->fs_seek = glade_xml_get_widget (vanity->xml, "hscale4");
-	vanity->fs_seekadj = gtk_range_get_adjustment
-		(GTK_RANGE (vanity->fs_seek));
-	vanity->fs_volume = glade_xml_get_widget (vanity->xml, "hscale5");
-	vanity->fs_voladj = gtk_range_get_adjustment
-		(GTK_RANGE (vanity->fs_volume));
-	vanity->volume_first_time = 1;
-	vanity->fs_pp_button = glade_xml_get_widget (vanity->xml, "fs_pp_button");
-	vanity->statusbar = glade_xml_get_widget (vanity->xml, "custom4");
-#endif
+	vanity->prefs = glade_xml_get_widget (vanity->xml, "dialog1");
 	vanity_callback_connect (vanity);
 
 	/* Show ! gtk_main_iteration trickery to show all the widgets
