@@ -504,9 +504,7 @@ totem_setup_preferences (Totem *totem)
 	g_signal_connect (G_OBJECT (item), "device-changed",
 			G_CALLBACK (on_combo_entry1_changed), totem);
 
-	bacon_cd_selection_set_device (BACON_CD_SELECTION (item),
-			gconf_client_get_string
-			(totem->gc, GCONF_PREFIX"/mediadev", NULL));
+	bacon_cd_selection_set_device (BACON_CD_SELECTION (item), mediadev);
 
 	/* Connection Speed */
 	connection_speed = bacon_video_widget_get_connection_speed (totem->bvw);
