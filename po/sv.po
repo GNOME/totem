@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2003-02-19 10:47+0100\n"
-"PO-Revision-Date: 2003-02-19 10:48+0100\n"
+"POT-Creation-Date: 2003-02-25 19:27+0100\n"
+"PO-Revision-Date: 2003-02-25 19:28+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -258,7 +258,7 @@ msgid "Toggle _Aspect Ratio"
 msgstr "Växla _proportioner"
 
 #. Title
-#: data/totem.glade.h:35 src/totem.c:386 src/totem.c:409 src/totem.c:1273
+#: data/totem.glade.h:35 src/totem.c:397 src/totem.c:419 src/totem.c:1300
 msgid "Totem"
 msgstr "Totem"
 
@@ -402,7 +402,7 @@ msgstr "_Lösenord:"
 msgid "Remember this password"
 msgstr "Kom ihåg detta lösenord"
 
-#: src/gtk-playlist.c:414 src/totem.c:1089
+#: src/gtk-playlist.c:414 src/totem.c:1116
 msgid "Select files"
 msgstr "Välj filer"
 
@@ -414,7 +414,7 @@ msgstr "Filnamn"
 msgid "Totem Video Window"
 msgstr "Totem-videofönster"
 
-#: src/bacon-video-widget.c:553
+#: src/bacon-video-widget.c:538
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -423,14 +423,38 @@ msgstr ""
 "Kunde inte läsa in ljuddrivrutinen \"%s\"\n"
 "Kontrollera att enheten inte är upptagen."
 
-#: src/bacon-video-widget.c:817
-msgid "Could not find a suitable video output."
-msgstr "Kunde inte hitta en lämplig videoutmatning."
+#: src/bacon-video-widget.c:889
+msgid "There is no plugin to handle this movie"
+msgstr "Det finns ingen insticksmodul för att hantera denna film"
 
-#: src/bacon-video-widget.c:1211
+#: src/bacon-video-widget.c:893
+msgid "This movie is broken and can not be played further"
+msgstr "Denna film är trasig, och kan inte spelas längre"
+
+#: src/bacon-video-widget.c:897
+msgid "This location is not a valid one"
+msgstr "Denna plats är inte giltig"
+
+#: src/bacon-video-widget.c:1177
 #, c-format
-msgid "Reason: Video type '%s' is not handled."
-msgstr "Orsak: Videotypen \"%s\" stöds inte."
+msgid "Video type '%s' is not handled"
+msgstr "Videotypen \"%s\" stöds inte"
+
+#: src/bacon-video-widget.c:2019
+msgid "Movie is not playing"
+msgstr "Filmen spelas inte"
+
+#: src/bacon-video-widget.c:2027
+msgid "Can't capture visual effects"
+msgstr "Kan inte fånga visuella effekter"
+
+#: src/bacon-video-widget.c:2028
+msgid "No video to capture"
+msgstr "Ingen video att fånga"
+
+#: src/bacon-video-widget.c:2035
+msgid "Video codec is not handled"
+msgstr "Videokomprimeringsmetoden hanteras inte"
 
 #. One hour
 #: src/bacon-video-widget-properties.c:109
@@ -525,19 +549,28 @@ msgstr "Kölägg"
 msgid "Replace"
 msgstr "Ersätt"
 
-#: src/totem.c:155
+#: src/totem.c:160
 msgid "Playing"
 msgstr "Spelar"
 
-#: src/totem.c:162
+#: src/totem.c:167
 msgid "Paused"
 msgstr "Gör paus"
 
-#: src/totem.c:169 src/totem-statusbar.c:171
+#: src/totem.c:174 src/totem-statusbar.c:171
 msgid "Stopped"
 msgstr "Stoppad"
 
-#: src/totem.c:238
+#: src/totem.c:232 src/totem.c:510 src/totem.c:599
+#, c-format
+msgid ""
+"Totem could not play '%s'.\n"
+"Reason: %s."
+msgstr ""
+"Totem kunde inte spela \"%s\".\n"
+"Orsak: %s."
+
+#: src/totem.c:257
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -549,7 +582,7 @@ msgstr ""
 "Installera de insticksmoduler som krävs och starta om Totem för att kunna "
 "spela denna typ av media."
 
-#: src/totem.c:246
+#: src/totem.c:265
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -561,39 +594,48 @@ msgstr ""
 "konfigurerad."
 
 #. Title
-#: src/totem.c:362
+#: src/totem.c:373
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:375 src/totem.c:2392
+#: src/totem.c:386 src/totem.c:2406
 msgid "No file"
 msgstr "Ingen fil"
 
-#: src/totem.c:1249
+#: src/totem.c:1276
 msgid "translator_credits"
 msgstr ""
 "Christian Rose\n"
 "Skicka synpunkter på översättningen till sv@li.org"
 
-#: src/totem.c:1275
+#: src/totem.c:1302
 msgid "Movie Player (based on the xine libraries)"
 msgstr "Filmspelare (baserad på xine-biblioteken)"
 
-#: src/totem.c:1329 src/totem.c:1340
+#: src/totem.c:1356 src/totem.c:1367
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Skärmdump%d.png"
 
-#: src/totem.c:1393
+#: src/totem.c:1424
+#, c-format
 msgid ""
 "Totem could not get a screenshot of that film.\n"
-"You might want to try again at another time."
+"Reason: %s."
 msgstr ""
 "Totem kunde inte ta en skärmdump från den filmen.\n"
-"Försök igen senare."
+"Orsak: %s."
 
-#: src/totem.c:1419
+#: src/totem.c:1434
+msgid ""
+"Totem could not get a screenshot of that film.\n"
+"Please file a bug, this isn't supposed to happen"
+msgstr ""
+"Totem kunde inte ta en skärmdump från den filmen.\n"
+"Skicka en felrapport. Detta ska inte hända"
+
+#: src/totem.c:1460
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
@@ -602,7 +644,7 @@ msgstr ""
 "Filen \"%s\" finns redan.\n"
 "Skärmdumpen sparades inte."
 
-#: src/totem.c:1430
+#: src/totem.c:1471
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -611,7 +653,7 @@ msgstr ""
 "Ett fel uppstod vid sparandet av skärmdumpen.\n"
 "Detaljer: %s"
 
-#: src/totem.c:1450
+#: src/totem.c:1490
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -619,7 +661,16 @@ msgstr ""
 "Totem kunde inte visa filmegenskapsfönstret.\n"
 "Försäkra dig om att Totem är korrekt installerat."
 
-#: src/totem.c:1826
+#: src/totem.c:1567
+#, c-format
+msgid ""
+"Totem could not seek in '%s'.\n"
+"Reason: %s."
+msgstr ""
+"Totem kunde inte spola i \"%s\".\n"
+"Orsak: %s."
+
+#: src/totem.c:2342
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -628,39 +679,7 @@ msgstr ""
 "Totem kunde inte starta:\n"
 "%s"
 
-#: src/totem.c:1832
-#, c-format
-msgid ""
-"There is no plugin for Totem to handle '%s'.\n"
-"Totem will not be able to play it."
-msgstr ""
-"Det finns ingen insticksmodul för Totem för hantering av \"%s\".\n"
-"Totem kommer inte att kunna spela det."
-
-#: src/totem.c:1838
-#, c-format
-msgid "'%s' is broken, and Totem can not play it further."
-msgstr "\"%s\" är trasig, och Totem kan inte spela den längre."
-
-#: src/totem.c:1843
-#, c-format
-msgid ""
-"Totem could not play '%s':\n"
-"%s"
-msgstr ""
-"Totem kunde inte spela \"%s\":\n"
-"%s"
-
-#: src/totem.c:1848
-#, c-format
-msgid ""
-"Totem could not play '%s'.\n"
-"This location is not a valid one."
-msgstr ""
-"Totem kunde inte spela \"%s\".\n"
-"Denna plats är inte giltig."
-
-#: src/totem.c:2558
+#: src/totem.c:2598
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -671,7 +690,7 @@ msgstr ""
 "konfigurationsmotorn:\n"
 "%s"
 
-#: src/totem.c:2572 src/totem.c:2608
+#: src/totem.c:2613 src/totem.c:2644
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -679,7 +698,7 @@ msgstr ""
 "Kunde inte läsa in huvudgränssnittet (totem.glade).\n"
 "Försäkra dig om att Totem är korrekt installerat."
 
-#: src/totem.c:2630
+#: src/totem.c:2666
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
@@ -698,6 +717,28 @@ msgstr "Stil på kanten runt statusradstexten"
 #: src/totem-statusbar.c:180
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
+
+#~ msgid "There is no plugin to handle this movie."
+#~ msgstr "Det finns ingen insticksmodul för att hantera denna film."
+
+#~ msgid "This movie is broken and can not be played further."
+#~ msgstr "Denna film är trasig, och kan inte spelas längre."
+
+#~ msgid "This location is not a valid one."
+#~ msgstr "Denna plats är inte giltig."
+
+#~ msgid "Video type '%s' is not handled."
+#~ msgstr "Videotypen \"%s\" stöds inte."
+
+#~ msgid "Could not find a suitable video output."
+#~ msgstr "Kunde inte hitta en lämplig videoutmatning."
+
+#~ msgid ""
+#~ "There is no plugin for Totem to handle '%s'.\n"
+#~ "Totem will not be able to play it."
+#~ msgstr ""
+#~ "Det finns ingen insticksmodul för Totem för hantering av \"%s\".\n"
+#~ "Totem kommer inte att kunna spela det."
 
 #~ msgid "URL"
 #~ msgstr "URL"
