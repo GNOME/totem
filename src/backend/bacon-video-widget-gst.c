@@ -392,6 +392,7 @@ static gboolean
 bacon_video_widget_motion_notify (GtkWidget *widget,
 				  GdkEventMotion *event)
 {
+  gboolean res = FALSE;
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
 
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
@@ -413,20 +414,21 @@ bacon_video_widget_motion_notify (GtkWidget *widget,
           "mouse-move", 0, event->x, event->y);
 
       /* we need a return value... */
-      return TRUE;
+      res = TRUE;
     }
   }
 
   if (GTK_WIDGET_CLASS (parent_class)->motion_notify_event)
-    return GTK_WIDGET_CLASS (parent_class)->motion_notify_event (widget, event);
+    res |= GTK_WIDGET_CLASS (parent_class)->motion_notify_event (widget, event);
 
-  return FALSE;
+  return res;
 }
 
 static gboolean
 bacon_video_widget_button_press (GtkWidget *widget,
 				 GdkEventButton *event)
 {
+  gboolean res = FALSE;
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
 
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
@@ -448,20 +450,21 @@ bacon_video_widget_button_press (GtkWidget *widget,
           "mouse-button-press", event->button, event->x, event->y);
 
       /* we need a return value... */
-      return TRUE;
+      res = TRUE;
     }
   }
 
   if (GTK_WIDGET_CLASS (parent_class)->button_press_event)
-    return GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, event);
+    res |= GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, event);
 
-  return FALSE;
+  return res;
 }
 
 static gboolean
 bacon_video_widget_button_release (GtkWidget *widget,
 				   GdkEventButton *event)
 {
+  gboolean res = FALSE;
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
 
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
@@ -483,14 +486,14 @@ bacon_video_widget_button_release (GtkWidget *widget,
           "mouse-button-release", event->button, event->x, event->y);
 
       /* we need a return value... */
-      return TRUE;
+      res = TRUE;
     }
   }
 
   if (GTK_WIDGET_CLASS (parent_class)->button_release_event)
-    return GTK_WIDGET_CLASS (parent_class)->button_release_event (widget, event);
+    res |= GTK_WIDGET_CLASS (parent_class)->button_release_event (widget, event);
 
-  return FALSE;
+  return res;
 }
 
 static void
