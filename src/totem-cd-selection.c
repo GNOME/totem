@@ -24,7 +24,7 @@
 
 #include <config.h>
 
-/* gtk+/gnome */
+#include <string.h>
 #include <gnome.h>
 #include <gconf/gconf-client.h>
 
@@ -69,7 +69,13 @@ static int tcs_table_signals[LAST_SIGNAL] = { 0 };
 static CDDrive *
 get_drive (TotemCdSelection *tcs, int nr)
 {
-	return g_list_nth (tcs->priv->cdroms, nr)->data;
+	GList *item;
+
+	item = g_list_nth (tcs->priv->cdroms, nr);
+	if (item == NULL)
+		return NULL;
+	else
+		return item->data;
 }
 
 
@@ -373,6 +379,15 @@ totem_cd_selection_set_device (TotemCdSelection *tcs, const char *device)
 			 * the default */
 			gtk_option_menu_set_history (GTK_OPTION_MENU
 					(tcs->priv->widget), 0);
+
+			drive = get_drive (tcs, 0);
+
+			if (drive == NULL)
+				return;
+
+			g_signal_emit (G_OBJECT (tcs),
+					tcs_table_signals [DEVICE_CHANGED],
+					0, drive->device);
 		}
 			
 	}
