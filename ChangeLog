@@ -1,3 +1,16 @@
+2002-11-16  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem.glade: fix the fullscreen buttons
+	* src/gtk-message.c: (gtk_message_queue_unref),
+	(selection_get_func), (selection_clear_func),
+	(gtk_program_register), (gtk_message_queue_new),
+	(gtk_message_queue_is_server):
+	* src/gtk-message.h: started porting to SysV message queues
+	* src/totem.c: (totem_action_exit), (totem_action_set_mrl),
+	(vol_cb), (totem_setup_preferences), (process_queue), (main): try to
+	fix the crash on exit, fixes for the fullscreen volume slider, changes
+	for gtk-message
+
 2002-11-15  Dmitry G. Mastrukov  <dmitry@taurussoft.org>
 
 	* configure.in: Added Belarusian to ALL_LINGUAS.

@@ -5,6 +5,10 @@
 #include <gtk/gtk.h>
 #include <X11/X.h>
 
+#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/msg.h>
+
 struct GtkMessagePriv
 {
 	char *message_id;
@@ -14,9 +18,14 @@ struct GtkMessagePriv
 	guint ref;
 };
 
-static GdkWindow *window = NULL;
-static GtkTargetEntry targets[0];
-static char *selection_name = NULL;
+struct GtkMessageQueuePriv
+{
+	gboolean is_server;
+	key_t key;
+	int msqid;
+
+	guint ref;
+};
 
 static gchar* gtk_message_make_selection_name (const gchar *unique_id);
 
@@ -57,66 +66,41 @@ gtk_message_unref (GtkMessage *message)
 gboolean gtk_message_send_to (GtkMessage *message, gchar *destination);
 */
 
-static GdkWindow *
-gdk_window_new_simple (void)
+void
+gtk_message_queue_unref (GtkMessageQueue *queue)
 {
-	GtkWidget *win;
+	if (queue == NULL)
+		return;
 
-	win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	gtk_widget_realize (win);
+	g_return_if_fail (queue->priv != NULL);
+	queue->priv->ref --;
 
-	return win->window;
+	if (queue->priv->ref == 0)
+	{
+		g_free (queue->priv);
+		g_free (queue);
+	}
 }
 
 static void
 selection_get_func (GtkClipboard *clipboard, GtkSelectionData *selection_data,
 		                guint info, gpointer user_data_or_owner)
 {
-	GtkSelectionData data;
-	GdkAtom clipboard_atom;
-
-	if (GDK_IS_WINDOW (window) == FALSE)
-		return;
-
-	clipboard_atom = gdk_atom_intern (selection_name, TRUE);
-	if (clipboard_atom == GDK_NONE)
-		return;
-
-	gtk_selection_data_set (selection_data, clipboard_atom, 0,
-			(guchar *)GINT_TO_POINTER (GDK_WINDOW_XID (window)),
-			strlen (GINT_TO_POINTER (GDK_WINDOW_XID (window))));
 }
 
 static void
 selection_clear_func (GtkClipboard *clipboard, gpointer user_data_or_owner)
 {
-	return;
 }
 
-static void
-clipboard_received_func (GtkClipboard *clipboard,
-		GtkSelectionData *selection_data, gpointer data)
-{
-	int xid;
-
-	if (selection_data->length == -1)
-	{
-		g_message ("Couldn't retrieve XID");
-		return;
-	}
-
-	xid = GPOINTER_TO_INT (selection_data->data);
-	window = gdk_window_foreign_new (xid);
-
-	g_message ("xid: %s", xid);
-}
-
-gboolean
+static gboolean
 gtk_program_register (const gchar *unique_id)
 {
 	gboolean result = FALSE;
 	GtkClipboard *clipboard;
 	Atom clipboard_atom;
+	GtkTargetEntry targets[1];
+	char *selection_name = NULL;
 
 	selection_name = gtk_message_make_selection_name (unique_id);
 	clipboard_atom = gdk_x11_get_xatom_by_name (selection_name);
@@ -144,21 +128,62 @@ out:
 	XUngrabServer (GDK_DISPLAY());
 	gdk_flush();
 
-	if (result == TRUE)
-	{
-		/* Store the GdkWindow, so we can get the XID */
-		window = gdk_window_new_simple ();
-	} else {
-		GdkAtom gdk_atom;
+	return result;
+}
 
-		/* Grab the XID for the already running app */
-		gdk_atom = gdk_atom_intern (selection_name, FALSE);
-		clipboard = gtk_clipboard_get (gdk_atom);
-		gtk_clipboard_request_contents (clipboard,
-				gdk_atom, clipboard_received_func, NULL);
+GtkMessageQueue *
+gtk_message_queue_new (const gchar *unique_id, const gchar *binary_path)
+{
+	GtkMessageQueue *q;
+
+	g_return_val_if_fail (unique_id != NULL, NULL);
+	g_return_val_if_fail (binary_path != NULL, NULL);
+
+	q = g_new0 (GtkMessageQueue, 1);
+	q->priv = g_new0 (GtkMessageQueuePriv, 1);
+	q->priv->ref = 1;
+
+	q->priv->is_server = gtk_program_register (unique_id);
+
+	/* Create the key */
+	q->priv->key = ftok (binary_path, unique_id[0]);
+	if (q->priv->key == -1)
+	{
+		g_message ("ftok: failed");
+		gtk_message_queue_unref (q);
+		return NULL;
 	}
 
-	return result;
+	/* Connect to the queue */
+	if (q->priv->is_server == TRUE)
+	{
+		/* destroy the msgctl if it's around */
+		q->priv->msqid = msgget(q->priv->key, 0600);
+		if (q->priv->msqid != -1)
+			msgctl (q->priv->msqid, IPC_RMID, NULL);
+
+		q->priv->msqid = msgget(q->priv->key, 0600 | IPC_CREAT);
+	} else {
+		q->priv->msqid = msgget(q->priv->key, 0600);
+	}
+
+	if (q->priv->msqid == -1)
+	{
+		g_message ("msgget: failed");
+		gtk_message_queue_unref (q);
+		return NULL;
+	}
+
+	return q;
+}
+
+gboolean
+gtk_message_queue_is_server (GtkMessageQueue *queue)
+{
+	g_return_val_if_fail (queue != NULL, FALSE);
+	g_return_val_if_fail (queue->priv != NULL, FALSE);
+
+	return queue->priv->is_server;
 }
 
 static gchar*

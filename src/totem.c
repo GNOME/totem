@@ -93,6 +93,7 @@ struct Totem {
 	GtkPlaylist *playlist;
 	GConfClient *gc;
 	TotemRemote *remote;
+	GtkMessageQueue *queue;
 };
 
 static const GtkTargetEntry target_table[] = {
@@ -163,10 +164,14 @@ totem_action_error (char *msg, GtkWindow *parent)
 void
 totem_action_exit (Totem *totem)
 {
-	gtk_main_quit ();
-
 	gtk_widget_destroy (totem->gtx);
 	gtk_widget_destroy (GTK_WIDGET (totem->playlist));
+	gtk_message_queue_unref (totem->queue);
+
+	gtk_main_quit ();
+//FIXME testing the problem with the race thing
+//	gtk_widget_destroy (totem->gtx);
+//	gtk_widget_destroy (GTK_WIDGET (totem->playlist));
 
 	exit (0);
 }
@@ -391,13 +396,13 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 
 		/* Control popup */
 		gtk_widget_set_sensitive (totem->fs_seek, FALSE);
-		gtk_widget_set_sensitive (totem->fs_volume, FALSE);
-
 		gtk_widget_set_sensitive (totem->fs_pp_button, FALSE);
 		widget = glade_xml_get_widget (totem->xml,
 				"fs_previous_button"); 
 		gtk_widget_set_sensitive (widget, FALSE);
 		widget = glade_xml_get_widget (totem->xml, "fs_next_button"); 
+		gtk_widget_set_sensitive (widget, FALSE);
+		widget = glade_xml_get_widget (totem->xml, "fs_volume_hbox");
 		gtk_widget_set_sensitive (widget, FALSE);
 
 		/* Set the logo */
@@ -428,21 +433,19 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 
 		/* Seek bar */
 		gtk_widget_set_sensitive (totem->seek,
-				gtk_xine_is_seekable(GTK_XINE (totem->gtx)));
+				gtk_xine_is_seekable (GTK_XINE (totem->gtx)));
 		widget = glade_xml_get_widget (totem->xml, "skip_forward1");
 		gtk_widget_set_sensitive (widget, TRUE);
 		widget = glade_xml_get_widget (totem->xml, "skip_backwards1");
 		gtk_widget_set_sensitive (widget, TRUE);
 
 		/* Control popup */
-		gtk_widget_set_sensitive (totem->fs_seek, 
-                gtk_xine_is_seekable(GTK_XINE (totem->gtx)));
+		gtk_widget_set_sensitive (totem->fs_seek,
+				gtk_xine_is_seekable (GTK_XINE (totem->gtx)));
 		gtk_widget_set_sensitive (totem->fs_pp_button, TRUE);
-		widget = glade_xml_get_widget (totem->xml,
-				"fs_previous_button"); 
-		gtk_widget_set_sensitive (widget, TRUE);
-		widget = glade_xml_get_widget (totem->xml, "fs_next_button"); 
-		gtk_widget_set_sensitive (widget, TRUE);
+		widget = glade_xml_get_widget (totem->xml, "fs_volume_hbox");
+		gtk_widget_set_sensitive (widget, gtk_xine_can_set_volume
+				(GTK_XINE (totem->gtx)));
 
 		/* Volume */
 		widget = glade_xml_get_widget (totem->xml, "volume_hbox");
@@ -774,26 +777,26 @@ vol_cb (GtkWidget *widget, gpointer user_data)
 	if (totem->vol_lock == FALSE)
 	{
 		totem->vol_lock = TRUE;
-        if (GTK_WIDGET(widget) == totem->fs_volume)
-        {
-            gtk_xine_set_volume (GTK_XINE (totem->gtx),
-                    (gint) totem->fs_voladj->value);
+		if (GTK_WIDGET(widget) == totem->fs_volume)
+		{
+			gtk_xine_set_volume (GTK_XINE (totem->gtx),
+					(gint) totem->fs_voladj->value);
 
-            /* Update the volume adjustment */
-            gtk_adjustment_set_value(totem->voladj, 
-                    gtk_adjustment_get_value(totem->fs_voladj));
-        }
-        else
-        {
-            gtk_xine_set_volume (GTK_XINE (totem->gtx),
-                    (gint) totem->voladj->value);
-            /* Update the fullscreen volume adjustment */
-            gtk_adjustment_set_value(totem->fs_voladj, 
-                    gtk_adjustment_get_value(totem->voladj));
+			/* Update the volume adjustment */
+			gtk_adjustment_set_value (totem->voladj, 
+					gtk_adjustment_get_value
+					(totem->fs_voladj));
+		} else {
+			gtk_xine_set_volume (GTK_XINE (totem->gtx),
+					(gint) totem->voladj->value);
+			/* Update the fullscreen volume adjustment */
+			gtk_adjustment_set_value (totem->fs_voladj, 
+					gtk_adjustment_get_value
+					(totem->voladj));
 
-        }
+		}
 
-        volume_set_image (totem, (gint) totem->voladj->value);
+		volume_set_image (totem, (gint) totem->voladj->value);
 		totem->vol_lock = FALSE;
 	}
 }
@@ -1764,6 +1767,8 @@ totem_setup_preferences (Totem *totem)
 {
 	GtkWidget *item;
 
+	g_return_if_fail (totem->gc != NULL);
+
 	gconf_client_add_dir (totem->gc, "/apps/totem",
 			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
 	gconf_client_notify_add (totem->gc, "/apps/totem/auto_resize",
@@ -1798,6 +1803,17 @@ totem_get_gconf_client (Totem *totem)
 	return totem->gc;
 }
 
+static void
+process_queue (GtkMessageQueue *queue, char **argv)
+{
+	if (gtk_message_queue_is_server (queue) == FALSE)
+	{
+		g_message ("send to existing GUI");
+	} else {
+		g_message ("setup the server thingo");
+	}
+}
+
 int
 main (int argc, char **argv)
 {
@@ -1805,6 +1821,7 @@ main (int argc, char **argv)
 	char *filename;
 	int width = 0;
 	GConfClient *gc;
+	GtkMessageQueue *q;
 	GError *err = NULL;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
@@ -1820,7 +1837,7 @@ main (int argc, char **argv)
 	glade_gnome_init ();
 	gnome_vfs_init ();
 	gconf_init (argc, argv, &err);
-	if (err != NULL)
+	if (err != NULL || (gc = gconf_client_get_default ()) == NULL)
 	{
 		char *str;
 
@@ -1832,15 +1849,12 @@ main (int argc, char **argv)
 		exit (1);
 	}
 
-	gc = gconf_client_get_default ();
-
-	if (gtk_program_register ("totem") == FALSE
-			&& gconf_client_get_bool
+	q = NULL;
+	if (gconf_client_get_bool
 			(gc, "/apps/totem/launch_once", NULL) == TRUE)
 	{
-		//FIXME
-		g_message ("Send message to the existing GUI");
-		return 0;
+		q = gtk_message_queue_new ("totem", argv[0]);
+		process_queue (q, argv);
 	}
 
 	totem = g_new (Totem, 1);
@@ -1850,6 +1864,7 @@ main (int argc, char **argv)
 	totem->popup_timeout = 0;
 	totem->gtx = NULL;
 	totem->gc = gc;
+	totem->queue = q;
 
 	filename = gnome_program_locate_file (NULL,
 			GNOME_FILE_DOMAIN_APP_DATADIR,
