@@ -402,6 +402,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 
 		/* Reset the properties */
 		gtk_xine_properties_update (GTK_XINE (totem->gtx), TRUE);
+		gtk_xine_play (GTK_XINE (totem->gtx), 0 , 0);
 	} else {
 		char *title, *time_text, *name;
 		int time;
@@ -1339,6 +1340,9 @@ on_eos_event (GtkWidget *widget, gpointer user_data)
 	Totem *totem = (Totem *) user_data;
 
 	D("on_eos_event");
+
+	if (strcmp (totem->mrl, LOGO_PATH) == 0)
+		return FALSE;
 
 	if (!gtk_playlist_has_next_mrl (totem->playlist))
 	{
