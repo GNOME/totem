@@ -100,6 +100,7 @@ static void update_seekable (Totem *totem, gboolean force_false);
 static void on_play_pause_button_clicked (GtkToggleButton *button,
 		Totem *totem);
 static void playlist_changed_cb (GtkWidget *playlist, Totem *totem);
+static gboolean totem_is_media (const char *mrl); 
 static void show_controls (Totem *totem, gboolean visible);
 static gboolean totem_is_fullscreen (Totem *totem);
 
@@ -144,6 +145,8 @@ totem_create_full_path (const char *path)
 
 	if (strstr (path, "://") != NULL)
 		return g_strdup (path);
+	if (totem_is_media (path) != FALSE)
+		return g_strdup (path);
 
 	if (path[0] == '/')
 	{
@@ -154,7 +157,8 @@ totem_create_full_path (const char *path)
 	}
 
 	curdir = g_get_current_dir ();
-	curdir_withslash = g_strdup_printf ("file:///%s%s", curdir, G_DIR_SEPARATOR_S);
+	curdir_withslash = g_strdup_printf ("file:///%s%s",
+			curdir, G_DIR_SEPARATOR_S);
 	g_free (curdir);
 
 	escaped = gnome_vfs_escape_path_string (path);
@@ -774,16 +778,16 @@ totem_playing_dvd (Totem *totem)
 }
 
 static gboolean
-totem_playing_media (Totem *totem)
+totem_is_media (const char *mrl)
 {
-	if (totem->mrl == NULL)
+	if (mrl == NULL)
 		return FALSE;
 
-	if (strncmp ("cdda:", totem->mrl, strlen ("cdda:")) == 0)
+	if (strncmp ("cdda:", mrl, strlen ("cdda:")) == 0)
 		return TRUE;
-	if (strncmp ("dvd:", totem->mrl, strlen ("dvd:")) == 0)
+	if (strncmp ("dvd:",mrl, strlen ("dvd:")) == 0)
 		return TRUE;
-	if (strncmp ("vcd:", totem->mrl, strlen ("vcd:")) == 0)
+	if (strncmp ("vcd:", mrl, strlen ("vcd:")) == 0)
 		return TRUE;
 
 	return FALSE;
@@ -2572,7 +2576,7 @@ update_media_menu_items (Totem *totem)
         item = glade_xml_get_widget (totem->xml, "tmw_dvd_chapter_menu_item");
 	gtk_widget_set_sensitive (item, playing);
 
-	playing = totem_playing_media (totem);
+	playing = totem_is_media (totem->mrl);
 
 	item = glade_xml_get_widget (totem->xml, "tmw_eject_menu_item");
 	gtk_widget_set_sensitive (item, playing);

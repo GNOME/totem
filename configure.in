@@ -95,8 +95,6 @@ AC_CHECK_LIB(lirc_client, lirc_init, [
 	AC_DEFINE(HAVE_REMOTE, 1, [defined if you have lirc library])
 	])
 ])
-else
-AC_DEFINE(HAVE_REMOTE, 0, [defined if you have lirc library])
 fi
 
 AC_SUBST(REMOTE_LIBS)
