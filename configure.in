@@ -83,7 +83,8 @@ if test x$HAVE_XINE = xno; then
 	PKG_CHECK_MODULES(GST, \
 			gstreamer-$GST_MAJORMINOR >= $GST_REQS \
 			gstreamer-gconf-$GST_MAJORMINOR >= $GSTPLUG_REQS \
-			gstreamer-interfaces-$GST_MAJORMINOR >= $GSTPLUG_REQS,
+			gstreamer-interfaces-$GST_MAJORMINOR >= $GSTPLUG_REQS \
+			glib-2.0 >= 2.6.3,
 			HAVE_GSTREAMER=yes, HAVE_GSTREAMER=no)
 	MM="gstreamer-$GST_MAJORMINOR >= $GST_REQS gstreamer-gconf-$GST_MAJORMINOR >= $GSTPLUG_REQS gstreamer-interfaces-$GST_MAJORMINOR >= $GSTPLUG_REQS"
 
