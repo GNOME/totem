@@ -7,15 +7,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2003-01-06 05:49+0100\n"
-"PO-Revision-Date: 2003-01-24 12:50+EDT\n"
+"POT-Creation-Date: 2003-02-07 11:31+0100\n"
+"PO-Revision-Date: 2003-02-07 17:46+EDT\n"
 "Last-Translator: Ge'ez Frontier Foundation <locales@geez.org>\n"
 "Language-Team: Amharic <locales@geez.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/playlist.glade.h:1 src/gtk-playlist.c:799
+#: data/playlist.glade.h:1 src/gtk-playlist.c:800
 msgid "Playlist"
 msgstr ""
 
@@ -247,7 +247,7 @@ msgid "Toggle Aspect Ratio"
 msgstr ""
 
 #. Title
-#: data/totem.glade.h:35 src/totem.c:411 src/totem.c:434 src/totem.c:1266
+#: data/totem.glade.h:35 src/totem.c:410 src/totem.c:433 src/totem.c:1269
 msgid "Totem"
 msgstr "ቶተም"
 
@@ -339,7 +339,11 @@ msgstr ""
 msgid "Y coordinate for the Playlist"
 msgstr ""
 
-#: src/bacon-cd-selection.c:257
+#: src/bacon-cd-selection.c:233
+msgid "Unnamed CDROM"
+msgstr "ያለ ስም CDROM"
+
+#: src/bacon-cd-selection.c:275
 msgid "Select the drive"
 msgstr ""
 
@@ -348,7 +352,7 @@ msgstr ""
 msgid "Unnamed SCSI CDROM (%s)"
 msgstr "ያለ ስም SCSI CDROM (%s)"
 
-#: src/cd-drive.c:572
+#: src/cd-drive.c:573
 msgid "File image"
 msgstr "የፋይል ምስል"
 
@@ -388,36 +392,30 @@ msgstr "ሚስጢራዊ ቃል፦ (_P)"
 msgid "Remember this password"
 msgstr "ይህንን ሚስጢራዊ ቃል አስታውሱ"
 
-#: src/gtk-playlist.c:413 src/totem.c:1091
+#: src/gtk-playlist.c:414 src/totem.c:1094
 msgid "Select files"
 msgstr "ፋይሎችን ምረጡ"
 
-#: src/gtk-playlist.c:549
+#: src/gtk-playlist.c:550
 msgid "Filename"
 msgstr "የፋይል ስም"
 
-#: src/gtk-xine.c:75
+#: src/gtk-xine.c:59
 msgid "Totem Video Window"
 msgstr "የቶተም ቪዲዮ መስኮት"
 
-#: src/gtk-xine.c:528
+#: src/gtk-xine.c:555
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
 "Check that the device is not busy."
 msgstr ""
 
-#: src/gtk-xine.c:843
-msgid ""
-"Could not initialise the threads support.\n"
-"You should install a thread-safe Xlib."
-msgstr ""
-
-#: src/gtk-xine.c:871
+#: src/gtk-xine.c:800
 msgid "Could not find a suitable video output."
 msgstr ""
 
-#: src/gtk-xine.c:1239
+#: src/gtk-xine.c:1189
 #, c-format
 msgid "Reason: Video type '%s' is not handled."
 msgstr ""
@@ -491,19 +489,19 @@ msgstr ""
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/totem.c:191
+#: src/totem.c:189
 msgid "Playing"
 msgstr ""
 
-#: src/totem.c:198
+#: src/totem.c:196
 msgid "Paused"
 msgstr ""
 
-#: src/totem.c:205 src/totem-statusbar.c:171
+#: src/totem.c:203 src/totem-statusbar.c:171
 msgid "Stopped"
 msgstr ""
 
-#: src/totem.c:273
+#: src/totem.c:271
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -511,7 +509,7 @@ msgid ""
 "media."
 msgstr ""
 
-#: src/totem.c:281
+#: src/totem.c:279
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -519,81 +517,88 @@ msgid ""
 msgstr ""
 
 #. Title
-#: src/totem.c:387
+#: src/totem.c:386
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - ቶተም"
 
-#: src/totem.c:400 src/totem.c:2383
+#: src/totem.c:399 src/totem.c:2444
 msgid "No file"
 msgstr "ፋይል የለም"
 
-#: src/totem.c:1242
+#: src/totem.c:1245
 msgid "translator_credits"
 msgstr "ዘግዕዝ Frontier Foundation"
 
-#: src/totem.c:1268
-msgid "Movie Player (based on the Xine libraries)"
+#: src/totem.c:1271
+msgid "Movie Player (based on the xine libraries)"
 msgstr ""
 
-#: src/totem.c:1322 src/totem.c:1333
+#: src/totem.c:1325 src/totem.c:1336
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "እስክሪንፎቶ%d.png"
 
-#: src/totem.c:1386
+#: src/totem.c:1389
 msgid ""
 "Totem could not get a screenshot of that film.\n"
 "You might want to try again at another time."
 msgstr ""
 
-#: src/totem.c:1412
+#: src/totem.c:1415
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
 "The screenshot was not saved."
 msgstr ""
 
-#: src/totem.c:1423
+#: src/totem.c:1426
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
 "Details: %s"
 msgstr ""
 
-#: src/totem.c:1444
+#: src/totem.c:1446
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
 msgstr ""
 
-#: src/totem.c:1885
+#: src/totem.c:1894
 #, c-format
 msgid ""
 "Totem could not startup:\n"
 "%s"
 msgstr ""
 
-#: src/totem.c:1891
+#: src/totem.c:1900
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'.\n"
 "Totem will not be able to play it."
 msgstr ""
 
-#: src/totem.c:1897
+#: src/totem.c:1906
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr ""
 
-#: src/totem.c:1902
+#: src/totem.c:1911
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
 "%s"
 msgstr ""
 
-#: src/totem.c:2545
+#: src/totem.c:1916
+#, c-format
+msgid ""
+"Totem could not play '%s'.\n"
+"This location is not a valid one."
+msgstr ""
+
+#: src/totem.c:2610
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -601,13 +606,13 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/totem.c:2560 src/totem.c:2590
+#: src/totem.c:2625 src/totem.c:2653
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
 msgstr ""
 
-#: src/totem.c:2612
+#: src/totem.c:2675
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
