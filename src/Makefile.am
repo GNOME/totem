@@ -80,10 +80,10 @@ totem_SOURCES = 					\
 	totem-statusbar.c		\
 	totem-statusbar.h
 
-totem_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) $(CURL_LIBS)
+totem_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) $(CURL_LIBS) $(RANDR_LIBS)
 
 totem_video_thumbnailer_SOURCES = $(VIDEOWIDGET) totem-video-thumbnailer.c
-totem_video_thumbnailer_LDADD = $(GTK_LIBS) $(XTEST_LIBS)
+totem_video_thumbnailer_LDADD = $(GTK_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
 
 libexec_PROGRAMS = totem-properties-page
 totem_properties_page_SOURCES = $(VIDEOWIDGET) totem-properties-page.c
@@ -96,7 +96,7 @@ vanity_SOURCES =					\
 	gnome-password-dialog.c gnome-password-dialog.h	\
 	vanity.c
 
-vanity_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS)
+vanity_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
 
 INCLUDES = 						\
 	-D_REENTRANT					\

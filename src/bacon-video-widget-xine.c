@@ -2592,7 +2592,6 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 
 	four_channel = five_channel = five_one_channel = 0;
 
-	g_message ("bacon_video_widget_set_audio_out_type: %d", type);
 	gconf_client_set_int (bvw->priv->gc,
 			GCONF_PREFIX"/audio_output_type",
 			type, NULL);
