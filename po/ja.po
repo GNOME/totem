@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-06 17:59+0900\n"
-"PO-Revision-Date: 2003-09-06 17:57+0900\n"
+"POT-Creation-Date: 2003-09-17 00:20+0900\n"
+"PO-Revision-Date: 2003-09-17 00:18+0900\n"
 "Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -38,26 +38,26 @@ msgstr "保存(_S)..."
 msgid "    "
 msgstr "    "
 
-#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:183
-#: src/totem-properties-page.c:177
+#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:170
+#: src/totem-properties-page.c:164
 msgid "0 frames per second"
 msgstr "0 フレーム/秒"
 
 #. Bitrate
-#: data/properties.glade.h:3 src/bacon-video-widget-properties.c:185
-#: src/totem-properties-page.c:179
+#: data/properties.glade.h:3 src/bacon-video-widget-properties.c:172
+#: src/totem-properties-page.c:166
 msgid "0 kbps"
 msgstr "0 Kビット/秒"
 
 #. 0 seconds
 #: data/properties.glade.h:4 data/totem.glade.h:3
-#: src/bacon-video-widget-properties.c:139 src/totem-properties-page.c:133
+#: src/bacon-video-widget-properties.c:126 src/totem-properties-page.c:120
 msgid "0 seconds"
 msgstr "0 秒"
 
 #. Dimensions
-#: data/properties.glade.h:5 src/bacon-video-widget-properties.c:178
-#: src/totem-properties-page.c:172
+#: data/properties.glade.h:5 src/bacon-video-widget-properties.c:165
+#: src/totem-properties-page.c:159
 msgid "0 x 0"
 msgstr "0 x 0"
 
@@ -98,16 +98,16 @@ msgid "Framerate:"
 msgstr "フレームレート:"
 
 #. Video Codec
-#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:180
-#: src/bacon-video-widget-properties.c:187
-#: src/bacon-video-widget-properties.c:256
-#: src/bacon-video-widget-properties.c:288 src/totem-properties-page.c:174
-#: src/totem-properties-page.c:181 src/totem-properties-page.c:250
-#: src/totem-properties-page.c:282
+#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:167
+#: src/bacon-video-widget-properties.c:174
+#: src/bacon-video-widget-properties.c:243
+#: src/bacon-video-widget-properties.c:275 src/totem-properties-page.c:161
+#: src/totem-properties-page.c:168 src/totem-properties-page.c:237
+#: src/totem-properties-page.c:269
 msgid "N/A"
 msgstr "N/A"
 
-#: data/properties.glade.h:16 src/bacon-video-widget-properties.c:337
+#: data/properties.glade.h:16 src/bacon-video-widget-properties.c:324
 msgid "Properties"
 msgstr "プロパティ"
 
@@ -116,15 +116,15 @@ msgid "Title:"
 msgstr "タイトル:"
 
 #. Title
-#: data/properties.glade.h:18 src/bacon-video-widget-properties.c:170
-#: src/bacon-video-widget-properties.c:172
-#: src/bacon-video-widget-properties.c:174
-#: src/bacon-video-widget-properties.c:205
-#: src/bacon-video-widget-properties.c:212
-#: src/bacon-video-widget-properties.c:219 src/totem-properties-page.c:164
-#: src/totem-properties-page.c:166 src/totem-properties-page.c:168
-#: src/totem-properties-page.c:199 src/totem-properties-page.c:206
-#: src/totem-properties-page.c:213
+#: data/properties.glade.h:18 src/bacon-video-widget-properties.c:157
+#: src/bacon-video-widget-properties.c:159
+#: src/bacon-video-widget-properties.c:161
+#: src/bacon-video-widget-properties.c:192
+#: src/bacon-video-widget-properties.c:199
+#: src/bacon-video-widget-properties.c:206 src/totem-properties-page.c:151
+#: src/totem-properties-page.c:153 src/totem-properties-page.c:155
+#: src/totem-properties-page.c:186 src/totem-properties-page.c:193
+#: src/totem-properties-page.c:200
 msgid "Unknown"
 msgstr "不明"
 
@@ -156,7 +156,7 @@ msgstr "プラグインのダウンロード"
 msgid "Play movies and songs"
 msgstr "動画や音楽を再生します"
 
-#: data/totem.desktop.in.h:2 src/totem.c:3556
+#: data/totem.desktop.in.h:2 src/totem.c:3524
 msgid "Totem Movie Player"
 msgstr "Totem 動画プレーヤー"
 
@@ -537,7 +537,7 @@ msgid "Toggle the aspect ratio"
 msgstr "画面のアスペクト比を切り替えます"
 
 #. Title
-#: data/totem.glade.h:97 src/totem.c:705 src/totem.c:732 src/totem.c:1877
+#: data/totem.glade.h:97 src/totem.c:676 src/totem.c:703 src/totem.c:1832
 msgid "Totem"
 msgstr "Totem"
 
@@ -831,71 +831,56 @@ msgstr "名前なしのビデオ・デバイス"
 msgid "Totem Video Window"
 msgstr "Totem ビデオ・ウィンドウ"
 
-#. One hour
-#: src/bacon-video-widget-properties.c:108 src/totem-properties-page.c:102
+#: src/bacon-video-widget-properties.c:106 src/totem-properties-page.c:100
 #, c-format
 msgid "%d hour"
-msgstr "%d 時間"
+msgid_plural "%d hours"
+msgstr[0] "%d 時間"
+msgstr[1] "%d 時間"
 
-#. Multiple hours
-#: src/bacon-video-widget-properties.c:111 src/totem-properties-page.c:105
-#, c-format
-msgid "%d hours"
-msgstr "%d 時間"
-
-#. One minute
-#: src/bacon-video-widget-properties.c:115 src/totem-properties-page.c:109
+#: src/bacon-video-widget-properties.c:108 src/totem-properties-page.c:102
 #, c-format
 msgid "%d minute"
-msgstr "%d 分"
+msgid_plural "%d minutes"
+msgstr[0] "%d 分"
+msgstr[1] "%d 分"
 
-#. Multiple minutes
-#: src/bacon-video-widget-properties.c:118 src/totem-properties-page.c:112
-#, c-format
-msgid "%d minutes"
-msgstr "%d 分"
-
-#. One second
-#: src/bacon-video-widget-properties.c:122 src/totem-properties-page.c:116
+#: src/bacon-video-widget-properties.c:111 src/totem-properties-page.c:105
 #, c-format
 msgid "%d second"
-msgstr "%d 秒"
-
-#. Multiple seconds
-#: src/bacon-video-widget-properties.c:125 src/totem-properties-page.c:119
-#, c-format
-msgid "%d seconds"
-msgstr "%d 秒"
+msgid_plural "%d seconds"
+msgstr[0] "%d 秒"
+msgstr[1] "%d 秒"
 
 #. hour:minutes:seconds
-#: src/bacon-video-widget-properties.c:130 src/totem-properties-page.c:124
+#: src/bacon-video-widget-properties.c:117 src/totem-properties-page.c:111
 #, c-format
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. minutes:seconds
-#: src/bacon-video-widget-properties.c:133 src/totem-properties-page.c:127
+#: src/bacon-video-widget-properties.c:120 src/totem-properties-page.c:114
 #, c-format
 msgid "%s %s"
 msgstr "%s %s"
 
 #. seconds
-#: src/bacon-video-widget-properties.c:136 src/totem-properties-page.c:130
+#: src/bacon-video-widget-properties.c:123 src/totem-properties-page.c:117
 #, c-format
 msgid "%s"
 msgstr "%s"
 
 #. Duration
-#: src/bacon-video-widget-properties.c:176 src/totem-properties-page.c:170
+#: src/bacon-video-widget-properties.c:163 src/totem-properties-page.c:157
 msgid "0 second"
 msgstr "0 秒"
 
-#: src/bacon-video-widget-properties.c:261 src/totem-properties-page.c:255
+#: src/bacon-video-widget-properties.c:248 src/totem-properties-page.c:242
 #, c-format
 msgid "%d frames per second"
 msgstr "%d フレーム/秒"
 
-#: src/bacon-video-widget-properties.c:279 src/totem-properties-page.c:273
+#: src/bacon-video-widget-properties.c:266 src/totem-properties-page.c:260
 #, c-format
 msgid "%d kbps"
 msgstr "%d Kバイト/秒"
@@ -1045,7 +1030,7 @@ msgstr "パスワード(_P):"
 msgid "Remember this password"
 msgstr "パスワードを記憶する"
 
-#: src/totem-playlist.c:635 src/totem.c:1543
+#: src/totem-playlist.c:635 src/totem.c:1507
 msgid "Select files"
 msgstr "ファイルの選択"
 
@@ -1066,7 +1051,7 @@ msgstr ""
 msgid "Filename"
 msgstr "ファイル名"
 
-#: src/totem-preferences.c:82
+#: src/totem-preferences.c:110
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1074,7 +1059,7 @@ msgstr ""
 "リモートから Totem を実行しているようです。\n"
 "視覚効果を有効にしますか？"
 
-#: src/totem-preferences.c:134
+#: src/totem-preferences.c:162
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted"
@@ -1082,20 +1067,24 @@ msgstr ""
 "この設定の変更は、次に再生される動画もしくは Totem を再起動したときに反映され"
 "ます"
 
-#: src/totem-preferences.c:178
+#: src/totem-preferences.c:206
 msgid ""
 "Switching on or off this type of TV-Out requires a restart to take effect."
 msgstr "この TV 出力の設定を適用するには再起動が必要です。"
 
-#: src/totem-preferences.c:343
+#: src/totem-preferences.c:339
+msgid "Totem could not start the file manager."
+msgstr "Totem はファイル・マネージャを起動できませんでした。"
+
+#: src/totem-preferences.c:367
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr "視覚効果の種類を適用するには再起動が必要です。"
 
-#: src/totem-properties-page.c:344
+#: src/totem-properties-page.c:331
 msgid "URI currently displayed"
 msgstr "現在表示している URI"
 
-#: src/totem-properties-page.c:410
+#: src/totem-properties-page.c:397
 msgid "Video and Audio information properties page"
 msgstr "ビデオとオーディオの情報プロパティのページ"
 
@@ -1107,7 +1096,7 @@ msgstr "影の種類"
 msgid "Style of bevel around the statusbar text"
 msgstr "ステータスバー・テキスト周りのベベルのスタイル"
 
-#: src/totem-statusbar.c:171 src/totem.c:344
+#: src/totem-statusbar.c:171 src/totem.c:347
 msgid "Stopped"
 msgstr "停止"
 
@@ -1144,220 +1133,195 @@ msgstr "キューに追加"
 msgid "Replace"
 msgstr "置換"
 
-#: src/totem.c:226
+#: src/totem.c:228
 msgid "Download"
 msgstr "ダウンロード"
 
-#: src/totem.c:330
+#: src/totem.c:333
 msgid "Playing"
 msgstr "再生中"
 
-#: src/totem.c:337
+#: src/totem.c:340
 msgid "Paused"
 msgstr "一時停止中"
 
-#: src/totem.c:403 src/totem.c:831 src/totem.c:952
+#: src/totem.c:379 src/totem.c:801 src/totem.c:919
 #, c-format
-msgid ""
-"Totem could not play '%s'.\n"
-"Reason: %s."
-msgstr ""
-"Totem は '%s' を再生できませんでした。\n"
-"理由: %s"
+msgid "Totem could not play '%s'."
+msgstr "Totem は '%s' を再生できませんでした。"
 
-#: src/totem.c:424
+#: src/totem.c:399
 msgid "DVD"
 msgstr "DVD"
 
-#: src/totem.c:425
+#: src/totem.c:400
 msgid "Video CD"
 msgstr "ビデオ CD"
 
-#: src/totem.c:426
+#: src/totem.c:401
 msgid "Audio CD"
 msgstr "オーディオ CD"
 
-#: src/totem.c:437
+#: src/totem.c:412
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
-"appropriate plugins to handle it.\n"
+"appropriate plugins to handle it."
+msgstr ""
+"この種類のメディア (%s) を操作する適切なプラグインがないため、Totem はそのメ"
+"ディアを再生できません。"
+
+#: src/totem.c:413
+msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
 msgstr ""
-"この種類のメディア (%s) を操作する適切なプラグインがないため、Totem はそのメ"
-"ディアを再生できません。\n"
 "必要なプラグインをインストールして Totem を再起動すると、このメディアを再生で"
 "きます。"
 
-#: src/totem.c:448
+#: src/totem.c:421
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
-"it.\n"
+"it."
+msgstr ""
+"このメディア (%s) を操作するプラグインはありますが、Totem はそのメディアを再"
+"生できませんでした。"
+
+#: src/totem.c:422
+msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr ""
-"このメディア (%s) を操作するプラグインはありますが、Totem はそのメディアを再"
-"生できませんでした。\n"
 "ドライブの中にディスクがあるか確認して、そのドライブが正しく設定されているこ"
 "とを確認して下さい。"
 
 #. Title
-#: src/totem.c:681
+#: src/totem.c:652
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:694 src/totem.c:3395
+#: src/totem.c:665 src/totem.c:3363
 msgid "No file"
 msgstr "ファイルなし"
 
-#: src/totem.c:1254
+#: src/totem.c:1208
+msgid "An error occured"
+msgstr "エラーが発生しました"
+
+#: src/totem.c:1220
 msgid "Buffering"
 msgstr "バッファリング中"
 
-#: src/totem.c:1275 src/totem.c:1297
+#: src/totem.c:1241 src/totem.c:1263
 #, c-format
 msgid "Buffering: %d%%"
 msgstr "バッファリング中: %d%%"
 
-#: src/totem.c:1594 src/totem.c:1605
-msgid ""
-"Couldn't load the 'Open Location...' interface.\n"
-"Make sure that Totem is properly installed."
-msgstr ""
-"'場所を開く...' インタフェースを読み込めませんでした。\n"
-"Totem が正しくインストールされているか確認して下さい。"
+#: src/totem.c:1558 src/totem.c:1566
+msgid "Couldn't load the 'Open Location...' interface."
+msgstr "'場所を開く...' インタフェースを読み込めませんでした。"
 
-#: src/totem.c:1667
+#: src/totem.c:1558 src/totem.c:1566 src/totem.c:3556 src/totem.c:3581
+#: src/totem.c:3604
+msgid "Make sure that Totem is properly installed."
+msgstr "Totem が正しくインストールされているか確認して下さい。"
+
+#: src/totem.c:1623
 msgid "Totem could not eject the optical media."
 msgstr "Totem は光学メディアを取り出すことができませんでした。"
 
-#: src/totem.c:1848 src/vanity.c:219
+#: src/totem.c:1623
+msgid "No reason given"
+msgstr "原因は不明です"
+
+#: src/totem.c:1803 src/vanity.c:219
 msgid "translator_credits"
 msgstr ""
 "James Hashida <khashida@redhat.com>\n"
 "KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>\n"
 "Takeshi AIHANA <aihana@gnome.gr.jp>"
 
-#: src/totem.c:1874
+#: src/totem.c:1829
 #, c-format
 msgid "Movie Player using %s"
 msgstr "%s を使った動画プレーヤです。"
 
-#: src/totem.c:1964 src/totem.c:1975 src/vanity.c:307 src/vanity.c:318
+#: src/totem.c:1919 src/totem.c:1930 src/vanity.c:307 src/vanity.c:318
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Screenshot%d.png"
 
+#: src/totem.c:1981 src/totem.c:1989
+msgid "Totem could not get a screenshot of that film."
+msgstr "Totem はこの映像のスクリーンショットを撮れませんでした。"
+
+#: src/totem.c:1989
+msgid "Please file a bug, this isn't supposed to happen"
+msgstr "バグを報告して下さい。この現象は未サポートです。"
+
+#: src/totem.c:2017
+#, c-format
+msgid "File '%s' already exists."
+msgstr "ファイル '%s' は既に存在しています。"
+
+#: src/totem.c:2018
+msgid "The screenshot was not saved"
+msgstr "スクリーンショットを保存しませんでした。"
+
 #: src/totem.c:2028
+msgid "There was an error saving the screenshot."
+msgstr "スクリーンショットの保存中にエラーが発生しました。"
+
+#: src/totem.c:2043
+msgid "Totem couldn't show the movie properties window."
+msgstr "Totem は動画プロパティ・ウィンドウを表示できませんでした。"
+
+#: src/totem.c:2043
+msgid "Make sure that Totem is correctly installed."
+msgstr "Totem が正しくインストールされているか確認して下さい。"
+
+#: src/totem.c:2111
 #, c-format
-msgid ""
-"Totem could not get a screenshot of that film.\n"
-"Reason: %s."
-msgstr ""
-"Totem はこの映像のスクリーンショットを撮れませんでした。\n"
-"理由: %s"
+msgid "Totem could not seek in '%s'."
+msgstr "Totem は '%s' 中を検索できませんでした。 "
 
-#: src/totem.c:2038
-msgid ""
-"Totem could not get a screenshot of that film.\n"
-"Please file a bug, this isn't supposed to happen"
-msgstr ""
-"Totem はこの映像のスクリーンショットを撮れませんでした。\n"
-"バグを報告して下さい。この現象は未サポートです。"
-
-#: src/totem.c:2064
-#, c-format
-msgid ""
-"File '%s' already exists.\n"
-"The screenshot was not saved."
-msgstr ""
-"ファイル '%s' は既に存在しています。\n"
-"スクリーンショットを保存しませんでした。"
-
-#: src/totem.c:2075
-#, c-format
-msgid ""
-"There was an error saving the screenshot.\n"
-"Details: %s"
-msgstr ""
-"スクリーンショットの保存中にエラーが発生しました。\n"
-"詳細: %s"
-
-#: src/totem.c:2092
-msgid ""
-"Totem couldn't show the movie properties window.\n"
-"Make sure that Totem is correctly installed."
-msgstr ""
-"動画プロパティウィンドウを表示できませんでした。\n"
-"Totem が正しくインストールされているか確認して下さい。"
-
-#: src/totem.c:2161
-#, c-format
-msgid ""
-"Totem could not seek in '%s'.\n"
-"Reason: %s."
-msgstr ""
-"Totem は '%s' 中を検索できませんでした。 \n"
-"理由: %s"
-
-#: src/totem.c:2869 src/totem.c:2891
+#: src/totem.c:2830 src/totem.c:2852
 msgid "None"
 msgstr "なし"
 
-#: src/totem.c:2873 src/totem.c:2894
+#: src/totem.c:2834 src/totem.c:2855
 msgid "Auto"
 msgstr "自動"
 
-#: src/totem.c:3295
-#, c-format
-msgid ""
-"Totem could not startup:\n"
-"%s"
-msgstr ""
-"Totem を起動できませんでした:\n"
-"%s"
+#: src/totem.c:3271
+msgid "Totem could not startup."
+msgstr "Totem を起動できませんでした。"
 
-#: src/totem.c:3296 src/vanity.c:551
+#: src/totem.c:3271 src/vanity.c:551
 msgid "No reason"
 msgstr "理由なし"
 
-#: src/totem.c:3561
-msgid ""
-"Could not initialise the thread-safe libraries.\n"
-"Verify your system installation. Totem will now exit."
-msgstr ""
-"スレッドセーフなライグラリを初期化できませんでした。\n"
-"システムのインストールを確認して下さい。Totem を終了します。"
+#: src/totem.c:3529
+msgid "Could not initialise the thread-safe libraries."
+msgstr "スレッドセーフなライグラリを初期化できませんでした。"
 
-#: src/totem.c:3583
-#, c-format
-msgid ""
-"Totem couln't initialise the \n"
-"configuration engine:\n"
-"%s"
-msgstr ""
-"Totem は設定エンジンを\n"
-"初期化できませんでした:\n"
-"%s"
+#: src/totem.c:3529
+msgid "Verify your system installation. Totem will now exit."
+msgstr "システムのインストールを確認して下さい。Totem を終了します。"
 
-#: src/totem.c:3597 src/totem.c:3625
-msgid ""
-"Couldn't load the main interface (totem.glade).\n"
-"Make sure that Totem is properly installed."
-msgstr ""
-"メイン・インタフェース (totem.glade) を読み込めませんでした。\n"
-"Totem が正しくインストールされているか確認して下さい。"
+#: src/totem.c:3546
+msgid "Totem couln't initialise the configuration engine."
+msgstr "Totem は設定エンジンを初期化できませんでした。"
 
-#: src/totem.c:3651
-msgid ""
-"Couldn't load the interface for the playlist.\n"
-"Make sure that Totem is properly installed."
-msgstr ""
-"再生リストのインタフェースをロードできませんでした。\n"
-"Totem が正しくインストールされているか確認して下さい。"
+#: src/totem.c:3556 src/totem.c:3581
+msgid "Couldn't load the main interface (totem.glade)."
+msgstr "メイン・インタフェース (totem.glade) を読み込めませんでした。"
+
+#: src/totem.c:3604
+msgid "Couldn't load the interface for the playlist."
+msgstr "再生リストのインタフェースをロードできませんでした。"
 
 #: src/vanity.c:55
 msgid "Debug mode on"
