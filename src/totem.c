@@ -630,6 +630,7 @@ totem_action_restore_pl (Totem *totem)
 	if (g_file_test (path, G_FILE_TEST_EXISTS) == FALSE)
 	{
 		g_free (path);
+		totem_action_set_mrl (totem, NULL);
 		return;
 	}
 
