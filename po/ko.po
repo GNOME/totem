@@ -1,13 +1,14 @@
 # Korean translation for Totem
 # Jang,Jae-Man <jacojang@korea.com>, 2003.
+# Changwoo Ryu <cwryu@debian.org>, 2004, 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-10 07:53+0900\n"
-"PO-Revision-Date: 2005-02-10 17:40+0900\n"
-"Last-Translator: Jang,Jae-Man <jacojang@korea.com>\n"
+"POT-Creation-Date: 2005-02-18 22:31+0900\n"
+"PO-Revision-Date: 2005-02-18 22:32+0900\n"
+"Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: Gnome Korea <jacojang@gnome.or.kr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -112,7 +113,7 @@ msgstr "프레임 속도:"
 msgid "N/A"
 msgstr "해당 없음"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:1972
+#: ../data/properties.glade.h:17 ../src/totem.c:1973
 msgid "Properties"
 msgstr "등록 정보"
 
@@ -546,7 +547,7 @@ msgstr "시간:"
 
 #. Title
 #: ../data/totem.glade.h:102 ../data/totem.desktop.in.in.in.h:2
-#: ../src/totem.c:571 ../src/totem.c:3384
+#: ../src/totem.c:571 ../src/totem.c:3385
 msgid "Totem Movie Player"
 msgstr "Totem 영화 플레이어"
 
@@ -935,7 +936,7 @@ msgstr "이름 없는 CDROM"
 msgid "Totem Video Window"
 msgstr "Totem 비디오 창"
 
-#: ../src/bacon-video-widget-gst.c:2897
+#: ../src/bacon-video-widget-gst.c:2901
 msgid "Failed to create a GStreamer play object"
 msgstr "GStreamer 재생 오브젝트를 만드는 데 실패했습니다"
 
@@ -967,7 +968,9 @@ msgstr ""
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
-msgstr "비디오 출력을 사용할 수 없습니다. 프로그램을 올바르게 설치했는지 확인하십시오."
+msgstr ""
+"비디오 출력을 사용할 수 없습니다. 프로그램을 올바르게 설치했는지 확인하십시"
+"오."
 
 #: ../src/bacon-video-widget-xine.c:1225
 msgid "The server you are trying to connect to is not known."
@@ -1057,94 +1060,98 @@ msgstr "이 영화는 정지 영상입니다. 그림 보기 프로그램으로 �
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
-msgstr "'%s' 비디오 코덱을 처리할 수 없습니다. 어떤 형식의 영화는 재생하려면 플러그인을 추가로 설치해야 합니다."
+msgstr ""
+"'%s' 비디오 코덱을 처리할 수 없습니다. 어떤 형식의 영화는 재생하려면 플러그인"
+"을 추가로 설치해야 합니다."
 
 #: ../src/bacon-video-widget-xine.c:1939
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
-msgstr "'%s' 오디오 코덱을 처리할 수 없습니다. 어떤 형식의 영화는 재생하려면 플러그인을 추가로 설치해야 합니다."
+msgstr ""
+"'%s' 오디오 코덱을 처리할 수 없습니다. 어떤 형식의 영화는 재생하려면 플러그인"
+"을 추가로 설치해야 합니다."
 
 #: ../src/bacon-video-widget-xine.c:1955
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "오디오만 들어 있는 파일이고, 오디오 출력을 사용할 수 없습니다."
 
-#: ../src/bacon-video-widget-xine.c:3363
+#: ../src/bacon-video-widget-xine.c:3366
 #, c-format
 msgid "Language %d"
 msgstr "언어 %d"
 
-#: ../src/bacon-video-widget-xine.c:3434
+#: ../src/bacon-video-widget-xine.c:3440
 msgid "Movie is not playing."
 msgstr "영화 재생중이 아닙니다."
 
-#: ../src/bacon-video-widget-xine.c:3443
+#: ../src/bacon-video-widget-xine.c:3449
 msgid "No video to capture."
 msgstr "캡처할 비디오가 없습니다."
 
-#: ../src/bacon-video-widget-xine.c:3451
+#: ../src/bacon-video-widget-xine.c:3457
 msgid "Video codec is not handled."
 msgstr "비디오 코덱을 처리할 수 없습니다."
 
-#: ../src/totem-disc.c:107
+#: ../src/totem-disc.c:114
 #, c-format
 msgid "Failed to find real device node for %s: %s"
 msgstr "%s에 대한 실제 장치 노드를 찾는 데 실패했습니다: %s"
 
-#: ../src/totem-disc.c:118
+#: ../src/totem-disc.c:125
 #, c-format
 msgid "Failed to read symbolic link %s: %s"
 msgstr "%s 심볼릭 링크를 읽는데 실패했습니다: %s"
 
-#: ../src/totem-disc.c:202
+#: ../src/totem-disc.c:209
 #, c-format
 msgid "Failed to find mountpoint for device %s in /etc/fstab"
 msgstr "/etc/fstab에서 %s 장치의 마운트 위치를 찾는 데 실패했습니다"
 
-#: ../src/totem-disc.c:240
+#: ../src/totem-disc.c:247
 msgid "Please check that a disc is present in the drive."
 msgstr "디스크가 드라이브 안에 들어 있는 지 확인하십시오."
 
-#: ../src/totem-disc.c:243
+#: ../src/totem-disc.c:250
 #, c-format
 msgid "Failed to open device %s for reading: %s"
 msgstr "%s 장치를 읽기용으로 여는 데 실패했습니다: %s"
 
-#: ../src/totem-disc.c:254
+#: ../src/totem-disc.c:261
 #, c-format
 msgid "Failed to retrieve capabilities of device %s: %s"
 msgstr "장치 %s의 기능을 알아내는 데 실패했습니다: %s"
 
-#: ../src/totem-disc.c:287
+#: ../src/totem-disc.c:294
 #, c-format
 msgid "Drive status 0x%x (%s) - check disc"
 msgstr "드라이브 상태 0x%x (%s) - 디스크를 검사하십시오"
 
-#: ../src/totem-disc.c:320
+#: ../src/totem-disc.c:327
 #, c-format
 msgid "Unexpected error status %d while mounting %s"
 msgstr "%2$s 장치를 마운트하는 데 예상치 못한 오류 상태 %1$d"
 
-#: ../src/totem-disc.c:372
+#: ../src/totem-disc.c:379
 #, c-format
 msgid "Error getting %s disc status: %s"
 msgstr "%s 디스크 상태를 얻어오는 데 오류: %s"
 
-#: ../src/totem-disc.c:401
+#: ../src/totem-disc.c:408
 #, c-format
 msgid "Unexpected/unknown cd type 0x%x (%s)"
 msgstr "예상치 못한/알 수 없는 CD 종류 0x%x (%s)"
 
-#: ../src/totem-disc.c:565
+#: ../src/totem-disc.c:572
 msgid "Audio CD"
 msgstr "오디오 CD"
 
-#: ../src/totem-disc.c:567
+#: ../src/totem-disc.c:574
 msgid "Video CD"
 msgstr "비디오 CD"
 
-#: ../src/totem-disc.c:569
+#: ../src/totem-disc.c:576
 msgid "DVD"
 msgstr "DVD"
 
@@ -1176,11 +1183,11 @@ msgstr "Totem 플러그인이 올바르게 설치되었는 지 확인하십시�
 msgid "The Totem plugin could not startup."
 msgstr "Totem 플러그인을 시작할 수 없습니다."
 
-#: ../src/totem-mozilla-viewer.c:109 ../src/totem.c:3208
+#: ../src/totem-mozilla-viewer.c:109 ../src/totem.c:3209
 msgid "No reason."
 msgstr "이유 없음."
 
-#: ../src/totem-mozilla-viewer.c:141 ../src/totem.c:3389
+#: ../src/totem-mozilla-viewer.c:141 ../src/totem.c:3390
 msgid "Could not initialise the thread-safe libraries."
 msgstr "쓰레드에 안전한 라이브러리를 초기화할 수 없습니다."
 
@@ -1262,6 +1269,10 @@ msgstr "이름인 '%s'인 파일이 이미 있습니다.  이 파일을 덮어 �
 #: ../src/totem-playlist.c:1053
 msgid "Filename"
 msgstr "파일이름"
+
+#: ../src/totem-playlist.c:1475
+msgid "playlist"
+msgstr "재생 목록"
 
 #: ../src/totem-playlist.c:1619
 msgid "Playlist error"
@@ -1446,7 +1457,7 @@ msgstr "%s - Totem 영화 플레이어"
 msgid "No file"
 msgstr "파일 없음"
 
-#: ../src/totem.c:598 ../src/totem.c:1887
+#: ../src/totem.c:598 ../src/totem.c:1888
 msgid "Totem"
 msgstr "Totem"
 
@@ -1454,56 +1465,60 @@ msgstr "Totem"
 msgid "An error occured"
 msgstr "오류가 발생했습니다"
 
-#: ../src/totem.c:1478
+#: ../src/totem.c:1479
 msgid "Select files"
 msgstr "파일 선택"
 
-#: ../src/totem.c:1845
+#: ../src/totem.c:1550
+msgid "Open Location..."
+msgstr "위치 열기..."
+
+#: ../src/totem.c:1846
 msgid "Totem could not display the help contents."
 msgstr "Totem 도움말 차례를 표시할 수 없습니다."
 
-#: ../src/totem.c:1883
+#: ../src/totem.c:1884
 #, c-format
 msgid "Movie Player using %s"
 msgstr "%s 사용 영화 플레이어"
 
-#: ../src/totem.c:1889 ../src/vanity.c:261
+#: ../src/totem.c:1890 ../src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Copyright © 2002-2005 Bastien Nocera"
 
-#: ../src/totem.c:1894 ../src/vanity.c:266
+#: ../src/totem.c:1895 ../src/vanity.c:266
 msgid "translator-credits"
 msgstr ""
 "장재만 <jacojang@korea.com>\n"
 "류창우 <cwryu@debian.org>"
 
-#: ../src/totem.c:1927 ../src/totem.c:1935 ../src/vanity.c:299
+#: ../src/totem.c:1928 ../src/totem.c:1936 ../src/vanity.c:299
 #: ../src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem이 이 필름의 스크린샷을 찍을 수 없습니다."
 
-#: ../src/totem.c:1935
+#: ../src/totem.c:1936
 msgid "Please file a bug, this isn't supposed to happen."
 msgstr "버그를 보고하십시오. 일어나서는 안 되는 현상입니다."
 
-#: ../src/totem.c:1962
+#: ../src/totem.c:1963
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem이 영화 등록정보 창을 열 수 없습니다."
 
-#: ../src/totem.c:1962
+#: ../src/totem.c:1963
 msgid "Make sure that Totem is correctly installed."
 msgstr "Totem을 올바르게 설치했는지 확인하십시오."
 
-#: ../src/totem.c:2048
+#: ../src/totem.c:2049
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "%s에서 이동할 수 없습니다."
 
-#: ../src/totem.c:3208
+#: ../src/totem.c:3209
 msgid "Totem could not startup."
 msgstr "Totem이 시작할 수 없습니다."
 
-#: ../src/totem.c:3389
+#: ../src/totem.c:3390
 msgid "Verify your system installation. Totem will now exit."
 msgstr "시스템 설치가 올바른지 확인하십시오. Totem을 끝냅니다."
 
@@ -1514,6 +1529,15 @@ msgstr "Totem이 설정 엔진을 초기화할 수 없습니다."
 #: ../src/totem.c:3410
 msgid "Make sure that GNOME is properly installed."
 msgstr "그놈을 올바르게 설치했는 지 확인하십시오."
+
+#. Main window
+#: ../src/totem.c:3437
+msgid "main window"
+msgstr "메인 창"
+
+#: ../src/totem.c:3442
+msgid "video popup menu"
+msgstr "비디오 팝업 메뉴"
 
 #: ../src/vanity.c:75
 msgid "Debug mode on"
