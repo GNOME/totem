@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2003-04-10 11:22+0200\n"
-"PO-Revision-Date: 2003-04-10 11:23+0200\n"
+"POT-Creation-Date: 2003-04-16 23:29+0200\n"
+"PO-Revision-Date: 2003-04-16 23:30+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -125,7 +125,7 @@ msgstr "År:"
 msgid "Play movies and songs"
 msgstr "Spela filmer och låtar"
 
-#: data/totem.desktop.in.h:2 src/totem.c:2938
+#: data/totem.desktop.in.h:2 src/totem.c:2945
 msgid "Totem Movie Player"
 msgstr "Filmspelaren Totem"
 
@@ -422,7 +422,7 @@ msgid "Toggle the aspect ratio"
 msgstr "Växla proportionerna"
 
 #. Title
-#: data/totem.glade.h:75 src/totem.c:510 src/totem.c:532 src/totem.c:1478
+#: data/totem.glade.h:75 src/totem.c:509 src/totem.c:531 src/totem.c:1479
 msgid "Totem"
 msgstr "Totem"
 
@@ -598,7 +598,7 @@ msgstr "_Lösenord:"
 msgid "Remember this password"
 msgstr "Kom ihåg detta lösenord"
 
-#: src/gtk-playlist.c:506 src/totem.c:1239
+#: src/gtk-playlist.c:506 src/totem.c:1234
 msgid "Select files"
 msgstr "Välj filer"
 
@@ -630,19 +630,19 @@ msgstr "Kölägg"
 msgid "Replace"
 msgstr "Ersätt"
 
-#: src/totem.c:217
+#: src/totem.c:216
 msgid "Playing"
 msgstr "Spelar"
 
-#: src/totem.c:224
+#: src/totem.c:223
 msgid "Paused"
 msgstr "Gör paus"
 
-#: src/totem.c:231 src/totem-statusbar.c:171
+#: src/totem.c:230 src/totem-statusbar.c:171
 msgid "Stopped"
 msgstr "Stoppad"
 
-#: src/totem.c:289 src/totem.c:635 src/totem.c:739
+#: src/totem.c:288 src/totem.c:630 src/totem.c:734
 #, c-format
 msgid ""
 "Totem could not play '%s'.\n"
@@ -651,7 +651,7 @@ msgstr ""
 "Totem kunde inte spela \"%s\".\n"
 "Orsak: %s."
 
-#: src/totem.c:318
+#: src/totem.c:317
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -663,7 +663,7 @@ msgstr ""
 "Installera de insticksmoduler som krävs och starta om Totem för att kunna "
 "spela denna typ av media."
 
-#: src/totem.c:326
+#: src/totem.c:325
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -675,16 +675,16 @@ msgstr ""
 "konfigurerad."
 
 #. Title
-#: src/totem.c:486
+#: src/totem.c:485
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:499 src/totem.c:2783
+#: src/totem.c:498 src/totem.c:2791
 msgid "No file"
 msgstr "Ingen fil"
 
-#: src/totem.c:1290 src/totem.c:1301
+#: src/totem.c:1285 src/totem.c:1296
 msgid ""
 "Couldn't load the 'Open Location...' interface.\n"
 "Make sure that Totem is properly installed."
@@ -692,26 +692,30 @@ msgstr ""
 "Kunde inte läsa in gränssnittet för \"Öppna plats...\".\n"
 "Försäkra dig om att Totem är korrekt installerat."
 
-#: src/totem.c:1362
+#: src/totem.c:1357
 msgid "Totem could not eject the optical media."
 msgstr "Totem kunde inte mata ut det optiska mediumet."
 
-#: src/totem.c:1454
+#: src/totem.c:1449
 msgid "translator_credits"
 msgstr ""
 "Christian Rose\n"
 "Skicka synpunkter på översättningen till sv@li.org"
 
-#: src/totem.c:1480
-msgid "Movie Player (based on the xine libraries)"
-msgstr "Filmspelare (baserad på xine-biblioteken)"
+#: src/totem.c:1475
+msgid "Movie Player"
+msgstr "Filmspelare"
 
-#: src/totem.c:1534 src/totem.c:1545
+#: src/totem.c:1476
+msgid "using backend :"
+msgstr "använder bakände:"
+
+#: src/totem.c:1538 src/totem.c:1549
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Skärmdump%d.png"
 
-#: src/totem.c:1598
+#: src/totem.c:1602
 #, c-format
 msgid ""
 "Totem could not get a screenshot of that film.\n"
@@ -720,7 +724,7 @@ msgstr ""
 "Totem kunde inte ta en skärmdump från den filmen.\n"
 "Orsak: %s."
 
-#: src/totem.c:1608
+#: src/totem.c:1612
 msgid ""
 "Totem could not get a screenshot of that film.\n"
 "Please file a bug, this isn't supposed to happen"
@@ -728,7 +732,7 @@ msgstr ""
 "Totem kunde inte ta en skärmdump från den filmen.\n"
 "Skicka en felrapport. Detta ska inte hända"
 
-#: src/totem.c:1634
+#: src/totem.c:1638
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
@@ -737,7 +741,7 @@ msgstr ""
 "Filen \"%s\" finns redan.\n"
 "Skärmdumpen sparades inte."
 
-#: src/totem.c:1645
+#: src/totem.c:1649
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -746,7 +750,7 @@ msgstr ""
 "Ett fel uppstod vid sparandet av skärmdumpen.\n"
 "Detaljer: %s"
 
-#: src/totem.c:1662
+#: src/totem.c:1666
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -754,7 +758,7 @@ msgstr ""
 "Totem kunde inte visa filmegenskapsfönstret.\n"
 "Försäkra dig om att Totem är korrekt installerat."
 
-#: src/totem.c:1731
+#: src/totem.c:1735
 #, c-format
 msgid ""
 "Totem could not seek in '%s'.\n"
@@ -763,11 +767,11 @@ msgstr ""
 "Totem kunde inte spola i \"%s\".\n"
 "Orsak: %s."
 
-#: src/totem.c:2361
+#: src/totem.c:2369
 msgid "Auto"
 msgstr "Auto"
 
-#: src/totem.c:2713
+#: src/totem.c:2721
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -776,7 +780,7 @@ msgstr ""
 "Totem kunde inte starta:\n"
 "%s"
 
-#: src/totem.c:2957
+#: src/totem.c:2963
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -787,7 +791,7 @@ msgstr ""
 "konfigurationsmotorn:\n"
 "%s"
 
-#: src/totem.c:2972 src/totem.c:3004
+#: src/totem.c:2978 src/totem.c:3010
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -795,7 +799,7 @@ msgstr ""
 "Kunde inte läsa in huvudgränssnittet (totem.glade).\n"
 "Försäkra dig om att Totem är korrekt installerat."
 
-#: src/totem.c:3030
+#: src/totem.c:3036
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
@@ -823,11 +827,11 @@ msgstr "Stil på kanten runt statusradstexten"
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: src/bacon-video-widget.c:56
+#: src/bacon-video-widget-xine.c:56 src/bacon-video-widget-gst.c:56
 msgid "Totem Video Window"
 msgstr "Totem-videofönster"
 
-#: src/bacon-video-widget.c:555
+#: src/bacon-video-widget-xine.c:555
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -836,40 +840,40 @@ msgstr ""
 "Kunde inte läsa in ljuddrivrutinen \"%s\"\n"
 "Kontrollera att enheten inte är upptagen."
 
-#: src/bacon-video-widget.c:968
+#: src/bacon-video-widget-xine.c:968
 msgid "There is no plugin to handle this movie"
 msgstr "Det finns ingen insticksmodul för att hantera denna film"
 
-#: src/bacon-video-widget.c:972
+#: src/bacon-video-widget-xine.c:972
 msgid "This movie is broken and can not be played further"
 msgstr "Denna film är trasig, och kan inte spelas längre"
 
-#: src/bacon-video-widget.c:976
+#: src/bacon-video-widget-xine.c:976
 msgid "This location is not a valid one"
 msgstr "Denna plats är inte giltig"
 
-#: src/bacon-video-widget.c:980
+#: src/bacon-video-widget-xine.c:980
 msgid "Generic Error"
 msgstr "Allmänt fel"
 
-#: src/bacon-video-widget.c:1294
+#: src/bacon-video-widget-xine.c:1303
 #, c-format
 msgid "Video type '%s' is not handled"
 msgstr "Videotypen \"%s\" stöds inte"
 
-#: src/bacon-video-widget.c:2271
+#: src/bacon-video-widget-xine.c:2293
 msgid "Movie is not playing"
 msgstr "Filmen spelas inte"
 
-#: src/bacon-video-widget.c:2279
+#: src/bacon-video-widget-xine.c:2301
 msgid "No video to capture"
 msgstr "Ingen video att fånga"
 
-#: src/bacon-video-widget.c:2286
+#: src/bacon-video-widget-xine.c:2308
 msgid "Video codec is not handled"
 msgstr "Videokomprimeringsmetoden hanteras inte"
 
-#: src/bacon-video-widget.c:2297
+#: src/bacon-video-widget-xine.c:2319
 msgid "Height or width of the video is 0. Please file a bug."
 msgstr "Höjden eller bredden på videobilden är 0. Felrapportera."
 
@@ -941,6 +945,15 @@ msgstr "%d ramar per sekund"
 #, c-format
 msgid "%d kbps"
 msgstr "%d kb/s"
+
+#~ msgid "Movie Player using backend:"
+#~ msgstr "Filmspelare som använder bakänden:"
+
+#~ msgid "using backend:"
+#~ msgstr "använder bakände:"
+
+#~ msgid "Movie Player (based on the xine libraries)"
+#~ msgstr "Filmspelare (baserad på xine-biblioteken)"
 
 #~ msgid "Add..."
 #~ msgstr "Lägg till..."
@@ -1154,9 +1167,6 @@ msgstr "%d kb/s"
 #~ "Detta etyder att versionerna av xine och denna insticksmodul inte "
 #~ "passar.\n"
 #~ "Att installera aktuella insticksmoduler ör hjälpa.\n"
-
-#~ msgid "Movie Player"
-#~ msgstr "Filmspelare"
 
 #~ msgid "Open _Recent"
 #~ msgstr "Öppna _senaste"
