@@ -314,7 +314,7 @@ totem_action_play_pause (Totem *totem)
 		}
 	}
 
-	if (!gtk_xine_is_playing(GTK_XINE(totem->gtx)))
+	if (gtk_xine_is_playing(GTK_XINE(totem->gtx)) == FALSE)
 	{
 		totem_action_play (totem, 0);
 	} else {
@@ -521,7 +521,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 static gboolean
 totem_playing_dvd (Totem *totem)
 {
-    if (!totem->mrl)
+    if (totem->mrl == NULL)
         return FALSE;
 
     return !strcmp("dvd:/", totem->mrl);
@@ -579,7 +579,7 @@ totem_action_seek_relative (Totem *totem, int off_sec)
 {
 	int oldsec,  sec;
 
-	if (!gtk_xine_is_seekable (GTK_XINE(totem->gtx)))
+	if (gtk_xine_is_seekable (GTK_XINE(totem->gtx)) == FALSE)
 		return;
 	if (totem->mrl == NULL)
 		return;
@@ -599,7 +599,7 @@ totem_action_volume_relative (Totem *totem, int off_pct)
 {
 	int vol;
 
-	if (!gtk_xine_can_set_volume (GTK_XINE (totem->gtx)))
+	if (gtk_xine_can_set_volume (GTK_XINE (totem->gtx)) == FALSE)
 		return;
 
 	vol = gtk_xine_get_volume (GTK_XINE (totem->gtx));
@@ -858,7 +858,7 @@ update_seekable (Totem *totem, gboolean force_false)
 	widget = glade_xml_get_widget (totem->xml, "skip_to1");
 	gtk_widget_set_sensitive (widget, caps);
 	widget = glade_xml_get_widget (totem->xml, "okbutton2");
-	gtk_set_sensitive (widget, caps);
+	gtk_widget_set_sensitive (widget, caps);
 }
 
 static void
