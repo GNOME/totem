@@ -1,5 +1,22 @@
 2002-07-31  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-playlist.c: (gtk_tree_model_iter_previous),
+	(update_current_from_playlist), (gtk_playlist_add_files),
+	(gtk_playlist_foreach_selected), (gtk_playlist_remove_files),
+	(init_columns), (init_treeview), (gtk_playlist_init),
+	(gtk_playlist_finalize), (gtk_playlist_new),
+	(gtk_playlist_add_mrl), (gtk_playlist_clear),
+	(gtk_playlist_get_current_mrl), (gtk_playlist_has_previous_mrl),
+	(gtk_playlist_has_next_mrl), (gtk_playlist_set_playing),
+	(gtk_playlist_unset_playing), (gtk_playlist_set_previous),
+	(gtk_playlist_set_next), (gtk_playlist_set_at_start),
+	(gtk_playlist_class_init): added debug, make items removal work,
+	fix warnings wrt signal emission, fix last item's removal
+	* src/totem.c: (action_exit), (current_removed_cb),
+	(totem_callback_connect): make items removal work as it should
+
+2002-07-31  Bastien Nocera  <hadess@hadess.net>
+
 	* .cvsignore:
 	* po/.cvsignore:
 	* src/.cvsignore: added

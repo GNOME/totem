@@ -85,6 +85,7 @@ static void
 action_exit (Totem *totem)
 {
 	gtk_xine_stop (GTK_XINE (totem->gtx));
+	gtk_main_quit ();
 	//FIXME gtk_widget_unrealize (totem->gtx);
 	//FIXME gtk_widget_destroy (totem->win);
 	exit (0);
@@ -191,6 +192,9 @@ action_set_mrl (Totem *totem, const char *mrl)
 
 		/* Seek bar */
 		gtk_widget_set_sensitive (totem->seek, FALSE);
+
+		/* Stop the playback */
+		gtk_xine_stop (GTK_XINE (totem->gtx));
 	} else {
 		char *title, *text, *time_text;
 		int time;
@@ -615,9 +619,20 @@ static void
 current_removed_cb (GtkWidget *playlist, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
+	char *mrl;
 g_message ("current removed");
-	action_set_mrl (totem, NULL);
+
+	/* Force play button status */
+	if (gtk_toggle_button_get_active
+			(GTK_TOGGLE_BUTTON(totem->pp_button)) == TRUE)
+		play_pause_toggle_disconnected (totem);
+	gtk_playlist_set_at_start (totem->playlist);
 	update_buttons (totem);
+	mrl = gtk_playlist_get_current_mrl (totem->playlist);
+	action_set_mrl (totem, mrl);
+	long_action ();
+	action_play_pause (totem);
+	g_free (mrl);
 }
 
 static gboolean
@@ -883,7 +898,7 @@ totem_callback_connect (Totem *totem)
 			"changed", G_CALLBACK (playlist_changed_cb),
 			(gpointer) totem);
 	g_signal_connect (G_OBJECT (totem->playlist),
-			"changed", G_CALLBACK (current_removed_cb),
+			"current-removed", G_CALLBACK (current_removed_cb),
 			(gpointer) totem);
 }
 
