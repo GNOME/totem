@@ -1,5 +1,16 @@
 2003-01-22  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (get_fourcc_string), (gtk_xine_open),
+	(gtk_xine_stop), (gtk_xine_close), (gtk_xine_get_position),
+	(gtk_xine_can_set_volume), (gtk_xine_get_volume),
+	(gtk_xine_get_stream_length), (gtk_xine_get_metadata_string),
+	(gtk_xine_get_metadata_int), (gtk_xine_get_metadata_bool),
+	(gtk_xine_get_metadata):
+	* src/totem.c: (on_error_event): boatloads of little fixes for
+	crashers and don't skip files on error
+
+2003-01-22  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-xine.c: (gtk_xine_stop): fix a deadlock when there is no
 	demuxer for the video/audio we're trying to play
 

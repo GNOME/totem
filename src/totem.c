@@ -1877,11 +1877,7 @@ on_error_event (GtkWidget *gtx, GtkXineError error, const char *message,
 	char *msg = NULL;
 	gboolean crap_out = FALSE;
 
-	if (gtk_playlist_has_next_mrl (totem->playlist))
-	{
-		totem_action_next (totem);
-		return;
-	}
+	/* We show errors all the time, and don't skip to the next */
 
 	switch (error)
 	{
@@ -1895,10 +1891,12 @@ on_error_event (GtkWidget *gtx, GtkXineError error, const char *message,
 		msg = g_strdup_printf (_("There is no plugin for Totem to "
 					"handle '%s'.\nTotem will not be able "
 					"to play it."), totem->mrl);
+		totem_action_stop (totem);
 		break;
 	case GTX_DEMUXER_FAILED:
 		msg = g_strdup_printf (_("'%s' is broken, and Totem can not "
 					"play it further."), totem->mrl);
+		totem_action_stop (totem);
 		break;
 	case GTX_NO_CODEC:
 		msg = g_strdup_printf(_("Totem could not play '%s':\n%s"),

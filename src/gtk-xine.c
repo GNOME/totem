@@ -1171,7 +1171,7 @@ gtk_xine_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 static char *
 get_fourcc_string (uint32_t f)
 {
-	char fcc[5];
+	static char fcc[5];
 
 	memset(&fcc, 0, sizeof(fcc));
 
@@ -1191,7 +1191,7 @@ get_fourcc_string (uint32_t f)
 			*(uint32_t *) fcc = 0x33706d2e; /* Force to '.mp3' */
 	}
 
-	return g_strdup (&fcc[0]);
+	return &fcc[0];
 }
 
 
@@ -1210,6 +1210,7 @@ gtk_xine_open (GtkXine *gtx, const gchar *mrl)
 	error = xine_open (gtx->priv->stream, mrl);
 	if (error == 0)
 	{
+		gtk_xine_close (gtx);
 		xine_error (gtx);
 		return FALSE;
 	}
@@ -1241,7 +1242,7 @@ gtk_xine_open (GtkXine *gtx, const gchar *mrl)
 
 		D("Reason: Video type '%s' is not handled.", name ? name : fourcc_str );
 
-		g_free (fourcc_str);
+//		g_free (fourcc_str);
 
 		return FALSE;
 	}
@@ -1298,9 +1299,6 @@ gtk_xine_stop (GtkXine *gtx)
 	g_return_if_fail (GTK_IS_XINE (gtx));
 	g_return_if_fail (gtx->priv->xine != NULL);
 
-	if (gtx->priv->stream == NULL)
-		return;
-
 	if (gtk_xine_is_playing (gtx) == FALSE)
 		return;
 
@@ -1313,9 +1311,6 @@ gtk_xine_close (GtkXine *gtx)
 	g_return_if_fail (gtx != NULL);
 	g_return_if_fail (GTK_IS_XINE (gtx));
 	g_return_if_fail (gtx->priv->xine != NULL);
-
-	if (gtx->priv->stream == NULL)
-		return;
 
 	xine_close (gtx->priv->stream);
 	g_free (gtx->priv->mrl);
@@ -1422,6 +1417,9 @@ gtk_xine_get_position (GtkXine *gtx)
 	g_return_val_if_fail (gtx != NULL, 0);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
 	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
+
+	if (gtx->priv->mrl == NULL)
+		return 0;
 
 	if (gtk_xine_is_playing (gtx) == FALSE)
 		return 0;
@@ -1559,9 +1557,6 @@ gtk_xine_can_set_volume (GtkXine *gtx)
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
 	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
 
-	if (gtx->priv->stream == NULL)
-		return FALSE;
-
 	if (xine_get_param (gtx->priv->stream, XINE_PARAM_AUDIO_VOLUME) == -1)
 		return FALSE;
 
@@ -1596,6 +1591,9 @@ gtk_xine_get_volume (GtkXine *gtx)
 	g_return_val_if_fail (gtx != NULL, 0);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
 	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
+
+	if (gtk_xine_can_set_volume (gtx) == FALSE)
+		return 0;
 
 	volume = xine_get_param (gtx->priv->stream,
 			XINE_PARAM_AUDIO_VOLUME);
@@ -1674,6 +1672,9 @@ gtk_xine_get_stream_length (GtkXine *gtx)
 	g_return_val_if_fail (gtx != NULL, 0);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
 	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
+
+	if (gtx->priv->mrl == NULL)
+		return 0;
 
 	xine_get_pos_length (gtx->priv->stream, &pos_stream,
 			&pos_time, &length_time);
@@ -1839,6 +1840,12 @@ gtk_xine_get_metadata_string (GtkXine *gtx, GtkXineMetadataType type,
 
 	g_value_init (value, G_TYPE_STRING);
 
+	if (gtx->priv->stream == NULL)
+	{
+		g_value_set_string (value, "");
+		return;
+	}
+
 	switch (type)
 	{
 	case GTX_INFO_TITLE:
@@ -1877,6 +1884,12 @@ gtk_xine_get_metadata_int (GtkXine *gtx, GtkXineMetadataType type,
 	int integer;
 
 	g_value_init (value, G_TYPE_INT);
+
+	if (gtx->priv->stream == NULL)
+	{
+		g_value_set_int (value, 0);
+		return;
+	}
 
 	switch (type)
 	{
@@ -1923,6 +1936,12 @@ gtk_xine_get_metadata_bool (GtkXine *gtx, GtkXineMetadataType type,
 
 	g_value_init (value, G_TYPE_BOOLEAN);
 
+	if (gtx->priv->stream == NULL)
+	{
+		g_value_set_boolean (value, FALSE);
+		return;
+	}
+
 	switch (type)
 	{
 	case GTX_INFO_HAS_VIDEO:
@@ -1945,6 +1964,10 @@ gtk_xine_get_metadata_bool (GtkXine *gtx, GtkXineMetadataType type,
 void
 gtk_xine_get_metadata (GtkXine *gtx, GtkXineMetadataType type, GValue *value)
 {
+	g_return_if_fail (gtx != NULL);
+	g_return_if_fail (GTK_IS_XINE (gtx));
+	g_return_if_fail (gtx->priv->xine != NULL);
+
 	switch (type)
 	{
 	case GTX_INFO_TITLE:
