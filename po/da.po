@@ -6,15 +6,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2002-10-22 20:35+0200\n"
-"PO-Revision-Date: 2002-10-22 20:35+0200\n"
+"POT-Creation-Date: 2002-10-28 22:53+0100\n"
+"PO-Revision-Date: 2002-10-28 22:54+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/playlist.glade.h:1 src/gtk-playlist.c:732
+#: data/playlist.glade.h:1 src/gtk-playlist.c:775
 msgid "Playlist"
 msgstr "Afspilningsliste"
 
@@ -94,7 +94,7 @@ msgstr "Spring fremad"
 msgid "Toggle Aspect Ratio"
 msgstr "Følg formatforholdet"
 
-#: data/totem.glade.h:17 src/totem.c:1009
+#: data/totem.glade.h:17 src/totem.c:1041
 msgid "Totem"
 msgstr "Totem"
 
@@ -144,15 +144,15 @@ msgstr "_Zoom 1:2"
 
 #: data/totem.glade.h:29
 msgid "button3"
-msgstr ""
+msgstr "button3"
 
 #: data/totem.glade.h:30
 msgid "button4"
-msgstr ""
+msgstr "button4"
 
 #: data/totem.glade.h:31
 msgid "button5"
-msgstr ""
+msgstr "button5"
 
 #: data/totem.schemas.in.h:1
 msgid "Default audio output driver"
@@ -174,23 +174,31 @@ msgstr "Gentagelsestilstand"
 msgid "Resize the canvas automatically on file load"
 msgstr "Ændr størrelsen af lærredet automatisk ved filåbninger"
 
-#: src/gtk-playlist.c:403 src/totem.c:841
+#: data/totem.schemas.in.h:6
+msgid "X coordinate for the Playlist"
+msgstr "x-koordinat for afspilningslisten"
+
+#: data/totem.schemas.in.h:7
+msgid "Y coordinate for the Playlist"
+msgstr "y-koordinat for afspilningslisten"
+
+#: src/gtk-playlist.c:405 src/totem.c:873
 msgid "Select files"
 msgstr "Vælg filer"
 
-#: src/gtk-playlist.c:543
+#: src/gtk-playlist.c:545
 msgid "Playing"
 msgstr "Afspiller"
 
-#: src/gtk-playlist.c:554
+#: src/gtk-playlist.c:556
 msgid "Filename"
 msgstr "Filnavn"
 
-#: src/gtk-xine.c:55
+#: src/gtk-xine.c:54
 msgid "Totem Video Window"
 msgstr "Totem-videovindue"
 
-#: src/gtk-xine.c:505
+#: src/gtk-xine.c:482
 msgid ""
 "The configuration system is not initialised.\n"
 "The defaults will be used."
@@ -198,7 +206,7 @@ msgstr ""
 "Konfigurationssystemet kunne ikke klargøres.\n"
 "Standardværdierne vil blive benyttet."
 
-#: src/gtk-xine.c:748
+#: src/gtk-xine.c:729
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
@@ -206,69 +214,32 @@ msgstr ""
 "Kunne ikke klargøre trådunderstøttelsen.\n"
 "Installér et multitråd-sikkert Xlib."
 
-#: src/gtk-xine.c:784
+#: src/gtk-xine.c:764
 msgid "Could not find a suitable video output."
 msgstr "Kunne ikke finde en passende video uddataenhed."
 
-#: src/gtk-xine.c:916
+#: src/gtk-xine.c:891
 #, c-format
 msgid "No video plugin available to decode '%s'."
 msgstr "Ingen videomoduler til rådighed til at afkode '%s'."
 
-#: src/input_gnomevfs.c:149
-#, c-format
-msgid "input_file: trying to open subtitle file '%s'\n"
-msgstr "input_file: forsøger at åbne undertitelsfilen '%s'\n"
-
-#: src/input_gnomevfs.c:155
-#, c-format
-msgid "input_file: failed to open subtitle file '%s'\n"
-msgstr "input_file: kunne ikke åbne undertitelsfilen '%s'\n"
-
-#: src/input_gnomevfs.c:224
-msgid "input_gnomevfs: read error\n"
-msgstr "input_gnomevfs: læsefejl\n"
-
-#: src/input_gnomevfs.c:376
-msgid "gnome-vfs input plugin as shipped with xine"
-msgstr "Gnome-VFS-inddatamodul som leveret med Xine"
-
-#: src/input_gnomevfs.c:393
-#, c-format
-msgid "input_gnomevfs: get optional data, type %08x, sub %p\n"
-msgstr "input_gnomevfs: henter valgfrie data, type %08x, sub %p\n"
-
-#: src/input_gnomevfs.c:444
-#, c-format
-msgid ""
-"gnomevfs input plugin doesn't support plugin API version %d.\n"
-"PLUGIN DISABLED.\n"
-"This means there's a version mismatch between xine and this input plugin.\n"
-"Installing current input plugins should help.\n"
-msgstr ""
-"Gnome-VFS-inddatamodulet understøtter ikke modul-API-version %d.\n"
-"MODEL DEAKTIVERET.\n"
-"Dette betyder at der er en uoverenstemmelse mellem version af Xine og dette "
-"inddatamodul.\n"
-"Installering af et nyere inddatamodul kan måske afhjælpe problemet.\n"
-
-#: src/totem.c:352 src/totem.c:1589
+#: src/totem.c:382 src/totem.c:1636
 msgid "<span size=\"medium\"><b>No file</b></span>"
 msgstr "<span size=\"medium\"><b>Igen fil</b></span>"
 
-#: src/totem.c:985
+#: src/totem.c:1017
 msgid "translator_credits"
 msgstr "Ole Laursen <olau@hardworking.dk>"
 
-#: src/totem.c:1010
+#: src/totem.c:1042
 msgid "(C) 2002 Bastien Nocera"
 msgstr "© 2002 Bastien Nocera"
 
-#: src/totem.c:1011
+#: src/totem.c:1043
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Videoafspiller baseret på Xine-bibliotekerne"
 
-#: src/totem.c:1250
+#: src/totem.c:1297
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -277,7 +248,7 @@ msgstr ""
 "Totem kunne ikke starte:\n"
 "%s"
 
-#: src/totem.c:1256
+#: src/totem.c:1303
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'\n"
@@ -286,12 +257,12 @@ msgstr ""
 "Der er ikke nogen moduler til rådighed for Totem til at \n"
 "håndtere '%s' som derfor ikke vil blive afspillet."
 
-#: src/totem.c:1261
+#: src/totem.c:1308
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "'%s' er ødelagt og kan ikke afspilles yderligere."
 
-#: src/totem.c:1265
+#: src/totem.c:1312
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -300,7 +271,7 @@ msgstr ""
 "Kunne ikke afspille '%s':\n"
 "%s"
 
-#: src/totem.c:1677
+#: src/totem.c:1724
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -311,7 +282,7 @@ msgstr ""
 "konfigurationsmotoren:\n"
 "%s"
 
-#: src/totem.c:1713 src/totem.c:1721
+#: src/totem.c:1760 src/totem.c:1768
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -319,10 +290,38 @@ msgstr ""
 "Kunne ikke indlæse hovedgrænsefladen (totem.glade).\n"
 "Sikr dig at Totem er korrekt installeret."
 
-#: src/totem.c:1734
+#: src/totem.c:1781
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
 msgstr ""
 "Kunne ikke indlæse grænsefladen til afspilningslisten.\n"
 "Sikr dig at Totem er korrekt installeret."
+
+#~ msgid "input_file: trying to open subtitle file '%s'\n"
+#~ msgstr "input_file: forsøger at åbne undertitelsfilen '%s'\n"
+
+#~ msgid "input_file: failed to open subtitle file '%s'\n"
+#~ msgstr "input_file: kunne ikke åbne undertitelsfilen '%s'\n"
+
+#~ msgid "input_gnomevfs: read error\n"
+#~ msgstr "input_gnomevfs: læsefejl\n"
+
+#~ msgid "gnome-vfs input plugin as shipped with xine"
+#~ msgstr "Gnome-VFS-inddatamodul som leveret med Xine"
+
+#~ msgid "input_gnomevfs: get optional data, type %08x, sub %p\n"
+#~ msgstr "input_gnomevfs: henter valgfrie data, type %08x, sub %p\n"
+
+#~ msgid ""
+#~ "gnomevfs input plugin doesn't support plugin API version %d.\n"
+#~ "PLUGIN DISABLED.\n"
+#~ "This means there's a version mismatch between xine and this input "
+#~ "plugin.\n"
+#~ "Installing current input plugins should help.\n"
+#~ msgstr ""
+#~ "Gnome-VFS-inddatamodulet understøtter ikke modul-API-version %d.\n"
+#~ "MODEL DEAKTIVERET.\n"
+#~ "Dette betyder at der er en uoverenstemmelse mellem version af Xine og "
+#~ "dette inddatamodul.\n"
+#~ "Installering af et nyere inddatamodul kan måske afhjælpe problemet.\n"
