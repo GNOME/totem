@@ -217,6 +217,9 @@ cdrom_option_menu (TotemCdSelection *tcs)
 
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
 
+	if (tcs->priv->cdroms == NULL)
+		gtk_widget_set_sensitive (option_menu, FALSE);
+
 	return option_menu;
 }
 
@@ -361,10 +364,17 @@ totem_cd_selection_set_device (TotemCdSelection *tcs, const char *device)
 				found = TRUE;
 		}
 
-		g_return_if_fail (found);
-
-		gtk_option_menu_set_history (GTK_OPTION_MENU
-				(tcs->priv->widget), i);
+		if (found)
+		{
+			gtk_option_menu_set_history (GTK_OPTION_MENU
+					(tcs->priv->widget), i);
+		} else {
+			/* If the device doesn't exist, set it back to
+			 * the default */
+			gtk_option_menu_set_history (GTK_OPTION_MENU
+					(tcs->priv->widget), 0);
+		}
+			
 	}
 }
 

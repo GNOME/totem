@@ -1,3 +1,14 @@
+2002-12-09  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: glib 2.1.x detection
+	* src/cd-drive.c: (cdrom_get_name), (linux_scan),
+	(scan_for_cdroms): fix up glib-2.1.x usage, use g_strndup instead of
+	strndup which is GNU only, some coding style fixes
+	* src/totem-cd-selection.c: (cdrom_option_menu),
+	(totem_cd_selection_set_device): make the widget insensitive if there
+	are no CD-Rom drives on the machine, fallback to the default device if
+	totem_cd_selection_set_device failed
+
 2002-12-08  Bastien Nocera  <hadess@hadess.net>
 
 	* src/cd-drive.c: (g_str_has_prefix): implement g_str_has_prefix for

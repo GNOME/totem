@@ -28,7 +28,6 @@
 #ifdef __linux__
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/ioctl.h>
@@ -38,7 +37,8 @@
 #include <math.h>
 #include <scsi/scsi.h>
 #include <scsi/sg.h>
-#endif
+#endif /* __linux__ */
+
 #include <glib.h>
 #include <libgnome/gnome-i18n.h>
 
@@ -46,7 +46,7 @@
 
 #ifdef __linux__
 
-#ifdef USE_STABLE_LIBGNOMEUI
+#ifdef USE_STABLE_LIBGLIB
 static gboolean
 g_str_has_prefix (gchar *haystack, gchar *needle)
 {
@@ -339,10 +339,11 @@ cdrom_get_name (struct cdrom_unit *cdrom, struct scsi_unit *units, int n_units)
 		g_free (filename);
 
 		i = strlen (line);
-		if (line[i-1] != '\n')
+		if (line[i-1] != '\n') {
 			retval = g_strdup (line);
-		else
-			retval = strndup (line, i - 1);
+		} else {
+			retval = g_strndup (line, i - 1);
+		}
 
 		g_free (line);
 	}
@@ -400,6 +401,7 @@ linux_scan (gboolean recorder_only)
 			return NULL;
 		}
 
+		/* Count the number of units, DO NOT REMOVE */
 		for (n_units = 0; device_str[n_units] != NULL && devices[n_units] != NULL; n_units++) {
 		}
 
@@ -407,7 +409,7 @@ linux_scan (gboolean recorder_only)
 		for (i = 0; i < n_units; i++) {
 			parse_sg_line (device_str[i], devices[i], &units[i]);
 		}
-	
+
 		g_strfreev (device_str);
 		g_strfreev (devices);
 	} else {
@@ -520,15 +522,18 @@ linux_scan (gboolean recorder_only)
 
 	return cdroms_list;
 }
-#endif
+#endif /* __linux__ */
+
 GList *
 scan_for_cdroms (gboolean recorder_only, gboolean add_image)
 {
 	CDDrive *cdrom;
 	GList *cdroms = NULL;
+
 #ifdef __linux__
 	cdroms = linux_scan (recorder_only);
 #endif
+
 	if (add_image) {
 		/* File */
 		cdrom = g_new0 (CDDrive, 1);
