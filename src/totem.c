@@ -206,7 +206,7 @@ totem_action_error (char *msg, Totem *totem)
 }
 
 #ifdef HAVE_X86
-static void
+static gboolean
 totem_action_error_try_download (char *msg, Totem *totem)
 {
 	GtkWidget *error_dialog;
@@ -246,12 +246,13 @@ totem_action_error_try_download (char *msg, Totem *totem)
 	gtk_widget_destroy (error_dialog);
 
 	if (res != GTK_RESPONSE_ACCEPT)
-		return;
+		return FALSE;
 
-	//FIXME we need a return value for that so we don't try to open
-	//a movie twice for no reasons
-	totem_download_from_fourcc (GTK_WINDOW (totem->win),
-			video_fcc, audio_fcc);
+	if (totem_download_from_fourcc (GTK_WINDOW (totem->win),
+				video_fcc, audio_fcc) < 0)
+		return FALSE;
+
+	return TRUE;
 }
 #endif
 
@@ -826,16 +827,19 @@ try_open_again:
 		if (retval == FALSE && first_try == TRUE)
 		{
 			char *msg;
+			gboolean try_again;
 
 			msg = g_strdup_printf(_("Totem could not play '%s'.\n"
 						"Reason: %s."),
 					mrl,
 					err->message);
 #ifdef HAVE_X86
-			totem_action_error_try_download (msg, totem);
+			try_again = totem_action_error_try_download
+				(msg, totem);
 			g_free (msg);
 			first_try = FALSE;
-			goto try_open_again;
+			if (try_again != FALSE)
+				goto try_open_again;
 #else
 			totem_action_error (msg, totem);
 #endif

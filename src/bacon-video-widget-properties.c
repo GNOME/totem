@@ -335,6 +335,7 @@ bacon_video_widget_properties_new (void)
 	props->priv->vbox = glade_xml_get_widget (props->priv->xml, "vbox1");
 
 	gtk_window_set_title (GTK_WINDOW (props), _("Properties"));
+	gtk_dialog_set_has_separator (GTK_DIALOG (props), FALSE);
 	gtk_dialog_add_buttons (GTK_DIALOG (props),
 			GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 			NULL);

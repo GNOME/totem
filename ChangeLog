@@ -1,3 +1,15 @@
+2003-06-12  Bastien Nocera  <hadess@hadess.net>
+
+	* data/properties.glade: remove unneeded gnome dependency
+	* src/bacon-video-widget-properties.c: remove the separator
+	(bacon_video_widget_properties_new):
+	* src/totem-download.c: (cab_extract),
+	(cab_url_from_fourcc_with_url), (cab_download_from_td_try),
+	(cab_download), (totem_download_from_fourcc):
+	* src/totem.c: (totem_action_error_try_download),
+	(totem_action_set_mrl): check if the codec was downloaded correctly
+	before trying to play the video again
+
 2003-06-11  Dennis Cranston <dennis_cranston at yahoo com>
 
 	* data/totem.glade:  Fix widget padding per HIG.  Fix case of various

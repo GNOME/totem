@@ -155,7 +155,6 @@ cab_extract (TotemDownload *td, const char *path)
 	/* The -d doesn't work very well... */
 	chdir (td->dirpath);
 	cmdline = g_strdup_printf ("cabextract -q -L %s", path);
-	g_message ("cmdline: %s", cmdline);
 
 	g_spawn_command_line_sync (cmdline, NULL, NULL, &err, NULL);
 	g_free (cmdline);
@@ -181,7 +180,6 @@ cab_extract (TotemDownload *td, const char *path)
 		 * filenames anyway */
 		if (strstr (name, ".inf") != NULL)
 		{
-			g_message ("removing %s", filename);
 			unlink (filename);
 		} else {
 			GnomeVFSResult res;
@@ -190,7 +188,6 @@ cab_extract (TotemDownload *td, const char *path)
 
 			destfile = g_build_filename (G_DIR_SEPARATOR_S,
 					destdir, name, NULL);
-			g_message ("moving %s to %s", filename, destfile);
 
 			origuri = gnome_vfs_uri_new (filename);
 			desturi = gnome_vfs_uri_new (destfile);
@@ -245,10 +242,7 @@ cab_url_from_fourcc_with_url (TotemDownload *td, const char *path,
 
 	c = curl_easy_init ();
 	if (c == NULL)
-	{
-		g_message ("curl init failed");
 		return -1;
-	}
 
 	fourcc = msid_from_fourcc (fcc);
 	msid = g_strdup_printf ("CLSID={%s}", fourcc);
@@ -291,6 +285,19 @@ cab_url_from_fourcc_with_url (TotemDownload *td, const char *path,
 	fclose (td->f);
 	g_free (msid);
 
+	/* If the file is empty, remove it and return -1 */
+	if (ret == 0)
+	{
+		struct stat st;
+
+		stat (path, &st);
+		if (st.st_size == 0)
+		{
+			unlink (path);
+			ret = -1;
+		}
+	}
+
 	return ret;
 }
 
@@ -307,11 +314,9 @@ cab_download_from_td_try (TotemDownload *td, const char *path, guint32 fcc)
 				CODECS_URL, fcc);
 		if (retval == 0)
 		{
-			cab_extract (td, path);
+			retval = cab_extract (td, path);
 			return retval;
 		}
-
-		sleep_with_long_action (1000000);
 	}
 
 	for (i = 0; i < 3; i++)
@@ -322,11 +327,9 @@ cab_download_from_td_try (TotemDownload *td, const char *path, guint32 fcc)
 				CODECS_URL, fcc);
 		if (retval == 0)
 		{
-			cab_extract (td, path);
+			retval = cab_extract (td, path);
 			return retval;
 		}
-
-		sleep_with_long_action (1000000);
 	}
 
 	return -1;
@@ -340,6 +343,8 @@ cab_download (TotemDownload *td)
 	char *filepath;
 	char *msg, *template;
 
+	retval = 0;
+
 	template = g_build_filename (G_DIR_SEPARATOR_S, g_get_tmp_dir (),
 			"totemXXXXXX", NULL);
 	td->dirpath = mktemp (template);
@@ -350,7 +355,8 @@ cab_download (TotemDownload *td)
 	{
 		filepath = g_build_filename (G_DIR_SEPARATOR_S, td->dirpath,
 				"totem_v.cab", NULL);
-		cab_download_from_td_try (td, filepath, td->video_fcc);
+		if (cab_download_from_td_try (td, filepath, td->video_fcc) < 0)
+			retval = -1;
 		g_free (filepath);
 	}
 
@@ -358,13 +364,17 @@ cab_download (TotemDownload *td)
 	{
 		filepath = g_build_filename (G_DIR_SEPARATOR_S, td->dirpath,
 				"totem_a.cab", NULL);
-		cab_download_from_td_try (td, filepath, td->audio_fcc);
+		if (cab_download_from_td_try (td, filepath, td->audio_fcc) < 0)
+		{
+			if (retval == 0)
+				retval = -1;
+		}
 		g_free (filepath);
 	}
 
 	set_label (td, DONE, TRUE);
 
-	return 0;
+	return retval;
 }
 
 int
@@ -375,6 +385,7 @@ totem_download_from_fourcc (GtkWindow *parent,
 	TotemDownload *td;
 	GtkWidget *hbox, *image;
 	char *filename, *msg;
+	int retval;
 
 	filename = gnome_program_locate_file (NULL,
 			GNOME_FILE_DOMAIN_APP_DATADIR,
@@ -385,7 +396,7 @@ totem_download_from_fourcc (GtkWindow *parent,
 	if (xml == NULL)
 	{
 		//FIXME
-		return;
+		return FALSE;
 	}
 
 	td = g_new0 (TotemDownload, 1);
@@ -401,9 +412,9 @@ totem_download_from_fourcc (GtkWindow *parent,
 
 	gtk_widget_show_all (td->dialog);
 
-	cab_download (td);
+	retval = cab_download (td);
 	totem_download_free (td);
 
-	return FALSE;
+	return retval;
 }
 
