@@ -70,7 +70,14 @@ enum {
 enum {
 	RATIO,
 	PROGRESS,
+	TITLE_CHANGE_ASYNC,
+	EOS_ASYNC,
 };
+
+typedef struct {
+	int signal;
+	char *msg;
+} signal_data;
 
 /* Arguments */
 enum {
@@ -447,8 +454,11 @@ frame_output_cb (void *bvw_gen,
 			if (bvw->priv->auto_resize == TRUE
 					&& bvw->priv->logo_mode == FALSE)
 			{
-				g_async_queue_push (bvw->priv->queue,
-						GINT_TO_POINTER (RATIO));
+				signal_data *data;
+
+				data = g_new0 (signal_data, 1);
+				data->signal = RATIO;
+				g_async_queue_push (bvw->priv->queue, data);
 				g_idle_add ((GSourceFunc)
 						bacon_video_widget_idle_signal,
 						bvw);
@@ -858,28 +868,44 @@ static gboolean
 bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 {
 	int queue_length;
-	char *i;
+	signal_data *data;
 
-	i = g_async_queue_try_pop (bvw->priv->queue);
-	if (i == NULL)
+	data = g_async_queue_try_pop (bvw->priv->queue);
+	if (data == NULL)
 		return FALSE;
 
 	TE ();
 
-	switch (GPOINTER_TO_INT (i))
+	switch (data->signal)
 	{
 	case RATIO:
 		bacon_video_widget_set_scale_ratio (bvw, 0);
 		queue_length = g_async_queue_length (bvw->priv->queue);
 		break;
 	case PROGRESS:
+		g_message ("%s", data->msg);
 		while (gtk_events_pending ())
 			gtk_main_iteration ();
 		//FIXME
 		break;
+	case TITLE_CHANGE_ASYNC:
+		g_signal_emit (G_OBJECT (bvw),
+				bvw_table_signals[TITLE_CHANGE],
+				0, data->msg);
+		break;
+	case EOS_ASYNC:
+		g_signal_emit (G_OBJECT (bvw),
+				bvw_table_signals[EOS], 0, NULL);
+		break;
+	default:
+		g_assert_not_reached ();
 	}
 
 	TL ();
+
+	g_free (data->msg);
+	g_free (data);
+	queue_length = g_async_queue_length (bvw->priv->queue);
 
 	return (queue_length > 0);
 }
@@ -891,31 +917,39 @@ xine_event (void *user_data, const xine_event_t *event)
 	xine_ui_data_t *ui_data;
 	xine_progress_data_t *prg;
 	xine_mrl_reference_data_t *ref;
+	signal_data *data;
 
 	switch (event->type)
 	{
 	case XINE_EVENT_UI_PLAYBACK_FINISHED:
-		g_signal_emit (G_OBJECT (bvw),
-				bvw_table_signals[EOS], 0, NULL);
+		data = g_new0 (signal_data, 1);
+		data->signal = EOS_ASYNC;
+		g_async_queue_push (bvw->priv->queue, data);
+		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
 		break;
 	case XINE_EVENT_UI_SET_TITLE:
 		ui_data = event->data;
-		g_signal_emit (G_OBJECT (bvw),
-				bvw_table_signals[TITLE_CHANGE],
-				0, ui_data->str);
+
+		data = g_new0 (signal_data, 1);
+		data->signal = TITLE_CHANGE_ASYNC;
+		data->msg = g_strdup (ui_data->str);
+		g_async_queue_push (bvw->priv->queue, data);
+		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
 		break;
 	case XINE_EVENT_PROGRESS:
 		prg = event->data;
 
-		g_async_queue_push (bvw->priv->queue,
-				GINT_TO_POINTER (PROGRESS));
+		data = g_new0 (signal_data, 1);
+		data->signal = PROGRESS;
+		data->msg = g_strdup_printf ("%s %d%%",
+				prg->description, prg->percent);
+		g_async_queue_push (bvw->priv->queue, data);
 		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
-
-		g_message ("pct: %d msg: %s", prg->percent, prg->description);
 		break;
 	case XINE_EVENT_MRL_REFERENCE:
 		ref = event->data;
 
+		//FIXME
 		g_message ("ref mrl detected: %s", ref->mrl);
 		break;
 	}
@@ -1038,10 +1072,7 @@ bacon_video_widget_new (int width, int height, gboolean null_out, GError **err)
 	/* load the video drivers */
 	bvw->priv->ao_driver = load_audio_out_driver (bvw, err);
 	if (*err != NULL)
-	{
-		//FIXME
 		return NULL;
-	}
 
 	bvw->priv->vo_driver = load_video_out_driver (bvw, TRUE);
 
@@ -2150,6 +2181,70 @@ char
 		return g_strdup_printf ("%s - %s", artist, short_title);
 
 	return NULL;
+}
+
+GList
+*bacon_video_widget_get_languages (BaconVideoWidget *bvw)
+{
+	GList *list = NULL;
+	int retval, i;
+	char lang[16];
+
+	for(i = 0; i < 15; i++)
+	{
+		memset (&lang, 0, sizeof (lang));
+
+		if (xine_get_audio_lang(bvw->priv->stream, i, lang) == 1)
+			list = g_list_prepend (list,
+					(gpointer) g_strdup (lang));
+	}
+
+	return g_list_reverse (list);
+}
+
+int
+bacon_video_widget_get_language (BaconVideoWidget *bvw)
+{
+	return xine_get_param (bvw->priv->stream,
+			XINE_PARAM_AUDIO_CHANNEL_LOGICAL);
+}
+
+void
+bacon_video_widget_set_language (BaconVideoWidget *bvw, int language)
+{
+	xine_set_param (bvw->priv->stream,
+			XINE_PARAM_AUDIO_CHANNEL_LOGICAL, language);
+}
+
+GList
+*bacon_video_widget_get_subtitles (BaconVideoWidget *bvw)
+{
+	GList *list = NULL;
+	int retval, i;
+	char lang[16];
+
+	for(i = 0; i < 15; i++)
+	{
+		memset (&lang, 0, sizeof (lang));
+
+		if (xine_get_spu_lang(bvw->priv->stream, i, lang) == 1)
+			list = g_list_prepend (list,
+					(gpointer) g_strdup (lang));
+	}
+
+	return g_list_reverse (list);
+}
+
+int
+bacon_video_widget_get_subtitle (BaconVideoWidget *bvw)
+{
+	return xine_get_param (bvw->priv->stream, XINE_PARAM_SPU_CHANNEL);
+}
+
+void
+bacon_video_widget_set_subtitle (BaconVideoWidget *bvw, int subtitle)
+{
+	xine_set_param (bvw->priv->stream, XINE_PARAM_SPU_CHANNEL, subtitle);
 }
 
 gboolean

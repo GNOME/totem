@@ -48,6 +48,7 @@
 		      <child>
 			<widget class="GtkMenuItem" id="open_location1">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Open a non-local file</property>
 			  <property name="label" translatable="yes">Open _Location...</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_open_location1_activate" last_modification_time="Wed, 12 Mar 2003 17:37:46 GMT"/>
@@ -58,12 +59,13 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="play_dvd1">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Play a Video DVD</property>
 			  <property name="label" translatable="yes">Play _DVD</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_play_dvd1_activate" last_modification_time="Fri, 09 Aug 2002 22:46:45 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1287">
+			    <widget class="GtkImage" id="image1359">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-cdrom</property>
 			      <property name="icon_size">1</property>
@@ -79,12 +81,13 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="play_vcd1">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Play a Video CD</property>
 			  <property name="label" translatable="yes">Play _VCD</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_play_vcd1_activate" last_modification_time="Fri, 09 Aug 2002 22:46:45 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1288">
+			    <widget class="GtkImage" id="image1360">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-cdrom</property>
 			      <property name="icon_size">1</property>
@@ -100,12 +103,13 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="play_audio_cd1">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Play an audio CD</property>
 			  <property name="label" translatable="yes">Play _Audio CD</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_play_cd1_activate" last_modification_time="Sun, 19 Jan 2003 22:48:19 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1289">
+			    <widget class="GtkImage" id="image1361">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-cdrom</property>
 			      <property name="icon_size">1</property>
@@ -142,6 +146,7 @@
 			<widget class="GtkMenuItem" id="play1">
 			  <property name="visible">True</property>
 			  <property name="sensitive">False</property>
+			  <property name="tooltip" translatable="yes">Play or pause the movie</property>
 			  <property name="label" translatable="yes">_Play / Pause</property>
 			  <property name="use_underline">True</property>
 			  <accelerator key="P" modifiers="0" signal="activate"/>
@@ -177,13 +182,13 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="take_screenshot1">
 			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">Take Screenshot</property>
+			  <property name="tooltip" translatable="yes">Take a screenshot</property>
 			  <property name="label" translatable="yes">Take _Screenshot</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_take_screenshot1_activate" last_modification_time="Mon, 06 Jan 2003 19:35:01 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1290">
+			    <widget class="GtkImage" id="image1362">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-convert</property>
 			      <property name="icon_size">1</property>
@@ -226,12 +231,13 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="fullscreen1">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Switch to fullscreen</property>
 			  <property name="label" translatable="yes">_Fullscreen</property>
 			  <property name="use_underline">True</property>
 			  <accelerator key="F" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1291">
+			    <widget class="GtkImage" id="image1363">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-zoom-fit</property>
 			      <property name="icon_size">1</property>
@@ -247,13 +253,14 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="zoom_1_2">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Zoom to half size</property>
 			  <property name="label" translatable="yes">_Zoom 1:2</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_zoom_1_2_activate" last_modification_time="Sat, 24 Aug 2002 12:55:50 GMT"/>
 			  <accelerator key="0" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1292">
+			    <widget class="GtkImage" id="image1364">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-zoom-out</property>
 			      <property name="icon_size">1</property>
@@ -269,13 +276,14 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="zoom_1_1">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Zoom to one for one size</property>
 			  <property name="label" translatable="yes">Zoom _1:1</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_zoom_1_1_activate" last_modification_time="Sat, 24 Aug 2002 12:49:15 GMT"/>
 			  <accelerator key="1" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1293">
+			    <widget class="GtkImage" id="image1365">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-zoom-100</property>
 			      <property name="icon_size">1</property>
@@ -291,13 +299,14 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="zoom_2_1">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Switch to double size</property>
 			  <property name="label" translatable="yes">Zoom _2:1</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_zoom_2_1_activate" last_modification_time="Sat, 24 Aug 2002 12:49:15 GMT"/>
 			  <accelerator key="2" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1294">
+			    <widget class="GtkImage" id="image1366">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-zoom-in</property>
 			      <property name="icon_size">1</property>
@@ -319,13 +328,14 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="toggle_aspect_ratio1">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Toggle the aspect ratio</property>
 			  <property name="label" translatable="yes">Toggle _Aspect Ratio</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_toggle_aspect_ratio1_activate" last_modification_time="Thu, 01 Aug 2002 17:44:43 GMT"/>
 			  <accelerator key="A" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1295">
+			    <widget class="GtkImage" id="image1367">
 			      <property name="visible">True</property>
 			      <property name="stock">gnome-stock-table-fill</property>
 			      <property name="icon_size">1</property>
@@ -341,10 +351,36 @@
 		      <child>
 			<widget class="GtkCheckMenuItem" id="always_on_top1">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Always on top</property>
 			  <property name="label" translatable="yes">Always On _Top</property>
 			  <property name="use_underline">True</property>
 			  <property name="active">False</property>
 			  <signal name="activate" handler="on_always_on_top1_activate" last_modification_time="Wed, 05 Mar 2003 20:46:23 GMT"/>
+			</widget>
+		      </child>
+
+		      <child>
+			<widget class="GtkMenuItem" id="subtitles1">
+			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Subtitles</property>
+			  <property name="label" translatable="yes">Subtitles</property>
+			  <property name="use_underline">True</property>
+			  <signal name="activate" handler="on_subtitles1_activate" last_modification_time="Mon, 24 Mar 2003 19:52:36 GMT"/>
+
+			  <child>
+			    <widget class="GtkMenu" id="subtitles1_menu">
+
+			      <child>
+				<widget class="GtkMenuItem" id="no_subtitles_selection_available1">
+				  <property name="visible">True</property>
+				  <property name="sensitive">False</property>
+				  <property name="label" translatable="yes">No subtitles selection available</property>
+				  <property name="use_underline">True</property>
+				  <signal name="activate" handler="on_no_subtitles_selection_available1_activate" last_modification_time="Mon, 24 Mar 2003 19:52:36 GMT"/>
+				</widget>
+			      </child>
+			    </widget>
+			  </child>
 			</widget>
 		      </child>
 
@@ -357,12 +393,13 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="show_playlist1">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Show or hide the playlist</property>
 			  <property name="label" translatable="yes">_Show/Hide Playlist</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_show_playlist1_activate" last_modification_time="Fri, 14 Jun 2002 22:36:54 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1296">
+			    <widget class="GtkImage" id="image1368">
 			      <property name="visible">True</property>
 			      <property name="pixbuf">playlist-16.png</property>
 			      <property name="xalign">0.5</property>
@@ -377,6 +414,7 @@
 		      <child>
 			<widget class="GtkCheckMenuItem" id="repeat_mode1">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Set the repeat mode</property>
 			  <property name="label" translatable="yes">_Repeat Mode</property>
 			  <property name="use_underline">True</property>
 			  <property name="active">False</property>
@@ -401,13 +439,14 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="dvd_root_menu">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Go to the DVD menu</property>
 			  <property name="label" translatable="yes">DVD menu</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_dvd_root_menu1_activate" last_modification_time="Sun, 01 Dec 2002 06:37:16 GMT"/>
 			  <accelerator key="m" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1297">
+			    <widget class="GtkImage" id="image1369">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-index</property>
 			      <property name="icon_size">1</property>
@@ -423,6 +462,7 @@
 		      <child>
 			<widget class="GtkMenuItem" id="dvd_title_menu">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Go to the title menu</property>
 			  <property name="label" translatable="yes">Title menu</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_dvd_title_menu1_activate" last_modification_time="Sun, 01 Dec 2002 06:46:59 GMT"/>
@@ -432,6 +472,7 @@
 		      <child>
 			<widget class="GtkMenuItem" id="dvd_audio_menu">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Go to the audio menu</property>
 			  <property name="label" translatable="yes">Audio menu</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_dvd_audio_menu1_activate" last_modification_time="Sun, 01 Dec 2002 06:47:23 GMT"/>
@@ -441,6 +482,7 @@
 		      <child>
 			<widget class="GtkMenuItem" id="dvd_angle_menu">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Go to the angle menu</property>
 			  <property name="label" translatable="yes">Angle menu</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_dvd_angle_menu1_activate" last_modification_time="Mon, 02 Dec 2002 16:46:53 GMT"/>
@@ -450,13 +492,14 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="dvd_chapter_menu">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Go to the chapter menu</property>
 			  <property name="label" translatable="yes">Chapter menu</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_dvd_chapter_menu1_activate" last_modification_time="Sun, 01 Dec 2002 06:48:14 GMT"/>
 			  <accelerator key="c" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1298">
+			    <widget class="GtkImage" id="image1370">
 			      <property name="visible">True</property>
 			      <property name="stock">gnome-stock-text-numbered-list</property>
 			      <property name="icon_size">1</property>
@@ -478,13 +521,14 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="next_chapter1">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Next chapter or movie</property>
 			  <property name="label" translatable="yes">Next Chapter/Movie</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_next_chapter1_activate" last_modification_time="Sun, 01 Dec 2002 05:37:38 GMT"/>
 			  <accelerator key="n" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1299">
+			    <widget class="GtkImage" id="image1371">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-goto-last</property>
 			      <property name="icon_size">1</property>
@@ -500,13 +544,14 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="previous_chapter1">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Previous chapter or movie</property>
 			  <property name="label" translatable="yes">Previous Chapter/Movie</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_previous_chapter1_activate" last_modification_time="Sun, 01 Dec 2002 05:38:03 GMT"/>
 			  <accelerator key="b" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1300">
+			    <widget class="GtkImage" id="image1372">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-goto-first</property>
 			      <property name="icon_size">1</property>
@@ -529,13 +574,14 @@
 			<widget class="GtkImageMenuItem" id="skip_to1">
 			  <property name="visible">True</property>
 			  <property name="sensitive">False</property>
+			  <property name="tooltip" translatable="yes">Skip to a specific time</property>
 			  <property name="label" translatable="yes">_Skip to...</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_skip_to1_activate" last_modification_time="Mon, 20 Jan 2003 13:27:41 GMT"/>
 			  <accelerator key="S" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1301">
+			    <widget class="GtkImage" id="image1373">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-jump-to</property>
 			      <property name="icon_size">1</property>
@@ -552,13 +598,14 @@
 			<widget class="GtkImageMenuItem" id="skip_forward1">
 			  <property name="visible">True</property>
 			  <property name="sensitive">False</property>
+			  <property name="tooltip" translatable="yes">Skip forward</property>
 			  <property name="label" translatable="yes">Skip forward</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_skip_forward1_activate" last_modification_time="Sun, 09 Jun 2002 02:56:32 GMT"/>
 			  <accelerator key="Right" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1302">
+			    <widget class="GtkImage" id="image1374">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-go-forward</property>
 			      <property name="icon_size">1</property>
@@ -575,13 +622,14 @@
 			<widget class="GtkImageMenuItem" id="skip_backwards1">
 			  <property name="visible">True</property>
 			  <property name="sensitive">False</property>
+			  <property name="tooltip" translatable="yes">Skip backwards</property>
 			  <property name="label" translatable="yes">Skip backwards</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_skip_backwards1_activate" last_modification_time="Sun, 09 Jun 2002 03:00:00 GMT"/>
 			  <accelerator key="Left" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1303">
+			    <widget class="GtkImage" id="image1375">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-go-back</property>
 			      <property name="icon_size">1</property>
@@ -608,15 +656,41 @@
 		    <widget class="GtkMenu" id="sound1_menu">
 
 		      <child>
+			<widget class="GtkMenuItem" id="languages1">
+			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Languages</property>
+			  <property name="label" translatable="yes">Languages</property>
+			  <property name="use_underline">True</property>
+			  <signal name="activate" handler="on_languages1_activate" last_modification_time="Mon, 24 Mar 2003 19:45:07 GMT"/>
+
+			  <child>
+			    <widget class="GtkMenu" id="languages1_menu">
+
+			      <child>
+				<widget class="GtkMenuItem" id="no_langage_selection_available1">
+				  <property name="visible">True</property>
+				  <property name="sensitive">False</property>
+				  <property name="label" translatable="yes">No langage selection available</property>
+				  <property name="use_underline">True</property>
+				  <signal name="activate" handler="on_no_langage_selection_available1_activate" last_modification_time="Mon, 24 Mar 2003 19:50:56 GMT"/>
+				</widget>
+			      </child>
+			    </widget>
+			  </child>
+			</widget>
+		      </child>
+
+		      <child>
 			<widget class="GtkImageMenuItem" id="volume_up1">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Volume up</property>
 			  <property name="label" translatable="yes">Volume Up</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_volume_up1_activate" last_modification_time="Fri, 09 Aug 2002 22:45:55 GMT"/>
 			  <accelerator key="Up" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1304">
+			    <widget class="GtkImage" id="image1376">
 			      <property name="visible">True</property>
 			      <property name="stock">gnome-stock-volume</property>
 			      <property name="icon_size">1</property>
@@ -632,13 +706,14 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="volume_down1">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">Volume down</property>
 			  <property name="label" translatable="yes">Volume Down</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_volume_down1_activate" last_modification_time="Fri, 09 Aug 2002 22:45:55 GMT"/>
 			  <accelerator key="Down" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1305">
+			    <widget class="GtkImage" id="image1377">
 			      <property name="visible">True</property>
 			      <property name="stock">gnome-stock-volume</property>
 			      <property name="icon_size">1</property>

@@ -1,3 +1,31 @@
+2003-03-31  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem.glade: add subtitles and audio languages selection menus
+	* src/Makefile.am:
+	* src/bacon-video-widget.c: (frame_output_cb),
+	(bacon_video_widget_idle_signal), (xine_event),
+	(bacon_video_widget_new),
+	(bacon_video_widget_properties_get_title),
+	(bacon_video_widget_get_languages),
+	(bacon_video_widget_get_language),
+	(bacon_video_widget_set_language),
+	(bacon_video_widget_get_subtitles),
+	(bacon_video_widget_get_subtitle),
+	(bacon_video_widget_set_subtitle):
+	* src/bacon-video-widget.h:
+	* src/languages.h: added, it needs to be fixed to include the *real*
+	names for the languages, so they appear i18n'ed in the menus
+	* src/totem-private.h:
+	* src/totem.c: (language_name_get_from_code),
+	(totem_g_list_deep_free), (totem_action_play), (totem_playing_dvd),
+	(totem_action_previous), (drag_video_cb), (on_title_change_event),
+	(on_sub_activate), (on_lang_activate), (add_item_to_menu),
+	(create_submenu), (update_dvd_menu_sub_lang),
+	(totem_callback_connect), (main): don't call gtk functions from within
+	the xine event callback (within the xine thread), should Closes
+	#105860 and kill the X Async replies problems
+	Added subtitles and audio languages selection menus (Closes: #106333)
+
 2003-03-25  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-video-widget.c: (bacon_video_widget_instance_init),

@@ -55,6 +55,10 @@ struct Totem {
 	gfloat prev_volume;
 	int volume_first_time;
 
+	/* Subtitles/Languages menus */
+	GtkWidget *subtitles;
+	GtkWidget *languages;
+
 	/* exit fullscreen Popup */
 	GtkWidget *exit_popup;
 

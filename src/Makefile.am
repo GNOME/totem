@@ -59,7 +59,7 @@ totem_SOURCES = 					\
 	rb-ellipsizing-label.h		\
 	scrsaver.c  scrsaver.h		\
 	video-utils.c video-utils.h	\
-	debug.h				\
+	debug.h	languages.h		\
 	gnome-authn-manager.c		\
 	gnome-authn-manager.h		\
 	gnome-caption-table.c		\

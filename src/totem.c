@@ -38,6 +38,7 @@
 #include "bacon-cd-selection.h"
 #include "totem-statusbar.h"
 #include "video-utils.h"
+#include "languages.h"
 
 #include "egg-recent-view.h"
 
@@ -93,6 +94,7 @@ static void update_fullscreen_size (Totem *totem);
 static gboolean popup_hide (Totem *totem);
 static void update_buttons (Totem *totem);
 static void update_dvd_menu_items (Totem *totem);
+static void update_dvd_menu_sub_lang (Totem *totem); 
 static void update_seekable (Totem *totem, gboolean force_false);
 static void on_play_pause_button_clicked (GtkToggleButton *button,
 		Totem *totem);
@@ -103,6 +105,31 @@ long_action (void)
 {
 	while (gtk_events_pending ())
 		gtk_main_iteration ();
+}
+
+static char
+*language_name_get_from_code (const char *code)
+{
+	int i;
+
+	for (i = 0; languages[i].code != NULL; i++)
+	{
+		if (strcmp (code, languages[i].code) == 0)
+			return g_strdup (languages[i].language);
+	}
+
+	/* Ooops, not found */
+	return g_strdup (code);
+}
+
+static void
+totem_g_list_deep_free (GList *list)
+{
+	GList *l;
+
+	for (l = list; l != NULL; l = l->next)
+		g_free (l->data);
+	g_list_free (list);
 }
 
 void
@@ -248,6 +275,8 @@ totem_action_play (Totem *totem, int offset)
 			totem_action_stop (totem);
 		g_free (msg);
 	}
+
+	update_dvd_menu_sub_lang (totem);
 }
 
 void
@@ -553,10 +582,10 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 static gboolean
 totem_playing_dvd (Totem *totem)
 {
-    if (totem->mrl == NULL)
-        return FALSE;
+	if (totem->mrl == NULL)
+	    return FALSE;
 
-    return !strcmp("dvd:/", totem->mrl);
+	return !strcmp("dvd:/", totem->mrl);
 }
 
 void
@@ -578,7 +607,6 @@ totem_action_previous (Totem *totem)
                 totem_action_set_mrl_and_play (totem, mrl);
                 g_free (mrl);
         }
-
 }
 
 void
@@ -785,7 +813,7 @@ drag_video_cb (GtkWidget *widget,
 		gpointer callback_data)
 {
 	Totem *totem = (Totem *) callback_data;
-	char *text;// = "file:///tmp/";
+	char *text;
 	int len;
 
 	g_assert (selection_data != NULL);
@@ -801,8 +829,6 @@ drag_video_cb (GtkWidget *widget,
 	g_return_if_fail (text != NULL);
 
 	len = strlen (text);
-
-	g_print ("info: %d text: %s len: %d\n", info, text, len);
 
 	gtk_selection_data_set (selection_data,
 			selection_data->target,
@@ -870,6 +896,9 @@ on_title_change_event (GtkWidget *win, const char *string, Totem *totem)
 {
 	update_mrl_label (totem, string);
 	gtk_playlist_set_title (GTK_PLAYLIST (totem->playlist), string);
+
+	/* The DVD plugin changes the title when loading new bits */
+	update_dvd_menu_sub_lang (totem);
 }
 
 static void
@@ -2154,6 +2183,148 @@ update_buttons (Totem *totem)
 }
 
 static void
+on_sub_activate (GtkButton *button, Totem *totem)
+{
+	int rank;
+	gboolean is_set;
+
+	rank = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button), "rank"));
+	is_set = gtk_check_menu_item_get_active (GTK_CHECK_MENU_ITEM (button));
+
+	if (is_set != FALSE)
+		bacon_video_widget_set_subtitle (totem->bvw, rank);
+}
+
+static void
+on_lang_activate (GtkButton *button, Totem *totem)
+{
+	int rank;
+	gboolean is_set;
+
+	rank = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button), "rank"));
+	is_set = gtk_check_menu_item_get_active (GTK_CHECK_MENU_ITEM (button));
+
+	if (is_set != FALSE)
+		bacon_video_widget_set_language (totem->bvw, rank);
+}
+
+static GSList*
+add_item_to_menu (Totem *totem, GtkWidget *menu, const char *lang,
+		int current_lang, int selection, gboolean is_lang,
+		GSList *group)
+{
+	GtkWidget *item;
+
+	item = gtk_radio_menu_item_new_with_label (group, lang);
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
+			current_lang == selection ? TRUE : FALSE);
+	gtk_widget_show (item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+
+	g_object_set_data (G_OBJECT (item), "rank",
+			GINT_TO_POINTER (selection));
+
+	if (is_lang == FALSE)
+		g_signal_connect (G_OBJECT (item), "activate",
+				G_CALLBACK (on_sub_activate), totem);
+	else
+		g_signal_connect (G_OBJECT (item), "activate",
+				G_CALLBACK (on_lang_activate), totem);
+
+	return gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
+}
+
+static GtkWidget*
+create_submenu (Totem *totem, GList *list, int current, gboolean is_lang)
+{
+	GtkWidget *menu = NULL;
+	int i;
+	GList *l;
+	GSList *group = NULL;
+
+	if (list == NULL)
+		return NULL;
+
+	i = 0;
+
+	for (l = list; l != NULL; l = l->next)
+	{
+		GtkWidget *menuitem;
+		char *lang;
+
+		if (menu == NULL)
+		{
+			menu = gtk_menu_new ();
+			group = add_item_to_menu (totem, menu, _("Auto"),
+					current, -1, is_lang, group);
+		}
+
+		lang = language_name_get_from_code (l->data);
+		group = add_item_to_menu (totem, menu, lang, current,
+				i, is_lang, group);
+		i++;
+		g_free (lang);
+	}
+
+	gtk_widget_show (menu);
+
+	return menu;
+}
+
+static void
+update_dvd_menu_sub_lang (Totem *totem)
+{
+	GtkWidget *item, *submenu;
+	gboolean playing_dvd;
+	GtkWidget *lang_menu, *sub_menu;
+
+	lang_menu = NULL;
+	sub_menu = NULL;
+
+	playing_dvd = totem_playing_dvd (totem);
+
+	if (playing_dvd != FALSE)
+	{
+		GList *list;
+		int current;
+
+		list = bacon_video_widget_get_languages (totem->bvw);
+		current = bacon_video_widget_get_language (totem->bvw);
+		g_message ("current_lang: %d", current);
+		lang_menu = create_submenu (totem, list, current, TRUE);
+		totem_g_list_deep_free (list);
+
+		list = bacon_video_widget_get_subtitles (totem->bvw);
+		current = bacon_video_widget_get_subtitle (totem->bvw);
+		g_message ("current_sub: %d", current);
+		sub_menu = create_submenu (totem, list, current, FALSE);
+		totem_g_list_deep_free (list);
+	}
+
+	/* Subtitles */
+	item = glade_xml_get_widget (totem->xml, "subtitles1");
+	submenu = glade_xml_get_widget (totem->xml, "subtitles1_menu");
+	if (sub_menu == NULL)
+	{
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), submenu);
+	} else {
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), sub_menu);
+		totem->subtitles = sub_menu;
+	}
+
+	/* Languages */
+	item = glade_xml_get_widget (totem->xml, "languages1");
+	submenu = glade_xml_get_widget (totem->xml, "languages1_menu");
+	if (lang_menu == NULL)
+	{
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), submenu);
+	} else {
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), lang_menu);
+		totem->languages = lang_menu;
+	}
+}
+
+static void
 totem_callback_connect (Totem *totem)
 {
 	GtkWidget *item;
@@ -2408,6 +2579,12 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "spinbutton1");
 	g_signal_connect (G_OBJECT (item), "value-changed",
 			G_CALLBACK (spin_button_value_changed_cb), totem);
+
+	/* Subtitle and Languages submenu */
+	item = glade_xml_get_widget (totem->xml, "languages1_menu");
+	g_object_ref (item);
+	item = glade_xml_get_widget (totem->xml, "subtitles1_menu");
+	g_object_ref (item);
 
 	/* Update the UI */
 	gtk_timeout_add (600, (GtkFunction) update_cb_often, totem);
@@ -2789,7 +2966,7 @@ main (int argc, char **argv)
 	totem->fs_seek = glade_xml_get_widget (totem->xml, "hscale4");
 	totem->fs_seekadj = gtk_range_get_adjustment
 		(GTK_RANGE (totem->fs_seek));
-	totem->fs_volume     = glade_xml_get_widget (totem->xml, "hscale5");
+	totem->fs_volume = glade_xml_get_widget (totem->xml, "hscale5");
 	totem->fs_voladj = gtk_range_get_adjustment
 		(GTK_RANGE (totem->fs_volume));
 	totem->volume_first_time = 1;

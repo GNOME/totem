@@ -170,6 +170,15 @@ typedef enum {
 void bacon_video_widget_dvd_event                (BaconVideoWidget *bvw,
 						  BaconVideoWidgetDVDEvent
 						  type);
+GList *bacon_video_widget_get_languages          (BaconVideoWidget *bvw);
+int bacon_video_widget_get_language              (BaconVideoWidget *bvw);
+void bacon_video_widget_set_language             (BaconVideoWidget *bvw,
+		                                  int language);
+
+GList *bacon_video_widget_get_subtitles          (BaconVideoWidget *bvw);
+int bacon_video_widget_get_subtitle              (BaconVideoWidget *bvw);
+void bacon_video_widget_set_subtitle             (BaconVideoWidget *bvw,
+		                                  int subtitle);
 
 /* Screenshot functions */
 gboolean bacon_video_widget_can_get_frames       (BaconVideoWidget *bvw,
