@@ -60,6 +60,16 @@ Tell an already running instance of
 .B totem
 to toggle between play and pause.
 .TP
+.B --play
+Tell an already running instance of
+.B totem
+to play (has no effect if already playing)
+.TP
+.B --pause
+Tell an already running instance of
+.B totem
+to pause (has no effect if already paused)
+.TP
 .B --next
 Tell an already running instance of 
 .B totem
@@ -190,6 +200,8 @@ Global keybindings for
 .ta \w'Down-arrow   'u	
 i	toggle interlacing on and off
 .br
+a	cycle between aspect ratios
+.br
 p	toggle between play and pause
 .br
 Esc	exit full screen mode
@@ -204,9 +216,28 @@ h	toggle display of on-screen controls
 .br
 2	resize window to 200% original size
 .br
-Left-arrow	skip back 15 seconds
 .br
-Right-arrow	skip forward 15 seconds
+r	zoom in the video
+.br
+t	zoom out the video
+.br
+d	start and stop the telestrator (drawing) mode
+.br
+e	erase the drawing
+.br
+Left-arrow        skip back 15 seconds
+.br
+Right-arrow       skip forward 15 seconds
+.br
+Shift+Left-arrow  skip back 5 seconds
+.br
+Shift+Right-arrow skip forward 15 seconds
+.br
+Ctrl+Left-arrow   skip back 3 minutes
+.br
+Ctrl+Right arrow  skip forward 10 minutes
+.br
+s	show the "Skip to..." dialog
 .br
 Up-arrow	increase volume by 8%
 .br
@@ -219,6 +250,9 @@ n		jump to next chapter/movie in playlist
 q		quit
 .br
 s		show the "skip to" dialog
+.br
+.br
+Ctrl-E          eject the playing optical media
 .br
 Ctrl-O		open a new file
 .br
