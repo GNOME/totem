@@ -1555,6 +1555,8 @@ bacon_video_widget_get_aspect_ratio (BaconVideoWidget *bvw)
 void
 bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
 {
+  gint w, h;
+
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
@@ -1563,7 +1565,11 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
   gst_video_widget_set_scale (bvw->priv->vw, ratio);
   gst_video_widget_set_scale_override (bvw->priv->vw, TRUE);
 #endif
+  get_media_size (bvw, &w, &h);
+  w = (gfloat) w * ratio;
+  h = (gfloat) h * ratio;
   shrink_toplevel (bvw);
+  totem_widget_set_preferred_size (GTK_WIDGET (bvw), w, h);
 }
 
 int

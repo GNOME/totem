@@ -1,5 +1,11 @@
 2004-10-07  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
+	* src/bacon-video-widget-gst.c:
+	(bacon_video_widget_set_scale_ratio):
+	  Actually do that, rather than just shrinking to a small size.
+
+2004-10-07  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
 	* src/bacon-video-widget-gst.c: (get_media_size),
 	(bacon_video_widget_realize), (bacon_video_widget_size_request),
 	(shrink_toplevel), (bacon_video_widget_signal_idler),
