@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Totem 05-09-2004 cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-19 12:25+0200\n"
-"PO-Revision-Date: 2004-09-19 14:15+0200\n"
+"POT-Creation-Date: 2004-09-29 12:40+0200\n"
+"PO-Revision-Date: 2004-09-29 16:22+0200\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
@@ -922,9 +922,13 @@ msgstr "_Afbeelding"
 msgid "Unnamed CDROM"
 msgstr "Naamloze cd-rom"
 
-#: src/bacon-video-widget-gst.c:62
+#: src/bacon-video-widget-gst.c:54
 msgid "Totem Video Window"
 msgstr "Totem videovenster"
+
+#: src/bacon-video-widget-gst.c:1966
+msgid "Failed to create a GStreamer play object"
+msgstr "Kon GStreamen afspeelobject niet aanmaken"
 
 #. Duration
 #: src/bacon-video-widget-properties.c:98
@@ -941,7 +945,7 @@ msgstr "%d frames per seconde"
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/bacon-video-widget-xine.c:665
+#: src/bacon-video-widget-xine.c:668
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -950,7 +954,7 @@ msgstr ""
 "De '%s' audiodriver kan niet geladen worden\n"
 "Controleer of het apparaat niet bezet is."
 
-#: src/bacon-video-widget-xine.c:1128 src/bacon-video-widget-xine.c:1601
+#: src/bacon-video-widget-xine.c:1131 src/bacon-video-widget-xine.c:1601
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -958,29 +962,29 @@ msgstr ""
 "Er is geen videoweergave beschikbaar. Controleer of het programma juist is "
 "geïnstalleerd."
 
-#: src/bacon-video-widget-xine.c:1243
+#: src/bacon-video-widget-xine.c:1246
 msgid "The server you are trying to connect to is not known."
 msgstr "De server waarmee u verbinding probeert te maken is niet bekend."
 
-#: src/bacon-video-widget-xine.c:1247
+#: src/bacon-video-widget-xine.c:1250
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "De apparaatnaam (%s) die u ingegeven hebt lijkt ongeldig te zijn."
 
-#: src/bacon-video-widget-xine.c:1251
+#: src/bacon-video-widget-xine.c:1254
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "server (%s) waarmee u verbinding probeert te maken is onbereikbaar."
 
-#: src/bacon-video-widget-xine.c:1255
+#: src/bacon-video-widget-xine.c:1258
 msgid "The connection to this server was refused."
 msgstr "De verbinding met de server is geweigerd."
 
-#: src/bacon-video-widget-xine.c:1259
+#: src/bacon-video-widget-xine.c:1262
 msgid "The specified movie could not be found."
 msgstr "De ingegeven film kan niet gevonden worden."
 
-#: src/bacon-video-widget-xine.c:1265 src/bacon-video-widget-xine.c:1279
+#: src/bacon-video-widget-xine.c:1268 src/bacon-video-widget-xine.c:1282
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -988,35 +992,35 @@ msgstr ""
 "De bron lijkt versleuteld te zijn en kan niet gelezen worden. Probeert u een "
 "versleutelde dvd af te spelen zonder libdvdcss?"
 
-#: src/bacon-video-widget-xine.c:1268
+#: src/bacon-video-widget-xine.c:1271
 msgid "The movie could not be read."
 msgstr "De film kan niet gelezen worden."
 
-#: src/bacon-video-widget-xine.c:1273
+#: src/bacon-video-widget-xine.c:1276
 #, c-format
 msgid "A problem occured while loading a library or a decoder (%s)."
 msgstr ""
 "Er is een probleem opgetreden tijdens het laden van een bibliotheek of een "
 "decoder (%s)."
 
-#: src/bacon-video-widget-xine.c:1282
+#: src/bacon-video-widget-xine.c:1285
 msgid "This file is encrypted and cannot be played back."
 msgstr "Deze film is versleuteld en kan niet worden afgespeeld."
 
-#: src/bacon-video-widget-xine.c:1287
+#: src/bacon-video-widget-xine.c:1290
 msgid "For security reasons, this movie can not be played back."
 msgstr "Wegens beveiligingsredenen kan deze film niet worden afgespeeld."
 
-#: src/bacon-video-widget-xine.c:1292
+#: src/bacon-video-widget-xine.c:1295
 msgid "The audio device is busy. Is another application using it?"
 msgstr ""
 "Het audioapparaat is bezet. Wordt het door een andere toepassing gebruikt?"
 
-#: src/bacon-video-widget-xine.c:1297
+#: src/bacon-video-widget-xine.c:1300
 msgid "You are not allowed to open this file."
 msgstr "U heeft geen toestemming om dit bestand te openen."
 
-#: src/bacon-video-widget-xine.c:1299
+#: src/bacon-video-widget-xine.c:1302
 msgid "The server refused access to this file or stream."
 msgstr "De server heeft toegang tot dit bestand of deze stroom geweigerd."
 
@@ -1040,13 +1044,13 @@ msgstr "Deze film kon niet worden geopend."
 msgid "Generic Error."
 msgstr "Algemene fout."
 
-#: src/bacon-video-widget-xine.c:1868
+#: src/bacon-video-widget-xine.c:1898
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr ""
 "Deze film bestaat uit een niet-bewegende afbeelding. U kunt deze openen met "
 "een afbeeldingsweergave-programma."
 
-#: src/bacon-video-widget-xine.c:1899
+#: src/bacon-video-widget-xine.c:1925
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1055,23 +1059,30 @@ msgstr ""
 "Videocodec '%s' kan niet verwerkt worden. U zult wellicht extra plugins "
 "moeten installeren om bepaalde type films af te kunnen spelen."
 
-#: src/bacon-video-widget-xine.c:1918
+#: src/bacon-video-widget-xine.c:1929
+#, c-format
+msgid ""
+"Audio codec '%s' is not handled. You might need to install additional "
+"plugins to be able to play some types of movies"
+msgstr "Audiocodec '%s' kan niet verwerkt worden. U zult wellicht extra plugins moeten installeren om bepaalde type films af te kunnen spelen."
+
+#: src/bacon-video-widget-xine.c:1948
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr ""
 "Dit is een bestand met alleen geluid en er is geen geluidsuitvoer "
 "beschikbaar."
 
 # de film wordt niet gedraaid?
-#: src/bacon-video-widget-xine.c:3386
+#: src/bacon-video-widget-xine.c:3420
 msgid "Movie is not playing."
 msgstr "De film wordt niet afgespeeld."
 
-#: src/bacon-video-widget-xine.c:3395
+#: src/bacon-video-widget-xine.c:3429
 msgid "No video to capture."
 msgstr "Geen video die opgeslagen kan worden."
 
 # videocodec kan niet worden afgespeeld?
-#: src/bacon-video-widget-xine.c:3403
+#: src/bacon-video-widget-xine.c:3437
 msgid "Video codec is not handled."
 msgstr "Videocodec kan niet worden verwerkt."
 
@@ -1140,12 +1151,12 @@ msgstr "Afspeellijst fout"
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "De film '%s' kan niet gelezen worden, mogelijk is deze beschadigd."
 
-#: src/totem-pl-parser.c:189
+#: src/totem-pl-parser.c:206
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "De parser kan niet worden geschreven: %s"
 
-#: src/totem-pl-parser.c:253
+#: src/totem-pl-parser.c:309 src/totem-pl-parser.c:432
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "Bestand '%s':·%s kan niet geopend worden"
@@ -1380,8 +1391,8 @@ msgstr "Kies de bestanden"
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "Het \"Lokatie openen...\"-interface kan niet worden geladen."
 
-#: src/totem.c:1684 src/totem.c:1692 src/totem.c:3792 src/totem.c:3819
-#: src/totem.c:3844
+#: src/totem.c:1684 src/totem.c:1692 src/totem.c:3795 src/totem.c:3822
+#: src/totem.c:3847
 msgid "Make sure that Totem is properly installed."
 msgstr "Controleer of Totem juist is geïnstalleerd."
 
@@ -1436,19 +1447,19 @@ msgstr "Optie '%s' is onbekend en werd genegeerd\n"
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verifieer uw systeeminstallatie. Totem zal nu afsluiten."
 
-#: src/totem.c:3780
+#: src/totem.c:3779
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem kan het configuratiesysteem niet initialiseren."
 
-#: src/totem.c:3780
+#: src/totem.c:3779
 msgid "Make sure that GNOME is properly installed."
 msgstr "Controleer of GNOME juist is geïnstalleerd."
 
-#: src/totem.c:3792 src/totem.c:3819
+#: src/totem.c:3795 src/totem.c:3822
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "Het hoofdinterface kan niet worden geladen (totem.glade)."
 
-#: src/totem.c:3844
+#: src/totem.c:3847
 msgid "Couldn't load the interface for the playlist."
 msgstr "De interface voor de afspeellijst kan niet worden geladen."
 
@@ -1519,7 +1530,7 @@ msgstr ""
 "niet initialiseren:\n"
 "%s"
 
-#: src/vanity.c:689 src/vanity.c:704
+#: src/vanity.c:692 src/vanity.c:707
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
