@@ -77,19 +77,21 @@ enum {
 
 /* Enum for none-signal stuff that needs to go through the AsyncQueue */
 enum {
-	RATIO,
+	RATIO_ASYNC,
 	TITLE_CHANGE_ASYNC,
 	EOS_ASYNC,
 	CHANNELS_CHANGE_ASYNC,
 	BUFFERING_ASYNC,
 	MESSAGE_ASYNC,
-	SPEED_WARNING_ASYNC
+	SPEED_WARNING_ASYNC,
+	ERROR_ASYNC
 };
 
 typedef struct {
 	int signal;
 	char *msg;
 	int num;
+	gboolean fatal;
 } signal_data;
 
 /* Arguments */
@@ -316,8 +318,9 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 				G_SIGNAL_RUN_LAST,
 				G_STRUCT_OFFSET (BaconVideoWidgetClass, error),
 				NULL, NULL,
-				baconvideowidget_marshal_VOID__STRING_BOOLEAN,
-				G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_BOOLEAN);
+				baconvideowidget_marshal_VOID__STRING_BOOLEAN_BOOLEAN,
+				G_TYPE_NONE, 3, G_TYPE_STRING, G_TYPE_BOOLEAN,
+				G_TYPE_BOOLEAN);
 
 	bvw_table_signals[EOS] =
 		g_signal_new ("eos",
@@ -533,7 +536,7 @@ frame_output_cb (void *bvw_gen,
 			signal_data *data;
 
 			data = g_new0 (signal_data, 1);
-			data->signal = RATIO;
+			data->signal = RATIO_ASYNC;
 			g_async_queue_push (bvw->priv->queue, data);
 			g_idle_add ((GSourceFunc)
 					bacon_video_widget_idle_signal, bvw);
@@ -1145,20 +1148,27 @@ bacon_video_widget_realize (GtkWidget *widget)
 			(gdk_display_get_default ()));
 	bvw->priv->screen = DefaultScreen (bvw->priv->display);
 
-	bvw->priv->ao_driver = load_audio_out_driver (bvw, NULL);
-	bvw->priv->vo_driver = load_video_out_driver (bvw, bvw->priv->null_out);
+	bvw->priv->vo_driver = load_video_out_driver
+		(bvw, bvw->priv->null_out);
 
 	if (bvw->priv->vo_driver == NULL)
 	{
-		bvw->priv->vo_driver = load_video_out_driver (bvw, TRUE);
-		g_signal_emit (G_OBJECT (bvw),
-				bvw_table_signals[ERROR], 0,
-				_("No video output is available. Make sure that the program is correctly installed."), TRUE);
-		g_message ("error");
-	}
-	//FIXME
+		signal_data *sigdata;
 
-	g_assert (bvw->priv->vo_driver != NULL);
+		bvw->priv->vo_driver = load_video_out_driver (bvw, TRUE);
+
+		/* We need to use an async signal, otherwise we try to
+		 * unrealize the widget before it's finished realizing */
+		sigdata = g_new0 (signal_data, 1);
+		sigdata->signal = ERROR_ASYNC;
+		sigdata->msg = _("No video output is available. Make sure that the program is correctly installed.");
+		sigdata->fatal = TRUE;
+		g_async_queue_push (bvw->priv->queue, sigdata);
+		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
+	}
+
+	bvw->priv->ao_driver = load_audio_out_driver (bvw, NULL);
+
 	setup_config_video (bvw);
 
 	if (bvw->priv->null_out == FALSE && bvw->priv->ao_driver != NULL)
@@ -1201,7 +1211,7 @@ bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 
 	switch (data->signal)
 	{
-	case RATIO:
+	case RATIO_ASYNC:
 		bacon_video_widget_set_scale_ratio (bvw, 1);
 		break;
 	case TITLE_CHANGE_ASYNC:
@@ -1225,13 +1235,17 @@ bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 	case MESSAGE_ASYNC:
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[ERROR],
-				0, data->msg, TRUE);
+				0, data->msg, TRUE, FALSE);
 		break;
 	case SPEED_WARNING_ASYNC:
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[SPEED_WARNING],
 				0, NULL);
 		break;
+	case ERROR_ASYNC:
+		g_signal_emit (G_OBJECT (bvw),
+				bvw_table_signals[ERROR], 0,
+				data->msg, TRUE, data->fatal);
 	default:
 		g_assert_not_reached ();
 	}

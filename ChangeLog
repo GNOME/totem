@@ -1,3 +1,19 @@
+2004-06-22  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_class_init),
+	(bacon_video_widget_signal_idler):
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_class_init),
+	(frame_output_cb), (bacon_video_widget_realize),
+	(bacon_video_widget_idle_signal):
+	* src/bacon-video-widget.h:
+	* src/baconvideowidget-marshal.list:
+	* src/totem.c: (on_error_event), (video_widget_create):
+
+	Add a "fatal" argument to the error signal, generate an async error
+	signal when a video output driver isn't available on _realize,
+	now we have a nice error message when a video driver isn't there
+	(Closes: #143879)
+
 2004-06-21  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_init):

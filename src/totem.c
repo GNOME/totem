@@ -1235,11 +1235,17 @@ on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 
 static void
 on_error_event (BaconVideoWidget *bvw, char *message,
-                gboolean playback_stopped, Totem *totem)
+                gboolean playback_stopped, gboolean fatal, Totem *totem)
 {
 	if (playback_stopped)
 		play_pause_set_label (totem, STATE_STOPPED);
-	totem_action_error (_("An error occured"), message, totem);
+
+	if (fatal == FALSE) {
+		totem_action_error (_("An error occured"), message, totem);
+	} else {
+		totem_action_error_and_exit (_("An error occured"),
+				message, totem);
+	}
 }
 
 static void
@@ -3374,10 +3380,6 @@ video_widget_create (Totem *totem)
 	/* Let's set a name. Will make debugging easier */
 	gtk_widget_set_name (GTK_WIDGET(totem->bvw), "bvw");
 
-	container = glade_xml_get_widget (totem->xml, "tmw_bvw_vbox");
-	gtk_container_add (GTK_CONTAINER (container),
-			GTK_WIDGET (totem->bvw));
-
 	g_signal_connect (G_OBJECT (totem->bvw),
 			"motion-notify-event",
 			G_CALLBACK (on_video_motion_notify_event),
@@ -3418,6 +3420,10 @@ video_widget_create (Totem *totem)
 			"speed-warning",
 			G_CALLBACK (on_speed_warning_event),
 			totem);
+
+	container = glade_xml_get_widget (totem->xml, "tmw_bvw_vbox");
+	gtk_container_add (GTK_CONTAINER (container),
+			GTK_WIDGET (totem->bvw));
 
 	/* Events for the widget video window as well */
 	gtk_widget_add_events (GTK_WIDGET (totem->bvw), GDK_KEY_PRESS_MASK);

@@ -438,8 +438,9 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 		  G_SIGNAL_RUN_LAST,
 		  G_STRUCT_OFFSET (BaconVideoWidgetClass, error),
 		  NULL, NULL,
-		  baconvideowidget_marshal_VOID__STRING_BOOLEAN,
-		  G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_BOOLEAN);
+		  baconvideowidget_marshal_VOID__STRING_BOOLEAN_BOOLEAN,
+		  G_TYPE_NONE, 3, G_TYPE_STRING,
+		  G_TYPE_BOOLEAN, G_TYPE_BOOLEAN);
 
   bvw_table_signals[EOS] =
     g_signal_new ("eos",
@@ -601,7 +602,8 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
 
           if (emit) {
             g_signal_emit (G_OBJECT (bvw),
-                           bvw_table_signals[ERROR], 0, error_message, TRUE);
+                           bvw_table_signals[ERROR], 0,
+			   error_message, TRUE, FALSE);
             
             /* Keep a copy of the last emitted message */
             if (bvw->priv->last_error_message)
