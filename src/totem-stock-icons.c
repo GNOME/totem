@@ -65,7 +65,7 @@ totem_get_icon_from_theme (const char *id, GtkIconSize size)
 	return pixbuf;
 }
 
-static gboolean 
+static gboolean
 remove_value (gpointer key, GdkPixbuf *pixbuf, Totem *totem)
 {
 	gdk_pixbuf_unref (pixbuf);
@@ -105,6 +105,12 @@ totem_set_default_icons (Totem *totem)
 	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
 			PIXBUF_FOR_ID("panel-screenshot"));
 
+	/* Leave fullscreen button */
+	item = glade_xml_get_widget (totem->xml,
+			"tefw_image");
+	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
+			PIXBUF_FOR_ID("stock_leave-fullscreen"));
+
 	/* Playlist button */
 	item = glade_xml_get_widget (totem->xml,
 			"tmw_playlist_button_image");
@@ -141,6 +147,7 @@ totem_named_icons_init (Totem *totem, gboolean refresh)
 	char *items[][4] = {
 		{ "panel-screenshot", "stock-panel-screenshot", "gnome-screenshot", "applets-screenshooter" },
 		{ "stock_playlist", "playlist-24", NULL, NULL },
+		{ "stock_leave-fullscreen", GTK_STOCK_QUIT, NULL, NULL },
 	};
 
 	if (refresh == FALSE) {
@@ -173,6 +180,17 @@ totem_named_icons_init (Totem *totem, gboolean refresh)
 			for (j = 0; j < size && items[i][j] != NULL; j++) {
 				pixbuf = totem_get_pixbuf_from_totem_install
 					(items[i][j]);
+				if (pixbuf != NULL)
+					break;
+			}
+		}
+
+		if (pixbuf == NULL) {
+			for (j = 0; j < size && items[i][j] != NULL; j++) {
+				pixbuf = gtk_widget_render_icon
+					(GTK_WIDGET (totem->win),
+					 items[i][j], GTK_ICON_SIZE_BUTTON,
+					 NULL);
 				if (pixbuf != NULL)
 					break;
 			}
