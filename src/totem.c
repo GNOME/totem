@@ -28,6 +28,7 @@
 #include "gnome-authn-manager.h"
 #include "gtk-message.h"
 #include "gtk-xine.h"
+#include "gtk-xine-properties.h"
 #include "gtk-playlist.h"
 #include "rb-ellipsizing-label.h"
 #include "bacon-cd-selection.h"
@@ -51,6 +52,7 @@ struct Totem {
 	GtkWidget *treeview;
 	GtkWidget *gtx;
 	GtkWidget *prefs;
+	GtkWidget *properties;
 
 	/* Play/Pause */
 	GtkWidget *pp_button;
@@ -422,7 +424,9 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 			gtk_xine_play (GTK_XINE (totem->gtx), 0 , 0);
 
 		/* Reset the properties */
-		gtk_xine_properties_update (GTK_XINE (totem->gtx), TRUE);
+		gtk_xine_properties_update
+			(GTK_XINE_PROPERTIES (totem->properties),
+			 GTK_XINE (totem->gtx), TRUE);
 	} else {
 		char *title, *time_text, *name;
 		int time;
@@ -483,7 +487,9 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		g_free (name);
 
 		/* Update the properties */
-		gtk_xine_properties_update (GTK_XINE (totem->gtx), FALSE);
+		gtk_xine_properties_update
+			(GTK_XINE_PROPERTIES (totem->properties),
+			 GTK_XINE (totem->gtx), FALSE);
 	}
 	update_buttons (totem);
 	update_dvd_menu_items (totem);
@@ -1276,10 +1282,8 @@ on_properties1_activate (GtkButton *button, gpointer user_data)
 {
 	Totem *totem = (Totem *)user_data;
 	GtkWidget *dialog;
-	//FIXME
-#if 0
-	dialog = gtk_xine_properties_dialog_get (GTK_XINE (totem->gtx));
-	if (dialog == NULL)
+
+	if (totem->properties == NULL)
 	{
 		totem_action_error (_("Totem couldn't show the movie properties window.\n"
 					"Make sure that Totem is correctly installed."),
@@ -1287,10 +1291,9 @@ on_properties1_activate (GtkButton *button, gpointer user_data)
 		return;
 	}
 
-	gtk_widget_show_all (dialog);
-	gtk_window_set_transient_for (GTK_WINDOW (dialog),
+	gtk_widget_show_all (totem->properties);
+	gtk_window_set_transient_for (GTK_WINDOW (totem->properties),
 			GTK_WINDOW (totem->win));
-#endif
 }
 
 static void
@@ -2285,6 +2288,7 @@ main (int argc, char **argv)
 		(GTK_RANGE (totem->fs_volume));
 	totem->volume_first_time = 1;
 	totem->fs_pp_button = glade_xml_get_widget (totem->xml, "fs_pp_button");
+	totem->properties = gtk_xine_properties_new ();
 
 	/* Calculate the height of the control popup window */
 	gtk_window_get_size (GTK_WINDOW (totem->control_popup),

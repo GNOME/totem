@@ -1,5 +1,20 @@
 2003-01-14  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine-properties.c: (gtk_xine_properties_init),
+	(gtk_xine_properties_finalize), (time_to_string),
+	(gtk_xine_properties_set_label), (gtk_xine_properties_reset),
+	(gtk_xine_properties_set_from_current),
+	(gtk_xine_properties_update), (gtk_xine_properties_new),
+	(gtk_xine_properties_class_init):
+	* src/gtk-xine-properties.h:
+	* src/gtk-xine.c: (gtk_xine_instance_init), (gtk_xine_finalize),
+	(gtk_xine_idle_signal):
+	* src/totem.c: (totem_action_set_mrl), (on_properties1_activate),
+	(main): update totem and GtkXine for the new GtkXine widget
+	need to finish the GtkXineProperties update code
+
+2003-01-14  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am:
 	* src/gtk-playlist.c:
 	* src/gtk-xine-properties.c:

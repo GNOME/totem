@@ -36,7 +36,6 @@
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 #include <gconf/gconf-client.h>
-#include <glade/glade.h>
 /* xine */
 #include <xine.h>
 
@@ -135,6 +134,7 @@ struct GtkXinePrivate {
 	int completion_event;
 
 	/* Visual effects */
+	char *mrl;
 	gboolean show_vfx;
 	gboolean using_vfx;
 	xine_post_t *vis;
@@ -152,12 +152,6 @@ struct GtkXinePrivate {
 	GdkWindow *fullscreen_window;
 	gboolean cursor_shown;
 	gboolean pml;
-
-	/* properties dialog */
-	char *mrl;
-	GtkWidget *dialog;
-	GladeXML *xml;
-	gboolean properties_reset_state;
 };
 
 static void gtk_xine_class_init (GtkXineClass *klass);
@@ -315,25 +309,7 @@ gtk_xine_instance_init (GtkXine *gtx)
 
 	gtx->priv = g_new0 (GtkXinePrivate, 1);
 	gtx->priv->xine = xine_new ();
-	gtx->priv->stream = NULL;
-	gtx->priv->vo_driver = NULL;
-	gtx->priv->ao_driver = NULL;
-	gtx->priv->ev_queue = NULL;
-	gtx->priv->display = NULL;
-	gtx->priv->null_out = FALSE;
-	gtx->priv->show_vfx = FALSE;
-	gtx->priv->using_vfx = FALSE;
-	gtx->priv->vis = NULL;
-	gtx->priv->fullscreen_mode = FALSE;
-	gtx->priv->init_finished = FALSE;
 	gtx->priv->cursor_shown = TRUE;
-	gtx->priv->can_dvd = FALSE;
-	gtx->priv->can_vcd = FALSE;
-	gtx->priv->pml = FALSE;
-	gtx->priv->mrl = NULL;
-	gtx->priv->dialog = NULL;
-	gtx->priv->xml = NULL;
-	gtx->priv->properties_reset_state = FALSE;
 
 	gtx->priv->queue = g_async_queue_new ();
 
@@ -356,10 +332,6 @@ gtk_xine_finalize (GObject *object)
 	/* Should put here what needs to be destroyed */
 	g_idle_remove_by_data (gtx);
 	g_async_queue_unref (gtx->priv->queue);
-	if (gtx->priv->dialog != NULL)
-		gtk_widget_destroy (gtx->priv->dialog);
-	if (gtx->priv->xml != NULL)
-		g_object_unref (gtx->priv->xml);
 	G_OBJECT_CLASS (parent_class)->finalize (object);
 
 	gtx->priv = NULL;
@@ -959,7 +931,6 @@ gtk_xine_idle_signal (GtkXine *gtx)
 	case RATIO:
 		gtk_xine_set_scale_ratio (gtx, 0);
 		break;
-	default:
 	}
 
 	g_free (signal->message);
@@ -1992,98 +1963,6 @@ gtk_xine_get_metadata (GtkXine *gtx, GtkXineMetadataType type, GValue *value)
 	return;
 }
 
-static void
-hide_dialog (GtkWidget *widget, int trash, gpointer user_data)
-{
-	GtkXine *gtx = (GtkXine *) user_data;
-
-	gtk_widget_hide (gtx->priv->dialog);
-}
-
-GtkWidget
-*gtk_xine_properties_dialog_get (GtkXine *gtx)
-{
-	char *filename;
-
-	if (gtx->priv->dialog != NULL)
-		return gtx->priv->dialog;
-
-	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
-			"totem", "properties.glade", NULL);
-
-	gtx->priv->xml = glade_xml_new (filename, NULL, NULL);
-	g_free (filename);
-
-	if (gtx->priv->xml == NULL)
-		return NULL;
-
-	gtx->priv->dialog = glade_xml_get_widget (gtx->priv->xml, "dialog1");
-
-	g_signal_connect (G_OBJECT (gtx->priv->dialog),
-			"response", G_CALLBACK (hide_dialog), (gpointer) gtx);
-	g_signal_connect (G_OBJECT (gtx->priv->dialog), "delete-event",
-			G_CALLBACK (hide_dialog), (gpointer) gtx);
-
-	gtk_xine_properties_update (gtx, gtx->priv->properties_reset_state);
-
-	return gtx->priv->dialog;
-}
-
-static char
-*time_to_string (int time)
-{
-	char *secs, *mins, *hours, *string;
-	int sec, min, hour;
-
-	sec = time % 60;
-	time = time - sec;
-	min = (time % (60*60)) / 60;
-	time = time - (min * 60);
-	hour = time / (60*60);
-
-	if (hour == 1)
-		/* One hour */
-		hours = g_strdup_printf (_("%d hour"), hour);
-	else
-		/* Multiple hours */
-		hours = g_strdup_printf (_("%d hours"), hour);
-
-	if (min == 1)
-		/* One minute */
-		mins = g_strdup_printf (_("%d minute"), min);
-	else
-		/* Multiple minutes */
-		mins = g_strdup_printf (_("%d minutes"), min);
-
-	if (sec == 1)
-		/* One second */
-		secs = g_strdup_printf (_("%d second"), sec);
-	else
-		/* Multiple seconds */
-		secs = g_strdup_printf (_("%d seconds"), sec);
-
-	if (hour > 0)
-	{
-		/* hour:minutes:seconds */
-		string = g_strdup_printf (_("%s %s %s"), hours, mins, secs);
-	} else if (min > 0) {
-		/* minutes:seconds */
-		string = g_strdup_printf (_("%s %s"), mins, secs);
-	} else if (sec > 0) {
-		/* seconds */
-		string = g_strdup_printf (_("%s"), secs);
-	} else {
-		/* 0 seconds */
-		string = g_strdup (_("0 seconds"));
-	}
-
-	g_free (hours);
-	g_free (mins);
-	g_free (secs);
-
-	return string;
-}
-
 char
 *gtk_xine_properties_get_title (GtkXine *gtx)
 {
@@ -2104,143 +1983,6 @@ char
 
 	return NULL;
 }
-
-static void
-gtk_xine_properties_set_label (GtkXine *gtx, const char *name, const char *text)
-{
-	GtkWidget *item;
-
-	item = glade_xml_get_widget (gtx->priv->xml, name);
-	gtk_label_set_text (GTK_LABEL (item), text);
-}
-
-static void
-gtk_xine_properties_reset (GtkXine *gtx)
-{
-	GtkWidget *item;
-
-	item = glade_xml_get_widget (gtx->priv->xml, "video");
-	gtk_widget_set_sensitive (item, FALSE);
-	item = glade_xml_get_widget (gtx->priv->xml, "audio");
-	gtk_widget_set_sensitive (item, FALSE);
-
-	/* Title */
-	gtk_xine_properties_set_label (gtx, "title", _("Unknown"));
-	/* Artist */
-	gtk_xine_properties_set_label (gtx, "artist", _("Unknown"));
-	/* Year */
-	gtk_xine_properties_set_label (gtx, "year", _("N/A"));
-	/* Duration */
-	gtk_xine_properties_set_label (gtx, "duration", _("0 second"));
-	/* Dimensions */
-	gtk_xine_properties_set_label (gtx, "dimensions", _("0 x 0"));
-	/* Video Codec */
-	gtk_xine_properties_set_label (gtx, "vcodec", _("N/A"));
-	/* Framerate */
-	gtk_xine_properties_set_label (gtx, "framerate",
-			_("0 frames per second"));
-	/* Bitrate */
-	gtk_xine_properties_set_label (gtx, "bitrate", _("0 kbps"));
-	/* Audio Codec */
-	gtk_xine_properties_set_label (gtx, "acodec", _("N/A"));
-}
-
-static void
-gtk_xine_properties_set_from_current (GtkXine *gtx)
-{
-	GtkWidget *item;
-	const char *text;
-	char *string;
-	int fps;
-
-	/* General */
-	text = xine_get_meta_info (gtx->priv->stream, XINE_META_INFO_TITLE);
-	gtk_xine_properties_set_label (gtx, "title",
-			text ? text : _("Unknown"));
-
-	text = xine_get_meta_info (gtx->priv->stream, XINE_META_INFO_ARTIST);
-	gtk_xine_properties_set_label (gtx, "artist",
-			text ? text : _("Unknown"));
-
-	text = xine_get_meta_info (gtx->priv->stream, XINE_META_INFO_YEAR);
-	gtk_xine_properties_set_label (gtx, "year",
-			text ? text : _("N/A"));
-
-	string = time_to_string (gtk_xine_get_stream_length (gtx) / 1000);
-	gtk_xine_properties_set_label (gtx, "duration", string);
-	g_free (string);
-
-	/* Video */
-	item = glade_xml_get_widget (gtx->priv->xml, "video");
-	if (xine_get_stream_info (gtx->priv->stream,
-				XINE_STREAM_INFO_HAS_VIDEO) == FALSE)
-		gtk_widget_set_sensitive (item, FALSE);
-	else
-		gtk_widget_set_sensitive (item, TRUE);
-
-	string = g_strdup_printf ("%d x %d",
-			xine_get_stream_info (gtx->priv->stream,
-				XINE_STREAM_INFO_VIDEO_WIDTH),
-			xine_get_stream_info (gtx->priv->stream,
-				XINE_STREAM_INFO_VIDEO_HEIGHT));
-	gtk_xine_properties_set_label (gtx, "dimensions", string);
-	g_free (string);
-
-	text = xine_get_meta_info (gtx->priv->stream,
-			XINE_META_INFO_VIDEOCODEC);
-	gtk_xine_properties_set_label (gtx, "vcodec",
-			text ? text : _("N/A"));
-
-	if (xine_get_stream_info (gtx->priv->stream,
-				XINE_STREAM_INFO_FRAME_DURATION) != 0)
-	{
-		fps = 90000 / xine_get_stream_info (gtx->priv->stream,
-				XINE_STREAM_INFO_FRAME_DURATION);
-	} else {
-		fps = 0;
-	}
-	string = g_strdup_printf (_("%d frames per second"), fps);
-	gtk_xine_properties_set_label (gtx, "framerate", string);
-	g_free (string);
-
-	/* Audio */
-	item = glade_xml_get_widget (gtx->priv->xml, "audio");
-	if (xine_get_stream_info (gtx->priv->stream,
-				XINE_STREAM_INFO_HAS_AUDIO) == FALSE)
-		gtk_widget_set_sensitive (item, FALSE);
-	else
-		gtk_widget_set_sensitive (item, TRUE);
-
-	string = g_strdup_printf (_("%d kbps"),
-			xine_get_stream_info (gtx->priv->stream,
-				XINE_STREAM_INFO_AUDIO_BITRATE) / 1000);
-	gtk_xine_properties_set_label (gtx, "bitrate", string);
-	g_free (string);
-
-	text = xine_get_meta_info (gtx->priv->stream,
-			XINE_META_INFO_AUDIOCODEC);
-	gtk_xine_properties_set_label (gtx, "acodec",
-			text ? text : _("N/A"));
-}
-
-void
-gtk_xine_properties_update (GtkXine *gtx, gboolean reset)
-{
-	gtx->priv->properties_reset_state = reset;
-
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
-	g_return_if_fail (gtx->priv->xine != NULL);
-
-	if (gtx->priv->dialog == NULL)
-		return;
-
-	if (reset == TRUE)
-		gtk_xine_properties_reset (gtx);
-	else
-		gtk_xine_properties_set_from_current (gtx);
-}
-
 
 /*
  *  For screen shot. Nicked from pornview which is in turn nicked from xine-ui.
@@ -2950,7 +2692,7 @@ scale_image (struct prvt_image_s *image)
  *  This function was pinched from filter_yuy2tov12.c, part of
  *  transcode, a linux video stream processing tool
  *
- *  Copyright (C) Thomas ŽÖstreich - June 2001
+ *  Copyright (C) Thomas ÂŽÃ–streich - June 2001
  *
  *  Thanks Thomas
  *      

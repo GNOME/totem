@@ -34,6 +34,7 @@ struct GtkXinePropertiesPrivate
 {
 	GladeXML *xml;
 	GtkWidget *vbox;
+	gboolean properties_reset_state;
 };
 
 static GtkWidgetClass *parent_class = NULL;
@@ -76,68 +77,216 @@ gtk_xine_properties_init (GtkXineProperties *playlist)
 	playlist->priv = g_new0 (GtkXinePropertiesPrivate, 1);
 	playlist->priv->xml = NULL;
 	playlist->priv->vbox = NULL;
+	playlist->priv->properties_reset_state = FALSE;
 }
 
 static void
 gtk_xine_properties_finalize (GObject *object)
 {
-	GtkXineProperties *playlist = GTK_XINE_PROPERTIES (object);
+	GtkXineProperties *props = GTK_XINE_PROPERTIES (object);
 
 	g_return_if_fail (object != NULL);
-#if 0
-	if (playlist->priv->current != NULL)
-		gtk_tree_path_free (playlist->priv->current);
-	if (playlist->priv->icon != NULL)
-		gdk_pixbuf_unref (playlist->priv->icon);
-#endif
+
+	g_object_unref (props->priv->xml);
+
 	if (G_OBJECT_CLASS (parent_class)->finalize != NULL) {
 		(* G_OBJECT_CLASS (parent_class)->finalize) (object);
 	}
 }
+
+static char
+*time_to_string (int time)
+{
+	char *secs, *mins, *hours, *string;
+	int sec, min, hour;
+
+	sec = time % 60;
+	time = time - sec;
+	min = (time % (60*60)) / 60;
+	time = time - (min * 60);
+	hour = time / (60*60);
+
+	if (hour == 1)
+		/* One hour */
+		hours = g_strdup_printf (_("%d hour"), hour);
+	else
+		/* Multiple hours */
+		hours = g_strdup_printf (_("%d hours"), hour);
+
+	if (min == 1)
+		/* One minute */
+		mins = g_strdup_printf (_("%d minute"), min);
+	else
+		/* Multiple minutes */
+		mins = g_strdup_printf (_("%d minutes"), min);
+
+	if (sec == 1)
+		/* One second */
+		secs = g_strdup_printf (_("%d second"), sec);
+	else
+		/* Multiple seconds */
+		secs = g_strdup_printf (_("%d seconds"), sec);
+
+	if (hour > 0)
+	{
+		/* hour:minutes:seconds */
+		string = g_strdup_printf (_("%s %s %s"), hours, mins, secs);
+	} else if (min > 0) {
+		/* minutes:seconds */
+		string = g_strdup_printf (_("%s %s"), mins, secs);
+	} else if (sec > 0) {
+		/* seconds */
+		string = g_strdup_printf (_("%s"), secs);
+	} else {
+		/* 0 seconds */
+		string = g_strdup (_("0 seconds"));
+	}
+
+	g_free (hours);
+	g_free (mins);
+	g_free (secs);
+
+	return string;
+}
+
+static void
+gtk_xine_properties_set_label (GtkXineProperties *props,
+			       const char *name, const char *text)
+{
+	GtkWidget *item;
+
+	item = glade_xml_get_widget (props->priv->xml, name);
+	gtk_label_set_text (GTK_LABEL (item), text);
+}
+
+static void
+gtk_xine_properties_reset (GtkXineProperties *props)
+{
+	GtkWidget *item;
+
+	item = glade_xml_get_widget (props->priv->xml, "video");
+	gtk_widget_set_sensitive (item, FALSE);
+	item = glade_xml_get_widget (props->priv->xml, "audio");
+	gtk_widget_set_sensitive (item, FALSE);
+
+	/* Title */
+	gtk_xine_properties_set_label (props, "title", _("Unknown"));
+	/* Artist */
+	gtk_xine_properties_set_label (props, "artist", _("Unknown"));
+	/* Year */
+	gtk_xine_properties_set_label (props, "year", _("N/A"));
+	/* Duration */
+	gtk_xine_properties_set_label (props, "duration", _("0 second"));
+	/* Dimensions */
+	gtk_xine_properties_set_label (props, "dimensions", _("0 x 0"));
+	/* Video Codec */
+	gtk_xine_properties_set_label (props, "vcodec", _("N/A"));
+	/* Framerate */
+	gtk_xine_properties_set_label (props, "framerate",
+			_("0 frames per second"));
+	/* Bitrate */
+	gtk_xine_properties_set_label (props, "bitrate", _("0 kbps"));
+	/* Audio Codec */
+	gtk_xine_properties_set_label (props, "acodec", _("N/A"));
+}
+
+static void
+gtk_xine_properties_set_from_current (GtkXineProperties *props, GtkXine *gtx)
+{
+	GtkWidget *item;
+	const char *text;
+	char *string;
+	int fps;
 #if 0
-static void
-gtk_xine_properties_unrealize (GtkWidget *widget)
-{
-	GtkXineProperties *playlist = GTK_XINE_PROPERTIES (widget);
-	int x, y;
+	/* General */
+	text = xine_get_meta_info (gtx->priv->stream, XINE_META_INFO_TITLE);
+	gtk_xine_properties_set_label (gtx, "title",
+			text ? text : _("Unknown"));
 
-	g_return_if_fail (widget != NULL);
+	text = xine_get_meta_info (gtx->priv->stream, XINE_META_INFO_ARTIST);
+	gtk_xine_properties_set_label (gtx, "artist",
+			text ? text : _("Unknown"));
 
-	gtk_window_get_position (GTK_WINDOW (widget), &x, &y);
-	gconf_client_set_int (playlist->priv->gc, "/apps/totem/playlist_x",
-			x, NULL);
-	gconf_client_set_int (playlist->priv->gc, "/apps/totem/playlist_y",
-			y, NULL);
+	text = xine_get_meta_info (gtx->priv->stream, XINE_META_INFO_YEAR);
+	gtk_xine_properties_set_label (gtx, "year",
+			text ? text : _("N/A"));
 
-	if (GTK_WIDGET_CLASS (parent_class)->unrealize != NULL) {
-		(* GTK_WIDGET_CLASS (parent_class)->unrealize) (widget);
+	string = time_to_string (gtk_xine_get_stream_length (gtx) / 1000);
+	gtk_xine_properties_set_label (gtx, "duration", string);
+	g_free (string);
+
+	/* Video */
+	item = glade_xml_get_widget (gtx->priv->xml, "video");
+	if (xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_HAS_VIDEO) == FALSE)
+		gtk_widget_set_sensitive (item, FALSE);
+	else
+		gtk_widget_set_sensitive (item, TRUE);
+
+	string = g_strdup_printf ("%d x %d",
+			xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_VIDEO_WIDTH),
+			xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_VIDEO_HEIGHT));
+	gtk_xine_properties_set_label (gtx, "dimensions", string);
+	g_free (string);
+
+	text = xine_get_meta_info (gtx->priv->stream,
+			XINE_META_INFO_VIDEOCODEC);
+	gtk_xine_properties_set_label (gtx, "vcodec",
+			text ? text : _("N/A"));
+
+	if (xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_FRAME_DURATION) != 0)
+	{
+		fps = 90000 / xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_FRAME_DURATION);
+	} else {
+		fps = 0;
 	}
-}
+	string = g_strdup_printf (_("%d frames per second"), fps);
+	gtk_xine_properties_set_label (gtx, "framerate", string);
+	g_free (string);
 
-static void
-gtk_xine_properties_realize (GtkWidget *widget)
-{
-	GtkXineProperties *playlist = GTK_XINE_PROPERTIES (widget);
-	int x, y;
+	/* Audio */
+	item = glade_xml_get_widget (gtx->priv->xml, "audio");
+	if (xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_HAS_AUDIO) == FALSE)
+		gtk_widget_set_sensitive (item, FALSE);
+	else
+		gtk_widget_set_sensitive (item, TRUE);
 
-	g_return_if_fail (widget != NULL);
+	string = g_strdup_printf (_("%d kbps"),
+			xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_AUDIO_BITRATE) / 1000);
+	gtk_xine_properties_set_label (gtx, "bitrate", string);
+	g_free (string);
 
-	if (GTK_WIDGET_CLASS (parent_class)->realize != NULL) {
-		(* GTK_WIDGET_CLASS (parent_class)->realize) (widget);
-	}
-
-	x = gconf_client_get_int (playlist->priv->gc,
-			"/apps/totem/playlist_x", NULL);
-	y = gconf_client_get_int (playlist->priv->gc,
-			"/apps/totem/playlist_y", NULL);
-
-	if (x == -1 || y == -1
-			|| x > gdk_screen_width () || y > gdk_screen_height ())
-		return;
-
-	gtk_window_move (GTK_WINDOW (widget), x, y);
-}
+	text = xine_get_meta_info (gtx->priv->stream,
+			XINE_META_INFO_AUDIOCODEC);
+	gtk_xine_properties_set_label (gtx, "acodec",
+			text ? text : _("N/A"));
 #endif
+}
+
+void
+gtk_xine_properties_update (GtkXineProperties *props, GtkXine *gtx,
+			    gboolean reset)
+{
+	g_return_if_fail (props != NULL);
+	g_return_if_fail (GTK_IS_XINE_PROPERTIES (props));
+
+	props->priv->properties_reset_state = reset;
+
+	if (reset == TRUE)
+	{
+		gtk_xine_properties_reset (props);
+	} else {
+		g_return_if_fail (gtx != NULL);
+		gtk_xine_properties_set_from_current (props, gtx);
+	}
+}
+
 static void
 hide_dialog (GtkWidget *widget, int trash, gpointer user_data)
 {
@@ -159,11 +308,7 @@ gtk_xine_properties_new (void)
 	g_free (filename);
 
 	if (xml == NULL)
-	{
-		//FIXME
-		g_warning (_("Couldn't find properties.glade"));
 		return NULL;
-	}
 
 	props = GTK_XINE_PROPERTIES (g_object_new
 			(GTK_TYPE_XINE_PROPERTIES, NULL));
@@ -185,7 +330,7 @@ gtk_xine_properties_new (void)
 	g_signal_connect (G_OBJECT (props), "delete-event",
 			G_CALLBACK (hide_dialog), NULL);
 
-//FIXME	gtk_xine_properties_update (gtx, gtx->priv->properties_reset_state);
+	gtk_xine_properties_update (props, NULL, FALSE);
 
 	gtk_widget_show_all (GTK_DIALOG (props)->vbox);
 
@@ -198,7 +343,5 @@ gtk_xine_properties_class_init (GtkXinePropertiesClass *klass)
 	parent_class = gtk_type_class (gtk_dialog_get_type ());
 
 	G_OBJECT_CLASS (klass)->finalize = gtk_xine_properties_finalize;
-//	GTK_WIDGET_CLASS (klass)->realize = gtk_xine_properties_realize;
-//	GTK_WIDGET_CLASS (klass)->unrealize = gtk_xine_properties_unrealize;
 }
 

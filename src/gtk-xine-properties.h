@@ -48,6 +48,7 @@ struct GtkXinePropertiesClass {
 GtkType    gtk_xine_properties_get_type	(void);
 GtkWidget *gtk_xine_properties_new	();
 
-void gtk_xine_properties_update		(GtkXine *gtx, gboolean reset);
+void gtk_xine_properties_update		(GtkXineProperties *props,
+					 GtkXine *gtx, gboolean reset);
 
 #endif /* GTK_XINE_PROPERTIES_H */
