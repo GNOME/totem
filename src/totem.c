@@ -106,7 +106,6 @@ action_error (char * msg)
 	gtk_widget_destroy (error_dialog);
 }
 
-
 #ifndef TOTEM_DEBUG
 /* Nicked from aaxine */
 static void
@@ -140,8 +139,6 @@ play_pause_set_label (Totem *totem, gboolean playing)
 	char *image_path;
 
 	image = glade_xml_get_widget (totem->xml, "pp_image");
-
-	D("Setting button to %s", playing ? "Pause" : "Playing");
 
 	if (playing == TRUE)
 	{
@@ -297,21 +294,11 @@ action_set_mrl (Totem *totem, const char *mrl)
 		/* Volume */
 		widget = glade_xml_get_widget (totem->xml, "volume_hbox");
 		gtk_widget_set_sensitive (widget, FALSE);
-
-		/* Stop the playback */
-		gtk_xine_stop (GTK_XINE (totem->gtx));
 	} else {
 		char *title, *time_text;
 		int time;
 
 		totem->mrl = g_strdup (mrl);
-
-		/* Otherwise we might never change the mrl in GtkXine */
-		if (gtk_xine_is_playing(GTK_XINE(totem->gtx))) {
-			/* If it's playing, we need to stop it */
-			action_play_pause (totem);
-		}
-		action_play (totem, 0);
 
 		/* Play/Pause */
 		gtk_widget_set_sensitive (totem->pp_button, TRUE);
@@ -358,7 +345,7 @@ action_previous (Totem *totem)
 	update_buttons (totem);
 	mrl = gtk_playlist_get_current_mrl (totem->playlist);
 	action_set_mrl (totem, mrl);
-//	action_play (totem, 0);
+	action_play (totem, 0);
 	g_free (mrl);
 }
 
@@ -371,7 +358,7 @@ action_next (Totem *totem)
 	update_buttons (totem);
 	mrl = gtk_playlist_get_current_mrl (totem->playlist);
 	action_set_mrl (totem, mrl);
-//	action_play (totem, 0);
+	action_play (totem, 0);
 	g_free (mrl);
 }
 
@@ -757,7 +744,7 @@ playlist_changed_cb (GtkWidget *playlist, gpointer user_data)
 		g_free (totem->mrl);
 		totem->mrl = NULL;
 		action_set_mrl (totem, mrl);
-//		action_play (totem, 0);
+		action_play (totem, 0);
 	} else if (totem->mrl != NULL) {
 		gtk_playlist_set_playing (totem->playlist, TRUE);
 	}
@@ -779,7 +766,6 @@ current_removed_cb (GtkWidget *playlist, gpointer user_data)
 	update_buttons (totem);
 	mrl = gtk_playlist_get_current_mrl (totem->playlist);
 	action_set_mrl (totem, mrl);
-	long_action ();
 	if (mrl != NULL)
 	{
 		action_play (totem, 0);
@@ -832,33 +818,28 @@ on_eos_event (GtkWidget *widget, gpointer user_data)
 
 	D("on_eos_event");
 
-	TE ();
-
 	if (!gtk_playlist_has_next_mrl (totem->playlist))
 	{
 		char *mrl;
 
-		long_action ();
 		/* Set play button status */
 		play_pause_set_label (totem, FALSE);
 		gtk_playlist_set_at_start (totem->playlist);
 		update_buttons (totem);
 		mrl = gtk_playlist_get_current_mrl (totem->playlist);
+		action_stop (totem);
 		action_set_mrl (totem, mrl);
-		long_action ();
-		action_play_pause (totem);
 		g_free (mrl);
 	} else {
 		action_next (totem);
 	}
 
-	TL ();
-
 	return FALSE;
 }
 
 static void
-on_play_error_event (GtkWidget *gtx, GtkXineError error, gpointer user_data)
+on_error_event (GtkWidget *gtx, GtkXineError error, const char *message,
+		gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 
@@ -868,7 +849,8 @@ on_play_error_event (GtkWidget *gtx, GtkXineError error, gpointer user_data)
 	{
 		char *msg;
 
-		msg = g_strdup_printf("Error: %d", error);
+		//FIXME
+		msg = g_strdup_printf("Error: %s %d", message, error);
 		action_error (msg);
 		g_free (msg);
 		gtk_playlist_set_playing (totem->playlist, FALSE);
@@ -980,13 +962,9 @@ video_widget_create (Totem *totem)
 			G_CALLBACK (on_eos_event),
 			totem);
 	g_signal_connect (G_OBJECT (totem->gtx),
-			"play-error",
-			G_CALLBACK (on_play_error_event),
-			totem);
-/* FIXME	g_signal_connect (G_OBJECT (totem->gtx),
 			"error",
 			G_CALLBACK (on_error_event),
-			totem); */
+			totem);
 
 	gtk_widget_realize (totem->gtx);
 	gtk_widget_show (totem->gtx); 
@@ -1181,7 +1159,10 @@ main (int argc, char **argv)
 	long_action ();
 
 	if (argc > 1)
+	{
 		action_open_files (totem, argv, TRUE);
+		action_play (totem, 0);
+	}
 
 	gtk_main ();
 

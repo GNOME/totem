@@ -1,3 +1,19 @@
+2002-08-06  Bastien Nocera  <hadess@hadess.net>
+
+	* src/Makefile.am: added the marshal list
+	* src/gtk-xine.c: (gtk_xine_class_init), (gtk_xine_instance_init),
+	(gtk_xine_realize), (gtk_xine_idle_signal), (xine_event),
+	(codec_reporting), (xine_error):
+	* src/gtk-xine.h:
+	* src/gtkxine-marshal.list: marshals
+	* src/totem.c: (play_pause_set_label), (action_set_mrl),
+	(action_previous), (action_next), (playlist_changed_cb),
+	(current_removed_cb), (on_eos_event), (on_error_event),
+	(video_widget_create), (main): mucho work wrt threading, deadlocks,
+	etc. All the deadlocks should now be gone, the player itself probably
+	behaves a bit bizzarely right now, I'll fix it soon.
+	Thanks to Steve Baker and Owen Taylor for their great help.
+
 2002-08-05  Bastien Nocera  <hadess@hadess.net>
 
 	* README:

@@ -29,9 +29,11 @@
 G_BEGIN_DECLS
 
 typedef enum {
+	GTX_STARTUP,
 	GTX_NO_INPUT_PLUGIN,
 	GTX_NO_DEMUXER_PLUGIN,
-	GTX_DEMUXER_FAILED
+	GTX_DEMUXER_FAILED,
+	GTX_NO_CODEC,
 } GtkXineError;
 
 #define GTK_XINE(obj)              (GTK_CHECK_CAST ((obj), gtk_xine_get_type (), GtkXine))
@@ -49,10 +51,9 @@ typedef struct {
 typedef struct {
 	GtkWidgetClass parent_class;
 
-	void (*error) (GtkWidget *gtx, const char *message);
+	void (*error) (GtkWidget *gtx, GtkXineError error, const char *message);
 	void (*mouse_motion) (GtkWidget *gtx);
 	void (*eos) (GtkWidget *gtx);
-	void (*play_error) (GtkWidget *gtx, GtkXineError error);
 } GtkXineClass;
 
 GtkType gtk_xine_get_type (void);

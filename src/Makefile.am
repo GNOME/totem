@@ -1,8 +1,23 @@
 
 bin_PROGRAMS = totem
 
+GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
+
+gtkxine-marshal.h: gtkxine-marshal.list
+	( $(GLIB_GENMARSHAL) --prefix=gtkxine_marshal gtkxine-marshal.list \
+	  --header > gtkxine-marshal.tmp \
+  	&& mv gtkxine-marshal.tmp gtkxine-marshal.h ) \
+	|| ( rm -f gtkxine-marshal.tmp && exit 1 )
+gtkxine-marshal.c: gtkxine-marshal.h
+	( $(GLIB_GENMARSHAL) --prefix=gtkxine_marshal gtkxine-marshal.list \
+	  --body > gtkxine-marshal.tmp \
+	  && mv gtkxine-marshal.tmp gtkxine-marshal.c ) \
+	|| ( rm -f gtkxine-marshal.tmp && exit 1 )
+
 totem_SOURCES = 			\
 	totem.c				\
+	gtkxine-marshal.h		\
+	gtkxine-marshal.c		\
 	gtk-xine.c gtk-xine.h		\
 	gtk-playlist.c	gtk-playlist.h	\
 	rb-ellipsizing-label.c		\

@@ -44,6 +44,7 @@
 
 #include "debug.h"
 #include "gtk-xine.h"
+#include "gtkxine-marshal.h"
 
 #define BLACK_PIXEL \
 	BlackPixel ((gtx->priv->display ? gtx->priv->display : gdk_display), \
@@ -54,12 +55,19 @@
 extern int XShmGetEventBase (Display *);
 #endif
 
+/* this struct is used to decouple signals coming out of the Xine threads */
+typedef struct
+{
+	gint type;		/* one of the signals in the following enum */
+	GtkXineError error_type;
+	char *message;		/* or NULL */
+} GtkXineSignal;
+
 /* Signals */
 enum {
 	ERROR,
 	MOUSE_MOTION,
 	EOS,
-	PLAY_ERROR,
 	LAST_SIGNAL
 };
 
@@ -93,6 +101,8 @@ struct GtkXinePrivate {
 
 	int xpos, ypos;
 
+	GAsyncQueue *queue;
+
 	/* fullscreen stuff */
 	gboolean fullscreen_mode;
 	int fullscreen_width, fullscreen_height;
@@ -122,6 +132,8 @@ static void gtk_xine_size_allocate (GtkWidget * widget,
 static GtkWidgetClass *parent_class = NULL;
 
 static void xine_event (void *user_data, xine_event_t *event);
+static void codec_reporting(void *user_data, int codec_type,
+		uint32_t fourcc, char *description, int handled);
 
 static int gtx_table_signals[LAST_SIGNAL] = { 0 };
 
@@ -206,8 +218,8 @@ gtk_xine_class_init (GtkXineClass * klass)
 				G_SIGNAL_RUN_LAST,
 				G_STRUCT_OFFSET (GtkXineClass, error),
 				NULL, NULL,
-				g_cclosure_marshal_VOID__STRING,
-				G_TYPE_NONE, 1, G_TYPE_STRING);
+				gtkxine_marshal_VOID__INT_STRING,
+				G_TYPE_NONE, 2, G_TYPE_INT, G_TYPE_STRING);
 
 	gtx_table_signals[MOUSE_MOTION] =
 	    g_signal_new ("mouse-motion",
@@ -225,15 +237,6 @@ gtk_xine_class_init (GtkXineClass * klass)
 				NULL, NULL,
 				g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
-	gtx_table_signals[PLAY_ERROR] =
-		g_signal_new ("play-error",
-				G_TYPE_FROM_CLASS (object_class),
-				G_SIGNAL_RUN_LAST,
-				G_STRUCT_OFFSET (GtkXineClass, error),
-				NULL, NULL,
-				g_cclosure_marshal_VOID__INT,
-				G_TYPE_NONE, 1, G_TYPE_INT);
-
 	if (!g_thread_supported ())
 		g_thread_init (NULL);
 	gdk_threads_init ();
@@ -242,8 +245,9 @@ gtk_xine_class_init (GtkXineClass * klass)
 static void
 gtk_xine_instance_init (GtkXine * gtx)
 {
+	/* Set the default size to be a 4:3 ratio */
 	gtx->widget.requisition.width = 420;
-	gtx->widget.requisition.height = 278;
+	gtx->widget.requisition.height = 315;
 
 	gtx->priv = g_new0 (GtkXinePrivate, 1);
 	gtx->priv->config = NULL;
@@ -254,6 +258,8 @@ gtk_xine_instance_init (GtkXine * gtx)
 	gtx->priv->fullscreen_mode = FALSE;
 	gtx->priv->mixer = -1;
 	gtx->priv->cursor_shown = TRUE;
+
+	gtx->priv->queue = g_async_queue_new ();
 }
 
 static void
@@ -511,6 +517,7 @@ gtk_xine_realize (GtkWidget * widget)
 	if (!XInitThreads ()) {
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[ERROR], 0,
+				0,
 				_("Could not initialise the threads support\n"
 				"You should install a thread-safe Xlib."));
 		return;
@@ -523,6 +530,7 @@ gtk_xine_realize (GtkWidget * widget)
 	if (!gtx->priv->display) {
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[ERROR], 0,
+				GTX_STARTUP,
 				_("Failed to open the display\n"));
 //FIXME					XOpenDisplay failed"));
 		return;
@@ -554,6 +562,7 @@ gtk_xine_realize (GtkWidget * widget)
 	if (!gtx->priv->vo_driver) {
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[ERROR], 0,
+				GTX_STARTUP,
 				_("couldn't open video driver"));
 		return;
 	}
@@ -586,6 +595,8 @@ gtk_xine_realize (GtkWidget * widget)
 	/* Setup xine events */
 	xine_register_event_listener (gtx->priv->xine, xine_event,
 			(void *) gtx);
+	xine_register_report_codec_cb(gtx->priv->xine, codec_reporting,
+			(void *) gtx);
 
 	/* now, create a xine thread */
 	pthread_create (&gtx->priv->thread, NULL, xine_thread, gtx);
@@ -593,57 +604,129 @@ gtk_xine_realize (GtkWidget * widget)
 	return;
 }
 
+static gboolean
+gtk_xine_idle_signal (GtkXine *gtx)
+{
+	GtkXineSignal *signal;
+	int queue_length;
+
+	signal = g_async_queue_try_pop (gtx->priv->queue);
+	if (signal == NULL)
+		return FALSE;
+
+	gdk_threads_enter ();
+	switch (signal->type)
+	{
+	case ERROR:
+		TE ();
+		g_signal_emit (G_OBJECT (gtx),
+				gtx_table_signals[ERROR], 0,
+				signal->error_type, signal->message);
+		TL ();
+		break;
+	case MOUSE_MOTION:
+		/* mouse motion doesn't need to go through here */
+		break;
+	case EOS:
+		D("EOS");
+		g_signal_emit (G_OBJECT (gtx),
+				gtx_table_signals[EOS], 0, NULL);
+		D("EOS called");
+		break;
+	default:
+		D("fooo");
+	}
+
+	g_free (signal->message);
+	g_free (signal);
+
+	queue_length = g_async_queue_length (gtx->priv->queue);
+	gdk_threads_leave ();
+
+	return (queue_length > 0);
+}
+
 static void
 xine_event (void *user_data, xine_event_t *event)
 {
 	GtkXine *gtx = (GtkXine *) user_data;
 
-	switch (event->type)
+	/* XINE_EVENT_MOUSE_MOVE doesn't actually work */
+	if (event->type == XINE_EVENT_PLAYBACK_FINISHED)
 	{
-	case XINE_EVENT_PLAYBACK_FINISHED:
-		g_message ("XINE_EVENT_PLAYBACK_FINISHED");
-		g_signal_emit (G_OBJECT (gtx),
-				gtx_table_signals[EOS], 0, NULL);
-		break;
-	case XINE_EVENT_MOUSE_MOVE:
-		/* This event doesn't actually work, too bad */
-		break;
-	default:
-		g_message ("got event %d", event->type);
+		GtkXineSignal *signal;
+
+		signal = g_new0 (GtkXineSignal, 1);
+		signal->type = EOS;
+		g_async_queue_push (gtx->priv->queue, signal);
+		g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
 	}
 }
+
+static void codec_reporting(void *user_data, int codec_type,
+		uint32_t fourcc, char *description, int handled)
+{
+	GtkXine *gtx = (GtkXine *) user_data;
+	char fourcc_txt[10];
+
+	/* store fourcc as text */
+	*(uint32_t *)fourcc_txt = fourcc;
+	fourcc_txt[4] = '\0';
+
+	if( !handled )
+	{
+		if( codec_type == XINE_CODEC_VIDEO)
+		{
+			GtkXineSignal *signal;
+
+			signal = g_new0 (GtkXineSignal, 1);
+			signal->type = ERROR;
+			
+			/* display fourcc if no description available */
+			if( !description[0])
+				description = fourcc_txt;
+			signal->error_type = GTX_NO_CODEC;
+			signal->message = g_strdup_printf
+				(_("No video plugin available to decode '%s'."),
+				 description);
+			g_async_queue_push (gtx->priv->queue, signal);
+			g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
+		}
+	}
+}
+
 
 static void
 xine_error (GtkXine *gtx)
 {
+	GtkXineSignal *signal;
 	int error;
 
 	error = xine_get_error (gtx->priv->xine);
+	if (error == XINE_ERROR_NONE)
+		return;
+
+	g_message ("xine_error: %d", error);
+	signal = g_new0 (GtkXineSignal, 1);
+	signal->type = ERROR;
+
 	switch (error)
 	{
-	case XINE_ERROR_NONE:
-		break;
 	case XINE_ERROR_NO_INPUT_PLUGIN:
-		g_message ("XINE_ERROR_NO_INPUT_PLUGIN");
-		g_signal_emit (G_OBJECT (gtx),
-				gtx_table_signals[PLAY_ERROR], 0,
-				GTX_NO_INPUT_PLUGIN);
+		signal->error_type = GTX_NO_INPUT_PLUGIN;
 		break;
 	case XINE_ERROR_NO_DEMUXER_PLUGIN:
-		g_message ("XINE_ERROR_NO_DEMUXER_PLUGIN");
-		g_signal_emit (G_OBJECT (gtx),
-				gtx_table_signals[PLAY_ERROR], 0,
-				GTX_NO_DEMUXER_PLUGIN);
+		signal->error_type = GTX_NO_DEMUXER_PLUGIN;
 		break;
 	case XINE_ERROR_DEMUXER_FAILED:
-		g_message ("XINE_ERROR_DEMUXER_FAILED");
-		g_signal_emit (G_OBJECT (gtx),
-				gtx_table_signals[PLAY_ERROR], 0,
-				GTX_DEMUXER_FAILED);
+		signal->error_type = GTX_DEMUXER_FAILED;
 		break;
 	default:
 		break;
 	}
+
+	g_async_queue_push (gtx->priv->queue, signal);
+	g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
 }
 
 static void
