@@ -1,5 +1,10 @@
 2005-03-14  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-mozilla-plugin.c: (totem_plugin_write_ready): we don't
+	need any more data when we've closed the stdin
+
+2005-03-14  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-mozilla-plugin.c: (totem_plugin_new_instance),
 	(totem_plugin_destroy_instance), (totem_plugin_destroy_stream),
 	(totem_plugin_write), (NP_GetMIMEDescription):

@@ -276,8 +276,10 @@ static int32 totem_plugin_write_ready (NPP instance, NPStream *stream)
 
 	plugin = (TotemPlugin *) instance->pdata;
 
-	return (8*1024);
-//	return 4096;
+	if (plugin->send_fd >0)
+		return (8*1024);
+
+	return 0;
 }
 
 static int32 totem_plugin_write (NPP instance, NPStream *stream, int32 offset,
