@@ -1356,7 +1356,22 @@ xine_event (void *user_data, const xine_event_t *event)
 static void
 xine_error (BaconVideoWidget *bvw, GError **error)
 {
+	signal_data *data;
 	int err;
+
+	/* Steal messages from the async queue, if there's an error,
+	 * to use as the error message rather than the crappy errors from
+	 * xine_open() */
+	data = g_async_queue_try_pop (bvw->priv->queue);
+	if (data != NULL) {
+		g_assert (data->signal == MESSAGE_ASYNC);
+
+		g_set_error (error, 0, 0, data->msg);
+		g_free (data->msg);
+		g_free (data);
+
+		return;
+	}
 
 	err = xine_get_error (bvw->priv->stream);
 	if (err == XINE_ERROR_NONE)
