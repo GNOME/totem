@@ -19,9 +19,12 @@
 
 #include <config.h>
 
+#include <string.h>
+
 #include "totem.h"
 #include "totem-private.h"
 #include "totem-preferences.h"
+#include "bacon-cd-selection.h"
 
 #include "debug.h"
 

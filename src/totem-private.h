@@ -26,13 +26,14 @@
 #include "egg-recent-view-gtk.h"
 #include "gtk-playlist.h"
 #include "bacon-message-connection.h"
+#include "bacon-video-widget.h"
 
 struct Totem {
 	/* Control window */
 	GladeXML *xml;
 	GtkWidget *win;
 	GtkWidget *treeview;
-	GtkWidget *bvw;
+	BaconVideoWidget *bvw;
 	GtkWidget *prefs;
 	GtkWidget *properties;
 	GtkWidget *statusbar;

@@ -171,7 +171,8 @@ void bacon_video_widget_get_metadata		 (BaconVideoWidget *bvw,
 						  GValue *value);
 
 /* Screenshot functions */
-gboolean bacon_video_widget_can_get_frames       (BaconVideoWidget *bvw);
+gboolean bacon_video_widget_can_get_frames       (BaconVideoWidget *bvw,
+						  GError **error);
 GdkPixbuf *bacon_video_widget_get_current_frame (BaconVideoWidget *bvw);
 
 G_END_DECLS

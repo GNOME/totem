@@ -1,5 +1,40 @@
 2003-02-21  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget.c: (xine_event),
+	(bacon_video_widget_motion_notify),
+	(bacon_video_widget_button_press),
+	(bacon_video_widget_get_logo_mode),
+	(bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_metadata_int),
+	(bacon_video_widget_get_metadata_bool),
+	(bacon_video_widget_can_get_frames),
+	(bacon_video_widget_get_current_frame):
+	* src/bacon-video-widget.h:
+	* src/totem-preferences.c:
+	* src/totem-preferences.h:
+	* src/totem-private.h:
+	* src/totem-video-thumbnailer.c: (save_pixbuf), (main):
+	* src/totem.c: (totem_action_exit), (play_pause_set_label),
+	(totem_action_play), (totem_action_play_media),
+	(totem_action_stop), (totem_action_play_pause),
+	(totem_action_fullscreen_toggle), (totem_action_fullscreen),
+	(update_mrl_label), (totem_action_set_mrl),
+	(totem_action_previous), (totem_action_next),
+	(totem_action_seek_relative), (totem_action_volume_relative),
+	(totem_action_toggle_aspect_ratio), (totem_action_set_scale_ratio),
+	(update_seekable), (update_sliders), (vol_cb),
+	(on_take_screenshot1_activate), (on_properties1_activate),
+	(on_dvd_root_menu1_activate), (on_dvd_title_menu1_activate),
+	(on_dvd_audio_menu1_activate), (on_dvd_angle_menu1_activate),
+	(on_dvd_chapter_menu1_activate), (commit_hide_skip_to),
+	(popup_hide), (on_video_motion_notify_event),
+	(totem_action_handle_key), (video_widget_create),
+	(process_command_line), (main): fix all the warnings, simplify the
+	code,add a GError return to bacon_video_widget_can_get_frames ()
+	(Closes: #104881)
+
+2003-02-21  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget.c: (bacon_video_widget_tick_send): always
 	retunr TRUE so that the tick works even if we can't get the time
 	properly

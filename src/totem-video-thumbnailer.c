@@ -52,9 +52,12 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path, const char *video_path)
 	if (gdk_pixbuf_save (small, path, "png", &err, NULL) == FALSE)
 	{
 		if (err != NULL)
+		{
 			g_print ("totem-video-thumbnailer couln't write the thumbnail '%s' for video '%s': %s\n", path, video_path, err->message);
-		else
+			g_error_free (err);
+		} else {
 			g_print ("totem-video-thumbnailer couln't write the thumbnail '%s' for video '%s'\n", path, video_path);
+		}
 
 		gdk_pixbuf_unref (small);
 		exit (0);
@@ -66,7 +69,7 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path, const char *video_path)
 int main (int argc, char *argv[])
 {
 	GError *err = NULL;
-	GtkWidget *bvw, *toplevel;
+	BaconVideoWidget *bvw;
 	GdkPixbuf *pixbuf;
 	int i;
 
@@ -75,9 +78,9 @@ int main (int argc, char *argv[])
 	if (argc != 3)
 		print_usage ();
 
-	bvw = bacon_video_widget_new (-1, -1, TRUE);
+	bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (-1, -1, TRUE));
 
-	if (bacon_video_widget_open (BACON_VIDEO_WIDGET (bvw), argv[1]) == FALSE)
+	if (bacon_video_widget_open (bvw, argv[1]) == FALSE)
 	{
 		g_print ("totem-video-thumbnailer couln't open file '%s'\n",
 					argv[1]);
@@ -85,33 +88,33 @@ int main (int argc, char *argv[])
 	}
 
 	/* A 3rd into the file */
-	bacon_video_widget_play (BACON_VIDEO_WIDGET (bvw), (int) (65535 / 3), 0);
+	bacon_video_widget_play (bvw, (int) (65535 / 3), 0);
 
-	if (bacon_video_widget_can_get_frames (BACON_VIDEO_WIDGET (bvw)) == FALSE)
+	if (bacon_video_widget_can_get_frames (bvw, &err) == FALSE)
 	{
-		g_print ("totem-video-thumbnailer: '%s' isn't thumbnailable\n",
-				argv[1]);
-		bacon_video_widget_close (BACON_VIDEO_WIDGET (bvw));
-		gtk_widget_unrealize (bvw);
-		gtk_widget_destroy (bvw);
-		gtk_widget_destroy (toplevel);
+		g_print ("totem-video-thumbnailer: '%s' isn't thumbnailable\n"
+				"Reason: %s\n",
+				argv[1], err->message);
+		bacon_video_widget_close (bvw);
+		gtk_widget_destroy (GTK_WIDGET (bvw));
+		g_error_free (err);
 
 		exit (1);
 	}
 
 	/* 10 seconds! */
 	i = 0;
-	pixbuf = bacon_video_widget_get_current_frame (BACON_VIDEO_WIDGET (bvw));
+	pixbuf = bacon_video_widget_get_current_frame (bvw);
 	while (pixbuf == NULL && i < 10)
 	{
 		usleep (1000000);
-		pixbuf = bacon_video_widget_get_current_frame (BACON_VIDEO_WIDGET (bvw));
+		pixbuf = bacon_video_widget_get_current_frame (bvw);
 		i++;
 	}
 
 	/* Cleanup */
-	bacon_video_widget_close (BACON_VIDEO_WIDGET (bvw));
-	gtk_widget_destroy (bvw);
+	bacon_video_widget_close (bvw);
+	gtk_widget_destroy (GTK_WIDGET (bvw));
 
 	if (pixbuf == NULL)
 	{

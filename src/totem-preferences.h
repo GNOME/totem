@@ -17,25 +17,5 @@
  *
  */
 
-#include <config.h>
-#include "totem-private.h"
-#include "bacon-cd-selection.h"
-
-#include "debug.h"
-
-static void on_preferences1_activate (GtkButton *button, gpointer user_data);
-static void on_checkbutton1_toggled (GtkToggleButton *togglebutton,
-		gpointer user_data);
-static void on_checkbutton2_toggled (GtkToggleButton *togglebutton,
-		gpointer user_data);
-static void on_combo_entry1_changed (BaconCdSelection *bcs, char *device,
-		gpointer user_data);
-static void auto_resize_changed_cb (GConfClient *client, guint cnxn_id,
-		GConfEntry *entry, gpointer user_data);
-static void show_vfx_changed_cb (GConfClient *client, guint cnxn_id,
-		GConfEntry *entry, gpointer user_data);
-static void mediadev_changed_cb (GConfClient *client, guint cnxn_id,
-		GConfEntry *entry, gpointer user_data);
-GtkWidget * bacon_cd_selection_create (void);
 void totem_setup_preferences (Totem *totem);
 

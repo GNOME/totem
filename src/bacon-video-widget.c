@@ -891,7 +891,6 @@ static void
 xine_event (void *user_data, const xine_event_t *event)
 {
 	BaconVideoWidget *bvw = (BaconVideoWidget *) user_data;
-	BaconVideoWidgetSignal *signal;
 	xine_ui_data_t *ui_data;
 
 	switch (event->type)
@@ -1056,7 +1055,7 @@ bacon_video_widget_motion_notify (GtkWidget *widget, GdkEventMotion *event)
 {
 	BaconVideoWidget *bvw = (BaconVideoWidget *) widget;
 
-	generate_mouse_event (BACON_VIDEO_WIDGET (widget), (GdkEvent *)event, TRUE);
+	generate_mouse_event (bvw, (GdkEvent *)event, TRUE);
 
 	if (GTK_WIDGET_CLASS (parent_class)->motion_notify_event != NULL)
 		(* GTK_WIDGET_CLASS (parent_class)->motion_notify_event) (widget, event);
@@ -1069,8 +1068,7 @@ bacon_video_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 {
 	BaconVideoWidget *bvw = (BaconVideoWidget *) widget;
 
-	if (generate_mouse_event (BACON_VIDEO_WIDGET (widget), (GdkEvent *)event,
-				FALSE) == TRUE)
+	if (generate_mouse_event (bvw, (GdkEvent *)event, FALSE) == TRUE)
 		return FALSE;
 
 	if (GTK_WIDGET_CLASS (parent_class)->button_press_event != NULL)
@@ -1390,9 +1388,9 @@ bacon_video_widget_set_logo_mode (BaconVideoWidget *bvw, gboolean logo_mode)
 gboolean
 bacon_video_widget_get_logo_mode (BaconVideoWidget *bvw)
 {
-	g_return_if_fail (bvw != NULL);
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-	g_return_if_fail (bvw->priv->xine != NULL);
+	g_return_val_if_fail (bvw != NULL, FALSE);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
 
 	return bvw->priv->logo_mode;
 }
@@ -1865,7 +1863,7 @@ static void
 bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetMetadataType type,
 		GValue *value)
 {
-	const char *string;
+	const char *string = NULL;
 
 	g_value_init (value, G_TYPE_STRING);
 
@@ -1910,7 +1908,7 @@ static void
 bacon_video_widget_get_metadata_int (BaconVideoWidget *bvw, BaconVideoWidgetMetadataType type,
 		GValue *value)
 {
-	int integer;
+	int integer = 0;
 
 	g_value_init (value, G_TYPE_INT);
 
@@ -1961,7 +1959,7 @@ static void
 bacon_video_widget_get_metadata_bool (BaconVideoWidget *bvw, BaconVideoWidgetMetadataType type,
 		GValue *value)
 {
-	gboolean boolean;
+	gboolean boolean = FALSE;
 
 	g_value_init (value, G_TYPE_BOOLEAN);
 
@@ -2051,24 +2049,33 @@ char
 
 #define PIXSZ 3
 
-static guchar *bacon_video_widget_get_current_frame_rgb (BaconVideoWidget *bvw, int *width_ret,
-					       int * height_ret);
+static guchar *bacon_video_widget_get_current_frame_rgb (BaconVideoWidget *bvw,
+		int *width_ret, int * height_ret);
 
 gboolean
-bacon_video_widget_can_get_frames (BaconVideoWidget *bvw)
+bacon_video_widget_can_get_frames (BaconVideoWidget *bvw, GError **error)
 {
 	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
-	g_return_val_if_fail (bacon_video_widget_is_playing (bvw) == TRUE, FALSE);
+	g_return_val_if_fail (bacon_video_widget_is_playing (bvw) == TRUE,
+			FALSE);
 
 	if (xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_HAS_VIDEO) == FALSE)
+	{
+		g_set_error (error, 0, 0, bvw->priv->using_vfx ?
+				"Can't capture visual effects"
+				: "No video to capture");
 		return FALSE;
+	}
 
 	if (xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_VIDEO_HANDLED) == FALSE)
+	{
+		g_set_error (error, 0, 0, "Video codec is not handled");
 		return FALSE;
+	}
 
 	return TRUE;
 }
@@ -2085,7 +2092,9 @@ bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
 	g_return_val_if_fail (bvw->priv->xine != NULL, NULL);
 
-	pixels = bacon_video_widget_get_current_frame_rgb (bvw, &width, &height);
+	pixels = bacon_video_widget_get_current_frame_rgb
+		(bvw, &width, &height);
+
 	if (pixels == NULL)
 		return NULL;
 
