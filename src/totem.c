@@ -1795,6 +1795,18 @@ on_show_controls2_activate (GtkMenuItem *menuitem, Totem *totem)
 }
 
 static void
+on_help_activate (GtkButton *button, Totem *totem)
+{
+	GError *err = NULL;
+
+	if (gnome_help_display ("totem.xml", NULL, &err) == FALSE)
+	{
+		totem_action_error (_("Totem could not display the help contents."), err->message, totem);
+		g_error_free (err);
+	}
+}
+
+static void
 on_about1_activate (GtkButton *button, Totem *totem)
 {
 	static GtkWidget *about = NULL;
@@ -3051,6 +3063,10 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "tmw_quit_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_quit1_activate), totem);
+
+	item = glade_xml_get_widget (totem->xml, "tmw_contents_menu_item");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_help_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "tmw_about_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_about1_activate), totem);

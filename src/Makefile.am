@@ -124,12 +124,7 @@ INCLUDES = 						\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
 	-DGCONF_PREFIX=\""/apps/totem"\"		\
 	-DDATADIR=\""$(datadir)"\"			\
-	-DLOGO_PATH=DATADIR\"\"G_DIR_SEPARATOR_S\"totem\"G_DIR_SEPARATOR_S\"totem_logo.png\"						\
-	-DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED	\
-	-DGTK_DISABLE_DEPRECATED			\
-	-DGNOME_DISABLE_DEPRECATED			\
-        -DGCONF_DISABLE_DEPRECATED=1 			\
-	-DLIBGLADE_DISABLE_DEPRECATED
+	-DLOGO_PATH=DATADIR\"\"G_DIR_SEPARATOR_S\"totem\"G_DIR_SEPARATOR_S\"totem_logo.png\"
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(MARSHALFILES) $(desktop_DATA)
 EXTRA_DIST =	bacon-video-widget-xine.c \
