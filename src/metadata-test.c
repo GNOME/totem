@@ -13,6 +13,42 @@
 #include <glib/gthread.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <libgnomevfs/gnome-vfs-utils.h>
+
+static char*
+totem_create_full_path (const char *path)
+{
+	char *retval, *curdir, *curdir_withslash, *escaped;
+
+	g_return_val_if_fail (path != NULL, NULL);
+
+	if (strstr (path, "://") != NULL)
+		return g_strdup (path);
+
+	if (path[0] == '/')
+	{
+		escaped = gnome_vfs_escape_path_string (path);
+
+		retval = g_strdup_printf ("file://%s", escaped);
+		g_free (escaped);
+		return retval;
+	}
+
+	curdir = g_get_current_dir ();
+	escaped = gnome_vfs_escape_path_string (curdir);
+	curdir_withslash = g_strdup_printf ("file://%s%s",
+			escaped, G_DIR_SEPARATOR_S);
+	g_free (escaped);
+	g_free (curdir);
+
+	escaped = gnome_vfs_escape_path_string (path);
+	retval = gnome_vfs_uri_make_full_from_relative
+		(curdir_withslash, escaped);
+	g_free (curdir_withslash);
+	g_free (escaped);
+
+	return retval;
+}
 
 static void
 print_usage (const char *arg)
@@ -122,6 +158,7 @@ int main (int argc, char **argv)
 	GtkWidget *widget;
 	BaconVideoWidget *bvw;
 	GError *error = NULL;
+	char *path;
 
 	if (argc != 2) {
 		print_usage (argv[0]);
@@ -152,12 +189,13 @@ int main (int argc, char **argv)
 			G_CALLBACK (on_got_metadata_event),
 			NULL);
 
-	if (bacon_video_widget_open (bvw, argv[1], &error) == FALSE) {
-		g_print ("Can't open %s: %s\n", argv[1], error->message);
+	path = totem_create_full_path (argv[1]);
+	if (bacon_video_widget_open (bvw, path, &error) == FALSE) {
+		g_print ("Can't open %s: %s\n", path, error->message);
 		return 1;
 	}
 	if (bacon_video_widget_play (bvw, &error) == FALSE) {
-		g_print ("Can't play %s: %s\n", argv[1], error->message);
+		g_print ("Can't play %s: %s\n", path, error->message);
 		return 1;
 	}
 
