@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: totem 0.8\n"
-"POT-Creation-Date: 2002-09-02 01:28+0100\n"
-"PO-Revision-Date: 2002-08-05 20:34:00\n"
+"Project-Id-Version: totem 0.10.0\n"
+"POT-Creation-Date: 2002-09-21 21:44+0200\n"
+"PO-Revision-Date: 2002-09-21 21:51+0200\n"
 "Last-Translator: Pier Luigi Fiorini <plfiorini@supereva.it>\n"
 "Language-Team: Italiano <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -15,210 +15,221 @@ msgstr ""
 
 #: data/playlist.glade.h:1 src/gtk-playlist.c:485
 msgid "Playlist"
-msgstr ""
+msgstr "Scaletta"
+
+#: data/totem.desktop.in.h:1
+msgid "Play movies and songs"
+msgstr "Riproduttore di filmati e canzoni"
+
+#: data/totem.desktop.in.h:2
+msgid "Totem Movie Player"
+msgstr "Lettore multimediale Totem"
 
 #: data/totem.glade.h:1
 msgid "Exit fullscreen"
-msgstr ""
+msgstr "Modalità normale"
 
 #: data/totem.glade.h:2
 msgid "File name"
-msgstr ""
+msgstr "Nome di file"
 
 #: data/totem.glade.h:3
 msgid "Next"
-msgstr ""
+msgstr "Prossimo"
 
 #: data/totem.glade.h:4
 msgid "Next stream"
-msgstr ""
+msgstr "Prossimo flusso"
 
 #: data/totem.glade.h:5
 msgid "Play DVD"
-msgstr ""
+msgstr "Riproduci DVD"
 
 #: data/totem.glade.h:6
 msgid "Play VCD"
-msgstr ""
+msgstr "Riproduci VCD"
 
 #: data/totem.glade.h:7
 msgid "Play/Pause"
-msgstr ""
+msgstr "Riproduci/Pausa"
 
 #: data/totem.glade.h:8
 msgid "Previous"
-msgstr ""
+msgstr "Precedente"
 
 #: data/totem.glade.h:9
 msgid "Previous stream"
-msgstr ""
+msgstr "Flusso precedente"
 
 #: data/totem.glade.h:10
 msgid "Show/Hide Playlist"
-msgstr ""
+msgstr "Mostra/Nascondi scaletta"
 
 #: data/totem.glade.h:11
 msgid "Skip backwards"
-msgstr ""
+msgstr "Indietro"
 
 #: data/totem.glade.h:12
 msgid "Skip forward"
-msgstr ""
+msgstr "Avanti"
 
 #: data/totem.glade.h:13
-msgid "Sound"
-msgstr ""
-
-#: data/totem.glade.h:14
 msgid "Toggle Aspect Ratio"
-msgstr ""
+msgstr "Commuta proporzioni"
 
-#: data/totem.glade.h:15 src/totem.c:850
+#: data/totem.glade.h:14 src/totem.c:900
 msgid "Totem"
 msgstr "Totem"
 
-#: data/totem.glade.h:16
+#: data/totem.glade.h:15
 msgid "Volume Down"
-msgstr ""
+msgstr "Abbassa il volume"
+
+#: data/totem.glade.h:16
+msgid "Volume Up"
+msgstr "Alza il volume"
 
 #: data/totem.glade.h:17
-msgid "Volume Up"
-msgstr ""
+msgid "Zoom _1:1"
+msgstr "Zoom _1:1"
 
 #: data/totem.glade.h:18
-msgid "Zoom _1:1"
-msgstr ""
+msgid "Zoom _2:1"
+msgstr "Zoom _2:1"
 
 #: data/totem.glade.h:19
-msgid "Zoom _2:1"
-msgstr ""
+msgid "_Fullscreen"
+msgstr "_Schermo intero"
 
 #: data/totem.glade.h:20
-msgid "_Fullscreen"
-msgstr ""
+msgid "_Movie"
+msgstr "_Filmato"
 
 #: data/totem.glade.h:21
-msgid "_Movie"
-msgstr ""
+msgid "_Play / Pause"
+msgstr "_Riproduci/Pausa"
 
 #: data/totem.glade.h:22
-msgid "_Play / Pause"
-msgstr ""
+msgid "_Show/Hide Playlist"
+msgstr "_Mostra/Nascondi scaletta"
 
 #: data/totem.glade.h:23
-msgid "_Show/Hide Playlist"
-msgstr ""
+msgid "_Sound"
+msgstr "_Audio"
 
 #: data/totem.glade.h:24
 msgid "_Zoom 1:2"
-msgstr ""
+msgstr "_Zoom 1:2"
 
 #: data/totem.schemas.in.h:1
 msgid "Default audio output driver"
+msgstr "Sistema audio predefinito"
+
+#: data/totem.schemas.in.h:2
+msgid "Resize the canvas automatically on file load"
 msgstr ""
 
-#: src/gtk-playlist.c:222 src/totem.c:682
+#: src/gtk-playlist.c:222 src/totem.c:732
 msgid "Select files"
-msgstr "Seleziona file"
+msgstr "Selezione di un file"
 
 #: src/gtk-playlist.c:376
 msgid "Playing"
-msgstr ""
+msgstr "Riproduzione"
 
 #: src/gtk-playlist.c:387
 msgid "Filename"
-msgstr ""
+msgstr "Nome del file"
 
 #: src/gtk-xine.c:55
 msgid "Totem Video Window"
-msgstr ""
+msgstr "Finestra video di Totem"
 
-#: src/gtk-xine.c:481
+#: src/gtk-xine.c:504
 msgid ""
 "The configuration system is not initialised.\n"
 "The defaults will be used."
 msgstr ""
+"Il sistema di configurazione non è inizializzato.\n"
+"Verranno usate le impostazioni predefinite."
 
-#: src/gtk-xine.c:711
+#: src/gtk-xine.c:734
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
 msgstr ""
+"Impossibile inizializzare il supporto ai thread.\n"
+"Installare una Xlib che supporti i thread."
 
-#: src/gtk-xine.c:747
+#: src/gtk-xine.c:770
 msgid "Could not find a suitable video output."
-msgstr ""
+msgstr "Impossibile trovare sistema video opportuno."
 
-#: src/gtk-xine.c:875
+#: src/gtk-xine.c:902
 #, c-format
 msgid "No video plugin available to decode '%s'."
-msgstr ""
+msgstr "Nessun plugin video disponibile per decodificare \"%s\"."
 
-#: src/totem.c:316 src/totem.c:1297
+#: src/totem.c:328 src/totem.c:1349
 msgid "<span size=\"medium\"><b>No file</b></span>"
 msgstr "<span size=\"medium\"><b>Nessun file</b></span>"
 
-#: src/totem.c:826
+#: src/totem.c:876
 msgid "translator_credits"
 msgstr "Pier Luigi Fiorini <plfiorini@supereva.it>"
 
-#: src/totem.c:851
+#: src/totem.c:901
 msgid "(C) 2002 Bastien Nocera"
 msgstr "(C) 2002 Bastien Nocera"
 
-#: src/totem.c:852
+#: src/totem.c:902
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Lettore multimediale (basato sulle librerie di Xine)"
 
-#: src/totem.c:1003
+#: src/totem.c:1055
 #, c-format
 msgid ""
 "Totem could not startup:\n"
 "%s"
 msgstr ""
+"Totem non è partito:\n"
+"%s"
 
-#: src/totem.c:1008
+#: src/totem.c:1060
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'\n"
 "Totem will not be able to play it."
 msgstr ""
+"Non c'è alcun plugin per far gestire \"%s\" a Totem\n"
+"Totem non sarà in grado di riprodurlo."
 
-#: src/totem.c:1011
+#: src/totem.c:1063
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
-msgstr ""
+msgstr "\"%s\" è danneggiato e Totem non può riprodurlo."
 
-#: src/totem.c:1014
+#: src/totem.c:1066
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
 "%s"
 msgstr ""
+"Totem non ha potuto riprodurre \"%s\":\n"
+"%s"
 
-#: src/totem.c:1339 src/totem.c:1347
-#, fuzzy
+#: src/totem.c:1428 src/totem.c:1436
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
 msgstr ""
-"Impossibile caricare il file Glade principale (totem.glade).\n"
+"Impossibile caricare l'interfaccia principale (totem.glade).\n"
 "Assicurarsi che Totem sia correttamente installato."
 
-#: src/totem.c:1360
+#: src/totem.c:1449
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
 msgstr ""
 "Impossibile caricare l'interfaccia della playlist.\n"
 "Assicurarsi che Totem sia correttamente installato."
-
-#~ msgid "XInitThreads failed - looks like you don't have a thread-safe xlib."
-#~ msgstr ""
-#~ "XInitThreads fallita - sembra non sia presente una xlib thread-safe."
-
-#~ msgid "XOpenDisplay failed"
-#~ msgstr "XOpenDisplay fallita"
-
-#~ msgid "couldn't open video driver"
-#~ msgstr "Impossibile aprire il driver video"
