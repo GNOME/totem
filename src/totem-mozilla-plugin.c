@@ -29,19 +29,7 @@
 #include <string.h>
 
 #include <glib.h>
-
-#ifdef ENABLE_NLS
-#include <libintl.h>
-#define _(String) dgettext(GETTEXT_PACKAGE,String)
-#ifdef gettext_noop
-#define N_(String) gettext_noop(String)
-#else
-#define N_(String) (String)
-#endif /* gettext_noop */
-#else
-#define _(String) (String)
-#define N_(String) (String)
-#endif /* ENABLE_NLS */
+#include <glib/gi18n.h>
 
 #define XP_UNIX 1
 #define MOZ_X11 1

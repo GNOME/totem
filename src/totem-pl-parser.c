@@ -28,6 +28,7 @@
 #include "totemplparser-marshal.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <libxml/tree.h>
 #include <libxml/parser.h>
@@ -40,23 +41,6 @@
 #include <libgnomevfs/gnome-vfs-mime.h>
 #include <libgnomevfs/gnome-vfs-mime-utils.h>
 #include <string.h>
-
-#ifdef HAVE_GTK_ONLY
-#ifdef ENABLE_NLS
-#include <libintl.h>
-#define _(String) dgettext(GETTEXT_PACKAGE,String)
-#ifdef gettext_noop
-#define N_(String) gettext_noop(String)
-#else
-#define N_(String) (String)
-#endif /* gettext_noop */
-#else
-#define _(String) (String)
-#define N_(String) (String)
-#endif /* ENABLE_NLS */
-#else
-#include <libgnome/gnome-i18n.h>
-#endif /* HAVE_GTK_ONLY */
 
 #define READ_CHUNK_SIZE 8192
 #define MIME_READ_CHUNK_SIZE 1024

@@ -24,6 +24,7 @@
 #include "totem-playlist.h"
 
 #include <gtk/gtk.h>
+#include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <glade/glade.h>
 #include <gconf/gconf-client.h>
@@ -33,23 +34,6 @@
 
 #include "totem-pl-parser.h"
 #include "debug.h"
-
-#ifdef HAVE_GTK_ONLY
-#ifdef ENABLE_NLS
-#include <libintl.h>
-#define _(String) dgettext(GETTEXT_PACKAGE,String)
-#ifdef gettext_noop
-#define N_(String) gettext_noop(String)
-#else
-#define N_(String) (String)
-#endif /* gettext_noop */
-#else
-#define _(String) (String)
-#define N_(String) (String)
-#endif /* ENABLE_NLS */
-#else
-#include <libgnome/gnome-i18n.h>
-#endif /* HAVE_GTK_ONLY */
 
 #define PL_LEN (gtk_tree_model_iter_n_children (playlist->_priv->model, NULL))
 

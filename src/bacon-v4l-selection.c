@@ -29,22 +29,7 @@
 #include <gtk/gtk.h>
 #endif /* !HAVE_GTK_ONLY */
 
-#ifdef HAVE_GTK_ONLY
-#ifdef ENABLE_NLS
-#include <libintl.h>
-#define _(String) dgettext(GETTEXT_PACKAGE,String)
-#ifdef gettext_noop
-#define N_(String) gettext_noop(String)
-#else
-#define N_(String) (String)
-#endif /* gettext_noop */
-#else
-#define _(String) (String)
-#define N_(String) (String)
-#endif /* ENABLE_NLS */
-#else
-#include <libgnome/gnome-i18n.h>
-#endif /* HAVE_GTK_ONLY */
+#include <glib/gi18n.h>
 
 #include "bacon-v4l-selection.h"
 
