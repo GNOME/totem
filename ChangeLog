@@ -1,3 +1,13 @@
+2003-02-02  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-playlist.c: (gtk_playlist_has_previous_mrl),
+	(gtk_playlist_has_next_mrl), (gtk_playlist_set_previous),
+	(gtk_playlist_set_next), (gtk_playlist_set_at_end):
+	* src/totem.c: (totem_action_previous), (totem_action_next),
+	(on_eos_event), (update_buttons): implement the Previous button in
+	Repeat mode (goes to the end of the playlist) (Partly based on a patch
+	by Julien Moutte <julien@moutte.net>) (Closes: #104725)
+
 2003-02-01  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-cd-selection.c: (bacon_cd_selection_finalize):

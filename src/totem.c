@@ -546,14 +546,15 @@ totem_action_previous (Totem *totem)
 	char *mrl;
 
 	if (totem_playing_dvd (totem) == FALSE &&
-                gtk_playlist_has_previous_mrl (totem->playlist) == FALSE)
+		gtk_playlist_has_previous_mrl (totem->playlist) == FALSE
+		&& gtk_playlist_get_repeat (totem->playlist) == FALSE)
 		return;
 
         if (totem_playing_dvd (totem) == TRUE)
         {
                 gtk_xine_dvd_event (GTK_XINE (totem->gtx),
                                         GTX_DVD_PREV_CHAPTER);
-        } else { 
+        } else {
                 gtk_playlist_set_previous (totem->playlist);
                 mrl = gtk_playlist_get_current_mrl (totem->playlist);
                 totem_action_set_mrl_and_play (totem, mrl);
@@ -568,8 +569,9 @@ totem_action_next (Totem *totem)
 	char *mrl;
 
 	if (totem_playing_dvd (totem) == FALSE &&
-                gtk_playlist_has_next_mrl (totem->playlist) == FALSE)
-                return;
+			gtk_playlist_has_next_mrl (totem->playlist) == FALSE
+			&& gtk_playlist_get_repeat (totem->playlist) == FALSE)
+		return;
 
         if (totem_playing_dvd (totem) == TRUE)
         {
@@ -1855,7 +1857,8 @@ on_eos_event (GtkWidget *widget, gpointer user_data)
 	if (strcmp (totem->mrl, LOGO_PATH) == 0)
 		return FALSE;
 
-	if (!gtk_playlist_has_next_mrl (totem->playlist))
+	if (gtk_playlist_has_next_mrl (totem->playlist) == FALSE
+			&& gtk_playlist_get_repeat (totem->playlist) == FALSE)
 	{
 		char *mrl;
 
@@ -2116,10 +2119,12 @@ update_buttons (Totem *totem)
 
 	/* Previous */
         /* FIXME Need way to detect if DVD Title is at first chapter */
-        if (totem_playing_dvd (totem))
+        if (totem_playing_dvd (totem) == TRUE)
+	{
                 has_item = TRUE;
-        else
+	} else {
                 has_item = gtk_playlist_has_previous_mrl (totem->playlist);
+	}
 
 	item = glade_xml_get_widget (totem->xml, "previous_button");
 	gtk_widget_set_sensitive (item, has_item);
@@ -2130,10 +2135,12 @@ update_buttons (Totem *totem)
 
 	/* Next */
         /* FIXME Need way to detect if DVD Title has no more chapters */
-        if (totem_playing_dvd (totem))
+        if (totem_playing_dvd (totem) == TRUE)
+	{
                 has_item = TRUE;
-        else
+	} else {
 		has_item = gtk_playlist_has_next_mrl (totem->playlist);
+	}
 
 	item = glade_xml_get_widget (totem->xml, "next_button");
 	gtk_widget_set_sensitive (item, has_item);

@@ -90,6 +90,7 @@ static void gtk_playlist_init       (GtkPlaylist      *playlist);
 
 static void init_treeview (GtkWidget *treeview, GtkPlaylist *playlist);
 static gboolean gtk_playlist_unset_playing (GtkPlaylist *playlist);
+static void gtk_playlist_set_at_end (GtkPlaylist *playlist);
 
 GtkType
 gtk_playlist_get_type (void)
@@ -1177,6 +1178,9 @@ gtk_playlist_has_previous_mrl (GtkPlaylist *playlist)
 	if (update_current_from_playlist (playlist) == FALSE)
 		return FALSE;
 
+	if (playlist->_priv->repeat == TRUE)
+		return TRUE;
+
 	gtk_tree_model_get_iter (playlist->_priv->model,
 			&iter,
 			playlist->_priv->current);
@@ -1193,6 +1197,7 @@ gtk_playlist_has_next_mrl (GtkPlaylist *playlist)
 
 	if (update_current_from_playlist (playlist) == FALSE)
 		return FALSE;
+
 	if (playlist->_priv->repeat == TRUE)
 		return TRUE;
 
@@ -1286,6 +1291,7 @@ void
 gtk_playlist_set_previous (GtkPlaylist *playlist)
 {
 	GtkTreeIter iter;
+	char *path;
 
 	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
 	
@@ -1293,6 +1299,13 @@ gtk_playlist_set_previous (GtkPlaylist *playlist)
 		return;
 
 	gtk_playlist_unset_playing (playlist);
+
+	path = gtk_tree_path_to_string (playlist->_priv->current);
+	if (strcmp (path, "0") == 0)
+	{
+		gtk_playlist_set_at_end (playlist);
+		return;
+	}
 
 	gtk_tree_model_get_iter (playlist->_priv->model,
 			&iter,
@@ -1313,9 +1326,7 @@ gtk_playlist_set_next (GtkPlaylist *playlist)
 
 	if (gtk_playlist_has_next_mrl (playlist) == FALSE)
 	{
-		if (playlist->_priv->repeat == TRUE)
-			gtk_playlist_set_at_start (playlist);
-
+		gtk_playlist_set_at_start (playlist);
 		return;
 	}
 
@@ -1363,6 +1374,30 @@ gtk_playlist_set_at_start (GtkPlaylist *playlist)
 		playlist->_priv->current = NULL;
 	}
 	update_current_from_playlist (playlist);
+}
+
+static void
+gtk_playlist_set_at_end (GtkPlaylist *playlist)
+{
+	gint nb_childs = 0;
+	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
+	
+	gtk_playlist_unset_playing (playlist);
+	
+	nb_childs = gtk_tree_model_iter_n_children (playlist->_priv->model,
+			NULL);
+
+	if (playlist->_priv->current != NULL)
+	{
+		gtk_tree_path_free (playlist->_priv->current);
+		playlist->_priv->current = NULL;
+	}
+
+	if (nb_childs)
+	{
+		playlist->_priv->current = gtk_tree_path_new_from_indices
+			(nb_childs-1, -1);
+	}
 }
 
 /* This one returns a new string, in UTF8 even if the mrl is encoded
@@ -1425,4 +1460,5 @@ gtk_playlist_class_init (GtkPlaylistClass *klass)
 				g_cclosure_marshal_VOID__BOOLEAN,
 				G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
 }
+
 
