@@ -23,9 +23,10 @@ totem_SOURCES = 			\
 	gtk-playlist.c	gtk-playlist.h	\
 	rb-ellipsizing-label.c		\
 	rb-ellipsizing-label.h		\
+	scrsaver.c  scrsaver.h		\
 	debug.h
 
-totem_LDADD = $(EXTRA_GNOME_LIBS) $(XINE_LIBS)
+totem_LDADD = $(EXTRA_GNOME_LIBS) $(XINE_LIBS) $(XTEST_LIBS)
 totem_LDFLAGS = -export-dynamic
 INCLUDES = 						\
 	$(EXTRA_GNOME_CFLAGS)				\

@@ -18,6 +18,16 @@ AC_SUBST(EXTRA_GNOME_LIBS)
 
 AM_PATH_XINE(0.9.9,, AC_MSG_ERROR(*** You should install xine-lib first ***))
 
+AC_PATH_X
+XTEST_LIBS=""
+AC_CHECK_LIB(Xtst, XTestFakeKeyEvent,
+		XTEST_LIBS="-lXtst -L$x_libraries"
+		AC_DEFINE(HAVE_XTEST),
+		,
+		"-L$x_libraries")
+AC_SUBST(XTEST_LIBS)
+
+
 AC_MSG_CHECKING(for broken old architecture)
 if test "`uname -m`x" = "i686x" ; then
 	AC_MSG_RESULT(h0rk3d)

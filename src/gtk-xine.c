@@ -46,6 +46,7 @@
 #include "debug.h"
 #include "gtk-xine.h"
 #include "gtkxine-marshal.h"
+#include "scrsaver.h"
 
 #define DEFAULT_HEIGHT 420
 #define DEFAULT_WIDTH 315
@@ -523,15 +524,17 @@ static void *
 xine_thread (void *gtx_gen)
 {
 	GtkXine *gtx = (GtkXine *) gtx_gen;
+	XEvent event;
+//	guint timer = 5000;
 
 	gtx->priv->init_finished = TRUE;
 
-	while (1) {
-		XEvent event;
-
+	while (1)
+	{
 		XNextEvent (gtx->priv->display, &event);
 
-		switch (event.type) {
+		switch (event.type)
+		{
 		case Expose:
 			if (event.xexpose.count != 0)
 				break;
@@ -560,6 +563,20 @@ xine_thread (void *gtx_gen)
 				(gtx->priv->vo_driver,
 				 GUI_DATA_EX_COMPLETION_EVENT, &event);
 		}
+		///FIXME FIXME FIXME
+#if 0
+		/* Screensaver poking hack */
+		timer--;
+		if (timer == 0 && gtx->priv->fullscreen_mode == TRUE)
+		{
+			g_message ("POOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOKE");
+			XLockDisplay(gtx->priv->display);
+			system ("xscreensaver-command -deactivate >&- 2>&- &");
+			XResetScreenSaver(gtx->priv->display);
+			XUnlockDisplay(gtx->priv->display);
+			timer = 5000;
+		}
+#endif
 	}
 
 	pthread_exit (NULL);
@@ -704,6 +721,8 @@ gtk_xine_realize (GtkWidget * widget)
 			(void *) gtx);
 	xine_register_report_codec_cb(gtx->priv->xine, codec_reporting,
 			(void *) gtx);
+
+	scrsaver_init (gtx->priv->display);
 
 	/* now, create a xine thread */
 	pthread_create (&gtx->priv->thread, NULL, xine_thread, gtx);
@@ -1239,6 +1258,8 @@ gtk_xine_set_fullscreen (GtkXine * gtx, gboolean fullscreen)
 		g_signal_connect (GTK_OBJECT (gtx->priv->invisible),
 				"motion-notify-event",
 				GTK_SIGNAL_FUNC (motion_notify_event_cb), gtx);
+
+		scrsaver_disable (gtx->priv->display);
 	} else {
 		gtx->priv->vo_driver->gui_data_exchange
 			(gtx->priv->vo_driver,
@@ -1248,6 +1269,8 @@ gtk_xine_set_fullscreen (GtkXine * gtx, gboolean fullscreen)
 		XDestroyWindow (gtx->priv->display,
 				gtx->priv->fullscreen_window);
 		gtx->priv->invisible = NULL;
+
+		scrsaver_enable (gtx->priv->display);
 	}
 
 	XUnlockDisplay (gtx->priv->display);
