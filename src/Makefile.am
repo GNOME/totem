@@ -2,7 +2,9 @@
 bin_PROGRAMS = totem totem-video-thumbnailer
 
 if TOTEM_GST
-MM=bacon-video-widget-gst.c
+MM=	bacon-video-widget-gst.c \
+	gstvideowidget.c \
+	gstvideowidget.h
 else
 MM=bacon-video-widget-xine.c
 endif
