@@ -1,5 +1,16 @@
 2003-05-20  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_class_init),
+	(bacon_video_widget_instance_init),
+	(bacon_video_widget_size_request),
+	(bacon_video_widget_size_allocate):
+	* src/totem.c: (totem_action_fullscreen_toggle), (show_controls),
+	(on_show_controls1_activate): patch from Julien MOUTTE
+	<julien@moutte.net> to fix the hide/show controls, fullscreen,
+	and auto-resize with both the xine and gst backends
+
+2003-05-20  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: lower the gnome-desktop requirement
 	* src/cd-drive.c: (linux_scan):
 	* src/egg-recent-model.c: (egg_recent_model_get_list): updated from

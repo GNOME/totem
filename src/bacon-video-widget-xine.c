@@ -50,8 +50,8 @@
 #   define N_(String) (String)
 #endif
 
-#define DEFAULT_HEIGHT 420
-#define DEFAULT_WIDTH 315
+#define DEFAULT_HEIGHT 315
+#define DEFAULT_WIDTH 420
 #define CONFIG_FILE ".gnome2"G_DIR_SEPARATOR_S"totem_config"
 #define DEFAULT_TITLE _("Totem Video Window")
 
@@ -140,6 +140,7 @@ struct BaconVideoWidgetPrivate {
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
+	int init_width, init_height;
 
 	/* fullscreen stuff */
 	gboolean fullscreen_mode;
@@ -177,6 +178,8 @@ static gboolean bacon_video_widget_button_press (GtkWidget *widget,
 static gboolean bacon_video_widget_key_press (GtkWidget *widget,
 		GdkEventKey *event);
 
+static void bacon_video_widget_size_request (GtkWidget *widget,
+		GtkRequisition *requisition);
 static void bacon_video_widget_size_allocate (GtkWidget *widget,
 		GtkAllocation *allocation);
 static xine_vo_driver_t * load_video_out_driver (BaconVideoWidget *bvw,
@@ -233,6 +236,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 	/* GtkWidget */
 	widget_class->realize = bacon_video_widget_realize;
 	widget_class->unrealize = bacon_video_widget_unrealize;
+	widget_class->size_request = bacon_video_widget_size_request;
 	widget_class->size_allocate = bacon_video_widget_size_allocate;
 	widget_class->expose_event = bacon_video_widget_expose;
 	widget_class->motion_notify_event = bacon_video_widget_motion_notify;
@@ -351,14 +355,13 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 	GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_CAN_FOCUS);
 	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
 
-	/* Set the default size to be a 4:3 ratio */
-	widget->requisition.width = DEFAULT_HEIGHT;
-	widget->requisition.height = DEFAULT_WIDTH;
-
 	bvw->priv = g_new0 (BaconVideoWidgetPrivate, 1);
 	bvw->priv->xine = xine_new ();
 	bvw->priv->cursor_shown = TRUE;
 	bvw->priv->vis_name = g_strdup ("goom");
+	
+	bvw->priv->init_width = 0;
+	bvw->priv->init_height = 0;
 
 	bvw->priv->queue = g_async_queue_new ();
 
@@ -1185,6 +1188,28 @@ bacon_video_widget_key_press (GtkWidget *widget, GdkEventKey *event)
 	return FALSE;
 }
 
+
+static void
+bacon_video_widget_size_request (GtkWidget *widget, GtkRequisition *requisition)
+{
+	BaconVideoWidget *bvw;
+	GtkRequisition child_requisition;
+	
+	g_return_if_fail(widget != NULL);
+	g_return_if_fail(BACON_IS_VIDEO_WIDGET(widget));
+	
+	bvw = BACON_VIDEO_WIDGET (widget);
+	
+	if ( (bvw->priv->init_width == 0) && (bvw->priv->init_height == 0) ) {
+		requisition->width = DEFAULT_WIDTH;
+		requisition->height = DEFAULT_HEIGHT;
+	}
+	else { /* Requesting first allocation as a minimum */
+		requisition->width = bvw->priv->init_width;
+		requisition->height = bvw->priv->init_height;
+	}
+}
+
 static void
 bacon_video_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 {
@@ -1198,6 +1223,12 @@ bacon_video_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	widget->allocation = *allocation;
 	bvw->priv->xpos = allocation->x;
 	bvw->priv->ypos = allocation->y;
+	
+	if ( (bvw->priv->init_width == 0) && (bvw->priv->init_height == 0) ) {
+		/* First allocation, saving values */
+		bvw->priv->init_width = allocation->width;
+		bvw->priv->init_height = allocation->height;
+	}
 
 	if (GTK_WIDGET_REALIZED (widget))
 	{

@@ -101,7 +101,7 @@ static void on_play_pause_button_clicked (GtkToggleButton *button,
 		Totem *totem);
 static void playlist_changed_cb (GtkWidget *playlist, Totem *totem);
 static gboolean totem_is_media (const char *mrl); 
-static void show_controls (Totem *totem, gboolean visible);
+static void show_controls (Totem *totem, gboolean visible, gboolean fullscreen_behaviour);
 static gboolean totem_is_fullscreen (Totem *totem);
 
 static void
@@ -456,9 +456,9 @@ totem_action_fullscreen_toggle (Totem *totem)
 			if (gtk_check_menu_item_get_active
 					(GTK_CHECK_MENU_ITEM (item)))
 			{
-				show_controls (totem, TRUE);
 				totem->controls_visibility =
 					TOTEM_CONTROLS_VISIBLE;
+				show_controls (totem, TRUE, FALSE);
 			} else {
 				totem->controls_visibility =
 					TOTEM_CONTROLS_HIDDEN;
@@ -471,9 +471,13 @@ totem_action_fullscreen_toggle (Totem *totem)
 		gtk_window_fullscreen (GTK_WINDOW(totem->win));
 		scrsaver_disable (totem->scr);
 
-		if (totem->controls_visibility == TOTEM_CONTROLS_VISIBLE)
-			show_controls (totem, FALSE);
-		totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
+		if (totem->controls_visibility == TOTEM_CONTROLS_VISIBLE) {
+			totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;	
+			show_controls (totem, FALSE, FALSE);
+		}
+		else {
+			totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
+		}
 	}
 }
 
@@ -1663,7 +1667,7 @@ on_always_on_top1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 }
 
 static void
-show_controls (Totem *totem, gboolean visible)
+show_controls (Totem *totem, gboolean visible, gboolean fullscreen_behaviour)
 {
 	GtkWidget *menubar, *controlbar, *statusbar, *item, *bvw_vbox;
 	GtkRequisition requisition;
@@ -1689,9 +1693,28 @@ show_controls (Totem *totem, gboolean visible)
 		gtk_container_set_border_width (GTK_CONTAINER (bvw_vbox), 0);
 	}
 	
-	gtk_widget_size_request (totem->win, &requisition);
-	gtk_window_resize (GTK_WINDOW(totem->win), requisition.width, requisition.height);
+	/* If we are called from fullscreen handlers
+	we do not handle the window's size */
+	if (!fullscreen_behaviour)
+		return;
 	
+	if (totem->controls_visibility == TOTEM_CONTROLS_HIDDEN) {
+		gtk_window_resize (GTK_WINDOW(totem->win),
+			GTK_WIDGET(totem->bvw)->allocation.width,
+			GTK_WIDGET(totem->bvw)->allocation.height);
+	}
+	else if (totem->controls_visibility == TOTEM_CONTROLS_VISIBLE) {
+		/* We get GtkWindow requisition then we substract
+		bvw's requisition to get other widget's height and
+		use that to resize properly GtkWindow */
+		gtk_widget_size_request (totem->win, &requisition);
+		/* Getting controls requisition */
+		requisition.height = requisition.height - GTK_WIDGET(totem->bvw)->requisition.height;
+		requisition.width = requisition.width - GTK_WIDGET(totem->bvw)->requisition.width;
+		gtk_window_resize (GTK_WINDOW(totem->win),
+			GTK_WIDGET(totem->bvw)->allocation.width + requisition.width,
+			GTK_WIDGET(totem->bvw)->allocation.height + requisition.height);
+	}
 }
 
 static void
@@ -1701,8 +1724,6 @@ on_show_controls1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 
 	show = gtk_check_menu_item_get_active (checkmenuitem);
 
-	show_controls (totem, show);
-
 	/* Let's update our controls visibility */
 	if (show)
 	{
@@ -1710,6 +1731,7 @@ on_show_controls1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 	} else {
 		totem->controls_visibility = TOTEM_CONTROLS_HIDDEN;
 	}
+	show_controls (totem, show, TRUE);
 }
 
 static void
