@@ -484,6 +484,9 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
 	g_free (contents);
 
 	for (i = 0; lines[i] != NULL; i++) {
+		if (strcmp (lines[i], "") == 0)
+			continue;
+
 		/* Either it's a URI, or it has a proper path ... */
 		if (strstr(lines[i], "://") != NULL
 				|| lines[i][0] == G_DIR_SEPARATOR) {

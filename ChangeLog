@@ -1,5 +1,10 @@
 2003-10-11  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-pl-parser.c: (totem_pl_parser_add_m3u): ignore empty lines
+	in m3u files (fixes parsing of the magnatune playlists)
+
+2003-10-11  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-pl-parser.c: (totem_pl_parser_ignore),
 	(totem_pl_parser_parse): fix parsing of directories with non-dual
 	and non-special mimetypes
