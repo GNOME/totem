@@ -1810,7 +1810,46 @@ static gboolean
 totem_playlist_add_directory (TotemPlaylist *playlist, const char *mrl,
 		gpointer data)
 {
-	return FALSE;
+	GnomeVFSDirectoryHandle *handle;
+	GnomeVFSFileInfo *info;
+	GnomeVFSResult res;
+	gboolean retval = FALSE;
+
+	if (gnome_vfs_directory_open (&handle, mrl,
+				GNOME_VFS_FILE_INFO_DEFAULT)
+			!= GNOME_VFS_OK)
+	{
+		return FALSE;
+	}
+
+	info = gnome_vfs_file_info_new ();
+	res = gnome_vfs_directory_read_next (handle, info);
+	while (res == GNOME_VFS_OK)
+	{
+		char *fullpath;
+
+		if (info->name != NULL && (strcmp (info->name, ".") == 0
+					|| strcmp (info->name, "..") == 0))
+		{
+			res = gnome_vfs_directory_read_next (handle, info);
+			continue;
+		}
+
+		fullpath = g_build_filename (G_DIR_SEPARATOR_S,
+				mrl, info->name, NULL);
+		g_message ("foo: %s", fullpath);
+		if (totem_playlist_add_mrl (playlist, fullpath + 1,
+					NULL) != FALSE)
+		{
+			retval = TRUE;
+		}
+		g_free (fullpath);
+		res = gnome_vfs_directory_read_next (handle, info);
+	}
+
+	gnome_vfs_directory_close (handle);
+	gnome_vfs_file_info_unref (info);
+	return retval;
 }
 
 /* These ones need a special treatment, mostly playlist formats */
