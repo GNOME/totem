@@ -587,26 +587,17 @@ totem_action_set_scale_ratio (Totem *totem, gfloat ratio)
 	gtk_xine_set_scale_ratio (GTK_XINE (totem->gtx), ratio);
 }
 
-static void
-drop_cb (GtkWidget     *widget,
-	 GdkDragContext     *context,
-	 gint                x,
-	 gint                y,
-	 GtkSelectionData   *data,
-	 guint               info,
-	 guint               time,
-	 gpointer            user_data)
+static gboolean
+totem_action_drop_files (Totem *totem, GtkSelectionData *data,
+		gboolean empty_pl)
 {
-	Totem *totem = (Totem *)user_data;
 	GList *list, *p, *file_list;
 	gboolean cleared = FALSE;
 
 	list = gnome_vfs_uri_list_parse (data->data);
 
-	if (list == NULL) {
-		gtk_drag_finish (context, FALSE, FALSE, time);
-		return;
-	}
+	if (list == NULL)
+		return FALSE;
 
 	p = list;
 	file_list = NULL;
@@ -623,10 +614,7 @@ drop_cb (GtkWidget     *widget,
 	file_list = g_list_reverse (file_list);
 
 	if (file_list == NULL)
-	{
-		gtk_drag_finish (context, FALSE, FALSE, time);
-		return;
-	}
+		return FALSE;
 
 	for (p = file_list; p != NULL; p = p->next)
 	{
@@ -646,7 +634,7 @@ drop_cb (GtkWidget     *widget,
 					| G_FILE_TEST_EXISTS)
 				|| strstr (filename, "://") != NULL))
 		{
-			if (cleared == FALSE)
+			if (empty_pl == TRUE && cleared == FALSE)
 			{
 				/* The function that calls us knows better
 				 * if we should be doing something with the 
@@ -678,8 +666,43 @@ drop_cb (GtkWidget     *widget,
 		g_free (mrl);
 	}
 
-	gtk_drag_finish (context, TRUE, FALSE, time);
+	return TRUE;
 }
+
+static void
+drop_video_cb (GtkWidget     *widget,
+	 GdkDragContext     *context,
+	 gint                x,
+	 gint                y,
+	 GtkSelectionData   *data,
+	 guint               info,
+	 guint               time,
+	 gpointer            user_data)
+{
+	Totem *totem = (Totem *)user_data;
+	gboolean retval;
+
+	retval = totem_action_drop_files (totem, data, TRUE);
+	gtk_drag_finish (context, retval, FALSE, time);
+}
+
+static void
+drop_playlist_cb (GtkWidget     *widget,
+	       GdkDragContext     *context,
+	       gint                x,
+	       gint                y,
+	       GtkSelectionData   *data,
+	       guint               info,
+	       guint               time,
+	       gpointer            user_data)
+{
+	Totem *totem = (Totem *)user_data;
+	gboolean retval;
+
+	retval = totem_action_drop_files (totem, data, FALSE);
+	gtk_drag_finish (context, retval, FALSE, time);
+}
+
 
 static void
 on_play_pause_button_clicked (GtkToggleButton *button, gpointer user_data)
@@ -1879,10 +1902,9 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (on_playlist_button_toggled), totem);
 
 	/* Drag'n'Drop */
-	//FIXME
 	item = glade_xml_get_widget (totem->xml, "playlist_button");
 	g_signal_connect (G_OBJECT (item), "drag_data_received",
-			G_CALLBACK (drop_cb), totem);
+			G_CALLBACK (drop_playlist_cb), totem);
 	gtk_drag_dest_set (item, GTK_DEST_DEFAULT_ALL,
 			target_table, 1, GDK_ACTION_COPY);
 
@@ -2024,10 +2046,9 @@ video_widget_create (Totem *totem)
 			totem);
 
 	g_signal_connect (G_OBJECT (totem->gtx), "drag_data_received",
-			G_CALLBACK (drop_cb), totem);
+			G_CALLBACK (drop_video_cb), totem);
 	gtk_drag_dest_set (totem->gtx, GTK_DEST_DEFAULT_ALL,
 			target_table, 1, GDK_ACTION_COPY);
-
 
 	g_object_add_weak_pointer (G_OBJECT (totem->gtx),
 			(void**)&(totem->gtx));

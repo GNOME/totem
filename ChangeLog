@@ -1,6 +1,14 @@
 2003-01-11  Bastien Nocera  <hadess@hadess.net>
 
-	* data/.cvsignore:
+	* data/.cvsignore: 
+	* src/totem.c: (totem_action_drop_files), (drop_video_cb),
+	(drop_playlist_cb), (totem_callback_connect),
+	(video_widget_create): dnd on the canvas replaces the dnd on the
+	action part of the UI, you can also dnd on the playlist button to add
+	files to the playlist (Closes: #101903)
+
+2003-01-11  Bastien Nocera  <hadess@hadess.net>
+
 	* README: upd
 	* src/gtk-xine.c: (gtk_xine_realize): use a GdkWindow, that enables
 	use to have a working DND on the canvas
