@@ -2275,8 +2275,28 @@ bacon_video_widget_set_visuals (BaconVideoWidget *bvw, const char *name)
 
 			if (bvw->priv->using_vfx == TRUE)
 			{
+				//FIXME kludgy hack to avoid locking up
+				//when switching plugins and paused
+#if 1
+				Speeds speed;
+
+				speed = bacon_video_widget_get_speed (bvw);
+				if (speed == SPEED_PAUSE)
+				{
+					xine_set_param (bvw->priv->stream,
+							XINE_PARAM_SPEED,
+							XINE_SPEED_SLOW_4);
+				}
+#endif
 				show_vfx_update (bvw, FALSE);
 				show_vfx_update (bvw, TRUE);
+#if 1
+				if (speed == SPEED_PAUSE)
+				{
+					bacon_video_widget_set_speed (bvw,
+							SPEED_PAUSE);
+				}
+#endif
 			}
 
 			xine_post_dispose (bvw->priv->xine, oldvis);

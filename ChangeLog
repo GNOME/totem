@@ -1,3 +1,9 @@
+2003-08-27  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_set_visuals):
+	work-around a deadlock when unwiring the post plugin with the xine
+	engine paused
+
 2003-08-26  Bastien Nocera  <hadess@hadess.net>
 
 	* src/Makefile.am: removed ICON_PATH from the CFLAGS
