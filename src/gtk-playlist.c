@@ -685,14 +685,12 @@ gtk_playlist_init (GtkPlaylist *playlist)
 	playlist->_priv->gc = NULL;
 }
 
-
 static void
 gtk_playlist_finalize (GObject *object)
 {
-	GtkPlaylist *playlist;
+	GtkPlaylist *playlist = GTK_PLAYLIST (object);
 
-	g_return_if_fail (GTK_IS_PLAYLIST (object));
-	playlist = GTK_PLAYLIST (object);
+	g_return_if_fail (object != NULL);
 
 	if (playlist->_priv->current != NULL)
 		gtk_tree_path_free (playlist->_priv->current);
@@ -702,6 +700,49 @@ gtk_playlist_finalize (GObject *object)
 	if (G_OBJECT_CLASS (parent_class)->finalize != NULL) {
 		(* G_OBJECT_CLASS (parent_class)->finalize) (object);
 	}
+}
+
+static void
+gtk_playlist_unrealize (GtkWidget *widget)
+{
+	GtkPlaylist *playlist = GTK_PLAYLIST (widget);
+	int x, y;
+
+	g_return_if_fail (widget != NULL);
+
+	gtk_window_get_position (GTK_WINDOW (widget), &x, &y);
+	gconf_client_set_int (playlist->_priv->gc, "/apps/totem/playlist_x",
+			x, NULL);
+	gconf_client_set_int (playlist->_priv->gc, "/apps/totem/playlist_y",
+			y, NULL);
+
+	if (GTK_WIDGET_CLASS (parent_class)->unrealize != NULL) {
+		(* GTK_WIDGET_CLASS (parent_class)->unrealize) (widget);
+	}
+}
+
+static void
+gtk_playlist_realize (GtkWidget *widget)
+{
+	GtkPlaylist *playlist = GTK_PLAYLIST (widget);
+	int x, y;
+
+	g_return_if_fail (widget != NULL);
+
+	if (GTK_WIDGET_CLASS (parent_class)->realize != NULL) {
+		(* GTK_WIDGET_CLASS (parent_class)->realize) (widget);
+	}
+
+	x = gconf_client_get_int (playlist->_priv->gc,
+			"/apps/totem/playlist_x", NULL);
+	y = gconf_client_get_int (playlist->_priv->gc,
+			"/apps/totem/playlist_y", NULL);
+
+	if (x == -1 || y == -1
+			|| x > gdk_screen_width () || y > gdk_screen_height ())
+		return;
+
+	gtk_window_move (GTK_WINDOW (widget), x, y);
 }
 
 GtkWidget*
@@ -1164,6 +1205,8 @@ gtk_playlist_class_init (GtkPlaylistClass *klass)
 	parent_class = gtk_type_class (gtk_dialog_get_type ());
 
 	G_OBJECT_CLASS (klass)->finalize = gtk_playlist_finalize;
+	GTK_WIDGET_CLASS (klass)->realize = gtk_playlist_realize;
+	GTK_WIDGET_CLASS (klass)->unrealize = gtk_playlist_unrealize;
 
 	/* Signals */
 	gtk_playlist_table_signals[CHANGED] =

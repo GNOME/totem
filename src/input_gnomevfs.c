@@ -354,8 +354,11 @@ gnomevfs_plugin_close (input_plugin_t *this_gen)
 {
 	gnomevfs_input_plugin_t *this = (gnomevfs_input_plugin_t *) this_gen;
 
-	gnome_vfs_close (this->fh);
-	this->fh = NULL;
+	if (this->fh)
+	{
+		gnome_vfs_close (this->fh);
+		this->fh = NULL;
+	}
 
 	if (this->sub)
 	{

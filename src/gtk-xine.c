@@ -133,22 +133,22 @@ struct GtkXinePrivate {
 };
 
 
-static void gtk_xine_class_init (GtkXineClass * klass);
-static void gtk_xine_instance_init (GtkXine * gtx);
+static void gtk_xine_class_init (GtkXineClass *klass);
+static void gtk_xine_instance_init (GtkXine *gtx);
 
 static void gtk_xine_set_property (GObject *object, guint property_id,
 		const GValue *value, GParamSpec *pspec);
 static void gtk_xine_get_property (GObject *object, guint property_id,
 		GValue *value, GParamSpec *pspec);
 
-static void gtk_xine_realize (GtkWidget * widget);
-static void gtk_xine_unrealize (GtkWidget * widget);
+static void gtk_xine_realize (GtkWidget *widget);
+static void gtk_xine_unrealize (GtkWidget *widget);
 static void gtk_xine_finalize (GObject *object);
 
-static gint gtk_xine_expose (GtkWidget * widget, GdkEventExpose * event);
+static gint gtk_xine_expose (GtkWidget *widget, GdkEventExpose *event);
 
-static void gtk_xine_size_allocate (GtkWidget * widget,
-				    GtkAllocation * allocation);
+static void gtk_xine_size_allocate (GtkWidget *widget,
+				    GtkAllocation *allocation);
 
 static GtkWidgetClass *parent_class = NULL;
 
@@ -185,7 +185,7 @@ gtk_xine_get_type (void)
 }
 
 static void
-gtk_xine_class_init (GtkXineClass * klass)
+gtk_xine_class_init (GtkXineClass *klass)
 {
 
 	GObjectClass *object_class;
@@ -275,7 +275,7 @@ gtk_xine_class_init (GtkXineClass * klass)
 }
 
 static void
-gtk_xine_instance_init (GtkXine * gtx)
+gtk_xine_instance_init (GtkXine *gtx)
 {
 	GTK_WIDGET_SET_FLAGS (GTK_WIDGET(gtx), GTK_CAN_FOCUS);
 
@@ -452,7 +452,7 @@ load_video_out_driver (GtkXine *gtx)
 }
 
 static ao_driver_t *
-load_audio_out_driver (GtkXine * gtx, char *audio_driver_id)
+load_audio_out_driver (GtkXine *gtx, char *audio_driver_id)
 {
 	ao_driver_t *ao_driver = NULL;
 	char **driver_ids;
@@ -701,8 +701,7 @@ xine_thread (void *gtx_gen)
 }
 
 static gboolean
-configure_cb (GtkWidget * widget,
-	      GdkEventConfigure * event, gpointer user_data)
+configure_cb (GtkWidget *widget, GdkEventConfigure *event, gpointer user_data)
 {
 	GtkXine *gtx = (GtkXine *) user_data;
 
@@ -713,7 +712,7 @@ configure_cb (GtkWidget * widget,
 }
 
 static void
-gtk_xine_realize (GtkWidget * widget)
+gtk_xine_realize (GtkWidget *widget)
 {
 	GtkXine *gtx;
 	char *configfile, **autoplug_list;
@@ -956,7 +955,7 @@ xine_error (GtkXine *gtx)
 }
 
 static void
-gtk_xine_unrealize (GtkWidget * widget)
+gtk_xine_unrealize (GtkWidget *widget)
 {
 	GtkXine *gtx;
 
@@ -1019,7 +1018,7 @@ gtk_xine_check (GtkXine *gtx)
 }
 
 static gint
-gtk_xine_expose (GtkWidget * widget, GdkEventExpose * event)
+gtk_xine_expose (GtkWidget *widget, GdkEventExpose *event)
 {
 	return FALSE;
 }
@@ -1067,7 +1066,7 @@ gtk_xine_play (GtkXine *gtx, gchar *mrl, gint pos, gint start_time)
 }
 
 void
-gtk_xine_stop (GtkXine * gtx)
+gtk_xine_stop (GtkXine *gtx)
 {
 	g_return_if_fail (gtx != NULL);
 	g_return_if_fail (GTK_IS_XINE (gtx));
@@ -1200,7 +1199,7 @@ gtk_xine_get_audio_channel (GtkXine *gtx)
 }
 
 void
-gtk_xine_set_fullscreen (GtkXine * gtx, gboolean fullscreen)
+gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 {
 	static gboolean pml = FALSE;
 	g_return_if_fail (gtx != NULL);
@@ -1311,7 +1310,7 @@ gtk_xine_set_fullscreen (GtkXine * gtx, gboolean fullscreen)
 }
 
 gint
-gtk_xine_is_fullscreen (GtkXine * gtx)
+gtk_xine_is_fullscreen (GtkXine *gtx)
 {
 	g_return_val_if_fail (gtx != NULL, 0);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);

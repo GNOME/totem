@@ -1,3 +1,20 @@
+2002-10-24  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem.schemas.in: added playlist coordinates
+	* src/gtk-playlist.c: (gtk_playlist_finalize),
+	(gtk_playlist_unrealize), (gtk_playlist_realize),
+	(gtk_playlist_class_init): Save playlist coordinates between runs of
+	Totem
+	* src/gtk-xine.c: (gtk_xine_class_init), (gtk_xine_instance_init),
+	(load_audio_out_driver), (configure_cb), (gtk_xine_realize),
+	(gtk_xine_unrealize), (gtk_xine_expose), (gtk_xine_stop),
+	(gtk_xine_set_fullscreen), (gtk_xine_is_fullscreen): some style
+	cleanups
+	* src/input_gnomevfs.c: (gnomevfs_plugin_close): only close if
+	there's actually something to close
+	* src/totem.c: (totem_action_exit): destroy the playlist before we
+	close Totem
+
 2002-10-23  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c: (time_to_string), (totem_action_play): display "2

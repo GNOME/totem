@@ -164,6 +164,7 @@ totem_action_exit (Totem *totem)
 	gtk_main_quit ();
 
 	gtk_widget_destroy (totem->gtx);
+	gtk_widget_destroy (totem->playlist);
 
 	exit (0);
 }
