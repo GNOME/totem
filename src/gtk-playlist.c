@@ -421,7 +421,9 @@ gtk_playlist_finalize (GObject *object)
 
 	D("gtk_playlist_finalize");
 
+	g_return_if_fail (GTK_IS_PLAYLIST (object));
 	playlist = GTK_PLAYLIST (object);
+
 	if (playlist->_priv->current != NULL)
 		gtk_tree_path_free (playlist->_priv->current);
 	if (playlist->_priv->icon != NULL)

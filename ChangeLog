@@ -1,5 +1,12 @@
 2002-08-28  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-playlist.c: (gtk_playlist_finalize): add a bit more checks
+	* src/gtk-xine.c: (video_window_translate_point),
+	(generate_mouse_event), (xine_thread): add generation of the necessary
+	xine mouse events to make DVD menus work
+
+2002-08-28  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-xine.c: (frame_output_cb), (xine_thread):
 	re-enable Expose event compression, should fix weird slow-downs
 

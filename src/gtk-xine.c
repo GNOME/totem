@@ -527,6 +527,69 @@ load_config_from_gconf (GtkXine *gtx)
 	 */
 }
 
+static gboolean
+video_window_translate_point(GtkXine *gtx, int gui_x, int gui_y,
+		int *video_x, int *video_y)
+{
+	x11_rectangle_t rect;
+
+	rect.x = gui_x;
+	rect.y = gui_y;
+	rect.w = 0;
+	rect.h = 0;
+
+	if (gtx->priv->vo_driver->gui_data_exchange (gtx->priv->vo_driver,
+				GUI_DATA_EX_TRANSLATE_GUI_TO_VIDEO,
+				(void*)&rect) != -1)
+	{
+		/* driver implements gui->video coordinate space translation
+		 * use it */
+		*video_x = rect.x;
+		*video_y = rect.y;
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+static void
+generate_mouse_event (GtkXine *gtx, XEvent *event, gboolean is_motion)
+{
+	XMotionEvent *mevent = (XMotionEvent *) event;
+	XButtonEvent *bevent = (XButtonEvent *) event;
+	int x, y;
+	gboolean retval;
+
+	if (is_motion == FALSE && bevent->button != Button1)
+		return;
+
+	if (is_motion == TRUE)
+		retval = video_window_translate_point (gtx,
+				mevent->x, mevent->y, &x, &y);
+	else
+		retval = video_window_translate_point (gtx,
+				bevent->x, bevent->y, &x, &y);
+
+	if (retval == TRUE)
+	{
+		xine_input_event_t xine_event;
+
+		if (is_motion == TRUE)
+		{
+			xine_event.event.type = XINE_EVENT_MOUSE_MOVE;
+			xine_event.button = 0; /* Just motion. */
+		} else {
+			xine_event.event.type = XINE_EVENT_MOUSE_BUTTON;
+			xine_event.button = 1;
+		}
+
+		xine_event.x = x;
+		xine_event.y = y;
+		xine_send_event (gtx->priv->xine,
+				(xine_event_t *) (&xine_event));
+	}
+}
+
 static void *
 xine_thread (void *gtx_gen)
 {
@@ -539,11 +602,22 @@ xine_thread (void *gtx_gen)
 	{
 		XNextEvent (gtx->priv->display, &event);
 
-		if (event.type == Expose && event.xexpose.count == 0)
+		switch (event.type)
 		{
+		case Expose:
+			if (event.xexpose.count != 0)
+				break;
+
 			gtx->priv->vo_driver->gui_data_exchange
 				(gtx->priv->vo_driver,
 				 GUI_DATA_EX_EXPOSE_EVENT, &event);
+			break;
+		case MotionNotify:
+			generate_mouse_event (gtx, &event, TRUE);
+			break;
+		case ButtonPress:
+			generate_mouse_event (gtx, &event, FALSE);
+			break;
 		}
 
 		if (event.type == gtx->priv->completion_event)
