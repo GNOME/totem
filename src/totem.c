@@ -485,6 +485,38 @@ totem_get_nice_name_for_stream (Totem *totem)
 	return retval;
 }
 
+static gboolean
+totem_action_restore_pl (Totem *totem)
+{
+	char *path, *mrl;
+
+	path = g_build_filename (G_DIR_SEPARATOR_S, g_get_home_dir (),
+			".gnome2", "totem.pls", NULL);
+
+	if (g_file_test (path, G_FILE_TEST_EXISTS) == FALSE)
+	{
+		g_free (path);
+		return FALSE;
+	}
+
+	if (gtk_playlist_add_mrl (totem->playlist, path, NULL) == FALSE)
+	{
+		g_free (path);
+		return FALSE;
+	}
+
+	g_free (path);
+	mrl = gtk_playlist_get_current_mrl (totem->playlist);
+	if (mrl == NULL)
+		return FALSE;
+
+	totem_action_set_mrl (totem, mrl);
+	play_pause_set_label (totem, STATE_PAUSED);
+	g_free (mrl);
+
+	return TRUE;
+}
+
 static void
 update_mrl_label (Totem *totem, const char *name)
 {
@@ -3282,7 +3314,8 @@ main (int argc, char **argv)
 		else
 			totem_action_set_mrl (totem, NULL);
 	} else {
-		totem_action_set_mrl (totem, NULL);
+		if (totem_action_restore_pl (totem) == FALSE)
+			totem_action_set_mrl (totem, NULL);
 	}
 
 #ifdef HAVE_REMOTE
