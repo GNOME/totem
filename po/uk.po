@@ -6,9 +6,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2003-10-03 11:47+0300\n"
-"PO-Revision-Date: 2003-09-30 13:50+0200\n"
-"Last-Translator: Maxim Dzumanenko <mvd@mylinux.com.ua>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-03-16 13:38+0200\n"
+"PO-Revision-Date: 2004-03-16 13:50+0200\n"
+"Last-Translator: Yuriy Syrota <rasta@cvs.gnome.org>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1425
+#: data/playlist.glade.h:1 src/totem-playlist.c:1291
 msgid "Playlist"
 msgstr "Список програвання"
 
@@ -41,25 +42,22 @@ msgid "    "
 msgstr "    "
 
 #: data/properties.glade.h:2 src/bacon-video-widget-properties.c:170
-#: src/totem-properties-page.c:164
 msgid "0 frames per second"
 msgstr "0 кадрів за секунду"
 
 #. Bitrate
 #: data/properties.glade.h:3 src/bacon-video-widget-properties.c:172
-#: src/totem-properties-page.c:166
 msgid "0 kbps"
 msgstr "0 кб/с"
 
 #. 0 seconds
 #: data/properties.glade.h:4 data/totem.glade.h:3
-#: src/bacon-video-widget-properties.c:126 src/totem-properties-page.c:120
+#: src/bacon-video-widget-properties.c:126
 msgid "0 seconds"
 msgstr "0 секунд"
 
 #. Dimensions
 #: data/properties.glade.h:5 src/bacon-video-widget-properties.c:165
-#: src/totem-properties-page.c:159
 msgid "0 x 0"
 msgstr "0 x 0"
 
@@ -103,13 +101,11 @@ msgstr "Частота кадрів:"
 #: data/properties.glade.h:15 src/bacon-video-widget-properties.c:167
 #: src/bacon-video-widget-properties.c:174
 #: src/bacon-video-widget-properties.c:243
-#: src/bacon-video-widget-properties.c:275 src/totem-properties-page.c:161
-#: src/totem-properties-page.c:168 src/totem-properties-page.c:237
-#: src/totem-properties-page.c:269
+#: src/bacon-video-widget-properties.c:275
 msgid "N/A"
 msgstr "Немає"
 
-#: data/properties.glade.h:16 src/bacon-video-widget-properties.c:324
+#: data/properties.glade.h:16 src/totem.c:2114
 msgid "Properties"
 msgstr "Властивості"
 
@@ -123,10 +119,7 @@ msgstr "Назва: "
 #: src/bacon-video-widget-properties.c:161
 #: src/bacon-video-widget-properties.c:192
 #: src/bacon-video-widget-properties.c:199
-#: src/bacon-video-widget-properties.c:206 src/totem-properties-page.c:151
-#: src/totem-properties-page.c:153 src/totem-properties-page.c:155
-#: src/totem-properties-page.c:186 src/totem-properties-page.c:193
-#: src/totem-properties-page.c:200
+#: src/bacon-video-widget-properties.c:206
 msgid "Unknown"
 msgstr "Невідомо"
 
@@ -134,31 +127,13 @@ msgstr "Невідомо"
 msgid "Year:"
 msgstr "Рік:"
 
-#: data/totem-download.glade.h:1
-msgid "Connecting to the server"
-msgstr "З'єднання з сервером"
-
-#: data/totem-download.glade.h:2
-msgid "Done"
-msgstr "Завершено"
-
-#: data/totem-download.glade.h:3
-msgid "Downloading the plug-ins"
-msgstr "Звантаження модулів"
-
-#: data/totem-download.glade.h:4
-msgid "Installing the plug-ins"
-msgstr "Встановлення модулів"
-
-#: data/totem-download.glade.h:5
-msgid "Plug-ins Download"
-msgstr "Звантаження модулів"
-
 #: data/totem.desktop.in.h:1
 msgid "Play movies and songs"
 msgstr "Відтворення відео і звуку"
 
-#: data/totem.desktop.in.h:2 src/totem.c:3611
+#. Title
+#: data/totem.desktop.in.h:2 data/totem.glade.h:97 src/totem.c:684
+#: src/totem.c:3687
 msgid "Totem Movie Player"
 msgstr "Програвач відео \"Тотем\""
 
@@ -227,8 +202,8 @@ msgid "<b>Audio Output</b>"
 msgstr "<b>Вивід звуку</b>"
 
 #: data/totem.glade.h:19
-msgid "<b>Brightness/Contrast</b>"
-msgstr "<b>Яскравість і контрастність</b>"
+msgid "<b>Color balance</b>"
+msgstr "<b>Баланс кольорів</b>"
 
 #: data/totem.glade.h:20
 msgid "<b>Display</b>"
@@ -335,351 +310,366 @@ msgid "Go to the title menu"
 msgstr "Перейти до меню заголовку"
 
 #: data/totem.glade.h:46
+msgid "Help contents"
+msgstr "Зміст довідки"
+
+#: data/totem.glade.h:47
 msgid "Intranet/LAN"
 msgstr "Інтранет/Локальна мережа"
 
-#: data/totem.glade.h:47
+#: data/totem.glade.h:48
 msgid "Languages"
 msgstr "Мови"
 
-#: data/totem.glade.h:48
+#: data/totem.glade.h:49
 msgid "Large"
 msgstr "Великий"
 
-#: data/totem.glade.h:49 src/totem.c:80
+#: data/totem.glade.h:50 src/totem.c:76
 msgid "Next"
 msgstr "Наступний"
 
-#: data/totem.glade.h:50
+#: data/totem.glade.h:51
 msgid "Next chapter or movie"
 msgstr "Наступний розділ або фільм"
 
-#: data/totem.glade.h:51
+#: data/totem.glade.h:52
 msgid "No Language Selection Available"
 msgstr "Вибір мов відсутній"
 
-#: data/totem.glade.h:52
+#: data/totem.glade.h:53
 msgid "No subtitles selection available"
 msgstr "Вибір субтитрів відсутній"
 
-#: data/totem.glade.h:53
+#: data/totem.glade.h:54
 msgid "Normal"
 msgstr "Звичайний"
 
-#: data/totem.glade.h:54
+#: data/totem.glade.h:55
 msgid "Open _Location..."
 msgstr "Відкрити _місцезнаходження..."
 
-#: data/totem.glade.h:55
+#: data/totem.glade.h:56
 msgid "Open a non-local file"
 msgstr "Відкрити не локальний файл"
 
-#: data/totem.glade.h:56
+#: data/totem.glade.h:57
 msgid "Play / Pa_use"
 msgstr "Відтворення / _пауза"
 
-#: data/totem.glade.h:57
+#: data/totem.glade.h:58
 msgid "Play _Audio CD"
 msgstr "Програвати _аудіодиск"
 
-#: data/totem.glade.h:58
+#: data/totem.glade.h:59
 msgid "Play _DVD"
 msgstr "Програвати _DVD"
 
-#: data/totem.glade.h:59
+#: data/totem.glade.h:60
 msgid "Play _VCD"
 msgstr "Програвати _VCD"
 
-#: data/totem.glade.h:60
+#: data/totem.glade.h:61
 msgid "Play a Video CD"
 msgstr "Програвати відеодиск"
 
-#: data/totem.glade.h:61
+#: data/totem.glade.h:62
 msgid "Play a Video DVD"
 msgstr "Програвати відео-DVD"
 
-#: data/totem.glade.h:62
+#: data/totem.glade.h:63
 msgid "Play an audio CD"
 msgstr "Програвати звуковий диск"
 
-#: data/totem.glade.h:63
+#: data/totem.glade.h:64
 msgid "Play or pause the movie"
 msgstr "Запускає або призупиняє програвання фільму"
 
-#: data/totem.glade.h:64 src/totem.c:79
+#: data/totem.glade.h:65 src/totem.c:75
 msgid "Play/Pause"
 msgstr "Відтворення/пауза"
 
-#: data/totem.glade.h:65 src/totem.c:81
+#: data/totem.glade.h:66 src/totem.c:77
 msgid "Previous"
 msgstr "Попередній"
 
-#: data/totem.glade.h:66
+#: data/totem.glade.h:67
 msgid "Previous chapter or movie"
 msgstr "Попередній розділ/фільм"
 
-#: data/totem.glade.h:67
+#: data/totem.glade.h:68
 msgid "S_ubtitles"
 msgstr "С_убтитри"
 
-#: data/totem.glade.h:68
+#: data/totem.glade.h:69
+msgid "Sat_uration:"
+msgstr "_Контрастність:"
+
+#: data/totem.glade.h:70
 msgid "Save Screenshot"
 msgstr "Зберегти знімок"
 
-#: data/totem.glade.h:69
+#: data/totem.glade.h:71
 msgid "Save screenshot to _file:"
 msgstr "Зберегти знімок у _файл:"
 
-#: data/totem.glade.h:70
+#: data/totem.glade.h:72
 msgid "Save screenshot to the _desktop"
 msgstr "Зберегти знімок на _стільниці"
 
-#: data/totem.glade.h:71
+#: data/totem.glade.h:73
 msgid "Set the repeat mode"
 msgstr "Встановлює режим повторення"
 
-#: data/totem.glade.h:72
+#: data/totem.glade.h:74
 msgid "Set the shuffle mode"
 msgstr "Встановлює режим перетасовування"
 
-#: data/totem.glade.h:73
+#: data/totem.glade.h:75
 msgid "Show _Controls"
 msgstr "Показати панель _керування"
 
-#: data/totem.glade.h:74
+#: data/totem.glade.h:76
 msgid "Show _visual effects when an audio file is played"
 msgstr "Показувати _відео ефекти під час відтворення звуку"
 
-#: data/totem.glade.h:75
+#: data/totem.glade.h:77
 msgid "Show controls"
 msgstr "Показує панель керування"
 
-#: data/totem.glade.h:76
+#: data/totem.glade.h:78
 msgid "Show or hide the playlist"
 msgstr "Показує чи приховує список програвання"
 
-#: data/totem.glade.h:77
+#: data/totem.glade.h:79
 msgid "Show/Hide Playlist"
 msgstr "Показати/сховати список програвання"
 
-#: data/totem.glade.h:78
-msgid "Shu_ffle Mode"
+#: data/totem.glade.h:80
+msgid "Shuff_le Mode"
 msgstr "Режим пере_тасовування"
 
-#: data/totem.glade.h:79
+#: data/totem.glade.h:81
 msgid "Skip _Backwards"
 msgstr "Перескочити _назад"
 
-#: data/totem.glade.h:80
+#: data/totem.glade.h:82
 msgid "Skip _Forward"
 msgstr "Перескочити _вперед"
 
-#: data/totem.glade.h:81
+#: data/totem.glade.h:83
 msgid "Skip backwards"
 msgstr "Перескочити назад"
 
-#: data/totem.glade.h:82
+#: data/totem.glade.h:84
 msgid "Skip forward"
 msgstr "Перескочити вперед"
 
-#: data/totem.glade.h:83
+#: data/totem.glade.h:85
 msgid "Skip to"
 msgstr "Перескочити на"
 
-#: data/totem.glade.h:84
+#: data/totem.glade.h:86
 msgid "Skip to a specific time"
 msgstr "Перескочити на проміжок часу"
 
-#: data/totem.glade.h:85
+#: data/totem.glade.h:87
 msgid "Small"
 msgstr "Маленький"
 
-#: data/totem.glade.h:86
+#: data/totem.glade.h:88
 msgid "Stereo"
 msgstr "Стерео"
 
-#: data/totem.glade.h:87
+#: data/totem.glade.h:89
 msgid "Subtitles"
 msgstr "Субтитри"
 
-#: data/totem.glade.h:88
+#: data/totem.glade.h:90
 msgid "Switch to double size"
 msgstr "Перемикає на подвійний розмір"
 
-#: data/totem.glade.h:89
+#: data/totem.glade.h:91
 msgid "Switch to fullscreen"
 msgstr "Перемикає на повноекранний режим"
 
-#: data/totem.glade.h:90
+#: data/totem.glade.h:92
 msgid "Take _Screenshot"
 msgstr "Зробити _знімок"
 
-#: data/totem.glade.h:91
+#: data/totem.glade.h:93
 msgid "Take a screenshot"
 msgstr "Робить знімок"
 
-#: data/totem.glade.h:92
+#: data/totem.glade.h:94
 msgid "Time:"
 msgstr "Час:"
 
-#: data/totem.glade.h:93
+#: data/totem.glade.h:95
 msgid "Toggle _Aspect Ratio"
 msgstr "Перемикнути _відношення сторін"
 
-#: data/totem.glade.h:94
+#: data/totem.glade.h:96
 msgid "Toggle the aspect ratio"
 msgstr "Перемикає відношення сторін"
 
-#. Title
-#: data/totem.glade.h:95 src/totem.c:704 src/totem.c:731 src/totem.c:1883
-msgid "Totem"
-msgstr "Тотем"
-
-#: data/totem.glade.h:96
+#: data/totem.glade.h:98
 msgid "Totem Preferences"
 msgstr "Властивості"
 
-#: data/totem.glade.h:97
+#: data/totem.glade.h:99
+msgid "Tv-out in fullscreen by Nvidia (NTSC)"
+msgstr "Повноекранний вивід ТБ через Nvidia (NTSC)"
+
+#: data/totem.glade.h:100
+msgid "Tv-out in fullscreen by Nvidia (PAL)"
+msgstr "Повноекранний вивід ТБ через Nvidia (PAL)"
+
+#: data/totem.glade.h:101
 msgid "Visualisation _size:"
 msgstr "Розмір _візуалізації"
 
-#: data/totem.glade.h:98
+#: data/totem.glade.h:102
 msgid "Volume _Down"
 msgstr "З_меншити гучність"
 
-#: data/totem.glade.h:99
+#: data/totem.glade.h:103
 msgid "Volume _Up"
 msgstr "З_більшити гучність"
 
-#: data/totem.glade.h:100
+#: data/totem.glade.h:104
 msgid "Volume down"
 msgstr "Зменшує гучність"
 
-#: data/totem.glade.h:101
+#: data/totem.glade.h:105
 msgid "Volume up"
 msgstr "Зменшує гучність"
 
-#: data/totem.glade.h:102 data/vanity.glade.h:7
+#: data/totem.glade.h:106 data/vanity.glade.h:7
 msgid "Zoom _1:1"
 msgstr "Масштаб _1:1"
 
-#: data/totem.glade.h:103 data/vanity.glade.h:8
+#: data/totem.glade.h:107 data/vanity.glade.h:8
 msgid "Zoom _2:1"
 msgstr "Масштаб _2:1"
 
-#: data/totem.glade.h:104
+#: data/totem.glade.h:108
 msgid "Zoom to half size"
 msgstr "Перемикнутись на половинний розмір"
 
-#: data/totem.glade.h:105
+#: data/totem.glade.h:109
 msgid "Zoom to one for one size"
 msgstr "Перемикнутись на тотожне відображення"
 
-#: data/totem.glade.h:106
+#: data/totem.glade.h:110
 msgid "_Add Proprietary Plugins..."
 msgstr "_Додати комерційний модуль"
 
-#: data/totem.glade.h:107
+#: data/totem.glade.h:111
 msgid "_Angle Menu"
 msgstr "_Кутове меню"
 
-#: data/totem.glade.h:108
+#: data/totem.glade.h:112
 msgid "_Audio output type:"
 msgstr "Тип _звукового виходу:"
 
-#: data/totem.glade.h:109
+#: data/totem.glade.h:113
 msgid "_Brightness:"
 msgstr "_Яскравість:"
 
-#: data/totem.glade.h:110
+#: data/totem.glade.h:114
 msgid "_Chapter Menu"
 msgstr "Меню _розділу"
 
-#: data/totem.glade.h:111
+#: data/totem.glade.h:115
+msgid "_Contents"
+msgstr "_Зміст"
+
+#: data/totem.glade.h:116
 msgid "_DVD Menu"
 msgstr "Меню _DVD"
 
-#: data/totem.glade.h:112
+#: data/totem.glade.h:117
 msgid "_DXR3 TV-out"
 msgstr "_DXR3 ТВ-вихід"
 
-#: data/totem.glade.h:113
+#: data/totem.glade.h:118
 msgid "_Deinterlace"
 msgstr "Не _через-рядкова розгортка"
 
-#: data/totem.glade.h:114
+#: data/totem.glade.h:119
 msgid "_Eject"
 msgstr "Ви_тягнути"
 
-#: data/totem.glade.h:115
+#: data/totem.glade.h:120
 msgid "_Fullscreen"
 msgstr "На весь _екран"
 
-#: data/totem.glade.h:116
+#: data/totem.glade.h:121
 msgid "_Go"
 msgstr "Пере_йти"
 
-#: data/totem.glade.h:117
+#: data/totem.glade.h:122
+msgid "_Hue:"
+msgstr "_Яскравість:"
+
+#: data/totem.glade.h:123
 msgid "_Languages"
 msgstr "_Мови"
 
-#: data/totem.glade.h:118
+#: data/totem.glade.h:124
 msgid "_Movie"
 msgstr "_Відео"
 
-#: data/totem.glade.h:119
+#: data/totem.glade.h:125
 msgid "_Next Chapter/Movie"
 msgstr "_Наступний розділ/фільм"
 
-#: data/totem.glade.h:120
+#: data/totem.glade.h:126
 msgid "_No TV-out"
 msgstr "_не виводити на ТВ-вихід"
 
-#: data/totem.glade.h:121
+#: data/totem.glade.h:127
 msgid "_Optical device path:"
 msgstr "Шлях до _оптичного пристрою:"
 
-#: data/totem.glade.h:122
+#: data/totem.glade.h:128
 msgid "_Previous Chapter/Movie"
 msgstr "_Попередній розділ/фільм"
 
-#: data/totem.glade.h:123
+#: data/totem.glade.h:129
 msgid "_Repeat Mode"
 msgstr "Режим _повторення"
 
-#: data/totem.glade.h:124
+#: data/totem.glade.h:130
 msgid "_Show/Hide Playlist"
 msgstr "Показати/сховати список про_гравання"
 
-#: data/totem.glade.h:125
+#: data/totem.glade.h:131
 msgid "_Skip to..."
 msgstr "_Перескочити..."
 
-#: data/totem.glade.h:126
+#: data/totem.glade.h:132
 msgid "_Skip to:"
 msgstr "_Перескочити на:"
 
-#: data/totem.glade.h:127
+#: data/totem.glade.h:133
 msgid "_Sound"
 msgstr "_Звук"
 
-#: data/totem.glade.h:128
-msgid "_TV-out mode"
-msgstr "вивід на _ТБ-вихід"
-
-#: data/totem.glade.h:129
+#: data/totem.glade.h:134
 msgid "_Title Menu"
 msgstr "Меню _заголовка"
 
-#: data/totem.glade.h:130
+#: data/totem.glade.h:135
 msgid "_Type of visualisation:"
 msgstr "_Тип візуалізації"
 
-#: data/totem.glade.h:131 data/vanity.glade.h:10
+#: data/totem.glade.h:136 data/vanity.glade.h:10
 msgid "_Zoom 1:2"
 msgstr "_Масштаб 1:2"
 
-#: data/totem.glade.h:132
+#: data/totem.glade.h:137
 msgid "seconds"
 msgstr "секунд"
 
@@ -762,10 +752,26 @@ msgid "The contrast of the video."
 msgstr "Контраст зображення."
 
 #: data/totem.schemas.in.h:20
+msgid "The hue of the video"
+msgstr "Яскравість відео"
+
+#: data/totem.schemas.in.h:21
+msgid "The hue of the video."
+msgstr "Яскравість відео."
+
+#: data/totem.schemas.in.h:22
+msgid "The saturation of the video"
+msgstr "Контраст відео"
+
+#: data/totem.schemas.in.h:23
+msgid "The saturation of the video."
+msgstr "Контраст відео."
+
+#: data/totem.schemas.in.h:24
 msgid "Type of audio output to use"
 msgstr "Який тип аудіовиходу використовується"
 
-#: data/totem.schemas.in.h:21
+#: data/totem.schemas.in.h:25
 msgid ""
 "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
 "\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
@@ -775,39 +781,39 @@ msgstr ""
 "канальний вивід, \"2\" - вивід через 5.0 канал, \"3\" - вивід через 5.1 "
 "канал.\"4\" - вивід через AC3."
 
-#: data/totem.schemas.in.h:22
+#: data/totem.schemas.in.h:26
 msgid "Whether the main window should stay on top"
 msgstr "Чи потрібно, щоб головне вікно залишалось нагорі"
 
-#: data/totem.schemas.in.h:23
+#: data/totem.schemas.in.h:27
 msgid "Whether the main window should stay on top of the other ones"
 msgstr "Чи потрібно, щоб головне вікно залишалось зверху інших"
 
-#: data/totem.schemas.in.h:24
+#: data/totem.schemas.in.h:28
 msgid "Whether to enable debug for the playback engine"
 msgstr "Чи потрібно вмикати налагодження механізму відтворення"
 
-#: data/totem.schemas.in.h:25
+#: data/totem.schemas.in.h:29
 msgid "Whether to enable debug for the playback engine."
 msgstr "Чи потрібно вмикати налагодження механізму відтворення."
 
-#: data/totem.schemas.in.h:26
+#: data/totem.schemas.in.h:30
 msgid "Width of the video widget"
 msgstr "Ширина області відображення відео"
 
-#: data/totem.schemas.in.h:27
+#: data/totem.schemas.in.h:31
 msgid "X coordinate for the Playlist"
 msgstr "X-координата для списку програвання"
 
-#: data/totem.schemas.in.h:28
+#: data/totem.schemas.in.h:32
 msgid "X coordinate for the Playlist."
 msgstr "X-координата для списку програвання."
 
-#: data/totem.schemas.in.h:29
+#: data/totem.schemas.in.h:33
 msgid "Y coordinate for the Playlist"
 msgstr "Y-координата для списку програвання"
 
-#: data/totem.schemas.in.h:30
+#: data/totem.schemas.in.h:34
 msgid "Y coordinate for the Playlist."
 msgstr "Y-координата для списку програвання."
 
@@ -831,7 +837,7 @@ msgstr "Перегляд web-камер та відвантаження зобр
 msgid "Save File"
 msgstr "Зберегти файл"
 
-#: data/vanity.glade.h:2 src/vanity.c:248
+#: data/vanity.glade.h:2 src/vanity.c:247
 msgid "Vanity"
 msgstr "Ваніті"
 
@@ -867,11 +873,11 @@ msgstr "Виберіть пристрій"
 msgid "Unnamed Video Device"
 msgstr "Невідомий відео-пристрій"
 
-#: src/bacon-video-widget-gst.c:56
+#: src/bacon-video-widget-gst.c:62
 msgid "Totem Video Window"
 msgstr "Вікно відео"
 
-#: src/bacon-video-widget-properties.c:106 src/totem-properties-page.c:100
+#: src/bacon-video-widget-properties.c:106
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -879,7 +885,7 @@ msgstr[0] "%d година"
 msgstr[1] "%d години"
 msgstr[2] "%d годин"
 
-#: src/bacon-video-widget-properties.c:108 src/totem-properties-page.c:102
+#: src/bacon-video-widget-properties.c:108
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -887,7 +893,7 @@ msgstr[0] "%d хвилина"
 msgstr[1] "%d хвилини"
 msgstr[2] "%d хвилин"
 
-#: src/bacon-video-widget-properties.c:111 src/totem-properties-page.c:105
+#: src/bacon-video-widget-properties.c:111
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -896,39 +902,39 @@ msgstr[1] "%d секунди"
 msgstr[2] "%d секунд"
 
 #. hour:minutes:seconds
-#: src/bacon-video-widget-properties.c:117 src/totem-properties-page.c:111
+#: src/bacon-video-widget-properties.c:117
 #, c-format
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. minutes:seconds
-#: src/bacon-video-widget-properties.c:120 src/totem-properties-page.c:114
+#: src/bacon-video-widget-properties.c:120
 #, c-format
 msgid "%s %s"
 msgstr "%s %s"
 
 #. seconds
-#: src/bacon-video-widget-properties.c:123 src/totem-properties-page.c:117
+#: src/bacon-video-widget-properties.c:123
 #, c-format
 msgid "%s"
 msgstr "%s"
 
 #. Duration
-#: src/bacon-video-widget-properties.c:163 src/totem-properties-page.c:157
+#: src/bacon-video-widget-properties.c:163
 msgid "0 second"
 msgstr "0 секунд"
 
-#: src/bacon-video-widget-properties.c:248 src/totem-properties-page.c:242
+#: src/bacon-video-widget-properties.c:248
 #, c-format
 msgid "%d frames per second"
 msgstr "%d кадрів за секунду"
 
-#: src/bacon-video-widget-properties.c:266 src/totem-properties-page.c:260
+#: src/bacon-video-widget-properties.c:266
 #, c-format
 msgid "%d kbps"
 msgstr "%d кб/с"
 
-#: src/bacon-video-widget-xine.c:620
+#: src/bacon-video-widget-xine.c:650
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -937,40 +943,40 @@ msgstr ""
 "Не вдалось завантажити драйвер звуку \"%s\"\n"
 "Переконайтесь, що пристрій не зайнятий."
 
-#: src/bacon-video-widget-xine.c:1126
+#: src/bacon-video-widget-xine.c:1182
 msgid "The server you are trying to connect to is not known."
 msgstr "Сервер, з яким ви намагаєтесь з'єднатись, не існує."
 
-#: src/bacon-video-widget-xine.c:1129
+#: src/bacon-video-widget-xine.c:1185
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "Схоже що пристрій з вказаною назвою (%s) неправильний."
 
-#: src/bacon-video-widget-xine.c:1132
+#: src/bacon-video-widget-xine.c:1188
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "Сервер, з яким ви намагаєтесь з'єднатись (%s), недосяжний."
 
-#: src/bacon-video-widget-xine.c:1135
+#: src/bacon-video-widget-xine.c:1191
 msgid "The connection to this server was refused."
 msgstr "Сервер відмовив у з'єднанні."
 
-#: src/bacon-video-widget-xine.c:1138
+#: src/bacon-video-widget-xine.c:1194
 #, c-format
 msgid "The specified movie '%s' could not be found."
 msgstr "Вказаний відео файл \"%s\" не існує."
 
-#: src/bacon-video-widget-xine.c:1141
+#: src/bacon-video-widget-xine.c:1197
 #, c-format
 msgid "The movie '%s' could not be read."
 msgstr "Вказаний відео файл \"%s\" неможливо зчитати."
 
-#: src/bacon-video-widget-xine.c:1144
+#: src/bacon-video-widget-xine.c:1200
 #, c-format
 msgid "A problem occured while loading a library or a decoder (%s)."
 msgstr "Під час завантаження бібліотеки або декодера (%s) виникла проблема."
 
-#: src/bacon-video-widget-xine.c:1147
+#: src/bacon-video-widget-xine.c:1204
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -978,27 +984,43 @@ msgstr ""
 "Схоже що джерело зашифроване, його неможливо прочитати. Ви намагаєтесь "
 "програти DVD без libdvdcss?"
 
-#: src/bacon-video-widget-xine.c:1230
+#: src/bacon-video-widget-xine.c:1206
+msgid "This file is encrypted and cannot be played back."
+msgstr "Цей файл зашифровано, його не можна відтворити."
+
+#: src/bacon-video-widget-xine.c:1209
+msgid "For security reasons, this movie can not be played back."
+msgstr "З причин безпеки, цей фільм не можливо відтворити."
+
+#: src/bacon-video-widget-xine.c:1302
 msgid "There is no plugin to handle this movie"
 msgstr "Відсутній модуль для обробки файлів цього типу"
 
-#: src/bacon-video-widget-xine.c:1234
+#: src/bacon-video-widget-xine.c:1306
 msgid "This movie is broken and can not be played further"
 msgstr "Цей відео фільм пошкоджений, його не можна відтворити."
 
-#: src/bacon-video-widget-xine.c:1238
+#: src/bacon-video-widget-xine.c:1310
 msgid "This location is not a valid one"
 msgstr "Це місце знаходження не є правильним"
 
-#: src/bacon-video-widget-xine.c:1242
+#: src/bacon-video-widget-xine.c:1314
 msgid "This movie could not be opened"
 msgstr "Цей відео фільм неможливо відкрити"
 
-#: src/bacon-video-widget-xine.c:1245
+#: src/bacon-video-widget-xine.c:1317
 msgid "Generic Error"
 msgstr "Загальна помилка"
 
-#: src/bacon-video-widget-xine.c:1624
+#: src/bacon-video-widget-xine.c:1463
+msgid ""
+"No video output is available. Make sure that the program is correctly "
+"installed."
+msgstr ""
+"Немає виводу відео. "
+"Переконайтесь, що програму встановлено коректно."
+
+#: src/bacon-video-widget-xine.c:1762
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1007,79 +1029,44 @@ msgstr ""
 "Відео кодек '%s' не підтримується. Для програвання деяких типів файлів, може "
 "знадобитись встановити додаткові модулі."
 
-#: src/bacon-video-widget-xine.c:1643
+#: src/bacon-video-widget-xine.c:1781
 msgid "This is an audio-only file, and there is no audio output available"
 msgstr "Цей файл містить лише звук, але аудіо вихід відсутній"
 
-#: src/bacon-video-widget-xine.c:2933
+#: src/bacon-video-widget-xine.c:3235
 msgid "Movie is not playing"
 msgstr "Відео не відтворюється"
 
-#: src/bacon-video-widget-xine.c:2941
+#: src/bacon-video-widget-xine.c:3243
 msgid "No video to capture"
 msgstr "Немає вхідного відео-потоку"
 
-#: src/bacon-video-widget-xine.c:2948
+#: src/bacon-video-widget-xine.c:3250
 msgid "Video codec is not handled"
 msgstr "Відеокодек не підтримується"
 
-#: src/cd-drive.c:399
+#: src/cd-drive.c:554
 #, c-format
 msgid "Unnamed SCSI CD-ROM (%s)"
 msgstr "Неназваний SCSI CD-ROM (%s)"
 
-#: src/cd-drive.c:858
+#: src/cd-drive.c:1132
 msgid "File image"
 msgstr "Файл із зображенням"
 
-#: src/gnome-authn-manager.c:60
-msgid "Your HTTP Proxy requires you to log in.\n"
-msgstr "Ваш проксі HTTP вимагає автентифікації.\n"
+#: src/totem-playlist.c:320
+msgid "Could not save the playlist"
+msgstr "Не вдалось зберегти список програвання"
 
-#: src/gnome-authn-manager.c:61
-#, c-format
-msgid ""
-"You must log in to access \"%s\".\n"
-"\n"
-"%s"
-msgstr ""
-"Ви маєте пройти автентифікацію для отримання доступу до \"%s\".\n"
-"\n"
-"%s"
-
-#: src/gnome-authn-manager.c:64
-msgid "Your password will be transmitted unencrypted."
-msgstr "Ваш пароль буде передано у незашифрованому вигляді."
-
-#: src/gnome-authn-manager.c:65
-msgid "Your password will be transmitted encrypted."
-msgstr "Ваш пароль буде передано у зашифрованому вигляді."
-
-#: src/gnome-authn-manager.c:68
-msgid "Authentication Required"
-msgstr "Вимагається автентифікація"
-
-#: src/gnome-password-dialog.c:227
-msgid "_Username:"
-msgstr "_Користувач:"
-
-#: src/gnome-password-dialog.c:234
-msgid "_Password:"
-msgstr "_Пароль:"
-
-#: src/gnome-password-dialog.c:261
-msgid "Remember this password"
-msgstr "Запам'ятати цей пароль"
-
-#: src/totem-playlist.c:655 src/totem.c:1556
+#: src/totem-playlist.c:475 src/totem.c:1525
 msgid "Select files"
 msgstr "Виберіть файли"
 
-#: src/totem-playlist.c:820
+#: src/totem-playlist.c:655
 msgid "Save playlist"
 msgstr "Збереження списку програвання"
 
-#: src/totem-playlist.c:858
+#: src/totem-playlist.c:698
 #, c-format
 msgid ""
 "A file named '%s' already exists.\n"
@@ -1088,11 +1075,21 @@ msgstr ""
 "Файл з назвою \"%s\" вже існує.\n"
 "Бажаєте його перезаписати?"
 
-#: src/totem-playlist.c:1041
+#: src/totem-playlist.c:883
 msgid "Filename"
 msgstr "Назва файла"
 
-#: src/totem-preferences.c:110
+#: src/totem-pl-parser.c:209
+#, c-format
+msgid "Couldn't write parser: %s"
+msgstr "Не вдалось зберегти аналізатор: %s"
+
+#: src/totem-pl-parser.c:273
+#, c-format
+msgid "Couldn't open parser: %s"
+msgstr "Не вдалось відкрити аналізатор: %s"
+
+#: src/totem-preferences.c:111
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1100,7 +1097,7 @@ msgstr ""
 "Здається ви запускаєте Тотем з віддаленого терміналу.\n"
 "Ви дійсно бажаєте ввімкнути відео-ефекти?"
 
-#: src/totem-preferences.c:162
+#: src/totem-preferences.c:164
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted"
@@ -1108,25 +1105,25 @@ msgstr ""
 "Зміна цього параметра матиме ефект лише на наступному відео фільмі, або "
 "після перезапуску Тотем"
 
-#: src/totem-preferences.c:206
+#: src/totem-preferences.c:208
 msgid ""
 "Switching on or off this type of TV-Out requires a restart to take effect."
 msgstr ""
 "Щоб задіяти вмикання чи вимикання цього типу ТВ-виходу потрібен перезапуск."
 
-#: src/totem-preferences.c:339
+#: src/totem-preferences.c:341
 msgid "Totem could not start the file manager."
 msgstr "Неможливо запустити менеджер файлів."
 
-#: src/totem-preferences.c:367
+#: src/totem-preferences.c:369
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr "Щоб задіяти зміну типу відео-ефектів потрібен перезапуск."
 
-#: src/totem-properties-page.c:331
+#: src/totem-properties-page.c:123
 msgid "URI currently displayed"
 msgstr "URI який відображується"
 
-#: src/totem-properties-page.c:397
+#: src/totem-properties-page.c:193
 msgid "Video and Audio information properties page"
 msgstr "Сторінка властивостей відео та аудіо"
 
@@ -1138,7 +1135,7 @@ msgstr "Тип тіні"
 msgid "Style of bevel around the statusbar text"
 msgstr "Стиль фаски навколо тексту панелі стану"
 
-#: src/totem-statusbar.c:171 src/totem.c:355
+#: src/totem-statusbar.c:171 src/totem.c:305
 msgid "Stopped"
 msgstr "Зупинено"
 
@@ -1146,82 +1143,96 @@ msgstr "Зупинено"
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: src/totem-statusbar.c:205
+#: src/totem-statusbar.c:208
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (встановлення потоку)"
 
-#: src/totem.c:82
+#: src/totem-statusbar.c:216
+msgid "Seek to"
+msgstr "Перейти на"
+
+#: src/totem-statusbar.c:278
+msgid "Buffering"
+msgstr "Буферизація"
+
+#. eg: 75 %
+#: src/totem-statusbar.c:281
+#, c-format
+msgid "%d %%"
+msgstr "%d %%"
+
+#: src/totem.c:74
+msgid "Backend options"
+msgstr "Параметри сервера"
+
+#: src/totem.c:78
 msgid "Seek Forwards"
 msgstr "Перескочити вперед"
 
-#: src/totem.c:83
+#: src/totem.c:79
 msgid "Seek Backwards"
 msgstr "Перескочити назад"
 
-#: src/totem.c:84
+#: src/totem.c:80
 msgid "Volume Up"
 msgstr "Збільшити гучність"
 
-#: src/totem.c:85
+#: src/totem.c:81
 msgid "Volume Down"
 msgstr "Зменшити гучність"
 
-#: src/totem.c:87
+#: src/totem.c:82
 msgid "Toggle Fullscreen"
 msgstr "Повний екран"
 
-#: src/totem.c:88
+#: src/totem.c:83
 msgid "Quit"
 msgstr "Вийти"
 
-#: src/totem.c:89
+#: src/totem.c:84
 msgid "Enqueue"
 msgstr "Внести в список програвання"
 
-#: src/totem.c:90
+#: src/totem.c:85
 msgid "Replace"
 msgstr "Замінити"
 
-#: src/totem.c:228
-msgid "Download"
-msgstr "Звантажити"
-
-#: src/totem.c:341
+#: src/totem.c:291
 msgid "Playing"
 msgstr "Відтворення"
 
-#: src/totem.c:348
+#: src/totem.c:298
 msgid "Paused"
 msgstr "Призупинено"
 
-#: src/totem.c:385
+#: src/totem.c:334
 msgid "Totem could not eject the optical media."
 msgstr "Неможливо витягнути оптичний носій."
 
-#: src/totem.c:385
+#: src/totem.c:334
 msgid "No reason given"
 msgstr "Причина невідома"
 
 # c-format
-#: src/totem.c:406 src/totem.c:829 src/totem.c:950
+#: src/totem.c:355 src/totem.c:383 src/totem.c:804 src/totem.c:911
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Не вдається відтворити \"%s\"."
 
-#: src/totem.c:426
+#: src/totem.c:403
 msgid "DVD"
 msgstr "DVD"
 
-#: src/totem.c:427
+#: src/totem.c:404
 msgid "Video CD"
 msgstr "Відеодиск"
 
-#: src/totem.c:428
+#: src/totem.c:405
 msgid "Audio CD"
 msgstr "Аудіодиск"
 
-#: src/totem.c:439
+#: src/totem.c:416
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1230,13 +1241,13 @@ msgstr ""
 "Додаток \"Тотем\" не може відтворити цей тип джерела даних (%s), через "
 "відсутність модуля, який може його обробляти."
 
-#: src/totem.c:440
+#: src/totem.c:417
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
 msgstr "Встановіть потрібні модулі та перезапустіть \"Тотем\"."
 
-#: src/totem.c:448
+#: src/totem.c:425
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1245,7 +1256,7 @@ msgstr ""
 "Додаток \"Тотем\" не може відтворити цей тип джерела даних (%s), хоча "
 "модуль, який може його обробляти, встановлений."
 
-#: src/totem.c:449
+#: src/totem.c:426
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1254,133 +1265,136 @@ msgstr ""
 "налаштовано пристрій."
 
 #. Title
-#: src/totem.c:680
+#: src/totem.c:661
 #, c-format
-msgid "%s - Totem"
-msgstr "%s - Тотем"
+msgid "%s - Totem Movie Player"
+msgstr "%s ― програвач відео \"Тотем\""
 
-#: src/totem.c:693 src/totem.c:3450
+#: src/totem.c:673 src/totem.c:3527
 msgid "No file"
 msgstr "Немає файла"
 
-#: src/totem.c:1239
+#: src/totem.c:709 src/totem.c:1889
+msgid "Totem"
+msgstr "Тотем"
+
+#: src/totem.c:1185
 msgid "An error occured"
 msgstr "Виникла помилка"
 
-#: src/totem.c:1251
-msgid "Buffering"
-msgstr "Буферизація"
-
-#: src/totem.c:1272 src/totem.c:1294
-#, c-format
-msgid "Buffering: %d%%"
-msgstr "Буферизація: %d%%"
-
-#: src/totem.c:1607 src/totem.c:1615
+#: src/totem.c:1601 src/totem.c:1609
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "Не вдалось завантажити інтерфейс \"Відкрити _місце знаходження...\"."
 
-#: src/totem.c:1607 src/totem.c:1615 src/totem.c:3643 src/totem.c:3668
-#: src/totem.c:3691
+#: src/totem.c:1601 src/totem.c:1609 src/totem.c:3720 src/totem.c:3745
+#: src/totem.c:3768
 msgid "Make sure that Totem is properly installed."
 msgstr "Переконайтесь, що \"Тотем\" встановлено коректно."
 
-#: src/totem.c:1854 src/vanity.c:219
+#: src/totem.c:1842
+msgid "Totem could not display the help contents."
+msgstr "Неможливо відобразити зміст довідки."
+
+#: src/totem.c:1860 src/vanity.c:218
 msgid "translator_credits"
 msgstr ""
 "Юрій Сирота <yuriy@beer.com>\n"
 "Максим Дзюманенко <mvd@mylinux.com.ua>"
 
-#: src/totem.c:1880
+#: src/totem.c:1886
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Програвач відео використовує %s"
 
-#: src/totem.c:1970 src/totem.c:1981 src/vanity.c:307 src/vanity.c:318
+#: src/totem.c:1972 src/totem.c:1983 src/vanity.c:304 src/vanity.c:315
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Знімок%d.png"
 
-#: src/totem.c:2032 src/totem.c:2040
+#: src/totem.c:2034 src/totem.c:2042
 msgid "Totem could not get a screenshot of that film."
 msgstr "Не вдалось зроби знімок цього фільму."
 
-#: src/totem.c:2040
+#: src/totem.c:2042
 msgid "Please file a bug, this isn't supposed to happen"
 msgstr "Надішліть повідомлення про помилку, якщо це не повинне було статись"
 
-#: src/totem.c:2068
+#: src/totem.c:2070
 #, c-format
 msgid "File '%s' already exists."
 msgstr "Файл \"%s\" вже існує."
 
-#: src/totem.c:2069
+#: src/totem.c:2071
 msgid "The screenshot was not saved"
 msgstr "Знімок не збережено."
 
-#: src/totem.c:2079
+#: src/totem.c:2081
 msgid "There was an error saving the screenshot."
 msgstr "Виникла помилка під час збереження знімку."
 
-#: src/totem.c:2094
+#: src/totem.c:2104
 msgid "Totem couldn't show the movie properties window."
 msgstr "Не вдалось показати вікно властивостей відео."
 
-#: src/totem.c:2094
+#: src/totem.c:2104
 msgid "Make sure that Totem is correctly installed."
 msgstr "Переконайтесь, що \"Тотем\" встановлено коректно."
 
-#: src/totem.c:2162
+#: src/totem.c:2189
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "\"Тотем\" не може перейти на \"%s\"."
 
-#: src/totem.c:2909 src/totem.c:2931
+#: src/totem.c:2944 src/totem.c:2966
 msgid "None"
 msgstr "Немає"
 
-#: src/totem.c:2913 src/totem.c:2934
+#: src/totem.c:2948 src/totem.c:2969
 msgid "Auto"
 msgstr "Авто"
 
-#: src/totem.c:3359
+#: src/totem.c:3432
 msgid "Totem could not startup."
 msgstr "Не вдається запустити додаток \"Тотем\"."
 
-#: src/totem.c:3359 src/vanity.c:551
-msgid "No reason"
-msgstr "Причина невідома"
+#: src/totem.c:3432
+msgid "No reason."
+msgstr "Причина невідома."
 
-#: src/totem.c:3616
+#: src/totem.c:3692
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Неможливо ініціалізувати безпечну бібліотеку ниток."
 
-#: src/totem.c:3616
+#: src/totem.c:3692
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Перевірте систему. Тотем завершується."
 
-#: src/totem.c:3633
+#: src/totem.c:3712
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Не вдалось ініціалізувати конфігураційний механізм."
 
-#: src/totem.c:3643 src/totem.c:3668
+#: src/totem.c:3712
+msgid "Make sure that GNOME is properly installed."
+msgstr "Переконайтесь, що GNOME встановлено коректно."
+
+#: src/totem.c:3720 src/totem.c:3745
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "Не вдалось завантажити основний інтерфейс (totem.glade)."
 
-#: src/totem.c:3691
+#: src/totem.c:3768
 msgid "Couldn't load the interface for the playlist."
 msgstr "Не вдалось завантажити інтерфейс для списку програвання."
 
-#: src/vanity.c:55
+#: src/vanity.c:54
 msgid "Debug mode on"
 msgstr "Ввімкнути режим налагодження"
 
-#: src/vanity.c:245
+#: src/vanity.c:244
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "Програма роботи з веб-камерами використовуючи %s"
 
-#: src/vanity.c:550
+#: src/vanity.c:547
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1389,7 +1403,11 @@ msgstr ""
 "Не вдалось запустити \"Ваніті\":\n"
 "%s"
 
-#: src/vanity.c:589
+#: src/vanity.c:548
+msgid "No reason"
+msgstr "Причина невідома"
+
+#: src/vanity.c:586
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1398,7 +1416,7 @@ msgstr ""
 "Не вдалось з'єднатись з web-камерою.\n"
 "Причина: %s"
 
-#: src/vanity.c:605
+#: src/vanity.c:602
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1407,11 +1425,11 @@ msgstr ""
 "\"Ваніті\" не може відтворити відео з web-камери.\n"
 "Причина: %s"
 
-#: src/vanity.c:641
+#: src/vanity.c:638
 msgid "Vanity Webcam Utility"
 msgstr "Програма роботи з web-камерами"
 
-#: src/vanity.c:647
+#: src/vanity.c:643
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1419,7 +1437,7 @@ msgstr ""
 "Не вдалось ініціалізувати безпечну бібліотеку ниток.\n"
 "Перевірте систему. \"Ваніті\" завершується."
 
-#: src/vanity.c:669
+#: src/vanity.c:665
 #, c-format
 msgid ""
 "Vanity couln't initialise the \n"
@@ -1430,7 +1448,7 @@ msgstr ""
 "конфігураційний механізм:\n"
 "%s"
 
-#: src/vanity.c:683 src/vanity.c:698
+#: src/vanity.c:679 src/vanity.c:694
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
