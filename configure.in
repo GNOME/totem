@@ -58,15 +58,13 @@ PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.1.0,
 		GLIB_UNSTABLE="-DUSE_STABLE_LIBGLIB")
 AC_SUBST(GLIB_UNSTABLE)
 
-PKG_CHECK_MODULES(EXTRA_GNOME, libgnomeui-2.0 libglade-2.0 gnome-vfs-2.0)
+PKG_CHECK_MODULES(EXTRA_GNOME, libxine >= 1.0.0 libgnomeui-2.0 libglade-2.0 gnome-vfs-2.0)
 AC_SUBST(EXTRA_GNOME_CFLAGS)
 AC_SUBST(EXTRA_GNOME_LIBS)
 
-PKG_CHECK_MODULES(VFS, gnome-vfs-2.0)
+PKG_CHECK_MODULES(VFS, libxine >= 1.0.0 gnome-vfs-2.0)
 AC_SUBST(VFS_CFLAGS)
 AC_SUBST(VFS_LIBS)
-
-AM_PATH_XINE(0.9.14,, AC_MSG_ERROR(*** You should install xine-lib >= 0.9.14 first ***))
 
 AC_PATH_X
 XTEST_LIBS=""

@@ -71,7 +71,7 @@ totem_SOURCES = 			\
 	debug.h                         \
 	$(EGG_RECENT_FILES)
 
-totem_LDADD = $(EXTRA_GNOME_LIBS) $(XINE_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS)
+totem_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS)
 totem_LDFLAGS = -export-dynamic
 INCLUDES = 						\
 	-Wall						\
@@ -79,7 +79,6 @@ INCLUDES = 						\
 	$(GNOMEUI_UNSTABLE)				\
 	$(GLIB_UNSTABLE)				\
 	$(EXTRA_GNOME_CFLAGS)				\
-	$(XINE_CFLAGS)					\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
 	-DGCONF_PREFIX=\""/apps/totem/"\"		\
 	-DDATADIR=\""$(datadir)"\"			\
@@ -96,6 +95,6 @@ libdir = ${exec_prefix}/lib/xine/plugins
 lib_LTLIBRARIES = xineplug_inp_gnomevfs.la
 
 xineplug_inp_gnomevfs_la_SOURCES = input_gnomevfs.c
-xineplug_inp_gnomevfs_la_LIBADD = -lxine
-xineplug_inp_gnomevfs_la_LDFLAGS = -avoid-version -module $(VFS_LIBS)
+xineplug_inp_gnomevfs_la_LIBADD = $(VFS_LIBS)
+xineplug_inp_gnomevfs_la_LDFLAGS = -avoid-version -module
 
