@@ -677,9 +677,17 @@ on_open1_activate (GtkButton *button, gpointer user_data)
 	Totem *totem = (Totem *) user_data;
 	GtkWidget *fs;
 	int response;
+	static char *path = NULL;
 
 	fs = gtk_file_selection_new (_("Select files"));
 	gtk_file_selection_set_select_multiple (GTK_FILE_SELECTION (fs), TRUE);
+	if (path != NULL)
+	{
+		gtk_file_selection_set_filename (GTK_FILE_SELECTION (fs),
+				path);
+		g_free (path);
+		path = NULL;
+	}
 	response = gtk_dialog_run (GTK_DIALOG (fs));
 	gtk_widget_hide (fs);
 
@@ -690,6 +698,14 @@ on_open1_activate (GtkButton *button, gpointer user_data)
 		filenames = gtk_file_selection_get_selections
 			(GTK_FILE_SELECTION (fs));
 		action_open_files (totem, filenames, FALSE);
+		if (filenames[0] != NULL)
+		{
+			char *tmp;
+			
+			tmp = g_path_get_dirname (filenames[0]);
+			path = g_strconcat (tmp, G_DIR_SEPARATOR_S, NULL);
+			g_free (tmp);
+		}
 		g_strfreev (filenames);
 
 		mrl = gtk_playlist_get_current_mrl (totem->playlist);

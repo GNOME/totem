@@ -42,6 +42,9 @@ struct GtkPlaylistPrivate
 
 	/* This is a scratch list for when we're removing files */
 	GList *list;
+
+	/* This is the current path for the file selector */
+	char *path;
 };
 
 /* Signals */
@@ -218,6 +221,13 @@ gtk_playlist_add_files (GtkWidget *widget, gpointer user_data)
 
 	fs = gtk_file_selection_new (_("Select files"));
 	gtk_file_selection_set_select_multiple (GTK_FILE_SELECTION (fs), TRUE);
+	if (playlist->_priv->path != NULL)
+	{
+		gtk_file_selection_set_filename (GTK_FILE_SELECTION (fs),
+				playlist->_priv->path);
+		g_free (playlist->_priv->path);
+		playlist->_priv->path = NULL;
+	}
 	response = gtk_dialog_run (GTK_DIALOG (fs));
 	gtk_widget_hide (fs);
 	while (gtk_events_pending())
@@ -230,6 +240,16 @@ gtk_playlist_add_files (GtkWidget *widget, gpointer user_data)
 
 		filenames = gtk_file_selection_get_selections
 			(GTK_FILE_SELECTION (fs));
+
+		if (filenames[0] != NULL)
+		{
+			char *tmp;
+
+			tmp = g_path_get_dirname (filenames[0]);
+			playlist->_priv->path = g_strconcat (tmp,
+					G_DIR_SEPARATOR_S, NULL);
+			g_free (tmp);
+		}
 
 		for (i = 0; filenames[i] != NULL; i++)
 			gtk_playlist_add_mrl (playlist, filenames[i]);
@@ -411,6 +431,7 @@ gtk_playlist_init (GtkPlaylist *playlist)
 	playlist->_priv = g_new0 (GtkPlaylistPrivate, 1);
 	playlist->_priv->current = NULL;
 	playlist->_priv->icon = NULL;
+	playlist->_priv->path = NULL;
 }
 
 
