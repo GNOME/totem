@@ -100,7 +100,7 @@ server_cb (GIOChannel *source, GIOCondition condition, gpointer data)
 		cd = conn->fd;
 	}
 	rc = read (cd, &buf, 1);
-	while (rc != 0 && buf != '\n')
+	while (rc > 0 && buf != '\n')
 	{
 		message = g_realloc (message, rc + offset + 1);
 		message[offset] = buf;
@@ -122,8 +122,9 @@ server_cb (GIOChannel *source, GIOCondition condition, gpointer data)
 	subs = message;
 	finished = FALSE;
 
-	while (subs != '\0' && finished == FALSE)
+	while (*subs != '\0' && finished == FALSE)
 	{
+		g_message ("subs '%x'", *subs);
 		if (message != NULL && conn->func != NULL)
 			(*conn->func) (subs, conn->data);
 

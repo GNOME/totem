@@ -1,3 +1,12 @@
+2005-03-28  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-message-connection.c: (server_cb): update from libbacon
+	to fix 2 crashers happening when opening the second stream
+	* src/totem-mozilla-plugin.cpp:  only set non-blocking mode on
+	an existing file descriptor
+	* src/totem-mozilla-scriptable.cpp: use non-depracated function
+	(Closes: #171866)
+
 2005-03-27  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-message-connection.c: (socket_filename), (try_server),

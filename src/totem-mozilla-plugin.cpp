@@ -275,7 +275,8 @@ static NPError totem_plugin_set_window (NPP instance, NPWindow* window)
 		totem_plugin_fork (plugin);
                 msg = plugin->iface->wait ();
 
-		fcntl(plugin->send_fd, F_SETFL, O_NONBLOCK);
+		if (plugin->send_fd > 0)
+			fcntl(plugin->send_fd, F_SETFL, O_NONBLOCK);
 	}
 
 	DEBUG("leaving plugin_set_window");

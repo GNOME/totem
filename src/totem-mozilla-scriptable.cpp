@@ -50,7 +50,7 @@ totemMozillaObject::wait ()
   gchar *msg;
 
   while (!this->tm->last_msg) {
-    g_main_iteration (FALSE);
+    g_main_context_iteration (NULL, FALSE);
   }
 
   msg = this->tm->last_msg;
