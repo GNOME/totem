@@ -1,3 +1,12 @@
+2004-12-27  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_open): don't
+	emit the metadata signal if we fail to open the stream
+	* src/metadata-test.c: (on_got_metadata_event), (main): fix
+	compilation warnings, and exit if we fail to _play()
+	* src/totem-properties-page.c: (set_property): _close() if we
+	don't manage to _play()
+
 2004-12-26  Bastien Nocera  <hadess@hadess.net>
 
 	* NEWS: updates

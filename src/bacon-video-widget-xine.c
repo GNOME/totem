@@ -1983,9 +1983,6 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const char *mrl,
 		is_audio = (xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_HAS_VIDEO) == FALSE);
 
-		g_signal_emit (G_OBJECT (bvw),
-				bvw_table_signals[GOT_METADATA], 0, NULL);
-
 		name = bacon_video_widget_get_nice_codec_name (bvw, is_audio);
 
 		bacon_video_widget_close (bvw);
@@ -2009,9 +2006,6 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const char *mrl,
 				XINE_STREAM_INFO_HAS_VIDEO) == FALSE
 		&& bvw->priv->ao_driver == NULL)
 	{
-		g_signal_emit (G_OBJECT (bvw),
-				bvw_table_signals[GOT_METADATA], 0, NULL);
-
 		bacon_video_widget_close (bvw);
 
 		g_set_error (error, BVW_ERROR, BVW_ERROR_AUDIO_ONLY,

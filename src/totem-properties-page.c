@@ -173,7 +173,9 @@ set_property(BonoboPropertyBag *bag,
 				props->bvw, TRUE);
 		if (bacon_video_widget_open (props->bvw, props->location, NULL) == FALSE)
 			return;
-		bacon_video_widget_play (props->bvw, NULL);
+		if (bacon_video_widget_play (props->bvw, NULL) == FALSE) {
+			bacon_video_widget_close (props->bvw);
+		}
 	}
 }
 

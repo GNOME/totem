@@ -1,6 +1,9 @@
 
 #include <bacon-video-widget.h>
+#include <gtk/gtk.h>
 #include <glib/gthread.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 static void
 print_usage (const char *arg)
@@ -19,7 +22,6 @@ static void
 on_got_metadata_event (BaconVideoWidget *bvw, gpointer data)
 {
 	GValue value = { 0, };
-	char *string;
 	int x, y;
 	gboolean has_type;
 
@@ -131,8 +133,10 @@ int main (int argc, char **argv)
 		g_print ("Can't open %s\n", argv[1]);
 		return 1;
 	}
-	//FIXME
-	bacon_video_widget_play (bvw, NULL);
+	if (bacon_video_widget_play (bvw, NULL) == FALSE) {
+		g_print ("Can't play %s\n", argv[1]);
+		return 1;
+	}
 
 	gtk_main ();
 
