@@ -583,7 +583,7 @@ totem_pl_parser_get_extinfo_title (gboolean extinfo, char **lines, int i)
 {
 	const char *retval;
 
-	if (extinfo == FALSE)
+	if (extinfo == FALSE || lines == NULL)
 		return NULL;
 
 	if (i == 0)
@@ -673,6 +673,7 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
 					totem_pl_parser_get_extinfo_title (extinfo, lines, i));
 			g_free (fullpath);
 			g_free (base);
+			extinfo = FALSE;
 		}
 	}
 

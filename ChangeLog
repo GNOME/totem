@@ -1,5 +1,11 @@
 2004-04-14  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-pl-parser.c: (totem_pl_parser_get_extinfo_title),
+	(totem_pl_parser_add_m3u): fix crash in m3u with extinfo parsing
+	(Closes: #140010)
+
+2004-04-14  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-stock-icons.c: (totem_named_icons_dispose),
 	(totem_named_icons_init): make all our installed icons loadable by
 	Totem (Closes: #139922)
