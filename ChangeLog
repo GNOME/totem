@@ -1,5 +1,11 @@
 2004-12-03  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_unrealize):
+	Send the XINE_GUI_SEND_WILL_DESTROY_DRAWABLE event when the video
+	window is going to be destroyed
+
+2004-12-03  Bastien Nocera  <hadess@hadess.net>
+
 	* NEWS: upd
 
 2004-12-03  Bastien Nocera  <hadess@hadess.net>

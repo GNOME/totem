@@ -1516,6 +1516,15 @@ bacon_video_widget_unrealize (GtkWidget *widget)
         nvtv_simple_exit();
 #endif
 
+
+/* FIXME missing stuff from libxine includes (<= 1-rc7) */
+#ifndef XINE_GUI_SEND_WILL_DESTROY_DRAWABLE
+#define XINE_GUI_SEND_WILL_DESTROY_DRAWABLE 9
+#endif
+	xine_port_send_gui_data (bvw->priv->vo_driver,
+			XINE_GUI_SEND_WILL_DESTROY_DRAWABLE,
+			(void*)bvw->priv->video_window);
+
 	/* Hide all windows */
 	if (GTK_WIDGET_MAPPED (widget))
 		gtk_widget_unmap (widget);
