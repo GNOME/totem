@@ -58,7 +58,8 @@ totem_embedded_open (TotemEmbedded *emb)
 		//disp = gnome_vfs_unescape_string_for_display (totem->mrl);
 		msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
 		g_free (disp);
-		g_message ("error: %s", err->message);
+		if (err != NULL)
+			g_message ("error: %s", err->message);
 		//totem_action_error (msg, err->message, totem);
 		g_free (msg);
 
@@ -199,8 +200,8 @@ int main (int argc, char **argv)
 		while (emb->embedded_done == FALSE && gtk_events_pending ())
 			gtk_main_iteration ();
 
-//	totem_embedded_open (emb);
-//	bacon_video_widget_play (emb->bvw, NULL);
+	totem_embedded_open (emb);
+	bacon_video_widget_play (emb->bvw, NULL);
 
 	gtk_main ();
 

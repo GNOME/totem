@@ -70,7 +70,7 @@ static void totem_plugin_fork (TotemPlugin *plugin)
 		argv[argc++] = g_strdup (LIBDIR"/totem/totem-mozilla-viewer");
 	}
 
-	argv[argc++] = "--xid";
+	argv[argc++] = g_strdup ("--xid");
 	argv[argc++] = g_strdup_printf ("%d", plugin->window);
 
 	if (plugin->width) {
@@ -171,8 +171,8 @@ static NPError totem_plugin_destroy_instance (NPP instance, NPSavedData **save)
 //	close(plugin->send_fd);
 //	close(plugin->recv_fd);
 
-//	kill (plugin->player_pid, SIGKILL);
-//	waitpid (plugin->player_pid, NULL, 0);
+	kill (plugin->player_pid, SIGKILL);
+	waitpid (plugin->player_pid, NULL, 0);
 
 	mozilla_functions.memfree (instance->pdata);
 	instance->pdata = NULL;
@@ -213,7 +213,7 @@ static NPError totem_plugin_set_window (NPP instance, NPWindow* window)
 
 		totem_plugin_fork (plugin);
 
-		//fcntl(plugin->send_fd, F_SETFL, O_NONBLOCK);
+		fcntl(plugin->send_fd, F_SETFL, O_NONBLOCK);
 	}
 
 	DEBUG("leaving plugin_set_window");
