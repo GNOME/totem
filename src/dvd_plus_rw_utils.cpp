@@ -104,7 +104,7 @@ int get_dvd_r_rw_profile (const char *name)
     unsigned char *list=new unsigned char[len];
 
     /* For valgrind */
-    memset (&list, 1, sizeof (list));
+    memset (list, 0, sizeof (list));
 
     cmd[0]=0x46;
     cmd[1]=2;
@@ -116,6 +116,13 @@ int get_dvd_r_rw_profile (const char *name)
       /* fprintf(stderr,"GET CONFIGURATION failed with "
 		      "SK=%xh/ASC=%02xh/ASCQ=%02xh\n",
 		      sense[2]&0xF,sense[12],sense[13]); */
+      goto bail;
+    }
+
+    if (len < 12 || list[11] > len)
+    {
+      /* fprintf(stderr, "GET CONFIGURATION with len %d, and list[11] %d\n",
+                         len, list[11]); */
       goto bail;
     }
 
