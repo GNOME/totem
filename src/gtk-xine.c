@@ -47,10 +47,12 @@
 #include "gtk-xine.h"
 #include "gtkxine-marshal.h"
 #include "scrsaver.h"
+#include "video-utils.h"
 
 #define DEFAULT_HEIGHT 420
 #define DEFAULT_WIDTH 315
 #define CONFIG_FILE ".xine"G_DIR_SEPARATOR_S"config"
+#define DEFAULT_TITLE "Totem Video Window"
 
 #define BLACK_PIXEL \
 	BlackPixel ((gtx->priv->display ? gtx->priv->display : gdk_display), \
@@ -525,7 +527,6 @@ xine_thread (void *gtx_gen)
 {
 	GtkXine *gtx = (GtkXine *) gtx_gen;
 	XEvent event;
-//	guint timer = 5000;
 
 	gtx->priv->init_finished = TRUE;
 
@@ -563,20 +564,6 @@ xine_thread (void *gtx_gen)
 				(gtx->priv->vo_driver,
 				 GUI_DATA_EX_COMPLETION_EVENT, &event);
 		}
-		///FIXME FIXME FIXME
-#if 0
-		/* Screensaver poking hack */
-		timer--;
-		if (timer == 0 && gtx->priv->fullscreen_mode == TRUE)
-		{
-			g_message ("POOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOKE");
-			XLockDisplay(gtx->priv->display);
-			system ("xscreensaver-command -deactivate >&- 2>&- &");
-			XResetScreenSaver(gtx->priv->display);
-			XUnlockDisplay(gtx->priv->display);
-			timer = 5000;
-		}
-#endif
 	}
 
 	pthread_exit (NULL);
@@ -941,8 +928,6 @@ gtk_xine_size_allocate (GtkWidget * widget, GtkAllocation * allocation)
 	}
 }
 
-/* Commands */
-
 gint
 gtk_xine_play (GtkXine * gtx, gchar * mrl, gint pos, gint start_time)
 {
@@ -972,8 +957,9 @@ gtk_xine_stop (GtkXine * gtx)
 }
 
 /* Properties */
-static void gtk_xine_set_property (GObject *object, guint property_id,
-				   const GValue *value, GParamSpec *pspec)
+static void
+gtk_xine_set_property (GObject *object, guint property_id,
+		const GValue *value, GParamSpec *pspec)
 {
 	GtkXine *gtx;
 
@@ -1000,8 +986,9 @@ static void gtk_xine_set_property (GObject *object, guint property_id,
 	}
 }
 
-static void gtk_xine_get_property (GObject *object, guint property_id,
-		                GValue *value, GParamSpec *pspec)
+static void
+gtk_xine_get_property (GObject *object, guint property_id,
+		GValue *value, GParamSpec *pspec)
 {
 	GtkXine *gtx;
 
@@ -1041,7 +1028,7 @@ static void gtk_xine_get_property (GObject *object, guint property_id,
 }
 
 void
-gtk_xine_set_speed (GtkXine * gtx, gint speed)
+gtk_xine_set_speed (GtkXine *gtx, gint speed)
 {
 	g_return_if_fail (gtx != NULL);
 	g_return_if_fail (GTK_IS_XINE (gtx));
@@ -1051,7 +1038,7 @@ gtk_xine_set_speed (GtkXine * gtx, gint speed)
 }
 
 gint
-gtk_xine_get_speed (GtkXine * gtx)
+gtk_xine_get_speed (GtkXine *gtx)
 {
 	g_return_val_if_fail (gtx != NULL, SPEED_NORMAL);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), SPEED_NORMAL);
@@ -1061,7 +1048,7 @@ gtk_xine_get_speed (GtkXine * gtx)
 }
 
 gint
-gtk_xine_get_position (GtkXine * gtx)
+gtk_xine_get_position (GtkXine *gtx)
 {
 	g_return_val_if_fail (gtx != NULL, 0);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
@@ -1073,7 +1060,7 @@ gtk_xine_get_position (GtkXine * gtx)
 }
 
 void
-gtk_xine_set_audio_channel (GtkXine * gtx, gint audio_channel)
+gtk_xine_set_audio_channel (GtkXine *gtx, gint audio_channel)
 {
 	g_return_if_fail (gtx != NULL);
 	g_return_if_fail (GTK_IS_XINE (gtx));
@@ -1083,53 +1070,13 @@ gtk_xine_set_audio_channel (GtkXine * gtx, gint audio_channel)
 }
 
 gint
-gtk_xine_get_audio_channel (GtkXine * gtx)
+gtk_xine_get_audio_channel (GtkXine *gtx)
 {
 	g_return_val_if_fail (gtx != NULL, 0);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
 	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
 
 	return xine_get_audio_selection (gtx->priv->xine);
-}
-
-#define MWM_HINTS_DECORATIONS   (1L << 1)
-#define PROP_MWM_HINTS_ELEMENTS 5
-typedef struct {
-	uint32_t flags;
-	uint32_t functions;
-	uint32_t decorations;
-	int32_t input_mode;
-	uint32_t status;
-} MWMHints;
-
-static void
-wmspec_change_xwindow_state (gboolean add,
-			     Window window, GdkAtom state1, GdkAtom state2)
-{
-	XEvent xev;
-
-#define _NET_WM_STATE_REMOVE        0	/* remove/unset property */
-#define _NET_WM_STATE_ADD           1	/* add/set property */
-#define _NET_WM_STATE_TOGGLE        2	/* toggle property  */
-
-	xev.xclient.type = ClientMessage;
-	xev.xclient.serial = 0;
-	xev.xclient.send_event = True;
-	xev.xclient.display = gdk_display;
-	xev.xclient.window = window;
-	xev.xclient.message_type =
-	    gdk_x11_get_xatom_by_name ("_NET_WM_STATE");
-	xev.xclient.format = 32;
-	xev.xclient.data.l[0] =
-	    add ? _NET_WM_STATE_ADD : _NET_WM_STATE_REMOVE;
-	xev.xclient.data.l[1] = gdk_x11_atom_to_xatom (state1);
-	xev.xclient.data.l[2] = gdk_x11_atom_to_xatom (state2);
-
-	XSendEvent (gdk_display,
-		    GDK_WINDOW_XID (gdk_get_default_root_window ()),
-		    False,
-		    SubstructureRedirectMask | SubstructureNotifyMask,
-		    &xev);
 }
 
 static gboolean
@@ -1147,10 +1094,8 @@ motion_notify_event_cb (GtkWidget * widget, GdkEventMotion * event,
 void
 gtk_xine_set_fullscreen (GtkXine * gtx, gboolean fullscreen)
 {
-	static char *window_title = "Totem";
 	XSizeHints hint;
 	Atom prop;
-	MWMHints mwmhints;
 	XEvent xev;
 	GdkWindow *win;
 
@@ -1185,38 +1130,19 @@ gtk_xine_set_fullscreen (GtkXine * gtx, gboolean fullscreen)
 
 		XSetStandardProperties (gtx->priv->display,
 					gtx->priv->fullscreen_window,
-					window_title, window_title, None,
+					DEFAULT_TITLE, DEFAULT_TITLE, None,
 					NULL, 0, 0);
 
 		XSetWMNormalHints (gtx->priv->display,
 				   gtx->priv->fullscreen_window, &hint);
-
-		/* wm, no borders please */
-		prop = XInternAtom (gtx->priv->display, "_MOTIF_WM_HINTS",
-				 False);
-		mwmhints.flags = MWM_HINTS_DECORATIONS;
-		mwmhints.decorations = 0;
-		XChangeProperty (gtx->priv->display,
-				 gtx->priv->fullscreen_window, prop, prop,
-				 32, PropModeReplace,
-				 (unsigned char *) &mwmhints,
-				 PROP_MWM_HINTS_ELEMENTS);
-
-		XSetTransientForHint (gtx->priv->display,
-				      gtx->priv->fullscreen_window, None);
-		XRaiseWindow (gtx->priv->display,
-			      gtx->priv->fullscreen_window);
 
 		XSelectInput (gtx->priv->display,
 			      gtx->priv->fullscreen_window,
 			      StructureNotifyMask | ExposureMask |
 			      FocusChangeMask);
 
-		wmspec_change_xwindow_state (TRUE,
-					     gtx->priv->fullscreen_window,
-					     gdk_atom_intern
-					     ("_NET_WM_STATE_FULLSCREEN",
-					      FALSE), GDK_NONE);
+		xwindow_set_fullscreen (gtx->priv->display,
+				gtx->priv->fullscreen_window);
 
 		/* Map window. */
 		XMapRaised (gtx->priv->display,
@@ -1229,8 +1155,7 @@ gtk_xine_set_fullscreen (GtkXine * gtx, gboolean fullscreen)
 			XMaskEvent (gtx->priv->display,
 				    StructureNotifyMask, &xev);
 		} while (xev.type != MapNotify
-			 || xev.xmap.event !=
-			 gtx->priv->fullscreen_window);
+			 || xev.xmap.event != gtx->priv->fullscreen_window);
 
 		XSetInputFocus (gtx->priv->display,
 				gtx->priv->toplevel, RevertToNone,
@@ -1470,36 +1395,3 @@ gtk_xine_set_scale_ratio (GtkXine *gtx, gfloat ratio)
 {
 }
 
-#if 0
-gint
-gtk_xine_get_log_section_count (GtkXine * gtx)
-{
-
-	g_return_val_if_fail (gtx != NULL, 0);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
-	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
-
-	return xine_get_log_section_count (gtx->priv->xine);
-}
-
-gchar **
-gtk_xine_get_log_names (GtkXine * gtx)
-{
-	g_return_val_if_fail (gtx != NULL, NULL);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), NULL);
-	g_return_val_if_fail (gtx->priv->xine != NULL, NULL);
-
-	return xine_get_log_names (gtx->priv->xine);
-}
-
-gchar **
-gtk_xine_get_log (GtkXine * gtx, gint buf)
-{
-
-	g_return_val_if_fail (gtx != NULL, NULL);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), NULL);
-	g_return_val_if_fail (gtx->priv->xine != NULL, NULL);
-
-	return xine_get_log (gtx->priv->xine, buf);
-}
-#endif

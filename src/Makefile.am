@@ -24,6 +24,7 @@ totem_SOURCES = 			\
 	rb-ellipsizing-label.c		\
 	rb-ellipsizing-label.h		\
 	scrsaver.c  scrsaver.h		\
+	video-utils.c video-utils.h	\
 	debug.h
 
 totem_LDADD = $(EXTRA_GNOME_LIBS) $(XINE_LIBS) $(XTEST_LIBS)
