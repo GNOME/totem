@@ -139,8 +139,29 @@ libtotem_properties_page_la_LIBADD = \
 	libbaconvideowidget.la libbaconpropertiespage.la
 libtotem_properties_page_la_LDFLAGS = $(module_flags)
 
+BUILT_SOURCES = \
+	totem_mozilla_scripting.h \
+	libtotem_mozilla.xpt
+
+CLEANFILES = $(BUILT_SOURCES)
+
+totem_mozilla_scripting.h: totem_mozilla_scripting.idl
+	$(MOZILLA_XPIDL) -m header -I $(MOZILLA_XPCFLAGS) $(srcdir)/totem_mozilla_scripting.idl
+
+libtotem_mozilla.xpt: totem_mozilla_scripting.idl
+	$(MOZILLA_XPIDL) -m typelib -I $(MOZILLA_XPCFLAGS) $(srcdir)/totem_mozilla_scripting.idl
+	mv totem_mozilla_scripting.xpt libtotem_mozilla.xpt
+
+typelib_DATA = libtotem_mozilla.xpt
+typelibdir = $(libdir)/mozilla/plugins
+
 libtotem_mozilla_la_LDFLAGS = $(MOZILLA_LIBS) $(module_flags)
-libtotem_mozilla_la_SOURCES = totem-mozilla-plugin.c totem-mozilla-options.h
+libtotem_mozilla_la_SOURCES = \
+	totem-mozilla-plugin.cpp \
+	totem_mozilla_scripting.h \
+	totem-mozilla-scriptable.h \
+	totem-mozilla-scriptable.cpp \
+	totem-mozilla-options.h
 
 totem_mozilla_viewer_SOURCES = 		\
 	totem-mozilla-viewer.c		\
@@ -205,7 +226,9 @@ EXTRA_DIST =	bacon-video-widget-xine.c \
 		$(BACON_V4L_SELECTION) \
 		vanity.c \
 		totem-mozilla-viewer.c \
-		totem-mozilla-plugin.c
+		totem-mozilla-plugin.cpp \
+		totem-mozilla-protocol.h \
+		totem_mozilla_scripting.idl
 
 ## libtotem-plparser.la
 

@@ -1,3 +1,17 @@
+2005-03-21  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/test.html:
+	* src/totem-mozilla-plugin.c:
+	* src/totem-mozilla-plugin.cpp:
+	* src/totem-mozilla-scriptable.cpp:
+	* src/totem-mozilla-scriptable.h:
+	* src/totem_mozilla_scripting.idl:
+	  Implement basic javascriptability support through XPCOM. The
+	  sample .html file has some images which, when clicked, will
+	  cause the plugin to printf() something to stdout.
+
 2005-03-21  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-message-connection.c: (server_cb): fix memset arguments

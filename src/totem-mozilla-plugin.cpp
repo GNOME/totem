@@ -34,27 +34,15 @@
 #include <libgnomevfs/gnome-vfs-mime-info.h>
 
 #include "totem-mozilla-options.h"
+#include "totem-mozilla-scriptable.h"
 
-#define XP_UNIX 1
+//#define XP_UNIX 1
 #define MOZ_X11 1
 #include "npapi.h"
 #include "npupp.h"
 
 #define DEBUG(x) printf(x "\n")
 //#define DEBUG(x)
-
-typedef struct {
-	NPP instance;
-	guint32 window;
-
-	char *src, *href;
-	int width, height;
-	int send_fd;
-	int player_pid;
-	gboolean controller_hidden;
-
-	GByteArray *bytes;
-} TotemPlugin;
 
 static NPNetscapeFuncs mozilla_functions;
 
@@ -151,6 +139,12 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 		return NPERR_OUT_OF_MEMORY_ERROR;
 
 	memset(plugin, 0, sizeof(TotemPlugin));
+	plugin->iface = new totemMozillaObject (plugin);
+	if (!plugin->iface) {
+		mozilla_functions.memfree (plugin);
+		return NPERR_OUT_OF_MEMORY_ERROR;
+	}
+	NS_ADDREF (plugin->iface);
 
 	/* mode is NP_EMBED, NP_FULL, or NP_BACKGROUND (see npapi.h) */
 	printf("mode %d\n",mode);
@@ -222,6 +216,7 @@ static NPError totem_plugin_destroy_instance (NPP instance, NPSavedData **save)
 		waitpid (plugin->player_pid, NULL, 0);
 	}
 
+	NS_RELEASE (plugin->iface);
 	mozilla_functions.memfree (instance->pdata);
 	instance->pdata = NULL;
 
@@ -243,7 +238,7 @@ static NPError totem_plugin_set_window (NPP instance, NPWindow* window)
 
 	if (plugin->window) {
 		DEBUG ("existing window");
-		if (plugin->window == (Window) window->window) {
+		if (plugin->window == (guint32) window->window) {
 			DEBUG("resize");
 			/* Resize event */
 			/* Not currently handled */
@@ -254,7 +249,7 @@ static NPError totem_plugin_set_window (NPP instance, NPWindow* window)
 	} else {
 		DEBUG("about to fork");
 
-		plugin->window = (Window) window->window;
+		plugin->window = (guint32) window->window;
 		totem_plugin_fork (plugin);
 
 		fcntl(plugin->send_fd, F_SETFL, O_NONBLOCK);
@@ -375,9 +370,14 @@ static NPError
 totem_plugin_get_value (NPP instance, NPPVariable variable,
 		                        void *value)
 {
+	TotemPlugin *plugin;
 	NPError err = NPERR_NO_ERROR;
 
 	DEBUG("plugin_get_value");
+
+        if (instance == NULL)
+                return NPERR_GENERIC_ERROR;
+        plugin = (TotemPlugin *) instance->pdata;
 
 	switch (variable) {
 	case NPPVpluginNameString:
@@ -390,10 +390,27 @@ totem_plugin_get_value (NPP instance, NPPVariable variable,
 	case NPPVpluginNeedsXEmbed:
 		*((PRBool *)value) = PR_TRUE;
 		break;
-	case NPPVpluginScriptableIID:
-		g_message ("we're not scriptable yet: NPPVpluginScriptableIID");
-		*((PRBool *)value) = PR_FALSE;
+	case NPPVpluginScriptableIID: {
+		static nsIID sIID = TOTEMMOZILLASCRIPT_IID;
+		nsIID* ptr = (nsIID *) mozilla_functions.memalloc (sizeof (nsIID));
+
+		if (ptr) {
+			*ptr = sIID;
+			* (nsIID **) value = ptr;
+			g_print ("Returning that we support iface\n");
+		} else {
+			err = NPERR_OUT_OF_MEMORY_ERROR;
+		}
 		break;
+	}
+	case NPPVpluginScriptableInstance: {
+		NS_ADDREF (plugin->iface);
+		plugin->iface->QueryInterface (NS_GET_IID (nsISupports),
+					       (void **) value);
+//		* (nsISupports **) value = static_cast<totemMozillaScript *>(plugin->iface);
+		g_print ("Returning instance %p\n", plugin->iface);
+		break;
+	}
 	default:
 		g_message ("unhandled variable %d", variable);
 		err = NPERR_INVALID_PARAM;
@@ -463,7 +480,7 @@ NPError NP_Initialize (NPNetscapeFuncs * moz_funcs,
 {
 	NPError err = NPERR_NO_ERROR;
 	PRBool supportsXEmbed = PR_FALSE;
-	NPNToolkitType toolkit = 0;
+	NPNToolkitType toolkit = (NPNToolkitType) 0;
 
 	printf ("NP_Initialize\n");
 
