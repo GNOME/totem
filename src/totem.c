@@ -881,37 +881,38 @@ update_current_time (BaconVideoWidget *bvw, int current_time, int stream_length,
 
 	totem_statusbar_set_time_and_length (TOTEM_STATUSBAR (totem->statusbar),
 			current_time / 1000, stream_length / 1000);
-}
-
-static void
-update_sliders (Totem *totem)
-{
-	gfloat pos;
 
 	if (totem->seek_lock == FALSE)
 	{
-		totem->seek_lock = TRUE;
-		pos = (gfloat) bacon_video_widget_get_position (totem->bvw);
-		gtk_adjustment_set_value (totem->seekadj, pos);
-		gtk_adjustment_set_value (totem->fs_seekadj, pos);
-		totem->seek_lock = FALSE;
+		gtk_adjustment_set_value (totem->seekadj,
+				(float) current_position);
+		gtk_adjustment_set_value (totem->fs_seekadj,
+				(float) current_position);
 	}
+}
 
+static void
+update_volume_sliders (Totem *totem)
+{
 	if (totem->vol_lock == FALSE)
 	{
-		totem->vol_lock = TRUE;
-		pos = (gfloat) bacon_video_widget_get_volume (totem->bvw);
+		int volume;
 
-		if (totem->volume_first_time || (totem->prev_volume != pos &&
-				totem->prev_volume != -1 && pos != -1))
+		totem->vol_lock = TRUE;
+		volume = bacon_video_widget_get_volume (totem->bvw);
+
+		if (totem->volume_first_time || (totem->prev_volume != volume &&
+				totem->prev_volume != -1 && volume != -1))
 		{
 			totem->volume_first_time = 0;
-			gtk_adjustment_set_value (totem->voladj, pos);
-			gtk_adjustment_set_value (totem->fs_voladj, pos);
-			volume_set_image (totem, (gint) pos);
+			gtk_adjustment_set_value (totem->voladj,
+					(float) volume);
+			gtk_adjustment_set_value (totem->fs_voladj,
+					(float) volume);
+			volume_set_image (totem, volume);
 		}
 
-		totem->prev_volume = pos;
+		totem->prev_volume = volume;
 		totem->vol_lock = FALSE;
 	}
 }
@@ -924,7 +925,7 @@ update_cb_often (gpointer user_data)
 	if (totem->bvw == NULL)
 		return TRUE;
 
-	update_sliders (user_data);
+	update_volume_sliders (user_data);
 
 	return TRUE;
 }
@@ -942,32 +943,40 @@ update_cb_rare (gpointer user_data)
 	return TRUE;
 }
 
-static void
-seek_cb (GtkWidget *widget, gpointer user_data)
+static gboolean
+seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event,
+		gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+	totem->seek_lock = TRUE;
+	return FALSE;
+}
+
+static gboolean
+seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event,
+		gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 
-	if (totem->seek_lock == FALSE)
+	if (GTK_WIDGET(widget) == totem->fs_seek)
 	{
-		totem->seek_lock = TRUE;
-		if (GTK_WIDGET(widget) == totem->fs_seek)
-		{
-			totem_action_play (totem,
-					(gint) totem->fs_seekadj->value);
-			/* Update the seek adjustment */
-			gtk_adjustment_set_value (totem->seekadj,
-					gtk_adjustment_get_value
-					(totem->fs_seekadj));
-		} else {
-			totem_action_play (totem,
-					(gint) totem->seekadj->value);
-			/* Update the fullscreen seek adjustment */
-			gtk_adjustment_set_value (totem->fs_seekadj,
-					gtk_adjustment_get_value
-					(totem->seekadj));
-		}
-		totem->seek_lock = FALSE;
+		totem_action_play (totem,
+				(gint) totem->fs_seekadj->value);
+		/* Update the seek adjustment */
+		gtk_adjustment_set_value (totem->seekadj,
+				gtk_adjustment_get_value
+				(totem->fs_seekadj));
+	} else {
+		totem_action_play (totem,
+				(gint) totem->seekadj->value);
+		/* Update the fullscreen seek adjustment */
+		gtk_adjustment_set_value (totem->fs_seekadj,
+				gtk_adjustment_get_value
+				(totem->seekadj));
 	}
+
+	totem->seek_lock = FALSE;
+	return FALSE;
 }
 
 static void
@@ -1546,9 +1555,8 @@ commit_hide_skip_to (GtkDialog *dialog, gint response, gpointer user_data)
 	spin = glade_xml_get_widget (totem->xml, "spinbutton1");
 	sec = (int) gtk_spin_button_get_value (GTK_SPIN_BUTTON (spin));
 
-	g_message ("commit_hide_skip_to: %d", sec);
-
 	bacon_video_widget_play (totem->bvw, 0, sec * 1000, &err);
+
 	if (err != NULL)
 	{
 		char *msg;
@@ -1755,6 +1763,9 @@ playlist_repeat_toggle_cb (GtkPlaylist *playlist, gboolean repeat,
 static gboolean
 popup_hide (Totem *totem)
 {
+	if (totem->seek_lock == TRUE)
+		return TRUE;
+
 	gtk_widget_hide (GTK_WIDGET (totem->exit_popup));
 	gtk_widget_hide (GTK_WIDGET (totem->control_popup));
 
@@ -2217,9 +2228,10 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (on_mouse_click_fullscreen), totem);
 
 	/* Control Popup Sliders */
-	g_signal_connect (G_OBJECT(totem->fs_seek), "value-changed",
-			G_CALLBACK (seek_cb), totem);
-
+	g_signal_connect (G_OBJECT(totem->fs_seek), "button_press_event",
+			G_CALLBACK (seek_slider_pressed_cb), totem);
+	g_signal_connect (G_OBJECT(totem->fs_seek), "button_release_event",
+			G_CALLBACK (seek_slider_released_cb), totem);
 	g_signal_connect (G_OBJECT(totem->fs_volume), "value-changed",
 			G_CALLBACK (vol_cb), totem);
 
@@ -2234,8 +2246,10 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (on_window_scroll_event), totem);
 
 	/* Sliders */
-	g_signal_connect (G_OBJECT (totem->seek), "value-changed",
-			G_CALLBACK (seek_cb), totem);
+	g_signal_connect (G_OBJECT(totem->seek), "button_press_event",
+			G_CALLBACK (seek_slider_pressed_cb), totem);
+	g_signal_connect (G_OBJECT(totem->seek), "button_release_event",
+			G_CALLBACK (seek_slider_released_cb), totem);
 	g_signal_connect (G_OBJECT (totem->volume), "value-changed",
 			G_CALLBACK (vol_cb), totem);
 

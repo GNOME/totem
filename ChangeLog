@@ -1,5 +1,13 @@
 2003-02-22  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (update_current_time), (update_volume_sliders),
+	(update_cb_often), (seek_slider_pressed_cb),
+	(seek_slider_released_cb), (commit_hide_skip_to), (popup_hide),
+	(totem_callback_connect): we seek only when the scale is released,
+	don't hide the popups when we're moving the slider (Closes: #106347)
+
+2003-02-22  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (create_full_path), (process_command_line): when the
 	file passed via remote isn't a fully qualified path or uri, we make it
 	so
