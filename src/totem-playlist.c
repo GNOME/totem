@@ -147,7 +147,7 @@ gtk_tree_model_iter_previous (GtkTreeModel *tree_model, GtkTreeIter *iter)
 
 	path = gtk_tree_model_get_path (tree_model, iter);
 	ret = gtk_tree_path_prev (path);
-	if (ret == TRUE)
+	if (ret != FALSE)
 		gtk_tree_model_get_iter (tree_model, iter, path);
 
 	gtk_tree_path_free (path);
@@ -584,7 +584,7 @@ totem_playlist_remove_files (GtkWidget *widget, TotemPlaylist *playlist)
 	g_list_free (playlist->_priv->list);
 	playlist->_priv->list = NULL;
 
-	if (is_selected == TRUE)
+	if (is_selected != FALSE)
 	{
 		/* The current item was removed from the playlist */
 		if (next_pos != -1)
@@ -666,7 +666,7 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 			g_free (tmp);
 		}
 
-		if (g_file_test (filename, G_FILE_TEST_EXISTS) == TRUE)
+		if (g_file_test (filename, G_FILE_TEST_EXISTS) != FALSE)
 		{
 			GtkWidget *dialog;
 
@@ -874,7 +874,7 @@ static void
 treeview_row_changed (GtkTreeView *treeview, GtkTreePath *arg1,
 		GtkTreeViewColumn *arg2, TotemPlaylist *playlist)
 {
-	if (gtk_tree_path_equals (arg1, playlist->_priv->current) == TRUE)
+	if (gtk_tree_path_equals (arg1, playlist->_priv->current) != FALSE)
 		return;
 
 	if (playlist->_priv->current != NULL)
@@ -1188,7 +1188,7 @@ totem_playlist_unrealize (GtkWidget *widget)
 
 	g_return_if_fail (widget != NULL);
 
-	if (GTK_WIDGET_MAPPED (widget) == TRUE)
+	if (GTK_WIDGET_MAPPED (widget) != FALSE)
 	{
 		gtk_window_get_position (GTK_WINDOW (widget), &x, &y);
 	} else {
@@ -1459,7 +1459,7 @@ totem_playlist_has_previous_mrl (TotemPlaylist *playlist)
 	if (update_current_from_playlist (playlist) == FALSE)
 		return FALSE;
 
-	if (playlist->_priv->repeat == TRUE)
+	if (playlist->_priv->repeat != FALSE)
 		return TRUE;
 
 	if (playlist->_priv->shuffle == FALSE)
@@ -1488,7 +1488,7 @@ totem_playlist_has_next_mrl (TotemPlaylist *playlist)
 	if (update_current_from_playlist (playlist) == FALSE)
 		return FALSE;
 
-	if (playlist->_priv->repeat == TRUE)
+	if (playlist->_priv->repeat != FALSE)
 		return TRUE;
 
 	if (playlist->_priv->shuffle == FALSE)
@@ -1551,7 +1551,7 @@ totem_playlist_set_playing (TotemPlaylist *playlist, gboolean state)
 	if (&iter == NULL)
 		return FALSE;
 
-	if (state == TRUE)
+	if (state != FALSE)
 		gtk_list_store_set (store, &iter,
 				PIX_COL, playlist->_priv->icon,
 				-1);

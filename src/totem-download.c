@@ -84,7 +84,7 @@ set_label (TotemDownload *td, Labels label, gboolean done)
 	image = glade_xml_get_widget (td->xml, name);
 	g_free (name);
 
-	if (done == TRUE)
+	if (done != FALSE)
 	{
 		gtk_image_set_from_stock (GTK_IMAGE (image),
 				GTK_STOCK_APPLY, GTK_ICON_SIZE_BUTTON);

@@ -1,5 +1,19 @@
 2004-01-31  Jon Trowbridge <trow@ximian.com>
 
+	* src/bacon-cd-selection.c:
+	* src/bacon-message-connection.c:
+	* src/bacon-v4l-selection.c:
+	* src/bacon-video-widget-properties.c:
+	* src/bacon-video-widget-xine.c:
+	* src/scrsaver.c:
+	* src/totem-download.c:
+	* src/totem-pl-parser.c:
+	* src/totem-playlist.c:
+	* src/totem-preferences.c:
+	* src/totem-video-thumbnailer.c:
+	* src/vanity.c: Paranoia.  Replaced a bunch of instances of
+	'foo == TRUE' with 'foo != FALSE'.
+	
 	* src/bacon-message-connection.c:
 	* src/bacon-video-widget-properties.c:
 	* src/totem-download.c:

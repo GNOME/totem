@@ -368,7 +368,7 @@ bacon_cd_selection_set_device (BaconCdSelection *bcs, const char *device)
 	g_return_if_fail (bcs != NULL);
 	g_return_if_fail (BACON_IS_CD_SELECTION (bcs));
 
-	if (bcs->priv->is_entry == TRUE)
+	if (bcs->priv->is_entry != FALSE)
 	{
 		entry = gnome_file_entry_gtk_entry
 			(GNOME_FILE_ENTRY (bcs->priv->widget));
@@ -421,7 +421,7 @@ bacon_cd_selection_get_device (BaconCdSelection *bcs)
 	g_return_val_if_fail (bcs != NULL, NULL);
 	g_return_val_if_fail (BACON_IS_CD_SELECTION (bcs), NULL);
 
-	if (bcs->priv->is_entry == TRUE)
+	if (bcs->priv->is_entry != FALSE)
 	{
 		entry = gnome_file_entry_gtk_entry
 			(GNOME_FILE_ENTRY (bcs->priv->widget));
@@ -446,7 +446,7 @@ bacon_cd_selection_get_cdrom (BaconCdSelection *bcs)
 	g_return_val_if_fail (bcs != NULL, NULL);
 	g_return_val_if_fail (BACON_IS_CD_SELECTION (bcs), NULL);
 
-	if (bcs->priv->is_entry == TRUE)
+	if (bcs->priv->is_entry != FALSE)
 	{
 		return NULL;
 	} else {

@@ -88,7 +88,7 @@ add_holes_to_pixbuf (GdkPixbuf *pixbuf, int width, int height)
 	}
 
 	g_assert (gdk_pixbuf_get_has_alpha (pixbuf) == FALSE);
-	g_assert (gdk_pixbuf_get_has_alpha (holes) == TRUE);
+	g_assert (gdk_pixbuf_get_has_alpha (holes) != FALSE);
 	tmp = gdk_pixbuf_add_alpha (pixbuf, FALSE, 0, 0, 0);
 
 	for (i = 0; i < height; i += gdk_pixbuf_get_height (holes))

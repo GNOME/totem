@@ -367,7 +367,7 @@ bacon_v4l_selection_set_device (BaconV4lSelection *bvs, const char *device)
 	g_return_if_fail (bvs != NULL);
 	g_return_if_fail (BACON_IS_CD_SELECTION (bvs));
 
-	if (bvs->priv->is_entry == TRUE)
+	if (bvs->priv->is_entry != FALSE)
 	{
 		entry = gnome_file_entry_gtk_entry
 			(GNOME_FILE_ENTRY (bvs->priv->widget));
@@ -420,7 +420,7 @@ bacon_v4l_selection_get_device (BaconV4lSelection *bvs)
 	g_return_val_if_fail (bvs != NULL, NULL);
 	g_return_val_if_fail (BACON_IS_CD_SELECTION (bvs), NULL);
 
-	if (bvs->priv->is_entry == TRUE)
+	if (bvs->priv->is_entry != FALSE)
 	{
 		entry = gnome_file_entry_gtk_entry
 			(GNOME_FILE_ENTRY (bvs->priv->widget));
@@ -445,7 +445,7 @@ bacon_v4l_selection_get_video_device (BaconV4lSelection *bvs)
 	g_return_val_if_fail (bvs != NULL, NULL);
 	g_return_val_if_fail (BACON_IS_CD_SELECTION (bvs), NULL);
 
-	if (bvs->priv->is_entry == TRUE)
+	if (bvs->priv->is_entry != FALSE)
 	{
 		return NULL;
 	} else {

@@ -536,7 +536,7 @@ load_video_out_driver (BaconVideoWidget *bvw, gboolean null_out)
 	const char *video_driver_id;
 	xine_vo_driver_t *vo_driver;
 
-	if (null_out == TRUE)
+	if (null_out != FALSE)
 	{
 		return xine_open_video_driver (bvw->priv->xine,
 				"none", XINE_VISUAL_TYPE_NONE, NULL);
@@ -602,7 +602,7 @@ load_audio_out_driver (BaconVideoWidget *bvw, GError **err)
 	xine_ao_driver_t *ao_driver;
 	const char *audio_driver_id;
 
-	if (bvw->priv->null_out == TRUE)
+	if (bvw->priv->null_out != FALSE)
 		return NULL;
 
 	audio_driver_id = xine_config_register_string (bvw->priv->xine,
@@ -916,19 +916,19 @@ generate_mouse_event (BaconVideoWidget *bvw, GdkEvent *event,
 	if (is_motion == FALSE && bevent->button != 1)
 		return FALSE;
 
-	if (is_motion == TRUE)
+	if (is_motion != FALSE)
 		retval = video_window_translate_point (bvw,
 				mevent->x, mevent->y, &x, &y);
 	else
 		retval = video_window_translate_point (bvw,
 				bevent->x, bevent->y, &x, &y);
 
-	if (retval == TRUE)
+	if (retval != FALSE)
 	{
 		xine_event_t event;
 		xine_input_data_t input;
 
-		if (is_motion == TRUE)
+		if (is_motion != FALSE)
 		{
 			event.type = XINE_EVENT_INPUT_MOUSE_MOVE;
 			input.button = 0; /* Just motion. */
@@ -1555,7 +1555,7 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 	else
 		bvw->priv->is_live = TRUE;
 
-	if (ret == TRUE)
+	if (ret != FALSE)
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[TICK], 0,
 				(gint64) (current_time),
@@ -1958,7 +1958,7 @@ bacon_video_widget_set_logo (BaconVideoWidget *bvw, char *filename)
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
 
-	if (bacon_video_widget_open (bvw, filename, NULL) == TRUE) {
+	if (bacon_video_widget_open (bvw, filename, NULL) != FALSE) {
 		bacon_video_widget_play (bvw, NULL);
 	}
 }
@@ -2057,7 +2057,7 @@ bacon_video_widget_set_volume (BaconVideoWidget *bvw, int volume)
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
 
-	if (bacon_video_widget_can_set_volume (bvw) == TRUE)
+	if (bacon_video_widget_can_set_volume (bvw) != FALSE)
 	{
 		volume = CLAMP (volume, 0, 100);
 		xine_set_param (bvw->priv->stream,
@@ -2365,7 +2365,7 @@ bacon_video_widget_set_visuals (BaconVideoWidget *bvw, const char *name)
 	}
 
 	speed = xine_get_param (bvw->priv->stream, XINE_PARAM_SPEED);
-	if (speed == XINE_SPEED_PAUSE && bvw->priv->using_vfx == TRUE)
+	if (speed == XINE_SPEED_PAUSE && bvw->priv->using_vfx != FALSE)
 	{
 		g_free (bvw->priv->queued_vis);
 		if (strcmp (name, bvw->priv->vis_name) == 0)
@@ -2393,7 +2393,7 @@ bacon_video_widget_set_visuals (BaconVideoWidget *bvw, const char *name)
 			oldvis = bvw->priv->vis;
 			bvw->priv->vis = newvis;
 
-			if (bvw->priv->using_vfx == TRUE)
+			if (bvw->priv->using_vfx != FALSE)
 			{
 				show_vfx_update (bvw, FALSE);
 				show_vfx_update (bvw, TRUE);
@@ -2654,7 +2654,7 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 	g_return_if_fail (bvw->priv->xine != NULL);
 	g_return_if_fail (ratio >= 0);
 
-	if (bvw->priv->fullscreen_mode == TRUE)
+	if (bvw->priv->fullscreen_mode != FALSE)
 		return;
 
 	/* Try best fit for the screen */

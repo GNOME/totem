@@ -199,7 +199,7 @@ bacon_message_connection_free (BaconMessageConnection *conn)
 	g_return_if_fail (conn != NULL);
 	g_return_if_fail (conn->path != NULL);
 
-	if (conn->is_server == TRUE)
+	if (conn->is_server != FALSE)
 	{
 		g_io_channel_shutdown (conn->chan, FALSE, NULL);
 		g_io_channel_unref (conn->chan);
@@ -218,7 +218,7 @@ bacon_message_connection_set_callback (BaconMessageConnection *conn,
 				       gpointer user_data)
 {
 	g_return_if_fail (conn != NULL);
-	g_assert (conn->is_server == TRUE);
+	g_assert (conn->is_server != FALSE);
 
 	g_io_add_watch (conn->chan, G_IO_IN, server_cb, conn);
 

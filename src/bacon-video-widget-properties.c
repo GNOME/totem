@@ -284,7 +284,7 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 	g_return_if_fail (props != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
 
-	if (reset == TRUE)
+	if (reset != FALSE)
 	{
 		bacon_video_widget_properties_reset (props);
 	} else {

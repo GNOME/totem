@@ -272,7 +272,7 @@ on_about1_activate (GtkButton *button, Vanity *vanity)
 static char *
 screenshot_make_filename_helper (char *filename, gboolean desktop_exists)
 {
-	if (desktop_exists == TRUE)
+	if (desktop_exists != FALSE)
 	{
 		return g_build_filename (g_get_home_dir (), ".gnome-desktop",
 				filename, NULL);
@@ -300,13 +300,13 @@ screenshot_make_filename (Vanity *vanity)
 	desktop_exists = g_file_test (fullpath, G_FILE_TEST_EXISTS);
 	g_free (fullpath);
 
-	if (on_desktop == TRUE)
+	if (on_desktop != FALSE)
 	{
 		filename = g_strdup_printf (_("Screenshot%d.png"), i);
 		fullpath = screenshot_make_filename_helper (filename,
 				desktop_exists);
 
-		while (g_file_test (fullpath, G_FILE_TEST_EXISTS) == TRUE
+		while (g_file_test (fullpath, G_FILE_TEST_EXISTS) != FALSE
 				&& i < G_MAXINT)
 		{
 			i++;

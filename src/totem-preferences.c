@@ -177,7 +177,7 @@ on_checkbutton2_toggled (GtkToggleButton *togglebutton, Totem *totem)
 
 	value = gtk_toggle_button_get_active (togglebutton);
 
-	if (value == TRUE && totem_display_is_local (totem) == FALSE)
+	if (value != FALSE && totem_display_is_local (totem) == FALSE)
 	{
 		if (ask_show_visuals (totem) == FALSE)
 		{
@@ -206,7 +206,7 @@ on_tvout_toggled (GtkToggleButton *togglebutton, Totem *totem)
 	value = bacon_video_widget_set_tv_out
 		(BACON_VIDEO_WIDGET (totem->bvw), type);
 
-	if (value == TRUE)
+	if (value != FALSE)
 		totem_action_info (_("Switching on or off this type of TV-Out requires a restart to take effect."), totem);
 }
 
@@ -367,7 +367,7 @@ visual_menu_changed (GtkOptionMenu *option_menu, Totem *totem)
 		gconf_client_set_string (totem->gc, GCONF_PREFIX"/visual",
 				name, NULL);
 
-		if (bacon_video_widget_set_visuals (totem->bvw, name) == TRUE)
+		if (bacon_video_widget_set_visuals (totem->bvw, name) != FALSE)
 			totem_action_info (_("Changing the visuals effect type will require a restart to take effect."), totem);
 	}
 }
@@ -529,7 +529,7 @@ totem_setup_preferences (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "tpw_visuals_checkbutton");
 	show_visuals = gconf_client_get_bool (totem->gc,
 			GCONF_PREFIX"/show_vfx", NULL);
-	if (is_local == FALSE && show_visuals == TRUE)
+	if (is_local == FALSE && show_visuals != FALSE)
 		show_visuals = ask_show_visuals (totem);
 
 	gtk_toggle_button_set_active

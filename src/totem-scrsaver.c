@@ -117,7 +117,7 @@ scrsaver_disable (ScreenSaver *scr)
 void
 scrsaver_enable (ScreenSaver *scr)
 {
-	g_return_if_fail (scr->disabled == TRUE);
+	g_return_if_fail (scr->disabled != FALSE);
 
 	scr->disabled = FALSE;
 

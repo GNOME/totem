@@ -841,7 +841,7 @@ parse_asx_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 
 		if (g_ascii_strcasecmp (node->name, "entry") == 0) {
 			/* Whee found an entry here, find the REF and TITLE */
-			if (parse_asx_entry (parser, base, doc, node) == TRUE)
+			if (parse_asx_entry (parser, base, doc, node) != FALSE)
 				retval = TRUE;
 		}
 	}
@@ -879,7 +879,7 @@ totem_pl_parser_add_asx (TotemPlParser *parser, const char *url, gpointer data)
 	base = totem_pl_parser_base_url (url);
 
 	for (node = doc->children; node != NULL; node = node->next)
-		if (parse_asx_entries (parser, base, doc, node) == TRUE)
+		if (parse_asx_entries (parser, base, doc, node) != FALSE)
 			retval = TRUE;
 
 	g_free (base);
@@ -942,7 +942,7 @@ parse_smil_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 
 			if (url != NULL) {
 				if (parse_smil_video_entry (parser,
-						base, url, title) == TRUE)
+						base, url, title) != FALSE)
 					retval = TRUE;
 			}
 
@@ -950,7 +950,7 @@ parse_smil_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 			g_free (url);
 		} else {
 			if (parse_smil_entry (parser,
-						base, doc, node) == TRUE)
+						base, doc, node) != FALSE)
 				retval = TRUE;
 		}
 	}
@@ -971,7 +971,7 @@ parse_smil_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 
 		if (g_ascii_strcasecmp (node->name, "body") == 0) {
 			if (parse_smil_entry (parser, base,
-						doc, node) == TRUE)
+						doc, node) != FALSE)
 				retval = TRUE;
 		}
 
@@ -1013,7 +1013,7 @@ totem_pl_parser_add_smil (TotemPlParser *parser, const char *url, gpointer data)
 	base = totem_pl_parser_base_url (url);
 
 	for (node = doc->children; node != NULL; node = node->next)
-		if (parse_smil_entries (parser, base, doc, node) == TRUE)
+		if (parse_smil_entries (parser, base, doc, node) != FALSE)
 			retval = TRUE;
 
 	return FALSE;
