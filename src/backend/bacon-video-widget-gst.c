@@ -1070,33 +1070,100 @@ bacon_video_widget_get_backend_name (BaconVideoWidget * bvw)
 int
 bacon_video_widget_get_subtitle (BaconVideoWidget * bvw)
 {
-  return -1;
+  int subtitle = -1;
+
+  g_return_val_if_fail (bvw != NULL, -2);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -2);
+  g_return_val_if_fail (bvw->priv->play != NULL, -2);
+
+  g_object_get (G_OBJECT (bvw->priv->play), "current-text", &subtitle, NULL);
+
+  if (subtitle == -1)
+    subtitle = -2;
+
+  return subtitle;
 }
 
 void
 bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
 {
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (bvw->priv->play != NULL);
+
+  if (subtitle == -1)
+    subtitle = 0;
+  else if (subtitle == -2)
+    subtitle = -1;
+
+  g_object_set (G_OBJECT (bvw->priv->play), "current-text", subtitle, NULL);
+}
+
+static GList *
+get_list_of_type (BaconVideoWidget * bvw, const gchar * type_name)
+{
+  GList *streaminfo, *ret = NULL;
+  gint num = 0;
+
+  g_object_get (G_OBJECT (bvw->priv->play), "stream-info", &streaminfo, NULL);
+  for ( ; streaminfo != NULL; streaminfo = streaminfo->next) {
+    GObject *info = streaminfo->data;
+    gint type;
+    GParamSpec *pspec;
+    GEnumValue *val;
+
+    g_object_get (info, "type", &type, NULL);
+    pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
+    val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
+
+    if (strstr (val->value_name, type_name)) {
+      ret = g_list_prepend (ret, g_strdup_printf ("%s %d", type_name, num++));
+    }
+  }
+
+  return g_list_reverse (ret);
 }
 
 GList * bacon_video_widget_get_subtitles (BaconVideoWidget * bvw)
 {
-  return NULL;
+  return get_list_of_type (bvw, "TEXT");
 }
 
 GList * bacon_video_widget_get_languages (BaconVideoWidget * bvw)
 {
-  return NULL;
+  return get_list_of_type (bvw, "AUDIO");
 }
 
 int
 bacon_video_widget_get_language (BaconVideoWidget * bvw)
 {
-  return -1;
+  int language = -1;
+
+  g_return_val_if_fail (bvw != NULL, -2);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -2);
+  g_return_val_if_fail (bvw->priv->play != NULL, -2);
+
+  g_object_get (G_OBJECT (bvw->priv->play), "current-audio", &language, NULL);
+
+  if (language == -1)
+    language = -2;
+
+  return language;
 }
 
 void
 bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
 {
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (bvw->priv->play != NULL);
+
+  if (language == -1)
+    language = 0;
+  else if (language == -2)
+    language = -1;
+
+  g_object_set (G_OBJECT (bvw->priv->play), "current-audio", language, NULL);
 }
 
 int
@@ -1336,6 +1403,8 @@ bacon_video_widget_open (BaconVideoWidget * bvw, const gchar * mrl,
       bvw->priv->mrl = NULL;
     }
 
+  g_signal_emit (bvw, bvw_table_signals[SIGNAL_CHANNELS_CHANGE], 0);
+
   return ret;
 }
 
@@ -1436,6 +1505,8 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
     g_free (bvw->priv->mrl);
     bvw->priv->mrl = NULL;
   }
+
+  g_signal_emit (bvw, bvw_table_signals[SIGNAL_CHANNELS_CHANGE], 0);
 }
 
 void
