@@ -34,6 +34,9 @@ desktopdir = $(datadir)/applications/
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
-EXTRA_DIST = $(stuff_DATA) $(desktop_DATA)
+keys_DATA = totem.keys
+keysdir = $(datadir)/mime-info/
+
+EXTRA_DIST = $(stuff_DATA) $(desktop_DATA) $(keys_DATA)
 
 CLEANFILES = *.bak *.gladep

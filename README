@@ -1,10 +1,25 @@
 
+                         _|_ __|_ _ ._ _  
+			  |_(_)|_(/_| | | 
+
+Totem is simple movie player for the Gnome desktop based on xine. It features a
+simple playlist, a full-screen mode, seek and volume controls, as well as
+a pretty complete keyboard navigation.
+
+News
+====
+
+0.7:
+* First release !
+
 Dependencies
 ============
 
 xine-lib:
 	http://xine.sourceforge.net/
 gnome2 development platform:
+	http://www.gnome.org
+eel:
 	http://www.gnome.org
 
 
@@ -52,8 +67,9 @@ TODO
 ====
 
 - move dnd to the output ctrl
-- make dnd work
 - think of what needs to be in the prefs
-- move to autoconf/autotools
+- use  G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
+- finish the playlist
+- make DVD playback work
+- kill GtkXine destroy bug
 
-  G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);

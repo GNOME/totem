@@ -9,7 +9,7 @@
 #include "gtk-xine.h"
 #include "gtk-playlist.h"
 
-#undef TOTEM_DEBUG
+#define TOTEM_DEBUG
 
 #ifndef TOTEM_DEBUG
 #include <fcntl.h>
@@ -338,6 +338,7 @@ drop_cb (GtkWidget     *widget,
 {
 	Totem *totem = (Totem *)user_data;
 	GList *list, *p, *file_list;
+	gboolean cleared = FALSE;
 	int i;
 
 	list = gnome_vfs_uri_list_parse (data->data);
@@ -371,13 +372,34 @@ drop_cb (GtkWidget     *widget,
 		char *filename;
 
 		filename = g_filename_from_uri (p->data, NULL, NULL);
-		//FIXME
-		g_print ("filename: %s\n", filename);
+		D("dropped filename: %s", filename);
+		if (filename != NULL && 
+				g_file_test (filename, G_FILE_TEST_IS_REGULAR
+					| G_FILE_TEST_EXISTS))
+		{
+			if (cleared == FALSE)
+			{
+				gtk_playlist_clear (totem->playlist);
+				cleared = TRUE;
+			}
+			gtk_playlist_add_mrl (totem->playlist, filename); 
+		}
+		g_free (filename);
 		g_free (p->data);
 	}
 
 	g_list_free (file_list);
 	gtk_drag_finish (context, TRUE, FALSE, time);
+
+	if (cleared == TRUE)
+	{
+		char *mrl;
+
+		mrl = gtk_playlist_get_current_mrl (totem->playlist);
+		action_set_mrl (totem, mrl);
+		g_free (mrl);
+		update_buttons (totem);
+	}
 }
 
 static void
@@ -608,7 +630,7 @@ on_about1_activate (GtkButton * button, gpointer user_data)
 
 	about = gnome_about_new(_("Totem"), VERSION,
 			_("(C) 2002 Bastien Nocera"),
-			_("Released under the GNU General Public License."),
+			_("Movie Player (based on the Xine libraries)"),
 			(const char **)authors,
 			(const char **)documenters,
 			strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,

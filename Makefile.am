@@ -7,5 +7,6 @@ EXTRA_DIST =			\
 	autogen.sh		\
 	intltool-extract.in	\
 	intltool-merge.in	\
-	intltool-update.in
+	intltool-update.in	\
+	AUTHORS NEWS
 
