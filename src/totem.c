@@ -3,7 +3,6 @@
 #include <gnome.h>
 #include <glade/glade.h>
 #include <libgnomevfs/gnome-vfs.h>
-#include <libgnomevfs/gnome-vfs-mime-handlers.h>
 #include <eel/eel-ellipsizing-label.h>
 
 #include "gtk-xine.h"
@@ -52,8 +51,9 @@ static const GtkTargetEntry target_table[] = {
 static void action_set_mrl (Totem *totem, const char *mrl);
 static gboolean popup_hide (Totem *totem);
 static void update_buttons (Totem *totem);
-static void on_play_pause_button_toggled (GtkToggleButton *button,
+static void on_play_pause_button_clicked (GtkToggleButton *button,
 		gpointer user_data);
+static void playlist_changed_cb (GtkWidget *playlist, gpointer user_data);
 
 static char
 *time_to_string (int time)
@@ -187,6 +187,8 @@ action_play (Totem *totem, int offset)
 {
 	int retval;
 
+	D("action_play");
+
 	retval = gtk_xine_play (GTK_XINE (totem->gtx), totem->mrl, offset , 0);
 	play_pause_set_label (totem, retval);
 }
@@ -194,6 +196,8 @@ action_play (Totem *totem, int offset)
 static void
 action_play_pause (Totem *totem)
 {
+	D("action_play_pause");
+
 	if (totem->mrl == NULL)
 	{
 		char *mrl;
@@ -287,11 +291,10 @@ action_set_mrl (Totem *totem, const char *mrl)
 
 		/* Otherwise we might never change the mrl in GtkXine */
 		if (gtk_xine_is_playing(GTK_XINE(totem->gtx))) {
+			/* If it's playing, we need to stop it */
 			action_play_pause (totem);
-		} else {
-			/* Make sure it will actually work first */
-			action_play (totem, 0);
 		}
+		action_play (totem, 0);
 
 		/* Play/Pause */
 		gtk_widget_set_sensitive (totem->pp_button, TRUE);
@@ -454,20 +457,10 @@ drop_cb (GtkWidget     *widget,
 
 	g_list_free (file_list);
 	gtk_drag_finish (context, TRUE, FALSE, time);
-
-	if (cleared == TRUE)
-	{
-		char *mrl;
-
-		mrl = gtk_playlist_get_current_mrl (totem->playlist);
-		action_set_mrl (totem, mrl);
-		g_free (mrl);
-		update_buttons (totem);
-	}
 }
 
 static void
-on_play_pause_button_toggled (GtkToggleButton *button, gpointer user_data)
+on_play_pause_button_clicked (GtkToggleButton *button, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 
@@ -576,16 +569,6 @@ action_open_files (Totem *totem, char **list, gboolean ignore_first)
 			}
 			gtk_playlist_add_mrl (totem->playlist, list[i]);
 		}
-	}
-
-	if (cleared == TRUE)
-	{
-		char *mrl;
-
-		mrl = gtk_playlist_get_current_mrl (totem->playlist);
-		action_set_mrl (totem, mrl);
-		g_free (mrl);
-		update_buttons (totem);
 	}
 }
 
@@ -708,7 +691,7 @@ on_about1_activate (GtkButton * button, gpointer user_data)
 			strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
 			pixbuf);
 
-	g_signal_connect (GTK_OBJECT (about), "destroy", G_CALLBACK
+	g_signal_connect (G_OBJECT (about), "destroy", G_CALLBACK
 			(gtk_widget_destroyed), &about);
 	gtk_window_set_transient_for (GTK_WINDOW (about),
 			GTK_WINDOW (totem->win));
@@ -731,8 +714,23 @@ static void
 playlist_changed_cb (GtkWidget *playlist, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
+	char *mrl;
+
+	D("playlist_changed_cb");
 
 	update_buttons (totem);
+	mrl = gtk_playlist_get_current_mrl (totem->playlist);
+
+	if (totem->mrl == NULL
+			|| (totem->mrl != NULL && mrl != NULL
+			&& strcmp (totem->mrl, mrl) != 0))
+	{
+		g_free (totem->mrl);
+		totem->mrl = NULL;
+		action_set_mrl (totem, mrl);
+	}
+
+	g_free (mrl);
 }
 
 static void
@@ -741,6 +739,8 @@ current_removed_cb (GtkWidget *playlist, gpointer user_data)
 	Totem *totem = (Totem *) user_data;
 	char *mrl;
 
+	D("current_removed_cb");
+
 	/* Set play button status */
 	play_pause_set_label (totem, FALSE);
 	gtk_playlist_set_at_start (totem->playlist);
@@ -748,8 +748,11 @@ current_removed_cb (GtkWidget *playlist, gpointer user_data)
 	mrl = gtk_playlist_get_current_mrl (totem->playlist);
 	action_set_mrl (totem, mrl);
 	long_action ();
-	action_play_pause (totem);
-	g_free (mrl);
+	if (mrl != NULL)
+	{
+		action_play (totem, 0);
+		g_free (mrl);
+	}
 }
 
 static gboolean
@@ -794,6 +797,8 @@ static gboolean
 on_eos_event (GtkWidget *widget, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
+
+	D("on_eos_event");
 
 	gdk_threads_enter ();
 
@@ -913,11 +918,11 @@ video_widget_create (Totem *totem)
 	container = glade_xml_get_widget (totem->xml, "frame2");
 	gtk_container_add (GTK_CONTAINER (container), totem->gtx);
 
-	g_signal_connect (GTK_OBJECT (totem->gtx),
+	g_signal_connect (G_OBJECT (totem->gtx),
 			"mouse-motion",
 			G_CALLBACK (on_mouse_motion_event),
 			totem);
-	g_signal_connect (GTK_OBJECT (totem->gtx),
+	g_signal_connect (G_OBJECT (totem->gtx),
 			"eos",
 			G_CALLBACK (on_eos_event),
 			totem);
@@ -933,75 +938,70 @@ totem_callback_connect (Totem *totem)
 
 	/* Menu items */
 	item = glade_xml_get_widget (totem->xml, "open1");
-	g_signal_connect (GTK_OBJECT (item), "activate",
+	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_open1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "play1");
-	g_signal_connect (GTK_OBJECT (item), "activate",
+	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_play1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "fullscreen1");
-	g_signal_connect (GTK_OBJECT (item), "activate",
+	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_full_screen1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "toggle_aspect_ratio1");
-	g_signal_connect (GTK_OBJECT (item), "activate",
+	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_toggle_aspect_ratio1_activate),
 			totem);
 	item = glade_xml_get_widget (totem->xml, "show_playlist1");
-	g_signal_connect (GTK_OBJECT (item), "activate",
+	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_show_playlist1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "quit1");
-	g_signal_connect (GTK_OBJECT (item), "activate",
+	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_quit1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "about1");
-	g_signal_connect (GTK_OBJECT (item), "activate",
+	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_about1_activate), totem);
 
 	/* Controls */
 	totem->pp_button = glade_xml_get_widget
 		(totem->xml, "play_pause_button");
-	g_signal_connect (GTK_OBJECT (totem->pp_button), "clicked",
-			G_CALLBACK (on_play_pause_button_toggled), totem);
+	g_signal_connect (G_OBJECT (totem->pp_button), "clicked",
+			G_CALLBACK (on_play_pause_button_clicked), totem);
 	item = glade_xml_get_widget (totem->xml, "previous_button");
-	g_signal_connect (GTK_OBJECT (item), "clicked",
+	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (on_previous_button_clicked), totem);
 	item = glade_xml_get_widget (totem->xml, "next_button");
-	g_signal_connect (GTK_OBJECT (item), "clicked", 
+	g_signal_connect (G_OBJECT (item), "clicked", 
 			G_CALLBACK (on_next_button_clicked), totem);
 	item = glade_xml_get_widget (totem->xml, "playlist_button");
-	g_signal_connect (GTK_OBJECT (item), "clicked",
+	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (on_playlist_button_toggled), totem);
 
 	/* Drag'n'Drop */
 	item = glade_xml_get_widget (totem->xml, "frame1");
-	g_signal_connect (GTK_OBJECT (item), "drag_data_received",
+	g_signal_connect (G_OBJECT (item), "drag_data_received",
 			G_CALLBACK (drop_cb), totem);
 	gtk_drag_dest_set (item, GTK_DEST_DEFAULT_ALL,
 			target_table, 1, GDK_ACTION_COPY);
-#if 0
-	g_signal_connect (GTK_OBJECT (totem->treeview), "drag_data_received",
-			G_CALLBACK (drop_cb), totem);
-	gtk_drag_dest_set (totem->treeview, GTK_DEST_DEFAULT_ALL,
-			target_table, 1, GDK_ACTION_COPY);
-#endif
+
 	/* Exit */
-	g_signal_connect (GTK_OBJECT (totem->win), "delete_event",
+	g_signal_connect (G_OBJECT (totem->win), "delete_event",
 			G_CALLBACK (action_exit), totem);
-	g_signal_connect (GTK_OBJECT (totem->win), "destroy_event",
+	g_signal_connect (G_OBJECT (totem->win), "destroy_event",
 			G_CALLBACK (action_exit), totem);
 
 	/* Popup */
 	item = glade_xml_get_widget (totem->xml, "fs_exit1");
-	g_signal_connect (GTK_OBJECT (item), "clicked",
+	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (on_fs_exit1_activate), totem);
 
 	/* Connect the keys */
 	gtk_widget_add_events (totem->win, GDK_KEY_RELEASE_MASK);
-	g_signal_connect (GTK_OBJECT(totem->win), "key_press_event",
+	g_signal_connect (G_OBJECT(totem->win), "key_press_event",
 			G_CALLBACK(on_window_key_press_event), totem);
 
 	/* Sliders */
-	g_signal_connect (GTK_OBJECT (totem->seek), "value-changed",
+	g_signal_connect (G_OBJECT (totem->seek), "value-changed",
 			G_CALLBACK (seek_cb), totem);
-	g_signal_connect (GTK_OBJECT (totem->volume), "value-changed",
+	g_signal_connect (G_OBJECT (totem->volume), "value-changed",
 			G_CALLBACK (vol_cb), totem);
 	gtk_timeout_add (500, update_sliders_cb, totem);
 
@@ -1009,7 +1009,7 @@ totem_callback_connect (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->playlist),
 			"response", G_CALLBACK (toggle_playlist_from_playlist),
 			(gpointer) totem);
-	g_signal_connect (GTK_OBJECT (totem->playlist),
+	g_signal_connect (G_OBJECT (totem->playlist),
 			"delete-event",
 			G_CALLBACK (toggle_playlist_from_playlist),
 			(gpointer) totem);

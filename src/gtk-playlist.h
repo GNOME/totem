@@ -52,6 +52,9 @@ GtkWidget *gtk_playlist_new      (GtkWindow *parent);
 
 /* The application is responsible for checking that the mrl is correct */
 gboolean   gtk_playlist_add_mrl  (GtkPlaylist *playlist, const char *mrl);
+
+/* gtk_playlist_clear doesn't emit the current_removed signal, even if it does
+ * because the caller should know what to do after it's done with clearing */
 void       gtk_playlist_clear (GtkPlaylist *playlist);
 char      *gtk_playlist_get_current_mrl (GtkPlaylist *playlist);
 

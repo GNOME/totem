@@ -26,6 +26,7 @@
 #include <gnome.h>
 #include <eel/eel-gtk-macros.h>
 #include <glade/glade.h>
+#include <libgnomevfs/gnome-vfs.h>
 
 #include "debug.h"
 
@@ -60,10 +61,14 @@ enum {
 
 static int gtk_playlist_table_signals[LAST_SIGNAL] = { 0 };
 
+static const GtkTargetEntry target_table[] = {
+	{ "text/uri-list", 0, 0 },
+};
+
 static void gtk_playlist_class_init (GtkPlaylistClass *class);
 static void gtk_playlist_init       (GtkPlaylist      *label);
 
-static void init_treeview (GtkWidget *treeview);
+static void init_treeview (GtkWidget *treeview, GtkPlaylist *playlist);
 
 EEL_CLASS_BOILERPLATE (GtkPlaylist, gtk_playlist, gtk_dialog_get_type ());
 
@@ -84,6 +89,73 @@ gtk_tree_model_iter_previous (GtkTreeModel *tree_model, GtkTreeIter *iter)
 	gtk_tree_path_free (path);
 	return ret;
 }
+
+static void
+drop_cb (GtkWidget     *widget,
+         GdkDragContext     *context, 
+	 gint                x,
+	 gint                y,
+	 GtkSelectionData   *data, 
+	 guint               info, 
+	 guint               time, 
+	 gpointer            user_data)
+{
+	GtkPlaylist *playlist = GTK_PLAYLIST (user_data);
+	GList *list, *p, *file_list;
+	int i;
+
+	D("drop_cb");
+
+	list = gnome_vfs_uri_list_parse (data->data);
+
+	if (list == NULL) {
+		gtk_drag_finish (context, FALSE, FALSE, time);
+		return;
+	}
+
+	p = list;
+	file_list = NULL;
+
+	while (p != NULL)
+	{
+		file_list = g_list_prepend (file_list,
+				gnome_vfs_uri_to_string
+				((const GnomeVFSURI*)(p->data), 0));
+		p = p->next;
+	}
+
+	gnome_vfs_uri_list_free (list);
+	file_list = g_list_reverse (file_list);
+
+	if (file_list == NULL)
+	{
+		gtk_drag_finish (context, FALSE, FALSE, time);
+		return;
+	}
+
+	for (p = file_list; p != NULL; p = p->next) {
+		char *filename;
+
+		filename = g_filename_from_uri (p->data, NULL, NULL);
+		D("dropped filename: %s", filename);
+		if (filename != NULL &&
+				g_file_test (filename, G_FILE_TEST_IS_REGULAR
+					| G_FILE_TEST_EXISTS))
+		{
+			gtk_playlist_add_mrl (playlist, filename);
+		}
+		g_free (filename);
+		g_free (p->data);
+	}
+
+	g_list_free (file_list);
+	gtk_drag_finish (context, TRUE, FALSE, time);
+
+	g_signal_emit (G_OBJECT (playlist),
+			gtk_playlist_table_signals[CHANGED], 0,
+			NULL);
+}
+
 
 /* This function checks if the current item is NULL, and try to update it as the
  * first item of the playlist if so. It returns TRUE if there is a current
@@ -275,7 +347,7 @@ init_columns (GtkTreeView *treeview)
 }
 
 static void
-init_treeview (GtkWidget *treeview)
+init_treeview (GtkWidget *treeview, GtkPlaylist *playlist)
 {
 	GtkTreeModel *model;
 
@@ -296,6 +368,13 @@ init_treeview (GtkWidget *treeview)
 	gtk_tree_selection_set_mode (gtk_tree_view_get_selection
 			GTK_TREE_VIEW ((treeview)),
 			GTK_SELECTION_MULTIPLE);
+
+	/* Drag'n'Drop */
+	g_signal_connect (G_OBJECT (treeview), "drag_data_received",
+			G_CALLBACK (drop_cb), playlist);
+	gtk_drag_dest_set (treeview, GTK_DEST_DEFAULT_ALL,
+			target_table, 1, GDK_ACTION_COPY);
+
 	gtk_widget_show (treeview);
 }
 
@@ -383,7 +462,7 @@ gtk_playlist_new (GtkWindow *parent)
 
 	playlist->_priv->treeview = glade_xml_get_widget
 		(playlist->_priv->xml, "treeview1");
-	init_treeview (playlist->_priv->treeview);
+	init_treeview (playlist->_priv->treeview, playlist);
 	playlist->_priv->model = gtk_tree_view_get_model
 		(GTK_TREE_VIEW (playlist->_priv->treeview));
 
