@@ -1450,6 +1450,11 @@ totem_action_handle_key (Totem *totem, guint keyval)
 	case GDK_F:
 		totem_action_fullscreen_toggle (totem);
 		break;
+	case GDK_O:
+	case GDK_o:
+		totem_action_fullscreen (totem, FALSE);
+		on_open1_activate (NULL, (gpointer) totem);
+		break;
 	case GDK_Left:
 		totem_action_seek_relative (totem, SEEK_BACKWARD_OFFSET);
 		break;
