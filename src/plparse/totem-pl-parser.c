@@ -1201,7 +1201,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	gpointer data = NULL;
 	gboolean ret = FALSE;
 
-	if (parser->priv->recurse_level > 3)
+	if (parser->priv->recurse_level > 4)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	parser->priv->recurse_level++;
@@ -1250,7 +1250,7 @@ totem_pl_parser_parse (TotemPlParser *parser, const char *url,
 	g_return_val_if_fail (TOTEM_IS_PL_PARSER (parser), TOTEM_PL_PARSER_RESULT_UNHANDLED);
 	g_return_val_if_fail (url != NULL, TOTEM_PL_PARSER_RESULT_UNHANDLED);
 
-	parser->priv->recurse_level = 1;
+	parser->priv->recurse_level = 0;
 	parser->priv->fallback = fallback;
 	return totem_pl_parser_parse_internal (parser, url);
 }

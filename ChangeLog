@@ -1,5 +1,13 @@
 2004-09-15  Bastien Nocera  <hadess@hadess.net>
 
+	* NEWS: upd
+	* src/totem-pl-parser.c: (totem_pl_parser_parse_internal),
+	(totem_pl_parser_parse): We now can recurse into 3 levels of
+	subdirectories (enough for drag'n'dropping, say, an "iTunes Music"
+	directory) (Closes: #149173)
+
+2004-09-15  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_action_remote): fix addition of optical media
 	URLs via the remote interface (Patch by Frederic Crozat
 	<fcrozat@mandrakesoft.com>)

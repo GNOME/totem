@@ -1,5 +1,19 @@
 New features and significant updates in version...
 
+0.99.16:
+* Fix addition of optical media via the remote interface
+* Fix Matroska and Real Audio file-types associations
+* Fix KDE detection for newer KDE versions
+* Work-around a bug in xine-lib where it wouldn't send the right error
+  message if trying to play a DVD without libdvdcss installed
+* Make --debug actually work for the instance that's being started
+* Make "totem --quit" just exit if there's no running Totem instance
+* Make Ctrl+A select all the files in the playlist window
+* Fix error message when the codec doesn't have a nice name
+* Fix properties windows when the file doesn't have audio or video
+* Fix parsing of ASX playlists for GNOME 2.4 and above
+* Recurse deeper into sub-directories
+
 0.99.15.1:
 * And again
 
