@@ -1791,6 +1791,14 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 	} else if (strcmp ("application/x-gnome-app-info", mimetype) == 0) {
 		g_free (data);
 		return gtk_playlist_add_desktop (playlist, mrl);
+	} else if (strcmp ("text/plain", mimetype) == 0) {
+		g_free (data);
+		/* Work around NSV streaming filter from Nullsoft */
+		if (strcmp (mrl + strlen (mrl) - 4, ".nsv") == 0)
+			return gtk_playlist_add_one_mrl (playlist,
+					mrl, display_name);
+		else
+			return FALSE;
 	}
 
 	g_free (data);
