@@ -209,6 +209,14 @@ else
        AC_MSG_RESULT(n334)
 fi
 
+AC_MSG_CHECKING(for bad taste in TV series)
+if test "`whoami`x" = "mickex" ; then
+       AC_MSG_RESULT(oh my god yes)
+else
+       AC_MSG_RESULT(pheew nope)
+fi
+
+
 _system_is_x86="no"
 AC_CHECK_HEADER( asm/vm86.h, _system_is_x86="yes" )
 if `test "x$_system_is_x86" = "xyes" && test "x$CURL_CONFIG" != "xno"` ; then
