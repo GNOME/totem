@@ -1,3 +1,9 @@
+2003-01-29  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-xine.c: (gtk_xine_get_current_frame): really fix the
+	screenshot aspect bug (it only worked because the test video was
+	square, haha) (Closes: #104605)
+
 2003-01-28  Bastien Nocera  <hadess@hadess.net>
 
 	* src/gtk-xine.c: (gtk_xine_get_current_frame): fix screenshot's aspect

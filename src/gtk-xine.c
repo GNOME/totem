@@ -2094,9 +2094,15 @@ gtk_xine_get_current_frame (GtkXine *gtx)
 	{
 		GdkPixbuf *tmp;
 
-		tmp = gdk_pixbuf_scale_simple (pixbuf,
-				(int) (width * ratio / 10000), height,
-				GDK_INTERP_BILINEAR);
+		if (ratio > 1.0)
+			tmp = gdk_pixbuf_scale_simple (pixbuf,
+					(int) (height * ratio / 10000), height,
+					GDK_INTERP_BILINEAR);
+		else
+			tmp = gdk_pixbuf_scale_simple (pixbuf,
+					width, (int) (width * ratio / 10000),
+					GDK_INTERP_BILINEAR);
+
 		gdk_pixbuf_unref (pixbuf);
 
 		return tmp;
