@@ -268,7 +268,8 @@ dest_size_cb (void *gtx_gen,
 {
 	GtkXine *gtx = (GtkXine *) gtx_gen;
 
-	if (gtx->priv->fullscreen_mode) {
+	if (gtx->priv->fullscreen_mode)
+	{
 		*dest_width = gtx->priv->fullscreen_width;
 		*dest_height = gtx->priv->fullscreen_height;
 	} else {
@@ -289,7 +290,9 @@ frame_output_cb (void *gtx_gen,
 	*dest_y = 0;
 	*win_x = gtx->priv->xpos;
 	*win_y = gtx->priv->ypos;
-	if (gtx->priv->fullscreen_mode) {
+
+	if (gtx->priv->fullscreen_mode)
+	{
 		*dest_width = gtx->priv->fullscreen_width;
 		*dest_height = gtx->priv->fullscreen_height;
 	} else {
@@ -299,7 +302,7 @@ frame_output_cb (void *gtx_gen,
 }
 
 static vo_driver_t *
-load_video_out_driver (GtkXine * gtx)
+load_video_out_driver (GtkXine *gtx)
 {
 	double res_h, res_v;
 	x11_visual_t vis;
@@ -336,6 +339,7 @@ load_video_out_driver (GtkXine * gtx)
 						"video.driver", "auto",
 						"video driver to use",
 						NULL, NULL, NULL);
+
 	if (!strcmp (video_driver_id, "auto")) {
 
 		vo_driver =
@@ -344,7 +348,7 @@ load_video_out_driver (GtkXine * gtx)
 						   VISUAL_TYPE_X11,
 						   (void *) &vis);
 		if (vo_driver) {
-			g_free (driver_ids);
+			g_strfreev (driver_ids);
 			return vo_driver;
 		}
 	}
@@ -363,11 +367,13 @@ load_video_out_driver (GtkXine * gtx)
 			gtx->priv->config->update_string
 				(gtx->priv->config, "video.driver",
 				 video_driver_id);
+			g_strfreev (driver_ids);
 			return vo_driver;
 		}
 		i++;
 	}
 
+	g_strfreev (driver_ids);
 	return NULL;
 }
 
@@ -444,9 +450,11 @@ xine_thread (void *gtx_gen)
 		}
 
 		if (event.type == gtx->priv->completion_event)
+		{
 			gtx->priv->vo_driver->gui_data_exchange
 				(gtx->priv->vo_driver,
 				 GUI_DATA_EX_COMPLETION_EVENT, &event);
+		}
 	}
 
 	pthread_exit (NULL);
@@ -457,9 +465,8 @@ static gboolean
 configure_cb (GtkWidget * widget,
 	      GdkEventConfigure * event, gpointer user_data)
 {
-	GtkXine *gtx = (GtkXine *) widget;
+	GtkXine *gtx = (GtkXine *) user_data;
 
-	D ("CONFIGURE");
 	gtx->priv->xpos = event->x;
 	gtx->priv->ypos = event->y;
 
@@ -553,7 +560,7 @@ gtk_xine_realize (GtkWidget * widget)
 	/* load audio, video drivers */
 	gtx->priv->vo_driver = load_video_out_driver (gtx);
 
-	if (gtx->priv->vo_driver == NULL)
+	if (!gtx->priv->vo_driver)
 	{
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[ERROR], 0,
@@ -773,10 +780,6 @@ gtk_xine_size_allocate (GtkWidget * widget, GtkAllocation * allocation)
 
 	g_return_if_fail (widget != NULL);
 	g_return_if_fail (GTK_IS_XINE (widget));
-
-	D ("ALLOCATE x: %d y: %d w: %d h: %d", allocation->x,
-			allocation->y, allocation->width,
-			allocation->height);
 
 	gtx = GTK_XINE (widget);
 
