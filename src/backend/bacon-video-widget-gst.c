@@ -378,19 +378,20 @@ bacon_video_widget_finalize (GObject *object)
 {
 	BaconVideoWidget *bvw = (BaconVideoWidget *) object;
 
-	if ( GST_IS_PLAY (bvw->priv->play) )
+	if (bvw->priv->play != NULL && GST_IS_PLAY (bvw->priv->play))
 		gst_play_set_state (bvw->priv->play, GST_STATE_READY);
-	
-	if (GST_IS_VIDEO_WIDGET(bvw->priv->vw)) {
+
+	if (bvw->priv->vw != NULL && GST_IS_VIDEO_WIDGET(bvw->priv->vw))
+	{
 		gtk_widget_destroy (GTK_WIDGET(bvw->priv->vw));
 		bvw->priv->vw = NULL;
 	}
-	
-	if (bvw->priv->play) {
+
+	if (bvw->priv->play)
+	{
 		g_object_unref (bvw->priv->play);
 		bvw->priv->play = NULL;
 	}
-	//FIXME
 }
 
 static void

@@ -1,5 +1,11 @@
 2003-04-21  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: debug is disabled by default
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_finalize): don't
+	crash on exit anymore (Closes: #111300)
+
+2003-04-21  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-gst.c: (got_time_tick): don't do divisions by
 	zero (Closes: #111295)
 
