@@ -227,7 +227,6 @@ EXTRA_DIST =	bacon-video-widget-xine.c \
 		vanity.c \
 		totem-mozilla-viewer.c \
 		totem-mozilla-plugin.cpp \
-		totem-mozilla-protocol.h \
 		totem_mozilla_scripting.idl
 
 ## libtotem-plparser.la
