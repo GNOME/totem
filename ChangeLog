@@ -1,3 +1,9 @@
+2004-02-18  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-pl-parser.c: (totem_pl_parser_add_directory):
+	Looks like g_build_filename changed behaviour when dealing with
+	URIs (as opposed to local paths) (Closes: #134616)
+
 2004-02-16  Arafat Medini  <lumina@silverpen.de>
 
 	* confiigure.in: Added Arabic locale "ar" to ALL_LINGUAS.
