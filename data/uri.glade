@@ -5,6 +5,7 @@
 <requires lib="gnome"/>
 
 <widget class="GtkDialog" id="open_uri_dialog">
+  <property name="border_width">5</property>
   <property name="title" translatable="yes">Open from URI</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
@@ -61,7 +62,7 @@
 	  <property name="border_width">5</property>
 	  <property name="visible">True</property>
 	  <property name="homogeneous">False</property>
-	  <property name="spacing">12</property>
+	  <property name="spacing">6</property>
 
 	  <child>
 	    <widget class="GtkLabel" id="label1">

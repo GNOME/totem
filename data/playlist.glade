@@ -5,6 +5,7 @@
 <requires lib="gnome"/>
 
 <widget class="GtkDialog" id="dialog1">
+  <property name="border_width">5</property>
   <property name="title" translatable="yes">Playlist</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
@@ -284,7 +285,7 @@
 	    <widget class="GtkCheckButton" id="repeat_button">
 	      <property name="visible">True</property>
 	      <property name="can_focus">True</property>
-	      <property name="label" translatable="yes">Repeat Mode</property>
+	      <property name="label" translatable="yes">Repeat _mode</property>
 	      <property name="use_underline">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="active">False</property>
