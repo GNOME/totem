@@ -303,7 +303,7 @@ int main (int argc, char *argv[])
 	int i, length, size;
 	char *input, *output;
 
-	if (strcmp (argv[1], "-h") == 0 ||
+	if (argc <= 2 || strcmp (argv[1], "-h") == 0 ||
 	    strcmp (argv[1], "--help") == 0) {
 		g_print ("Usage: %s [-s <size>] <input> <output> [backend options]\n", argv[0]);
 		return -1;
