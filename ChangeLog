@@ -1,5 +1,13 @@
 2003-09-22  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (totem_action_add_recent),
+	(totem_add_cd_track_name), (totem_action_open_files):
+	fix memleaks when using "dvd:" or "cd:" on the command-line,
+	get the title of all the tracks when reading an Audio CD
+	(Closes: #122821)
+
+2003-09-22  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.glade: fix mnemonic for the audio drop-down
 	* src/bacon-video-widget-xine.c: fix compile-time warning
 

@@ -1442,6 +1442,31 @@ vol_cb (GtkWidget *widget, Totem *totem)
 	}
 }
 
+static void
+totem_action_add_recent (Totem *totem, const char *filename)
+{
+	EggRecentItem *item;
+
+	if (strstr (filename, "file:///") == NULL)
+		return;
+
+	item = egg_recent_item_new_from_uri (filename);
+	egg_recent_item_add_group (item, "Totem");
+	egg_recent_model_add_full (totem->recent_model, item);
+}
+
+static void
+totem_add_cd_track_name (Totem *totem, const char *filename)
+{
+	char *name;
+
+	bacon_video_widget_open (totem->bvw, filename, NULL);
+	name = totem_get_nice_name_for_stream (totem);
+	bacon_video_widget_close (totem->bvw);
+	totem_playlist_add_mrl (totem->playlist, filename, name);
+	g_free (name);
+}
+
 gboolean
 totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 {
@@ -1480,28 +1505,19 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 				totem_playlist_clear (totem->playlist);
 				cleared = TRUE;
 			}
+
 			if (strcmp (list[i], "dvd:") == 0)
 			{
 				totem_action_load_media (totem, MEDIA_DVD);
-				continue;
 			} else if (strcmp (list[i], "vcd:") == 0) {
 				totem_action_load_media (totem, MEDIA_VCD);
-				continue;
 			} else if (strcmp (list[i], "cd:") == 0) {
 				totem_action_load_media (totem, MEDIA_CDDA);
-				continue;
+			} else if (strstr (filename, "cdda:/") != NULL) {
+				totem_add_cd_track_name (totem, filename);
 			} else if (totem_playlist_add_mrl (totem->playlist,
-						filename, NULL) != FALSE)
-			{
-                                EggRecentItem *item;
-
-				if (strstr (filename, "file:///") == NULL)
-					continue;
-
-				item = egg_recent_item_new_from_uri (filename);
-				egg_recent_item_add_group (item, "Totem");
-				egg_recent_model_add_full
-					(totem->recent_model, item);
+						filename, NULL) != FALSE) {
+				totem_action_add_recent (totem, filename);
 			}
 		}
 
