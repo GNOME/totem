@@ -45,6 +45,9 @@
 #define SEEK_FORWARD_OFFSET 60000
 #define SEEK_BACKWARD_OFFSET -15000
 
+#define SEEK_FORWARD_SHORT_OFFSET 20000
+#define SEEK_BACKWARD_SHORT_OFFSET -20000
+
 struct Totem {
 	/* Control window */
 	GladeXML *xml;
@@ -1869,6 +1872,25 @@ totem_action_handle_key (Totem *totem, guint keyval)
 	return retval;
 }
 
+static gboolean
+totem_action_handle_scroll (Totem *totem, GdkScrollDirection direction)
+{
+	gboolean retval = TRUE;
+
+	switch (direction) {
+		case GDK_SCROLL_UP:
+			totem_action_seek_relative (totem, SEEK_FORWARD_SHORT_OFFSET);
+			break;
+		case GDK_SCROLL_DOWN:
+			totem_action_seek_relative (totem, SEEK_BACKWARD_SHORT_OFFSET);
+			break;
+		default:
+			retval = FALSE;
+	}
+			
+	return retval;
+}
+
 static int
 on_window_key_press_event (GtkWidget *win, GdkEventKey *event,
 		                gpointer user_data)
@@ -1876,6 +1898,14 @@ on_window_key_press_event (GtkWidget *win, GdkEventKey *event,
 	Totem *totem = (Totem *) user_data;
 
 	return totem_action_handle_key (totem, event->keyval);
+}
+
+static int
+on_window_scroll_event (GtkWidget *win, GdkEventScroll *event,
+				gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+	return totem_action_handle_scroll (totem, event->direction);
 }
 
 static void
@@ -2073,6 +2103,11 @@ totem_callback_connect (Totem *totem)
 	gtk_widget_add_events (totem->win, GDK_KEY_PRESS_MASK);
 	g_signal_connect (G_OBJECT(totem->win), "key_press_event",
 			G_CALLBACK (on_window_key_press_event), totem);
+
+	/* Connect the mouse wheel */
+	gtk_widget_add_events (totem->win, GDK_SCROLL_MASK);
+	g_signal_connect (G_OBJECT(totem->win), "scroll_event",
+			G_CALLBACK (on_window_scroll_event), totem);
 
 	/* Sliders */
 	g_signal_connect (G_OBJECT (totem->seek), "value-changed",
