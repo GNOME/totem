@@ -3686,6 +3686,19 @@ process_options (Totem *totem, int *argc, char ***argv)
 		} else if (strcmp (args[i], "--fullscreen") == 0) {
 			totem_action_fullscreen_toggle (totem);
 			options++;
+		} else if (strcmp (args[i], "--toggle-controls") == 0) {
+			if (totem->controls_visibility != TOTEM_CONTROLS_FULLSCREEN)
+			{
+				GtkCheckMenuItem *item;
+				gboolean value;
+
+				item = GTK_CHECK_MENU_ITEM
+					(glade_xml_get_widget
+					 (totem->xml,
+					  "tmw_show_controls_menu_item"));
+				value = gtk_check_menu_item_get_active (item);
+				gtk_check_menu_item_set_active (item, !value);
+			}
 		} else if (g_str_has_prefix (args[i], "--") != FALSE) {
 			printf (_("Option '%s' is unknown and was ignored\n"),
 					args[i]);
