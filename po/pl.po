@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 15:49+0200\n"
+"POT-Creation-Date: 2004-04-16 15:53+0200\n"
 "PO-Revision-Date: 2003-07-28 02:35+0100\n"
 "Last-Translator: Gnome PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
@@ -1002,7 +1002,7 @@ msgstr ""
 "Nie można załadować sterownika dźwięku \"%s\"\n"
 "Sprawdź, czy urządzenie nie jest zajęte."
 
-#: src/bacon-video-widget-xine.c:1130 src/bacon-video-widget-xine.c:1521
+#: src/bacon-video-widget-xine.c:1130 src/bacon-video-widget-xine.c:1545
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -1064,27 +1064,35 @@ msgid "The audio device is busy. Is another application using it?"
 msgstr ""
 "Urządzenie dźwiękowe jest zajęte. Czy nie korzysta z niego inna aplikacja?"
 
-#: src/bacon-video-widget-xine.c:1360
+#: src/bacon-video-widget-xine.c:1274
+msgid "You are not allowed to open this file."
+msgstr "Nie masz uprawnień do odczytu tego pliku."
+
+#: src/bacon-video-widget-xine.c:1276
+msgid "The server refused access to this file or stream."
+msgstr "Serwer odmówił prawa dostępu do tego pliku lub strumienia."
+
+#: src/bacon-video-widget-xine.c:1384
 msgid "There is no plugin to handle this movie"
 msgstr "Brak wtyczki obsługującej ten film"
 
-#: src/bacon-video-widget-xine.c:1364
+#: src/bacon-video-widget-xine.c:1388
 msgid "This movie is broken and can not be played further"
 msgstr "Film jest uszkodzony i jego dalsze odtwarzanie jest niemożliwe"
 
-#: src/bacon-video-widget-xine.c:1368
+#: src/bacon-video-widget-xine.c:1392
 msgid "This location is not a valid one"
 msgstr "Położenie nie jest poprawne"
 
-#: src/bacon-video-widget-xine.c:1372
+#: src/bacon-video-widget-xine.c:1396
 msgid "This movie could not be opened"
 msgstr "Nie można otworzyć filmu"
 
-#: src/bacon-video-widget-xine.c:1375
+#: src/bacon-video-widget-xine.c:1399
 msgid "Generic Error"
 msgstr "Zwykły błąd"
 
-#: src/bacon-video-widget-xine.c:1819
+#: src/bacon-video-widget-xine.c:1843
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1093,19 +1101,19 @@ msgstr ""
 "Kodek wideo \"%s\" nie jest obsługiwany. Aby można było odtwarzać niektóre "
 "rodzaje filmów, może być konieczna instalacja dodatkowych wtyczek."
 
-#: src/bacon-video-widget-xine.c:1838
+#: src/bacon-video-widget-xine.c:1862
 msgid "This is an audio-only file, and there is no audio output available"
 msgstr "To jest plik dźwiękowy, ale nie jest dostępne wyjście dźwięku"
 
-#: src/bacon-video-widget-xine.c:3303
+#: src/bacon-video-widget-xine.c:3327
 msgid "Movie is not playing"
 msgstr "Film nie jest odtwarzany"
 
-#: src/bacon-video-widget-xine.c:3311
+#: src/bacon-video-widget-xine.c:3335
 msgid "No video to capture"
 msgstr "Brak obrazu do przechwycenia"
 
-#: src/bacon-video-widget-xine.c:3318
+#: src/bacon-video-widget-xine.c:3342
 msgid "Video codec is not handled"
 msgstr "Kodek wideo nie jest obsługiwany"
 
