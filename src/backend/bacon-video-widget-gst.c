@@ -3034,6 +3034,23 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
   return pixbuf;
 }
 
+static void
+cb_gconf (GConfClient * client,
+	  guint connection_id,
+	  GConfEntry * entry,
+	  gpointer data)
+{
+  BaconVideoWidget *bvw = data;
+
+  if (!strcmp (entry->key, "/apps/totem/network-buffer-threshold")) {
+    g_object_set (G_OBJECT (bvw->priv->play), "queue-threshold",
+        (guint64) GST_SECOND * gconf_value_get_float (entry->value), NULL);
+  } else if (!strcmp (entry->key, "/apps/totem/buffer-size")) {
+    g_object_set (G_OBJECT (bvw->priv->play), "queue-threshold",
+        (guint64) GST_SECOND * gconf_value_get_float (entry->value), NULL);
+  }
+}
+
 /* =========================================== */
 /*                                             */
 /*          Widget typing & Creation           */
@@ -3113,6 +3130,8 @@ bacon_video_widget_new (int width, int height,
 
   /* gconf setting in backend */
   bvw->priv->gc = gconf_client_get_default ();
+  gconf_client_notify_add (bvw->priv->gc, "/apps/totem",
+      cb_gconf, bvw, NULL, NULL);
 
   if (type == BVW_USE_TYPE_VIDEO || type == BVW_USE_TYPE_AUDIO) {
     audio_sink = gst_gconf_get_default_audio_sink ();
@@ -3318,6 +3337,20 @@ bacon_video_widget_new (int width, int height,
       GCONF_PREFIX"/connection_speed", NULL);
   if (confvalue != NULL) {
     bvw->priv->connection_speed = gconf_value_get_int (confvalue);
+  }
+
+  /* FIXME: document/viewer/controller model should be used here */
+  confvalue = gconf_client_get_without_default (bvw->priv->gc,
+      GCONF_PREFIX"/buffer-size", NULL);
+  if (confvalue != NULL) {
+    g_object_set (G_OBJECT (bvw->priv->play), "queue-size",
+        (guint64) GST_SECOND * gconf_value_get_float (confvalue), NULL);
+  }
+  confvalue = gconf_client_get_without_default (bvw->priv->gc,
+      GCONF_PREFIX"/network-buffer-threshold", NULL);
+  if (confvalue != NULL) {
+    g_object_set (G_OBJECT (bvw->priv->play), "queue-threshold",
+        (guint64) GST_SECOND * gconf_value_get_float (confvalue), NULL);
   }
 
   return GTK_WIDGET (bvw);

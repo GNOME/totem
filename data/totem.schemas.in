@@ -228,5 +228,29 @@
 	</locale>
       </schema>
 
+      <schema>
+        <key>/schemas/apps/totem/network-buffer-threshold</key>
+        <applyto>/apps/totem/network-buffer-threshold</applyto>
+        <owner>totem</owner>
+        <type>float</type>
+        <default>2</default>
+        <locale name="C">
+          <short>Network buffering threshold</short>
+          <long>Amount of data to buffer for network streams before starting to display the stream (in seconds)</long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/totem/buffer-size</key>
+        <applyto>/apps/totem/buffer-size</applyto>
+        <owner>totem</owner>
+        <type>float</type>
+        <default>3</default>
+        <locale name="C">
+          <short>Buffer size</short>
+          <long>Maximum amount of data to decode ahead of display (in seconds)</long>
+        </locale>
+      </schema>
+
   </schemalist>
 </gconfschemafile>
