@@ -1,5 +1,18 @@
 2003-10-07  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_class_init):
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_class_init),
+	(bacon_video_widget_idle_signal), (xine_event):
+	* src/bacon-video-widget.h:
+	* src/totem.c: (on_speed_warning_event), (video_widget_create):
+	added support for XINE_EVENT_DROPPED_FRAMES event on the xine-side,
+	add the "speed-warning" signal to BaconVideoWidget, still need
+	to implement the GUI on the Totem side
+	See for details:
+	http://sourceforge.net/mailarchive/forum.php?thread_id=2753813&forum_id=7131
+
+2003-10-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c: (setup_config),
 	(bacon_video_widget_tick_send), (bacon_video_widget_play),
 	(bacon_video_widget_pause): fix a possible crash when setting the

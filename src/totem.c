@@ -1252,6 +1252,12 @@ on_error_event (BaconVideoWidget *bvw, char *message,
 }
 
 static void
+on_speed_warning_event (BaconVideoWidget *bvw, Totem *totem)
+{
+	g_message ("TBD: Implement speed warning");
+}
+
+static void
 on_buffering_event (BaconVideoWidget *bvw, int percentage, Totem *totem)
 {
 	char *msg;
@@ -3421,6 +3427,10 @@ video_widget_create (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->bvw),
 			"error",
 			G_CALLBACK (on_error_event),
+			totem);
+	g_signal_connect (G_OBJECT (totem->bvw),
+			"speed-warning",
+			G_CALLBACK (on_speed_warning_event),
 			totem);
 
 	/* Events for the widget video window as well */

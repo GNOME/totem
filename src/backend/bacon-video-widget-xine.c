@@ -66,6 +66,7 @@ enum {
 	TICK,
 	GOT_METADATA,
 	BUFFERING,
+	SPEED_WARNING,
 	LAST_SIGNAL,
 };
 
@@ -77,6 +78,7 @@ enum {
 	CHANNELS_CHANGE_ASYNC,
 	BUFFERING_ASYNC,
 	MESSAGE_ASYNC,
+	SPEED_WARNING_ASYNC,
 };
 
 typedef struct {
@@ -354,6 +356,15 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 				NULL, NULL,
 				g_cclosure_marshal_VOID__INT,
 				G_TYPE_NONE, 1, G_TYPE_INT);
+
+	bvw_table_signals[SPEED_WARNING] =
+		g_signal_new ("speed-warning",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (BaconVideoWidgetClass, speed_warning),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__VOID,
+				G_TYPE_NONE, 0);
 }
 
 static void
@@ -1086,6 +1097,11 @@ bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 				bvw_table_signals[ERROR],
 				0, data->msg, TRUE);
 		break;
+	case SPEED_WARNING_ASYNC:
+		g_signal_emit (G_OBJECT (bvw),
+				bvw_table_signals[SPEED_WARNING],
+				0, NULL);
+		break;
 	default:
 		g_assert_not_reached ();
 	}
@@ -1208,6 +1224,12 @@ xine_event (void *user_data, const xine_event_t *event)
 		break;
 	case XINE_EVENT_UI_MESSAGE:
 		xine_event_message (bvw, (xine_ui_message_data_t *)event->data);
+		break;
+	case XINE_EVENT_DROPPED_FRAMES:
+		data = g_new0 (signal_data, 1);
+		data->signal = SPEED_WARNING_ASYNC;
+		g_async_queue_push (bvw->priv->queue, data);
+		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
 		break;
 	}
 }

@@ -49,10 +49,10 @@ typedef struct {
 	void (*got_metadata) (GtkWidget *bvw);
 	void (*title_change) (GtkWidget *bvw, const char *title);
 	void (*channels_change) (GtkWidget *bvw);
-	void (*tick) (GtkWidget *bvw, gint64 current_time,
-			gint64 stream_length,
+	void (*tick) (GtkWidget *bvw, gint64 current_time, gint64 stream_length,
 			float current_position);
 	void (*buffering) (GtkWidget *bvw, guint progress);
+	void (*speed_warning) (GtkWidget *bvw);
 } BaconVideoWidgetClass;
 
 GType bacon_video_widget_get_type                (void);
