@@ -360,33 +360,6 @@ play_pause_set_label (Totem *totem, TotemStates state)
 	g_free (image_path);
 }
 
-static void
-volume_set_image (Totem *totem, int vol)
-{
-	GtkWidget *image;
-	char *filename, *path;
-
-	vol = CLAMP (vol, 0, 100);
-	if (vol == 0)
-		filename = "totem/rhythmbox-volume-zero.png";
-	else if (vol <= 100 / 3)
-		filename = "totem/rhythmbox-volume-min.png";
-	else if (vol <= 2 * 100 / 3)
-		filename = "totem/rhythmbox-volume-medium.png";
-	else
-		filename = "totem/rhythmbox-volume-max.png";
-
-	path = gnome_program_locate_file (NULL,
-			GNOME_FILE_DOMAIN_APP_DATADIR,
-			filename,
-			FALSE, NULL);
-	image = glade_xml_get_widget (totem->xml, "tmw_volume_image");
-	gtk_image_set_from_file (GTK_IMAGE (image), path);
-	image = glade_xml_get_widget (totem->xml, "tcw_volume_image");
-	gtk_image_set_from_file (GTK_IMAGE (image), path);
-	g_free (path);
-}
-
 void
 totem_action_play (Totem *totem, int offset)
 {
@@ -965,7 +938,6 @@ totem_action_volume_relative (Totem *totem, int off_pct)
 
 	vol = bacon_video_widget_get_volume (totem->bvw);
 	bacon_video_widget_set_volume (totem->bvw, vol + off_pct);
-	volume_set_image (totem, vol + off_pct);
 }
 
 void
@@ -1369,7 +1341,6 @@ update_volume_sliders (Totem *totem)
 					(float) volume);
 			gtk_adjustment_set_value (totem->fs_voladj,
 					(float) volume);
-			volume_set_image (totem, volume);
 		}
 
 		totem->prev_volume = volume;
@@ -1445,7 +1416,6 @@ vol_cb (GtkWidget *widget, Totem *totem)
 
 		}
 
-		volume_set_image (totem, (gint) totem->voladj->value);
 		totem->vol_lock = FALSE;
 	}
 }
@@ -2201,6 +2171,18 @@ static void
 on_volume_down1_activate (GtkButton *button, Totem *totem)
 {
 	totem_action_volume_relative (totem, VOLUME_DOWN_OFFSET);
+}
+
+static void
+on_volume_mute_button (GtkButton *button, Totem *totem)
+{
+	totem_action_volume_relative (totem, -100);
+}
+
+static void
+on_volume_max_button (GtkButton *button, Totem *totem)
+{
+	totem_action_volume_relative (totem, 100);
 }
 
 void
@@ -3084,6 +3066,12 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "tmw_playlist_button");
 	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (on_playlist_button_toggled), totem);
+	item = glade_xml_get_widget (totem->xml, "tmw_volume_mute_button");
+	g_signal_connect (G_OBJECT (item), "clicked",
+			G_CALLBACK (on_volume_mute_button), totem);
+	item = glade_xml_get_widget (totem->xml, "tmw_volume_max_button");
+	g_signal_connect (G_OBJECT (item), "clicked",
+			G_CALLBACK (on_volume_max_button), totem);
 
 	/* Drag'n'Drop */
 	item = glade_xml_get_widget (totem->xml, "tmw_playlist_button");
@@ -3139,6 +3127,13 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (on_next_button_clicked), totem);
 	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (on_mouse_click_fullscreen), totem);
+
+	item = glade_xml_get_widget (totem->xml, "tcw_volume_mute_button");
+	g_signal_connect (G_OBJECT (item), "clicked",
+			G_CALLBACK (on_volume_mute_button), totem);
+	item = glade_xml_get_widget (totem->xml, "tcw_volume_max_button");
+	g_signal_connect (G_OBJECT (item), "clicked",
+			G_CALLBACK (on_volume_max_button), totem);
 
 	/* Control Popup Sliders */
 	g_signal_connect (G_OBJECT(totem->fs_seek), "button_press_event",
