@@ -4,7 +4,7 @@ figdir = figures
 docname = totem
 lang = es
 omffile = totem-es.omf
-entities = totem.xml legal.xml
+entities = legal.xml
 
 include $(top_srcdir)/xmldocs.make
 
