@@ -1,4 +1,4 @@
-noinst_PROGRAMS = bvw-test list_v4l test-parser
+noinst_PROGRAMS = bvw-test list_v4l test-parser disc-test
 
 if TOTEM_VANITY
 VANITY=vanity
@@ -100,7 +100,9 @@ totem_SOURCES = 					\
 	rb-ellipsizing-label.h		\
 	debug.h				\
 	totem-statusbar.c		\
-	totem-statusbar.h
+	totem-statusbar.h		\
+	totem-disc.c			\
+	totem-disc.h
 
 totem_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) $(RANDR_LIBS)  $(NVTV_LIBS)
 
@@ -137,6 +139,9 @@ vanity_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)  $(NVTV
 
 bvw_test_SOURCES = $(VIDEOWIDGET)  bvw-test.c
 bvw_test_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)  $(NVTV_LIBS)
+
+disc_test_SOURCES = disc-test.c totem-disc.c
+disc_test_LDADD = $(GTK_LIBS) $(EXTRA_GNOME_LIBS)
 
 list_v4l_SOURCES = list_v4l.c $(BACON_V4L_SELECTION)
 list_v4l_LDADD = $(GTK_LIBS)

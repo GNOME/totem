@@ -1,3 +1,31 @@
+2004-10-11  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* data/totem.glade:
+	  Remove open vcd/cdda/dvd entries, add open disc.
+	* po/POTFILES.in:
+	* src/Makefile.am:
+	  Add totem-disc.[ch].
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_open),
+	(bacon_video_widget_can_play), (bacon_video_widget_get_mrls),
+	(bacon_video_widget_get_metadata_string):
+	  Add discid for audio-CDs. Don't open the same media twice. This
+	  is sort of a hack for something that I don't quite understand
+	  in Totem just yet.
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_can_play),
+	(bacon_video_widget_get_mrls):
+	* src/bacon-video-widget.h:
+	* src/disc-test.c: (main):
+	* src/totem-disc.c: (get_device), (cd_cache_new),
+	(cd_cache_open_device), (cd_cache_open_mountpoint),
+	(cd_cache_free), (cd_cache_disc_is_cdda), (cd_cache_disc_is_vcd),
+	(cd_cache_disc_is_dvd), (cd_detect_type):
+	* src/totem-disc.h:
+	* src/totem.c: (totem_action_open_files_list),
+	(on_play_disc1_activate), (totem_action_remote),
+	(totem_callback_connect):
+	  Move MEDIA_* to MEDIA_TYPE_*, add DATA/ERROR, add disc content
+	  autodetection for the 'Open Disc' menu entry (VCD still TODO).
+
 2004-10-09  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_signal_idler),

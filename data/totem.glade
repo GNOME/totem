@@ -2465,59 +2465,15 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkImageMenuItem" id="tmw_play_dvd_menu_item">
+		    <widget class="GtkImageMenuItem" id="tmw_play_disc_menu_item">
 		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">Play a Video DVD</property>
-		      <property name="label" translatable="yes">Play _DVD</property>
+		      <property name="tooltip" translatable="yes">Play a Video or Audio Disc</property>
+		      <property name="label" translatable="yes">Play _Disc</property>
 		      <property name="use_underline">True</property>
-		      <signal name="activate" handler="on_play_dvd1_activate" last_modification_time="Fri, 09 Aug 2002 22:46:45 GMT"/>
+		      <signal name="activate" handler="on_play_disc1_activate" last_modification_time="Fri, 09 Aug 2002 22:46:45 GMT"/>
 
 		      <child internal-child="image">
 			<widget class="GtkImage" id="tmw_play_dvd_menu_item_image">
-			  <property name="visible">True</property>
-			  <property name="stock">gtk-cdrom</property>
-			  <property name="icon_size">1</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
-			</widget>
-		      </child>
-		    </widget>
-		  </child>
-
-		  <child>
-		    <widget class="GtkImageMenuItem" id="tmw_play_vcd_menu_item">
-		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">Play a Video CD</property>
-		      <property name="label" translatable="yes">Play _VCD</property>
-		      <property name="use_underline">True</property>
-		      <signal name="activate" handler="on_play_vcd1_activate" last_modification_time="Fri, 09 Aug 2002 22:46:45 GMT"/>
-
-		      <child internal-child="image">
-			<widget class="GtkImage" id="tmw_play_vcd_menu_item_image">
-			  <property name="visible">True</property>
-			  <property name="stock">gtk-cdrom</property>
-			  <property name="icon_size">1</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
-			</widget>
-		      </child>
-		    </widget>
-		  </child>
-
-		  <child>
-		    <widget class="GtkImageMenuItem" id="tmw_play_audio_cd_menu_item">
-		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">Play an audio CD</property>
-		      <property name="label" translatable="yes">Play _Audio CD</property>
-		      <property name="use_underline">True</property>
-		      <signal name="activate" handler="on_play_cd1_activate" last_modification_time="Sun, 19 Jan 2003 22:48:19 GMT"/>
-
-		      <child internal-child="image">
-			<widget class="GtkImage" id="tmw_play_audio_cd_menu_item_image">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-cdrom</property>
 			  <property name="icon_size">1</property>

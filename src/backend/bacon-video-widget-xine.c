@@ -2871,11 +2871,11 @@ bacon_video_widget_can_play (BaconVideoWidget *bvw, MediaType type)
 {
 	switch (type)
 	{
-	case MEDIA_DVD:
+	case MEDIA_TYPE_DVD:
 		return bvw->priv->can_dvd;
-	case MEDIA_VCD:
+	case MEDIA_TYPE_VCD:
 		return bvw->priv->can_vcd;
-	case MEDIA_CDDA:
+	case MEDIA_TYPE_CDDA:
 		return bvw->priv->can_cdda;
 	default:
 		return FALSE;
@@ -2892,11 +2892,11 @@ G_CONST_RETURN char
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
 	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
 
-	if (type == MEDIA_DVD)
+	if (type == MEDIA_TYPE_DVD)
 		plugin_id = "DVD";
-	else if (type == MEDIA_VCD)
+	else if (type == MEDIA_TYPE_VCD)
 		plugin_id = "VCD";
-	else if (type == MEDIA_CDDA)
+	else if (type == MEDIA_TYPE_CDDA)
 		plugin_id = "CD";
 	else
 		return NULL;

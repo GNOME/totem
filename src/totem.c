@@ -53,6 +53,7 @@
 #include "totem-private.h"
 #include "totem-preferences.h"
 #include "totem-stock-icons.h"
+#include "totem-disc.h"
 
 #include "debug.h"
 
@@ -1570,11 +1571,11 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 
 			if (strcmp (data, "dvd:") == 0)
 			{
-				totem_action_load_media (totem, MEDIA_DVD);
+				totem_action_load_media (totem, MEDIA_TYPE_DVD);
 			} else if (strcmp (data, "vcd:") == 0) {
-				totem_action_load_media (totem, MEDIA_VCD);
+				totem_action_load_media (totem, MEDIA_TYPE_VCD);
 			} else if (strcmp (data, "cd:") == 0) {
-				totem_action_load_media (totem, MEDIA_CDDA);
+				totem_action_load_media (totem, MEDIA_TYPE_CDDA);
 			} else if (strstr (filename, "cdda:/") != NULL) {
 				totem_add_cd_track_name (totem, filename);
 			} else if (totem_playlist_add_mrl (totem->playlist,
@@ -1721,21 +1722,34 @@ on_open_location1_activate (GtkButton *button, Totem *totem)
 }
 
 static void
-on_play_dvd1_activate (GtkButton *button, Totem *totem)
+on_play_disc1_activate (GtkButton *button, Totem *totem)
 {
-	totem_action_play_media (totem, MEDIA_DVD);
-}
+	MediaType type;
+	GError *error = NULL;
+	const gchar *device;
 
-static void
-on_play_vcd1_activate (GtkButton *button, Totem *totem)
-{
-	totem_action_play_media (totem, MEDIA_VCD);
-}
-
-static void
-on_play_cd1_activate (GtkButton *button, Totem *totem)
-{
-	totem_action_play_media (totem, MEDIA_CDDA);
+	device = gconf_client_get_string (totem->gc,
+					  GCONF_PREFIX"/mediadev", NULL);
+	type = cd_detect_type (device, &error);
+	switch (type) {
+		case MEDIA_TYPE_ERROR:
+			totem_action_error ("Failed to play Audio/Video Disc",
+					    error ? error->message : "Reason unknown",
+					    totem);
+			return;
+		case MEDIA_TYPE_DATA:
+			/* Maybe set default location to the mountpoint of
+			 * this device?... */
+			on_open1_activate (button, totem);
+			return;
+		case MEDIA_TYPE_DVD:
+		case MEDIA_TYPE_VCD:
+		case MEDIA_TYPE_CDDA:
+			totem_action_play_media (totem, type);
+			break;
+		default:
+			g_assert_not_reached ();
+	}
 }
 
 static void
@@ -2270,11 +2284,11 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 			totem_playlist_clear (totem->playlist);
 			if (g_str_has_prefix (url, "dvd:"))
 			{
-				totem_action_play_media (totem, MEDIA_DVD);
+				totem_action_play_media (totem, MEDIA_TYPE_DVD);
 			} else if (g_str_has_prefix (url, "vcd:") != FALSE) {
-				totem_action_play_media (totem, MEDIA_VCD);
+				totem_action_play_media (totem, MEDIA_TYPE_VCD);
 			} else if (g_str_has_prefix (url, "cd:") != FALSE) {
-				totem_action_play_media (totem, MEDIA_CDDA);
+				totem_action_play_media (totem, MEDIA_TYPE_CDDA);
 			} else if (g_str_has_prefix (url, "cdda:/") != FALSE) {
 				totem_add_cd_track_name (totem, url);
 			} else if (totem_playlist_add_mrl (totem->playlist,
@@ -3072,15 +3086,9 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "tmw_open_location_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_open_location1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_play_dvd_menu_item");
+	item = glade_xml_get_widget (totem->xml, "tmw_play_disc_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_play_dvd1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_play_vcd_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_play_vcd1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_play_audio_cd_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_play_cd1_activate), totem);
+			G_CALLBACK (on_play_disc1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "tmw_eject_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_eject1_activate), totem);

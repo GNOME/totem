@@ -1063,6 +1063,10 @@ bacon_video_widget_open (BaconVideoWidget * bvw, const gchar * mrl,
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
   g_return_val_if_fail (bvw->priv->mrl == NULL, FALSE);
 
+  /* hmm... */
+  if (bvw->priv->mrl && !strcmp (bvw->priv->mrl, mrl))
+    return TRUE;
+
   g_free (bvw->priv->mrl);
   bvw->priv->mrl = g_strdup (mrl);
 
@@ -1767,21 +1771,57 @@ bacon_video_widget_is_seekable (BaconVideoWidget * bvw)
 gboolean
 bacon_video_widget_can_play (BaconVideoWidget * bvw, MediaType type)
 {
+  gboolean res;
+
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  return FALSE;
+  switch (type) {
+    case MEDIA_TYPE_CDDA:
+      res = TRUE;
+      break;
+    case MEDIA_TYPE_DVD:
+    case MEDIA_TYPE_VCD:
+    default:
+      res = FALSE;
+      break;
+  }
+
+  return res;
 }
 
 G_CONST_RETURN gchar **
 bacon_video_widget_get_mrls (BaconVideoWidget * bvw, MediaType type)
 {
+  const gchar **mrls;
+
   g_return_val_if_fail (bvw != NULL, NULL);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), NULL);
 
-  return NULL;
+  switch (type) {
+    case MEDIA_TYPE_CDDA: {
+      static const gchar *uri[] = { "cdda://", NULL };
+      mrls = uri;
+      break;
+    }
+    case MEDIA_TYPE_VCD: {
+      static const gchar *uri[] = { "vcd://", NULL };
+      mrls = uri;
+      break;
+    }
+    case MEDIA_TYPE_DVD: {
+      static const gchar *uri[] = { "dvd://", NULL };
+      mrls = uri;
+      break;
+    }
+    default:
+      mrls = NULL;
+      break;
+  }
+
+  return mrls;
 }
 
 static void
@@ -1823,7 +1863,8 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
 				     GST_TAG_AUDIO_CODEC, &string);
       break;
     case BVW_INFO_CDINDEX:
-      res = FALSE;
+      res = gst_tag_list_get_string (bvw->priv->tagcache,
+				     "discid", &string);
       break;
     default:
       g_assert_not_reached ();

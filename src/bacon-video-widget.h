@@ -27,6 +27,9 @@
 #include <gtk/gtkbox.h>
 #include <popt.h>
 
+/* for optical disc enumeration type */
+#include "totem-disc.h"
+
 G_BEGIN_DECLS
 
 #define BACON_VIDEO_WIDGET(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), bacon_video_widget_get_type (), BaconVideoWidget))
@@ -151,13 +154,6 @@ void bacon_video_widget_set_auto_resize		 (BaconVideoWidget *bvw,
 void bacon_video_widget_set_connection_speed     (BaconVideoWidget *bvw,
 						  int speed);
 int bacon_video_widget_get_connection_speed      (BaconVideoWidget *bvw);
-
-/* Optical devices */
-typedef enum {
-	MEDIA_DVD,
-	MEDIA_VCD,
-	MEDIA_CDDA
-} MediaType;
 
 void bacon_video_widget_set_media_device         (BaconVideoWidget *bvw,
 						  const char *path);
