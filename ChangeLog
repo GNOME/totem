@@ -1,3 +1,19 @@
+2004-06-30  Colin Walters  <walters@verbum.org>
+
+	* src/totem-pl-parser.h (enum TotemPlParserResult): New.
+
+	* src/totem-pl-parser.c (totem_pl_parser_parse_internal): New
+	function, busted out from totem_pl_parser_parse.  Also return
+	TotemPlParserResult instead of a boolean, and check the
+	recurse level to be sure we're not going too recursive.
+	(totem_pl_parser_parse): Add new fallabck option, that says
+	whether or not to try just adding the url.
+	(totem_pl_parser_add_url_from_data): Delete; unified with
+	totem_pl_parser_parse_internal.
+
+	* src/totem-pl-parser.c: Change a bunch of internal functions
+	to call totem_pl_parser_parse_internal.
+
 2004-06-30  Bastien Nocera  <hadess@hadess.net>
 
 	* src/Makefile.am: upd

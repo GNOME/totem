@@ -1526,7 +1526,7 @@ totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl,
 {
 	g_return_val_if_fail (mrl != NULL, FALSE);
 
-	if (totem_pl_parser_parse (playlist->_priv->parser, mrl) == FALSE)
+	if (totem_pl_parser_parse (playlist->_priv->parser, mrl, TRUE) != TOTEM_PL_PARSER_RESULT_SUCCESS)
 		return totem_playlist_add_one_mrl (playlist, mrl, display_name);
 	return TRUE;
 }

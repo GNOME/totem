@@ -36,6 +36,13 @@ G_BEGIN_DECLS
 #define TOTEM_IS_PL_PARSER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TOTEM_TYPE_PL_PARSER))
 #define TOTEM_IS_PL_PARSER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), TOTEM_TYPE_PL_PARSER))
 
+typedef enum
+{
+	TOTEM_PL_PARSER_RESULT_UNHANDLED,
+	TOTEM_PL_PARSER_RESULT_ERROR,
+	TOTEM_PL_PARSER_RESULT_SUCCESS
+} TotemPlParserResult;
+
 typedef struct TotemPlParser	       TotemPlParser;
 typedef struct TotemPlParserClass      TotemPlParserClass;
 typedef struct TotemPlParserPrivate    TotemPlParserPrivate;
@@ -72,7 +79,7 @@ gboolean   totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
 				  const char *output, GError **error);
 void	   totem_pl_parser_add_ignored_scheme (TotemPlParser *parser,
 					       const char *scheme);
-gboolean   totem_pl_parser_parse (TotemPlParser *parser, const char *url);
+TotemPlParserResult totem_pl_parser_parse (TotemPlParser *parser, const char *url, gboolean fallback);
 
 TotemPlParser *totem_pl_parser_new (void);
 
