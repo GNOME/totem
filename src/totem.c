@@ -1477,7 +1477,7 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 
 	for ( ; list[i] != NULL; i++)
 	{
-		char *filename;
+		char *filename, *local_path;
 
 		/* Ignore relatives paths that start with "--", tough luck */
 		if (list[i][0] == '-' && list[i][1] == '-')
@@ -1485,6 +1485,12 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 
 		/* Get the subtitle part out for our tests */
 		filename = totem_create_full_path (list[i]);
+		local_path = gnome_vfs_get_local_path_from_uri (filename);
+		if (g_file_test (local_path, G_FILE_TEST_IS_DIR))
+		{
+			g_free (local_path);
+			continue;
+		}
 
 		if (g_file_test (filename, G_FILE_TEST_IS_REGULAR)
 				|| strstr (filename, "#") != NULL
@@ -1552,29 +1558,41 @@ on_open1_activate (GtkButton *button, Totem *totem)
 		g_free (path);
 		path = NULL;
 	}
-	response = gtk_dialog_run (GTK_DIALOG (fs));
-	gtk_widget_hide (fs);
 
-	if (response == GTK_RESPONSE_OK)
+	while (1)
 	{
-		char **filenames, *mrl;
-
-		filenames = gtk_file_selection_get_selections
-			(GTK_FILE_SELECTION (fs));
-		totem_action_open_files (totem, filenames, FALSE);
-		if (filenames[0] != NULL)
+		response = gtk_dialog_run (GTK_DIALOG (fs));
+		if (response == GTK_RESPONSE_OK)
 		{
-			char *tmp;
+			char **filenames, *mrl;
+			gboolean playlist_modified;
 
-			tmp = g_path_get_dirname (filenames[0]);
-			path = g_strconcat (tmp, G_DIR_SEPARATOR_S, NULL);
-			g_free (tmp);
+			filenames = gtk_file_selection_get_selections
+					(GTK_FILE_SELECTION (fs));
+			playlist_modified = totem_action_open_files (totem, filenames, FALSE);
+			if (playlist_modified == FALSE)
+			{
+				g_strfreev (filenames);
+				continue;
+			}
+		/* Hide the selection widget only if playlist is modified */
+			gtk_widget_hide (fs);
+
+			if (filenames[0] != NULL)
+			{
+				char *tmp;
+	
+				tmp = g_path_get_dirname (filenames[0]);
+				path = g_strconcat (tmp, G_DIR_SEPARATOR_S, NULL);
+				g_free (tmp);
+			}
+			g_strfreev (filenames);
+
+			mrl = totem_playlist_get_current_mrl (totem->playlist);
+			totem_action_set_mrl_and_play (totem, mrl);
+			g_free (mrl);
+			break;
 		}
-		g_strfreev (filenames);
-
-		mrl = totem_playlist_get_current_mrl (totem->playlist);
-		totem_action_set_mrl_and_play (totem, mrl);
-		g_free (mrl);
 	}
 
 	gtk_widget_destroy (fs);
