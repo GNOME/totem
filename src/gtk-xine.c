@@ -543,13 +543,26 @@ load_config_from_gconf (GtkXine *gtx)
 	gtx->priv->config->update_string (gtx->priv->config,
 			"misc.demux_strategy", "reverse");
 
+	/* DVD and VCD Device */
+	tmp = gconf_client_get_string (conf, GCONF_PREFIX"mediadev", NULL);
+	if (tmp == NULL || strcmp (tmp, "") == 0)
+		tmp = g_strdup ("/dev/cdrom");
+
+	gtx->priv->config->register_string (gtx->priv->config,
+			"input.dvd_device", tmp,
+			"device used for dvd drive",
+			NULL, NULL, NULL);
+	gtx->priv->config->update_string (gtx->priv->config,
+			"input.dvd_device", tmp);
+
+	gtx->priv->config->register_string (gtx->priv->config,
+			"input.vcd_device", tmp,
+			"device used for cdrom drive",
+			NULL, NULL, NULL);
+	gtx->priv->config->update_string (gtx->priv->config,
+			"input.vcd_device", tmp);
+
 	/* TODO skip by chapter for DVD */
-	/* TODO input.cda_device:/dev/cdaudio
-	 * input.cda_cddb_server:freedb.freedb.org
-	 * input.cda_cddb_port:8880 (or is it 888 like gnome-media says ?
-	 * input.dvd_device:/dev/dvd
-	 * input.dvd_raw_device:/dev/rdvd
-	 */
 }
 
 static gboolean

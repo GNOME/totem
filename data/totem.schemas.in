@@ -41,5 +41,17 @@
 	</locale>
       </schema>
 
+      <schema>
+        <key>/schemas/apps/totem/mediadev</key>
+	<applyto>/apps/totem/mediadev</applyto>
+	<owner>totem</owner>
+	<type>string</type>
+	<default>/dev/cdrom</default>
+	<locale name="C">
+	  <short>Path to the optical media device</short>
+	  <long>Path to the optical media device</long>
+	</locale>
+      </schema>
+
   </schemalist>
 </gconfschemafile>

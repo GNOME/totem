@@ -74,9 +74,15 @@ gdk_window_set_fullscreen (GdkWindow *window, gboolean set)
 
 	/* Set full-screen hint */
 	wmspec_change_state (set, window,
-			gdk_atom_intern
-			("_NET_WM_STATE_FULLSCREEN", FALSE),
+			gdk_atom_intern ("_NET_WM_STATE_FULLSCREEN", FALSE),
 			GDK_NONE);
+	wmspec_change_state (set, window,
+			gdk_atom_intern ("_NET_WM_STATE_MAXIMIZED_HORZ", FALSE),
+			GDK_NONE);
+	wmspec_change_state (set, window,
+			gdk_atom_intern ("_NET_WM_MAXIMIZED_VERT", FALSE),
+			GDK_NONE);
+	gdk_window_maximize (window);
 }
 
 void

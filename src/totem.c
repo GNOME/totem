@@ -764,7 +764,9 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 	{
 		if (g_file_test (list[i], G_FILE_TEST_IS_REGULAR
 					| G_FILE_TEST_EXISTS)
-				|| strstr (list[i], "://") != NULL)
+				|| strstr (list[i], "://") != NULL
+				|| strcmp (list[i], "dvd:") == 0
+				|| strcmp (list[i], "vcd:") == 0)
 		{
 			if (cleared == FALSE)
 			{
@@ -777,8 +779,15 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 				gtk_playlist_clear (totem->playlist);
 				cleared = TRUE;
 			}
-			if (gtk_playlist_add_mrl (totem->playlist, list[i],
-						NULL) == TRUE)
+			if (strcmp (list[i], "dvd:") == 0)
+			{
+				totem_action_play_media (totem, MEDIA_DVD);
+				continue;
+			} else if (strcmp (list[i], "vcd:") == 0) {
+				totem_action_play_media (totem, MEDIA_VCD);
+				continue;
+			} else if (gtk_playlist_add_mrl (totem->playlist,
+						list[i], NULL) == TRUE)
                         {
                                 char *uri;
                                 EggRecentItem *item;
@@ -1121,7 +1130,6 @@ current_removed_cb (GtkWidget *playlist, gpointer user_data)
 static gboolean
 popup_hide (Totem *totem)
 {
-	D("POPUP HIDE");
 	gtk_widget_hide (GTK_WIDGET (totem->exit_popup));
 	gtk_widget_hide (GTK_WIDGET (totem->control_popup));
 
@@ -1169,7 +1177,6 @@ static gboolean
 on_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 		gpointer user_data)
 {
-	g_message ("******************************** on_motion_notify_event");
 	return on_mouse_motion_event (widget, user_data);
 }
 

@@ -1,5 +1,19 @@
 2002-10-19  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.glade: added prefs dialog (not hooked yet)
+	* data/totem.schemas.in: added VCD/DVD device configuration
+	(Closes:#95653), default is /dev/cdrom, both Debian and Red Hat create
+	the link by default
+	* src/gtk-xine.c: (load_config_from_gconf): added support for optical
+	media configuration
+	* src/totem.c: (totem_action_open_files), (popup_hide),
+	(on_motion_notify_event): removed debug, added support for dvd: and
+	vcd: arguments (Closes:#95874)
+	* src/video-utils.c: (gdk_window_set_fullscreen): added some more
+	atoms needed for fullscreen
+
+2002-10-19  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-xine.c: (gtk_xine_set_fullscreen),
 	(gtk_xine_set_show_cursor): just show/hide a window instead of
 	creating a new one each time (Closes: #91892)
