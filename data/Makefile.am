@@ -25,7 +25,12 @@ stuff_DATA =				\
 pixmapdir = $(datadir)/pixmaps
 pixmap_DATA = media-player-48.png vanity.png
 
+if HAVE_LINUX
 desktop_in_files = totem.desktop.in vanity.desktop.in
+else
+desktop_in_files = totem.desktop.in
+endif
+
 desktopdir = $(datadir)/applications/
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@

@@ -63,9 +63,6 @@ dnl Give error and exit if we don't have gstreamer
 else
 	MM="libxine >= $XINE_REQS"
 	AC_MSG_RESULT(xine)
-
-	dnl FIXME for bug 111349
-	AC_DEFINE(HAVE_XINE, 1, [defined if you have xine installed])
 fi
 AM_CONDITIONAL(TOTEM_GST, test x$ENABLE_GST = "xyes")
 
@@ -148,6 +145,15 @@ if test "`whoami`x" = "hadessx" ; then
 else
        AC_MSG_RESULT(n334)
 fi
+
+case "$host" in
+	*linux*)
+	AM_CONDITIONAL(HAVE_LINUX, 1)
+	;;
+	*)
+	AM_CONDITIONAL(HAVE_LINUX, 0)
+	;;
+esac
 
 AC_PATH_PROG(GCONFTOOL, gconftool-2)
 AM_GCONF_SOURCE_2

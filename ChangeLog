@@ -1,5 +1,12 @@
 2003-05-06  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* data/Makefile.am: only install the vanity desktop file on Linux
+	systems, we could not build or install any of it, but it's not much
+	point actually
+
+2003-05-06  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c: (setup_config_video):
 	revert change for the colour key, seems to break on some machines...
 	(Closes: #112339)
