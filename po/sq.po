@@ -2,21 +2,22 @@
 # This file is distributed under the same license as the totem package.
 # Copyright (C) 2004, 2005 Free Software Foundation, Inc.
 # Laurent Dhima <laurenti@alblinux.net>, 2004, 2005.
+# Elian Myftiu <elian@alblinux.net>, 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-17 11:08+0100\n"
-"PO-Revision-Date: 2005-02-17 12:26+0100\n"
-"Last-Translator: Laurent Dhima <laurenti@alblinux.net>\n"
+"POT-Creation-Date: 2005-03-02 07:28+0100\n"
+"PO-Revision-Date: 2005-03-03 14:32+0100\n"
+"Last-Translator: Elian Myftiu <elian@alblinux.net>\n"
 "Language-Team: Albanian <gnome-albanian-perkthyesit@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1484
+#: data/playlist.glade.h:1 src/totem-playlist.c:1510
 msgid "Playlist"
 msgstr "Lista e riprodhimit të melodive"
 
@@ -25,9 +26,8 @@ msgid "Repeat _mode"
 msgstr "Modalitet _përsëritje"
 
 #: data/playlist.glade.h:3
-#, fuzzy
 msgid "Shuf_fle mode"
-msgstr "modaliteti "
+msgstr "Modaliteti pa r_radhë"
 
 #: data/playlist.glade.h:4
 msgid "_Add..."
@@ -40,6 +40,66 @@ msgstr "_Kopjo Vendodhjen"
 #: data/playlist.glade.h:6
 msgid "_Save..."
 msgstr "_Ruaj..."
+
+#: data/popup.glade.h:1 data/totem.glade.h:48
+msgid "Next chapter or movie"
+msgstr "Kapitulli apo skena në vazhdim"
+
+#: data/popup.glade.h:2 data/totem.glade.h:53
+msgid "Play / Pa_use"
+msgstr "Luaj / Pa_uzë"
+
+#: data/popup.glade.h:3 data/totem.glade.h:56
+msgid "Play or pause the movie"
+msgstr "Luaj ose pezullo filmin"
+
+#: data/popup.glade.h:4 data/totem.glade.h:59
+msgid "Previous chapter or movie"
+msgstr "Kapitulli apo skena paraardhëse"
+
+#: data/popup.glade.h:5 data/totem.glade.h:75
+msgid "Show _Controls"
+msgstr "Shfaq _Kontrollet"
+
+#: data/popup.glade.h:6 data/totem.glade.h:77
+msgid "Show controls"
+msgstr "Shfaq kontrollet"
+
+#: data/popup.glade.h:7 data/totem.glade.h:81
+msgid "Skip _Backwards"
+msgstr "Kapërce _Prapa"
+
+#: data/popup.glade.h:8 data/totem.glade.h:82
+msgid "Skip _Forward"
+msgstr "Kapërce Pë_rpara"
+
+#: data/popup.glade.h:9 data/totem.glade.h:83
+msgid "Skip backwards"
+msgstr "Kapërce prapa"
+
+#: data/popup.glade.h:10 data/totem.glade.h:84
+msgid "Skip forward"
+msgstr "Kapërce përpara"
+
+#: data/popup.glade.h:11 data/totem.glade.h:107
+msgid "Volume _Down"
+msgstr "_Ul Zërin"
+
+#: data/popup.glade.h:12 data/totem.glade.h:108
+msgid "Volume _Up"
+msgstr "_Ngri Zërin"
+
+#: data/popup.glade.h:13 data/totem.glade.h:110
+msgid "Volume up"
+msgstr "Ngri zërin"
+
+#: data/popup.glade.h:14 data/totem.glade.h:133
+msgid "_Next Chapter/Movie"
+msgstr "Kapitulli/Filmi _Tjetër"
+
+#: data/popup.glade.h:15 data/totem.glade.h:136
+msgid "_Previous Chapter/Movie"
+msgstr "Kapitulli/Filmi _Paraardhës"
 
 #: data/properties.glade.h:1 data/screenshot.glade.h:1 data/totem.glade.h:1
 msgid "    "
@@ -113,7 +173,7 @@ msgstr "Shpejtësia e frame:"
 msgid "N/A"
 msgstr "Mungon"
 
-#: data/properties.glade.h:17 src/totem.c:1972
+#: data/properties.glade.h:17 src/totem.c:1986
 msgid "Properties"
 msgstr "Pronësitë"
 
@@ -175,6 +235,16 @@ msgstr "_Kapërce tek:"
 #: data/skip_to.glade.h:4
 msgid "seconds"
 msgstr "sekonda"
+
+#: data/totem.desktop.in.in.in.h:1
+msgid "Play movies and songs"
+msgstr "Luaj filmat dhe këngët"
+
+#. Title
+#: data/totem.desktop.in.in.in.h:2 data/totem.glade.h:102 src/totem.c:580
+#: src/totem.c:3398
+msgid "Totem Movie Player"
+msgstr "Totem - Lexues Filmash"
 
 #: data/totem.glade.h:2
 msgid ""
@@ -290,7 +360,7 @@ msgstr "_Shpejtësia e lidhjes:"
 
 #: data/totem.glade.h:35
 msgid "Deinterlace"
-msgstr ""
+msgstr "Deinterlace"
 
 #: data/totem.glade.h:36
 msgid "Display"
@@ -340,10 +410,6 @@ msgstr "Gjuhët"
 msgid "Next"
 msgstr "Vazhdo"
 
-#: data/totem.glade.h:48
-msgid "Next chapter or movie"
-msgstr "Kapitulli apo skena në vazhdim"
-
 #: data/totem.glade.h:49
 msgid "No Language Selection Available"
 msgstr "Zgjedhja e gjuhës nuk është në dispozicion"
@@ -360,10 +426,6 @@ msgstr "Hap _pozicionin..."
 msgid "Open a non-local file"
 msgstr "Hap një file jo-lokal"
 
-#: data/totem.glade.h:53
-msgid "Play / Pa_use"
-msgstr "Luaj / Pa_uzë"
-
 #: data/totem.glade.h:54
 msgid "Play _Disc"
 msgstr "Luaj _Diskun"
@@ -372,10 +434,6 @@ msgstr "Luaj _Diskun"
 msgid "Play a Video or Audio Disc"
 msgstr "Luaj një disk video apo audio"
 
-#: data/totem.glade.h:56
-msgid "Play or pause the movie"
-msgstr "Luaj ose pezullo filmin"
-
 #: data/totem.glade.h:57 src/totem-options.c:38
 msgid "Play/Pause"
 msgstr "Luaj/Pezullo"
@@ -383,10 +441,6 @@ msgstr "Luaj/Pezullo"
 #: data/totem.glade.h:58 src/totem-options.c:40
 msgid "Previous"
 msgstr "Paraardhëse"
-
-#: data/totem.glade.h:59
-msgid "Previous chapter or movie"
-msgstr "Kapitulli apo skena paraardhëse"
 
 #: data/totem.glade.h:60
 msgid "Resize _1:1"
@@ -397,14 +451,12 @@ msgid "Resize _2:1"
 msgstr "Ripërmaso _2:1"
 
 #: data/totem.glade.h:62
-#, fuzzy
 msgid "Resize to half the video size"
-msgstr "nga"
+msgstr "Përgjysmo madhësinë e videos"
 
 #: data/totem.glade.h:63
-#, fuzzy
 msgid "Resize to twice the video size"
-msgstr "nga"
+msgstr "Dyfisho madhësinë e videos"
 
 #: data/totem.glade.h:64
 msgid "Resize to video size"
@@ -415,111 +467,76 @@ msgid "S_ubtitles"
 msgstr "Në_ntituj"
 
 #: data/totem.glade.h:66
-#, fuzzy
 msgid "Sat_uration:"
-msgstr "Sht:"
+msgstr "Ngop_ja e ngjyrave:"
 
 #: data/totem.glade.h:67
 msgid "Set the aspect ratio"
-msgstr ""
+msgstr "Cakto "
 
 #: data/totem.glade.h:68
 msgid "Set the repeat mode"
 msgstr "Cakto modalitetin përsëritës"
 
 #: data/totem.glade.h:69
-#, fuzzy
 msgid "Set the shuffle mode"
-msgstr "modaliteti"
+msgstr "Cakto modalitetin pa rradhë"
 
 #: data/totem.glade.h:70
 msgid "Sets 16:9 (Anamorphic) aspect ratio"
-msgstr ""
+msgstr "Cakton raportin e aspektit 16:9 (Anamorfik)"
 
 #: data/totem.glade.h:71
 msgid "Sets 2.11:1 (DVB) aspect ratio"
-msgstr ""
+msgstr "Cakton raportin e aspektit 2.11:1 (DVB)"
 
 #: data/totem.glade.h:72
 msgid "Sets 4:3 (TV) aspect ratio"
-msgstr ""
+msgstr "Cakton raportin e aspektit 4:3 (TV)"
 
 #: data/totem.glade.h:73
 msgid "Sets automatic aspect ratio"
-msgstr ""
+msgstr "Cakton raport automatik të aspektit"
 
 #: data/totem.glade.h:74
 msgid "Sets square aspect ratio"
-msgstr ""
-
-#: data/totem.glade.h:75
-#, fuzzy
-msgid "Show _Controls"
-msgstr "Shfaq Kontrollet"
+msgstr "Cakton raport katror të aspektit"
 
 #: data/totem.glade.h:76
-#, fuzzy
 msgid "Show _visual effects when an audio file is played"
-msgstr "Shfaq është"
-
-#: data/totem.glade.h:77
-#, fuzzy
-msgid "Show controls"
-msgstr "Shfaq"
+msgstr "Shfaq efekte _vizuale kur riprodhohet një file audio"
 
 #: data/totem.glade.h:78
-#, fuzzy
 msgid "Show or hide the playlist"
-msgstr "Shfaq"
+msgstr "Shfaq ose fshih listën e riprodhimit"
 
 #: data/totem.glade.h:79
-#, fuzzy
 msgid "Show/Hide Playlist"
-msgstr "Shfaq Lista e riprodhimit të melodive"
+msgstr "Shfaq/Fshih Listën e riprodhimit"
 
 #: data/totem.glade.h:80
-#, fuzzy
 msgid "Shuff_le Mode"
-msgstr "Modaliteti"
-
-#: data/totem.glade.h:81
-#, fuzzy
-msgid "Skip _Backwards"
-msgstr "Kapërce"
-
-#: data/totem.glade.h:82
-#, fuzzy
-msgid "Skip _Forward"
-msgstr "Kapërce Vazhdo"
-
-#: data/totem.glade.h:83
-#, fuzzy
-msgid "Skip backwards"
-msgstr "Kapërce"
-
-#: data/totem.glade.h:84
-#, fuzzy
-msgid "Skip forward"
-msgstr "Kalo përpara"
+msgstr "Modaliteti Pa _Rradhë"
 
 #: data/totem.glade.h:85
-#, fuzzy
 msgid "Skip to a specific time"
-msgstr "Kapërce a ora"
+msgstr "Kapërce në një moment të caktuar"
 
 #: data/totem.glade.h:86
-#, fuzzy
 msgid ""
 "Small\n"
 "Normal\n"
 "Large\n"
 "Extra Large"
-msgstr "E vogël E madhe"
+msgstr ""
+"E vogël\n"
+"Normale\n"
+"E Madhe\n"
+"Goxha e Madhe"
 
 #: data/totem.glade.h:90
-#, fuzzy
 msgid "Square"
-msgstr "Në katror"
+msgstr "Katror"
 
 #: data/totem.glade.h:91
 msgid ""
@@ -530,1270 +547,1107 @@ msgid ""
 "5.1-channel\n"
 "AC3 Passthrough"
 msgstr ""
+"Stereo\n"
+"4-kanale\n"
+"4.1-kanale\n"
+"5.0-kanale\n"
+"5.1-kanale\n"
+"Kalim AC3"
 
 #: data/totem.glade.h:97
 msgid "Subtitles"
-msgstr ""
+msgstr "Nëntitujt"
 
 #: data/totem.glade.h:98
-#, fuzzy
 msgid "Switch to fullscreen"
 msgstr "Kalo në modalitetin me ekran të plotë"
 
 #: data/totem.glade.h:99
 msgid "Take _Screenshot"
-msgstr ""
+msgstr "Merr _Pamje Ekrani"
 
 #: data/totem.glade.h:100
-#, fuzzy
 msgid "Take a screenshot"
-msgstr "Merr një pamje"
+msgstr "Merr një pamje ekrani"
 
 #: data/totem.glade.h:101
-#, fuzzy
 msgid "Time:"
 msgstr "Koha:"
 
-#. Title
-#: data/totem.glade.h:102 data/totem.desktop.in.in.in.h:2 src/totem.c:571
-#: src/totem.c:3384
-msgid "Totem Movie Player"
-msgstr "Totem - Lexues Filmash"
-
 #: data/totem.glade.h:103
-#, fuzzy
 msgid "Totem Preferences"
-msgstr "Preferimet"
+msgstr "Preferimet e Totem-it"
 
 #: data/totem.glade.h:104
-#, fuzzy
 msgid "Tv-out in fullscreen by Nvidia (NTSC)"
-msgstr "në nga"
+msgstr "Tv-out me ekran të plotë nga Nvidia (NTSC)"
 
 #: data/totem.glade.h:105
-#, fuzzy
 msgid "Tv-out in fullscreen by Nvidia (PAL)"
-msgstr "në nga"
+msgstr "Tv-out me ekran të plotë nga Nvidia (PAL)"
 
 #: data/totem.glade.h:106
-#, fuzzy
 msgid "Visualisation _size:"
-msgstr "madhësia:"
-
-#: data/totem.glade.h:107
-#, fuzzy
-msgid "Volume _Down"
-msgstr "Volumi Poshtë"
-
-#: data/totem.glade.h:108
-#, fuzzy
-msgid "Volume _Up"
-msgstr "Volumi Sipër"
+msgstr "Ma_dhësia e efekteve vizivë:"
 
 #: data/totem.glade.h:109
-#, fuzzy
 msgid "Volume down"
 msgstr "Ul zërin"
 
-#: data/totem.glade.h:110
-#, fuzzy
-msgid "Volume up"
-msgstr "Ngre zërin"
-
 #: data/totem.glade.h:111
-#, fuzzy
 msgid "Zoom In"
-msgstr "Shkalla e zmadhimit"
+msgstr "Zmadho"
 
 #: data/totem.glade.h:112
-#, fuzzy
 msgid "Zoom Out"
-msgstr "Shkalla e zmadhimit"
+msgstr "Zvogëlo"
 
 #: data/totem.glade.h:113
-#, fuzzy
 msgid "Zoom Reset"
-msgstr "Shkalla e zmadhimit Nga fillimi"
+msgstr "Ripërmaso Shkallën"
 
 #: data/totem.glade.h:114
-#, fuzzy
 msgid "Zoom in"
-msgstr "Shkalla e zmadhimit"
+msgstr "Zmadho"
 
 #: data/totem.glade.h:115
-#, fuzzy
 msgid "Zoom out"
-msgstr "Shkalla e zmadhimit"
+msgstr "Zvogëlo"
 
 #: data/totem.glade.h:116
-#, fuzzy
 msgid "Zoom reset"
-msgstr "Shkalla e zmadhimit rishkruaj"
+msgstr "Ripërmaso Shkallën"
 
 #: data/totem.glade.h:117
-#, fuzzy
 msgid "_Add Proprietary Plugins..."
-msgstr "Shto Plugins."
+msgstr "_Shto Plugin-a të Patentuar..."
 
 #: data/totem.glade.h:118
-#, fuzzy
 msgid "_Angle Menu"
-msgstr "Menu"
+msgstr "Menuja e _Këndit"
 
 #: data/totem.glade.h:119
-#, fuzzy
 msgid "_Aspect Ratio"
-msgstr "Përpjestimi"
+msgstr "Raporti i _Aspektit"
 
 #: data/totem.glade.h:120
-#, fuzzy
 msgid "_Audio output type:"
-msgstr "Zëri lloji:"
+msgstr "Lloji i daljes së _zërit:"
 
 #: data/totem.glade.h:121
-#, fuzzy
 msgid "_Brightness:"
 msgstr "_Ndriçimi:"
 
 #: data/totem.glade.h:122
-#, fuzzy
 msgid "_Chapter Menu"
-msgstr "Kapitulli Menu"
+msgstr "Menuja e _Kapitujve"
 
 #: data/totem.glade.h:123
-#, fuzzy
 msgid "_Contents"
 msgstr "_Përmbajtja"
 
 #: data/totem.glade.h:124
-#, fuzzy
 msgid "_DVD Menu"
-msgstr "DVD Menu"
+msgstr "Menuja _DVD"
 
 #: data/totem.glade.h:125
 msgid "_DXR3 TV-out"
-msgstr ""
+msgstr "Dalje TV _DXR3"
 
 #: data/totem.glade.h:126
 msgid "_Deinterlace"
-msgstr ""
+msgstr "_Ndërzgjidh"
 
 #: data/totem.glade.h:127
-#, fuzzy
 msgid "_Eject"
-msgstr "_Nxirre jashtë"
+msgstr "_Nxirre"
 
 #: data/totem.glade.h:128
-#, fuzzy
 msgid "_Fullscreen"
-msgstr "_Ekran i plotë"
+msgstr "_Ekran i Plotë"
 
 #: data/totem.glade.h:129
-#, fuzzy
 msgid "_Go"
 msgstr "_Shko"
 
 #: data/totem.glade.h:130
-#, fuzzy
 msgid "_Hue:"
 msgstr "_Tonaliteti:"
 
 #: data/totem.glade.h:131
-#, fuzzy
 msgid "_Languages"
-msgstr "Gjuhët"
+msgstr "_Gjuhët"
 
 #: data/totem.glade.h:132
 msgid "_Movie"
-msgstr ""
-
-#: data/totem.glade.h:133
-#, fuzzy
-msgid "_Next Chapter/Movie"
-msgstr "Vazhdo Kapitulli"
+msgstr "_Film"
 
 #: data/totem.glade.h:134
-#, fuzzy
 msgid "_No TV-out"
-msgstr "Jo"
+msgstr "_Pa TV-out"
 
 #: data/totem.glade.h:135
-#, fuzzy
 msgid "_Optical device path:"
-msgstr "periferik shtegu:"
-
-#: data/totem.glade.h:136
-#, fuzzy
-msgid "_Previous Chapter/Movie"
-msgstr "Paraardhëse Kapitulli"
+msgstr "Pozicioni i dispozitivit _optik:"
 
 #: data/totem.glade.h:137
-#, fuzzy
 msgid "_Repeat Mode"
-msgstr "Përsërit Modaliteti"
+msgstr "Mënyrë _Përsëritëse"
 
 #: data/totem.glade.h:138
-#, fuzzy
 msgid "_Reset To Defaults"
-msgstr "Nga fillimi"
+msgstr "_Rivendos Vlerat e Prezgjedhura"
 
 #: data/totem.glade.h:139
-#, fuzzy
 msgid "_Resize 1:2"
-msgstr "_Ripërmaso 2"
+msgstr "_Ripërmaso 1:2"
 
 #: data/totem.glade.h:140
-#, fuzzy
 msgid "_Show/Hide Playlist"
-msgstr "Shfaq Lista e riprodhimit të melodive"
+msgstr "Shfaq/Fshih Listën e Riprodhimit"
 
 #: data/totem.glade.h:141
-#, fuzzy
 msgid "_Skip to..."
-msgstr "Kapërce."
+msgstr "_Kapërce tek..."
 
 #: data/totem.glade.h:142
-#, fuzzy
 msgid "_Sound"
 msgstr "_Zëri"
 
 #: data/totem.glade.h:143
-#, fuzzy
 msgid "_Title Menu"
-msgstr "Titulli Menu"
+msgstr "Menuja e _Titujve"
 
 #: data/totem.glade.h:144
-#, fuzzy
 msgid "_Type of visualisation:"
-msgstr "Lloji nga:"
+msgstr "_Lloji i vizualizimeve:"
 
 #: data/totem.schemas.in.h:1
-#, fuzzy
 msgid "Enable deinterlacing"
-msgstr "Aktivo"
+msgstr "Aktivizo ndërzgjidhjen"
 
 #: data/totem.schemas.in.h:2
-#, fuzzy
 msgid "Enable deinterlacing."
-msgstr "Aktivo."
+msgstr "Aktivizo ndërzgjidhjen"
 
 #: data/totem.schemas.in.h:3
-#, fuzzy
 msgid "Height of the video widget"
-msgstr "nga"
+msgstr "Lartësia e dritares së videos"
 
 #: data/totem.schemas.in.h:4
-#, fuzzy
 msgid "Name of the visual effects plugins"
-msgstr "Emri nga"
+msgstr "Emri i plugin-ave të efekteve vizuale"
 
 #: data/totem.schemas.in.h:5
-#, fuzzy
 msgid "Name of the visual effects plugins."
-msgstr "Emri nga."
+msgstr "Emri i plugin-ave të efekteve vizuale."
 
 #: data/totem.schemas.in.h:6
-#, fuzzy
 msgid "Path to the optical media device"
-msgstr "Pozicioni periferik"
+msgstr "Shtegu për tek dispozitivi i medias optike"
 
 #: data/totem.schemas.in.h:7
-#, fuzzy
 msgid "Path to the optical media device."
-msgstr "Pozicioni periferik."
+msgstr "Shtegu për tek dispozitivi i medias optike."
 
 #: data/totem.schemas.in.h:8
-#, fuzzy
 msgid "Repeat mode"
-msgstr "Përsërit modaliteti"
+msgstr "Mënyrë përsëritëse"
 
 #: data/totem.schemas.in.h:9
-#, fuzzy
 msgid "Repeat mode."
-msgstr "Përsërit modaliteti."
+msgstr "Mënyrë përsëritëse."
 
 #: data/totem.schemas.in.h:10
-#, fuzzy
 msgid "Resize the canvas automatically on file load"
-msgstr "Ripërmaso plani i punës në ngarkoje"
+msgstr "Ripërmaso automatikisht planin kur ngarkon një file"
 
 #: data/totem.schemas.in.h:11
-#, fuzzy
 msgid "Resize the canvas automatically on file load."
-msgstr "Ripërmaso plani i punës në ngarkoje."
+msgstr "Ripërmaso automatikisht planin kur ngarkon një file."
 
 #: data/totem.schemas.in.h:12
-#, fuzzy
 msgid "Show visual effects when no video is displayed"
-msgstr "Shfaq jo është"
+msgstr "Shfaq efekte vizuale kur nuk ka video"
 
 #: data/totem.schemas.in.h:13
-#, fuzzy
 msgid "Show visual effects when playing an audio only file."
-msgstr "Shfaq."
+msgstr "Shfaq efekte vizuale kur riprodhohen file vetëm audio."
 
 #: data/totem.schemas.in.h:14
-#, fuzzy
 msgid "Shuffle mode"
-msgstr "Përzierje modaliteti"
+msgstr "Mënyrë pa rradhë"
 
 #: data/totem.schemas.in.h:15
-#, fuzzy
 msgid "Shuffle mode."
-msgstr "Përzierje modaliteti."
+msgstr "Mënyrë pa rradhë."
 
 #: data/totem.schemas.in.h:16
-#, fuzzy
 msgid "Sound volume"
-msgstr "Zëri volumi"
+msgstr "Volumi i zërit"
 
 #: data/totem.schemas.in.h:17
-#, fuzzy
 msgid "Sound volume, in percent, between 0 and 100"
-msgstr "Zëri volumi në dhe"
+msgstr "Volumi i zërit, në përqindje, midis 0 dhe 100"
 
 #: data/totem.schemas.in.h:18
-#, fuzzy
 msgid "The brightness of the video"
-msgstr "nga"
+msgstr "Ndriçimi i videos"
 
 #: data/totem.schemas.in.h:19
-#, fuzzy
 msgid "The brightness of the video."
-msgstr "nga."
+msgstr "Ndriçimi i videos."
 
 #: data/totem.schemas.in.h:20
-#, fuzzy
 msgid "The contrast of the video"
-msgstr "nga"
+msgstr "Kontrasti i videos"
 
 #: data/totem.schemas.in.h:21
-#, fuzzy
 msgid "The contrast of the video."
-msgstr "nga."
+msgstr "Kontrasti i videos."
 
 #: data/totem.schemas.in.h:22
-#, fuzzy
 msgid "The hue of the video"
-msgstr "nga"
+msgstr "Hiri i videos"
 
 #: data/totem.schemas.in.h:23
-#, fuzzy
 msgid "The hue of the video."
-msgstr "nga."
+msgstr "Hiri i videos."
 
 #: data/totem.schemas.in.h:24
-#, fuzzy
 msgid "The saturation of the video"
-msgstr "nga"
+msgstr "Ngopja e videos"
 
 #: data/totem.schemas.in.h:25
-#, fuzzy
 msgid "The saturation of the video."
-msgstr "nga."
+msgstr "Ngopja e videos."
 
 #: data/totem.schemas.in.h:26
-#, fuzzy
 msgid "Type of audio output to use"
-msgstr "Lloji nga"
+msgstr "Lloji i daljes së zërit"
 
 #: data/totem.schemas.in.h:27
-#, fuzzy
 msgid ""
 "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
 "\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
 "Passthrough."
-msgstr "Lloji nga për stereo për për për për."
+msgstr ""
+"Lloji i daljes së zërit: \"0\" për stereo, \"1\" për dalje 4-kanalëshe, \"2\" për "
+"dalje 5.0 kanalëshe, \"3\" për dalje 5.1 kanalëshe, \"4\" për Kalim AC3."
 
 #: data/totem.schemas.in.h:28
-#, fuzzy
 msgid "Whether the main window should stay on top"
-msgstr "dritare në sipër"
+msgstr "Nëse dritarja kryesore duhet të qëndrojë në pamje të parë"
 
 #: data/totem.schemas.in.h:29
-#, fuzzy
 msgid "Whether the main window should stay on top of the other ones"
-msgstr "dritare në sipër nga tjetër"
+msgstr "Nëse dritarja kryesore duhet të qëndrojë përmbi të tjerave"
 
 #: data/totem.schemas.in.h:30
-#, fuzzy
 msgid "Whether to enable debug for the playback engine"
-msgstr "aktiv për"
+msgstr "Nëse duhet aktivizuar gjetja e gabimeve për motorin e riprodhimit"
 
 #: data/totem.schemas.in.h:31
-#, fuzzy
 msgid "Whether to enable debug for the playback engine."
-msgstr "aktiv për."
+msgstr "Nëse duhet aktivizuar gjetja e gabimeve për motorin e riprodhimit."
 
 #: data/totem.schemas.in.h:32
-#, fuzzy
 msgid "Width of the video widget"
-msgstr "Gjerësia nga"
+msgstr "Gjerësia e dritares së videos"
 
 #: data/totem.schemas.in.h:33
-#, fuzzy
 msgid "X coordinate for the Playlist"
-msgstr "X për Lista e riprodhimit të melodive"
+msgstr "Koordinata X për Listën e Riprodhimit"
 
 #: data/totem.schemas.in.h:34
-#, fuzzy
 msgid "X coordinate for the Playlist."
-msgstr "X për Lista e riprodhimit të melodive."
+msgstr "Koordinata X për Listën e Riprodhimit."
 
 #: data/totem.schemas.in.h:35
-#, fuzzy
 msgid "Y coordinate for the Playlist"
-msgstr "Y për Lista e riprodhimit të melodive"
+msgstr "Koordinata Y për Listën e Riprodhimit"
 
 #: data/totem.schemas.in.h:36
-#, fuzzy
 msgid "Y coordinate for the Playlist."
-msgstr "Y për Lista e riprodhimit të melodive."
+msgstr "Koordinata Y për Listën e Riprodhimit."
 
 #: data/uri.glade.h:2
-#, fuzzy
 msgid "Enter the _location (URI) of the file you would like to open:"
-msgstr "Shkruaj _vendodhjen (URI) e file që dëshironi të hapni:"
+msgstr "Shkruaj _vendodhjen (URI) e file-t që dëshiron të hapësh:"
 
 #: data/uri.glade.h:3
-#, fuzzy
 msgid "Open from URI"
 msgstr "Hap nga URI"
 
+#: data/vanity.desktop.in.in.h:1
+msgid "Vanity Webcam utility"
+msgstr "Vegël Webcam-i Vanity"
+
+#: data/vanity.desktop.in.in.h:2
+msgid "View live webcam and upload pictures"
+msgstr "Shiko webcam drejtpërsëdrejti dhe ngarko pamje"
+
 #: data/vanity.glade.h:1
-#, fuzzy
 msgid "Save File"
 msgstr "Ruaj File"
 
 #: data/vanity.glade.h:2 src/vanity.c:259
 msgid "Vanity"
-msgstr ""
+msgstr "Vanity"
 
 #: data/vanity.glade.h:3
-#, fuzzy
 msgid "Vanity Preferences"
-msgstr "Preferimet"
+msgstr "Preferimet e Vanity"
 
 #: data/vanity.glade.h:4
-#, fuzzy
 msgid "Zoom 1:1"
-msgstr "Shkalla e zmadhimit"
+msgstr "Shkalla 1:1"
 
 #: data/vanity.glade.h:5
-#, fuzzy
 msgid "Zoom 1:2"
-msgstr "Shkalla e zmadhimit 2"
+msgstr "Shkalla 1:2"
 
 #: data/vanity.glade.h:6
-#, fuzzy
 msgid "Zoom 2:1"
-msgstr "Shkalla e zmadhimit"
+msgstr "Shkalla 2:1"
 
 #: data/vanity.glade.h:7
-#, fuzzy
 msgid "Zoom _1:1"
-msgstr "Shkalla e zmadhimit"
+msgstr "Shkalla _1:1"
 
 #: data/vanity.glade.h:8
-#, fuzzy
 msgid "Zoom _2:1"
-msgstr "Shkalla e zmadhimit"
+msgstr "Shkalla _2:1"
 
 #: data/vanity.glade.h:9
-#, fuzzy
 msgid "_Picture"
-msgstr "Figurë"
+msgstr "_Figurë"
 
 #: data/vanity.glade.h:10
-#, fuzzy
 msgid "_Zoom 1:2"
-msgstr "Shkalla e zmadhimit 2"
-
-#: data/vanity.desktop.in.in.h:1
-#, fuzzy
-msgid "Vanity Webcam utility"
-msgstr "Webcam"
-
-#: data/vanity.desktop.in.in.h:2
-#, fuzzy
-msgid "View live webcam and upload pictures"
-msgstr "Paraqitja dhe"
-
-#: data/totem.desktop.in.in.in.h:1
-msgid "Play movies and songs"
-msgstr "Luaj filmat dhe këngët"
+msgstr "_Shkalla 1:2"
 
 #: src/bacon-v4l-selection.c:191
-#, fuzzy
 msgid "Unnamed CDROM"
 msgstr "CDROM pa emër"
 
 #: src/bacon-video-widget-gst.c:68
-#, fuzzy
 msgid "Totem Video Window"
-msgstr "Video Dritarja"
+msgstr "Dritarja Video e Totem-it"
 
-#: src/bacon-video-widget-gst.c:2901
-#, fuzzy
+#: src/bacon-video-widget-gst.c:2913
 msgid "Failed to create a GStreamer play object"
-msgstr "Dështoi tek a"
+msgstr "Dështoi në krijimin e një objekti GStreamer"
 
 #. Duration
 #: src/bacon-video-widget-properties.c:102
-#, fuzzy
 msgid "0 second"
-msgstr "sekondë"
+msgstr "0 sekonda"
 
 #: src/bacon-video-widget-properties.c:199
-#, fuzzy, c-format
+#, c-format
 msgid "%d frames per second"
-msgstr "korniza sekondë"
+msgstr "%d pamje për sekondë"
 
 #: src/bacon-video-widget-properties.c:221
 #, c-format
 msgid "%d kbps"
-msgstr ""
+msgstr "%d kbps"
 
 #: src/bacon-video-widget-xine.c:657
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
 "Check that the device is not busy."
-msgstr "ngarkoje periferik është nuk."
+msgstr ""
+"Nuk munda të ngarkoj driver-in e zërit '%s'\n"
+"Kontrollo që dispozitivi nuk është i zënë."
 
 #: src/bacon-video-widget-xine.c:1109 src/bacon-video-widget-xine.c:1614
-#, fuzzy
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
-msgstr "Jo është programi është instaluar."
+msgstr ""
+"Asnjë dalje video në dispozicion. Sigurohu që programi është instaluar "
+"saktë."
 
 #: src/bacon-video-widget-xine.c:1225
-#, fuzzy
 msgid "The server you are trying to connect to is not known."
-msgstr "server është nuk."
+msgstr "Serveri me të cilin po përpiqesh të lidhesh është i panjohur."
 
 #: src/bacon-video-widget-xine.c:1229
-#, fuzzy, c-format
+#, c-format
 msgid "The device name you specified (%s) seems to be invalid."
-msgstr "periferik emri I pavlefshëm."
+msgstr "Emri i dispozitivit që përcaktove (%s) ngjan të jetë i pavlefshëm."
 
 #: src/bacon-video-widget-xine.c:1233
-#, fuzzy, c-format
+#, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
-msgstr "server është."
+msgstr "Serveri me të cilin po përpiqesh të lidhesh (%s) është i paarritshëm."
 
 #: src/bacon-video-widget-xine.c:1237
-#, fuzzy
 msgid "The connection to this server was refused."
-msgstr "server."
+msgstr "Lidhja me këtë server nuk u pranua."
 
 #: src/bacon-video-widget-xine.c:1241
-#, fuzzy
 msgid "The specified movie could not be found."
-msgstr "nuk."
+msgstr "Filmi në fjalë nuk u gjet."
 
 #: src/bacon-video-widget-xine.c:1247 src/bacon-video-widget-xine.c:1265
-#, fuzzy
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
-msgstr "dhe lexo DVD?"
+msgstr ""
+"Buruesit ngjajnë të jenë kodifikuar, dhe nuk mund të lexohen. Mos po "
+"përpiqesh të shikosh një DVD të kodifikuar pa libdvdcss?"
 
 #: src/bacon-video-widget-xine.c:1250
-#, fuzzy
 msgid "The movie could not be read."
-msgstr "nuk."
+msgstr "Filmi nuk mundi të lexohej."
 
 #: src/bacon-video-widget-xine.c:1259
-#, fuzzy, c-format
+#, c-format
 msgid "A problem occured while loading a library or a decoder (%s)."
-msgstr "A a a."
+msgstr "Pati një problem gjatë ngarkimit të një librarie apo një çkodifikuesi (%s)."
 
 #: src/bacon-video-widget-xine.c:1268
-#, fuzzy
 msgid "This file is encrypted and cannot be played back."
-msgstr "është dhe mbrapa."
+msgstr "File është i kodifikuar dhe nuk mund të shikohet."
 
 #: src/bacon-video-widget-xine.c:1273
-#, fuzzy
 msgid "For security reasons, this movie can not be played back."
-msgstr "nuk mbrapa."
+msgstr "Për arsye sigurie, ky film nuk mund të shikohet."
 
 #: src/bacon-video-widget-xine.c:1278
-#, fuzzy
 msgid "The audio device is busy. Is another application using it?"
-msgstr "periferik është programi?"
+msgstr "Dispozitivi i zërit është i zënë. Mos po e përdor ndonjë program tjetër?"
 
 #: src/bacon-video-widget-xine.c:1283
-#, fuzzy
 msgid "You are not allowed to open this file."
-msgstr "Ti nuk hap."
+msgstr "Nuk lejohet ta hapësh këtë file."
 
 #: src/bacon-video-widget-xine.c:1285
-#, fuzzy
 msgid "The server refused access to this file or stream."
-msgstr "server hyrje."
+msgstr "Serveri nuk pranoi hyrjen me këtë file apo rrymë."
 
 #: src/bacon-video-widget-xine.c:1425
-#, fuzzy
 msgid "There is no plugin to handle this movie."
-msgstr "është jo."
+msgstr "Nuk ka asnjë plugin për të parë këtë film."
 
 #: src/bacon-video-widget-xine.c:1429
-#, fuzzy
 msgid "This movie is broken and can not be played further."
-msgstr "është dhe nuk."
+msgstr "Ky film ka gabime dhe nuk mund të shikohet më tej."
 
 #: src/bacon-video-widget-xine.c:1433
-#, fuzzy
 msgid "This location is not a valid one."
-msgstr "pozicioni është nuk a."
+msgstr "Kjo vendndodhje nuk është e vlefshme."
 
 #: src/bacon-video-widget-xine.c:1437
-#, fuzzy
 msgid "This movie could not be opened."
-msgstr "nuk."
+msgstr "Ky film nuk mund të shikohej."
 
 #: src/bacon-video-widget-xine.c:1441
-#, fuzzy
 msgid "Generic Error."
-msgstr "I përgjithshëm Gabim."
+msgstr "Gabim i Përgjithshëm."
 
 #: src/bacon-video-widget-xine.c:1911
-#, fuzzy
 msgid "This movie is a still image. You can open it with an image viewer."
-msgstr "është a figurë Ti hap me figurë."
+msgstr "Ky film është një pamje në prehje. Mund ta hapësh me një shikues pamjesh."
 
 #: src/bacon-video-widget-xine.c:1935
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
-msgstr "Video codec është nuk Ti instalo lexo nga"
+msgstr ""
+"Kodifikuesi i videos '%s' nuk punon. Ndoshta të duhet të instalosh plugin-a të "
+"tjerë për të parë disa lloje filmash."
 
 #: src/bacon-video-widget-xine.c:1939
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
-msgstr "Video codec është nuk Ti instalo lexo nga"
+msgstr ""
+"Kodifikuesi i zërit '%s' nuk punon. Ndoshta të duhet të instalosh plugin-a të "
+"tjerë për të parë disa lloje filmash."
 
 #: src/bacon-video-widget-xine.c:1955
-#, fuzzy
 msgid "This is an audio-only file, and there is no audio output available."
-msgstr "është dhe është jo."
+msgstr "Ky është vetëm një file audio, dhe nuk ka dalje zëri në dispozicion."
 
-#: src/bacon-video-widget-xine.c:3363
-#, fuzzy, c-format
+#: src/bacon-video-widget-xine.c:3369
+#, c-format
 msgid "Language %d"
-msgstr "Gjuhët"
+msgstr "Gjuha %d"
 
-#: src/bacon-video-widget-xine.c:3434
-#, fuzzy
+#: src/bacon-video-widget-xine.c:3452
 msgid "Movie is not playing."
-msgstr "është nuk."
+msgstr "Filmi ka ndalur."
 
-#: src/bacon-video-widget-xine.c:3443
-#, fuzzy
+#: src/bacon-video-widget-xine.c:3461
 msgid "No video to capture."
-msgstr "Jo."
+msgstr "Asnjë sinjal video."
 
-#: src/bacon-video-widget-xine.c:3451
-#, fuzzy
+#: src/bacon-video-widget-xine.c:3469
 msgid "Video codec is not handled."
-msgstr "Video codec është nuk."
+msgstr "Kodifikuesi i videos nuk punon."
 
-#: src/totem-disc.c:107
+#: src/totem-disc.c:114
 #, c-format
-#, fuzzy
 msgid "Failed to find real device node for %s: %s"
-msgstr "Dështoi tek gjej nyje për s s"
+msgstr "Dështoi në gjetjen e nyjes së vërtetë të dispozitivit për %s: %s"
 
-#: src/totem-disc.c:118
+#: src/totem-disc.c:125
 #, c-format
-#, fuzzy
 msgid "Failed to read symbolic link %s: %s"
-msgstr "Dështoi tek lidhje s s"
+msgstr "Dështoi në leximin e lidhjes simbolike %s: %s"
 
-#: src/totem-disc.c:202
+#: src/totem-disc.c:209
 #, c-format
-#, fuzzy
 msgid "Failed to find mountpoint for device %s in /etc/fstab"
-msgstr "Dështoi tek gjej për s në"
+msgstr "Dështoi në gjetjen e pikës së montimit për dispozitivin %s në /etc/fstab"
 
-#: src/totem-disc.c:240
-#, fuzzy
+#: src/totem-disc.c:247
 msgid "Please check that a disc is present in the drive."
-msgstr "Ti a është në dhe është."
+msgstr "Të lutem kontrollo që gjendet një disk brenda në lexues."
 
-#: src/totem-disc.c:243
+#: src/totem-disc.c:250
 #, c-format
-#, fuzzy
 msgid "Failed to open device %s for reading: %s"
-msgstr "Dështoi tek hap s për s"
+msgstr "Dështoi në hapjen e dispozitivit %s për lexim: %s"
 
-#: src/totem-disc.c:254
+#: src/totem-disc.c:261
 #, c-format
-#, fuzzy
 msgid "Failed to retrieve capabilities of device %s: %s"
-msgstr "Dështoi tek nga s s"
+msgstr "Dështoi në marrjen e mundësive të dispozitivit %s: %s"
 
-#: src/totem-disc.c:287
+#: src/totem-disc.c:294
 #, c-format
-#, fuzzy
 msgid "Drive status 0x%x (%s) - check disc"
-msgstr "gjendja x s"
+msgstr "Gjendja e lexuesit 0x%x (%s) - kontrollo diskun"
 
-#: src/totem-disc.c:320
+#: src/totem-disc.c:327
 #, c-format
-#, fuzzy
 msgid "Unexpected error status %d while mounting %s"
-msgstr "gabim gjendja s"
+msgstr "Gabim i papritur %d ndërsa montohej %s"
 
-#: src/totem-disc.c:372
+#: src/totem-disc.c:379
 #, c-format
-#, fuzzy
 msgid "Error getting %s disc status: %s"
-msgstr "Gabim s gjendja s"
+msgstr "Gabim në marrjen e gjendjes së diskut %s: %s"
 
-#: src/totem-disc.c:401
+#: src/totem-disc.c:408
 #, c-format
-#, fuzzy
 msgid "Unexpected/unknown cd type 0x%x (%s)"
-msgstr "nuk njihet lloji x s"
+msgstr "Lloj i papritur/panjohur cd-je 0x%x (%s)"
 
-#: src/totem-disc.c:565
-#, fuzzy
+#: src/totem-disc.c:572
 msgid "Audio CD"
 msgstr "CD Audio"
 
-#: src/totem-disc.c:567
-#, fuzzy
+#: src/totem-disc.c:574
 msgid "Video CD"
 msgstr "Video CD"
 
-#: src/totem-disc.c:569
-#, fuzzy
+#: src/totem-disc.c:576
 msgid "DVD"
 msgstr "DVD"
 
 #: src/totem-interface.c:112
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't load the '%s' interface."
-msgstr "ngarkoje Hap Vendodhja interfaqja."
+msgstr "Nuk munda të ngarkoj ndërfaqen '%s'."
 
 #: src/totem-interface.c:114 src/totem-interface.c:116
-#, fuzzy
 msgid "Make sure that Totem is properly installed."
-msgstr "është instaluar."
+msgstr "Sigurohu që Totem është instaluar siç duhet."
 
 #. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
-#: src/totem-mozilla-viewer.c:59 src/totem.c:309 src/totem.c:336
-#: src/totem.c:700 src/totem.c:805
-#, fuzzy, c-format
+#: src/totem-mozilla-viewer.c:59 src/totem.c:312 src/totem.c:339
+#: src/totem.c:713 src/totem.c:818
+#, c-format
 msgid "Totem could not play '%s'."
-msgstr "nuk lexo."
+msgstr "Totem nuk arriti të luajë '%s'."
 
 #: src/totem-mozilla-viewer.c:91 src/totem-mozilla-viewer.c:98
-#, fuzzy
 msgid "Couldn't load the main interface (mozilla-viewer.glade)."
-msgstr "ngarkoje interfaqja."
+msgstr "Nuk munda të ngarkoj ndërfaqen kryesore (mozilla-viewer.glade)."
 
 #: src/totem-mozilla-viewer.c:91 src/totem-mozilla-viewer.c:98
-#, fuzzy
 msgid "Make sure that the Totem plugin is properly installed."
-msgstr "është instaluar."
+msgstr "Sigurohu që plugin-i i Totem është instaluar siç duhet."
 
 #: src/totem-mozilla-viewer.c:109
-#, fuzzy
 msgid "The Totem plugin could not startup."
-msgstr "nuk."
+msgstr "Plugin-i i Totem-it nuk mundi të niset."
 
-#: src/totem-mozilla-viewer.c:109 src/totem.c:3208
-#, fuzzy
+#: src/totem-mozilla-viewer.c:109 src/totem.c:3222
 msgid "No reason."
-msgstr "Jo."
+msgstr "Pa arsye."
 
-#: src/totem-mozilla-viewer.c:141 src/totem.c:3389
-#, fuzzy
+#: src/totem-mozilla-viewer.c:141 src/totem.c:3403
 msgid "Could not initialise the thread-safe libraries."
-msgstr "nuk."
+msgstr "Nuk munda të nis libraritë thread-safe."
 
 #: src/totem-mozilla-viewer.c:141
-#, fuzzy
 msgid "Verify your system installation. The Totem plugin will now exit."
-msgstr "Verifikimi sistemi tani."
+msgstr "Kontrollo instalimin e sistemit tënd. Plugin-i i Totem-it do përfundojë tani."
 
 #: src/totem-options.c:36
 msgid "Backend options"
-msgstr ""
+msgstr "Mundësi të përparuara"
 
 #: src/totem-options.c:37
-#, fuzzy
 msgid "Enable debug"
-msgstr "Aktivo debug"
+msgstr "Aktivo gjetjen e gabimeve"
 
 #: src/totem-options.c:41
 msgid "Seek Forwards"
-msgstr ""
+msgstr "Kërko Përpara"
 
 #: src/totem-options.c:42
 msgid "Seek Backwards"
-msgstr ""
+msgstr "Kërko Prapa"
 
 #: src/totem-options.c:43
-#, fuzzy
 msgid "Volume Up"
-msgstr "Ngre Volumin"
+msgstr "Ngri Volumin"
 
 #: src/totem-options.c:44
-#, fuzzy
 msgid "Volume Down"
-msgstr "Ul volumin"
+msgstr "Ul Volumin"
 
 #: src/totem-options.c:45
-#, fuzzy
 msgid "Toggle Fullscreen"
-msgstr "Kavo Ekran të plotë"
+msgstr "Zgjidh Ekranin e Plotë"
 
 #: src/totem-options.c:46
-#, fuzzy
 msgid "Show/Hide Controls"
-msgstr "Shfaq Kontrollet"
+msgstr "Shfaq/Fshih Kontrollet"
 
 #: src/totem-options.c:47
-#, fuzzy
 msgid "Quit"
-msgstr "Dalja"
+msgstr "Dil"
 
 #: src/totem-options.c:48
-#, fuzzy
 msgid "Enqueue"
-msgstr "Shtoje në listë"
+msgstr "Shtoje në rradhë"
 
 #: src/totem-options.c:49
-#, fuzzy
 msgid "Replace"
 msgstr "Zëvendëso"
 
 #: src/totem-options.c:110
-#, fuzzy, c-format
+#, c-format
 msgid "Option '%s' is unknown and was ignored\n"
-msgstr "është nuk njihet dhe j"
-
-#: src/totem-playlist.c:299
-#, fuzzy
-msgid "Could not save the playlist"
-msgstr "nuk ruaj"
-
-#: src/totem-playlist.c:631
-#, fuzzy
-msgid "Select Movies or Playlists"
-msgstr "Zgjidh"
-
-#: src/totem-playlist.c:807
-#, fuzzy
-msgid "Save playlist"
-msgstr "Ruaj listën e ekzekutimit"
-
-#: src/totem-playlist.c:852
-#, fuzzy
-msgid "Overwrite file?"
-msgstr "Mbishkruaj file?"
-
-#: src/totem-playlist.c:854
-#, fuzzy, c-format
-msgid "A file named '%s' already exists.  Are you sure you want to overwrite it?"
-msgstr "A ekziston?"
-
-#: src/totem-playlist.c:1053
-#, fuzzy
-msgid "Filename"
-msgstr "Emri i file"
-
-#: src/totem-playlist.c:1619
-#, fuzzy
-msgid "Playlist error"
-msgstr "Lista e riprodhimit të melodive gabim"
-
-#: src/totem-playlist.c:1619
-#, fuzzy, c-format
-msgid "The playlist '%s' could not be parsed, it might be damaged."
-msgstr "nuk."
+msgstr "Mundësia '%s' nuk njihet dhe u shpërfill\n"
 
 #: src/totem-pl-parser.c:215
 #, c-format
-#, fuzzy
 msgid "Couldn't write parser: %s"
-msgstr "s"
+msgstr "Nuk munda të shkruaj analizën: %s"
 
 #: src/totem-pl-parser.c:321 src/totem-pl-parser.c:444
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't open file '%s': %s"
-msgstr "hap"
+msgstr "Nuk munda të hap file-n '%s': %s"
+
+#: src/totem-playlist.c:299
+msgid "Could not save the playlist"
+msgstr "Nuk munda të ruaj listën"
+
+#: src/totem-playlist.c:631
+msgid "Select Movies or Playlists"
+msgstr "Zgjidh Filmat ose Listën"
+
+#: src/totem-playlist.c:808
+msgid "Save playlist"
+msgstr "Ruaj listën"
+
+#: src/totem-playlist.c:853
+msgid "Overwrite file?"
+msgstr "Ta mbishkruaj file-n?"
+
+#: src/totem-playlist.c:855
+#, c-format
+msgid "A file named '%s' already exists.  Are you sure you want to overwrite it?"
+msgstr "Një file i quajtur '%s' ekziston.  Je i sigurt që do ta mbishkruash?"
+
+#: src/totem-playlist.c:1054
+msgid "Filename"
+msgstr "Emri i file-t"
+
+#: src/totem-playlist.c:1501
+msgid "playlist"
+msgstr "lista e riprodhimit"
+
+#: src/totem-playlist.c:1645
+msgid "Playlist error"
+msgstr "Gabim liste riprodhimi"
+
+#: src/totem-playlist.c:1645
+#, c-format
+msgid "The playlist '%s' could not be parsed, it might be damaged."
+msgstr "Lista e riprodhimit '%s' nuk mund të analizohej, mund të ketë gabime."
 
 #: src/totem-preferences.c:87
-#, fuzzy
 msgid "Enable visual effects?"
-msgstr "Emri nga"
+msgstr "T'i aktivizoj efektet vizuale?"
 
 #: src/totem-preferences.c:89
-#, fuzzy
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
-msgstr "në punim e sipër aktiv?"
+msgstr ""
+"Ngjan që je duke xhiruar Totem nga larg.\n"
+"I sigurtë për aktivizimin e efekteve vizuale?"
 
 #: src/totem-preferences.c:142
-#, fuzzy
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted."
-msgstr "nga për në vazhdim është"
+msgstr "Ky rregullim do ketë efekt filmin tjetër, ose kur Totem riniset."
 
 #: src/totem-preferences.c:186
-#, fuzzy
 msgid "Switching on or off this type of TV-Out requires a restart to take effect."
-msgstr "në lloji nga Zvogëlo a."
+msgstr "Shuajtja apo ndezja e këtij lloji TV-Out kërkon rinisje për të patur efekt."
 
-#: src/totem-preferences.c:322
-#, fuzzy
+#: src/totem-preferences.c:336
 msgid "Totem could not start the file manager."
-msgstr "nuk nisje."
+msgstr "Totem nuk mundi të nisë organizuesin e file-ve."
 
-#: src/totem-preferences.c:350
-#, fuzzy
+#: src/totem-preferences.c:364
 msgid "Changing the visuals effect type will require a restart to take effect."
-msgstr "lloji a."
+msgstr "Ndryshimi i efekteve vizualë kërkon rinisje për të patur efekt."
 
-#: src/totem-preferences.c:443
-#, fuzzy
+#: src/totem-preferences.c:457
 msgid ""
 "The change of audio output type will only take effect when Totem is "
 "restarted."
-msgstr "nga për në vazhdim është"
+msgstr "Ndryshimi i daljes së zërit do ketë efekt vetëm kur Totem do riniset."
 
 #: src/totem-properties-main.c:112
-#, fuzzy
 msgid "Audio/Video"
-msgstr "Zëri"
+msgstr "Audio/Video"
 
 #: src/totem-screenshot.c:151 src/totem-screenshot.c:162
 #, c-format
 msgid "Screenshot%d.png"
-msgstr ""
+msgstr "PamjeEkrani%d.png"
 
 #: src/totem-screenshot.c:204
-#, fuzzy, c-format
+#, c-format
 msgid "File '%s' already exists."
-msgstr "File ekziston."
+msgstr "File '%s' ekziston."
 
 #: src/totem-screenshot.c:206
-#, fuzzy
 msgid "The screenshot was not saved"
-msgstr "nuk"
+msgstr "Pamje e ekranit nuk u ruajt"
 
 #: src/totem-screenshot.c:217
-#, fuzzy
 msgid "There was an error saving the screenshot."
-msgstr "gabim."
+msgstr "Ndodhi një gabim në ruajtjen e pamjes së ekranit."
 
 #: src/totem-screenshot.c:250
-#, fuzzy
 msgid "Screenshot.png"
-msgstr "Ruaj Pamjen e Ekranit"
+msgstr "PamjeEkrani.png"
 
 #: src/totem-statusbar.c:91
-#, fuzzy
 msgid "Shadow type"
 msgstr "Lloji i hijes"
 
 #: src/totem-statusbar.c:92
-#, fuzzy
 msgid "Style of bevel around the statusbar text"
-msgstr "Stili i rilievit rreth tekstit të panelit të gjendjes"
+msgstr "Lloji i rilievit rreth tekstit të panelit të gjendjes"
 
-#: src/totem-statusbar.c:124 src/totem.c:251 src/totem.c:555
-#, fuzzy
+#: src/totem-statusbar.c:124 src/totem.c:251 src/totem.c:564
 msgid "Stopped"
-msgstr "U ndërpre"
+msgstr "Ndalur"
 
 #: src/totem-statusbar.c:141
 msgid "0:00 / 0:00"
-msgstr ""
+msgstr "0:00 / 0:00"
 
 #: src/totem-statusbar.c:166
-#, fuzzy, c-format
+#, c-format
 msgid "%s (Streaming)"
-msgstr "Rrjedhat vazhduese"
+msgstr "%s (Duke rrjedhur)"
 
 #. Elapsed / Total Length
 #: src/totem-statusbar.c:173 src/totem-time-label.c:70
-#, fuzzy, c-format
+#, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
 #: src/totem-statusbar.c:176
 #, c-format
-#, fuzzy
 msgid "Seek to %s / %s"
-msgstr "tek s s"
+msgstr "Kërko në %s / %s"
 
 #: src/totem-statusbar.c:234
-#, fuzzy
 msgid "Buffering"
-msgstr "Regjistrimi i përkohshëm"
+msgstr "Duke regjistruar"
 
 #. eg: 75 %
 #: src/totem-statusbar.c:237
-#, fuzzy, c-format
+#, c-format
 msgid "%d %%"
 msgstr "%d %%"
 
 #: src/totem-sublang.c:108 src/totem-sublang.c:130
-#, fuzzy
 msgid "None"
 msgstr "Asnjë"
 
 #: src/totem.c:241
-#, fuzzy
 msgid "Playing"
 msgstr "Duke riprodhuar"
 
 #: src/totem.c:246
-#, fuzzy
 msgid "Paused"
-msgstr "E pezulluar"
+msgstr "Pezulluar"
 
 #: src/totem.c:287
-#, fuzzy
 msgid "Totem could not eject the optical media."
-msgstr "nuk."
+msgstr "Totem nuk mundi të nxjerrë diskun optik."
 
-#: src/totem.c:362
-#, fuzzy, c-format
+#: src/totem.c:365
+#, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
 "appropriate plugins to handle it."
-msgstr "lexo lloji nga nuk."
+msgstr ""
+"Totem nuk mundi të riprodhojë këtë lloj medieje (%s) pasi nuk ke plugin-at "
+"e duhur për të."
 
-#: src/totem.c:363
-#, fuzzy
+#: src/totem.c:366
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
-msgstr "instalo dhe lexo."
+msgstr ""
+"Të lutem instalo plugin-at e nevojshëm dhe rinis Totem për të riprodhuar këtë "
+"media."
 
-#: src/totem.c:371
-#, fuzzy, c-format
+#: src/totem.c:374
+#, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
 "it."
-msgstr "nuk lexo a është."
+msgstr ""
+"Totem nuk mundi të riprodhojë këtë medie (%s) edhe pse një gjendet një plugin "
+"për të."
 
-#: src/totem.c:372
-#, fuzzy
+#: src/totem.c:375
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
-msgstr "Ti a është në dhe është."
+msgstr ""
+"Duhet të kontrollosh që një disk është gjendet në lexues dhe që është "
+"konfiguruar siç duhet."
 
 #. Title
-#: src/totem.c:548
-#, fuzzy, c-format
+#: src/totem.c:557
+#, c-format
 msgid "%s - Totem Movie Player"
-msgstr "Lojtari"
+msgstr "%s Riprodhuesi i Filmave Totem"
 
-#: src/totem.c:562
-#, fuzzy
+#: src/totem.c:571
 msgid "No file"
-msgstr "Jo"
+msgstr "Asnjë file"
 
-#: src/totem.c:598 src/totem.c:1887
+#: src/totem.c:607 src/totem.c:1901
 msgid "Totem"
-msgstr ""
+msgstr "Totem"
 
-#: src/totem.c:1145 src/totem.c:1147
-#, fuzzy
+#: src/totem.c:1158 src/totem.c:1160
 msgid "An error occured"
-msgstr "gabim"
+msgstr "Ndodhi një gabim"
 
-#: src/totem.c:1478
-#, fuzzy
+#: src/totem.c:1492
 msgid "Select files"
-msgstr "Zgjidh"
+msgstr "Zgjidh file-t"
 
-#: src/totem.c:1845
-#, fuzzy
+#: src/totem.c:1563
+msgid "Open Location..."
+msgstr "Hap Vendndodhjen..."
+
+#: src/totem.c:1859
 msgid "Totem could not display the help contents."
-msgstr "nuk ndihmë."
+msgstr "Totem nuk mundi të shfaqë përmbajtjen e ndihmës."
 
-#: src/totem.c:1883
-#, fuzzy, c-format
+#: src/totem.c:1897
+#, c-format
 msgid "Movie Player using %s"
-msgstr "Lojtari"
+msgstr "Riprodhues Filmi duke përdorur %s"
 
-#: src/totem.c:1889 src/vanity.c:261
-#, fuzzy
+#: src/totem.c:1903 src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
-msgstr "Copyright"
+msgstr "Copyright © 2002-2005 Bastien Nocera"
 
-#: src/totem.c:1894 src/vanity.c:266
-#, fuzzy
+#: src/totem.c:1908 src/vanity.c:266
 msgid "translator-credits"
-msgstr "Laurent Dhima <laurenti@alblinux.net>"
-
-#: src/totem.c:1927 src/totem.c:1935 src/vanity.c:299 src/vanity.c:307
-#, fuzzy
-msgid "Totem could not get a screenshot of that film."
-msgstr "nuk merr a nga."
-
-#: src/totem.c:1935
-#, fuzzy
-msgid "Please file a bug, this isn't supposed to happen."
-msgstr "a difekt."
-
-#: src/totem.c:1962
-#, fuzzy
-msgid "Totem couldn't show the movie properties window."
-msgstr "pronësitë dritare."
-
-#: src/totem.c:1962
-#, fuzzy
-msgid "Make sure that Totem is correctly installed."
-msgstr "është instaluar."
-
-#: src/totem.c:2048
-#, fuzzy, c-format
-msgid "Totem could not seek in '%s'."
-msgstr "nuk në."
-
-#: src/totem.c:3208
-#, fuzzy
-msgid "Totem could not startup."
-msgstr "nuk."
-
-#: src/totem.c:3389
-#, fuzzy
-msgid "Verify your system installation. Totem will now exit."
-msgstr "Verifikimi sistemi tani."
-
-#: src/totem.c:3410
-msgid "Totem couln't initialise the configuration engine."
 msgstr ""
+"Laurent Dhima <laurenti@alblinux.net>\n"
+"Elian Myftiu <elian@alblinux.net>"
 
-#: src/totem.c:3410
-#, fuzzy
+#: src/totem.c:1941 src/totem.c:1949 src/vanity.c:299 src/vanity.c:307
+msgid "Totem could not get a screenshot of that film."
+msgstr "Totem nuk mundi të marrë një pamje ekrani nga ai film."
+
+#: src/totem.c:1949
+msgid "Please file a bug, this isn't supposed to happen."
+msgstr "Të lutem njofto këtë difekt, kjo nuk duhet të ndodhte."
+
+#: src/totem.c:1976
+msgid "Totem couldn't show the movie properties window."
+msgstr "Totem nuk mundi të shfaqë dritaren e pronësisë së filmit."
+
+#: src/totem.c:1976
+msgid "Make sure that Totem is correctly installed."
+msgstr "Sigurohu që Totem është instaluar siç duhet."
+
+#: src/totem.c:2062
+#, c-format
+msgid "Totem could not seek in '%s'."
+msgstr "Totem nuk mundi të kërkojë në '%s'."
+
+#: src/totem.c:3222
+msgid "Totem could not startup."
+msgstr "Totem nuk mundi të nisë."
+
+#: src/totem.c:3403
+msgid "Verify your system installation. Totem will now exit."
+msgstr "Kontrollo instalimin e sistemit. Totem tani do dalë."
+
+#: src/totem.c:3423
+msgid "Totem couln't initialise the configuration engine."
+msgstr "Totem nuk mundi të niste motorin e konfigurimit."
+
+#: src/totem.c:3423
 msgid "Make sure that GNOME is properly installed."
-msgstr "GNOME është instaluar."
+msgstr "Sigurohu që GNOME është instaluar saktë."
+
+#. Main window
+#: src/totem.c:3450
+msgid "main window"
+msgstr "dritarja kryesore"
+
+#: src/totem.c:3455
+msgid "video popup menu"
+msgstr "menuja e videos"
 
 #: src/vanity.c:75
-#, fuzzy
 msgid "Debug mode on"
-msgstr "Gjetja dhe korrigjimi i gabimeve modaliteti në"
+msgstr "Modaliteti gjetjeve të gabimeve ndezur"
 
 #: src/vanity.c:255
-#, fuzzy, c-format
+#, c-format
 msgid "Webcam utility using %s"
-msgstr "Webcam"
+msgstr "Webcam po përdor %s"
 
 #: src/vanity.c:307
-#, fuzzy
 msgid "Please file a bug, this isn't supposed to happen"
-msgstr "a difekt"
+msgstr "Të lutem nis këtë gabim, kjo nuk duhej të ndodhte"
 
 #: src/vanity.c:550
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Vanity could not startup:\n"
 "%s"
-msgstr "nuk j"
+msgstr ""
+"Vanity nuk mundi të nisej:\n"
+"%s"
 
 #: src/vanity.c:551
-#, fuzzy
 msgid "No reason"
-msgstr "Jo"
+msgstr "Pa arsye"
 
 #: src/vanity.c:589
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
 "Reason: %s"
-msgstr "nuk kontakti"
+msgstr ""
+"Vanity nuk mundi të komunikojë me webcam-in.\n"
+"Shkaku: %s"
 
 #: src/vanity.c:605
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
 "Reason: %s"
-msgstr "nuk lexo"
+msgstr ""
+"Vanity nuk mundi të riprodhojë video nga webcam-i.\n"
+"Shkaku: %s"
 
 #: src/vanity.c:641
-#, fuzzy
 msgid "Vanity Webcam Utility"
-msgstr "Webcam Ndihmues"
+msgstr "Vegël Webcam-i Vanity"
 
 #: src/vanity.c:646
-#, fuzzy
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
-msgstr "nuk sistemi tani."
+msgstr ""
+"Nuk munda të nis libraritë thread-safe.\n"
+"Kontrollo instalimin e sistemit tënd. Vanity tani po del."
 
 #: src/vanity.c:671
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Vanity couln't initialise the \n"
 "configuration engine:\n"
 "%s"
-msgstr "j"
+msgstr ""
+"Vanity nuk mundi të nisë \n"
+"motorin e konfigurimit:\n"
+"%s"
 
 #: src/vanity.c:691 src/vanity.c:706
-#, fuzzy
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
-msgstr "ngarkoje interfaqja është instaluar."
+msgstr ""
+"Nuk munda të ngarkoj ndërfaqen kryesore (vanity.glade).\n"
+"Sigurohu që Vanity është instaluar siç duhet."
 
 #: src/video-utils.c:290
-#, fuzzy, c-format
+#, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d orë"
 msgstr[1] "%d orë"
 
 #: src/video-utils.c:292
-#, fuzzy, c-format
+#, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minutë"
 msgstr[1] "%d minutë"
 
 #: src/video-utils.c:295
-#, fuzzy, c-format
+#, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
-msgstr[0] "sekondë"
-msgstr[1] "sekondë"
+msgstr[0] "%d sekondë"
+msgstr[1] "%d sekonda"
 
 #. hour:minutes:seconds
 #: src/video-utils.c:301
 #, c-format
-#, fuzzy
 msgid "%s %s %s"
-msgstr "s s s"
+msgstr "%s %s %s"
 
 #. minutes:seconds
 #: src/video-utils.c:304
-#, fuzzy, c-format
+#, c-format
 msgid "%s %s"
 msgstr "%s %s"
 
 #. seconds
 #: src/video-utils.c:307
-#, fuzzy, c-format
+#, c-format
 msgid "%s"
 msgstr "%s"
 
