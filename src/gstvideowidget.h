@@ -108,11 +108,7 @@ gboolean gst_video_widget_set_scale_override (GstVideoWidget * vw,
 gboolean gst_video_widget_set_scale (GstVideoWidget * vw, gfloat scale);
 gfloat gst_video_widget_get_scale (GstVideoWidget * vw);
 
-/* Set/Get the XID of the Xwindow to be embedded */
-
-void gst_video_widget_set_xembed_xid (GstVideoWidget * vw, gulong xid);
-gulong gst_video_widget_get_xembed_xid (GstVideoWidget * vw);
-gboolean gst_video_widget_destroy_embedded_window (GstVideoWidget * vw);
+GdkWindow *gst_video_widget_get_video_window (GstVideoWidget * vw);
 
 /* Set/Get the GdkPixbuf used for logo display */
 

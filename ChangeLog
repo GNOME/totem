@@ -1,3 +1,28 @@
+2003-12-23  Julien MOUTTE <julien@moutte.net>
+
+	* configure.in: Switching to GStreamer 0.7.x and using
+	gstreamer-interfaces package.
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_realized),
+	(print_tag), (got_found_tag), (got_video_size),
+	(bacon_video_widget_finalize), (bacon_video_widget_open),
+	(bacon_video_widget_play), (bacon_video_widget_seek),
+	(bacon_video_widget_stop), (bacon_video_widget_close),
+	(bacon_video_widget_pause), (bacon_video_widget_can_set_volume),
+	(bacon_video_widget_set_volume), (bacon_video_widget_get_volume),
+	(bacon_video_widget_set_show_visuals),
+	(bacon_video_widget_get_visuals_list),
+	(bacon_video_widget_set_visuals), (bacon_video_widget_is_playing),
+	(bacon_video_widget_new): Implement the newest libgstplay API.
+	* src/gstvideowidget.c: (gst_video_widget_reorder_windows),
+	(gst_video_widget_realize), (gst_video_widget_expose),
+	(gst_video_widget_allocate), (gst_video_widget_set_property),
+	(gst_video_widget_get_property), (gst_video_widget_class_init),
+	(gst_video_widget_get_video_window),
+	(gst_video_widget_set_logo_focus): Implement a new video widget
+	compliant with the XOverlay interface using a model similar to
+	xine-lib.
+	* src/gstvideowidget.h:
+
 2003-12-22  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.applications:

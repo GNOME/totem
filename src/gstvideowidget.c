@@ -34,7 +34,6 @@ enum
   ARG_VISIBLE_CURSOR,
   ARG_LOGO_FOCUSED,
   ARG_EVENT_CATCHER,
-  ARG_XID,
   ARG_SOURCE_WIDTH,
   ARG_SOURCE_HEIGHT,
   ARG_LOGO,
@@ -47,8 +46,6 @@ struct _GstVideoWidgetPrivate
   GdkWindow *video_window;
 
   GdkPixbuf *logo_pixbuf;
-
-  gulong xembed_xid;
   
   guint video_window_width;
   guint video_window_height;
@@ -156,10 +153,8 @@ gst_video_widget_reorder_windows (GstVideoWidget * vw)
     {
       gdk_window_show (vw->priv->video_window);
     }
-  else
-    {
-      gtk_widget_queue_draw (GTK_WIDGET (vw));
-    }
+  
+  gtk_widget_queue_draw (GTK_WIDGET (vw));
 }
 
 /* =========================================== */
@@ -180,7 +175,7 @@ gst_video_widget_realize (GtkWidget * widget)
   g_return_if_fail (vw != NULL);
 
   GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
-
+  
   /* Creating our widget's window */
 
   attributes.window_type = GDK_WINDOW_CHILD;
@@ -219,6 +214,26 @@ gst_video_widget_realize (GtkWidget * widget)
   gdk_window_set_user_data (vw->priv->event_window, widget);
 
   gdk_window_show (vw->priv->event_window);
+  
+  /* Creating our video window */
+
+  attributes.window_type = GDK_WINDOW_CHILD;
+  attributes.x = 0;
+  attributes.y = 0;
+  attributes.width = widget->allocation.width;
+  attributes.height = widget->allocation.height;
+  attributes.wclass = GDK_INPUT_OUTPUT;
+  attributes.event_mask = gtk_widget_get_events (widget);
+  attributes.event_mask |= GDK_EXPOSURE_MASK;
+
+  attributes_mask = GDK_WA_X | GDK_WA_Y;
+
+  vw->priv->video_window = gdk_window_new (widget->window,
+				           &attributes, attributes_mask);
+
+  gdk_window_set_user_data (vw->priv->video_window, widget);
+
+  gdk_window_show (vw->priv->video_window);
 
   widget->style = gtk_style_attach (widget->style, widget->window);
 
@@ -281,12 +296,11 @@ gst_video_widget_expose (GtkWidget * widget, GdkEventExpose * event)
   g_return_val_if_fail (widget != NULL, FALSE);
   g_return_val_if_fail (GST_IS_VIDEO_WIDGET (widget), FALSE);
   g_return_val_if_fail (event != NULL, FALSE);
-
+  
   vw = GST_VIDEO_WIDGET (widget);
 
   if (GTK_WIDGET_VISIBLE (widget) && GTK_WIDGET_MAPPED (widget))
     {
-
       if ((vw->priv->logo_focused) && (vw->priv->logo_pixbuf))
 	{
 	  GdkPixbuf *frame;
@@ -335,7 +349,7 @@ gst_video_widget_expose (GtkWidget * widget, GdkEventExpose * event)
 
 	  pixels = gdk_pixbuf_get_pixels (frame) +
 	    rowstride * event->area.y + event->area.x * 3;
-
+          
 	  gdk_draw_rgb_image_dithalign (widget->window,
 					widget->style->black_gc,
 					event->area.x, event->area.y,
@@ -367,7 +381,7 @@ gst_video_widget_expose (GtkWidget * widget, GdkEventExpose * event)
         }
     }
     
-  return FALSE;
+  return TRUE;
 }
 
 /* Size request for our widget */
@@ -529,7 +543,17 @@ gst_video_widget_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	gdk_window_move_resize (vw->priv->event_window,
 				0, 0, allocation->width, allocation->height);
 
-      vw->priv->video_window_width = width;
+      /* X windows can only be resized to 1,1 not 0,0 so we have to handle
+         the case where source size is 0,0 (not set basically). So instead
+         of setting the video window to 0,0 we set it to 1,1 to match with
+         what X will really do. If we don't do that we have an infinite loop
+         with the expose event reacting on video window geometry changes. */
+      if (!width)
+        width = 1;
+      if (!height)
+        height = 1;
+      
+      vw->priv->video_window_width = width; 
       vw->priv->video_window_height = height;
       
       if (GDK_IS_WINDOW (vw->priv->video_window))
@@ -580,9 +604,6 @@ gst_video_widget_set_property (GObject * object, guint prop_id,
       vw->priv->event_catcher = g_value_get_boolean (value);
       gst_video_widget_reorder_windows (vw);
       break;
-    case ARG_XID:
-      gst_video_widget_set_xembed_xid (vw, g_value_get_ulong (value));
-      break;
     case ARG_SOURCE_WIDTH:
       vw->priv->source_width = g_value_get_int (value);
       break;
@@ -632,9 +653,6 @@ gst_video_widget_get_property (GObject * object, guint prop_id,
       break;
     case ARG_EVENT_CATCHER:
       g_value_set_boolean (value, vw->priv->event_catcher);
-      break;
-    case ARG_XID:
-      g_value_set_ulong (value, vw->priv->xembed_xid);
       break;
     case ARG_SOURCE_WIDTH:
       g_value_set_int (value, vw->priv->source_width);
@@ -715,14 +733,6 @@ gst_video_widget_class_init (GstVideoWidgetClass * klass)
 							 G_PARAM_READWRITE));
 
   g_object_class_install_property (gobject_class,
-				   ARG_XID,
-				   g_param_spec_ulong ("video_xid",
-						       "video window xid",
-						       "Video playback Xwindow XID",
-						       0, G_MAXLONG, 1,
-						       G_PARAM_READWRITE));
-
-  g_object_class_install_property (gobject_class,
 				   ARG_SOURCE_WIDTH,
 				   g_param_spec_int ("source_width",
 						     "video source width",
@@ -786,94 +796,12 @@ gst_video_widget_init (GstVideoWidget * vw)
 /*                                                               */
 /* ============================================================= */
 
-/**
- * gst_video_widget_set_xembed_xid:
- * @vw: a #GstVideoWidget
- * @xid: the window ID of an existing window.
- * 
- * Reparents a pre-existing video window into a #GstVideoWidget. This is
- *  meant to embed a foreign Xwindow created by xvideosink for example.
- *
- * Remember you can set this value trough the "video_xid" property. This will
- *  trigger the embedding the same way than calling this method.
- *
- **/
-void
-gst_video_widget_set_xembed_xid (GstVideoWidget * vw, gulong xid)
+GdkWindow *
+gst_video_widget_get_video_window (GstVideoWidget * vw)
 {
-  GtkWidget *widget = GTK_WIDGET (vw);
-
-  gdk_threads_enter ();
-
-  vw->priv->logo_focused = FALSE;
-
-  if (GDK_IS_WINDOW (vw->priv->video_window))
-    {
-      gdk_window_destroy (vw->priv->video_window);
-      vw->priv->video_window = NULL;
-    }
-
-  vw->priv->video_window = gdk_window_foreign_new (xid);
-
-  if (vw->priv->video_window)
-    {
-      gint video_x, video_y, video_width, video_height, video_depth;
-
-      gdk_window_reparent (vw->priv->video_window, widget->window, 0, 0);
-
-      gdk_window_show (vw->priv->video_window);
-
-      if (vw->priv->event_catcher)
-	gdk_window_raise (vw->priv->event_window);
-
-      vw->priv->xembed_xid = xid;
-
-      gtk_widget_queue_resize (GTK_WIDGET (vw));
-
-    }
-  else
-    g_warning ("Trying to embed a window which has been destroyed");
-
-  gdk_threads_leave ();
-}
-
-/**
- * gst_video_widget_get_xembed_xid:
- * @vw: a #GstVideoWidget
- * 
- * Get current embeded window xid.
- *
- * Remember you can get this value trough the "video_xid" property.
- *
- * Return value: a #gulong referencing embeded video window.
- **/
-gulong
-gst_video_widget_get_xembed_xid (GstVideoWidget * vw)
-{
-  g_return_val_if_fail (vw != NULL, 0);
-  g_return_val_if_fail (GST_IS_VIDEO_WIDGET (vw), 0);
-  return vw->priv->xembed_xid;
-}
-
-gboolean
-gst_video_widget_destroy_embedded_window (GstVideoWidget * vw)
-{
-  g_return_val_if_fail (vw != NULL, FALSE);
-  g_return_val_if_fail (GST_IS_VIDEO_WIDGET (vw), FALSE);
-  
-  if (vw->priv->xembed_xid)
-    {
-      gdk_threads_enter ();
-      gdk_window_destroy (vw->priv->video_window);
-      gdk_threads_leave ();
-      vw->priv->video_window = NULL;
-    }
-  
-  vw->priv->logo_focused = TRUE;
-
-  gst_video_widget_reorder_windows (vw);
-    
-  return TRUE;
+  g_return_val_if_fail (vw != NULL, NULL);
+  g_return_val_if_fail (GST_IS_VIDEO_WIDGET (vw), NULL);
+  return vw->priv->video_window;
 }
 
 /**
@@ -1049,7 +977,7 @@ gst_video_widget_set_logo_focus (GstVideoWidget * vw, gboolean focused)
 {
   g_return_val_if_fail (vw != NULL, FALSE);
   g_return_val_if_fail (GST_IS_VIDEO_WIDGET (vw), FALSE);
-
+  
   vw->priv->logo_focused = focused;
 
   gst_video_widget_reorder_windows (vw);
