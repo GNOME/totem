@@ -1,3 +1,11 @@
+2004-11-08  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_subtitle_mrl), (bacon_video_widget_open):
+	Try to auto-load subtitle files for local files. The suffix must
+	be three letters, and the filename of the subtitle only differ by
+	the suffix (which must be a known subtitle suffix) (Closes: #123060)
+
 2004-11-07  Bastien Nocera  <hadess@hadess.net>
 
 	* README: update dependencies (Closes: #157530)
