@@ -43,6 +43,7 @@
 #include "totem.h"
 #include "totem-private.h"
 #include "totem-preferences.h"
+#include "totem-stock-icons.h"
 
 #include "debug.h"
 
@@ -56,12 +57,6 @@
 
 #define VOLUME_DOWN_OFFSET -8
 #define VOLUME_UP_OFFSET 8
-
-typedef enum {
-	STATE_PLAYING,
-	STATE_PAUSED,
-	STATE_STOPPED
-} TotemStates;
 
 static const GtkTargetEntry target_table[] = {
 	{ "text/uri-list", 0, 0 },
@@ -256,6 +251,8 @@ totem_action_exit (Totem *totem)
 	if (totem->bvw)
 		gtk_widget_destroy (GTK_WIDGET (totem->bvw));
 
+	totem_named_icons_dispose (totem);
+
 	if (totem->playlist)
 	{
 		char *path;
@@ -283,40 +280,37 @@ static void
 play_pause_set_label (Totem *totem, TotemStates state)
 {
 	GtkWidget *image;
-	char *image_path;
+	const char *id;
 
 	switch (state)
 	{
 	case STATE_PLAYING:
 		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
 				_("Playing"));
-		image_path = gnome_program_locate_file (NULL,
-				GNOME_FILE_DOMAIN_APP_DATADIR,
-				"totem/stock_media_pause.png", FALSE, NULL);
+		id = "stock-media-pause";
 		break;
 	case STATE_PAUSED:
 		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
 				_("Paused"));
-		image_path = gnome_program_locate_file (NULL,
-				GNOME_FILE_DOMAIN_APP_DATADIR,
-				"totem/stock_media_play.png", FALSE, NULL);
+		id = "stock-media-play";
 		break;
 	case STATE_STOPPED:
 		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
 				_("Stopped"));
-		image_path = gnome_program_locate_file (NULL,
-				GNOME_FILE_DOMAIN_APP_DATADIR,
-				"totem/stock_media_play.png", FALSE, NULL);
+		id = "stock-media-play";
 		break;
 	default:
 		return;
 	}
 
 	image = glade_xml_get_widget (totem->xml, "tmw_play_pause_button_image");
-	gtk_image_set_from_file (GTK_IMAGE (image), image_path);
+	gtk_image_set_from_pixbuf (GTK_IMAGE (image),
+			totem_get_named_icon_for_id (id));
 	image = glade_xml_get_widget (totem->xml, "tcw_pp_button_image");
-	gtk_image_set_from_file (GTK_IMAGE (image), image_path);
-	g_free (image_path);
+	gtk_image_set_from_pixbuf (GTK_IMAGE (image),
+			totem_get_named_icon_for_id (id));
+
+	totem->state = state;
 }
 
 static void
@@ -2903,34 +2897,6 @@ totem_setup_window (Totem *totem)
 }
 
 static void
-totem_set_screenshot_icon (GtkWidget *item)
-{
-	GtkIconTheme *theme;
-	GtkIconInfo *icon;
-	GtkWidget *image;
-	const char *filename;
-	int width, height;
-	GdkPixbuf *pixbuf;
-
-	theme = gtk_icon_theme_get_default ();
-	gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
-	icon = gtk_icon_theme_lookup_icon (theme,
-			"gnome-screenshot", width, 0);
-	if (icon == NULL)
-		return;
-
-	filename = gtk_icon_info_get_filename (icon);
-	pixbuf = gdk_pixbuf_new_from_file_at_size (filename,
-			width, height, NULL);
-	image = gtk_image_new_from_pixbuf (pixbuf);
-	gdk_pixbuf_unref (pixbuf);
-	gtk_widget_show (image);
-	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item),
-			image);
-	gtk_icon_info_free (icon);
-}
-
-static void
 totem_callback_connect (Totem *totem)
 {
 	GtkWidget *item;
@@ -3000,7 +2966,6 @@ totem_callback_connect (Totem *totem)
 			"tmw_take_screenshot_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_take_screenshot1_activate), totem);
-	totem_set_screenshot_icon (item);
 	item = glade_xml_get_widget (totem->xml, "tmw_preferences_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_preferences1_activate), totem);
@@ -3246,6 +3211,9 @@ totem_callback_connect (Totem *totem)
 	g_object_ref (item);
 	item = glade_xml_get_widget (totem->xml, "tmw_menu_subtitles");
 	g_object_ref (item);
+
+	/* Named icon support */
+	totem_set_default_icons (totem);
 
 	/* Update the UI */
 	gtk_timeout_add (600, (GtkFunction) gui_update_cb, totem);
@@ -3550,6 +3518,7 @@ main (int argc, char **argv)
 
 	glade_init ();
 	gnome_vfs_init ();
+
 	if ((gc = gconf_client_get_default ()) == NULL)
 	{
 		totem_action_error_and_exit (_("Totem couln't initialise the configuration engine."), _("Make sure that GNOME is properly installed."), NULL);
@@ -3589,6 +3558,8 @@ main (int argc, char **argv)
 	}
 	g_free (filename);
 
+	totem_named_icons_init (totem, FALSE);
+
 	totem->win = glade_xml_get_widget (totem->xml, "totem_main_window");
 	filename = g_build_filename (DATADIR,
 			"totem", "media-player-48.png", NULL);
@@ -3617,6 +3588,7 @@ main (int argc, char **argv)
 	g_free (filename);
 
 	/* The rest of the widgets */
+	totem->state = STATE_STOPPED;
 	totem->seek = glade_xml_get_widget (totem->xml, "tmw_seek_hscale");
 	totem->seekadj = gtk_range_get_adjustment (GTK_RANGE (totem->seek));
 	g_object_set_data (G_OBJECT (totem->seek), "fs", GINT_TO_POINTER (0));

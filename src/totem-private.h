@@ -35,6 +35,12 @@ typedef enum {
 	TOTEM_CONTROLS_FULLSCREEN
 } ControlsVisibility;
 
+typedef enum {
+	STATE_PLAYING,
+	STATE_PAUSED,
+	STATE_STOPPED
+} TotemStates;
+
 struct Totem {
 	/* Control window */
 	GladeXML *xml;
@@ -98,6 +104,7 @@ struct Totem {
 	BaconMessageConnection *conn;
 	int action;
 	guint32 keypress_time;
+	TotemStates state;
 };
 
 #endif /* __TOTEM_PRIVATE_H__ */

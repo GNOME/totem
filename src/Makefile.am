@@ -73,6 +73,7 @@ totem_SOURCES = 					\
 	totem.c totem.h					\
 	totem-remote.c totem-remote.h			\
 	totem-preferences.c totem-preferences.h		\
+	totem-stock-icons.c totem-stock-icons.h		\
 	totem-private.h			\
 	bacon-video-widget-properties.c	\
 	bacon-video-widget-properties.h	\

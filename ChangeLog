@@ -1,3 +1,16 @@
+2004-03-22  Bastien Nocera  <hadess@hadess.net>
+
+	* src/Makefile.am:
+	* src/totem-private.h:
+	* src/totem-stock-icons.c: (totem_get_icon_from_theme),
+	(remove_value), (totem_named_icons_dispose),
+	(totem_default_theme_changed), (totem_set_default_icons),
+	(totem_get_named_icon_for_id), (totem_named_icons_init):
+	* src/totem-stock-icons.h:
+	* src/totem.c: (totem_action_exit), (play_pause_set_label),
+	(totem_callback_connect), (main): add support for the stock icons for
+	the Play, Pause, Previous, Next and Screenshot icons
+
 2004-03-21  Bastien Nocera  <hadess@hadess.net>
 
 	* data/Makefile.am:
