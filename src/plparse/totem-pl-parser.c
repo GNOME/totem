@@ -500,12 +500,12 @@ totem_pl_parser_add_one_url_ext (TotemPlParser *parser, const char *url, const c
 }
 
 static gboolean
-totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
+totem_pl_parser_add_ram (TotemPlParser *parser, const char *url, gpointer data)
 {
 	gboolean retval = FALSE;
 	char *contents, **lines;
 	int size, i;
-	char *split_char;
+	const char *split_char;
 
 	if (my_eel_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
@@ -513,7 +513,7 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
 	contents = g_realloc (contents, size + 1);
 	contents[size] = '\0';
 
-	/* figure out whether we're a unix m3u or dos m3u */
+	/* figure out whether we're a unix m3u or dos RAM file */
 	if (strstr(contents,"\x0d") == NULL)
 		split_char = "\n";
 	else
@@ -531,13 +531,103 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
 		/* Either it's a URI, or it has a proper path ... */
 		if (strstr(lines[i], "://") != NULL
 				|| lines[i][0] == G_DIR_SEPARATOR) {
-			/* We use the same code for .ram and m3u parsers,
-			 * and .ram files can contain .smil entries */
+			/* .ram files can contain .smil entries */
 			if (totem_pl_parser_parse (parser, lines[i]) == FALSE)
 			{
 				totem_pl_parser_add_one_url (parser,
 						lines[i], NULL);
 			}
+		} else if (strcmp (lines[i], "--stop--") == 0) {
+			/* For Real Media playlists, handle the stop command */
+			break;
+		} else {
+			char *fullpath, *base;
+
+			/* Try with a base */
+			base = totem_pl_parser_base_url (url);
+
+			fullpath = g_strdup_printf ("%s/%s", base, lines[i]);
+			if (totem_pl_parser_parse (parser, fullpath) == FALSE)
+			{
+				totem_pl_parser_add_one_url (parser, fullpath, NULL);
+			}
+			g_free (fullpath);
+			g_free (base);
+		}
+	}
+
+	g_strfreev (lines);
+
+	return retval;
+}
+
+static const char *
+totem_pl_parser_get_extinfo_title (gboolean extinfo, char **lines, int i)
+{
+	const char *retval;
+
+	if (extinfo == FALSE)
+		return NULL;
+
+	if (i == 0)
+		return NULL;
+
+	retval = strstr (lines[i-1], "#EXTINF:");
+	retval = strstr (retval, ",");
+	if (retval == NULL || retval[0] == '\0')
+		return NULL;
+
+	retval++;
+
+	return retval;
+}
+
+static gboolean
+totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
+{
+	gboolean retval = FALSE;
+	char *contents, **lines;
+	int size, i;
+	const char *split_char;
+	gboolean extinfo;
+
+	if (my_eel_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+		return FALSE;
+
+	contents = g_realloc (contents, size + 1);
+	contents[size] = '\0';
+
+	/* is TRUE if there's an EXTINF on the previous line */
+	extinfo = FALSE;
+
+	/* figure out whether we're a unix m3u or dos m3u */
+	if (strstr(contents,"\x0d") == NULL)
+		split_char = "\n";
+	else
+		split_char = "\x0d\n";
+
+	lines = g_strsplit (contents, split_char, 0);
+	g_free (contents);
+
+	for (i = 0; lines[i] != NULL; i++) {
+		if (strcmp (lines[i], "") == 0)
+			continue;
+
+		retval = TRUE;
+
+		/* Ignore comments, but mark it if we have extra info */
+		if (lines[i][0] == '#') {
+			if (strstr (lines[i], "#EXTINF") != NULL)
+				extinfo = TRUE;
+			continue;
+		}
+
+		/* Either it's a URI, or it has a proper path ... */
+		if (strstr(lines[i], "://") != NULL
+				|| lines[i][0] == G_DIR_SEPARATOR) {
+			totem_pl_parser_add_one_url (parser, lines[i],
+					totem_pl_parser_get_extinfo_title (extinfo, lines, i));
+			extinfo = FALSE;
 		} else if (lines[i][0] == '\\' && lines[i][1] == '\\') {
 			/* ... Or it's in the windows smb form
 			 * (\\machine\share\filename), Note drive names
@@ -548,13 +638,11 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
 			lines[i] = g_strdelimit (lines[i], "\\", '/');
 			tmpurl = g_strjoin (NULL, "smb:", lines[i], NULL);
 
-			totem_pl_parser_add_one_url (parser, lines[i], NULL);
-			retval = TRUE;
+			totem_pl_parser_add_one_url (parser, lines[i],
+					totem_pl_parser_get_extinfo_title (extinfo, lines, i));
+			extinfo = FALSE;
 
 			g_free (tmpurl);
-		} else if (strcmp (lines[i], "--stop--") == 0) {
-			/* For Real Media playlists, handle the stop command */
-			break;
 		} else {
 			/* Try with a base */
 			char *fullpath, *base, sep;
@@ -564,11 +652,8 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
 			if (sep == '\\')
 				lines[i] = g_strdelimit (lines[i], "\\", '/');
 			fullpath = g_strdup_printf ("%s/%s", base, lines[i]);
-			if (totem_pl_parser_parse (parser, fullpath) == FALSE)
-			{
-				totem_pl_parser_add_one_url (parser,
-						fullpath, NULL);
-			}
+			totem_pl_parser_add_one_url (parser, fullpath,
+					totem_pl_parser_get_extinfo_title (extinfo, lines, i));
 			g_free (fullpath);
 			g_free (base);
 		}
@@ -806,8 +891,7 @@ totem_pl_parser_add_ra (TotemPlParser *parser, const char *url, gpointer data)
 		return TRUE;
 	}
 
-	/* How nice, same format as m3u it seems */
-	return totem_pl_parser_add_m3u (parser, url, NULL);
+	return totem_pl_parser_add_ram (parser, url, NULL);
 }
 
 static gboolean
