@@ -21,7 +21,7 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
- 
+
 #ifndef __GST_VIDEO_WIDGET_H__
 #define __GST_VIDEO_WIDGET_H__
 
@@ -39,79 +39,84 @@
 
 typedef struct _GstVideoWidget GstVideoWidget;
 typedef struct _GstVideoWidgetClass GstVideoWidgetClass;
-typedef struct _GstVideoWidgetPrivate  GstVideoWidgetPrivate;
-	
-struct _GstVideoWidget {
-	
-	GtkWidget parent;
+typedef struct _GstVideoWidgetPrivate GstVideoWidgetPrivate;
 
-	GstVideoWidgetPrivate *priv;
-};
-	
-struct _GstVideoWidgetClass {
-	
-	GtkWidgetClass parent_class;
-	
+struct _GstVideoWidget
+{
+
+  GtkWidget parent;
+
+  GstVideoWidgetPrivate *priv;
 };
 
-GType 	gst_video_widget_get_type		(void);
+struct _GstVideoWidgetClass
+{
 
-GtkWidget*	gst_video_widget_new		(void);
+  GtkWidgetClass parent_class;
+
+};
+
+GType gst_video_widget_get_type (void);
+
+GtkWidget *gst_video_widget_new (void);
 
 /* Set/Get video source size */
 
-gboolean gst_video_widget_set_source_size	(	GstVideoWidget *vw,
-											gint width, gint height);
+gboolean gst_video_widget_set_source_size (GstVideoWidget * vw,
+					   gint width, gint height);
 
-gboolean gst_video_widget_get_source_size	(	GstVideoWidget *vw,
-											gint *width, gint *height);
+gboolean gst_video_widget_get_source_size (GstVideoWidget * vw,
+					   gint * width, gint * height);
 
 /* Set/Get minimum video widget size */
 
-gboolean gst_video_widget_set_minimum_size	(	GstVideoWidget *vw,
-											gint width, gint height);
+gboolean gst_video_widget_set_minimum_size (GstVideoWidget * vw,
+					    gint width, gint height);
 
-gboolean gst_video_widget_get_minimum_size	(	GstVideoWidget *vw,
-											gint *width, gint *height);
-
-/* Set/Get mouse pointer visible or not */
-
-gboolean gst_video_widget_set_cursor_visible (	GstVideoWidget *vw,
-												gboolean visible);
-gboolean gst_video_widget_get_cursor_visible (GstVideoWidget *vw);
+gboolean gst_video_widget_get_minimum_size (GstVideoWidget * vw,
+					    gint * width, gint * height);
 
 /* Set/Get mouse pointer visible or not */
 
-gboolean gst_video_widget_set_logo_focus (	GstVideoWidget *vw,
-												gboolean focused);
-gboolean gst_video_widget_get_logo_focus (GstVideoWidget *vw);
+gboolean gst_video_widget_set_cursor_visible (GstVideoWidget * vw,
+					      gboolean visible);
+gboolean gst_video_widget_get_cursor_visible (GstVideoWidget * vw);
+
+/* Set/Get mouse pointer visible or not */
+
+gboolean gst_video_widget_set_logo_focus (GstVideoWidget * vw,
+					  gboolean focused);
+gboolean gst_video_widget_get_logo_focus (GstVideoWidget * vw);
 
 /* Set/Get if the widget should catch events over embeded window */
 
-gboolean gst_video_widget_set_event_catcher (	GstVideoWidget *vw,
-												gboolean event_catcher);
-gboolean gst_video_widget_get_event_catcher (GstVideoWidget *vw);
+gboolean gst_video_widget_set_event_catcher (GstVideoWidget * vw,
+					     gboolean event_catcher);
+gboolean gst_video_widget_get_event_catcher (GstVideoWidget * vw);
 
 /* Set/Get auto resize mode used by the widget */
 
-gboolean gst_video_widget_set_auto_resize (GstVideoWidget *vw, gboolean resize);
-gboolean gst_video_widget_get_auto_resize (GstVideoWidget *vw);
+gboolean gst_video_widget_set_auto_resize (GstVideoWidget * vw,
+					   gboolean resize);
+gboolean gst_video_widget_get_auto_resize (GstVideoWidget * vw);
 
 /* Set/Get scale factor used by the widget */
 
-gboolean gst_video_widget_get_scale_override (GstVideoWidget *vw);
-gboolean gst_video_widget_set_scale_override (GstVideoWidget *vw, gboolean override);
-gboolean gst_video_widget_set_scale (GstVideoWidget *vw, gfloat scale);
-gfloat gst_video_widget_get_scale (GstVideoWidget *vw);
+gboolean gst_video_widget_get_scale_override (GstVideoWidget * vw);
+gboolean gst_video_widget_set_scale_override (GstVideoWidget * vw,
+					      gboolean override);
+gboolean gst_video_widget_set_scale (GstVideoWidget * vw, gfloat scale);
+gfloat gst_video_widget_get_scale (GstVideoWidget * vw);
 
 /* Set/Get the XID of the Xwindow to be embedded */
 
-void	gst_video_widget_set_xembed_xid		(GstVideoWidget *vw, gulong xid);
-gulong	gst_video_widget_get_xembed_xid		(GstVideoWidget *vw);
+void gst_video_widget_set_xembed_xid (GstVideoWidget * vw, gulong xid);
+gulong gst_video_widget_get_xembed_xid (GstVideoWidget * vw);
+gboolean gst_video_widget_destroy_embedded_window (GstVideoWidget * vw);
 
 /* Set/Get the GdkPixbuf used for logo display */
 
-void gst_video_widget_set_logo (GstVideoWidget *vw, GdkPixbuf *logo_pixbuf);
-GdkPixbuf* gst_video_widget_get_logo (GstVideoWidget *vw);
+void gst_video_widget_set_logo (GstVideoWidget * vw, GdkPixbuf * logo_pixbuf);
+GdkPixbuf *gst_video_widget_get_logo (GstVideoWidget * vw);
 
 #endif /* __GST_VIDEO_WIDGET_H__ */
