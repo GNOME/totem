@@ -1,5 +1,11 @@
 2004-12-12  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (theme_changed_cb), (totem_callback_connect): Catch
+	theme changes so that we can place the popup windows properly
+	(Closes: #148942)
+
+2004-12-12  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c:
 	(bacon_video_widget_get_subtitle_mrl): don't try to load a subtitle
 	file when one was already supplied in the URI

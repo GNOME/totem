@@ -2524,6 +2524,12 @@ size_changed_cb (GdkScreen *screen, Totem *totem)
 	move_popups (totem);
 }
 
+static void
+theme_changed_cb (GtkIconTheme *icon_theme, Totem *totem)
+{
+	move_popups (totem);
+}
+
 static gboolean
 popup_hide (Totem *totem)
 {
@@ -3345,9 +3351,11 @@ totem_callback_connect (Totem *totem)
 	g_signal_connect_swapped (G_OBJECT (totem->win), "notify",
 			G_CALLBACK (popup_hide), totem);
 
-	/* Screen size changes */
+	/* Screen size and Theme changes */
 	g_signal_connect (G_OBJECT (gdk_screen_get_default ()),
 			"size-changed", G_CALLBACK (size_changed_cb), totem);
+	g_signal_connect (G_OBJECT (gtk_icon_theme_get_default ()),
+			"changed", G_CALLBACK (theme_changed_cb), totem);
 
 	/* Motion notify for the Popups */
 	item = glade_xml_get_widget (totem->xml,
