@@ -585,6 +585,7 @@ egg_recent_model_filter (EggRecentModel *model,
 
 
 
+#if 0
 static void
 egg_recent_model_monitor_list_cb (GnomeVFSMonitorHandle *handle,
 			       const gchar *monitor_uri,
@@ -636,7 +637,7 @@ egg_recent_model_monitor_list (EggRecentModel *model, GList *list)
 			g_free (uri);
 	}
 }
-
+#endif
 
 
 static gboolean
@@ -1634,7 +1635,7 @@ egg_recent_model_changed (EggRecentModel *model)
 
 	if (model->priv->limit > 0) {
 		list = egg_recent_model_get_list (model);
-		egg_recent_model_monitor_list (model, list);
+		/* egg_recent_model_monitor_list (model, list); */
 	
 		g_signal_emit (G_OBJECT (model), model_signals[CHANGED], 0,
 			       list);

@@ -605,6 +605,7 @@ egg_recent_view_gtk_init (EggRecentViewGtk * view)
 	view->uid = egg_recent_util_get_unique_id ();
 #ifndef USE_STABLE_LIBGNOMEUI
 	view->theme = gnome_icon_theme_new ();
+	gnome_icon_theme_set_allow_svg (view->theme, TRUE);
 	g_signal_connect_object (view->theme, "changed",
 				 G_CALLBACK (theme_changed_cb), view, 0);
 #endif
