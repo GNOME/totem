@@ -121,6 +121,11 @@ struct GtkXinePrivate {
 	Window video_window;
 	int completion_event;
 
+	/* Visual effects */
+	gboolean show_vfx;
+	gboolean using_vfx;
+	xine_post_t *vis;
+
 	/* Other stuff */
 	int xpos, ypos;
 	gboolean init_finished;
@@ -311,6 +316,9 @@ gtk_xine_instance_init (GtkXine *gtx)
 	gtx->priv->ao_driver = NULL;
 	gtx->priv->ev_queue = NULL;
 	gtx->priv->display = NULL;
+	gtx->priv->show_vfx = FALSE;
+	gtx->priv->using_vfx = FALSE;
+	gtx->priv->vis = NULL;
 	gtx->priv->fullscreen_mode = FALSE;
 	gtx->priv->init_finished = FALSE;
 	gtx->priv->cursor_shown = TRUE;
@@ -532,9 +540,8 @@ load_audio_out_driver (GtkXine *gtx)
 }
 
 static void
-update_mediadev_conf (GtkXine *gtx)
+update_mediadev_conf (GtkXine *gtx, GConfClient *conf)
 {
-	GConfClient *conf;
 	char *tmp;
 
 	conf = gconf_client_get_default ();
@@ -555,9 +562,21 @@ update_mediadev_conf (GtkXine *gtx)
 			NULL, 10, NULL, NULL);
 }
 
+static void             
+show_vfx_changed_cb (GConfClient *client, guint cnxn_id,
+		                GConfEntry *entry, gpointer user_data)
+{
+	GtkXine *gtx = (GtkXine *) user_data;
+
+	gtx->priv->show_vfx = gconf_client_get_bool (client,
+			GCONF_PREFIX"show_vfx", NULL);
+}
+
 static void
 load_config_from_gconf (GtkXine *gtx)
 {
+	GConfClient *conf;
+
 	/* default demux strategy */
 	xine_config_register_string (gtx->priv->xine,
 			"misc.demux_strategy", "reverse",
@@ -565,7 +584,15 @@ load_config_from_gconf (GtkXine *gtx)
 			"{ default  reverse  content  extension }, default: 0",
 			10, NULL, NULL);
 
-	update_mediadev_conf (gtx);
+	conf = gconf_client_get_default ();
+
+	gconf_client_add_dir (conf, "/apps/totem",
+			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
+	gconf_client_notify_add (conf, GCONF_PREFIX"show_vfx",
+			show_vfx_changed_cb, gtx, NULL, NULL);
+	gtx->priv->show_vfx = gconf_client_get_bool (conf,
+			GCONF_PREFIX"show_vfx", NULL);
+	update_mediadev_conf (gtx, conf);
 }
 
 static gboolean
@@ -1196,10 +1223,32 @@ gboolean
 gtk_xine_play (GtkXine *gtx, guint pos, guint start_time)
 {
 	int error, length;
+	xine_post_out_t *audio_source;
+	gboolean has_video;
 
 	g_return_val_if_fail (gtx != NULL, -1);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), -1);
 	g_return_val_if_fail (gtx->priv->xine != NULL, -1);
+
+	has_video = xine_get_stream_info(gtx->priv->stream,
+			XINE_STREAM_INFO_HAS_VIDEO);
+
+	if ((has_video == TRUE || gtx->priv->show_vfx == TRUE)
+			&& gtx->priv->using_vfx == TRUE)
+	{
+		audio_source = xine_get_audio_source (gtx->priv->stream);
+		if (xine_post_wire_audio_port (audio_source,
+					gtx->priv->ao_driver))
+			gtx->priv->using_vfx = FALSE;
+	} else if (has_video == FALSE && gtx->priv->show_vfx == FALSE
+			&& gtx->priv->using_vfx == FALSE
+			&& gtx->priv->vis == NULL)
+	{
+		audio_source = xine_get_audio_source (gtx->priv->stream);
+		if (xine_post_wire_audio_port (audio_source,
+					gtx->priv->vis->audio_input[0]))
+			gtx->priv->using_vfx = TRUE;
+	}
 
 	length = gtk_xine_get_stream_length (gtx);
 	error = xine_play (gtx->priv->stream, pos,
@@ -1663,7 +1712,7 @@ G_CONST_RETURN gchar
 	else
 		return NULL;
 
-	update_mediadev_conf (gtx);
+	update_mediadev_conf (gtx, gconf_client_get_default ());
 
 	return (G_CONST_RETURN gchar **) xine_get_autoplay_mrls
 		(gtx->priv->xine, plugin_id, &num_mrls);

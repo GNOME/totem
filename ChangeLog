@@ -1,5 +1,16 @@
 2002-12-27  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.glade: upd
+	* data/totem.schemas.in: upd
+	* src/gtk-xine.c: (gtk_xine_instance_init), (update_mediadev_conf),
+	(show_vfx_changed_cb), (load_config_from_gconf), (gtk_xine_play),
+	(gtk_xine_get_mrls): upd
+	* src/totem.c: (on_checkbutton2_toggled), (show_vfx_changed_cb),
+	(totem_setup_preferences): added Visual Effects Playback when a stream
+	with no video is playing. See http://sourceforge.net/mailarchive/forum.php?thread_id=1460406&forum_id=11923 for interesting code
+
+2002-12-27  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am:
 	* src/gtk-xine.c: (gtk_xine_instance_init), (frame_output_cb),
 	(gtk_xine_open), (gtk_xine_close):

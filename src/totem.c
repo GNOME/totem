@@ -1294,6 +1294,18 @@ on_checkbutton1_toggled (GtkToggleButton *togglebutton, gpointer user_data)
 			value, NULL);
 }
 
+static void              
+on_checkbutton2_toggled (GtkToggleButton *togglebutton, gpointer user_data)
+{                               
+	Totem *totem = (Totem *)user_data;
+	gboolean value;
+
+	D("on_checkbutton2_toggled");
+	value = gtk_toggle_button_get_active (togglebutton);
+	gconf_client_set_bool (totem->gc, GCONF_PREFIX"show_vfx",
+			value, NULL);
+}
+
 static void
 on_combo_entry1_changed (TotemCdSelection *tcs, char *device,
 		gpointer user_data)
@@ -1324,6 +1336,25 @@ auto_resize_changed_cb (GConfClient *client, guint cnxn_id,
 
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_checkbutton1_toggled), totem);
+}
+
+static void
+show_vfx_changed_cb (GConfClient *client, guint cnxn_id,
+		GConfEntry *entry, gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+	GtkWidget *item;
+
+	item = glade_xml_get_widget (totem->xml, "checkbutton2");
+	g_signal_handlers_disconnect_by_func (G_OBJECT (item),
+			on_checkbutton2_toggled, totem);
+
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
+			gconf_client_get_bool (totem->gc,
+				GCONF_PREFIX"show_vfx", NULL));
+
+	g_signal_connect (G_OBJECT (item), "toggled",
+			G_CALLBACK (on_checkbutton2_toggled), totem);
 }
 
 static void
@@ -2048,6 +2079,8 @@ totem_setup_preferences (Totem *totem)
 			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
 	gconf_client_notify_add (totem->gc, GCONF_PREFIX"auto_resize",
 			auto_resize_changed_cb, totem, NULL, NULL);
+	gconf_client_notify_add (totem->gc, GCONF_PREFIX"show_vfx",
+			show_vfx_changed_cb, totem, NULL, NULL);
 	gconf_client_notify_add (totem->gc, GCONF_PREFIX"mediadev",
 			mediadev_changed_cb, totem, NULL, NULL);
 
@@ -2064,6 +2097,13 @@ totem_setup_preferences (Totem *totem)
 				GCONF_PREFIX"auto_resize", NULL));
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_checkbutton1_toggled), totem);
+
+	item = glade_xml_get_widget (totem->xml, "checkbutton2");
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
+			gconf_client_get_bool (totem->gc,
+				GCONF_PREFIX"show_vfx", NULL));
+	g_signal_connect (G_OBJECT (item), "toggled",
+			G_CALLBACK (on_checkbutton2_toggled), totem);
 
 	item = glade_xml_get_widget (totem->xml, "custom3");
 	device = gconf_client_get_string

@@ -14,6 +14,20 @@
       </schema>
 
       <schema>
+        <key>/schemas/apps/totem/show_vfx</key>
+	<applyto>/apps/totem/show_vfx</applyto>
+	<owner>totem</owner>
+	<type>bool</type>
+	<default>auto</default>
+	<locale name="C">
+	  <short>Show visual effects when no video is displayed</short>
+	  <long>
+	    Show visual effects when playing an audio only file
+	  </long>
+	</locale>
+      </schema>
+
+      <schema>
         <key>/schemas/apps/totem/auto_resize</key>
 	<applyto>/apps/totem/auto_resize</applyto>
 	<owner>totem</owner>
