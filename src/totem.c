@@ -248,8 +248,6 @@ totem_action_play (Totem *totem, int offset)
 {
 	int retval;
 
-	D("action_play");
-
 	if (totem->mrl == NULL)
 		return;
 
@@ -298,16 +296,12 @@ totem_action_play_media (Totem *totem, MediaType type)
 void
 totem_action_stop (Totem *totem)
 {
-	D("action_pause");
-
 	gtk_xine_stop (GTK_XINE (totem->gtx));
 }
 
 void
 totem_action_play_pause (Totem *totem)
 {
-	D("action_play_pause");
-
 	if (totem->mrl == NULL)
 	{
 		char *mrl;
@@ -1276,23 +1270,43 @@ on_about1_activate (GtkButton *button, gpointer user_data)
 }
 
 static char *
+screenshot_make_filename_helper (char *filename, gboolean desktop_exists)
+{
+	if (desktop_exists == TRUE)
+	{
+		return g_build_filename (G_DIR_SEPARATOR_S,
+				g_get_home_dir (), ".gnome-desktop",
+				filename, NULL);
+	} else {
+		return g_build_filename (G_DIR_SEPARATOR_S,
+				g_get_home_dir (), filename, NULL);
+	}
+}
+
+static char *
 screenshot_make_filename (Totem *totem)
 {
 	GtkWidget *radiobutton, *entry;
 	gboolean on_desktop;
 	char *fullpath, *filename;
 	int i = 0;
+	gboolean desktop_exists;
 
 	radiobutton = glade_xml_get_widget (totem->xml, "radiobutton2");
 	on_desktop = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON
 			(radiobutton));
 
+	/* Test if we have a desktop directory */
+	fullpath = g_build_path (G_DIR_SEPARATOR_S, g_get_home_dir (),
+			".gnome-desktop", NULL);
+	desktop_exists = g_file_test (fullpath, G_FILE_TEST_EXISTS);
+	g_free (fullpath);
+
 	if (on_desktop == TRUE)
 	{
 		filename = g_strdup_printf (_("Screenshot%d.png"), i);
-		fullpath = g_build_filename (G_DIR_SEPARATOR_S,
-				g_get_home_dir (), ".gnome-desktop", filename,
-				NULL);
+		fullpath = screenshot_make_filename_helper (filename,
+				desktop_exists);
 
 		while (g_file_test (fullpath, G_FILE_TEST_EXISTS) == TRUE
 				&& i < G_MAXINT)
@@ -1300,10 +1314,10 @@ screenshot_make_filename (Totem *totem)
 			i++;
 			g_free (filename);
 			g_free (fullpath);
+
 			filename = g_strdup_printf (_("Screenshot%d.png"), i);
-			fullpath = g_build_filename (G_DIR_SEPARATOR_S,
-					g_get_home_dir (), ".gnome-desktop",
-					filename, NULL);
+			fullpath = screenshot_make_filename_helper (filename,
+					desktop_exists);
 		}
 
 		g_free (filename);
@@ -1371,6 +1385,7 @@ on_take_screenshot1_activate (GtkButton *button, gpointer user_data)
 	gdk_pixbuf_unref (scaled);
 	entry = glade_xml_get_widget (totem->xml, "combo-entry1");
 	gtk_entry_set_text (GTK_ENTRY (entry), filename);
+	g_free (filename);
 	response = gtk_dialog_run (GTK_DIALOG (dialog));
 	gtk_widget_hide (dialog);
 
@@ -1395,9 +1410,10 @@ on_take_screenshot1_activate (GtkButton *button, gpointer user_data)
 			g_free (msg);
 			g_error_free (err);
 		}
+
+		g_free (filename);
 	}
 
-	g_free (filename);
 	gdk_pixbuf_unref (pixbuf);
 }
 
@@ -1478,7 +1494,6 @@ on_checkbutton1_toggled (GtkToggleButton *togglebutton, gpointer user_data)
 	Totem *totem = (Totem *)user_data;
 	gboolean value;
 
-	D("on_checkbutton1_toggled");
 	value = gtk_toggle_button_get_active (togglebutton);
 	gconf_client_set_bool (totem->gc, GCONF_PREFIX"auto_resize",
 			value, NULL);
@@ -1490,7 +1505,6 @@ on_checkbutton2_toggled (GtkToggleButton *togglebutton, gpointer user_data)
 	Totem *totem = (Totem *)user_data;
 	gboolean value;
 
-	D("on_checkbutton2_toggled");
 	value = gtk_toggle_button_get_active (togglebutton);
 	gconf_client_set_bool (totem->gc, GCONF_PREFIX"show_vfx",
 			value, NULL);
@@ -1503,7 +1517,6 @@ on_combo_entry1_changed (BaconCdSelection *bcs, char *device,
 	Totem *totem = (Totem *)user_data;
 	const char *str;
 
-	D("on_combo_entry1_activate");
 	str = bacon_cd_selection_get_device (bcs);
 	gconf_client_set_string (totem->gc, GCONF_PREFIX"mediadev",
 			str, NULL);
@@ -1635,8 +1648,6 @@ playlist_changed_cb (GtkWidget *playlist, gpointer user_data)
 	Totem *totem = (Totem *) user_data;
 	char *mrl;
 
-	D("playlist_changed_cb");
-
 	update_buttons (totem);
 	mrl = gtk_playlist_get_current_mrl (totem->playlist);
 
@@ -1737,8 +1748,6 @@ on_eos_event (GtkWidget *widget, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 
-	D("on_eos_event");
-
 	if (strcmp (totem->mrl, LOGO_PATH) == 0)
 		return FALSE;
 
@@ -1768,8 +1777,6 @@ on_error_event (GtkWidget *gtx, GtkXineError error, const char *message,
 	Totem *totem = (Totem *) user_data;
 	char *msg = NULL;
 	gboolean crap_out = FALSE;
-
-	D("play_error");
 
 	if (gtk_playlist_has_next_mrl (totem->playlist))
 	{
@@ -2384,6 +2391,7 @@ main (int argc, char **argv)
 	GConfClient *gc;
 	GtkMessageQueue *q;
 	GError *err = NULL;
+	GdkPixbuf *pix;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -2455,7 +2463,18 @@ main (int argc, char **argv)
 
 	totem->win = glade_xml_get_widget (totem->xml, "app1");
 
-	totem->playlist = GTK_PLAYLIST (gtk_playlist_new ());
+	/* The playlist */
+	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
+			"totem", "playlist-playing.png", NULL);
+	pix = gdk_pixbuf_new_from_file (filename, NULL);
+	g_free (filename);
+
+	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
+			"totem", "playlist.glade", NULL);
+
+	totem->playlist = GTK_PLAYLIST (gtk_playlist_new (filename, pix));
+	g_free (filename);
+
 	if (totem->playlist == NULL)
 	{
 		totem_action_error (_("Couldn't load the interface for the playlist."

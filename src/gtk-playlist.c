@@ -616,7 +616,7 @@ repeat_button_toggled (GtkToggleButton *togglebutton, gpointer user_data)
 	gboolean repeat;
 
 	repeat = gtk_toggle_button_get_active (togglebutton);
-	gconf_client_set_bool (playlist->_priv->gc, "/apps/totem/repeat",
+	gconf_client_set_bool (playlist->_priv->gc, GCONF_PREFIX"repeat",
 			repeat, NULL);
 	playlist->_priv->repeat = repeat;
 }
@@ -630,7 +630,7 @@ update_repeat_cb (GConfClient *client, guint cnxn_id,
 	gboolean repeat;
 
 	repeat = gconf_client_get_bool (client,
-			"/apps/totem/repeat", NULL);
+			GCONF_PREFIX"repeat", NULL);
 	button = glade_xml_get_widget (playlist->_priv->xml, "repeat_button");
 	g_signal_handlers_disconnect_by_func (G_OBJECT (button),
 			repeat_button_toggled, playlist);
@@ -654,12 +654,12 @@ init_config (GtkPlaylist *playlist)
 	playlist->_priv->gc = gconf_client_get_default ();
 
 	repeat = gconf_client_get_bool (playlist->_priv->gc,
-			"/apps/totem/repeat", NULL);
+			GCONF_PREFIX"repeat", NULL);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), repeat);
 
 	gconf_client_add_dir (playlist->_priv->gc, "/apps/totem",
 			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
-	gconf_client_notify_add (playlist->_priv->gc, "/apps/totem/repeat",
+	gconf_client_notify_add (playlist->_priv->gc, GCONF_PREFIX"repeat",
 			update_repeat_cb, playlist, NULL, NULL);
 	g_signal_connect (G_OBJECT (button), "toggled",
 			G_CALLBACK (repeat_button_toggled),
@@ -705,9 +705,9 @@ gtk_playlist_unrealize (GtkWidget *widget)
 	g_return_if_fail (widget != NULL);
 
 	gtk_window_get_position (GTK_WINDOW (widget), &x, &y);
-	gconf_client_set_int (playlist->_priv->gc, "/apps/totem/playlist_x",
+	gconf_client_set_int (playlist->_priv->gc, GCONF_PREFIX"playlist_x",
 			x, NULL);
-	gconf_client_set_int (playlist->_priv->gc, "/apps/totem/playlist_y",
+	gconf_client_set_int (playlist->_priv->gc, GCONF_PREFIX"playlist_y",
 			y, NULL);
 
 	if (GTK_WIDGET_CLASS (parent_class)->unrealize != NULL) {
@@ -728,9 +728,9 @@ gtk_playlist_realize (GtkWidget *widget)
 	}
 
 	x = gconf_client_get_int (playlist->_priv->gc,
-			"/apps/totem/playlist_x", NULL);
+			GCONF_PREFIX"playlist_x", NULL);
 	y = gconf_client_get_int (playlist->_priv->gc,
-			"/apps/totem/playlist_y", NULL);
+			GCONF_PREFIX"playlist_y", NULL);
 
 	if (x == -1 || y == -1
 			|| x > gdk_screen_width () || y > gdk_screen_height ())
@@ -740,11 +740,14 @@ gtk_playlist_realize (GtkWidget *widget)
 }
 
 GtkWidget*
-gtk_playlist_new (void)
+gtk_playlist_new (const char *glade_filename, GdkPixbuf *playing_pix)
 {
 	GtkPlaylist *playlist;
 	GtkWidget *container, *item;
 	char *filename;
+
+	if (glade_filename == NULL)
+		return NULL;
 
 	playlist = GTK_PLAYLIST (g_object_new (GTK_TYPE_PLAYLIST, NULL));
 
@@ -796,10 +799,7 @@ gtk_playlist_new (void)
 	/* The configuration */
 	init_config (playlist);
 
-	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
-			"totem", "playlist-playing.png", NULL);
-	playlist->_priv->icon = gdk_pixbuf_new_from_file (filename, NULL);
-	g_free (filename);
+	playlist->_priv->icon = playing_pix;
 
 	gtk_widget_show_all (GTK_DIALOG (playlist)->vbox);
 

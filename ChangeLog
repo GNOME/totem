@@ -1,3 +1,18 @@
+2003-01-20  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-playlist.c: (repeat_button_toggled), (update_repeat_cb),
+	(init_config), (gtk_playlist_unrealize), (gtk_playlist_realize),
+	(gtk_playlist_new):
+	* src/gtk-playlist.h:
+	* src/totem.c: (totem_action_play), (totem_action_stop),
+	(totem_action_play_pause), (screenshot_make_filename_helper),
+	(screenshot_make_filename), (on_take_screenshot1_activate),
+	(on_checkbutton1_toggled), (on_checkbutton2_toggled),
+	(on_combo_entry1_changed), (playlist_changed_cb), (on_eos_event),
+	(on_error_event), (main): remove obvious dependency on totem in the
+	playlist (glade/pix path), fix the absence of ~/.gnome-desktop dir and
+	plug a small memleak
+
 2003-01-19  Bastien Nocera  <hadess@hadess.net>
 
 	* README:
@@ -535,6 +550,8 @@
 	on startup (patch by John McCutchan <ttb@tentacle.dhs.org>)
 	(Closes: #101298)
 
+============ Version 0.13.1
+
 2002-12-15  Bastien Nocera  <hadess@hadess.net>
 
 	* src/list_cddrives.c: (list_cdroms): fix compilation,
@@ -590,6 +607,8 @@
 	(totem_cd_selection_set_device): make the widget insensitive if there
 	are no CD-Rom drives on the machine, fallback to the default device if
 	totem_cd_selection_set_device failed
+
+============ Version 0.13.0
 
 2002-12-08  Bastien Nocera  <hadess@hadess.net>
 
@@ -725,6 +744,8 @@
 
 	* src/totem.c: (totem_action_open_files): removed debug message
 
+============ Version 0.12.1
+
 2002-11-27  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: 0.12.1
@@ -741,6 +762,8 @@
 	* data/totem.applications:
 	* data/totem.keys: whoo, xine 1.0 alpha2 can use the binary-only
 	plugins from Real Player for Linux, added the Real Media mime-types
+
+============ Version 0.12.0
 
 2002-11-25  Bastien Nocera  <hadess@hadess.net>
 
