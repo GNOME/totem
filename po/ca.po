@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem 0.97.0\n"
-"POT-Creation-Date: 2003-04-29 12:44+0200\n"
+"POT-Creation-Date: 2003-04-29 20:41+0100\n"
 "PO-Revision-Date: 2003-04-29 14:06+0200\n"
 "Last-Translator: Jordi Mallach <jordi@sindominio.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/playlist.glade.h:1 src/gtk-playlist.c:1044
+#: data/playlist.glade.h:1 src/gtk-playlist.c:1206
 msgid "Playlist"
 msgstr "Llista de reproducció"
 
@@ -25,6 +25,10 @@ msgstr "Mode de repetició"
 #: data/playlist.glade.h:3
 msgid "_Add..."
 msgstr "_Afegeix..."
+
+#: data/playlist.glade.h:4
+msgid "_Save..."
+msgstr ""
 
 #: data/properties.glade.h:1 src/bacon-video-widget-properties.c:184
 msgid "0 frames per second"
@@ -124,7 +128,7 @@ msgstr "Any:"
 msgid "Play movies and songs"
 msgstr "Reprodueix vídeos i cançons"
 
-#: data/totem.desktop.in.h:2 src/totem.c:3122
+#: data/totem.desktop.in.h:2 src/totem.c:3163
 msgid "Totem Movie Player"
 msgstr "Reproductor de vídeo Totem"
 
@@ -457,7 +461,7 @@ msgid "Toggle the aspect ratio"
 msgstr "Canvia el ràtio de l'aspecte"
 
 #. Title
-#: data/totem.glade.h:84 src/totem.c:540 src/totem.c:562 src/totem.c:1565
+#: data/totem.glade.h:84 src/totem.c:581 src/totem.c:603 src/totem.c:1606
 msgid "Totem"
 msgstr "Totem"
 
@@ -637,11 +641,25 @@ msgstr "_Contrasenya:"
 msgid "Remember this password"
 msgstr "Recorda aquesta contrasenya"
 
-#: src/gtk-playlist.c:503 src/totem.c:1282
+#: src/gtk-playlist.c:601 src/totem.c:1323
 msgid "Select files"
 msgstr "Seleccioneu fitxers"
 
-#: src/gtk-playlist.c:796
+#: src/gtk-playlist.c:760
+#, fuzzy
+msgid "Save playlist"
+msgstr "Llista de reproducció"
+
+#: src/gtk-playlist.c:798
+#, fuzzy, c-format
+msgid ""
+"A file named '%s' already exists.\n"
+"Are you sure you want to overwrite it?"
+msgstr ""
+"El fitxer «%s» ja existeix.\n"
+"La captura de pantalla no s'ha desat."
+
+#: src/gtk-playlist.c:958
 msgid "Filename"
 msgstr "Nom de fitxer"
 
@@ -669,19 +687,19 @@ msgstr "Encua"
 msgid "Replace"
 msgstr "Reemplaça"
 
-#: src/totem.c:247
+#: src/totem.c:256
 msgid "Playing"
 msgstr "Reproduïnt"
 
-#: src/totem.c:254
+#: src/totem.c:263
 msgid "Paused"
 msgstr "Pausat"
 
-#: src/totem.c:261 src/totem-statusbar.c:171
+#: src/totem.c:270 src/totem-statusbar.c:171
 msgid "Stopped"
 msgstr "Parat"
 
-#: src/totem.c:319 src/totem.c:674 src/totem.c:778
+#: src/totem.c:328 src/totem.c:715 src/totem.c:819
 #, c-format
 msgid ""
 "Totem could not play '%s'.\n"
@@ -690,7 +708,7 @@ msgstr ""
 "Totem no ha pogut reproduir «%s».\n"
 "Raó: %s."
 
-#: src/totem.c:348
+#: src/totem.c:357
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -702,7 +720,7 @@ msgstr ""
 "Instal·leu el connector necessari i reinicieu Totem per a poder reproduir "
 "aquest medi."
 
-#: src/totem.c:356
+#: src/totem.c:365
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -714,16 +732,16 @@ msgstr ""
 "correctament configurada."
 
 #. Title
-#: src/totem.c:516
+#: src/totem.c:557
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:529 src/totem.c:2967
+#: src/totem.c:570 src/totem.c:3008
 msgid "No file"
 msgstr "Cap fitxer"
 
-#: src/totem.c:1333 src/totem.c:1344
+#: src/totem.c:1374 src/totem.c:1385
 msgid ""
 "Couldn't load the 'Open Location...' interface.\n"
 "Make sure that Totem is properly installed."
@@ -731,25 +749,25 @@ msgstr ""
 "No s'ha pogut carregar la interfície «Obre una ubicació».\n"
 "Assegureu-vos que Totem està instal·lat correctament."
 
-#: src/totem.c:1405
+#: src/totem.c:1446
 msgid "Totem could not eject the optical media."
 msgstr "Totem no ha pogut ejectar el medi òptic."
 
-#: src/totem.c:1536
+#: src/totem.c:1577
 msgid "translator_credits"
 msgstr "Jordi Mallach <jordi@sindominio.net>"
 
-#: src/totem.c:1562
+#: src/totem.c:1603
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Reproductor de vídeo que utilitza %s"
 
-#: src/totem.c:1624 src/totem.c:1635
+#: src/totem.c:1665 src/totem.c:1676
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Captura%d.png"
 
-#: src/totem.c:1688
+#: src/totem.c:1729
 #, c-format
 msgid ""
 "Totem could not get a screenshot of that film.\n"
@@ -758,7 +776,7 @@ msgstr ""
 "Totem no ha pogut obtindre una captura de pantalla d'aquesta pel·lícula.\n"
 "Raó: %s."
 
-#: src/totem.c:1698
+#: src/totem.c:1739
 msgid ""
 "Totem could not get a screenshot of that film.\n"
 "Please file a bug, this isn't supposed to happen"
@@ -766,7 +784,7 @@ msgstr ""
 "Totem no ha pogut obtindre una captura de pantalla d'aquesta pel·lícula.\n"
 "Si us plau, envieu un informe d'error, açò no hauria de passar"
 
-#: src/totem.c:1724
+#: src/totem.c:1765
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
@@ -775,7 +793,7 @@ msgstr ""
 "El fitxer «%s» ja existeix.\n"
 "La captura de pantalla no s'ha desat."
 
-#: src/totem.c:1735
+#: src/totem.c:1776
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -784,7 +802,7 @@ msgstr ""
 "S'ha produït un error en desar la captura de pantalla.\n"
 "Detalls: %s"
 
-#: src/totem.c:1752
+#: src/totem.c:1793
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -792,7 +810,7 @@ msgstr ""
 "Totem no ha pogut mostrar la finestra de propietats de la pel·lícula.\n"
 "Assegureu-vos que Totem està instal·lat correctament."
 
-#: src/totem.c:1821
+#: src/totem.c:1862
 #, c-format
 msgid ""
 "Totem could not seek in '%s'.\n"
@@ -801,11 +819,11 @@ msgstr ""
 "Totem no ha pogut cercar en «%s».\n"
 "Raó: %s."
 
-#: src/totem.c:2508
+#: src/totem.c:2549
 msgid "Auto"
 msgstr "Auto"
 
-#: src/totem.c:2889
+#: src/totem.c:2930
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -814,11 +832,11 @@ msgstr ""
 "Totem no ha pogut executar-se:\n"
 "%s"
 
-#: src/totem.c:2890
+#: src/totem.c:2931
 msgid "No reason"
 msgstr "Sense raó"
 
-#: src/totem.c:3128
+#: src/totem.c:3169
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Totem will now exit."
@@ -826,7 +844,7 @@ msgstr ""
 "No s'ha pogut iniciar les biblioteques amb suport per a fils.\n"
 "Verifiqueu la vostra instal·lació del sistema. Totem surtirà ara."
 
-#: src/totem.c:3150
+#: src/totem.c:3191
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -837,7 +855,7 @@ msgstr ""
 "motor de configuració:\n"
 "%s"
 
-#: src/totem.c:3164 src/totem.c:3196
+#: src/totem.c:3205 src/totem.c:3237
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -845,7 +863,7 @@ msgstr ""
 "No s'ha pogut carregar la interfície principal (totem.glade).\n"
 "Assegureu-vos que Totem està instal·lat correctament."
 
-#: src/totem.c:3222
+#: src/totem.c:3263
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
@@ -872,7 +890,9 @@ msgstr ""
 #: src/totem-preferences.c:147
 msgid ""
 "Switching on or off this type of TV-Out requires a restart to take effect."
-msgstr "Activar o desactivar aquest tipus d'eixida de TV requereix un reinici per a que tinga efecte."
+msgstr ""
+"Activar o desactivar aquest tipus d'eixida de TV requereix un reinici per a "
+"que tinga efecte."
 
 #: src/totem-statusbar.c:138
 msgid "Shadow type"
@@ -920,11 +940,14 @@ msgstr "Error genèric"
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
-msgstr "El còdec de vídeo «%s» no es pot gestionar. Potser necessiteu instal·lar connectors addicionals per a poder veure alguns tipus de pel·lícules"
+msgstr ""
+"El còdec de vídeo «%s» no es pot gestionar. Potser necessiteu instal·lar "
+"connectors addicionals per a poder veure alguns tipus de pel·lícules"
 
 #: src/bacon-video-widget-xine.c:1349
 msgid "This is an audio-only file, and there is no audio output available"
-msgstr "Aquest és un fitxer de només audio, i no hi ha cap sortida d'audio disponible"
+msgstr ""
+"Aquest és un fitxer de només audio, i no hi ha cap sortida d'audio disponible"
 
 #: src/bacon-video-widget-xine.c:2426
 msgid "Movie is not playing"
