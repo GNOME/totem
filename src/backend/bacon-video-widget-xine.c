@@ -41,6 +41,7 @@
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 #include <gconf/gconf-client.h>
+#include <glib/gi18n.h>
 /* xine */
 #include <xine.h>
 
@@ -50,14 +51,6 @@
 #include "scrsaver.h"
 #include "video-utils.h"
 #include "bacon-resize.h"
-
-#include <libintl.h>
-#define _(String) gettext (String)
-#ifdef gettext_noop
-#   define N_(String) gettext_noop (String)
-#else
-#   define N_(String) (String)
-#endif
 
 #define DEFAULT_HEIGHT 315
 #define DEFAULT_WIDTH 420
@@ -402,6 +395,7 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
 	bvw->priv->xine = xine_new ();
 	bvw->priv->cursor_shown = TRUE;
 	bvw->priv->vis_name = g_strdup ("goom");
+	bvw->priv->volume = -1;
 
 	bvw->priv->init_width = 0;
 	bvw->priv->init_height = 0;
@@ -707,13 +701,6 @@ setup_config (BaconVideoWidget *bvw)
 	entry.num_value = 0;
 	xine_config_update_entry (bvw->priv->xine, &entry);
 
-	/* The volume */
-	xine_config_register_range (bvw->priv->xine,
-			"misc.amp_level",
-			50, 0, 100, "amp volume level",
-			NULL, 10, NULL, NULL);
-	bvw->priv->volume = -1;
-
 	if (bvw->priv->gc == NULL)
 		return;
 
@@ -794,17 +781,6 @@ setup_config (BaconVideoWidget *bvw)
 				NULL);
 		xine_config_update_entry (bvw->priv->xine, &entry);
 	}
-}
-
-static void
-setup_config_video (BaconVideoWidget *bvw)
-{
-	xine_cfg_entry_t entry;
-
-	/* Remove the ALSA HW mixing */
-	bvw_config_helper_num (bvw->priv->xine, "audio.alsa_hw_mixer", 0, &entry);
-	entry.num_value = 0;
-	xine_config_update_entry (bvw->priv->xine, &entry);
 }
 
 static void
@@ -1129,8 +1105,6 @@ bacon_video_widget_realize (GtkWidget *widget)
 	}
 
 	bvw->priv->ao_driver = load_audio_out_driver (bvw, NULL);
-
-	setup_config_video (bvw);
 
 	if (bvw->priv->type == BVW_USE_TYPE_VIDEO
 			&& bvw->priv->ao_driver != NULL)
@@ -1465,7 +1439,6 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 {
 	BaconVideoWidget *bvw;
 	char *configfile;
-	xine_cfg_entry_t entry;
 	int speed;
 
 	g_return_if_fail (widget != NULL);
@@ -1483,13 +1456,11 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	xine_stop (bvw->priv->stream);
 	xine_close (bvw->priv->stream);
 
-	/* Put the current volume in the config system */
+	/* Save the current volume */
 	if (bacon_video_widget_can_set_volume (bvw) != FALSE)
 	{
-		xine_config_lookup_entry (bvw->priv->xine,
-				"misc.amp_level", &entry);
-		entry.num_value = bvw->priv->volume;
-		xine_config_update_entry (bvw->priv->xine, &entry);
+		gconf_client_set_int (bvw->priv->gc, GCONF_PREFIX"/volume",
+				bvw->priv->volume, NULL);
 	}
 
 	/* Kill the TV out */
@@ -1558,7 +1529,6 @@ bacon_video_widget_error_quark (void)
 		q = g_quark_from_static_string ("bvw-error-quark");
 	return q;
 }
-
 
 GtkWidget *
 bacon_video_widget_new (int width, int height,
@@ -2388,11 +2358,9 @@ bacon_video_widget_get_volume (BaconVideoWidget *bvw)
 
 	if (bvw->priv->volume == -1)
 	{
-		xine_cfg_entry_t entry;
-
-		xine_config_lookup_entry (bvw->priv->xine,
-				"misc.amp_level", &entry);
-		bvw->priv->volume = entry.num_value;
+		bvw->priv->volume = gconf_client_get_int (bvw->priv->gc,
+				GCONF_PREFIX"/volume", NULL);
+		bvw->priv->volume = CLAMP (bvw->priv->volume, 0, 100);
 
 		xine_set_param (bvw->priv->stream,
 				XINE_PARAM_AUDIO_AMP_LEVEL, bvw->priv->volume);
@@ -3182,7 +3150,7 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 		value = 3;
 		break;
 	default:
-		value = 2;
+		value = 1;
 		g_warning ("Unsupported audio type %d selected", type);
 	}
 
@@ -3456,7 +3424,7 @@ GList
 	{
 		memset (&lang, 0, sizeof (lang));
 
-		if (xine_get_spu_lang(bvw->priv->stream, i, lang) == 1)
+		if (xine_get_spu_lang (bvw->priv->stream, i, lang) == 1)
 		{
 			list = g_list_prepend (list,
 					(gpointer) g_strdup (lang));

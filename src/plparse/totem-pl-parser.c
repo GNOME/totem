@@ -22,7 +22,10 @@
    Author: Bastien Nocera <hadess@hadess.net>
  */
 
+#ifdef HAVE_CONFIG_H
 #include "config.h"
+#endif /* HAVE_CONFIG_H */
+
 #include "totem-pl-parser.h"
 
 #include "totemplparser-marshal.h"
@@ -33,8 +36,6 @@
 #include <gtk/gtk.h>
 #include <libxml/tree.h>
 #include <libxml/parser.h>
-#include <glade/glade.h>
-#include <gconf/gconf-client.h>
 #include <libgnomevfs/gnome-vfs.h>
 #include <libgnomevfs/gnome-vfs-mime.h>
 #include <libgnomevfs/gnome-vfs-mime-utils.h>

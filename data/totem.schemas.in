@@ -228,5 +228,17 @@
 	</locale>
       </schema>
 
+      <schema>
+        <key>/schemas/apps/totem/volume</key>
+	<applyto>/apps/totem/volume</applyto>
+	<owner>totem</owner>
+	<type>int</type>
+	<default>50</default>
+	<locale name="C">
+	  <short>Sound volume</short>
+	  <long>Sound volume, in percent, between 0 and 100</long>
+	</locale>
+      </schema>
+
   </schemalist>
 </gconfschemafile>

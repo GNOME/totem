@@ -1,5 +1,18 @@
 2004-12-27  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.schemas.in: added a volume config
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_init),
+	(setup_config), (bacon_video_widget_realize),
+	(bacon_video_widget_unrealize), (bacon_video_widget_get_volume),
+	(bacon_video_widget_set_audio_out_type),
+	(bacon_video_widget_get_subtitles): save the volume in GConf, not
+	in the xine config file, remove unneeded code, fix the "default"
+	value of the audio output
+	* src/totem-pl-parser.c: remove unneeded includes, patch by Tiago
+	Cogumbreiro <cogumbreiro@linus.uac.pt>
+
+2004-12-27  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c: (bacon_video_widget_open): don't
 	emit the metadata signal if we fail to open the stream
 	* src/metadata-test.c: (on_got_metadata_event), (main): fix
