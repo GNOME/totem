@@ -1,5 +1,11 @@
 2003-07-03  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_metadata_string): if the metadata isn't UTF-8,
+	try to transform it into that, fixes display of non-UTF-8 id3 tags
+
+2003-07-03  Bastien Nocera  <hadess@hadess.net>
+
 	* AUTHORS: added Julien
 	* README: updated
 	* configure.in: added a little echo to show which backend is used

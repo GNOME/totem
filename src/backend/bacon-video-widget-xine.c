@@ -2675,6 +2675,19 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetM
 	if (string != NULL && string[0] == '\0')
 		string = NULL;
 
+	if (string != NULL)
+	{
+		if (g_utf8_validate (string, -1, NULL) == FALSE)
+		{
+			char *utf8;
+
+			utf8 = g_locale_to_utf8 (string, -1, NULL, NULL, NULL);
+			g_value_set_string (value, utf8);
+			g_free (utf8);
+			return;
+		}
+	}
+
 	g_value_set_string (value, string);
 
 	return;
