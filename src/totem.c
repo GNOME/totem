@@ -517,10 +517,11 @@ totem_action_fullscreen_toggle (Totem *totem)
 			{
 				totem->controls_visibility =
 					TOTEM_CONTROLS_VISIBLE;
-				show_controls (totem, TRUE, FALSE);
+				show_controls (totem, TRUE, TRUE);
 			} else {
 				totem->controls_visibility =
 					TOTEM_CONTROLS_HIDDEN;
+				show_controls (totem, FALSE, TRUE);
 			}
 		}
 	} else {
@@ -531,12 +532,8 @@ totem_action_fullscreen_toggle (Totem *totem)
 		gtk_window_fullscreen (GTK_WINDOW(totem->win));
 		scrsaver_disable (totem->scr);
 
-		if (totem->controls_visibility == TOTEM_CONTROLS_VISIBLE) {
-			totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
-			show_controls (totem, FALSE, FALSE);
-		} else {
-			totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
-		}
+		totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
+		show_controls (totem, FALSE, TRUE);
 	}
 }
 
@@ -1721,19 +1718,23 @@ show_controls (Totem *totem, gboolean visible, gboolean fullscreen_behaviour)
 		gtk_widget_show (menubar);
 		gtk_widget_show (controlbar);
 		gtk_widget_show (statusbar);
-		gtk_widget_show (item);
+		gtk_widget_hide (item);
 		gtk_container_set_border_width (GTK_CONTAINER (bvw_vbox), 1);
 	} else {
 		gtk_widget_hide (menubar);
 		gtk_widget_hide (controlbar);
 		gtk_widget_hide (statusbar);
-		gtk_widget_hide (item);
+		 /* We won't show controls in fullscreen */
+		if (totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN)
+			gtk_widget_hide (item);
+		else
+			gtk_widget_show (item);
 		gtk_container_set_border_width (GTK_CONTAINER (bvw_vbox), 0);
 	}
 	
 	/* If we are called from fullscreen handlers
 	we do not handle the window's size */
-	if (!fullscreen_behaviour)
+	if (fullscreen_behaviour)
 		return;
 	
 	if (totem->controls_visibility == TOTEM_CONTROLS_HIDDEN) {
@@ -1769,7 +1770,7 @@ on_show_controls1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 	} else {
 		totem->controls_visibility = TOTEM_CONTROLS_HIDDEN;
 	}
-	show_controls (totem, show, TRUE);
+	show_controls (totem, show, FALSE);
 }
 
 static void
