@@ -125,27 +125,41 @@ linux_add_video_dev (const char *name)
 		return NULL;
 	}
 
-	proc = g_build_filename ("/proc/video/dev", name, NULL);
-	lines = read_lines (proc);
-	g_free (proc);
+	if (g_file_test ("/proc/video/dev", G_FILE_TEST_IS_DIR) != FALSE) {
+		proc = g_build_filename ("/proc/video/dev", name, NULL);
+		lines = read_lines (proc);
+		g_free (proc);
 
-	if (lines == NULL) {
-		return NULL;
-	}
+		if (lines == NULL) {
+			return NULL;
+		}
 
-	if (g_str_has_prefix (lines[0], "name") == FALSE) {
-		g_strfreev (lines);
-		return NULL;
-	}
+		if (g_str_has_prefix (lines[0], "name") == FALSE) {
+			g_strfreev (lines);
+			return NULL;
+		}
 
-	tmp = strstr (lines[0], ":");
-	if (tmp == NULL || tmp + 1 == NULL || tmp + 2 == NULL) {
-		g_strfreev (lines);
-		return NULL;
+		tmp = strstr (lines[0], ":");
+		if (tmp == NULL || tmp + 1 == NULL || tmp + 2 == NULL) {
+			g_strfreev (lines);
+			return NULL;
+		}
+		tmp = tmp + 2;
+	} else {
+		proc = g_build_filename ("/sys/class/video4linux/",
+				name, "model", NULL);
+		lines = read_lines (proc);
+		g_free (proc);
+
+		if (lines == NULL) {
+			return NULL;
+		}
+
+		tmp = lines[0];
 	}
 
 	dev = g_new0 (VideoDev, 1);
-	dev->display_name = g_strdup (tmp+2);
+	dev->display_name = g_strdup (tmp);
 	dev->device = filename;
 
 	g_strfreev (lines);
@@ -161,11 +175,14 @@ linux_scan (void)
 	const char *name;
 	VideoDev *dev;
 
-	if (g_file_test ("/proc/video/dev", G_FILE_TEST_IS_DIR) == FALSE) {
+	if (g_file_test ("/proc/video/dev", G_FILE_TEST_IS_DIR) != FALSE) {
+		dir = g_dir_open ("/proc/video/dev", 0, NULL);
+	} else if (g_file_test ("/sys/class/video4linux/", G_FILE_TEST_IS_DIR) != FALSE) {
+		dir = g_dir_open ("/sys/class/video4linux/", 0, NULL);
+	} else {
 		return NULL;
 	}
 
-	dir = g_dir_open ("/proc/video/dev", 0, NULL);
 	name = g_dir_read_name (dir);
 	while (name != NULL) {
 		dev = linux_add_video_dev (name);

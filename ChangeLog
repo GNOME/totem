@@ -1,5 +1,16 @@
 2004-02-28  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-private.h:
+	* src/totem.c: (update_current_time), (vol_slider_pressed_cb),
+	(vol_slider_released_cb), (seek_slider_changed_cb),
+	(seek_slider_released_cb), (vol_cb), (popup_hide), (main):
+	use GObject data rather than comparing pointers to widgets for
+	fullscreen/windowed mode updates (Closes: #135513)
+	* src/video-dev.c: (linux_add_video_dev), (linux_scan):
+	add Linux 2.6 support, from libbacon
+
+2004-02-28  Bastien Nocera  <hadess@hadess.net>
+
 	* data/Makefile.am: Honour gconf2 configure arguments (patch by
 	Julio M. Merino Vidal <jmmv@menta.net>) (Closes: #135415)
 

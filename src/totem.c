@@ -1245,8 +1245,8 @@ update_current_time (BaconVideoWidget *bvw,
 {
 	update_skip_to (totem, stream_length);
 
-	if (totem->seek_lock == FALSE) {
-
+	if (totem->seek_lock == FALSE)
+	{
 		if (stream_length == 0)
 		{
 			totem_statusbar_set_time_and_length
@@ -1269,14 +1269,14 @@ update_current_time (BaconVideoWidget *bvw,
 static gboolean
 vol_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 {
-	totem->vol_lock = TRUE;
+	totem->vol_fs_lock = TRUE;
 	return FALSE;
 }
 
 static gboolean
 vol_slider_released_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 {
-	totem->vol_lock = FALSE;
+	totem->vol_fs_lock = FALSE;
 	return FALSE;
 }
 
@@ -1323,23 +1323,22 @@ seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 static void
 seek_slider_changed_cb (GtkAdjustment *adj, Totem *totem)
 {
-  double pos;
-  gint time;
+	double pos;
+	gint time;
 
-  if (! totem->seek_lock)
-    return;
+	if (totem->seek_lock == FALSE)
+		return;
   
-  pos = gtk_adjustment_get_value (adj) / 65535;
-  time = bacon_video_widget_get_stream_length (totem->bvw);
-  totem_statusbar_set_time_and_length (TOTEM_STATUSBAR (totem->statusbar),
-				       (gint) (pos * time / 1000),
-				       time / 1000);
+	pos = gtk_adjustment_get_value (adj) / 65535;
+	time = bacon_video_widget_get_stream_length (totem->bvw);
+	totem_statusbar_set_time_and_length (TOTEM_STATUSBAR (totem->statusbar),
+			(int) (pos * time / 1000), time / 1000);
 }
 
 static gboolean
 seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 {
-	if (GTK_WIDGET(widget) == totem->fs_seek)
+	if (g_object_get_data (G_OBJECT (widget), "fs") != FALSE)
 	{
 		totem_action_seek (totem,
 				gtk_adjustment_get_value (totem->fs_seekadj) / 65535);
@@ -1367,7 +1366,8 @@ vol_cb (GtkWidget *widget, Totem *totem)
 	if (totem->vol_lock == FALSE)
 	{
 		totem->vol_lock = TRUE;
-		if (GTK_WIDGET(widget) == totem->fs_volume)
+
+		if (GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "fs")) != FALSE)
 		{
 			bacon_video_widget_set_volume
 				(totem->bvw, (gint) totem->fs_voladj->value);
@@ -2451,7 +2451,7 @@ popup_hide (Totem *totem)
 		return TRUE;
 	}
 
-	if (totem->seek_lock != FALSE || totem->vol_lock != FALSE)
+	if (totem->seek_lock != FALSE || totem->vol_fs_lock != FALSE)
 		return TRUE;
 
 	gtk_widget_hide (GTK_WIDGET (totem->exit_popup));
@@ -3774,8 +3774,10 @@ main (int argc, char **argv)
 	/* The rest of the widgets */
 	totem->seek = glade_xml_get_widget (totem->xml, "tmw_seek_hscale");
 	totem->seekadj = gtk_range_get_adjustment (GTK_RANGE (totem->seek));
+	g_object_set_data (G_OBJECT (totem->seek), "fs", GINT_TO_POINTER (0));
 	totem->volume = glade_xml_get_widget (totem->xml, "tmw_volume_hscale");
 	totem->voladj = gtk_range_get_adjustment (GTK_RANGE (totem->volume));
+	g_object_set_data (G_OBJECT (totem->volume), "fs", GINT_TO_POINTER (0));
 	totem->exit_popup = glade_xml_get_widget
 		(totem->xml, "totem_exit_fullscreen_window");
 	totem->control_popup = glade_xml_get_widget
@@ -3783,14 +3785,17 @@ main (int argc, char **argv)
 	totem->fs_seek = glade_xml_get_widget (totem->xml, "tcw_seek_hscale");
 	totem->fs_seekadj = gtk_range_get_adjustment
 		(GTK_RANGE (totem->fs_seek));
+	g_object_set_data (G_OBJECT (totem->fs_seek), "fs", GINT_TO_POINTER (1));
 	totem->fs_volume = glade_xml_get_widget
 		(totem->xml, "tcw_volume_hscale");
 	totem->fs_voladj = gtk_range_get_adjustment
 		(GTK_RANGE (totem->fs_volume));
+	g_object_set_data (G_OBJECT (totem->fs_volume), "fs", GINT_TO_POINTER (1));
 	totem->volume_first_time = 1;
 	totem->fs_pp_button = glade_xml_get_widget
 		(totem->xml, "tcw_pp_button");
 	totem->statusbar = glade_xml_get_widget (totem->xml, "tmw_statusbar");
+	totem->seek_lock = totem->vol_lock = totem->vol_fs_lock = FALSE;
 
 	/* Properties */
 	totem->properties = bacon_video_widget_properties_new ();

@@ -58,6 +58,7 @@ struct Totem {
 	GtkWidget *volume;
 	GtkAdjustment *voladj;
 	gboolean vol_lock;
+	gboolean vol_fs_lock;
 	gfloat prev_volume;
 	int volume_first_time;
 
