@@ -143,8 +143,6 @@ BUILT_SOURCES = \
 	totem_mozilla_scripting.h \
 	libtotem_mozilla.xpt
 
-CLEANFILES = $(BUILT_SOURCES)
-
 totem_mozilla_scripting.h: totem_mozilla_scripting.idl
 	$(MOZILLA_XPIDL) -m header -I $(MOZILLA_XPCFLAGS) $(srcdir)/totem_mozilla_scripting.idl
 
@@ -218,7 +216,7 @@ INCLUDES = 						\
 	-DLIBEXECDIR=\""$(libexecdir)"\"		\
 	-DLOGO_PATH=DATADIR\"\"G_DIR_SEPARATOR_S\"totem\"G_DIR_SEPARATOR_S\"totem_logo.png\"
 
-CLEANFILES = *.bak *.gladep core* *.orig *~ $(MARSHALFILES) $(desktop_DATA)
+CLEANFILES = *.bak *.gladep core* *.orig *~ $(MARSHALFILES) $(desktop_DATA) $(BUILT_SOURCES) 
 EXTRA_DIST =	bacon-video-widget-xine.c \
 		bacon-video-widget-gst.c \
 		gstscreenshot.c \
