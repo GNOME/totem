@@ -51,9 +51,6 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 keys_DATA = totem.keys
 keysdir = $(datadir)/mime-info/
 
-app_DATA = totem.applications
-appdir = $(datadir)/application-registry
-
 totem.desktop.in: totem.desktop.in.in totem.keys desktop.sh
 	cat $(srcdir)/totem.desktop.in.in > totem.desktop.in &&\
 	$(srcdir)/desktop.sh $(srcdir)/totem.keys		\
@@ -90,9 +87,8 @@ schema_DATA = $(schema_in_files:.schemas.in=.schemas)
 @INTLTOOL_SCHEMAS_RULE@
 
 # For the sake of some users
-user-install: $(app_DATA) $(keys_DATA)
+user-install: $(keys_DATA)
 	mkdir -p $(HOME)/.gnome/application-registry $(HOME)/.gnome/mime-info/
-	cp $(app_DATA) $(HOME)/.gnome/application-registry
 	cp $(keys_DATA) $(HOME)/.gnome/mime-info/
 
 if GCONF_SCHEMAS_INSTALL
@@ -102,7 +98,7 @@ else
 install-data-local:
 endif
 
-EXTRA_DIST = $(stuff_DATA) $(desktop_in_in_files_all) $(keys_DATA) $(app_DATA) $(server_in_files) totem.schemas.in lirc_example schemas.sh desktop.sh handlers.sh $(man_MANS)
+EXTRA_DIST = $(stuff_DATA) $(desktop_in_in_files_all) $(keys_DATA) $(server_in_files) totem.schemas.in lirc_example schemas.sh desktop.sh handlers.sh $(man_MANS)
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(desktop_DATA) $(schema_DATA) $(desktop_in_files_all)
 
