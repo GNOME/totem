@@ -95,7 +95,7 @@ struct BaconVideoWidgetPrivate {
 	
 	gboolean media_has_video;
 	
-	int stream_length;
+	guint stream_length;
 	
 	/* Configuration */
 	gboolean null_out;
@@ -355,7 +355,8 @@ got_stream_length (GstPlay* play, gint64 length_nanos, BaconVideoWidget *bvw)
 static void
 got_time_tick (GstPlay* play, gint64 time_nanos, BaconVideoWidget *bvw)
 {
-	int current_time = 0, current_position = 0;
+	guint current_time = 0;
+	guint current_position = 0;
 	g_return_if_fail(bvw != NULL);
 	g_return_if_fail(BACON_IS_VIDEO_WIDGET(bvw));
 
@@ -364,7 +365,7 @@ got_time_tick (GstPlay* play, gint64 time_nanos, BaconVideoWidget *bvw)
 	if (bvw->priv->stream_length == 0)
 		current_position = 0;
 	else
-		current_position = current_time * 65535
+		current_position = (long long) current_time * 65535
 			/ bvw->priv->stream_length;
 
 	g_signal_emit (G_OBJECT (bvw),
@@ -387,7 +388,7 @@ bacon_video_widget_finalize (GObject *object)
 		bvw->priv->vw = NULL;
 	}
 
-	if (bvw->priv->play)
+	if ( (bvw->priv->play) && GST_IS_PLAY(bvw->priv->play) )
 	{
 		g_object_unref (bvw->priv->play);
 		bvw->priv->play = NULL;
