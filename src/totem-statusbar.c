@@ -195,8 +195,10 @@ totem_statusbar_set_time (TotemStatusbar *statusbar, gint time)
 {
   g_return_if_fail (TOTEM_IS_STATUSBAR (statusbar));
 
-  statusbar->time = time;
+  if (statusbar->time == time)
+    return;
 
+  statusbar->time = time;
   totem_statusbar_update_time (statusbar);
 }
 
