@@ -379,12 +379,12 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 	bvw->priv->queue = g_async_queue_new ();
 
 	/* init configuration  */
+	bvw->priv->gc = gconf_client_get_default ();
 	setup_config (bvw);
 
 	xine_init (bvw->priv->xine);
 
 	/* Debug configuration */
-	bvw->priv->gc = gconf_client_get_default ();
 	if (gconf_client_get_bool (bvw->priv->gc, GCONF_PREFIX"/debug", NULL) == FALSE)
 	{
 		xine_engine_set_param (bvw->priv->xine,
@@ -626,6 +626,35 @@ load_audio_out_driver (BaconVideoWidget *bvw, GError **err)
 }
 
 static void
+bvw_config_helper_string (xine_t *xine, const char *id, const char *val,
+		xine_cfg_entry_t *entry)
+{
+	memset (entry, 0, sizeof (entry));
+
+	if (!xine_config_lookup_entry (xine, id, entry))
+	{
+		xine_config_register_string (xine, id, val, "", NULL, 10,
+				NULL, NULL);
+		xine_config_lookup_entry (xine, id, entry);
+	}
+}
+
+static void
+bvw_config_help_num (xine_t *xine, const char *id, int val,
+		xine_cfg_entry_t *entry)
+{
+	memset (entry, 0, sizeof (entry));
+
+	if (!xine_config_lookup_entry (xine, id, entry))
+	{
+		xine_config_register_num (xine, id, val, 0, NULL, 10,
+				NULL, NULL);
+		xine_config_lookup_entry (xine, id, entry);
+	}
+}
+
+
+static void
 setup_config (BaconVideoWidget *bvw)
 {
 	char *path;
@@ -662,76 +691,58 @@ setup_config (BaconVideoWidget *bvw)
 	if (bvw->priv->gc == NULL)
 		return;
 
-	memset (&entry, 0, sizeof (entry));
-
 	if (gconf_client_get_bool (bvw->priv->gc, "/system/http_proxy/use_http_proxy", NULL) == FALSE)
 	{
-		if (xine_config_lookup_entry (bvw->priv->xine,
-				"input.http_proxy_host", &entry))
-		{
-			entry.str_value = "";
-			xine_config_update_entry (bvw->priv->xine, &entry);
-		}
+		bvw_config_helper_string (bvw->priv->xine,
+				"input.http_proxy_host", "", &entry);
+		entry.str_value = "";
+		xine_config_update_entry (bvw->priv->xine, &entry);
 
 		return;
 	}
 
-	memset (&entry, 0, sizeof (entry));
-	if (xine_config_lookup_entry (bvw->priv->xine,
-			"input.http_proxy_host", &entry))
-	{
-		entry.str_value = gconf_client_get_string (bvw->priv->gc,
-				"/system/http_proxy/host", NULL);
-		xine_config_update_entry (bvw->priv->xine, &entry);
-	}
+	bvw_config_helper_string (bvw->priv->xine,
+			"input.http_proxy_host", "", &entry);
+	entry.str_value = gconf_client_get_string (bvw->priv->gc,
+			"/system/http_proxy/host", NULL);
+	g_message ("str value: %s", entry.str_value);
+	xine_config_update_entry (bvw->priv->xine, &entry);
 
-	memset (&entry, 0, sizeof (entry));
-	if (xine_config_lookup_entry (bvw->priv->xine,
-			"input.http_proxy_port", &entry))
-	{
-		entry.num_value = gconf_client_get_int (bvw->priv->gc,
-				"/system/http_proxy/port", NULL);
-		xine_config_update_entry (bvw->priv->xine, &entry);
-	}
+	bvw_config_help_num (bvw->priv->xine,
+			 "input.http_proxy_port", 8080, &entry);
+	entry.num_value = gconf_client_get_int (bvw->priv->gc,
+			"/system/http_proxy/port", NULL);
+	xine_config_update_entry (bvw->priv->xine, &entry);
 
-	memset (&entry, 0, sizeof (entry));
 	if (gconf_client_get_bool (bvw->priv->gc, "/system/http_proxy/use_authentication", NULL) == FALSE)
 	{
-		if (xine_config_lookup_entry (bvw->priv->xine,
-				"input.http_proxy_user", &entry))
-		{
-			entry.str_value = "";
-			xine_config_update_entry (bvw->priv->xine, &entry);
-		}
+		bvw_config_helper_string (bvw->priv->xine,
+				"input.http_proxy_user", g_get_user_name(),
+				&entry);
+		entry.str_value = "";
+		xine_config_update_entry (bvw->priv->xine, &entry);
 
-		memset (&entry, 0, sizeof (entry));
-		if (xine_config_lookup_entry (bvw->priv->xine,
-				"input.http_proxy_password", &entry))
-		{
-			entry.str_value = "";
-			xine_config_update_entry (bvw->priv->xine, &entry);
-		}
+		bvw_config_helper_string (bvw->priv->xine,
+				"input.http_proxy_password", "",
+				&entry);
+		entry.str_value = "";
+		xine_config_update_entry (bvw->priv->xine, &entry);
 	} else {
-		if (xine_config_lookup_entry (bvw->priv->xine,
-				"input.http_proxy_user", &entry))
-		{
-			entry.str_value = gconf_client_get_string
-				(bvw->priv->gc,
-				 "/system/http_proxy/authentication_user",
-				 NULL);
-			xine_config_update_entry (bvw->priv->xine, &entry);
-		}
+		bvw_config_helper_string (bvw->priv->xine,
+				"input.http_proxy_user", g_get_user_name(),
+				&entry);
+		entry.str_value = gconf_client_get_string (bvw->priv->gc,
+				"/system/http_proxy/authentication_user",
+				NULL);
+		xine_config_update_entry (bvw->priv->xine, &entry);
 
-		memset (&entry, 0, sizeof (entry));
-		if (xine_config_lookup_entry (bvw->priv->xine,
-				"input.http_proxy_password", &entry))
-		{
-			entry.str_value = gconf_client_get_string
-				(bvw->priv->gc,
-				 "/system/http_proxy/authentication_password",
-				 NULL);
-			xine_config_update_entry (bvw->priv->xine, &entry);
-		}
+		bvw_config_helper_string (bvw->priv->xine,
+				"input.http_proxy_password", "",
+				&entry);
+		entry.str_value = gconf_client_get_string (bvw->priv->gc,
+				"/system/http_proxy/authentication_password",
+				NULL);
+		xine_config_update_entry (bvw->priv->xine, &entry);
 	}
 }
 
@@ -741,12 +752,9 @@ setup_config_video (BaconVideoWidget *bvw)
 	xine_cfg_entry_t entry;
 
 	/* Default xv colourkey */
-	if (xine_config_lookup_entry (bvw->priv->xine,
-				"video.xv_colorkey", &entry))
-	{
-		entry.num_value = 30;
-		xine_config_update_entry (bvw->priv->xine, &entry);
-	}
+	bvw_config_help_num (bvw->priv->xine, "video.xv_colorkey", 30, &entry);
+	entry.num_value = 30;
+	xine_config_update_entry (bvw->priv->xine, &entry);
 }
 
 static void
@@ -2003,30 +2011,22 @@ bacon_video_widget_set_media_device (BaconVideoWidget *bvw, const char *path)
 	xine_cfg_entry_t entry;
 
 	/* DVD device */
-	if (xine_config_lookup_entry (bvw->priv->xine,
-			"input.dvd_device", &entry))
-	{
-		entry.str_value = g_strdup (path);
-		xine_config_update_entry (bvw->priv->xine, &entry);
-	}
+	bvw_config_helper_string (bvw->priv->xine, "input.dvd_device",
+			path, &entry);
+	entry.str_value = g_strdup (path);
+	xine_config_update_entry (bvw->priv->xine, &entry);
 
 	/* VCD device */
-	memset (&entry, 0, sizeof (entry));
-	if (xine_config_lookup_entry (bvw->priv->xine,
-				"input.vcd_device", &entry))
-	{
-		entry.str_value = g_strdup (path);
-		xine_config_update_entry (bvw->priv->xine, &entry);
-	}
+	bvw_config_helper_string (bvw->priv->xine, "input.vcd_device",
+			path, &entry);
+	entry.str_value = g_strdup (path);
+	xine_config_update_entry (bvw->priv->xine, &entry);
 
 	/* CDDA device */
-	memset (&entry, 0, sizeof (entry));
-	if (xine_config_lookup_entry (bvw->priv->xine,
-				"input.cdda_device", &entry))
-	{
-		entry.str_value = g_strdup (path);
-		xine_config_update_entry (bvw->priv->xine, &entry);
-	}
+	bvw_config_helper_string (bvw->priv->xine, "input.cdda_device",
+			path, &entry);
+	entry.str_value = g_strdup (path);
+	xine_config_update_entry (bvw->priv->xine, &entry);
 }
 
 void
@@ -2035,20 +2035,15 @@ bacon_video_widget_set_proprietary_plugins_path (BaconVideoWidget *bvw,
 {
 	xine_cfg_entry_t entry;
 
-	if (xine_config_lookup_entry (bvw->priv->xine,
-				"codec.win32_path", &entry))
-	{
-		entry.str_value = g_strdup (path);
-		xine_config_update_entry (bvw->priv->xine, &entry);
-	}
+	bvw_config_helper_string (bvw->priv->xine,
+			"codec.win32_path", path, &entry);
+	entry.str_value = g_strdup (path);
+	xine_config_update_entry (bvw->priv->xine, &entry);
 
-	memset (&entry, 0, sizeof (entry));
-	if (xine_config_lookup_entry (bvw->priv->xine,
-				"codec.real_codecs_path", &entry))
-	{
-		entry.str_value = g_strdup (path);
-		xine_config_update_entry (bvw->priv->xine, &entry);
-	}
+	bvw_config_helper_string (bvw->priv->xine,
+			"codec.real_codecs_path", path, &entry);
+	entry.str_value = g_strdup (path);
+	xine_config_update_entry (bvw->priv->xine, &entry);
 
 	/* And we try and create symlinks from /usr/lib/win32 to
 	 * the local user path */
@@ -2308,23 +2303,17 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget *bvw,
 		g_assert_not_reached ();
 	}
 
-	if (xine_config_lookup_entry (bvw->priv->xine, "post.goom_fps", &entry))
-	{
-		entry.num_value = fps;
-		xine_config_update_entry (bvw->priv->xine, &entry);
-	}
+	bvw_config_help_num (bvw->priv->xine, "post.goom_fps", fps, &entry);
+	entry.num_value = fps;
+	xine_config_update_entry (bvw->priv->xine, &entry);
 
-	if (xine_config_lookup_entry (bvw->priv->xine, "post.goom_width", &entry))
-	{
-		entry.num_value = w;
-		xine_config_update_entry (bvw->priv->xine, &entry);
-	}
+	bvw_config_help_num (bvw->priv->xine, "post.goom_width", w, &entry);
+	entry.num_value = w;
+	xine_config_update_entry (bvw->priv->xine, &entry);
 
-	if (xine_config_lookup_entry (bvw->priv->xine, "post.goom_height", &entry))
-	{
-		entry.num_value = h;
-		xine_config_update_entry (bvw->priv->xine, &entry);
-	}
+	bvw_config_help_num (bvw->priv->xine, "post.goom_height", h, &entry);
+	entry.num_value = h;
+	xine_config_update_entry (bvw->priv->xine, &entry);
 }
 
 gboolean
@@ -2640,30 +2629,21 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 		g_assert_not_reached ();
 	}
 
-	if (xine_config_lookup_entry (bvw->priv->xine, "audio.four_channel", &entry))
-	{
-		entry.num_value = four_channel;
-		xine_config_update_entry (bvw->priv->xine, &entry);
-	}
+	bvw_config_help_num (bvw->priv->xine, "audio.four_channel", four_channel, &entry);
+	entry.num_value = four_channel;
+	xine_config_update_entry (bvw->priv->xine, &entry);
 
-	if (xine_config_lookup_entry (bvw->priv->xine, "audio.five_channel", &entry))
-	{
-		entry.num_value = five_channel;
-		xine_config_update_entry (bvw->priv->xine, &entry);
-	}
+	bvw_config_help_num (bvw->priv->xine, "audio.five_channel", five_channel,  &entry);
+	entry.num_value = five_channel;
+	xine_config_update_entry (bvw->priv->xine, &entry);
 
-	if (xine_config_lookup_entry (bvw->priv->xine, "audio.five_lfe_channel", &entry))
-	{
-		entry.num_value = five_one_channel;
-		xine_config_update_entry (bvw->priv->xine, &entry);
-	}
+	bvw_config_help_num (bvw->priv->xine, "audio.five_lfe_channel", five_one_channel, &entry);
+	entry.num_value = five_one_channel;
+	xine_config_update_entry (bvw->priv->xine, &entry);
 
-	if (xine_config_lookup_entry (bvw->priv->xine, "audio.a52_pass_through",
- &entry))
-	{
-		entry.num_value = passthru;
-		xine_config_update_entry (bvw->priv->xine, &entry);
-	}
+	bvw_config_help_num (bvw->priv->xine, "audio.a52_pass_through", passthru, &entry);
+	entry.num_value = passthru;
+	xine_config_update_entry (bvw->priv->xine, &entry);
 }
 
 static void

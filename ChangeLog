@@ -1,5 +1,19 @@
 2003-09-21  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_instance_init), (bvw_config_helper_string),
+	(bvw_config_help_num), (setup_config), (setup_config_video),
+	(bacon_video_widget_set_media_device),
+	(bacon_video_widget_set_proprietary_plugins_path),
+	(bacon_video_widget_set_visuals_quality),
+	(bacon_video_widget_set_audio_out_type): add bvw_config_helper_string
+	and bvw_config_help_num working-around the crummy config system from
+	xine, fix codepath for the proxy (the code to set the proxy was never
+	executed) (Closes: #122212), partially fix #122580 with the new config
+	changes (AC-3 passthrough not instant-apply)
+
+2003-09-21  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-gst.c:
 	* src/bacon-video-widget-xine.c:
 	* src/bacon-video-widget.h: remove the _eject() command, nothing to
