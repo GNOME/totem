@@ -408,25 +408,36 @@ totem_action_set_mrl_and_play (Totem *totem, char *mrl)
 		totem_action_play (totem, 0);
 }
 
+static char *media_strings[] = {
+	N_("DVD"),
+	N_("Video CD"),
+	N_("Audio CD")
+};
+
 static gboolean
 totem_action_load_media (Totem *totem, MediaType type)
 {
 	const char **mrls;
-	char *mrl;
+	char *mrl, *msg;
 
 	if (bacon_video_widget_can_play (totem->bvw, type) == FALSE)
 	{
-		totem_action_error (_("Totem cannot play this type of media because you do not have the appropriate plugins to handle it.\n"
-					"Install the necessary plugins and restart Totem to be able to play this media."), totem);
+		msg = g_strdup_printf (_("Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it.\n"
+					"Please install the necessary plugins and restart Totem to be able to play this media."),
+				_(media_strings[type]));
+		totem_action_error (msg, totem);
+		g_free (msg);
 		return FALSE;
 	}
 
 	mrls = bacon_video_widget_get_mrls (totem->bvw, type);
 	if (mrls == NULL)
 	{
-		totem_action_error (_("Totem could not play this media although a plugin is present to handle it.\n"
+		msg = g_strdup_printf (_("Totem could not play this media (%s) although a plugin is present to handle it.\n"
 					"You might want to check that a disc is present in the drive and that it is correctly configured."),
-				totem);
+				_(media_strings[type]));
+		totem_action_error (msg, totem);
+		g_free (msg);
 		return FALSE;
 	}
 

@@ -1,5 +1,11 @@
 2003-07-30  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (totem_action_load_media): change the "Install..." to
+	"Please install...", tell the type of media that the user tried to play
+	in the error message (Closes: #118658)
+
+2003-07-30  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.schemas.in: added window_w and window_h entries
 	* src/bacon-video-widget-xine.c: (bacon_video_widget_new),
 	(bacon_video_widget_size_allocate): fix first widget size allocation
