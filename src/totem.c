@@ -72,6 +72,7 @@
 
 static const GtkTargetEntry target_table[] = {
 	{ "text/uri-list", 0, 0 },
+	{ "_NETSCAPE_URL", 0, 1 },
 };
 
 static const GtkTargetEntry source_table[] = {
@@ -1038,7 +1039,7 @@ totem_action_set_scale_ratio (Totem *totem, gfloat ratio)
 
 static gboolean
 totem_action_drop_files (Totem *totem, GtkSelectionData *data,
-		gboolean empty_pl)
+		int drop_type, gboolean empty_pl)
 {
 	GList *list, *p, *file_list;
 	gboolean cleared = FALSE;
@@ -1067,12 +1068,13 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 
 	for (p = file_list; p != NULL; p = p->next)
 	{
-		char *filename;
+		char *filename, *title;
 
 		if (p->data == NULL)
 			continue;
 
 		filename = totem_create_full_path (p->data);
+		title = NULL;
 
 		if (empty_pl != FALSE && cleared == FALSE)
 		{
@@ -1085,7 +1087,21 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 			totem_playlist_clear (totem->playlist);
 			cleared = TRUE;
 		}
-		totem_playlist_add_mrl (totem->playlist, filename, NULL);
+
+		/* Super _NETSCAPE_URL trick */
+		if (drop_type == 1)
+		{
+			g_free (p->data);
+			p = p->next;
+			if (p != NULL) {
+				if (g_str_has_prefix (p->data, "file:") != FALSE)
+					title = (char *)p->data + 5;
+				else
+					title = p->data;
+			}
+		}
+
+		totem_playlist_add_mrl (totem->playlist, filename, title);
 
 		g_free (filename);
 		g_free (p->data);
@@ -1121,7 +1137,7 @@ drop_video_cb (GtkWidget     *widget,
 {
 	gboolean retval;
 
-	retval = totem_action_drop_files (totem, data, TRUE);
+	retval = totem_action_drop_files (totem, data, info, TRUE);
 	gtk_drag_finish (context, retval, FALSE, time);
 }
 
@@ -1137,7 +1153,7 @@ drop_playlist_cb (GtkWidget     *widget,
 {
 	gboolean retval;
 
-	retval = totem_action_drop_files (totem, data, FALSE);
+	retval = totem_action_drop_files (totem, data, info, FALSE);
 	gtk_drag_finish (context, retval, FALSE, time);
 }
 
@@ -3526,7 +3542,8 @@ video_widget_create (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->bvw), "drag_data_received",
 			G_CALLBACK (drop_video_cb), totem);
 	gtk_drag_dest_set (GTK_WIDGET (totem->bvw), GTK_DEST_DEFAULT_ALL,
-			target_table, 1, GDK_ACTION_COPY);
+			target_table, G_N_ELEMENTS (target_table),
+			GDK_ACTION_COPY);
 
 	g_signal_connect (G_OBJECT (totem->bvw), "drag_data_get",
 			G_CALLBACK (drag_video_cb), totem);

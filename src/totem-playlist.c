@@ -105,6 +105,7 @@ static int totem_playlist_table_signals[LAST_SIGNAL] = { 0 };
 
 static const GtkTargetEntry target_table[] = {
 	{ "text/uri-list", 0, 0 },
+	{ "_NETSCAPE_URL", 0, 1 },
 };
 
 static GtkWidgetClass *parent_class = NULL;
@@ -380,7 +381,22 @@ drop_cb (GtkWidget     *widget,
 					| G_FILE_TEST_EXISTS)
 				 || strstr (filename, "://") != NULL))
 		{
-			totem_playlist_add_mrl (playlist, filename, NULL);
+			char *title = NULL;
+
+			/* Super _NETSCAPE_URL trick */
+			if (info == 1)
+			{
+				g_free (p->data);
+				p = p->next;
+				if (p != NULL) {
+					if (g_str_has_prefix (p->data, "file:") != FALSE)
+						title = (char *) p->data + 5;
+					else
+						title = p->data;
+				}
+			}
+
+			totem_playlist_add_mrl (playlist, filename, title);
 		}
 		g_free (filename);
 		g_free (p->data);
@@ -1077,7 +1093,8 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
          g_signal_connect (G_OBJECT (treeview), "drag_end",
                         G_CALLBACK (drag_end_cb), playlist);
 	gtk_drag_dest_set (treeview, GTK_DEST_DEFAULT_ALL,
-			target_table, 1, GDK_ACTION_COPY);
+			target_table, G_N_ELEMENTS (target_table),
+			GDK_ACTION_COPY);
 
 	playlist->_priv->selection = selection;
 
