@@ -440,6 +440,23 @@ my_eel_read_entire_file (const char *uri,
 	return GNOME_VFS_OK;
 }
 
+static char*
+gtk_playlist_base_url (const char *mrl)
+{
+	/* Yay, let's reconstruct the base by hand */
+	GnomeVFSURI *uri, *parent;
+	char *base;
+
+	uri = gnome_vfs_uri_new (mrl);
+	parent = gnome_vfs_uri_get_parent (uri);
+	base = gnome_vfs_uri_to_string (parent, 0);
+
+	gnome_vfs_uri_unref (uri);
+	gnome_vfs_uri_unref (parent);
+
+	return base;
+}
+
 static int
 read_ini_line_int (char **lines, const char *key)
 {
@@ -1327,7 +1344,7 @@ gtk_playlist_add_m3u (GtkPlaylist *playlist, const char *mrl, gpointer data)
 	gboolean retval = FALSE;
 	char *contents, **lines;
 	int size, i;
-	char *split_char;
+	char *split_char, *base;
 
 	if (my_eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
@@ -1336,10 +1353,10 @@ gtk_playlist_add_m3u (GtkPlaylist *playlist, const char *mrl, gpointer data)
 	contents[size] = '\0';
 
 	/* figure out whether we're a unix m3u or dos m3u */
-	if ( strstr(contents,"\x0d") == NULL )
-                split_char = "\n";
+	if (strstr(contents,"\x0d") == NULL)
+		split_char = "\n";
 	else
-       	        split_char = "\x0d\n";
+		split_char = "\x0d\n";
 
 	lines = g_strsplit (contents, split_char, 0);
 	g_free (contents);
@@ -1355,25 +1372,36 @@ gtk_playlist_add_m3u (GtkPlaylist *playlist, const char *mrl, gpointer data)
 			if (gtk_playlist_add_mrl (playlist,
 						lines[i], NULL) == TRUE)
 				retval = TRUE;
-		}
-                else
-	     	/* ... Or it's in the windows smb form (\\machine\share\filename) */
-	       	/* Note drive names (C:\ D:\ etc) are unhandled (unknown base for 
-	       	/* drive letters) */
-		if (lines[i][1] == '\\' && lines[i][0] == '\\')
-		{
-		        char *tmpmrl, **tmplist;
+		} else if (lines[i][0] == '\\' && lines[i][1] == '\\') {
+			/* ... Or it's in the windows smb form
+			 * (\\machine\share\filename), Note drive names
+			 * (C:\ D:\ etc) are unhandled (unknown base for
+			 * drive letters) */
+		        char *tmpmrl;
 
 			lines[i] = g_strdelimit (lines[i], "\\", '/');
 			tmpmrl = g_strjoin (NULL, "smb:", lines[i], NULL);
 
 			if (gtk_playlist_add_one_mrl
-			    (playlist, tmpmrl, NULL) == TRUE)
+					(playlist, tmpmrl, NULL) == TRUE)
 				retval = TRUE;
 
 			g_free (tmpmrl);
-		}
+		} else {
+			/* Try with a base */
+			char *fullpath, *base, sep;
 
+			base = gtk_playlist_base_url (mrl);
+			sep = (split_char[0] == '\n' ? '/' : '\\');
+			if (sep == '\\')
+				lines[i] = g_strdelimit (lines[i], "\\", '/');
+			fullpath = g_strdup_printf ("%s/%s", base, lines[i]);
+			if (gtk_playlist_add_mrl (playlist,
+						fullpath, NULL) == TRUE)
+				retval = TRUE;
+			g_free (fullpath);
+			g_free (base);
+		}
 	}
 
 	g_strfreev (lines);
@@ -1576,16 +1604,7 @@ gtk_playlist_add_asx (GtkPlaylist *playlist, const char *mrl, gpointer data)
 		return FALSE;
 	}
 
-	/* Yay, let's reconstruct the base by hand */
-	{
-		GnomeVFSURI *uri, *parent;
-		uri = gnome_vfs_uri_new (mrl);
-		parent = gnome_vfs_uri_get_parent (uri);
-		base = gnome_vfs_uri_to_string (parent, 0);
-
-		gnome_vfs_uri_unref (uri);
-		gnome_vfs_uri_unref (parent);
-	}
+	base = gtk_playlist_base_url (mrl);
 
 	for (node = doc->children; node != NULL; node = node->next)
 	{
@@ -1734,16 +1753,7 @@ gtk_playlist_add_smil (GtkPlaylist *playlist, const char *mrl, gpointer data)
 		return FALSE;
 	}
 
-	/* Yay, let's reconstruct the base by hand */
-	{
-		GnomeVFSURI *uri, *parent;
-		uri = gnome_vfs_uri_new (mrl);
-		parent = gnome_vfs_uri_get_parent (uri);
-		base = gnome_vfs_uri_to_string (parent, 0);
-
-		gnome_vfs_uri_unref (uri);
-		gnome_vfs_uri_unref (parent);
-	}
+	base = gtk_playlist_base_url (mrl);
 
 	for (node = doc->children; node != NULL; node = node->next)
 	{

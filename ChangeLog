@@ -1,5 +1,14 @@
 2003-06-30  Bastien Nocera  <hadess@hadess.net>
 
+	* README: upd
+	* src/gtk-playlist.c: (gtk_playlist_base_url),
+	(gtk_playlist_add_m3u), (gtk_playlist_add_asx),
+	(gtk_playlist_add_smil): the m3u playlist parser now supports
+	relative URIs and paths, should make it possible to launch
+	m3u files from CD-Roms, be them dos-text files or unix ones
+
+2003-06-30  Bastien Nocera  <hadess@hadess.net>
+
 	* README: removed screensaver TODO item
 	* configure.in: added check for XRandR for XFree86 4.3.0
 	* src/bacon-resize.c: (bacon_resize_init), (bacon_resize),
