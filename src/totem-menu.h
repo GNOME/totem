@@ -28,6 +28,7 @@
 G_BEGIN_DECLS
 
 void totem_sublang_update (Totem *totem);
+void totem_sublang_exit (Totem *totem);
 
 void totem_setup_play_disc (Totem *totem);
 

@@ -1,5 +1,18 @@
 2005-04-01  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-menu.c: (totem_sublang_equal_lists),
+	(totem_languages_update), (totem_subtitles_update),
+	(totem_sublang_update), (totem_sublang_exit):
+	* src/totem-menu.h:
+	* src/totem-private.h:
+	* src/totem.c: (totem_action_exit):
+
+	Only add/remove the menu items when the languages or audio tracks
+	change, should avoid GtkMenu crappiness when the menu is opened
+	and we switch to a different DVD chapter
+
+2005-04-01  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am: fix linking for the video properties nautilus
 	extension
 

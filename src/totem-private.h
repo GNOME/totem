@@ -92,6 +92,8 @@ struct Totem {
 	/* Subtitles/Languages menus */
 	GtkWidget *subtitles;
 	GtkWidget *languages;
+	GList *subtitles_list;
+	GList *language_list;
 
 	/* exit fullscreen Popup */
 	GtkWidget *exit_popup;

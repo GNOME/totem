@@ -176,6 +176,7 @@ totem_action_exit (Totem *totem)
 	if (totem->win)
 		gtk_widget_hide (totem->win);
 
+	totem_sublang_exit (totem);
 	totem_named_icons_dispose (totem);
 
 	if (totem->bvw)

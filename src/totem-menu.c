@@ -280,18 +280,41 @@ create_submenu (Totem *totem, GList *list, int current, gboolean is_lang)
 	return menu;
 }
 
-void
-totem_sublang_update (Totem *totem)
+static gboolean
+totem_sublang_equal_lists (GList *orig, GList *new)
+{
+	GList *o, *n;
+	gboolean retval;
+
+	if ((orig == NULL && new != NULL) || (orig != NULL && new == NULL))
+		return FALSE;
+	if (orig == NULL && new == NULL)
+		return TRUE;
+
+	if (g_list_length (orig) != g_list_length (new))
+		return FALSE;
+
+	retval = TRUE;
+	o = orig;
+	n = new;
+	while (o != NULL && n != NULL && retval != FALSE)
+	{
+		if (g_str_equal (o->data, n->data) == FALSE)
+			retval = FALSE;
+	}
+
+	return retval;
+}
+
+static void
+totem_languages_update (Totem *totem, GList *list)
 {
 	GtkWidget *item, *submenu;
-	GtkWidget *lang_menu, *sub_menu;
-	GList *list;
+	GtkWidget *lang_menu;
 	int current;
 
 	lang_menu = NULL;
-	sub_menu = NULL;
 
-	list = bacon_video_widget_get_languages (totem->bvw);
 	if (list != NULL)
 	{
 		current = bacon_video_widget_get_language (totem->bvw);
@@ -299,7 +322,30 @@ totem_sublang_update (Totem *totem)
 		totem_g_list_deep_free (list);
 	}
 
-	list = bacon_video_widget_get_subtitles (totem->bvw);
+	/* Languages */
+	item = glade_xml_get_widget (totem->xml, "tmw_languages_menu_item");
+	submenu = glade_xml_get_widget (totem->xml, "tmw_menu_languages");
+	if (lang_menu == NULL)
+	{
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), submenu);
+	} else {
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), lang_menu);
+		totem->languages = lang_menu;
+	}
+
+	totem_g_list_deep_free (totem->language_list);
+	totem->language_list = list;
+}
+
+static void
+totem_subtitles_update (Totem *totem, GList *list)
+{
+	GtkWidget *item, *submenu;
+	GtkWidget *sub_menu;
+	int current;
+
+	sub_menu = NULL;
+
 	if (list != NULL)
 	{
 		current = bacon_video_widget_get_subtitle (totem->bvw);
@@ -318,16 +364,35 @@ totem_sublang_update (Totem *totem)
 		totem->subtitles = sub_menu;
 	}
 
-	/* Languages */
-	item = glade_xml_get_widget (totem->xml, "tmw_languages_menu_item");
-	submenu = glade_xml_get_widget (totem->xml, "tmw_menu_languages");
-	if (lang_menu == NULL)
-	{
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), submenu);
+	totem_g_list_deep_free (totem->subtitles_list);
+	totem->subtitles_list = list;
+}
+
+void
+totem_sublang_update (Totem *totem)
+{
+	GList *list;
+
+	list = bacon_video_widget_get_languages (totem->bvw);
+	if (totem_sublang_equal_lists (totem->language_list, list) == FALSE) {
+		totem_g_list_deep_free (list);
 	} else {
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), lang_menu);
-		totem->languages = lang_menu;
+		totem_languages_update (totem, list);
 	}
+
+	list = bacon_video_widget_get_subtitles (totem->bvw);
+	if (totem_sublang_equal_lists (totem->subtitles_list, list) == FALSE) {
+		totem_g_list_deep_free (list);
+	} else {
+		totem_subtitles_update (totem, list);
+	}
+}
+
+void
+totem_sublang_exit (Totem *totem)
+{
+	totem_g_list_deep_free (totem->subtitles_list);
+	totem_g_list_deep_free (totem->language_list);
 }
 
 /* Recent files */
