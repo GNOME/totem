@@ -31,6 +31,18 @@ EGG_RECENT_FILES =                      \
 	egg-recent-vfs-utils.c		\
 	egg-recent-vfs-utils.h
 
+egg-recent-model.c: regenerate-built-sources
+egg-recent-model.h: regenerate-built-sources
+egg-recent-item.c: regenerate-built-sources
+egg-recent-item.h: regenerate-built-sources
+egg-recent-view.h: regenerate-built-sources
+egg-recent-view-gtk.c: regenerate-built-sources
+egg-recent-view-gtk.h: regenerate-built-sources
+egg-recent-util.c: regenerate-built-sources
+egg-recent-util.h: regenerate-built-sources
+egg-recent-vfs-utils.c: regenerate-built-sources
+egg-recent-vfs-utils.h: regenerate-built-sources
+
 EGGDIR=$(srcdir)/../../libegg/libegg/recent-files/
 regenerate-built-sources:
 	EGGFILES="$(EGG_RECENT_FILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh
