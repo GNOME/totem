@@ -1,5 +1,11 @@
 2003-10-07  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c: (totem_playlist_add_mrl): oops, return when
+	a blacklisted scheme was used in the filename (fixes the audio CD
+	tracks appearing twice)
+
+2003-10-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (on_take_screenshot1_activate): scale down using
 	gnome_thumbnail_scale_down_pixbuf instead of gdk_pixbuf_scale_simple
 

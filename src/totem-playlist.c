@@ -2129,7 +2129,7 @@ totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl,
 	{
 		if (strncmp (mrl, ignore_mime[i], strlen (ignore_mime[i])) == 0)
 		{
-			totem_playlist_add_one_mrl (playlist,
+			return totem_playlist_add_one_mrl (playlist,
 					mrl, display_name);
 		}
 	}
