@@ -1,5 +1,12 @@
 2003-07-29  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-video-thumbnailer.c: (main): call nice() before
+	initialising threads to make glib shut up, check that there is a
+	GError coming out of bacon_video_widget_can_get_frames before
+	printing it (Closes: #118587)
+
+2003-07-29  Bastien Nocera  <hadess@hadess.net>
+
 	* README: removed TODO item
 	* src/totem.c: (popup_hide), (totem_callback_connect): hide the popups
 	when we're changing workspaces so that they don't follow us around

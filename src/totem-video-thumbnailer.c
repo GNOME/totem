@@ -185,14 +185,14 @@ int main (int argc, char *argv[])
 	GdkPixbuf *pixbuf;
 	int i, length;
 
+	nice (20);
+
 	g_thread_init (NULL);
 
 	gtk_init (&argc, &argv);
 
 	if (argc != 3)
 		print_usage ();
-
-	nice (20);
 
 	bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (-1, -1, TRUE, &err));
 	if (err != NULL)
@@ -241,7 +241,7 @@ int main (int argc, char *argv[])
 	{
 		g_print ("totem-video-thumbnailer: '%s' isn't thumbnailable\n"
 				"Reason: %s\n",
-				argv[1], err->message);
+				argv[1], err ? err->message : "programming error");
 		bacon_video_widget_close (bvw);
 		gtk_widget_destroy (GTK_WIDGET (bvw));
 		g_error_free (err);
