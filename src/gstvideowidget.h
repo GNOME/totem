@@ -2,7 +2,7 @@
  * Copyright (C) 1999,2000,2001,2002 Erik Walthinsen <omega@cse.ogi.edu>
  *                    2000,2001,2002 Wim Taymans <wtay@chello.be>
  *                              2002 Steve Baker <steve@stevebaker.org>
- *								2003 Julien Moutte <julien@moutte.net>
+ *                              2003 Julien Moutte <julien@moutte.net>
  *
  * gstvideowidget.h: Video widget for gst xvideosink window
  *

@@ -333,20 +333,33 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 }
 
 static void
+shrink_toplevel (BaconVideoWidget *bvw)
+{
+	GtkWidget *toplevel;
+	GtkRequisition requisition;
+	g_return_if_fail(bvw != NULL);
+	g_return_if_fail(BACON_IS_VIDEO_WIDGET(bvw));
+	toplevel = gtk_widget_get_toplevel (GTK_WIDGET(bvw));
+	gtk_widget_size_request (toplevel, &requisition);
+	gtk_window_resize (GTK_WINDOW(toplevel), requisition.width, requisition.height);	
+}
+
+static void
 update_vis_xid (GstPlay* play, gint xid, BaconVideoWidget *bvw)
 {
 	g_return_if_fail(bvw != NULL);
 	g_return_if_fail(BACON_IS_VIDEO_WIDGET(bvw));
 
 	g_message ("update_vis_xid");
-	if ( (bvw->priv->vw) && (!bvw->priv->media_has_video) )
+	if ( (bvw->priv->vw) && (!bvw->priv->media_has_video) ) {
 		gst_video_widget_set_xembed_xid(bvw->priv->vw, xid);
-	
+		shrink_toplevel (bvw);
+	}
 }
 
 static void
 update_xid (GstPlay* play, gint xid, BaconVideoWidget *bvw)
-{
+{	
 	g_return_if_fail(bvw != NULL);
 	g_return_if_fail(BACON_IS_VIDEO_WIDGET(bvw));
 
@@ -362,8 +375,10 @@ update_xid (GstPlay* play, gint xid, BaconVideoWidget *bvw)
 		bvw->priv->vis_signal_blocked = TRUE;
 	}
 	
-	if (bvw->priv->vw)
+	if (bvw->priv->vw) {
 		gst_video_widget_set_xembed_xid(bvw->priv->vw, xid);
+		shrink_toplevel (bvw);
+	}
 }
 
 static void
@@ -421,6 +436,17 @@ got_time_tick (GstPlay* play, gint64 time_nanos, BaconVideoWidget *bvw)
 			bvw_table_signals[TICK], 0,
 			current_time, bvw->priv->stream_length,
 			current_position);
+}
+
+static void
+got_error (GstPlay *play, GstElement *orig, char *error_message, BaconVideoWidget *bvw)
+{
+	g_return_if_fail(bvw != NULL);
+	g_return_if_fail(BACON_IS_VIDEO_WIDGET(bvw));
+
+	g_signal_emit (G_OBJECT (bvw),
+			bvw_table_signals[ERROR], 0,
+			error_message);
 }
 
 static void
@@ -998,6 +1024,7 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 	
 	gst_video_widget_set_scale (bvw->priv->vw, ratio);
 	gst_video_widget_set_scale_override (bvw->priv->vw, TRUE);
+	shrink_toplevel (bvw);
 }
 
 int
@@ -1371,6 +1398,8 @@ bacon_video_widget_new (int width, int height,
 			(GtkSignalFunc) bacon_video_widget_information, (gpointer) bvw);
 	g_signal_connect (G_OBJECT (bvw->priv->play),
 			"time_tick", (GtkSignalFunc) got_time_tick, (gpointer) bvw);
+	g_signal_connect (G_OBJECT (bvw->priv->play),
+			"pipeline_error", (GtkSignalFunc) got_error, (gpointer) bvw);
 			
 	bvw->priv->vw = GST_VIDEO_WIDGET(gst_video_widget_new ());
 	if (!GST_IS_VIDEO_WIDGET(bvw->priv->vw)) {
