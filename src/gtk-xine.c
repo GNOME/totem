@@ -1444,6 +1444,7 @@ gtk_xine_get_position (GtkXine *gtx)
 		usleep (100000);
 		ret = xine_get_pos_length (gtx->priv->stream, &pos_stream,
 				&pos_time, &length_time);
+		i++;
 	}
 
 	if (ret == FALSE)
@@ -1700,6 +1701,7 @@ gtk_xine_get_current_time (GtkXine *gtx)
 		usleep (100000);
 		ret = xine_get_pos_length (gtx->priv->stream, &pos_stream,
 				&pos_time, &length_time);
+		i++;
 	}
 
 	if (ret == FALSE)
@@ -1730,6 +1732,7 @@ gtk_xine_get_stream_length (GtkXine *gtx)
 		usleep (100000);
 		ret = xine_get_pos_length (gtx->priv->stream, &pos_stream,
 				&pos_time, &length_time);
+		i++;
 	}
 
 	if (ret == FALSE)
