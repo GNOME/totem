@@ -6,21 +6,100 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Totem for Gnome2\n"
-"POT-Creation-Date: 2002-10-27 06:10+0100\n"
-"PO-Revision-Date: 2002-10-27 19:27+0700\n"
+"POT-Creation-Date: 2002-11-11 16:53+0100\n"
+"PO-Revision-Date: 2002-11-09 13:47+0700\n"
 "Last-Translator: Trinh Minh Thanh <tmthanh@linuxmail.org>\n"
 "Language-Team: Gnome-Vi Team <Gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/playlist.glade.h:1 src/gtk-playlist.c:775
+#: data/playlist.glade.h:1 src/gtk-playlist.c:767
 msgid "Playlist"
 msgstr "Danh sách chơi"
 
 #: data/playlist.glade.h:2
 msgid "Repeat Mode"
 msgstr "Chế độ nhắc lại"
+
+#: data/properties.glade.h:1 src/gtk-xine.c:1721
+msgid "0 frames per second"
+msgstr "0 khung / giây"
+
+#. Bitrate
+#: data/properties.glade.h:2 src/gtk-xine.c:1723
+msgid "0 kbps"
+msgstr "0 Kb/giây"
+
+#: data/properties.glade.h:3
+msgid "0 seconds"
+msgstr ""
+
+#. Dimensions
+#: data/properties.glade.h:4 src/gtk-xine.c:1716
+msgid "0 x 0"
+msgstr "0 x 0"
+
+#: data/properties.glade.h:5
+msgid "<b>Audio</b>"
+msgstr ""
+
+#: data/properties.glade.h:6
+msgid "<b>General</b>"
+msgstr ""
+
+#: data/properties.glade.h:7
+msgid "<b>Video</b>"
+msgstr ""
+
+#: data/properties.glade.h:8
+msgid "Artist: "
+msgstr ""
+
+#: data/properties.glade.h:9
+msgid "Bitrate: "
+msgstr ""
+
+#: data/properties.glade.h:10
+msgid "Codec: "
+msgstr ""
+
+#: data/properties.glade.h:11
+msgid "Dimensions: "
+msgstr ""
+
+#: data/properties.glade.h:12
+msgid "Duration: "
+msgstr ""
+
+#: data/properties.glade.h:13
+msgid "Framerate: "
+msgstr ""
+
+#. Year
+#: data/properties.glade.h:14 src/gtk-xine.c:1712 src/gtk-xine.c:1718
+#: src/gtk-xine.c:1725 src/gtk-xine.c:1747 src/gtk-xine.c:1772
+#: src/gtk-xine.c:1803
+msgid "N/A"
+msgstr "Không sẵn có"
+
+#: data/properties.glade.h:15
+msgid "Properties"
+msgstr ""
+
+#: data/properties.glade.h:16
+msgid "Title: "
+msgstr ""
+
+#. Title
+#: data/properties.glade.h:17 src/gtk-xine.c:1708 src/gtk-xine.c:1710
+#: src/gtk-xine.c:1739 src/gtk-xine.c:1743
+msgid "Unknown"
+msgstr "Không xác định"
+
+#: data/properties.glade.h:18
+msgid "Year: "
+msgstr ""
 
 #: data/totem.desktop.in.h:1
 msgid "Play movies and songs"
@@ -94,7 +173,7 @@ msgstr "Nhảy qua tiến lên"
 msgid "Toggle Aspect Ratio"
 msgstr "Cố định tỷ lệ bề ngoài"
 
-#: data/totem.glade.h:17 src/totem.c:1037
+#: data/totem.glade.h:17 src/totem.c:1043
 msgid "Totem"
 msgstr "Totem"
 
@@ -182,31 +261,19 @@ msgstr "X coordinate cho Danh sách chơi"
 msgid "Y coordinate for the Playlist"
 msgstr "Y coordinate cho Danh sách chơi"
 
-#: src/gtk-playlist.c:405 src/totem.c:869
+#: src/gtk-playlist.c:410 src/totem.c:875
 msgid "Select files"
 msgstr "Chọn tập tin"
 
-#: src/gtk-playlist.c:545
-msgid "Playing"
-msgstr "Đang chơi"
-
-#: src/gtk-playlist.c:556
+#: src/gtk-playlist.c:546
 msgid "Filename"
 msgstr "Tên tập tin"
 
-#: src/gtk-xine.c:55
+#: src/gtk-xine.c:52
 msgid "Totem Video Window"
 msgstr "Cửa sổ video của totem"
 
-#: src/gtk-xine.c:507
-msgid ""
-"The configuration system is not initialised.\n"
-"The defaults will be used."
-msgstr ""
-"Hệ thống cấu hình chưa được sơ khởi.\n"
-"Sẽ sử dụng mặc định."
-
-#: src/gtk-xine.c:749
+#: src/gtk-xine.c:733
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
@@ -214,32 +281,126 @@ msgstr ""
 "Không thể sơ khởi hỗ trợ đa luồng.\n"
 "Bạn nên cài đặt thread-safe Xlib."
 
-#: src/gtk-xine.c:785
+#: src/gtk-xine.c:765
 msgid "Could not find a suitable video output."
 msgstr "Không thể tìm thấy đầu ra video thích hợp."
 
-#: src/gtk-xine.c:917
+#. One hour
+#: src/gtk-xine.c:1626
 #, c-format
-msgid "No video plugin available to decode '%s'."
-msgstr "Hiện không có video plugin để giải mã '%s'."
+msgid "%d hour"
+msgstr ""
 
-#: src/totem.c:380 src/totem.c:1630
-msgid "<span size=\"medium\"><b>No file</b></span>"
-msgstr "<span size=\"medium\"><b>Không có tập tin</b></span>"
+#. Multiple hours
+#: src/gtk-xine.c:1629
+#, c-format
+msgid "%d hours"
+msgstr ""
 
-#: src/totem.c:1013
+#. One minute
+#: src/gtk-xine.c:1633
+#, c-format
+msgid "%d minute"
+msgstr ""
+
+#. Multiple minutes
+#: src/gtk-xine.c:1636
+#, c-format
+msgid "%d minutes"
+msgstr ""
+
+#. One second
+#: src/gtk-xine.c:1640
+#, fuzzy, c-format
+msgid "%d second"
+msgstr "%d khung / giây"
+
+#. Multiple seconds
+#: src/gtk-xine.c:1643
+#, fuzzy, c-format
+msgid "%d seconds"
+msgstr "%d khung / giây"
+
+#. hour:minutes:seconds
+#: src/gtk-xine.c:1648
+#, c-format
+msgid "%s %s %s"
+msgstr ""
+
+#. minutes:seconds
+#: src/gtk-xine.c:1651
+#, c-format
+msgid "%s %s"
+msgstr ""
+
+#. seconds
+#: src/gtk-xine.c:1654
+#, c-format
+msgid "%s"
+msgstr ""
+
+#. 0 second
+#: src/gtk-xine.c:1657 src/gtk-xine.c:1714
+msgid "0 second"
+msgstr ""
+
+#: src/gtk-xine.c:1782
+#, c-format
+msgid "%d frames per second"
+msgstr "%d khung / giây"
+
+#: src/gtk-xine.c:1794
+#, c-format
+msgid "%d kbps"
+msgstr "%d Kb/giây"
+
+#: src/totem.c:257
+msgid ""
+"Totem cannot play this type of media because you do not have the appropriate "
+"plugins to handle it.\n"
+"Install the necessary plugins and restart Totem to be able to play this "
+"media."
+msgstr ""
+"Totem không thể chơi loại phương tiện này vì bạn không có plugin thích hợp "
+"để xử lý.\n"
+"Hãy cài đặt plugin cần thiết và chạy lại Totem để chơi phương tiện này."
+
+#: src/totem.c:265
+msgid ""
+"Totem could not play this media although a plugin is present to handle it.\n"
+"You might want to check that a disc is present in the drive and that it is "
+"correctly configured."
+msgstr ""
+"Totem không thể chơi phương tiện này mặc dù có plugin để xử lý nó.\n"
+"Có thể bạn cần kiểm tra là có đĩa đang trong ổ và nó đã được cấu hình đúng "
+"hay chưa."
+
+#: src/totem.c:369 src/totem.c:1713
+msgid "No file"
+msgstr "Không có tập tin"
+
+#: src/totem.c:1019
 msgid "translator_credits"
 msgstr "đóng góp dịch thuật"
 
-#: src/totem.c:1038
-msgid "(C) 2002 Bastien Nocera"
-msgstr "(C) 2002 Bastien Nocera"
+#: src/totem.c:1044
+msgid "Copyright (c) 2002 Bastien Nocera"
+msgstr "Bản quyền (c) 2002 Bastien Nocera"
 
-#: src/totem.c:1039
+#: src/totem.c:1045
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Trình chiếu phim (dựa trên thư viện của Xine)"
 
-#: src/totem.c:1293
+#: src/totem.c:1070
+#, fuzzy
+msgid ""
+"Totem couldn't show the movie properties window.\n"
+"Make sure that Totem is correctly installed."
+msgstr ""
+"Không thể nạp giao diện cho danh sách chơi\n"
+"Kiểm tra xem Totem được cài đặt chuẩn chưa."
+
+#: src/totem.c:1381
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -248,21 +409,21 @@ msgstr ""
 "Totem không thể khởi chạy:\n"
 "%s"
 
-#: src/totem.c:1299
+#: src/totem.c:1387
 #, c-format
 msgid ""
-"There is no plugin for Totem to handle '%s'\n"
+"There is no plugin for Totem to handle '%s'.\n"
 "Totem will not be able to play it."
 msgstr ""
-"Không có plugin cho Totem để xử lý '%s'\n"
+"Không có plugin cho Totem để xử lý '%s'.\n"
 "Totem sẽ không thể chơi nó."
 
-#: src/totem.c:1304
+#: src/totem.c:1392
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "'%s' bị gẫy, Totem không thể chơi thêm nữa."
 
-#: src/totem.c:1308
+#: src/totem.c:1396
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -271,7 +432,7 @@ msgstr ""
 "Totem không thể chơi '%s':\n"
 "%s"
 
-#: src/totem.c:1718
+#: src/totem.c:1816
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -282,7 +443,7 @@ msgstr ""
 "engine cấu hình:\n"
 "%s"
 
-#: src/totem.c:1754 src/totem.c:1762
+#: src/totem.c:1848 src/totem.c:1857
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -290,7 +451,7 @@ msgstr ""
 "Không thể nạp giao diện chính (totem, glade).\n"
 "Kiểm tra xem Totem được cài đặt chuẩn chưa."
 
-#: src/totem.c:1775
+#: src/totem.c:1870
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
@@ -298,3 +459,18 @@ msgstr ""
 "Không thể nạp giao diện cho danh sách chơi\n"
 "Kiểm tra xem Totem được cài đặt chuẩn chưa."
 
+#~ msgid "Playing"
+#~ msgstr "Đang chơi"
+
+#~ msgid ""
+#~ "The configuration system is not initialised.\n"
+#~ "The defaults will be used."
+#~ msgstr ""
+#~ "Hệ thống cấu hình chưa được sơ khởi.\n"
+#~ "Sẽ sử dụng mặc định."
+
+#~ msgid "No video plugin available to decode '%s'."
+#~ msgstr "Hiện không có video plugin để giải mã '%s'."
+
+#~ msgid "<span size=\"medium\"><b>No file</b></span>"
+#~ msgstr "<span size=\"medium\"><b>Không có tập tin</b></span>"
