@@ -41,7 +41,6 @@
 
 #include "bacon-video-widget.h"
 #include "bacon-video-widget-properties.h"
-#include "rb-ellipsizing-label.h"
 #include "bacon-cd-selection.h"
 #include "totem-statusbar.h"
 #include "totem-time-label.h"
@@ -101,6 +100,7 @@ static void playlist_changed_cb (GtkWidget *playlist, Totem *totem);
 static void show_controls (Totem *totem, gboolean was_fullscreen);
 static gboolean totem_is_fullscreen (Totem *totem);
 static void play_pause_set_label (Totem *totem, TotemStates state);
+static gboolean on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event, Totem *totem);
 
 static void
 long_action (void)
@@ -573,11 +573,9 @@ update_mrl_label (Totem *totem, const char *name)
 		g_free (escaped);
 
 		widget = glade_xml_get_widget (totem->xml, "tcw_label_custom");
-		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
-				text);
+		gtk_label_set_markup (GTK_LABEL (widget), text);
 		widget = glade_xml_get_widget (totem->xml, "tmw_title_label");
-		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
-				text);
+		gtk_label_set_markup (GTK_LABEL (widget), text);
 
 		g_free (text);
 
@@ -598,11 +596,9 @@ update_mrl_label (Totem *totem, const char *name)
 			("<span size=\"medium\"><b>%s</b></span>",
 			 _("No file"));
 		widget = glade_xml_get_widget (totem->xml, "tcw_label_custom");
-		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
-				text);
+		gtk_label_set_markup (GTK_LABEL (widget), text);
 		widget = glade_xml_get_widget (totem->xml, "tmw_title_label");
-		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
-				text);
+		gtk_label_set_markup (GTK_LABEL (widget), text);
 
 		g_free (text);
 
@@ -1889,6 +1885,7 @@ on_help_activate (GtkButton *button, Totem *totem)
 		g_error_free (err);
 	}
 }
+#endif /* !HAVE_GTK_ONLY */
 
 static void
 on_about1_activate (GtkButton *button, Totem *totem)
@@ -1901,9 +1898,14 @@ on_about1_activate (GtkButton *button, Totem *totem)
 		"Julien Moutte <julien@moutte.net> (GStreamer backend)",
 		NULL
 	};
-	const char *documenters[] = { NULL };
-	const char *translator_credits = _("translator_credits");
+	const char *artists[] = { "Jakub Steiner <jimmac@ximian.com>", NULL };
+	const char *documenters[] =
+	{
+		"Chee Bin Hoh <cbhoh@gnome.org>",
+		NULL
+	};
 	char *backend_version, *description;
+	char *filename;
 
 	if (totem->about != NULL)
 	{
@@ -1911,32 +1913,26 @@ on_about1_activate (GtkButton *button, Totem *totem)
 		return;
 	}
 
-	{
-		char *filename = NULL;
-
-		filename = gnome_program_locate_file (NULL,
-				GNOME_FILE_DOMAIN_APP_DATADIR,
-				"totem/media-player-48.png",
-				TRUE, NULL);
-
-		if (filename != NULL)
-		{
-			pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
-			g_free (filename);
-		}
-	}
+	filename = g_build_filename (DATADIR,
+			"totem", "media-player-48.png", NULL);
+	pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+	g_free (filename);
 
 	backend_version = bacon_video_widget_get_backend_name (totem->bvw);
 	description = g_strdup_printf (_("Movie Player using %s"),
 				backend_version);
 
-	totem->about = gnome_about_new(_("Totem"), VERSION,
-			"Copyright \xc2\xa9 2002-2004 Bastien Nocera",
-			(const char *)description,
-			(const char **)authors,
-			(const char **)documenters,
-			strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
-			pixbuf);
+	totem->about = g_object_new (GTK_TYPE_ABOUT_DIALOG,
+			"name", _("Totem"),
+			"version", VERSION,
+			"copyright", _("Copyright \xc2\xa9 2002-2005 Bastien Nocera"),
+			"comments", description,
+			"authors", authors,
+			"documenters", documenters,
+			"artists", artists, 
+			"translator-credits", _("translator-credits"),
+			"logo", pixbuf,
+			NULL);
 
 	g_free (backend_version);
 	g_free (description);
@@ -1948,10 +1944,11 @@ on_about1_activate (GtkButton *button, Totem *totem)
 			(gpointer *)&totem->about);
 	gtk_window_set_transient_for (GTK_WINDOW (totem->about),
 			GTK_WINDOW (totem->win));
+	g_signal_connect (G_OBJECT (totem->about), "response",
+			G_CALLBACK (gtk_widget_destroy), NULL);
 
 	gtk_widget_show(totem->about);
 }
-#endif /* !HAVE_GTK_ONLY */
 
 static void
 on_take_screenshot1_activate (GtkButton *button, Totem *totem)
@@ -2960,15 +2957,17 @@ totem_callback_connect (Totem *totem)
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_quit1_activate), totem);
 
+	/* Help */
+	item = glade_xml_get_widget (totem->xml, "tmw_about_menu_item");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_about1_activate), totem);
+
 #ifndef HAVE_GTK_ONLY
 	item = glade_xml_get_widget (totem->xml, "tmw_contents_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_help_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_about_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_about1_activate), totem);
 #else
-	item = glade_xml_get_widget (totem->xml, "tmw_menu_item_help");
+	item = glade_xml_get_widget (totem->xml, "tmw_contents_menu_item");
 	gtk_widget_hide (item);
 #endif /* !HAVE_GTK_ONLY */
 
@@ -3336,17 +3335,18 @@ label_create (void)
 	GtkWidget *label;
 	char *text;
 
-	label = rb_ellipsizing_label_new ("");
+	label = gtk_label_new ("");
 	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
 	gtk_label_set_selectable (GTK_LABEL (label), FALSE);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
+	gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_MIDDLE);
 	gtk_widget_show (label);
 
 	/* Set default */
 	text = g_strdup_printf
 		("<span size=\"medium\"><b>%s</b></span>",
 		 _("No file"));
-	rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (label), text);
+	gtk_label_set_markup (GTK_LABEL (label), text);
 	g_free (text);
 
 	return label;

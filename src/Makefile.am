@@ -100,8 +100,6 @@ totem_SOURCES = 					\
 	totem-sublang.c totem-sublang.h	\
 	totem-time-label.c totem-time-label.h \
 	totem-uri.c totem-uri.h		\
-	rb-ellipsizing-label.c		\
-	rb-ellipsizing-label.h		\
 	debug.h				\
 	totem-statusbar.c		\
 	totem-statusbar.h		\

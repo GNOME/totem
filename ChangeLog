@@ -1,5 +1,16 @@
 2005-01-03  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* src/Makefile.am:
+	* src/rb-ellipsizing-label.c:
+	* src/rb-ellipsizing-label.h:
+	* src/totem.c: (update_mrl_label), (on_about1_activate),
+	(totem_callback_connect), (label_create):
+	Require GTK+ 2.6, convert the about box, and the ellipsising labels
+	(Helps: #160807)
+
+2005-01-03  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (on_skip_to1_activate), (totem_action_remote):
 	Rise the controls when in fullscreen and using LIRC, or the Totem
 	remote commands (Closes: #162843)
