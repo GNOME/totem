@@ -1267,6 +1267,9 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 
 	bvw = BACON_VIDEO_WIDGET (widget);
 
+	/* stop the playback */
+	xine_close (bvw->priv->stream);
+
 	/* Kill the TV out */
 	xine_tvmode_exit (bvw->priv->xine);
 
@@ -1280,9 +1283,6 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	xine_osd_hide (bvw->priv->osd, 0);
 	xine_osd_free (bvw->priv->osd);
 #endif
-
-	/* stop the playback */
-	xine_close (bvw->priv->stream);
 
 	/* Get rid of the rest of the stream */
 	xine_event_dispose_queue (bvw->priv->ev_queue);
