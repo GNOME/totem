@@ -473,11 +473,16 @@ totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist)
 	GtkWidget *fs;
 	int response;
 
-	fs = gtk_file_selection_new (_("Select files"));
-	gtk_file_selection_set_select_multiple (GTK_FILE_SELECTION (fs), TRUE);
+	fs = gtk_file_chooser_dialog_new (_("Select files"),
+			GTK_WINDOW (playlist), GTK_FILE_CHOOSER_ACTION_OPEN,
+			GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			NULL);
+	gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (fs), TRUE);
+
 	if (playlist->_priv->path != NULL)
 	{
-		gtk_file_selection_set_filename (GTK_FILE_SELECTION (fs),
+		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (fs),
 				playlist->_priv->path);
 	}
 	response = gtk_dialog_run (GTK_DIALOG (fs));
@@ -485,29 +490,38 @@ totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist)
 	while (gtk_events_pending())
 		gtk_main_iteration();
 
-	if (response == GTK_RESPONSE_OK)
+	if (response == GTK_RESPONSE_ACCEPT)
 	{
-		char **filenames;
-		int i;
+		GSList *filenames, *l;
+		char *mrl;
 
-		filenames = gtk_file_selection_get_selections
-			(GTK_FILE_SELECTION (fs));
+		filenames = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (fs));
+		if (filenames == NULL)
+		{
+			gtk_widget_destroy (fs);
+			return;
+		}
 
-		if (filenames[0] != NULL)
+		mrl = filenames->data;
+		if (mrl != NULL)
 		{
 			char *tmp;
 
-			tmp = g_path_get_dirname (filenames[0]);
+			tmp = g_path_get_dirname (mrl);
 			g_free (playlist->_priv->path);
 			playlist->_priv->path = g_strconcat (tmp,
 					G_DIR_SEPARATOR_S, NULL);
 			g_free (tmp);
 		}
 
-		for (i = 0; filenames[i] != NULL; i++)
-			totem_playlist_add_mrl (playlist, filenames[i], NULL);
+		for (l = filenames; l != NULL; l = l->next)
+		{
+			mrl = l->data;
+			totem_playlist_add_mrl (playlist, mrl, NULL);
+			g_free (mrl);
+		}
 
-		g_strfreev (filenames);
+		g_slist_free (filenames);
 	}
 
 	gtk_widget_destroy (fs);
@@ -638,10 +652,15 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 	GtkWidget *fs;
 	int response;
 
-	fs = gtk_file_selection_new (_("Save playlist"));
+	fs = gtk_file_chooser_dialog_new (_("Save playlist"),
+			GTK_WINDOW (playlist), GTK_FILE_CHOOSER_ACTION_SAVE,
+			GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			NULL);
+
 	if (playlist->_priv->save_path != NULL)
 	{
-		gtk_file_selection_set_filename (GTK_FILE_SELECTION (fs),
+		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (fs),
 				playlist->_priv->save_path);
 	}
 
@@ -650,22 +669,22 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 	while (gtk_events_pending())
 		gtk_main_iteration();
 
-	if (response == GTK_RESPONSE_OK)
+	if (response == GTK_RESPONSE_ACCEPT)
 	{
-		const char *filename;
+		char *filename, *tmp;
 
-		filename = gtk_file_selection_get_filename
-			(GTK_FILE_SELECTION (fs));
-		if (filename != NULL)
-		{
-			char *tmp;
+		filename = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (fs));
 
-			tmp = g_path_get_dirname (filename);
-			g_free (playlist->_priv->save_path);
-			playlist->_priv->save_path = g_strconcat (tmp,
-					G_DIR_SEPARATOR_S, NULL);
-			g_free (tmp);
-		}
+		gtk_widget_destroy (fs);
+
+		if (filename == NULL)
+			return;
+
+		tmp = g_path_get_dirname (filename);
+		g_free (playlist->_priv->save_path);
+		playlist->_priv->save_path = g_strconcat (tmp,
+				G_DIR_SEPARATOR_S, NULL);
+		g_free (tmp);
 
 		if (g_file_test (filename, G_FILE_TEST_EXISTS) != FALSE)
 		{
@@ -689,15 +708,16 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 			gtk_widget_destroy (dialog);
 			if (response != GTK_RESPONSE_ACCEPT)
 			{
-				gtk_widget_destroy (fs);
+				g_free (filename);
 				return;
 			}
 		}
 
 		totem_playlist_save_current_playlist (playlist, filename);
+		g_free (filename);
+	} else {
+		gtk_widget_destroy (fs);
 	}
-
-	gtk_widget_destroy (fs);
 }
 
 static void
