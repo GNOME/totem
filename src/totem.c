@@ -3,10 +3,10 @@
 #include <gnome.h>
 #include <glade/glade.h>
 #include <libgnomevfs/gnome-vfs.h>
-#include <eel/eel-ellipsizing-label.h>
 
 #include "gtk-xine.h"
 #include "gtk-playlist.h"
+#include "rb-ellipsizing-label.h"
 
 #include "debug.h"
 
@@ -215,7 +215,8 @@ action_play_pause (Totem *totem)
 		}
 	}
 
-	if (!gtk_xine_is_playing(GTK_XINE(totem->gtx))) {
+	if (!gtk_xine_is_playing(GTK_XINE(totem->gtx)))
+	{
 		if (gtk_xine_play (GTK_XINE(totem->gtx), totem->mrl, 0, 0)
 				== FALSE)
 		{
@@ -257,6 +258,7 @@ static void
 action_set_mrl (Totem *totem, const char *mrl)
 {
 	GtkWidget *widget;
+	char *text;
 
 	g_free (totem->mrl);
 
@@ -269,10 +271,17 @@ action_set_mrl (Totem *totem, const char *mrl)
 		widget = glade_xml_get_widget (totem->xml, "play1");
 		gtk_widget_set_sensitive (widget, FALSE);
 
+		/* Label */
 		widget = glade_xml_get_widget (totem->xml, "label1");
 		gtk_window_set_title (GTK_WINDOW (totem->win), "Totem");
-		eel_ellipsizing_label_set_text (EEL_ELLIPSIZING_LABEL (widget),
-				"No file");
+		text = g_strdup_printf
+			(_("<span size=\"medium\"><b>No file</b></span>"));
+		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
+				text);
+		g_free (text);
+
+		/* Title */
+		gtk_window_set_title (GTK_WINDOW (totem->win), "Totem");
 
 		/* Seek bar */
 		gtk_widget_set_sensitive (totem->seek, FALSE);
@@ -284,7 +293,7 @@ action_set_mrl (Totem *totem, const char *mrl)
 		/* Stop the playback */
 		gtk_xine_stop (GTK_XINE (totem->gtx));
 	} else {
-		char *title, *text, *time_text;
+		char *title, *time_text;
 		int time;
 
 		totem->mrl = g_strdup (mrl);
@@ -304,6 +313,7 @@ action_set_mrl (Totem *totem, const char *mrl)
 		/* Title */
 		title = g_strdup_printf ("%s - Totem", g_basename (mrl));
 		gtk_window_set_title (GTK_WINDOW (totem->win), title);
+		g_free (title);
 
 		/* Seek bar */
 		gtk_widget_set_sensitive (totem->seek,
@@ -321,9 +331,10 @@ action_set_mrl (Totem *totem, const char *mrl)
 		widget = glade_xml_get_widget (totem->xml, "label1");
 		time = gtk_xine_get_stream_length (GTK_XINE (totem->gtx));
 		time_text = time_to_string (time);
-		text = g_strdup_printf ("%s (%s)",
-				g_basename (mrl), time_text);
-		eel_ellipsizing_label_set_text (EEL_ELLIPSIZING_LABEL (widget),
+		text = g_strdup_printf
+			("<span size=\"medium\"><b>%s (%s)</b></span>",
+			 g_basename (mrl), time_text);
+		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
 				text);
 		g_free (text);
 		g_free (time_text);
@@ -1029,9 +1040,19 @@ GtkWidget
 *label_create (void)
 {
 	GtkWidget *label;
+	char *text;
 
-	label = eel_ellipsizing_label_new ("No File");
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	label = rb_ellipsizing_label_new ("");
+	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+	gtk_label_set_selectable (GTK_LABEL (label), FALSE);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0);
+
+	/* Set default */
+	text = g_strdup_printf
+		(_("<span size=\"medium\"><b>No file</b></span>"));
+	rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (label), text);
+	g_free (text);
+
 	return label;
 }
 

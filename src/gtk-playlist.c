@@ -24,7 +24,6 @@
 #include "gtk-playlist.h"
 
 #include <gnome.h>
-#include <eel/eel-gtk-macros.h>
 #include <glade/glade.h>
 #include <libgnomevfs/gnome-vfs.h>
 
@@ -65,12 +64,38 @@ static const GtkTargetEntry target_table[] = {
 	{ "text/uri-list", 0, 0 },
 };
 
+static GtkWidgetClass *parent_class = NULL;
+
 static void gtk_playlist_class_init (GtkPlaylistClass *class);
 static void gtk_playlist_init       (GtkPlaylist      *label);
 
 static void init_treeview (GtkWidget *treeview, GtkPlaylist *playlist);
 
-EEL_CLASS_BOILERPLATE (GtkPlaylist, gtk_playlist, gtk_dialog_get_type ());
+GtkType
+gtk_playlist_get_type (void)
+{
+	static GtkType gtk_playlist_type = 0;
+
+	if (!gtk_playlist_type) {
+		static const GTypeInfo gtk_playlist_info = {
+			sizeof (GtkPlaylistClass),
+			(GBaseInitFunc) NULL,
+			(GBaseFinalizeFunc) NULL,
+			(GClassInitFunc) gtk_playlist_class_init,
+			(GClassFinalizeFunc) NULL,
+			NULL /* class_data */,
+			sizeof (GtkPlaylist),
+			0 /* n_preallocs */,
+			(GInstanceInitFunc) gtk_playlist_init,
+		};
+
+		gtk_playlist_type = g_type_register_static (GTK_TYPE_DIALOG,
+				"GtkPlaylist", &gtk_playlist_info,
+				(GTypeFlags)0);
+	}
+
+	return gtk_playlist_type;
+}
 
 /* Helper functions */
 static gboolean
@@ -402,7 +427,9 @@ gtk_playlist_finalize (GObject *object)
 	if (playlist->_priv->icon != NULL)
 		gdk_pixbuf_unref (playlist->_priv->icon);
 
-	EEL_CALL_PARENT (G_OBJECT_CLASS, finalize, (object));
+	if (G_OBJECT_CLASS (parent_class)->finalize != NULL) {
+		(* G_OBJECT_CLASS (parent_class)->finalize) (object);
+	}
 }
 
 GtkWidget*

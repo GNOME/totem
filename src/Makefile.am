@@ -5,6 +5,8 @@ totem_SOURCES = 			\
 	totem.c				\
 	gtk-xine.c gtk-xine.h		\
 	gtk-playlist.c	gtk-playlist.h	\
+	rb-ellipsizing-label.c		\
+	rb-ellipsizing-label.h		\
 	debug.h
 
 totem_LDADD = $(EXTRA_GNOME_LIBS) $(XINE_LIBS)
