@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-27 21:01+0200\n"
-"PO-Revision-Date: 2003-07-27 23:46+0200\n"
+"POT-Creation-Date: 2003-07-30 13:01+0200\n"
+"PO-Revision-Date: 2003-07-30 20:50+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -154,7 +154,7 @@ msgstr "Stahování zásuvných modulů"
 msgid "Play movies and songs"
 msgstr "Přehrávání filmů a písniček"
 
-#: data/totem.desktop.in.h:2 src/totem.c:3487
+#: data/totem.desktop.in.h:2 src/totem.c:3495
 msgid "Totem Movie Player"
 msgstr "Přehrávač filmů Totem"
 
@@ -535,7 +535,7 @@ msgid "Toggle the aspect ratio"
 msgstr "Přepnout poměr stran"
 
 #. Title
-#: data/totem.glade.h:97 src/totem.c:680 src/totem.c:707 src/totem.c:1849
+#: data/totem.glade.h:97 src/totem.c:682 src/totem.c:709 src/totem.c:1851
 msgid "Totem"
 msgstr "Totem"
 
@@ -760,9 +760,13 @@ msgstr "_Obrázek"
 msgid "Unnamed CDROM"
 msgstr "Nepojmenovaná CDROM"
 
-#: src/bacon-cd-selection.c:276
+#: src/bacon-cd-selection.c:276 src/bacon-v4l-selection.c:275
 msgid "Select the drive"
 msgstr "Vyberte zařízení"
+
+#: src/bacon-v4l-selection.c:233
+msgid "Unnamed Video Device"
+msgstr "Nepojmenované video zařízení"
 
 #: src/bacon-video-widget-gst.c:56
 msgid "Totem Video Window"
@@ -980,7 +984,7 @@ msgstr "_Heslo:"
 msgid "Remember this password"
 msgstr "Zapamatovat si toto heslo"
 
-#: src/totem-playlist.c:635 src/totem.c:1518
+#: src/totem-playlist.c:635 src/totem.c:1520
 msgid "Select files"
 msgstr "Vyberte soubory"
 
@@ -1041,7 +1045,7 @@ msgstr "Typ stínování"
 msgid "Style of bevel around the statusbar text"
 msgstr "Styl ohraničení okolo textu ve stavové liště"
 
-#: src/totem-statusbar.c:171 src/totem.c:330
+#: src/totem-statusbar.c:171 src/totem.c:332
 msgid "Stopped"
 msgstr "Zastaveno"
 
@@ -1082,15 +1086,15 @@ msgstr "Nahradit"
 msgid "Download"
 msgstr "Stáhnout"
 
-#: src/totem.c:316
+#: src/totem.c:318
 msgid "Playing"
 msgstr "Přehrává se"
 
-#: src/totem.c:323
+#: src/totem.c:325
 msgid "Paused"
 msgstr "Pozastaveno"
 
-#: src/totem.c:389 src/totem.c:796 src/totem.c:917
+#: src/totem.c:391 src/totem.c:798 src/totem.c:919
 #, c-format
 msgid ""
 "Totem could not play '%s'.\n"
@@ -1099,7 +1103,7 @@ msgstr ""
 "Totem nemohl přehrát '%s'.\n"
 "Důvod: %s"
 
-#: src/totem.c:417
+#: src/totem.c:419
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -1111,7 +1115,7 @@ msgstr ""
 "Chcete -li tento typ médií přehrát, nainstalujte odpovídající zásuvný modul "
 "a znovu spusťte Totem."
 
-#: src/totem.c:425
+#: src/totem.c:427
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -1123,25 +1127,25 @@ msgstr ""
 "zařízení správně nastaveno."
 
 #. Title
-#: src/totem.c:656
+#: src/totem.c:658
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:669 src/totem.c:3327
+#: src/totem.c:671 src/totem.c:3335
 msgid "No file"
 msgstr "Žádný soubor"
 
-#: src/totem.c:1219
+#: src/totem.c:1221
 msgid "Buffering"
 msgstr "Ukládám do vyrovnávací paměti"
 
-#: src/totem.c:1240 src/totem.c:1262
+#: src/totem.c:1242 src/totem.c:1264
 #, c-format
 msgid "Buffering: %d%%"
 msgstr "Ukládám do vyrovnávací paměti: %d%%"
 
-#: src/totem.c:1569 src/totem.c:1580
+#: src/totem.c:1571 src/totem.c:1582
 msgid ""
 "Couldn't load the 'Open Location...' interface.\n"
 "Make sure that Totem is properly installed."
@@ -1149,25 +1153,25 @@ msgstr ""
 "Nelze načíst rozhraní 'Otevřít umístění...'.\n"
 "Ujistěte se, že je Totem řádně nainstalován."
 
-#: src/totem.c:1642
+#: src/totem.c:1644
 msgid "Totem could not eject the optical media."
 msgstr "Totem nemohl vysunout optické médium."
 
-#: src/totem.c:1820 src/vanity.c:218
+#: src/totem.c:1822 src/vanity.c:218
 msgid "translator_credits"
 msgstr "Michal Bukovjan <bukm@centrum.cz>"
 
-#: src/totem.c:1846
+#: src/totem.c:1848
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Přehrávač filmů používající %s"
 
-#: src/totem.c:1929 src/totem.c:1940 src/vanity.c:306 src/vanity.c:317
+#: src/totem.c:1931 src/totem.c:1942 src/vanity.c:306 src/vanity.c:317
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Obrazovka%d.png"
 
-#: src/totem.c:1993
+#: src/totem.c:1995
 #, c-format
 msgid ""
 "Totem could not get a screenshot of that film.\n"
@@ -1176,7 +1180,7 @@ msgstr ""
 "Totem nebyl schopen zachytit obrazovku s tímto filmem.\n"
 "Důvod: %s."
 
-#: src/totem.c:2003
+#: src/totem.c:2005
 msgid ""
 "Totem could not get a screenshot of that film.\n"
 "Please file a bug, this isn't supposed to happen"
@@ -1184,7 +1188,7 @@ msgstr ""
 "Totem nebyl schopen zachytit obrazovku s tímto filmem.\n"
 "Ohlašte prosím chybu, toto by se nemělo stát"
 
-#: src/totem.c:2029
+#: src/totem.c:2031
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
@@ -1193,7 +1197,7 @@ msgstr ""
 "Soubor '%s' již existuje.\n"
 "Obrazovka nebyla uložena."
 
-#: src/totem.c:2040
+#: src/totem.c:2042
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -1202,7 +1206,7 @@ msgstr ""
 "Při ukládání obrazovky nastala chyba.\n"
 "Podrobnosti: %s"
 
-#: src/totem.c:2057
+#: src/totem.c:2059
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -1210,7 +1214,7 @@ msgstr ""
 "Totem nemůže zobrazit okno vlastností filmu.\n"
 "Ujistěte se, že je tato aplikace správně nainstalovaná."
 
-#: src/totem.c:2126
+#: src/totem.c:2128
 #, c-format
 msgid ""
 "Totem could not seek in '%s'.\n"
@@ -1219,15 +1223,15 @@ msgstr ""
 "Totem se nemohl posouvat v '%s':\n"
 "Důvod: %s"
 
-#: src/totem.c:2824 src/totem.c:2848
+#: src/totem.c:2829 src/totem.c:2853
 msgid "None"
 msgstr "Žádný"
 
-#: src/totem.c:2828 src/totem.c:2851
+#: src/totem.c:2833 src/totem.c:2856
 msgid "Auto"
 msgstr "Auto"
 
-#: src/totem.c:3227
+#: src/totem.c:3235
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -1237,11 +1241,11 @@ msgstr ""
 "%s"
 
 # :-)
-#: src/totem.c:3228 src/vanity.c:550
+#: src/totem.c:3236 src/vanity.c:550
 msgid "No reason"
 msgstr "Žádný důvod"
 
-#: src/totem.c:3492
+#: src/totem.c:3500
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Totem will now exit."
@@ -1249,7 +1253,7 @@ msgstr ""
 "Nemohu inicializovat knihovny podporující thready.\n"
 "Zkontrolujte svou instalaci systému. Totem nyní skončí."
 
-#: src/totem.c:3514
+#: src/totem.c:3522
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -1260,7 +1264,7 @@ msgstr ""
 "rozhraní pro nastavení:\n"
 "%s"
 
-#: src/totem.c:3528 src/totem.c:3556
+#: src/totem.c:3536 src/totem.c:3564
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -1268,7 +1272,7 @@ msgstr ""
 "Nelze načíst hlavní rozhraní (totem.glade).\n"
 "Ujistěte se, že je Totem řádně nainstalován."
 
-#: src/totem.c:3582
+#: src/totem.c:3590
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
