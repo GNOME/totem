@@ -1,0 +1,125 @@
+<gconfschemafile>
+    <schemalist>    
+
+      <schema>
+        <key>/schemas/apps/acme/mute_key</key>
+        <applyto>/apps/acme/mute_key</applyto>
+        <owner>acme</owner>
+        <type>int</type>
+        <default>166</default>
+        <locale name="C">
+          <short>Mute key's XKeycode</short>
+          <long>Mute key's XKeycode, 0 to disable</long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/acme/volume_down_key</key>
+        <applyto>/apps/acme/volume_down_key</applyto>
+        <owner>acme</owner>
+        <type>int</type>
+        <default>165</default>
+        <locale name="C">
+          <short>Volume down key's XKeycode</short>
+          <long>Volume down key's XKeycode, 0 to disable</long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/acme/volume_up_key</key>
+	<applyto>/apps/acme/volume_up_key</applyto>
+	<owner>acme</owner>
+	<type>int</type>
+	<default>158</default>
+	<locale name="C">
+	  <short>Volume up key's XKeycode</short>
+	  <long>Volume up key's XKeycode, 0 to disable</long>
+	</locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/acme/power_key</key>
+	<applyto>/apps/acme/power_key</applyto>
+	<owner>acme</owner>
+	<type>int</type>
+	<default>222</default>
+	<locale name="C">
+	  <short>Power key's XKeycode</short>
+	  <long>Power key's XKeycode, 0 to disable</long>
+	</locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/acme/eject_key</key>
+	<applyto>/apps/acme/eject_key</applyto>
+	<owner>acme</owner>
+	<type>int</type>
+	<default>116</default>
+	<locale name="C">
+	  <short>Eject key's XKeycode</short>
+	  <long>Eject key's XKeycode, 0 to disable</long>
+	</locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/acme/brightness_down</key>
+	<applyto>/apps/acme/brightness_down</applyto>
+	<owner>acme</owner>
+	<type>int</type>
+	<default>101</default>
+	<locale name="C">
+	  <short>Brightness down key's XKeycode</short>
+	  <long>Brightness down key's XKeycode, 0 to disable</long>
+	</locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/acme/brightness_up</key>
+	<applyto>/apps/acme/brightness_up</applyto>
+	<owner>acme</owner>
+	<type>int</type>
+	<default>212</default>
+	<locale name="C">
+	  <short>Brightness up key's XKeycode</short>
+	  <long>Brightness up key's XKeycode, 0 to disable</long>
+	</locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/acme/use_pcm</key>
+	<applyto>/apps/acme/use_pcm</applyto>
+	<owner>acme</owner>
+	<type>bool</type>
+	<default>false</default>
+	<locale name="C">
+	  <short>Use PCM Volume instead of Master Volume</short>
+	  <long>Use PCM Volume instead of Master Volume</long>
+	</locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/acme/eject_command</key>
+	<applyto>/apps/acme/eject_command</applyto>
+	<owner>acme</owner>
+	<type>string</type>
+	<default>eject</default>
+	<locale name="C">
+	  <short>Command to execute when the Eject button is pressed</short>
+	  <long>Command to execute when the Eject button is pressed</long>
+	</locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/acme/soundfile_name</key>
+	<applyto>/apps/acme/soundfile_name</applyto>
+	<owner>acme</owner>
+	<type>string</type>
+	<default></default>
+	<locale name="C">
+	  <short>Sound file to be played when volume is changed</short>
+	  <long>Sound file to be played when volume is changed</long>
+	</locale>
+      </schema>
+
+  </schemalist>
+</gconfschemafile>

@@ -279,8 +279,7 @@ gtk_xine_finalize (GObject *object)
 {
 	GtkXine *gtx = (GtkXine *) object;
 
-	/* save configuration */
-	gtx->priv->config->save (gtx->priv->config);
+	/* Should put here what needs to be destroyed */
 
 	G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -463,27 +462,32 @@ load_config_from_gconf (GtkXine *gtx)
 			"misc.logo_mrl", tmp);
 	g_free (tmp);
 
-	/* The audio output */
-	//FIXME tmp = gconf_client_get_string (conf, "", NULL);
-	tmp =
-		gtx->priv->config->register_string (gtx->priv->config,
-				"audio.driver", "auto",
-				"audio driver to use",
-				NULL, NULL, NULL);
-	if (tmp == NULL)
+	/* The audio output, equivalent to audio.driver*/
+	tmp = gconf_client_get_string (conf,
+			"/apps/gtk-xine/audio_driver",
+			NULL);
+	if (tmp == NULL || strcmp (tmp, "") == 0)
 		tmp = g_strdup ("auto");
 
 	gtx->priv->ao_driver = load_audio_out_driver (gtx, tmp);
 	g_free (tmp);
 
+	/* Fallback on null, just in case */
+	if (!gtx->priv->ao_driver)
+	{
+		tmp = g_strdup ("null");
+		gtx->priv->ao_driver = load_audio_out_driver (gtx, tmp);
+		g_free (tmp);
+	}
+
 	/* default demux strategy */
 	gtx->priv->config->register_string (gtx->priv->config,
-			"misc.demux_strategy", "default",
+			"misc.demux_strategy", "reverse",
 			"demuxer selection strategy",
 			"{ default  reverse  content  extension }, default: 0",
 			NULL, NULL);
 	gtx->priv->config->update_string (gtx->priv->config,
-			"misc.demux_strategy", "default");
+			"misc.demux_strategy", "reverse");
 
 	/* TODO skip by chapter for DVD */
 	/* TODO input.cda_device:/dev/cdaudio
@@ -810,11 +814,11 @@ gtk_xine_unrealize (GtkWidget * widget)
 
 	gtx = GTK_XINE (widget);
 
-	/* stop event thread */
-	xine_exit (gtx->priv->xine);
-
 	/* save configuration */
 	gtx->priv->config->save (gtx->priv->config);
+
+	/* stop event thread */
+	xine_exit (gtx->priv->xine);
 
 	/* Hide all windows */
 	if (GTK_WIDGET_MAPPED (widget))

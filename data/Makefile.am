@@ -31,12 +31,21 @@ keysdir = $(datadir)/mime-info/
 app_DATA = totem.applications
 appdir = $(datadir)/application-registry
 
+schema_in_files = gtk-xine.schemas.in
+schemadir = $(sysconfdir)/gconf/schemas
+schema_DATA = $(schema_in_files:.schemas.in=.schemas)
+@INTLTOOL_SCHEMAS_RULE@
+
 # For the sake of some users
 user-install: $(app_DATA) $(keys_DATA)
 	mkdir -p ~/.gnome/application-registry ~/.gnome/mime-info/
 	cp $(app_DATA) ~/.gnome/application-registry
 	cp $(keys_DATA) ~/.gnome/mime-info/
 
-EXTRA_DIST = $(stuff_DATA) $(desktop_DATA) $(keys_DATA) $(app_DATA)
+install-data-local:
+	-GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(srcdir)/$(schema_DATA)
 
-CLEANFILES = *.bak *.gladep core* *.orig *~ $(desktop_DATA)
+EXTRA_DIST = $(stuff_DATA) $(desktop_DATA) $(keys_DATA) $(app_DATA) $(schema_in_files)
+
+CLEANFILES = *.bak *.gladep core* *.orig *~ $(desktop_DATA) $(schema_DATA)
+

@@ -558,6 +558,7 @@ update_sliders_cb (gpointer user_data)
 		totem->vol_lock = TRUE;
 		pos = (gfloat) gtk_xine_get_volume (GTK_XINE (totem->gtx));
 		gtk_adjustment_set_value (totem->voladj, pos);
+		volume_set_image (totem, (gint) pos);
 		totem->vol_lock = FALSE;
 	}
 
