@@ -89,11 +89,13 @@ add_holes_to_pixbuf_small (GdkPixbuf *pixbuf, int width, int height)
 }
 
 static GdkPixbuf *
-add_holes_to_pixbuf_large (GdkPixbuf *pixbuf, int width, int height)
+add_holes_to_pixbuf_large (GdkPixbuf *pixbuf, int size)
 {
 	char *filename;
 	int lh, lw, rh, rw, i;
 	GdkPixbuf *left, *right, *small;
+	int canvas_w, canvas_h;
+	int d_height, d_width;
 	double ratio;
 
 	filename = g_build_filename (DATADIR, "totem",
@@ -126,35 +128,55 @@ add_holes_to_pixbuf_large (GdkPixbuf *pixbuf, int width, int height)
 	g_assert (lh == rh);
 	g_assert (lw == rw);
 
-	small = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, width, height);
+	{
+		int height, width;
+
+		height = gdk_pixbuf_get_height (pixbuf);
+		width = gdk_pixbuf_get_width (pixbuf);
+
+		if (width > height)
+		{
+			d_width = size - lw - lw;
+			d_height = d_width * height / width;
+		} else {
+			d_height = size - lw -lw;
+			d_width = d_height * width / height;
+		}
+
+		canvas_h = d_height;
+		canvas_w = d_width + 2 * lw;
+	}
+
+	small = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
+			canvas_w, canvas_h);
 	gdk_pixbuf_fill (small, 0x000000ff);
-	ratio = ((double)(width - lw - rw) /
-			(double) gdk_pixbuf_get_width (pixbuf));
-	gdk_pixbuf_scale (pixbuf, small, lw, lw,
-			width - lw - rw, height - lw -lw,
-			lw, lw, ratio, ratio, GDK_INTERP_NEAREST);
+	ratio = ((double)d_width / (double) gdk_pixbuf_get_width (pixbuf));
+
+	gdk_pixbuf_scale (pixbuf, small, lw, 0,
+			d_width, d_height,
+			lw, 0, ratio, ratio, GDK_INTERP_NEAREST);
 
 	/* Left side holes */
-	for (i = 0; i < height; i += lh)
+	for (i = 0; i < canvas_h; i += lh)
 	{
 		gdk_pixbuf_composite (left, small, 0, i,
-				MIN (width, lw),
-				MIN (height-i, lh),
+				MIN (canvas_w, lw),
+				MIN (canvas_h - i, lh),
 				0, i, 1, 1, GDK_INTERP_NEAREST, 255);
 	}
 
 	/* Right side holes */
-	for (i = 0; i < height; i += rh)
+	for (i = 0; i < canvas_h; i += rh)
 	{
 		gdk_pixbuf_composite (right, small,
-				width - rw, i,
-				MIN (width, rw),
-				MIN (height-i, rh),
-				width - rw, i,
+				canvas_w - rw, i,
+				MIN (canvas_w, rw),
+				MIN (canvas_h - i, rh),
+				canvas_w - rw, i,
 				1, 1, GDK_INTERP_NEAREST, 255);
 	}
 
-	/* TODO Add a border of 0x33333300 all around */
+	/* TODO Add a one pixel border of 0x33333300 all around */
 
 	return small;
 }
@@ -164,31 +186,33 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 	     const char *video_path, int size)
 {
 	GdkPixbuf *small, *with_holes;
-	int width, height, d_width, d_height;
 	GError *err = NULL;
-
-	height = gdk_pixbuf_get_height (pixbuf);
-	width = gdk_pixbuf_get_width (pixbuf);
-
-	if (width > height)
-	{
-		d_width = size;
-		d_height = size * height / width;
-	} else {
-		d_height = size;
-		d_width = size * width / height;
-	}
 
 	if (size <= 128)
 	{
+		int width, height, d_width, d_height;
+
+		height = gdk_pixbuf_get_height (pixbuf);
+		width = gdk_pixbuf_get_width (pixbuf);
+
+		if (width > height)
+		{
+			d_width = size;
+			d_height = size * height / width;
+		} else {
+			d_height = size;
+			d_width = size * width / height;
+		}
+
 		small = gdk_pixbuf_scale_simple (pixbuf, d_width, d_height,
 				GDK_INTERP_TILES);
 
-		with_holes = add_holes_to_pixbuf_small (small, d_width, d_height);
+		with_holes = add_holes_to_pixbuf_small (small,
+				d_width, d_height);
 		g_return_if_fail (with_holes != NULL);
 		gdk_pixbuf_unref (small);
 	} else {
-		with_holes = add_holes_to_pixbuf_large (pixbuf, d_width, d_height);
+		with_holes = add_holes_to_pixbuf_large (pixbuf, size);
 		g_return_if_fail (with_holes != NULL);
 	}
 
