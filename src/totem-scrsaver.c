@@ -65,7 +65,8 @@ ScreenSaver
 				&scr->interval,
 				&scr->prefer_blanking,
 				&scr->allow_exposures);
-		g_timeout_add (scr->timeout / 2, (GSourceFunc) fake_event, scr);
+		g_timeout_add (scr->timeout / 2 * 1000,
+				(GSourceFunc) fake_event, scr);
 	}
 	XSync (display, False);
 	XUnlockDisplay (display);

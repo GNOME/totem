@@ -3193,6 +3193,9 @@ video_widget_create (Totem *totem)
 	GError *err = NULL;
 	GtkWidget *container;
 
+//FIXME this seems to break pretty badly
+//	totem->scr = scrsaver_new (GDK_DISPLAY ());
+
 	totem->bvw = BACON_VIDEO_WIDGET
 		(bacon_video_widget_new (-1, -1, FALSE, &err));
 
@@ -3566,18 +3569,22 @@ main (int argc, char **argv)
 	totem->seekadj = gtk_range_get_adjustment (GTK_RANGE (totem->seek));
 	totem->volume = glade_xml_get_widget (totem->xml, "tmw_volume_hscale");
 	totem->voladj = gtk_range_get_adjustment (GTK_RANGE (totem->volume));
-	totem->exit_popup = glade_xml_get_widget (totem->xml, "totem_exit_fullscreen_window");
-	totem->control_popup = glade_xml_get_widget (totem->xml, "totem_controls_window");
+	totem->exit_popup = glade_xml_get_widget
+		(totem->xml, "totem_exit_fullscreen_window");
+	totem->control_popup = glade_xml_get_widget
+		(totem->xml, "totem_controls_window");
 	totem->fs_seek = glade_xml_get_widget (totem->xml, "tcw_seek_hscale");
 	totem->fs_seekadj = gtk_range_get_adjustment
 		(GTK_RANGE (totem->fs_seek));
-	totem->fs_volume = glade_xml_get_widget (totem->xml, "tcw_volume_hscale");
+	totem->fs_volume = glade_xml_get_widget
+		(totem->xml, "tcw_volume_hscale");
 	totem->fs_voladj = gtk_range_get_adjustment
 		(GTK_RANGE (totem->fs_volume));
 	totem->volume_first_time = 1;
-	totem->fs_pp_button = glade_xml_get_widget (totem->xml, "tcw_pp_button");
+	totem->fs_pp_button = glade_xml_get_widget
+		(totem->xml, "tcw_pp_button");
 	totem->statusbar = glade_xml_get_widget (totem->xml, "tmw_statusbar");
-	
+
 	/* Properties */
 	totem->properties = bacon_video_widget_properties_new ();
 
@@ -3595,8 +3602,6 @@ main (int argc, char **argv)
 	/* Show ! (again) the video widget this time. */
 	video_widget_create (totem);
 	long_action ();
-
-	totem->scr = scrsaver_new (GDK_DISPLAY ());
 
 	/* The prefs after the video widget is connected */
 	totem_setup_preferences (totem);

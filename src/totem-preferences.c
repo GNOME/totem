@@ -99,7 +99,36 @@ on_checkbutton1_toggled (GtkToggleButton *togglebutton, Totem *totem)
 		(BACON_VIDEO_WIDGET (totem->bvw), value);
 }
 
-static void              
+static void
+totem_prefs_set_show_visuals (Totem *totem, gboolean value, gboolean warn)
+{
+	GtkWidget *item;
+
+	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/show_vfx", value, NULL);
+
+	item = glade_xml_get_widget (totem->xml, "tpw_visuals_type_label");
+	gtk_widget_set_sensitive (item, value);
+	item = glade_xml_get_widget (totem->xml, "tpw_visuals_type_optionmenu");
+	gtk_widget_set_sensitive (item, value);
+	item = glade_xml_get_widget (totem->xml, "tpw_visuals_size_label");
+	gtk_widget_set_sensitive (item, value);
+	item = glade_xml_get_widget (totem->xml, "tpw_visuals_size_optionmenu");
+	gtk_widget_set_sensitive (item, value);
+
+	if (warn == FALSE)
+		return;
+
+	if (bacon_video_widget_set_show_visuals
+			(BACON_VIDEO_WIDGET (totem->bvw), value) == FALSE)
+	{
+		totem_action_error (_("The change of this setting will only "
+					"take effect for the next movie, or "
+					"when Totem is restarted"),
+				totem);
+	}
+}
+
+static void
 on_checkbutton2_toggled (GtkToggleButton *togglebutton, Totem *totem)
 {
 	GtkWidget *item;
@@ -118,25 +147,7 @@ on_checkbutton2_toggled (GtkToggleButton *togglebutton, Totem *totem)
 		}
 	}
 
-	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/show_vfx", value, NULL);
-
-	item = glade_xml_get_widget (totem->xml, "tpw_visuals_type_label");
-	gtk_widget_set_sensitive (item, value);
-	item = glade_xml_get_widget (totem->xml, "tpw_visuals_type_optionmenu");
-	gtk_widget_set_sensitive (item, value);
-	item = glade_xml_get_widget (totem->xml, "tpw_visuals_size_label");
-	gtk_widget_set_sensitive (item, value);
-	item = glade_xml_get_widget (totem->xml, "tpw_visuals_size_optionmenu");
-	gtk_widget_set_sensitive (item, value);
-
-	if (bacon_video_widget_set_show_visuals
-		(BACON_VIDEO_WIDGET (totem->bvw), value) == FALSE)
-	{
-		totem_action_error (_("The change of this setting will only "
-					"take effect for the next movie, or "
-					"when Totem is restarted"),
-				totem);
-	}
+	totem_prefs_set_show_visuals (totem, value, TRUE);
 }
 
 static void
@@ -465,8 +476,7 @@ totem_setup_preferences (Totem *totem)
 
 	gtk_toggle_button_set_active
 		(GTK_TOGGLE_BUTTON (item), show_visuals);
-	bacon_video_widget_set_show_visuals
-		(BACON_VIDEO_WIDGET (totem->bvw), show_visuals);
+	totem_prefs_set_show_visuals (totem, show_visuals, FALSE);
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_checkbutton2_toggled), totem);
 

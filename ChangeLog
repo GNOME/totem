@@ -1,3 +1,16 @@
+2003-07-02  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-resize.c: (bacon_resize_init): lock the display before
+	testing for existence of the extension
+	* src/scrsaver.c: (scrsaver_new): the screensaver timeout is in seconds
+	and the timeout for the g_timeout_add in msec
+	* src/totem-preferences.c: (totem_prefs_set_show_visuals),
+	(on_checkbutton2_toggled), (totem_setup_preferences): update
+	the visuals drop-down correctly on startup if they are disabled
+	* src/totem.c: (video_widget_create), (main): move the screensaver
+	creation before the video widget creation, and disable for now,
+	it seems to be causing expose events to never reach the application
+
 2003-07-02  Jordi Mallach  <jordi@sindominio.net>
 
 	* data/totem.desktop.in, data/vanity.desktop.in: Replace "0" with
@@ -31,7 +44,7 @@
 	(bacon_resize_get_current), (bacon_restore): fix compilation with
 	XFree86 < 4.3.0
 	* src/scrsaver.c: (fake_event), (scrsaver_new), (scrsaver_disable),
-	(scrsaver_enable): fix screensaver functions not poking the root window 
+	(scrsaver_enable): fix screensaver functions not poking the root window
 	often enough
 
 2003-06-29  Bastien Nocera  <hadess@hadess.net>

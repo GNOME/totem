@@ -22,9 +22,13 @@ gboolean
 bacon_resize_init (void)
 {
 #ifdef HAVE_RANDR
-	int event_basep, error_basep;
+	int event_basep, error_basep, res;
 
-	if (XRRQueryExtension (GDK_DISPLAY(), &event_basep, &error_basep))
+	XLockDisplay (GDK_DISPLAY());
+	res = XRRQueryExtension (GDK_DISPLAY(), &event_basep, &error_basep);
+	XUnlockDisplay (GDK_DISPLAY());
+
+	if (res)
 		return TRUE;
 #endif /* HAVE_RANDR */
 	return FALSE;
