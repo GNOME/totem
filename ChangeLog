@@ -1,3 +1,12 @@
+2004-10-21  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-playlist.c: (totem_playlist_add_files),
+	(totem_playlist_save_files):
+	* src/totem.c: (on_open1_activate), (show_controls):
+	for all the file selectors, use gtk_file_chooser_set_current_folder_uri
+	instead of gtk_file_chooser_set_uri (Closes: #156030)
+	When hiding and showing the controls again, don't shrink the window
+
 2004-10-19  Bastien Nocera  <hadess@hadess.net>
 
 	* src/disc-test.c: (main):

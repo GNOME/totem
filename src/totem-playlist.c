@@ -582,7 +582,7 @@ totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist)
 
 	if (playlist->_priv->path != NULL)
 	{
-		gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (fs),
+		gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (fs),
 				playlist->_priv->path);
 	}
 	response = gtk_dialog_run (GTK_DIALOG (fs));
@@ -605,13 +605,8 @@ totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist)
 		mrl = filenames->data;
 		if (mrl != NULL)
 		{
-			char *tmp;
-
-			tmp = g_path_get_dirname (mrl);
 			g_free (playlist->_priv->path);
-			playlist->_priv->path = g_strconcat (tmp,
-					G_DIR_SEPARATOR_S, NULL);
-			g_free (tmp);
+			playlist->_priv->path = g_path_get_dirname (mrl);
 		}
 
 		for (l = filenames; l != NULL; l = l->next)
@@ -762,7 +757,7 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 
 	if (playlist->_priv->save_path != NULL)
 	{
-		gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (fs),
+		gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (fs),
 				playlist->_priv->save_path);
 	}
 
@@ -773,7 +768,7 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 
 	if (response == GTK_RESPONSE_ACCEPT)
 	{
-		char *filename, *tmp;
+		char *filename;
 		GnomeVFSResult res;
 		GnomeVFSFileInfo info;
 
@@ -784,11 +779,8 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 		if (filename == NULL)
 			return;
 
-		tmp = g_path_get_dirname (filename);
 		g_free (playlist->_priv->save_path);
-		playlist->_priv->save_path = g_strconcat (tmp,
-				G_DIR_SEPARATOR_S, NULL);
-		g_free (tmp);
+		playlist->_priv->save_path = g_path_get_dirname (filename);
 
 		res = gnome_vfs_get_file_info (filename, &info, GNOME_VFS_FILE_INFO_DEFAULT);
 		if (res != GNOME_VFS_ERROR_NOT_FOUND && res == GNOME_VFS_OK)

@@ -1621,9 +1621,8 @@ on_open1_activate (GtkButton *button, Totem *totem)
 
 	if (path != NULL)
 	{
-		gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (fs), path);
-		g_free (path);
-		path = NULL;
+		gtk_file_chooser_set_current_folder_uri
+			(GTK_FILE_CHOOSER (fs), path);
 	}
 
 	while (1)
@@ -1652,14 +1651,13 @@ on_open1_activate (GtkButton *button, Totem *totem)
 		/* Hide the selection widget only if playlist is modified */
 		gtk_widget_hide (fs);
 
+		/* Save the path */
 		if (filenames->data != NULL)
 		{
-			char *tmp;
-
-			tmp = g_path_get_dirname (filenames->data);
-			path = g_strconcat (tmp, G_DIR_SEPARATOR_S, NULL);
-			g_free (tmp);
+			g_free (path);
+			path = g_path_get_dirname (filenames->data);
 		}
+
 		g_slist_foreach (filenames, (GFunc) g_free, NULL);
 		g_slist_free (filenames);
 
@@ -1867,14 +1865,14 @@ on_always_on_top1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 static void
 show_controls (Totem *totem, gboolean visible, gboolean fullscreen_behaviour)
 {
-	GtkWidget *menubar, *controlbar, *statusbar, *item, *bvw_vbox;
-	GtkRequisition requisition;
-	
+	GtkWidget *menubar, *controlbar, *statusbar, *item, *bvw_vbox, *widget;
+
 	menubar = glade_xml_get_widget (totem->xml, "tmw_menubar");
 	controlbar = glade_xml_get_widget (totem->xml, "tmw_controls_vbox");
 	statusbar = glade_xml_get_widget (totem->xml, "tmw_statusbar");
 	item = glade_xml_get_widget (totem->xml, "trcm_show_controls");
 	bvw_vbox = glade_xml_get_widget (totem->xml, "tmw_bvw_vbox");
+	widget = GTK_WIDGET (totem->bvw);
 
 	if (visible)
 	{
@@ -1883,43 +1881,35 @@ show_controls (Totem *totem, gboolean visible, gboolean fullscreen_behaviour)
 		gtk_widget_show (statusbar);
 		gtk_widget_hide (item);
 		gtk_container_set_border_width (GTK_CONTAINER (bvw_vbox), 1);
+
+		totem_widget_set_preferred_size (widget,
+				widget->allocation.width,
+				widget->allocation.height);
 	} else {
+		int width = 0, height = 0;
+
+		if (totem->controls_visibility == TOTEM_CONTROLS_HIDDEN)
+		{
+			width = widget->allocation.width;
+			height = widget->allocation.height;
+		}
+
 		gtk_widget_hide (menubar);
 		gtk_widget_hide (controlbar);
 		gtk_widget_hide (statusbar);
+
 		 /* We won't show controls in fullscreen */
 		if (totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN)
 			gtk_widget_hide (item);
 		else
 			gtk_widget_show (item);
 		gtk_container_set_border_width (GTK_CONTAINER (bvw_vbox), 0);
-	}
-	
-	/* If we are called from fullscreen handlers
-	we do not handle the window's size */
-	if (fullscreen_behaviour)
-		return;
-	
-	if (totem->controls_visibility == TOTEM_CONTROLS_HIDDEN)
-	{
-		gtk_window_resize (GTK_WINDOW(totem->win),
-			GTK_WIDGET(totem->bvw)->allocation.width,
-			GTK_WIDGET(totem->bvw)->allocation.height);
-	} else if (totem->controls_visibility == TOTEM_CONTROLS_VISIBLE) {
-		/* We get GtkWindow requisition then we substract
-		bvw's requisition to get other widget's height and
-		use that to resize properly GtkWindow */
-		gtk_widget_size_request (totem->win, &requisition);
-		/* Getting controls requisition */
-		requisition.height = requisition.height
-			- GTK_WIDGET(totem->bvw)->requisition.height;
-		requisition.width = requisition.width
-			- GTK_WIDGET(totem->bvw)->requisition.width;
-		gtk_window_resize (GTK_WINDOW(totem->win),
-				GTK_WIDGET(totem->bvw)->allocation.width
-				+ requisition.width,
-				GTK_WIDGET(totem->bvw)->allocation.height
-				+ requisition.height);
+
+		if (totem->controls_visibility == TOTEM_CONTROLS_HIDDEN)
+		{
+			gtk_window_resize (GTK_WINDOW(totem->win),
+					width, height);
+		}
 	}
 }
 
