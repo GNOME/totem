@@ -15,6 +15,13 @@
 	* src/totem.c: (totem_action_exit): destroy the playlist before we
 	close Totem
 
+2002-10-24  Thomas Vander Stichele <thomas@apestaart.org>
+
+  	* configure.in: fix AC_DEFINE* to take three arguments
+          get rid of acconfig.h 
+          appease libtool gods by switching around two macros
+          poke fun at the master hacker
+
 2002-10-23  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c: (time_to_string), (totem_action_play): display "2
