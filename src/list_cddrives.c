@@ -15,6 +15,8 @@ list_cdroms (void)
 		cd = l->data;
 		g_print ("name: %s device: %s type: %d\n",
 				cd->name, cd->device, cd->type);
+		g_print ("CD-Recorder/SCSI devices only: max_speed: %d"
+				" id: %s\n", cd->max_speed, cd->id);
 	}
 }
 
