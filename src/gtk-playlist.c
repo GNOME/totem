@@ -34,6 +34,9 @@ struct GtkPlaylistDetails
 	GtkWidget *treeview;
 	GtkTreeModel *model;
 	GtkTreePath *current;
+
+	/* This is the playing icon */
+	GdkPixbuf *icon;
 };
 
 enum {
@@ -50,6 +53,7 @@ static void init_treeview (GtkWidget *treeview);
 
 EEL_CLASS_BOILERPLATE (GtkPlaylist, gtk_playlist, gtk_dialog_get_type ());
 
+/* Helper function */
 static gboolean
 gtk_tree_model_iter_previous (GtkTreeModel *tree_model, GtkTreeIter *iter)
 {
@@ -182,10 +186,15 @@ gtk_playlist_new (GtkWindow *parent)
 		(GTK_TREE_VIEW (playlist->details->treeview));
 
 	if (parent != NULL)
-	{
-		gtk_window_set_transient_for (GTK_WINDOW (playlist),
-				parent);
-	}
+		gtk_window_set_transient_for (GTK_WINDOW (playlist), parent);
+
+	filename = gnome_program_locate_file (NULL,
+			GNOME_FILE_DOMAIN_APP_DATADIR,
+			"playlist-playing.png", TRUE, NULL);
+	//FIXME check if NULL
+	playlist->details->icon = gdk_pixbuf_new_from_file (filename,
+			NULL);
+	g_free (filename);
 
 	gtk_widget_show_all (GTK_DIALOG (playlist)->vbox);
 
@@ -203,7 +212,6 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, char *mrl)
 	g_return_val_if_fail (mrl != NULL, FALSE);
 
 	filename = g_path_get_basename (mrl);
-	g_message ("basename for %s: %s", mrl, filename);
 
 	store = GTK_LIST_STORE (playlist->details->model);
 	gtk_list_store_append (store, &iter);
@@ -263,8 +271,97 @@ gtk_playlist_has_next_mrl (GtkPlaylist *playlist)
 	return gtk_tree_model_iter_next (playlist->details->model, &iter);
 }
 
+gboolean
+gtk_playlist_set_playing (GtkPlaylist *playlist)
+{
+	GtkListStore *store;
+	GtkTreeIter iter;
+
+	g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), FALSE);
+
+	store = GTK_LIST_STORE (playlist->details->model);
+	gtk_tree_model_get_iter (playlist->details->model,
+			&iter,
+			playlist->details->current);
+
+	if (&iter == NULL)
+		return FALSE;
+
+	gtk_list_store_set (store, &iter,
+			PIX_COL, playlist->details->icon,
+			-1);
+	return TRUE;
+}
+
+static gboolean
+gtk_playlist_unset_playing (GtkPlaylist *playlist)
+{
+	GtkListStore *store;
+	GtkTreeIter iter;
+
+	g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), FALSE);
+
+	store = GTK_LIST_STORE (playlist->details->model);
+	gtk_tree_model_get_iter (playlist->details->model,
+			&iter,
+			playlist->details->current);
+
+	if (&iter == NULL)
+		return FALSE;
+
+	gtk_list_store_set (store, &iter,
+			PIX_COL, NULL,
+			-1);
+	return TRUE;
+}
+
+void
+gtk_playlist_set_previous (GtkPlaylist *playlist)
+{
+	GtkTreeIter iter;
+
+	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
+	
+	if (gtk_playlist_has_previous_mrl (playlist) == FALSE)
+		return;
+
+	gtk_playlist_unset_playing (playlist);
+
+	gtk_tree_model_get_iter (playlist->details->model,
+			&iter,
+			playlist->details->current);
+
+	gtk_tree_model_iter_previous (playlist->details->model, &iter);
+	gtk_tree_path_free (playlist->details->current);
+	playlist->details->current = gtk_tree_model_get_path
+		(playlist->details->model, &iter);
+}
+
+void
+gtk_playlist_set_next (GtkPlaylist *playlist)
+{
+	GtkTreeIter iter;
+
+	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
+
+	if (gtk_playlist_has_next_mrl (playlist) == FALSE)
+		return;
+
+	gtk_playlist_unset_playing (playlist);
+
+	gtk_tree_model_get_iter (playlist->details->model,
+			&iter,
+			playlist->details->current);
+
+	gtk_tree_model_iter_next (playlist->details->model, &iter);
+	gtk_tree_path_free (playlist->details->current);
+	playlist->details->current = gtk_tree_model_get_path
+		(playlist->details->model, &iter);
+}
+
 static void
 gtk_playlist_class_init (GtkPlaylistClass *klass)
 {
 	G_OBJECT_CLASS (klass)->finalize = gtk_playlist_finalize;
 }
+

@@ -1,3 +1,20 @@
+2002-07-27  Bastien Nocera,,,  <hadess@hadess.net>
+
+	* src/Makefile.am:
+	* src/gtk-playlist.c: (gtk_playlist_new), (gtk_playlist_add_mrl),
+	(gtk_playlist_set_playing), (gtk_playlist_unset_playing),
+	(gtk_playlist_set_previous), (gtk_playlist_set_next):
+	* src/gtk-playlist.h:
+	* src/gtk-xine.c: (xine_error), (gtk_xine_play):
+	* src/playlist-playing.png:
+	* src/totem.c: (play_pause_toggle_disconnected),
+	(action_play_pause_real), (action_set_mrl), (action_previous),
+	(action_next), (on_previous_button_clicked),
+	(on_next_button_clicked), (toggle_playlist_from_playlist),
+	(on_window_key_press_event), (totem_callback_connect), (main):
+	Cleanups, add real ability to skip backwards and forwards in the
+	playlist. Yesh, yesh, it works!
+
 2002-07-16  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: remove unneeded gob2 check

@@ -605,7 +605,35 @@ xine_event (void *user_data, xine_event_t *event)
 		g_message ("got event %d", event->type);
 	}
 }
-		
+
+static void
+xine_error (GtkXine *gtx)
+{
+	int error;
+
+	error = xine_get_error (gtx->priv->xine);
+	g_message ("ERROR: %d", error);
+	switch (error)
+	{
+	case XINE_ERROR_NONE:
+		break;
+	case XINE_ERROR_NO_INPUT_PLUGIN:
+		g_message ("XINE_ERROR_NO_INPUT_PLUGIN");
+		//g_signal_emit
+		break;
+	case XINE_ERROR_NO_DEMUXER_PLUGIN:
+		g_message ("XINE_ERROR_NO_DEMUXER_PLUGIN");
+		//g_signal_emit
+		break;
+	case XINE_ERROR_DEMUXER_FAILED:
+		g_message ("XINE_ERROR_DEMUXER_FAILED");
+		//g_signal_emit
+		break;
+	default:
+		break;
+	}
+}
+
 static void
 gtk_xine_unrealize (GtkWidget * widget)
 {
@@ -681,6 +709,7 @@ gtk_xine_size_allocate (GtkWidget * widget, GtkAllocation * allocation)
 gint
 gtk_xine_play (GtkXine * gtx, gchar * mrl, gint pos, gint start_time)
 {
+	int error;
 
 	g_return_val_if_fail (gtx != NULL, -1);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), -1);
@@ -690,7 +719,14 @@ gtk_xine_play (GtkXine * gtx, gchar * mrl, gint pos, gint start_time)
 	   ("gtkxine: calling xine_play start_pos = %d, start_time = %d\n",
 	    pos, start_time));
 
-	return xine_play (gtx->priv->xine, mrl, pos, start_time);
+	error = xine_play (gtx->priv->xine, mrl, pos, start_time);
+	if (!error)
+	{
+		g_message ("BROKEN");
+		xine_error (gtx);
+		return FALSE;
+	}
+	return TRUE;
 }
 
 void

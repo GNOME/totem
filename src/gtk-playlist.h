@@ -56,4 +56,9 @@ char      *gtk_playlist_get_current_mrl (GtkPlaylist *playlist);
 gboolean   gtk_playlist_has_previous_mrl (GtkPlaylist *playlist);
 gboolean   gtk_playlist_has_next_mrl (GtkPlaylist *playlist);
 
+void       gtk_playlist_set_previous (GtkPlaylist *playlist);
+void       gtk_playlist_set_next (GtkPlaylist *playlist);
+
+gboolean   gtk_playlist_set_playing (GtkPlaylist *playlist);
+
 #endif /* GTK_PLAYLIST_H */

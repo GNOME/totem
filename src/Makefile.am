@@ -24,6 +24,7 @@ stuff_DATA =				\
 	stock_media_previous.png	\
 	playlist-16.png			\
 	playlist-24.png			\
+	playlist-playing.png		\
 	tb_volume_off.xpm tb_volume.xpm	\
 	totem.glade			\
 	playlist.glade

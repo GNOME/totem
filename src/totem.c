@@ -38,6 +38,10 @@ static const GtkTargetEntry target_table[] = {
 };
 
 static gboolean popup_hide (Totem *totem);
+static void update_buttons (Totem *totem);
+static void on_play_pause_button_toggled (GtkToggleButton *button,
+		gpointer user_data);
+
 
 static char
 *time_to_string (int time)
@@ -89,13 +93,34 @@ action_play_pause (Totem *totem)
 }
 
 static void
+play_pause_toggle_disconnected (Totem *totem)
+{
+	/* Avoid loops by disconnecting the callback first */
+	g_signal_handler_disconnect
+		(GTK_OBJECT (totem->pp_button),
+		 totem->pp_handler);
+	action_play_pause (totem);
+	totem->pp_handler = g_signal_connect
+		(GTK_OBJECT (totem->pp_button),
+		 "toggled",
+		 GTK_SIGNAL_FUNC (on_play_pause_button_toggled), totem);
+}
+
+static void
 action_play_pause_real (Totem *totem, int pos)
 {
 	if (totem->mrl == NULL)
+	{
+		play_pause_toggle_disconnected (totem);
 		return;
+	}
 
 	if (!gtk_xine_is_playing(GTK_XINE(totem->gtx))) {
-		gtk_xine_play (GTK_XINE(totem->gtx), totem->mrl, 0, pos);
+		if (gtk_xine_play (GTK_XINE(totem->gtx), totem->mrl, 0, pos)
+				== FALSE)
+		{
+			play_pause_toggle_disconnected (totem);
+		}
 	} else {
 		if (gtk_xine_get_speed (GTK_XINE(totem->gtx)) == SPEED_PAUSE)
 		{
@@ -155,6 +180,14 @@ action_set_mrl (Totem *totem, const char *mrl)
 
 		totem->mrl = g_strdup (mrl);
 
+		/* Otherwise we might never change the mrl in GtkXine */
+		if (gtk_xine_is_playing(GTK_XINE(totem->gtx))) {
+			gtk_xine_play (GTK_XINE(totem->gtx), totem->mrl, 0, 0);
+		} else {
+			/* Make sure it will actually work first */
+			action_play_pause (totem);
+		}
+
 		/* Play/Pause */
 		gtk_widget_set_sensitive (totem->pp_button, TRUE);
 		widget = glade_xml_get_widget (totem->xml, "play1");
@@ -165,9 +198,11 @@ action_set_mrl (Totem *totem, const char *mrl)
 		gtk_window_set_title (GTK_WINDOW (totem->win), title);
 
 		/* Seek bar */
-		action_play_pause (totem);
 		gtk_widget_set_sensitive (totem->seek,
 				gtk_xine_is_seekable(GTK_XINE (totem->gtx)));
+
+		/* Set the playlist */
+		gtk_playlist_set_playing (totem->playlist);
 
 		/* Label */
 		widget = glade_xml_get_widget (totem->xml, "label1");
@@ -180,6 +215,31 @@ action_set_mrl (Totem *totem, const char *mrl)
 		g_free (text);
 		g_free (time_text);
 	}
+}
+
+static void
+action_previous (Totem *totem)
+{
+	char *mrl;
+
+	action_play_pause (totem);
+	gtk_playlist_set_previous (totem->playlist);
+	update_buttons (totem);
+	mrl = gtk_playlist_get_current_mrl (totem->playlist);
+	action_set_mrl (totem, mrl);
+}
+
+static void
+action_next (Totem *totem)
+{
+	char *mrl;
+
+	action_play_pause (totem);
+	gtk_playlist_set_next (totem->playlist);
+	update_buttons (totem);
+	mrl = gtk_playlist_get_current_mrl (totem->playlist);
+	g_message ("mrl we set as next is: %s", mrl);
+	action_set_mrl (totem, mrl);
 }
 
 static void
@@ -271,7 +331,7 @@ on_previous_button_clicked (GtkButton *button, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 
-	//action_previous (totem);
+	action_previous (totem);
 }
 
 static void
@@ -279,7 +339,7 @@ on_next_button_clicked (GtkButton *button, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 
-	//action_next (totem);
+	action_next (totem);
 }
 
 static void
@@ -446,22 +506,14 @@ on_about1_activate (GtkButton * button, gpointer user_data)
 }
 
 static void
-toggle_playlist (GtkWidget *widget, gpointer user_data)
+toggle_playlist_from_playlist (GtkWidget *playlist, int trash,
+		gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
-	GtkWidget *sw;
-	gboolean state;
+	GtkWidget *button;
 
-	state = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
-	sw = glade_xml_get_widget (totem->xml, "scrolledwindow1");
-	if (state == TRUE)
-	{
-		gtk_widget_show (sw);
-		gtk_window_set_resizable (GTK_WINDOW (totem->win), TRUE);
-	} else {
-		gtk_widget_hide (sw);
-		gtk_window_set_resizable (GTK_WINDOW (totem->win), FALSE);
-	}
+	button = glade_xml_get_widget (totem->xml, "playlist_button");
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
 }
 
 static gboolean
@@ -551,12 +603,12 @@ on_window_key_press_event (GtkWidget *win, GdkEventKey *event,
 		break;
 	case GDK_B:
 	case GDK_b:
-		//action_previous ();
+		action_previous (totem);
 		retval = TRUE;
 		break;
 	case GDK_N:
 	case GDK_n:
-		//action_next ();
+		action_next (totem);
 		retval = TRUE;
 		break;
 	case GDK_q:
@@ -648,7 +700,6 @@ totem_callback_connect (Totem *totem)
 	g_signal_connect (GTK_OBJECT (item), "clicked",
 			GTK_SIGNAL_FUNC (on_playlist_button_toggled), totem);
 
-
 	/* Drag'n'Drop */
 	item = glade_xml_get_widget (totem->xml, "frame1");
 	g_signal_connect (GTK_OBJECT (item), "drag_data_received",
@@ -685,6 +736,17 @@ totem_callback_connect (Totem *totem)
 	g_signal_connect (GTK_OBJECT (totem->seek), "value-changed",
 			GTK_SIGNAL_FUNC (seek_cb), totem);
 	gtk_timeout_add (500, update_slider_cb, totem);
+
+	/* Playlist */
+	g_signal_connect (G_OBJECT (totem->playlist),
+			"response", G_CALLBACK (toggle_playlist_from_playlist),
+			(gpointer) totem);
+	g_signal_connect (GTK_OBJECT (totem->playlist),
+			"delete-event",
+			G_CALLBACK (toggle_playlist_from_playlist),
+			(gpointer) totem);
+	g_object_add_weak_pointer (G_OBJECT (totem->playlist),
+			(void**)&(totem->playlist));
 }
 
 GtkWidget
@@ -734,10 +796,9 @@ main (int argc, char *argv[])
 	totem->seek = glade_xml_get_widget (totem->xml, "hscale1");
 	totem->adj = gtk_range_get_adjustment (GTK_RANGE (totem->seek));
 	totem->popup = glade_xml_get_widget (totem->xml, "window1");
-	totem_callback_connect (totem);
-
 	totem->playlist = GTK_PLAYLIST
 		(gtk_playlist_new (GTK_WINDOW (totem->win)));
+	totem_callback_connect (totem);
 
 	/* Show ! */
 	long_action ();
