@@ -32,6 +32,7 @@
 #include <gst/xoverlay/xoverlay.h>
 #include <gst/navigation/navigation.h>
 #include <gst/mixer/mixer.h>
+#include <gst/colorbalance/colorbalance.h>
 
 /* system */
 #include <string.h>
@@ -104,6 +105,7 @@ struct BaconVideoWidgetPrivate
   GstMixer *mixer;
   GstMixerTrack *mixer_track;
   GstXOverlay *xoverlay;
+  GstColorBalance *balance;
 
   GdkPixbuf *logo_pixbuf;
 
@@ -1415,24 +1417,93 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
 
 int
 bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
-		                BaconVideoWidgetVideoProperty type)
+                                       BaconVideoWidgetVideoProperty type)
 {
-	g_return_val_if_fail (bvw != NULL, 65535 / 2);
-	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 65535 / 2);
-
-	//FIXME
-	return 65535 / 2;
+  int value = 65535 / 2;
+  g_return_val_if_fail (bvw != NULL, value);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), value);
+  
+  if (GST_IS_COLOR_BALANCE (bvw->priv->balance))
+    {
+      const GList *channels_list = NULL;
+      GstColorBalanceChannel *found_channel = NULL;
+      
+      channels_list = gst_color_balance_list_channels (bvw->priv->balance);
+      
+      while (channels_list)
+        { /* We search for the right channel corresponding to type */
+          GstColorBalanceChannel *channel = channels_list->data;
+          if (type == BVW_VIDEO_BRIGHTNESS && channel &&
+              g_strrstr (channel->label, "BRIGHTNESS"))
+            {
+              g_object_ref (channel);
+              found_channel = channel;
+            }
+          else if (type == BVW_VIDEO_CONTRAST && channel &&
+              g_strrstr (channel->label, "CONTRAST"))
+            {
+              g_object_ref (channel);
+              found_channel = channel;
+            }
+          channels_list = g_list_next (channels_list);
+        }
+        
+      if (GST_IS_COLOR_BALANCE_CHANNEL (found_channel))
+        {
+          value = gst_color_balance_get_value (bvw->priv->balance,
+                                               found_channel);
+          value = (value - found_channel->min_value) * 65535 / (found_channel->max_value - found_channel->min_value);
+          g_object_unref (found_channel);
+        }
+    }
+    
+  return value;
 }
 
 void
 bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
-		                BaconVideoWidgetVideoProperty type, int value)
+                                       BaconVideoWidgetVideoProperty type,
+                                       int value)
 {
-	g_return_if_fail (bvw != NULL);
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-	g_return_if_fail ((value < 65535 && value > 0));
-
-	//FIXME
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  
+  if ( !(value < 65535 && value > 0) )
+    return;
+  
+  if (GST_IS_COLOR_BALANCE (bvw->priv->balance))
+    {
+      const GList *channels_list = NULL;
+      GstColorBalanceChannel *found_channel = NULL;
+      
+      channels_list = gst_color_balance_list_channels (bvw->priv->balance);
+      
+      while (channels_list)
+        { /* We search for the right channel corresponding to type */
+          GstColorBalanceChannel *channel = channels_list->data;
+          if (type == BVW_VIDEO_BRIGHTNESS && channel &&
+              g_strrstr (channel->label, "BRIGHTNESS"))
+            {
+              g_object_ref (channel);
+              found_channel = channel;
+            }
+          else if (type == BVW_VIDEO_CONTRAST && channel &&
+              g_strrstr (channel->label, "CONTRAST"))
+            {
+              g_object_ref (channel);
+              found_channel = channel;
+            }
+          channels_list = g_list_next (channels_list);
+        }
+        
+      if (GST_IS_COLOR_BALANCE_CHANNEL (found_channel))
+        {
+          value = value * (found_channel->max_value - found_channel->min_value) / 65535 + found_channel->min_value;
+          gst_color_balance_set_value (bvw->priv->balance, found_channel,
+                                       value);
+          g_object_unref (found_channel);
+        }
+    }
 }
 
 float
@@ -1836,13 +1907,18 @@ bacon_video_widget_new (int width, int height,
       bvw->priv->xoverlay = GST_X_OVERLAY (element);
     
     element = gst_bin_get_by_interface (GST_BIN (bvw->priv->play),
+                                        GST_TYPE_COLOR_BALANCE);
+    
+    if (GST_IS_COLOR_BALANCE (element))
+      bvw->priv->balance = GST_COLOR_BALANCE (element);
+    
+    element = gst_bin_get_by_interface (GST_BIN (bvw->priv->play),
                                         GST_TYPE_MIXER);
     if (GST_IS_MIXER (element)) {
       const GList *tracks;
       bvw->priv->mixer = GST_MIXER (element);
       tracks = gst_mixer_list_tracks (GST_MIXER (element));
       bvw->priv->mixer_track = GST_MIXER_TRACK (tracks->data);
-      g_message ("track found min max volume %d, %d", bvw->priv->mixer_track->min_volume, bvw->priv->mixer_track->max_volume);
     }
     else
       g_warning ("can't find any mixer element, no volume.");

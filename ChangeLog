@@ -1,6 +1,14 @@
 2004-01-12  Julien MOUTTE  <julien@moutte.net>
 
 	* src/bacon-video-widget-gst.c:
+	(bacon_video_widget_get_video_property),
+	(bacon_video_widget_set_video_property), (bacon_video_widget_new):
+	Implementing brightness and contrast setting/getting thanks to the
+	colorbalance interface in xvimagesink.
+
+2004-01-12  Julien MOUTTE  <julien@moutte.net>
+
+	* src/bacon-video-widget-gst.c:
 	(bacon_video_widget_set_visuals_quality): Removing the visual quality
 	warning. I ll fix that later with filtered caps.
 
