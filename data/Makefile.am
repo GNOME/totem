@@ -48,19 +48,16 @@ desktopdir = $(datadir)/applications/
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
-keys_DATA = totem.keys
-keysdir = $(datadir)/mime-info/
-
-totem.desktop.in: totem.desktop.in.in totem.keys desktop.sh
+totem.desktop.in: totem.desktop.in.in mime-type-list.txt desktop.sh
 	cat $(srcdir)/totem.desktop.in.in > totem.desktop.in &&\
-	$(srcdir)/desktop.sh $(srcdir)/totem.keys		\
+	$(srcdir)/desktop.sh $(srcdir)/mime-type-list.txt	\
 	>> totem.desktop.in
 
 serverdir = $(libdir)/bonobo/servers
 server_DATA = Totem_properties.server
 server_in_files = Totem_properties.server.in.in._1 Totem_properties.server.in.in._3 servers.sh
-Totem_properties.server.in.in._2: $(server_in_files) totem.keys
-	$(srcdir)/servers.sh $(srcdir)/totem.keys		\
+Totem_properties.server.in.in._2: $(server_in_files) mime-type-list.txt
+	$(srcdir)/servers.sh $(srcdir)/mime-type-list.txt	\
 	> Totem_properties.server.in.in._2
 Totem_properties.server.in.in: $(server_in_files) Totem_properties.server.in.in._2
 	cat $(srcdir)/Totem_properties.server.in.in._1		\
@@ -73,9 +70,9 @@ Totem_properties.server.in: Totem_properties.server.in.in
 
 update-gconf.sh: totem-video-thumbnail.schemas.in
 
-totem-video-thumbnail.schemas.in: schemas.sh totem.keys
-	$(srcdir)/schemas.sh $(srcdir)/totem.keys $(bindir)	\
-	> totem-video-thumbnail.schemas.in			\
+totem-video-thumbnail.schemas.in: schemas.sh mime-type-list.txt
+	$(srcdir)/schemas.sh $(srcdir)/mime-type-list.txt $(bindir)	\
+	> totem-video-thumbnail.schemas.in				\
 	2> update-gconf.sh
 
 totem-handlers.schemas.in: handlers.sh
@@ -86,11 +83,6 @@ schemadir = $(GCONF_SCHEMA_FILE_DIR)
 schema_DATA = $(schema_in_files:.schemas.in=.schemas)
 @INTLTOOL_SCHEMAS_RULE@
 
-# For the sake of some users
-user-install: $(keys_DATA)
-	mkdir -p $(HOME)/.gnome/application-registry $(HOME)/.gnome/mime-info/
-	cp $(keys_DATA) $(HOME)/.gnome/mime-info/
-
 if GCONF_SCHEMAS_INSTALL
 install-data-local:
 	-GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(srcdir)/$(schema_DATA)
@@ -98,7 +90,7 @@ else
 install-data-local:
 endif
 
-EXTRA_DIST = $(stuff_DATA) $(desktop_in_in_files_all) $(keys_DATA) $(server_in_files) totem.schemas.in lirc_example schemas.sh desktop.sh handlers.sh $(man_MANS)
+EXTRA_DIST = $(stuff_DATA) $(desktop_in_in_files_all) $(keys_DATA) $(server_in_files) totem.schemas.in lirc_example schemas.sh desktop.sh handlers.sh $(man_MANS) mime-type-list.txt
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(desktop_DATA) $(schema_DATA) $(desktop_in_files_all)
 

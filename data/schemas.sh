@@ -27,7 +27,7 @@ schema()
 	upd_schema;
 }
 
-MIMETYPES=`cat $1 | grep -v short_list_application_ids_for_ | grep "\/" | grep -v audio | grep -v "application/x-flac"`
+MIMETYPES=`cat $1 | grep -v audio | grep -v "application/x-flac"`
 MIMETYPES="$MIMETYPES audio/x-pn-realaudio"
 
 echo "<gconfschemafile>";
