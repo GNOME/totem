@@ -474,6 +474,18 @@ bacon_video_widget_set_connection_speed (BaconVideoWidget *bvw, int speed)
 {
 }
 
+void
+bacon_video_widget_set_deinterlacing (BaconVideoWidget *bvw,
+		gboolean deinterlace)
+{
+}
+
+gboolean
+bacon_video_widget_get_deinterlacing (BaconVideoWidget *bvw)
+{
+	return 0;
+}
+
 /* =========================================== */
 /*                                             */
 /*               Play/Pause, Stop              */

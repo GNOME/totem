@@ -40,6 +40,12 @@ typedef enum {
 } MediaType;
 
 typedef enum {
+	TV_OUT_NONE,
+	TV_OUT_DXR3,
+	TV_OUT_TVMODE,
+} TvOutType;
+
+typedef enum {
 	BVW_INFO_TITLE,
 	BVW_INFO_ARTIST,
 	BVW_INFO_YEAR,
@@ -138,6 +144,10 @@ void bacon_video_widget_set_auto_resize		 (BaconVideoWidget *bvw,
 void bacon_video_widget_set_connection_speed     (BaconVideoWidget *bvw,
 						  int speed);
 int bacon_video_widget_get_connection_speed      (BaconVideoWidget *bvw);
+
+void bacon_video_widget_set_deinterlacing	 (BaconVideoWidget *bvw,
+						  gboolean deinterlace);
+gboolean bacon_video_widget_get_deinterlacing	 (BaconVideoWidget *bvw);
 
 void bacon_video_widget_toggle_aspect_ratio      (BaconVideoWidget *bvw);
 void bacon_video_widget_set_scale_ratio          (BaconVideoWidget *bvw,

@@ -1,5 +1,25 @@
 2003-04-24  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.glade:
+	* data/totem.schemas.in:
+	* src/bacon-video-widget-gst.c:
+	(bacon_video_widget_set_deinterlacing),
+	(bacon_video_widget_get_deinterlacing):
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_connection_speed),
+	(bacon_video_widget_set_deinterlacing),
+	(bacon_video_widget_get_deinterlacing):
+	* src/bacon-video-widget.h:
+	* src/totem-preferences.c: (on_deinterlace1_activate),
+	(deinterlace_changed_cb), (auto_resize_changed_cb),
+	(totem_setup_preferences):
+	* src/totem.c: (totem_action_handle_key): added deinterlace
+	functionality (dummy functions in gst port), don't forget to reconnect
+	the "toggled" signal on the show visual fx button when the setting is
+	changed via gconf, added more checks for some functions
+
+2003-04-24  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (on_video_motion_notify_event),
 	(totem_action_handle_scroll), (totem_action_handle_volume_scroll):
 	Increase the timeout for the popup windows (5 seconds) and make

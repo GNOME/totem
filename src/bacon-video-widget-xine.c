@@ -1819,6 +1819,10 @@ bacon_video_widget_get_connection_speed (BaconVideoWidget *bvw)
 	xine_cfg_entry_t entry;
 	int i = 0;
 
+	g_return_val_if_fail (bvw != NULL, 0);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
+	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
+
 	xine_config_register_enum (bvw->priv->xine,
 			"input.mms_network_bandwidth",
 			6,
@@ -1830,6 +1834,28 @@ bacon_video_widget_get_connection_speed (BaconVideoWidget *bvw)
 			"input.mms_network_bandwidth", &entry);
 
 	return entry.num_value;
+}
+
+void
+bacon_video_widget_set_deinterlacing (BaconVideoWidget *bvw,
+		gboolean deinterlace)
+{
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
+
+	xine_set_param (bvw->priv->stream, XINE_PARAM_VO_DEINTERLACE,
+			deinterlace);
+}
+
+gboolean
+bacon_video_widget_get_deinterlacing (BaconVideoWidget *bvw)
+{
+	g_return_val_if_fail (bvw != NULL, 0);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
+	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
+
+	return xine_get_param (bvw->priv->stream, XINE_PARAM_VO_DEINTERLACE);
 }
 
 gboolean

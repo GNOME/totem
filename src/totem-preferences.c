@@ -129,6 +129,35 @@ on_checkbutton2_toggled (GtkToggleButton *togglebutton, Totem *totem)
 }
 
 static void
+on_deinterlace1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
+{
+	gboolean value;
+
+	value = gtk_check_menu_item_get_active (checkmenuitem);
+	bacon_video_widget_set_deinterlacing (totem->bvw, value);
+	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/deinterlace",
+			value, NULL);
+}
+
+static void
+deinterlace_changed_cb (GConfClient *client, guint cnxn_id,
+		GConfEntry *entry, Totem *totem)
+{
+	GtkWidget *item;
+
+	item = glade_xml_get_widget (totem->xml, "deinterlace1");
+	g_signal_handlers_disconnect_by_func (G_OBJECT (item),
+			on_deinterlace1_activate, totem);
+
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
+			gconf_client_get_bool (totem->gc,
+				GCONF_PREFIX"/deinterlace", NULL));
+
+	g_signal_connect (G_OBJECT (item),  "activate",
+			G_CALLBACK (on_deinterlace1_activate), totem);
+}
+
+static void
 on_combo_entry1_changed (BaconCdSelection *bcs, char *device, Totem *totem)
 {
 	const char *str;
@@ -152,6 +181,9 @@ auto_resize_changed_cb (GConfClient *client, guint cnxn_id,
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
 			gconf_client_get_bool (totem->gc,
 				GCONF_PREFIX"/auto_resize", NULL));
+
+	g_signal_connect (G_OBJECT (item), "toggled",
+			G_CALLBACK (on_checkbutton1_toggled), totem);
 }
 
 static void
@@ -250,7 +282,7 @@ totem_setup_preferences (Totem *totem)
 {
 	GtkWidget *item;
 	const char *mediadev;
-	gboolean show_visuals, auto_resize, is_local;
+	gboolean show_visuals, auto_resize, is_local, deinterlace;
 	int connection_speed;
 	char *path;
 
@@ -337,5 +369,19 @@ totem_setup_preferences (Totem *totem)
 	bacon_video_widget_set_proprietary_plugins_path
 		(totem->bvw, path);
 	g_free (path);
+
+	/* This one is for the deinterlacing menu, not really our dialog
+	 * but we do it anyway */
+	item = glade_xml_get_widget (totem->xml, "deinterlace1");
+	deinterlace = gconf_client_get_bool (totem->gc,
+			GCONF_PREFIX"/deinterlace", NULL);
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
+				deinterlace);
+	bacon_video_widget_set_deinterlacing (totem->bvw, deinterlace);
+	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/deinterlace",
+			(GConfClientNotifyFunc) deinterlace_changed_cb,
+			totem, NULL, NULL);
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_deinterlace1_activate), totem);
 }
 

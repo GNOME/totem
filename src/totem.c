@@ -2199,6 +2199,16 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 		break;
 	case GDK_i:
 	case GDK_I:
+		{
+			GtkCheckMenuItem *item;
+			gboolean value;
+
+			item = GTK_CHECK_MENU_ITEM (glade_xml_get_widget
+					(totem->xml, "deinterlace1"));
+			value = gtk_check_menu_item_get_active (item);
+			gtk_check_menu_item_set_active (item, !value);
+		}
+
 		if (totem->action == 3)
 			totem->action++;
 		else
