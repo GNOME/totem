@@ -26,6 +26,7 @@
 #endif
 
 #define TOTEM_GCONF_PREFIX "/apps/totem"
+#define LOGO_PATH DATADIR""G_DIR_SEPARATOR_S"totem"G_DIR_SEPARATOR_S"totem_logo.mpv"
 
 struct Totem {
 	/* Control window */
@@ -326,8 +327,6 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 
 	if (mrl == NULL)
 	{
-		totem->mrl = NULL;
-
 		/* Play/Pause */
 		gtk_widget_set_sensitive (totem->pp_button, FALSE);
 		widget = glade_xml_get_widget (totem->xml, "play1");
@@ -366,6 +365,10 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		gtk_widget_set_sensitive (widget, FALSE);
 		widget = glade_xml_get_widget (totem->xml, "fs_next_button"); 
 		gtk_widget_set_sensitive (widget, FALSE);
+
+		/* Set the logo */
+		totem->mrl = g_strdup (LOGO_PATH);
+		gtk_xine_open (GTK_XINE (totem->gtx), totem->mrl);
 	} else {
 		char *title, *time_text, *name;
 		int time;
@@ -1782,6 +1785,8 @@ main (int argc, char **argv)
 			usleep (100000);
 		totem_action_open_files (totem, argv, TRUE);
 		totem_action_play_pause (totem);
+	} else {
+		totem_action_set_mrl (totem, NULL);
 	}
 
 #ifdef HAVE_REMOTE

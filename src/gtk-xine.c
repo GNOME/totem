@@ -53,7 +53,6 @@
 #define CONFIG_FILE ".gnome2"G_DIR_SEPARATOR_S"totem_config"
 #define DEFAULT_TITLE _("Totem Video Window")
 #define GCONF_PREFIX "/apps/totem/"
-#define LOGO_PATH DATADIR""G_DIR_SEPARATOR_S"totem"G_DIR_SEPARATOR_S"totem_logo.mpv"
 
 #define BLACK_PIXEL \
 	BlackPixel ((gtx->priv->display ? gtx->priv->display : gdk_display), \
@@ -518,13 +517,6 @@ load_config_from_gconf (GtkXine *gtx)
 		return;
 	}
 	conf = gconf_client_get_default ();
-
-	/* The logo path */
-	tmp = LOGO_PATH;
-	xine_config_register_string (gtx->priv->xine,
-			"misc.logo_mrl", tmp,
-			"audio driver to use",
-			NULL, 10, NULL, NULL);
 
 	/* default demux strategy */
 	xine_config_register_string (gtx->priv->xine,
