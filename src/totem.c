@@ -507,12 +507,12 @@ drop_cb (GtkWidget     *widget,
 	{
 		char *filename;
 
-		filename = g_filename_from_uri (p->data, NULL, NULL);
-
+		filename = gnome_vfs_get_local_path_from_uri (p->data);
+		D("dropped URI: %s filename: %s", p->data, filename);
 		if (filename != NULL && 
-				g_file_test (filename, G_FILE_TEST_IS_REGULAR
+				(g_file_test (filename, G_FILE_TEST_IS_REGULAR
 					| G_FILE_TEST_EXISTS)
-				|| strstr (filename, "://") != NULL)
+				|| strstr (filename, "://") != NULL))
 		{
 			if (cleared == FALSE)
 			{

@@ -26,6 +26,7 @@
 #include <gnome.h>
 #include <glade/glade.h>
 #include <libgnomevfs/gnome-vfs.h>
+#include <string.h>
 
 #include "debug.h"
 
@@ -164,11 +165,12 @@ drop_cb (GtkWidget     *widget,
 	for (p = file_list; p != NULL; p = p->next) {
 		char *filename;
 
-		filename = g_filename_from_uri (p->data, NULL, NULL);
+		filename = gnome_vfs_get_local_path_from_uri (p->data);
 		D("dropped filename: %s", filename);
 		if (filename != NULL &&
-				g_file_test (filename, G_FILE_TEST_IS_REGULAR
-					| G_FILE_TEST_EXISTS))
+				(g_file_test (filename, G_FILE_TEST_IS_REGULAR
+					| G_FILE_TEST_EXISTS)
+				 || strstr (filename, "://") != NULL))
 		{
 			gtk_playlist_add_mrl (playlist, filename);
 		}
