@@ -1928,6 +1928,10 @@ totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl,
 
 	g_return_val_if_fail (mrl != NULL, FALSE);
 
+	/* Hack around the gnome-vfs cdda: method, crappety crap */
+	if (strncmp (mrl, "cdda:", 5) == 0)
+		return totem_playlist_add_one_mrl (playlist, mrl, display_name);
+
 	mimetype = gnome_vfs_get_mime_type (mrl);
 	D("totem_playlist_add_mrl adding %s, type %s", mrl, mimetype);
 
