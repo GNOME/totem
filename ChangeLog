@@ -1,3 +1,44 @@
+2004-09-29  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_vw_exposed),
+	(bacon_video_widget_class_init), (bacon_video_widget_init),
+	(bacon_video_widget_signal_idler), (got_found_tag),
+	(got_video_size), (got_eos), (got_stream_length), (got_time_tick),
+	(cb_iterate), (state_change), (got_error),
+	(bacon_video_widget_finalize), (bacon_video_widget_open),
+	(bacon_video_widget_play), (bacon_video_widget_seek),
+	(bacon_video_widget_seek_time), (bacon_video_widget_stop),
+	(bacon_video_widget_close), (bacon_video_widget_dvd_event),
+	(bacon_video_widget_pause), (bacon_video_widget_can_set_volume),
+	(bacon_video_widget_set_volume), (bacon_video_widget_get_volume),
+	(bacon_video_widget_set_media_device),
+	(bacon_video_widget_set_show_visuals),
+	(bacon_video_widget_get_visuals_list),
+	(bacon_video_widget_set_visuals),
+	(bacon_video_widget_set_visuals_quality),
+	(bacon_video_widget_get_auto_resize),
+	(bacon_video_widget_set_auto_resize),
+	(bacon_video_widget_set_aspect_ratio),
+	(bacon_video_widget_get_aspect_ratio),
+	(bacon_video_widget_set_scale_ratio),
+	(bacon_video_widget_is_playing), (bacon_video_widget_is_seekable),
+	(bacon_video_widget_can_play), (bacon_video_widget_get_mrls),
+	(bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_metadata_int),
+	(bacon_video_widget_get_metadata_bool),
+	(bacon_video_widget_get_metadata),
+	(bacon_video_widget_can_get_frames),
+	(bacon_video_widget_get_current_frame), (bacon_video_widget_new):
+	* src/gststreaminfo.h:
+	  Make GStreamer backend use playbin. Also lots of small changes
+	  to make it integrate a bit with playbin. Implements some missing
+	  properties (such as has_video) and modifies tag handling to use
+	  the GStreamer tag objects for that (instead of a hashtable).
+	  Disable visualizations, DVD, VCD and CDDA until we've actually
+	  implemented that.
+
 2004-09-28  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-video-widget-xine.c: (load_video_out_driver):

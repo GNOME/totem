@@ -25,8 +25,9 @@ libexec_PROGRAMS = $(TOTEM_MOZILLA_VIEWER) $(TOTEM_PROPERTIES_PAGE)
 plugin_LTLIBRARIES = $(TOTEM_MOZILLA_PLUGIN)
 
 if TOTEM_GST
-MM =	bacon-video-widget-gst.c	\
-	gstvideowidget.c		\
+MM = bacon-video-widget-gst.c \
+	gststreaminfo.h \
+	gstvideowidget.c \
 	gstvideowidget.h
 else
 MM = bacon-video-widget-xine.c
@@ -157,6 +158,7 @@ INCLUDES = 						\
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(MARSHALFILES) $(desktop_DATA)
 EXTRA_DIST =	bacon-video-widget-xine.c \
 		bacon-video-widget-gst.c \
+		gststreaminfo.h \
 		gstvideowidget.c \
 		gstvideowidget.h \
 		$(BACON_V4L_SELECTION) \
