@@ -1252,7 +1252,7 @@ get_fourcc_string (uint32_t f)
 const gchar *
 bacon_video_widget_get_backend_name (BaconVideoWidget *bvw)
 {	
-	return g_strdup_printf (	"Xine-lib version %d.%d.%d",
+	return g_strdup_printf (	"xine-lib version %d.%d.%d",
 								XINE_MAJOR_VERSION,
 								XINE_MINOR_VERSION,
 								XINE_SUB_VERSION);
