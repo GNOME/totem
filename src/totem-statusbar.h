@@ -63,6 +63,7 @@ struct _TotemStatusbar
   
   guint has_resize_grip : 1;
   guint pushed : 1;
+  guint seeking : 1;
 };
 
 struct _TotemStatusbarClass
@@ -78,6 +79,8 @@ void       totem_statusbar_set_time		(TotemStatusbar *statusbar,
 						 gint time);
 void       totem_statusbar_set_time_and_length	(TotemStatusbar *statusbar,
 						 gint time, gint length);
+void       totem_statusbar_set_seeking          (TotemStatusbar *statusbar,
+						 gboolean seeking);
 
 void       totem_statusbar_set_text             (TotemStatusbar *statusbar,
 						 const char *label);
