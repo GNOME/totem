@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 0.99.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-13 03:04+0200\n"
-"PO-Revision-Date: 2004-04-13 03:08+0200\n"
+"POT-Creation-Date: 2004-06-08 18:14+0200\n"
+"PO-Revision-Date: 2004-06-08 18:20+0200\n"
 "Last-Translator: Jordi Mallach <jordi@sindominio.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n!=1;\n"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1444
+#: data/playlist.glade.h:1 src/totem-playlist.c:1445
 msgid "Playlist"
 msgstr "Llista de reproducció"
 
@@ -146,12 +146,16 @@ msgid "Save Screenshot"
 msgstr "Desa la captura de pantalla"
 
 #: data/screenshot.glade.h:5
-msgid "Save screenshot to _file:"
-msgstr "Desa la captura de pantalla a un _fitxer:"
+msgid "Save screenshot"
+msgstr "Desa la captura de pantalla"
 
 #: data/screenshot.glade.h:6
-msgid "Save screenshot to the _desktop"
+msgid "Save screenshot to _desktop"
 msgstr "_Desa la captura de pantalla a l'escriptori"
+
+#: data/screenshot.glade.h:7
+msgid "Save screenshot to _file:"
+msgstr "Desa la captura de pantalla a un _fitxer:"
 
 #: data/totem.desktop.in.h:1
 msgid "Play movies and songs"
@@ -159,7 +163,7 @@ msgstr "Reprodueix vídeos i cançons"
 
 #. Title
 #: data/totem.desktop.in.h:2 data/totem.glade.h:101 src/totem.c:694
-#: src/totem.c:3622
+#: src/totem.c:3638
 msgid "Totem Movie Player"
 msgstr "Reproductor de vídeo Totem"
 
@@ -283,7 +287,7 @@ msgstr "Sempre per damunt"
 msgid "Audio"
 msgstr "Àudio"
 
-#: data/totem.glade.h:33 src/totem.c:2864 src/totem.c:2885
+#: data/totem.glade.h:33 src/totem.c:2880 src/totem.c:2901
 msgid "Auto"
 msgstr "Auto"
 
@@ -979,7 +983,7 @@ msgstr "%d quadres per segón"
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/bacon-video-widget-xine.c:655
+#: src/bacon-video-widget-xine.c:687
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -988,7 +992,7 @@ msgstr ""
 "No s'ha pogut carregar el controlador d'àudio «%s»\n"
 "Comproveu que el dispositiu no està ocupat."
 
-#: src/bacon-video-widget-xine.c:1130 src/bacon-video-widget-xine.c:1521
+#: src/bacon-video-widget-xine.c:1180 src/bacon-video-widget-xine.c:1611
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -996,40 +1000,40 @@ msgstr ""
 "No hi ha cap sortida de vídeo disponible. Assegureu-vos que el programa està "
 "instal·lat correctament."
 
-#: src/bacon-video-widget-xine.c:1237
+#: src/bacon-video-widget-xine.c:1287
 msgid "The server you are trying to connect to is not known."
 msgstr "El servidor al que esteu intentant connectar no és conegut."
 
-#: src/bacon-video-widget-xine.c:1240
+#: src/bacon-video-widget-xine.c:1290
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "El nom del dispositiu que heu especificat (%s) sembla ser invàlid."
 
-#: src/bacon-video-widget-xine.c:1243
+#: src/bacon-video-widget-xine.c:1293
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "No es pot arribar al servidor al que esteu intentant connectar (%s)."
 
-#: src/bacon-video-widget-xine.c:1246
+#: src/bacon-video-widget-xine.c:1296
 msgid "The connection to this server was refused."
 msgstr "S'ha refusat la connexió a aquest servidor."
 
-#: src/bacon-video-widget-xine.c:1249
+#: src/bacon-video-widget-xine.c:1299
 #, c-format
 msgid "The specified movie '%s' could not be found."
 msgstr "No s'ha trobat la pel·lícula especificada «%s»."
 
-#: src/bacon-video-widget-xine.c:1252
+#: src/bacon-video-widget-xine.c:1302
 #, c-format
 msgid "The movie '%s' could not be read."
 msgstr "No s'ha pogut llegir la pel·lícula «%s»."
 
-#: src/bacon-video-widget-xine.c:1255
+#: src/bacon-video-widget-xine.c:1305
 #, c-format
 msgid "A problem occured while loading a library or a decoder (%s)."
 msgstr "S'ha produït un error en carregar una biblioteca o decodificador (%s)."
 
-#: src/bacon-video-widget-xine.c:1259
+#: src/bacon-video-widget-xine.c:1309
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -1037,40 +1041,48 @@ msgstr ""
 "El font sembla estar xifrat i no es pot llegir. Esteu intentant reproduir un "
 "DVD xifrat sense libdvdcss?"
 
-#: src/bacon-video-widget-xine.c:1261
+#: src/bacon-video-widget-xine.c:1311
 msgid "This file is encrypted and cannot be played back."
 msgstr "Aquesta pel·lícula està xifrada i no es pot reproduir."
 
-#: src/bacon-video-widget-xine.c:1264
+#: src/bacon-video-widget-xine.c:1314
 msgid "For security reasons, this movie can not be played back."
 msgstr "Per raons de seguretat, no es pot reproduir aquesta pel·lícula."
 
-#: src/bacon-video-widget-xine.c:1268
+#: src/bacon-video-widget-xine.c:1318
 msgid "The audio device is busy. Is another application using it?"
 msgstr ""
 "El dispositiu d'àudio està ocupat. L'està utilitzant una altra aplicació?"
 
-#: src/bacon-video-widget-xine.c:1360
-msgid "There is no plugin to handle this movie"
-msgstr "No hi ha cap connector per a gestionar aquesta pel·lícula"
+#: src/bacon-video-widget-xine.c:1322
+msgid "You are not allowed to open this file."
+msgstr "No se vos permet obrir aquest fitxer."
 
-#: src/bacon-video-widget-xine.c:1364
-msgid "This movie is broken and can not be played further"
-msgstr "Aquesta pel·lícula està trencada i no es pot continuar reproduint-la"
+#: src/bacon-video-widget-xine.c:1324
+msgid "The server refused access to this file or stream."
+msgstr "El servidor ha rebutjat l'accés a aquest fitxer o flux."
 
-#: src/bacon-video-widget-xine.c:1368
-msgid "This location is not a valid one"
-msgstr "Aquesta ubicació no és vàlida"
+#: src/bacon-video-widget-xine.c:1450
+msgid "There is no plugin to handle this movie."
+msgstr "No hi ha cap connector per a gestionar aquesta pel·lícula."
 
-#: src/bacon-video-widget-xine.c:1372
-msgid "This movie could not be opened"
-msgstr "No s'ha pogut obrir aquesta pel·lícula"
+#: src/bacon-video-widget-xine.c:1454
+msgid "This movie is broken and can not be played further."
+msgstr "Aquesta pel·lícula està trencada i no es pot continuar reproduint-la."
 
-#: src/bacon-video-widget-xine.c:1375
-msgid "Generic Error"
-msgstr "Error genèric"
+#: src/bacon-video-widget-xine.c:1458
+msgid "This location is not a valid one."
+msgstr "Aquesta ubicació no és vàlida."
 
-#: src/bacon-video-widget-xine.c:1819
+#: src/bacon-video-widget-xine.c:1462
+msgid "This movie could not be opened."
+msgstr "No s'ha pogut obrir aquesta pel·lícula."
+
+#: src/bacon-video-widget-xine.c:1465
+msgid "Generic Error."
+msgstr "Error genèric."
+
+#: src/bacon-video-widget-xine.c:1908
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1079,22 +1091,21 @@ msgstr ""
 "El còdec de vídeo «%s» no es pot gestionar. Pot ser necessiteu instal·lar "
 "connectors addicionals per a poder veure alguns tipus de pel·lícules"
 
-#: src/bacon-video-widget-xine.c:1838
-msgid "This is an audio-only file, and there is no audio output available"
-msgstr ""
-"Aquest és un fitxer de només audio, i no hi ha cap sortida d'audio disponible"
+#: src/bacon-video-widget-xine.c:1928
+msgid "This is an audio-only file, and there is no audio output available."
+msgstr "Aquest és un fitxer de només audio, i no hi ha cap sortida d'àudio disponible."
 
-#: src/bacon-video-widget-xine.c:3303
-msgid "Movie is not playing"
-msgstr "La pel·lícula no s'està reproduïnt"
+#: src/bacon-video-widget-xine.c:3403
+msgid "Movie is not playing."
+msgstr "La pel·lícula no s'està reproduïnt."
 
-#: src/bacon-video-widget-xine.c:3311
-msgid "No video to capture"
-msgstr "No hi ha cap vídeo per a capturar"
+#: src/bacon-video-widget-xine.c:3411
+msgid "No video to capture."
+msgstr "No hi ha cap vídeo per a capturar."
 
-#: src/bacon-video-widget-xine.c:3318
-msgid "Video codec is not handled"
-msgstr "El còdec de vídeo no es pot gestionar"
+#: src/bacon-video-widget-xine.c:3418
+msgid "Video codec is not handled."
+msgstr "El còdec de vídeo no es pot gestionar."
 
 #: src/cd-drive.c:573
 #, c-format
@@ -1104,6 +1115,37 @@ msgstr "CD-ROM SCSI sense nom (%s)"
 #: src/cd-drive.c:1151
 msgid "File image"
 msgstr "Fitxer d'imatge"
+
+#. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+#: src/totem-mozilla-viewer.c:72 src/totem.c:363 src/totem.c:391
+#: src/totem.c:816 src/totem.c:925
+#, c-format
+msgid "Totem could not play '%s'."
+msgstr "Totem no ha pogut reproduir «%s»."
+
+#: src/totem-mozilla-viewer.c:104 src/totem-mozilla-viewer.c:111
+msgid "Couldn't load the main interface (mozilla-viewer.glade)."
+msgstr "No s'ha pogut carregar la interfície principal (mozilla-viewer.glade)."
+
+#: src/totem-mozilla-viewer.c:104 src/totem-mozilla-viewer.c:111
+msgid "Make sure that the Totem plugin is properly installed."
+msgstr "Assegureu-vos que el connector de Totem està instal·lat correctament."
+
+#: src/totem-mozilla-viewer.c:122
+msgid "The Totem plugin could not startup."
+msgstr "No s'ha pogut iniciar el connector de Totem."
+
+#: src/totem-mozilla-viewer.c:122 src/totem.c:3348
+msgid "No reason."
+msgstr "Sense raó."
+
+#: src/totem-mozilla-viewer.c:154 src/totem.c:3643
+msgid "Could not initialise the thread-safe libraries."
+msgstr "No s'ha pogut iniciar les biblioteques amb suport per a fils."
+
+#: src/totem-mozilla-viewer.c:154
+msgid "Verify your system installation. The Totem plugin will now exit."
+msgstr "Verifiqueu la vostra instal·lació del sistema. El connector de Totem sortirà ara."
 
 #: src/totem-playlist.c:339
 msgid "Could not save the playlist"
@@ -1287,13 +1329,8 @@ msgid "Totem could not eject the optical media."
 msgstr "Totem no ha pogut expulsar el medi òptic."
 
 #: src/totem.c:342
-msgid "No reason given"
-msgstr "No s'ha donat cap rao"
-
-#: src/totem.c:363 src/totem.c:391 src/totem.c:816 src/totem.c:925
-#, c-format
-msgid "Totem could not play '%s'."
-msgstr "Totem no ha pogut reproduir «%s»."
+msgid "No reason given."
+msgstr "No s'ha donat cap raó."
 
 #: src/totem.c:411
 msgid "DVD"
@@ -1347,7 +1384,7 @@ msgstr ""
 msgid "%s - Totem Movie Player"
 msgstr "%s - Reproductor de vídeo Totem"
 
-#: src/totem.c:683 src/totem.c:3427
+#: src/totem.c:683 src/totem.c:3443
 msgid "No file"
 msgstr "Cap fitxer"
 
@@ -1363,8 +1400,8 @@ msgstr "S'ha produït un error"
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "No s'ha pogut carregar la interfície «Obre una ubicació»."
 
-#: src/totem.c:1637 src/totem.c:1645 src/totem.c:3662 src/totem.c:3687
-#: src/totem.c:3712
+#: src/totem.c:1637 src/totem.c:1645 src/totem.c:3678 src/totem.c:3703
+#: src/totem.c:3728
 msgid "Make sure that Totem is properly installed."
 msgstr "Assegureu-vos que Totem està instal·lat correctament."
 
@@ -1386,9 +1423,9 @@ msgid "Totem could not get a screenshot of that film."
 msgstr ""
 "Totem no ha pogut obtindre una captura de pantalla d'aquesta pel·lícula."
 
-#: src/totem.c:1993 src/vanity.c:324
-msgid "Please file a bug, this isn't supposed to happen"
-msgstr "Si us plau, envieu un informe d'error, açò no hauria de passar"
+#: src/totem.c:1993
+msgid "Please file a bug, this isn't supposed to happen."
+msgstr "Si us plau, envieu un informe d'error, açò no hauria de passar."
 
 #: src/totem.c:2020
 msgid "Totem couldn't show the movie properties window."
@@ -1398,49 +1435,41 @@ msgstr "Totem no ha pogut mostrar la finestra de propietats de la pel·lícula."
 msgid "Make sure that Totem is correctly installed."
 msgstr "Assegureu-vos que Totem està instal·lat correctament."
 
-#: src/totem.c:2105
+#: src/totem.c:2106
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem no ha pogut cercar en «%s»."
 
-#: src/totem.c:2860 src/totem.c:2882
+#: src/totem.c:2876 src/totem.c:2898
 msgid "None"
 msgstr "Cap"
 
-#: src/totem.c:3332
+#: src/totem.c:3348
 msgid "Totem could not startup."
-msgstr "Totem no ha pogut executar-se."
+msgstr "No s'ha pogut executar Totem."
 
-#: src/totem.c:3332
-msgid "No reason."
-msgstr "Sense raó."
-
-#: src/totem.c:3532
+#: src/totem.c:3548
 #, c-format
 msgid "Option '%s' is unknown and was ignored\n"
 msgstr "L'opció «%s» és desconeguda i ha estat omesa\n"
 
-#: src/totem.c:3627
-msgid "Could not initialise the thread-safe libraries."
-msgstr "No s'ha pogut iniciar les biblioteques amb suport per a fils."
-
-#: src/totem.c:3627
+#: src/totem.c:3643
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verifiqueu la vostra instal·lació del sistema. Totem sortirà ara."
 
-#: src/totem.c:3650
+#: src/totem.c:3666
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem no ha pogut iniciar el motor de configuració."
 
-#: src/totem.c:3650
+#: src/totem.c:3666
 msgid "Make sure that GNOME is properly installed."
 msgstr "Assegureu-vos que el GNOME està instal·lat correctament."
 
-#: src/totem.c:3662 src/totem.c:3687
+#: src/totem.c:3678 src/totem.c:3703
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "No s'ha pogut carregar la interfície principal (totem.glade)."
 
-#: src/totem.c:3712
+#: src/totem.c:3728
 msgid "Couldn't load the interface for the playlist."
 msgstr "No s'ha pogut carregar la interfície per a la llista de reproducció."
 
@@ -1453,13 +1482,17 @@ msgstr "Mode de depuració activat"
 msgid "Webcam utility using %s"
 msgstr "Utilitat de webcam que utilitza %s"
 
+#: src/vanity.c:324
+msgid "Please file a bug, this isn't supposed to happen"
+msgstr "Si us plau, envieu un informe d'error, açò no hauria de passar"
+
 #: src/vanity.c:567
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
 "%s"
 msgstr ""
-"Vanity no ha pogut iniciar-se:\n"
+"No s'ha pogut iniciar Vanity:\n"
 "%s"
 
 #: src/vanity.c:568
