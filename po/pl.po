@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2003-03-08 20:20+0100\n"
-"PO-Revision-Date: 2003-03-10 20:42+0100\n"
+"POT-Creation-Date: 2003-03-13 13:28+0100\n"
+"PO-Revision-Date: 2003-03-17 03:18+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -131,7 +131,7 @@ msgstr "Totem - odtwarzacz filmów"
 msgid " seconds"
 msgstr " sekund"
 
-#: data/totem.glade.h:1
+#: data/totem.glade.h:1 data/uri.glade.h:1
 msgid "*"
 msgstr "*"
 
@@ -230,6 +230,10 @@ msgstr "Następny"
 #: data/totem.glade.h:1
 msgid "Next Chapter/Movie"
 msgstr "Następny rozdział/film"
+
+#: data/totem.glade.h:1
+msgid "Open _Location..."
+msgstr "Otwórz z położ_enia..."
 
 #: data/totem.glade.h:1
 msgid "Optical Device _Path: "
@@ -354,7 +358,7 @@ msgstr "_Film"
 
 #: data/totem.glade.h:1
 msgid "_Play / Pause"
-msgstr "_Odtwarzanie / Pauza"
+msgstr "Odtwarzanie / Pa_uza"
 
 #: data/totem.glade.h:1
 msgid "_Repeat Mode"
@@ -403,6 +407,14 @@ msgstr "Pozioma współrzędna listy odtwarzania"
 #: data/totem.schemas.in.h:1
 msgid "Y coordinate for the Playlist"
 msgstr "Pionowa współrzędna listy odtwarzania"
+
+#: data/uri.glade.h:1
+msgid "Enter the _location (URI) of the file you would like to open:"
+msgstr "Wprowadź położenie (URI) p_liku który chcesz otworzyć:"
+
+#: data/uri.glade.h:1
+msgid "Open from URI"
+msgstr "Otwarcie z URI"
 
 #: src/bacon-cd-selection.c:1
 msgid "Unnamed CDROM"
@@ -499,6 +511,7 @@ msgid "Generic Error"
 msgstr "Błąd"
 
 #: src/bacon-video-widget.c:1
+#, c-format
 msgid "Video type '%s' is not handled"
 msgstr "Typ wideo \"%s\" nie jest obsługiwany"
 
@@ -624,6 +637,7 @@ msgid "Stopped"
 msgstr "Zatrzymany"
 
 #: src/totem.c:1 src/totem.c:1 src/totem.c:1
+#, c-format
 msgid ""
 "Totem could not play '%s'.\n"
 "Reason: %s."
@@ -664,6 +678,14 @@ msgstr "%s - Totem"
 msgid "No file"
 msgstr "Brak pliku"
 
+#: src/totem.c:1 src/totem.c:1
+msgid ""
+"Couldn't load the 'Open Location...' interface.\n"
+"Make sure that Totem is properly installed."
+msgstr ""
+"Nie można załadować interfejsu okna \"Otwórz z położenia...\".\n"
+"Upewnij się, że Totem został prawidłowo zainstalowany."
+
 #: src/totem.c:1
 msgid "translator_credits"
 msgstr "GNOME PL Team <translators@gnome.pl>"
@@ -678,6 +700,7 @@ msgid "Screenshot%d.png"
 msgstr "Zrzut_Ekranu%d.png"
 
 #: src/totem.c:1
+#, c-format
 msgid ""
 "Totem could not get a screenshot of that film.\n"
 "Reason: %s."
@@ -720,6 +743,7 @@ msgstr ""
 "Upewnij się, że Totem został prawidłowo zainstalowany."
 
 #: src/totem.c:1
+#, c-format
 msgid ""
 "Totem could not seek in '%s'.\n"
 "Reason: %s."
