@@ -40,7 +40,7 @@ typedef struct {
 
 typedef struct {
 	GtkVBoxClass parent_class;
-	void (*device_changed) (GtkWidget *gtx, const char *device_path);
+	void (*device_changed) (GtkWidget *gtx, const char *title);
 } BaconCdSelectionClass;
 
 GtkType bacon_cd_selection_get_type              (void);
