@@ -1,3 +1,10 @@
+2005-01-25  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_set_tv_out):
+	For all the supported TV-Out types, we don't need a restart
+	* src/totem-preferences.c: (on_tvout_toggled): don't hard-code
+	dxr3 needing a restart
+
 2005-01-25  Mattias Eriksson <snaggen@acc.umu.se>
 
 	Reviewed by:  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>

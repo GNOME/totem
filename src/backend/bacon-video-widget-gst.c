@@ -1363,7 +1363,7 @@ bacon_video_widget_set_tv_out (BaconVideoWidget * bvw, TvOutType tvout)
   gconf_client_set_int (bvw->priv->gc,
       GCONF_PREFIX"/tv_out_type", tvout, NULL);
 
-  return TRUE;
+  return FALSE;
 }
 
 TvOutType
