@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
-"POT-Creation-Date: 2003-05-05 11:39+0900\n"
-"PO-Revision-Date: 2003-05-05 17:14+0900\n"
+"POT-Creation-Date: 2003-05-06 22:01+0900\n"
+"PO-Revision-Date: 2003-05-06 22:03+0900\n"
 "Last-Translator: KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>\n"
 "Language-Team: Japanese <i18n-list@redhat.com>\n"
 "MIME-Version: 1.0\n"
@@ -130,7 +130,11 @@ msgstr "年:"
 msgid "Play movies and songs"
 msgstr "ムービーと音楽を再生"
 
-#: data/totem.desktop.in.h:2 src/totem.c:3166
+#. Please also translate your language into its native language
+#. * in src/languages.h
+#. * for example: French -> Francais
+#. * use C UTF-8 strings
+#: data/totem.desktop.in.h:2 src/totem.c:3178
 msgid "Totem Movie Player"
 msgstr "Totem ムービープレーヤー"
 
@@ -483,7 +487,7 @@ msgid "Toggle the aspect ratio"
 msgstr "アスペクト比を切り替えます"
 
 #. Title
-#: data/totem.glade.h:89 src/totem.c:581 src/totem.c:603 src/totem.c:1606
+#: data/totem.glade.h:89 src/totem.c:581 src/totem.c:603 src/totem.c:1614
 msgid "Totem"
 msgstr "Totem"
 
@@ -778,11 +782,15 @@ msgstr "一般的なエラー"
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
-msgstr "ビデオコーデック '%s' を扱えません。いくつかのタイプの動画を再生するには、追加プラグインをインストールする必要があるかも知れません。"
+msgstr ""
+"ビデオコーデック '%s' を扱えません。いくつかのタイプの動画を再生するには、追"
+"加プラグインをインストールする必要があるかも知れません。"
 
 #: src/bacon-video-widget-xine.c:1367
 msgid "This is an audio-only file, and there is no audio output available"
-msgstr "これは音声のみのファイルですが、使用できるオーディオ出力デバイスがありません。"
+msgstr ""
+"これは音声のみのファイルですが、使用できるオーディオ出力デバイスがありませ"
+"ん。"
 
 #: src/bacon-video-widget-xine.c:2535
 msgid "Movie is not playing"
@@ -848,7 +856,7 @@ msgstr "パスワード(_P):"
 msgid "Remember this password"
 msgstr "パスワードを記憶する"
 
-#: src/gtk-playlist.c:601 src/totem.c:1323 src/vanity.c:194
+#: src/gtk-playlist.c:601 src/totem.c:1331 src/vanity.c:194
 msgid "Select files"
 msgstr "ファイルを選択"
 
@@ -942,39 +950,39 @@ msgstr ""
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:570 src/totem.c:3011
+#: src/totem.c:570 src/totem.c:3019
 msgid "No file"
 msgstr "ファイルなし"
 
-#: src/totem.c:1374 src/totem.c:1385
+#: src/totem.c:1382 src/totem.c:1393
 msgid ""
 "Couldn't load the 'Open Location...' interface.\n"
 "Make sure that Totem is properly installed."
 msgstr ""
-"'場所を開く...' インターフェイスを読み込めませんでした。\n"
+"'場所を開く...' インタフェースを読み込めませんでした。\n"
 "Totemが正しくインストールされているか確認してください。"
 
-#: src/totem.c:1446
+#: src/totem.c:1454
 msgid "Totem could not eject the optical media."
 msgstr "Totem は光学メディアを取り出すことができません。"
 
-#: src/totem.c:1577 src/vanity.c:268
+#: src/totem.c:1585 src/vanity.c:268
 msgid "translator_credits"
 msgstr ""
 "James Hashida <khashida@redhat.com>\n"
 "KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>"
 
-#: src/totem.c:1603
+#: src/totem.c:1611
 #, c-format
 msgid "Movie Player using %s"
 msgstr "ムービープレーヤー (%s 使用)"
 
-#: src/totem.c:1665 src/totem.c:1676 src/vanity.c:356 src/vanity.c:367
+#: src/totem.c:1673 src/totem.c:1684 src/vanity.c:356 src/vanity.c:367
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Screenshot%d.png"
 
-#: src/totem.c:1729
+#: src/totem.c:1737
 #, c-format
 msgid ""
 "Totem could not get a screenshot of that film.\n"
@@ -983,7 +991,7 @@ msgstr ""
 "Totem はこの映像のスクリーンショットを撮れませんでした。\n"
 "理由: %s"
 
-#: src/totem.c:1739
+#: src/totem.c:1747
 msgid ""
 "Totem could not get a screenshot of that film.\n"
 "Please file a bug, this isn't supposed to happen"
@@ -991,7 +999,7 @@ msgstr ""
 "Totem はこの映像のスクリーンショットを撮れませんでした。\n"
 "バグは報告してください。この機能はサポートされていません。"
 
-#: src/totem.c:1765
+#: src/totem.c:1773
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
@@ -1000,7 +1008,7 @@ msgstr ""
 "ファイル '%s' は既に存在しています。\n"
 "スクリーンショットは保存されませんでした。"
 
-#: src/totem.c:1776
+#: src/totem.c:1784
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -1009,7 +1017,7 @@ msgstr ""
 "スクリーンショットの保存中にエラーが発生しました。\n"
 "詳細: %s"
 
-#: src/totem.c:1793
+#: src/totem.c:1801
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -1017,7 +1025,7 @@ msgstr ""
 "ムービープロパティウィンドウを表示できませんでした。\n"
 "Totem が正しくインストールされているか確認してください。"
 
-#: src/totem.c:1862
+#: src/totem.c:1870
 #, c-format
 msgid ""
 "Totem could not seek in '%s'.\n"
@@ -1026,11 +1034,11 @@ msgstr ""
 "Totem は '%s' 中を検索できませんでした。 \n"
 "理由: %s"
 
-#: src/totem.c:2549
+#: src/totem.c:2557
 msgid "Auto"
 msgstr "自動"
 
-#: src/totem.c:2930
+#: src/totem.c:2938
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -1039,11 +1047,11 @@ msgstr ""
 "Totem は起動出来ませんでした:\n"
 "%s"
 
-#: src/totem.c:2931 src/vanity.c:600
+#: src/totem.c:2939 src/vanity.c:600
 msgid "No reason"
 msgstr "理由なし"
 
-#: src/totem.c:3172
+#: src/totem.c:3184
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Totem will now exit."
@@ -1051,7 +1059,7 @@ msgstr ""
 "スレッドセーフなライグラリを初期化できませんでした。\n"
 "システムのインストール状態を確認してください。Totem は終了します。"
 
-#: src/totem.c:3194
+#: src/totem.c:3206
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -1062,21 +1070,21 @@ msgstr ""
 "することが出来ませんでした:\n"
 "%s"
 
-#: src/totem.c:3208 src/totem.c:3240
+#: src/totem.c:3220 src/totem.c:3252
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
 msgstr ""
-"メインインターフェイス(totem.glade)をロードできませんでした。\n"
+"メインインタフェース(totem.glade)をロードできませんでした。\n"
 "Totem が適切にインストールされているか確認してください。"
 
-#: src/totem.c:3266
+#: src/totem.c:3278
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
 msgstr ""
-"再生リスト用のインターフェイスをロードでき\n"
-"ません。Totemのインストールを確認して下さい。"
+"再生リスト用のインタフェースをロードできません。\n"
+"Totemが適切にインストールされているか確認して下さい。"
 
 #: src/totem-preferences.c:79
 msgid ""
@@ -1090,7 +1098,9 @@ msgstr ""
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted"
-msgstr "この設定の変更は、次に再生される動画もしくは Totem を再起動したときに反映されます"
+msgstr ""
+"この設定の変更は、次に再生される動画もしくは Totem を再起動したときに反映され"
+"ます"
 
 #: src/totem-preferences.c:158
 msgid ""
@@ -1099,7 +1109,8 @@ msgstr "この TV 出力についての設定の変更を反映させるには�
 
 #: src/totem-preferences.c:320
 msgid "Changing the visuals effect type will require a restart to take effect."
-msgstr "視覚エフェクトのタイプについての変更を反映させるには、再起動が必要です。"
+msgstr ""
+"視覚エフェクトのタイプについての変更を反映させるには、再起動が必要です。"
 
 #: src/totem-statusbar.c:138
 msgid "Shadow type"
@@ -1112,6 +1123,11 @@ msgstr "ステータスバーテキスト周りの角度のスタイル"
 #: src/totem-statusbar.c:180
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
+
+#: src/totem-statusbar.c:205
+#, c-format
+msgid "%s (Streaming)"
+msgstr "%s (ストリーミング)"
 
 #: src/vanity.c:294
 #, c-format
@@ -1173,7 +1189,7 @@ msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
 msgstr ""
-"メインインターフェイス(vanity.glade)をロードできませんでした。 \n"
+"メインインタフェース(vanity.glade)をロードできませんでした。 \n"
 "Vanityが適切にインストールされているか確認してください。"
 
 #~ msgid "Movie Player (based on the xine libraries)"
