@@ -229,7 +229,7 @@ int main (int argc, char *argv[])
 	if (length > MIN_LEN_FOR_SEEK)
 	{
 		if (bacon_video_widget_seek
-				(bvw, (1 / 3), NULL) == FALSE)
+				(bvw, ((float) 1 / 3), NULL) == FALSE)
 		{
 			bacon_video_widget_play (bvw, NULL);
 		}
