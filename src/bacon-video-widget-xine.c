@@ -42,6 +42,7 @@
 #include "baconvideowidget-marshal.h"
 #include "scrsaver.h"
 #include "video-utils.h"
+#include "bacon-resize.h"
 
 #include <libintl.h>
 #define _(String) gettext (String)
@@ -119,7 +120,9 @@ struct BaconVideoWidgetPrivate {
 	xine_vo_driver_t *vo_driver;
 	xine_ao_driver_t *ao_driver;
 	xine_event_queue_t *ev_queue;
+#if 0
 	xine_osd_t *osd;
+#endif
 	double display_ratio;
 	gboolean started;
 
@@ -147,7 +150,7 @@ struct BaconVideoWidgetPrivate {
 	guint tick_id;
 	gboolean auto_resize;
 	GdkPixbuf *icon;
-	gint volume;
+	int volume;
 	TvOutType tvout;
 	guint32 video_fcc, audio_fcc;
 
@@ -158,6 +161,7 @@ struct BaconVideoWidgetPrivate {
 	/* fullscreen stuff */
 	gboolean fullscreen_mode;
 	gboolean cursor_shown;
+	int screenid;
 };
 
 static const char *mms_bandwidth_strs[]={"14.4 Kbps (Modem)",
@@ -436,13 +440,13 @@ bacon_video_widget_finalize (GObject *object)
 }
 
 static void
-dest_size_cb (void *bvw_gen,
+dest_size_cb (void *data,
 	      int video_width, int video_height,
 	      double video_pixel_aspect,
 	      int *dest_width, int *dest_height,
 	      double *dest_pixel_aspect)
 {
-	BaconVideoWidget *bvw = (BaconVideoWidget *) bvw_gen;
+	BaconVideoWidget *bvw = (BaconVideoWidget *)data;
 
 	/* correct size with video_pixel_aspect */
 	if (video_pixel_aspect >= bvw->priv->display_ratio)
@@ -494,8 +498,9 @@ frame_output_cb (void *bvw_gen,
 		bvw->priv->video_width = video_width;
 		bvw->priv->video_height = video_height;
 
-		if (bvw->priv->auto_resize == TRUE
-				&& bvw->priv->logo_mode == FALSE)
+		if (bvw->priv->auto_resize != FALSE
+				&& bvw->priv->logo_mode == FALSE
+				&& bvw->priv->fullscreen_mode == FALSE)
 		{
 			signal_data *data;
 
@@ -504,6 +509,9 @@ frame_output_cb (void *bvw_gen,
 			g_async_queue_push (bvw->priv->queue, data);
 			g_idle_add ((GSourceFunc)
 					bacon_video_widget_idle_signal, bvw);
+		} else if (bvw->priv->auto_resize != FALSE
+				&& bvw->priv->fullscreen_mode == TRUE) {
+			bacon_resize (video_height, video_width);
 		}
 	}
 
@@ -528,9 +536,11 @@ load_video_out_driver (BaconVideoWidget *bvw, gboolean null_out)
 	vis.screen = bvw->priv->screen;
 	vis.d = GDK_WINDOW_XID (bvw->priv->video_window);
 	res_h = (DisplayWidth (bvw->priv->display, bvw->priv->screen) * 1000 /
-	     DisplayWidthMM (bvw->priv->display, bvw->priv->screen));
+			DisplayWidthMM (bvw->priv->display,
+				bvw->priv->screen));
 	res_v = (DisplayHeight (bvw->priv->display, bvw->priv->screen) * 1000 /
-	     DisplayHeightMM (bvw->priv->display, bvw->priv->screen));
+			DisplayHeightMM (bvw->priv->display,
+				bvw->priv->screen));
 	bvw->priv->display_ratio = res_v / res_h;
 
 	if (fabs (bvw->priv->display_ratio - 1.0) < 0.01) {
@@ -745,7 +755,7 @@ setup_config_video (BaconVideoWidget *bvw)
 		xine_config_update_entry (bvw->priv->xine, &entry);
 	}
 }
-
+#if 0
 static void
 setup_osd (BaconVideoWidget *bvw)
 {
@@ -753,11 +763,12 @@ setup_osd (BaconVideoWidget *bvw)
 
 	bvw->priv->osd = xine_osd_new(bvw->priv->stream,
 			0, 0, 900, (fonth * 6) + (5 * 3));
-	xine_osd_set_font(bvw->priv->osd, "sans", fonth);
+	xine_osd_set_font(bvw->priv->osd, "/home/hadess/.fonts/helvetica.ttf", fonth * 10);
 	xine_osd_set_text_palette(bvw->priv->osd,
 			XINE_TEXTPALETTE_WHITE_NONE_TRANSPARENT,
 			XINE_OSD_TEXT1);
 }
+#endif
 
 static void
 setup_config_stream (BaconVideoWidget *bvw)
@@ -939,14 +950,34 @@ generate_mouse_event (BaconVideoWidget *bvw, GdkEvent *event,
 }
 
 static gboolean
-configure_cb (GtkWidget *widget, GdkEventConfigure *event, gpointer user_data)
+configure_cb (GtkWidget *widget, GdkEventConfigure *event,
+		BaconVideoWidget *bvw)
 {
-	BaconVideoWidget *bvw = (BaconVideoWidget *) user_data;
-
 	bvw->priv->xpos = event->x + GTK_WIDGET (bvw)->allocation.x;
 	bvw->priv->ypos = event->y + GTK_WIDGET (bvw)->allocation.y;
 
 	return FALSE;
+}
+
+static void
+size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw)
+{
+	double res_h, res_v;
+
+	XLockDisplay (bvw->priv->display);
+	res_h = (DisplayWidth (bvw->priv->display, bvw->priv->screen) * 1000 /
+			DisplayWidthMM (bvw->priv->display,
+				bvw->priv->screen));
+	res_v = (DisplayHeight (bvw->priv->display, bvw->priv->screen) * 1000 /
+			DisplayHeightMM (bvw->priv->display,
+				bvw->priv->screen));
+	XUnlockDisplay (bvw->priv->display);
+
+	bvw->priv->display_ratio = res_v / res_h;
+
+	if (fabs (bvw->priv->display_ratio - 1.0) < 0.01) {
+		bvw->priv->display_ratio = 1.0;
+	}
 }
 
 static void
@@ -995,6 +1026,10 @@ bacon_video_widget_realize (GtkWidget *widget)
 			"configure-event",
 			G_CALLBACK (configure_cb), bvw);
 
+	/* get screen size changes */
+	g_signal_connect (G_OBJECT (gdk_screen_get_default ()),
+			"size-changed", G_CALLBACK (size_changed_cb), bvw);
+
 	/* Now onto the video out driver */
 	bvw->priv->display = XOpenDisplay (gdk_display_get_name
 			(gdk_display_get_default ()));
@@ -1010,10 +1045,13 @@ bacon_video_widget_realize (GtkWidget *widget)
 				bvw->priv->vis_name, 0,
 				&bvw->priv->ao_driver, &bvw->priv->vo_driver);
 
+	bacon_resize_init ();
 	bvw->priv->stream = xine_stream_new (bvw->priv->xine,
 			bvw->priv->ao_driver, bvw->priv->vo_driver);
 	setup_config_stream (bvw);
+#if 0
 	setup_osd (bvw);
+#endif
 	bvw->priv->ev_queue = xine_event_new_queue (bvw->priv->stream);
 
 	/* Setup xine events */
@@ -1238,8 +1276,10 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	GTK_WIDGET_UNSET_FLAGS (widget, GTK_MAPPED);
 
 	/* Kill the OSD */
+#if 0
 	xine_osd_hide (bvw->priv->osd, 0);
 	xine_osd_free (bvw->priv->osd);
+#endif
 
 	/* stop the playback */
 	xine_close (bvw->priv->stream);
@@ -1254,6 +1294,12 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	entry.num_value = bvw->priv->volume;
 	xine_config_update_entry (bvw->priv->xine, &entry);
 
+	/* save config */
+	configfile = g_build_path (G_DIR_SEPARATOR_S,
+			g_get_home_dir (), CONFIG_FILE, NULL);
+	xine_config_save (bvw->priv->xine, configfile);
+	g_free (configfile);
+
 	/* Kill the drivers */
 	if (bvw->priv->vo_driver != NULL)
 		xine_close_video_driver (bvw->priv->xine,
@@ -1261,12 +1307,6 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	if (bvw->priv->ao_driver != NULL)
 		xine_close_audio_driver (bvw->priv->xine,
 				bvw->priv->ao_driver);
-
-	/* save config */
-	configfile = g_build_path (G_DIR_SEPARATOR_S,
-			g_get_home_dir (), CONFIG_FILE, NULL);
-	xine_config_save (bvw->priv->xine, configfile);
-	g_free (configfile);
 
 	/* stop event thread */
 	xine_exit (bvw->priv->xine);
@@ -1644,7 +1684,7 @@ bacon_video_widget_play (BaconVideoWidget *bvw, guint pos,
 		xine_error (bvw, gerror);
 		return FALSE;
 	}
-
+#if 0
 	if (pos == 0 && start_time == 0 && bvw->priv->using_vfx == TRUE)
 	{
 		char *name;
@@ -1661,9 +1701,9 @@ bacon_video_widget_play (BaconVideoWidget *bvw, guint pos,
 		xine_osd_show(bvw->priv->osd, 0);
 		/* Hide in... vpts is in 1/90000 sec */
 		//FIXME
-		xine_osd_hide (bvw->priv->osd, 90000 * 8);
+		//xine_osd_hide (bvw->priv->osd, 90000 * 8);
 	}
-
+#endif
 	return TRUE;
 }
 
@@ -1939,6 +1979,18 @@ bacon_video_widget_get_volume (BaconVideoWidget *bvw)
 void
 bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 {
+	if (bvw->priv->auto_resize == FALSE)
+		return;
+
+	if (fullscreen == FALSE)
+	{
+		bacon_restore (bvw->priv->screenid);
+	} else {
+		bvw->priv->screenid = bacon_resize_get_current ();
+		bacon_resize (bvw->priv->video_height,
+				bvw->priv->video_width);
+	} 
+	bvw->priv->fullscreen_mode = fullscreen;
 }
 
 void

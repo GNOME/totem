@@ -1,3 +1,23 @@
+2003-06-29  Bastien Nocera  <hadess@hadess.net>
+
+	* README: upd
+	* src/Makefile.am: remove languages.h
+	* src/bacon-resize.[ch]: added
+	* src/bacon-video-widget-xine.c: (frame_output_cb), (setup_osd),
+	(bacon_video_widget_realize), (bacon_video_widget_unrealize),
+	(bacon_video_widget_play), (bacon_video_widget_set_fullscreen):
+	change the screen resolution automatically depending on the movie
+	dimensions when switching to fullscreen, uses the auto resize setting,
+	takes aspect ratio into account
+	disable all the OSD stuff for now
+	* src/languages.h: removed
+	* src/totem-video-thumbnailer.c: (time_monitor), (main): fixed seeking
+	to a third into the stream (swapped args), implement the time monitor
+	thread so that thumbnailing doesn't take more than 30 secs
+	* src/totem.c: (create_submenu), (totem_action_fullscreen_toggle): we
+	now get directly the language, and not a code for it; the video widget
+	is supposed to know when to use the auto-resize or not
+
 2003-06-27  Julien MOUTTE <julien@moutte.net>
 
 	* src/bacon-video-widget-gst.c:

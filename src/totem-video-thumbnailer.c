@@ -3,11 +3,14 @@
 
 #include <gnome.h>
 #include <string.h>
+#include <unistd.h>
 #include "bacon-video-widget.h"
 
 /* #define THUMB_DEBUG */
 
 #define MIN_LEN_FOR_SEEK 25000
+
+gboolean finished = FALSE;
 
 static void
 print_usage (void)
@@ -161,6 +164,20 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path, const char *video_path)
 	gdk_pixbuf_unref (with_holes);
 }
 
+gpointer
+time_monitor (gpointer data)
+{
+	g_usleep (30 * G_USEC_PER_SEC);
+
+	if (finished != FALSE)
+		g_thread_exit (NULL);
+
+	g_print ("totem-video-thumbnailer couln't thumbnail file: '%s'\n"
+			"Reason: Took too much time to thumbnail.\n",
+			(const char *) data);
+	exit (1);
+}
+
 int main (int argc, char *argv[])
 {
 	GError *err = NULL;
@@ -175,6 +192,8 @@ int main (int argc, char *argv[])
 	if (argc != 3)
 		print_usage ();
 
+	nice (20);
+
 	bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (-1, -1, TRUE, &err));
 	if (err != NULL)
 	{
@@ -184,8 +203,7 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	//FIXME create a new thread that will watch over these 2 next
-	//calls so that we know they won't take longer than 30 secs
+	g_thread_create (time_monitor, (gpointer) argv[1], FALSE, NULL);
 
 	if (bacon_video_widget_open (bvw, argv[1], &err) == FALSE)
 	{
@@ -211,11 +229,13 @@ int main (int argc, char *argv[])
 	if (length > MIN_LEN_FOR_SEEK)
 	{
 		if (bacon_video_widget_play
-				(bvw, 0, (int) (65535 / 3), NULL) == FALSE)
+				(bvw, (int) (65535 / 3), 0, NULL) == FALSE)
 		{
 			bacon_video_widget_play (bvw, 0, 0, NULL);
 		}
 	}
+
+	finished = TRUE;
 
 	if (bacon_video_widget_can_get_frames (bvw, &err) == FALSE)
 	{

@@ -40,7 +40,6 @@
 #include "bacon-cd-selection.h"
 #include "totem-statusbar.h"
 #include "video-utils.h"
-#include "languages.h"
 
 #include "egg-recent-view.h"
 
@@ -110,21 +109,6 @@ long_action (void)
 {
 	while (gtk_events_pending ())
 		gtk_main_iteration ();
-}
-
-static char
-*language_name_get_from_code (const char *code)
-{
-	int i;
-
-	for (i = 0; languages[i].code != NULL; i++)
-	{
-		if (strstr (code, languages[i].code) != NULL)
-			return g_strdup (languages[i].language);
-	}
-
-	/* Ooops, not found */
-	return g_strdup (code);
 }
 
 static void
@@ -502,19 +486,11 @@ totem_action_fullscreen_toggle (Totem *totem)
 {
 	if (totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN)
 	{
-		gboolean auto_resize;
-
 		popup_hide (totem);
 		bacon_video_widget_set_fullscreen (totem->bvw, FALSE);
 		gtk_window_unfullscreen (GTK_WINDOW(totem->win));
 		bacon_video_widget_set_show_cursor (totem->bvw, TRUE);
 		scrsaver_enable (totem->scr);
-
-		/* Auto-resize */
-		auto_resize = gconf_client_get_bool (totem->gc,
-				GCONF_PREFIX"/auto_resize", NULL);
-
-		bacon_video_widget_set_auto_resize (totem->bvw, auto_resize);
 
 		if (totem->controls_visibility != TOTEM_CONTROLS_VISIBLE)
 		{
@@ -536,7 +512,6 @@ totem_action_fullscreen_toggle (Totem *totem)
 	} else {
 		update_fullscreen_size (totem);
 		bacon_video_widget_set_fullscreen (totem->bvw, TRUE);
-		bacon_video_widget_set_auto_resize (totem->bvw, FALSE);
 		bacon_video_widget_set_show_cursor (totem->bvw, FALSE);
 		gtk_window_fullscreen (GTK_WINDOW(totem->win));
 		scrsaver_disable (totem->scr);
@@ -2841,11 +2816,9 @@ create_submenu (Totem *totem, GList *list, int current, gboolean is_lang)
 					current, -1, is_lang, group);
 		}
 
-		lang = language_name_get_from_code (l->data);
-		group = add_item_to_menu (totem, menu, lang, current,
+		group = add_item_to_menu (totem, menu, l->data, current,
 				i, is_lang, group);
 		i++;
-		g_free (lang);
 	}
 
 	gtk_widget_show (menu);
