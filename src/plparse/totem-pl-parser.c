@@ -514,65 +514,6 @@ totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
 	return FALSE;
 }
 
-static GnomeVFSResult
-my_eel_read_entire_file (const char *uri,
-		int *file_size,
-		char **file_contents)
-{
-	GnomeVFSResult result;
-	GnomeVFSHandle *handle;
-	char *buffer;
-	GnomeVFSFileSize total_bytes_read;
-	GnomeVFSFileSize bytes_read;
-
-	*file_size = 0;
-	*file_contents = NULL;
-
-	/* Open the file. */
-	result = gnome_vfs_open (&handle, uri, GNOME_VFS_OPEN_READ);
-	if (result != GNOME_VFS_OK) {
-		return result;
-	}
-
-	/* Read the whole thing. */
-	buffer = NULL;
-	total_bytes_read = 0;
-	do {
-		buffer = g_realloc (buffer, total_bytes_read + READ_CHUNK_SIZE);
-		result = gnome_vfs_read (handle,
-				buffer + total_bytes_read,
-				READ_CHUNK_SIZE,
-				&bytes_read);
-		if (result != GNOME_VFS_OK && result != GNOME_VFS_ERROR_EOF) {
-			g_free (buffer);
-			gnome_vfs_close (handle);
-			return result;
-		}
-
-		/* Check for overflow. */
-		if (total_bytes_read + bytes_read < total_bytes_read) {
-			g_free (buffer);
-			gnome_vfs_close (handle);
-			return GNOME_VFS_ERROR_TOO_BIG;
-		}
-
-		total_bytes_read += bytes_read;
-	} while (result == GNOME_VFS_OK);
-
-	/* Close the file. */
-	result = gnome_vfs_close (handle);
-	if (result != GNOME_VFS_OK) {
-		g_free (buffer);
-		return result;
-	}
-
-	/* Return the file. */
-	*file_size = total_bytes_read;
-	*file_contents = g_realloc (buffer, total_bytes_read);
-
-	return GNOME_VFS_OK;
-}
-
 static int
 read_ini_line_int (char **lines, const char *key)
 {
@@ -690,7 +631,7 @@ totem_pl_parser_add_ram (TotemPlParser *parser, const char *url, gpointer data)
 	int size, i;
 	const char *split_char;
 
-	if (my_eel_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	contents = g_realloc (contents, size + 1);
@@ -774,7 +715,7 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
 	const char *split_char;
 	gboolean extinfo;
 
-	if (my_eel_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
 
 	contents = g_realloc (contents, size + 1);
@@ -856,7 +797,7 @@ totem_pl_parser_add_asf_parser (TotemPlParser *parser, const char *url,
 	char *contents, **lines, *ref;
 	int size;
 
-	if (my_eel_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	contents = g_realloc (contents, size + 1);
@@ -894,7 +835,7 @@ totem_pl_parser_add_pls (TotemPlParser *parser, const char *url, gpointer data)
 	char *split_char;
 	gboolean dos_mode = FALSE;
 
-	if (my_eel_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	if (size == 0)
@@ -1089,7 +1030,7 @@ totem_pl_parser_add_asx (TotemPlParser *parser, const char *url, gpointer data)
 	int size;
 	gboolean retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 
-	if (my_eel_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
 
 	contents = g_realloc (contents, size + 1);
@@ -1220,7 +1161,7 @@ totem_pl_parser_add_smil (TotemPlParser *parser, const char *url, gpointer data)
 	int size;
 	gboolean retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 
-	if (my_eel_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	contents = g_realloc (contents, size + 1);
@@ -1274,7 +1215,7 @@ totem_pl_parser_add_desktop (TotemPlParser *parser, const char *url, gpointer da
 	const char *path, *display_name, *type;
 	int size;
 
-	if (my_eel_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	contents = g_realloc (contents, size + 1);

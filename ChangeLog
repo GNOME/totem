@@ -1,3 +1,12 @@
+2005-03-15  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-pl-parser.c: (totem_pl_parser_add_ram),
+	(totem_pl_parser_add_m3u), (totem_pl_parser_add_asf_parser),
+	(totem_pl_parser_add_pls), (totem_pl_parser_add_asx),
+	(totem_pl_parser_add_smil), (totem_pl_parser_add_desktop):
+	Remove our home-made read-entire file function, and use
+	gnome_vfs_read_entire_file instead
+
 2005-03-15  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_signal_idler),
