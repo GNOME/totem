@@ -1,7 +1,7 @@
 
 stuffdir = $(datadir)/totem/
 stuff_DATA =				\
-	emblem-multimedia.png		\
+	filmholes.png			\
 	media-player-48.png		\
 	stock_media_next.png		\
 	stock_media_previous.png	\

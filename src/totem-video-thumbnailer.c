@@ -6,8 +6,6 @@
 
 /* #define THUMB_DEBUG */
 
-#define TOP_LEFT_MARGIN 2
-
 static void
 print_usage (void)
 {
@@ -37,23 +35,40 @@ add_emblem_to_pixbuf (GdkPixbuf *pixbuf, int width, int height)
 {
 	GdkPixbuf *emblem, *tmp;
 	char *filename;
+	int i;
 
 	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
-			"totem", "emblem-multimedia.png", NULL);
+			"totem", "filmholes.png", NULL);
 	emblem = gdk_pixbuf_new_from_file (filename, NULL);
 	g_free (filename);
 
 	if (emblem == NULL)
+	{
+		gdk_pixbuf_ref (pixbuf);
 		return pixbuf;
+	}
 
 	g_assert (gdk_pixbuf_get_has_alpha (pixbuf) == FALSE);
 	tmp = gdk_pixbuf_add_alpha (pixbuf, FALSE, 0, 0, 0);
 
-	gdk_pixbuf_composite (emblem, tmp, 0, 0, 
-			MIN (width, gdk_pixbuf_get_width (emblem)),
-			MIN (height, gdk_pixbuf_get_height (emblem)),
-			TOP_LEFT_MARGIN, TOP_LEFT_MARGIN,
-			1, 1, GDK_INTERP_NEAREST, 255);
+	for (i = 0; i < height; i += gdk_pixbuf_get_height (emblem))
+	{
+		gdk_pixbuf_composite (emblem, tmp, 0, i,
+				MIN (width, gdk_pixbuf_get_width (emblem)),
+				MIN (height-i, gdk_pixbuf_get_height (emblem)),
+				0, i, 1, 1, GDK_INTERP_NEAREST, 255);
+	}
+
+	//FIXME we need to mirror the pixbuf eheh
+	for (i = 0; i < height; i += gdk_pixbuf_get_height (emblem))
+	{
+		gdk_pixbuf_composite (emblem, tmp,
+				width - gdk_pixbuf_get_width (emblem), i,
+				MIN (width, gdk_pixbuf_get_width (emblem)),
+				MIN (height-i, gdk_pixbuf_get_height (emblem)),
+				width - gdk_pixbuf_get_width (emblem), i,
+				1, 1, GDK_INTERP_NEAREST, 255);
+	}
 
 	gdk_pixbuf_unref (emblem);
 
@@ -99,6 +114,10 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path, const char *video_path)
 		gdk_pixbuf_unref (with_emblem);
 		return;
 	}
+
+#ifdef THUMB_DEBUG
+	show_pixbuf (with_emblem);
+#endif
 
 	gdk_pixbuf_unref (with_emblem);
 }
@@ -176,11 +195,6 @@ int main (int argc, char *argv[])
 					"'%s'\n", argv[1]);
 		exit (1);
 	}
-
-	/* For debug only */
-#ifdef THUMB_DEBUG
-	show_pixbuf (pixbuf);
-#endif
 
 	save_pixbuf (pixbuf, argv[2], argv[1]);
 	gdk_pixbuf_unref (pixbuf);
