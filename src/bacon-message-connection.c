@@ -78,7 +78,7 @@ server_cb (GIOChannel *source, GIOCondition condition, gpointer data)
 	offset = 0;
 	cd = accept (g_io_channel_unix_get_fd (source), NULL, &alen);
 
-	memset (buf, sizeof (buf), '\0');
+	memset (buf, 0, sizeof (buf));
 	rc = read (cd, buf, BUF_SIZE);
 //FIXME test for the actual errno
 	while (rc != 0)
@@ -87,7 +87,7 @@ server_cb (GIOChannel *source, GIOCondition condition, gpointer data)
 		memcpy (message + offset, buf, MIN(rc, BUF_SIZE));
 
 		offset = offset + rc;
-		memset (buf, sizeof (buf), '\0');
+		memset (buf, 0, sizeof (buf));
 		rc = read (cd, buf, BUF_SIZE);
 	}
 
