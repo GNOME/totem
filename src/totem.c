@@ -1124,7 +1124,12 @@ popup_hide (Totem *totem)
 	D("POPUP HIDE");
 	gtk_widget_hide (GTK_WIDGET (totem->exit_popup));
 	gtk_widget_hide (GTK_WIDGET (totem->control_popup));
-	totem->popup_timeout = 0;
+
+	if (totem->popup_timeout != 0)
+	{
+		gtk_timeout_remove (totem->popup_timeout);
+		totem->popup_timeout = 0;
+	}
 
 	gtk_xine_set_show_cursor (GTK_XINE (totem->gtx), FALSE);
 

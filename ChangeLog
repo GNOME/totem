@@ -1,5 +1,10 @@
 2002-10-19  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (popup_hide): disconnect the "popup_hide" callback
+	before hiding the popup (Closes: #91836)
+
+2002-10-19  Bastien Nocera  <hadess@hadess.net>
+
 	* .cvsignore: upd
 	* data/totem.glade: remove the additional events on the popups,
 	they're already in the sources
