@@ -17,8 +17,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * $Id$
- *
  * Authors: Bastien Nocera <hadess@hadess.net>
  */
 
@@ -214,7 +212,7 @@ cdrom_option_menu (BaconCdSelection *bcs)
 	for (l = bcs->priv->cdroms; l != NULL; l = l->next)
 	{
 		cdrom = l->data;
-		item = gtk_menu_item_new_with_label (cdrom->name);
+		item = gtk_menu_item_new_with_label (cdrom->display_name);
 		gtk_widget_show (item);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	}
@@ -357,12 +355,14 @@ bacon_cd_selection_set_device (BaconCdSelection *bcs, const char *device)
 			(GNOME_FILE_ENTRY (bcs->priv->widget));
 		gtk_entry_set_text (GTK_ENTRY (entry), device);
 	} else {
-		i = 0;
+		i = -1;
 		found = FALSE;
 
 		for (l = bcs->priv->cdroms; l != NULL && found == FALSE;
 				l = l->next)
 		{
+			i++;
+
 			drive = l->data;
 
 			if (strcmp (drive->device, device) == 0)

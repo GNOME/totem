@@ -29,19 +29,19 @@
 #include <glib.h>
 
 typedef enum {
-	DRIVE_TYPE_FILE,
-	DRIVE_TYPE_CD_RECORDER,
-	DRIVE_TYPE_DVD_RECORDER,
-	DRIVE_TYPE_CD_DRIVE,
-	DRIVE_TYPE_DVD_DRIVE,
+	CDDRIVE_TYPE_FILE,
+	CDDRIVE_TYPE_CD_RECORDER,
+	CDDRIVE_TYPE_DVD_RECORDER,
+	CDDRIVE_TYPE_CD_DRIVE,
+	CDDRIVE_TYPE_DVD_DRIVE,
 } CDDriveType;
 
 typedef struct {
 	CDDriveType type;
-	char *name;
+	char *display_name;
 	int max_speed_write;
 	int max_speed_read;
-	char *id;
+	char *cdrecord_id;
 	char *device;
 } CDDrive;
 

@@ -1,5 +1,18 @@
 2003-01-20  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-cd-selection.c: (cdrom_option_menu),
+	(bacon_cd_selection_set_device):
+	* src/bacon-cd-selection.h:
+	* src/cd-drive.c: (parse_sg_line), (get_cd_scsi_id),
+	(lookup_scsi_unit), (get_scsi_cd_name), (add_linux_cd_recorder),
+	(cdrom_get_name), (add_linux_cd_drive), (get_cd_device_file),
+	(linux_scan), (scan_for_cdroms):
+	* src/cd-drive.h:
+	* src/egg-recent-model.c: (egg_recent_model_add_full): update from
+	libegg and libbacon (Closes: #103419)
+
+2003-01-20  Bastien Nocera  <hadess@hadess.net>
+
 	* README:
 	* src/totem.c: (update_sliders), (totem_action_handle_key),
 	(on_window_key_press_event): ignore key presses if there's a modifier,
