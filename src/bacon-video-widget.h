@@ -135,6 +135,10 @@ G_CONST_RETURN gchar **bacon_video_widget_get_mrls
 						 (BaconVideoWidget *bvw,
 						  MediaType type);
 
+/* Video devices */
+void bacon_video_widget_set_video_device	 (BaconVideoWidget *bvw,
+						  const char *path);
+
 /* Metadata */
 typedef enum {
 	BVW_INFO_TITLE,

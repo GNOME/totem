@@ -1,3 +1,14 @@
+2004-05-10  Bastien Nocera  <hadess@hadess.net>
+
+	* src/.cvsignore: upd
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_realize),
+	(bacon_video_widget_open), (bacon_video_widget_get_mrls),
+	(bacon_video_widget_set_video_device):
+	* src/bacon-video-widget.h: add a way to set the video device,
+	for vanity, add a warning if there's a file opened before realizing
+	the widget, don't warn if there's no output at all and we're
+	opening an audio-only file
+
 2004-05-06  Bastien Nocera  <hadess@hadess.net>
 
 	* NEWS: upd

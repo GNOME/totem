@@ -253,7 +253,6 @@ static void xine_event (void *user_data, const xine_event_t *event);
 static gboolean bacon_video_widget_idle_signal (BaconVideoWidget *bvw);
 static void show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals);
 
-
 static int bvw_table_signals[LAST_SIGNAL] = { 0 };
 
 GType
@@ -1108,6 +1107,8 @@ bacon_video_widget_realize (GtkWidget *widget)
 
 	bvw = BACON_VIDEO_WIDGET (widget);
 
+	g_return_if_fail (bvw->priv->mrl == NULL);
+
 	/* set realized flag */
 	GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
 
@@ -1117,10 +1118,14 @@ bacon_video_widget_realize (GtkWidget *widget)
 	xine_dispose (bvw->priv->stream);
 	bvw->priv->stream = NULL;
 
-	if (bvw->priv->vo_driver != NULL)
-		xine_close_video_driver (bvw->priv->xine, bvw->priv->vo_driver);
-	if (bvw->priv->ao_driver != NULL)
-		xine_close_audio_driver (bvw->priv->xine, bvw->priv->ao_driver);
+	if (bvw->priv->vo_driver != NULL) {
+		xine_close_video_driver (bvw->priv->xine,
+				bvw->priv->vo_driver);
+	}
+	if (bvw->priv->ao_driver != NULL) {
+		xine_close_audio_driver (bvw->priv->xine,
+				bvw->priv->ao_driver);
+	}
 
 	/* Create the widget's window */
 	attr.x = widget->allocation.x;
@@ -1135,6 +1140,7 @@ bacon_video_widget_realize (GtkWidget *widget)
 	widget->window = gdk_window_new (gtk_widget_get_parent_window (widget),
 			&attr, GDK_WA_X | GDK_WA_Y);
 	gdk_window_show (widget->window);
+
 	/* Flush, so that the window is really shown */
 	gdk_flush ();
 	gdk_window_set_user_data (widget->window, bvw);
@@ -1907,7 +1913,8 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const char *mrl,
 
 	if (xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_HAS_VIDEO) == FALSE
-		&& bvw->priv->ao_driver == NULL)
+		&& bvw->priv->ao_driver == NULL
+		&& bvw->priv->null_out != FALSE)
 	{
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[GOT_METADATA], 0, NULL);
@@ -2879,6 +2886,17 @@ G_CONST_RETURN char
 
 	return (G_CONST_RETURN char **) xine_get_autoplay_mrls
 		(bvw->priv->xine, plugin_id, &num_mrls);
+}
+
+void
+bacon_video_widget_set_video_device (BaconVideoWidget *bvw, const char *path)
+{
+	xine_cfg_entry_t entry;
+
+	bvw_config_helper_string (bvw->priv->xine,
+			"input.v4l_video_device_path", path, &entry);
+	entry.str_value = g_strdup (path);
+	xine_config_update_entry (bvw->priv->xine, &entry);
 }
 
 void
