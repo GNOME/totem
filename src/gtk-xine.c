@@ -50,7 +50,7 @@
 
 #define DEFAULT_HEIGHT 420
 #define DEFAULT_WIDTH 315
-#define CONFIG_FILE ".gnome2"G_DIR_SEPARATOR_S"totem"
+#define CONFIG_FILE ".gnome2"G_DIR_SEPARATOR_S"totem_config"
 #define DEFAULT_TITLE _("Totem Video Window")
 #define GCONF_PREFIX "/apps/totem/"
 #define LOGO_PATH DATADIR""G_DIR_SEPARATOR_S"totem"G_DIR_SEPARATOR_S"totem_logo.mpv"
@@ -307,6 +307,8 @@ gtk_xine_instance_init (GtkXine *gtx)
 	xine_config_load (gtx->priv->xine, configfile);
 	g_free (configfile);
 
+	load_config_from_gconf (gtx);
+
 	xine_init (gtx->priv->xine);
 }
 
@@ -359,6 +361,9 @@ frame_output_cb (void *gtx_gen,
 		 int *win_x, int *win_y)
 {
 	GtkXine *gtx = (GtkXine *) gtx_gen;
+
+	if (gtx == NULL || gtx->priv == NULL)
+		return;
 
 	/* correct size with video_pixel_aspect */
 	if (video_pixel_aspect >= gtx->priv->display_ratio)
@@ -459,13 +464,42 @@ load_video_out_driver (GtkXine *gtx)
 }
 
 static xine_ao_driver_t *
-load_audio_out_driver (GtkXine *gtx, const char *audio_driver_id)
+load_audio_out_driver (GtkXine *gtx)
 {
+	GConfClient *conf;
+	xine_ao_driver_t *ao_driver;
+	char *audio_driver_id;
+
+	conf = gconf_client_get_default ();
+
+	audio_driver_id = gconf_client_get_string (conf,
+			GCONF_PREFIX"audio_driver",
+			NULL);
+
+	/* No configuration, fallback to auto */
+	if (audio_driver_id == NULL || strcmp (audio_driver_id, "") == 0)
+		audio_driver_id = g_strdup ("auto");
+
+	/* We know how to handle null driver */
 	if (strcmp (audio_driver_id, "null") == 0)
 		return NULL;
 
-	return xine_open_audio_driver (gtx->priv->xine,
+	/* auto probe */
+	if (strcmp (audio_driver_id, "auto") == 0)
+		return xine_open_audio_driver (gtx->priv->xine, NULL, NULL);
+
+	/* no autoprobe */
+	ao_driver =  xine_open_audio_driver (gtx->priv->xine,
 			audio_driver_id, NULL);
+
+	/* if it failed without autoprobe, probe */
+	if (ao_driver == NULL)
+		ao_driver = xine_open_audio_driver (gtx->priv->xine,
+				NULL, NULL);
+
+	g_free (audio_driver_id);
+
+	return ao_driver;
 }
 
 static void
@@ -474,6 +508,7 @@ load_config_from_gconf (GtkXine *gtx)
 	GConfClient *conf;
 	char *tmp;
 
+	//FIXME move to totem.c
 	if (!gconf_is_initialized ())
 	{
 		g_signal_emit (G_OBJECT (gtx),
@@ -490,26 +525,6 @@ load_config_from_gconf (GtkXine *gtx)
 			"misc.logo_mrl", tmp,
 			"audio driver to use",
 			NULL, 10, NULL, NULL);
-//	xine_config_update_string (gtx->priv->xine,
-//			"misc.logo_mrl", tmp);
-
-	/* The audio output, equivalent to audio.driver*/
-	tmp = gconf_client_get_string (conf,
-			GCONF_PREFIX"audio_driver",
-			NULL);
-	if (tmp == NULL || strcmp (tmp, "") == 0)
-		tmp = g_strdup ("auto");
-
-	gtx->priv->ao_driver = load_audio_out_driver (gtx, tmp);
-	g_free (tmp);
-
-	/* Fallback on null, just in case */
-	if (!gtx->priv->ao_driver)
-	{
-		tmp = g_strdup ("null");
-		gtx->priv->ao_driver = load_audio_out_driver (gtx, tmp);
-		g_free (tmp);
-	}
 
 	/* default demux strategy */
 	xine_config_register_string (gtx->priv->xine,
@@ -517,8 +532,6 @@ load_config_from_gconf (GtkXine *gtx)
 			"demuxer selection strategy",
 			"{ default  reverse  content  extension }, default: 0",
 			10, NULL, NULL);
-//	xine_config_update_string (gtx->priv->xine,
-//			"misc.demux_strategy", "reverse");
 
 	/* DVD and VCD Device */
 	tmp = gconf_client_get_string (conf, GCONF_PREFIX"mediadev", NULL);
@@ -529,15 +542,11 @@ load_config_from_gconf (GtkXine *gtx)
 			"input.dvd_device", tmp,
 			"device used for dvd drive",
 			NULL, 10, NULL, NULL);
-//	xine_config_update_string (gtx->priv->xine,
-//			"input.dvd_device", tmp);
 
 	xine_config_register_string (gtx->priv->xine,
 			"input.vcd_device", tmp,
 			"device used for cdrom drive",
 			NULL, 10, NULL, NULL);
-//	xine_config_update_string (gtx->priv->xine,
-//			"input.vcd_device", tmp);
 
 	/* TODO skip by chapter for DVD */
 }
@@ -748,10 +757,8 @@ gtk_xine_realize (GtkWidget *widget)
 		      | ButtonPressMask | PointerMotionMask
 		      | KeyPressMask);
 
-	/* Get more configuration options */
-	load_config_from_gconf (gtx);
-
 	/* load audio, video drivers */
+	gtx->priv->ao_driver = load_audio_out_driver (gtx);
 	gtx->priv->vo_driver = load_video_out_driver (gtx);
 
 	if (!gtx->priv->vo_driver)
@@ -860,39 +867,7 @@ xine_event (void *user_data, const xine_event_t *event)
 		g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
 	}
 }
-#if 0
-static void codec_reporting(void *user_data, int codec_type,
-		uint32_t fourcc, char *description, int handled)
-{
-	GtkXine *gtx = (GtkXine *) user_data;
-	char fourcc_txt[10];
 
-	/* store fourcc as text */
-	*(uint32_t *)fourcc_txt = fourcc;
-	fourcc_txt[4] = '\0';
-
-	if (!handled)
-	{
-		if (codec_type == XINE_CODEC_VIDEO)
-		{
-			GtkXineSignal *signal;
-
-			signal = g_new0 (GtkXineSignal, 1);
-			signal->type = ERROR;
-
-			/* display fourcc if no description available */
-			if (!description[0])
-				description = fourcc_txt;
-			signal->error_type = GTX_NO_CODEC;
-			signal->message = g_strdup_printf
-				(_("No video plugin available to decode '%s'."),
-				 description);
-			g_async_queue_push (gtx->priv->queue, signal);
-			g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
-		}
-	}
-}
-#endif
 static void
 xine_error (GtkXine *gtx)
 {
@@ -1204,8 +1179,9 @@ gtk_xine_set_audio_channel (GtkXine *gtx, gint audio_channel)
 	g_return_if_fail (gtx != NULL);
 	g_return_if_fail (GTK_IS_XINE (gtx));
 	g_return_if_fail (gtx->priv->xine != NULL);
-//FIXME XINE_PARAM_AUDIO_CHANNEL_LOGICAL ?
-//	xine_select_audio_channel (gtx->priv->stream, audio_channel);
+
+	xine_set_param (gtx->priv->stream,
+			XINE_PARAM_AUDIO_CHANNEL_LOGICAL, audio_channel);
 }
 
 gint
@@ -1214,8 +1190,9 @@ gtk_xine_get_audio_channel (GtkXine *gtx)
 	g_return_val_if_fail (gtx != NULL, 0);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
 	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
-return 0;
-//	return xine_get_audio_selection (gtx->priv->stream);
+
+	return xine_get_param (gtx->priv->stream,
+			XINE_PARAM_AUDIO_CHANNEL_LOGICAL);
 }
 
 void
@@ -1348,6 +1325,10 @@ gtk_xine_can_set_volume (GtkXine *gtx)
 
 	if (xine_get_param (gtx->priv->stream,
 				XINE_PARAM_AUDIO_CHANNEL_LOGICAL) == -2)
+		return FALSE;
+
+	if (xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_HAS_AUDIO) == FALSE)
 		return FALSE;
 
 	return TRUE;
