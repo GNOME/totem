@@ -83,6 +83,7 @@ static void gtk_playlist_class_init (GtkPlaylistClass *class);
 static void gtk_playlist_init       (GtkPlaylist      *label);
 
 static void init_treeview (GtkWidget *treeview, GtkPlaylist *playlist);
+static gboolean gtk_playlist_unset_playing (GtkPlaylist *playlist);
 
 GtkType
 gtk_playlist_get_type (void)
@@ -117,8 +118,6 @@ gtk_tree_model_iter_previous (GtkTreeModel *tree_model, GtkTreeIter *iter)
 	GtkTreePath *path;
 	gboolean ret;
 
-	D("gtk_tree_model_iter_previous");
-
 	path = gtk_tree_model_get_path (tree_model, iter);
 	ret = gtk_tree_path_prev (path);
 	if (ret == TRUE)
@@ -128,13 +127,36 @@ gtk_tree_model_iter_previous (GtkTreeModel *tree_model, GtkTreeIter *iter)
 	return ret;
 }
 
+static gboolean
+gtk_tree_path_equals (GtkTreePath *path1, GtkTreePath *path2)
+{
+	char *str1, *str2;
+	gboolean retval;
+
+	if (path1 == NULL && path2 == NULL)
+		return TRUE;
+	if (path1 == NULL || path2 == NULL)
+		return FALSE;
+
+	str1 = gtk_tree_path_to_string (path1);
+	str2 = gtk_tree_path_to_string (path2);
+
+	if (strcmp (str1, str2) == 0)
+		retval = TRUE;
+	else
+		retval = FALSE;
+
+	g_free (str1);
+	g_free (str2);
+
+	return retval;
+}
+
 static void
 gtk_tree_selection_has_selected_foreach (GtkTreeModel *model,
 		GtkTreePath *path, GtkTreeIter *iter, gpointer user_data)
 {
 	int *retval = (gboolean *)user_data;
-	D("HAS SELECTED");
-
 	*retval = TRUE;
 }
 
@@ -233,7 +255,6 @@ read_ini_line_int (char **lines, const char *key)
 			}
 
 			retval = (gint) g_strtod (bits[1], NULL);
-			D("read_ini_line_string: %d", retval);
 			g_strfreev (bits);
 		}
 	}
@@ -264,7 +285,6 @@ read_ini_line_string (char **lines, const char *key)
 			}
 
 			retval = g_strdup (bits[1]);
-			D("read_ini_line_string: %s", retval);
 			g_strfreev (bits);
 		}
 	}
@@ -285,8 +305,6 @@ drop_cb (GtkWidget     *widget,
 	GtkPlaylist *playlist = GTK_PLAYLIST (user_data);
 	GList *list, *p, *file_list;
 	int i;
-
-	D("drop_cb");
 
 	list = gnome_vfs_uri_list_parse (data->data);
 
@@ -361,19 +379,14 @@ selection_changed (GtkTreeSelection *treeselection, gpointer user_data)
 static gboolean
 update_current_from_playlist (GtkPlaylist *playlist)
 {
-	D("update_current_from_playlist");
-
 	if (playlist->_priv->current == NULL)
 	{
-		D("update_current_from_playlist: current is NULL");
 		if (gtk_tree_model_iter_n_children (playlist->_priv->model,
 					NULL) != 0)
 		{
-			D("The playlist isn't empty");
 			playlist->_priv->current =
 				gtk_tree_path_new_from_string ("0");
 		} else {
-			D("The playlist is empty");
 			return FALSE;
 		}
 	}
@@ -386,8 +399,6 @@ gtk_playlist_add_files (GtkWidget *widget, gpointer user_data)
 	GtkPlaylist *playlist = (GtkPlaylist *)user_data;
 	GtkWidget *fs;
 	int response;
-
-	D("gtk_playlist_add_files");
 
 	fs = gtk_file_selection_new (_("Select files"));
 	gtk_file_selection_set_select_multiple (GTK_FILE_SELECTION (fs), TRUE);
@@ -437,16 +448,6 @@ gtk_playlist_foreach_selected (GtkTreeModel *model, GtkTreePath *path,
 	GtkPlaylist *playlist = (GtkPlaylist *)data;
 	GtkTreeRowReference *ref;
 
-	D("gtk_playlist_foreach_selected");
-#ifdef TOTEM_DEBUG
-	{
-		char *file;
-
-		gtk_tree_model_get (model, iter, URI_COL, &file, -1);
-		g_message ("removing path: %s", file);
-		g_free (file);
-	}
-#endif
 	/* We can't use gtk_list_store_remove() here
 	 * So we build a list a RowReferences */
 	ref = gtk_tree_row_reference_new (playlist->_priv->model, path);
@@ -461,8 +462,6 @@ gtk_playlist_remove_files (GtkWidget *widget, gpointer user_data)
 	GtkTreeSelection *selection;
 	GtkTreeRowReference *ref = NULL;
 	gboolean is_selected = FALSE;
-
-	D("gtk_playlist_remove_files");
 
 	selection = gtk_tree_view_get_selection
 		(GTK_TREE_VIEW (playlist->_priv->treeview));
@@ -533,8 +532,6 @@ init_columns (GtkTreeView *treeview)
 	GtkWidget *header;
 	char *filename;
 
-	D("init_columns");
-
 	/* Playing pix */
 	renderer = gtk_cell_renderer_pixbuf_new ();
 	filename = gnome_program_locate_file (NULL,
@@ -562,12 +559,31 @@ init_columns (GtkTreeView *treeview)
 }
 
 static void
+treeview_row_changed (GtkTreeView *treeview, GtkTreePath *arg1,
+		GtkTreeViewColumn *arg2, gpointer user_data)
+{
+	GtkPlaylist *playlist = (GtkPlaylist *)user_data;
+
+	if (gtk_tree_path_equals (arg1, playlist->_priv->current) == TRUE)
+		return;
+
+	if (playlist->_priv->current != NULL)
+	{
+		gtk_playlist_unset_playing (playlist);
+		gtk_tree_path_free (playlist->_priv->current);
+	}
+
+	playlist->_priv->current = gtk_tree_path_copy (arg1);
+	g_signal_emit (G_OBJECT (playlist),
+			gtk_playlist_table_signals[CHANGED], 0,
+			NULL);
+}
+
+static void
 init_treeview (GtkWidget *treeview, GtkPlaylist *playlist)
 {
 	GtkTreeModel *model;
 	GtkTreeSelection *selection;
-
-	D("init_treeview");
 
 	/* the model */
 	model = GTK_TREE_MODEL (gtk_list_store_new (NUM_COLS,
@@ -585,7 +601,9 @@ init_treeview (GtkWidget *treeview, GtkPlaylist *playlist)
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
 	g_signal_connect (G_OBJECT (selection), "changed",
-				G_CALLBACK (selection_changed), playlist);
+			G_CALLBACK (selection_changed), playlist);
+	g_signal_connect (G_OBJECT (treeview), "row-activated",
+			G_CALLBACK (treeview_row_changed), playlist);
 
 	/* Drag'n'Drop */
 	g_signal_connect (G_OBJECT (treeview), "drag_data_received",
@@ -659,8 +677,6 @@ init_config (GtkPlaylist *playlist)
 static void
 gtk_playlist_init (GtkPlaylist *playlist)
 {
-	D("gtk_playlist_init");
-
 	playlist->_priv = g_new0 (GtkPlaylistPrivate, 1);
 	playlist->_priv->current = NULL;
 	playlist->_priv->icon = NULL;
@@ -674,8 +690,6 @@ static void
 gtk_playlist_finalize (GObject *object)
 {
 	GtkPlaylist *playlist;
-
-	D("gtk_playlist_finalize");
 
 	g_return_if_fail (GTK_IS_PLAYLIST (object));
 	playlist = GTK_PLAYLIST (object);
@@ -696,8 +710,6 @@ gtk_playlist_new (GtkWindow *parent)
 	GtkPlaylist *playlist;
 	GtkWidget *container, *item;
 	char *filename;
-
-	D("gtk_playlist_new");
 
 	playlist = GTK_PLAYLIST (g_object_new (GTK_TYPE_PLAYLIST, NULL));
 
@@ -785,8 +797,6 @@ gtk_playlist_add_one_mrl (GtkPlaylist *playlist, const char *mrl,
 	g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), FALSE);
 	g_return_val_if_fail (mrl != NULL, FALSE);
 
-	D("gtk_playlist_add_one_mrl: %s", mrl);
-
 	if (display_name == NULL)
 	{
 		char *filename, *unescaped;
@@ -830,8 +840,6 @@ gtk_playlist_add_m3u (GtkPlaylist *playlist, const char *mrl)
 	char *contents, **lines;
 	int size, i;
 
-	D("gtk_playlist_add_m3u: %s", mrl);
-
 	if (eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
 
@@ -840,8 +848,6 @@ gtk_playlist_add_m3u (GtkPlaylist *playlist, const char *mrl)
 
 	for (i = 0; lines[i] != NULL; i++)
 	{
-		D("gtk_playlist_add_m3u: line %s", lines[i]);
-
 		/* Either it's a URI, or it has a proper path */
 		if (strstr(lines[i], "://") != NULL
 				|| lines[i][0] == G_DIR_SEPARATOR)
@@ -864,26 +870,19 @@ gtk_playlist_add_pls (GtkPlaylist *playlist, const char *mrl)
 	char *contents, **lines;
 	int size, i, num_entries;
 
-	D("gtk_playlist_add_pls: %s", mrl);
-
 	if (eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
 
-	D("gtk_playlist_add_pls: %s", contents);
 	lines = g_strsplit (contents, "\n", 0);
 	g_free (contents);
 
 	/* [playlist] */
 	if (g_ascii_strncasecmp (lines[0], "[playlist]",
 				(gsize)strlen ("[playlist]")) != 0)
-	{
-		D("gtk_playlist_add_pls: not a playlist");
 		goto bail;
-	}
 
 	/* numberofentries=? */
 	num_entries = read_ini_line_int (lines, "numberofentries");
-	D("gtk_playlist_add_pls: num_entries: %d", num_entries);
 	if (num_entries == -1)
 		goto bail;
 
@@ -900,8 +899,6 @@ gtk_playlist_add_pls (GtkPlaylist *playlist, const char *mrl)
 
 		g_free (file_key);
 		g_free (title_key);
-
-		D("gtk_playlist_add_pls: %s -> %s", title, file);
 
 		if (file != NULL)
 		{
@@ -930,7 +927,6 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 	g_return_val_if_fail (mrl != NULL, FALSE);
 
 	mimetype = gnome_vfs_get_mime_type (mrl);
-	D("gtk_playlist_add_mrl: adding %s (%s)", mrl, mimetype);
 
 	if (mimetype == NULL)
 	{
@@ -951,8 +947,6 @@ gtk_playlist_clear (GtkPlaylist *playlist)
 {
 	GtkListStore *store;
 
-	D("gtk_playlist_clear");
-
 	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
 
 	store = GTK_LIST_STORE (playlist->_priv->model);
@@ -969,8 +963,6 @@ char
 	GtkTreeIter iter;
 	char *path;
 
-	D("gtk_playlist_get_current_mrl");
-
 	g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), NULL);
 
 	if (update_current_from_playlist (playlist) == FALSE)
@@ -984,8 +976,6 @@ char
 			URI_COL, &path,
 			-1);
 
-	D("gtk_playlist_get_current_mrl: returns %s", path);
-
 	return path;
 }
 
@@ -993,8 +983,6 @@ gboolean
 gtk_playlist_has_previous_mrl (GtkPlaylist *playlist)
 {
 	GtkTreeIter iter;
-
-	D("gtk_playlist_has_previous_mrl");
 
 	g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), FALSE);
 
@@ -1012,8 +1000,6 @@ gboolean
 gtk_playlist_has_next_mrl (GtkPlaylist *playlist)
 {
 	GtkTreeIter iter;
-
-	D("gtk_playlist_has_next_mrl");
 
 	g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), FALSE);
 
@@ -1034,8 +1020,6 @@ gtk_playlist_set_playing (GtkPlaylist *playlist, gboolean state)
 {
 	GtkListStore *store;
 	GtkTreeIter iter;
-
-	D("gtk_playlist_set_playing");
 
 	g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), FALSE);
 
@@ -1067,8 +1051,6 @@ gtk_playlist_unset_playing (GtkPlaylist *playlist)
 	GtkListStore *store;
 	GtkTreeIter iter;
 
-	D("gtk_playlist_unset_playing");
-
 	if (update_current_from_playlist (playlist) == FALSE)
 		return FALSE;
 
@@ -1093,8 +1075,6 @@ gtk_playlist_set_previous (GtkPlaylist *playlist)
 {
 	GtkTreeIter iter;
 
-	D("gtk_playlist_set_previous");
-
 	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
 	
 	if (gtk_playlist_has_previous_mrl (playlist) == FALSE)
@@ -1116,8 +1096,6 @@ void
 gtk_playlist_set_next (GtkPlaylist *playlist)
 {
 	GtkTreeIter iter;
-
-	D("gtk_playlist_set_next");
 
 	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
 
@@ -1145,8 +1123,6 @@ void
 gtk_playlist_set_at_start (GtkPlaylist *playlist)
 {
 	GtkTreeIter iter;
-
-	D("gtk_playlist_set_at_start");
 
 	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
 
@@ -1185,8 +1161,6 @@ gtk_playlist_mrl_to_title (const gchar *mrl)
 static void
 gtk_playlist_class_init (GtkPlaylistClass *klass)
 {
-	D("gtk_playlist_class_init");
-
 	parent_class = gtk_type_class (gtk_dialog_get_type ());
 
 	G_OBJECT_CLASS (klass)->finalize = gtk_playlist_finalize;

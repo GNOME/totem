@@ -1192,11 +1192,6 @@
 		  <property name="yalign">0.5</property>
 		  <property name="xpad">0</property>
 		  <property name="ypad">0</property>
-		  <property name="mnemonic_widget">entry1</property>
-		  <accessibility>
-		    <atkrelation target="entry1" type="controlled-by"/>
-		    <atkrelation target="entry1" type="label-for"/>
-		  </accessibility>
 		</widget>
 		<packing>
 		  <property name="padding">0</property>
@@ -1206,16 +1201,29 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkEntry" id="entry1">
+		<widget class="GnomeFileEntry" id="fileentry1">
 		  <property name="visible">True</property>
-		  <property name="can_focus">True</property>
-		  <property name="editable">True</property>
-		  <property name="visibility">True</property>
-		  <property name="max_length">0</property>
-		  <property name="text" translatable="yes"></property>
-		  <property name="has_frame">True</property>
-		  <property name="invisible_char" translatable="yes">*</property>
-		  <property name="activates_default">False</property>
+		  <property name="max_saved">10</property>
+		  <property name="directory_entry">False</property>
+		  <property name="modal">False</property>
+
+		  <child internal-child="entry">
+		    <widget class="GtkEntry" id="combo-entry1">
+		      <property name="visible">True</property>
+		      <property name="can_focus">True</property>
+		      <property name="editable">True</property>
+		      <property name="visibility">True</property>
+		      <property name="max_length">0</property>
+		      <property name="text" translatable="yes"></property>
+		      <property name="has_frame">True</property>
+		      <property name="invisible_char" translatable="yes">*</property>
+		      <property name="activates_default">False</property>
+		      <accessibility>
+			<atkrelation target="label8" type="labelled-by"/>
+			<atkrelation target="label8" type="controller-for"/>
+		      </accessibility>
+		    </widget>
+		  </child>
 		</widget>
 		<packing>
 		  <property name="padding">0</property>

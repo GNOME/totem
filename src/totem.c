@@ -1627,11 +1627,19 @@ totem_setup_recent (Totem *totem)
 static void
 totem_setup_preferences (Totem *totem)
 {
+	GtkWidget *item;
+
 	totem->prefs = glade_xml_get_widget (totem->xml, "dialog1");
+
 	g_signal_connect (G_OBJECT (totem->prefs),
 			"response", G_CALLBACK (hide_prefs), (gpointer) totem);
 	g_signal_connect (G_OBJECT (totem->prefs), "delete-event",
 			G_CALLBACK (hide_prefs), (gpointer) totem);
+
+	item = glade_xml_get_widget (totem->xml, "checkbutton1");
+	//FIXME need to finish this...
+//	g_signal_connect (G_OBJECT (item), "clicked",
+//			G_CALLBACK (on_checkbutton1_toggled), totem);
 }
 
 GConfClient *

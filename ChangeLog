@@ -1,5 +1,26 @@
 2002-10-21  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.glade: use a FileEntry instead of a simple entry
+	* src/gtk-playlist.c: (gtk_tree_model_iter_previous),
+	(gtk_tree_path_equals), (gtk_tree_selection_has_selected_foreach),
+	(read_ini_line_int), (read_ini_line_string), (drop_cb),
+	(update_current_from_playlist), (gtk_playlist_add_files),
+	(gtk_playlist_foreach_selected), (gtk_playlist_remove_files),
+	(init_columns), (treeview_row_changed), (init_treeview),
+	(gtk_playlist_init), (gtk_playlist_finalize), (gtk_playlist_new),
+	(gtk_playlist_add_one_mrl), (gtk_playlist_add_m3u),
+	(gtk_playlist_add_pls), (gtk_playlist_add_mrl),
+	(gtk_playlist_clear), (gtk_playlist_get_current_mrl),
+	(gtk_playlist_has_previous_mrl), (gtk_playlist_has_next_mrl),
+	(gtk_playlist_set_playing), (gtk_playlist_unset_playing),
+	(gtk_playlist_set_previous), (gtk_playlist_set_next),
+	(gtk_playlist_set_at_start), (gtk_playlist_class_init): remove all the
+	debug (not needed anymore), add double-click to the playlist
+	* src/totem.c: (totem_setup_preferences): make it compile again until
+	I find the strength to write this boring code
+
+2002-10-21  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (on_preferences1_activate), (hide_prefs),
 	(update_buttons), (totem_callback_connect),
 	(totem_setup_preferences), (main): add basic code for the preferences
