@@ -1,3 +1,10 @@
+2004-01-09  Jon Trowbridge <trow@ximian.com>
+
+	* src/bacon-video-widget-gst.c (bacon_video_widget_finalize):
+	Since the GstVideoWidget stored in bvw->priv->vw has been packed
+	into the BaconVideoWidget bvw, it doesn't need to be destroyed.
+	(This fixes a segfault on BaconVideoWidget finalization.)
+
 2004-01-08  Bastien Nocera  <hadess@hadess.net>
 
 	* NEWS: updated

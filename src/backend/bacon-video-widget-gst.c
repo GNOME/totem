@@ -525,17 +525,10 @@ bacon_video_widget_finalize (GObject * object)
     }
 
   if (bvw->priv->play != NULL && GST_IS_PLAY (bvw->priv->play))
-    gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_READY);
-
-  if (bvw->priv->vw != NULL && GST_IS_VIDEO_WIDGET (bvw->priv->vw))
     {
-      gtk_widget_destroy (GTK_WIDGET (bvw->priv->vw));
-      bvw->priv->vw = NULL;
-    }
-
-  if ((bvw->priv->play) && G_IS_OBJECT (bvw->priv->play))
-    {
-      /*g_object_unref (bvw->priv->play);*/
+      gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_READY);
+      /* FIXME: we are leaking the GstPlay. */
+      /* g_object_unref (bvw->priv->play); */
       bvw->priv->play = NULL;
     }
 }
