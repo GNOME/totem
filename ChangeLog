@@ -1,5 +1,13 @@
 2002-07-31  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: upd to 0.7 (RELEASE!!!)
+	* src/gtk-playlist.c:  disabled debug by default
+	* src/totem.c: (disable_error_output), (playlist_changed_cb),
+	(current_removed_cb), (main): added some way to kill off all of
+	xine's debug output
+
+2002-07-31  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-playlist.c: (gtk_tree_model_iter_previous),
 	(update_current_from_playlist), (gtk_playlist_add_files),
 	(gtk_playlist_foreach_selected), (gtk_playlist_remove_files),

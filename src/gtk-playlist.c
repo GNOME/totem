@@ -27,7 +27,7 @@
 #include <eel/eel-gtk-macros.h>
 #include <glade/glade.h>
 
-#define DEBUG_PL_ENABLE
+/* #define DEBUG_PL_ENABLE */
 
 #ifdef DEBUG_PL_ENABLE
 #define D(x...) g_message (x)

@@ -9,6 +9,13 @@
 #include "gtk-xine.h"
 #include "gtk-playlist.h"
 
+#undef TOTEM_DEBUG
+
+#ifndef TOTEM_DEBUG
+#include <fcntl.h>
+#include <unistd.h>
+#endif
+
 typedef struct {
 	/* Control window */
 	GladeXML *xml;
@@ -80,6 +87,25 @@ long_action (void)
 	while (gtk_events_pending ())
 		gtk_main_iteration ();
 }
+
+#ifndef TOTEM_DEBUG
+/* Nicked from aaxine */
+static void
+disable_error_output (void)
+{
+	int error_fd;
+
+	if ((error_fd = open ("/dev/null", O_WRONLY)) < 0)
+	{
+		g_message("cannot open /dev/null");
+	} else {
+		if (dup2 (error_fd, STDOUT_FILENO) < 0)
+			g_message("cannot dup2 stdout");
+		if (dup2 (error_fd, STDERR_FILENO) < 0)
+			g_message("cannot dup2 stderr");
+	}
+}
+#endif
 
 static void
 action_exit (Totem *totem)
@@ -611,7 +637,7 @@ static void
 playlist_changed_cb (GtkWidget *playlist, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
-g_message ("changed");
+
 	update_buttons (totem);
 }
 
@@ -620,7 +646,6 @@ current_removed_cb (GtkWidget *playlist, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 	char *mrl;
-g_message ("current removed");
 
 	/* Force play button status */
 	if (gtk_toggle_button_get_active
@@ -932,6 +957,10 @@ main (int argc, char **argv)
 
 	glade_gnome_init ();
 	gnome_vfs_init ();
+
+#ifndef TOTEM_DEBUG
+	disable_error_output ();
+#endif
 
 	totem = g_new (Totem, 1);
 	totem->mrl = NULL;
