@@ -718,10 +718,8 @@ egg_recent_model_read (EggRecentModel *model, FILE *file)
 
 	content = egg_recent_model_read_raw (model, file);
 
-	if (strlen (content) <= 0) {
-		g_free (content);
+	if (strlen (content) <= 0)
 		return NULL;
-	}
 
 	parse_info_init (&info);
 	

@@ -31,7 +31,9 @@ BACON_CD_SELECTION = 			\
 	cd-drive.c			\
 	cd-drive.h			\
 	bacon-cd-selection.c		\
-	bacon-cd-selection.h
+	bacon-cd-selection.h		\
+	bacon-message-connection.c	\
+	bacon-message-connection.h
 
 EGGDIR=$(srcdir)/../../libegg/libegg/recent-files/
 BACONDIR=$(srcdir)/../../libbacon/src/

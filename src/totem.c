@@ -31,6 +31,7 @@
 #include "gtk-playlist.h"
 #include "rb-ellipsizing-label.h"
 #include "bacon-cd-selection.h"
+#include "bacon-message-connection.h"
 #include "totem-statusbar.h"
 
 #include "egg-recent-model.h"
@@ -103,6 +104,7 @@ struct Totem {
 	GtkPlaylist *playlist;
 	GConfClient *gc;
 	TotemRemote *remote;
+	BaconMessageConnection *conn;
 	int action;
 };
 
@@ -2568,18 +2570,73 @@ totem_get_gconf_client (Totem *totem)
 {
 	return totem->gc;
 }
-#if 0
+
 static void
-process_queue (GtkMessageQueue *queue, char **argv)
+totem_message_connection_receive_cb (const char *msg, gpointer user_data)
 {
-	if (gtk_message_queue_is_server (queue) == FALSE)
+	//FIXME
+	g_print ("msg: %s\n", msg);
+}
+
+static void
+process_command_line (BaconMessageConnection *conn, int argc, char **argv)
+{
+	int i, command;
+	gboolean replace_done = FALSE;
+	char *line;
+
+	i = 2;
+
+	if (strlen (argv[1]) > 3 && strncmp (argv[1], "--", 2) != 0)
 	{
-		g_message ("send to existing GUI");
-	} else {
-		g_message ("setup the server thingo");
+		command = TOTEM_REMOTE_COMMAND_ENQUEUE;
+		i = 1;
+	} else if (strcmp (argv[1], "--play-pause") == 0) {
+		command = TOTEM_REMOTE_COMMAND_PLAY;
+	} else if (strcmp (argv[1], "--next") == 0) {
+		command = TOTEM_REMOTE_COMMAND_NEXT;
+	} else if (strcmp (argv[1], "--previous") == 0) {
+		command = TOTEM_REMOTE_COMMAND_PREVIOUS;
+	} else if (strcmp (argv[1], "--seek-fwd") == 0) {
+		command = TOTEM_REMOTE_COMMAND_SEEK_FORWARD;
+	} else if (strcmp (argv[1], "--seek-bwd") == 0) {
+		command = TOTEM_REMOTE_COMMAND_SEEK_BACKWARD;
+	} else if (strcmp (argv[1], "--volume-up") == 0) {
+		command = TOTEM_REMOTE_COMMAND_VOLUME_UP;
+	} else if (strcmp (argv[1], "--volume-down") == 0) {
+		command = TOTEM_REMOTE_COMMAND_VOLUME_DOWN;
+	} else if (strcmp (argv[1], "--fullscreen") == 0) {
+		command = TOTEM_REMOTE_COMMAND_FULLSCREEN;
+	} else if (strcmp (argv[1], "--quit") == 0) {
+		command = TOTEM_REMOTE_COMMAND_QUIT;
+	} else if (strcmp (argv[1], "--enqueue") == 0) {
+		command = TOTEM_REMOTE_COMMAND_ENQUEUE;
+	} else if (strcmp (argv[1], "--replace") == 0) {
+		command = TOTEM_REMOTE_COMMAND_REPLACE;
+	}
+
+	if (command != TOTEM_REMOTE_COMMAND_ENQUEUE
+				&& command != TOTEM_REMOTE_COMMAND_REPLACE)
+	{
+		line = g_strdup_printf ("%03d ", command, argv[i]);
+		bacon_message_connection_send (conn, line);
+		g_free (line);
+		return;
+	}
+
+	for (; argv[i] != NULL; i++)
+	{
+		if (command == TOTEM_REMOTE_COMMAND_REPLACE &&
+				replace_done == TRUE)
+			command = TOTEM_REMOTE_COMMAND_ENQUEUE;
+
+		line = g_strdup_printf ("%03d %s", command, argv[i]);
+		bacon_message_connection_send (conn, line);
+		g_free (line);
+		command = TOTEM_REMOTE_COMMAND_ENQUEUE;
 	}
 }
-#endif
+
 int
 main (int argc, char **argv)
 {
@@ -2616,7 +2673,6 @@ main (int argc, char **argv)
 	}
 	gnome_authentication_manager_init ();
 
-	/* We need it right now for the queue */
 	filename = gnome_program_locate_file (NULL,
 			GNOME_FILE_DOMAIN_APP_DATADIR,
 			"totem/totem.glade", TRUE, NULL);
@@ -2628,15 +2684,29 @@ main (int argc, char **argv)
 		exit (1);
 	}
 
-#if 0
+	totem = g_new (Totem, 1);
+
+	/* IPC stuff */
 	if (gconf_client_get_bool
 			(gc, GCONF_PREFIX"/launch_once", NULL) == TRUE)
 	{
-		q = gtk_message_queue_new ("totem", filename);
-		process_queue (q, argv);
+		BaconMessageConnection *conn;
+
+		conn = bacon_message_connection_new (GETTEXT_PACKAGE);
+		if (bacon_message_connection_get_is_server (conn) == TRUE)
+		{
+			bacon_message_connection_set_callback (conn,
+					totem_message_connection_receive_cb,
+					totem);
+		} else {
+			process_command_line (conn, argc, argv);
+			bacon_message_connection_free (conn);
+			g_free (totem);
+			exit (0);
+		}
 	}
-#endif
-	totem = g_new (Totem, 1);
+
+	/* Init totem itself */
 	totem->mrl = NULL;
 	totem->seek_lock = FALSE;
 	totem->vol_lock = FALSE;
