@@ -1,5 +1,13 @@
 2003-05-25  Bastien Nocera  <hadess@hadess.net>
 
+	* README: upd
+	* src/gtk-playlist.c: (gtk_playlist_add_asf_playlist),
+	(gtk_playlist_add_asf), (gtk_playlist_add_mrl_with_data),
+	(gtk_playlist_add_mrl): treat video/x-ms-wmv and video/x-ms-wvx
+	specially, implement mmsh redirections (Closes: #109952)
+
+2003-05-25  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-playlist.c: (gtk_playlist_add_m3u),
 	(gtk_playlist_add_asf_playlist), (gtk_playlist_add_pls),
 	(gtk_playlist_add_asx), (gtk_playlist_add_ra),
