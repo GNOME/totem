@@ -644,7 +644,8 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 			char *msg;
 
 			msg = g_strdup_printf(_("Totem could not play '%s'.\n"
-						"Reason: %s."),
+						"Reason: %s.\n"
+						"You might need to install additional plugins to be able to play some types of movies."),
 					mrl,
 					err->message);
 			totem_action_error (msg, GTK_WINDOW (totem->win));

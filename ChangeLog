@@ -1,5 +1,11 @@
 2003-04-21  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_open):
+	* src/totem.c: (totem_action_set_mrl): better message when the video
+	type is not handled, ie. give a pointer to the additional plugins
+
+2003-04-21  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (main): call XInitThreads very early on, before we
 	even remotely touch the X server connection. Fixes the possible
 	(async reply) lockups. Thanks to Owen Taylor for his quick diagnosis

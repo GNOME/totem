@@ -1300,7 +1300,7 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 		bacon_video_widget_close (bvw);
 
 		g_set_error (gerror, 0, 0,
-				_("Video type '%s' is not handled"),
+				_("Video codec '%s' is not handled"),
 				name ? name : fourcc_str);
 
 		g_free (fourcc_str);
