@@ -9,6 +9,7 @@ AC_DEFINE(VERSION, AC_PACKAGE_VERSION, [package version])
 AC_DEFINE(GETTEXT_PACKAGE, "AC_PACKAGE_NAME", [foo])
 GETTEXT_PACKAGE=AC_PACKAGE_NAME
 AC_SUBST(GETTEXT_PACKAGE)
+AC_SUBST(VERSION)
 
 AC_PROG_CXX
 AC_PROG_LIBTOOL()
@@ -313,6 +314,8 @@ Makefile
 totem.spec
 src/Makefile
 data/Makefile
+data/totem.desktop.in.in
+data/vanity.desktop.in
 po/Makefile.in
 help/Makefile
 help/C/Makefile

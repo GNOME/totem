@@ -30,6 +30,7 @@ stuff_DATA =				\
 pixmapdir = $(datadir)/pixmaps
 pixmap_DATA = media-player-48.png vanity.png
 
+desktop_in_in_files_all = totem.desktop.in.in.in vanity.desktop.in.in
 desktop_in_files_all = totem.desktop.in.in vanity.desktop.in
 if TOTEM_VANITY
 desktop_in_files = totem.desktop.in vanity.desktop.in
@@ -95,7 +96,7 @@ else
 install-data-local:
 endif
 
-EXTRA_DIST = $(stuff_DATA) $(desktop_in_files_all) $(keys_DATA) $(app_DATA) $(server_in_files) totem.schemas.in lirc_example schemas.sh desktop.sh handlers.sh $(man_MANS)
+EXTRA_DIST = $(stuff_DATA) $(desktop_in_in_files_all) $(keys_DATA) $(app_DATA) $(server_in_files) totem.schemas.in lirc_example schemas.sh desktop.sh handlers.sh $(man_MANS)
 
-CLEANFILES = *.bak *.gladep core* *.orig *~ $(desktop_DATA) $(schema_DATA)
+CLEANFILES = *.bak *.gladep core* *.orig *~ $(desktop_DATA) $(schema_DATA) $(desktop_in_files_all)
 
