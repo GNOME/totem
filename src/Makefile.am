@@ -64,6 +64,7 @@ INCLUDES = 						\
 	-Wall						\
 	-D_REENTRANT -D_FILE_OFFSET_BITS=64		\
 	$(GNOMEUI_UNSTABLE)				\
+	$(GLIB_UNSTABLE)				\
 	$(EXTRA_GNOME_CFLAGS)				\
 	$(XINE_CFLAGS)					\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
