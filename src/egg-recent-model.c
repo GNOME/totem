@@ -1291,6 +1291,7 @@ egg_recent_model_add_full (EggRecentModel * model, EggRecentItem *item)
 		ret = TRUE;
 	} else {
 		g_warning ("Failed to lock:  %s", strerror (errno));
+		fclose (file);
 		return FALSE;
 	}
 
