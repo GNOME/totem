@@ -1502,7 +1502,7 @@ G_CONST_RETURN gchar
 	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
 
 	if (type == MEDIA_DVD)
-		plugin_id = "NAV";
+		plugin_id = "DVD";
 	else if (type == MEDIA_VCD)
 		plugin_id = "VCD";
 	else

@@ -1,5 +1,12 @@
 2002-11-27  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (gtk_xine_get_mrls): use DVD as the DVD plugin
+	identifier, not NAV anymore
+	* src/totem.c: (totem_action_open_files): not dvd:// anymore, but
+	dvd:/, makes DVD playback work again. (Closes: #99556)
+
+2002-11-27  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.applications:
 	* data/totem.keys: whoo, xine 1.0 alpha2 can use the binary-only
 	plugins from Real Player for Linux, added the Real Media mime-types
