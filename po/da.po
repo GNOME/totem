@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-02 10:03+0100\n"
-"PO-Revision-Date: 2005-02-02 10:03+0100\n"
+"POT-Creation-Date: 2005-02-21 14:11+0100\n"
+"PO-Revision-Date: 2005-02-21 14:12+0100\n"
 "Last-Translator: Martin Willemoes Hansen <mwh@sysrq.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1484
+#: data/playlist.glade.h:1 src/totem-playlist.c:1509
 msgid "Playlist"
 msgstr "Afspilningsliste"
 
@@ -44,6 +44,66 @@ msgstr "_Kopiér placering"
 #: data/playlist.glade.h:6
 msgid "_Save..."
 msgstr "_Gem..."
+
+#: data/popup.glade.h:1 data/totem.glade.h:48
+msgid "Next chapter or movie"
+msgstr "Næste kapitel eller film"
+
+#: data/popup.glade.h:2 data/totem.glade.h:53
+msgid "Play / Pa_use"
+msgstr "Afspil/pa_use"
+
+#: data/popup.glade.h:3 data/totem.glade.h:56
+msgid "Play or pause the movie"
+msgstr "Afspil eller sæt filmen på pause"
+
+#: data/popup.glade.h:4 data/totem.glade.h:59
+msgid "Previous chapter or movie"
+msgstr "Foregående kapitel eller film"
+
+#: data/popup.glade.h:5 data/totem.glade.h:75
+msgid "Show _Controls"
+msgstr "Vis _kontroller"
+
+#: data/popup.glade.h:6 data/totem.glade.h:77
+msgid "Show controls"
+msgstr "Vis kontroller"
+
+#: data/popup.glade.h:7 data/totem.glade.h:81
+msgid "Skip _Backwards"
+msgstr "Spring _tilbage"
+
+#: data/popup.glade.h:8 data/totem.glade.h:82
+msgid "Skip _Forward"
+msgstr "Spring _fremad"
+
+#: data/popup.glade.h:9 data/totem.glade.h:83
+msgid "Skip backwards"
+msgstr "Spring tilbage"
+
+#: data/popup.glade.h:10 data/totem.glade.h:84
+msgid "Skip forward"
+msgstr "Spring fremad"
+
+#: data/popup.glade.h:11 data/totem.glade.h:107
+msgid "Volume _Down"
+msgstr "Lydstyrke _ned"
+
+#: data/popup.glade.h:12 data/totem.glade.h:108
+msgid "Volume _Up"
+msgstr "Lydstyrke _op"
+
+#: data/popup.glade.h:13 data/totem.glade.h:110
+msgid "Volume up"
+msgstr "Lydstyrke op"
+
+#: data/popup.glade.h:14 data/totem.glade.h:133
+msgid "_Next Chapter/Movie"
+msgstr "_Næste kapitel/film"
+
+#: data/popup.glade.h:15 data/totem.glade.h:136
+msgid "_Previous Chapter/Movie"
+msgstr "_Foregående kapitel/film"
 
 #: data/properties.glade.h:1 data/screenshot.glade.h:1 data/totem.glade.h:1
 msgid "    "
@@ -117,7 +177,7 @@ msgstr "Billedfrekvens:"
 msgid "N/A"
 msgstr " - "
 
-#: data/properties.glade.h:17 src/totem.c:1964
+#: data/properties.glade.h:17 src/totem.c:1986
 msgid "Properties"
 msgstr "Egenskaber"
 
@@ -179,6 +239,16 @@ msgstr "_Spring til:"
 #: data/skip_to.glade.h:4
 msgid "seconds"
 msgstr "sekunder"
+
+#: data/totem.desktop.in.in.in.h:1
+msgid "Play movies and songs"
+msgstr "Afspil film og sange"
+
+#. Title
+#: data/totem.desktop.in.in.in.h:2 data/totem.glade.h:102 src/totem.c:580
+#: src/totem.c:3398
+msgid "Totem Movie Player"
+msgstr "Totem - filmafspiller"
 
 #: data/totem.glade.h:2
 msgid ""
@@ -344,10 +414,6 @@ msgstr "Sprog"
 msgid "Next"
 msgstr "Næste"
 
-#: data/totem.glade.h:48
-msgid "Next chapter or movie"
-msgstr "Næste kapitel eller film"
-
 #: data/totem.glade.h:49
 msgid "No Language Selection Available"
 msgstr "Intet sprogvalg tilgængeligt"
@@ -364,10 +430,6 @@ msgstr "Åbn _placering..."
 msgid "Open a non-local file"
 msgstr "Åbn en ikke-lokal fil"
 
-#: data/totem.glade.h:53
-msgid "Play / Pa_use"
-msgstr "Afspil/pa_use"
-
 #: data/totem.glade.h:54
 msgid "Play _Disc"
 msgstr "Afspil _disk"
@@ -376,10 +438,6 @@ msgstr "Afspil _disk"
 msgid "Play a Video or Audio Disc"
 msgstr "Afspil en video- eller lyd-disk"
 
-#: data/totem.glade.h:56
-msgid "Play or pause the movie"
-msgstr "Afspil eller sæt filmen på pause"
-
 #: data/totem.glade.h:57 src/totem-options.c:38
 msgid "Play/Pause"
 msgstr "Afspil/pause"
@@ -387,10 +445,6 @@ msgstr "Afspil/pause"
 #: data/totem.glade.h:58 src/totem-options.c:40
 msgid "Previous"
 msgstr "Forrige"
-
-#: data/totem.glade.h:59
-msgid "Previous chapter or movie"
-msgstr "Foregående kapitel eller film"
 
 #: data/totem.glade.h:60
 msgid "Resize _1:1"
@@ -452,17 +506,9 @@ msgstr "Sætter højde-/breddeforholdet automatisk"
 msgid "Sets square aspect ratio"
 msgstr "Sætter kvadratisk højde-/breddeforhold"
 
-#: data/totem.glade.h:75
-msgid "Show _Controls"
-msgstr "Vis _kontroller"
-
 #: data/totem.glade.h:76
 msgid "Show _visual effects when an audio file is played"
 msgstr "Vis _visuelle effekter når en lydfil afspilles"
-
-#: data/totem.glade.h:77
-msgid "Show controls"
-msgstr "Vis kontroller"
 
 #: data/totem.glade.h:78
 msgid "Show or hide the playlist"
@@ -475,22 +521,6 @@ msgstr "Vis/skjul afspilningsliste"
 #: data/totem.glade.h:80
 msgid "Shuff_le Mode"
 msgstr "_Blandingstilstand"
-
-#: data/totem.glade.h:81
-msgid "Skip _Backwards"
-msgstr "Spring _tilbage"
-
-#: data/totem.glade.h:82
-msgid "Skip _Forward"
-msgstr "Spring _fremad"
-
-#: data/totem.glade.h:83
-msgid "Skip backwards"
-msgstr "Spring tilbage"
-
-#: data/totem.glade.h:84
-msgid "Skip forward"
-msgstr "Spring fremad"
 
 #: data/totem.glade.h:85
 msgid "Skip to a specific time"
@@ -548,12 +578,6 @@ msgstr "Gem et skærmbillede"
 msgid "Time:"
 msgstr "Tid:"
 
-#. Title
-#: data/totem.glade.h:102 data/totem.desktop.in.in.in.h:2 src/totem.c:563
-#: src/totem.c:3376
-msgid "Totem Movie Player"
-msgstr "Totem - filmafspiller"
-
 #: data/totem.glade.h:103
 msgid "Totem Preferences"
 msgstr "Indstillinger for Totem"
@@ -570,21 +594,9 @@ msgstr "Tv-ud i fuldskærm med Nvidia (PAL)"
 msgid "Visualisation _size:"
 msgstr "Visualiserings_størrelse:"
 
-#: data/totem.glade.h:107
-msgid "Volume _Down"
-msgstr "Lydstyrke _ned"
-
-#: data/totem.glade.h:108
-msgid "Volume _Up"
-msgstr "Lydstyrke _op"
-
 #: data/totem.glade.h:109
 msgid "Volume down"
 msgstr "Lydstyrke ned"
-
-#: data/totem.glade.h:110
-msgid "Volume up"
-msgstr "Lydstyrke op"
 
 #: data/totem.glade.h:111
 msgid "Zoom In"
@@ -674,10 +686,6 @@ msgstr "_Sprog"
 msgid "_Movie"
 msgstr "_Film"
 
-#: data/totem.glade.h:133
-msgid "_Next Chapter/Movie"
-msgstr "_Næste kapitel/film"
-
 #: data/totem.glade.h:134
 msgid "_No TV-out"
 msgstr "_Intet tv-ud"
@@ -685,10 +693,6 @@ msgstr "_Intet tv-ud"
 #: data/totem.glade.h:135
 msgid "_Optical device path:"
 msgstr "Sti til _optisk enhed: "
-
-#: data/totem.glade.h:136
-msgid "_Previous Chapter/Movie"
-msgstr "_Foregående kapitel/film"
 
 #: data/totem.glade.h:137
 msgid "_Repeat Mode"
@@ -880,11 +884,19 @@ msgstr "Indtast _placeringen (URI) på den fil du ønsker at åbne:"
 msgid "Open from URI"
 msgstr "Åbn fra URI"
 
+#: data/vanity.desktop.in.in.h:1
+msgid "Vanity Webcam utility"
+msgstr "Vanity - netkameraværktøj"
+
+#: data/vanity.desktop.in.in.h:2
+msgid "View live webcam and upload pictures"
+msgstr "Vis live-netkamera og overfør billeder"
+
 #: data/vanity.glade.h:1
 msgid "Save File"
 msgstr "Gem vil"
 
-#: data/vanity.glade.h:2 src/vanity.c:251
+#: data/vanity.glade.h:2 src/vanity.c:259
 msgid "Vanity"
 msgstr "Vanity"
 
@@ -920,27 +932,15 @@ msgstr "_Billede"
 msgid "_Zoom 1:2"
 msgstr "_Zoom 1:2"
 
-#: data/vanity.desktop.in.in.h:1
-msgid "Vanity Webcam utility"
-msgstr "Vanity - netkameraværktøj"
-
-#: data/vanity.desktop.in.in.h:2
-msgid "View live webcam and upload pictures"
-msgstr "Vis live-netkamera og overfør billeder"
-
-#: data/totem.desktop.in.in.in.h:1
-msgid "Play movies and songs"
-msgstr "Afspil film og sange"
-
-#: src/bacon-v4l-selection.c:182
+#: src/bacon-v4l-selection.c:191
 msgid "Unnamed CDROM"
 msgstr "Unavngiven cd-rom"
 
-#: src/bacon-video-widget-gst.c:59
+#: src/bacon-video-widget-gst.c:68
 msgid "Totem Video Window"
 msgstr "Totem-videovindue"
 
-#: src/bacon-video-widget-gst.c:2882
+#: src/bacon-video-widget-gst.c:2906
 msgid "Failed to create a GStreamer play object"
 msgstr "Det mislykkedes at oprette et spilleobjekt for GStreamer"
 
@@ -1083,96 +1083,96 @@ msgid "This is an audio-only file, and there is no audio output available."
 msgstr ""
 "Dette er en fil med kun lyd, og der er ikke nogen lydudgang tilgængelig."
 
-#: src/bacon-video-widget-xine.c:3359
+#: src/bacon-video-widget-xine.c:3366
 #, c-format
 msgid "Language %d"
 msgstr "Sprog %d"
 
-#: src/bacon-video-widget-xine.c:3430
+#: src/bacon-video-widget-xine.c:3440
 msgid "Movie is not playing."
 msgstr "Filmen spiller ikke."
 
-#: src/bacon-video-widget-xine.c:3439
+#: src/bacon-video-widget-xine.c:3449
 msgid "No video to capture."
 msgstr "Ingen video at optage."
 
-#: src/bacon-video-widget-xine.c:3447
+#: src/bacon-video-widget-xine.c:3457
 msgid "Video codec is not handled."
 msgstr "Videokodningen håndteres ikke."
 
-#: src/totem-disc.c:98
+#: src/totem-disc.c:114
 #, c-format
 msgid "Failed to find real device node for %s: %s"
 msgstr "Kunne ikke finde korrekt enhedsknude for %s: %s"
 
-#: src/totem-disc.c:109
+#: src/totem-disc.c:125
 #, c-format
 msgid "Failed to read symbolic link %s: %s"
 msgstr "Kunne ikke læse symbolsk henvisning %s: %s"
 
-#: src/totem-disc.c:193
+#: src/totem-disc.c:209
 #, c-format
 msgid "Failed to find mountpoint for device %s in /etc/fstab"
 msgstr "Kunne ikke finde monteringspunktet for enheden %s i /etc/fstab"
 
-#: src/totem-disc.c:231
+#: src/totem-disc.c:247
 msgid "Please check that a disc is present in the drive."
 msgstr "Kontrollér venligst at der er en disk i drevet."
 
-#: src/totem-disc.c:234
+#: src/totem-disc.c:250
 #, c-format
 msgid "Failed to open device %s for reading: %s"
 msgstr "Kunne ikke åbne enheden %s for læsning: %s"
 
-#: src/totem-disc.c:245
+#: src/totem-disc.c:261
 #, c-format
 msgid "Failed to retrieve capabilities of device %s: %s"
 msgstr "Kunne ikke hente egenskaber for enheden %s: %s"
 
-#: src/totem-disc.c:278
+#: src/totem-disc.c:294
 #, c-format
 msgid "Drive status 0x%x (%s) - check disc"
 msgstr "Drevstatus 0x%x (%s) - kontrollér disken"
 
-#: src/totem-disc.c:311
+#: src/totem-disc.c:327
 #, c-format
 msgid "Unexpected error status %d while mounting %s"
 msgstr "Uventet fejlstatus %d ved montering af %s"
 
-#: src/totem-disc.c:363
+#: src/totem-disc.c:379
 #, c-format
 msgid "Error getting %s disc status: %s"
 msgstr "Fejl ved henting %s diskstatus: %s"
 
-#: src/totem-disc.c:392
+#: src/totem-disc.c:408
 #, c-format
 msgid "Unexpected/unknown cd type 0x%x (%s)"
 msgstr "Uventet/ukendt cd-type 0x%x (%s)"
 
-#: src/totem-disc.c:556
+#: src/totem-disc.c:572
 msgid "Audio CD"
 msgstr "Lyd-cd"
 
-#: src/totem-disc.c:558
+#: src/totem-disc.c:574
 msgid "Video CD"
 msgstr "Video-cd"
 
-#: src/totem-disc.c:560
+#: src/totem-disc.c:576
 msgid "DVD"
 msgstr "DVD"
 
-#: src/totem-interface.c:103
+#: src/totem-interface.c:112
 #, c-format
 msgid "Couldn't load the '%s' interface."
 msgstr "Kunne ikke indlæse grænsefladen \"%s\"."
 
-#: src/totem-interface.c:105 src/totem-interface.c:107
+#: src/totem-interface.c:114 src/totem-interface.c:116
 msgid "Make sure that Totem is properly installed."
 msgstr "Sikr dig at Totem er korrekt installeret."
 
 #. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
-#: src/totem-mozilla-viewer.c:59 src/totem.c:301 src/totem.c:328
-#: src/totem.c:692 src/totem.c:797
+#: src/totem-mozilla-viewer.c:59 src/totem.c:312 src/totem.c:339
+#: src/totem.c:713 src/totem.c:818
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem kunne ikke afspille '%s'."
@@ -1189,11 +1189,11 @@ msgstr "Kontrollér at udvidelsesmodulet Totem er korrekt installeret."
 msgid "The Totem plugin could not startup."
 msgstr "Udvidelsesmodulet Totem kunne ikke starte."
 
-#: src/totem-mozilla-viewer.c:109 src/totem.c:3200
+#: src/totem-mozilla-viewer.c:109 src/totem.c:3222
 msgid "No reason."
 msgstr "Ingen begrundelse."
 
-#: src/totem-mozilla-viewer.c:141 src/totem.c:3381
+#: src/totem-mozilla-viewer.c:141 src/totem.c:3403
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Kunne ikke klargøre de trådsikre bibliotekter."
 
@@ -1250,6 +1250,16 @@ msgstr "Erstat"
 msgid "Option '%s' is unknown and was ignored\n"
 msgstr "Valgmuligheden \"%s\" er ukendt og blev ignoreret\n"
 
+#: src/totem-pl-parser.c:215
+#, c-format
+msgid "Couldn't write parser: %s"
+msgstr "Kunne ikke skrive fortolker: %s"
+
+#: src/totem-pl-parser.c:321 src/totem-pl-parser.c:444
+#, c-format
+msgid "Couldn't open file '%s': %s"
+msgstr "Kunne ikke åbne filen \"%s\": %s"
+
 #: src/totem-playlist.c:299
 msgid "Could not save the playlist"
 msgstr "Kunne ikke gemme afspilningslisten"
@@ -1276,31 +1286,25 @@ msgstr "Filen \"%s\" findes allerede. Er du sikker på du vil overskrive den?"
 msgid "Filename"
 msgstr "Filnavn"
 
-#: src/totem-playlist.c:1619
+#: src/totem-playlist.c:1500
+msgid "playlist"
+msgstr "afspilningsliste"
+
+#: src/totem-playlist.c:1644
 msgid "Playlist error"
 msgstr "Afspilningslistefejl"
 
-#: src/totem-playlist.c:1619
+#: src/totem-playlist.c:1644
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr ""
 "Afspilningslisten \"%s\" kunne ikke fortolkes, den kan være beskadiget."
 
-#: src/totem-pl-parser.c:215
-#, c-format
-msgid "Couldn't write parser: %s"
-msgstr "Kunne ikke skrive fortolker: %s"
-
-#: src/totem-pl-parser.c:321 src/totem-pl-parser.c:444
-#, c-format
-msgid "Couldn't open file '%s': %s"
-msgstr "Kunne ikke åbne filen \"%s\": %s"
-
-#: src/totem-preferences.c:78
+#: src/totem-preferences.c:87
 msgid "Enable visual effects?"
 msgstr "Aktivér visuelle effekter?"
 
-#: src/totem-preferences.c:80
+#: src/totem-preferences.c:89
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1308,7 +1312,7 @@ msgstr ""
 "Der ser ud til at du kører Totem fjern.\n"
 "Er du sikker på du vil aktivere de visuelle effekter?"
 
-#: src/totem-preferences.c:133
+#: src/totem-preferences.c:142
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted."
@@ -1316,30 +1320,30 @@ msgstr ""
 "Ændringen af denne indstilling træder først i kraft for den næste film eller "
 "når Totem bliver genstartet."
 
-#: src/totem-preferences.c:177
+#: src/totem-preferences.c:186
 msgid ""
 "Switching on or off this type of TV-Out requires a restart to take effect."
 msgstr ""
 "Aktivering/deaktivering af denne type tv-ud kræver en genstart for at træde "
 "i kraft."
 
-#: src/totem-preferences.c:310
+#: src/totem-preferences.c:336
 msgid "Totem could not start the file manager."
 msgstr "Totem kunne ikke starte filhåndteringen."
 
-#: src/totem-preferences.c:338
+#: src/totem-preferences.c:364
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr ""
 "Skift af typen af visuel effekt kræver en genstart for at træde i kraft."
 
-#: src/totem-preferences.c:431
+#: src/totem-preferences.c:457
 msgid ""
 "The change of audio output type will only take effect when Totem is "
 "restarted."
 msgstr ""
 "Ændringen af lyduddatatype træder først i kraft når Totem bliver genstartet."
 
-#: src/totem-properties-main.c:103
+#: src/totem-properties-main.c:112
 msgid "Audio/Video"
 msgstr "Lyd/video"
 
@@ -1373,7 +1377,7 @@ msgstr "Skyggetype"
 msgid "Style of bevel around the statusbar text"
 msgstr "Afrundingstypen omkring statuslinjeteksten"
 
-#: src/totem-statusbar.c:124 src/totem.c:243 src/totem.c:547
+#: src/totem-statusbar.c:124 src/totem.c:251 src/totem.c:564
 msgid "Stopped"
 msgstr "Stoppet"
 
@@ -1412,19 +1416,19 @@ msgstr "%d %%"
 msgid "None"
 msgstr "Ingen"
 
-#: src/totem.c:233
+#: src/totem.c:241
 msgid "Playing"
 msgstr "Afspiller"
 
-#: src/totem.c:238
+#: src/totem.c:246
 msgid "Paused"
 msgstr "På pause"
 
-#: src/totem.c:279
+#: src/totem.c:287
 msgid "Totem could not eject the optical media."
 msgstr "Totem kunne ikke skubbe det optiske medium ud."
 
-#: src/totem.c:354
+#: src/totem.c:365
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1433,7 +1437,7 @@ msgstr ""
 "Totem kan ikke afspille denne medietype (%s) fordi du ikke har de nødvendige "
 "udvidelsesmoduler til at håndtere den."
 
-#: src/totem.c:355
+#: src/totem.c:366
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1441,7 +1445,7 @@ msgstr ""
 "Installér de nødvendige moduler og genstart Totem hvis du vil afspille denne "
 "type."
 
-#: src/totem.c:363
+#: src/totem.c:374
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1450,7 +1454,7 @@ msgstr ""
 "Totem kunne ikke afspille dette medie (%s) selvom et modul er tilgængeligt "
 "til at håndtere det."
 
-#: src/totem.c:364
+#: src/totem.c:375
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1458,41 +1462,45 @@ msgstr ""
 "Kontrollér at disken sidder i drevet og at det er korrekt konfigureret."
 
 #. Title
-#: src/totem.c:540
+#: src/totem.c:557
 #, c-format
 msgid "%s - Totem Movie Player"
 msgstr "%s - filmafspiller"
 
-#: src/totem.c:554
+#: src/totem.c:571
 msgid "No file"
 msgstr "Ingen fil"
 
-#: src/totem.c:590 src/totem.c:1879
+#: src/totem.c:607 src/totem.c:1901
 msgid "Totem"
 msgstr "Totem"
 
-#: src/totem.c:1137 src/totem.c:1139
+#: src/totem.c:1158 src/totem.c:1160
 msgid "An error occured"
 msgstr "En fejl opstod"
 
-#: src/totem.c:1470
+#: src/totem.c:1492
 msgid "Select files"
 msgstr "Vælg filer"
 
-#: src/totem.c:1837
+#: src/totem.c:1563
+msgid "Open Location..."
+msgstr "Åbn placering..."
+
+#: src/totem.c:1859
 msgid "Totem could not display the help contents."
 msgstr "Totem kunne ikke vise indholdet af hjælp."
 
-#: src/totem.c:1875
+#: src/totem.c:1897
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Filmafspiller via %s"
 
-#: src/totem.c:1881 src/vanity.c:253
+#: src/totem.c:1903 src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Copyright © 2002-2005 Bastien Nocera"
 
-#: src/totem.c:1886 src/vanity.c:258
+#: src/totem.c:1908 src/vanity.c:266
 msgid "translator-credits"
 msgstr ""
 "Martin Willemoes Hansen\n"
@@ -1501,57 +1509,66 @@ msgstr ""
 "Dansk-gruppen <dansk@klid.dk>\n"
 "Mere info: http://www.klid.dk/dansk/"
 
-#: src/totem.c:1919 src/totem.c:1927 src/vanity.c:291 src/vanity.c:299
+#: src/totem.c:1941 src/totem.c:1949 src/vanity.c:299 src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem kunne ikke skaffe et skærmbillede af den film."
 
-#: src/totem.c:1927
+#: src/totem.c:1949
 msgid "Please file a bug, this isn't supposed to happen."
 msgstr "Indsend venligst en fejlrapport, dette burde ikke kunne ske."
 
-#: src/totem.c:1954
+#: src/totem.c:1976
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem kunne ikke vise filmegenskabsvinduet."
 
-#: src/totem.c:1954
+#: src/totem.c:1976
 msgid "Make sure that Totem is correctly installed."
 msgstr "Kontrollér at Totem er korrekt installeret."
 
-#: src/totem.c:2040
+#: src/totem.c:2062
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem kunne ikke søge i '%s'."
 
-#: src/totem.c:3200
+#: src/totem.c:3222
 msgid "Totem could not startup."
 msgstr "Totem kunne ikke starte."
 
-#: src/totem.c:3381
+#: src/totem.c:3403
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Kontrollér din systeminstallation. Totem vil nu afslutte."
 
-#: src/totem.c:3402
+#: src/totem.c:3423
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem kunne ikke klargøre konfigurationsmotoren."
 
-#: src/totem.c:3402
+#: src/totem.c:3423
 msgid "Make sure that GNOME is properly installed."
 msgstr "Kontrollér at Gnome er korrekt installeret."
 
-#: src/vanity.c:67
+#. Main window
+#: src/totem.c:3450
+msgid "main window"
+msgstr "hovedvindue"
+
+#: src/totem.c:3455
+msgid "video popup menu"
+msgstr "video pop op-menu"
+
+#: src/vanity.c:75
 msgid "Debug mode on"
 msgstr "Fejlanalyseringstilstand til"
 
-#: src/vanity.c:247
+#: src/vanity.c:255
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "Netkamera-værktøj via %s"
 
-#: src/vanity.c:299
+#: src/vanity.c:307
 msgid "Please file a bug, this isn't supposed to happen"
 msgstr "Indsend venligst en fejlrapport, dette burde ikke kunne ske."
 
-#: src/vanity.c:542
+#: src/vanity.c:550
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1560,11 +1577,11 @@ msgstr ""
 "Vanity kunne ikke starte:\n"
 "%s"
 
-#: src/vanity.c:543
+#: src/vanity.c:551
 msgid "No reason"
 msgstr "Ingen begrundelse"
 
-#: src/vanity.c:581
+#: src/vanity.c:589
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1573,7 +1590,7 @@ msgstr ""
 "Vanity kunne ikke kontakte netkameraet.\n"
 "Grund: %s."
 
-#: src/vanity.c:597
+#: src/vanity.c:605
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1582,11 +1599,11 @@ msgstr ""
 "Vanity kunne ikke afspille video fra netkameraet.\n"
 "Grund: %s"
 
-#: src/vanity.c:633
+#: src/vanity.c:641
 msgid "Vanity Webcam Utility"
 msgstr "Vanity - netkamera-værktøj"
 
-#: src/vanity.c:638
+#: src/vanity.c:646
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1594,7 +1611,7 @@ msgstr ""
 "Kunne ikke klargøre de tråd-sikre bibliotekter.\n"
 "Kontrollér din systeminstallering. Totem vil nu afslutte."
 
-#: src/vanity.c:663
+#: src/vanity.c:671
 #, c-format
 msgid ""
 "Vanity couln't initialise the \n"
@@ -1605,7 +1622,7 @@ msgstr ""
 "konfigurationsmotoren:\n"
 "%s"
 
-#: src/vanity.c:683 src/vanity.c:698
+#: src/vanity.c:691 src/vanity.c:706
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
