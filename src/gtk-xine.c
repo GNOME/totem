@@ -329,7 +329,11 @@ gtk_xine_finalize (GObject *object)
 	GtkXine *gtx = (GtkXine *) object;
 
 	/* Should put here what needs to be destroyed */
-//FIXME
+	g_async_queue_unref (gtx->priv->queue);
+	if (gtx->priv->dialog != NULL)
+		gtk_widget_destroy (gtx->priv->dialog);
+	if (gtx->priv->xml != NULL)
+		g_object_unref (gtx->priv->xml);
 	G_OBJECT_CLASS (parent_class)->finalize (object);
 
 	gtx->priv = NULL;
@@ -916,11 +920,13 @@ gtk_xine_unrealize (GtkWidget *widget)
 
 	/* stop the playback */
 	xine_close (gtx->priv->stream);
+	xine_event_dispose_queue (gtx->priv->ev_queue);
 	xine_dispose (gtx->priv->stream);
 	gtx->priv->stream = NULL;
 
 	/* stop the event thread */
 	pthread_cancel (gtx->priv->thread);
+	pthread_join (gtx->priv->thread, NULL);
 
 	/* Kill the drivers */
 	if (gtx->priv->vo_driver != NULL)
@@ -939,6 +945,10 @@ gtk_xine_unrealize (GtkWidget *widget)
 	/* stop event thread */
 	xine_exit (gtx->priv->xine);
 	gtx->priv->xine = NULL;
+
+	/* Finally, kill the left-over windows */
+	if (gtx->priv->fullscreen_window != NULL)
+		g_object_unref (GDK_DRAWABLE (gtx->priv->fullscreen_window));
 
 	/* This destroys widget->window and unsets the realized flag */
 	if (GTK_WIDGET_CLASS (parent_class)->unrealize)
