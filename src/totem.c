@@ -820,8 +820,6 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 			subtitle++;
 		}
 
-		g_message ("totem_action_open_files: %s", filename);
-
 		if (g_file_test (filename, G_FILE_TEST_IS_REGULAR
 					| G_FILE_TEST_EXISTS)
 				|| strstr (filename, "://") != NULL
