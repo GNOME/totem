@@ -15,12 +15,6 @@ gtkxine-marshal.c: gtkxine-marshal.h
 	  && mv gtkxine-marshal.tmp gtkxine-marshal.c ) \
 	|| ( rm -f gtkxine-marshal.tmp && exit 1 )
 
-EGGFILES2 = eggaccelerators.h eggaccelerators.c
-EGGDIR2=$(srcdir)/../../libegg/libegg/
-regenerate-built-sources:
-	EGGFILES="$(EGGFILES1)" EGGDIR="$(EGGDIR1)" $(srcdir)/update-from-egg.sh
-	EGGFILES="$(EGGFILES2)" EGGDIR="$(EGGDIR2)" $(srcdir)/update-from-egg.sh
-
 EGG_RECENT_FILES =                      \
         egg-recent-model.c              \
         egg-recent-model.h              \
