@@ -1615,7 +1615,7 @@ bacon_video_widget_can_set_volume (BaconVideoWidget *bvw)
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
 	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
 
-	if (xine_get_param (bvw->priv->stream, XINE_PARAM_AUDIO_VOLUME) == -1)
+	if (bvw->priv->ao_driver == NULL)
 		return FALSE;
 
 	if (xine_get_param (bvw->priv->stream,

@@ -1,3 +1,10 @@
+2003-04-03  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget.c: (bacon_video_widget_can_set_volume):
+	work around a bug in xine that would make the write to the audio
+	device take about 30 seconds, thus locking up our read of the volume,
+	on Red Hat Linux 9 (Closes: #107359)
+
 2003-04-02  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.glade: add a separator between the volume control and
