@@ -1,3 +1,12 @@
+2005-03-27  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-xine.c: (xine_error): remove unused debug
+	* src/totem-private.h:
+	* src/totem-session.c:
+	* src/totem.c: (on_recent_file_activate): move the
+	totem_signal_(un)block_by_data helpers to totem-private.h, prevent
+	double-open when activating files from the recent-files menu (from HEAD)
+
 2005-03-24  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-stock-icons.c: (totem_set_default_icons),

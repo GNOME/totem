@@ -41,6 +41,9 @@
 #include "bacon-video-widget.h"
 #include "totem-skipto.h"
 
+#define totem_signal_block_by_data(obj, data) (g_signal_handlers_block_matched (obj, G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, data))
+#define totem_signal_unblock_by_data(obj, data) (g_signal_handlers_unblock_matched (obj, G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, data))
+
 typedef enum {
 	TOTEM_CONTROLS_VISIBLE,
 	TOTEM_CONTROLS_HIDDEN,

@@ -1411,7 +1411,6 @@ xine_error (BaconVideoWidget *bvw, GError **error)
 	 * xine_open() */
 	while ((data = g_async_queue_try_pop (bvw->priv->queue)) != NULL)
 	{
-		g_message ("data->signal %d", data->signal);
 		g_assert (data->signal == MESSAGE_ASYNC
 				|| data->signal == BUFFERING_ASYNC
 				|| data->signal == REDIRECT_ASYNC
