@@ -28,6 +28,7 @@
 #include <glade/glade.h>
 #include <string.h>
 #include "video-utils.h"
+#include "totem-interface.h"
 
 #include "debug.h"
 
@@ -270,14 +271,10 @@ bacon_video_widget_properties_new (void)
 {
 	BaconVideoWidgetProperties *props;
 	GladeXML *xml;
-	char *filename;
 	GtkWidget *vbox;
 
-	filename = g_build_filename (DATADIR,
-			"totem", "properties.glade", NULL);
-
-	xml = glade_xml_new (filename, "vbox1", NULL);
-	g_free (filename);
+	xml = totem_interface_load_with_root ("properties.glade",
+			"vbox1", _("Properties dialog"), TRUE, NULL);
 
 	if (xml == NULL)
 		return NULL;

@@ -1,3 +1,12 @@
+2005-04-01  Bastien Nocera  <hadess@hadess.net>
+
+	* NEWS: upd
+	* src/bacon-video-widget-properties.c:
+	(bacon_video_widget_properties_new): load the glade file using
+	our convenience functions
+	* src/totem-menu.c: (totem_lang_get_full): load the translations
+	from the correct domain
+
 2005-04-01  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* data/totem.schemas.in:
@@ -99,7 +108,7 @@
 	to fix 2 crashers happening when opening the second stream
 	* src/totem-mozilla-plugin.cpp:  only set non-blocking mode on
 	an existing file descriptor
-	* src/totem-mozilla-scriptable.cpp: use non-depracated function
+	* src/totem-mozilla-scriptable.cpp: use non-deprecated function
 	(Closes: #171866)
 
 2005-03-27  Bastien Nocera  <hadess@hadess.net>

@@ -145,7 +145,7 @@ totem_lang_get_full (const char *lang)
 	lang_name = (const gchar*) g_hash_table_lookup (lang_table, lang);
 
 	if (lang_name)
-		return dgettext (GETTEXT_PACKAGE "_iso_639", lang_name);
+		return dgettext ("iso_639", lang_name);
 
 	g_return_val_if_fail (g_utf8_validate (lang, -1, NULL), NULL);
 
