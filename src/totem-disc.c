@@ -444,7 +444,9 @@ cd_cache_disc_is_vcd (CdCache *cache,
     return MEDIA_TYPE_ERROR;
   if (!cd_cache_open_mountpoint (cache, error))
     return MEDIA_TYPE_ERROR;
-  if (cd_cache_file_exists (cache, "MPEGAV", "AVSEQ01.DAT"))
+  /* first is VCD, second is SVCD */
+  if (cd_cache_file_exists (cache, "MPEGAV", "AVSEQ01.DAT") ||
+      cd_cache_file_exists (cache, "MPEG2", "AVSEQ01.MPG"))
     return MEDIA_TYPE_VCD;
 
   return MEDIA_TYPE_DATA;

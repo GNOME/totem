@@ -1791,10 +1791,10 @@ bacon_video_widget_can_play (BaconVideoWidget * bvw, MediaType type)
 
   switch (type) {
     case MEDIA_TYPE_CDDA:
+    case MEDIA_TYPE_VCD:
       res = TRUE;
       break;
     case MEDIA_TYPE_DVD:
-    case MEDIA_TYPE_VCD:
     default:
       res = FALSE;
       break;
