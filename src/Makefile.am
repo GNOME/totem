@@ -164,7 +164,6 @@ EXTRA_DIST =	bacon-video-widget-xine.c \
 		bacon-video-widget-gst.c \
 		gstscreenshot.c \
 		gstscreenshot.h \
-		gststreaminfo.h \
 		$(BACON_V4L_SELECTION) \
 		vanity.c \
 		totem-mozilla-viewer.c \
