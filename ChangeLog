@@ -1,5 +1,13 @@
 2003-07-11  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.glade:
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_set_audio_out_type):
+	* src/bacon-video-widget.h: also do ac3 passthrough with the audio
+	output configuration
+
+2003-07-11  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: fix detection of curl with 2 digits in either the
 	major, minor or micro version, and fix the tests to actually compare
 	version correctly (Spotted by Frederic Crozat, fixed with help

@@ -74,6 +74,7 @@ typedef enum {
 	BVW_AUDIO_SOUND_4CHANNEL,
 	BVW_AUDIO_SOUND_5CHANNEL,
 	BVW_AUDIO_SOUND_51CHANNEL,
+	BVW_AUDIO_SOUND_AC3PASSTHRU,
 } BaconVideoWidgetAudioOutType;
 
 #define BACON_VIDEO_WIDGET(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), bacon_video_widget_get_type (), BaconVideoWidget))

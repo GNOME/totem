@@ -2584,13 +2584,13 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 		BaconVideoWidgetAudioOutType type)
 {
 	xine_cfg_entry_t entry;
-	int four_channel, five_channel, five_one_channel;
+	int four_channel, five_channel, five_one_channel, passthru;
 
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
 
-	four_channel = five_channel = five_one_channel = 0;
+	four_channel = five_channel = five_one_channel = passthru = 0;
 
 	gconf_client_set_int (bvw->priv->gc,
 			GCONF_PREFIX"/audio_output_type",
@@ -2607,6 +2607,9 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 		break;
 	case BVW_AUDIO_SOUND_51CHANNEL:
 		five_one_channel = 1;
+		break;
+	case BVW_AUDIO_SOUND_AC3PASSTHRU:
+		passthru = 1;
 		break;
 	default:
 		g_assert_not_reached ();
@@ -2627,6 +2630,13 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 	if (xine_config_lookup_entry (bvw->priv->xine, "audio.five_lfe_channel", &entry))
 	{
 		entry.num_value = five_one_channel;
+		xine_config_update_entry (bvw->priv->xine, &entry);
+	}
+
+	if (xine_config_lookup_entry (bvw->priv->xine, "audio.a52_pass_through",
+ &entry))
+	{
+		entry.num_value = passthru;
 		xine_config_update_entry (bvw->priv->xine, &entry);
 	}
 }
