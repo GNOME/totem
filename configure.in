@@ -31,7 +31,7 @@ AC_ARG_ENABLE(gstreamer,
 AC_MSG_CHECKING(for backend libraries)
 
 if test x$ENABLE_GST = xyes; then
-	MM="gstreamer-play-0.6 >= $GST_REQS"
+	MM="gstreamer-play-0.6 >= $GST_REQS gstreamer-gconf-0.6 >=  $GST_REQS gstreamer-control-0.6 >= $GST_REQS"
 	AC_MSG_RESULT(GStreamer)
 else
 	MM="libxine >= $XINE_REQS"

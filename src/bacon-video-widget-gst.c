@@ -219,7 +219,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 		g_signal_new ("title-change",
 				G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST,
-				G_STRUCT_OFFSET (BaconVideoWidgetClass, title_change),
+				G_STRUCT_OFFSET (BaconVideoWidgetClass,
+					title_change),
 				NULL, NULL,
 				g_cclosure_marshal_VOID__STRING,
 				G_TYPE_NONE, 1, G_TYPE_STRING);
@@ -232,7 +233,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 				baconvideowidget_marshal_VOID__INT_INT_INT,
 				G_TYPE_NONE, 3, G_TYPE_INT, G_TYPE_INT,
 				G_TYPE_INT);
-
 }
 
 static void
@@ -259,6 +259,7 @@ update_xid (GstPlay* play, gint xid, BaconVideoWidget *bvw)
 {
 	GdkWindow *window;
 
+	g_message ("update_xid");
 	window = gdk_window_foreign_new (xid);
 	gdk_window_reparent (window, bvw->priv->video_window, 0, 0);
 	gdk_window_show (window);
@@ -404,6 +405,7 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 	g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 	g_return_val_if_fail (bvw->priv->mrl == NULL, FALSE);
 
+	g_message ("bacon_video_widget_open: %s", mrl);
 	bvw->priv->mrl = g_strdup (mrl);
 
 	return gst_play_set_location (bvw->priv->play, mrl);
@@ -419,6 +421,7 @@ bacon_video_widget_play	(BaconVideoWidget *bvw,
 		GError **error)
 {
 	//FIXME
+	g_message ("bacon_video_widget_play");
 	gst_play_set_state (bvw->priv->play, GST_STATE_PLAYING);
 }
 
@@ -751,11 +754,48 @@ bacon_video_widget_new (int width, int height,
 		gboolean null_out, GError **err)
 {
 	BaconVideoWidget *bvw;
+	GstElement *audio_sink, *video_sink, *vis_video_sink, *vis_element;
 
 	bvw = BACON_VIDEO_WIDGET (g_object_new
 			(bacon_video_widget_get_type (), NULL));
 
 	bvw->priv->play = gst_play_new (GST_PLAY_PIPE_VIDEO, err);
+	//FIXME
+	if (*err != NULL)
+	{
+		g_message ("error: %s", (*err)->message);
+		return NULL;
+	}
+
+	//FIXME get me error checking please
+	audio_sink = gst_gconf_get_default_audio_sink ();
+	g_assert (audio_sink != NULL);
+	video_sink = gst_gconf_get_default_video_sink ();
+	g_assert (video_sink != NULL);
+	vis_video_sink = gst_gconf_get_default_video_sink ();
+	g_assert (vis_video_sink != NULL);
+//	vis_element = gst_gconf_get_default_visualisation_element ();
+
+	gst_play_set_video_sink (bvw->priv->play, video_sink);
+	gst_play_set_audio_sink (bvw->priv->play, audio_sink);
+//	gst_play_set_visualisation_video_sink (bvw->priv->play, vis_video_sink);
+//	gst_play_set_visualisation_element (bvw->priv->play, vis_element);
+#if 0
+	g_signal_connect (G_OBJECT (bvw->priv->play), "stream_end",
+			G_CALLBACK (gst_media_play_stream_end), mplay);
+	g_signal_connect (G_OBJECT (bvw->priv->play), "information",
+			G_CALLBACK (gst_media_play_information), mplay);
+	g_signal_connect (G_OBJECT (bvw->priv->play), "time_tick",
+			G_CALLBACK (gst_media_play_time_tick), mplay);
+	g_signal_connect (G_OBJECT (bvw->priv->play), "stream_length",
+			G_CALLBACK (gst_media_play_got_length), mplay);
+	g_signal_connect (G_OBJECT (bvw->priv->play), "have_xid",
+			G_CALLBACK (gst_media_play_have_xid), mplay);
+	g_signal_connect (G_OBJECT (bvw->priv->play), "have_video_size",
+			G_CALLBACK (gst_media_play_have_video_size), mplay);
+	g_signal_connect (G_OBJECT (bvw->priv->play), "state_change",
+			G_CALLBACK (gst_media_play_state_change), mplay);
+#endif
 
 	return GTK_WIDGET (bvw);
 }
