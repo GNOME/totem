@@ -6,15 +6,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Totem for Gnome v.2.2\n"
-"POT-Creation-Date: 2003-02-26 20:23+0000\n"
-"PO-Revision-Date: 2003-02-15 23:21+0700\n"
+"POT-Creation-Date: 2003-03-15 05:12+0100\n"
+"PO-Revision-Date: 2003-03-15 17:48+0700\n"
 "Last-Translator: Trinh Minh Thanh <tmthanh@yahoo.com>\n"
 "Language-Team: Gnome-Vi <Gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/playlist.glade.h:1 src/gtk-playlist.c:800
+#: data/playlist.glade.h:1 src/gtk-playlist.c:808
 msgid "Playlist"
 msgstr "Danh sách chơi"
 
@@ -51,9 +51,8 @@ msgid "<b>General</b>"
 msgstr "<b>Chung</b>"
 
 #: data/properties.glade.h:7
-#, fuzzy
 msgid "<b>URL</b>"
-msgstr "<b>Audio</b>"
+msgstr "<b>URL</b>"
 
 #: data/properties.glade.h:8
 msgid "<b>Video</b>"
@@ -95,7 +94,7 @@ msgstr "Không sẵn có"
 
 #: data/properties.glade.h:16 src/bacon-video-widget-properties.c:192
 msgid "No Link"
-msgstr ""
+msgstr "Không có liên kết"
 
 #: data/properties.glade.h:17 src/bacon-video-widget-properties.c:350
 msgid "Properties"
@@ -121,7 +120,7 @@ msgstr "Năm: "
 msgid "Play movies and songs"
 msgstr "Chơi phim và nhạc"
 
-#: data/totem.desktop.in.h:2
+#: data/totem.desktop.in.h:2 src/totem.c:2683
 msgid "Totem Movie Player"
 msgstr "Trình Chơi Phim Totem"
 
@@ -129,192 +128,252 @@ msgstr "Trình Chơi Phim Totem"
 msgid " seconds"
 msgstr " giây"
 
-#: data/totem.glade.h:2
+#: data/totem.glade.h:2 data/uri.glade.h:1
 msgid "*"
 msgstr "*"
 
 #: data/totem.glade.h:4
+msgid "1.5 Mbps T1/Intranet/LAN"
+msgstr "1.5 Mbps T1/Intranet/LAN"
+
+#: data/totem.glade.h:5
+msgid "112 Kbps Dual ISDN/DSL"
+msgstr "112 Kbps Dual ISDN/DSL"
+
+#: data/totem.glade.h:6
+msgid "14.4 Kbps Modem"
+msgstr "14.4 Kbps Modem"
+
+#: data/totem.glade.h:7
+msgid "19.2 Kbps Modem"
+msgstr "19.2 Kbps Modem"
+
+#: data/totem.glade.h:8
+msgid "256 Kbps DSL/Cable"
+msgstr "256 Kbps DSL/Cable"
+
+#: data/totem.glade.h:9
+msgid "28.8 Kbps Modem"
+msgstr "28.8 Kbps Modem"
+
+#: data/totem.glade.h:10
+msgid "33.6 Kbps Modem"
+msgstr "33.6 Kbps Modem"
+
+#: data/totem.glade.h:11
+msgid "34.4 Kbps Modem"
+msgstr "34.4 Kbps Modem"
+
+#: data/totem.glade.h:12
+msgid "384 Kbps DSL/Cable"
+msgstr "384 Kbps DSL/Cable"
+
+#: data/totem.glade.h:13
+msgid "512 Kbps DSL/Cable"
+msgstr "512 Kbps DSL/Cable"
+
+#: data/totem.glade.h:14
+msgid "56 Kbps Modem/ISDN"
+msgstr "56 Kbps Modem/ISDN"
+
+#: data/totem.glade.h:15
 msgid "<b>Preview</b>"
 msgstr "<b>Xem trước</b>"
 
-#: data/totem.glade.h:5
+#: data/totem.glade.h:16
+msgid "Always On _Top"
+msgstr "Luôn ở phía trư_ớc"
+
+#: data/totem.glade.h:17
 msgid "Angle menu"
 msgstr "Menu góc"
 
-#: data/totem.glade.h:6
+#: data/totem.glade.h:18
 msgid "Audio menu"
 msgstr "Menu Audio"
 
-#: data/totem.glade.h:7
+#: data/totem.glade.h:19
 msgid "Automatically _resize the window when a new video is loaded"
 msgstr "Tự động lập lại kích thước cửa sổ khi nạp video mới"
 
-#: data/totem.glade.h:8
+#: data/totem.glade.h:20
 msgid "Chapter menu"
 msgstr "Menu chương"
 
-#: data/totem.glade.h:9
+#: data/totem.glade.h:21
+msgid "Connection Speed: "
+msgstr "Tốc độ kết nối: "
+
+#: data/totem.glade.h:22
 msgid "DVD menu"
 msgstr "Menu DVD"
 
-#: data/totem.glade.h:10
+#: data/totem.glade.h:23
 msgid "Exit fullscreen"
 msgstr "Ra khỏi toàn màn hình"
 
-#: data/totem.glade.h:11
+#: data/totem.glade.h:24
 msgid "File name"
 msgstr "Tên tập tin"
 
-#: data/totem.glade.h:12 src/totem.c:74
+#: data/totem.glade.h:25
+msgid "Intranet/LAN"
+msgstr "Intranet/LAN"
+
+#: data/totem.glade.h:26 src/totem.c:77
 msgid "Next"
 msgstr "Tiếp theo"
 
-#: data/totem.glade.h:13
+#: data/totem.glade.h:27
 msgid "Next Chapter/Movie"
 msgstr "Chương/Phim Tiếp theo"
 
-#: data/totem.glade.h:14
+#: data/totem.glade.h:28
+msgid "Open _Location..."
+msgstr "Mở vị trí..."
+
+#: data/totem.glade.h:29
 msgid "Optical Device _Path: "
 msgstr "Đường dẫn thiết bị quang: "
 
-#: data/totem.glade.h:15
+#: data/totem.glade.h:30
 msgid "Play _Audio CD"
 msgstr "Chơi _Audio CD"
 
-#: data/totem.glade.h:16
+#: data/totem.glade.h:31
 msgid "Play _DVD"
 msgstr "Chơi _DVD"
 
-#: data/totem.glade.h:17
+#: data/totem.glade.h:32
 msgid "Play _VCD"
 msgstr "Chơi _VCD"
 
-#: data/totem.glade.h:18 src/totem.c:73
+#: data/totem.glade.h:33 src/totem.c:76
 msgid "Play/Pause"
 msgstr "Chơi/Tạm dừng"
 
-#: data/totem.glade.h:19 src/totem.c:75
+#: data/totem.glade.h:34 src/totem.c:78
 msgid "Previous"
 msgstr "Đứng trước"
 
-#: data/totem.glade.h:20
+#: data/totem.glade.h:35
 msgid "Previous Chapter/Movie"
 msgstr "Chương/Phim Trước"
 
-#: data/totem.glade.h:21
+#: data/totem.glade.h:36
 msgid "Save Screenshot"
 msgstr "Lưu Screenshot"
 
-#: data/totem.glade.h:22
+#: data/totem.glade.h:37
 msgid "Save screenshot to _file: "
 msgstr "Lưu Screenshot vào _tập tin: "
 
-#: data/totem.glade.h:23
+#: data/totem.glade.h:38
 msgid "Save screenshot to the _desktop"
 msgstr "Lưu screenshot lên _desktop"
 
-#: data/totem.glade.h:24
+#: data/totem.glade.h:39
 msgid "Show visual effects when an audio file is played"
 msgstr "Hiển thị tác động trực quan khi chơi tập tin audio"
 
-#: data/totem.glade.h:25
+#: data/totem.glade.h:40
 msgid "Show/Hide Playlist"
 msgstr "Hiện/Ẩn danh sách chơi"
 
-#: data/totem.glade.h:26
+#: data/totem.glade.h:41
 msgid "Skip backwards"
 msgstr "Nhảy qua tua lại"
 
-#: data/totem.glade.h:27
+#: data/totem.glade.h:42
 msgid "Skip forward"
 msgstr "Nhảy qua tiến lên"
 
-#: data/totem.glade.h:28
+#: data/totem.glade.h:43
 msgid "Skip to"
 msgstr "Nhảy tới"
 
-#: data/totem.glade.h:29
+#: data/totem.glade.h:44
 msgid "Skip to: "
 msgstr "Nhảy tới: "
 
-#: data/totem.glade.h:30
+#: data/totem.glade.h:45
 msgid "Take Screenshot"
 msgstr "Chụp Screenshot"
 
-#: data/totem.glade.h:31
+#: data/totem.glade.h:46
 msgid "Take _Screenshot"
 msgstr "Chụp _Screenshot"
 
-#: data/totem.glade.h:32
+#: data/totem.glade.h:47
 msgid "Time: "
 msgstr "Thời gian: "
 
-#: data/totem.glade.h:33
+#: data/totem.glade.h:48
 msgid "Title menu"
 msgstr "Menu tiêu đề"
 
-#: data/totem.glade.h:34
+#: data/totem.glade.h:49
 msgid "Toggle _Aspect Ratio"
 msgstr "Cố định tỷ lệ _bề ngoài"
 
 #. Title
-#: data/totem.glade.h:35 src/totem.c:414 src/totem.c:436 src/totem.c:1267
+#: data/totem.glade.h:50 src/totem.c:426 src/totem.c:448 src/totem.c:1351
 msgid "Totem"
 msgstr "Totem"
 
-#: data/totem.glade.h:36
+#: data/totem.glade.h:51
 msgid "Totem Preferences"
 msgstr "Tùy thích Totem"
 
-#: data/totem.glade.h:37 src/totem.c:79
+#: data/totem.glade.h:52 src/totem.c:82
 msgid "Volume Down"
 msgstr "Giảm âm"
 
-#: data/totem.glade.h:38 src/totem.c:78
+#: data/totem.glade.h:53 src/totem.c:81
 msgid "Volume Up"
 msgstr "Tăng âm"
 
-#: data/totem.glade.h:39
+#: data/totem.glade.h:54
 msgid "Zoom _1:1"
 msgstr "Zoom _1:1"
 
-#: data/totem.glade.h:40
+#: data/totem.glade.h:55
 msgid "Zoom _2:1"
 msgstr "Zoom _2:1"
 
-#: data/totem.glade.h:41
+#: data/totem.glade.h:56
 msgid "_Fullscreen"
 msgstr "T_oàn màn hình"
 
-#: data/totem.glade.h:42
+#: data/totem.glade.h:57
 msgid "_Go"
 msgstr "_Đi"
 
-#: data/totem.glade.h:43
+#: data/totem.glade.h:58
 msgid "_Movie"
 msgstr "_Phim"
 
-#: data/totem.glade.h:44
+#: data/totem.glade.h:59
 msgid "_Play / Pause"
 msgstr "_Chơi / Tạm dừng"
 
-#: data/totem.glade.h:45
+#: data/totem.glade.h:60
 msgid "_Repeat Mode"
 msgstr "Chế độ nhắ_c lại"
 
-#: data/totem.glade.h:46
+#: data/totem.glade.h:61
 msgid "_Show/Hide Playlist"
 msgstr "_Hiện/Ẩn danh sách chơi"
 
-#: data/totem.glade.h:47
+#: data/totem.glade.h:62
 msgid "_Skip to..."
 msgstr "_Nhảy tới..."
 
-#: data/totem.glade.h:48
+#: data/totem.glade.h:63
 msgid "_Sound"
 msgstr "Â_m thanh"
 
-#: data/totem.glade.h:49
+#: data/totem.glade.h:64
 msgid "_Zoom 1:2"
 msgstr "_Zoom 1:2"
 
@@ -345,6 +404,14 @@ msgstr "X coordinate cho Danh sách chơi"
 #: data/totem.schemas.in.h:7
 msgid "Y coordinate for the Playlist"
 msgstr "Y coordinate cho Danh sách chơi"
+
+#: data/uri.glade.h:2
+msgid "Enter the _location (URI) of the file you would like to open:"
+msgstr "Nhập _vị trí (URI) của tập tin bạn muốn mở:"
+
+#: data/uri.glade.h:3
+msgid "Open from URI"
+msgstr "Mở từ URI"
 
 #: src/bacon-cd-selection.c:233
 msgid "Unnamed CDROM"
@@ -402,11 +469,11 @@ msgstr "_Mật khẩu:"
 msgid "Remember this password"
 msgstr "Nhớ mật khẩu"
 
-#: src/gtk-playlist.c:414 src/totem.c:1108
+#: src/gtk-playlist.c:422 src/totem.c:1126
 msgid "Select files"
 msgstr "Chọn tập tin"
 
-#: src/gtk-playlist.c:550
+#: src/gtk-playlist.c:558
 msgid "Filename"
 msgstr "Tên tập tin"
 
@@ -414,7 +481,7 @@ msgstr "Tên tập tin"
 msgid "Totem Video Window"
 msgstr "Cửa sổ video của totem"
 
-#: src/bacon-video-widget.c:544
+#: src/bacon-video-widget.c:551
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -423,43 +490,42 @@ msgstr ""
 "Không thể nạp thiết bị âm '%s'\n"
 "Hãy kiểm tra xem thiết bị có được dùng bởi chương trình khác không."
 
-#: src/bacon-video-widget.c:895
+#: src/bacon-video-widget.c:929
 msgid "There is no plugin to handle this movie"
-msgstr ""
+msgstr "Không có plugin để xử lý phim này"
 
-#: src/bacon-video-widget.c:899
-#, fuzzy
+#: src/bacon-video-widget.c:933
 msgid "This movie is broken and can not be played further"
-msgstr "'%s' bị gẫy, Totem không thể chơi thêm nữa."
+msgstr "Phim này bị hỏng, không thể chơi thêm nữa."
 
-#: src/bacon-video-widget.c:903
-#, fuzzy
+#: src/bacon-video-widget.c:937
 msgid "This location is not a valid one"
-msgstr ""
-"Totem không thể chơi '%s'.\n"
-"Vị trí này không hợp lệ."
+msgstr "Vị trí này không hợp lệ"
 
-#: src/bacon-video-widget.c:1183
-#, fuzzy, c-format
+#: src/bacon-video-widget.c:941
+msgid "Generic Error"
+msgstr "Lỗi chung"
+
+#: src/bacon-video-widget.c:1218
+#, c-format
 msgid "Video type '%s' is not handled"
-msgstr "Nguyên nhân: Loại video '%s' không được xử lý."
+msgstr "Loại video '%s' không được xử lý"
 
-#: src/bacon-video-widget.c:2038
+#: src/bacon-video-widget.c:2107
 msgid "Movie is not playing"
-msgstr ""
+msgstr "Phim đang không chạy"
 
-#: src/bacon-video-widget.c:2046
-msgid "Can't capture visual effects"
-msgstr ""
-
-#: src/bacon-video-widget.c:2047
+#: src/bacon-video-widget.c:2115
 msgid "No video to capture"
-msgstr ""
+msgstr "Không có video để nhận"
 
-#: src/bacon-video-widget.c:2054
-#, fuzzy
+#: src/bacon-video-widget.c:2122
 msgid "Video codec is not handled"
-msgstr "Nguyên nhân: Loại video '%s' không được xử lý."
+msgstr "Video codec không được xử lý"
+
+#: src/bacon-video-widget.c:2133
+msgid "Height or width of the video is 0. Please file a bug."
+msgstr "Chiều cao hay rộng của video bằng 0, hãy báo lỗi."
 
 #. One hour
 #: src/bacon-video-widget-properties.c:109
@@ -530,52 +596,52 @@ msgstr "%d khung / giây"
 msgid "%d kbps"
 msgstr "%d Kb/giây"
 
-#: src/totem.c:76
+#: src/totem.c:79
 msgid "Seek Forwards"
 msgstr "Tìm phía trước"
 
-#: src/totem.c:77
+#: src/totem.c:80
 msgid "Seek Backwards"
 msgstr "Tìm trở lại"
 
-#: src/totem.c:81
+#: src/totem.c:84
 msgid "Toggle Fullscreen"
 msgstr "Cố định toàn màn hình"
 
-#: src/totem.c:82
+#: src/totem.c:85
 msgid "Quit"
 msgstr "Thoát"
 
-#: src/totem.c:83
+#: src/totem.c:86
 msgid "Enqueue"
 msgstr ""
 
-#: src/totem.c:84
+#: src/totem.c:87
 msgid "Replace"
 msgstr "Thay thế"
 
-#: src/totem.c:166
+#: src/totem.c:169
 msgid "Playing"
 msgstr "Đang chơi"
 
-#: src/totem.c:173
+#: src/totem.c:176
 msgid "Paused"
 msgstr "Tạm dừng"
 
-#: src/totem.c:180 src/totem-statusbar.c:171
+#: src/totem.c:183 src/totem-statusbar.c:171
 msgid "Stopped"
 msgstr "Dừng"
 
-#: src/totem.c:238 src/totem.c:527 src/totem.c:616
-#, fuzzy, c-format
+#: src/totem.c:241 src/totem.c:539 src/totem.c:628
+#, c-format
 msgid ""
 "Totem could not play '%s'.\n"
 "Reason: %s."
 msgstr ""
 "Totem không thể chơi '%s':\n"
-"%s"
+"Lý do: %s."
 
-#: src/totem.c:263
+#: src/totem.c:268
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -586,7 +652,7 @@ msgstr ""
 "để xử lý.\n"
 "Hãy cài đặt plugin cần thiết và chạy lại Totem để chơi phương tiện này."
 
-#: src/totem.c:271
+#: src/totem.c:276
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -597,47 +663,54 @@ msgstr ""
 "hay chưa."
 
 #. Title
-#: src/totem.c:390
+#: src/totem.c:402
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:403 src/totem.c:2373
+#: src/totem.c:415 src/totem.c:2502
 msgid "No file"
 msgstr "Không có tập tin"
 
-#: src/totem.c:1243
+#: src/totem.c:1177 src/totem.c:1188
+msgid ""
+"Couldn't load the 'Open Location...' interface.\n"
+"Make sure that Totem is properly installed."
+msgstr ""
+"Không thể nạp giao diện 'Mở vị trí...'.\n"
+"Hãy bảo đảm là Totem được cài đặt đúng."
+
+#: src/totem.c:1327
 msgid "translator_credits"
 msgstr "đóng góp dịch thuật"
 
-#: src/totem.c:1269
+#: src/totem.c:1353
 msgid "Movie Player (based on the xine libraries)"
 msgstr "Chương trình chiếu phim (dựa trên thư viện của Xine)"
 
-#: src/totem.c:1323 src/totem.c:1334
+#: src/totem.c:1407 src/totem.c:1418
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Screenshot%d.png"
 
-#: src/totem.c:1387
-#, fuzzy, c-format
+#: src/totem.c:1471
+#, c-format
 msgid ""
 "Totem could not get a screenshot of that film.\n"
 "Reason: %s."
 msgstr ""
-"Totem không thể chụp screenshot của phim này.\n"
-"Bạn có lẽ cần thử lại vào thời điểm khác."
+"Totem đã không lấy được ảnh chụp màn hình của phim đó.\n"
+"Lý do: %s."
 
-#: src/totem.c:1397
-#, fuzzy
+#: src/totem.c:1481
 msgid ""
 "Totem could not get a screenshot of that film.\n"
 "Please file a bug, this isn't supposed to happen"
 msgstr ""
-"Totem không thể chụp screenshot của phim này.\n"
-"Bạn có lẽ cần thử lại vào thời điểm khác."
+"Totem đã không lấy được ảnh chụp màn hình của phim đó.\n"
+"Hãy tìm lỗi."
 
-#: src/totem.c:1423
+#: src/totem.c:1507
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
@@ -646,7 +719,7 @@ msgstr ""
 "Tập tin '%s' đã có rồi.\n"
 "Screenshot chưa được lưu."
 
-#: src/totem.c:1434
+#: src/totem.c:1518
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -655,7 +728,7 @@ msgstr ""
 "Lỗi lưu screenshot.\n"
 "Chi tiết: %s"
 
-#: src/totem.c:1451
+#: src/totem.c:1535
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -663,16 +736,16 @@ msgstr ""
 "Totem không thể hiển thị cửa sổ thuộc tính movie.\n"
 "Kiểm tra xem Totem được cài đặt chuẩn chưa."
 
-#: src/totem.c:1520
-#, fuzzy, c-format
+#: src/totem.c:1604
+#, c-format
 msgid ""
 "Totem could not seek in '%s'.\n"
 "Reason: %s."
 msgstr ""
-"Totem không thể chơi '%s':\n"
-"%s"
+"Totem không thể tìm kiếm trong '%s':\n"
+"Lý do: %s."
 
-#: src/totem.c:2303
+#: src/totem.c:2432
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -681,7 +754,7 @@ msgstr ""
 "Totem không thể khởi chạy:\n"
 "%s"
 
-#: src/totem.c:2568
+#: src/totem.c:2699
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -692,7 +765,7 @@ msgstr ""
 "engine cấu hình:\n"
 "%s"
 
-#: src/totem.c:2583 src/totem.c:2615
+#: src/totem.c:2714 src/totem.c:2746
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -700,7 +773,7 @@ msgstr ""
 "Không thể nạp giao diện chính (totem, glade).\n"
 "Kiểm tra xem Totem được cài đặt chuẩn chưa."
 
-#: src/totem.c:2641
+#: src/totem.c:2772
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
@@ -776,3 +849,4 @@ msgstr "0:00 / 0:00"
 
 #~ msgid "<span size=\"medium\"><b>No file</b></span>"
 #~ msgstr "<span size=\"medium\"><b>Không có tập tin</b></span>"
+
