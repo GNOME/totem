@@ -25,7 +25,6 @@
 #include <gconf/gconf-client.h>
 #include <string.h>
 
-#include "gnome-authn-manager.h"
 #include "bacon-video-widget.h"
 
 #include "debug.h"

@@ -1,5 +1,15 @@
 2004-02-19  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* src/Makefile.am:
+	* src/gnome-authn-manager.c:
+	* src/gnome-authn-manager.h:
+	* src/totem.c:
+	* src/vanity.c: Removed the builtin authentication manager, and
+	use the one shipped in libgnomeui from the 2.4 version
+
+2004-02-19  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: require GTK+ 2.3
 	* src/totem.c: (totem_set_screenshot_icon),
 	(totem_callback_connect): Added a totem_set_screenshot_icon function

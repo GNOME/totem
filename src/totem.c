@@ -30,7 +30,6 @@
 #include <X11/XF86keysym.h>
 #endif
 
-#include "gnome-authn-manager.h"
 #include "bacon-video-widget.h"
 #include "bacon-video-widget-properties.h"
 #include "rb-ellipsizing-label.h"
