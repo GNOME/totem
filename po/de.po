@@ -1,4 +1,4 @@
-# German totem translation.
+# German Totem translation.
 # Copyright (C) 2002-2003 Bastien Nocera
 # This file is distributed under the same license as the totem package.
 # Christian Neumair <chris@gnome-de.org>, 2002, 2003.
@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Totem HEAD\n"
-"POT-Creation-Date: 2003-01-09 18:00+0100\n"
-"PO-Revision-Date: 2002-01-09 18:00+0100\n"
+"POT-Creation-Date: 2003-01-13 14:45+0100\n"
+"PO-Revision-Date: 2002-01-13 14:45+0100\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,22 +22,22 @@ msgstr "Playliste"
 msgid "Repeat Mode"
 msgstr "Endlosschleife"
 
-#: data/properties.glade.h:1 src/gtk-xine.c:2081
+#: data/properties.glade.h:1 src/gtk-xine.c:2054
 msgid "0 frames per second"
 msgstr "0"
 
 #. Bitrate
-#: data/properties.glade.h:2 src/gtk-xine.c:2083
+#: data/properties.glade.h:2 src/gtk-xine.c:2056
 msgid "0 kbps"
 msgstr "0 kB/s"
 
 #. 0 seconds
-#: data/properties.glade.h:3 src/gtk-xine.c:2017
+#: data/properties.glade.h:3 src/gtk-xine.c:1990
 msgid "0 seconds"
 msgstr "0 Sekunden"
 
 #. Dimensions
-#: data/properties.glade.h:4 src/gtk-xine.c:2076
+#: data/properties.glade.h:4 src/gtk-xine.c:2049
 msgid "0 x 0"
 msgstr "0 x 0"
 
@@ -78,9 +78,9 @@ msgid "Framerate: "
 msgstr "Bilder / Sekunde: "
 
 #. Year
-#: data/properties.glade.h:14 src/gtk-xine.c:2072 src/gtk-xine.c:2078
-#: src/gtk-xine.c:2085 src/gtk-xine.c:2107 src/gtk-xine.c:2132
-#: src/gtk-xine.c:2163
+#: data/properties.glade.h:14 src/gtk-xine.c:2045 src/gtk-xine.c:2051
+#: src/gtk-xine.c:2058 src/gtk-xine.c:2080 src/gtk-xine.c:2105
+#: src/gtk-xine.c:2136
 msgid "N/A"
 msgstr "Nicht verfügbar"
 
@@ -93,8 +93,8 @@ msgid "Title: "
 msgstr "Titel: "
 
 #. Title
-#: data/properties.glade.h:17 src/gtk-xine.c:2068 src/gtk-xine.c:2070
-#: src/gtk-xine.c:2099 src/gtk-xine.c:2103
+#: data/properties.glade.h:17 src/gtk-xine.c:2041 src/gtk-xine.c:2043
+#: src/gtk-xine.c:2072 src/gtk-xine.c:2076
 msgid "Unknown"
 msgstr "Unbekannt"
 
@@ -207,7 +207,7 @@ msgstr "Titel-Menü"
 msgid "Toggle Aspect Ratio"
 msgstr "Ansichtsverhältnis beibehalten"
 
-#: data/totem.glade.h:25 src/totem.c:374 src/totem.c:1207
+#: data/totem.glade.h:25 src/totem.c:374 src/totem.c:1230
 msgid "Totem"
 msgstr "Totem"
 
@@ -297,7 +297,7 @@ msgstr "X-Koordinate der Playliste"
 msgid "Y coordinate for the Playlist"
 msgstr "Y-Koordinate der Playliste"
 
-#: src/gtk-playlist.c:409 src/totem.c:1040
+#: src/gtk-playlist.c:409 src/totem.c:1063
 msgid "Select files"
 msgstr "Dateien auswählen"
 
@@ -305,11 +305,20 @@ msgstr "Dateien auswählen"
 msgid "Filename"
 msgstr "Dateiname"
 
-#: src/gtk-xine.c:76
+#: src/gtk-xine.c:77
 msgid "Totem Video Window"
 msgstr "Totem Video-Fenster"
 
-#: src/gtk-xine.c:921
+#: src/gtk-xine.c:571
+#, c-format
+msgid ""
+"Couldn't load the '%s' audio driver\n"
+"Check that the device is not busy."
+msgstr ""
+"Der Audio-Treiber »%s« konnte nicht geladen werden.\n"
+"Stellen Sie sicher, dass das Gerät nicht belegt ist."
+
+#: src/gtk-xine.c:941
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
@@ -317,80 +326,80 @@ msgstr ""
 "Die Unterstützung für »threads« konnte nicht initialisiert werden.\n"
 "Sie sollten eine »thread«-sichere Xlib installieren."
 
-#: src/gtk-xine.c:953
+#: src/gtk-xine.c:969
 msgid "Could not find a suitable video output."
 msgstr "Es konnte keine passende Video-Ausgabe gefunden werden"
 
-#: src/gtk-xine.c:1292
+#: src/gtk-xine.c:1312
 #, c-format
 msgid "Reason: Video type '%s' is not handled."
 msgstr "Grund: Videotyp »%s« wird nicht unterstützt."
 
 #. One hour
-#: src/gtk-xine.c:1986
+#: src/gtk-xine.c:1959
 #, c-format
 msgid "%d hour"
 msgstr "%d Stunde"
 
 #. Multiple hours
-#: src/gtk-xine.c:1989
+#: src/gtk-xine.c:1962
 #, c-format
 msgid "%d hours"
 msgstr "%d Stunden"
 
 #. One minute
-#: src/gtk-xine.c:1993
+#: src/gtk-xine.c:1966
 #, c-format
 msgid "%d minute"
 msgstr "%d Minute"
 
 #. Multiple minutes
-#: src/gtk-xine.c:1996
+#: src/gtk-xine.c:1969
 #, c-format
 msgid "%d minutes"
 msgstr "%d Minuten"
 
 #. One second
-#: src/gtk-xine.c:2000
+#: src/gtk-xine.c:1973
 #, c-format
 msgid "%d second"
 msgstr "%d Sekunde"
 
 #. Multiple seconds
-#: src/gtk-xine.c:2003
+#: src/gtk-xine.c:1976
 #, c-format
 msgid "%d seconds"
 msgstr "%d Sekunden"
 
 #. hour:minutes:seconds
-#: src/gtk-xine.c:2008
+#: src/gtk-xine.c:1981
 #, c-format
 msgid "%s %s %s"
 msgstr "%s:%s:%s"
 
 #. minutes:seconds
-#: src/gtk-xine.c:2011
+#: src/gtk-xine.c:1984
 #, c-format
 msgid "%s %s"
 msgstr "%s:%s"
 
 #. seconds
-#: src/gtk-xine.c:2014
+#: src/gtk-xine.c:1987
 #, c-format
 msgid "%s"
 msgstr "%s"
 
 #. Duration
-#: src/gtk-xine.c:2074
+#: src/gtk-xine.c:2047
 msgid "0 second"
 msgstr "0 Sekunden"
 
-#: src/gtk-xine.c:2142
+#: src/gtk-xine.c:2115
 #, c-format
 msgid "%d frames per second"
 msgstr "%d"
 
-#: src/gtk-xine.c:2154
+#: src/gtk-xine.c:2127
 #, c-format
 msgid "%d kbps"
 msgstr "%d kB/s"
@@ -399,12 +408,11 @@ msgstr "%d kB/s"
 msgid "Select the drive"
 msgstr "Wählen Sie ein Laufwerk"
 
-#: src/cd-drive.c:274
-#, c-format
-msgid "Unnamed SCSI CDROM (%s)"
-msgstr "Namenloses SCSI-CD-ROM (%s)"
+#: src/cd-drive.c:330
+msgid "Unnamed Drive"
+msgstr "Namenloses Laufwerk"
 
-#: src/cd-drive.c:572
+#: src/cd-drive.c:559
 msgid "File image"
 msgstr "Datei-Abbild"
 
@@ -431,31 +439,31 @@ msgstr ""
 "Stellen Sie sicher, dass sich ein Medium im Laufwerk befindet und dieses "
 "korrekt konfiguriert ist."
 
-#: src/totem.c:385 src/totem.c:2053
+#: src/totem.c:385 src/totem.c:2074
 msgid "No file"
 msgstr "Keine Datei"
 
 #. Title
-#: src/totem.c:440 src/totem.c:772
+#: src/totem.c:440 src/totem.c:795
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
 #. Make the new label
-#: src/totem.c:811
+#: src/totem.c:834
 #, c-format
 msgid "Time: %s "
 msgstr "Verstrichen: %s"
 
-#: src/totem.c:1183
+#: src/totem.c:1206
 msgid "translator_credits"
 msgstr "Christian Neumair <chris@gnome-de.org>"
 
-#: src/totem.c:1209
+#: src/totem.c:1232
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Video-Wiedergabe (basierend auf den Xine-Bibliotheken)"
 
-#: src/totem.c:1259
+#: src/totem.c:1282
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -463,7 +471,7 @@ msgstr ""
 "Das Eigenschaften-Fenster für das Video konnte nicht geladen werden.\n"
 "Stellen Sie sicher, dass Totem korrekt installiert ist."
 
-#: src/totem.c:1632
+#: src/totem.c:1655
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -472,7 +480,7 @@ msgstr ""
 "Totem konnte nicht gestartet werden:\n"
 "%s"
 
-#: src/totem.c:1638
+#: src/totem.c:1661
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'.\n"
@@ -481,12 +489,12 @@ msgstr ""
 "Es ist kein Plugin installiert, um »%s« zu verarbeiten.\n"
 "Totem kann es daher nicht wiedergeben."
 
-#: src/totem.c:1643
+#: src/totem.c:1666
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "»%s« ist fehlerhaft und Totem kann es nicht weiter wiedergeben."
 
-#: src/totem.c:1647
+#: src/totem.c:1670
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -495,7 +503,7 @@ msgstr ""
 "Totem konnte »%s« nicht wiedergeben:\n"
 "%s"
 
-#: src/totem.c:2203
+#: src/totem.c:2224
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -507,7 +515,7 @@ msgstr ""
 "initialisiert werden:\n"
 "%s"
 
-#: src/totem.c:2217 src/totem.c:2245
+#: src/totem.c:2238 src/totem.c:2266
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -515,7 +523,7 @@ msgstr ""
 "Die Haupt-Oberfläche (totem.glade) konnte nicht geladen werden.\n"
 "Stellen Sie sicher, dass Totem korrekt installiert ist."
 
-#: src/totem.c:2257
+#: src/totem.c:2278
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
@@ -523,3 +531,5 @@ msgstr ""
 "Die Playlisten-Oberfläche konnte nicht geladen werden.\n"
 "Stellen Sie sicher, dass Totem korrekt installiert ist."
 
+#~ msgid "Unnamed SCSI CDROM (%s)"
+#~ msgstr "Namenloses SCSI-CD-ROM (%s)"
