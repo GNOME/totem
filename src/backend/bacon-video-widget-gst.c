@@ -719,7 +719,7 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
         {
           g_signal_emit (G_OBJECT (bvw), bvw_table_signals[SIGNAL_GOT_METADATA], 0, NULL);
 
-          if (bvw->priv->auto_resize) {
+          if (bvw->priv->auto_resize && !bvw->priv->fullscreen_mode) {
             gint w, h;
 
             shrink_toplevel (bvw);
@@ -1855,12 +1855,12 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget * bvw,
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
+  bvw->priv->fullscreen_mode = fullscreen;
+
 #ifdef HAVE_NVTV
   if (bvw->priv->tv_out_type != TV_OUT_NVTV_NTSC &&
       bvw->priv->tv_out_type != TV_OUT_NVTV_PAL)
     return;
-
-  bvw->priv->fullscreen_mode = fullscreen;
 
   if (fullscreen == FALSE)
   {
