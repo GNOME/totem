@@ -996,7 +996,7 @@ cb_iterate (BaconVideoWidget *bvw)
 
   /* check length/pos of stream */
   if (gst_element_query (GST_ELEMENT (bvw->priv->play),
-			 GST_QUERY_TOTAL, &fmt, &value) &
+			 GST_QUERY_TOTAL, &fmt, &value) &&
       GST_CLOCK_TIME_IS_VALID (value) &&
       value / GST_MSECOND != bvw->priv->stream_length) {
     got_stream_length (GST_ELEMENT (bvw->priv->play),
@@ -1550,8 +1550,8 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 {
   GstElement *audiosink = NULL;
 
-  g_return_if_fail (bvw != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 
   if (type == bvw->priv->speakersetup)
     return FALSE;
