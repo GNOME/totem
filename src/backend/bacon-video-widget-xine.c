@@ -53,6 +53,9 @@
 #   define N_(String) (String)
 #endif
 
+#ifndef XINE_LANG_LABEL_MAX_SIZE
+#define XINE_LANG_LABEL_MAX_SIZE 128
+#endif
 #define DEFAULT_HEIGHT 315
 #define DEFAULT_WIDTH 420
 #define CONFIG_FILE ".gnome2"G_DIR_SEPARATOR_S"totem_config"
@@ -1640,7 +1643,6 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const char *mrl,
 {
 	int error;
 
-	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (mrl != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
@@ -1865,8 +1867,9 @@ bacon_video_widget_close (BaconVideoWidget *bvw)
 	g_free (bvw->priv->mrl);
 	bvw->priv->mrl = NULL;
 
-	g_signal_emit (G_OBJECT (bvw),
-			bvw_table_signals[CHANNELS_CHANGE], 0, NULL);
+	if (bvw->priv->logo_mode == FALSE)
+		g_signal_emit (G_OBJECT (bvw),
+				bvw_table_signals[CHANNELS_CHANGE], 0, NULL);
 }
 
 /* Properties */
@@ -3007,15 +3010,17 @@ GList
 {
 	GList *list = NULL;
 	int i;
-	char lang[16];
+	char lang[XINE_LANG_LABEL_MAX_SIZE];
 
 	for(i = 0; i < 32; i++)
 	{
 		memset (&lang, 0, sizeof (lang));
 
 		if (xine_get_audio_lang(bvw->priv->stream, i, lang) == 1)
+		{
 			list = g_list_prepend (list,
 					(gpointer) g_strdup (lang));
+		}
 	}
 
 	return g_list_reverse (list);
@@ -3024,6 +3029,9 @@ GList
 int
 bacon_video_widget_get_language (BaconVideoWidget *bvw)
 {
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -1);
+	g_return_val_if_fail (bvw->priv->stream != NULL, -1);
+
 	return xine_get_param (bvw->priv->stream,
 			XINE_PARAM_AUDIO_CHANNEL_LOGICAL);
 }
@@ -3031,6 +3039,9 @@ bacon_video_widget_get_language (BaconVideoWidget *bvw)
 void
 bacon_video_widget_set_language (BaconVideoWidget *bvw, int language)
 {
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->stream != NULL);
+
 	xine_set_param (bvw->priv->stream,
 			XINE_PARAM_AUDIO_CHANNEL_LOGICAL, language);
 }
@@ -3040,15 +3051,17 @@ GList
 {
 	GList *list = NULL;
 	int i;
-	char lang[16];
+	char lang[XINE_LANG_LABEL_MAX_SIZE];
 
 	for(i = 0; i < 32; i++)
 	{
 		memset (&lang, 0, sizeof (lang));
 
 		if (xine_get_spu_lang(bvw->priv->stream, i, lang) == 1)
+		{
 			list = g_list_prepend (list,
 					(gpointer) g_strdup (lang));
+		}
 	}
 
 	return g_list_reverse (list);
