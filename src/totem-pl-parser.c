@@ -1144,6 +1144,7 @@ static PlaylistTypes dual_types[] = {
 	{ "text/plain", totem_pl_parser_add_ra },
 	{ "video/x-ms-asf", totem_pl_parser_add_asf },
 	{ "video/x-ms-wmv", totem_pl_parser_add_asf },
+	{ "audio/x-mp3", totem_pl_parser_add_m3u },
 };
 
 static gboolean
