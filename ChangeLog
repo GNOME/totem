@@ -1,3 +1,11 @@
+2004-10-06  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: remove libgnome-desktop dependency
+	* src/totem-pl-parser.c: (totem_pl_parser_add_desktop):
+	add application/x-desktop as a supported "playlist" type, and
+	reimplement the desktop parsing with our own .ini file parsing
+	(Closes: #152800)
+
 ============ Version 0.99.17
 
 2004-10-06  Bastien Nocera  <hadess@hadess.net>

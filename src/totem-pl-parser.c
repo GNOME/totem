@@ -34,9 +34,6 @@
 #include <libxml/parser.h>
 #include <glade/glade.h>
 #include <gconf/gconf-client.h>
-#if HAVE_LIBGNOME_DESKTOP
-#include <libgnome/gnome-desktop-item.h>
-#endif
 #include <libgnomevfs/gnome-vfs.h>
 #include <libgnomevfs/gnome-vfs-mime.h>
 #include <libgnomevfs/gnome-vfs-mime-utils.h>
@@ -1201,42 +1198,47 @@ totem_pl_parser_add_asf (TotemPlParser *parser, const char *url, gpointer data)
 	return totem_pl_parser_add_asf_parser (parser, url, data);
 }
 
-#if HAVE_LIBGNOME_DESKTOP
 static TotemPlParserResult
 totem_pl_parser_add_desktop (TotemPlParser *parser, const char *url, gpointer data)
 {
-	GnomeDesktopItem *ditem;
-	int type;
-	const char *path, *display_name;
+	char *contents, **lines;
+	const char *path, *display_name, *type;
+	int size;
 
-	ditem = gnome_desktop_item_new_from_file (url, 0, NULL);
-	if (ditem == NULL)
+	if (my_eel_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
-	type = gnome_desktop_item_get_entry_type (ditem);
-	if (type != GNOME_DESKTOP_ITEM_TYPE_LINK) {
-		gnome_desktop_item_unref (ditem);
+	contents = g_realloc (contents, size + 1);
+	contents[size] = '\0';
+
+	lines = g_strsplit (contents, "\n", 0);
+	g_free (contents);
+
+	type = read_ini_line_string (lines, "Type", FALSE);
+	if (type == NULL || g_ascii_strcasecmp (type, "Link") != 0) {
+		g_strfreev (lines);
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
-	path = gnome_desktop_item_get_string (ditem, "URL");
+	path = read_ini_line_string (lines, "URL", FALSE);
 	if (path == NULL) {
-		gnome_desktop_item_unref (ditem);
+		g_strfreev (lines);
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
-	display_name = gnome_desktop_item_get_localestring (ditem, "Name");
+	display_name = read_ini_line_string (lines, "Name", FALSE);
+
 	if (totem_pl_parser_ignore (parser, path) == FALSE) {
 		totem_pl_parser_add_one_url (parser, path, display_name);
 	} else {
 		if (totem_pl_parser_parse_internal (parser, path) != TOTEM_PL_PARSER_RESULT_SUCCESS)
 			totem_pl_parser_add_one_url (parser, path, display_name);
 	}
-	gnome_desktop_item_unref (ditem);
+
+	g_strfreev (lines);
 
 	return TOTEM_PL_PARSER_RESULT_SUCCESS;
 }
-#endif
 
 static int
 totem_pl_parser_dir_compare (GnomeVFSFileInfo *a, GnomeVFSFileInfo *b)
@@ -1304,9 +1306,8 @@ static PlaylistTypes special_types[] = {
 	{ "audio/x-ms-asx", totem_pl_parser_add_asx },
 	{ "audio/x-scpls", totem_pl_parser_add_pls },
 	{ "application/x-smil", totem_pl_parser_add_smil },
-#if HAVE_LIBGNOME_DESKTOP
 	{ "application/x-gnome-app-info", totem_pl_parser_add_desktop },
-#endif	
+	{ "application/x-desktop", totem_pl_parser_add_desktop },
 	{ "x-directory/normal", totem_pl_parser_add_directory },
 	{ "video/x-ms-wvx", totem_pl_parser_add_asx },
 	{ "audio/x-ms-wax", totem_pl_parser_add_asx },

@@ -133,7 +133,6 @@ dnl Seems that the order matters because libtool blows
 dnl Also check if we're going to be using GTK+ only
 if test x$ENABLE_GTK = "xno" ; then
 	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= 2.1.0 gtk+-2.0 >= 2.3.1 libgnomeui-2.0 >= 2.3.3 libglade-2.0 gnome-vfs-2.0 >= 2.1.6 gnome-vfs-module-2.0 >= 2.1.6 gnome-desktop-2.0 >= 2.1.5 libnautilus-burn >= 2.8.1 $MM)
-	AC_DEFINE(HAVE_LIBGNOME_DESKTOP, 1, [defined if you have gnome-desktop])
 	HAVE_GNOME=yes
 else
 	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= 2.1.0 gtk+-2.0 >= 2.3.1 libglade-2.0 gnome-vfs-2.0 >= 2.1.6 gnome-vfs-module-2.0 >= 2.1.6 libnautilus-burn >= 2.8.1 $MM)
