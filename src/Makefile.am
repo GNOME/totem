@@ -36,6 +36,9 @@ stuff_DATA =				\
 	totem.glade			\
 	playlist.glade
 
+pixmapdir = $(datadir)/pixmaps
+pixmap_DATA = media-player-48.png
+
 desktop_in_files = totem.desktop.in
 desktopdir = $(datadir)/applications/
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
@@ -44,6 +47,9 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 keys_DATA = totem.keys
 keysdir = $(datadir)/mime-info/
 
-EXTRA_DIST = $(stuff_DATA) $(desktop_DATA) $(keys_DATA)
+app_DATA = totem.applications
+appdir = $(datadir)/application-registry
+
+EXTRA_DIST = $(stuff_DATA) $(desktop_DATA) $(keys_DATA) $(app_DATA)
 
 CLEANFILES = *.bak *.gladep core*

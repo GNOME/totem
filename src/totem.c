@@ -739,6 +739,8 @@ playlist_changed_cb (GtkWidget *playlist, gpointer user_data)
 		g_free (totem->mrl);
 		totem->mrl = NULL;
 		action_set_mrl (totem, mrl);
+	} else if (totem->mrl != NULL) {
+		gtk_playlist_set_playing (totem->playlist);
 	}
 
 	g_free (mrl);

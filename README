@@ -9,6 +9,15 @@ a pretty complete keyboard navigation.
 News
 ====
 
+0.8:
+* Removed eel dependency
+* Added dnd to both the main window and the playlist
+* Volume is not accessible if the sound device is busy or inexistant
+* Nifty icon reflecting the volume
+* Aspect toggling
+* Some UI changes
+* More error checking
+
 0.7:
 * First release !
 
@@ -60,6 +69,19 @@ gtk-xine.[ch] from gnome-xine, with the following enhancements by myself:
 Nifty media player icon by Jakub Steiner <jimmac@ximian.com>
 
 UI help by Seth Nickell <snickell@stanford.edu>
+
+FAQ
+===
+
+Q: Totem doesn't appear in the applications to open videos in Nautilus.
+
+A: You probably installed Totem in a different prefix. Here is how to fix it.
+   $ cd /where/the/totem/sources/are/
+   $ mkdir -p ~/.gnome/application-registry ~/.gnome/mime-info/
+   $ cp src/totem.applications ~/.gnome/application-registry
+   $ cp src/totem.keys ~/.gnome/mime-info/
+
+   And it should now. Enjoy.
 
 TODO
 ====
