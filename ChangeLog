@@ -1,3 +1,9 @@
+2003-10-10  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_unrealize):
+	only switch off the visual effects if we're not paused, fixes a
+	deadlock on exit
+
 2003-10-07  Bastien Nocera  <hadess@hadess.net>
 
 	* README: remove a TODO item

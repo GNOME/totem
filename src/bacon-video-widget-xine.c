@@ -1273,6 +1273,7 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	BaconVideoWidget *bvw;
 	char *configfile;
 	xine_cfg_entry_t entry;
+	int speed;
 
 	g_return_if_fail (widget != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (widget));
@@ -1281,7 +1282,9 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 
 	g_source_remove (bvw->priv->tick_id);
 
-	show_vfx_update (bvw, FALSE);
+	speed = xine_get_param (bvw->priv->stream, XINE_PARAM_SPEED);
+	if (speed != XINE_SPEED_PAUSE)
+		show_vfx_update (bvw, FALSE);
 
 	/* stop the playback */
 	xine_stop (bvw->priv->stream);
