@@ -1361,7 +1361,7 @@ init_config (TotemPlaylist *playlist)
 			(GConfClientNotifyFunc) update_shuffle_cb,
 			playlist, NULL, NULL);
 
-	gconf_client_add_dir (playlist->_priv->gc, "/desktop/gnome/lockdown/",
+	gconf_client_add_dir (playlist->_priv->gc, "/desktop/gnome/lockdown",
 			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
 	gconf_client_notify_add (playlist->_priv->gc,
 			"/desktop/gnome/lockdown/disable_save_to_disk",

@@ -487,7 +487,7 @@ totem_setup_preferences (Totem *totem)
 	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/mediadev",
 			(GConfClientNotifyFunc) mediadev_changed_cb,
 			totem, NULL, NULL);
-	gconf_client_add_dir (totem->gc, "/desktop/gnome/lockdown/",
+	gconf_client_add_dir (totem->gc, "/desktop/gnome/lockdown",
 			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
 	gconf_client_notify_add (totem->gc,
 			"/desktop/gnome/lockdown/disable_save_to_disk",

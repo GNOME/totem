@@ -1,5 +1,12 @@
 2005-02-19  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c: (init_config):
+	* src/totem-preferences.c: (totem_setup_preferences): fix
+	warning from gconf_client_add_dir caused by the lockdown work
+	below
+
+2005-02-19  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in:
 	* src/Makefile.am: make sure that GLIB_MKENUMS gets defined
 
