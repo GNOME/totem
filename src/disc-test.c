@@ -32,7 +32,9 @@ main (gint   argc,
 {
   MediaType type;
   GError *error = NULL;
-  const gchar *type_s = NULL;
+  const char *type_s = NULL;
+  char *url = NULL;
+  gboolean is_dir = FALSE;
 
   if (argc != 2) {
     g_print ("Usage: %s <device>\n", argv[0]);
@@ -42,7 +44,13 @@ main (gint   argc,
   g_type_init ();
   gnome_vfs_init ();
 
-  type = cd_detect_type (argv[1], &error);
+  if (g_file_test (argv[1], G_FILE_TEST_IS_DIR) != FALSE) {
+    type = cd_detect_type_from_dir (argv[1], &url, &error);
+    is_dir = TRUE;
+  } else {
+    type = cd_detect_type (argv[1], &error);
+  }
+
   switch (type) {
     case MEDIA_TYPE_ERROR:
       g_print ("Error: %s\n", error ? error->message : "unknown reason");
@@ -64,6 +72,12 @@ main (gint   argc,
   }
 
   g_print ("%s contains a %s\n", argv[1], type_s);
+
+  if (is_dir != FALSE && url != NULL) {
+    g_print ("URL for directory is %s\n", url);
+  }
+
+  g_free (url);
 
   return 0;
 }

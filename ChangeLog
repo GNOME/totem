@@ -1,3 +1,11 @@
+2004-10-19  Bastien Nocera  <hadess@hadess.net>
+
+	* src/disc-test.c: (main):
+	* src/totem-disc.c: (totem_disc_resolve_link), (cd_cache_new),
+	(cd_detect_type_from_dir):
+	* src/totem-disc.h: updated to give back a URL/MRL (dvd:///path/) if
+	we have a VCD or a DVD
+
 2004-10-18  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-disc.c: (cd_detect_type_from_dir): directories can't be

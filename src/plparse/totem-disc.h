@@ -37,6 +37,7 @@ typedef enum {
 MediaType	cd_detect_type	(const char *device,
 				 GError     **error);
 MediaType	cd_detect_type_from_dir (const char *dir,
+					 char      **url, 
 					 GError    **error);
 
 G_END_DECLS

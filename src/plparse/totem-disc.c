@@ -68,7 +68,7 @@ totem_disc_resolve_link (const char *dev, const char *buf)
   char *parent, *new;
 
   /* is it an absolute path? */
-  if (buf != NULL && buf[0] == '/')
+  if (g_path_is_absolute (buf) != FALSE)
     return g_strdup (buf);
 
   parent = g_path_get_dirname (dev);
@@ -131,7 +131,7 @@ cd_cache_new (const char *dev,
   GList *list, *or;
   gboolean is_dir;
 
-  is_dir = g_file_test (dev, G_FILE_TEST_IS_DIR & G_FILE_TEST_EXISTS);
+  is_dir = g_file_test (dev, G_FILE_TEST_IS_DIR);
   if (is_dir) {
     cache = g_new0 (CdCache, 1);
     cache->mountpoint = g_strdup (dev);
@@ -477,8 +477,9 @@ cd_cache_disc_is_dvd (CdCache *cache,
   return (have_vts && have_vtsifo) ?
       MEDIA_TYPE_DVD : MEDIA_TYPE_DATA;
 }
+
 MediaType
-cd_detect_type_from_dir (const char *dir, GError    **error)
+cd_detect_type_from_dir (const char *dir, char **url, GError **error)
 {
   CdCache *cache;
   MediaType type;
@@ -493,8 +494,34 @@ cd_detect_type_from_dir (const char *dir, GError    **error)
   if ((type = cd_cache_disc_is_vcd (cache, error)) == MEDIA_TYPE_DATA &&
       (type = cd_cache_disc_is_dvd (cache, error)) == MEDIA_TYPE_DATA) {
     /* crap, nothing found */
+    cd_cache_free (cache);
+    return type;
   }
   cd_cache_free (cache);
+
+  if (url == NULL) {
+    return type;
+  }
+
+  if (type == MEDIA_TYPE_DVD) {
+    if (g_str_has_prefix (dir, "file://") != FALSE) {
+      char *local;
+      local = g_filename_from_uri (dir, NULL, NULL);
+      *url = g_strdup_printf ("dvd://%s", local);
+      g_free (local);
+    } else {
+      *url = g_strdup_printf ("dvd://%s", dir);
+    }
+  } else if (type == MEDIA_TYPE_VCD) {
+    if (g_str_has_prefix (dir, "file://") != FALSE) {
+      char *local;
+      local = g_filename_from_uri (dir, NULL, NULL);
+      *url = g_strdup_printf ("vcd://%s", local);
+      g_free (local);
+    } else {
+      *url = g_strdup_printf ("vcd://%s", dir);
+    }
+  }
 
   return type;
 }
