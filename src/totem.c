@@ -151,6 +151,7 @@ totem_create_full_path (const char *path)
 	if (path[0] == '/')
 	{
 		escaped = gnome_vfs_escape_path_string (path);
+
 		retval = g_strdup_printf ("file://%s", escaped);
 		g_free (escaped);
 		return retval;
@@ -162,8 +163,8 @@ totem_create_full_path (const char *path)
 	g_free (curdir);
 
 	escaped = gnome_vfs_escape_path_string (path);
-	retval = gnome_vfs_uri_make_full_from_relative (curdir_withslash,
-			escaped);
+	retval = gnome_vfs_uri_make_full_from_relative
+		(curdir_withslash, escaped);
 	g_free (curdir_withslash);
 	g_free (escaped);
 
@@ -1416,18 +1417,28 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 						filename, NULL) == TRUE)
 			{
                                 EggRecentItem *item;
+				char *local;
 
 				if (strstr (filename, "file:///") == NULL)
+					continue;
+
+				//FIXME another bug in egg, it seems
+				//to fuck up file:/// uri into file:////
+				local = g_filename_from_uri (filename,
+						NULL, NULL);
+
+				if (local == NULL)
 					continue;
 
 				//FIXME egg recent seems to unescape our
 				//pure and clean uri
 				//playing something with a # in the name
 				//won't get saved properly
-				item = egg_recent_item_new_from_uri (filename);
+				item = egg_recent_item_new_from_uri (local);
+				g_free (local);
 				egg_recent_item_add_group (item, "Totem");
-				egg_recent_model_add_full (totem->recent_model,
-						item);
+				egg_recent_model_add_full
+					(totem->recent_model, item);
 			}
 		}
 
