@@ -14,7 +14,9 @@ struct GtkMessagePriv
 	guint ref;
 };
 
-static GdkWindow *window;
+static GdkWindow *window = NULL;
+static GtkTargetEntry targets[0];
+static char *selection_name = NULL;
 
 static gchar* gtk_message_make_selection_name (const gchar *unique_id);
 
@@ -73,10 +75,19 @@ static void
 selection_get_func (GtkClipboard *clipboard, GtkSelectionData *selection_data,
 		                guint info, gpointer user_data_or_owner)
 {
+	GtkSelectionData data;
+	GdkAtom clipboard_atom;
+
 	if (GDK_IS_WINDOW (window) == FALSE)
 		return;
 
-//FIXME	selection_data = GINT_TO_POINTER (GDK_WINDOW_XID (window));
+	clipboard_atom = gdk_atom_intern (selection_name, TRUE);
+	if (clipboard_atom == GDK_NONE)
+		return;
+
+	gtk_selection_data_set (selection_data, clipboard_atom, 0,
+			(guchar *)GINT_TO_POINTER (GDK_WINDOW_XID (window)),
+			strlen (GINT_TO_POINTER (GDK_WINDOW_XID (window))));
 }
 
 static void
@@ -85,21 +96,33 @@ selection_clear_func (GtkClipboard *clipboard, gpointer user_data_or_owner)
 	return;
 }
 
+static void
+clipboard_received_func (GtkClipboard *clipboard,
+		GtkSelectionData *selection_data, gpointer data)
+{
+	int xid;
+
+	if (selection_data->length == -1)
+	{
+		g_message ("Couldn't retrieve XID");
+		return;
+	}
+
+	xid = GPOINTER_TO_INT (selection_data->data);
+	window = gdk_window_foreign_new (xid);
+
+	g_message ("xid: %s", xid);
+}
+
 gboolean
 gtk_program_register (const gchar *unique_id)
 {
 	gboolean result = FALSE;
 	GtkClipboard *clipboard;
 	Atom clipboard_atom;
-	char *selection_name;
-	GtkTargetEntry targets[0];
 
 	selection_name = gtk_message_make_selection_name (unique_id);
 	clipboard_atom = gdk_x11_get_xatom_by_name (selection_name);
-
-	targets[0].target = selection_name;
-	targets[0].flags = 0;
-	targets[0].info = 0;
 
 	XGrabServer (GDK_DISPLAY());
 
@@ -107,6 +130,11 @@ gtk_program_register (const gchar *unique_id)
 		goto out;
 
 	clipboard = gtk_clipboard_get (gdk_atom_intern (selection_name, FALSE));
+
+	targets[0].target = selection_name;
+	targets[0].flags = 0;
+	targets[0].info = 0;
+
 	if (!gtk_clipboard_set_with_data  (clipboard, targets,
 				G_N_ELEMENTS (targets),
 				selection_get_func,
@@ -124,8 +152,13 @@ out:
 		/* Store the GdkWindow, so we can get the XID */
 		window = gdk_window_new_simple ();
 	} else {
+		GdkAtom gdk_atom;
+
 		/* Grab the XID for the already running app */
-		//FIXME
+		gdk_atom = gdk_atom_intern (selection_name, FALSE);
+		clipboard = gtk_clipboard_get (gdk_atom);
+		gtk_clipboard_request_contents (clipboard,
+				gdk_atom, clipboard_received_func, NULL);
 	}
 
 	return result;

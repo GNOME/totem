@@ -1127,7 +1127,7 @@ on_error_event (GtkWidget *gtx, GtkXineError error, const char *message,
 	case GTX_NO_CODEC:
 		msg = g_strdup_printf(_("Totem could not play '%s':\n%s"),
 				totem->mrl, message);
-		gtk_xine_stop (gtx);
+		totem_action_stop (totem);
 		break;
 	default:
 		g_assert_not_reached ();
