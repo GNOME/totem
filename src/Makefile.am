@@ -60,14 +60,8 @@ EGG_RECENT_FILES =                      \
 	egg-recent-util.h
 
 BACON_CD_SELECTION = 			\
-	cd-drive.c			\
-	cd-drive.h			\
-	bacon-cd-selection.c		\
-	bacon-cd-selection.h		\
 	bacon-message-connection.c	\
-	bacon-message-connection.h	\
-	dvd_plus_rw_utils.cpp		\
-	transport.hxx
+	bacon-message-connection.h
 
 BACON_V4L_SELECTION =			\
 	video-dev.c			\

@@ -23,11 +23,11 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <bacon-cd-selection.h>
 
 #include "totem.h"
 #include "totem-private.h"
 #include "totem-preferences.h"
-#include "bacon-cd-selection.h"
 #include "video-utils.h"
 
 #include "debug.h"
