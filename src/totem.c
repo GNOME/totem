@@ -103,6 +103,7 @@ static const GtkTargetEntry target_table[] = {
 
 static gboolean popup_hide (Totem *totem);
 static void update_buttons (Totem *totem);
+static void update_dvd_menu_items (Totem *totem);
 static void on_play_pause_button_clicked (GtkToggleButton *button,
 		gpointer user_data);
 static void playlist_changed_cb (GtkWidget *playlist, gpointer user_data);
@@ -473,6 +474,17 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		/* Update the properties */
 		gtk_xine_properties_update (GTK_XINE (totem->gtx), FALSE);
 	}
+        update_buttons (totem);
+        update_dvd_menu_items (totem);
+}
+
+static gboolean
+totem_playing_dvd (Totem *totem)
+{
+    if (!totem->mrl)
+        return FALSE;
+
+    return !strcmp("dvd:/", totem->mrl);
 }
 
 void
@@ -480,15 +492,22 @@ totem_action_previous (Totem *totem)
 {
 	char *mrl;
 
-	if (gtk_playlist_has_previous_mrl (totem->playlist) == FALSE)
+	if (totem_playing_dvd (totem) == FALSE &&
+                gtk_playlist_has_previous_mrl (totem->playlist) == FALSE)
 		return;
 
-	gtk_playlist_set_previous (totem->playlist);
-	update_buttons (totem);
-	mrl = gtk_playlist_get_current_mrl (totem->playlist);
-	totem_action_set_mrl (totem, mrl);
-	totem_action_play (totem, 0);
-	g_free (mrl);
+        if (totem_playing_dvd (totem) == TRUE)
+        {
+                gtk_xine_dvd_event (GTK_XINE (totem->gtx),
+                                        GTX_DVD_PREV_CHAPTER);
+        } else { 
+                gtk_playlist_set_previous (totem->playlist);
+                mrl = gtk_playlist_get_current_mrl (totem->playlist);
+                totem_action_set_mrl (totem, mrl);
+                totem_action_play (totem, 0);
+                g_free (mrl);
+        }
+
 }
 
 void
@@ -496,15 +515,21 @@ totem_action_next (Totem *totem)
 {
 	char *mrl;
 
-	if (gtk_playlist_has_next_mrl (totem->playlist) == FALSE)
-		                return;
+	if (totem_playing_dvd (totem) == FALSE &&
+                gtk_playlist_has_next_mrl (totem->playlist) == FALSE)
+                return;
 
-	gtk_playlist_set_next (totem->playlist);
-	update_buttons (totem);
-	mrl = gtk_playlist_get_current_mrl (totem->playlist);
-	totem_action_set_mrl (totem, mrl);
-	totem_action_play (totem, 0);
-	g_free (mrl);
+        if (totem_playing_dvd (totem) == TRUE)
+        {
+                gtk_xine_dvd_event (GTK_XINE (totem->gtx), 
+                                        GTX_DVD_NEXT_CHAPTER);
+        } else {
+                gtk_playlist_set_next (totem->playlist);
+                mrl = gtk_playlist_get_current_mrl (totem->playlist);
+                totem_action_set_mrl (totem, mrl);
+                totem_action_play (totem, 0);
+                g_free (mrl);
+        }
 }
 
 void
@@ -640,7 +665,6 @@ drop_cb (GtkWidget     *widget,
 				(gpointer) totem);
 		mrl = gtk_playlist_get_current_mrl (totem->playlist);
 		totem_action_set_mrl (totem, mrl);
-		update_buttons (totem);
 		g_free (mrl);
 		totem_action_play (totem, 0);
 	}
@@ -968,7 +992,6 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 	/* ... and reconnect because we're nice people */
 	if (cleared == TRUE)
 	{
-		update_buttons (totem);
 		g_signal_connect (G_OBJECT (totem->playlist),
 				"changed", G_CALLBACK (playlist_changed_cb),
 				(gpointer) totem);
@@ -1195,6 +1218,41 @@ on_preferences1_activate (GtkButton *button, gpointer user_data)
 	Totem *totem = (Totem *)user_data;
 
 	gtk_widget_show (totem->prefs);
+}
+
+static void
+on_dvd_root_menu1_activate (GtkButton *button, gpointer user_data)
+{
+        Totem *totem = (Totem *)user_data;
+        gtk_xine_dvd_event (GTK_XINE (totem->gtx), GTX_DVD_ROOT_MENU);
+}
+
+static void
+on_dvd_title_menu1_activate (GtkButton *button, gpointer user_data)
+{
+        Totem *totem = (Totem *)user_data;
+        gtk_xine_dvd_event (GTK_XINE (totem->gtx), GTX_DVD_TITLE_MENU);
+}
+
+static void
+on_dvd_audio_menu1_activate (GtkButton *button, gpointer user_data)
+{
+        Totem *totem = (Totem *)user_data;
+        gtk_xine_dvd_event (GTK_XINE (totem->gtx), GTX_DVD_AUDIO_MENU);
+}
+
+static void
+on_dvd_angle_menu1_activate (GtkButton *button, gpointer user_data)
+{
+        Totem *totem = (Totem *)user_data;
+        gtk_xine_dvd_event (GTK_XINE (totem->gtx), GTX_DVD_ANGLE_MENU);
+}
+
+static void
+on_dvd_chapter_menu1_activate (GtkButton *button, gpointer user_data)
+{
+        Totem *totem = (Totem *)user_data;
+        gtk_xine_dvd_event (GTK_XINE (totem->gtx), GTX_DVD_CHAPTER_MENU);
 }
 
 static void
@@ -1561,6 +1619,13 @@ totem_action_handle_key (Totem *totem, guint keyval)
 	case GDK_a:
 		totem_action_toggle_aspect_ratio (totem);
 		break;
+    case GDK_C:
+    case GDK_c:
+        gtk_xine_dvd_event (GTK_XINE (totem->gtx), GTX_DVD_CHAPTER_MENU);
+        break;
+    case GDK_M:
+    case GDK_m:
+        gtk_xine_dvd_event (GTK_XINE (totem->gtx), GTX_DVD_ROOT_MENU);
 	case XF86XK_AudioPrev:
 	case GDK_B:
 	case GDK_b:
@@ -1611,27 +1676,57 @@ on_window_key_press_event (GtkWidget *win, GdkEventKey *event,
 }
 
 static void
+update_dvd_menu_items (Totem *totem)
+{
+        GtkWidget *item;
+        gboolean playing_dvd;
+
+        playing_dvd = totem_playing_dvd (totem);
+
+        item = glade_xml_get_widget (totem->xml, "dvd_root_menu");
+	gtk_widget_set_sensitive (item, playing_dvd);
+        item = glade_xml_get_widget (totem->xml, "dvd_title_menu");
+	gtk_widget_set_sensitive (item, playing_dvd);
+        item = glade_xml_get_widget (totem->xml, "dvd_audio_menu");
+	gtk_widget_set_sensitive (item, playing_dvd);
+        item = glade_xml_get_widget (totem->xml, "dvd_angle_menu");
+	gtk_widget_set_sensitive (item, playing_dvd);
+        item = glade_xml_get_widget (totem->xml, "dvd_chapter_menu");
+	gtk_widget_set_sensitive (item, playing_dvd);
+
+        return;
+}
+
+static void
 update_buttons (Totem *totem)
 {
 	GtkWidget *item;
 	gboolean has_item;
 
 	/* Previous */
-	has_item = gtk_playlist_has_previous_mrl (totem->playlist);
+        /* FIXME Need way to detect if DVD Title is at first chapter */
+        if (totem_playing_dvd (totem))
+                has_item = TRUE;
+        else
+                has_item = gtk_playlist_has_previous_mrl (totem->playlist);
 	item = glade_xml_get_widget (totem->xml, "previous_button");
 	gtk_widget_set_sensitive (item, has_item);
 	item = glade_xml_get_widget (totem->xml, "fs_previous_button");
 	gtk_widget_set_sensitive (item, has_item);
-	item = glade_xml_get_widget (totem->xml, "previous_stream1");
+	item = glade_xml_get_widget (totem->xml, "previous_chapter1");
 	gtk_widget_set_sensitive (item, has_item);
 
 	/* Next */
-	has_item = gtk_playlist_has_next_mrl (totem->playlist);
+        /* FIXME Need way to detect if DVD Title has no more chapters */
+        if (totem_playing_dvd (totem))
+                has_item = TRUE;
+        else
+                has_item = gtk_playlist_has_next_mrl (totem->playlist);
 	item = glade_xml_get_widget (totem->xml, "next_button");
 	gtk_widget_set_sensitive (item, has_item);
 	item = glade_xml_get_widget (totem->xml, "fs_next_button");
 	gtk_widget_set_sensitive (item, has_item);
-	item = glade_xml_get_widget (totem->xml, "next_stream1");
+	item = glade_xml_get_widget (totem->xml, "next_chapter1");
 	gtk_widget_set_sensitive (item, has_item);
 }
 
@@ -1780,6 +1875,33 @@ totem_callback_connect (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->playlist),
 			"current-removed", G_CALLBACK (current_removed_cb),
 			(gpointer) totem);
+
+
+        /* DVD menu callbacks */
+        item = glade_xml_get_widget (totem->xml, "dvd_root_menu");
+        g_signal_connect (G_OBJECT (item), "activate",
+                        G_CALLBACK (on_dvd_root_menu1_activate), totem);
+        item = glade_xml_get_widget (totem->xml, "dvd_title_menu");
+        g_signal_connect (G_OBJECT (item), "activate",
+                        G_CALLBACK (on_dvd_title_menu1_activate), totem);
+        item = glade_xml_get_widget (totem->xml, "dvd_audio_menu");
+        g_signal_connect (G_OBJECT (item), "activate",
+                        G_CALLBACK (on_dvd_audio_menu1_activate), totem);
+        item = glade_xml_get_widget (totem->xml, "dvd_audio_menu");
+        g_signal_connect (G_OBJECT (item), "activate",
+                        G_CALLBACK (on_dvd_audio_menu1_activate), totem);
+        item = glade_xml_get_widget (totem->xml, "dvd_angle_menu");
+        g_signal_connect (G_OBJECT (item), "activate",
+                        G_CALLBACK (on_dvd_angle_menu1_activate), totem);
+        item = glade_xml_get_widget (totem->xml, "dvd_chapter_menu");
+        g_signal_connect (G_OBJECT (item), "activate",
+                        G_CALLBACK (on_dvd_chapter_menu1_activate), totem);
+        item = glade_xml_get_widget (totem->xml, "next_chapter1");
+        g_signal_connect (G_OBJECT (item), "activate",
+                        G_CALLBACK (on_next_button_clicked), totem);
+        item = glade_xml_get_widget (totem->xml, "previous_chapter1");
+        g_signal_connect (G_OBJECT (item), "activate",
+                        G_CALLBACK (on_previous_button_clicked), totem);
 
 	/* Update the UI */
 	gtk_timeout_add (500, update_cb, totem);

@@ -42,6 +42,21 @@ typedef enum {
 } GtkXineError;
 
 typedef enum {
+    GTX_DVD_ROOT_MENU,
+    GTX_DVD_TITLE_MENU,
+    GTX_DVD_SUBPICTURE_MENU,
+    GTX_DVD_AUDIO_MENU,
+    GTX_DVD_ANGLE_MENU,
+    GTX_DVD_CHAPTER_MENU,
+    GTX_DVD_NEXT_CHAPTER,
+    GTX_DVD_PREV_CHAPTER,
+    GTX_DVD_NEXT_TITLE,
+    GTX_DVD_PREV_TITLE,
+    GTX_DVD_NEXT_ANGLE,
+    GTX_DVD_PREV_ANGLE
+} GtkXineDVDEvent;
+
+typedef enum {
 	MEDIA_DVD,
 	MEDIA_VCD,
 } MediaType;
@@ -117,6 +132,8 @@ GtkWidget *gtk_xine_properties_dialog_get
                                        (GtkXine *gtx);
 char *gtk_xine_properties_get_title    (GtkXine *gtx);
 void gtk_xine_properties_update        (GtkXine *gtx, gboolean reset);
+
+void gtk_xine_dvd_event (GtkXine *gtx, GtkXineDVDEvent type);
 
 G_END_DECLS
 

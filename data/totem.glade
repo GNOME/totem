@@ -53,7 +53,7 @@
 			  <signal name="activate" handler="on_play_dvd1_activate" last_modification_time="Fri, 09 Aug 2002 22:46:45 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image415">
+			    <widget class="GtkImage" id="image1040">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-cdrom</property>
 			      <property name="icon_size">1</property>
@@ -74,7 +74,7 @@
 			  <signal name="activate" handler="on_play_vcd1_activate" last_modification_time="Fri, 09 Aug 2002 22:46:45 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image416">
+			    <widget class="GtkImage" id="image1041">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-cdrom</property>
 			      <property name="icon_size">1</property>
@@ -104,105 +104,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="skip_forward1">
-			  <property name="visible">True</property>
-			  <property name="sensitive">False</property>
-			  <property name="label" translatable="yes">Skip forward</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_skip_forward1_activate" last_modification_time="Sun, 09 Jun 2002 02:56:32 GMT"/>
-			  <accelerator key="Right" modifiers="0" signal="activate"/>
-
-			  <child internal-child="image">
-			    <widget class="GtkImage" id="image417">
-			      <property name="visible">True</property>
-			      <property name="stock">gtk-go-forward</property>
-			      <property name="icon_size">1</property>
-			      <property name="xalign">0.5</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
-			    </widget>
-			  </child>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkImageMenuItem" id="skip_backwards1">
-			  <property name="visible">True</property>
-			  <property name="sensitive">False</property>
-			  <property name="label" translatable="yes">Skip backwards</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_skip_backwards1_activate" last_modification_time="Sun, 09 Jun 2002 03:00:00 GMT"/>
-			  <accelerator key="Left" modifiers="0" signal="activate"/>
-
-			  <child internal-child="image">
-			    <widget class="GtkImage" id="image418">
-			      <property name="visible">True</property>
-			      <property name="stock">gtk-go-back</property>
-			      <property name="icon_size">1</property>
-			      <property name="xalign">0.5</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
-			    </widget>
-			  </child>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkMenuItem" id="separator7">
-			  <property name="visible">True</property>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkImageMenuItem" id="next_stream1">
-			  <property name="visible">True</property>
-			  <property name="sensitive">False</property>
-			  <property name="label" translatable="yes">Next Movie</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_next_stream1_activate" last_modification_time="Sun, 09 Jun 2002 03:00:00 GMT"/>
-			  <accelerator key="N" modifiers="0" signal="activate"/>
-
-			  <child internal-child="image">
-			    <widget class="GtkImage" id="image419">
-			      <property name="visible">True</property>
-			      <property name="stock">gtk-goto-last</property>
-			      <property name="icon_size">1</property>
-			      <property name="xalign">0.5</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
-			    </widget>
-			  </child>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkImageMenuItem" id="previous_stream1">
-			  <property name="visible">True</property>
-			  <property name="sensitive">False</property>
-			  <property name="label" translatable="yes">Previous Movie</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_previous_stream1_activate" last_modification_time="Sun, 09 Jun 2002 03:00:00 GMT"/>
-			  <accelerator key="B" modifiers="0" signal="activate"/>
-
-			  <child internal-child="image">
-			    <widget class="GtkImage" id="image420">
-			      <property name="visible">True</property>
-			      <property name="stock">gtk-goto-first</property>
-			      <property name="icon_size">1</property>
-			      <property name="xalign">0.5</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
-			    </widget>
-			  </child>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkMenuItem" id="separator10">
+			<widget class="GtkMenuItem" id="separator14">
 			  <property name="visible">True</property>
 			</widget>
 		      </child>
@@ -270,7 +172,7 @@
 			  <accelerator key="F" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image421">
+			    <widget class="GtkImage" id="image1042">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-zoom-fit</property>
 			      <property name="icon_size">1</property>
@@ -292,7 +194,7 @@
 			  <accelerator key="0" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image422">
+			    <widget class="GtkImage" id="image1043">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-zoom-out</property>
 			      <property name="icon_size">1</property>
@@ -314,7 +216,7 @@
 			  <accelerator key="1" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image423">
+			    <widget class="GtkImage" id="image1044">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-zoom-100</property>
 			      <property name="icon_size">1</property>
@@ -336,7 +238,7 @@
 			  <accelerator key="2" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image424">
+			    <widget class="GtkImage" id="image1045">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-zoom-in</property>
 			      <property name="icon_size">1</property>
@@ -364,7 +266,7 @@
 			  <accelerator key="A" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image425">
+			    <widget class="GtkImage" id="image1046">
 			      <property name="visible">True</property>
 			      <property name="stock">gnome-stock-table-fill</property>
 			      <property name="icon_size">1</property>
@@ -391,9 +293,196 @@
 			  <signal name="activate" handler="on_show_playlist1_activate" last_modification_time="Fri, 14 Jun 2002 22:36:54 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image426">
+			    <widget class="GtkImage" id="image1047">
 			      <property name="visible">True</property>
 			      <property name="pixbuf">playlist-16.png</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
+			</widget>
+		      </child>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+
+	      <child>
+		<widget class="GtkMenuItem" id="dvd1_menu">
+		  <property name="visible">True</property>
+		  <property name="label" translatable="yes">_Go</property>
+		  <property name="use_underline">True</property>
+		  <signal name="activate" handler="on_dvd1_menu_activate" last_modification_time="Sun, 01 Dec 2002 05:35:38 GMT"/>
+
+		  <child>
+		    <widget class="GtkMenu" id="dvd1_menu_menu">
+
+		      <child>
+			<widget class="GtkImageMenuItem" id="dvd_root_menu">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">DVD menu</property>
+			  <property name="use_underline">True</property>
+			  <signal name="activate" handler="on_dvd_root_menu1_activate" last_modification_time="Sun, 01 Dec 2002 06:37:16 GMT"/>
+			  <accelerator key="m" modifiers="0" signal="activate"/>
+
+			  <child internal-child="image">
+			    <widget class="GtkImage" id="image1048">
+			      <property name="visible">True</property>
+			      <property name="stock">gtk-index</property>
+			      <property name="icon_size">1</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
+			</widget>
+		      </child>
+
+		      <child>
+			<widget class="GtkMenuItem" id="dvd_title_menu">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">Title menu</property>
+			  <property name="use_underline">True</property>
+			  <signal name="activate" handler="on_dvd_title_menu1_activate" last_modification_time="Sun, 01 Dec 2002 06:46:59 GMT"/>
+			</widget>
+		      </child>
+
+		      <child>
+			<widget class="GtkMenuItem" id="dvd_audio_menu">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">Audio menu</property>
+			  <property name="use_underline">True</property>
+			  <signal name="activate" handler="on_dvd_audio_menu1_activate" last_modification_time="Sun, 01 Dec 2002 06:47:23 GMT"/>
+			</widget>
+		      </child>
+
+		      <child>
+			<widget class="GtkMenuItem" id="dvd_angle_menu">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">Angle menu</property>
+			  <property name="use_underline">True</property>
+			  <signal name="activate" handler="on_dvd_angle_menu1_activate" last_modification_time="Mon, 02 Dec 2002 16:46:53 GMT"/>
+			</widget>
+		      </child>
+
+		      <child>
+			<widget class="GtkImageMenuItem" id="dvd_chapter_menu">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">Chapter menu</property>
+			  <property name="use_underline">True</property>
+			  <signal name="activate" handler="on_dvd_chapter_menu1_activate" last_modification_time="Sun, 01 Dec 2002 06:48:14 GMT"/>
+			  <accelerator key="c" modifiers="0" signal="activate"/>
+
+			  <child internal-child="image">
+			    <widget class="GtkImage" id="image1049">
+			      <property name="visible">True</property>
+			      <property name="stock">gnome-stock-text-numbered-list</property>
+			      <property name="icon_size">1</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
+			</widget>
+		      </child>
+
+		      <child>
+			<widget class="GtkMenuItem" id="separator12">
+			  <property name="visible">True</property>
+			</widget>
+		      </child>
+
+		      <child>
+			<widget class="GtkImageMenuItem" id="next_chapter1">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">Next Chapter/Movie</property>
+			  <property name="use_underline">True</property>
+			  <signal name="activate" handler="on_next_chapter1_activate" last_modification_time="Sun, 01 Dec 2002 05:37:38 GMT"/>
+			  <accelerator key="n" modifiers="0" signal="activate"/>
+
+			  <child internal-child="image">
+			    <widget class="GtkImage" id="image1050">
+			      <property name="visible">True</property>
+			      <property name="stock">gtk-goto-last</property>
+			      <property name="icon_size">1</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
+			</widget>
+		      </child>
+
+		      <child>
+			<widget class="GtkImageMenuItem" id="previous_chapter1">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">Previous Chapter/Movie</property>
+			  <property name="use_underline">True</property>
+			  <signal name="activate" handler="on_previous_chapter1_activate" last_modification_time="Sun, 01 Dec 2002 05:38:03 GMT"/>
+			  <accelerator key="b" modifiers="0" signal="activate"/>
+
+			  <child internal-child="image">
+			    <widget class="GtkImage" id="image1051">
+			      <property name="visible">True</property>
+			      <property name="stock">gtk-goto-first</property>
+			      <property name="icon_size">1</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
+			</widget>
+		      </child>
+
+		      <child>
+			<widget class="GtkMenuItem" id="separator13">
+			  <property name="visible">True</property>
+			</widget>
+		      </child>
+
+		      <child>
+			<widget class="GtkImageMenuItem" id="skip_forward1">
+			  <property name="visible">True</property>
+			  <property name="sensitive">False</property>
+			  <property name="label" translatable="yes">Skip forward</property>
+			  <property name="use_underline">True</property>
+			  <signal name="activate" handler="on_skip_forward1_activate" last_modification_time="Sun, 09 Jun 2002 02:56:32 GMT"/>
+			  <accelerator key="Right" modifiers="0" signal="activate"/>
+
+			  <child internal-child="image">
+			    <widget class="GtkImage" id="image1052">
+			      <property name="visible">True</property>
+			      <property name="stock">gtk-go-forward</property>
+			      <property name="icon_size">1</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
+			</widget>
+		      </child>
+
+		      <child>
+			<widget class="GtkImageMenuItem" id="skip_backwards1">
+			  <property name="visible">True</property>
+			  <property name="sensitive">False</property>
+			  <property name="label" translatable="yes">Skip backwards</property>
+			  <property name="use_underline">True</property>
+			  <signal name="activate" handler="on_skip_backwards1_activate" last_modification_time="Sun, 09 Jun 2002 03:00:00 GMT"/>
+			  <accelerator key="Left" modifiers="0" signal="activate"/>
+
+			  <child internal-child="image">
+			    <widget class="GtkImage" id="image1053">
+			      <property name="visible">True</property>
+			      <property name="stock">gtk-go-back</property>
+			      <property name="icon_size">1</property>
 			      <property name="xalign">0.5</property>
 			      <property name="yalign">0.5</property>
 			      <property name="xpad">0</property>
@@ -425,7 +514,7 @@
 			  <accelerator key="Up" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image427">
+			    <widget class="GtkImage" id="image1054">
 			      <property name="visible">True</property>
 			      <property name="stock">gnome-stock-volume</property>
 			      <property name="icon_size">1</property>
@@ -447,7 +536,7 @@
 			  <accelerator key="Down" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image428">
+			    <widget class="GtkImage" id="image1055">
 			      <property name="visible">True</property>
 			      <property name="stock">gnome-stock-volume</property>
 			      <property name="icon_size">1</property>

@@ -588,6 +588,90 @@ video_window_translate_point(GtkXine *gtx, int gui_x, int gui_y,
 	return FALSE;
 }
 
+/* Changes the way xine skips while playing a DVD,
+ * 1 == CHAPTER
+ * 2 == TITLE
+ */
+static void 
+dvd_skip_behaviour (GtkXine *gtx, int behaviour)
+{
+        if (behaviour < 1 || behaviour > 2)
+                return;
+
+        xine_config_register_num (gtx->priv->xine,
+                        "input.dvd_skip_behaviour",
+                        behaviour,
+                        "DVD Skip behaviour",
+                        NULL,
+                        10,
+                        NULL, NULL);
+
+        return;
+}
+
+void
+gtk_xine_dvd_event (GtkXine *gtx, GtkXineDVDEvent type)
+{
+        xine_event_t event;
+
+	g_return_val_if_fail (gtx != NULL, 0);
+	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
+	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
+
+        switch (type)
+        {
+        case GTX_DVD_ROOT_MENU:
+                event.type = XINE_EVENT_INPUT_MENU1;
+                break;
+        case GTX_DVD_TITLE_MENU:
+                event.type = XINE_EVENT_INPUT_MENU2;
+                break;
+        case GTX_DVD_SUBPICTURE_MENU:
+                event.type = XINE_EVENT_INPUT_MENU4;
+                break;
+        case GTX_DVD_AUDIO_MENU:
+                event.type = XINE_EVENT_INPUT_MENU5;
+                break;
+        case GTX_DVD_ANGLE_MENU:
+                event.type = XINE_EVENT_INPUT_MENU6;
+                break;
+        case GTX_DVD_CHAPTER_MENU:
+                event.type = XINE_EVENT_INPUT_MENU7;
+                break;
+        case GTX_DVD_NEXT_CHAPTER:
+                dvd_skip_behaviour (gtx, 1);
+                event.type = XINE_EVENT_INPUT_NEXT;
+                break;
+        case GTX_DVD_PREV_CHAPTER:
+                dvd_skip_behaviour (gtx, 1);
+                event.type = XINE_EVENT_INPUT_PREVIOUS;
+                break;
+        case GTX_DVD_NEXT_TITLE:
+                dvd_skip_behaviour (gtx, 2);
+                event.type = XINE_EVENT_INPUT_NEXT;
+                break;
+        case GTX_DVD_PREV_TITLE:
+                dvd_skip_behaviour (gtx, 2);
+                event.type = XINE_EVENT_INPUT_PREVIOUS;
+                break;
+        case GTX_DVD_NEXT_ANGLE:
+                event.type = XINE_EVENT_INPUT_ANGLE_NEXT;
+                break;
+        case GTX_DVD_PREV_ANGLE:
+                event.type = XINE_EVENT_INPUT_ANGLE_PREVIOUS;
+                break;
+        default:
+                return;
+        }
+
+        event.stream = gtx->priv->stream;
+        event.data = NULL;
+        event.data_length = 0;
+
+        xine_event_send (gtx->priv->stream,
+                        (xine_event_t *) (&event));
+}
+
 static void
 generate_mouse_event (GtkXine *gtx, XEvent *event, gboolean is_motion)
 {

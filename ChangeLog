@@ -1,3 +1,19 @@
+2002-12-03  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem.glade:
+	* src/gtk-xine.c: (dvd_skip_behaviour), (gtk_xine_dvd_event):
+	* src/gtk-xine.h:
+	* src/totem.c: (totem_action_set_mrl), (totem_playing_dvd),
+	(totem_action_previous), (totem_action_next), (drop_cb),
+	(totem_action_open_files), (on_dvd_root_menu1_activate),
+	(on_dvd_title_menu1_activate), (on_dvd_audio_menu1_activate),
+	(on_dvd_angle_menu1_activate), (on_dvd_chapter_menu1_activate),
+	(totem_action_handle_key), (update_dvd_menu_items),
+	(update_buttons), (totem_callback_connect):
+	big patch by John McCutchan <ttb@tentacle.dhs.org>. Added
+	gtk_xine_dvd_event (), Skip by Chapter, DVD menu/Title menu/Angle
+	menu/Chapter menu items and associated code.
+
 2002-11-30  Bastien Nocera  <hadess@hadess.net>
 
 	* src/gtk-playlist.c: (gtk_playlist_add_mrl),
