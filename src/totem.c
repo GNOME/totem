@@ -2949,8 +2949,7 @@ main (int argc, char **argv)
 
 	glade_init ();
 	gnome_vfs_init ();
-	gconf_init (argc, argv, &err);
-	if (err != NULL || (gc = gconf_client_get_default ()) == NULL)
+	if ((gc = gconf_client_get_default ()) == NULL)
 	{
 		char *str;
 

@@ -2,6 +2,7 @@
 #include "config.h"
 
 #include <gnome.h>
+#include <string.h>
 #include "bacon-video-widget.h"
 
 /* #define THUMB_DEBUG */
