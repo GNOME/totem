@@ -1148,6 +1148,7 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 	}
 
 	//FIXME check size != 0
+	//FIXME we need to show a proper error message
 
 	return gtk_playlist_add_one_mrl (playlist, mrl, display_name);
 }
