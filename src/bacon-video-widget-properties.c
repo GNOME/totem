@@ -296,7 +296,10 @@ bacon_video_widget_properties_set_from_current (BaconVideoWidgetProperties *prop
 	gtk_widget_set_sensitive (item, TRUE);
 	string = g_strdup_printf ("http://us.imdb.com/Tsearch?title=%s", name);
 	gnome_href_set_url (GNOME_HREF (item), string);
-	gnome_href_set_text (GNOME_HREF (item), name);
+	g_free (string);
+
+	string = g_markup_escape_text (name, strlen (name));
+	gnome_href_set_text (GNOME_HREF (item), string);
 	g_free (string);
 }
 

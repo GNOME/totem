@@ -1,5 +1,13 @@
 2003-04-03  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-properties.c:
+	(bacon_video_widget_properties_set_from_current):
+	* src/totem.c: (update_mrl_label): escape the strings before pushing
+	them to the label as pango markup, fixes warnings when opening files
+	like "Foo & Bar.mp3"
+
+2003-04-03  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget.c: (bacon_video_widget_can_set_volume):
 	work around a bug in xine that would make the write to the audio
 	device take about 30 seconds, thus locking up our read of the volume,

@@ -425,6 +425,8 @@ update_mrl_label (Totem *totem, const char *name)
 
 	if (name != NULL)
 	{
+		char *escaped;
+
 		/* Get the length of the stream */
 		time = bacon_video_widget_get_stream_length (totem->bvw);
 
@@ -436,8 +438,10 @@ update_mrl_label (Totem *totem, const char *name)
 				0, (gdouble) time / 1000);
 
 		/* Update the mrl label */
+		escaped = g_markup_escape_text (name, strlen (name));
 		text = g_strdup_printf
-			("<span size=\"medium\"><b>%s</b></span>", name);
+			("<span size=\"medium\"><b>%s</b></span>", escaped);
+		g_free (escaped);
 
 		widget = glade_xml_get_widget (totem->xml, "label1");
 		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
