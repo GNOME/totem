@@ -82,6 +82,7 @@ enum {
 /* Arguments */
 enum {
 	PROP_0,
+	PROP_LOGO_MODE,
 	PROP_FULLSCREEN,
 	PROP_SPEED,
 	PROP_POSITION,
@@ -127,6 +128,7 @@ struct GtkXinePrivate {
 	int xpos, ypos;
 	gboolean init_finished;
 	gboolean can_dvd, can_vcd, can_cdda;
+	gboolean logo_mode;
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
@@ -221,6 +223,9 @@ gtk_xine_class_init (GtkXineClass *klass)
 	object_class->finalize = gtk_xine_finalize;
 
 	/* Properties */
+	g_object_class_install_property (object_class, PROP_LOGO_MODE,
+			g_param_spec_boolean ("logo_mode", NULL, NULL,
+				FALSE, G_PARAM_READWRITE));
 	g_object_class_install_property (object_class, PROP_FULLSCREEN,
 			g_param_spec_boolean ("fullscreen", NULL, NULL,
 				FALSE, G_PARAM_READWRITE));
@@ -398,7 +403,7 @@ frame_output_cb (void *gtx_gen,
 			gc = gconf_client_get_default ();
 
 			if (gconf_client_get_bool (gc, GCONF_PREFIX"/auto_resize", NULL) == TRUE
-					&& strcmp (gtx->priv->mrl, LOGO_PATH) != 0)
+					&& gtx->priv->logo_mode == FALSE)
 			{
 				GtkXineSignal *signal;
 
@@ -1317,6 +1322,9 @@ gtk_xine_set_property (GObject *object, guint property_id,
 
 	switch (property_id)
 	{
+	case PROP_LOGO_MODE:
+		gtk_xine_set_logo_mode (gtx, g_value_get_boolean (value));
+		break;
 	case PROP_FULLSCREEN:
 		gtk_xine_set_fullscreen (gtx, g_value_get_boolean (value));
 		break;
@@ -1346,6 +1354,9 @@ gtk_xine_get_property (GObject *object, guint property_id,
 
 	switch (property_id)
 	{
+	case PROP_LOGO_MODE:
+		g_value_set_boolean (value, gtk_xine_get_logo_mode (gtx));
+		break;
 	case PROP_FULLSCREEN:
 		g_value_set_boolean (value, gtk_xine_is_fullscreen (gtx));
 		break;
@@ -1373,6 +1384,26 @@ gtk_xine_get_property (GObject *object, guint property_id,
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 	}
+}
+
+void
+gtk_xine_set_logo_mode (GtkXine *gtx, gboolean logo_mode)
+{
+	g_return_if_fail (gtx != NULL);
+	g_return_if_fail (GTK_IS_XINE (gtx));
+	g_return_if_fail (gtx->priv->xine != NULL);
+
+	gtx->priv->logo_mode = logo_mode;
+}
+
+gboolean
+gtk_xine_get_logo_mode (GtkXine *gtx)
+{
+	g_return_if_fail (gtx != NULL);
+	g_return_if_fail (GTK_IS_XINE (gtx));
+	g_return_if_fail (gtx->priv->xine != NULL);
+
+	return gtx->priv->logo_mode;
 }
 
 void

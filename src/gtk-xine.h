@@ -120,6 +120,9 @@ void gtk_xine_close                    (GtkXine *gtx);
 void gtk_xine_dvd_event                (GtkXine *gtx, GtkXineDVDEvent type);
 
 /* Properties */
+void  gtk_xine_set_logo_mode	       (GtkXine *gtx, gboolean logo_mode);
+gboolean gtk_xine_get_logo_mode	       (GtkXine *gtx);
+
 void gtk_xine_set_speed                (GtkXine *gtx, Speeds speed);
 gint gtk_xine_get_speed                (GtkXine *gtx);
 

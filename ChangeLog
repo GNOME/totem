@@ -1,5 +1,14 @@
 2003-01-23  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (gtk_xine_class_init), (frame_output_cb),
+	(gtk_xine_set_property), (gtk_xine_get_property),
+	(gtk_xine_set_logo_mode), (gtk_xine_get_logo_mode):
+	* src/gtk-xine.h:
+	* src/totem.c: (totem_action_set_mrl): remove the dependency on
+	LOGO_PATH from gtk-xine.c
+
+2003-01-23  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-xine.c: (gtk_xine_open), (gtk_xine_close): fix the crash
 	when navigating to an unsupported file for the second time
 

@@ -470,6 +470,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 
 		/* Set the logo */
 		totem->mrl = g_strdup (LOGO_PATH);
+		gtk_xine_set_logo_mode (GTK_XINE (totem->gtx), TRUE);
 		if (gtk_xine_open (GTK_XINE (totem->gtx), totem->mrl) == TRUE)
 			gtk_xine_play (GTK_XINE (totem->gtx), 0 , 0);
 
@@ -481,6 +482,8 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		char *title, *name;
 		int time;
 		gboolean caps;
+
+		gtk_xine_set_logo_mode (GTK_XINE (totem->gtx), FALSE);
 
 		retval = gtk_xine_open (GTK_XINE (totem->gtx), mrl);
 
