@@ -49,11 +49,11 @@ gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/totem-video-thu
 %config %{_sysconfdir}/gconf/schemas/totem-video-thumbnail.schemas
 %{_bindir}/%{name}
 %{_bindir}/totem-video-thumbnailer
-%{_libdir}/bonobo/servers/Totem_properties.server
-%{_libexecdir}/totem-properties-page
-%{_datadir}/application-registry/%{name}.applications
+%{_libdir}/libtotem-plparser*
+%{_libdir}/nautilus/extensions-1.0
+%{_libdir}/pkgconfig/totem-plparser.pc
+%{_includedir}//totem/1/plparser/*.h
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/mime-info/%{name}.keys
 %{_datadir}/pixmaps/*
 %{_datadir}/gnome/help
 %{_datadir}/omf/totem/totem-C.omf
@@ -65,6 +65,10 @@ gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/totem-video-thu
 %{_datadir}/omf/totem/totem-es.omf
 
 %changelog
+* Fri Jan 28 2005 Christian Schaller <Uraeus@gnome.org>
+- update spec file to reflect update to new nautilus version
+- add playlist
+
 * Thu Dec 23 2004 Christian Schaller <Uraeus@gnome.org>
 - Add russian omf file
 * Thu Sep 21 2004 Christian Schaller <Uraeus@gnome.org>
