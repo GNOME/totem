@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem 0.13.0\n"
-"POT-Creation-Date: 2002-12-08 20:27+0100\n"
-"PO-Revision-Date: 2002-12-08 20:30+0100\n"
+"POT-Creation-Date: 2002-12-14 03:16+0100\n"
+"PO-Revision-Date: 2002-12-14 03:17+0100\n"
 "Last-Translator: Jordi Mallach <jordi@sindominio.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,22 +22,22 @@ msgstr "Llista de reproducció"
 msgid "Repeat Mode"
 msgstr "Mode de repetició"
 
-#: data/properties.glade.h:1 src/gtk-xine.c:1857
+#: data/properties.glade.h:1 src/gtk-xine.c:1863
 msgid "0 frames per second"
 msgstr "0 quadres per segón"
 
 #. Bitrate
-#: data/properties.glade.h:2 src/gtk-xine.c:1859
+#: data/properties.glade.h:2 src/gtk-xine.c:1865
 msgid "0 kbps"
 msgstr "0 kbps"
 
 #. 0 seconds
-#: data/properties.glade.h:3 src/gtk-xine.c:1793
+#: data/properties.glade.h:3 src/gtk-xine.c:1799
 msgid "0 seconds"
 msgstr "0 segons"
 
 #. Dimensions
-#: data/properties.glade.h:4 src/gtk-xine.c:1852
+#: data/properties.glade.h:4 src/gtk-xine.c:1858
 msgid "0 x 0"
 msgstr "0 x 0"
 
@@ -78,9 +78,9 @@ msgid "Framerate: "
 msgstr "Freqüència de quadre: "
 
 #. Year
-#: data/properties.glade.h:14 src/gtk-xine.c:1848 src/gtk-xine.c:1854
-#: src/gtk-xine.c:1861 src/gtk-xine.c:1883 src/gtk-xine.c:1908
-#: src/gtk-xine.c:1939
+#: data/properties.glade.h:14 src/gtk-xine.c:1854 src/gtk-xine.c:1860
+#: src/gtk-xine.c:1867 src/gtk-xine.c:1889 src/gtk-xine.c:1914
+#: src/gtk-xine.c:1945
 msgid "N/A"
 msgstr "N/D"
 
@@ -93,8 +93,8 @@ msgid "Title: "
 msgstr "Títol: "
 
 #. Title
-#: data/properties.glade.h:17 src/gtk-xine.c:1844 src/gtk-xine.c:1846
-#: src/gtk-xine.c:1875 src/gtk-xine.c:1879
+#: data/properties.glade.h:17 src/gtk-xine.c:1850 src/gtk-xine.c:1852
+#: src/gtk-xine.c:1881 src/gtk-xine.c:1885
 msgid "Unknown"
 msgstr "Desconegut"
 
@@ -274,6 +274,14 @@ msgstr "Coordenada X per a la llista de reproducció"
 msgid "Y coordinate for the Playlist"
 msgstr "Coordenada Y per a la llista de reproducció"
 
+#: src/cd-drive.c:330
+msgid "Unnamed Drive"
+msgstr "Unitat no anomenada"
+
+#: src/cd-drive.c:559
+msgid "File image"
+msgstr "Fitxer d'imatge"
+
 #: src/gtk-playlist.c:410 src/totem.c:1025
 msgid "Select files"
 msgstr "Seleccioneu fitxers"
@@ -286,7 +294,7 @@ msgstr "Nom de fitxer"
 msgid "Totem Video Window"
 msgstr "Finestra de vídeo de Totem"
 
-#: src/gtk-xine.c:834
+#: src/gtk-xine.c:838
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
@@ -294,75 +302,75 @@ msgstr ""
 "No s'ha pogut iniciar el suport de fils.\n"
 "Haurieu d'instal·lar una Xlib amb suport per a fils."
 
-#: src/gtk-xine.c:866
+#: src/gtk-xine.c:870
 msgid "Could not find a suitable video output."
 msgstr "No s'ha trobat una eixida de vídeo convenient."
 
 #. One hour
-#: src/gtk-xine.c:1762
+#: src/gtk-xine.c:1768
 #, c-format
 msgid "%d hour"
 msgstr "%d hora"
 
 #. Multiple hours
-#: src/gtk-xine.c:1765
+#: src/gtk-xine.c:1771
 #, c-format
 msgid "%d hours"
 msgstr "%d hores"
 
 #. One minute
-#: src/gtk-xine.c:1769
+#: src/gtk-xine.c:1775
 #, c-format
 msgid "%d minute"
 msgstr "%d minut"
 
 #. Multiple minutes
-#: src/gtk-xine.c:1772
+#: src/gtk-xine.c:1778
 #, c-format
 msgid "%d minutes"
 msgstr "%d minuts"
 
 #. One second
-#: src/gtk-xine.c:1776
+#: src/gtk-xine.c:1782
 #, c-format
 msgid "%d second"
 msgstr "%d segón"
 
 #. Multiple seconds
-#: src/gtk-xine.c:1779
+#: src/gtk-xine.c:1785
 #, c-format
 msgid "%d seconds"
 msgstr "%d segons"
 
 #. hour:minutes:seconds
-#: src/gtk-xine.c:1784
+#: src/gtk-xine.c:1790
 #, c-format
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. minutes:seconds
-#: src/gtk-xine.c:1787
+#: src/gtk-xine.c:1793
 #, c-format
 msgid "%s %s"
 msgstr "%s %s"
 
 #. seconds
-#: src/gtk-xine.c:1790
+#: src/gtk-xine.c:1796
 #, c-format
 msgid "%s"
 msgstr "%s"
 
 #. Duration
-#: src/gtk-xine.c:1850
+#: src/gtk-xine.c:1856
 msgid "0 second"
 msgstr "0 segons"
 
-#: src/gtk-xine.c:1918
+#: src/gtk-xine.c:1924
 #, c-format
 msgid "%d frames per second"
 msgstr "%d quadres per segón"
 
-#: src/gtk-xine.c:1930
+#: src/gtk-xine.c:1936
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
@@ -485,7 +493,7 @@ msgstr ""
 "No s'ha pogut carregar la interfície per a la llista de reproducció.\n"
 "Assegureu-vos que Totem està instal·lat correctament."
 
-#: src/totem-cd-selection.c:251
+#: src/totem-cd-selection.c:260
 msgid "Select the drive"
 msgstr "Seleccioneu la unitat"
 
