@@ -930,6 +930,7 @@ xine_error (BaconVideoWidget *bvw, GError **error)
 					"a valid one"));
 		break;
 	default:
+		g_set_error (error, 0, 0, _("Generic Error"));
 		break;
 	}
 }

@@ -53,7 +53,7 @@ user-install: $(app_DATA) $(keys_DATA)
 install-data-local:
 	-GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(srcdir)/$(schema_DATA)
 
-EXTRA_DIST = $(stuff_DATA) $(desktop_in_files) $(keys_DATA) $(app_DATA) $(schema_in_files) lirc_example schemas.sh
+EXTRA_DIST = $(stuff_DATA) $(desktop_in_files) $(keys_DATA) $(app_DATA) totem.schemas.in lirc_example schemas.sh
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(desktop_DATA) $(schema_DATA)
 

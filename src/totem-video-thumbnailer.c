@@ -101,7 +101,7 @@ int main (int argc, char *argv[])
 	if (err != NULL)
 	{
 		g_print ("totem-video-thumbnailer couln't play file: '%s'\n",
-				"Reason: %s.",
+				"Reason: %s.\n",
 				argv[1], err->message);
 		g_error_free (err);
 		exit (1);
