@@ -281,7 +281,18 @@ totem_action_exit (Totem *totem)
 		gtk_widget_hide (totem->win);
 
 	if (totem->bvw)
+	{
+		/* Save the size of the video widget */
+		gconf_client_set_int (totem->gc,
+				GCONF_PREFIX"/window_w",
+				GTK_WIDGET(totem->bvw)->allocation.width, NULL);
+		gconf_client_set_int (totem->gc,
+				GCONF_PREFIX"/window_h",
+				GTK_WIDGET(totem->bvw)->allocation.height,
+				NULL);
+
 		gtk_widget_destroy (GTK_WIDGET (totem->bvw));
+	}
 
 	if (totem->playlist)
 	{
@@ -529,14 +540,6 @@ totem_action_fullscreen_toggle (Totem *totem)
 			}
 		}
 	} else {
-		/* Save the size of the video widget */
-		gconf_client_set_int (totem->gc,
-				GCONF_PREFIX"/window_w",
-				GTK_WIDGET(totem->bvw)->allocation.width, NULL);                gconf_client_set_int (totem->gc,
-				GCONF_PREFIX"/window_h",
-				GTK_WIDGET(totem->bvw)->allocation.height,
-				NULL);
-
 		update_fullscreen_size (totem);
 		bacon_video_widget_set_fullscreen (totem->bvw, TRUE);
 		bacon_video_widget_set_show_cursor (totem->bvw, FALSE);
