@@ -16,6 +16,30 @@
       </schema>
 
       <schema>
+        <key>/schemas/apps/totem/visual</key>
+	<applyto>/apps/totem/visual</applyto>
+	<owner>totem</owner>
+	<type>string</type>
+	<default>goom</default>
+	<locale name="C">
+	  <short>Name of the visual effects plugins</short>
+	  <long>Name of the visual effects plugins</long>
+	</locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/totem/visual_quality</key>
+	<applyto>/apps/totem/visual_quality</applyto>
+	<owner>totem</owner>
+	<type>int</type>
+	<default>1</default>
+	<locale name="C">
+	  <short>The quality of the visuals when using goom</short>
+	  <long>The quality of the visuals when using goom</long>
+	</locale>
+      </schema>
+
+      <schema>
         <key>/schemas/apps/totem/auto_resize</key>
 	<applyto>/apps/totem/auto_resize</applyto>
 	<owner>totem</owner>

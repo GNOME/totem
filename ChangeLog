@@ -1,3 +1,24 @@
+2003-05-02  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem.glade:
+	* data/totem.schemas.in:
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_instance_init), (bacon_video_widget_realize),
+	(bacon_video_widget_set_show_visuals),
+	(bacon_video_widget_get_visuals_list),
+	(bacon_video_widget_set_visuals),
+	(bacon_video_widget_set_visuals_quality):
+	* src/bacon-video-widget.h:
+	* src/gtk-playlist.c:
+	* src/totem-preferences.c: (on_checkbutton2_toggled),
+	(visual_menu_changed), (visual_quality_menu_changed),
+	(totem_setup_preferences), (totem_preferences_tvout_setup),
+	(totem_preferences_visuals_setup):
+	* src/totem-preferences.h:
+	* src/totem.c: (video_widget_create): added options to configure the
+	visual plugin used, and the quality of them (size, frames per second)
+	(Closes: #107244 and #109166)
+
 2003-04-30  Bastien Nocera  <hadess@hadess.net>
 
 	* src/vanity.c: (video_widget_create): added error checking

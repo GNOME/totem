@@ -101,7 +101,8 @@ on_checkbutton1_toggled (GtkToggleButton *togglebutton, Totem *totem)
 
 static void              
 on_checkbutton2_toggled (GtkToggleButton *togglebutton, Totem *totem)
-{                               
+{
+	GtkWidget *item;
 	gboolean value;
 
 	value = gtk_toggle_button_get_active (togglebutton);
@@ -118,6 +119,16 @@ on_checkbutton2_toggled (GtkToggleButton *togglebutton, Totem *totem)
 	}
 
 	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/show_vfx", value, NULL);
+
+	item = glade_xml_get_widget (totem->xml, "label27");
+	gtk_widget_set_sensitive (item, value);
+	item = glade_xml_get_widget (totem->xml, "optionmenu2");
+	gtk_widget_set_sensitive (item, value);
+	item = glade_xml_get_widget (totem->xml, "label28");
+	gtk_widget_set_sensitive (item, value);
+	item = glade_xml_get_widget (totem->xml, "optionmenu3");
+	gtk_widget_set_sensitive (item, value);
+
 	if (bacon_video_widget_set_show_visuals
 		(BACON_VIDEO_WIDGET (totem->bvw), value) == FALSE)
 	{
@@ -285,6 +296,36 @@ on_button1_clicked (GtkButton *button, Totem *totem)
 	g_free (cmd);
 }
 
+static void
+visual_menu_changed (GtkOptionMenu *option_menu, Totem *totem)
+{
+	GList *list;
+	char *name;
+	int i;
+
+	i = gtk_option_menu_get_history (GTK_OPTION_MENU (option_menu));
+	list = bacon_video_widget_get_visuals_list (totem->bvw);
+	name = g_list_nth_data (list, i);
+	gconf_client_set_string (totem->gc, GCONF_PREFIX"/visual",
+			name, NULL);
+
+	if (bacon_video_widget_set_visuals (totem->bvw, name) == TRUE)
+		totem_action_error (_("Changing the visuals effect type will require a restart to take effect."), totem);
+
+	g_list_foreach (list, (GFunc) g_free, NULL);
+	g_list_free (list);
+}
+
+static void
+visual_quality_menu_changed (GtkOptionMenu *option_menu, Totem *totem)
+{
+	int i;
+
+	i = gtk_option_menu_get_history (GTK_OPTION_MENU (option_menu));
+	gconf_client_set_int (totem->gc,
+			GCONF_PREFIX"/visual_quality", i, NULL);
+}
+
 GtkWidget *
 bacon_cd_selection_create (void)
 {
@@ -299,11 +340,12 @@ bacon_cd_selection_create (void)
 void
 totem_setup_preferences (Totem *totem)
 {
-	GtkWidget *item;
+	GtkWidget *item, *menu;
 	const char *mediadev;
 	gboolean show_visuals, auto_resize, is_local, deinterlace;
-	int connection_speed;
-	char *path;
+	int connection_speed, i, found;
+	char *path, *visual;
+	GList *list, *l;
 
 	g_return_if_fail (totem->gc != NULL);
 
@@ -328,6 +370,7 @@ totem_setup_preferences (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->prefs), "delete-event",
 			G_CALLBACK (hide_prefs), (gpointer) totem);
 
+	/* Auto-resize */
 	auto_resize = gconf_client_get_bool (totem->gc,
 			GCONF_PREFIX"/auto_resize", NULL);
 	item = glade_xml_get_widget (totem->xml, "checkbutton1");
@@ -337,19 +380,7 @@ totem_setup_preferences (Totem *totem)
 	bacon_video_widget_set_auto_resize
 		(BACON_VIDEO_WIDGET (totem->bvw), auto_resize);
 
-	item = glade_xml_get_widget (totem->xml, "checkbutton2");
-	show_visuals = gconf_client_get_bool (totem->gc,
-			GCONF_PREFIX"/show_vfx", NULL);
-	if (is_local == FALSE && show_visuals == TRUE)
-		show_visuals = ask_show_visuals (totem);
-
-	gtk_toggle_button_set_active
-		(GTK_TOGGLE_BUTTON (item), show_visuals);
-	bacon_video_widget_set_show_visuals
-		(BACON_VIDEO_WIDGET (totem->bvw), show_visuals);
-	g_signal_connect (G_OBJECT (item), "toggled",
-			G_CALLBACK (on_checkbutton2_toggled), totem);
-
+	/* Media device */
 	item = glade_xml_get_widget (totem->xml, "custom3");
 	mediadev = gconf_client_get_string
 		(totem->gc, GCONF_PREFIX"/mediadev", NULL);
@@ -373,21 +404,79 @@ totem_setup_preferences (Totem *totem)
 	g_signal_connect (G_OBJECT (item), "device-changed",
 			G_CALLBACK (on_combo_entry1_changed), totem);
 
+	/* Connection Speed */
 	connection_speed = bacon_video_widget_get_connection_speed (totem->bvw);
 	item = glade_xml_get_widget (totem->xml, "optionmenu1");
 	gtk_option_menu_set_history (GTK_OPTION_MENU (item),
 			connection_speed);
 	g_signal_connect (item, "changed",
-			(GCallback)option_menu_connection_changed, totem);
+			G_CALLBACK (option_menu_connection_changed), totem);
 
+	/* Proprietary plugins */
 	item = glade_xml_get_widget (totem->xml, "button1");
 	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (on_button1_clicked), totem);
 	path = g_build_path (G_DIR_SEPARATOR_S,
 			g_get_home_dir (), PROPRIETARY_PLUGINS, NULL);
-	bacon_video_widget_set_proprietary_plugins_path
-		(totem->bvw, path);
+	bacon_video_widget_set_proprietary_plugins_path (totem->bvw, path);
 	g_free (path);
+
+	/* Enable visuals */
+	item = glade_xml_get_widget (totem->xml, "checkbutton2");
+	show_visuals = gconf_client_get_bool (totem->gc,
+			GCONF_PREFIX"/show_vfx", NULL);
+	if (is_local == FALSE && show_visuals == TRUE)
+		show_visuals = ask_show_visuals (totem);
+
+	gtk_toggle_button_set_active
+		(GTK_TOGGLE_BUTTON (item), show_visuals);
+	bacon_video_widget_set_show_visuals
+		(BACON_VIDEO_WIDGET (totem->bvw), show_visuals);
+	g_signal_connect (G_OBJECT (item), "toggled",
+			G_CALLBACK (on_checkbutton2_toggled), totem);
+
+	/* Visuals list */
+	list = bacon_video_widget_get_visuals_list (totem->bvw);
+	menu = gtk_menu_new ();
+	gtk_widget_show (menu);
+
+	visual = gconf_client_get_string (totem->gc,
+			GCONF_PREFIX"/visual", NULL);
+	if (visual == NULL || strcmp (visual, "") == 0)
+		visual = g_strdup ("goom");
+
+	i = 0;
+	for (l = list; l != NULL; l = l->next)
+	{
+		const char *name = l->data;
+
+		item = gtk_menu_item_new_with_label (name);
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+		gtk_widget_show (item);
+
+		if (strcmp (name, visual) == 0)
+			found = i;
+
+		i++;
+	}
+
+	g_list_foreach (list, (GFunc) g_free, NULL);
+	g_list_free (list);
+
+	/* Visualisation quality */
+	i = gconf_client_get_int (totem->gc,
+			GCONF_PREFIX"/visual_quality", NULL);
+	bacon_video_widget_set_visuals_quality (totem->bvw, i);
+	item = glade_xml_get_widget (totem->xml, "optionmenu3");
+	gtk_option_menu_set_history (GTK_OPTION_MENU (item), i);
+	g_signal_connect (G_OBJECT (item), "changed",
+			G_CALLBACK (visual_quality_menu_changed), totem);
+
+	item = glade_xml_get_widget (totem->xml, "optionmenu2");
+	gtk_option_menu_set_menu (GTK_OPTION_MENU (item), menu);
+	gtk_option_menu_set_history (GTK_OPTION_MENU (item), found);
+	g_signal_connect (G_OBJECT (item), "changed",
+			G_CALLBACK (visual_menu_changed), totem);
 
 	/* This one is for the deinterlacing menu, not really our dialog
 	 * but we do it anyway */
@@ -445,5 +534,18 @@ totem_preferences_tvout_setup (Totem *totem)
 			G_CALLBACK (on_tvout_toggled), totem);
 	g_object_set_data (G_OBJECT (item), "tvout_type",
 			GINT_TO_POINTER (TV_OUT_DXR3));
+}
+
+void
+totem_preferences_visuals_setup (Totem *totem)
+{
+	char *visual;
+
+	visual = gconf_client_get_string (totem->gc,
+			GCONF_PREFIX"/visual", NULL);
+	if (visual == NULL || strcmp (visual, "") == 0)
+		visual = g_strdup ("goom");
+	
+	bacon_video_widget_set_visuals (totem->bvw, visual);
 }
 

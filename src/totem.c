@@ -2940,6 +2940,9 @@ video_widget_create (Totem *totem)
 		g_free (msg);
 	}
 
+	totem_preferences_tvout_setup (totem);
+	totem_preferences_visuals_setup (totem);
+
 	container = glade_xml_get_widget (totem->xml, "frame2");
 	gtk_container_add (GTK_CONTAINER (container),
 			GTK_WIDGET (totem->bvw));
@@ -2987,8 +2990,6 @@ video_widget_create (Totem *totem)
 			(void**)&(totem->bvw));
 
 	gtk_widget_show (GTK_WIDGET (totem->bvw));
-
-	totem_preferences_tvout_setup (totem);
 }
 
 GtkWidget *

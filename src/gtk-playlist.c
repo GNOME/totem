@@ -2097,4 +2097,3 @@ gtk_playlist_class_init (GtkPlaylistClass *klass)
 				G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
 }
 
-

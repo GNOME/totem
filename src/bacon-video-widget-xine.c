@@ -109,6 +109,7 @@ struct BaconVideoWidgetPrivate {
 
 	/* Configuration */
 	gboolean null_out;
+	char *mrl;
 
 	/* X stuff */
 	Display *display;
@@ -116,7 +117,7 @@ struct BaconVideoWidgetPrivate {
 	GdkWindow *video_window;
 
 	/* Visual effects */
-	char *mrl;
+	char *vis_name;
 	gboolean show_vfx;
 	gboolean using_vfx;
 	xine_post_t *vis;
@@ -332,6 +333,7 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 	bvw->priv = g_new0 (BaconVideoWidgetPrivate, 1);
 	bvw->priv->xine = xine_new ();
 	bvw->priv->cursor_shown = TRUE;
+	bvw->priv->vis_name = g_strdup ("goom");
 
 	bvw->priv->queue = g_async_queue_new ();
 
@@ -867,7 +869,8 @@ bacon_video_widget_realize (GtkWidget *widget)
 	g_assert (bvw->priv->vo_driver != NULL);
 
 	if (bvw->priv->null_out == FALSE)
-		bvw->priv->vis = xine_post_init (bvw->priv->xine, "goom", 0,
+		bvw->priv->vis = xine_post_init (bvw->priv->xine,
+				bvw->priv->vis_name, 0,
 				&bvw->priv->ao_driver, &bvw->priv->vo_driver);
 
 	bvw->priv->stream = xine_stream_new (bvw->priv->xine,
@@ -1943,13 +1946,104 @@ gboolean
 bacon_video_widget_set_show_visuals (BaconVideoWidget *bvw,
 		gboolean show_visuals)
 {
+	g_return_val_if_fail (bvw != NULL, FALSE);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
+
+	bvw->priv->show_vfx = show_visuals;
+	show_vfx_update (bvw, show_visuals);
+
+	return TRUE;
+}
+
+GList *
+bacon_video_widget_get_visuals_list (BaconVideoWidget *bvw)
+{
+	const char * const* plugins;
+	GList *list = NULL;
+	int i;
+
+	g_return_val_if_fail (bvw != NULL, NULL);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
+	g_return_val_if_fail (bvw->priv->xine != NULL, NULL);
+
+	plugins = xine_list_post_plugins_typed (bvw->priv->xine,
+			XINE_POST_TYPE_AUDIO_VISUALIZATION);
+
+	for (i = 0; plugins[i] != NULL; i++)
+	{
+		list = g_list_prepend (list, g_strdup (plugins[i]));
+	}
+
+	list = g_list_reverse (list);
+
+	return list;
+}
+
+gboolean
+bacon_video_widget_set_visuals (BaconVideoWidget *bvw, const char *name)
+{
+	g_return_val_if_fail (bvw != NULL, FALSE);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
+
+	g_free (bvw->priv->vis_name);
+	bvw->priv->vis_name = g_strdup (name);
+
+	if (GTK_WIDGET_REALIZED (GTK_WIDGET (bvw)))
+		return TRUE;
+	else
+		return FALSE;
+}
+
+void
+bacon_video_widget_set_visuals_quality (BaconVideoWidget *bvw,
+		VisualsQuality quality)
+{
+	xine_cfg_entry_t entry;
+	int fps, w, h;
+
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
 
-	bvw->priv->show_vfx = show_visuals;
-	show_vfx_update (bvw, show_visuals);
-	return TRUE;
+	switch (quality)
+	{
+	case VISUAL_SMALL:
+		fps = 25;
+		w = 160;
+		h = 120;
+		break;
+	case VISUAL_NORMAL:
+		fps = 15;
+		w = 320;
+		h = 240;
+		break;
+	case VISUAL_LARGE:
+		fps = 25;
+		w = 640;
+		h = 480;
+		break;
+	case VISUAL_EXTRA_LARGE:
+		fps = 25;
+		w = 1024;
+		h = 768;
+		break;
+	default:
+		g_assert_not_reached ();
+	}
+
+	xine_config_lookup_entry (bvw->priv->xine, "post.goom_fps", &entry);
+	entry.num_value = fps;
+	xine_config_update_entry (bvw->priv->xine, &entry);
+
+	xine_config_lookup_entry (bvw->priv->xine, "post.goom_width", &entry);
+	entry.num_value = w;
+	xine_config_update_entry (bvw->priv->xine, &entry);
+
+	xine_config_lookup_entry (bvw->priv->xine, "post.goom_height", &entry);
+	entry.num_value = h;
+	xine_config_update_entry (bvw->priv->xine, &entry);
 }
 
 void

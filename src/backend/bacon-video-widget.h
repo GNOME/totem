@@ -136,8 +136,6 @@ gboolean bacon_video_widget_get_show_cursor      (BaconVideoWidget *bvw);
 
 void bacon_video_widget_set_media_device	 (BaconVideoWidget *bvw,
 						  const char *path);
-gboolean bacon_video_widget_set_show_visuals	 (BaconVideoWidget *bvw,
-						  gboolean show_visuals);
 void bacon_video_widget_set_auto_resize		 (BaconVideoWidget *bvw,
 						  gboolean auto_resize);
 
@@ -173,6 +171,22 @@ void bacon_video_widget_get_metadata		 (BaconVideoWidget *bvw,
 						  BaconVideoWidgetMetadataType
 						  type,
 						  GValue *value);
+
+/* Visualisation functions */
+typedef enum {
+	VISUAL_SMALL,
+	VISUAL_NORMAL,
+	VISUAL_LARGE,
+	VISUAL_EXTRA_LARGE,
+} VisualsQuality;
+
+gboolean bacon_video_widget_set_show_visuals	  (BaconVideoWidget *bvw,
+						   gboolean show_visuals);
+GList *bacon_video_widget_get_visuals_list	  (BaconVideoWidget *bvw);
+gboolean bacon_video_widget_set_visuals		  (BaconVideoWidget *bvw,
+						   const char *name);
+void bacon_video_widget_set_visuals_quality	  (BaconVideoWidget *bvw,
+						   VisualsQuality quality);
 
 /* DVD functions */
 typedef enum {
