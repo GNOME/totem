@@ -2356,6 +2356,9 @@ bacon_video_widget_fullscreen_mode_available (BaconVideoWidget *bvw,
 void
 bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 {
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
 	if (bvw->priv->have_xvidmode == FALSE &&
 			bvw->priv->tvout != TV_OUT_NVTV_NTSC &&
 			bvw->priv->tvout != TV_OUT_NVTV_PAL)

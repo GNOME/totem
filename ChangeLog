@@ -1,3 +1,16 @@
+2005-01-25  Mattias Eriksson <snaggen@acc.umu.se>
+
+	Reviewed by:  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_realize),
+	(bacon_video_widget_unrealize), (bacon_video_widget_class_init),
+	(bacon_video_widget_fullscreen_mode_available),
+	(bacon_video_widget_set_fullscreen):
+	  Add NVTV support.
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_set_fullscreen):
+	  Add a g_return_if_fail().
+
 ============ Version 0.101
 
 2005-01-24  Bastien Nocera  <hadess@hadess.net>

@@ -23,6 +23,10 @@
 
 #include <config.h>
 
+#ifdef HAVE_NVTV
+#include <nvtv_simple.h>
+#endif 
+
 /* gstgconf */
 #include <gst/gconf/gconf.h>
 
@@ -133,6 +137,7 @@ struct BaconVideoWidgetPrivate
   int xpos, ypos;
   gboolean logo_mode;
   gboolean cursor_shown;
+  gboolean fullscreen_mode;
   gboolean auto_resize;
   
   GAsyncQueue *queue;
@@ -283,6 +288,25 @@ bacon_video_widget_realize (GtkWidget * widget)
   /* nice hack to show the logo fullsize, while still being resizable */
   get_media_size (BACON_VIDEO_WIDGET (widget), &w, &h);
   totem_widget_set_preferred_size (widget, w, h);
+
+#ifdef HAVE_NVTV
+  if (!(nvtv_simple_init() && nvtv_enable_autoresize(TRUE))) {
+    nvtv_simple_enable(FALSE);
+  } 
+#endif
+
+}
+
+static void
+bacon_video_widget_unrealize (GtkWidget *widget)
+{
+#ifdef HAVE_NVTV
+  /* Kill the TV out */
+  nvtv_simple_exit();
+#endif
+
+  if (GTK_WIDGET_CLASS (parent_class)->unrealize)
+    GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
 static gboolean
@@ -532,6 +556,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   widget_class->size_request = bacon_video_widget_size_request;
   widget_class->size_allocate = bacon_video_widget_size_allocate;
   widget_class->realize = bacon_video_widget_realize;
+  widget_class->unrealize = bacon_video_widget_unrealize;
   widget_class->expose_event = bacon_video_widget_expose_event;
   widget_class->motion_notify_event = bacon_video_widget_motion_notify;
   widget_class->button_press_event = bacon_video_widget_button_press;
@@ -1806,7 +1831,16 @@ bacon_video_widget_fullscreen_mode_available (BaconVideoWidget *bvw,
 		return TRUE;
 	case TV_OUT_NVTV_NTSC:
 	case TV_OUT_NVTV_PAL:
+#ifdef HAVE_NVTV
+		/* Make sure nvtv is initialized, it will not do any harm 
+		 * if it is done twice any way */
+		if (!(nvtv_simple_init() && nvtv_enable_autoresize(TRUE))) {
+			nvtv_simple_enable(FALSE);
+		}
+		return (nvtv_simple_is_available());
+#else
 		return FALSE;
+#endif
 	case TV_OUT_DXR3:
 		/* FIXME: Add DXR3 detection code */
 		return FALSE;
@@ -1820,6 +1854,29 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget * bvw,
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+#ifdef HAVE_NVTV
+  if (bvw->priv->tv_out_type != TV_OUT_NVTV_NTSC &&
+      bvw->priv->tv_out_type != TV_OUT_NVTV_PAL)
+    return;
+
+  bvw->priv->fullscreen_mode = fullscreen;
+
+  if (fullscreen == FALSE)
+  {
+    /* If NVTV is used */
+    if (nvtv_simple_get_state() == NVTV_SIMPLE_TV_ON) {
+      nvtv_simple_switch(NVTV_SIMPLE_TV_OFF,0,0);
+
+    }
+    /* Turn fullscreen on with NVTV if that option is on */
+  } else if ((bvw->priv->tv_out_type == TV_OUT_NVTV_NTSC) ||
+      (bvw->priv->tv_out_type == TV_OUT_NVTV_PAL)) {
+    nvtv_simple_switch(NVTV_SIMPLE_TV_ON,
+	bvw->priv->video_width,
+	bvw->priv->video_height);
+  }
+#endif
 }
 
 void
