@@ -365,7 +365,8 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		widget = glade_xml_get_widget (totem->xml, "label1");
 		gtk_window_set_title (GTK_WINDOW (totem->win), "Totem");
 		text = g_strdup_printf
-			(_("<span size=\"medium\"><b>No file</b></span>"));
+			("<span size=\"medium\"><b>%s</b></span>",
+			 _("No file"));
 		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
 				text);
 		g_free (text);
@@ -1034,7 +1035,7 @@ on_about1_activate (GtkButton *button, gpointer user_data)
 	}
 
 	about = gnome_about_new(_("Totem"), VERSION,
-			_("(C) 2002 Bastien Nocera"),
+			_("(c) Copyright 2002 Bastien Nocera"),
 			_("Movie Player (based on the Xine libraries)"),
 			(const char **)authors,
 			(const char **)documenters,
@@ -1358,7 +1359,7 @@ on_error_event (GtkWidget *gtx, GtkXineError error, const char *message,
 	case GTX_NO_INPUT_PLUGIN:
 	case GTX_NO_DEMUXER_PLUGIN:
 		msg = g_strdup_printf (_("There is no plugin for Totem to "
-					"handle '%s'\nTotem will not be able "
+					"handle '%s'.\nTotem will not be able "
 					"to play it."), totem->mrl);
 		break;
 	case GTX_DEMUXER_FAILED:
@@ -1679,7 +1680,8 @@ GtkWidget
 
 	/* Set default */
 	text = g_strdup_printf
-		(_("<span size=\"medium\"><b>No file</b></span>"));
+		("<span size=\"medium\"><b>%s</b></span>",
+		 _("No file"));
 	rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (label), text);
 	g_free (text);
 
