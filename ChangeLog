@@ -1,3 +1,9 @@
+2004-01-30  Jon Trowbridge <trow@ximian.com>
+
+	* src/bacon-video-widget-gst.c (bacon_video_widget_seek_time):
+	Multiply the seek time by GST_MSECOND.  This fixes (among other
+	things) relative seeking.
+
 2004-01-28  Frederic Crozat  <fcrozat@mandrakesoft.com>
 
 	* src/totem-preferences.c: (totem_setup_preferences):

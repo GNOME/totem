@@ -997,8 +997,8 @@ bacon_video_widget_seek (BaconVideoWidget *bvw, float position, GError **gerror)
   return TRUE;
 }
 
-gboolean bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time,
-		GError **gerror)
+gboolean
+bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **gerror)
 {
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
@@ -1011,7 +1011,7 @@ gboolean bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time,
       bvw->priv->last_error_message = NULL;
     }
 
-  gst_play_seek_to_time (bvw->priv->play, time);
+  gst_play_seek_to_time (bvw->priv->play, time * GST_MSECOND);
 
   return TRUE;
 }
