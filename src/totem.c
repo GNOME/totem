@@ -68,6 +68,7 @@ struct Totem {
 	GtkAdjustment *voladj;
 	gboolean vol_lock;
 	gfloat prev_volume;
+    int volume_first_time;
 
 	/* exit fullscreen Popup */
 	GtkWidget *exit_popup;
@@ -827,9 +828,10 @@ update_sliders (Totem *totem)
 		totem->vol_lock = TRUE;
 		pos = (gfloat) gtk_xine_get_volume (GTK_XINE (totem->gtx));
 
-		if (totem->prev_volume != pos &&
-				totem->prev_volume != -1 && pos != -1)
+		if (totem->volume_first_time || (totem->prev_volume != pos &&
+				totem->prev_volume != -1 && pos != -1))
 		{
+            totem->volume_first_time = 0;
 			gtk_adjustment_set_value (totem->voladj, pos);
 			gtk_adjustment_set_value (totem->fs_voladj, pos);
 			volume_set_image (totem, (gint) pos);
@@ -2193,6 +2195,7 @@ main (int argc, char **argv)
 	totem->fs_volume     = glade_xml_get_widget (totem->xml, "hscale5");
 	totem->fs_voladj = gtk_range_get_adjustment
 		(GTK_RANGE (totem->fs_volume));
+    totem->volume_first_time = 1;
 	totem->fs_pp_button = glade_xml_get_widget (totem->xml, "fs_pp_button");
 
 	/* Calculate the height of the control popup window */
