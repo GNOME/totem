@@ -536,33 +536,21 @@ init_columns (GtkTreeView *treeview)
 {
 	GtkCellRenderer *renderer;
 	GtkTreeViewColumn *column;
-	GtkWidget *header;
-	char *filename;
 
 	/* Playing pix */
 	renderer = gtk_cell_renderer_pixbuf_new ();
-	filename = gnome_program_locate_file (NULL,
-			GNOME_FILE_DOMAIN_APP_DATADIR,
-			"totem/playlist-16.png", TRUE, NULL);
-	header = gtk_image_new_from_file (filename);
-	g_free (filename);
-	gtk_widget_show (header);
-	column = gtk_tree_view_column_new_with_attributes (_("Playing"),
-			renderer,
-			"pixbuf", PIX_COL,
-			NULL);
-	gtk_tree_view_column_set_fixed_width (column, 20);
-	gtk_tree_view_column_set_widget (column, header);
+	column = gtk_tree_view_column_new ();
+	gtk_tree_view_column_pack_start (column, renderer, FALSE);
+	gtk_tree_view_column_set_attributes (column, renderer,
+			"pixbuf", PIX_COL, NULL);
+	gtk_tree_view_column_set_title (column, _("Filename"));
 	gtk_tree_view_append_column (treeview, column);
 
-	/* Display Name */
+	/* Labels */
 	renderer = gtk_cell_renderer_text_new ();
-
-	column = gtk_tree_view_column_new_with_attributes (_("Filename"),
-			renderer,
-			"text", FILENAME_COL,
-			NULL);
-	gtk_tree_view_append_column (treeview, column);
+	gtk_tree_view_column_pack_start (column, renderer, TRUE);
+	gtk_tree_view_column_set_attributes (column, renderer,
+			"text", FILENAME_COL, NULL);
 }
 
 static void
