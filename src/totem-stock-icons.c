@@ -104,20 +104,49 @@ totem_set_default_icons (Totem *totem)
 			: PIXBUF_FOR_ID("stock-media-play"));
 
 	/* Previous button */
-	item = glade_xml_get_widget (totem->xml, "tmw_previous_button_image");
-	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
-			PIXBUF_FOR_ID("stock-media-prev"));
-	item = glade_xml_get_widget (totem->xml, "tcw_previous_button_image");
-	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
-			PIXBUF_FOR_ID("stock-media-prev"));
+	if (gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_LTR)
+	{
+		item = glade_xml_get_widget (totem->xml,
+				"tmw_previous_button_image");
+		gtk_image_set_from_pixbuf (GTK_IMAGE (item),
+				PIXBUF_FOR_ID("stock-media-prev"));
+		item = glade_xml_get_widget (totem->xml,
+				"tcw_previous_button_image");
+		gtk_image_set_from_pixbuf (GTK_IMAGE (item),
+				PIXBUF_FOR_ID("stock-media-prev"));
+	} else {
+		item = glade_xml_get_widget (totem->xml,
+				"tmw_previous_button_image");
+		gtk_image_set_from_pixbuf (GTK_IMAGE (item),
+				PIXBUF_FOR_ID("stock-media-next"));
+		item = glade_xml_get_widget (totem->xml,
+				"tcw_previous_button_image");
+		gtk_image_set_from_pixbuf (GTK_IMAGE (item),
+				PIXBUF_FOR_ID("stock-media-next"));
+	}
 
 	/* Next button */
-	item = glade_xml_get_widget (totem->xml, "tmw_next_button_image");
-	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
-			PIXBUF_FOR_ID("stock-media-next"));
-	item = glade_xml_get_widget (totem->xml, "tcw_next_button_image");
-	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
-			PIXBUF_FOR_ID("stock-media-next"));
+	if (gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_LTR)
+	{
+		item = glade_xml_get_widget (totem->xml,
+				"tmw_next_button_image");
+		gtk_image_set_from_pixbuf (GTK_IMAGE (item),
+				PIXBUF_FOR_ID("stock-media-next"));
+		item = glade_xml_get_widget (totem->xml,
+				"tcw_next_button_image");
+		gtk_image_set_from_pixbuf (GTK_IMAGE (item),
+				PIXBUF_FOR_ID("stock-media-next"));
+	} else {
+		item = glade_xml_get_widget (totem->xml,
+				"tmw_next_button_image");
+		gtk_image_set_from_pixbuf (GTK_IMAGE (item),
+				PIXBUF_FOR_ID("stock-media-prev"));
+		item = glade_xml_get_widget (totem->xml,
+				"tcw_next_button_image");
+		gtk_image_set_from_pixbuf (GTK_IMAGE (item),
+				PIXBUF_FOR_ID("stock-media-prev"));
+	}
+
 	/* Screenshot button */
 	item = glade_xml_get_widget (totem->xml,
 			"tmw_take_screenshot_menu_item_image");
