@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2003-01-12 03:20+0100\n"
-"PO-Revision-Date: 2003-01-12 12:28+0200\n"
+"POT-Creation-Date: 2003-01-12 19:17+0100\n"
+"PO-Revision-Date: 2003-01-13 00:26+0200\n"
 "Last-Translator: Artis Trops <hornet@navigator.lv>\n"
 "Language-Team: Latvian <ll10nt@os.lv>\n"
 "MIME-Version: 1.0\n"
@@ -24,25 +24,25 @@ msgid "Repeat Mode"
 msgstr "Atkārtošanās Režīms"
 
 #: data/properties.glade.h:1
-#: src/gtk-xine.c:2051
+#: src/gtk-xine.c:2054
 msgid "0 frames per second"
 msgstr "0 kadri sekundē"
 
 #. Bitrate
 #: data/properties.glade.h:2
-#: src/gtk-xine.c:2053
+#: src/gtk-xine.c:2056
 msgid "0 kbps"
 msgstr "0 kbps"
 
 #. 0 seconds
 #: data/properties.glade.h:3
-#: src/gtk-xine.c:1987
+#: src/gtk-xine.c:1990
 msgid "0 seconds"
 msgstr "0 sekondes"
 
 #. Dimensions
 #: data/properties.glade.h:4
-#: src/gtk-xine.c:2046
+#: src/gtk-xine.c:2049
 msgid "0 x 0"
 msgstr "0 x 0"
 
@@ -84,12 +84,12 @@ msgstr "Kadrātrums: "
 
 #. Year
 #: data/properties.glade.h:14
-#: src/gtk-xine.c:2042
-#: src/gtk-xine.c:2048
-#: src/gtk-xine.c:2055
-#: src/gtk-xine.c:2077
-#: src/gtk-xine.c:2102
-#: src/gtk-xine.c:2133
+#: src/gtk-xine.c:2045
+#: src/gtk-xine.c:2051
+#: src/gtk-xine.c:2058
+#: src/gtk-xine.c:2080
+#: src/gtk-xine.c:2105
+#: src/gtk-xine.c:2136
 msgid "N/A"
 msgstr "N/P"
 
@@ -103,10 +103,10 @@ msgstr "Nosaukums: "
 
 #. Title
 #: data/properties.glade.h:17
-#: src/gtk-xine.c:2038
-#: src/gtk-xine.c:2040
-#: src/gtk-xine.c:2069
-#: src/gtk-xine.c:2073
+#: src/gtk-xine.c:2041
+#: src/gtk-xine.c:2043
+#: src/gtk-xine.c:2072
+#: src/gtk-xine.c:2076
 msgid "Unknown"
 msgstr "Nezināms"
 
@@ -317,90 +317,97 @@ msgstr "Izvēlieties failus"
 msgid "Filename"
 msgstr "Faila nosaukums"
 
-#: src/gtk-xine.c:76
+#: src/gtk-xine.c:77
 msgid "Totem Video Window"
 msgstr "Totem Video Logs"
 
-#: src/gtk-xine.c:913
+#: src/gtk-xine.c:571
+#, c-format
+msgid "Couldn't load the '%s' audio driver\n"
+"Check that the device is not busy."
+msgstr "Nevarēju ielādēt '%s' audio draiveri\n"
+"Pārbaudiet, vai iekārta nav aizņemta."
+
+#: src/gtk-xine.c:941
 msgid "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
 msgstr "Nevarēju inicializēt sazarojuma atbalstu.\n"
 "Jums vajadzētu uzstādīt sazarojumdrošu Xlib."
 
-#: src/gtk-xine.c:941
+#: src/gtk-xine.c:969
 msgid "Could not find a suitable video output."
 msgstr "Nevarēju atrast lietojamu video izvadi."
 
-#: src/gtk-xine.c:1280
+#: src/gtk-xine.c:1312
 #, c-format
 msgid "Reason: Video type '%s' is not handled."
 msgstr "Iemesls: Video tips '%s' netiek apdarināts."
 
 #. One hour
-#: src/gtk-xine.c:1956
+#: src/gtk-xine.c:1959
 #, c-format
 msgid "%d hour"
 msgstr "%d stunda"
 
 #. Multiple hours
-#: src/gtk-xine.c:1959
+#: src/gtk-xine.c:1962
 #, c-format
 msgid "%d hours"
 msgstr "%d stundas"
 
 #. One minute
-#: src/gtk-xine.c:1963
+#: src/gtk-xine.c:1966
 #, c-format
 msgid "%d minute"
 msgstr "%d minūte"
 
 #. Multiple minutes
-#: src/gtk-xine.c:1966
+#: src/gtk-xine.c:1969
 #, c-format
 msgid "%d minutes"
 msgstr "%d minūtes"
 
 #. One second
-#: src/gtk-xine.c:1970
+#: src/gtk-xine.c:1973
 #, c-format
 msgid "%d second"
 msgstr "%d sekunde"
 
 #. Multiple seconds
-#: src/gtk-xine.c:1973
+#: src/gtk-xine.c:1976
 #, c-format
 msgid "%d seconds"
 msgstr "%d sekundes"
 
 #. hour:minutes:seconds
-#: src/gtk-xine.c:1978
+#: src/gtk-xine.c:1981
 #, c-format
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. minutes:seconds
-#: src/gtk-xine.c:1981
+#: src/gtk-xine.c:1984
 #, c-format
 msgid "%s %s"
 msgstr "%s %s"
 
 #. seconds
-#: src/gtk-xine.c:1984
+#: src/gtk-xine.c:1987
 #, c-format
 msgid "%s"
 msgstr "%s"
 
 #. Duration
-#: src/gtk-xine.c:2044
+#: src/gtk-xine.c:2047
 msgid "0 second"
 msgstr "0 sekundes"
 
-#: src/gtk-xine.c:2112
+#: src/gtk-xine.c:2115
 #, c-format
 msgid "%d frames per second"
 msgstr "%d kadri sekundē"
 
-#: src/gtk-xine.c:2124
+#: src/gtk-xine.c:2127
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
