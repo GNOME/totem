@@ -1009,7 +1009,8 @@ gtk_xine_play (GtkXine *gtx, gint pos, gint start_time)
 	g_return_val_if_fail (GTK_IS_XINE (gtx), -1);
 	g_return_val_if_fail (gtx->priv->xine != NULL, -1);
 
-	error = xine_play (gtx->priv->stream, pos, start_time);
+	/* xine_play expects start_time in milliseconds */
+	error = xine_play (gtx->priv->stream, pos, start_time * 1000);
 	if (!error)
 	{
 		xine_error (gtx);

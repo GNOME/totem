@@ -1038,6 +1038,30 @@ hide_prefs (GtkWidget *playlist, int trash, gpointer user_data)
 	gtk_widget_hide (totem->prefs);
 }
 
+static void
+on_checkbutton1_toggled (GtkToggleButton *togglebutton, gpointer user_data)
+{
+	Totem *totem = (Totem *)user_data;
+	gboolean value;
+
+	D("on_checkbutton1_toggled");
+	value = gtk_toggle_button_get_active (togglebutton);
+	gconf_client_set_bool (totem->gc, "/apps/totem/auto_resize",
+			value, NULL);
+}
+
+static void
+on_combo_entry1_changed (GtkEntry *entry, gpointer user_data)
+{
+	Totem *totem = (Totem *)user_data;
+	const char *str;
+
+	D("on_combo_entry1_activate");
+	str = gtk_entry_get_text (entry);
+	gconf_client_set_string (totem->gc, "/apps/totem/mediadev",
+			str, NULL);
+}
+
 void
 totem_button_pressed_remote_cb (TotemRemote *remote, TotemRemoteCommand cmd,
 				Totem *totem)
@@ -1650,9 +1674,12 @@ totem_setup_preferences (Totem *totem)
 			G_CALLBACK (hide_prefs), (gpointer) totem);
 
 	item = glade_xml_get_widget (totem->xml, "checkbutton1");
-	//FIXME need to finish this...
-//	g_signal_connect (G_OBJECT (item), "clicked",
-//			G_CALLBACK (on_checkbutton1_toggled), totem);
+	g_signal_connect (G_OBJECT (item), "toggled",
+			G_CALLBACK (on_checkbutton1_toggled), totem);
+
+	item = glade_xml_get_widget (totem->xml, "combo-entry1");
+	g_signal_connect (G_OBJECT (item), "changed",
+			G_CALLBACK (on_combo_entry1_changed), totem);
 }
 
 GConfClient *

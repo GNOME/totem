@@ -72,6 +72,8 @@ gboolean  gtk_xine_check               (GtkXine *gtx);
 
 /* Actions */
 gboolean gtk_xine_open                (GtkXine *gtx, const gchar *mrl);
+
+/* This is used for seeking, start_time is in seconds */
 gboolean gtk_xine_play                 (GtkXine *gtx, gint pos,
 		                        gint start_time);
 void gtk_xine_stop                     (GtkXine *gtx);

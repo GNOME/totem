@@ -1,3 +1,12 @@
+2002-11-07  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-xine.c: (gtk_xine_play): fix seeking, xine now uses
+	milliseconds not seconds
+	* src/gtk-xine.h: add comment for gtk_xine_play
+	* src/totem.c: (on_checkbutton1_toggled),
+	(on_combo_entry1_changed), (totem_setup_preferences): more preferences
+	work, need to update when changed from gconf
+
 2002-11-04  Jordi Mallach  <jordi@sindominio.net>
 
 	* configure.in (ALL_LINGUAS): Added Catalan (ca).
