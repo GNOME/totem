@@ -29,7 +29,7 @@ show_pixbuf (GdkPixbuf *pix)
 	gtk_main ();
 }
 #endif
-#if 0
+
 static void
 gdk_pixbuf_mirror (GdkPixbuf *pixbuf)
 {
@@ -44,17 +44,14 @@ gdk_pixbuf_mirror (GdkPixbuf *pixbuf)
 	width = gdk_pixbuf_get_width (pixbuf);
 	height = gdk_pixbuf_get_height (pixbuf);
 	rowstride = gdk_pixbuf_get_rowstride (pixbuf);
-	size = (height -1) * rowstride + height * sizeof (guint32);
+	size = height * width * sizeof (guint32);
 
 	for (i = 0; i < size; i += rowstride)
 	{
 		for (j = 0; j < rowstride; j += sizeof(guint32))
 		{
 			offset = i + j;
-			right = i + (width * sizeof(guint32) - j);
-
-			g_message ("size: %d offset: %d right: %d",
-					size, offset, right);
+			right = i + (((width - 1) * sizeof(guint32)) - j);
 
 			if (right <= offset)
 				break;
@@ -66,7 +63,7 @@ gdk_pixbuf_mirror (GdkPixbuf *pixbuf)
 		}
 	}
 }
-#endif
+
 static GdkPixbuf *
 add_holes_to_pixbuf (GdkPixbuf *pixbuf, int width, int height)
 {
@@ -96,9 +93,9 @@ add_holes_to_pixbuf (GdkPixbuf *pixbuf, int width, int height)
 				MIN (height-i, gdk_pixbuf_get_height (holes)),
 				0, i, 1, 1, GDK_INTERP_NEAREST, 255);
 	}
-#if 0
+
 	gdk_pixbuf_mirror (holes);
-#endif
+
 	for (i = 0; i < height; i += gdk_pixbuf_get_height (holes))
 	{
 		gdk_pixbuf_composite (holes, tmp,

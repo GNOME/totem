@@ -1,3 +1,10 @@
+2003-03-16  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-video-thumbnailer.c: (gdk_pixbuf_mirror),
+	(add_holes_to_pixbuf): fix gdk_pixbuf_mirror, the right edge was off
+	by one pixel, enable the mirroring of the holes now so the margins
+	look OK
+
 2003-03-14  Bastien Nocera  <hadess@hadess.net>
 
 	* data/Makefile.am: upd
