@@ -108,8 +108,10 @@ GtkWidget *bacon_video_widget_new		 (int width, int height,
 char *bacon_video_widget_get_backend_name (BaconVideoWidget *bvw);
 
 /* Actions */
-gboolean bacon_video_widget_open		 (BaconVideoWidget *bvw,
+#define bacon_video_widget_open(bvw, mrl, error) bacon_video_widget_open_with_subtitle(bvw, mrl, NULL, error)
+gboolean bacon_video_widget_open_with_subtitle	 (BaconVideoWidget *bvw,
 						  const char *mrl,
+						  const char *subtitle_uri,
 						  GError **error);
 gboolean bacon_video_widget_play                 (BaconVideoWidget *bvw,
 						  GError **error);

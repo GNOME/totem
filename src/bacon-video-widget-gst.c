@@ -1482,8 +1482,8 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 /* =========================================== */
 
 gboolean
-bacon_video_widget_open (BaconVideoWidget * bvw, const gchar * mrl,
-			 GError ** error)
+bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
+		const gchar * mrl, const gchar *subtitle_uri, GError ** error)
 {
   gboolean ret;
 
@@ -1522,7 +1522,7 @@ bacon_video_widget_open (BaconVideoWidget * bvw, const gchar * mrl,
     g_strfreev (uris);
   } else {
     g_object_set (G_OBJECT (bvw->priv->play), "uri",
-		  bvw->priv->mrl, "suburi", NULL, NULL);
+		  bvw->priv->mrl, "suburi", subtitle_uri, NULL);
   }
 
   ret = (gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED) ==

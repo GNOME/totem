@@ -111,3 +111,56 @@ totem_setup_file_monitoring (Totem *totem)
 			totem);
 }
 
+/* List from xine-lib's demux_sputext.c */
+static const char *subtitle_ext[] = {
+	"asc",
+	"txt",
+	"sub",
+	"srt",
+	"smi",
+	"ssa"
+};
+
+char *
+totem_uri_get_subtitle_uri (const char *uri)
+{
+	char *suffix, *subtitle, *full;
+	guint len, i;
+
+	if (g_str_has_prefix (uri, "file://") == FALSE) {
+		return NULL;
+	}
+
+	if (strstr (uri, "#subtitle:") != NULL) {
+		return NULL;
+	}
+
+	len = strlen (uri);
+	if (uri[len-4] != '.') {
+		return NULL;
+	}
+
+	full = NULL;
+	subtitle = g_strdup (uri);
+	suffix = subtitle + len - 4;
+	for (i = 0; i < G_N_ELEMENTS(subtitle_ext) ; i++) {
+		char *fname;
+
+		memcpy (suffix + 1, subtitle_ext[i], 3);
+		fname = g_filename_from_uri (subtitle, NULL, NULL);
+
+		if (fname == NULL)
+			continue;
+
+		if (g_file_test (fname, G_FILE_TEST_IS_REGULAR) == FALSE) {
+			g_free (fname);
+			continue;
+		}
+
+		g_free (fname);
+		return subtitle;
+	}
+
+	return NULL;
+}
+

@@ -1844,66 +1844,17 @@ bacon_video_widget_get_backend_name (BaconVideoWidget *bvw)
 			XINE_SUB_VERSION);
 }
 
-/* List from xine-lib's demux_sputext.c */
-static const char *subtitle_ext[] = {
-	"asc",
-	"txt",
-	"sub",
-	"srt",
-	"smi",
-	"ssa"
-};
-
 static char *
-bacon_video_widget_get_subtitle_mrl (const char *mrl)
+bacon_video_widget_get_subtitled (const char *mrl, const char *subtitle_uri)
 {
-	char *suffix, *subtitle, *full;
-	guint len, i;
-
-	if (g_str_has_prefix (mrl, "file://") == FALSE) {
-		return NULL;
-	}
-
-	if (strstr (mrl, "#subtitle:") != NULL) {
-		return NULL;
-	}
-
-	len = strlen (mrl);
-	if (mrl[len-4] != '.') {
-		return NULL;
-	}
-
-	full = NULL;
-	subtitle = g_strdup (mrl);
-	suffix = subtitle + len - 4;
-	for (i = 0; i < G_N_ELEMENTS(subtitle_ext) ; i++) {
-		char *fname;
-
-		memcpy (suffix + 1, subtitle_ext[i], 3);
-		fname = g_filename_from_uri (subtitle, NULL, NULL);
-
-		if (fname == NULL)
-			continue;
-
-		if (g_file_test (fname, G_FILE_TEST_IS_REGULAR) == FALSE) {
-			g_free (fname);
-			continue;
-		}
-
-		full = g_strdup_printf ("%s#subtitle:%s", mrl,
-				subtitle + strlen ("file://"));
-		break;
-	}
-	g_free (subtitle);
-
-	return full;
+	g_return_val_if_fail (g_str_has_prefix (subtitle_uri, "file://"), NULL);
+	return g_strdup_printf ("%s#subtitle:%s", mrl, subtitle_uri + strlen ("file://"));
 }
 
 gboolean
-bacon_video_widget_open (BaconVideoWidget *bvw, const char *mrl,
-		GError **error)
+bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
+		const char *subtitle_uri, GError **error)
 {
-	char *subtitled;
 	int err;
 
 	g_return_val_if_fail (mrl != NULL, FALSE);
@@ -1911,14 +1862,15 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const char *mrl,
 	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
 	g_return_val_if_fail (bvw->priv->mrl == NULL, FALSE);
 
-	subtitled = bacon_video_widget_get_subtitle_mrl (mrl);
-	if (subtitled != NULL) {
+	if (subtitle_uri != NULL)
+	{
+		char *subtitled;
+		subtitled = bacon_video_widget_get_subtitled (mrl, subtitle_uri);
 		err = xine_open (bvw->priv->stream, subtitled);
+		g_free (subtitled);
 	} else {
 		err = xine_open (bvw->priv->stream, mrl);
 	}
-
-	g_free (subtitled);
 
 	if (err == 0)
 	{

@@ -678,6 +678,7 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		update_mrl_label (totem, NULL);
 	} else {
 		gboolean caps;
+		char *subtitle_uri;
 		GError *err = NULL;
 
 		if (bacon_video_widget_get_logo_mode (totem->bvw) != FALSE)
@@ -686,7 +687,9 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 			bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
 		}
 
-		retval = bacon_video_widget_open (totem->bvw, mrl, &err);
+		subtitle_uri = totem_uri_get_subtitle_uri (mrl);
+		retval = bacon_video_widget_open_with_subtitle (totem->bvw,
+				mrl, subtitle_uri, &err);
 		totem->mrl = g_strdup (mrl);
 
 		/* Play/Pause */

@@ -1,3 +1,17 @@
+2005-01-12  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-gst.c:
+	(bacon_video_widget_open_with_subtitle):
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_subtitled),
+	(bacon_video_widget_open_with_subtitle):
+	* src/bacon-video-widget.h:
+	* src/totem-uri.c: (totem_uri_get_subtitle_uri):
+	* src/totem-uri.h:
+	* src/totem.c: (totem_action_set_mrl_with_warning):
+	do the automatic subtitle opening in the front-end, rather than
+	in the backends
+
 2005-01-11  Bastien Nocera  <hadess@hadess.net>
 
 	* src/scrsaver.c: (fake_event), (totem_scrsaver_init):
