@@ -253,6 +253,7 @@ static GtkWidgetClass *parent_class = NULL;
 static void xine_event (void *user_data, const xine_event_t *event);
 static gboolean bacon_video_widget_idle_signal (BaconVideoWidget *bvw);
 static void show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals);
+static char *bacon_video_widget_get_media_device (BaconVideoWidget *bvw);
 
 static int bvw_table_signals[LAST_SIGNAL] = { 0 };
 
@@ -305,7 +306,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 				FALSE, G_PARAM_READWRITE));
 	g_object_class_install_property (object_class, PROP_MEDIADEV,
 			g_param_spec_string ("mediadev", NULL, NULL,
-				FALSE, G_PARAM_WRITABLE));
+				FALSE, G_PARAM_READWRITE));
 	g_object_class_install_property (object_class, PROP_SHOW_VISUALS,
 			g_param_spec_boolean ("showvisuals", NULL, NULL,
 				FALSE, G_PARAM_WRITABLE));
@@ -2221,6 +2222,9 @@ bacon_video_widget_get_property (GObject *object, guint property_id,
 		g_value_set_boolean (value,
 				bacon_video_widget_get_show_cursor (bvw));
 		break;
+	case PROP_MEDIADEV:
+		g_value_take_string (value,
+				bacon_video_widget_get_media_device (bvw));
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 	}
@@ -2470,6 +2474,17 @@ bacon_video_widget_get_show_cursor (BaconVideoWidget *bvw)
 	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
 
 	return bvw->priv->cursor_shown;
+}
+
+static char *
+bacon_video_widget_get_media_device (BaconVideoWidget *bvw)
+{
+	xine_cfg_entry_t entry;
+
+	if (!xine_config_lookup_entry (bvw->priv->xine,
+				"media.dvd.device", &entry))
+		return g_strdup ("");
+	return g_strdup (entry.str_value);
 }
 
 void

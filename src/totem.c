@@ -270,6 +270,7 @@ totem_action_eject (Totem *totem)
 	GError *err = NULL;
 	char *cmd, *prefix;
 	const char *needle;
+	char *device;
 
 	needle = strchr (totem->mrl, ':');
 	g_assert (needle != NULL);
@@ -278,8 +279,11 @@ totem_action_eject (Totem *totem)
 	totem_playlist_clear_with_prefix (totem->playlist, prefix);
 	g_free (prefix);
 
-	cmd = g_strdup_printf ("eject %s", gconf_client_get_string
-			(totem->gc, GCONF_PREFIX"/mediadev", NULL));
+	g_object_get (G_OBJECT (totem->bvw),
+			"mediadev", &device, NULL);
+	cmd = g_strdup_printf ("eject %s", device);
+	g_free (device);
+
 	if (g_spawn_command_line_sync (cmd, NULL, NULL, NULL, &err) == FALSE)
 	{
 		totem_action_error (_("Totem could not eject the optical media."), err->message, totem);

@@ -2033,6 +2033,12 @@ bacon_video_widget_get_show_cursor (BaconVideoWidget * bvw)
   return bvw->priv->cursor_shown;
 }
 
+static const char *
+bacon_video_widget_get_media_device (BaconVideoWidget * bvw)
+{
+  return bvw->priv->media_device;
+}
+
 void
 bacon_video_widget_set_media_device (BaconVideoWidget * bvw, const char *path)
 {
