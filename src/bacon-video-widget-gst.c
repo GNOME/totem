@@ -2288,16 +2288,17 @@ bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
   g_return_val_if_fail (bvw != NULL, value);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), value);
   
-  if (GST_IS_COLOR_BALANCE (bvw->priv->balance))
+  if (bvw->priv->balance && GST_IS_COLOR_BALANCE (bvw->priv->balance))
     {
       const GList *channels_list = NULL;
       GstColorBalanceChannel *found_channel = NULL;
       
       channels_list = gst_color_balance_list_channels (bvw->priv->balance);
       
-      while (channels_list)
+      while (channels_list != NULL && found_channel == NULL)
         { /* We search for the right channel corresponding to type */
           GstColorBalanceChannel *channel = channels_list->data;
+
           if (type == BVW_VIDEO_BRIGHTNESS && channel &&
               g_strrstr (channel->label, "BRIGHTNESS"))
             {
@@ -2325,17 +2326,20 @@ bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
           channels_list = g_list_next (channels_list);
         }
         
-      if (GST_IS_COLOR_BALANCE_CHANNEL (found_channel))
+      if (found_channel && GST_IS_COLOR_BALANCE_CHANNEL (found_channel))
         {
           value = gst_color_balance_get_value (bvw->priv->balance,
                                                found_channel);
           value = ((double) value - found_channel->min_value) * 65535 /
                   ((double) found_channel->max_value - found_channel->min_value);
           g_object_unref (found_channel);
+
+	  return value;
         }
     }
-    
-  return value;
+
+  /* value wasn't found, get from gconf */
+  return gconf_client_get_int (bvw->priv->gc, video_props_str[type], NULL);
 }
 
 void
@@ -2348,17 +2352,18 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
   
   if ( !(value < 65535 && value > 0) )
     return;
-  
-  if (GST_IS_COLOR_BALANCE (bvw->priv->balance))
+
+  if (bvw->priv->balance && GST_IS_COLOR_BALANCE (bvw->priv->balance))
     {
       const GList *channels_list = NULL;
       GstColorBalanceChannel *found_channel = NULL;
       
       channels_list = gst_color_balance_list_channels (bvw->priv->balance);
-      
-      while (channels_list)
-        { /* We search for the right channel corresponding to type */
+
+      while (found_channel == NULL && channels_list != NULL) {
+          /* We search for the right channel corresponding to type */
           GstColorBalanceChannel *channel = channels_list->data;
+
           if (type == BVW_VIDEO_BRIGHTNESS && channel &&
               g_strrstr (channel->label, "BRIGHTNESS"))
             {
@@ -2385,12 +2390,13 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
             }
           channels_list = g_list_next (channels_list);
         }
-        
-      if (GST_IS_COLOR_BALANCE_CHANNEL (found_channel))
+
+      if (found_channel && GST_IS_COLOR_BALANCE_CHANNEL (found_channel))
         {
-          value = value * ((double) found_channel->max_value - found_channel->min_value) / 65535 + found_channel->min_value;
+          int i_value = value * ((double) found_channel->max_value -
+	      found_channel->min_value) / 65535 + found_channel->min_value;
           gst_color_balance_set_value (bvw->priv->balance, found_channel,
-                                       value);
+                                       i_value);
           g_object_unref (found_channel);
         }
     }
