@@ -652,10 +652,13 @@ on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
 	D ("on_recent_file_activate URI: %s", uri);
 
 	filename = gnome_vfs_get_local_path_from_uri (uri);
-	g_return_if_fail (filename != NULL);
-	
-	gtk_playlist_add_mrl (totem->playlist, filename, NULL);
+	if (filename == NULL)
+	{
+		g_free (uri);
+		return;
+	}
 
+	gtk_playlist_add_mrl (totem->playlist, filename, NULL);
 	egg_recent_model_add_full (totem->recent_model, item);
 
 	g_free (uri);

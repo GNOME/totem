@@ -25,6 +25,7 @@
 
 #include <gnome.h>
 #include <glade/glade.h>
+#include <gconf/gconf-client.h>
 #include <libgnomevfs/gnome-vfs.h>
 #include <libgnomevfs/gnome-vfs-mime-utils.h>
 #include <string.h>
@@ -49,6 +50,11 @@ struct GtkPlaylistPrivate
 
 	/* This is the current path for the file selector */
 	char *path;
+
+	/* Repeat mode */
+	gboolean repeat;
+
+	GConfClient *gc;
 };
 
 /* Signals */
@@ -591,6 +597,66 @@ init_treeview (GtkWidget *treeview, GtkPlaylist *playlist)
 }
 
 static void
+repeat_button_toggled (GtkToggleButton *togglebutton, gpointer user_data)
+{
+	GtkPlaylist *playlist = (GtkPlaylist *)user_data;
+	gboolean repeat;
+
+	repeat = gtk_toggle_button_get_active (togglebutton);
+	gconf_client_set_bool (playlist->_priv->gc, "/apps/totem/repeat",
+			repeat, NULL);
+	playlist->_priv->repeat = repeat;
+}
+
+static void
+update_repeat_cb (GConfClient *client, guint cnxn_id,
+		GConfEntry *entry, gpointer user_data)
+{
+	GtkPlaylist *playlist = (GtkPlaylist *)user_data;
+	GtkWidget *button;
+	gboolean repeat;
+
+	repeat = gconf_client_get_bool (client,
+			"/apps/totem/repeat", NULL);
+	button = glade_xml_get_widget (playlist->_priv->xml, "repeat_button");
+	g_signal_handlers_disconnect_by_func (G_OBJECT (button),
+			repeat_button_toggled, playlist);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), repeat);
+	g_signal_connect (G_OBJECT (button), "toggled",
+			G_CALLBACK (repeat_button_toggled),
+			(gpointer) playlist);
+
+	g_signal_emit (G_OBJECT (playlist),
+			gtk_playlist_table_signals[CHANGED], 0,
+			NULL);
+}
+
+static void
+init_config (GtkPlaylist *playlist)
+{
+	GtkWidget *button;
+	GConfClient *gc;
+	gboolean repeat;
+
+	button = glade_xml_get_widget (playlist->_priv->xml, "repeat_button");
+	playlist->_priv->gc = gconf_client_get_default ();
+
+	repeat = gconf_client_get_bool (playlist->_priv->gc,
+			"/apps/totem/repeat", NULL);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), repeat);
+
+	gconf_client_add_dir (playlist->_priv->gc, "/apps/totem",
+			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
+	gconf_client_notify_add (playlist->_priv->gc, "/apps/totem/repeat",
+			update_repeat_cb, playlist, NULL, NULL);
+	g_signal_connect (G_OBJECT (button), "toggled",
+			G_CALLBACK (repeat_button_toggled),
+			(gpointer) playlist);
+
+	playlist->_priv->repeat = repeat;
+}
+
+static void
 gtk_playlist_init (GtkPlaylist *playlist)
 {
 	D("gtk_playlist_init");
@@ -599,6 +665,8 @@ gtk_playlist_init (GtkPlaylist *playlist)
 	playlist->_priv->current = NULL;
 	playlist->_priv->icon = NULL;
 	playlist->_priv->path = NULL;
+	playlist->_priv->repeat = FALSE;
+	playlist->_priv->gc = NULL;
 }
 
 
@@ -682,6 +750,9 @@ gtk_playlist_new (GtkWindow *parent)
 	init_treeview (playlist->_priv->treeview, playlist);
 	playlist->_priv->model = gtk_tree_view_get_model
 		(GTK_TREE_VIEW (playlist->_priv->treeview));
+
+	/* The configuration */
+	init_config (playlist);
 
 	if (parent != NULL)
 		gtk_window_set_transient_for (GTK_WINDOW (playlist), parent);
@@ -948,6 +1019,8 @@ gtk_playlist_has_next_mrl (GtkPlaylist *playlist)
 
 	if (update_current_from_playlist (playlist) == FALSE)
 		return FALSE;
+	if (playlist->_priv->repeat == TRUE)
+		return TRUE;
 
 	gtk_tree_model_get_iter (playlist->_priv->model,
 			&iter,
@@ -1049,7 +1122,12 @@ gtk_playlist_set_next (GtkPlaylist *playlist)
 	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
 
 	if (gtk_playlist_has_next_mrl (playlist) == FALSE)
+	{
+		if (playlist->_priv->repeat == TRUE)
+			gtk_playlist_set_at_start (playlist);
+
 		return;
+	}
 
 	gtk_playlist_unset_playing (playlist);
 

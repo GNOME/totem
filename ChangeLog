@@ -1,5 +1,17 @@
 2002-10-21  Bastien Nocera  <hadess@hadess.net>
 
+	* data/playlist.glade: added repeat check button
+	* data/totem.schemas.in: added repeat configuration
+	* src/gtk-playlist.c: (repeat_button_toggled), (update_repeat_cb),
+	(init_config), (gtk_playlist_init), (gtk_playlist_new),
+	(gtk_playlist_has_next_mrl), (gtk_playlist_set_next): add support for
+	repeat, pressing next in repeat mode from the last song goes to the
+	beginning of the list (Closes: #96048)
+	* src/totem.c: (on_recent_file_activate): fix a leak when filename was
+	NULL
+
+2002-10-21  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-playlist.c: (gtk_tree_selection_has_selected_foreach),
 	(gtk_tree_selection_has_selected): urgh, still learning C bud ?
 
