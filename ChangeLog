@@ -1,3 +1,16 @@
+2003-04-26  Bastien Nocera  <hadess@hadess.net>
+
+	* README: upd regarding debugging
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_instance_init), (load_audio_out_driver),
+	(bacon_video_widget_open): added some way to get debugging,
+	if we can't autoprobe a device, fallback on null output, and stop
+	whinging, complain if a file is audio-only and there's no audio out,
+	tell the user about the additional plugins only if we don't have a
+	decoder for the video
+	* src/totem.c: (totem_action_set_mrl): move the "additional plugins"
+	hint to the video widget
+
 2003-04-25  Bastien Nocera  <hadess@hadess.net>
 
 	* README: upd

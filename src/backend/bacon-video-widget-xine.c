@@ -340,6 +340,16 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 
 	xine_init (bvw->priv->xine);
 
+#ifndef DEBUG
+	xine_engine_set_param (bvw->priv->xine,
+			XINE_ENGINE_PARAM_VERBOSITY,
+			XINE_VERBOSITY_NONE);
+#else
+	xine_engine_set_param (bvw->priv->xine,
+			XINE_ENGINE_PARAM_VERBOSITY,
+			XINE_VERBOSITY_DEBUG);
+#endif
+
 	/* Can we play DVDs and VCDs ? */
 	autoplug_list = xine_get_autoplay_input_plugin_ids (bvw->priv->xine);
 	while (autoplug_list && autoplug_list[i])
@@ -565,7 +575,7 @@ load_audio_out_driver (BaconVideoWidget *bvw, GError **err)
 		ao_driver = xine_open_audio_driver (bvw->priv->xine,
 				NULL, NULL);
 
-	if (ao_driver == NULL)
+	if (ao_driver == NULL && strcmp (audio_driver_id, "auto") != 0)
 	{
 		g_set_error (err, 0, 0,
 				_("Couldn't load the '%s' audio driver\n"
@@ -1322,11 +1332,23 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 		bacon_video_widget_close (bvw);
 
 		g_set_error (gerror, 0, 0,
-				_("Video codec '%s' is not handled"),
+				_("Video codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"),
 				name ? name : fourcc_str);
 
 		g_free (fourcc_str);
 		g_free (name);
+
+		return FALSE;
+	}
+
+	if (xine_get_stream_info (bvw->priv->stream,
+				XINE_STREAM_INFO_HAS_VIDEO) == FALSE
+		&& bvw->priv->ao_driver == NULL)
+	{
+		bacon_video_widget_close (bvw);
+
+		g_set_error (gerror, 0, 0,
+				_("This is an audio-only file, and there is no audio output available"));
 
 		return FALSE;
 	}
