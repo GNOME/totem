@@ -1323,8 +1323,8 @@ on_mouse_motion_event (GtkWidget *widget, gpointer user_data)
 
 	gtk_window_move (GTK_WINDOW (totem->control_popup), 0,
 			gdk_screen_height () - totem->control_popup_height);
-	gtk_widget_show (totem->exit_popup);
-	gtk_widget_show (totem->control_popup);
+	gtk_widget_show_all (totem->exit_popup);
+	gtk_widget_show_all (totem->control_popup);
 	gtk_xine_set_show_cursor (GTK_XINE (totem->gtx), TRUE);
 
 	totem->popup_timeout = gtk_timeout_add (2000,
