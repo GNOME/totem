@@ -217,8 +217,10 @@ static NPError totem_plugin_destroy_instance (NPP instance, NPSavedData **save)
 	if (plugin->send_fd >= 0)
 		close(plugin->send_fd);
 
-	kill (plugin->player_pid, SIGKILL);
-	waitpid (plugin->player_pid, NULL, 0);
+	if (plugin->player_pid) {
+		kill (plugin->player_pid, SIGKILL);
+		waitpid (plugin->player_pid, NULL, 0);
+	}
 
 	mozilla_functions.memfree (instance->pdata);
 	instance->pdata = NULL;
@@ -388,6 +390,10 @@ totem_plugin_get_value (NPP instance, NPPVariable variable,
 	case NPPVpluginNeedsXEmbed:
 		*((PRBool *)value) = PR_TRUE;
 		break;
+	case NPPVpluginScriptableIID:
+		g_message ("we're not scriptable yet: NPPVpluginScriptableIID");
+		*((PRBool *)value) = PR_FALSE;
+		break;
 	default:
 		g_message ("unhandled variable %d", variable);
 		err = NPERR_INVALID_PARAM;
@@ -411,7 +417,7 @@ NP_GetValue(void *future, NPPVariable variable, void *value)
 	return totem_plugin_get_value (NULL, variable, value);
 }
 
-#define NUM_MIME_TYPES 3
+#define NUM_MIME_TYPES 3 //FIXME no realaudio just yet
 static struct {
 	const char *mime_type;
 	const char *extensions;
@@ -419,7 +425,8 @@ static struct {
 } mime_types[] = {
 	{ "video/quicktime", "mov" },
 	{ "application/x-mplayer2", "avi, wma, wmv", "video/x-msvideo" },
-	{ "video/mpeg", "mpg, mpeg, mpe" }
+	{ "video/mpeg", "mpg, mpeg, mpe" },
+	{ "audio/x-pn-realaudio-plugin", "rpm", "audio/x-pn-realaudio" }
 };
 
 char *NP_GetMIMEDescription(void)

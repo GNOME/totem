@@ -1,5 +1,12 @@
 2005-03-20  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-mozilla-plugin.c: (totem_plugin_destroy_instance),
+	(totem_plugin_get_value): don't crash when we haven't forked the
+	viewer, tell the browser we don't have a scriptable interface yet,
+	starts of RealAudio support
+
+2005-03-20  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-mozilla-viewer.c: (on_video_button_press_event): Haha!
 	QuickTime actually shows the controls after the initial no controls
 
