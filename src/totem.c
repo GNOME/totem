@@ -404,7 +404,7 @@ totem_action_set_mrl_and_play (Totem *totem, char *mrl)
 		totem_action_play (totem, 0);
 }
 
-void
+static gboolean
 totem_action_load_media (Totem *totem, MediaType type)
 {
 	const char **mrls;
@@ -414,7 +414,7 @@ totem_action_load_media (Totem *totem, MediaType type)
 	{
 		totem_action_error (_("Totem cannot play this type of media because you do not have the appropriate plugins to handle it.\n"
 					"Install the necessary plugins and restart Totem to be able to play this media."), totem);
-		return;
+		return FALSE;
 	}
 
 	mrls = bacon_video_widget_get_mrls (totem->bvw, type);
@@ -423,10 +423,11 @@ totem_action_load_media (Totem *totem, MediaType type)
 		totem_action_error (_("Totem could not play this media although a plugin is present to handle it.\n"
 					"You might want to check that a disc is present in the drive and that it is correctly configured."),
 				totem);
-		return;
+		return FALSE;
 	}
 
 	totem_action_open_files (totem, (char **)mrls, FALSE);
+	return TRUE;
 }
 
 void
@@ -434,10 +435,12 @@ totem_action_play_media (Totem *totem, MediaType type)
 {
 	char *mrl;
 
-	totem_action_load_media (totem, type);
-	mrl = gtk_playlist_get_current_mrl (totem->playlist);
-	totem_action_set_mrl_and_play (totem, mrl);
-	g_free (mrl);
+	if (totem_action_load_media (totem, type) != FALSE)
+	{
+		mrl = gtk_playlist_get_current_mrl (totem->playlist);
+		totem_action_set_mrl_and_play (totem, mrl);
+		g_free (mrl);
+	}
 }
 
 void

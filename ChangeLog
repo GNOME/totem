@@ -1,5 +1,11 @@
 2003-07-11  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (totem_action_load_media),
+	(totem_action_play_media): check if we could actually get any mrls
+	before starting playback of a media being loaded (Closes: #117160)
+
+2003-07-11  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-video-thumbnailer.c: (time_monitor): don't tell nautilus
 	that the file can't be thumbnailed if it takes too long to do so
 
