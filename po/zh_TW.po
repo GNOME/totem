@@ -1,21 +1,23 @@
 # traditional Chinese translation of totem.
-# Copyright (C) 2003 Free Software Foundation, Inc.
+# Copyright (C) 2003,04 Free Software Foundation, Inc.
 # Abel Cheung <maddog@linux.org.hk>, 2003.
-#
+# Woodman Tuen <woodman@culturecom.com.hk>, 2004
+# 
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: totem 0.99.7\n"
+"Project-Id-Version: totem 0.99.15.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-04 11:15+0800\n"
-"PO-Revision-Date: 2003-11-06 06:13+0800\n"
-"Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
-"Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
+"POT-Creation-Date: 2004-09-09 05:50+0800\n"
+"PO-Revision-Date: 2004-09-09 05:50+0800\n"
+"Last-Translator: Woodman Tuen <woodman@culturecom.com.hk>\n"
+"Language-Team: Chinese/Traditional <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1212
+#: data/playlist.glade.h:1 src/totem-playlist.c:1409
 msgid "Playlist"
 msgstr "播放清單"
 
@@ -32,30 +34,33 @@ msgid "_Add..."
 msgstr "加入(_A)..."
 
 #: data/playlist.glade.h:5
+msgid "_Copy Location"
+msgstr "複製位置(_L)..."
+
+#: data/playlist.glade.h:6
 msgid "_Save..."
 msgstr "儲存(_S)..."
 
-#: data/properties.glade.h:1 data/totem.glade.h:1
+#: data/properties.glade.h:1 data/screenshot.glade.h:1 data/totem.glade.h:1
 msgid "    "
 msgstr "    "
 
-#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:170
+#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:105
 msgid "0 frames per second"
 msgstr "每秒 0 格"
 
 #. Bitrate
-#: data/properties.glade.h:3 src/bacon-video-widget-properties.c:172
+#: data/properties.glade.h:3 src/bacon-video-widget-properties.c:107
 msgid "0 kbps"
 msgstr "0 kbps"
 
 #. 0 seconds
-#: data/properties.glade.h:4 data/totem.glade.h:3
-#: src/bacon-video-widget-properties.c:126
+#: data/properties.glade.h:4 data/totem.glade.h:2 src/video-utils.c:344
 msgid "0 seconds"
 msgstr "0 秒"
 
 #. Dimensions
-#: data/properties.glade.h:5 src/bacon-video-widget-properties.c:165
+#: data/properties.glade.h:5 src/bacon-video-widget-properties.c:100
 msgid "0 x 0"
 msgstr "0×0"
 
@@ -77,7 +82,7 @@ msgstr "藝人："
 
 #: data/properties.glade.h:10
 msgid "Bitrate:"
-msgstr ""
+msgstr "位元率："
 
 #: data/properties.glade.h:11
 msgid "Codec:"
@@ -96,14 +101,15 @@ msgid "Framerate:"
 msgstr "播放速度："
 
 #. Video Codec
-#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:167
-#: src/bacon-video-widget-properties.c:174
-#: src/bacon-video-widget-properties.c:243
-#: src/bacon-video-widget-properties.c:275
+#. Audio Codec
+#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:102
+#: src/bacon-video-widget-properties.c:109
+#: src/bacon-video-widget-properties.c:180
+#: src/bacon-video-widget-properties.c:216
 msgid "N/A"
 msgstr "不適用"
 
-#: data/properties.glade.h:16 src/totem.c:2066
+#: data/properties.glade.h:16 src/totem.c:2067
 msgid "Properties"
 msgstr "屬性"
 
@@ -112,12 +118,14 @@ msgid "Title:"
 msgstr "標題："
 
 #. Title
-#: data/properties.glade.h:18 src/bacon-video-widget-properties.c:157
-#: src/bacon-video-widget-properties.c:159
-#: src/bacon-video-widget-properties.c:161
-#: src/bacon-video-widget-properties.c:192
-#: src/bacon-video-widget-properties.c:199
-#: src/bacon-video-widget-properties.c:206
+#. Artist
+#. Year
+#: data/properties.glade.h:18 src/bacon-video-widget-properties.c:92
+#: src/bacon-video-widget-properties.c:94
+#: src/bacon-video-widget-properties.c:96
+#: src/bacon-video-widget-properties.c:128
+#: src/bacon-video-widget-properties.c:135
+#: src/bacon-video-widget-properties.c:142
 msgid "Unknown"
 msgstr "不明"
 
@@ -125,564 +133,609 @@ msgstr "不明"
 msgid "Year:"
 msgstr "年份："
 
-#: data/totem-download.glade.h:1
-msgid "Connecting to the server"
-msgstr "正在連接伺服器"
-
-#: data/totem-download.glade.h:2
-msgid "Done"
-msgstr "完成"
-
-#: data/totem-download.glade.h:3
-msgid "Downloading the plug-ins"
-msgstr "下載增效模組"
-
-#: data/totem-download.glade.h:4
-msgid "Installing the plug-ins"
-msgstr "安裝增效模組"
-
-#: data/totem-download.glade.h:5
-msgid "Plug-ins Download"
-msgstr "下載增效模組"
-
-#: data/totem.desktop.in.h:1
-msgid "Play movies and songs"
-msgstr "播放影片及歌曲"
-
-#: data/totem.desktop.in.h:2 src/totem.c:3596
-msgid "Totem Movie Player"
-msgstr "Totem 影片播放程式"
-
-#: data/totem.glade.h:2 data/uri.glade.h:1
+#: data/screenshot.glade.h:2 data/uri.glade.h:1
 msgid "*"
 msgstr "*"
 
-#: data/totem.glade.h:4
+#: data/screenshot.glade.h:3
+msgid "<b>Preview</b>"
+msgstr "<b>預覽</b>"
+
+#: data/screenshot.glade.h:4 src/totem-screenshot.c:268
+msgid "Save Screenshot"
+msgstr "儲存畫面快照"
+
+#: data/screenshot.glade.h:5
+msgid "Save screenshot"
+msgstr "儲存畫面快照"
+
+#: data/screenshot.glade.h:6
+msgid "Save screenshot to _desktop"
+msgstr "將畫面快照儲存至桌面(_D)"
+
+#: data/screenshot.glade.h:7
+msgid "Save screenshot to _file:"
+msgstr "將畫面快照儲存至檔案(_F)："
+
+#: data/totem.desktop.in.in.h:1
+msgid "Play movies and songs"
+msgstr "播放影片及歌曲"
+
+#. Title
+#: data/totem.desktop.in.in.h:2 data/totem.glade.h:101 src/totem.c:710
+#: src/totem.c:3699
+msgid "Totem Movie Player"
+msgstr "Totem 影片播放程式"
+
+#: data/totem.glade.h:3
 msgid "1.5 Mbps T1/Intranet/LAN"
 msgstr "1.5 Mbps T1/內部網路/LAN"
 
-#: data/totem.glade.h:5
+#: data/totem.glade.h:4
 msgid "112 Kbps Dual ISDN/DSL"
-msgstr ""
+msgstr "112 Kbps 雙頻 ISDN/DSL"
 
-#: data/totem.glade.h:6
+#: data/totem.glade.h:5
 msgid "14.4 Kbps Modem"
 msgstr "14.4 Kbps 數據機"
+
+#: data/totem.glade.h:6
+msgid "16:9 (Widescreen)"
+msgstr "16:9 (闊螢幕)"
 
 #: data/totem.glade.h:7
 msgid "19.2 Kbps Modem"
 msgstr "19.2 Kbps 數據機"
 
 #: data/totem.glade.h:8
+msgid "2.11:1 (DVB)"
+msgstr "2.11:1 (DVB)"
+
+#: data/totem.glade.h:9
 msgid "256 Kbps DSL/Cable"
 msgstr "256 Kbps DSL/纜線"
 
-#: data/totem.glade.h:9
+#: data/totem.glade.h:10
 msgid "28.8 Kbps Modem"
 msgstr "28.8 Kbps 數據機"
 
-#: data/totem.glade.h:10
+#: data/totem.glade.h:11
 msgid "33.6 Kbps Modem"
 msgstr "33.6 Kbps 數據機"
 
-#: data/totem.glade.h:11
+#: data/totem.glade.h:12
 msgid "34.4 Kbps Modem"
 msgstr "34.4 Kbps 數據機"
 
-#: data/totem.glade.h:12
+#: data/totem.glade.h:13
 msgid "384 Kbps DSL/Cable"
 msgstr "384 Kbps DSL/纜線"
 
-#: data/totem.glade.h:13
+#: data/totem.glade.h:14
 msgid "4-channel"
 msgstr "4 聲道"
 
-#: data/totem.glade.h:14
+#: data/totem.glade.h:15
+msgid "4:3 (TV)"
+msgstr "4:3 (電視)"
+
+#: data/totem.glade.h:16
 msgid "5.0-channel"
 msgstr "5.0 聲道"
 
-#: data/totem.glade.h:15
+#: data/totem.glade.h:17
 msgid "5.1-channel"
 msgstr "5.1 聲道"
 
-#: data/totem.glade.h:16
+#: data/totem.glade.h:18
 msgid "512 Kbps DSL/Cable"
 msgstr "512 Kbps DSL/纜線"
 
-#: data/totem.glade.h:17
+#: data/totem.glade.h:19
 msgid "56 Kbps Modem/ISDN"
 msgstr "56 Kbps 數據機/ISDN"
 
-#: data/totem.glade.h:18
+#: data/totem.glade.h:20
 msgid "<b>Audio Output</b>"
 msgstr "<b>音效輸出</b>"
 
-#: data/totem.glade.h:19
-msgid "<b>Brightness/Contrast</b>"
-msgstr "<b>亮度/反差</b>"
+#: data/totem.glade.h:21
+msgid "<b>Color balance</b>"
+msgstr "<b>色彩平衡M/b>"
 
-#: data/totem.glade.h:20
+#: data/totem.glade.h:22
 msgid "<b>Display</b>"
 msgstr "<b>顯示</b>"
 
-#: data/totem.glade.h:21
+#: data/totem.glade.h:23
 msgid "<b>Networking</b>"
 msgstr "<b>網路</b>"
 
-#: data/totem.glade.h:22
+#: data/totem.glade.h:24
 msgid "<b>Optical Device</b>"
 msgstr "<b>光碟裝置</b>"
 
-#: data/totem.glade.h:23
-msgid "<b>Preview</b>"
-msgstr "<b>預覽</b>"
-
-#: data/totem.glade.h:24
-msgid "<b>Proprietary Plugins</b>"
-msgstr ""
-
 #: data/totem.glade.h:25
-msgid "<b>TV-Out</b>"
-msgstr "<b>TV 輸出</b>"
+msgid "<b>Proprietary Plugins</b>"
+msgstr "<b>專屬增效模組</b>"
 
 #: data/totem.glade.h:26
+msgid "<b>TV-Out</b>"
+msgstr "<b>電視輸出</b>"
+
+#: data/totem.glade.h:27
 msgid "<b>Visual Effects</b>"
 msgstr "<b>視覺效果</b>"
 
-#: data/totem.glade.h:27
-msgid "AC3 Passthrough"
-msgstr ""
-
 #: data/totem.glade.h:28
+msgid "AC3 Passthrough"
+msgstr "AC3 Passthrough"
+
+#: data/totem.glade.h:29
 msgid "A_udio Menu"
 msgstr "音效選單(_U)"
 
-#: data/totem.glade.h:29
-msgid "Always on _Top"
-msgstr ""
-
 #: data/totem.glade.h:30
-msgid "Always on top"
-msgstr ""
+msgid "Always on _Top"
+msgstr "永遠在最上層(_T)"
 
 #: data/totem.glade.h:31
+msgid "Always on top"
+msgstr "永遠在最上層"
+
+#: data/totem.glade.h:32
 msgid "Audio"
 msgstr "音效"
 
-#: data/totem.glade.h:32
+#: data/totem.glade.h:33 src/totem.c:2930 src/totem.c:2951
+msgid "Auto"
+msgstr "自動"
+
+#: data/totem.glade.h:34
 msgid "Automatically _resize the window when a new video is loaded"
 msgstr "載入新的影片後自動調整視窗尺寸(_R)"
 
-#: data/totem.glade.h:33
+#: data/totem.glade.h:35
 msgid "Co_ntrast:"
 msgstr "反差(_N)："
 
-#: data/totem.glade.h:34
+#: data/totem.glade.h:36
 msgid "Connection _speed:"
 msgstr "連線速度(_S)："
 
-#: data/totem.glade.h:35
+#: data/totem.glade.h:37
 msgid "Deinterlace"
-msgstr ""
+msgstr "交錯式"
 
-#: data/totem.glade.h:36
+#: data/totem.glade.h:38
 msgid "Display"
 msgstr "顯示"
 
-#: data/totem.glade.h:37
+#: data/totem.glade.h:39
 msgid "Exit Fullscreen"
 msgstr "離開全螢幕模式"
 
-#: data/totem.glade.h:38
+#: data/totem.glade.h:40
 msgid "Extra Large"
 msgstr "特大"
 
-#: data/totem.glade.h:39
+#: data/totem.glade.h:41
 msgid "File name"
 msgstr "檔案名稱"
 
-#: data/totem.glade.h:40
+#: data/totem.glade.h:42
 msgid "General"
 msgstr "一般"
 
-#: data/totem.glade.h:41
+#: data/totem.glade.h:43
 msgid "Go to the DVD menu"
 msgstr "前往 DVD 選單"
 
-#: data/totem.glade.h:42
+#: data/totem.glade.h:44
 msgid "Go to the angle menu"
-msgstr ""
+msgstr "往角度選單"
 
-#: data/totem.glade.h:43
+#: data/totem.glade.h:45
 msgid "Go to the audio menu"
 msgstr "前往音效選單"
 
-#: data/totem.glade.h:44
+#: data/totem.glade.h:46
 msgid "Go to the chapter menu"
-msgstr ""
+msgstr "往章節選單"
 
-#: data/totem.glade.h:45
+#: data/totem.glade.h:47
 msgid "Go to the title menu"
 msgstr "前往標題選單"
 
-#: data/totem.glade.h:46
+#: data/totem.glade.h:48
+msgid "Help contents"
+msgstr "求助內容"
+
+#: data/totem.glade.h:49
 msgid "Intranet/LAN"
 msgstr "內部網路/LAN"
 
-#: data/totem.glade.h:47
+#: data/totem.glade.h:50
 msgid "Languages"
 msgstr "語言"
 
-#: data/totem.glade.h:48
+#: data/totem.glade.h:51
 msgid "Large"
 msgstr "大"
 
-#: data/totem.glade.h:49 src/totem.c:80
+#: data/totem.glade.h:52 src/totem.c:83
 msgid "Next"
-msgstr ""
+msgstr "下一首"
 
-#: data/totem.glade.h:50
+#: data/totem.glade.h:53
 msgid "Next chapter or movie"
 msgstr "下一章或下一齣影片"
 
-#: data/totem.glade.h:51
+#: data/totem.glade.h:54
 msgid "No Language Selection Available"
-msgstr ""
+msgstr "沒有語言選項存在"
 
-#: data/totem.glade.h:52
+#: data/totem.glade.h:55
 msgid "No subtitles selection available"
-msgstr ""
+msgstr "沒有字幕選項存在"
 
-#: data/totem.glade.h:53
+#: data/totem.glade.h:56
 msgid "Normal"
 msgstr "正常"
 
-#: data/totem.glade.h:54
+#: data/totem.glade.h:57
 msgid "Open _Location..."
 msgstr "開啟位置(_L)..."
 
-#: data/totem.glade.h:55
+#: data/totem.glade.h:58
 msgid "Open a non-local file"
 msgstr "開啟遠端檔案"
 
-#: data/totem.glade.h:56
+#: data/totem.glade.h:59
 msgid "Play / Pa_use"
 msgstr "播放/暫停(_U)"
 
-#: data/totem.glade.h:57
+#: data/totem.glade.h:60
 msgid "Play _Audio CD"
 msgstr "播放音樂 CD(_A)"
 
-#: data/totem.glade.h:58
+#: data/totem.glade.h:61
 msgid "Play _DVD"
 msgstr "播放 _DVD"
 
-#: data/totem.glade.h:59
+#: data/totem.glade.h:62
 msgid "Play _VCD"
 msgstr "播放 _VCD"
 
-#: data/totem.glade.h:60
+#: data/totem.glade.h:63
 msgid "Play a Video CD"
 msgstr "播放 VCD"
 
-#: data/totem.glade.h:61
+#: data/totem.glade.h:64
 msgid "Play a Video DVD"
 msgstr "播放 DVD 影片"
 
-#: data/totem.glade.h:62
+#: data/totem.glade.h:65
 msgid "Play an audio CD"
 msgstr "播放音樂 CD"
 
-#: data/totem.glade.h:63
+#: data/totem.glade.h:66
 msgid "Play or pause the movie"
 msgstr "播放或暫停播放影片"
 
-#: data/totem.glade.h:64 src/totem.c:79
+#: data/totem.glade.h:67 src/totem.c:82
 msgid "Play/Pause"
 msgstr "播放/暫停"
 
-#: data/totem.glade.h:65 src/totem.c:81
+#: data/totem.glade.h:68 src/totem.c:84
 msgid "Previous"
-msgstr ""
+msgstr "上一首"
 
-#: data/totem.glade.h:66
+#: data/totem.glade.h:69
 msgid "Previous chapter or movie"
 msgstr "上一章或上一齣影片"
 
-#: data/totem.glade.h:67
-msgid "S_ubtitles"
-msgstr ""
-
-#: data/totem.glade.h:68
-msgid "Save Screenshot"
-msgstr "儲存畫面快照"
-
-#: data/totem.glade.h:69
-msgid "Save screenshot to _file:"
-msgstr "將畫面快照儲存至檔案(_F)："
-
 #: data/totem.glade.h:70
-msgid "Save screenshot to the _desktop"
-msgstr "將畫面快照儲存至桌面(_D)"
+msgid "S_ubtitles"
+msgstr "字幕(_U)"
 
 #: data/totem.glade.h:71
+msgid "Sat_uration:"
+msgstr "飽和度(_U)："
+
+#: data/totem.glade.h:72
+msgid "Set the aspect ratio"
+msgstr "設定長寬比"
+
+#: data/totem.glade.h:73
 msgid "Set the repeat mode"
 msgstr "切換是否循環播放影片"
 
-#: data/totem.glade.h:72
+#: data/totem.glade.h:74
 msgid "Set the shuffle mode"
 msgstr "切換是否以隨機的次序播放影片"
 
-#: data/totem.glade.h:73
+#: data/totem.glade.h:75
+msgid "Sets 16:9 (Anamorphic) aspect ratio"
+msgstr "設置為 2.11:1 (圖像變形) 長寬比"
+
+#: data/totem.glade.h:76
+msgid "Sets 2.11:1 (DVB) aspect ratio"
+msgstr "設置為 2.11:1 (DVB) 長寬比"
+
+#: data/totem.glade.h:77
+msgid "Sets 4:3 (TV) aspect ratio"
+msgstr "設置為 4:3 (電視) 長寬比"
+
+#: data/totem.glade.h:78
+msgid "Sets automatic aspect ratio"
+msgstr "自動切換長寬比"
+
+#: data/totem.glade.h:79
+msgid "Sets square aspect ratio"
+msgstr "設置為 square 長寬比"
+
+#: data/totem.glade.h:80
 msgid "Show _Controls"
 msgstr "顯示影片控制介面(_C)"
 
-#: data/totem.glade.h:74
+#: data/totem.glade.h:81
 msgid "Show _visual effects when an audio file is played"
 msgstr "當播放音樂時顯示視覺效果(_V)"
 
-#: data/totem.glade.h:75
+#: data/totem.glade.h:82
 msgid "Show controls"
 msgstr "顯示影片控制介面"
 
-#: data/totem.glade.h:76
+#: data/totem.glade.h:83
 msgid "Show or hide the playlist"
 msgstr "顯示或隱藏播放清單"
 
-#: data/totem.glade.h:77
+#: data/totem.glade.h:84
 msgid "Show/Hide Playlist"
 msgstr "顯示/隱藏播放清單"
 
-#: data/totem.glade.h:78
-msgid "Shu_ffle Mode"
-msgstr "隨機播放模式(_F)"
-
-#: data/totem.glade.h:79
-msgid "Skip _Backwards"
-msgstr ""
-
-#: data/totem.glade.h:80
-msgid "Skip _Forward"
-msgstr ""
-
-#: data/totem.glade.h:81
-msgid "Skip backwards"
-msgstr ""
-
-#: data/totem.glade.h:82
-msgid "Skip forward"
-msgstr ""
-
-#: data/totem.glade.h:83
-msgid "Skip to"
-msgstr ""
-
-#: data/totem.glade.h:84
-msgid "Skip to a specific time"
-msgstr ""
-
 #: data/totem.glade.h:85
+msgid "Shuff_le Mode"
+msgstr "隨機播放模式(_L)"
+
+#: data/totem.glade.h:86
+msgid "Skip _Backwards"
+msgstr "跳後(_B)"
+
+#: data/totem.glade.h:87
+msgid "Skip _Forward"
+msgstr "跳前(_F)"
+
+#: data/totem.glade.h:88
+msgid "Skip backwards"
+msgstr "跳後"
+
+#: data/totem.glade.h:89
+msgid "Skip forward"
+msgstr "跳前"
+
+#: data/totem.glade.h:90
+msgid "Skip to"
+msgstr "跳至"
+
+#: data/totem.glade.h:91
+msgid "Skip to a specific time"
+msgstr "跳至指定時間"
+
+#: data/totem.glade.h:92
 msgid "Small"
 msgstr "小"
 
-#: data/totem.glade.h:86
+#: data/totem.glade.h:93
+msgid "Square"
+msgstr "Square"
+
+#: data/totem.glade.h:94
 msgid "Stereo"
 msgstr "立體聲"
 
-#: data/totem.glade.h:87
+#: data/totem.glade.h:95
 msgid "Subtitles"
-msgstr ""
+msgstr "字幕"
 
-#: data/totem.glade.h:88
+#: data/totem.glade.h:96
 msgid "Switch to double size"
 msgstr "將畫面尺寸放大一倍"
 
-#: data/totem.glade.h:89
+#: data/totem.glade.h:97
 msgid "Switch to fullscreen"
 msgstr "切換至全螢幕模式"
 
-#: data/totem.glade.h:90
+#: data/totem.glade.h:98
 msgid "Take _Screenshot"
 msgstr "擷取畫面快照(_S)"
 
-#: data/totem.glade.h:91
+#: data/totem.glade.h:99
 msgid "Take a screenshot"
 msgstr "擷取畫面快照"
 
-#: data/totem.glade.h:92
+#: data/totem.glade.h:100
 msgid "Time:"
 msgstr "時間："
 
-#: data/totem.glade.h:93
-msgid "Toggle _Aspect Ratio"
-msgstr "切換長寬比(_A)"
-
-#: data/totem.glade.h:94
-msgid "Toggle the aspect ratio"
-msgstr "切換長寬比"
-
-#. Title
-#: data/totem.glade.h:95 src/totem.c:733 src/totem.c:758 src/totem.c:1839
-msgid "Totem"
-msgstr "Totem"
-
-#: data/totem.glade.h:96
+#: data/totem.glade.h:102
 msgid "Totem Preferences"
 msgstr "Totem 偏好設定"
 
-#: data/totem.glade.h:97
+#: data/totem.glade.h:103
+msgid "Tv-out in fullscreen by Nvidia (NTSC)"
+msgstr "Nvidia 的全螢幕電腦輸出 (NTSC)"
+
+#: data/totem.glade.h:104
+msgid "Tv-out in fullscreen by Nvidia (PAL)"
+msgstr "Nvidia 的全螢幕電腦輸出 (PAL)"
+
+#: data/totem.glade.h:105
 msgid "Visualisation _size:"
 msgstr "播放視覺效果的視窗尺寸(_S)："
 
-#: data/totem.glade.h:98
+#: data/totem.glade.h:106
 msgid "Volume _Down"
 msgstr "調低音量(_D)"
 
-#: data/totem.glade.h:99
+#: data/totem.glade.h:107
 msgid "Volume _Up"
 msgstr "調高音量(_U)"
 
-#: data/totem.glade.h:100
+#: data/totem.glade.h:108
 msgid "Volume down"
 msgstr "調低音量"
 
-#: data/totem.glade.h:101
+#: data/totem.glade.h:109
 msgid "Volume up"
 msgstr "調高音量"
 
-#: data/totem.glade.h:102 data/vanity.glade.h:7
+#: data/totem.glade.h:110 data/vanity.glade.h:7
 msgid "Zoom _1:1"
 msgstr "原來大小(_1)"
 
-#: data/totem.glade.h:103 data/vanity.glade.h:8
+#: data/totem.glade.h:111 data/vanity.glade.h:8
 msgid "Zoom _2:1"
 msgstr "縮小一半(_2)"
 
-#: data/totem.glade.h:104
+#: data/totem.glade.h:112
 msgid "Zoom to half size"
 msgstr "將視窗尺寸縮小一半"
 
-#: data/totem.glade.h:105
+#: data/totem.glade.h:113
 msgid "Zoom to one for one size"
 msgstr "將視窗還原至原來尺寸"
 
-#: data/totem.glade.h:106
+#: data/totem.glade.h:114
 msgid "_Add Proprietary Plugins..."
-msgstr ""
+msgstr "加入專屬增效模組(_A)..."
 
-#: data/totem.glade.h:107
+#: data/totem.glade.h:115
 msgid "_Angle Menu"
-msgstr ""
+msgstr "角度選單(_A)"
 
-#: data/totem.glade.h:108
+#: data/totem.glade.h:116
+msgid "_Aspect Ratio"
+msgstr "長寬比(_A)"
+
+#: data/totem.glade.h:117
 msgid "_Audio output type:"
 msgstr "音效輸出類型(_A)："
 
-#: data/totem.glade.h:109
+#: data/totem.glade.h:118
 msgid "_Brightness:"
 msgstr "亮度(_B)："
 
-#: data/totem.glade.h:110
+#: data/totem.glade.h:119
 msgid "_Chapter Menu"
-msgstr ""
+msgstr "章節選單(_C)"
 
-#: data/totem.glade.h:111
+#: data/totem.glade.h:120
+msgid "_Contents"
+msgstr "內容(_C)"
+
+#: data/totem.glade.h:121
 msgid "_DVD Menu"
 msgstr "_DVD 選單"
 
-#: data/totem.glade.h:112
+#: data/totem.glade.h:122
 msgid "_DXR3 TV-out"
-msgstr "_DXR3 TV 輸出"
+msgstr "_DXR3 電視輸出"
 
-#: data/totem.glade.h:113
+#: data/totem.glade.h:123
 msgid "_Deinterlace"
-msgstr ""
+msgstr "交錯式(_D)"
 
-#: data/totem.glade.h:114
+#: data/totem.glade.h:124
 msgid "_Eject"
 msgstr "退出(_E)"
 
-#: data/totem.glade.h:115
+#: data/totem.glade.h:125
 msgid "_Fullscreen"
 msgstr "全螢幕(_F)"
 
-#: data/totem.glade.h:116
+#: data/totem.glade.h:126
 msgid "_Go"
 msgstr "前往(_G)"
 
-#: data/totem.glade.h:117
+#: data/totem.glade.h:127
+msgid "_Hue:"
+msgstr "色調(_H)："
+
+#: data/totem.glade.h:128
 msgid "_Languages"
 msgstr "語言(_L)"
 
 # Following German team's practice (_Movie -> _File), since totem can play
 # audio as well -- Abel
-#: data/totem.glade.h:118
+#: data/totem.glade.h:129
 msgid "_Movie"
 msgstr "檔案(_F)"
 
-#: data/totem.glade.h:119
+#: data/totem.glade.h:130
 msgid "_Next Chapter/Movie"
 msgstr "下一章或下一齣影片(_N)"
 
-#: data/totem.glade.h:120
+#: data/totem.glade.h:131
 msgid "_No TV-out"
-msgstr "沒有 T_V 輸出"
+msgstr "沒有電視輸出(_V)"
 
-#: data/totem.glade.h:121
+#: data/totem.glade.h:132
 msgid "_Optical device path:"
 msgstr "光碟裝置路徑(_O)："
 
-#: data/totem.glade.h:122
+#: data/totem.glade.h:133
 msgid "_Previous Chapter/Movie"
 msgstr "上一章或上一齣影片(_P)"
 
-#: data/totem.glade.h:123
+#: data/totem.glade.h:134
 msgid "_Repeat Mode"
 msgstr "循環播放(_R)"
 
-#: data/totem.glade.h:124
+#: data/totem.glade.h:135
+msgid "_Reset defaults"
+msgstr "重設為預設值(_R)"
+
+#: data/totem.glade.h:136
 msgid "_Show/Hide Playlist"
 msgstr "顯示/隱藏播放清單(_S)"
 
-#: data/totem.glade.h:125
+#: data/totem.glade.h:137
 msgid "_Skip to..."
-msgstr ""
+msgstr "跳至(_S)..."
 
-#: data/totem.glade.h:126
+#: data/totem.glade.h:138
 msgid "_Skip to:"
-msgstr ""
+msgstr "跳至(_S)："
 
-#: data/totem.glade.h:127
+#: data/totem.glade.h:139
 msgid "_Sound"
 msgstr "音效(_S)"
 
-#: data/totem.glade.h:128
-msgid "_TV-out mode"
-msgstr "_TV 輸出模式"
-
-#: data/totem.glade.h:129
+#: data/totem.glade.h:140
 msgid "_Title Menu"
 msgstr "標題選單(_T)"
 
-#: data/totem.glade.h:130
+#: data/totem.glade.h:141
 msgid "_Type of visualisation:"
 msgstr "視覺效果類型(_T)："
 
-#: data/totem.glade.h:131 data/vanity.glade.h:10
+#: data/totem.glade.h:142 data/vanity.glade.h:10
 msgid "_Zoom 1:2"
 msgstr "放大一倍(_Z)"
 
-#: data/totem.glade.h:132
+#: data/totem.glade.h:143
 msgid "seconds"
 msgstr "秒"
 
 #: data/totem.schemas.in.h:1
 msgid "Enable deinterlacing"
-msgstr ""
+msgstr "啟用交錯式"
 
 #: data/totem.schemas.in.h:2
 msgid "Enable deinterlacing."
-msgstr ""
+msgstr "啟用交錯式。"
 
 #: data/totem.schemas.in.h:3
 msgid "Height of the video widget"
@@ -702,7 +755,7 @@ msgstr "光碟裝置的路徑"
 
 #: data/totem.schemas.in.h:7
 msgid "Path to the optical media device."
-msgstr "光碟裝置的路徑"
+msgstr "光碟裝置的路徑。"
 
 #: data/totem.schemas.in.h:8
 msgid "Repeat mode"
@@ -753,49 +806,67 @@ msgid "The contrast of the video."
 msgstr "影片畫面的反差度"
 
 #: data/totem.schemas.in.h:20
+msgid "The hue of the video"
+msgstr "影片畫面的亮度"
+
+#: data/totem.schemas.in.h:21
+msgid "The hue of the video."
+msgstr "影片畫面的亮度。"
+
+#: data/totem.schemas.in.h:22
+msgid "The saturation of the video"
+msgstr "影片畫面的飽和度"
+
+#: data/totem.schemas.in.h:23
+msgid "The saturation of the video."
+msgstr "影片畫面的飽和度"
+
+#: data/totem.schemas.in.h:24
 msgid "Type of audio output to use"
 msgstr "音效輸出方式"
 
-#: data/totem.schemas.in.h:21
+#: data/totem.schemas.in.h:25
 msgid ""
 "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
 "\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
 "Passthrough."
 msgstr ""
+"使用的輸出類型：“0” 代表音體聲，“1”代表四聲道輸出。“2”代表 5.0聲道輸出。“3”代"
+"表 5.1聲道輸出，“4”代表 AC3 Passthrough。"
 
-#: data/totem.schemas.in.h:22
+#: data/totem.schemas.in.h:26
 msgid "Whether the main window should stay on top"
 msgstr "主視窗應否保持不被其它視窗遮蔽"
 
-#: data/totem.schemas.in.h:23
+#: data/totem.schemas.in.h:27
 msgid "Whether the main window should stay on top of the other ones"
 msgstr "主視窗應否保持不被其它視窗遮蔽"
 
-#: data/totem.schemas.in.h:24
+#: data/totem.schemas.in.h:28
 msgid "Whether to enable debug for the playback engine"
 msgstr "應否顯示播放引擎的偵錯訊息"
 
-#: data/totem.schemas.in.h:25
+#: data/totem.schemas.in.h:29
 msgid "Whether to enable debug for the playback engine."
 msgstr "應否顯示播放引擎的偵錯訊息"
 
-#: data/totem.schemas.in.h:26
+#: data/totem.schemas.in.h:30
 msgid "Width of the video widget"
 msgstr "視訊部份寬度"
 
-#: data/totem.schemas.in.h:27
+#: data/totem.schemas.in.h:31
 msgid "X coordinate for the Playlist"
 msgstr "播放清單的水平位置"
 
-#: data/totem.schemas.in.h:28
+#: data/totem.schemas.in.h:32
 msgid "X coordinate for the Playlist."
 msgstr "播放清單的水平位置。"
 
-#: data/totem.schemas.in.h:29
+#: data/totem.schemas.in.h:33
 msgid "Y coordinate for the Playlist"
 msgstr "播放清單的垂直位置"
 
-#: data/totem.schemas.in.h:30
+#: data/totem.schemas.in.h:34
 msgid "Y coordinate for the Playlist."
 msgstr "播放清單的垂直位置。"
 
@@ -809,17 +880,17 @@ msgstr "開啟 URI"
 
 #: data/vanity.desktop.in.h:1
 msgid "Vanity Webcam utility"
-msgstr ""
+msgstr "Vanity 網路攝影機工具"
 
 #: data/vanity.desktop.in.h:2
 msgid "View live webcam and upload pictures"
-msgstr ""
+msgstr "觀看網路攝影機即時影像及上傳圖片"
 
 #: data/vanity.glade.h:1
 msgid "Save File"
 msgstr "儲存檔案"
 
-#: data/vanity.glade.h:2 src/vanity.c:248
+#: data/vanity.glade.h:2 src/vanity.c:262
 msgid "Vanity"
 msgstr "Vanity"
 
@@ -841,76 +912,32 @@ msgstr "縮小一半"
 
 #: data/vanity.glade.h:9
 msgid "_Picture"
-msgstr ""
+msgstr "圖片(_P)"
 
-#: src/bacon-cd-selection.c:234
+#: src/bacon-cd-selection.c:187 src/bacon-v4l-selection.c:182
 msgid "Unnamed CDROM"
 msgstr "未命名 CDROM"
 
-#: src/bacon-cd-selection.c:276 src/bacon-v4l-selection.c:275
-msgid "Select the drive"
-msgstr ""
-
-#: src/bacon-v4l-selection.c:233
-msgid "Unnamed Video Device"
-msgstr "未命名視訊裝置"
-
-#: src/bacon-video-widget-gst.c:56
+#: src/bacon-video-widget-gst.c:62
 msgid "Totem Video Window"
-msgstr ""
-
-#: src/bacon-video-widget-properties.c:106
-#, c-format
-msgid "%d hour"
-msgid_plural "%d hours"
-msgstr[0] "%d 小時"
-
-#: src/bacon-video-widget-properties.c:108
-#, c-format
-msgid "%d minute"
-msgid_plural "%d minutes"
-msgstr[0] "%d 分鐘"
-
-#: src/bacon-video-widget-properties.c:111
-#, c-format
-msgid "%d second"
-msgid_plural "%d seconds"
-msgstr[0] "%d 秒"
-
-#. hour:minutes:seconds
-#: src/bacon-video-widget-properties.c:117
-#, c-format
-msgid "%s %s %s"
-msgstr "%s %s %s"
-
-#. minutes:seconds
-#: src/bacon-video-widget-properties.c:120
-#, c-format
-msgid "%s %s"
-msgstr "%s %s"
-
-#. seconds
-#: src/bacon-video-widget-properties.c:123
-#, c-format
-msgid "%s"
-msgstr "%s"
+msgstr "Totem 視訊視窗"
 
 #. Duration
-#: src/bacon-video-widget-properties.c:163
+#: src/bacon-video-widget-properties.c:98
 msgid "0 second"
 msgstr "0 秒"
 
-#: src/bacon-video-widget-properties.c:248
+#: src/bacon-video-widget-properties.c:185
 #, c-format
 msgid "%d frames per second"
 msgstr "每秒 %d 格"
 
-#: src/bacon-video-widget-properties.c:266
+#: src/bacon-video-widget-properties.c:205
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/bacon-video-widget-xine.c:637
+#: src/bacon-video-widget-xine.c:665
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -919,150 +946,172 @@ msgstr ""
 "無法載入‘%s’音效驅動程序\n"
 "請確保音效裝置不是在使用中。"
 
-#: src/bacon-video-widget-xine.c:1147
+#: src/bacon-video-widget-xine.c:1128 src/bacon-video-widget-xine.c:1595
+msgid ""
+"No video output is available. Make sure that the program is correctly "
+"installed."
+msgstr "沒有視訊輸出存在，請檢查 Totem 是否已正確安裝。"
+
+#: src/bacon-video-widget-xine.c:1243
 msgid "The server you are trying to connect to is not known."
 msgstr "無法聯絡您想連接的伺服器。"
 
-#: src/bacon-video-widget-xine.c:1150
+#: src/bacon-video-widget-xine.c:1247
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "您指定的裝置名稱 (%s) 可能無效。"
 
-#: src/bacon-video-widget-xine.c:1153
+#: src/bacon-video-widget-xine.c:1251
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "您指定的伺服器 (%s) 可能無法聯絡。"
 
-#: src/bacon-video-widget-xine.c:1156
+#: src/bacon-video-widget-xine.c:1255
 msgid "The connection to this server was refused."
 msgstr "該伺服器拒絕接受連線。"
 
-#: src/bacon-video-widget-xine.c:1159
-#, c-format
-msgid "The specified movie '%s' could not be found."
+#: src/bacon-video-widget-xine.c:1259
+#, fuzzy
+msgid "The specified movie could not be found."
 msgstr "找不到指定的影片‘%s’"
 
-#: src/bacon-video-widget-xine.c:1162
-#, c-format
-msgid "The movie '%s' could not be read."
+#: src/bacon-video-widget-xine.c:1263
+#, fuzzy
+msgid "The movie could not be read."
 msgstr "無法讀取影片‘%s’。"
 
-#: src/bacon-video-widget-xine.c:1165
+#: src/bacon-video-widget-xine.c:1267
 #, c-format
 msgid "A problem occured while loading a library or a decoder (%s)."
 msgstr "載入函式庫或解碼程序時 (%s) 出現問題。"
 
-#: src/bacon-video-widget-xine.c:1168
+#: src/bacon-video-widget-xine.c:1273
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
 msgstr ""
 "來源資料已被加密，無法讀取。您是否正在播放加密的 DVD，而沒有使用 libdvdcss？"
 
-#: src/bacon-video-widget-xine.c:1258
-msgid "There is no plugin to handle this movie"
-msgstr "沒有任何增效模組可以處理這種影片"
+#: src/bacon-video-widget-xine.c:1276
+msgid "This file is encrypted and cannot be played back."
+msgstr "這檔案已被加密，所以無法播放。"
 
-#: src/bacon-video-widget-xine.c:1262
-msgid "This movie is broken and can not be played further"
-msgstr "影片已經損毁，無法繼續播放"
+#: src/bacon-video-widget-xine.c:1281
+msgid "For security reasons, this movie can not be played back."
+msgstr "由於安全理由，因此這影片不能播放。"
 
-#: src/bacon-video-widget-xine.c:1266
-msgid "This location is not a valid one"
-msgstr "位置無效"
+#: src/bacon-video-widget-xine.c:1286
+msgid "The audio device is busy. Is another application using it?"
+msgstr "音效裝置正在忙碌中。其它程式正在使用它嗎？"
 
-#: src/bacon-video-widget-xine.c:1270
-msgid "This movie could not be opened"
-msgstr "無法開啟影片"
+#: src/bacon-video-widget-xine.c:1291
+msgid "You are not allowed to open this file."
+msgstr "您沒有權限開啟此檔案。"
 
-#: src/bacon-video-widget-xine.c:1273
-msgid "Generic Error"
-msgstr "一般錯誤"
+#: src/bacon-video-widget-xine.c:1293
+msgid "The server refused access to this file or stream."
+msgstr "伺服器拒絕存取這檔案式串流。"
 
-#: src/bacon-video-widget-xine.c:1690
+#: src/bacon-video-widget-xine.c:1422
+msgid "There is no plugin to handle this movie."
+msgstr "沒有任何增效模組可以處理這種影片。"
+
+#: src/bacon-video-widget-xine.c:1426
+msgid "This movie is broken and can not be played further."
+msgstr "影片已經損毁，無法繼續播放。"
+
+#: src/bacon-video-widget-xine.c:1430
+msgid "This location is not a valid one."
+msgstr "這是一個無效的位置片"
+
+#: src/bacon-video-widget-xine.c:1434
+msgid "This movie could not be opened."
+msgstr "無法開啟影片。"
+
+#: src/bacon-video-widget-xine.c:1438
+msgid "Generic Error."
+msgstr "一般錯誤。"
+
+#: src/bacon-video-widget-xine.c:1862
+msgid "This movie is a still image. You can open it with an image viewer."
+msgstr ""
+
+#: src/bacon-video-widget-xine.c:1893
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr "無法處理‘%s‘視訊編碼。您可能需要安裝額外的增效模組才可以播放某類影片。"
 
-#: src/bacon-video-widget-xine.c:1709
-msgid "This is an audio-only file, and there is no audio output available"
-msgstr "這個是音效檔案，但您沒有設定任何可使用的音效輸出方式"
+#: src/bacon-video-widget-xine.c:1912
+msgid "This is an audio-only file, and there is no audio output available."
+msgstr "這個是音效檔案，但沒有的音效輸出存在。"
 
-#: src/bacon-video-widget-xine.c:3072
-msgid "Movie is not playing"
-msgstr "未播放影片"
+#: src/bacon-video-widget-xine.c:3379
+msgid "Movie is not playing."
+msgstr "未播放影片。"
 
-#: src/bacon-video-widget-xine.c:3080
-msgid "No video to capture"
-msgstr ""
+#: src/bacon-video-widget-xine.c:3388
+msgid "No video to capture."
+msgstr "沒有視訊可擷取。"
 
-#: src/bacon-video-widget-xine.c:3087
-msgid "Video codec is not handled"
-msgstr "無法處理視訊編碼"
+#: src/bacon-video-widget-xine.c:3396
+msgid "Video codec is not handled."
+msgstr "無法處理視訊編碼。"
 
-#: src/cd-drive.c:399
+#: src/cd-drive.c:696
 #, c-format
 msgid "Unnamed SCSI CD-ROM (%s)"
 msgstr "未命名 SCSI CD-ROM (%s)"
 
-#: src/cd-drive.c:858
+#: src/cd-drive.c:1256
 msgid "File image"
 msgstr "影像檔"
 
-#: src/gnome-authn-manager.c:60
-msgid "Your HTTP Proxy requires you to log in.\n"
-msgstr "HTTP 代理伺服器需要登入後方可使用。\n"
-
-#: src/gnome-authn-manager.c:61
+#. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+#: src/totem-mozilla-viewer.c:59 src/totem.c:380 src/totem.c:408
+#: src/totem.c:832 src/totem.c:955
 #, c-format
-msgid ""
-"You must log in to access \"%s\".\n"
-"\n"
-"%s"
-msgstr ""
-"您必須先登入才可以存取“%s”。\n"
-"\n"
-"%s"
+msgid "Totem could not play '%s'."
+msgstr "Totem 無法播放‘%s’。"
 
-#: src/gnome-authn-manager.c:64
-msgid "Your password will be transmitted unencrypted."
-msgstr "您的密碼會以沒有加密的方式傳送。"
+#: src/totem-mozilla-viewer.c:91 src/totem-mozilla-viewer.c:98
+msgid "Couldn't load the main interface (mozilla-viewer.glade)."
+msgstr "無法載入主要視窗界面 (mozilla-viewer.glade)。"
 
-#: src/gnome-authn-manager.c:65
-msgid "Your password will be transmitted encrypted."
-msgstr "您的密碼會以加密的方式傳送。"
+#: src/totem-mozilla-viewer.c:91 src/totem-mozilla-viewer.c:98
+msgid "Make sure that the Totem plugin is properly installed."
+msgstr "請檢查 Totem 增效模組是否已正確安裝。"
 
-#: src/gnome-authn-manager.c:68
-msgid "Authentication Required"
-msgstr "需要認證"
+#: src/totem-mozilla-viewer.c:109
+msgid "The Totem plugin could not startup."
+msgstr "Totem 增效模組無法啟動"
 
-#: src/gnome-password-dialog.c:227
-msgid "_Username:"
-msgstr "用戶名稱(_U)："
+#: src/totem-mozilla-viewer.c:109 src/totem.c:3398
+msgid "No reason."
+msgstr "沒有原因。"
 
-#: src/gnome-password-dialog.c:234
-msgid "_Password:"
-msgstr "密碼(_P)："
+#: src/totem-mozilla-viewer.c:141 src/totem.c:3704
+msgid "Could not initialise the thread-safe libraries."
+msgstr "然法起動 thread-safe libraries。"
 
-#: src/gnome-password-dialog.c:261
-msgid "Remember this password"
-msgstr "記下密碼"
+#: src/totem-mozilla-viewer.c:141
+msgid "Verify your system installation. The Totem plugin will now exit."
+msgstr "請檢系統安裝。Totem 增效模組會立刻結束。"
 
-#: src/totem-playlist.c:270
+#: src/totem-playlist.c:300
 msgid "Could not save the playlist"
 msgstr "無法儲存播放清單"
 
-#: src/totem-playlist.c:425 src/totem.c:1512
-msgid "Select files"
-msgstr "選取檔案"
+#: src/totem-playlist.c:574
+msgid "Select Movies or Playlists"
+msgstr ""
 
-#: src/totem-playlist.c:590
+#: src/totem-playlist.c:755
 msgid "Save playlist"
 msgstr "儲存播放清單"
 
-#: src/totem-playlist.c:628
+#: src/totem-playlist.c:803
 #, c-format
 msgid ""
 "A file named '%s' already exists.\n"
@@ -1071,21 +1120,31 @@ msgstr ""
 "名稱為‘%s’的檔案已經存在。\n"
 "是否確定要覆寫檔案？"
 
-#: src/totem-playlist.c:811
+#: src/totem-playlist.c:988
 msgid "Filename"
 msgstr "檔案名稱"
 
-#: src/totem-pl-parser.c:210
+#: src/totem-playlist.c:1539
+#, fuzzy
+msgid "Playlist error"
+msgstr "播放清單"
+
+#: src/totem-playlist.c:1539
+#, fuzzy, c-format
+msgid "The playlist '%s' could not be parsed, it might be damaged."
+msgstr "無法讀取影片‘%s’。"
+
+#: src/totem-pl-parser.c:189
 #, c-format
 msgid "Couldn't write parser: %s"
-msgstr ""
+msgstr "無法寫入解析器：%s"
 
-#: src/totem-pl-parser.c:243
-#, c-format
-msgid "Couldn't open parser: %s"
-msgstr ""
+#: src/totem-pl-parser.c:253
+#, fuzzy, c-format
+msgid "Couldn't open file '%s': %s"
+msgstr "無法開啟解析器：%s"
 
-#: src/totem-preferences.c:110
+#: src/totem-preferences.c:82
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1093,22 +1152,22 @@ msgstr ""
 "似乎您是在遠端執行 Totem。\n"
 "您是否確定要啟用視覺效果？"
 
-#: src/totem-preferences.c:162
+#: src/totem-preferences.c:135
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted"
 msgstr "只有播放下一齣影片或者重新啟動 Totem 時，本設定方會生效"
 
-#: src/totem-preferences.c:206
+#: src/totem-preferences.c:179
 msgid ""
 "Switching on or off this type of TV-Out requires a restart to take effect."
-msgstr "如果您想啟用或關閉這種 TV 輸出，必須先重新啟動程式。"
+msgstr "如果您想啟用或關閉這種電視輸出，必須先重新啟動程式。"
 
-#: src/totem-preferences.c:339
+#: src/totem-preferences.c:312
 msgid "Totem could not start the file manager."
 msgstr "Totem 無法啟動檔案總管。"
 
-#: src/totem-preferences.c:367
+#: src/totem-preferences.c:340
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr "必須重新啟動程式，更改視覺效果方會生效。"
 
@@ -1120,253 +1179,278 @@ msgstr "目前顯示的 URI"
 msgid "Video and Audio information properties page"
 msgstr "影音資訊視窗"
 
-#: src/totem-statusbar.c:138
+#: src/totem-screenshot.c:146 src/totem-screenshot.c:157
+#, c-format
+msgid "Screenshot%d.png"
+msgstr "Screenshot%d.png"
+
+#: src/totem-screenshot.c:199
+#, c-format
+msgid "File '%s' already exists."
+msgstr "檔案‘%s’已經存在。"
+
+#: src/totem-screenshot.c:201
+msgid "The screenshot was not saved"
+msgstr "不會儲存畫面快照。"
+
+#: src/totem-screenshot.c:212
+msgid "There was an error saving the screenshot."
+msgstr "儲存畫面快照時出現錯誤。"
+
+#: src/totem-statusbar.c:91
 msgid "Shadow type"
 msgstr "陰影類型"
 
-#: src/totem-statusbar.c:139
+#: src/totem-statusbar.c:92
 msgid "Style of bevel around the statusbar text"
 msgstr "狀態列周圍加上的斜邊樣式"
 
-#: src/totem-statusbar.c:171 src/totem.c:355
+#: src/totem-statusbar.c:124 src/totem.c:324 src/totem.c:692
 msgid "Stopped"
 msgstr "停止"
 
-#: src/totem-statusbar.c:180
+#: src/totem-statusbar.c:133
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: src/totem-statusbar.c:208
+#: src/totem-statusbar.c:161
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (串流方式)"
 
-#: src/totem-statusbar.c:274
+#. Elapsed / Total Length
+#: src/totem-statusbar.c:168 src/totem-time-label.c:56
+#, fuzzy, c-format
+msgid "%s / %s"
+msgstr "%s %s"
+
+#. Seeking to Time / Total Length
+#: src/totem-statusbar.c:171
+#, fuzzy, c-format
+msgid "Seek to %s / %s"
+msgstr "搜尋至"
+
+#: src/totem-statusbar.c:233
 msgid "Buffering"
-msgstr ""
+msgstr "正在建立緩沖區"
 
 #. eg: 75 %
-#: src/totem-statusbar.c:277
+#: src/totem-statusbar.c:236
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
 
-#: src/totem.c:82
+#: src/totem.c:80
+msgid "Backend options"
+msgstr "後端選項"
+
+#: src/totem.c:81
+msgid "Enable debug"
+msgstr "啟用除錯"
+
+#: src/totem.c:85
 msgid "Seek Forwards"
 msgstr "向前搜尋"
 
-#: src/totem.c:83
+#: src/totem.c:86
 msgid "Seek Backwards"
 msgstr "向後搜尋"
 
-#: src/totem.c:84
+#: src/totem.c:87
 msgid "Volume Up"
 msgstr "調高音量"
 
-#: src/totem.c:85
+#: src/totem.c:88
 msgid "Volume Down"
 msgstr "調低音量"
 
-#: src/totem.c:87
+#: src/totem.c:89
 msgid "Toggle Fullscreen"
 msgstr "切換全螢幕模式"
 
-#: src/totem.c:88
+#: src/totem.c:90
 msgid "Quit"
 msgstr "離開"
 
-#: src/totem.c:89
+#: src/totem.c:91
 msgid "Enqueue"
-msgstr ""
+msgstr "加入隊列"
 
-#: src/totem.c:90
+#: src/totem.c:92
 msgid "Replace"
 msgstr "取代"
 
-#: src/totem.c:228
-msgid "Download"
-msgstr "下載"
-
-#: src/totem.c:341
+#: src/totem.c:314
 msgid "Playing"
 msgstr "播放"
 
-#: src/totem.c:348
+#: src/totem.c:319
 msgid "Paused"
 msgstr "暫停"
 
-#: src/totem.c:384
+#: src/totem.c:359
 msgid "Totem could not eject the optical media."
 msgstr "Totem 無法退出該媒體。"
 
-#: src/totem.c:384
-msgid "No reason given"
-msgstr "沒有原因"
+#: src/totem.c:359
+msgid "No reason given."
+msgstr "沒有原因。"
 
-#: src/totem.c:405 src/totem.c:433 src/totem.c:856 src/totem.c:975
-#, c-format
-msgid "Totem could not play '%s'."
-msgstr "Totem 無法播放‘%s’。"
-
-#: src/totem.c:453
+#: src/totem.c:428
 msgid "DVD"
 msgstr "DVD"
 
-#: src/totem.c:454
+#: src/totem.c:429
 msgid "Video CD"
 msgstr "VCD"
 
-#: src/totem.c:455
+#: src/totem.c:430
 msgid "Audio CD"
 msgstr "音樂 CD"
 
-#: src/totem.c:466
+#: src/totem.c:441
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
 "appropriate plugins to handle it."
 msgstr "因為沒有適當的增效模組，Totem 無法播放這個媒體 (%s)。"
 
-#: src/totem.c:467
+#: src/totem.c:442
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
 msgstr "請安裝適當的增效模組，然後重新啟動 Totem，方可播放這個媒體。"
 
-#: src/totem.c:475
+#: src/totem.c:450
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
 "it."
 msgstr "即使適當的增效模組已經存在，Totem 仍然無法播放這個媒體 (%s)。"
 
-#: src/totem.c:476
+#: src/totem.c:451
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
-msgstr ""
+msgstr "您可能要檢查一下光碟是否已在光碟機內，和是否已經設置好。"
 
 #. Title
-#: src/totem.c:710
+#: src/totem.c:685
 #, c-format
-msgid "%s - Totem"
-msgstr "%s ─ Totem"
+msgid "%s - Totem Movie Player"
+msgstr "%s - Totem 影片播放程式"
 
-#: src/totem.c:722 src/totem.c:3435
+#: src/totem.c:699 src/totem.c:3493
 msgid "No file"
 msgstr "沒有檔案"
 
-#: src/totem.c:1239
+#: src/totem.c:736 src/totem.c:1985
+msgid "Totem"
+msgstr "Totem"
+
+#: src/totem.c:1263 src/totem.c:1265
 msgid "An error occured"
 msgstr "出現錯誤"
 
-#: src/totem.c:1563 src/totem.c:1571
+#: src/totem.c:1603
+msgid "Select files"
+msgstr "選取檔案"
+
+#: src/totem.c:1680 src/totem.c:1688
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "無法載入「開啟位置...」界面。"
 
-#: src/totem.c:1563 src/totem.c:1571 src/totem.c:3628 src/totem.c:3653
-#: src/totem.c:3676
+#: src/totem.c:1680 src/totem.c:1688 src/totem.c:3739 src/totem.c:3764
+#: src/totem.c:3789
 msgid "Make sure that Totem is properly installed."
 msgstr "請檢查 Totem 是否已正確安裝。"
 
-#: src/totem.c:1810 src/vanity.c:219
+#: src/totem.c:1938
+msgid "Totem could not display the help contents."
+msgstr "Totem 無法顯示求助內容。"
+
+#: src/totem.c:1956 src/vanity.c:235
 msgid "translator_credits"
 msgstr ""
 "i18n 程式中文化計劃\n"
 "http://i18n.linux.org.tw/\n"
 "\n"
-"Abel Cheung <maddog@linux.org.hk>, 2003"
+"Abel Cheung <maddog@linux.org.hk>, 2003\n"
+"Woodman Tuen <woodman@culturecom.com.hk>, 2004"
 
-#: src/totem.c:1836
+#: src/totem.c:1982
 #, c-format
 msgid "Movie Player using %s"
 msgstr "使用 %s 的影片播放程式"
 
-#: src/totem.c:1925 src/totem.c:1936 src/vanity.c:307 src/vanity.c:318
-#, c-format
-msgid "Screenshot%d.png"
-msgstr "Screenshot%d.png"
-
-#: src/totem.c:1987 src/totem.c:1995
+#: src/totem.c:2022 src/totem.c:2030 src/vanity.c:300 src/vanity.c:308
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem 無法為該影片擷取畫面快照。"
 
-#: src/totem.c:1995
-msgid "Please file a bug, this isn't supposed to happen"
+#: src/totem.c:2030
+msgid "Please file a bug, this isn't supposed to happen."
 msgstr "這種情況不應該發生，請向程式作者匯報錯誤。"
 
-#: src/totem.c:2022
-#, c-format
-msgid "File '%s' already exists."
-msgstr "檔案‘%s’已經存在。"
-
-#: src/totem.c:2023
-msgid "The screenshot was not saved"
-msgstr "不會儲存畫面快照。"
-
-#: src/totem.c:2033
-msgid "There was an error saving the screenshot."
-msgstr "儲存畫面快照時出現錯誤。"
-
-#: src/totem.c:2056
+#: src/totem.c:2057
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem 無法顯示影片屬性視窗。"
 
-#: src/totem.c:2056
+#: src/totem.c:2057
 msgid "Make sure that Totem is correctly installed."
 msgstr "請檢查 Totem 是否已正確安裝。"
 
-#: src/totem.c:2141
+#: src/totem.c:2143
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem 無法在‘%s’中進行搜尋。"
 
-#: src/totem.c:2890 src/totem.c:2912
+#: src/totem.c:2926 src/totem.c:2948
 msgid "None"
 msgstr "無"
 
-#: src/totem.c:2894 src/totem.c:2915
-msgid "Auto"
-msgstr "自動"
-
-#: src/totem.c:3340
+#: src/totem.c:3398
 msgid "Totem could not startup."
 msgstr "Totem 無法啟動"
 
-#: src/totem.c:3340 src/vanity.c:551
-msgid "No reason"
-msgstr "沒有原因"
+#: src/totem.c:3609
+#, c-format
+msgid "Option '%s' is unknown and was ignored\n"
+msgstr "'%s' 是不明的選項，及已略過此選項\n"
 
-#: src/totem.c:3601
-msgid "Could not initialise the thread-safe libraries."
-msgstr ""
-
-#: src/totem.c:3601
+#: src/totem.c:3704
 msgid "Verify your system installation. Totem will now exit."
 msgstr "請先確認安裝時有沒有問題。Totem 會立刻結束。"
 
-#: src/totem.c:3618
+#: src/totem.c:3727
 msgid "Totem couln't initialise the configuration engine."
-msgstr ""
+msgstr "Totem 無法起動設置引擊。"
 
-#: src/totem.c:3628 src/totem.c:3653
+#: src/totem.c:3727
+msgid "Make sure that GNOME is properly installed."
+msgstr "請檢查 GNOME 是否已正確安裝。"
+
+#: src/totem.c:3739 src/totem.c:3764
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "無法載入主要視窗界面 (totem.glade)。"
 
-#: src/totem.c:3676
+#: src/totem.c:3789
 msgid "Couldn't load the interface for the playlist."
 msgstr "無法載入播放清單界面。"
 
-#: src/vanity.c:55
+#: src/vanity.c:63
 msgid "Debug mode on"
 msgstr "開啟偵錯模式"
 
-#: src/vanity.c:245
+#: src/vanity.c:259
 #, c-format
 msgid "Webcam utility using %s"
-msgstr ""
+msgstr "網路攝影機工具使用 %s"
 
-#: src/vanity.c:550
+#: src/vanity.c:308
+msgid "Please file a bug, this isn't supposed to happen"
+msgstr "這種情況不應該發生，請向程式作者匯報錯誤。"
+
+#: src/vanity.c:551
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1375,45 +1459,156 @@ msgstr ""
 "Vanity 無法啟動：\n"
 "%s"
 
-#: src/vanity.c:589
+#: src/vanity.c:552
+msgid "No reason"
+msgstr "沒有原因"
+
+#: src/vanity.c:590
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
 "Reason: %s"
 msgstr ""
+"Vanity 無法連接網路攝影機。\n"
+"原因：%s"
 
-#: src/vanity.c:605
+#: src/vanity.c:606
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
 "Reason: %s"
 msgstr ""
+"Vanity 無法自網路攝影機播放影像。\n"
+"原因：%s"
 
-#: src/vanity.c:641
+#: src/vanity.c:642
 msgid "Vanity Webcam Utility"
-msgstr ""
+msgstr "Vanity 網路攝影機工具"
 
-#: src/vanity.c:646
+#: src/vanity.c:647
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
 msgstr ""
+"不能起動 thread-safe libraries。\n"
+"檢查系統安裝。Vanity 現在將會離開。"
 
-#: src/vanity.c:668
+#: src/vanity.c:672
 #, c-format
 msgid ""
 "Vanity couln't initialise the \n"
 "configuration engine:\n"
 "%s"
 msgstr ""
+"Vanity 無法起動設置引擊：\n"
+"%s"
 
-#: src/vanity.c:682 src/vanity.c:697
+#: src/vanity.c:689 src/vanity.c:704
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
 msgstr ""
 "無法載入主視窗界面 (vanity.glade)。\n"
 "請檢查 Totem 是否已正確安裝。"
+
+#: src/video-utils.c:324
+#, c-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d 小時"
+
+#: src/video-utils.c:326
+#, c-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d 分鐘"
+
+#: src/video-utils.c:329
+#, c-format
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "%d 秒"
+
+#. hour:minutes:seconds
+#: src/video-utils.c:335
+#, c-format
+msgid "%s %s %s"
+msgstr "%s %s %s"
+
+#. minutes:seconds
+#: src/video-utils.c:338
+#, c-format
+msgid "%s %s"
+msgstr "%s %s"
+
+#. seconds
+#: src/video-utils.c:341
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#~ msgid "Select the drive"
+#~ msgstr "選取光碟機"
+
+#~ msgid "Unnamed Video Device"
+#~ msgstr "未命名視訊裝置"
+
+#~ msgid "Connecting to the server"
+#~ msgstr "正在連接伺服器"
+
+#~ msgid "Done"
+#~ msgstr "完成"
+
+#~ msgid "Downloading the plug-ins"
+#~ msgstr "下載增效模組"
+
+#~ msgid "Installing the plug-ins"
+#~ msgstr "安裝增效模組"
+
+#~ msgid "Plug-ins Download"
+#~ msgstr "下載增效模組"
+
+#~ msgid "<b>Brightness/Contrast</b>"
+#~ msgstr "<b>亮度/反差</b>"
+
+#~ msgid "_TV-out mode"
+#~ msgstr "_TV 輸出模式"
+
+#~ msgid "Your HTTP Proxy requires you to log in.\n"
+#~ msgstr "HTTP 代理伺服器需要登入後方可使用。\n"
+
+#~ msgid ""
+#~ "You must log in to access \"%s\".\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "您必須先登入才可以存取“%s”。\n"
+#~ "\n"
+#~ "%s"
+
+#~ msgid "Your password will be transmitted unencrypted."
+#~ msgstr "您的密碼會以沒有加密的方式傳送。"
+
+#~ msgid "Your password will be transmitted encrypted."
+#~ msgstr "您的密碼會以加密的方式傳送。"
+
+#~ msgid "Authentication Required"
+#~ msgstr "需要認證"
+
+#~ msgid "_Username:"
+#~ msgstr "用戶名稱(_U)："
+
+#~ msgid "_Password:"
+#~ msgstr "密碼(_P)："
+
+#~ msgid "Remember this password"
+#~ msgstr "記下密碼"
+
+#~ msgid "Download"
+#~ msgstr "下載"
+
+#~ msgid "%s - Totem"
+#~ msgstr "%s ─ Totem"
 
 #~ msgid "Repeat Mode"
 #~ msgstr "循環播放"
