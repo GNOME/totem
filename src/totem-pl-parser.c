@@ -660,7 +660,6 @@ totem_pl_parser_finalize (GObject *object)
 static gboolean
 totem_pl_parser_check_utf8 (const char *title)
 {
-	printf ("Title %s\n", title);
 	return g_utf8_validate (title, -1, NULL);
 }
 
