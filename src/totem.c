@@ -360,6 +360,25 @@ play_pause_set_label (Totem *totem, TotemStates state)
 	g_free (image_path);
 }
 
+static void
+totem_action_eject (Totem *totem)
+{
+	char *cmd;
+
+	totem_playlist_set_playing (totem->playlist, FALSE);
+	play_pause_set_label (totem, STATE_PAUSED);
+
+	bacon_video_widget_stop (totem->bvw);
+	bacon_video_widget_close (totem->bvw);
+	cmd = g_strdup_printf ("eject %s", gconf_client_get_string
+			(totem->gc, GCONF_PREFIX"/mediadev", NULL));
+	if (g_spawn_command_line_sync (cmd, NULL, NULL, NULL, NULL) == FALSE)
+	{
+		totem_action_error (_("Totem could not eject the optical media."), _("No reason given"), totem);
+	}
+	g_free (cmd);
+}
+
 void
 totem_action_play (Totem *totem, int offset)
 {
@@ -1619,12 +1638,7 @@ on_play_cd1_activate (GtkButton *button, Totem *totem)
 static void
 on_eject1_activate (GtkButton *button, Totem *totem)
 {
-	totem_playlist_set_playing (totem->playlist, FALSE);
-
-	if (bacon_video_widget_eject (totem->bvw) == FALSE)
-	{
-		totem_action_error (_("Totem could not eject the optical media."), _("No reason given"), totem);
-	}
+	totem_action_eject (totem);
 }
 
 static void

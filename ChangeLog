@@ -1,5 +1,15 @@
 2003-09-21  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-gst.c:
+	* src/bacon-video-widget-xine.c:
+	* src/bacon-video-widget.h: remove the _eject() command, nothing to
+	do in there
+	* src/totem.c: (totem_action_eject), (on_eject1_activate):
+	use the "eject" command to eject CDs instead of xine-lib's internal
+	one, more reliable (Closes Debian BTS #211968)
+
+2003-09-21  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-playlist.c: (totem_playlist_key_press),
 	(totem_playlist_new):
 	* src/totem.c: (totem_action_handle_key), (video_widget_create):

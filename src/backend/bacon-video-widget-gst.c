@@ -565,12 +565,6 @@ bacon_video_widget_get_backend_name (BaconVideoWidget * bvw)
   return g_strdup_printf ("GStreamer version %d.%d.%d", major, minor, micro);
 }
 
-gboolean
-bacon_video_widget_eject (BaconVideoWidget * bvw)
-{
-  return FALSE;
-}
-
 int
 bacon_video_widget_get_subtitle (BaconVideoWidget * bvw)
 {

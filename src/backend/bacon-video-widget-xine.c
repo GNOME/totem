@@ -1705,17 +1705,6 @@ bacon_video_widget_close (BaconVideoWidget *bvw)
 			bvw_table_signals[CHANNELS_CHANGE], 0, NULL);
 }
 
-gboolean
-bacon_video_widget_eject (BaconVideoWidget *bvw)
-{
-	g_return_val_if_fail (bvw != NULL, FALSE);
-	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-	g_return_val_if_fail (bvw->priv->stream != NULL, FALSE);
-
-	bacon_video_widget_close (bvw);
-	return xine_eject (bvw->priv->stream);
-}
-
 /* Properties */
 static void
 bacon_video_widget_set_property (GObject *object, guint property_id,
