@@ -1,5 +1,11 @@
 2005-03-01  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
+	* src/totem-video-thumbnailer.c: (main):
+	  Allow some time before knowing the length of a file. Also,
+	  allow a short time to resync after the seek. Fixes #167879.
+
+2005-03-01  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_new):
 	  Don't set multichannel for fakesrc (leads to warnings).
 

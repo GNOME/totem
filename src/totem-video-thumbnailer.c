@@ -43,6 +43,7 @@
 /* #define THUMB_DEBUG */
 
 #define MIN_LEN_FOR_SEEK 25000
+#define HALF_SECOND G_USEC_PER_SEC * .5
 
 gboolean finished = FALSE;
 
@@ -400,8 +401,17 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	/* A 3rd into the file */
-	length = bacon_video_widget_get_stream_length (bvw);
+	/* A 3rd into the file - multi-times = HACK for gst backend... */
+	i = 0;
+	do {
+		if (i != 0) {
+			g_usleep (HALF_SECOND);
+			g_main_iteration (FALSE);
+		}
+		length = bacon_video_widget_get_stream_length (bvw);
+		i++;
+	} while (length == 0 && i < 20);
+
 	if (length > MIN_LEN_FOR_SEEK)
 	{
 		if (bacon_video_widget_seek
@@ -427,13 +437,14 @@ int main (int argc, char *argv[])
 
 	/* 10 seconds! */
 	i = 0;
-	pixbuf = bacon_video_widget_get_current_frame (bvw);
-	while (pixbuf == NULL && i < 20)
-	{
-		g_usleep (500000);
+	do {
+		/* This is a hack for the gst backend because it resyncs
+		 * after a seekj asynchronously, and so a direct get_frame()
+		 * would still return the old frame. */
+		g_usleep (HALF_SECOND);
 		pixbuf = bacon_video_widget_get_current_frame (bvw);
 		i++;
-	}
+	} while (pixbuf == NULL && i < 20);
 
 	/* Cleanup */
 	bacon_video_widget_close (bvw);
