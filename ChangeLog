@@ -1,3 +1,8 @@
+2005-02-08  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-video-thumbnailer.c: (main): use g_type_init so that
+	the thumbnailer can work without a DISPLAY
+
 2005-02-07  Bastien Nocera  <hadess@hadess.net>
 
 	* src/disc-test.c: (main): print out the list of connected drives

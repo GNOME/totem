@@ -312,11 +312,6 @@ time_monitor (gpointer data)
 
 int main (int argc, char *argv[])
 {
-	static struct poptOption options[] = {
-		{NULL, '\0', POPT_ARG_INCLUDE_TABLE, NULL, 0,
-			N_("Backend options"), NULL},
-		{NULL, '\0', 0, NULL, 0} /* end the list */
-	};
 	GError *err = NULL;
 	BaconVideoWidget *bvw;
 	GdkPixbuf *pixbuf;
@@ -332,17 +327,12 @@ int main (int argc, char *argv[])
 	nice (20);
 
 	g_thread_init (NULL);
-
-	options[0].arg = bacon_video_widget_get_popt_table ();
-#ifndef HAVE_GTK_ONLY
-	gnome_program_init ("totem-video-thumbnailer", VERSION,
-			LIBGNOME_MODULE, argc, argv,
-			GNOME_PARAM_APP_DATADIR, DATADIR,
-			GNOME_PARAM_POPT_TABLE, options,
-			GNOME_PARAM_NONE);
-#else /* !HAVE_GTK_ONLY */
+#ifndef THUMB_DEBUG
+	g_type_init ();
+#else
 	gtk_init (&argc, &argv);
-#endif /* !HAVE_GTK_ONLY */
+#endif
+	bacon_video_widget_init_backend (&argc, &argv);
 
 	if (!strcmp (argv[1], "-s")) {
 		input = argv[3];
