@@ -1,3 +1,10 @@
+2005-01-13  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-session.c: (totem_session_restore):
+	* src/totem.c: (on_eos_event): when restoring a playlist, or
+	when rewinding to the start of a playlist (without repeat), set the
+	video widget to pause to release the sound device (Closes: #163875)
+
 2005-01-12  Bastien Nocera  <hadess@hadess.net>
 
 	* src/Makefile.am:

@@ -2460,6 +2460,7 @@ on_eos_event (GtkWidget *widget, Totem *totem)
 		mrl = totem_playlist_get_current_mrl (totem->playlist);
 		totem_action_stop (totem);
 		totem_action_set_mrl_with_warning (totem, mrl, FALSE);
+		bacon_video_widget_pause (totem->bvw);
 		g_free (mrl);
 	} else {
 		totem_action_next (totem);

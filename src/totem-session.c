@@ -147,6 +147,7 @@ totem_session_restore (Totem *totem, char **argv)
 		bacon_video_widget_seek_time (totem->bvw,
 				totem->seek_to, NULL);
 	}
+	bacon_video_widget_pause (totem->bvw);
 
 	g_free (mrl);
 
