@@ -812,13 +812,11 @@ gtk_xine_idle_signal (GtkXine *gtx)
 				0, NULL);
 		break;
 	case KEY_PRESS:
-		D("KEY_RELEASE:");
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[KEY_PRESS],
 				0, signal->keyval);
 		break;
 	case EOS:
-		D("EOS:");
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[EOS], 0, NULL);
 		break;
@@ -1180,6 +1178,7 @@ gtk_xine_set_fullscreen (GtkXine * gtx, gboolean fullscreen)
 		Window win;
 		XEvent xev;
 		XSizeHints hint;
+		GdkWindow *parent;
 
 		hint.x = 0;
 		hint.y = 0;
@@ -1221,6 +1220,10 @@ gtk_xine_set_fullscreen (GtkXine * gtx, gboolean fullscreen)
 		/* TODO add check for full-screen from fullscreen_callback
 		 * in terminal-window.c (profterm) */
 		gdk_window_set_fullscreen (gtx->priv->fullscreen_window, TRUE);
+
+		parent = gdk_window_get_toplevel (gtx->widget.window);
+		gdk_window_set_transient_for (gtx->priv->fullscreen_window,
+				parent);
 
 		XMoveWindow (gtx->priv->display,
 			     win, 0, 0);

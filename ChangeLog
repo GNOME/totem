@@ -1,3 +1,11 @@
+2002-08-31  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-xine.c: (xine_thread), (gtk_xine_idle_signal),
+	(gtk_xine_set_fullscreen): made the fullscreen window a transient
+	window for the main UI (the totem UI won't go over the top of the
+	fullscreen window). All the keyboard commands available in fullscreen
+	are still available (Closes: #92090)
+
 2002-08-29  Bastien Nocera  <hadess@hadess.net>
 
 	* src/video-utils.c: (old_wmspec_set_fullscreen),
