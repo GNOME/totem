@@ -1447,7 +1447,8 @@ on_about1_activate (GtkButton *button, Totem *totem)
 	};
 	const gchar *documenters[] = { NULL };
 	const gchar *translator_credits = _("translator_credits");
-
+	const gchar *backend_version = NULL;
+	
 	if (about != NULL)
 	{
 		gdk_window_raise (about->window);
@@ -1470,9 +1471,14 @@ on_about1_activate (GtkButton *button, Totem *totem)
 		}
 	}
 
+	backend_version = bacon_video_widget_get_backend_name (totem->bvw);
+	
 	about = gnome_about_new(_("Totem"), VERSION,
 			"Copyright \xc2\xa9 2002 Bastien Nocera",
-			_("Movie Player (based on the xine libraries)"),
+			g_strjoin (		"\n", 
+							_("Movie Player"),
+							_("using backend :"),
+							backend_version, NULL),
 			(const char **)authors,
 			(const char **)documenters,
 			strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,

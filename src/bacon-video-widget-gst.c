@@ -389,6 +389,17 @@ bacon_video_widget_get_property (GObject *object, guint property_id,
 /*                                                               */
 /* ============================================================= */
 
+const gchar *
+bacon_video_widget_get_backend_name (BaconVideoWidget *bvw)
+{
+	guint major, minor, micro;
+	
+	gst_version (&major, &minor, &micro);
+	
+	
+	return g_strdup_printf ("GStreamer version %d.%d.%d", major, minor, micro);
+}
+
 gboolean
 bacon_video_widget_eject (BaconVideoWidget *bvw)
 {
