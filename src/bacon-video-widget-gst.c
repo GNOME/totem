@@ -936,6 +936,13 @@ bacon_video_widget_open (BaconVideoWidget * bvw, const gchar * mrl,
         gst_play_set_data_src (bvw->priv->play, datasrc);
       gst_play_set_location (bvw->priv->play, "/dev/video");
     }
+  else if (g_str_has_prefix (mrl, "cda://"))
+    {
+      datasrc = gst_element_factory_make ("cdparanoia", "source");
+      if (GST_IS_ELEMENT (datasrc))
+        gst_play_set_data_src (bvw->priv->play, datasrc);
+      gst_play_set_location (bvw->priv->play, bvw->priv->media_device);
+    }
   else
     {
       datasrc = gst_element_factory_make ("gnomevfssrc", "source");
@@ -1495,7 +1502,7 @@ bacon_video_widget_can_play (BaconVideoWidget * bvw, MediaType type)
       case MEDIA_VCD:
         return FALSE;
       case MEDIA_CDDA:
-        return FALSE;
+        return TRUE;
       default:
         return FALSE;
     }
@@ -1521,7 +1528,11 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw, MediaType type)
       case MEDIA_VCD:
         return NULL;
       case MEDIA_CDDA:
-        return NULL;
+        {
+          mrls = g_malloc (sizeof (char *) * 1);
+          mrls[0] = "cda://";
+          return mrls;
+        }
       default:
         return NULL;
     }
