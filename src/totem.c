@@ -1268,6 +1268,12 @@ update_seekable (Totem *totem, gboolean force_false)
 	gtk_widget_set_sensitive (totem->seek, caps);
 	gtk_widget_set_sensitive (totem->fs_seek, caps);
 
+	widget = glade_xml_get_widget (totem->xml, "tmw_seek_hbox");
+	gtk_widget_set_sensitive (widget, caps);
+
+	widget = glade_xml_get_widget (totem->xml, "tcw_time_hbox");
+	gtk_widget_set_sensitive (widget, caps);
+
 	widget = glade_xml_get_widget (totem->xml,
 			"tmw_skip_forward_menu_item");
 	gtk_widget_set_sensitive (widget, caps);
@@ -1281,8 +1287,6 @@ update_seekable (Totem *totem, gboolean force_false)
 	widget = glade_xml_get_widget (totem->xml, "tmw_skip_to_menu_item");
 	gtk_widget_set_sensitive (widget, caps);
 	widget = glade_xml_get_widget (totem->xml, "tstw_ok_button");
-	gtk_widget_set_sensitive (widget, caps);
-	widget = glade_xml_get_widget (totem->xml, "tmw_time_label");
 	gtk_widget_set_sensitive (widget, caps);
 
 }
