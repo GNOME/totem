@@ -28,6 +28,7 @@
 #include <libxml/parser.h>
 #include <glade/glade.h>
 #include <gconf/gconf-client.h>
+#include <libgnome/gnome-desktop-item.h>
 #include <libgnomevfs/gnome-vfs.h>
 #include <libgnomevfs/gnome-vfs-mime-utils.h>
 #include <string.h>
@@ -1712,6 +1713,38 @@ gtk_playlist_add_asf (GtkPlaylist *playlist, const char *mrl, gpointer data)
 	return FALSE;
 }
 
+static gboolean
+gtk_playlist_add_desktop (GtkPlaylist *playlist, const char *mrl)
+{
+	GnomeDesktopItem *ditem;
+	int type;
+	gboolean retval;
+	const char *path, *display_name;
+
+	ditem = gnome_desktop_item_new_from_file (mrl, 0, NULL);
+	if (ditem == NULL)
+		return FALSE;
+
+	type = gnome_desktop_item_get_entry_type (ditem);
+	if (type != GNOME_DESKTOP_ITEM_TYPE_LINK)
+	{
+		gnome_desktop_item_unref (ditem);
+		return FALSE;
+	}
+
+	path = gnome_desktop_item_get_string (ditem, "URL");
+	if (path == NULL)
+	{
+		gnome_desktop_item_unref (ditem);
+		return FALSE;
+	}
+	display_name = gnome_desktop_item_get_localestring (ditem, "Name");
+	retval = gtk_playlist_add_mrl (playlist, path, display_name);
+	gnome_desktop_item_unref (ditem);
+
+	return retval;
+}
+
 gboolean
 gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 		const char *display_name)
@@ -1755,6 +1788,9 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 		return gtk_playlist_add_smil (playlist, mrl);
 	} else if (strcmp ("x-directory/normal", mimetype) == 0) {
 		//FIXME Load all the files in the dir ?
+	} else if (strcmp ("application/x-gnome-app-info", mimetype) == 0) {
+		g_free (data);
+		return gtk_playlist_add_desktop (playlist, mrl);
 	}
 
 	g_free (data);

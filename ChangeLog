@@ -1,5 +1,13 @@
 2003-05-18  Bastien Nocera  <hadess@hadess.net>
 
+	* README: updated
+	* configure.in: added dependency on gnome-desktop
+	* src/gtk-playlist.c: (gtk_playlist_add_desktop),
+	(gtk_playlist_add_mrl): we can now read the links .desktop files
+	that we create when drag and dropping the video widget
+
+2003-05-18  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_create_full_path), (totem_action_open_files):
 	work-around another egg-recent bug wrt. local filenames
 
