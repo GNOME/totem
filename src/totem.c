@@ -1441,7 +1441,7 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 	if (list == NULL)
 		return cleared;
 
-	for (l = list ; l->next != NULL; l = l->next)
+	for (l = list ; l != NULL; l = l->next)
 	{
 		char *filename, *local_path;
 		char *data = l->data;
@@ -1455,6 +1455,7 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 
 		/* Get the subtitle part out for our tests */
 		filename = totem_create_full_path (data);
+		g_message ("filename: %s", filename);
 		local_path = gnome_vfs_get_local_path_from_uri (filename);
 		if (local_path != NULL && g_file_test (local_path, G_FILE_TEST_IS_DIR))
 		{
