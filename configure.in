@@ -55,6 +55,14 @@ dnl Add the languages which your application supports here.
 ALL_LINGUAS="de es fr it sv"
 AM_GLIB_GNU_GETTEXT
 
+have_uuid=no
+AC_CHECK_LIB(uuid,uuid_generate,have_uuid=yes,AC_MSG_ERROR(You must have the uuid library installed.))
+AC_CHECK_HEADER(uuid/uuid.h,,AC_MSG_ERROR(Headers for uuid not found.  Please install the development packages for the uuid library.))
+
+if test "$have_uuid" = "yes"; then
+  EXTRA_GNOME_LIBS="$EXTRA_GNOME_LIBS -luuid"
+fi
+
 AC_OUTPUT([
 Makefile
 src/Makefile

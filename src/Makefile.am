@@ -15,6 +15,28 @@ gtkxine-marshal.c: gtkxine-marshal.h
 	  && mv gtkxine-marshal.tmp gtkxine-marshal.c ) \
 	|| ( rm -f gtkxine-marshal.tmp && exit 1 )
 
+EGGFILES2 = eggaccelerators.h eggaccelerators.c
+EGGDIR2=$(srcdir)/../../libegg/libegg/
+regenerate-built-sources:
+	EGGFILES="$(EGGFILES1)" EGGDIR="$(EGGDIR1)" $(srcdir)/update-from-egg.sh
+	EGGFILES="$(EGGFILES2)" EGGDIR="$(EGGDIR2)" $(srcdir)/update-from-egg.sh
+
+EGG_RECENT_FILES =                      \
+        egg-recent-model.c              \
+        egg-recent-model.h              \
+        egg-recent-item.c               \
+        egg-recent-item.h               \
+        egg-recent-view.c               \
+        egg-recent-view.h               \
+        egg-recent-view-gtk.c           \
+        egg-recent-view-gtk.h           \
+        egg-recent-util.c               \
+	egg-recent-util.h
+
+EGGDIR=$(srcdir)/../../libegg/libegg/recent-files/
+regenerate-built-sources:
+	EGGFILES="$(EGG_RECENT_FILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh
+
 totem_SOURCES = 			\
 	totem.c				\
 	gtkxine-marshal.list		\
@@ -25,7 +47,8 @@ totem_SOURCES = 			\
 	rb-ellipsizing-label.h		\
 	scrsaver.c  scrsaver.h		\
 	video-utils.c video-utils.h	\
-	debug.h
+        debug.h                         \
+        $(EGG_RECENT_FILES)
 
 totem_LDADD = $(EXTRA_GNOME_LIBS) $(XINE_LIBS) $(XTEST_LIBS)
 totem_LDFLAGS = -export-dynamic
@@ -38,3 +61,4 @@ INCLUDES = 						\
 	-DGTK_DISABLE_DEPRECATED -DGNOME_DISABLE_DEPRECATED
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(MARSHALFILES) $(desktop_DATA)
+

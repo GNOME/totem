@@ -9,6 +9,10 @@
 #include "gtk-playlist.h"
 #include "rb-ellipsizing-label.h"
 
+#include "egg-recent-model.h"
+#include "egg-recent-view.h"
+#include "egg-recent-view-gtk.h"
+
 #include "debug.h"
 
 #ifndef TOTEM_DEBUG
@@ -39,6 +43,10 @@ typedef struct {
 	/* fullscreen Popup */
 	GtkWidget *popup;
 	guint popup_timeout;
+
+        /* recent file stuff */
+        EggRecentModel *recent_model;
+        EggRecentViewGtk *recent_view;
 
 	/* other */
 	char *mrl;
@@ -575,6 +583,29 @@ on_playlist_button_toggled (GtkToggleButton *button, gpointer user_data)
 		gtk_widget_hide (GTK_WIDGET (totem->playlist));
 }
 
+static void
+on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
+                         Totem *totem)
+{
+	gchar *uri;
+	gchar *filename;
+
+	uri = egg_recent_item_get_uri (item);
+
+	D ("on_recent_file_activate URI: %s", uri);
+
+	/* FIXME GtkXine should be able to handle URIs directly, no ? */
+	filename = g_filename_from_uri (uri, NULL, NULL);
+
+        if (filename != NULL) {
+                D ("Filename: %s\n", filename);
+                gtk_playlist_add_mrl (totem->playlist, filename);
+                g_free (filename);
+        }
+
+        g_free (uri);
+}
+
 static int
 update_sliders_cb (gpointer user_data)
 {
@@ -658,6 +689,27 @@ action_open_files (Totem *totem, char **list, gboolean ignore_first)
 				cleared = TRUE;
 			}
 			gtk_playlist_add_mrl (totem->playlist, list[i]);
+
+                        {
+                                char *uri;
+                                EggRecentItem *item;
+
+                                uri = gnome_vfs_get_uri_from_local_path (list[i]);
+                                if (uri == NULL) {
+                                        /* ok, if this fails, then it was
+                                         * something like dvd:/// and we don't
+                                         * want to add it
+                                         */
+                                        continue;
+                                }
+
+                                item = egg_recent_item_new_from_uri (uri);
+                                egg_recent_item_add_group (item, "Totem");
+                                egg_recent_model_add_full (totem->recent_model,
+                                                           item);
+
+                                g_free (uri);
+                        }
 		}
 	}
 
@@ -1301,6 +1353,33 @@ GtkWidget
 	return label;
 }
 
+static void
+totem_setup_recent (Totem *totem)
+{
+	GtkWidget *menu_item;
+	GtkWidget *menu;
+
+	menu = gtk_menu_new ();
+	menu_item = glade_xml_get_widget (totem->xml, "open_recent");
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menu_item), menu);
+	gtk_widget_show (menu);
+
+	totem->recent_model = egg_recent_model_new
+		(EGG_RECENT_MODEL_SORT_MRU,10);
+
+	/* it would be better if we just filtered by mime-type, but there
+	 * doesn't seem to be an easy way to figure out which mime-types we
+	 * can handle */
+	egg_recent_model_set_filter_groups (totem->recent_model, "Totem", NULL);
+
+	totem->recent_view = egg_recent_view_gtk_new (menu, NULL);
+	egg_recent_view_set_model (EGG_RECENT_VIEW (totem->recent_view),
+			totem->recent_model);
+
+	g_signal_connect (totem->recent_view, "activate",
+			G_CALLBACK (on_recent_file_activate), totem);
+}
+
 int
 main (int argc, char **argv)
 {
@@ -1369,6 +1448,7 @@ main (int argc, char **argv)
 	totem->volume = glade_xml_get_widget (totem->xml, "hscale2");
 	totem->voladj = gtk_range_get_adjustment (GTK_RANGE (totem->volume));
 	totem->popup = glade_xml_get_widget (totem->xml, "window1");
+	totem_setup_recent (totem);
 	totem_callback_connect (totem);
 
 	/* Show ! gtk_main_iteration trickery to show all the widgets

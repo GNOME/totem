@@ -1,3 +1,15 @@
+2002-09-03  Bastien Nocera  <hadess@hadess.net>
+
+	* src/.cvsignore: upd
+	* configure.in:
+	* data/totem.glade:
+	* src/Makefile.am:
+	* src/totem.c: (on_recent_file_activate), (action_open_files),
+	(totem_setup_recent), (main):
+	* src/update-from-egg.sh: merge in big patch by James Willcox
+	<jwillcox@gnome.org> for "Recent files" support, added Makefile.am
+	fu for CVS users
+
 2002-09-03  Christian Rose  <menthos@menthos.com>
 
 	* configure.in: Added "sv" to ALL_LINGUAS.
@@ -6,7 +18,8 @@
 
 	* src/gtk-playlist.c: (gtk_playlist_class_init): initialise the
 	parent_class, fixes a crash bug when closing the playlist from the wm
-	close button.
+	close button. (thanks to Sebastien Bacher <seb128@debian.org> for help
+	on this one)
 
 ============ Version 0.9.1
 
