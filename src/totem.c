@@ -1472,9 +1472,8 @@ on_about1_activate (GtkButton *button, Totem *totem)
 	}
 
 	backend_version = bacon_video_widget_get_backend_name (totem->bvw);
-	description = g_strjoin ("\n", _("Movie Player"),
-			_("using backend :"),
-			(const char *) backend_version, NULL);
+	description = g_strdup_printf (_("Movie Player using %s"),
+				backend_version);
 
 	about = gnome_about_new(_("Totem"), VERSION,
 			"Copyright \xc2\xa9 2002 Bastien Nocera",
