@@ -1,5 +1,16 @@
 2003-01-11  Bastien Nocera  <hadess@hadess.net>
 
+	* README:
+	* src/gtk-xine.c: (gtk_xine_instance_init),
+	(load_video_out_driver), (gtk_xine_realize),
+	(gtk_xine_set_fullscreen): disable fullscreen for a second, use a
+	GdkWindow for video_window
+	* src/video-utils.c: (wmspec_change_state),
+	(old_wmspec_set_fullscreen), (window_set_fullscreen):
+	* src/video-utils.h: use GdkWindows instead of Windows
+
+2003-01-11  Bastien Nocera  <hadess@hadess.net>
+
 	* data/.cvsignore: 
 	* src/totem.c: (totem_action_drop_files), (drop_video_cb),
 	(drop_playlist_cb), (totem_callback_connect),

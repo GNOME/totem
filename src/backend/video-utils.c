@@ -19,7 +19,7 @@ typedef struct {
 
 static void
 wmspec_change_state (gboolean   add,
-		Window     window,
+		GdkWindow *window,
 		GdkAtom    state1,
 		GdkAtom    state2)
 {
@@ -33,7 +33,7 @@ wmspec_change_state (gboolean   add,
 	xev.xclient.serial = 0;
 	xev.xclient.send_event = True;
 	xev.xclient.display = gdk_display;
-	xev.xclient.window = window;
+	xev.xclient.window = GDK_WINDOW_XID (window);
 	xev.xclient.message_type = gdk_x11_get_xatom_by_name ("_NET_WM_STATE");
 	xev.xclient.format = 32;
 	xev.xclient.data.l[0] = add ? _NET_WM_STATE_ADD : _NET_WM_STATE_REMOVE;
@@ -48,7 +48,7 @@ wmspec_change_state (gboolean   add,
 }
 
 void
-old_wmspec_set_fullscreen (Window window)
+old_wmspec_set_fullscreen (GdkWindow *window)
 {
 	Atom XA_WIN_LAYER = None;
 	long propvalue[1];
@@ -62,7 +62,7 @@ old_wmspec_set_fullscreen (Window window)
 	 * WIN_LAYER_ABOVE_DOCK = 10 */
 	propvalue[0] = 10;
 
-	XChangeProperty (GDK_DISPLAY (), window, XA_WIN_LAYER,
+	XChangeProperty (GDK_DISPLAY (), GDK_WINDOW_XID (window), XA_WIN_LAYER,
 			XA_CARDINAL, 32, PropModeReplace,
 			(unsigned char *) propvalue, 1);
 
@@ -70,13 +70,13 @@ old_wmspec_set_fullscreen (Window window)
 	prop = XInternAtom (GDK_DISPLAY (), "_MOTIF_WM_HINTS", False);
 	mwmhints.flags = MWM_HINTS_DECORATIONS;
 	mwmhints.decorations = 0;
-	XChangeProperty (GDK_DISPLAY (), window, prop, prop, 32,
-			PropModeReplace, (unsigned char *) &mwmhints,
+	XChangeProperty (GDK_DISPLAY (), GDK_WINDOW_XID (window), prop, prop,
+			32, PropModeReplace, (unsigned char *) &mwmhints,
 			PROP_MWM_HINTS_ELEMENTS);
 }
 
 void
-window_set_fullscreen (Window window, gboolean set)
+window_set_fullscreen (GdkWindow *window, gboolean set)
 {
 	/* Set full-screen hint */
 	wmspec_change_state (set, window,

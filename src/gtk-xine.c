@@ -143,7 +143,7 @@ struct GtkXinePrivate {
 	/* X stuff */
 	Display *display;
 	int screen;
-	Window video_window;
+	GdkWindow *video_window;
 	int completion_event;
 
 	/* Visual effects */
@@ -328,7 +328,8 @@ gtk_xine_instance_init (GtkXine *gtx)
 {
 	char *configfile;
 
-	GTK_WIDGET_SET_FLAGS (GTK_WIDGET(gtx), GTK_CAN_FOCUS);
+	GTK_WIDGET_SET_FLAGS (GTK_WIDGET (gtx), GTK_CAN_FOCUS);
+	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (gtx), GTK_DOUBLE_BUFFERED);
 
 	/* Set the default size to be a 4:3 ratio */
 	gtx->widget.requisition.width = DEFAULT_HEIGHT;
@@ -489,7 +490,7 @@ load_video_out_driver (GtkXine *gtx)
 
 	vis.display = gtx->priv->display;
 	vis.screen = gtx->priv->screen;
-	vis.d = gtx->priv->video_window;
+	vis.d = GDK_WINDOW_XID (gtx->priv->video_window);
 	res_h =
 	    (DisplayWidth (gtx->priv->display, gtx->priv->screen) * 1000 /
 	     DisplayWidthMM (gtx->priv->display, gtx->priv->screen));
@@ -888,19 +889,15 @@ gtk_xine_realize (GtkWidget *widget)
 	attr.height = widget->allocation.height;
 	attr.window_type = GDK_WINDOW_CHILD;
 	attr.wclass = GDK_INPUT_OUTPUT;
-	attr.visual = gtk_widget_get_visual (widget);
-	attr.colormap = gtk_widget_get_colormap (widget);
 	attr.event_mask = gtk_widget_get_events (widget) | GDK_EXPOSURE_MASK;
 	widget->window = gdk_window_new (gtk_widget_get_parent_window (widget),
-			&attr, GDK_WA_X | GDK_WA_Y
-			| GDK_WA_VISUAL | GDK_WA_COLORMAP);
+			&attr, GDK_WA_X | GDK_WA_Y);
 	gdk_window_show (widget->window);
 	/* Flush, so that the window is really shown */
 	gdk_flush ();
 	gdk_window_set_user_data (widget->window, gtx);
 
-	gtx->priv->video_window = GDK_WINDOW_XWINDOW (widget->window);
-	gtk_widget_set_double_buffered (widget, FALSE);
+	gtx->priv->video_window = widget->window;
 
 	/* track configure events of toplevel window */
 	g_signal_connect (GTK_OBJECT (gtk_widget_get_toplevel (widget)),
@@ -1556,11 +1553,11 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 
 		XSetWMNormalHints (gtx->priv->display, win, &hint);
 
-		old_wmspec_set_fullscreen (win);
+//		old_wmspec_set_fullscreen (win);
 		/* TODO add check for full-screen from
 		 * fullscreen_callback
 		 * in terminal-window.c (profterm) */
-		window_set_fullscreen (win, TRUE);
+//		window_set_fullscreen (win, TRUE);
 		XRaiseWindow(gtx->priv->display, win);
 
 		XSelectInput (gtx->priv->display, win,
@@ -1598,7 +1595,7 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 	} else {
 		xine_gui_send_vo_data (gtx->priv->stream,
 			 XINE_GUI_SEND_DRAWABLE_CHANGED,
-			 (void *) gtx->priv->video_window);
+			 (void *) GDK_WINDOW_XID (gtx->priv->video_window));
 
 		/* Hide the window */
 		XDestroyWindow (gtx->priv->display, GDK_WINDOW_XID
