@@ -118,10 +118,11 @@ struct BaconVideoWidgetPrivate
 
   char *last_error_message;
 
-  /* X stuff */
-  Display *display;
-  int screen;
   GdkWindow *video_window;
+  gint video_window_x;
+  gint video_window_y;
+  gint video_window_w;
+  gint video_window_h;
 
   /* Visual effects */
   GList *vis_plugins_list;
@@ -195,15 +196,116 @@ static GtkWidgetClass *parent_class = NULL;
 static int bvw_table_signals[LAST_SIGNAL] = { 0 };
 
 static void
-bacon_video_widget_realized (GtkWidget * widget, BaconVideoWidget * bvw)
+bacon_video_widget_vw_realized (GtkWidget * widget, BaconVideoWidget * bvw)
 {
   GdkWindow *video_window = NULL;
+  
   video_window = gst_video_widget_get_video_window (GST_VIDEO_WIDGET (widget));
+  
+  if (video_window)
+    bvw->priv->video_window = video_window;
+  
   if (GST_IS_X_OVERLAY (bvw->priv->xoverlay) && GDK_IS_WINDOW (video_window))
     gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay,
                                   GDK_WINDOW_XID (video_window));
   else
     g_warning ("Could not find a XOVERLAY element in the bin");
+}
+
+static void
+bacon_video_widget_vw_allocate (GtkWidget * widget, GtkAllocation  *allocation,
+                             BaconVideoWidget * bvw)
+{
+  gint x, y, w, h;
+  
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  
+  gdk_window_get_geometry (bvw->priv->video_window, &x, &y, &w, &h, NULL);
+  
+  bvw->priv->video_window_x = x;
+  bvw->priv->video_window_y = y;
+  bvw->priv->video_window_w = w;
+  bvw->priv->video_window_h = h;
+}
+
+static gboolean
+bacon_video_widget_button_press (GtkWidget *widget, GdkEventButton *event,
+                                 BaconVideoWidget *bvw)
+{
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  
+  if (GST_IS_NAVIGATION (bvw->priv->xoverlay)) {
+    gint x, y, w, h;
+    
+    x = bvw->priv->video_window_x;
+    y = bvw->priv->video_window_y;
+    w = bvw->priv->video_window_w;
+    h = bvw->priv->video_window_h;
+    
+    if ( (event->x >= x) && (event->x <= x+w) &&
+         (event->y >= y) && (event->y <= y +h) )
+      gst_navigation_send_mouse_event (GST_NAVIGATION (bvw->priv->xoverlay),
+                                       "mouse-button-press",
+                                       event->button,
+                                       event->x - x, event->y - y);
+  }
+  
+  return TRUE;
+}
+
+static gboolean
+bacon_video_widget_button_release (GtkWidget *widget, GdkEventButton *event,
+                                   BaconVideoWidget *bvw)
+{
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  
+  if (GST_IS_NAVIGATION (bvw->priv->xoverlay)) {
+    gint x, y, w, h;
+    
+    x = bvw->priv->video_window_x;
+    y = bvw->priv->video_window_y;
+    w = bvw->priv->video_window_w;
+    h = bvw->priv->video_window_h;
+    
+    if ( (event->x >= x) && (event->x <= x+w) &&
+         (event->y >= y) && (event->y <= y +h) )
+      gst_navigation_send_mouse_event (GST_NAVIGATION (bvw->priv->xoverlay),
+                                       "mouse-button-release",
+                                       event->button,
+                                       event->x - x, event->y - y);
+  }
+  
+  return TRUE;
+}
+
+static gboolean
+bacon_video_widget_motion_notify_callback (GtkWidget *widget,
+                                           GdkEventMotion *event,
+                                           BaconVideoWidget *bvw)
+{
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  
+  if (GST_IS_NAVIGATION (bvw->priv->xoverlay)) {
+    gint x, y, w, h;
+    
+    x = bvw->priv->video_window_x;
+    y = bvw->priv->video_window_y;
+    w = bvw->priv->video_window_w;
+    h = bvw->priv->video_window_h;
+    
+    if ( (event->x >= x) && (event->x <= x+w) &&
+         (event->y >= y) && (event->y <= y +h) )
+    gst_navigation_send_mouse_event (GST_NAVIGATION (bvw->priv->xoverlay),
+                                     "mouse-move",
+                                     0,
+                                     event->x, event->y);
+  }
+
+  return TRUE;
 }
 
 static void
@@ -1674,8 +1776,23 @@ bacon_video_widget_new (int width, int height,
       return NULL;
     }
 
+  /* VideoWidget signals */
+
+  g_signal_connect (G_OBJECT (bvw->priv->vw), "motion-notify-event",
+                    G_CALLBACK (bacon_video_widget_motion_notify_callback),
+                    bvw);
+  g_signal_connect (G_OBJECT(bvw->priv->vw), "button-press-event",
+                    G_CALLBACK (bacon_video_widget_button_press),
+                    bvw);
+  g_signal_connect (G_OBJECT(bvw->priv->vw), "button-release-event",
+                    G_CALLBACK (bacon_video_widget_button_release),
+                    bvw);
+    
+  g_signal_connect_after (G_OBJECT (bvw->priv->vw), "size_allocate",
+                          G_CALLBACK (bacon_video_widget_vw_allocate),
+                          bvw);
   g_signal_connect_after (G_OBJECT (bvw->priv->vw), "realize",
-                          G_CALLBACK (bacon_video_widget_realized),
+                          G_CALLBACK (bacon_video_widget_vw_realized),
                           bvw);
     
   gtk_box_pack_end (GTK_BOX (bvw), GTK_WIDGET (bvw->priv->vw), TRUE, TRUE, 0);
