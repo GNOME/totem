@@ -588,15 +588,15 @@ size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw)
 static void
 setup_config (BaconVideoWidget *bvw)
 {
-	char *configfile;
+	char *path;
 	xine_cfg_entry_t entry;
 	const char *demux_strategies[] = {"default", "reverse", "content",
 		"extension", NULL};
 
-	configfile = g_build_path (G_DIR_SEPARATOR_S,
+	path = g_build_path (G_DIR_SEPARATOR_S,
 			g_get_home_dir (), CONFIG_FILE, NULL);
-	xine_config_load (bvw->priv->xine, configfile);
-	g_free (configfile);
+	xine_config_load (bvw->priv->xine, path);
+	g_free (path);
 
 	/* default demux strategy */
 	xine_config_register_enum (bvw->priv->xine,
@@ -1758,6 +1758,28 @@ bacon_video_widget_set_media_device (BaconVideoWidget *bvw, const char *path)
 	memset (&entry, 0, sizeof (entry));
 	if (xine_config_lookup_entry (bvw->priv->xine,
 				"input.cdda_device", &entry))
+	{
+		entry.str_value = g_strdup (path);
+		xine_config_update_entry (bvw->priv->xine, &entry);
+	}
+}
+
+void
+bacon_video_widget_set_proprietary_plugins_path (BaconVideoWidget *bvw,
+		const char *path)
+{
+	xine_cfg_entry_t entry;
+
+	if (xine_config_lookup_entry (bvw->priv->xine,
+				"codec.win32_path", &entry))
+	{
+		entry.str_value = g_strdup (path);
+		xine_config_update_entry (bvw->priv->xine, &entry);
+	}
+
+	memset (&entry, 0, sizeof (entry));
+	if (xine_config_lookup_entry (bvw->priv->xine,
+				"codec.win32_path", &entry))
 	{
 		entry.str_value = g_strdup (path);
 		xine_config_update_entry (bvw->priv->xine, &entry);

@@ -111,6 +111,10 @@ void bacon_video_widget_set_speed                (BaconVideoWidget *bvw,
 		                                  Speeds speed);
 int bacon_video_widget_get_speed                 (BaconVideoWidget *bvw);
 
+void bacon_video_widget_set_proprietary_plugins_path
+						 (BaconVideoWidget *bvw,
+				                  const char *path);
+
 void bacon_video_widget_set_fullscreen           (BaconVideoWidget *bvw,
 						  gboolean fullscreen);
 gboolean bacon_video_widget_is_fullscreen        (BaconVideoWidget *bvw);

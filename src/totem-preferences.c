@@ -28,18 +28,17 @@
 
 #include "debug.h"
 
-static void
-hide_prefs (GtkWidget *widget, int trash, gpointer user_data)
-{
-	Totem *totem = (Totem *)user_data;
+#define PROPRIETARY_PLUGINS ".gnome2"G_DIR_SEPARATOR_S"totem-addons"
 
+static void
+hide_prefs (GtkWidget *widget, int trash, Totem *totem)
+{
 	gtk_widget_hide (totem->prefs);
 }
 
 static void
-on_checkbutton1_toggled (GtkToggleButton *togglebutton, gpointer user_data)
+on_checkbutton1_toggled (GtkToggleButton *togglebutton, Totem *totem)
 {
-	Totem *totem = (Totem *)user_data;
 	gboolean value;
 
 	value = gtk_toggle_button_get_active (togglebutton);
@@ -50,9 +49,8 @@ on_checkbutton1_toggled (GtkToggleButton *togglebutton, gpointer user_data)
 }
 
 static void              
-on_checkbutton2_toggled (GtkToggleButton *togglebutton, gpointer user_data)
+on_checkbutton2_toggled (GtkToggleButton *togglebutton, Totem *totem)
 {                               
-	Totem *totem = (Totem *)user_data;
 	gboolean value;
 
 	value = gtk_toggle_button_get_active (togglebutton);
@@ -68,10 +66,8 @@ on_checkbutton2_toggled (GtkToggleButton *togglebutton, gpointer user_data)
 }
 
 static void
-on_combo_entry1_changed (BaconCdSelection *bcs, char *device,
-		gpointer user_data)
+on_combo_entry1_changed (BaconCdSelection *bcs, char *device, Totem *totem)
 {
-	Totem *totem = (Totem *)user_data;
 	const char *str;
 
 	str = bacon_cd_selection_get_device (bcs);
@@ -82,9 +78,8 @@ on_combo_entry1_changed (BaconCdSelection *bcs, char *device,
 
 static void
 auto_resize_changed_cb (GConfClient *client, guint cnxn_id,
-		GConfEntry *entry, gpointer user_data)
+		GConfEntry *entry, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
 	GtkWidget *item;
 
 	item = glade_xml_get_widget (totem->xml, "checkbutton1");
@@ -98,9 +93,8 @@ auto_resize_changed_cb (GConfClient *client, guint cnxn_id,
 
 static void
 show_vfx_changed_cb (GConfClient *client, guint cnxn_id,
-		GConfEntry *entry, gpointer user_data)
+		GConfEntry *entry, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
 	GtkWidget *item;
 
 	item = glade_xml_get_widget (totem->xml, "checkbutton2");
@@ -117,9 +111,8 @@ show_vfx_changed_cb (GConfClient *client, guint cnxn_id,
 
 static void
 mediadev_changed_cb (GConfClient *client, guint cnxn_id,
-		GConfEntry *entry, gpointer user_data)
+		GConfEntry *entry, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
 	GtkWidget *item;
 	char *mediadev;
 
@@ -142,14 +135,40 @@ mediadev_changed_cb (GConfClient *client, guint cnxn_id,
 }
 
 static void
-option_menu_connection_changed (GtkOptionMenu *option_menu, gpointer user_data)
+option_menu_connection_changed (GtkOptionMenu *option_menu, Totem *totem)
 {
-	Totem *totem = (Totem *) user_data;
 	int i;
 
 	i = gtk_option_menu_get_history (option_menu);
 	bacon_video_widget_set_connection_speed
 		(BACON_VIDEO_WIDGET (totem->bvw), i);
+}
+
+static void
+on_button1_clicked (GtkButton *button, Totem *totem)
+{
+	GError *err = NULL;
+	char *path, *cmd;
+
+	path = path = g_build_path (G_DIR_SEPARATOR_S,
+			g_get_home_dir (), PROPRIETARY_PLUGINS, NULL);
+	if (g_file_test (path, G_FILE_TEST_IS_DIR) == FALSE)
+		mkdir (path, 0775);
+
+	cmd = g_strdup_printf ("nautilus --no-default-window %s", path);
+	g_free (path);
+
+	if (g_spawn_command_line_async (cmd, &err) == FALSE)
+	{
+		char *msg;
+
+		msg = g_strdup_printf ("Totem could not start the file manager\nReason: %s.", err->message);
+		totem_action_error (msg, GTK_WINDOW (totem->win));
+		g_free (msg);
+		g_error_free (err);
+	}
+
+	g_free (cmd);
 }
 
 GtkWidget *
@@ -170,17 +189,21 @@ totem_setup_preferences (Totem *totem)
 	const char *mediadev;
 	gboolean show_visuals, auto_resize;
 	int connection_speed;
+	char *path;
 
 	g_return_if_fail (totem->gc != NULL);
 
 	gconf_client_add_dir (totem->gc, "/apps/totem",
 			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
 	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/auto_resize",
-			auto_resize_changed_cb, totem, NULL, NULL);
+			(GConfClientNotifyFunc) auto_resize_changed_cb,
+			totem, NULL, NULL);
 	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/show_vfx",
-			show_vfx_changed_cb, totem, NULL, NULL);
+			(GConfClientNotifyFunc) show_vfx_changed_cb,
+			totem, NULL, NULL);
 	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/mediadev",
-			mediadev_changed_cb, totem, NULL, NULL);
+			(GConfClientNotifyFunc) mediadev_changed_cb,
+			totem, NULL, NULL);
 
 	totem->prefs = glade_xml_get_widget (totem->xml, "dialog1");
 
@@ -236,5 +259,14 @@ totem_setup_preferences (Totem *totem)
 			connection_speed);
 	g_signal_connect (item, "changed",
 			(GCallback)option_menu_connection_changed, totem);
+
+	item = glade_xml_get_widget (totem->xml, "button1");
+	g_signal_connect (G_OBJECT (item), "clicked",
+			G_CALLBACK (on_button1_clicked), totem);
+	path = g_build_path (G_DIR_SEPARATOR_S,
+			g_get_home_dir (), PROPRIETARY_PLUGINS, NULL);
+	bacon_video_widget_set_proprietary_plugins_path
+		(totem->bvw, path);
+	g_free (path);
 }
 

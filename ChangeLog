@@ -1,3 +1,20 @@
+2003-04-18  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem.glade:
+	* src/bacon-video-widget-gst.c:
+	(bacon_video_widget_set_proprietary_plugins_path):
+	* src/bacon-video-widget-xine.c: (setup_config),
+	(bacon_video_widget_set_media_device),
+	(bacon_video_widget_set_proprietary_plugins_path):
+	* src/bacon-video-widget.h:
+	* src/totem-preferences.c: (hide_prefs), (on_checkbutton1_toggled),
+	(on_checkbutton2_toggled), (on_combo_entry1_changed),
+	(auto_resize_changed_cb), (show_vfx_changed_cb),
+	(mediadev_changed_cb), (option_menu_connection_changed),
+	(on_button1_clicked), (totem_setup_preferences): added an "Add
+	proprietary plugins" button to the preferences, make the xine backend
+	use this path (Closes: #110384)
+
 2003-04-18  Julien MOUTTE  <julien@moutte.net>
 
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_class_init): We do
