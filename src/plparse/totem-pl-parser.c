@@ -652,6 +652,8 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		/* ENTRY should only have one ref and one title nodes */
 		if (g_ascii_strcasecmp (node->name, "ref") == 0) {
 			url = xmlGetProp (node, "href");
+			if (url == NULL)
+				url = xmlGetProp (node, "HREF");
 			continue;
 		}
 
