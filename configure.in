@@ -14,8 +14,6 @@ AC_PROG_CXX
 AC_PROG_LIBTOOL()
 AC_PROG_INTLTOOL([0.20])
 
-GNOME_COMPILE_WARNINGS
-
 dnl FreeBSD support
 AC_CHECK_LIB(cam, cam_open_spec_device)
 
@@ -253,6 +251,15 @@ AC_ARG_ENABLE(debug,
 [ENABLE_DEBUG=no]) dnl Default value
 if test x$ENABLE_DEBUG = xyes; then
 	AC_DEFINE(TOTEM_DEBUG, 1, [Define if DEBUG statements should be compiled in])
+fi
+
+if test "$GCC" = "yes" ; then
+	CFLAGS="\
+	-Wall \
+	-Wchar-subscripts -Wmissing-declarations -Wmissing-prototypes \
+	-Wnested-externs -Wpointer-arith \
+	-Wcast-align -Wsign-compare \
+	$CFLAGS"
 fi
 
 dnl Add the languages which your application supports here.

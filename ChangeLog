@@ -1,5 +1,16 @@
 2003-10-04  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: more warnings
+	* src/bacon-video-widget-gst.c: (got_stream_length),
+	(got_time_tick), (got_error), (bacon_video_widget_play),
+	(bacon_video_widget_seek), (bacon_video_widget_seek_time),
+	(bacon_video_widget_set_show_visuals),
+	(bacon_video_widget_get_visuals_list),
+	(bacon_video_widget_get_auto_resize), (bacon_video_widget_new):
+	more fixes for the gstreamer backend
+
+2003-10-04  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_class_init),
 	(got_time_tick), (bacon_video_widget_play),
 	(bacon_video_widget_seek), (bacon_video_widget_seek_time),
