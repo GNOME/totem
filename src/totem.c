@@ -158,6 +158,31 @@ play_pause_set_label (Totem *totem, gboolean playing)
 }
 
 static void
+volume_set_image (Totem *totem, int vol)
+{
+	GtkWidget *image;
+	char *filename, *path;
+
+	image = glade_xml_get_widget (totem->xml, "volume_image");
+	vol = CLAMP (vol, 0, 100);
+	if (vol == 0)
+		filename = "totem/rhythmbox-volume-zero.png";
+	else if (vol <= 100 / 3)
+		filename = "totem/rhythmbox-volume-min.png";
+	else if (vol <= 2 * 100 / 3)
+		filename = "totem/rhythmbox-volume-medium.png";
+	else
+		filename = "totem/rhythmbox-volume-max.png";
+
+	path = gnome_program_locate_file (NULL,
+			GNOME_FILE_DOMAIN_APP_DATADIR,
+			filename,
+			FALSE, NULL);
+	gtk_image_set_from_file (GTK_IMAGE (image), path);
+	g_free (path);
+}
+
+static void
 action_play (Totem *totem, int offset)
 {
 	int retval;
@@ -283,7 +308,8 @@ action_set_mrl (Totem *totem, const char *mrl)
 
 		/* Volume */
 		widget = glade_xml_get_widget (totem->xml, "volume_hbox");
-		gtk_widget_set_sensitive (widget, TRUE);
+		gtk_widget_set_sensitive (widget, gtk_xine_can_set_volume
+				(GTK_XINE (totem->gtx)));
 
 		/* Set the playlist */
 		gtk_playlist_set_playing (totem->playlist);
@@ -341,9 +367,6 @@ action_seek_relative (Totem *totem, int off_sec)
 	else
 		sec = oldsec + off_sec;
 
-//FIXME	if (gtk_xine_is_playing(GTK_XINE(totem->gtx)) == FALSE)
-//		action_play_pause (totem);
-
 	gtk_xine_play (GTK_XINE(totem->gtx), totem->mrl, 0, sec);
 	play_pause_set_label (totem, TRUE);
 }
@@ -358,6 +381,7 @@ action_volume_relative (Totem *totem, int off_pct)
 
 	vol = gtk_xine_get_volume (GTK_XINE (totem->gtx));
 	gtk_xine_set_volume (GTK_XINE (totem->gtx), vol + off_pct);
+	volume_set_image (totem, vol + off_pct);
 }
 
 static void
@@ -527,6 +551,7 @@ vol_cb (GtkWidget *widget, gpointer user_data)
 		totem->vol_lock = TRUE;
 		gtk_xine_set_volume (GTK_XINE (totem->gtx),
 				(gint) totem->voladj->value);
+		volume_set_image (totem, (gint) totem->voladj->value);
 		totem->vol_lock = FALSE;
 	}
 }
