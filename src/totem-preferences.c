@@ -120,13 +120,13 @@ on_checkbutton2_toggled (GtkToggleButton *togglebutton, Totem *totem)
 
 	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/show_vfx", value, NULL);
 
-	item = glade_xml_get_widget (totem->xml, "label27");
+	item = glade_xml_get_widget (totem->xml, "tpw_visuals_type_label");
 	gtk_widget_set_sensitive (item, value);
-	item = glade_xml_get_widget (totem->xml, "optionmenu2");
+	item = glade_xml_get_widget (totem->xml, "tpw_visuals_type_optionmenu");
 	gtk_widget_set_sensitive (item, value);
-	item = glade_xml_get_widget (totem->xml, "label28");
+	item = glade_xml_get_widget (totem->xml, "tpw_visuals_size_label");
 	gtk_widget_set_sensitive (item, value);
-	item = glade_xml_get_widget (totem->xml, "optionmenu3");
+	item = glade_xml_get_widget (totem->xml, "tpw_visuals_size_optionmenu");
 	gtk_widget_set_sensitive (item, value);
 
 	if (bacon_video_widget_set_show_visuals
@@ -175,7 +175,7 @@ deinterlace_changed_cb (GConfClient *client, guint cnxn_id,
 {
 	GtkWidget *item;
 
-	item = glade_xml_get_widget (totem->xml, "deinterlace1");
+	item = glade_xml_get_widget (totem->xml, "tmw_deinterlace_menu_item");
 	g_signal_handlers_disconnect_by_func (G_OBJECT (item),
 			on_deinterlace1_activate, totem);
 
@@ -204,7 +204,7 @@ auto_resize_changed_cb (GConfClient *client, guint cnxn_id,
 {
 	GtkWidget *item;
 
-	item = glade_xml_get_widget (totem->xml, "checkbutton1");
+	item = glade_xml_get_widget (totem->xml, "tpw_display_checkbutton");
 	g_signal_handlers_disconnect_by_func (G_OBJECT (item),
 			on_checkbutton1_toggled, totem);
 
@@ -222,7 +222,7 @@ show_vfx_changed_cb (GConfClient *client, guint cnxn_id,
 {
 	GtkWidget *item;
 
-	item = glade_xml_get_widget (totem->xml, "checkbutton2");
+	item = glade_xml_get_widget (totem->xml, "tpw_visuals_checkbutton");
 	g_signal_handlers_disconnect_by_func (G_OBJECT (item),
 			on_checkbutton2_toggled, totem);
 
@@ -241,7 +241,7 @@ mediadev_changed_cb (GConfClient *client, guint cnxn_id,
 	GtkWidget *item;
 	char *mediadev;
 
-	item = glade_xml_get_widget (totem->xml, "custom3");
+	item = glade_xml_get_widget (totem->xml, "tpw_device_combo");
 	g_signal_handlers_disconnect_by_func (G_OBJECT (item),
 			on_combo_entry1_changed, totem);
 
@@ -366,7 +366,7 @@ totem_setup_preferences (Totem *totem)
 			(GConfClientNotifyFunc) mediadev_changed_cb,
 			totem, NULL, NULL);
 
-	totem->prefs = glade_xml_get_widget (totem->xml, "dialog1");
+	totem->prefs = glade_xml_get_widget (totem->xml, "totem_preferences_window");
 
 	g_signal_connect (G_OBJECT (totem->prefs),
 			"response", G_CALLBACK (hide_prefs), (gpointer) totem);
@@ -376,7 +376,7 @@ totem_setup_preferences (Totem *totem)
 	/* Auto-resize */
 	auto_resize = gconf_client_get_bool (totem->gc,
 			GCONF_PREFIX"/auto_resize", NULL);
-	item = glade_xml_get_widget (totem->xml, "checkbutton1");
+	item = glade_xml_get_widget (totem->xml, "tpw_display_checkbutton");
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), auto_resize);
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_checkbutton1_toggled), totem);
@@ -384,7 +384,7 @@ totem_setup_preferences (Totem *totem)
 		(BACON_VIDEO_WIDGET (totem->bvw), auto_resize);
 
 	/* Media device */
-	item = glade_xml_get_widget (totem->xml, "custom3");
+	item = glade_xml_get_widget (totem->xml, "tpw_device_combo");
 	mediadev = gconf_client_get_string
 		(totem->gc, GCONF_PREFIX"/mediadev", NULL);
 	if (mediadev == NULL || (strcmp (mediadev, "") == 0)
@@ -409,14 +409,14 @@ totem_setup_preferences (Totem *totem)
 
 	/* Connection Speed */
 	connection_speed = bacon_video_widget_get_connection_speed (totem->bvw);
-	item = glade_xml_get_widget (totem->xml, "optionmenu1");
+	item = glade_xml_get_widget (totem->xml, "tpw_speed_optionmenu");
 	gtk_option_menu_set_history (GTK_OPTION_MENU (item),
 			connection_speed);
 	g_signal_connect (item, "changed",
 			G_CALLBACK (option_menu_connection_changed), totem);
 
 	/* Proprietary plugins */
-	item = glade_xml_get_widget (totem->xml, "button1");
+	item = glade_xml_get_widget (totem->xml, "tpw_plugins_button");
 	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (on_button1_clicked), totem);
 	path = g_build_path (G_DIR_SEPARATOR_S,
@@ -427,7 +427,7 @@ totem_setup_preferences (Totem *totem)
 	g_free (path);
 
 	/* Enable visuals */
-	item = glade_xml_get_widget (totem->xml, "checkbutton2");
+	item = glade_xml_get_widget (totem->xml, "tpw_visuals_checkbutton");
 	show_visuals = gconf_client_get_bool (totem->gc,
 			GCONF_PREFIX"/show_vfx", NULL);
 	if (is_local == FALSE && show_visuals == TRUE)
@@ -469,12 +469,12 @@ totem_setup_preferences (Totem *totem)
 	i = gconf_client_get_int (totem->gc,
 			GCONF_PREFIX"/visual_quality", NULL);
 	bacon_video_widget_set_visuals_quality (totem->bvw, i);
-	item = glade_xml_get_widget (totem->xml, "optionmenu3");
+	item = glade_xml_get_widget (totem->xml, "tpw_visuals_size_optionmenu");
 	gtk_option_menu_set_history (GTK_OPTION_MENU (item), i);
 	g_signal_connect (G_OBJECT (item), "changed",
 			G_CALLBACK (visual_quality_menu_changed), totem);
 
-	item = glade_xml_get_widget (totem->xml, "optionmenu2");
+	item = glade_xml_get_widget (totem->xml, "tpw_visuals_type_optionmenu");
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (item), menu);
 	gtk_option_menu_set_history (GTK_OPTION_MENU (item), found);
 	g_signal_connect (G_OBJECT (item), "changed",
@@ -482,7 +482,7 @@ totem_setup_preferences (Totem *totem)
 
 	/* This one is for the deinterlacing menu, not really our dialog
 	 * but we do it anyway */
-	item = glade_xml_get_widget (totem->xml, "deinterlace1");
+	item = glade_xml_get_widget (totem->xml, "tmw_deinterlace_menu_item");
 	deinterlace = gconf_client_get_bool (totem->gc,
 			GCONF_PREFIX"/deinterlace", NULL);
 	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
@@ -506,13 +506,13 @@ totem_preferences_tvout_setup (Totem *totem)
 	switch (type)
 	{
 	case TV_OUT_NONE:
-		name = "notvout";
+		name = "tpw_notvout_radio_button";
 		break;
 	case TV_OUT_TVMODE:
-		name = "tvoutmode";
+		name = "tpw_tvoutmode_radio_button";
 		break;
 	case TV_OUT_DXR3:
-		name = "dxr3tvout";
+		name = "tpw_dxr3tvout_radio_button";
 		break;
 	default:
 		g_assert_not_reached ();
@@ -521,17 +521,17 @@ totem_preferences_tvout_setup (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, name);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), TRUE);
 
-	item = glade_xml_get_widget (totem->xml, "notvout");
+	item = glade_xml_get_widget (totem->xml, "tpw_notvout_radio_button");
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_tvout_toggled), totem);
 	g_object_set_data (G_OBJECT (item), "tvout_type",
 			GINT_TO_POINTER (TV_OUT_NONE));
-	item = glade_xml_get_widget (totem->xml, "tvoutmode");
+	item = glade_xml_get_widget (totem->xml, "tpw_tvoutmode_radio_button");
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_tvout_toggled), totem);
 	g_object_set_data (G_OBJECT (item), "tvout_type",
 			GINT_TO_POINTER (TV_OUT_TVMODE));
-	item = glade_xml_get_widget (totem->xml, "dxr3tvout");
+	item = glade_xml_get_widget (totem->xml, "tpw_dxr3tvout_radio_button");
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_tvout_toggled), totem);
 	g_object_set_data (G_OBJECT (item), "tvout_type",
@@ -550,4 +550,3 @@ totem_preferences_visuals_setup (Totem *totem)
 
 	bacon_video_widget_set_visuals (totem->bvw, visual);
 }
-

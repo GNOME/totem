@@ -124,15 +124,13 @@ void bacon_video_widget_set_proprietary_plugins_path
 						 (BaconVideoWidget *bvw,
 				                  const char *path);
 
-void bacon_video_widget_set_fullscreen           (BaconVideoWidget *bvw,
-						  gboolean fullscreen);
-gboolean bacon_video_widget_is_fullscreen        (BaconVideoWidget *bvw);
-
 gboolean bacon_video_widget_can_set_volume       (BaconVideoWidget *bvw);
 void bacon_video_widget_set_volume               (BaconVideoWidget *bvw,
 						  int volume);
 int bacon_video_widget_get_volume                (BaconVideoWidget *bvw);
 
+void bacon_video_widget_set_fullscreen		 (BaconVideoWidget *bvw,
+						  gboolean fullscreen);
 void bacon_video_widget_set_show_cursor          (BaconVideoWidget *bvw,
 						  gboolean use_cursor);
 gboolean bacon_video_widget_get_show_cursor      (BaconVideoWidget *bvw);

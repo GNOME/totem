@@ -5,7 +5,7 @@
 <requires lib="gnome"/>
 <requires lib="bonobo"/>
 
-<widget class="GnomeApp" id="app1">
+<widget class="GnomeApp" id="totem_main_window">
   <property name="title" translatable="yes">Totem</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
@@ -16,37 +16,37 @@
   <property name="enable_layout_config">True</property>
 
   <child internal-child="dock">
-    <widget class="BonoboDock" id="bonobodock1">
+    <widget class="BonoboDock" id="tmw_bonobodock">
       <property name="visible">True</property>
       <property name="allow_floating">True</property>
 
       <child>
-	<widget class="BonoboDockItem" id="bonobodockitem1">
+	<widget class="BonoboDockItem" id="tmw_bonobodockitem">
 	  <property name="visible">True</property>
 	  <property name="shadow_type">GTK_SHADOW_NONE</property>
 
 	  <child>
-	    <widget class="GtkMenuBar" id="menubar1">
+	    <widget class="GtkMenuBar" id="tmw_menubar">
 	      <property name="visible">True</property>
 
 	      <child>
-		<widget class="GtkMenuItem" id="movie1">
+		<widget class="GtkMenuItem" id="tmw_menu_item_movie">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">_Movie</property>
 		  <property name="use_underline">True</property>
 
 		  <child>
-		    <widget class="GtkMenu" id="movie1_menu">
+		    <widget class="GtkMenu" id="tmw_menu_movie">
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="open1">
+			<widget class="GtkImageMenuItem" id="tmw_open_menu_item">
 			  <property name="visible">True</property>
 			  <property name="stock_item">GNOMEUIINFO_MENU_OPEN_ITEM</property>
 			</widget>
 		      </child>
 
 		      <child>
-			<widget class="GtkMenuItem" id="open_location1">
+			<widget class="GtkMenuItem" id="tmw_open_location_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Open a non-local file</property>
 			  <property name="label" translatable="yes">Open _Location...</property>
@@ -57,7 +57,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="play_dvd1">
+			<widget class="GtkImageMenuItem" id="tmw_play_dvd_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Play a Video DVD</property>
 			  <property name="label" translatable="yes">Play _DVD</property>
@@ -65,7 +65,7 @@
 			  <signal name="activate" handler="on_play_dvd1_activate" last_modification_time="Fri, 09 Aug 2002 22:46:45 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1498">
+			    <widget class="GtkImage" id="tmw_play_dvd_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-cdrom</property>
 			      <property name="icon_size">1</property>
@@ -79,7 +79,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="play_vcd1">
+			<widget class="GtkImageMenuItem" id="tmw_play_vcd_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Play a Video CD</property>
 			  <property name="label" translatable="yes">Play _VCD</property>
@@ -87,7 +87,7 @@
 			  <signal name="activate" handler="on_play_vcd1_activate" last_modification_time="Fri, 09 Aug 2002 22:46:45 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1499">
+			    <widget class="GtkImage" id="tmw_play_vcd_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-cdrom</property>
 			      <property name="icon_size">1</property>
@@ -101,7 +101,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="play_audio_cd1">
+			<widget class="GtkImageMenuItem" id="tmw_play_audio_cd_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Play an audio CD</property>
 			  <property name="label" translatable="yes">Play _Audio CD</property>
@@ -109,7 +109,7 @@
 			  <signal name="activate" handler="on_play_cd1_activate" last_modification_time="Sun, 19 Jan 2003 22:48:19 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1500">
+			    <widget class="GtkImage" id="tmw_play_audio_cd_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-cdrom</property>
 			      <property name="icon_size">1</property>
@@ -123,13 +123,13 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkMenuItem" id="separator17">
+			<widget class="GtkMenuItem" id="tmw_menu_movie_separator_1">
 			  <property name="visible">True</property>
 			</widget>
 		      </child>
 
 		      <child>
-			<widget class="GtkMenuItem" id="eject1">
+			<widget class="GtkMenuItem" id="tmw_eject_menu_item">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes">_Eject</property>
 			  <property name="use_underline">True</property>
@@ -139,13 +139,13 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkMenuItem" id="separator18">
+			<widget class="GtkMenuItem" id="tmw_menu_movie_separator_2">
 			  <property name="visible">True</property>
 			</widget>
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="properties1">
+			<widget class="GtkImageMenuItem" id="tmw_properties_menu_item">
 			  <property name="visible">True</property>
 			  <property name="stock_item">GNOMEUIINFO_MENU_PROPERTIES_ITEM</property>
 			  <signal name="activate" handler="on_properties1_activate" last_modification_time="Fri, 07 Feb 2003 20:29:18 GMT"/>
@@ -153,13 +153,13 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkMenuItem" id="recent_separator">
+			<widget class="GtkMenuItem" id="tmw_menu_recent_separator">
 			  <property name="visible">True</property>
 			</widget>
 		      </child>
 
 		      <child>
-			<widget class="GtkMenuItem" id="play1">
+			<widget class="GtkMenuItem" id="tmw_play_menu_item">
 			  <property name="visible">True</property>
 			  <property name="sensitive">False</property>
 			  <property name="tooltip" translatable="yes">Play or pause the movie</property>
@@ -170,13 +170,13 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkMenuItem" id="separator14">
+			<widget class="GtkMenuItem" id="tmw_menu_movie_separator_3">
 			  <property name="visible">True</property>
 			</widget>
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="quit1">
+			<widget class="GtkImageMenuItem" id="tmw_quit_menu_item">
 			  <property name="visible">True</property>
 			  <property name="stock_item">GNOMEUIINFO_MENU_EXIT_ITEM</property>
 			  <signal name="activate" handler="on_quit1_activate" last_modification_time="Sat, 08 Jun 2002 22:29:16 GMT"/>
@@ -188,15 +188,15 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkMenuItem" id="edit1">
+		<widget class="GtkMenuItem" id="tmw_menu_item_edit">
 		  <property name="visible">True</property>
 		  <property name="stock_item">GNOMEUIINFO_MENU_EDIT_TREE</property>
 
 		  <child>
-		    <widget class="GtkMenu" id="edit1_menu">
+		    <widget class="GtkMenu" id="tmw_menu_edit">
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="take_screenshot1">
+			<widget class="GtkImageMenuItem" id="tmw_take_screenshot_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Take a screenshot</property>
 			  <property name="label" translatable="yes">Take _Screenshot</property>
@@ -204,7 +204,7 @@
 			  <signal name="activate" handler="on_take_screenshot1_activate" last_modification_time="Mon, 06 Jan 2003 19:35:01 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1501">
+			    <widget class="GtkImage" id="tmw_take_screenshot_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-convert</property>
 			      <property name="icon_size">1</property>
@@ -218,13 +218,13 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkMenuItem" id="separator15">
+			<widget class="GtkMenuItem" id="tmw_menu_edit_separator">
 			  <property name="visible">True</property>
 			</widget>
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="preferences1">
+			<widget class="GtkImageMenuItem" id="tmw_preferences_menu_item">
 			  <property name="visible">True</property>
 			  <property name="sensitive">False</property>
 			  <property name="stock_item">GNOMEUIINFO_MENU_PREFERENCES_ITEM</property>
@@ -237,15 +237,15 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkMenuItem" id="view1">
+		<widget class="GtkMenuItem" id="tmw_menu_item_view">
 		  <property name="visible">True</property>
 		  <property name="stock_item">GNOMEUIINFO_MENU_VIEW_TREE</property>
 
 		  <child>
-		    <widget class="GtkMenu" id="view1_menu">
+		    <widget class="GtkMenu" id="tmw_menu_view">
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="fullscreen1">
+			<widget class="GtkImageMenuItem" id="tmw_fullscreen_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Switch to fullscreen</property>
 			  <property name="label" translatable="yes">_Fullscreen</property>
@@ -253,7 +253,7 @@
 			  <accelerator key="F" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1502">
+			    <widget class="GtkImage" id="tmw_fullscreen_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-zoom-fit</property>
 			      <property name="icon_size">1</property>
@@ -267,7 +267,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="zoom_1_2">
+			<widget class="GtkImageMenuItem" id="tmw_zoom_1_2_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Zoom to half size</property>
 			  <property name="label" translatable="yes">_Zoom 1:2</property>
@@ -276,7 +276,7 @@
 			  <accelerator key="0" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1503">
+			    <widget class="GtkImage" id="tmw_zoom_1_2_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-zoom-out</property>
 			      <property name="icon_size">1</property>
@@ -290,7 +290,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="zoom_1_1">
+			<widget class="GtkImageMenuItem" id="tmw_zoom_1_1_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Zoom to one for one size</property>
 			  <property name="label" translatable="yes">Zoom _1:1</property>
@@ -299,7 +299,7 @@
 			  <accelerator key="1" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1504">
+			    <widget class="GtkImage" id="tmw_zoom_1_1_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-zoom-100</property>
 			      <property name="icon_size">1</property>
@@ -313,7 +313,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="zoom_2_1">
+			<widget class="GtkImageMenuItem" id="tmw_zoom_2_1_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Switch to double size</property>
 			  <property name="label" translatable="yes">Zoom _2:1</property>
@@ -322,7 +322,7 @@
 			  <accelerator key="2" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1505">
+			    <widget class="GtkImage" id="tmw_zoom_2_1_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-zoom-in</property>
 			      <property name="icon_size">1</property>
@@ -336,13 +336,13 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkMenuItem" id="separator9">
+			<widget class="GtkMenuItem" id="tmw_menu_view_separator_1">
 			  <property name="visible">True</property>
 			</widget>
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="toggle_aspect_ratio1">
+			<widget class="GtkImageMenuItem" id="tmw_toggle_aspect_ratio_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Toggle the aspect ratio</property>
 			  <property name="label" translatable="yes">Toggle _Aspect Ratio</property>
@@ -351,7 +351,7 @@
 			  <accelerator key="A" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1506">
+			    <widget class="GtkImage" id="tmw_toggle_aspect_ratio_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gnome-stock-table-fill</property>
 			      <property name="icon_size">1</property>
@@ -365,7 +365,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkCheckMenuItem" id="deinterlace1">
+			<widget class="GtkCheckMenuItem" id="tmw_deinterlace_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Deinterlace</property>
 			  <property name="label" translatable="yes">Deinterlace</property>
@@ -377,7 +377,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkCheckMenuItem" id="always_on_top1">
+			<widget class="GtkCheckMenuItem" id="tmw_always_on_top_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Always on top</property>
 			  <property name="label" translatable="yes">Always On _Top</property>
@@ -388,7 +388,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkCheckMenuItem" id="show_controls1">
+			<widget class="GtkCheckMenuItem" id="tmw_show_controls_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Show controls</property>
 			  <property name="label" translatable="yes">Show Controls</property>
@@ -400,7 +400,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkMenuItem" id="subtitles1">
+			<widget class="GtkMenuItem" id="tmw_subtitles_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Subtitles</property>
 			  <property name="label" translatable="yes">Subtitles</property>
@@ -408,10 +408,10 @@
 			  <signal name="activate" handler="on_subtitles1_activate" last_modification_time="Mon, 24 Mar 2003 19:52:36 GMT"/>
 
 			  <child>
-			    <widget class="GtkMenu" id="subtitles1_menu">
+			    <widget class="GtkMenu" id="tmw_menu_subtitles">
 
 			      <child>
-				<widget class="GtkMenuItem" id="no_subtitles_selection_available1">
+				<widget class="GtkMenuItem" id="tmw_no_subtitles_selection_available">
 				  <property name="visible">True</property>
 				  <property name="sensitive">False</property>
 				  <property name="label" translatable="yes">No subtitles selection available</property>
@@ -425,13 +425,13 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkMenuItem" id="separator8">
+			<widget class="GtkMenuItem" id="tmw_menu_view_separator_2">
 			  <property name="visible">True</property>
 			</widget>
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="show_playlist1">
+			<widget class="GtkImageMenuItem" id="tmw_show_playlist_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Show or hide the playlist</property>
 			  <property name="label" translatable="yes">_Show/Hide Playlist</property>
@@ -439,7 +439,7 @@
 			  <signal name="activate" handler="on_show_playlist1_activate" last_modification_time="Fri, 14 Jun 2002 22:36:54 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1507">
+			    <widget class="GtkImage" id="tmw_show_playlist_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="pixbuf">playlist-16.png</property>
 			      <property name="xalign">0.5</property>
@@ -452,7 +452,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkCheckMenuItem" id="repeat_mode1">
+			<widget class="GtkCheckMenuItem" id="tmw_repeat_mode_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Set the repeat mode</property>
 			  <property name="label" translatable="yes">_Repeat Mode</property>
@@ -467,17 +467,17 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkMenuItem" id="dvd1_menu">
+		<widget class="GtkMenuItem" id="tmw_menu_item_dvd">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">_Go</property>
 		  <property name="use_underline">True</property>
 		  <signal name="activate" handler="on_dvd1_menu_activate" last_modification_time="Sun, 01 Dec 2002 05:35:38 GMT"/>
 
 		  <child>
-		    <widget class="GtkMenu" id="dvd1_menu_menu">
+		    <widget class="GtkMenu" id="tmw_menu_dvd">
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="dvd_root_menu">
+			<widget class="GtkImageMenuItem" id="tmw_dvd_root_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Go to the DVD menu</property>
 			  <property name="label" translatable="yes">DVD menu</property>
@@ -486,7 +486,7 @@
 			  <accelerator key="m" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1508">
+			    <widget class="GtkImage" id="tmw_dvd_root_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-index</property>
 			      <property name="icon_size">1</property>
@@ -500,7 +500,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkMenuItem" id="dvd_title_menu">
+			<widget class="GtkMenuItem" id="tmw_dvd_title_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Go to the title menu</property>
 			  <property name="label" translatable="yes">Title menu</property>
@@ -510,7 +510,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkMenuItem" id="dvd_audio_menu">
+			<widget class="GtkMenuItem" id="tmw_dvd_audio_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Go to the audio menu</property>
 			  <property name="label" translatable="yes">Audio menu</property>
@@ -520,7 +520,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkMenuItem" id="dvd_angle_menu">
+			<widget class="GtkMenuItem" id="tmw_dvd_angle_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Go to the angle menu</property>
 			  <property name="label" translatable="yes">Angle menu</property>
@@ -530,7 +530,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="dvd_chapter_menu">
+			<widget class="GtkImageMenuItem" id="tmw_dvd_chapter_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Go to the chapter menu</property>
 			  <property name="label" translatable="yes">Chapter menu</property>
@@ -539,7 +539,7 @@
 			  <accelerator key="c" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1509">
+			    <widget class="GtkImage" id="tmw_dvd_chapter_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gnome-stock-text-numbered-list</property>
 			      <property name="icon_size">1</property>
@@ -553,13 +553,13 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkMenuItem" id="separator12">
+			<widget class="GtkMenuItem" id="tmw_menu_dvd_separator_1">
 			  <property name="visible">True</property>
 			</widget>
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="next_chapter1">
+			<widget class="GtkImageMenuItem" id="tmw_next_chapter_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Next chapter or movie</property>
 			  <property name="label" translatable="yes">Next Chapter/Movie</property>
@@ -568,7 +568,7 @@
 			  <accelerator key="n" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1510">
+			    <widget class="GtkImage" id="tmw_next_chapter_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-goto-last</property>
 			      <property name="icon_size">1</property>
@@ -582,7 +582,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="previous_chapter1">
+			<widget class="GtkImageMenuItem" id="tmw_previous_chapter_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Previous chapter or movie</property>
 			  <property name="label" translatable="yes">Previous Chapter/Movie</property>
@@ -591,7 +591,7 @@
 			  <accelerator key="b" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1511">
+			    <widget class="GtkImage" id="tmw_previous_chapter_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-goto-first</property>
 			      <property name="icon_size">1</property>
@@ -605,13 +605,13 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkMenuItem" id="separator13">
+			<widget class="GtkMenuItem" id="tmw_menu_dvd_separator_2">
 			  <property name="visible">True</property>
 			</widget>
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="skip_to1">
+			<widget class="GtkImageMenuItem" id="tmw_skip_to_menu_item">
 			  <property name="visible">True</property>
 			  <property name="sensitive">False</property>
 			  <property name="tooltip" translatable="yes">Skip to a specific time</property>
@@ -621,7 +621,7 @@
 			  <accelerator key="S" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1512">
+			    <widget class="GtkImage" id="tmw_skip_to_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-jump-to</property>
 			      <property name="icon_size">1</property>
@@ -635,7 +635,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="skip_forward1">
+			<widget class="GtkImageMenuItem" id="tmw_skip_forward_menu_item">
 			  <property name="visible">True</property>
 			  <property name="sensitive">False</property>
 			  <property name="tooltip" translatable="yes">Skip forward</property>
@@ -645,7 +645,7 @@
 			  <accelerator key="Right" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1513">
+			    <widget class="GtkImage" id="tmw_skip_forward_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-go-forward</property>
 			      <property name="icon_size">1</property>
@@ -659,7 +659,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="skip_backwards1">
+			<widget class="GtkImageMenuItem" id="tmw_skip_backwards_menu_item">
 			  <property name="visible">True</property>
 			  <property name="sensitive">False</property>
 			  <property name="tooltip" translatable="yes">Skip backwards</property>
@@ -669,7 +669,7 @@
 			  <accelerator key="Left" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1514">
+			    <widget class="GtkImage" id="tmw_skip_backwards_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-go-back</property>
 			      <property name="icon_size">1</property>
@@ -687,16 +687,16 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkMenuItem" id="sound1">
+		<widget class="GtkMenuItem" id="tmw_menu_item_sound">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">_Sound</property>
 		  <property name="use_underline">True</property>
 
 		  <child>
-		    <widget class="GtkMenu" id="sound1_menu">
+		    <widget class="GtkMenu" id="tmw_menu_sound">
 
 		      <child>
-			<widget class="GtkMenuItem" id="languages1">
+			<widget class="GtkMenuItem" id="tmw_languages_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Languages</property>
 			  <property name="label" translatable="yes">Languages</property>
@@ -704,10 +704,10 @@
 			  <signal name="activate" handler="on_languages1_activate" last_modification_time="Mon, 24 Mar 2003 19:45:07 GMT"/>
 
 			  <child>
-			    <widget class="GtkMenu" id="languages1_menu">
+			    <widget class="GtkMenu" id="tmw_menu_languages">
 
 			      <child>
-				<widget class="GtkMenuItem" id="no_langage_selection_available1">
+				<widget class="GtkMenuItem" id="tmw_no_language_selection_available">
 				  <property name="visible">True</property>
 				  <property name="sensitive">False</property>
 				  <property name="label" translatable="yes">No langage selection available</property>
@@ -721,7 +721,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="volume_up1">
+			<widget class="GtkImageMenuItem" id="tmw_volume_up_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Volume up</property>
 			  <property name="label" translatable="yes">Volume Up</property>
@@ -730,7 +730,7 @@
 			  <accelerator key="Up" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1515">
+			    <widget class="GtkImage" id="tmw_volume_up_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gnome-stock-volume</property>
 			      <property name="icon_size">1</property>
@@ -744,7 +744,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="volume_down1">
+			<widget class="GtkImageMenuItem" id="tmw_volume_down_menu_item">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">Volume down</property>
 			  <property name="label" translatable="yes">Volume Down</property>
@@ -753,7 +753,7 @@
 			  <accelerator key="Down" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1516">
+			    <widget class="GtkImage" id="tmw_volume_down_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gnome-stock-volume</property>
 			      <property name="icon_size">1</property>
@@ -771,15 +771,15 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkMenuItem" id="help1">
+		<widget class="GtkMenuItem" id="tmw_menu_item_help">
 		  <property name="visible">True</property>
 		  <property name="stock_item">GNOMEUIINFO_MENU_HELP_TREE</property>
 
 		  <child>
-		    <widget class="GtkMenu" id="help1_menu">
+		    <widget class="GtkMenu" id="tmw_menu_help">
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="about1">
+			<widget class="GtkImageMenuItem" id="tmw_about_menu_item">
 			  <property name="visible">True</property>
 			  <property name="stock_item">GNOMEUIINFO_MENU_ABOUT_ITEM</property>
 			  <signal name="activate" handler="on_about1_activate" last_modification_time="Sat, 08 Jun 2002 22:29:16 GMT"/>
@@ -802,19 +802,19 @@
       </child>
 
       <child>
-	<widget class="GtkVBox" id="vbox2">
+	<widget class="GtkVBox" id="tmw_main_vbox">
 	  <property name="visible">True</property>
 	  <property name="homogeneous">False</property>
 	  <property name="spacing">0</property>
 
 	  <child>
-	    <widget class="GtkFrame" id="frame2">
+	    <widget class="GtkVBox" id="tmw_bvw_vbox">
+	      <property name="border_width">1</property>
 	      <property name="width_request">420</property>
 	      <property name="height_request">315</property>
 	      <property name="visible">True</property>
-	      <property name="label_xalign">0</property>
-	      <property name="label_yalign">0.5</property>
-	      <property name="shadow_type">GTK_SHADOW_NONE</property>
+	      <property name="homogeneous">False</property>
+	      <property name="spacing">0</property>
 
 	      <child>
 		<placeholder/>
@@ -828,27 +828,66 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkFrame" id="frame1">
+	    <widget class="GtkVBox" id="tmw_controls_vbox">
+	      <property name="border_width">6</property>
 	      <property name="visible">True</property>
-	      <property name="label_xalign">0</property>
-	      <property name="label_yalign">0.5</property>
-	      <property name="shadow_type">GTK_SHADOW_OUT</property>
+	      <property name="homogeneous">False</property>
+	      <property name="spacing">6</property>
 
 	      <child>
-		<widget class="GtkVBox" id="vbox3">
-		  <property name="border_width">6</property>
+		<widget class="Custom" id="tmw_title_label">
+		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">File name</property>
+		  <property name="creation_function">label_create</property>
+		  <property name="int1">0</property>
+		  <property name="int2">0</property>
+		  <property name="last_modification_time">Sun, 09 Jun 2002 23:23:39 GMT</property>
+		</widget>
+		<packing>
+		  <property name="padding">0</property>
+		  <property name="expand">True</property>
+		  <property name="fill">True</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkHBox" id="tmw_seek_hbox">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">6</property>
 
 		  <child>
-		    <widget class="Custom" id="label1">
+		    <widget class="GtkLabel" id="tmw_time_label">
 		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">File name</property>
-		      <property name="creation_function">label_create</property>
-		      <property name="int1">0</property>
-		      <property name="int2">0</property>
-		      <property name="last_modification_time">Sun, 09 Jun 2002 23:23:39 GMT</property>
+		      <property name="label" translatable="yes">Time:</property>
+		      <property name="use_underline">False</property>
+		      <property name="use_markup">False</property>
+		      <property name="justify">GTK_JUSTIFY_LEFT</property>
+		      <property name="wrap">False</property>
+		      <property name="selectable">False</property>
+		      <property name="xalign">0.5</property>
+		      <property name="yalign">0.5</property>
+		      <property name="xpad">0</property>
+		      <property name="ypad">0</property>
+		    </widget>
+		    <packing>
+		      <property name="padding">0</property>
+		      <property name="expand">False</property>
+		      <property name="fill">False</property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkHScale" id="tmw_seek_hscale">
+		      <property name="visible">True</property>
+		      <property name="sensitive">False</property>
+		      <property name="can_focus">True</property>
+		      <property name="draw_value">False</property>
+		      <property name="value_pos">GTK_POS_TOP</property>
+		      <property name="digits">1</property>
+		      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+		      <property name="inverted">False</property>
+		      <property name="adjustment">10 0 65536 1 10 1</property>
 		    </widget>
 		    <packing>
 		      <property name="padding">0</property>
@@ -856,22 +895,147 @@
 		      <property name="fill">True</property>
 		    </packing>
 		  </child>
+		</widget>
+		<packing>
+		  <property name="padding">0</property>
+		  <property name="expand">True</property>
+		  <property name="fill">True</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkHBox" id="tmw_buttons_hbox">
+		  <property name="visible">True</property>
+		  <property name="homogeneous">False</property>
+		  <property name="spacing">6</property>
 
 		  <child>
-		    <widget class="GtkHBox" id="hbox8">
+		    <widget class="GtkButton" id="tmw_previous_button">
 		      <property name="visible">True</property>
-		      <property name="homogeneous">False</property>
-		      <property name="spacing">6</property>
+		      <property name="sensitive">False</property>
+		      <property name="tooltip" translatable="yes">Previous</property>
+		      <property name="can_focus">True</property>
+		      <property name="relief">GTK_RELIEF_NORMAL</property>
 
 		      <child>
-			<widget class="GtkLabel" id="label9">
+			<widget class="GtkImage" id="tmw_previous_button_image">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Time:</property>
-			  <property name="use_underline">False</property>
-			  <property name="use_markup">False</property>
-			  <property name="justify">GTK_JUSTIFY_LEFT</property>
-			  <property name="wrap">False</property>
-			  <property name="selectable">False</property>
+			  <property name="pixbuf">stock_media_previous.png</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
+		    </widget>
+		    <packing>
+		      <property name="padding">0</property>
+		      <property name="expand">False</property>
+		      <property name="fill">False</property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkButton" id="tmw_play_pause_button">
+		      <property name="visible">True</property>
+		      <property name="sensitive">False</property>
+		      <property name="tooltip" translatable="yes">Play/Pause</property>
+		      <property name="can_focus">True</property>
+		      <property name="relief">GTK_RELIEF_NORMAL</property>
+
+		      <child>
+			<widget class="GtkImage" id="tmw_play_pause_button_image">
+			  <property name="visible">True</property>
+			  <property name="pixbuf">stock_media_play.png</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
+		    </widget>
+		    <packing>
+		      <property name="padding">0</property>
+		      <property name="expand">False</property>
+		      <property name="fill">False</property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkButton" id="tmw_next_button">
+		      <property name="visible">True</property>
+		      <property name="sensitive">False</property>
+		      <property name="tooltip" translatable="yes">Next</property>
+		      <property name="can_focus">True</property>
+		      <property name="relief">GTK_RELIEF_NORMAL</property>
+
+		      <child>
+			<widget class="GtkImage" id="tmw_next_button_image">
+			  <property name="visible">True</property>
+			  <property name="pixbuf">stock_media_next.png</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
+		    </widget>
+		    <packing>
+		      <property name="padding">0</property>
+		      <property name="expand">False</property>
+		      <property name="fill">False</property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkToggleButton" id="tmw_playlist_button">
+		      <property name="visible">True</property>
+		      <property name="tooltip" translatable="yes">Show/Hide Playlist</property>
+		      <property name="can_focus">True</property>
+		      <property name="relief">GTK_RELIEF_NORMAL</property>
+		      <property name="active">False</property>
+		      <property name="inconsistent">False</property>
+
+		      <child>
+			<widget class="GtkImage" id="tmw_playlist_button_image">
+			  <property name="visible">True</property>
+			  <property name="pixbuf">playlist-24.png</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
+		    </widget>
+		    <packing>
+		      <property name="padding">0</property>
+		      <property name="expand">False</property>
+		      <property name="fill">False</property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkVSeparator" id="tmw_buttons_vseparator">
+		      <property name="visible">True</property>
+		    </widget>
+		    <packing>
+		      <property name="padding">0</property>
+		      <property name="expand">False</property>
+		      <property name="fill">True</property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkHBox" id="tmw_volume_hbox">
+		      <property name="visible">True</property>
+		      <property name="sensitive">False</property>
+		      <property name="homogeneous">False</property>
+		      <property name="spacing">0</property>
+
+		      <child>
+			<widget class="GtkImage" id="tmw_volume_image">
+			  <property name="visible">True</property>
+			  <property name="pixbuf">rhythmbox-volume-medium.png</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
@@ -880,199 +1044,21 @@
 			<packing>
 			  <property name="padding">0</property>
 			  <property name="expand">False</property>
-			  <property name="fill">False</property>
+			  <property name="fill">True</property>
 			</packing>
 		      </child>
 
 		      <child>
-			<widget class="GtkHScale" id="hscale1">
+			<widget class="GtkHScale" id="tmw_volume_hscale">
+			  <property name="width_request">100</property>
 			  <property name="visible">True</property>
-			  <property name="sensitive">False</property>
 			  <property name="can_focus">True</property>
 			  <property name="draw_value">False</property>
 			  <property name="value_pos">GTK_POS_TOP</property>
 			  <property name="digits">1</property>
 			  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 			  <property name="inverted">False</property>
-			  <property name="adjustment">10 0 65536 1 10 1</property>
-			</widget>
-			<packing>
-			  <property name="padding">0</property>
-			  <property name="expand">True</property>
-			  <property name="fill">True</property>
-			</packing>
-		      </child>
-		    </widget>
-		    <packing>
-		      <property name="padding">0</property>
-		      <property name="expand">True</property>
-		      <property name="fill">True</property>
-		    </packing>
-		  </child>
-
-		  <child>
-		    <widget class="GtkHBox" id="hbox1">
-		      <property name="visible">True</property>
-		      <property name="homogeneous">False</property>
-		      <property name="spacing">6</property>
-
-		      <child>
-			<widget class="GtkButton" id="previous_button">
-			  <property name="visible">True</property>
-			  <property name="sensitive">False</property>
-			  <property name="tooltip" translatable="yes">Previous</property>
-			  <property name="can_focus">True</property>
-			  <property name="relief">GTK_RELIEF_NORMAL</property>
-
-			  <child>
-			    <widget class="GtkImage" id="image5">
-			      <property name="visible">True</property>
-			      <property name="pixbuf">stock_media_previous.png</property>
-			      <property name="xalign">0.5</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
-			    </widget>
-			  </child>
-			</widget>
-			<packing>
-			  <property name="padding">0</property>
-			  <property name="expand">False</property>
-			  <property name="fill">False</property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkButton" id="play_pause_button">
-			  <property name="visible">True</property>
-			  <property name="sensitive">False</property>
-			  <property name="tooltip" translatable="yes">Play/Pause</property>
-			  <property name="can_focus">True</property>
-			  <property name="relief">GTK_RELIEF_NORMAL</property>
-
-			  <child>
-			    <widget class="GtkImage" id="pp_image">
-			      <property name="visible">True</property>
-			      <property name="pixbuf">stock_media_play.png</property>
-			      <property name="xalign">0.5</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
-			    </widget>
-			  </child>
-			</widget>
-			<packing>
-			  <property name="padding">0</property>
-			  <property name="expand">False</property>
-			  <property name="fill">False</property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkButton" id="next_button">
-			  <property name="visible">True</property>
-			  <property name="sensitive">False</property>
-			  <property name="tooltip" translatable="yes">Next</property>
-			  <property name="can_focus">True</property>
-			  <property name="relief">GTK_RELIEF_NORMAL</property>
-
-			  <child>
-			    <widget class="GtkImage" id="image6">
-			      <property name="visible">True</property>
-			      <property name="pixbuf">stock_media_next.png</property>
-			      <property name="xalign">0.5</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
-			    </widget>
-			  </child>
-			</widget>
-			<packing>
-			  <property name="padding">0</property>
-			  <property name="expand">False</property>
-			  <property name="fill">False</property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkToggleButton" id="playlist_button">
-			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">Show/Hide Playlist</property>
-			  <property name="can_focus">True</property>
-			  <property name="relief">GTK_RELIEF_NORMAL</property>
-			  <property name="active">False</property>
-			  <property name="inconsistent">False</property>
-
-			  <child>
-			    <widget class="GtkImage" id="image128">
-			      <property name="visible">True</property>
-			      <property name="pixbuf">playlist-24.png</property>
-			      <property name="xalign">0.5</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
-			    </widget>
-			  </child>
-			</widget>
-			<packing>
-			  <property name="padding">0</property>
-			  <property name="expand">False</property>
-			  <property name="fill">False</property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkVSeparator" id="vseparator1">
-			  <property name="visible">True</property>
-			</widget>
-			<packing>
-			  <property name="padding">0</property>
-			  <property name="expand">False</property>
-			  <property name="fill">True</property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkHBox" id="volume_hbox">
-			  <property name="visible">True</property>
-			  <property name="sensitive">False</property>
-			  <property name="homogeneous">False</property>
-			  <property name="spacing">0</property>
-
-			  <child>
-			    <widget class="GtkImage" id="volume_image">
-			      <property name="visible">True</property>
-			      <property name="pixbuf">rhythmbox-volume-medium.png</property>
-			      <property name="xalign">0.5</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
-			    </widget>
-			    <packing>
-			      <property name="padding">0</property>
-			      <property name="expand">False</property>
-			      <property name="fill">True</property>
-			    </packing>
-			  </child>
-
-			  <child>
-			    <widget class="GtkHScale" id="hscale2">
-			      <property name="width_request">100</property>
-			      <property name="visible">True</property>
-			      <property name="can_focus">True</property>
-			      <property name="draw_value">False</property>
-			      <property name="value_pos">GTK_POS_TOP</property>
-			      <property name="digits">1</property>
-			      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-			      <property name="inverted">False</property>
-			      <property name="adjustment">10 0 100 1 10 2</property>
-			    </widget>
-			    <packing>
-			      <property name="padding">0</property>
-			      <property name="expand">True</property>
-			      <property name="fill">True</property>
-			    </packing>
-			  </child>
+			  <property name="adjustment">10 0 100 1 10 2</property>
 			</widget>
 			<packing>
 			  <property name="padding">0</property>
@@ -1088,6 +1074,11 @@
 		    </packing>
 		  </child>
 		</widget>
+		<packing>
+		  <property name="padding">0</property>
+		  <property name="expand">True</property>
+		  <property name="fill">True</property>
+		</packing>
 	      </child>
 	    </widget>
 	    <packing>
@@ -1098,7 +1089,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="Custom" id="custom4">
+	    <widget class="Custom" id="tmw_statusbar">
 	      <property name="visible">True</property>
 	      <property name="creation_function">totem_statusbar_create</property>
 	      <property name="int1">0</property>
@@ -1122,7 +1113,7 @@
   </child>
 </widget>
 
-<widget class="GtkWindow" id="window1">
+<widget class="GtkWindow" id="totem_exit_fullscreen_window">
   <property name="title" translatable="yes">window1</property>
   <property name="type">GTK_WINDOW_POPUP</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
@@ -1131,20 +1122,20 @@
   <property name="destroy_with_parent">False</property>
 
   <child>
-    <widget class="GtkFrame" id="frame3">
+    <widget class="GtkFrame" id="tefw_frame">
       <property name="visible">True</property>
       <property name="label_xalign">0</property>
       <property name="label_yalign">0.5</property>
       <property name="shadow_type">GTK_SHADOW_IN</property>
 
       <child>
-	<widget class="GtkButton" id="fs_exit1">
+	<widget class="GtkButton" id="tefw_fs_exit_button">
 	  <property name="visible">True</property>
 	  <property name="can_focus">True</property>
 	  <property name="relief">GTK_RELIEF_NORMAL</property>
 
 	  <child>
-	    <widget class="GtkAlignment" id="alignment3">
+	    <widget class="GtkAlignment" id="tefw_alignment">
 	      <property name="visible">True</property>
 	      <property name="xalign">0.5</property>
 	      <property name="yalign">0.5</property>
@@ -1152,13 +1143,13 @@
 	      <property name="yscale">0</property>
 
 	      <child>
-		<widget class="GtkHBox" id="hbox3">
+		<widget class="GtkHBox" id="tefw_hbox">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">2</property>
 
 		  <child>
-		    <widget class="GtkImage" id="image84">
+		    <widget class="GtkImage" id="tefw_image">
 		      <property name="visible">True</property>
 		      <property name="stock">gtk-zoom-100</property>
 		      <property name="icon_size">4</property>
@@ -1175,7 +1166,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkLabel" id="label4">
+		    <widget class="GtkLabel" id="tefw_label">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">Exit Fullscreen</property>
 		      <property name="use_underline">True</property>
@@ -1204,7 +1195,7 @@
   </child>
 </widget>
 
-<widget class="GtkDialog" id="dialog1">
+<widget class="GtkDialog" id="totem_preferences_window">
   <property name="title" translatable="yes">Totem Preferences</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
@@ -1215,18 +1206,18 @@
   <property name="has_separator">False</property>
 
   <child internal-child="vbox">
-    <widget class="GtkVBox" id="dialog-vbox1">
+    <widget class="GtkVBox" id="tpw_dialog_vbox">
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
       <property name="spacing">6</property>
 
       <child internal-child="action_area">
-	<widget class="GtkHButtonBox" id="dialog-action_area1">
+	<widget class="GtkHButtonBox" id="tpw_dialog_action_area">
 	  <property name="visible">True</property>
 	  <property name="layout_style">GTK_BUTTONBOX_END</property>
 
 	  <child>
-	    <widget class="GtkButton" id="closebutton1">
+	    <widget class="GtkButton" id="tpw_close_button">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
@@ -1246,7 +1237,7 @@
       </child>
 
       <child>
-	<widget class="GtkNotebook" id="notebook1">
+	<widget class="GtkNotebook" id="tpw_notebook">
 	  <property name="visible">True</property>
 	  <property name="can_focus">True</property>
 	  <property name="show_tabs">True</property>
@@ -1256,14 +1247,14 @@
 	  <property name="enable_popup">False</property>
 
 	  <child>
-	    <widget class="GtkVBox" id="vbox8">
+	    <widget class="GtkVBox" id="tpw_general_vbox">
 	      <property name="border_width">6</property>
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">18</property>
 
 	      <child>
-		<widget class="GtkTable" id="table1">
+		<widget class="GtkTable" id="tpw_display_table">
 		  <property name="visible">True</property>
 		  <property name="n_rows">2</property>
 		  <property name="n_columns">2</property>
@@ -1272,7 +1263,7 @@
 		  <property name="column_spacing">12</property>
 
 		  <child>
-		    <widget class="GtkLabel" id="label16">
+		    <widget class="GtkLabel" id="tpw_display_label">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">&lt;b&gt;Display&lt;/b&gt;</property>
 		      <property name="use_underline">False</property>
@@ -1296,7 +1287,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkCheckButton" id="checkbutton1">
+		    <widget class="GtkCheckButton" id="tpw_display_checkbutton">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="label" translatable="yes">Automatically _resize the window when a new video is loaded</property>
@@ -1317,7 +1308,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkLabel" id="label19">
+		    <widget class="GtkLabel" id="tpw_display_indent_label">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes"></property>
 		      <property name="use_underline">False</property>
@@ -1348,7 +1339,7 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkTable" id="table2">
+		<widget class="GtkTable" id="tpw_device_table">
 		  <property name="visible">True</property>
 		  <property name="n_rows">2</property>
 		  <property name="n_columns">3</property>
@@ -1357,7 +1348,7 @@
 		  <property name="column_spacing">12</property>
 
 		  <child>
-		    <widget class="GtkLabel" id="label17">
+		    <widget class="GtkLabel" id="tpw_device_label">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">&lt;b&gt;Optical Device&lt;/b&gt;</property>
 		      <property name="use_underline">False</property>
@@ -1381,7 +1372,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkLabel" id="label20">
+		    <widget class="GtkLabel" id="tpw_device_indent_label">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes"></property>
 		      <property name="use_underline">False</property>
@@ -1405,7 +1396,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkLabel" id="label8">
+		    <widget class="GtkLabel" id="tpw_path_label">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">Optical Device _Path: </property>
 		      <property name="use_underline">True</property>
@@ -1429,7 +1420,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="Custom" id="custom3">
+		    <widget class="Custom" id="tpw_device_combo">
 		      <property name="visible">True</property>
 		      <property name="creation_function">bacon_cd_selection_create</property>
 		      <property name="int1">0</property>
@@ -1453,7 +1444,7 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkTable" id="table3">
+		<widget class="GtkTable" id="tpw_network_table">
 		  <property name="visible">True</property>
 		  <property name="n_rows">2</property>
 		  <property name="n_columns">3</property>
@@ -1462,7 +1453,7 @@
 		  <property name="column_spacing">12</property>
 
 		  <child>
-		    <widget class="GtkLabel" id="label18">
+		    <widget class="GtkLabel" id="tpw_network_label">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">&lt;b&gt;Networking&lt;/b&gt;</property>
 		      <property name="use_underline">False</property>
@@ -1486,7 +1477,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkLabel" id="label21">
+		    <widget class="GtkLabel" id="tpw_network_indent_label">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes"></property>
 		      <property name="use_underline">False</property>
@@ -1510,7 +1501,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkLabel" id="label15">
+		    <widget class="GtkLabel" id="tpw_speed_label">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">Connection Speed: </property>
 		      <property name="use_underline">False</property>
@@ -1534,16 +1525,16 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkOptionMenu" id="optionmenu1">
+		    <widget class="GtkOptionMenu" id="tpw_speed_optionmenu">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="history">0</property>
 
 		      <child>
-			<widget class="GtkMenu" id="menu1">
+			<widget class="GtkMenu" id="tpw_speed_menu">
 
 			  <child>
-			    <widget class="GtkMenuItem" id="144_kbps_modem1">
+			    <widget class="GtkMenuItem" id="tpw_speed_144_kbps_modem">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">14.4 Kbps Modem</property>
 			      <property name="use_underline">True</property>
@@ -1552,7 +1543,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="192_kbps_modem1">
+			    <widget class="GtkMenuItem" id="tpw_speed_192_kbps_modem">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">19.2 Kbps Modem</property>
 			      <property name="use_underline">True</property>
@@ -1561,7 +1552,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="288_kbps_modem1">
+			    <widget class="GtkMenuItem" id="tpw_speed_288_kbps_modem">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">28.8 Kbps Modem</property>
 			      <property name="use_underline">True</property>
@@ -1570,7 +1561,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="336_kbps_modem1">
+			    <widget class="GtkMenuItem" id="tpw_speed_336_kbps_modem">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">33.6 Kbps Modem</property>
 			      <property name="use_underline">True</property>
@@ -1579,7 +1570,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="344_kbps_modem1">
+			    <widget class="GtkMenuItem" id="tpw_speed_344_kbps_modem">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">34.4 Kbps Modem</property>
 			      <property name="use_underline">True</property>
@@ -1588,7 +1579,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="56_kbps_modem/isdn1">
+			    <widget class="GtkMenuItem" id="tpw_speed_56_kbps_modem/isdn">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">56 Kbps Modem/ISDN</property>
 			      <property name="use_underline">True</property>
@@ -1597,7 +1588,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="112_kbps_dual_isdn/dsl1">
+			    <widget class="GtkMenuItem" id="tpw_speed_112_kbps_dual_isdn/dsl">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">112 Kbps Dual ISDN/DSL</property>
 			      <property name="use_underline">True</property>
@@ -1606,7 +1597,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="256_kbps_dsl/cable1">
+			    <widget class="GtkMenuItem" id="tpw_speed_256_kbps_dsl/cable">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">256 Kbps DSL/Cable</property>
 			      <property name="use_underline">True</property>
@@ -1615,7 +1606,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="384_kbps_dsl/cable1">
+			    <widget class="GtkMenuItem" id="tpw_speed_384_kbps_dsl/cable">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">384 Kbps DSL/Cable</property>
 			      <property name="use_underline">True</property>
@@ -1624,7 +1615,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="512_kbps_dsl/cable1">
+			    <widget class="GtkMenuItem" id="tpw_speed_512_kbps_dsl/cable">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">512 Kbps DSL/Cable</property>
 			      <property name="use_underline">True</property>
@@ -1633,7 +1624,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="15_mbps_t1/intranet/lan1">
+			    <widget class="GtkMenuItem" id="tpw_speed_15_mbps_t1/intranet/lan">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">1.5 Mbps T1/Intranet/LAN</property>
 			      <property name="use_underline">True</property>
@@ -1642,7 +1633,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="intranet/lan1">
+			    <widget class="GtkMenuItem" id="tpw_speed_intranet/lan">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">Intranet/LAN</property>
 			      <property name="use_underline">True</property>
@@ -1669,7 +1660,7 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkTable" id="table5">
+		<widget class="GtkTable" id="tpw_tvout_table">
 		  <property name="visible">True</property>
 		  <property name="n_rows">4</property>
 		  <property name="n_columns">2</property>
@@ -1678,7 +1669,7 @@
 		  <property name="column_spacing">0</property>
 
 		  <child>
-		    <widget class="GtkLabel" id="label24">
+		    <widget class="GtkLabel" id="tpw_tvout_label">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">&lt;b&gt;TV-Out&lt;/b&gt;</property>
 		      <property name="use_underline">False</property>
@@ -1702,7 +1693,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkRadioButton" id="tvoutmode">
+		    <widget class="GtkRadioButton" id="tpw_tvoutmode_radio_button">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="label" translatable="yes">TV-Out Mode</property>
@@ -1723,7 +1714,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkRadioButton" id="dxr3tvout">
+		    <widget class="GtkRadioButton" id="tpw_dxr3tvout_radio_button">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="label" translatable="yes">DXR3 TV-Out</property>
@@ -1732,7 +1723,7 @@
 		      <property name="active">False</property>
 		      <property name="inconsistent">False</property>
 		      <property name="draw_indicator">True</property>
-		      <property name="group">tvoutmode</property>
+		      <property name="group">tpw_tvoutmode_radio_button</property>
 		    </widget>
 		    <packing>
 		      <property name="left_attach">1</property>
@@ -1745,7 +1736,28 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkLabel" id="label25">
+		    <widget class="GtkRadioButton" id="tpw_notvout_radio_button">
+		      <property name="visible">True</property>
+		      <property name="can_focus">True</property>
+		      <property name="label" translatable="yes">No TV-Out</property>
+		      <property name="use_underline">True</property>
+		      <property name="relief">GTK_RELIEF_NORMAL</property>
+		      <property name="active">False</property>
+		      <property name="inconsistent">False</property>
+		      <property name="draw_indicator">True</property>
+		      <property name="group">tpw_tvoutmode_radio_button</property>
+		    </widget>
+		    <packing>
+		      <property name="left_attach">1</property>
+		      <property name="right_attach">2</property>
+		      <property name="top_attach">1</property>
+		      <property name="bottom_attach">2</property>
+		      <property name="y_options"></property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkLabel" id="tpw_tvout_indent_label">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes"></property>
 		      <property name="use_underline">False</property>
@@ -1767,27 +1779,6 @@
 		      <property name="y_options"></property>
 		    </packing>
 		  </child>
-
-		  <child>
-		    <widget class="GtkRadioButton" id="notvout">
-		      <property name="visible">True</property>
-		      <property name="can_focus">True</property>
-		      <property name="label" translatable="yes">No TV-Out</property>
-		      <property name="use_underline">True</property>
-		      <property name="relief">GTK_RELIEF_NORMAL</property>
-		      <property name="active">False</property>
-		      <property name="inconsistent">False</property>
-		      <property name="draw_indicator">True</property>
-		      <property name="group">tvoutmode</property>
-		    </widget>
-		    <packing>
-		      <property name="left_attach">1</property>
-		      <property name="right_attach">2</property>
-		      <property name="top_attach">1</property>
-		      <property name="bottom_attach">2</property>
-		      <property name="y_options"></property>
-		    </packing>
-		  </child>
 		</widget>
 		<packing>
 		  <property name="padding">0</property>
@@ -1797,7 +1788,7 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkTable" id="table4">
+		<widget class="GtkTable" id="tpw_plugins_table">
 		  <property name="visible">True</property>
 		  <property name="n_rows">2</property>
 		  <property name="n_columns">1</property>
@@ -1806,7 +1797,7 @@
 		  <property name="column_spacing">0</property>
 
 		  <child>
-		    <widget class="GtkLabel" id="label22">
+		    <widget class="GtkLabel" id="tpw_plugins_label">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">&lt;b&gt;Proprietary Plugins&lt;/b&gt;</property>
 		      <property name="use_underline">False</property>
@@ -1829,7 +1820,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkAlignment" id="alignment4">
+		    <widget class="GtkAlignment" id="tpw_plugins_alignment">
 		      <property name="visible">True</property>
 		      <property name="xalign">1</property>
 		      <property name="yalign">0.5</property>
@@ -1837,14 +1828,14 @@
 		      <property name="yscale">1</property>
 
 		      <child>
-			<widget class="GtkButton" id="button1">
+			<widget class="GtkButton" id="tpw_plugins_button">
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
 			  <property name="relief">GTK_RELIEF_NORMAL</property>
 			  <signal name="clicked" handler="on_button1_clicked" last_modification_time="Fri, 18 Apr 2003 09:00:51 GMT"/>
 
 			  <child>
-			    <widget class="GtkAlignment" id="alignment4">
+			    <widget class="GtkAlignment" id="tpw_plugins_button_alignment">
 			      <property name="visible">True</property>
 			      <property name="xalign">0.5</property>
 			      <property name="yalign">0.5</property>
@@ -1852,13 +1843,13 @@
 			      <property name="yscale">0</property>
 
 			      <child>
-				<widget class="GtkHBox" id="hbox16">
+				<widget class="GtkHBox" id="tpw_plugins_hbox">
 				  <property name="visible">True</property>
 				  <property name="homogeneous">False</property>
 				  <property name="spacing">2</property>
 
 				  <child>
-				    <widget class="GtkImage" id="image1396">
+				    <widget class="GtkImage" id="tpw_plugins_image">
 				      <property name="visible">True</property>
 				      <property name="stock">gtk-add</property>
 				      <property name="icon_size">4</property>
@@ -1875,7 +1866,7 @@
 				  </child>
 
 				  <child>
-				    <widget class="GtkLabel" id="label23">
+				    <widget class="GtkLabel" id="tpw_plugins_button_label">
 				      <property name="visible">True</property>
 				      <property name="label" translatable="yes">Add Proprietary plugins...</property>
 				      <property name="use_underline">True</property>
@@ -1925,7 +1916,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkLabel" id="label22">
+	    <widget class="GtkLabel" id="tpw_general_notebook_label">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">_General</property>
 	      <property name="use_underline">True</property>
@@ -1944,7 +1935,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkTable" id="table6">
+	    <widget class="GtkTable" id="tpw_visuals_table">
 	      <property name="border_width">6</property>
 	      <property name="visible">True</property>
 	      <property name="n_rows">4</property>
@@ -1954,13 +1945,13 @@
 	      <property name="column_spacing">0</property>
 
 	      <child>
-		<widget class="GtkHBox" id="hbox17">
+		<widget class="GtkHBox" id="tpw_visuals_type_hbox">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">0</property>
 
 		  <child>
-		    <widget class="GtkLabel" id="label27">
+		    <widget class="GtkLabel" id="tpw_visuals_type_label">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">Type of visualisation: </property>
 		      <property name="use_underline">False</property>
@@ -1981,7 +1972,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkOptionMenu" id="optionmenu2">
+		    <widget class="GtkOptionMenu" id="tpw_visuals_type_optionmenu">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="history">-1</property>
@@ -2004,13 +1995,13 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkHBox" id="hbox18">
+		<widget class="GtkHBox" id="tpw_visuals_size_hbox">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">0</property>
 
 		  <child>
-		    <widget class="GtkLabel" id="label28">
+		    <widget class="GtkLabel" id="tpw_visuals_size_label">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">Visualisation size: </property>
 		      <property name="use_underline">False</property>
@@ -2031,16 +2022,16 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkOptionMenu" id="optionmenu3">
+		    <widget class="GtkOptionMenu" id="tpw_visuals_size_optionmenu">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="history">0</property>
 
 		      <child>
-			<widget class="GtkMenu" id="menu3">
+			<widget class="GtkMenu" id="tpw_visuals_size_menu">
 
 			  <child>
-			    <widget class="GtkMenuItem" id="small1">
+			    <widget class="GtkMenuItem" id="tpw_visuals_size_small">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">Small</property>
 			      <property name="use_underline">True</property>
@@ -2049,7 +2040,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="normal1">
+			    <widget class="GtkMenuItem" id="tpw_visuals_size_normal">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">Normal</property>
 			      <property name="use_underline">True</property>
@@ -2058,7 +2049,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="large1">
+			    <widget class="GtkMenuItem" id="tpw_visuals_size_large">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">Large</property>
 			      <property name="use_underline">True</property>
@@ -2067,7 +2058,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="extra_large1">
+			    <widget class="GtkMenuItem" id="tpw_visuals_size_extra_large">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">Extra Large</property>
 			      <property name="use_underline">True</property>
@@ -2095,7 +2086,7 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkCheckButton" id="checkbutton2">
+		<widget class="GtkCheckButton" id="tpw_visuals_checkbutton">
 		  <property name="visible">True</property>
 		  <property name="can_focus">True</property>
 		  <property name="label" translatable="yes">Show visual effects when an audio file is played</property>
@@ -2116,7 +2107,7 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkLabel" id="label26">
+		<widget class="GtkLabel" id="tpw_visuals_label">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">&lt;b&gt;Visual Effects&lt;/b&gt;</property>
 		  <property name="use_underline">False</property>
@@ -2145,7 +2136,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkLabel" id="label23">
+	    <widget class="GtkLabel" id="tpw_visuals_notebook_label">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">_Visual Effects</property>
 	      <property name="use_underline">True</property>
@@ -2173,7 +2164,7 @@
   </child>
 </widget>
 
-<widget class="GtkWindow" id="window2">
+<widget class="GtkWindow" id="totem_controls_window">
   <property name="border_width">6</property>
   <property name="title" translatable="yes"></property>
   <property name="type">GTK_WINDOW_POPUP</property>
@@ -2183,13 +2174,13 @@
   <property name="destroy_with_parent">False</property>
 
   <child>
-    <widget class="GtkVBox" id="vbox5">
+    <widget class="GtkVBox" id="tcw_vbox">
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
       <property name="spacing">3</property>
 
       <child>
-	<widget class="Custom" id="custom2">
+	<widget class="Custom" id="tcw_label_custom">
 	  <property name="visible">True</property>
 	  <property name="tooltip" translatable="yes">File name</property>
 	  <property name="creation_function">label_create</property>
@@ -2205,13 +2196,13 @@
       </child>
 
       <child>
-	<widget class="GtkHBox" id="hbox10">
+	<widget class="GtkHBox" id="tcw_time_hbox">
 	  <property name="visible">True</property>
 	  <property name="homogeneous">False</property>
 	  <property name="spacing">6</property>
 
 	  <child>
-	    <widget class="GtkLabel" id="label10">
+	    <widget class="GtkLabel" id="tcw_time_label">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">Time:</property>
 	      <property name="use_underline">False</property>
@@ -2232,7 +2223,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkHScale" id="hscale4">
+	    <widget class="GtkHScale" id="tcw_seek_hscale">
 	      <property name="visible">True</property>
 	      <property name="sensitive">False</property>
 	      <property name="can_focus">True</property>
@@ -2258,13 +2249,13 @@
       </child>
 
       <child>
-	<widget class="GtkHBox" id="hbox11">
+	<widget class="GtkHBox" id="tcw_buttons_hbox">
 	  <property name="visible">True</property>
 	  <property name="homogeneous">False</property>
 	  <property name="spacing">4</property>
 
 	  <child>
-	    <widget class="GtkButton" id="fs_previous_button">
+	    <widget class="GtkButton" id="tcw_previous_button">
 	      <property name="visible">True</property>
 	      <property name="sensitive">False</property>
 	      <property name="tooltip" translatable="yes">Previous</property>
@@ -2272,7 +2263,7 @@
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 
 	      <child>
-		<widget class="GtkImage" id="image399">
+		<widget class="GtkImage" id="tcw_previous_button_image">
 		  <property name="visible">True</property>
 		  <property name="pixbuf">stock_media_previous.png</property>
 		  <property name="xalign">0.5</property>
@@ -2290,7 +2281,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkButton" id="fs_pp_button">
+	    <widget class="GtkButton" id="tcw_pp_button">
 	      <property name="visible">True</property>
 	      <property name="sensitive">False</property>
 	      <property name="tooltip" translatable="yes">Play/Pause</property>
@@ -2298,7 +2289,7 @@
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 
 	      <child>
-		<widget class="GtkImage" id="fs_pp_image">
+		<widget class="GtkImage" id="tcw_pp_button_image">
 		  <property name="visible">True</property>
 		  <property name="pixbuf">stock_media_play.png</property>
 		  <property name="xalign">0.5</property>
@@ -2316,7 +2307,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkButton" id="fs_next_button">
+	    <widget class="GtkButton" id="tcw_next_button">
 	      <property name="visible">True</property>
 	      <property name="sensitive">False</property>
 	      <property name="tooltip" translatable="yes">Next</property>
@@ -2324,7 +2315,7 @@
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 
 	      <child>
-		<widget class="GtkImage" id="image401">
+		<widget class="GtkImage" id="tcw_next_button_image">
 		  <property name="visible">True</property>
 		  <property name="pixbuf">stock_media_next.png</property>
 		  <property name="xalign">0.5</property>
@@ -2342,14 +2333,14 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkHBox" id="fs_volume_hbox">
+	    <widget class="GtkHBox" id="tcw_volume_hbox">
 	      <property name="visible">True</property>
 	      <property name="sensitive">False</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">0</property>
 
 	      <child>
-		<widget class="GtkImage" id="fs_volume_image">
+		<widget class="GtkImage" id="tcw_volume_image">
 		  <property name="visible">True</property>
 		  <property name="pixbuf">rhythmbox-volume-medium.png</property>
 		  <property name="xalign">0.5</property>
@@ -2365,7 +2356,7 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkHScale" id="hscale5">
+		<widget class="GtkHScale" id="tcw_volume_hscale">
 		  <property name="width_request">100</property>
 		  <property name="visible">True</property>
 		  <property name="can_focus">True</property>
@@ -2400,7 +2391,7 @@
   </child>
 </widget>
 
-<widget class="GtkDialog" id="dialog2">
+<widget class="GtkDialog" id="totem_screenshot_window">
   <property name="title" translatable="yes">Save Screenshot</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
@@ -2411,18 +2402,18 @@
   <property name="has_separator">False</property>
 
   <child internal-child="vbox">
-    <widget class="GtkVBox" id="dialog-vbox2">
+    <widget class="GtkVBox" id="tsw_dialog_vbox">
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
       <property name="spacing">6</property>
 
       <child internal-child="action_area">
-	<widget class="GtkHButtonBox" id="dialog-action_area2">
+	<widget class="GtkHButtonBox" id="tsw_dialog_action_area">
 	  <property name="visible">True</property>
 	  <property name="layout_style">GTK_BUTTONBOX_END</property>
 
 	  <child>
-	    <widget class="GtkButton" id="cancelbutton1">
+	    <widget class="GtkButton" id="tsw_cancel_button">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
@@ -2434,7 +2425,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkButton" id="okbutton1">
+	    <widget class="GtkButton" id="tsw_ok_button">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
@@ -2454,20 +2445,20 @@
       </child>
 
       <child>
-	<widget class="GtkFrame" id="frame5">
+	<widget class="GtkFrame" id="tsw_frame">
 	  <property name="visible">True</property>
 	  <property name="label_xalign">0</property>
 	  <property name="label_yalign">0.5</property>
 	  <property name="shadow_type">GTK_SHADOW_NONE</property>
 
 	  <child>
-	    <widget class="GtkVBox" id="vbox6">
+	    <widget class="GtkVBox" id="tsw_vbox">
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">0</property>
 
 	      <child>
-		<widget class="GtkHBox" id="hbox13">
+		<widget class="GtkHBox" id="tsw_shot_hbox">
 		  <property name="border_width">6</property>
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
@@ -2478,7 +2469,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkImage" id="image1072">
+		    <widget class="GtkImage" id="tsw_shot_image">
 		      <property name="height_request">240</property>
 		      <property name="visible">True</property>
 		      <property name="xalign">0.5</property>
@@ -2505,13 +2496,13 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkHBox" id="hbox12">
+		<widget class="GtkHBox" id="tsw_save2file_hbox">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">0</property>
 
 		  <child>
-		    <widget class="GtkRadioButton" id="radiobutton1">
+		    <widget class="GtkRadioButton" id="tsw_save2file_radiobutton">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="label" translatable="yes">Save screenshot to _file: </property>
@@ -2529,7 +2520,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GnomeFileEntry" id="fileentry1">
+		    <widget class="GnomeFileEntry" id="tsw_save2file_fileentry">
 		      <property name="visible">True</property>
 		      <property name="sensitive">False</property>
 		      <property name="max_saved">10</property>
@@ -2537,7 +2528,7 @@
 		      <property name="modal">False</property>
 
 		      <child internal-child="entry">
-			<widget class="GtkEntry" id="combo-entry1">
+			<widget class="GtkEntry" id="tsw_save2file_combo_entry">
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
 			  <property name="editable">True</property>
@@ -2565,7 +2556,7 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkRadioButton" id="radiobutton2">
+		<widget class="GtkRadioButton" id="tsw_save2desk_radiobutton">
 		  <property name="visible">True</property>
 		  <property name="can_focus">True</property>
 		  <property name="label" translatable="yes">Save screenshot to the _desktop</property>
@@ -2574,7 +2565,7 @@
 		  <property name="active">True</property>
 		  <property name="inconsistent">False</property>
 		  <property name="draw_indicator">True</property>
-		  <property name="group">radiobutton1</property>
+		  <property name="group">tsw_save2file_radiobutton</property>
 		</widget>
 		<packing>
 		  <property name="padding">0</property>
@@ -2586,7 +2577,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkLabel" id="label11">
+	    <widget class="GtkLabel" id="tsw_preview_label">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">&lt;b&gt;Preview&lt;/b&gt;</property>
 	      <property name="use_underline">False</property>
@@ -2614,7 +2605,7 @@
   </child>
 </widget>
 
-<widget class="GtkDialog" id="dialog3">
+<widget class="GtkDialog" id="totem_skip_to_window">
   <property name="title" translatable="yes">Skip to</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
@@ -2625,18 +2616,18 @@
   <property name="has_separator">False</property>
 
   <child internal-child="vbox">
-    <widget class="GtkVBox" id="dialog-vbox3">
+    <widget class="GtkVBox" id="tstw_dialog_vbox">
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
       <property name="spacing">6</property>
 
       <child internal-child="action_area">
-	<widget class="GtkHButtonBox" id="dialog-action_area3">
+	<widget class="GtkHButtonBox" id="tstw_dialog_action_area">
 	  <property name="visible">True</property>
 	  <property name="layout_style">GTK_BUTTONBOX_END</property>
 
 	  <child>
-	    <widget class="GtkButton" id="cancelbutton2">
+	    <widget class="GtkButton" id="tstw_cancel_button">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
@@ -2648,7 +2639,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkButton" id="okbutton2">
+	    <widget class="GtkButton" id="tstw_ok_button">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
@@ -2668,21 +2659,21 @@
       </child>
 
       <child>
-	<widget class="GtkVBox" id="vbox7">
+	<widget class="GtkVBox" id="tstw_skip_vbox">
 	  <property name="border_width">5</property>
 	  <property name="visible">True</property>
 	  <property name="homogeneous">False</property>
 	  <property name="spacing">6</property>
 
 	  <child>
-	    <widget class="GtkHBox" id="hbox14">
+	    <widget class="GtkHBox" id="tstw_skip_hbox">
 	      <property name="border_width">4</property>
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">6</property>
 
 	      <child>
-		<widget class="GtkLabel" id="label12">
+		<widget class="GtkLabel" id="tstw_skip_label">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">Skip to:</property>
 		  <property name="use_underline">False</property>
@@ -2703,7 +2694,7 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkSpinButton" id="spinbutton1">
+		<widget class="GtkSpinButton" id="tstw_skip_spinbutton">
 		  <property name="visible">True</property>
 		  <property name="can_focus">True</property>
 		  <property name="climb_rate">1</property>
@@ -2722,7 +2713,7 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkLabel" id="label13">
+		<widget class="GtkLabel" id="tstw_seconds_label">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">seconds</property>
 		  <property name="use_underline">False</property>
@@ -2750,7 +2741,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkLabel" id="label14">
+	    <widget class="GtkLabel" id="tstw_position_label">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">0 seconds</property>
 	      <property name="use_underline">False</property>
@@ -2780,10 +2771,10 @@
   </child>
 </widget>
 
-<widget class="GtkMenu" id="menu2">
+<widget class="GtkMenu" id="totem_right_click_menu">
 
   <child>
-    <widget class="GtkMenuItem" id="play2">
+    <widget class="GtkMenuItem" id="trcm_play">
       <property name="visible">True</property>
       <property name="tooltip" translatable="yes">Play or pause the movie</property>
       <property name="label" translatable="yes">_Play / Pause</property>
@@ -2794,7 +2785,7 @@
   </child>
 
   <child>
-    <widget class="GtkImageMenuItem" id="next_chapter2">
+    <widget class="GtkImageMenuItem" id="trcm_next_chapter">
       <property name="visible">True</property>
       <property name="tooltip" translatable="yes">Next chapter or movie</property>
       <property name="label" translatable="yes">Next Chapter/Movie</property>
@@ -2803,7 +2794,7 @@
       <accelerator key="N" modifiers="0" signal="activate"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image1402">
+	<widget class="GtkImage" id="trcm_next_chapter_image">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-goto-last</property>
 	  <property name="icon_size">1</property>
@@ -2817,7 +2808,7 @@
   </child>
 
   <child>
-    <widget class="GtkImageMenuItem" id="previous_chapter2">
+    <widget class="GtkImageMenuItem" id="trcm_previous_chapter">
       <property name="visible">True</property>
       <property name="tooltip" translatable="yes">Previous chapter or movie</property>
       <property name="label" translatable="yes">Previous Chapter/Movie</property>
@@ -2826,7 +2817,7 @@
       <accelerator key="B" modifiers="0" signal="activate"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image1403">
+	<widget class="GtkImage" id="trcm_previous_chapter_image">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-goto-first</property>
 	  <property name="icon_size">1</property>
@@ -2840,7 +2831,7 @@
   </child>
 
   <child>
-    <widget class="GtkImageMenuItem" id="skip_forward2">
+    <widget class="GtkImageMenuItem" id="trcm_skip_forward">
       <property name="visible">True</property>
       <property name="tooltip" translatable="yes">Skip forward</property>
       <property name="label" translatable="yes">Skip forward</property>
@@ -2849,7 +2840,7 @@
       <accelerator key="Right" modifiers="0" signal="activate"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image1404">
+	<widget class="GtkImage" id="trcm_skip_forward_image">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-go-forward</property>
 	  <property name="icon_size">1</property>
@@ -2863,7 +2854,7 @@
   </child>
 
   <child>
-    <widget class="GtkImageMenuItem" id="skip_backwards2">
+    <widget class="GtkImageMenuItem" id="trcm_skip_backwards">
       <property name="visible">True</property>
       <property name="tooltip" translatable="yes">Skip backwards</property>
       <property name="label" translatable="yes">Skip backwards</property>
@@ -2872,7 +2863,7 @@
       <accelerator key="Left" modifiers="0" signal="activate"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image1405">
+	<widget class="GtkImage" id="trcm_skip_backwards_image">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-go-back</property>
 	  <property name="icon_size">1</property>
@@ -2886,7 +2877,7 @@
   </child>
 
   <child>
-    <widget class="GtkImageMenuItem" id="volume_up2">
+    <widget class="GtkImageMenuItem" id="trcm_volume_up">
       <property name="visible">True</property>
       <property name="tooltip" translatable="yes">Volume up</property>
       <property name="label" translatable="yes">Volume Up</property>
@@ -2895,7 +2886,7 @@
       <accelerator key="Up" modifiers="0" signal="activate"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image1406">
+	<widget class="GtkImage" id="trcm_volume_up_image">
 	  <property name="visible">True</property>
 	  <property name="stock">gnome-stock-volume</property>
 	  <property name="icon_size">1</property>
@@ -2909,7 +2900,7 @@
   </child>
 
   <child>
-    <widget class="GtkImageMenuItem" id="volume_down2">
+    <widget class="GtkImageMenuItem" id="trcm_volume_down">
       <property name="visible">True</property>
       <property name="label" translatable="yes">Volume Down</property>
       <property name="use_underline">True</property>
@@ -2917,7 +2908,7 @@
       <accelerator key="Down" modifiers="0" signal="activate"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image1407">
+	<widget class="GtkImage" id="trcm_volume_down_image">
 	  <property name="visible">True</property>
 	  <property name="stock">gnome-stock-volume</property>
 	  <property name="icon_size">1</property>
@@ -2931,7 +2922,7 @@
   </child>
 
   <child>
-    <widget class="GtkMenuItem" id="show_controls2">
+    <widget class="GtkMenuItem" id="trcm_show_controls">
       <property name="tooltip" translatable="yes">Show controls</property>
       <property name="label" translatable="yes">Show Controls</property>
       <property name="use_underline">True</property>

@@ -22,11 +22,18 @@
 
 #include <glade/glade.h>
 #include "totem-remote.h"
+#include "scrsaver.h"
 #include "egg-recent-model.h"
 #include "egg-recent-view-gtk.h"
 #include "gtk-playlist.h"
 #include "bacon-message-connection.h"
 #include "bacon-video-widget.h"
+
+typedef enum {
+	TOTEM_CONTROLS_VISIBLE,
+	TOTEM_CONTROLS_HIDDEN,
+	TOTEM_CONTROLS_FULLSCREEN
+} ControlsVisibility;
 
 struct Totem {
 	/* Control window */
@@ -36,7 +43,7 @@ struct Totem {
 	GtkWidget *prefs;
 	GtkWidget *properties;
 	GtkWidget *statusbar;
-
+	
 	/* Play/Pause */
 	GtkWidget *pp_button;
 	/* fullscreen Play/Pause */
@@ -65,6 +72,9 @@ struct Totem {
 	GtkWidget *buffer_dialog;
 	GtkWidget *buffer_label;
 
+	/* controls management */
+	ControlsVisibility controls_visibility;
+
 	/* control fullscreen Popup */
 	GtkWidget *control_popup;
 	GtkWidget *fs_seek;
@@ -76,6 +86,8 @@ struct Totem {
 	guint popup_timeout;
 	gboolean popup_in_progress;
 	GdkRectangle fullscreen_rect;
+
+	ScreenSaver *scr;
 
 	/* recent file stuff */
 	EggRecentModel *recent_model;

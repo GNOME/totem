@@ -1,3 +1,42 @@
+2003-05-13  Bastien Nocera  <hadess@hadess.net>
+
+	* README:
+	* data/totem.glade:
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_class_init),
+	(bacon_video_widget_set_fullscreen), (bacon_video_widget_new):
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_class_init),
+	(dest_size_cb), (frame_output_cb), (bacon_video_widget_realize),
+	(bacon_video_widget_unrealize), (bacon_video_widget_set_property),
+	(bacon_video_widget_get_property),
+	(bacon_video_widget_set_fullscreen),
+	(bacon_video_widget_set_show_cursor),
+	(bacon_video_widget_ratio_fits_screen):
+	* src/bacon-video-widget.h:
+	* src/totem-preferences.c: (on_checkbutton2_toggled),
+	(deinterlace_changed_cb), (auto_resize_changed_cb),
+	(show_vfx_changed_cb), (mediadev_changed_cb),
+	(totem_setup_preferences), (totem_preferences_tvout_setup),
+	(totem_preferences_visuals_setup):
+	* src/totem-private.h:
+	* src/totem.c: (play_pause_set_label), (volume_set_image),
+	(totem_action_fullscreen_toggle), (totem_action_fullscreen),
+	(update_mrl_label), (totem_action_set_mrl), (update_seekable),
+	(on_show_playlist1_activate), (show_controls),
+	(on_show_controls1_activate), (on_show_controls2_activate),
+	(screenshot_make_filename), (on_radiobutton_shot_toggled),
+	(hide_screenshot), (on_take_screenshot1_activate),
+	(commit_hide_skip_to), (spin_button_value_changed_cb),
+	(on_skip_to1_activate), (toggle_playlist_from_playlist),
+	(playlist_repeat_toggle_cb), (totem_is_fullscreen),
+	(on_video_motion_notify_event), (on_video_button_press_event),
+	(totem_action_handle_key), (update_media_menu_items),
+	(update_buttons), (update_dvd_menu_sub_lang),
+	(totem_callback_connect), (video_widget_create),
+	(totem_setup_recent), (main): big huge patch by Julien Moutte
+	<julien@moutte.net> to rename the widgets to meaningful names,
+	and move the fullscreen stuff to just use gtk_window_fullscreen(),
+	xine fixes by myself, more work needed to avoid regressions
+
 2003-05-12  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-cd-selection.c: (bacon_cd_selection_get_type):
