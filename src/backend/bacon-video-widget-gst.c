@@ -134,7 +134,9 @@ struct BaconVideoWidgetPrivate
   int xpos, ypos;
   gboolean logo_mode;
   gboolean auto_resize;
-
+  
+  GAsyncQueue *queue;
+  
   guint video_width;
   guint video_height;
 
@@ -144,6 +146,37 @@ struct BaconVideoWidgetPrivate
   /* Signal handlers we want to keep */
   gulong vis_sig_handler;
   gboolean vis_signal_blocked;
+};
+
+enum {
+  VIDEO_SIZE,
+  GST_ERROR,
+  FOUND_TAG
+};
+
+typedef struct _BVWSignal BVWSignal;
+
+struct _BVWSignal
+{
+  gint signal_id;
+  union
+  {
+    struct
+    {
+      gint width;
+      gint height;
+    } video_size;
+    struct
+    {
+      GstElement *element;
+      char *error;
+    } error;
+    struct
+    {
+      GstElement *source;
+      GstTagList *tag_list;
+    } found_tag;
+  } signal_data;
 };
 
 static void bacon_video_widget_set_property (GObject * object,
@@ -360,11 +393,13 @@ bacon_video_widget_instance_init (BaconVideoWidget * bvw)
    * gconf variable was set
    * FIXME */
   gst_init (&argc, &argv);
-
+  
   /* Using opt as default scheduler */
   gst_scheduler_factory_set_default_name ("opt");
 
   bvw->priv = g_new0 (BaconVideoWidgetPrivate, 1);
+  
+  bvw->priv->queue = g_async_queue_new ();
 }
 
 static void
@@ -407,31 +442,116 @@ print_tag (const GstTagList *list, const gchar *tag, gpointer unused)
   }
 }
 
+static gboolean
+bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
+{
+  BVWSignal *signal = NULL;
+  gint queue_length;
+  
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  
+  signal = g_async_queue_try_pop (bvw->priv->queue);
+  if (!signal)
+    return FALSE;
+  
+  switch (signal->signal_id)
+    {
+      case VIDEO_SIZE:
+        {
+          gint width, height;
+          width = signal->signal_data.video_size.width;
+          height = signal->signal_data.video_size.height;
+          
+          if ( (width <= 1) || (height <= 1) )
+            return FALSE;
+  
+          bvw->priv->media_has_video = TRUE;
+          bvw->priv->video_width = width;
+          bvw->priv->video_height = height;
+
+          if (bvw->priv->vw) {
+            gst_video_widget_set_logo_focus (bvw->priv->vw, FALSE);
+            gst_video_widget_set_source_size (bvw->priv->vw, width, height);
+          }
+          break;
+        }
+      case GST_ERROR:
+        {
+          char *error_message = NULL;
+          gboolean emit = TRUE;
+          
+          if (signal->signal_data.error.error)
+            error_message = signal->signal_data.error.error;
+
+          if (bvw->priv->last_error_message) {
+            /* Let's check the latest error message */
+            if (g_ascii_strcasecmp (error_message,
+                                    bvw->priv->last_error_message) == 0)
+              emit = FALSE;
+          }
+
+          if (emit) {
+            g_signal_emit (G_OBJECT (bvw),
+                           bvw_table_signals[ERROR], 0, error_message, TRUE);
+            if (bvw->priv->last_error_message)
+              g_free (bvw->priv->last_error_message);
+            bvw->priv->last_error_message = g_strdup (error_message);
+          }
+          break;
+        }
+      case FOUND_TAG:
+        {
+          GstTagList *tag_list;
+          gst_tag_list_foreach (tag_list, print_tag, NULL);
+          break;
+        }
+      default:
+        break;
+    }
+    
+  g_free (signal);
+  queue_length = g_async_queue_length (bvw->priv->queue);
+
+  return (queue_length > 0);
+}
+
 static void
 got_found_tag (GstPlay *play, GstElement *source,
                GstTagList *tag_list, BaconVideoWidget * bvw)
 {
-  gst_tag_list_foreach (tag_list, print_tag, NULL);
+  BVWSignal *signal;
+  
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  
+  signal = g_new0 (BVWSignal, 1);
+  signal->signal_id = FOUND_TAG;
+  signal->signal_data.found_tag.source = source;
+  signal->signal_data.found_tag.tag_list = tag_list;
+
+  g_async_queue_push (bvw->priv->queue, signal);
+
+  g_idle_add ((GSourceFunc) bacon_video_widget_signal_idler, bvw);
 }
 
 static void
 got_video_size (GstPlay * play, gint width, gint height,
-		BaconVideoWidget * bvw)
+                BaconVideoWidget * bvw)
 {
+  BVWSignal *signal;
+  
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-
-  if ( (width <= 1) || (height <= 1) )
-    return;
   
-  bvw->priv->media_has_video = TRUE;
-  bvw->priv->video_width = width;
-  bvw->priv->video_height = height;
+  signal = g_new0 (BVWSignal, 1);
+  signal->signal_id = VIDEO_SIZE;
+  signal->signal_data.video_size.width = width;
+  signal->signal_data.video_size.height = height;
 
-  if (bvw->priv->vw) {
-    gst_video_widget_set_logo_focus (bvw->priv->vw, FALSE);
-    gst_video_widget_set_source_size (bvw->priv->vw, width, height);
-  }
+  g_async_queue_push (bvw->priv->queue, signal);
+
+  g_idle_add ((GSourceFunc) bacon_video_widget_signal_idler, bvw);
 }
 
 static void
@@ -444,7 +564,7 @@ got_eos (GstPlay * play, BaconVideoWidget * bvw)
 
 static void
 got_stream_length (GstPlay * play, gint64 length_nanos,
-		   BaconVideoWidget * bvw)
+                   BaconVideoWidget * bvw)
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -472,38 +592,32 @@ got_time_tick (GstPlay * play, gint64 time_nanos, BaconVideoWidget * bvw)
   else
     {
       bvw->priv->current_position =
-	(float) bvw->priv->current_time / bvw->priv->stream_length;
+        (float) bvw->priv->current_time / bvw->priv->stream_length;
     }
 
   g_signal_emit (G_OBJECT (bvw),
-		 bvw_table_signals[TICK], 0,
-		 bvw->priv->current_time, bvw->priv->stream_length,
-		 bvw->priv->current_position);
+                 bvw_table_signals[TICK], 0,
+                 bvw->priv->current_time, bvw->priv->stream_length,
+                 bvw->priv->current_position);
 }
 
 static void
 got_error (GstPlay * play, GstElement * orig,
-	   char *error_message, BaconVideoWidget * bvw)
+           char *error_message, BaconVideoWidget * bvw)
 {
-  gboolean emit = TRUE;
+  BVWSignal *signal;
+  
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  
+  signal = g_new0 (BVWSignal, 1);
+  signal->signal_id = GST_ERROR;
+  signal->signal_data.error.element = orig;
+  signal->signal_data.error.error = g_strdup (error_message);
 
-  if (bvw->priv->last_error_message)
-    {
-      /* Let's check the latest error message */
-      if (g_ascii_strcasecmp (error_message, bvw->priv->last_error_message) == 0)
-	emit = FALSE;
-    }
+  g_async_queue_push (bvw->priv->queue, signal);
 
-  if (emit)
-    {
-      g_signal_emit (G_OBJECT (bvw),
-		     bvw_table_signals[ERROR], 0, error_message, TRUE);
-      if (bvw->priv->last_error_message)
-	g_free (bvw->priv->last_error_message);
-      bvw->priv->last_error_message = g_strdup (error_message);
-    }
+  g_idle_add ((GSourceFunc) bacon_video_widget_signal_idler, bvw);
 }
 
 static void
@@ -511,6 +625,12 @@ bacon_video_widget_finalize (GObject * object)
 {
   BaconVideoWidget *bvw = (BaconVideoWidget *) object;
 
+  if (bvw->priv->queue)
+    {
+      g_async_queue_unref (bvw->priv->queue);
+      bvw->priv->queue = NULL;
+    }
+  
   if (bvw->priv->metadata_hash)
     {
       g_hash_table_destroy (bvw->priv->metadata_hash);
@@ -535,13 +655,13 @@ bacon_video_widget_finalize (GObject * object)
 
 static void
 bacon_video_widget_set_property (GObject * object, guint property_id,
-				 const GValue * value, GParamSpec * pspec)
+                                 const GValue * value, GParamSpec * pspec)
 {
 }
 
 static void
 bacon_video_widget_get_property (GObject * object, guint property_id,
-				 GValue * value, GParamSpec * pspec)
+                                 GValue * value, GParamSpec * pspec)
 {
 }
 

@@ -63,10 +63,10 @@ GtkWidget *gst_video_widget_new (void);
 /* Set/Get video source size */
 
 gboolean gst_video_widget_set_source_size (GstVideoWidget * vw,
-					   gint width, gint height);
+					   guint width, guint height);
 
 gboolean gst_video_widget_get_source_size (GstVideoWidget * vw,
-					   gint * width, gint * height);
+					   guint * width, guint * height);
 
 /* Set/Get minimum video widget size */
 
