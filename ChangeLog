@@ -1,5 +1,10 @@
 2003-04-18  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-preferences.c: (totem_display_is_local),
+	(totem_setup_preferences): some work towards fixing #110851
+
+2003-04-18  Bastien Nocera  <hadess@hadess.net>
+
 	* src/scrsaver.c: (fake_event), (scrsaver_init),
 	(scrsaver_disable), (scrsaver_enable): plenty of display locking around
 	all that, and use XSync, not XFlush

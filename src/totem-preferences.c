@@ -30,6 +30,36 @@
 
 #define PROPRIETARY_PLUGINS ".gnome2"G_DIR_SEPARATOR_S"totem-addons"
 
+static gboolean
+totem_display_is_local (Totem *totem)
+{
+	const char *name, *work;
+	int display, screen;
+
+	name = gdk_display_get_name (gdk_display_get_default ());
+	if (name == NULL)
+		return TRUE;
+
+	work = strstr (name, ":");
+	if (work == NULL)
+		return TRUE;
+
+	/* Get to the character after the colon */
+	work++;
+	if (work == NULL)
+		return TRUE;
+
+	if (sscanf (work, "%d.%d", &display, &screen) != 2)
+		return TRUE;
+
+	if (display < 10)
+		return TRUE;
+
+	g_message ("name: %s", work);
+
+	return FALSE;
+}
+
 static void
 hide_prefs (GtkWidget *widget, int trash, Totem *totem)
 {
@@ -187,11 +217,14 @@ totem_setup_preferences (Totem *totem)
 {
 	GtkWidget *item;
 	const char *mediadev;
-	gboolean show_visuals, auto_resize;
+	gboolean show_visuals, auto_resize, is_local;
 	int connection_speed;
 	char *path;
 
 	g_return_if_fail (totem->gc != NULL);
+
+	is_local = totem_display_is_local (totem);
+	g_message ("display is %s", is_local ? "local" : "remote");
 
 	gconf_client_add_dir (totem->gc, "/apps/totem",
 			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
