@@ -45,7 +45,7 @@ typedef struct {
 } TotemCdSelectionClass;
 
 GtkType totem_cd_selection_get_type              (void);
-GtkWidget *totem_cd_selection_new                ();
+GtkWidget *totem_cd_selection_new                (void);
 
 void totem_cd_selection_set_device		 (TotemCdSelection *tcs,
 						  const char *device);

@@ -111,6 +111,7 @@ struct scsi_unit {
 
 struct cdrom_unit {
 	char *device;
+	int speed;
 	gboolean can_write_cdr;
 	gboolean can_write_cdrw;
 	gboolean can_write_dvdr;
@@ -145,10 +146,11 @@ parse_sg_line (char *device_str, char *devices, struct scsi_unit *unit)
 		    &channel, &unit->id, &unit->lun, &unit->type,
 		    &access_count, &queue_depth, &device_busy,
 		    &online) != 9) {
-		unit->bus = channel;
+		
 		g_warning ("Couldn't match line in /proc/scsi/sg/devices\n");
 		return;
 	}
+	unit->bus = host_no;
 	unit->exist = TRUE;
 }
 
@@ -288,7 +290,8 @@ add_linux_cd_recorder (GList *cdroms,
 			cdrom->name = g_strdup_printf ("%s - %s",
 							  unit->vendor,
 							  unit->model);
-			cdrom->max_speed = get_device_max_speed (cdrom->id);
+			cdrom->max_speed_write = get_device_max_speed (cdrom->id);
+			cdrom->max_speed_read = cdrom_s->speed; 
 			if (cdrom_s->can_write_dvdr
 					|| cdrom_s->can_write_dvdram) {
 				cdrom->type = DRIVE_TYPE_DVD_RECORDER;
@@ -298,7 +301,6 @@ add_linux_cd_recorder (GList *cdroms,
 
 			cdrom->device = g_strdup_printf ("/dev/%s",
 					cdrom_s->device);
-
 			cdroms = g_list_append (cdroms, cdrom);
 		}
 	}
@@ -360,7 +362,8 @@ add_linux_cd_drive (GList *cdroms, struct cdrom_unit *cdrom_s,
 	cdrom = g_new0 (CDDrive, 1);
 	cdrom->id = NULL;
 	cdrom->name = cdrom_get_name (cdrom_s, units, n_units);
-	cdrom->max_speed = 0;
+	cdrom->max_speed_write = 0; /* Can't write */
+	cdrom->max_speed_read = cdrom_s->speed;
 	if (cdrom_s->can_read_dvd) {
 		cdrom->type = DRIVE_TYPE_DVD_DRIVE;
 	} else {
@@ -368,7 +371,6 @@ add_linux_cd_drive (GList *cdroms, struct cdrom_unit *cdrom_s,
 	}
 
 	cdrom->device = g_strdup_printf ("/dev/%s", cdrom_s->device);
-
 	cdroms = g_list_append (cdroms, cdrom);
 
 	return cdroms;
@@ -453,6 +455,7 @@ linux_scan (gboolean recorder_only)
 			}
 			for (j = 0; j < n_cdroms; j++) {
 				cdroms[j].can_write_cdr = *p++ == '1';
+
 				/* Skip tab */
 				p++;
 			}
@@ -464,6 +467,7 @@ linux_scan (gboolean recorder_only)
 			}
 			for (j = 0; j < n_cdroms; j++) {
 				cdroms[j].can_write_cdrw = *p++ == '1';
+
 				/* Skip tab */
 				p++;
 			}
@@ -475,6 +479,7 @@ linux_scan (gboolean recorder_only)
 			}
 			for (j = 0; j < n_cdroms; j++) {
 				cdroms[j].can_write_dvdr = *p++ == '1';
+
 				/* Skip tab */
 				p++;
 			}
@@ -486,6 +491,7 @@ linux_scan (gboolean recorder_only)
 			}
 			for (j = 0; j < n_cdroms; j++) {
 				cdroms[j].can_write_dvdram = *p++ == '1';
+
 				/* Skip tab */
 				p++;
 			}
@@ -497,6 +503,19 @@ linux_scan (gboolean recorder_only)
 			}
 			for (j = 0; j < n_cdroms; j++) {
 				cdroms[j].can_read_dvd = *p++ == '1';
+
+				/* Skip tab */
+				p++;
+			}
+		}
+		if (g_str_has_prefix (cdrom_info[i], "drive speed:")) {
+			p = cdrom_info[i] + strlen ("drive speed:");
+			while (*p == '\t') {
+				p++;
+			}
+			for (j = 0; j < n_cdroms; j++) {
+  				cdroms[j].speed = atoi (p);
+
 				/* Skip tab */
 				p++;
 			}
@@ -538,7 +557,8 @@ scan_for_cdroms (gboolean recorder_only, gboolean add_image)
 		/* File */
 		cdrom = g_new0 (CDDrive, 1);
 		cdrom->name = _("File image");
-		cdrom->max_speed = 0;
+		cdrom->max_speed_read = 0;
+		cdrom->max_speed_write = 0;
 		cdrom->type = DRIVE_TYPE_FILE;
 
 		cdroms = g_list_prepend (cdroms, cdrom);

@@ -1,3 +1,12 @@
+2002-12-13  Bastien Nocera  <hadess@hadess.net>
+
+	* src/cd-drive.c: (parse_sg_line), (add_linux_cd_recorder),
+	(add_linux_cd_drive), (linux_scan), (scan_for_cdroms):
+	* src/cd-drive.h: some fixes from Iain Holmes <iain@prettypeople.org>,
+	change max_speed to max_speed_write, and add max_speed_read
+	* src/totem-cd-selection.h: use (void) when there are no args, not just
+	()
+
 2002-12-12  Bastien Nocera  <hadess@hadess.net>
 
 	* src/list_cddrives.c: (list_cdroms): list more stuff

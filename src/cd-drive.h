@@ -39,7 +39,8 @@ typedef enum {
 typedef struct {
 	CDDriveType type;
 	char *name;
-	int max_speed;
+	int max_speed_write;
+	int max_speed_read;
 	char *id;
 	char *device;
 } CDDrive;
