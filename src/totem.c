@@ -652,7 +652,7 @@ on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
 
 	D ("on_recent_file_activate URI: %s", uri);
 
-	filename = g_filename_from_uri (uri, NULL, NULL);
+	filename = gnome_vfs_get_local_path_from_uri (uri);
 	g_return_if_fail (filename != NULL);
 	
 	gtk_playlist_add_mrl (totem->playlist, filename, NULL);

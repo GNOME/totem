@@ -36,7 +36,7 @@
 struct GtkPlaylistPrivate
 {
 	GladeXML *xml;
-	
+
 	GtkWidget *treeview;
 	GtkTreeModel *model;
 	GtkTreePath *current;
@@ -1085,7 +1085,8 @@ gtk_playlist_class_init (GtkPlaylistClass *klass)
 		g_signal_new ("current-removed",
 				G_TYPE_FROM_CLASS (klass),
 				G_SIGNAL_RUN_LAST,
-				G_STRUCT_OFFSET (GtkPlaylistClass, changed),
+				G_STRUCT_OFFSET (GtkPlaylistClass,
+					current_removed),
 				NULL, NULL,
 				g_cclosure_marshal_VOID__VOID,
 				G_TYPE_NONE, 0);

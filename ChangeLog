@@ -1,5 +1,12 @@
 2002-10-21  Bastien Nocera  <hadess@hadess.net>
 
+	* data/playlist.glade: the remove button is disabled by default
+	* src/totem.c: (on_recent_file_activate): use
+	gnome_vfs_get_local_path_from_uri rather than g_filename_from_uri, the
+	glib function doesn't like non-UTF8
+
+2002-10-21  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_action_set_mrl), (seek_cb): patch by John
 	McCutchan <ttb@tentacle.dhs.org>, to move the correct seekbars around
 
