@@ -1,5 +1,15 @@
 2005-03-07  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-xine.c: (setup_config),
+	(bacon_video_widget_set_media_device),
+	(bacon_video_widget_set_proprietary_plugins_path),
+	(bacon_video_widget_set_tv_out),
+	(bacon_video_widget_set_video_device): fix memory leaks,
+	adapted from patch by Aivars Kalvans <aivars.kalvans@inbox.lv>
+	(Closes: #169437)
+
+2005-03-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-uri.c: (totem_uri_get_subtitle_uri): fix memory leak,
 	patch by Aivars Kalvans <aivars.kalvans@inbox.lv> (Closes: #169440)
 

@@ -758,6 +758,7 @@ setup_config (BaconVideoWidget *bvw)
 	entry.str_value = gconf_client_get_string (bvw->priv->gc,
 			"/system/http_proxy/host", NULL);
 	xine_config_update_entry (bvw->priv->xine, &entry);
+	g_free (entry.str_value);
 
 	bvw_config_helper_num (bvw->priv->xine,
 			 "media.network.http_proxy_port", 8080, &entry);
@@ -786,6 +787,7 @@ setup_config (BaconVideoWidget *bvw)
 				"/system/http_proxy/authentication_user",
 				NULL);
 		xine_config_update_entry (bvw->priv->xine, &entry);
+		g_free (entry.str_value);
 
 		bvw_config_helper_string (bvw->priv->xine,
 				"media.network.http_proxy_password", "",
@@ -794,6 +796,7 @@ setup_config (BaconVideoWidget *bvw)
 				"/system/http_proxy/authentication_password",
 				NULL);
 		xine_config_update_entry (bvw->priv->xine, &entry);
+		g_free (entry.str_value);
 	}
 }
 
@@ -2454,25 +2457,25 @@ bacon_video_widget_set_media_device (BaconVideoWidget *bvw, const char *path)
 	/* DVD device */
 	bvw_config_helper_string (bvw->priv->xine, "media.dvd.device",
 			path, &entry);
-	entry.str_value = g_strdup (path);
+	entry.str_value = (char *) path;
 	xine_config_update_entry (bvw->priv->xine, &entry);
 
 	/* VCD device */
 	bvw_config_helper_string (bvw->priv->xine, "media.vcd.device",
 			path, &entry);
-	entry.str_value = g_strdup (path);
+	entry.str_value = (char *) path;
 	xine_config_update_entry (bvw->priv->xine, &entry);
 
 	/* VCD device for the new input plugin */
 	bvw_config_helper_string (bvw->priv->xine, "media.vcd.device",
 			path, &entry);
-	entry.str_value = g_strdup (path);
+	entry.str_value = (char *) path;
 	xine_config_update_entry (bvw->priv->xine, &entry);
 
 	/* CDDA device */
 	bvw_config_helper_string (bvw->priv->xine, "media.audio_cd.device",
 			path, &entry);
-	entry.str_value = g_strdup (path);
+	entry.str_value = (char *) path;
 	xine_config_update_entry (bvw->priv->xine, &entry);
 }
 
@@ -2484,12 +2487,12 @@ bacon_video_widget_set_proprietary_plugins_path (BaconVideoWidget *bvw,
 
 	bvw_config_helper_string (bvw->priv->xine,
 			"decoder.external.win32_codecs_path", path, &entry);
-	entry.str_value = g_strdup (path);
+	entry.str_value = (char *) path;
 	xine_config_update_entry (bvw->priv->xine, &entry);
 
 	bvw_config_helper_string (bvw->priv->xine,
 			"decoder.external.real_codecs_path", path, &entry);
-	entry.str_value = g_strdup (path);
+	entry.str_value = (char *) path;
 	xine_config_update_entry (bvw->priv->xine, &entry);
 
 	/* And we try and create symlinks from /usr/lib/win32 to
@@ -2583,8 +2586,7 @@ bacon_video_widget_set_tv_out (BaconVideoWidget *bvw, TvOutType tvout)
 
 		xine_config_lookup_entry (bvw->priv->xine,
 				"video.driver", &entry);
-		entry.str_value = g_strdup (tvout == TV_OUT_DXR3 ?
-				"dxr3" : "auto");
+		entry.str_value = (tvout == TV_OUT_DXR3 ? "dxr3" : "auto");
 		xine_config_update_entry (bvw->priv->xine, &entry);
 
 		bvw->priv->tvout = tvout;
@@ -2927,7 +2929,7 @@ bacon_video_widget_set_video_device (BaconVideoWidget *bvw, const char *path)
 
 	bvw_config_helper_string (bvw->priv->xine,
 			"media.video4linux.video_device", path, &entry);
-	entry.str_value = g_strdup (path);
+	entry.str_value = (char *) path;
 	xine_config_update_entry (bvw->priv->xine, &entry);
 }
 
