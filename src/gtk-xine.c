@@ -1661,8 +1661,8 @@ static char
 		/* seconds */
 		string = g_strdup_printf (_("%s"), secs);
 	} else {
-		/* 0 second */
-		string = g_strdup (_("0 second"));
+		/* 0 seconds */
+		string = g_strdup (_("0 seconds"));
 	}
 
 	g_free (hours);
