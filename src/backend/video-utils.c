@@ -7,16 +7,6 @@
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 
-#define MWM_HINTS_DECORATIONS   (1L << 1)
-#define PROP_MWM_HINTS_ELEMENTS 5
-typedef struct {
-	uint32_t flags;
-	uint32_t functions;
-	uint32_t decorations;
-	int32_t input_mode;
-	uint32_t status;
-} MWMHints;
-
 static void
 wmspec_change_state (gboolean   add,
 		GdkWindow *window,
@@ -45,34 +35,6 @@ wmspec_change_state (gboolean   add,
 			False,
 			SubstructureRedirectMask | SubstructureNotifyMask,
 			&xev);
-}
-
-void
-old_wmspec_set_fullscreen (GdkWindow *window)
-{
-	Atom XA_WIN_LAYER = None;
-	long propvalue[1];
-	MWMHints mwmhints;
-	Atom prop;
-
-	if (XA_WIN_LAYER == None)
-		XA_WIN_LAYER = XInternAtom(GDK_DISPLAY (), "_WIN_LAYER", False);
-
-	/* layer above most other things, like gnome panel
-	 * WIN_LAYER_ABOVE_DOCK = 10 */
-	propvalue[0] = 10;
-
-	XChangeProperty (GDK_DISPLAY (), GDK_WINDOW_XID (window), XA_WIN_LAYER,
-			XA_CARDINAL, 32, PropModeReplace,
-			(unsigned char *) propvalue, 1);
-
-	/* Now set the decorations hints */
-	prop = XInternAtom (GDK_DISPLAY (), "_MOTIF_WM_HINTS", False);
-	mwmhints.flags = MWM_HINTS_DECORATIONS;
-	mwmhints.decorations = 0;
-	XChangeProperty (GDK_DISPLAY (), GDK_WINDOW_XID (window), prop, prop,
-			32, PropModeReplace, (unsigned char *) &mwmhints,
-			PROP_MWM_HINTS_ELEMENTS);
 }
 
 void
