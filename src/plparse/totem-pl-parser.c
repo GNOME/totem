@@ -179,10 +179,15 @@ totem_pl_parser_base_url (const char *url)
 
 	uri = gnome_vfs_uri_new (url);
 	parent = gnome_vfs_uri_get_parent (uri);
+	if (!parent) {
+		parent = uri;
+	}
 	base = gnome_vfs_uri_to_string (parent, 0);
 
 	gnome_vfs_uri_unref (uri);
-	gnome_vfs_uri_unref (parent);
+	if (parent != uri) {
+		gnome_vfs_uri_unref (parent);
+	}
 
 	return base;
 }
