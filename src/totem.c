@@ -714,6 +714,9 @@ static int
 update_sliders_cb (gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
+    char *time_text, *label_text;
+    gint time;
+    GtkWidget *widget = NULL;
 	gfloat pos;
 
 	if (totem->gtx == NULL)
@@ -737,6 +740,19 @@ update_sliders_cb (gpointer user_data)
 		volume_set_image (totem, (gint) pos);
 		totem->vol_lock = FALSE;
 	}
+
+    time = gtk_xine_get_current_time (GTK_XINE (totem->gtx));
+
+    time_text = time_to_string (time/1000);
+
+    label_text = g_strdup_printf("Time: %s ", time_text);
+    widget = glade_xml_get_widget (totem->xml, "label9");
+    gtk_label_set_text (GTK_LABEL (widget), label_text);
+    widget = glade_xml_get_widget (totem->xml, "label10");
+    gtk_label_set_text (GTK_LABEL (widget), label_text);
+
+    g_free(label_text);
+    g_free(time_text);
 
 	return TRUE;
 }
