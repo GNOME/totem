@@ -62,7 +62,7 @@ guint8 * yv12torgb (guint8 *src_y, guint8 *src_u, guint8 *src_v,
 	  uv_width  = width / 2;
 	  uv_height = height / 2;
 
-	  rgb = malloc (width * height * 3);
+	  rgb = (guchar *) malloc (width * height * 3);
 	  if (!rgb)
 		  return NULL;
 
