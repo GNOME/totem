@@ -79,6 +79,8 @@ totem_SOURCES = 					\
 	scrsaver.c scrsaver.h		\
 	totem-pl-parser.c totem-pl-parser.h \
 	totem-playlist.c totem-playlist.h \
+	totem-screenshot.c		\
+	totem-screenshot.h		\
 	rb-ellipsizing-label.c		\
 	rb-ellipsizing-label.h		\
 	debug.h				\
@@ -102,6 +104,7 @@ totem_properties_page_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RAND
 vanity_SOURCES =					\
 	$(VIDEOWIDGET)					\
 	$(BACON_V4L_SELECTION)				\
+	totem-screenshot.c totem-screenshot.h		\
 	vanity.c
 
 vanity_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)  $(NVTV_LIBS)

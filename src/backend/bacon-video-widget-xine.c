@@ -3279,7 +3279,7 @@ bacon_video_widget_can_get_frames (BaconVideoWidget *bvw, GError **error)
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
 
-	if (bacon_video_widget_is_playing (bvw) == FALSE)
+	if (xine_get_status (bvw->priv->stream) != XINE_STATUS_PLAY)
 	{
 		g_set_error (error, 0, 0, _("Movie is not playing"));
 		return FALSE;

@@ -17,6 +17,7 @@ stuff_DATA =				\
 	playlist.glade			\
 	properties.glade		\
 	uri.glade			\
+	screenshot.glade		\
 	totem_logo.png			\
 	vanity.glade			\
 	vanity.png

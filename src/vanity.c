@@ -26,6 +26,7 @@
 #include <string.h>
 
 #include "bacon-video-widget.h"
+#include "totem-screenshot.h"
 
 #include "debug.h"
 
@@ -61,36 +62,43 @@ long_action (void)
 	while (gtk_events_pending ())
 		gtk_main_iteration ();
 }
-#if 0
+
 static void
-vanity_action_error (char *msg, Vanity *vanity)
+vanity_action_error (char *title, char *reason, Vanity *vanity)
 {
 	GtkWidget *parent, *error_dialog;
+	char *title_esc, *reason_esc;
 
 	if (vanity == NULL)
 		parent = NULL;
 	else
 		parent = vanity->win;
 
+	title_esc = g_markup_escape_text (title, -1);
+	reason_esc = g_markup_escape_text (reason, -1);
+
 	error_dialog =
-		gtk_message_dialog_new (GTK_WINDOW (vanity->win),
+		gtk_message_dialog_new (GTK_WINDOW (parent),
 				GTK_DIALOG_MODAL,
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK,
-				"%s", msg);
+				"<b>%s</b>\n%s.", title_esc, reason_esc);
+	g_free (title_esc);
+	g_free (reason_esc);
+
+	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
 			GTK_RESPONSE_OK);
+	gtk_label_set_use_markup (GTK_LABEL (GTK_MESSAGE_DIALOG (error_dialog)->label), TRUE);
 	g_signal_connect (G_OBJECT (error_dialog), "destroy", G_CALLBACK
 			(gtk_widget_destroy), error_dialog);
 	g_signal_connect (G_OBJECT (error_dialog), "response", G_CALLBACK
 			(gtk_widget_destroy), error_dialog);
-	g_object_add_weak_pointer (G_OBJECT (error_dialog),
-			(void**)&(error_dialog));
 	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
 
 	gtk_widget_show (error_dialog);
 }
-#endif
+
 static void
 vanity_action_error_and_exit (char *msg, Vanity *vanity)
 {
@@ -267,68 +275,41 @@ on_about1_activate (GtkButton *button, Vanity *vanity)
 
 	gtk_widget_show(about);
 }
-#if 0
-static char *
-screenshot_make_filename_helper (char *filename, gboolean desktop_exists)
+
+static void
+on_save1_activate (GtkButton *button, Vanity *vanity)
 {
-	if (desktop_exists != FALSE)
+	GdkPixbuf *pixbuf;
+	GtkWidget *dialog;
+	char *filename;
+	GError *err = NULL;
+
+	if (bacon_video_widget_can_get_frames (vanity->bvw, &err) == FALSE)
 	{
-		return g_build_filename (g_get_home_dir (), ".gnome-desktop",
-				filename, NULL);
-	} else {
-		return g_build_filename (g_get_home_dir (), filename, NULL);
-	}
-}
+		if (err == NULL)
+			return;
 
-static char *
-screenshot_make_filename (Vanity *vanity)
-{
-	GtkWidget *radiobutton, *entry;
-	gboolean on_desktop;
-	char *fullpath, *filename;
-	int i = 0;
-	gboolean desktop_exists;
-
-	radiobutton = glade_xml_get_widget (vanity->xml, "radiobutton2");
-	on_desktop = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON
-			(radiobutton));
-
-	/* Test if we have a desktop directory */
-	fullpath = g_build_path (G_DIR_SEPARATOR_S, g_get_home_dir (),
-			".gnome-desktop", NULL);
-	desktop_exists = g_file_test (fullpath, G_FILE_TEST_EXISTS);
-	g_free (fullpath);
-
-	if (on_desktop != FALSE)
-	{
-		filename = g_strdup_printf (_("Screenshot%d.png"), i);
-		fullpath = screenshot_make_filename_helper (filename,
-				desktop_exists);
-
-		while (g_file_test (fullpath, G_FILE_TEST_EXISTS) != FALSE
-				&& i < G_MAXINT)
-		{
-			i++;
-			g_free (filename);
-			g_free (fullpath);
-
-			filename = g_strdup_printf (_("Screenshot%d.png"), i);
-			fullpath = screenshot_make_filename_helper (filename,
-					desktop_exists);
-		}
-
-		g_free (filename);
-	} else {
-		entry = glade_xml_get_widget (vanity->xml, "combo-entry1");
-		if (gtk_entry_get_text (GTK_ENTRY (entry)) == NULL)
-			return NULL;
-
-		fullpath = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
+		vanity_action_error (_("Totem could not get a screenshot of that film."), err->message, vanity);
+		g_error_free (err);
+		return;
 	}
 
-	return fullpath;
+	pixbuf = bacon_video_widget_get_current_frame (vanity->bvw);
+	if (pixbuf == NULL)
+	{
+		vanity_action_error (_("Totem could not get a screenshot of that film."), _("Please file a bug, this isn't supposed to happen"), vanity);
+		return;
+	}
+
+	filename = g_build_filename (DATADIR,
+			"totem", "screenshot.glade", NULL);
+
+	dialog = totem_screenshot_new (filename, pixbuf);
+	g_free (filename);
+	gtk_dialog_run (GTK_DIALOG (dialog));
+	gtk_widget_destroy (dialog);
+	gdk_pixbuf_unref (pixbuf);
 }
-#endif
 
 static void
 on_preferences1_activate (GtkButton *button, Vanity *vanity)
@@ -500,6 +481,9 @@ vanity_callback_connect (Vanity *vanity)
 	GtkWidget *item;
 
 	/* Menu items */
+	item = glade_xml_get_widget (vanity->xml, "save1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_save1_activate), vanity);
 	item = glade_xml_get_widget (vanity->xml, "zoom_12");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_zoom_1_2_activate), vanity);

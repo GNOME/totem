@@ -1,3 +1,25 @@
+2004-03-21  Bastien Nocera  <hadess@hadess.net>
+
+	* data/Makefile.am:
+	* data/screenshot.glade:
+	* data/totem.glade:
+	* src/Makefile.am:
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_can_get_frames):
+	* src/totem-screenshot.c: (totem_screenshot_get_type),
+	(totem_screenshot_action_error), (screenshot_make_filename_helper),
+	(screenshot_make_filename), (on_radiobutton_shot_toggled),
+	(totem_screenshot_response), (totem_screenshot_init),
+	(totem_screenshot_finalize), (totem_screenshot_new),
+	(totem_screenshot_class_init):
+	* src/totem-screenshot.h:
+	* src/totem.c: (on_take_screenshot1_activate),
+	(totem_callback_connect):
+	* src/vanity.c: (vanity_action_error), (on_about1_activate),
+	(on_save1_activate), (vanity_callback_connect):
+	split out the screenshot dialog into a separate widget, make Totem
+	and Vanity use the new widget
+
 2004-03-20  Bastien Nocera  <hadess@hadess.net>
 
 	* NEWS: updated
