@@ -27,6 +27,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 /* X11 */
 #include <X11/X.h>
 #include <X11/Xlib.h>
