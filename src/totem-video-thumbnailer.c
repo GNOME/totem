@@ -357,7 +357,6 @@ int main (int argc, char *argv[])
 				save_still_pixbuf (pixbuf,
 						output, input, size);
 				gdk_pixbuf_unref (pixbuf);
-				g_error_free (err);
 				exit (0);
 			}
 			g_print ("totem-video-thumbnailer couln't open file '%s'\n"
