@@ -441,24 +441,26 @@ totem_action_fullscreen_toggle (Totem *totem)
 	if (new_state == FALSE)
 	{
 		gboolean auto_resize;
+
 		popup_hide (totem);
 		gtk_window_unfullscreen (GTK_WINDOW(totem->win));
 		bacon_video_widget_set_show_cursor (totem->bvw, TRUE);
 		scrsaver_enable (totem->scr);
-		
+
 		/* Auto-resize */
 		auto_resize = gconf_client_get_bool (totem->gc,
-								GCONF_PREFIX"/auto_resize", NULL);
-		
+				GCONF_PREFIX"/auto_resize", NULL);
+
 		bacon_video_widget_set_auto_resize (totem->bvw, auto_resize);
-		
+
 		if (totem->controls_visibility != TOTEM_CONTROLS_VISIBLE)
 		{
 			GtkWidget *item;
 			item = glade_xml_get_widget
 				(totem->xml, "tmw_show_controls_menu_item");
 			if (gtk_check_menu_item_get_active
-					(GTK_CHECK_MENU_ITEM (item))) {
+					(GTK_CHECK_MENU_ITEM (item)))
+			{
 				show_controls (totem, TRUE);
 				totem->controls_visibility =
 					TOTEM_CONTROLS_VISIBLE;
@@ -473,7 +475,7 @@ totem_action_fullscreen_toggle (Totem *totem)
 		bacon_video_widget_set_show_cursor (totem->bvw, FALSE);
 		gtk_window_fullscreen (GTK_WINDOW(totem->win));
 		scrsaver_disable (totem->scr);
-		
+
 		if (totem->controls_visibility == TOTEM_CONTROLS_VISIBLE)
 			show_controls (totem, FALSE);
 		totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
@@ -1678,8 +1680,6 @@ show_controls (Totem *totem, gboolean visible)
 	item = glade_xml_get_widget (totem->xml, "trcm_show_controls");
 	bvw_vbox = glade_xml_get_widget (totem->xml, "tmw_bvw_vbox");
 
-	gtk_window_set_resizable (GTK_WINDOW (totem->win), TRUE);
-
 	if (visible)
 	{
 		gtk_widget_show (menubar);
@@ -1694,24 +1694,41 @@ show_controls (Totem *totem, gboolean visible)
 		gtk_widget_hide (item);
 		gtk_container_set_border_width (GTK_CONTAINER (bvw_vbox), 0);
 	}
-
-	gtk_window_set_resizable (GTK_WINDOW (totem->win), FALSE);
 }
 
 static void
 on_show_controls1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 {
 	gboolean show;
+	int w, h;
 
 	show = gtk_check_menu_item_get_active (checkmenuitem);
-	
+
+	gdk_drawable_get_size
+		(GDK_DRAWABLE (GTK_WIDGET (totem->bvw)->window),
+		 &w, &h);
+
 	show_controls (totem, show);
-	
+
 	/* Let's update our controls visibility */
 	if (show)
+	{
+		int win_w, win_h, wid_w, wid_h;
+
+		long_action();
+		wid_w = GTK_WIDGET(totem->bvw)->allocation.width;
+		wid_h = GTK_WIDGET(totem->bvw)->allocation.height;
+		gdk_drawable_get_size
+			(GDK_DRAWABLE (GTK_WIDGET (totem->win)->window),
+			 &win_w, &win_h);
+
+		gtk_window_resize (GTK_WINDOW (totem->win),
+				win_w - wid_w + w, win_h - wid_h + h);
 		totem->controls_visibility = TOTEM_CONTROLS_VISIBLE;
-	else
+	} else {
+		gtk_window_resize (GTK_WINDOW (totem->win), w, h);
 		totem->controls_visibility = TOTEM_CONTROLS_HIDDEN;
+	}
 }
 
 static void
@@ -2315,6 +2332,7 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 			(GtkFunction) popup_hide, totem);
 	totem->popup_in_progress = FALSE;
 	gdk_window_get_pointer (widget->window, &pointer_x, &pointer_y, &state);
+
 	return FALSE;
 }
 
