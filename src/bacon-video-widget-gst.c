@@ -603,23 +603,20 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
         }
       case ASYNC_FOUND_TAG:
         {
-          GstTagList *tag_list = signal->signal_data.found_tag.tag_list;
+          GstTagList *tag_list = signal->signal_data.found_tag.tag_list,
+		*result;
 
-          if (tag_list) {
-            if (bvw->priv->tagcache) {
-              GstTagList *taglist;
+          result = gst_tag_list_merge (bvw->priv->tagcache, tag_list,
+				       GST_TAG_MERGE_APPEND);
+          if (tag_list)
+            gst_tag_list_free (tag_list);
+          if (bvw->priv->tagcache)
+            gst_tag_list_free (bvw->priv->tagcache);
 
-              taglist = gst_tag_list_merge (bvw->priv->tagcache, tag_list,
-					    GST_TAG_MERGE_APPEND);
-              gst_tag_list_free (tag_list);
-              gst_tag_list_free (bvw->priv->tagcache);
-              bvw->priv->tagcache = taglist;
-            } else {
-              bvw->priv->tagcache = tag_list;
-            }
-            g_signal_emit (G_OBJECT (bvw), bvw_table_signals[SIGNAL_GOT_METADATA],
-                           0, NULL);
-          }
+          bvw->priv->tagcache = result;
+          g_signal_emit (G_OBJECT (bvw),
+			 bvw_table_signals[SIGNAL_GOT_METADATA],
+			 0, NULL);
           break;
         }
       case ASYNC_EOS:
@@ -1797,7 +1794,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
 
   g_value_init (value, G_TYPE_STRING);
 
-  if (bvw->priv->play == NULL)
+  if (bvw->priv->play == NULL || bvw->priv->tagcache == NULL)
     {
       g_value_set_string (value, NULL);
       return;
