@@ -155,17 +155,19 @@ static void bacon_video_widget_realize (GtkWidget *widget);
 static void bacon_video_widget_unrealize (GtkWidget *widget);
 static void bacon_video_widget_finalize (GObject *object);
 
-static gboolean bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event);
+static gboolean bacon_video_widget_expose (GtkWidget *widget,
+		GdkEventExpose *event);
 static gboolean bacon_video_widget_motion_notify (GtkWidget *widget,
-				        GdkEventMotion *event);
+		GdkEventMotion *event);
 static gboolean bacon_video_widget_button_press (GtkWidget *widget,
-				       GdkEventButton *event);
-static gboolean bacon_video_widget_key_press (GtkWidget *widget, GdkEventKey *event);
+		GdkEventButton *event);
+static gboolean bacon_video_widget_key_press (GtkWidget *widget,
+		GdkEventKey *event);
 
 static void bacon_video_widget_size_allocate (GtkWidget *widget,
-				    GtkAllocation *allocation);
+		GtkAllocation *allocation);
 static xine_vo_driver_t * load_video_out_driver (BaconVideoWidget *bvw,
-						 gboolean null_out);
+		gboolean null_out);
 static xine_ao_driver_t * load_audio_out_driver (BaconVideoWidget *bvw);
 static gboolean bacon_video_widget_tick_send (BaconVideoWidget *bvw);
 
@@ -173,6 +175,7 @@ static GtkWidgetClass *parent_class = NULL;
 
 static void xine_event (void *user_data, const xine_event_t *event);
 static gboolean bacon_video_widget_idle_signal (BaconVideoWidget *bvw);
+static void size_changed_cb (GdkScreen *screen, gpointer user_data);
 
 static int bvw_table_signals[LAST_SIGNAL] = { 0 };
 
@@ -568,6 +571,29 @@ load_audio_out_driver (BaconVideoWidget *bvw)
 }
 
 static void
+update_fullscreen_size (BaconVideoWidget *bvw)
+{
+	gdk_screen_get_monitor_geometry (gdk_screen_get_default (),
+			gdk_screen_get_monitor_at_window
+			(gdk_screen_get_default (),
+			 bvw->priv->video_window),
+			&bvw->priv->fullscreen_rect);
+}
+
+static void
+size_changed_cb (GdkScreen *screen, gpointer user_data)
+{
+	BaconVideoWidget *bvw = (BaconVideoWidget *) bvw;
+	update_fullscreen_size (bvw);
+	if (bvw->priv->fullscreen_mode)
+	{
+		gdk_window_resize (bvw->priv->fullscreen_window,
+				bvw->priv->fullscreen_rect.width,
+				bvw->priv->fullscreen_rect.height);
+	}
+}
+
+static void
 load_config_from_gconf (BaconVideoWidget *bvw)
 {
 	GConfClient *conf;
@@ -782,9 +808,9 @@ bacon_video_widget_realize (GtkWidget *widget)
 	bvw->priv->video_window = widget->window;
 
 	/* track configure events of toplevel window */
-	g_signal_connect (GTK_OBJECT (gtk_widget_get_toplevel (widget)),
+	g_signal_connect (G_OBJECT (gtk_widget_get_toplevel (widget)),
 			"configure-event",
-			GTK_SIGNAL_FUNC (configure_cb), bvw);
+			G_CALLBACK (configure_cb), bvw);
 
 	bvw->priv->display = XOpenDisplay (gdk_display_get_name
 			(gdk_display_get_default ()));
@@ -813,6 +839,11 @@ bacon_video_widget_realize (GtkWidget *widget)
 	/* Setup xine events, the screensaver and the event filter */
 	xine_event_create_listener_thread (bvw->priv->ev_queue,
 			xine_event, (void *) bvw);
+
+	/* Setup the default screen stuff */
+	update_fullscreen_size (bvw);
+	g_signal_connect (G_OBJECT (gdk_screen_get_default ()),
+			"size-changed", G_CALLBACK (size_changed_cb), bvw);
 
 	scrsaver_init (bvw->priv->display);
 
@@ -1441,11 +1472,7 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 
 		parent = gdk_window_get_toplevel (bvw->widget.window);
 
-		gdk_screen_get_monitor_geometry (gdk_screen_get_default (),
-				gdk_screen_get_monitor_at_window
-				(gdk_screen_get_default (),
-				 bvw->priv->video_window),
-				&bvw->priv->fullscreen_rect);
+		update_fullscreen_size (bvw);
 
 		attr.x = bvw->priv->fullscreen_rect.x;
 		attr.y = bvw->priv->fullscreen_rect.y;
@@ -1761,6 +1788,8 @@ bacon_video_widget_ratio_fits_screen (BaconVideoWidget *bvw, gfloat ratio)
 
 	new_w = bvw->priv->video_width * ratio;
 	new_h = bvw->priv->video_height * ratio;
+
+	update_fullscreen_size (bvw);
 
 	if (new_w > (bvw->priv->fullscreen_rect.width - 128) ||
 			new_h > (bvw->priv->fullscreen_rect.height - 128))
