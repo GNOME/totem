@@ -28,6 +28,7 @@
 
 #include <stdio.h>
 #include <lirc/lirc_client.h>
+#include <gconf/gconf-client.h>
 
 /* strings that we recognize as commands from lirc */
 #define TOTEM_IR_COMMAND_PLAY "play"
@@ -43,7 +44,6 @@
 
 struct _TotemRemote {
 	GObject parent;
-
 };
 
 enum
@@ -195,20 +195,27 @@ static void
 totem_remote_init (TotemRemote *remote)
 {
 	int fd;
-	
-	
+
 	if (lirc_channel == NULL) {
 		fd = lirc_init ("Totem", 0);
 
 		if (fd < 0) {
-			/* g_message ("Couldn't initialize lirc.\n"); */
+			GConfClient *gc;
+
+			gc = gconf_client_get_default ();
+			if (gc == NULL)
+				return;
+
+			if (gconf_client_get_bool (gc, GCONF_PREFIX"/debug", NULL) != FALSE)
+				g_message ("Couldn't initialize lirc.\n");
+			g_object_unref (gc);
 			return;
 		}
-			
+
 		lirc_channel = g_io_channel_unix_new (fd);
 
 		g_io_add_watch (lirc_channel, G_IO_IN,
-				(GIOFunc) totem_remote_read_code, NULL);	
+				(GIOFunc) totem_remote_read_code, NULL);
 	}
 
 	listeners = g_list_prepend (listeners, remote);
