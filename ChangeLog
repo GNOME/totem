@@ -1,5 +1,21 @@
 2005-03-20  Bastien Nocera  <hadess@hadess.net>
 
+	* .cvsignore: upd
+	* data/mozilla-viewer.glade: set the proper defaults on the
+	seekbar
+	* src/bacon-video-widget-xine.c: (xine_event),
+	(bacon_video_widget_open_with_subtitle): don't push the EOS event
+	when we get a redirect
+	* src/totem-mozilla-viewer.c: (totem_embedded_set_pp_state),
+	(totem_embedded_open), (totem_embedded_play), (on_play_pause),
+	(on_got_redirect), (on_video_button_press_event), (on_eos_event),
+	(on_tick), (totem_embedded_add_children), (main):
+	more work on getting the proper states, make the play button stop
+	working when we reach the end of a stream that Mozilla is feeding us,
+	make the seekbar show the current progress
+
+2005-03-20  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-mozilla-viewer.c: (totem_embedded_set_state),
 	(totem_embedded_open), (on_got_redirect),
 	(on_video_button_press_event), (on_eos_event),

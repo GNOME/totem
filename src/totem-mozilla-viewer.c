@@ -54,6 +54,10 @@ struct TotemEmbedded {
 	TotemStates state;
 	GdkCursor *cursor;
 
+	/* Seek bits */
+	GtkAdjustment *seekadj;
+	GtkWidget *seek;
+
 	/* XEmbed */
 	gboolean embedded_done;
 };
@@ -108,6 +112,15 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 	emb->state = state;
 }
 
+static void
+totem_embedded_set_pp_state (TotemEmbedded *emb, gboolean state)
+{
+	GtkWidget *item;
+
+	item = glade_xml_get_widget (emb->xml, "pp_button");
+	gtk_widget_set_sensitive (item, state);
+}
+
 static gboolean
 totem_embedded_open (TotemEmbedded *emb)
 {
@@ -120,6 +133,8 @@ totem_embedded_open (TotemEmbedded *emb)
 	if (retval == FALSE)
 	{
 		char *msg, *disp;
+
+		totem_embedded_set_state (emb, STATE_STOPPED);
 
 		//FIXME if emb->filename is fd://0 or stdin:///
 		//we should use a better name than that
@@ -136,10 +151,18 @@ totem_embedded_open (TotemEmbedded *emb)
 
 		g_error_free (err);
 	} else {
-		totem_embedded_set_state (emb, STATE_PLAYING);
+		totem_embedded_set_state (emb, STATE_PAUSED);
+		totem_embedded_set_pp_state (emb, TRUE);
 	}
 
 	return retval;
+}
+
+static void
+totem_embedded_play (TotemEmbedded *emb)
+{
+	if (bacon_video_widget_play (emb->bvw, NULL))
+		totem_embedded_set_state (emb, STATE_PLAYING);
 }
 
 static void
@@ -149,8 +172,7 @@ on_play_pause (GtkWidget *widget, TotemEmbedded *emb)
 		bacon_video_widget_pause (emb->bvw);
 		totem_embedded_set_state (emb, STATE_PAUSED);
 	} else {
-		if (bacon_video_widget_play (emb->bvw, NULL))
-			totem_embedded_set_state (emb, STATE_PLAYING);
+		totem_embedded_play (emb);
 	}
 }
 
@@ -176,9 +198,10 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 	g_free (emb->filename);
 	emb->filename = new_mrl;
 	bacon_video_widget_close (emb->bvw);
+	totem_embedded_set_state (emb, STATE_STOPPED);
 
 	if (totem_embedded_open (emb) != FALSE)
-		bacon_video_widget_play (emb->bvw, NULL);
+		totem_embedded_play (emb);
 }
 
 static gboolean
@@ -193,9 +216,10 @@ on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 		emb->filename = emb->href;
 		emb->href = NULL;
 		bacon_video_widget_close (emb->bvw);
+		totem_embedded_set_state (emb, STATE_STOPPED);
 
 		if (totem_embedded_open (emb) != FALSE)
-			bacon_video_widget_play (emb->bvw, NULL);
+			totem_embedded_play (emb);
 
 		return TRUE;
 	}
@@ -207,6 +231,25 @@ static void
 on_eos_event (GtkWidget *bvw, TotemEmbedded *emb)
 {
 	totem_embedded_set_state (emb, STATE_STOPPED);
+	gtk_adjustment_set_value (emb->seekadj, 0);
+	if (strcmp (emb->filename, "fd://0") == 0) {
+		totem_embedded_set_pp_state (emb, FALSE);
+	}
+}
+
+static void
+on_tick (GtkWidget *bvw,
+		gint64 current_time,
+		gint64 stream_length,
+		float current_position,
+		gboolean seekable,
+		TotemEmbedded *emb)
+{
+	if (emb->state != STATE_STOPPED) {
+		gtk_widget_set_sensitive (emb->seek, seekable);
+		gtk_adjustment_set_value (emb->seekadj,
+				current_position * 65535);
+	}
 }
 
 static void
@@ -228,7 +271,7 @@ totem_embedded_add_children (TotemEmbedded *emb)
 	gtk_container_add (GTK_CONTAINER (emb->window), child);
 
 	emb->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new
-			(-1, -1, FALSE, &err));
+			(-1, -1, BVW_USE_TYPE_VIDEO, &err));
 
 	if (emb->bvw == NULL)
 	{
@@ -237,16 +280,24 @@ totem_embedded_add_children (TotemEmbedded *emb)
 			g_error_free (err);
 	}
 
+	//FIXME we need a decent volume controller
+	bacon_video_widget_set_volume (emb->bvw, 50);
+
 	g_signal_connect (G_OBJECT(emb->bvw), "got-redirect",
 			G_CALLBACK (on_got_redirect), emb);
 	g_signal_connect (G_OBJECT (emb->bvw), "eos",
 			G_CALLBACK (on_eos_event), emb);
 	g_signal_connect (G_OBJECT(emb->bvw), "button-press-event",
 			G_CALLBACK (on_video_button_press_event), emb);
+	g_signal_connect (G_OBJECT(emb->bvw), "tick",
+			G_CALLBACK (on_tick), emb);
 
 	container = glade_xml_get_widget (emb->xml, "hbox4");
 	gtk_container_add (GTK_CONTAINER (container), GTK_WIDGET (emb->bvw));
 	gtk_widget_show (GTK_WIDGET (emb->bvw));
+
+	emb->seek = glade_xml_get_widget (emb->xml, "time_hscale");
+	emb->seekadj = gtk_range_get_adjustment (GTK_RANGE (emb->seek));
 
 	pp_button = glade_xml_get_widget (emb->xml, "pp_button");
 	g_signal_connect (G_OBJECT (pp_button), "clicked",
@@ -375,7 +426,7 @@ int main (int argc, char **argv)
 	}
 
 	if (totem_embedded_open (emb) != FALSE)
-		bacon_video_widget_play (emb->bvw, NULL);
+		totem_embedded_play (emb);
 
 	gtk_main ();
 

@@ -164,6 +164,7 @@ struct BaconVideoWidgetPrivate {
 	TvOutType tvout;
 	gboolean is_live;
 	char *codecs_path;
+	gboolean got_redirect;
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
@@ -1341,6 +1342,9 @@ xine_event (void *user_data, const xine_event_t *event)
 		}
 		break;
 	case XINE_EVENT_UI_PLAYBACK_FINISHED:
+		if (bvw->priv->got_redirect != FALSE)
+			break;
+
 		data = g_new0 (signal_data, 1);
 		data->signal = EOS_ASYNC;
 		g_async_queue_push (bvw->priv->queue, data);
@@ -1377,6 +1381,7 @@ xine_event (void *user_data, const xine_event_t *event)
 		data->msg = g_strdup (ref->mrl);
 		g_async_queue_push (bvw->priv->queue, data);
 		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
+		bvw->priv->got_redirect = TRUE;
 		break;
 	case XINE_EVENT_UI_MESSAGE:
 		xine_event_message (bvw, (xine_ui_message_data_t *)event->data);
@@ -1909,6 +1914,8 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
 	g_return_val_if_fail (bvw->priv->mrl == NULL, FALSE);
+
+	bvw->priv->got_redirect = FALSE;
 
 	if (subtitle_uri != NULL)
 	{
