@@ -69,6 +69,7 @@ typedef struct
 	GtkXineError error_type;
 	char *message;		/* or NULL */
 	guint keyval;		/* for KEY_PRESS events */
+	GList *list;		/* for the DND events */
 } GtkXineSignal;
 
 /* Signals */
@@ -76,6 +77,7 @@ enum {
 	ERROR,
 	MOUSE_MOTION,
 	KEY_PRESS,
+	DND,
 	EOS,
 	TITLE_CHANGE,
 	LAST_SIGNAL
@@ -275,6 +277,15 @@ gtk_xine_class_init (GtkXineClass *klass)
 				NULL, NULL,
 				g_cclosure_marshal_VOID__UINT,
 				G_TYPE_NONE, 1, G_TYPE_UINT);
+
+	gtx_table_signals[DND] =
+		g_signal_new ("dnd",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (GtkXineClass, dnd),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__POINTER,
+				G_TYPE_NONE, 1, G_TYPE_POINTER);
 
 	gtx_table_signals[EOS] =
 		g_signal_new ("eos",
@@ -747,6 +758,18 @@ generate_mouse_event (GtkXine *gtx, XEvent *event, gboolean is_motion)
 	}
 }
 
+static void
+gtk_xine_process_file_list (GtkXine *gtx, GList *list)
+{
+	GtkXineSignal *signal;
+
+	signal = g_new0 (GtkXineSignal, 1);
+	signal->type = DND;
+	signal->list = list;
+	g_async_queue_push (gtx->priv->queue, signal);
+	g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
+}
+
 static void *
 xine_thread (void *gtx_gen)
 {
@@ -816,35 +839,29 @@ xine_thread (void *gtx_gen)
 	return NULL;
 }
 
-//FIXME
 static GdkFilterReturn
 gtk_xine_filter_events (GdkXEvent *xevent, GdkEvent *event, gpointer data)
 {
-#if 0
 	XEvent *xev = (XEvent *) xevent;
 	GtkXine *gtx = (GtkXine *) data;
-
-	g_message ("xev->type: %d", xev->type);
+	GList *list;
 
 	switch (xev->type)
 	{
 	case ClientMessage:
-		XLockDisplay (gtx->priv->display);
-		wXDNDProcessClientMessage (&(xev->xclient));
-		XUnlockDisplay (gtx->priv->display);
+		if (wXDNDProcessClientMessage (&(xev->xclient)) == False)
+			return GDK_FILTER_CONTINUE;
 		break;
 	case SelectionNotify:
-		XLockDisplay (gtx->priv->display);
-		wXDNDProcessSelection(xev);
-		XUnlockDisplay (gtx->priv->display);
+		list = wXDNDProcessSelection (gtx->priv->video_window, xev);
+		if (list != NULL)
+			gtk_xine_process_file_list (gtx, list);
 		break;
 	default:
 		return GDK_FILTER_CONTINUE;
 	}
 
 	return GDK_FILTER_REMOVE;
-#endif
-	return GDK_FILTER_CONTINUE;
 }
 
 static gboolean
@@ -917,7 +934,7 @@ gtk_xine_realize (GtkWidget *widget)
 		      | KeyPressMask | PropertyChangeMask);
 
 	/* Add the DND setup */
-	wXDNDInitializeAtoms ();
+	wXDNDInitialize ();
 	wXDNDMakeAwareness(gtx->priv->video_window);
 
 	/* load audio, video drivers */
@@ -998,6 +1015,11 @@ gtk_xine_idle_signal (GtkXine *gtx)
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[KEY_PRESS],
 				0, signal->keyval);
+		break;
+	case DND:
+		g_signal_emit (G_OBJECT (gtx),
+				gtx_table_signals[DND],
+				0, signal->list);
 		break;
 	case EOS:
 		g_signal_emit (G_OBJECT (gtx),

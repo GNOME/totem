@@ -2,11 +2,12 @@
 #ifndef _XDND_H_
 #define _XDND_H_
 
+#include <glib.h>
 #include <X11/X.h>
 #include <X11/Xlib.h>
 
 void wXDNDInitializeAtoms(void);
-Bool wXDNDProcessSelection(XEvent *event);
+GList *wXDNDProcessSelection(Window window, XEvent *event);
 Bool wXDNDProcessClientMessage(XClientMessageEvent *event);
 void wXDNDMakeAwareness(Window window);
 void wXDNDClearAwareness(Window window);

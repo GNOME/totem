@@ -1,5 +1,21 @@
 2003-01-02  Bastien Nocera  <hadess@hadess.net>
 
+	* README: upd
+	* src/gtk-xine.c: (gtk_xine_class_init),
+	(gtk_xine_process_file_list), (gtk_xine_filter_events),
+	(gtk_xine_realize), (gtk_xine_idle_signal):
+	* src/gtk-xine.h:
+	* src/totem.c: (on_dnd_event), (totem_callback_connect),
+	(video_widget_create):
+	* src/xdnd.c: (wXDNDInitialize), (wXDNDMakeAwareness),
+	(wXDNDClearAwareness), (wXDNDProcessSelection),
+	(wXDNDProcessClientMessage):
+	* src/xdnd.h: get the DND code from MPlayer instead of Window Maker,
+	glib-ise a bit the whole thing, and clean up the code.
+	DND now works on the video playback canvas
+
+2003-01-02  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am: build fixes
 
 2003-01-02  Bastien Nocera  <hadess@hadess.net>

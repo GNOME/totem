@@ -1718,6 +1718,64 @@ on_video_key_press_event (GtkWidget *win, guint keyval, gpointer user_data)
 	return totem_action_handle_key (totem, keyval);
 }
 
+static void
+on_dnd_event (GtkXine *gtx, GList *file_list, gpointer user_data)
+{
+	Totem *totem = (Totem *)user_data;
+	GList *p;
+	gboolean cleared = FALSE;
+
+	for (p = file_list; p != NULL; p = p->next)
+	{
+		char *filename;
+
+		if (p->data == NULL)
+			continue;
+
+		/* We can't use g_filename_from_uri, as we don't know if
+		 * the uri is in locale or UTF8 encoding */
+		filename = gnome_vfs_get_local_path_from_uri (p->data);
+		if (filename == NULL)
+			filename = g_strdup (p->data);
+
+		if (filename != NULL &&
+				(g_file_test (filename, G_FILE_TEST_IS_REGULAR
+					      | G_FILE_TEST_EXISTS)
+				 || strstr (filename, "://") != NULL))
+		{
+			if (cleared == FALSE)
+			{
+				/* The function that calls us knows better
+				 * if we should be doing something with the 
+				 * changed playlist ... */
+				g_signal_handlers_disconnect_by_func
+					(G_OBJECT (totem->playlist),
+					 playlist_changed_cb, (gpointer) totem);                                gtk_playlist_clear (totem->playlist);
+					 cleared = TRUE;
+			}
+			gtk_playlist_add_mrl (totem->playlist, filename, NULL);
+		}               
+		g_free (filename);
+		g_free (p->data);
+	}
+
+	g_list_free (file_list);
+
+	/* ... and reconnect because we're nice people */
+	if (cleared == TRUE)
+	{
+		char *mrl;
+
+		g_signal_connect (G_OBJECT (totem->playlist),
+				"changed", G_CALLBACK (playlist_changed_cb),
+				(gpointer) totem);
+		mrl = gtk_playlist_get_current_mrl (totem->playlist);
+		totem_action_set_mrl (totem, mrl);
+		g_free (mrl);
+		totem_action_play (totem, 0);
+	}
+}
+
 static int
 on_window_key_press_event (GtkWidget *win, GdkEventKey *event,
 		                gpointer user_data)
@@ -1847,6 +1905,7 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (on_playlist_button_toggled), totem);
 
 	/* Drag'n'Drop */
+	//FIXME
 	item = glade_xml_get_widget (totem->xml, "frame1");
 	g_signal_connect (G_OBJECT (item), "drag_data_received",
 			G_CALLBACK (drop_cb), totem);
@@ -1983,19 +2042,18 @@ video_widget_create (Totem *totem)
 			"error",
 			G_CALLBACK (on_error_event),
 			totem);
-	g_signal_connect (G_OBJECT(totem->gtx),
+	g_signal_connect (G_OBJECT (totem->gtx),
 			"key-press",
 			G_CALLBACK (on_video_key_press_event),
+			totem);
+	g_signal_connect (G_OBJECT(totem->gtx),
+			"dnd",
+			G_CALLBACK (on_dnd_event),
 			totem);
 	g_signal_connect (G_OBJECT(totem->gtx),
 			"title-change",
 			G_CALLBACK (on_title_change_event),
 			totem);
-
-	g_signal_connect (G_OBJECT (totem->gtx), "drag_data_received",
-			G_CALLBACK (drop_cb), totem);
-	gtk_drag_dest_set (totem->gtx, GTK_DEST_DEFAULT_ALL,
-			target_table, 1, GDK_ACTION_COPY);
 
 	g_object_add_weak_pointer (G_OBJECT (totem->gtx),
 			(void**)&(totem->gtx));
