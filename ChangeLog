@@ -1,5 +1,14 @@
 2003-04-24  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (on_video_motion_notify_event),
+	(totem_action_handle_scroll), (totem_action_handle_volume_scroll):
+	Increase the timeout for the popup windows (5 seconds) and make
+	sure that wheel mouse scrolls are taking into account as events, so
+	that the window doesn't disappear in the middle of a scroll
+	(Closes: #109222)
+
+2003-04-24  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c: (bacon_video_widget_realize),
 	(bacon_video_widget_unrealize),
 	(bacon_video_widget_set_fullscreen):

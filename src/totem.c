@@ -2097,7 +2097,7 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 	gtk_widget_show_all (totem->control_popup);
 	bacon_video_widget_set_show_cursor (totem->bvw, TRUE);
 
-	totem->popup_timeout = gtk_timeout_add (2000,
+	totem->popup_timeout = gtk_timeout_add (5000,
 			(GtkFunction) popup_hide, totem);
 	totem->popup_in_progress = FALSE;
 
@@ -2283,6 +2283,8 @@ totem_action_handle_scroll (Totem *totem, GdkScrollDirection direction)
 {
 	gboolean retval = TRUE;
 
+	on_video_motion_notify_event (NULL, NULL, totem);
+
 	switch (direction) {
 	case GDK_SCROLL_UP:
 		totem_action_seek_relative
@@ -2303,6 +2305,8 @@ static gboolean
 totem_action_handle_volume_scroll (Totem *totem, GdkScrollDirection direction)
 {
 	gboolean retval = TRUE;
+
+	on_video_motion_notify_event (NULL, NULL, totem);
 
 	switch (direction) {
 	case GDK_SCROLL_UP:
