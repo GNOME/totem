@@ -365,7 +365,8 @@ bacon_video_widget_motion_notify (GtkWidget *widget,
           GST_TYPE_NAVIGATION);
     }
 
-    if (videosink && GST_IS_NAVIGATION (videosink)) {
+    if (videosink && GST_IS_NAVIGATION (videosink) &&
+        GST_STATE (videosink) >= GST_STATE_PAUSED) {
       GstNavigation *nav = GST_NAVIGATION (videosink);
 
       gst_navigation_send_mouse_event (nav,
@@ -399,7 +400,8 @@ bacon_video_widget_button_press (GtkWidget *widget,
          GST_TYPE_NAVIGATION);
     }
 
-    if (videosink && GST_IS_NAVIGATION (videosink)) {
+    if (videosink && GST_IS_NAVIGATION (videosink) &&
+        GST_STATE (videosink) >= GST_STATE_PAUSED) {
       GstNavigation *nav = GST_NAVIGATION (videosink);
 
       gst_navigation_send_mouse_event (nav,
@@ -433,7 +435,8 @@ bacon_video_widget_button_release (GtkWidget *widget,
           GST_TYPE_NAVIGATION);
     }
 
-    if (videosink && GST_IS_NAVIGATION (videosink)) {
+    if (videosink && GST_IS_NAVIGATION (videosink) &&
+        GST_STATE (videosink) >= GST_STATE_PAUSED) {
       GstNavigation *nav = GST_NAVIGATION (videosink);
 
       gst_navigation_send_mouse_event (nav,

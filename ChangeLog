@@ -3,6 +3,14 @@
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_motion_notify),
 	(bacon_video_widget_button_press),
 	(bacon_video_widget_button_release):
+	  Hm, this requires state checks, else you'll get warnings on
+	  console...
+
+2005-01-10  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_motion_notify),
+	(bacon_video_widget_button_press),
+	(bacon_video_widget_button_release):
 	  Only if media has video, to prevent warnings.
 	(cb_iterate), (state_change):
 	  Change to use g_timeout instead of g_idle, don't sleep inside
