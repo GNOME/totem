@@ -1,5 +1,17 @@
 2003-01-19  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.glade:
+	* src/gtk-xine.c: (gtk_xine_realize), (gtk_xine_can_play),
+	(gtk_xine_get_mrls):
+	* src/gtk-xine.h:
+	* README:
+	* src/totem.c: (drag_video_cb), (totem_action_open_files),
+	(on_play_cd1_activate), (totem_callback_connect): add CDDA support,
+	needs a very very recent xine-lib, and works nicely (where's cddb
+	support though ? ;)
+
+2003-01-19  Bastien Nocera  <hadess@hadess.net>
+
 	* README:
 	* src/totem.c: (drag_video_cb), (video_widget_create): added drag
 	support for the video widget, has a weird interaction with nautilus

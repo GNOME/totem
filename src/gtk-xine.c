@@ -142,7 +142,7 @@ struct GtkXinePrivate {
 	/* Other stuff */
 	int xpos, ypos;
 	gboolean init_finished;
-	gboolean can_dvd, can_vcd;
+	gboolean can_dvd, can_vcd, can_cdda;
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
@@ -896,6 +896,8 @@ gtk_xine_realize (GtkWidget *widget)
 			gtx->priv->can_vcd = TRUE;
 		else if (g_ascii_strcasecmp (autoplug_list[i], "DVD") == 0)
 			gtx->priv->can_dvd = TRUE;
+		else if (g_ascii_strcasecmp (autoplug_list[i], "CDDA") == 0)
+			gtx->priv->can_cdda = TRUE;
 		i++;
 	}
 
@@ -1712,6 +1714,8 @@ gtk_xine_can_play (GtkXine *gtx, MediaType type)
 		return gtx->priv->can_dvd;
 	case MEDIA_VCD:
 		return gtx->priv->can_vcd;
+	case MEDIA_CDDA:
+		return gtx->priv->can_cdda;
 	default:
 		return FALSE;
 	}
@@ -1731,6 +1735,8 @@ G_CONST_RETURN gchar
 		plugin_id = "DVD";
 	else if (type == MEDIA_VCD)
 		plugin_id = "VCD";
+	else if (type == MEDIA_CDDA)
+		plugin_id = "CDDA";
 	else
 		return NULL;
 

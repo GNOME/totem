@@ -112,8 +112,8 @@ static const GtkTargetEntry target_table[] = {
 };
 
 static const GtkTargetEntry source_table[] = {
-	{ "text/plain", 0, 0 },
-//	{ "_NETSCAPE_URL", 0, 0 },
+	{ "_NETSCAPE_URL", 0, 0 },
+	{ "text/uri-list", 0, 1 },
 };
 
 static gboolean popup_hide (Totem *totem);
@@ -744,7 +744,7 @@ drag_video_cb (GtkWidget *widget,
 		gpointer callback_data)
 {
 	Totem *totem = (Totem *) callback_data;
-	char *text;
+	char *text;// = "file:///tmp/";
 	int len;
 
 	g_assert (selection_data != NULL);
@@ -752,8 +752,10 @@ drag_video_cb (GtkWidget *widget,
 	if (totem->mrl == NULL)
 		return;
 
-	text = totem->mrl;
+	text = gnome_vfs_get_uri_from_local_path (totem->mrl);
 	len = strlen (text);
+
+	g_print ("info: %d text: %s len: %d\n", info, text, len);
 
 	gtk_selection_data_set (selection_data,
 			selection_data->target,
@@ -999,7 +1001,9 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 					| G_FILE_TEST_EXISTS)
 				|| strstr (filename, "://") != NULL
 				|| strncmp (filename, "dvd:", 4) == 0
-				|| strncmp (filename, "vcd:", 4) == 0)
+				|| strncmp (filename, "vcd:", 4) == 0
+				|| strncmp (filename, "cdda:", 5) == 0
+				|| strncmp (filename, "cd:", 3) == 0)
 		{
 			g_free (filename);
 
@@ -1020,6 +1024,9 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 				continue;
 			} else if (strcmp (list[i], "vcd:") == 0) {
 				totem_action_play_media (totem, MEDIA_VCD);
+				continue;
+			} else if (strcmp (list[i], "cd:") == 0) {
+				totem_action_play_media (totem, MEDIA_CDDA);
 				continue;
 			} else if (gtk_playlist_add_mrl (totem->playlist,
 						list[i], NULL) == TRUE)
@@ -1123,6 +1130,14 @@ on_play_vcd1_activate (GtkButton *button, gpointer user_data)
 	Totem *totem = (Totem *) user_data;
 
 	totem_action_play_media (totem, MEDIA_VCD);
+}
+
+static void
+on_play_cd1_activate (GtkButton *button, gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+
+	totem_action_play_media (totem, MEDIA_CDDA);
 }
 
 static void
@@ -1980,6 +1995,9 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "play_vcd1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_play_vcd1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "play_audio_cd1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_play_cd1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "play1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_play1_activate), totem);

@@ -59,6 +59,7 @@ typedef enum {
 typedef enum {
 	MEDIA_DVD,
 	MEDIA_VCD,
+	MEDIA_CDDA,
 } MediaType;
 
 typedef enum {

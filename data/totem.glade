@@ -48,12 +48,12 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="play_dvd1">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Play DVD</property>
+			  <property name="label" translatable="yes">Play _DVD</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_play_dvd1_activate" last_modification_time="Fri, 09 Aug 2002 22:46:45 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1055">
+			    <widget class="GtkImage" id="image1073">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-cdrom</property>
 			      <property name="icon_size">1</property>
@@ -69,12 +69,33 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="play_vcd1">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Play VCD</property>
+			  <property name="label" translatable="yes">Play _VCD</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_play_vcd1_activate" last_modification_time="Fri, 09 Aug 2002 22:46:45 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1056">
+			    <widget class="GtkImage" id="image1074">
+			      <property name="visible">True</property>
+			      <property name="stock">gtk-cdrom</property>
+			      <property name="icon_size">1</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
+			</widget>
+		      </child>
+
+		      <child>
+			<widget class="GtkImageMenuItem" id="play_audio_cd1">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">Play _Audio CD</property>
+			  <property name="use_underline">True</property>
+			  <signal name="activate" handler="on_play_cd1_activate" last_modification_time="Sun, 19 Jan 2003 22:48:19 GMT"/>
+
+			  <child internal-child="image">
+			    <widget class="GtkImage" id="image1075">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-cdrom</property>
 			      <property name="icon_size">1</property>
@@ -138,7 +159,7 @@
 			  <signal name="activate" handler="on_take_screenshot1_activate" last_modification_time="Mon, 06 Jan 2003 19:35:01 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1057">
+			    <widget class="GtkImage" id="image1076">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-convert</property>
 			      <property name="icon_size">1</property>
@@ -194,7 +215,7 @@
 			  <accelerator key="F" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1058">
+			    <widget class="GtkImage" id="image1077">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-zoom-fit</property>
 			      <property name="icon_size">1</property>
@@ -216,7 +237,7 @@
 			  <accelerator key="0" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1059">
+			    <widget class="GtkImage" id="image1078">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-zoom-out</property>
 			      <property name="icon_size">1</property>
@@ -238,7 +259,7 @@
 			  <accelerator key="1" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1060">
+			    <widget class="GtkImage" id="image1079">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-zoom-100</property>
 			      <property name="icon_size">1</property>
@@ -260,7 +281,7 @@
 			  <accelerator key="2" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1061">
+			    <widget class="GtkImage" id="image1080">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-zoom-in</property>
 			      <property name="icon_size">1</property>
@@ -288,7 +309,7 @@
 			  <accelerator key="A" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1062">
+			    <widget class="GtkImage" id="image1081">
 			      <property name="visible">True</property>
 			      <property name="stock">gnome-stock-table-fill</property>
 			      <property name="icon_size">1</property>
@@ -315,7 +336,7 @@
 			  <signal name="activate" handler="on_show_playlist1_activate" last_modification_time="Fri, 14 Jun 2002 22:36:54 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1063">
+			    <widget class="GtkImage" id="image1082">
 			      <property name="visible">True</property>
 			      <property name="pixbuf">playlist-16.png</property>
 			      <property name="xalign">0.5</property>
@@ -350,7 +371,7 @@
 			  <accelerator key="m" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1064">
+			    <widget class="GtkImage" id="image1083">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-index</property>
 			      <property name="icon_size">1</property>
@@ -399,7 +420,7 @@
 			  <accelerator key="c" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1065">
+			    <widget class="GtkImage" id="image1084">
 			      <property name="visible">True</property>
 			      <property name="stock">gnome-stock-text-numbered-list</property>
 			      <property name="icon_size">1</property>
@@ -427,7 +448,7 @@
 			  <accelerator key="n" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1066">
+			    <widget class="GtkImage" id="image1085">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-goto-last</property>
 			      <property name="icon_size">1</property>
@@ -449,7 +470,7 @@
 			  <accelerator key="b" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1067">
+			    <widget class="GtkImage" id="image1086">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-goto-first</property>
 			      <property name="icon_size">1</property>
@@ -478,7 +499,7 @@
 			  <accelerator key="Right" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1068">
+			    <widget class="GtkImage" id="image1087">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-go-forward</property>
 			      <property name="icon_size">1</property>
@@ -501,7 +522,7 @@
 			  <accelerator key="Left" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1069">
+			    <widget class="GtkImage" id="image1088">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-go-back</property>
 			      <property name="icon_size">1</property>
@@ -536,7 +557,7 @@
 			  <accelerator key="Up" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1070">
+			    <widget class="GtkImage" id="image1089">
 			      <property name="visible">True</property>
 			      <property name="stock">gnome-stock-volume</property>
 			      <property name="icon_size">1</property>
@@ -558,7 +579,7 @@
 			  <accelerator key="Down" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image1071">
+			    <widget class="GtkImage" id="image1090">
 			      <property name="visible">True</property>
 			      <property name="stock">gnome-stock-volume</property>
 			      <property name="icon_size">1</property>
