@@ -2377,7 +2377,7 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 }
 
 static gboolean
-on_video_button_press_event (GtkButton *button, GdkEventButton *event,
+on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 		Totem *totem)
 {
 	if (event->type == GDK_BUTTON_PRESS && event->button == 3)

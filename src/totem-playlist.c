@@ -56,6 +56,7 @@ struct TotemPlaylistPrivate
 	GtkWidget *treeview;
 	GtkTreeModel *model;
 	GtkTreePath *current;
+	GtkTreeSelection *selection;
 	TotemPlParser *parser;
 
 	/* This is the playing icon */
@@ -412,6 +413,68 @@ drop_cb (GtkWidget     *widget,
 	g_signal_emit (G_OBJECT (playlist),
 			totem_playlist_table_signals[CHANGED], 0,
 			NULL);
+}
+
+static void
+on_copy1_activate (GtkButton *button, TotemPlaylist *playlist)
+{
+	GList *l;
+	GtkTreePath *path;
+	GtkClipboard *clip;
+	char *url;
+	GtkTreeIter iter;
+
+	l = gtk_tree_selection_get_selected_rows (playlist->_priv->selection,
+			NULL);
+	path = l->data;
+
+	gtk_tree_model_get_iter (playlist->_priv->model, &iter, path);
+
+	gtk_tree_model_get (playlist->_priv->model,
+			&iter,
+			URI_COL, &url,
+			-1);
+
+	/* Set both the middle-click and the super-paste buffers */
+	clip = gtk_clipboard_get_for_display
+		(gdk_display_get_default(), GDK_SELECTION_CLIPBOARD);
+	gtk_clipboard_set_text (clip, url, -1);
+	clip = gtk_clipboard_get_for_display
+		(gdk_display_get_default(), GDK_SELECTION_PRIMARY);
+	gtk_clipboard_set_text (clip, url, -1);
+	g_free (url);
+
+	g_list_foreach (l, (GFunc) gtk_tree_path_free, NULL);
+	g_list_free (l);
+}
+
+static gboolean
+treeview_button_pressed (GtkTreeView *treeview, GdkEventButton *event,
+		TotemPlaylist *playlist)
+{
+	GtkTreePath *path;
+	GtkWidget *menu;
+
+	if (event->type != GDK_BUTTON_PRESS
+			|| event->button != 3)
+		return FALSE;
+
+	if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (treeview),
+				event->x, event->y, &path,
+				NULL, NULL, NULL) == FALSE)
+	{
+		return FALSE;
+	}
+
+	gtk_tree_selection_unselect_all (playlist->_priv->selection);
+	gtk_tree_selection_select_path (playlist->_priv->selection, path);
+	gtk_tree_path_free (path);
+
+	menu = glade_xml_get_widget (playlist->_priv->xml, "menu1");
+	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
+			event->button, event->time);
+
+	return TRUE;
 }
 
 static void
@@ -956,12 +1019,16 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 			G_CALLBACK (selection_changed), playlist);
 	g_signal_connect (G_OBJECT (treeview), "row-activated",
 			G_CALLBACK (treeview_row_changed), playlist);
+	g_signal_connect (G_OBJECT (treeview), "button-press-event",
+			G_CALLBACK (treeview_button_pressed), playlist);
 
 	/* Drag'n'Drop */
 	g_signal_connect (G_OBJECT (treeview), "drag_data_received",
 			G_CALLBACK (drop_cb), playlist);
 	gtk_drag_dest_set (treeview, GTK_DEST_DEFAULT_ALL,
 			target_table, 1, GDK_ACTION_COPY);
+
+	playlist->_priv->selection = selection;
 
 	gtk_widget_show (treeview);
 }
@@ -1284,7 +1351,7 @@ totem_playlist_new (const char *glade_filename, GdkPixbuf *playing_pix)
 
 	playlist = TOTEM_PLAYLIST (g_object_new (GTK_TYPE_PLAYLIST, NULL));
 
-	playlist->_priv->xml = glade_xml_new (glade_filename, "vbox4", NULL);
+	playlist->_priv->xml = glade_xml_new (glade_filename, NULL, NULL);
 	if (playlist->_priv->xml == NULL)
 	{
 		totem_playlist_finalize (G_OBJECT (playlist));
@@ -1324,16 +1391,25 @@ totem_playlist_new (const char *glade_filename, GdkPixbuf *playing_pix)
 			G_CALLBACK (totem_playlist_down_files),
 			playlist);
 
+	item = glade_xml_get_widget (playlist->_priv->xml, "copy1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_copy1_activate), playlist);
+
 	gtk_widget_add_events (GTK_WIDGET (playlist), GDK_KEY_PRESS_MASK);
 	g_signal_connect (G_OBJECT (playlist), "key_press_event",
 			G_CALLBACK (totem_playlist_key_press), playlist);
 
+	/* Reparent the vbox */
+	item = glade_xml_get_widget (playlist->_priv->xml, "dialog-vbox1");
 	container = glade_xml_get_widget (playlist->_priv->xml, "vbox4");
+	g_object_ref (container);
+	gtk_container_remove (GTK_CONTAINER (item), container);
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (playlist)->vbox),
 			container,
 			TRUE,       /* expand */
 			TRUE,       /* fill */
 			0);         /* padding */
+	g_object_unref (container);
 
 	playlist->_priv->treeview = glade_xml_get_widget
 		(playlist->_priv->xml, "treeview1");
