@@ -1,5 +1,17 @@
 2003-04-04  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-playlist.c: (my_gnome_vfs_get_mime_type_with_data),
+	(my_eel_read_entire_file), (gtk_playlist_add_m3u),
+	(gtk_playlist_add_pls), (gtk_playlist_add_asx),
+	(gtk_playlist_add_ra), (parse_smil_video_entry),
+	(parse_smil_entry), (parse_smil_entries), (gtk_playlist_add_smil),
+	(gtk_playlist_add_mrl): parse SMIL playlists correctly so not only
+	the last entry is added to the playlist, get some data from the file
+	while getting the mime-type, so we can poke at it for our dual 
+	playlist/video formats, like "Real Audio"
+
+2003-04-04  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-playlist.c: (gtk_playlist_mrl_to_title), (init_treeview),
 	(gtk_playlist_add_one_mrl), (parse_asx_entry), (parse_asx_entries),
 	(gtk_playlist_add_asx), (parse_smil_entry), (parse_smil_entries),

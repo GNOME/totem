@@ -36,6 +36,7 @@
 #include "debug.h"
 
 #define READ_CHUNK_SIZE 8192
+#define MIME_READ_CHUNK_SIZE 1024
 
 struct GtkPlaylistPrivate
 {
@@ -194,6 +195,65 @@ gtk_playlist_mrl_to_title (const gchar *mrl)
 	return filename_for_display;
 }
 
+const char *
+my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data)
+{
+	GnomeVFSResult result;
+	GnomeVFSHandle *handle;
+	char *buffer;
+	const char *mimetype;
+	GnomeVFSFileSize total_bytes_read;
+	GnomeVFSFileSize bytes_read;
+
+	*data = NULL;
+
+	/* Open the file. */
+	result = gnome_vfs_open (&handle, uri, GNOME_VFS_OPEN_READ);
+	if (result != GNOME_VFS_OK) {
+		return NULL;
+	}
+
+	/* Read the whole thing. */
+	buffer = NULL;
+	total_bytes_read = 0;
+	do {
+		buffer = g_realloc (buffer, total_bytes_read
+				+ MIME_READ_CHUNK_SIZE);
+		result = gnome_vfs_read (handle,
+				buffer + total_bytes_read,
+				MIME_READ_CHUNK_SIZE,
+				&bytes_read);
+		if (result != GNOME_VFS_OK && result != GNOME_VFS_ERROR_EOF) {
+			g_free (buffer);
+			gnome_vfs_close (handle);
+			return NULL;
+		}
+
+		/* Check for overflow. */
+		if (total_bytes_read + bytes_read < total_bytes_read) {
+			g_free (buffer);
+			gnome_vfs_close (handle);
+			return NULL;
+		}
+
+		total_bytes_read += bytes_read;
+	} while (result == GNOME_VFS_OK
+			&& total_bytes_read < MIME_READ_CHUNK_SIZE);
+
+	/* Close the file. */
+	result = gnome_vfs_close (handle);
+	if (result != GNOME_VFS_OK) {
+		g_free (buffer);
+		return NULL;
+	}
+
+	/* Return the file. */
+	*data = g_realloc (buffer, total_bytes_read);
+	mimetype = gnome_vfs_get_mime_type_for_data (*data, total_bytes_read);
+
+	return mimetype;
+}
+
 static void
 gtk_tree_selection_has_selected_foreach (GtkTreeModel *model,
 		GtkTreePath *path, GtkTreeIter *iter, gpointer user_data)
@@ -217,7 +277,7 @@ gtk_tree_selection_has_selected (GtkTreeSelection *selection)
 }
 
 static GnomeVFSResult
-eel_read_entire_file (const char *uri,
+my_eel_read_entire_file (const char *uri,
 		int *file_size,
 		char **file_contents)
 {
@@ -932,7 +992,7 @@ gtk_playlist_add_m3u (GtkPlaylist *playlist, const char *mrl)
 	char *contents, **lines;
 	int size, i;
 
-	if (eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
+	if (my_eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
 
 	contents = g_realloc (contents, size + 1);
@@ -965,7 +1025,7 @@ gtk_playlist_add_pls (GtkPlaylist *playlist, const char *mrl)
 	char *contents, **lines;
 	int size, i, num_entries;
 
-	if (eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
+	if (my_eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
 
 	contents = g_realloc (contents, size + 1);
@@ -1099,7 +1159,7 @@ gtk_playlist_add_asx (GtkPlaylist *playlist, const char *mrl)
 	int size;
 	gboolean retval = FALSE;
 
-	if (eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
+	if (my_eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
 
 	doc = xmlParseMemory(contents, size);
@@ -1135,13 +1195,34 @@ gtk_playlist_add_asx (GtkPlaylist *playlist, const char *mrl)
 }
 
 static gboolean
-gtk_playlist_add_ra (GtkPlaylist *playlist, const char *mrl)
+gtk_playlist_add_ra (GtkPlaylist *playlist, const char *mrl, gpointer data)
 {
 	//FIXME we need to have some way to differentiate the playlists
 	//and the videos
 
 	/* How nice, same format as m3u it seems */
 	return gtk_playlist_add_m3u (playlist, mrl);
+}
+
+static gboolean
+parse_smil_video_entry (GtkPlaylist *playlist, char *base,
+		char *url, char *title)
+{
+	gboolean retval = FALSE;
+
+	if (strstr (url, "://") != NULL || url[0] == '/')
+	{
+		retval = gtk_playlist_add_one_mrl (playlist, url, title);
+	} else {
+		char *fullpath;
+
+		fullpath = g_strdup_printf ("%s/%s", base, url);
+		retval = gtk_playlist_add_one_mrl (playlist, fullpath, title);
+
+		g_free (fullpath);
+	}
+
+	return retval;
 }
 
 static gboolean
@@ -1165,29 +1246,17 @@ parse_smil_entry (GtkPlaylist *playlist, char *base, xmlDocPtr doc,
 		{
 			url = xmlGetProp (node, "src");
 			title = xmlGetProp (node, "title");
-			continue;
+
+			if (url != NULL)
+			{
+				retval = parse_smil_video_entry (playlist,
+						base, url, title);
+			}
+
+			g_free (title);
+			g_free (url);
 		}
 	}
-
-	if (url == NULL)
-	{
-		g_free (title);
-		return FALSE;
-	}
-
-	if (strstr (url, "://") != NULL || url[0] == '/')
-		retval = gtk_playlist_add_one_mrl (playlist, url, title);
-	else {
-		char *fullpath;
-
-		fullpath = g_strdup_printf ("%s/%s", base, url);
-		retval = gtk_playlist_add_one_mrl (playlist, fullpath, title);
-
-		g_free (fullpath);
-	}
-
-	g_free (title);
-	g_free (url);
 
 	return retval;
 }
@@ -1206,9 +1275,11 @@ parse_smil_entries (GtkPlaylist *playlist, char *base, xmlDocPtr doc,
 
 		if (g_ascii_strcasecmp (node->name, "body") == 0)
 		{
-			/* Whee found an entry here, find the REF and TITLE */
-			if (parse_smil_entry (playlist, base, doc, node) == TRUE)
+			if (parse_smil_entry (playlist, base,
+						doc, node) == TRUE)
+			{
 				retval = TRUE;
+			}
 		}
 
 	}
@@ -1225,7 +1296,7 @@ gtk_playlist_add_smil (GtkPlaylist *playlist, const char *mrl)
 	int size;
 	gboolean retval = FALSE;
 
-	if (eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
+	if (my_eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
 
 	doc = xmlParseMemory(contents, size);
@@ -1272,29 +1343,40 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 		const char *display_name)
 {
 	const char *mimetype;
+	gpointer data;
+	gboolean retval = FALSE;
 
 	g_return_val_if_fail (mrl != NULL, FALSE);
 
-	mimetype = gnome_vfs_get_mime_type (mrl);
+	mimetype = my_gnome_vfs_get_mime_type_with_data (mrl, &data);
 
 	if (mimetype == NULL)
 	{
 		D("adding '%s' with no mimetype", mrl);
+		g_free (data);
 		return gtk_playlist_add_one_mrl (playlist, mrl, display_name);
 	} else if (strcmp ("audio/x-mpegurl", mimetype) == 0) {
+		g_free (data);
 		return gtk_playlist_add_m3u (playlist, mrl);
 	} else if (strcmp ("audio/x-scpls", mimetype) == 0) {
+		g_free (data);
 		return gtk_playlist_add_pls (playlist, mrl);
 	} else if (strcmp ("audio/x-ms-asx", mimetype) == 0) {
+		//FIXME
 		return gtk_playlist_add_asx (playlist, mrl);
 	} else if (strcmp ("audio/x-real-audio", mimetype) == 0
 			|| strcmp ("audio/x-pn-realaudio", mimetype) == 0) {
-		return gtk_playlist_add_ra (playlist, mrl);
+		retval = gtk_playlist_add_ra (playlist, mrl, data);
+		g_free (data);
+		return retval;
 	} else if (strcmp ("application/x-smil", mimetype) == 0) {
+		g_free (data);
 		return gtk_playlist_add_smil (playlist, mrl);
 	} else if (strcmp ("x-directory/normal", mimetype) == 0) {
 		//FIXME Load all the files in the dir ?
 	}
+
+	g_free (data);
 
 	if (strncmp ("audio/", mimetype, 6) != 0
 			&& strncmp ("video/", mimetype, 6) != 0
