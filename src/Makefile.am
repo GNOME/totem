@@ -96,10 +96,10 @@ totem_SOURCES = 					\
 	totem-statusbar.c		\
 	totem-statusbar.h
 
-totem_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) $(CURL_LIBS) $(RANDR_LIBS)
+totem_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) $(CURL_LIBS) $(RANDR_LIBS)
 
 totem_video_thumbnailer_SOURCES = $(VIDEOWIDGET) totem-video-thumbnailer.c
-totem_video_thumbnailer_LDADD = $(GTK_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
+totem_video_thumbnailer_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
 
 libexec_PROGRAMS = totem-properties-page
 totem_properties_page_SOURCES =		\
@@ -108,7 +108,7 @@ totem_properties_page_SOURCES =		\
 	bacon-video-widget-properties.h	\
 	totem-properties-page.c
 
-totem_properties_page_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
+totem_properties_page_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
 
 vanity_SOURCES =					\
 	$(VIDEOWIDGET)					\
@@ -118,10 +118,10 @@ vanity_SOURCES =					\
 	gnome-password-dialog.c gnome-password-dialog.h	\
 	vanity.c
 
-vanity_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
+vanity_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
 
 bvw_test_SOURCES = $(VIDEOWIDGET)  bvw-test.c
-bvw_test_LDADD = $(GTK_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
+bvw_test_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
 
 INCLUDES = 						\
 	-D_REENTRANT					\

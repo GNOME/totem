@@ -1,5 +1,11 @@
 2004-01-10  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* src/Makefile.am: explicitely link against libX11 to avoid problems
+	with crappy linkers (like the Solaris one) (Closes: #130894)
+
+2004-01-10  Bastien Nocera  <hadess@hadess.net>
+
 	* README: upd
 	* src/bacon-video-widget-xine.c: (bacon_video_widget_idle_signal):
 	the automatic resize on new stream should be of 1:1, apparently, any

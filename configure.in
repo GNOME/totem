@@ -152,10 +152,9 @@ AC_SUBST(EXTRA_GNOME_CFLAGS)
 AC_SUBST(EXTRA_GNOME_LIBS)
 AC_DEFINE(HAVE_LIBGNOME_DESKTOP, 1, [defined if you have gnome-desktop])
 
-PKG_CHECK_MODULES(GTK, gtk+-2.0 $MM gthread-2.0)
+PKG_CHECK_MODULES(GTK, gtk+-x11-2.0 $MM gthread-2.0)
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
-
 
 dnl LIRC
 
@@ -188,7 +187,7 @@ LIBS="-L$x_libraries $LIBS"
 
 XTEST_LIBS=""
 AC_CHECK_LIB(Xtst, XTestFakeKeyEvent,
-		XTEST_LIBS="-lXtst -L$x_libraries"
+		XTEST_LIBS="-lX11 -lXtst -L$x_libraries"
 		AC_DEFINE(HAVE_XTEST, 1, [defined if you have XTest library]),
 		,
 		"-L$x_libraries")
@@ -198,12 +197,16 @@ have_randr=no
 AC_CHECK_LIB(Xrandr, XRRUpdateConfiguration,
 	[AC_CHECK_HEADER(X11/extensions/Xrandr.h,
 		have_randr=yes
-		RANDR_LIBS="-lXrandr -lXrender"
+		RANDR_LIBS="-lX11 -lXrandr -lXrender"
 		AC_DEFINE(HAVE_RANDR, 1, Have the Xrandr extension library),
 		:, [#include <X11/Xlib.h>])], : ,
-	-lXrandr -lXrender $x_libs)
+	"-L$x_libraries -lXrandr -lXrender")
 AM_CONDITIONAL(HAVE_RANDR, [test $have_randr = yes])
 AC_SUBST(RANDR_LIBS)
+
+dnl Explicitely link against libX11 to avoid problems with crappy linkers
+X_LIBS="-L$x_libraries -lX11"
+AC_SUBST(X_LIBS)
 
 dnl Multimedia keys
 have_xfree=no
