@@ -1051,6 +1051,8 @@ parse_stream_info (BaconVideoWidget *bvw)
     GParamSpec *pspec;
     GEnumValue *val;
 
+    if (!info)
+      break;
     g_object_get (info, "type", &type, NULL);
     pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
     val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
@@ -1294,6 +1296,8 @@ get_list_of_type (BaconVideoWidget * bvw, const gchar * type_name)
     GParamSpec *pspec;
     GEnumValue *val;
 
+    if (!info)
+      break;
     g_object_get (info, "type", &type, NULL);
     pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
     val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
@@ -2747,6 +2751,8 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
     GParamSpec *pspec;
     GEnumValue *val;
 
+    if (!info)
+      break;
     g_object_get (info, "type", &type, NULL);
     pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
     val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
