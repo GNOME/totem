@@ -10,7 +10,9 @@ EXTRA_DIST =			\
 	intltool-update.in	\
 	AUTHORS NEWS		\
 	totem.spec.in		\
-	totem.spec
+	totem.spec		\
+	omf.make		\
+	xmldocs.make
 
 CLEANFILES = totem.spec
 
