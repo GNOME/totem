@@ -230,6 +230,20 @@ bacon_video_widget_vw_allocate (GtkWidget * widget, GtkAllocation  *allocation,
 }
 
 static gboolean
+bacon_video_widget_vw_exposed (GtkWidget *widget, GdkEventExpose *event,
+                               BaconVideoWidget *bvw)
+{
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  
+  if (GST_IS_X_OVERLAY (bvw->priv->xoverlay)) {
+    gst_x_overlay_expose (bvw->priv->xoverlay);
+  }
+  
+  return FALSE;
+}
+
+static gboolean
 bacon_video_widget_button_press (GtkWidget *widget, GdkEventButton *event,
                                  BaconVideoWidget *bvw)
 {
@@ -375,7 +389,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   /* GtkWidget */
   widget_class->size_request = bacon_video_widget_size_request;
   widget_class->size_allocate = bacon_video_widget_size_allocate;
-
+  
   /* GObject */
   object_class->set_property = bacon_video_widget_set_property;
   object_class->get_property = bacon_video_widget_get_property;
@@ -1920,6 +1934,9 @@ bacon_video_widget_new (int width, int height,
                           bvw);
   g_signal_connect_after (G_OBJECT (bvw->priv->vw), "realize",
                           G_CALLBACK (bacon_video_widget_vw_realized),
+                          bvw);
+  g_signal_connect_after (G_OBJECT (bvw->priv->vw), "expose-event",
+                          G_CALLBACK (bacon_video_widget_vw_exposed),
                           bvw);
     
   gtk_box_pack_end (GTK_BOX (bvw), GTK_WIDGET (bvw->priv->vw), TRUE, TRUE, 0);

@@ -301,70 +301,70 @@ gst_video_widget_expose (GtkWidget * widget, GdkEventExpose * event)
   if (GTK_WIDGET_VISIBLE (widget) && GTK_WIDGET_MAPPED (widget))
     {
       if ((vw->priv->logo_focused) && (vw->priv->logo_pixbuf))
-	{
-	  GdkPixbuf *frame;
-	  guchar *pixels;
-	  int rowstride;
-	  gint width, height, alloc_width, alloc_height, logo_x, logo_y;
-	  gfloat width_ratio, height_ratio;
+        {
+          GdkPixbuf *frame;
+          guchar *pixels;
+          int rowstride;
+          gint width, height, alloc_width, alloc_height, logo_x, logo_y;
+          gfloat width_ratio, height_ratio;
 
-	  frame = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-				  FALSE, 8, widget->allocation.width,
-				  widget->allocation.height);
+          frame = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
+                                  FALSE, 8, widget->allocation.width,
+                                  widget->allocation.height);
 
-	  width = gdk_pixbuf_get_width (vw->priv->logo_pixbuf);
-	  height = gdk_pixbuf_get_height (vw->priv->logo_pixbuf);
-	  alloc_width = widget->allocation.width;
-	  alloc_height = widget->allocation.height;
+          width = gdk_pixbuf_get_width (vw->priv->logo_pixbuf);
+          height = gdk_pixbuf_get_height (vw->priv->logo_pixbuf);
+          alloc_width = widget->allocation.width;
+          alloc_height = widget->allocation.height;
 
-	  /* Checking if allocated space is smaller than our logo */
+          /* Checking if allocated space is smaller than our logo */
 
-	  if ((alloc_width < width) || (alloc_height < height))
-	    {
-	      width_ratio = (gfloat) alloc_width / (gfloat) width;
-	      height_ratio = (gfloat) alloc_height / (gfloat) height;
-	      width_ratio = MIN (width_ratio, height_ratio);
-	      height_ratio = width_ratio;
-	    }
-	  else
-	    width_ratio = height_ratio = 1.0;
+          if ((alloc_width < width) || (alloc_height < height))
+            {
+              width_ratio = (gfloat) alloc_width / (gfloat) width;
+              height_ratio = (gfloat) alloc_height / (gfloat) height;
+              width_ratio = MIN (width_ratio, height_ratio);
+              height_ratio = width_ratio;
+            }
+          else
+            width_ratio = height_ratio = 1.0;
 
-	  logo_x = (alloc_width / 2) - (width * width_ratio / 2);
-	  logo_y = (alloc_height / 2) - (height * height_ratio / 2);
+          logo_x = (alloc_width / 2) - (width * width_ratio / 2);
+          logo_y = (alloc_height / 2) - (height * height_ratio / 2);
 
-	  /* Scaling to available space */
+          /* Scaling to available space */
 
-	  gdk_pixbuf_composite (vw->priv->logo_pixbuf,
-				frame,
-				0, 0,
-				alloc_width, alloc_height,
-				logo_x, logo_y,
-				width_ratio, height_ratio,
-				GDK_INTERP_BILINEAR, 255);
+          gdk_pixbuf_composite (vw->priv->logo_pixbuf,
+                                frame,
+                                0, 0,
+                                alloc_width, alloc_height,
+                                logo_x, logo_y,
+                                width_ratio, height_ratio,
+                                GDK_INTERP_BILINEAR, 255);
 
-	  /* Drawing our frame */
+          /* Drawing our frame */
 
-	  rowstride = gdk_pixbuf_get_rowstride (frame);
+          rowstride = gdk_pixbuf_get_rowstride (frame);
 
-	  pixels = gdk_pixbuf_get_pixels (frame) +
-	    rowstride * event->area.y + event->area.x * 3;
+          pixels = gdk_pixbuf_get_pixels (frame) +
+            rowstride * event->area.y + event->area.x * 3;
           
-	  gdk_draw_rgb_image_dithalign (widget->window,
-					widget->style->black_gc,
-					event->area.x, event->area.y,
-					event->area.width, event->area.height,
-					GDK_RGB_DITHER_NORMAL, pixels,
-					rowstride, event->area.x,
-					event->area.y);
+          gdk_draw_rgb_image_dithalign (widget->window,
+                                        widget->style->black_gc,
+                                        event->area.x, event->area.y,
+                                        event->area.width, event->area.height,
+                                        GDK_RGB_DITHER_NORMAL, pixels,
+                                        rowstride, event->area.x,
+                                        event->area.y);
 
-	  g_object_unref (frame);
-	}
+          g_object_unref (frame);
+        }
       else
-	{
-	  gdk_draw_rectangle (widget->window, widget->style->black_gc, TRUE,
-			      event->area.x, event->area.y,
-			      event->area.width, event->area.height);
-	}
+        {
+          gdk_draw_rectangle (widget->window, widget->style->black_gc, TRUE,
+                              event->area.x, event->area.y,
+                              event->area.width, event->area.height);
+        }
 
     }
     
@@ -380,7 +380,7 @@ gst_video_widget_expose (GtkWidget * widget, GdkEventExpose * event)
         }
     }
     
-  return TRUE;
+  return FALSE;
 }
 
 /* Size request for our widget */
