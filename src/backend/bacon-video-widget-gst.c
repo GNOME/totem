@@ -783,16 +783,18 @@ bacon_video_widget_set_volume (BaconVideoWidget *bvw, int volume)
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
 	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
-	gst_play_set_volume (bvw->priv->play, volume / 100);
+	gst_play_set_volume (bvw->priv->play, (gfloat) volume / 100);
 }
 
 int
 bacon_video_widget_get_volume (BaconVideoWidget *bvw)
 {
+	int volume;
 	g_return_val_if_fail (bvw != NULL, -1);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET(bvw), -1);
 	g_return_val_if_fail (GST_IS_PLAY(bvw->priv->play), -1);
-	return gst_play_get_volume (bvw->priv->play) * 100;
+	volume = gst_play_get_volume (bvw->priv->play) * 100;
+	return volume;
 }
 
 void
