@@ -836,8 +836,6 @@ on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
 
 	uri = egg_recent_item_get_uri (item);
 
-	D ("on_recent_file_activate URI: %s", uri);
-
 	filename = gnome_vfs_get_local_path_from_uri (uri);
 	if (filename == NULL)
 	{
