@@ -137,6 +137,8 @@ struct BaconVideoWidgetPrivate
   
   char *mrl;
   char *media_device;
+
+  BaconVideoWidgetAudioOutType speakersetup;
 };
 
 enum {
@@ -1120,17 +1122,134 @@ bacon_video_widget_get_tv_out (BaconVideoWidget * bvw)
   return TV_OUT_NONE;
 }
 
+static GstCaps *
+cb_audio_fixate (GstPad *pad,
+		 const GstCaps *in_caps,
+		 BaconVideoWidget *bvw)
+{
+  gint channels = -1, n, count, diff = -1;
+  const GstStructure *s, *closest = NULL;
+  const GValue *v;
+
+  switch (bvw->priv->speakersetup) {
+    case BVW_AUDIO_SOUND_STEREO:
+      channels = 2;
+      break;
+    case BVW_AUDIO_SOUND_4CHANNEL:
+      channels = 4;
+      break;
+    case BVW_AUDIO_SOUND_5CHANNEL:
+      channels = 5;
+      break;
+    case BVW_AUDIO_SOUND_41CHANNEL:
+      /* so alsa has this as 5.1, but empty center speaker. We don't really
+       * do that yet. ;-). So we'll take the placebo approach. */
+    case BVW_AUDIO_SOUND_51CHANNEL:
+      channels = 6;
+      break;
+    case BVW_AUDIO_SOUND_AC3PASSTHRU:
+    default:
+      break;
+  }
+
+  if (channels == -1)
+    return NULL;
+
+  /* there might be multiple structures, and one might contain the
+   * channelcount that we want. Try that. */
+  count = gst_caps_get_size (in_caps);
+  for (n = 0; n < count; n++) {
+    s = gst_caps_get_structure (in_caps, n);
+    v = gst_structure_get_value (s, "channels");
+    if (!v)
+      continue;
+
+    /* get channel count (or list of ~) */
+    if (G_VALUE_TYPE (v) == G_TYPE_INT) {
+      gint c = g_value_get_int (v);
+
+      if (channels == c) {
+        if (count == 1)
+          return NULL;
+        return gst_caps_new_full (gst_structure_copy (s), NULL);
+      } else if (!closest || abs (c - channels) < diff) {
+        diff = abs (c - channels);
+        closest = s;
+      }
+    } else if (G_VALUE_TYPE (v) == GST_TYPE_INT_RANGE) {
+      gint c1 = gst_value_get_int_range_min (v),
+           c2 = gst_value_get_int_range_max (v);
+
+      if (c1 <= channels  && c2 >= channels) {
+        GstCaps *caps;
+
+        caps = gst_caps_new_full (gst_structure_copy (s), NULL);
+        gst_caps_structure_fixate_field_nearest_int (
+            gst_caps_get_structure (caps, 0), "channels", channels);
+
+        return caps;
+      } else if (!closest ||
+                 (c1 > channels && c1 - channels < diff) ||
+                 (c2 < channels && channels - c2 < diff)) {
+        closest = s; /* FIXME: fixate already? */
+        diff = c1 > channels ? c1 - channels : channels - c2;
+      }
+    } else if (G_VALUE_TYPE (v) == GST_TYPE_LIST) {
+      const GValue *kid;
+      gint nkid, kidcount = gst_value_list_get_size (v), kidc;
+
+      for (nkid = 0; nkid < kidcount; nkid++) {
+        kid = gst_value_list_get_value (v, nkid);
+        if (G_VALUE_TYPE (kid) != G_TYPE_INT)
+          continue;
+        kidc = g_value_get_int (kid);
+        if (kidc == channels) {
+          GstCaps *caps;
+
+          caps = gst_caps_new_full (gst_structure_copy (s), NULL);
+          gst_caps_structure_fixate_field_nearest_int (
+              gst_caps_get_structure (caps, 0), "channels", channels);
+
+          return caps;
+        } else if (!closest || abs (kidc - channels) < diff) {
+          diff = abs (kidc - channels);
+          closest = s;
+        }
+      }
+    }
+  }
+
+  /* FIXME: we could do something with closest here... */
+  return NULL;
+}
+
 BaconVideoWidgetAudioOutType
 bacon_video_widget_get_audio_out_type (BaconVideoWidget *bvw)
 {
-  return BVW_AUDIO_SOUND_STEREO;
+  g_return_val_if_fail (bvw != NULL, -1);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -1);
+
+  return bvw->priv->speakersetup;
 }
 
 void
 bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
                                        BaconVideoWidgetAudioOutType type)
 {
-  
+  GstElement *audiosink = NULL;
+
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  if (type == bvw->priv->speakersetup)
+    return;
+
+  bvw->priv->speakersetup = type;
+
+  g_object_get (G_OBJECT (bvw->priv->play), "audio-sink", &audiosink, NULL);
+  if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED) {
+    //gst_pad_renegotiate (gst_element_get_pad (audiosink, "sink"));
+  }
 }
 
 /* =========================================== */
@@ -1180,6 +1299,8 @@ bacon_video_widget_open (BaconVideoWidget * bvw, const gchar * mrl,
     {
       g_set_error (error, 0, 0, bvw->priv->last_error_message ?
           bvw->priv->last_error_message : "Failed to open; reason unknown");
+      g_free (bvw->priv->mrl);
+      bvw->priv->mrl = NULL;
     }
 
   return ret;
@@ -1696,7 +1817,9 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget * bvw,
     return;
   bvw->priv->visq = quality;
 
-  //gst_pad_renegotiate (gst_element_get_pad (bvw->priv->vis_element, "src"));
+  if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED) {
+    //gst_pad_renegotiate (gst_element_get_pad (bvw->priv->vis_element, "src"));
+  }
 }
 
 gboolean
@@ -2368,6 +2491,7 @@ bacon_video_widget_new (int width, int height,
     return NULL;
   }
   
+  bvw->priv->speakersetup = BVW_AUDIO_SOUND_STEREO;
   bvw->priv->media_device = g_strdup ("/dev/dvd");
   bvw->priv->init_width = 240;
   bvw->priv->init_height = 180;
@@ -2426,6 +2550,8 @@ bacon_video_widget_new (int width, int height,
 		video_sink, NULL);
   g_object_set (G_OBJECT (bvw->priv->play), "audio-sink",
 		audio_sink, NULL);
+  g_signal_connect (GST_PAD_REALIZE (gst_element_get_pad (audio_sink, "sink")),
+		    "fixate", G_CALLBACK (cb_audio_fixate), (gpointer) bvw);
 
   bvw->priv->vis_plugins_list = NULL;
 
