@@ -116,18 +116,7 @@ end:
 void
 nautilus_module_initialize (GTypeModule *module)
 {
-	poptContext ctx;
-	static struct poptOption options[] = {
-		{NULL, '\0', POPT_ARG_INCLUDE_TABLE, NULL, 0,
-			N_("Backend options"), NULL},
-		{NULL, '\0', 0, NULL, 0} /* end the list */
-	};
-
-	options[0].arg = bacon_video_widget_get_popt_table ();
-	ctx = poptGetContext ("totem-properties", 0, NULL, options, 0);
-	while (poptGetNextOpt (ctx) >= 0) ;
-	poptFreeContext (ctx);
-
+	bacon_video_widget_init_backend (NULL, NULL);
 	totem_properties_plugin_register_type (module);
 	totem_properties_view_register_type (module);
 

@@ -1933,10 +1933,12 @@ setup_vis (BaconVideoWidget * bvw)
     }
   }
 
-  if (bvw->priv->show_vfx && bvw->priv->vis_element)
+  if (bvw->priv->show_vfx && bvw->priv->vis_element) {
+    gst_object_ref (GST_OBJECT (bvw->priv->vis_element));
     vis = bvw->priv->vis_element;
-  else
+  } else {
     vis = NULL;
+  }
 
   g_object_set (G_OBJECT (bvw->priv->play), "vis-plugin", vis, NULL);
 }
@@ -2713,6 +2715,12 @@ bacon_video_widget_get_popt_table (void)
   /* Initializing GStreamer backend and parse our options from the command 
      line options */
   return (struct poptOption *) gst_init_get_popt_table ();
+}
+
+void
+bacon_video_widget_init_backend (int *argc, char ***argv)
+{
+  gst_init (argc, argv);
 }
 
 GQuark

@@ -93,6 +93,8 @@ typedef enum {
 GQuark bacon_video_widget_error_quark		 (void) G_GNUC_CONST;
 GType bacon_video_widget_get_type                (void);
 struct poptOption *bacon_video_widget_get_popt_table    (void);
+/* This can be used if the app does not use popt */
+void bacon_video_widget_init_backend		 (int *argc, char ***argv);
 
 typedef enum {
 	BVW_USE_TYPE_VIDEO,

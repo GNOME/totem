@@ -1515,6 +1515,12 @@ bacon_video_widget_get_popt_table (void)
 	return (struct poptOption *) xine_options;
 }
 
+void
+bacon_video_widget_init_backend (int *argc, char ***argv)
+{
+  /* no-op */
+}
+
 GQuark
 bacon_video_widget_error_quark (void)
 {
