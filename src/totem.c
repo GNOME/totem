@@ -183,7 +183,6 @@ totem_action_error (char *msg, GtkWindow *parent)
 void
 totem_action_error_and_exit (char *msg, Totem *totem)
 {
-	//FIXME
 	GtkWidget *error_dialog;
 
 	error_dialog =
@@ -3091,6 +3090,7 @@ main (int argc, char **argv)
 	GConfClient *gc;
 	GError *err = NULL;
 	GdkPixbuf *pix;
+	int retval;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -3098,14 +3098,19 @@ main (int argc, char **argv)
 
 	g_set_application_name (_("Totem Movie Player"));
 
-	g_thread_init (NULL);
-	gdk_threads_init ();
-
 	/* FIXME This should be enabled all the time, and needs to be
 	 * removed when 111349 is closed */
 #ifdef HAVE_XINE
-	XInitThreads ();
+	if (XInitThreads () == 0)
+	{
+		g_warning (_("Could not initialise the thread-safe libraries.\n"                                        "Verify your system installation. Totem
+					will now exit."));
+		exit (1);
+	}
 #endif
+
+	g_thread_init (NULL);
+	gdk_threads_init ();
 
 	gnome_program_init ("totem", VERSION,
 			LIBGNOMEUI_MODULE,
@@ -3123,10 +3128,9 @@ main (int argc, char **argv)
 		str = g_strdup_printf (_("Totem couln't initialise the \n"
 					"configuration engine:\n%s"),
 				err->message);
-		totem_action_error (str, NULL);
+		totem_action_error_and_exit (str, totem);
 		g_error_free (err);
 		g_free (str);
-		exit (1);
 	}
 	gnome_authentication_manager_init ();
 
@@ -3135,10 +3139,10 @@ main (int argc, char **argv)
 			"totem/totem.glade", TRUE, NULL);
 	if (filename == NULL)
 	{
-		totem_action_error (_("Couldn't load the main interface"
-					" (totem.glade).\nMake sure that Totem"
+		totem_action_error_and_exit (_("Couldn't load the main "
+					"interface (totem.glade).\n"
+					"Make sure that Totem"
 					" is properly installed."), NULL);
-		exit (1);
 	}
 
 	totem = g_new0 (Totem, 1);
@@ -3167,10 +3171,10 @@ main (int argc, char **argv)
 	if (totem->xml == NULL)
 	{
 		g_free (filename);
-		totem_action_error (_("Couldn't load the main interface"
-					" (totem.glade).\nMake sure that Totem"
+		totem_action_error_and_exit (_("Couldn't load the main "
+					"interface (totem.glade).\n"
+					"Make sure that Totem"
 					" is properly installed."), NULL);
-		exit (1);
 	}
 	g_free (filename);
 
@@ -3193,11 +3197,11 @@ main (int argc, char **argv)
 
 	if (totem->playlist == NULL)
 	{
-		totem_action_error (_("Couldn't load the interface for the playlist."
+		totem_action_error_and_exit (_("Couldn't load the interface "
+					"for the playlist."
 					"\nMake sure that Totem"
 					" is properly installed."),
-				GTK_WINDOW (totem->win));
-		exit (1);
+				totem);
 	}
 	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
 			"totem", "playlist-24.png", NULL);

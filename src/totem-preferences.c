@@ -19,6 +19,7 @@
 
 #include <config.h>
 #include <libgnome/gnome-i18n.h>
+#include <gtk/gtkmessagedialog.h>
 #include <string.h>
 
 #include "totem.h"
@@ -66,6 +67,28 @@ hide_prefs (GtkWidget *widget, int trash, Totem *totem)
 	gtk_widget_hide (totem->prefs);
 }
 
+static gboolean
+ask_show_visuals (Totem *totem)
+{
+	GtkWidget *dialog;
+	int answer;
+
+	dialog =
+		gtk_message_dialog_new (NULL,
+				GTK_DIALOG_MODAL,
+				GTK_MESSAGE_ERROR,
+				GTK_BUTTONS_YES_NO,
+				_("It seems you are running Totem remotely.\n"
+				"Are you sure you want to enable the visual "
+				"effects?"));
+	gtk_dialog_set_default_response (GTK_DIALOG (dialog),
+			GTK_RESPONSE_NO);
+	answer = gtk_dialog_run (GTK_DIALOG (dialog));
+	gtk_widget_destroy (dialog);
+
+	return (answer == GTK_RESPONSE_YES);
+}
+
 static void
 on_checkbutton1_toggled (GtkToggleButton *togglebutton, Totem *totem)
 {
@@ -84,6 +107,17 @@ on_checkbutton2_toggled (GtkToggleButton *togglebutton, Totem *totem)
 	gboolean value;
 
 	value = gtk_toggle_button_get_active (togglebutton);
+
+	if (value == TRUE && totem_display_is_local (totem) == FALSE)
+	{
+		if (ask_show_visuals (totem) == FALSE)
+		{
+			gconf_client_set_bool (totem->gc,
+					GCONF_PREFIX"/show_vfx", FALSE, NULL);
+			return;
+		}
+	}
+
 	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/show_vfx", value, NULL);
 	if (bacon_video_widget_set_show_visuals
 		(BACON_VIDEO_WIDGET (totem->bvw), value) == FALSE)
@@ -257,7 +291,11 @@ totem_setup_preferences (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "checkbutton2");
 	show_visuals = gconf_client_get_bool (totem->gc,
 			GCONF_PREFIX"/show_vfx", NULL);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), show_visuals);
+	if (is_local == FALSE && show_visuals == TRUE)
+		show_visuals = ask_show_visuals (totem);
+
+	gtk_toggle_button_set_active
+		(GTK_TOGGLE_BUTTON (item), show_visuals);
 	bacon_video_widget_set_show_visuals
 		(BACON_VIDEO_WIDGET (totem->bvw), show_visuals);
 	g_signal_connect (G_OBJECT (item), "toggled",

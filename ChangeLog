@@ -1,3 +1,12 @@
+2003-04-23  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-preferences.c: (ask_show_visuals),
+	(on_checkbutton2_toggled), (totem_setup_preferences):
+	* src/totem.c: (totem_action_error_and_exit), (main): ask the user if he
+	really wants visual effects when running on a non-local display
+	(Closes: #110851), really display the error messages when we have
+	errors on startup
+
 2003-04-22  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in:
