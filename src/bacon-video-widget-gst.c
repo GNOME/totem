@@ -913,6 +913,9 @@ bacon_video_widget_set_auto_resize (BaconVideoWidget *bvw, gboolean auto_resize)
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
 	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
+	g_return_if_fail (GST_IS_VIDEO_WIDGET(bvw->priv->vw));
+	
+	gst_video_widget_set_auto_resize (bvw->priv->vw, auto_resize);
 }
 
 void
@@ -929,6 +932,9 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
 	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
+	g_return_if_fail (GST_IS_VIDEO_WIDGET(bvw->priv->vw));
+	
+	gst_video_widget_set_scale (bvw->priv->vw, ratio);
 }
 
 int
@@ -1034,6 +1040,7 @@ bacon_video_widget_information (GstPlay *play,
 									g_ascii_strdown(name, -1), (char *) val);
 			p = g_list_next (p);
 		}
+		g_signal_emit (G_OBJECT (bvw), bvw_table_signals[GOT_METADATA], 0, NULL);
 	}
 }
 
@@ -1045,33 +1052,28 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetM
 
 	g_value_init (value, G_TYPE_STRING);
 
-/*	if (bvw->priv->play == NULL)
-	{*/
+	if (bvw->priv->play == NULL)
+	{
 		g_value_set_string (value, "");
 		return;
-/*	}
+	}
 
 	switch (type)
 	{
 	case BVW_INFO_TITLE:
-		string = xine_get_meta_info (bvw->priv->stream,
-				XINE_META_INFO_TITLE);
+		string = g_hash_table_lookup(bvw->priv->metadata_hash, "title");
 		break;
 	case BVW_INFO_ARTIST:
-		string = xine_get_meta_info (bvw->priv->stream,
-				XINE_META_INFO_ARTIST);
+		string = g_hash_table_lookup(bvw->priv->metadata_hash, "artist");
 		break;
 	case BVW_INFO_YEAR:
-		string = xine_get_meta_info (bvw->priv->stream,
-				XINE_META_INFO_YEAR);
+		string = g_strdup ("N/A");
 		break;
 	case BVW_INFO_VIDEO_CODEC:
-		string = xine_get_meta_info (bvw->priv->stream,
-				XINE_META_INFO_VIDEOCODEC);
+		string = g_strdup ("N/A");
 		break;
 	case BVW_INFO_AUDIO_CODEC:
-		string = xine_get_meta_info (bvw->priv->stream,
-				XINE_META_INFO_AUDIOCODEC);
+		string = g_strdup ("N/A");
 		break;
 	default:
 		g_assert_not_reached ();
@@ -1079,7 +1081,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetM
 
 	g_value_set_string (value, string);
 
-	return;*/
+	return;
 }
 
 static void
@@ -1090,11 +1092,11 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget *bvw, BaconVideoWidgetMeta
 
 	g_value_init (value, G_TYPE_INT);
 
-/*	if (bvw->priv->play == NULL)
-	{*/
+	if (bvw->priv->play == NULL)
+	{
 		g_value_set_int (value, 0);
 		return;
-/*	}
+	}
 
 	switch (type)
 	{
@@ -1102,27 +1104,16 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget *bvw, BaconVideoWidgetMeta
 		integer = bacon_video_widget_get_stream_length (bvw) / 1000;
 		break;
 	case BVW_INFO_DIMENSION_X:
-		integer = xine_get_stream_info (bvw->priv->stream,
-				XINE_STREAM_INFO_VIDEO_WIDTH);
+		integer = bvw->priv->video_width;
 		break;
 	case BVW_INFO_DIMENSION_Y:
-		integer = xine_get_stream_info (bvw->priv->stream,
-				XINE_STREAM_INFO_VIDEO_HEIGHT);
+		integer = bvw->priv->video_height;
 		break;
 	case BVW_INFO_FPS:
-		if (xine_get_stream_info (bvw->priv->stream,
-					XINE_STREAM_INFO_FRAME_DURATION) != 0)
-		{
-			integer = 90000 / xine_get_stream_info
-				(bvw->priv->stream,
-				 XINE_STREAM_INFO_FRAME_DURATION);
-		} else {
-			integer = 0;
-		}
+		integer = 0;
 		break;
-	 case BVW_INFO_BITRATE:
-		integer = xine_get_stream_info (bvw->priv->stream,
-				XINE_STREAM_INFO_AUDIO_BITRATE) / 1000;
+	case BVW_INFO_BITRATE:
+		integer = 0;
 		break;
 	 default:
 		g_assert_not_reached ();
@@ -1130,7 +1121,7 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget *bvw, BaconVideoWidgetMeta
 
 	 g_value_set_int (value, integer);
 
-	 return;*/
+	 return;
 }
 
 static void
@@ -1141,21 +1132,19 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget *bvw,
 
 	g_value_init (value, G_TYPE_BOOLEAN);
 
-/*	if (bvw->priv->play == NULL)
-	{*/
+	if (bvw->priv->play == NULL)
+	{
 		g_value_set_boolean (value, FALSE);
 		return;
-/*	}
+	}
 
 	switch (type)
 	{
 	case BVW_INFO_HAS_VIDEO:
-		boolean = xine_get_stream_info (bvw->priv->stream,
-				XINE_STREAM_INFO_HAS_VIDEO);
+		boolean = bvw->priv->media_has_video;
 		break;
 	case BVW_INFO_HAS_AUDIO:
-		boolean = xine_get_stream_info (bvw->priv->stream,
-				XINE_STREAM_INFO_HAS_AUDIO);
+		boolean = TRUE;
 		break;
 	default:
 		g_assert_not_reached ();
@@ -1163,7 +1152,7 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget *bvw,
 
 	g_value_set_boolean (value, boolean);
 
-	return;*/
+	return;
 }
 
 void
@@ -1291,22 +1280,12 @@ bacon_video_widget_new (int width, int height,
 		g_message ("failed to render default video sink from gconf for vis");
 		return NULL;
 	}
-	/* vis_element = gst_gconf_get_default_visualisation_element ();
-	if (!GST_IS_ELEMENT (vis_element))
-	{
-		g_message ("failed to render default visualisation element from gconf");
-		return NULL;
-	}*/
 
 	gst_play_set_video_sink (bvw->priv->play, video_sink);
 	gst_play_set_audio_sink (bvw->priv->play, audio_sink);
 	gst_play_set_visualisation_video_sink (bvw->priv->play, vis_video_sink);
-	/*gst_play_set_visualisation_element (bvw->priv->play, vis_element);*/
 
 	bvw->priv->vis_plugins_list = NULL;
-	
-	g_signal_connect (G_OBJECT (bvw->priv->play),
-			"have_xid", (GtkSignalFunc) update_xid, (gpointer) bvw);
 	
 	bvw->priv->vis_sig_handler = g_signal_connect (G_OBJECT (bvw->priv->play),
 												"have_vis_xid",
@@ -1314,6 +1293,9 @@ bacon_video_widget_new (int width, int height,
 												(gpointer) bvw);
 	bvw->priv->vis_signal_blocked = FALSE;
 	
+	
+	g_signal_connect (G_OBJECT (bvw->priv->play),
+			"have_xid", (GtkSignalFunc) update_xid, (gpointer) bvw);
 	g_signal_connect (G_OBJECT (bvw->priv->play),
 			"have_video_size", (GtkSignalFunc) got_video_size, (gpointer) bvw);
 	g_signal_connect (G_OBJECT (bvw->priv->play),

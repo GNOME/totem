@@ -272,8 +272,6 @@ gst_video_widget_expose(GtkWidget *widget, GdkEventExpose *event)
 	g_return_val_if_fail(event != NULL, FALSE);
 	
 	vw = GST_VIDEO_WIDGET (widget);
-	
-	g_message ("expose %d, %d", widget->allocation.width, widget->allocation.height);
 		
 	if (GTK_WIDGET_VISIBLE (widget) && GTK_WIDGET_MAPPED (widget)) {
 		
@@ -400,8 +398,6 @@ gst_video_widget_size_request (GtkWidget *widget, GtkRequisition *requisition)
 		}
 	}
 	
-	g_message ("requesting %d, %d", width, height);
-	
 	requisition->width = width;
 	requisition->height = height;
 }
@@ -420,7 +416,7 @@ gst_video_widget_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	
 	vw = GST_VIDEO_WIDGET (widget);
 
-	g_message ("allocated %d, %d", allocation->width, allocation->height);
+	/* g_message ("allocated %d, %d", allocation->width, allocation->height);*/
 	
 	/* Choosing best ratio */
 	
@@ -428,7 +424,7 @@ gst_video_widget_allocate (GtkWidget *widget, GtkAllocation *allocation)
 		scale_factor = vw->priv->scale_factor;
 		vw->priv->scale_override = FALSE;
 	}
-	else {
+	else if (!vw->priv->auto_resize) {
 		
 		/* Ratio get impacted only if video window loaded */
 		if (	(vw->priv->source_width) &&
@@ -442,6 +438,9 @@ gst_video_widget_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	
 			scale_factor = MIN (width_ratio, height_ratio);
 		}
+	}
+	else {
+		scale_factor = 1.0;
 	}
 	
 	/* Calculating width & height with optimal ratio */
@@ -463,10 +462,10 @@ gst_video_widget_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	
 	widget->allocation = *allocation;
 	
-	g_message ("allocation now is %d, %d", allocation->width, allocation->height);
+	/* g_message ("allocation now is %d, %d", allocation->width, allocation->height); */
 	
 	if (GTK_WIDGET_REALIZED (widget)) {
-		g_message ("source %d, %d size %d, %d auto %d scale %f", vw->priv->source_width, vw->priv->source_height, width, height, vw->priv->auto_resize, vw->priv->scale_factor);
+		/* g_message ("source %d, %d size %d, %d auto %d scale %f", vw->priv->source_width, vw->priv->source_height, width, height, vw->priv->auto_resize, vw->priv->scale_factor); */
 		gdk_window_move_resize (	widget->window,
 									allocation->x, 
 									allocation->y,
