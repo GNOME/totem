@@ -239,9 +239,7 @@ volume_set_image (Totem *totem, int vol)
 void
 totem_action_play (Totem *totem, int offset)
 {
-	GtkWidget *widget;
-	int retval, time;
-	char *time_text, *name, *text;
+	int retval;
 
 	D("action_play");
 
@@ -250,35 +248,16 @@ totem_action_play (Totem *totem, int offset)
 
 	retval = gtk_xine_play (GTK_XINE (totem->gtx), offset , 0);
 	play_pause_set_label (totem, retval);
-
-	/* Set the new label */
-	name = gtk_playlist_mrl_to_title (totem->mrl);
-	widget = glade_xml_get_widget (totem->xml, "label1");
-	time = gtk_xine_get_stream_length (GTK_XINE (totem->gtx));
-	time_text = time_to_string (time / 1000);
-	text = g_strdup_printf ("<span size=\"medium\"><b>%s (%s)</b></span>",
-		 name, time_text);
-	rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget), text);
-	widget = glade_xml_get_widget (totem->xml, "custom2");
-	rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget), text);
-	g_free (text);
-	g_free (time_text);
-	g_free (name);
-
-	/* Update the properties */
-	gtk_xine_properties_update (GTK_XINE (totem->gtx), FALSE);
 }
 
 void
 totem_action_set_mrl_and_play (Totem *totem, char *mrl)
 {
-	int retval;
+	if (mrl == NULL)
+		totem_action_set_mrl (totem, mrl);
 
-	retval = totem_action_set_mrl (totem, mrl);
-	if (mrl == NULL || retval == FALSE)
-		return;
-
-	totem_action_play (totem, 0);
+	if (totem_action_set_mrl (totem, mrl) == TRUE)
+		totem_action_play (totem, 0);
 }
 
 void
@@ -361,7 +340,6 @@ totem_action_fullscreen_toggle (Totem *totem)
 
 	new_state = !gtk_xine_is_fullscreen (GTK_XINE (totem->gtx));
 	gtk_xine_set_fullscreen (GTK_XINE (totem->gtx), new_state);
-
 	/* Hide the popup when switching fullscreen off */
 	if (new_state == FALSE)
 		popup_hide (totem);
@@ -445,7 +423,8 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		/* Reset the properties */
 		gtk_xine_properties_update (GTK_XINE (totem->gtx), TRUE);
 	} else {
-		char *title, *name;
+		char *title, *time_text, *name;
+		int time;
 
 		retval = gtk_xine_open (GTK_XINE (totem->gtx), mrl);
 
@@ -488,19 +467,22 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 
 		/* Label */
 		widget = glade_xml_get_widget (totem->xml, "label1");
+		time = gtk_xine_get_stream_length (GTK_XINE (totem->gtx));
+		time_text = time_to_string (time/1000);
 		text = g_strdup_printf
-			("<span size=\"medium\"><b>%s</b></span>",
-			 name);
+			("<span size=\"medium\"><b>%s (%s)</b></span>",
+			 name, time_text);
 		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
 				text);
 		widget = glade_xml_get_widget (totem->xml, "custom2");
 		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
 				text);
 		g_free (text);
+		g_free (time_text);
 		g_free (name);
 
 		/* Update the properties */
-		gtk_xine_properties_update (GTK_XINE (totem->gtx), TRUE);
+		gtk_xine_properties_update (GTK_XINE (totem->gtx), FALSE);
 	}
 	update_buttons (totem);
 	update_dvd_menu_items (totem);

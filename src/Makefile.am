@@ -27,32 +27,17 @@ EGG_RECENT_FILES =                      \
 	egg-recent-util.c               \
 	egg-recent-util.h
 
-egg-recent-model.c: regenerate-built-sources
-egg-recent-model.h: regenerate-built-sources
-egg-recent-item.c: regenerate-built-sources
-egg-recent-item.h: regenerate-built-sources
-egg-recent-view.h: regenerate-built-sources
-egg-recent-view-gtk.c: regenerate-built-sources
-egg-recent-view-gtk.h: regenerate-built-sources
-egg-recent-util.c: regenerate-built-sources
-egg-recent-util.h: regenerate-built-sources
-
 BACON_CD_SELECTION = 			\
 	cd-drive.c			\
 	cd-drive.h			\
 	bacon-cd-selection.c		\
 	bacon-cd-selection.h
 
-cd-drive.c: regenerate-built-sources
-cd-drive.h: regenerate-built-sources
-bacon-cd-selection.c: regenerate-built-sources
-bacon-cd-selection.h: regenerate-built-sources
-
 EGGDIR=$(srcdir)/../../libegg/libegg/recent-files/
 BACONDIR=$(srcdir)/../../libbacon/src/
 regenerate-built-sources:
-	EGGFILES="$(EGG_RECENT_FILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh
-	EGGFILES="$(BACON_CD_SELECTION)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh
+	EGGFILES="$(EGG_RECENT_FILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh || true
+	EGGFILES="$(BACON_CD_SELECTION)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
 
 totem_SOURCES = 			\
 	$(EGG_RECENT_FILES)		\

@@ -1752,33 +1752,15 @@ gtk_xine_get_current_time (GtkXine *gtx)
 gint
 gtk_xine_get_stream_length (GtkXine *gtx)
 {
-	int length_time = 0, i = 0;
+	int length_time = 0;
 	int pos_stream, pos_time;
-	gboolean ret;
 
 	g_return_val_if_fail (gtx != NULL, 0);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
 	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
 
-	if (gtk_xine_is_playing (gtx) == FALSE)
-		return 0;
-
-	ret = xine_get_pos_length (gtx->priv->stream, &pos_stream,
+	xine_get_pos_length (gtx->priv->stream, &pos_stream,
 			&pos_time, &length_time);
-
-	while (ret == FALSE && i < 10)
-	{
-		usleep (100000);
-		ret = xine_get_pos_length (gtx->priv->stream, &pos_stream,
-				&pos_time, &length_time);
-		i++;
-	}
-
-	if (ret == FALSE)
-	{
-		g_message ("gtk_xine_get_stream_length failed");
-		return -1;
-	}
 
 	return length_time;
 }

@@ -1,5 +1,14 @@
 2003-01-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am: build fixes (again)
+	* src/gtk-xine.c: (gtk_xine_get_stream_length):
+	* src/totem.c: (totem_action_play),
+	(totem_action_set_mrl_and_play), (totem_action_fullscreen_toggle),
+	(totem_action_set_mrl): back out the previous time display changes
+	and fix the gtk_xine_get_stream_length() call
+
+2003-01-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am: build fix
 
 2003-01-10  Bastien Nocera  <hadess@hadess.net>
