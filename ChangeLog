@@ -1,5 +1,14 @@
 2002-11-09  Bastien Nocera  <hadess@hadess.net>
 
+	* data/properties.glade:
+	* src/gtk-xine.c: (gtk_xine_can_set_volume),
+	(gtk_xine_properties_reset),
+	(gtk_xine_properties_set_from_current): simplify
+	gtk_xine_can_set_volume(), disable the video/audio frames in the
+	properties depending on wether there is audio/video present
+
+2002-11-09  Bastien Nocera  <hadess@hadess.net>
+
 	* data/playlist-playing.png: invert the colours, otherwise you can't
 	see a thing with most of the themes
 

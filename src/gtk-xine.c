@@ -1326,11 +1326,8 @@ gtk_xine_can_set_volume (GtkXine *gtx)
 				XINE_PARAM_AUDIO_CHANNEL_LOGICAL) == -2)
 		return FALSE;
 
-	if (xine_get_stream_info (gtx->priv->stream,
-				XINE_STREAM_INFO_HAS_AUDIO) == FALSE)
-		return FALSE;
-
-	return TRUE;
+	return xine_get_stream_info (gtx->priv->stream,
+			XINE_STREAM_INFO_HAS_AUDIO);
 }
 
 void
@@ -1645,6 +1642,13 @@ gtk_xine_properties_set_label (GtkXine *gtx, const char *name, const char *text)
 static void
 gtk_xine_properties_reset (GtkXine *gtx)
 {
+	GtkWidget *item;
+
+	item = glade_xml_get_widget (gtx->priv->xml, "video");
+	gtk_widget_set_sensitive (item, FALSE);
+	item = glade_xml_get_widget (gtx->priv->xml, "audio");
+	gtk_widget_set_sensitive (item, FALSE);
+	
 	/* Title */
 	gtk_xine_properties_set_label (gtx, "title", _("Unknown"));
 	/* Artist */
@@ -1667,10 +1671,12 @@ gtk_xine_properties_reset (GtkXine *gtx)
 static void
 gtk_xine_properties_set_from_current (GtkXine *gtx)
 {
+	GtkWidget *item;
 	const char *text;
 	char *string;
 	int fps;
 
+	/* General */
 	text = xine_get_meta_info (gtx->priv->stream, XINE_META_INFO_TITLE);
 	gtk_xine_properties_set_label (gtx, "title",
 			text ? text : _("Unknown"));
@@ -1682,6 +1688,14 @@ gtk_xine_properties_set_from_current (GtkXine *gtx)
 	text = xine_get_meta_info (gtx->priv->stream, XINE_META_INFO_YEAR);
 	gtk_xine_properties_set_label (gtx, "year",
 			text ? text : _("N/A"));
+
+	/* Video */
+	item = glade_xml_get_widget (gtx->priv->xml, "video");
+	if (xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_HAS_VIDEO) == FALSE)
+		gtk_widget_set_sensitive (item, FALSE);
+	else
+		gtk_widget_set_sensitive (item, TRUE);
 
 	string = g_strdup_printf ("%d x %d",
 			xine_get_stream_info (gtx->priv->stream,
@@ -1707,6 +1721,14 @@ gtk_xine_properties_set_from_current (GtkXine *gtx)
 	string = g_strdup_printf (_("%d frames per second"), fps);
 	gtk_xine_properties_set_label (gtx, "framerate", string);
 	g_free (string);
+
+	/* Audio */
+	item = glade_xml_get_widget (gtx->priv->xml, "audio");
+	if (xine_get_stream_info (gtx->priv->stream,
+				XINE_STREAM_INFO_HAS_AUDIO) == FALSE)
+		gtk_widget_set_sensitive (item, FALSE);
+	else
+		gtk_widget_set_sensitive (item, TRUE);
 
 	string = g_strdup_printf (_("%d kbps"),
 			xine_get_stream_info (gtx->priv->stream,
