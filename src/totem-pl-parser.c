@@ -46,6 +46,7 @@
 #define MIME_READ_CHUNK_SIZE 1024
 
 typedef gboolean (*PlaylistCallback) (TotemPlParser *parser, const char *url, gpointer data);
+static gboolean totem_pl_parser_scheme_is_ignored (TotemPlParser *parser, const char *url);
 static gboolean totem_pl_parser_ignore (TotemPlParser *parser, const char *url);
 
 typedef struct {
@@ -233,7 +234,7 @@ totem_pl_parser_num_entries (TotemPlParser *parser, GtkTreeModel *model,
 		g_free (path);
 
 		func (model, &iter, &url, &title);
-		if (totem_pl_parser_ignore (parser, url) != FALSE)
+		if (totem_pl_parser_scheme_is_ignored (parser, url) != FALSE)
 			ignored++;
 
 		g_free (url);
@@ -253,8 +254,8 @@ totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
 	char *buf;
 	gboolean success;
 
-	num_entries_total = totem_pl_parser_num_entries (parser, model, func);
-	num_entries = gtk_tree_model_iter_n_children (model, NULL);
+	num_entries = totem_pl_parser_num_entries (parser, model, func);
+	num_entries_total = gtk_tree_model_iter_n_children (model, NULL);
 
 	res = gnome_vfs_open (&handle, output, GNOME_VFS_OPEN_WRITE);
 	if (res == GNOME_VFS_ERROR_NOT_FOUND) {
@@ -296,7 +297,7 @@ totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
 
 		func (model, &iter, &url, &title);
 
-		if (totem_pl_parser_ignore (parser, url) != FALSE)
+		if (totem_pl_parser_scheme_is_ignored (parser, url) != FALSE)
 		{
 			g_free (url);
 			g_free (title);
