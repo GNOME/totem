@@ -83,7 +83,7 @@ else
   curl_major=`curl-config --version | sed 's/libcurl\ \(@<:@0-9@:>@*\).\(@<:@0-9@:>@*\).\(@<:@0-9@:>@*\)/\1/'`
   curl_minor=`curl-config --version | sed 's/libcurl\ \(@<:@0-9@:>@*\).\(@<:@0-9@:>@*\).\(@<:@0-9@:>@*\)/\2/'`
   curl_micro=`curl-config --version | sed 's/libcurl\ \(@<:@0-9@:>@*\).\(@<:@0-9@:>@*\).\(@<:@0-9@:>@*\)/\3/'`
-  if `test $curl_major -gt $CURL_MAJOR_REQ || (test $curl_major -eq $CURL_MAJOR_REQ && test $curl_minor -gt $CURL_MINOR_REQ)|| (test $curl_major -eq $CURL_MAJOR_REQ && test $curl_minor -eq $CURL_MINOR_REQ && test $curl_micro -gt $CURL_MICRO_REQ)` ; then
+  if `test $curl_major -gt $CURL_MAJOR_REQ || (test $curl_major -eq $CURL_MAJOR_REQ && test $curl_minor -gt $CURL_MINOR_REQ)|| (test $curl_major -eq $CURL_MAJOR_REQ && test $curl_minor -eq $CURL_MINOR_REQ && test $curl_micro -ge $CURL_MICRO_REQ)` ; then
 	AC_MSG_RESULT(found $curl_major.$curl_minor.$curl_micro)
 	CURL_CFLAGS=`$CURL_CONFIG --cflags`
 	CURL_LIBS=`$CURL_CONFIG --libs`
