@@ -28,6 +28,7 @@ noinst_LTLIBRARIES = \
 	libbaconpropertiespage.la \
 	libbaconmessageconnection.la
 plugin_LTLIBRARIES = $(TOTEM_MOZILLA_PLUGIN)
+plugindir = $(libdir)/mozilla/plugins/
 nautilus_LTLIBRARIES = $(TOTEM_PROPERTIES_PAGE)
 
 modules_flags = -avoid-version -module
@@ -119,6 +120,8 @@ BUILT_SOURCES = \
 	totem_mozilla_scripting.h \
 	libtotem_mozilla.xpt
 
+if HAVE_MOZILLA
+
 totem_mozilla_scripting.h: totem_mozilla_scripting.idl
 	$(MOZILLA_XPIDL) -m header -I $(MOZILLA_XPCFLAGS) $(srcdir)/totem_mozilla_scripting.idl
 
@@ -148,8 +151,9 @@ totem_mozilla_viewer_LDADD = \
 	$(NVTV_LIBS) backend/libbaconvideowidget.la libbaconpropertiespage.la \
 	libbaconmessageconnection.la
 
-plugindir = $(libdir)/mozilla/plugins/
 module_flags = -export_dynamic -avoid-version
+
+endif
 
 vanity_SOURCES =					\
 	$(BACON_V4L_SELECTION)				\
@@ -194,4 +198,6 @@ EXTRA_DIST = \
 	vanity.c \
 	totem-mozilla-viewer.c \
 	totem-mozilla-plugin.cpp \
-	totem_mozilla_scripting.idl
+	totem_mozilla_scripting.idl \
+	totem-mozilla-scriptable.cpp \
+	totem-mozilla-scriptable.h
