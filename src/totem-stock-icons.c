@@ -86,7 +86,8 @@ totem_set_default_icons (Totem *totem)
 	GtkWidget *item;
 
 	/* Play button */
-	item = glade_xml_get_widget (totem->xml, "tmw_play_pause_button_image");
+	item = glade_xml_get_widget (totem->xml,
+			"tmw_play_pause_button_image");
 	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
 			totem->state == STATE_PLAYING
 			? PIXBUF_FOR_ID("stock-media-pause")
@@ -96,6 +97,7 @@ totem_set_default_icons (Totem *totem)
 			totem->state == STATE_PLAYING
 			? PIXBUF_FOR_ID("stock-media-pause")
 			: PIXBUF_FOR_ID("stock-media-play"));
+
 	/* Previous button */
 	item = glade_xml_get_widget (totem->xml, "tmw_previous_button_image");
 	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
@@ -103,6 +105,7 @@ totem_set_default_icons (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "tcw_previous_button_image");
 	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
 			PIXBUF_FOR_ID("stock-media-prev"));
+
 	/* Next button */
 	item = glade_xml_get_widget (totem->xml, "tmw_next_button_image");
 	gtk_image_set_from_pixbuf (GTK_IMAGE (item),

@@ -29,6 +29,7 @@
 #include "totem-private.h"
 #include "totem-preferences.h"
 #include "bacon-cd-selection.h"
+#include "video-utils.h"
 
 #include "debug.h"
 
@@ -404,6 +405,24 @@ hue_changed (GtkRange *range, Totem *totem)
 }
 
 static void
+on_tpw_color_reset_clicked (GtkButton *button, Totem *totem)
+{
+	guint i;
+	char *scales[] = {
+		"tpw_bright_scale",
+		"tpw_contrast_scale",
+		"tpw_saturation_scale",
+		"tpw_hue_scale"
+	};
+
+	for (i = 0; i < G_N_ELEMENTS (scales); i++) {
+		GtkWidget *item;
+		item = glade_xml_get_widget (totem->xml, scales[i]);
+		gtk_range_set_value (GTK_RANGE (item), 65535/2);
+	}
+}
+
+static void
 audio_out_menu_changed (GtkOptionMenu *option_menu, Totem *totem)
 {
 	BaconVideoWidgetAudioOutType audio_out;
@@ -578,6 +597,11 @@ totem_setup_preferences (Totem *totem)
 	gtk_range_set_value (GTK_RANGE (item), (gdouble) i);
 	g_signal_connect (G_OBJECT (item), "value-changed",
 			G_CALLBACK (hue_changed), totem);
+
+	/* Reset colour balance */
+	item = glade_xml_get_widget (totem->xml, "tpw_color_reset");
+	g_signal_connect (G_OBJECT (item), "clicked",
+			G_CALLBACK (on_tpw_color_reset_clicked), totem);
 
 	/* Sound output type */
 	item = glade_xml_get_widget (totem->xml, "tpw_sound_output_optionmenu");
