@@ -1340,10 +1340,24 @@ xine_event (void *user_data, const xine_event_t *event)
 	xine_ui_data_t *ui_data;
 	xine_progress_data_t *prg;
 	xine_mrl_reference_data_t *ref;
+	xine_spu_button_t *spubtn;
 	signal_data *data;
 
 	switch (event->type)
 	{
+	case XINE_EVENT_SPU_BUTTON:
+		spubtn = (xine_spu_button_t *) event->data;
+		if (spubtn->direction)
+		{
+			GdkCursor *cursor;
+			cursor = gdk_cursor_new (GDK_HAND2);
+			gdk_window_set_cursor
+				(bvw->priv->video_window, cursor);
+			gdk_cursor_unref (cursor);
+		} else {
+			gdk_window_set_cursor(bvw->priv->video_window, NULL);
+		}
+		break;
 	case XINE_EVENT_UI_PLAYBACK_FINISHED:
 		data = g_new0 (signal_data, 1);
 		data->signal = EOS_ASYNC;
