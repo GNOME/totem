@@ -27,13 +27,14 @@ AC_CHECK_LIB(Xtst, XTestFakeKeyEvent,
 		"-L$x_libraries")
 AC_SUBST(XTEST_LIBS)
 
-
 AC_CHECK_HEADER(irman.h,,)
 
 IRMAN_LIBS=""
 AC_CHECK_LIB(irman, ir_init,
-		AC_CHECK_HEADER(irman.h,IRMAN_LIBS="-lirman"
-		AC_DEFINE(HAVE_IRMAN),,),)
+		[ AC_CHECK_HEADER(irman.h,
+			[ IRMAN_LIBS="-lirman"
+			AC_DEFINE(HAVE_IRMAN)]
+			,,) ] ,)
 AC_SUBST(IRMAN_LIBS)
 
 
