@@ -1,5 +1,12 @@
 2004-01-04  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-pl-parser.c: (totem_pl_parser_add_pls):
+	When a file is empty, don't try to parse it, and say we parsed
+	properly, fixes the problem of Totem trying to play ~/.gnome2/totem.pls
+	(Closes: #129591)
+
+2004-01-04  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c: (bacon_video_widget_button_press):
 	Don't hide mouse button presses from GTK+ (Closes: #127586)
 

@@ -713,6 +713,12 @@ totem_pl_parser_add_pls (TotemPlParser *parser, const char *url, gpointer data)
 	if (my_eel_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
 
+	if (size == 0)
+	{
+		g_free (contents);
+		return TRUE;
+	}
+
 	contents = g_realloc (contents, size + 1);
 	contents[size] = '\0';
 
