@@ -1,3 +1,12 @@
+2003-03-13  Bastien Nocera  <hadess@hadess.net>
+
+	* data/Makefile.am: upd
+	* data/emblem-multimedia.png: added the multimedia emblem
+	* src/totem-video-thumbnailer.c: (add_emblem_to_pixbuf),
+	(save_pixbuf), (main): Hack the addition of an emblem on top of the
+	thumbnailed video. Not really done properly as the metadata nautilus
+	uses is nautilus-only for now (Closes: #105891)
+
 2003-03-12  Bastien Nocera  <hadess@hadess.net>
 
 	* README: upd

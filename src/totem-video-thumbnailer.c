@@ -4,6 +4,10 @@
 #include <gnome.h>
 #include "bacon-video-widget.h"
 
+/* #define THUMB_DEBUG */
+
+#define TOP_LEFT_MARGIN 2
+
 static void
 print_usage (void)
 {
@@ -11,6 +15,7 @@ print_usage (void)
 	exit (1);
 }
 
+#ifdef THUMB_DEBUG
 static void
 show_pixbuf (GdkPixbuf *pix)
 {
@@ -25,11 +30,40 @@ show_pixbuf (GdkPixbuf *pix)
 	/* Display and crash baby crash */
 	gtk_main ();
 }
+#endif
+
+static GdkPixbuf *
+add_emblem_to_pixbuf (GdkPixbuf *pixbuf, int width, int height)
+{
+	GdkPixbuf *emblem, *tmp;
+	char *filename;
+
+	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
+			"totem", "emblem-multimedia.png", NULL);
+	emblem = gdk_pixbuf_new_from_file (filename, NULL);
+	g_free (filename);
+
+	if (emblem == NULL)
+		return pixbuf;
+
+	g_assert (gdk_pixbuf_get_has_alpha (pixbuf) == FALSE);
+	tmp = gdk_pixbuf_add_alpha (pixbuf, FALSE, 0, 0, 0);
+
+	gdk_pixbuf_composite (emblem, tmp, 0, 0, 
+			MIN (width, gdk_pixbuf_get_width (emblem)),
+			MIN (height, gdk_pixbuf_get_height (emblem)),
+			TOP_LEFT_MARGIN, TOP_LEFT_MARGIN,
+			1, 1, GDK_INTERP_NEAREST, 255);
+
+	gdk_pixbuf_unref (emblem);
+
+	return tmp;
+}
 
 static void
 save_pixbuf (GdkPixbuf *pixbuf, const char *path, const char *video_path)
 {
-	GdkPixbuf *small;
+	GdkPixbuf *small, *with_emblem;
 	int width, height, d_width, d_height;
 	GError *err = NULL;
 
@@ -47,9 +81,12 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path, const char *video_path)
 
 	small = gdk_pixbuf_scale_simple (pixbuf, d_width, d_height,
 			GDK_INTERP_TILES);
-	gdk_pixbuf_unref (pixbuf);
 
-	if (gdk_pixbuf_save (small, path, "png", &err, NULL) == FALSE)
+	with_emblem = add_emblem_to_pixbuf (small, d_width, d_height);
+	g_return_if_fail (with_emblem != NULL);
+	gdk_pixbuf_unref (small);
+
+	if (gdk_pixbuf_save (with_emblem, path, "png", &err, NULL) == FALSE)
 	{
 		if (err != NULL)
 		{
@@ -59,11 +96,11 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path, const char *video_path)
 			g_print ("totem-video-thumbnailer couln't write the thumbnail '%s' for video '%s'\n", path, video_path);
 		}
 
-		gdk_pixbuf_unref (small);
-		exit (0);
+		gdk_pixbuf_unref (with_emblem);
+		return;
 	}
 
-	gdk_pixbuf_unref (small);
+	gdk_pixbuf_unref (with_emblem);
 }
 
 int main (int argc, char *argv[])
@@ -141,9 +178,12 @@ int main (int argc, char *argv[])
 	}
 
 	/* For debug only */
-	//show_pixbuf (pixbuf);
+#ifdef THUMB_DEBUG
+	show_pixbuf (pixbuf);
+#endif
 
 	save_pixbuf (pixbuf, argv[2], argv[1]);
+	gdk_pixbuf_unref (pixbuf);
 
 	return 0;
 }
