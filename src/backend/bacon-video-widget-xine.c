@@ -166,6 +166,7 @@ struct BaconVideoWidgetPrivate {
 	int volume;
 	TvOutType tvout;
 	gboolean is_live;
+	char *codecs_path;
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
@@ -456,6 +457,7 @@ bacon_video_widget_finalize (GObject *object)
 	}
 	g_free (bvw->priv->vis_name);
 	g_object_unref (G_OBJECT (bvw->priv->gc));
+	g_free (bvw->priv->codecs_path);
 
 	g_list_foreach (bvw->priv->visuals, (GFunc) g_free, NULL);
 	g_list_free (bvw->priv->visuals);
@@ -852,6 +854,18 @@ setup_config_stream (BaconVideoWidget *bvw)
 }
 
 static gboolean
+bacon_video_widget_plugin_exists (BaconVideoWidget *bvw, const char *filename)
+{
+	char *path;
+	gboolean res;
+
+	path = g_build_filename (bvw->priv->codecs_path, filename, NULL);
+	res = g_file_test (path, G_FILE_TEST_IS_REGULAR);
+	g_free (path);
+	return res;
+}
+
+static gboolean
 video_window_translate_point (BaconVideoWidget *bvw, int gui_x, int gui_y,
 		int *video_x, int *video_y)
 {
@@ -1232,6 +1246,7 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 	char *message;
 	int num;
 	signal_data *sigdata;
+	const char *params;
 
 	message = NULL;
 
@@ -1273,7 +1288,10 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		break;
 	case XINE_MSG_LIBRARY_LOAD_ERROR:
 		num = BVW_ERROR_PLUGIN_LOAD;
-		message = g_strdup_printf (_("A problem occured while loading a library or a decoder (%s)."), (char *) data + data->parameters);
+		params = (char *) data + data->parameters;
+		/* Only if the file could really not be loaded */
+		if (bacon_video_widget_plugin_exists (bvw, params) != FALSE)
+			message = g_strdup_printf (_("A problem occured while loading a library or a decoder (%s)."), params);
 		break;
 	case XINE_MSG_ENCRYPTED_SOURCE:
 		if (g_str_has_prefix (bvw->priv->mrl, "dvd:") != FALSE)
@@ -1901,7 +1919,7 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const char *mrl,
 					BVW_ERROR_CODEC_NOT_HANDLED,
 					_("Audio codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"), name);
 		}
-g_message ("returning error message");
+
 		g_free (name);
 
 		return FALSE;
@@ -2467,6 +2485,9 @@ bacon_video_widget_set_proprietary_plugins_path (BaconVideoWidget *bvw,
 	totem_create_symlinks ("/usr/lib/RealPlayer9/Codecs/", path);
 	totem_create_symlinks ("/usr/lib/RealPlayer9/users/Real/Codecs/", path);
 	totem_create_symlinks ("/usr/lib/RealPlayer8/Codecs", path);
+
+	g_free (bvw->priv->codecs_path);
+	bvw->priv->codecs_path = g_strdup (path);
 }
 
 void

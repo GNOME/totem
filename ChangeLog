@@ -1,3 +1,13 @@
+2004-10-09  Bastien Nocera  <hadess@hadess.net>
+
+	* NEWS: upd
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_finalize),
+	(bacon_video_widget_plugin_exists), (xine_event_message),
+	(bacon_video_widget_open),
+	(bacon_video_widget_set_proprietary_plugins_path):
+	remove useless debug, only warn about missing proprietary plugins
+	if the files are there and can't be loaded, not when they're absent.
+
 2004-10-09  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* configure.in:
