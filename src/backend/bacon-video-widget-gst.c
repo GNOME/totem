@@ -2237,6 +2237,7 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
       "stream-info", &streaminfo, NULL);
   for (; streaminfo != NULL; streaminfo = streaminfo->next) {
     GObject *info = streaminfo->data;
+    GstPad *real;
     gint type;
     GParamSpec *pspec;
     GEnumValue *val;
@@ -2253,7 +2254,8 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
       if (!pad)
         g_object_get (info, "pad", &pad, NULL);
       g_assert (GST_IS_PAD (pad));
-      from = gst_caps_copy (GST_PAD_CAPS (pad));
+      real = (GstPad *) GST_PAD_REALIZE (pad);
+      from = gst_caps_copy (GST_PAD_CAPS (real));
     }
   }
   if (!from)
