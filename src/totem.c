@@ -416,6 +416,36 @@ totem_action_fullscreen (Totem *totem, gboolean state)
 	totem_action_fullscreen_toggle (totem);
 }
 
+static char *
+totem_get_nice_name_for_stream (Totem *totem)
+{
+	char *title, *artist, *retval;
+	GValue value = { 0, };
+
+	bacon_video_widget_get_metadata (totem->bvw, BVW_INFO_TITLE, &value);
+	title = g_strdup (g_value_get_string (&value));
+	g_value_unset (&value);
+
+	if (title == NULL)
+		return NULL;
+
+	bacon_video_widget_get_metadata (totem->bvw, BVW_INFO_ARTIST, &value);
+	artist = g_strdup (g_value_get_string (&value));
+	g_value_unset (&value);
+
+	if (artist == NULL)
+	{
+		g_free (title);
+		return NULL;
+	}
+
+	retval = g_strdup_printf ("%s - %s", artist, title);
+	g_free (artist);
+	g_free (title);
+
+	return retval;
+}
+
 static void
 update_mrl_label (Totem *totem, const char *name)
 {
@@ -552,7 +582,9 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 
 		retval = bacon_video_widget_open (totem->bvw, mrl, &err);
 		totem->mrl = g_strdup (mrl);
-		name = gtk_playlist_mrl_to_title (mrl);
+		name = totem_get_nice_name_for_stream (totem);
+		if (name == NULL)
+			name = gtk_playlist_mrl_to_title (mrl);
 
 		/* Play/Pause */
 		gtk_widget_set_sensitive (totem->pp_button, TRUE);
@@ -561,6 +593,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		gtk_widget_set_sensitive (totem->fs_pp_button, TRUE);
 
 		update_mrl_label (totem, name);
+		gtk_playlist_set_title (GTK_PLAYLIST (totem->playlist), name);
 
 		/* Seek bar */
 		update_seekable (totem, FALSE);
@@ -1133,6 +1166,9 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 			{
                                 char *uri;
                                 EggRecentItem *item;
+
+				if (filename[0] != '/')
+					continue;
 
 				uri = gnome_vfs_get_uri_from_local_path
 					(filename);

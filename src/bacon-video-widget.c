@@ -485,11 +485,9 @@ load_video_out_driver (BaconVideoWidget *bvw, gboolean null_out)
 	vis.display = bvw->priv->display;
 	vis.screen = bvw->priv->screen;
 	vis.d = GDK_WINDOW_XID (bvw->priv->video_window);
-	res_h =
-	    (DisplayWidth (bvw->priv->display, bvw->priv->screen) * 1000 /
+	res_h = (DisplayWidth (bvw->priv->display, bvw->priv->screen) * 1000 /
 	     DisplayWidthMM (bvw->priv->display, bvw->priv->screen));
-	res_v =
-	    (DisplayHeight (bvw->priv->display, bvw->priv->screen) * 1000 /
+	res_v = (DisplayHeight (bvw->priv->display, bvw->priv->screen) * 1000 /
 	     DisplayHeightMM (bvw->priv->display, bvw->priv->screen));
 	bvw->priv->display_ratio = res_v / res_h;
 
@@ -841,7 +839,7 @@ bacon_video_widget_realize (GtkWidget *widget)
 	bvw->priv->screen = DefaultScreen (bvw->priv->display);
 
 	bvw->priv->vo_driver = load_video_out_driver (bvw, bvw->priv->null_out);
-
+	//FIXME
 	g_assert (bvw->priv->vo_driver != NULL);
 
 	if (bvw->priv->null_out == FALSE)
@@ -1074,6 +1072,8 @@ bacon_video_widget_new (int width, int height, gboolean null_out, GError **err)
 		return NULL;
 
 	bvw->priv->vo_driver = load_video_out_driver (bvw, TRUE);
+	//FIXME
+	g_assert (bvw->priv->vo_driver != NULL);
 
 	bvw->priv->stream = xine_stream_new (bvw->priv->xine,
 			bvw->priv->ao_driver, bvw->priv->vo_driver);
@@ -1703,34 +1703,30 @@ bacon_video_widget_set_media_device (BaconVideoWidget *bvw, const char *path)
 	xine_cfg_entry_t entry;
 
 	/* DVD device */
-	xine_config_register_string (bvw->priv->xine,
-			"input.dvd_device", path,
-			"device used for dvd drive",
-			NULL, 10, NULL, NULL);
-	xine_config_lookup_entry (bvw->priv->xine,
-			"input.dvd_device", &entry);
-	entry.str_value = g_strdup (path);
-	xine_config_update_entry (bvw->priv->xine, &entry);
+	if (xine_config_lookup_entry (bvw->priv->xine,
+			"input.dvd_device", &entry))
+	{
+		entry.str_value = g_strdup (path);
+		xine_config_update_entry (bvw->priv->xine, &entry);
+	}
 
 	/* VCD device */
-	xine_config_register_string (bvw->priv->xine,
-			"input.vcd_device", path,
-			"device used for cdrom drive",
-			NULL, 10, NULL, NULL);
-	xine_config_lookup_entry (bvw->priv->xine,
-			"input.vcd_device", &entry);
-	entry.str_value = g_strdup (path);
-	xine_config_update_entry (bvw->priv->xine, &entry);
+	memset (&entry, 0, sizeof (entry));
+	if (xine_config_lookup_entry (bvw->priv->xine,
+				"input.vcd_device", &entry))
+	{
+		entry.str_value = g_strdup (path);
+		xine_config_update_entry (bvw->priv->xine, &entry);
+	}
 
 	/* CDDA device */
-	xine_config_register_string (bvw->priv->xine,
-			"input.cdda_device", path,
-			"device used for cdrom drive",
-			NULL, 10, NULL, NULL);
-	xine_config_lookup_entry (bvw->priv->xine,
-			"input.cdda_device", &entry);
-	entry.str_value = g_strdup (path);
-	xine_config_update_entry (bvw->priv->xine, &entry);
+	memset (&entry, 0, sizeof (entry));
+	if (xine_config_lookup_entry (bvw->priv->xine,
+				"input.cdda_device", &entry))
+	{
+		entry.str_value = g_strdup (path);
+		xine_config_update_entry (bvw->priv->xine, &entry);
+	}
 }
 
 void

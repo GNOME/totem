@@ -1,3 +1,15 @@
+2003-04-04  Bastien Nocera  <hadess@hadess.net>
+
+	* README: upd
+	* src/bacon-video-widget.c: (load_video_out_driver),
+	(bacon_video_widget_realize), (bacon_video_widget_new),
+	(bacon_video_widget_set_media_device):
+	* src/totem.c: (totem_get_nice_name_for_stream),
+	(totem_action_set_mrl), (totem_action_open_files): when there's a
+	artist and title info, use that for the main label and the playlist
+	entry. This allows mp3s, oggs and audio CDs to update the playlist
+	with more meaningful entries (Closes: #109405)
+
 2003-04-03  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-video-widget-properties.c:
