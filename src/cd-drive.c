@@ -99,7 +99,7 @@ linux_bsd_media_type (const char *device)
 		return CD_MEDIA_TYPE_ERROR;
 	}
 
-	mmc_profile = get_mmc_profile ((void *)fd);
+	mmc_profile = get_mmc_profile ((void *)&fd);
 	close (fd);
 
 	switch (mmc_profile) {
@@ -882,7 +882,7 @@ guess_media_type (const char *device_path)
 #if defined(__linux__) || defined(__FreeBSD__)
 	return linux_bsd_media_type (device_path);
 #else
-	return CD_BLANK_MEDIA_TYPE_UNKNOWN;
+	return CD_MEDIA_TYPE_UNKNOWN;
 #endif
 }
 

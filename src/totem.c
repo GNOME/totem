@@ -3724,6 +3724,14 @@ main (int argc, char **argv)
 	/* The prefs after the video widget is connected */
 	totem_setup_preferences (totem);
 
+	/* Basic command-line handling at load-time. */
+	if (strlen (argv[1]) > 3 && strncmp (argv[1], "--", 2) == 0)
+	{
+		if (strcmp (argv[1], "--fullscreen") == 0) {
+			totem_action_fullscreen_toggle (totem);
+		}
+	}
+
 	if (argc > 1)
 	{
 		if (totem_action_open_files (totem, argv, TRUE))

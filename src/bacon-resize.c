@@ -18,7 +18,7 @@
  */
 
 #include "config.h"
-#include "scrsaver.h"
+#include "bacon-resize.h"
 
 #include <glib.h>
 #include <gdk/gdkx.h>
