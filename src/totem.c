@@ -1441,7 +1441,6 @@ totem_action_add_recent (Totem *totem, const char *filename)
 		return;
 
 	item = egg_recent_item_new_from_uri (filename);
-	egg_recent_item_add_group (item, "Totem");
 	egg_recent_model_add_full (totem->recent_model, item);
 }
 
@@ -3510,12 +3509,11 @@ totem_setup_recent (Totem *totem)
 	g_return_if_fail (menu != NULL);
 	g_return_if_fail (menu_item != NULL);
 
-	totem->recent_model = egg_recent_model_new (EGG_RECENT_MODEL_SORT_MRU);
-
 	/* it would be better if we just filtered by mime-type, but there
 	 * doesn't seem to be an easy way to figure out which mime-types we
 	 * can handle */
-	egg_recent_model_set_filter_groups (totem->recent_model, "Totem", NULL);
+	totem->recent_model = egg_recent_model_new ("Totem",
+			EGG_RECENT_MODEL_SORT_MRU);
 
 	totem->recent_view = egg_recent_view_gtk_new (menu, menu_item);
 	egg_recent_view_gtk_show_icons (EGG_RECENT_VIEW_GTK

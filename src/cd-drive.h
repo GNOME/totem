@@ -55,6 +55,11 @@ typedef enum {
 	CDDRIVE_TYPE_DVD_DRIVE              = 1 << 8,
 } CDDriveType;
 
+typedef enum {
+	CD_PROTOCOL_IDE,
+	CD_PROTOCOL_SCSI,
+} CDProtocolType;
+
 typedef struct {
 	CDDriveType type;
 	char *display_name;
@@ -62,6 +67,7 @@ typedef struct {
 	int max_speed_read;
 	char *cdrecord_id;
 	char *device;
+	CDProtocolType protocol;
 } CDDrive;
 
 /* Returns a list of CDDrive structs */
