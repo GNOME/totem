@@ -1182,6 +1182,8 @@ update_seekable (Totem *totem, gboolean seekable)
 	if (totem->seekable == seekable)
 		return;
 
+	totem->seekable = seekable;
+
 	/* Check if the stream is seekable */
 	gtk_widget_set_sensitive (totem->seek, seekable);
 	gtk_widget_set_sensitive (totem->fs_seek, seekable);
