@@ -1,5 +1,12 @@
 2004-11-19  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_realize):
+	  Set mouse/key event masks so we get notified of mouse motion
+	  in fullscreen mode and we see controls, just like the xine
+	  backend.
+
+2004-11-19  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_can_play):
 	  Enable VCD/SVCD again.
 	* src/totem-disc.c: (cd_cache_disc_is_vcd):
