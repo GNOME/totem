@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Totem HEAD\n"
-"POT-Creation-Date: 2003-04-29 20:41+0100\n"
+"POT-Creation-Date: 2003-06-06 18:58+0100\n"
 "PO-Revision-Date: 2003-02-21 14:37+0100\n"
 "Last-Translator: Pól ? Dubhthaigh <dubhthach@zion.nuigalway.ie>\n"
 "Language-Team: Irish \n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/playlist.glade.h:1 src/gtk-playlist.c:1206
+#: data/playlist.glade.h:1 src/gtk-playlist.c:1225
 msgid "Playlist"
 msgstr ""
 
@@ -28,25 +28,28 @@ msgstr ""
 
 #: data/playlist.glade.h:4
 msgid "_Save..."
-msgstr ""
+msgstr "_Sábháil..."
 
-#: data/properties.glade.h:1 src/bacon-video-widget-properties.c:184
+#: data/properties.glade.h:1 src/bacon-video-widget-properties.c:183
+#: src/totem-properties-page.c:177
 msgid "0 frames per second"
 msgstr "0 fráma gach soicind"
 
 #. Bitrate
-#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:186
+#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:185
+#: src/totem-properties-page.c:179
 msgid "0 kbps"
 msgstr " 0 kbps"
 
 #. 0 seconds
 #: data/properties.glade.h:3 data/totem.glade.h:2
-#: src/bacon-video-widget-properties.c:140
+#: src/bacon-video-widget-properties.c:139 src/totem-properties-page.c:133
 msgid "0 seconds"
 msgstr "0 soicind"
 
 #. Dimensions
-#: data/properties.glade.h:4 src/bacon-video-widget-properties.c:179
+#: data/properties.glade.h:4 src/bacon-video-widget-properties.c:178
+#: src/totem-properties-page.c:172
 msgid "0 x 0"
 msgstr "0 x 0"
 
@@ -59,75 +62,66 @@ msgid "<b>General</b>"
 msgstr "<b>Ginearálta</b>"
 
 #: data/properties.glade.h:7
-msgid "<b>URL</b>"
-msgstr "<b>Seoladh Idirlíon (URL)</b>"
-
-#: data/properties.glade.h:8
 msgid "<b>Video</b>"
 msgstr "<b>Fís</b>"
 
-#: data/properties.glade.h:9
-#, fuzzy
+#: data/properties.glade.h:8
 msgid "Artist:"
 msgstr "Ceoltóir:"
 
-#: data/properties.glade.h:10
-#, fuzzy
+#: data/properties.glade.h:9
 msgid "Bitrate:"
 msgstr "Ráta na bits:"
 
-#: data/properties.glade.h:11
+#: data/properties.glade.h:10
 #, fuzzy
 msgid "Codec:"
-msgstr "Codec"
+msgstr "Codec:"
 
-#: data/properties.glade.h:12
+#: data/properties.glade.h:11
 msgid "Dimensions:"
 msgstr ""
 
-#: data/properties.glade.h:13
-#, fuzzy
+#: data/properties.glade.h:12
 msgid "Duration:"
 msgstr "Achar:"
 
-#: data/properties.glade.h:14
-#, fuzzy
+#: data/properties.glade.h:13
 msgid "Framerate:"
 msgstr "Ráta na Frámaí"
 
 #. Video Codec
-#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:181
-#: src/bacon-video-widget-properties.c:188
-#: src/bacon-video-widget-properties.c:260
-#: src/bacon-video-widget-properties.c:292
+#: data/properties.glade.h:14 src/bacon-video-widget-properties.c:180
+#: src/bacon-video-widget-properties.c:187
+#: src/bacon-video-widget-properties.c:256
+#: src/bacon-video-widget-properties.c:288 src/totem-properties-page.c:174
+#: src/totem-properties-page.c:181 src/totem-properties-page.c:250
+#: src/totem-properties-page.c:282
 msgid "N/A"
 msgstr "N/A"
 
-#: data/properties.glade.h:16 src/bacon-video-widget-properties.c:192
-msgid "No Link"
-msgstr "Gan Ceangal"
-
-#: data/properties.glade.h:17 src/bacon-video-widget-properties.c:353
+#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:337
 msgid "Properties"
 msgstr "Cáilíoch"
 
-#: data/properties.glade.h:18
-#, fuzzy
+#: data/properties.glade.h:16
 msgid "Title:"
 msgstr "Teideal:"
 
 #. Title
-#: data/properties.glade.h:19 src/bacon-video-widget-properties.c:171
-#: src/bacon-video-widget-properties.c:173
-#: src/bacon-video-widget-properties.c:175
-#: src/bacon-video-widget-properties.c:209
-#: src/bacon-video-widget-properties.c:216
-#: src/bacon-video-widget-properties.c:223
+#: data/properties.glade.h:17 src/bacon-video-widget-properties.c:170
+#: src/bacon-video-widget-properties.c:172
+#: src/bacon-video-widget-properties.c:174
+#: src/bacon-video-widget-properties.c:205
+#: src/bacon-video-widget-properties.c:212
+#: src/bacon-video-widget-properties.c:219 src/totem-properties-page.c:164
+#: src/totem-properties-page.c:166 src/totem-properties-page.c:168
+#: src/totem-properties-page.c:199 src/totem-properties-page.c:206
+#: src/totem-properties-page.c:213
 msgid "Unknown"
 msgstr "Gan Aithne"
 
-#: data/properties.glade.h:20
-#, fuzzy
+#: data/properties.glade.h:18
 msgid "Year:"
 msgstr "Bliain: "
 
@@ -135,7 +129,11 @@ msgstr "Bliain: "
 msgid "Play movies and songs"
 msgstr "Cas scannán agus ceol"
 
-#: data/totem.desktop.in.h:2 src/totem.c:3163
+#. Please also translate your language into its native language
+#. * in src/languages.h
+#. * for example: French -> Francais
+#. * use C UTF-8 strings
+#: data/totem.desktop.in.h:2 src/totem.c:3411
 msgid "Totem Movie Player"
 msgstr "Imreoir scannán Totem"
 
@@ -192,14 +190,12 @@ msgid "<b>Display</b>"
 msgstr "<b>Taispeánadh</b>"
 
 #: data/totem.glade.h:15
-#, fuzzy
 msgid "<b>Networking</b>"
-msgstr "<b>Fís</b>"
+msgstr ""
 
 #: data/totem.glade.h:16
-#, fuzzy
 msgid "<b>Optical Device</b>"
-msgstr "_Bealach do gaireas léasar"
+msgstr "<b>Gaireas Léasar</b>"
 
 #: data/totem.glade.h:17
 msgid "<b>Preview</b>"
@@ -210,350 +206,383 @@ msgid "<b>Proprietary Plugins</b>"
 msgstr ""
 
 #: data/totem.glade.h:19
-#, fuzzy
 msgid "<b>TV-Out</b>"
-msgstr "<b>Audio</b>"
+msgstr "<b>Teilifís-Amach</b>"
 
 #: data/totem.glade.h:20
-msgid "Add Proprietary plugins..."
+msgid "<b>Visual Effects</b>"
 msgstr ""
 
 #: data/totem.glade.h:21
-msgid "Always On _Top"
+msgid "Add Proprietary plugins..."
 msgstr ""
 
 #: data/totem.glade.h:22
-msgid "Always on top"
+msgid "Always On _Top"
 msgstr ""
 
 #: data/totem.glade.h:23
+msgid "Always on top"
+msgstr ""
+
+#: data/totem.glade.h:24
 msgid "Angle menu"
 msgstr "Roghchláir do Uillinn"
 
-#: data/totem.glade.h:24
+#: data/totem.glade.h:25
 msgid "Audio menu"
 msgstr "Roghchlár do Audio"
 
-#: data/totem.glade.h:25
+#: data/totem.glade.h:26
 msgid "Automatically _resize the window when a new video is loaded"
 msgstr ""
 
-#: data/totem.glade.h:26
+#: data/totem.glade.h:27
 msgid "Chapter menu"
 msgstr "Roghchlár an Caibidil"
 
-#: data/totem.glade.h:27
+#: data/totem.glade.h:28
 msgid "Connection Speed: "
 msgstr ""
 
-#: data/totem.glade.h:28
+#: data/totem.glade.h:29
 msgid "DVD menu"
 msgstr "Roghchlár an DVD"
 
-#: data/totem.glade.h:29
-msgid "DXR3 TV-Out"
-msgstr ""
-
 #: data/totem.glade.h:30
+msgid "DXR3 TV-Out"
+msgstr "Teilifís-Amach do DXR3"
+
+#: data/totem.glade.h:31
 msgid "Deinterlace"
 msgstr ""
 
-#: data/totem.glade.h:31
+#: data/totem.glade.h:32
 msgid "Exit Fullscreen"
 msgstr ""
 
-#: data/totem.glade.h:32
+#: data/totem.glade.h:33
+msgid "Extra Large"
+msgstr ""
+
+#: data/totem.glade.h:34
 msgid "File name"
 msgstr "Ainm an Comhad"
 
-#: data/totem.glade.h:33
+#: data/totem.glade.h:35
 msgid "Go to the DVD menu"
 msgstr "Dul go dtí roghchlár na DVD"
 
-#: data/totem.glade.h:34
+#: data/totem.glade.h:36
 msgid "Go to the angle menu"
 msgstr "Dul go dtí roghchláir an t'Uillinn"
 
-#: data/totem.glade.h:35
+#: data/totem.glade.h:37
 msgid "Go to the audio menu"
 msgstr "Dul go dtí roghchlár an Audio"
 
-#: data/totem.glade.h:36
+#: data/totem.glade.h:38
 msgid "Go to the chapter menu"
 msgstr "Dul go dtí roghchlár na Caibidil"
 
-#: data/totem.glade.h:37
+#: data/totem.glade.h:39
 msgid "Go to the title menu"
 msgstr "Dul go dtí roghchlár an Teideal"
 
-#: data/totem.glade.h:38
+#: data/totem.glade.h:40
 msgid "Intranet/LAN"
 msgstr "Idirlíon/LAN"
 
-#: data/totem.glade.h:39
+#: data/totem.glade.h:41
 msgid "Languages"
 msgstr "Teangaí"
 
-#: data/totem.glade.h:40 src/totem.c:78
+#: data/totem.glade.h:42
+msgid "Large"
+msgstr ""
+
+#: data/totem.glade.h:43 src/totem.c:80
 msgid "Next"
 msgstr "Dul chun cinn"
 
-#: data/totem.glade.h:41
+#: data/totem.glade.h:44
 msgid "Next Chapter/Movie"
 msgstr "An Caibidil/Scannán chun cinn"
 
-#: data/totem.glade.h:42
-#, fuzzy
+#: data/totem.glade.h:45
 msgid "Next chapter or movie"
 msgstr "An Caibidil no an Scannán chun cinn"
 
-#: data/totem.glade.h:43
+#: data/totem.glade.h:46
 msgid "No TV-Out"
-msgstr ""
+msgstr "Níl aon Teilifís-Amach"
 
-#: data/totem.glade.h:44
+#: data/totem.glade.h:47
 msgid "No langage selection available"
 msgstr ""
 
-#: data/totem.glade.h:45
+#: data/totem.glade.h:48
 msgid "No subtitles selection available"
 msgstr ""
 
-#: data/totem.glade.h:46
+#: data/totem.glade.h:49
+msgid "Normal"
+msgstr ""
+
+#: data/totem.glade.h:50
 msgid "Open _Location..."
 msgstr ""
 
-#: data/totem.glade.h:47
+#: data/totem.glade.h:51
 msgid "Open a non-local file"
 msgstr "Oscail comhad a nach bhfuil ar an riomhaire seo"
 
-#: data/totem.glade.h:48
+#: data/totem.glade.h:52
 msgid "Optical Device _Path: "
 msgstr "_Bealach do gaireas léasar"
 
-#: data/totem.glade.h:49
+#: data/totem.glade.h:53
 msgid "Play _Audio CD"
 msgstr "Cas CD _Ceol"
 
-#: data/totem.glade.h:50
+#: data/totem.glade.h:54
 msgid "Play _DVD"
 msgstr "Cas _DVD"
 
-#: data/totem.glade.h:51
+#: data/totem.glade.h:55
 msgid "Play _VCD"
 msgstr "Cas _VCD"
 
-#: data/totem.glade.h:52
+#: data/totem.glade.h:56
 msgid "Play a Video CD"
 msgstr "Cas VCD"
 
-#: data/totem.glade.h:53
+#: data/totem.glade.h:57
 msgid "Play a Video DVD"
 msgstr "Cas DVD"
 
-#: data/totem.glade.h:54
+#: data/totem.glade.h:58
 msgid "Play an audio CD"
 msgstr "Cas CD Ceol"
 
-#: data/totem.glade.h:55
+#: data/totem.glade.h:59
 msgid "Play or pause the movie"
 msgstr "Cas nó stad an Scannán"
 
-#: data/totem.glade.h:56 src/totem.c:77
+#: data/totem.glade.h:60 src/totem.c:79
 msgid "Play/Pause"
 msgstr "Cas/Stad"
 
-#: data/totem.glade.h:57 src/totem.c:79
+#: data/totem.glade.h:61 src/totem.c:81
 msgid "Previous"
 msgstr "Roimh ré"
 
-#: data/totem.glade.h:58
+#: data/totem.glade.h:62
 msgid "Previous Chapter/Movie"
 msgstr "An Caibidil/Scannán roimhe"
 
-#: data/totem.glade.h:59
-#, fuzzy
+#: data/totem.glade.h:63
 msgid "Previous chapter or movie"
 msgstr "An Caibidil nó Scannán roimhe"
 
-#: data/totem.glade.h:60
+#: data/totem.glade.h:64
 msgid "Save Screenshot"
 msgstr "Sábháil an Radharcscáthán"
 
-#: data/totem.glade.h:61
+#: data/totem.glade.h:65
 msgid "Save screenshot to _file: "
 msgstr "Sábháil an radharcscáthán go _comhad:"
 
-#: data/totem.glade.h:62
+#: data/totem.glade.h:66
 msgid "Save screenshot to the _desktop"
 msgstr "Sábháil an radharcscáthán go dtí an _deasc"
 
-#: data/totem.glade.h:63
+#: data/totem.glade.h:67
 msgid "Set the repeat mode"
 msgstr ""
 
-#: data/totem.glade.h:64
+#: data/totem.glade.h:68
 msgid "Show Controls"
 msgstr ""
 
-#: data/totem.glade.h:65
+#: data/totem.glade.h:69
 msgid "Show controls"
 msgstr ""
 
-#: data/totem.glade.h:66
+#: data/totem.glade.h:70
 msgid "Show or hide the playlist"
 msgstr ""
 
-#: data/totem.glade.h:67
+#: data/totem.glade.h:71
 msgid "Show visual effects when an audio file is played"
 msgstr ""
 
-#: data/totem.glade.h:68
+#: data/totem.glade.h:72
 msgid "Show/Hide Playlist"
 msgstr ""
 
-#: data/totem.glade.h:69
+#: data/totem.glade.h:73
 msgid "Skip backwards"
 msgstr ""
 
-#: data/totem.glade.h:70
+#: data/totem.glade.h:74
 msgid "Skip forward"
 msgstr ""
 
-#: data/totem.glade.h:71
+#: data/totem.glade.h:75
 msgid "Skip to"
 msgstr "Dul go dtí"
 
-#: data/totem.glade.h:72
+#: data/totem.glade.h:76
 msgid "Skip to a specific time"
 msgstr ""
 
-#: data/totem.glade.h:73
+#: data/totem.glade.h:77
 msgid "Skip to:"
 msgstr "Dul go dtí:"
 
-#: data/totem.glade.h:74
+#: data/totem.glade.h:78
+msgid "Small"
+msgstr "Beag"
+
+#: data/totem.glade.h:79
 msgid "Subtitles"
 msgstr "Fotheideal"
 
-#: data/totem.glade.h:75
+#: data/totem.glade.h:80
 msgid "Switch to double size"
 msgstr ""
 
-#: data/totem.glade.h:76
+#: data/totem.glade.h:81
 msgid "Switch to fullscreen"
 msgstr ""
 
-#: data/totem.glade.h:77
+#: data/totem.glade.h:82
 msgid "TV-Out Mode"
 msgstr ""
 
-#: data/totem.glade.h:78
+#: data/totem.glade.h:83
 msgid "Take _Screenshot"
 msgstr "Tog _Radharcscáthán"
 
-#: data/totem.glade.h:79
+#: data/totem.glade.h:84
 msgid "Take a screenshot"
 msgstr "Tog Radharcscáthán"
 
-#: data/totem.glade.h:80
+#: data/totem.glade.h:85
 msgid "Time:"
 msgstr "Am:"
 
-#: data/totem.glade.h:81
+#: data/totem.glade.h:86
 msgid "Title menu"
 msgstr "Roghchlár an Teideal"
 
-#: data/totem.glade.h:82
+#: data/totem.glade.h:87
 msgid "Toggle _Aspect Ratio"
 msgstr ""
 
-#: data/totem.glade.h:83
+#: data/totem.glade.h:88
 msgid "Toggle the aspect ratio"
 msgstr ""
 
 #. Title
-#: data/totem.glade.h:84 src/totem.c:581 src/totem.c:603 src/totem.c:1606
+#: data/totem.glade.h:89 src/totem.c:692 src/totem.c:719 src/totem.c:1826
 msgid "Totem"
 msgstr "Totem"
 
-#: data/totem.glade.h:85
+#: data/totem.glade.h:90
 msgid "Totem Preferences"
 msgstr ""
 
-#: data/totem.glade.h:86 src/totem.c:83
+#: data/totem.glade.h:91
+msgid "Type of visualisation: "
+msgstr ""
+
+#: data/totem.glade.h:92
+msgid "Visualisation size: "
+msgstr ""
+
+#: data/totem.glade.h:93 src/totem.c:85
 msgid "Volume Down"
 msgstr ""
 
-#: data/totem.glade.h:87 src/totem.c:82
+#: data/totem.glade.h:94 src/totem.c:84
 msgid "Volume Up"
 msgstr ""
 
-#: data/totem.glade.h:88
+#: data/totem.glade.h:95
 msgid "Volume down"
 msgstr ""
 
-#: data/totem.glade.h:89
+#: data/totem.glade.h:96
 msgid "Volume up"
 msgstr ""
 
-#: data/totem.glade.h:90
+#: data/totem.glade.h:97 data/vanity.glade.h:7
 msgid "Zoom _1:1"
 msgstr "Formhéadaigh _1:1"
 
-#: data/totem.glade.h:91
+#: data/totem.glade.h:98 data/vanity.glade.h:8
 msgid "Zoom _2:1"
 msgstr "Formhéadaigh _2:1"
 
-#: data/totem.glade.h:92
+#: data/totem.glade.h:99
 msgid "Zoom to half size"
 msgstr ""
 
-#: data/totem.glade.h:93
+#: data/totem.glade.h:100
 msgid "Zoom to one for one size"
 msgstr ""
 
-#: data/totem.glade.h:94
+#: data/totem.glade.h:101
 msgid "_Eject"
 msgstr ""
 
-#: data/totem.glade.h:95
+#: data/totem.glade.h:102
 msgid "_Fullscreen"
 msgstr ""
 
-#: data/totem.glade.h:96
+#: data/totem.glade.h:103
+msgid "_General"
+msgstr "_Ginearálta"
+
+#: data/totem.glade.h:104
 msgid "_Go"
 msgstr "_Dul go dtí"
 
-#: data/totem.glade.h:97
+#: data/totem.glade.h:105
 msgid "_Movie"
 msgstr "_Scanán"
 
-#: data/totem.glade.h:98
+#: data/totem.glade.h:106
 msgid "_Play / Pause"
 msgstr "_Cas / Stad"
 
-#: data/totem.glade.h:99
+#: data/totem.glade.h:107
 msgid "_Repeat Mode"
 msgstr ""
 
-#: data/totem.glade.h:100
+#: data/totem.glade.h:108
 msgid "_Show/Hide Playlist"
 msgstr ""
 
-#: data/totem.glade.h:101
+#: data/totem.glade.h:109
 msgid "_Skip to..."
 msgstr ""
 
-#: data/totem.glade.h:102
+#: data/totem.glade.h:110
 msgid "_Sound"
 msgstr "_Glóir"
 
-#: data/totem.glade.h:103
+#: data/totem.glade.h:111
+msgid "_Visual Effects"
+msgstr ""
+
+#: data/totem.glade.h:112 data/vanity.glade.h:10
 msgid "_Zoom 1:2"
 msgstr "_Formhéadaigh 1:2"
 
-#: data/totem.glade.h:104
+#: data/totem.glade.h:113
 msgid "seconds"
 msgstr "soicind"
 
@@ -562,31 +591,63 @@ msgid "Enable deinterlacing"
 msgstr ""
 
 #: data/totem.schemas.in.h:2
-msgid "Path to the optical media device"
+msgid "Name of the visual effects plugins"
 msgstr ""
 
 #: data/totem.schemas.in.h:3
-msgid "Repeat mode"
+msgid "Path to the optical media device"
 msgstr ""
 
 #: data/totem.schemas.in.h:4
-msgid "Resize the canvas automatically on file load"
+msgid "Repeat mode"
 msgstr ""
 
 #: data/totem.schemas.in.h:5
-msgid "Show visual effects when no video is displayed"
+msgid "Resize the canvas automatically on file load"
 msgstr ""
 
 #: data/totem.schemas.in.h:6
-msgid "Show visual effects when playing an audio only file"
+msgid "Show visual effects when no video is displayed"
 msgstr ""
 
 #: data/totem.schemas.in.h:7
-msgid "X coordinate for the Playlist"
+msgid "Show visual effects when playing an audio only file"
 msgstr ""
 
 #: data/totem.schemas.in.h:8
+msgid "The quality of the visuals when using goom"
+msgstr ""
+
+#: data/totem.schemas.in.h:9
+msgid "Whether to enable debug for the playback engine"
+msgstr ""
+
+#: data/totem.schemas.in.h:10
+msgid "X coordinate for the Playlist"
+msgstr ""
+
+#: data/totem.schemas.in.h:11
 msgid "Y coordinate for the Playlist"
+msgstr ""
+
+#: data/totem-download.glade.h:1
+msgid "Connecting to the server"
+msgstr ""
+
+#: data/totem-download.glade.h:2
+msgid "Done"
+msgstr ""
+
+#: data/totem-download.glade.h:3
+msgid "Downloading the plug-ins"
+msgstr ""
+
+#: data/totem-download.glade.h:4
+msgid "Installing the plug-ins"
+msgstr ""
+
+#: data/totem-download.glade.h:5
+msgid "Plug-ins Download"
 msgstr ""
 
 #: data/uri.glade.h:2
@@ -597,20 +658,223 @@ msgstr ""
 msgid "Open from URI"
 msgstr "Oscail o URI"
 
-#: src/bacon-cd-selection.c:233
+#: data/vanity.desktop.in.h:1
+msgid "Vanity Webcam utility"
+msgstr ""
+
+#: data/vanity.desktop.in.h:2
+msgid "View live webcam and upload pictures"
+msgstr ""
+
+#: data/vanity.glade.h:1
+msgid "Save File"
+msgstr "Sábháil an Comhad"
+
+#: data/vanity.glade.h:2 src/vanity.c:247
+msgid "Vanity"
+msgstr "Díomhaointeacht"
+
+#: data/vanity.glade.h:3
+msgid "Vanity Preferences"
+msgstr ""
+
+#: data/vanity.glade.h:4
+msgid "Zoom 1:1"
+msgstr "Formhéadaigh 1:1"
+
+#: data/vanity.glade.h:5
+msgid "Zoom 1:2"
+msgstr "Formhéadaigh 1:2"
+
+#: data/vanity.glade.h:6
+msgid "Zoom 2:1"
+msgstr "Formhéadaigh 2:1"
+
+#: data/vanity.glade.h:9
+msgid "_Picture"
+msgstr "_Pictiúr"
+
+#: src/bacon-cd-selection.c:234
 msgid "Unnamed CDROM"
 msgstr "CDROM gan ainm"
 
-#: src/bacon-cd-selection.c:275
+#: src/bacon-cd-selection.c:276
 msgid "Select the drive"
 msgstr "Roghnaigh an diosca"
 
-#: src/cd-drive.c:274
+#: src/bacon-video-widget-gst.c:56 src/bacon-video-widget-xine.c:57
+msgid "Totem Video Window"
+msgstr "Fuinneg an físean Totem"
+
+#. One hour
+#: src/bacon-video-widget-properties.c:108 src/totem-properties-page.c:102
+#, c-format
+msgid "%d hour"
+msgstr "%d uair"
+
+#. Multiple hours
+#: src/bacon-video-widget-properties.c:111 src/totem-properties-page.c:105
+#, c-format
+msgid "%d hours"
+msgstr "%d uaireanna"
+
+#. One minute
+#: src/bacon-video-widget-properties.c:115 src/totem-properties-page.c:109
+#, c-format
+msgid "%d minute"
+msgstr "%d noimead"
+
+#. Multiple minutes
+#: src/bacon-video-widget-properties.c:118 src/totem-properties-page.c:112
+#, c-format
+msgid "%d minutes"
+msgstr "%d noimead"
+
+#. One second
+#: src/bacon-video-widget-properties.c:122 src/totem-properties-page.c:116
+#, c-format
+msgid "%d second"
+msgstr "%d soicind"
+
+#. Multiple seconds
+#: src/bacon-video-widget-properties.c:125 src/totem-properties-page.c:119
+#, c-format
+msgid "%d seconds"
+msgstr "%d soicind"
+
+#. hour:minutes:seconds
+#: src/bacon-video-widget-properties.c:130 src/totem-properties-page.c:124
+#, c-format
+msgid "%s %s %s"
+msgstr "%s %s %s"
+
+#. minutes:seconds
+#: src/bacon-video-widget-properties.c:133 src/totem-properties-page.c:127
+#, c-format
+msgid "%s %s"
+msgstr "%s %s"
+
+#. seconds
+#: src/bacon-video-widget-properties.c:136 src/totem-properties-page.c:130
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#. Duration
+#: src/bacon-video-widget-properties.c:176 src/totem-properties-page.c:170
+msgid "0 second"
+msgstr "0 soicind"
+
+#: src/bacon-video-widget-properties.c:261 src/totem-properties-page.c:255
+#, c-format
+msgid "%d frames per second"
+msgstr "%d frámaí gach soicind"
+
+#: src/bacon-video-widget-properties.c:279 src/totem-properties-page.c:273
+#, c-format
+msgid "%d kbps"
+msgstr "%d kbps"
+
+#: src/bacon-video-widget-xine.c:606
+#, c-format
+msgid ""
+"Couldn't load the '%s' audio driver\n"
+"Check that the device is not busy."
+msgstr ""
+
+#: src/bacon-video-widget-xine.c:1051
+#, c-format
+msgid "The server you are trying to connect to (%s) is not known."
+msgstr ""
+
+#: src/bacon-video-widget-xine.c:1054
+#, c-format
+msgid "The device name you specified (%s) seems to be invalid."
+msgstr ""
+
+#: src/bacon-video-widget-xine.c:1057
+#, c-format
+msgid "The server you are trying to connect to (%s) is unreachable."
+msgstr ""
+
+#: src/bacon-video-widget-xine.c:1060
+msgid "The connection to this server was refused."
+msgstr ""
+
+#: src/bacon-video-widget-xine.c:1063
+#, c-format
+msgid "The specified movie '%s' could not be found."
+msgstr ""
+
+#: src/bacon-video-widget-xine.c:1066
+#, c-format
+msgid "The movie '%s' could not be read."
+msgstr ""
+
+#: src/bacon-video-widget-xine.c:1069
+#, c-format
+msgid "A problem occured while loading a library or a decoder (%s)."
+msgstr ""
+
+#: src/bacon-video-widget-xine.c:1072
+msgid ""
+"The source seems encrypted, and can't be read. Are you trying to play an "
+"encrypted DVD without libdvdcss?"
+msgstr ""
+
+#: src/bacon-video-widget-xine.c:1154
+msgid "There is no plugin to handle this movie"
+msgstr ""
+
+#: src/bacon-video-widget-xine.c:1158
+msgid "This movie is broken and can not be played further"
+msgstr "Tá an scanann seo briste agus ní beidh Totem in ann e a senim níos mó."
+
+#: src/bacon-video-widget-xine.c:1162
+msgid "This location is not a valid one"
+msgstr ""
+
+#: src/bacon-video-widget-xine.c:1166
+msgid "This movie could not be opened"
+msgstr "Tá an scanann seo briste agus ní Totem in ann ea oscailte."
+
+#: src/bacon-video-widget-xine.c:1169
+msgid "Generic Error"
+msgstr "Earraid Gineralta"
+
+#: src/bacon-video-widget-xine.c:1539
+#, c-format
+msgid ""
+"Video codec '%s' is not handled. You might need to install additional "
+"plugins to be able to play some types of movies"
+msgstr ""
+
+#: src/bacon-video-widget-xine.c:1558
+msgid "This is an audio-only file, and there is no audio output available"
+msgstr ""
+
+#: src/bacon-video-widget-xine.c:2686
+msgid "Movie is not playing"
+msgstr ""
+
+#: src/bacon-video-widget-xine.c:2694
+msgid "No video to capture"
+msgstr ""
+
+#: src/bacon-video-widget-xine.c:2701
+msgid "Video codec is not handled"
+msgstr ""
+
+#: src/bacon-video-widget-xine.c:2712
+msgid "Height or width of the video is 0. Please file a bug."
+msgstr ""
+
+#: src/cd-drive.c:286
 #, c-format
 msgid "Unnamed SCSI CDROM (%s)"
 msgstr "SCSI CDROM (%s) gan ainm"
 
-#: src/cd-drive.c:573
+#: src/cd-drive.c:708
 msgid "File image"
 msgstr "íomha do Comhad"
 
@@ -640,215 +904,34 @@ msgstr ""
 
 #: src/gnome-password-dialog.c:227
 msgid "_Username:"
-msgstr ""
+msgstr "Ainm an _èsáideoir:"
 
 #: src/gnome-password-dialog.c:234
 msgid "_Password:"
-msgstr "_Focal faire"
+msgstr "_Passfhocal:"
 
 #: src/gnome-password-dialog.c:261
 msgid "Remember this password"
 msgstr "Cuimhnigh an focal faire seo"
 
-#: src/gtk-playlist.c:601 src/totem.c:1323
+#: src/gtk-playlist.c:620 src/totem.c:1500
 msgid "Select files"
 msgstr "Pioc Comhaí"
 
-#: src/gtk-playlist.c:760
+#: src/gtk-playlist.c:779
 msgid "Save playlist"
 msgstr ""
 
-#: src/gtk-playlist.c:798
+#: src/gtk-playlist.c:817
 #, c-format
 msgid ""
 "A file named '%s' already exists.\n"
 "Are you sure you want to overwrite it?"
 msgstr ""
 
-#: src/gtk-playlist.c:958
+#: src/gtk-playlist.c:977
 msgid "Filename"
 msgstr "Ainm-Comhad"
-
-#: src/totem.c:80
-msgid "Seek Forwards"
-msgstr ""
-
-#: src/totem.c:81
-msgid "Seek Backwards"
-msgstr ""
-
-#: src/totem.c:85
-msgid "Toggle Fullscreen"
-msgstr ""
-
-#: src/totem.c:86
-msgid "Quit"
-msgstr "Ealu"
-
-#: src/totem.c:87
-msgid "Enqueue"
-msgstr "Enqueue"
-
-#: src/totem.c:88
-msgid "Replace"
-msgstr "Athchuir"
-
-#: src/totem.c:256
-msgid "Playing"
-msgstr "Ag Senim"
-
-#: src/totem.c:263
-msgid "Paused"
-msgstr "Ar Stad"
-
-#: src/totem.c:270 src/totem-statusbar.c:171
-msgid "Stopped"
-msgstr "Ar Stailc"
-
-#: src/totem.c:328 src/totem.c:715 src/totem.c:819
-#, c-format
-msgid ""
-"Totem could not play '%s'.\n"
-"Reason: %s."
-msgstr ""
-"Ní raibh Totem in an '%s' a senim:\n"
-"%s"
-
-#: src/totem.c:357
-msgid ""
-"Totem cannot play this type of media because you do not have the appropriate "
-"plugins to handle it.\n"
-"Install the necessary plugins and restart Totem to be able to play this "
-"media."
-msgstr ""
-
-#: src/totem.c:365
-msgid ""
-"Totem could not play this media although a plugin is present to handle it.\n"
-"You might want to check that a disc is present in the drive and that it is "
-"correctly configured."
-msgstr ""
-
-#. Title
-#: src/totem.c:557
-#, c-format
-msgid "%s - Totem"
-msgstr "%s - Totem"
-
-#: src/totem.c:570 src/totem.c:3008
-msgid "No file"
-msgstr "Níl aon Comhad"
-
-#: src/totem.c:1374 src/totem.c:1385
-msgid ""
-"Couldn't load the 'Open Location...' interface.\n"
-"Make sure that Totem is properly installed."
-msgstr ""
-
-#: src/totem.c:1446
-msgid "Totem could not eject the optical media."
-msgstr ""
-
-#: src/totem.c:1577
-msgid "translator_credits"
-msgstr "Ainm na Aistritheoir"
-
-#: src/totem.c:1603
-#, fuzzy, c-format
-msgid "Movie Player using %s"
-msgstr "Imreoir scannán Totem"
-
-#: src/totem.c:1665 src/totem.c:1676
-#, c-format
-msgid "Screenshot%d.png"
-msgstr "Radharcscáthán%d.png"
-
-#: src/totem.c:1729
-#, c-format
-msgid ""
-"Totem could not get a screenshot of that film.\n"
-"Reason: %s."
-msgstr ""
-
-#: src/totem.c:1739
-msgid ""
-"Totem could not get a screenshot of that film.\n"
-"Please file a bug, this isn't supposed to happen"
-msgstr ""
-
-#: src/totem.c:1765
-#, c-format
-msgid ""
-"File '%s' already exists.\n"
-"The screenshot was not saved."
-msgstr ""
-
-#: src/totem.c:1776
-#, c-format
-msgid ""
-"There was an error saving the screenshot.\n"
-"Details: %s"
-msgstr ""
-"Bhí feadbh ag sábháil an radharcscáthán.\n"
-"Eolas:%s"
-
-#: src/totem.c:1793
-msgid ""
-"Totem couldn't show the movie properties window.\n"
-"Make sure that Totem is correctly installed."
-msgstr ""
-
-#: src/totem.c:1862
-#, fuzzy, c-format
-msgid ""
-"Totem could not seek in '%s'.\n"
-"Reason: %s."
-msgstr ""
-"Ní raibh Totem in an '%s' a senim:\n"
-"%s"
-
-#: src/totem.c:2549
-msgid "Auto"
-msgstr ""
-
-#: src/totem.c:2930
-#, c-format
-msgid ""
-"Totem could not startup:\n"
-"%s"
-msgstr ""
-"Ní raibh Totem in an tosaigh:\n"
-"%s"
-
-#: src/totem.c:2931
-msgid "No reason"
-msgstr ""
-
-#: src/totem.c:3169
-msgid ""
-"Could not initialise the thread-safe libraries.\n"
-"Verify your system installation. Totem will now exit."
-msgstr ""
-
-#: src/totem.c:3191
-#, c-format
-msgid ""
-"Totem couln't initialise the \n"
-"configuration engine:\n"
-"%s"
-msgstr ""
-
-#: src/totem.c:3205 src/totem.c:3237
-msgid ""
-"Couldn't load the main interface (totem.glade).\n"
-"Make sure that Totem is properly installed."
-msgstr ""
-
-#: src/totem.c:3263
-msgid ""
-"Couldn't load the interface for the playlist.\n"
-"Make sure that Totem is properly installed."
-msgstr ""
 
 #: src/totem-preferences.c:79
 msgid ""
@@ -856,15 +939,27 @@ msgid ""
 "Are you sure you want to enable the visual effects?"
 msgstr ""
 
-#: src/totem-preferences.c:124
+#: src/totem-preferences.c:135
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted"
 msgstr ""
 
-#: src/totem-preferences.c:147
+#: src/totem-preferences.c:158
 msgid ""
 "Switching on or off this type of TV-Out requires a restart to take effect."
+msgstr ""
+
+#: src/totem-preferences.c:318
+msgid "Changing the visuals effect type will require a restart to take effect."
+msgstr ""
+
+#: src/totem-properties-page.c:344
+msgid "URI currently displayed"
+msgstr ""
+
+#: src/totem-properties-page.c:410
+msgid "Video and Audio information properties page"
 msgstr ""
 
 #: src/totem-statusbar.c:138
@@ -875,136 +970,265 @@ msgstr "saghas Scáth"
 msgid "Style of bevel around the statusbar text"
 msgstr ""
 
+#: src/totem-statusbar.c:171 src/totem.c:345
+msgid "Stopped"
+msgstr "Ar Stailc"
+
 #: src/totem-statusbar.c:180
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: src/bacon-video-widget-xine.c:56 src/bacon-video-widget-gst.c:56
-msgid "Totem Video Window"
-msgstr "Fuinneg an físean Totem"
+#: src/totem-statusbar.c:205
+#, c-format
+msgid "%s (Streaming)"
+msgstr ""
 
-#: src/bacon-video-widget-xine.c:581
+#: src/totem.c:82
+msgid "Seek Forwards"
+msgstr ""
+
+#: src/totem.c:83
+msgid "Seek Backwards"
+msgstr ""
+
+#: src/totem.c:87
+msgid "Toggle Fullscreen"
+msgstr ""
+
+#: src/totem.c:88
+msgid "Quit"
+msgstr "Ealu"
+
+#: src/totem.c:89
+msgid "Enqueue"
+msgstr "Enqueue"
+
+#: src/totem.c:90
+msgid "Replace"
+msgstr "Athchuir"
+
+#: src/totem.c:241
+msgid "Download"
+msgstr ""
+
+#: src/totem.c:331
+msgid "Playing"
+msgstr "Ag Senim"
+
+#: src/totem.c:338
+msgid "Paused"
+msgstr "Ar Stad"
+
+#: src/totem.c:403 src/totem.c:821 src/totem.c:926
 #, c-format
 msgid ""
-"Couldn't load the '%s' audio driver\n"
-"Check that the device is not busy."
+"Totem could not play '%s'.\n"
+"Reason: %s."
+msgstr ""
+"Ní raibh Totem in an '%s' a senim:\n"
+"%s"
+
+#: src/totem.c:430
+msgid ""
+"Totem cannot play this type of media because you do not have the appropriate "
+"plugins to handle it.\n"
+"Install the necessary plugins and restart Totem to be able to play this "
+"media."
 msgstr ""
 
-#: src/bacon-video-widget-xine.c:992
-msgid "There is no plugin to handle this movie"
+#: src/totem.c:438
+msgid ""
+"Totem could not play this media although a plugin is present to handle it.\n"
+"You might want to check that a disc is present in the drive and that it is "
+"correctly configured."
 msgstr ""
 
-#: src/bacon-video-widget-xine.c:996
-msgid "This movie is broken and can not be played further"
-msgstr "Tá an scanann seo briste agus ní beidh Totem in ann e a senim níos mó."
+#. Title
+#: src/totem.c:668
+#, c-format
+msgid "%s - Totem"
+msgstr "%s - Totem"
 
-#: src/bacon-video-widget-xine.c:1000
-msgid "This location is not a valid one"
+#: src/totem.c:681 src/totem.c:3254
+msgid "No file"
+msgstr "Níl aon Comhad"
+
+#: src/totem.c:1207
+msgid "Buffering"
 msgstr ""
 
-#: src/bacon-video-widget-xine.c:1004
-msgid "Generic Error"
-msgstr "Earraid Gineralta"
+#: src/totem.c:1228 src/totem.c:1250
+#, c-format
+msgid "Buffering: %d%%"
+msgstr ""
 
-#: src/bacon-video-widget-xine.c:1333
+#: src/totem.c:1551 src/totem.c:1562
+msgid ""
+"Couldn't load the 'Open Location...' interface.\n"
+"Make sure that Totem is properly installed."
+msgstr ""
+
+#: src/totem.c:1624
+msgid "Totem could not eject the optical media."
+msgstr ""
+
+#: src/totem.c:1797 src/vanity.c:218
+msgid "translator_credits"
+msgstr "Ainm na Aistritheoir"
+
+#: src/totem.c:1823
+#, fuzzy, c-format
+msgid "Movie Player using %s"
+msgstr "Imreoir scannán Totem"
+
+#: src/totem.c:1885 src/totem.c:1896 src/vanity.c:306 src/vanity.c:317
+#, c-format
+msgid "Screenshot%d.png"
+msgstr "Radharcscáthán%d.png"
+
+#: src/totem.c:1949
 #, c-format
 msgid ""
-"Video codec '%s' is not handled. You might need to install additional "
-"plugins to be able to play some types of movies"
+"Totem could not get a screenshot of that film.\n"
+"Reason: %s."
 msgstr ""
 
-#: src/bacon-video-widget-xine.c:1349
-msgid "This is an audio-only file, and there is no audio output available"
+#: src/totem.c:1959
+msgid ""
+"Totem could not get a screenshot of that film.\n"
+"Please file a bug, this isn't supposed to happen"
 msgstr ""
 
-#: src/bacon-video-widget-xine.c:2426
-msgid "Movie is not playing"
+#: src/totem.c:1985
+#, c-format
+msgid ""
+"File '%s' already exists.\n"
+"The screenshot was not saved."
 msgstr ""
 
-#: src/bacon-video-widget-xine.c:2434
-msgid "No video to capture"
+#: src/totem.c:1996
+#, c-format
+msgid ""
+"There was an error saving the screenshot.\n"
+"Details: %s"
+msgstr ""
+"Bhí feadbh ag sábháil an radharcscáthán.\n"
+"Eolas:%s"
+
+#: src/totem.c:2013
+msgid ""
+"Totem couldn't show the movie properties window.\n"
+"Make sure that Totem is correctly installed."
 msgstr ""
 
-#: src/bacon-video-widget-xine.c:2441
-msgid "Video codec is not handled"
+#: src/totem.c:2082
+#, fuzzy, c-format
+msgid ""
+"Totem could not seek in '%s'.\n"
+"Reason: %s."
+msgstr ""
+"Ní raibh Totem in an '%s' a senim:\n"
+"%s"
+
+#: src/totem.c:2778
+msgid "Auto"
 msgstr ""
 
-#: src/bacon-video-widget-xine.c:2452
-msgid "Height or width of the video is 0. Please file a bug."
+#: src/totem.c:3154
+#, c-format
+msgid ""
+"Totem could not startup:\n"
+"%s"
+msgstr ""
+"Ní raibh Totem in an tosaigh:\n"
+"%s"
+
+#: src/totem.c:3155 src/vanity.c:550
+msgid "No reason"
+msgstr "Gan réasún"
+
+#: src/totem.c:3417
+msgid ""
+"Could not initialise the thread-safe libraries.\n"
+"Verify your system installation. Totem will now exit."
 msgstr ""
 
-#. One hour
-#: src/bacon-video-widget-properties.c:109
+#: src/totem.c:3439
 #, c-format
-msgid "%d hour"
-msgstr "%d uair"
+msgid ""
+"Totem couln't initialise the \n"
+"configuration engine:\n"
+"%s"
+msgstr ""
 
-#. Multiple hours
-#: src/bacon-video-widget-properties.c:112
+#: src/totem.c:3453 src/totem.c:3485
+msgid ""
+"Couldn't load the main interface (totem.glade).\n"
+"Make sure that Totem is properly installed."
+msgstr ""
+
+#: src/totem.c:3511
+msgid ""
+"Couldn't load the interface for the playlist.\n"
+"Make sure that Totem is properly installed."
+msgstr ""
+
+#: src/vanity.c:55
+msgid "Debug mode on"
+msgstr ""
+
+#: src/vanity.c:244
 #, c-format
-msgid "%d hours"
-msgstr "%d uaireanna"
+msgid "Webcam utility using %s"
+msgstr ""
 
-#. One minute
-#: src/bacon-video-widget-properties.c:116
+#: src/vanity.c:549
 #, c-format
-msgid "%d minute"
-msgstr "%d noimead"
+msgid ""
+"Vanity could not startup:\n"
+"%s"
+msgstr ""
+"Ní raibh Vanity in an tosaigh:\n"
+"%s"
 
-#. Multiple minutes
-#: src/bacon-video-widget-properties.c:119
+#: src/vanity.c:588
+#, fuzzy, c-format
+msgid ""
+"Vanity could not contact the webcam.\n"
+"Reason: %s"
+msgstr ""
+"Ní raibh Totem in an '%s' a senim:\n"
+"%s"
+
+#: src/vanity.c:604
+#, fuzzy, c-format
+msgid ""
+"Vanity could not play video from the webcam.\n"
+"Reason: %s"
+msgstr ""
+"Ní raibh Totem in an '%s' a senim:\n"
+"%s"
+
+#: src/vanity.c:640
+msgid "Vanity Webcam Utility"
+msgstr ""
+
+#: src/vanity.c:646
+msgid ""
+"Could not initialise the thread-safe libraries.\n"
+"Verify your system installation. Vanity will now exit."
+msgstr ""
+
+#: src/vanity.c:668
 #, c-format
-msgid "%d minutes"
-msgstr "%d noimead"
+msgid ""
+"Vanity couln't initialise the \n"
+"configuration engine:\n"
+"%s"
+msgstr ""
 
-#. One second
-#: src/bacon-video-widget-properties.c:123
-#, c-format
-msgid "%d second"
-msgstr "%d soicind"
-
-#. Multiple seconds
-#: src/bacon-video-widget-properties.c:126
-#, c-format
-msgid "%d seconds"
-msgstr "%d soicind"
-
-#. hour:minutes:seconds
-#: src/bacon-video-widget-properties.c:131
-#, c-format
-msgid "%s %s %s"
-msgstr "%s %s %s"
-
-#. minutes:seconds
-#: src/bacon-video-widget-properties.c:134
-#, c-format
-msgid "%s %s"
-msgstr "%s %s"
-
-#. seconds
-#: src/bacon-video-widget-properties.c:137
-#, c-format
-msgid "%s"
-msgstr "%s"
-
-#. Duration
-#: src/bacon-video-widget-properties.c:177
-msgid "0 second"
-msgstr "0 soicind"
-
-#: src/bacon-video-widget-properties.c:265
-#, c-format
-msgid "%d frames per second"
-msgstr "%d frámaí gach soicind"
-
-#: src/bacon-video-widget-properties.c:283
-#, c-format
-msgid "%d kbps"
-msgstr "%d kbps"
-
-#~ msgid ""
-#~ "There is no plugin for Totem to handle '%s'.\n"
-#~ "Totem will not be able to play it."
-#~ msgstr ""
-#~ "Ní aon breiseán le haighaid '%s'.\n"
-#~ "Ní beidh Totem in ann e a senim."
+#: src/vanity.c:682 src/vanity.c:697
+msgid ""
+"Couldn't load the main interface (vanity.glade).\n"
+"Make sure that Vanity is properly installed."
+msgstr ""
