@@ -298,7 +298,11 @@ action_set_mrl (Totem *totem, const char *mrl)
 		/* Title */
 		gtk_window_set_title (GTK_WINDOW (totem->win), "Totem");
 
-		/* Seek bar */
+		/* Seek bar and seek buttons */
+		gtk_widget_set_sensitive (totem->seek, FALSE);
+		widget = glade_xml_get_widget (totem->xml, "skip_forward1");
+		gtk_widget_set_sensitive (totem->seek, FALSE);
+		widget = glade_xml_get_widget (totem->xml, "skip_backwards1");
 		gtk_widget_set_sensitive (totem->seek, FALSE);
 
 		/* Volume */
@@ -323,6 +327,10 @@ action_set_mrl (Totem *totem, const char *mrl)
 		/* Seek bar */
 		gtk_widget_set_sensitive (totem->seek,
 				gtk_xine_is_seekable(GTK_XINE (totem->gtx)));
+		widget = glade_xml_get_widget (totem->xml, "skip_forward1");
+		gtk_widget_set_sensitive (widget, TRUE);
+		widget = glade_xml_get_widget (totem->xml, "skip_backwards1");
+		gtk_widget_set_sensitive (widget, TRUE);
 
 		/* Volume */
 		widget = glade_xml_get_widget (totem->xml, "volume_hbox");

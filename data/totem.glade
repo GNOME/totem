@@ -108,6 +108,7 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="skip_forward1">
 			  <property name="visible">True</property>
+			  <property name="sensitive">False</property>
 			  <property name="label" translatable="yes">Skip forward</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_skip_forward1_activate" last_modification_time="Sun, 09 Jun 2002 02:56:32 GMT"/>
@@ -130,6 +131,7 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="skip_backwards1">
 			  <property name="visible">True</property>
+			  <property name="sensitive">False</property>
 			  <property name="label" translatable="yes">Skip backwards</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_skip_backwards1_activate" last_modification_time="Sun, 09 Jun 2002 03:00:00 GMT"/>
@@ -158,6 +160,7 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="next_stream1">
 			  <property name="visible">True</property>
+			  <property name="sensitive">False</property>
 			  <property name="label" translatable="yes">Next stream</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_next_stream1_activate" last_modification_time="Sun, 09 Jun 2002 03:00:00 GMT"/>
@@ -180,6 +183,7 @@
 		      <child>
 			<widget class="GtkImageMenuItem" id="previous_stream1">
 			  <property name="visible">True</property>
+			  <property name="sensitive">False</property>
 			  <property name="label" translatable="yes">Previous stream</property>
 			  <property name="use_underline">True</property>
 			  <signal name="activate" handler="on_previous_stream1_activate" last_modification_time="Sun, 09 Jun 2002 03:00:00 GMT"/>
