@@ -6,17 +6,21 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Totem for Gnome2\n"
-"POT-Creation-Date: 2002-10-18 05:58+0200\n"
-"PO-Revision-Date: 2002-10-19 10:34+0700\n"
+"POT-Creation-Date: 2002-10-27 06:10+0100\n"
+"PO-Revision-Date: 2002-10-27 19:27+0700\n"
 "Last-Translator: Trinh Minh Thanh <tmthanh@linuxmail.org>\n"
 "Language-Team: Gnome-Vi Team <Gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/playlist.glade.h:1 src/gtk-playlist.c:611
+#: data/playlist.glade.h:1 src/gtk-playlist.c:775
 msgid "Playlist"
 msgstr "Danh sách chơi"
+
+#: data/playlist.glade.h:2
+msgid "Repeat Mode"
+msgstr "Chế độ nhắc lại"
 
 #: data/totem.desktop.in.h:1
 msgid "Play movies and songs"
@@ -27,100 +31,128 @@ msgid "Totem Movie Player"
 msgstr "Trình Chơi Phim Totem"
 
 #: data/totem.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: data/totem.glade.h:2
+msgid "Automatically _resize the window when a new video is loaded"
+msgstr "Tự động lập lại kích thước cửa sổ khi nạp video mới"
+
+#: data/totem.glade.h:3
 msgid "Exit fullscreen"
 msgstr "Ra khỏi toàn màn hình"
 
-#: data/totem.glade.h:2
+#: data/totem.glade.h:4
 msgid "File name"
 msgstr "Tên tập tin"
 
-#: data/totem.glade.h:3
+#: data/totem.glade.h:5
 msgid "Next"
 msgstr "Tiếp theo"
 
-#: data/totem.glade.h:4
+#: data/totem.glade.h:6
 msgid "Next stream"
 msgstr "Stream tiếp theo"
 
-#: data/totem.glade.h:5
+#: data/totem.glade.h:7
+msgid "Optical Device _Path: "
+msgstr "Đường dẫn thiết bị quang: "
+
+#: data/totem.glade.h:8
 msgid "Play DVD"
 msgstr "Chơi DVD"
 
-#: data/totem.glade.h:6
+#: data/totem.glade.h:9
 msgid "Play VCD"
 msgstr "Chơi VCD"
 
-#: data/totem.glade.h:7
+#: data/totem.glade.h:10
 msgid "Play/Pause"
 msgstr "Chơi/Tạm dừng"
 
-#: data/totem.glade.h:8
+#: data/totem.glade.h:11
 msgid "Previous"
 msgstr "Đứng trước"
 
-#: data/totem.glade.h:9
+#: data/totem.glade.h:12
 msgid "Previous stream"
 msgstr "Stream đứng trước"
 
-#: data/totem.glade.h:10
+#: data/totem.glade.h:13
 msgid "Show/Hide Playlist"
 msgstr "Hiện/Ẩn danh sách chơi"
 
-#: data/totem.glade.h:11
+#: data/totem.glade.h:14
 msgid "Skip backwards"
 msgstr "Nhảy qua tua lại"
 
-#: data/totem.glade.h:12
+#: data/totem.glade.h:15
 msgid "Skip forward"
 msgstr "Nhảy qua tiến lên"
 
-#: data/totem.glade.h:13
+#: data/totem.glade.h:16
 msgid "Toggle Aspect Ratio"
 msgstr "Cố định tỷ lệ bề ngoài"
 
-#: data/totem.glade.h:14 src/totem.c:918
+#: data/totem.glade.h:17 src/totem.c:1037
 msgid "Totem"
 msgstr "Totem"
 
-#: data/totem.glade.h:15
+#: data/totem.glade.h:18
+msgid "Totem Preferences"
+msgstr "Tùy thích Totem"
+
+#: data/totem.glade.h:19
 msgid "Volume Down"
 msgstr "Giảm âm"
 
-#: data/totem.glade.h:16
+#: data/totem.glade.h:20
 msgid "Volume Up"
 msgstr "Tăng âm"
 
-#: data/totem.glade.h:17
+#: data/totem.glade.h:21
 msgid "Zoom _1:1"
 msgstr "Zoom _1:1"
 
-#: data/totem.glade.h:18
+#: data/totem.glade.h:22
 msgid "Zoom _2:1"
 msgstr "Zoom _2:1"
 
-#: data/totem.glade.h:19
+#: data/totem.glade.h:23
 msgid "_Fullscreen"
 msgstr "T_oàn màn hình"
 
-#: data/totem.glade.h:20
+#: data/totem.glade.h:24
 msgid "_Movie"
 msgstr "_Phim"
 
-#: data/totem.glade.h:21
+#: data/totem.glade.h:25
 msgid "_Play / Pause"
 msgstr "_Chơi / Tạm dừng"
 
-#: data/totem.glade.h:22
+#: data/totem.glade.h:26
 msgid "_Show/Hide Playlist"
 msgstr "_Hiện/Ẩn danh sách chơi"
 
-#: data/totem.glade.h:23
+#: data/totem.glade.h:27
 msgid "_Sound"
 msgstr "Â_m thanh"
 
-#: data/totem.glade.h:24
+#: data/totem.glade.h:28
 msgid "_Zoom 1:2"
 msgstr "_Zoom 1:2"
+
+#: data/totem.glade.h:29
+msgid "button3"
+msgstr "nút 3"
+
+#: data/totem.glade.h:30
+msgid "button4"
+msgstr "nút 4"
+
+#: data/totem.glade.h:31
+msgid "button5"
+msgstr "nút 5"
 
 #: data/totem.schemas.in.h:1
 msgid "Default audio output driver"
@@ -131,18 +163,34 @@ msgid "Only start if there isn't already a Totem application running"
 msgstr "Chỉ khởi chạy khi không có ứng dụng nào của Totem đang chạy"
 
 #: data/totem.schemas.in.h:3
+msgid "Path to the optical media device"
+msgstr "Đường dẫn đến thiết bị quang học"
+
+#: data/totem.schemas.in.h:4
+msgid "Repeat mode"
+msgstr "Chế độ nhắc lại"
+
+#: data/totem.schemas.in.h:5
 msgid "Resize the canvas automatically on file load"
 msgstr "Tự động đặt lại lích thước canvas khi nạp tập tin"
 
-#: src/gtk-playlist.c:348 src/totem.c:750
+#: data/totem.schemas.in.h:6
+msgid "X coordinate for the Playlist"
+msgstr "X coordinate cho Danh sách chơi"
+
+#: data/totem.schemas.in.h:7
+msgid "Y coordinate for the Playlist"
+msgstr "Y coordinate cho Danh sách chơi"
+
+#: src/gtk-playlist.c:405 src/totem.c:869
 msgid "Select files"
 msgstr "Chọn tập tin"
 
-#: src/gtk-playlist.c:502
+#: src/gtk-playlist.c:545
 msgid "Playing"
 msgstr "Đang chơi"
 
-#: src/gtk-playlist.c:513
+#: src/gtk-playlist.c:556
 msgid "Filename"
 msgstr "Tên tập tin"
 
@@ -150,7 +198,7 @@ msgstr "Tên tập tin"
 msgid "Totem Video Window"
 msgstr "Cửa sổ video của totem"
 
-#: src/gtk-xine.c:504
+#: src/gtk-xine.c:507
 msgid ""
 "The configuration system is not initialised.\n"
 "The defaults will be used."
@@ -158,7 +206,7 @@ msgstr ""
 "Hệ thống cấu hình chưa được sơ khởi.\n"
 "Sẽ sử dụng mặc định."
 
-#: src/gtk-xine.c:734
+#: src/gtk-xine.c:749
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
@@ -166,32 +214,32 @@ msgstr ""
 "Không thể sơ khởi hỗ trợ đa luồng.\n"
 "Bạn nên cài đặt thread-safe Xlib."
 
-#: src/gtk-xine.c:770
+#: src/gtk-xine.c:785
 msgid "Could not find a suitable video output."
 msgstr "Không thể tìm thấy đầu ra video thích hợp."
 
-#: src/gtk-xine.c:902
+#: src/gtk-xine.c:917
 #, c-format
 msgid "No video plugin available to decode '%s'."
 msgstr "Hiện không có video plugin để giải mã '%s'."
 
-#: src/totem.c:333 src/totem.c:1424
+#: src/totem.c:380 src/totem.c:1630
 msgid "<span size=\"medium\"><b>No file</b></span>"
 msgstr "<span size=\"medium\"><b>Không có tập tin</b></span>"
 
-#: src/totem.c:894
+#: src/totem.c:1013
 msgid "translator_credits"
 msgstr "đóng góp dịch thuật"
 
-#: src/totem.c:919
+#: src/totem.c:1038
 msgid "(C) 2002 Bastien Nocera"
 msgstr "(C) 2002 Bastien Nocera"
 
-#: src/totem.c:920
+#: src/totem.c:1039
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Trình chiếu phim (dựa trên thư viện của Xine)"
 
-#: src/totem.c:1125
+#: src/totem.c:1293
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -200,7 +248,7 @@ msgstr ""
 "Totem không thể khởi chạy:\n"
 "%s"
 
-#: src/totem.c:1131
+#: src/totem.c:1299
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'\n"
@@ -209,12 +257,12 @@ msgstr ""
 "Không có plugin cho Totem để xử lý '%s'\n"
 "Totem sẽ không thể chơi nó."
 
-#: src/totem.c:1136
+#: src/totem.c:1304
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "'%s' bị gẫy, Totem không thể chơi thêm nữa."
 
-#: src/totem.c:1140
+#: src/totem.c:1308
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -223,7 +271,7 @@ msgstr ""
 "Totem không thể chơi '%s':\n"
 "%s"
 
-#: src/totem.c:1493
+#: src/totem.c:1718
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -234,7 +282,7 @@ msgstr ""
 "engine cấu hình:\n"
 "%s"
 
-#: src/totem.c:1528 src/totem.c:1536
+#: src/totem.c:1754 src/totem.c:1762
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -242,7 +290,7 @@ msgstr ""
 "Không thể nạp giao diện chính (totem, glade).\n"
 "Kiểm tra xem Totem được cài đặt chuẩn chưa."
 
-#: src/totem.c:1549
+#: src/totem.c:1775
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
