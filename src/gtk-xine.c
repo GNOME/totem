@@ -1067,18 +1067,6 @@ gtk_xine_new (int width, int height, gboolean null_out)
 	return gtx;
 }
 
-gboolean
-gtk_xine_check (GtkXine *gtx)
-{
-	g_return_val_if_fail (gtx != NULL, FALSE);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), FALSE);
-
-	if (gtx->priv->stream == NULL)
-		return FALSE;
-
-	return gtx->priv->init_finished;
-}
-
 static gboolean
 gtk_xine_expose (GtkWidget *widget, GdkEventExpose *event)
 {

@@ -104,8 +104,6 @@ GtkType gtk_xine_get_type              (void);
 GtkWidget *gtk_xine_new		       (int width, int height,
 					gboolean null_video_out);
 
-gboolean  gtk_xine_check               (GtkXine *gtx);
-
 /* Actions */
 gboolean gtk_xine_open                (GtkXine *gtx, const gchar *mrl);
 

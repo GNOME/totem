@@ -2665,10 +2665,6 @@ main (int argc, char **argv)
 
 	if (argc > 1)
 	{
-		/* Use gtk_xine_check to wait until xine has finished
-		 * initialising completely, otherwise this can turn up nasty */
-		while (gtk_xine_check (GTK_XINE (totem->gtx)) == FALSE)
-			usleep (100000);
 		if (totem_action_open_files (totem, argv, TRUE))
 			totem_action_play_pause (totem);
 		else

@@ -141,7 +141,7 @@ parse_sg_line (char *device_str, char *devices, struct scsi_unit *scsi_unit)
 	scsi_unit->vendor = g_strdup (g_strstrip (vendor));
 	scsi_unit->model = g_strdup (g_strstrip (model));
 	scsi_unit->rev = g_strdup (g_strstrip (rev));
-
+	
 	if (sscanf (devices, "%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d",
 		    &host_no,
 		    &channel, &scsi_unit->id, &scsi_unit->lun, &scsi_unit->type,
@@ -278,8 +278,6 @@ get_scsi_cd_name (int bus, int id, int lun, const char *dev,
 				scsi_unit->vendor,
 				scsi_unit->model);
 }
-		  
-
 
 static GList *
 add_linux_cd_recorder (GList *cdroms,
@@ -319,8 +317,11 @@ cdrom_get_name (struct cdrom_unit *cdrom, struct scsi_unit *scsi_units, int n_sc
 
 	g_return_val_if_fail (cdrom != NULL, FALSE);
 
-	if (cdrom->device[0] == 's' &&
-	    cdrom->device[1] == 'r') {
+	if ((cdrom->device[0] == 's' &&
+	    cdrom->device[1] == 'r') ||
+	    (cdrom->device[0] == 's' &&
+	    cdrom->device[1] == 'c' &&
+	    cdrom->device[2] == 'd')) {
 		get_cd_scsi_id (cdrom->device, &bus, &id, &lun);
 
 		retval = get_scsi_cd_name (bus, id, lun, cdrom->device, scsi_units, n_scsi_units);

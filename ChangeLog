@@ -1,3 +1,17 @@
+2003-01-24  Bastien Nocera  <hadess@hadess.net>
+
+	* data/playlist.glade:
+	* data/properties.glade:
+	* data/totem.glade: remove separators from the dialogs
+	* src/bacon-cd-selection.c: (cdrom_option_menu):
+	* src/cd-drive.c: (parse_sg_line), (get_scsi_cd_name),
+	(cdrom_get_name): update these from libbacon, fixes a crash on startup
+	on machines using ide-scsi
+	* src/gtk-xine.c:
+	* src/gtk-xine.h:
+	* src/totem.c: (main): removed gtk_xine_check() calls, not needed
+	anymore
+
 2003-01-24  Daniel Yacob  <locales@geez.org>
 
         * configure.in: Added am to ALL_LINGUAS.
