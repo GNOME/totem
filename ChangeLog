@@ -1,5 +1,14 @@
 2003-04-26  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_languages),
+	(bacon_video_widget_get_subtitles): look into 32 subchannels
+	instead of 16
+	* src/gtk-playlist.c: (gtk_playlist_move_files): update the current
+	treepath, this fixes problems when moving the currently played movie
+
+2003-04-26  Bastien Nocera  <hadess@hadess.net>
+
 	* README: upd regarding debugging
 	* src/bacon-video-widget-xine.c:
 	(bacon_video_widget_instance_init), (load_audio_out_driver),

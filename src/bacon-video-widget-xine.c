@@ -2359,7 +2359,7 @@ GList
 	int retval, i;
 	char lang[16];
 
-	for(i = 0; i < 15; i++)
+	for(i = 0; i < 32; i++)
 	{
 		memset (&lang, 0, sizeof (lang));
 
@@ -2392,7 +2392,7 @@ GList
 	int retval, i;
 	char lang[16];
 
-	for(i = 0; i < 15; i++)
+	for(i = 0; i < 32; i++)
 	{
 		memset (&lang, 0, sizeof (lang));
 

@@ -631,6 +631,7 @@ gtk_playlist_move_files (GtkPlaylist *playlist, gboolean direction_up)
 	GtkTreeModel *model;
 	GtkListStore *store;
 	GtkTreeIter iter;
+	GtkTreeRowReference *current;
 	GList *paths, *refs, *l;
 	int pos;
 
@@ -644,6 +645,14 @@ gtk_playlist_move_files (GtkPlaylist *playlist, gboolean direction_up)
 	store = GTK_LIST_STORE (model);
 	pos = -2;
 	refs = NULL;
+
+	if (playlist->_priv->current != NULL)
+	{
+		current = gtk_tree_row_reference_new (model,
+				playlist->_priv->current);
+	} else {
+		current = NULL;
+	}
 
 	/* Build a list of tree references */
 	paths = gtk_tree_selection_get_selected_rows (selection, NULL);
@@ -714,6 +723,15 @@ gtk_playlist_move_files (GtkPlaylist *playlist, gboolean direction_up)
 
 	g_list_foreach (refs, (GFunc) gtk_tree_row_reference_free, NULL);
 	g_list_free (refs);
+
+	/* Update the current path */
+	if (current != NULL)
+	{
+		gtk_tree_path_free (playlist->_priv->current);
+		playlist->_priv->current = gtk_tree_row_reference_get_path
+			(current);
+		gtk_tree_row_reference_free (current);
+	}
 
 	g_signal_emit (G_OBJECT (playlist),
 			gtk_playlist_table_signals[CHANGED], 0,
