@@ -26,8 +26,8 @@
 #include <X11/XF86keysym.h>
 
 #include "gnome-authn-manager.h"
-#include "gtk-xine.h"
-#include "gtk-xine-properties.h"
+#include "bacon-video-widget.h"
+#include "bacon-video-widget-properties.h"
 #include "gtk-playlist.h"
 #include "rb-ellipsizing-label.h"
 #include "bacon-cd-selection.h"
@@ -60,7 +60,7 @@ struct Totem {
 	GladeXML *xml;
 	GtkWidget *win;
 	GtkWidget *treeview;
-	GtkWidget *gtx;
+	GtkWidget *bvw;
 	GtkWidget *prefs;
 	GtkWidget *properties;
 	GtkWidget *statusbar;
@@ -181,7 +181,7 @@ totem_action_exit (Totem *totem)
 	gtk_widget_hide (totem->win);
 	gtk_widget_hide (GTK_WIDGET (totem->playlist));
 
-	gtk_widget_destroy (totem->gtx);
+	gtk_widget_destroy (totem->bvw);
 	gtk_widget_destroy (GTK_WIDGET (totem->playlist));
 
 	exit (0);
@@ -270,7 +270,7 @@ totem_action_play (Totem *totem, int offset)
 	if (totem->mrl == NULL)
 		return;
 
-	retval = gtk_xine_play (GTK_XINE (totem->gtx), offset , 0);
+	retval = bacon_video_widget_play (BACON_VIDEO_WIDGET (totem->bvw), offset , 0);
 	play_pause_set_label (totem, retval ? STATE_PLAYING : STATE_STOPPED);
 }
 
@@ -287,14 +287,14 @@ totem_action_play_media (Totem *totem, MediaType type)
 	const char **mrls;
 	char *mrl;
 
-	if (gtk_xine_can_play (GTK_XINE (totem->gtx), type) == FALSE)
+	if (bacon_video_widget_can_play (BACON_VIDEO_WIDGET (totem->bvw), type) == FALSE)
 	{
 		totem_action_error (_("Totem cannot play this type of media because you do not have the appropriate plugins to handle it.\n"
 					"Install the necessary plugins and restart Totem to be able to play this media."), GTK_WINDOW (totem->win));
 		return;
 	}
 
-	mrls = gtk_xine_get_mrls (GTK_XINE (totem->gtx), type);
+	mrls = bacon_video_widget_get_mrls (BACON_VIDEO_WIDGET (totem->bvw), type);
 	if (mrls == NULL)
 	{
 		totem_action_error (_("Totem could not play this media although a plugin is present to handle it.\n"
@@ -312,7 +312,7 @@ totem_action_play_media (Totem *totem, MediaType type)
 void
 totem_action_stop (Totem *totem)
 {
-	gtk_xine_stop (GTK_XINE (totem->gtx));
+	bacon_video_widget_stop (BACON_VIDEO_WIDGET (totem->bvw));
 }
 
 void
@@ -335,16 +335,16 @@ totem_action_play_pause (Totem *totem)
 		}
 	}
 
-	if (gtk_xine_is_playing(GTK_XINE(totem->gtx)) == FALSE)
+	if (bacon_video_widget_is_playing(BACON_VIDEO_WIDGET(totem->bvw)) == FALSE)
 	{
 		totem_action_play (totem, 0);
 	} else {
-		if (gtk_xine_get_speed (GTK_XINE(totem->gtx)) == SPEED_PAUSE)
+		if (bacon_video_widget_get_speed (BACON_VIDEO_WIDGET(totem->bvw)) == SPEED_PAUSE)
 		{
-			gtk_xine_set_speed (GTK_XINE(totem->gtx), SPEED_NORMAL);
+			bacon_video_widget_set_speed (BACON_VIDEO_WIDGET(totem->bvw), SPEED_NORMAL);
 			play_pause_set_label (totem, STATE_PLAYING);
 		} else {
-			gtk_xine_set_speed (GTK_XINE(totem->gtx), SPEED_PAUSE);
+			bacon_video_widget_set_speed (BACON_VIDEO_WIDGET(totem->bvw), SPEED_PAUSE);
 			play_pause_set_label (totem, STATE_PAUSED);
 		}
 	}
@@ -355,8 +355,8 @@ totem_action_fullscreen_toggle (Totem *totem)
 {
 	gboolean new_state;
 
-	new_state = !gtk_xine_is_fullscreen (GTK_XINE (totem->gtx));
-	gtk_xine_set_fullscreen (GTK_XINE (totem->gtx), new_state);
+	new_state = !bacon_video_widget_is_fullscreen (BACON_VIDEO_WIDGET (totem->bvw));
+	bacon_video_widget_set_fullscreen (BACON_VIDEO_WIDGET (totem->bvw), new_state);
 	/* Hide the popup when switching fullscreen off */
 	if (new_state == FALSE)
 		popup_hide (totem);
@@ -365,7 +365,7 @@ totem_action_fullscreen_toggle (Totem *totem)
 void
 totem_action_fullscreen (Totem *totem, gboolean state)
 {
-	if (gtk_xine_is_fullscreen (GTK_XINE (totem->gtx)) == state)
+	if (bacon_video_widget_is_fullscreen (BACON_VIDEO_WIDGET (totem->bvw)) == state)
 		return;
 
 	totem_action_fullscreen_toggle (totem);
@@ -381,7 +381,7 @@ update_mrl_label (Totem *totem, const char *name)
 	if (name != NULL)
 	{
 		/* Get the length of the stream */
-		time = gtk_xine_get_stream_length (GTK_XINE (totem->gtx));
+		time = bacon_video_widget_get_stream_length (BACON_VIDEO_WIDGET (totem->bvw));
 
 		totem_statusbar_set_time_and_length (TOTEM_STATUSBAR
 				(totem->statusbar), 0, time / 1000);
@@ -439,12 +439,12 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 	char *text;
 	gboolean retval = TRUE;
 
-	gtk_xine_stop (GTK_XINE (totem->gtx));
+	bacon_video_widget_stop (BACON_VIDEO_WIDGET (totem->bvw));
 
 	if (totem->mrl != NULL)
 	{
 		g_free (totem->mrl);
-		gtk_xine_close (GTK_XINE (totem->gtx));
+		bacon_video_widget_close (BACON_VIDEO_WIDGET (totem->bvw));
 	}
 
 	if (mrl == NULL)
@@ -484,22 +484,22 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 
 		/* Set the logo */
 		totem->mrl = g_strdup (LOGO_PATH);
-		gtk_xine_set_logo_mode (GTK_XINE (totem->gtx), TRUE);
-		if (gtk_xine_open (GTK_XINE (totem->gtx), totem->mrl) == TRUE)
-			gtk_xine_play (GTK_XINE (totem->gtx), 0 , 0);
+		bacon_video_widget_set_logo_mode (BACON_VIDEO_WIDGET (totem->bvw), TRUE);
+		if (bacon_video_widget_open (BACON_VIDEO_WIDGET (totem->bvw), totem->mrl) == TRUE)
+			bacon_video_widget_play (BACON_VIDEO_WIDGET (totem->bvw), 0 , 0);
 
 		/* Reset the properties */
-		gtk_xine_properties_update
-			(GTK_XINE_PROPERTIES (totem->properties),
-			 GTK_XINE (totem->gtx), TRUE);
+		bacon_video_widget_properties_update
+			(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
+			 BACON_VIDEO_WIDGET (totem->bvw), TRUE);
 	} else {
 		char *title, *name;
 		int time;
 		gboolean caps;
 
-		gtk_xine_set_logo_mode (GTK_XINE (totem->gtx), FALSE);
+		bacon_video_widget_set_logo_mode (BACON_VIDEO_WIDGET (totem->bvw), FALSE);
 
-		retval = gtk_xine_open (GTK_XINE (totem->gtx), mrl);
+		retval = bacon_video_widget_open (BACON_VIDEO_WIDGET (totem->bvw), mrl);
 
 		totem->mrl = g_strdup (mrl);
 		name = gtk_playlist_mrl_to_title (mrl);
@@ -516,7 +516,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		update_seekable (totem, FALSE);
 
 		/* Volume */
-		caps = gtk_xine_can_set_volume (GTK_XINE (totem->gtx));
+		caps = bacon_video_widget_can_set_volume (BACON_VIDEO_WIDGET (totem->bvw));
 		widget = glade_xml_get_widget (totem->xml, "volume_hbox");
 		gtk_widget_set_sensitive (widget, caps);
 		widget = glade_xml_get_widget (totem->xml, "volume_up1");
@@ -530,9 +530,9 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		gtk_playlist_set_playing (totem->playlist, TRUE);
 
 		/* Update the properties */
-		gtk_xine_properties_update
-			(GTK_XINE_PROPERTIES (totem->properties),
-			 GTK_XINE (totem->gtx), FALSE);
+		bacon_video_widget_properties_update
+			(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
+			 BACON_VIDEO_WIDGET (totem->bvw), FALSE);
 	}
 	update_buttons (totem);
 	update_dvd_menu_items (totem);
@@ -561,8 +561,8 @@ totem_action_previous (Totem *totem)
 
         if (totem_playing_dvd (totem) == TRUE)
         {
-                gtk_xine_dvd_event (GTK_XINE (totem->gtx),
-                                        GTX_DVD_PREV_CHAPTER);
+                bacon_video_widget_dvd_event (BACON_VIDEO_WIDGET (totem->bvw),
+                                        BVW_DVD_PREV_CHAPTER);
         } else {
                 gtk_playlist_set_previous (totem->playlist);
                 mrl = gtk_playlist_get_current_mrl (totem->playlist);
@@ -584,8 +584,8 @@ totem_action_next (Totem *totem)
 
 	if (totem_playing_dvd (totem) == TRUE)
 	{
-		gtk_xine_dvd_event (GTK_XINE (totem->gtx), 
-				GTX_DVD_NEXT_CHAPTER);
+		bacon_video_widget_dvd_event (BACON_VIDEO_WIDGET (totem->bvw), 
+				BVW_DVD_NEXT_CHAPTER);
 	} else {
 		gtk_playlist_set_next (totem->playlist);
 		mrl = gtk_playlist_get_current_mrl (totem->playlist);
@@ -599,18 +599,18 @@ totem_action_seek_relative (Totem *totem, int off_sec)
 {
 	int oldsec,  sec;
 
-	if (gtk_xine_is_seekable (GTK_XINE(totem->gtx)) == FALSE)
+	if (bacon_video_widget_is_seekable (BACON_VIDEO_WIDGET(totem->bvw)) == FALSE)
 		return;
 	if (totem->mrl == NULL)
 		return;
 
-	oldsec = gtk_xine_get_current_time (GTK_XINE(totem->gtx));
+	oldsec = bacon_video_widget_get_current_time (BACON_VIDEO_WIDGET(totem->bvw));
 	if ((oldsec + off_sec) < 0)
 		sec = 0;
 	else
 		sec = oldsec + off_sec;
 
-	gtk_xine_play (GTK_XINE(totem->gtx), 0, sec);
+	bacon_video_widget_play (BACON_VIDEO_WIDGET(totem->bvw), 0, sec);
 	play_pause_set_label (totem, STATE_PLAYING);
 }
 
@@ -619,24 +619,24 @@ totem_action_volume_relative (Totem *totem, int off_pct)
 {
 	int vol;
 
-	if (gtk_xine_can_set_volume (GTK_XINE (totem->gtx)) == FALSE)
+	if (bacon_video_widget_can_set_volume (BACON_VIDEO_WIDGET (totem->bvw)) == FALSE)
 		return;
 
-	vol = gtk_xine_get_volume (GTK_XINE (totem->gtx));
-	gtk_xine_set_volume (GTK_XINE (totem->gtx), vol + off_pct);
+	vol = bacon_video_widget_get_volume (BACON_VIDEO_WIDGET (totem->bvw));
+	bacon_video_widget_set_volume (BACON_VIDEO_WIDGET (totem->bvw), vol + off_pct);
 	volume_set_image (totem, vol + off_pct);
 }
 
 void
 totem_action_toggle_aspect_ratio (Totem *totem)
 {
-	gtk_xine_toggle_aspect_ratio (GTK_XINE (totem->gtx));
+	bacon_video_widget_toggle_aspect_ratio (BACON_VIDEO_WIDGET (totem->bvw));
 }
 
 void
 totem_action_set_scale_ratio (Totem *totem, gfloat ratio)
 {
-	gtk_xine_set_scale_ratio (GTK_XINE (totem->gtx), ratio);
+	bacon_video_widget_set_scale_ratio (BACON_VIDEO_WIDGET (totem->bvw), ratio);
 }
 
 static gboolean
@@ -846,7 +846,7 @@ on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
 	g_free (filename);
 }
 
-/* This is only called when xine is playing a DVD */
+/* This is only called when we are playing a DVD */
 static void
 on_title_change_event (GtkWidget *win, const char *string, gpointer user_data)
 {
@@ -863,7 +863,7 @@ update_seekable (Totem *totem, gboolean force_false)
 	gboolean caps;
 
 	if (force_false == FALSE)
-		caps = gtk_xine_is_seekable (GTK_XINE (totem->gtx));
+		caps = bacon_video_widget_is_seekable (BACON_VIDEO_WIDGET (totem->bvw));
 	else
 		caps = FALSE;
 
@@ -882,7 +882,7 @@ update_seekable (Totem *totem, gboolean force_false)
 }
 
 static void
-update_current_time (GtkXine *gtx, int current_time, int stream_length,
+update_current_time (BaconVideoWidget *bvw, int current_time, int stream_length,
 		int current_position, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
@@ -899,7 +899,7 @@ update_sliders (Totem *totem)
 	if (totem->seek_lock == FALSE)
 	{
 		totem->seek_lock = TRUE;
-		pos = (gfloat) gtk_xine_get_position (GTK_XINE (totem->gtx));
+		pos = (gfloat) bacon_video_widget_get_position (BACON_VIDEO_WIDGET (totem->bvw));
 		gtk_adjustment_set_value (totem->seekadj, pos);
 		gtk_adjustment_set_value (totem->fs_seekadj, pos);
 		totem->seek_lock = FALSE;
@@ -908,7 +908,7 @@ update_sliders (Totem *totem)
 	if (totem->vol_lock == FALSE)
 	{
 		totem->vol_lock = TRUE;
-		pos = (gfloat) gtk_xine_get_volume (GTK_XINE (totem->gtx));
+		pos = (gfloat) bacon_video_widget_get_volume (BACON_VIDEO_WIDGET (totem->bvw));
 
 		if (totem->volume_first_time || (totem->prev_volume != pos &&
 				totem->prev_volume != -1 && pos != -1))
@@ -929,7 +929,7 @@ update_cb_often (gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 
-	if (totem->gtx == NULL)
+	if (totem->bvw == NULL)
 		return TRUE;
 
 	update_sliders (user_data);
@@ -942,7 +942,7 @@ update_cb_rare (gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 
-	if (totem->gtx == NULL)
+	if (totem->bvw == NULL)
 		return TRUE;
 
 	update_seekable (user_data, FALSE);
@@ -988,7 +988,7 @@ vol_cb (GtkWidget *widget, gpointer user_data)
 		totem->vol_lock = TRUE;
 		if (GTK_WIDGET(widget) == totem->fs_volume)
 		{
-			gtk_xine_set_volume (GTK_XINE (totem->gtx),
+			bacon_video_widget_set_volume (BACON_VIDEO_WIDGET (totem->bvw),
 					(gint) totem->fs_voladj->value);
 
 			/* Update the volume adjustment */
@@ -996,7 +996,7 @@ vol_cb (GtkWidget *widget, gpointer user_data)
 					gtk_adjustment_get_value
 					(totem->fs_voladj));
 		} else {
-			gtk_xine_set_volume (GTK_XINE (totem->gtx),
+			bacon_video_widget_set_volume (BACON_VIDEO_WIDGET (totem->bvw),
 					(gint) totem->voladj->value);
 			/* Update the fullscreen volume adjustment */
 			gtk_adjustment_set_value (totem->fs_voladj, 
@@ -1413,7 +1413,7 @@ on_take_screenshot1_activate (GtkButton *button, gpointer user_data)
 	char *filename;
 	GError *err = NULL;
 
-	pixbuf = gtk_xine_get_current_frame (GTK_XINE (totem->gtx));
+	pixbuf = bacon_video_widget_get_current_frame (BACON_VIDEO_WIDGET (totem->bvw));
 	if (pixbuf == NULL)
 	{
 		totem_action_error (_("Totem could not get a screenshot of that film.\nYou might want to try again at another time."), GTK_WINDOW (totem->win));
@@ -1496,35 +1496,35 @@ static void
 on_dvd_root_menu1_activate (GtkButton *button, gpointer user_data)
 {
         Totem *totem = (Totem *)user_data;
-        gtk_xine_dvd_event (GTK_XINE (totem->gtx), GTX_DVD_ROOT_MENU);
+        bacon_video_widget_dvd_event (BACON_VIDEO_WIDGET (totem->bvw), BVW_DVD_ROOT_MENU);
 }
 
 static void
 on_dvd_title_menu1_activate (GtkButton *button, gpointer user_data)
 {
         Totem *totem = (Totem *)user_data;
-        gtk_xine_dvd_event (GTK_XINE (totem->gtx), GTX_DVD_TITLE_MENU);
+        bacon_video_widget_dvd_event (BACON_VIDEO_WIDGET (totem->bvw), BVW_DVD_TITLE_MENU);
 }
 
 static void
 on_dvd_audio_menu1_activate (GtkButton *button, gpointer user_data)
 {
         Totem *totem = (Totem *)user_data;
-        gtk_xine_dvd_event (GTK_XINE (totem->gtx), GTX_DVD_AUDIO_MENU);
+        bacon_video_widget_dvd_event (BACON_VIDEO_WIDGET (totem->bvw), BVW_DVD_AUDIO_MENU);
 }
 
 static void
 on_dvd_angle_menu1_activate (GtkButton *button, gpointer user_data)
 {
         Totem *totem = (Totem *)user_data;
-        gtk_xine_dvd_event (GTK_XINE (totem->gtx), GTX_DVD_ANGLE_MENU);
+        bacon_video_widget_dvd_event (BACON_VIDEO_WIDGET (totem->bvw), BVW_DVD_ANGLE_MENU);
 }
 
 static void
 on_dvd_chapter_menu1_activate (GtkButton *button, gpointer user_data)
 {
         Totem *totem = (Totem *)user_data;
-        gtk_xine_dvd_event (GTK_XINE (totem->gtx), GTX_DVD_CHAPTER_MENU);
+        bacon_video_widget_dvd_event (BACON_VIDEO_WIDGET (totem->bvw), BVW_DVD_CHAPTER_MENU);
 }
 
 static void
@@ -1545,7 +1545,7 @@ commit_hide_skip_to (GtkDialog *dialog, gint response, gpointer user_data)
 
 	g_message ("commit_hide_skip_to: %d", sec);
 
-	gtk_xine_play (GTK_XINE(totem->gtx), 0, sec * 1000);
+	bacon_video_widget_play (BACON_VIDEO_WIDGET(totem->bvw), 0, sec * 1000);
 }
 
 static void
@@ -1564,7 +1564,7 @@ spin_button_value_changed_cb (GtkSpinButton *spinbutton, gpointer user_data)
 
 	sec = (int) gtk_spin_button_get_value (GTK_SPIN_BUTTON (spinbutton));
 	label = glade_xml_get_widget (totem->xml, "label14");
-	str = gtk_xine_properties_time_to_string (sec);
+	str = bacon_video_widget_properties_time_to_string (sec);
 	gtk_label_set_text (GTK_LABEL (label), str);
 	g_free (str);
 }
@@ -1638,7 +1638,7 @@ on_checkbutton2_toggled (GtkToggleButton *togglebutton, gpointer user_data)
 
 	value = gtk_toggle_button_get_active (togglebutton);
 	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/show_vfx", value, NULL);
-	gtk_xine_set_show_visuals (GTK_XINE (totem->gtx), value);
+	bacon_video_widget_set_show_visuals (BACON_VIDEO_WIDGET (totem->bvw), value);
 }
 
 static void
@@ -1650,7 +1650,7 @@ on_combo_entry1_changed (BaconCdSelection *bcs, char *device,
 
 	str = bacon_cd_selection_get_device (bcs);
 	gconf_client_set_string (totem->gc, GCONF_PREFIX"/mediadev", str, NULL);
-	gtk_xine_set_media_device (GTK_XINE (totem->gtx), str);
+	bacon_video_widget_set_media_device (BACON_VIDEO_WIDGET (totem->bvw), str);
 }
 
 static void
@@ -1710,7 +1710,7 @@ mediadev_changed_cb (GConfClient *client, guint cnxn_id,
 		mediadev = g_strdup ("/dev/cdrom");
 
 	bacon_cd_selection_set_device (BACON_CD_SELECTION (item), mediadev);
-	gtk_xine_set_media_device (GTK_XINE (totem->gtx), mediadev);
+	bacon_video_widget_set_media_device (BACON_VIDEO_WIDGET (totem->bvw), mediadev);
 
 	g_signal_connect (G_OBJECT (item), "device-changed",
 			G_CALLBACK (on_combo_entry1_changed), totem);
@@ -1853,7 +1853,7 @@ popup_hide (Totem *totem)
 		totem->popup_timeout = 0;
 	}
 
-	gtk_xine_set_show_cursor (GTK_XINE (totem->gtx), FALSE);
+	bacon_video_widget_set_show_cursor (BACON_VIDEO_WIDGET (totem->bvw), FALSE);
 
 	return FALSE;
 }
@@ -1880,7 +1880,7 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 	static gboolean in_progress = FALSE;
 	Totem *totem = (Totem *) user_data;
 
-	if (gtk_xine_is_fullscreen (GTK_XINE (totem->gtx)) == FALSE)
+	if (bacon_video_widget_is_fullscreen (BACON_VIDEO_WIDGET (totem->bvw)) == FALSE)
 		return FALSE;
 
 	if (in_progress == TRUE)
@@ -1897,7 +1897,7 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 			gdk_screen_height () - totem->control_popup_height);
 	gtk_widget_show_all (totem->exit_popup);
 	gtk_widget_show_all (totem->control_popup);
-	gtk_xine_set_show_cursor (GTK_XINE (totem->gtx), TRUE);
+	bacon_video_widget_set_show_cursor (BACON_VIDEO_WIDGET (totem->bvw), TRUE);
 
 	totem->popup_timeout = gtk_timeout_add (2000,
 			(GtkFunction) popup_hide, totem);
@@ -1935,7 +1935,7 @@ on_eos_event (GtkWidget *widget, gpointer user_data)
 }
 
 static void
-on_error_event (GtkWidget *gtx, GtkXineError error, const char *message,
+on_error_event (GtkWidget *bvw, BaconVideoWidgetError error, const char *message,
 		gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
@@ -1946,29 +1946,29 @@ on_error_event (GtkWidget *gtx, GtkXineError error, const char *message,
 
 	switch (error)
 	{
-	case GTX_STARTUP:
+	case BVW_STARTUP:
 		msg = g_strdup_printf (_("Totem could not startup:\n%s"),
 				message);
 		crap_out = TRUE;
 		break;
-	case GTX_NO_INPUT_PLUGIN:
-	case GTX_NO_DEMUXER_PLUGIN:
+	case BVW_NO_INPUT_PLUGIN:
+	case BVW_NO_DEMUXER_PLUGIN:
 		msg = g_strdup_printf (_("There is no plugin for Totem to "
 					"handle '%s'.\nTotem will not be able "
 					"to play it."), totem->mrl);
 		totem_action_stop (totem);
 		break;
-	case GTX_DEMUXER_FAILED:
+	case BVW_DEMUXER_FAILED:
 		msg = g_strdup_printf (_("'%s' is broken, and Totem can not "
 					"play it further."), totem->mrl);
 		totem_action_stop (totem);
 		break;
-	case GTX_NO_CODEC:
+	case BVW_NO_CODEC:
 		msg = g_strdup_printf(_("Totem could not play '%s':\n%s"),
 				totem->mrl, message);
 		totem_action_stop (totem);
 		break;
-	case GTX_MALFORMED_MRL:
+	case BVW_MALFORMED_MRL:
 		msg = g_strdup_printf(_("Totem could not play '%s'.\n"
 					"This location is not a valid one."),
 					totem->mrl);
@@ -2007,8 +2007,8 @@ totem_action_handle_key (Totem *totem, guint keyval)
 		break;
 	case GDK_C:
 	case GDK_c:
-		gtk_xine_dvd_event (GTK_XINE (totem->gtx),
-				GTX_DVD_CHAPTER_MENU);
+		bacon_video_widget_dvd_event (BACON_VIDEO_WIDGET (totem->bvw),
+				BVW_DVD_CHAPTER_MENU);
 		if (totem->action == 1)
 			totem->action++;
 		else
@@ -2027,7 +2027,7 @@ totem_action_handle_key (Totem *totem, guint keyval)
 		break;
 	case GDK_M:
 	case GDK_m:
-		gtk_xine_dvd_event (GTK_XINE (totem->gtx), GTX_DVD_ROOT_MENU);
+		bacon_video_widget_dvd_event (BACON_VIDEO_WIDGET (totem->bvw), BVW_DVD_ROOT_MENU);
 		break;
 	case XF86XK_AudioNext:
 	case GDK_N:
@@ -2448,47 +2448,47 @@ video_widget_create (Totem *totem)
 {
 	GtkWidget *container;
 
-	totem->gtx = gtk_xine_new (-1, -1, FALSE);
+	totem->bvw = bacon_video_widget_new (-1, -1, FALSE);
 	container = glade_xml_get_widget (totem->xml, "frame2");
-	gtk_container_add (GTK_CONTAINER (container), totem->gtx);
+	gtk_container_add (GTK_CONTAINER (container), totem->bvw);
 
-	g_signal_connect (G_OBJECT (totem->gtx),
+	g_signal_connect (G_OBJECT (totem->bvw),
 			"motion-notify-event",
 			G_CALLBACK (on_video_motion_notify_event),
 			totem);
-	g_signal_connect (G_OBJECT (totem->gtx),
+	g_signal_connect (G_OBJECT (totem->bvw),
 			"eos",
 			G_CALLBACK (on_eos_event),
 			totem);
-	g_signal_connect (G_OBJECT (totem->gtx),
+	g_signal_connect (G_OBJECT (totem->bvw),
 			"error",
 			G_CALLBACK (on_error_event),
 			totem);
-	g_signal_connect (G_OBJECT(totem->gtx),
+	g_signal_connect (G_OBJECT(totem->bvw),
 			"title-change",
 			G_CALLBACK (on_title_change_event),
 			totem);
-	g_signal_connect (G_OBJECT (totem->gtx),
+	g_signal_connect (G_OBJECT (totem->bvw),
 			"tick",
 			G_CALLBACK (update_current_time),
 			totem);
 
-	g_signal_connect (G_OBJECT (totem->gtx), "drag_data_received",
+	g_signal_connect (G_OBJECT (totem->bvw), "drag_data_received",
 			G_CALLBACK (drop_video_cb), totem);
-	gtk_drag_dest_set (totem->gtx, GTK_DEST_DEFAULT_ALL,
+	gtk_drag_dest_set (totem->bvw, GTK_DEST_DEFAULT_ALL,
 			target_table, 1, GDK_ACTION_COPY);
 
-	g_signal_connect (G_OBJECT (totem->gtx), "drag_data_get",
+	g_signal_connect (G_OBJECT (totem->bvw), "drag_data_get",
 			G_CALLBACK (drag_video_cb), totem);
-	gtk_drag_source_set (totem->gtx, GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
+	gtk_drag_source_set (totem->bvw, GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
 			source_table, G_N_ELEMENTS (source_table),
 			GDK_ACTION_LINK);
 
-	g_object_add_weak_pointer (G_OBJECT (totem->gtx),
-			(void**)&(totem->gtx));
+	g_object_add_weak_pointer (G_OBJECT (totem->bvw),
+			(void**)&(totem->bvw));
 
-	gtk_widget_realize (totem->gtx);
-	gtk_widget_show (totem->gtx);
+	gtk_widget_realize (totem->bvw);
+	gtk_widget_show (totem->bvw);
 }
 
 GtkWidget *
@@ -2601,7 +2601,7 @@ totem_setup_preferences (Totem *totem)
 	show_visuals = gconf_client_get_bool (totem->gc,
 			GCONF_PREFIX"/show_vfx", NULL);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), show_visuals);
-	gtk_xine_set_show_visuals (GTK_XINE (totem->gtx), show_visuals);
+	bacon_video_widget_set_show_visuals (BACON_VIDEO_WIDGET (totem->bvw), show_visuals);
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_checkbutton2_toggled), totem);
 
@@ -2615,9 +2615,9 @@ totem_setup_preferences (Totem *totem)
 			(BACON_CD_SELECTION (item));
 		gconf_client_set_string (totem->gc, GCONF_PREFIX"/mediadev",
 				mediadev, NULL);
-		gtk_xine_set_media_device (GTK_XINE (totem->gtx), mediadev);
+		bacon_video_widget_set_media_device (BACON_VIDEO_WIDGET (totem->bvw), mediadev);
 	} else {
-		gtk_xine_set_media_device (GTK_XINE (totem->gtx), mediadev);
+		bacon_video_widget_set_media_device (BACON_VIDEO_WIDGET (totem->bvw), mediadev);
 }
 
 	bacon_cd_selection_set_device (BACON_CD_SELECTION (item),
@@ -2786,7 +2786,7 @@ main (int argc, char **argv)
 	totem->vol_lock = FALSE;
 	totem->prev_volume = -1;
 	totem->popup_timeout = 0;
-	totem->gtx = NULL;
+	totem->bvw = NULL;
 	totem->gc = gc;
 
 	/* Main window */
@@ -2846,7 +2846,7 @@ main (int argc, char **argv)
 	totem->statusbar = glade_xml_get_widget (totem->xml, "custom4");
 
 	/* Properties */
-	totem->properties = gtk_xine_properties_new ();
+	totem->properties = bacon_video_widget_properties_new ();
 	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
 			"totem", "media-player-48.png", NULL);
 	gtk_window_set_icon_from_file (GTK_WINDOW (totem->properties),

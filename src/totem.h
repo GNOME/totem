@@ -21,7 +21,6 @@
 #define __TOTEM_H__
 
 #include <gconf/gconf-client.h>
-#include "gtk-xine.h"
 
 #define TOTEM_GCONF_PREFIX "/apps/totem"
 

@@ -1,19 +1,19 @@
 
 bin_PROGRAMS = totem totem-video-thumbnailer
 
-MARSHALFILES = gtkxine-marshal.h gtkxine-marshal.c
+MARSHALFILES = baconvideowidget-marshal.h baconvideowidget-marshal.c
 GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
 
-gtkxine-marshal.h: gtkxine-marshal.list
-	( $(GLIB_GENMARSHAL) --prefix=gtkxine_marshal gtkxine-marshal.list \
-	  --header > gtkxine-marshal.tmp \
-	  && mv gtkxine-marshal.tmp gtkxine-marshal.h ) \
-	|| ( rm -f gtkxine-marshal.tmp && exit 1 )
-gtkxine-marshal.c: gtkxine-marshal.h
-	( $(GLIB_GENMARSHAL) --prefix=gtkxine_marshal gtkxine-marshal.list \
-	  --body > gtkxine-marshal.tmp \
-	  && mv gtkxine-marshal.tmp gtkxine-marshal.c ) \
-	|| ( rm -f gtkxine-marshal.tmp && exit 1 )
+baconvideowidget-marshal.h: baconvideowidget-marshal.list
+	( $(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal baconvideowidget-marshal.list \
+	  --header > baconvideowidget-marshal.tmp \
+	  && mv baconvideowidget-marshal.tmp baconvideowidget-marshal.h ) \
+	|| ( rm -f baconvideowidget-marshal.tmp && exit 1 )
+baconvideowidget-marshal.c: baconvideowidget-marshal.h
+	( $(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal baconvideowidget-marshal.list \
+	  --body > baconvideowidget-marshal.tmp \
+	  && mv baconvideowidget-marshal.tmp baconvideowidget-marshal.c ) \
+	|| ( rm -f baconvideowidget-marshal.tmp && exit 1 )
 
 EGG_RECENT_FILES =                      \
 	egg-recent-model.c              \
@@ -48,11 +48,11 @@ totem_SOURCES = 			\
 	totem.h				\
 	totem-remote.c			\
 	totem-remote.h			\
-	gtkxine-marshal.list		\
+	baconvideowidget-marshal.list		\
 	$(MARSHALFILES)			\
-	gtk-xine.c gtk-xine.h		\
-	gtk-xine-properties.c		\
-	gtk-xine-properties.h		\
+	bacon-video-widget.c bacon-video-widget.h		\
+	bacon-video-widget-properties.c		\
+	bacon-video-widget-properties.h		\
 	gtk-playlist.c	gtk-playlist.h	\
 	rb-ellipsizing-label.c		\
 	rb-ellipsizing-label.h		\
@@ -71,9 +71,9 @@ totem_SOURCES = 			\
 totem_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS)
 
 totem_video_thumbnailer_SOURCES =	\
-	gtkxine-marshal.list		\
+	baconvideowidget-marshal.list		\
 	$(MARSHALFILES)			\
-	gtk-xine.c gtk-xine.h		\
+	bacon-video-widget.c bacon-video-widget.h		\
 	scrsaver.c  scrsaver.h          \
 	video-utils.c video-utils.h     \
 	totem-video-thumbnailer.c

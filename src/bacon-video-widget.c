@@ -40,8 +40,8 @@
 #include <xine.h>
 
 #include "debug.h"
-#include "gtk-xine.h"
-#include "gtkxine-marshal.h"
+#include "bacon-video-widget.h"
+#include "baconvideowidget-marshal.h"
 #include "scrsaver.h"
 #include "video-utils.h"
 
@@ -62,9 +62,9 @@
 typedef struct
 {
 	int type;		/* one of the signals in the following enum */
-	GtkXineError error_type;
+	BaconVideoWidgetError error_type;
 	char *message;		/* or NULL */
-} GtkXineSignal;
+} BaconVideoWidgetSignal;
 
 /* Signals */
 enum {
@@ -101,7 +101,7 @@ static int speeds[2] = {
 	XINE_SPEED_NORMAL,
 };
 
-struct GtkXinePrivate {
+struct BaconVideoWidgetPrivate {
 	/* Xine stuff */
 	xine_t *xine;
 	xine_stream_t *stream;
@@ -140,68 +140,68 @@ struct GtkXinePrivate {
 	gboolean pml;
 };
 
-static void gtk_xine_class_init (GtkXineClass *klass);
-static void gtk_xine_instance_init (GtkXine *gtx);
+static void bacon_video_widget_class_init (BaconVideoWidgetClass *klass);
+static void bacon_video_widget_instance_init (BaconVideoWidget *bvw);
 
-static void load_config_from_gconf (GtkXine *gtx);
+static void load_config_from_gconf (BaconVideoWidget *bvw);
 
-static void gtk_xine_set_property (GObject *object, guint property_id,
+static void bacon_video_widget_set_property (GObject *object, guint property_id,
 		const GValue *value, GParamSpec *pspec);
-static void gtk_xine_get_property (GObject *object, guint property_id,
+static void bacon_video_widget_get_property (GObject *object, guint property_id,
 		GValue *value, GParamSpec *pspec);
 
-static void gtk_xine_realize (GtkWidget *widget);
-static void gtk_xine_unrealize (GtkWidget *widget);
-static void gtk_xine_finalize (GObject *object);
+static void bacon_video_widget_realize (GtkWidget *widget);
+static void bacon_video_widget_unrealize (GtkWidget *widget);
+static void bacon_video_widget_finalize (GObject *object);
 
-static gboolean gtk_xine_expose (GtkWidget *widget, GdkEventExpose *event);
-static gboolean gtk_xine_motion_notify (GtkWidget *widget,
+static gboolean bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event);
+static gboolean bacon_video_widget_motion_notify (GtkWidget *widget,
 				        GdkEventMotion *event);
-static gboolean gtk_xine_button_press (GtkWidget *widget,
+static gboolean bacon_video_widget_button_press (GtkWidget *widget,
 				       GdkEventButton *event);
-static gboolean gtk_xine_key_press (GtkWidget *widget, GdkEventKey *event);
+static gboolean bacon_video_widget_key_press (GtkWidget *widget, GdkEventKey *event);
 
-static void gtk_xine_size_allocate (GtkWidget *widget,
+static void bacon_video_widget_size_allocate (GtkWidget *widget,
 				    GtkAllocation *allocation);
-static xine_vo_driver_t * load_video_out_driver (GtkXine *gtx,
+static xine_vo_driver_t * load_video_out_driver (BaconVideoWidget *bvw,
 						 gboolean null_out);
-static xine_ao_driver_t * load_audio_out_driver (GtkXine *gtx);
-static gboolean gtk_xine_tick_send (GtkXine *gtx);
+static xine_ao_driver_t * load_audio_out_driver (BaconVideoWidget *bvw);
+static gboolean bacon_video_widget_tick_send (BaconVideoWidget *bvw);
 
 static GtkWidgetClass *parent_class = NULL;
 
 static void xine_event (void *user_data, const xine_event_t *event);
-static gboolean gtk_xine_idle_signal (GtkXine *gtx);
+static gboolean bacon_video_widget_idle_signal (BaconVideoWidget *bvw);
 
-static int gtx_table_signals[LAST_SIGNAL] = { 0 };
+static int bvw_table_signals[LAST_SIGNAL] = { 0 };
 
 GType
-gtk_xine_get_type (void)
+bacon_video_widget_get_type (void)
 {
-	static GType gtk_xine_type = 0;
+	static GType bacon_video_widget_type = 0;
 
-	if (!gtk_xine_type) {
-		static const GTypeInfo gtk_xine_info = {
-			sizeof (GtkXineClass),
+	if (!bacon_video_widget_type) {
+		static const GTypeInfo bacon_video_widget_info = {
+			sizeof (BaconVideoWidgetClass),
 			(GBaseInitFunc) NULL,
 			(GBaseFinalizeFunc) NULL,
-			(GClassInitFunc) gtk_xine_class_init,
+			(GClassInitFunc) bacon_video_widget_class_init,
 			(GClassFinalizeFunc) NULL,
 			NULL /* class_data */,
-			sizeof (GtkXine),
+			sizeof (BaconVideoWidget),
 			0 /* n_preallocs */,
-			(GInstanceInitFunc) gtk_xine_instance_init,
+			(GInstanceInitFunc) bacon_video_widget_instance_init,
 		};
 
-		gtk_xine_type = g_type_register_static (GTK_TYPE_WIDGET,
-				"GtkXine", &gtk_xine_info, (GTypeFlags)0);
+		bacon_video_widget_type = g_type_register_static (GTK_TYPE_WIDGET,
+				"BaconVideoWidget", &bacon_video_widget_info, (GTypeFlags)0);
 	}
 
-	return gtk_xine_type;
+	return bacon_video_widget_type;
 }
 
 static void
-gtk_xine_class_init (GtkXineClass *klass)
+bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 {
 
 	GObjectClass *object_class;
@@ -213,18 +213,18 @@ gtk_xine_class_init (GtkXineClass *klass)
 	parent_class = gtk_type_class (gtk_widget_get_type ());
 
 	/* GtkWidget */
-	widget_class->realize = gtk_xine_realize;
-	widget_class->unrealize = gtk_xine_unrealize;
-	widget_class->size_allocate = gtk_xine_size_allocate;
-	widget_class->expose_event = gtk_xine_expose;
-	widget_class->motion_notify_event = gtk_xine_motion_notify;
-	widget_class->button_press_event = gtk_xine_button_press;
-	widget_class->key_press_event = gtk_xine_key_press;
+	widget_class->realize = bacon_video_widget_realize;
+	widget_class->unrealize = bacon_video_widget_unrealize;
+	widget_class->size_allocate = bacon_video_widget_size_allocate;
+	widget_class->expose_event = bacon_video_widget_expose;
+	widget_class->motion_notify_event = bacon_video_widget_motion_notify;
+	widget_class->button_press_event = bacon_video_widget_button_press;
+	widget_class->key_press_event = bacon_video_widget_key_press;
 
 	/* GObject */
-	object_class->set_property = gtk_xine_set_property;
-	object_class->get_property = gtk_xine_get_property;
-	object_class->finalize = gtk_xine_finalize;
+	object_class->set_property = bacon_video_widget_set_property;
+	object_class->get_property = bacon_video_widget_get_property;
+	object_class->finalize = bacon_video_widget_finalize;
 
 	/* Properties */
 	g_object_class_install_property (object_class, PROP_LOGO_MODE,
@@ -260,38 +260,38 @@ gtk_xine_class_init (GtkXineClass *klass)
 				FALSE, G_PARAM_WRITABLE));
 
 	/* Signals */
-	gtx_table_signals[ERROR] =
+	bvw_table_signals[ERROR] =
 		g_signal_new ("error",
 				G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST,
-				G_STRUCT_OFFSET (GtkXineClass, error),
+				G_STRUCT_OFFSET (BaconVideoWidgetClass, error),
 				NULL, NULL,
-				gtkxine_marshal_VOID__INT_STRING,
+				baconvideowidget_marshal_VOID__INT_STRING,
 				G_TYPE_NONE, 2, G_TYPE_INT, G_TYPE_STRING);
 
-	gtx_table_signals[EOS] =
+	bvw_table_signals[EOS] =
 		g_signal_new ("eos",
 				G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST,
-				G_STRUCT_OFFSET (GtkXineClass, eos),
+				G_STRUCT_OFFSET (BaconVideoWidgetClass, eos),
 				NULL, NULL,
 				g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
-	gtx_table_signals[TITLE_CHANGE] =
+	bvw_table_signals[TITLE_CHANGE] =
 		g_signal_new ("title-change",
 				G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST,
-				G_STRUCT_OFFSET (GtkXineClass, title_change),
+				G_STRUCT_OFFSET (BaconVideoWidgetClass, title_change),
 				NULL, NULL,
 				g_cclosure_marshal_VOID__STRING,
 				G_TYPE_NONE, 1, G_TYPE_STRING);
-	gtx_table_signals[TICK] =
+	bvw_table_signals[TICK] =
 		g_signal_new ("tick",
 				G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST,
-				G_STRUCT_OFFSET (GtkXineClass, tick),
+				G_STRUCT_OFFSET (BaconVideoWidgetClass, tick),
 				NULL, NULL,
-				gtkxine_marshal_VOID__INT_INT_INT,
+				baconvideowidget_marshal_VOID__INT_INT_INT,
 				G_TYPE_NONE, 3, G_TYPE_INT, G_TYPE_INT,
 				G_TYPE_INT);
 
@@ -301,101 +301,101 @@ gtk_xine_class_init (GtkXineClass *klass)
 }
 
 static void
-gtk_xine_instance_init (GtkXine *gtx)
+bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 {
-	GtkWidget *widget = (GtkWidget *) gtx;
+	GtkWidget *widget = (GtkWidget *) bvw;
 	const char *const *autoplug_list;
 	int i = 0;
 	char *configfile;
 
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-	GTK_WIDGET_SET_FLAGS (GTK_WIDGET (gtx), GTK_CAN_FOCUS);
-	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (gtx), GTK_DOUBLE_BUFFERED);
+	GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_CAN_FOCUS);
+	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
 
 	/* Set the default size to be a 4:3 ratio */
 	widget->requisition.width = DEFAULT_HEIGHT;
 	widget->requisition.height = DEFAULT_WIDTH;
 
-	gtx->priv = g_new0 (GtkXinePrivate, 1);
-	gtx->priv->xine = xine_new ();
-	gtx->priv->cursor_shown = TRUE;
+	bvw->priv = g_new0 (BaconVideoWidgetPrivate, 1);
+	bvw->priv->xine = xine_new ();
+	bvw->priv->cursor_shown = TRUE;
 
-	gtx->priv->queue = g_async_queue_new ();
+	bvw->priv->queue = g_async_queue_new ();
 
 	/* generate and init configuration  */
 	configfile = g_build_path (G_DIR_SEPARATOR_S,
 			g_get_home_dir (), CONFIG_FILE, NULL);
-	xine_config_load (gtx->priv->xine, configfile);
+	xine_config_load (bvw->priv->xine, configfile);
 	g_free (configfile);
 
-	load_config_from_gconf (gtx);
+	load_config_from_gconf (bvw);
 
-	xine_init (gtx->priv->xine);
+	xine_init (bvw->priv->xine);
 
 	/* Can we play DVDs and VCDs ? */
-	autoplug_list = xine_get_autoplay_input_plugin_ids (gtx->priv->xine);
+	autoplug_list = xine_get_autoplay_input_plugin_ids (bvw->priv->xine);
 	while (autoplug_list && autoplug_list[i])
 	{
 		if (g_ascii_strcasecmp (autoplug_list[i], "VCD") == 0)
-			gtx->priv->can_vcd = TRUE;
+			bvw->priv->can_vcd = TRUE;
 		else if (g_ascii_strcasecmp (autoplug_list[i], "DVD") == 0)
-			gtx->priv->can_dvd = TRUE;
+			bvw->priv->can_dvd = TRUE;
 		else if (g_ascii_strcasecmp (autoplug_list[i], "CDDA") == 0)
-			gtx->priv->can_cdda = TRUE;
+			bvw->priv->can_cdda = TRUE;
 		i++;
 	}
 
-	gtx->priv->tick_id = g_timeout_add (200,
-			(GSourceFunc) gtk_xine_tick_send, gtx);
+	bvw->priv->tick_id = g_timeout_add (200,
+			(GSourceFunc) bacon_video_widget_tick_send, bvw);
 }
 
 static void
-gtk_xine_finalize (GObject *object)
+bacon_video_widget_finalize (GObject *object)
 {
-	GtkXine *gtx = (GtkXine *) object;
+	BaconVideoWidget *bvw = (BaconVideoWidget *) object;
 
 	/* Should put here what needs to be destroyed */
-	g_idle_remove_by_data (gtx);
-	g_async_queue_unref (gtx->priv->queue);
+	g_idle_remove_by_data (bvw);
+	g_async_queue_unref (bvw->priv->queue);
 	G_OBJECT_CLASS (parent_class)->finalize (object);
 
-	gtx->priv = NULL;
-	gtx = NULL;
+	bvw->priv = NULL;
+	bvw = NULL;
 }
 
 static void
-dest_size_cb (void *gtx_gen,
+dest_size_cb (void *bvw_gen,
 	      int video_width, int video_height,
 	      double video_pixel_aspect,
 	      int *dest_width, int *dest_height,
 	      double *dest_pixel_aspect)
 {
-	GtkXine *gtx = (GtkXine *) gtx_gen;
+	BaconVideoWidget *bvw = (BaconVideoWidget *) bvw_gen;
 
 	/* correct size with video_pixel_aspect */
-	if (video_pixel_aspect >= gtx->priv->display_ratio)
+	if (video_pixel_aspect >= bvw->priv->display_ratio)
 		video_width  = video_width * video_pixel_aspect
-			/ gtx->priv->display_ratio + .5;
+			/ bvw->priv->display_ratio + .5;
 	else
-		video_height = video_height * gtx->priv->display_ratio
+		video_height = video_height * bvw->priv->display_ratio
 			/ video_pixel_aspect + .5;
 
-	if (gtx->priv->fullscreen_mode)
+	if (bvw->priv->fullscreen_mode)
 	{
 		*dest_width = gdk_screen_width ();
 		*dest_height = gdk_screen_height ();
 	} else {
-		*dest_width = gtx->widget.allocation.width;
-		*dest_height = gtx->widget.allocation.height;
+		*dest_width = bvw->widget.allocation.width;
+		*dest_height = bvw->widget.allocation.height;
 	}
 
-	*dest_pixel_aspect = gtx->priv->display_ratio;
+	*dest_pixel_aspect = bvw->priv->display_ratio;
 }
 
 static void
-frame_output_cb (void *gtx_gen,
+frame_output_cb (void *bvw_gen,
 		 int video_width, int video_height,
 		 double video_pixel_aspect,
 		 int *dest_x, int *dest_y,
@@ -403,62 +403,62 @@ frame_output_cb (void *gtx_gen,
 		 double *dest_pixel_aspect,
 		 int *win_x, int *win_y)
 {
-	GtkXine *gtx = (GtkXine *) gtx_gen;
+	BaconVideoWidget *bvw = (BaconVideoWidget *) bvw_gen;
 
-	if (gtx == NULL || gtx->priv == NULL)
+	if (bvw == NULL || bvw->priv == NULL)
 		return;
 
 	/* correct size with video_pixel_aspect */
-	if (video_pixel_aspect >= gtx->priv->display_ratio)
+	if (video_pixel_aspect >= bvw->priv->display_ratio)
 		video_width = video_width * video_pixel_aspect
-			/ gtx->priv->display_ratio + .5;
+			/ bvw->priv->display_ratio + .5;
 	else
-		video_height = video_height * gtx->priv->display_ratio
+		video_height = video_height * bvw->priv->display_ratio
 			/ video_pixel_aspect + .5;
 
 	*dest_x = 0;
 	*dest_y = 0;
-	*win_x = gtx->priv->xpos;
-	*win_y = gtx->priv->ypos;
+	*win_x = bvw->priv->xpos;
+	*win_y = bvw->priv->ypos;
 
-	if (gtx->priv->fullscreen_mode)
+	if (bvw->priv->fullscreen_mode)
 	{
 		*dest_width = gdk_screen_width ();
 		*dest_height = gdk_screen_height ();
 	} else {
-		*dest_width = gtx->widget.allocation.width;
-		*dest_height = gtx->widget.allocation.height;
+		*dest_width = bvw->widget.allocation.width;
+		*dest_height = bvw->widget.allocation.height;
 
 		/* Size changed */
-		if (gtx->priv->video_width != video_width
-				|| gtx->priv->video_height != video_height)
+		if (bvw->priv->video_width != video_width
+				|| bvw->priv->video_height != video_height)
 		{
 			GConfClient *gc;
 
-			gtx->priv->video_width = video_width;
-			gtx->priv->video_height = video_height;
+			bvw->priv->video_width = video_width;
+			bvw->priv->video_height = video_height;
 
 			gc = gconf_client_get_default ();
 
 			if (gconf_client_get_bool (gc, GCONF_PREFIX"/auto_resize", NULL) == TRUE
-					&& gtx->priv->logo_mode == FALSE)
+					&& bvw->priv->logo_mode == FALSE)
 			{
-				GtkXineSignal *signal;
+				BaconVideoWidgetSignal *signal;
 
-				signal = g_new0 (GtkXineSignal, 1);
+				signal = g_new0 (BaconVideoWidgetSignal, 1);
 				signal->type = RATIO;
-				g_async_queue_push (gtx->priv->queue, signal);
-				g_idle_add ((GSourceFunc) gtk_xine_idle_signal,
-						gtx);
+				g_async_queue_push (bvw->priv->queue, signal);
+				g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal,
+						bvw);
 			}
 		}
 	}
 
-	*dest_pixel_aspect = gtx->priv->display_ratio;
+	*dest_pixel_aspect = bvw->priv->display_ratio;
 }
 
 static xine_vo_driver_t *
-load_video_out_driver (GtkXine *gtx, gboolean null_out)
+load_video_out_driver (BaconVideoWidget *bvw, gboolean null_out)
 {
 	double res_h, res_v;
 	x11_visual_t vis;
@@ -467,37 +467,37 @@ load_video_out_driver (GtkXine *gtx, gboolean null_out)
 
 	if (null_out == TRUE)
 	{
-		return xine_open_video_driver (gtx->priv->xine,
+		return xine_open_video_driver (bvw->priv->xine,
 				"none", XINE_VISUAL_TYPE_NONE, NULL);
 	}
 
-	vis.display = gtx->priv->display;
-	vis.screen = gtx->priv->screen;
-	vis.d = GDK_WINDOW_XID (gtx->priv->video_window);
+	vis.display = bvw->priv->display;
+	vis.screen = bvw->priv->screen;
+	vis.d = GDK_WINDOW_XID (bvw->priv->video_window);
 	res_h =
-	    (DisplayWidth (gtx->priv->display, gtx->priv->screen) * 1000 /
-	     DisplayWidthMM (gtx->priv->display, gtx->priv->screen));
+	    (DisplayWidth (bvw->priv->display, bvw->priv->screen) * 1000 /
+	     DisplayWidthMM (bvw->priv->display, bvw->priv->screen));
 	res_v =
-	    (DisplayHeight (gtx->priv->display, gtx->priv->screen) * 1000 /
-	     DisplayHeightMM (gtx->priv->display, gtx->priv->screen));
-	gtx->priv->display_ratio = res_v / res_h;
+	    (DisplayHeight (bvw->priv->display, bvw->priv->screen) * 1000 /
+	     DisplayHeightMM (bvw->priv->display, bvw->priv->screen));
+	bvw->priv->display_ratio = res_v / res_h;
 
-	if (fabs (gtx->priv->display_ratio - 1.0) < 0.01) {
-		gtx->priv->display_ratio = 1.0;
+	if (fabs (bvw->priv->display_ratio - 1.0) < 0.01) {
+		bvw->priv->display_ratio = 1.0;
 	}
 
 	vis.dest_size_cb = dest_size_cb;
 	vis.frame_output_cb = frame_output_cb;
-	vis.user_data = gtx;
+	vis.user_data = bvw;
 
 	/* Try to init video with stored information */
-	video_driver_id = xine_config_register_string (gtx->priv->xine,
+	video_driver_id = xine_config_register_string (bvw->priv->xine,
 			"video.driver", "auto", "video driver to use",
 			NULL, 10, NULL, NULL);
 
 	if (strcmp (video_driver_id, "auto") != 0)
 	{
-		vo_driver = xine_open_video_driver (gtx->priv->xine,
+		vo_driver = xine_open_video_driver (bvw->priv->xine,
 						   video_driver_id,
 						   XINE_VISUAL_TYPE_X11,
 						   (void *) &vis);
@@ -505,20 +505,20 @@ load_video_out_driver (GtkXine *gtx, gboolean null_out)
 			return vo_driver;
 	}
 
-	vo_driver = xine_open_video_driver (gtx->priv->xine, NULL,
+	vo_driver = xine_open_video_driver (bvw->priv->xine, NULL,
 			XINE_VISUAL_TYPE_X11, (void *) &vis);
 
 	return vo_driver;
 }
 
 static xine_ao_driver_t *
-load_audio_out_driver (GtkXine *gtx)
+load_audio_out_driver (BaconVideoWidget *bvw)
 {
 	GConfClient *conf;
 	xine_ao_driver_t *ao_driver;
 	char *audio_driver_id;
 
-	if (gtx->priv->null_out == TRUE)
+	if (bvw->priv->null_out == TRUE)
 		return NULL;
 
 	conf = gconf_client_get_default ();
@@ -537,15 +537,15 @@ load_audio_out_driver (GtkXine *gtx)
 
 	/* auto probe */
 	if (strcmp (audio_driver_id, "auto") == 0)
-		ao_driver = xine_open_audio_driver (gtx->priv->xine,
+		ao_driver = xine_open_audio_driver (bvw->priv->xine,
 				NULL, NULL);
 	else
-		ao_driver = xine_open_audio_driver (gtx->priv->xine,
+		ao_driver = xine_open_audio_driver (bvw->priv->xine,
 				audio_driver_id, NULL);
 
 	/* if it failed without autoprobe, probe */
 	if (ao_driver == NULL && strcmp (audio_driver_id, "auto") != 0)
-		ao_driver = xine_open_audio_driver (gtx->priv->xine,
+		ao_driver = xine_open_audio_driver (bvw->priv->xine,
 				NULL, NULL);
 
 	if (ao_driver == NULL)
@@ -555,8 +555,8 @@ load_audio_out_driver (GtkXine *gtx)
 		msg = g_strdup_printf (_("Couldn't load the '%s' audio driver\n"
 					"Check that the device is not busy."),
 				audio_driver_id ? audio_driver_id : "auto" );
-		g_signal_emit (G_OBJECT (gtx),
-				gtx_table_signals[ERROR], 0,
+		g_signal_emit (G_OBJECT (bvw),
+				bvw_table_signals[ERROR], 0,
 				0, msg);
 		g_free (msg);
 	}
@@ -567,12 +567,12 @@ load_audio_out_driver (GtkXine *gtx)
 }
 
 static void
-load_config_from_gconf (GtkXine *gtx)
+load_config_from_gconf (BaconVideoWidget *bvw)
 {
 	GConfClient *conf;
 
 	/* default demux strategy */
-	xine_config_register_string (gtx->priv->xine,
+	xine_config_register_string (bvw->priv->xine,
 			"misc.demux_strategy", "reverse",
 			"demuxer selection strategy",
 			"{ default  reverse  content  extension }, default: 0",
@@ -580,7 +580,7 @@ load_config_from_gconf (GtkXine *gtx)
 }
 
 static gboolean
-video_window_translate_point (GtkXine *gtx, int gui_x, int gui_y,
+video_window_translate_point (BaconVideoWidget *bvw, int gui_x, int gui_y,
 		int *video_x, int *video_y)
 {
 	x11_rectangle_t rect;
@@ -590,7 +590,7 @@ video_window_translate_point (GtkXine *gtx, int gui_x, int gui_y,
 	rect.w = 0;
 	rect.h = 0;
 
-	if (xine_gui_send_vo_data (gtx->priv->stream,
+	if (xine_gui_send_vo_data (bvw->priv->stream,
 				XINE_GUI_SEND_TRANSLATE_GUI_TO_VIDEO,
 				(void*)&rect) != -1)
 	{
@@ -609,12 +609,12 @@ video_window_translate_point (GtkXine *gtx, int gui_x, int gui_y,
  * 2 == TITLE
  */
 static void 
-dvd_skip_behaviour (GtkXine *gtx, int behaviour)
+dvd_skip_behaviour (BaconVideoWidget *bvw, int behaviour)
 {
         if (behaviour < 1 || behaviour > 2)
                 return;
 
-        xine_config_register_num (gtx->priv->xine,
+        xine_config_register_num (bvw->priv->xine,
                         "input.dvd_skip_behaviour",
                         behaviour,
                         "DVD Skip behaviour",
@@ -626,70 +626,70 @@ dvd_skip_behaviour (GtkXine *gtx, int behaviour)
 }
 
 void
-gtk_xine_dvd_event (GtkXine *gtx, GtkXineDVDEvent type)
+bacon_video_widget_dvd_event (BaconVideoWidget *bvw, BaconVideoWidgetDVDEvent type)
 {
         xine_event_t event;
 
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
-	g_return_if_fail (gtx->priv->xine != NULL);
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
 
         switch (type)
         {
-        case GTX_DVD_ROOT_MENU:
+        case BVW_DVD_ROOT_MENU:
                 event.type = XINE_EVENT_INPUT_MENU1;
                 break;
-        case GTX_DVD_TITLE_MENU:
+        case BVW_DVD_TITLE_MENU:
                 event.type = XINE_EVENT_INPUT_MENU2;
                 break;
-        case GTX_DVD_SUBPICTURE_MENU:
+        case BVW_DVD_SUBPICTURE_MENU:
                 event.type = XINE_EVENT_INPUT_MENU4;
                 break;
-        case GTX_DVD_AUDIO_MENU:
+        case BVW_DVD_AUDIO_MENU:
                 event.type = XINE_EVENT_INPUT_MENU5;
                 break;
-        case GTX_DVD_ANGLE_MENU:
+        case BVW_DVD_ANGLE_MENU:
                 event.type = XINE_EVENT_INPUT_MENU6;
                 break;
-        case GTX_DVD_CHAPTER_MENU:
+        case BVW_DVD_CHAPTER_MENU:
                 event.type = XINE_EVENT_INPUT_MENU7;
                 break;
-        case GTX_DVD_NEXT_CHAPTER:
-                dvd_skip_behaviour (gtx, 1);
+        case BVW_DVD_NEXT_CHAPTER:
+                dvd_skip_behaviour (bvw, 1);
                 event.type = XINE_EVENT_INPUT_NEXT;
                 break;
-        case GTX_DVD_PREV_CHAPTER:
-                dvd_skip_behaviour (gtx, 1);
+        case BVW_DVD_PREV_CHAPTER:
+                dvd_skip_behaviour (bvw, 1);
                 event.type = XINE_EVENT_INPUT_PREVIOUS;
                 break;
-        case GTX_DVD_NEXT_TITLE:
-                dvd_skip_behaviour (gtx, 2);
+        case BVW_DVD_NEXT_TITLE:
+                dvd_skip_behaviour (bvw, 2);
                 event.type = XINE_EVENT_INPUT_NEXT;
                 break;
-        case GTX_DVD_PREV_TITLE:
-                dvd_skip_behaviour (gtx, 2);
+        case BVW_DVD_PREV_TITLE:
+                dvd_skip_behaviour (bvw, 2);
                 event.type = XINE_EVENT_INPUT_PREVIOUS;
                 break;
-        case GTX_DVD_NEXT_ANGLE:
+        case BVW_DVD_NEXT_ANGLE:
                 event.type = XINE_EVENT_INPUT_ANGLE_NEXT;
                 break;
-        case GTX_DVD_PREV_ANGLE:
+        case BVW_DVD_PREV_ANGLE:
                 event.type = XINE_EVENT_INPUT_ANGLE_PREVIOUS;
                 break;
         default:
                 return;
         }
 
-        event.stream = gtx->priv->stream;
+        event.stream = bvw->priv->stream;
         event.data = NULL;
         event.data_length = 0;
 
-        xine_event_send (gtx->priv->stream,
+        xine_event_send (bvw->priv->stream,
                         (xine_event_t *) (&event));
 }
 
 static gboolean
-generate_mouse_event (GtkXine *gtx, GdkEvent *event, gboolean is_motion)
+generate_mouse_event (BaconVideoWidget *bvw, GdkEvent *event, gboolean is_motion)
 {
 	GdkEventMotion *mevent = (GdkEventMotion *) event;
 	GdkEventButton *bevent = (GdkEventButton *) event;
@@ -700,10 +700,10 @@ generate_mouse_event (GtkXine *gtx, GdkEvent *event, gboolean is_motion)
 		return FALSE;
 
 	if (is_motion == TRUE)
-		retval = video_window_translate_point (gtx,
+		retval = video_window_translate_point (bvw,
 				mevent->x, mevent->y, &x, &y);
 	else
-		retval = video_window_translate_point (gtx,
+		retval = video_window_translate_point (bvw,
 				bevent->x, bevent->y, &x, &y);
 
 	if (retval == TRUE)
@@ -722,11 +722,11 @@ generate_mouse_event (GtkXine *gtx, GdkEvent *event, gboolean is_motion)
 
 		input.x = x;
 		input.y = y;
-		event.stream = gtx->priv->stream;
+		event.stream = bvw->priv->stream;
 		event.data = &input;
 		event.data_length = sizeof(input);
 
-		xine_event_send (gtx->priv->stream,
+		xine_event_send (bvw->priv->stream,
 				(xine_event_t *) (&event));
 
 		return TRUE;
@@ -738,29 +738,29 @@ generate_mouse_event (GtkXine *gtx, GdkEvent *event, gboolean is_motion)
 static gboolean
 configure_cb (GtkWidget *widget, GdkEventConfigure *event, gpointer user_data)
 {
-	GtkXine *gtx = (GtkXine *) user_data;
+	BaconVideoWidget *bvw = (BaconVideoWidget *) user_data;
 
-	gtx->priv->xpos = event->x;
-	gtx->priv->ypos = event->y;
+	bvw->priv->xpos = event->x;
+	bvw->priv->ypos = event->y;
 
 	return FALSE;
 }
 
 static void
-gtk_xine_realize (GtkWidget *widget)
+bacon_video_widget_realize (GtkWidget *widget)
 {
 	GdkWindowAttr attr;
-	GtkXine *gtx;
+	BaconVideoWidget *bvw;
 
-	gtx = GTK_XINE (widget);
+	bvw = BACON_VIDEO_WIDGET (widget);
 
 	/* set realized flag */
 	GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
 
-	xine_close (gtx->priv->stream);
-	xine_event_dispose_queue (gtx->priv->ev_queue);
-	xine_dispose (gtx->priv->stream);
-	xine_close_video_driver(gtx->priv->xine, gtx->priv->vo_driver);
+	xine_close (bvw->priv->stream);
+	xine_event_dispose_queue (bvw->priv->ev_queue);
+	xine_dispose (bvw->priv->stream);
+	xine_close_video_driver(bvw->priv->xine, bvw->priv->vo_driver);
 
 	attr.x = widget->allocation.x;
 	attr.y = widget->allocation.y;
@@ -776,55 +776,55 @@ gtk_xine_realize (GtkWidget *widget)
 	gdk_window_show (widget->window);
 	/* Flush, so that the window is really shown */
 	gdk_flush ();
-	gdk_window_set_user_data (widget->window, gtx);
+	gdk_window_set_user_data (widget->window, bvw);
 
-	gtx->priv->video_window = widget->window;
+	bvw->priv->video_window = widget->window;
 
 	/* track configure events of toplevel window */
 	g_signal_connect (GTK_OBJECT (gtk_widget_get_toplevel (widget)),
 			"configure-event",
-			GTK_SIGNAL_FUNC (configure_cb), gtx);
+			GTK_SIGNAL_FUNC (configure_cb), bvw);
 
-	gtx->priv->display = XOpenDisplay (gdk_display_get_name
+	bvw->priv->display = XOpenDisplay (gdk_display_get_name
 			(gdk_display_get_default ()));
-	gtx->priv->screen = DefaultScreen (gtx->priv->display);
+	bvw->priv->screen = DefaultScreen (bvw->priv->display);
 
 	/* load the video driver */
-	gtx->priv->vo_driver = load_video_out_driver (gtx, gtx->priv->null_out);
+	bvw->priv->vo_driver = load_video_out_driver (bvw, bvw->priv->null_out);
 
-	if (gtx->priv->vo_driver == NULL)
+	if (bvw->priv->vo_driver == NULL)
 	{
-		g_signal_emit (G_OBJECT (gtx),
-				gtx_table_signals[ERROR], 0,
-				GTX_STARTUP,
+		g_signal_emit (G_OBJECT (bvw),
+				bvw_table_signals[ERROR], 0,
+				BVW_STARTUP,
 				_("Could not find a suitable video output."));
 		return;
 	}
 
-	if (gtx->priv->null_out == FALSE)
-		gtx->priv->vis = xine_post_init (gtx->priv->xine, "goom", 0,
-				&gtx->priv->ao_driver, &gtx->priv->vo_driver);
+	if (bvw->priv->null_out == FALSE)
+		bvw->priv->vis = xine_post_init (bvw->priv->xine, "goom", 0,
+				&bvw->priv->ao_driver, &bvw->priv->vo_driver);
 
-	gtx->priv->stream = xine_stream_new (gtx->priv->xine,
-			gtx->priv->ao_driver, gtx->priv->vo_driver);
-	gtx->priv->ev_queue = xine_event_new_queue (gtx->priv->stream);
+	bvw->priv->stream = xine_stream_new (bvw->priv->xine,
+			bvw->priv->ao_driver, bvw->priv->vo_driver);
+	bvw->priv->ev_queue = xine_event_new_queue (bvw->priv->stream);
 
 	/* Setup xine events, the screensaver and the event filter */
-	xine_event_create_listener_thread (gtx->priv->ev_queue,
-			xine_event, (void *) gtx);
+	xine_event_create_listener_thread (bvw->priv->ev_queue,
+			xine_event, (void *) bvw);
 
-	scrsaver_init (gtx->priv->display);
+	scrsaver_init (bvw->priv->display);
 
 	return;
 }
 
 static gboolean
-gtk_xine_idle_signal (GtkXine *gtx)
+bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 {
-	GtkXineSignal *signal;
+	BaconVideoWidgetSignal *signal;
 	int queue_length;
 
-	signal = g_async_queue_try_pop (gtx->priv->queue);
+	signal = g_async_queue_try_pop (bvw->priv->queue);
 	if (signal == NULL)
 		return FALSE;
 
@@ -833,23 +833,23 @@ gtk_xine_idle_signal (GtkXine *gtx)
 	{
 	case ERROR:
 		/* We don't emit the ERROR signal when in fullscreen mode */
-		if (gtx->priv->fullscreen_mode == TRUE)
+		if (bvw->priv->fullscreen_mode == TRUE)
 			break;
 
-		g_signal_emit (G_OBJECT (gtx),
-				gtx_table_signals[ERROR], 0,
+		g_signal_emit (G_OBJECT (bvw),
+				bvw_table_signals[ERROR], 0,
 				signal->error_type, signal->message);
 		break;
 	/* A bit of cheating right here */
 	case RATIO:
-		gtk_xine_set_scale_ratio (gtx, 0);
+		bacon_video_widget_set_scale_ratio (bvw, 0);
 		break;
 	}
 
 	g_free (signal->message);
 	g_free (signal);
 
-	queue_length = g_async_queue_length (gtx->priv->queue);
+	queue_length = g_async_queue_length (bvw->priv->queue);
 	TL ();
 
 	return (queue_length > 0);
@@ -858,103 +858,103 @@ gtk_xine_idle_signal (GtkXine *gtx)
 static void
 xine_event (void *user_data, const xine_event_t *event)
 {
-	GtkXine *gtx = (GtkXine *) user_data;
-	GtkXineSignal *signal;
+	BaconVideoWidget *bvw = (BaconVideoWidget *) user_data;
+	BaconVideoWidgetSignal *signal;
 	xine_ui_data_t *ui_data;
 
 	switch (event->type)
 	{
 	case XINE_EVENT_UI_PLAYBACK_FINISHED:
-		g_signal_emit (G_OBJECT (gtx),
-				gtx_table_signals[EOS], 0, NULL);
+		g_signal_emit (G_OBJECT (bvw),
+				bvw_table_signals[EOS], 0, NULL);
 		break;
 	case XINE_EVENT_UI_SET_TITLE:
 		ui_data = (xine_ui_data_t *) event->data;
-		g_signal_emit (G_OBJECT (gtx),
-				gtx_table_signals[TITLE_CHANGE],
+		g_signal_emit (G_OBJECT (bvw),
+				bvw_table_signals[TITLE_CHANGE],
 				0, ui_data->str);
 		break;
 	}
 }
 
 static void
-xine_error (GtkXine *gtx)
+xine_error (BaconVideoWidget *bvw)
 {
-	GtkXineSignal *signal;
+	BaconVideoWidgetSignal *signal;
 	int error;
 
-	error = xine_get_error (gtx->priv->stream);
+	error = xine_get_error (bvw->priv->stream);
 	if (error == XINE_ERROR_NONE)
 		return;
 
-	signal = g_new0 (GtkXineSignal, 1);
+	signal = g_new0 (BaconVideoWidgetSignal, 1);
 	signal->type = ERROR;
 
 	switch (error)
 	{
 	case XINE_ERROR_NO_INPUT_PLUGIN:
-		signal->error_type = GTX_NO_INPUT_PLUGIN;
+		signal->error_type = BVW_NO_INPUT_PLUGIN;
 		break;
 	case XINE_ERROR_NO_DEMUX_PLUGIN:
-		signal->error_type = GTX_NO_DEMUXER_PLUGIN;
+		signal->error_type = BVW_NO_DEMUXER_PLUGIN;
 		break;
 	case XINE_ERROR_DEMUX_FAILED:
-		signal->error_type = GTX_DEMUXER_FAILED;
+		signal->error_type = BVW_DEMUXER_FAILED;
 		break;
 	case XINE_ERROR_MALFORMED_MRL:
-		signal->error_type = GTX_MALFORMED_MRL;
+		signal->error_type = BVW_MALFORMED_MRL;
 		break;
 	default:
 		break;
 	}
 
-	g_async_queue_push (gtx->priv->queue, signal);
-	g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
+	g_async_queue_push (bvw->priv->queue, signal);
+	g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
 }
 
 static void
-gtk_xine_unrealize (GtkWidget *widget)
+bacon_video_widget_unrealize (GtkWidget *widget)
 {
-	GtkXine *gtx;
+	BaconVideoWidget *bvw;
 	char *configfile;
 
 	g_return_if_fail (widget != NULL);
-	g_return_if_fail (GTK_IS_XINE (widget));
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (widget));
 
 	/* Hide all windows */
 	if (GTK_WIDGET_MAPPED (widget))
 		gtk_widget_unmap (widget);
 	GTK_WIDGET_UNSET_FLAGS (widget, GTK_MAPPED);
 
-	gtx = GTK_XINE (widget);
+	bvw = BACON_VIDEO_WIDGET (widget);
 
 	/* stop the playback */
-	xine_close (gtx->priv->stream);
+	xine_close (bvw->priv->stream);
 
 	/* Get rid of the rest of the stream */
-	xine_event_dispose_queue (gtx->priv->ev_queue);
-	xine_dispose (gtx->priv->stream);
-	gtx->priv->stream = NULL;
+	xine_event_dispose_queue (bvw->priv->ev_queue);
+	xine_dispose (bvw->priv->stream);
+	bvw->priv->stream = NULL;
 
 	/* Kill the drivers */
-	if (gtx->priv->vo_driver != NULL)
-		xine_close_video_driver (gtx->priv->xine, gtx->priv->vo_driver);
-	if (gtx->priv->ao_driver != NULL)
-		xine_close_audio_driver (gtx->priv->xine, gtx->priv->ao_driver);
+	if (bvw->priv->vo_driver != NULL)
+		xine_close_video_driver (bvw->priv->xine, bvw->priv->vo_driver);
+	if (bvw->priv->ao_driver != NULL)
+		xine_close_audio_driver (bvw->priv->xine, bvw->priv->ao_driver);
 
 	/* save config */
 	configfile = g_build_path (G_DIR_SEPARATOR_S,
 			g_get_home_dir (), CONFIG_FILE, NULL);
-	xine_config_save (gtx->priv->xine, configfile);
+	xine_config_save (bvw->priv->xine, configfile);
 	g_free (configfile);
 
 	/* stop event thread */
-	xine_exit (gtx->priv->xine);
-	gtx->priv->xine = NULL;
+	xine_exit (bvw->priv->xine);
+	bvw->priv->xine = NULL;
 
 	/* Finally, kill the left-over windows */
-	if (gtx->priv->fullscreen_window != NULL)
-		gdk_window_destroy (gtx->priv->fullscreen_window);
+	if (bvw->priv->fullscreen_window != NULL)
+		gdk_window_destroy (bvw->priv->fullscreen_window);
 
 	/* This destroys widget->window and unsets the realized flag */
 	if (GTK_WIDGET_CLASS (parent_class)->unrealize)
@@ -962,13 +962,13 @@ gtk_xine_unrealize (GtkWidget *widget)
 }
 
 GtkWidget *
-gtk_xine_new (int width, int height, gboolean null_out)
+bacon_video_widget_new (int width, int height, gboolean null_out)
 {
-	GtkXine *gtx;
+	BaconVideoWidget *bvw;
 
-	gtx = GTK_XINE (g_object_new (gtk_xine_get_type (), NULL));
+	bvw = BACON_VIDEO_WIDGET (g_object_new (bacon_video_widget_get_type (), NULL));
 
-	gtx->priv->null_out = null_out;
+	bvw->priv->null_out = null_out;
 
 	/* defaults are fine if both are negative */
 	if (width > 0 && height > 0)
@@ -984,24 +984,24 @@ gtk_xine_new (int width, int height, gboolean null_out)
 		height = 0;
 	}
 
-	gtx->widget.requisition.width = width;
-	gtx->widget.requisition.height = height;
+	bvw->widget.requisition.width = width;
+	bvw->widget.requisition.height = height;
 
 	/* load the video drivers */
-	gtx->priv->ao_driver = load_audio_out_driver (gtx);
-	gtx->priv->vo_driver = load_video_out_driver (gtx, TRUE);
+	bvw->priv->ao_driver = load_audio_out_driver (bvw);
+	bvw->priv->vo_driver = load_video_out_driver (bvw, TRUE);
 
-	gtx->priv->stream = xine_stream_new (gtx->priv->xine,
-			gtx->priv->ao_driver, gtx->priv->vo_driver);
-	gtx->priv->ev_queue = xine_event_new_queue (gtx->priv->stream);
+	bvw->priv->stream = xine_stream_new (bvw->priv->xine,
+			bvw->priv->ao_driver, bvw->priv->vo_driver);
+	bvw->priv->ev_queue = xine_event_new_queue (bvw->priv->stream);
 
-	return GTK_WIDGET (gtx);
+	return GTK_WIDGET (bvw);
 }
 
 static gboolean
-gtk_xine_expose (GtkWidget *widget, GdkEventExpose *event)
+bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 {
-	GtkXine *gtx = (GtkXine *) widget;
+	BaconVideoWidget *bvw = (BaconVideoWidget *) widget;
 	XExposeEvent *expose;
 
 	if (event->count != 0)
@@ -1010,7 +1010,7 @@ gtk_xine_expose (GtkWidget *widget, GdkEventExpose *event)
 	expose = g_new0 (XExposeEvent, 1);
 	expose->count = event->count;
 
-	xine_gui_send_vo_data (gtx->priv->stream,
+	xine_gui_send_vo_data (bvw->priv->stream,
 			XINE_GUI_SEND_EXPOSE_EVENT,
 			expose);
 
@@ -1020,11 +1020,11 @@ gtk_xine_expose (GtkWidget *widget, GdkEventExpose *event)
 }
 
 static gboolean
-gtk_xine_motion_notify (GtkWidget *widget, GdkEventMotion *event)
+bacon_video_widget_motion_notify (GtkWidget *widget, GdkEventMotion *event)
 {
-	GtkXine *gtx = (GtkXine *) widget;
+	BaconVideoWidget *bvw = (BaconVideoWidget *) widget;
 
-	generate_mouse_event (GTK_XINE (widget), (GdkEvent *)event, TRUE);
+	generate_mouse_event (BACON_VIDEO_WIDGET (widget), (GdkEvent *)event, TRUE);
 
 	if (GTK_WIDGET_CLASS (parent_class)->motion_notify_event != NULL)
 		(* GTK_WIDGET_CLASS (parent_class)->motion_notify_event) (widget, event);
@@ -1033,11 +1033,11 @@ gtk_xine_motion_notify (GtkWidget *widget, GdkEventMotion *event)
 }
 
 static gboolean
-gtk_xine_button_press (GtkWidget *widget, GdkEventButton *event)
+bacon_video_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 {
-	GtkXine *gtx = (GtkXine *) widget;
+	BaconVideoWidget *bvw = (BaconVideoWidget *) widget;
 
-	if (generate_mouse_event (GTK_XINE (widget), (GdkEvent *)event,
+	if (generate_mouse_event (BACON_VIDEO_WIDGET (widget), (GdkEvent *)event,
 				FALSE) == TRUE)
 		return FALSE;
 
@@ -1048,7 +1048,7 @@ gtk_xine_button_press (GtkWidget *widget, GdkEventButton *event)
 }
 
 static gboolean
-gtk_xine_key_press (GtkWidget *widget, GdkEventKey *event)
+bacon_video_widget_key_press (GtkWidget *widget, GdkEventKey *event)
 {
 	if (GTK_WIDGET_CLASS (parent_class)->key_press_event != NULL)
 		(* GTK_WIDGET_CLASS (parent_class)->key_press_event) (widget, event);
@@ -1057,18 +1057,18 @@ gtk_xine_key_press (GtkWidget *widget, GdkEventKey *event)
 }
 
 static void
-gtk_xine_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
+bacon_video_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 {
-	GtkXine *gtx;
+	BaconVideoWidget *bvw;
 
 	g_return_if_fail (widget != NULL);
-	g_return_if_fail (GTK_IS_XINE (widget));
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (widget));
 
-	gtx = GTK_XINE (widget);
+	bvw = BACON_VIDEO_WIDGET (widget);
 
 	widget->allocation = *allocation;
-	gtx->priv->xpos = allocation->x;
-	gtx->priv->ypos = allocation->y;
+	bvw->priv->xpos = allocation->x;
+	bvw->priv->ypos = allocation->y;
 
 	if (GTK_WIDGET_REALIZED (widget))
 	{
@@ -1081,21 +1081,21 @@ gtk_xine_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 }
 
 static gboolean
-gtk_xine_tick_send (GtkXine *gtx)
+bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 {
 	int i, current_time, stream_length, current_position;
 	gboolean ret = TRUE;
 
-	if (gtx->priv->stream == NULL)
+	if (bvw->priv->stream == NULL)
 		return TRUE;
 
-	if (gtx->priv->mrl == NULL)
+	if (bvw->priv->mrl == NULL)
 	{
 		current_time = 0;
 		stream_length = 0;
 		current_position = 0;
 	} else {
-		ret = xine_get_pos_length (gtx->priv->stream,
+		ret = xine_get_pos_length (bvw->priv->stream,
 				&current_position,
 				&current_time,
 				&stream_length);
@@ -1103,7 +1103,7 @@ gtk_xine_tick_send (GtkXine *gtx)
 		while (ret == FALSE && i < 10)
 		{
 			usleep (100000);
-			ret = xine_get_pos_length (gtx->priv->stream,
+			ret = xine_get_pos_length (bvw->priv->stream,
 					&current_position,
 					&current_time,
 					&stream_length);
@@ -1112,8 +1112,8 @@ gtk_xine_tick_send (GtkXine *gtx)
 	}
 
 	if (ret == TRUE)
-		g_signal_emit (G_OBJECT (gtx),
-				gtx_table_signals[TICK], 0,
+		g_signal_emit (G_OBJECT (bvw),
+				bvw_table_signals[TICK], 0,
 				current_time, stream_length, current_position);
 }
 
@@ -1144,51 +1144,51 @@ get_fourcc_string (uint32_t f)
 }
 
 gboolean
-gtk_xine_open (GtkXine *gtx, const gchar *mrl)
+bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl)
 {
 	int error;
 	gboolean has_video;
 	xine_post_out_t *audio_source;
 
-	g_return_val_if_fail (gtx != NULL, FALSE);
+	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (mrl != NULL, FALSE);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), FALSE);
-	g_return_val_if_fail (gtx->priv->xine != NULL, FALSE);
-	g_return_val_if_fail (gtx->priv->mrl == NULL, FALSE);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
+	g_return_val_if_fail (bvw->priv->mrl == NULL, FALSE);
 
-	gtx->priv->mrl = g_strdup (mrl);
+	bvw->priv->mrl = g_strdup (mrl);
 
-	error = xine_open (gtx->priv->stream, mrl);
+	error = xine_open (bvw->priv->stream, mrl);
 	if (error == 0)
 	{
-		gtk_xine_close (gtx);
-		xine_error (gtx);
+		bacon_video_widget_close (bvw);
+		xine_error (bvw);
 		return FALSE;
 	}
 
-	if (xine_get_stream_info (gtx->priv->stream,
+	if (xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_VIDEO_HANDLED) == FALSE
-		&& xine_get_stream_info (gtx->priv->stream,
+		&& xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_AUDIO_HANDLED) == FALSE)
 	{
-		GtkXineSignal *signal;
+		BaconVideoWidgetSignal *signal;
 		uint32_t fourcc;
 		char *fourcc_str, *name;
 
-		fourcc = xine_get_stream_info (gtx->priv->stream,
+		fourcc = xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_VIDEO_FOURCC);
 		fourcc_str = get_fourcc_string (fourcc);
-		name = g_strdup (xine_get_meta_info (gtx->priv->stream,
+		name = g_strdup (xine_get_meta_info (bvw->priv->stream,
 				XINE_META_INFO_VIDEOCODEC));
 
-		gtk_xine_close (gtx);
+		bacon_video_widget_close (bvw);
 
-		signal = g_new0 (GtkXineSignal, 1);
+		signal = g_new0 (BaconVideoWidgetSignal, 1);
 		signal->type = ERROR;
-		signal->error_type = GTX_NO_CODEC;
+		signal->error_type = BVW_NO_CODEC;
 		signal->message = g_strdup_printf (_("Reason: Video type '%s' is not handled."), name ? name : fourcc_str);
-		g_async_queue_push (gtx->priv->queue, signal);
-		g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
+		g_async_queue_push (bvw->priv->queue, signal);
+		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
 
 		g_free (fourcc_str);
 		g_free (name);
@@ -1196,105 +1196,105 @@ gtk_xine_open (GtkXine *gtx, const gchar *mrl)
 		return FALSE;
 	}
 
-	has_video = xine_get_stream_info(gtx->priv->stream,
+	has_video = xine_get_stream_info(bvw->priv->stream,
 			XINE_STREAM_INFO_HAS_VIDEO);
 
-	if (has_video == TRUE && gtx->priv->using_vfx == TRUE)
+	if (has_video == TRUE && bvw->priv->using_vfx == TRUE)
 	{
-		audio_source = xine_get_audio_source (gtx->priv->stream);
+		audio_source = xine_get_audio_source (bvw->priv->stream);
 		if (xine_post_wire_audio_port (audio_source,
-					gtx->priv->ao_driver))
-			gtx->priv->using_vfx = FALSE;
-	} else if (has_video == FALSE && gtx->priv->show_vfx == TRUE
-			&& gtx->priv->using_vfx == FALSE
-			&& gtx->priv->vis != NULL)
+					bvw->priv->ao_driver))
+			bvw->priv->using_vfx = FALSE;
+	} else if (has_video == FALSE && bvw->priv->show_vfx == TRUE
+			&& bvw->priv->using_vfx == FALSE
+			&& bvw->priv->vis != NULL)
 	{
-		audio_source = xine_get_audio_source (gtx->priv->stream);
+		audio_source = xine_get_audio_source (bvw->priv->stream);
 		if (xine_post_wire_audio_port (audio_source,
-					gtx->priv->vis->audio_input[0]))
-			gtx->priv->using_vfx = TRUE;
+					bvw->priv->vis->audio_input[0]))
+			bvw->priv->using_vfx = TRUE;
 	}
 
 	return TRUE;
 }
 
 gboolean
-gtk_xine_play (GtkXine *gtx, guint pos, guint start_time)
+bacon_video_widget_play (BaconVideoWidget *bvw, guint pos, guint start_time)
 {
 	int error, length;
 
-	g_return_val_if_fail (gtx != NULL, -1);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), -1);
-	g_return_val_if_fail (gtx->priv->xine != NULL, -1);
+	g_return_val_if_fail (bvw != NULL, -1);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -1);
+	g_return_val_if_fail (bvw->priv->xine != NULL, -1);
 
-	length = gtk_xine_get_stream_length (gtx);
+	length = bacon_video_widget_get_stream_length (bvw);
 
-	error = xine_play (gtx->priv->stream, pos,
+	error = xine_play (bvw->priv->stream, pos,
 			CLAMP (start_time, 0, length));
 
 	if (error == 0)
 	{
-		xine_error (gtx);
+		xine_error (bvw);
 		return FALSE;
 	}
 	return TRUE;
 }
 
 void
-gtk_xine_stop (GtkXine *gtx)
+bacon_video_widget_stop (BaconVideoWidget *bvw)
 {
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
-	g_return_if_fail (gtx->priv->xine != NULL);
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
 
-	if (gtk_xine_is_playing (gtx) == FALSE)
+	if (bacon_video_widget_is_playing (bvw) == FALSE)
 		return;
 
-	xine_stop (gtx->priv->stream);
+	xine_stop (bvw->priv->stream);
 }
 
 void
-gtk_xine_close (GtkXine *gtx)
+bacon_video_widget_close (BaconVideoWidget *bvw)
 {
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
-	g_return_if_fail (gtx->priv->xine != NULL);
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
 
-	xine_close (gtx->priv->stream);
-	g_free (gtx->priv->mrl);
-	gtx->priv->mrl = NULL;
+	xine_close (bvw->priv->stream);
+	g_free (bvw->priv->mrl);
+	bvw->priv->mrl = NULL;
 }
 
 /* Properties */
 static void
-gtk_xine_set_property (GObject *object, guint property_id,
+bacon_video_widget_set_property (GObject *object, guint property_id,
 		const GValue *value, GParamSpec *pspec)
 {
-	GtkXine *gtx;
+	BaconVideoWidget *bvw;
 
-	g_return_if_fail (GTK_IS_XINE (object));
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (object));
 
-	gtx = GTK_XINE (object);
+	bvw = BACON_VIDEO_WIDGET (object);
 
 	switch (property_id)
 	{
 	case PROP_LOGO_MODE:
-		gtk_xine_set_logo_mode (gtx, g_value_get_boolean (value));
+		bacon_video_widget_set_logo_mode (bvw, g_value_get_boolean (value));
 		break;
 	case PROP_FULLSCREEN:
-		gtk_xine_set_fullscreen (gtx, g_value_get_boolean (value));
+		bacon_video_widget_set_fullscreen (bvw, g_value_get_boolean (value));
 		break;
 	case PROP_SPEED:
-		gtk_xine_set_speed (gtx, g_value_get_int (value));
+		bacon_video_widget_set_speed (bvw, g_value_get_int (value));
 		break;
 	case PROP_SHOWCURSOR:
-		gtk_xine_set_show_cursor (gtx, g_value_get_boolean (value));
+		bacon_video_widget_set_show_cursor (bvw, g_value_get_boolean (value));
 		break;
 	case PROP_MEDIADEV:
-		gtk_xine_set_media_device (gtx, g_value_get_string (value));
+		bacon_video_widget_set_media_device (bvw, g_value_get_string (value));
 		break;
 	case PROP_SHOW_VISUALS:
-		gtk_xine_set_show_visuals (gtx, g_value_get_boolean (value));
+		bacon_video_widget_set_show_visuals (bvw, g_value_get_boolean (value));
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1302,40 +1302,40 @@ gtk_xine_set_property (GObject *object, guint property_id,
 }
 
 static void
-gtk_xine_get_property (GObject *object, guint property_id,
+bacon_video_widget_get_property (GObject *object, guint property_id,
 		GValue *value, GParamSpec *pspec)
 {
-	GtkXine *gtx;
+	BaconVideoWidget *bvw;
 
-	g_return_if_fail (GTK_IS_XINE (object));
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (object));
 
-	gtx = GTK_XINE (object);
+	bvw = BACON_VIDEO_WIDGET (object);
 
 	switch (property_id)
 	{
 	case PROP_LOGO_MODE:
-		g_value_set_boolean (value, gtk_xine_get_logo_mode (gtx));
+		g_value_set_boolean (value, bacon_video_widget_get_logo_mode (bvw));
 		break;
 	case PROP_FULLSCREEN:
-		g_value_set_boolean (value, gtk_xine_is_fullscreen (gtx));
+		g_value_set_boolean (value, bacon_video_widget_is_fullscreen (bvw));
 		break;
 	case PROP_SPEED:
-		g_value_set_int (value, gtk_xine_get_speed (gtx));
+		g_value_set_int (value, bacon_video_widget_get_speed (bvw));
 		break;
 	case PROP_POSITION:
-		g_value_set_int (value, gtk_xine_get_position (gtx));
+		g_value_set_int (value, bacon_video_widget_get_position (bvw));
 		break;
 	case PROP_STREAM_LENGTH:
-		g_value_set_int (value, gtk_xine_get_stream_length (gtx));
+		g_value_set_int (value, bacon_video_widget_get_stream_length (bvw));
 		break;
 	case PROP_PLAYING:
-		g_value_set_boolean (value, gtk_xine_is_playing (gtx));
+		g_value_set_boolean (value, bacon_video_widget_is_playing (bvw));
 		break;
 	case PROP_SEEKABLE:
-		g_value_set_boolean (value, gtk_xine_is_seekable (gtx));
+		g_value_set_boolean (value, bacon_video_widget_is_seekable (bvw));
 		break;
 	case PROP_SHOWCURSOR:
-		g_value_set_boolean (value, gtk_xine_get_show_cursor (gtx));
+		g_value_set_boolean (value, bacon_video_widget_get_show_cursor (bvw));
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1343,69 +1343,69 @@ gtk_xine_get_property (GObject *object, guint property_id,
 }
 
 void
-gtk_xine_set_logo_mode (GtkXine *gtx, gboolean logo_mode)
+bacon_video_widget_set_logo_mode (BaconVideoWidget *bvw, gboolean logo_mode)
 {
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
-	g_return_if_fail (gtx->priv->xine != NULL);
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
 
-	gtx->priv->logo_mode = logo_mode;
+	bvw->priv->logo_mode = logo_mode;
 }
 
 gboolean
-gtk_xine_get_logo_mode (GtkXine *gtx)
+bacon_video_widget_get_logo_mode (BaconVideoWidget *bvw)
 {
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
-	g_return_if_fail (gtx->priv->xine != NULL);
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
 
-	return gtx->priv->logo_mode;
+	return bvw->priv->logo_mode;
 }
 
 void
-gtk_xine_set_speed (GtkXine *gtx, Speeds speed)
+bacon_video_widget_set_speed (BaconVideoWidget *bvw, Speeds speed)
 {
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
-	g_return_if_fail (gtx->priv->xine != NULL);
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
 
-	xine_set_param (gtx->priv->stream, XINE_PARAM_SPEED, speeds[speed]);
+	xine_set_param (bvw->priv->stream, XINE_PARAM_SPEED, speeds[speed]);
 }
 
 int
-gtk_xine_get_speed (GtkXine *gtx)
+bacon_video_widget_get_speed (BaconVideoWidget *bvw)
 {
-	g_return_val_if_fail (gtx != NULL, SPEED_NORMAL);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), SPEED_NORMAL);
-	g_return_val_if_fail (gtx->priv->xine != NULL, SPEED_NORMAL);
+	g_return_val_if_fail (bvw != NULL, SPEED_NORMAL);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), SPEED_NORMAL);
+	g_return_val_if_fail (bvw->priv->xine != NULL, SPEED_NORMAL);
 
-	return xine_get_param (gtx->priv->stream, XINE_PARAM_SPEED);
+	return xine_get_param (bvw->priv->stream, XINE_PARAM_SPEED);
 }
 
 int
-gtk_xine_get_position (GtkXine *gtx)
+bacon_video_widget_get_position (BaconVideoWidget *bvw)
 {
 	int pos_stream = 0, i = 0;
 	int pos_time, length_time;
 	gboolean ret;
 
-	g_return_val_if_fail (gtx != NULL, 0);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
-	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
+	g_return_val_if_fail (bvw != NULL, 0);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
+	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
 
-	if (gtx->priv->mrl == NULL)
+	if (bvw->priv->mrl == NULL)
 		return 0;
 
-	if (gtk_xine_is_playing (gtx) == FALSE)
+	if (bacon_video_widget_is_playing (bvw) == FALSE)
 		return 0;
 
-	ret = xine_get_pos_length (gtx->priv->stream, &pos_stream,
+	ret = xine_get_pos_length (bvw->priv->stream, &pos_stream,
 			&pos_time, &length_time);
 
 	while (ret == FALSE && i < 10)
 	{
 		usleep (100000);
-		ret = xine_get_pos_length (gtx->priv->stream, &pos_stream,
+		ret = xine_get_pos_length (bvw->priv->stream, &pos_stream,
 				&pos_time, &length_time);
 		i++;
 	}
@@ -1417,21 +1417,21 @@ gtk_xine_get_position (GtkXine *gtx)
 }
 
 void
-gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
+bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 {
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
-	g_return_if_fail (gtx->priv->xine != NULL);
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
 
-	if (gtx->priv->pml == FALSE)
-		gtx->priv->pml = TRUE;
+	if (bvw->priv->pml == FALSE)
+		bvw->priv->pml = TRUE;
 	else
 		return;
 
-	if (fullscreen == gtx->priv->fullscreen_mode)
+	if (fullscreen == bvw->priv->fullscreen_mode)
 		return;
 
-	gtx->priv->fullscreen_mode = fullscreen;
+	bvw->priv->fullscreen_mode = fullscreen;
 
 	if (fullscreen)
 	{
@@ -1439,12 +1439,12 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 		GdkWindowAttr attr;
 		GdkRectangle rect;
 
-		parent = gdk_window_get_toplevel (gtx->widget.window);
+		parent = gdk_window_get_toplevel (bvw->widget.window);
 
 		gdk_screen_get_monitor_geometry (gdk_screen_get_default (),
 				gdk_screen_get_monitor_at_window
 				(gdk_screen_get_default (),
-				 gtx->priv->video_window),
+				 bvw->priv->video_window),
 				&rect);
 
 		attr.x = rect.x;
@@ -1453,195 +1453,195 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 		attr.height = rect.height;
 		attr.window_type = GDK_WINDOW_TOPLEVEL;
 		attr.wclass = GDK_INPUT_OUTPUT;
-		attr.event_mask = gtk_widget_get_events (GTK_WIDGET (gtx))
+		attr.event_mask = gtk_widget_get_events (GTK_WIDGET (bvw))
 			| GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK
 			| GDK_BUTTON_PRESS_MASK | GDK_KEY_PRESS_MASK;
-		gtx->priv->fullscreen_window = gdk_window_new
+		bvw->priv->fullscreen_window = gdk_window_new
 			(NULL, &attr, GDK_WA_X | GDK_WA_Y);
-		gdk_window_show (gtx->priv->fullscreen_window);
-		gdk_window_fullscreen (gtx->priv->fullscreen_window);
+		gdk_window_show (bvw->priv->fullscreen_window);
+		gdk_window_fullscreen (bvw->priv->fullscreen_window);
 		/* Flush, so that the window is really shown */
 		gdk_flush ();
 
-		gdk_window_set_user_data (gtx->priv->fullscreen_window, gtx);
+		gdk_window_set_user_data (bvw->priv->fullscreen_window, bvw);
 
-		xine_gui_send_vo_data (gtx->priv->stream,
+		xine_gui_send_vo_data (bvw->priv->stream,
 			 XINE_GUI_SEND_DRAWABLE_CHANGED,
-			 (void*) GDK_WINDOW_XID (gtx->priv->fullscreen_window));
+			 (void*) GDK_WINDOW_XID (bvw->priv->fullscreen_window));
 
 		/* switch off mouse cursor */
-		gtk_xine_set_show_cursor (gtx, FALSE);
+		bacon_video_widget_set_show_cursor (bvw, FALSE);
 
-		scrsaver_disable (gtx->priv->display);
+		scrsaver_disable (bvw->priv->display);
 	} else {
-		gdk_window_set_user_data (gtx->widget.window, gtx);
+		gdk_window_set_user_data (bvw->widget.window, bvw);
 
-		xine_gui_send_vo_data (gtx->priv->stream,
+		xine_gui_send_vo_data (bvw->priv->stream,
 			 XINE_GUI_SEND_DRAWABLE_CHANGED,
-			 (void *) GDK_WINDOW_XID (gtx->priv->video_window));
+			 (void *) GDK_WINDOW_XID (bvw->priv->video_window));
 
 		/* Hide the window */
-		gdk_window_destroy (gtx->priv->fullscreen_window);
-		gtx->priv->fullscreen_window = NULL;
+		gdk_window_destroy (bvw->priv->fullscreen_window);
+		bvw->priv->fullscreen_window = NULL;
 
-		scrsaver_enable (gtx->priv->display);
+		scrsaver_enable (bvw->priv->display);
 
 		gdk_window_focus (gdk_window_get_toplevel
 				(gtk_widget_get_parent_window
-				 (GTK_WIDGET (gtx))), GDK_CURRENT_TIME);
+				 (GTK_WIDGET (bvw))), GDK_CURRENT_TIME);
 	}
 
-	gtx->priv->pml = FALSE;
+	bvw->priv->pml = FALSE;
 }
 
 gboolean
-gtk_xine_is_fullscreen (GtkXine *gtx)
+bacon_video_widget_is_fullscreen (BaconVideoWidget *bvw)
 {
-	g_return_val_if_fail (gtx != NULL, 0);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
+	g_return_val_if_fail (bvw != NULL, 0);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
 
-	return gtx->priv->fullscreen_mode;
+	return bvw->priv->fullscreen_mode;
 }
 
 gboolean
-gtk_xine_can_set_volume (GtkXine *gtx)
+bacon_video_widget_can_set_volume (BaconVideoWidget *bvw)
 {
-	g_return_val_if_fail (gtx != NULL, 0);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
-	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
+	g_return_val_if_fail (bvw != NULL, 0);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
+	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
 
-	if (xine_get_param (gtx->priv->stream, XINE_PARAM_AUDIO_VOLUME) == -1)
+	if (xine_get_param (bvw->priv->stream, XINE_PARAM_AUDIO_VOLUME) == -1)
 		return FALSE;
 
-	if (xine_get_param (gtx->priv->stream,
+	if (xine_get_param (bvw->priv->stream,
 				XINE_PARAM_AUDIO_CHANNEL_LOGICAL) == -2)
 		return FALSE;
 
-	return xine_get_stream_info (gtx->priv->stream,
+	return xine_get_stream_info (bvw->priv->stream,
 			XINE_STREAM_INFO_HAS_AUDIO);
 }
 
 void
-gtk_xine_set_volume (GtkXine *gtx, int volume)
+bacon_video_widget_set_volume (BaconVideoWidget *bvw, int volume)
 {
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
-	g_return_if_fail (gtx->priv->xine != NULL);
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
 
-	if (gtk_xine_can_set_volume (gtx) == TRUE)
+	if (bacon_video_widget_can_set_volume (bvw) == TRUE)
 	{
 		volume = CLAMP (volume, 0, 100);
-		xine_set_param (gtx->priv->stream, XINE_PARAM_AUDIO_VOLUME,
+		xine_set_param (bvw->priv->stream, XINE_PARAM_AUDIO_VOLUME,
 				volume);
 	}
 }
 
 int
-gtk_xine_get_volume (GtkXine *gtx)
+bacon_video_widget_get_volume (BaconVideoWidget *bvw)
 {
 	int volume = 0;
 
-	g_return_val_if_fail (gtx != NULL, 0);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
-	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
+	g_return_val_if_fail (bvw != NULL, 0);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
+	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
 
-	if (gtk_xine_can_set_volume (gtx) == FALSE)
+	if (bacon_video_widget_can_set_volume (bvw) == FALSE)
 		return 0;
 
-	volume = xine_get_param (gtx->priv->stream,
+	volume = xine_get_param (bvw->priv->stream,
 			XINE_PARAM_AUDIO_VOLUME);
 
 	return volume;
 }
 
 void
-gtk_xine_set_show_cursor (GtkXine *gtx, gboolean show_cursor)
+bacon_video_widget_set_show_cursor (BaconVideoWidget *bvw, gboolean show_cursor)
 {
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
-	g_return_if_fail (gtx->priv->xine != NULL);
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
 
-	if (GDK_IS_WINDOW (gtx->priv->fullscreen_window) == FALSE)
+	if (GDK_IS_WINDOW (bvw->priv->fullscreen_window) == FALSE)
 		return;
 
 	if (show_cursor == FALSE)
 	{
 		eel_gdk_window_set_invisible_cursor
-			(gtx->priv->fullscreen_window);
+			(bvw->priv->fullscreen_window);
 	} else {
-		gdk_window_set_cursor (gtx->priv->fullscreen_window, NULL);
+		gdk_window_set_cursor (bvw->priv->fullscreen_window, NULL);
 	}
 
-	gtx->priv->cursor_shown = show_cursor;
+	bvw->priv->cursor_shown = show_cursor;
 }
 
 gboolean
-gtk_xine_get_show_cursor (GtkXine *gtx)
+bacon_video_widget_get_show_cursor (BaconVideoWidget *bvw)
 {
-	g_return_val_if_fail (gtx != NULL, FALSE);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), FALSE);
-	g_return_val_if_fail (gtx->priv->xine != NULL, FALSE);
+	g_return_val_if_fail (bvw != NULL, FALSE);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
 
-	return gtx->priv->cursor_shown;
+	return bvw->priv->cursor_shown;
 }
 
 void
-gtk_xine_set_media_device (GtkXine *gtx, const char *path)
+bacon_video_widget_set_media_device (BaconVideoWidget *bvw, const char *path)
 {
 	xine_cfg_entry_t entry;
 
 	/* DVD device */
-	xine_config_register_string (gtx->priv->xine,
+	xine_config_register_string (bvw->priv->xine,
 			"input.dvd_device", path,
 			"device used for dvd drive",
 			NULL, 10, NULL, NULL);
-	xine_config_lookup_entry (gtx->priv->xine,
+	xine_config_lookup_entry (bvw->priv->xine,
 			"input.dvd_device", &entry);
 	entry.str_value = g_strdup (path);
-	xine_config_update_entry (gtx->priv->xine, &entry);
+	xine_config_update_entry (bvw->priv->xine, &entry);
 
 	/* VCD device */
-	xine_config_register_string (gtx->priv->xine,
+	xine_config_register_string (bvw->priv->xine,
 			"input.vcd_device", path,
 			"device used for cdrom drive",
 			NULL, 10, NULL, NULL);
-	xine_config_lookup_entry (gtx->priv->xine,
+	xine_config_lookup_entry (bvw->priv->xine,
 			"input.vcd_device", &entry);
 	entry.str_value = g_strdup (path);
-	xine_config_update_entry (gtx->priv->xine, &entry);
+	xine_config_update_entry (bvw->priv->xine, &entry);
 }
 
 void
-gtk_xine_set_show_visuals (GtkXine *gtx, gboolean show_visuals)
+bacon_video_widget_set_show_visuals (BaconVideoWidget *bvw, gboolean show_visuals)
 {
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
-	g_return_if_fail (gtx->priv->xine != NULL);
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
 
-	gtx->priv->show_vfx = show_visuals;
+	bvw->priv->show_vfx = show_visuals;
 }
 
 int
-gtk_xine_get_current_time (GtkXine *gtx)
+bacon_video_widget_get_current_time (BaconVideoWidget *bvw)
 {
 	int pos_time = 0, i = 0;
 	int pos_stream, length_time;
 	gboolean ret;
 
-	g_return_val_if_fail (gtx != NULL, 0);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
-	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
+	g_return_val_if_fail (bvw != NULL, 0);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
+	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
 
-	if (gtk_xine_is_playing (gtx) == FALSE)
+	if (bacon_video_widget_is_playing (bvw) == FALSE)
 		return 0;
 
-	ret = xine_get_pos_length (gtx->priv->stream, &pos_stream,
+	ret = xine_get_pos_length (bvw->priv->stream, &pos_stream,
 			&pos_time, &length_time);
 
 	while (ret == FALSE && i < 10)
 	{
 		usleep (100000);
-		ret = xine_get_pos_length (gtx->priv->stream, &pos_stream,
+		ret = xine_get_pos_length (bvw->priv->stream, &pos_stream,
 				&pos_time, &length_time);
 		i++;
 	}
@@ -1653,76 +1653,76 @@ gtk_xine_get_current_time (GtkXine *gtx)
 }
 
 int
-gtk_xine_get_stream_length (GtkXine *gtx)
+bacon_video_widget_get_stream_length (BaconVideoWidget *bvw)
 {
 	int length_time = 0;
 	int pos_stream, pos_time;
 
-	g_return_val_if_fail (gtx != NULL, 0);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
-	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
+	g_return_val_if_fail (bvw != NULL, 0);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
+	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
 
-	if (gtx->priv->mrl == NULL)
+	if (bvw->priv->mrl == NULL)
 		return 0;
 
-	xine_get_pos_length (gtx->priv->stream, &pos_stream,
+	xine_get_pos_length (bvw->priv->stream, &pos_stream,
 			&pos_time, &length_time);
 
 	return length_time;
 }
 
 gboolean
-gtk_xine_is_playing (GtkXine *gtx)
+bacon_video_widget_is_playing (BaconVideoWidget *bvw)
 {
-	g_return_val_if_fail (gtx != NULL, 0);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
-	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
+	g_return_val_if_fail (bvw != NULL, 0);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
+	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
 
-	if (gtx->priv->stream == NULL)
+	if (bvw->priv->stream == NULL)
 		return FALSE;
 
-	return xine_get_status (gtx->priv->stream) == XINE_STATUS_PLAY;
+	return xine_get_status (bvw->priv->stream) == XINE_STATUS_PLAY;
 }
 
 gboolean
-gtk_xine_is_seekable (GtkXine *gtx)
+bacon_video_widget_is_seekable (BaconVideoWidget *bvw)
 {
-	g_return_val_if_fail (gtx != NULL, 0);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
-	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
+	g_return_val_if_fail (bvw != NULL, 0);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
+	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
 
-	if (gtk_xine_get_stream_length (gtx) == 0)
+	if (bacon_video_widget_get_stream_length (bvw) == 0)
 		return FALSE;
 
-	return xine_get_stream_info (gtx->priv->stream,
+	return xine_get_stream_info (bvw->priv->stream,
 			XINE_STREAM_INFO_SEEKABLE);
 }
 
 gboolean
-gtk_xine_can_play (GtkXine *gtx, MediaType type)
+bacon_video_widget_can_play (BaconVideoWidget *bvw, MediaType type)
 {
 	switch (type)
 	{
 	case MEDIA_DVD:
-		return gtx->priv->can_dvd;
+		return bvw->priv->can_dvd;
 	case MEDIA_VCD:
-		return gtx->priv->can_vcd;
+		return bvw->priv->can_vcd;
 	case MEDIA_CDDA:
-		return gtx->priv->can_cdda;
+		return bvw->priv->can_cdda;
 	default:
 		return FALSE;
 	}
 }
 
 G_CONST_RETURN gchar
-**gtk_xine_get_mrls (GtkXine *gtx, MediaType type)
+**bacon_video_widget_get_mrls (BaconVideoWidget *bvw, MediaType type)
 {
 	char *plugin_id;
 	int num_mrls;
 
-	g_return_val_if_fail (gtx != NULL, 0);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
-	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
+	g_return_val_if_fail (bvw != NULL, 0);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
+	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
 
 	if (type == MEDIA_DVD)
 		plugin_id = "DVD";
@@ -1734,33 +1734,33 @@ G_CONST_RETURN gchar
 		return NULL;
 
 	return (G_CONST_RETURN gchar **) xine_get_autoplay_mrls
-		(gtx->priv->xine, plugin_id, &num_mrls);
+		(bvw->priv->xine, plugin_id, &num_mrls);
 }
 
 void
-gtk_xine_toggle_aspect_ratio (GtkXine *gtx)
+bacon_video_widget_toggle_aspect_ratio (BaconVideoWidget *bvw)
 {
 	int tmp;
 
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
-	g_return_if_fail (gtx->priv->xine != NULL);
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
 
-	tmp = xine_get_param (gtx->priv->stream, XINE_PARAM_VO_ASPECT_RATIO);
-	xine_set_param (gtx->priv->stream, XINE_PARAM_VO_ASPECT_RATIO, tmp + 1);
+	tmp = xine_get_param (bvw->priv->stream, XINE_PARAM_VO_ASPECT_RATIO);
+	xine_set_param (bvw->priv->stream, XINE_PARAM_VO_ASPECT_RATIO, tmp + 1);
 }
 
 static gboolean
-gtk_xine_ratio_fits_screen (GtkXine *gtx, gfloat ratio)
+bacon_video_widget_ratio_fits_screen (BaconVideoWidget *bvw, gfloat ratio)
 {
 	int new_w, new_h;
 
-	g_return_val_if_fail (gtx != NULL, FALSE);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), FALSE);
-	g_return_val_if_fail (gtx->priv->xine != NULL, FALSE);
+	g_return_val_if_fail (bvw != NULL, FALSE);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
 
-	new_w = gtx->priv->video_width * ratio;
-	new_h = gtx->priv->video_height * ratio;
+	new_w = bvw->priv->video_width * ratio;
+	new_h = bvw->priv->video_height * ratio;
 
 	if (new_w > (gdk_screen_width () - 128) ||
 			new_h > (gdk_screen_height () - 128))
@@ -1772,62 +1772,62 @@ gtk_xine_ratio_fits_screen (GtkXine *gtx, gfloat ratio)
 }
 
 void
-gtk_xine_set_scale_ratio (GtkXine *gtx, gfloat ratio)
+bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 {
 	GtkWindow *toplevel;
 	int new_w, new_h;
 
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
-	g_return_if_fail (gtx->priv->xine != NULL);
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
 	g_return_if_fail (ratio >= 0);
 
-	if (gtx->priv->fullscreen_mode == TRUE)
+	if (bvw->priv->fullscreen_mode == TRUE)
 		return;
 
 	/* Try best fit for the screen */
 	if (ratio == 0)
 	{
-		if (gtk_xine_ratio_fits_screen (gtx, 2) == TRUE)
+		if (bacon_video_widget_ratio_fits_screen (bvw, 2) == TRUE)
 			ratio = 2;
-		else if (gtk_xine_ratio_fits_screen (gtx, 1) == TRUE)
+		else if (bacon_video_widget_ratio_fits_screen (bvw, 1) == TRUE)
 			ratio = 1;
-		else if (gtk_xine_ratio_fits_screen (gtx, 0.5) == TRUE)
+		else if (bacon_video_widget_ratio_fits_screen (bvw, 0.5) == TRUE)
 			ratio = 0.5;
 		else
 			return;
 	} else {
 		/* don't scale to something bigger than the screen, and leave
 		 * us some room */
-		if (gtk_xine_ratio_fits_screen (gtx, ratio) == FALSE)
+		if (bacon_video_widget_ratio_fits_screen (bvw, ratio) == FALSE)
 			return;
 	}
 
-	new_w = gtx->priv->video_width * ratio;
-	new_h = gtx->priv->video_height * ratio;
+	new_w = bvw->priv->video_width * ratio;
+	new_h = bvw->priv->video_height * ratio;
 
-	toplevel = GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (gtx)));
+	toplevel = GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (bvw)));
 
 	gtk_window_set_resizable (toplevel, FALSE);
-	gtx->widget.allocation.width = new_w;
-	gtx->widget.allocation.height = new_h;
-	gtk_widget_set_size_request (gtk_widget_get_parent (GTK_WIDGET (gtx)),
+	bvw->widget.allocation.width = new_w;
+	bvw->widget.allocation.height = new_h;
+	gtk_widget_set_size_request (gtk_widget_get_parent (GTK_WIDGET (bvw)),
 			new_w, new_h);
-	gtk_widget_queue_resize (gtk_widget_get_parent (GTK_WIDGET (gtx)));
+	gtk_widget_queue_resize (gtk_widget_get_parent (GTK_WIDGET (bvw)));
 	while (gtk_events_pending ())
 		gtk_main_iteration ();
 	gtk_window_set_resizable (toplevel, TRUE);
 }
 
 static void
-gtk_xine_get_metadata_string (GtkXine *gtx, GtkXineMetadataType type,
+bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetMetadataType type,
 		GValue *value)
 {
 	const char *string;
 
 	g_value_init (value, G_TYPE_STRING);
 
-	if (gtx->priv->stream == NULL)
+	if (bvw->priv->stream == NULL)
 	{
 		g_value_set_string (value, "");
 		return;
@@ -1835,24 +1835,24 @@ gtk_xine_get_metadata_string (GtkXine *gtx, GtkXineMetadataType type,
 
 	switch (type)
 	{
-	case GTX_INFO_TITLE:
-		string = xine_get_meta_info (gtx->priv->stream,
+	case BVW_INFO_TITLE:
+		string = xine_get_meta_info (bvw->priv->stream,
 				XINE_META_INFO_TITLE);
 		break;
-	case GTX_INFO_ARTIST:
-		string = xine_get_meta_info (gtx->priv->stream,
+	case BVW_INFO_ARTIST:
+		string = xine_get_meta_info (bvw->priv->stream,
 				XINE_META_INFO_ARTIST);
 		break;
-	case GTX_INFO_YEAR:
-		string = xine_get_meta_info (gtx->priv->stream,
+	case BVW_INFO_YEAR:
+		string = xine_get_meta_info (bvw->priv->stream,
 				XINE_META_INFO_YEAR);
 		break;
-	case GTX_INFO_VIDEO_CODEC:
-		string = xine_get_meta_info (gtx->priv->stream,
+	case BVW_INFO_VIDEO_CODEC:
+		string = xine_get_meta_info (bvw->priv->stream,
 				XINE_META_INFO_VIDEOCODEC);
 		break;
-	case GTX_INFO_AUDIO_CODEC:
-		string = xine_get_meta_info (gtx->priv->stream,
+	case BVW_INFO_AUDIO_CODEC:
+		string = xine_get_meta_info (bvw->priv->stream,
 				XINE_META_INFO_AUDIOCODEC);
 		break;
 	default:
@@ -1865,14 +1865,14 @@ gtk_xine_get_metadata_string (GtkXine *gtx, GtkXineMetadataType type,
 }
 
 static void
-gtk_xine_get_metadata_int (GtkXine *gtx, GtkXineMetadataType type,
+bacon_video_widget_get_metadata_int (BaconVideoWidget *bvw, BaconVideoWidgetMetadataType type,
 		GValue *value)
 {
 	int integer;
 
 	g_value_init (value, G_TYPE_INT);
 
-	if (gtx->priv->stream == NULL)
+	if (bvw->priv->stream == NULL)
 	{
 		g_value_set_int (value, 0);
 		return;
@@ -1880,30 +1880,30 @@ gtk_xine_get_metadata_int (GtkXine *gtx, GtkXineMetadataType type,
 
 	switch (type)
 	{
-	case GTX_INFO_DURATION:
-		integer = gtk_xine_get_stream_length (gtx) / 1000;
+	case BVW_INFO_DURATION:
+		integer = bacon_video_widget_get_stream_length (bvw) / 1000;
 		break;
-	case GTX_INFO_DIMENSION_X:
-		integer = xine_get_stream_info (gtx->priv->stream,
+	case BVW_INFO_DIMENSION_X:
+		integer = xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_VIDEO_WIDTH);
 		break;
-	case GTX_INFO_DIMENSION_Y:
-		integer = xine_get_stream_info (gtx->priv->stream,
+	case BVW_INFO_DIMENSION_Y:
+		integer = xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_VIDEO_HEIGHT);
 		break;
-	case GTX_INFO_FPS:
-		if (xine_get_stream_info (gtx->priv->stream,
+	case BVW_INFO_FPS:
+		if (xine_get_stream_info (bvw->priv->stream,
 					XINE_STREAM_INFO_FRAME_DURATION) != 0)
 		{
 			integer = 90000 / xine_get_stream_info
-				(gtx->priv->stream,
+				(bvw->priv->stream,
 				 XINE_STREAM_INFO_FRAME_DURATION);
 		} else {
 			integer = 0;
 		}
 		break;
-	 case GTX_INFO_BITRATE:
-		integer = xine_get_stream_info (gtx->priv->stream,
+	 case BVW_INFO_BITRATE:
+		integer = xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_AUDIO_BITRATE) / 1000;
 		break;
 	 default:
@@ -1916,14 +1916,14 @@ gtk_xine_get_metadata_int (GtkXine *gtx, GtkXineMetadataType type,
 }
 
 static void
-gtk_xine_get_metadata_bool (GtkXine *gtx, GtkXineMetadataType type,
+bacon_video_widget_get_metadata_bool (BaconVideoWidget *bvw, BaconVideoWidgetMetadataType type,
 		GValue *value)
 {
 	gboolean boolean;
 
 	g_value_init (value, G_TYPE_BOOLEAN);
 
-	if (gtx->priv->stream == NULL)
+	if (bvw->priv->stream == NULL)
 	{
 		g_value_set_boolean (value, FALSE);
 		return;
@@ -1931,12 +1931,12 @@ gtk_xine_get_metadata_bool (GtkXine *gtx, GtkXineMetadataType type,
 
 	switch (type)
 	{
-	case GTX_INFO_HAS_VIDEO:
-		boolean = xine_get_stream_info (gtx->priv->stream,
+	case BVW_INFO_HAS_VIDEO:
+		boolean = xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_HAS_VIDEO);
 		break;
-	case GTX_INFO_HAS_AUDIO:
-		boolean = xine_get_stream_info (gtx->priv->stream,
+	case BVW_INFO_HAS_AUDIO:
+		boolean = xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_HAS_AUDIO);
 		break;
 	default:
@@ -1949,31 +1949,31 @@ gtk_xine_get_metadata_bool (GtkXine *gtx, GtkXineMetadataType type,
 }
 
 void
-gtk_xine_get_metadata (GtkXine *gtx, GtkXineMetadataType type, GValue *value)
+bacon_video_widget_get_metadata (BaconVideoWidget *bvw, BaconVideoWidgetMetadataType type, GValue *value)
 {
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
-	g_return_if_fail (gtx->priv->xine != NULL);
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
 
 	switch (type)
 	{
-	case GTX_INFO_TITLE:
-	case GTX_INFO_ARTIST:
-	case GTX_INFO_YEAR:
-	case GTX_INFO_VIDEO_CODEC:
-	case GTX_INFO_AUDIO_CODEC:
-		gtk_xine_get_metadata_string (gtx, type, value);
+	case BVW_INFO_TITLE:
+	case BVW_INFO_ARTIST:
+	case BVW_INFO_YEAR:
+	case BVW_INFO_VIDEO_CODEC:
+	case BVW_INFO_AUDIO_CODEC:
+		bacon_video_widget_get_metadata_string (bvw, type, value);
 		break;
-	case GTX_INFO_DURATION:
-	case GTX_INFO_DIMENSION_X:
-	case GTX_INFO_DIMENSION_Y:
-	case GTX_INFO_FPS:
-	case GTX_INFO_BITRATE:
-		gtk_xine_get_metadata_int (gtx, type, value);
+	case BVW_INFO_DURATION:
+	case BVW_INFO_DIMENSION_X:
+	case BVW_INFO_DIMENSION_Y:
+	case BVW_INFO_FPS:
+	case BVW_INFO_BITRATE:
+		bacon_video_widget_get_metadata_int (bvw, type, value);
 		break;
-	case GTX_INFO_HAS_VIDEO:
-	case GTX_INFO_HAS_AUDIO:
-		gtk_xine_get_metadata_bool (gtx, type, value);
+	case BVW_INFO_HAS_VIDEO:
+	case BVW_INFO_HAS_AUDIO:
+		bacon_video_widget_get_metadata_bool (bvw, type, value);
 		break;
 	default:
 		g_assert_not_reached ();
@@ -1983,12 +1983,12 @@ gtk_xine_get_metadata (GtkXine *gtx, GtkXineMetadataType type, GValue *value)
 }
 
 char
-*gtk_xine_properties_get_title (GtkXine *gtx)
+*bacon_video_widget_properties_get_title (BaconVideoWidget *bvw)
 {
 	const char *short_title, *artist;
 
-	artist = xine_get_meta_info (gtx->priv->stream, XINE_META_INFO_ARTIST);
-	short_title = xine_get_meta_info (gtx->priv->stream,
+	artist = xine_get_meta_info (bvw->priv->stream, XINE_META_INFO_ARTIST);
+	short_title = xine_get_meta_info (bvw->priv->stream,
 			XINE_META_INFO_TITLE);
 
 	if (artist == NULL && short_title == NULL)
@@ -2009,22 +2009,22 @@ char
 
 #define PIXSZ 3
 
-static guchar *gtk_xine_get_current_frame_rgb (GtkXine *gtx, int *width_ret,
+static guchar *bacon_video_widget_get_current_frame_rgb (BaconVideoWidget *bvw, int *width_ret,
 					       int * height_ret);
 
 gboolean
-gtk_xine_can_get_frames (GtkXine *gtx)
+bacon_video_widget_can_get_frames (BaconVideoWidget *bvw)
 {
-	g_return_val_if_fail (gtx != NULL, FALSE);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), FALSE);
-	g_return_val_if_fail (gtx->priv->xine != NULL, FALSE);
-	g_return_val_if_fail (gtk_xine_is_playing (gtx) == TRUE, FALSE);
+	g_return_val_if_fail (bvw != NULL, FALSE);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
+	g_return_val_if_fail (bacon_video_widget_is_playing (bvw) == TRUE, FALSE);
 
-	if (xine_get_stream_info (gtx->priv->stream,
+	if (xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_HAS_VIDEO) == FALSE)
 		return FALSE;
 
-	if (xine_get_stream_info (gtx->priv->stream,
+	if (xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_VIDEO_HANDLED) == FALSE)
 		return FALSE;
 
@@ -2032,18 +2032,18 @@ gtk_xine_can_get_frames (GtkXine *gtx)
 }
 
 GdkPixbuf *
-gtk_xine_get_current_frame (GtkXine *gtx)
+bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 {
 	guchar *pixels;
 	int width, height;
 	float ratio;
 	GdkPixbuf *pixbuf = NULL;
 
-	g_return_val_if_fail (gtx != NULL, NULL);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), NULL);
-	g_return_val_if_fail (gtx->priv->xine != NULL, NULL);
+	g_return_val_if_fail (bvw != NULL, NULL);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
+	g_return_val_if_fail (bvw->priv->xine != NULL, NULL);
 
-	pixels = gtk_xine_get_current_frame_rgb (gtx, &width, &height);
+	pixels = bacon_video_widget_get_current_frame_rgb (bvw, &width, &height);
 	if (pixels == NULL)
 		return NULL;
 
@@ -2053,7 +2053,7 @@ gtk_xine_get_current_frame (GtkXine *gtx)
 			(GdkPixbufDestroyNotify) g_free, NULL);
 
 	/* MPEG streams have ratio information */
-	ratio = xine_get_stream_info (gtx->priv->stream,
+	ratio = xine_get_stream_info (bvw->priv->stream,
 			XINE_STREAM_INFO_VIDEO_RATIO);
 
 	if (ratio != 10000.0 && ratio != 0.0)
@@ -2101,7 +2101,7 @@ struct prvt_image_s
 static guchar *xine_frame_to_rgb (struct prvt_image_s *image);
 
 static guchar *
-gtk_xine_get_current_frame_rgb (GtkXine * gtx, int * width_ret,
+bacon_video_widget_get_current_frame_rgb (BaconVideoWidget * bvw, int * width_ret,
 				int * height_ret)
 {
     int    err = 0;
@@ -2109,10 +2109,10 @@ gtk_xine_get_current_frame_rgb (GtkXine * gtx, int * width_ret,
     guchar *rgb = NULL;
     int    width, height;
 
-    g_return_val_if_fail (gtx, NULL);
-    g_return_val_if_fail (GTK_IS_XINE (gtx), NULL);
-    g_return_val_if_fail (gtx->priv->xine, NULL);
-    g_return_val_if_fail (gtx->priv->stream != NULL, 0);
+    g_return_val_if_fail (bvw, NULL);
+    g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
+    g_return_val_if_fail (bvw->priv->xine, NULL);
+    g_return_val_if_fail (bvw->priv->stream != NULL, 0);
     g_return_val_if_fail (width_ret && height_ret, NULL);
 
     image = g_new0 (struct prvt_image_s, 1);
@@ -2126,9 +2126,9 @@ gtk_xine_get_current_frame_rgb (GtkXine * gtx, int * width_ret,
 
     image->y = image->u = image->v = image->yuy2 = image->img = NULL;
 
-    width = xine_get_stream_info (gtx->priv->stream,
+    width = xine_get_stream_info (bvw->priv->stream,
 		    XINE_STREAM_INFO_VIDEO_WIDTH);
-    height = xine_get_stream_info (gtx->priv->stream,
+    height = xine_get_stream_info (bvw->priv->stream,
 		    XINE_STREAM_INFO_VIDEO_HEIGHT);
 
     image->img = g_malloc (width * height * 2);
@@ -2142,7 +2142,7 @@ gtk_xine_get_current_frame_rgb (GtkXine * gtx, int * width_ret,
 	return NULL;
     }
 
-    err = xine_get_current_frame (gtx->priv->stream,
+    err = xine_get_current_frame (bvw->priv->stream,
 				  &image->width, &image->height,
 				  &image->ratio_code,
 				  &image->format, image->img);

@@ -1,3 +1,91 @@
+2003-02-11  Bastien Nocera  <hadess@hadess.net>
+
+	* src/.cvsignore:
+	* src/Makefile.am:
+	* src/bacon-video-widget-properties.c:
+	(bacon_video_widget_properties_get_type),
+	(bacon_video_widget_properties_init),
+	(bacon_video_widget_properties_finalize),
+	(bacon_video_widget_properties_time_to_string),
+	(bacon_video_widget_properties_set_label),
+	(bacon_video_widget_properties_reset),
+	(bacon_video_widget_properties_set_from_current),
+	(bacon_video_widget_properties_update), (hide_dialog),
+	(bacon_video_widget_properties_new),
+	(bacon_video_widget_properties_class_init):
+	* src/bacon-video-widget-properties.h:
+	* src/bacon-video-widget.c: (bacon_video_widget_get_type),
+	(bacon_video_widget_class_init),
+	(bacon_video_widget_instance_init), (bacon_video_widget_finalize),
+	(dest_size_cb), (frame_output_cb), (load_video_out_driver),
+	(load_audio_out_driver), (load_config_from_gconf),
+	(video_window_translate_point), (dvd_skip_behaviour),
+	(bacon_video_widget_dvd_event), (generate_mouse_event),
+	(configure_cb), (bacon_video_widget_realize),
+	(bacon_video_widget_idle_signal), (xine_event), (xine_error),
+	(bacon_video_widget_unrealize), (bacon_video_widget_new),
+	(bacon_video_widget_expose), (bacon_video_widget_motion_notify),
+	(bacon_video_widget_button_press), (bacon_video_widget_key_press),
+	(bacon_video_widget_size_allocate), (bacon_video_widget_tick_send),
+	(get_fourcc_string), (bacon_video_widget_open),
+	(bacon_video_widget_play), (bacon_video_widget_stop),
+	(bacon_video_widget_close), (bacon_video_widget_set_property),
+	(bacon_video_widget_get_property),
+	(bacon_video_widget_set_logo_mode),
+	(bacon_video_widget_get_logo_mode), (bacon_video_widget_set_speed),
+	(bacon_video_widget_get_speed), (bacon_video_widget_get_position),
+	(bacon_video_widget_set_fullscreen),
+	(bacon_video_widget_is_fullscreen),
+	(bacon_video_widget_can_set_volume),
+	(bacon_video_widget_set_volume), (bacon_video_widget_get_volume),
+	(bacon_video_widget_set_show_cursor),
+	(bacon_video_widget_get_show_cursor),
+	(bacon_video_widget_set_media_device),
+	(bacon_video_widget_set_show_visuals),
+	(bacon_video_widget_get_current_time),
+	(bacon_video_widget_get_stream_length),
+	(bacon_video_widget_is_playing), (bacon_video_widget_is_seekable),
+	(bacon_video_widget_can_play), (bacon_video_widget_get_mrls),
+	(bacon_video_widget_toggle_aspect_ratio),
+	(bacon_video_widget_ratio_fits_screen),
+	(bacon_video_widget_set_scale_ratio),
+	(bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_metadata_int),
+	(bacon_video_widget_get_metadata_bool),
+	(bacon_video_widget_get_metadata),
+	(bacon_video_widget_properties_get_title),
+	(bacon_video_widget_can_get_frames),
+	(bacon_video_widget_get_current_frame),
+	(bacon_video_widget_get_current_frame_rgb), (scale_line_1_1),
+	(scale_line_45_64), (scale_line_15_16), (scale_image),
+	(yuy2toyv12), (yuy2_fudge), (yv12_2_rgb), (xine_frame_to_rgb):
+	* src/bacon-video-widget.h:
+	* src/gtk-xine-properties.c:
+	* src/gtk-xine-properties.h:
+	* src/gtk-xine.c:
+	* src/gtk-xine.h:
+	* src/gtkxine-marshal.list:
+	* src/totem-video-thumbnailer.c: (main):
+	* src/totem.c: (totem_action_exit), (totem_action_play),
+	(totem_action_play_media), (totem_action_stop),
+	(totem_action_play_pause), (totem_action_fullscreen_toggle),
+	(totem_action_fullscreen), (update_mrl_label),
+	(totem_action_set_mrl), (totem_action_previous),
+	(totem_action_next), (totem_action_seek_relative),
+	(totem_action_volume_relative), (totem_action_toggle_aspect_ratio),
+	(totem_action_set_scale_ratio), (update_seekable),
+	(update_current_time), (update_sliders), (update_cb_often),
+	(update_cb_rare), (vol_cb), (on_take_screenshot1_activate),
+	(on_dvd_root_menu1_activate), (on_dvd_title_menu1_activate),
+	(on_dvd_audio_menu1_activate), (on_dvd_angle_menu1_activate),
+	(on_dvd_chapter_menu1_activate), (commit_hide_skip_to),
+	(spin_button_value_changed_cb), (on_checkbutton2_toggled),
+	(on_combo_entry1_changed), (mediadev_changed_cb), (popup_hide),
+	(on_video_motion_notify_event), (on_error_event),
+	(totem_action_handle_key), (video_widget_create),
+	(totem_setup_preferences), (main):
+	* src/totem.h: rename GtkXine to BaconVideoWidget
+
 2003-02-10  Bastien Nocera  <hadess@hadess.net>
 
 	* src/gtk-xine.c: (gtk_xine_set_media_device): fix possible memory

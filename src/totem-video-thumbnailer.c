@@ -3,7 +3,7 @@
 
 #include <gnome.h>
 #include <gconf/gconf-client.h>
-#include "gtk-xine.h"
+#include "bacon-video-widget.h"
 
 static void
 print_usage (void)
@@ -67,7 +67,7 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path, const char *video_path)
 int main (int argc, char *argv[])
 {
 	GError *err = NULL;
-	GtkWidget *gtx, *toplevel;
+	GtkWidget *bvw, *toplevel;
 	GdkPixbuf *pixbuf;
 	int i;
 
@@ -84,9 +84,9 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	gtx = gtk_xine_new (-1, -1, TRUE);
+	bvw = bacon_video_widget_new (-1, -1, TRUE);
 
-	if (gtk_xine_open (GTK_XINE (gtx), argv[1]) == FALSE)
+	if (bacon_video_widget_open (BACON_VIDEO_WIDGET (bvw), argv[1]) == FALSE)
 	{
 		g_print ("totem-video-thumbnailer couln't open file '%s'\n",
 					argv[1]);
@@ -94,15 +94,15 @@ int main (int argc, char *argv[])
 	}
 
 	/* A 3rd into the file */
-	gtk_xine_play (GTK_XINE (gtx), (int) (65535 / 3), 0);
+	bacon_video_widget_play (BACON_VIDEO_WIDGET (bvw), (int) (65535 / 3), 0);
 
-	if (gtk_xine_can_get_frames (GTK_XINE (gtx)) == FALSE)
+	if (bacon_video_widget_can_get_frames (BACON_VIDEO_WIDGET (bvw)) == FALSE)
 	{
 		g_print ("totem-video-thumbnailer: '%s' isn't thumbnailable\n",
 				argv[1]);
-		gtk_xine_close (GTK_XINE (gtx));
-		gtk_widget_unrealize (gtx);
-		gtk_widget_destroy (gtx);
+		bacon_video_widget_close (BACON_VIDEO_WIDGET (bvw));
+		gtk_widget_unrealize (bvw);
+		gtk_widget_destroy (bvw);
 		gtk_widget_destroy (toplevel);
 
 		exit (1);
@@ -110,17 +110,17 @@ int main (int argc, char *argv[])
 
 	/* 10 seconds! */
 	i = 0;
-	pixbuf = gtk_xine_get_current_frame (GTK_XINE (gtx));
+	pixbuf = bacon_video_widget_get_current_frame (BACON_VIDEO_WIDGET (bvw));
 	while (pixbuf == NULL && i < 10)
 	{
 		usleep (1000000);
-		pixbuf = gtk_xine_get_current_frame (GTK_XINE (gtx));
+		pixbuf = bacon_video_widget_get_current_frame (BACON_VIDEO_WIDGET (bvw));
 		i++;
 	}
 
 	/* Cleanup */
-	gtk_xine_close (GTK_XINE (gtx));
-	gtk_widget_destroy (gtx);
+	bacon_video_widget_close (BACON_VIDEO_WIDGET (bvw));
+	gtk_widget_destroy (bvw);
 
 	if (pixbuf == NULL)
 	{

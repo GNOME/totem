@@ -1,4 +1,4 @@
-/* gtk-xine-properties.c
+/* bacon-video-widget-properties.c
 
    Copyright (C) 2002 Bastien Nocera
 
@@ -21,7 +21,7 @@
  */
 
 #include "config.h"
-#include "gtk-xine-properties.h"
+#include "bacon-video-widget-properties.h"
 
 #include <gtk/gtk.h>
 #include <glade/glade.h>
@@ -30,7 +30,7 @@
 
 #include "debug.h"
 
-struct GtkXinePropertiesPrivate
+struct BaconVideoWidgetPropertiesPrivate
 {
 	GladeXML *xml;
 	GtkWidget *vbox;
@@ -38,50 +38,50 @@ struct GtkXinePropertiesPrivate
 
 static GtkWidgetClass *parent_class = NULL;
 
-static void gtk_xine_properties_class_init (GtkXinePropertiesClass *class);
-static void gtk_xine_properties_init       (GtkXineProperties      *label);
+static void bacon_video_widget_properties_class_init (BaconVideoWidgetPropertiesClass *class);
+static void bacon_video_widget_properties_init       (BaconVideoWidgetProperties      *label);
 
-static void init_treeview (GtkWidget *treeview, GtkXineProperties *playlist);
-static gboolean gtk_xine_properties_unset_playing (GtkXineProperties *playlist);
+static void init_treeview (GtkWidget *treeview, BaconVideoWidgetProperties *playlist);
+static gboolean bacon_video_widget_properties_unset_playing (BaconVideoWidgetProperties *playlist);
 
 GtkType
-gtk_xine_properties_get_type (void)
+bacon_video_widget_properties_get_type (void)
 {
-	static GtkType gtk_xine_properties_type = 0;
+	static GtkType bacon_video_widget_properties_type = 0;
 
-	if (!gtk_xine_properties_type) {
-		static const GTypeInfo gtk_xine_properties_info = {
-			sizeof (GtkXinePropertiesClass),
+	if (!bacon_video_widget_properties_type) {
+		static const GTypeInfo bacon_video_widget_properties_info = {
+			sizeof (BaconVideoWidgetPropertiesClass),
 			(GBaseInitFunc) NULL,
 			(GBaseFinalizeFunc) NULL,
-			(GClassInitFunc) gtk_xine_properties_class_init,
+			(GClassInitFunc) bacon_video_widget_properties_class_init,
 			(GClassFinalizeFunc) NULL,
 			NULL /* class_data */,
-			sizeof (GtkXineProperties),
+			sizeof (BaconVideoWidgetProperties),
 			0 /* n_preallocs */,
-			(GInstanceInitFunc) gtk_xine_properties_init,
+			(GInstanceInitFunc) bacon_video_widget_properties_init,
 		};
 
-		gtk_xine_properties_type = g_type_register_static
-			(GTK_TYPE_DIALOG, "GtkXineProperties",
-			 &gtk_xine_properties_info, (GTypeFlags)0);
+		bacon_video_widget_properties_type = g_type_register_static
+			(GTK_TYPE_DIALOG, "BaconVideoWidgetProperties",
+			 &bacon_video_widget_properties_info, (GTypeFlags)0);
 	}
 
-	return gtk_xine_properties_type;
+	return bacon_video_widget_properties_type;
 }
 
 static void
-gtk_xine_properties_init (GtkXineProperties *playlist)
+bacon_video_widget_properties_init (BaconVideoWidgetProperties *playlist)
 {
-	playlist->priv = g_new0 (GtkXinePropertiesPrivate, 1);
+	playlist->priv = g_new0 (BaconVideoWidgetPropertiesPrivate, 1);
 	playlist->priv->xml = NULL;
 	playlist->priv->vbox = NULL;
 }
 
 static void
-gtk_xine_properties_finalize (GObject *object)
+bacon_video_widget_properties_finalize (GObject *object)
 {
-	GtkXineProperties *props = GTK_XINE_PROPERTIES (object);
+	BaconVideoWidgetProperties *props = BACON_VIDEO_WIDGET_PROPERTIES (object);
 
 	g_return_if_fail (object != NULL);
 
@@ -93,7 +93,7 @@ gtk_xine_properties_finalize (GObject *object)
 }
 
 char *
-gtk_xine_properties_time_to_string (int time)
+bacon_video_widget_properties_time_to_string (int time)
 {
 	char *secs, *mins, *hours, *string;
 	int sec, min, hour;
@@ -148,7 +148,7 @@ gtk_xine_properties_time_to_string (int time)
 }
 
 static void
-gtk_xine_properties_set_label (GtkXineProperties *props,
+bacon_video_widget_properties_set_label (BaconVideoWidgetProperties *props,
 			       const char *name, const char *text)
 {
 	GtkWidget *item;
@@ -158,7 +158,7 @@ gtk_xine_properties_set_label (GtkXineProperties *props,
 }
 
 static void
-gtk_xine_properties_reset (GtkXineProperties *props)
+bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 {
 	GtkWidget *item;
 
@@ -168,28 +168,28 @@ gtk_xine_properties_reset (GtkXineProperties *props)
 	gtk_widget_set_sensitive (item, FALSE);
 
 	/* Title */
-	gtk_xine_properties_set_label (props, "title", _("Unknown"));
+	bacon_video_widget_properties_set_label (props, "title", _("Unknown"));
 	/* Artist */
-	gtk_xine_properties_set_label (props, "artist", _("Unknown"));
+	bacon_video_widget_properties_set_label (props, "artist", _("Unknown"));
 	/* Year */
-	gtk_xine_properties_set_label (props, "year", _("N/A"));
+	bacon_video_widget_properties_set_label (props, "year", _("N/A"));
 	/* Duration */
-	gtk_xine_properties_set_label (props, "duration", _("0 second"));
+	bacon_video_widget_properties_set_label (props, "duration", _("0 second"));
 	/* Dimensions */
-	gtk_xine_properties_set_label (props, "dimensions", _("0 x 0"));
+	bacon_video_widget_properties_set_label (props, "dimensions", _("0 x 0"));
 	/* Video Codec */
-	gtk_xine_properties_set_label (props, "vcodec", _("N/A"));
+	bacon_video_widget_properties_set_label (props, "vcodec", _("N/A"));
 	/* Framerate */
-	gtk_xine_properties_set_label (props, "framerate",
+	bacon_video_widget_properties_set_label (props, "framerate",
 			_("0 frames per second"));
 	/* Bitrate */
-	gtk_xine_properties_set_label (props, "bitrate", _("0 kbps"));
+	bacon_video_widget_properties_set_label (props, "bitrate", _("0 kbps"));
 	/* Audio Codec */
-	gtk_xine_properties_set_label (props, "acodec", _("N/A"));
+	bacon_video_widget_properties_set_label (props, "acodec", _("N/A"));
 }
 
 static void
-gtk_xine_properties_set_from_current (GtkXineProperties *props, GtkXine *gtx)
+bacon_video_widget_properties_set_from_current (BaconVideoWidgetProperties *props, BaconVideoWidget *bvw)
 {
 	GtkWidget *item;
 	GValue value = { 0, };
@@ -197,98 +197,98 @@ gtk_xine_properties_set_from_current (GtkXineProperties *props, GtkXine *gtx)
 	int x, y;
 
 	/* General */
-	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_TITLE, &value);
-	gtk_xine_properties_set_label (props, "title",
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_TITLE, &value);
+	bacon_video_widget_properties_set_label (props, "title",
 			g_value_get_string (&value)
 			? g_value_get_string (&value)
 			: _("Unknown"));
 	g_value_unset (&value);
 
-	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_ARTIST, &value);
-	gtk_xine_properties_set_label (props, "artist",
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_ARTIST, &value);
+	bacon_video_widget_properties_set_label (props, "artist",
 			g_value_get_string (&value)
 			? g_value_get_string (&value) : _("Unknown"));
 	g_value_unset (&value);
 
-	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_YEAR, &value);
-	gtk_xine_properties_set_label (props, "year",
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_YEAR, &value);
+	bacon_video_widget_properties_set_label (props, "year",
 			g_value_get_string (&value)
 			? g_value_get_string (&value) : _("N/A"));
 	g_value_unset (&value);
 
-	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_DURATION, &value);
-	string = gtk_xine_properties_time_to_string (g_value_get_int (&value));
-	gtk_xine_properties_set_label (props, "duration", string);
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_DURATION, &value);
+	string = bacon_video_widget_properties_time_to_string (g_value_get_int (&value));
+	bacon_video_widget_properties_set_label (props, "duration", string);
 	g_free (string);
 	g_value_unset (&value);
 
 	/* Video */
 	item = glade_xml_get_widget (props->priv->xml, "video");
-	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_HAS_VIDEO, &value);
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_HAS_VIDEO, &value);
 	if (g_value_get_boolean (&value) == FALSE)
 		gtk_widget_set_sensitive (item, FALSE);
 	else
 		gtk_widget_set_sensitive (item, TRUE);
 	g_value_unset (&value);
 
-	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_DIMENSION_X, &value);
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_DIMENSION_X, &value);
 	x = g_value_get_int (&value);
 	g_value_unset (&value);
-	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_DIMENSION_Y, &value);
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_DIMENSION_Y, &value);
 	y = g_value_get_int (&value);
 	g_value_unset (&value);
 	string = g_strdup_printf ("%d x %d", x, y);
-	gtk_xine_properties_set_label (props, "dimensions", string);
+	bacon_video_widget_properties_set_label (props, "dimensions", string);
 	g_free (string);
 
-	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_VIDEO_CODEC, &value);
-	gtk_xine_properties_set_label (props, "vcodec",
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_VIDEO_CODEC, &value);
+	bacon_video_widget_properties_set_label (props, "vcodec",
 			g_value_get_string (&value)
 			? g_value_get_string (&value) : _("N/A"));
 	g_value_unset (&value);
 
-	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_FPS, &value);
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_FPS, &value);
 	string = g_strdup_printf (_("%d frames per second"),
 			g_value_get_int (&value));
-	gtk_xine_properties_set_label (props, "framerate", string);
+	bacon_video_widget_properties_set_label (props, "framerate", string);
 	g_free (string);
 	g_value_unset (&value);
 
 	/* Audio */
 	item = glade_xml_get_widget (props->priv->xml, "audio");
-	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_HAS_AUDIO, &value);
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_HAS_AUDIO, &value);
 	if (g_value_get_boolean (&value) == FALSE)
 		gtk_widget_set_sensitive (item, FALSE);
 	else
 		gtk_widget_set_sensitive (item, TRUE);
 	g_value_unset (&value);
 
-	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_BITRATE, &value);
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_BITRATE, &value);
 	string = g_strdup_printf (_("%d kbps"), g_value_get_int (&value));
-	gtk_xine_properties_set_label (props, "bitrate", string);
+	bacon_video_widget_properties_set_label (props, "bitrate", string);
 	g_free (string);
 	g_value_unset (&value);
 
-	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_AUDIO_CODEC, &value);
-	gtk_xine_properties_set_label (props, "acodec",
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_AUDIO_CODEC, &value);
+	bacon_video_widget_properties_set_label (props, "acodec",
 			g_value_get_string (&value)
 			? g_value_get_string (&value) : _("N/A"));
 	g_value_unset (&value);
 }
 
 void
-gtk_xine_properties_update (GtkXineProperties *props, GtkXine *gtx,
+bacon_video_widget_properties_update (BaconVideoWidgetProperties *props, BaconVideoWidget *bvw,
 			    gboolean reset)
 {
 	g_return_if_fail (props != NULL);
-	g_return_if_fail (GTK_IS_XINE_PROPERTIES (props));
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
 
 	if (reset == TRUE)
 	{
-		gtk_xine_properties_reset (props);
+		bacon_video_widget_properties_reset (props);
 	} else {
-		g_return_if_fail (gtx != NULL);
-		gtk_xine_properties_set_from_current (props, gtx);
+		g_return_if_fail (bvw != NULL);
+		bacon_video_widget_properties_set_from_current (props, bvw);
 	}
 }
 
@@ -300,9 +300,9 @@ hide_dialog (GtkWidget *widget, int trash, gpointer user_data)
 
 
 GtkWidget*
-gtk_xine_properties_new (void)
+bacon_video_widget_properties_new (void)
 {
-	GtkXineProperties *props;
+	BaconVideoWidgetProperties *props;
 	GladeXML *xml;
 	char *filename;
 
@@ -315,7 +315,7 @@ gtk_xine_properties_new (void)
 	if (xml == NULL)
 		return NULL;
 
-	props = GTK_XINE_PROPERTIES (g_object_new
+	props = BACON_VIDEO_WIDGET_PROPERTIES (g_object_new
 			(GTK_TYPE_XINE_PROPERTIES, NULL));
 	props->priv->xml = xml;
 	props->priv->vbox = glade_xml_get_widget (props->priv->xml, "vbox1");
@@ -335,7 +335,7 @@ gtk_xine_properties_new (void)
 	g_signal_connect (G_OBJECT (props), "delete-event",
 			G_CALLBACK (hide_dialog), NULL);
 
-	gtk_xine_properties_update (props, NULL, TRUE);
+	bacon_video_widget_properties_update (props, NULL, TRUE);
 
 	gtk_widget_show_all (GTK_DIALOG (props)->vbox);
 
@@ -343,10 +343,10 @@ gtk_xine_properties_new (void)
 }
 
 static void
-gtk_xine_properties_class_init (GtkXinePropertiesClass *klass)
+bacon_video_widget_properties_class_init (BaconVideoWidgetPropertiesClass *klass)
 {
 	parent_class = gtk_type_class (gtk_dialog_get_type ());
 
-	G_OBJECT_CLASS (klass)->finalize = gtk_xine_properties_finalize;
+	G_OBJECT_CLASS (klass)->finalize = bacon_video_widget_properties_finalize;
 }
 
