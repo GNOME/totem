@@ -126,7 +126,6 @@ struct BaconVideoWidgetPrivate
 
   /* Visual effects */
   GList *vis_plugins_list;
-  char *mrl;
   gboolean show_vfx;
   gboolean using_vfx;
   GstElement *vis_element;
@@ -143,10 +142,9 @@ struct BaconVideoWidgetPrivate
 
   guint init_width;
   guint init_height;
-
-  /* Signal handlers we want to keep */
-  gulong vis_sig_handler;
-  gboolean vis_signal_blocked;
+  
+  char *mrl;
+  char *media_device;
 };
 
 enum {
@@ -727,6 +725,18 @@ bacon_video_widget_finalize (GObject * object)
 {
   BaconVideoWidget *bvw = (BaconVideoWidget *) object;
 
+  if (bvw->priv->media_device)
+    {
+      g_free (bvw->priv->media_device);
+      bvw->priv->media_device = NULL;
+    }
+    
+  if (bvw->priv->mrl)
+    {
+      g_free (bvw->priv->mrl);
+      bvw->priv->mrl = NULL;
+    }
+    
   if (bvw->priv->queue)
     {
       g_async_queue_unref (bvw->priv->queue);
@@ -917,7 +927,7 @@ bacon_video_widget_open (BaconVideoWidget * bvw, const gchar * mrl,
       datasrc = gst_element_factory_make ("dvdnavsrc", "source");
       if (GST_IS_ELEMENT (datasrc))
         gst_play_set_data_src (bvw->priv->play, datasrc);
-      gst_play_set_location (bvw->priv->play, "/dev/dvd");
+      gst_play_set_location (bvw->priv->play, bvw->priv->media_device);
     }
   else if (g_str_has_prefix (mrl, "v4l://"))
     {
@@ -1017,7 +1027,9 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
 
   gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_READY);
   gst_play_set_location (bvw->priv->play, "/dev/null");
-  g_free (bvw->priv->mrl);
+  
+  if (bvw->priv->mrl)
+    g_free (bvw->priv->mrl);
   bvw->priv->mrl = NULL;
 }
 
@@ -1179,6 +1191,11 @@ bacon_video_widget_set_media_device (BaconVideoWidget * bvw, const char *path)
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_PLAY (bvw->priv->play));
+  
+  if (bvw->priv->media_device)
+    g_free (bvw->priv->media_device);
+  
+  bvw->priv->media_device = g_strdup (path);
 }
 
 gboolean
@@ -1722,6 +1739,8 @@ bacon_video_widget_new (int width, int height,
   bvw = BACON_VIDEO_WIDGET (g_object_new
 			    (bacon_video_widget_get_type (), NULL));
 
+  bvw->priv->media_device = g_strdup ("/dev/dvd");
+  
   bvw->priv->metadata_hash =
     g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
 

@@ -1,5 +1,12 @@
 2004-01-10  Julien MOUTTE  <julien@moutte.net>
 
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_finalize),
+	(bacon_video_widget_open), (bacon_video_widget_close),
+	(bacon_video_widget_set_media_device), (bacon_video_widget_new):
+	Implementing set_media_device to use the prefered cdrom reader.
+
+2004-01-10  Julien MOUTTE  <julien@moutte.net>
+
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_vw_realized),
 	(bacon_video_widget_vw_allocate),
 	(bacon_video_widget_button_press),
