@@ -129,7 +129,20 @@ static void
 action_exit (Totem *totem)
 {
 	gtk_main_quit ();
+
+	gtk_widget_destroy (totem->gtx);
+
 	exit (0);
+}
+
+gboolean
+main_window_destroy_cb (GtkWidget *widget, GdkEvent *event, gpointer user_data)
+{
+	Totem *totem = (Totem *)user_data;
+
+	action_exit (totem);
+
+	return FALSE;
 }
 
 static void
@@ -1047,10 +1060,12 @@ totem_callback_connect (Totem *totem)
 			target_table, 1, GDK_ACTION_COPY);
 
 	/* Exit */
-	g_signal_connect (G_OBJECT (totem->win), "delete_event",
-			G_CALLBACK (action_exit), totem);
-	g_signal_connect (G_OBJECT (totem->win), "destroy_event",
-			G_CALLBACK (action_exit), totem);
+	g_signal_connect (G_OBJECT (totem->win), "delete-event",
+			G_CALLBACK (main_window_destroy_cb), totem);
+	g_signal_connect (G_OBJECT (totem->win), "destroy",
+			G_CALLBACK (main_window_destroy_cb), totem);
+	g_object_add_weak_pointer (G_OBJECT (totem->win),
+			(void**)&(totem->win));
 
 	/* Popup */
 	item = glade_xml_get_widget (totem->xml, "fs_exit1");
@@ -1089,7 +1104,6 @@ totem_callback_connect (Totem *totem)
 			(gpointer) totem);
 }
 
-/* Widget creations for libglade's benefit */
 static void
 video_widget_create (Totem *totem) 
 {
@@ -1111,6 +1125,9 @@ video_widget_create (Totem *totem)
 			"error",
 			G_CALLBACK (on_error_event),
 			totem);
+
+	g_object_add_weak_pointer (G_OBJECT (totem->gtx),
+			(void**)&(totem->gtx));
 
 	gtk_widget_realize (totem->gtx);
 	gtk_widget_show (totem->gtx);

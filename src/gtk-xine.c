@@ -39,6 +39,7 @@
 #include <gtk/gtkmain.h>
 #include <gtk/gtkinvisible.h>
 #include <libgnome/gnome-i18n.h>
+#include <gconf/gconf-client.h>
 /* xine */
 #include <xine/video_out_x11.h>
 
@@ -48,6 +49,7 @@
 
 #define DEFAULT_HEIGHT 420
 #define DEFAULT_WIDTH 315
+#define CONFIG_FILE ".xine"G_DIR_SEPARATOR_S"config"
 
 #define BLACK_PIXEL \
 	BlackPixel ((gtx->priv->display ? gtx->priv->display : gdk_display), \
@@ -130,6 +132,7 @@ static void gtk_xine_get_property (GObject *object, guint property_id,
 
 static void gtk_xine_realize (GtkWidget * widget);
 static void gtk_xine_unrealize (GtkWidget * widget);
+static void gtk_xine_finalize (GObject *object);
 
 static gint gtk_xine_expose (GtkWidget * widget, GdkEventExpose * event);
 
@@ -190,6 +193,7 @@ gtk_xine_class_init (GtkXineClass * klass)
 	/* GObject */
 	object_class->set_property = gtk_xine_set_property;
 	object_class->get_property = gtk_xine_get_property;
+	object_class->finalize = gtk_xine_finalize;
 
 	/* Properties */
 	g_object_class_install_property (object_class, PROP_FULLSCREEN,
@@ -268,6 +272,17 @@ gtk_xine_instance_init (GtkXine * gtx)
 	gtx->priv->cursor_shown = TRUE;
 
 	gtx->priv->queue = g_async_queue_new ();
+}
+
+static void
+gtk_xine_finalize (GObject *object)
+{
+	GtkXine *gtx = (GtkXine *) object;
+
+	/* save configuration */
+	gtx->priv->config->save (gtx->priv->config);
+
+	G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -387,19 +402,11 @@ load_video_out_driver (GtkXine *gtx)
 }
 
 static ao_driver_t *
-load_audio_out_driver (GtkXine * gtx)
+load_audio_out_driver (GtkXine * gtx, char *audio_driver_id)
 {
 	ao_driver_t *ao_driver = NULL;
-	char *audio_driver_id;
 	char **driver_ids = xine_list_audio_output_plugins ();
 	int i = 0;
-
-	/* try to init audio with stored information */
-	audio_driver_id =
-	    gtx->priv->config->register_string (gtx->priv->config,
-						"audio.driver", "auto",
-						"audio driver to use",
-						NULL, NULL, NULL);
 
 	if (strcmp (audio_driver_id, "auto"))
 		return xine_load_audio_output_plugin (gtx->priv->config,
@@ -427,6 +434,64 @@ load_audio_out_driver (GtkXine * gtx)
 	}
 
 	return ao_driver;
+}
+
+static void
+load_config_from_gconf (GtkXine *gtx)
+{
+	GConfClient *conf;
+	char *tmp;
+
+	if (!gconf_is_initialized ())
+	{
+		g_signal_emit (G_OBJECT (gtx),
+				gtx_table_signals[ERROR], 0,
+				GTX_STARTUP,
+				_("The configuration system is not initialised.\nThe defaults will be used."));
+		return;
+	}
+	conf = gconf_client_get_default ();
+
+	/* The logo path is hard-coded, sorry folks */
+	tmp = g_build_path (G_DIR_SEPARATOR_S,
+			DATADIR, "totem", "totem_logo.mpv", NULL);
+	gtx->priv->config->register_string (gtx->priv->config,
+			"misc.logo_mrl", tmp,
+			"audio driver to use",
+			NULL, NULL, NULL);
+	gtx->priv->config->update_string (gtx->priv->config,
+			"misc.logo_mrl", tmp);
+	g_free (tmp);
+
+	/* The audio output */
+	//FIXME tmp = gconf_client_get_string (conf, "", NULL);
+	tmp =
+		gtx->priv->config->register_string (gtx->priv->config,
+				"audio.driver", "auto",
+				"audio driver to use",
+				NULL, NULL, NULL);
+	if (tmp == NULL)
+		tmp = g_strdup ("auto");
+
+	gtx->priv->ao_driver = load_audio_out_driver (gtx, tmp);
+	g_free (tmp);
+
+	/* default demux strategy */
+	gtx->priv->config->register_string (gtx->priv->config,
+			"misc.demux_strategy", "default",
+			"demuxer selection strategy",
+			"{ default  reverse  content  extension }, default: 0",
+			NULL, NULL);
+	gtx->priv->config->update_string (gtx->priv->config,
+			"misc.demux_strategy", "default");
+
+	/* TODO skip by chapter for DVD */
+	/* TODO input.cda_device:/dev/cdaudio
+	 * input.cda_cddb_server:freedb.freedb.org
+	 * input.cda_cddb_port:8880 (or is it 888 like gnome-media says ?
+	 * input.dvd_device:/dev/dvd
+	 * input.dvd_raw_device:/dev/rdvd
+	 */
 }
 
 static void *
@@ -563,7 +628,7 @@ gtk_xine_realize (GtkWidget * widget)
 
 	/* generate and init a config "object" */
 	configfile = g_build_path (G_DIR_SEPARATOR_S,
-			g_get_home_dir (), ".xine", "config", NULL);
+			g_get_home_dir (), CONFIG_FILE, NULL);
 	gtx->priv->config = xine_config_file_init (configfile);
 	g_free (configfile);
 
@@ -579,7 +644,8 @@ gtk_xine_realize (GtkWidget * widget)
 		return;
 	}
 
-	gtx->priv->ao_driver = load_audio_out_driver (gtx);
+	/* configure some more things, including audio output */
+	load_config_from_gconf (gtx);
 
 	/* init xine engine */
 	gtx->priv->xine = xine_init (gtx->priv->vo_driver,
@@ -745,7 +811,6 @@ gtk_xine_unrealize (GtkWidget * widget)
 	gtx = GTK_XINE (widget);
 
 	/* stop event thread */
-	pthread_cancel (gtx->priv->thread);
 	xine_exit (gtx->priv->xine);
 
 	/* save configuration */

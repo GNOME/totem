@@ -14,7 +14,8 @@ stuff_DATA =				\
 	rhythmbox-volume-min.png	\
 	rhythmbox-volume-zero.png	\
 	totem.glade			\
-	playlist.glade
+	playlist.glade			\
+	totem_logo.mpv
 
 pixmapdir = $(datadir)/pixmaps
 pixmap_DATA = media-player-48.png
