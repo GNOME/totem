@@ -1,3 +1,10 @@
+2004-10-07  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-pl-parser.c: (parse_asx_entry), (parse_asx_entries),
+	(totem_pl_parser_add_asf): fix parsing of ASX playlists (again),
+	allow the title of ASX playlists to be set by the whole playlist, not
+	just by the entry (Closes: #153644)
+
 2004-10-06  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: remove libgnome-desktop dependency

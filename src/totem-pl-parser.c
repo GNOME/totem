@@ -936,7 +936,7 @@ bail:
 
 static gboolean
 parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
-		xmlNodePtr parent)
+		xmlNodePtr parent, const char *pl_title)
 {
 	xmlNodePtr node;
 	char *title, *url;
@@ -968,7 +968,8 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 	}
 
 	if (strstr (url, "://") != NULL || url[0] == '/') {
-		totem_pl_parser_add_one_url (parser, url, title);
+		totem_pl_parser_add_one_url (parser, url,
+				title ? title : pl_title);
 		retval = TRUE;
 	} else {
 		char *fullpath;
@@ -976,7 +977,8 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		fullpath = g_strdup_printf ("%s/%s", base, url);
 		/* .asx files can contain references to other .asx files */
 		if (totem_pl_parser_parse_internal (parser, fullpath) != TOTEM_PL_PARSER_RESULT_SUCCESS)
-			totem_pl_parser_add_one_url (parser, fullpath, NULL);
+			totem_pl_parser_add_one_url (parser, fullpath,
+					title ? title : pl_title);
 
 		g_free (fullpath);
 	}
@@ -991,6 +993,7 @@ static gboolean
 parse_asx_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		xmlNodePtr parent)
 {
+	char *title = NULL;
 	xmlNodePtr node;
 	gboolean retval = FALSE;
 
@@ -998,18 +1001,24 @@ parse_asx_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		if (node->name == NULL)
 			continue;
 
+		if (g_ascii_strcasecmp (node->name, "title") == 0) {
+			title = xmlNodeListGetString(doc, node->children, 1);
+		}
+
 		if (g_ascii_strcasecmp (node->name, "entry") == 0) {
 			/* Whee found an entry here, find the REF and TITLE */
-			if (parse_asx_entry (parser, base, doc, node) != FALSE)
+			if (parse_asx_entry (parser, base, doc, node, title) != FALSE)
 				retval = TRUE;
 		}
 		if (g_ascii_strcasecmp (node->name, "entryref") == 0) {
 			/* Found an entryref, give the parent instead of the
 			 * children to the parser */
-			if (parse_asx_entry (parser, base, doc, parent) != FALSE)
+			if (parse_asx_entry (parser, base, doc, parent, title) != FALSE)
 				retval = TRUE;
 		}
 	}
+
+	g_free (title);
 
 	return retval;
 }
@@ -1190,7 +1199,8 @@ static TotemPlParserResult
 totem_pl_parser_add_asf (TotemPlParser *parser, const char *url, gpointer data)
 {
 	if (data != NULL &&
-		g_str_has_prefix (data, "[Reference]") == FALSE) {
+		(g_str_has_prefix (data, "[Reference]") == FALSE
+		 && g_ascii_strncasecmp (data, "<ASX", strlen ("<ASX")) != 0)) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
