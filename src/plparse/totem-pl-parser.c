@@ -222,7 +222,7 @@ write_string (GnomeVFSHandle *handle, const char *buf, GError **error)
 
 static int
 totem_pl_parser_num_entries (TotemPlParser *parser, GtkTreeModel *model,
-			     TotemPlParserIterFunc func)
+			     TotemPlParserIterFunc func, gpointer user_data)
 {
 	int num_entries, i, ignored;
 
@@ -238,7 +238,7 @@ totem_pl_parser_num_entries (TotemPlParser *parser, GtkTreeModel *model,
 		gtk_tree_model_get_iter_from_string (model, &iter, path);
 		g_free (path);
 
-		func (model, &iter, &url, &title);
+		func (model, &iter, &url, &title, user_data);
 		if (totem_pl_parser_scheme_is_ignored (parser, url) != FALSE)
 			ignored++;
 
@@ -292,8 +292,8 @@ totem_pl_parser_relative (const char *url, const char *output)
 
 static gboolean
 totem_pl_parser_write_pls (TotemPlParser *parser, GtkTreeModel *model,
-		TotemPlParserIterFunc func, const char *output,
-		GError **error)
+                           TotemPlParserIterFunc func, 
+                           const char *output, gpointer user_data, GError **error)
 {
 	GnomeVFSHandle *handle;
 	GnomeVFSResult res;
@@ -301,7 +301,7 @@ totem_pl_parser_write_pls (TotemPlParser *parser, GtkTreeModel *model,
 	char *buf;
 	gboolean success;
 
-	num_entries = totem_pl_parser_num_entries (parser, model, func);
+	num_entries = totem_pl_parser_num_entries (parser, model, func, user_data);
 	num_entries_total = gtk_tree_model_iter_n_children (model, NULL);
 
 	res = gnome_vfs_open (&handle, output, GNOME_VFS_OPEN_WRITE);
@@ -345,7 +345,7 @@ totem_pl_parser_write_pls (TotemPlParser *parser, GtkTreeModel *model,
 		gtk_tree_model_get_iter_from_string (model, &iter, path);
 		g_free (path);
 
-		func (model, &iter, &url, &title);
+		func (model, &iter, &url, &title, user_data);
 
 		if (totem_pl_parser_scheme_is_ignored (parser, url) != FALSE)
 		{
@@ -419,7 +419,7 @@ totem_pl_parser_url_to_dos (const char *url, const char *output)
 static gboolean
 totem_pl_parser_write_m3u (TotemPlParser *parser, GtkTreeModel *model,
 		TotemPlParserIterFunc func, const char *output,
-		gboolean dos_compatible, GError **error)
+		gboolean dos_compatible, gpointer user_data, GError **error)
 {
 	GnomeVFSHandle *handle;
 	GnomeVFSResult res;
@@ -455,7 +455,7 @@ totem_pl_parser_write_m3u (TotemPlParser *parser, GtkTreeModel *model,
 		gtk_tree_model_get_iter_from_string (model, &iter, path);
 		g_free (path);
 
-		func (model, &iter, &url, &title);
+		func (model, &iter, &url, &title, user_data);
 
 		if (totem_pl_parser_scheme_is_ignored (parser, url) != FALSE)
 		{
@@ -494,18 +494,18 @@ totem_pl_parser_write_m3u (TotemPlParser *parser, GtkTreeModel *model,
 gboolean
 totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
 		TotemPlParserIterFunc func, const char *output,
-		TotemPlParserType type, GError **error)
+		TotemPlParserType type, gpointer user_data, GError **error)
 {
 	switch (type)
 	{
 	case TOTEM_PL_PARSER_PLS:
 		return totem_pl_parser_write_pls (parser, model, func,
-				output, error);
+				output, user_data, error);
 	case TOTEM_PL_PARSER_M3U:
 	case TOTEM_PL_PARSER_M3U_DOS:
 		return totem_pl_parser_write_m3u (parser, model, func,
 				output, (type == TOTEM_PL_PARSER_M3U_DOS),
-				error);
+                                user_data, error);
 	default:
 		g_assert_not_reached ();
 	}

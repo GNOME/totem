@@ -28,6 +28,8 @@
 #include <glib.h>
 #include <gtk/gtktreemodel.h>
 
+#include "totem-pl-parser-builtins.h"
+
 G_BEGIN_DECLS
 
 #define TOTEM_TYPE_PL_PARSER            (totem_pl_parser_get_type ())
@@ -77,13 +79,15 @@ typedef enum
 
 GQuark totem_pl_parser_error_quark (void);
 
-typedef void (*TotemPlParserIterFunc) (GtkTreeModel *model, GtkTreeIter *iter, char **uri, char **title);
+typedef void (*TotemPlParserIterFunc) (GtkTreeModel *model, GtkTreeIter *iter,
+                                       char **uri, char **title, gpointer user_data);
 
 GType    totem_pl_parser_get_type (void);
 
 gboolean   totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
-				  TotemPlParserIterFunc func,
+				  TotemPlParserIterFunc func, 
 				  const char *output, TotemPlParserType type,
+                                  gpointer user_data,
 				  GError **error);
 void	   totem_pl_parser_add_ignored_scheme (TotemPlParser *parser,
 					       const char *scheme);

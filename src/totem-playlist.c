@@ -277,7 +277,7 @@ totem_playlist_create_full_path (const char *path)
 
 static void
 totem_playlist_save_get_iter_func (GtkTreeModel *model,
-		GtkTreeIter *iter, char **uri, char **title)
+		GtkTreeIter *iter, char **uri, char **title, gpointer user_data)
 {
 	gtk_tree_model_get (model, iter,
 			URI_COL, uri,
@@ -293,8 +293,8 @@ totem_playlist_save_current_playlist (TotemPlaylist *playlist, const char *outpu
 
 	retval = totem_pl_parser_write (playlist->_priv->parser,
 			playlist->_priv->model,
-			totem_playlist_save_get_iter_func,
-			output, TOTEM_PL_PARSER_PLS, &error);
+                        totem_playlist_save_get_iter_func,
+			output, TOTEM_PL_PARSER_PLS, NULL, &error);
 
 	if (retval == FALSE)
 	{

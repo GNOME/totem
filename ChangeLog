@@ -32,6 +32,15 @@
 
 2005-01-04  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
 
+	* src/totem-pl-parser.h: include totem-pl-parser-builtins.h.
+	
+	* src/totem-pl-parser.h, src/totem-pl-parser.c: Add a gpointer
+	user_data to TotemPlParserIterFunc and to totem_pl_parser_write.
+
+	* src/totem-playlist.c (totem_playlist_save_get_iter_func)
+	(totem_playlist_save_current_playlist): Update to new
+	totem_pl_parser_write API.
+
 	* totem-plparser.pc.in: Add .pc file for totem-plparser library.
 	
 	* Makefile.am: Install totem-plparser.pc.
