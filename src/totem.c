@@ -911,7 +911,7 @@ on_about1_activate (GtkButton *button, gpointer user_data)
 	gtk_widget_show(about);
 }
 
-static void
+static int
 toggle_playlist_from_playlist (GtkWidget *playlist, int trash,
 		gpointer user_data)
 {
@@ -920,6 +920,8 @@ toggle_playlist_from_playlist (GtkWidget *playlist, int trash,
 
 	button = glade_xml_get_widget (totem->xml, "playlist_button");
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
+
+	return TRUE;
 }
 
 static void
