@@ -320,6 +320,7 @@ gtk_xine_instance_init (GtkXine *gtx)
 	char *configfile;
 
 	GTK_WIDGET_SET_FLAGS (GTK_WIDGET (gtx), GTK_CAN_FOCUS);
+	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (gtx), GTK_DOUBLE_BUFFERED);
 
 	/* Set the default size to be a 4:3 ratio */
 	gtx->widget.requisition.width = DEFAULT_HEIGHT;
@@ -824,21 +825,11 @@ gtk_xine_filter_events (GdkXEvent *xevent, GdkEvent *event, gpointer data)
 	GtkXine *gtx = (GtkXine *) data;
 	XEvent *xev = (XEvent *) xevent;
 	XKeyEvent *key = (XKeyEvent *) xevent;
-	XExposeEvent *expose = (XExposeEvent *) xevent;
 	GtkXineSignal *signal;
 	gboolean retval;
 
 	switch (xev->type)
 	{
-	case Expose:
-		D("Expose:");
-		if (expose->count != 0)
-			break;
-		xine_gui_send_vo_data (gtx->priv->stream,
-				XINE_GUI_SEND_EXPOSE_EVENT,
-				&event);
-		return GDK_FILTER_REMOVE;
-		break;
 	case MotionNotify:
 		D("MotionNotify:");
 		retval = generate_mouse_event (gtx, xevent, TRUE);
@@ -1214,7 +1205,20 @@ gtk_xine_check (GtkXine *gtx)
 static gboolean
 gtk_xine_expose (GtkWidget *widget, GdkEventExpose *event)
 {
-	return FALSE;
+	GtkXine *gtx = (GtkXine *) widget;
+	XExposeEvent *expose;
+
+	if (event->count != 0)
+		return FALSE;
+
+	expose = g_new0 (XExposeEvent, 1);
+	expose->count = event->count;
+
+	xine_gui_send_vo_data (gtx->priv->stream,
+			XINE_GUI_SEND_EXPOSE_EVENT,
+			expose);
+
+	return TRUE;
 }
 
 static void
@@ -1581,6 +1585,7 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 
 		gdk_window_add_filter (gtx->priv->fullscreen_window,
 				gtk_xine_filter_events, (gpointer) gtx);
+		gdk_window_set_user_data (gtx->priv->fullscreen_window, gtx);
 
 		gdk_window_set_transient_for
 			(gtx->priv->fullscreen_window, parent);
@@ -1596,6 +1601,7 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 	} else {
 		gdk_window_remove_filter (gtx->priv->fullscreen_window,
 				gtk_xine_filter_events, (gpointer) gtx);
+		gdk_window_set_user_data (gtx->widget.window, gtx);
 
 		xine_gui_send_vo_data (gtx->priv->stream,
 			 XINE_GUI_SEND_DRAWABLE_CHANGED,

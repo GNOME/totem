@@ -1,5 +1,12 @@
 2003-01-13  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (gtk_xine_instance_init),
+	(gtk_xine_filter_events), (gtk_xine_expose),
+	(gtk_xine_set_fullscreen): move the expose event handling from the
+	filter queue to the widget's handler
+
+2003-01-13  Bastien Nocera  <hadess@hadess.net>
+
 	* Makefile.am:
 	* configure.in:
 	* src/Makefile.am:
