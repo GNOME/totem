@@ -357,7 +357,7 @@ update_mrl_label (Totem *totem, const char *name)
 {
 	gint time;
 	char *text;
-	GtkWidget *widget = NULL;
+	GtkWidget *widget;
 
 	if (name != NULL)
 	{
@@ -365,6 +365,10 @@ update_mrl_label (Totem *totem, const char *name)
 		time = gtk_xine_get_stream_length (GTK_XINE (totem->gtx));
 		totem_statusbar_set_time_and_length (TOTEM_STATUSBAR
 				(totem->statusbar), 0, time / 1000);
+
+		widget = glade_xml_get_widget (totem->xml, "spinbutton1");
+		gtk_spin_button_set_range (GTK_SPIN_BUTTON (widget),
+				0, (gdouble) time / 1000);
 
 		/* Update the mrl label */
 		text = g_strdup_printf
@@ -386,6 +390,9 @@ update_mrl_label (Totem *totem, const char *name)
 	} else {
 		totem_statusbar_set_time_and_length (TOTEM_STATUSBAR
 				(totem->statusbar), 0, 0);
+
+		widget = glade_xml_get_widget (totem->xml, "spinbutton1");
+		gtk_spin_button_set_range (GTK_SPIN_BUTTON (widget), 0, 0);
 
 		/* Update the mrl label */
 		text = g_strdup_printf
@@ -1489,11 +1496,55 @@ on_dvd_chapter_menu1_activate (GtkButton *button, gpointer user_data)
 }
 
 static void
+commit_hide_skip_to (GtkDialog *dialog, gint response, gpointer user_data)
+
+{
+	Totem *totem = (Totem *)user_data;
+	GtkWidget *spin;
+	int sec;
+
+	gtk_widget_hide (GTK_WIDGET (dialog));
+
+	if (response != GTK_RESPONSE_OK)
+		return;
+
+	spin = glade_xml_get_widget (totem->xml, "spinbutton1");
+	sec = (int) gtk_spin_button_get_value (GTK_SPIN_BUTTON (spin));
+
+	g_message ("commit_hide_skip_to: %d", sec);
+
+	gtk_xine_play (GTK_XINE(totem->gtx), 0, sec * 1000);
+}
+
+static void
+hide_skip_to (GtkWidget *widget, GdkEvent *event, gpointer user_data)
+{
+	gtk_widget_hide (widget);
+}
+
+static void
+spin_button_value_changed_cb (GtkSpinButton *spinbutton, gpointer user_data)
+{
+	Totem *totem = (Totem *)user_data;
+	GtkWidget *label;
+	int sec;
+	char *str;
+
+	sec = (int) gtk_spin_button_get_value (GTK_SPIN_BUTTON (spinbutton));
+	label = glade_xml_get_widget (totem->xml, "label14");
+	str = gtk_xine_properties_time_to_string (sec);
+	gtk_label_set_text (GTK_LABEL (label), str);
+	g_free (str);
+}
+
+static void
 on_skip_to1_activate (GtkButton *button, gpointer user_data)
 {
 	Totem *totem = (Totem *)user_data;
+	GtkWidget *dialog;
 
-	//FIXME show seek thingo
+	dialog = glade_xml_get_widget (totem->xml, "dialog3");
+	gtk_widget_show (dialog);
 }
 
 static void
@@ -2249,6 +2300,16 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "skip_backwards1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_skip_backwards1_activate), totem);
+
+	/* Skip dialog */
+	item = glade_xml_get_widget (totem->xml, "dialog3");
+	g_signal_connect (G_OBJECT (item), "response",
+			G_CALLBACK (commit_hide_skip_to), totem);
+	g_signal_connect (G_OBJECT (item), "delete-event",
+			G_CALLBACK (hide_skip_to), totem);
+	item = glade_xml_get_widget (totem->xml, "spinbutton1");
+	g_signal_connect (G_OBJECT (item), "value-changed",
+			G_CALLBACK (spin_button_value_changed_cb), totem);
 
 	/* Update the UI */
 	gtk_timeout_add (600, update_cb_often, totem);

@@ -51,4 +51,7 @@ GtkWidget *gtk_xine_properties_new	();
 void gtk_xine_properties_update		(GtkXineProperties *props,
 					 GtkXine *gtx, gboolean reset);
 
+char      *gtk_xine_properties_time_to_string
+					(int time);
+
 #endif /* GTK_XINE_PROPERTIES_H */

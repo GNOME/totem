@@ -1,6 +1,17 @@
 2003-01-20  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.glade:
+	* src/gtk-xine-properties.c: (gtk_xine_properties_time_to_string),
+	(gtk_xine_properties_set_from_current):
+	* src/gtk-xine-properties.h:
+	* src/totem.c: (update_mrl_label), (commit_hide_skip_to),
+	(hide_skip_to), (spin_button_value_changed_cb),
+	(on_skip_to1_activate), (totem_callback_connect): make the "Skip to"
+	dialog actually work (Closes: #99150)
+
+2003-01-20  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem.glade:
 	* src/totem.c: (totem_action_set_mrl_and_play),
 	(totem_action_set_mrl), (on_skip_to1_activate),
 	(on_skip_forward1_activate), (on_skip_backwards1_activate),

@@ -92,8 +92,8 @@ gtk_xine_properties_finalize (GObject *object)
 	}
 }
 
-static char
-*time_to_string (int time)
+char *
+gtk_xine_properties_time_to_string (int time)
 {
 	char *secs, *mins, *hours, *string;
 	int sec, min, hour;
@@ -217,7 +217,7 @@ gtk_xine_properties_set_from_current (GtkXineProperties *props, GtkXine *gtx)
 	g_value_unset (&value);
 
 	gtk_xine_get_metadata (GTK_XINE (gtx), GTX_INFO_DURATION, &value);
-	string = time_to_string (g_value_get_int (&value));
+	string = gtk_xine_properties_time_to_string (g_value_get_int (&value));
 	gtk_xine_properties_set_label (props, "duration", string);
 	g_free (string);
 	g_value_unset (&value);
