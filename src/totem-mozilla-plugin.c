@@ -172,7 +172,8 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 		if (g_ascii_strcasecmp (argn[i], "hidden") == 0) {
 			//FIXME
 		}
-		if (g_ascii_strcasecmp (argn[i], "autostart") == 0) {
+		if (g_ascii_strcasecmp (argn[i], "autostart") == 0
+				|| g_ascii_strcasecmp (argn[i], "autoplay") == 0) {
 			//FIXME
 		}
 		if (g_ascii_strcasecmp (argn[i], "loop") == 0 ||
@@ -321,11 +322,15 @@ static int32 totem_plugin_write (NPP instance, NPStream *stream, int32 offset,
 	if (!plugin->player_pid)
 		return 0;
 
-	g_message ("write %d %p %d", plugin->send_fd, buffer, len);
+	if (plugin->send_fd < 0)
+		return 0;
+
+//	g_message ("write %d %p %d", plugin->send_fd, buffer, len);
 	ret = write (plugin->send_fd, buffer, len);
-	if (ret < 0)
+	if (ret < 0) {
+		g_message ("ret %d", ret);
 		ret = 0;
-	g_message ("ret %d", ret);
+	}
 
 	return ret;
 }
