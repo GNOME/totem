@@ -1,6 +1,12 @@
 
 bin_PROGRAMS = totem totem-video-thumbnailer
 
+if TOTEM_GST
+MM=bacon-video-widget-gst.c
+else
+MM=bacon-video-widget-xine.c
+endif
+
 MARSHALFILES = baconvideowidget-marshal.h baconvideowidget-marshal.c
 GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
 
@@ -50,7 +56,7 @@ totem_SOURCES = 					\
 	totem-private.h			\
 	baconvideowidget-marshal.list	\
 	$(MARSHALFILES)			\
-	bacon-video-widget-xine.c	\
+	$(MM)				\
 	bacon-video-widget.h		\
 	bacon-video-widget-properties.c	\
 	bacon-video-widget-properties.h	\
@@ -73,8 +79,8 @@ totem_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS)
 
 totem_video_thumbnailer_SOURCES =				\
 	baconvideowidget-marshal.list				\
-	$(MARSHALFILES)						\
-	bacon-video-widget-xine.c bacon-video-widget.h		\
+	$(MARSHALFILES)	$(MM)					\
+	bacon-video-widget.h					\
 	scrsaver.c  scrsaver.h          			\
 	video-utils.c video-utils.h     			\
 	totem-video-thumbnailer.c
@@ -96,4 +102,5 @@ INCLUDES = 						\
 	-DLIBGLADE_DISABLE_DEPRECATED
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(MARSHALFILES) $(desktop_DATA)
+EXTRA_DIST = bacon-video-widget-xine.c bacon-video-widget-gst.c
 

@@ -1558,11 +1558,12 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 		attr.height = bvw->priv->fullscreen_rect.height;
 		attr.window_type = GDK_WINDOW_TOPLEVEL;
 		attr.wclass = GDK_INPUT_OUTPUT;
+		attr.override_redirect = FALSE;
 		attr.event_mask = gtk_widget_get_events (GTK_WIDGET (bvw))
 			| GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK
 			| GDK_BUTTON_PRESS_MASK | GDK_KEY_PRESS_MASK;
 		bvw->priv->fullscreen_window = gdk_window_new
-			(NULL, &attr, GDK_WA_X | GDK_WA_Y);
+			(NULL, &attr, GDK_WA_X | GDK_WA_Y | GDK_WA_NOREDIR);
 		gdk_window_show (bvw->priv->fullscreen_window);
 		gdk_window_fullscreen (bvw->priv->fullscreen_window);
 		/* Flush, so that the window is really shown */

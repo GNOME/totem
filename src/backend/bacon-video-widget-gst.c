@@ -113,36 +113,30 @@ struct BaconVideoWidgetPrivate {
 	gboolean fullscreen_mode;
 };
 
-/* ============================================================= */
-/*                                                               */
-/*                       Private Methods                         */
-/*                                                               */
-/* ============================================================= */
+static void bacon_video_widget_set_property (GObject *object, guint property_id,
+		const GValue *value, GParamSpec *pspec);
+static void bacon_video_widget_get_property (GObject *object, guint property_id,
+		GValue *value, GParamSpec *pspec);
 
-/* =========================================== */
-/*                                             */
-/*                  Tool Box                   */
-/*                                             */
-/* =========================================== */
+static void bacon_video_widget_realize (GtkWidget *widget);
+static void bacon_video_widget_unrealize (GtkWidget *widget);
+static void bacon_video_widget_finalize (GObject *object);
 
+static gboolean bacon_video_widget_expose (GtkWidget *widget,
+		GdkEventExpose *event);
+static gboolean bacon_video_widget_motion_notify (GtkWidget *widget,
+		GdkEventMotion *event);
+static gboolean bacon_video_widget_button_press (GtkWidget *widget,
+		GdkEventButton *event);
+static gboolean bacon_video_widget_key_press (GtkWidget *widget,
+		GdkEventKey *event);
 
-/* =========================================== */
-/*                                             */
-/*                  GFX stuff                  */
-/*                                             */
-/* =========================================== */
+static void bacon_video_widget_size_allocate (GtkWidget *widget,
+		GtkAllocation *allocation);
 
-/* =========================================== */
-/*                                             */
-/*          Event Handlers, Callbacks          */
-/*                                             */
-/* =========================================== */
+static GtkWidgetClass *parent_class = NULL;
 
-/* =========================================== */
-/*                                             */
-/*              Init & Class init              */
-/*                                             */
-/* =========================================== */
+static int bvw_table_signals[LAST_SIGNAL] = { 0 };
 
 static void
 bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
@@ -159,11 +153,11 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 	/* GtkWidget */
 	widget_class->realize = bacon_video_widget_realize;
 	widget_class->unrealize = bacon_video_widget_unrealize;
-	widget_class->size_allocate = bacon_video_widget_size_allocate;
-	widget_class->expose_event = bacon_video_widget_expose;
-	widget_class->motion_notify_event = bacon_video_widget_motion_notify;
-	widget_class->button_press_event = bacon_video_widget_button_press;
-	widget_class->key_press_event = bacon_video_widget_key_press;
+//	widget_class->size_allocate = bacon_video_widget_size_allocate;
+//	widget_class->expose_event = bacon_video_widget_expose;
+//	widget_class->motion_notify_event = bacon_video_widget_motion_notify;
+//	widget_class->button_press_event = bacon_video_widget_button_press;
+//	widget_class->key_press_event = bacon_video_widget_key_press;
 
 	/* GObject */
 	object_class->set_property = bacon_video_widget_set_property;
@@ -253,11 +247,92 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 	bvw->priv = g_new0 (BaconVideoWidgetPrivate, 1);
 }
 
+static void
+bacon_video_widget_realize (GtkWidget *widget)
+{
+}
+
+static void
+bacon_video_widget_unrealize (GtkWidget *widget)
+{
+}
+
+static void
+bacon_video_widget_finalize (GObject *object)
+{
+	BaconVideoWidget *bvw = (BaconVideoWidget *) object;
+
+	//FIXME
+}
+
+static void
+bacon_video_widget_set_property (GObject *object, guint property_id,
+		const GValue *value, GParamSpec *pspec)
+{
+}
+
+static void
+bacon_video_widget_get_property (GObject *object, guint property_id,
+		GValue *value, GParamSpec *pspec)
+{
+}
+
 /* ============================================================= */
 /*                                                               */
 /*                       Public Methods                          */
 /*                                                               */
 /* ============================================================= */
+
+gboolean
+bacon_video_widget_eject (BaconVideoWidget *bvw)
+{
+	return FALSE;
+}
+
+int
+bacon_video_widget_get_subtitle (BaconVideoWidget *bvw)
+{
+	return -1;
+}
+
+void
+bacon_video_widget_set_subtitle (BaconVideoWidget *bvw, int subtitle)
+{
+}
+
+GList
+*bacon_video_widget_get_subtitles (BaconVideoWidget *bvw)
+{
+	return NULL;
+}
+
+GList
+*bacon_video_widget_get_languages (BaconVideoWidget *bvw)
+{
+	return NULL;
+}
+
+int
+bacon_video_widget_get_language (BaconVideoWidget *bvw)
+{
+	return -1;
+}
+
+void
+bacon_video_widget_set_language (BaconVideoWidget *bvw, int language)
+{
+}
+
+int
+bacon_video_widget_get_connection_speed (BaconVideoWidget *bvw)
+{
+	return 0;
+}
+
+void
+bacon_video_widget_set_connection_speed (BaconVideoWidget *bvw, int speed)
+{
+}
 
 /* =========================================== */
 /*                                             */
@@ -266,23 +341,21 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 /* =========================================== */
 
 gboolean
-bacon_video_widget_open		(	BaconVideoWidget *bvw,
-								const gchar *mrl,
-								GError **error)
+bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
+		GError **error)
 {
-	
 }
 
 /* This is used for seeking:
  * @pos is used for seeking, from 0 (start) to 65535 (end)
  * @start_time is in milliseconds */
 gboolean
-bacon_video_widget_play		(	BaconVideoWidget *bvw,
-								guint pos,
-								guint start_time,
-								GError **error)
+bacon_video_widget_play	(BaconVideoWidget *bvw,
+		guint pos,
+		guint start_time,
+		GError **error)
 {
-	
+
 }
 
 void
@@ -290,9 +363,9 @@ bacon_video_widget_stop		(BaconVideoWidget *bvw)
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
-	g_return_if_fail (GST_IS_PLAY(bvw->play));
+	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
 	
-	gst_play_set_state (bvw->play, GST_STATE_READY);
+	gst_play_set_state (bvw->priv->play, GST_STATE_READY);
 }
 
 void
@@ -300,10 +373,10 @@ bacon_video_widget_close	(BaconVideoWidget *bvw)
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
-	g_return_if_fail (GST_IS_PLAY(bvw->play));
-	gst_play_set_state (bvw->play, GST_STATE_READY);
+	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
+	gst_play_set_state (bvw->priv->play, GST_STATE_READY);
 	
-	gst_play_set_location (bvw->play, "/dev/null");
+	gst_play_set_location (bvw->priv->play, "/dev/null");
 }
 
 void
@@ -312,7 +385,7 @@ bacon_video_widget_dvd_event	(	BaconVideoWidget *bvw,
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
-	g_return_if_fail (GST_IS_PLAY(bvw->play));
+	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
 }
 
 void
@@ -321,7 +394,7 @@ bacon_video_widget_set_logo_mode	(	BaconVideoWidget *bvw,
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
-	g_return_if_fail (GST_IS_PLAY(bvw->play));
+	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
 }
 
 gboolean
@@ -337,14 +410,14 @@ bacon_video_widget_set_speed		(	BaconVideoWidget *bvw,
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
-	g_return_if_fail (GST_IS_PLAY(bvw->play));
+	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
 	
 	switch (speed) {
 		case SPEED_PAUSE:
-			gst_play_set_state (bvw->play, GST_STATE_PAUSED);
+			gst_play_set_state (bvw->priv->play, GST_STATE_PAUSED);
 			break;;
 		case SPEED_NORMAL:
-			gst_play_set_state (bvw->play, GST_STATE_PLAYING);
+			gst_play_set_state (bvw->priv->play, GST_STATE_PLAYING);
 			break;;
 		default:
 			g_message ("unsupported speed %d", speed);
@@ -356,11 +429,11 @@ bacon_video_widget_get_speed		(BaconVideoWidget *bvw)
 {
 	g_return_val_if_fail (bvw != NULL, -1);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET(bvw), -1);
-	g_return_val_if_fail (GST_IS_PLAY(bvw->play), -1);
+	g_return_val_if_fail (GST_IS_PLAY(bvw->priv->play), -1);
 	
-	if (gst_play_get_state (bvw->play) == GST_STATE_PAUSED)
+	if (gst_play_get_state (bvw->priv->play) == GST_STATE_PAUSED)
 		return SPEED_PAUSE;
-	else if (gst_play_get_state (bvw->play) == GST_STATE_PLAYING)
+	else if (gst_play_get_state (bvw->priv->play) == GST_STATE_PLAYING)
 		return SPEED_NORMAL;
 	else
 		g_message ("pipeline is not in a known Bacon speed");
@@ -374,7 +447,7 @@ bacon_video_widget_set_fullscreen	(	BaconVideoWidget *bvw,
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
-	g_return_if_fail (GST_IS_PLAY(bvw->play));
+	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
 }
 
 gboolean
@@ -382,7 +455,7 @@ bacon_video_widget_is_fullscreen	(BaconVideoWidget *bvw)
 {
 	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET(bvw), FALSE);
-	g_return_val_if_fail (GST_IS_PLAY(bvw->play), FALSE);
+	g_return_val_if_fail (GST_IS_PLAY(bvw->priv->play), FALSE);
 	return FALSE;
 }
 
@@ -391,196 +464,190 @@ bacon_video_widget_can_set_volume	(BaconVideoWidget *bvw)
 {
 	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET(bvw), FALSE);
-	g_return_val_if_fail (GST_IS_PLAY(bvw->play), FALSE);
+	g_return_val_if_fail (GST_IS_PLAY(bvw->priv->play), FALSE);
 	return TRUE;
 }
 
 void
-bacon_video_widget_set_volume		(	BaconVideoWidget *bvw,
-										int volume)
+bacon_video_widget_set_volume (BaconVideoWidget *bvw, int volume)
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
-	g_return_if_fail (GST_IS_PLAY(bvw->play));
-	gst_play_set_volume (bvw->play, volume); /* FIXME float 0-1 */
+	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
+	gst_play_set_volume (bvw->priv->play, volume / 100);
 }
 
 int
-bacon_video_widget_get_volume		(BaconVideoWidget *bvw)
+bacon_video_widget_get_volume (BaconVideoWidget *bvw)
 {
 	g_return_val_if_fail (bvw != NULL, -1);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET(bvw), -1);
-	g_return_val_if_fail (GST_IS_PLAY(bvw->play), -1);
-	return gst_play_set_volume (bvw->play); /* FIXME float 0-1 */
+	g_return_val_if_fail (GST_IS_PLAY(bvw->priv->play), -1);
+	return gst_play_get_volume (bvw->priv->play) * 100;
 }
 
 void
-bacon_video_widget_set_show_cursor	(	BaconVideoWidget *bvw,
-										gboolean use_cursor)
+bacon_video_widget_set_show_cursor (BaconVideoWidget *bvw, gboolean use_cursor)
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
-	g_return_if_fail (GST_IS_PLAY(bvw->play));
-	g_return_if_fail (GST_IS_VIDEO_WIDGET(bvw->vw));
+	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
 	
-	gst_video_widget_set_cursor_visible (
-							GST_VIDEO_WIDGET(bvw->vw), use_cursor);
-	
+//	gst_video_widget_set_cursor_visible (GST_VIDEO_WIDGET(bvw->vw),
+//			use_cursor);
 }
 
 gboolean
-bacon_video_widget_get_show_cursor	(BaconVideoWidget *bvw)
+bacon_video_widget_get_show_cursor (BaconVideoWidget *bvw)
 {
 	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET(bvw), FALSE);
-	g_return_val_if_fail (GST_IS_PLAY(bvw->play), FALSE);
-	g_return_val_if_fail (GST_IS_VIDEO_WIDGET(bvw->vw), FALSE);
-	
-	return gst_video_widget_get_cursor_visible (GST_VIDEO_WIDGET(bvw->vw));
+	g_return_val_if_fail (GST_IS_PLAY(bvw->priv->play), FALSE);
+
+	return FALSE;
+//	return gst_video_widget_get_cursor_visible (GST_VIDEO_WIDGET(bvw->vw));
 }
 
 void
-bacon_video_widget_set_media_device	(	BaconVideoWidget *bvw,
-										const char *path)
+bacon_video_widget_set_media_device (BaconVideoWidget *bvw, const char *path)
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
-	g_return_if_fail (GST_IS_PLAY(bvw->play));
-}
-
-void
-bacon_video_widget_set_show_visuals	(	BaconVideoWidget *bvw,
-										gboolean show_visuals)
-{
-	g_return_if_fail (bvw != NULL);
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
-	g_return_if_fail (GST_IS_PLAY(bvw->play));
-}
-
-void
-bacon_video_widget_set_auto_resize	(	BaconVideoWidget *bvw,
-										gboolean auto_resize)
-{
-	g_return_if_fail (bvw != NULL);
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
-	g_return_if_fail (GST_IS_PLAY(bvw->play));
-}
-
-void
-bacon_video_widget_toggle_aspect_ratio	(BaconVideoWidget *bvw)
-{
-	g_return_if_fail (bvw != NULL);
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
-	g_return_if_fail (GST_IS_PLAY(bvw->play));
-}
-
-void
-bacon_video_widget_set_scale_ratio	(	BaconVideoWidget *bvw,
-										gfloat ratio)
-{
-	g_return_if_fail (bvw != NULL);
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
-	g_return_if_fail (GST_IS_PLAY(bvw->play));
+	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
 }
 
 int
-bacon_video_widget_get_position		(BaconVideoWidget *bvw)
+bacon_video_widget_set_show_visuals (BaconVideoWidget *bvw,
+		gboolean show_visuals)
 {
-	g_return_val_if_fail (bvw != NULL, -1);
-	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET(bvw), -1);
-	g_return_val_if_fail (GST_IS_PLAY(bvw->play), -1);
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
+	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
+
+	return FALSE;
+}
+
+void
+bacon_video_widget_set_auto_resize (BaconVideoWidget *bvw, gboolean auto_resize)
+{
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
+	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
+}
+
+void
+bacon_video_widget_toggle_aspect_ratio (BaconVideoWidget *bvw)
+{
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
+	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
+}
+
+void
+bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
+{
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
+	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
 }
 
 int
-bacon_video_widget_get_current_time	(BaconVideoWidget *bvw)
+bacon_video_widget_get_position (BaconVideoWidget *bvw)
 {
 	g_return_val_if_fail (bvw != NULL, -1);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET(bvw), -1);
-	g_return_val_if_fail (GST_IS_PLAY(bvw->play), -1);
+	g_return_val_if_fail (GST_IS_PLAY(bvw->priv->play), -1);
 }
 
 int
-bacon_video_widget_get_stream_length	(BaconVideoWidget *bvw)
+bacon_video_widget_get_current_time (BaconVideoWidget *bvw)
 {
 	g_return_val_if_fail (bvw != NULL, -1);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET(bvw), -1);
-	g_return_val_if_fail (GST_IS_PLAY(bvw->play), -1);
-	return bvw->length;
+	g_return_val_if_fail (GST_IS_PLAY(bvw->priv->play), -1);
+}
+
+int
+bacon_video_widget_get_stream_length (BaconVideoWidget *bvw)
+{
+	g_return_val_if_fail (bvw != NULL, -1);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET(bvw), -1);
+	g_return_val_if_fail (GST_IS_PLAY(bvw->priv->play), -1);
+
+	return bvw->priv->play->length_nanos / 1000;
 }
 
 gboolean
-bacon_video_widget_is_playing		(BaconVideoWidget *bvw)
+bacon_video_widget_is_playing (BaconVideoWidget *bvw)
 {
 	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET(bvw), FALSE);
-	g_return_val_if_fail (GST_IS_PLAY(bvw->play), FALSE);
+	g_return_val_if_fail (GST_IS_PLAY(bvw->priv->play), FALSE);
 	
-	if (gst_play_get_state(bvw->play) == GST_STATE_PLAYING) {
+	if (gst_play_get_state(bvw->priv->play) == GST_STATE_PLAYING) {
 		return TRUE;
 	}
-	
+
 	return FALSE;
 }
 
 gboolean
-bacon_video_widget_is_seekable		(BaconVideoWidget *bvw)
+bacon_video_widget_is_seekable (BaconVideoWidget *bvw)
 {
 	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET(bvw), FALSE);
-	g_return_val_if_fail (GST_IS_PLAY(bvw->play), FALSE);
-	if (bvw->length)
+	g_return_val_if_fail (GST_IS_PLAY(bvw->priv->play), FALSE);
+
+	if (bvw->priv->play->length_nanos)
 		return TRUE;
 	else
 		return FALSE;
 }
 
 gboolean
-bacon_video_widget_can_play			(	BaconVideoWidget *bvw,
-										MediaType type)
+bacon_video_widget_can_play (BaconVideoWidget *bvw, MediaType type)
 {
 	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET(bvw), FALSE);
-	g_return_val_if_fail (GST_IS_PLAY(bvw->play), FALSE);
+	g_return_val_if_fail (GST_IS_PLAY(bvw->priv->play), FALSE);
 	return FALSE;
 }
 
 G_CONST_RETURN gchar **
-bacon_video_widget_get_mrls			 (	BaconVideoWidget *bvw,
-						  				MediaType type)
+bacon_video_widget_get_mrls (BaconVideoWidget *bvw, MediaType type)
 {
 	g_return_val_if_fail (bvw != NULL, NULL);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET(bvw), NULL);
-	g_return_val_if_fail (GST_IS_PLAY(bvw->play), NULL);
+	g_return_val_if_fail (GST_IS_PLAY(bvw->priv->play), NULL);
 	return NULL;
 }
 
 void
-bacon_video_widget_get_metadata		 (	BaconVideoWidget *bvw,
-						  				BaconVideoWidgetMetadataType type,
-						  				GValue *value)
+bacon_video_widget_get_metadata (BaconVideoWidget *bvw,
+		BaconVideoWidgetMetadataType type,
+		GValue *value)
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
-	g_return_if_fail (GST_IS_PLAY(bvw->play));
+	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
 }
 
 /* Screenshot functions */
 gboolean
-bacon_video_widget_can_get_frames	(	BaconVideoWidget *bvw,
-						  				GError **error)
+bacon_video_widget_can_get_frames (BaconVideoWidget *bvw, GError **error)
 {
 	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET(bvw), FALSE);
-	g_return_val_if_fail (GST_IS_PLAY(bvw->play), FALSE);
+	g_return_val_if_fail (GST_IS_PLAY(bvw->priv->play), FALSE);
 	return FALSE;
 }
 
 GdkPixbuf *
-bacon_video_widget_get_current_frame	(BaconVideoWidget *bvw)
+bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 {
 	g_return_val_if_fail (bvw != NULL, NULL);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET(bvw), NULL);
-	g_return_val_if_fail (GST_IS_PLAY(bvw->play), NULL);
+	g_return_val_if_fail (GST_IS_PLAY(bvw->priv->play), NULL);
 	return NULL;
 }
 
@@ -608,18 +675,17 @@ bacon_video_widget_get_type (void)
 			(GInstanceInitFunc) bacon_video_widget_instance_init,
 		};
 
-		bacon_video_widget_type = g_type_register_static (GTK_TYPE_WIDGET,
-			"BaconVideoWidget", &bacon_video_widget_info, (GTypeFlags)0);
+		bacon_video_widget_type = g_type_register_static
+			(GTK_TYPE_WIDGET, "BaconVideoWidget",
+			 &bacon_video_widget_info, (GTypeFlags)0);
 	}
 
 	return bacon_video_widget_type;
 }
 
 GtkWidget *
-bacon_video_widget_new (	int width,
-							int height,
-							gboolean null_out,
-							GError **err)
+bacon_video_widget_new (int width, int height,
+		gboolean null_out, GError **err)
 {
 	BaconVideoWidget *bvw;
 
@@ -627,5 +693,4 @@ bacon_video_widget_new (	int width,
 			(bacon_video_widget_get_type (), NULL));
 	
 	return GTK_WIDGET (bvw);
-	
 }

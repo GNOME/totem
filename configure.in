@@ -14,12 +14,37 @@ AC_PROG_INTLTOOL([0.20])
 
 GNOME_COMPILE_WARNINGS
 
+dnl xine or gst ?
+
+GST_REQS=0.6.0
+XINE_REQS=1.0.0
+
+AC_ARG_ENABLE(gstreamer,
+		AC_HELP_STRING([--enable-gstreamer],[use GStreamer instead of xine for the backend]),
+	[case "${enableval}" in
+	yes) ENABLE_GST=yes ;;
+        no)  ENABLE_GST=no ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-gstreamer) ;;
+	esac],
+	[ENABLE_GST=no]) dnl Default value
+
+AC_MSG_CHECKING(for backend libraries)
+
+if test x$ENABLE_GST = xyes; then
+	MM="gstreamer-play-0.6 >= $GST_REQS"
+	AC_MSG_RESULT(GStreamer)
+else
+	MM="libxine >= $XINE_REQS"
+	AC_MSG_RESULT(xine)
+fi
+AM_CONDITIONAL(TOTEM_GST, test x$ENABLE_GST = "xyes")
+
 dnl Seems that the order matters because libtool blows
-PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= 2.1.0 libgnomeui-2.0 >= 2.1.1 libglade-2.0 gnome-vfs-2.0 >= 2.1.6 libxine >= 1.0.0)
+PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= 2.1.0 libgnomeui-2.0 >= 2.1.1 libglade-2.0 gnome-vfs-2.0 >= 2.1.6 $MM)
 AC_SUBST(EXTRA_GNOME_CFLAGS)
 AC_SUBST(EXTRA_GNOME_LIBS)
 
-PKG_CHECK_MODULES(GTK, gtk+-2.0 libxine >= 1.0.0 gthread-2.0)
+PKG_CHECK_MODULES(GTK, gtk+-2.0 $MM gthread-2.0)
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
 
@@ -33,7 +58,6 @@ AC_CHECK_LIB(Xtst, XTestFakeKeyEvent,
 AC_SUBST(XTEST_LIBS)
 
 AC_CHECK_HEADER(irman.h,,)
-
 REMOTE_LIBS=""
 AC_CHECK_LIB(lirc_client, lirc_init, [
                 AC_CHECK_HEADER(lirc/lirc_client.h, [
@@ -89,7 +113,6 @@ else
        AC_MSG_RESULT(n334)
 fi
 
-
 AC_PATH_PROG(GCONFTOOL, gconftool-2)
 AM_GCONF_SOURCE_2
 
@@ -99,7 +122,7 @@ AC_ARG_ENABLE(debug,
 	[case "${enableval}" in
 	yes) ENABLE_DEBUG=yes ;;
 	no)  ENABLE_DEBUG=no ;;
-	*) AC_MSG_ERROR(bad value ${enableval} for --enable-debug) ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --disable-debug) ;;
 	esac],
 [ENABLE_DEBUG=yes]) dnl Default value
 if test x$ENABLE_DEBUG = xyes; then
