@@ -113,7 +113,7 @@ static char
 
 	for (i = 0; languages[i].code != NULL; i++)
 	{
-		if (strcmp (code, languages[i].code) == 0)
+		if (strstr (code, languages[i].code) != NULL)
 			return g_strdup (languages[i].language);
 	}
 
@@ -3171,6 +3171,10 @@ main (int argc, char **argv)
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
+	/* Please also translate your language into its native language
+	 * in src/languages.h
+	 * for example: French -> Francais
+	 * use C UTF-8 strings */
 	g_set_application_name (_("Totem Movie Player"));
 
 	/* FIXME See http://bugzilla.gnome.org/show_bug.cgi?id=111349 */

@@ -1,5 +1,11 @@
 2003-05-06  Bastien Nocera  <hadess@hadess.net>
 
+	* src/languages.h: add all the languages from ISO 639-1
+	* src/totem.c: (language_name_get_from_code), (main): fix for the new
+	ISO 639-1 table above, and add a notice for translators
+
+2003-05-06  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c: (bacon_video_widget_realize): don't
 	try to create a goom if we don't have an audio ouput
 	* src/gtk-playlist.c: (gtk_playlist_add_mrl): application/ogg and
