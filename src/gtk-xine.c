@@ -782,11 +782,11 @@ gtk_xine_realize (GtkWidget *widget)
 
 	/* Can we play DVDs and VCDs ? */
 	autoplug_list = xine_get_autoplay_input_plugin_ids (gtx->priv->xine);
-	while (autoplug_list[i])
+	while (autoplug_list && autoplug_list[i])
 	{
-		if (strcmp (autoplug_list[i], "VCD") == 0)
+		if (g_ascii_strcasecmp (autoplug_list[i], "VCD") == 0)
 			gtx->priv->can_vcd = TRUE;
-		else if (strcmp (autoplug_list[i], "NAV") == 0)
+		else if (g_ascii_strcasecmp (autoplug_list[i], "DVD") == 0)
 			gtx->priv->can_dvd = TRUE;
 		i++;
 	}
@@ -1027,8 +1027,8 @@ gtk_xine_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	}
 }
 
-gint
-gtk_xine_open (GtkXine *gtx, gchar *mrl)
+gboolean
+gtk_xine_open (GtkXine *gtx, const gchar *mrl)
 {
 	int error;
 
@@ -1046,7 +1046,7 @@ gtk_xine_open (GtkXine *gtx, gchar *mrl)
 	return TRUE;
 }
 
-gint
+gboolean
 gtk_xine_play (GtkXine *gtx, gint pos, gint start_time)
 {
 	int error;
@@ -1075,6 +1075,19 @@ gtk_xine_stop (GtkXine *gtx)
 		return;
 
 	xine_stop (gtx->priv->stream);
+}
+
+void
+gtk_xine_close (GtkXine *gtx)
+{
+	g_return_if_fail (gtx != NULL);
+	g_return_if_fail (GTK_IS_XINE (gtx));
+	g_return_if_fail (gtx->priv->xine != NULL);
+
+	if (gtx->priv->stream == NULL)
+		return;
+
+	xine_close (gtx->priv->stream);
 }
 
 /* Properties */

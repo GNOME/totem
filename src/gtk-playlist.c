@@ -306,7 +306,6 @@ drop_cb (GtkWidget     *widget,
 {
 	GtkPlaylist *playlist = GTK_PLAYLIST (user_data);
 	GList *list, *p, *file_list;
-	int i;
 
 	list = gnome_vfs_uri_list_parse (data->data);
 
@@ -655,7 +654,6 @@ static void
 init_config (GtkPlaylist *playlist)
 {
 	GtkWidget *button;
-	GConfClient *gc;
 	gboolean repeat;
 
 	button = glade_xml_get_widget (playlist->_priv->xml, "repeat_button");
@@ -874,6 +872,8 @@ gtk_playlist_add_one_mrl (GtkPlaylist *playlist, const char *mrl,
 	g_signal_emit (G_OBJECT (playlist),
 			gtk_playlist_table_signals[CHANGED], 0,
 			NULL);
+
+	return TRUE;
 }
 
 static gboolean
@@ -1285,8 +1285,6 @@ gtk_playlist_set_next (GtkPlaylist *playlist)
 void
 gtk_playlist_set_at_start (GtkPlaylist *playlist)
 {
-	GtkTreeIter iter;
-
 	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
 
 	gtk_playlist_unset_playing (playlist);

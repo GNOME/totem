@@ -139,25 +139,6 @@ totem_action_error (char *msg, GtkWindow *parent)
 	error_dialog = NULL;
 }
 
-#ifndef TOTEM_DEBUG
-/* Nicked from aaxine */
-static void
-disable_error_output (void)
-{
-	int error_fd;
-
-	if ((error_fd = open ("/dev/null", O_WRONLY)) < 0)
-	{
-		g_message("cannot open /dev/null");
-	} else {
-		if (dup2 (error_fd, STDOUT_FILENO) < 0)
-			g_message("cannot dup2 stdout");
-		if (dup2 (error_fd, STDERR_FILENO) < 0)
-			g_message("cannot dup2 stderr");
-	}
-}
-#endif
-
 void
 totem_action_exit (Totem *totem)
 {
@@ -242,34 +223,6 @@ totem_action_play (Totem *totem, int offset)
 
 	retval = gtk_xine_play (GTK_XINE (totem->gtx), offset , 0);
 	play_pause_set_label (totem, retval);
-
-	/* FIXME remove when we're gone to 0.9.14 */
-//	if (offset != 0)
-//		return;
-#if 0
-	gtk_widget_set_sensitive (totem->fs_seek,
-			gtk_xine_is_seekable(GTK_XINE (totem->gtx)));
-	gtk_widget_set_sensitive (totem->seek,
-			gtk_xine_is_seekable(GTK_XINE (totem->gtx)));
-	{
-		GtkWidget *widget;
-		char *text, *time_text, *name;
-		int time;
-
-		widget = glade_xml_get_widget (totem->xml, "label1");
-		time = gtk_xine_get_stream_length (GTK_XINE (totem->gtx));
-		name = gtk_playlist_mrl_to_title (totem->mrl);
-		time_text = time_to_string (time);
-		text = g_strdup_printf
-			("<span size=\"medium\"><b>%s (%s)</b></span>",
-			 name, time_text);
-		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
-				text);
-		g_free (text);
-		g_free (time_text);
-		g_free (name);
-	}
-#endif
 }
 
 void
@@ -363,8 +316,13 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 	GtkWidget *widget;
 	char *text;
 
-	g_free (totem->mrl);
 	gtk_xine_stop (GTK_XINE (totem->gtx));
+
+	if (totem->mrl != NULL)
+	{
+		g_free (totem->mrl);
+		gtk_xine_close (GTK_XINE (totem->gtx));
+	}
 
 	if (mrl == NULL)
 	{
@@ -456,7 +414,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		/* Label */
 		widget = glade_xml_get_widget (totem->xml, "label1");
 		time = gtk_xine_get_stream_length (GTK_XINE (totem->gtx));
-		time_text = time_to_string (time);
+		time_text = time_to_string (time/1000);
 		text = g_strdup_printf
 			("<span size=\"medium\"><b>%s (%s)</b></span>",
 			 name, time_text);
@@ -1739,10 +1697,6 @@ main (int argc, char **argv)
 		g_message ("Send message to the existing GUI");
 		return 0;
 	}
-
-#ifndef TOTEM_DEBUG
-	disable_error_output ();
-#endif
 
 	totem = g_new (Totem, 1);
 	totem->mrl = NULL;

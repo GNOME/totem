@@ -1,5 +1,18 @@
 2002-10-28  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-playlist.c: (drop_cb), (init_config),
+	(gtk_playlist_add_one_mrl), (gtk_playlist_set_at_start):
+	fix all the crack warnings
+	* src/gtk-xine.c: (gtk_xine_realize), (gtk_xine_open),
+	(gtk_xine_stop), (gtk_xine_close): fix the plugins detection,
+	semantics for _open/_play and _close
+	* src/gtk-xine.h:
+	* src/totem.c: (totem_action_set_mrl): fix the time display, and
+	remove the temporary commented hacks, remove the disable_output stuff,
+	it's crack and not used anyway
+
+2002-10-28  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-xine.c: (dest_size_cb), (frame_output_cb),
 	(load_video_out_driver), (generate_mouse_event), (xine_thread),
 	(gtk_xine_realize), (gtk_xine_set_speed), (gtk_xine_is_playing):

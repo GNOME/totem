@@ -71,10 +71,11 @@ GtkWidget *gtk_xine_new                (int width, int height);
 gboolean  gtk_xine_check               (GtkXine *gtx);
 
 /* Actions */
-gint gtk_xine_open		       (GtkXine *gtx, gchar *mrl);
-gint gtk_xine_play                     (GtkXine *gtx, gint pos,
+gboolean gtk_xine_open                (GtkXine *gtx, const gchar *mrl);
+gboolean gtk_xine_play                 (GtkXine *gtx, gint pos,
 		                        gint start_time);
 void gtk_xine_stop                     (GtkXine *gtx);
+void gtk_xine_close                    (GtkXine *gtx);
 
 /* Properties */
 void gtk_xine_set_speed                (GtkXine *gtx, gint speed);
