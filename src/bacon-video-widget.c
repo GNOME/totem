@@ -1431,7 +1431,6 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 	{
 		GdkWindow *parent;
 		GdkWindowAttr attr;
-		GList *list = NULL;
 
 		parent = gdk_window_get_toplevel (bvw->widget.window);
 
@@ -1465,8 +1464,9 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 		scrsaver_disable (bvw->priv->display);
 
 		/* Set the icon and the name */
+		if (bvw->priv->icon != NULL)
 		{
-			GList *list;
+			GList *list = NULL;
 
 			list = g_list_append (list, bvw->priv->icon);
 			gdk_window_set_icon_list (bvw->priv->fullscreen_window,
