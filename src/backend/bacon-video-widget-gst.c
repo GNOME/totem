@@ -841,7 +841,7 @@ got_found_tag (GstElement *play, GstElement *source,
   
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  
+
   signal = g_new0 (BVWSignal, 1);
   signal->signal_id = ASYNC_FOUND_TAG;
   signal->signal_data.found_tag.source = source;
@@ -2640,12 +2640,6 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
       for (num = 0; ; num++) {
         if (!gst_tag_list_get_uint_index (bvw->priv->tagcache,
 					  GST_TAG_BITRATE, num, &t))
-          break;
-        integer += t;
-      }
-      for (num = 0; ; num++) {
-        if (!gst_tag_list_get_uint_index (bvw->priv->tagcache,
-					  GST_TAG_NOMINAL_BITRATE, num, &t))
           break;
         integer += t;
       }

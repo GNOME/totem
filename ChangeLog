@@ -1,3 +1,10 @@
+2005-02-23  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/bacon-video-widget-gst.c:
+	(bacon_video_widget_get_metadata_int):
+	  Just read bitrate, not different kinds (leads to conflicts
+	  with several elements).
+
 2005-02-22  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-playlist.c: (totem_playlist_remove_files):
