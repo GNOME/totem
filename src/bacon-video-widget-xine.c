@@ -1324,7 +1324,6 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 		GError **gerror)
 {
 	int error;
-	gboolean has_video;
 
 	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (mrl != NULL, FALSE);
@@ -1886,7 +1885,6 @@ int
 bacon_video_widget_get_connection_speed (BaconVideoWidget *bvw)
 {
 	xine_cfg_entry_t entry;
-	int i = 0;
 
 	g_return_val_if_fail (bvw != NULL, 0);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
@@ -1930,9 +1928,9 @@ bacon_video_widget_get_deinterlacing (BaconVideoWidget *bvw)
 gboolean
 bacon_video_widget_set_tv_out (BaconVideoWidget *bvw, TvOutType tvout)
 {
-	g_return_if_fail (bvw != NULL);
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-	g_return_if_fail (bvw->priv->xine != NULL);
+	g_return_val_if_fail (bvw != NULL, FALSE);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
 
 	if (tvout == TV_OUT_DXR3 || bvw->priv->tvout == TV_OUT_DXR3)
 	{
@@ -2061,6 +2059,8 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget *bvw,
 		h = 768;
 		break;
 	default:
+		/* shut up warnings */
+		fps = w = h = 0;
 		g_assert_not_reached ();
 	}
 
@@ -2479,7 +2479,7 @@ GList
 *bacon_video_widget_get_languages (BaconVideoWidget *bvw)
 {
 	GList *list = NULL;
-	int retval, i;
+	int i;
 	char lang[16];
 
 	for(i = 0; i < 32; i++)
@@ -2512,7 +2512,7 @@ GList
 *bacon_video_widget_get_subtitles (BaconVideoWidget *bvw)
 {
 	GList *list = NULL;
-	int retval, i;
+	int i;
 	char lang[16];
 
 	for(i = 0; i < 32; i++)

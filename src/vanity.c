@@ -18,6 +18,7 @@
  */
 
 #include <config.h>
+#include <X11/Xlib.h>
 #include <gnome.h>
 #include <glade/glade.h>
 #include <libgnomevfs/gnome-vfs.h>
@@ -672,8 +673,6 @@ main (int argc, char **argv)
 	char *filename;
 	GConfClient *gc;
 	GError *err = NULL;
-	GdkPixbuf *pix;
-	int retval;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -710,7 +709,7 @@ main (int argc, char **argv)
 		str = g_strdup_printf (_("Vanity couln't initialise the \n"
 					"configuration engine:\n%s"),
 				err->message);
-		vanity_action_error_and_exit (str, vanity);
+		vanity_action_error_and_exit (str, NULL);
 		g_error_free (err);
 		g_free (str);
 	}

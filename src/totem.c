@@ -24,6 +24,7 @@
 #include <string.h>
 
 /* X11 headers */
+#include <X11/Xlib.h>
 #ifdef HAVE_XFREE
 #include <X11/XF86keysym.h>
 #endif
@@ -483,10 +484,10 @@ totem_get_nice_name_for_stream (Totem *totem)
 	return retval;
 }
 
-static gboolean
+static void
 totem_action_restore_pl (Totem *totem)
 {
-	char *path, *mrl;
+	char *path;
 
 	path = g_build_filename (G_DIR_SEPARATOR_S, g_get_home_dir (),
 			".gnome2", "totem.pls", NULL);
@@ -494,25 +495,20 @@ totem_action_restore_pl (Totem *totem)
 	if (g_file_test (path, G_FILE_TEST_EXISTS) == FALSE)
 	{
 		g_free (path);
-		return FALSE;
+		return;
 	}
 
 	if (gtk_playlist_add_mrl (totem->playlist, path, NULL) == FALSE)
 	{
 		g_free (path);
-		return FALSE;
+		totem_action_set_mrl (totem, NULL);
+		return;
 	}
 
 	g_free (path);
-	mrl = gtk_playlist_get_current_mrl (totem->playlist);
-	if (mrl == NULL)
-		return FALSE;
-
-	totem_action_set_mrl (totem, mrl);
 	play_pause_set_label (totem, STATE_PAUSED);
-	g_free (mrl);
 
-	return TRUE;
+	return;
 }
 
 static void
@@ -608,8 +604,6 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		widget = glade_xml_get_widget (totem->xml, "play2");
 		gtk_widget_set_sensitive (widget, FALSE);
 
-		update_mrl_label (totem, NULL);
-
 		/* Seek bar and seek buttons */
 		update_seekable (totem, TRUE);
 
@@ -644,6 +638,8 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		totem->mrl = g_strdup(LOGO_PATH);
 		bacon_video_widget_set_logo (totem->bvw, totem->mrl);
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
+
+		update_mrl_label (totem, NULL);
 
 		/* Reset the properties */
 		bacon_video_widget_properties_update
@@ -1095,7 +1091,8 @@ static void
 update_current_time (BaconVideoWidget *bvw, int current_time, int stream_length,
 		int current_position, Totem *totem)
 {
-	if (bacon_video_widget_get_logo_mode (totem->bvw) == TRUE)
+	if (bacon_video_widget_get_logo_mode (totem->bvw) == TRUE
+			|| (current_time == 0 && stream_length == 0))
 	{
 		totem_statusbar_set_time_and_length
 			(TOTEM_STATUSBAR (totem->statusbar),
@@ -2419,7 +2416,7 @@ update_media_menu_items (Totem *totem)
 
 	playing = totem_playing_dvd (totem);
 
-        item = glade_xml_get_widget (totem->xml, "dvd_root_menu");
+	item = glade_xml_get_widget (totem->xml, "dvd_root_menu");
 	gtk_widget_set_sensitive (item, playing);
         item = glade_xml_get_widget (totem->xml, "dvd_title_menu");
 	gtk_widget_set_sensitive (item, playing);
@@ -2546,7 +2543,6 @@ create_submenu (Totem *totem, GList *list, int current, gboolean is_lang)
 
 	for (l = list; l != NULL; l = l->next)
 	{
-		GtkWidget *menuitem;
 		char *lang;
 
 		if (menu == NULL)
@@ -3097,7 +3093,6 @@ static void
 process_command_line (BaconMessageConnection *conn, int argc, char **argv)
 {
 	int i, command;
-	gboolean replace_done = FALSE;
 	char *line, *full_path;
 
 	if (argc == 1)
@@ -3163,7 +3158,6 @@ main (int argc, char **argv)
 	GConfClient *gc;
 	GError *err = NULL;
 	GdkPixbuf *pix;
-	int retval;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -3204,7 +3198,7 @@ main (int argc, char **argv)
 		str = g_strdup_printf (_("Totem couln't initialise the \n"
 					"configuration engine:\n%s"),
 				err->message);
-		totem_action_error_and_exit (str, totem);
+		totem_action_error_and_exit (str, NULL);
 		g_error_free (err);
 		g_free (str);
 	}
@@ -3327,8 +3321,7 @@ main (int argc, char **argv)
 		else
 			totem_action_set_mrl (totem, NULL);
 	} else {
-		if (totem_action_restore_pl (totem) == FALSE)
-			totem_action_set_mrl (totem, NULL);
+		totem_action_restore_pl (totem);
 	}
 
 #ifdef HAVE_REMOTE

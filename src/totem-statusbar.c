@@ -156,10 +156,10 @@ totem_statusbar_init (TotemStatusbar *statusbar)
 
   statusbar->has_resize_grip = TRUE;
   statusbar->time = 0;
-  statusbar->length = 0;
+  statusbar->length = -1;
 
   gtk_widget_style_get (GTK_WIDGET (statusbar), "shadow_type", &shadow_type, NULL);
-  
+ 
   statusbar->frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (statusbar->frame), shadow_type);
   gtk_box_pack_start (box, statusbar->frame, TRUE, TRUE, 0);

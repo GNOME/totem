@@ -1,3 +1,19 @@
+2003-05-08  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_open),
+	(bacon_video_widget_get_connection_speed),
+	(bacon_video_widget_set_tv_out),
+	(bacon_video_widget_set_visuals_quality),
+	(bacon_video_widget_get_languages),
+	(bacon_video_widget_get_subtitles):
+	* src/totem-statusbar.c: (totem_statusbar_init):
+	* src/totem.c: (totem_action_restore_pl), (totem_action_set_mrl),
+	(update_current_time), (update_media_menu_items), (create_submenu),
+	(process_command_line), (main):
+	* src/vanity.c: (main): remove unused variables, fix some retvals,
+	fix statusbar saying "Streaming" when a file can't be opened, fix
+	"double-play" when restoring a playlist
+
 2003-05-07  Julien MOUTTE  <julien@moutte.net>
 
 	* src/bacon-video-widget-gst.c:
