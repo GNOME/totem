@@ -80,7 +80,21 @@ PKG_CHECK_MODULES(GTK, gtk+-2.0 $MM gthread-2.0)
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
 
+AC_CHECK_HEADER(irman.h,,)
+REMOTE_LIBS=""
+AC_CHECK_LIB(lirc_client, lirc_init, [
+		AC_CHECK_HEADER(lirc/lirc_client.h, [
+			REMOTE_LIBS="-llirc_client"
+			AC_DEFINE(HAVE_REMOTE, 1, [defined if you have lirc library])
+			])
+])
+AC_SUBST(REMOTE_LIBS)
+
 AC_PATH_X
+
+CFLAGS="-I$x_includes $CFLAGS"
+LIBS="-L$x_libraries $LIBS"
+
 XTEST_LIBS=""
 AC_CHECK_LIB(Xtst, XTestFakeKeyEvent,
 		XTEST_LIBS="-lXtst -L$x_libraries"
@@ -88,16 +102,6 @@ AC_CHECK_LIB(Xtst, XTestFakeKeyEvent,
 		,
 		"-L$x_libraries")
 AC_SUBST(XTEST_LIBS)
-
-AC_CHECK_HEADER(irman.h,,)
-REMOTE_LIBS=""
-AC_CHECK_LIB(lirc_client, lirc_init, [
-                AC_CHECK_HEADER(lirc/lirc_client.h, [
-                        REMOTE_LIBS="-llirc_client"
-                        AC_DEFINE(HAVE_REMOTE, 1, [defined if you have lirc library])
-		])
-])
-AC_SUBST(REMOTE_LIBS)
 
 dnl Multimedia keys
 have_xfree=no
