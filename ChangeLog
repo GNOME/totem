@@ -1,5 +1,14 @@
 2003-03-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (on_volume_up1_activate),
+	(on_volume_down1_activate), (totem_action_remote),
+	(totem_action_handle_key), (totem_action_handle_scroll),
+	(totem_action_handle_volume_scroll), (on_volume_scroll_event),
+	(totem_callback_connect): add mouse-wheel support to all the widgets
+	that could (the sliders)
+
+2003-03-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget.c: (bacon_video_widget_can_get_frames),
 	(bacon_video_widget_get_current_frame): Make it possible to take
 	screenshots of visual plugins. This requires xine-lib beta8. People

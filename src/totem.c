@@ -55,6 +55,9 @@
 #define SEEK_FORWARD_SHORT_OFFSET 20000
 #define SEEK_BACKWARD_SHORT_OFFSET -20000
 
+#define VOLUME_DOWN_OFFSET -8
+#define VOLUME_UP_OFFSET 8
+
 typedef enum {
 	STATE_PLAYING,
 	STATE_PAUSED,
@@ -1583,13 +1586,13 @@ on_skip_backwards1_activate (GtkButton *button, Totem *totem)
 static void
 on_volume_up1_activate (GtkButton *button, Totem *totem)
 {
-	totem_action_volume_relative (totem, 8);
+	totem_action_volume_relative (totem, VOLUME_UP_OFFSET);
 }
 
 static void
 on_volume_down1_activate (GtkButton *button, Totem *totem)
 {
-	totem_action_volume_relative (totem, -8);
+	totem_action_volume_relative (totem, VOLUME_DOWN_OFFSET);
 }
 
 void
@@ -1610,10 +1613,10 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 				SEEK_BACKWARD_OFFSET);
 		break;
 	case TOTEM_REMOTE_COMMAND_VOLUME_UP:
-		totem_action_volume_relative (totem, 8);
+		totem_action_volume_relative (totem, VOLUME_UP_OFFSET);
 		break;
 	case TOTEM_REMOTE_COMMAND_VOLUME_DOWN:
-		totem_action_volume_relative (totem, -8);
+		totem_action_volume_relative (totem, VOLUME_DOWN_OFFSET);
 		break;
 	case TOTEM_REMOTE_COMMAND_NEXT:
 		totem_action_next (totem);
@@ -1928,10 +1931,10 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 		totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET);
 		break;
 	case GDK_Up:
-		totem_action_volume_relative (totem, 8);
+		totem_action_volume_relative (totem, VOLUME_UP_OFFSET);
 		break;
 	case GDK_Down:
-		totem_action_volume_relative (totem, -8);
+		totem_action_volume_relative (totem, VOLUME_DOWN_OFFSET);
 		break;
 	case GDK_0:
 	case GDK_onehalf:
@@ -1967,7 +1970,26 @@ totem_action_handle_scroll (Totem *totem, GdkScrollDirection direction)
 	default:
 		retval = FALSE;
 	}
-			
+
+	return retval;
+}
+
+static gboolean
+totem_action_handle_volume_scroll (Totem *totem, GdkScrollDirection direction)
+{
+	gboolean retval = TRUE;
+
+	switch (direction) {
+	case GDK_SCROLL_UP:
+		totem_action_volume_relative (totem, VOLUME_UP_OFFSET);
+		break;
+	case GDK_SCROLL_DOWN:
+		totem_action_volume_relative (totem, VOLUME_DOWN_OFFSET);
+		break;
+	default:
+		retval = FALSE;
+	}
+
 	return retval;
 }
 
@@ -1992,6 +2014,12 @@ static int
 on_window_scroll_event (GtkWidget *win, GdkEventScroll *event, Totem *totem)
 {
 	return totem_action_handle_scroll (totem, event->direction);
+}
+
+static int
+on_volume_scroll_event (GtkWidget *win, GdkEventScroll *event, Totem *totem)
+{
+	return totem_action_handle_volume_scroll (totem, event->direction);
 }
 
 static void
@@ -2222,6 +2250,18 @@ totem_callback_connect (Totem *totem)
 	gtk_widget_add_events (totem->win, GDK_SCROLL_MASK);
 	g_signal_connect (G_OBJECT(totem->win), "scroll_event",
 			G_CALLBACK (on_window_scroll_event), totem);
+	gtk_widget_add_events (totem->seek, GDK_SCROLL_MASK);
+	g_signal_connect (G_OBJECT (totem->seek), "scroll_event",
+			G_CALLBACK (on_window_scroll_event), totem);
+	gtk_widget_add_events (totem->fs_seek, GDK_SCROLL_MASK);
+	g_signal_connect (G_OBJECT (totem->fs_seek), "scroll_event",
+			G_CALLBACK (on_window_scroll_event), totem);
+	gtk_widget_add_events (totem->volume, GDK_SCROLL_MASK);
+	g_signal_connect (G_OBJECT (totem->volume), "scroll_event",
+			G_CALLBACK (on_volume_scroll_event), totem);
+	gtk_widget_add_events (totem->fs_volume, GDK_SCROLL_MASK);
+	g_signal_connect (G_OBJECT (totem->fs_volume), "scroll_event",
+			G_CALLBACK (on_volume_scroll_event), totem);
 
 	/* Sliders */
 	g_signal_connect (G_OBJECT(totem->seek), "button_press_event",
