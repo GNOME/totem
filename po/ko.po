@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-23 04:25+0900\n"
-"PO-Revision-Date: 2003-09-23 04:31+0900\n"
+"POT-Creation-Date: 2005-02-10 07:53+0900\n"
+"PO-Revision-Date: 2005-02-10 17:40+0900\n"
 "Last-Translator: Jang,Jae-Man <jacojang@korea.com>\n"
 "Language-Team: Gnome Korea <jacojang@gnome.or.kr>\n"
 "MIME-Version: 1.0\n"
@@ -14,734 +14,815 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1264
+#: ../data/playlist.glade.h:1 ../src/totem-playlist.c:1484
 msgid "Playlist"
 msgstr "재생 목록"
 
-#: data/playlist.glade.h:2
+#: ../data/playlist.glade.h:2
 msgid "Repeat _mode"
 msgstr "반복 모드(_M)"
 
-#: data/playlist.glade.h:3
+#: ../data/playlist.glade.h:3
+msgid "Shuf_fle mode"
+msgstr "임의 재생 모드(_F)"
+
+#: ../data/playlist.glade.h:4
 msgid "_Add..."
 msgstr "더하기(_A)..."
 
-#: data/playlist.glade.h:4
+#: ../data/playlist.glade.h:5
+msgid "_Copy Location"
+msgstr "위치 복사(_C)"
+
+#: ../data/playlist.glade.h:6
 msgid "_Save..."
 msgstr "저장(_S)..."
 
-#: data/properties.glade.h:1 data/totem.glade.h:1
+#: ../data/properties.glade.h:1 ../data/screenshot.glade.h:1
+#: ../data/totem.glade.h:1
 msgid "    "
 msgstr "    "
 
-#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:170
-#: src/totem-properties-page.c:164
+#: ../data/properties.glade.h:2 ../src/bacon-video-widget-properties.c:109
 msgid "0 frames per second"
 msgstr "초당 0 프레임"
 
 #. Bitrate
-#: data/properties.glade.h:3 src/bacon-video-widget-properties.c:172
-#: src/totem-properties-page.c:166
+#: ../data/properties.glade.h:3 ../src/bacon-video-widget-properties.c:111
 msgid "0 kbps"
 msgstr "0 kbps"
 
 #. 0 seconds
-#: data/properties.glade.h:4 data/totem.glade.h:3
-#: src/bacon-video-widget-properties.c:126 src/totem-properties-page.c:120
+#: ../data/properties.glade.h:4 ../data/skip_to.glade.h:1
+#: ../src/video-utils.c:310
 msgid "0 seconds"
 msgstr "0 초"
 
 #. Dimensions
-#: data/properties.glade.h:5 src/bacon-video-widget-properties.c:165
-#: src/totem-properties-page.c:159
+#: ../data/properties.glade.h:5 ../src/bacon-video-widget-properties.c:104
 msgid "0 x 0"
 msgstr "0 x 0"
 
-#: data/properties.glade.h:6
+#: ../data/properties.glade.h:6
 msgid "<b>Audio</b>"
 msgstr "<b>오디오</b>"
 
-#: data/properties.glade.h:7
+#: ../data/properties.glade.h:7
 msgid "<b>General</b>"
 msgstr "<b>일반</b>"
 
-#: data/properties.glade.h:8
+#: ../data/properties.glade.h:8
 msgid "<b>Video</b>"
 msgstr "<b>비디오</b>"
 
-#: data/properties.glade.h:9
+#: ../data/properties.glade.h:9
+msgid "Album:"
+msgstr "앨범:"
+
+#: ../data/properties.glade.h:10
 msgid "Artist:"
 msgstr "음악가:"
 
-#: data/properties.glade.h:10
+#: ../data/properties.glade.h:11
 msgid "Bitrate:"
 msgstr "비트 전송률:"
 
-#: data/properties.glade.h:11
+#: ../data/properties.glade.h:12
 msgid "Codec:"
 msgstr "코덱:"
 
-#: data/properties.glade.h:12
+#: ../data/properties.glade.h:13
 msgid "Dimensions:"
 msgstr "크기:"
 
-#: data/properties.glade.h:13
+#: ../data/properties.glade.h:14
 msgid "Duration:"
 msgstr "재생 시간:"
 
-#: data/properties.glade.h:14
+#: ../data/properties.glade.h:15
 msgid "Framerate:"
 msgstr "프레임 속도:"
 
 #. Video Codec
-#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:167
-#: src/bacon-video-widget-properties.c:174
-#: src/bacon-video-widget-properties.c:243
-#: src/bacon-video-widget-properties.c:275 src/totem-properties-page.c:161
-#: src/totem-properties-page.c:168 src/totem-properties-page.c:237
-#: src/totem-properties-page.c:269
+#. Audio Codec
+#: ../data/properties.glade.h:16 ../src/bacon-video-widget-properties.c:106
+#: ../src/bacon-video-widget-properties.c:113
+#: ../src/bacon-video-widget-properties.c:194
+#: ../src/bacon-video-widget-properties.c:232
 msgid "N/A"
 msgstr "해당 없음"
 
-#: data/properties.glade.h:16 src/bacon-video-widget-properties.c:324
+#: ../data/properties.glade.h:17 ../src/totem.c:1972
 msgid "Properties"
 msgstr "등록 정보"
 
-#: data/properties.glade.h:17
+#: ../data/properties.glade.h:18
 msgid "Title:"
 msgstr "제목:"
 
 #. Title
-#: data/properties.glade.h:18 src/bacon-video-widget-properties.c:157
-#: src/bacon-video-widget-properties.c:159
-#: src/bacon-video-widget-properties.c:161
-#: src/bacon-video-widget-properties.c:192
-#: src/bacon-video-widget-properties.c:199
-#: src/bacon-video-widget-properties.c:206 src/totem-properties-page.c:151
-#: src/totem-properties-page.c:153 src/totem-properties-page.c:155
-#: src/totem-properties-page.c:186 src/totem-properties-page.c:193
-#: src/totem-properties-page.c:200
+#. Artist
+#. Album
+#. Year
+#: ../data/properties.glade.h:19 ../src/bacon-video-widget-properties.c:94
+#: ../src/bacon-video-widget-properties.c:96
+#: ../src/bacon-video-widget-properties.c:98
+#: ../src/bacon-video-widget-properties.c:100
+#: ../src/bacon-video-widget-properties.c:132
+#: ../src/bacon-video-widget-properties.c:139
+#: ../src/bacon-video-widget-properties.c:146
+#: ../src/bacon-video-widget-properties.c:153
 msgid "Unknown"
 msgstr "알 수 없음"
 
-#: data/properties.glade.h:19
+#: ../data/properties.glade.h:20
 msgid "Year:"
 msgstr "연도:"
 
-#: data/totem-download.glade.h:1
-msgid "Connecting to the server"
-msgstr "서버에 연결중"
-
-#: data/totem-download.glade.h:2
-msgid "Done"
-msgstr "완료"
-
-#: data/totem-download.glade.h:3
-msgid "Downloading the plug-ins"
-msgstr "플러그인 다운로드중"
-
-#: data/totem-download.glade.h:4
-msgid "Installing the plug-ins"
-msgstr "플러그인 설치중"
-
-#: data/totem-download.glade.h:5
-msgid "Plug-ins Download"
-msgstr "플러그인 다운로드"
-
-#: data/totem.desktop.in.h:1
-msgid "Play movies and songs"
-msgstr "영화와 음악 재생"
-
-#: data/totem.desktop.in.h:2 src/totem.c:3570
-msgid "Totem Movie Player"
-msgstr "Totem 영화 플레이어"
-
-#: data/totem.glade.h:2 data/uri.glade.h:1
+#: ../data/screenshot.glade.h:2 ../data/uri.glade.h:1
 msgid "*"
 msgstr "*"
 
-#: data/totem.glade.h:4
-msgid "1.5 Mbps T1/Intranet/LAN"
-msgstr "1.5 Mbps T1/인트라넷/LAN"
-
-#: data/totem.glade.h:5
-msgid "112 Kbps Dual ISDN/DSL"
-msgstr "112 Kbps 듀얼 ISDN/DSL"
-
-#: data/totem.glade.h:6
-msgid "14.4 Kbps Modem"
-msgstr "14.4 Kbps 모뎀"
-
-#: data/totem.glade.h:7
-msgid "19.2 Kbps Modem"
-msgstr "19.2 Kbps 모뎀"
-
-#: data/totem.glade.h:8
-msgid "256 Kbps DSL/Cable"
-msgstr "256 Kbps DSL/케이블"
-
-#: data/totem.glade.h:9
-msgid "28.8 Kbps Modem"
-msgstr "28.8 Kbps 모뎀"
-
-#: data/totem.glade.h:10
-msgid "33.6 Kbps Modem"
-msgstr "33.6 Kbps 모뎀"
-
-#: data/totem.glade.h:11
-msgid "34.4 Kbps Modem"
-msgstr "34.4 Kbps 모뎀"
-
-#: data/totem.glade.h:12
-msgid "384 Kbps DSL/Cable"
-msgstr "384 Kbps DSL/케이블"
-
-#: data/totem.glade.h:13
-msgid "4-channel"
-msgstr "4 채널"
-
-#: data/totem.glade.h:14
-msgid "5.0-channel"
-msgstr "5.0 채널"
-
-#: data/totem.glade.h:15
-msgid "5.1-channel"
-msgstr "5.1 채널"
-
-#: data/totem.glade.h:16
-msgid "512 Kbps DSL/Cable"
-msgstr "512 Kbps DSL/케이블"
-
-#: data/totem.glade.h:17
-msgid "56 Kbps Modem/ISDN"
-msgstr "56 Kbps 모뎀/ISDN"
-
-#: data/totem.glade.h:18
-msgid "<b>Audio Output</b>"
-msgstr "<b>오디오 출력</b>"
-
-#: data/totem.glade.h:19
-msgid "<b>Brightness/Contrast</b>"
-msgstr "<b>밝기/대비</b>"
-
-#: data/totem.glade.h:20
-msgid "<b>Display</b>"
-msgstr "<b>보여주기</b>"
-
-#: data/totem.glade.h:21
-msgid "<b>Networking</b>"
-msgstr "<b>네트워킹</b>"
-
-#: data/totem.glade.h:22
-msgid "<b>Optical Device</b>"
-msgstr "<b>광 장치</b>"
-
-#: data/totem.glade.h:23
+#: ../data/screenshot.glade.h:3
 msgid "<b>Preview</b>"
 msgstr "<b>미리 보기</b>"
 
-#: data/totem.glade.h:24
-msgid "<b>Proprietary Plugins</b>"
-msgstr "<b>독점 플러그인</b>"
-
-#: data/totem.glade.h:25
-msgid "<b>TV-Out</b>"
-msgstr "<b>TV 출력</b>"
-
-#: data/totem.glade.h:26
-msgid "<b>Visual Effects</b>"
-msgstr "<b>시각 효과</b>"
-
-#: data/totem.glade.h:27
-msgid "AC3 Passthrough"
-msgstr "AC3 통과 연결"
-
-#: data/totem.glade.h:28
-msgid "A_udio Menu"
-msgstr "오디오 메뉴(_U)"
-
-#: data/totem.glade.h:29
-msgid "Always on _Top"
-msgstr "항상 위(_T)"
-
-#: data/totem.glade.h:30
-msgid "Always on top"
-msgstr "항상 위"
-
-#: data/totem.glade.h:31
-msgid "Audio"
-msgstr "오디오"
-
-#: data/totem.glade.h:32
-msgid "Automatically _resize the window when a new video is loaded"
-msgstr "새 비디오를 읽어들였을 때 자동으로 창 크기 재조정(_R)"
-
-#: data/totem.glade.h:33
-msgid "Co_ntrast:"
-msgstr "대비(_N):"
-
-#: data/totem.glade.h:34
-msgid "Connection _speed:"
-msgstr "접속 속도(_S):"
-
-#: data/totem.glade.h:35
-msgid "Deinterlace"
-msgstr "비 인터레이스"
-
-#: data/totem.glade.h:36
-msgid "Display"
-msgstr "보여주기"
-
-#: data/totem.glade.h:37
-msgid "Exit Fullscreen"
-msgstr "전체 화면 끝내기"
-
-#: data/totem.glade.h:38
-msgid "Extra Large"
-msgstr "아주 크게"
-
-#: data/totem.glade.h:39
-msgid "File name"
-msgstr "파일 이름"
-
-#: data/totem.glade.h:40
-msgid "General"
-msgstr "일반"
-
-#: data/totem.glade.h:41
-msgid "Go to the DVD menu"
-msgstr "DVD 메뉴로 가기"
-
-#: data/totem.glade.h:42
-msgid "Go to the angle menu"
-msgstr "각도 메뉴로 가기"
-
-#: data/totem.glade.h:43
-msgid "Go to the audio menu"
-msgstr "오디오 메뉴로 가기"
-
-#: data/totem.glade.h:44
-msgid "Go to the chapter menu"
-msgstr "장 메뉴로 가기"
-
-#: data/totem.glade.h:45
-msgid "Go to the title menu"
-msgstr "제목 메뉴로 가기"
-
-#: data/totem.glade.h:46
-msgid "Intranet/LAN"
-msgstr "인트라넷/LAN"
-
-#: data/totem.glade.h:47
-msgid "Languages"
-msgstr "언어"
-
-#: data/totem.glade.h:48
-msgid "Large"
-msgstr "크게"
-
-#: data/totem.glade.h:49 src/totem.c:80
-msgid "Next"
-msgstr "다음"
-
-#: data/totem.glade.h:50
-msgid "Next chapter or movie"
-msgstr "다음 장으로 혹은 영화로"
-
-#: data/totem.glade.h:51
-msgid "No Language Selection Available"
-msgstr "언어를 선택할 수 없습니다. "
-
-#: data/totem.glade.h:52
-msgid "No subtitles selection available"
-msgstr "자막을 선택할 수 없습니다."
-
-#: data/totem.glade.h:53
-msgid "Normal"
-msgstr "보통"
-
-#: data/totem.glade.h:54
-msgid "Open _Location..."
-msgstr "위치 열기(_L)..."
-
-#: data/totem.glade.h:55
-msgid "Open a non-local file"
-msgstr "로컬이 아닌 파일을 엽니다"
-
-#: data/totem.glade.h:56
-msgid "Play / Pa_use"
-msgstr "재생 / 일시 정지(_U)"
-
-#: data/totem.glade.h:57
-msgid "Play _Audio CD"
-msgstr "오디오 CD 재생(_A)"
-
-#: data/totem.glade.h:58
-msgid "Play _DVD"
-msgstr "DVD 재생(_D)"
-
-#: data/totem.glade.h:59
-msgid "Play _VCD"
-msgstr "VCD 재생(_V)"
-
-#: data/totem.glade.h:60
-msgid "Play a Video CD"
-msgstr "비디오 CD 재생"
-
-#: data/totem.glade.h:61
-msgid "Play a Video DVD"
-msgstr "비디오 DVD 재생"
-
-#: data/totem.glade.h:62
-msgid "Play an audio CD"
-msgstr "오디오 CD 재생"
-
-#: data/totem.glade.h:63
-msgid "Play or pause the movie"
-msgstr "영화를 재생하거나 일시 정지합니다"
-
-#: data/totem.glade.h:64 src/totem.c:79
-msgid "Play/Pause"
-msgstr "재생/일시 정지"
-
-#: data/totem.glade.h:65 src/totem.c:81
-msgid "Previous"
-msgstr "이전"
-
-#: data/totem.glade.h:66
-msgid "Previous chapter or movie"
-msgstr "이전 장으로 혹은 영화로"
-
-#: data/totem.glade.h:67
-msgid "S_ubtitles"
-msgstr "자막(_U)"
-
-#: data/totem.glade.h:68
+#: ../data/screenshot.glade.h:4 ../src/totem-screenshot.c:346
 msgid "Save Screenshot"
 msgstr "스크린샷 저장"
 
-#: data/totem.glade.h:69
+#: ../data/screenshot.glade.h:5
+msgid "Save screenshot"
+msgstr "스크린샷 저장"
+
+#: ../data/screenshot.glade.h:6
+msgid "Save screenshot to _desktop"
+msgstr "스크린샷을 바탕화면에 저장(_D)"
+
+#: ../data/screenshot.glade.h:7
 msgid "Save screenshot to _file:"
 msgstr "스크린샷을 파일로 저장(_F):"
 
-#: data/totem.glade.h:70
-msgid "Save screenshot to the _desktop"
-msgstr "스크린샷을 바탕화면에 저장(_D)"
-
-#: data/totem.glade.h:71
-msgid "Set the repeat mode"
-msgstr "반복 모드 설정"
-
-#: data/totem.glade.h:72
-msgid "Show _Controls"
-msgstr "컨트롤 보이기(_C)"
-
-#: data/totem.glade.h:73
-msgid "Show _visual effects when an audio file is played"
-msgstr "오디오 파일 재생시 시각 효과 보여주기(_V)"
-
-#: data/totem.glade.h:74
-msgid "Show controls"
-msgstr "컨트롤을 보입니다"
-
-#: data/totem.glade.h:75
-msgid "Show or hide the playlist"
-msgstr "저장 목록을 보여주거나 감춥니다"
-
-#: data/totem.glade.h:76
-msgid "Show/Hide Playlist"
-msgstr "저장 목록 보이기/감추기"
-
-#: data/totem.glade.h:77
-msgid "Skip _Backwards"
-msgstr "뒤로 건너뛰기(_B)"
-
-#: data/totem.glade.h:78
-msgid "Skip _Forward"
-msgstr "앞으로 건너뛰기(_F)"
-
-#: data/totem.glade.h:79
-msgid "Skip backwards"
-msgstr "뒤로 건너뛰기"
-
-#: data/totem.glade.h:80
-msgid "Skip forward"
-msgstr "앞으로 건너뛰기"
-
-#: data/totem.glade.h:81
+#: ../data/skip_to.glade.h:2 ../src/totem-skipto.c:140
 msgid "Skip to"
 msgstr "건너뛰기"
 
-#: data/totem.glade.h:82
-msgid "Skip to a specific time"
-msgstr "특정 시간으로 이동"
-
-#: data/totem.glade.h:83
-msgid "Small"
-msgstr "작게"
-
-#: data/totem.glade.h:84
-msgid "Stereo"
-msgstr "스테레오"
-
-#: data/totem.glade.h:85
-msgid "Subtitles"
-msgstr "자막"
-
-#: data/totem.glade.h:86
-msgid "Switch to double size"
-msgstr "2배 크기로 변경"
-
-#: data/totem.glade.h:87
-msgid "Switch to fullscreen"
-msgstr "전체화면으로 전환"
-
-#: data/totem.glade.h:88
-msgid "Take _Screenshot"
-msgstr "스크린샷 찍기(_S)"
-
-#: data/totem.glade.h:89
-msgid "Take a screenshot"
-msgstr "스크린샷을 찍습니다"
-
-#: data/totem.glade.h:90
-msgid "Time:"
-msgstr "시간:"
-
-#: data/totem.glade.h:91
-msgid "Toggle _Aspect Ratio"
-msgstr "화면 비율 토글(_A)"
-
-#: data/totem.glade.h:92
-msgid "Toggle the aspect ratio"
-msgstr "화면 비율 토글"
-
-#. Title
-#: data/totem.glade.h:93 src/totem.c:695 src/totem.c:722 src/totem.c:1867
-msgid "Totem"
-msgstr "Totem"
-
-#: data/totem.glade.h:94
-msgid "Totem Preferences"
-msgstr "Totem 기본 설정"
-
-#: data/totem.glade.h:95
-msgid "Visualisation _size:"
-msgstr "시각 효과 크기(_S):"
-
-#: data/totem.glade.h:96
-msgid "Volume _Down"
-msgstr "소리 낮춤(_D)"
-
-#: data/totem.glade.h:97
-msgid "Volume _Up"
-msgstr "소리 높임(_U)"
-
-#: data/totem.glade.h:98
-msgid "Volume down"
-msgstr "소리 낮춤"
-
-#: data/totem.glade.h:99
-msgid "Volume up"
-msgstr "소리 높임"
-
-#: data/totem.glade.h:100 data/vanity.glade.h:7
-msgid "Zoom _1:1"
-msgstr "크기 1:1(_1)"
-
-#: data/totem.glade.h:101 data/vanity.glade.h:8
-msgid "Zoom _2:1"
-msgstr "크기 _2:1(_2)"
-
-#: data/totem.glade.h:102
-msgid "Zoom to half size"
-msgstr "절반 크기로 줄임"
-
-#: data/totem.glade.h:103
-msgid "Zoom to one for one size"
-msgstr "원래 크기로"
-
-#: data/totem.glade.h:104
-msgid "_Add Proprietary Plugins..."
-msgstr "독점 플러그인 더하기(_A)..."
-
-#: data/totem.glade.h:105
-msgid "_Angle Menu"
-msgstr "각도 메뉴(_A)"
-
-#: data/totem.glade.h:106
-msgid "_Audio output type:"
-msgstr "오디오 출력 형식(_A):"
-
-#: data/totem.glade.h:107
-msgid "_Brightness:"
-msgstr "밝기(_B):"
-
-#: data/totem.glade.h:108
-msgid "_Chapter Menu"
-msgstr "장 메뉴(_C)"
-
-#: data/totem.glade.h:109
-msgid "_DVD Menu"
-msgstr "DVD 메뉴(_D)"
-
-#: data/totem.glade.h:110
-msgid "_DXR3 TV-out"
-msgstr "DXR3 TV 출력(_D)"
-
-#: data/totem.glade.h:111
-msgid "_Deinterlace"
-msgstr "비 인터레이스(_D)"
-
-#: data/totem.glade.h:112
-msgid "_Eject"
-msgstr "꺼내기(_E)"
-
-#: data/totem.glade.h:113
-msgid "_Fullscreen"
-msgstr "전체 화면(_F)"
-
-#: data/totem.glade.h:114
-msgid "_Go"
-msgstr "가기(_G)"
-
-#: data/totem.glade.h:115
-msgid "_Languages"
-msgstr "언어(_L)"
-
-#: data/totem.glade.h:116
-msgid "_Movie"
-msgstr "영화(_M)"
-
-#: data/totem.glade.h:117
-msgid "_Next Chapter/Movie"
-msgstr "다음 장으로/영화로(_N)"
-
-#: data/totem.glade.h:118
-msgid "_No TV-out"
-msgstr "TV 출력 안 함(_N)"
-
-#: data/totem.glade.h:119
-msgid "_Optical device path:"
-msgstr "광 장치 경로(_O): "
-
-#: data/totem.glade.h:120
-msgid "_Previous Chapter/Movie"
-msgstr "이전 장으로/영화로(_P)"
-
-#: data/totem.glade.h:121
-msgid "_Repeat Mode"
-msgstr "반복 모드(_R)"
-
-#: data/totem.glade.h:122
-msgid "_Show/Hide Playlist"
-msgstr "재생 목록 보이기/감추기(_S)"
-
-#: data/totem.glade.h:123
-msgid "_Skip to..."
-msgstr "건너뛰기(_S)..."
-
-#: data/totem.glade.h:124
+#: ../data/skip_to.glade.h:3
 msgid "_Skip to:"
 msgstr "건너뛰기(_S):"
 
-#: data/totem.glade.h:125
-msgid "_Sound"
-msgstr "사운드(_S)"
-
-#: data/totem.glade.h:126
-msgid "_TV-out mode"
-msgstr "TV 출력 모드(_T)"
-
-#: data/totem.glade.h:127
-msgid "_Title Menu"
-msgstr "제목 메뉴(_T)"
-
-#: data/totem.glade.h:128
-msgid "_Type of visualisation:"
-msgstr "시각 효과 종류(_T):"
-
-#: data/totem.glade.h:129 data/vanity.glade.h:10
-msgid "_Zoom 1:2"
-msgstr "크기 1:2(_Z)"
-
-#: data/totem.glade.h:130
+#: ../data/skip_to.glade.h:4
 msgid "seconds"
 msgstr "초"
 
-#: data/totem.schemas.in.h:1
+#: ../data/totem.glade.h:2
+msgid ""
+"14.4 Kbps Modem\n"
+"19.2 Kbps Modem\n"
+"28.8 Kbps Modem\n"
+"33.6 Kbps Modem\n"
+"34.4 Kbps Modem\n"
+"56 Kbps Modem/ISDN\n"
+"112 Kbps Dual ISDN/DSL\n"
+"256 Kbps DSL/Cable\n"
+"384 Kbps DSL/Cable\n"
+"512 Kbps DSL/Cable\n"
+"1.5 Mbps T1/Intranet/LAN\n"
+"Intranet/LAN"
+msgstr ""
+"14.4 Kbps 모뎀\n"
+"19.2 Kbps 모뎀\n"
+"28.8 Kbps 모뎀\n"
+"33.6 Kbps 모뎀\n"
+"34.4 Kbps 모뎀\n"
+"56 Kbps 모뎀/ISDN\n"
+"112 Kbps Dual ISDN/DSL\n"
+"256 Kbps DSL/케이블\n"
+"384 Kbps DSL/케이블\n"
+"512 Kbps DSL/케이블\n"
+"1.5 Mbps T1/Intranet/LAN\n"
+"Intranet/LAN"
+
+#: ../data/totem.glade.h:14
+msgid "16:9 (Widescreen)"
+msgstr "16:9 (와이드스크린)"
+
+#: ../data/totem.glade.h:15
+msgid "2.11:1 (DVB)"
+msgstr "2.11:1 (DVB)"
+
+#: ../data/totem.glade.h:16
+msgid "4:3 (TV)"
+msgstr "4:3 (TV)"
+
+#: ../data/totem.glade.h:17
+msgid "<b>Audio Output</b>"
+msgstr "<b>오디오 출력</b>"
+
+#: ../data/totem.glade.h:18
+msgid "<b>Color balance</b>"
+msgstr "<b>색 밸런스</b>"
+
+#: ../data/totem.glade.h:19
+msgid "<b>Display</b>"
+msgstr "<b>보여주기</b>"
+
+#: ../data/totem.glade.h:20
+msgid "<b>Networking</b>"
+msgstr "<b>네트워킹</b>"
+
+#: ../data/totem.glade.h:21
+msgid "<b>Optical Device</b>"
+msgstr "<b>광 장치</b>"
+
+#: ../data/totem.glade.h:22
+msgid "<b>Proprietary Plugins</b>"
+msgstr "<b>독점 플러그인</b>"
+
+#: ../data/totem.glade.h:23
+msgid "<b>TV-Out</b>"
+msgstr "<b>TV 출력</b>"
+
+#: ../data/totem.glade.h:24
+msgid "<b>Visual Effects</b>"
+msgstr "<b>시각 효과</b>"
+
+#: ../data/totem.glade.h:25
+msgid "<span size=\"medium\"><b>No File</b></span>"
+msgstr "<span size=\"medium\"><b>파일 없음</b></span>"
+
+#: ../data/totem.glade.h:26
+msgid "<span size=\"medium\"><b>No file</b></span>"
+msgstr "<span size=\"medium\"><b>파일 없음</b></span>"
+
+#: ../data/totem.glade.h:27
+msgid "A_udio Menu"
+msgstr "오디오 메뉴(_U)"
+
+#: ../data/totem.glade.h:28
+msgid "Always on _Top"
+msgstr "항상 위(_T)"
+
+#: ../data/totem.glade.h:29
+msgid "Always on top"
+msgstr "항상 위"
+
+#: ../data/totem.glade.h:30
+msgid "Audio"
+msgstr "오디오"
+
+#: ../data/totem.glade.h:31 ../src/totem-sublang.c:112
+#: ../src/totem-sublang.c:133
+msgid "Auto"
+msgstr "자동"
+
+#: ../data/totem.glade.h:32
+msgid "Automatically _resize the window when a new video is loaded"
+msgstr "새 비디오를 읽어들였을 때 자동으로 창 크기 재조정(_R)"
+
+#: ../data/totem.glade.h:33
+msgid "Co_ntrast:"
+msgstr "대비(_N):"
+
+#: ../data/totem.glade.h:34
+msgid "Connection _speed:"
+msgstr "접속 속도(_S):"
+
+#: ../data/totem.glade.h:35
+msgid "Deinterlace"
+msgstr "비 인터레이스"
+
+#: ../data/totem.glade.h:36
+msgid "Display"
+msgstr "표시"
+
+#: ../data/totem.glade.h:37
+msgid "Exit Fullscreen"
+msgstr "전체 화면 끝내기"
+
+#: ../data/totem.glade.h:38
+msgid "Fit Window to Movie"
+msgstr "창 크기를 영상 크기에 맞추기"
+
+#: ../data/totem.glade.h:39
+msgid "General"
+msgstr "일반"
+
+#: ../data/totem.glade.h:40
+msgid "Go to the DVD menu"
+msgstr "DVD 메뉴로 가기"
+
+#: ../data/totem.glade.h:41
+msgid "Go to the angle menu"
+msgstr "각도 메뉴로 가기"
+
+#: ../data/totem.glade.h:42
+msgid "Go to the audio menu"
+msgstr "오디오 메뉴로 가기"
+
+#: ../data/totem.glade.h:43
+msgid "Go to the chapter menu"
+msgstr "장 메뉴로 가기"
+
+#: ../data/totem.glade.h:44
+msgid "Go to the title menu"
+msgstr "제목 메뉴로 가기"
+
+#: ../data/totem.glade.h:45
+msgid "Help contents"
+msgstr "도움말 차례"
+
+#: ../data/totem.glade.h:46
+msgid "Languages"
+msgstr "언어"
+
+#: ../data/totem.glade.h:47 ../src/totem-options.c:39
+msgid "Next"
+msgstr "다음"
+
+#: ../data/totem.glade.h:48
+msgid "Next chapter or movie"
+msgstr "다음 장으로 혹은 영화로"
+
+#: ../data/totem.glade.h:49
+msgid "No Language Selection Available"
+msgstr "언어를 선택할 수 없습니다. "
+
+#: ../data/totem.glade.h:50
+msgid "No subtitles selection available"
+msgstr "자막을 선택할 수 없습니다."
+
+#: ../data/totem.glade.h:51
+msgid "Open _Location..."
+msgstr "위치 열기(_L)..."
+
+#: ../data/totem.glade.h:52
+msgid "Open a non-local file"
+msgstr "로컬이 아닌 파일을 엽니다"
+
+#: ../data/totem.glade.h:53
+msgid "Play / Pa_use"
+msgstr "재생 / 일시 정지(_U)"
+
+#: ../data/totem.glade.h:54
+msgid "Play _Disc"
+msgstr "디스크 재생(_D)"
+
+#: ../data/totem.glade.h:55
+msgid "Play a Video or Audio Disc"
+msgstr "비디오 혹은 오디오 디스크를 재생합니다"
+
+#: ../data/totem.glade.h:56
+msgid "Play or pause the movie"
+msgstr "영화를 재생하거나 일시 정지합니다"
+
+#: ../data/totem.glade.h:57 ../src/totem-options.c:38
+msgid "Play/Pause"
+msgstr "재생/일시 정지"
+
+#: ../data/totem.glade.h:58 ../src/totem-options.c:40
+msgid "Previous"
+msgstr "이전"
+
+#: ../data/totem.glade.h:59
+msgid "Previous chapter or movie"
+msgstr "이전 장으로 혹은 영화로"
+
+#: ../data/totem.glade.h:60
+msgid "Resize _1:1"
+msgstr "_1:1 크기"
+
+#: ../data/totem.glade.h:61
+msgid "Resize _2:1"
+msgstr "_2:1 크기"
+
+#: ../data/totem.glade.h:62
+msgid "Resize to half the video size"
+msgstr "화면 크기의 절반으로"
+
+#: ../data/totem.glade.h:63
+msgid "Resize to twice the video size"
+msgstr "화면 크기의 두 배로"
+
+#: ../data/totem.glade.h:64
+msgid "Resize to video size"
+msgstr "화면 크기"
+
+#: ../data/totem.glade.h:65
+msgid "S_ubtitles"
+msgstr "자막(_U)"
+
+#: ../data/totem.glade.h:66
+msgid "Sat_uration:"
+msgstr "채도(_U):"
+
+#: ../data/totem.glade.h:67
+msgid "Set the aspect ratio"
+msgstr "화면 비율 설정"
+
+#: ../data/totem.glade.h:68
+msgid "Set the repeat mode"
+msgstr "반복 모드 설정"
+
+#: ../data/totem.glade.h:69
+msgid "Set the shuffle mode"
+msgstr "임의 재생 모드 설정"
+
+#: ../data/totem.glade.h:70
+msgid "Sets 16:9 (Anamorphic) aspect ratio"
+msgstr "16:9 (와이드) 화면 비율"
+
+#: ../data/totem.glade.h:71
+msgid "Sets 2.11:1 (DVB) aspect ratio"
+msgstr "2.11:1 (DVB) 화면 비율"
+
+#: ../data/totem.glade.h:72
+msgid "Sets 4:3 (TV) aspect ratio"
+msgstr "4:3 (TV) 화면 비율"
+
+#: ../data/totem.glade.h:73
+msgid "Sets automatic aspect ratio"
+msgstr "화면 비율을 자동으로 설정합니다"
+
+#: ../data/totem.glade.h:74
+msgid "Sets square aspect ratio"
+msgstr "화면 비율을 정사각형으로 설정합니다"
+
+#: ../data/totem.glade.h:75
+msgid "Show _Controls"
+msgstr "컨트롤 보이기(_C)"
+
+#: ../data/totem.glade.h:76
+msgid "Show _visual effects when an audio file is played"
+msgstr "오디오 파일 재생시 시각 효과 보여주기(_V)"
+
+#: ../data/totem.glade.h:77
+msgid "Show controls"
+msgstr "컨트롤을 보입니다"
+
+#: ../data/totem.glade.h:78
+msgid "Show or hide the playlist"
+msgstr "저장 목록을 보여주거나 감춥니다"
+
+#: ../data/totem.glade.h:79
+msgid "Show/Hide Playlist"
+msgstr "저장 목록 보이기/감추기"
+
+#: ../data/totem.glade.h:80
+msgid "Shuff_le Mode"
+msgstr "임의 재생 모드(_L)"
+
+#: ../data/totem.glade.h:81
+msgid "Skip _Backwards"
+msgstr "뒤로 건너뛰기(_B)"
+
+#: ../data/totem.glade.h:82
+msgid "Skip _Forward"
+msgstr "앞으로 건너뛰기(_F)"
+
+#: ../data/totem.glade.h:83
+msgid "Skip backwards"
+msgstr "뒤로 건너뛰기"
+
+#: ../data/totem.glade.h:84
+msgid "Skip forward"
+msgstr "앞으로 건너뛰기"
+
+#: ../data/totem.glade.h:85
+msgid "Skip to a specific time"
+msgstr "특정 시간으로 이동"
+
+#: ../data/totem.glade.h:86
+msgid ""
+"Small\n"
+"Normal\n"
+"Large\n"
+"Extra Large"
+msgstr ""
+"작게\n"
+"보통\n"
+"크게\n"
+"아주 크게"
+
+#: ../data/totem.glade.h:90
+msgid "Square"
+msgstr "정사각형"
+
+#: ../data/totem.glade.h:91
+msgid ""
+"Stereo\n"
+"4-channel\n"
+"4.1-channel\n"
+"5.0-channel\n"
+"5.1-channel\n"
+"AC3 Passthrough"
+msgstr ""
+"스테레오\n"
+"4채널\n"
+"4.1채널\n"
+"5.0채널\n"
+"5.1채널\n"
+"AC3 패스스루"
+
+#: ../data/totem.glade.h:97
+msgid "Subtitles"
+msgstr "자막"
+
+#: ../data/totem.glade.h:98
+msgid "Switch to fullscreen"
+msgstr "전체 화면으로 전환"
+
+#: ../data/totem.glade.h:99
+msgid "Take _Screenshot"
+msgstr "스크린샷 찍기(_S)"
+
+#: ../data/totem.glade.h:100
+msgid "Take a screenshot"
+msgstr "스크린샷을 찍습니다"
+
+#: ../data/totem.glade.h:101
+msgid "Time:"
+msgstr "시간:"
+
+#. Title
+#: ../data/totem.glade.h:102 ../data/totem.desktop.in.in.in.h:2
+#: ../src/totem.c:571 ../src/totem.c:3384
+msgid "Totem Movie Player"
+msgstr "Totem 영화 플레이어"
+
+#: ../data/totem.glade.h:103
+msgid "Totem Preferences"
+msgstr "Totem 기본 설정"
+
+#: ../data/totem.glade.h:104
+msgid "Tv-out in fullscreen by Nvidia (NTSC)"
+msgstr "TV 출력을 전체 화면으로, Nvidia 기능 (NTSC)"
+
+#: ../data/totem.glade.h:105
+msgid "Tv-out in fullscreen by Nvidia (PAL)"
+msgstr "TV 출력을 전체 화면으로, Nvidia 기능 (PAL)"
+
+#: ../data/totem.glade.h:106
+msgid "Visualisation _size:"
+msgstr "시각 효과 크기(_S):"
+
+#: ../data/totem.glade.h:107
+msgid "Volume _Down"
+msgstr "소리 낮춤(_D)"
+
+#: ../data/totem.glade.h:108
+msgid "Volume _Up"
+msgstr "소리 높임(_U)"
+
+#: ../data/totem.glade.h:109
+msgid "Volume down"
+msgstr "소리 낮춤"
+
+#: ../data/totem.glade.h:110
+msgid "Volume up"
+msgstr "소리 높임"
+
+#: ../data/totem.glade.h:111
+msgid "Zoom In"
+msgstr "확대"
+
+#: ../data/totem.glade.h:112
+msgid "Zoom Out"
+msgstr "축소"
+
+#: ../data/totem.glade.h:113
+msgid "Zoom Reset"
+msgstr "확대/축소 리셋"
+
+#: ../data/totem.glade.h:114
+msgid "Zoom in"
+msgstr "확대"
+
+#: ../data/totem.glade.h:115
+msgid "Zoom out"
+msgstr "축소"
+
+#: ../data/totem.glade.h:116
+msgid "Zoom reset"
+msgstr "확대/축소 리셋"
+
+#: ../data/totem.glade.h:117
+msgid "_Add Proprietary Plugins..."
+msgstr "독점 플러그인 더하기(_A)..."
+
+#: ../data/totem.glade.h:118
+msgid "_Angle Menu"
+msgstr "각도 메뉴(_A)"
+
+#: ../data/totem.glade.h:119
+msgid "_Aspect Ratio"
+msgstr "화면 비율(_A)"
+
+#: ../data/totem.glade.h:120
+msgid "_Audio output type:"
+msgstr "오디오 출력 형식(_A):"
+
+#: ../data/totem.glade.h:121
+msgid "_Brightness:"
+msgstr "밝기(_B):"
+
+#: ../data/totem.glade.h:122
+msgid "_Chapter Menu"
+msgstr "장 메뉴(_C)"
+
+#: ../data/totem.glade.h:123
+msgid "_Contents"
+msgstr "차례(_C)"
+
+#: ../data/totem.glade.h:124
+msgid "_DVD Menu"
+msgstr "DVD 메뉴(_D)"
+
+#: ../data/totem.glade.h:125
+msgid "_DXR3 TV-out"
+msgstr "DXR3 TV 출력(_D)"
+
+#: ../data/totem.glade.h:126
+msgid "_Deinterlace"
+msgstr "비 인터레이스(_D)"
+
+#: ../data/totem.glade.h:127
+msgid "_Eject"
+msgstr "꺼내기(_E)"
+
+#: ../data/totem.glade.h:128
+msgid "_Fullscreen"
+msgstr "전체 화면(_F)"
+
+#: ../data/totem.glade.h:129
+msgid "_Go"
+msgstr "이동(_G)"
+
+#: ../data/totem.glade.h:130
+msgid "_Hue:"
+msgstr "색상(_H):"
+
+#: ../data/totem.glade.h:131
+msgid "_Languages"
+msgstr "언어(_L)"
+
+#: ../data/totem.glade.h:132
+msgid "_Movie"
+msgstr "영화(_M)"
+
+#: ../data/totem.glade.h:133
+msgid "_Next Chapter/Movie"
+msgstr "다음 장으로/영화로(_N)"
+
+#: ../data/totem.glade.h:134
+msgid "_No TV-out"
+msgstr "TV 출력 안 함(_N)"
+
+#: ../data/totem.glade.h:135
+msgid "_Optical device path:"
+msgstr "광 장치 경로(_O):"
+
+#: ../data/totem.glade.h:136
+msgid "_Previous Chapter/Movie"
+msgstr "이전 장으로/영화로(_P)"
+
+#: ../data/totem.glade.h:137
+msgid "_Repeat Mode"
+msgstr "반복 모드(_R)"
+
+#: ../data/totem.glade.h:138
+msgid "_Reset To Defaults"
+msgstr "기본값으로 리셋(_R)"
+
+#: ../data/totem.glade.h:139
+msgid "_Resize 1:2"
+msgstr "1:2 크기(_R)"
+
+#: ../data/totem.glade.h:140
+msgid "_Show/Hide Playlist"
+msgstr "재생 목록 보이기/감추기(_S)"
+
+#: ../data/totem.glade.h:141
+msgid "_Skip to..."
+msgstr "건너뛰기(_S)..."
+
+#: ../data/totem.glade.h:142
+msgid "_Sound"
+msgstr "사운드(_S)"
+
+#: ../data/totem.glade.h:143
+msgid "_Title Menu"
+msgstr "제목 메뉴(_T)"
+
+#: ../data/totem.glade.h:144
+msgid "_Type of visualisation:"
+msgstr "시각 효과 종류(_T):"
+
+#: ../data/totem.schemas.in.h:1
 msgid "Enable deinterlacing"
 msgstr "비 인터레이스 사용"
 
-#: data/totem.schemas.in.h:2
+#: ../data/totem.schemas.in.h:2
 msgid "Enable deinterlacing."
 msgstr "비 인터레이스 사용."
 
-#: data/totem.schemas.in.h:3
+#: ../data/totem.schemas.in.h:3
 msgid "Height of the video widget"
 msgstr "비디오 위젯의 높이"
 
-#: data/totem.schemas.in.h:4
+#: ../data/totem.schemas.in.h:4
 msgid "Name of the visual effects plugins"
 msgstr "시각 효과 플러그인의 이름"
 
-#: data/totem.schemas.in.h:5
+#: ../data/totem.schemas.in.h:5
 msgid "Name of the visual effects plugins."
 msgstr "시각 효과 플러그인의 이름."
 
-#: data/totem.schemas.in.h:6
+#: ../data/totem.schemas.in.h:6
 msgid "Path to the optical media device"
 msgstr "광 미디어 장치의 경로"
 
-#: data/totem.schemas.in.h:7
+#: ../data/totem.schemas.in.h:7
 msgid "Path to the optical media device."
 msgstr "광 미디어 장치의 경로."
 
-#: data/totem.schemas.in.h:8
+#: ../data/totem.schemas.in.h:8
 msgid "Repeat mode"
 msgstr "반복 모드"
 
-#: data/totem.schemas.in.h:9
+#: ../data/totem.schemas.in.h:9
 msgid "Repeat mode."
-msgstr "반복 모드"
+msgstr "반복 모드."
 
-#: data/totem.schemas.in.h:10
+#: ../data/totem.schemas.in.h:10
 msgid "Resize the canvas automatically on file load"
 msgstr "파일을 읽어들일 때 자동으로 캔버스 사이즈 재조정"
 
-#: data/totem.schemas.in.h:11
+#: ../data/totem.schemas.in.h:11
 msgid "Resize the canvas automatically on file load."
 msgstr "파일을 읽어들일 때 자동으로 캔버스 사이즈 재조정."
 
-#: data/totem.schemas.in.h:12
+#: ../data/totem.schemas.in.h:12
 msgid "Show visual effects when no video is displayed"
 msgstr "오디오 파일 재생시 시각 효과 보여주기"
 
-#: data/totem.schemas.in.h:13
+#: ../data/totem.schemas.in.h:13
 msgid "Show visual effects when playing an audio only file."
 msgstr "오디오 파일 재생시 시각 효과 보여주기."
 
-#: data/totem.schemas.in.h:14
+#: ../data/totem.schemas.in.h:14
+msgid "Shuffle mode"
+msgstr "임의 재생 모드"
+
+#: ../data/totem.schemas.in.h:15
+msgid "Shuffle mode."
+msgstr "임의 재생 모드."
+
+#: ../data/totem.schemas.in.h:16
+msgid "Sound volume"
+msgstr "소리 볼륨"
+
+#: ../data/totem.schemas.in.h:17
+msgid "Sound volume, in percent, between 0 and 100"
+msgstr "소리 볼륨, 퍼센트 단위, 0에서 100까지"
+
+#: ../data/totem.schemas.in.h:18
 msgid "The brightness of the video"
 msgstr "비디오의 밝기"
 
-#: data/totem.schemas.in.h:15
+#: ../data/totem.schemas.in.h:19
 msgid "The brightness of the video."
 msgstr "비디오의 밝기."
 
-#: data/totem.schemas.in.h:16
+#: ../data/totem.schemas.in.h:20
 msgid "The contrast of the video"
 msgstr "비디오의 대비"
 
-#: data/totem.schemas.in.h:17
+#: ../data/totem.schemas.in.h:21
 msgid "The contrast of the video."
 msgstr "비디오의 대비."
 
-#: data/totem.schemas.in.h:18
+#: ../data/totem.schemas.in.h:22
+msgid "The hue of the video"
+msgstr "비디오의 색상"
+
+#: ../data/totem.schemas.in.h:23
+msgid "The hue of the video."
+msgstr "비디오의 색상."
+
+#: ../data/totem.schemas.in.h:24
+msgid "The saturation of the video"
+msgstr "비디오의 채도"
+
+#: ../data/totem.schemas.in.h:25
+msgid "The saturation of the video."
+msgstr "비디오의 채도."
+
+#: ../data/totem.schemas.in.h:26
 msgid "Type of audio output to use"
 msgstr "사용할 오디오 출력 형식"
 
-#: data/totem.schemas.in.h:19
+#: ../data/totem.schemas.in.h:27
 msgid ""
 "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
 "\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
@@ -750,154 +831,130 @@ msgstr ""
 "사용할 오디오 출력 형식: \"0\"은 스테레오, \"1\"은 4 채널 출력, \"2\"는 5.0 "
 "채널 출력, \"3\"은 5.1 채널 출력, \"4\"는 AC3 통과 연결입니다."
 
-#: data/totem.schemas.in.h:20
+#: ../data/totem.schemas.in.h:28
 msgid "Whether the main window should stay on top"
 msgstr "주 창을 맨 위에 놓을 지 여부"
 
-#: data/totem.schemas.in.h:21
+#: ../data/totem.schemas.in.h:29
 msgid "Whether the main window should stay on top of the other ones"
 msgstr "주 창을 맨 위에 놓을 지 여부."
 
-#: data/totem.schemas.in.h:22
+#: ../data/totem.schemas.in.h:30
 msgid "Whether to enable debug for the playback engine"
 msgstr "재생 엔진에 디버깅 기능을 사용할 지 여부"
 
-#: data/totem.schemas.in.h:23
+#: ../data/totem.schemas.in.h:31
 msgid "Whether to enable debug for the playback engine."
 msgstr "재생 엔진에 디버깅 기능을 사용할 지 여부."
 
-#: data/totem.schemas.in.h:24
+#: ../data/totem.schemas.in.h:32
 msgid "Width of the video widget"
 msgstr "비디오 위젯의 너비"
 
-#: data/totem.schemas.in.h:25
+#: ../data/totem.schemas.in.h:33
 msgid "X coordinate for the Playlist"
 msgstr "재생 목록의 X좌표"
 
-#: data/totem.schemas.in.h:26
+#: ../data/totem.schemas.in.h:34
 msgid "X coordinate for the Playlist."
 msgstr "재생 목록의 X좌표."
 
-#: data/totem.schemas.in.h:27
+#: ../data/totem.schemas.in.h:35
 msgid "Y coordinate for the Playlist"
 msgstr "재생 목록의 Y좌표"
 
-#: data/totem.schemas.in.h:28
+#: ../data/totem.schemas.in.h:36
 msgid "Y coordinate for the Playlist."
 msgstr "재생 목록의 Y좌표."
 
-#: data/uri.glade.h:2
+#: ../data/uri.glade.h:2
 msgid "Enter the _location (URI) of the file you would like to open:"
 msgstr "열고자 하는 파일의 위치(URI)를 입력하세요(_L):"
 
-#: data/uri.glade.h:3
+#: ../data/uri.glade.h:3
 msgid "Open from URI"
 msgstr "URI에서 열기"
 
-#: data/vanity.desktop.in.h:1
-msgid "Vanity Webcam utility"
-msgstr "Vanity 웹캠 유틸리티"
-
-#: data/vanity.desktop.in.h:2
-msgid "View live webcam and upload pictures"
-msgstr "라이브 웹캠을 보고 그림을 업로드합니다"
-
-#: data/vanity.glade.h:1
+#: ../data/vanity.glade.h:1
 msgid "Save File"
 msgstr "파일 저장"
 
-#: data/vanity.glade.h:2 src/vanity.c:248
+#: ../data/vanity.glade.h:2 ../src/vanity.c:259
 msgid "Vanity"
 msgstr "Vanity"
 
-#: data/vanity.glade.h:3
+#: ../data/vanity.glade.h:3
 msgid "Vanity Preferences"
 msgstr "Vanity 기본 설정"
 
-#: data/vanity.glade.h:4
+#: ../data/vanity.glade.h:4
 msgid "Zoom 1:1"
 msgstr "크기 1:1"
 
-#: data/vanity.glade.h:5
+#: ../data/vanity.glade.h:5
 msgid "Zoom 1:2"
 msgstr "크기 1:2"
 
-#: data/vanity.glade.h:6
+#: ../data/vanity.glade.h:6
 msgid "Zoom 2:1"
 msgstr "크기 2:1"
 
-#: data/vanity.glade.h:9
+#: ../data/vanity.glade.h:7
+msgid "Zoom _1:1"
+msgstr "크기 1:1(_1)"
+
+#: ../data/vanity.glade.h:8
+msgid "Zoom _2:1"
+msgstr "크기 2:1(_2)"
+
+#: ../data/vanity.glade.h:9
 msgid "_Picture"
 msgstr "그림(_P)"
 
-#: src/bacon-cd-selection.c:234
+#: ../data/vanity.glade.h:10
+msgid "_Zoom 1:2"
+msgstr "크기 1:2(_Z)"
+
+#: ../data/vanity.desktop.in.in.h:1
+msgid "Vanity Webcam utility"
+msgstr "Vanity 웹캠 유틸리티"
+
+#: ../data/vanity.desktop.in.in.h:2
+msgid "View live webcam and upload pictures"
+msgstr "라이브 웹캠을 보고 그림을 업로드합니다"
+
+#: ../data/totem.desktop.in.in.in.h:1
+msgid "Play movies and songs"
+msgstr "영화와 음악 재생"
+
+#: ../src/bacon-v4l-selection.c:191
 msgid "Unnamed CDROM"
 msgstr "이름 없는 CDROM"
 
-#: src/bacon-cd-selection.c:276 src/bacon-v4l-selection.c:275
-msgid "Select the drive"
-msgstr "드라이브 선택"
-
-#: src/bacon-v4l-selection.c:233
-msgid "Unnamed Video Device"
-msgstr "이름 없는 비디오 장치"
-
-#: src/bacon-video-widget-gst.c:56
+#: ../src/bacon-video-widget-gst.c:68
 msgid "Totem Video Window"
 msgstr "Totem 비디오 창"
 
-#: src/bacon-video-widget-properties.c:106 src/totem-properties-page.c:100
-#, c-format
-msgid "%d hour"
-msgid_plural "%d hours"
-msgstr[0] "%d시간"
-
-#: src/bacon-video-widget-properties.c:108 src/totem-properties-page.c:102
-#, c-format
-msgid "%d minute"
-msgid_plural "%d minutes"
-msgstr[0] "%d분"
-
-#: src/bacon-video-widget-properties.c:111 src/totem-properties-page.c:105
-#, c-format
-msgid "%d second"
-msgid_plural "%d seconds"
-msgstr[0] "%d초"
-
-#. hour:minutes:seconds
-#: src/bacon-video-widget-properties.c:117 src/totem-properties-page.c:111
-#, c-format
-msgid "%s %s %s"
-msgstr "%s %s %s"
-
-#. minutes:seconds
-#: src/bacon-video-widget-properties.c:120 src/totem-properties-page.c:114
-#, c-format
-msgid "%s %s"
-msgstr "%s %s"
-
-#. seconds
-#: src/bacon-video-widget-properties.c:123 src/totem-properties-page.c:117
-#, c-format
-msgid "%s"
-msgstr "%s"
+#: ../src/bacon-video-widget-gst.c:2897
+msgid "Failed to create a GStreamer play object"
+msgstr "GStreamer 재생 오브젝트를 만드는 데 실패했습니다"
 
 #. Duration
-#: src/bacon-video-widget-properties.c:163 src/totem-properties-page.c:157
+#: ../src/bacon-video-widget-properties.c:102
 msgid "0 second"
 msgstr "0 초"
 
-#: src/bacon-video-widget-properties.c:248 src/totem-properties-page.c:242
+#: ../src/bacon-video-widget-properties.c:199
 #, c-format
 msgid "%d frames per second"
 msgstr "초당 %d프레임"
 
-#: src/bacon-video-widget-properties.c:266 src/totem-properties-page.c:260
+#: ../src/bacon-video-widget-properties.c:221
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: src/bacon-video-widget-xine.c:620
+#: ../src/bacon-video-widget-xine.c:657
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -906,40 +963,35 @@ msgstr ""
 "'%s' 오디오 드라이버를 읽어들일 수 없습니다\n"
 "장치가 사용중인지 확인하십시오."
 
-#: src/bacon-video-widget-xine.c:1126
+#: ../src/bacon-video-widget-xine.c:1109 ../src/bacon-video-widget-xine.c:1614
+msgid ""
+"No video output is available. Make sure that the program is correctly "
+"installed."
+msgstr "비디오 출력을 사용할 수 없습니다. 프로그램을 올바르게 설치했는지 확인하십시오."
+
+#: ../src/bacon-video-widget-xine.c:1225
 msgid "The server you are trying to connect to is not known."
 msgstr "연결하려는 서버를 알 수 없습니다."
 
-#: src/bacon-video-widget-xine.c:1129
+#: ../src/bacon-video-widget-xine.c:1229
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "지정한 장치 이름이 (%s) 잘못된 것으로 보입니다."
 
-#: src/bacon-video-widget-xine.c:1132
+#: ../src/bacon-video-widget-xine.c:1233
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "연결하려는 서버에 (%s) 연결할 수 없습니다."
 
-#: src/bacon-video-widget-xine.c:1135
+#: ../src/bacon-video-widget-xine.c:1237
 msgid "The connection to this server was refused."
 msgstr "이 서버에 대한 연결이 거부되었습니다."
 
-#: src/bacon-video-widget-xine.c:1138
-#, c-format
-msgid "The specified movie '%s' could not be found."
-msgstr "지정한 영화 '%s'을(를) 찾을 수 없습니다."
+#: ../src/bacon-video-widget-xine.c:1241
+msgid "The specified movie could not be found."
+msgstr "지정한 영화를 찾을 수 없습니다."
 
-#: src/bacon-video-widget-xine.c:1141
-#, c-format
-msgid "The movie '%s' could not be read."
-msgstr "'%s' 영화를 읽을 수 없습니다."
-
-#: src/bacon-video-widget-xine.c:1144
-#, c-format
-msgid "A problem occured while loading a library or a decoder (%s)."
-msgstr "라이브러리 혹은 디코더를 읽어들이는 데 문제가 발생했습니다 (%s)."
-
-#: src/bacon-video-widget-xine.c:1147
+#: ../src/bacon-video-widget-xine.c:1247 ../src/bacon-video-widget-xine.c:1265
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -947,121 +999,294 @@ msgstr ""
 "소스가 암호화되어 있고 읽을 수 없습니다. libdvdcss 없이 암호화된 DVD를 재생하"
 "시나요?"
 
-#: src/bacon-video-widget-xine.c:1230
-msgid "There is no plugin to handle this movie"
+#: ../src/bacon-video-widget-xine.c:1250
+msgid "The movie could not be read."
+msgstr "영화를 읽을 수 없습니다."
+
+#: ../src/bacon-video-widget-xine.c:1259
+#, c-format
+msgid "A problem occured while loading a library or a decoder (%s)."
+msgstr "라이브러리 혹은 디코더를 읽어들이는 데 문제가 발생했습니다 (%s)."
+
+#: ../src/bacon-video-widget-xine.c:1268
+msgid "This file is encrypted and cannot be played back."
+msgstr "이 파일은 암호화되어 있어서 재생할 수 없습니다."
+
+#: ../src/bacon-video-widget-xine.c:1273
+msgid "For security reasons, this movie can not be played back."
+msgstr "보안 문제때문에, 영화를 재생할 수 없습니다."
+
+#: ../src/bacon-video-widget-xine.c:1278
+msgid "The audio device is busy. Is another application using it?"
+msgstr "오디오 장치가 사용중입니다. 다른 프로그램이 사용하고 있지 않습니까?"
+
+#: ../src/bacon-video-widget-xine.c:1283
+msgid "You are not allowed to open this file."
+msgstr "이 파일을 열 권한이 없습니다."
+
+#: ../src/bacon-video-widget-xine.c:1285
+msgid "The server refused access to this file or stream."
+msgstr "서버에서 이 파일이나 스트림에 대한 접근을 거부했습니다."
+
+#: ../src/bacon-video-widget-xine.c:1425
+msgid "There is no plugin to handle this movie."
 msgstr "이 영화를 처리할 플러그인이 없습니다."
 
-#: src/bacon-video-widget-xine.c:1234
-msgid "This movie is broken and can not be played further"
-msgstr "이 영화는 깨졌습니다. 더이상 재생할 수 없습니다"
+#: ../src/bacon-video-widget-xine.c:1429
+msgid "This movie is broken and can not be played further."
+msgstr "이 영화는 깨졌습니다. 더이상 재생할 수 없습니다."
 
-#: src/bacon-video-widget-xine.c:1238
-msgid "This location is not a valid one"
-msgstr "올바른 위치가 아닙니다"
+#: ../src/bacon-video-widget-xine.c:1433
+msgid "This location is not a valid one."
+msgstr "올바른 위치가 아닙니다."
 
-#: src/bacon-video-widget-xine.c:1242
-msgid "This movie could not be opened"
-msgstr "이 영화를 열 수 없습니다"
+#: ../src/bacon-video-widget-xine.c:1437
+msgid "This movie could not be opened."
+msgstr "이 영화를 열 수 없습니다."
 
-#: src/bacon-video-widget-xine.c:1245
-msgid "Generic Error"
-msgstr "일반 오류"
+#: ../src/bacon-video-widget-xine.c:1441
+msgid "Generic Error."
+msgstr "일반 오류."
 
-#: src/bacon-video-widget-xine.c:1624
+#: ../src/bacon-video-widget-xine.c:1911
+msgid "This movie is a still image. You can open it with an image viewer."
+msgstr "이 영화는 정지 영상입니다. 그림 보기 프로그램으로 열 수 있습니다."
+
+#: ../src/bacon-video-widget-xine.c:1935
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
-msgstr ""
-"비디오 코덱 '%s'을(를) 처리할 수 없습니다. 어떤 형식의 영화는 재생하기 위해 "
-"플러그인을 추가로 설치해야 합니다."
+msgstr "'%s' 비디오 코덱을 처리할 수 없습니다. 어떤 형식의 영화는 재생하려면 플러그인을 추가로 설치해야 합니다."
 
-#: src/bacon-video-widget-xine.c:1643
-msgid "This is an audio-only file, and there is no audio output available"
-msgstr "오디오만 들어 있는 파일이고, 오디오 출력을 사용할 수 없습니다"
-
-#: src/bacon-video-widget-xine.c:2933
-msgid "Movie is not playing"
-msgstr "영화 재생중이 아님"
-
-#: src/bacon-video-widget-xine.c:2941
-msgid "No video to capture"
-msgstr "캡처할 비디오가 없음"
-
-#: src/bacon-video-widget-xine.c:2948
-msgid "Video codec is not handled"
-msgstr "비디오 코덱을 처리할 수 없습니다"
-
-#: src/cd-drive.c:362
-#, c-format
-msgid "Unnamed SCSI CD-ROM (%s)"
-msgstr "이름 없는 SCSI CD-ROM (%s)"
-
-#: src/cd-drive.c:815
-msgid "File image"
-msgstr "파일 이미지"
-
-#: src/gnome-authn-manager.c:60
-msgid "Your HTTP Proxy requires you to log in.\n"
-msgstr "이 HTTP 프록시는 로그인을 해야만 합니다.\n"
-
-#: src/gnome-authn-manager.c:61
+#: ../src/bacon-video-widget-xine.c:1939
 #, c-format
 msgid ""
-"You must log in to access \"%s\".\n"
-"\n"
-"%s"
-msgstr ""
-"%s에 접근하려면 로그인해야 합니다.\n"
-"\n"
-"%s"
+"Audio codec '%s' is not handled. You might need to install additional "
+"plugins to be able to play some types of movies"
+msgstr "'%s' 오디오 코덱을 처리할 수 없습니다. 어떤 형식의 영화는 재생하려면 플러그인을 추가로 설치해야 합니다."
 
-#: src/gnome-authn-manager.c:64
-msgid "Your password will be transmitted unencrypted."
-msgstr "암호가 암호화 되지 않은 상태로 전송될 것입니다."
+#: ../src/bacon-video-widget-xine.c:1955
+msgid "This is an audio-only file, and there is no audio output available."
+msgstr "오디오만 들어 있는 파일이고, 오디오 출력을 사용할 수 없습니다."
 
-#: src/gnome-authn-manager.c:65
-msgid "Your password will be transmitted encrypted."
-msgstr "암호가 암호화된 상태로 전송될 것입니다."
+#: ../src/bacon-video-widget-xine.c:3363
+#, c-format
+msgid "Language %d"
+msgstr "언어 %d"
 
-#: src/gnome-authn-manager.c:68
-msgid "Authentication Required"
-msgstr "인증이 필요합니다."
+#: ../src/bacon-video-widget-xine.c:3434
+msgid "Movie is not playing."
+msgstr "영화 재생중이 아닙니다."
 
-#: src/gnome-password-dialog.c:227
-msgid "_Username:"
-msgstr "사용자 이름(_U):"
+#: ../src/bacon-video-widget-xine.c:3443
+msgid "No video to capture."
+msgstr "캡처할 비디오가 없습니다."
 
-#: src/gnome-password-dialog.c:234
-msgid "_Password:"
-msgstr "열쇠글(_P):"
+#: ../src/bacon-video-widget-xine.c:3451
+msgid "Video codec is not handled."
+msgstr "비디오 코덱을 처리할 수 없습니다."
 
-#: src/gnome-password-dialog.c:261
-msgid "Remember this password"
-msgstr "이 열쇠글 기억하기"
+#: ../src/totem-disc.c:107
+#, c-format
+msgid "Failed to find real device node for %s: %s"
+msgstr "%s에 대한 실제 장치 노드를 찾는 데 실패했습니다: %s"
 
-#: src/totem-playlist.c:636 src/totem.c:1547
-msgid "Select files"
-msgstr "파일 선택"
+#: ../src/totem-disc.c:118
+#, c-format
+msgid "Failed to read symbolic link %s: %s"
+msgstr "%s 심볼릭 링크를 읽는데 실패했습니다: %s"
 
-#: src/totem-playlist.c:795
+#: ../src/totem-disc.c:202
+#, c-format
+msgid "Failed to find mountpoint for device %s in /etc/fstab"
+msgstr "/etc/fstab에서 %s 장치의 마운트 위치를 찾는 데 실패했습니다"
+
+#: ../src/totem-disc.c:240
+msgid "Please check that a disc is present in the drive."
+msgstr "디스크가 드라이브 안에 들어 있는 지 확인하십시오."
+
+#: ../src/totem-disc.c:243
+#, c-format
+msgid "Failed to open device %s for reading: %s"
+msgstr "%s 장치를 읽기용으로 여는 데 실패했습니다: %s"
+
+#: ../src/totem-disc.c:254
+#, c-format
+msgid "Failed to retrieve capabilities of device %s: %s"
+msgstr "장치 %s의 기능을 알아내는 데 실패했습니다: %s"
+
+#: ../src/totem-disc.c:287
+#, c-format
+msgid "Drive status 0x%x (%s) - check disc"
+msgstr "드라이브 상태 0x%x (%s) - 디스크를 검사하십시오"
+
+#: ../src/totem-disc.c:320
+#, c-format
+msgid "Unexpected error status %d while mounting %s"
+msgstr "%2$s 장치를 마운트하는 데 예상치 못한 오류 상태 %1$d"
+
+#: ../src/totem-disc.c:372
+#, c-format
+msgid "Error getting %s disc status: %s"
+msgstr "%s 디스크 상태를 얻어오는 데 오류: %s"
+
+#: ../src/totem-disc.c:401
+#, c-format
+msgid "Unexpected/unknown cd type 0x%x (%s)"
+msgstr "예상치 못한/알 수 없는 CD 종류 0x%x (%s)"
+
+#: ../src/totem-disc.c:565
+msgid "Audio CD"
+msgstr "오디오 CD"
+
+#: ../src/totem-disc.c:567
+msgid "Video CD"
+msgstr "비디오 CD"
+
+#: ../src/totem-disc.c:569
+msgid "DVD"
+msgstr "DVD"
+
+#: ../src/totem-interface.c:112
+#, c-format
+msgid "Couldn't load the '%s' interface."
+msgstr "'%s' 인터페이스를 읽어들일 수 없습니다."
+
+#: ../src/totem-interface.c:114 ../src/totem-interface.c:116
+msgid "Make sure that Totem is properly installed."
+msgstr "Totem이 올바르게 설치되었는 지 확인하십시오."
+
+#. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+#: ../src/totem-mozilla-viewer.c:59 ../src/totem.c:309 ../src/totem.c:336
+#: ../src/totem.c:700 ../src/totem.c:805
+#, c-format
+msgid "Totem could not play '%s'."
+msgstr "Totem이 '%s'을(를) 재생할 수 없습니다."
+
+#: ../src/totem-mozilla-viewer.c:91 ../src/totem-mozilla-viewer.c:98
+msgid "Couldn't load the main interface (mozilla-viewer.glade)."
+msgstr "주 인터페이스 파일(mozilla-viewer.glade)을 읽어들일 수 없습니다."
+
+#: ../src/totem-mozilla-viewer.c:91 ../src/totem-mozilla-viewer.c:98
+msgid "Make sure that the Totem plugin is properly installed."
+msgstr "Totem 플러그인이 올바르게 설치되었는 지 확인하십시오."
+
+#: ../src/totem-mozilla-viewer.c:109
+msgid "The Totem plugin could not startup."
+msgstr "Totem 플러그인을 시작할 수 없습니다."
+
+#: ../src/totem-mozilla-viewer.c:109 ../src/totem.c:3208
+msgid "No reason."
+msgstr "이유 없음."
+
+#: ../src/totem-mozilla-viewer.c:141 ../src/totem.c:3389
+msgid "Could not initialise the thread-safe libraries."
+msgstr "쓰레드에 안전한 라이브러리를 초기화할 수 없습니다."
+
+#: ../src/totem-mozilla-viewer.c:141
+msgid "Verify your system installation. The Totem plugin will now exit."
+msgstr "시스템 설치가 올바른지 확인하십시오. Totem 플러그인을 끝냅니다."
+
+#: ../src/totem-options.c:36
+msgid "Backend options"
+msgstr "백엔드 옵션"
+
+#: ../src/totem-options.c:37
+msgid "Enable debug"
+msgstr "디버깅 사용"
+
+#: ../src/totem-options.c:41
+msgid "Seek Forwards"
+msgstr "앞으로 이동"
+
+#: ../src/totem-options.c:42
+msgid "Seek Backwards"
+msgstr "뒤로 이동"
+
+#: ../src/totem-options.c:43
+msgid "Volume Up"
+msgstr "소리 높임"
+
+#: ../src/totem-options.c:44
+msgid "Volume Down"
+msgstr "소리 낮춤"
+
+#: ../src/totem-options.c:45
+msgid "Toggle Fullscreen"
+msgstr "전체화면 토글"
+
+#: ../src/totem-options.c:46
+msgid "Show/Hide Controls"
+msgstr "컨트롤 보이기/감추기"
+
+#: ../src/totem-options.c:47
+msgid "Quit"
+msgstr "끝내기"
+
+#: ../src/totem-options.c:48
+msgid "Enqueue"
+msgstr "큐에 넣기"
+
+#: ../src/totem-options.c:49
+msgid "Replace"
+msgstr "바꾸기"
+
+#: ../src/totem-options.c:110
+#, c-format
+msgid "Option '%s' is unknown and was ignored\n"
+msgstr "'%s' 옵션은 알 수 없는 옵션이므로 무시합니다\n"
+
+#: ../src/totem-playlist.c:299
+msgid "Could not save the playlist"
+msgstr "저장 목록을 저장할 수 없습니다"
+
+#: ../src/totem-playlist.c:631
+msgid "Select Movies or Playlists"
+msgstr "영화 혹은 재생 목록 선택"
+
+#: ../src/totem-playlist.c:807
 msgid "Save playlist"
 msgstr "재생 목록 저장"
 
-#: src/totem-playlist.c:833
+#: ../src/totem-playlist.c:852
+msgid "Overwrite file?"
+msgstr "파일을 덮어쓰시겠습니까?"
+
+#: ../src/totem-playlist.c:854
 #, c-format
 msgid ""
-"A file named '%s' already exists.\n"
-"Are you sure you want to overwrite it?"
-msgstr ""
-"'%s'(이)라는 이름의 파일이 이미 있습니다.\n"
-"이 파일을 덮어 쓸까요?"
+"A file named '%s' already exists.  Are you sure you want to overwrite it?"
+msgstr "이름인 '%s'인 파일이 이미 있습니다.  이 파일을 덮어 쓰시겠습니까?"
 
-#: src/totem-playlist.c:1016
+#: ../src/totem-playlist.c:1053
 msgid "Filename"
 msgstr "파일이름"
 
-#: src/totem-preferences.c:110
+#: ../src/totem-playlist.c:1619
+msgid "Playlist error"
+msgstr "재생 목록 오류"
+
+#: ../src/totem-playlist.c:1619
+#, c-format
+msgid "The playlist '%s' could not be parsed, it might be damaged."
+msgstr "'%s' 재생 목록을 파싱할 수 없습니다. 손상된 것 같습니다."
+
+#: ../src/totem-pl-parser.c:215
+#, c-format
+msgid "Couldn't write parser: %s"
+msgstr "파서를 쓸 수 없습니다: %s"
+
+#: ../src/totem-pl-parser.c:321 ../src/totem-pl-parser.c:444
+#, c-format
+msgid "Couldn't open file '%s': %s"
+msgstr "'%s' 파일을 열 수 없습니다: %s"
+
+#: ../src/totem-preferences.c:87
+msgid "Enable visual effects?"
+msgstr "시각 효과를 사용하시겠습니까?"
+
+#: ../src/totem-preferences.c:89
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1069,277 +1294,241 @@ msgstr ""
 "Totem을 원격으로 실행하고 있습니다.\n"
 "정말로 시각 효과를 사용할까요?"
 
-#: src/totem-preferences.c:162
+#: ../src/totem-preferences.c:142
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
-"Totem is restarted"
+"Totem is restarted."
 msgstr "바꾼 설정은 다음 영화나, Totem을 다시 시작했을 때 적용됩니다."
 
-#: src/totem-preferences.c:206
+#: ../src/totem-preferences.c:186
 msgid ""
 "Switching on or off this type of TV-Out requires a restart to take effect."
 msgstr "TV 출력 타입을 바꾸면 재시작해야 효과가 있습니다."
 
-#: src/totem-preferences.c:339
+#: ../src/totem-preferences.c:322
 msgid "Totem could not start the file manager."
 msgstr "Totem이 파일 관리자를 시작할 수 없습니다."
 
-#: src/totem-preferences.c:367
+#: ../src/totem-preferences.c:350
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr "시각 효과를 바꾸면 재시작해야 효과가 있습니다."
 
-#: src/totem-properties-page.c:331
-msgid "URI currently displayed"
-msgstr "현재 재생중인 URI"
-
-#: src/totem-properties-page.c:397
-msgid "Video and Audio information properties page"
-msgstr "비디오 및 오디오 등록 정보 페이지"
-
-#: src/totem-statusbar.c:138
-msgid "Shadow type"
-msgstr "그림자 형태"
-
-#: src/totem-statusbar.c:139
-msgid "Style of bevel around the statusbar text"
-msgstr "상태 표시줄 텍스트 주위의 3D 효과 형태"
-
-#: src/totem-statusbar.c:171 src/totem.c:347
-msgid "Stopped"
-msgstr "멈춤"
-
-#: src/totem-statusbar.c:180
-msgid "0:00 / 0:00"
-msgstr "0:00 / 0:00"
-
-#: src/totem-statusbar.c:205
-#, c-format
-msgid "%s (Streaming)"
-msgstr "%s (스트리밍)"
-
-#: src/totem.c:82
-msgid "Seek Forwards"
-msgstr "앞으로 이동"
-
-#: src/totem.c:83
-msgid "Seek Backwards"
-msgstr "뒤로 이동"
-
-#: src/totem.c:84
-msgid "Volume Up"
-msgstr "소리 높임"
-
-#: src/totem.c:85
-msgid "Volume Down"
-msgstr "소리 낮춤"
-
-#: src/totem.c:87
-msgid "Toggle Fullscreen"
-msgstr "전체화면 토글"
-
-#: src/totem.c:88
-msgid "Quit"
-msgstr "끝내기"
-
-#: src/totem.c:89
-msgid "Enqueue"
-msgstr "큐에 넣기"
-
-#: src/totem.c:90
-msgid "Replace"
-msgstr "바꾸기"
-
-#: src/totem.c:228
-msgid "Download"
-msgstr "다운로드"
-
-#: src/totem.c:333
-msgid "Playing"
-msgstr "재생중"
-
-#: src/totem.c:340
-msgid "Paused"
-msgstr "일시 정지"
-
-#: src/totem.c:377
-msgid "Totem could not eject the optical media."
-msgstr "Totem이 광 미디어를 꺼낼 수 없습니다."
-
-#: src/totem.c:377
-msgid "No reason given"
-msgstr "이유 없음"
-
-#: src/totem.c:398 src/totem.c:820 src/totem.c:941
-#, c-format
-msgid "Totem could not play '%s'."
-msgstr "Totem이 '%s'을(를) 재생할 수 없습니다."
-
-#: src/totem.c:418
-msgid "DVD"
-msgstr "DVD"
-
-#: src/totem.c:419
-msgid "Video CD"
-msgstr "비디오 CD"
-
-#: src/totem.c:420
-msgid "Audio CD"
-msgstr "오디오 CD"
-
-#: src/totem.c:431
-#, c-format
+#: ../src/totem-preferences.c:443
 msgid ""
-"Totem cannot play this type of media (%s) because you do not have the "
-"appropriate plugins to handle it."
-msgstr "이 형태의 미디어를 (%s) 처리할 수 있는 적절한 플러그인이 없기 때문에 Totem에서 이 형태의 미디어를 재생할 수 없습니다."
+"The change of audio output type will only take effect when Totem is "
+"restarted."
+msgstr "바꾼 설정은 Totem을 다시 시작했을 때 적용됩니다."
 
-#: src/totem.c:432
-msgid ""
-"Please install the necessary plugins and restart Totem to be able to play "
-"this media."
-msgstr "필요한 플러그인을 설치하고 Totem을 재시작하면 이 미디어를 재생할 수 있습니다."
+#: ../src/totem-properties-main.c:112
+msgid "Audio/Video"
+msgstr "오디오/비디오"
 
-#: src/totem.c:440
-#, c-format
-msgid ""
-"Totem could not play this media (%s) although a plugin is present to handle "
-"it."
-msgstr "이 형태의 미디어를 처리할 수 있는 플러그인이 있지만 이 미디어를 (%s) 재생할 수 없습니다."
-
-#: src/totem.c:441
-msgid ""
-"You might want to check that a disc is present in the drive and that it is "
-"correctly configured."
-msgstr "디스크가 드라이브 안에 들어 있고 올바르게 설정되어 있는 지 확인하십시오."
-
-#. Title
-#: src/totem.c:671
-#, c-format
-msgid "%s - Totem"
-msgstr "%s - Totem"
-
-#: src/totem.c:684 src/totem.c:3409
-msgid "No file"
-msgstr "파일 없음"
-
-#: src/totem.c:1230
-msgid "An error occured"
-msgstr "오류가 발생했습니다"
-
-#: src/totem.c:1242
-msgid "Buffering"
-msgstr "버퍼링"
-
-#: src/totem.c:1263 src/totem.c:1285
-#, c-format
-msgid "Buffering: %d%%"
-msgstr "버퍼링: %d%%"
-
-#: src/totem.c:1598 src/totem.c:1606
-msgid "Couldn't load the 'Open Location...' interface."
-msgstr "'위치 열기...' 인터페이스를 읽어들일 수 없습니다."
-
-#: src/totem.c:1598 src/totem.c:1606 src/totem.c:3602 src/totem.c:3627
-#: src/totem.c:3650
-msgid "Make sure that Totem is properly installed."
-msgstr "Totem이 올바르게 설치되었는 지 확인하십시오."
-
-#: src/totem.c:1838 src/vanity.c:219
-msgid "translator_credits"
-msgstr ""
-"장재만 <jacojang@korea.com>\n"
-"류창우 <cwryu@debian.org>"
-
-#: src/totem.c:1864
-#, c-format
-msgid "Movie Player using %s"
-msgstr "%s 사용 영화 플레이어"
-
-#: src/totem.c:1954 src/totem.c:1965 src/vanity.c:307 src/vanity.c:318
+#: ../src/totem-screenshot.c:151 ../src/totem-screenshot.c:162
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "스크린샷%d.png"
 
-#: src/totem.c:2016 src/totem.c:2024
-msgid "Totem could not get a screenshot of that film."
-msgstr "Totem이 이 필름의 스크린샷을 찍을 수 없습니다."
-
-#: src/totem.c:2024
-msgid "Please file a bug, this isn't supposed to happen"
-msgstr "버그를 보고하십시오. 일어나서는 안 되는 현상입니다"
-
-#: src/totem.c:2052
+#: ../src/totem-screenshot.c:204
 #, c-format
 msgid "File '%s' already exists."
 msgstr "'%s' 파일은 이미 존재합니다."
 
-#: src/totem.c:2053
+#: ../src/totem-screenshot.c:206
 msgid "The screenshot was not saved"
 msgstr "스크린샷을 저장하지 않았습니다."
 
-#: src/totem.c:2063
+#: ../src/totem-screenshot.c:217
 msgid "There was an error saving the screenshot."
 msgstr "스크린샷을 저장하는 중에 오류가 발생했습니다."
 
-#: src/totem.c:2078
+#: ../src/totem-screenshot.c:250
+msgid "Screenshot.png"
+msgstr "스크린샷.png"
+
+#: ../src/totem-statusbar.c:91
+msgid "Shadow type"
+msgstr "그림자 형태"
+
+#: ../src/totem-statusbar.c:92
+msgid "Style of bevel around the statusbar text"
+msgstr "상태 표시줄 텍스트 주위의 3D 효과 형태"
+
+#: ../src/totem-statusbar.c:124 ../src/totem.c:251 ../src/totem.c:555
+msgid "Stopped"
+msgstr "멈춤"
+
+#: ../src/totem-statusbar.c:141
+msgid "0:00 / 0:00"
+msgstr "0:00 / 0:00"
+
+#: ../src/totem-statusbar.c:166
+#, c-format
+msgid "%s (Streaming)"
+msgstr "%s (스트리밍)"
+
+#. Elapsed / Total Length
+#: ../src/totem-statusbar.c:173 ../src/totem-time-label.c:70
+#, c-format
+msgid "%s / %s"
+msgstr "%s / %s"
+
+#. Seeking to Time / Total Length
+#: ../src/totem-statusbar.c:176
+#, c-format
+msgid "Seek to %s / %s"
+msgstr "%s / %s 위치로 이동"
+
+#: ../src/totem-statusbar.c:234
+msgid "Buffering"
+msgstr "버퍼링"
+
+#. eg: 75 %
+#: ../src/totem-statusbar.c:237
+#, c-format
+msgid "%d %%"
+msgstr "%d %%"
+
+#: ../src/totem-sublang.c:108 ../src/totem-sublang.c:130
+msgid "None"
+msgstr "없음"
+
+#: ../src/totem.c:241
+msgid "Playing"
+msgstr "재생중"
+
+#: ../src/totem.c:246
+msgid "Paused"
+msgstr "일시 정지"
+
+#: ../src/totem.c:287
+msgid "Totem could not eject the optical media."
+msgstr "Totem이 광 미디어를 꺼낼 수 없습니다."
+
+#: ../src/totem.c:362
+#, c-format
+msgid ""
+"Totem cannot play this type of media (%s) because you do not have the "
+"appropriate plugins to handle it."
+msgstr ""
+"이 형태의 미디어를 (%s) 처리할 수 있는 적절한 플러그인이 없기 때문에 Totem에"
+"서 이 형태의 미디어를 재생할 수 없습니다."
+
+#: ../src/totem.c:363
+msgid ""
+"Please install the necessary plugins and restart Totem to be able to play "
+"this media."
+msgstr ""
+"필요한 플러그인을 설치하고 Totem을 재시작하면 이 미디어를 재생할 수 있습니다."
+
+#: ../src/totem.c:371
+#, c-format
+msgid ""
+"Totem could not play this media (%s) although a plugin is present to handle "
+"it."
+msgstr ""
+"이 형태의 미디어를 처리할 수 있는 플러그인이 있지만 이 미디어를 (%s) 재생할 "
+"수 없습니다."
+
+#: ../src/totem.c:372
+msgid ""
+"You might want to check that a disc is present in the drive and that it is "
+"correctly configured."
+msgstr ""
+"디스크가 드라이브 안에 들어 있고 올바르게 설정되어 있는 지 확인하십시오."
+
+#. Title
+#: ../src/totem.c:548
+#, c-format
+msgid "%s - Totem Movie Player"
+msgstr "%s - Totem 영화 플레이어"
+
+#: ../src/totem.c:562
+msgid "No file"
+msgstr "파일 없음"
+
+#: ../src/totem.c:598 ../src/totem.c:1887
+msgid "Totem"
+msgstr "Totem"
+
+#: ../src/totem.c:1145 ../src/totem.c:1147
+msgid "An error occured"
+msgstr "오류가 발생했습니다"
+
+#: ../src/totem.c:1478
+msgid "Select files"
+msgstr "파일 선택"
+
+#: ../src/totem.c:1845
+msgid "Totem could not display the help contents."
+msgstr "Totem 도움말 차례를 표시할 수 없습니다."
+
+#: ../src/totem.c:1883
+#, c-format
+msgid "Movie Player using %s"
+msgstr "%s 사용 영화 플레이어"
+
+#: ../src/totem.c:1889 ../src/vanity.c:261
+msgid "Copyright © 2002-2005 Bastien Nocera"
+msgstr "Copyright © 2002-2005 Bastien Nocera"
+
+#: ../src/totem.c:1894 ../src/vanity.c:266
+msgid "translator-credits"
+msgstr ""
+"장재만 <jacojang@korea.com>\n"
+"류창우 <cwryu@debian.org>"
+
+#: ../src/totem.c:1927 ../src/totem.c:1935 ../src/vanity.c:299
+#: ../src/vanity.c:307
+msgid "Totem could not get a screenshot of that film."
+msgstr "Totem이 이 필름의 스크린샷을 찍을 수 없습니다."
+
+#: ../src/totem.c:1935
+msgid "Please file a bug, this isn't supposed to happen."
+msgstr "버그를 보고하십시오. 일어나서는 안 되는 현상입니다."
+
+#: ../src/totem.c:1962
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem이 영화 등록정보 창을 열 수 없습니다."
 
-#: src/totem.c:2078
+#: ../src/totem.c:1962
 msgid "Make sure that Totem is correctly installed."
 msgstr "Totem을 올바르게 설치했는지 확인하십시오."
 
-#: src/totem.c:2146
+#: ../src/totem.c:2048
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "%s에서 이동할 수 없습니다."
 
-#: src/totem.c:2877 src/totem.c:2899
-msgid "None"
-msgstr "없음"
-
-#: src/totem.c:2881 src/totem.c:2902
-msgid "Auto"
-msgstr "자동"
-
-#: src/totem.c:3318
+#: ../src/totem.c:3208
 msgid "Totem could not startup."
 msgstr "Totem이 시작할 수 없습니다."
 
-#: src/totem.c:3318 src/vanity.c:551
-msgid "No reason"
-msgstr "이유 없음"
-
-#: src/totem.c:3575
-msgid "Could not initialise the thread-safe libraries."
-msgstr "쓰레드에 안전한 라이브러리를 초기화할 수 없습니다."
-
-#: src/totem.c:3575
+#: ../src/totem.c:3389
 msgid "Verify your system installation. Totem will now exit."
 msgstr "시스템 설치가 올바른지 확인하십시오. Totem을 끝냅니다."
 
-#: src/totem.c:3592
+#: ../src/totem.c:3410
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem이 설정 엔진을 초기화할 수 없습니다."
 
-#: src/totem.c:3602 src/totem.c:3627
-msgid "Couldn't load the main interface (totem.glade)."
-msgstr "주 인터페이스 파일(totem.glade)을 읽어들일 수 없습니다."
+#: ../src/totem.c:3410
+msgid "Make sure that GNOME is properly installed."
+msgstr "그놈을 올바르게 설치했는 지 확인하십시오."
 
-#: src/totem.c:3650
-msgid "Couldn't load the interface for the playlist."
-msgstr "재생 목록에 대한 인터페이스를 읽어들일 수 없습니다."
-
-#: src/vanity.c:55
+#: ../src/vanity.c:75
 msgid "Debug mode on"
 msgstr "디버깅 모드 사용"
 
-#: src/vanity.c:245
+#: ../src/vanity.c:255
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "%s을(를) 사용하는 웹캠 유틸리티"
 
-#: src/vanity.c:550
+#: ../src/vanity.c:307
+msgid "Please file a bug, this isn't supposed to happen"
+msgstr "버그를 보고하십시오. 일어나서는 안 되는 현상입니다"
+
+#: ../src/vanity.c:550
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1348,7 +1537,11 @@ msgstr ""
 "Vanity가 시작할 수 없습니다:\n"
 "%s"
 
-#: src/vanity.c:589
+#: ../src/vanity.c:551
+msgid "No reason"
+msgstr "이유 없음"
+
+#: ../src/vanity.c:589
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1357,7 +1550,7 @@ msgstr ""
 "Vanity가 웹캠에 접근할 수 없습니다.\n"
 "이유: %s"
 
-#: src/vanity.c:605
+#: ../src/vanity.c:605
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1366,11 +1559,11 @@ msgstr ""
 "Vanity가 웹캠에서 비디오를 재생할 수 없습니다.\n"
 "이유: %s"
 
-#: src/vanity.c:641
+#: ../src/vanity.c:641
 msgid "Vanity Webcam Utility"
 msgstr "Vanity 웹캠 유틸리티"
 
-#: src/vanity.c:647
+#: ../src/vanity.c:646
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1378,7 +1571,7 @@ msgstr ""
 "쓰레드에 안전한 라이브러리를 초기화할 수 없습니다.\n"
 "시스템 설치가 올바른지 확인하십시오. Vanity를 끝냅니다."
 
-#: src/vanity.c:669
+#: ../src/vanity.c:671
 #, c-format
 msgid ""
 "Vanity couln't initialise the \n"
@@ -1389,10 +1582,46 @@ msgstr ""
 "초기화할 수 없습니다:\n"
 "%s"
 
-#: src/vanity.c:683 src/vanity.c:698
+#: ../src/vanity.c:691 ../src/vanity.c:706
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
 msgstr ""
 "주 인터페이스 파일(totem.glade)을 읽어들일 수 없습니다.\n"
 "Vanity가 올바르게 설치되었는 지 확인하십시오."
+
+#: ../src/video-utils.c:290
+#, c-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d시간"
+
+#: ../src/video-utils.c:292
+#, c-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d분"
+
+#: ../src/video-utils.c:295
+#, c-format
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "%d초"
+
+#. hour:minutes:seconds
+#: ../src/video-utils.c:301
+#, c-format
+msgid "%s %s %s"
+msgstr "%s %s %s"
+
+#. minutes:seconds
+#: ../src/video-utils.c:304
+#, c-format
+msgid "%s %s"
+msgstr "%s %s"
+
+#. seconds
+#: ../src/video-utils.c:307
+#, c-format
+msgid "%s"
+msgstr "%s"
