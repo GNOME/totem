@@ -25,7 +25,9 @@ EGG_RECENT_FILES =                      \
         egg-recent-view-gtk.c           \
         egg-recent-view-gtk.h           \
         egg-recent-util.c               \
-	egg-recent-util.h
+	egg-recent-util.h		\
+	egg-recent-vfs-utils.c		\
+	egg-recent-vfs-utils.h
 
 EGGDIR=$(srcdir)/../../libegg/libegg/recent-files/
 regenerate-built-sources:
