@@ -514,6 +514,9 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
 			retval = TRUE;
 
 			g_free (tmpurl);
+		} else if (strcmp (lines[i], "--stop--") == 0) {
+			/* For Real Media playlists, handle the stop command */
+			break;
 		} else {
 			/* Try with a base */
 			char *fullpath, *base, sep;
