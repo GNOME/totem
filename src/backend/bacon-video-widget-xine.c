@@ -3263,6 +3263,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetM
 		{
 			char *utf8;
 
+			g_warning ("Metadata for index %d not in UTF-8 for mrl '%s'", type, bvw->priv->mrl);
 			utf8 = g_locale_to_utf8 (string, -1, NULL, NULL, NULL);
 			g_value_set_string (value, utf8);
 			g_free (utf8);
