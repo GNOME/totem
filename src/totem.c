@@ -3121,17 +3121,15 @@ main (int argc, char **argv)
 
 	g_set_application_name (_("Totem Movie Player"));
 
-	/* FIXME This should be enabled all the time, and needs to be
-	 * removed when 111349 is closed */
-#if 0
+	/* FIXME See http://bugzilla.gnome.org/show_bug.cgi?id=111349 */
 	if (XInitThreads () == 0)
 	{
-		g_warning (_("Could not initialise the thread-safe libraries.\n"
+		gtk_init (&argc, &argv);
+		totem_action_error_and_exit (_("Could not initialise the "
+					"thread-safe libraries.\n"
 					"Verify your system installation. Totem"
-					" will now exit."));
-		exit (1);
+					" will now exit."), NULL);
 	}
-#endif
 
 	g_thread_init (NULL);
 	gdk_threads_init ();

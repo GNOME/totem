@@ -590,13 +590,11 @@ load_audio_out_driver (BaconVideoWidget *bvw, GError **err)
 static void
 update_fullscreen_size (BaconVideoWidget *bvw)
 {
-	XLockDisplay (bvw->priv->display);
 	gdk_screen_get_monitor_geometry (gdk_screen_get_default (),
 			gdk_screen_get_monitor_at_window
 			(gdk_screen_get_default (),
 			 bvw->priv->video_window),
 			&bvw->priv->fullscreen_rect);
-	XUnlockDisplay (bvw->priv->display);
 }
 
 static void

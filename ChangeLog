@@ -1,3 +1,19 @@
+2003-04-27  Bastien Nocera  <hadess@hadess.net>
+
+	* README: updated
+	* src/bacon-video-widget-xine.c: (update_fullscreen_size): remove
+	unneeded locks
+	* src/gtk-playlist.c:
+	* src/gtk-playlist.h: updated copyrights
+	* src/totem.c: (main): display a graphical error message if X isn't
+	compiled with threads, enable XInitThreads all the time now that
+	a work-around has been found. See
+	http://bugzilla.gnome.org/show_bug.cgi?id=111349 for details.
+	1) Remove the call to XInitThreads in totem.c, totem is very
+	likely to lockup, especially with the xine backend
+	2) Install a Gtk+ with XInput disabled
+	3) Install a fixed version of X, see the bug above for the patch
+
 2003-04-26  Bastien Nocera  <hadess@hadess.net>
 
 	* src/gtk-playlist.c: (gtk_playlist_remove_files): plug a memleak
