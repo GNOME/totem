@@ -111,6 +111,11 @@ static const GtkTargetEntry target_table[] = {
 	{ "text/uri-list", 0, 0 },
 };
 
+static const GtkTargetEntry source_table[] = {
+	{ "text/plain", 0, 0 },
+//	{ "_NETSCAPE_URL", 0, 0 },
+};
+
 static gboolean popup_hide (Totem *totem);
 static void update_buttons (Totem *totem);
 static void update_dvd_menu_items (Totem *totem);
@@ -730,6 +735,32 @@ drop_playlist_cb (GtkWidget     *widget,
 	gtk_drag_finish (context, retval, FALSE, time);
 }
 
+static void
+drag_video_cb (GtkWidget *widget,
+		GdkDragContext *context,
+		GtkSelectionData *selection_data,
+		guint info,
+		guint32 time,
+		gpointer callback_data)
+{
+	Totem *totem = (Totem *) callback_data;
+	char *text;
+	int len;
+
+	g_assert (selection_data != NULL);
+
+	if (totem->mrl == NULL)
+		return;
+
+	text = totem->mrl;
+	len = strlen (text);
+
+	gtk_selection_data_set (selection_data,
+			selection_data->target,
+			8, (guchar *) text, len);
+
+	g_free (text);
+}
 
 static void
 on_play_pause_button_clicked (GtkToggleButton *button, gpointer user_data)
@@ -2164,6 +2195,12 @@ video_widget_create (Totem *totem)
 			G_CALLBACK (drop_video_cb), totem);
 	gtk_drag_dest_set (totem->gtx, GTK_DEST_DEFAULT_ALL,
 			target_table, 1, GDK_ACTION_COPY);
+
+	g_signal_connect (G_OBJECT (totem->gtx), "drag_data_get",
+			G_CALLBACK (drag_video_cb), totem);
+	gtk_drag_source_set (totem->gtx, GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
+			source_table, G_N_ELEMENTS (source_table),
+			GDK_ACTION_LINK);
 
 	g_object_add_weak_pointer (G_OBJECT (totem->gtx),
 			(void**)&(totem->gtx));
