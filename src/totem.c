@@ -1436,6 +1436,10 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 	{
 		char *filename;
 
+		/* Ignore relatives paths that start with "--", tough luck */
+		if (list[i][0] == '-' && list[i][1] == '-')
+			continue;
+
 		/* Get the subtitle part out for our tests */
 		filename = totem_create_full_path (list[i]);
 

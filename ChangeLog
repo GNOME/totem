@@ -1,3 +1,9 @@
+2003-07-14  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem.c: (totem_action_open_files): don't open files with
+	relative paths and 2 dashes in front (ie. don't try to open command-line
+	arguments) (Closes: #117359)
+
 2003-07-13  Julien MOUTTE <julien@moutte.net>
 
 	* src/gstvideowidget.c: Fixing indentation, and a bug when
