@@ -97,6 +97,7 @@ totem_SOURCES = 					\
 	totem-screenshot.h		\
 	totem-session.c totem-session.h	\
 	totem-skipto.c totem-skipto.h	\
+	totem-sublang.c totem-sublang.h	\
 	totem-time-label.c totem-time-label.h \
 	totem-uri.c totem-uri.h		\
 	rb-ellipsizing-label.c		\

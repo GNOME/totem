@@ -1004,6 +1004,7 @@ totem_playlist_down_files (GtkWidget *widget, TotemPlaylist *playlist)
 static int
 totem_playlist_key_press (GtkWidget *win, GdkEventKey *event, TotemPlaylist *playlist)
 {
+	//FIXME add support for GDK_Menu and Ctrl+F10
 	/* Special case some shortcuts */
 	if (event->state != 0
 			&& (event->state &GDK_CONTROL_MASK))
@@ -2040,6 +2041,46 @@ totem_playlist_set_at_end (TotemPlaylist *playlist)
 		playlist->_priv->current = gtk_tree_path_new_from_indices
 			(indice, -1);
 	}
+}
+
+guint
+totem_playlist_get_current (TotemPlaylist *playlist)
+{
+	char *path;
+	double index;
+
+	g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), 0);
+
+	path = gtk_tree_path_to_string (playlist->_priv->current);
+	if (path == NULL)
+		return -1;
+
+	index = g_ascii_strtod (path, NULL);
+	g_free (path);
+
+	return index;
+}
+
+guint
+totem_playlist_get_last (TotemPlaylist *playlist)
+{
+	g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), -1);
+
+	return PL_LEN - 1;
+}
+
+void
+totem_playlist_set_current (TotemPlaylist *playlist, guint index)
+{
+	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
+
+	if (index >= (guint) PL_LEN)
+		return;
+
+	totem_playlist_unset_playing (playlist);
+	//FIXME problems when shuffled?
+	gtk_tree_path_free (playlist->_priv->current);
+	playlist->_priv->current = gtk_tree_path_new_from_indices (index, -1);
 }
 
 static void

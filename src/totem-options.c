@@ -30,6 +30,7 @@
 #include "totem-options.h"
 #include "totem-uri.h"
 #include "bacon-video-widget.h"
+#include "totem-private.h"
 
 static struct poptOption options[] = {
 	{NULL, '\0', POPT_ARG_INCLUDE_TABLE, NULL, 0, N_("Backend options"), NULL},
@@ -56,17 +57,18 @@ totem_options_get_options (void)
 	return options;
 }
 
-void
+gboolean
 totem_options_process_late (Totem *totem, int *argc, char ***argv)
 {
 	int i;
 	guint options = 0;
 	char **args = *argv;
+	gboolean session_restored = FALSE;
 
 	if (*argc == 1) {
 		*argc = 0;
 		*argv = *argv + 1;
-		return;
+		return FALSE;
 	}
 
 	for (i = 1; i < *argc; i++)
@@ -79,8 +81,31 @@ totem_options_process_late (Totem *totem, int *argc, char ***argv)
 			options++;
 		} else if (strcmp (args[i], "--toggle-controls") == 0) {
 			totem_action_toggle_controls (totem);
-		} else if (strcmp (args[i], "--sm-config-prefix") == 0) {
-			//FIXME save the config prefix
+		} else if (strcmp (args[i], "--sm-config-prefix") == 0
+				|| strcmp (args[i], "--sm-client-id") == 0
+				|| strcmp (args[i], "--screen") == 0) {
+			session_restored = TRUE;
+			options++;
+			i++;
+			if (i < *argc)
+				options++;
+		} else if (strcmp (args[i], "--playlist-idx") == 0) {
+			options++;
+			i++;
+			if (i < *argc)
+			{
+				options++;
+				totem->index = g_ascii_strtod (args[i], NULL);
+			}
+		} else if (strcmp (args[i], "--seek") == 0) {
+			options++;
+			i++;
+			if (i < *argc)
+			{
+				options++;
+				if (sscanf (args[i], "%"G_GINT64_FORMAT, &totem->seek_to) != 1)
+					totem->seek_to = 0;
+			}
 		} else if (g_str_has_prefix (args[i], "--") != FALSE) {
 			printf (_("Option '%s' is unknown and was ignored\n"),
 					args[i]);
@@ -90,6 +115,8 @@ totem_options_process_late (Totem *totem, int *argc, char ***argv)
 
 	*argc = *argc - options;
 	*argv = *argv + options + 1;
+
+	return session_restored;
 }
 
 void

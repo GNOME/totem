@@ -935,9 +935,34 @@ totem_pl_parser_add_pls (TotemPlParser *parser, const char *url, gpointer data)
 		g_free (title_key);
 		g_free (genre_key);
 
-		if (file != NULL)
+		if (file == NULL)
+		{
+			g_free (file);
+			g_free (title);
+			g_free (genre);
+			continue;
+		}
+
+		if (strstr (file, "://") != NULL
+				|| file[0] == G_DIR_SEPARATOR) {
 			totem_pl_parser_add_one_url_ext (parser,
 					file, title, genre);
+		} else {
+			char *uri, *base, *escaped;
+
+			/* Try with a base */
+			base = totem_pl_parser_base_url (url);
+			escaped = gnome_vfs_escape_path_string (file);
+
+			uri = g_strdup_printf ("%s/%s", base, escaped);
+
+			totem_pl_parser_add_one_url_ext (parser,
+					uri, title, genre);
+
+			g_free (escaped);
+			g_free (uri);
+			g_free (base);
+		}
 
 		g_free (file);
 		g_free (title);

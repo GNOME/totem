@@ -792,13 +792,23 @@ setup_config_stream (BaconVideoWidget *bvw)
 	if (bvw->priv->gc == NULL)
 		return;
 
+	/* Set the volume */
+	if (bvw->priv->ao_driver != NULL)
+	{
+		bvw->priv->volume = gconf_client_get_int (bvw->priv->gc,
+				GCONF_PREFIX"/volume", NULL);
+		bvw->priv->volume = CLAMP (bvw->priv->volume, 0, 100);
+
+		xine_set_param (bvw->priv->stream,
+				XINE_PARAM_AUDIO_AMP_LEVEL,
+				bvw->priv->volume);
+	}
+
 	/* Setup brightness and contrast */
 	for (i = 0; i < 4; i++)
 	{
-		GError *error = NULL;
-
 		confvalue = gconf_client_get_without_default (bvw->priv->gc,
-				video_props_str[i], &error);
+				video_props_str[i], NULL);
 
 		if (confvalue != NULL)
 		{
@@ -808,19 +818,12 @@ setup_config_stream (BaconVideoWidget *bvw)
 			value = 65535 / 2;
 		}
 
-		/* avoid black screens */
-		if (value == 0 || error != NULL)
-			value = 65535 / 2;
-
 		tmp = xine_get_param (bvw->priv->stream, video_props[i]);
 		if (value != tmp)
 		{
 			xine_set_param (bvw->priv->stream,
 					video_props[i], value);
 		}
-
-		if (error != NULL)
-			g_error_free (error);
 	}
 }
 
@@ -1603,6 +1606,7 @@ bacon_video_widget_new (int width, int height,
 
 	bvw->priv->stream = xine_stream_new (bvw->priv->xine,
 			bvw->priv->ao_driver, bvw->priv->vo_driver);
+	setup_config_stream (bvw);
 	bvw->priv->ev_queue = xine_event_new_queue (bvw->priv->stream);
 
 	return GTK_WIDGET (bvw);
@@ -2092,7 +2096,7 @@ gboolean bacon_video_widget_seek (BaconVideoWidget *bvw, float position,
 gboolean bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time,
 		GError **gerror)
 {
-	int error, speed;
+	int error, speed, status;
 	gint64 length;
 
 	g_return_val_if_fail (bvw != NULL, -1);
@@ -2102,7 +2106,8 @@ gboolean bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time,
 	length = bacon_video_widget_get_stream_length (bvw);
 
 	speed = xine_get_param (bvw->priv->stream, XINE_PARAM_SPEED);
-	if (speed == XINE_SPEED_PAUSE)
+	status = xine_get_status (bvw->priv->stream);
+	if (speed == XINE_SPEED_PAUSE || status == XINE_STATUS_STOP)
 	{
 		bvw->priv->seeking = 2;
 		bvw->priv->seek_dest_time = CLAMP (time, 0, length);
@@ -2356,16 +2361,6 @@ bacon_video_widget_get_volume (BaconVideoWidget *bvw)
 
 	if (bacon_video_widget_can_set_volume (bvw) == FALSE)
 		return 0;
-
-	if (bvw->priv->volume == -1)
-	{
-		bvw->priv->volume = gconf_client_get_int (bvw->priv->gc,
-				GCONF_PREFIX"/volume", NULL);
-		bvw->priv->volume = CLAMP (bvw->priv->volume, 0, 100);
-
-		xine_set_param (bvw->priv->stream,
-				XINE_PARAM_AUDIO_AMP_LEVEL, bvw->priv->volume);
-	}
 
 	return bvw->priv->volume;
 }
@@ -2824,13 +2819,15 @@ bacon_video_widget_get_current_time (BaconVideoWidget *bvw)
 {
 	int pos_time = 0, i = 0;
 	int pos_stream, length_time;
+	int status;
 	gboolean ret;
 
 	g_return_val_if_fail (bvw != NULL, 0);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
 	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
 
-	if (bacon_video_widget_is_playing (bvw) == FALSE)
+	status = xine_get_status (bvw->priv->stream);
+	if (status != XINE_STATUS_STOP && status != XINE_STATUS_PLAY)
 		return 0;
 
 	ret = xine_get_pos_length (bvw->priv->stream, &pos_stream,

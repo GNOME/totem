@@ -38,9 +38,14 @@ void	totem_action_next			(Totem *totem);
 void	totem_action_previous			(Totem *totem);
 void	totem_action_seek_relative		(Totem *totem, int off_sec);
 void	totem_action_volume_relative		(Totem *totem, int off_pct);
-gboolean totem_action_set_mrl			(Totem *totem, const char *mrl);
+gboolean totem_action_set_mrl			(Totem *totem,
+						 const char *mrl);
+gboolean totem_action_set_mrl_with_warning	(Totem *totem,
+						 const char *mrl,
+						 gboolean warn);
 
-void	totem_action_play_media			(Totem *totem, MediaType type);
+void	totem_action_play_media			(Totem *totem,
+						 MediaType type);
 
 void	totem_action_toggle_aspect_ratio	(Totem *totem);
 void	totem_action_set_aspect_ratio		(Totem *totem, int ratio);

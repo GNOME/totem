@@ -95,6 +95,10 @@ gboolean   totem_playlist_set_playing (TotemPlaylist *playlist, gboolean state);
 void       totem_playlist_set_at_start (TotemPlaylist *playlist);
 void       totem_playlist_set_at_end (TotemPlaylist *playlist);
 
+guint      totem_playlist_get_current (TotemPlaylist *playlist);
+guint      totem_playlist_get_last (TotemPlaylist *playlist);
+void       totem_playlist_set_current (TotemPlaylist *playlist, guint index);
+
 G_END_DECLS
 
 #endif /* TOTEM_PLAYLIST_H */

@@ -104,9 +104,13 @@ struct Totem {
 	EggRecentModel *recent_model;
 	EggRecentViewGtk *recent_view;
 
+	/* session */
+	const char *argv0;
+	gint64 seek_to;
+	guint index;
+
 	/* other */
 	char *mrl;
-	char *argv0;
 	TotemPlaylist *playlist;
 	GConfClient *gc;
 	TotemRemote *remote;

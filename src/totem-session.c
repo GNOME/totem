@@ -24,34 +24,71 @@
 
 #include "totem.h"
 #include "totem-private.h"
+#include "totem-session.h"
 
 #ifndef HAVE_GTK_ONLY
 
 #include <libgnome/gnome-config.h>
 #include <libgnomeui/gnome-client.h>
 
+#define totem_signal_block_by_data(obj, data) (g_signal_handlers_block_matched (obj, G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, data))
+#define totem_signal_unblock_by_data(obj, data) (g_signal_handlers_unblock_matched (obj, G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, data))
+
+static char *
+totem_session_create_key (void)
+{
+	char *filename, *path;
+
+	filename = g_strdup_printf ("totem-%d-%d-%u.pls",
+			(int) getpid (),
+			(int) time (NULL),
+			g_random_int ());
+	path = g_build_filename (g_get_home_dir (),
+			".gnome2", filename, NULL);
+	g_free (filename);
+
+	return path;
+}
+
 static gboolean
 totem_save_yourself_cb (GnomeClient *client, int phase, GnomeSaveStyle style,
 		gboolean shutting_down, GnomeInteractStyle interact_style,
 		gboolean fast, Totem *totem)
 {
-	char *argv[] = { "rm", "-r", NULL };
-	const char *prefix;
-	gboolean succeeded = TRUE;
+	char *argv[] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL };
+	int i = 0;
+	char *path_id, *current, *seek;
+
+	path_id = totem_session_create_key ();
+	totem_playlist_save_current_playlist (totem->playlist, path_id);
 
 	/* How to discard the save */
-	prefix = gnome_client_get_config_prefix (client);
-	g_message ("prefix %s real_path %s", prefix, gnome_config_get_real_path (prefix));
-	argv[2] = gnome_config_get_real_path (prefix);
-	gnome_client_set_discard_command (client, 3, argv);
+	argv[i++] = "rm";
+	argv[i++] = "-f";
+	argv[i++] = path_id;
+	gnome_client_set_discard_command (client, i, argv);
 
 	/* How to clone or restart */
-	argv[0] = (char *) totem->argv0;
-	argv[1] = NULL;
+	i = 0;
+	current = g_strdup_printf ("%d",
+			totem_playlist_get_current (totem->playlist));
+	seek = g_strdup_printf ("%"G_GINT64_FORMAT,
+			bacon_video_widget_get_current_time (totem->bvw));
+	argv[i++] = (char *) totem->argv0;
+	argv[i++] = "--playlist-idx";
+	argv[i++] = current;
+	argv[i++] = "--seek";
+	argv[i++] = seek;
+	argv[i++] = path_id;
 
-	gnome_client_set_clone_command (client, 1, argv);
-	gnome_client_set_restart_command (client, 1, argv);
-	return succeeded;
+	gnome_client_set_clone_command (client, i, argv);
+	gnome_client_set_restart_command (client, i, argv);
+
+	g_free (path_id);
+	g_free (current);
+	g_free (seek);
+
+	return TRUE;
 }
 
 static void
@@ -74,10 +111,56 @@ totem_session_setup (Totem *totem, char **argv)
 			G_CALLBACK (totem_client_die_cb), totem);
 }
 
+void
+totem_session_restore (Totem *totem, char **argv)
+{
+	char *path, *mrl;
+
+	g_return_if_fail (argv[0] != NULL);
+	path = argv[0];
+
+	if (g_file_test (path, G_FILE_TEST_EXISTS) == FALSE)
+	{
+		totem_action_set_mrl (totem, NULL);
+		return;
+	}
+
+	totem_signal_block_by_data (totem->playlist, totem);
+
+	if (totem_playlist_add_mrl (totem->playlist, path, NULL) == FALSE)
+	{
+		totem_signal_unblock_by_data (totem->playlist, totem);
+		totem_action_set_mrl (totem, NULL);
+		return;
+	}
+
+	totem_signal_unblock_by_data (totem->playlist, totem);
+
+	if (totem->index != 0)
+		totem_playlist_set_current (totem->playlist, totem->index);
+	mrl = totem_playlist_get_current_mrl (totem->playlist);
+
+	totem_action_set_mrl_with_warning (totem, mrl, FALSE);
+
+	if (totem->seek_to != 0)
+	{
+		bacon_video_widget_seek_time (totem->bvw,
+				totem->seek_to, NULL);
+	}
+
+	g_free (mrl);
+
+	return;
+}
+
 #else
 
 void
 totem_session_setup (Totem *totem, char **argv)
+{
+}
+
+void totem_action_restore_pl (Totem *totem)
 {
 }
 

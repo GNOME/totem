@@ -1,4 +1,4 @@
-/* totem-options.h
+/* totem-sublang.h
 
    Copyright (C) 2004 Bastien Nocera <hadess@hadess.net>
 
@@ -20,24 +20,15 @@
    Author: Bastien Nocera <hadess@hadess.net>
  */
 
-#ifndef TOTEM_OPTIONS_H
-#define TOTEM_OPTIONS_H
-
-#include <popt.h>
+#ifndef TOTEM_SUBLANG_H
+#define TOTEM_SUBLANG_H
 
 #include "totem.h"
-#include "bacon-message-connection.h"
 
 G_BEGIN_DECLS
 
-poptOption totem_options_get_options (void);
-
-void totem_options_process_early (GConfClient *gc, int argc, char **argv);
-gboolean totem_options_process_late (Totem *totem, int *argc, char ***argv);
-
-void totem_options_process_for_server (BaconMessageConnection *conn,
-		int argc, char **argv);
+void totem_sublang_update (Totem *totem);
 
 G_END_DECLS
 
-#endif /* TOTEM_SKIPTO_H */
+#endif /* TOTEM_SUBLANG_H */

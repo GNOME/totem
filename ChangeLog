@@ -1,3 +1,49 @@
+2005-01-01  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem.glade:
+	* src/Makefile.am:
+	* src/bacon-video-widget-xine.c: (setup_config_stream),
+	(bacon_video_widget_new), (bacon_video_widget_seek_time),
+	(bacon_video_widget_get_volume),
+	(bacon_video_widget_get_current_time):
+	* src/totem-options.c: (totem_options_process_late):
+	* src/totem-options.h:
+	* src/totem-pl-parser.c: (totem_pl_parser_add_pls):
+	* src/totem-playlist.c: (totem_playlist_key_press),
+	(totem_playlist_set_at_end), (totem_playlist_get_current),
+	(totem_playlist_get_last), (totem_playlist_set_current):
+	* src/totem-playlist.h:
+	* src/totem-private.h:
+	* src/totem-session.c: (totem_session_create_key),
+	(totem_save_yourself_cb), (totem_session_restore),
+	(totem_session_setup), (totem_action_restore_pl):
+	* src/totem-session.h:
+	* src/totem.c: (totem_action_save_size), (totem_action_exit),
+	(totem_action_menu_popup), (play_pause_set_label),
+	(totem_action_play), (totem_action_seek),
+	(totem_action_fullscreen_toggle), (totem_action_seek_relative),
+	(on_recent_file_activate), (on_channels_change_event),
+	(totem_action_open_files), (show_controls),
+	(totem_action_toggle_controls), (on_about1_activate),
+	(commit_hide_skip_to), (totem_action_remote),
+	(popup_timeout_remove), (popup_hide), (on_mouse_click_fullscreen),
+	(on_video_motion_notify_event), (on_video_button_press_event),
+	(totem_action_handle_key), (totem_setup_window),
+	(totem_callback_connect), (main):
+	* src/totem.h:
+	* src/totem-sublang.[ch]:
+
+	Remove possible "burps" on startup when the sound is supposed to
+	be mute (xine-lib)
+	Fix parsing of .pls files with relative paths (they're relative to
+	the .pls file, not to the working directory) (Closes: #162440)
+	Fix problems with activating a multi-item playlist from the
+	recent files, we should play the first item added, not the last one
+	Move languages and subtitles menu code to totem-sublang.[ch]
+	Add session saving support (Closes: #131811)
+	Fix seeking into streams that haven't been played yet, only opened
+	Some code cleanups
+
 2004-12-30  Bastien Nocera  <hadess@hadess.net>
 
 	* src/Makefile.am: upd
