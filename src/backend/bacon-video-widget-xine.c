@@ -2475,6 +2475,70 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
 	gconf_client_set_int (bvw->priv->gc, video_props_str[type], value, NULL);
 }
 
+BaconVideoWidgetAudioOutType
+bacon_video_widget_get_audio_out_type (BaconVideoWidget *bvw)
+{
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
+
+	return gconf_client_get_int (bvw->priv->gc,
+			GCONF_PREFIX"/audio_output_type", NULL);
+}
+
+void
+bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
+		BaconVideoWidgetAudioOutType type)
+{
+	xine_cfg_entry_t entry;
+	int four_channel, five_channel, five_one_channel;
+
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
+
+	four_channel = five_channel = five_one_channel = 0;
+
+	g_message ("bacon_video_widget_set_audio_out_type: %d", type);
+	gconf_client_set_int (bvw->priv->gc,
+			GCONF_PREFIX"/audio_output_type",
+			type, NULL);
+	switch (type) {
+	case BVW_AUDIO_SOUND_STEREO:
+		/* Nothing to do */
+		break;
+	case BVW_AUDIO_SOUND_4CHANNEL:
+		four_channel = 1;
+		break;
+	case BVW_AUDIO_SOUND_5CHANNEL:
+		five_channel = 1;
+		break;
+	case BVW_AUDIO_SOUND_51CHANNEL:
+		five_one_channel = 1;
+		break;
+	default:
+		g_assert_not_reached ();
+	}
+
+	if (xine_config_lookup_entry (bvw->priv->xine, "audio.four_channel", &entry))
+	{
+		entry.num_value = four_channel;
+		xine_config_update_entry (bvw->priv->xine, &entry);
+	}
+
+	if (xine_config_lookup_entry (bvw->priv->xine, "audio.five_channel", &entry))
+	{
+		entry.num_value = five_channel;
+		xine_config_update_entry (bvw->priv->xine, &entry);
+	}
+
+	if (xine_config_lookup_entry (bvw->priv->xine, "audio.five_lfe_channel", &entry))
+	{
+		entry.num_value = five_one_channel;
+		xine_config_update_entry (bvw->priv->xine, &entry);
+	}
+}
+
 static void
 bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetMetadataType type,
 		GValue *value)

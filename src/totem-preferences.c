@@ -361,6 +361,14 @@ contrast_changed (GtkRange *range, Totem *totem)
 			BVW_VIDEO_CONTRAST, (int) i);
 }
 
+static void
+audio_out_menu_changed (GtkOptionMenu *option_menu, Totem *totem)
+{
+	BaconVideoWidgetAudioOutType audio_out;
+	audio_out = gtk_option_menu_get_history (GTK_OPTION_MENU (option_menu));
+	bacon_video_widget_set_audio_out_type (totem->bvw, audio_out);
+}
+
 void
 totem_setup_preferences (Totem *totem)
 {
@@ -370,6 +378,7 @@ totem_setup_preferences (Totem *totem)
 	int connection_speed, i, found;
 	char *path, *visual;
 	GList *list, *l;
+	BaconVideoWidgetAudioOutType audio_out;
 
 	g_return_if_fail (totem->gc != NULL);
 
@@ -501,6 +510,7 @@ totem_setup_preferences (Totem *totem)
 	g_signal_connect (G_OBJECT (item), "changed",
 			G_CALLBACK (visual_menu_changed), totem);
 
+	/* Brightness */
 	item = glade_xml_get_widget (totem->xml, "tpw_bright_scale");
 	i = bacon_video_widget_get_video_property (totem->bvw,
 			BVW_VIDEO_BRIGHTNESS);
@@ -508,12 +518,20 @@ totem_setup_preferences (Totem *totem)
 	g_signal_connect (G_OBJECT (item), "value-changed",
 			G_CALLBACK (brightness_changed), totem);
 
+	/* Contrast */
 	item = glade_xml_get_widget (totem->xml, "tpw_contrast_scale");
 	i = bacon_video_widget_get_video_property (totem->bvw,
 			BVW_VIDEO_CONTRAST);
 	gtk_range_set_value (GTK_RANGE (item), (gdouble) i);
 	g_signal_connect (G_OBJECT (item), "value-changed",
 			G_CALLBACK (contrast_changed), totem);
+
+	/* Sound output type */
+	item = glade_xml_get_widget (totem->xml, "tpw_sound_output_optionmenu");
+	audio_out = bacon_video_widget_get_audio_out_type (totem->bvw);
+	gtk_option_menu_set_history (GTK_OPTION_MENU (item), audio_out);
+	g_signal_connect (G_OBJECT (item), "changed",
+			G_CALLBACK (audio_out_menu_changed), totem);
 
 	/* This one is for the deinterlacing menu, not really our dialog
 	 * but we do it anyway */

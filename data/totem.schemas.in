@@ -135,6 +135,25 @@
 	</locale>
       </schema>
 
+      <schema>
+        <key>/schemas/apps/totem/audio_output_type</key>
+	<applyto>/apps/totem/audio_output_type</applyto>
+	<owner>totem</owner>
+	<type>int</type>
+	<default>0</default>
+	<locale name="C">
+	  <short>Type of audio output to use</short>
+	  <long>
+	    Type of audio output to use:
+	    0 for Stereo
+	    1 for 4-channel output
+	    2 for 5.0 channel output
+	    3 for 5.1 channel output
+	  </long>
+	</locale>
+      </schema>
+
+
 
   </schemalist>
 </gconfschemafile>
