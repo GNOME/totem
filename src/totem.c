@@ -1860,9 +1860,23 @@ screenshot_make_filename_helper (char *filename, gboolean desktop_exists)
 {
 	if (desktop_exists == TRUE)
 	{
-		return g_build_filename (G_DIR_SEPARATOR_S,
-				g_get_home_dir (), ".gnome-desktop",
-				filename, NULL);
+		char *fullpath;
+
+		fullpath = g_build_path (G_DIR_SEPARATOR_S, g_get_home_dir (),
+				"Desktop", NULL);
+		desktop_exists = g_file_test (fullpath, G_FILE_TEST_EXISTS);
+		g_free (fullpath);
+
+		if (desktop_exists == TRUE)
+		{
+			return g_build_filename (G_DIR_SEPARATOR_S,
+					g_get_home_dir (), "Desktop",
+					filename, NULL);
+		} else {
+			return g_build_filename (G_DIR_SEPARATOR_S,
+					g_get_home_dir (), ".gnome-desktop",
+					filename, NULL);
+		}
 	} else {
 		return g_build_filename (G_DIR_SEPARATOR_S,
 				g_get_home_dir (), filename, NULL);
