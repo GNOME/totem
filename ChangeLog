@@ -1,3 +1,16 @@
+2005-01-11  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-xine.c: (setup_config_stream):
+	don't setup the video bits if we don't have a video output
+	* src/totem-properties-main.c:
+	* src/totem-properties-view.c:
+	(totem_properties_view_register_type),
+	(totem_properties_view_class_init), (on_got_metadata_event),
+	(totem_properties_view_init), (totem_properties_view_finalize),
+	(totem_properties_view_set_location):
+	Fix the properties page, this one will actually work (if you don't
+	use GStreamer)
+
 2005-01-11  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* Makefile.am:

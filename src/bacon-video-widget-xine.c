@@ -793,6 +793,9 @@ setup_config_stream (BaconVideoWidget *bvw)
 		return;
 
 	/* Setup brightness and contrast */
+	if (bvw->priv->vo_driver == NULL)
+		return;
+
 	for (i = 0; i < 4; i++)
 	{
 		confvalue = gconf_client_get_without_default (bvw->priv->gc,

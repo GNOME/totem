@@ -32,46 +32,24 @@ struct TotemPropertiesViewPriv {
 	BaconVideoWidget *bvw;
 };
 
-static GType tpv_type = 0;
 static GObjectClass *parent_class = NULL;
 static void totem_properties_view_init (TotemPropertiesView *self);
 static void totem_properties_view_class_init (TotemPropertiesViewClass *class);
-static void totem_properties_view_destroy (GtkObject *object);
+static void totem_properties_view_finalize (GObject *object);
 
-GType
-totem_properties_view_get_type (void)
-{
-	return tpv_type;
-}
-
-//XXX use G_DEFINE_TYPE
+G_DEFINE_TYPE (TotemPropertiesView, totem_properties_view, GTK_TYPE_TABLE)
 
 void
 totem_properties_view_register_type (GTypeModule *module)
 {
-    static const GTypeInfo info = {
-	    sizeof (TotemPropertiesViewClass),
-	    (GBaseInitFunc) NULL,
-	    (GBaseFinalizeFunc) NULL,
-	    (GClassInitFunc) totem_properties_view_class_init,
-	    NULL,
-	    NULL,
-	    sizeof (TotemPropertiesView),
-	    0,
-	    (GInstanceInitFunc) totem_properties_view_init
-    };
-
-    tpv_type = g_type_module_register_type (module, GTK_TYPE_TABLE,
-		    "TotemPropertiesView",
-		    &info, 0);
+	totem_properties_view_get_type ();
 }
 
 static void
 totem_properties_view_class_init (TotemPropertiesViewClass *class)
 {
-	g_type_class_add_private (class, sizeof (TotemPropertiesViewPriv));
 	parent_class = g_type_class_peek_parent (class);
-	GTK_OBJECT_CLASS (class)->destroy = totem_properties_view_destroy;
+	G_OBJECT_CLASS (class)->finalize = totem_properties_view_finalize;
 }
 
 static void
@@ -80,47 +58,60 @@ on_got_metadata_event (BaconVideoWidget *bvw, TotemPropertiesView *props)
 	bacon_video_widget_properties_update
 		(props->priv->props, props->priv->bvw, FALSE);
 	bacon_video_widget_close (props->priv->bvw);
+	g_free (props->priv->location);
+	props->priv->location = NULL;
 }
 static void
 totem_properties_view_init (TotemPropertiesView *props)
 {
 	GError *err = NULL;
 
-	props->priv = G_TYPE_INSTANCE_GET_PRIVATE (props,
-			TOTEM_TYPE_PROPERTIES_VIEW,
-			TotemPropertiesViewPriv);
+	props->priv = g_new0 (TotemPropertiesViewPriv, 1);
 
 	props->priv->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new
 			(-1, -1, BVW_USE_TYPE_METADATA, &err));
-	if (props->priv->bvw == NULL)
-		g_error ("Error: %s", err ? err->message : "bla");
-	//FIXME
 
-	g_signal_connect (G_OBJECT (props->priv->bvw),
-			"got-metadata",
-			G_CALLBACK (on_got_metadata_event),
-			props);
+	if (props->priv->bvw != NULL)
+	{
+		/* Reference it, so that it's not floating */
+		g_object_ref (props->priv->bvw);
+
+		//FIXME
+
+		g_signal_connect (G_OBJECT (props->priv->bvw),
+				"got-metadata",
+				G_CALLBACK (on_got_metadata_event),
+				props);
+	} else {
+		g_error ("Error: %s", err ? err->message : "bla");
+	}
 
 	props->priv->vbox = bacon_video_widget_properties_new ();
-	gtk_widget_show (props->priv->vbox);
+	gtk_table_resize (GTK_TABLE (props), 1, 1);
+	gtk_container_add (GTK_CONTAINER (props), props->priv->vbox);
+	gtk_widget_show (GTK_WIDGET (props));
+
 	props->priv->props = BACON_VIDEO_WIDGET_PROPERTIES (props->priv->vbox);
 }
 
 static void
-totem_properties_view_destroy (GtkObject *object)
+totem_properties_view_finalize (GObject *object)
 {
 	TotemPropertiesView *props;
 
 	props = TOTEM_PROPERTIES_VIEW (object);
 
-	g_object_unref (G_OBJECT (props->priv->bvw));
-	props->priv->bvw = NULL;
-	g_free(props->priv->location);
-	props->priv->location = NULL;
-	g_object_unref (G_OBJECT (props->priv->props));
-	props->priv->props = NULL;
+	if (props->priv != NULL)
+	{
+		g_object_unref (G_OBJECT (props->priv->bvw));
+		props->priv->bvw = NULL;
+		g_free (props->priv->location);
+		props->priv->location = NULL;
+		g_free (props->priv);
+	}
+	props->priv = NULL;
 
-	GTK_OBJECT_CLASS (parent_class)->destroy (object);
+	G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 GtkWidget *
@@ -149,11 +140,19 @@ totem_properties_view_set_location (TotemPropertiesView *props,
 		bacon_video_widget_properties_update (props->priv->props,
 				props->priv->bvw, TRUE);
 		if (bacon_video_widget_open (props->priv->bvw, location, &error) == FALSE) {
+			g_free (props->priv->location);
+			props->priv->location = NULL;
 			g_warning ("Couldn't open %s: %s", location, error->message);
 			g_error_free (error);
 			return;
 		}
+		/* Already closed? */
+		if (props->priv->location == NULL)
+			return;
+
 		if (bacon_video_widget_play (props->priv->bvw, &error) == FALSE) {
+			g_free (props->priv->location);
+			props->priv->location = NULL;
 			g_warning ("Couldn't play %s: %s", location, error->message);
 			g_error_free (error);
 			bacon_video_widget_close (props->priv->bvw);

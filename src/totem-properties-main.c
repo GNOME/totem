@@ -28,9 +28,10 @@
 #include "data/totem-mime-types.h"
 
 static GType tpp_type = 0;
-static void   property_page_provider_iface_init (NautilusPropertyPageProviderIface *iface);
-static GList *totem_properties_get_pages (NautilusPropertyPageProvider *provider,
-		GList *files);
+static void property_page_provider_iface_init
+	(NautilusPropertyPageProviderIface *iface);
+static GList *totem_properties_get_pages
+	(NautilusPropertyPageProvider *provider, GList *files);
 
 static void
 totem_properties_plugin_register_type (GTypeModule *module)
