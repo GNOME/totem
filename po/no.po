@@ -5,16 +5,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem 0.5\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-23 11:25+0200\n"
-"PO-Revision-Date: 2003-07-23 11:27+0200\n"
+"POT-Creation-Date: 2003-08-21 10:26+0200\n"
+"PO-Revision-Date: 2003-08-21 10:30+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
-#: data/playlist.glade.h:1 src/gtk-playlist.c:1242
+#: data/playlist.glade.h:1 src/totem-playlist.c:1240
 msgid "Playlist"
 msgstr "Spilleliste"
 
@@ -128,11 +128,31 @@ msgstr "Ukjent"
 msgid "Year:"
 msgstr "År:"
 
+#: data/totem-download.glade.h:1
+msgid "Connecting to the server"
+msgstr "Kobler til tjener"
+
+#: data/totem-download.glade.h:2
+msgid "Done"
+msgstr "Ferdig"
+
+#: data/totem-download.glade.h:3
+msgid "Downloading the plug-ins"
+msgstr "Laster ned tillegg"
+
+#: data/totem-download.glade.h:4
+msgid "Installing the plug-ins"
+msgstr "Installerer tilleggene"
+
+#: data/totem-download.glade.h:5
+msgid "Plug-ins Download"
+msgstr "Nedlasting av tillegg"
+
 #: data/totem.desktop.in.h:1
 msgid "Play movies and songs"
 msgstr "Spill av filmer og sanger"
 
-#: data/totem.desktop.in.h:2 src/totem.c:3485
+#: data/totem.desktop.in.h:2 src/totem.c:3538
 msgid "Totem Movie Player"
 msgstr "Totem filmavspiller"
 
@@ -336,296 +356,304 @@ msgstr "Språk"
 msgid "Large"
 msgstr "Stor"
 
-#: data/totem.glade.h:53 src/totem.c:79
+#: data/totem.glade.h:53
+msgid "Mute"
+msgstr "Demp"
+
+#: data/totem.glade.h:54
+msgid "Mute sound"
+msgstr "Demp lyd"
+
+#: data/totem.glade.h:55 src/totem.c:79
 msgid "Next"
 msgstr "Neste"
 
-#: data/totem.glade.h:54
+#: data/totem.glade.h:56
 msgid "Next Chapter/Movie"
 msgstr "Neste kapittel/film"
 
-#: data/totem.glade.h:55
+#: data/totem.glade.h:57
 msgid "Next chapter or movie"
 msgstr "Neste kapittel eller film"
 
-#: data/totem.glade.h:56
-msgid "No langage selection available"
+#: data/totem.glade.h:58
+msgid "No language selection available"
 msgstr "Ingen språkvalg tilgjengelig"
 
-#: data/totem.glade.h:57
+#: data/totem.glade.h:59
 msgid "No subtitles selection available"
 msgstr "Ingen teksting tilgjengelig"
 
-#: data/totem.glade.h:58
+#: data/totem.glade.h:60
 msgid "Normal"
 msgstr "Normal"
 
-#: data/totem.glade.h:59
+#: data/totem.glade.h:61
 msgid "Open _Location..."
 msgstr "Åpne p_lassering..."
 
-#: data/totem.glade.h:60
+#: data/totem.glade.h:62
 msgid "Open a non-local file"
 msgstr "Åpne en ekstern fil"
 
-#: data/totem.glade.h:61
+#: data/totem.glade.h:63
 msgid "Optical device _path:"
 msgstr "Sti til optisk _enhet:"
 
-#: data/totem.glade.h:62
+#: data/totem.glade.h:64
 msgid "Play _Audio CD"
 msgstr "Spill av _lyd-CD"
 
-#: data/totem.glade.h:63
+#: data/totem.glade.h:65
 msgid "Play _DVD"
 msgstr "Spill av _DVD"
 
-#: data/totem.glade.h:64
+#: data/totem.glade.h:66
 msgid "Play _VCD"
 msgstr "Spill av _VCD"
 
-#: data/totem.glade.h:65
+#: data/totem.glade.h:67
 msgid "Play a Video CD"
 msgstr "Spill av en Video-CD"
 
-#: data/totem.glade.h:66
+#: data/totem.glade.h:68
 msgid "Play a Video DVD"
 msgstr "Spill av en Video-DVD"
 
-#: data/totem.glade.h:67
+#: data/totem.glade.h:69
 msgid "Play an audio CD"
 msgstr "Spill av lyd-CD"
 
-#: data/totem.glade.h:68
+#: data/totem.glade.h:70
 msgid "Play or pause the movie"
 msgstr "Spill av eller sett filmen på pause"
 
-#: data/totem.glade.h:69 src/totem.c:78
+#: data/totem.glade.h:71 src/totem.c:78
 msgid "Play/Pause"
 msgstr "Spill/pause"
 
-#: data/totem.glade.h:70 src/totem.c:80
+#: data/totem.glade.h:72 src/totem.c:80
 msgid "Previous"
 msgstr "Forrige"
 
-#: data/totem.glade.h:71
+#: data/totem.glade.h:73
 msgid "Previous Chapter/Movie"
 msgstr "Forrige kapittel/film"
 
-#: data/totem.glade.h:72
+#: data/totem.glade.h:74
 msgid "Previous chapter or movie"
 msgstr "Forrige kapittel eller film"
 
-#: data/totem.glade.h:73
+#: data/totem.glade.h:75
 msgid "Save Screenshot"
 msgstr "Lagre skjermdump"
 
-#: data/totem.glade.h:74
+#: data/totem.glade.h:76
 msgid "Save screenshot to _file:"
 msgstr "Lagre skjermdump til _fil:"
 
-#: data/totem.glade.h:75
+#: data/totem.glade.h:77
 msgid "Save screenshot to the _desktop"
 msgstr "Lagre skjermdump til _skrivebordet"
 
-#: data/totem.glade.h:76
+#: data/totem.glade.h:78
 msgid "Set the repeat mode"
 msgstr "Sett repeteringsmodus"
 
-#: data/totem.glade.h:77
+#: data/totem.glade.h:79
 msgid "Show Controls"
 msgstr "Vis kontroller"
 
-#: data/totem.glade.h:78
+#: data/totem.glade.h:80
 msgid "Show _visual effects when an audio file is played"
 msgstr "_Vis effekter når en lydfil spilles av"
 
-#: data/totem.glade.h:79
+#: data/totem.glade.h:81
 msgid "Show controls"
 msgstr "Vis kontroller"
 
-#: data/totem.glade.h:80
+#: data/totem.glade.h:82
 msgid "Show or hide the playlist"
 msgstr "Vis eller skjul spillelisten"
 
-#: data/totem.glade.h:81
+#: data/totem.glade.h:83
 msgid "Show/Hide Playlist"
 msgstr "Vis/skjul spilleliste"
 
-#: data/totem.glade.h:82
+#: data/totem.glade.h:84
 msgid "Skip backwards"
 msgstr "Hopp bakover"
 
-#: data/totem.glade.h:83
+#: data/totem.glade.h:85
 msgid "Skip forward"
 msgstr "Hopp fremover"
 
-#: data/totem.glade.h:84
+#: data/totem.glade.h:86
 msgid "Skip to"
 msgstr "Hopp til"
 
-#: data/totem.glade.h:85
+#: data/totem.glade.h:87
 msgid "Skip to a specific time"
 msgstr "Hopp til en gitt tid"
 
-#: data/totem.glade.h:86
+#: data/totem.glade.h:88
 msgid "Small"
 msgstr "Liten"
 
-#: data/totem.glade.h:87
+#: data/totem.glade.h:89
 msgid "Stereo"
 msgstr "Stereo"
 
-#: data/totem.glade.h:88
+#: data/totem.glade.h:90
 msgid "Subtitles"
 msgstr "Tekst"
 
-#: data/totem.glade.h:89
+#: data/totem.glade.h:91
 msgid "Switch to double size"
 msgstr "Bytt til dobbel størrelse"
 
-#: data/totem.glade.h:90
+#: data/totem.glade.h:92
 msgid "Switch to fullscreen"
 msgstr "Bytt til fullskjerm"
 
-#: data/totem.glade.h:91
+#: data/totem.glade.h:93
 msgid "Take _Screenshot"
 msgstr "Ta _skjermdump"
 
-#: data/totem.glade.h:92
+#: data/totem.glade.h:94
 msgid "Take a screenshot"
 msgstr "Ta skjermdump"
 
-#: data/totem.glade.h:93
+#: data/totem.glade.h:95
 msgid "Time:"
 msgstr "Tid:"
 
-#: data/totem.glade.h:94
+#: data/totem.glade.h:96
 msgid "Title menu"
 msgstr "Tittelmeny"
 
-#: data/totem.glade.h:95
+#: data/totem.glade.h:97
 msgid "Toggle _Aspect Ratio"
 msgstr "Slå av/på _høyde-/breddeforhold"
 
-#: data/totem.glade.h:96
+#: data/totem.glade.h:98
 msgid "Toggle the aspect ratio"
 msgstr "Slå av/på høyde-/breddeforhold"
 
 #. Title
-#: data/totem.glade.h:97 src/totem.c:680 src/totem.c:707 src/totem.c:1847
+#: data/totem.glade.h:99 src/totem.c:701 src/totem.c:728 src/totem.c:1863
 msgid "Totem"
 msgstr "Totem"
 
-#: data/totem.glade.h:98
+#: data/totem.glade.h:100
 msgid "Totem Preferences"
 msgstr "Brukervalg for Totem"
 
-#: data/totem.glade.h:99
+#: data/totem.glade.h:101
 msgid "Visualisation _size:"
 msgstr "_Størrelse på effekt:"
 
-#: data/totem.glade.h:100 src/totem.c:84
+#: data/totem.glade.h:102 src/totem.c:84
 msgid "Volume Down"
 msgstr "Volum ned"
 
-#: data/totem.glade.h:101 src/totem.c:83
+#: data/totem.glade.h:103 src/totem.c:83
 msgid "Volume Up"
 msgstr "Volum opp"
 
-#: data/totem.glade.h:102
+#: data/totem.glade.h:104
 msgid "Volume down"
 msgstr "Volum ned"
 
-#: data/totem.glade.h:103
+#: data/totem.glade.h:105
 msgid "Volume up"
 msgstr "Volum opp"
 
-#: data/totem.glade.h:104 data/vanity.glade.h:7
+#: data/totem.glade.h:106 data/vanity.glade.h:7
 msgid "Zoom _1:1"
 msgstr "Zoom _1:1"
 
-#: data/totem.glade.h:105 data/vanity.glade.h:8
+#: data/totem.glade.h:107 data/vanity.glade.h:8
 msgid "Zoom _2:1"
 msgstr "Zoom _2:1"
 
-#: data/totem.glade.h:106
+#: data/totem.glade.h:108
 msgid "Zoom to half size"
 msgstr "Zoom til halv størrelse"
 
-#: data/totem.glade.h:107
+#: data/totem.glade.h:109
 msgid "Zoom to one for one size"
 msgstr "Zoom til en-etter-en størrelse"
 
-#: data/totem.glade.h:108
+#: data/totem.glade.h:110
 msgid "_Add Proprietary Plugins..."
 msgstr "_Legg til proprietære tillegg..."
 
-#: data/totem.glade.h:109
+#: data/totem.glade.h:111
 msgid "_Brightness:"
 msgstr "L_ysstyrke:"
 
-#: data/totem.glade.h:110
+#: data/totem.glade.h:112
 msgid "_DXR3 TV-out"
 msgstr "_DXR3 TV-ut"
 
-#: data/totem.glade.h:111
+#: data/totem.glade.h:113
 msgid "_Eject"
 msgstr "_Løs ut"
 
-#: data/totem.glade.h:112
+#: data/totem.glade.h:114
 msgid "_Fullscreen"
 msgstr "_Fullskjerm"
 
-#: data/totem.glade.h:113
+#: data/totem.glade.h:115
 msgid "_Go"
 msgstr "_Gå til"
 
-#: data/totem.glade.h:114
+#: data/totem.glade.h:116
 msgid "_Movie"
 msgstr "_Film"
 
-#: data/totem.glade.h:115
+#: data/totem.glade.h:117
 msgid "_No TV-out"
 msgstr "I_ngen TV-ut"
 
-#: data/totem.glade.h:116
+#: data/totem.glade.h:118
 msgid "_Play / Pause"
 msgstr "S_pill /pause"
 
-#: data/totem.glade.h:117
+#: data/totem.glade.h:119
 msgid "_Repeat Mode"
 msgstr "_Repeteringsmodus"
 
-#: data/totem.glade.h:118
+#: data/totem.glade.h:120
 msgid "_Show/Hide Playlist"
 msgstr "Vi_s/skjul spilleliste"
 
-#: data/totem.glade.h:119
+#: data/totem.glade.h:121
 msgid "_Skip to..."
 msgstr "_Hopp til..."
 
-#: data/totem.glade.h:120
+#: data/totem.glade.h:122
 msgid "_Skip to:"
 msgstr "_Hopp til:"
 
-#: data/totem.glade.h:121
+#: data/totem.glade.h:123
 msgid "_Sound"
 msgstr "_Lyd"
 
-#: data/totem.glade.h:122
+#: data/totem.glade.h:124
 msgid "_TV-out mode"
 msgstr "_TV-ut-modus"
 
-#: data/totem.glade.h:123
+#: data/totem.glade.h:125
 msgid "_Type of visualisation:"
 msgstr "_Type effekt:"
 
-#: data/totem.glade.h:124 data/vanity.glade.h:10
+#: data/totem.glade.h:126 data/vanity.glade.h:10
 msgid "_Zoom 1:2"
 msgstr "_Zoom 1:2"
 
-#: data/totem.glade.h:125
+#: data/totem.glade.h:127
 msgid "seconds"
 msgstr "sekunder"
 
@@ -634,80 +662,115 @@ msgid "Enable deinterlacing"
 msgstr "Aktiver deinterlacing"
 
 #: data/totem.schemas.in.h:2
+msgid "Enable deinterlacing."
+msgstr "Aktiver deinterlacing"
+
+#: data/totem.schemas.in.h:3
+msgid "Height of the video widget"
+msgstr "Høyde på videobildet"
+
+#: data/totem.schemas.in.h:4
 msgid "Name of the visual effects plugins"
 msgstr "Navn på tillegg for visuell effekt"
 
-#: data/totem.schemas.in.h:3
+#: data/totem.schemas.in.h:5
+msgid "Name of the visual effects plugins."
+msgstr "Navn på tillegg for visuell effekt."
+
+#: data/totem.schemas.in.h:6
 msgid "Path to the optical media device"
 msgstr "Sti til enhet for optiske media"
 
-#: data/totem.schemas.in.h:4
+#: data/totem.schemas.in.h:7
+msgid "Path to the optical media device."
+msgstr "Sti til enhet for optiske media."
+
+#: data/totem.schemas.in.h:8
 msgid "Repeat mode"
 msgstr "Repeteringsmodus"
 
-#: data/totem.schemas.in.h:5
+#: data/totem.schemas.in.h:9
+msgid "Repeat mode."
+msgstr "Repeteringsmodus."
+
+#: data/totem.schemas.in.h:10
 msgid "Resize the canvas automatically on file load"
 msgstr "Endre størrelse på kanvas automatisk ved lasting av fil"
 
-#: data/totem.schemas.in.h:6
+#: data/totem.schemas.in.h:11
+msgid "Resize the canvas automatically on file load."
+msgstr "Endre størrelse på kanvas automatisk ved lasting av fil."
+
+#: data/totem.schemas.in.h:12
 msgid "Show visual effects when no video is displayed"
 msgstr "Vis visuelle effekter hvis ingen video spilles av"
 
-#: data/totem.schemas.in.h:7
-msgid "Show visual effects when playing an audio only file"
-msgstr "Vis visuelle effekter ved avspilling av en lydfil"
+#: data/totem.schemas.in.h:13
+msgid "Show visual effects when playing an audio only file."
+msgstr "Vis visuelle effekter ved avspilling av en lydfil."
 
-#: data/totem.schemas.in.h:8
+#: data/totem.schemas.in.h:14
 msgid "The brightness of the video"
 msgstr "Lyststyrke for videoen"
 
-#: data/totem.schemas.in.h:9
+#: data/totem.schemas.in.h:15
+msgid "The brightness of the video."
+msgstr "Lyststyrke for videoen."
+
+#: data/totem.schemas.in.h:16
 msgid "The contrast of the video"
 msgstr "Kontrast for videoen"
 
-#: data/totem.schemas.in.h:10
+#: data/totem.schemas.in.h:17
+msgid "The contrast of the video."
+msgstr "Kontrast for videoen."
+
+#: data/totem.schemas.in.h:18
 msgid "Type of audio output to use"
 msgstr "Type lydutgang som skal brukes"
 
-#: data/totem.schemas.in.h:11
+#: data/totem.schemas.in.h:19
 msgid ""
 "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
-"\"2\" for 5.0 channel output, \"3\" for 5.1 channel output."
-msgstr ""
-"Type lyd som skal brukes: «0» for stereo, «1» for 4-kanalers lyd, «2» for "
-"5.0 kanalers lyd, «3» for 5.1 kanalers lyd."
+"\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
+"Passthrough."
+msgstr "Type lyd som skal brukes: «0» for stereo, «1» for 4-kanalers lyd, «2» for 5.0 kanalers lyd, «3» for 5.1 kanalers lyd, «4» for AC-3 passthrough."
 
-#: data/totem.schemas.in.h:12
+#: data/totem.schemas.in.h:20
+msgid "Whether the main window should stay on top"
+msgstr "Om hovedvinduet skal holdes øverst"
+
+#: data/totem.schemas.in.h:21
+msgid "Whether the main window should stay on top of the other ones"
+msgstr "Om hovedvinduet skal holdes over andre vinduer"
+
+#: data/totem.schemas.in.h:22
 msgid "Whether to enable debug for the playback engine"
 msgstr "Om feilsøking skal aktiveres for avspillingsmotoren"
 
-#: data/totem.schemas.in.h:13
+#: data/totem.schemas.in.h:23
+msgid "Whether to enable debug for the playback engine."
+msgstr "Om feilsøking skal aktiveres for avspillingsmotoren."
+
+#: data/totem.schemas.in.h:24
+msgid "Width of the video widget"
+msgstr "Bredde på videobildet"
+
+#: data/totem.schemas.in.h:25
 msgid "X coordinate for the Playlist"
 msgstr "X-koordinat for spillelisten"
 
-#: data/totem.schemas.in.h:14
+#: data/totem.schemas.in.h:26
+msgid "X coordinate for the Playlist."
+msgstr "X-koordinat for spillelisten."
+
+#: data/totem.schemas.in.h:27
 msgid "Y coordinate for the Playlist"
 msgstr "Y-koordinat for spillelisten"
 
-#: data/totem-download.glade.h:1
-msgid "Connecting to the server"
-msgstr "Kobler til tjener"
-
-#: data/totem-download.glade.h:2
-msgid "Done"
-msgstr "Ferdig"
-
-#: data/totem-download.glade.h:3
-msgid "Downloading the plug-ins"
-msgstr "Laster ned tillegg"
-
-#: data/totem-download.glade.h:4
-msgid "Installing the plug-ins"
-msgstr "Installerer tilleggene"
-
-#: data/totem-download.glade.h:5
-msgid "Plug-ins Download"
-msgstr "Nedlasting av tillegg"
+#: data/totem.schemas.in.h:28
+msgid "Y coordinate for the Playlist."
+msgstr "Y-koordinat for spillelisten."
 
 #: data/uri.glade.h:2
 msgid "Enter the _location (URI) of the file you would like to open:"
@@ -757,9 +820,13 @@ msgstr "_Bilde"
 msgid "Unnamed CDROM"
 msgstr "SCSI CD-ROM uten navn"
 
-#: src/bacon-cd-selection.c:276
+#: src/bacon-cd-selection.c:276 src/bacon-v4l-selection.c:275
 msgid "Select the drive"
 msgstr "Velg stasjon"
+
+#: src/bacon-v4l-selection.c:233
+msgid "Unnamed Video Device"
+msgstr "Videoenhet uten navn"
 
 #: src/bacon-video-widget-gst.c:56
 msgid "Totem Video Window"
@@ -843,40 +910,40 @@ msgstr ""
 "Kunne ikke laste lyddriver «%s»\n"
 "Sjekk at enheten ikke er opptatt."
 
-#: src/bacon-video-widget-xine.c:1139
+#: src/bacon-video-widget-xine.c:1141
 msgid "The server you are trying to connect to is not known."
 msgstr "Tjeneren du prøver å koble til er ikke kjent."
 
-#: src/bacon-video-widget-xine.c:1142
+#: src/bacon-video-widget-xine.c:1144
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "Enhetsnavnet du oppga (%s) ser ut til å være ugyldig."
 
-#: src/bacon-video-widget-xine.c:1145
+#: src/bacon-video-widget-xine.c:1147
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "Tjeneren du prøver å koble til (%s) kan ikke nås."
 
-#: src/bacon-video-widget-xine.c:1148
+#: src/bacon-video-widget-xine.c:1150
 msgid "The connection to this server was refused."
 msgstr "Tilkobling til denne tjeneren ble nektet."
 
-#: src/bacon-video-widget-xine.c:1151
+#: src/bacon-video-widget-xine.c:1153
 #, c-format
 msgid "The specified movie '%s' could not be found."
 msgstr "Oppgitt film ble ikke funnet. «%s»."
 
-#: src/bacon-video-widget-xine.c:1154
+#: src/bacon-video-widget-xine.c:1156
 #, c-format
 msgid "The movie '%s' could not be read."
 msgstr "Filmen «%s» kunne ikke leses."
 
-#: src/bacon-video-widget-xine.c:1157
+#: src/bacon-video-widget-xine.c:1159
 #, c-format
 msgid "A problem occured while loading a library or a decoder (%s)."
 msgstr "Et problem oppsto under lasting av et bibliotek eller en dekoder (%s)."
 
-#: src/bacon-video-widget-xine.c:1160
+#: src/bacon-video-widget-xine.c:1162
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -884,27 +951,27 @@ msgstr ""
 "Kilden ser ut til å være kryptert, og kan ikke leses. Prøver du å spille av "
 "en DVD uten libdvdcss?"
 
-#: src/bacon-video-widget-xine.c:1243
+#: src/bacon-video-widget-xine.c:1245
 msgid "There is no plugin to handle this movie"
 msgstr "Det finnes ingen tillegg som håndterer denne filmen"
 
-#: src/bacon-video-widget-xine.c:1247
+#: src/bacon-video-widget-xine.c:1249
 msgid "This movie is broken and can not be played further"
 msgstr "Denne filmen er ødelagt og kan ikke spilles av videre"
 
-#: src/bacon-video-widget-xine.c:1251
+#: src/bacon-video-widget-xine.c:1253
 msgid "This location is not a valid one"
 msgstr "Denne lokasjonen er ikke gyldig"
 
-#: src/bacon-video-widget-xine.c:1255
+#: src/bacon-video-widget-xine.c:1257
 msgid "This movie could not be opened"
 msgstr "Kunne ikke åpne denne filmen"
 
-#: src/bacon-video-widget-xine.c:1258
+#: src/bacon-video-widget-xine.c:1260
 msgid "Generic Error"
 msgstr "Generisk feil"
 
-#: src/bacon-video-widget-xine.c:1641
+#: src/bacon-video-widget-xine.c:1646
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -913,28 +980,28 @@ msgstr ""
 "Video-kodek «%s» håndteres ikke. Du vil kanskje måtte installere flere "
 "tillegg for å kunne spille av noen typer filmer"
 
-#: src/bacon-video-widget-xine.c:1660
+#: src/bacon-video-widget-xine.c:1665
 msgid "This is an audio-only file, and there is no audio output available"
 msgstr "Dette er en lydfil, og det finnes innen mulighet for avspilling av lyd"
 
-#: src/bacon-video-widget-xine.c:2935
+#: src/bacon-video-widget-xine.c:2974
 msgid "Movie is not playing"
 msgstr "Filmen spilles ikke av"
 
-#: src/bacon-video-widget-xine.c:2943
+#: src/bacon-video-widget-xine.c:2982
 msgid "No video to capture"
 msgstr "Ingen video å fange"
 
-#: src/bacon-video-widget-xine.c:2950
+#: src/bacon-video-widget-xine.c:2989
 msgid "Video codec is not handled"
 msgstr "Videotypen er ikke støttet"
 
-#: src/cd-drive.c:347
+#: src/cd-drive.c:362
 #, c-format
-msgid "Unnamed SCSI CDROM (%s)"
+msgid "Unnamed SCSI CD-ROM (%s)"
 msgstr "SCSI CD-ROM uten navn (%s)"
 
-#: src/cd-drive.c:792
+#: src/cd-drive.c:815
 msgid "File image"
 msgstr "CD-bilde"
 
@@ -977,15 +1044,15 @@ msgstr "_Passord:"
 msgid "Remember this password"
 msgstr "Husk dette passordet"
 
-#: src/gtk-playlist.c:637 src/totem.c:1516
+#: src/totem-playlist.c:635 src/totem.c:1529
 msgid "Select files"
 msgstr "Velg filer"
 
-#: src/gtk-playlist.c:796
+#: src/totem-playlist.c:794
 msgid "Save playlist"
 msgstr "Lagre spilleliste"
 
-#: src/gtk-playlist.c:834
+#: src/totem-playlist.c:832
 #, c-format
 msgid ""
 "A file named '%s' already exists.\n"
@@ -994,7 +1061,7 @@ msgstr ""
 "En fil med navn «%s» eksisterer allerede.\n"
 "Er du sikker på at du vil overskrive den?"
 
-#: src/gtk-playlist.c:994
+#: src/totem-playlist.c:992
 msgid "Filename"
 msgstr "Filnavn"
 
@@ -1041,7 +1108,7 @@ msgstr "Skyggetype"
 msgid "Style of bevel around the statusbar text"
 msgstr "Stil på kant rundt statuslinjeteksten"
 
-#: src/totem-statusbar.c:171 src/totem.c:330
+#: src/totem-statusbar.c:171 src/totem.c:332
 msgid "Stopped"
 msgstr "Stoppet"
 
@@ -1082,15 +1149,15 @@ msgstr "Erstatt"
 msgid "Download"
 msgstr "Last ned"
 
-#: src/totem.c:316
+#: src/totem.c:318
 msgid "Playing"
 msgstr "Spiller"
 
-#: src/totem.c:323
+#: src/totem.c:325
 msgid "Paused"
 msgstr "Pause"
 
-#: src/totem.c:389 src/totem.c:796 src/totem.c:917
+#: src/totem.c:391 src/totem.c:817 src/totem.c:938
 #, c-format
 msgid ""
 "Totem could not play '%s'.\n"
@@ -1099,49 +1166,60 @@ msgstr ""
 "Totem kunne ikke spille av «%s».\n"
 "Årsak: %s"
 
-#: src/totem.c:417
-msgid ""
-"Totem cannot play this type of media because you do not have the appropriate "
-"plugins to handle it.\n"
-"Install the necessary plugins and restart Totem to be able to play this "
-"media."
-msgstr ""
-"Totem kan ikke spille av denne typen media fordi du ikke har tilleggene som "
-"håndterer det.\n"
-"Installer de nødvendige tilleggene og start Totem på nytt for å kunne spille "
-"av dette mediet."
+#: src/totem.c:412
+msgid "DVD"
+msgstr "DVD"
+
+#: src/totem.c:413
+msgid "Video CD"
+msgstr "Video-CD"
+
+#: src/totem.c:414
+msgid "Audio CD"
+msgstr "Audio-CD"
 
 #: src/totem.c:425
+#, c-format
 msgid ""
-"Totem could not play this media although a plugin is present to handle it.\n"
+"Totem cannot play this type of media (%s) because you do not have the "
+"appropriate plugins to handle it.\n"
+"Please install the necessary plugins and restart Totem to be able to play "
+"this media."
+msgstr ""
+"Totem kan ikke spille av denne typen media (%s) fordi du ikke har tilleggene som håndterer det.\n"
+"Installer de nødvendige tilleggene og start Totem på nytt for å kunne spille av dette mediet."
+
+#: src/totem.c:436
+#, c-format
+msgid ""
+"Totem could not play this media (%s) although a plugin is present to handle "
+"it.\n"
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr ""
-"Totem kunne ikke spille av dette mediet selv om et tillegg finnes som skal "
-"håndtere det.\n"
-"Du bør sjekke at det finnes en disk i stasjonen og at den er riktig "
-"konfigurert."
+"Totem kunne ikke spille av dette mediet (%s) selv om et tillegg finnes som skal håndtere det.\n"
+"Du bør sjekke at det finnes en disk i stasjonen og at den er riktig konfigurert."
 
 #. Title
-#: src/totem.c:656
+#: src/totem.c:677
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:669 src/totem.c:3325
+#: src/totem.c:690 src/totem.c:3377
 msgid "No file"
 msgstr "Ingen fil"
 
-#: src/totem.c:1217
+#: src/totem.c:1240
 msgid "Buffering"
 msgstr "Henter data"
 
-#: src/totem.c:1238 src/totem.c:1260
+#: src/totem.c:1261 src/totem.c:1283
 #, c-format
 msgid "Buffering: %d%%"
 msgstr "Henter data: %d%%"
 
-#: src/totem.c:1567 src/totem.c:1578
+#: src/totem.c:1580 src/totem.c:1591
 msgid ""
 "Couldn't load the 'Open Location...' interface.\n"
 "Make sure that Totem is properly installed."
@@ -1149,25 +1227,25 @@ msgstr ""
 "Kunne ikke laste grensesnitt for 'Åpne lokasjon'.\n"
 "Sjekk at Totem er korrekt installert."
 
-#: src/totem.c:1640
+#: src/totem.c:1653
 msgid "Totem could not eject the optical media."
 msgstr "Totem kunne ikke løse ut det optiske mediet."
 
-#: src/totem.c:1818 src/vanity.c:218
+#: src/totem.c:1834 src/vanity.c:218
 msgid "translator_credits"
 msgstr "Kjartan Maraas <kmaraas@gnome.org>"
 
-#: src/totem.c:1844
+#: src/totem.c:1860
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Filmavspiller bruker %s"
 
-#: src/totem.c:1927 src/totem.c:1938 src/vanity.c:306 src/vanity.c:317
+#: src/totem.c:1943 src/totem.c:1954 src/vanity.c:306 src/vanity.c:317
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Skjermdump%d.png"
 
-#: src/totem.c:1991
+#: src/totem.c:2007
 #, c-format
 msgid ""
 "Totem could not get a screenshot of that film.\n"
@@ -1176,7 +1254,7 @@ msgstr ""
 "Totem kunne ikke ta et skjermdump av denne filmen.\n"
 "Årsak: %s."
 
-#: src/totem.c:2001
+#: src/totem.c:2017
 msgid ""
 "Totem could not get a screenshot of that film.\n"
 "Please file a bug, this isn't supposed to happen"
@@ -1184,7 +1262,7 @@ msgstr ""
 "Totem kunne ikke ta et skjermdump av denne filmen.\n"
 "Vær snill å rapportere dette da det ikke skal skje"
 
-#: src/totem.c:2027
+#: src/totem.c:2043
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
@@ -1193,7 +1271,7 @@ msgstr ""
 "Filen «%s» eksisterer allerede.\n"
 "Skjermdumpet ble ikke lagret."
 
-#: src/totem.c:2038
+#: src/totem.c:2054
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -1202,7 +1280,7 @@ msgstr ""
 "Det oppsto en feil under lagring av skjermdump.\n"
 "Detaljer: %s"
 
-#: src/totem.c:2055
+#: src/totem.c:2071
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -1210,7 +1288,7 @@ msgstr ""
 "Totem kunne ikke laste vindu for egenskaper for filmen.\n"
 "Sjekk at Totem er korrekt installert."
 
-#: src/totem.c:2124
+#: src/totem.c:2140
 #, c-format
 msgid ""
 "Totem could not seek in '%s'.\n"
@@ -1219,15 +1297,15 @@ msgstr ""
 "Totem kunne ikke søke i «%s».\n"
 "Årsak: %s."
 
-#: src/totem.c:2822 src/totem.c:2846
+#: src/totem.c:2848 src/totem.c:2872
 msgid "None"
 msgstr "Ingen"
 
-#: src/totem.c:2826 src/totem.c:2849
+#: src/totem.c:2852 src/totem.c:2875
 msgid "Auto"
 msgstr "Auto"
 
-#: src/totem.c:3225
+#: src/totem.c:3277
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -1236,11 +1314,11 @@ msgstr ""
 "Totem kunne ikke starte opp:\n"
 "%s"
 
-#: src/totem.c:3226 src/vanity.c:550
+#: src/totem.c:3278 src/vanity.c:550
 msgid "No reason"
 msgstr "Ingen årsak"
 
-#: src/totem.c:3490
+#: src/totem.c:3543
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Totem will now exit."
@@ -1248,7 +1326,7 @@ msgstr ""
 "Kunne ikke initiere trådsikre biblioteker.\n"
 "Sjekk systeminstallasjonen. Totem avslutter nå."
 
-#: src/totem.c:3512
+#: src/totem.c:3565
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -1259,7 +1337,7 @@ msgstr ""
 "konfigurasjonsmotoren:\n"
 "%s"
 
-#: src/totem.c:3526 src/totem.c:3554
+#: src/totem.c:3579 src/totem.c:3607
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -1267,7 +1345,7 @@ msgstr ""
 "Kunne ikke laste hovedgrensesnittet (totem.glade).\n"
 "Sjekk at Totem er korrekt installert."
 
-#: src/totem.c:3580
+#: src/totem.c:3633
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
