@@ -39,8 +39,8 @@ wmspec_change_state (gboolean   add,
 	xev.xclient.data.l[1] = gdk_x11_atom_to_xatom (state1);
 	xev.xclient.data.l[2] = gdk_x11_atom_to_xatom (state2);
 
-	XSendEvent (gdk_display, GDK_WINDOW_XID
-			(gdk_get_default_root_window ()),
+	XSendEvent (gdk_display,
+			GDK_WINDOW_XID (gdk_get_default_root_window ()),
 			False,
 			SubstructureRedirectMask | SubstructureNotifyMask,
 			&xev);
@@ -50,8 +50,6 @@ void
 gdk_window_set_fullscreen (GdkWindow *window, gboolean set)
 {
 	gdk_window_set_decorations (window, set ? 0 : 1);
-	if (set == TRUE)
-		gdk_window_raise (window);
 
 	/* Set full-screen hint */
 	wmspec_change_state (set, window,

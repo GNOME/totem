@@ -1,3 +1,19 @@
+2002-08-27  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-xine.c: (gtk_xine_finalize), (load_video_out_driver),
+	(load_audio_out_driver), (load_config_from_gconf), (xine_thread),
+	(gtk_xine_realize), (gtk_xine_idle_signal), (gtk_xine_new),
+	(gtk_xine_set_fullscreen), (gtk_xine_can_set_volume),
+	(gtk_xine_set_scale_ratio): revert to a 0.9.1 state with these
+	differences:
+	- translate the fullscreen video window title
+	- kill ->priv->fullscreen_width/height
+	- fix a possible crash on exit bug
+	- a bit of gdk-ification in the full-screen handling
+	* src/gtk-xine.h: remove the xine.h include
+	* src/video-utils.c: (wmspec_change_state),
+	(gdk_window_set_fullscreen): upd
+
 2002-08-26  Bastien Nocera  <hadess@hadess.net>
 
 	* README: add snippet about black fullscreen bug
@@ -5,7 +21,8 @@
 	* src/gtk-xine.c: (load_config_from_gconf), (xine_thread),
 	(gtk_xine_realize), (gtk_xine_idle_signal),
 	(gtk_xine_set_fullscreen), (gtk_xine_set_scale_ratio):
-	kill ->gc, some cleanups, re-enable some hacks so it keeps working
+	kill ->gc, some cleanups, re-enable some hacks so it keeps working,
+	possible crash on exit fix from Hallski
 
 2002-08-26  Bastien Nocera  <hadess@hadess.net>
 

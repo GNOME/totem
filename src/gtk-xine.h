@@ -24,9 +24,13 @@
 #define HAVE_GTK_XINE_H
 
 #include <gtk/gtkwidget.h>
-#include <xine.h>
 
 G_BEGIN_DECLS
+
+#ifndef SPEED_PAUSE
+#define SPEED_PAUSE 0
+#define SPEED_NORMAL 4
+#endif
 
 typedef enum {
 	GTX_STARTUP,
