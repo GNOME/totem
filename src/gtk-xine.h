@@ -27,10 +27,10 @@
 
 G_BEGIN_DECLS
 
-#ifndef SPEED_PAUSE
-#define SPEED_PAUSE 0
-#define SPEED_NORMAL 4
-#endif
+enum {
+	SPEED_PAUSE,
+	SPEED_NORMAL,
+};
 
 typedef enum {
 	GTX_STARTUP,
@@ -73,7 +73,9 @@ gboolean  gtk_xine_check               (GtkXine *gtx);
 /* Actions */
 gboolean gtk_xine_open                (GtkXine *gtx, const gchar *mrl);
 
-/* This is used for seeking, start_time is in seconds */
+/* This is used for seeking:
+ * @pos is used for seeking, from 0 to 65535
+ * @start_time is in milliseconds */
 gboolean gtk_xine_play                 (GtkXine *gtx, gint pos,
 		                        gint start_time);
 void gtk_xine_stop                     (GtkXine *gtx);

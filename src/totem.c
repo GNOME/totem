@@ -27,6 +27,8 @@
 
 #define TOTEM_GCONF_PREFIX "/apps/totem"
 #define LOGO_PATH DATADIR""G_DIR_SEPARATOR_S"totem"G_DIR_SEPARATOR_S"totem_logo.mpv"
+#define SEEK_FORWARD_OFFSET 60000
+#define SEEK_BACKWARD_OFFSET -15000
 
 struct Totem {
 	/* Control window */
@@ -1076,11 +1078,12 @@ totem_button_pressed_remote_cb (TotemRemote *remote, TotemRemoteCommand cmd,
 		break;
 		
 		case TOTEM_REMOTE_COMMAND_SEEK_FORWARD:
-			totem_action_seek_relative (totem, 60);
+			totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET);
 		break;
 		
 		case TOTEM_REMOTE_COMMAND_SEEK_BACKWARD:
-			totem_action_seek_relative (totem, -15);
+			totem_action_seek_relative (totem,
+					SEEK_BACKWARD_OFFSET);
 		break;
 		
 		case TOTEM_REMOTE_COMMAND_VOLUME_UP:
@@ -1333,10 +1336,10 @@ totem_action_handle_key (Totem *totem, guint keyval)
 		totem_action_fullscreen_toggle (totem);
 		break;
 	case GDK_Left:
-		totem_action_seek_relative (totem, -15);
+		totem_action_seek_relative (totem, SEEK_BACKWARD_OFFSET);
 		break;
 	case GDK_Right:
-		totem_action_seek_relative (totem, 60);
+		totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET);
 		break;
 	case GDK_Up:
 		totem_action_volume_relative (totem, 8);

@@ -1,5 +1,13 @@
 2002-11-07  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (gtk_xine_play), (gtk_xine_set_speed):
+	* src/gtk-xine.h:
+	* src/totem.c: (totem_button_pressed_remote_cb),
+	(totem_action_handle_key): fix seeking and speed arguments, fix API
+	to make it less xine-specific
+
+2002-11-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-xine.c: (gtk_xine_play): fix seeking, xine now uses
 	milliseconds not seconds
 	* src/gtk-xine.h: add comment for gtk_xine_play

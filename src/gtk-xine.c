@@ -100,6 +100,11 @@ enum {
 	PROP_SHOWCURSOR,
 };
 
+static int speeds[2] = {
+	XINE_SPEED_PAUSE,
+	XINE_SPEED_NORMAL,
+};
+
 struct GtkXinePrivate {
 	/* Xine stuff */
 	xine_t *xine;
@@ -1009,9 +1014,8 @@ gtk_xine_play (GtkXine *gtx, gint pos, gint start_time)
 	g_return_val_if_fail (GTK_IS_XINE (gtx), -1);
 	g_return_val_if_fail (gtx->priv->xine != NULL, -1);
 
-	/* xine_play expects start_time in milliseconds */
-	error = xine_play (gtx->priv->stream, pos, start_time * 1000);
-	if (!error)
+	error = xine_play (gtx->priv->stream, pos, start_time);
+	if (error == 0)
 	{
 		xine_error (gtx);
 		return FALSE;
@@ -1123,10 +1127,7 @@ gtk_xine_set_speed (GtkXine *gtx, gint speed)
 	g_return_if_fail (GTK_IS_XINE (gtx));
 	g_return_if_fail (gtx->priv->xine != NULL);
 
-	if (speed == SPEED_NORMAL)
-		xine_set_param (gtx->priv->stream, XINE_PARAM_SPEED, 100);
-	else if (speed == SPEED_PAUSE)
-		xine_set_param (gtx->priv->stream, XINE_PARAM_SPEED, 0);
+	xine_set_param (gtx->priv->stream, XINE_PARAM_SPEED, speeds[speed]);
 }
 
 gint
