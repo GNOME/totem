@@ -101,8 +101,8 @@ totem_SOURCES = 					\
 	debug.h				\
 	totem-statusbar.c		\
 	totem-statusbar.h		\
-	totem-disc.c			\
-	totem-disc.h
+	totem-disc.c totem-disc.h	\
+	totem-gromit.c totem-gromit.h
 
 totem_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) $(RANDR_LIBS)  $(NVTV_LIBS)
 

@@ -21,6 +21,7 @@
 
 #ifndef HAVE_GTK_ONLY
 #include <gnome.h>
+#include "totem-gromit.h"
 #else
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
@@ -252,6 +253,9 @@ totem_action_exit (Totem *totem)
 	if (totem == NULL)
 		exit (0);
 
+#ifndef HAVE_GTK_ONLY
+	totem_gromit_clear (TRUE);
+#endif /* !HAVE_GTK_ONLY */
 	bacon_message_connection_free (totem->conn);
 	totem_action_save_size (totem);
 
@@ -2612,6 +2616,16 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 	case GDK_c:
 		bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_CHAPTER_MENU);
 		break;
+#ifndef HAVE_GTK_ONLY
+	case GDK_D:
+	case GDK_d:
+		totem_gromit_toggle ();
+		break;
+	case GDK_E:
+	case GDK_e:
+		totem_gromit_clear (FALSE);
+		break;
+#endif /* !HAVE_GTK_ONLY */
 	case GDK_f:
 	case GDK_F:
 		if (event->time - totem->keypress_time
