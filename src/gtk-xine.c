@@ -87,7 +87,6 @@ enum {
 	PROP_FULLSCREEN,
 	PROP_SPEED,
 	PROP_POSITION,
-	PROP_AUDIOCHANNEL,
 	PROP_CURRENT_TIME,
 	PROP_STREAM_LENGTH,
 	PROP_PLAYING,
@@ -241,9 +240,6 @@ gtk_xine_class_init (GtkXineClass *klass)
 	g_object_class_install_property (object_class, PROP_POSITION,
 			g_param_spec_int ("position", NULL, NULL,
 				0, 65535, 0, G_PARAM_READABLE));
-	g_object_class_install_property (object_class, PROP_AUDIOCHANNEL,
-			g_param_spec_int ("audiochannel", NULL, NULL,
-				0, 65535, 0, G_PARAM_READWRITE));
 	g_object_class_install_property (object_class, PROP_STREAM_LENGTH,
 			g_param_spec_int ("stream_length", NULL, NULL,
 				0, 65535, 0, G_PARAM_READABLE));
@@ -1291,9 +1287,6 @@ gtk_xine_set_property (GObject *object, guint property_id,
 	case PROP_SPEED:
 		gtk_xine_set_speed (gtx, g_value_get_int (value));
 		break;
-	case PROP_AUDIOCHANNEL:
-		gtk_xine_set_audio_channel (gtx, g_value_get_int (value));
-		break;
 	case PROP_SHOWCURSOR:
 		gtk_xine_set_show_cursor (gtx, g_value_get_boolean (value));
 		break;
@@ -1331,9 +1324,6 @@ gtk_xine_get_property (GObject *object, guint property_id,
 		break;
 	case PROP_POSITION:
 		g_value_set_int (value, gtk_xine_get_position (gtx));
-		break;
-	case PROP_AUDIOCHANNEL:
-		g_value_set_int (value, gtk_xine_get_audio_channel (gtx));
 		break;
 	case PROP_STREAM_LENGTH:
 		g_value_set_int (value, gtk_xine_get_stream_length (gtx));
@@ -1424,28 +1414,6 @@ gtk_xine_get_position (GtkXine *gtx)
 		return -1;
 
 	return pos_stream;
-}
-
-void
-gtk_xine_set_audio_channel (GtkXine *gtx, int audio_channel)
-{
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
-	g_return_if_fail (gtx->priv->xine != NULL);
-
-	xine_set_param (gtx->priv->stream,
-			XINE_PARAM_AUDIO_CHANNEL_LOGICAL, audio_channel);
-}
-
-int
-gtk_xine_get_audio_channel (GtkXine *gtx)
-{
-	g_return_val_if_fail (gtx != NULL, 0);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
-	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
-
-	return xine_get_param (gtx->priv->stream,
-			XINE_PARAM_AUDIO_CHANNEL_LOGICAL);
 }
 
 void

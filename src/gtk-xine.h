@@ -139,9 +139,6 @@ gboolean gtk_xine_get_show_cursor      (GtkXine *gtx);
 void gtk_xine_set_media_device	       (GtkXine *gtx, const char *path);
 void gtk_xine_set_show_visuals	       (GtkXine *gtx, gboolean show_visuals);
 
-void gtk_xine_set_audio_channel        (GtkXine *gtx, int audio_channel);
-int gtk_xine_get_audio_channel         (GtkXine *gtx);
-
 void gtk_xine_toggle_aspect_ratio      (GtkXine *gtx);
 void gtk_xine_set_scale_ratio          (GtkXine *gtx, gfloat ratio);
 

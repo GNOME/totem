@@ -1,5 +1,12 @@
 2003-02-06  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (gtk_xine_class_init), (gtk_xine_set_property),
+	(gtk_xine_get_property), (gtk_xine_get_position):
+	* src/gtk-xine.h: removed the set_audio_channel and associated, we
+	don't use or need them
+
+2003-02-06  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-xine.c: (gtk_xine_set_media_device):
 	* src/totem.c: (totem_setup_preferences): fix setting the media
 	device, yet again
