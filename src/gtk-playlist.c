@@ -629,6 +629,7 @@ gtk_playlist_remove_files (GtkWidget *widget, GtkPlaylist *playlist)
 						&iter, cur) == FALSE)
 			{
 				playlist->_priv->current = NULL;
+				gtk_tree_path_free (cur);
 			} else {
 				playlist->_priv->current = cur;
 			}

@@ -1,5 +1,9 @@
 2003-04-26  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-playlist.c: (gtk_playlist_remove_files): plug a memleak
+
+2003-04-26  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-playlist.c: (gtk_playlist_remove_files):
 	* src/totem.c: (current_removed_cb): play the item after the currently
 	removed one (Closes: #111239)
