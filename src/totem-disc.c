@@ -356,8 +356,7 @@ cd_cache_disc_is_cdda (CdCache *cache,
 
   switch (disc) {
     case CDS_NO_INFO:
-      disc_s = "Not implemented";
-      type = MEDIA_TYPE_ERROR;
+      /* The drive doesn't implement CDROM_DISC_STATUS */
       break;
     case CDS_NO_DISC:
       disc_s = "No disc in tray";
