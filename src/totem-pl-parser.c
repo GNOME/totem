@@ -488,13 +488,18 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
 		if (strcmp (lines[i], "") == 0)
 			continue;
 
+		retval = TRUE;
+
 		/* Either it's a URI, or it has a proper path ... */
 		if (strstr(lines[i], "://") != NULL
 				|| lines[i][0] == G_DIR_SEPARATOR) {
 			/* We use the same code for .ram and m3u parsers,
 			 * and .ram files can contain .smil entries */
-			if (totem_pl_parser_parse (parser, lines[i]) == TRUE)
-				retval = TRUE;
+			if (totem_pl_parser_parse (parser, lines[i]) == FALSE)
+			{
+				totem_pl_parser_add_one_url (parser,
+						lines[i], NULL);
+			}
 		} else if (lines[i][0] == '\\' && lines[i][1] == '\\') {
 			/* ... Or it's in the windows smb form
 			 * (\\machine\share\filename), Note drive names
@@ -505,7 +510,7 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
 			lines[i] = g_strdelimit (lines[i], "\\", '/');
 			tmpurl = g_strjoin (NULL, "smb:", lines[i], NULL);
 
-			totem_pl_parser_add_one_url (parser, tmpurl, NULL);
+			totem_pl_parser_add_one_url (parser, lines[i], NULL);
 			retval = TRUE;
 
 			g_free (tmpurl);
@@ -518,8 +523,11 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
 			if (sep == '\\')
 				lines[i] = g_strdelimit (lines[i], "\\", '/');
 			fullpath = g_strdup_printf ("%s/%s", base, lines[i]);
-			if (totem_pl_parser_parse (parser, fullpath) == TRUE)
-				retval = TRUE;
+			if (totem_pl_parser_parse (parser, fullpath) == FALSE)
+			{
+				totem_pl_parser_add_one_url (parser,
+						fullpath, NULL);
+			}
 			g_free (fullpath);
 			g_free (base);
 		}
@@ -675,7 +683,8 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 
 		fullpath = g_strdup_printf ("%s/%s", base, url);
 		/* .asx files can contain references to other .asx files */
-		totem_pl_parser_parse (parser, fullpath);
+		if (totem_pl_parser_parse (parser, fullpath) == FALSE)
+			totem_pl_parser_add_one_url (parser, fullpath, NULL);
 
 		g_free (fullpath);
 	}
