@@ -1,8 +1,6 @@
-/* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 8; tab-width: 8 -*- */
+/* gtk-playlist.h: Simple playlist dialog
 
-/* eel-ellipsizing-label.h: Subclass of GtkLabel that ellipsizes the text.
-
-   Copyright (C) 2001 Eazel, Inc.
+   Copyright (C) 2002 Bastien Nocera <hadess@hadess.net>
 
    The Gnome Library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public License as
@@ -19,7 +17,7 @@
    write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
    Boston, MA 02111-1307, USA.
 
-   Author: John Sullivan <sullivan@eazel.com>,
+   Author: Bastien Nocera <hadess@hadess.net>
  */
 
 #ifndef GTK_PLAYLIST_H
@@ -35,15 +33,18 @@
 
 typedef struct GtkPlaylist	      GtkPlaylist;
 typedef struct GtkPlaylistClass	      GtkPlaylistClass;
-typedef struct GtkPlaylistDetails     GtkPlaylistDetails;
+typedef struct GtkPlaylistPrivate     GtkPlaylistPrivate;
 
 struct GtkPlaylist {
 	GtkDialog parent;
-	GtkPlaylistDetails *details;
+	GtkPlaylistPrivate *_priv;
 };
 
 struct GtkPlaylistClass {
 	GtkDialogClass parent_class;
+
+	void (*changed) (GtkPlaylist *playlist);
+	void (*current_removed) (GtkPlaylist *playlist);
 };
 
 GtkType    gtk_playlist_get_type (void);

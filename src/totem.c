@@ -77,13 +77,16 @@ static char
 static void
 long_action (void)
 {
-	while (gtk_events_pending())
-		gtk_main_iteration();
+	while (gtk_events_pending ())
+		gtk_main_iteration ();
 }
 
 static void
 action_exit (Totem *totem)
 {
+	gtk_xine_stop (GTK_XINE (totem->gtx));
+	//FIXME gtk_widget_unrealize (totem->gtx);
+	//FIXME gtk_widget_destroy (totem->win);
 	exit (0);
 }
 
@@ -438,31 +441,60 @@ vol_cb (GtkWidget *widget, gpointer user_data)
 }
 
 static void
+action_open_files (Totem *totem, char **list, gboolean ignore_first)
+{
+	int i;
+	gboolean cleared = FALSE;
+
+	i = (ignore_first ? 1 : 0 );
+
+	for ( ; list[i] != NULL; i++)
+	{
+		if (g_file_test (list[i], G_FILE_TEST_IS_REGULAR
+					| G_FILE_TEST_EXISTS))
+		{
+			if (cleared == FALSE)
+			{
+				gtk_playlist_clear (totem->playlist);
+				cleared = TRUE;
+			}
+			gtk_playlist_add_mrl (totem->playlist, list[i]);
+		}
+	}
+
+	if (cleared == TRUE)
+	{
+		char *mrl;
+
+		mrl = gtk_playlist_get_current_mrl (totem->playlist);
+		action_set_mrl (totem, mrl);
+		g_free (mrl);
+		update_buttons (totem);
+	}
+}
+
+
+static void
 on_open1_activate (GtkButton * button, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 	GtkWidget *fs;
 	int response;
 
-	fs = gtk_file_selection_new ("Select file");
+	fs = gtk_file_selection_new (_("Select files"));
+	gtk_file_selection_set_select_multiple (GTK_FILE_SELECTION (fs), TRUE);
 	response = gtk_dialog_run (GTK_DIALOG (fs));
 	gtk_widget_hide (fs);
 	long_action ();
 
 	if (response == GTK_RESPONSE_OK)
 	{
-		const char *filename;
+		char **filenames;
 
-		filename = gtk_file_selection_get_filename
+		filenames = gtk_file_selection_get_selections
 			(GTK_FILE_SELECTION (fs));
-
-		if (g_file_test (filename, G_FILE_TEST_IS_REGULAR
-					| G_FILE_TEST_EXISTS))
-		{
-			gtk_playlist_clear (totem->playlist);
-			gtk_playlist_add_mrl (totem->playlist, filename);
-			action_set_mrl (totem, filename);
-		}
+		action_open_files (totem, filenames, FALSE);
+		g_strfreev (filenames);
 	}
 
 	gtk_widget_destroy (fs);
@@ -569,6 +601,23 @@ toggle_playlist_from_playlist (GtkWidget *playlist, int trash,
 
 	button = glade_xml_get_widget (totem->xml, "playlist_button");
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
+}
+
+static void
+playlist_changed_cb (GtkWidget *playlist, gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+g_message ("changed");
+	update_buttons (totem);
+}
+
+static void
+current_removed_cb (GtkWidget *playlist, gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+g_message ("current removed");
+	action_set_mrl (totem, NULL);
+	update_buttons (totem);
 }
 
 static gboolean
@@ -818,7 +867,7 @@ totem_callback_connect (Totem *totem)
 			GTK_SIGNAL_FUNC (vol_cb), totem);
 	gtk_timeout_add (500, update_sliders_cb, totem);
 
-	/* Playlist */
+	/* Playlist Disappearance, woop woop */
 	g_signal_connect (G_OBJECT (totem->playlist),
 			"response", G_CALLBACK (toggle_playlist_from_playlist),
 			(gpointer) totem);
@@ -828,6 +877,14 @@ totem_callback_connect (Totem *totem)
 			(gpointer) totem);
 	g_object_add_weak_pointer (G_OBJECT (totem->playlist),
 			(void**)&(totem->playlist));
+
+	/* Playlist */
+	g_signal_connect (G_OBJECT (totem->playlist),
+			"changed", G_CALLBACK (playlist_changed_cb),
+			(gpointer) totem);
+	g_signal_connect (G_OBJECT (totem->playlist),
+			"changed", G_CALLBACK (current_removed_cb),
+			(gpointer) totem);
 }
 
 GtkWidget
@@ -841,7 +898,7 @@ GtkWidget
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, char **argv)
 {
 	Totem *totem;
 	char *filename;
@@ -892,16 +949,7 @@ main (int argc, char *argv[])
 	long_action ();
 
 	if (argc > 1)
-	{
-		char *mrl;
-		int i;
-		
-		for (i = 1 ; i < argc; i++)
-			gtk_playlist_add_mrl (totem->playlist, argv[i]);
-		update_buttons (totem);
-		mrl = gtk_playlist_get_current_mrl (totem->playlist);
-		action_set_mrl (totem, mrl);
-	}
+		action_open_files (totem, argv, TRUE);
 
 	gtk_main ();
 

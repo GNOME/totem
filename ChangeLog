@@ -1,5 +1,31 @@
 2002-07-31  Bastien Nocera  <hadess@hadess.net>
 
+	* .cvsignore:
+	* po/.cvsignore:
+	* src/.cvsignore: added
+	* src/gtk-playlist.c: (gtk_tree_model_iter_previous),
+	(gtk_playlist_add_files), (gtk_playlist_foreach_selected),
+	(gtk_playlist_remove_files), (init_treeview), (gtk_playlist_init),
+	(gtk_playlist_finalize), (gtk_playlist_new),
+	(gtk_playlist_add_mrl), (gtk_playlist_clear),
+	(gtk_playlist_get_current_mrl), (gtk_playlist_has_previous_mrl),
+	(gtk_playlist_has_next_mrl), (gtk_playlist_set_playing),
+	(gtk_playlist_unset_playing), (gtk_playlist_set_previous),
+	(gtk_playlist_set_next), (gtk_playlist_set_at_start),
+	(gtk_playlist_class_init): s/details/_priv/, added "changed" and
+	"current_removed" signals, made the add and remove buttons functional,
+	added checks for the glade UI, convert the filename to utf8 before
+	displaying them in the tree
+	(mucho crashes with remove still), 
+	* src/gtk-playlist.h: same
+	* src/playlist.glade: upd
+	* src/totem.c: (long_action), (action_exit), (action_open_files),
+	(on_open1_activate), (playlist_changed_cb), (current_removed_cb),
+	(totem_callback_connect), (main): allow multiple files selection in
+	the open dialog
+
+2002-07-31  Bastien Nocera  <hadess@hadess.net>
+
 	* README: upd
 	* src/gtk-playlist.c: (gtk_playlist_add_mrl), (gtk_playlist_clear):
 	* src/gtk-playlist.h: add gtk_playlist_clear()
