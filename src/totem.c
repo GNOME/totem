@@ -813,7 +813,7 @@ on_eos_event (GtkWidget *widget, gpointer user_data)
 
 	D("on_eos_event");
 
-	gdk_threads_enter ();
+	TE ();
 
 	if (!gtk_playlist_has_next_mrl (totem->playlist))
 	{
@@ -833,7 +833,7 @@ on_eos_event (GtkWidget *widget, gpointer user_data)
 		action_next (totem);
 	}
 
-	gdk_threads_leave ();
+	TL ();
 
 	return FALSE;
 }
@@ -1097,8 +1097,6 @@ main (int argc, char **argv)
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
-	g_thread_init (NULL);
-	gdk_threads_init ();
 	gnome_program_init ("totem", VERSION,
 			LIBGNOMEUI_MODULE,
 			argc, argv,

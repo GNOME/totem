@@ -233,6 +233,10 @@ gtk_xine_class_init (GtkXineClass * klass)
 				NULL, NULL,
 				g_cclosure_marshal_VOID__INT,
 				G_TYPE_NONE, 1, G_TYPE_INT);
+
+	if (!g_thread_supported ())
+		g_thread_init (NULL);
+	gdk_threads_init ();
 }
 
 static void
