@@ -65,8 +65,7 @@ static const GtkTargetEntry target_table[] = {
 };
 
 static const GtkTargetEntry source_table[] = {
-//	{ "_NETSCAPE_URL", 0, 0 },
-	{ "text/uri-list", 0, 1 },
+	{ "text/uri-list", 0, 0 },
 };
 
 static const struct poptOption options[] = {
@@ -779,9 +778,13 @@ drag_video_cb (GtkWidget *widget,
 	if (totem->mrl == NULL)
 		return;
 
-	text = gnome_vfs_get_uri_from_local_path (totem->mrl);
-	if (text == NULL)
+	if (totem->mrl[0] == '/')
+		text = gnome_vfs_get_uri_from_local_path (totem->mrl);
+	else
 		text = g_strdup (totem->mrl);
+
+	g_return_if_fail (text != NULL);
+
 	len = strlen (text);
 
 	g_print ("info: %d text: %s len: %d\n", info, text, len);
