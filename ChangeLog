@@ -1,3 +1,8 @@
+2004-10-18  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-disc.c: (cd_detect_type_from_dir): directories can't be
+	CDDA yet, check if they're local paths before continuing
+
 2004-10-16  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c: (on_properties1_activate): the property window

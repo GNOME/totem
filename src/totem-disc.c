@@ -483,10 +483,14 @@ cd_detect_type_from_dir (const char *dir, GError    **error)
   CdCache *cache;
   MediaType type;
 
+  g_return_val_if_fail (dir != NULL, MEDIA_TYPE_ERROR);
+
+  if (dir[0] != '/' && g_str_has_prefix (dir, "file://") == FALSE)
+    return MEDIA_TYPE_ERROR;
+
   if (!(cache = cd_cache_new (dir, error)))
     return MEDIA_TYPE_ERROR;
-  if ((type = cd_cache_disc_is_cdda (cache, error)) == MEDIA_TYPE_DATA &&
-      (type = cd_cache_disc_is_vcd (cache, error)) == MEDIA_TYPE_DATA &&
+  if ((type = cd_cache_disc_is_vcd (cache, error)) == MEDIA_TYPE_DATA &&
       (type = cd_cache_disc_is_dvd (cache, error)) == MEDIA_TYPE_DATA) {
     /* crap, nothing found */
   }
