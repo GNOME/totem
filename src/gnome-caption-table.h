@@ -81,8 +81,8 @@ guint      gnome_caption_table_get_num_rows       (GnomeCaptionTable *caption_ta
 void       gnome_caption_table_resize             (GnomeCaptionTable *caption_table,
 						 guint            num_rows);
 
+void gnome_accessibility_set_up_label_widget_relation (GtkWidget *label, GtkWidget *widget);
+
 G_END_DECLS
 
 #endif /* GNOME_CAPTION_TABLE_H */
-
-

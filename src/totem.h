@@ -51,4 +51,7 @@ void    totem_action_error                      (char *title, char *reason,
 
 GConfClient *totem_get_gconf_client		(Totem *totem);
 
+GtkWidget * label_create (void);
+GtkWidget * totem_statusbar_create (void);
+
 #endif /* __TOTEM_H__ */
