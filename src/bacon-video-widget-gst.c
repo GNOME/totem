@@ -1864,8 +1864,12 @@ bacon_video_widget_set_volume (BaconVideoWidget * bvw, int volume)
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
-  g_object_set (G_OBJECT (bvw->priv->play), "volume",
-		(gdouble) (1. * volume / 100), NULL);
+  if (bacon_video_widget_can_set_volume (bvw) != FALSE)
+  {
+    volume = CLAMP (volume, 0, 100);
+    g_object_set (G_OBJECT (bvw->priv->play), "volume",
+	(gdouble) (1. * volume / 100), NULL);
+  }
 }
 
 int
