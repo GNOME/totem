@@ -1,5 +1,12 @@
 2005-03-20  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-interface.c: (totem_interface_error_blocking):
+	* src/totem-mozilla-viewer.c: (totem_embedded_open):
+	Fix weird behaviour when a file can't be played (Mala Educacion trailer
+	on apple.com)
+
+2005-03-20  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am: upd
 	* src/totem-mozilla-options.h: added
 	* src/totem-mozilla-plugin.c: (totem_plugin_fork),

@@ -123,7 +123,9 @@ totem_embedded_open (TotemEmbedded *emb)
 		g_free (disp);
 		if (err != NULL)
 			g_message ("error: %s", err->message);
-		totem_embedded_error_and_exit (msg, err->message, emb);
+		totem_interface_error_blocking (msg, err->message,
+				GTK_WINDOW (emb->window));
+
 		g_free (msg);
 
 		g_error_free (err);

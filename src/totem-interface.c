@@ -89,6 +89,7 @@ totem_interface_error_blocking (const char *title, const char *reason,
 	error_dialog = totem_interface_error_dialog (title, reason, parent);
 
 	gtk_dialog_run (GTK_DIALOG (error_dialog));
+	gtk_widget_destroy (error_dialog);
 }
 
 GladeXML *
