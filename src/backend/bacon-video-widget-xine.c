@@ -1074,7 +1074,7 @@ bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 	switch (data->signal)
 	{
 	case RATIO:
-		bacon_video_widget_set_scale_ratio (bvw, 0);
+		bacon_video_widget_set_scale_ratio (bvw, 1);
 		break;
 	case TITLE_CHANGE_ASYNC:
 		g_signal_emit (G_OBJECT (bvw),
