@@ -326,7 +326,7 @@ static void
 bacon_video_widget_instance_init (BaconVideoWidget * bvw)
 {
   int argc = 1;
-  char *argv[] = { "bacon_name", NULL };
+  char **argv = NULL;
 
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -403,6 +403,23 @@ got_video_size (GstPlay * play, gint width, gint height,
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
+  bvw->priv->video_width = width;
+  bvw->priv->video_height = height;
+
+  if (bvw->priv->vw)
+    gst_video_widget_set_source_size (bvw->priv->vw, width, height);
+}
+
+static void
+got_vis_video_size (GstPlay * play, gint width, gint height,
+		    BaconVideoWidget * bvw)
+{
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  if (bvw->priv->media_has_video)
+    return;
+  
   bvw->priv->video_width = width;
   bvw->priv->video_height = height;
 
@@ -672,8 +689,7 @@ bacon_video_widget_open (BaconVideoWidget * bvw, const gchar * mrl,
       bvw->priv->vis_signal_blocked = FALSE;
     }
 
-  gst_play_connect_visualisation (bvw->priv->play, TRUE);
-
+  gst_video_widget_set_source_size (GST_VIDEO_WIDGET (bvw->priv->vw), 1, 1);
   gst_play_need_new_video_window (bvw->priv->play);
 
   if (g_file_test (mrl, G_FILE_TEST_EXISTS))
@@ -1513,6 +1529,9 @@ bacon_video_widget_new (int width, int height,
 		    "have_xid", (GtkSignalFunc) update_xid, (gpointer) bvw);
   g_signal_connect (G_OBJECT (bvw->priv->play),
 		    "have_video_size", (GtkSignalFunc) got_video_size,
+		    (gpointer) bvw);
+  g_signal_connect (G_OBJECT (bvw->priv->play),
+		    "have_vis_size", (GtkSignalFunc) got_vis_video_size,
 		    (gpointer) bvw);
   g_signal_connect (G_OBJECT (bvw->priv->play), "stream_end",
 		    (GtkSignalFunc) got_eos, (gpointer) bvw);
