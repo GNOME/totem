@@ -1251,6 +1251,15 @@ on_quit1_activate (GtkButton *button, gpointer user_data)
 }
 
 static void
+on_repeat_mode1_toggled (GtkCheckMenuItem *checkmenuitem, gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+
+	gtk_playlist_set_repeat (totem->playlist,
+			gtk_check_menu_item_get_active (checkmenuitem));
+}
+
+static void
 on_about1_activate (GtkButton *button, gpointer user_data)
 {
 	static GtkWidget *about = NULL;
@@ -1814,6 +1823,24 @@ current_removed_cb (GtkWidget *playlist, gpointer user_data)
 	g_free (mrl);
 }
 
+void
+playlist_repeat_toggle_cb (GtkPlaylist *playlist, gboolean repeat,
+		gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+	GtkWidget *item;
+
+	item = glade_xml_get_widget (totem->xml, "repeat_mode1");
+
+	g_signal_handlers_disconnect_by_func (G_OBJECT (item),
+			on_repeat_mode1_toggled, (gpointer) totem);
+
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), repeat);
+
+	g_signal_connect (G_OBJECT (item), "toggled",
+			G_CALLBACK (on_repeat_mode1_toggled), totem);
+}
+
 static gboolean
 popup_hide (Totem *totem)
 {
@@ -2219,6 +2246,11 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "show_playlist1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_show_playlist1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "repeat_mode1");
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
+			gtk_playlist_get_repeat (totem->playlist));
+	g_signal_connect (G_OBJECT (item), "toggled",
+			G_CALLBACK (on_repeat_mode1_toggled), totem);
 	item = glade_xml_get_widget (totem->xml, "quit1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_quit1_activate), totem);
@@ -2356,7 +2388,10 @@ totem_callback_connect (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->playlist),
 			"current-removed", G_CALLBACK (current_removed_cb),
 			(gpointer) totem);
-
+	g_signal_connect (G_OBJECT (totem->playlist),
+			"repeat-toggled",
+			G_CALLBACK (playlist_repeat_toggle_cb),
+			(gpointer) totem);
 
 	/* DVD menu callbacks */
 	item = glade_xml_get_widget (totem->xml, "dvd_root_menu");
