@@ -172,7 +172,6 @@ struct GtkXinePrivate {
 	gboolean properties_reset_state;
 };
 
-
 static void gtk_xine_class_init (GtkXineClass *klass);
 static void gtk_xine_instance_init (GtkXine *gtx);
 
@@ -187,7 +186,7 @@ static void gtk_xine_realize (GtkWidget *widget);
 static void gtk_xine_unrealize (GtkWidget *widget);
 static void gtk_xine_finalize (GObject *object);
 
-static gint gtk_xine_expose (GtkWidget *widget, GdkEventExpose *event);
+static gboolean gtk_xine_expose (GtkWidget *widget, GdkEventExpose *event);
 
 static void gtk_xine_size_allocate (GtkWidget *widget,
 				    GtkAllocation *allocation);
@@ -744,7 +743,7 @@ gtk_xine_dvd_event (GtkXine *gtx, GtkXineDVDEvent type)
                         (xine_event_t *) (&event));
 }
 
-static void
+static gboolean
 generate_mouse_event (GtkXine *gtx, XEvent *event, gboolean is_motion)
 {
 	XMotionEvent *mevent = (XMotionEvent *) event;
@@ -753,7 +752,7 @@ generate_mouse_event (GtkXine *gtx, XEvent *event, gboolean is_motion)
 	gboolean retval;
 
 	if (is_motion == FALSE && bevent->button != Button1)
-		return;
+		return FALSE;
 
 	if (is_motion == TRUE)
 		retval = video_window_translate_point (gtx,
@@ -784,7 +783,11 @@ generate_mouse_event (GtkXine *gtx, XEvent *event, gboolean is_motion)
 
 		xine_event_send (gtx->priv->stream,
 				(xine_event_t *) (&event));
+
+		return TRUE;
 	}
+
+	return FALSE;
 }
 
 static void *
@@ -799,51 +802,6 @@ xine_thread (void *gtx_gen)
 	{
 		XNextEvent (gtx->priv->display, &event);
 
-		switch (event.type)
-		{
-		case Expose:
-			if (event.xexpose.count != 0)
-				break;
-			xine_gui_send_vo_data (gtx->priv->stream,
-					XINE_GUI_SEND_EXPOSE_EVENT,
-					&event);
-			break;
-		case MotionNotify:
-			generate_mouse_event (gtx, &event, TRUE);
-			if (gtx->priv->fullscreen_mode == TRUE)
-			{
-				GtkXineSignal *signal;
-
-				signal = g_new0 (GtkXineSignal, 1);
-				signal->type = MOUSE_MOTION;
-				g_async_queue_push (gtx->priv->queue, signal);
-				g_idle_add ((GSourceFunc) gtk_xine_idle_signal,
-						gtx);
-			}
-			break;
-		case ButtonPress:
-			generate_mouse_event (gtx, &event, FALSE);
-			break;
-		case KeyPress:
-			if (gtx->priv->fullscreen_mode == TRUE)
-			{
-				GtkXineSignal *signal;
-				char buf[16];
-				KeySym keysym;
-				static XComposeStatus compose;
-
-				signal = g_new0 (GtkXineSignal, 1);
-				signal->type = KEY_PRESS;
-				XLookupString (&event.xkey, buf, 16,
-						&keysym, &compose);
-				signal->keyval = keysym;
-				g_async_queue_push (gtx->priv->queue, signal);
-				g_idle_add ((GSourceFunc) gtk_xine_idle_signal,
-						gtx);
-			}
-			break;
-		}
-
 		if (event.type == gtx->priv->completion_event)
 		{
 			xine_gui_send_vo_data (gtx->priv->stream,
@@ -854,6 +812,73 @@ xine_thread (void *gtx_gen)
 
 	pthread_exit (NULL);
 	return NULL;
+}
+
+static GdkFilterReturn
+gtk_xine_filter_events (GdkXEvent *xevent, GdkEvent *event, gpointer data)
+{
+	GtkXine *gtx = (GtkXine *) data;
+	XEvent *xev = (XEvent *) xevent;
+	XKeyEvent *key = (XKeyEvent *) xevent;
+	XExposeEvent *expose = (XExposeEvent *) xevent;
+	GtkXineSignal *signal;
+	gboolean retval;
+
+	switch (xev->type)
+	{
+	case Expose:
+		D("Expose:");
+		if (expose->count != 0)
+			break;
+		xine_gui_send_vo_data (gtx->priv->stream,
+				XINE_GUI_SEND_EXPOSE_EVENT,
+				&event);
+		return GDK_FILTER_REMOVE;
+		break;
+	case MotionNotify:
+		D("MotionNotify:");
+		retval = generate_mouse_event (gtx, xevent, TRUE);
+		if (gtx->priv->fullscreen_mode == TRUE)
+		{
+			GtkXineSignal *signal;
+
+			signal = g_new0 (GtkXineSignal, 1);
+			signal->type = MOUSE_MOTION;
+			g_async_queue_push (gtx->priv->queue, signal);
+			g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
+		}
+
+		if (retval == TRUE)
+			return GDK_FILTER_REMOVE;
+		break;
+	case ButtonPress:
+		D("ButtonPress:");
+		if (generate_mouse_event (gtx, xevent, FALSE) == TRUE)
+			return GDK_FILTER_REMOVE;
+		break;
+	case KeyPress:
+		D("KeyPress:");
+		if (gtx->priv->fullscreen_mode == TRUE)
+		{
+			GtkXineSignal *signal;
+			char buf[16];
+			KeySym keysym;
+			static XComposeStatus compose;
+
+			signal = g_new0 (GtkXineSignal, 1);
+			signal->type = KEY_PRESS;
+			XLookupString (key, buf, 16,
+					&keysym, &compose);
+			signal->keyval = keysym;
+			g_async_queue_push (gtx->priv->queue, signal);
+			g_idle_add ((GSourceFunc) gtk_xine_idle_signal, gtx);
+
+			return GDK_FILTER_REMOVE;
+		}
+		break;
+	}
+
+	return GDK_FILTER_CONTINUE;
 }
 
 static gboolean
@@ -889,7 +914,9 @@ gtk_xine_realize (GtkWidget *widget)
 	attr.height = widget->allocation.height;
 	attr.window_type = GDK_WINDOW_CHILD;
 	attr.wclass = GDK_INPUT_OUTPUT;
-	attr.event_mask = gtk_widget_get_events (widget) | GDK_EXPOSURE_MASK;
+	attr.event_mask = gtk_widget_get_events (widget) | GDK_EXPOSURE_MASK
+		| GDK_POINTER_MOTION_MASK | GDK_BUTTON_PRESS_MASK
+		| GDK_KEY_PRESS_MASK;
 	widget->window = gdk_window_new (gtk_widget_get_parent_window (widget),
 			&attr, GDK_WA_X | GDK_WA_Y);
 	gdk_window_show (widget->window);
@@ -956,6 +983,11 @@ gtk_xine_realize (GtkWidget *widget)
 
 	scrsaver_init (gtx->priv->display);
 
+	gdk_window_add_filter (widget->window,
+			gtk_xine_filter_events, (gpointer) gtx);
+
+	XUnlockDisplay (gtx->priv->display);
+
 	/* Can we play DVDs and VCDs ? */
 	autoplug_list = xine_get_autoplay_input_plugin_ids (gtx->priv->xine);
 	while (autoplug_list && autoplug_list[i])
@@ -966,8 +998,6 @@ gtk_xine_realize (GtkWidget *widget)
 			gtx->priv->can_dvd = TRUE;
 		i++;
 	}
-
-	XUnlockDisplay (gtx->priv->display);
 
 	/* now, create a xine thread */
 	pthread_create (&gtx->priv->thread, NULL, xine_thread, gtx);
@@ -1180,7 +1210,7 @@ gtk_xine_check (GtkXine *gtx)
 	return gtx->priv->init_finished;
 }
 
-static gint
+static gboolean
 gtk_xine_expose (GtkWidget *widget, GdkEventExpose *event)
 {
 	return FALSE;
@@ -1200,7 +1230,8 @@ gtk_xine_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	gtx->priv->xpos = allocation->x;
 	gtx->priv->ypos = allocation->y;
 
-	if (GTK_WIDGET_REALIZED (widget)) {
+	if (GTK_WIDGET_REALIZED (widget))
+	{
 		/* HACK it seems to be 1 pixel off, weird */
 		gdk_window_move_resize (widget->window,
 					allocation->x - 1,
@@ -1526,60 +1557,30 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 
 	if (fullscreen)
 	{
-		Window win;
-		XEvent xev;
-		XSizeHints hint;
 		GdkWindow *parent;
+		GdkWindowAttr attr;
 
 		parent = gdk_window_get_toplevel (gtx->widget.window);
 
-		hint.x = 0;
-		hint.y = 0;
-		hint.width = gdk_screen_width ();
-		hint.height = gdk_screen_height ();
+		attr.x = 0;
+		attr.y = 0;
+		attr.width = gdk_screen_width ();
+		attr.height = gdk_screen_height ();
+		attr.window_type = GDK_WINDOW_TOPLEVEL;
+		attr.wclass = GDK_INPUT_OUTPUT;
+		attr.event_mask = gtk_widget_get_events (GTK_WIDGET (gtx))
+			| GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK
+			| GDK_BUTTON_PRESS_MASK | GDK_KEY_PRESS_MASK;
+		gtx->priv->fullscreen_window = gdk_window_new
+			(NULL, &attr, GDK_WA_X | GDK_WA_Y);
+		gdk_window_show (gtx->priv->fullscreen_window);
+		window_set_fullscreen (gtx->priv->fullscreen_window, TRUE);
+		/* Flush, so that the window is really shown */
+		gdk_flush ();
 
-		win = XCreateSimpleWindow (gtx->priv->display,
-				GDK_ROOT_WINDOW (),
-				0, 0,
-				hint.width, hint.height, 1,
-				BLACK_PIXEL, BLACK_PIXEL);
+		gdk_window_add_filter (gtx->priv->fullscreen_window,
+				gtk_xine_filter_events, (gpointer) gtx);
 
-		hint.win_gravity = StaticGravity;
-		hint.flags = PPosition | PSize | PWinGravity;
-
-		XSetStandardProperties (gtx->priv->display, win,
-				DEFAULT_TITLE, DEFAULT_TITLE, None,
-				NULL, 0, 0);
-
-		XSetWMNormalHints (gtx->priv->display, win, &hint);
-
-//		old_wmspec_set_fullscreen (win);
-		/* TODO add check for full-screen from
-		 * fullscreen_callback
-		 * in terminal-window.c (profterm) */
-//		window_set_fullscreen (win, TRUE);
-		XRaiseWindow(gtx->priv->display, win);
-
-		XSelectInput (gtx->priv->display, win,
-				StructureNotifyMask | ExposureMask
-				| FocusChangeMask | ButtonPressMask
-				| PointerMotionMask | KeyPressMask);
-
-		/* Map window */
-		XMapRaised (gtx->priv->display, win);
-		XFlush (gtx->priv->display);
-
-		/* Wait for map */
-		do {
-			XMaskEvent (gtx->priv->display,
-					StructureNotifyMask, &xev);
-		} while (xev.type != MapNotify || xev.xmap.event != win);
-
-		XMoveWindow (gtx->priv->display, win, 0, 0);
-
-		/* FIXME Why does this sometimes return NULL ? */
-		gtx->priv->fullscreen_window =
-			gdk_window_foreign_new (win);
 		gdk_window_set_transient_for
 			(gtx->priv->fullscreen_window, parent);
 
@@ -1591,23 +1592,24 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 		gtk_xine_set_show_cursor (gtx, FALSE);
 
 		scrsaver_disable (gtx->priv->display);
-		XFlush(gtx->priv->display);
 	} else {
+		gdk_window_remove_filter (gtx->priv->fullscreen_window,
+				gtk_xine_filter_events, (gpointer) gtx);
+
 		xine_gui_send_vo_data (gtx->priv->stream,
 			 XINE_GUI_SEND_DRAWABLE_CHANGED,
 			 (void *) GDK_WINDOW_XID (gtx->priv->video_window));
 
 		/* Hide the window */
-		XDestroyWindow (gtx->priv->display, GDK_WINDOW_XID
-				(gtx->priv->fullscreen_window));
+		window_set_fullscreen (gtx->priv->fullscreen_window, FALSE);
+		gdk_window_destroy (gtx->priv->fullscreen_window);
 		gtx->priv->fullscreen_window = NULL;
 
 		scrsaver_enable (gtx->priv->display);
 
 		gdk_window_focus (gdk_window_get_toplevel
 				(gtk_widget_get_parent_window
-				 (GTK_WIDGET (gtx))),
-				GDK_CURRENT_TIME);
+				 (GTK_WIDGET (gtx))), GDK_CURRENT_TIME);
 	}
 
 	gtx->priv->pml = FALSE;

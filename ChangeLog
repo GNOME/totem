@@ -1,3 +1,12 @@
+2003-01-12  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-xine.c: (generate_mouse_event), (xine_thread),
+	(gtk_xine_filter_events), (gtk_xine_realize),
+	(gtk_xine_size_allocate), (gtk_xine_set_fullscreen):
+	Make the events needed for menus and all generated again,
+	fullscreen works again (Can we also filter the completion event the
+	same way ?)
+
 2003-01-11  Bastien Nocera  <hadess@hadess.net>
 
 	* README:
