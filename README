@@ -13,7 +13,15 @@ News
 ====
 
 1.0(?):
-* 
+* Allow AC3 passthrough sound
+* Fix races when getting errors on startup
+* Better error messages
+* Check that we could get tracks before trying to playback optical media
+* Don't tell nautilus we can't thumbnail a file if it just takes a long time
+* Make the CD selector work on FreeBSD
+* Fixup argument parsing
+* Fix a memleak in the recent files
+* Detect libcurl version properly
 
 0.99.2:
 * Fixed XFree86 lockup on start bug (see http://bugs.xfree86.org/cgi-bin/bugzilla/show_bug.cgi?id=260 for the patch)
@@ -309,6 +317,7 @@ http://article.gmane.org/gmane.comp.video.xine.devel/3456/match=+api+addition+su
 we could be getting)
 - rtsp plugin for xine?
 http://www.live.com/liveMedia/#testProgs
+- finish vanity
 
 From Iain:
 > if (position_in_file > 1second) {
