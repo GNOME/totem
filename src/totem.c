@@ -383,12 +383,14 @@ totem_action_play (Totem *totem, int offset)
 	play_pause_set_label (totem, retval ? STATE_PLAYING : STATE_STOPPED);
 	if (retval == FALSE)
 	{
-		char *msg;
+		char *msg, *disp;
 
+		disp = gnome_vfs_unescape_string_for_display (totem->mrl);
 		msg = g_strdup_printf(_("Totem could not play '%s'.\n"
 					"Reason: %s."),
-				totem->mrl,
+				disp,
 				err->message);
+		g_free (disp);
 		gtk_playlist_set_playing (totem->playlist, FALSE);
 		totem_action_error (msg, totem);
 		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
@@ -786,13 +788,16 @@ try_open_again:
 
 		if (retval == FALSE && first_try == TRUE)
 		{
-			char *msg;
+			char *msg, *disp;
 			gboolean try_again;
 
+			disp = gnome_vfs_unescape_string_for_display
+				(totem->mrl);
 			msg = g_strdup_printf(_("Totem could not play '%s'.\n"
 						"Reason: %s."),
-					mrl,
+					disp,
 					err->message);
+			g_free (disp);
 #ifdef HAVE_X86
 			try_again = totem_action_error_try_download
 				(msg, totem);

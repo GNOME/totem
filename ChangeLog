@@ -1,5 +1,10 @@
 2003-07-15  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (totem_action_play), (totem_action_set_mrl): unescape
+	the MRLs for display before using them in the error messages
+
+2003-07-15  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c: (bacon_video_widget_idle_signal),
 	(xine_event_message): pass the error messages events through the async
 	handler (Closes: #117151, maybe)
