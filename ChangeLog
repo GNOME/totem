@@ -1,5 +1,12 @@
 2004-07-06  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-pl-parser.c: (totem_pl_parser_write): better error message
+	when the playlist can't be written
+	* src/totem-playlist.c: (totem_playlist_save_files): don't use
+	g_file_test() on a URI, it doesn't work (Closes: #145419)
+
+2004-07-06  Bastien Nocera  <hadess@hadess.net>
+
 	* data/schemas.sh: actually use the size option of the thumbnailer
 
 2004-07-04  Bastien Nocera  <hadess@hadess.net>

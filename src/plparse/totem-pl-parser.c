@@ -249,8 +249,8 @@ totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
 		g_set_error(error,
 			    TOTEM_PL_PARSER_ERROR,
 			    TOTEM_PL_PARSER_ERROR_VFS_OPEN,
-			    _("Couldn't open parser: %s"),
-			    gnome_vfs_result_to_string (res));
+			    _("Couldn't open file '%s': %s"),
+			    output, gnome_vfs_result_to_string (res));
 		return FALSE;
 	}
 

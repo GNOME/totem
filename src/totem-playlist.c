@@ -774,6 +774,8 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 	if (response == GTK_RESPONSE_ACCEPT)
 	{
 		char *filename, *tmp;
+		GnomeVFSResult res;
+		GnomeVFSFileInfo info;
 
 		filename = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (fs));
 
@@ -788,7 +790,8 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 				G_DIR_SEPARATOR_S, NULL);
 		g_free (tmp);
 
-		if (g_file_test (filename, G_FILE_TEST_EXISTS) != FALSE)
+		res = gnome_vfs_get_file_info (filename, &info, GNOME_VFS_FILE_INFO_DEFAULT);
+		if (res != GNOME_VFS_ERROR_NOT_FOUND && res == GNOME_VFS_OK)
 		{
 			GtkWidget *dialog;
 
