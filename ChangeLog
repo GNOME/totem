@@ -1,5 +1,10 @@
 2003-01-29  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (generate_mouse_event): fix typo that prevented the
+	mouse clicks from being passed onto xine (Closes: #104598)
+
+2003-01-29  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (on_window_key_press_event): If we have modifiers, and
 	either Ctrl, Mod1 (Alt), or any of Mod3 to Mod5 (Mod2 is num-lock...)
 	are pressed, we let Gtk+ handle the key (Closes: #104675)

@@ -688,7 +688,7 @@ generate_mouse_event (GtkXine *gtx, GdkEvent *event, gboolean is_motion)
 	int x, y;
 	gboolean retval;
 
-	if (is_motion == FALSE && bevent->button != GDK_BUTTON_PRESS)
+	if (is_motion == FALSE && bevent->button != 1)
 		return FALSE;
 
 	if (is_motion == TRUE)
