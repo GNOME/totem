@@ -54,6 +54,8 @@
 #define DEFAULT_WIDTH 315
 #define CONFIG_FILE ".xine"G_DIR_SEPARATOR_S"config"
 #define DEFAULT_TITLE "Totem Video Window"
+#define GCONF_PREFIX "/apps/totem/"
+#define LOGO_PATH DATADIR""G_DIR_SEPARATOR_S"totem"G_DIR_SEPARATOR_S"totem_logo.mpv"
 
 #define BLACK_PIXEL \
 	BlackPixel ((gtx->priv->display ? gtx->priv->display : gdk_display), \
@@ -455,20 +457,18 @@ load_config_from_gconf (GtkXine *gtx)
 	}
 	conf = gconf_client_get_default ();
 
-	/* The logo path is hard-coded, sorry folks */
-	tmp = g_build_path (G_DIR_SEPARATOR_S,
-			DATADIR, "totem", "totem_logo.mpv", NULL);
+	/* The logo path */
+	tmp = LOGO_PATH;
 	gtx->priv->config->register_string (gtx->priv->config,
 			"misc.logo_mrl", tmp,
 			"audio driver to use",
 			NULL, NULL, NULL);
 	gtx->priv->config->update_string (gtx->priv->config,
 			"misc.logo_mrl", tmp);
-	g_free (tmp);
 
 	/* The audio output, equivalent to audio.driver*/
 	tmp = gconf_client_get_string (conf,
-			"/apps/gtk-xine/audio_driver",
+			GCONF_PREFIX"audio_driver",
 			NULL);
 	if (tmp == NULL || strcmp (tmp, "") == 0)
 		tmp = g_strdup ("auto");
@@ -1361,21 +1361,6 @@ gtk_xine_is_seekable (GtkXine * gtx)
 	return xine_is_stream_seekable (gtx->priv->xine);
 }
 
-#if 0
-static void
-gtk_xine_set_video_property (GtkXine * gtx, gint property, gint value)
-{
-	gtx->priv->vo_driver->set_property (gtx->priv->vo_driver, property,
-					    value);
-}
-
-static gint
-gtk_xine_get_video_property (GtkXine * gtx, gint property)
-{
-	return gtx->priv->vo_driver->get_property (gtx->priv->vo_driver,
-						   property);
-}
-#endif
 void
 gtk_xine_toggle_aspect_ratio (GtkXine *gtx)
 {

@@ -31,7 +31,7 @@ keysdir = $(datadir)/mime-info/
 app_DATA = totem.applications
 appdir = $(datadir)/application-registry
 
-schema_in_files = gtk-xine.schemas.in
+schema_in_files = totem.schemas.in
 schemadir = $(sysconfdir)/gconf/schemas
 schema_DATA = $(schema_in_files:.schemas.in=.schemas)
 @INTLTOOL_SCHEMAS_RULE@

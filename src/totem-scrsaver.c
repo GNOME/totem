@@ -25,6 +25,7 @@ static Bool xtest;
 static gboolean fake_event (gpointer data)
 {
 	Display *display = (Display *)data;
+
 	if(disabled)
 	{
 		XTestFakeKeyEvent (display, keycode, True, CurrentTime);
@@ -34,7 +35,6 @@ static gboolean fake_event (gpointer data)
 	return TRUE;
 }
 #endif
-
 
 void scrsaver_init (Display *display)
 {
@@ -49,7 +49,6 @@ void scrsaver_init (Display *display)
 #endif
 }
 
-
 void scrsaver_disable(Display *display)
 {
 #ifdef HAVE_XTEST
@@ -61,8 +60,10 @@ void scrsaver_disable(Display *display)
 #endif
 	if(disabled == 0)
 	{
-		XGetScreenSaver(display, &timeout, &interval, &prefer_blanking, &allow_exposures);
-		XSetScreenSaver(display, 0, 0, DontPreferBlanking, DontAllowExposures);
+		XGetScreenSaver(display, &timeout, &interval,
+				&prefer_blanking, &allow_exposures);
+		XSetScreenSaver(display, 0, 0,
+				DontPreferBlanking, DontAllowExposures);
 		disabled = 1;
 	}
 }
@@ -79,7 +80,9 @@ void scrsaver_enable(Display *display)
 #endif
 	if(disabled)
 	{
-		XSetScreenSaver(display, timeout, interval, prefer_blanking, allow_exposures);
+		XSetScreenSaver(display, timeout, interval,
+				prefer_blanking, allow_exposures);
 		disabled = 0;
 	}
 }
+
