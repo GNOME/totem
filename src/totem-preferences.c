@@ -550,6 +550,7 @@ totem_setup_preferences (Totem *totem)
 
 		i++;
 	}
+	g_free (visual);
 
 	/* Visualisation quality */
 	i = gconf_client_get_int (totem->gc,
@@ -705,4 +706,5 @@ totem_preferences_visuals_setup (Totem *totem)
 		visual = g_strdup ("goom");
 
 	bacon_video_widget_set_visuals (totem->bvw, visual);
+	g_free (visual);
 }

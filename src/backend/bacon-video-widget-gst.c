@@ -944,6 +944,7 @@ bacon_video_widget_finalize (GObject * object)
       gst_tag_list_free (bvw->priv->tagcache);
       bvw->priv->tagcache = NULL;
     }
+  g_free (bvw->priv);
 }
 
 static void
@@ -1880,7 +1881,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
     }
 
   if (res)
-    g_value_set_string (value, string);
+    g_value_take_string (value, string);
   else
     g_value_set_string (value, NULL);
 

@@ -641,6 +641,8 @@ totem_pl_parser_finalize (GObject *object)
 	g_return_if_fail (parser->priv != NULL);
 
 	g_list_foreach (parser->priv->ignore_schemes, (GFunc) g_free, NULL);
+	g_free (parser->priv);
+	parser->priv = NULL;
 
 	if (G_OBJECT_CLASS (parent_class)->finalize != NULL) {
 		(* G_OBJECT_CLASS (parent_class)->finalize) (object);

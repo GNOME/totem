@@ -1,5 +1,13 @@
 2004-11-03  Christophe Fergeau  <teuf@gnome.org>
 
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_finalize),
+	(bacon_video_widget_get_metadata_string):
+	* src/totem-pl-parser.c: (totem_pl_parser_finalize):
+	* src/totem-preferences.c: (totem_setup_preferences),
+	(totem_preferences_visuals_setup): more leak fixes
+
+2004-11-03  Christophe Fergeau  <teuf@gnome.org>
+
 	* src/totem-pl-parser.c: (my_gnome_vfs_get_mime_type_with_data),
 	(totem_pl_parser_parse_internal):
 	* src/totem-preferences.c: (totem_setup_preferences): leak fixes
