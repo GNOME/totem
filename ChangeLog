@@ -1,5 +1,11 @@
 2005-03-22  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_class_init):
+	make the property read-write, just need to implement the get/setter
+	for the props now
+
+2005-03-22  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-gst.c:
 	(bacon_video_widget_get_media_device): add the helper
 	bacon_video_widget_get_media_device

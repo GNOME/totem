@@ -615,7 +615,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   g_object_class_install_property (object_class, PROP_MEDIADEV,
 				   g_param_spec_string ("mediadev", NULL,
 							NULL, FALSE,
-							G_PARAM_WRITABLE));
+							G_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_SHOW_VISUALS,
 				   g_param_spec_boolean ("showvisuals", NULL,
 							 NULL, FALSE,
