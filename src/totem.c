@@ -2344,17 +2344,41 @@ totem_is_fullscreen (Totem *totem)
 }
 
 static void
+move_popups (Totem *totem)
+{
+	int control_width, control_height;
+	int exit_width, exit_height;
+
+	gtk_window_get_size (GTK_WINDOW (totem->control_popup),
+			&control_width, &control_height);
+	gtk_window_get_size (GTK_WINDOW (totem->exit_popup),
+			&exit_width, &exit_height);
+
+	if (gtk_widget_get_direction (totem->exit_popup) == GTK_TEXT_DIR_RTL)
+	{
+		gtk_window_move (GTK_WINDOW (totem->exit_popup),
+				totem->fullscreen_rect.width - exit_width,
+				totem->fullscreen_rect.y);
+		gtk_window_move (GTK_WINDOW (totem->control_popup),
+				totem->fullscreen_rect.width - control_width,
+				totem->fullscreen_rect.height
+				- control_height);
+	} else {
+		gtk_window_move (GTK_WINDOW (totem->exit_popup),
+				totem->fullscreen_rect.x,
+				totem->fullscreen_rect.y);
+		gtk_window_move (GTK_WINDOW (totem->control_popup),
+				totem->fullscreen_rect.x,
+				totem->fullscreen_rect.height
+				- control_height);
+	}
+}
+
+static void
 size_changed_cb (GdkScreen *screen, Totem *totem)
 {
 	update_fullscreen_size (totem);
-
-	gtk_window_move (GTK_WINDOW (totem->exit_popup),
-			totem->fullscreen_rect.x,
-			totem->fullscreen_rect.y);
-	gtk_window_move (GTK_WINDOW (totem->control_popup),
-			totem->fullscreen_rect.x,
-			totem->fullscreen_rect.height
-			- totem->control_popup_height);
+	move_popups (totem);
 }
 
 static gboolean
@@ -2402,7 +2426,6 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 		Totem *totem)
 {
 	GtkWidget *item;
-	int width;
 
 	if (totem_is_fullscreen (totem) == FALSE) 
 		return FALSE;
@@ -2424,15 +2447,7 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 	gtk_widget_realize (item);
 	gdk_flush ();
 
-	gtk_window_get_size (GTK_WINDOW (totem->control_popup),
-			&width, &totem->control_popup_height);
-	gtk_window_move (GTK_WINDOW (totem->exit_popup),
-			totem->fullscreen_rect.x,
-			totem->fullscreen_rect.y);
-	gtk_window_move (GTK_WINDOW (totem->control_popup),
-			totem->fullscreen_rect.x,
-			totem->fullscreen_rect.height
-			- totem->control_popup_height);
+	move_popups (totem);
 
 	gtk_widget_show_all (totem->exit_popup);
 	gtk_widget_show_all (totem->control_popup);

@@ -101,7 +101,6 @@ struct Totem {
 	GtkAdjustment *fs_seekadj;
 	GtkWidget *fs_volume;
 	GtkAdjustment *fs_voladj;
-	gint control_popup_height;
 
 	guint popup_timeout;
 	gboolean popup_in_progress;
