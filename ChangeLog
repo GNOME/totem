@@ -1,3 +1,9 @@
+2005-01-20  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-interface.c: (totem_interface_error_dialog):
+	try to avoid problems with unescaped error messages passed to the
+	error dialog (Closes: #164627)
+
 2005-01-18  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/bacon-video-widget-gst.c: (setup_vis),
