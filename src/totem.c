@@ -204,7 +204,7 @@ totem_action_error_and_exit (char *title, char *reason, Totem *totem)
 
 	error_dialog =
 		gtk_message_dialog_new (NULL,
-				GTK_DIALOG_MODAL | GTK_DIALOG_NO_SEPARATOR,
+				GTK_DIALOG_MODAL,
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK,
 				"<b>%s</b>\n%s", title, reason);
@@ -2029,7 +2029,7 @@ on_properties1_activate (GtkButton *button, Totem *totem)
 
 	dialog = gtk_dialog_new_with_buttons (_("Properties"),
 			GTK_WINDOW (totem->win),
-			GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_NO_SEPARATOR,
+			GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
 			GTK_STOCK_CLOSE,
 			GTK_RESPONSE_ACCEPT,
 			NULL);
