@@ -29,11 +29,6 @@
 G_BEGIN_DECLS
 
 typedef enum {
-	SPEED_PAUSE,
-	SPEED_NORMAL,
-} Speeds;
-
-typedef enum {
 	MEDIA_DVD,
 	MEDIA_VCD,
 	MEDIA_CDDA,
@@ -118,6 +113,7 @@ gboolean bacon_video_widget_open		 (BaconVideoWidget *bvw,
 
 gboolean bacon_video_widget_play                 (BaconVideoWidget *bvw,
 						  GError **error);
+void bacon_video_widget_pause			 (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_seek		 (BaconVideoWidget *bvw,
 						  float position,
 						  GError **error);
@@ -126,16 +122,13 @@ gboolean bacon_video_widget_seek_time		 (BaconVideoWidget *bvw,
 						  GError **error);
 void bacon_video_widget_stop                     (BaconVideoWidget *bvw);
 void bacon_video_widget_close                    (BaconVideoWidget *bvw);
-void bacon_video_widget_set_logo                 (BaconVideoWidget *bvw,
-                                                  gchar *filename);
+
 /* Properties */
+void bacon_video_widget_set_logo		 (BaconVideoWidget *bvw,
+						  char *filename);
 void  bacon_video_widget_set_logo_mode		 (BaconVideoWidget *bvw,
 						  gboolean logo_mode);
 gboolean bacon_video_widget_get_logo_mode	 (BaconVideoWidget *bvw);
-
-void bacon_video_widget_set_speed                (BaconVideoWidget *bvw,
-		                                  Speeds speed);
-int bacon_video_widget_get_speed                 (BaconVideoWidget *bvw);
 
 void bacon_video_widget_set_proprietary_plugins_path
 						 (BaconVideoWidget *bvw,
@@ -188,7 +181,6 @@ BaconVideoWidgetAudioOutType bacon_video_widget_get_audio_out_type
 void bacon_video_widget_set_audio_out_type	 (BaconVideoWidget *bvw,
 						  BaconVideoWidgetAudioOutType
 						  type);
-//FIXME
 float bacon_video_widget_get_position            (BaconVideoWidget *bvw);
 gint64 bacon_video_widget_get_current_time       (BaconVideoWidget *bvw);
 gint64 bacon_video_widget_get_stream_length      (BaconVideoWidget *bvw);

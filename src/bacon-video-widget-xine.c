@@ -100,11 +100,6 @@ enum {
 	PROP_SHOW_VISUALS,
 };
 
-static int speeds[2] = {
-	XINE_SPEED_PAUSE,
-	XINE_SPEED_NORMAL,
-};
-
 static int video_props[2] = {
 	XINE_PARAM_VO_BRIGHTNESS,
 	XINE_PARAM_VO_CONTRAST,
@@ -141,6 +136,11 @@ struct BaconVideoWidgetPrivate {
 	xine_post_t *vis;
 	GList *visuals;
 	char *queued_vis;
+
+	/* Seeking stuff */
+	int seeking;
+	float seek_dest;
+	gint64 seek_dest_time;
 
 	/* Other stuff */
 	int xpos, ypos;
@@ -269,10 +269,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 	g_object_class_install_property (object_class, PROP_LOGO_MODE,
 			g_param_spec_boolean ("logo_mode", NULL, NULL,
 				FALSE, G_PARAM_READWRITE));
-	g_object_class_install_property (object_class, PROP_SPEED,
-			g_param_spec_int ("speed", NULL, NULL,
-				SPEED_PAUSE, SPEED_NORMAL,
-				0, G_PARAM_READWRITE));
 	g_object_class_install_property (object_class, PROP_POSITION,
 			g_param_spec_int64 ("position", NULL, NULL,
 				0, G_MAXINT64, 0, G_PARAM_READABLE));
@@ -1475,6 +1471,7 @@ static gboolean
 bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 {
 	int current_time, stream_length, current_position;
+	float current_position_f;
 	gboolean ret = TRUE;
 
 	if (bvw->priv->stream == NULL)
@@ -1492,12 +1489,23 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 				&stream_length);
 	}
 
+	if (bvw->priv->seeking == 1)
+	{
+		current_position_f = bvw->priv->seek_dest;
+		current_time = bvw->priv->seek_dest * stream_length;
+	} else if (bvw->priv->seeking == 2) {
+		current_time = bvw->priv->seek_dest_time;
+		current_position_f = (float) current_time / stream_length;
+	} else {
+		current_position_f = (float) current_position / 65535;
+	}
+
 	if (ret == TRUE)
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[TICK], 0,
 				(gint64) (current_time),
 				(gint64) (stream_length),
-				((float) current_position / 65535));
+				current_position_f);
 
 	return TRUE;
 }
@@ -1671,8 +1679,30 @@ bacon_video_widget_play (BaconVideoWidget *bvw, GError **gerror)
 
 	bvw->priv->started = TRUE;
 
-	//FIXME seek
-	error = xine_play (bvw->priv->stream, 0, 0);
+	if (bvw->priv->seeking == 1)
+	{
+		error = xine_play (bvw->priv->stream,
+				bvw->priv->seek_dest * 65535, 0);
+		bvw->priv->seeking = 0;
+	} else if (bvw->priv->seeking == 2) {
+		error = xine_play (bvw->priv->stream, 0,
+				bvw->priv->seek_dest_time);
+		bvw->priv->seeking = 0;
+	} else {
+		int speed;
+
+		speed = xine_get_param (bvw->priv->stream, XINE_PARAM_SPEED);
+		if (speed == XINE_SPEED_PAUSE)
+		{
+			xine_set_param (bvw->priv->stream,
+					XINE_PARAM_SPEED, XINE_SPEED_NORMAL);
+			error = 0;
+		} else {
+			error = xine_play (bvw->priv->stream, 0, 0);
+		}
+
+		bvw->priv->seeking = 0;
+	}
 
 	if (error == 0)
 	{
@@ -1702,8 +1732,8 @@ gboolean bacon_video_widget_seek (BaconVideoWidget *bvw, float position,
 	speed = xine_get_param (bvw->priv->stream, XINE_PARAM_SPEED);
 	if (speed == XINE_SPEED_PAUSE)
 	{
-		//remember pos
-		//FIXME
+		bvw->priv->seeking = 1;
+		bvw->priv->seek_dest = position;
 		return TRUE;
 	}
 
@@ -1728,11 +1758,13 @@ gboolean bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time,
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -1);
 	g_return_val_if_fail (bvw->priv->xine != NULL, -1);
 
+	length = bacon_video_widget_get_stream_length (bvw);
+
 	speed = xine_get_param (bvw->priv->stream, XINE_PARAM_SPEED);
 	if (speed == XINE_SPEED_PAUSE)
 	{
-		//remember pos
-		//FIXME
+		bvw->priv->seeking = 2;
+		bvw->priv->seek_dest_time = CLAMP (time, 0, length);
 		return TRUE;
 	}
 
@@ -1796,9 +1828,6 @@ bacon_video_widget_set_property (GObject *object, guint property_id,
 		bacon_video_widget_set_logo_mode (bvw,
 				g_value_get_boolean (value));
 		break;
-	case PROP_SPEED:
-		bacon_video_widget_set_speed (bvw, g_value_get_int (value));
-		break;
 	case PROP_SHOWCURSOR:
 		bacon_video_widget_set_show_cursor (bvw,
 				g_value_get_boolean (value));
@@ -1831,9 +1860,6 @@ bacon_video_widget_get_property (GObject *object, guint property_id,
 	case PROP_LOGO_MODE:
 		g_value_set_boolean (value,
 				bacon_video_widget_get_logo_mode (bvw));
-		break;
-	case PROP_SPEED:
-		g_value_set_int (value, bacon_video_widget_get_speed (bvw));
 		break;
 	case PROP_POSITION:
 		g_value_set_int64 (value, bacon_video_widget_get_position (bvw));
@@ -1892,38 +1918,19 @@ bacon_video_widget_get_logo_mode (BaconVideoWidget *bvw)
 }
 
 void
-bacon_video_widget_set_speed (BaconVideoWidget *bvw, Speeds speed)
+bacon_video_widget_pause (BaconVideoWidget *bvw)
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
 
-	xine_set_param (bvw->priv->stream, XINE_PARAM_SPEED, speeds[speed]);
+	xine_set_param (bvw->priv->stream, XINE_PARAM_SPEED, XINE_SPEED_PAUSE);
 
 #ifdef HAVE_XINE_CLOSE
 	/* Close the audio device when on pause */
-	if (speeds[speed] == XINE_SPEED_PAUSE)
-		xine_set_param (bvw->priv->stream,
-				XINE_PARAM_AUDIO_CLOSE_DEVICE, 1);
+	xine_set_param (bvw->priv->stream,
+			XINE_PARAM_AUDIO_CLOSE_DEVICE, 1);
 #endif
-
-	if (bvw->priv->queued_vis != NULL)
-	{
-		g_message ("removing %s from the queue (set_speed)", bvw->priv->queued_vis);
-		bacon_video_widget_set_visuals (bvw, bvw->priv->queued_vis);
-		g_free (bvw->priv->queued_vis);
-		bvw->priv->queued_vis = NULL;
-	}
-}
-
-int
-bacon_video_widget_get_speed (BaconVideoWidget *bvw)
-{
-	g_return_val_if_fail (bvw != NULL, SPEED_NORMAL);
-	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), SPEED_NORMAL);
-	g_return_val_if_fail (bvw->priv->xine != NULL, SPEED_NORMAL);
-
-	return xine_get_param (bvw->priv->stream, XINE_PARAM_SPEED);
 }
 
 float
@@ -1952,6 +1959,13 @@ bacon_video_widget_get_position (BaconVideoWidget *bvw)
 		ret = xine_get_pos_length (bvw->priv->stream, &pos_stream,
 				&pos_time, &length_time);
 		i++;
+	}
+
+	if (bvw->priv->seeking == 1)
+	{
+		return bvw->priv->seek_dest * length_time;
+	} else if (bvw->priv->seeking == 2) {
+		return bvw->priv->seek_dest_time;
 	}
 
 	if (ret == FALSE)
@@ -2427,6 +2441,13 @@ bacon_video_widget_get_current_time (BaconVideoWidget *bvw)
 		i++;
 	}
 
+	if (bvw->priv->seeking == 1)
+	{
+		return bvw->priv->seek_dest * length_time;
+	} else if (bvw->priv->seeking == 2) {
+		return bvw->priv->seek_dest_time;
+	}
+
 	if (ret == FALSE)
 		return -1;
 
@@ -2462,7 +2483,7 @@ bacon_video_widget_is_playing (BaconVideoWidget *bvw)
 	if (bvw->priv->stream == NULL)
 		return FALSE;
 
-	return xine_get_status (bvw->priv->stream) == XINE_STATUS_PLAY;
+	return (xine_get_status (bvw->priv->stream) == XINE_STATUS_PLAY && xine_get_param (bvw->priv->stream, XINE_PARAM_SPEED) == XINE_SPEED_NORMAL);
 }
 
 gboolean

@@ -523,16 +523,11 @@ totem_action_play_pause (Totem *totem)
 
 	if (bacon_video_widget_is_playing (totem->bvw) == FALSE)
 	{
-		totem_action_play (totem);
+		bacon_video_widget_play (totem->bvw, NULL);
+		play_pause_set_label (totem, STATE_PLAYING);
 	} else {
-		if (bacon_video_widget_get_speed (totem->bvw) == SPEED_PAUSE)
-		{
-			bacon_video_widget_set_speed (totem->bvw, SPEED_NORMAL);
-			play_pause_set_label (totem, STATE_PLAYING);
-		} else {
-			bacon_video_widget_set_speed (totem->bvw, SPEED_PAUSE);
-			play_pause_set_label (totem, STATE_PAUSED);
-		}
+		bacon_video_widget_pause (totem->bvw);
+		play_pause_set_label (totem, STATE_PAUSED);
 	}
 }
 
