@@ -871,9 +871,14 @@ got_error (GstElement *play, GstElement *orig, GError *error,
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-  /* the handler will catch it */
-  if (GST_STATE (play) != GST_STATE_PLAYING)
+  /* since we're opening, we will never enter the mainloop
+   * until we return, so setting an idle handler doesn't
+   * help... Anyway, let's prepare a message. */
+  if (GST_STATE (play) != GST_STATE_PLAYING) {
+    g_free (bvw->priv->last_error_message);
+    bvw->priv->last_error_message = g_strdup (error->message);
     return;
+  }
   
   signal = g_new0 (BVWSignal, 1);
   signal->signal_id = ASYNC_ERROR;

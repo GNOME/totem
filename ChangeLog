@@ -1,3 +1,12 @@
+2004-10-22  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/bacon-video-widget-gst.c: (got_error):
+	  Since we are blocking the mainloop in _play or _open, errors
+	  will never be reported until after we unblock the mainloop if we
+	  use idle handlers. Also, we don't need signals at that stage. So	
+	  we can abuse the coincidence of those two and just report errors
+	  as we should.
+
 2004-10-21  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-playlist.c: (totem_playlist_add_files),
