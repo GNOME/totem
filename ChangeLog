@@ -1,6 +1,19 @@
 2004-09-15  Bastien Nocera  <hadess@hadess.net>
 
 	* NEWS: upd
+	* README: update the Copyright notices
+	* src/totem-playlist.c: (totem_playlist_current_has_prefix),
+	(totem_playlist_clear_with_prefix):
+	* src/totem-playlist.h: add totem_playlist_clear_with_prefix
+	to remove playlist items with a particular prefix
+	* src/totem.c: (totem_action_eject): call
+	totem_playlist_clear_with_prefix when ejecting an optical media
+	instead of simply stopping the play, so that the stream doesn't
+	appear in the UI after an eject (Closes: #148480)
+
+2004-09-15  Bastien Nocera  <hadess@hadess.net>
+
+	* NEWS: upd
 	* src/totem-pl-parser.c: (totem_pl_parser_parse_internal),
 	(totem_pl_parser_parse): We now can recurse into 3 levels of
 	subdirectories (enough for drag'n'dropping, say, an "iTunes Music"

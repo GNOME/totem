@@ -344,20 +344,23 @@ play_pause_set_label (Totem *totem, TotemStates state)
 static void
 totem_action_eject (Totem *totem)
 {
-	char *cmd;
+	GError *err = NULL;
+	char *cmd, *prefix;
+	const char *needle;
 
-	totem_playlist_set_playing (totem->playlist, FALSE);
-	play_pause_set_label (totem, STATE_STOPPED);
-
-	bacon_video_widget_close (totem->bvw);
-	g_free (totem->mrl);
-	totem->mrl = NULL;
+	needle = strchr (totem->mrl, ':');
+	g_assert (needle != NULL);
+	/* we want the ':' as well */
+	prefix = g_strndup (totem->mrl, needle - totem->mrl + 1);
+	totem_playlist_clear_with_prefix (totem->playlist, prefix);
+	g_free (prefix);
 
 	cmd = g_strdup_printf ("eject %s", gconf_client_get_string
 			(totem->gc, GCONF_PREFIX"/mediadev", NULL));
-	if (g_spawn_command_line_sync (cmd, NULL, NULL, NULL, NULL) == FALSE)
+	if (g_spawn_command_line_sync (cmd, NULL, NULL, NULL, &err) == FALSE)
 	{
-		totem_action_error (_("Totem could not eject the optical media."), _("No reason given."), totem);
+		totem_action_error (_("Totem could not eject the optical media."), err->message, totem);
+		g_error_free (err);
 	}
 	g_free (cmd);
 }

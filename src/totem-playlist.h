@@ -69,6 +69,8 @@ void totem_playlist_save_current_playlist (TotemPlaylist *playlist,
 /* totem_playlist_clear doesn't emit the current_removed signal, even if it does
  * because the caller should know what to do after it's done with clearing */
 void       totem_playlist_clear (TotemPlaylist *playlist);
+void       totem_playlist_clear_with_prefix (TotemPlaylist *playlist,
+					     const char *prefix);
 char      *totem_playlist_get_current_mrl (TotemPlaylist *playlist);
 char      *totem_playlist_get_current_title (TotemPlaylist *playlist,
 					     gboolean *custom);

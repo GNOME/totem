@@ -1567,6 +1567,94 @@ totem_playlist_clear (TotemPlaylist *playlist)
 	playlist->_priv->current = NULL;
 }
 
+static gboolean
+totem_playlist_current_has_prefix (TotemPlaylist *playlist,
+		const char *prefix)
+{
+	char *current;
+	gboolean retval;
+
+	current = totem_playlist_get_current_mrl (playlist);
+	retval = g_str_has_prefix (current, prefix);
+	g_free (current);
+	return retval;
+}
+
+void
+totem_playlist_clear_with_prefix (TotemPlaylist *playlist, const char *prefix)
+{
+	GList *list = NULL, *l;
+	guint num_items, i;
+
+	num_items = PL_LEN;
+	if (num_items == 0)
+		return;
+
+	if (totem_playlist_current_has_prefix (playlist, prefix) == FALSE)
+	{
+		g_warning ("totem_playlist_clear_with_prefix called while current mrl doesn't have prefix '%s'", prefix);
+		return;
+	}
+
+	for (i = 0; i < num_items; i++)
+	{
+		GtkTreeIter iter;
+		char *index;
+		char *mrl;
+
+		index = g_strdup_printf ("%d", i);
+		if (gtk_tree_model_get_iter_from_string
+				(playlist->_priv->model,
+				 &iter, index) == FALSE)
+		{
+			g_free (index);
+			continue;
+		}
+		g_free (index);
+
+		gtk_tree_model_get (playlist->_priv->model, &iter,
+				URI_COL, &mrl, -1);
+
+		if (g_str_has_prefix (mrl, prefix) != FALSE)
+		{
+			GtkTreePath *path;
+			GtkTreeRowReference *ref;
+
+			path = gtk_tree_path_new_from_indices (i, -1);
+			ref = gtk_tree_row_reference_new
+				(playlist->_priv->model, path);
+			list = g_list_prepend (list, ref);
+			gtk_tree_path_free (path);
+		}
+
+		g_free (mrl);
+	}
+
+
+	for (l = list; l != NULL; l = l->next)
+	{
+		GtkTreePath *path;
+		GtkTreeIter iter;
+
+		path = gtk_tree_row_reference_get_path (l->data);
+		gtk_tree_model_get_iter (playlist->_priv->model, &iter, path);
+		gtk_list_store_remove (GTK_LIST_STORE (playlist->_priv->model),
+				&iter);
+		gtk_tree_path_free (path);
+		gtk_tree_row_reference_free (l->data);
+	}
+	g_list_free (list);
+
+	playlist->_priv->current_shuffled = -1;
+
+	ensure_shuffled (playlist, playlist->_priv->shuffle);
+	gtk_tree_path_free (playlist->_priv->current);
+	playlist->_priv->current = NULL;
+	g_signal_emit (G_OBJECT (playlist),
+			totem_playlist_table_signals[CURRENT_REMOVED],
+			0, NULL);
+}
+
 char
 *totem_playlist_get_current_mrl (TotemPlaylist *playlist)
 {
