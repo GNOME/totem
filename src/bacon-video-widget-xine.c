@@ -1739,6 +1739,9 @@ bacon_video_widget_close (BaconVideoWidget *bvw)
 	xine_close (bvw->priv->stream);
 	g_free (bvw->priv->mrl);
 	bvw->priv->mrl = NULL;
+
+	g_signal_emit (G_OBJECT (bvw),
+			bvw_table_signals[CHANNELS_CHANGE], 0, NULL);
 }
 
 gboolean

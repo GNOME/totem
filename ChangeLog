@@ -1,3 +1,12 @@
+2003-09-01  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem.glade: back out a couple of changes made by an old version
+	of glade (Closes: #121136)
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_close):
+	emit the channel-changed signal when closing a file, fixes the
+	subtitles and languages menus still being populated after removing a
+	DVD from the playlist
+
 ============ Version 0.99.3
 
 2003-08-31  Bastien Nocera  <hadess@hadess.net>

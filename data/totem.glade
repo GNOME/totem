@@ -36,7 +36,7 @@
 		  <property name="use_underline">True</property>
 
 		  <child>
-		    <widget class="GtkMenu" id="tmw_menu_item_movie_menu">
+		    <widget class="GtkMenu" id="tmw_menu_movie">
 
 		      <child>
 			<widget class="GtkImageMenuItem" id="tmw_open_menu_item">
@@ -65,7 +65,7 @@
 			  <signal name="activate" handler="on_play_dvd1_activate" last_modification_time="Fri, 09 Aug 2002 22:46:45 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image8">
+			    <widget class="GtkImage" id="tmw_play_dvd_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-cdrom</property>
 			      <property name="icon_size">1</property>
@@ -87,7 +87,7 @@
 			  <signal name="activate" handler="on_play_vcd1_activate" last_modification_time="Fri, 09 Aug 2002 22:46:45 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image9">
+			    <widget class="GtkImage" id="tmw_play_vcd_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-cdrom</property>
 			      <property name="icon_size">1</property>
@@ -109,7 +109,7 @@
 			  <signal name="activate" handler="on_play_cd1_activate" last_modification_time="Sun, 19 Jan 2003 22:48:19 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image10">
+			    <widget class="GtkImage" id="tmw_play_audio_cd_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-cdrom</property>
 			      <property name="icon_size">1</property>
@@ -193,7 +193,7 @@
 		  <property name="stock_item">GNOMEUIINFO_MENU_EDIT_TREE</property>
 
 		  <child>
-		    <widget class="GtkMenu" id="tmw_menu_item_edit_menu">
+		    <widget class="GtkMenu" id="tmw_menu_edit">
 
 		      <child>
 			<widget class="GtkImageMenuItem" id="tmw_take_screenshot_menu_item">
@@ -204,7 +204,7 @@
 			  <signal name="activate" handler="on_take_screenshot1_activate" last_modification_time="Mon, 06 Jan 2003 19:35:01 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image11">
+			    <widget class="GtkImage" id="tmw_take_screenshot_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-convert</property>
 			      <property name="icon_size">1</property>
@@ -242,7 +242,7 @@
 		  <property name="stock_item">GNOMEUIINFO_MENU_VIEW_TREE</property>
 
 		  <child>
-		    <widget class="GtkMenu" id="tmw_menu_item_view_menu">
+		    <widget class="GtkMenu" id="tmw_menu_view">
 
 		      <child>
 			<widget class="GtkImageMenuItem" id="tmw_fullscreen_menu_item">
@@ -253,7 +253,7 @@
 			  <accelerator key="F" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image12">
+			    <widget class="GtkImage" id="tmw_fullscreen_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-zoom-fit</property>
 			      <property name="icon_size">1</property>
@@ -276,7 +276,7 @@
 			  <accelerator key="0" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image13">
+			    <widget class="GtkImage" id="tmw_zoom_1_2_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-zoom-out</property>
 			      <property name="icon_size">1</property>
@@ -299,7 +299,7 @@
 			  <accelerator key="1" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image14">
+			    <widget class="GtkImage" id="tmw_zoom_1_1_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-zoom-100</property>
 			      <property name="icon_size">1</property>
@@ -322,7 +322,7 @@
 			  <accelerator key="2" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image15">
+			    <widget class="GtkImage" id="tmw_zoom_2_1_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-zoom-in</property>
 			      <property name="icon_size">1</property>
@@ -351,7 +351,7 @@
 			  <accelerator key="A" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image16">
+			    <widget class="GtkImage" id="tmw_toggle_aspect_ratio_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gnome-stock-table-fill</property>
 			      <property name="icon_size">1</property>
@@ -408,7 +408,7 @@
 			  <signal name="activate" handler="on_subtitles1_activate" last_modification_time="Mon, 24 Mar 2003 19:52:36 GMT"/>
 
 			  <child>
-			    <widget class="GtkMenu" id="tmw_subtitles_menu_item_menu">
+			    <widget class="GtkMenu" id="tmw_menu_subtitles">
 
 			      <child>
 				<widget class="GtkMenuItem" id="tmw_no_subtitles_selection_available">
@@ -439,7 +439,7 @@
 			  <signal name="activate" handler="on_show_playlist1_activate" last_modification_time="Fri, 14 Jun 2002 22:36:54 GMT"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image17">
+			    <widget class="GtkImage" id="tmw_show_playlist_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="pixbuf">playlist-16.png</property>
 			      <property name="xalign">0.5</property>
@@ -474,7 +474,7 @@
 		  <signal name="activate" handler="on_dvd1_menu_activate" last_modification_time="Sun, 01 Dec 2002 05:35:38 GMT"/>
 
 		  <child>
-		    <widget class="GtkMenu" id="tmw_menu_item_dvd_menu">
+		    <widget class="GtkMenu" id="tmw_menu_dvd">
 
 		      <child>
 			<widget class="GtkImageMenuItem" id="tmw_dvd_root_menu_item">
@@ -486,7 +486,7 @@
 			  <accelerator key="m" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image18">
+			    <widget class="GtkImage" id="tmw_dvd_root_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-index</property>
 			      <property name="icon_size">1</property>
@@ -539,7 +539,7 @@
 			  <accelerator key="c" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image19">
+			    <widget class="GtkImage" id="tmw_dvd_chapter_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gnome-stock-text-numbered-list</property>
 			      <property name="icon_size">1</property>
@@ -568,7 +568,7 @@
 			  <accelerator key="n" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image20">
+			    <widget class="GtkImage" id="tmw_next_chapter_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-goto-last</property>
 			      <property name="icon_size">1</property>
@@ -591,7 +591,7 @@
 			  <accelerator key="b" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image21">
+			    <widget class="GtkImage" id="tmw_previous_chapter_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-goto-first</property>
 			      <property name="icon_size">1</property>
@@ -621,7 +621,7 @@
 			  <accelerator key="S" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image22">
+			    <widget class="GtkImage" id="tmw_skip_to_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-jump-to</property>
 			      <property name="icon_size">1</property>
@@ -645,7 +645,7 @@
 			  <accelerator key="Right" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image23">
+			    <widget class="GtkImage" id="tmw_skip_forward_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-go-forward</property>
 			      <property name="icon_size">1</property>
@@ -669,7 +669,7 @@
 			  <accelerator key="Left" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image24">
+			    <widget class="GtkImage" id="tmw_skip_backwards_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gtk-go-back</property>
 			      <property name="icon_size">1</property>
@@ -693,7 +693,7 @@
 		  <property name="use_underline">True</property>
 
 		  <child>
-		    <widget class="GtkMenu" id="tmw_menu_item_sound_menu">
+		    <widget class="GtkMenu" id="tmw_menu_sound">
 
 		      <child>
 			<widget class="GtkMenuItem" id="tmw_languages_menu_item">
@@ -704,7 +704,7 @@
 			  <signal name="activate" handler="on_languages1_activate" last_modification_time="Mon, 24 Mar 2003 19:45:07 GMT"/>
 
 			  <child>
-			    <widget class="GtkMenu" id="tmw_languages_menu_item_menu">
+			    <widget class="GtkMenu" id="tmw_menu_languages">
 
 			      <child>
 				<widget class="GtkMenuItem" id="tmw_no_language_selection_available">
@@ -712,7 +712,7 @@
 				  <property name="sensitive">False</property>
 				  <property name="label" translatable="yes">No language selection available</property>
 				  <property name="use_underline">True</property>
-				  <signal name="activate" handler="on_no_language_selection_available1_activate" last_modification_time="Mon, 24 Mar 2003 19:50:56 GMT"/>
+				  <signal name="activate" handler="on_no_langage_selection_available1_activate" last_modification_time="Mon, 24 Mar 2003 19:50:56 GMT"/>
 				</widget>
 			      </child>
 			    </widget>
@@ -730,7 +730,7 @@
 			  <accelerator key="Up" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image25">
+			    <widget class="GtkImage" id="tmw_volume_up_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gnome-stock-volume</property>
 			      <property name="icon_size">1</property>
@@ -753,7 +753,7 @@
 			  <accelerator key="Down" modifiers="0" signal="activate"/>
 
 			  <child internal-child="image">
-			    <widget class="GtkImage" id="image26">
+			    <widget class="GtkImage" id="tmw_volume_down_menu_item_image">
 			      <property name="visible">True</property>
 			      <property name="stock">gnome-stock-volume</property>
 			      <property name="icon_size">1</property>
@@ -763,17 +763,6 @@
 			      <property name="ypad">0</property>
 			    </widget>
 			  </child>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkCheckMenuItem" id="tvw_mute_menu_item">
-			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">Mute sound</property>
-			  <property name="label" translatable="yes">Mute</property>
-			  <property name="use_underline">True</property>
-			  <property name="active">False</property>
-			  <signal name="activate" handler="on_tvw_mute_menu_item_activate" last_modification_time="Wed, 30 Jul 2003 11:36:17 GMT"/>
 			</widget>
 		      </child>
 		    </widget>
@@ -787,7 +776,7 @@
 		  <property name="stock_item">GNOMEUIINFO_MENU_HELP_TREE</property>
 
 		  <child>
-		    <widget class="GtkMenu" id="tmw_menu_item_help_menu">
+		    <widget class="GtkMenu" id="tmw_menu_help">
 
 		      <child>
 			<widget class="GtkImageMenuItem" id="tmw_about_menu_item">
@@ -2892,7 +2881,7 @@
   <property name="title" translatable="yes">Save Screenshot</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
-  <property name="modal">False</property>
+  <property name="modal">True</property>
   <property name="resizable">True</property>
   <property name="destroy_with_parent">False</property>
   <property name="icon">media-player-48.png</property>
