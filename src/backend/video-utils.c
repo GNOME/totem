@@ -5,6 +5,7 @@
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
+#include <X11/Xatom.h>
 
 #define MWM_HINTS_DECORATIONS   (1L << 1)
 #define PROP_MWM_HINTS_ELEMENTS 5
@@ -46,10 +47,30 @@ wmspec_change_state (gboolean   add,
 			&xev);
 }
 
+static void
+old_wmspec_set_fullscreen (GdkWindow *window)
+{
+	Atom XA_WIN_LAYER = None;
+	long propvalue[1];
+
+	XA_WIN_LAYER = XInternAtom(GDK_DISPLAY (), "_WIN_LAYER", False);
+
+	/* layer above most other things, like gnome panel
+	 * WIN_LAYER_ABOVE_DOCK = 10 */
+	propvalue[0] = 10;
+
+	XChangeProperty (GDK_DISPLAY (), GDK_WINDOW_XID (window), XA_WIN_LAYER,
+			XA_CARDINAL, 32, PropModeReplace,
+			(unsigned char *) propvalue, 1);
+}
+
 void
 gdk_window_set_fullscreen (GdkWindow *window, gboolean set)
 {
 	gdk_window_set_decorations (window, set ? 0 : 1);
+
+	if (set == TRUE)
+		old_wmspec_set_fullscreen (window);
 
 	/* Set full-screen hint */
 	wmspec_change_state (set, window,
