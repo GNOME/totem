@@ -1,3 +1,11 @@
+2004-03-10  Anders Carlsson  <andersca@gnome.org>
+
+	* src/totem-playlist.c: (totem_playlist_add_files),
+	(totem_playlist_save_files):
+	* src/totem.c: (on_open1_activate):
+	Set default response to GTK_RESPONSE_ACCEPT so double-clicking
+	on files will work.
+	
 2004-03-09  Bastien Nocera  <hadess@hadess.net>
 
 	* src/egg-recent-util.c: (egg_recent_util_get_icon):
