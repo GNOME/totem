@@ -1,3 +1,15 @@
+2004-12-01  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: detect XVidModeExtension as well
+	* src/Makefile.am: upd
+	* src/bacon-resize.c: (bacon_resize_init), (bacon_resize),
+	(bacon_restore):
+	* src/bacon-resize.h:
+	* src/bacon-video-widget-xine.c: (frame_output_cb),
+	(bacon_video_widget_realize), (bacon_video_widget_set_fullscreen):
+	Use XRandR and XVidModeExtension to get rid of the viewport when
+	there is one (Closes: #129986)
+
 2004-11-29  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.keys: added audio/mpegurl as a supported mime-type

@@ -103,17 +103,17 @@ totem_SOURCES = 					\
 	totem-disc.c totem-disc.h	\
 	totem-gromit.c totem-gromit.h
 
-totem_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) $(RANDR_LIBS)  $(NVTV_LIBS)
+totem_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) $(XVIDMODE_LIBS)  $(NVTV_LIBS)
 
 totem_video_thumbnailer_SOURCES = $(VIDEOWIDGET) totem-video-thumbnailer.c
-totem_video_thumbnailer_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)  $(NVTV_LIBS) $(EXTRA_GNOME_LIBS)
+totem_video_thumbnailer_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS)  $(NVTV_LIBS) $(EXTRA_GNOME_LIBS)
 
 totem_properties_page_SOURCES =		\
 	$(VIDEOWIDGET)			\
 	bacon-video-widget-properties.c	\
 	bacon-video-widget-properties.h	\
 	totem-properties-page.c
-totem_properties_page_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)  $(NVTV_LIBS)
+totem_properties_page_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS)  $(NVTV_LIBS)
 
 libtotem_mozilla_la_LDFLAGS = $(GTK_LIBS) $(module_flags)
 libtotem_mozilla_la_SOURCES = totem-mozilla-plugin.c
@@ -123,7 +123,7 @@ totem_mozilla_viewer_SOURCES = 		\
 	bacon-video-widget-properties.c	\
 	bacon-video-widget-properties.h	\
 	totem-mozilla-viewer.c
-totem_mozilla_viewer_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS) $(NVTV_LIBS)
+totem_mozilla_viewer_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS)
 
 plugindir = $(libdir)/mozilla/plugins/
 module_flags = -export_dynamic -avoid-version
@@ -134,10 +134,10 @@ vanity_SOURCES =					\
 	totem-screenshot.c totem-screenshot.h		\
 	vanity.c
 
-vanity_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)  $(NVTV_LIBS)
+vanity_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS)  $(NVTV_LIBS)
 
 bvw_test_SOURCES = $(VIDEOWIDGET)  bvw-test.c
-bvw_test_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)  $(NVTV_LIBS)
+bvw_test_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS)  $(NVTV_LIBS)
 
 disc_test_SOURCES = disc-test.c totem-disc.c
 disc_test_LDADD = $(GTK_LIBS) $(EXTRA_GNOME_LIBS)

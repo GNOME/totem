@@ -1,5 +1,5 @@
 /* bacon-resize.h
- * Copyright (C) 2003, Bastien Nocera <hadess@hadess.net>
+ * Copyright (C) 2003-2004, Bastien Nocera <hadess@hadess.net>
  * All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
@@ -17,13 +17,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Cambridge, MA 02139, USA.
  */
 
-#include <X11/X.h>
-#include <X11/Xlib.h>
-
 #include <glib.h>
 
 gboolean bacon_resize_init (void);
-void bacon_resize (int height, int width);
-int bacon_resize_get_current (void);
-void bacon_restore (int id);
+void bacon_resize (void);
+void bacon_restore (void);
 

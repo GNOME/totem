@@ -214,16 +214,26 @@ AC_CHECK_LIB(Xtst, XTestFakeKeyEvent,
 		$X_LIBRARIES)
 AC_SUBST(XTEST_LIBS)
 
+have_xvidmode=no
+AC_CHECK_LIB(Xxf86vm, XF86VidModeQueryExtension,
+	XVIDMODE_LIBS="-lXxf86vm"
+	have_xvidmode=yes,,
+	$X_LIBRARIES -lXext)
+
 have_randr=no
 AC_CHECK_LIB(Xrandr, XRRUpdateConfiguration,
 	[AC_CHECK_HEADER(X11/extensions/Xrandr.h,
-		have_randr=yes
-		RANDR_LIBS="-lX11 -lXrandr -lXrender"
-		AC_DEFINE(HAVE_RANDR, 1, Have the Xrandr extension library),
-		:, [#include <X11/Xlib.h>])], : ,
+	have_randr=yes
+	RANDR_LIBS="-lX11 -lXrandr -lXrender",
+	:, [#include <X11/Xlib.h>])], : ,
 	$X_LIBRARIES -lXrandr -lXrender)
-AM_CONDITIONAL(HAVE_RANDR, [test $have_randr = yes])
-AC_SUBST(RANDR_LIBS)
+
+XVIDMODE_LIBS="$XVIDMODE_LIBS $RANDR_LIBS"
+AC_SUBST(XVIDMODE_LIBS)
+AM_CONDITIONAL(HAVE_XVIDMODE, [test $have_randr = yes -a $have_xvidmode = yes])
+if test $have_randr = yes -a $have_xvidmode = yes; then
+	AC_DEFINE(HAVE_XVIDMODE,, [Define this if you have the XVidMode and XRandR extension installed])
+fi
 
 dnl Explicitely link against libX11 to avoid problems with crappy linkers
 X_LIBS="$X_LIBRARIES -lX11"
