@@ -1,5 +1,11 @@
 2003-07-01  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_metadata_string): set the string as NULL
+	if there's no data in it, fixes " - " style titles
+
+2003-07-01  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c: (bacon_video_widget_unrealize):
 	close the stream before hiding the window
 

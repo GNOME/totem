@@ -2642,7 +2642,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetM
 
 	if (bvw->priv->stream == NULL)
 	{
-		g_value_set_string (value, "");
+		g_value_set_string (value, string);
 		return;
 	}
 
@@ -2671,6 +2671,9 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetM
 	default:
 		g_assert_not_reached ();
 	}
+
+	if (string != NULL && string[0] == '\0')
+		string = NULL;
 
 	g_value_set_string (value, string);
 
