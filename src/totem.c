@@ -180,7 +180,7 @@ totem_action_error (char *title, char *reason, Totem *totem)
 				GTK_DIALOG_MODAL,
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK,
-				"<b>%s</b>\n%s.", title_esc, reason_esc);
+				"<b>%s</b>\n%s", title_esc, reason_esc);
 	g_free (title_esc);
 	g_free (reason_esc);
 
@@ -339,7 +339,7 @@ totem_action_eject (Totem *totem)
 			(totem->gc, GCONF_PREFIX"/mediadev", NULL));
 	if (g_spawn_command_line_sync (cmd, NULL, NULL, NULL, NULL) == FALSE)
 	{
-		totem_action_error (_("Totem could not eject the optical media."), _("No reason given"), totem);
+		totem_action_error (_("Totem could not eject the optical media."), _("No reason given."), totem);
 	}
 	g_free (cmd);
 }
@@ -1990,7 +1990,7 @@ on_take_screenshot1_activate (GtkButton *button, Totem *totem)
 	pixbuf = bacon_video_widget_get_current_frame (totem->bvw);
 	if (pixbuf == NULL)
 	{
-		totem_action_error (_("Totem could not get a screenshot of that film."), _("Please file a bug, this isn't supposed to happen"), totem);
+		totem_action_error (_("Totem could not get a screenshot of that film."), _("Please file a bug, this isn't supposed to happen."), totem);
 		return;
 	}
 

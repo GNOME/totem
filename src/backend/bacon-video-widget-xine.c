@@ -1267,15 +1267,12 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		xine_stop (bvw->priv->stream);
 		message = g_strdup (_("The audio device is busy. Is another application using it?"));
 		break;
-/* FIXME enable when xine-lib has been released */
-#if 0
 	case XINE_MSG_PERMISSION_ERROR:
 		if (strncmp (bvw->priv->mrl, "file:", 5) == 0)
 			message = g_strdup (_("You are not allowed to open this file."));
 		else
 			message = g_strdup (_("The server refused access to this file or stream."));
 		break;
-#endif
 	}
 
 	if (message == NULL)
@@ -1382,21 +1379,21 @@ xine_error (BaconVideoWidget *bvw, GError **error)
 	case XINE_ERROR_NO_INPUT_PLUGIN:
 	case XINE_ERROR_NO_DEMUX_PLUGIN:
 		g_set_error (error, 0, 0, _("There is no plugin to handle this"
-					" movie"));
+					" movie."));
 		break;
 	case XINE_ERROR_DEMUX_FAILED:
 		g_set_error (error, 0, 0, _("This movie is broken and can not "
-					"be played further"));
+					"be played further."));
 		break;
 	case XINE_ERROR_MALFORMED_MRL:
 		g_set_error (error, 0, 0, _("This location is not "
-					"a valid one"));
+					"a valid one."));
 		break;
 	case XINE_ERROR_INPUT_FAILED:
-		g_set_error (error, 0, 0, _("This movie could not be opened"));
+		g_set_error (error, 0, 0, _("This movie could not be opened."));
 		break;
 	default:
-		g_set_error (error, 0, 0, _("Generic Error"));
+		g_set_error (error, 0, 0, _("Generic Error."));
 		break;
 	}
 }
@@ -1859,7 +1856,7 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const char *mrl,
 		bacon_video_widget_close (bvw);
 
 		g_set_error (gerror, 0, 0,
-				_("This is an audio-only file, and there is no audio output available"));
+				_("This is an audio-only file, and there is no audio output available."));
 
 		return FALSE;
 	}
@@ -3322,7 +3319,7 @@ bacon_video_widget_can_get_frames (BaconVideoWidget *bvw, GError **error)
 	if (xine_get_status (bvw->priv->stream) != XINE_STATUS_PLAY
 			&& bvw->priv->logo_mode == FALSE)
 	{
-		g_set_error (error, 0, 0, _("Movie is not playing"));
+		g_set_error (error, 0, 0, _("Movie is not playing."));
 		return FALSE;
 	}
 
@@ -3330,14 +3327,14 @@ bacon_video_widget_can_get_frames (BaconVideoWidget *bvw, GError **error)
 				XINE_STREAM_INFO_HAS_VIDEO) == FALSE
 			&& bvw->priv->using_vfx == FALSE)
 	{
-		g_set_error (error, 0, 0, _("No video to capture"));
+		g_set_error (error, 0, 0, _("No video to capture."));
 		return FALSE;
 	}
 
 	if (xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_VIDEO_HANDLED) == FALSE)
 	{
-		g_set_error (error, 0, 0, _("Video codec is not handled"));
+		g_set_error (error, 0, 0, _("Video codec is not handled."));
 		return FALSE;
 	}
 

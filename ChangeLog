@@ -1,3 +1,15 @@
+2004-04-16  Bastien Nocera  <hadess@hadess.net>
+
+	* README: removed TODO item
+	* src/bacon-video-widget-xine.c: (xine_event_message),
+	(xine_error), (bacon_video_widget_open),
+	(bacon_video_widget_can_get_frames):
+	* src/totem.c: (totem_action_error), (totem_action_eject),
+	(on_take_screenshot1_activate):
+	Make sure that only one period appears on error messages, GErrors
+	have periods to finish up their messages
+	Sorry to the translators...
+
 2004-04-16  Iñaki Larrañaga  <dooteo@euskalgnu.org>
 
 	* configure.in: Added "eu" (Basque) to ALL_LINGUAS.
