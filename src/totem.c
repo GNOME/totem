@@ -1203,6 +1203,9 @@ on_about1_activate (GtkButton *button, gpointer user_data)
 			strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
 			pixbuf);
 
+	if (pixbuf != NULL)
+		gdk_pixbuf_unref (pixbuf);
+
 	g_signal_connect (G_OBJECT (about), "destroy", G_CALLBACK
 			(gtk_widget_destroyed), &about);
 	g_object_add_weak_pointer (G_OBJECT (about),
