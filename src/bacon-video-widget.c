@@ -1148,7 +1148,8 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[TICK], 0,
 				current_time, stream_length, current_position);
-	return ret;
+
+	return TRUE;
 }
 
 static char *
