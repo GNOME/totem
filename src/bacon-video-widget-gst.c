@@ -1669,7 +1669,7 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw, MediaType type)
     {
       case MEDIA_DVD:
         {
-          mrls = g_malloc (sizeof (char *) * 1);
+          mrls = g_malloc0 (sizeof (char *) * 2);
           mrls[0] = "dvd://";
           return mrls;
         }
@@ -1677,7 +1677,7 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw, MediaType type)
         return NULL;
       case MEDIA_CDDA:
         {
-          mrls = g_malloc (sizeof (char *) * 1);
+          mrls = g_malloc0 (sizeof (char *) * 2);
           mrls[0] = "cda://";
           return mrls;
         }
