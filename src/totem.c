@@ -44,9 +44,9 @@ typedef struct {
 	GtkWidget *popup;
 	guint popup_timeout;
 
-        /* recent file stuff */
-        EggRecentModel *recent_model;
-        EggRecentViewGtk *recent_view;
+	/* recent file stuff */
+	EggRecentModel *recent_model;
+	EggRecentViewGtk *recent_view;
 
 	/* other */
 	char *mrl;
@@ -588,22 +588,16 @@ on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
                          Totem *totem)
 {
 	gchar *uri;
-	gchar *filename;
 
 	uri = egg_recent_item_get_uri (item);
 
 	D ("on_recent_file_activate URI: %s", uri);
 
-	/* FIXME GtkXine should be able to handle URIs directly, no ? */
-	filename = g_filename_from_uri (uri, NULL, NULL);
+	gtk_playlist_add_mrl (totem->playlist, uri);
 
-        if (filename != NULL) {
-                D ("Filename: %s\n", filename);
-                gtk_playlist_add_mrl (totem->playlist, filename);
-                g_free (filename);
-        }
+	egg_recent_model_add_full (totem->recent_model, item);
 
-        g_free (uri);
+	g_free (uri);
 }
 
 static int
