@@ -170,11 +170,17 @@ totem_embedded_play (TotemEmbedded *emb)
 }
 
 static void
+totem_embedded_pause (TotemEmbedded *emb)
+{
+	bacon_video_widget_pause (emb->bvw);
+	totem_embedded_set_state (emb, STATE_PAUSED);
+}
+
+static void
 on_play_pause (GtkWidget *widget, TotemEmbedded *emb)
 {
 	if (emb->state == STATE_PLAYING) {
-		bacon_video_widget_pause (emb->bvw);
-		totem_embedded_set_state (emb, STATE_PAUSED);
+		totem_embedded_pause (emb);
 	} else {
 		totem_embedded_play (emb);
 	}
@@ -351,15 +357,22 @@ cb_data (const char * msg, gpointer user_data)
 	TotemEmbedded *emb = user_data;
 	GError *err = NULL;
 	gboolean res = TRUE;
+	TotemStates state;
 
 	g_print ("Got message: %s\n", msg);
 
+	state = STATE_STOPPED;
+
 	if (!strcmp (msg, "PLAY")) {
 		res = bacon_video_widget_play (emb->bvw, &err);
+		if (res != FALSE)
+			state = STATE_PLAYING;
 	} else if (!strcmp (msg, "PAUSE")) {
 		bacon_video_widget_pause (emb->bvw);
+		state = STATE_PAUSED;
 	} else if (!strcmp (msg, "STOP")) {
 		bacon_video_widget_stop (emb->bvw);
+		state = STATE_STOPPED;
 	} else {
 		g_set_error (&err, 0, 0, _("Unknown command"));
 		res = FALSE;
@@ -375,6 +388,8 @@ cb_data (const char * msg, gpointer user_data)
 		bacon_message_connection_send (emb->conn, err_str);
 		g_free (err_str);
 	}
+
+	totem_embedded_set_state (emb, state);
 }
 
 int main (int argc, char **argv)
