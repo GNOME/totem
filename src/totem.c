@@ -2254,14 +2254,29 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		totem_action_exit (totem);
 		break;
 	case TOTEM_REMOTE_COMMAND_ENQUEUE:
-		if (url != NULL)
-			totem_playlist_add_mrl (totem->playlist, url, NULL);
+		if (url != NULL) {
+			if (totem_playlist_add_mrl (totem->playlist, url, NULL) != FALSE) {
+				totem_action_add_recent (totem, url);
+			}
+		}
 		break;
 	case TOTEM_REMOTE_COMMAND_REPLACE:
 		if (url != NULL)
 		{
 			totem_playlist_clear (totem->playlist);
-			totem_playlist_add_mrl (totem->playlist, url, NULL);
+			if (g_str_has_prefix (url, "dvd:"))
+			{
+				totem_action_play_media (totem, MEDIA_DVD);
+			} else if (g_str_has_prefix (url, "vcd:") != FALSE) {
+				totem_action_play_media (totem, MEDIA_VCD);
+			} else if (g_str_has_prefix (url, "cd:") != FALSE) {
+				totem_action_play_media (totem, MEDIA_CDDA);
+			} else if (g_str_has_prefix (url, "cdda:/") != FALSE) {
+				totem_add_cd_track_name (totem, url);
+			} else if (totem_playlist_add_mrl (totem->playlist,
+						url, NULL) != FALSE) {
+				totem_action_add_recent (totem, url);
+			}	
 		}
 		break;
 	case TOTEM_REMOTE_COMMAND_SHOW:
