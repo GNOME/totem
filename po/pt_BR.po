@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-12 15:47-0400\n"
-"PO-Revision-Date: 2004-07-07 12:09-0300\n"
+"POT-Creation-Date: 2004-08-10 16:26-0400\n"
+"PO-Revision-Date: 2004-08-06 09:56-0300\n"
 "Last-Translator: Raphael Higino <raphaelh@uai.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: data/playlist.glade.h:1 src/totem-playlist.c:1409
 msgid "Playlist"
@@ -158,13 +158,13 @@ msgstr "Salvar captura de tela na área de _trabalho"
 msgid "Save screenshot to _file:"
 msgstr "Salvar captura de tela no _arquivo:"
 
-#: data/totem.desktop.in.h:1
+#: data/totem.desktop.in.in.h:1
 msgid "Play movies and songs"
 msgstr "Reproduzir filmes e músicas"
 
 #. Title
-#: data/totem.desktop.in.h:2 data/totem.glade.h:101 src/totem.c:710
-#: src/totem.c:3695
+#: data/totem.desktop.in.in.h:2 data/totem.glade.h:101 src/totem.c:710
+#: src/totem.c:3699
 msgid "Totem Movie Player"
 msgstr "Reprodutor de Filmes Totem"
 
@@ -288,7 +288,7 @@ msgstr "Sempre na frente"
 msgid "Audio"
 msgstr "Áudio"
 
-#: data/totem.glade.h:33 src/totem.c:2926 src/totem.c:2947
+#: data/totem.glade.h:33 src/totem.c:2930 src/totem.c:2951
 msgid "Auto"
 msgstr "Auto"
 
@@ -946,7 +946,7 @@ msgstr ""
 "Não foi possível carregar o driver de áudio '%s'\n"
 "Verifique se o dispositivo não está ocupado."
 
-#: src/bacon-video-widget-xine.c:1163 src/bacon-video-widget-xine.c:1600
+#: src/bacon-video-widget-xine.c:1128 src/bacon-video-widget-xine.c:1595
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -954,40 +954,40 @@ msgstr ""
 "Nenhuma saída de vídeo está disponível. Certifique-se de que o programa está "
 "instalado corretamente."
 
-#: src/bacon-video-widget-xine.c:1276
+#: src/bacon-video-widget-xine.c:1243
 msgid "The server you are trying to connect to is not known."
 msgstr "O servidor ao qual você está tentando se conectar não é conhecido."
 
-#: src/bacon-video-widget-xine.c:1279
+#: src/bacon-video-widget-xine.c:1247
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "O nome do dispositivo (%s) que você especificou parece inválido."
 
-#: src/bacon-video-widget-xine.c:1282
+#: src/bacon-video-widget-xine.c:1251
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr ""
 "O servidor (%s) ao que você está tentando se conectar está inalcançável."
 
-#: src/bacon-video-widget-xine.c:1285
+#: src/bacon-video-widget-xine.c:1255
 msgid "The connection to this server was refused."
 msgstr "A conexão com este servidor foi negada."
 
-#: src/bacon-video-widget-xine.c:1288
+#: src/bacon-video-widget-xine.c:1259
 msgid "The specified movie could not be found."
 msgstr "O filme especificado não pôde ser encontrado."
 
-#: src/bacon-video-widget-xine.c:1291
+#: src/bacon-video-widget-xine.c:1263
 msgid "The movie could not be read."
 msgstr "O filme não pôde ser lido."
 
-#: src/bacon-video-widget-xine.c:1294
+#: src/bacon-video-widget-xine.c:1267
 #, c-format
 msgid "A problem occured while loading a library or a decoder (%s)."
 msgstr ""
 "Ocorreu um problema ao carregar uma biblioteca ou um decodificador (%s)."
 
-#: src/bacon-video-widget-xine.c:1298
+#: src/bacon-video-widget-xine.c:1273
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -995,48 +995,54 @@ msgstr ""
 "A fonte parece estar criptografada e não pode ser lida. Você está tentando "
 "reproduzir um DVD criptografado sem a libdvdcss?"
 
-#: src/bacon-video-widget-xine.c:1300
+#: src/bacon-video-widget-xine.c:1276
 msgid "This file is encrypted and cannot be played back."
 msgstr "Este arquivo está criptografado e não pode ser reproduzido."
 
-#: src/bacon-video-widget-xine.c:1303
+#: src/bacon-video-widget-xine.c:1281
 msgid "For security reasons, this movie can not be played back."
 msgstr "Por razões de segurança, este filme não pode ser reproduzido."
 
-#: src/bacon-video-widget-xine.c:1307
+#: src/bacon-video-widget-xine.c:1286
 msgid "The audio device is busy. Is another application using it?"
 msgstr ""
 "O dispositivo de áudio está ocupado. Alguma outra aplicação o está usando?"
 
-#: src/bacon-video-widget-xine.c:1311
+#: src/bacon-video-widget-xine.c:1291
 msgid "You are not allowed to open this file."
 msgstr "Você não tem permissão para abrir este arquivo."
 
-#: src/bacon-video-widget-xine.c:1313
+#: src/bacon-video-widget-xine.c:1293
 msgid "The server refused access to this file or stream."
 msgstr "O servidor recusou o acesso a este arquivo ou fluxo."
 
-#: src/bacon-video-widget-xine.c:1439
+#: src/bacon-video-widget-xine.c:1422
 msgid "There is no plugin to handle this movie."
 msgstr "Não existe plugin para tratar este filme."
 
-#: src/bacon-video-widget-xine.c:1443
+#: src/bacon-video-widget-xine.c:1426
 msgid "This movie is broken and can not be played further."
 msgstr "Este filme está com defeito e não pode ser mais reproduzido."
 
-#: src/bacon-video-widget-xine.c:1447
+#: src/bacon-video-widget-xine.c:1430
 msgid "This location is not a valid one."
 msgstr "Esta localização não é válida."
 
-#: src/bacon-video-widget-xine.c:1451
+#: src/bacon-video-widget-xine.c:1434
 msgid "This movie could not be opened."
 msgstr "Este filme não pôde ser aberto."
 
-#: src/bacon-video-widget-xine.c:1454
+#: src/bacon-video-widget-xine.c:1438
 msgid "Generic Error."
 msgstr "Erro Genérico."
 
-#: src/bacon-video-widget-xine.c:1889
+#: src/bacon-video-widget-xine.c:1862
+msgid "This movie is a still image. You can open it with an image viewer."
+msgstr ""
+"Esse filme é uma imagem parada. Você pode abrí-lo com um visualizador de "
+"imagens."
+
+#: src/bacon-video-widget-xine.c:1892
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1045,21 +1051,21 @@ msgstr ""
 "O codec de vídeo '%s' não é suportado. Você pode ter que instalar plugins "
 "adicionais para poder reproduzir alguns tipos de filmes"
 
-#: src/bacon-video-widget-xine.c:1908
+#: src/bacon-video-widget-xine.c:1911
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr ""
 "Este é um arquivo de áudio apenas, e não há nenhuma saída de áudio "
 "disponível."
 
-#: src/bacon-video-widget-xine.c:3374
+#: src/bacon-video-widget-xine.c:3378
 msgid "Movie is not playing."
 msgstr "O filme não está sendo reproduzido."
 
-#: src/bacon-video-widget-xine.c:3382
+#: src/bacon-video-widget-xine.c:3387
 msgid "No video to capture."
 msgstr "Sem vídeo para capturar."
 
-#: src/bacon-video-widget-xine.c:3389
+#: src/bacon-video-widget-xine.c:3395
 msgid "Video codec is not handled."
 msgstr "O codec de vídeo não é suportado."
 
@@ -1092,11 +1098,11 @@ msgstr "Certifique-se de que o Totem está instalado adequadamente."
 msgid "The Totem plugin could not startup."
 msgstr "O plugin do Totem não pôde iniciar."
 
-#: src/totem-mozilla-viewer.c:109 src/totem.c:3394
+#: src/totem-mozilla-viewer.c:109 src/totem.c:3398
 msgid "No reason."
 msgstr "Sem motivo."
 
-#: src/totem-mozilla-viewer.c:141 src/totem.c:3700
+#: src/totem-mozilla-viewer.c:141 src/totem.c:3704
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Não foi possível inicializar as bibliotecas thread-safe."
 
@@ -1141,12 +1147,12 @@ msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr ""
 "A lista de reprodução '%s' não pôde ser analisada, ela pode estar danificada."
 
-#: src/totem-pl-parser.c:188
+#: src/totem-pl-parser.c:189
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "Não foi possível gravar o analisador: %s"
 
-#: src/totem-pl-parser.c:252
+#: src/totem-pl-parser.c:253
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "Não foi possível abrir o arquivo '%s': %s"
@@ -1360,7 +1366,7 @@ msgstr ""
 msgid "%s - Totem Movie Player"
 msgstr "%s - Reprodutor de Filmes Totem"
 
-#: src/totem.c:699 src/totem.c:3489
+#: src/totem.c:699 src/totem.c:3493
 msgid "No file"
 msgstr "Nenhum arquivo"
 
@@ -1380,8 +1386,8 @@ msgstr "Selecionar arquivos"
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "Não foi possível carregar a interface 'Abrir Localização...'."
 
-#: src/totem.c:1680 src/totem.c:1688 src/totem.c:3735 src/totem.c:3760
-#: src/totem.c:3785
+#: src/totem.c:1680 src/totem.c:1688 src/totem.c:3739 src/totem.c:3764
+#: src/totem.c:3789
 msgid "Make sure that Totem is properly installed."
 msgstr "Certifique-se de que o Totem está instalado adequadamente."
 
@@ -1422,36 +1428,36 @@ msgstr "Certifique-se de que o Totem está instalado corretamente."
 msgid "Totem could not seek in '%s'."
 msgstr "O Totem não pôde ir para '%s'."
 
-#: src/totem.c:2922 src/totem.c:2944
+#: src/totem.c:2926 src/totem.c:2948
 msgid "None"
 msgstr "Nenhum"
 
-#: src/totem.c:3394
+#: src/totem.c:3398
 msgid "Totem could not startup."
 msgstr "O Totem não pôde iniciar."
 
-#: src/totem.c:3605
+#: src/totem.c:3609
 #, c-format
 msgid "Option '%s' is unknown and was ignored\n"
 msgstr "A opção '%s' não é conhecida e foi ignorada\n"
 
-#: src/totem.c:3700
+#: src/totem.c:3704
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verifique a instalação do seu sistema. O Totem vai fechar agora."
 
-#: src/totem.c:3723
+#: src/totem.c:3727
 msgid "Totem couln't initialise the configuration engine."
 msgstr "O Totem não pôde inicializar o mecanismo de configuração."
 
-#: src/totem.c:3723
+#: src/totem.c:3727
 msgid "Make sure that GNOME is properly installed."
 msgstr "Certifique-se de que o GNOME está instalado adequadamente."
 
-#: src/totem.c:3735 src/totem.c:3760
+#: src/totem.c:3739 src/totem.c:3764
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "Não foi possível carregar a interface principal (totem.glade)."
 
-#: src/totem.c:3785
+#: src/totem.c:3789
 msgid "Couldn't load the interface for the playlist."
 msgstr "Não foi possível carregar a interface da lista de reprodução."
 
