@@ -37,6 +37,9 @@ AC_SUBST(NVTV_LIBS)
 	fi
 fi
 
+PKG_CHECK_MODULES(NOTHING, glib-2.0 >= 2.6.3,,[
+		AC_MSG_WARN(Old glib version detected, the thumbnailer may not work for you. Update glib before filing bugs.)])
+
 dnl xine or gst ?
 
 dnl the two versions here implicate the gstreamer core and gst-plugins
@@ -91,9 +94,6 @@ dnl Give error and exit if we don't have gstreamer
 	if test "x$HAVE_GSTREAMER" = "xno"; then
 		AC_MSG_ERROR(you need the GStreamer or the xine-lib development packages installed)
 	fi
-
-	PKG_CHECK_MODULES(NOTHING, glib-2.0 >= 2.6.3,,[
-            AC_MSG_WARN(Old glib version detected, the thumbnailer may not work for you. Update glib before filing bugs.)])
 
 	AC_MSG_RESULT(GStreamer)
 fi
