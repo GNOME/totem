@@ -771,6 +771,7 @@ totem_playlist_remove_files (GtkWidget *widget, TotemPlaylist *playlist)
 			} else {
 				playlist->_priv->current = cur;
 			}
+			g_free (str);
 		} else {
 			playlist->_priv->current = NULL;
 		}
