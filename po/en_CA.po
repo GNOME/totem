@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-06 17:47-0500\n"
-"PO-Revision-Date: 2005-01-06 19:41-0400\n"
+"POT-Creation-Date: 2005-01-09 15:07-0500\n"
+"PO-Revision-Date: 2005-01-09 19:41-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -691,8 +691,8 @@ msgid "_Repeat Mode"
 msgstr "_Repeat Mode"
 
 #: data/totem.glade.h:138
-msgid "_Reset defaults"
-msgstr "_Reset defaults"
+msgid "_Reset To Defaults"
+msgstr "_Reset To Defaults"
 
 #: data/totem.glade.h:139
 msgid "_Resize 1:2"
@@ -880,7 +880,7 @@ msgstr "Open from URI"
 msgid "Save File"
 msgstr "Save File"
 
-#: data/vanity.glade.h:2 src/vanity.c:262
+#: data/vanity.glade.h:2 src/vanity.c:256
 msgid "Vanity"
 msgstr "Vanity"
 
@@ -932,11 +932,11 @@ msgstr "Play movies and songs"
 msgid "Unnamed CDROM"
 msgstr "Unnamed CDROM"
 
-#: src/bacon-video-widget-gst.c:54
+#: src/bacon-video-widget-gst.c:55
 msgid "Totem Video Window"
 msgstr "Totem Video Window"
 
-#: src/bacon-video-widget-gst.c:2535
+#: src/bacon-video-widget-gst.c:2711
 msgid "Failed to create a GStreamer play object"
 msgstr "Failed to create a GStreamer play object"
 
@@ -1468,17 +1468,17 @@ msgstr "Totem could not display the help contents."
 msgid "Movie Player using %s"
 msgstr "Movie Player using %s"
 
-#: src/totem.c:1929
+#: src/totem.c:1929 src/vanity.c:258
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Copyright © 2002-2005 Bastien Nocera"
 
-#: src/totem.c:1934
+#: src/totem.c:1934 src/vanity.c:263
 msgid "translator-credits"
 msgstr ""
 "Maintainer: Adam Weinberger <adamw@gnome.org>\n"
 "Alexander Winston <alexander.winston@comcast.net>"
 
-#: src/totem.c:1967 src/totem.c:1975 src/vanity.c:300 src/vanity.c:308
+#: src/totem.c:1967 src/totem.c:1975 src/vanity.c:296 src/vanity.c:304
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem could not get a screenshot of that film."
 
@@ -1523,26 +1523,20 @@ msgstr "Couldn't load the main interface (totem.glade)."
 msgid "Couldn't load the interface for the playlist."
 msgstr "Couldn't load the interface for the playlist."
 
-#: src/vanity.c:63
+#: src/vanity.c:66
 msgid "Debug mode on"
 msgstr "Debug mode on"
 
-#: src/vanity.c:235
-msgid "translator_credits"
-msgstr ""
-"Maintainer: Adam Weinberger <adamw@gnome.org>\n"
-"Alexander Winston <alexander.winston@comcast.net>"
-
-#: src/vanity.c:259
+#: src/vanity.c:252
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "Webcam utility using %s"
 
-#: src/vanity.c:308
+#: src/vanity.c:304
 msgid "Please file a bug, this isn't supposed to happen"
 msgstr "Please file a bug, this isn't supposed to happen"
 
-#: src/vanity.c:551
+#: src/vanity.c:547
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1551,11 +1545,11 @@ msgstr ""
 "Vanity could not startup:\n"
 "%s"
 
-#: src/vanity.c:552
+#: src/vanity.c:548
 msgid "No reason"
 msgstr "No reason"
 
-#: src/vanity.c:590
+#: src/vanity.c:586
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1564,7 +1558,7 @@ msgstr ""
 "Vanity could not contact the webcam.\n"
 "Reason: %s"
 
-#: src/vanity.c:606
+#: src/vanity.c:602
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1573,11 +1567,11 @@ msgstr ""
 "Vanity could not play video from the webcam.\n"
 "Reason: %s"
 
-#: src/vanity.c:642
+#: src/vanity.c:638
 msgid "Vanity Webcam Utility"
 msgstr "Vanity Webcam Utility"
 
-#: src/vanity.c:647
+#: src/vanity.c:643
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1585,7 +1579,7 @@ msgstr ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
 
-#: src/vanity.c:672
+#: src/vanity.c:668
 #, c-format
 msgid ""
 "Vanity couln't initialise the \n"
@@ -1596,7 +1590,7 @@ msgstr ""
 "configuration engine:\n"
 "%s"
 
-#: src/vanity.c:692 src/vanity.c:707
+#: src/vanity.c:688 src/vanity.c:703
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
