@@ -78,6 +78,7 @@ typedef struct
 enum {
 	ERROR,
 	MOUSE_MOTION,
+	KEY_PRESS,
 	EOS,
 	LAST_SIGNAL
 };
@@ -121,7 +122,6 @@ struct GtkXinePrivate {
 	/* fullscreen stuff */
 	gboolean fullscreen_mode;
 	GdkWindow *fullscreen_window;
-	Window toplevel;
 	GtkWidget *invisible;
 	gboolean cursor_shown;
 };
@@ -238,12 +238,21 @@ gtk_xine_class_init (GtkXineClass * klass)
 				G_TYPE_NONE, 2, G_TYPE_INT, G_TYPE_STRING);
 
 	gtx_table_signals[MOUSE_MOTION] =
-	    g_signal_new ("mouse-motion",
-			  G_TYPE_FROM_CLASS (object_class),
-			  G_SIGNAL_RUN_LAST,
-			  G_STRUCT_OFFSET (GtkXineClass, mouse_motion),
-			  NULL, NULL,
-			  g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
+		g_signal_new ("mouse-motion",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (GtkXineClass, mouse_motion),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
+
+	gtx_table_signals[KEY_PRESS] =
+		g_signal_new ("key-press",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (GtkXineClass, key_press),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__POINTER,
+				G_TYPE_NONE, 1, G_TYPE_POINTER);
 
 	gtx_table_signals[EOS] =
 		g_signal_new ("eos",
@@ -501,27 +510,6 @@ load_config_from_gconf (GtkXine *gtx)
 	 */
 }
 
-static gboolean
-x_window_is_visible(Display *display, Window window)
-{
-	XWindowAttributes  wattr;
-	Status             status;
-
-	if((display == NULL) || (window == None))
-		return FALSE;
-
-	XLockDisplay (display);
-	status = XGetWindowAttributes(display, window, &wattr);
-	XUnlockDisplay(display);
-
-	if((status != BadDrawable)
-			&& (status != BadWindow)
-			&& (wattr.map_state == IsViewable))
-		return TRUE;
-
-	return FALSE;
-}
-
 static void *
 xine_thread (void *gtx_gen)
 {
@@ -534,28 +522,14 @@ xine_thread (void *gtx_gen)
 	{
 		XNextEvent (gtx->priv->display, &event);
 
-		switch (event.type)
+		if (event.type == Expose)
 		{
-		case Expose:
 			if (event.xexpose.count != 0)
 				break;
 
 			gtx->priv->vo_driver->gui_data_exchange
 				(gtx->priv->vo_driver,
 				 GUI_DATA_EX_EXPOSE_EVENT, &event);
-			break;
-		case FocusIn:
-			/* happens only in fullscreen mode
-			 * wait for the window to get visible first
-			 * to avoid BadMatch problems */
-			while (x_window_is_visible (gtx->priv->display,
-						gtx->priv->toplevel) == FALSE)
-				usleep(5000);
-
-			XSetInputFocus (gtx->priv->display,
-					gtx->priv->toplevel, RevertToNone,
-					CurrentTime);
-			break;
 		}
 
 		if (event.type == gtx->priv->completion_event)
@@ -606,10 +580,6 @@ gtk_xine_realize (GtkWidget * widget)
 		 1, BLACK_PIXEL, BLACK_PIXEL);
 
 	widget->window = gdk_window_foreign_new (gtx->priv->video_window);
-
-	gtx->priv->toplevel =
-	    GDK_WINDOW_XWINDOW (gdk_window_get_toplevel
-				(gtk_widget_get_parent_window (widget)));
 
 	/* track configure events of toplevel window */
 	g_signal_connect (GTK_OBJECT (gtk_widget_get_toplevel (widget)),
@@ -1073,6 +1043,17 @@ motion_notify_event_cb (GtkWidget * widget, GdkEventMotion * event,
 	return TRUE;
 }
 
+static gboolean
+key_press_event_cb (GtkWidget *widget, GdkEventKey *event, gpointer user_data)
+{
+	GtkXine *gtx = GTK_XINE (user_data);
+
+	g_signal_emit (G_OBJECT (gtx),
+			gtx_table_signals[KEY_PRESS], 0, event);
+
+	return TRUE;
+}
+
 void
 gtk_xine_set_fullscreen (GtkXine * gtx, gboolean fullscreen)
 {
@@ -1133,10 +1114,6 @@ gtk_xine_set_fullscreen (GtkXine * gtx, gboolean fullscreen)
 		 * in terminal-window.c (profterm) */
 		gdk_window_set_fullscreen (gtx->priv->fullscreen_window, TRUE);
 
-		XSetInputFocus (gtx->priv->display,
-				gtx->priv->toplevel, RevertToNone,
-				CurrentTime);
-
 		XMoveWindow (gtx->priv->display,
 			     win, 0, 0);
 
@@ -1154,11 +1131,15 @@ gtk_xine_set_fullscreen (GtkXine * gtx, gboolean fullscreen)
 		gdk_window_set_user_data (gtx->priv->fullscreen_window,
 				gtx->priv->invisible);
 		gdk_window_set_events (gtx->priv->fullscreen_window,
-				GDK_POINTER_MOTION_MASK);
+				GDK_POINTER_MOTION_MASK
+				| GDK_KEY_PRESS_MASK);
 
 		g_signal_connect (GTK_OBJECT (gtx->priv->invisible),
 				"motion-notify-event",
 				GTK_SIGNAL_FUNC (motion_notify_event_cb), gtx);
+		g_signal_connect (GTK_OBJECT (gtx->priv->invisible),
+				"key-press-event",
+				GTK_SIGNAL_FUNC (key_press_event_cb), gtx);
 
 		scrsaver_disable (gtx->priv->display);
 	} else {
@@ -1167,12 +1148,18 @@ gtk_xine_set_fullscreen (GtkXine * gtx, gboolean fullscreen)
 			 GUI_DATA_EX_DRAWABLE_CHANGED,
 			 (void *) gtx->priv->video_window);
 
+		/* Destroy the window, the invisible is destroyed at the same
+		 * time */
 		XDestroyWindow (gtx->priv->display,
 				GDK_WINDOW_XID (gtx->priv->fullscreen_window));
-//FIXME		gtk_widget_destroy (gtx->priv->invisible);
 		gtx->priv->invisible = NULL;
 
 		scrsaver_enable (gtx->priv->display);
+
+		gdk_window_focus (gdk_window_get_toplevel
+				(gtk_widget_get_parent_window
+				 (GTK_WIDGET (gtx))),
+				GDK_CURRENT_TIME);
 	}
 
 	XUnlockDisplay (gtx->priv->display);

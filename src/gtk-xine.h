@@ -57,6 +57,7 @@ typedef struct {
 
 	void (*error) (GtkWidget *gtx, GtkXineError error, const char *message);
 	void (*mouse_motion) (GtkWidget *gtx);
+	void (*key_press) (GtkWidget *gtx, GdkEventKey *event);
 	void (*eos) (GtkWidget *gtx);
 } GtkXineClass;
 

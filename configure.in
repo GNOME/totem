@@ -16,7 +16,7 @@ PKG_CHECK_MODULES(EXTRA_GNOME, libgnomeui-2.0 libglade-2.0 gnome-vfs-2.0)
 AC_SUBST(EXTRA_GNOME_CFLAGS)
 AC_SUBST(EXTRA_GNOME_LIBS)
 
-AM_PATH_XINE(0.9.9,, AC_MSG_ERROR(*** You should install xine-lib first ***))
+AM_PATH_XINE(0.9.13,, AC_MSG_ERROR(*** You should install xine-lib >= 0.9.13 first ***))
 
 AC_PATH_X
 XTEST_LIBS=""

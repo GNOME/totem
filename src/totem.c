@@ -1140,7 +1140,7 @@ totem_callback_connect (Totem *totem)
 	/* Connect the keys */
 	gtk_widget_add_events (totem->win, GDK_KEY_RELEASE_MASK);
 	g_signal_connect (G_OBJECT(totem->win), "key_press_event",
-			G_CALLBACK(on_window_key_press_event), totem);
+			G_CALLBACK (on_window_key_press_event), totem);
 
 	/* Sliders */
 	g_signal_connect (G_OBJECT (totem->seek), "value-changed",
@@ -1189,6 +1189,10 @@ video_widget_create (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->gtx),
 			"error",
 			G_CALLBACK (on_error_event),
+			totem);
+	g_signal_connect (G_OBJECT(totem->gtx),
+			"key-press",
+			G_CALLBACK (on_window_key_press_event),
 			totem);
 
 	g_object_add_weak_pointer (G_OBJECT (totem->gtx),
