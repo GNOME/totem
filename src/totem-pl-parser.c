@@ -792,7 +792,8 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 			continue;
 
 		/* ENTRY should only have one ref and one title nodes */
-		if (g_ascii_strcasecmp (node->name, "ref") == 0) {
+		if (g_ascii_strcasecmp (node->name, "ref") == 0
+				|| g_ascii_strcasecmp (node->name, "entryref") == 0) {
 			url = xmlGetProp (node, "href");
 			if (url == NULL)
 				url = xmlGetProp (node, "HREF");
@@ -842,6 +843,12 @@ parse_asx_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		if (g_ascii_strcasecmp (node->name, "entry") == 0) {
 			/* Whee found an entry here, find the REF and TITLE */
 			if (parse_asx_entry (parser, base, doc, node) != FALSE)
+				retval = TRUE;
+		}
+		if (g_ascii_strcasecmp (node->name, "entryref") == 0) {
+			/* Found an entryref, give the parent instead of the
+			 * children to the parser */
+			if (parse_asx_entry (parser, base, doc, parent) != FALSE)
 				retval = TRUE;
 		}
 	}
