@@ -1,5 +1,12 @@
 2003-01-07  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (gtk_xine_get_position),
+	(gtk_xine_get_current_time), (gtk_xine_get_stream_length):
+	harden the functions using xine_get_pos_length. 10 tries to getting the
+	current positions, and length. Makes seeking better
+
+2003-01-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-xine.c: (gtk_xine_open), (gtk_xine_play): moved the port
 	rewiring from gtk_xine_play to gtk_xine_open, and add an error
 	if there's no audio nor video supported in the stream (this should
