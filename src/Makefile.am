@@ -1,6 +1,7 @@
 
 bin_PROGRAMS = totem
 
+MARSHALFILES = gtkxine-marshal.h gtkxine-marshal.c
 GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
 
 gtkxine-marshal.h: gtkxine-marshal.list
@@ -16,8 +17,7 @@ gtkxine-marshal.c: gtkxine-marshal.h
 
 totem_SOURCES = 			\
 	totem.c				\
-	gtkxine-marshal.h		\
-	gtkxine-marshal.c		\
+	$(MARSHALFILES)			\
 	gtk-xine.c gtk-xine.h		\
 	gtk-playlist.c	gtk-playlist.h	\
 	rb-ellipsizing-label.c		\
@@ -65,6 +65,6 @@ keysdir = $(datadir)/mime-info/
 app_DATA = totem.applications
 appdir = $(datadir)/application-registry
 
-EXTRA_DIST = $(stuff_DATA) $(desktop_DATA) $(keys_DATA) $(app_DATA)
+EXTRA_DIST = $(stuff_DATA) $(desktop_DATA) $(keys_DATA) $(app_DATA) $(MARSHALFILES)
 
-CLEANFILES = *.bak *.gladep core*
+CLEANFILES = *.bak *.gladep core* $(MARSHALFILES)

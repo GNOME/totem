@@ -87,7 +87,6 @@ enum {
 
 struct GtkXinePrivate {
 	xine_t *xine;
-	char *configfile;
 	config_values_t *config;
 	vo_driver_t *vo_driver;
 	ao_driver_t *ao_driver;
@@ -388,10 +387,8 @@ load_audio_out_driver (GtkXine * gtx)
 						NULL, NULL, NULL);
 
 	if (strcmp (audio_driver_id, "auto"))
-	{
 		return xine_load_audio_output_plugin (gtx->priv->config,
 						      audio_driver_id);
-	}
 
 	while (driver_ids[i])
 	{
@@ -460,11 +457,9 @@ static gboolean
 configure_cb (GtkWidget * widget,
 	      GdkEventConfigure * event, gpointer user_data)
 {
-	GtkXine *gtx;
+	GtkXine *gtx = (GtkXine *) widget;
 
 	D ("CONFIGURE");
-	gtx = GTK_XINE (user_data);
-
 	gtx->priv->xpos = event->x;
 	gtx->priv->ypos = event->y;
 
@@ -479,6 +474,7 @@ gtk_xine_realize (GtkWidget * widget)
 	GtkXine *gtx;
 	XGCValues values;
 	Pixmap bm_no;
+	char *configfile;
 
 	g_return_if_fail (widget != NULL);
 	g_return_if_fail (GTK_IS_XINE (widget));
@@ -489,11 +485,12 @@ gtk_xine_realize (GtkWidget * widget)
 	GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
 
 	/* create our own video window */
-	gtx->priv->video_window = XCreateSimpleWindow (gdk_display,
-			GDK_WINDOW_XWINDOW (gtk_widget_get_parent_window (widget)),
-			0, 0, widget->allocation.width,
-			widget->allocation.height, 1,
-			BLACK_PIXEL, BLACK_PIXEL);
+	gtx->priv->video_window = XCreateSimpleWindow
+		(gdk_display,
+		 GDK_WINDOW_XWINDOW (gtk_widget_get_parent_window (widget)),
+		 0, 0,
+		 widget->allocation.width, widget->allocation.height,
+		 1, BLACK_PIXEL, BLACK_PIXEL);
 
 	widget->window = gdk_window_foreign_new (gtx->priv->video_window);
 
@@ -512,8 +509,6 @@ gtk_xine_realize (GtkWidget * widget)
 			  "configure-event",
 			  GTK_SIGNAL_FUNC (configure_cb), gtx);
 
-	D("xine_thread: init threads");
-
 	if (!XInitThreads ()) {
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[ERROR], 0,
@@ -522,8 +517,6 @@ gtk_xine_realize (GtkWidget * widget)
 				"You should install a thread-safe Xlib."));
 		return;
 	}
-
-	D ("xine_thread: open display\n");
 
 	gtx->priv->display = XOpenDisplay (NULL);
 
@@ -552,14 +545,16 @@ gtk_xine_realize (GtkWidget * widget)
 		      ButtonPressMask | PointerMotionMask);
 
 	/* generate and init a config "object" */
-	gtx->priv->configfile =
-	    g_strdup_printf ("%s/.xine/config", g_get_home_dir ());
-	gtx->priv->config = xine_config_file_init (gtx->priv->configfile);
+	configfile = g_build_path (G_DIR_SEPARATOR_S,
+			g_get_home_dir (), ".xine", "config", NULL);
+	gtx->priv->config = xine_config_file_init (configfile);
+	g_free (configfile);
 
 	/* load audio, video drivers */
 	gtx->priv->vo_driver = load_video_out_driver (gtx);
 
-	if (!gtx->priv->vo_driver) {
+	if (gtx->priv->vo_driver == NULL)
+	{
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[ERROR], 0,
 				GTX_STARTUP,
@@ -570,9 +565,9 @@ gtk_xine_realize (GtkWidget * widget)
 	gtx->priv->ao_driver = load_audio_out_driver (gtx);
 
 	/* init xine engine */
-	gtx->priv->xine =
-	    xine_init (gtx->priv->vo_driver, gtx->priv->ao_driver,
-		       gtx->priv->config);
+	gtx->priv->xine = xine_init (gtx->priv->vo_driver,
+			gtx->priv->ao_driver,
+			gtx->priv->config);
 
 	values.foreground = BLACK_PIXEL;
 	values.background = BLACK_PIXEL;
@@ -592,7 +587,7 @@ gtk_xine_realize (GtkWidget * widget)
 				 (XColor *) & BLACK_PIXEL,
 				 (XColor *) & BLACK_PIXEL, 0, 0);
 
-	/* Setup xine events */
+	/* Setup xine events and codec reporting */
 	xine_register_event_listener (gtx->priv->xine, xine_event,
 			(void *) gtx);
 	xine_register_report_codec_cb(gtx->priv->xine, codec_reporting,
@@ -614,34 +609,29 @@ gtk_xine_idle_signal (GtkXine *gtx)
 	if (signal == NULL)
 		return FALSE;
 
-	gdk_threads_enter ();
+	TE ();
 	switch (signal->type)
 	{
 	case ERROR:
-		TE ();
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[ERROR], 0,
 				signal->error_type, signal->message);
-		TL ();
 		break;
 	case MOUSE_MOTION:
 		/* mouse motion doesn't need to go through here */
 		break;
 	case EOS:
-		D("EOS");
 		g_signal_emit (G_OBJECT (gtx),
 				gtx_table_signals[EOS], 0, NULL);
-		D("EOS called");
 		break;
 	default:
-		D("fooo");
 	}
 
 	g_free (signal->message);
 	g_free (signal);
 
 	queue_length = g_async_queue_length (gtx->priv->queue);
-	gdk_threads_leave ();
+	TL ();
 
 	return (queue_length > 0);
 }
@@ -673,17 +663,17 @@ static void codec_reporting(void *user_data, int codec_type,
 	*(uint32_t *)fourcc_txt = fourcc;
 	fourcc_txt[4] = '\0';
 
-	if( !handled )
+	if (!handled)
 	{
-		if( codec_type == XINE_CODEC_VIDEO)
+		if (codec_type == XINE_CODEC_VIDEO)
 		{
 			GtkXineSignal *signal;
 
 			signal = g_new0 (GtkXineSignal, 1);
 			signal->type = ERROR;
-			
+
 			/* display fourcc if no description available */
-			if( !description[0])
+			if (!description[0])
 				description = fourcc_txt;
 			signal->error_type = GTX_NO_CODEC;
 			signal->message = g_strdup_printf
@@ -695,7 +685,6 @@ static void codec_reporting(void *user_data, int codec_type,
 	}
 }
 
-
 static void
 xine_error (GtkXine *gtx)
 {
@@ -706,7 +695,6 @@ xine_error (GtkXine *gtx)
 	if (error == XINE_ERROR_NONE)
 		return;
 
-	g_message ("xine_error: %d", error);
 	signal = g_new0 (GtkXineSignal, 1);
 	signal->type = ERROR;
 
@@ -760,10 +748,17 @@ gtk_xine_unrealize (GtkWidget * widget)
 GtkWidget *
 gtk_xine_new (void)
 {
-	GtkWidget *gtx = GTK_WIDGET (gtk_type_new (gtk_xine_get_type ()));
-	return gtx;
+	return GTK_WIDGET (gtk_type_new (gtk_xine_get_type ()));
 }
 
+gboolean
+gtk_xine_check (GtkXine *gtx)
+{
+	g_return_val_if_fail (gtx != NULL, FALSE);
+	g_return_val_if_fail (GTK_IS_XINE (gtx), FALSE);
+
+	return (gtx->priv->xine != NULL);
+}
 
 static gint
 gtk_xine_expose (GtkWidget * widget, GdkEventExpose * event)
@@ -780,8 +775,8 @@ gtk_xine_size_allocate (GtkWidget * widget, GtkAllocation * allocation)
 	g_return_if_fail (GTK_IS_XINE (widget));
 
 	D ("ALLOCATE x: %d y: %d w: %d h: %d", allocation->x,
-		      allocation->y, allocation->width,
-		      allocation->height);
+			allocation->y, allocation->width,
+			allocation->height);
 
 	gtx = GTK_XINE (widget);
 
@@ -810,13 +805,9 @@ gtk_xine_play (GtkXine * gtx, gchar * mrl, gint pos, gint start_time)
 	g_return_val_if_fail (GTK_IS_XINE (gtx), -1);
 	g_return_val_if_fail (gtx->priv->xine != NULL, -1);
 
-	D ("gtkxine: calling xine_play start_pos = %d, start_time = %d\n",
-	    pos, start_time);
-
 	error = xine_play (gtx->priv->xine, mrl, pos, start_time);
 	if (!error)
 	{
-		g_message ("BROKEN");
 		xine_error (gtx);
 		return FALSE;
 	}
@@ -855,11 +846,10 @@ static void gtk_xine_set_property (GObject *object, guint property_id,
 		gtk_xine_set_audio_channel (gtx, g_value_get_int (value));
 		break;
 	case PROP_SHOWCURSOR:
-		//FIXME
-		g_message ("change cursor to %d", g_value_get_boolean (value));
+		gtk_xine_set_show_cursor (gtx, g_value_get_boolean (value));
 		break;
 	default:
-		g_assert_not_reached ();
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 	}
 }
 
@@ -896,19 +886,16 @@ static void gtk_xine_get_property (GObject *object, guint property_id,
 		g_value_set_boolean (value, gtk_xine_is_seekable (gtx));
 		break;
 	case PROP_SHOWCURSOR:
-		//FIXME
-		//g_value_set_boolean (value, 
-		g_message ("set cursor");
+		g_value_set_boolean (value, gtk_xine_get_show_cursor (gtx));
 		break;
 	default:
-		g_assert_not_reached ();
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 	}
 }
 
 void
 gtk_xine_set_speed (GtkXine * gtx, gint speed)
 {
-
 	g_return_if_fail (gtx != NULL);
 	g_return_if_fail (GTK_IS_XINE (gtx));
 	g_return_if_fail (gtx->priv->xine != NULL);
@@ -919,7 +906,6 @@ gtk_xine_set_speed (GtkXine * gtx, gint speed)
 gint
 gtk_xine_get_speed (GtkXine * gtx)
 {
-
 	g_return_val_if_fail (gtx != NULL, SPEED_NORMAL);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), SPEED_NORMAL);
 	g_return_val_if_fail (gtx->priv->xine != NULL, SPEED_NORMAL);
@@ -930,15 +916,13 @@ gtk_xine_get_speed (GtkXine * gtx)
 gint
 gtk_xine_get_position (GtkXine * gtx)
 {
-
 	g_return_val_if_fail (gtx != NULL, 0);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
 	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
 
-	if (gtk_xine_is_playing (gtx))
-		return xine_get_current_position (gtx->priv->xine);
-	else
-		return 0;
+	return (gtk_xine_is_playing (gtx)
+			? xine_get_current_position (gtx->priv->xine)
+			: 0);
 }
 
 void
@@ -954,7 +938,6 @@ gtk_xine_set_audio_channel (GtkXine * gtx, gint audio_channel)
 gint
 gtk_xine_get_audio_channel (GtkXine * gtx)
 {
-
 	g_return_val_if_fail (gtx != NULL, 0);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
 	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
@@ -1088,7 +1071,6 @@ gtk_xine_set_fullscreen (GtkXine * gtx, gboolean fullscreen)
 					     ("_NET_WM_STATE_FULLSCREEN",
 					      FALSE), GDK_NONE);
 
-
 		/* Map window. */
 		XMapRaised (gtx->priv->display,
 			    gtx->priv->fullscreen_window);
@@ -1168,9 +1150,9 @@ gtk_xine_can_set_volume (GtkXine *gtx)
 		return can_set_volume;
 
 	caps = xine_get_audio_capabilities (gtx->priv->xine);
-	if(caps & AO_CAP_PCM_VOL)
+	if (caps & AO_CAP_PCM_VOL)
 		mixer = AO_PROP_PCM_VOL;
-	else if(caps & AO_CAP_MIXER_VOL)
+	else if (caps & AO_CAP_MIXER_VOL)
 		mixer = AO_PROP_MIXER_VOL;
 
 	if (caps & (AO_CAP_PCM_VOL | AO_CAP_MIXER_VOL))
@@ -1188,13 +1170,9 @@ gtk_xine_set_volume (GtkXine *gtx, gint volume)
 	g_return_if_fail (GTK_IS_XINE (gtx));
 	g_return_if_fail (gtx->priv->xine != NULL);
 
-	if (volume < 0)
-		volume = 0;
-	else if (volume > 100)
-		volume = 100;
-
-	if(gtk_xine_can_set_volume (gtx) == TRUE)
+	if (gtk_xine_can_set_volume (gtx) == TRUE)
 	{
+		volume = CLAMP (volume, 0, 100);
 		xine_set_audio_property (gtx->priv->xine,
 				gtx->priv->mixer, volume);
 	}
@@ -1209,7 +1187,7 @@ gtk_xine_get_volume (GtkXine *gtx)
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
 	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
 
-	if(gtk_xine_can_set_volume (gtx) == TRUE)
+	if (gtk_xine_can_set_volume (gtx) == TRUE)
 	{
 		volume = xine_get_audio_property (gtx->priv->xine,
 				gtx->priv->mixer);
@@ -1246,7 +1224,7 @@ gtk_xine_set_show_cursor (GtkXine *gtx, gboolean show_cursor)
 }
 
 gboolean
-gtk_xine_get_cursor (GtkXine *gtx)
+gtk_xine_get_show_cursor (GtkXine *gtx)
 {
 	g_return_val_if_fail (gtx != NULL, FALSE);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), FALSE);
@@ -1255,10 +1233,10 @@ gtk_xine_get_cursor (GtkXine *gtx)
 	return gtx->priv->cursor_shown;
 }
 
+//FIXME
 gchar **
 gtk_xine_get_autoplay_plugins (GtkXine * gtx)
 {
-
 	g_return_val_if_fail (gtx != NULL, NULL);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), NULL);
 	g_return_val_if_fail (gtx->priv->xine != NULL, NULL);
@@ -1305,7 +1283,7 @@ gtk_xine_is_seekable (GtkXine * gtx)
 
 	return xine_is_stream_seekable (gtx->priv->xine);
 }
-
+#if 0
 void
 gtk_xine_save_config (GtkXine * gtx)
 {
@@ -1315,30 +1293,22 @@ gtk_xine_save_config (GtkXine * gtx)
 
 	gtx->priv->config->save (gtx->priv->config);
 }
-
-void
+#endif
+#if 0
+static void
 gtk_xine_set_video_property (GtkXine * gtx, gint property, gint value)
 {
-	g_return_if_fail (gtx != NULL);
-	g_return_if_fail (GTK_IS_XINE (gtx));
-	g_return_if_fail (gtx->priv->xine != NULL);
-
 	gtx->priv->vo_driver->set_property (gtx->priv->vo_driver, property,
 					    value);
 }
 
-gint
+static gint
 gtk_xine_get_video_property (GtkXine * gtx, gint property)
 {
-
-	g_return_val_if_fail (gtx != NULL, 0);
-	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
-	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
-
 	return gtx->priv->vo_driver->get_property (gtx->priv->vo_driver,
 						   property);
 }
-
+#endif
 void
 gtk_xine_toggle_aspect_ratio (GtkXine * gtx)
 {
@@ -1348,10 +1318,12 @@ gtk_xine_toggle_aspect_ratio (GtkXine * gtx)
 	g_return_if_fail (GTK_IS_XINE (gtx));
 	g_return_if_fail (gtx->priv->xine != NULL);
 
-	tmp = gtk_xine_get_video_property (gtx, VO_PROP_ASPECT_RATIO);
-	gtk_xine_set_video_property (gtx, VO_PROP_ASPECT_RATIO, tmp + 1);
+	tmp = gtx->priv->vo_driver->get_property (gtx->priv->vo_driver,
+			VO_PROP_ASPECT_RATIO);
+	gtx->priv->vo_driver->set_property (gtx->priv->vo_driver,
+			VO_PROP_ASPECT_RATIO, tmp + 1);
 }
-
+#if 0
 gint
 gtk_xine_get_log_section_count (GtkXine * gtx)
 {
@@ -1383,3 +1355,4 @@ gtk_xine_get_log (GtkXine * gtx, gint buf)
 
 	return xine_get_log (gtx->priv->xine, buf);
 }
+#endif

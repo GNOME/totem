@@ -82,13 +82,6 @@ static char
 }
 
 static void
-long_action (void)
-{
-	while (gtk_events_pending ())
-		gtk_main_iteration ();
-}
-
-static void
 action_error (char * msg)
 {
 	GtkWidget *error_dialog;
@@ -592,7 +585,6 @@ on_open1_activate (GtkButton * button, gpointer user_data)
 	gtk_file_selection_set_select_multiple (GTK_FILE_SELECTION (fs), TRUE);
 	response = gtk_dialog_run (GTK_DIALOG (fs));
 	gtk_widget_hide (fs);
-	long_action ();
 
 	if (response == GTK_RESPONSE_OK)
 	{
@@ -802,7 +794,6 @@ on_mouse_motion_event (GtkWidget *widget, gpointer user_data)
 
 	gtk_widget_show (totem->popup);
 	gtk_xine_set_show_cursor (GTK_XINE (totem->gtx), TRUE);
-	long_action ();
 
 	totem->popup_timeout = gtk_timeout_add (2000,
 			(GtkFunction) popup_hide, totem);
@@ -944,33 +935,6 @@ update_buttons (Totem *totem)
 }
 
 static void
-video_widget_create (Totem *totem)
-{
-	GtkWidget *container;
-	
-	totem->gtx = gtk_xine_new();
-	//FIXME use gtk_xine_check();
-	container = glade_xml_get_widget (totem->xml, "frame2");
-	gtk_container_add (GTK_CONTAINER (container), totem->gtx);
-
-	g_signal_connect (G_OBJECT (totem->gtx),
-			"mouse-motion",
-			G_CALLBACK (on_mouse_motion_event),
-			totem);
-	g_signal_connect (G_OBJECT (totem->gtx),
-			"eos",
-			G_CALLBACK (on_eos_event),
-			totem);
-	g_signal_connect (G_OBJECT (totem->gtx),
-			"error",
-			G_CALLBACK (on_error_event),
-			totem);
-
-	gtk_widget_realize (totem->gtx);
-	gtk_widget_show (totem->gtx); 
-}
-
-static void
 totem_callback_connect (Totem *totem)
 {
 	GtkWidget *item;
@@ -1064,6 +1028,34 @@ totem_callback_connect (Totem *totem)
 			(gpointer) totem);
 }
 
+/* Widget creations for libglade's benefit */
+static void
+video_widget_create (Totem *totem) 
+{
+	GtkWidget *container;
+
+	totem->gtx = gtk_xine_new();
+	//FIXME use gtk_xine_check();
+	container = glade_xml_get_widget (totem->xml, "frame2");
+	gtk_container_add (GTK_CONTAINER (container), totem->gtx);
+
+	g_signal_connect (G_OBJECT (totem->gtx),
+			"mouse-motion",
+			G_CALLBACK (on_mouse_motion_event),
+			totem);
+	g_signal_connect (G_OBJECT (totem->gtx),
+			"eos",
+			G_CALLBACK (on_eos_event),
+			totem);
+	g_signal_connect (G_OBJECT (totem->gtx),
+			"error",
+			G_CALLBACK (on_error_event),
+			totem);
+
+	gtk_widget_realize (totem->gtx);
+	gtk_widget_show (totem->gtx);
+}
+
 GtkWidget
 *label_create (void)
 {
@@ -1133,7 +1125,6 @@ main (int argc, char **argv)
 	}
 	g_free (filename);
 
-	video_widget_create (totem);
 	totem->win = glade_xml_get_widget (totem->xml, "app1");
 
 	totem->playlist = GTK_PLAYLIST
@@ -1151,12 +1142,15 @@ main (int argc, char **argv)
 	totem->volume = glade_xml_get_widget (totem->xml, "hscale2");
 	totem->voladj = gtk_range_get_adjustment (GTK_RANGE (totem->volume));
 	totem->popup = glade_xml_get_widget (totem->xml, "window1");
-	update_sliders_cb ((gpointer) totem);
 	totem_callback_connect (totem);
 
 	/* Show ! */
 	gtk_widget_show_all (totem->win);
-	long_action ();
+
+	video_widget_create (totem);
+	update_sliders_cb ((gpointer) totem);
+	while (gtk_events_pending ())
+		gtk_main_iteration ();
 
 	if (argc > 1)
 	{

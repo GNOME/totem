@@ -56,10 +56,11 @@ typedef struct {
 	void (*eos) (GtkWidget *gtx);
 } GtkXineClass;
 
-GtkType gtk_xine_get_type (void);
-GtkWidget *gtk_xine_new (void);
-gboolean  gtk_xine_check (void);
+GtkType gtk_xine_get_type              (void);
+GtkWidget *gtk_xine_new                (void);
+gboolean  gtk_xine_check               (GtkXine *gtx);
 
+/* Actions */
 gint gtk_xine_play                     (GtkXine *gtx, gchar * mrl, gint pos,
 		                        gint start_time);
 void gtk_xine_stop                     (GtkXine *gtx);
@@ -76,15 +77,15 @@ void gtk_xine_set_volume               (GtkXine *gtx, gint volume);
 gint gtk_xine_get_volume               (GtkXine *gtx);
 
 void gtk_xine_set_show_cursor          (GtkXine *gtx, gboolean use_cursor);
-gboolean gtk_xine_get_cursor           (GtkXine *gtx);
+gboolean gtk_xine_get_show_cursor      (GtkXine *gtx);
 
 void gtk_xine_set_audio_channel        (GtkXine *gtx, gint audio_channel);
 gint gtk_xine_get_audio_channel        (GtkXine *gtx);
-
+#if 0
 void gtk_xine_set_video_property       (GtkXine *gtx,
 				        gint property, gint value);
 gint gtk_xine_get_video_property       (GtkXine *gtx, gint property);
-
+#endif
 void gtk_xine_toggle_aspect_ratio      (GtkXine * gtx);
 
 gint gtk_xine_get_position             (GtkXine *gtx);
@@ -93,14 +94,14 @@ gint gtk_xine_get_stream_length        (GtkXine *gtx);
 gboolean gtk_xine_is_playing           (GtkXine *gtx);
 gboolean gtk_xine_is_seekable          (GtkXine *gtx);
 
-gchar **gtk_xine_get_autoplay_plugins  (GtkXine *gtx);
+//gchar **gtk_xine_get_autoplay_plugins  (GtkXine *gtx);
 
-void gtk_xine_save_config              (GtkXine *gtx);
-
+//void gtk_xine_save_config              (GtkXine *gtx);
+#if 0
 gint gtk_xine_get_log_section_count    (GtkXine *gtx);
 gchar **gtk_xine_get_log_names         (GtkXine *gtx);
 gchar **gtk_xine_get_log               (GtkXine *gtx, gint buf);
-
+#endif
 G_END_DECLS
 
 #endif				/* HAVE_GTK_XINE_H */
