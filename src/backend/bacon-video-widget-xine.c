@@ -1041,9 +1041,11 @@ bacon_video_widget_realize (GtkWidget *widget)
 	setup_config_video (bvw);
 
 	if (bvw->priv->null_out == FALSE && bvw->priv->ao_driver != NULL)
+	{
 		bvw->priv->vis = xine_post_init (bvw->priv->xine,
 				bvw->priv->vis_name, 0,
 				&bvw->priv->ao_driver, &bvw->priv->vo_driver);
+	}
 
 	bacon_resize_init ();
 	bvw->priv->stream = xine_stream_new (bvw->priv->xine,
@@ -2240,17 +2242,51 @@ bacon_video_widget_get_visuals_list (BaconVideoWidget *bvw)
 gboolean
 bacon_video_widget_set_visuals (BaconVideoWidget *bvw, const char *name)
 {
+	xine_post_t *newvis;
+
 	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
 
-	g_free (bvw->priv->vis_name);
-	bvw->priv->vis_name = g_strdup (name);
-
-	if (GTK_WIDGET_REALIZED (GTK_WIDGET (bvw)))
-		return TRUE;
-	else
+	if (bvw->priv->null_out != FALSE || bvw->priv->ao_driver == NULL)
 		return FALSE;
+
+	if (GTK_WIDGET_REALIZED (bvw) == FALSE)
+	{
+		g_free (bvw->priv->vis_name);
+		bvw->priv->vis_name = g_strdup (name);
+		return FALSE;
+	}
+
+	newvis = xine_post_init (bvw->priv->xine,
+			name, 0,
+			&bvw->priv->ao_driver, &bvw->priv->vo_driver);
+
+	if (newvis != NULL)
+	{
+		g_free (bvw->priv->vis_name);
+		bvw->priv->vis_name = g_strdup (name);
+
+		if (bvw->priv->vis != NULL)
+		{
+			xine_post_t *oldvis;
+
+			oldvis = bvw->priv->vis;
+			bvw->priv->vis = newvis;
+
+			if (bvw->priv->using_vfx == TRUE)
+			{
+				show_vfx_update (bvw, FALSE);
+				show_vfx_update (bvw, TRUE);
+			}
+
+			xine_post_dispose (bvw->priv->xine, oldvis);
+		} else {
+			bvw->priv->vis = newvis;
+		}
+	}
+
+	return FALSE;
 }
 
 void
