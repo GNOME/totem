@@ -25,6 +25,7 @@
 #define HAVE_BACON_VIDEO_WIDGET_H
 
 #include <gtk/gtkbox.h>
+#include <popt.h>
 
 G_BEGIN_DECLS
 
@@ -56,6 +57,7 @@ typedef struct {
 } BaconVideoWidgetClass;
 
 GType bacon_video_widget_get_type                (void);
+struct poptOption *bacon_video_widget_get_popt_table    (void);
 GtkWidget *bacon_video_widget_new		 (int width, int height,
 						  gboolean null_video_out,
 						  GError **error);

@@ -72,7 +72,8 @@ static const GtkTargetEntry source_table[] = {
 	{ "text/uri-list", 0, 0 },
 };
 
-static const struct poptOption options[] = {
+static struct poptOption options[] = {
+	{NULL, '\0', POPT_ARG_INCLUDE_TABLE, NULL, 0, N_("Backend options"), NULL},
 	{"play-pause", '\0', POPT_ARG_NONE, NULL, 0, N_("Play/Pause"), NULL},
 	{"next", '\0', POPT_ARG_NONE, NULL, 0, N_("Next"), NULL},
 	{"previous", '\0', POPT_ARG_NONE, NULL, 0, N_("Previous"), NULL},
@@ -80,8 +81,7 @@ static const struct poptOption options[] = {
 	{"seek-bwd", '\0', POPT_ARG_NONE, NULL, 0, N_("Seek Backwards"), NULL},
 	{"volume-up", '\0', POPT_ARG_NONE, NULL, 0, N_("Volume Up"), NULL},
 	{"volume-down", '\0', POPT_ARG_NONE, NULL, 0, N_("Volume Down"), NULL},
-	{"fullscreen", '\0', POPT_ARG_NONE, NULL, 0,
-		N_("Toggle Fullscreen"), NULL},
+	{"fullscreen", '\0', POPT_ARG_NONE, NULL, 0, N_("Toggle Fullscreen"), NULL},
 	{"quit", '\0', POPT_ARG_NONE, NULL, 0, N_("Quit"), NULL},
 	{"enqueue", '\0', POPT_ARG_NONE, NULL, 0, N_("Enqueue"), NULL},
 	{"replace", '\0', POPT_ARG_NONE, NULL, 0, N_("Replace"), NULL},
@@ -3701,6 +3701,7 @@ main (int argc, char **argv)
 	g_thread_init (NULL);
 	gdk_threads_init ();
 
+	options[0].arg = bacon_video_widget_get_popt_table ();
 	gnome_program_init ("totem", VERSION,
 			LIBGNOMEUI_MODULE,
 			argc, argv,
@@ -3715,7 +3716,6 @@ main (int argc, char **argv)
 		totem_action_error_and_exit (_("Totem couln't initialise the configuration engine."), _("Make sure that GNOME is properly installed."), NULL);
 	}
 	gnome_authentication_manager_init ();
-
 	filename = gnome_program_locate_file (NULL,
 			GNOME_FILE_DOMAIN_APP_DATADIR,
 			"totem/totem.glade", TRUE, NULL);
@@ -3855,4 +3855,3 @@ main (int argc, char **argv)
 
 	return 0;
 }
-

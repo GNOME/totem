@@ -499,23 +499,12 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 static void
 bacon_video_widget_instance_init (BaconVideoWidget * bvw)
 {
-  int argc = 1;
-  char **argv = NULL;
-
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
   GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_CAN_FOCUS);
   GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_NO_WINDOW);
   GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
-
-  /* we could actually change this to have some more flags if some
-   * gconf variable was set
-   * FIXME */
-  gst_init (&argc, &argv);
-  
-  /* Using opt as default scheduler */
-  gst_scheduler_factory_set_default_name ("opt");
 
   bvw->priv = g_new0 (BaconVideoWidgetPrivate, 1);
   
@@ -1853,6 +1842,14 @@ bacon_video_widget_get_type (void)
   return bacon_video_widget_type;
 }
 
+struct poptOption *
+bacon_video_widget_get_popt_table (void)
+{
+  /* Initializing GStreamer backend and parse our options from the command 
+     line options */
+  return (struct poptOption *) gst_init_get_popt_table ();
+}
+
 GtkWidget *
 bacon_video_widget_new (int width, int height,
 			gboolean null_out, GError ** err)
@@ -1863,6 +1860,9 @@ bacon_video_widget_new (int width, int height,
   bvw = BACON_VIDEO_WIDGET (g_object_new
                             (bacon_video_widget_get_type (), NULL));
 
+  /* Using opt as default scheduler */
+  gst_scheduler_factory_set_default_name ("opt");
+  
   bvw->priv->play = gst_play_new (err);
   
   if (*err != NULL) {
