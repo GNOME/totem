@@ -368,7 +368,6 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		gtk_widget_set_sensitive (widget, FALSE);
 
 		/* Control popup */
-
 		gtk_widget_set_sensitive (totem->fs_seek, FALSE);
 		gtk_widget_set_sensitive (totem->fs_volume, FALSE);
 
@@ -1125,6 +1124,8 @@ current_removed_cb (GtkWidget *playlist, gpointer user_data)
 	{
 		totem_action_play (totem, 0);
 		g_free (mrl);
+	} else {
+		totem_action_stop (totem);
 	}
 }
 

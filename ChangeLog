@@ -1,5 +1,15 @@
 2002-10-21  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-playlist.c: (gtk_tree_selection_has_selected_foreach),
+	(gtk_tree_selection_has_selected), (selection_changed),
+	(init_treeview): make the removed button's state depend on wether we
+	have a selection or not, fixed a bug in the class_init (wrong offset
+	for the current-removed signal
+	* src/totem.c: (totem_action_set_mrl), (current_removed_cb): stop the
+	playback when the current song is removed, and the playlist is empty
+
+2002-10-21  Bastien Nocera  <hadess@hadess.net>
+
 	* data/playlist.glade: the remove button is disabled by default
 	* src/totem.c: (on_recent_file_activate): use
 	gnome_vfs_get_local_path_from_uri rather than g_filename_from_uri, the

@@ -65,6 +65,11 @@ enum {
 	NUM_COLS
 };
 
+typedef struct BooleanPointer BooleanPointer;
+struct BooleanPointer {
+	gboolean boolean;
+};
+
 static int gtk_playlist_table_signals[LAST_SIGNAL] = { 0 };
 
 static const GtkTargetEntry target_table[] = {
@@ -120,6 +125,31 @@ gtk_tree_model_iter_previous (GtkTreeModel *tree_model, GtkTreeIter *iter)
 
 	gtk_tree_path_free (path);
 	return ret;
+}
+
+static void
+gtk_tree_selection_has_selected_foreach (GtkTreeModel *model,
+		GtkTreePath *path, GtkTreeIter *iter, gpointer user_data)
+{
+	BooleanPointer *retval = (BooleanPointer *)user_data;
+	retval->boolean = TRUE;
+}
+
+static gboolean
+gtk_tree_selection_has_selected (GtkTreeSelection *selection)
+{
+	BooleanPointer *boolean;
+	gboolean retval;
+
+	boolean = g_new (BooleanPointer, 1);
+	boolean->boolean = FALSE;
+	gtk_tree_selection_selected_foreach (selection,
+			gtk_tree_selection_has_selected_foreach,
+			(gpointer) (boolean));
+
+	retval = boolean->boolean;
+	g_free (boolean);
+	return retval;
 }
 
 static GnomeVFSResult
@@ -310,6 +340,20 @@ drop_cb (GtkWidget     *widget,
 			NULL);
 }
 
+static void
+selection_changed (GtkTreeSelection *treeselection, gpointer user_data)
+{
+	GtkPlaylist *playlist = GTK_PLAYLIST (user_data);
+	GtkWidget *remove_button;
+
+	remove_button = glade_xml_get_widget (playlist->_priv->xml,
+			"remove_button");
+
+	if (gtk_tree_selection_has_selected (treeselection))
+		gtk_widget_set_sensitive (remove_button, TRUE);
+	else
+		gtk_widget_set_sensitive (remove_button, FALSE);
+}
 
 /* This function checks if the current item is NULL, and try to update it as the
  * first item of the playlist if so. It returns TRUE if there is a current
@@ -521,6 +565,7 @@ static void
 init_treeview (GtkWidget *treeview, GtkPlaylist *playlist)
 {
 	GtkTreeModel *model;
+	GtkTreeSelection *selection;
 
 	D("init_treeview");
 
@@ -536,9 +581,11 @@ init_treeview (GtkWidget *treeview, GtkPlaylist *playlist)
 	g_object_unref (G_OBJECT (model));
 
 	init_columns (GTK_TREE_VIEW (treeview));
-	gtk_tree_selection_set_mode (gtk_tree_view_get_selection
-			GTK_TREE_VIEW ((treeview)),
-			GTK_SELECTION_MULTIPLE);
+
+	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
+	gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
+	g_signal_connect (G_OBJECT (selection), "changed",
+				G_CALLBACK (selection_changed), playlist);
 
 	/* Drag'n'Drop */
 	g_signal_connect (G_OBJECT (treeview), "drag_data_received",
