@@ -1,3 +1,9 @@
+2004-09-28  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-xine.c: (load_video_out_driver):
+	the new xxmc video plugin has fallback for Xv for non-MPEG streams
+	so try and use it in place of the xv driver
+
 2004-09-26  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-pl-parser.c: (totem_pl_parser_write_pls):
