@@ -1156,38 +1156,27 @@ show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals)
 	has_video = xine_get_stream_info(bvw->priv->stream,
 			XINE_STREAM_INFO_HAS_VIDEO);
 
-g_message ("show_vfx_update: show_visuals: %d has_video: %d",
-		show_visuals, has_video);
-
 	if (has_video == TRUE && show_visuals == TRUE)
 	{
-		g_message ("has_video == TRUE && show_visuals == TRUE");
 		audio_source = xine_get_audio_source (bvw->priv->stream);
-		g_message ("audio_source: %p", audio_source);
 		if (xine_post_wire_audio_port (audio_source,
 					bvw->priv->ao_driver))
-		{
-			g_message ("bvw->priv->using_vfx = FALSE");
 			bvw->priv->using_vfx = FALSE;
-		}
 	} else if (has_video == FALSE && show_visuals == TRUE
 			&& bvw->priv->using_vfx == FALSE
 			&& bvw->priv->vis != NULL)
 	{
-		g_message ("has_video == FALSE && show_visuals == TRUE and more");
 		audio_source = xine_get_audio_source (bvw->priv->stream);
-		g_message ("audio_source: %p", audio_source);
 		if (xine_post_wire_audio_port (audio_source,
 					bvw->priv->vis->audio_input[0]))
-		{
-			g_message ("bvw->priv->vis->audio_input[0]");
 			bvw->priv->using_vfx = TRUE;
-		}
-	} else if (has_video == FALSE && show_visuals == FALSE) {
-		g_message ("has_video == FALSE && show_visuals == FALSE");
+	}
+#if 0
+	else if (has_video == FALSE && show_visuals == FALSE) {
 		audio_source = xine_get_audio_source (bvw->priv->stream);
 		xine_post_wire_audio_port (audio_source, bvw->priv->ao_driver);
 	}
+#endif
 }
 
 static char *
@@ -1716,7 +1705,7 @@ bacon_video_widget_get_connection_speed (BaconVideoWidget *bvw)
 	return entry.num_value;
 }
 
-void
+gboolean
 bacon_video_widget_set_show_visuals (BaconVideoWidget *bvw,
 		gboolean show_visuals)
 {
@@ -1725,7 +1714,11 @@ bacon_video_widget_set_show_visuals (BaconVideoWidget *bvw,
 	g_return_if_fail (bvw->priv->xine != NULL);
 
 	bvw->priv->show_vfx = show_visuals;
-//FIXME	show_vfx_update (bvw, show_visuals);
+#if 0
+	show_vfx_update (bvw, show_visuals);
+	return TRUE;
+#endif
+	return FALSE;
 }
 
 void

@@ -18,7 +18,7 @@
  */
 
 #include <config.h>
-
+#include <libgnome/gnome-i18n.h>
 #include <string.h>
 
 #include "totem.h"
@@ -57,8 +57,14 @@ on_checkbutton2_toggled (GtkToggleButton *togglebutton, gpointer user_data)
 
 	value = gtk_toggle_button_get_active (togglebutton);
 	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/show_vfx", value, NULL);
-	bacon_video_widget_set_show_visuals
-		(BACON_VIDEO_WIDGET (totem->bvw), value);
+	if (bacon_video_widget_set_show_visuals
+		(BACON_VIDEO_WIDGET (totem->bvw), value) == FALSE)
+	{
+		totem_action_error (_("The change of this setting will only "
+					"take effect for the next movie, or "
+					"when Totem is restarted"),
+				GTK_WINDOW (totem->win));
+	}
 }
 
 static void

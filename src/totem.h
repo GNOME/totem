@@ -21,6 +21,7 @@
 #define __TOTEM_H__
 
 #include <gconf/gconf-client.h>
+#include <gtk/gtkwindow.h>
 #include "bacon-video-widget.h"
 
 #define TOTEM_GCONF_PREFIX "/apps/totem"
@@ -45,6 +46,7 @@ void	totem_action_play_media			(Totem *totem, MediaType type);
 
 void	totem_action_toggle_aspect_ratio	(Totem *totem);
 void	totem_action_set_scale_ratio		(Totem *totem, gfloat ratio);
+void    totem_action_error                      (char *msg, GtkWindow *parent);
 
 GConfClient *totem_get_gconf_client		(Totem *totem);
 

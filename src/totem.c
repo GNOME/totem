@@ -105,7 +105,7 @@ long_action (void)
 		gtk_main_iteration ();
 }
 
-static void
+void
 totem_action_error (char *msg, GtkWindow *parent)
 {
 	static GtkWidget *error_dialog = NULL;

@@ -1,3 +1,16 @@
+2003-03-18  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem.glade: updated the preferences window to respect the HIG
+	better, look a bit cleaner and more spaced now
+	* src/bacon-video-widget.c: (show_vfx_update),
+	(bacon_video_widget_set_show_visuals):
+	* src/bacon-video-widget.h:
+	* src/totem-preferences.c: (on_checkbutton2_toggled):
+	* src/totem.c:
+	* src/totem.h: the retval of bacon_video_widget_set_show_visuals() now
+	indicates if the setting is taken into account immediately
+	(Closes: #108595)
+
 2003-03-17  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-video-widget.c: (show_vfx_update),
