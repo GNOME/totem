@@ -21,17 +21,19 @@
 gboolean
 bacon_resize_init (void)
 {
+#ifdef HAVE_RANDR
 	int event_basep, error_basep;
 
 	if (XRRQueryExtension (GDK_DISPLAY(), &event_basep, &error_basep))
 		return TRUE;
-
+#endif /* HAVE_RANDR */
 	return FALSE;
 }
 
 void
 bacon_resize (int height, int width)
 {
+#ifdef HAVE_RANDR
 	XRRScreenConfiguration *xr_screen_conf;
 	XRRScreenSize *xr_sizes;
 	SizeID xr_current_size;
@@ -42,7 +44,7 @@ bacon_resize (int height, int width)
 	Status status;
 
 	if (height == 0 || width == 0)
-		return -1;
+		return;
 
 	/* Getting the current info */
 	XLockDisplay (GDK_DISPLAY());
@@ -64,7 +66,7 @@ bacon_resize (int height, int width)
 	}
 
 	if (target == -1)
-		return -1;
+		return;
 
 	XLockDisplay (GDK_DISPLAY());
 	status = XRRSetScreenConfig (GDK_DISPLAY(),
@@ -74,16 +76,13 @@ bacon_resize (int height, int width)
 			xr_current_rotation,
 			CurrentTime);
 	XUnlockDisplay (GDK_DISPLAY());
-
-	if (status != RRSetConfigSuccess)
-		return -1;
-
-	return (int) xr_current_size;
+#endif /* HAVE_RANDR */
 }
 
 int
 bacon_resize_get_current (void)
 {
+#ifdef HAVE_RANDR
 	XRRScreenConfiguration *xr_screen_conf;
 	SizeID xr_current_size;
 	Rotation xr_current_rotation;
@@ -96,11 +95,15 @@ bacon_resize_get_current (void)
 	XUnlockDisplay (GDK_DISPLAY());
 
 	return (int) xr_current_size;
+#else
+	return -1;
+#endif /* HAVE_RANDR */
 }
 
 void
 bacon_restore (int id)
 {
+#ifdef HAVE_RANDR
 	XRRScreenConfiguration *xr_screen_conf;
 	Rotation xr_current_rotation;
 	SizeID xr_current_size;
@@ -121,5 +124,6 @@ bacon_restore (int id)
 			xr_current_rotation,
 			CurrentTime);
 	XUnlockDisplay (GDK_DISPLAY());
+#endif
 }
 

@@ -1,3 +1,14 @@
+2003-06-30  Bastien Nocera  <hadess@hadess.net>
+
+	* README: removed screensaver TODO item
+	* configure.in: added check for XRandR for XFree86 4.3.0
+	* src/bacon-resize.c: (bacon_resize_init), (bacon_resize),
+	(bacon_resize_get_current), (bacon_restore): fix compilation with
+	XFree86 < 4.3.0
+	* src/scrsaver.c: (fake_event), (scrsaver_new), (scrsaver_disable),
+	(scrsaver_enable): fix screensaver functions not poking the root window 
+	often enough
+
 2003-06-29  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c: (screenshot_make_filename_helper): fix the location

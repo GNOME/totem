@@ -29,9 +29,10 @@ struct ScreenSaver {
 };
 
 #ifdef HAVE_XTEST
-static gboolean fake_event (ScreenSaver *scr)
+static gboolean
+fake_event (ScreenSaver *scr)
 {
-	if(scr->disabled)
+	if (scr->disabled)
 	{
 		XLockDisplay (scr->display);
 		XTestFakeKeyEvent (scr->display, scr->keycode,
@@ -45,7 +46,8 @@ static gboolean fake_event (ScreenSaver *scr)
 }
 #endif /* HAVE_XTEST */
 
-ScreenSaver *scrsaver_new (Display *display)
+ScreenSaver
+*scrsaver_new (Display *display)
 {
 	ScreenSaver *scr;
 	int a, b, c, d;
@@ -59,7 +61,11 @@ ScreenSaver *scrsaver_new (Display *display)
 	if(scr->xtest == True)
 	{
 		scr->keycode = XKeysymToKeycode (display, XK_Shift_L);
-		g_timeout_add (15000, (GSourceFunc)fake_event, scr);
+		XGetScreenSaver (scr->display, &scr->timeout,
+				&scr->interval,
+				&scr->prefer_blanking,
+				&scr->allow_exposures);
+		g_timeout_add (scr->timeout / 2, (GSourceFunc) fake_event, scr);
 	}
 	XSync (display, False);
 	XUnlockDisplay (display);
@@ -68,16 +74,17 @@ ScreenSaver *scrsaver_new (Display *display)
 	return scr;
 }
 
-void scrsaver_disable(ScreenSaver *scr)
+void
+scrsaver_disable (ScreenSaver *scr)
 {
 #ifdef HAVE_XTEST
-	if(scr->xtest == True)
+	if (scr->xtest == True)
 	{
 		scr->disabled = 1;
 		return;
 	}
 #endif /* HAVE_XTEST */
-	if(scr->disabled == 0)
+	if (!scr->disabled)
 	{
 		XLockDisplay (scr->display);
 		XGetScreenSaver(scr->display, &scr->timeout,
@@ -91,7 +98,8 @@ void scrsaver_disable(ScreenSaver *scr)
 	}
 }
 
-void scrsaver_enable(ScreenSaver *scr)
+void
+scrsaver_enable (ScreenSaver *scr)
 {
 #ifdef HAVE_XTEST
 	if(scr->xtest == True)

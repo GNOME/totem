@@ -144,6 +144,16 @@ AC_CHECK_LIB(Xtst, XTestFakeKeyEvent,
 		"-L$x_libraries")
 AC_SUBST(XTEST_LIBS)
 
+have_randr=no
+AC_CHECK_LIB(Xrandr, XRRUpdateConfiguration,
+	[AC_CHECK_HEADER(X11/extensions/Xrandr.h,
+		have_randr=yes
+		RANDR_LIBS="-lXrandr -lXrender"
+		AC_DEFINE(HAVE_RANDR, 1, Have the Xrandr extension library),
+		:, [#include <X11/Xlib.h>])], : ,
+	-lXrandr -lXrender $x_libs)
+AM_CONDITIONAL(HAVE_RANDR, [test $have_randr = yes])
+
 dnl Multimedia keys
 have_xfree=no
 AC_TRY_COMPILE([
