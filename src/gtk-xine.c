@@ -343,12 +343,8 @@ load_video_out_driver (GtkXine *gtx)
 	vis.display = gtx->priv->display;
 	vis.screen = gtx->priv->screen;
 	vis.d = gtx->priv->video_window;
-	res_h =
-	    (DisplayWidth (gtx->priv->display, gtx->priv->screen) * 1000 /
-	     DisplayWidthMM (gtx->priv->display, gtx->priv->screen));
-	res_v =
-	    (DisplayHeight (gtx->priv->display, gtx->priv->screen) * 1000 /
-	     DisplayHeightMM (gtx->priv->display, gtx->priv->screen));
+	res_h = gdk_screen_height () * 1000 / gdk_screen_height_mm ();
+	res_v = gdk_screen_width () * 1000 / gdk_screen_width_mm ();
 	vis.display_ratio = res_h / res_v;
 
 	if (fabs (vis.display_ratio - 1.0) < 0.01) {
@@ -612,10 +608,8 @@ gtk_xine_realize (GtkWidget * widget)
 	widget->window = gdk_window_foreign_new (gtx->priv->video_window);
 
 	/* prepare for fullscreen playback */
-	gtx->priv->fullscreen_width =
-	    DisplayWidth (gdk_display, gdk_x11_get_default_screen ());
-	gtx->priv->fullscreen_height =
-	    DisplayHeight (gdk_display, gdk_x11_get_default_screen ());
+	gtx->priv->fullscreen_width = gdk_screen_width ();
+	gtx->priv->fullscreen_height = gdk_screen_height ();
 
 	gtx->priv->toplevel =
 	    GDK_WINDOW_XWINDOW (gdk_window_get_toplevel
