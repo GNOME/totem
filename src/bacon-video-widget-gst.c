@@ -1016,9 +1016,10 @@ caps_set (GObject * obj,
   if (s) {
     const GValue *par;
 
-    gst_structure_get_double (s, "framerate", &bvw->priv->video_fps);
-    gst_structure_get_int (s, "width", &bvw->priv->video_width);
-    gst_structure_get_int (s, "height", &bvw->priv->video_height);
+    if (!(gst_structure_get_double (s, "framerate", &bvw->priv->video_fps) &&
+          gst_structure_get_int (s, "width", &bvw->priv->video_width) &&
+          gst_structure_get_int (s, "height", &bvw->priv->video_height)))
+      return;
     if ((par = gst_structure_get_value (s,
                    "pixel-aspect-ratio"))) {
       gint num = gst_value_get_fraction_numerator (par),
@@ -1029,10 +1030,13 @@ caps_set (GObject * obj,
       else
         bvw->priv->video_height *= (gfloat) den / num;
     }
+
+    got_video_size (bvw->priv->play, bvw->priv->video_width,
+		    bvw->priv->video_height, bvw);
   }
 
   /* and disable ourselves */
-  g_signal_handlers_disconnect_by_func (pad, caps_set, bvw);
+  //g_signal_handlers_disconnect_by_func (pad, caps_set, bvw);
 }
 
 static GstCaps * fixate_visualization (GstPad *pad, const GstCaps *in_caps,
@@ -1055,7 +1059,7 @@ parse_stream_info (BaconVideoWidget *bvw)
     GEnumValue *val;
 
     if (!info)
-      break;
+      continue;
     g_object_get (info, "type", &type, NULL);
     pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
     val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
@@ -1063,10 +1067,10 @@ parse_stream_info (BaconVideoWidget *bvw)
     if (strstr (val->value_name, "AUDIO")) {
       if (!bvw->priv->media_has_audio) {
         bvw->priv->media_has_audio = TRUE;
-        if (!bvw->priv->media_has_video &&
+        /*if (!bvw->priv->media_has_video &&
             bvw->priv->show_vfx && bvw->priv->vis_element) {
           videopad = gst_element_get_pad (bvw->priv->vis_element, "src");
-        }
+        }*/
       }
     } else if (strstr (val->value_name, "VIDEO")) {
       bvw->priv->media_has_video = TRUE;
@@ -1085,7 +1089,7 @@ parse_stream_info (BaconVideoWidget *bvw)
     /* handle explicit caps as well - they're set later */
     if (((GstRealPad *) real)->link != NULL && GST_PAD_CAPS (real))
       caps_set (G_OBJECT (real), NULL, bvw);
-    else
+    //else
       g_signal_connect (real, "notify::caps",
           G_CALLBACK (caps_set), bvw);
   } else if (bvw->priv->show_vfx && bvw->priv->vis_element) {
@@ -1302,7 +1306,7 @@ get_list_of_type (BaconVideoWidget * bvw, const gchar * type_name)
     GEnumValue *val;
 
     if (!info)
-      break;
+      continue;
     g_object_get (info, "type", &type, NULL);
     pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
     val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
@@ -2762,7 +2766,7 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
     GEnumValue *val;
 
     if (!info)
-      break;
+      continue;
     g_object_get (info, "type", &type, NULL);
     pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
     val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
