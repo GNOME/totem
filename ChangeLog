@@ -1,5 +1,11 @@
 2004-09-26  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-pl-parser.c: (totem_pl_parser_write_pls):
+	when writing .pls files, check whether there actually is a relative
+	path
+
+2004-09-26  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-pl-parser.c: (totem_pl_parser_relative),
 	(totem_pl_parser_write_pls): Make the .pls playlist writer also use
 	relative paths

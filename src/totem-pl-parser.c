@@ -344,7 +344,8 @@ totem_pl_parser_write_pls (TotemPlParser *parser, GtkTreeModel *model,
 		}
 
 		relative = totem_pl_parser_relative (url, output);
-		buf = g_strdup_printf ("File%d=%s\n", i, relative);
+		buf = g_strdup_printf ("File%d=%s\n", i,
+				relative ? relative : url);
 		g_free (relative);
 		g_free (url);
 		success = write_string (handle, buf, error);
