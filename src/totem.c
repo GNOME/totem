@@ -49,6 +49,8 @@ static const GtkTargetEntry target_table[] = {
 	{ "text/uri-list", 0, 0 },
 };
 
+static void action_open_files (Totem *totem, char **list,
+		gboolean ignore_first);
 static void action_set_mrl (Totem *totem, const char *mrl);
 static gboolean popup_hide (Totem *totem);
 static void update_buttons (Totem *totem);
@@ -210,13 +212,17 @@ action_play (Totem *totem, int offset)
 static void
 action_play_media (Totem *totem, MediaType type)
 {
-	char **mrls, *mrl;
+	const char **mrls;
+	char *mrl;
 
 	mrls = gtk_xine_get_mrls (GTK_XINE (totem->gtx), type);
 	if (mrls == NULL)
+	{
+		//FIXME print out something
 		return;
-	g_strfreev (mrls);
+	}
 
+	action_open_files (totem, (char **)mrls, FALSE);
 	mrl = gtk_playlist_get_current_mrl (totem->playlist);
 	action_set_mrl (totem, mrl);
 	g_free (mrl);

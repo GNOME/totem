@@ -102,7 +102,8 @@ gboolean gtk_xine_is_playing           (GtkXine *gtx);
 gboolean gtk_xine_is_seekable          (GtkXine *gtx);
 
 gboolean gtk_xine_can_play             (GtkXine *gtx, MediaType type);
-gchar **gtk_xine_get_mrls              (GtkXine *gtx, MediaType type);
+G_CONST_RETURN gchar **gtk_xine_get_mrls
+                                       (GtkXine *gtx, MediaType type);
 
 G_END_DECLS
 

@@ -1349,7 +1349,7 @@ gtk_xine_can_play (GtkXine *gtx, MediaType type)
 	}
 }
 
-gchar
+G_CONST_RETURN gchar
 **gtk_xine_get_mrls (GtkXine *gtx, MediaType type)
 {
 	char *plugin_id;
@@ -1366,7 +1366,7 @@ gchar
 	else
 		return NULL;
 
-	return xine_get_autoplay_mrls
+	return (G_CONST_RETURN gchar **) xine_get_autoplay_mrls
 		(gtx->priv->xine, plugin_id, &num_mrls);
 }
 
