@@ -1432,7 +1432,6 @@ on_take_screenshot1_activate (GtkButton *button, gpointer user_data)
 	gdk_pixbuf_unref (pixbuf);
 }
 
-
 static void
 on_properties1_activate (GtkButton *button, gpointer user_data)
 {
@@ -2686,8 +2685,15 @@ main (int argc, char **argv)
 		(GTK_RANGE (totem->fs_volume));
 	totem->volume_first_time = 1;
 	totem->fs_pp_button = glade_xml_get_widget (totem->xml, "fs_pp_button");
-	totem->properties = gtk_xine_properties_new ();
 	totem->statusbar = glade_xml_get_widget (totem->xml, "custom4");
+
+	/* Properties */
+	totem->properties = gtk_xine_properties_new ();
+	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
+			"totem", "media-player-48.png", NULL);
+	gtk_window_set_icon_from_file (GTK_WINDOW (totem->properties),
+			filename, NULL);
+	g_free (filename);
 
 	/* Calculate the height of the control popup window */
 	gtk_window_get_size (GTK_WINDOW (totem->control_popup),
