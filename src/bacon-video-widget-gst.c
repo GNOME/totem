@@ -497,7 +497,7 @@ bacon_video_widget_instance_init (BaconVideoWidget * bvw)
   gst_init (&argc, &argv);
   
   /* Using opt as default scheduler */
-  gst_scheduler_factory_set_default_name ("opt");
+  gst_scheduler_factory_set_default_name ("basicgthread");
 
   bvw->priv = g_new0 (BaconVideoWidgetPrivate, 1);
   
@@ -604,8 +604,9 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
         }
       case FOUND_TAG:
         {
-          GstTagList *tag_list;
+          GstTagList *tag_list = signal->signal_data.found_tag.tag_list;
           gst_tag_list_foreach (tag_list, print_tag, NULL);
+          gst_tag_list_free (tag_list);
           break;
         }
       default:
@@ -630,7 +631,7 @@ got_found_tag (GstPlay *play, GstElement *source,
   signal = g_new0 (BVWSignal, 1);
   signal->signal_id = FOUND_TAG;
   signal->signal_data.found_tag.source = source;
-  signal->signal_data.found_tag.tag_list = tag_list;
+  signal->signal_data.found_tag.tag_list = gst_tag_list_copy (tag_list);
 
   g_async_queue_push (bvw->priv->queue, signal);
 
@@ -1035,11 +1036,12 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   g_return_if_fail (GST_IS_PLAY (bvw->priv->play));
 
   gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_READY);
-  gst_play_set_location (bvw->priv->play, "/dev/null");
   
-  if (bvw->priv->mrl)
+  if (bvw->priv->mrl) {
+    gst_play_set_location (bvw->priv->play, "/dev/null");
     g_free (bvw->priv->mrl);
-  bvw->priv->mrl = NULL;
+    bvw->priv->mrl = NULL;
+  }
 }
 
 void
