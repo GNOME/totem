@@ -1,3 +1,16 @@
+2004-10-07  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/bacon-video-widget-gst.c: (get_media_size),
+	(bacon_video_widget_realize), (bacon_video_widget_size_request),
+	(shrink_toplevel), (bacon_video_widget_signal_idler),
+	(bacon_video_widget_set_logo), (bacon_video_widget_set_visuals),
+	(bacon_video_widget_set_scale_ratio), (bacon_video_widget_new):
+	* src/video-utils.c: (cb_unset_size), (cb_set_preferred_size),
+	(totem_widget_set_preferred_size):
+	* src/video-utils.h:
+	  Set a preferred window size. Allows resizing to smaller than
+	  this size.
+
 2004-10-07  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-pl-parser.c: (parse_asx_entry), (parse_asx_entries),

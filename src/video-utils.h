@@ -1,5 +1,6 @@
 
 #include <gdk/gdk.h>
+#include <gtk/gtk.h>
 
 void eel_gdk_window_set_invisible_cursor (GdkWindow *window);
 void totem_gdk_window_set_always_on_top (GdkWindow *window, gboolean setting);
@@ -16,3 +17,5 @@ void totem_pixbuf_mirror (GdkPixbuf *pixbuf);
 char *totem_time_to_string (gint64 msecs);
 char *totem_time_to_string_text (gint64 msecs);
 
+void totem_widget_set_preferred_size (GtkWidget *widget, gint width,
+				      gint height);

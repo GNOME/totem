@@ -350,3 +350,47 @@ totem_time_to_string_text (gint64 msecs)
 
 	return string;
 }
+
+typedef struct _TotemPrefSize {
+  gint width, height;
+  gulong sig_id;
+} TotemPrefSize;
+
+static gboolean
+cb_unset_size (gpointer data)
+{
+  GtkWidget *widget = data;
+
+  gtk_widget_queue_resize_no_redraw (widget);
+
+  return FALSE;
+}
+
+static void
+cb_set_preferred_size (GtkWidget *widget, GtkRequisition *req,
+		       gpointer data)
+{
+  TotemPrefSize *size = data;
+
+  req->width = size->width;
+  req->height = size->height;
+
+  g_signal_handler_disconnect (widget, size->sig_id);
+  g_free (size);
+  g_idle_add (cb_unset_size, widget);
+}
+
+void
+totem_widget_set_preferred_size (GtkWidget *widget, gint width,
+				 gint height)
+{
+  TotemPrefSize *size = g_new (TotemPrefSize, 1);
+
+  size->width = width;
+  size->height = height;
+  size->sig_id = g_signal_connect (widget, "size-request",
+				   G_CALLBACK (cb_set_preferred_size),
+				   size);
+
+  gtk_widget_queue_resize (widget);
+}

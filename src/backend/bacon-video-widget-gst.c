@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *_
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
@@ -188,11 +188,28 @@ static GtkWidgetClass *parent_class = NULL;
 static int bvw_table_signals[LAST_SIGNAL] = { 0 };
 
 static void
+get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
+{
+  if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED) {
+    *width = bvw->priv->video_width;
+    *height = bvw->priv->video_height;
+  } else {
+    if (bvw->priv->logo_pixbuf != NULL) {
+      *width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
+      *height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
+    } else {
+      *width = bvw->priv->init_width;
+      *height = bvw->priv->init_height;
+    }
+  }
+}
+
+static void
 bacon_video_widget_realize (GtkWidget * widget)
 {
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
   GdkWindowAttr attributes;
-  gint attributes_mask;
+  gint attributes_mask, w, h;
 
   /* Creating our widget's window */
   attributes.window_type = GDK_WINDOW_CHILD;
@@ -232,6 +249,10 @@ bacon_video_widget_realize (GtkWidget * widget)
   gtk_style_set_background (widget->style, widget->window, GTK_STATE_NORMAL);
 
   GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
+
+  /* nice hack to show the logo fullsize, while still being resizable */
+  get_media_size (BACON_VIDEO_WIDGET (widget), &w, &h);
+  totem_widget_set_preferred_size (widget, w, h);
 }
 
 static gboolean
@@ -305,20 +326,8 @@ bacon_video_widget_size_request (GtkWidget * widget,
 {
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
 
-  /* FIXME: intial width, this is minimal, but not "recommended"
-   * (media size) */
-  if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED) {
-    requisition->width = bvw->priv->video_width;
-    requisition->height = bvw->priv->video_height;
-  } else {
-    if (bvw->priv->logo_pixbuf != NULL) {
-      requisition->width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
-      requisition->height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
-    } else {
-      requisition->width = bvw->priv->init_width;
-      requisition->height = bvw->priv->init_height;
-    }
-  }
+  requisition->width = bvw->priv->init_width;
+  requisition->height = bvw->priv->init_height;
 }
 
 static void
@@ -525,7 +534,6 @@ shrink_toplevel (BaconVideoWidget * bvw)
   GtkWidget *toplevel;
   toplevel = gtk_widget_get_toplevel (GTK_WIDGET (bvw));
   gtk_window_resize (GTK_WINDOW (toplevel), 1, 1);
-  gtk_widget_queue_resize (GTK_WIDGET (bvw));
 }
 
 static gboolean
@@ -573,7 +581,11 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
           g_signal_emit (G_OBJECT (bvw), bvw_table_signals[SIGNAL_GOT_METADATA], 0, NULL);
 
           if (bvw->priv->auto_resize) {
+            gint w, h;
+
             shrink_toplevel (bvw);
+            get_media_size (bvw, &w, &h);
+            totem_widget_set_preferred_size (GTK_WIDGET (bvw), w, h);
           } else {
             bacon_video_widget_size_allocate (GTK_WIDGET (bvw),
 					      &GTK_WIDGET (bvw)->allocation);
@@ -1188,7 +1200,11 @@ bacon_video_widget_set_logo (BaconVideoWidget * bvw, gchar * filename)
                filename, error->message);
     g_error_free (error);
   } else {
+    gint w, h;
+
     shrink_toplevel (bvw);
+    get_media_size (bvw, &w, &h);
+    totem_widget_set_preferred_size (GTK_WIDGET (bvw), w, h);
   }
 }
 
@@ -1420,7 +1436,7 @@ bacon_video_widget_get_visuals_list (BaconVideoWidget * bvw)
 gboolean
 bacon_video_widget_set_visuals (BaconVideoWidget * bvw, const char *name)
 {
-  //gboolean paused = FALSE;
+  /*gboolean paused = FALSE;*/
 
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
@@ -1543,8 +1559,10 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
-//  gst_video_widget_set_scale (bvw->priv->vw, ratio);
-//  gst_video_widget_set_scale_override (bvw->priv->vw, TRUE);
+#if 0
+  gst_video_widget_set_scale (bvw->priv->vw, ratio);
+  gst_video_widget_set_scale_override (bvw->priv->vw, TRUE);
+#endif
   shrink_toplevel (bvw);
 }
 
@@ -1964,12 +1982,8 @@ bacon_video_widget_new (int width, int height,
   }
   
   bvw->priv->media_device = g_strdup ("/dev/dvd");
-  if (width <= 0 || height <= 0) {
-    width = DEFAULT_WIDTH;
-    height = DEFAULT_HEIGHT;
-  }
-  bvw->priv->init_width = width;
-  bvw->priv->init_height = height;
+  bvw->priv->init_width = 240;
+  bvw->priv->init_height = 180;
 
   bvw->priv->cursor_shown = TRUE;
   bvw->priv->logo_mode = TRUE;
