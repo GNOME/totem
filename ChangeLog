@@ -1,5 +1,10 @@
 2005-03-07  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-uri.c: (totem_uri_get_subtitle_uri): fix memory leak,
+	patch by Aivars Kalvans <aivars.kalvans@inbox.lv> (Closes: #169440)
+
+2005-03-07  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.desktop.in.in.in: allow multiple URIs to be passed
 	by using %U instead of of %u
 

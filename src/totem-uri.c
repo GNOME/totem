@@ -161,6 +161,7 @@ totem_uri_get_subtitle_uri (const char *uri)
 		return subtitle;
 	}
 
+	g_free (subtitle);
 	return NULL;
 }
 
