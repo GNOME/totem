@@ -1,5 +1,13 @@
 2005-03-14  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c: (button_release_cb), (drag_end_cb),
+	(init_treeview):
+	* src/totem.c: (totem_callback_connect), (video_widget_create):
+	also handle COPY actions on a drop, as Konqueror doesn't handle
+	moves (Closes: #170109)
+
+2005-03-14  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-playlist.c: (totem_playlist_add_one_mrl): use
 	gtk_list_store_insert_with_values instead of separate
 	gtk_list_store_insert() and gtk_list_store_set

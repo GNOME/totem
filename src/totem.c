@@ -3038,7 +3038,7 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (drop_playlist_cb), totem);
 	gtk_drag_dest_set (item, GTK_DEST_DEFAULT_ALL,
 			target_table, G_N_ELEMENTS (target_table),
-			GDK_ACTION_COPY);
+			GDK_ACTION_COPY | GDK_ACTION_MOVE);
 
 	/* Main Window */
 	g_signal_connect (G_OBJECT (totem->win), "delete-event",
@@ -3300,7 +3300,7 @@ video_widget_create (Totem *totem)
 			G_CALLBACK (drop_video_cb), totem);
 	gtk_drag_dest_set (GTK_WIDGET (totem->bvw), GTK_DEST_DEFAULT_ALL,
 			target_table, G_N_ELEMENTS (target_table),
-			GDK_ACTION_COPY);
+			GDK_ACTION_COPY | GDK_ACTION_MOVE);
 
 	g_signal_connect (G_OBJECT (totem->bvw), "drag_data_get",
 			G_CALLBACK (drag_video_cb), totem);

@@ -536,7 +536,7 @@ button_release_cb (GtkWidget *treeview, GdkEventButton *event, gpointer data)
 		totem_playlist_set_reorderable (playlist, FALSE);
 		gtk_drag_dest_set (treeview, GTK_DEST_DEFAULT_ALL,
 				target_table, G_N_ELEMENTS (target_table),
-				GDK_ACTION_COPY);
+				GDK_ACTION_COPY | GDK_ACTION_MOVE);
 
 		g_signal_handlers_unblock_by_func (treeview,
 				(GFunc) drop_cb, data);
@@ -563,7 +563,8 @@ drag_end_cb (GtkWidget *treeview, GdkDragContext *context, gpointer data)
 	playlist->_priv->drag_started = FALSE;
 	totem_playlist_set_reorderable (playlist, FALSE);
 	gtk_drag_dest_set (treeview, GTK_DEST_DEFAULT_ALL, target_table,
-        		G_N_ELEMENTS (target_table), GDK_ACTION_COPY);
+        		G_N_ELEMENTS (target_table),
+			GDK_ACTION_COPY | GDK_ACTION_MOVE);
 
 	g_signal_handlers_unblock_by_func (treeview, (GFunc) drop_cb, data);
 
@@ -1148,7 +1149,7 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
                         G_CALLBACK (drag_end_cb), playlist);
 	gtk_drag_dest_set (treeview, GTK_DEST_DEFAULT_ALL,
 			target_table, G_N_ELEMENTS (target_table),
-			GDK_ACTION_COPY);
+			GDK_ACTION_COPY | GDK_ACTION_MOVE);
 
 	playlist->_priv->selection = selection;
 
