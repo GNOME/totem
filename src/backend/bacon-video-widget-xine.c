@@ -1796,6 +1796,20 @@ bacon_video_widget_play (BaconVideoWidget *bvw, GError **gerror)
 		bvw->priv->queued_vis = NULL;
 	}
 
+	/* Workaround for xine-lib: don't try to use a
+	 * non-existent audio channel */
+	{
+		int cur, num;
+
+		cur = xine_get_param(bvw->priv->stream,
+				XINE_PARAM_AUDIO_CHANNEL_LOGICAL);
+		num = xine_get_stream_info(bvw->priv->stream,
+				XINE_STREAM_INFO_AUDIO_CHANNELS);
+		if (cur > num)
+			xine_set_param(bvw->priv->stream,
+					XINE_PARAM_AUDIO_CHANNEL_LOGICAL, -1);
+	}
+
 	return TRUE;
 }
 
