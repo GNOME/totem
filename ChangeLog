@@ -1,3 +1,11 @@
+2003-05-20  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_size_request),
+	(bacon_video_widget_set_scale_ratio): set the size request of the
+	widget if we're trying to scale to a size that's smaller than the
+	current widget size (allows 'zoom 1:2' to shrink to sizes smaller than
+	the default size)
+
 2003-05-20  Julien MOUTTE  <julien@moutte.net>
 
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_size_request),

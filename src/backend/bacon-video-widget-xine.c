@@ -1197,14 +1197,14 @@ bacon_video_widget_size_request (GtkWidget *widget, GtkRequisition *requisition)
 	
 	g_return_if_fail(widget != NULL);
 	g_return_if_fail(BACON_IS_VIDEO_WIDGET(widget));
-	
+
 	bvw = BACON_VIDEO_WIDGET (widget);
 	
-	if ( (bvw->priv->init_width == 0) && (bvw->priv->init_height == 0) ) {
+	if ((bvw->priv->init_width == 0) && (bvw->priv->init_height == 0)) {
 		requisition->width = DEFAULT_WIDTH;
 		requisition->height = DEFAULT_HEIGHT;
-	}
-	else { /* Requesting first allocation as a minimum */
+	} else {
+		/* Requesting first allocation as a minimum */
 		requisition->width = bvw->priv->init_width;
 		requisition->height = bvw->priv->init_height;
 	}
@@ -2190,7 +2190,7 @@ bacon_video_widget_ratio_fits_screen (BaconVideoWidget *bvw, gfloat ratio)
 void
 bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 {
-	GtkWidget *toplevel;
+	GtkWidget *toplevel, *widget;
 	int new_w, new_h, win_w, win_h;
 
 	g_return_if_fail (bvw != NULL);
@@ -2223,18 +2223,30 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 			return;
 	}
 
-	toplevel = gtk_widget_get_toplevel (GTK_WIDGET (bvw));
+	widget = GTK_WIDGET (bvw);
+
+	toplevel = gtk_widget_get_toplevel (widget);
 
 	/* Get the size of the toplevel window */
-	gdk_drawable_get_size (GDK_DRAWABLE (GTK_WIDGET (toplevel)->window),
+	gdk_drawable_get_size (GDK_DRAWABLE (toplevel->window),
 			&win_w, &win_h);
 
 	/* Calculate the new size of the window, depending on the size of the
 	 * video widget, and the new size of the video */
-	new_w = win_w - GTK_WIDGET(bvw)->allocation.width +
-		(bvw->priv->video_width * ratio);
-	new_h = win_h - GTK_WIDGET(bvw)->allocation.height +
-		(bvw->priv->video_height * ratio);
+	new_w = win_w - widget->allocation.width +
+		bvw->priv->video_width * ratio;
+	new_h = win_h - widget->allocation.height +
+		bvw->priv->video_height * ratio;
+
+	/* Change the minimum size of the widget
+	 * but only if we're getting a smaller window */
+	if (new_w < widget->allocation.width
+			|| new_h < widget->allocation.height)
+	{
+		gtk_widget_set_size_request (widget,
+				bvw->priv->video_width * ratio,
+				bvw->priv->video_height * ratio);
+	}
 
 	gtk_window_resize (GTK_WINDOW (toplevel), new_w, new_h);
 }
