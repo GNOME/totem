@@ -39,6 +39,7 @@
 #include <gtk/gtkmain.h>
 #include <libgnome/gnome-i18n.h>
 #include <gconf/gconf-client.h>
+#include <glade/glade.h>
 /* xine */
 #include <xine.h>
 
@@ -134,6 +135,10 @@ struct GtkXinePrivate {
 	GdkWindow *fullscreen_window;
 	gboolean cursor_shown;
 	gboolean pml;
+
+	/* properties dialog */
+	GtkWidget *dialog;
+	GladeXML *xml;
 };
 
 
@@ -1006,15 +1011,18 @@ gtk_xine_open (GtkXine *gtx, const gchar *mrl)
 }
 
 gboolean
-gtk_xine_play (GtkXine *gtx, gint pos, gint start_time)
+gtk_xine_play (GtkXine *gtx, guint pos, guint start_time)
 {
-	int error;
+	int error, length;
 
 	g_return_val_if_fail (gtx != NULL, -1);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), -1);
 	g_return_val_if_fail (gtx->priv->xine != NULL, -1);
 
-	error = xine_play (gtx->priv->stream, pos, start_time);
+	length = gtk_xine_get_stream_length (gtx);
+	error = xine_play (gtx->priv->stream, pos,
+			CLAMP (start_time, 0, length));
+
 	if (error == 0)
 	{
 		xine_error (gtx);
@@ -1121,7 +1129,7 @@ gtk_xine_get_property (GObject *object, guint property_id,
 }
 
 void
-gtk_xine_set_speed (GtkXine *gtx, gint speed)
+gtk_xine_set_speed (GtkXine *gtx, Speeds speed)
 {
 	g_return_if_fail (gtx != NULL);
 	g_return_if_fail (GTK_IS_XINE (gtx));
@@ -1559,5 +1567,22 @@ gtk_xine_set_scale_ratio (GtkXine *gtx, gfloat ratio)
 	while (gtk_events_pending ())
 		gtk_main_iteration ();
 	gtk_window_set_resizable (toplevel, TRUE);
+}
+
+GtkWidget
+*gtk_xine_properties_dialog_get (GtkXine *gtx)
+{
+	return NULL;
+}
+
+char
+*gtk_xine_properties_get_title (GtkXine *gtx)
+{
+	return NULL;
+}
+
+void
+gtk_xine_properties_update (GtkXine *gtx)
+{
 }
 

@@ -28,10 +28,10 @@
 
 G_BEGIN_DECLS
 
-enum {
+typedef enum {
 	SPEED_PAUSE,
 	SPEED_NORMAL,
-};
+} Speeds;
 
 typedef enum {
 	GTX_STARTUP,
@@ -75,15 +75,15 @@ gboolean  gtk_xine_check               (GtkXine *gtx);
 gboolean gtk_xine_open                (GtkXine *gtx, const gchar *mrl);
 
 /* This is used for seeking:
- * @pos is used for seeking, from 0 to 65535
+ * @pos is used for seeking, from 0 (start) to 65535 (end)
  * @start_time is in milliseconds */
-gboolean gtk_xine_play                 (GtkXine *gtx, gint pos,
-		                        gint start_time);
+gboolean gtk_xine_play                 (GtkXine *gtx, guint pos,
+		                        guint start_time);
 void gtk_xine_stop                     (GtkXine *gtx);
 void gtk_xine_close                    (GtkXine *gtx);
 
 /* Properties */
-void gtk_xine_set_speed                (GtkXine *gtx, gint speed);
+void gtk_xine_set_speed                (GtkXine *gtx, Speeds speed);
 gint gtk_xine_get_speed                (GtkXine *gtx);
 
 void gtk_xine_set_fullscreen           (GtkXine *gtx, gboolean fullscreen);
@@ -111,6 +111,11 @@ gboolean gtk_xine_is_seekable          (GtkXine *gtx);
 gboolean gtk_xine_can_play             (GtkXine *gtx, MediaType type);
 G_CONST_RETURN gchar **gtk_xine_get_mrls
                                        (GtkXine *gtx, MediaType type);
+
+GtkWidget *gtk_xine_properties_dialog_get
+                                       (GtkXine *gtx);
+char *gtk_xine_properties_get_title    (GtkXine *gtx);
+void gtk_xine_properties_update        (GtkXine *gtx);
 
 G_END_DECLS
 
