@@ -22,6 +22,7 @@
 #include <string.h>
 #include <glib/gi18n-lib.h>
 #include "totem-properties-view.h"
+#include "bacon-video-widget.h"
 #include <libnautilus-extension/nautilus-extension-types.h>
 #include <libnautilus-extension/nautilus-property-page-provider.h>
 
@@ -115,8 +116,7 @@ end:
 void
 nautilus_module_initialize (GTypeModule *module)
 {
-	//FIXME GStreamer!
-#if 0
+	poptContext ctx;
 	static struct poptOption options[] = {
 		{NULL, '\0', POPT_ARG_INCLUDE_TABLE, NULL, 0,
 			N_("Backend options"), NULL},
@@ -124,12 +124,10 @@ nautilus_module_initialize (GTypeModule *module)
 	};
 
 	options[0].arg = bacon_video_widget_get_popt_table ();
-	gnome_program_init ("totem-video-thumbnailer", VERSION,
-			LIBGNOME_MODULE, argc, argv,
-			GNOME_PARAM_APP_DATADIR, DATADIR,
-			GNOME_PARAM_POPT_TABLE, options,
-			GNOME_PARAM_NONE);
-#endif
+	ctx = poptGetContext ("totem-properties", 0, NULL, options, 0);
+	while (poptGetNextOpt (ctx) >= 0) ;
+	poptFreeContext (ctx);
+
 	totem_properties_plugin_register_type (module);
 	totem_properties_view_register_type (module);
 
