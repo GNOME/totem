@@ -11,10 +11,14 @@ by the GNOME libraries
 * Make vanity support Linux 2.6
 * Have the command-line options translated
 * Use a proper icon for the screenshot menu item
+* Install handlers for mms, pnm and rtsp protocols in the xine-lib backend
 * Make the fullscreen slider work again
 * Restore the default audio stream if a custom one is not available in the
 file that we're about to play
 * Don't crash when the video output plugin isn't available
+* Don't probe for the Xv video driver on remote connections
+* Disable the ALSA mixer event thread as we don't need it, fixes a crash/hang
+  on exit when using the ALSA audio output
 
 0.99.9:
 * Extended Gstreamer 0.7.x support, DVD and Audio CD support, related bug fixes
