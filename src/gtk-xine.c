@@ -339,8 +339,12 @@ frame_output_cb (void *gtx_gen,
 		*dest_width = gtx->widget.allocation.width;
 		*dest_height = gtx->widget.allocation.height;
 
-		gtx->priv->video_width = video_width;
-		gtx->priv->video_height = video_height;
+		if (gtx->priv->video_width != video_width
+				|| gtx->priv->video_height != video_height)
+		{
+			gtx->priv->video_width = video_width;
+			gtx->priv->video_height = video_height;
+		}
 	}
 }
 
@@ -535,11 +539,8 @@ xine_thread (void *gtx_gen)
 	{
 		XNextEvent (gtx->priv->display, &event);
 
-		if (event.type == Expose)
+		if (event.type == Expose && event.xexpose.count == 0)
 		{
-			if (event.xexpose.count != 0)
-				break;
-
 			gtx->priv->vo_driver->gui_data_exchange
 				(gtx->priv->vo_driver,
 				 GUI_DATA_EX_EXPOSE_EVENT, &event);
