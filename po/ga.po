@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the Totem package.
 # Pól Ó Dubhthaigh <dubhthach@zion.nuigalway.ie>,2003
 # David O'Callaghan <david.ocallaghan@cs.tcd.ie>, 2003
-# Alastair McKinstry <mckinstry@computer.org>, 2004.
 #
 msgid ""
 msgstr ""
@@ -11,11 +10,12 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-12-17 04:57+0100\n"
 "PO-Revision-Date: 2003-10-28 21:51+0100\n"
-"Last-Translator: Alastair McKinstry <mckinstry@computer.org> \n"
-"Language-Team: Irish \n"
+"Last-Translator: David O'Callaghan <david.ocallaghan@cs.tcd.ie>\n"
+"Language-Team: Irish  <gaeilge-gnulinux@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n==2 ? 1 : 2;\n"
 
 #: data/playlist.glade.h:1 src/totem-playlist.c:1276
 msgid "Playlist"
@@ -618,9 +618,8 @@ msgid "_Go"
 msgstr "_Dul go dtí"
 
 #: data/totem.glade.h:119
-#, fuzzy
 msgid "_Languages"
-msgstr "Teangaí"
+msgstr "_Teanganna"
 
 #: data/totem.glade.h:120
 msgid "_Movie"
@@ -635,9 +634,8 @@ msgid "_No TV-out"
 msgstr "_Níl aon Teilifís-Amach"
 
 #: data/totem.glade.h:123
-#, fuzzy
 msgid "_Optical device path:"
-msgstr "_Bealach do gaireas léasar"
+msgstr "_Slí do gaireas léasar:"
 
 #: data/totem.glade.h:124
 msgid "_Previous Chapter/Movie"
@@ -867,25 +865,28 @@ msgid "Totem Video Window"
 msgstr "Fuinneg an físean Totem"
 
 #: src/bacon-video-widget-properties.c:106
-#, fuzzy, c-format
+#,  c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d uair"
 msgstr[1] "%d uair"
+msgstr[2] "%d uair"
 
 #: src/bacon-video-widget-properties.c:108
-#, fuzzy, c-format
+#,  c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d noimead"
-msgstr[1] "%d noimead"
+msgstr[1] "%d noimeaid"
+msgstr[2] "%d noimeaid"
 
 #: src/bacon-video-widget-properties.c:111
-#, fuzzy, c-format
+#, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d soicind"
 msgstr[1] "%d soicind"
+msgstr[2] "%d soicind"
 
 #. hour:minutes:seconds
 #: src/bacon-video-widget-properties.c:117
@@ -1173,11 +1174,11 @@ msgstr ""
 
 #: src/totem.c:84
 msgid "Volume Up"
-msgstr ""
+msgstr "Lánu Suas"
 
 #: src/totem.c:85
 msgid "Volume Down"
-msgstr ""
+msgstr "Lánu Síos"
 
 #: src/totem.c:87
 msgid "Toggle Fullscreen"
@@ -1263,9 +1264,9 @@ msgstr ""
 
 #. Title
 #: src/totem.c:718
-#, fuzzy, c-format
+#, c-format
 msgid "%s - Totem Movie Player"
-msgstr "Imreoir scannán Totem"
+msgstr "%s - Imreoir scannán Totem"
 
 #: src/totem.c:730 src/totem.c:3481
 msgid "No file"
