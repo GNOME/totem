@@ -62,8 +62,8 @@
 #define SEEK_FORWARD_OFFSET 60
 #define SEEK_BACKWARD_OFFSET -15
 
-#define SEEK_FORWARD_SHORT_OFFSET 20
-#define SEEK_BACKWARD_SHORT_OFFSET -20
+#define SEEK_FORWARD_SHORT_OFFSET 15
+#define SEEK_BACKWARD_SHORT_OFFSET -15
 
 #define VOLUME_DOWN_OFFSET -8
 #define VOLUME_UP_OFFSET 8
@@ -1338,6 +1338,10 @@ update_current_time (BaconVideoWidget *bvw,
 				current_position * 65535);
 		gtk_adjustment_set_value (totem->fs_seekadj,
 				current_position * 65535);
+
+		totem_time_label_set_time
+			(TOTEM_TIME_LABEL (totem->tcw_time_label),
+			 current_time, stream_length);
 	}
 }
 
@@ -2163,7 +2167,7 @@ spin_button_value_changed_cb (GtkSpinButton *spinbutton, Totem *totem)
 
 	sec = (int) gtk_spin_button_get_value (GTK_SPIN_BUTTON (spinbutton));
 	label = glade_xml_get_widget (totem->xml, "tstw_position_label");
-	str = bacon_video_widget_properties_time_to_string (sec);
+	str = totem_time_to_string_text (sec * 1000);
 	gtk_label_set_text (GTK_LABEL (label), str);
 	g_free (str);
 }
@@ -2549,10 +2553,6 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 	case GDK_A:
 	case GDK_a:
 		totem_action_toggle_aspect_ratio (totem);
-		if (totem->action == 0)
-			totem->action++;
-		else
-			totem->action = 0;
 		break;
 #ifdef HAVE_XFREE
 	case XF86XK_AudioPrev:
@@ -2564,10 +2564,6 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 	case GDK_C:
 	case GDK_c:
 		bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_CHAPTER_MENU);
-		if (totem->action == 1)
-			totem->action++;
-		else
-			totem->action = 0;
 		break;
 	case GDK_f:
 	case GDK_F:
@@ -2604,11 +2600,6 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 			value = gtk_check_menu_item_get_active (item);
 			gtk_check_menu_item_set_active (item, !value);
 		}
-
-		if (totem->action == 3)
-			totem->action++;
-		else
-			totem->action = 0;
 		break;
 	case GDK_M:
 	case GDK_m:
@@ -2620,18 +2611,11 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 	case GDK_N:
 	case GDK_n:
 		totem_action_next (totem);
-		if (totem->action == 5)
-			totem_action_set_mrl_and_play (totem, "v4l:/");
-		totem->action = 0;
 		break;
 	case GDK_O:
 	case GDK_o:
 		totem_action_fullscreen (totem, FALSE);
 		on_open1_activate (NULL, totem);
-		if (totem->action == 4)
-			totem->action++;
-		else
-			totem->action = 0;
 		break;
 #ifdef HAVE_XFREE
 	case XF86XK_AudioPlay:
@@ -2653,20 +2637,27 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 	case GDK_S:
 		on_skip_to1_activate (NULL, totem);
 		break;
-	case GDK_T:
-		if (totem->action == 2)
-			totem->action++;
-		else
-			totem->action = 0;
-		break;
 	case GDK_Escape:
 		totem_action_fullscreen (totem, FALSE);
 		break;
 	case GDK_Left:
-		totem_action_seek_relative (totem, SEEK_BACKWARD_OFFSET);
+		if (event->state & GDK_SHIFT_MASK)
+		{
+			totem_action_seek_relative (totem,
+					SEEK_BACKWARD_SHORT_OFFSET);
+		} else {
+			totem_action_seek_relative (totem,
+					SEEK_BACKWARD_OFFSET);
+		}
 		break;
 	case GDK_Right:
-		totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET);
+		if (event->state & GDK_SHIFT_MASK)
+		{
+			totem_action_seek_relative (totem,
+					SEEK_FORWARD_SHORT_OFFSET);
+		} else {
+			totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET);
+		}
 		break;
 	case GDK_Up:
 		totem_action_volume_relative (totem, VOLUME_UP_OFFSET);
@@ -3812,6 +3803,8 @@ main (int argc, char **argv)
 	totem->fs_pp_button = glade_xml_get_widget
 		(totem->xml, "tcw_pp_button");
 	totem->statusbar = glade_xml_get_widget (totem->xml, "tmw_statusbar");
+	totem->tcw_time_label = glade_xml_get_widget (totem->xml,
+			"tcw_time_display_label");
 	totem->seek_lock = totem->vol_lock = totem->vol_fs_lock = FALSE;
 
 	/* Properties */

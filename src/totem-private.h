@@ -85,6 +85,7 @@ struct Totem {
 	GtkAdjustment *fs_seekadj;
 	GtkWidget *fs_volume;
 	GtkAdjustment *fs_voladj;
+	GtkWidget *tcw_time_label;
 
 	guint popup_timeout;
 	gboolean popup_in_progress;
@@ -102,7 +103,6 @@ struct Totem {
 	GConfClient *gc;
 	TotemRemote *remote;
 	BaconMessageConnection *conn;
-	int action;
 	guint32 keypress_time;
 	TotemStates state;
 };

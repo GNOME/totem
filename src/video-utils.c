@@ -1,5 +1,10 @@
 
+#include "config.h"
+
 #include "video-utils.h"
+
+#include <glib/gi18n.h>
+#include <libintl.h>
 
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
@@ -279,3 +284,69 @@ totem_pixbuf_mirror (GdkPixbuf *pixbuf)
 	}
 }
 
+char *
+totem_time_to_string (gint64 msecs)
+{
+	int sec, min, hour, time;
+
+	time = (int) (msecs / 1000);
+	sec = time % 60;
+	time = time - sec;
+	min = (time % (60*60)) / 60;
+	time = time - (min * 60);
+	hour = time / (60*60);
+
+	if (hour > 0)
+	{
+		/* hour:minutes:seconds */
+		return g_strdup_printf ("%d:%02d:%02d", hour, min, sec);
+	} else {
+		/* minutes:seconds */
+		return g_strdup_printf ("%d:%02d", min, sec);
+	}
+
+	return NULL;
+}
+
+char *
+totem_time_to_string_text (gint64 msecs)
+{
+	char *secs, *mins, *hours, *string;
+	int sec, min, hour, time;
+
+	time = (int) (msecs / 1000);
+	sec = time % 60;
+	time = time - sec;
+	min = (time % (60*60)) / 60;
+	time = time - (min * 60);
+	hour = time / (60*60);
+
+	hours = g_strdup_printf (ngettext ("%d hour", "%d hours", hour), hour);
+
+	mins = g_strdup_printf (ngettext ("%d minute",
+					  "%d minutes", min), min);
+
+	secs = g_strdup_printf (ngettext ("%d second",
+					  "%d seconds", sec), sec);
+
+	if (hour > 0)
+	{
+		/* hour:minutes:seconds */
+		string = g_strdup_printf (_("%s %s %s"), hours, mins, secs);
+	} else if (min > 0) {
+		/* minutes:seconds */
+		string = g_strdup_printf (_("%s %s"), mins, secs);
+	} else if (sec > 0) {
+		/* seconds */
+		string = g_strdup_printf (_("%s"), secs);
+	} else {
+		/* 0 seconds */
+		string = g_strdup (_("0 seconds"));
+	}
+
+	g_free (hours);
+	g_free (mins);
+	g_free (secs);
+
+	return string;
+}

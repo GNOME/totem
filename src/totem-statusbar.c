@@ -34,6 +34,7 @@
 #include <glib/gi18n.h>
 
 #include "totem-statusbar.h"
+#include "video-utils.h"
 
 static void     totem_statusbar_class_init     (TotemStatusbarClass *class);
 static void     totem_statusbar_init           (TotemStatusbar      *statusbar);
@@ -56,29 +57,6 @@ static void     totem_statusbar_create_window  (TotemStatusbar      *statusbar);
 static void     totem_statusbar_destroy_window (TotemStatusbar      *statusbar);
 
 static GtkContainerClass *parent_class;
-
-static char
-*time_to_string (int time)
-{
-  int sec, min, hour;
-                                                                              
-  sec = time % 60;
-  time = time - sec;
-  min = (time % (60*60)) / 60;
-  time = time - (min * 60);
-  hour = time / (60*60);
-
-  if (hour > 0)
-  {
-    /* hour:minutes:seconds */
-    return g_strdup_printf ("%d:%02d:%02d", hour, min, sec);
-  } else {
-    /* minutes:seconds */
-    return g_strdup_printf ("%d:%02d", min, sec);
-  }
-
-  return NULL;
-}
 
 G_DEFINE_TYPE(TotemStatusbar, totem_statusbar, GTK_TYPE_HBOX)
 
@@ -177,12 +155,13 @@ totem_statusbar_update_time (TotemStatusbar *statusbar)
   if (statusbar->pushed == 1)
     return;
 
-  time = time_to_string (statusbar->time);
+  time = totem_time_to_string (statusbar->time * 1000);
 
   if (statusbar->length < 0) {
     label = g_strdup_printf (_("%s (Streaming)"), time);
   } else {
-    length = time_to_string (statusbar->length == -1 ? 0 : statusbar->length);
+    length = totem_time_to_string
+	    (statusbar->length == -1 ? 0 : statusbar->length * 1000);
 
     if (statusbar->seeking == FALSE)
       /* Elapsed / Total Length */

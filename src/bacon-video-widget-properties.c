@@ -27,6 +27,7 @@
 #include <glib/gi18n.h>
 #include <glade/glade.h>
 #include <string.h>
+#include "video-utils.h"
 
 #include "debug.h"
 
@@ -65,48 +66,6 @@ bacon_video_widget_properties_finalize (GObject *object)
 	if (G_OBJECT_CLASS (parent_class)->finalize != NULL) {
 		(* G_OBJECT_CLASS (parent_class)->finalize) (object);
 	}
-}
-
-char *
-bacon_video_widget_properties_time_to_string (int time)
-{
-	char *secs, *mins, *hours, *string;
-	int sec, min, hour;
-
-	sec = time % 60;
-	time = time - sec;
-	min = (time % (60*60)) / 60;
-	time = time - (min * 60);
-	hour = time / (60*60);
-
-	hours = g_strdup_printf (ngettext ("%d hour", "%d hours", hour), hour);
-
-	mins = g_strdup_printf (ngettext ("%d minute",
-					  "%d minutes", min), min);
-
-	secs = g_strdup_printf (ngettext ("%d second",
-					  "%d seconds", sec), sec);
-
-	if (hour > 0)
-	{
-		/* hour:minutes:seconds */
-		string = g_strdup_printf (_("%s %s %s"), hours, mins, secs);
-	} else if (min > 0) {
-		/* minutes:seconds */
-		string = g_strdup_printf (_("%s %s"), mins, secs);
-	} else if (sec > 0) {
-		/* seconds */
-		string = g_strdup_printf (_("%s"), secs);
-	} else {
-		/* 0 seconds */
-		string = g_strdup (_("0 seconds"));
-	}
-
-	g_free (hours);
-	g_free (mins);
-	g_free (secs);
-
-	return string;
 }
 
 static void
@@ -184,8 +143,8 @@ bacon_video_widget_properties_set_from_current
 
 	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
 			BVW_INFO_DURATION, &value);
-	string = bacon_video_widget_properties_time_to_string
-		(g_value_get_int (&value));
+	string = totem_time_to_string_text
+		(g_value_get_int (&value) * 1000);
 	bacon_video_widget_properties_set_label (props, "duration", string);
 	g_free (string);
 	g_value_unset (&value);

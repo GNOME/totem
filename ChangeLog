@@ -1,5 +1,24 @@
 2004-07-04  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-properties.c:
+	(bacon_video_widget_properties_set_from_current):
+	* src/totem-private.h:
+	* src/totem-statusbar.c: (totem_statusbar_update_time):
+	* src/totem-time-label.c: (totem_time_label_new),
+	(totem_time_label_class_init), (totem_time_label_set_time):
+	* src/totem-time-label.h:
+	* src/totem.c: (update_current_time),
+	(spin_button_value_changed_cb), (totem_action_handle_key), (main):
+	* src/video-utils.c: (totem_time_to_string),
+	(totem_time_to_string_text):
+	* src/video-utils.h:
+
+	Move the time to string functions to the video-utils.[ch], update
+	the code taking that into account, finish the TotemTimeLabel code and
+	hook it up in totem.c, make Shift+Right/Left arrow do shorter seeks
+
+2004-07-04  Bastien Nocera  <hadess@hadess.net>
+
 	* data/Totem_properties.server.in.in._1:
 	* data/Totem_properties.server.in.in._3: remove unused translations
 
@@ -20,7 +39,7 @@
 	not quite finished
 	* src/totem.c: (on_got_metadata_event), (totem_statusbar_create),
 	(totem_time_display_create): cleanups
-	* src/totem.h: TotemTimeTable creation
+	* src/totem.h: TotemTimeLabel creation
 
 2004-07-03  Bastien Nocera  <hadess@hadess.net>
 
