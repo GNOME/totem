@@ -56,6 +56,7 @@
 #include "debug.h"
 
 #define KEYBOARD_HYSTERISIS_TIMEOUT 500
+#define REWIND_OR_PREVIOUS 4000
 
 #define SEEK_FORWARD_OFFSET 60
 #define SEEK_BACKWARD_OFFSET -15
@@ -646,7 +647,6 @@ update_skip_to (Totem *totem, gint64 time)
 			0, (gdouble) time / 1000);
 }
 
-
 static void
 update_mrl_label (Totem *totem, const char *name)
 {
@@ -872,6 +872,16 @@ totem_is_media (const char *mrl)
 	return FALSE;
 }
 
+static gboolean
+totem_time_within_seconds (Totem *totem)
+{
+	gint64 time;
+
+	time = bacon_video_widget_get_current_time (totem->bvw);
+
+	return (time < REWIND_OR_PREVIOUS);
+}
+
 void
 totem_action_previous (Totem *totem)
 {
@@ -886,11 +896,16 @@ totem_action_previous (Totem *totem)
         {
                 bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_PREV_CHAPTER);
         } else {
-                totem_playlist_set_previous (totem->playlist);
-                mrl = totem_playlist_get_current_mrl (totem->playlist);
-                totem_action_set_mrl_and_play (totem, mrl);
-                g_free (mrl);
-        }
+		if (bacon_video_widget_is_seekable (totem->bvw) == FALSE
+				|| totem_time_within_seconds (totem) != FALSE) {
+			totem_playlist_set_previous (totem->playlist);
+			mrl = totem_playlist_get_current_mrl (totem->playlist);
+			totem_action_set_mrl_and_play (totem, mrl);
+			g_free (mrl);
+		} else {
+			totem_action_seek (totem, 0);
+		}
+	}
 }
 
 void

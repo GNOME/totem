@@ -1,3 +1,11 @@
+2004-06-28  set REAL_NAME environment variable  <hadess@hadess.net>
+
+	* README: upd TODO
+	* src/totem.c: (totem_time_within_seconds),
+	(totem_action_previous): implement Iain's CD player like idea
+	(only go to the previous track if we're at the beginning of the track,
+	 otherwise seek back to the start)
+
 2004-06-27  Julien MOUTTE  <julien@moutte.net>
 
 	* configure.in: Fix build.
