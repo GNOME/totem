@@ -1282,6 +1282,9 @@ update_seekable (Totem *totem, gboolean force_false)
 	gtk_widget_set_sensitive (widget, caps);
 	widget = glade_xml_get_widget (totem->xml, "tstw_ok_button");
 	gtk_widget_set_sensitive (widget, caps);
+	widget = glade_xml_get_widget (totem->xml, "tmw_time_label");
+	gtk_widget_set_sensitive (widget, caps);
+
 }
 
 static void
