@@ -311,7 +311,7 @@ cab_download_from_td_try (TotemDownload *td, const char *path, guint32 fcc)
 		set_label (td, CONNECTING, FALSE);
 
 		retval = cab_url_from_fourcc_with_url (td, path,
-				CODECS_URL, fcc);
+				ACTIVEX_URL, fcc);
 		if (retval == 0)
 		{
 			retval = cab_extract (td, path);

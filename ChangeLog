@@ -1,3 +1,11 @@
+2003-06-21  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-download.c: (cab_download_from_td_try): try downloading from
+	the 2 servers, not both times from the same one
+	* src/totem-video-thumbnailer.c: (main): try to playback from '0' if
+	playing back from a third fails, fixes thumbnailing small streams even
+	more
+
 2003-06-20  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c: (on_video_motion_notify_event): fix a crash when

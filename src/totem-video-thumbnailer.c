@@ -210,7 +210,11 @@ int main (int argc, char *argv[])
 	length = bacon_video_widget_get_stream_length (bvw);
 	if (length > MIN_LEN_FOR_SEEK)
 	{
-		bacon_video_widget_play (bvw, 0, (int) (65535 / 3), NULL);
+		if (bacon_video_widget_play
+				(bvw, 0, (int) (65535 / 3), NULL) == FALSE)
+		{
+			bacon_video_widget_play (bvw, 0, 0, NULL);
+		}
 	}
 
 	if (bacon_video_widget_can_get_frames (bvw, &err) == FALSE)
