@@ -3134,6 +3134,9 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 	case BVW_AUDIO_SOUND_4CHANNEL:
 		value = 6;
 		break;
+	case BVW_AUDIO_SOUND_41CHANNEL:
+		value = 7;
+		break;
 	case BVW_AUDIO_SOUND_5CHANNEL:
 		value = 8;
 		break;
