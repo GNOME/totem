@@ -17,6 +17,7 @@ gtkxine-marshal.c: gtkxine-marshal.h
 
 totem_SOURCES = 			\
 	totem.c				\
+	gtkxine-marshal.list		\
 	$(MARSHALFILES)			\
 	gtk-xine.c gtk-xine.h		\
 	gtk-playlist.c	gtk-playlist.h	\
@@ -34,37 +35,4 @@ INCLUDES = 						\
 	-DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED	\
 	-DGTK_DISABLE_DEPRECATED -DGNOME_DISABLE_DEPRECATED
 
-stuffdir = $(datadir)/totem/
-stuff_DATA =				\
-	media-player-48.png		\
-	stock_media_next.png		\
-	stock_media_previous.png	\
-	stock_media_pause.png		\
-	stock_media_play.png		\
-	playlist-16.png			\
-	playlist-24.png			\
-	playlist-playing.png		\
-	rhythmbox-volume-max.png	\
-	rhythmbox-volume-medium.png	\
-	rhythmbox-volume-min.png	\
-	rhythmbox-volume-zero.png	\
-	totem.glade			\
-	playlist.glade
-
-pixmapdir = $(datadir)/pixmaps
-pixmap_DATA = media-player-48.png
-
-desktop_in_files = totem.desktop.in
-desktopdir = $(datadir)/applications/
-desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
-@INTLTOOL_DESKTOP_RULE@
-
-keys_DATA = totem.keys
-keysdir = $(datadir)/mime-info/
-
-app_DATA = totem.applications
-appdir = $(datadir)/application-registry
-
-EXTRA_DIST = $(stuff_DATA) $(desktop_DATA) $(keys_DATA) $(app_DATA) $(MARSHALFILES)
-
-CLEANFILES = *.bak *.gladep core* $(MARSHALFILES)
+CLEANFILES = *.bak *.gladep core* *.orig *~ $(MARSHALFILES) $(desktop_DATA)
