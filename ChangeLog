@@ -1,3 +1,13 @@
+2003-06-25  Bastien Nocera  <hadess@hadess.net>
+
+	* README: upd
+	* data/totem.glade: remove trailing spaces (Closes: #115893)
+	* data/totem.schemas.in: fix text (thanks Menthos) (Closes: #115894)
+	* src/bacon-video-widget-xine.c: (setup_osd),
+	(setup_config_stream), (bacon_video_widget_realize),
+	(bacon_video_widget_unrealize), (bacon_video_widget_play):
+	first try at OSD display on audio-only streams
+
 2003-06-24  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-private.h:

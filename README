@@ -2,15 +2,18 @@
                          _|_ __|_ _ ._ _  
 			  |_(_)|_(/_| | | 
 
-Totem is simple movie player for the Gnome desktop based on xine. It features a
-simple playlist, a full-screen mode, seek and volume controls, as well as
-a pretty complete keyboard navigation.
+Totem is movie player for the Gnome desktop based on xine. It features a
+playlist, a full-screen mode, seek and volume controls, as well as
+complete keyboard navigation.
 
 Read the previous release notes if you encounter problems:
 http://lists.gnome.org/archives/gnome-announce-list/2003-May/msg00096.html
 
 News
 ====
+
+1.0(?):
+* Audio output selection: stereo, 4.0, 5.0 or 5.1 channels
 
 0.99.1:
 * Added a automatic downloader for the DLLs on x86 machines
@@ -276,6 +279,7 @@ TODO
   http://devedge.netscape.com/library/manuals/2002/plugin/1.0/preface.html
 - check that the fake event is generated more often, depending on the
   intervals of the screensaver
+- split the baconvideowidget into a GtkWidget and a GObject
 
 GStreamer backend TODO
 ======================

@@ -119,6 +119,7 @@ struct BaconVideoWidgetPrivate {
 	xine_vo_driver_t *vo_driver;
 	xine_ao_driver_t *ao_driver;
 	xine_event_queue_t *ev_queue;
+	xine_osd_t *osd;
 	double display_ratio;
 	gboolean started;
 
@@ -746,6 +747,19 @@ setup_config_video (BaconVideoWidget *bvw)
 }
 
 static void
+setup_osd (BaconVideoWidget *bvw)
+{
+	int fonth = 20;
+
+	bvw->priv->osd = xine_osd_new(bvw->priv->stream,
+			0, 0, 900, (fonth * 6) + (5 * 3));
+	xine_osd_set_font(bvw->priv->osd, "sans", fonth);
+	xine_osd_set_text_palette(bvw->priv->osd,
+			XINE_TEXTPALETTE_WHITE_NONE_TRANSPARENT,
+			XINE_OSD_TEXT1);
+}
+
+static void
 setup_config_stream (BaconVideoWidget *bvw)
 {
 	int value, i;
@@ -753,6 +767,7 @@ setup_config_stream (BaconVideoWidget *bvw)
 	if (bvw->priv->gc == NULL)
 		return;
 
+	/* Setup brightness and contrast */
 	for (i = 0; i < 2; i++)
 	{
 		value = gconf_client_get_int (bvw->priv->gc, video_props_str[i], NULL);
@@ -998,6 +1013,7 @@ bacon_video_widget_realize (GtkWidget *widget)
 	bvw->priv->stream = xine_stream_new (bvw->priv->xine,
 			bvw->priv->ao_driver, bvw->priv->vo_driver);
 	setup_config_stream (bvw);
+	setup_osd (bvw);
 	bvw->priv->ev_queue = xine_event_new_queue (bvw->priv->stream);
 
 	/* Setup xine events */
@@ -1219,6 +1235,10 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	if (GTK_WIDGET_MAPPED (widget))
 		gtk_widget_unmap (widget);
 	GTK_WIDGET_UNSET_FLAGS (widget, GTK_MAPPED);
+
+	/* Kill the OSD */
+	xine_osd_hide (bvw->priv->osd, 0);
+	xine_osd_free (bvw->priv->osd);
 
 	/* stop the playback */
 	xine_close (bvw->priv->stream);
@@ -1623,6 +1643,26 @@ bacon_video_widget_play (BaconVideoWidget *bvw, guint pos,
 		xine_error (bvw, gerror);
 		return FALSE;
 	}
+
+	if (pos == 0 && start_time == 0 && bvw->priv->using_vfx == TRUE)
+	{
+		char *name;
+
+		name = g_strdup_printf ("%s - %s",
+				xine_get_meta_info (bvw->priv->stream,
+					XINE_META_INFO_ARTIST),
+				xine_get_meta_info (bvw->priv->stream,
+					XINE_META_INFO_TITLE));
+
+		xine_osd_clear (bvw->priv->osd);
+		xine_osd_draw_text (bvw->priv->osd, 0, 0, name, XINE_OSD_TEXT1);
+		xine_osd_set_position(bvw->priv->osd, 20, 10 + 30);
+		xine_osd_show(bvw->priv->osd, 0);
+		/* Hide in... vpts is in 1/90000 sec */
+		//FIXME
+		xine_osd_hide (bvw->priv->osd, 90000 * 8);
+	}
+
 	return TRUE;
 }
 
