@@ -477,18 +477,16 @@ totem_setup_preferences (Totem *totem)
 			(BACON_CD_SELECTION (item));
 		gconf_client_set_string (totem->gc, GCONF_PREFIX"/mediadev",
 				mediadev, NULL);
-		bacon_video_widget_set_media_device
-			(BACON_VIDEO_WIDGET (totem->bvw), mediadev);
-	} else {
-		bacon_video_widget_set_media_device
-			(BACON_VIDEO_WIDGET (totem->bvw), mediadev);
 	}
+	bacon_video_widget_set_media_device
+		(BACON_VIDEO_WIDGET (totem->bvw), mediadev);
+
+	g_signal_connect (G_OBJECT (item), "device-changed",
+			G_CALLBACK (on_combo_entry1_changed), totem);
 
 	bacon_cd_selection_set_device (BACON_CD_SELECTION (item),
 			gconf_client_get_string
 			(totem->gc, GCONF_PREFIX"/mediadev", NULL));
-	g_signal_connect (G_OBJECT (item), "device-changed",
-			G_CALLBACK (on_combo_entry1_changed), totem);
 
 	/* Connection Speed */
 	connection_speed = bacon_video_widget_get_connection_speed (totem->bvw);

@@ -1,5 +1,13 @@
 2003-12-29  Bastien Nocera  <hadess@hadess.net>
 
+	* NEWS: upd
+	* README: upd
+	* src/totem-preferences.c: (totem_setup_preferences):
+	When the media device doesn't exist, we should get it directly from
+	the selection widget (fixes problems with disappearing devices)
+
+2003-12-29  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_action_restore_pl):
 	Set the logo path if we can't restore a playlist on startup
 
