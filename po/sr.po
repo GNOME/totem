@@ -9,17 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-09 12:44+0100\n"
-"PO-Revision-Date: 2003-11-09 12:45+0100\n"
+"POT-Creation-Date: 2003-11-22 21:01+0100\n"
+"PO-Revision-Date: 2003-11-22 21:02+0100\n"
 "Last-Translator: Veljko M. Stanojevic <veljko@vms.homelinux.net>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3;    plural=n%10==1 && n%100!=11 ? 0 :    n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3;    plural=n%10==1 && n%100!=11 ? 0 :    n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1212
+#: data/playlist.glade.h:1 src/totem-playlist.c:1269
 msgid "Playlist"
 msgstr "Листа"
 
@@ -107,7 +106,7 @@ msgstr "Брзина оквира:"
 msgid "N/A"
 msgstr "Није доступно"
 
-#: data/properties.glade.h:16 src/totem.c:2078
+#: data/properties.glade.h:16 src/totem.c:2089
 msgid "Properties"
 msgstr "Особине"
 
@@ -153,7 +152,7 @@ msgstr "Преузимање додатака"
 msgid "Play movies and songs"
 msgstr "Пусти филмове и песме"
 
-#: data/totem.desktop.in.h:2 src/totem.c:3612
+#: data/totem.desktop.in.h:2 src/totem.c:3627
 msgid "Totem Movie Player"
 msgstr "Тотем"
 
@@ -530,7 +529,7 @@ msgid "Toggle the aspect ratio"
 msgstr "Промени однос гледишта"
 
 #. Title
-#: data/totem.glade.h:96 src/totem.c:733 src/totem.c:758 src/totem.c:1851
+#: data/totem.glade.h:96 src/totem.c:735 src/totem.c:760 src/totem.c:1862
 msgid "Totem"
 msgstr "Тотем"
 
@@ -972,7 +971,7 @@ msgstr "Филм „%s“ не може да се учита."
 msgid "A problem occured while loading a library or a decoder (%s)."
 msgstr "Наступио је проблем при учитавању библиотеке или декодера (%s)."
 
-#: src/bacon-video-widget-xine.c:1168
+#: src/bacon-video-widget-xine.c:1169
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -980,27 +979,31 @@ msgstr ""
 "Изгледа да је извор шифрован. Да ли покушавате да пустите шифровани DVD без "
 "libdvdcss?"
 
-#: src/bacon-video-widget-xine.c:1258
+#: src/bacon-video-widget-xine.c:1171
+msgid "This file is encrypted and cannot be played back."
+msgstr "Ова датотека је шифрована и не могу је пустити."
+
+#: src/bacon-video-widget-xine.c:1261
 msgid "There is no plugin to handle this movie"
 msgstr "Нема додатка за гледање овог филма"
 
-#: src/bacon-video-widget-xine.c:1262
+#: src/bacon-video-widget-xine.c:1265
 msgid "This movie is broken and can not be played further"
 msgstr "Овај филм је оштећен и не може се наставити"
 
-#: src/bacon-video-widget-xine.c:1266
+#: src/bacon-video-widget-xine.c:1269
 msgid "This location is not a valid one"
 msgstr "Ово није исправна локација"
 
-#: src/bacon-video-widget-xine.c:1270
+#: src/bacon-video-widget-xine.c:1273
 msgid "This movie could not be opened"
 msgstr "Овај филм не може да се отвори"
 
-#: src/bacon-video-widget-xine.c:1273
+#: src/bacon-video-widget-xine.c:1276
 msgid "Generic Error"
 msgstr "Општа грешка"
 
-#: src/bacon-video-widget-xine.c:1690
+#: src/bacon-video-widget-xine.c:1693
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1009,19 +1012,19 @@ msgstr ""
 "Видео „codec“ „%s“ није подржан. За неке врсте филмова ћете можда морати да "
 "инсталирате посебне додатке."
 
-#: src/bacon-video-widget-xine.c:1709
+#: src/bacon-video-widget-xine.c:1712
 msgid "This is an audio-only file, and there is no audio output available"
 msgstr "Ово је датотека са звуком, али нема доступног излаза за звук."
 
-#: src/bacon-video-widget-xine.c:3072
+#: src/bacon-video-widget-xine.c:3075
 msgid "Movie is not playing"
 msgstr "Филм се не приказује"
 
-#: src/bacon-video-widget-xine.c:3080
+#: src/bacon-video-widget-xine.c:3083
 msgid "No video to capture"
 msgstr "Нема видео сигнала"
 
-#: src/bacon-video-widget-xine.c:3087
+#: src/bacon-video-widget-xine.c:3090
 msgid "Video codec is not handled"
 msgstr "Видео codec није подржан"
 
@@ -1073,19 +1076,19 @@ msgstr "Лозинка:"
 msgid "Remember this password"
 msgstr "Да запамтим ову лозинку"
 
-#: src/totem-playlist.c:270
+#: src/totem-playlist.c:323
 msgid "Could not save the playlist"
 msgstr "Не могу да сачувам листу"
 
-#: src/totem-playlist.c:425 src/totem.c:1512
+#: src/totem-playlist.c:478 src/totem.c:1523
 msgid "Select files"
 msgstr "Одаберите датотеке"
 
-#: src/totem-playlist.c:590
+#: src/totem-playlist.c:643
 msgid "Save playlist"
 msgstr "Сними листу"
 
-#: src/totem-playlist.c:628
+#: src/totem-playlist.c:681
 #, c-format
 msgid ""
 "A file named '%s' already exists.\n"
@@ -1094,16 +1097,16 @@ msgstr ""
 "Датотека „%s“ већ постоји.\n"
 "Да ли сте сигурни да желите да снимите преко ње?"
 
-#: src/totem-playlist.c:811
+#: src/totem-playlist.c:864
 msgid "Filename"
 msgstr "Име датотеке"
 
-#: src/totem-pl-parser.c:210
+#: src/totem-pl-parser.c:208
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "Не могу да испишем обрађивача: %s"
 
-#: src/totem-pl-parser.c:243
+#: src/totem-pl-parser.c:272
 #, c-format
 msgid "Couldn't open parser: %s"
 msgstr "Не могу да покренем обрађивача: %s"
@@ -1157,7 +1160,7 @@ msgstr "Врста сенке"
 msgid "Style of bevel around the statusbar text"
 msgstr "Облик ивице око текста статусне линије"
 
-#: src/totem-statusbar.c:171 src/totem.c:355
+#: src/totem-statusbar.c:171 src/totem.c:357
 msgid "Stopped"
 msgstr "Заустављено"
 
@@ -1212,44 +1215,44 @@ msgstr "Стави у ред"
 msgid "Replace"
 msgstr "Замени"
 
-#: src/totem.c:228
+#: src/totem.c:230
 msgid "Download"
 msgstr "Преузимање"
 
-#: src/totem.c:341
+#: src/totem.c:343
 msgid "Playing"
 msgstr "Приказује"
 
-#: src/totem.c:348
+#: src/totem.c:350
 msgid "Paused"
 msgstr "Пауза"
 
-#: src/totem.c:384
+#: src/totem.c:386
 msgid "Totem could not eject the optical media."
 msgstr "Тотем није успео да избаци оптички диск."
 
-#: src/totem.c:384
+#: src/totem.c:386
 msgid "No reason given"
 msgstr "Разлог није наведен"
 
-#: src/totem.c:405 src/totem.c:433 src/totem.c:856 src/totem.c:975
+#: src/totem.c:407 src/totem.c:435 src/totem.c:858 src/totem.c:977
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Тотем није могао да прикаже „%s“."
 
-#: src/totem.c:453
+#: src/totem.c:455
 msgid "DVD"
 msgstr "ДВД"
 
-#: src/totem.c:454
+#: src/totem.c:456
 msgid "Video CD"
 msgstr "Видео CD"
 
-#: src/totem.c:455
+#: src/totem.c:457
 msgid "Audio CD"
 msgstr "Звучни CD"
 
-#: src/totem.c:466
+#: src/totem.c:468
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1258,7 +1261,7 @@ msgstr ""
 "Тотем не може да прикаже ову врсту медија (%s) јер немате одговарајуће "
 "додатке (plugins)."
 
-#: src/totem.c:467
+#: src/totem.c:469
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1266,7 +1269,7 @@ msgstr ""
 "Инсталирајте неопходне додатке и изнова покрените Тотем да би сте користили "
 "овај медиј."
 
-#: src/totem.c:475
+#: src/totem.c:477
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1275,7 +1278,7 @@ msgstr ""
 "Тотем није успео да пусти овај медиј (%s) иако је одговарајући додатак "
 "присутан."
 
-#: src/totem.c:476
+#: src/totem.c:478
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1283,116 +1286,116 @@ msgstr ""
 "Могли би сте проверити да ли је диск убачен и да ли је исправно подешен."
 
 #. Title
-#: src/totem.c:710
+#: src/totem.c:712
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Тотем"
 
-#: src/totem.c:722 src/totem.c:3451
+#: src/totem.c:724 src/totem.c:3466
 msgid "No file"
 msgstr "Нема датотеке"
 
-#: src/totem.c:1239
+#: src/totem.c:1241
 msgid "An error occured"
 msgstr "Дошло је до грешке"
 
-#: src/totem.c:1563 src/totem.c:1571
+#: src/totem.c:1574 src/totem.c:1582
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "Нисам успео да учитам сучеље „Отвори локацију...“."
 
-#: src/totem.c:1563 src/totem.c:1571 src/totem.c:3644 src/totem.c:3669
-#: src/totem.c:3692
+#: src/totem.c:1574 src/totem.c:1582 src/totem.c:3659 src/totem.c:3684
+#: src/totem.c:3707
 msgid "Make sure that Totem is properly installed."
 msgstr "Проверите да ли је Тотем правилно инсталиран."
 
-#: src/totem.c:1804
+#: src/totem.c:1815
 msgid "Totem could not display the help contents."
 msgstr "Тотем није могао да прикаже садржај помоћи."
 
-#: src/totem.c:1822 src/vanity.c:219
+#: src/totem.c:1833 src/vanity.c:219
 msgid "translator_credits"
 msgstr ""
 "Вељко Станојевић <veljko@vms.homelinux.net>\n"
 "\n"
 "Prevod.org — превод на српски језик."
 
-#: src/totem.c:1848
+#: src/totem.c:1859
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Прикзаивач филмова са %s"
 
-#: src/totem.c:1937 src/totem.c:1948 src/vanity.c:307 src/vanity.c:318
+#: src/totem.c:1948 src/totem.c:1959 src/vanity.c:307 src/vanity.c:318
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Слика_екрана%d.png"
 
-#: src/totem.c:1999 src/totem.c:2007
+#: src/totem.c:2010 src/totem.c:2018
 msgid "Totem could not get a screenshot of that film."
 msgstr "Тотем није успео да направи слику екрана тог филма."
 
-#: src/totem.c:2007
+#: src/totem.c:2018
 msgid "Please file a bug, this isn't supposed to happen"
 msgstr "Молим вас да пријавите грешку, ово не би смело да се догоди."
 
-#: src/totem.c:2034
+#: src/totem.c:2045
 #, c-format
 msgid "File '%s' already exists."
 msgstr "Датотека „%s“ већ постоји."
 
-#: src/totem.c:2035
+#: src/totem.c:2046
 msgid "The screenshot was not saved"
 msgstr "Слика екрана није сачувана."
 
-#: src/totem.c:2045
+#: src/totem.c:2056
 msgid "There was an error saving the screenshot."
 msgstr "Дошло је до грешке приликом снимања слике екрана."
 
-#: src/totem.c:2068
+#: src/totem.c:2079
 msgid "Totem couldn't show the movie properties window."
 msgstr "Тотем није могао да прикаже прозор са особинама филма."
 
-#: src/totem.c:2068
+#: src/totem.c:2079
 msgid "Make sure that Totem is correctly installed."
 msgstr "Проверите да ли је Тотем правилно инсталиран."
 
-#: src/totem.c:2153
+#: src/totem.c:2164
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Тотем није могао да тражи у „%s“."
 
-#: src/totem.c:2902 src/totem.c:2924
+#: src/totem.c:2913 src/totem.c:2935
 msgid "None"
 msgstr "Ништа"
 
-#: src/totem.c:2906 src/totem.c:2927
+#: src/totem.c:2917 src/totem.c:2938
 msgid "Auto"
 msgstr "Аутоматски"
 
-#: src/totem.c:3356
+#: src/totem.c:3371
 msgid "Totem could not startup."
 msgstr "Тотем није успео да се покрене."
 
-#: src/totem.c:3356 src/vanity.c:551
+#: src/totem.c:3371 src/vanity.c:551
 msgid "No reason"
 msgstr "Без разлога"
 
-#: src/totem.c:3617
+#: src/totem.c:3632
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Нисам успео да покренем thread-safe библиотеке."
 
-#: src/totem.c:3617
+#: src/totem.c:3632
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Проверите инсталацију система. Тотем ће се сада угасити."
 
-#: src/totem.c:3634
+#: src/totem.c:3649
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Тотем није успео да покрене систем подешавања."
 
-#: src/totem.c:3644 src/totem.c:3669
+#: src/totem.c:3659 src/totem.c:3684
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "Неуспело учитавање главног сучеља (totem.glade)."
 
-#: src/totem.c:3692
+#: src/totem.c:3707
 msgid "Couldn't load the interface for the playlist."
 msgstr "Неуспело учитавање сучеља за листу."
 
