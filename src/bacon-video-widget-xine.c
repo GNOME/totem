@@ -122,7 +122,9 @@ struct BaconVideoWidgetPrivate {
 	xine_t *xine;
 	xine_stream_t *stream;
 	xine_video_port_t *vo_driver;
+	gboolean vo_driver_none;
 	xine_audio_port_t *ao_driver;
+	gboolean ao_driver_none;
 	xine_event_queue_t *ev_queue;
 	double display_ratio;
 
@@ -240,7 +242,7 @@ static void bacon_video_widget_size_allocate (GtkWidget *widget,
 static xine_video_port_t * load_video_out_driver (BaconVideoWidget *bvw,
 		gboolean null_out);
 static xine_audio_port_t * load_audio_out_driver (BaconVideoWidget *bvw,
-		GError **error);
+		gboolean null_out, GError **error);
 static gboolean bacon_video_widget_tick_send (BaconVideoWidget *bvw);
 
 static GtkWidgetClass *parent_class = NULL;
@@ -540,6 +542,7 @@ load_video_out_driver (BaconVideoWidget *bvw, gboolean null_out)
 
 	if (null_out != FALSE)
 	{
+		bvw->priv->vo_driver_none = TRUE;
 		return xine_open_video_driver (bvw->priv->xine,
 				"none", XINE_VISUAL_TYPE_NONE, NULL);
 	}
@@ -607,10 +610,20 @@ load_video_out_driver (BaconVideoWidget *bvw, gboolean null_out)
 }
 
 static xine_audio_port_t *
-load_audio_out_driver (BaconVideoWidget *bvw, GError **error)
+load_audio_out_driver (BaconVideoWidget *bvw, gboolean null_out,
+		GError **error)
 {
 	xine_audio_port_t *ao_driver;
 	const char *audio_driver_id;
+
+	if (null_out != FALSE) {
+		ao_driver = xine_open_audio_driver (bvw->priv->xine,
+				"none", NULL);
+		if (ao_driver != NULL) {
+			bvw->priv->ao_driver_none = TRUE;
+		}
+		return ao_driver;
+	}
 
 	audio_driver_id = xine_config_register_string (bvw->priv->xine,
 			"audio.driver", "auto", "audio driver to use",
@@ -1098,10 +1111,11 @@ bacon_video_widget_realize (GtkWidget *widget)
 		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
 	}
 
-	bvw->priv->ao_driver = load_audio_out_driver (bvw, NULL);
+	bvw->priv->ao_driver = load_audio_out_driver (bvw, FALSE, NULL);
 
 	if (bvw->priv->type == BVW_USE_TYPE_VIDEO
-			&& bvw->priv->ao_driver != NULL)
+			&& bvw->priv->ao_driver != NULL
+			&& bvw->priv->ao_driver_none == FALSE)
 	{
 		bvw->priv->vis = xine_post_init (bvw->priv->xine,
 				bvw->priv->vis_name, 0,
@@ -1558,15 +1572,19 @@ bacon_video_widget_new (int width, int height,
 	/* load the output drivers */
 	if (type == BVW_USE_TYPE_AUDIO)
 	{
-		bvw->priv->ao_driver = load_audio_out_driver (bvw, error);
+		bvw->priv->ao_driver = load_audio_out_driver (bvw,
+				FALSE, error);
 		if (error != NULL && *error != NULL)
 			return NULL;
+	} else if (type == BVW_USE_TYPE_METADATA) {
+		bvw->priv->ao_driver = load_audio_out_driver (bvw,
+				TRUE, error);
 	}
 
 	/* We need to wait for the widget to realise if we want to
 	 * load a video output with screen output, and capture is the
 	 * only one actually needing a video output */
-	if (type == BVW_USE_TYPE_CAPTURE) {
+	if (type == BVW_USE_TYPE_CAPTURE || type == BVW_USE_TYPE_METADATA) {
 		bvw->priv->vo_driver = load_video_out_driver (bvw, TRUE);
 	}
 
@@ -2275,7 +2293,7 @@ bacon_video_widget_can_set_volume (BaconVideoWidget *bvw)
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
 	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
 
-	if (bvw->priv->ao_driver == NULL)
+	if (bvw->priv->ao_driver == NULL || bvw->priv->ao_driver_none != FALSE)
 		return FALSE;
 
 	if (xine_get_param (bvw->priv->stream,
