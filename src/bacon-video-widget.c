@@ -2123,10 +2123,11 @@ bacon_video_widget_can_get_frames (BaconVideoWidget *bvw, GError **error)
 		return FALSE;
 	}
 
-	if (xine_get_stream_info (bvw->priv->stream,
-				XINE_STREAM_INFO_VIDEO_WIDTH) == 0 ||
-			xine_get_stream_info (bvw->priv->stream,
-				XINE_STREAM_INFO_VIDEO_HEIGHT) == 0)
+	if (bvw->priv->using_vfx == FALSE
+			&& (xine_get_stream_info (bvw->priv->stream,
+				XINE_STREAM_INFO_VIDEO_WIDTH) == 0
+			|| xine_get_stream_info (bvw->priv->stream,
+				XINE_STREAM_INFO_VIDEO_HEIGHT) == 0))
 	{
 		g_set_error (error, 0, 0,
 				_("Height or width of the video is 0. "
@@ -2148,10 +2149,9 @@ bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
 	g_return_val_if_fail (bvw->priv->xine != NULL, NULL);
 
-	width = xine_get_stream_info (bvw->priv->stream,
-			XINE_STREAM_INFO_VIDEO_WIDTH);
-	height = xine_get_stream_info (bvw->priv->stream,
-			XINE_STREAM_INFO_VIDEO_HEIGHT);
+	if (xine_get_current_frame (bvw->priv->stream, &width, &height,
+			&ratio, &format, NULL) == 0)
+		return NULL;
 
 	yuv = malloc ((width + 8) * (height + 1) * 2);
 	if (yuv == NULL)
