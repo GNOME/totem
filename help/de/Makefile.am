@@ -2,7 +2,7 @@
 
 figdir = figures
 docname = totem
-lang = C
+lang = de
 omffile = totem-de.omf
 entities = totem.xml legal.xml
 
