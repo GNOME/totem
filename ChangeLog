@@ -1,3 +1,30 @@
+2005-03-21  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: remove need for libnautilus-burn
+	* data/totem.glade: removed the CD selection widget
+	* data/totem.schemas.in: remove the mediadev key
+	* src/Makefile.am:
+	* src/totem-menu.c: (totem_g_list_deep_free), (on_sub_activate),
+	(on_lang_activate), (add_item_to_menu), (create_submenu),
+	(totem_sublang_update), (on_recent_file_activate),
+	(totem_setup_recent), (totem_action_add_recent),
+	(on_play_disc_activate), (fake_gnome_vfs_device_get_something),
+	(add_device_to_menu), (on_movie_menu_select),
+	(totem_setup_play_disc):
+	* src/totem-menu.h:
+	* src/totem-preferences.c: (totem_setup_preferences):
+	* src/totem-sublang.c:
+	* src/totem-sublang.h:
+	* src/totem.c: (totem_action_set_mrl_and_play),
+	(totem_callback_connect), (main):
+	* src/totem.h: 
+
+	Rename totem-sublang.[ch] to totem-menu.[ch] and move the recent
+	files setup there
+	Adapted patch from Sam Morris <sam@robots.org.uk> to have a list
+	of CD drives in the main movie menu, rather than a "Play Disc..."
+	item (Helps: #167742)
+
 2005-03-21  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* configure.in:

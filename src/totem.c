@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* 
- * Copyright (C) 2001-2004 Bastien Nocera <hadess@hadess.net>
+ * Copyright (C) 2001-2005 Bastien Nocera <hadess@hadess.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,13 +52,11 @@
 #include "totem-time-label.h"
 #include "totem-session.h"
 #include "totem-screenshot.h"
-#include "totem-sublang.h"
+#include "totem-menu.h"
 #include "totem-options.h"
 #include "totem-uri.h"
 #include "totem-interface.h"
 #include "video-utils.h"
-
-#include "egg-recent-view.h"
 
 #include "totem.h"
 #include "totem-private.h"
@@ -347,8 +345,8 @@ totem_action_seek (Totem *totem, double pos)
 	}
 }
 
-static void
-totem_action_set_mrl_and_play (Totem *totem, char *mrl)
+void
+totem_action_set_mrl_and_play (Totem *totem, const char *mrl)
 {
 	if (totem_action_set_mrl (totem, mrl) != FALSE)
 		totem_action_play (totem);
@@ -1077,33 +1075,6 @@ on_playlist_button_toggled (GtkToggleButton *button, Totem *totem)
 }
 
 static void
-on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
-                         Totem *totem)
-{
-	char *uri;
-	gboolean playlist_changed;
-	guint end;
-
-	uri = egg_recent_item_get_uri (item);
-
-	end = totem_playlist_get_last (totem->playlist);
-	playlist_changed = totem_playlist_add_mrl (totem->playlist, uri, NULL);
-	egg_recent_model_add_full (totem->recent_model, item);
-
-	if (playlist_changed)
-	{
-		char *mrl;
-
-		totem_playlist_set_current (totem->playlist, end + 1);
-		mrl = totem_playlist_get_current_mrl (totem->playlist);
-		totem_action_set_mrl_and_play (totem, mrl);
-		g_free (mrl);
-	}
-
-	g_free (uri);
-}
-
-static void
 on_got_redirect (BaconVideoWidget *bvw, const char *mrl, Totem *totem)
 {
 	g_message ("on_got_redirect %s", mrl);
@@ -1380,19 +1351,6 @@ vol_cb (GtkWidget *widget, Totem *totem)
 }
 
 static void
-totem_action_add_recent (Totem *totem, const char *filename)
-{
-	EggRecentItem *item;
-
-	if (strstr (filename, "file:///") == NULL)
-		return;
-
-	item = egg_recent_item_new_from_uri (filename);
-	egg_recent_item_add_group (item, "Totem");
-	egg_recent_model_add_full (totem->recent_model, item);
-}
-
-static void
 totem_add_cd_track_name (Totem *totem, const char *filename)
 {
 	char *name;
@@ -1605,37 +1563,6 @@ on_open_location1_activate (GtkButton *button, Totem *totem)
 
 	gtk_widget_destroy (dialog);
 	g_object_unref (glade);
-}
-
-static void
-on_play_disc1_activate (GtkButton *button, Totem *totem)
-{
-	MediaType type;
-	GError *error = NULL;
-	const gchar *device;
-
-	device = gconf_client_get_string (totem->gc,
-					  GCONF_PREFIX"/mediadev", NULL);
-	type = totem_cd_detect_type (device, &error);
-	switch (type) {
-		case MEDIA_TYPE_ERROR:
-			totem_action_error ("Failed to play Audio/Video Disc",
-					    error ? error->message : "Reason unknown",
-					    totem);
-			return;
-		case MEDIA_TYPE_DATA:
-			/* Maybe set default location to the mountpoint of
-			 * this device?... */
-			on_open1_activate (button, totem);
-			return;
-		case MEDIA_TYPE_DVD:
-		case MEDIA_TYPE_VCD:
-		case MEDIA_TYPE_CDDA:
-			totem_action_play_media (totem, type);
-			break;
-		default:
-			g_assert_not_reached ();
-	}
 }
 
 static void
@@ -2862,9 +2789,6 @@ totem_callback_connect (Totem *totem)
 			"tmw_open_location_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_open_location1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_play_disc_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_play_disc1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "tmw_eject_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_eject1_activate), totem);
@@ -3345,39 +3269,6 @@ totem_time_display_create (void)
 }
 
 static void
-totem_setup_recent (Totem *totem)
-{
-	GtkWidget *menu_item;
-	GtkWidget *menu;
-
-	menu_item = glade_xml_get_widget (totem->xml, "tmw_menu_item_movie");
-	menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu_item));
-	menu_item = glade_xml_get_widget (totem->xml,
-			"tmw_menu_recent_separator");
-
-	g_return_if_fail (menu != NULL);
-	g_return_if_fail (menu_item != NULL);
-
-	/* it would be better if we just filtered by mime-type, but there
-	 * doesn't seem to be an easy way to figure out which mime-types we
-	 * can handle */
-	totem->recent_model = egg_recent_model_new (EGG_RECENT_MODEL_SORT_MRU);
-
-	totem->recent_view = egg_recent_view_gtk_new (menu, menu_item);
-	egg_recent_view_gtk_show_icons (EGG_RECENT_VIEW_GTK
-			(totem->recent_view), FALSE);
-	egg_recent_model_set_limit (totem->recent_model, 5);
-	egg_recent_view_set_model (EGG_RECENT_VIEW (totem->recent_view),
-			totem->recent_model);
-	egg_recent_model_set_filter_groups (totem->recent_model,
-			"Totem", NULL);
-	egg_recent_view_gtk_set_trailing_sep (totem->recent_view, TRUE);
-
-	g_signal_connect (totem->recent_view, "activate",
-			G_CALLBACK (on_recent_file_activate), totem);
-}
-
-static void
 totem_message_connection_receive_cb (const char *msg, Totem *totem)
 {
 	char *command_str, *url;
@@ -3520,6 +3411,7 @@ main (int argc, char **argv)
 
 	totem_session_setup (totem, argv);
 	totem_setup_recent (totem);
+	totem_setup_play_disc (totem);
 	totem_callback_connect (totem);
 	totem_setup_window (totem);
 	totem_setup_file_monitoring (totem);

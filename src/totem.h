@@ -48,6 +48,9 @@ void	totem_action_seek_relative		(Totem *totem, int off_sec);
 void	totem_action_volume_relative		(Totem *totem, int off_pct);
 gboolean totem_action_set_mrl			(Totem *totem,
 						 const char *mrl);
+void	totem_action_set_mrl_and_play		(Totem *totem,
+						 const char *mrl);
+
 gboolean totem_action_set_mrl_with_warning	(Totem *totem,
 						 const char *mrl,
 						 gboolean warn);

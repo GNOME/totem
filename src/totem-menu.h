@@ -1,6 +1,6 @@
-/* totem-sublang.h
+/* totem-menu.h
 
-   Copyright (C) 2004 Bastien Nocera <hadess@hadess.net>
+   Copyright (C) 2004-2005 Bastien Nocera <hadess@hadess.net>
 
    The Gnome Library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public License as
@@ -28,6 +28,11 @@
 G_BEGIN_DECLS
 
 void totem_sublang_update (Totem *totem);
+
+void totem_setup_play_disc (Totem *totem);
+
+void totem_setup_recent (Totem *totem);
+void totem_action_add_recent (Totem *totem, const char *filename);
 
 G_END_DECLS
 
