@@ -2916,34 +2916,6 @@ bacon_video_widget_get_aspect_ratio (BaconVideoWidget *bvw)
 	return xine_get_param (bvw->priv->stream, XINE_PARAM_VO_ASPECT_RATIO);
 }
 
-static gboolean
-bacon_video_widget_ratio_fits_screen (BaconVideoWidget *bvw, gfloat ratio)
-{
-	GdkRectangle fullscreen_rect;
-	int new_w, new_h;
-
-	g_return_val_if_fail (bvw != NULL, FALSE);
-	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
-
-	new_w = bvw->priv->video_width * ratio;
-	new_h = bvw->priv->video_height * ratio;
-
-	gdk_screen_get_monitor_geometry (gdk_screen_get_default (),
-			gdk_screen_get_monitor_at_window
-			(gdk_screen_get_default (),
-			 bvw->priv->video_window),
-			&fullscreen_rect);
-
-	if (new_w > (fullscreen_rect.width - 128) ||
-			new_h > (fullscreen_rect.height - 128))
-	{
-		return FALSE;
-	}
-
-	return TRUE;
-}
-
 void
 bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 {
@@ -2961,13 +2933,13 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 	/* Try best fit for the screen */
 	if (ratio == 0)
 	{
-		if (bacon_video_widget_ratio_fits_screen (bvw, 2) != FALSE)
+		if (totem_ratio_fits_screen (bvw->priv->video_window, bvw->priv->video_width, bvw->priv->video_height, 2) != FALSE)
 		{
 			ratio = 2;
-		} else if (bacon_video_widget_ratio_fits_screen (bvw, 1)
+		} else if (totem_ratio_fits_screen (bvw->priv->video_window, bvw->priv->video_width, bvw->priv->video_height, 1)
 				!= FALSE) {
 			ratio = 1;
-		} else if (bacon_video_widget_ratio_fits_screen (bvw, 0.5)
+		} else if (totem_ratio_fits_screen (bvw->priv->video_window, bvw->priv->video_width, bvw->priv->video_height, 0.5)
 				!= FALSE) {
 			ratio = 0.5;
 		} else {
@@ -2976,7 +2948,7 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 	} else {
 		/* don't scale to something bigger than the screen, and leave
 		 * us some room */
-		if (bacon_video_widget_ratio_fits_screen (bvw, ratio) == FALSE)
+		if (totem_ratio_fits_screen (bvw->priv->video_window, bvw->priv->video_width, bvw->priv->video_height, ratio) == FALSE)
 			return;
 	}
 

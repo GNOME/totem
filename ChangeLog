@@ -1,5 +1,13 @@
 2004-10-07  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_set_scale_ratio):
+	* src/video-utils.c: (totem_ratio_fits_screen):
+	* src/video-utils.h: move bacon_video_widget_ratio_fits_screen to
+	totem_ratio_fits_screen, from the xine-lib backend to the video-utils.[ch]
+
+2004-10-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c: (bacon_video_widget_new),
 	(bacon_video_widget_size_request),
 	(bacon_video_widget_set_scale_ratio): use

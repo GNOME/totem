@@ -394,3 +394,31 @@ totem_widget_set_preferred_size (GtkWidget *widget, gint width,
 
   gtk_widget_queue_resize (widget);
 }
+
+gboolean
+totem_ratio_fits_screen (GdkWindow *video_window, int video_width,
+			 int video_height, gfloat ratio)
+{
+	GdkRectangle fullscreen_rect;
+	int new_w, new_h;
+
+	g_return_val_if_fail (video_width > 0, FALSE);
+	g_return_val_if_fail (video_height > 0, FALSE);
+
+	new_w = video_width * ratio;
+	new_h = video_height * ratio;
+
+	gdk_screen_get_monitor_geometry (gdk_screen_get_default (),
+			gdk_screen_get_monitor_at_window
+			(gdk_screen_get_default (),
+			 video_window),
+			&fullscreen_rect);
+
+	if (new_w > (fullscreen_rect.width - 128) ||
+			new_h > (fullscreen_rect.height - 128))
+	{
+		return FALSE;
+	}
+
+	return TRUE;
+}

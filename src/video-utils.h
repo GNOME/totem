@@ -19,3 +19,6 @@ char *totem_time_to_string_text (gint64 msecs);
 
 void totem_widget_set_preferred_size (GtkWidget *widget, gint width,
 				      gint height);
+gboolean totem_ratio_fits_screen (GdkWindow *window, int video_width,
+				  int video_height, gfloat ratio);
+
