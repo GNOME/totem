@@ -1228,6 +1228,7 @@ xine_event (void *user_data, const xine_event_t *event)
 		ref = event->data;
 		bacon_video_widget_close (bvw);
 		bacon_video_widget_open (bvw, ref->mrl, NULL);
+		bacon_video_widget_play (bvw, NULL);
 		break;
 	case XINE_EVENT_UI_MESSAGE:
 		xine_event_message (bvw, (xine_ui_message_data_t *)event->data);

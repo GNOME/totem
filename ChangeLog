@@ -1,3 +1,10 @@
+2003-11-02  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-xine.c: (xine_event): when getting we
+	get a reference MRL from xine, that means we're playing, so play
+	the file straight away (fixes playback of most of the trailers
+	on the Apple website)
+
 2003-10-25  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-pl-parser.c: (totem_pl_parser_add_m3u):
