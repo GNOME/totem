@@ -563,6 +563,12 @@ totem_setup_preferences (Totem *totem)
 			totem, NULL, NULL);
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_deinterlace1_activate), totem);
+
+	/* Always On Top */
+	item = glade_xml_get_widget (totem->xml, "tmw_always_on_top_menu_item");
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
+			gconf_client_get_bool (totem->gc,
+				GCONF_PREFIX"/window_on_top", NULL));
 }
 
 void
@@ -620,3 +626,4 @@ totem_preferences_visuals_setup (Totem *totem)
 
 	bacon_video_widget_set_visuals (totem->bvw, visual);
 }
+

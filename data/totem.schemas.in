@@ -148,12 +148,25 @@
 	    "0" for stereo,
 	    "1" for 4-channel output, 
 	    "2" for 5.0 channel output,
-	    "3" for 5.1 channel output.
+	    "3" for 5.1 channel output,
+	    "4" for AC3 Passthrough.
 	  </long>
 	</locale>
       </schema>
 
-
+      <schema>
+        <key>/schemas/apps/totem/window_on_top</key>
+	<applyto>/apps/totem/window_on_top</applyto>
+	<owner>totem</owner>
+	<type>bool</type>
+	<default>false</default>
+	<locale name="C">
+	  <short>Whether the main window should stay on top</short>
+	  <long>
+	    Whether the main window should stay on top of the other ones
+	  </long>
+	</locale>
+      </schema>
 
   </schemalist>
 </gconfschemafile>

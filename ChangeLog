@@ -1,5 +1,16 @@
 2003-07-30  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.schemas.in: added "window_on_top" item, updated docs
+	for the audio output
+	* src/totem-preferences.c: (totem_setup_preferences):
+	* src/totem.c: (gui_update_cb), (on_always_on_top1_activate),
+	(popup_hide), (on_video_button_press_event),
+	(totem_action_handle_key), (totem_callback_connect),
+	(totem_setup_recent): remember the "Always On Top" setting across
+	sessions (Closes: #114162)
+
+2003-07-30  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-resize.c: (bacon_resize_init): disable xrandr's
 	automatic resize, it's broken :/
 	* src/totem.c: (totem_action_exit): switch off fullscreen in the

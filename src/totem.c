@@ -1351,23 +1351,13 @@ update_volume_sliders (Totem *totem)
 }
 
 static int
-update_cb_often (Totem *totem)
-{
-	if (totem->bvw == NULL)
-		return TRUE;
-
-	update_volume_sliders (totem);
-
-	return TRUE;
-}
-
-static int
-update_cb_rare (Totem *totem)
+gui_update_cb (Totem *totem)
 {
 	if (totem->bvw == NULL)
 		return TRUE;
 
 	update_seekable (totem, FALSE);
+	update_volume_sliders (totem);
 
 	return TRUE;
 }
@@ -1719,6 +1709,9 @@ on_always_on_top1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 {
 	totem_gdk_window_set_always_on_top (GTK_WIDGET (totem->win)->window,
 			gtk_check_menu_item_get_active (checkmenuitem));
+	gconf_client_set_bool (totem->gc,
+			GCONF_PREFIX"/window_on_top",
+			gtk_check_menu_item_get_active (checkmenuitem), NULL);
 }
 
 static void
@@ -2354,8 +2347,12 @@ size_changed_cb (GdkScreen *screen, Totem *totem)
 static gboolean
 popup_hide (Totem *totem)
 {
-	if (totem->bvw == NULL || totem->controls_visibility != TOTEM_CONTROLS_FULLSCREEN)
+	if (totem->bvw == NULL
+			|| totem->controls_visibility
+			!= TOTEM_CONTROLS_FULLSCREEN)
+	{
 		return TRUE;
+	}
 
 	if (totem->seek_lock == TRUE)
 		return TRUE;
@@ -2443,7 +2440,8 @@ on_video_button_press_event (GtkButton *button, GdkEventButton *event,
 	{
 		GtkWidget *menu;
 
-		menu = glade_xml_get_widget (totem->xml, "totem_right_click_menu");
+		menu = glade_xml_get_widget (totem->xml,
+				"totem_right_click_menu");
 		gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
 				event->button, event->time);
 
@@ -2524,7 +2522,8 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 			gboolean value;
 
 			item = GTK_CHECK_MENU_ITEM (glade_xml_get_widget
-					(totem->xml, "tmw_show_controls_menu_item"));
+					(totem->xml,
+					 "tmw_show_controls_menu_item"));
 			value = gtk_check_menu_item_get_active (item);
 			gtk_check_menu_item_set_active (item, !value);
 		}
@@ -2536,7 +2535,8 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 			gboolean value;
 
 			item = GTK_CHECK_MENU_ITEM (glade_xml_get_widget
-					(totem->xml, "tmw_deinterlace_menu_item"));
+					(totem->xml,
+					 "tmw_deinterlace_menu_item"));
 			value = gtk_check_menu_item_get_active (item);
 			gtk_check_menu_item_set_active (item, !value);
 		}
@@ -2957,7 +2957,8 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "tmw_zoom_2_1_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_zoom_2_1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_toggle_aspect_ratio_menu_item");
+	item = glade_xml_get_widget (totem->xml,
+			"tmw_toggle_aspect_ratio_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_toggle_aspect_ratio1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "tmw_show_playlist_menu_item");
@@ -2974,7 +2975,8 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "tmw_about_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_about1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_take_screenshot_menu_item");
+	item = glade_xml_get_widget (totem->xml,
+			"tmw_take_screenshot_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_take_screenshot1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "tmw_preferences_menu_item");
@@ -3186,13 +3188,15 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "tmw_next_chapter_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_next_button_clicked), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_previous_chapter_menu_item");
+	item = glade_xml_get_widget (totem->xml,
+			"tmw_previous_chapter_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_previous_button_clicked), totem);
 	item = glade_xml_get_widget (totem->xml, "tmw_skip_forward_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_skip_forward1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_skip_backwards_menu_item");
+	item = glade_xml_get_widget (totem->xml,
+			"tmw_skip_backwards_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_skip_backwards1_activate), totem);
 
@@ -3213,8 +3217,7 @@ totem_callback_connect (Totem *totem)
 	g_object_ref (item);
 
 	/* Update the UI */
-	gtk_timeout_add (600, (GtkFunction) update_cb_often, totem);
-	gtk_timeout_add (1200, (GtkFunction) update_cb_rare, totem);
+	gtk_timeout_add (600, (GtkFunction) gui_update_cb, totem);
 }
 
 static void
@@ -3358,7 +3361,8 @@ totem_setup_recent (Totem *totem)
 
 	menu_item = glade_xml_get_widget (totem->xml, "tmw_menu_item_movie");
 	menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu_item));
-	menu_item = glade_xml_get_widget (totem->xml, "tmw_menu_recent_separator");
+	menu_item = glade_xml_get_widget (totem->xml,
+			"tmw_menu_recent_separator");
 
 	g_return_if_fail (menu != NULL);
 	g_return_if_fail (menu_item != NULL);
