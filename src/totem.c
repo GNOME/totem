@@ -412,6 +412,12 @@ action_toggle_aspect_ratio (Totem *totem)
 }
 
 static void
+action_set_scale_ratio (Totem *totem, gfloat ratio)
+{
+	gtk_xine_set_scale_ratio (GTK_XINE (totem->gtx), ratio);
+}
+
+static void
 drop_cb (GtkWidget     *widget,
 	 GdkDragContext     *context,
 	 gint                x,
@@ -633,7 +639,7 @@ action_open_files (Totem *totem, char **list, gboolean ignore_first)
 }
 
 static void
-on_open1_activate (GtkButton * button, gpointer user_data)
+on_open1_activate (GtkButton *button, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 	GtkWidget *fs;
@@ -663,7 +669,7 @@ on_open1_activate (GtkButton * button, gpointer user_data)
 }
 
 static void
-on_play1_activate (GtkButton * button, gpointer user_data)
+on_play1_activate (GtkButton *button, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 
@@ -671,7 +677,7 @@ on_play1_activate (GtkButton * button, gpointer user_data)
 }
 
 static void
-on_full_screen1_activate (GtkButton * button, gpointer user_data)
+on_full_screen1_activate (GtkButton *button, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 
@@ -679,7 +685,32 @@ on_full_screen1_activate (GtkButton * button, gpointer user_data)
 }
 
 static void
-on_toggle_aspect_ratio1_activate (GtkButton * button, gpointer user_data)
+on_zoom_1_2_activate (GtkButton *button, gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+
+	action_set_scale_ratio (totem, 0.5); 
+}
+
+static void
+on_zoom_1_1_activate (GtkButton *button, gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+
+	action_set_scale_ratio (totem, 1);
+}
+
+static void
+on_zoom_2_1_activate (GtkButton *button, gpointer user_data)
+{                       
+	Totem *totem = (Totem *) user_data;
+
+	action_set_scale_ratio (totem, 2);
+}
+
+
+static void
+on_toggle_aspect_ratio1_activate (GtkButton *button, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 
@@ -687,7 +718,7 @@ on_toggle_aspect_ratio1_activate (GtkButton * button, gpointer user_data)
 }
 
 static void
-on_show_playlist1_activate (GtkButton * button, gpointer user_data)
+on_show_playlist1_activate (GtkButton *button, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 	GtkWidget *toggle;
@@ -700,7 +731,7 @@ on_show_playlist1_activate (GtkButton * button, gpointer user_data)
 }
 
 static void
-on_fs_exit1_activate (GtkButton * button, gpointer user_data)
+on_fs_exit1_activate (GtkButton *button, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 
@@ -709,13 +740,13 @@ on_fs_exit1_activate (GtkButton * button, gpointer user_data)
 }
 
 static void
-on_quit1_activate (GtkButton * button, gpointer user_data)
+on_quit1_activate (GtkButton *button, gpointer user_data)
 {
 	action_exit ((Totem *) user_data);
 }
 
 static void
-on_about1_activate (GtkButton * button, gpointer user_data)
+on_about1_activate (GtkButton *button, gpointer user_data)
 {
 	static GtkWidget *about = NULL;
 	Totem *totem = (Totem *) user_data;
@@ -987,6 +1018,18 @@ on_window_key_press_event (GtkWidget *win, GdkEventKey *event,
 		action_exit (totem);
 		retval = TRUE;
 		break;
+	case GDK_0:
+		action_set_scale_ratio (totem, 0.5);
+		retval = TRUE;
+		break;
+	case GDK_1:
+		action_set_scale_ratio (totem, 1);
+		retval = TRUE;
+		break;
+	case GDK_2:
+		action_set_scale_ratio (totem, 2);
+		retval = TRUE;
+		break;
 	}
 
 	return retval;
@@ -1028,6 +1071,15 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "fullscreen1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_full_screen1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "zoom_1_2");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_zoom_1_2_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "zoom_1_1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_zoom_1_1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "zoom_2_1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_zoom_2_1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "toggle_aspect_ratio1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_toggle_aspect_ratio1_activate),

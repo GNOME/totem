@@ -81,11 +81,7 @@ gboolean gtk_xine_get_show_cursor      (GtkXine *gtx);
 
 void gtk_xine_set_audio_channel        (GtkXine *gtx, gint audio_channel);
 gint gtk_xine_get_audio_channel        (GtkXine *gtx);
-#if 0
-void gtk_xine_set_video_property       (GtkXine *gtx,
-				        gint property, gint value);
-gint gtk_xine_get_video_property       (GtkXine *gtx, gint property);
-#endif
+
 void gtk_xine_toggle_aspect_ratio      (GtkXine *gtx);
 void gtk_xine_set_scale_ratio          (GtkXine *gtx, gfloat ratio);
 
@@ -97,11 +93,7 @@ gboolean gtk_xine_is_seekable          (GtkXine *gtx);
 
 //gchar **gtk_xine_get_autoplay_plugins  (GtkXine *gtx);
 
-#if 0
-gint gtk_xine_get_log_section_count    (GtkXine *gtx);
-gchar **gtk_xine_get_log_names         (GtkXine *gtx);
-gchar **gtk_xine_get_log               (GtkXine *gtx, gint buf);
-#endif
+
 G_END_DECLS
 
 #endif				/* HAVE_GTK_XINE_H */

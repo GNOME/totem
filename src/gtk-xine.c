@@ -36,6 +36,7 @@
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 #include <gtk/gtkwidget.h>
+#include <gtk/gtkwindow.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkinvisible.h>
 #include <libgnome/gnome-i18n.h>
@@ -905,7 +906,7 @@ gtk_xine_expose (GtkWidget * widget, GdkEventExpose * event)
 }
 
 static void
-gtk_xine_size_allocate (GtkWidget * widget, GtkAllocation * allocation)
+gtk_xine_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 {
 	GtkXine *gtx;
 
@@ -929,7 +930,7 @@ gtk_xine_size_allocate (GtkWidget * widget, GtkAllocation * allocation)
 }
 
 gint
-gtk_xine_play (GtkXine * gtx, gchar * mrl, gint pos, gint start_time)
+gtk_xine_play (GtkXine *gtx, gchar *mrl, gint pos, gint start_time)
 {
 	int error;
 
@@ -1393,5 +1394,49 @@ gtk_xine_toggle_aspect_ratio (GtkXine *gtx)
 void
 gtk_xine_set_scale_ratio (GtkXine *gtx, gfloat ratio)
 {
+	GtkWindow *toplevel;
+	uint8_t *y, *u, *v;
+	int width, height, ratio_code, format;
+	int new_w, new_h;
+
+	y = u = v = NULL;
+
+	if (gtx->priv->fullscreen_mode == TRUE)
+		return;
+
+	if (xine_get_current_frame(gtx->priv->xine,
+				&width, &height, &ratio_code, &format,
+				&y, &u, &v) == 0)
+		return;
+
+	D ("Orig width: %d height: %d", width, height);
+
+	new_w = width * ratio;
+	new_h = height * ratio;
+
+	D ("New width: %d height: %d", new_w, new_h);
+
+	/* y, u and v don't need to be freed apparently */
+/*FIXME	g_free (y);
+	g_free (u);
+	g_free (v);*/
+
+	/* don't scale to something bigger than the screen, and leave us
+	 * some room */
+	if (new_w > (gdk_screen_width () - 128) ||
+			new_h > (gdk_screen_height () - 128))
+		return;
+
+	toplevel = GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (gtx)));
+
+	gtk_window_set_resizable (toplevel, FALSE);
+	gtx->widget.allocation.width = new_w;
+	gtx->widget.allocation.height = new_h;
+	gtk_widget_set_size_request (gtk_widget_get_parent (GTK_WIDGET (gtx)),
+			new_w, new_h);
+	gtk_widget_queue_resize (gtk_widget_get_parent (GTK_WIDGET (gtx)));
+	while (gtk_events_pending ())
+		gtk_main_iteration ();
+	gtk_window_set_resizable (toplevel, TRUE);
 }
 

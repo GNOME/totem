@@ -1,5 +1,16 @@
 2002-08-24  Bastien Nocera  <hadess@hadess.net>
 
+	* README:
+	* data/totem.glade: added 1:2 zoom
+	* src/gtk-xine.c: (gtk_xine_set_scale_ratio): implement with mucho
+	hackery... but it works (whee!)
+	* src/gtk-xine.h:
+	* src/totem.c: (action_set_scale_ratio), (on_zoom_1_2_activate),
+	(on_zoom_1_1_activate), (on_zoom_2_1_activate): implement these
+	and add the 0,1 and 2 shortcuts
+
+2002-08-24  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am:
 	* src/gtk-xine.c: 
 	* src/video-utils.c: (xwindow_set_fullscreen):
