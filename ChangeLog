@@ -1,5 +1,13 @@
 2003-06-20  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (totem_action_set_mrl), (on_got_metadata_event),
+	(update_dvd_menu_sub_lang): set the labels and playlist items when
+	we get the metadata properly, fixes setting the labels with both
+	backends, update subtitles and audio menus on non-DVDs as well,
+	fixes OGM subtitles
+
+2003-06-20  Bastien Nocera  <hadess@hadess.net>
+
 	* README: updated with the latest fixes
 
 2003-06-16  Julien MOUTTE <julien@moutte.net>

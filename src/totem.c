@@ -772,8 +772,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 
 		update_mrl_label (totem, NULL);
 	} else {
-		char *name;
-		gboolean caps, custom, first_try;
+		gboolean caps, first_try;
 		GError *err = NULL;
 
 		first_try = TRUE;
@@ -782,14 +781,6 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 try_open_again:
 		retval = bacon_video_widget_open (totem->bvw, mrl, &err);
 		totem->mrl = g_strdup (mrl);
-		custom = FALSE;
-		name = totem_get_nice_name_for_stream (totem);
-		if (name == NULL)
-		{
-			name = gtk_playlist_get_current_title
-				(totem->playlist,
-				 &custom);
-		}
 
 		/* Play/Pause */
 		gtk_widget_set_sensitive (totem->pp_button, TRUE);
@@ -798,13 +789,6 @@ try_open_again:
 		widget = glade_xml_get_widget (totem->xml, "trcm_play");
 		gtk_widget_set_sensitive (widget, TRUE);
 		gtk_widget_set_sensitive (totem->fs_pp_button, TRUE);
-
-		update_mrl_label (totem, name);
-		if (custom == FALSE)
-		{
-			gtk_playlist_set_title
-				(GTK_PLAYLIST (totem->playlist), name);
-		}
 
 		/* Seek bar */
 		update_seekable (totem, FALSE);
@@ -822,8 +806,6 @@ try_open_again:
 
 		/* Set the playlist */
 		gtk_playlist_set_playing (totem->playlist, retval);
-
-		g_free (name);
 
 		if (retval == FALSE && first_try == TRUE)
 		{
@@ -1191,15 +1173,24 @@ static void
 on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 {
         char *name = NULL;
+	gboolean custom;
 
         bacon_video_widget_properties_update
 		(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
 		 totem->bvw, FALSE);
         name = totem_get_nice_name_for_stream (totem);
-        update_mrl_label (totem, name);
-        gtk_playlist_set_title (GTK_PLAYLIST (totem->playlist), name);
-        if (name)
-                g_free (name);
+	if (name == NULL)
+	{
+		name = gtk_playlist_get_current_title
+			(totem->playlist,
+			 &custom);
+	}
+
+	update_mrl_label (totem, name);
+
+	if (custom == FALSE)
+		gtk_playlist_set_title (GTK_PLAYLIST (totem->playlist), name);
+	g_free (name);
 }
 
 static int
@@ -2849,23 +2840,23 @@ update_dvd_menu_sub_lang (Totem *totem)
 	GtkWidget *item, *submenu;
 	gboolean playing_dvd;
 	GtkWidget *lang_menu, *sub_menu;
+	GList *list;
+	int current;
 
 	lang_menu = NULL;
 	sub_menu = NULL;
 
-	playing_dvd = totem_playing_dvd (totem);
-
-	if (playing_dvd != FALSE)
+	list = bacon_video_widget_get_languages (totem->bvw);
+	if (list != NULL)
 	{
-		GList *list;
-		int current;
-
-		list = bacon_video_widget_get_languages (totem->bvw);
 		current = bacon_video_widget_get_language (totem->bvw);
 		lang_menu = create_submenu (totem, list, current, TRUE);
 		totem_g_list_deep_free (list);
+	}
 
-		list = bacon_video_widget_get_subtitles (totem->bvw);
+	list = bacon_video_widget_get_subtitles (totem->bvw);
+	if (list != NULL)
+	{
 		current = bacon_video_widget_get_subtitle (totem->bvw);
 		sub_menu = create_submenu (totem, list, current, FALSE);
 		totem_g_list_deep_free (list);
