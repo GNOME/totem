@@ -397,6 +397,7 @@ totem_plugin_get_value (NPP instance, NPPVariable variable,
 	default:
 		g_message ("unhandled variable %d", variable);
 		err = NPERR_INVALID_PARAM;
+		break;
 	}
 
 	return err;
