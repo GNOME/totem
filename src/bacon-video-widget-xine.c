@@ -793,6 +793,11 @@ setup_config_video (BaconVideoWidget *bvw)
 	bvw_config_help_num (bvw->priv->xine, "video.xv_colorkey", 30, &entry);
 	entry.num_value = 30;
 	xine_config_update_entry (bvw->priv->xine, &entry);
+
+	/* Remove the ALSA HW mixing */
+	bvw_config_help_num (bvw->priv->xine, "audio.alsa_hw_mixer", 0, &entry);
+	entry.num_value = 0;
+	xine_config_update_entry (bvw->priv->xine, &entry);
 }
 
 static void
@@ -1036,7 +1041,9 @@ bacon_video_widget_realize (GtkWidget *widget)
 	xine_dispose (bvw->priv->stream);
 
 	if (bvw->priv->vo_driver != NULL)
-		xine_close_video_driver(bvw->priv->xine, bvw->priv->vo_driver);
+		xine_close_video_driver (bvw->priv->xine, bvw->priv->vo_driver);
+	if (bvw->priv->ao_driver != NULL)
+		xine_close_audio_driver (bvw->priv->xine, bvw->priv->ao_driver);
 
 	/* Create the widget's window */
 	attr.x = widget->allocation.x;
@@ -1076,6 +1083,7 @@ bacon_video_widget_realize (GtkWidget *widget)
 			(gdk_display_get_default ()));
 	bvw->priv->screen = DefaultScreen (bvw->priv->display);
 
+	bvw->priv->ao_driver = load_audio_out_driver (bvw, NULL);
 	bvw->priv->vo_driver = load_video_out_driver (bvw, bvw->priv->null_out);
 	//FIXME
 	g_assert (bvw->priv->vo_driver != NULL);
@@ -1220,8 +1228,7 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 
 	if (message == NULL)
 	{
-		D("xine_event_message: unhandled error\n"
-				"type: %d", data->type);
+		D("xine_event_message: unhandled error\ntype: %d", data->type);
 		return;
 	}
 
@@ -1439,7 +1446,7 @@ bacon_video_widget_new (int width, int height, gboolean null_out, GError **err)
 	bvw->priv->init_width = width;
 	bvw->priv->init_height = height;
 
-	/* load the video drivers */
+	/* load the output drivers */
 	bvw->priv->ao_driver = load_audio_out_driver (bvw, err);
 	if (err != NULL && *err != NULL)
 		return NULL;

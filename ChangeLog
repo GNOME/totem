@@ -1,5 +1,13 @@
 2004-03-20  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-xine.c: (setup_config_video),
+	(bacon_video_widget_realize), (xine_event_message),
+	(bacon_video_widget_new): do not re-use the sound driver when creating
+	a new stream, disable ALSA's event thread with current xine-lib
+	CVS (Closes: #122120)
+
+2004-03-20  Bastien Nocera  <hadess@hadess.net>
+
 	* NEWS: removed duplicate entry
 	* src/bacon-video-widget-xine.c: (load_video_out_driver):
 	* src/totem-preferences.c: (on_checkbutton2_toggled),
