@@ -1,5 +1,13 @@
 2004-09-14  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-remote.h:
+	* src/totem.c: (totem_action_remote), (process_options),
+	(process_command_line_early), (process_command_line), (main):
+	make --debug actually work for the instance that's being started,
+	add a "--toggle-controls" command-line option (Closes: #152355)
+
+2004-09-14  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (process_command_line_quit), (main):
 	make "totem --quit" just exit if there's no running Totem instance
 	(Closes: #152360)

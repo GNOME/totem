@@ -87,6 +87,7 @@ static struct poptOption options[] = {
 	{"volume-up", '\0', POPT_ARG_NONE, NULL, 0, N_("Volume Up"), NULL},
 	{"volume-down", '\0', POPT_ARG_NONE, NULL, 0, N_("Volume Down"), NULL},
 	{"fullscreen", '\0', POPT_ARG_NONE, NULL, 0, N_("Toggle Fullscreen"), NULL},
+	{"toggle-controls", '\0', POPT_ARG_NONE, NULL, 0, N_("Show/Hide Controls"), NULL},
 	{"quit", '\0', POPT_ARG_NONE, NULL, 0, N_("Quit"), NULL},
 	{"enqueue", '\0', POPT_ARG_NONE, NULL, 0, N_("Enqueue"), NULL},
 	{"replace", '\0', POPT_ARG_NONE, NULL, 0, N_("Replace"), NULL},
@@ -2266,6 +2267,19 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 	case TOTEM_REMOTE_COMMAND_SHOW:
 		gtk_window_present (GTK_WINDOW (totem->win));
 		break;
+	case TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS:
+		if (totem->controls_visibility != TOTEM_CONTROLS_FULLSCREEN)
+		{
+			GtkCheckMenuItem *item;
+			gboolean value;
+
+			item = GTK_CHECK_MENU_ITEM (glade_xml_get_widget
+					(totem->xml,
+					 "tmw_show_controls_menu_item"));
+			value = gtk_check_menu_item_get_active (item);
+			gtk_check_menu_item_set_active (item, !value);
+		}
+		break;
 	default:
 		break;
 	}
@@ -3598,9 +3612,6 @@ process_options (Totem *totem, int *argc, char ***argv)
 	{
 		if (strcmp (args[i], "--debug") == 0)
 		{
-			gconf_client_set_bool (totem->gc,
-					GCONF_PREFIX"/debug",
-					TRUE, NULL);
 			options++;
 		} else if (strcmp (args[i], "--fullscreen") == 0) {
 			totem_action_fullscreen_toggle (totem);
@@ -3617,13 +3628,24 @@ process_options (Totem *totem, int *argc, char ***argv)
 }
 
 static void
-process_command_line_quit (int argc, char **argv)
+process_command_line_early (GConfClient *gc, int argc, char **argv)
 {
-	/* If --quit is the only command, just quit */
-	if (argc == 2 && strcmp (argv[1], "--quit") == 0)
+	int i;
+
+	if (argc == 1)
+		return;
+
+	for (i = 1; i < argc; i++)
 	{
-		gdk_notify_startup_complete ();
-		exit (0);
+		if (strcmp (argv[i], "--debug") == 0)
+		{
+			gconf_client_set_bool (gc, GCONF_PREFIX"/debug",
+					TRUE, NULL);
+		} else if (strcmp (argv[i], "--quit") == 0) {
+			/* If --quit is one of the commands, just quit */
+			gdk_notify_startup_complete ();
+			exit (0);
+		}
 	}
 }
 
@@ -3671,6 +3693,8 @@ process_command_line (BaconMessageConnection *conn, int argc, char **argv)
 		command = TOTEM_REMOTE_COMMAND_ENQUEUE;
 	} else if (strcmp (argv[1], "--replace") == 0) {
 		command = TOTEM_REMOTE_COMMAND_REPLACE;
+	} else if (strcmp (argv[1], "--toggle-controls") == 0) {
+		command = TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS;
 	} else {
 		return;
 	}
@@ -3762,7 +3786,7 @@ main (int argc, char **argv)
 		gdk_notify_startup_complete ();
 		exit (0);
 	} else {
-		process_command_line_quit (argc, argv);
+		process_command_line_early (gc, argc, argv);
 	}
 
 	/* Init totem itself */
