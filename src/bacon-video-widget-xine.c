@@ -33,6 +33,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 /* X11 */
 #include <X11/X.h>
 #include <X11/Xlib.h>
@@ -1235,9 +1236,9 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 	switch (data->type)
 	{
 	case XINE_MSG_NO_ERROR:
-		break;
+		return;
 	case XINE_MSG_GENERAL_WARNING:
-		break;
+		return;
 	case XINE_MSG_UNKNOWN_HOST:
 		num = BVW_ERROR_UNKNOWN_HOST;
 		message = g_strdup (_("The server you are trying to connect to is not known."));
@@ -1298,10 +1299,7 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		else
 			message = g_strdup (_("The server refused access to this file or stream."));
 		break;
-	}
-
-	if (message == NULL)
-	{
+	default:
 		D("xine_event_message: unhandled error\ntype: %d", data->type);
 		return;
 	}
@@ -1833,6 +1831,36 @@ get_fourcc_string (uint32_t f)
 	return g_strdup (fcc);
 }
 
+static char *
+bacon_video_widget_get_nice_codec_name (BaconVideoWidget *bvw,
+		gboolean is_audio)
+{
+	char *name;
+	int codec, fcc;
+
+	if (is_audio == FALSE) {
+		codec = XINE_META_INFO_VIDEOCODEC;
+		fcc = XINE_STREAM_INFO_VIDEO_FOURCC;
+	} else {
+		codec = XINE_META_INFO_AUDIOCODEC;
+		fcc = XINE_STREAM_INFO_AUDIO_FOURCC;
+	}
+
+	name = g_strdup (xine_get_meta_info (bvw->priv->stream, codec));
+
+	if (name == NULL || name[0] == '\0')
+	{
+		guint32 fourcc;
+
+		g_free (name);
+		fourcc = xine_get_stream_info (bvw->priv->stream,
+				XINE_STREAM_INFO_VIDEO_FOURCC);
+		name = get_fourcc_string (fourcc);
+	}
+
+	return name;
+}
+
 char *
 bacon_video_widget_get_backend_name (BaconVideoWidget *bvw)
 {	
@@ -1877,28 +1905,28 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const char *mrl,
 				XINE_STREAM_INFO_AUDIO_HANDLED) == FALSE))
 	{
 		char *name;
+		gboolean is_audio;
+
+		is_audio = (xine_get_stream_info (bvw->priv->stream,
+				XINE_STREAM_INFO_HAS_VIDEO) == FALSE);
 
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[GOT_METADATA], 0, NULL);
 
-		name = g_strdup (xine_get_meta_info (bvw->priv->stream,
-				XINE_META_INFO_VIDEOCODEC));
-		if (name == NULL || name[0] == '\0')
-		{
-			guint32 video_fcc;
-
-			g_free (name);
-			video_fcc = xine_get_stream_info (bvw->priv->stream,
-					XINE_STREAM_INFO_VIDEO_FOURCC);
-			name = get_fourcc_string (video_fcc);
-		}
+		name = bacon_video_widget_get_nice_codec_name (bvw, is_audio);
 
 		bacon_video_widget_close (bvw);
 
-		g_set_error (error, BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED,
-				_("Video codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"),
-				name);
-
+		if (is_audio == FALSE) {
+			g_set_error (error, BVW_ERROR,
+					BVW_ERROR_CODEC_NOT_HANDLED,
+					_("Video codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"), name);
+		} else {
+			g_set_error (error, BVW_ERROR,
+					BVW_ERROR_CODEC_NOT_HANDLED,
+					_("Audio codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"), name);
+		}
+g_message ("returning error message");
 		g_free (name);
 
 		return FALSE;

@@ -1,5 +1,13 @@
 2004-09-21  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-xine.c: (xine_event_message),
+	(bacon_video_widget_get_nice_codec_name),
+	(bacon_video_widget_open): Show an error about the audio codec not
+	being handled if we have an audio only file for which we don't have
+	a codec
+
+2004-09-21  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c:
 	(bacon_video_widget_get_metadata_string),
 	(bacon_video_widget_get_metadata):
