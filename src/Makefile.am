@@ -81,7 +81,6 @@ totem_SOURCES = 					\
 	$(EGG_RECENT_FILES)				\
 	$(BACON_CD_SELECTION)				\
 	$(VIDEOWIDGET)					\
-	$(PLPARSERMARSHALFILES)				\
 	totem.c totem.h					\
 	totem-remote.c totem-remote.h			\
 	totem-preferences.c totem-preferences.h		\
@@ -143,14 +142,18 @@ bvw_test_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS)  $(NVTV_LI
 metadata_test_SOURCES = $(VIDEOWIDGET) metadata-test.c
 metadata_test_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS)  $(NVTV_LIBS)
 
-disc_test_SOURCES = disc-test.c totem-disc.c
-disc_test_LDADD = $(GTK_LIBS) $(EXTRA_GNOME_LIBS)
+disc_test_SOURCES = disc-test.c
+disc_test_LDADD = \
+	$(GTK_LIBS) $(EXTRA_GNOME_LIBS) \
+	libtotem-plparser.la
 
 list_v4l_SOURCES = list_v4l.c $(BACON_V4L_SELECTION)
 list_v4l_LDADD = $(GTK_LIBS)
 
-test_parser_SOURCES = test-parser.c totem-disc.c totem-disc.h $(PLPARSERMARSHALFILES)
-test_parser_LDADD = $(EXTRA_GNOME_LIBS)
+test_parser_SOURCES = test-parser.c
+test_parser_LDADD = \
+	$(EXTRA_GNOME_LIBS) \
+	libtotem-plparser.la
 
 INCLUDES = 						\
 	-D_REENTRANT					\
