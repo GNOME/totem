@@ -882,31 +882,26 @@ gtk_xine_realize (GtkWidget *widget)
 	/* set realized flag */
 	GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
 
-#if 0
 	attr.x = widget->allocation.x;
 	attr.y = widget->allocation.y;
 	attr.width = widget->allocation.width;
 	attr.height = widget->allocation.height;
 	attr.window_type = GDK_WINDOW_CHILD;
 	attr.wclass = GDK_INPUT_OUTPUT;
+	attr.visual = gtk_widget_get_visual (widget);
+	attr.colormap = gtk_widget_get_colormap (widget);
 	attr.event_mask = gtk_widget_get_events (widget) | GDK_EXPOSURE_MASK;
 	widget->window = gdk_window_new (gtk_widget_get_parent_window (widget),
-			&attr, GDK_WA_X | GDK_WA_Y | GDK_WA_WMCLASS);
+			&attr, GDK_WA_X | GDK_WA_Y
+			| GDK_WA_VISUAL | GDK_WA_COLORMAP);
 	gdk_window_show (widget->window);
+	/* Flush, so that the window is really shown */
+	gdk_flush ();
 	gdk_window_set_user_data (widget->window, gtx);
 
 	gtx->priv->video_window = GDK_WINDOW_XWINDOW (widget->window);
-#else
-	gtx->priv->video_window = XCreateSimpleWindow
-		(gdk_display,
-		 GDK_WINDOW_XWINDOW (gtk_widget_get_parent_window (widget)),
-		 0, 0,
-		 widget->allocation.width, widget->allocation.height,
-		 1, BLACK_PIXEL, BLACK_PIXEL);
+	gtk_widget_set_double_buffered (widget, FALSE);
 
-	widget->window = gdk_window_foreign_new (gtx->priv->video_window);
-	gdk_window_set_user_data (widget->window, gtx);
-#endif
 	/* track configure events of toplevel window */
 	g_signal_connect (GTK_OBJECT (gtk_widget_get_toplevel (widget)),
 			  "configure-event",
@@ -936,16 +931,11 @@ gtk_xine_realize (GtkWidget *widget)
 		gtx->priv->completion_event = -1;
 	}
 
-	XSelectInput (gtx->priv->display, gtx->priv->video_window,
-		      StructureNotifyMask | ExposureMask
-		      | ButtonPressMask | PointerMotionMask
-		      | KeyPressMask | PropertyChangeMask);
-
 	/* load audio, video drivers */
 	gtx->priv->ao_driver = load_audio_out_driver (gtx);
 	gtx->priv->vo_driver = load_video_out_driver (gtx);
 
-	if (!gtx->priv->vo_driver)
+	if (gtx->priv->vo_driver == NULL)
 	{
 		XUnlockDisplay (gtx->priv->display);
 		g_signal_emit (G_OBJECT (gtx),
