@@ -1,3 +1,12 @@
+2005-01-06  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-preferences.c: (totem_setup_preferences): remove
+	hide_prefs, use gtk_widget_hide directly instead, replace hard-coded
+	/apps/totem by GCONF_PREFIX, 
+	* src/totem.c: (show_controls), (totem_setup_window):
+	when setting up the window, take into account the vbox border for the
+	width and height, replace hard-coded border width of 1 by a #define
+
 2005-01-06  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/Makefile.am:

@@ -77,6 +77,8 @@
 #define ZOOM_IN_OFFSET 1
 #define ZOOM_OUT_OFFSET -1
 
+#define BVW_VBOX_BORDER_WIDTH 1
+
 static const GtkTargetEntry target_table[] = {
 	{ "text/uri-list", 0, 0 },
 	{ "_NETSCAPE_URL", 0, 1 },
@@ -1801,7 +1803,8 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 		gtk_widget_show (controlbar);
 		gtk_widget_show (statusbar);
 		gtk_widget_hide (item);
-		gtk_container_set_border_width (GTK_CONTAINER (bvw_vbox), 1);
+		gtk_container_set_border_width (GTK_CONTAINER (bvw_vbox),
+				BVW_VBOX_BORDER_WIDTH);
 
 		if (was_fullscreen == FALSE)
 		{
@@ -2855,7 +2858,8 @@ totem_setup_window (Totem *totem)
 		return;
 
 	item = glade_xml_get_widget (totem->xml, "tmw_bvw_vbox");
-	gtk_widget_set_size_request (item, w, h);
+	gtk_widget_set_size_request (item,
+			w + BVW_VBOX_BORDER_WIDTH, h + BVW_VBOX_BORDER_WIDTH);
 }
 
 static void

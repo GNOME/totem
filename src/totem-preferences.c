@@ -63,12 +63,6 @@ totem_action_info (char *reason, Totem *totem)
 	gtk_widget_show (error_dialog);
 }
 
-static void
-hide_prefs (GtkWidget *widget, int trash, Totem *totem)
-{
-	gtk_widget_hide (totem->prefs);
-}
-
 static gboolean
 ask_show_visuals (Totem *totem)
 {
@@ -445,7 +439,7 @@ totem_setup_preferences (Totem *totem)
 
 	is_local = totem_display_is_local ();
 
-	gconf_client_add_dir (totem->gc, "/apps/totem",
+	gconf_client_add_dir (totem->gc, GCONF_PREFIX,
 			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
 	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/auto_resize",
 			(GConfClientNotifyFunc) auto_resize_changed_cb,
@@ -457,12 +451,13 @@ totem_setup_preferences (Totem *totem)
 			(GConfClientNotifyFunc) mediadev_changed_cb,
 			totem, NULL, NULL);
 
-	totem->prefs = glade_xml_get_widget (totem->xml, "totem_preferences_window");
+	totem->prefs = glade_xml_get_widget (totem->xml,
+			"totem_preferences_window");
 
-	g_signal_connect (G_OBJECT (totem->prefs),
-			"response", G_CALLBACK (hide_prefs), (gpointer) totem);
+	g_signal_connect (G_OBJECT (totem->prefs), "response",
+			G_CALLBACK (gtk_widget_hide), NULL);
 	g_signal_connect (G_OBJECT (totem->prefs), "delete-event",
-			G_CALLBACK (hide_prefs), (gpointer) totem);
+			G_CALLBACK (gtk_widget_hide), NULL);
 
 	/* Auto-resize */
 	auto_resize = gconf_client_get_bool (totem->gc,
@@ -481,7 +476,8 @@ totem_setup_preferences (Totem *totem)
 	if (mediadev == NULL || (strcmp (mediadev, "") == 0)
 			|| (strcmp (mediadev, "auto") == 0))
 	{
-		mediadev = g_strdup (nautilus_burn_drive_selection_get_default_device
+		mediadev = g_strdup
+			(nautilus_burn_drive_selection_get_default_device
 				     (NAUTILUS_BURN_DRIVE_SELECTION (item)));
 		gconf_client_set_string (totem->gc, GCONF_PREFIX"/mediadev",
 				mediadev, NULL);
@@ -492,7 +488,8 @@ totem_setup_preferences (Totem *totem)
 	g_signal_connect (G_OBJECT (item), "device-changed",
 			G_CALLBACK (on_combo_entry1_changed), totem);
 
-	nautilus_burn_drive_selection_set_device (NAUTILUS_BURN_DRIVE_SELECTION (item), mediadev);
+	nautilus_burn_drive_selection_set_device
+		(NAUTILUS_BURN_DRIVE_SELECTION (item), mediadev);
 	g_free (mediadev);
 
 	/* Connection Speed */
