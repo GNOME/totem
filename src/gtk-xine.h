@@ -43,18 +43,18 @@ typedef enum {
 } GtkXineError;
 
 typedef enum {
-    GTX_DVD_ROOT_MENU,
-    GTX_DVD_TITLE_MENU,
-    GTX_DVD_SUBPICTURE_MENU,
-    GTX_DVD_AUDIO_MENU,
-    GTX_DVD_ANGLE_MENU,
-    GTX_DVD_CHAPTER_MENU,
-    GTX_DVD_NEXT_CHAPTER,
-    GTX_DVD_PREV_CHAPTER,
-    GTX_DVD_NEXT_TITLE,
-    GTX_DVD_PREV_TITLE,
-    GTX_DVD_NEXT_ANGLE,
-    GTX_DVD_PREV_ANGLE
+	GTX_DVD_ROOT_MENU,
+	GTX_DVD_TITLE_MENU,
+	GTX_DVD_SUBPICTURE_MENU,
+	GTX_DVD_AUDIO_MENU,
+	GTX_DVD_ANGLE_MENU,
+	GTX_DVD_CHAPTER_MENU,
+	GTX_DVD_NEXT_CHAPTER,
+	GTX_DVD_PREV_CHAPTER,
+	GTX_DVD_NEXT_TITLE,
+	GTX_DVD_PREV_TITLE,
+	GTX_DVD_NEXT_ANGLE,
+	GTX_DVD_PREV_ANGLE
 } GtkXineDVDEvent;
 
 typedef enum {
@@ -133,6 +133,8 @@ gint gtk_xine_get_volume               (GtkXine *gtx);
 
 void gtk_xine_set_show_cursor          (GtkXine *gtx, gboolean use_cursor);
 gboolean gtk_xine_get_show_cursor      (GtkXine *gtx);
+
+void gtk_xine_set_media_device	       (GtkXine *gtx, const char *path);
 
 void gtk_xine_set_audio_channel        (GtkXine *gtx, gint audio_channel);
 gint gtk_xine_get_audio_channel        (GtkXine *gtx);

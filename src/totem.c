@@ -1620,8 +1620,8 @@ on_combo_entry1_changed (BaconCdSelection *bcs, char *device,
 	const char *str;
 
 	str = bacon_cd_selection_get_device (bcs);
-	gconf_client_set_string (totem->gc, GCONF_PREFIX"/mediadev",
-			str, NULL);
+	gconf_client_set_string (totem->gc, GCONF_PREFIX"/mediadev", str, NULL);
+	gtk_xine_set_media_device (GTK_XINE (totem->gtx), str);
 }
 
 static void
@@ -1668,14 +1668,20 @@ mediadev_changed_cb (GConfClient *client, guint cnxn_id,
 {
 	Totem *totem = (Totem *) user_data;
 	GtkWidget *item;
+	char *mediadev;
 
 	item = glade_xml_get_widget (totem->xml, "custom3");
 	g_signal_handlers_disconnect_by_func (G_OBJECT (item),
 			on_combo_entry1_changed, totem);
 
-	bacon_cd_selection_set_device (BACON_CD_SELECTION (item),
-			gconf_client_get_string
-			(totem->gc, GCONF_PREFIX"/mediadev", NULL));
+	mediadev = gconf_client_get_string (totem->gc,
+			GCONF_PREFIX"/mediadev", NULL);
+
+	if (mediadev == NULL || strcmp (mediadev, "") == 0)
+		mediadev = g_strdup ("/dev/cdrom");
+
+	bacon_cd_selection_set_device (BACON_CD_SELECTION (item), mediadev);
+	gtk_xine_set_media_device (GTK_XINE (totem->gtx), mediadev);
 
 	g_signal_connect (G_OBJECT (item), "device-changed",
 			G_CALLBACK (on_combo_entry1_changed), totem);
@@ -2452,7 +2458,7 @@ static void
 totem_setup_preferences (Totem *totem)
 {
 	GtkWidget *item;
-	const char *device;
+	const char *mediadev;
 
 	g_return_if_fail (totem->gc != NULL);
 
@@ -2487,15 +2493,16 @@ totem_setup_preferences (Totem *totem)
 			G_CALLBACK (on_checkbutton2_toggled), totem);
 
 	item = glade_xml_get_widget (totem->xml, "custom3");
-	device = gconf_client_get_string
+	mediadev = gconf_client_get_string
 		(totem->gc, GCONF_PREFIX"/mediadev", NULL);
-	if (device == NULL || (strcmp (device, "") == 0)
-			|| (strcmp (device, "auto") == 0))
+	if (mediadev == NULL || (strcmp (mediadev, "") == 0)
+			|| (strcmp (mediadev, "auto") == 0))
 	{
-		device = bacon_cd_selection_get_default_device
+		mediadev = bacon_cd_selection_get_default_device
 			(BACON_CD_SELECTION (item));
 		gconf_client_set_string (totem->gc, GCONF_PREFIX"/mediadev",
-				device, NULL);
+				mediadev, NULL);
+		gtk_xine_set_media_device (GTK_XINE (totem->gtx), mediadev);
 	}
 
 	bacon_cd_selection_set_device (BACON_CD_SELECTION (item),

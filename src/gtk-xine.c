@@ -92,6 +92,7 @@ enum {
 	PROP_PLAYING,
 	PROP_SEEKABLE,
 	PROP_SHOWCURSOR,
+	PROP_MEDIADEV,
 };
 
 static int speeds[2] = {
@@ -254,6 +255,9 @@ gtk_xine_class_init (GtkXineClass *klass)
 	g_object_class_install_property (object_class, PROP_SHOWCURSOR,
 			g_param_spec_boolean ("showcursor", NULL, NULL,
 				FALSE, G_PARAM_READWRITE));
+	g_object_class_install_property (object_class, PROP_MEDIADEV,
+			g_param_spec_string ("mediadev", NULL, NULL,
+				FALSE, G_PARAM_WRITABLE));
 
 	/* Signals */
 	gtx_table_signals[ERROR] =
@@ -550,29 +554,6 @@ load_audio_out_driver (GtkXine *gtx)
 	return ao_driver;
 }
 
-static void
-update_mediadev_conf (GtkXine *gtx, GConfClient *conf)
-{
-	char *tmp;
-
-	conf = gconf_client_get_default ();
-
-	/* DVD and VCD Device */
-	tmp = gconf_client_get_string (conf, GCONF_PREFIX"/mediadev", NULL);
-	if (tmp == NULL || strcmp (tmp, "") == 0)
-		tmp = g_strdup ("/dev/cdrom");
-
-	xine_config_register_string (gtx->priv->xine,
-			"input.dvd_device", tmp,
-			"device used for dvd drive",
-			NULL, 10, NULL, NULL);
-
-	xine_config_register_string (gtx->priv->xine,
-			"input.vcd_device", tmp,
-			"device used for cdrom drive",
-			NULL, 10, NULL, NULL);
-}
-
 static void             
 show_vfx_changed_cb (GConfClient *client, guint cnxn_id,
 		                GConfEntry *entry, gpointer user_data)
@@ -603,7 +584,6 @@ load_config_from_gconf (GtkXine *gtx)
 			show_vfx_changed_cb, gtx, NULL, NULL);
 	gtx->priv->show_vfx = gconf_client_get_bool (conf,
 			GCONF_PREFIX"/show_vfx", NULL);
-	update_mediadev_conf (gtx, conf);
 }
 
 static gboolean
@@ -852,7 +832,7 @@ gtk_xine_realize (GtkWidget *widget)
 				gtx_table_signals[ERROR], 0,
 				0,
 				_("Could not initialise the threads support.\n"
-					"You should install a thread-safe Xlib."));
+				"You should install a thread-safe Xlib."));
 		return;
 	}
 
@@ -1346,6 +1326,9 @@ gtk_xine_set_property (GObject *object, guint property_id,
 	case PROP_SHOWCURSOR:
 		gtk_xine_set_show_cursor (gtx, g_value_get_boolean (value));
 		break;
+	case PROP_MEDIADEV:
+		gtk_xine_set_media_device (gtx, g_value_get_string (value));
+		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 	}
@@ -1660,6 +1643,20 @@ gtk_xine_get_show_cursor (GtkXine *gtx)
 	return gtx->priv->cursor_shown;
 }
 
+void
+gtk_xine_set_media_device (GtkXine *gtx, const char *path)
+{
+	xine_config_register_string (gtx->priv->xine,
+			"input.dvd_device", path,
+			"device used for dvd drive",
+			NULL, 10, NULL, NULL);
+
+	xine_config_register_string (gtx->priv->xine,
+			"input.vcd_device", path,
+			"device used for cdrom drive",
+			NULL, 10, NULL, NULL);
+}
+
 gint
 gtk_xine_get_current_time (GtkXine *gtx)
 {
@@ -1771,8 +1768,6 @@ G_CONST_RETURN gchar
 		plugin_id = "CDDA";
 	else
 		return NULL;
-
-	update_mediadev_conf (gtx, gconf_client_get_default ());
 
 	return (G_CONST_RETURN gchar **) xine_get_autoplay_mrls
 		(gtx->priv->xine, plugin_id, &num_mrls);
