@@ -461,17 +461,22 @@ get_cd_scsi_id (const char *dev, int *bus, int *id, int *lun)
 	devfile = g_strdup_printf ("/dev/%s", dev);
 	fd = open(devfile, O_RDONLY | O_NONBLOCK);
 	g_free (devfile);
-	
+
+	/* Avoid problems with Valgrind */
+	memset (&m_idlun, 1, sizeof (m_idlun));
+	*bus = *id = *lun = -1;
+
 	if (fd < 0) {
 		g_warning ("Failed to open cd device %s\n", dev);
 		return 0;
 	}
-    
-	if (ioctl (fd, SCSI_IOCTL_GET_BUS_NUMBER, bus) < 0) {
+
+	if (ioctl (fd, SCSI_IOCTL_GET_BUS_NUMBER, bus) < 0 || *bus < 0) {
 		g_warning ("Failed to get scsi bus nr\n");
 		close (fd);
 		return 0;
 	}
+
 	if (ioctl (fd, SCSI_IOCTL_GET_IDLUN, &m_idlun) < 0) {
 		g_warning ("Failed to get scsi id and lun\n");
 		close(fd);
@@ -479,7 +484,7 @@ get_cd_scsi_id (const char *dev, int *bus, int *id, int *lun)
 	}
 	*id = m_idlun.mux4 & 0xFF;
 	*lun = (m_idlun.mux4 >> 8)  & 0xFF;
-	
+
 	close(fd);
 	return 1;
 }
@@ -548,7 +553,7 @@ get_scsi_cd_name (int bus, int id, int lun, const char *dev,
 		  struct scsi_unit *scsi_units, int n_scsi_units)
 {
 	struct scsi_unit *scsi_unit;
-	
+
 	scsi_unit = lookup_scsi_unit (bus, id, lun, scsi_units, n_scsi_units);
 	if (scsi_unit == NULL) {
 		return g_strdup_printf (_("Unnamed SCSI CD-ROM (%s)"), dev);
@@ -787,7 +792,7 @@ linux_scan (gboolean recorder_only)
 			g_strfreev (devices);
 			return NULL;
 		}
-		
+
 		scsi_units = g_new0 (struct scsi_unit, n_scsi_units);
 		get_scsi_units (device_str, devices, scsi_units);
 
@@ -796,7 +801,7 @@ linux_scan (gboolean recorder_only)
 	} else {
 		scsi_units = NULL;
 	}
-	
+
 	for (i = 3; cdrom_info[i] != NULL; i++) {
 		if (g_str_has_prefix (cdrom_info[i], "Can write CD-R:")) {
 			p = cdrom_info[i] + strlen ("Can write CD-R:");

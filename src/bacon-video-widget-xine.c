@@ -351,9 +351,9 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 				G_SIGNAL_RUN_LAST,
 				G_STRUCT_OFFSET (BaconVideoWidgetClass, tick),
 				NULL, NULL,
-				baconvideowidget_marshal_VOID__INT64_INT64_FLOAT,
-				G_TYPE_NONE, 3, G_TYPE_INT64, G_TYPE_INT64,
-				G_TYPE_FLOAT);
+				baconvideowidget_marshal_VOID__INT64_INT64_FLOAT_BOOLEAN,
+				G_TYPE_NONE, 4, G_TYPE_INT64, G_TYPE_INT64,
+				G_TYPE_FLOAT, G_TYPE_BOOLEAN);
 
 	bvw_table_signals[BUFFERING] =
 		g_signal_new ("buffering",
@@ -985,6 +985,10 @@ generate_mouse_event (BaconVideoWidget *bvw, GdkEvent *event,
 	int x, y;
 	gboolean retval;
 
+	/* Don't even try to generate an event if we're dying */
+	if (bvw->priv->stream == NULL)
+		return FALSE;
+
 	if (is_motion == FALSE && bevent->button != 1)
 		return FALSE;
 
@@ -1070,6 +1074,7 @@ bacon_video_widget_realize (GtkWidget *widget)
 	xine_close (bvw->priv->stream);
 	xine_event_dispose_queue (bvw->priv->ev_queue);
 	xine_dispose (bvw->priv->stream);
+	bvw->priv->stream = NULL;
 
 	if (bvw->priv->vo_driver != NULL)
 		xine_close_video_driver (bvw->priv->xine, bvw->priv->vo_driver);
@@ -1116,7 +1121,17 @@ bacon_video_widget_realize (GtkWidget *widget)
 
 	bvw->priv->ao_driver = load_audio_out_driver (bvw, NULL);
 	bvw->priv->vo_driver = load_video_out_driver (bvw, bvw->priv->null_out);
+
+	if (bvw->priv->vo_driver == NULL)
+	{
+		bvw->priv->vo_driver = load_video_out_driver (bvw, TRUE);
+		g_signal_emit (G_OBJECT (bvw),
+				bvw_table_signals[ERROR], 0,
+				_("No video output is available. Make sure that the program is correctly installed."), TRUE);
+		g_message ("error");
+	}
 	//FIXME
+
 	g_assert (bvw->priv->vo_driver != NULL);
 	setup_config_video (bvw);
 
@@ -1631,7 +1646,7 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 {
 	int current_time, stream_length, current_position;
 	float current_position_f;
-	gboolean ret = TRUE;
+	gboolean ret = TRUE, seekable;
 
 	if (bvw->priv->stream == NULL || bvw->priv->logo_mode != FALSE)
 		return TRUE;
@@ -1664,12 +1679,20 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 	else
 		bvw->priv->is_live = TRUE;
 
+	if (stream_length != 0 && bvw->priv->mrl != NULL) {
+		seekable = xine_get_stream_info (bvw->priv->stream,
+				XINE_STREAM_INFO_SEEKABLE);
+	} else {
+		seekable = FALSE;
+	}
+
 	if (ret != FALSE)
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[TICK], 0,
 				(gint64) (current_time),
 				(gint64) (stream_length),
-				current_position_f);
+				current_position_f,
+				seekable);
 
 	return TRUE;
 }
@@ -1752,7 +1775,6 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const char *mrl,
 	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
 	g_return_val_if_fail (bvw->priv->mrl == NULL, FALSE);
 
-	bvw->priv->mrl = g_strdup (mrl);
 	bvw->priv->video_fcc = 0;
 	bvw->priv->audio_fcc = 0;
 
@@ -1820,6 +1842,8 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const char *mrl,
 	}
 
 	show_vfx_update (bvw, bvw->priv->show_vfx);
+
+	bvw->priv->mrl = g_strdup (mrl);
 
 	g_signal_emit (G_OBJECT (bvw),
 			bvw_table_signals[GOT_METADATA], 0, NULL);
@@ -2729,6 +2753,9 @@ bacon_video_widget_is_seekable (BaconVideoWidget *bvw)
 	g_return_val_if_fail (bvw != NULL, 0);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
 	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
+
+	if (bvw->priv->mrl == NULL)
+		return FALSE;
 
 	if (bacon_video_widget_get_stream_length (bvw) == 0)
 		return FALSE;

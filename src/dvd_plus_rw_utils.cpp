@@ -121,6 +121,9 @@ int get_mmc_profile (int fd)
   unsigned char *sense=cmd.sense();
   int i;
 
+  /* For valgrind */
+  memset (&page, 1, sizeof (page));
+
   cmd[0]=0x46;
   cmd[1]=2;
   cmd[8]=8;
@@ -156,7 +159,7 @@ int get_mmc_profile (int fd)
       goto bail;
     }
 
-    delete list;
+    //delete list;
   }
 
   return page[6]<<8|page[7];

@@ -712,7 +712,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		gtk_widget_set_sensitive (widget, FALSE);
 
 		/* Seek bar and seek buttons */
-		update_seekable (totem, TRUE);
+		update_seekable (totem, FALSE);
 
 		/* Volume */
 		widget = glade_xml_get_widget (totem->xml, "tmw_volume_hbox");
@@ -770,7 +770,8 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		gtk_widget_set_sensitive (totem->fs_pp_button, TRUE);
 
 		/* Seek bar */
-		update_seekable (totem, FALSE);
+		update_seekable (totem,
+				bacon_video_widget_is_seekable (totem->bvw));
 
 		/* Volume */
 		caps = bacon_video_widget_can_set_volume (totem->bvw);
@@ -1160,6 +1161,7 @@ on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 		name = totem_playlist_get_current_title
 			(totem->playlist,
 			 &custom);
+		custom = TRUE;
 	} else {
 		custom = FALSE;
 	}
@@ -1193,50 +1195,45 @@ on_buffering_event (BaconVideoWidget *bvw, int percentage, Totem *totem)
 }
 
 static void
-update_seekable (Totem *totem, gboolean force_false)
+update_seekable (Totem *totem, gboolean seekable)
 {
 	GtkWidget *widget;
-	gboolean caps;
-
-	if (force_false == FALSE)
-		caps = bacon_video_widget_is_seekable (totem->bvw);
-	else
-		caps = FALSE;
 
 	/* Check if the stream is seekable */
-	gtk_widget_set_sensitive (totem->seek, caps);
-	gtk_widget_set_sensitive (totem->fs_seek, caps);
+	gtk_widget_set_sensitive (totem->seek, seekable);
+	gtk_widget_set_sensitive (totem->fs_seek, seekable);
 
 	widget = glade_xml_get_widget (totem->xml, "tmw_seek_hbox");
-	gtk_widget_set_sensitive (widget, caps);
+	gtk_widget_set_sensitive (widget, seekable);
 
 	widget = glade_xml_get_widget (totem->xml, "tcw_time_hbox");
-	gtk_widget_set_sensitive (widget, caps);
+	gtk_widget_set_sensitive (widget, seekable);
 
 	widget = glade_xml_get_widget (totem->xml,
 			"tmw_skip_forward_menu_item");
-	gtk_widget_set_sensitive (widget, caps);
+	gtk_widget_set_sensitive (widget, seekable);
 	widget = glade_xml_get_widget (totem->xml,
 			"tmw_skip_backwards_menu_item");
-	gtk_widget_set_sensitive (widget, caps);
+	gtk_widget_set_sensitive (widget, seekable);
 	widget = glade_xml_get_widget (totem->xml, "trcm_skip_forward");
-	gtk_widget_set_sensitive (widget, caps);
+	gtk_widget_set_sensitive (widget, seekable);
 	widget = glade_xml_get_widget (totem->xml, "trcm_skip_backwards");
-	gtk_widget_set_sensitive (widget, caps);
+	gtk_widget_set_sensitive (widget, seekable);
 	widget = glade_xml_get_widget (totem->xml, "tmw_skip_to_menu_item");
-	gtk_widget_set_sensitive (widget, caps);
+	gtk_widget_set_sensitive (widget, seekable);
 	widget = glade_xml_get_widget (totem->xml, "tstw_ok_button");
-	gtk_widget_set_sensitive (widget, caps);
-
+	gtk_widget_set_sensitive (widget, seekable);
 }
 
 static void
 update_current_time (BaconVideoWidget *bvw,
 		gint64 current_time,
 		gint64 stream_length,
-		float current_position, Totem *totem)
+		float current_position,
+		gboolean seekable, Totem *totem)
 {
 	update_skip_to (totem, stream_length);
+	update_seekable (totem, seekable);
 
 	if (totem->seek_lock == FALSE)
 	{
@@ -1299,7 +1296,6 @@ gui_update_cb (Totem *totem)
 	if (totem->bvw == NULL)
 		return TRUE;
 
-	update_seekable (totem, FALSE);
 	update_volume_sliders (totem);
 
 	return TRUE;
@@ -3251,7 +3247,7 @@ video_widget_create (Totem *totem)
 
 	/* Let's set a name. Will make debugging easier */
 	gtk_widget_set_name (GTK_WIDGET(totem->bvw), "bvw");
-	
+
 	container = glade_xml_get_widget (totem->xml, "tmw_bvw_vbox");
 	gtk_container_add (GTK_CONTAINER (container),
 			GTK_WIDGET (totem->bvw));

@@ -30,8 +30,8 @@ int main(int argc, char *argv[])
 	guint32 height = 500;
 	guint32 width = 500;
 
-	if (argc < 2) {
-		g_warning ("Need at least 2 arguments");
+	if (argc > 2) {
+		g_warning ("Usage: %s <file>", argv[0]);
 		return 1;
 	}
 
@@ -56,8 +56,8 @@ int main(int argc, char *argv[])
 	gtk_widget_show(xine);
 
 	mrl = NULL;
-	test_xine_set_mrl(argv[1]);
-	argument = g_strdup (argv[1]);
+	test_xine_set_mrl(argv[1] ? argv[1] : LOGO_PATH);
+	argument = g_strdup (argv[1] ? argv[1] : LOGO_PATH);
 	bacon_video_widget_play (BACON_VIDEO_WIDGET (xine), NULL);
 	gtk_main();
 
