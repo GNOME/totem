@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem 0.8\n"
-"POT-Creation-Date: 2002-08-24 14:56+0100\n"
+"POT-Creation-Date: 2002-09-02 01:28+0100\n"
 "PO-Revision-Date: 2002-08-05 20:34:00\n"
 "Last-Translator: Pier Luigi Fiorini <plfiorini@supereva.it>\n"
 "Language-Team: Italiano <tp@lists.linux.it>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/playlist.glade.h:1 src/gtk-playlist.c:462
+#: data/playlist.glade.h:1 src/gtk-playlist.c:485
 msgid "Playlist"
 msgstr ""
 
@@ -73,7 +73,7 @@ msgstr ""
 msgid "Toggle Aspect Ratio"
 msgstr ""
 
-#: data/totem.glade.h:15 src/totem.c:785
+#: data/totem.glade.h:15 src/totem.c:850
 msgid "Totem"
 msgstr "Totem"
 
@@ -113,86 +113,90 @@ msgstr ""
 msgid "_Zoom 1:2"
 msgstr ""
 
-#: src/gtk-playlist.c:219 src/totem.c:648
+#: data/totem.schemas.in.h:1
+msgid "Default audio output driver"
+msgstr ""
+
+#: src/gtk-playlist.c:222 src/totem.c:682
 msgid "Select files"
 msgstr "Seleziona file"
 
-#: src/gtk-playlist.c:356
+#: src/gtk-playlist.c:376
 msgid "Playing"
 msgstr ""
 
-#: src/gtk-playlist.c:367
+#: src/gtk-playlist.c:387
 msgid "Filename"
 msgstr ""
 
-#: src/gtk-xine.c:453
+#: src/gtk-xine.c:55
+msgid "Totem Video Window"
+msgstr ""
+
+#: src/gtk-xine.c:481
 msgid ""
 "The configuration system is not initialised.\n"
 "The defaults will be used."
 msgstr ""
 
-#: src/gtk-xine.c:633
+#: src/gtk-xine.c:711
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
 msgstr ""
 
-#: src/gtk-xine.c:644
-msgid "Failed to open the display."
-msgstr ""
-
-#: src/gtk-xine.c:677
+#: src/gtk-xine.c:747
 msgid "Could not find a suitable video output."
 msgstr ""
 
-#: src/gtk-xine.c:799
+#: src/gtk-xine.c:875
 #, c-format
 msgid "No video plugin available to decode '%s'."
 msgstr ""
 
-#: src/totem.c:293 src/totem.c:1206
+#: src/totem.c:316 src/totem.c:1297
 msgid "<span size=\"medium\"><b>No file</b></span>"
 msgstr "<span size=\"medium\"><b>Nessun file</b></span>"
 
-#: src/totem.c:761
+#: src/totem.c:826
 msgid "translator_credits"
 msgstr "Pier Luigi Fiorini <plfiorini@supereva.it>"
 
-#: src/totem.c:786
+#: src/totem.c:851
 msgid "(C) 2002 Bastien Nocera"
 msgstr "(C) 2002 Bastien Nocera"
 
-#: src/totem.c:787
+#: src/totem.c:852
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Lettore multimediale (basato sulle librerie di Xine)"
 
-#: src/totem.c:938
+#: src/totem.c:1003
 #, c-format
 msgid ""
 "Totem could not startup:\n"
 "%s"
 msgstr ""
 
-#: src/totem.c:943
+#: src/totem.c:1008
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'\n"
 "Totem will not be able to play it."
 msgstr ""
 
-#: src/totem.c:946
+#: src/totem.c:1011
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr ""
 
-#: src/totem.c:949
+#: src/totem.c:1014
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
 "%s"
 msgstr ""
 
-#: src/totem.c:1248 src/totem.c:1256
+#: src/totem.c:1339 src/totem.c:1347
 #, fuzzy
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
@@ -201,7 +205,7 @@ msgstr ""
 "Impossibile caricare il file Glade principale (totem.glade).\n"
 "Assicurarsi che Totem sia correttamente installato."
 
-#: src/totem.c:1269
+#: src/totem.c:1360
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
