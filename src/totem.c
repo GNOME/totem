@@ -23,6 +23,7 @@
 #include <libgnomevfs/gnome-vfs.h>
 #include <gconf/gconf-client.h>
 #include <string.h>
+#include <X11/XF86keysym.h>
 
 #include "gtk-message.h"
 #include "gtk-xine.h"
@@ -1439,6 +1440,8 @@ totem_action_handle_key (Totem *totem, guint keyval)
 	gboolean retval = TRUE;
 
 	switch (keyval) {
+	case XF86XK_AudioPlay:
+	case XF86XK_AudioPause:
 	case GDK_p:
 	case GDK_P:
 		totem_action_play_pause (totem);
@@ -1471,10 +1474,12 @@ totem_action_handle_key (Totem *totem, guint keyval)
 	case GDK_a:
 		totem_action_toggle_aspect_ratio (totem);
 		break;
+	case XF86XK_AudioPrev:
 	case GDK_B:
 	case GDK_b:
 		totem_action_previous (totem);
 		break;
+	case XF86XK_AudioNext:
 	case GDK_N:
 	case GDK_n:
 		totem_action_next (totem);
