@@ -4,6 +4,7 @@ install-data-local:
 	@$(NORMAL_INSTALL)
 
 EXTRA_DIST =			\
+	COPYING.LIB		\
 	autogen.sh		\
 	intltool-extract.in	\
 	intltool-merge.in	\
