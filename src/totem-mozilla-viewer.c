@@ -14,6 +14,12 @@
 
 typedef struct TotemEmbedded TotemEmbedded;
 
+typedef enum {
+	STATE_PLAYING,
+	STATE_PAUSED,
+	STATE_STOPPED
+} TotemStates;
+
 struct TotemEmbedded {
 	GtkWidget *window;
 	GladeXML *xml;
@@ -22,6 +28,7 @@ struct TotemEmbedded {
 	char *filename, *orig_filename;
 	BaconVideoWidget *bvw;
 	gboolean embedded_done;
+	TotemStates state;
 };
 
 static void
@@ -37,6 +44,35 @@ totem_embedded_error_and_exit (char *title, char *reason, TotemEmbedded *emb)
 	totem_interface_error_blocking (title, reason,
 			GTK_WINDOW (emb->window));
 	totem_embedded_exit (emb);
+}
+
+static void
+totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
+{
+	const char *id = NULL;
+	GtkWidget *image;
+
+	if (state == emb->state)
+		return;
+
+	switch (state) {
+	case STATE_STOPPED:
+		id = GTK_STOCK_MEDIA_PLAY;
+		break;
+	case STATE_PAUSED:
+		id = GTK_STOCK_MEDIA_PLAY;
+		break;
+	case STATE_PLAYING:
+		id = GTK_STOCK_MEDIA_PAUSE;
+		break;
+	default:
+		break;
+	}
+
+	image = glade_xml_get_widget (emb->xml, "emb_pp_button_image");
+	gtk_image_set_from_stock (GTK_IMAGE (image), id, GTK_ICON_SIZE_MENU);
+
+	emb->state = state;
 }
 
 static void
@@ -65,10 +101,24 @@ totem_embedded_open (TotemEmbedded *emb)
 
 		g_error_free (err);
 		retval = FALSE;
+	} else {
+		totem_embedded_set_state (emb, STATE_PLAYING);
 	}
 
 	return;
 //	return retval;
+}
+
+static void
+on_play_pause (GtkWidget *widget, TotemEmbedded *emb)
+{
+	if (emb->state == STATE_PLAYING) {
+		bacon_video_widget_pause (emb->bvw);
+		totem_embedded_set_state (emb, STATE_PAUSED);
+	} else {
+		if (bacon_video_widget_play (emb->bvw, NULL))
+			totem_embedded_set_state (emb, STATE_PLAYING);
+	}
 }
 
 static void
@@ -101,7 +151,7 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 static void
 totem_embedded_add_children (TotemEmbedded *emb)
 {
-	GtkWidget *child, *container;
+	GtkWidget *child, *container, *pp_button;
 	GError *err = NULL;
 
 	emb->xml = totem_interface_load_with_root ("mozilla-viewer.glade",
@@ -135,6 +185,10 @@ totem_embedded_add_children (TotemEmbedded *emb)
 	gtk_container_add (GTK_CONTAINER (container), GTK_WIDGET (emb->bvw));
 	gtk_widget_show (GTK_WIDGET (emb->bvw));
 
+	pp_button = glade_xml_get_widget (emb->xml, "pp_button");
+	g_signal_connect (G_OBJECT (pp_button), "clicked",
+			  G_CALLBACK (on_play_pause), emb);
+
 	gtk_widget_realize (emb->window);
 	gtk_widget_set_size_request (emb->window, emb->width, emb->height);
 }
@@ -154,6 +208,7 @@ int main (int argc, char **argv)
 	emb = g_new0 (TotemEmbedded, 1);
 	emb->use_xembed = TRUE;
 	emb->width = emb->height = -1;
+	emb->state = STATE_STOPPED;
 
 	if (XInitThreads () == 0)
 	{
