@@ -1,5 +1,10 @@
 2005-02-19  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-gst.c: (shrink_toplevel): don't try to
+	shrink the toplevel window if there's not one
+
+2005-02-19  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-gst.c: (get_list_of_type): fix crash when
 	asking for subtitles or audio languages and no media is loaded
 

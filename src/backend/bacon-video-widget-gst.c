@@ -704,9 +704,11 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
 static void
 shrink_toplevel (BaconVideoWidget * bvw)
 {
-  GtkWidget *toplevel;
-  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (bvw));
-  gtk_window_resize (GTK_WINDOW (toplevel), 1, 1);
+  GtkWidget *toplevel, *widget;
+  widget = GTK_WIDGET (bvw);
+  toplevel = gtk_widget_get_toplevel (widget);
+  if (toplevel != widget && GTK_IS_WINDOW (toplevel) != FALSE)
+    gtk_window_resize (GTK_WINDOW (toplevel), 1, 1);
 }
 
 static gboolean
