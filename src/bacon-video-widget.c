@@ -518,18 +518,15 @@ load_video_out_driver (BaconVideoWidget *bvw, gboolean null_out)
 static xine_ao_driver_t *
 load_audio_out_driver (BaconVideoWidget *bvw)
 {
-	GConfClient *conf;
 	xine_ao_driver_t *ao_driver;
-	char *audio_driver_id;
+	const char *audio_driver_id;
 
 	if (bvw->priv->null_out == TRUE)
 		return NULL;
 
-	conf = gconf_client_get_default ();
-
-	audio_driver_id = gconf_client_get_string (conf,
-			GCONF_PREFIX"/audio_driver",
-			NULL);
+	audio_driver_id = xine_config_register_string (bvw->priv->xine,
+			"audio.driver", "auto", "audio driver to use",
+			NULL, 10, NULL, NULL);
 
 	/* No configuration, fallback to auto */
 	if (audio_driver_id == NULL || strcmp (audio_driver_id, "") == 0)
@@ -564,8 +561,6 @@ load_audio_out_driver (BaconVideoWidget *bvw)
 				0, msg);
 		g_free (msg);
 	}
-
-	g_free (audio_driver_id);
 
 	return ao_driver;
 }

@@ -1,5 +1,11 @@
 2003-02-17  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.schemas.in: updated
+	* src/bacon-video-widget.c: (load_audio_out_driver): remove audio
+	driver from gconf, we use automatic stuff, or xine's config
+
+2003-02-17  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am:
 	* src/totem-preferences.c: (hide_prefs), (on_checkbutton1_toggled),
 	(on_checkbutton2_toggled), (on_combo_entry1_changed),
