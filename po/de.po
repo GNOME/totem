@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Totem HEAD\n"
-"POT-Creation-Date: 2002-12-11 17:03+0100\n"
+"POT-Creation-Date: 2002-12-29 10:48+0100\n"
 "PO-Revision-Date: 2002-12-11 17:00+0100\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -22,22 +22,22 @@ msgstr "Playliste"
 msgid "Repeat Mode"
 msgstr "Endlosschleife"
 
-#: data/properties.glade.h:1 src/gtk-xine.c:1863
+#: data/properties.glade.h:1 src/gtk-xine.c:1953
 msgid "0 frames per second"
 msgstr "0"
 
 #. Bitrate
-#: data/properties.glade.h:2 src/gtk-xine.c:1865
+#: data/properties.glade.h:2 src/gtk-xine.c:1955
 msgid "0 kbps"
 msgstr "0 kB/s"
 
 #. 0 seconds
-#: data/properties.glade.h:3 src/gtk-xine.c:1799
+#: data/properties.glade.h:3 src/gtk-xine.c:1889
 msgid "0 seconds"
 msgstr "0 Sekunden"
 
 #. Dimensions
-#: data/properties.glade.h:4 src/gtk-xine.c:1858
+#: data/properties.glade.h:4 src/gtk-xine.c:1948
 msgid "0 x 0"
 msgstr "0 x 0"
 
@@ -78,9 +78,9 @@ msgid "Framerate: "
 msgstr "Bilder / Sekunde: "
 
 #. Year
-#: data/properties.glade.h:14 src/gtk-xine.c:1854 src/gtk-xine.c:1860
-#: src/gtk-xine.c:1867 src/gtk-xine.c:1889 src/gtk-xine.c:1914
-#: src/gtk-xine.c:1945
+#: data/properties.glade.h:14 src/gtk-xine.c:1944 src/gtk-xine.c:1950
+#: src/gtk-xine.c:1957 src/gtk-xine.c:1979 src/gtk-xine.c:2004
+#: src/gtk-xine.c:2035
 msgid "N/A"
 msgstr "Nicht verfügbar"
 
@@ -93,8 +93,8 @@ msgid "Title: "
 msgstr "Titel: "
 
 #. Title
-#: data/properties.glade.h:17 src/gtk-xine.c:1850 src/gtk-xine.c:1852
-#: src/gtk-xine.c:1881 src/gtk-xine.c:1885
+#: data/properties.glade.h:17 src/gtk-xine.c:1940 src/gtk-xine.c:1942
+#: src/gtk-xine.c:1971 src/gtk-xine.c:1975
 msgid "Unknown"
 msgstr "Unbekannt"
 
@@ -104,7 +104,7 @@ msgstr "Jahr: "
 
 #: data/totem.desktop.in.h:1
 msgid "Play movies and songs"
-msgstr "Totem - Filme und Musik abspielen"
+msgstr "Totem - Filme und Musik wiedergeben"
 
 #: data/totem.desktop.in.h:2
 msgid "Totem Movie Player"
@@ -153,15 +153,15 @@ msgstr "_Pfad zum optischen Gerät:"
 
 #: data/totem.glade.h:11
 msgid "Play DVD"
-msgstr "DVD abspielen"
+msgstr "DVD-Wiedergabe"
 
 #: data/totem.glade.h:12
 msgid "Play VCD"
-msgstr "VCD abspielen"
+msgstr "VCD-Wiedergabe"
 
 #: data/totem.glade.h:13
 msgid "Play/Pause"
-msgstr "Abspielen/Pause"
+msgstr "Wiedergabe/Pause"
 
 #: data/totem.glade.h:14
 msgid "Previous"
@@ -172,78 +172,82 @@ msgid "Previous Chapter/Movie"
 msgstr "Voriges Kapitel / Voriger Film"
 
 #: data/totem.glade.h:16
-msgid "Show/Hide Playlist"
-msgstr "Playliste zeigen/verbergen"
+msgid "Show visual effects when an audio file is played"
+msgstr "Visuelle Effekte anzeigen, wenn eine Audio-Datei wiedergegeben wird"
 
 #: data/totem.glade.h:17
+msgid "Show/Hide Playlist"
+msgstr "Playliste anzeigen/verbergen"
+
+#: data/totem.glade.h:18
 msgid "Skip backwards"
 msgstr "Zurückspulen"
 
-#: data/totem.glade.h:18
+#: data/totem.glade.h:19
 msgid "Skip forward"
 msgstr "Vorspulen"
 
-#: data/totem.glade.h:19
+#: data/totem.glade.h:20
 msgid "Time: "
 msgstr "Verstrichen: "
 
-#: data/totem.glade.h:20
+#: data/totem.glade.h:21
 msgid "Title menu"
 msgstr "Titel-Menü"
 
-#: data/totem.glade.h:21
+#: data/totem.glade.h:22
 msgid "Toggle Aspect Ratio"
 msgstr "Ansichtsverhältnis beibehalten"
 
-#: data/totem.glade.h:22 src/totem.c:361 src/totem.c:1193
+#: data/totem.glade.h:23 src/totem.c:363 src/totem.c:1196
 msgid "Totem"
 msgstr "Totem"
 
-#: data/totem.glade.h:23
+#: data/totem.glade.h:24
 msgid "Totem Preferences"
 msgstr "Totem - Einstellungen"
 
-#: data/totem.glade.h:24
+#: data/totem.glade.h:25
 msgid "Volume Down"
 msgstr "Leiser"
 
-#: data/totem.glade.h:25
+#: data/totem.glade.h:26
 msgid "Volume Up"
 msgstr "Lauter"
 
-#: data/totem.glade.h:26
+#: data/totem.glade.h:27
 msgid "Zoom _1:1"
 msgstr "Zoom _1:1"
 
-#: data/totem.glade.h:27
+#: data/totem.glade.h:28
 msgid "Zoom _2:1"
 msgstr "Zoom _2:1"
 
-#: data/totem.glade.h:28
+#: data/totem.glade.h:29
 msgid "_Fullscreen"
 msgstr "_Vollbild"
 
-#: data/totem.glade.h:29
+#: data/totem.glade.h:30
 msgid "_Go"
 msgstr "_Gehe zu"
 
-#: data/totem.glade.h:30
+#: data/totem.glade.h:31
 msgid "_Movie"
 msgstr "_Datei"
 
-#: data/totem.glade.h:31
-msgid "_Play / Pause"
-msgstr "_Abspielen / Pause"
-
 #: data/totem.glade.h:32
-msgid "_Show/Hide Playlist"
-msgstr "Playliste _zeigen/verbergen"
+msgid "_Play / Pause"
+msgstr "_Wiedergabe / Pause"
 
 #: data/totem.glade.h:33
+msgid "_Show/Hide Playlist"
+msgstr "Playliste _anzeigen/verbergen"
+
+#: data/totem.glade.h:34
 msgid "_Sound"
 msgstr "_Audio"
 
-#: data/totem.glade.h:34
+#: data/totem.glade.h:35
 msgid "_Zoom 1:2"
 msgstr "_Zoom 1:2"
 
@@ -268,22 +272,32 @@ msgid "Resize the canvas automatically on file load"
 msgstr "Die Fenstergröße automatisch der geöffneten Datei anpassen"
 
 #: data/totem.schemas.in.h:6
+msgid "Show visual effects when no video is displayed"
+msgstr "Visuelle Effekte anzeigen, wenn kein Video angezeigt wird"
+
+#: data/totem.schemas.in.h:7
+msgid "Show visual effects when playing an audio only file"
+msgstr ""
+"Visuelle Effekte anzeigen, wenn eine Datei wiedergegeben wird, die lediglich "
+"eine Audio-Spur enthält"
+
+#: data/totem.schemas.in.h:8
 msgid "X coordinate for the Playlist"
 msgstr "X-Koordinate der Playliste"
 
-#: data/totem.schemas.in.h:7
+#: data/totem.schemas.in.h:9
 msgid "Y coordinate for the Playlist"
 msgstr "Y-Koordinate der Playliste"
 
-#: src/cd-drive.c:328
+#: src/cd-drive.c:330
 msgid "Unnamed Drive"
 msgstr "Namenloses Laufwerk"
 
-#: src/cd-drive.c:540
+#: src/cd-drive.c:559
 msgid "File image"
 msgstr "Datei-Abbild"
 
-#: src/gtk-playlist.c:410 src/totem.c:1025
+#: src/gtk-playlist.c:410 src/totem.c:1028
 msgid "Select files"
 msgstr "Dateien auswählen"
 
@@ -291,11 +305,11 @@ msgstr "Dateien auswählen"
 msgid "Filename"
 msgstr "Dateiname"
 
-#: src/gtk-xine.c:53
+#: src/gtk-xine.c:54
 msgid "Totem Video Window"
 msgstr "Totem Video-Fenster"
 
-#: src/gtk-xine.c:838
+#: src/gtk-xine.c:897
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
@@ -303,80 +317,80 @@ msgstr ""
 "Die Unterstützung für »threads« konnte nicht initialisiert werden.\n"
 "Sie sollten eine »thread«-sichere Xlib installieren."
 
-#: src/gtk-xine.c:870
+#: src/gtk-xine.c:933
 msgid "Could not find a suitable video output."
 msgstr "Es konnte keine passende Video-Ausgabe gefunden werden"
 
 #. One hour
-#: src/gtk-xine.c:1768
+#: src/gtk-xine.c:1858
 #, c-format
 msgid "%d hour"
 msgstr "%d Stunde"
 
 #. Multiple hours
-#: src/gtk-xine.c:1771
+#: src/gtk-xine.c:1861
 #, c-format
 msgid "%d hours"
 msgstr "%d Stunden"
 
 #. One minute
-#: src/gtk-xine.c:1775
+#: src/gtk-xine.c:1865
 #, c-format
 msgid "%d minute"
 msgstr "%d Minute"
 
 #. Multiple minutes
-#: src/gtk-xine.c:1778
+#: src/gtk-xine.c:1868
 #, c-format
 msgid "%d minutes"
 msgstr "%d Minuten"
 
 #. One second
-#: src/gtk-xine.c:1782
+#: src/gtk-xine.c:1872
 #, c-format
 msgid "%d second"
 msgstr "%d Sekunde"
 
 #. Multiple seconds
-#: src/gtk-xine.c:1785
+#: src/gtk-xine.c:1875
 #, c-format
 msgid "%d seconds"
 msgstr "%d Sekunden"
 
 #. hour:minutes:seconds
-#: src/gtk-xine.c:1790
+#: src/gtk-xine.c:1880
 #, c-format
 msgid "%s %s %s"
 msgstr "%s:%s:%s"
 
 #. minutes:seconds
-#: src/gtk-xine.c:1793
+#: src/gtk-xine.c:1883
 #, c-format
 msgid "%s %s"
 msgstr "%s:%s"
 
 #. seconds
-#: src/gtk-xine.c:1796
+#: src/gtk-xine.c:1886
 #, c-format
 msgid "%s"
 msgstr "%s"
 
 #. Duration
-#: src/gtk-xine.c:1856
+#: src/gtk-xine.c:1946
 msgid "0 second"
 msgstr "0 Sekunden"
 
-#: src/gtk-xine.c:1924
+#: src/gtk-xine.c:2014
 #, c-format
 msgid "%d frames per second"
 msgstr "%d"
 
-#: src/gtk-xine.c:1936
+#: src/gtk-xine.c:2026
 #, c-format
 msgid "%d kbps"
 msgstr "%d kB/s"
 
-#: src/totem.c:259
+#: src/totem.c:261
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -386,48 +400,44 @@ msgstr ""
 "Dieser Medientyp kann nicht von Totem abgespielt werden, da das dafür "
 "notwendige Plugin nicht verfügbar ist.\n"
 "Installieren Sie dieses und starten Sie Totem neu, um dieses Medium "
-"abspielen zu können."
+"wiedergeben zu können."
 
-#: src/totem.c:267
+#: src/totem.c:269
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr ""
 "Obwohl ein Plugin für diesen Medientyp verfügbar ist, konnte Totem das "
-"Medium nicht abspielen.\n"
+"Medium nicht wiedergeben.\n"
 "Stellen Sie sicher, dass sich ein Medium im Laufwerk befindet und dieses "
 "korrekt konfiguriert ist."
 
-#: src/totem.c:372 src/totem.c:1982
+#: src/totem.c:374 src/totem.c:2021
 msgid "No file"
 msgstr "Keine Datei"
 
 #. Title
-#: src/totem.c:427 src/totem.c:760
+#: src/totem.c:429 src/totem.c:762
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
 #. Make the new label
-#: src/totem.c:799
+#: src/totem.c:801
 #, c-format
 msgid "Time: %s "
 msgstr "Verstrichen: %s"
 
-#: src/totem.c:1169
+#: src/totem.c:1172
 msgid "translator_credits"
 msgstr "Christian Neumair <chris@gnome-de.org>"
 
-#: src/totem.c:1194
-msgid "Copyright (c) 2002 Bastien Nocera"
-msgstr "© 2002 Bastien Nocera"
-
-#: src/totem.c:1195
+#: src/totem.c:1198
 msgid "Movie Player (based on the Xine libraries)"
-msgstr "Videos abspielen (basierend auf den Xine-Bibliotheken)"
+msgstr "Video-Wiedergabe (basierend auf den Xine-Bibliotheken)"
 
-#: src/totem.c:1220
+#: src/totem.c:1223
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -435,7 +445,7 @@ msgstr ""
 "Das Eigenschaften-Fenster für das Video konnte nicht geladen werden.\n"
 "Stellen Sie sicher, dass Totem korrekt installiert ist."
 
-#: src/totem.c:1569
+#: src/totem.c:1603
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -444,30 +454,30 @@ msgstr ""
 "Totem konnte nicht gestartet werden:\n"
 "%s"
 
-#: src/totem.c:1575
+#: src/totem.c:1609
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'.\n"
 "Totem will not be able to play it."
 msgstr ""
 "Es ist kein Plugin installiert, um »%s« zu verarbeiten.\n"
-"Totem kann es daher nicht abspielen."
+"Totem kann es daher nicht wiedergeben."
 
-#: src/totem.c:1580
+#: src/totem.c:1614
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
-msgstr "»%s« ist fehlerhaft und Totem kann es nicht weiter abspielen."
+msgstr "»%s« ist fehlerhaft und Totem kann es nicht weiter wiedergeben."
 
-#: src/totem.c:1584
+#: src/totem.c:1618
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
 "%s"
 msgstr ""
-"Totem konnte »%s« nicht abspielen:\n"
+"Totem konnte »%s« nicht wiedergeben:\n"
 "%s"
 
-#: src/totem.c:2123
+#: src/totem.c:2171
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -479,7 +489,7 @@ msgstr ""
 "initialisiert werden:\n"
 "%s"
 
-#: src/totem.c:2137 src/totem.c:2165
+#: src/totem.c:2185 src/totem.c:2213
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -487,7 +497,7 @@ msgstr ""
 "Die Haupt-Oberfläche (totem.glade) konnte nicht geladen werden.\n"
 "Stellen Sie sicher, dass Totem korrekt installiert ist."
 
-#: src/totem.c:2177
+#: src/totem.c:2225
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
@@ -498,3 +508,6 @@ msgstr ""
 #: src/totem-cd-selection.c:260
 msgid "Select the drive"
 msgstr "Wählen Sie ein Laufwerk"
+
+#~ msgid "Copyright (c) 2002 Bastien Nocera"
+#~ msgstr "© 2002 Bastien Nocera"
