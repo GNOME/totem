@@ -1,3 +1,15 @@
+2004-11-26  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/bacon-video-widget-gst.c: (get_media_size),
+	(bacon_video_widget_expose_event),
+	(bacon_video_widget_size_allocate), (state_change),
+	(bacon_video_widget_set_media_device), (fixate_visualization),
+	(setup_vis), (bacon_video_widget_set_show_visuals),
+	(bacon_video_widget_set_visuals),
+	(bacon_video_widget_set_visuals_quality):
+	  Re-enable visualizations in GStreamer backend. Size window to
+	  visualization size if set up like that (is that right?).
+
 2004-11-25  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-disc.c: (cd_cache_new): fix DVD from disk detection when

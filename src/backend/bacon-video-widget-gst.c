@@ -117,7 +117,7 @@ struct BaconVideoWidgetPrivate
   /* Visual effects */
   GList *vis_plugins_list;
   gboolean show_vfx;
-  gboolean using_vfx;
+  VisualsQuality visq;
   GstElement *vis_element;
 
   /* Other stuff */
@@ -190,7 +190,9 @@ static int bvw_table_signals[LAST_SIGNAL] = { 0 };
 static void
 get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
 {
-  if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED) {
+  if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED &&
+      (bvw->priv->media_has_video ||
+       (bvw->priv->show_vfx && bvw->priv->vis_element))) {
     *width = bvw->priv->video_width;
     *height = bvw->priv->video_height;
   } else {
@@ -281,7 +283,9 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
 		      widget->allocation.width, widget->allocation.height);
   gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, window);
 
-  if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED) {
+  if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED &&
+      (bvw->priv->media_has_video ||
+       (bvw->priv->vis_element && bvw->priv->show_vfx))) {
     gst_x_overlay_expose (bvw->priv->xoverlay);
   } else if (bvw->priv->logo_pixbuf != NULL) {
     /* draw logo here */
@@ -353,7 +357,9 @@ bacon_video_widget_size_allocate (GtkWidget * widget,
                             allocation->width, allocation->height);
 
     /* resize video_window */
-    if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED) {
+    if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED &&
+        (bvw->priv->media_has_video ||
+         (bvw->priv->show_vfx && bvw->priv->vis_element))) {
       width = bvw->priv->video_width;
       height = bvw->priv->video_height;
     } else if (bvw->priv->logo_pixbuf) {
@@ -825,6 +831,7 @@ state_change (GstElement *play, GstElementState old_state,
   if (old_state <= GST_STATE_READY &&
       new_state >= GST_STATE_PAUSED) {
     GList *streaminfo = NULL;
+    GstPad *videopad = NULL;
 
     g_object_get (G_OBJECT (bvw->priv->play), "stream-info",
 		  &streaminfo, NULL);
@@ -839,27 +846,36 @@ state_change (GstElement *play, GstElementState old_state,
       val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
 
       if (strstr (val->value_name, "AUDIO")) {
-        bvw->priv->media_has_audio = TRUE;
-      } else if (strstr (val->value_name, "VIDEO")) {
-        GstPad *pad = NULL;
-
-        g_object_get (info, "object", &pad, NULL);
-        /* hack for 0.8.5 */
-        if (!pad)
-          g_object_get (info, "pad", &pad, NULL);
-        if (pad != NULL && GST_PAD_REALIZE (pad) != NULL) {
-          g_assert (GST_IS_PAD (pad));
-
-          /* handle explicit caps as well - they're set later */
-          if (GST_PAD_REALIZE (pad)->link != NULL && GST_PAD_CAPS (pad))
-            caps_set (G_OBJECT (pad), NULL, bvw);
-          else
-            g_signal_connect (pad, "notify::caps",
-                G_CALLBACK (caps_set), bvw);
+        if (!bvw->priv->media_has_audio) {
+          bvw->priv->media_has_audio = TRUE;
+          if (!bvw->priv->media_has_video &&
+              bvw->priv->show_vfx && bvw->priv->vis_element) {
+            videopad = gst_element_get_pad (bvw->priv->vis_element, "src");
+          }
         }
+      } else if (strstr (val->value_name, "VIDEO")) {
+        if (!bvw->priv->media_has_video) {
+          bvw->priv->media_has_video = TRUE;
 
-        bvw->priv->media_has_video = TRUE;
+          videopad = NULL;
+          g_object_get (info, "object", &videopad, NULL);
+          /* hack for 0.8.5 */
+          if (!videopad)
+            g_object_get (info, "pad", &videopad, NULL);
+        }
       }
+    }
+
+    if (videopad && GST_PAD_REALIZE (videopad)) {
+      g_assert (GST_IS_PAD (videopad));
+
+      /* handle explicit caps as well - they're set later */
+      if (GST_PAD_REALIZE (videopad)->link != NULL &&
+          GST_PAD_CAPS (videopad))
+        caps_set (G_OBJECT (videopad), NULL, bvw);
+      else
+        g_signal_connect (videopad, "notify::caps",
+            G_CALLBACK (caps_set), bvw);
     }
   } else if (new_state <= GST_STATE_READY &&
              old_state >= GST_STATE_PAUSED) {
@@ -1380,10 +1396,90 @@ bacon_video_widget_set_media_device (BaconVideoWidget * bvw, const char *path)
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
   
-  if (bvw->priv->media_device)
-    g_free (bvw->priv->media_device);
-  
+  g_free (bvw->priv->media_device);
   bvw->priv->media_device = g_strdup (path);
+}
+
+static GstCaps *
+fixate_visualization (GstPad *pad, const GstCaps *in_caps,
+		      BaconVideoWidget *bvw)
+{
+  GstCaps *caps;
+  GstStructure *s;
+  int fps, w, h;
+
+  switch (bvw->priv->visq)
+    {
+    case VISUAL_SMALL:
+      fps = 10;
+      w = 200;
+      h = 150;
+      break;
+    case VISUAL_NORMAL:
+      fps = 20;
+      w = 320;
+      h = 240;
+      break;
+    case VISUAL_LARGE:
+      fps = 25;
+      w = 640;
+      h = 480;
+      break;
+    case VISUAL_EXTRA_LARGE:
+      fps = 30;
+      w = 800;
+      h = 600;
+      break;
+    default:
+      /* shut up warnings */
+      fps = w = h = 0;
+      g_assert_not_reached ();
+  }
+
+  /* simple please */
+  if (gst_caps_get_size (in_caps) > 1)
+    return NULL;
+
+  /* fixate */
+  caps = gst_caps_copy (in_caps);
+  s = gst_caps_get_structure (caps, 0);
+  if (gst_caps_structure_fixate_field_nearest_int (s, "width", w) ||
+      gst_caps_structure_fixate_field_nearest_int (s, "height", h) ||
+      gst_caps_structure_fixate_field_nearest_double (s, "framerate", fps))
+    return caps;
+
+  gst_caps_free (caps);
+  return NULL;
+}
+
+static void
+setup_vis (BaconVideoWidget * bvw)
+{
+  const GstElement *vis;
+  gint rel = -1, mic = 0;
+
+  /* only if >= 0.8.6.1, else it'll hang after one song (refcount bug) */
+  if (rel == -1) {
+    GstPlugin *p;
+
+    p = gst_registry_pool_find_plugin ("playbin");
+    g_assert (p); /* otherwise we can't be here */
+    if (sscanf (p->desc.version, "%*d.%*d.%d.%d", &rel, &mic) < 1)
+      g_assert_not_reached ();
+
+    /* only if >= 0.8.6.1 */
+    if (rel < 6 || (rel == 6 && mic < 1)) {
+      g_warning ("Visualization disabled because your gst-plugins is too old (%d.%d.%d.%d)", 0, 8, rel, mic);
+      return;
+    }
+  }
+
+  if (bvw->priv->show_vfx && bvw->priv->vis_element)
+    vis = bvw->priv->vis_element;
+  else
+    vis = NULL;
+
+  g_object_set (G_OBJECT (bvw->priv->play), "vis-plugin", vis, NULL);
 }
 
 gboolean
@@ -1394,20 +1490,11 @@ bacon_video_widget_set_show_visuals (BaconVideoWidget * bvw,
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  return FALSE;
-#if 0
-  if (!bvw->priv->media_has_video)
-    {
-      if (!show_visuals)
-	gst_video_widget_set_logo_focus (bvw->priv->vw, TRUE);
-      else
-	gst_video_widget_set_logo_focus (bvw->priv->vw, FALSE);
+  bvw->priv->show_vfx = show_visuals;
 
-      gst_play_connect_visualization (bvw->priv->play, show_visuals);
-    }
+  setup_vis (bvw);
 
   return TRUE;
-#endif
 }
 
 GList *
@@ -1478,82 +1565,43 @@ bacon_video_widget_get_visuals_list (BaconVideoWidget * bvw)
 gboolean
 bacon_video_widget_set_visuals (BaconVideoWidget * bvw, const char *name)
 {
-  /*gboolean paused = FALSE;*/
+  GstElement *old_vis = bvw->priv->vis_element;
 
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  return FALSE;
-#if 0
-  if (GST_STATE (GST_ELEMENT (bvw->priv->play)) == GST_STATE_PLAYING)
-    {
-      gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_PAUSED);
-      paused = TRUE;
-    }
-
   bvw->priv->vis_element = gst_element_factory_make (name,
                                                      "vis_plugin_element");
-  if (GST_IS_ELEMENT (bvw->priv->vis_element))
-    {
-      gst_play_set_visualization (bvw->priv->play, bvw->priv->vis_element);
-      if (paused)
-	{
-	  gst_play_seek_to_time (bvw->priv->play,
-				 bvw->priv->current_time_nanos);
-	  gst_element_set_state (GST_ELEMENT (bvw->priv->play),
-                                 GST_STATE_PLAYING);
-	}
+  if (!bvw->priv->vis_element) {
+    bvw->priv->vis_element = old_vis;
+    return FALSE;
+  }
 
-      return FALSE;
-    }
-  else
-    {
-      return FALSE;
-    }
-#endif
+  g_signal_connect (gst_element_get_pad (bvw->priv->vis_element, "src"),
+		    "fixate", G_CALLBACK (fixate_visualization), bvw);
+
+  setup_vis (bvw);
+  if (old_vis) {
+    gst_object_unref (GST_OBJECT (old_vis));
+  }
+
+  return TRUE;
 }
 
 void
 bacon_video_widget_set_visuals_quality (BaconVideoWidget * bvw,
 					VisualsQuality quality)
 {
-  int fps, w, h;
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
-  if (bvw->priv->vis_element == NULL)
+  if (bvw->priv->visq == quality)
     return;
+  bvw->priv->visq = quality;
 
-  switch (quality)
-    {
-    case VISUAL_SMALL:
-      fps = 15;
-      w = 320;
-      h = 240;
-      break;
-    case VISUAL_NORMAL:
-      fps = 25;
-      w = 320;
-      h = 240;
-      break;
-    case VISUAL_LARGE:
-      fps = 25;
-      w = 640;
-      h = 480;
-      break;
-    case VISUAL_EXTRA_LARGE:
-      fps = 30;
-      w = 800;
-      h = 600;
-      break;
-    default:
-      /* shut up warnings */
-      fps = w = h = 0;
-      g_assert_not_reached ();
-  }
-
+  //gst_pad_renegotiate (gst_element_get_pad (bvw->priv->vis_element, "src"));
 }
 
 gboolean
