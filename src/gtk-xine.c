@@ -1620,15 +1620,27 @@ gtk_xine_get_show_cursor (GtkXine *gtx)
 void
 gtk_xine_set_media_device (GtkXine *gtx, const char *path)
 {
+	xine_cfg_entry_t entry;
+
+	/* DVD device */
 	xine_config_register_string (gtx->priv->xine,
 			"input.dvd_device", path,
 			"device used for dvd drive",
 			NULL, 10, NULL, NULL);
+	xine_config_lookup_entry (gtx->priv->xine,
+			"input.dvd_device", &entry);
+	entry.str_value = (char *) path;
+	xine_config_update_entry (gtx->priv->xine, &entry);
 
+	/* VCD device */
 	xine_config_register_string (gtx->priv->xine,
 			"input.vcd_device", path,
 			"device used for cdrom drive",
 			NULL, 10, NULL, NULL);
+	xine_config_lookup_entry (gtx->priv->xine,
+			"input.vcd_device", &entry);
+	entry.str_value = (char *) path;
+	xine_config_update_entry (gtx->priv->xine, &entry);
 }
 
 void

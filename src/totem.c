@@ -2552,7 +2552,9 @@ totem_setup_preferences (Totem *totem)
 		gconf_client_set_string (totem->gc, GCONF_PREFIX"/mediadev",
 				mediadev, NULL);
 		gtk_xine_set_media_device (GTK_XINE (totem->gtx), mediadev);
-	}
+	} else {
+		gtk_xine_set_media_device (GTK_XINE (totem->gtx), mediadev);
+}
 
 	bacon_cd_selection_set_device (BACON_CD_SELECTION (item),
 			gconf_client_get_string
