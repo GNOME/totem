@@ -1798,6 +1798,7 @@ on_about1_activate (GtkButton *button, Totem *totem)
 	const gchar *authors[] =
 	{
 		"Bastien Nocera <hadess@hadess.net>",
+		"Julien Moutte <julien@moutte.net> (GStreamer backend)",
 		"Guenter Bartsch <guenter@users.sourceforge.net>",
 		NULL
 	};
@@ -1832,7 +1833,7 @@ on_about1_activate (GtkButton *button, Totem *totem)
 				backend_version);
 
 	about = gnome_about_new(_("Totem"), VERSION,
-			"Copyright \xc2\xa9 2002 Bastien Nocera",
+			"Copyright \xc2\xa9 2002-2003 Bastien Nocera",
 			(const char *)description,
 			(const char **)authors,
 			(const char **)documenters,
@@ -2710,7 +2711,8 @@ update_buttons (Totem *totem)
 	gtk_widget_set_sensitive (item, has_item);
 	item = glade_xml_get_widget (totem->xml, "tcw_previous_button");
 	gtk_widget_set_sensitive (item, has_item);
-	item = glade_xml_get_widget (totem->xml, "tmw_previous_chapter_menu_item");
+	item = glade_xml_get_widget (totem->xml,
+			"tmw_previous_chapter_menu_item");
 	gtk_widget_set_sensitive (item, has_item);
 	item = glade_xml_get_widget (totem->xml, "trcm_previous_chapter");
 	gtk_widget_set_sensitive (item, has_item);

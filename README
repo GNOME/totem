@@ -13,12 +13,23 @@ News
 ====
 
 1.0(?):
+* 
+
+0.99.2:
 * Fixed XFree86 lockup on start bug (see http://bugs.xfree86.org/cgi-bin/bugzilla/show_bug.cgi?id=260 for the patch)
 * Automatic resolution switching when going to fullscreen with auto-resize
 enabled (useful for TV output)
 * Audio output selection: stereo, 4.0, 5.0 or 5.1 channels
 * Changed default command-line action to replace, not enqueue
-* Plenty of small bug fixes (see ChangeLog)
+* Stop the stream before exiting, fixes the long waits on exit
+* Fix display of non-UTF8 id3 tags
+* Rewrote most of the screensaver disabling code
+* Implemented Winamp m3u compatibility and relative paths resolution
+* Don't take more than 30 seconds to thumbnail a movie
+* Fix the location of the screenshots if ~/Desktop exists (GNOME 2.3)
+* Implemented seek to time (GStreamer)
+* Sync'ed visuals quality with the xine backend (GStreamer)
+* Really fix the position of the popup controls on first appearance
 
 0.99.1:
 * Added a automatic downloader for the DLLs on x86 machines

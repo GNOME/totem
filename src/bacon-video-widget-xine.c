@@ -412,7 +412,7 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 		i++;
 	}
 
-	bvw->priv->tick_id = g_timeout_add (70,
+	bvw->priv->tick_id = g_timeout_add (140,
 			(GSourceFunc) bacon_video_widget_tick_send, bvw);
 
 	bvw->priv->icon = gdk_pixbuf_new_from_file (ICON_PATH, NULL);
