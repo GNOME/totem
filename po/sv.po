@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2002-11-08 13:35+0100\n"
-"PO-Revision-Date: 2002-11-08 13:36+0100\n"
+"POT-Creation-Date: 2002-11-09 15:09+0100\n"
+"PO-Revision-Date: 2002-11-09 15:10+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,6 +22,81 @@ msgstr "Spellista"
 #: data/playlist.glade.h:2
 msgid "Repeat Mode"
 msgstr "Upprepningsläge"
+
+#: data/properties.glade.h:1 src/gtk-xine.c:1660
+msgid "0 frames per second"
+msgstr "0 ramar per sekund"
+
+#. Bitrate
+#: data/properties.glade.h:2 src/gtk-xine.c:1662
+msgid "0 kbps"
+msgstr "0 kb/s"
+
+#. Dimensions
+#: data/properties.glade.h:3 src/gtk-xine.c:1655
+msgid "0 x 0"
+msgstr "0 × 0"
+
+#: data/properties.glade.h:4
+msgid "<b>Audio</b>"
+msgstr "<b>Ljud</b>"
+
+#: data/properties.glade.h:5
+msgid "<b>General</b>"
+msgstr "<b>Allmänt</b>"
+
+#: data/properties.glade.h:6
+msgid "<b>Video</b>"
+msgstr "<b>Video</b>"
+
+#: data/properties.glade.h:7
+msgid "Artist: "
+msgstr "Artist: "
+
+#: data/properties.glade.h:8
+msgid "Bitrate: "
+msgstr "Bithastighet: "
+
+#: data/properties.glade.h:9
+msgid "Codec:"
+msgstr "Komprimeringsmetod:"
+
+#: data/properties.glade.h:10
+msgid "Codec: "
+msgstr "Komprimeringsmetod: "
+
+#: data/properties.glade.h:11
+msgid "Dimensions: "
+msgstr "Dimensioner: "
+
+#: data/properties.glade.h:12
+msgid "Framerate: "
+msgstr "Ramhastighet: "
+
+#. Year
+#: data/properties.glade.h:13 src/gtk-xine.c:1653 src/gtk-xine.c:1657
+#: src/gtk-xine.c:1664 src/gtk-xine.c:1684 src/gtk-xine.c:1697
+#: src/gtk-xine.c:1720
+msgid "N/A"
+msgstr "-"
+
+#: data/properties.glade.h:14
+msgid "Properties"
+msgstr "Egenskaper"
+
+#: data/properties.glade.h:15
+msgid "Title: "
+msgstr "Titel: "
+
+#. Title
+#: data/properties.glade.h:16 src/gtk-xine.c:1649 src/gtk-xine.c:1651
+#: src/gtk-xine.c:1676 src/gtk-xine.c:1680
+msgid "Unknown"
+msgstr "Okänd"
+
+#: data/properties.glade.h:17
+msgid "Year: "
+msgstr "År: "
 
 #: data/totem.desktop.in.h:1
 msgid "Play movies and songs"
@@ -95,7 +170,7 @@ msgstr "Hoppa över framlänges"
 msgid "Toggle Aspect Ratio"
 msgstr "Växla proportioner"
 
-#: data/totem.glade.h:17 src/totem.c:1037
+#: data/totem.glade.h:17 src/totem.c:1043
 msgid "Totem"
 msgstr "Totem"
 
@@ -143,6 +218,18 @@ msgstr "_Ljud"
 msgid "_Zoom 1:2"
 msgstr "_Zooma 1:2"
 
+#: data/totem.glade.h:29
+msgid "button3"
+msgstr "knapp3"
+
+#: data/totem.glade.h:30
+msgid "button4"
+msgstr "knapp4"
+
+#: data/totem.glade.h:31
+msgid "button5"
+msgstr "knapp5"
+
 #: data/totem.schemas.in.h:1
 msgid "Default audio output driver"
 msgstr "Standarddrivrutin för ljudutmatning"
@@ -171,7 +258,7 @@ msgstr "X-koordinat för spellistan"
 msgid "Y coordinate for the Playlist"
 msgstr "Y-koordinat för spellistan"
 
-#: src/gtk-playlist.c:410 src/totem.c:869
+#: src/gtk-playlist.c:410 src/totem.c:875
 msgid "Select files"
 msgstr "Välj filer"
 
@@ -183,11 +270,11 @@ msgstr "Spelar"
 msgid "Filename"
 msgstr "Filnamn"
 
-#: src/gtk-xine.c:54
+#: src/gtk-xine.c:52
 msgid "Totem Video Window"
 msgstr "Totem-videofönster"
 
-#: src/gtk-xine.c:726
+#: src/gtk-xine.c:733
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
@@ -195,9 +282,19 @@ msgstr ""
 "Kunde inte initiera trådstödet.\n"
 "Du bör installera ett trådsäkert Xlib."
 
-#: src/gtk-xine.c:758
+#: src/gtk-xine.c:765
 msgid "Could not find a suitable video output."
 msgstr "Kunde inte hitta en lämplig videoutmatning."
+
+#: src/gtk-xine.c:1707
+#, c-format
+msgid "%d frames per second"
+msgstr "%d ramar per sekund"
+
+#: src/gtk-xine.c:1711
+#, c-format
+msgid "%d kbps"
+msgstr "%d kb/s"
 
 #: src/totem.c:257
 msgid ""
@@ -222,25 +319,25 @@ msgstr ""
 "Du bör kontrollera om det finns en skiva i enheten och att den är korrekt "
 "konfigurerad."
 
-#: src/totem.c:369 src/totem.c:1684
+#: src/totem.c:369 src/totem.c:1711
 msgid "No file"
 msgstr "Ingen fil"
 
-#: src/totem.c:1013
+#: src/totem.c:1019
 msgid "translator_credits"
 msgstr ""
 "Christian Rose\n"
 "Skicka synpunkter på översättningen till sv@li.org"
 
-#: src/totem.c:1038
-msgid "(c) Copyright 2002 Bastien Nocera"
-msgstr "© Copyright 2002 Bastien Nocera"
+#: src/totem.c:1044
+msgid "Copyright (c) 2002 Bastien Nocera"
+msgstr "Copyright © 2002 Bastien Nocera"
 
-#: src/totem.c:1039
+#: src/totem.c:1045
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Filmspelare (baserad på Xine-biblioteken)"
 
-#: src/totem.c:1355
+#: src/totem.c:1379
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -249,7 +346,7 @@ msgstr ""
 "Totem kunde inte starta:\n"
 "%s"
 
-#: src/totem.c:1361
+#: src/totem.c:1385
 #, c-format
 msgid ""
 "There is no plugin for Totem to handle '%s'.\n"
@@ -258,12 +355,12 @@ msgstr ""
 "Det finns ingen insticksmodul för Totem för hantering av \"%s\".\n"
 "Totem kommer inte att kunna spela det."
 
-#: src/totem.c:1366
+#: src/totem.c:1390
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "\"%s\" är trasig, och Totem kan inte spela den längre."
 
-#: src/totem.c:1370
+#: src/totem.c:1394
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -272,7 +369,7 @@ msgstr ""
 "Totem kunde inte spela \"%s\":\n"
 "%s"
 
-#: src/totem.c:1787
+#: src/totem.c:1814
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -283,7 +380,7 @@ msgstr ""
 "konfigurationsmotorn:\n"
 "%s"
 
-#: src/totem.c:1819 src/totem.c:1827
+#: src/totem.c:1846 src/totem.c:1855
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -291,22 +388,13 @@ msgstr ""
 "Kunde inte läsa in huvudgränssnittet (totem.glade).\n"
 "Försäkra dig om att Totem är korrekt installerat."
 
-#: src/totem.c:1840
+#: src/totem.c:1868
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
 msgstr ""
 "Kunde inte läsa in gränssnittet för spellistan.\n"
 "Försäkra dig om att Totem är korrekt installerat."
-
-#~ msgid "button3"
-#~ msgstr "knapp3"
-
-#~ msgid "button4"
-#~ msgstr "knapp4"
-
-#~ msgid "button5"
-#~ msgstr "knapp5"
 
 #~ msgid ""
 #~ "The configuration system is not initialised.\n"
