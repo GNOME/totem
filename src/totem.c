@@ -213,6 +213,12 @@ totem_action_exit (Totem *totem)
 
 	totem_named_icons_dispose (totem);
 
+	if (totem->bvw)
+		gconf_client_set_int (totem->gc,
+				GCONF_PREFIX"/volume",
+				bacon_video_widget_get_volume (totem->bvw),
+				NULL);
+
 	if (totem->playlist)
 		gtk_widget_destroy (GTK_WIDGET (totem->playlist));
 	if (totem->win)
@@ -3245,6 +3251,11 @@ video_widget_create (Totem *totem)
 
 	totem_preferences_tvout_setup (totem);
 	totem_preferences_visuals_setup (totem);
+
+	bacon_video_widget_set_volume (totem->bvw,
+			gconf_client_get_int (totem->gc,
+				GCONF_PREFIX"/volume", NULL));
+	update_volume_sliders (totem);
 
 	/* Let's set a name. Will make debugging easier */
 	gtk_widget_set_name (GTK_WIDGET(totem->bvw), "bvw");

@@ -792,18 +792,6 @@ setup_config_stream (BaconVideoWidget *bvw)
 	if (bvw->priv->gc == NULL)
 		return;
 
-	/* Set the volume */
-	if (bvw->priv->ao_driver != NULL)
-	{
-		bvw->priv->volume = gconf_client_get_int (bvw->priv->gc,
-				GCONF_PREFIX"/volume", NULL);
-		bvw->priv->volume = CLAMP (bvw->priv->volume, 0, 100);
-
-		xine_set_param (bvw->priv->stream,
-				XINE_PARAM_AUDIO_AMP_LEVEL,
-				bvw->priv->volume);
-	}
-
 	/* Setup brightness and contrast */
 	for (i = 0; i < 4; i++)
 	{
