@@ -57,6 +57,7 @@ gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/totem-video-thu
 %{_datadir}/pixmaps/*
 %{_datadir}/gnome/help
 %{_datadir}/omf/totem/totem-C.omf
+%{_datadir}/omf/totem/totem-ru.omf
 %{_datadir}/%{name}
 %{_sysconfdir}/gconf/schemas/totem-handlers.schemas
 %{_mandir}/man1/totem.1.gz
@@ -64,6 +65,8 @@ gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/totem-video-thu
 %{_datadir}/omf/totem/totem-es.omf
 
 %changelog
+* Thu Dec 23 2004 Christian Schaller <Uraeus@gnome.org>
+- Add russian omf file
 * Thu Sep 21 2004 Christian Schaller <Uraeus@gnome.org>
 - Remove vanity
 - Add manpage
