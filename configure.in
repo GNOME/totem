@@ -198,7 +198,7 @@ AC_SUBST(REMOTE_LIBS)
 AC_PATH_X
 
 if test x"$x_includes" != x"NONE" && test -n "$x_includes" ; then
-	X_INCLUDES=-L`echo $x_includes | sed -e "s/:/ -I/g"`
+	X_INCLUDES=-I`echo $x_includes | sed -e "s/:/ -I/g"`
 fi
 if test x"$x_libraries" != x"NONE" && test -n "$x_libraries" ; then
 	X_LIBRARIES=-L`echo $x_libraries | sed -e "s/:/ -L/g"`
