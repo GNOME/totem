@@ -199,15 +199,21 @@ AC_SUBST(REMOTE_LIBS)
 
 AC_PATH_X
 
-CFLAGS="-I$x_includes $CFLAGS"
-LIBS="-L$x_libraries $LIBS"
+if test x"$x_includes" != x"NONE" && test -n "$x_includes" ; then
+	X_INCLUDES=-L`echo $x_includes | sed -e "s/:/ -I/g"`
+fi
+if test x"$x_libraries" != x"NONE" && test -n "$x_libraries" ; then
+	X_LIBRARIES=-L`echo $x_libraries | sed -e "s/:/ -L/g"`
+fi
+CFLAGS="$X_INCLUDES $CFLAGS"
+LIBS="$X_LIBRARIES $LIBS"
 
 XTEST_LIBS=""
 AC_CHECK_LIB(Xtst, XTestFakeKeyEvent,
-		XTEST_LIBS="-lX11 -lXtst -L$x_libraries"
+		XTEST_LIBS="-lX11 -lXtst $X_LIBRARIES"
 		AC_DEFINE(HAVE_XTEST, 1, [defined if you have XTest library]),
 		,
-		-L$x_libraries)
+		$X_LIBRARIES)
 AC_SUBST(XTEST_LIBS)
 
 have_randr=no
@@ -217,12 +223,12 @@ AC_CHECK_LIB(Xrandr, XRRUpdateConfiguration,
 		RANDR_LIBS="-lX11 -lXrandr -lXrender"
 		AC_DEFINE(HAVE_RANDR, 1, Have the Xrandr extension library),
 		:, [#include <X11/Xlib.h>])], : ,
-	-L$x_libraries -lXrandr -lXrender)
+	$X_LIBRARIES -lXrandr -lXrender)
 AM_CONDITIONAL(HAVE_RANDR, [test $have_randr = yes])
 AC_SUBST(RANDR_LIBS)
 
 dnl Explicitely link against libX11 to avoid problems with crappy linkers
-X_LIBS="-L$x_libraries -lX11"
+X_LIBS="$X_LIBRARIES -lX11"
 AC_SUBST(X_LIBS)
 
 dnl Multimedia keys
