@@ -1597,7 +1597,7 @@ gtk_xine_set_media_device (GtkXine *gtx, const char *path)
 			NULL, 10, NULL, NULL);
 	xine_config_lookup_entry (gtx->priv->xine,
 			"input.dvd_device", &entry);
-	entry.str_value = (char *) path;
+	entry.str_value = g_strdup (path);
 	xine_config_update_entry (gtx->priv->xine, &entry);
 
 	/* VCD device */
@@ -1607,7 +1607,7 @@ gtk_xine_set_media_device (GtkXine *gtx, const char *path)
 			NULL, 10, NULL, NULL);
 	xine_config_lookup_entry (gtx->priv->xine,
 			"input.vcd_device", &entry);
-	entry.str_value = (char *) path;
+	entry.str_value = g_strdup (path);
 	xine_config_update_entry (gtx->priv->xine, &entry);
 }
 

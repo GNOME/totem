@@ -1,5 +1,10 @@
 2003-02-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-xine.c: (gtk_xine_set_media_device): fix possible memory
+	fuckage which caused the DVD/VCD to not work
+
+2003-02-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-message-connection.c:
 	* src/bacon-message-connection.h: upd from libbacon
 	* src/egg-recent-model.c: (egg_recent_model_read): fix a leak
