@@ -2394,4 +2394,155 @@
   </child>
 </widget>
 
+<widget class="GtkMenu" id="menu2">
+
+  <child>
+    <widget class="GtkMenuItem" id="play2">
+      <property name="visible">True</property>
+      <property name="tooltip" translatable="yes">Play or pause the movie</property>
+      <property name="label" translatable="yes">_Play / Pause</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_play_/_pause1_activate" last_modification_time="Fri, 18 Apr 2003 09:56:36 GMT"/>
+      <accelerator key="P" modifiers="0" signal="activate"/>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkImageMenuItem" id="next_chapter2">
+      <property name="visible">True</property>
+      <property name="tooltip" translatable="yes">Next chapter or movie</property>
+      <property name="label" translatable="yes">Next Chapter/Movie</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_next_chapter1_activate" last_modification_time="Fri, 18 Apr 2003 09:56:36 GMT"/>
+      <accelerator key="N" modifiers="0" signal="activate"/>
+
+      <child internal-child="image">
+	<widget class="GtkImage" id="image1402">
+	  <property name="visible">True</property>
+	  <property name="stock">gtk-goto-last</property>
+	  <property name="icon_size">1</property>
+	  <property name="xalign">0.5</property>
+	  <property name="yalign">0.5</property>
+	  <property name="xpad">0</property>
+	  <property name="ypad">0</property>
+	</widget>
+      </child>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkImageMenuItem" id="previous_chapter2">
+      <property name="visible">True</property>
+      <property name="tooltip" translatable="yes">Previous chapter or movie</property>
+      <property name="label" translatable="yes">Previous Chapter/Movie</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_previous_chapter1_activate" last_modification_time="Fri, 18 Apr 2003 09:56:36 GMT"/>
+      <accelerator key="B" modifiers="0" signal="activate"/>
+
+      <child internal-child="image">
+	<widget class="GtkImage" id="image1403">
+	  <property name="visible">True</property>
+	  <property name="stock">gtk-goto-first</property>
+	  <property name="icon_size">1</property>
+	  <property name="xalign">0.5</property>
+	  <property name="yalign">0.5</property>
+	  <property name="xpad">0</property>
+	  <property name="ypad">0</property>
+	</widget>
+      </child>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkImageMenuItem" id="skip_forward2">
+      <property name="visible">True</property>
+      <property name="tooltip" translatable="yes">Skip forward</property>
+      <property name="label" translatable="yes">Skip forward</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_skip_forward2_activate" last_modification_time="Fri, 18 Apr 2003 09:56:36 GMT"/>
+      <accelerator key="Right" modifiers="0" signal="activate"/>
+
+      <child internal-child="image">
+	<widget class="GtkImage" id="image1404">
+	  <property name="visible">True</property>
+	  <property name="stock">gtk-go-forward</property>
+	  <property name="icon_size">1</property>
+	  <property name="xalign">0.5</property>
+	  <property name="yalign">0.5</property>
+	  <property name="xpad">0</property>
+	  <property name="ypad">0</property>
+	</widget>
+      </child>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkImageMenuItem" id="skip_backwards2">
+      <property name="visible">True</property>
+      <property name="tooltip" translatable="yes">Skip backwards</property>
+      <property name="label" translatable="yes">Skip backwards</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_skip_backwards2_activate" last_modification_time="Fri, 18 Apr 2003 09:56:36 GMT"/>
+      <accelerator key="Left" modifiers="0" signal="activate"/>
+
+      <child internal-child="image">
+	<widget class="GtkImage" id="image1405">
+	  <property name="visible">True</property>
+	  <property name="stock">gtk-go-back</property>
+	  <property name="icon_size">1</property>
+	  <property name="xalign">0.5</property>
+	  <property name="yalign">0.5</property>
+	  <property name="xpad">0</property>
+	  <property name="ypad">0</property>
+	</widget>
+      </child>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkImageMenuItem" id="volume_up2">
+      <property name="visible">True</property>
+      <property name="tooltip" translatable="yes">Volume up</property>
+      <property name="label" translatable="yes">Volume Up</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_volume_up2_activate" last_modification_time="Fri, 18 Apr 2003 09:56:36 GMT"/>
+      <accelerator key="Up" modifiers="0" signal="activate"/>
+
+      <child internal-child="image">
+	<widget class="GtkImage" id="image1406">
+	  <property name="visible">True</property>
+	  <property name="stock">gnome-stock-volume</property>
+	  <property name="icon_size">1</property>
+	  <property name="xalign">0.5</property>
+	  <property name="yalign">0.5</property>
+	  <property name="xpad">0</property>
+	  <property name="ypad">0</property>
+	</widget>
+      </child>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkImageMenuItem" id="volume_down2">
+      <property name="visible">True</property>
+      <property name="label" translatable="yes">Volume Down</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_volume_down2_activate" last_modification_time="Fri, 18 Apr 2003 09:56:36 GMT"/>
+      <accelerator key="Down" modifiers="0" signal="activate"/>
+
+      <child internal-child="image">
+	<widget class="GtkImage" id="image1407">
+	  <property name="visible">True</property>
+	  <property name="stock">gnome-stock-volume</property>
+	  <property name="icon_size">1</property>
+	  <property name="xalign">0.5</property>
+	  <property name="yalign">0.5</property>
+	  <property name="xpad">0</property>
+	  <property name="ypad">0</property>
+	</widget>
+      </child>
+    </widget>
+  </child>
+</widget>
+
 </glade-interface>

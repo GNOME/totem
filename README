@@ -12,6 +12,9 @@ News
 0.97.0:
 * Re-enable the visuals on the fly as well
 * Experimental GStreamer backend (pass --enable-gstreamer to configure)
+* Added a button to get a filemanager to add new proprietary plugins (DLLs,
+  and Real Media .so files)
+* Added a popup menu on the video canvas
 * Fix positioning problem with the popup controls when switching to fullscreen
   for the first time
 
@@ -203,7 +206,6 @@ TODO
 ====
 
 - add an option to hide everything but the video
-- add a popup menu on the video canvas (play, pause, forward, backward and seek)
 - finish the playlist (move stuff around)
 - gtk_xine_play/pause instead of set_speed (hmmm)
 - GStreamer backend (after 1.0, or if somebody sends in a patch :)
