@@ -1145,7 +1145,7 @@ on_open1_activate (GtkButton *button, Totem *totem)
 		if (filenames[0] != NULL)
 		{
 			char *tmp;
-			
+
 			tmp = g_path_get_dirname (filenames[0]);
 			path = g_strconcat (tmp, G_DIR_SEPARATOR_S, NULL);
 			g_free (tmp);
@@ -1158,6 +1158,41 @@ on_open1_activate (GtkButton *button, Totem *totem)
 	}
 
 	gtk_widget_destroy (fs);
+}
+
+static void
+open_location1_activate (GtkButton *button, Totem *totem)
+{
+	GladeXML *glade;
+	char *filename;
+	GtkWidget *dialog, *entry;
+
+	filename = gnome_program_locate_file (NULL,
+			GNOME_FILE_DOMAIN_APP_DATADIR,
+			"totem/uri.glade", TRUE, NULL);
+	if (filename == NULL)
+	{
+		totem_action_error (_("Couldn't load the 'Open Location...'"
+					" interface.\nMake sure that Totem"
+					" is properly installed."), totem->win);
+		return;
+	}
+
+	glade = glade_xml_new (filename, NULL, NULL);
+	if (glade == NULL)
+	{
+		g_free (filename);
+		totem_action_error (_("Couldn't load the 'Open Location...'"
+					" interface.\nMake sure that Totem"
+					" is properly installed."), totem->win);
+		return;
+	}
+
+	g_free (filename);
+	item = glade_xml_get_widget (glade, "open_uri_dialog");
+	response = gtk_dialog_run (GTK_DIALOG (item));
+
+	//FIXME gone home
 }
 
 static void
@@ -2105,6 +2140,9 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "open1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_open1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "open_location1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_open_location1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "play_dvd1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_play_dvd1_activate), totem);
