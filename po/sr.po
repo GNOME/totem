@@ -1,16 +1,16 @@
 # Serbian translation of totem
-# Courtesy of Prevod.org team (http://www.prevod.org/) -- 2003.
-# 
+# Courtesy of Prevod.org team (http://prevod.org/) -- 2003, 2004.
+#
 # This file is distributed under the same license as the totem package.
-# 
+#
 # Maintainer: Вељко М. Станојевић <veljko@vms.homelinux.net>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-17 03:01+0100\n"
-"PO-Revision-Date: 2004-01-17 03:03+0100\n"
+"POT-Creation-Date: 2004-02-12 05:39+0100\n"
+"PO-Revision-Date: 2004-02-12 05:39+0100\n"
 "Last-Translator: Veljko M. Stanojevic <veljko@vms.homelinux.net>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -107,7 +107,7 @@ msgstr "Брзина оквира:"
 msgid "N/A"
 msgstr "Није доступно"
 
-#: data/properties.glade.h:16 src/totem.c:2134
+#: data/properties.glade.h:16 src/totem.c:2149
 msgid "Properties"
 msgstr "Особине"
 
@@ -155,7 +155,7 @@ msgstr "Пусти филмове и песме"
 
 #. Title
 #: data/totem.desktop.in.h:2 data/totem.glade.h:97 src/totem.c:739
-#: src/totem.c:3677
+#: src/totem.c:3693
 msgid "Totem Movie Player"
 msgstr "Тотем"
 
@@ -1054,12 +1054,12 @@ msgstr "Нема видео сигнала"
 msgid "Video codec is not handled"
 msgstr "Видео codec није подржан"
 
-#: src/cd-drive.c:404
+#: src/cd-drive.c:554
 #, c-format
 msgid "Unnamed SCSI CD-ROM (%s)"
 msgstr "Неименовани SCSI CDROM (%s)"
 
-#: src/cd-drive.c:976
+#: src/cd-drive.c:1132
 msgid "File image"
 msgstr "Слика датотеке"
 
@@ -1106,7 +1106,7 @@ msgstr "Да запамтим ову лозинку"
 msgid "Could not save the playlist"
 msgstr "Не могу да сачувам листу"
 
-#: src/totem-playlist.c:475 src/totem.c:1553
+#: src/totem-playlist.c:475 src/totem.c:1571
 msgid "Select files"
 msgstr "Одаберите датотеке"
 
@@ -1199,12 +1199,16 @@ msgstr "0:00 / 0:00"
 msgid "%s (Streaming)"
 msgstr "%s (Текући)"
 
-#: src/totem-statusbar.c:274
+#: src/totem-statusbar.c:216
+msgid "Seek to"
+msgstr "Прескочи до"
+
+#: src/totem-statusbar.c:278
 msgid "Buffering"
 msgstr "Пренос у бафер"
 
 #. eg: 75 %
-#: src/totem-statusbar.c:277
+#: src/totem-statusbar.c:281
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
@@ -1317,11 +1321,11 @@ msgstr ""
 msgid "%s - Totem Movie Player"
 msgstr "%s — пуштање филмова Тотем"
 
-#: src/totem.c:728 src/totem.c:3518
+#: src/totem.c:728 src/totem.c:3535
 msgid "No file"
 msgstr "Нема датотеке"
 
-#: src/totem.c:764 src/totem.c:1906
+#: src/totem.c:764 src/totem.c:1924
 msgid "Totem"
 msgstr "Тотем"
 
@@ -1329,107 +1333,107 @@ msgstr "Тотем"
 msgid "An error occured"
 msgstr "Дошло је до грешке"
 
-#: src/totem.c:1618 src/totem.c:1626
+#: src/totem.c:1636 src/totem.c:1644
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "Нисам успео да учитам сучеље „Отвори локацију...“."
 
-#: src/totem.c:1618 src/totem.c:1626 src/totem.c:3708 src/totem.c:3733
-#: src/totem.c:3756
+#: src/totem.c:1636 src/totem.c:1644 src/totem.c:3724 src/totem.c:3749
+#: src/totem.c:3772
 msgid "Make sure that Totem is properly installed."
 msgstr "Проверите да ли је Тотем правилно инсталиран."
 
-#: src/totem.c:1859
+#: src/totem.c:1877
 msgid "Totem could not display the help contents."
 msgstr "Тотем није могао да прикаже садржај помоћи."
 
-#: src/totem.c:1877 src/vanity.c:219
+#: src/totem.c:1895 src/vanity.c:219
 msgid "translator_credits"
 msgstr ""
 "Вељко Станојевић <veljko@vms.homelinux.net>\n"
 "\n"
 "Prevod.org — превод на српски језик."
 
-#: src/totem.c:1903
+#: src/totem.c:1921
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Прикзаивач филмова са %s"
 
-#: src/totem.c:1992 src/totem.c:2003 src/vanity.c:307 src/vanity.c:318
+#: src/totem.c:2007 src/totem.c:2018 src/vanity.c:305 src/vanity.c:316
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Слика_екрана%d.png"
 
-#: src/totem.c:2054 src/totem.c:2062
+#: src/totem.c:2069 src/totem.c:2077
 msgid "Totem could not get a screenshot of that film."
 msgstr "Тотем није успео да направи слику екрана тог филма."
 
-#: src/totem.c:2062
+#: src/totem.c:2077
 msgid "Please file a bug, this isn't supposed to happen"
 msgstr "Молим вас да пријавите грешку, ово не би смело да се догоди."
 
-#: src/totem.c:2090
+#: src/totem.c:2105
 #, c-format
 msgid "File '%s' already exists."
 msgstr "Датотека „%s“ већ постоји."
 
-#: src/totem.c:2091
+#: src/totem.c:2106
 msgid "The screenshot was not saved"
 msgstr "Слика екрана није сачувана."
 
-#: src/totem.c:2101
+#: src/totem.c:2116
 msgid "There was an error saving the screenshot."
 msgstr "Дошло је до грешке приликом снимања слике екрана."
 
-#: src/totem.c:2124
+#: src/totem.c:2139
 msgid "Totem couldn't show the movie properties window."
 msgstr "Тотем није могао да прикаже прозор са особинама филма."
 
-#: src/totem.c:2124
+#: src/totem.c:2139
 msgid "Make sure that Totem is correctly installed."
 msgstr "Проверите да ли је Тотем правилно инсталиран."
 
-#: src/totem.c:2210
+#: src/totem.c:2225
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Тотем није могао да тражи у „%s“."
 
-#: src/totem.c:2965 src/totem.c:2987
+#: src/totem.c:2980 src/totem.c:3002
 msgid "None"
 msgstr "Ништа"
 
-#: src/totem.c:2969 src/totem.c:2990
+#: src/totem.c:2984 src/totem.c:3005
 msgid "Auto"
 msgstr "Аутоматски"
 
-#: src/totem.c:3423
+#: src/totem.c:3440
 msgid "Totem could not startup."
 msgstr "Тотем није успео да се покрене."
 
-#: src/totem.c:3423
+#: src/totem.c:3440
 msgid "No reason."
 msgstr "Без разлога."
 
-#: src/totem.c:3682
+#: src/totem.c:3698
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Нисам успео да покренем thread-safe библиотеке."
 
-#: src/totem.c:3682
+#: src/totem.c:3698
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Проверите инсталацију система. Тотем ће се сада угасити."
 
-#: src/totem.c:3699
+#: src/totem.c:3715
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Тотем није успео да покрене систем подешавања."
 
-#: src/totem.c:3699
+#: src/totem.c:3715
 msgid "Make sure that GNOME is properly installed."
 msgstr "Проверите да ли је Гном правилно инсталиран."
 
-#: src/totem.c:3708 src/totem.c:3733
+#: src/totem.c:3724 src/totem.c:3749
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "Неуспело учитавање главног сучеља (totem.glade)."
 
-#: src/totem.c:3756
+#: src/totem.c:3772
 msgid "Couldn't load the interface for the playlist."
 msgstr "Неуспело учитавање сучеља за листу."
 
@@ -1442,7 +1446,7 @@ msgstr "Мод за отклањање грешака је укључен"
 msgid "Webcam utility using %s"
 msgstr "Помагало за мрежну камеру са %s"
 
-#: src/vanity.c:550
+#: src/vanity.c:548
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1451,11 +1455,11 @@ msgstr ""
 "Vanity није успео да покрене:\n"
 "%s"
 
-#: src/vanity.c:551
+#: src/vanity.c:549
 msgid "No reason"
 msgstr "Без разлога"
 
-#: src/vanity.c:589
+#: src/vanity.c:587
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1464,7 +1468,7 @@ msgstr ""
 "Vanity није успео да успостави контакт са мрежном камером.\n"
 "Разлог: %s."
 
-#: src/vanity.c:605
+#: src/vanity.c:603
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1473,11 +1477,11 @@ msgstr ""
 "Vanity није могао да прикаже слику са мрежне камере.\n"
 "Разлог: %s."
 
-#: src/vanity.c:641
+#: src/vanity.c:639
 msgid "Vanity Webcam Utility"
 msgstr "Помагало за Vanity мрежну камеру"
 
-#: src/vanity.c:646
+#: src/vanity.c:644
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1485,7 +1489,7 @@ msgstr ""
 "Нисам успео да покренем thread-safe библиотеке.\n"
 "Проверите инсталацију система. Vanity ће се сада угасити."
 
-#: src/vanity.c:668
+#: src/vanity.c:666
 #, c-format
 msgid ""
 "Vanity couln't initialise the \n"
@@ -1496,7 +1500,7 @@ msgstr ""
 "покретач подешавања:\n"
 "%s"
 
-#: src/vanity.c:682 src/vanity.c:697
+#: src/vanity.c:680 src/vanity.c:695
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
