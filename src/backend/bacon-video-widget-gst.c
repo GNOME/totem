@@ -3025,7 +3025,7 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
 			GDK_COLORSPACE_RGB, FALSE,
 			8, bvw->priv->video_width,
 			bvw->priv->video_height,
-			3 * bvw->priv->video_width,
+			(3 * bvw->priv->video_width + 3) &~ 3,
 			destroy_pixbuf, buf);
   if (!pixbuf)
     gst_buffer_unref (buf);
