@@ -1,5 +1,10 @@
 2004-05-30  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c: (totem_playlist_add_files): Adding files to the
+	playlist shouldn't say "Open" but "Add" (Closes: #143403)
+
+2004-05-30  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_open),
 	(bacon_video_widget_get_mrls): the GStreamer backend should use
 	cdda: not cda: for audio CD playback
