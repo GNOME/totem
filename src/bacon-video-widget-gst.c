@@ -1994,10 +1994,13 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
       res = gst_tag_list_get_string (bvw->priv->tagcache,
 				     GST_TAG_ARTIST, &string);
       break;
-    case BVW_INFO_YEAR:
-      res = gst_tag_list_get_string (bvw->priv->tagcache,
-				     GST_TAG_DATE, &string);
+    case BVW_INFO_YEAR: {
+      guint year;
+      res = gst_tag_list_get_uint (bvw->priv->tagcache,
+				   GST_TAG_DATE, &year);
+      string = g_strdup_printf ("%u", year);
       break;
+    }
     case BVW_INFO_ALBUM:
       res = gst_tag_list_get_string (bvw->priv->tagcache,
 		      		     GST_TAG_ALBUM, &string);
