@@ -247,7 +247,8 @@ gnomevfs_plugin_get_optional_data (input_plugin_t *this_gen,
 
 	D ("input_gnomevfs: get optional data, type %08x, sub %p\n",
 			data_type, this->sub);
-
+//FIXME
+#if 0
 	switch (data_type) {
 	case INPUT_OPTIONAL_DATA_TEXTSPU0:
 		if(this->sub)
@@ -272,7 +273,7 @@ gnomevfs_plugin_get_optional_data (input_plugin_t *this_gen,
 		return INPUT_OPTIONAL_UNSUPPORTED;
 		break;
 	}
-
+#endif
 	return INPUT_OPTIONAL_UNSUPPORTED;
 }
 
