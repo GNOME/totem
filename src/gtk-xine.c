@@ -128,7 +128,6 @@ struct GtkXinePrivate {
 
 	/* Other stuff */
 	int xpos, ypos;
-	gboolean init_finished;
 	gboolean can_dvd, can_vcd, can_cdda;
 	gboolean logo_mode;
 
@@ -733,8 +732,6 @@ xine_thread (void *gtx_gen)
 	GtkXine *gtx = (GtkXine *) gtx_gen;
 	XEvent event;
 
-	gtx->priv->init_finished = TRUE;
-
 	while (1)
 	{
 		if (gtx->priv->stream == NULL)
@@ -1125,7 +1122,6 @@ gtk_xine_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 
 	if (GTK_WIDGET_REALIZED (widget))
 	{
-		/* HACK it seems to be 1 pixel off, weird */
 		gdk_window_move_resize (widget->window,
 					allocation->x,
 					allocation->y,
