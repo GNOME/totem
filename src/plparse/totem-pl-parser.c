@@ -1304,8 +1304,12 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 			continue;
 		}
 
-		name = gnome_vfs_escape_string (info->name);
-		str = g_build_filename (url, name, NULL);
+		if (g_utf8_validate (info->name, -1, NULL) == FALSE)
+			name = g_strdup (info->name);
+		else
+			name = gnome_vfs_escape_string (info->name);
+		str = g_build_filename (url, info->name, NULL);
+
 		if (strstr (str, "://") != NULL && str[0] == '/')
 			fullpath = str + 1;
 		else

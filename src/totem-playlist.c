@@ -394,7 +394,7 @@ drop_cb (GtkWidget     *widget,
 				}
 			}
 
-			totem_playlist_add_mrl (playlist, filename, title);
+			totem_playlist_add_mrl (playlist, p->data, title);
 		}
 		g_free (filename);
 		g_free (p->data);
