@@ -66,10 +66,13 @@ remove_value (gpointer key, GdkPixbuf *pixbuf, Totem *totem)
 void
 totem_named_icons_dispose (Totem *totem)
 {
-	g_hash_table_foreach_remove (icons_table,
-			(GHRFunc) remove_value, totem);
-	g_hash_table_destroy (icons_table);
-	icons_table = NULL;
+	if (icons_table != NULL)
+	{
+		g_hash_table_foreach_remove (icons_table,
+				(GHRFunc) remove_value, totem);
+		g_hash_table_destroy (icons_table);
+		icons_table = NULL;
+	}
 }
 
 #define PIXBUF_FOR_ID(x) (g_hash_table_lookup(icons_table, x))
@@ -186,7 +189,7 @@ totem_named_icons_init (Totem *totem, gboolean refresh)
 	}
 
 	for (i = 0; i < (int) G_N_ELEMENTS (items); i++) {
-		GdkPixbuf *pixbuf;
+		GdkPixbuf *pixbuf = NULL;
 
 		pixbuf = totem_get_icon_from_theme (items[i].fn1,
 				GTK_ICON_SIZE_BUTTON);
@@ -201,14 +204,19 @@ totem_named_icons_init (Totem *totem, gboolean refresh)
 					GTK_ICON_SIZE_BUTTON);
 		}
 
-		if (pixbuf == NULL) {
+		if (pixbuf == NULL && items[i].fn3 != NULL) {
 			pixbuf = totem_get_pixbuf_from_totem_install
-				(items[i].fn1);
+				(items[i].fn3);
 		}
 
 		if (pixbuf == NULL) {
 			pixbuf = totem_get_pixbuf_from_totem_install
 				(items[i].fn2);
+		}
+
+		if (pixbuf == NULL) {
+			pixbuf = totem_get_pixbuf_from_totem_install
+				(items[i].fn1);
 		}
 
 		if (pixbuf == NULL) {
