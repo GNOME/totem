@@ -273,11 +273,6 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
 
   gdk_draw_rectangle (widget->window, widget->style->black_gc, TRUE, 0, 0,
 		      widget->allocation.width, widget->allocation.height);
-  gdk_draw_rectangle (bvw->priv->video_window, widget->style->black_gc, TRUE,
-		      bvw->priv->video_window_allocation.x,
-		      bvw->priv->video_window_allocation.y,
-		      bvw->priv->video_window_allocation.width,
-		      bvw->priv->video_window_allocation.height);
   gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, window);
 
   if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED) {
@@ -312,6 +307,12 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
 		     GDK_RGB_DITHER_NONE, 0, 0);
 
     gdk_pixbuf_unref (logo);
+  }
+  else {
+    gdk_draw_rectangle (bvw->priv->video_window, widget->style->black_gc, TRUE,
+		      0, 0,
+		      bvw->priv->video_window_allocation.width,
+		      bvw->priv->video_window_allocation.height);
   }
   
   return TRUE;
