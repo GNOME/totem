@@ -1,4 +1,4 @@
-noinst_PROGRAMS = bvw-test
+noinst_PROGRAMS = bvw-test list_v4l
 
 if TOTEM_VANITY
 VANITY=vanity
@@ -142,6 +142,9 @@ vanity_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)  $(NVTV
 
 bvw_test_SOURCES = $(VIDEOWIDGET)  bvw-test.c
 bvw_test_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)  $(NVTV_LIBS)
+
+list_v4l_SOURCES = list_v4l.c $(BACON_V4L_SELECTION)
+list_v4l_LDADD = $(GTK_LIBS)
 
 INCLUDES = 						\
 	-D_REENTRANT					\
