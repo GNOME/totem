@@ -2947,7 +2947,7 @@ main (int argc, char **argv)
 			GNOME_PARAM_POPT_TABLE, options,
 			GNOME_PARAM_NONE);
 
-	glade_gnome_init ();
+	glade_init ();
 	gnome_vfs_init ();
 	gconf_init (argc, argv, &err);
 	if (err != NULL || (gc = gconf_client_get_default ()) == NULL)
