@@ -1,3 +1,21 @@
+/* 
+ * Copyright (C) 2001-2002 Bastien Nocera <hadess@hadess.net>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ *
+ */
 
 #include <config.h>
 #include <gnome.h>
@@ -1073,6 +1091,43 @@ on_combo_entry1_changed (GtkEntry *entry, gpointer user_data)
 			str, NULL);
 }
 
+static void
+auto_resize_changed_cb (GConfClient *client, guint cnxn_id,
+		GConfEntry *entry, gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+	GtkWidget *item;
+
+	item = glade_xml_get_widget (totem->xml, "checkbutton1");
+	g_signal_handlers_disconnect_by_func (G_OBJECT (item),
+			on_checkbutton1_toggled, totem);
+
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
+			gconf_client_get_bool (totem->gc,
+				"/apps/totem/auto_resize", NULL));
+
+	g_signal_connect (G_OBJECT (item), "toggled",
+			G_CALLBACK (on_checkbutton1_toggled), totem);
+}
+
+static void
+mediadev_changed_cb (GConfClient *client, guint cnxn_id,
+		GConfEntry *entry, gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+	GtkWidget *item;
+
+	item = glade_xml_get_widget (totem->xml, "combo-entry1");
+	g_signal_handlers_disconnect_by_func (G_OBJECT (item),
+			on_combo_entry1_changed, totem);
+
+	gtk_entry_set_text (GTK_ENTRY (item), gconf_client_get_string
+			(totem->gc, "/apps/totem/mediadev", NULL));
+
+	g_signal_connect (G_OBJECT (item), "changed",
+			G_CALLBACK (on_combo_entry1_changed), totem);
+}
+
 void
 totem_button_pressed_remote_cb (TotemRemote *remote, TotemRemoteCommand cmd,
 				Totem *totem)
@@ -1579,7 +1634,7 @@ totem_callback_connect (Totem *totem)
 static void
 video_widget_create (Totem *totem) 
 {
-	GtkWidget *container, *widget;
+	GtkWidget *container;
 
 	g_message ("video_widget_create");
 
@@ -1667,6 +1722,13 @@ totem_setup_preferences (Totem *totem)
 {
 	GtkWidget *item;
 
+	gconf_client_add_dir (totem->gc, "/apps/totem",
+			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
+	gconf_client_notify_add (totem->gc, "/apps/totem/auto_resize",
+			auto_resize_changed_cb, totem, NULL, NULL);
+	gconf_client_notify_add (totem->gc, "/apps/totem/mediadev",
+			mediadev_changed_cb, totem, NULL, NULL);
+
 	totem->prefs = glade_xml_get_widget (totem->xml, "dialog1");
 
 	g_signal_connect (G_OBJECT (totem->prefs),
@@ -1675,10 +1737,15 @@ totem_setup_preferences (Totem *totem)
 			G_CALLBACK (hide_prefs), (gpointer) totem);
 
 	item = glade_xml_get_widget (totem->xml, "checkbutton1");
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
+			gconf_client_get_bool (totem->gc,
+				"/apps/totem/auto_resize", NULL));
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_checkbutton1_toggled), totem);
 
 	item = glade_xml_get_widget (totem->xml, "combo-entry1");
+	gtk_entry_set_text (GTK_ENTRY (item), gconf_client_get_string
+			(totem->gc, "/apps/totem/mediadev", NULL));
 	g_signal_connect (G_OBJECT (item), "changed",
 			G_CALLBACK (on_combo_entry1_changed), totem);
 }
