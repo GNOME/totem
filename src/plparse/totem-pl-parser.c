@@ -39,6 +39,7 @@
 #include <libgnomevfs/gnome-vfs.h>
 #include <libgnomevfs/gnome-vfs-mime.h>
 #include <libgnomevfs/gnome-vfs-mime-utils.h>
+#include <libgnomevfs/gnome-vfs-utils.h>
 #include <string.h>
 
 #define READ_CHUNK_SIZE 8192
@@ -1336,7 +1337,7 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 	l = list;
 
 	while (l != NULL) {
-		char *str, *fullpath;
+		char *name, *str, *fullpath;
 		GnomeVFSFileInfo *info = l->data;
 
 		if (info->name != NULL && (strcmp (info->name, ".") == 0
@@ -1345,7 +1346,8 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 			continue;
 		}
 
-		str = g_build_filename (url, info->name, NULL);
+		name = gnome_vfs_escape_string (info->name);
+		str = g_build_filename (url, name, NULL);
 		if (strstr (str, "://") != NULL && str[0] == '/')
 			fullpath = str + 1;
 		else
@@ -1355,6 +1357,7 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 			totem_pl_parser_add_one_url (parser, fullpath, NULL);
 
 		g_free (str);
+		g_free (name);
 		l = l->next;
 	}
 
