@@ -49,19 +49,27 @@ gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/totem-video-thu
 %config %{_sysconfdir}/gconf/schemas/totem-video-thumbnail.schemas
 %{_bindir}/%{name}
 %{_bindir}/totem-video-thumbnailer
-%{_bindir}/vanity
 %{_libdir}/bonobo/servers/Totem_properties.server
 %{_libexecdir}/totem-properties-page
 %{_datadir}/application-registry/%{name}.applications
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/applications/vanity.desktop
 %{_datadir}/mime-info/%{name}.keys
 %{_datadir}/pixmaps/*
 %{_datadir}/gnome/help
 %{_datadir}/omf/totem/totem-C.omf
 %{_datadir}/%{name}
+%{_sysconfdir}/gconf/schemas/totem-handlers.schemas
+%{_mandir}/man1/totem.1.gz
+%{_datadir}/omf/totem/totem-de.omf
+%{_datadir}/omf/totem/totem-es.omf
 
 %changelog
+* Thu Sep 21 2004 Christian Schaller <Uraeus@gnome.org>
+- Remove vanity
+- Add manpage
+- Add totem-handlers.schemas file
+- Add a couple of omf files
+
 * Fri Mar 19 2004 Christian Schaller <Uraeus@gnome.org>
 - Add all unpackaged files
 - Add scrollkeeper to post area
