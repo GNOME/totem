@@ -391,9 +391,8 @@ drop_cb (GtkWidget     *widget,
 	 GtkSelectionData   *data, 
 	 guint               info, 
 	 guint               time, 
-	 gpointer            user_data)
+	 GtkPlaylist        *playlist)
 {
-	GtkPlaylist *playlist = GTK_PLAYLIST (user_data);
 	GList *list, *p, *file_list;
 
 	list = gnome_vfs_uri_list_parse (data->data);
@@ -454,9 +453,8 @@ drop_cb (GtkWidget     *widget,
 }
 
 static void
-selection_changed (GtkTreeSelection *treeselection, gpointer user_data)
+selection_changed (GtkTreeSelection *treeselection, GtkPlaylist *playlist)
 {
-	GtkPlaylist *playlist = GTK_PLAYLIST (user_data);
 	GtkWidget *remove_button, *up_button, *down_button;
 	gboolean sensitivity;
 
@@ -497,9 +495,8 @@ update_current_from_playlist (GtkPlaylist *playlist)
 }
 
 static void
-gtk_playlist_add_files (GtkWidget *widget, gpointer user_data)
+gtk_playlist_add_files (GtkWidget *widget, GtkPlaylist *playlist)
 {
-	GtkPlaylist *playlist = (GtkPlaylist *)user_data;
 	GtkWidget *fs;
 	int response;
 
@@ -559,9 +556,8 @@ gtk_playlist_foreach_selected (GtkTreeModel *model, GtkTreePath *path,
 }
 
 static void
-gtk_playlist_remove_files (GtkWidget *widget, gpointer user_data)
+gtk_playlist_remove_files (GtkWidget *widget, GtkPlaylist *playlist)
 {
-	GtkPlaylist *playlist = (GtkPlaylist *)user_data;
 	GtkTreeSelection *selection;
 	GtkTreeRowReference *ref = NULL;
 	gboolean is_selected = FALSE;
@@ -604,6 +600,7 @@ gtk_playlist_remove_files (GtkWidget *widget, gpointer user_data)
 		playlist->_priv->list = g_list_remove (playlist->_priv->list,
 				playlist->_priv->list->data);
 	}
+	g_list_free (playlist->_priv->list);
 	playlist->_priv->list = NULL;
 
 	if (is_selected == TRUE)
@@ -625,6 +622,115 @@ gtk_playlist_remove_files (GtkWidget *widget, gpointer user_data)
 				gtk_playlist_table_signals[CHANGED], 0,
 				NULL);
 	}
+}
+
+static void
+gtk_playlist_move_files (GtkPlaylist *playlist, gboolean direction_up)
+{
+	GtkTreeSelection *selection;
+	GtkTreeModel *model;
+	GtkListStore *store;
+	GtkTreeIter iter;
+	GList *paths, *refs, *l;
+	int pos;
+
+	selection = gtk_tree_view_get_selection
+		(GTK_TREE_VIEW (playlist->_priv->treeview));
+	if (selection == NULL)
+		return;
+
+	model = gtk_tree_view_get_model
+		(GTK_TREE_VIEW (playlist->_priv->treeview));
+	store = GTK_LIST_STORE (model);
+	pos = -2;
+	refs = NULL;
+
+	/* Build a list of tree references */
+	paths = gtk_tree_selection_get_selected_rows (selection, NULL);
+	for (l = paths; l != NULL; l = l->next)
+	{
+		GtkTreePath *path = l->data;
+		int cur_pos, *indices;
+
+		refs = g_list_prepend (refs,
+				gtk_tree_row_reference_new (model, path));
+		indices = gtk_tree_path_get_indices (path);
+		cur_pos = indices[0];
+		if (pos == -2)
+		{
+			pos = cur_pos;
+		} else {
+			if (direction_up == FALSE)
+				pos = MAX (cur_pos, pos);
+			else
+				pos = MIN (cur_pos, pos);
+		}
+	}
+	g_list_foreach (paths, (GFunc) gtk_tree_path_free, NULL);
+	g_list_free (paths);
+
+	refs = g_list_reverse (refs);
+
+	if (direction_up == FALSE)
+		pos = pos + 2;
+	else
+		pos = pos - 2;
+
+	for (l = refs; l != NULL; l = l->next)
+	{
+		GtkTreeIter *position, current;
+		GtkTreeRowReference *ref = l->data;
+		GtkTreePath *path;
+
+		if (pos < 0)
+		{
+			position = NULL;
+		} else {
+			char *str;
+
+			str = g_strdup_printf ("%d", pos);
+			if (gtk_tree_model_get_iter_from_string (model,
+					&iter, str))
+				position = &iter;
+			else
+				position = NULL;
+
+			g_free (str);
+		}
+
+		path = gtk_tree_row_reference_get_path (ref);
+		gtk_tree_model_get_iter (model, &current, path);
+		gtk_tree_path_free (path);
+
+		if (direction_up == FALSE)
+		{
+			pos--;
+			gtk_list_store_move_before (store, &current, position);
+		} else {
+			gtk_list_store_move_after (store, &current, position);
+			pos++;
+		}
+	}
+
+	g_list_foreach (refs, (GFunc) gtk_tree_row_reference_free, NULL);
+	g_list_free (refs);
+
+	g_signal_emit (G_OBJECT (playlist),
+			gtk_playlist_table_signals[CHANGED], 0,
+			NULL);
+}
+
+static void
+gtk_playlist_up_files (GtkWidget *widget, GtkPlaylist *playlist,
+		gboolean direction_up)
+{
+	gtk_playlist_move_files (playlist, TRUE);
+}
+
+static void
+gtk_playlist_down_files (GtkWidget *widget, GtkPlaylist *playlist)
+{
+	gtk_playlist_move_files (playlist, FALSE);
 }
 
 static void
@@ -651,10 +757,8 @@ init_columns (GtkTreeView *treeview)
 
 static void
 treeview_row_changed (GtkTreeView *treeview, GtkTreePath *arg1,
-		GtkTreeViewColumn *arg2, gpointer user_data)
+		GtkTreeViewColumn *arg2, GtkPlaylist *playlist)
 {
-	GtkPlaylist *playlist = (GtkPlaylist *)user_data;
-
 	if (gtk_tree_path_equals (arg1, playlist->_priv->current) == TRUE)
 		return;
 
@@ -707,9 +811,8 @@ init_treeview (GtkWidget *treeview, GtkPlaylist *playlist)
 }
 
 static void
-repeat_button_toggled (GtkToggleButton *togglebutton, gpointer user_data)
+repeat_button_toggled (GtkToggleButton *togglebutton, GtkPlaylist *playlist)
 {
-	GtkPlaylist *playlist = (GtkPlaylist *)user_data;
 	gboolean repeat;
 
 	repeat = gtk_toggle_button_get_active (togglebutton);
@@ -724,9 +827,8 @@ repeat_button_toggled (GtkToggleButton *togglebutton, gpointer user_data)
 
 static void
 update_repeat_cb (GConfClient *client, guint cnxn_id,
-		GConfEntry *entry, gpointer user_data)
+		GConfEntry *entry, GtkPlaylist *playlist)
 {
-	GtkPlaylist *playlist = (GtkPlaylist *)user_data;
 	GtkWidget *button;
 	gboolean repeat;
 
@@ -765,7 +867,8 @@ init_config (GtkPlaylist *playlist)
 	gconf_client_add_dir (playlist->_priv->gc, GCONF_PREFIX,
 			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
 	gconf_client_notify_add (playlist->_priv->gc, GCONF_PREFIX"/repeat",
-			update_repeat_cb, playlist, NULL, NULL);
+			(GConfClientNotifyFunc) update_repeat_cb,
+			playlist, NULL, NULL);
 	g_signal_connect (G_OBJECT (button), "toggled",
 			G_CALLBACK (repeat_button_toggled),
 			(gpointer) playlist);
@@ -897,19 +1000,27 @@ gtk_playlist_new (const char *glade_filename, GdkPixbuf *playing_pix)
 	gtk_window_set_default_size (GTK_WINDOW (playlist),
 			300, 375);
 	g_signal_connect_object (GTK_OBJECT (playlist), "response",
-			GTK_SIGNAL_FUNC (gtk_widget_hide), 
+			G_CALLBACK (gtk_widget_hide), 
 			GTK_WIDGET (playlist),
 			0);
 
 	/* Connect the buttons */
 	item = glade_xml_get_widget (playlist->_priv->xml, "add_button");
 	g_signal_connect (GTK_OBJECT (item), "clicked",
-			GTK_SIGNAL_FUNC (gtk_playlist_add_files),
-			(gpointer) playlist);
+			G_CALLBACK (gtk_playlist_add_files),
+			playlist);
 	item = glade_xml_get_widget (playlist->_priv->xml, "remove_button");
 	g_signal_connect (GTK_OBJECT (item), "clicked",
-			GTK_SIGNAL_FUNC (gtk_playlist_remove_files),
-			(gpointer) playlist);
+			G_CALLBACK (gtk_playlist_remove_files),
+			playlist);
+	item = glade_xml_get_widget (playlist->_priv->xml, "up_button");
+	g_signal_connect (GTK_OBJECT (item), "clicked",
+			G_CALLBACK (gtk_playlist_up_files),
+			playlist);
+	item = glade_xml_get_widget (playlist->_priv->xml, "down_button");
+	g_signal_connect (GTK_OBJECT (item), "clicked",
+			G_CALLBACK (gtk_playlist_down_files),
+			playlist);
 
 	container = glade_xml_get_widget (playlist->_priv->xml, "vbox4");
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (playlist)->vbox),

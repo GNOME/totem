@@ -1,3 +1,14 @@
+2003-04-25  Bastien Nocera  <hadess@hadess.net>
+
+	* README: updated
+	* src/gtk-playlist.c: (drop_cb), (selection_changed),
+	(gtk_playlist_add_files), (gtk_playlist_remove_files),
+	(gtk_playlist_move_files), (gtk_playlist_up_files),
+	(gtk_playlist_down_files), (treeview_row_changed),
+	(repeat_button_toggled), (update_repeat_cb), (init_config),
+	(gtk_playlist_new): implement list reordering (Closes: #110236),
+	small cleanups
+
 2003-04-24  Bastien Nocera  <hadess@hadess.net>
 
 	* README: added mention of the deinterlacing
