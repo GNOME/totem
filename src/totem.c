@@ -70,6 +70,9 @@
 #define VOLUME_DOWN_OFFSET -8
 #define VOLUME_UP_OFFSET 8
 
+#define ZOOM_IN_OFFSET 1
+#define ZOOM_OUT_OFFSET -1
+
 static const GtkTargetEntry target_table[] = {
 	{ "text/uri-list", 0, 0 },
 	{ "_NETSCAPE_URL", 0, 1 },
@@ -985,6 +988,21 @@ totem_action_seek_relative (Totem *totem, int off_sec)
 	}
 }
 
+static void
+totem_action_zoom_relative (Totem *totem, int off_pct)
+{
+	int zoom;
+
+	zoom = bacon_video_widget_get_zoom (totem->bvw);
+	bacon_video_widget_set_zoom (totem->bvw, zoom + off_pct);
+}
+
+static void
+totem_action_zoom_reset (Totem *totem)
+{
+	bacon_video_widget_set_zoom (totem->bvw, 100);
+}
+
 void
 totem_action_volume_relative (Totem *totem, int off_pct)
 {
@@ -1792,21 +1810,39 @@ on_full_screen1_activate (GtkButton *button, Totem *totem)
 }
 
 static void
-on_zoom_1_2_activate (GtkButton *button, Totem *totem)
+on_resize_1_2_activate (GtkButton *button, Totem *totem)
 {
 	totem_action_set_scale_ratio (totem, 0.5); 
 }
 
 static void
-on_zoom_1_1_activate (GtkButton *button, Totem *totem)
+on_resize_1_1_activate (GtkButton *button, Totem *totem)
 {
 	totem_action_set_scale_ratio (totem, 1);
 }
 
 static void
-on_zoom_2_1_activate (GtkButton *button, Totem *totem)
+on_resize_2_1_activate (GtkButton *button, Totem *totem)
 {                       
 	totem_action_set_scale_ratio (totem, 2);
+}
+
+static void
+on_zoom_in_activate (GtkButton *button, Totem *totem)
+{
+	totem_action_zoom_relative (totem, ZOOM_IN_OFFSET);
+}
+
+static void
+on_zoom_reset_activate (GtkButton *button, Totem *totem)
+{
+	totem_action_zoom_reset (totem);
+}
+
+static void
+on_zoom_out_activate (GtkButton *button, Totem *totem)
+{
+	totem_action_zoom_relative (totem, ZOOM_OUT_OFFSET);
 }
 
 static void
@@ -2712,9 +2748,17 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 	case GDK_Q:
 		totem_action_exit (totem);
 		break;
+	case GDK_r:
+	case GDK_R:
+		totem_action_zoom_relative (totem, ZOOM_IN_OFFSET);
+		break;
 	case GDK_s:
 	case GDK_S:
 		on_skip_to1_activate (NULL, totem);
+		break;
+	case GDK_t:
+	case GDK_T:
+		totem_action_zoom_relative (totem, ZOOM_OUT_OFFSET);
 		break;
 	case GDK_Escape:
 		totem_action_fullscreen (totem, FALSE);
@@ -3130,15 +3174,41 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "tmw_fullscreen_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_full_screen1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_zoom_1_2_menu_item");
+	item = glade_xml_get_widget (totem->xml, "tmw_resize_1_2_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_zoom_1_2_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_zoom_1_1_menu_item");
+			G_CALLBACK (on_resize_1_2_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "tmw_resize_1_1_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_zoom_1_1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_zoom_2_1_menu_item");
+			G_CALLBACK (on_resize_1_1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "tmw_resize_2_1_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_zoom_2_1_activate), totem);
+			G_CALLBACK (on_resize_2_1_activate), totem);
+	if (bacon_video_widget_can_set_zoom (totem->bvw) != FALSE)
+	{
+		item = glade_xml_get_widget
+			(totem->xml, "tmw_zoom_in_menu_item");
+		g_signal_connect (G_OBJECT (item), "activate",
+				G_CALLBACK (on_zoom_in_activate), totem);
+		item = glade_xml_get_widget
+			(totem->xml, "tmw_zoom_reset_menu_item");
+		g_signal_connect (G_OBJECT (item), "activate",
+				G_CALLBACK (on_zoom_reset_activate), totem);
+		item = glade_xml_get_widget
+			(totem->xml, "tmw_zoom_out_menu_item");
+		g_signal_connect (G_OBJECT (item), "activate",
+				G_CALLBACK (on_zoom_out_activate), totem);
+	} else {
+		item = glade_xml_get_widget
+			(totem->xml, "tmw_zoom_in_menu_item");
+		gtk_widget_hide (item);
+		item = glade_xml_get_widget
+			(totem->xml, "tmw_zoom_reset_menu_item");
+		gtk_widget_hide (item);
+		item = glade_xml_get_widget
+			(totem->xml, "tmw_zoom_out_menu_item");
+		gtk_widget_hide (item);
+	}
+
 	item = glade_xml_get_widget (totem->xml,
 			"tmw_aspect_ratio_auto_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",

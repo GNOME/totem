@@ -236,7 +236,12 @@ BaconVideoWidgetAspectRatio bacon_video_widget_get_aspect_ratio
 						 (BaconVideoWidget *bvw);
 
 void bacon_video_widget_set_scale_ratio          (BaconVideoWidget *bvw,
-						  gfloat ratio);
+						  float ratio);
+
+gboolean bacon_video_widget_can_set_zoom	 (BaconVideoWidget *bvw);
+void bacon_video_widget_set_zoom		 (BaconVideoWidget *bvw,
+						  int zoom);
+int bacon_video_widget_get_zoom			 (BaconVideoWidget *bvw);
 
 int bacon_video_widget_get_video_property        (BaconVideoWidget *bvw,
 						  BaconVideoWidgetVideoProperty

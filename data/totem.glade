@@ -2482,7 +2482,7 @@
 		      <signal name="activate" handler="on_play_disc1_activate" last_modification_time="Fri, 09 Aug 2002 22:46:45 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="tmw_play_dvd_menu_item_image">
+			<widget class="GtkImage" id="image102">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-cdrom</property>
 			  <property name="icon_size">1</property>
@@ -2496,7 +2496,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkMenuItem" id="tmw_menu_movie_separator_1">
+		    <widget class="GtkSeparatorMenuItem" id="tmw_menu_movie_separator_1">
 		      <property name="visible">True</property>
 		    </widget>
 		  </child>
@@ -2512,7 +2512,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkMenuItem" id="tmw_menu_movie_separator_2">
+		    <widget class="GtkSeparatorMenuItem" id="tmw_menu_movie_separator_2">
 		      <property name="visible">True</property>
 		    </widget>
 		  </child>
@@ -2526,7 +2526,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkMenuItem" id="tmw_menu_recent_separator">
+		    <widget class="GtkSeparatorMenuItem" id="tmw_menu_recent_separator">
 		      <property name="visible">True</property>
 		    </widget>
 		  </child>
@@ -2543,7 +2543,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkMenuItem" id="tmw_menu_movie_separator_3">
+		    <widget class="GtkSeparatorMenuItem" id="tmw_menu_movie_separator_3">
 		      <property name="visible">True</property>
 		    </widget>
 		  </child>
@@ -2591,7 +2591,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkMenuItem" id="tmw_menu_edit_separator">
+		    <widget class="GtkSeparatorMenuItem" id="tmw_menu_edit_separator">
 		      <property name="visible">True</property>
 		    </widget>
 		  </child>
@@ -2626,7 +2626,7 @@
 		      <accelerator key="F" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="tmw_fullscreen_menu_item_image">
+			<widget class="GtkImage" id="image104">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-zoom-fit</property>
 			  <property name="icon_size">1</property>
@@ -2640,62 +2640,62 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkImageMenuItem" id="tmw_zoom_1_2_menu_item">
+		    <widget class="GtkMenuItem" id="fit_window_to_movie1">
 		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">Zoom to half size</property>
-		      <property name="label" translatable="yes">_Zoom 1:2</property>
+		      <property name="label" translatable="yes">Fit Window to Movie</property>
 		      <property name="use_underline">True</property>
-		      <signal name="activate" handler="on_zoom_1_2_activate" last_modification_time="Sat, 24 Aug 2002 12:55:50 GMT"/>
-		      <accelerator key="0" modifiers="0" signal="activate"/>
 
-		      <child internal-child="image">
-			<widget class="GtkImage" id="tmw_zoom_1_2_menu_item_image">
-			  <property name="visible">True</property>
-			  <property name="stock">gtk-zoom-out</property>
-			  <property name="icon_size">1</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
+		      <child>
+			<widget class="GtkMenu" id="fit_window_to_movie1_menu">
+
+			  <child>
+			    <widget class="GtkMenuItem" id="tmw_resize_1_2_menu_item">
+			      <property name="visible">True</property>
+			      <property name="tooltip" translatable="yes">Resize to half the video size</property>
+			      <property name="label" translatable="yes">_Resize 1:2</property>
+			      <property name="use_underline">True</property>
+			      <signal name="activate" handler="on_zoom_1_2_activate" last_modification_time="Sat, 24 Aug 2002 12:55:50 GMT"/>
+			      <accelerator key="0" modifiers="0" signal="activate"/>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkMenuItem" id="tmw_resize_1_1_menu_item">
+			      <property name="visible">True</property>
+			      <property name="tooltip" translatable="yes">Resize to video size</property>
+			      <property name="label" translatable="yes">Resize _1:1</property>
+			      <property name="use_underline">True</property>
+			      <signal name="activate" handler="on_zoom_1_1_activate" last_modification_time="Sat, 24 Aug 2002 12:49:15 GMT"/>
+			      <accelerator key="1" modifiers="0" signal="activate"/>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkMenuItem" id="tmw_resize_2_1_menu_item">
+			      <property name="visible">True</property>
+			      <property name="tooltip" translatable="yes">Resize to twice the video size</property>
+			      <property name="label" translatable="yes">Resize _2:1</property>
+			      <property name="use_underline">True</property>
+			      <signal name="activate" handler="on_zoom_2_1_activate" last_modification_time="Sat, 24 Aug 2002 12:49:15 GMT"/>
+			      <accelerator key="2" modifiers="0" signal="activate"/>
+			    </widget>
+			  </child>
 			</widget>
 		      </child>
 		    </widget>
 		  </child>
 
 		  <child>
-		    <widget class="GtkImageMenuItem" id="tmw_zoom_1_1_menu_item">
+		    <widget class="GtkImageMenuItem" id="tmw_zoom_in_menu_item">
 		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">Zoom to one for one size</property>
-		      <property name="label" translatable="yes">Zoom _1:1</property>
+		      <property name="tooltip" translatable="yes">Zoom in</property>
+		      <property name="label" translatable="yes">Zoom In</property>
 		      <property name="use_underline">True</property>
-		      <signal name="activate" handler="on_zoom_1_1_activate" last_modification_time="Sat, 24 Aug 2002 12:49:15 GMT"/>
-		      <accelerator key="1" modifiers="0" signal="activate"/>
+		      <signal name="activate" handler="on_zoom_in1_activate" last_modification_time="Fri, 03 Dec 2004 19:37:56 GMT"/>
+		      <accelerator key="R" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="tmw_zoom_1_1_menu_item_image">
-			  <property name="visible">True</property>
-			  <property name="stock">gtk-zoom-100</property>
-			  <property name="icon_size">1</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
-			</widget>
-		      </child>
-		    </widget>
-		  </child>
-
-		  <child>
-		    <widget class="GtkImageMenuItem" id="tmw_zoom_2_1_menu_item">
-		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">Switch to double size</property>
-		      <property name="label" translatable="yes">Zoom _2:1</property>
-		      <property name="use_underline">True</property>
-		      <signal name="activate" handler="on_zoom_2_1_activate" last_modification_time="Sat, 24 Aug 2002 12:49:15 GMT"/>
-		      <accelerator key="2" modifiers="0" signal="activate"/>
-
-		      <child internal-child="image">
-			<widget class="GtkImage" id="tmw_zoom_2_1_menu_item_image">
+			<widget class="GtkImage" id="image105">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-zoom-in</property>
 			  <property name="icon_size">1</property>
@@ -2709,7 +2709,52 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkMenuItem" id="tmw_menu_view_separator_1">
+		    <widget class="GtkImageMenuItem" id="tmw_zoom_reset_menu_item">
+		      <property name="visible">True</property>
+		      <property name="tooltip" translatable="yes">Zoom reset</property>
+		      <property name="label" translatable="yes">Zoom Reset</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_tmw_zoom_reset_menu_item_activate" last_modification_time="Fri, 03 Dec 2004 20:15:06 GMT"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image106">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-zoom-100</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkImageMenuItem" id="tmw_zoom_out_menu_item">
+		      <property name="visible">True</property>
+		      <property name="tooltip" translatable="yes">Zoom out</property>
+		      <property name="label" translatable="yes">Zoom Out</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_zoom_out1_activate" last_modification_time="Fri, 03 Dec 2004 19:37:56 GMT"/>
+		      <accelerator key="T" modifiers="0" signal="activate"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image107">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-zoom-out</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkSeparatorMenuItem" id="tmw_menu_view_separator_1">
 		      <property name="visible">True</property>
 		    </widget>
 		  </child>
@@ -2849,7 +2894,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkMenuItem" id="tmw_menu_view_separator_2">
+		    <widget class="GtkSeparatorMenuItem" id="tmw_menu_view_separator_2">
 		      <property name="visible">True</property>
 		    </widget>
 		  </child>
@@ -2922,7 +2967,7 @@
 		      <accelerator key="m" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="tmw_dvd_root_menu_item_image">
+			<widget class="GtkImage" id="image109">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-index</property>
 			  <property name="icon_size">1</property>
@@ -2975,7 +3020,7 @@
 		      <accelerator key="c" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="tmw_dvd_chapter_menu_item_image">
+			<widget class="GtkImage" id="image110">
 			  <property name="visible">True</property>
 			  <property name="stock">gnome-stock-text-numbered-list</property>
 			  <property name="icon_size">1</property>
@@ -2989,7 +3034,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkMenuItem" id="tmw_menu_dvd_separator_1">
+		    <widget class="GtkSeparatorMenuItem" id="tmw_menu_dvd_separator_1">
 		      <property name="visible">True</property>
 		    </widget>
 		  </child>
@@ -3004,7 +3049,7 @@
 		      <accelerator key="n" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="tmw_next_chapter_menu_item_image">
+			<widget class="GtkImage" id="image111">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-goto-last</property>
 			  <property name="icon_size">1</property>
@@ -3027,7 +3072,7 @@
 		      <accelerator key="b" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="tmw_previous_chapter_menu_item_image">
+			<widget class="GtkImage" id="image112">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-goto-first</property>
 			  <property name="icon_size">1</property>
@@ -3041,7 +3086,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkMenuItem" id="tmw_menu_dvd_separator_2">
+		    <widget class="GtkSeparatorMenuItem" id="tmw_menu_dvd_separator_2">
 		      <property name="visible">True</property>
 		    </widget>
 		  </child>
@@ -3057,7 +3102,7 @@
 		      <accelerator key="S" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="tmw_skip_to_menu_item_image">
+			<widget class="GtkImage" id="image113">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-jump-to</property>
 			  <property name="icon_size">1</property>
@@ -3081,7 +3126,7 @@
 		      <accelerator key="Right" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="tmw_skip_forward_menu_item_image">
+			<widget class="GtkImage" id="image114">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-go-forward</property>
 			  <property name="icon_size">1</property>
@@ -3105,7 +3150,7 @@
 		      <accelerator key="Left" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="tmw_skip_backwards_menu_item_image">
+			<widget class="GtkImage" id="image115">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-go-back</property>
 			  <property name="icon_size">1</property>
@@ -3166,7 +3211,7 @@
 		      <accelerator key="Up" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="tmw_volume_up_menu_item_image">
+			<widget class="GtkImage" id="image116">
 			  <property name="visible">True</property>
 			  <property name="stock">gnome-stock-volume</property>
 			  <property name="icon_size">1</property>
@@ -3189,7 +3234,7 @@
 		      <accelerator key="Down" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="tmw_volume_down_menu_item_image">
+			<widget class="GtkImage" id="image117">
 			  <property name="visible">True</property>
 			  <property name="stock">gnome-stock-volume</property>
 			  <property name="icon_size">1</property>
@@ -3224,7 +3269,7 @@
 		      <accelerator key="F1" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image69">
+			<widget class="GtkImage" id="image118">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-help</property>
 			  <property name="icon_size">1</property>

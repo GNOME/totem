@@ -1,3 +1,18 @@
+2004-12-04  Bastien Nocera  <hadess@hadess.net>
+
+	* README: upd
+	* data/totem.glade: upd
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_can_set_zoom),
+	(bacon_video_widget_set_zoom), (bacon_video_widget_get_zoom):
+	* src/bacon-video-widget.h:
+	* src/totem.c: (totem_action_zoom_relative),
+	(totem_action_zoom_reset), (on_resize_1_2_activate),
+	(on_resize_1_1_activate), (on_resize_2_1_activate),
+	(on_zoom_in_activate), (on_zoom_reset_activate),
+	(on_zoom_out_activate), (totem_action_handle_key),
+	(totem_callback_connect): added zooming in the video with 'R' and 'T',
+	and break GStreamer-backend compilation (Closes: #144929)
+
 2004-12-03  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-video-widget-xine.c: (bacon_video_widget_unrealize):

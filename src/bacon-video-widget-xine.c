@@ -3084,6 +3084,35 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 	totem_widget_set_preferred_size (toplevel, new_w, new_h);
 }
 
+gboolean
+bacon_video_widget_can_set_zoom (BaconVideoWidget *bvw)
+{
+	return TRUE;
+}
+
+void
+bacon_video_widget_set_zoom (BaconVideoWidget *bvw, int zoom)
+{
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
+
+	xine_set_param (bvw->priv->stream,
+			XINE_PARAM_VO_ZOOM_X, zoom);
+	xine_set_param (bvw->priv->stream,
+			XINE_PARAM_VO_ZOOM_Y, zoom);
+}
+
+int
+bacon_video_widget_get_zoom (BaconVideoWidget *bvw)
+{
+	g_return_val_if_fail (bvw != NULL, 1.0);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 1.0);
+	g_return_val_if_fail (bvw->priv->xine != NULL, 1.0);
+
+	return xine_get_param (bvw->priv->stream, XINE_PARAM_VO_ZOOM_X);
+}
+
 int
 bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
 		BaconVideoWidgetVideoProperty type)
