@@ -244,6 +244,41 @@ totem_playlist_mrl_to_title (const gchar *mrl)
 	return filename_for_display;
 }
 
+static char*
+totem_playlist_create_full_path (const char *path)
+{
+	char *retval, *curdir, *curdir_withslash, *escaped;
+
+	g_return_val_if_fail (path != NULL, NULL);
+
+	if (strstr (path, "://") != NULL)
+		return g_strdup (path);
+
+	if (path[0] == '/')
+	{
+		escaped = gnome_vfs_escape_path_string (path);
+
+		retval = g_strdup_printf ("file://%s", escaped);
+		g_free (escaped);
+		return retval;
+	}
+
+	curdir = g_get_current_dir ();
+	escaped = gnome_vfs_escape_path_string (curdir);
+	curdir_withslash = g_strdup_printf ("file://%s%s",
+			escaped, G_DIR_SEPARATOR_S);
+	g_free (escaped);
+	g_free (curdir);
+
+	escaped = gnome_vfs_escape_path_string (path);
+	retval = gnome_vfs_uri_make_full_from_relative
+		(curdir_withslash, escaped);
+	g_free (curdir_withslash);
+	g_free (escaped);
+
+	return retval;
+}
+
 static void
 totem_playlist_save_get_iter_func (GtkTreeModel *model,
 		GtkTreeIter *iter, char **uri, char **title)
@@ -1279,7 +1314,7 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 {
 	GtkListStore *store;
 	GtkTreeIter iter;
-	char *filename_for_display;
+	char *filename_for_display, *uri;
 
 	g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), FALSE);
 	g_return_val_if_fail (mrl != NULL, FALSE);
@@ -1291,19 +1326,22 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 		filename_for_display = g_strdup (display_name);
 	}
 
+	uri = totem_playlist_create_full_path (mrl);
+
 	D("totem_playlist_add_one_mrl (): %s %s %s\n",
-				filename_for_display, mrl, display_name);
+				filename_for_display, uri, display_name);
 
 	store = GTK_LIST_STORE (playlist->_priv->model);
 	gtk_list_store_append (store, &iter);
 	gtk_list_store_set (store, &iter,
 			PIX_COL, NULL,
 			FILENAME_COL, filename_for_display,
-			URI_COL, mrl,
+			URI_COL, uri,
 			TITLE_CUSTOM_COL, display_name ? TRUE : FALSE,
 			-1);
 
 	g_free (filename_for_display);
+	g_free (uri);
 
 	if (playlist->_priv->current == NULL
 			&& playlist->_priv->shuffle == FALSE)
