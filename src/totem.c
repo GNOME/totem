@@ -356,6 +356,8 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 
 	if (mrl == NULL)
 	{
+		gtk_window_set_title (GTK_WINDOW (totem->win), _("Totem"));
+
 		/* Play/Pause */
 		gtk_widget_set_sensitive (totem->pp_button, FALSE);
 		widget = glade_xml_get_widget (totem->xml, "play1");
@@ -363,10 +365,12 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 
 		/* Label */
 		widget = glade_xml_get_widget (totem->xml, "label1");
-		gtk_window_set_title (GTK_WINDOW (totem->win), "Totem");
 		text = g_strdup_printf
 			("<span size=\"medium\"><b>%s</b></span>",
 			 _("No file"));
+		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
+				text);
+		widget = glade_xml_get_widget (totem->xml, "custom2");
 		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
 				text);
 		g_free (text);
@@ -455,6 +459,9 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		text = g_strdup_printf
 			("<span size=\"medium\"><b>%s (%s)</b></span>",
 			 name, time_text);
+		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
+				text);
+		widget = glade_xml_get_widget (totem->xml, "custom2");
 		rb_ellipsizing_label_set_markup (RB_ELLIPSIZING_LABEL (widget),
 				text);
 		g_free (text);
