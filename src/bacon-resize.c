@@ -66,10 +66,26 @@ bacon_resize (int height, int width)
 
 	for (i = 0; i < xr_nsize; i++)
 	{
+		/* Avoid non-multiples of 16 for the resolutions as it
+		 * would break ffmpeg's direct rendering and probably
+		 * make everything slower */
+		if (xr_sizes[i].height % 16 != 0 || xr_sizes[i].width % 16 != 0)
+			continue;
 		if (height > xr_sizes[i].height && width > xr_sizes[i].width)
 			break;
 		if (height < xr_sizes[i].height && width < xr_sizes[i].width)
-			target = i;
+		{
+			if (target == -1)
+			{
+				target = i;
+				continue;
+			}
+			if (xr_sizes[i].height < xr_sizes[target].height
+					 && xr_sizes[i].width < xr_sizes[target].width)
+			{
+				target = i;
+			}
+		}
 	}
 
 	if (target == -1)
