@@ -39,9 +39,9 @@ schema_DATA = $(schema_in_files:.schemas.in=.schemas)
 
 # For the sake of some users
 user-install: $(app_DATA) $(keys_DATA)
-	mkdir -p ~/.gnome/application-registry ~/.gnome/mime-info/
-	cp $(app_DATA) ~/.gnome/application-registry
-	cp $(keys_DATA) ~/.gnome/mime-info/
+	mkdir -p $(HOME)/.gnome/application-registry $(HOME)/.gnome/mime-info/
+	cp $(app_DATA) $(HOME)/.gnome/application-registry
+	cp $(keys_DATA) $(HOME)/.gnome/mime-info/
 
 install-data-local:
 	-GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(srcdir)/$(schema_DATA)

@@ -214,7 +214,7 @@ cdrom_option_menu (BaconCdSelection *bcs)
 	for (l = bcs->priv->cdroms; l != NULL; l = l->next)
 	{
 		cdrom = l->data;
-		item = gtk_menu_item_new_with_label (cdrom->display_name);
+		item = gtk_menu_item_new_with_label (cdrom->name);
 		gtk_widget_show (item);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	}

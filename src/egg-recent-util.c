@@ -16,8 +16,6 @@
 #include "egg-recent-util.h"
 
 #define EGG_RECENT_UTIL_HOSTNAME_SIZE 512
-#define ICON_SIZE_STANDARD 20
-#define ICON_SIZE_MAX 24
 
 /* ripped out of gedit2 */
 gchar* 
@@ -82,7 +80,7 @@ load_pixbuf_svg (const char *path,
 	if (base_size != 0) {
 		zoom = (double)size_in_pixels / base_size;
 
-		pixbuf = rsvg_pixbuf_from_file_at_zoom_with_max (path, zoom, zoom, ICON_SIZE_STANDARD, ICON_SIZE_STANDARD, NULL);
+		pixbuf = rsvg_pixbuf_from_file_at_zoom_with_max (path, zoom, zoom, size_in_pixels, size_in_pixels, NULL);
 	} else {
 		pixbuf = rsvg_pixbuf_from_file_at_max_size (path,
 							    size_in_pixels,
@@ -119,7 +117,7 @@ load_icon_file (char          *filename,
 		guint          nominal_size)
 {
 	GdkPixbuf *pixbuf, *scaled_pixbuf;
-	int width, height, size;
+	guint width, height, size;
 	double scale;
 
 	if (path_represents_svg_image (filename)) {
@@ -142,11 +140,11 @@ load_icon_file (char          *filename,
 			width = gdk_pixbuf_get_width (pixbuf); 
 			height = gdk_pixbuf_get_height (pixbuf);
 			size = MAX (width, height);
-			if (size > ICON_SIZE_MAX) {
+			if (size > nominal_size) {
 				base_size = size;
 			} else {
 				/* Don't scale up small icons */
-				base_size = ICON_SIZE_STANDARD;
+				base_size = nominal_size;
 			}
 		}
 		
@@ -164,7 +162,7 @@ load_icon_file (char          *filename,
 #ifndef USE_STABLE_LIBGNOMEUI
 GdkPixbuf *
 egg_recent_util_get_icon (GnomeIconTheme *theme, const gchar *uri,
-			  const gchar *mime_type)
+			  const gchar *mime_type, int size)
 {
 	gchar *icon;
 	gchar *filename;
@@ -179,12 +177,12 @@ egg_recent_util_get_icon (GnomeIconTheme *theme, const gchar *uri,
 	g_return_val_if_fail (icon != NULL, NULL);
 
 	filename = gnome_icon_theme_lookup_icon (theme, icon,
-						 ICON_SIZE_STANDARD,
+						 size,
 						 &icon_data,
 						 &base_size);
 	g_free (icon);
 
-	pixbuf = load_icon_file (filename, base_size, ICON_SIZE_STANDARD);
+	pixbuf = load_icon_file (filename, base_size, size);
 	g_free (filename);
 	
 	

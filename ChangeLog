@@ -1,3 +1,17 @@
+2003-01-09  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: remove STABLE/UNSTABLE stuff
+	* data/Makefile.am: fix user-install (Closes: #102987), patch by
+	jogzh001@sneakemail.com
+	* src/Makefile.am: ditto configure.in
+	* src/bacon-cd-selection.[ch]:
+	* src/cd-drive.[ch]:
+	* src/egg-*.[ch]: upd from libegg and libbacon
+	* src/totem-video-thumbnailer.c: (main):
+	* src/totem.c: (totem_action_play),
+	(totem_action_set_mrl_and_play), (totem_action_fullscreen_toggle),
+	(totem_action_set_mrl): fix time display, and the properties window
+
 2003-01-09  Christian Neumair  <chris@gnome-de.org>
 
 	* src/.cvsignore: Added list_cddrives.

@@ -36,7 +36,6 @@
 #include <gconf/gconf-client.h>
 #include "egg-recent-model.h"
 #include "egg-recent-item.h"
-#include "egg-recent-vfs-utils.h"
 
 #define EGG_RECENT_MODEL_FILE_PATH "/.recently-used"
 #define EGG_RECENT_MODEL_BUFFER_SIZE 8192
@@ -261,7 +260,7 @@ egg_recent_model_update_item (GList *items, EggRecentItem *upd_item)
 	while (tmp) {
 		EggRecentItem *item = tmp->data;
 
-		if (egg_recent_vfs_uris_match (egg_recent_item_peek_uri (item), uri)) {
+		if (gnome_vfs_uris_match (egg_recent_item_peek_uri (item), uri)) {
 			egg_recent_item_set_timestamp (item, (time_t) -1);
 
 			egg_recent_model_add_new_groups (item, upd_item);
@@ -559,7 +558,7 @@ egg_recent_model_filter (EggRecentModel *model,
 		    model->priv->scheme_filter_values != NULL) {
 			gchar *scheme;
 			
-			scheme = egg_recent_vfs_get_uri_scheme (uri);
+			scheme = gnome_vfs_get_uri_scheme (uri);
 
 			if (egg_recent_model_string_match
 				(model->priv->scheme_filter_values, scheme))

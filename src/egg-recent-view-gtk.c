@@ -62,6 +62,7 @@ struct _EggRecentViewGtk {
 
 	EggRecentModel *model;
 	GConfClient *client;
+	GtkIconSize icon_size;
 };
 
 
@@ -224,8 +225,18 @@ egg_recent_view_gtk_new_menu_item (EggRecentViewGtk *view,
 
 		mime_type = egg_recent_item_get_mime_type (item);
 #ifndef USE_STABLE_LIBGNOMEUI
-		pixbuf = egg_recent_util_get_icon (view->theme, uri,
-						   mime_type);
+		{
+			int width, height;
+
+			gtk_icon_size_lookup_for_settings
+					(gtk_widget_get_settings (view->menu),
+					 view->icon_size,
+					 &width, &height);
+
+			pixbuf = egg_recent_util_get_icon (view->theme, uri,
+							   mime_type,
+							   height);
+		}
 #else
 		pixbuf = NULL;
 #endif
@@ -372,8 +383,10 @@ egg_recent_view_gtk_set_model (EggRecentView *view_parent,
 	view->model = model;
 	g_object_ref (view->model);
 
-	view->changed_cb_id = g_signal_connect (G_OBJECT (model), "changed",
-			  G_CALLBACK (model_changed_cb), view);
+	view->changed_cb_id = g_signal_connect_object (G_OBJECT (model),
+						"changed",
+						G_CALLBACK (model_changed_cb),
+						view, 0);
 
 	egg_recent_model_changed (view->model);
 }
@@ -592,14 +605,34 @@ egg_recent_view_gtk_init (EggRecentViewGtk * view)
 	view->uid = egg_recent_util_get_unique_id ();
 #ifndef USE_STABLE_LIBGNOMEUI
 	view->theme = gnome_icon_theme_new ();
-	g_signal_connect (view->theme, "changed",
-			  G_CALLBACK (theme_changed_cb), view);
+	g_signal_connect_object (view->theme, "changed",
+				 G_CALLBACK (theme_changed_cb), view, 0);
 #endif
 	view->tooltips = gtk_tooltips_new ();
 	g_object_ref (view->tooltips);
 	gtk_object_sink (GTK_OBJECT (view->tooltips));
 	view->tooltip_func = NULL;
 	view->tooltip_func_data = NULL;
+
+	view->icon_size = GTK_ICON_SIZE_MENU;
+}
+
+void
+egg_recent_view_gtk_set_icon_size (EggRecentViewGtk *view,
+				   GtkIconSize icon_size)
+{
+	if (view->icon_size != icon_size) {
+		view->icon_size = icon_size;
+		egg_recent_model_changed (view->model);
+	} else {
+		view->icon_size = icon_size;
+	}
+}
+
+GtkIconSize
+egg_recent_view_gtk_get_icon_size (EggRecentViewGtk *view)
+{
+	return view->icon_size;
 }
 
 void
