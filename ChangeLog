@@ -1,3 +1,10 @@
+2003-09-05  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in:
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_set_speed):
+	release the sound card with the xine backend if xine-lib is new
+	enough to allow that feature
+
 2003-09-04  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-cd-selection.h:

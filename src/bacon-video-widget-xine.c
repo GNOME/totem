@@ -1873,6 +1873,13 @@ bacon_video_widget_set_speed (BaconVideoWidget *bvw, Speeds speed)
 	g_return_if_fail (bvw->priv->xine != NULL);
 
 	xine_set_param (bvw->priv->stream, XINE_PARAM_SPEED, speeds[speed]);
+
+#ifdef HAVE_XINE_CLOSE
+	/* Close the audio device when on pause */
+	if (speeds[speed] == XINE_SPEED_PAUSE)
+		xine_set_param (bvw->priv->stream,
+				XINE_PARAM_AUDIO_CLOSE_DEVICE, 1);
+#endif
 }
 
 int
