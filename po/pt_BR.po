@@ -1,13 +1,13 @@
 # totem: translation to Brazilian Portuguese (pt_BR)
-# Copyright (C) 2002 Free Software Foundation, Inc.
+# Copyright (C) 2002-2003 Free Software Foundation, Inc.
 # This file is distributed under the same license as the totem package.
 # Alexandre Folle de Menezes <afmenez@terra.com.br>, 2002-2003.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.0\n"
-"POT-Creation-Date: 2003-02-20 04:43-0300\n"
-"PO-Revision-Date: 2003-02-20 03:15-0300\n"
+"POT-Creation-Date: 2003-02-22 18:25-0300\n"
+"PO-Revision-Date: 2003-02-22 16:45-0300\n"
 "Last-Translator: Alexandre Folle de Menezes <afmenez@terra.com.br>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
@@ -258,7 +258,7 @@ msgid "Toggle _Aspect Ratio"
 msgstr "Mudar Razão de Aspecto"
 
 #. Title
-#: data/totem.glade.h:35 src/totem.c:386 src/totem.c:409 src/totem.c:1273
+#: data/totem.glade.h:35 src/totem.c:397 src/totem.c:419 src/totem.c:1300
 msgid "Totem"
 msgstr "Totem"
 
@@ -402,7 +402,7 @@ msgstr "_Senha:"
 msgid "Remember this password"
 msgstr "Lembrar-se dessa senha"
 
-#: src/gtk-playlist.c:414 src/totem.c:1089
+#: src/gtk-playlist.c:414 src/totem.c:1116
 msgid "Select files"
 msgstr "Selecione arquivos"
 
@@ -414,7 +414,7 @@ msgstr "Nome do Arquivo"
 msgid "Totem Video Window"
 msgstr "Janela de Vídeo Totem"
 
-#: src/bacon-video-widget.c:553
+#: src/bacon-video-widget.c:538
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -423,14 +423,22 @@ msgstr ""
 "Impossível carregar o driver de áudio '%s'\n"
 "Verifique se o dispositivo não está ocupado."
 
-#: src/bacon-video-widget.c:817
-msgid "Could not find a suitable video output."
-msgstr "Impossível encontrar uma saída de vídeo adequada."
+#: src/bacon-video-widget.c:887
+msgid "There is no plugin to handle this movie"
+msgstr "Não existe plugin para tratar este filme"
 
-#: src/bacon-video-widget.c:1211
+#: src/bacon-video-widget.c:891
+msgid "This movie is broken and can not be played further"
+msgstr "Este filme está com defeito e não pode ser mais tocado"
+
+#: src/bacon-video-widget.c:895
+msgid "This location is not a valid one"
+msgstr "Essa localização não é válida."
+
+#: src/bacon-video-widget.c:1175
 #, c-format
-msgid "Reason: Video type '%s' is not handled."
-msgstr "Razão: Tipo de vídeo '%s' não é suportado."
+msgid "Video type '%s' is not handled"
+msgstr "Tipo de vídeo '%s' não é suportado."
 
 #. One hour
 #: src/bacon-video-widget-properties.c:109
@@ -525,19 +533,28 @@ msgstr "Enfileirar"
 msgid "Replace"
 msgstr "Substituir"
 
-#: src/totem.c:155
+#: src/totem.c:160
 msgid "Playing"
 msgstr "Reproduzindo"
 
-#: src/totem.c:162
+#: src/totem.c:167
 msgid "Paused"
 msgstr "Pausado"
 
-#: src/totem.c:169 src/totem-statusbar.c:171
+#: src/totem.c:174 src/totem-statusbar.c:171
 msgid "Stopped"
 msgstr "Parado"
 
-#: src/totem.c:238
+#: src/totem.c:232 src/totem.c:510 src/totem.c:599
+#, c-format
+msgid ""
+"Totem could not play '%s'.\n"
+"Reason: %s."
+msgstr ""
+"O Totem não pode tocar '%s':\n"
+"Razão: %s."
+
+#: src/totem.c:257
 msgid ""
 "Totem cannot play this type of media because you do not have the appropriate "
 "plugins to handle it.\n"
@@ -549,7 +566,7 @@ msgstr ""
 "Instale os plugins necessários e reinicie o Totem para poder tocar este tipo "
 "de mídia."
 
-#: src/totem.c:246
+#: src/totem.c:265
 msgid ""
 "Totem could not play this media although a plugin is present to handle it.\n"
 "You might want to check that a disc is present in the drive and that it is "
@@ -561,37 +578,46 @@ msgstr ""
 "corretamente configurado."
 
 #. Title
-#: src/totem.c:362
+#: src/totem.c:373
 #, c-format
 msgid "%s - Totem"
 msgstr "%s - Totem"
 
-#: src/totem.c:375 src/totem.c:2392
+#: src/totem.c:386 src/totem.c:2403
 msgid "No file"
 msgstr "Nenhum arquivo"
 
-#: src/totem.c:1249
+#: src/totem.c:1276
 msgid "translator_credits"
 msgstr "Copyright (C) 2002 Alexandre Folle de Menezes"
 
-#: src/totem.c:1275
+#: src/totem.c:1302
 msgid "Movie Player (based on the xine libraries)"
 msgstr "Movie Player (baseado nas bibliotecas xine)"
 
-#: src/totem.c:1329 src/totem.c:1340
+#: src/totem.c:1356 src/totem.c:1367
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "CapturadeTela%d.png"
 
-#: src/totem.c:1393
+#: src/totem.c:1421
+#, c-format
 msgid ""
 "Totem could not get a screenshot of that film.\n"
-"You might want to try again at another time."
+"Reason: %s."
 msgstr ""
 "O Totem não pôde capturar um quadro do filme.\n"
-"Tente em outra oportunidade."
+"Razão: %s."
 
-#: src/totem.c:1419
+#: src/totem.c:1431
+msgid ""
+"Totem could not get a screenshot of that film.\n"
+"Please file a bug, this isn't supposed to happen"
+msgstr ""
+"O Totem não pôde capturar um quadro do filme.\n"
+"Por favor, informe sobre este problema, não deveria ter acontecido"
+
+#: src/totem.c:1457
 #, c-format
 msgid ""
 "File '%s' already exists.\n"
@@ -600,7 +626,7 @@ msgstr ""
 "O arquivo '%s' já existe.\n"
 "A captura de tela não foi salva."
 
-#: src/totem.c:1430
+#: src/totem.c:1468
 #, c-format
 msgid ""
 "There was an error saving the screenshot.\n"
@@ -609,7 +635,7 @@ msgstr ""
 "Ocorreu um erro ao salvar a captura de tela.\n"
 "Detalhes: %s"
 
-#: src/totem.c:1450
+#: src/totem.c:1487
 msgid ""
 "Totem couldn't show the movie properties window.\n"
 "Make sure that Totem is correctly installed."
@@ -617,7 +643,16 @@ msgstr ""
 "Impossível mostrar a janela de propriedades do filme.\n"
 "Certifique-se de que o Totem  está adequadamente instalado."
 
-#: src/totem.c:1826
+#: src/totem.c:1564
+#, c-format
+msgid ""
+"Totem could not seek in '%s'.\n"
+"Reason: %s."
+msgstr ""
+"O Totem não pode buscar em '%s':\n"
+"Razão: %s."
+
+#: src/totem.c:2339
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -626,39 +661,7 @@ msgstr ""
 "O Totem não pode iniciar:\n"
 "%s"
 
-#: src/totem.c:1832
-#, c-format
-msgid ""
-"There is no plugin for Totem to handle '%s'.\n"
-"Totem will not be able to play it."
-msgstr ""
-"Nenhum plug-in para lidar com '%s'.\n"
-"O Totem não será capaz de tocá-lo."
-
-#: src/totem.c:1838
-#, c-format
-msgid "'%s' is broken, and Totem can not play it further."
-msgstr "'%s' está com defeito, e o Totem não pode prosseguir."
-
-#: src/totem.c:1843
-#, c-format
-msgid ""
-"Totem could not play '%s':\n"
-"%s"
-msgstr ""
-"O Totem não pode tocar '%s':\n"
-"%s"
-
-#: src/totem.c:1848
-#, c-format
-msgid ""
-"Totem could not play '%s'.\n"
-"This location is not a valid one."
-msgstr ""
-"O Totem não pôde tocar '%s'.\n"
-"Essa localização não é válida."
-
-#: src/totem.c:2558
+#: src/totem.c:2595
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -669,7 +672,7 @@ msgstr ""
 "o mecanismo de configuração:\n"
 "%s"
 
-#: src/totem.c:2572 src/totem.c:2608
+#: src/totem.c:2610 src/totem.c:2641
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -677,7 +680,7 @@ msgstr ""
 "Impossível carregar a interface principal (totem.glade).\n"
 "Certifique-se de que o Totem  está adequadamente instalado."
 
-#: src/totem.c:2630
+#: src/totem.c:2663
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
@@ -696,6 +699,16 @@ msgstr "Estilo do chanfro ao redor do texto da barra de status"
 #: src/totem-statusbar.c:180
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
+
+#~ msgid "Could not find a suitable video output."
+#~ msgstr "Impossível encontrar uma saída de vídeo adequada."
+
+#~ msgid ""
+#~ "There is no plugin for Totem to handle '%s'.\n"
+#~ "Totem will not be able to play it."
+#~ msgstr ""
+#~ "Nenhum plug-in para lidar com '%s'.\n"
+#~ "O Totem não será capaz de tocá-lo."
 
 #~ msgid "Default audio output driver"
 #~ msgstr "Driver de saída de áudio padrão"
