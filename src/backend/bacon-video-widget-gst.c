@@ -980,7 +980,7 @@ bacon_video_widget_open (BaconVideoWidget * bvw, const gchar * mrl,
         gst_play_set_data_src (bvw->priv->play, datasrc);
       gst_play_set_location (bvw->priv->play, "/dev/video");
     }
-  else if (g_str_has_prefix (mrl, "cda://"))
+  else if (g_str_has_prefix (mrl, "cdda://"))
     {
       datasrc = gst_element_factory_make ("cdparanoia", "source");
       if (GST_IS_ELEMENT (datasrc))
@@ -1704,7 +1704,7 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw, MediaType type)
       case MEDIA_CDDA:
         {
           mrls = g_malloc0 (sizeof (char *) * 2);
-          mrls[0] = "cda://";
+          mrls[0] = "cdda://";
           return mrls;
         }
       default:

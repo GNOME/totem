@@ -837,7 +837,7 @@ totem_playing_dvd (Totem *totem)
 	if (totem->mrl == NULL)
 		return FALSE;
 
-	return !strcmp("dvd:/", totem->mrl);
+	return (strncmp("dvd:/", totem->mrl, strlen ("dvd:/")) == 0);
 }
 
 static gboolean

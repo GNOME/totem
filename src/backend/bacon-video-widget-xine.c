@@ -1107,7 +1107,10 @@ bacon_video_widget_realize (GtkWidget *widget)
 
 	bvw = BACON_VIDEO_WIDGET (widget);
 
-	g_return_if_fail (bvw->priv->mrl == NULL);
+	if (bvw->priv->mrl != NULL) {
+		bacon_video_widget_close (bvw);
+		g_warning ("bvw->priv->mrl != NULL on open");
+	}
 
 	/* set realized flag */
 	GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);

@@ -1,3 +1,13 @@
+2004-05-30  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_open),
+	(bacon_video_widget_get_mrls): the GStreamer backend should use
+	cdda: not cda: for audio CD playback
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_realize):
+	don't crash when a file's opened on _realize, simply warn
+	* src/totem.c: (totem_playing_dvd): all mrls starting with dvd: are
+	DVDs playing, not just "dvd:/" (Closes: #143002)
+
 2004-05-29  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.applications:
