@@ -1258,7 +1258,8 @@ totem_pl_parser_add_asf (TotemPlParser *parser, const char *url, gpointer data)
 {
 	if (data != NULL &&
 		(g_str_has_prefix (data, "[Reference]") == FALSE
-		 && g_ascii_strncasecmp (data, "<ASX", strlen ("<ASX")) != 0)) {
+		 && g_ascii_strncasecmp (data, "<ASX", strlen ("<ASX")) != 0
+		 && strstr (data, "<ASX") == NULL)) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
