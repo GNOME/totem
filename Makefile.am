@@ -8,5 +8,9 @@ EXTRA_DIST =			\
 	intltool-extract.in	\
 	intltool-merge.in	\
 	intltool-update.in	\
-	AUTHORS NEWS
+	AUTHORS NEWS		\
+	totem.spec.in		\
+	totem.spec
+
+CLEANFILES = totem.spec
 
