@@ -47,6 +47,7 @@ struct GtkPlaylistClass {
 
 	void (*changed) (GtkPlaylist *playlist);
 	void (*current_removed) (GtkPlaylist *playlist);
+	void (*repeat_toggled) (GtkPlaylist *playlist, gboolean repeat);
 };
 
 GtkType    gtk_playlist_get_type (void);
@@ -71,6 +72,9 @@ gboolean   gtk_playlist_has_next_mrl (GtkPlaylist *playlist);
 
 void       gtk_playlist_set_previous (GtkPlaylist *playlist);
 void       gtk_playlist_set_next (GtkPlaylist *playlist);
+
+gboolean   gtk_playlist_get_repeat (GtkPlaylist *playlist);
+void       gtk_playlist_set_repeat (GtkPlaylist *playlist, gboolean repeat);
 
 gboolean   gtk_playlist_set_title (GtkPlaylist *playlist, const gchar *title);
 

@@ -413,7 +413,7 @@ frame_output_cb (void *gtx_gen,
 
 			gc = gconf_client_get_default ();
 
-			if (gconf_client_get_bool (gc, GCONF_PREFIX"auto_resize", NULL) == TRUE
+			if (gconf_client_get_bool (gc, GCONF_PREFIX"/auto_resize", NULL) == TRUE
 					&& strcmp (gtx->priv->mrl, LOGO_PATH) != 0)
 			{
 				GtkXineSignal *signal;
@@ -497,7 +497,7 @@ load_audio_out_driver (GtkXine *gtx)
 	conf = gconf_client_get_default ();
 
 	audio_driver_id = gconf_client_get_string (conf,
-			GCONF_PREFIX"audio_driver",
+			GCONF_PREFIX"/audio_driver",
 			NULL);
 
 	/* No configuration, fallback to auto */
@@ -547,7 +547,7 @@ update_mediadev_conf (GtkXine *gtx, GConfClient *conf)
 	conf = gconf_client_get_default ();
 
 	/* DVD and VCD Device */
-	tmp = gconf_client_get_string (conf, GCONF_PREFIX"mediadev", NULL);
+	tmp = gconf_client_get_string (conf, GCONF_PREFIX"/mediadev", NULL);
 	if (tmp == NULL || strcmp (tmp, "") == 0)
 		tmp = g_strdup ("/dev/cdrom");
 
@@ -569,7 +569,7 @@ show_vfx_changed_cb (GConfClient *client, guint cnxn_id,
 	GtkXine *gtx = (GtkXine *) user_data;
 
 	gtx->priv->show_vfx = gconf_client_get_bool (client,
-			GCONF_PREFIX"show_vfx", NULL);
+			GCONF_PREFIX"/show_vfx", NULL);
 }
 
 static void
@@ -588,10 +588,10 @@ load_config_from_gconf (GtkXine *gtx)
 
 	gconf_client_add_dir (conf, "/apps/totem",
 			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
-	gconf_client_notify_add (conf, GCONF_PREFIX"show_vfx",
+	gconf_client_notify_add (conf, GCONF_PREFIX"/show_vfx",
 			show_vfx_changed_cb, gtx, NULL, NULL);
 	gtx->priv->show_vfx = gconf_client_get_bool (conf,
-			GCONF_PREFIX"show_vfx", NULL);
+			GCONF_PREFIX"/show_vfx", NULL);
 	update_mediadev_conf (gtx, conf);
 }
 

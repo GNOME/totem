@@ -1,5 +1,25 @@
 2003-01-20  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am:
+	* src/gtk-playlist.c: (repeat_button_toggled), (update_repeat_cb),
+	(init_config), (gtk_playlist_unrealize), (gtk_playlist_unmap),
+	(gtk_playlist_realize), (gtk_playlist_get_repeat),
+	(gtk_playlist_set_repeat), (gtk_playlist_class_init):
+	* src/gtk-playlist.h:
+	* src/gtk-xine.c: (frame_output_cb), (load_audio_out_driver),
+	(update_mediadev_conf), (show_vfx_changed_cb),
+	(load_config_from_gconf):
+	* src/totem.c: (on_checkbutton1_toggled),
+	(on_checkbutton2_toggled), (on_combo_entry1_changed),
+	(auto_resize_changed_cb), (show_vfx_changed_cb),
+	(mediadev_changed_cb), (totem_setup_preferences), (main):
+	fix more GCONF_PREFIX stuff, make the playlist position saving work
+	again (I don't know how it ever worked...), set playlist icon,
+	add a signal to GtkPlaylist for when repeat is toggled, get/set
+	functions for toggled
+
+2003-01-20  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-playlist.c: (repeat_button_toggled), (update_repeat_cb),
 	(init_config), (gtk_playlist_unrealize), (gtk_playlist_realize),
 	(gtk_playlist_new):

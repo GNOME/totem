@@ -58,12 +58,15 @@ struct GtkPlaylistPrivate
 	gboolean repeat;
 
 	GConfClient *gc;
+
+	int x, y;
 };
 
 /* Signals */
 enum {
 	CHANGED,
 	CURRENT_REMOVED,
+	REPEAT_TOGGLED,
 	LAST_SIGNAL
 };
 
@@ -616,9 +619,13 @@ repeat_button_toggled (GtkToggleButton *togglebutton, gpointer user_data)
 	gboolean repeat;
 
 	repeat = gtk_toggle_button_get_active (togglebutton);
-	gconf_client_set_bool (playlist->_priv->gc, GCONF_PREFIX"repeat",
+	gconf_client_set_bool (playlist->_priv->gc, GCONF_PREFIX"/repeat",
 			repeat, NULL);
 	playlist->_priv->repeat = repeat;
+
+	g_signal_emit (G_OBJECT (playlist),
+			gtk_playlist_table_signals[REPEAT_TOGGLED], 0,
+			repeat, NULL);
 }
 
 static void
@@ -630,11 +637,12 @@ update_repeat_cb (GConfClient *client, guint cnxn_id,
 	gboolean repeat;
 
 	repeat = gconf_client_get_bool (client,
-			GCONF_PREFIX"repeat", NULL);
+			GCONF_PREFIX"/repeat", NULL);
 	button = glade_xml_get_widget (playlist->_priv->xml, "repeat_button");
 	g_signal_handlers_disconnect_by_func (G_OBJECT (button),
 			repeat_button_toggled, playlist);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), repeat);
+	playlist->_priv->repeat = repeat;
 	g_signal_connect (G_OBJECT (button), "toggled",
 			G_CALLBACK (repeat_button_toggled),
 			(gpointer) playlist);
@@ -642,6 +650,9 @@ update_repeat_cb (GConfClient *client, guint cnxn_id,
 	g_signal_emit (G_OBJECT (playlist),
 			gtk_playlist_table_signals[CHANGED], 0,
 			NULL);
+	g_signal_emit (G_OBJECT (playlist),
+			gtk_playlist_table_signals[REPEAT_TOGGLED], 0,
+			repeat, NULL);
 }
 
 static void
@@ -654,12 +665,12 @@ init_config (GtkPlaylist *playlist)
 	playlist->_priv->gc = gconf_client_get_default ();
 
 	repeat = gconf_client_get_bool (playlist->_priv->gc,
-			GCONF_PREFIX"repeat", NULL);
+			GCONF_PREFIX"/repeat", NULL);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), repeat);
 
-	gconf_client_add_dir (playlist->_priv->gc, "/apps/totem",
+	gconf_client_add_dir (playlist->_priv->gc, GCONF_PREFIX,
 			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
-	gconf_client_notify_add (playlist->_priv->gc, GCONF_PREFIX"repeat",
+	gconf_client_notify_add (playlist->_priv->gc, GCONF_PREFIX"/repeat",
 			update_repeat_cb, playlist, NULL, NULL);
 	g_signal_connect (G_OBJECT (button), "toggled",
 			G_CALLBACK (repeat_button_toggled),
@@ -704,14 +715,40 @@ gtk_playlist_unrealize (GtkWidget *widget)
 
 	g_return_if_fail (widget != NULL);
 
-	gtk_window_get_position (GTK_WINDOW (widget), &x, &y);
-	gconf_client_set_int (playlist->_priv->gc, GCONF_PREFIX"playlist_x",
+	if (GTK_WIDGET_MAPPED (widget) == TRUE)
+	{
+		gtk_window_get_position (GTK_WINDOW (widget), &x, &y);
+	} else {
+		x = playlist->_priv->x;
+		y = playlist->_priv->y;
+	}
+
+	gconf_client_set_int (playlist->_priv->gc, GCONF_PREFIX"/playlist_x",
 			x, NULL);
-	gconf_client_set_int (playlist->_priv->gc, GCONF_PREFIX"playlist_y",
+	gconf_client_set_int (playlist->_priv->gc, GCONF_PREFIX"/playlist_y",
 			y, NULL);
+
+	GTK_WIDGET_UNSET_FLAGS (widget, GTK_REALIZED);
 
 	if (GTK_WIDGET_CLASS (parent_class)->unrealize != NULL) {
 		(* GTK_WIDGET_CLASS (parent_class)->unrealize) (widget);
+	}
+}
+
+static void
+gtk_playlist_unmap (GtkWidget *widget)
+{
+	GtkPlaylist *playlist = GTK_PLAYLIST (widget);
+	int x, y;
+
+	g_return_if_fail (widget != NULL);
+
+	gtk_window_get_position (GTK_WINDOW (widget), &x, &y);
+	playlist->_priv->x = x;
+	playlist->_priv->y = y;
+
+	if (GTK_WIDGET_CLASS (parent_class)->unmap != NULL) {
+		(* GTK_WIDGET_CLASS (parent_class)->unmap) (widget);
 	}
 }
 
@@ -723,14 +760,16 @@ gtk_playlist_realize (GtkWidget *widget)
 
 	g_return_if_fail (widget != NULL);
 
+	GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
+
 	if (GTK_WIDGET_CLASS (parent_class)->realize != NULL) {
 		(* GTK_WIDGET_CLASS (parent_class)->realize) (widget);
 	}
 
 	x = gconf_client_get_int (playlist->_priv->gc,
-			GCONF_PREFIX"playlist_x", NULL);
+			GCONF_PREFIX"/playlist_x", NULL);
 	y = gconf_client_get_int (playlist->_priv->gc,
-			GCONF_PREFIX"playlist_y", NULL);
+			GCONF_PREFIX"/playlist_y", NULL);
 
 	if (x == -1 || y == -1
 			|| x > gdk_screen_width () || y > gdk_screen_height ())
@@ -1296,6 +1335,25 @@ gtk_playlist_set_next (GtkPlaylist *playlist)
 		(playlist->_priv->model, &iter);
 }
 
+gboolean
+gtk_playlist_get_repeat (GtkPlaylist *playlist)
+{
+	g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), FALSE);
+
+	return playlist->_priv->repeat;
+}
+	
+void
+gtk_playlist_set_repeat (GtkPlaylist *playlist, gboolean repeat)
+{
+	GtkWidget *button;
+
+	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
+
+	button = glade_xml_get_widget (playlist->_priv->xml, "repeat_button");
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), repeat);
+}
+
 void
 gtk_playlist_set_at_start (GtkPlaylist *playlist)
 {
@@ -1341,6 +1399,7 @@ gtk_playlist_class_init (GtkPlaylistClass *klass)
 	G_OBJECT_CLASS (klass)->finalize = gtk_playlist_finalize;
 	GTK_WIDGET_CLASS (klass)->realize = gtk_playlist_realize;
 	GTK_WIDGET_CLASS (klass)->unrealize = gtk_playlist_unrealize;
+	GTK_WIDGET_CLASS (klass)->unmap = gtk_playlist_unmap;
 
 	/* Signals */
 	gtk_playlist_table_signals[CHANGED] =
@@ -1360,5 +1419,14 @@ gtk_playlist_class_init (GtkPlaylistClass *klass)
 				NULL, NULL,
 				g_cclosure_marshal_VOID__VOID,
 				G_TYPE_NONE, 0);
+	gtk_playlist_table_signals[REPEAT_TOGGLED] =
+		g_signal_new ("repeat-toggled",
+				G_TYPE_FROM_CLASS (klass),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (GtkPlaylistClass,
+					repeat_toggled),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__BOOLEAN,
+				G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
 }
 

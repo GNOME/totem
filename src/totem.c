@@ -1495,7 +1495,7 @@ on_checkbutton1_toggled (GtkToggleButton *togglebutton, gpointer user_data)
 	gboolean value;
 
 	value = gtk_toggle_button_get_active (togglebutton);
-	gconf_client_set_bool (totem->gc, GCONF_PREFIX"auto_resize",
+	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/auto_resize",
 			value, NULL);
 }
 
@@ -1506,7 +1506,7 @@ on_checkbutton2_toggled (GtkToggleButton *togglebutton, gpointer user_data)
 	gboolean value;
 
 	value = gtk_toggle_button_get_active (togglebutton);
-	gconf_client_set_bool (totem->gc, GCONF_PREFIX"show_vfx",
+	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/show_vfx",
 			value, NULL);
 }
 
@@ -1518,7 +1518,7 @@ on_combo_entry1_changed (BaconCdSelection *bcs, char *device,
 	const char *str;
 
 	str = bacon_cd_selection_get_device (bcs);
-	gconf_client_set_string (totem->gc, GCONF_PREFIX"mediadev",
+	gconf_client_set_string (totem->gc, GCONF_PREFIX"/mediadev",
 			str, NULL);
 }
 
@@ -1535,7 +1535,7 @@ auto_resize_changed_cb (GConfClient *client, guint cnxn_id,
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
 			gconf_client_get_bool (totem->gc,
-				GCONF_PREFIX"auto_resize", NULL));
+				GCONF_PREFIX"/auto_resize", NULL));
 
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_checkbutton1_toggled), totem);
@@ -1554,7 +1554,7 @@ show_vfx_changed_cb (GConfClient *client, guint cnxn_id,
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
 			gconf_client_get_bool (totem->gc,
-				GCONF_PREFIX"show_vfx", NULL));
+				GCONF_PREFIX"/show_vfx", NULL));
 
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_checkbutton2_toggled), totem);
@@ -1573,7 +1573,7 @@ mediadev_changed_cb (GConfClient *client, guint cnxn_id,
 
 	bacon_cd_selection_set_device (BACON_CD_SELECTION (item),
 			gconf_client_get_string
-			(totem->gc, GCONF_PREFIX"mediadev", NULL));
+			(totem->gc, GCONF_PREFIX"/mediadev", NULL));
 
 	g_signal_connect (G_OBJECT (item), "device-changed",
 			G_CALLBACK (on_combo_entry1_changed), totem);
@@ -2318,11 +2318,11 @@ totem_setup_preferences (Totem *totem)
 
 	gconf_client_add_dir (totem->gc, "/apps/totem",
 			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
-	gconf_client_notify_add (totem->gc, GCONF_PREFIX"auto_resize",
+	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/auto_resize",
 			auto_resize_changed_cb, totem, NULL, NULL);
-	gconf_client_notify_add (totem->gc, GCONF_PREFIX"show_vfx",
+	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/show_vfx",
 			show_vfx_changed_cb, totem, NULL, NULL);
-	gconf_client_notify_add (totem->gc, GCONF_PREFIX"mediadev",
+	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/mediadev",
 			mediadev_changed_cb, totem, NULL, NULL);
 
 	totem->prefs = glade_xml_get_widget (totem->xml, "dialog1");
@@ -2335,32 +2335,32 @@ totem_setup_preferences (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "checkbutton1");
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
 			gconf_client_get_bool (totem->gc,
-				GCONF_PREFIX"auto_resize", NULL));
+				GCONF_PREFIX"/auto_resize", NULL));
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_checkbutton1_toggled), totem);
 
 	item = glade_xml_get_widget (totem->xml, "checkbutton2");
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
 			gconf_client_get_bool (totem->gc,
-				GCONF_PREFIX"show_vfx", NULL));
+				GCONF_PREFIX"/show_vfx", NULL));
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_checkbutton2_toggled), totem);
 
 	item = glade_xml_get_widget (totem->xml, "custom3");
 	device = gconf_client_get_string
-		(totem->gc, GCONF_PREFIX"mediadev", NULL);
+		(totem->gc, GCONF_PREFIX"/mediadev", NULL);
 	if (device == NULL || (strcmp (device, "") == 0)
 			|| (strcmp (device, "auto") == 0))
 	{
 		device = bacon_cd_selection_get_default_device
 			(BACON_CD_SELECTION (item));
-		gconf_client_set_string (totem->gc, GCONF_PREFIX"mediadev",
+		gconf_client_set_string (totem->gc, GCONF_PREFIX"/mediadev",
 				device, NULL);
 	}
 
 	bacon_cd_selection_set_device (BACON_CD_SELECTION (item),
 			gconf_client_get_string
-			(totem->gc, GCONF_PREFIX"mediadev", NULL));
+			(totem->gc, GCONF_PREFIX"/mediadev", NULL));
 	g_signal_connect (G_OBJECT (item), "device-changed",
 			G_CALLBACK (on_combo_entry1_changed), totem);
 }
@@ -2434,7 +2434,7 @@ main (int argc, char **argv)
 	q = NULL;
 #if 0
 	if (gconf_client_get_bool
-			(gc, GCONF_PREFIX"launch_once", NULL) == TRUE)
+			(gc, GCONF_PREFIX"/launch_once", NULL) == TRUE)
 	{
 		q = gtk_message_queue_new ("totem", filename);
 		process_queue (q, argv);
@@ -2450,6 +2450,7 @@ main (int argc, char **argv)
 	totem->gc = gc;
 	totem->queue = q;
 
+	/* Main window */
 	totem->xml = glade_xml_new (filename, NULL, NULL);
 	if (totem->xml == NULL)
 	{
@@ -2471,7 +2472,6 @@ main (int argc, char **argv)
 
 	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
 			"totem", "playlist.glade", NULL);
-
 	totem->playlist = GTK_PLAYLIST (gtk_playlist_new (filename, pix));
 	g_free (filename);
 
@@ -2483,7 +2483,13 @@ main (int argc, char **argv)
 				GTK_WINDOW (totem->win));
 		exit (1);
 	}
+	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
+			"totem", "playlist-24.png", NULL);
+	gtk_window_set_icon_from_file (GTK_WINDOW (totem->playlist),
+			filename, NULL);
+	g_free (filename);
 
+	/* The rest of the widgets */
 	totem->seek = glade_xml_get_widget (totem->xml, "hscale1");
 	totem->seekadj = gtk_range_get_adjustment (GTK_RANGE (totem->seek));
 	totem->volume = glade_xml_get_widget (totem->xml, "hscale2");
