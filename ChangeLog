@@ -1,3 +1,20 @@
+2004-12-24  Bastien Nocera  <hadess@hadess.net>
+
+	* README: upd
+	* src/Makefile.am:
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_new): fix
+	compilation of the GStreamer backend (Closes: #159452)
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_get_metadata):
+	fix assert when getting the Musicbrainz disc ID
+	* src/metadata-test.c: add a metadata test program
+	* src/totem-private.h: remove keypress_time member
+	* src/totem-properties-page.c: (set_property): don't try to play if
+	we didn't manage to open the file
+	* src/totem.c: (totem_action_set_mrl), (on_eos_event),
+	(totem_action_handle_key): remove fullscreen hysteris work-around,
+	don't have a MRL in the Totem object if we're in logo mode
+	(Closes: #161371)
+
 2004-12-23  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-video-widget-xine.c: (bacon_video_widget_init),

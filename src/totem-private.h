@@ -104,7 +104,6 @@ struct Totem {
 	GConfClient *gc;
 	TotemRemote *remote;
 	BaconMessageConnection *conn;
-	guint32 keypress_time;
 	TotemStates state;
 };
 

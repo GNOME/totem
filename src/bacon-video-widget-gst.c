@@ -2351,7 +2351,7 @@ out_error (GstElement *el, GstElement *src,
 
 GtkWidget *
 bacon_video_widget_new (int width, int height,
-			gboolean null_out, GError ** err)
+			BvwUseType type, GError ** err)
 {
   BaconVideoWidget *bvw;
   GstElement *audio_sink = NULL, *video_sink = NULL;
@@ -2376,21 +2376,28 @@ bacon_video_widget_new (int width, int height,
   bvw->priv->logo_mode = TRUE;
   bvw->priv->auto_resize = TRUE;
 
-  if (!null_out) {
+  if (type == BVW_USE_TYPE_VIDEO || type == BVW_USE_TYPE_AUDIO) {
     audio_sink = gst_gconf_get_default_audio_sink ();
     if (!GST_IS_ELEMENT (audio_sink))
       {
         g_message ("failed to render default audio sink from gconf");
         return NULL;
       }
+  }
+
+  if (type == BVW_USE_TYPE_VIDEO) {
     video_sink = gst_gconf_get_default_video_sink ();
     if (!GST_IS_ELEMENT (video_sink))
       {
         g_message ("failed to render default video sink from gconf");
         return NULL;
       }
-  } else {
+  }
+
+  if (video_sink == NULL) {
     video_sink = gst_element_factory_make ("fakesink", "fakevideosink");
+  }
+  if (audio_sink == NULL) {
     audio_sink = gst_element_factory_make ("fakesink", "fakeaudiosink");
   }
 
@@ -2436,7 +2443,7 @@ bacon_video_widget_new (int width, int height,
 		    G_CALLBACK (got_source), (gpointer) bvw);
 
   /* We try to get an element supporting XOverlay interface */
-  if (!null_out && GST_IS_BIN (bvw->priv->play)) {
+  if (type == BVW_USE_TYPE_VIDEO && GST_IS_BIN (bvw->priv->play)) {
     GstElement *element = NULL;
     GList *elements = NULL, *l_elements = NULL;
     

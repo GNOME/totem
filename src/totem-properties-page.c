@@ -171,10 +171,9 @@ set_property(BonoboPropertyBag *bag,
 		props->location = g_strdup(BONOBO_ARG_GET_STRING(arg));
 		bacon_video_widget_properties_update (props->props,
 				props->bvw, TRUE);
-		bacon_video_widget_open (props->bvw, props->location, NULL);
+		if (bacon_video_widget_open (props->bvw, props->location, NULL) == FALSE)
+			return;
 		bacon_video_widget_play (props->bvw, NULL);
-		bacon_video_widget_properties_update (props->props,
-				props->bvw, FALSE);
 	}
 }
 

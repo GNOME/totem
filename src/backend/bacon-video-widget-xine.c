@@ -3368,6 +3368,7 @@ bacon_video_widget_get_metadata (BaconVideoWidget *bvw,
 	case BVW_INFO_YEAR:
 	case BVW_INFO_VIDEO_CODEC:
 	case BVW_INFO_AUDIO_CODEC:
+	case BVW_INFO_CDINDEX:
 		bacon_video_widget_get_metadata_string (bvw, type, value);
 		break;
 	case BVW_INFO_DURATION:

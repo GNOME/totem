@@ -58,7 +58,6 @@
 
 #include "debug.h"
 
-#define KEYBOARD_HYSTERISIS_TIMEOUT 500
 #define REWIND_OR_PREVIOUS 4000
 
 #define SEEK_FORWARD_OFFSET 60
@@ -803,16 +802,19 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		gtk_widget_set_sensitive (widget, FALSE);
 
 		/* Set the logo */
-		totem->mrl = g_strdup(LOGO_PATH);
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
-		bacon_video_widget_set_logo (totem->bvw, totem->mrl);
+		bacon_video_widget_set_logo (totem->bvw, LOGO_PATH);
 
 		update_mrl_label (totem, NULL);
 	} else {
 		gboolean caps;
 		GError *err = NULL;
 
-		bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
+		if (bacon_video_widget_get_logo_mode (totem->bvw) != FALSE)
+		{
+			bacon_video_widget_close (totem->bvw);
+			bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
+		}
 
 		retval = bacon_video_widget_open (totem->bvw, mrl, &err);
 		totem->mrl = g_strdup (mrl);
@@ -2631,7 +2633,7 @@ on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 static gboolean
 on_eos_event (GtkWidget *widget, Totem *totem)
 {
-	if (strcmp (totem->mrl, LOGO_PATH) == 0)
+	if (bacon_video_widget_get_logo_mode (totem->bvw) != FALSE)
 		return FALSE;
 
 	if (totem_playlist_has_next_mrl (totem->playlist) == FALSE
@@ -2688,12 +2690,7 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 #endif /* !HAVE_GTK_ONLY */
 	case GDK_f:
 	case GDK_F:
-		if (event->time - totem->keypress_time
-				>= KEYBOARD_HYSTERISIS_TIMEOUT)
-			totem_action_fullscreen_toggle (totem);
-
-		totem->keypress_time = event->time;
-
+		totem_action_fullscreen_toggle (totem);
 		break;
 	case GDK_h:
 	case GDK_H:
@@ -2725,6 +2722,15 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 	case GDK_M:
 	case GDK_m:
 		bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU);
+		break;
+	case GDK_Menu:
+		{
+			GtkWidget *menu;
+			menu = glade_xml_get_widget (totem->xml,
+					"totem_right_click_menu");
+			gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
+					0, gtk_get_current_event_time ());
+		}
 		break;
 #ifdef HAVE_XFREE
 	case XF86XK_AudioNext:
