@@ -1907,6 +1907,10 @@ bacon_video_widget_get_subtitle_mrl (const char *mrl)
 		return NULL;
 	}
 
+	if (strstr (mrl, "#subtitle:") != NULL) {
+		return NULL;
+	}
+
 	len = strlen (mrl);
 	if (mrl[len-4] != '.') {
 		return NULL;
