@@ -74,6 +74,7 @@ enum {
 	PIX_COL,
 	FILENAME_COL,
 	URI_COL,
+	TITLE_CUSTOM_COL,
 	NUM_COLS
 };
 
@@ -157,6 +158,40 @@ gtk_tree_path_equals (GtkTreePath *path1, GtkTreePath *path2)
 	g_free (str2);
 
 	return retval;
+}
+
+/* This one returns a new string, in UTF8 even if the mrl is encoded
+ *  * in the locale's encoding
+ *   */
+static char *
+gtk_playlist_mrl_to_title (const gchar *mrl)
+{
+	char *filename_for_display, *with_suffix, *filename, *unescaped;
+
+	filename = g_path_get_basename (mrl);
+	unescaped = gnome_vfs_unescape_string_for_display (filename);
+	g_free (filename);
+	with_suffix = g_filename_to_utf8 (unescaped,
+			-1,             /* length */
+			NULL,           /* bytes_read */
+			NULL,           /* bytes_written */
+			NULL);          /* error */
+
+	g_free (unescaped);
+
+	if (strrchr (with_suffix, '.')
+			&& strlen (strrchr (with_suffix, '.')) < 5)
+	{
+		filename_for_display = g_strndup (with_suffix,
+				strlen (with_suffix)
+				- strlen (strrchr (with_suffix, '.')));
+	} else {
+		filename_for_display = g_strdup (with_suffix);
+	}
+
+	g_free (with_suffix);
+
+	return filename_for_display;
 }
 
 static void
@@ -596,7 +631,8 @@ init_treeview (GtkWidget *treeview, GtkPlaylist *playlist)
 	model = GTK_TREE_MODEL (gtk_list_store_new (NUM_COLS,
 				GDK_TYPE_PIXBUF,
 				G_TYPE_STRING,
-				G_TYPE_STRING));
+				G_TYPE_STRING,
+				G_TYPE_BOOLEAN));
 
 	/* the treeview */
 	gtk_tree_view_set_model (GTK_TREE_VIEW (treeview), model);
@@ -862,17 +898,7 @@ gtk_playlist_add_one_mrl (GtkPlaylist *playlist, const char *mrl,
 
 	if (display_name == NULL)
 	{
-		char *filename, *unescaped;
-
-		filename = g_path_get_basename (mrl);
-		unescaped = gnome_vfs_unescape_string_for_display (filename);
-		g_free (filename);
-		filename_for_display = g_filename_to_utf8 (unescaped,
-				-1,		/* length */
-				NULL,		/* bytes_read */
-				NULL,		/* bytes_written */
-				NULL);		/* error */
-		g_free (unescaped);
+		filename_for_display = gtk_playlist_mrl_to_title (mrl);
 	} else {
 		filename_for_display = g_strdup (display_name);
 	}
@@ -883,6 +909,7 @@ gtk_playlist_add_one_mrl (GtkPlaylist *playlist, const char *mrl,
 			PIX_COL, NULL,
 			FILENAME_COL, filename_for_display,
 			URI_COL, mrl,
+			TITLE_CUSTOM_COL, display_name ? TRUE : FALSE,
 			-1);
 
 	g_free (filename_for_display);
@@ -990,7 +1017,7 @@ bail:
 }
 
 static gboolean
-parse_entry (GtkPlaylist *playlist, char *base, xmlDocPtr doc,
+parse_asx_entry (GtkPlaylist *playlist, char *base, xmlDocPtr doc,
 		xmlNodePtr parent)
 {
 	xmlNodePtr node;
@@ -1041,7 +1068,7 @@ parse_entry (GtkPlaylist *playlist, char *base, xmlDocPtr doc,
 }
 
 static gboolean
-parse_entries (GtkPlaylist *playlist, char *base, xmlDocPtr doc,
+parse_asx_entries (GtkPlaylist *playlist, char *base, xmlDocPtr doc,
 		xmlNodePtr parent)
 {
 	xmlNodePtr node;
@@ -1055,7 +1082,7 @@ parse_entries (GtkPlaylist *playlist, char *base, xmlDocPtr doc,
 		if (g_ascii_strcasecmp (node->name, "entry") == 0)
 		{
 			/* Whee found an entry here, find the REF and TITLE */
-			if (parse_entry (playlist, base, doc, node) == TRUE)
+			if (parse_asx_entry (playlist, base, doc, node) == TRUE)
 				retval = TRUE;
 		}
 	}
@@ -1096,9 +1123,9 @@ gtk_playlist_add_asx (GtkPlaylist *playlist, const char *mrl)
 		gnome_vfs_uri_unref (parent);
 	}
 
-	for(node = doc->children; node != NULL; node = node->next)
+	for (node = doc->children; node != NULL; node = node->next)
 	{
-		if (parse_entries (playlist, base, doc, node) == TRUE)
+		if (parse_asx_entries (playlist, base, doc, node) == TRUE)
 			retval = TRUE;
 	}
 
@@ -1116,6 +1143,124 @@ gtk_playlist_add_ra (GtkPlaylist *playlist, const char *mrl)
 	/* How nice, same format as m3u it seems */
 	return gtk_playlist_add_m3u (playlist, mrl);
 }
+
+static gboolean
+parse_smil_entry (GtkPlaylist *playlist, char *base, xmlDocPtr doc,
+		xmlNodePtr parent)
+{
+	xmlNodePtr node;
+	char *title, *url;
+	gboolean retval = FALSE;
+
+	title = NULL;
+	url = NULL;
+
+	for (node = parent->children; node != NULL; node = node->next)
+	{
+		if (node->name == NULL)
+			continue;
+
+		/* ENTRY should only have one ref and one title nodes */
+		if (g_ascii_strcasecmp (node->name, "video") == 0)
+		{
+			url = xmlGetProp (node, "src");
+			title = xmlGetProp (node, "title");
+			continue;
+		}
+	}
+
+	if (url == NULL)
+	{
+		g_free (title);
+		return FALSE;
+	}
+
+	if (strstr (url, "://") != NULL || url[0] == '/')
+		retval = gtk_playlist_add_one_mrl (playlist, url, title);
+	else {
+		char *fullpath;
+
+		fullpath = g_strdup_printf ("%s/%s", base, url);
+		retval = gtk_playlist_add_one_mrl (playlist, fullpath, title);
+
+		g_free (fullpath);
+	}
+
+	g_free (title);
+	g_free (url);
+
+	return retval;
+}
+
+static gboolean
+parse_smil_entries (GtkPlaylist *playlist, char *base, xmlDocPtr doc,
+		xmlNodePtr parent)
+{
+	xmlNodePtr node;
+	gboolean retval = FALSE;
+
+	for (node = parent->children; node != NULL; node = node->next)
+	{
+		if (node->name == NULL)
+			continue;
+
+		if (g_ascii_strcasecmp (node->name, "body") == 0)
+		{
+			/* Whee found an entry here, find the REF and TITLE */
+			if (parse_smil_entry (playlist, base, doc, node) == TRUE)
+				retval = TRUE;
+		}
+
+	}
+
+	return retval;
+}
+
+static gboolean
+gtk_playlist_add_smil (GtkPlaylist *playlist, const char *mrl)
+{
+	xmlDocPtr doc;
+	xmlNodePtr node;
+	char *contents = NULL, *base;
+	int size;
+	gboolean retval = FALSE;
+
+	if (eel_read_entire_file (mrl, &size, &contents) != GNOME_VFS_OK)
+		return FALSE;
+
+	doc = xmlParseMemory(contents, size);
+	g_free (contents);
+
+	/* If the document has no root, or no name */
+	if(!doc->children
+			|| !doc->children->name
+			|| g_ascii_strcasecmp (doc->children->name,
+				"smil") != 0)
+	{
+		xmlFreeDoc(doc);
+		return FALSE;
+	}
+
+	/* Yay, let's reconstruct the base by hand */
+	{
+		GnomeVFSURI *uri, *parent;
+		uri = gnome_vfs_uri_new (mrl);
+		parent = gnome_vfs_uri_get_parent (uri);
+		base = gnome_vfs_uri_to_string (parent, 0);
+
+		gnome_vfs_uri_unref (uri);
+		gnome_vfs_uri_unref (parent);
+	}
+
+	for (node = doc->children; node != NULL; node = node->next)
+	{
+		if (parse_smil_entries (playlist, base, doc, node) == TRUE)
+			retval = TRUE;
+	}
+
+	return FALSE;
+}
+
 #if 0 //FIXME
 static gboolean
 gtk_playlist_add_wmv (GtkPlaylist *playlist, const char *mrl)
@@ -1134,7 +1279,7 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 
 	if (mimetype == NULL)
 	{
-		D("trying to add '%s' with no mimetype", mrl);
+		D("adding '%s' with no mimetype", mrl);
 		return gtk_playlist_add_one_mrl (playlist, mrl, display_name);
 	} else if (strcmp ("audio/x-mpegurl", mimetype) == 0) {
 		return gtk_playlist_add_m3u (playlist, mrl);
@@ -1145,6 +1290,8 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 	} else if (strcmp ("audio/x-real-audio", mimetype) == 0
 			|| strcmp ("audio/x-pn-realaudio", mimetype) == 0) {
 		return gtk_playlist_add_ra (playlist, mrl);
+	} else if (strcmp ("application/x-smil", mimetype) == 0) {
+		return gtk_playlist_add_smil (playlist, mrl);
 	} else if (strcmp ("x-directory/normal", mimetype) == 0) {
 		//FIXME Load all the files in the dir ?
 	}
@@ -1154,13 +1301,11 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 			&& strncmp ("application/x-ogg", mimetype, 17) != 0
 			&& strncmp ("image/png", mimetype, 9) != 0)
 	{
+		//FIXME error message
 		D("not adding '%s' with mimetype '%s'",
 				mrl, mimetype);
 		return FALSE;
 	}
-
-	//FIXME check size != 0
-	//FIXME we need to show a proper error message
 
 	return gtk_playlist_add_one_mrl (playlist, mrl, display_name);
 }
@@ -1197,6 +1342,30 @@ char
 	gtk_tree_model_get (playlist->_priv->model,
 			&iter,
 			URI_COL, &path,
+			-1);
+
+	return path;
+}
+
+char
+*gtk_playlist_get_current_title (GtkPlaylist *playlist, gboolean *custom)
+{
+	GtkTreeIter iter;
+	char *path;
+
+	g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), NULL);
+
+	if (update_current_from_playlist (playlist) == FALSE)
+		return NULL;
+
+	gtk_tree_model_get_iter (playlist->_priv->model,
+			&iter,
+			playlist->_priv->current);
+
+	gtk_tree_model_get (playlist->_priv->model,
+			&iter,
+			FILENAME_COL, &path,
+			TITLE_CUSTOM_COL, custom,
 			-1);
 
 	return path;
@@ -1432,40 +1601,6 @@ gtk_playlist_set_at_end (GtkPlaylist *playlist)
 		playlist->_priv->current = gtk_tree_path_new_from_indices
 			(nb_childs-1, -1);
 	}
-}
-
-/* This one returns a new string, in UTF8 even if the mrl is encoded
- * in the locale's encoding
- */
-gchar *
-gtk_playlist_mrl_to_title (const gchar *mrl)
-{
-	char *filename_for_display, *with_suffix, *filename, *unescaped;
-
-	filename = g_path_get_basename (mrl);
-	unescaped = gnome_vfs_unescape_string_for_display (filename);
-	g_free (filename);
-	with_suffix = g_filename_to_utf8 (unescaped,
-			-1,             /* length */
-			NULL,           /* bytes_read */
-			NULL,           /* bytes_written */
-			NULL);          /* error */
-
-	g_free (unescaped);
-
-	if (strrchr (with_suffix, '.')
-			&& strlen (strrchr (with_suffix, '.')) < 5)
-	{
-		filename_for_display = g_strndup (with_suffix,
-				strlen (with_suffix)
-				- strlen (strrchr (with_suffix, '.')));
-	} else {
-		filename_for_display = g_strdup (with_suffix);
-	}
-
-	g_free (with_suffix);
-
-	return filename_for_display;
 }
 
 static void

@@ -1,5 +1,17 @@
 2003-04-04  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-playlist.c: (gtk_playlist_mrl_to_title), (init_treeview),
+	(gtk_playlist_add_one_mrl), (parse_asx_entry), (parse_asx_entries),
+	(gtk_playlist_add_asx), (parse_smil_entry), (parse_smil_entries),
+	(gtk_playlist_add_smil), (gtk_playlist_add_mrl),
+	(gtk_playlist_get_current_title), (gtk_playlist_set_at_end):
+	* src/gtk-playlist.h:
+	* src/totem.c: (totem_action_set_mrl): SMIL playlist support
+	(Closes: #109953), make the playlist-supplied name take precedence
+	over the MRL mangling to get something nice to display
+
+2003-04-04  Bastien Nocera  <hadess@hadess.net>
+
 	* README: upd
 	* src/bacon-video-widget.c: (load_video_out_driver),
 	(bacon_video_widget_realize), (bacon_video_widget_new),

@@ -66,6 +66,9 @@ gboolean   gtk_playlist_add_mrl  (GtkPlaylist *playlist, const char *mrl,
  * because the caller should know what to do after it's done with clearing */
 void       gtk_playlist_clear (GtkPlaylist *playlist);
 char      *gtk_playlist_get_current_mrl (GtkPlaylist *playlist);
+char      *gtk_playlist_get_current_title (GtkPlaylist *playlist,
+		gboolean *custom);
+gboolean   gtk_playlist_set_title (GtkPlaylist *playlist, const gchar *title);
 
 gboolean   gtk_playlist_has_previous_mrl (GtkPlaylist *playlist);
 gboolean   gtk_playlist_has_next_mrl (GtkPlaylist *playlist);
@@ -76,13 +79,9 @@ void       gtk_playlist_set_next (GtkPlaylist *playlist);
 gboolean   gtk_playlist_get_repeat (GtkPlaylist *playlist);
 void       gtk_playlist_set_repeat (GtkPlaylist *playlist, gboolean repeat);
 
-gboolean   gtk_playlist_set_title (GtkPlaylist *playlist, const gchar *title);
-
 gboolean   gtk_playlist_set_playing (GtkPlaylist *playlist, gboolean state);
 
 void       gtk_playlist_set_at_start (GtkPlaylist *playlist);
-
-gchar *     gtk_playlist_mrl_to_title (const gchar *mrl);
 
 G_END_DECLS
 

@@ -575,7 +575,7 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 			 totem->bvw, NULL, TRUE);
 	} else {
 		char *name;
-		gboolean caps;
+		gboolean caps, custom;
 		GError *err = NULL;
 
 		bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
@@ -584,7 +584,11 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		totem->mrl = g_strdup (mrl);
 		name = totem_get_nice_name_for_stream (totem);
 		if (name == NULL)
-			name = gtk_playlist_mrl_to_title (mrl);
+		{
+			name = gtk_playlist_get_current_title
+				(totem->playlist,
+				 &custom);
+		}
 
 		/* Play/Pause */
 		gtk_widget_set_sensitive (totem->pp_button, TRUE);
@@ -593,7 +597,11 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		gtk_widget_set_sensitive (totem->fs_pp_button, TRUE);
 
 		update_mrl_label (totem, name);
-		gtk_playlist_set_title (GTK_PLAYLIST (totem->playlist), name);
+		if (custom == FALSE)
+		{
+			gtk_playlist_set_title
+				(GTK_PLAYLIST (totem->playlist), name);
+		}
 
 		/* Seek bar */
 		update_seekable (totem, FALSE);
