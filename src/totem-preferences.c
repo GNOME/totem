@@ -327,6 +327,7 @@ visual_quality_menu_changed (GtkOptionMenu *option_menu, Totem *totem)
 	i = gtk_option_menu_get_history (GTK_OPTION_MENU (option_menu));
 	gconf_client_set_int (totem->gc,
 			GCONF_PREFIX"/visual_quality", i, NULL);
+	bacon_video_widget_set_visuals_quality (totem->bvw, i);
 }
 
 GtkWidget *

@@ -1,3 +1,13 @@
+2003-05-23  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: added dependency on gconf for the xine backend
+	* src/bacon-video-widget-xine.c: (setup_config): set the proxy
+	settings in xine with the gnome settings
+	* src/totem-preferences.c: (visual_quality_menu_changed): actually
+	set the quality when we popup the menu
+	* src/totem.c: (totem_action_fullscreen_toggle): inform the video
+	widget that we're switching to fullscreen
+
 2003-05-22  Bastien Nocera  <hadess@hadess.net>
 
 	* README: updated

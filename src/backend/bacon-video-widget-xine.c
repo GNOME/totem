@@ -33,6 +33,7 @@
 /* gtk+/gnome */
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
+#include <gconf/gconf-client.h>
 /* xine */
 #include <xine.h>
 
@@ -609,6 +610,7 @@ load_audio_out_driver (BaconVideoWidget *bvw, GError **err)
 static void
 setup_config (BaconVideoWidget *bvw)
 {
+	GConfClient *gc;
 	char *path;
 	xine_cfg_entry_t entry;
 	const char *demux_strategies[] = {"default", "reverse", "content",
@@ -638,6 +640,81 @@ setup_config (BaconVideoWidget *bvw)
 			50, 0, 100, "amp volume level",
 			NULL, 10, NULL, NULL);
 	bvw->priv->volume = -1;
+
+	/* Proxy configuration */
+	gc = gconf_client_get_default ();
+	if (gc == NULL)
+		return;
+
+	memset (&entry, 0, sizeof (entry));
+
+	if (gconf_client_get_bool (gc, "/system/http_proxy/use_http_proxy", NULL) == FALSE)
+	{
+		if (xine_config_lookup_entry (bvw->priv->xine,
+				"input.http_proxy_host", &entry))
+		{
+			entry.str_value = "";
+			xine_config_update_entry (bvw->priv->xine, &entry);
+		}
+
+		return;
+	}
+
+	memset (&entry, 0, sizeof (entry));
+	if (xine_config_lookup_entry (bvw->priv->xine,
+			"input.http_proxy_host", &entry))
+	{
+		entry.str_value = gconf_client_get_string (gc,
+				"/system/http_proxy/host", NULL);
+		xine_config_update_entry (bvw->priv->xine, &entry);
+	}
+
+	memset (&entry, 0, sizeof (entry));
+	if (xine_config_lookup_entry (bvw->priv->xine,
+			"input.http_proxy_port", &entry))
+	{
+		entry.num_value = gconf_client_get_int (gc,
+				"/system/http_proxy/port", NULL);
+		xine_config_update_entry (bvw->priv->xine, &entry);
+	}
+
+	memset (&entry, 0, sizeof (entry));
+	if (gconf_client_get_bool (gc, "/system/http_proxy/use_authentication", NULL) == FALSE)
+	{
+		if (xine_config_lookup_entry (bvw->priv->xine,
+				"input.http_proxy_user", &entry))
+		{
+			entry.str_value = "";
+			xine_config_update_entry (bvw->priv->xine, &entry);
+		}
+
+		memset (&entry, 0, sizeof (entry));
+		if (xine_config_lookup_entry (bvw->priv->xine,
+				"input.http_proxy_password", &entry))
+		{
+			entry.str_value = "";
+			xine_config_update_entry (bvw->priv->xine, &entry);
+		}
+	} else {
+		if (xine_config_lookup_entry (bvw->priv->xine,
+				"input.http_proxy_user", &entry))
+		{
+			entry.str_value = gconf_client_get_string (gc,
+					"/system/http_proxy/authentication_user",
+					NULL);
+			xine_config_update_entry (bvw->priv->xine, &entry);
+		}
+
+		memset (&entry, 0, sizeof (entry));
+		if (xine_config_lookup_entry (bvw->priv->xine,
+				"input.http_proxy_password", &entry))
+		{
+			entry.str_value = gconf_client_get_string (gc,
+					"/system/http_proxy/authentication_password",
+					NULL);
+			xine_config_update_entry (bvw->priv->xine, &entry);
+		}
+	}
 }
 
 static void

@@ -445,6 +445,7 @@ totem_action_fullscreen_toggle (Totem *totem)
 		gboolean auto_resize;
 
 		popup_hide (totem);
+		bacon_video_widget_set_fullscreen (totem->bvw, FALSE);
 		gtk_window_unfullscreen (GTK_WINDOW(totem->win));
 		bacon_video_widget_set_show_cursor (totem->bvw, TRUE);
 		scrsaver_enable (totem->scr);
@@ -473,6 +474,7 @@ totem_action_fullscreen_toggle (Totem *totem)
 		}
 	} else {
 		update_fullscreen_size (totem);
+		bacon_video_widget_set_fullscreen (totem->bvw, TRUE);
 		bacon_video_widget_set_auto_resize (totem->bvw, FALSE);
 		bacon_video_widget_set_show_cursor (totem->bvw, FALSE);
 		gtk_window_fullscreen (GTK_WINDOW(totem->win));

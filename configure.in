@@ -62,7 +62,7 @@ dnl Give error and exit if we don't have gstreamer
 
 	AC_MSG_RESULT(GStreamer)
 else
-	MM="libxine >= $XINE_REQS"
+	MM="libxine >= $XINE_REQS gconf-2.0"
 	AC_MSG_RESULT(xine)
 fi
 AM_CONDITIONAL(TOTEM_GST, test x$ENABLE_GST = "xyes")
