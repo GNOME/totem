@@ -124,8 +124,8 @@ struct BaconVideoWidgetPrivate {
 	/* Xine stuff */
 	xine_t *xine;
 	xine_stream_t *stream;
-	xine_vo_driver_t *vo_driver;
-	xine_ao_driver_t *ao_driver;
+	xine_video_port_t *vo_driver;
+	xine_audio_port_t *ao_driver;
 	xine_event_queue_t *ev_queue;
 	double display_ratio;
 	gboolean started;
@@ -175,13 +175,22 @@ struct BaconVideoWidgetPrivate {
 	int screenid;
 };
 
-static const char *mms_bandwidth_strs[]={"14.4 Kbps (Modem)",
-	"19.2 Kbps (Modem)", "28.8 Kbps (Modem)",
-	"33.6 Kbps (Modem)", "34.4 Kbps (Modem)",
-	"57.6 Kbps (Modem)", "115.2 Kbps (ISDN)",
-	"262.2 Kbps (Cable/DSL)", "393.2 Kbps (Cable/DSL)",
-	"524.3 Kbps (Cable/DSL)", "1.5 Mbps (T1)",
-	"10.5 Mbps (LAN)", NULL};
+static const char *mms_bandwidth_strs[] = {
+	"14.4 Kbps (Modem)",
+	"19.2 Kbps (Modem)",
+	"28.8 Kbps (Modem)",
+	"33.6 Kbps (Modem)",
+	"34.4 Kbps (Modem)",
+	"57.6 Kbps (Modem)",
+	"115.2 Kbps (ISDN)",
+	"262.2 Kbps (Cable/DSL)",
+	"393.2 Kbps (Cable/DSL)",
+	"524.3 Kbps (Cable/DSL)",
+	"1.5 Mbps (T1)",
+	"10.5 Mbps (LAN)",
+	NULL
+};
+
 static const char *audio_out_types_strs[] = {
 	"Mono",
 	"Stereo",
@@ -199,15 +208,23 @@ static const char *audio_out_types_strs[] = {
 	NULL
 };
 
+static const char *demux_strategies_str[] = {
+	"default",
+	"reverse",
+	"content",
+	"extension",
+	NULL
+};
+
 static void bacon_video_widget_class_init (BaconVideoWidgetClass *klass);
 static void bacon_video_widget_instance_init (BaconVideoWidget *bvw);
 
 static void setup_config (BaconVideoWidget *bvw);
 
-static void bacon_video_widget_set_property (GObject *object, guint property_id,
-		const GValue *value, GParamSpec *pspec);
-static void bacon_video_widget_get_property (GObject *object, guint property_id,
-		GValue *value, GParamSpec *pspec);
+static void bacon_video_widget_set_property (GObject *object,
+		guint property_id, const GValue *value, GParamSpec *pspec);
+static void bacon_video_widget_get_property (GObject *object,
+		guint property_id, GValue *value, GParamSpec *pspec);
 
 static void bacon_video_widget_realize (GtkWidget *widget);
 static void bacon_video_widget_unrealize (GtkWidget *widget);
@@ -224,9 +241,9 @@ static void bacon_video_widget_size_request (GtkWidget *widget,
 		GtkRequisition *requisition);
 static void bacon_video_widget_size_allocate (GtkWidget *widget,
 		GtkAllocation *allocation);
-static xine_vo_driver_t * load_video_out_driver (BaconVideoWidget *bvw,
+static xine_video_port_t * load_video_out_driver (BaconVideoWidget *bvw,
 		gboolean null_out);
-static xine_ao_driver_t * load_audio_out_driver (BaconVideoWidget *bvw,
+static xine_audio_port_t * load_audio_out_driver (BaconVideoWidget *bvw,
 		GError **error);
 static gboolean bacon_video_widget_tick_send (BaconVideoWidget *bvw);
 
@@ -555,13 +572,13 @@ frame_output_cb (void *bvw_gen,
 	*dest_pixel_aspect = bvw->priv->display_ratio;
 }
 
-static xine_vo_driver_t *
+static xine_video_port_t *
 load_video_out_driver (BaconVideoWidget *bvw, gboolean null_out)
 {
 	double res_h, res_v;
 	x11_visual_t vis;
 	const char *video_driver_id;
-	xine_vo_driver_t *vo_driver;
+	xine_video_port_t *vo_driver;
 
 	if (null_out != FALSE)
 	{
@@ -631,10 +648,10 @@ load_video_out_driver (BaconVideoWidget *bvw, gboolean null_out)
 	return vo_driver;
 }
 
-static xine_ao_driver_t *
+static xine_audio_port_t *
 load_audio_out_driver (BaconVideoWidget *bvw, GError **err)
 {
-	xine_ao_driver_t *ao_driver;
+	xine_audio_port_t *ao_driver;
 	const char *audio_driver_id;
 
 	if (bvw->priv->null_out != FALSE)
@@ -692,7 +709,7 @@ bvw_config_helper_string (xine_t *xine, const char *id, const char *val,
 }
 
 static void
-bvw_config_help_num (xine_t *xine, const char *id, int val,
+bvw_config_helper_num (xine_t *xine, const char *id, int val,
 		xine_cfg_entry_t *entry)
 {
 	memset (entry, 0, sizeof (entry));
@@ -740,8 +757,6 @@ setup_config (BaconVideoWidget *bvw)
 {
 	char *path;
 	xine_cfg_entry_t entry;
-	const char *demux_strategies[] = {"default", "reverse", "content",
-		"extension", NULL};
 
 	path = g_build_path (G_DIR_SEPARATOR_S,
 			g_get_home_dir (), CONFIG_FILE, NULL);
@@ -752,7 +767,7 @@ setup_config (BaconVideoWidget *bvw)
 	xine_config_register_enum (bvw->priv->xine,
 			"misc.demux_strategy",
 			0,
-			(char **) demux_strategies,
+			(char **) demux_strategies_str,
 			 "media format detection strategy",
 			 NULL, 10, NULL, NULL);
 
@@ -770,6 +785,17 @@ setup_config (BaconVideoWidget *bvw)
 
 	if (bvw->priv->gc == NULL)
 		return;
+
+	/* Disable CDDB, we'll use Musicbrainz instead */
+	bvw_config_helper_num (bvw->priv->xine,
+			"input.cdda_use_cddb", 1, &entry);
+	entry.num_value = 0;
+	xine_config_update_entry (bvw->priv->xine, &entry);
+
+	if (bvw->priv->gc == NULL) {
+		g_warning ("GConf not available, broken installation?");
+		return;
+	}
 
 	/* Setup the protocol handlers for our funky stuff */
 	setup_url_handlers (bvw, "pnm");
@@ -793,7 +819,7 @@ setup_config (BaconVideoWidget *bvw)
 			"/system/http_proxy/host", NULL);
 	xine_config_update_entry (bvw->priv->xine, &entry);
 
-	bvw_config_help_num (bvw->priv->xine,
+	bvw_config_helper_num (bvw->priv->xine,
 			 "input.http_proxy_port", 8080, &entry);
 	entry.num_value = gconf_client_get_int (bvw->priv->gc,
 			"/system/http_proxy/port", NULL);
@@ -837,12 +863,12 @@ setup_config_video (BaconVideoWidget *bvw)
 	xine_cfg_entry_t entry;
 
 	/* Default xv colourkey */
-	bvw_config_help_num (bvw->priv->xine, "video.xv_colorkey", 30, &entry);
+	bvw_config_helper_num (bvw->priv->xine, "video.xv_colorkey", 30, &entry);
 	entry.num_value = 30;
 	xine_config_update_entry (bvw->priv->xine, &entry);
 
 	/* Remove the ALSA HW mixing */
-	bvw_config_help_num (bvw->priv->xine, "audio.alsa_hw_mixer", 0, &entry);
+	bvw_config_helper_num (bvw->priv->xine, "audio.alsa_hw_mixer", 0, &entry);
 	entry.num_value = 0;
 	xine_config_update_entry (bvw->priv->xine, &entry);
 }
@@ -892,9 +918,8 @@ video_window_translate_point (BaconVideoWidget *bvw, int gui_x, int gui_y,
 	rect.w = 0;
 	rect.h = 0;
 
-	res = xine_gui_send_vo_data (bvw->priv->stream,
-				XINE_GUI_SEND_TRANSLATE_GUI_TO_VIDEO,
-				(void*)&rect);
+	res = xine_port_send_gui_data (bvw->priv->vo_driver,
+			XINE_GUI_SEND_TRANSLATE_GUI_TO_VIDEO, (void*)&rect);
 
 	if (res != -1)
 	{
@@ -1580,11 +1605,11 @@ bacon_video_widget_new (int width, int height, gboolean null_out, GError **err)
 
 	if (bvw->priv->null_out != FALSE)
 	{
-		bvw_config_help_num (bvw->priv->xine, "video.num_buffers",
+		bvw_config_helper_num (bvw->priv->xine, "video.num_buffers",
 				5, &entry);
 		entry.num_value = 5;
 	} else {
-		bvw_config_help_num (bvw->priv->xine, "video.num_buffers",
+		bvw_config_helper_num (bvw->priv->xine, "video.num_buffers",
 				500, &entry);
 		entry.num_value = 500;
 	}
@@ -1609,9 +1634,8 @@ bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 	expose = g_new0 (XExposeEvent, 1);
 	expose->count = event->count;
 
-	xine_gui_send_vo_data (bvw->priv->stream,
-			XINE_GUI_SEND_EXPOSE_EVENT,
-			expose);
+	xine_port_send_gui_data (bvw->priv->vo_driver,
+			XINE_GUI_SEND_EXPOSE_EVENT, expose);
 
 	g_free (expose);
 
@@ -2697,15 +2721,15 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget *bvw,
 		g_assert_not_reached ();
 	}
 
-	bvw_config_help_num (bvw->priv->xine, "post.goom_fps", fps, &entry);
+	bvw_config_helper_num (bvw->priv->xine, "post.goom_fps", fps, &entry);
 	entry.num_value = fps;
 	xine_config_update_entry (bvw->priv->xine, &entry);
 
-	bvw_config_help_num (bvw->priv->xine, "post.goom_width", w, &entry);
+	bvw_config_helper_num (bvw->priv->xine, "post.goom_width", w, &entry);
 	entry.num_value = w;
 	xine_config_update_entry (bvw->priv->xine, &entry);
 
-	bvw_config_help_num (bvw->priv->xine, "post.goom_height", h, &entry);
+	bvw_config_helper_num (bvw->priv->xine, "post.goom_height", h, &entry);
 	entry.num_value = h;
 	xine_config_update_entry (bvw->priv->xine, &entry);
 }
@@ -2721,7 +2745,8 @@ bacon_video_widget_get_auto_resize (BaconVideoWidget *bvw)
 }
 
 void
-bacon_video_widget_set_auto_resize (BaconVideoWidget *bvw, gboolean auto_resize)
+bacon_video_widget_set_auto_resize (BaconVideoWidget *bvw,
+		gboolean auto_resize)
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -3091,6 +3116,10 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetM
 	case BVW_INFO_AUDIO_CODEC:
 		string = xine_get_meta_info (bvw->priv->stream,
 				XINE_META_INFO_AUDIOCODEC);
+		break;
+	case BVW_INFO_CDINDEX:
+		string = xine_get_meta_info (bvw->priv->stream,
+				XINE_META_INFO_CDINDEX_DISCID);
 		break;
 	default:
 		g_assert_not_reached ();
