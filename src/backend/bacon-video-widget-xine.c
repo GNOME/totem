@@ -2153,6 +2153,8 @@ bacon_video_widget_set_proprietary_plugins_path (BaconVideoWidget *bvw,
 	/* And we try and create symlinks from /usr/lib/win32 to
 	 * the local user path */
 	totem_create_symlinks ("/usr/lib/win32", path);
+	totem_create_symlinks ("/usr/lib/RealPlayer9/users/Real/Codecs/", path);
+	totem_create_symlinks ("/usr/lib/RealPlayer8/Codecs", path);
 }
 
 void
