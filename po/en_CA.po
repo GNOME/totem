@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-29 12:26-0500\n"
-"PO-Revision-Date: 2005-03-29 19:41-0400\n"
+"POT-Creation-Date: 2005-03-30 14:03-0500\n"
+"PO-Revision-Date: 2005-03-30 19:41-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1254,9 +1254,9 @@ msgstr ""
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem could not get a screenshot of that film."
 
-#: ../src/totem.c:1908
-msgid "Please file a bug, this isn't supposed to happen."
-msgstr "Please file a bug; this is not supposed to happen."
+#: ../src/totem.c:1908 ../src/vanity.c:307
+msgid "This is not supposed to happen; please file a bug report."
+msgstr "This is not supposed to happen; please file a bug report."
 
 #: ../src/totem.c:1935
 msgid "Totem couldn't show the movie properties window."
@@ -1280,7 +1280,7 @@ msgid "No reason."
 msgstr "No reason."
 
 #: ../src/totem.c:3333
-msgid "Could not initialise the thread-safe libraries."
+msgid "Could not initialize the thread-safe libraries."
 msgstr "Could not initialize the thread-safe libraries."
 
 #: ../src/totem.c:3333
@@ -1288,7 +1288,7 @@ msgid "Verify your system installation. Totem will now exit."
 msgstr "Verify your system installation. Totem will now exit."
 
 #: ../src/totem.c:3354
-msgid "Totem couln't initialise the configuration engine."
+msgid "Totem could not initialize the configuration engine."
 msgstr "Totem could not initialize the configuration engine."
 
 #: ../src/totem.c:3354
@@ -1312,10 +1312,6 @@ msgstr "Debug mode on"
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "Webcam utility using %s"
-
-#: ../src/vanity.c:307
-msgid "Please file a bug, this isn't supposed to happen"
-msgstr "Please file a bug; this is not supposed to happen"
 
 #: ../src/vanity.c:550
 #, c-format
@@ -1354,7 +1350,7 @@ msgstr "Vanity Webcam Utility"
 
 #: ../src/vanity.c:646
 msgid ""
-"Could not initialise the thread-safe libraries.\n"
+"Could not initialize the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
 msgstr ""
 "Could not initialize the thread-safe libraries.\n"
@@ -1363,7 +1359,7 @@ msgstr ""
 #: ../src/vanity.c:671
 #, c-format
 msgid ""
-"Vanity couln't initialise the \n"
+"Vanity could not initialize the \n"
 "configuration engine:\n"
 "%s"
 msgstr ""
@@ -1379,11 +1375,15 @@ msgstr ""
 "Could not load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
 
-#: ../src/backend/bacon-video-widget-gst.c:67
+#: ../src/backend/bacon-video-widget-gst.c:68
 msgid "Totem Video Window"
 msgstr "Totem Video Window"
 
-#: ../src/backend/bacon-video-widget-gst.c:3022
+#: ../src/backend/bacon-video-widget-gst.c:1786
+msgid "Failed to retrieve working directory"
+msgstr "Failed to retrieve working directory"
+
+#: ../src/backend/bacon-video-widget-gst.c:3095
 msgid "Failed to create a GStreamer play object"
 msgstr "Failed to create a GStreamer play object"
 
