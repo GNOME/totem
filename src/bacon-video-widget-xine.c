@@ -1170,6 +1170,9 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		else
 			message = g_strdup (_("This file is encrypted and cannot be played back."));
 		break;
+	case XINE_MSG_SECURITY:
+		message = g_strdup (_("For security reasons, this movie can not be played back."));
+		break;
 	}
 
 	if (message == NULL)

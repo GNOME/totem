@@ -513,7 +513,7 @@ totem_pl_parser_add_ram (TotemPlParser *parser, const char *url, gpointer data)
 	contents = g_realloc (contents, size + 1);
 	contents[size] = '\0';
 
-	/* figure out whether we're a unix m3u or dos RAM file */
+	/* figure out whether we're a unix or dos RAM file */
 	if (strstr(contents,"\x0d") == NULL)
 		split_char = "\n";
 	else
@@ -610,7 +610,7 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
 	g_free (contents);
 
 	for (i = 0; lines[i] != NULL; i++) {
-		if (strcmp (lines[i], "") == 0)
+		if (lines[i][0] == '\0')
 			continue;
 
 		retval = TRUE;
