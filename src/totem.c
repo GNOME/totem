@@ -191,7 +191,7 @@ totem_action_exit (Totem *totem)
 
 	if (totem->bvw)
 		gtk_widget_destroy (GTK_WIDGET (totem->bvw));
-	
+
 	if (totem->playlist)
 		gtk_widget_destroy (GTK_WIDGET (totem->playlist));
 
@@ -1455,6 +1455,45 @@ on_always_on_top1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 }
 
 static void
+on_show_controls1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
+{
+	GtkWidget *menu, *controls, *statusbar, *item;
+	gboolean show;
+
+	show = gtk_check_menu_item_get_active (checkmenuitem);
+	menu = glade_xml_get_widget (totem->xml, "bonobodockitem1");
+	controls = glade_xml_get_widget (totem->xml, "frame1");
+	statusbar = glade_xml_get_widget (totem->xml, "custom4");
+	item = glade_xml_get_widget (totem->xml, "show_controls2");
+
+	gtk_window_set_resizable (GTK_WINDOW (totem->win), TRUE);
+
+	if (show)
+	{
+		gtk_widget_show (menu);
+		gtk_widget_show (controls);
+		gtk_widget_show (statusbar);
+		gtk_widget_hide (item);
+	} else {
+		gtk_widget_hide (menu);
+		gtk_widget_hide (controls);
+		gtk_widget_hide (statusbar);
+		gtk_widget_show (item);
+	}
+
+	gtk_window_set_resizable (GTK_WINDOW (totem->win), FALSE);
+}
+
+static void
+on_show_controls2_activate (GtkMenuItem *menuitem, Totem *totem)
+{
+	GtkWidget *item;
+
+	item = glade_xml_get_widget (totem->xml, "show_controls1");
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), TRUE);
+}
+
+static void
 on_about1_activate (GtkButton *button, Totem *totem)
 {
 	static GtkWidget *about = NULL;
@@ -2116,6 +2155,18 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 		totem->keypress_time = event->time;
 
 		break;
+	case GDK_h:
+	case GDK_H:
+		{
+			GtkCheckMenuItem *item;
+			gboolean value;
+
+			item = GTK_CHECK_MENU_ITEM (glade_xml_get_widget
+					(totem->xml, "show_controls1"));
+			value = gtk_check_menu_item_get_active (item);
+			gtk_check_menu_item_set_active (item, !value);
+		}
+		break;
 	case GDK_i:
 	case GDK_I:
 		if (totem->action == 3)
@@ -2550,6 +2601,9 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "always_on_top1");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_always_on_top1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "show_controls1");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_show_controls1_activate), totem);
 
 	/* Popup menu */
 	item = glade_xml_get_widget (totem->xml, "play2");
@@ -2573,6 +2627,9 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "volume_down2");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_volume_down1_activate), totem);
+	item = glade_xml_get_widget (totem->xml, "show_controls2");
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_show_controls2_activate), totem);
 
 	/* Screenshot dialog */
 	item = glade_xml_get_widget (totem->xml, "dialog2");
