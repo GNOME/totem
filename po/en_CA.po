@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-10 00:58-0500\n"
-"PO-Revision-Date: 2004-12-10 19:41-0400\n"
+"POT-Creation-Date: 2004-12-12 17:10-0500\n"
+"PO-Revision-Date: 2004-12-12 19:41-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -288,7 +288,7 @@ msgstr "Always on top"
 msgid "Audio"
 msgstr "Audio"
 
-#: data/totem.glade.h:34 src/totem.c:3053 src/totem.c:3074
+#: data/totem.glade.h:34 src/totem.c:3059 src/totem.c:3080
 msgid "Auto"
 msgstr "Auto"
 
@@ -565,7 +565,8 @@ msgid "Time:"
 msgstr "Time:"
 
 #. Title
-#: data/totem.glade.h:103 src/totem.c:734 src/totem.c:3878
+#: data/totem.glade.h:103 data/totem.desktop.in.in.in.h:2 src/totem.c:734
+#: src/totem.c:3886
 msgid "Totem Movie Player"
 msgstr "Totem Movie Player"
 
@@ -935,6 +936,18 @@ msgstr "_Picture"
 msgid "_Zoom 1:2"
 msgstr "_Zoom 1:2"
 
+#: data/vanity.desktop.in.in.h:1
+msgid "Vanity Webcam utility"
+msgstr "Vanity Webcam utility"
+
+#: data/vanity.desktop.in.in.h:2
+msgid "View live webcam and upload pictures"
+msgstr "View live webcam and upload pictures"
+
+#: data/totem.desktop.in.in.in.h:1
+msgid "Play movies and songs"
+msgstr "Play movies and songs"
+
 #: src/bacon-v4l-selection.c:182
 msgid "Unnamed CDROM"
 msgstr "Unnamed CDROM"
@@ -1058,41 +1071,41 @@ msgstr "This movie could not be opened."
 msgid "Generic Error."
 msgstr "Generic Error."
 
-#: src/bacon-video-widget-xine.c:1973
+#: src/bacon-video-widget-xine.c:1977
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr "This movie is a still image. You can open it with an image viewer."
-
-#: src/bacon-video-widget-xine.c:2000
-#, c-format
-msgid ""
-"Video codec '%s' is not handled. You might need to install additional "
-"plugins to be able to play some types of movies"
-msgstr ""
-"Video codec '%s' is not handled. You might need to install additional "
-"plugins to be able to play some types of movies"
 
 #: src/bacon-video-widget-xine.c:2004
 #, c-format
 msgid ""
+"Video codec '%s' is not handled. You might need to install additional "
+"plugins to be able to play some types of movies"
+msgstr ""
+"Video codec '%s' is not handled. You might need to install additional "
+"plugins to be able to play some types of movies"
+
+#: src/bacon-video-widget-xine.c:2008
+#, c-format
+msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr ""
 "Audio codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 
-#: src/bacon-video-widget-xine.c:2023
+#: src/bacon-video-widget-xine.c:2027
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "This is an audio-only file, and there is no audio output available."
 
-#: src/bacon-video-widget-xine.c:3501
+#: src/bacon-video-widget-xine.c:3505
 msgid "Movie is not playing."
 msgstr "Movie is not playing."
 
-#: src/bacon-video-widget-xine.c:3510
+#: src/bacon-video-widget-xine.c:3514
 msgid "No video to capture."
 msgstr "No video to capture."
 
-#: src/bacon-video-widget-xine.c:3518
+#: src/bacon-video-widget-xine.c:3522
 msgid "Video codec is not handled."
 msgstr "Video codec is not handled."
 
@@ -1164,11 +1177,11 @@ msgstr "Make sure that the Totem plugin is properly installed."
 msgid "The Totem plugin could not startup."
 msgstr "The Totem plugin could not startup."
 
-#: src/totem-mozilla-viewer.c:109 src/totem.c:3541
+#: src/totem-mozilla-viewer.c:109 src/totem.c:3549
 msgid "No reason."
 msgstr "No reason."
 
-#: src/totem-mozilla-viewer.c:141 src/totem.c:3883
+#: src/totem-mozilla-viewer.c:141 src/totem.c:3891
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Could not initialise the thread-safe libraries."
 
@@ -1432,7 +1445,7 @@ msgstr ""
 msgid "%s - Totem Movie Player"
 msgstr "%s - Totem Movie Player"
 
-#: src/totem.c:723 src/totem.c:3638
+#: src/totem.c:723 src/totem.c:3646
 msgid "No file"
 msgstr "No file"
 
@@ -1452,8 +1465,8 @@ msgstr "Select files"
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "Couldn't load the 'Open Location...' interface."
 
-#: src/totem.c:1724 src/totem.c:1732 src/totem.c:3921 src/totem.c:3948
-#: src/totem.c:3973
+#: src/totem.c:1724 src/totem.c:1732 src/totem.c:3929 src/totem.c:3956
+#: src/totem.c:3981
 msgid "Make sure that Totem is properly installed."
 msgstr "Make sure that Totem is properly installed."
 
@@ -1493,36 +1506,36 @@ msgstr "Make sure that Totem is correctly installed."
 msgid "Totem could not seek in '%s'."
 msgstr "Totem could not seek in '%s'."
 
-#: src/totem.c:3049 src/totem.c:3071
+#: src/totem.c:3055 src/totem.c:3077
 msgid "None"
 msgstr "None"
 
-#: src/totem.c:3541
+#: src/totem.c:3549
 msgid "Totem could not startup."
 msgstr "Totem could not startup."
 
-#: src/totem.c:3764
+#: src/totem.c:3772
 #, c-format
 msgid "Option '%s' is unknown and was ignored\n"
 msgstr "Option '%s' is unknown and was ignored\n"
 
-#: src/totem.c:3883
+#: src/totem.c:3891
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verify your system installation. Totem will now exit."
 
-#: src/totem.c:3905
+#: src/totem.c:3913
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem couln't initialise the configuration engine."
 
-#: src/totem.c:3905
+#: src/totem.c:3913
 msgid "Make sure that GNOME is properly installed."
 msgstr "Make sure that GNOME is properly installed."
 
-#: src/totem.c:3921 src/totem.c:3948
+#: src/totem.c:3929 src/totem.c:3956
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "Couldn't load the main interface (totem.glade)."
 
-#: src/totem.c:3973
+#: src/totem.c:3981
 msgid "Couldn't load the interface for the playlist."
 msgstr "Couldn't load the interface for the playlist."
 
