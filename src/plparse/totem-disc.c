@@ -131,15 +131,26 @@ cd_cache_new (const char *dev,
   GList *list, *or;
   gboolean is_dir;
 
-  is_dir = g_file_test (dev, G_FILE_TEST_IS_DIR);
+  if (g_str_has_prefix (dev, "file://") != FALSE)
+    device = g_filename_from_uri (dev, NULL, NULL);
+  else
+    device = g_strdup (dev);
+
+  if (device == NULL)
+    return NULL;
+
+  is_dir = g_file_test (device, G_FILE_TEST_IS_DIR);
+
   if (is_dir) {
     cache = g_new0 (CdCache, 1);
-    cache->mountpoint = g_strdup (dev);
+    cache->mountpoint = device;
     cache->fd = -1;
     cache->is_media = FALSE;
 
     return cache;
   }
+
+  g_free (device);
 
   /* retrieve mountpoint (/etc/fstab). We could also use HAL for this,
    * I think (gnome-volume-manager does that). */

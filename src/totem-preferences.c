@@ -433,10 +433,9 @@ void
 totem_setup_preferences (Totem *totem)
 {
 	GtkWidget *item, *menu;
-	const char *mediadev;
 	gboolean show_visuals, auto_resize, is_local, deinterlace;
 	int connection_speed, i, found;
-	char *path, *visual;
+	char *path, *visual, *mediadev;
 	GList *list, *l;
 	BaconVideoWidgetAudioOutType audio_out;
 
@@ -475,8 +474,8 @@ totem_setup_preferences (Totem *totem)
 
 	/* Media device */
 	item = glade_xml_get_widget (totem->xml, "tpw_device_combo");
-	mediadev = gconf_client_get_string
-		(totem->gc, GCONF_PREFIX"/mediadev", NULL);
+	mediadev = g_strdup (gconf_client_get_string
+		(totem->gc, GCONF_PREFIX"/mediadev", NULL));
 	if (mediadev == NULL || (strcmp (mediadev, "") == 0)
 			|| (strcmp (mediadev, "auto") == 0))
 	{

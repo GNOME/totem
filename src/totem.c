@@ -1558,7 +1558,7 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 
 	for (l = list ; l != NULL; l = l->next)
 	{
-		char *filename, *local_path;
+		char *filename;
 		char *data = l->data;
 
 		if (data == NULL)
@@ -1570,16 +1570,6 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 
 		/* Get the subtitle part out for our tests */
 		filename = totem_create_full_path (data);
-		local_path = gnome_vfs_get_local_path_from_uri (filename);
-		if (local_path != NULL && g_file_test (local_path, G_FILE_TEST_IS_DIR))
-		{
-			g_free (local_path);
-			continue;
-		} else if (local_path != NULL && g_file_test (local_path, G_FILE_TEST_EXISTS) == FALSE)
-		{
-			g_free (local_path);
-			continue;
-		}
 
 		if (g_file_test (filename, G_FILE_TEST_IS_REGULAR)
 				|| strstr (filename, "#") != NULL

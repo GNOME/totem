@@ -1,3 +1,13 @@
+2004-11-25  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-disc.c: (cd_cache_new): fix DVD from disk detection when
+	we're given a URI
+	* src/totem-preferences.c: (totem_setup_preferences): fix possible
+	leak or crash
+	* src/totem.c: (totem_action_open_files_list): remove kludge dating
+	from the GtkFileSelection days, fixes starting Totem with a DVD from
+	disk
+
 2004-11-25  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/totem-properties-page.c: (totem_properties_page_init),
