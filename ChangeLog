@@ -1,5 +1,11 @@
 2003-06-09  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (create_submenu): add a "None" entry to the subtitles
+	submenu to turn them off completely (for some DVDs, "Auto" is not "No
+	subtitles") (Closes: #113526)
+
+2003-06-09  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_action_load_media),
 	(totem_action_play_media), (totem_action_open_files): don't start/stop
 	playing optical media files on startup (Closes: #113959)

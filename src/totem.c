@@ -2772,7 +2772,21 @@ create_submenu (Totem *totem, GList *list, int current, gboolean is_lang)
 	GSList *group = NULL;
 
 	if (list == NULL)
-		return NULL;
+	{
+		menu = gtk_menu_new ();
+		if (is_lang == FALSE)
+		{
+			group = add_item_to_menu (totem, menu, _("None"),
+					current, -2, is_lang, group);
+		}
+
+		group = add_item_to_menu (totem, menu, _("Auto"),
+				current, -1, is_lang, group);
+
+		gtk_widget_show (menu);
+
+		return menu;
+	}
 
 	i = 0;
 
@@ -2783,6 +2797,12 @@ create_submenu (Totem *totem, GList *list, int current, gboolean is_lang)
 		if (menu == NULL)
 		{
 			menu = gtk_menu_new ();
+			if (is_lang == FALSE)
+			{
+				group = add_item_to_menu (totem, menu,
+						_("None"), current, -2,
+						is_lang, group);
+			}
 			group = add_item_to_menu (totem, menu, _("Auto"),
 					current, -1, is_lang, group);
 		}
