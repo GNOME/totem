@@ -203,8 +203,6 @@ static gboolean bacon_video_widget_motion_notify (GtkWidget *widget,
 		GdkEventMotion *event);
 static gboolean bacon_video_widget_button_press (GtkWidget *widget,
 		GdkEventButton *event);
-static gboolean bacon_video_widget_key_press (GtkWidget *widget,
-		GdkEventKey *event);
 
 static void bacon_video_widget_size_request (GtkWidget *widget,
 		GtkRequisition *requisition);
@@ -271,7 +269,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 	widget_class->expose_event = bacon_video_widget_expose;
 	widget_class->motion_notify_event = bacon_video_widget_motion_notify;
 	widget_class->button_press_event = bacon_video_widget_button_press;
-	widget_class->key_press_event = bacon_video_widget_key_press;
 
 	/* GObject */
 	object_class->set_property = bacon_video_widget_set_property;
@@ -1141,9 +1138,9 @@ bacon_video_widget_realize (GtkWidget *widget)
 			xine_event, (void *) bvw);
 
 #ifdef HAVE_NVTV
-    if (!(nvtv_simple_init() && nvtv_enable_autoresize(TRUE))) {
-        nvtv_simple_enable(FALSE);
-    } 
+	if (!(nvtv_simple_init() && nvtv_enable_autoresize(TRUE))) {
+		nvtv_simple_enable(FALSE);
+	} 
 #endif
 
 	return;
@@ -1579,16 +1576,6 @@ bacon_video_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 	return FALSE;
 }
 
-static gboolean
-bacon_video_widget_key_press (GtkWidget *widget, GdkEventKey *event)
-{
-	if (GTK_WIDGET_CLASS (parent_class)->key_press_event != NULL)
-		(* GTK_WIDGET_CLASS (parent_class)->key_press_event) (widget, event);
-
-	return FALSE;
-}
-
-
 static void
 bacon_video_widget_size_request (GtkWidget *widget, GtkRequisition *requisition)
 {
@@ -1968,16 +1955,12 @@ gboolean bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time,
 	return TRUE;
 }
 
-
 void
 bacon_video_widget_stop (BaconVideoWidget *bvw)
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
-
-	if (bacon_video_widget_is_playing (bvw) == FALSE)
-		return;
 
 	xine_stop (bvw->priv->stream);
 }
@@ -2277,23 +2260,23 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 #ifdef HAVE_NVTV
         /* If NVTV is used */
         if (nvtv_simple_get_state() == NVTV_SIMPLE_TV_ON) {
-            nvtv_simple_switch(NVTV_SIMPLE_TV_OFF,0,0);
+		nvtv_simple_switch(NVTV_SIMPLE_TV_OFF,0,0);
         
-            /* Else if just auto resize is used */
+		/* Else if just auto resize is used */
         } else if (bvw->priv->auto_resize != FALSE) {
 #endif
 		bacon_restore (bvw->priv->screenid);
-
 #ifdef HAVE_NVTV
-        }
-        /* Turn fullscreen on with NVTV if that option is on */
-    } else if ((bvw->priv->tvout == TV_OUT_NVTV_NTSC) ||
-            (bvw->priv->tvout == TV_OUT_NVTV_PAL)) {
-        nvtv_simple_switch(NVTV_SIMPLE_TV_ON,
-                bvw->priv->video_width,bvw->priv->video_height);
+	}
+	/* Turn fullscreen on with NVTV if that option is on */
+	} else if ((bvw->priv->tvout == TV_OUT_NVTV_NTSC) ||
+			(bvw->priv->tvout == TV_OUT_NVTV_PAL)) {
+		nvtv_simple_switch(NVTV_SIMPLE_TV_ON,
+				bvw->priv->video_width,
+				bvw->priv->video_height);
 #endif
-        /* Turn fullscreen on with autoresize */
-    } else if (bvw->priv->auto_resize != FALSE) {
+		/* Turn fullscreen on with autoresize */
+	} else if (bvw->priv->auto_resize != FALSE) {
 		bvw->priv->screenid = bacon_resize_get_current ();
 		bacon_resize (bvw->priv->video_height,
 				bvw->priv->video_width);
@@ -2301,7 +2284,8 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 }
 
 void
-bacon_video_widget_set_show_cursor (BaconVideoWidget *bvw, gboolean show_cursor)
+bacon_video_widget_set_show_cursor (BaconVideoWidget *bvw,
+		gboolean show_cursor)
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -2471,10 +2455,10 @@ bacon_video_widget_set_tv_out (BaconVideoWidget *bvw, TvOutType tvout)
 	}
 
 #ifdef HAVE_NVTV
-    if (tvout == TV_OUT_NVTV_PAL) {
-        nvtv_simple_set_tvsystem(NVTV_SIMPLE_TVSYSTEM_PAL);
-    } else if (tvout == TV_OUT_NVTV_NTSC) {
-        nvtv_simple_set_tvsystem(NVTV_SIMPLE_TVSYSTEM_NTSC);
+	if (tvout == TV_OUT_NVTV_PAL) {
+		nvtv_simple_set_tvsystem(NVTV_SIMPLE_TVSYSTEM_PAL);
+	} else if (tvout == TV_OUT_NVTV_NTSC) {
+		nvtv_simple_set_tvsystem(NVTV_SIMPLE_TVSYSTEM_NTSC);
 	}
 #endif
 
