@@ -1,3 +1,12 @@
+2002-12-06  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-playlist.c: (gtk_playlist_add_mrl):
+	* src/gtk-xine.c: (gtk_xine_get_volume):
+	* src/totem.c: (update_sliders), (update_cb_often),
+	(update_cb_rare), (totem_callback_connect), (video_widget_create),
+	(main): try to be more efficient when setting the volume (including
+	the updating of the image), don't check if we're seekable so often
+
 2002-12-04  Bastien Nocera  <hadess@hadess.net>
 
 	* src/gtk-xine.c: (load_video_out_driver), (gtk_xine_dvd_event):

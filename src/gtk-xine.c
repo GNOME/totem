@@ -1493,11 +1493,8 @@ gtk_xine_get_volume (GtkXine *gtx)
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
 	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
 
-	if (gtk_xine_can_set_volume (gtx) == TRUE)
-	{
-		volume = xine_get_param (gtx->priv->stream,
-				XINE_PARAM_AUDIO_VOLUME);
-	}
+	volume = xine_get_param (gtx->priv->stream,
+			XINE_PARAM_AUDIO_VOLUME);
 
 	return volume;
 }

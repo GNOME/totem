@@ -1080,10 +1080,9 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 
 	mimetype = gnome_vfs_get_mime_type (mrl);
 
-	g_message ("trying to add %s (%s)", mrl, mimetype);
-
 	if (mimetype == NULL)
 	{
+		g_message ("trying to add '%s' with no mimetype", mrl);
 		return gtk_playlist_add_one_mrl (playlist, mrl, display_name);
 	} else if (strcmp ("audio/x-mpegurl", mimetype) == 0) {
 		return gtk_playlist_add_m3u (playlist, mrl);
@@ -1094,6 +1093,16 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 	} else if (strcmp ("x-directory/normal", mimetype) == 0) {
 		//FIXME Load all the files in the dir ?
 	}
+
+	if (strncmp ("audio/", mimetype, 6) != 0
+			&& strncmp ("video/", mimetype, 6) != 0)
+	{
+		g_message ("trying to add '%s' with mimetype '%s'",
+				mrl, mimetype);
+		return FALSE;
+	}
+
+	//FIXME check size != 0
 
 	return gtk_playlist_add_one_mrl (playlist, mrl, display_name);
 }

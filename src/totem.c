@@ -39,11 +39,6 @@
 
 #include "debug.h"
 
-#ifndef TOTEM_DEBUG
-#include <fcntl.h>
-#include <unistd.h>
-#endif
-
 #define TOTEM_GCONF_PREFIX "/apps/totem"
 #define LOGO_PATH DATADIR""G_DIR_SEPARATOR_S"totem"G_DIR_SEPARATOR_S"totem_logo.mpv"
 #define SEEK_FORWARD_OFFSET 60000
@@ -71,6 +66,7 @@ struct Totem {
 	GtkWidget *volume;
 	GtkAdjustment *voladj;
 	gboolean vol_lock;
+	gfloat prev_volume;
 
 	/* exit fullscreen Popup */
 	GtkWidget *exit_popup;
@@ -829,15 +825,36 @@ update_sliders (Totem *totem)
 	{
 		totem->vol_lock = TRUE;
 		pos = (gfloat) gtk_xine_get_volume (GTK_XINE (totem->gtx));
-		gtk_adjustment_set_value (totem->voladj, pos);
-		gtk_adjustment_set_value (totem->fs_voladj, pos);
-		volume_set_image (totem, (gint) pos);
+
+		if (totem->prev_volume != pos &&
+				totem->prev_volume != -1 && pos != -1)
+		{
+			gtk_adjustment_set_value (totem->voladj, pos);
+			gtk_adjustment_set_value (totem->fs_voladj, pos);
+			volume_set_image (totem, (gint) pos);
+		}
+
+		totem->prev_volume = pos;
 		totem->vol_lock = FALSE;
 	}
 }
 
 static int
-update_cb (gpointer user_data)
+update_cb_often (gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+
+	if (totem->gtx == NULL)
+		return TRUE;
+
+	update_current_time (user_data);
+	update_sliders (user_data);
+
+	return TRUE;
+}
+
+static int
+update_cb_rare (gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 
@@ -845,8 +862,6 @@ update_cb (gpointer user_data)
 		return TRUE;
 
 	update_seekable (user_data);
-	update_current_time (user_data);
-	update_sliders (user_data);
 
 	return TRUE;
 }
@@ -1904,7 +1919,8 @@ totem_callback_connect (Totem *totem)
                         G_CALLBACK (on_previous_button_clicked), totem);
 
 	/* Update the UI */
-	gtk_timeout_add (500, update_cb, totem);
+	gtk_timeout_add (600, update_cb_often, totem);
+	gtk_timeout_add (1200, update_cb_rare, totem);
 }
 
 static void
@@ -1914,7 +1930,7 @@ video_widget_create (Totem *totem)
 
 	g_message ("video_widget_create");
 
-	totem->gtx = gtk_xine_new(-1, -1);
+	totem->gtx = gtk_xine_new (-1, -1);
 	container = glade_xml_get_widget (totem->xml, "frame2");
 	gtk_container_add (GTK_CONTAINER (container), totem->gtx);
 
@@ -2109,6 +2125,7 @@ main (int argc, char **argv)
 	totem->mrl = NULL;
 	totem->seek_lock = FALSE;
 	totem->vol_lock = FALSE;
+	totem->prev_volume = -1;
 	totem->popup_timeout = 0;
 	totem->gtx = NULL;
 	totem->gc = gc;
