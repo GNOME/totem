@@ -1,5 +1,10 @@
 2005-04-01  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (main): don't call g_set_application_name before
+	gtk_init (spotted by Frederic Crozat)
+
+2005-04-01  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.glade:
 	* src/totem-preferences.c: (totem_setup_preferences):
 

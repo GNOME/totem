@@ -3326,11 +3326,10 @@ main (int argc, char **argv)
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
-	g_set_application_name (_("Totem Movie Player"));
-
 	if (XInitThreads () == 0)
 	{
 		gtk_init (&argc, &argv);
+		g_set_application_name (_("Totem Movie Player"));
 		totem_action_error_and_exit (_("Could not initialize the thread-safe libraries."), _("Verify your system installation. Totem will now exit."), NULL);
 	}
 
@@ -3346,6 +3345,8 @@ main (int argc, char **argv)
 			GNOME_PARAM_POPT_TABLE, totem_options_get_options (),
 			GNOME_PARAM_NONE);
 #endif /* HAVE_GTK_ONLY */
+
+	g_set_application_name (_("Totem Movie Player"));
 
 	gnome_vfs_init ();
 
