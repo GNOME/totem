@@ -21,7 +21,7 @@
 #ifndef HAVE_BACON_CD_SELECTION_H
 #define HAVE_BACON_CD_SELECTION_H
 
-#include <gtk/gtkvbox.h>
+#include <gtk/gtkcomboboxentry.h>
 #include <cd-drive.h>
 
 G_BEGIN_DECLS
@@ -34,12 +34,12 @@ G_BEGIN_DECLS
 typedef struct BaconCdSelectionPrivate BaconCdSelectionPrivate;
 
 typedef struct {
-	GtkVBox widget;
+	GtkComboBox widget;
 	BaconCdSelectionPrivate *priv;
 } BaconCdSelection;
 
 typedef struct {
-	GtkVBoxClass parent_class;
+	GtkComboBoxClass parent_class;
 	void (*device_changed) (GtkWidget *bcs, const char *device_path);
 } BaconCdSelectionClass;
 

@@ -21,36 +21,36 @@
 #ifndef HAVE_BACON_V4L_SELECTION_H
 #define HAVE_BACON_V4L_SELECTION_H
 
-#include <gtk/gtkwidget.h>
-#include <video-dev.h>
+#include <gtk/gtkcomboboxentry.h>
+#include <cd-drive.h>
 
 G_BEGIN_DECLS
 
 #define BACON_V4L_SELECTION(obj)              (GTK_CHECK_CAST ((obj), bacon_v4l_selection_get_type (), BaconV4lSelection))
 #define BACON_V4L_SELECTION_CLASS(klass)      (GTK_CHECK_CLASS_CAST ((klass), bacon_v4l_selection_get_type (), BaconV4lSelectionClass))
-#define BACON_IS_CD_SELECTION(obj)           (GTK_CHECK_TYPE (obj, bacon_v4l_selection_get_type ()))
-#define BACON_IS_CD_SELECTION_CLASS(klass)   (GTK_CHECK_CLASS_TYPE ((klass), bacon_v4l_selection_get_type ()))
+#define BACON_IS_V4L_SELECTION(obj)           (GTK_CHECK_TYPE (obj, bacon_v4l_selection_get_type ()))
+#define BACON_IS_V4L_SELECTION_CLASS(klass)   (GTK_CHECK_CLASS_TYPE ((klass), bacon_v4l_selection_get_type ()))
 
 typedef struct BaconV4lSelectionPrivate BaconV4lSelectionPrivate;
 
 typedef struct {
-	GtkVBox widget;
+	GtkComboBox widget;
 	BaconV4lSelectionPrivate *priv;
 } BaconV4lSelection;
 
 typedef struct {
-	GtkVBoxClass parent_class;
-	void (*device_changed) (GtkWidget *gtx, const char *device_path);
+	GtkComboBoxClass parent_class;
+	void (*device_changed) (GtkWidget *bvs, const char *device_path);
 } BaconV4lSelectionClass;
 
-GtkType bacon_v4l_selection_get_type               (void);
-GtkWidget *bacon_v4l_selection_new                 (void);
+GtkType bacon_v4l_selection_get_type              (void);
+GtkWidget *bacon_v4l_selection_new                (void);
 
-void bacon_v4l_selection_set_device		   (BaconV4lSelection *bvs,
-						    const char *device);
-const char *bacon_v4l_selection_get_device	   (BaconV4lSelection *bvs);
+void bacon_v4l_selection_set_device		 (BaconV4lSelection *bvs,
+						  const char *device);
+const char *bacon_v4l_selection_get_device	 (BaconV4lSelection *bvs);
 const char *bacon_v4l_selection_get_default_device (BaconV4lSelection *bvs);
-const VideoDev *bacon_v4l_selection_get_video_device (BaconV4lSelection *bvs);
+
 G_END_DECLS
 
 #endif				/* HAVE_BACON_V4L_SELECTION_H */

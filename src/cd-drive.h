@@ -74,6 +74,8 @@ typedef struct {
 /* Returns a list of CDDrive structs */
 GList *scan_for_cdroms (gboolean recorder_only, gboolean add_image);
 void cd_drive_free (CDDrive *drive);
-CDMediaType guess_media_type (const char *device_path);
+CDMediaType cd_drive_get_media_type (CDDrive *drive);
+CDMediaType cd_drive_get_media_type_from_path (const char *device_path);
+CDDrive *cd_drive_get_file_image (void);
 
 #endif

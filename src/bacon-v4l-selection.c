@@ -1,7 +1,7 @@
 /* 
  * Copyright (C) 2002 Bastien Nocera <hadess@hadess.net>
  *
- * bacon-cd-selection.c
+ * bacon-v4l-selection.c
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,18 +20,23 @@
  * Authors: Bastien Nocera <hadess@hadess.net>
  */
 
-#include <config.h>
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
-#include <string.h>
-#ifndef HAVE_GTK_ONLY
-#include <gnome.h>
-#else
-#include <gtk/gtk.h>
-#endif /* !HAVE_GTK_ONLY */
-
+#include <glib.h>
 #include <glib/gi18n.h>
 
+#include <string.h>
+
+#include <gtk/gtkmenu.h>
+#include <gtk/gtkcombobox.h>
+#include <gtk/gtkliststore.h>
+#include <gtk/gtkcelllayout.h>
+#include <gtk/gtkcellrenderertext.h>
+
 #include "bacon-v4l-selection.h"
+#include "video-dev.h"
 
 /* Signals */
 enum {
@@ -46,13 +51,9 @@ enum {
 };
 
 struct BaconV4lSelectionPrivate {
-	gboolean is_entry;
-	GtkWidget *widget;
-	GList *devs;
+	GList *cdroms;
 };
 
-
-static void bacon_v4l_selection_class_init (BaconV4lSelectionClass *klass);
 static void bacon_v4l_selection_init (BaconV4lSelection *bvs);
 
 static void bacon_v4l_selection_set_property (GObject *object, guint property_id,
@@ -60,8 +61,6 @@ static void bacon_v4l_selection_set_property (GObject *object, guint property_id
 static void bacon_v4l_selection_get_property (GObject *object, guint property_id,
 		GValue *value, GParamSpec *pspec);
 
-static void bacon_v4l_selection_realize (GtkWidget *widget);
-static void bacon_v4l_selection_unrealize (GtkWidget *widget);
 static void bacon_v4l_selection_finalize (GObject *object);
 
 static GtkWidgetClass *parent_class = NULL;
@@ -69,18 +68,18 @@ static GtkWidgetClass *parent_class = NULL;
 static int bvs_table_signals[LAST_SIGNAL] = { 0 };
 
 static VideoDev *
-get_drive (BaconV4lSelection *bvs, int nr)
+get_video_device (BaconV4lSelection *bvs, int nr)
 {
 	GList *item;
 
-	item = g_list_nth (bvs->priv->devs, nr);
+	item = g_list_nth (bvs->priv->cdroms, nr);
 	if (item == NULL)
 		return NULL;
 	else
 		return item->data;
 }
 
-G_DEFINE_TYPE(BaconV4lSelection, bacon_v4l_selection, GTK_TYPE_VBOX)
+G_DEFINE_TYPE(BaconV4lSelection, bacon_v4l_selection, GTK_TYPE_COMBO_BOX)
 
 static void
 bacon_v4l_selection_class_init (BaconV4lSelectionClass *klass)
@@ -91,11 +90,7 @@ bacon_v4l_selection_class_init (BaconV4lSelectionClass *klass)
 	object_class = (GObjectClass *) klass;
 	widget_class = (GtkWidgetClass *) klass;
 
-	parent_class = gtk_type_class (gtk_vbox_get_type ());
-
-	/* GtkWidget */
-	widget_class->realize = bacon_v4l_selection_realize;
-	widget_class->unrealize = bacon_v4l_selection_unrealize;
+	parent_class = gtk_type_class (gtk_combo_box_get_type ());
 
 	/* GObject */
 	object_class->set_property = bacon_v4l_selection_set_property;
@@ -123,162 +118,102 @@ static void
 bacon_v4l_selection_init (BaconV4lSelection *bvs)
 {
 	bvs->priv = g_new0 (BaconV4lSelectionPrivate, 1);
-
-#if defined (__linux__) || defined (__FreeBSD__)
-	bvs->priv->is_entry = FALSE;
-#else
-	bvs->priv->is_entry = TRUE;
-#endif
-
-	bvs->priv->devs = NULL;
-}
-
-static void
-bacon_v4l_selection_realize (GtkWidget *widget)
-{
-	if (GTK_WIDGET_CLASS (parent_class)->realize != NULL) {
-		(* GTK_WIDGET_CLASS (parent_class)->realize) (widget);
-	}
-}
-
-static void
-bacon_v4l_selection_unrealize (GtkWidget *widget)
-{
-	if (GTK_WIDGET_CLASS (parent_class)->unrealize != NULL) {
-		(* GTK_WIDGET_CLASS (parent_class)->unrealize) (widget);
-	}
 }
 
 static void
 bacon_v4l_selection_finalize (GObject *object)
 {
 	GList *l;
-
 	BaconV4lSelection *bvs = (BaconV4lSelection *) object;
-	G_OBJECT_CLASS (parent_class)->finalize (object);
 
-	gtk_widget_destroy (bvs->priv->widget);
+	g_return_if_fail (bvs != NULL);
+	g_return_if_fail (BACON_IS_V4L_SELECTION (bvs));
 
-	l = bvs->priv->devs;
+	l = bvs->priv->cdroms;
 	while (l != NULL)
 	{
-		VideoDev *dev = l->data;
+		VideoDev *cdrom = l->data;
 
-		video_dev_free (dev);
-		l = g_list_remove (l, dev);
-		g_free (dev);
+		l = g_list_remove (l, cdrom);
+		video_dev_free (cdrom);
 	}
 
+	g_free (bvs->priv);
 	bvs->priv = NULL;
-	bvs = NULL;
+
+	if (G_OBJECT_CLASS (parent_class)->finalize != NULL) {
+		(* G_OBJECT_CLASS (parent_class)->finalize) (object);
+	}
 }
 
 static void
-option_menu_device_changed (GtkOptionMenu *option_menu, gpointer user_data)
+combo_device_changed (GtkComboBox *combo, gpointer user_data)
 {
 	BaconV4lSelection *bvs = (BaconV4lSelection *) user_data;
 	VideoDev *drive;
 	int i;
 
-	i = gtk_option_menu_get_history (GTK_OPTION_MENU (option_menu));
-	drive = get_drive (bvs, i);
+	i = gtk_combo_box_get_active (combo);
+	drive = get_video_device (bvs, i);
 
 	g_signal_emit (G_OBJECT (bvs),
-			bvs_table_signals[DEVICE_CHANGED],
-			0, drive->device);
+		       bvs_table_signals[DEVICE_CHANGED],
+		       0, drive->device);
 }
 
-static GtkWidget *
-video_dev_option_menu (BaconV4lSelection *bvs)
+static void
+cdrom_combo_box (BaconV4lSelection *bvs)
 {
 	GList *l;
-	GtkWidget *option_menu, *menu, *item;
-	VideoDev *dev;
+	VideoDev *cdrom;
 
-	bvs->priv->devs = scan_for_video_devices ();
+	bvs->priv->cdroms = scan_for_video_devices ();
 
-	menu = gtk_menu_new();
-	gtk_widget_show(menu);
-
-	option_menu = gtk_option_menu_new ();
-
-	for (l = bvs->priv->devs; l != NULL; l = l->next)
+	for (l = bvs->priv->cdroms; l != NULL; l = l->next)
 	{
-		dev = l->data;
+		cdrom = l->data;
 
-		if (dev->display_name == NULL)
-			g_warning ("dev->display_name != NULL failed");
-		item = gtk_menu_item_new_with_label (dev->display_name
-				? dev->display_name : _("Unnamed Video Device"));
-		gtk_widget_show (item);
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+		if (cdrom->display_name == NULL) {
+			g_warning ("cdrom->display_name != NULL failed");
+		}
+
+		gtk_combo_box_append_text (GTK_COMBO_BOX (bvs),
+				cdrom->display_name
+				? cdrom->display_name : _("Unnamed CDROM"));
 	}
-	gtk_option_menu_set_history (GTK_OPTION_MENU (option_menu), 0);
+	gtk_combo_box_set_active (GTK_COMBO_BOX (bvs), 0);
 
-	gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
-
-	if (bvs->priv->devs == NULL)
-		gtk_widget_set_sensitive (option_menu, FALSE);
-
-	return option_menu;
+	if (bvs->priv->cdroms == NULL) {
+		gtk_widget_set_sensitive (GTK_WIDGET (bvs), FALSE);
+	}
 }
-
-#ifndef HAVE_GTK_ONLY
-static void
-on_combo_entry_changed (GnomeFileEntry *entry, gpointer user_data)
-{
-	BaconV4lSelection *bvs = (BaconV4lSelection *) user_data;
-	const char *str;
-	GtkWidget *widget;
-
-	widget = gnome_file_entry_gtk_entry (entry);
-	str = gtk_entry_get_text (GTK_ENTRY (widget));
-
-	g_signal_emit (G_OBJECT (bvs),
-			bvs_table_signals[DEVICE_CHANGED],
-			0, str);
-}
-#endif /* !HAVE_GTK_ONLY */
 
 GtkWidget *
 bacon_v4l_selection_new (void)
 {
 	GtkWidget *widget;
 	BaconV4lSelection *bvs;
+	GtkCellRenderer *cell;
+	GtkListStore *store;
 
 	widget = GTK_WIDGET
 		(g_object_new (bacon_v4l_selection_get_type (), NULL));
+
+	store = gtk_list_store_new (1, G_TYPE_STRING);
+	gtk_combo_box_set_model (GTK_COMBO_BOX (widget),
+			GTK_TREE_MODEL (store));
+
+	cell = gtk_cell_renderer_text_new ();
+	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (widget), cell, TRUE);
+	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (widget), cell,
+			"text", 0,
+			NULL);
+
 	bvs = BACON_V4L_SELECTION (widget);
+	cdrom_combo_box (bvs);
 
-#ifndef HAVE_GTK_ONLY
-	if (bvs->priv->is_entry)
-	{
-		bvs->priv->widget = gnome_file_entry_new (NULL,
-					_("Select the drive"));
-		g_signal_connect (G_OBJECT (bvs->priv->widget), "changed",
-				G_CALLBACK (on_combo_entry_changed), bvs);
-
-		gtk_box_pack_start (GTK_BOX (widget),
-				bvs->priv->widget,
-				TRUE,       /* expand */
-				TRUE,       /* fill */
-				0);         /* padding */
-	} else
-#endif /* !HAVE_GTK_ONLY */
-	{
-		bvs->priv->widget = video_dev_option_menu (bvs);
-
-		g_signal_connect (bvs->priv->widget, "changed",
-				(GCallback)option_menu_device_changed, bvs);
-
-		gtk_box_pack_start (GTK_BOX (widget),
-				bvs->priv->widget,
-				TRUE,       /* expand */
-				TRUE,       /* fill */
-				0);         /* padding */
-	}
-
-	gtk_widget_show_all (bvs->priv->widget);
+	g_signal_connect (G_OBJECT (bvs), "changed",
+			G_CALLBACK (combo_device_changed), bvs);
 
 	return widget;
 }
@@ -290,7 +225,7 @@ bacon_v4l_selection_set_property (GObject *object, guint property_id,
 {
 	BaconV4lSelection *bvs;
 
-	g_return_if_fail (BACON_IS_CD_SELECTION (object));
+	g_return_if_fail (BACON_IS_V4L_SELECTION (object));
 
 	bvs = BACON_V4L_SELECTION (object);
 
@@ -310,7 +245,7 @@ bacon_v4l_selection_get_property (GObject *object, guint property_id,
 {
 	BaconV4lSelection *bvs;
 
-	g_return_if_fail (BACON_IS_CD_SELECTION (object));
+	g_return_if_fail (BACON_IS_V4L_SELECTION (object));
 
 	bvs = BACON_V4L_SELECTION (object);
 
@@ -330,8 +265,11 @@ bacon_v4l_selection_get_default_device (BaconV4lSelection *bvs)
 	GList *l;
 	VideoDev *drive;
 
-	l = bvs->priv->devs;
-	if (bvs->priv->devs == NULL)
+	g_return_val_if_fail (bvs != NULL, "/dev/video0");
+	g_return_val_if_fail (BACON_IS_V4L_SELECTION (bvs), "/dev/video0");
+
+	l = bvs->priv->cdroms;
+	if (bvs->priv->cdroms == NULL)
 		return "/dev/video0";
 
 	drive = l->data;
@@ -347,54 +285,39 @@ bacon_v4l_selection_set_device (BaconV4lSelection *bvs, const char *device)
 	gboolean found;
 	int i;
 
+	found = FALSE;
+	i = -1;
+
 	g_return_if_fail (bvs != NULL);
-	g_return_if_fail (BACON_IS_CD_SELECTION (bvs));
+	g_return_if_fail (BACON_IS_V4L_SELECTION (bvs));
 
-#ifndef HAVE_GTK_ONLY
-	if (bvs->priv->is_entry != FALSE)
+	for (l = bvs->priv->cdroms; l != NULL && found == FALSE;
+			l = l->next)
 	{
-		GtkWidget *entry;
+		i++;
 
-		entry = gnome_file_entry_gtk_entry
-			(GNOME_FILE_ENTRY (bvs->priv->widget));
-		gtk_entry_set_text (GTK_ENTRY (entry), device);
-	} else
-#endif /* !HAVE_GTK_ONLY */
+		drive = l->data;
+
+		if (strcmp (drive->device, device) == 0)
+			found = TRUE;
+	}
+
+	if (found)
 	{
-		i = -1;
-		found = FALSE;
+		gtk_combo_box_set_active (GTK_COMBO_BOX (bvs), i);
+	} else {
+		/* If the device doesn't exist, set it back to
+		 * the default */
+		gtk_combo_box_set_active (GTK_COMBO_BOX (bvs), 0);
 
-		for (l = bvs->priv->devs; l != NULL && found == FALSE;
-				l = l->next)
-		{
-			i++;
+		drive = get_video_device (bvs, 0);
 
-			drive = l->data;
+		if (drive == NULL)
+			return;
 
-			if (strcmp (drive->device, device) == 0)
-				found = TRUE;
-		}
-
-		if (found)
-		{
-			gtk_option_menu_set_history (GTK_OPTION_MENU
-					(bvs->priv->widget), i);
-		} else {
-			/* If the device doesn't exist, set it back to
-			 * the default */
-			gtk_option_menu_set_history (GTK_OPTION_MENU
-					(bvs->priv->widget), 0);
-
-			drive = get_drive (bvs, 0);
-
-			if (drive == NULL)
-				return;
-
-			g_signal_emit (G_OBJECT (bvs),
-					bvs_table_signals [DEVICE_CHANGED],
-					0, drive->device);
-		}
-			
+		g_signal_emit (G_OBJECT (bvs),
+				bvs_table_signals [DEVICE_CHANGED],
+				0, drive->device);
 	}
 }
 
@@ -405,49 +328,11 @@ bacon_v4l_selection_get_device (BaconV4lSelection *bvs)
 	int i;
 
 	g_return_val_if_fail (bvs != NULL, NULL);
-	g_return_val_if_fail (BACON_IS_CD_SELECTION (bvs), NULL);
+	g_return_val_if_fail (BACON_IS_V4L_SELECTION (bvs), NULL);
 
-#ifndef HAVE_GTK_ONLY
-	if (bvs->priv->is_entry != FALSE)
-	{
-		GtkWidget *entry;
+	i = gtk_combo_box_get_active (GTK_COMBO_BOX (bvs));
+	drive = get_video_device (bvs, i);
 
-		entry = gnome_file_entry_gtk_entry
-			(GNOME_FILE_ENTRY (bvs->priv->widget));
-		return gtk_entry_get_text (GTK_ENTRY (entry));
-	} else
-#endif /* !HAVE_GTK_ONLY */
-	{
-		i = gtk_option_menu_get_history (GTK_OPTION_MENU
-				(bvs->priv->widget));
-		drive = get_drive (bvs, i);
-
-		return drive ? drive->device : NULL;
-	}
-
-	return NULL;
-}
-
-const VideoDev *
-bacon_v4l_selection_get_video_device (BaconV4lSelection *bvs)
-{
-	VideoDev *drive;
-	int i;
-
-	g_return_val_if_fail (bvs != NULL, NULL);
-	g_return_val_if_fail (BACON_IS_CD_SELECTION (bvs), NULL);
-
-	if (bvs->priv->is_entry != FALSE)
-	{
-		return NULL;
-	} else {
-		i = gtk_option_menu_get_history (GTK_OPTION_MENU
-				(bvs->priv->widget));
-		drive = get_drive (bvs, i);
-
-		return drive;
-	}
-
-	return NULL;
+	return drive ? drive->device : NULL;
 }
 
