@@ -301,6 +301,9 @@ totem_action_play (Totem *totem)
 
 	retval = bacon_video_widget_play (totem->bvw,  &err);
 	play_pause_set_label (totem, retval ? STATE_PLAYING : STATE_STOPPED);
+	if (totem_is_fullscreen (totem) != FALSE)
+		totem_scrsaver_disable (totem->scr);
+
 	if (retval == FALSE)
 	{
 		char *msg, *disp;
@@ -395,6 +398,7 @@ void
 totem_action_stop (Totem *totem)
 {
 	bacon_video_widget_stop (totem->bvw);
+	totem_scrsaver_enable (totem->scr);
 }
 
 void
@@ -421,9 +425,12 @@ totem_action_play_pause (Totem *totem)
 	{
 		bacon_video_widget_play (totem->bvw, NULL);
 		play_pause_set_label (totem, STATE_PLAYING);
+		if (totem_is_fullscreen (totem) != FALSE)
+			totem_scrsaver_disable (totem->scr);
 	} else {
 		bacon_video_widget_pause (totem->bvw);
 		play_pause_set_label (totem, STATE_PAUSED);
+		totem_scrsaver_enable (totem->scr);
 	}
 }
 
@@ -438,6 +445,7 @@ totem_action_fullscreen_toggle (Totem *totem)
 		bacon_video_widget_set_fullscreen (totem->bvw, FALSE);
 		gtk_window_unfullscreen (GTK_WINDOW(totem->win));
 		bacon_video_widget_set_show_cursor (totem->bvw, TRUE);
+
 		totem_scrsaver_enable (totem->scr);
 
 		totem->controls_visibility = TOTEM_CONTROLS_VISIBLE;
@@ -460,7 +468,8 @@ totem_action_fullscreen_toggle (Totem *totem)
 		bacon_video_widget_set_fullscreen (totem->bvw, TRUE);
 		bacon_video_widget_set_show_cursor (totem->bvw, FALSE);
 		gtk_window_fullscreen (GTK_WINDOW(totem->win));
-		totem_scrsaver_disable (totem->scr);
+		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
+			totem_scrsaver_disable (totem->scr);
 
 		totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
 		show_controls (totem, FALSE);

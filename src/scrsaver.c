@@ -118,7 +118,8 @@ totem_scrsaver_init (TotemScrsaver *scr)
 void
 totem_scrsaver_disable (TotemScrsaver *scr)
 {
-	g_return_if_fail (scr->priv->disabled == FALSE);
+	if (scr->priv->disabled != FALSE)
+		return;
 
 	scr->priv->disabled = TRUE;
 
@@ -158,7 +159,8 @@ totem_scrsaver_disable (TotemScrsaver *scr)
 void
 totem_scrsaver_enable (TotemScrsaver *scr)
 {
-	g_return_if_fail (scr->priv->disabled != FALSE);
+	if (scr->priv->disabled == FALSE)
+		return;
 
 	scr->priv->disabled = FALSE;
 
