@@ -619,10 +619,12 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
       case FOUND_TAG:
         {
           GstTagList *tag_list = signal->signal_data.found_tag.tag_list;
-          gst_tag_list_foreach (tag_list, store_tag, bvw);
-          gst_tag_list_free (tag_list);
-          g_signal_emit (G_OBJECT (bvw), bvw_table_signals[GOT_METADATA],
-                         0, NULL);
+          if (GST_IS_TAG_LIST (tag_list)) {
+            gst_tag_list_foreach (tag_list, store_tag, bvw);
+            gst_tag_list_free (tag_list);
+            g_signal_emit (G_OBJECT (bvw), bvw_table_signals[GOT_METADATA],
+                           0, NULL);
+          }
           break;
         }
       default:
