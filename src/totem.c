@@ -271,6 +271,8 @@ totem_action_exit (Totem *totem)
 
 	bacon_message_connection_free (totem->conn);
 
+	totem_action_fullscreen (totem, FALSE);
+
 	if (totem->playlist)
 		gtk_widget_hide (GTK_WIDGET (totem->playlist));
 

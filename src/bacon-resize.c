@@ -28,8 +28,11 @@ bacon_resize_init (void)
 	res = XRRQueryExtension (GDK_DISPLAY(), &event_basep, &error_basep);
 	XUnlockDisplay (GDK_DISPLAY());
 
+	//FIXME http://bugzilla.gnome.org/show_bug.cgi?id=118203
+#if 0
 	if (res)
 		return TRUE;
+#endif
 #endif /* HAVE_RANDR */
 	return FALSE;
 }

@@ -1,3 +1,10 @@
+2003-07-30  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-resize.c: (bacon_resize_init): disable xrandr's
+	automatic resize, it's broken :/
+	* src/totem.c: (totem_action_exit): switch off fullscreen in the
+	video widget before exiting
+
 2003-07-29  Bastien Nocera  <hadess@hadess.net>
 
 	* README: removed TODO item
