@@ -53,6 +53,7 @@ totem.desktop.in: totem.desktop.in.in mime-type-list.txt desktop.sh
 	$(srcdir)/desktop.sh $(srcdir)/mime-type-list.txt	\
 	>> totem.desktop.in
 
+noinst_HEADERS = totem-mime-types.h
 totem-mime-types.h: mime-type-include.sh mime-type-list.txt
 	$(srcdir)/mime-type-include.sh $(srcdir)/mime-type-list.txt	\
 	> totem-mime-types.h

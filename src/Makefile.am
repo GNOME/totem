@@ -6,8 +6,8 @@ else
 VANITY=
 endif
 
-if HAVE_GNOME
-TOTEM_PROPERTIES_PAGE = totem-properties-page
+if HAVE_NAUTILUS
+TOTEM_PROPERTIES_PAGE = libtotem-properties-page.la
 else
 TOTEM_PROPERTIES_PAGE =
 endif
@@ -21,8 +21,11 @@ TOTEM_MOZILLA_PLUGIN =
 endif
 
 bin_PROGRAMS = totem totem-video-thumbnailer $(VANITY)
-libexec_PROGRAMS = $(TOTEM_MOZILLA_VIEWER) $(TOTEM_PROPERTIES_PAGE)
+libexec_PROGRAMS = $(TOTEM_MOZILLA_VIEWER)
 plugin_LTLIBRARIES = $(TOTEM_MOZILLA_PLUGIN)
+nautilus_LTLIBRARIES = $(TOTEM_PROPERTIES_PAGE)
+
+modules_flags = -avoid-version -module
 
 if TOTEM_GST
 MM = bacon-video-widget-gst.c \
@@ -103,17 +106,21 @@ totem_SOURCES = 					\
 	totem-statusbar.h		\
 	totem-gromit.c totem-gromit.h
 
-totem_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) $(XVIDMODE_LIBS)  $(NVTV_LIBS) libtotem-plparser.la
+totem_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS) libtotem-plparser.la
 
 totem_video_thumbnailer_SOURCES = $(VIDEOWIDGET) totem-video-thumbnailer.c
-totem_video_thumbnailer_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS)  $(NVTV_LIBS) $(EXTRA_GNOME_LIBS)
+totem_video_thumbnailer_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS) $(EXTRA_GNOME_LIBS)
 
-totem_properties_page_SOURCES =		\
+nautilusdir = $(libdir)/nautilus/extensions-1.0/
+libtotem_properties_page_la_SOURCES = 	\
 	$(VIDEOWIDGET)			\
 	bacon-video-widget-properties.c	\
 	bacon-video-widget-properties.h	\
-	totem-properties-page.c
-totem_properties_page_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS)  $(NVTV_LIBS)
+	totem-properties-main.c		\
+	totem-properties-view.c		\
+	totem-properties-view.h
+
+libtotem_properties_page_la_LDFLAGS = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS) $(NAUTILUS_LIBS) $(module_flags)
 
 libtotem_mozilla_la_LDFLAGS = $(GTK_LIBS) $(module_flags)
 libtotem_mozilla_la_SOURCES = totem-mozilla-plugin.c
@@ -134,13 +141,13 @@ vanity_SOURCES =					\
 	totem-screenshot.c totem-screenshot.h		\
 	vanity.c
 
-vanity_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS)  $(NVTV_LIBS)
+vanity_LDADD = $(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS)
 
 bvw_test_SOURCES = $(VIDEOWIDGET) bvw-test.c
-bvw_test_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS)  $(NVTV_LIBS)
+bvw_test_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS)
 
 metadata_test_SOURCES = $(VIDEOWIDGET) metadata-test.c
-metadata_test_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS)  $(NVTV_LIBS) $(EXTRA_GNOME_LIBS)
+metadata_test_LDADD = $(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS) $(EXTRA_GNOME_LIBS)
 
 disc_test_SOURCES = disc-test.c
 disc_test_LDADD = \
@@ -160,6 +167,7 @@ INCLUDES = 						\
 	$(EXTRA_GNOME_CFLAGS)				\
 	$(MOZILLA_CFLAGS)				\
 	$(NVTV_CFLAGS)					\
+	$(NAUTILUS_CFLAGS)				\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
 	-DGCONF_PREFIX=\""/apps/totem"\"		\
 	-DDATADIR=\""$(datadir)"\"			\

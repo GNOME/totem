@@ -1,5 +1,25 @@
 2005-01-11  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* data/Makefile.am:
+	* src/Makefile.am:
+	* src/totem-properties-main.c:
+	(totem_properties_plugin_register_type),
+	(property_page_provider_iface_init), (totem_properties_get_pages),
+	(nautilus_module_initialize), (nautilus_module_shutdown),
+	(nautilus_module_list_types):
+	* src/totem-properties-page.c:
+	* src/totem-properties-view.c: (totem_properties_view_get_type),
+	(totem_properties_view_register_type),
+	(totem_properties_view_class_init), (on_got_metadata_event),
+	(totem_properties_view_init), (totem_properties_view_destroy),
+	(totem_properties_view_new), (totem_properties_view_set_location):
+	* src/totem-properties-view.h:
+	Port the properties page to the non-bonobo nautilus interface
+	(Closes: #162850)
+
+2005-01-11  Bastien Nocera  <hadess@hadess.net>
+
 	* data/Makefile.am: remove unused keys_DATA
 
 2005-01-11  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
