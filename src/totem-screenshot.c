@@ -306,6 +306,7 @@ totem_screenshot_new (const char *glade_filename, GdkPixbuf *screen_image)
 	g_object_ref (screenshot->_priv->pixbuf);
 
 	gtk_window_set_title (GTK_WINDOW (screenshot), _("Save Screenshot"));
+	gtk_dialog_set_has_separator (GTK_DIALOG (screenshot), FALSE);
 	gtk_dialog_add_buttons (GTK_DIALOG (screenshot),
 			GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 			GTK_STOCK_SAVE, GTK_RESPONSE_OK,
@@ -352,11 +353,12 @@ totem_screenshot_new (const char *glade_filename, GdkPixbuf *screen_image)
 			"tsw_save2file_fileentry");
 	{
 		GValue value = { 0, };
-		g_value_init (&value, G_TYPE_BOOLEAN);
-		g_value_set_boolean (&value, TRUE);
+		g_value_init (&value, GTK_TYPE_FILE_CHOOSER_ACTION);
+		g_value_set_enum (&value, GTK_FILE_CHOOSER_ACTION_SAVE);
 		g_object_set_property (G_OBJECT (item),
-				"use_filechooser", &value);
+				"filechooser-action", &value);
 	}
+
 
 	container = glade_xml_get_widget (screenshot->_priv->xml, "vbox11");
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (screenshot)->vbox),
