@@ -1,5 +1,11 @@
 2004-09-14  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (process_command_line_quit), (main):
+	make "totem --quit" just exit if there's no running Totem instance
+	(Closes: #152360)
+
+2004-09-14  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-playlist.c: (totem_playlist_key_press):
 	make Ctrl+A select all the files in the playlist window
 	(Closes: #152197)

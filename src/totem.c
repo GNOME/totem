@@ -3617,6 +3617,17 @@ process_options (Totem *totem, int *argc, char ***argv)
 }
 
 static void
+process_command_line_quit (int argc, char **argv)
+{
+	/* If --quit is the only command, just quit */
+	if (argc == 2 && strcmp (argv[1], "--quit") == 0)
+	{
+		gdk_notify_startup_complete ();
+		exit (0);
+	}
+}
+
+static void
 process_command_line (BaconMessageConnection *conn, int argc, char **argv)
 {
 	int i, command;
@@ -3750,6 +3761,8 @@ main (int argc, char **argv)
 		g_free (totem);
 		gdk_notify_startup_complete ();
 		exit (0);
+	} else {
+		process_command_line_quit (argc, argv);
 	}
 
 	/* Init totem itself */
