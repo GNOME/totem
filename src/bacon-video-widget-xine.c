@@ -1267,6 +1267,15 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		xine_stop (bvw->priv->stream);
 		message = g_strdup (_("The audio device is busy. Is another application using it?"));
 		break;
+/* FIXME enable when xine-lib has been released */
+#if 0
+	case XINE_MSG_PERMISSION_ERROR:
+		if (strncmp (bvw->priv->mrl, "file:", 5) == 0)
+			message = g_strdup (_("You are not allowed to open this file."));
+		else
+			message = g_strdup (_("The server refused access to this file or stream."));
+		break;
+#endif
 	}
 
 	if (message == NULL)

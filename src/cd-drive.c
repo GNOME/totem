@@ -260,7 +260,7 @@ linux_bsd_media_type (const char *device)
 	int fd;
 	int mmc_profile;
 
-	fd = open (device, O_RDONLY|O_EXCL);
+	fd = open (device, O_RDONLY|O_EXCL|O_NONBLOCK);
 	if (fd < 0) {
 		if (errno == EBUSY) {
 			return CD_MEDIA_TYPE_BUSY;

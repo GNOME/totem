@@ -53,7 +53,6 @@ egg_recent_util_escape_underlines (const gchar* text)
 	return g_string_free (str, FALSE);
 }
 
-#ifndef USE_STABLE_LIBGNOMEUI
 static GdkPixbuf *
 scale_icon (GdkPixbuf *pixbuf,
 	    double *scale)
@@ -69,6 +68,7 @@ scale_icon (GdkPixbuf *pixbuf,
 	return gdk_pixbuf_scale_simple (pixbuf, width, height, GDK_INTERP_BILINEAR);
 }
 
+#ifndef USE_STABLE_LIBGNOMEUI
 static GdkPixbuf *
 load_icon_file (char          *filename,
 		guint          base_size,
