@@ -358,13 +358,19 @@ got_time_tick (GstPlay* play, gint64 time_nanos, BaconVideoWidget *bvw)
 	int current_time = 0, current_position = 0;
 	g_return_if_fail(bvw != NULL);
 	g_return_if_fail(BACON_IS_VIDEO_WIDGET(bvw));
-		
+
 	current_time = (time_nanos / GST_MSECOND);
-	current_position = current_time * 65535 / bvw->priv->stream_length;
-	
+
+	if (bvw->priv->stream_length == 0)
+		current_position = 0;
+	else
+		current_position = current_time * 65535
+			/ bvw->priv->stream_length;
+
 	g_signal_emit (G_OBJECT (bvw),
-					bvw_table_signals[TICK], 0,
-					current_time, bvw->priv->stream_length, current_position);
+			bvw_table_signals[TICK], 0,
+			current_time, bvw->priv->stream_length,
+			current_position);
 }
 
 static void
