@@ -205,6 +205,9 @@ totem_action_exit (Totem *totem)
 	if (gtk_main_level () > 0)
 		gtk_main_quit ();
 
+	if (totem == NULL)
+		exit (0);
+
 	bacon_message_connection_free (totem->conn);
 
 	if (totem->win)
