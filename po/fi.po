@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-04 23:18+0200\n"
+"POT-Creation-Date: 2004-06-16 22:12+0300\n"
 "PO-Revision-Date: 2004-02-04 23:18+0200\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1271
+#: data/playlist.glade.h:1 src/totem-playlist.c:1406
 msgid "Playlist"
 msgstr "Soittolista"
 
@@ -36,30 +36,34 @@ msgid "_Add..."
 msgstr "_Lisää..."
 
 #: data/playlist.glade.h:5
+msgid "_Copy Location"
+msgstr "_Kopioi sijainti"
+
+#: data/playlist.glade.h:6
 msgid "_Save..."
 msgstr "_Tallenna..."
 
-#: data/properties.glade.h:1 data/totem.glade.h:1
+#: data/properties.glade.h:1 data/screenshot.glade.h:1 data/totem.glade.h:1
 msgid "    "
 msgstr "    "
 
-#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:170
+#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:146
 msgid "0 frames per second"
 msgstr "0 kehystä sekunnissa"
 
 #. Bitrate
-#: data/properties.glade.h:3 src/bacon-video-widget-properties.c:172
+#: data/properties.glade.h:3 src/bacon-video-widget-properties.c:148
 msgid "0 kbps"
 msgstr "0 kb/s"
 
 #. 0 seconds
-#: data/properties.glade.h:4 data/totem.glade.h:3
-#: src/bacon-video-widget-properties.c:126
+#: data/properties.glade.h:4 data/totem.glade.h:2
+#: src/bacon-video-widget-properties.c:102
 msgid "0 seconds"
 msgstr "0 sekuntia"
 
 #. Dimensions
-#: data/properties.glade.h:5 src/bacon-video-widget-properties.c:165
+#: data/properties.glade.h:5 src/bacon-video-widget-properties.c:141
 msgid "0 x 0"
 msgstr "0 × 0"
 
@@ -101,14 +105,14 @@ msgstr "Kehysnopeus:"
 
 #. Video Codec
 #. Audio Codec
-#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:167
-#: src/bacon-video-widget-properties.c:174
-#: src/bacon-video-widget-properties.c:243
-#: src/bacon-video-widget-properties.c:275
+#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:143
+#: src/bacon-video-widget-properties.c:150
+#: src/bacon-video-widget-properties.c:219
+#: src/bacon-video-widget-properties.c:251
 msgid "N/A"
 msgstr "-"
 
-#: data/properties.glade.h:16 src/totem.c:2149
+#: data/properties.glade.h:16 src/totem.c:2038
 msgid "Properties"
 msgstr "Ominaisuudet"
 
@@ -119,12 +123,12 @@ msgstr "Nimi:"
 #. Title
 #. Artist
 #. Year
-#: data/properties.glade.h:18 src/bacon-video-widget-properties.c:157
-#: src/bacon-video-widget-properties.c:159
-#: src/bacon-video-widget-properties.c:161
-#: src/bacon-video-widget-properties.c:192
-#: src/bacon-video-widget-properties.c:199
-#: src/bacon-video-widget-properties.c:206
+#: data/properties.glade.h:18 src/bacon-video-widget-properties.c:133
+#: src/bacon-video-widget-properties.c:135
+#: src/bacon-video-widget-properties.c:137
+#: src/bacon-video-widget-properties.c:168
+#: src/bacon-video-widget-properties.c:175
+#: src/bacon-video-widget-properties.c:182
 msgid "Unknown"
 msgstr "Tuntematon"
 
@@ -132,315 +136,319 @@ msgstr "Tuntematon"
 msgid "Year:"
 msgstr "Vuosi:"
 
-#: data/totem-download.glade.h:1
-msgid "Connecting to the server"
-msgstr "Otetaan yhteyttä palvelimeen"
+#: data/screenshot.glade.h:2 data/uri.glade.h:1
+msgid "*"
+msgstr "*"
 
-#: data/totem-download.glade.h:2
-msgid "Done"
-msgstr "Tehty"
+#: data/screenshot.glade.h:3
+msgid "<b>Preview</b>"
+msgstr "<b>Esikatselu</b>"
 
-#: data/totem-download.glade.h:3
-msgid "Downloading the plug-ins"
-msgstr "Noudetaan liitännäisiä"
+#: data/screenshot.glade.h:4 src/totem-screenshot.c:268
+msgid "Save Screenshot"
+msgstr "Tallenna _kuvakaappaus"
 
-#: data/totem-download.glade.h:4
-msgid "Installing the plug-ins"
-msgstr "Asennetaan liitännäisiä"
+#: data/screenshot.glade.h:5
+msgid "Save screenshot"
+msgstr "Tallenna kuvankaappaus"
 
-#: data/totem-download.glade.h:5
-msgid "Plug-ins Download"
-msgstr "Liitännäisten nouto"
+#: data/screenshot.glade.h:6
+msgid "Save screenshot to _desktop"
+msgstr "Tallenna kuvankaappaus työ_pöydälle"
+
+#: data/screenshot.glade.h:7
+msgid "Save screenshot to _file:"
+msgstr "Tallenna kuvakaappaus _tiedostoon:"
 
 #: data/totem.desktop.in.h:1
 msgid "Play movies and songs"
 msgstr "Soita elokuvia ja musiikkia"
 
 #. Title
-#: data/totem.desktop.in.h:2 data/totem.glade.h:97 src/totem.c:739
-#: src/totem.c:3694
+#: data/totem.desktop.in.h:2 data/totem.glade.h:101 src/totem.c:709
+#: src/totem.c:3656
 msgid "Totem Movie Player"
 msgstr "Totem-elokuvasoitin"
 
-#: data/totem.glade.h:2 data/uri.glade.h:1
-msgid "*"
-msgstr "*"
-
-#: data/totem.glade.h:4
+#: data/totem.glade.h:3
 msgid "1.5 Mbps T1/Intranet/LAN"
 msgstr "1,5 Mbps T1/Intranet/lähiverkko"
 
-#: data/totem.glade.h:5
+#: data/totem.glade.h:4
 msgid "112 Kbps Dual ISDN/DSL"
 msgstr "112 kbps tupla-ISDL/DSL"
 
-#: data/totem.glade.h:6
+#: data/totem.glade.h:5
 msgid "14.4 Kbps Modem"
 msgstr "14,4 kbps modeemi"
+
+#: data/totem.glade.h:6
+msgid "16:9 (Widescreen)"
+msgstr "16:9 (Laajakuva)"
 
 #: data/totem.glade.h:7
 msgid "19.2 Kbps Modem"
 msgstr "19,2 kbps modeemi"
 
 #: data/totem.glade.h:8
+msgid "2.11:1 (DVB)"
+msgstr "2.11:1 (DVB)"
+
+#: data/totem.glade.h:9
 msgid "256 Kbps DSL/Cable"
 msgstr "256 kbps DSL/kaapeli"
 
-#: data/totem.glade.h:9
+#: data/totem.glade.h:10
 msgid "28.8 Kbps Modem"
 msgstr "28,8 kbps modeemi"
 
-#: data/totem.glade.h:10
+#: data/totem.glade.h:11
 msgid "33.6 Kbps Modem"
 msgstr "33,6 kbps modeemi"
 
-#: data/totem.glade.h:11
+#: data/totem.glade.h:12
 msgid "34.4 Kbps Modem"
 msgstr "34,4 kbps modeemi"
 
-#: data/totem.glade.h:12
+#: data/totem.glade.h:13
 msgid "384 Kbps DSL/Cable"
 msgstr "384 kbps DSL/kaapeli"
 
-#: data/totem.glade.h:13
+#: data/totem.glade.h:14
 msgid "4-channel"
 msgstr "4-kanavainen"
 
-#: data/totem.glade.h:14
+#: data/totem.glade.h:15
+msgid "4:3 (TV)"
+msgstr "4:3 (TV)"
+
+#: data/totem.glade.h:16
 msgid "5.0-channel"
 msgstr "5.0-kanavainen"
 
-#: data/totem.glade.h:15
+#: data/totem.glade.h:17
 msgid "5.1-channel"
 msgstr "5.1-kanavainen"
 
-#: data/totem.glade.h:16
+#: data/totem.glade.h:18
 msgid "512 Kbps DSL/Cable"
 msgstr "512 kbps DSL/kaapeli"
 
-#: data/totem.glade.h:17
+#: data/totem.glade.h:19
 msgid "56 Kbps Modem/ISDN"
 msgstr "56 kbps modeemi/ISDN"
 
-#: data/totem.glade.h:18
+#: data/totem.glade.h:20
 msgid "<b>Audio Output</b>"
 msgstr "<b>Ääniulostulo</b>"
 
-#: data/totem.glade.h:19
+#: data/totem.glade.h:21
 msgid "<b>Color balance</b>"
 msgstr "<b>Väritasapaino</b>"
 
-#: data/totem.glade.h:20
+#: data/totem.glade.h:22
 msgid "<b>Display</b>"
 msgstr "<b>Näyttö</b>"
 
-#: data/totem.glade.h:21
+#: data/totem.glade.h:23
 msgid "<b>Networking</b>"
 msgstr "<b>Verkko</b>"
 
-#: data/totem.glade.h:22
+#: data/totem.glade.h:24
 msgid "<b>Optical Device</b>"
 msgstr "<b>Optinen laite</b>"
 
-#: data/totem.glade.h:23
-msgid "<b>Preview</b>"
-msgstr "<b>Esikatselu</b>"
-
-#: data/totem.glade.h:24
+#: data/totem.glade.h:25
 msgid "<b>Proprietary Plugins</b>"
 msgstr "<b>Omat liitännäiset</b>"
 
-#: data/totem.glade.h:25
+#: data/totem.glade.h:26
 msgid "<b>TV-Out</b>"
 msgstr "<b>TV-ulostulo</b>"
 
-#: data/totem.glade.h:26
+#: data/totem.glade.h:27
 msgid "<b>Visual Effects</b>"
 msgstr "<b>Visualliset tehosteet</b>"
 
-#: data/totem.glade.h:27
+#: data/totem.glade.h:28
 msgid "AC3 Passthrough"
 msgstr "AC3-läpivienti"
 
-#: data/totem.glade.h:28
+#: data/totem.glade.h:29
 msgid "A_udio Menu"
 msgstr "_Äänivalikko"
 
-#: data/totem.glade.h:29
+#: data/totem.glade.h:30
 msgid "Always on _Top"
 msgstr "Aina _päällimmäisenä"
 
-#: data/totem.glade.h:30
+#: data/totem.glade.h:31
 msgid "Always on top"
 msgstr "Aina päällimmäisenä"
 
-#: data/totem.glade.h:31
+#: data/totem.glade.h:32
 msgid "Audio"
 msgstr "Ääni"
 
-#: data/totem.glade.h:32
+#: data/totem.glade.h:33 src/totem.c:2898 src/totem.c:2919
+msgid "Auto"
+msgstr "Auto"
+
+#: data/totem.glade.h:34
 msgid "Automatically _resize the window when a new video is loaded"
 msgstr "_Muuta ikkunan kokoa automaattisesti, kun uusi video ladataan"
 
-#: data/totem.glade.h:33
+#: data/totem.glade.h:35
 msgid "Co_ntrast:"
 msgstr "Ko_ntrasti:"
 
-#: data/totem.glade.h:34
+#: data/totem.glade.h:36
 msgid "Connection _speed:"
 msgstr "Yhteys_nopeus:"
 
-#: data/totem.glade.h:35
+#: data/totem.glade.h:37
 msgid "Deinterlace"
 msgstr "Lomittamaton"
 
-#: data/totem.glade.h:36
+#: data/totem.glade.h:38
 msgid "Display"
 msgstr "Näyttö"
 
-#: data/totem.glade.h:37
+#: data/totem.glade.h:39
 msgid "Exit Fullscreen"
 msgstr "Poistu kokoruututilasta"
 
-#: data/totem.glade.h:38
+#: data/totem.glade.h:40
 msgid "Extra Large"
 msgstr "Erittäin suuri"
 
-#: data/totem.glade.h:39
+#: data/totem.glade.h:41
 msgid "File name"
 msgstr "Tiedoston nimi"
 
-#: data/totem.glade.h:40
+#: data/totem.glade.h:42
 msgid "General"
 msgstr "Yleistä"
 
-#: data/totem.glade.h:41
+#: data/totem.glade.h:43
 msgid "Go to the DVD menu"
 msgstr "Siirry DVD-valikkoon"
 
-#: data/totem.glade.h:42
+#: data/totem.glade.h:44
 msgid "Go to the angle menu"
 msgstr "Siirry kuvakulmavalikkoon"
 
-#: data/totem.glade.h:43
+#: data/totem.glade.h:45
 msgid "Go to the audio menu"
 msgstr "Siirry äänivalikkoon"
 
-#: data/totem.glade.h:44
+#: data/totem.glade.h:46
 msgid "Go to the chapter menu"
 msgstr "Siirry kappalevalikkoon"
 
-#: data/totem.glade.h:45
+#: data/totem.glade.h:47
 msgid "Go to the title menu"
 msgstr "Siirry nimivalikkoon"
 
-#: data/totem.glade.h:46
+#: data/totem.glade.h:48
 msgid "Help contents"
 msgstr "Ohjeen sisältö"
 
-#: data/totem.glade.h:47
+#: data/totem.glade.h:49
 msgid "Intranet/LAN"
 msgstr "Intranet/lähiverkko"
 
-#: data/totem.glade.h:48
+#: data/totem.glade.h:50
 msgid "Languages"
 msgstr "Kielet"
 
-#: data/totem.glade.h:49
+#: data/totem.glade.h:51
 msgid "Large"
 msgstr "Suuri"
 
-#: data/totem.glade.h:50 src/totem.c:77
+#: data/totem.glade.h:52 src/totem.c:81
 msgid "Next"
 msgstr "Seuraava"
 
-#: data/totem.glade.h:51
+#: data/totem.glade.h:53
 msgid "Next chapter or movie"
 msgstr "Seuraava kappale/elokuva"
 
-#: data/totem.glade.h:52
+#: data/totem.glade.h:54
 msgid "No Language Selection Available"
 msgstr "Kielivalintoja ei saatavilla"
 
-#: data/totem.glade.h:53
+#: data/totem.glade.h:55
 msgid "No subtitles selection available"
 msgstr "Tekstitysvalintoja ei saatavilla"
 
-#: data/totem.glade.h:54
+#: data/totem.glade.h:56
 msgid "Normal"
 msgstr "Normaali"
 
-#: data/totem.glade.h:55
+#: data/totem.glade.h:57
 msgid "Open _Location..."
 msgstr "Avaa _sijainnista..."
 
-#: data/totem.glade.h:56
+#: data/totem.glade.h:58
 msgid "Open a non-local file"
 msgstr "Avaa ei-paikallinen tiedosto"
 
-#: data/totem.glade.h:57
+#: data/totem.glade.h:59
 msgid "Play / Pa_use"
 msgstr "Soita / Pidä ta_uko"
 
-#: data/totem.glade.h:58
+#: data/totem.glade.h:60
 msgid "Play _Audio CD"
 msgstr "Soita _Ääni-CD:tä"
 
-#: data/totem.glade.h:59
+#: data/totem.glade.h:61
 msgid "Play _DVD"
 msgstr "Soita _DVD:tä"
 
-#: data/totem.glade.h:60
+#: data/totem.glade.h:62
 msgid "Play _VCD"
 msgstr "Soita _VCD:tä"
 
-#: data/totem.glade.h:61
+#: data/totem.glade.h:63
 msgid "Play a Video CD"
 msgstr "Soita Video-CD:tä"
 
-#: data/totem.glade.h:62
+#: data/totem.glade.h:64
 msgid "Play a Video DVD"
 msgstr "Soita Video-DVD:tä"
 
-#: data/totem.glade.h:63
+#: data/totem.glade.h:65
 msgid "Play an audio CD"
 msgstr "Soita ääni-CD:tä"
 
-#: data/totem.glade.h:64
+#: data/totem.glade.h:66
 msgid "Play or pause the movie"
 msgstr "Soita tai pidä tauko elokuvassa"
 
-#: data/totem.glade.h:65 src/totem.c:76
+#: data/totem.glade.h:67 src/totem.c:80
 msgid "Play/Pause"
 msgstr "Soita/Pidä tauko"
 
-#: data/totem.glade.h:66 src/totem.c:78
+#: data/totem.glade.h:68 src/totem.c:82
 msgid "Previous"
 msgstr "Edellinen"
 
-#: data/totem.glade.h:67
+#: data/totem.glade.h:69
 msgid "Previous chapter or movie"
 msgstr "Edellinen kappale/elokuva"
 
-#: data/totem.glade.h:68
+#: data/totem.glade.h:70
 msgid "S_ubtitles"
 msgstr "_Tekstitys"
 
-#: data/totem.glade.h:69
+#: data/totem.glade.h:71
 msgid "Sat_uration:"
 msgstr "_Kylläisyys:"
 
-#: data/totem.glade.h:70
-msgid "Save Screenshot"
-msgstr "Tallenna _kuvakaappaus"
-
-#: data/totem.glade.h:71
-msgid "Save screenshot to _file:"
-msgstr "Tallenna kuvakaappaus _tiedostoon:"
-
 #: data/totem.glade.h:72
-msgid "Save screenshot to the _desktop"
-msgstr "Tallenna kuvakaappaus työ_pöydälle"
+msgid "Set the aspect ratio"
+msgstr "Aseta kuvasuhde"
 
 #: data/totem.glade.h:73
 msgid "Set the repeat mode"
@@ -451,246 +459,274 @@ msgid "Set the shuffle mode"
 msgstr "Aseta satunnaissoittotila"
 
 #: data/totem.glade.h:75
+msgid "Sets 16:9 (Anamorphic) aspect ratio"
+msgstr "Asettaa 16:9 (Anamorfisen) kuvasuhteen"
+
+#: data/totem.glade.h:76
+msgid "Sets 2.11:1 (DVB) aspect ratio"
+msgstr "Asettaa 2.11:1 (DVB) kuvasuhteen"
+
+#: data/totem.glade.h:77
+msgid "Sets 4:3 (TV) aspect ratio"
+msgstr "Asettaa 4:3 (TV) kuvasuhteen"
+
+#: data/totem.glade.h:78
+msgid "Sets automatic aspect ratio"
+msgstr "Valitsee kuvasuhteen automaattisesti"
+
+#: data/totem.glade.h:79
+msgid "Sets square aspect ratio"
+msgstr "Aseta neliönmuotoinen kuvasuhde"
+
+#: data/totem.glade.h:80
 msgid "Show _Controls"
 msgstr "Näytä _säätimet"
 
-#: data/totem.glade.h:76
+#: data/totem.glade.h:81
 msgid "Show _visual effects when an audio file is played"
 msgstr "Näytä _visuaalisia tehosteita, kun ääntä soitetaan"
 
-#: data/totem.glade.h:77
+#: data/totem.glade.h:82
 msgid "Show controls"
 msgstr "Näytä säätimet"
 
-#: data/totem.glade.h:78
+#: data/totem.glade.h:83
 msgid "Show or hide the playlist"
 msgstr "Näytä tai piilota soittolista"
 
-#: data/totem.glade.h:79
+#: data/totem.glade.h:84
 msgid "Show/Hide Playlist"
 msgstr "Näytä/Piilota soittolista"
 
-#: data/totem.glade.h:80
+#: data/totem.glade.h:85
 msgid "Shuff_le Mode"
 msgstr "_Satunnaissoitto"
 
-#: data/totem.glade.h:81
+#: data/totem.glade.h:86
 msgid "Skip _Backwards"
 msgstr "Kelaa _taaksepäin"
 
-#: data/totem.glade.h:82
+#: data/totem.glade.h:87
 msgid "Skip _Forward"
 msgstr "Kelaa _eteenpäin"
 
-#: data/totem.glade.h:83
+#: data/totem.glade.h:88
 msgid "Skip backwards"
 msgstr "Kelaa taaksepäin"
 
-#: data/totem.glade.h:84
+#: data/totem.glade.h:89
 msgid "Skip forward"
 msgstr "Kelaa eteenpäin"
 
-#: data/totem.glade.h:85
+#: data/totem.glade.h:90
 msgid "Skip to"
 msgstr "Kelaa kohtaan"
 
-#: data/totem.glade.h:86
+#: data/totem.glade.h:91
 msgid "Skip to a specific time"
 msgstr "Kelaa annettuun ajankohtaan"
 
-#: data/totem.glade.h:87
+#: data/totem.glade.h:92
 msgid "Small"
 msgstr "Pieni"
 
-#: data/totem.glade.h:88
+#: data/totem.glade.h:93
+msgid "Square"
+msgstr "Neliö"
+
+#: data/totem.glade.h:94
 msgid "Stereo"
 msgstr "Stereo"
 
-#: data/totem.glade.h:89
+#: data/totem.glade.h:95
 msgid "Subtitles"
 msgstr "Tekstitys"
 
-#: data/totem.glade.h:90
+#: data/totem.glade.h:96
 msgid "Switch to double size"
 msgstr "Vaihda tuplakokoiseksi"
 
-#: data/totem.glade.h:91
+#: data/totem.glade.h:97
 msgid "Switch to fullscreen"
 msgstr "Vaihda kokoruututilaan"
 
-#: data/totem.glade.h:92
+#: data/totem.glade.h:98
 msgid "Take _Screenshot"
 msgstr "Ota _kuvakaappaus"
 
-#: data/totem.glade.h:93
+#: data/totem.glade.h:99
 msgid "Take a screenshot"
 msgstr "Ota kuvakaappaus"
 
-#: data/totem.glade.h:94
+#: data/totem.glade.h:100
 msgid "Time:"
 msgstr "Aika:"
 
-#: data/totem.glade.h:95
-msgid "Toggle _Aspect Ratio"
-msgstr "Vaihda kuvasuhdett_a"
-
-#: data/totem.glade.h:96
-msgid "Toggle the aspect ratio"
-msgstr "Vaihda kuvasuhdetta"
-
-#: data/totem.glade.h:98
+#: data/totem.glade.h:102
 msgid "Totem Preferences"
 msgstr "Totemin asetukset"
 
-#: data/totem.glade.h:99
+#: data/totem.glade.h:103
+msgid "Tv-out in fullscreen by Nvidia (NTSC)"
+msgstr "Nvidia (NTSC) TV-ulostulo kokoruututilassa"
+
+#: data/totem.glade.h:104
+msgid "Tv-out in fullscreen by Nvidia (PAL)"
+msgstr "Nvidia (PAL) TV-ulostulo kokoruututilassa"
+
+#: data/totem.glade.h:105
 msgid "Visualisation _size:"
 msgstr "Visualisointik_oko:"
 
-#: data/totem.glade.h:100
+#: data/totem.glade.h:106
 msgid "Volume _Down"
 msgstr "_Hiljemmalle"
 
-#: data/totem.glade.h:101
+#: data/totem.glade.h:107
 msgid "Volume _Up"
 msgstr "_Kovemmalle"
 
-#: data/totem.glade.h:102
+#: data/totem.glade.h:108
 msgid "Volume down"
 msgstr "Hiljemmalle"
 
-#: data/totem.glade.h:103
+#: data/totem.glade.h:109
 msgid "Volume up"
 msgstr "Kovemmalle"
 
-#: data/totem.glade.h:104 data/vanity.glade.h:7
+#: data/totem.glade.h:110 data/vanity.glade.h:7
 msgid "Zoom _1:1"
 msgstr "Kuvasuhde _1:1"
 
-#: data/totem.glade.h:105 data/vanity.glade.h:8
+#: data/totem.glade.h:111 data/vanity.glade.h:8
 msgid "Zoom _2:1"
 msgstr "Kuvasuhde _2:1"
 
-#: data/totem.glade.h:106
+#: data/totem.glade.h:112
 msgid "Zoom to half size"
 msgstr "Loitonna puoleen"
 
-#: data/totem.glade.h:107
+#: data/totem.glade.h:113
 msgid "Zoom to one for one size"
 msgstr "Alkuperäinen koko"
 
-#: data/totem.glade.h:108
+#: data/totem.glade.h:114
 msgid "_Add Proprietary Plugins..."
 msgstr "_Lisää omia liitännäisiä..."
 
-#: data/totem.glade.h:109
+#: data/totem.glade.h:115
 msgid "_Angle Menu"
 msgstr "K_atselukulmavalikko"
 
-#: data/totem.glade.h:110
+#: data/totem.glade.h:116
+msgid "_Aspect Ratio"
+msgstr "_Kuvasuhde"
+
+#: data/totem.glade.h:117
 msgid "_Audio output type:"
 msgstr "_Ääniulostulon tyyppi:"
 
-#: data/totem.glade.h:111
+#: data/totem.glade.h:118
 msgid "_Brightness:"
 msgstr "_Kirkkaus:"
 
-#: data/totem.glade.h:112
+#: data/totem.glade.h:119
 msgid "_Chapter Menu"
 msgstr "Ka_ppalevalikko"
 
-#: data/totem.glade.h:113
+#: data/totem.glade.h:120
 msgid "_Contents"
 msgstr "_Sisältö"
 
-#: data/totem.glade.h:114
+#: data/totem.glade.h:121
 msgid "_DVD Menu"
 msgstr "_DVD-valikko"
 
-#: data/totem.glade.h:115
+#: data/totem.glade.h:122
 msgid "_DXR3 TV-out"
 msgstr "_DXR3-TV-ulostulo"
 
-#: data/totem.glade.h:116
+#: data/totem.glade.h:123
 msgid "_Deinterlace"
 msgstr "_Lomittamaton"
 
-#: data/totem.glade.h:117
+#: data/totem.glade.h:124
 msgid "_Eject"
 msgstr "L_evy ulos"
 
-#: data/totem.glade.h:118
+#: data/totem.glade.h:125
 msgid "_Fullscreen"
 msgstr "_Kokoruutu"
 
-#: data/totem.glade.h:119
+#: data/totem.glade.h:126
 msgid "_Go"
 msgstr "_Siirry"
 
-#: data/totem.glade.h:120
+#: data/totem.glade.h:127
 msgid "_Hue:"
 msgstr "_Sävy:"
 
-#: data/totem.glade.h:121
+#: data/totem.glade.h:128
 msgid "_Languages"
 msgstr "_Kielet"
 
-#: data/totem.glade.h:122
+#: data/totem.glade.h:129
 msgid "_Movie"
 msgstr "_Elokuva"
 
-#: data/totem.glade.h:123
+#: data/totem.glade.h:130
 msgid "_Next Chapter/Movie"
 msgstr "_Seuraava kappale/elokuva"
 
-#: data/totem.glade.h:124
+#: data/totem.glade.h:131
 msgid "_No TV-out"
 msgstr "_Ei TV-ulostuloa"
 
-#: data/totem.glade.h:125
+#: data/totem.glade.h:132
 msgid "_Optical device path:"
 msgstr "_Optisen laitteen polku:"
 
-#: data/totem.glade.h:126
+#: data/totem.glade.h:133
 msgid "_Previous Chapter/Movie"
 msgstr "Ede_llinen kappale/elokuva"
 
-#: data/totem.glade.h:127
+#: data/totem.glade.h:134
 msgid "_Repeat Mode"
 msgstr "Kertaus_tila"
 
-#: data/totem.glade.h:128
+#: data/totem.glade.h:135
+msgid "_Reset defaults"
+msgstr "_Palauta oletukset"
+
+#: data/totem.glade.h:136
 msgid "_Show/Hide Playlist"
 msgstr "_Näytä/Piilota soittolista"
 
-#: data/totem.glade.h:129
+#: data/totem.glade.h:137
 msgid "_Skip to..."
 msgstr "_Kelaa..."
 
-#: data/totem.glade.h:130
+#: data/totem.glade.h:138
 msgid "_Skip to:"
 msgstr "_Kelaa kohtaan:"
 
-#: data/totem.glade.h:131
+#: data/totem.glade.h:139
 msgid "_Sound"
 msgstr "_Ääni"
 
-#: data/totem.glade.h:132
-msgid "_TV-out mode"
-msgstr "_TV-ulostulo-tila"
-
-#: data/totem.glade.h:133
+#: data/totem.glade.h:140
 msgid "_Title Menu"
 msgstr "_Otsikkovalikko"
 
-#: data/totem.glade.h:134
+#: data/totem.glade.h:141
 msgid "_Type of visualisation:"
 msgstr "Visualisoinnin _tyyppi:"
 
-#: data/totem.glade.h:135 data/vanity.glade.h:10
+#: data/totem.glade.h:142 data/vanity.glade.h:10
 msgid "_Zoom 1:2"
 msgstr "K_uvasuhde 1:2"
 
-#: data/totem.glade.h:136
+#: data/totem.glade.h:143
 msgid "seconds"
 msgstr "sekuntia"
 
@@ -857,7 +893,7 @@ msgstr "Katsele elävää webcamia ja lähetä kuvia"
 msgid "Save File"
 msgstr "Tallenna tiedosto"
 
-#: data/vanity.glade.h:2 src/vanity.c:248
+#: data/vanity.glade.h:2 src/vanity.c:262
 msgid "Vanity"
 msgstr "Vanity"
 
@@ -881,15 +917,15 @@ msgstr "Kuvasuhde 2:1"
 msgid "_Picture"
 msgstr "_Kuva"
 
-#: src/bacon-cd-selection.c:234
+#: src/bacon-cd-selection.c:257
 msgid "Unnamed CDROM"
 msgstr "Nimetön romppu"
 
-#: src/bacon-cd-selection.c:276 src/bacon-v4l-selection.c:275
+#: src/bacon-cd-selection.c:302 src/bacon-v4l-selection.c:257
 msgid "Select the drive"
 msgstr "Valitse asema"
 
-#: src/bacon-v4l-selection.c:233
+#: src/bacon-v4l-selection.c:212
 msgid "Unnamed Video Device"
 msgstr "Nimetön videolaite"
 
@@ -897,21 +933,21 @@ msgstr "Nimetön videolaite"
 msgid "Totem Video Window"
 msgstr "Totem-videoikkuna"
 
-#: src/bacon-video-widget-properties.c:106
+#: src/bacon-video-widget-properties.c:82
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d tunti"
 msgstr[1] "%d tuntia"
 
-#: src/bacon-video-widget-properties.c:108
+#: src/bacon-video-widget-properties.c:84
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minuutti"
 msgstr[1] "%d minuuttia"
 
-#: src/bacon-video-widget-properties.c:111
+#: src/bacon-video-widget-properties.c:87
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -919,39 +955,39 @@ msgstr[0] "%d sekunti"
 msgstr[1] "%d sekuntia"
 
 #. hour:minutes:seconds
-#: src/bacon-video-widget-properties.c:117
+#: src/bacon-video-widget-properties.c:93
 #, c-format
 msgid "%s %s %s"
 msgstr "%s, %s, %s"
 
 #. minutes:seconds
-#: src/bacon-video-widget-properties.c:120
+#: src/bacon-video-widget-properties.c:96
 #, c-format
 msgid "%s %s"
 msgstr "%s, %s"
 
 #. seconds
-#: src/bacon-video-widget-properties.c:123
+#: src/bacon-video-widget-properties.c:99
 #, c-format
 msgid "%s"
 msgstr "%s"
 
 #. Duration
-#: src/bacon-video-widget-properties.c:163
+#: src/bacon-video-widget-properties.c:139
 msgid "0 second"
 msgstr "0 sekuntia"
 
-#: src/bacon-video-widget-properties.c:248
+#: src/bacon-video-widget-properties.c:224
 #, c-format
 msgid "%d frames per second"
 msgstr "%d kehystä per sekunti"
 
-#: src/bacon-video-widget-properties.c:266
+#: src/bacon-video-widget-properties.c:242
 #, c-format
 msgid "%d kbps"
 msgstr "%d kb/s"
 
-#: src/bacon-video-widget-xine.c:636
+#: src/bacon-video-widget-xine.c:687
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -960,40 +996,46 @@ msgstr ""
 "Ääniajuria \"%s\" ei voitu avata\n"
 "Tarkista, ettei laite ole käytössä"
 
-#: src/bacon-video-widget-xine.c:1146
+#: src/bacon-video-widget-xine.c:1180 src/bacon-video-widget-xine.c:1611
+msgid ""
+"No video output is available. Make sure that the program is correctly "
+"installed."
+msgstr ""
+"Video-ulostuloa ei ole käytettävissä. Tarkista, että ohjelma on asennettu "
+"oikein."
+
+#: src/bacon-video-widget-xine.c:1287
 msgid "The server you are trying to connect to is not known."
 msgstr "Palvelinta, johon yrität ottaa yhteyttä, ei löydy."
 
-#: src/bacon-video-widget-xine.c:1149
+#: src/bacon-video-widget-xine.c:1290
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "Määrittämäsi laitenimi (%s) näyttää kelvottomalta."
 
-#: src/bacon-video-widget-xine.c:1152
+#: src/bacon-video-widget-xine.c:1293
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "Palvelin, johon yrität ottaa yhteyttä (%s), on tavoittamattomissa."
 
-#: src/bacon-video-widget-xine.c:1155
+#: src/bacon-video-widget-xine.c:1296
 msgid "The connection to this server was refused."
 msgstr "Yhteys palvelimeen torjuttiin."
 
-#: src/bacon-video-widget-xine.c:1158
-#, c-format
-msgid "The specified movie '%s' could not be found."
-msgstr "Annettua elokuvaa \"%s\" ei löydy."
+#: src/bacon-video-widget-xine.c:1299
+msgid "The specified movie could not be found."
+msgstr "Annettua elokuvaa ei löytynyt"
 
-#: src/bacon-video-widget-xine.c:1161
-#, c-format
-msgid "The movie '%s' could not be read."
-msgstr "Elokuvaa \"%s\" ei voi lukea."
+#: src/bacon-video-widget-xine.c:1302
+msgid "The movie could not be read."
+msgstr "Elokuvaa ei voida lukea."
 
-#: src/bacon-video-widget-xine.c:1164
+#: src/bacon-video-widget-xine.c:1305
 #, c-format
 msgid "A problem occured while loading a library or a decoder (%s)."
 msgstr "Ladattaessa kirjastoa tai dekooderia (%s) tuli vastaan ongelma."
 
-#: src/bacon-video-widget-xine.c:1168
+#: src/bacon-video-widget-xine.c:1309
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -1001,35 +1043,47 @@ msgstr ""
 "Lähde on salattu eikä sitä voi lukea. Et kai yritä soittaa salattua DVD:tä "
 "ilman libdvdcss-kirjastoa?"
 
-#: src/bacon-video-widget-xine.c:1170
+#: src/bacon-video-widget-xine.c:1311
 msgid "This file is encrypted and cannot be played back."
 msgstr "Tämä elokuva on salattu eikä sitä voi soittaa."
 
-#: src/bacon-video-widget-xine.c:1173
+#: src/bacon-video-widget-xine.c:1314
 msgid "For security reasons, this movie can not be played back."
 msgstr "Elokuvaa ei voitu turvasyistä soittaa."
 
-#: src/bacon-video-widget-xine.c:1263
-msgid "There is no plugin to handle this movie"
-msgstr "Tähän elokuvaan ei löydy sopivaa liitännäistä"
+#: src/bacon-video-widget-xine.c:1318
+msgid "The audio device is busy. Is another application using it?"
+msgstr "Äänilaite on varattu. Käyttäkö joku muu ohjelma sitä?"
 
-#: src/bacon-video-widget-xine.c:1267
-msgid "This movie is broken and can not be played further"
-msgstr "Tämä elokuva on rikki, eikä Totem voi soittaa sitä pidemmälle"
+#: src/bacon-video-widget-xine.c:1322
+msgid "You are not allowed to open this file."
+msgstr "Oikeutesi eivät riitä tämän tiedoston avaamiseen."
 
-#: src/bacon-video-widget-xine.c:1271
-msgid "This location is not a valid one"
-msgstr "Sijainti ei ole kelvollinen"
+#: src/bacon-video-widget-xine.c:1324
+msgid "The server refused access to this file or stream."
+msgstr "Palvelin ei anna pääsyä tähän tiedostoon tai virtaan"
 
-#: src/bacon-video-widget-xine.c:1275
-msgid "This movie could not be opened"
-msgstr "Tämän elokuvan avaaminen ei onnistu"
+#: src/bacon-video-widget-xine.c:1450
+msgid "There is no plugin to handle this movie."
+msgstr "Tämän elokuvan avaamiseen ei löydy sopivaa liitännäistä"
 
-#: src/bacon-video-widget-xine.c:1278
-msgid "Generic Error"
-msgstr "Tyypillinen virhe"
+#: src/bacon-video-widget-xine.c:1454
+msgid "This movie is broken and can not be played further."
+msgstr "Tämä elokuva on rikki, eikä sitä voida soittaa pidemmälle"
 
-#: src/bacon-video-widget-xine.c:1693
+#: src/bacon-video-widget-xine.c:1458
+msgid "This location is not a valid one."
+msgstr "Sijainti ei ole kelvollinen."
+
+#: src/bacon-video-widget-xine.c:1462
+msgid "This movie could not be opened."
+msgstr "Tämän elokuvan avaaminen ei onnistu."
+
+#: src/bacon-video-widget-xine.c:1465
+msgid "Generic Error."
+msgstr "Yleinen virhe."
+
+#: src/bacon-video-widget-xine.c:1908
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1038,83 +1092,75 @@ msgstr ""
 "Videotyyppiä \"%s\" ei tueta. Sinun kenties täytyy asentaa lisäliitännäinen "
 "voidaksesi katsoa jotain elokuvia"
 
-#: src/bacon-video-widget-xine.c:1712
-msgid "This is an audio-only file, and there is no audio output available"
-msgstr "Tässä tiedostossa on vain ääniraita ja ääniulostulo ei ole käytössä"
+#: src/bacon-video-widget-xine.c:1928
+msgid "This is an audio-only file, and there is no audio output available."
+msgstr "Tässä tiedostossa on vain ääntä ja ääniulostulo ei ole käytettävissä"
 
-#: src/bacon-video-widget-xine.c:3094
-msgid "Movie is not playing"
-msgstr "Elokuva ei soi"
+#: src/bacon-video-widget-xine.c:3403
+msgid "Movie is not playing."
+msgstr "Elokuva ei soi."
 
-#: src/bacon-video-widget-xine.c:3102
-msgid "No video to capture"
-msgstr "Ei kaapattavaa videota"
+#: src/bacon-video-widget-xine.c:3411
+msgid "No video to capture."
+msgstr "Ei kaapattavaa videota."
 
-#: src/bacon-video-widget-xine.c:3109
-msgid "Video codec is not handled"
-msgstr "Videotyyppiä ei voida käsitellä"
+#: src/bacon-video-widget-xine.c:3418
+msgid "Video codec is not handled."
+msgstr "Videotyyppiä ei voida käsitellä."
 
-#: src/cd-drive.c:554
+#: src/cd-drive.c:573
 #, c-format
 msgid "Unnamed SCSI CD-ROM (%s)"
 msgstr "Nimetön SCSI-romppu (%s)"
 
-#: src/cd-drive.c:1132
+#: src/cd-drive.c:1151
 msgid "File image"
 msgstr "Tiedostokuva"
 
-#: src/gnome-authn-manager.c:60
-msgid "Your HTTP Proxy requires you to log in.\n"
-msgstr "HTTP-välityspalvelimesi vaatii kirjautumista.\n"
-
-#: src/gnome-authn-manager.c:61
+#. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+#: src/totem-mozilla-viewer.c:59 src/totem.c:378 src/totem.c:406
+#: src/totem.c:831 src/totem.c:939
 #, c-format
-msgid ""
-"You must log in to access \"%s\".\n"
-"\n"
-"%s"
-msgstr ""
-"Lähteen \"%s\" avaus vaatii kirjautumista.\n"
-"\n"
-"%s"
+msgid "Totem could not play '%s'."
+msgstr "Totem ei voinut soittaa sijainnista \"%s\"."
 
-#: src/gnome-authn-manager.c:64
-msgid "Your password will be transmitted unencrypted."
-msgstr "Salasanasi siirtyy salaamattomana."
+#: src/totem-mozilla-viewer.c:91 src/totem-mozilla-viewer.c:98
+msgid "Couldn't load the main interface (mozilla-viewer.glade)."
+msgstr "Pääkäyttöliittymää ei voitu avata (mozilla-viewer.glade)."
 
-#: src/gnome-authn-manager.c:65
-msgid "Your password will be transmitted encrypted."
-msgstr "Salasanasi siirtyy salattuna."
+#: src/totem-mozilla-viewer.c:91 src/totem-mozilla-viewer.c:98
+msgid "Make sure that the Totem plugin is properly installed."
+msgstr "Tarkista, että Totemin liitännäinen on oikein asennettu."
 
-#: src/gnome-authn-manager.c:68
-msgid "Authentication Required"
-msgstr "Tunnistaminen vaaditaan"
+#: src/totem-mozilla-viewer.c:109
+msgid "The Totem plugin could not startup."
+msgstr "Totemin liitännäistä ei voida käynnistää."
 
-#: src/gnome-password-dialog.c:227
-msgid "_Username:"
-msgstr "_Käyttäjätunnus:"
+#: src/totem-mozilla-viewer.c:109 src/totem.c:3366
+msgid "No reason."
+msgstr "Ei syytä"
 
-#: src/gnome-password-dialog.c:234
-msgid "_Password:"
-msgstr "_Salasana:"
+#: src/totem-mozilla-viewer.c:141 src/totem.c:3661
+msgid "Could not initialise the thread-safe libraries."
+msgstr "Säieturvallista kirjastoa ei voitu alustaa."
 
-#: src/gnome-password-dialog.c:261
-msgid "Remember this password"
-msgstr "Muista tämä salasana"
+#: src/totem-mozilla-viewer.c:141
+msgid "Verify your system installation. The Totem plugin will now exit."
+msgstr "Tarkista järjestelmäasennuksesi. Totemin liitännäinen suljetaan."
 
-#: src/totem-playlist.c:320
+#: src/totem-playlist.c:300
 msgid "Could not save the playlist"
 msgstr "Soittolistaa ei voitu tallentaa"
 
-#: src/totem-playlist.c:475 src/totem.c:1571
+#: src/totem-playlist.c:574 src/totem.c:1574
 msgid "Select files"
 msgstr "Valitse tiedostot"
 
-#: src/totem-playlist.c:640
+#: src/totem-playlist.c:755
 msgid "Save playlist"
 msgstr "Tallenna soittolista"
 
-#: src/totem-playlist.c:678
+#: src/totem-playlist.c:800
 #, c-format
 msgid ""
 "A file named '%s' already exists.\n"
@@ -1123,21 +1169,21 @@ msgstr ""
 "Tiedosto \"%s\" on jo olemassa.\n"
 "Haluatko varmasti ylikirjoittaa sen?"
 
-#: src/totem-playlist.c:863
+#: src/totem-playlist.c:985
 msgid "Filename"
 msgstr "Tiedoston nimi"
 
-#: src/totem-pl-parser.c:209
+#: src/totem-pl-parser.c:185
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "Ei voitu kirjoittaa jäsennintä: %s"
 
-#: src/totem-pl-parser.c:273
+#: src/totem-pl-parser.c:249
 #, c-format
 msgid "Couldn't open parser: %s"
 msgstr "Ei voitu avata jäsennintä: %s"
 
-#: src/totem-preferences.c:112
+#: src/totem-preferences.c:82
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1145,7 +1191,7 @@ msgstr ""
 "Etäkäytät Totemia.\n"
 "Haluatko varmasti käyttää visuaalisia tehosteita?"
 
-#: src/totem-preferences.c:166
+#: src/totem-preferences.c:135
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted"
@@ -1153,18 +1199,18 @@ msgstr ""
 "Tämän asetuksen muutos astuu voimaan vasta seuraavassa elokuvassa tai kun "
 "uudelleenkäynnistät Totemin"
 
-#: src/totem-preferences.c:210
+#: src/totem-preferences.c:179
 msgid ""
 "Switching on or off this type of TV-Out requires a restart to take effect."
 msgstr ""
 "Tämän tyyppisen TV-ulostulon kytkeminen päälle ja pois vaatii "
 "uudelleenkäynnistyksen."
 
-#: src/totem-preferences.c:343
+#: src/totem-preferences.c:312
 msgid "Totem could not start the file manager."
 msgstr "Totem ei voinut käynnistää tiedostonhallintaa."
 
-#: src/totem-preferences.c:371
+#: src/totem-preferences.c:340
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr ""
 "Visuaalisten tehosteiden tyypin muutos astuu voimaan "
@@ -1178,6 +1224,24 @@ msgstr "URI näytetään tällä hetkellä"
 msgid "Video and Audio information properties page"
 msgstr "Video- ja äänitietojen ominaisuussivu"
 
+#: src/totem-screenshot.c:146 src/totem-screenshot.c:157
+#, c-format
+msgid "Screenshot%d.png"
+msgstr "Kuvakaappaus%d.png"
+
+#: src/totem-screenshot.c:199
+#, c-format
+msgid "File '%s' already exists."
+msgstr "Tiedosto \"%s\" on jo olemassa."
+
+#: src/totem-screenshot.c:201
+msgid "The screenshot was not saved"
+msgstr "Kuvakaappausta ei tallennettu."
+
+#: src/totem-screenshot.c:212
+msgid "There was an error saving the screenshot."
+msgstr "Kuvakaappauksen tallennuksessa tapahtui virhe."
+
 #: src/totem-statusbar.c:138
 msgid "Shadow type"
 msgstr "Varjotyyppi"
@@ -1186,7 +1250,7 @@ msgstr "Varjotyyppi"
 msgid "Style of bevel around the statusbar text"
 msgstr "Tilarivin tekstiä ympäröivän kehyksen tyyli"
 
-#: src/totem-statusbar.c:171 src/totem.c:360
+#: src/totem-statusbar.c:171 src/totem.c:322 src/totem.c:691
 msgid "Stopped"
 msgstr "Pysäytetty"
 
@@ -1213,76 +1277,75 @@ msgstr "Puskuroidaan"
 msgid "%d %%"
 msgstr "%d %%"
 
+#: src/totem.c:78
+msgid "Backend options"
+msgstr "Taustajärjestelmän asetukset"
+
 #: src/totem.c:79
+msgid "Enable debug"
+msgstr "Käytä debuggausta"
+
+#: src/totem.c:83
 msgid "Seek Forwards"
 msgstr "Kelaa eteenpäin"
 
-#: src/totem.c:80
+#: src/totem.c:84
 msgid "Seek Backwards"
 msgstr "Kelaa taaksepäin"
 
-#: src/totem.c:81
+#: src/totem.c:85
 msgid "Volume Up"
 msgstr "Kovemmalle"
 
-#: src/totem.c:82
+#: src/totem.c:86
 msgid "Volume Down"
 msgstr "Hiljemmalle"
 
-#: src/totem.c:84
+#: src/totem.c:87
 msgid "Toggle Fullscreen"
 msgstr "_Kokoruutu"
 
-#: src/totem.c:85
+#: src/totem.c:88
 msgid "Quit"
 msgstr "Lopeta"
 
-#: src/totem.c:86
+#: src/totem.c:89
 msgid "Enqueue"
 msgstr "Lisää jonoon"
 
-#: src/totem.c:87
+#: src/totem.c:90
 msgid "Replace"
 msgstr "Korvaa"
 
-#: src/totem.c:231
-msgid "Download"
-msgstr "Nouda"
-
-#: src/totem.c:346
+#: src/totem.c:312
 msgid "Playing"
 msgstr "Soi"
 
-#: src/totem.c:353
+#: src/totem.c:317
 msgid "Paused"
 msgstr "Tauko"
 
-#: src/totem.c:389
+#: src/totem.c:357
 msgid "Totem could not eject the optical media."
 msgstr "Totem ei voi työntää optista mediaa ulos."
 
-#: src/totem.c:389
-msgid "No reason given"
-msgstr "Syytä ei annettu"
+#: src/totem.c:357
+msgid "No reason given."
+msgstr "Syytä ei annettu."
 
-#: src/totem.c:410 src/totem.c:438 src/totem.c:862 src/totem.c:981
-#, c-format
-msgid "Totem could not play '%s'."
-msgstr "Totem ei voinut soittaa sijainnista \"%s\"."
-
-#: src/totem.c:458
+#: src/totem.c:426
 msgid "DVD"
 msgstr "DVD"
 
-#: src/totem.c:459
+#: src/totem.c:427
 msgid "Video CD"
 msgstr "Video-CD"
 
-#: src/totem.c:460
+#: src/totem.c:428
 msgid "Audio CD"
 msgstr "Ääni-CD"
 
-#: src/totem.c:471
+#: src/totem.c:439
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1291,7 +1354,7 @@ msgstr ""
 "Totem ei voi soittaa tämäntyyppisiä tiedostoja (%s), koska sopivaa "
 "liitännäistä ei ole asennettu."
 
-#: src/totem.c:472
+#: src/totem.c:440
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1299,7 +1362,7 @@ msgstr ""
 "Soittaaksesi tiedoston asenna tarvittavat liitännäiset ja käynnistä Totem "
 "uudestaan."
 
-#: src/totem.c:480
+#: src/totem.c:448
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1308,44 +1371,44 @@ msgstr ""
 "Totem ei voi soittaa mediaa (%s), vaikka sille tarkoitettu liitännäinen on "
 "asennettu."
 
-#: src/totem.c:481
+#: src/totem.c:449
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr "Varmista, että levy on asemassa ja että aseman asetukset ovat oikein."
 
 #. Title
-#: src/totem.c:716
+#: src/totem.c:684
 #, c-format
 msgid "%s - Totem Movie Player"
-msgstr "%s - Totem elokuvasoitin"
+msgstr "%s - Totem-elokuvasoitin"
 
-#: src/totem.c:728 src/totem.c:3535
+#: src/totem.c:698 src/totem.c:3461
 msgid "No file"
 msgstr "Ei tiedostoa"
 
-#: src/totem.c:764 src/totem.c:1924
+#: src/totem.c:735 src/totem.c:1956
 msgid "Totem"
 msgstr "Totem"
 
-#: src/totem.c:1255
+#: src/totem.c:1242
 msgid "An error occured"
 msgstr "Tapahtui virhe"
 
-#: src/totem.c:1636 src/totem.c:1644
+#: src/totem.c:1651 src/totem.c:1659
 msgid "Couldn't load the 'Open Location...' interface."
 msgstr "\"Avaa sijainnista...\"-käyttöliittymää ei voitu ladata."
 
-#: src/totem.c:1636 src/totem.c:1644 src/totem.c:3725 src/totem.c:3750
-#: src/totem.c:3773
+#: src/totem.c:1651 src/totem.c:1659 src/totem.c:3696 src/totem.c:3721
+#: src/totem.c:3746
 msgid "Make sure that Totem is properly installed."
 msgstr "Tarkista, että Totem on oikein asennettu."
 
-#: src/totem.c:1877
+#: src/totem.c:1909
 msgid "Totem could not display the help contents."
 msgstr "Totem ei voinut näyttää ohjeen sisältöä."
 
-#: src/totem.c:1895 src/vanity.c:219
+#: src/totem.c:1927 src/vanity.c:235
 msgid "translator_credits"
 msgstr ""
 "Hile Tuohela, 2002-2003\n"
@@ -1353,100 +1416,79 @@ msgstr ""
 "\n"
 "http://gnome-fi.org/"
 
-#: src/totem.c:1921
+#: src/totem.c:1953
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Elokuvasoitin, joka käyttää %s"
 
-#: src/totem.c:2007 src/totem.c:2018 src/vanity.c:305 src/vanity.c:316
-#, c-format
-msgid "Screenshot%d.png"
-msgstr "Kuvakaappaus%d.png"
-
-#: src/totem.c:2069 src/totem.c:2077
+#: src/totem.c:1993 src/totem.c:2001 src/vanity.c:300 src/vanity.c:308
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem ei voinut kaapata kuvaa tästä elokuvasta."
 
-#: src/totem.c:2077
-msgid "Please file a bug, this isn't supposed to happen"
+#: src/totem.c:2001
+msgid "Please file a bug, this isn't supposed to happen."
 msgstr "Ole hyvä ja ilmoita tästä viasta. Näin ei pitäisi päästä tapahtumaan"
 
-#: src/totem.c:2105
-#, c-format
-msgid "File '%s' already exists."
-msgstr "Tiedosto \"%s\" on jo olemassa."
-
-#: src/totem.c:2106
-msgid "The screenshot was not saved"
-msgstr "Kuvakaappausta ei tallennettu."
-
-#: src/totem.c:2116
-msgid "There was an error saving the screenshot."
-msgstr "Kuvakaappauksen tallennuksessa tapahtui virhe."
-
-#: src/totem.c:2139
+#: src/totem.c:2028
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem ei voinut näyttää elokuvan ominaisuuksia ikkunassa."
 
-#: src/totem.c:2139
+#: src/totem.c:2028
 msgid "Make sure that Totem is correctly installed."
 msgstr "Tarkista, että Totem on oikein asennettu."
 
-#: src/totem.c:2225
+#: src/totem.c:2114
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem ei voinut kelata \"%s\"."
 
-#: src/totem.c:2980 src/totem.c:3002
+#: src/totem.c:2894 src/totem.c:2916
 msgid "None"
 msgstr "Ei mikään"
 
-#: src/totem.c:2984 src/totem.c:3005
-msgid "Auto"
-msgstr "Auto"
-
-#: src/totem.c:3440
+#: src/totem.c:3366
 msgid "Totem could not startup."
 msgstr "Totemia ei voi käynnistää."
 
-#: src/totem.c:3440
-msgid "No reason."
-msgstr "Ei syytä"
+#: src/totem.c:3566
+#, c-format
+msgid "Option '%s' is unknown and was ignored\n"
+msgstr "Optio '%s' on tuntematon ja hylättiin\n"
 
-#: src/totem.c:3699
-msgid "Could not initialise the thread-safe libraries."
-msgstr "Säieturvallista kirjastoa ei voitu alustaa."
-
-#: src/totem.c:3699
+#: src/totem.c:3661
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Tarkista järjestelmäasennuksesi. Totem sulkeutuu."
 
-#: src/totem.c:3716
+#: src/totem.c:3684
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totemin asetusmoottoria ei voitu alustaa."
 
-#: src/totem.c:3716
+#: src/totem.c:3684
 msgid "Make sure that GNOME is properly installed."
 msgstr "Varmista, että GNOME on oikein asennettu.."
 
-#: src/totem.c:3725 src/totem.c:3750
+#: src/totem.c:3696 src/totem.c:3721
 msgid "Couldn't load the main interface (totem.glade)."
 msgstr "Pääkäyttöliittymää ei voitu avata (totem.glade)."
 
-#: src/totem.c:3773
+#: src/totem.c:3746
 msgid "Couldn't load the interface for the playlist."
 msgstr "Soittolistan käyttöliittymää ei voitu ladata."
 
-#: src/vanity.c:55
+#: src/vanity.c:63
 msgid "Debug mode on"
 msgstr "Vianetsintätila päällä"
 
-#: src/vanity.c:245
+#: src/vanity.c:259
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "Webcam-ohjelma, joka käyttää %s"
 
-#: src/vanity.c:548
+#: src/vanity.c:308
+msgid "Please file a bug, this isn't supposed to happen"
+msgstr "Ole hyvä ja ilmoita tästä viasta. Näin ei pitäisi päästä tapahtumaan"
+
+#: src/vanity.c:551
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1455,11 +1497,11 @@ msgstr ""
 "Vanity ei käynnisty:\n"
 "%s"
 
-#: src/vanity.c:549
+#: src/vanity.c:552
 msgid "No reason"
 msgstr "Ei syytä"
 
-#: src/vanity.c:587
+#: src/vanity.c:590
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1468,7 +1510,7 @@ msgstr ""
 "Vanity ei saanut yhteyttä webcamiin.\n"
 "Syy: %s"
 
-#: src/vanity.c:603
+#: src/vanity.c:606
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1477,11 +1519,11 @@ msgstr ""
 "Vanity ei voi näyttää videota webcamista.\n"
 "Syy: %s"
 
-#: src/vanity.c:639
+#: src/vanity.c:642
 msgid "Vanity Webcam Utility"
 msgstr "Vanity-webcam-ohjelma"
 
-#: src/vanity.c:644
+#: src/vanity.c:647
 msgid ""
 "Could not initialise the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1489,7 +1531,7 @@ msgstr ""
 "Säieturvallista kirjastoa ei voitu alustaa.\n"
 "Tarkista järjestelmäasennuksesi. Vanity sulkeutuu."
 
-#: src/vanity.c:666
+#: src/vanity.c:672
 #, c-format
 msgid ""
 "Vanity couln't initialise the \n"
@@ -1500,10 +1542,61 @@ msgstr ""
 "ei voitu alustaa:\n"
 "%s"
 
-#: src/vanity.c:680 src/vanity.c:695
+#: src/vanity.c:689 src/vanity.c:704
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
 msgstr ""
 "Pääkäyttöliittymää ei voitu avata (vanity.glade).\n"
 "Tarkista, että Vanity on oikein asennettu."
+
+#~ msgid "Connecting to the server"
+#~ msgstr "Otetaan yhteyttä palvelimeen"
+
+#~ msgid "Done"
+#~ msgstr "Tehty"
+
+#~ msgid "Downloading the plug-ins"
+#~ msgstr "Noudetaan liitännäisiä"
+
+#~ msgid "Installing the plug-ins"
+#~ msgstr "Asennetaan liitännäisiä"
+
+#~ msgid "Plug-ins Download"
+#~ msgstr "Liitännäisten nouto"
+
+#~ msgid "_TV-out mode"
+#~ msgstr "_TV-ulostulo-tila"
+
+#~ msgid "Your HTTP Proxy requires you to log in.\n"
+#~ msgstr "HTTP-välityspalvelimesi vaatii kirjautumista.\n"
+
+#~ msgid ""
+#~ "You must log in to access \"%s\".\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Lähteen \"%s\" avaus vaatii kirjautumista.\n"
+#~ "\n"
+#~ "%s"
+
+#~ msgid "Your password will be transmitted unencrypted."
+#~ msgstr "Salasanasi siirtyy salaamattomana."
+
+#~ msgid "Your password will be transmitted encrypted."
+#~ msgstr "Salasanasi siirtyy salattuna."
+
+#~ msgid "Authentication Required"
+#~ msgstr "Tunnistaminen vaaditaan"
+
+#~ msgid "_Username:"
+#~ msgstr "_Käyttäjätunnus:"
+
+#~ msgid "_Password:"
+#~ msgstr "_Salasana:"
+
+#~ msgid "Remember this password"
+#~ msgstr "Muista tämä salasana"
+
+#~ msgid "Download"
+#~ msgstr "Nouda"
