@@ -373,8 +373,8 @@ gst_video_widget_expose (GtkWidget * widget, GdkEventExpose * event)
 /* Size request for our widget */
 
 static void
-gst_video_widget_size_request (GtkWidget * widget,
-			       GtkRequisition * requisition)
+gst_video_widget_size_request (GtkWidget *widget,
+			       GtkRequisition *requisition)
 {
   GstVideoWidget *vw;
   gint width, height;
@@ -385,15 +385,16 @@ gst_video_widget_size_request (GtkWidget * widget,
 
   vw = GST_VIDEO_WIDGET (widget);
 
-  if ((!vw->priv->auto_resize) && (!vw->priv->scale_override))
+  if ( (!vw->priv->auto_resize) && (!vw->priv->scale_override) )
     {
       requisition->width = vw->priv->width_mini;
       requisition->height = vw->priv->height_mini;
       return;
     }
 
-  if ((vw->priv->source_width) &&
-      (vw->priv->source_height) && (vw->priv->scale_factor))
+  if ( (vw->priv->source_width) &&
+       (vw->priv->source_height) &&
+       (vw->priv->scale_factor) )
     {
       temp = (vw->priv->scale_factor * vw->priv->source_width + 0.5);
       width = (gint) temp > G_MAXINT ? G_MAXINT : (gint) temp;
@@ -441,10 +442,10 @@ gst_video_widget_size_request (GtkWidget * widget,
 /* Allocate method for our widget */
 
 static void
-gst_video_widget_allocate (GtkWidget * widget, GtkAllocation * allocation)
+gst_video_widget_allocate (GtkWidget *widget, GtkAllocation *allocation)
 {
   GstVideoWidget *vw;
-  gfloat width_ratio, height_ratio, temp, scale_factor = 1.0;
+  gfloat temp, scale_factor = 1.0;
   guint width, height;
 
   g_return_if_fail (widget != NULL);
@@ -456,22 +457,22 @@ gst_video_widget_allocate (GtkWidget * widget, GtkAllocation * allocation)
 
   if (vw->priv->scale_override)
     {
+      /* Enforcing scale ratio taking the scale ratio from the priv structure */
       scale_factor = vw->priv->scale_factor;
     }
   else if (!vw->priv->auto_resize)
-    {
-
-      /* Ratio get impacted only if video window loaded */
-      if ((vw->priv->source_width) &&
-	  (vw->priv->source_height) &&
-	  (GDK_IS_WINDOW (vw->priv->video_window)))
+    { 
+      /* Calculating optimal ratio to fit the allocated window */
+      if ( (vw->priv->source_width) &&
+	   (vw->priv->source_height) &&
+	   (GDK_IS_WINDOW (vw->priv->video_window)) )
 	{
-	  width_ratio = (gfloat) allocation->width /
-	    (gfloat) vw->priv->source_width;
-	  height_ratio = (gfloat) allocation->height /
-	    (gfloat) vw->priv->source_height;
+          gfloat w_ratio, h_ratio;
+          
+	  w_ratio = (gfloat) allocation->width / vw->priv->source_width;
+	  h_ratio = (gfloat) allocation->height / vw->priv->source_height;
 
-	  scale_factor = MIN (width_ratio, height_ratio);
+	  scale_factor = MIN (w_ratio, h_ratio);
 	}
     }
   else
@@ -486,8 +487,8 @@ gst_video_widget_allocate (GtkWidget * widget, GtkAllocation * allocation)
   temp = (scale_factor * vw->priv->source_height + 0.5);
   height = (gint) temp > G_MAXINT ? G_MAXINT : (gint) temp;
 
-  /* If auto resize is set we check that video size is
-     bigger than minimum size */
+  /* When auto resizing we change allocation to our geometry except if our
+     geometry violates the minimum one */
   if (vw->priv->auto_resize)
     {
       if (width < vw->priv->width_mini)
@@ -506,9 +507,9 @@ gst_video_widget_allocate (GtkWidget * widget, GtkAllocation * allocation)
 	{
 	  allocation->height = height;
 	}
-    }				/* If not auto resizing we check that allocation is bigger */
+    }
   else
-    {				/* than minimum size */
+    { /* We do not want to shrink under our minimum geometry */
       if (allocation->width < vw->priv->width_mini)
 	allocation->width = vw->priv->width_mini;
       if (allocation->height < vw->priv->height_mini)
@@ -822,13 +823,6 @@ gst_video_widget_set_xembed_xid (GstVideoWidget * vw, gulong xid)
 
       gdk_window_show (vw->priv->video_window);
 
-      gdk_window_get_geometry (vw->priv->video_window,
-			       &video_x, &video_y,
-			       &video_width, &video_height, &video_depth);
-
-      vw->priv->source_width = video_width;
-      vw->priv->source_height = video_height;
-
       if (vw->priv->event_catcher)
 	gdk_window_raise (vw->priv->event_window);
 
@@ -905,7 +899,7 @@ gst_video_widget_set_source_size (GstVideoWidget * vw, gint width,
 {
   g_return_val_if_fail (vw != NULL, FALSE);
   g_return_val_if_fail (GST_IS_VIDEO_WIDGET (vw), FALSE);
-
+  
   vw->priv->source_width = width;
   vw->priv->source_height = height;
   gtk_widget_queue_resize (GTK_WIDGET (vw));
