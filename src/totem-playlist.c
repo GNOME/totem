@@ -1062,6 +1062,21 @@ treeview_row_changed (GtkTreeView *treeview, GtkTreePath *arg1,
 	}
 
 	playlist->_priv->current = gtk_tree_path_copy (arg1);
+	{
+		int *indices, indice, i;
+
+		indices = gtk_tree_path_get_indices (playlist->_priv->current);
+		indice = indices[0];
+
+		for (i = 0; i < PL_LEN; i++)
+		{
+			if (playlist->_priv->shuffled[i] == indice)
+			{
+				playlist->_priv->current_shuffled = i;
+				break;
+			}
+		}
+	}
 	g_signal_emit (G_OBJECT (playlist),
 			totem_playlist_table_signals[CHANGED], 0,
 			NULL);
