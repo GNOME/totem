@@ -810,11 +810,6 @@ setup_config_video (BaconVideoWidget *bvw)
 {
 	xine_cfg_entry_t entry;
 
-	/* Default xv colourkey */
-	bvw_config_helper_num (bvw->priv->xine, "video.xv_colorkey", 30, &entry);
-	entry.num_value = 30;
-	xine_config_update_entry (bvw->priv->xine, &entry);
-
 	/* Remove the ALSA HW mixing */
 	bvw_config_helper_num (bvw->priv->xine, "audio.alsa_hw_mixer", 0, &entry);
 	entry.num_value = 0;

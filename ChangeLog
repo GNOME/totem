@@ -1,3 +1,9 @@
+2004-11-04  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-xine.c: (setup_config_video): remove the
+	colour key setting, which seems to break more things than it fixes
+	(Closes: #157320)
+
 2004-11-03  Christophe Fergeau  <teuf@gnome.org>
 
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_finalize),
