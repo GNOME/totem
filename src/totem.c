@@ -1067,7 +1067,9 @@ on_properties1_activate (GtkButton *button, gpointer user_data)
 	dialog = gtk_xine_properties_dialog_get (GTK_XINE (totem->gtx));
 	if (dialog == NULL)
 	{
-		//FIXME
+		totem_action_error (_("Totem couldn't show the movie properties window.\n"
+					"Make sure that Totem is correctly installed."),
+				GTK_WINDOW (totem->win));
 		return;
 	}
 
