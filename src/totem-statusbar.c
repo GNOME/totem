@@ -253,10 +253,13 @@ totem_statusbar_set_time_and_length (TotemStatusbar *statusbar,
 {
   g_return_if_fail (TOTEM_IS_STATUSBAR (statusbar));
 
-  statusbar->time = time;
-  statusbar->length = length;
+  if (time != statusbar->time ||
+      length != statusbar->length) {
+    statusbar->time = time;
+    statusbar->length = length;
 
-  totem_statusbar_update_time (statusbar);
+    totem_statusbar_update_time (statusbar);
+  }
 }
 
 void

@@ -45,7 +45,6 @@
 #include "baconvideowidget-marshal.h"
 #include "scrsaver.h"
 #include "video-utils.h"
-#include "gstvideowidget.h"
 #include "gststreaminfo.h"
 
 #define DEFAULT_HEIGHT 420
@@ -94,7 +93,6 @@ struct BaconVideoWidgetPrivate
 
   GstElement *play;
   guint update_id;
-  GstVideoWidget *vw;
   GstMixer *mixer;
   GstMixerTrack *mixer_track;
   GstXOverlay *xoverlay;
@@ -114,10 +112,7 @@ struct BaconVideoWidgetPrivate
   char *last_error_message;
 
   GdkWindow *video_window;
-  gint video_window_x;
-  gint video_window_y;
-  gint video_window_w;
-  gint video_window_h;
+  GtkAllocation video_window_allocation;
 
   /* Visual effects */
   GList *vis_plugins_list;
@@ -128,6 +123,7 @@ struct BaconVideoWidgetPrivate
   /* Other stuff */
   int xpos, ypos;
   gboolean logo_mode;
+  gboolean cursor_shown;
   gboolean auto_resize;
   
   GAsyncQueue *queue;
@@ -192,184 +188,188 @@ static GtkWidgetClass *parent_class = NULL;
 static int bvw_table_signals[LAST_SIGNAL] = { 0 };
 
 static void
-bacon_video_widget_vw_realized (GtkWidget * widget, BaconVideoWidget * bvw)
+bacon_video_widget_realize (GtkWidget * widget)
 {
-  GdkWindow *video_window = NULL;
-  
-  video_window = gst_video_widget_get_video_window (GST_VIDEO_WIDGET (widget));
-  
-  if (video_window)
-    bvw->priv->video_window = video_window;
-  
-  if (GST_IS_X_OVERLAY (bvw->priv->xoverlay) && GDK_IS_WINDOW (video_window))
-    gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay,
-                                  GDK_WINDOW_XID (video_window));
-  else
-    g_warning ("Could not find a XOVERLAY element in the bin");
-}
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+  GdkWindowAttr attributes;
+  gint attributes_mask;
 
-static void
-bacon_video_widget_vw_allocate (GtkWidget * widget, GtkAllocation  *allocation,
-                             BaconVideoWidget * bvw)
-{
-  gint x, y, w, h;
-  
-  g_return_if_fail (bvw != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  
-  gdk_window_get_geometry (bvw->priv->video_window, &x, &y, &w, &h, NULL);
-  
-  bvw->priv->video_window_x = x;
-  bvw->priv->video_window_y = y;
-  bvw->priv->video_window_w = w;
-  bvw->priv->video_window_h = h;
+  /* Creating our widget's window */
+  attributes.window_type = GDK_WINDOW_CHILD;
+  attributes.x = widget->allocation.x;
+  attributes.y = widget->allocation.y;
+  attributes.width = widget->allocation.width;
+  attributes.height = widget->allocation.height;
+  attributes.wclass = GDK_INPUT_OUTPUT;
+  attributes.visual = gtk_widget_get_visual (widget);
+  attributes.colormap = gtk_widget_get_colormap (widget);
+  attributes.event_mask = gtk_widget_get_events (widget);
+  attributes.event_mask |= GDK_EXPOSURE_MASK;
+  attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
+
+  widget->window = gdk_window_new (gtk_widget_get_parent_window (widget),
+				   &attributes, attributes_mask);
+  gdk_window_set_user_data (widget->window, widget);
+  gdk_window_show (widget->window);
+
+  /* Creating our video window */
+  attributes.window_type = GDK_WINDOW_CHILD;
+  attributes.x = 0;
+  attributes.y = 0;
+  attributes.width = widget->allocation.width;
+  attributes.height = widget->allocation.height;
+  attributes.wclass = GDK_INPUT_OUTPUT;
+  attributes.event_mask = GDK_EXPOSURE_MASK;
+  attributes_mask = GDK_WA_X | GDK_WA_Y;
+
+  bvw->priv->video_window = gdk_window_new (widget->window,
+				            &attributes, attributes_mask);
+  gdk_window_set_user_data (bvw->priv->video_window, widget);
+  gdk_window_show (bvw->priv->video_window);
+
+  widget->style = gtk_style_attach (widget->style, widget->window);
+
+  gtk_style_set_background (widget->style, widget->window, GTK_STATE_NORMAL);
+
+  GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
 }
 
 static gboolean
-bacon_video_widget_vw_exposed (GtkWidget *widget, GdkEventExpose *event,
-                               BaconVideoWidget *bvw)
+bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
 {
-  g_return_val_if_fail (bvw != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+  XID window;
 
-  if (GST_IS_X_OVERLAY (bvw->priv->xoverlay)) {
-    bacon_video_widget_vw_realized (widget, bvw);
+  if (event && event->count > 0)
+    return TRUE;
+
+  g_return_val_if_fail (bvw->priv->xoverlay != NULL &&
+			GST_IS_X_OVERLAY (bvw->priv->xoverlay),
+			FALSE);
+
+  if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED) {
+    window = GDK_WINDOW_XWINDOW (bvw->priv->video_window);
+  } else {
+    window = 0;
+  }
+
+  gdk_draw_rectangle (widget->window, widget->style->black_gc, TRUE, 0, 0,
+		      widget->allocation.width, widget->allocation.height);
+  gdk_draw_rectangle (bvw->priv->video_window, widget->style->black_gc, TRUE,
+		      bvw->priv->video_window_allocation.x,
+		      bvw->priv->video_window_allocation.y,
+		      bvw->priv->video_window_allocation.width,
+		      bvw->priv->video_window_allocation.height);
+  gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, window);
+
+  if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED) {
     gst_x_overlay_expose (bvw->priv->xoverlay);
-  }
-  
-  return FALSE;
-}
+  } else if (bvw->priv->logo_pixbuf != NULL) {
+    /* draw logo here */
+    GdkPixbuf *logo;
+    gfloat width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf),
+           height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
+    gfloat ratio;
 
-static gboolean
-bacon_video_widget_button_press (GtkWidget *widget, GdkEventButton *event,
-                                 BaconVideoWidget *bvw)
-{
-  g_return_val_if_fail (bvw != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-  
-  if (GST_IS_NAVIGATION (bvw->priv->xoverlay)) {
-    gint x, y, w, h;
-    
-    x = bvw->priv->video_window_x;
-    y = bvw->priv->video_window_y;
-    w = bvw->priv->video_window_w;
-    h = bvw->priv->video_window_h;
-    
-    if ( (event->x >= x) && (event->x <= x+w) &&
-         (event->y >= y) && (event->y <= y +h) )
-      gst_navigation_send_mouse_event (GST_NAVIGATION (bvw->priv->xoverlay),
-                                       "mouse-button-press",
-                                       event->button,
-                                       event->x - x, event->y - y);
-  }
-  
-  return TRUE;
-}
+    if ((gfloat) widget->allocation.width /
+        gdk_pixbuf_get_width (bvw->priv->logo_pixbuf) >
+        (gfloat) widget->allocation.height /
+        gdk_pixbuf_get_height (bvw->priv->logo_pixbuf)) {
+      ratio = (gfloat) widget->allocation.height /
+	      gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
+    } else {
+      ratio = (gfloat) widget->allocation.width /
+	      gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
+    }
+    width *= ratio;
+    height *= ratio;
 
-static gboolean
-bacon_video_widget_button_release (GtkWidget *widget, GdkEventButton *event,
-                                   BaconVideoWidget *bvw)
-{
-  g_return_val_if_fail (bvw != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-  
-  if (GST_IS_NAVIGATION (bvw->priv->xoverlay)) {
-    gint x, y, w, h;
-    
-    x = bvw->priv->video_window_x;
-    y = bvw->priv->video_window_y;
-    w = bvw->priv->video_window_w;
-    h = bvw->priv->video_window_h;
-    
-    if ( (event->x >= x) && (event->x <= x+w) &&
-         (event->y >= y) && (event->y <= y +h) )
-      gst_navigation_send_mouse_event (GST_NAVIGATION (bvw->priv->xoverlay),
-                                       "mouse-button-release",
-                                       event->button,
-                                       event->x - x, event->y - y);
+    logo = gdk_pixbuf_scale_simple (bvw->priv->logo_pixbuf,
+				    width, height,
+				    GDK_INTERP_BILINEAR);
+
+    gdk_draw_pixbuf (GDK_DRAWABLE (bvw->priv->video_window),
+		     widget->style->fg_gc[0], logo,
+		     0, 0, 0, 0, width, height,
+		     GDK_RGB_DITHER_NONE, 0, 0);
+
+    gdk_pixbuf_unref (logo);
   }
   
   return TRUE;
-}
-
-static gboolean
-bacon_video_widget_motion_notify_callback (GtkWidget *widget,
-                                           GdkEventMotion *event,
-                                           BaconVideoWidget *bvw)
-{
-  gboolean return_code;
-  
-  g_return_val_if_fail (bvw != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-  
-  if (GST_IS_NAVIGATION (bvw->priv->xoverlay)) {
-    gint x, y, w, h;
-    
-    x = bvw->priv->video_window_x;
-    y = bvw->priv->video_window_y;
-    w = bvw->priv->video_window_w;
-    h = bvw->priv->video_window_h;
-    
-    if ( (event->x >= x) && (event->x <= x+w) &&
-         (event->y >= y) && (event->y <= y +h) )
-    gst_navigation_send_mouse_event (GST_NAVIGATION (bvw->priv->xoverlay),
-                                     "mouse-move",
-                                     0,
-                                     event->x, event->y);
-  }
-
-  g_signal_emit_by_name (G_OBJECT (bvw), "motion-notify-event", event, &return_code);
-  
-  return return_code;
 }
 
 static void
 bacon_video_widget_size_request (GtkWidget * widget,
 				 GtkRequisition * requisition)
 {
-  BaconVideoWidget *bvw;
-  GtkRequisition child_requisition;
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
 
-  g_return_if_fail (widget != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (widget));
-
-  bvw = BACON_VIDEO_WIDGET (widget);
-
-  gtk_widget_size_request (GTK_WIDGET (bvw->priv->vw), &child_requisition);
-
-  requisition->width = child_requisition.width;
-  requisition->height = child_requisition.height;
+  /* FIXME: intial width, this is minimal, but not "recommended"
+   * (media size) */
+  if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED) {
+    requisition->width = bvw->priv->video_width;
+    requisition->height = bvw->priv->video_height;
+  } else {
+    if (bvw->priv->logo_pixbuf != NULL) {
+      requisition->width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
+      requisition->height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
+    } else {
+      requisition->width = bvw->priv->init_width;
+      requisition->height = bvw->priv->init_height;
+    }
+  }
 }
 
 static void
 bacon_video_widget_size_allocate (GtkWidget * widget,
 				  GtkAllocation * allocation)
 {
-  BaconVideoWidget *bvw;
-  GtkAllocation child_allocation;
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
 
   g_return_if_fail (widget != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (widget));
 
-  bvw = BACON_VIDEO_WIDGET (widget);
-
   widget->allocation = *allocation;
 
-  child_allocation.x = allocation->x;
-  child_allocation.y = allocation->y;
-  child_allocation.width = allocation->width;
-  child_allocation.height = allocation->height;
+  if (GTK_WIDGET_REALIZED (widget)) {
+    gfloat width, height, ratio;
 
-  gtk_widget_size_allocate (GTK_WIDGET (bvw->priv->vw), &child_allocation);
+    gdk_window_move_resize (widget->window,
+                            allocation->x, allocation->y,
+                            allocation->width, allocation->height);
 
-  if ((bvw->priv->init_width == 0) && (bvw->priv->init_height == 0))
-    {
-      bvw->priv->init_width = allocation->width;
-      bvw->priv->init_height = allocation->height;
-      gst_video_widget_set_minimum_size (bvw->priv->vw,
-					 bvw->priv->init_width,
-					 bvw->priv->init_height);
+    /* resize video_window */
+    if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED) {
+      width = bvw->priv->video_width;
+      height = bvw->priv->video_height;
+    } else if (bvw->priv->logo_pixbuf) {
+      width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
+      height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
+    } else {
+      width = bvw->priv->init_width;
+      height = bvw->priv->init_height;
     }
+
+    if ((gfloat) allocation->width / width >
+        (gfloat) allocation->height / height) {
+      ratio = (gfloat) allocation->height / height;
+    } else {
+      ratio = (gfloat) allocation->width / width;
+    }
+
+    width *= ratio;
+    height *= ratio;
+
+    bvw->priv->video_window_allocation.width = width;
+    bvw->priv->video_window_allocation.height = height;
+    bvw->priv->video_window_allocation.x = (allocation->width - width) / 2;
+    bvw->priv->video_window_allocation.y = (allocation->height - height) / 2;
+    gdk_window_move_resize (bvw->priv->video_window,
+                            (allocation->width - width) / 2,
+			    (allocation->height - height) / 2,
+                            width, height);
+  }
 }
 
 static void
@@ -386,6 +386,13 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   /* GtkWidget */
   widget_class->size_request = bacon_video_widget_size_request;
   widget_class->size_allocate = bacon_video_widget_size_allocate;
+  widget_class->realize = bacon_video_widget_realize;
+  widget_class->expose_event = bacon_video_widget_expose_event;
+
+  /* FIXME:
+   * - once I've re-added DVD supports, I want to add event handlers
+   *    ( keys, mouse buttons, mouse motion) here, too.
+   */
   
   /* GObject */
   object_class->set_property = bacon_video_widget_set_property;
@@ -516,13 +523,9 @@ static void
 shrink_toplevel (BaconVideoWidget * bvw)
 {
   GtkWidget *toplevel;
-  GtkRequisition requisition;
-  g_return_if_fail (bvw != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   toplevel = gtk_widget_get_toplevel (GTK_WIDGET (bvw));
-  gtk_widget_size_request (toplevel, &requisition);
-  gtk_window_resize (GTK_WINDOW (toplevel), requisition.width,
-		     requisition.height);
+  gtk_window_resize (GTK_WINDOW (toplevel), 1, 1);
+  gtk_widget_queue_resize (GTK_WIDGET (bvw));
 }
 
 static gboolean
@@ -544,10 +547,6 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
         {
           GList *streaminfo = NULL;
 
-          /* Note that we don't use the size provided by the xoverlay
-           * element - we also need framerate and it's all provided
-           * in the caps that we can get through playbin. */
-
           g_object_get (G_OBJECT (bvw->priv->play), "stream-info",
 			&streaminfo, NULL);
           for ( ; streaminfo != NULL; streaminfo = streaminfo->next) {
@@ -559,9 +558,10 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
 
                 s = gst_caps_get_structure (GST_PAD_CAPS (info->pad), 0);
                 if (s) {
+                  gst_structure_get_double (s, "framerate", &bvw->priv->video_fps);
                   gst_structure_get_int (s, "width", &bvw->priv->video_width);
                   gst_structure_get_int (s, "height", &bvw->priv->video_height);
-                  gst_structure_get_double (s, "framerate", &bvw->priv->video_fps);
+                  /* FIXME: a-s-r */
                 }
                 break;
               }
@@ -570,14 +570,15 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
             }
           }
 
-          if (bvw->priv->vw) {
-            gst_video_widget_set_logo_focus (bvw->priv->vw, FALSE);
-            gst_video_widget_set_source_size (bvw->priv->vw,
-					      bvw->priv->video_width,
-					      bvw->priv->video_height);
+          g_signal_emit (G_OBJECT (bvw), bvw_table_signals[SIGNAL_GOT_METADATA], 0, NULL);
+
+          if (bvw->priv->auto_resize) {
+            shrink_toplevel (bvw);
+          } else {
+            bacon_video_widget_size_allocate (GTK_WIDGET (bvw),
+					      &GTK_WIDGET (bvw)->allocation);
           }
 
-          g_signal_emit (G_OBJECT (bvw), bvw_table_signals[SIGNAL_GOT_METADATA], 0, NULL);
           break;
         }
       case ASYNC_ERROR:
@@ -1047,8 +1048,6 @@ bacon_video_widget_open (BaconVideoWidget * bvw, const gchar * mrl,
     }
 
 
-  gst_video_widget_set_source_size (GST_VIDEO_WIDGET (bvw->priv->vw), 1, 1);
-
   bvw->priv->media_has_video = FALSE;
   bvw->priv->stream_length = 0;
 
@@ -1181,7 +1180,6 @@ bacon_video_widget_set_logo (BaconVideoWidget * bvw, gchar * filename)
   
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  g_return_if_fail (GST_IS_VIDEO_WIDGET (bvw->priv->vw));
 
   bvw->priv->logo_pixbuf = gdk_pixbuf_new_from_file (filename, &error);
 
@@ -1189,9 +1187,8 @@ bacon_video_widget_set_logo (BaconVideoWidget * bvw, gchar * filename)
     g_warning ("An error occured trying to open logo %s: %s",
                filename, error->message);
     g_error_free (error);
-  }
-  else {
-    gst_video_widget_set_logo (bvw->priv->vw, bvw->priv->logo_pixbuf);
+  } else {
+    shrink_toplevel (bvw);
   }
 }
 
@@ -1200,8 +1197,10 @@ bacon_video_widget_set_logo_mode (BaconVideoWidget * bvw, gboolean logo_mode)
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  g_return_if_fail (GST_IS_VIDEO_WIDGET (bvw->priv->vw));
-  gst_video_widget_set_logo_focus (bvw->priv->vw, TRUE);
+
+  /* this probably tells us to show logo or not? We already know
+   * that from the media...? */
+  bvw->priv->logo_mode = logo_mode;
 }
 
 gboolean
@@ -1209,8 +1208,8 @@ bacon_video_widget_get_logo_mode (BaconVideoWidget * bvw)
 {
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-  g_return_val_if_fail (GST_IS_VIDEO_WIDGET (bvw->priv->vw), FALSE);
-  return gst_video_widget_get_logo_focus (bvw->priv->vw);
+
+  return bvw->priv->logo_mode;
 }
 
 void
@@ -1288,23 +1287,23 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget * bvw,
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  
-  if (bvw->priv->vw)
-    {
-      gst_video_widget_set_scale_override (GST_VIDEO_WIDGET
-					   (bvw->priv->vw),
-					   FALSE);
-    }
 }
 
 void
 bacon_video_widget_set_show_cursor (BaconVideoWidget * bvw,
-				    gboolean use_cursor)
+				    gboolean show_cursor)
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  g_return_if_fail (GST_IS_VIDEO_WIDGET (bvw->priv->vw));
-  gst_video_widget_set_cursor_visible (bvw->priv->vw, use_cursor);
+
+  if (show_cursor == FALSE)
+  {
+    eel_gdk_window_set_invisible_cursor (bvw->priv->video_window);
+  } else {
+    gdk_window_set_cursor (bvw->priv->video_window, NULL);
+  }
+
+  bvw->priv->cursor_shown = show_cursor;
 }
 
 gboolean
@@ -1312,8 +1311,8 @@ bacon_video_widget_get_show_cursor (BaconVideoWidget * bvw)
 {
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-  g_return_val_if_fail (GST_IS_VIDEO_WIDGET (bvw->priv->vw), FALSE);
-  return gst_video_widget_get_cursor_visible (bvw->priv->vw);
+
+  return bvw->priv->cursor_shown;
 }
 
 void
@@ -1504,10 +1503,8 @@ bacon_video_widget_get_auto_resize (BaconVideoWidget * bvw)
 {
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
-  g_return_val_if_fail (GST_IS_VIDEO_WIDGET (bvw->priv->vw), FALSE);
 
-  return gst_video_widget_get_auto_resize (bvw->priv->vw);
+  return bvw->priv->auto_resize;
 }
 
 void
@@ -1516,10 +1513,10 @@ bacon_video_widget_set_auto_resize (BaconVideoWidget * bvw,
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
-  g_return_if_fail (GST_IS_VIDEO_WIDGET (bvw->priv->vw));
 
-  gst_video_widget_set_auto_resize (bvw->priv->vw, auto_resize);
+  bvw->priv->auto_resize = auto_resize;
+
+  /* this will take effect when the next media file loads */
 }
 
 void
@@ -1528,7 +1525,6 @@ bacon_video_widget_set_aspect_ratio (BaconVideoWidget *bvw,
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 }
 
 BaconVideoWidgetAspectRatio
@@ -1536,7 +1532,6 @@ bacon_video_widget_get_aspect_ratio (BaconVideoWidget *bvw)
 {
   g_return_val_if_fail (bvw != NULL, 0);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
-  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), 0);
 
   return BVW_RATIO_AUTO;
 }
@@ -1547,10 +1542,9 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
-  g_return_if_fail (GST_IS_VIDEO_WIDGET (bvw->priv->vw));
 
-  gst_video_widget_set_scale (bvw->priv->vw, ratio);
-  gst_video_widget_set_scale_override (bvw->priv->vw, TRUE);
+//  gst_video_widget_set_scale (bvw->priv->vw, ratio);
+//  gst_video_widget_set_scale_override (bvw->priv->vw, TRUE);
   shrink_toplevel (bvw);
 }
 
@@ -1714,6 +1708,7 @@ bacon_video_widget_is_seekable (BaconVideoWidget * bvw)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
+  /* hmm... */
   if (bvw->priv->stream_length)
     return TRUE;
   else
@@ -1969,15 +1964,16 @@ bacon_video_widget_new (int width, int height,
   }
   
   bvw->priv->media_device = g_strdup ("/dev/dvd");
-  
-  bvw->priv->init_width = bvw->priv->init_height = 0;
+  if (width <= 0 || height <= 0) {
+    width = DEFAULT_WIDTH;
+    height = DEFAULT_HEIGHT;
+  }
+  bvw->priv->init_width = width;
+  bvw->priv->init_height = height;
 
-  //FIXME
-  if (*err != NULL)
-    {
-      g_message ("error: %s", (*err)->message);
-      return NULL;
-    }
+  bvw->priv->cursor_shown = TRUE;
+  bvw->priv->logo_mode = TRUE;
+  bvw->priv->auto_resize = TRUE;
 
   audio_sink = gst_gconf_get_default_audio_sink ();
   if (!GST_IS_ELEMENT (audio_sink))
@@ -2007,39 +2003,6 @@ bacon_video_widget_new (int width, int height,
 		    (GtkSignalFunc) got_found_tag, (gpointer) bvw);
   g_signal_connect (G_OBJECT (bvw->priv->play), "error",
 		    (GtkSignalFunc) got_error, (gpointer) bvw);
-
-  bvw->priv->vw = GST_VIDEO_WIDGET (gst_video_widget_new ());
-  if (!GST_IS_VIDEO_WIDGET (bvw->priv->vw))
-    {
-      g_message ("failed to create video widget");
-      return NULL;
-    }
-
-  /* VideoWidget signals */
-
-  g_signal_connect (G_OBJECT (bvw->priv->vw), "motion-notify-event",
-                    G_CALLBACK (bacon_video_widget_motion_notify_callback),
-                    bvw);
-  g_signal_connect (G_OBJECT(bvw->priv->vw), "button-press-event",
-                    G_CALLBACK (bacon_video_widget_button_press),
-                    bvw);
-  g_signal_connect (G_OBJECT(bvw->priv->vw), "button-release-event",
-                    G_CALLBACK (bacon_video_widget_button_release),
-                    bvw);
-    
-  g_signal_connect_after (G_OBJECT (bvw->priv->vw), "size_allocate",
-                          G_CALLBACK (bacon_video_widget_vw_allocate),
-                          bvw);
-  g_signal_connect_after (G_OBJECT (bvw->priv->vw), "realize",
-                          G_CALLBACK (bacon_video_widget_vw_realized),
-                          bvw);
-  g_signal_connect_after (G_OBJECT (bvw->priv->vw), "expose-event",
-                          G_CALLBACK (bacon_video_widget_vw_exposed),
-                          bvw);
-    
-  gtk_box_pack_end (GTK_BOX (bvw), GTK_WIDGET (bvw->priv->vw), TRUE, TRUE, 0);
-
-  gtk_widget_show (GTK_WIDGET (bvw->priv->vw));
 
   /* We try to get an element supporting XOverlay interface */
   if (GST_IS_BIN (bvw->priv->play)) {

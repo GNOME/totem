@@ -1,3 +1,32 @@
+2004-10-06  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/Makefile.am:
+	* src/gstvideowidget.c:
+	* src/gstvideowidget.h:
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_realize),
+	(bacon_video_widget_expose_event),
+	(bacon_video_widget_size_request),
+	(bacon_video_widget_size_allocate),
+	(bacon_video_widget_class_init), (shrink_toplevel),
+	(bacon_video_widget_signal_idler), (bacon_video_widget_open),
+	(bacon_video_widget_set_logo), (bacon_video_widget_set_logo_mode),
+	(bacon_video_widget_get_logo_mode),
+	(bacon_video_widget_set_fullscreen),
+	(bacon_video_widget_set_show_cursor),
+	(bacon_video_widget_get_show_cursor),
+	(bacon_video_widget_get_auto_resize),
+	(bacon_video_widget_set_auto_resize),
+	(bacon_video_widget_set_aspect_ratio),
+	(bacon_video_widget_get_aspect_ratio),
+	(bacon_video_widget_set_scale_ratio),
+	(bacon_video_widget_is_seekable), (bacon_video_widget_new):
+	  Remove gstvideowidget, integrate widget in bvw just like the
+	  xine version does. Fix some obscure race or so that made this
+	  not work on some systems and work fien on others.
+	* src/totem-statusbar.c: (totem_statusbar_set_time_and_length):
+	  Only redraw the label if it actually changed. Huge performance
+	  benefit (drawing labels is expensive...).
+
 2004-09-29  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* configure.in:
