@@ -1,3 +1,14 @@
+2005-03-20  Bastien Nocera  <hadess@hadess.net>
+
+	* src/Makefile.am: upd
+	* src/totem-mozilla-options.h: added
+	* src/totem-mozilla-plugin.c: (totem_plugin_fork),
+	(totem_plugin_new_instance):
+	* src/totem-mozilla-viewer.c: (on_video_button_press_event),
+	(totem_embedded_add_children), (main):
+	add support for the href attribute, allows to play the Hotel Rwanda
+	trailer on apple.com
+
 2005-03-19  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-pl-parser.c: (totem_pl_parser_add_directory):

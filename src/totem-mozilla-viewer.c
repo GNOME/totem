@@ -1,6 +1,6 @@
 /* Totem Mozilla plugin
  *
- * Copyright (C) <2004> Bastien Nocera <hadess@hadess.net>
+ * Copyright (C) <2004-2005> Bastien Nocera <hadess@hadess.net>
  * Copyright (C) <2002> David A. Schleef <ds@schleef.org>
  *
  * This library is free software; you can redistribute it and/or
@@ -29,8 +29,11 @@
 
 #include "bacon-video-widget.h"
 #include "totem-interface.h"
+#include "totem-mozilla-options.h"
 //FIXME damn build system!
 #include "totem-interface.c"
+
+#define OPTION_IS(x) (strcmp(argv[i], x) == 0)
 
 typedef struct TotemEmbedded TotemEmbedded;
 
@@ -44,7 +47,8 @@ struct TotemEmbedded {
 	GtkWidget *window;
 	GladeXML *xml;
 	int xid, width, height;
-	char *filename, *orig_filename;
+	const char *orig_filename;
+	char *filename, *href;
 	BaconVideoWidget *bvw;
 	gboolean controller_hidden;
 
@@ -171,6 +175,28 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 	bacon_video_widget_play (emb->bvw, NULL);
 }
 
+static gboolean
+on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
+		TotemEmbedded *emb)
+{
+	if (event->type == GDK_BUTTON_PRESS &&
+			event->button == 1 &&
+			emb->href != NULL)
+	{
+		g_free (emb->filename);
+		emb->filename = emb->href;
+		emb->href = NULL;
+		bacon_video_widget_close (emb->bvw);
+
+		totem_embedded_open (emb);
+		bacon_video_widget_play (emb->bvw, NULL);
+
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
 static void
 on_eos_event (GtkWidget *bvw, TotemEmbedded *emb)
 {
@@ -205,12 +231,12 @@ totem_embedded_add_children (TotemEmbedded *emb)
 			g_error_free (err);
 	}
 
-	g_signal_connect (G_OBJECT(emb->bvw),
-			"got-redirect",
-			G_CALLBACK (on_got_redirect),
-			emb);
-	g_signal_connect (G_OBJECT (emb->bvw),
-			  "eos", G_CALLBACK (on_eos_event), emb);
+	g_signal_connect (G_OBJECT(emb->bvw), "got-redirect",
+			G_CALLBACK (on_got_redirect), emb);
+	g_signal_connect (G_OBJECT (emb->bvw), "eos",
+			G_CALLBACK (on_eos_event), emb);
+	g_signal_connect (G_OBJECT(emb->bvw), "button-press-event",
+			G_CALLBACK (on_video_button_press_event), emb);
 
 	container = glade_xml_get_widget (emb->xml, "hbox4");
 	gtk_container_add (GTK_CONTAINER (container), GTK_WIDGET (emb->bvw));
@@ -227,7 +253,6 @@ totem_embedded_add_children (TotemEmbedded *emb)
 		child = glade_xml_get_widget (emb->xml, "controls");
 		gtk_widget_hide (child);
 	}
-
 }
 
 static void embedded (GtkPlug *plug, TotemEmbedded *emb)
@@ -267,28 +292,33 @@ int main (int argc, char **argv)
 
 	/* TODO Add popt options */
 	for (i = 1; i < argc; i++) {
-		if (strcmp (argv[i], "--xid") == 0) {
+		if (OPTION_IS (TOTEM_OPTION_XID)) {
 			if (i + 1 < argc) {
 				i++;
 				emb->xid = atoi (argv[i]);
 			}
-		} else if (strcmp (argv[i], "--width") == 0) {
+		} else if (OPTION_IS (TOTEM_OPTION_WIDTH)) {
 			if (i + 1 < argc) {
 				i++;
 				emb->width = atoi (argv[i]);
 			}
-		} else if (strcmp (argv[i], "--height") == 0) {
+		} else if (OPTION_IS (TOTEM_OPTION_HEIGHT)) {
 			if (i + 1 < argc) {
 				i++;
 				emb->height = atoi (argv[i]);
 			}
-		} else if (strcmp (argv[i], "--url") == 0) {
+		} else if (OPTION_IS (TOTEM_OPTION_URL)) {
 			if (i + 1 < argc) {
 				i++;
-				emb->orig_filename = argv[i];
+				emb->orig_filename = (const char *) argv[i];
 			}
-		} else if (strcmp (argv[i], "--nocontrols") == 0) {
+		} else if (OPTION_IS (TOTEM_OPTION_CONTROLS_HIDDEN)) {
 			emb->controller_hidden = TRUE;
+		} else if (OPTION_IS (TOTEM_OPTION_HREF)) {
+			if (i + 1 < argc) {
+				i++;
+				emb->href = g_strdup (argv[i]);
+			}
 		} else if (i + 1 == argc) {
 			emb->filename = g_strdup (argv[i]);
 		}

@@ -33,6 +33,8 @@
 #include <libgnomevfs/gnome-vfs-mime-handlers.h>
 #include <libgnomevfs/gnome-vfs-mime-info.h>
 
+#include "totem-mozilla-options.h"
+
 #define XP_UNIX 1
 #define MOZ_X11 1
 #include "npapi.h"
@@ -45,7 +47,7 @@ typedef struct {
 	NPP instance;
 	guint32 window;
 
-	char *src;
+	char *src, *href;
 	int width, height;
 	int send_fd;
 	int player_pid;
@@ -57,7 +59,7 @@ typedef struct {
 static NPNetscapeFuncs mozilla_functions;
 
 /* You don't update, you die! */
-#define MAX_ARGV_LEN 12
+#define MAX_ARGV_LEN 14
 
 static void totem_plugin_fork (TotemPlugin *plugin)
 {
@@ -74,22 +76,27 @@ static void totem_plugin_fork (TotemPlugin *plugin)
 		argv[argc++] = g_strdup (LIBEXECDIR"/totem-mozilla-viewer");
 	}
 
-	argv[argc++] = g_strdup ("--xid");
+	argv[argc++] = g_strdup (TOTEM_OPTION_XID);
 	argv[argc++] = g_strdup_printf ("%d", plugin->window);
 
 	if (plugin->width) {
-		argv[argc++] = g_strdup ("--width");
+		argv[argc++] = g_strdup (TOTEM_OPTION_WIDTH);
 		argv[argc++] = g_strdup_printf ("%d", plugin->width);
 	}
 
 	if (plugin->height) {
-		argv[argc++] = g_strdup ("--height");
+		argv[argc++] = g_strdup (TOTEM_OPTION_HEIGHT);
 		argv[argc++] = g_strdup_printf ("%d", plugin->height);
 	}
 
 	if (plugin->src) {
-		argv[argc++] = g_strdup ("--url");
+		argv[argc++] = g_strdup (TOTEM_OPTION_URL);
 		argv[argc++] = g_strdup (plugin->src);
+	}
+	
+	if (plugin->href) {
+		argv[argc++] = g_strdup (TOTEM_OPTION_HREF);
+		argv[argc++] = g_strdup (plugin->href);
 	}
 
 	if (plugin->controller_hidden) {
@@ -162,6 +169,9 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 		//FIXME we can have some relative paths here as well!
 		if (g_ascii_strcasecmp (argn[i], "src") == 0) {
 			plugin->src = g_strdup (argv[i]);
+		}
+		if (g_ascii_strcasecmp (argn[i], "href") == 0) {
+			plugin->href = g_strdup (argv[i]);
 		}
 		if (g_ascii_strcasecmp (argn[i], "controller") == 0) {
 			if (g_ascii_strcasecmp (argv[i], "false") == 0) {
