@@ -2147,11 +2147,9 @@ bacon_video_widget_pause (BaconVideoWidget *bvw)
 	if (bvw->priv->is_live != FALSE)
 		xine_stop (bvw->priv->stream);
 
-#ifdef HAVE_XINE_CLOSE
 	/* Close the audio device when on pause */
 	xine_set_param (bvw->priv->stream,
 			XINE_PARAM_AUDIO_CLOSE_DEVICE, 1);
-#endif
 }
 
 float

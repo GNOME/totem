@@ -86,26 +86,18 @@ TODO
 ====
 
 - fix error messages with ".." instead of a single period at the end
-
 - support gxine, freevo, ypl playlist formats
+- add support for ATI TV out
 - write a widget more suitable for seeking in place of the current slider
 - check if there's a CD in the drive before trying to play anything
 - try to load optical media depending on what's in the drive
 - broadcasting and network client
-
-- Maybe move it into monkeymedia? The only real gnome deps
-  are gnomevfs and gconf, and i believe gtkxine depends on them already
-  anyway. Would be nice to not have to pull the mm bits from a thousand
-  places :)
-- Removing hard-coded deps in monkey-media:
-  <hadess> if you dl_open'ed the libraries when they are needed, i would
-  be 100 % with it
 - Play with OSD and stuff
 - ports to other windowing system/OSes?
 - Browser plugin ? See for examples:
   http://lxr.mozilla.org/seamonkey/source/modules/plugin/samples/default/unix/ for examples
   http://devedge.netscape.com/library/manuals/2002/plugin/1.0/preface.html
-- split the baconvideowidget into a GtkWidget and a GObject (use a GInterface)
+- split the baconvideowidget into a GtkWidget and a GObject (use a GInterface)?
 - add equaliser support to the API
 - be able to choose the deinterlace method?
 http://article.gmane.org/gmane.comp.video.xine.devel/4304/match=tvtime
