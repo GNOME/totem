@@ -7,15 +7,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2002-10-26 02:16+0200\n"
-"PO-Revision-Date: 2002-10-26 02:20+0200\n"
+"POT-Creation-Date: 2002-11-08 13:35+0100\n"
+"PO-Revision-Date: 2002-11-08 13:36+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/playlist.glade.h:1 src/gtk-playlist.c:775
+#: data/playlist.glade.h:1 src/gtk-playlist.c:779
 msgid "Playlist"
 msgstr "Spellista"
 
@@ -143,18 +143,6 @@ msgstr "_Ljud"
 msgid "_Zoom 1:2"
 msgstr "_Zooma 1:2"
 
-#: data/totem.glade.h:29
-msgid "button3"
-msgstr "knapp3"
-
-#: data/totem.glade.h:30
-msgid "button4"
-msgstr "knapp4"
-
-#: data/totem.glade.h:31
-msgid "button5"
-msgstr "knapp5"
-
 #: data/totem.schemas.in.h:1
 msgid "Default audio output driver"
 msgstr "Standarddrivrutin för ljudutmatning"
@@ -183,31 +171,23 @@ msgstr "X-koordinat för spellistan"
 msgid "Y coordinate for the Playlist"
 msgstr "Y-koordinat för spellistan"
 
-#: src/gtk-playlist.c:405 src/totem.c:869
+#: src/gtk-playlist.c:410 src/totem.c:869
 msgid "Select files"
 msgstr "Välj filer"
 
-#: src/gtk-playlist.c:545
+#: src/gtk-playlist.c:550
 msgid "Playing"
 msgstr "Spelar"
 
-#: src/gtk-playlist.c:556
+#: src/gtk-playlist.c:561
 msgid "Filename"
 msgstr "Filnamn"
 
-#: src/gtk-xine.c:55
+#: src/gtk-xine.c:54
 msgid "Totem Video Window"
 msgstr "Totem-videofönster"
 
-#: src/gtk-xine.c:507
-msgid ""
-"The configuration system is not initialised.\n"
-"The defaults will be used."
-msgstr ""
-"Konfigurationssystemet är inte initierat.\n"
-"Standardalternativen kommer att användas."
-
-#: src/gtk-xine.c:749
+#: src/gtk-xine.c:726
 msgid ""
 "Could not initialise the threads support.\n"
 "You should install a thread-safe Xlib."
@@ -215,18 +195,36 @@ msgstr ""
 "Kunde inte initiera trådstödet.\n"
 "Du bör installera ett trådsäkert Xlib."
 
-#: src/gtk-xine.c:785
+#: src/gtk-xine.c:758
 msgid "Could not find a suitable video output."
 msgstr "Kunde inte hitta en lämplig videoutmatning."
 
-#: src/gtk-xine.c:917
-#, c-format
-msgid "No video plugin available to decode '%s'."
-msgstr "Ingen videoinsticksmodul tillgänglig för avkodning av \"%s\"."
+#: src/totem.c:257
+msgid ""
+"Totem cannot play this type of media because you do not have the appropriate "
+"plugins to handle it.\n"
+"Install the necessary plugins and restart Totem to be able to play this "
+"media."
+msgstr ""
+"Totem kan inte spela denna typ av media eftersom du saknar lämpliga "
+"insticksmoduler för att hantera den.\n"
+"Installera de insticksmoduler som krävs och starta om Totem för att kunna "
+"spela denna typ av media."
 
-#: src/totem.c:380 src/totem.c:1630
-msgid "<span size=\"medium\"><b>No file</b></span>"
-msgstr "<span size=\"medium\"><b>Ingen fil</b></span>"
+#: src/totem.c:265
+msgid ""
+"Totem could not play this media although a plugin is present to handle it.\n"
+"You might want to check that a disc is present in the drive and that it is "
+"correctly configured."
+msgstr ""
+"Totem kunde inte spela denna media trots att en insticksmodul som hanterar "
+"den är installerad.\n"
+"Du bör kontrollera om det finns en skiva i enheten och att den är korrekt "
+"konfigurerad."
+
+#: src/totem.c:369 src/totem.c:1684
+msgid "No file"
+msgstr "Ingen fil"
 
 #: src/totem.c:1013
 msgid "translator_credits"
@@ -235,14 +233,14 @@ msgstr ""
 "Skicka synpunkter på översättningen till sv@li.org"
 
 #: src/totem.c:1038
-msgid "(C) 2002 Bastien Nocera"
-msgstr "© 2002 Bastien Nocera"
+msgid "(c) Copyright 2002 Bastien Nocera"
+msgstr "© Copyright 2002 Bastien Nocera"
 
 #: src/totem.c:1039
 msgid "Movie Player (based on the Xine libraries)"
 msgstr "Filmspelare (baserad på Xine-biblioteken)"
 
-#: src/totem.c:1293
+#: src/totem.c:1355
 #, c-format
 msgid ""
 "Totem could not startup:\n"
@@ -251,21 +249,21 @@ msgstr ""
 "Totem kunde inte starta:\n"
 "%s"
 
-#: src/totem.c:1299
+#: src/totem.c:1361
 #, c-format
 msgid ""
-"There is no plugin for Totem to handle '%s'\n"
+"There is no plugin for Totem to handle '%s'.\n"
 "Totem will not be able to play it."
 msgstr ""
-"Det finns ingen insticksmodul för Totem för hantering av \"%s\"\n"
+"Det finns ingen insticksmodul för Totem för hantering av \"%s\".\n"
 "Totem kommer inte att kunna spela det."
 
-#: src/totem.c:1304
+#: src/totem.c:1366
 #, c-format
 msgid "'%s' is broken, and Totem can not play it further."
 msgstr "\"%s\" är trasig, och Totem kan inte spela den längre."
 
-#: src/totem.c:1308
+#: src/totem.c:1370
 #, c-format
 msgid ""
 "Totem could not play '%s':\n"
@@ -274,7 +272,7 @@ msgstr ""
 "Totem kunde inte spela \"%s\":\n"
 "%s"
 
-#: src/totem.c:1718
+#: src/totem.c:1787
 #, c-format
 msgid ""
 "Totem couln't initialise the \n"
@@ -285,7 +283,7 @@ msgstr ""
 "konfigurationsmotorn:\n"
 "%s"
 
-#: src/totem.c:1754 src/totem.c:1762
+#: src/totem.c:1819 src/totem.c:1827
 msgid ""
 "Couldn't load the main interface (totem.glade).\n"
 "Make sure that Totem is properly installed."
@@ -293,13 +291,35 @@ msgstr ""
 "Kunde inte läsa in huvudgränssnittet (totem.glade).\n"
 "Försäkra dig om att Totem är korrekt installerat."
 
-#: src/totem.c:1775
+#: src/totem.c:1840
 msgid ""
 "Couldn't load the interface for the playlist.\n"
 "Make sure that Totem is properly installed."
 msgstr ""
 "Kunde inte läsa in gränssnittet för spellistan.\n"
 "Försäkra dig om att Totem är korrekt installerat."
+
+#~ msgid "button3"
+#~ msgstr "knapp3"
+
+#~ msgid "button4"
+#~ msgstr "knapp4"
+
+#~ msgid "button5"
+#~ msgstr "knapp5"
+
+#~ msgid ""
+#~ "The configuration system is not initialised.\n"
+#~ "The defaults will be used."
+#~ msgstr ""
+#~ "Konfigurationssystemet är inte initierat.\n"
+#~ "Standardalternativen kommer att användas."
+
+#~ msgid "No video plugin available to decode '%s'."
+#~ msgstr "Ingen videoinsticksmodul tillgänglig för avkodning av \"%s\"."
+
+#~ msgid "<span size=\"medium\"><b>No file</b></span>"
+#~ msgstr "<span size=\"medium\"><b>Ingen fil</b></span>"
 
 #~ msgid "input_file: trying to open subtitle file '%s'\n"
 #~ msgstr "input_file: försöker att öppna undertitelfilen \"%s\"\n"
@@ -335,6 +355,3 @@ msgstr ""
 
 #~ msgid "Open _Recent"
 #~ msgstr "Öppna _senaste"
-
-#~ msgid "No file"
-#~ msgstr "Ingen fil"
