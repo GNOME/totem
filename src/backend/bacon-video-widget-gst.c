@@ -95,6 +95,8 @@ struct BaconVideoWidgetPrivate {
 	
 	gboolean media_has_video;
 	
+	int stream_length;
+	
 	/* Configuration */
 	gboolean null_out;
 
@@ -352,6 +354,30 @@ got_eos (GstPlay* play, BaconVideoWidget *bvw)
 }
 
 static void
+got_stream_length (GstPlay* play, gint64 length_nanos, BaconVideoWidget *bvw)
+{
+	g_return_if_fail(bvw != NULL);
+	g_return_if_fail(BACON_IS_VIDEO_WIDGET(bvw));
+
+	bvw->priv->stream_length = (length_nanos / GST_MSECOND);
+}
+
+static void
+got_time_tick (GstPlay* play, gint64 time_nanos, BaconVideoWidget *bvw)
+{
+	int current_time = 0, current_position = 0;
+	g_return_if_fail(bvw != NULL);
+	g_return_if_fail(BACON_IS_VIDEO_WIDGET(bvw));
+		
+	current_time = (time_nanos / GST_MSECOND);
+	current_position = current_time * 65535 / bvw->priv->stream_length;
+	
+	g_signal_emit (G_OBJECT (bvw),
+					bvw_table_signals[TICK], 0,
+					current_time, bvw->priv->stream_length, current_position);
+}
+
+static void
 bacon_video_widget_finalize (GObject *object)
 {
 	BaconVideoWidget *bvw = (BaconVideoWidget *) object;
@@ -488,6 +514,7 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 		gst_play_set_data_src (bvw->priv->play, datasrc);
 	
 	bvw->priv->media_has_video = FALSE;
+	bvw->priv->stream_length = 0;
 	
 	return gst_play_set_location (bvw->priv->play, mrl);;
 }
@@ -501,9 +528,25 @@ bacon_video_widget_play	(BaconVideoWidget *bvw,
 		guint start_time,
 		GError **error)
 {
+	gint64 seek_time;
+	gint64 length_nanos;
+	
+	g_return_val_if_fail (bvw != NULL, FALSE);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+	g_return_val_if_fail (GST_IS_PLAY(bvw->priv->play), FALSE);
+
 	//FIXME
-	g_message ("bacon_video_widget_play");
-	gst_play_set_state (bvw->priv->play, GST_STATE_PLAYING);
+	g_message ("bacon_video_widget_play %d %d", pos , start_time);
+	
+	if (pos) {
+		length_nanos = (gint64) (bvw->priv->stream_length * GST_MSECOND);
+		seek_time = (gint64) (length_nanos * pos / 65535);
+		g_message ("seeking to %d", seek_time);
+		gst_play_seek_to_time (bvw->priv->play, seek_time);
+	}
+	else {
+		gst_play_set_state (bvw->priv->play, GST_STATE_PLAYING);
+	}
 	return TRUE;
 }
 
@@ -914,7 +957,11 @@ bacon_video_widget_new (int width, int height,
 			"have_video_size", (GtkSignalFunc) got_video_size, (gpointer) bvw);
 	g_signal_connect (G_OBJECT (bvw->priv->play),
 			"stream_end", (GtkSignalFunc) got_eos, (gpointer) bvw);
-	
+	g_signal_connect (G_OBJECT (bvw->priv->play),
+			"stream_length", (GtkSignalFunc) got_stream_length, (gpointer) bvw);
+	g_signal_connect (G_OBJECT (bvw->priv->play),
+			"time_tick", (GtkSignalFunc) got_time_tick, (gpointer) bvw);
+			
 	bvw->priv->vw = GST_VIDEO_WIDGET(gst_video_widget_new ());
 	if (!GST_IS_VIDEO_WIDGET(bvw->priv->vw)) {
 		g_message ("failed to create video widget");
