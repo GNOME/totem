@@ -1,5 +1,10 @@
 2004-04-14  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (show_controls): don't crash when hiding/showing the
+	controls, following the GTK+-only build changes
+
+2004-04-14  Bastien Nocera  <hadess@hadess.net>
+
 	* data/screenshot.glade:
 	* src/totem-screenshot.c: (totem_screenshot_new): make the screenshot
 	dialog look more like the GNOME panel one, use a Save file chooser

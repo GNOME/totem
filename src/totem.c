@@ -1811,7 +1811,7 @@ show_controls (Totem *totem, gboolean visible, gboolean fullscreen_behaviour)
 	GtkWidget *menubar, *controlbar, *statusbar, *item, *bvw_vbox;
 	GtkRequisition requisition;
 	
-	menubar = glade_xml_get_widget (totem->xml, "tmw_bonobodockitem");
+	menubar = glade_xml_get_widget (totem->xml, "tmw_menubar");
 	controlbar = glade_xml_get_widget (totem->xml, "tmw_controls_vbox");
 	statusbar = glade_xml_get_widget (totem->xml, "tmw_statusbar");
 	item = glade_xml_get_widget (totem->xml, "trcm_show_controls");
