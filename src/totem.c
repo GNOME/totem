@@ -164,14 +164,12 @@ totem_action_error (char *msg, GtkWindow *parent)
 void
 totem_action_exit (Totem *totem)
 {
-	gtk_widget_destroy (totem->gtx);
-	gtk_widget_destroy (GTK_WIDGET (totem->playlist));
 	gtk_message_queue_unref (totem->queue);
 
 	gtk_main_quit ();
-//FIXME testing the problem with the race thing
-//	gtk_widget_destroy (totem->gtx);
-//	gtk_widget_destroy (GTK_WIDGET (totem->playlist));
+
+	gtk_widget_destroy (totem->gtx);
+	gtk_widget_destroy (GTK_WIDGET (totem->playlist));
 
 	exit (0);
 }
@@ -1271,8 +1269,6 @@ current_removed_cb (GtkWidget *playlist, gpointer user_data)
 	{
 		totem_action_play (totem, 0);
 		g_free (mrl);
-	} else {
-		totem_action_stop (totem);
 	}
 }
 

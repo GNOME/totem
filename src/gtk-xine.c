@@ -909,6 +909,9 @@ gtk_xine_unrealize (GtkWidget *widget)
 
 	gtx = GTK_XINE (widget);
 
+	/* stop the playback */
+	xine_close (gtx->priv->stream);
+
 	/* stop the event thread */
 	pthread_cancel (gtx->priv->thread);
 
