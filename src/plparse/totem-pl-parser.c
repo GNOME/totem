@@ -1031,15 +1031,15 @@ totem_pl_parser_ignore (const char *url)
 			return TRUE;
 
 	mimetype = gnome_vfs_get_file_mime_type (url, NULL, TRUE);
-	if (mimetype == NULL)
-		return TRUE;
+	if (mimetype == NULL || strcmp (mimetype, "application/octet-stream") == 0)
+		return FALSE;
 
 	for (i = 0; i < G_N_ELEMENTS (special_types); i++)
 		if (strcmp (special_types[i].mimetype, mimetype) == 0)
 			return FALSE;
 
 	for (i = 0; i < G_N_ELEMENTS (dual_types); i++)
-		if (strcmp (special_types[i].mimetype, mimetype) == 0)
+		if (strcmp (dual_types[i].mimetype, mimetype) == 0)
 			return FALSE;
 
 	return TRUE;
@@ -1054,7 +1054,10 @@ totem_pl_parser_parse (TotemPlParser *parser, const char *url)
 	g_return_val_if_fail (url != NULL, FALSE);
 
 	if (totem_pl_parser_ignore (url) != FALSE)
-		return FALSE;
+	{
+		totem_pl_parser_add_one_url (parser, url, NULL);
+		return TRUE;
+	}
 
 	mimetype = gnome_vfs_get_mime_type (url);
 
@@ -1069,6 +1072,7 @@ totem_pl_parser_parse (TotemPlParser *parser, const char *url)
 		if (strcmp (dual_types[i].mimetype, mimetype) == 0)
 			return totem_pl_parser_add_url_from_data (parser, url);
 
-	return FALSE;
+	totem_pl_parser_add_one_url (parser, url, NULL);
+	return TRUE;
 }
 

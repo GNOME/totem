@@ -1,5 +1,11 @@
 2003-10-11  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-pl-parser.c: (totem_pl_parser_ignore),
+	(totem_pl_parser_parse): fix parsing of directories with non-dual
+	and non-special mimetypes
+
+2003-10-11  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-pl-parser.c: (totem_pl_parser_add_pls),
 	(totem_pl_parser_ignore): fix parsing of .pls playlists (ie. don't
 	whinge if there's no files in it)
