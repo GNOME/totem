@@ -2041,17 +2041,42 @@ on_take_screenshot1_activate (GtkButton *button, Totem *totem)
 }
 
 static void
+hide_props_dialog (GtkWidget *widget, int trash, gpointer user_data)
+{
+	gtk_widget_hide (widget);
+}
+
+static void
 on_properties1_activate (GtkButton *button, Totem *totem)
 {
+	static GtkWidget *dialog;
+
 	if (totem->properties == NULL)
 	{
 		totem_action_error (_("Totem couldn't show the movie properties window."), _("Make sure that Totem is correctly installed."), totem);
 		return;
 	}
 
-	gtk_widget_show (totem->properties);
-	gtk_window_set_transient_for (GTK_WINDOW (totem->properties),
-			GTK_WINDOW (totem->win));
+	if (dialog != NULL)
+	{
+		gtk_widget_show_all (dialog);
+		return;
+	}
+
+	dialog = gtk_dialog_new_with_buttons (_("Properties"),
+			GTK_WINDOW (totem->win),
+			GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+			GTK_STOCK_CLOSE,
+			GTK_RESPONSE_ACCEPT,
+			NULL);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+			totem->properties, TRUE, TRUE, 0);
+	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
+	g_signal_connect (G_OBJECT (dialog), "response",
+			G_CALLBACK (hide_props_dialog), NULL);
+	g_signal_connect (G_OBJECT (dialog), "delete-event",
+			G_CALLBACK (hide_props_dialog), NULL);
+	gtk_widget_show_all (dialog);
 }
 
 static void

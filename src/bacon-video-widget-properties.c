@@ -62,7 +62,7 @@ bacon_video_widget_properties_get_type (void)
 		};
 
 		bacon_video_widget_properties_type = g_type_register_static
-			(GTK_TYPE_DIALOG, "BaconVideoWidgetProperties",
+			(GTK_TYPE_VBOX, "BaconVideoWidgetProperties",
 			 &bacon_video_widget_properties_info, (GTypeFlags)0);
 	}
 
@@ -293,19 +293,13 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 	}
 }
 
-static void
-hide_dialog (GtkWidget *widget, int trash, gpointer user_data)
-{
-	gtk_widget_hide (widget);
-}
-
-
 GtkWidget*
 bacon_video_widget_properties_new (void)
 {
 	BaconVideoWidgetProperties *props;
 	GladeXML *xml;
 	char *filename;
+	GtkWidget *vbox;
 
 	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
 			"totem", "properties.glade", NULL);
@@ -317,29 +311,15 @@ bacon_video_widget_properties_new (void)
 		return NULL;
 
 	props = BACON_VIDEO_WIDGET_PROPERTIES (g_object_new
-			(GTK_TYPE_XINE_PROPERTIES, NULL));
+			(BACON_TYPE_VIDEO_WIDGET_PROPERTIES, NULL));
+
 	props->priv->xml = xml;
-	props->priv->vbox = glade_xml_get_widget (props->priv->xml, "vbox1");
-
-	gtk_window_set_title (GTK_WINDOW (props), _("Properties"));
-	gtk_dialog_set_has_separator (GTK_DIALOG (props), FALSE);
-	gtk_dialog_add_buttons (GTK_DIALOG (props),
-			GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-			NULL);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (props)->vbox),
-			props->priv->vbox,
-			TRUE,       /* expand */
-			TRUE,       /* fill */
-			0);         /* padding */
-
-	g_signal_connect (G_OBJECT (props),
-			"response", G_CALLBACK (hide_dialog), NULL);
-	g_signal_connect (G_OBJECT (props), "delete-event",
-			G_CALLBACK (hide_dialog), NULL);
+	vbox = glade_xml_get_widget (props->priv->xml, "vbox1");
+	gtk_box_pack_start (GTK_BOX (props), vbox, TRUE, TRUE, 0);
 
 	bacon_video_widget_properties_update (props, NULL, TRUE);
 
-	gtk_widget_show (GTK_DIALOG (props)->vbox);
+	gtk_widget_show_all (GTK_WIDGET (props));
 
 	return GTK_WIDGET (props);
 }
@@ -347,7 +327,7 @@ bacon_video_widget_properties_new (void)
 static void
 bacon_video_widget_properties_class_init (BaconVideoWidgetPropertiesClass *klass)
 {
-	parent_class = gtk_type_class (gtk_dialog_get_type ());
+	parent_class = gtk_type_class (gtk_vbox_get_type ());
 
 	G_OBJECT_CLASS (klass)->finalize = bacon_video_widget_properties_finalize;
 }

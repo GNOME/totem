@@ -96,7 +96,12 @@ totem_video_thumbnailer_SOURCES = $(VIDEOWIDGET) totem-video-thumbnailer.c
 totem_video_thumbnailer_LDADD = $(GTK_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
 
 libexec_PROGRAMS = totem-properties-page
-totem_properties_page_SOURCES = $(VIDEOWIDGET) totem-properties-page.c
+totem_properties_page_SOURCES =		\
+	$(VIDEOWIDGET)			\
+	bacon-video-widget-properties.c	\
+	bacon-video-widget-properties.h	\
+	totem-properties-page.c
+
 totem_properties_page_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(RANDR_LIBS)
 
 vanity_SOURCES =					\

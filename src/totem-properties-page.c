@@ -30,6 +30,7 @@
 #include <bonobo.h>
 #include <libgnomevfs/gnome-vfs.h>
 #include <glade/glade.h>
+#include "bacon-video-widget-properties.h"
 #include "bacon-video-widget.h"
 
 #define TOTEM_TYPE_PROPERTIES_PAGE		     (totem_properties_page_get_type ())
@@ -43,7 +44,8 @@ typedef struct {
 
 	gchar *location;
 
-	GladeXML *xml;
+	GtkWidget *vbox;
+	BaconVideoWidgetProperties *props;
 	BaconVideoWidget *bvw;
 } TotemPropertiesPage;
 
@@ -85,222 +87,19 @@ totem_properties_page_class_init(TotemPropertiesPageClass *class)
 	G_OBJECT_CLASS(class)->finalize = totem_properties_page_finalize;
 }
 
-static char *
-bacon_video_widget_properties_time_to_string (int time)
-{
-	char *secs, *mins, *hours, *string;
-	int sec, min, hour;
-
-	sec = time % 60;
-	time = time - sec;
-	min = (time % (60*60)) / 60;
-	time = time - (min * 60);
-	hour = time / (60*60);
-
-	hours = g_strdup_printf (ngettext ("%d hour", "%d hours", hour), hour);
-
-	mins = g_strdup_printf (ngettext ("%d minute",
-					  "%d minutes", min), min);
-
-	secs = g_strdup_printf (ngettext ("%d second",
-					  "%d seconds", sec), sec);
-
-	if (hour > 0)
-	{
-		/* hour:minutes:seconds */
-		string = g_strdup_printf (_("%s %s %s"), hours, mins, secs);
-	} else if (min > 0) {
-		/* minutes:seconds */
-		string = g_strdup_printf (_("%s %s"), mins, secs);
-	} else if (sec > 0) {
-		/* seconds */
-		string = g_strdup_printf (_("%s"), secs);
-	} else {
-		/* 0 seconds */
-		string = g_strdup (_("0 seconds"));
-	}
-
-	g_free (hours);
-	g_free (mins);
-	g_free (secs);
-
-	return string;
-}
-
-static void
-bacon_video_widget_properties_set_label (TotemPropertiesPage *props,
-			       const char *name, const char *text)
-{
-	GtkWidget *item;
-
-	item = glade_xml_get_widget (props->xml, name);
-	gtk_label_set_text (GTK_LABEL (item), text);
-}
-
-static void
-bacon_video_widget_properties_reset (TotemPropertiesPage *props)
-{
-	GtkWidget *item;
-
-	item = glade_xml_get_widget (props->xml, "video");
-	gtk_widget_set_sensitive (item, FALSE);
-	item = glade_xml_get_widget (props->xml, "audio");
-	gtk_widget_set_sensitive (item, FALSE);
-
-	/* Title */
-	bacon_video_widget_properties_set_label (props, "title", _("Unknown"));
-	/* Artist */
-	bacon_video_widget_properties_set_label (props, "artist", _("Unknown"));
-	/* Year */
-	bacon_video_widget_properties_set_label (props, "year", _("Unknown"));
-	/* Duration */
-	bacon_video_widget_properties_set_label (props, "duration", _("0 second"));
-	/* Dimensions */
-	bacon_video_widget_properties_set_label (props, "dimensions", _("0 x 0"));
-	/* Video Codec */
-	bacon_video_widget_properties_set_label (props, "vcodec", _("N/A"));
-	/* Framerate */
-	bacon_video_widget_properties_set_label (props, "framerate",
-			_("0 frames per second"));
-	/* Bitrate */
-	bacon_video_widget_properties_set_label (props, "bitrate", _("0 kbps"));
-	/* Audio Codec */
-	bacon_video_widget_properties_set_label (props, "acodec", _("N/A"));
-}
-
-static void
-bacon_video_widget_properties_set_from_current
-(TotemPropertiesPage *props, BaconVideoWidget *bvw)
-{
-	GtkWidget *item;
-	GValue value = { 0, };
-	char *string;
-	int x, y;
-
-	/* General */
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_TITLE, &value);
-	bacon_video_widget_properties_set_label (props, "title",
-			g_value_get_string (&value)
-			? g_value_get_string (&value)
-			: _("Unknown"));
-	g_value_unset (&value);
-
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_ARTIST, &value);
-	bacon_video_widget_properties_set_label (props, "artist",
-			g_value_get_string (&value)
-			? g_value_get_string (&value) : _("Unknown"));
-	g_value_unset (&value);
-
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_YEAR, &value);
-	bacon_video_widget_properties_set_label (props, "year",
-			g_value_get_string (&value)
-			? g_value_get_string (&value) : _("Unknown"));
-	g_value_unset (&value);
-
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_DURATION, &value);
-	string = bacon_video_widget_properties_time_to_string
-		(g_value_get_int (&value));
-	bacon_video_widget_properties_set_label (props, "duration", string);
-	g_free (string);
-	g_value_unset (&value);
-
-	/* Video */
-	item = glade_xml_get_widget (props->xml, "video");
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_HAS_VIDEO, &value);
-	if (g_value_get_boolean (&value) == FALSE)
-		gtk_widget_set_sensitive (item, FALSE);
-	else
-		gtk_widget_set_sensitive (item, TRUE);
-	g_value_unset (&value);
-
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_DIMENSION_X, &value);
-	x = g_value_get_int (&value);
-	g_value_unset (&value);
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_DIMENSION_Y, &value);
-	y = g_value_get_int (&value);
-	g_value_unset (&value);
-	string = g_strdup_printf ("%d x %d", x, y);
-	bacon_video_widget_properties_set_label (props, "dimensions", string);
-	g_free (string);
-
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_VIDEO_CODEC, &value);
-	bacon_video_widget_properties_set_label (props, "vcodec",
-			g_value_get_string (&value)
-			? g_value_get_string (&value) : _("N/A"));
-	g_value_unset (&value);
-
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_FPS, &value);
-	string = g_strdup_printf (_("%d frames per second"),
-			g_value_get_int (&value));
-	bacon_video_widget_properties_set_label (props, "framerate", string);
-	g_free (string);
-	g_value_unset (&value);
-
-	/* Audio */
-	item = glade_xml_get_widget (props->xml, "audio");
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_HAS_AUDIO, &value);
-	if (g_value_get_boolean (&value) == FALSE)
-		gtk_widget_set_sensitive (item, FALSE);
-	else
-		gtk_widget_set_sensitive (item, TRUE);
-	g_value_unset (&value);
-
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_BITRATE, &value);
-	string = g_strdup_printf (_("%d kbps"), g_value_get_int (&value));
-	bacon_video_widget_properties_set_label (props, "bitrate", string);
-	g_free (string);
-	g_value_unset (&value);
-
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_AUDIO_CODEC, &value);
-	bacon_video_widget_properties_set_label (props, "acodec",
-			g_value_get_string (&value)
-			? g_value_get_string (&value) : _("N/A"));
-	g_value_unset (&value);
-}
-
-static void
-bacon_video_widget_properties_update (TotemPropertiesPage *props,
-		BaconVideoWidget *bvw,
-		gboolean reset)
-{
-	g_return_if_fail (props != NULL);
-	g_return_if_fail ( (props));
-
-	if (reset == TRUE)
-	{
-		bacon_video_widget_properties_reset (props);
-	} else {
-		g_return_if_fail (bvw != NULL);
-		bacon_video_widget_properties_set_from_current (props, bvw);
-	}
-}
-
 static void
 on_got_metadata_event (BaconVideoWidget *bvw, TotemPropertiesPage *props)
 {
 	bacon_video_widget_properties_update
-		(props, props->bvw, FALSE);
+		(props->props, props->bvw, FALSE);
+	bacon_video_widget_close (props->bvw);
 }
 
 static void
 totem_properties_page_init(TotemPropertiesPage *props)
 {
-	GtkWidget *vbox;
 	BonoboPropertyBag *pb;
 	GError *err = NULL;
-	char *filename;
 
 	props->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new
 			(-1, -1, TRUE, &err));
@@ -311,18 +110,11 @@ totem_properties_page_init(TotemPropertiesPage *props)
 			G_CALLBACK (on_got_metadata_event),
 			props);
 
-	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
-			"totem", "properties.glade", NULL);
-	props->xml = glade_xml_new (filename, "vbox1", NULL);
-	g_free (filename);
+	props->vbox = bacon_video_widget_properties_new ();
+	gtk_widget_show_all (props->vbox);
+	props->props = BACON_VIDEO_WIDGET_PROPERTIES (props->vbox);
 
-	if (props->xml == NULL)
-		return;
-
-	vbox = glade_xml_get_widget (props->xml, "vbox1");
-	gtk_widget_show (vbox);
-
-	bonobo_control_construct (BONOBO_CONTROL (props), vbox);
+	bonobo_control_construct (BONOBO_CONTROL (props), props->vbox);
 
 	pb = bonobo_property_bag_new (
 			(BonoboPropertyGetFn) get_property,
@@ -341,10 +133,12 @@ totem_properties_page_finalize (GObject *object)
 
 	props = TOTEM_PROPERTIES_PAGE (object);
 
+	g_object_unref (G_OBJECT (props->bvw));
+	props->bvw = NULL;
 	g_free(props->location);
 	props->location = NULL;
-	g_object_unref (G_OBJECT (props->xml));
-	props->xml = NULL;
+	g_object_unref (G_OBJECT (props->props));
+	props->props = NULL;
 
 	parent_class->finalize(object);
 }
@@ -372,8 +166,10 @@ set_property(BonoboPropertyBag *bag,
 		g_free(props->location);
 		bacon_video_widget_close (props->bvw);
 		props->location = g_strdup(BONOBO_ARG_GET_STRING(arg));
-		//FIXME reset
+		bacon_video_widget_properties_update (props->props,
+				props->bvw, TRUE);
 		bacon_video_widget_open (props->bvw, props->location, NULL);
+		bacon_video_widget_play (props->bvw, NULL);
 	}
 }
 

@@ -1,3 +1,22 @@
+2003-10-19  Bastien Nocera  <hadess@hadess.net>
+
+	* README: updated
+	* src/Makefile.am:
+	* src/bacon-video-widget-properties.c:
+	(bacon_video_widget_properties_get_type),
+	(bacon_video_widget_properties_new),
+	(bacon_video_widget_properties_class_init): descend of a VBox
+	instead of Dialog
+	* src/bacon-video-widget-properties.h: ditto
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_new):
+	drop the number of buffers to 5 instead of 500
+	* src/totem-properties-page.c: (on_got_metadata_event),
+	(totem_properties_page_init), (totem_properties_page_finalize),
+	(set_property): embed the BaconVideoWidgetProperties instead
+	of cut'n'paste silliness
+	* src/totem.c: (hide_props_dialog), (on_properties1_activate):
+	update for new BaconVideoWidgetProperties
+
 2003-10-17  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-statusbar.c: (totem_statusbar_push):

@@ -1337,6 +1337,7 @@ GtkWidget *
 bacon_video_widget_new (int width, int height, gboolean null_out, GError **err)
 {
 	BaconVideoWidget *bvw;
+	xine_cfg_entry_t entry;
 
 	bvw = BACON_VIDEO_WIDGET (g_object_new
 			(bacon_video_widget_get_type (), NULL));
@@ -1371,6 +1372,18 @@ bacon_video_widget_new (int width, int height, gboolean null_out, GError **err)
 	bvw->priv->vo_driver = load_video_out_driver (bvw, TRUE);
 	//FIXME
 	g_assert (bvw->priv->vo_driver != NULL);
+
+	if (bvw->priv->null_out != FALSE)
+	{
+		bvw_config_help_num (bvw->priv->xine, "video.num_buffers",
+				5, &entry);
+		entry.num_value = 5;
+	} else {
+		bvw_config_help_num (bvw->priv->xine, "video.num_buffers",
+				500, &entry);
+		entry.num_value = 500;
+	}
+	xine_config_update_entry (bvw->priv->xine, &entry);
 
 	bvw->priv->stream = xine_stream_new (bvw->priv->xine,
 			bvw->priv->ao_driver, bvw->priv->vo_driver);

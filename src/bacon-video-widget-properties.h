@@ -23,30 +23,30 @@
 #ifndef BACON_VIDEO_WIDGET_PROPERTIES_H
 #define BACON_VIDEO_WIDGET_PROPERTIES_H
 
-#include <gtk/gtkdialog.h>
+#include <gtk/gtkvbox.h>
 #include "bacon-video-widget.h"
 
-#define GTK_TYPE_XINE_PROPERTIES            (bacon_video_widget_properties_get_type ())
-#define BACON_VIDEO_WIDGET_PROPERTIES(obj)            (GTK_CHECK_CAST ((obj), GTK_TYPE_XINE_PROPERTIES, BaconVideoWidgetProperties))
-#define BACON_VIDEO_WIDGET_PROPERTIES_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GTK_TYPE_XINE_PROPERTIES, BaconVideoWidgetPropertiesClass))
-#define BACON_IS_VIDEO_WIDGET_PROPERTIES(obj)         (GTK_CHECK_TYPE ((obj), GTK_TYPE_XINE_PROPERTIES))
-#define BACON_IS_VIDEO_WIDGET_PROPERTIES_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GTK_TYPE_XINE_PROPERTIES))
+#define BACON_TYPE_VIDEO_WIDGET_PROPERTIES            (bacon_video_widget_properties_get_type ())
+#define BACON_VIDEO_WIDGET_PROPERTIES(obj)            (GTK_CHECK_CAST ((obj), BACON_TYPE_VIDEO_WIDGET_PROPERTIES, BaconVideoWidgetProperties))
+#define BACON_VIDEO_WIDGET_PROPERTIES_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), BACON_TYPE_VIDEO_WIDGET_PROPERTIES, BaconVideoWidgetPropertiesClass))
+#define BACON_IS_VIDEO_WIDGET_PROPERTIES(obj)         (GTK_CHECK_TYPE ((obj), BACON_TYPE_VIDEO_WIDGET_PROPERTIES))
+#define BACON_IS_VIDEO_WIDGET_PROPERTIES_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), BACON_TYPE_VIDEO_WIDGET_PROPERTIES))
 
 typedef struct BaconVideoWidgetProperties		BaconVideoWidgetProperties;
 typedef struct BaconVideoWidgetPropertiesClass		BaconVideoWidgetPropertiesClass;
 typedef struct BaconVideoWidgetPropertiesPrivate		BaconVideoWidgetPropertiesPrivate;
 
 struct BaconVideoWidgetProperties {
-	GtkDialog parent;
+	GtkVBox parent;
 	BaconVideoWidgetPropertiesPrivate *priv;
 };
 
 struct BaconVideoWidgetPropertiesClass {
-	GtkDialogClass parent_class;
+	GtkVBoxClass parent_class;
 };
 
 GtkType bacon_video_widget_properties_get_type		(void);
-GtkWidget *bacon_video_widget_properties_new		();
+GtkWidget *bacon_video_widget_properties_new		(void);
 
 void bacon_video_widget_properties_update		(BaconVideoWidgetProperties *props,
 							BaconVideoWidget *bvw,
