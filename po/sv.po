@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2003-08-01 13:20+0200\n"
-"PO-Revision-Date: 2003-08-01 13:21+0200\n"
+"POT-Creation-Date: 2003-08-18 02:57+0200\n"
+"PO-Revision-Date: 2003-08-18 02:58+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -227,7 +227,7 @@ msgstr "<b>Ljusstyrka/Kontrast</b>"
 
 #: data/totem.glade.h:20
 msgid "<b>Display</b>"
-msgstr "<b>Display</b>"
+msgstr "<b>Bild</b>"
 
 #: data/totem.glade.h:21
 msgid "<b>Networking</b>"
@@ -309,7 +309,7 @@ msgstr "Avsammanfläta"
 
 #: data/totem.glade.h:40
 msgid "Display"
-msgstr "Display"
+msgstr "Bild"
 
 #: data/totem.glade.h:41
 msgid "Exit Fullscreen"
@@ -382,12 +382,12 @@ msgid "Next chapter or movie"
 msgstr "Nästa kapitel eller film"
 
 #: data/totem.glade.h:58
-msgid "No langage selection available"
+msgid "No language selection available"
 msgstr "Inget språkval tillgängligt"
 
 #: data/totem.glade.h:59
 msgid "No subtitles selection available"
-msgstr "Inget undertitelsval tillgängligt"
+msgstr "Inget textremseval tillgängligt"
 
 #: data/totem.glade.h:60
 msgid "Normal"
@@ -509,9 +509,10 @@ msgstr "Liten"
 msgid "Stereo"
 msgstr "Stereo"
 
+# "Textremsor" enligt önskemål, inte undertitlar
 #: data/totem.glade.h:90
 msgid "Subtitles"
-msgstr "Undertitlar"
+msgstr "Textremsor"
 
 #: data/totem.glade.h:91
 msgid "Switch to double size"
@@ -1007,12 +1008,12 @@ msgstr "Ingen video att fånga"
 msgid "Video codec is not handled"
 msgstr "Videokomprimeringsmetoden hanteras inte"
 
-#: src/cd-drive.c:347
+#: src/cd-drive.c:362
 #, c-format
 msgid "Unnamed SCSI CD-ROM (%s)"
 msgstr "Namnlös SCSI-cd-rom (%s)"
 
-#: src/cd-drive.c:793
+#: src/cd-drive.c:815
 msgid "File image"
 msgstr "Filbild"
 
@@ -1439,6 +1440,9 @@ msgstr ""
 "Kunde inte läsa in huvudgränssnittet (vanity.glade).\n"
 "Försäkra dig om att Vanity är korrekt installerat."
 
+#~ msgid "No langage selection available"
+#~ msgstr "Inget språkval tillgängligt"
+
 #~ msgid "Unnamed Device"
 #~ msgstr "Namnlös enhet"
 
@@ -1446,7 +1450,7 @@ msgstr ""
 #~ msgstr "_Ljud"
 
 #~ msgid "_Display"
-#~ msgstr "_Display"
+#~ msgstr "_Bild"
 
 #~ msgid "_General"
 #~ msgstr "_Allmänt"
@@ -1671,9 +1675,6 @@ msgstr ""
 #~ msgid "Skip to: "
 #~ msgstr "Hoppa till: "
 
-#~ msgid "No language selection available"
-#~ msgstr "Inget språkval tillgängligt"
-
 #~ msgid "Networking"
 #~ msgstr "Nätverk"
 
@@ -1813,10 +1814,10 @@ msgstr ""
 #~ msgstr "<span size=\"medium\"><b>Ingen fil</b></span>"
 
 #~ msgid "input_file: trying to open subtitle file '%s'\n"
-#~ msgstr "input_file: försöker att öppna undertitelfilen \"%s\"\n"
+#~ msgstr "input_file: försöker att öppna textremsefilen \"%s\"\n"
 
 #~ msgid "input_file: failed to open subtitle file '%s'\n"
-#~ msgstr "input_file: misslyckades med att öppna undertitelfilen \"%s\"\n"
+#~ msgstr "input_file: misslyckades med att öppna textremsefilen \"%s\"\n"
 
 #~ msgid "input_gnomevfs: read error\n"
 #~ msgstr "input_gnomevfs: läsfel\n"
