@@ -301,6 +301,8 @@ totem_sublang_equal_lists (GList *orig, GList *new)
 	{
 		if (g_str_equal (o->data, n->data) == FALSE)
 			retval = FALSE;
+                o = g_list_next (o);
+                n = g_list_next (n);
 	}
 
 	return retval;
@@ -319,7 +321,6 @@ totem_languages_update (Totem *totem, GList *list)
 	{
 		current = bacon_video_widget_get_language (totem->bvw);
 		lang_menu = create_submenu (totem, list, current, TRUE);
-		totem_g_list_deep_free (list);
 	}
 
 	/* Languages */
@@ -350,7 +351,6 @@ totem_subtitles_update (Totem *totem, GList *list)
 	{
 		current = bacon_video_widget_get_subtitle (totem->bvw);
 		sub_menu = create_submenu (totem, list, current, FALSE);
-		totem_g_list_deep_free (list);
 	}
 
 	/* Subtitles */
@@ -374,14 +374,14 @@ totem_sublang_update (Totem *totem)
 	GList *list;
 
 	list = bacon_video_widget_get_languages (totem->bvw);
-	if (totem_sublang_equal_lists (totem->language_list, list) == FALSE) {
+	if (totem_sublang_equal_lists (totem->language_list, list) == TRUE) {
 		totem_g_list_deep_free (list);
 	} else {
 		totem_languages_update (totem, list);
 	}
 
 	list = bacon_video_widget_get_subtitles (totem->bvw);
-	if (totem_sublang_equal_lists (totem->subtitles_list, list) == FALSE) {
+	if (totem_sublang_equal_lists (totem->subtitles_list, list) == TRUE) {
 		totem_g_list_deep_free (list);
 	} else {
 		totem_subtitles_update (totem, list);
