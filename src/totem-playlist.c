@@ -1031,6 +1031,9 @@ treeview_row_changed (GtkTreeView *treeview, GtkTreePath *arg1,
 	g_signal_emit (G_OBJECT (playlist),
 			totem_playlist_table_signals[CHANGED], 0,
 			NULL);
+
+	g_signal_handlers_unblock_by_func (treeview,
+			(GFunc) drop_cb, playlist);
 }
 
 static void
