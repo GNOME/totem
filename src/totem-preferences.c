@@ -34,7 +34,10 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+
+#ifdef HAVE_NCB
 #include <nautilus-burn-drive-selection.h>
+#endif /* HAVE_NCB */
 
 #include "totem.h"
 #include "totem-private.h"
@@ -215,6 +218,7 @@ deinterlace_changed_cb (GConfClient *client, guint cnxn_id,
 			G_CALLBACK (on_deinterlace1_activate), totem);
 }
 
+#ifdef HAVE_NCB
 static void
 on_combo_entry1_changed (NautilusBurnDriveSelection *bcs, char *device, Totem *totem)
 {
@@ -228,6 +232,21 @@ on_combo_entry1_changed (NautilusBurnDriveSelection *bcs, char *device, Totem *t
 	bacon_video_widget_set_media_device
 		(BACON_VIDEO_WIDGET (totem->bvw), str);
 }
+#else /* HAVE_NCB */
+static void
+on_combo_entry1_changed (GtkEntry * entry, Totem * totem)
+{
+	const char *str;
+
+	str = gtk_entry_get_text (entry);
+	if (str == NULL)
+		str = "";
+
+	gconf_client_set_string (totem->gc, GCONF_PREFIX"/mediadev", str, NULL);
+	bacon_video_widget_set_media_device
+		(BACON_VIDEO_WIDGET (totem->bvw), str);
+}
+#endif /* HAVE_NCB */
 
 static void
 auto_resize_changed_cb (GConfClient *client, guint cnxn_id,
@@ -298,13 +317,22 @@ mediadev_changed_cb (GConfClient *client, guint cnxn_id,
 		mediadev = g_strdup ("/dev/cdrom");
 	}
 
+#ifdef HAVE_NCB
 	nautilus_burn_drive_selection_set_device (NAUTILUS_BURN_DRIVE_SELECTION (item), mediadev);
+#else /* HAVE_NCB */
+	gtk_entry_set_text (GTK_ENTRY (item), mediadev);
+#endif /* HAVE_NCB */
 	bacon_video_widget_set_media_device
 		(BACON_VIDEO_WIDGET (totem->bvw), mediadev);
 	g_free (mediadev);
 
+#ifdef HAVE_NCB
 	g_signal_connect (G_OBJECT (item), "device-changed",
 			G_CALLBACK (on_combo_entry1_changed), totem);
+#else
+	g_signal_connect (G_OBJECT (item), "changed",
+			  G_CALLBACK (on_combo_entry1_changed), totem);
+#endif
 }
 
 static void
@@ -385,7 +413,11 @@ bacon_cd_selection_create (void)
 {
 	GtkWidget *widget;
 
+#ifdef HAVE_NCB
 	widget = nautilus_burn_drive_selection_new ();
+#else
+	widget = gtk_entry_new ();
+#endif
 	gtk_widget_show (widget);
 
 	return widget;
@@ -525,20 +557,30 @@ totem_setup_preferences (Totem *totem)
 			|| (strcmp (mediadev, "auto") == 0))
 	{
 		g_free (mediadev);
+#ifdef HAVE_NCB
 		mediadev = g_strdup
 			(nautilus_burn_drive_selection_get_default_device
 				     (NAUTILUS_BURN_DRIVE_SELECTION (item)));
+#else /* HAVE_NCB */
+		mediadev = g_strdup ("/dev/cdrom");
+#endif /* HAVE_NCB */
 		gconf_client_set_string (totem->gc, GCONF_PREFIX"/mediadev",
 				mediadev, NULL);
 	}
+
 	bacon_video_widget_set_media_device
 		(BACON_VIDEO_WIDGET (totem->bvw), mediadev);
 
+#ifdef HAVE_NCB
 	g_signal_connect (G_OBJECT (item), "device-changed",
-			G_CALLBACK (on_combo_entry1_changed), totem);
-
+			  G_CALLBACK (on_combo_entry1_changed), totem);
 	nautilus_burn_drive_selection_set_device
 		(NAUTILUS_BURN_DRIVE_SELECTION (item), mediadev);
+#else /* HAVE_NCB */
+	g_signal_connect (G_OBJECT (item), "changed",
+			  G_CALLBACK (on_combo_entry1_changed), totem);
+	gtk_entry_set_text (GTK_ENTRY (item), mediadev);
+#endif /* HAVE_NCB */
 	g_free (mediadev);
 
 	/* Connection Speed */

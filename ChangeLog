@@ -1,3 +1,12 @@
+2005-03-11  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* configure.in:
+	* src/totem-preferences.c: (on_combo_entry1_changed),
+	(mediadev_changed_cb), (bacon_cd_selection_create),
+	(totem_setup_preferences):
+	  Allow compilation without libnautilus-burn 2.9 (for those of
+	  us on a less top-notch distro).
+
 2005-03-10  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-pl-parser.c: (parse_asx_entries): fix parsing of ASX
