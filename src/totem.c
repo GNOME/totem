@@ -1040,30 +1040,21 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 		if (p->data == NULL)
 			continue;
 
-		/* We can't use g_filename_from_uri, as we don't know if
-		 * the uri is in locale or UTF8 encoding */
-		filename = gnome_vfs_get_local_path_from_uri (p->data);
-		if (filename == NULL)
-			filename = g_strdup (p->data);
+		filename = totem_create_full_path (p->data);
 
-		if (filename != NULL && 
-				(g_file_test (filename, G_FILE_TEST_IS_REGULAR
-					| G_FILE_TEST_EXISTS)
-				|| strstr (filename, "://") != NULL))
+		if (empty_pl != FALSE && cleared == FALSE)
 		{
-			if (empty_pl != FALSE && cleared == FALSE)
-			{
-				/* The function that calls us knows better
-				 * if we should be doing something with the 
-				 * changed playlist ... */
-				g_signal_handlers_disconnect_by_func
-					(G_OBJECT (totem->playlist),
-					 playlist_changed_cb, totem);
-				totem_playlist_clear (totem->playlist);
-				cleared = TRUE;
-			}
-			totem_playlist_add_mrl (totem->playlist, filename, NULL); 
+			/* The function that calls us knows better
+			 * if we should be doing something with the 
+			 * changed playlist ... */
+			g_signal_handlers_disconnect_by_func
+				(G_OBJECT (totem->playlist),
+				 playlist_changed_cb, totem);
+			totem_playlist_clear (totem->playlist);
+			cleared = TRUE;
 		}
+		totem_playlist_add_mrl (totem->playlist, filename, NULL);
+
 		g_free (filename);
 		g_free (p->data);
 	}

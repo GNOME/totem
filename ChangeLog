@@ -1,5 +1,16 @@
 2003-10-06  Bastien Nocera  <hadess@hadess.net>
 
+	* README: updated
+	* src/totem-download.c: fix warnings
+	* src/totem-playlist.c: (write_string), (ensure_shuffled),
+	(totem_playlist_add_mrl_with_data), (totem_playlist_add_mrl):
+	fix warnings
+	* src/totem.c: (totem_action_drop_files): don't transform URIs into
+	local filenames, fixes drag'n'dropping local files with percentages
+	in their name
+
+2003-10-06  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget.h: sort the functions by type
 
 2003-10-05  Mugurel Tudor  <mugurelu@go.ro>

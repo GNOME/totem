@@ -39,6 +39,8 @@
 #include <libgnomevfs/gnome-vfs-xfer.h>
 #include <libgnomevfs/gnome-vfs-init.h>
 
+#include "totem-download.h"
+
 /* #define DEBUG */
 
 #ifndef DEBUG
@@ -117,7 +119,7 @@ write_data(void *buffer, size_t size, size_t nmemb, void *userp)
 	return fwrite (buffer, size, nmemb, td->f);
 }
 
-int
+static int
 progress_cb (void *clientp, double dltotal, double dlnow,
 		double ultotal, double ulnow)
 {

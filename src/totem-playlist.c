@@ -212,7 +212,7 @@ totem_playlist_mrl_to_title (const gchar *mrl)
 	return filename_for_display;
 }
 
-const char *
+static const char *
 my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data)
 {
 	GnomeVFSResult result;
@@ -275,7 +275,7 @@ write_string (GnomeVFSHandle *handle, const char *buf)
 {
 	GnomeVFSResult res;
 	GnomeVFSFileSize written;
-	int len;
+	guint len;
 
 	len = strlen (buf);
 	res = gnome_vfs_write (handle, buf, len, &written);
@@ -1185,7 +1185,7 @@ ensure_shuffled (TotemPlaylist *playlist, gboolean shuffle)
 {
 	RandomData data;
 	GArray *array;
-	int i, len, current;
+	int i, current;
 	int *indices;
 
 	if (shuffle == FALSE || PL_LEN != playlist->_priv->shuffle_len)
@@ -1201,6 +1201,8 @@ ensure_shuffled (TotemPlaylist *playlist, gboolean shuffle)
 	{
 		indices = gtk_tree_path_get_indices (playlist->_priv->current);
 		current = indices[0];
+	} else {
+		current = -1;
 	}
 
 	playlist->_priv->shuffled = g_new (int, PL_LEN);
@@ -2077,7 +2079,7 @@ totem_playlist_add_mrl_with_data (TotemPlaylist *playlist, const char *mrl,
 	const char *mimetype;
 	gboolean retval;
 	gpointer data;
-	int i;
+	guint i;
 
 	mimetype = my_gnome_vfs_get_mime_type_with_data (mrl, &data);
 	D("totem_playlist_add_mrl_with_data adding %s, type %s", mrl, mimetype);
@@ -2119,7 +2121,7 @@ totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl,
 		const char *display_name)
 {
 	const char *mimetype;
-	int i;
+	guint i;
 
 	g_return_val_if_fail (mrl != NULL, FALSE);
 
