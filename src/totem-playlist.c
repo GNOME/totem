@@ -1311,10 +1311,23 @@ update_shuffle_cb (GConfClient *client, guint cnxn_id,
 }
 
 static void
+update_lockdown (GConfClient *client, guint cnxn_id,
+		GConfEntry *entry, TotemPlaylist *playlist)
+{
+	GtkWidget *button;
+	gboolean locked;
+
+	locked = gconf_client_get_bool (playlist->_priv->gc,
+			"/desktop/gnome/lockdown/disable_save_to_disk", NULL);
+	button = glade_xml_get_widget (playlist->_priv->xml, "save_button");
+	gtk_widget_set_sensitive (button, !locked);
+}
+
+static void
 init_config (TotemPlaylist *playlist)
 {
 	GtkWidget *button;
-	gboolean repeat, shuffle;
+	gboolean repeat, shuffle, locked;
 
 	playlist->_priv->gc = gconf_client_get_default ();
 
@@ -1334,6 +1347,11 @@ init_config (TotemPlaylist *playlist)
 			G_CALLBACK (shuffle_button_toggled),
 			(gpointer) playlist);
 
+	locked = gconf_client_get_bool (playlist->_priv->gc,
+			"/desktop/gnome/lockdown/disable_save_to_disk", NULL);
+	button = glade_xml_get_widget (playlist->_priv->xml, "save_button");
+	gtk_widget_set_sensitive (button, !locked);
+
 	gconf_client_add_dir (playlist->_priv->gc, GCONF_PREFIX,
 			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
 	gconf_client_notify_add (playlist->_priv->gc, GCONF_PREFIX"/repeat",
@@ -1341,6 +1359,13 @@ init_config (TotemPlaylist *playlist)
 			playlist, NULL, NULL);
 	gconf_client_notify_add (playlist->_priv->gc, GCONF_PREFIX"/shuffle",
 			(GConfClientNotifyFunc) update_shuffle_cb,
+			playlist, NULL, NULL);
+
+	gconf_client_add_dir (playlist->_priv->gc, "/desktop/gnome/lockdown/",
+			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
+	gconf_client_notify_add (playlist->_priv->gc,
+			"/desktop/gnome/lockdown/disable_save_to_disk",
+			(GConfClientNotifyFunc) update_lockdown,
 			playlist, NULL, NULL);
 
 	playlist->_priv->repeat = repeat;

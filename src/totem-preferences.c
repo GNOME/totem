@@ -266,6 +266,20 @@ show_vfx_changed_cb (GConfClient *client, guint cnxn_id,
 }
 
 static void
+disable_save_to_disk_changed_cb (GConfClient *client, guint cnxn_id,
+		GConfEntry *entry, Totem *totem)
+{
+	GtkWidget *item;
+	gboolean locked;
+
+	locked = gconf_client_get_bool (totem->gc,
+			"/desktop/gnome/lockdown/disable_save_to_disk", NULL);
+	item = glade_xml_get_widget (totem->xml,
+			"tmw_take_screenshot_menu_item");
+	gtk_widget_set_sensitive (item, !locked);
+}
+
+static void
 mediadev_changed_cb (GConfClient *client, guint cnxn_id,
 		GConfEntry *entry, Totem *totem)
 {
@@ -473,6 +487,13 @@ totem_setup_preferences (Totem *totem)
 	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/mediadev",
 			(GConfClientNotifyFunc) mediadev_changed_cb,
 			totem, NULL, NULL);
+	gconf_client_add_dir (totem->gc, "/desktop/gnome/lockdown/",
+			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
+	gconf_client_notify_add (totem->gc,
+			"/desktop/gnome/lockdown/disable_save_to_disk",
+			(GConfClientNotifyFunc)
+			disable_save_to_disk_changed_cb,
+			totem, NULL, NULL);
 
 	totem->prefs = glade_xml_get_widget (totem->xml,
 			"totem_preferences_window");
@@ -646,6 +667,14 @@ totem_setup_preferences (Totem *totem)
 	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
 			gconf_client_get_bool (totem->gc,
 				GCONF_PREFIX"/window_on_top", NULL));
+
+	/* Save to disk Lockdown */
+	item = glade_xml_get_widget
+		(totem->xml, "tmw_take_screenshot_menu_item");
+	gtk_widget_set_sensitive (item,
+			!gconf_client_get_bool (totem->gc,
+				"/desktop/gnome/lockdown/disable_save_to_disk",
+				NULL));
 }
 
 void

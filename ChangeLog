@@ -1,5 +1,13 @@
 2005-02-19  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c: (update_lockdown), (init_config):
+	* src/totem-preferences.c: (disable_save_to_disk_changed_cb),
+	(totem_setup_preferences): disable "Take Screenshot" and the Save
+	playlist button when in disable_save_to_disk lockdown mode
+	(Closes: #165611)
+
+2005-02-19  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-gst.c: (shrink_toplevel): don't try to
 	shrink the toplevel window if there's not one
 
