@@ -560,13 +560,9 @@ totem_action_set_mrl (Totem *totem, const char *mrl)
 		gtk_widget_set_sensitive (widget, FALSE);
 
 		/* Set the logo */
-		totem->mrl = g_strdup (LOGO_PATH);
+		totem->mrl = g_strdup(LOGO_PATH);
+		bacon_video_widget_set_logo (totem->bvw, totem->mrl);
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
-		if (bacon_video_widget_open
-				(totem->bvw, totem->mrl, NULL) == TRUE)
-		{
-			bacon_video_widget_play (totem->bvw, 0 , 0, NULL);
-		}
 
 		/* Reset the properties */
 		bacon_video_widget_properties_update
@@ -3095,4 +3091,3 @@ main (int argc, char **argv)
 
 	return 0;
 }
-

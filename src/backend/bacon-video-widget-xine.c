@@ -1462,6 +1462,18 @@ bacon_video_widget_set_logo_mode (BaconVideoWidget *bvw, gboolean logo_mode)
 	bvw->priv->logo_mode = logo_mode;
 }
 
+void
+bacon_video_widget_set_logo (BaconVideoWidget *bvw, gchar *filename)
+{
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
+	
+	if (bacon_video_widget_open (bvw, filename, NULL) == TRUE) {
+		bacon_video_widget_play (bvw, 0 , 0, NULL);
+	}
+}
+
 gboolean
 bacon_video_widget_get_logo_mode (BaconVideoWidget *bvw)
 {

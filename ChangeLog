@@ -1,5 +1,28 @@
 2003-04-16  Julien MOUTTE  <julien@moutte.net>
 
+	* src/bacon-video-widget-gst.c: (update_xid), (update_vis_xid),
+	(got_video_size), (got_eos), (bacon_video_widget_finalize),
+	(bacon_video_widget_open), (bacon_video_widget_set_logo),
+	(bacon_video_widget_set_logo_mode),
+	(bacon_video_widget_get_logo_mode),
+	(bacon_video_widget_set_show_cursor),
+	(bacon_video_widget_get_show_cursor),
+	(bacon_video_widget_set_show_visuals), (bacon_video_widget_new):
+	Prepared for visualisation support, managing logo trough video
+	widget, implemented methods for stuff like cursor and logo focus,
+	implemented finalize method and eos signal
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_set_logo) :
+	implemented logo management as header changed
+	* src/bacon-video-widget.h: Changed header adding
+	bacon_video_widget_set_logo method.
+	* src/gstvideowidget.c: (gst_video_widget_set_cursor_visible),
+	(gst_video_widget_set_logo_focus),
+	(gst_video_widget_set_event_catcher): Fixed some gdk_threads lock bugs
+	* src/totem.c: (totem_action_set_mrl), (main): changed logo management
+	according to bacon widget changes
+
+2003-04-16  Julien MOUTTE  <julien@moutte.net>
+
 	* src/Makefile.am: Added gstvideowidget in EXTRA_DIST
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_size_request),
 	(bacon_video_widget_size_allocate),

@@ -91,6 +91,10 @@ struct BaconVideoWidgetPrivate {
 	GstPlay *play;
 	GstVideoWidget *vw;
 	
+	GdkPixbuf *logo_pixbuf;
+	
+	gboolean media_has_video;
+	
 	/* Configuration */
 	gboolean null_out;
 
@@ -301,14 +305,32 @@ update_xid (GstPlay* play, gint xid, BaconVideoWidget *bvw)
 	g_return_if_fail(BACON_IS_VIDEO_WIDGET(bvw));
 
 	g_message ("update_xid");
+	
+	bvw->priv->media_has_video = TRUE;
+	
+	/* 0.6.1 
+	gst_play_connect_visualisation ( bvw->priv->play, FALSE);*/
+	
 	if (bvw->priv->vw)
 		gst_video_widget_set_xembed_xid(bvw->priv->vw, xid);
 }
 
 static void
+update_vis_xid (GstPlay* play, gint xid, BaconVideoWidget *bvw)
+{
+	g_return_if_fail(bvw != NULL);
+	g_return_if_fail(BACON_IS_VIDEO_WIDGET(bvw));
+
+	g_message ("update_vis_xid");
+	if (bvw->priv->vw)
+		gst_video_widget_set_xembed_xid(bvw->priv->vw, xid);
+	
+}
+
+static void
 got_video_size (GstPlay* play, gint width, gint height, BaconVideoWidget *bvw)
 {
-	g_message ("have_video_size");
+	g_message ("have_video_size %d, %d", width, height);
 	g_return_if_fail(bvw != NULL);
 	g_return_if_fail(BACON_IS_VIDEO_WIDGET(bvw));
 
@@ -320,10 +342,32 @@ got_video_size (GstPlay* play, gint width, gint height, BaconVideoWidget *bvw)
 }
 
 static void
+got_eos (GstPlay* play, BaconVideoWidget *bvw)
+{
+	g_return_if_fail(bvw != NULL);
+	g_return_if_fail(BACON_IS_VIDEO_WIDGET(bvw));
+
+	g_message ("stream_end");
+	g_signal_emit (G_OBJECT (bvw), bvw_table_signals[EOS], 0, NULL);
+}
+
+static void
 bacon_video_widget_finalize (GObject *object)
 {
 	BaconVideoWidget *bvw = (BaconVideoWidget *) object;
 
+	if ( GST_IS_PLAY (bvw->priv->play) )
+		gst_play_set_state (bvw->priv->play, GST_STATE_READY);
+	
+	if (GST_IS_VIDEO_WIDGET(bvw->priv->vw)) {
+		gtk_widget_destroy (GTK_WIDGET(bvw->priv->vw));
+		bvw->priv->vw = NULL;
+	}
+	
+	if (bvw->priv->play) {
+		g_object_unref (bvw->priv->play);
+		bvw->priv->play = NULL;
+	}
 	//FIXME
 }
 
@@ -417,6 +461,9 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 	g_message ("bacon_video_widget_open: %s", mrl);
 	bvw->priv->mrl = g_strdup (mrl);
 
+	/* 0.6.1 
+	gst_play_connect_visualisation ( bvw->priv->play, TRUE);*/
+	
 	gst_play_need_new_video_window ( bvw->priv->play);
 
 	if (g_file_test (mrl,G_FILE_TEST_EXISTS)) {
@@ -428,6 +475,8 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 	
 	if (GST_IS_ELEMENT(datasrc))
 		gst_play_set_data_src (bvw->priv->play, datasrc);
+	
+	bvw->priv->media_has_video = FALSE;
 	
 	return gst_play_set_location (bvw->priv->play, mrl);;
 }
@@ -480,11 +529,24 @@ bacon_video_widget_dvd_event (BaconVideoWidget *bvw,
 }
 
 void
+bacon_video_widget_set_logo (BaconVideoWidget *bvw, gchar *filename)
+{
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
+	g_return_if_fail (GST_IS_VIDEO_WIDGET(bvw->priv->vw));
+	
+	bvw->priv->logo_pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+	
+	gst_video_widget_set_logo (	bvw->priv->vw, bvw->priv->logo_pixbuf);
+}
+
+void
 bacon_video_widget_set_logo_mode (BaconVideoWidget *bvw, gboolean logo_mode)
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
-	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
+	g_return_if_fail (GST_IS_VIDEO_WIDGET(bvw->priv->vw));
+	gst_video_widget_set_logo_focus (bvw->priv->vw, TRUE);
 }
 
 gboolean
@@ -492,6 +554,8 @@ bacon_video_widget_get_logo_mode (BaconVideoWidget *bvw)
 {
 	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+	g_return_val_if_fail (GST_IS_VIDEO_WIDGET(bvw->priv->vw), FALSE);
+	return gst_video_widget_get_logo_focus (bvw->priv->vw);
 }
 
 void
@@ -579,10 +643,9 @@ bacon_video_widget_set_show_cursor (BaconVideoWidget *bvw, gboolean use_cursor)
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
-	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
+	g_return_if_fail (GST_IS_VIDEO_WIDGET(bvw->priv->vw));
 	
-//	gst_video_widget_set_cursor_visible (GST_VIDEO_WIDGET(bvw->vw),
-//			use_cursor);
+	gst_video_widget_set_cursor_visible (bvw->priv->vw, use_cursor);
 }
 
 gboolean
@@ -590,10 +653,9 @@ bacon_video_widget_get_show_cursor (BaconVideoWidget *bvw)
 {
 	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET(bvw), FALSE);
-	g_return_val_if_fail (GST_IS_PLAY(bvw->priv->play), FALSE);
+	g_return_val_if_fail (GST_IS_VIDEO_WIDGET(bvw->priv->vw), FALSE);
 
-	return FALSE;
-//	return gst_video_widget_get_cursor_visible (GST_VIDEO_WIDGET(bvw->vw));
+	return gst_video_widget_get_cursor_visible (bvw->priv->vw);
 }
 
 void
@@ -612,7 +674,20 @@ bacon_video_widget_set_show_visuals (BaconVideoWidget *bvw,
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
 	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
 
-	return FALSE;
+	if (!bvw->priv->media_has_video) {
+		if (!show_visuals) {
+			gst_video_widget_set_logo_focus (bvw->priv->vw,TRUE);
+		}
+		else {
+			gst_video_widget_set_logo_focus (bvw->priv->vw,FALSE);
+		}
+		
+		/* 0.6.1 
+		gst_play_connect_visualisation (bvw->priv->play, show_visuals); */
+		
+	}
+	
+	return TRUE;
 }
 
 void
@@ -781,7 +856,7 @@ bacon_video_widget_new (int width, int height,
 	bvw = BACON_VIDEO_WIDGET (g_object_new
 			(bacon_video_widget_get_type (), NULL));
 
-	bvw->priv->play = gst_play_new (GST_PLAY_PIPE_VIDEO, err);
+	bvw->priv->play = gst_play_new (GST_PLAY_PIPE_VIDEO_VISUALISATION, err);
 	//FIXME
 	if (*err != NULL)
 	{
@@ -804,7 +879,8 @@ bacon_video_widget_new (int width, int height,
 		g_message ("failed to render default video sink from gconf for vis");
 		return NULL;
 	}
-/*	vis_element = gst_gconf_get_default_visualisation_element ();
+	/* 0.6.1 
+	vis_element = gst_gconf_get_default_visualisation_element ();
 	if (!GST_IS_ELEMENT (vis_element)) {
 		g_message ("failed to render default visualisation element from gconf");
 		return NULL;
@@ -812,13 +888,19 @@ bacon_video_widget_new (int width, int height,
 
 	gst_play_set_video_sink (bvw->priv->play, video_sink);
 	gst_play_set_audio_sink (bvw->priv->play, audio_sink);
-//	gst_play_set_visualisation_video_sink (bvw->priv->play, vis_video_sink);
-//	gst_play_set_visualisation_element (bvw->priv->play, vis_element);
+	/* 0.6.1 
+	gst_play_set_visualisation_video_sink (bvw->priv->play, vis_video_sink);
+	gst_play_set_visualisation_element (bvw->priv->play, vis_element);*/
 
 	g_signal_connect (G_OBJECT (bvw->priv->play),
 			"have_xid", (GtkSignalFunc) update_xid, (gpointer) bvw);
+	/* 0.6.1 
+	g_signal_connect (G_OBJECT (bvw->priv->play),
+			"have_vis_xid", (GtkSignalFunc) update_vis_xid, (gpointer) bvw);*/
 	g_signal_connect (G_OBJECT (bvw->priv->play),
 			"have_video_size", (GtkSignalFunc) got_video_size, (gpointer) bvw);
+	g_signal_connect (G_OBJECT (bvw->priv->play),
+			"stream_end", (GtkSignalFunc) got_eos, (gpointer) bvw);
 	
 	bvw->priv->vw = GST_VIDEO_WIDGET(gst_video_widget_new ());
 	if (!GST_IS_VIDEO_WIDGET(bvw->priv->vw)) {

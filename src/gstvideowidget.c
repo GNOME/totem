@@ -805,13 +805,9 @@ gst_video_widget_set_cursor_visible (GstVideoWidget *vw, gboolean visible)
 	g_return_val_if_fail(vw != NULL, FALSE);
 	g_return_val_if_fail (GST_IS_VIDEO_WIDGET (vw), FALSE);
 	
-	gdk_threads_enter ();
-	
 	vw->cursor_visible = visible;
 	
 	gst_video_widget_update_cursor (vw);
-	
-	gdk_threads_leave ();
 	
 	return TRUE;
 }
@@ -851,13 +847,9 @@ gst_video_widget_set_logo_focus (GstVideoWidget *vw, gboolean focused)
 	g_return_val_if_fail(vw != NULL, FALSE);
 	g_return_val_if_fail (GST_IS_VIDEO_WIDGET (vw), FALSE);
 	
-	gdk_threads_enter ();
-	
 	vw->logo_focused = focused;
 	
 	gst_video_widget_reorder_windows (vw);
-	
-	gdk_threads_leave ();
 	
 	return TRUE;
 }
@@ -898,13 +890,9 @@ gst_video_widget_set_event_catcher (GstVideoWidget *vw, gboolean event_catcher)
 	g_return_val_if_fail(vw != NULL, FALSE);
 	g_return_val_if_fail (GST_IS_VIDEO_WIDGET (vw), FALSE);
 	
-	gdk_threads_enter ();
-	
 	vw->event_catcher = event_catcher;
 	
 	gst_video_widget_reorder_windows (vw);
-	
-	gdk_threads_leave ();
 	
 	return TRUE;
 }

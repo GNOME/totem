@@ -98,7 +98,8 @@ gboolean bacon_video_widget_play                 (BaconVideoWidget *bvw,
 void bacon_video_widget_stop                     (BaconVideoWidget *bvw);
 void bacon_video_widget_close                    (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_eject                (BaconVideoWidget *bvw);
-
+void bacon_video_widget_set_logo                 (BaconVideoWidget *bvw,
+                                                  gchar *filename);
 /* Properties */
 void  bacon_video_widget_set_logo_mode		 (BaconVideoWidget *bvw,
 						  gboolean logo_mode);
