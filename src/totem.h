@@ -46,7 +46,8 @@ void	totem_action_play_media			(Totem *totem, MediaType type);
 
 void	totem_action_toggle_aspect_ratio	(Totem *totem);
 void	totem_action_set_scale_ratio		(Totem *totem, gfloat ratio);
-void    totem_action_error                      (char *msg, Totem *totem);
+void    totem_action_error                      (char *title, char *reason,
+						 Totem *totem);
 
 GConfClient *totem_get_gconf_client		(Totem *totem);
 

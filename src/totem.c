@@ -158,7 +158,7 @@ totem_create_full_path (const char *path)
 }
 
 void
-totem_action_error (char *msg, Totem *totem)
+totem_action_error (char *title, char *reason, Totem *totem)
 {
 	GtkWidget *parent, *error_dialog;
 
@@ -172,9 +172,10 @@ totem_action_error (char *msg, Totem *totem)
 				GTK_DIALOG_MODAL,
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK,
-				"%s", msg);
+				"<b>%s</b>\n%s.", title, reason);
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
 			GTK_RESPONSE_OK);
+	gtk_label_set_use_markup (GTK_LABEL (GTK_MESSAGE_DIALOG (error_dialog)->label), TRUE);
 	g_signal_connect (G_OBJECT (error_dialog), "destroy", G_CALLBACK
 			(gtk_widget_destroy), error_dialog);
 	g_signal_connect (G_OBJECT (error_dialog), "response", G_CALLBACK
@@ -193,7 +194,7 @@ totem_action_error (char *msg, Totem *totem)
 
 #ifdef HAVE_X86
 static gboolean
-totem_action_error_try_download (char *msg, Totem *totem)
+totem_action_error_try_download (char *title, char *reason, Totem *totem)
 {
 	GtkWidget *error_dialog;
 	GValue value = { 0, };
@@ -211,7 +212,7 @@ totem_action_error_try_download (char *msg, Totem *totem)
 
 	if (audio_fcc == 0 && video_fcc == 0)
 	{
-		totem_action_error (msg, totem);
+		totem_action_error (title, reason, totem);
 		return FALSE;
 	}
 
@@ -220,7 +221,8 @@ totem_action_error_try_download (char *msg, Totem *totem)
 				GTK_DIALOG_MODAL,
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_NONE,
-				"%s", msg);
+				"<b>%s</b>\n%s.", title, reason);
+	gtk_label_set_use_markup (GTK_LABEL (GTK_MESSAGE_DIALOG (error_dialog)->label), TRUE);
 	gtk_dialog_add_buttons (GTK_DIALOG (error_dialog),
 			GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
 			_("Download"), GTK_RESPONSE_ACCEPT,
@@ -243,7 +245,7 @@ totem_action_error_try_download (char *msg, Totem *totem)
 #endif
 
 void
-totem_action_error_and_exit (char *msg, Totem *totem)
+totem_action_error_and_exit (char *title, char *reason, Totem *totem)
 {
 	GtkWidget *error_dialog;
 
@@ -252,7 +254,8 @@ totem_action_error_and_exit (char *msg, Totem *totem)
 				GTK_DIALOG_MODAL,
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK,
-				"%s", msg);
+				"<b>%s</b>\n%s.", title, reason);
+	gtk_label_set_use_markup (GTK_LABEL (GTK_MESSAGE_DIALOG (error_dialog)->label), TRUE);
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
 			GTK_RESPONSE_OK);
 	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
@@ -400,16 +403,15 @@ totem_action_play (Totem *totem, int offset)
 		char *msg, *disp;
 
 		disp = gnome_vfs_unescape_string_for_display (totem->mrl);
-		msg = g_strdup_printf(_("Totem could not play '%s'.\n"
-					"Reason: %s."),
-				disp,
-				err->message);
+		msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
 		g_free (disp);
+
 		totem_playlist_set_playing (totem->playlist, FALSE);
-		totem_action_error (msg, totem);
+		totem_action_error (msg, err->message, totem);
 		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
 			totem_action_stop (totem);
 		g_free (msg);
+		g_error_free (err);
 	}
 }
 
@@ -434,10 +436,8 @@ totem_action_load_media (Totem *totem, MediaType type)
 
 	if (bacon_video_widget_can_play (totem->bvw, type) == FALSE)
 	{
-		msg = g_strdup_printf (_("Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it.\n"
-					"Please install the necessary plugins and restart Totem to be able to play this media."),
-				_(media_strings[type]));
-		totem_action_error (msg, totem);
+		msg = g_strdup_printf (_("Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."), _(media_strings[type]));
+		totem_action_error (msg, _("Please install the necessary plugins and restart Totem to be able to play this media."), totem);
 		g_free (msg);
 		return FALSE;
 	}
@@ -445,10 +445,8 @@ totem_action_load_media (Totem *totem, MediaType type)
 	mrls = bacon_video_widget_get_mrls (totem->bvw, type);
 	if (mrls == NULL)
 	{
-		msg = g_strdup_printf (_("Totem could not play this media (%s) although a plugin is present to handle it.\n"
-					"You might want to check that a disc is present in the drive and that it is correctly configured."),
-				_(media_strings[type]));
-		totem_action_error (msg, totem);
+		msg = g_strdup_printf (_("Totem could not play this media (%s) although a plugin is present to handle it."), _(media_strings[type]));
+		totem_action_error (msg, _("You might want to check that a disc is present in the drive and that it is correctly configured."), totem);
 		g_free (msg);
 		return FALSE;
 	}
@@ -826,15 +824,11 @@ try_open_again:
 			char *msg, *disp;
 			gboolean try_again;
 
-			disp = gnome_vfs_unescape_string_for_display
-				(totem->mrl);
-			msg = g_strdup_printf(_("Totem could not play '%s'.\n"
-						"Reason: %s."),
-					disp, err->message);
+			disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+			msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
 			g_free (disp);
 #ifdef HAVE_X86
-			try_again = totem_action_error_try_download
-				(msg, totem);
+			try_again = totem_action_error_try_download (msg, err->message, totem);
 			g_free (msg);
 			first_try = FALSE;
 			if (try_again != FALSE)
@@ -845,9 +839,10 @@ try_open_again:
 				goto try_open_again;
 			}
 #else
-			totem_action_error (msg, totem);
+			totem_action_error (msg, err->message, totem);
 			g_free (msg);
 #endif
+			g_error_free (err);
 			retval = FALSE;
 		}
 	}
@@ -945,17 +940,18 @@ totem_action_seek_relative (Totem *totem, int off_sec)
 	play_pause_set_label (totem, STATE_PLAYING);
 	if (err != NULL)
 	{
-		char *msg;
+		char *msg, *disp;
 
-		msg = g_strdup_printf(_("Totem could not play '%s'.\n"
-					"Reason: %s."),
-				totem->mrl,
-				err->message);
+		disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+		msg = g_strdup_printf(_("Totem could not play '%s'."), totem->mrl);
+		g_free (disp);
+
 		totem_playlist_set_playing (totem->playlist, FALSE);
 		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
 			totem_action_stop (totem);
-		totem_action_error (msg, totem);
+		totem_action_error (msg, err->message, totem);
 		g_free (msg);
+		g_error_free (err);
 	}
 }
 
@@ -1235,9 +1231,9 @@ static void
 on_error_event (BaconVideoWidget *bvw, char *message,
                 gboolean playback_stopped, Totem *totem)
 {
-        if (playback_stopped)
+	if (playback_stopped)
 		play_pause_set_label (totem, STATE_STOPPED);
-	totem_action_error (message, totem);
+	totem_action_error (_("An error occured"), message, totem);
 }
 
 static void
@@ -1589,10 +1585,7 @@ on_open_location1_activate (GtkButton *button, Totem *totem)
 			"totem/uri.glade", TRUE, NULL);
 	if (filename == NULL)
 	{
-		totem_action_error (_("Couldn't load the 'Open Location...'"
-					" interface.\nMake sure that Totem"
-					" is properly installed."),
-				totem);
+		totem_action_error (_("Couldn't load the 'Open Location...' interface."), _("Make sure that Totem is properly installed."), totem);
 		return;
 	}
 
@@ -1600,10 +1593,7 @@ on_open_location1_activate (GtkButton *button, Totem *totem)
 	if (glade == NULL)
 	{
 		g_free (filename);
-		totem_action_error (_("Couldn't load the 'Open Location...'"
-					" interface.\nMake sure that Totem"
-					" is properly installed."),
-				totem);
+		totem_action_error (_("Couldn't load the 'Open Location...' interface."), _("Make sure that Totem is properly installed."), totem);
 		return;
 	}
 
@@ -1660,10 +1650,7 @@ on_eject1_activate (GtkButton *button, Totem *totem)
 
 	if (bacon_video_widget_eject (totem->bvw) == FALSE)
 	{
-		char *msg;
-
-		msg = _("Totem could not eject the optical media.");
-		totem_action_error (msg, totem);
+		totem_action_error (_("Totem could not eject the optical media."), _("No reason given"), totem);
 	}
 }
 
@@ -2018,22 +2005,18 @@ on_take_screenshot1_activate (GtkButton *button, Totem *totem)
 
 	if (bacon_video_widget_can_get_frames (totem->bvw, &err) == FALSE)
 	{
-		char *msg;
-
 		if (err == NULL)
 			return;
 
-		msg = g_strdup_printf (_("Totem could not get a screenshot of that film.\nReason: %s."), err->message);
+		totem_action_error (_("Totem could not get a screenshot of that film."), err->message, totem);
 		g_error_free (err);
-		totem_action_error (msg, totem);
-		g_free (msg);
 		return;
 	}
 
 	pixbuf = bacon_video_widget_get_current_frame (totem->bvw);
 	if (pixbuf == NULL)
 	{
-		totem_action_error (_("Totem could not get a screenshot of that film.\nPlease file a bug, this isn't supposed to happen"), totem);
+		totem_action_error (_("Totem could not get a screenshot of that film."), _("Please file a bug, this isn't supposed to happen"), totem);
 		return;
 	}
 
@@ -2059,7 +2042,11 @@ on_take_screenshot1_activate (GtkButton *button, Totem *totem)
 		filename = screenshot_make_filename (totem);
 		if (g_file_test (filename, G_FILE_TEST_EXISTS) != FALSE)
 		{
-			totem_action_error (_("File '%s' already exists.\nThe screenshot was not saved."), totem);
+			char *msg;
+
+			msg = g_strdup_printf (_("File '%s' already exists."), filename);
+			totem_action_error (msg, _("The screenshot was not saved"), totem);
+			g_free (msg);
 			gdk_pixbuf_unref (pixbuf);
 			g_free (filename);
 			return;
@@ -2068,11 +2055,7 @@ on_take_screenshot1_activate (GtkButton *button, Totem *totem)
 		if (gdk_pixbuf_save (pixbuf, filename, "png", &err, NULL)
 				== FALSE)
 		{
-			char *msg;
-
-			msg = g_strdup_printf (_("There was an error saving the screenshot.\nDetails: %s"), err->message);
-			totem_action_error (msg, totem);
-			g_free (msg);
+			totem_action_error (_("There was an error saving the screenshot."), err->message, totem);
 			g_error_free (err);
 		}
 
@@ -2087,9 +2070,7 @@ on_properties1_activate (GtkButton *button, Totem *totem)
 {
 	if (totem->properties == NULL)
 	{
-		totem_action_error (_("Totem couldn't show the movie properties window.\n"
-					"Make sure that Totem is correctly installed."),
-				totem);
+		totem_action_error (_("Totem couldn't show the movie properties window."), _("Make sure that Totem is correctly installed."), totem);
 		return;
 	}
 
@@ -2154,18 +2135,18 @@ commit_hide_skip_to (GtkDialog *dialog, gint response, Totem *totem)
 
 	if (err != NULL)
 	{
-		char *msg;
+		char *msg, *disp;
 
-		msg = g_strdup_printf(_("Totem could not seek in '%s'.\n"
-					"Reason: %s."),
-				totem->mrl,
-				err->message);
+		disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+		msg = g_strdup_printf(_("Totem could not seek in '%s'."), disp);
+		g_free (disp);
 		totem_action_stop (totem);
 		totem_playlist_set_playing (totem->playlist, FALSE);
 		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
 			totem_action_stop (totem);
-		totem_action_error (msg, totem);
+		totem_action_error (msg, err->message, totem);
 		g_free (msg);
+		g_error_free (err);
 	}
 }
 
@@ -3288,19 +3269,13 @@ video_widget_create (Totem *totem)
 
 	if (totem->bvw == NULL)
 	{
-		char *msg;
-
-		msg = g_strdup_printf (_("Totem could not startup:\n%s"),
-				err != NULL ? err->message : _("No reason"));
 		totem_playlist_set_playing (totem->playlist, FALSE);
-
-		if (err != NULL)
-			g_error_free (err);
 
 		gtk_widget_hide (totem->win);
 
-		totem_action_error_and_exit (msg, totem);
-		g_free (msg);
+		totem_action_error_and_exit (_("Totem could not startup."), err != NULL ? err->message : _("No reason"), totem);
+		if (err != NULL)
+			g_error_free (err);
 	}
 
 	totem_preferences_tvout_setup (totem);
@@ -3556,10 +3531,7 @@ main (int argc, char **argv)
 	if (XInitThreads () == 0)
 	{
 		gtk_init (&argc, &argv);
-		totem_action_error_and_exit (_("Could not initialise the "
-					"thread-safe libraries.\n"
-					"Verify your system installation. Totem"
-					" will now exit."), NULL);
+		totem_action_error_and_exit (_("Could not initialise the thread-safe libraries."), _("Verify your system installation. Totem will now exit."), NULL);
 	}
 
 	g_thread_init (NULL);
@@ -3576,14 +3548,8 @@ main (int argc, char **argv)
 	gnome_vfs_init ();
 	if ((gc = gconf_client_get_default ()) == NULL)
 	{
-		char *str;
-
-		str = g_strdup_printf (_("Totem couln't initialise the \n"
-					"configuration engine:\n%s"),
-				err->message);
-		totem_action_error_and_exit (str, NULL);
+		totem_action_error_and_exit (_("Totem couln't initialise the configuration engine."), err->message, NULL);
 		g_error_free (err);
-		g_free (str);
 	}
 	gnome_authentication_manager_init ();
 
@@ -3592,10 +3558,7 @@ main (int argc, char **argv)
 			"totem/totem.glade", TRUE, NULL);
 	if (filename == NULL)
 	{
-		totem_action_error_and_exit (_("Couldn't load the main "
-					"interface (totem.glade).\n"
-					"Make sure that Totem"
-					" is properly installed."), NULL);
+		totem_action_error_and_exit (_("Couldn't load the main interface (totem.glade)."), _("Make sure that Totem is properly installed."), NULL);
 	}
 
 	totem = g_new0 (Totem, 1);
@@ -3620,10 +3583,7 @@ main (int argc, char **argv)
 	if (totem->xml == NULL)
 	{
 		g_free (filename);
-		totem_action_error_and_exit (_("Couldn't load the main "
-					"interface (totem.glade).\n"
-					"Make sure that Totem"
-					" is properly installed."), NULL);
+		totem_action_error_and_exit (_("Couldn't load the main interface (totem.glade)."), _("Make sure that Totem is properly installed."), NULL);
 	}
 	g_free (filename);
 
@@ -3646,11 +3606,7 @@ main (int argc, char **argv)
 
 	if (totem->playlist == NULL)
 	{
-		totem_action_error_and_exit (_("Couldn't load the interface "
-					"for the playlist."
-					"\nMake sure that Totem"
-					" is properly installed."),
-				totem);
+		totem_action_error_and_exit (_("Couldn't load the interface for the playlist."), _("Make sure that Totem is properly installed."), totem);
 	}
 	filename = g_build_filename (G_DIR_SEPARATOR_S, DATADIR,
 			"totem", "playlist-24.png", NULL);

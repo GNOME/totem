@@ -1,5 +1,20 @@
 2003-09-11  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-preferences.c: (totem_action_info),
+	(totem_prefs_set_show_visuals), (on_tvout_toggled),
+	(on_button1_clicked), (visual_menu_changed):
+	* src/totem.c: (totem_action_error),
+	(totem_action_error_try_download), (totem_action_error_and_exit),
+	(totem_action_play), (totem_action_load_media),
+	(totem_action_set_mrl), (totem_action_seek_relative),
+	(on_error_event), (on_open_location1_activate),
+	(on_eject1_activate), (on_take_screenshot1_activate),
+	(on_properties1_activate), (commit_hide_skip_to),
+	(video_widget_create), (main):
+	* src/totem.h: HIG-ify the error dialogs
+
+2003-09-11  Bastien Nocera  <hadess@hadess.net>
+
 	* README: updated
 	* src/totem.c: (totem_action_set_mrl_and_play),
 	(totem_action_set_mrl), (totem_action_previous),

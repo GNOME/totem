@@ -34,6 +34,34 @@
 
 #define PROPRIETARY_PLUGINS ".gnome2"G_DIR_SEPARATOR_S"totem-addons"
 
+static void
+totem_action_info (char *reason, Totem *totem)
+{
+	GtkWidget *parent, *error_dialog;
+
+	if (totem == NULL)
+		parent = NULL;
+	else
+		parent = totem->win;
+
+	error_dialog =
+		gtk_message_dialog_new (GTK_WINDOW (parent),
+				GTK_DIALOG_MODAL,
+				GTK_MESSAGE_INFO,
+				GTK_BUTTONS_OK,
+				"%s", reason);
+	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
+			GTK_RESPONSE_OK);
+	g_signal_connect (G_OBJECT (error_dialog), "destroy", G_CALLBACK
+			(gtk_widget_destroy), error_dialog);
+	g_signal_connect (G_OBJECT (error_dialog), "response", G_CALLBACK
+			(gtk_widget_destroy), error_dialog);
+	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
+
+	gtk_widget_show (error_dialog);
+}
+
+
 static gboolean
 totem_display_is_local (Totem *totem)
 {
@@ -131,7 +159,7 @@ totem_prefs_set_show_visuals (Totem *totem, gboolean value, gboolean warn)
 	if (bacon_video_widget_set_show_visuals
 			(BACON_VIDEO_WIDGET (totem->bvw), value) == FALSE)
 	{
-		totem_action_error (_("The change of this setting will only "
+		totem_action_info (_("The change of this setting will only "
 					"take effect for the next movie, or "
 					"when Totem is restarted"),
 				totem);
@@ -175,7 +203,7 @@ on_tvout_toggled (GtkToggleButton *togglebutton, Totem *totem)
 		(BACON_VIDEO_WIDGET (totem->bvw), type);
 
 	if (value == TRUE)
-		totem_action_error (_("Switching on or off this type of TV-Out requires a restart to take effect."), totem);
+		totem_action_info (_("Switching on or off this type of TV-Out requires a restart to take effect."), totem);
 }
 
 static void
@@ -308,11 +336,7 @@ on_button1_clicked (GtkButton *button, Totem *totem)
 
 	if (g_spawn_command_line_async (cmd, &err) == FALSE)
 	{
-		char *msg;
-
-		msg = g_strdup_printf ("Totem could not start the file manager\nReason: %s.", err->message);
-		totem_action_error (msg, totem);
-		g_free (msg);
+		totem_action_error (_("Totem could not start the file manager."), err->message, totem);
 		g_error_free (err);
 	}
 
@@ -340,7 +364,7 @@ visual_menu_changed (GtkOptionMenu *option_menu, Totem *totem)
 				name, NULL);
 
 		if (bacon_video_widget_set_visuals (totem->bvw, name) == TRUE)
-			totem_action_error (_("Changing the visuals effect type will require a restart to take effect."), totem);
+			totem_action_info (_("Changing the visuals effect type will require a restart to take effect."), totem);
 	}
 }
 
