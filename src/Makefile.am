@@ -65,7 +65,9 @@ regenerate-built-sources:
 
 libbaconpropertiespage_la_SOURCES = \
 	bacon-video-widget-properties.c \
-	bacon-video-widget-properties.h
+	bacon-video-widget-properties.h \
+	totem-interface.c		\
+	totem-interface.h
 
 totem_SOURCES = 					\
 	$(EGG_RECENT_FILES)				\
@@ -77,8 +79,6 @@ totem_SOURCES = 					\
 	totem-scrsaver.c		\
 	totem-scrsaver.h		\
 	totem-options.c totem-options.h	\
-	totem-interface.c		\
-	totem-interface.h		\
 	totem-playlist.c totem-playlist.h \
 	totem-screenshot.c		\
 	totem-screenshot.h		\
