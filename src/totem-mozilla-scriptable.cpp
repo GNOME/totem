@@ -41,29 +41,63 @@ totemMozillaObject::~totemMozillaObject ()
 NS_IMPL_ISUPPORTS2(totemMozillaObject, totemMozillaScript, nsIClassInfo)
 
 /*
+ * Waiting for response.
+ */
+
+gchar *
+totemMozillaObject::wait ()
+{
+  gchar *msg;
+
+  while (!this->tm->last_msg) {
+    g_main_iteration (FALSE);
+  }
+
+  msg = this->tm->last_msg;
+  this->tm->last_msg = NULL;
+
+  return msg;
+}
+
+/*
  * From here on start the javascript-callable implementations.
  */
 
 NS_IMETHODIMP
 totemMozillaObject::Play ()
 {
-  g_print ("Play!\n");
+  g_message ("play");
 
-  return NS_ERROR_NOT_IMPLEMENTED;
+  bacon_message_connection_send (this->tm->conn, "PLAY");
+  gchar *msg = wait ();
+  g_message ("Response: %s", msg);
+  g_free (msg);
+
+  return NS_OK;
 }
 
 NS_IMETHODIMP
 totemMozillaObject::Rewind ()
 {
-  g_print ("Stop!\n");
+  g_message ("stop");
 
-  return NS_ERROR_NOT_IMPLEMENTED;
+  bacon_message_connection_send (this->tm->conn, "STOP");
+  gchar *msg = wait ();
+  g_message ("Response: %s", msg);
+  g_free (msg);
+
+  return NS_OK;
 }
 
 NS_IMETHODIMP
 totemMozillaObject::Stop ()
 {
-  g_print ("Pause!\n");
+  g_message ("pause");
 
-  return NS_ERROR_NOT_IMPLEMENTED;
+  bacon_message_connection_send (this->tm->conn, "PAUSE");
+  gchar *msg = wait ();
+  g_message ("Response: %s", msg);
+  g_free (msg);
+
+  return NS_OK;
 }

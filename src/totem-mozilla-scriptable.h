@@ -22,6 +22,7 @@
 #ifndef __TOTEM_MOZILLA_SCRIPTABLE_H__
 #define __TOTEM_MOZILLA_SCRIPTABLE_H__
 
+#include "bacon-message-connection.h"
 #include "totem_mozilla_scripting.h"
 #include "nsIClassInfo.h"
 #include "npupp.h"
@@ -36,6 +37,8 @@ typedef struct {
 
         char *src, *href;
         int width, height;
+	BaconMessageConnection *conn;
+	gchar *last_msg;
         int send_fd;
         int player_pid;
         gboolean controller_hidden;
@@ -76,9 +79,9 @@ public:
   NS_DECL_TOTEMMOZILLASCRIPT
 
   totemMozillaObject (TotemPlugin *tm);
-
-private:
   ~totemMozillaObject ();
+
+  gchar *wait ();
 
 protected:
   TotemPlugin *tm;

@@ -120,6 +120,16 @@ static void totem_plugin_fork (TotemPlugin *plugin)
 	g_strfreev (argv);
 }
 
+static void
+cb_data (const gchar * msg, gpointer user_data)
+{
+	TotemPlugin *plugin = (TotemPlugin *) user_data;
+
+	g_free (plugin->last_msg);
+	plugin->last_msg = g_strdup (msg);
+	g_print ("Read msg '%s'\n", msg);
+}
+
 static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 		uint16_t mode, int16_t argc, char *argn[], char *argv[],
 		NPSavedData *saved)
@@ -144,6 +154,13 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 		mozilla_functions.memfree (plugin);
 		return NPERR_OUT_OF_MEMORY_ERROR;
 	}
+	plugin->conn = bacon_message_connection_new ("totem-mozilla");
+	if (!plugin->conn) {
+		delete plugin->iface;
+		mozilla_functions.memfree (plugin);
+		return NPERR_OUT_OF_MEMORY_ERROR;
+	}
+	bacon_message_connection_set_callback (plugin->conn, cb_data, plugin);
 	NS_ADDREF (plugin->iface);
 
 	/* mode is NP_EMBED, NP_FULL, or NP_BACKGROUND (see npapi.h) */
@@ -217,6 +234,9 @@ static NPError totem_plugin_destroy_instance (NPP instance, NPSavedData **save)
 	}
 
 	NS_RELEASE (plugin->iface);
+	delete plugin->iface;
+	bacon_message_connection_free (plugin->conn);
+	g_free (plugin->last_msg);
 	mozilla_functions.memfree (instance->pdata);
 	instance->pdata = NULL;
 
@@ -247,10 +267,13 @@ static NPError totem_plugin_set_window (NPP instance, NPWindow* window)
 			printf ("ack.  window changed!\n");
 		}
 	} else {
+		gchar *msg;
+
 		DEBUG("about to fork");
 
 		plugin->window = (guint32) window->window;
 		totem_plugin_fork (plugin);
+                msg = plugin->iface->wait ();
 
 		fcntl(plugin->send_fd, F_SETFL, O_NONBLOCK);
 	}

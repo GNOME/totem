@@ -1,3 +1,24 @@
+2005-03-23  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/Makefile.am:
+	  link totem-mozilla-* against baconconnection.
+	* src/bacon-message-connection.c: (setup_connection), (server_cb),
+	(try_server), (try_client), (bacon_message_connection_new),
+	(bacon_message_connection_free),
+	(bacon_message_connection_set_callback),
+	(bacon_message_connection_send),
+	(bacon_message_connection_get_is_server):
+	  Update for two-way communication.
+	* src/bacon-message-connection.h:
+	* src/totem-mozilla-plugin.cpp:
+	* src/totem-mozilla-scriptable.cpp:
+	* src/totem-mozilla-scriptable.h:
+	* src/totem-mozilla-viewer.c: (cb_data), (main):
+	  Set up basic push-response model. Idea: plugin gets a function
+	  call from mozilla, pushes as message to child, does action, waits,
+	  responds, puts message back, mozilla-plugin reads and returns
+	  error/ok to mozilla. Works nicely.
+
 2005-03-23  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/.cvsignore:

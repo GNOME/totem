@@ -27,6 +27,7 @@
 #include <gdk/gdkx.h>
 #include <glade/glade.h>
 
+#include "bacon-message-connection.h"
 #include "bacon-video-widget.h"
 #include "totem-interface.h"
 #include "totem-mozilla-options.h"
@@ -60,6 +61,9 @@ struct TotemEmbedded {
 
 	/* XEmbed */
 	gboolean embedded_done;
+
+	/* getting messages from the parent process */
+	BaconMessageConnection *conn;
 };
 
 static void
@@ -341,6 +345,16 @@ static void embedded (GtkPlug *plug, TotemEmbedded *emb)
 	emb->embedded_done = TRUE;
 }
 
+static void
+cb_data (const char * msg, gpointer user_data)
+{
+	TotemEmbedded *emb = user_data;
+
+	g_print ("Got message: %s\n", msg);
+
+	bacon_message_connection_send (emb->conn, "OK");
+}
+
 int main (int argc, char **argv)
 {
 	TotemEmbedded *emb;
@@ -349,6 +363,11 @@ int main (int argc, char **argv)
 	emb = g_new0 (TotemEmbedded, 1);
 	emb->width = emb->height = -1;
 	emb->state = STATE_STOPPED;
+	emb->conn = bacon_message_connection_new ("totem-mozilla");
+	if (!emb->conn)
+		return 1;
+	bacon_message_connection_set_callback (emb->conn, cb_data, emb);
+	bacon_message_connection_send (emb->conn, "STARTUP OK");
 
 	if (XInitThreads () == 0)
 	{

@@ -15,19 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * The Totem project hereby grant permission for non-gpl compatible GStreamer
- * plugins to be used and distributed together with GStreamer and Totem. This
- * permission are above and beyond the permissions granted by the GPL license
- * Totem is covered by.
- *
- * Monday 7th February 2005: Christian Schaller: Add excemption clause.
- * See license_change file for details.
- * 
  */
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -41,10 +34,15 @@
 #endif
 
 struct BaconMessageConnection {
+	/* A server accepts connections */
 	gboolean is_server;
-	int fd;
+
+	/* FD is for the connection, serverfd is for the server socket,
+	 * it accepts incoming connections. */
+	int fd, serverfd;
 	char *path;
 	GIOChannel *chan;
+
 	/* callback */
 	void (*func) (const char *message, gpointer user_data);
 	gpointer data;
@@ -64,32 +62,59 @@ test_is_socket (const char *path)
 	return FALSE;
 }
 
-#define BUF_SIZE 1024
+static gboolean server_cb (GIOChannel *source,
+			   GIOCondition condition, gpointer data);
+
+static gboolean
+setup_connection (BaconMessageConnection *conn)
+{
+	conn->chan = g_io_channel_unix_new (conn->fd);
+	if (!conn->chan) {
+		return FALSE;
+	}
+	g_io_channel_set_line_term (conn->chan, "\n", 1);
+	g_io_add_watch (conn->chan, G_IO_IN, server_cb, conn);
+
+	return TRUE;
+}
 
 static gboolean
 server_cb (GIOChannel *source, GIOCondition condition, gpointer data)
 {
 	BaconMessageConnection *conn = (BaconMessageConnection *)data;
-	char *message, *subs, buf[BUF_SIZE];
+	char *message, *subs, buf;
 	int cd, alen, rc, offset;
-	gboolean finished;
+	gboolean finished, serverconn = FALSE;
 
-	message = NULL;
+	message = g_malloc (1);
 	offset = 0;
-	cd = accept (g_io_channel_unix_get_fd (source), NULL, &alen);
-
-	memset (buf, 0, sizeof (buf));
-	rc = read (cd, buf, BUF_SIZE);
-//FIXME test for the actual errno
-	while (rc != 0)
-	{
-		message = g_realloc (message, rc + offset);
-		memcpy (message + offset, buf, MIN(rc, BUF_SIZE));
-
-		offset = offset + rc;
-		memset (buf, 0, sizeof (buf));
-		rc = read (cd, buf, BUF_SIZE);
+	if (conn->serverfd == g_io_channel_unix_get_fd (source)) {
+		cd = accept (conn->serverfd, NULL, &alen);
+		conn->fd = cd;
+		setup_connection (conn);
+		serverconn = TRUE;
+	} else {
+		cd = conn->fd;
 	}
+	rc = read (cd, &buf, 1);
+	while (rc != 0 && buf != '\n')
+	{
+		message = g_realloc (message, rc + offset + 1);
+		message[offset] = buf;
+		offset = offset + rc;
+		rc = read (cd, &buf, 1);
+	}
+	if (rc == 0) {
+		g_io_channel_shutdown (conn->chan, FALSE, NULL);
+		g_io_channel_unref (conn->chan);
+		conn->chan = NULL;
+		close (conn->fd);
+		conn->fd = -1;
+		g_free (message);
+
+		return serverconn;
+	}
+	message[offset] = '\0';
 
 	subs = message;
 	finished = FALSE;
@@ -118,22 +143,15 @@ try_server (BaconMessageConnection *conn)
 	uaddr.sun_family = AF_UNIX;
 	strncpy (uaddr.sun_path, conn->path,
 			MIN (strlen(conn->path)+1, UNIX_PATH_MAX));
-	conn->fd = socket (PF_UNIX, SOCK_STREAM, 0);
+	conn->serverfd = conn->fd = socket (PF_UNIX, SOCK_STREAM, 0);
 	if (bind (conn->fd, (struct sockaddr *) &uaddr, sizeof (uaddr)) == -1)
 	{
 		conn->fd = -1;
 		return FALSE;
 	}
-
 	listen (conn->fd, 5);
-	conn->chan = g_io_channel_unix_new (conn->fd);
-	if (conn->chan == NULL || err != NULL)
-	{
-		conn->fd = -1;
-		return FALSE;
-	}
 
-	return TRUE;
+	return setup_connection (conn);
 }
 
 static gboolean
@@ -145,6 +163,7 @@ try_client (BaconMessageConnection *conn)
 	strncpy (uaddr.sun_path, conn->path,
 			MIN(strlen(conn->path)+1, UNIX_PATH_MAX));
 	conn->fd = socket (PF_UNIX, SOCK_STREAM, 0);
+	conn->serverfd = -1;
 	if (connect (conn->fd, (struct sockaddr *) &uaddr,
 				sizeof (uaddr)) == -1)
 	{
@@ -152,7 +171,7 @@ try_client (BaconMessageConnection *conn)
 		return FALSE;
 	}
 
-	return TRUE;
+	return setup_connection (conn);
 }
 
 BaconMessageConnection *
@@ -172,8 +191,7 @@ bacon_message_connection_new (const char *prefix)
 
 	if (test_is_socket (conn->path) == FALSE)
 	{
-		try_server (conn);
-		if (conn->fd == -1)
+		if (!try_server (conn))
 		{
 			bacon_message_connection_free (conn);
 			return NULL;
@@ -207,12 +225,15 @@ bacon_message_connection_free (BaconMessageConnection *conn)
 	g_return_if_fail (conn != NULL);
 	g_return_if_fail (conn->path != NULL);
 
-	if (conn->is_server != FALSE)
-	{
+	if (conn->chan) {
 		g_io_channel_shutdown (conn->chan, FALSE, NULL);
 		g_io_channel_unref (conn->chan);
+	}
+
+	if (conn->is_server != FALSE) {
 		unlink (conn->path);
-	} else {
+		close (conn->serverfd);
+	} else if (conn->fd != -1) {
 		close (conn->fd);
 	}
 
@@ -226,9 +247,6 @@ bacon_message_connection_set_callback (BaconMessageConnection *conn,
 				       gpointer user_data)
 {
 	g_return_if_fail (conn != NULL);
-	g_assert (conn->is_server != FALSE);
-
-	g_io_add_watch (conn->chan, G_IO_IN, server_cb, conn);
 
 	conn->func = func;
 	conn->data = user_data;
@@ -239,15 +257,18 @@ bacon_message_connection_send (BaconMessageConnection *conn,
 			       const char *message)
 {
 	g_return_if_fail (conn != NULL);
-	g_assert (conn->is_server == FALSE);
-//FIXME test short writes
-	write (conn->fd, message, strlen (message) + 1);
+
+	g_io_channel_write_chars (conn->chan, message, strlen (message),
+				  NULL, NULL);
+	g_io_channel_write_chars (conn->chan, "\n", 1, NULL, NULL);
+	g_io_channel_flush (conn->chan, NULL);
 }
 
 gboolean
 bacon_message_connection_get_is_server (BaconMessageConnection *conn)
 {
 	g_return_val_if_fail (conn != NULL, FALSE);
+
 	return conn->is_server;
 }
 

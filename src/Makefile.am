@@ -25,7 +25,8 @@ endif
 bin_PROGRAMS = totem totem-video-thumbnailer $(VANITY)
 libexec_PROGRAMS = $(TOTEM_MOZILLA_VIEWER)
 noinst_LTLIBRARIES = \
-	libbaconpropertiespage.la
+	libbaconpropertiespage.la \
+	libbaconmessageconnection.la
 plugin_LTLIBRARIES = $(TOTEM_MOZILLA_PLUGIN)
 nautilus_LTLIBRARIES = $(TOTEM_PROPERTIES_PAGE)
 
@@ -43,9 +44,11 @@ EGG_RECENT_FILES =                      \
 	egg-recent-util.c               \
 	egg-recent-util.h
 
-BACON_MESSAGE_CONNECTION = 		\
-	bacon-message-connection.c	\
+BACON_MESSAGE_CONNECTION = \
+	bacon-message-connection.c \
 	bacon-message-connection.h
+
+libbaconmessageconnection_la_SOURCES = $(BACON_MESSAGE_CONNECTION)
 
 BACON_V4L_SELECTION =			\
 	video-dev.c			\
@@ -65,7 +68,6 @@ libbaconpropertiespage_la_SOURCES = \
 
 totem_SOURCES = 					\
 	$(EGG_RECENT_FILES)				\
-	$(BACON_MESSAGE_CONNECTION)			\
 	totem.c totem.h					\
 	totem-remote.c totem-remote.h			\
 	totem-preferences.c totem-preferences.h		\
@@ -91,8 +93,9 @@ totem_SOURCES = 					\
 
 totem_LDADD = \
 	$(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) \
-	$(XVIDMODE_LIBS) $(NVTV_LIBS) libtotem-plparser.la \
-	backend/libbaconvideowidget.la libbaconpropertiespage.la
+	$(XVIDMODE_LIBS) $(NVTV_LIBS) plparse/libtotem-plparser.la \
+	backend/libbaconvideowidget.la libbaconpropertiespage.la \
+	libbaconmessageconnection.la
 
 totem_video_thumbnailer_SOURCES = totem-video-thumbnailer.c
 totem_video_thumbnailer_LDADD = \
@@ -126,20 +129,24 @@ libtotem_mozilla.xpt: totem_mozilla_scripting.idl
 typelib_DATA = libtotem_mozilla.xpt
 typelibdir = $(libdir)/mozilla/plugins
 
-libtotem_mozilla_la_LDFLAGS = $(MOZILLA_LIBS) $(module_flags)
+libtotem_mozilla_la_LDFLAGS = \
+	$(MOZILLA_LIBS) $(module_flags)
 libtotem_mozilla_la_SOURCES = \
 	totem-mozilla-plugin.cpp \
 	totem_mozilla_scripting.h \
 	totem-mozilla-scriptable.h \
 	totem-mozilla-scriptable.cpp \
 	totem-mozilla-options.h
+libtotem_mozilla_la_LIBADD = \
+	libbaconmessageconnection.la
 
 totem_mozilla_viewer_SOURCES = 		\
 	totem-mozilla-viewer.c		\
 	totem-mozilla-options.h
 totem_mozilla_viewer_LDADD = \
 	$(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) \
-	$(NVTV_LIBS) backend/libbaconvideowidget.la libbaconpropertiespage.la
+	$(NVTV_LIBS) backend/libbaconvideowidget.la libbaconpropertiespage.la \
+	libbaconmessageconnection.la
 
 plugindir = $(libdir)/mozilla/plugins/
 module_flags = -export_dynamic -avoid-version
