@@ -39,6 +39,14 @@
 #define READ_CHUNK_SIZE 8192
 #define MIME_READ_CHUNK_SIZE 1024
 
+typedef gboolean (*PlaylistCallback) (GtkPlaylist *playlist, const char *mrl,
+		gpointer data);
+
+typedef struct {
+	char *mimetype;
+	PlaylistCallback func;
+} PlaylistTypes;
+
 struct GtkPlaylistPrivate
 {
 	GladeXML *xml;
@@ -1305,7 +1313,7 @@ gtk_playlist_add_one_mrl (GtkPlaylist *playlist, const char *mrl,
 }
 
 static gboolean
-gtk_playlist_add_m3u (GtkPlaylist *playlist, const char *mrl)
+gtk_playlist_add_m3u (GtkPlaylist *playlist, const char *mrl, gpointer data)
 {
 	gboolean retval = FALSE;
 	char *contents, **lines;
@@ -1340,7 +1348,8 @@ gtk_playlist_add_m3u (GtkPlaylist *playlist, const char *mrl)
 }
 
 static gboolean
-gtk_playlist_add_asf_playlist (GtkPlaylist *playlist, const char *mrl)
+gtk_playlist_add_asf_playlist (GtkPlaylist *playlist, const char *mrl,
+		gpointer data)
 {
 	gboolean retval = FALSE;
 	char *contents, **lines;
@@ -1359,7 +1368,7 @@ gtk_playlist_add_asf_playlist (GtkPlaylist *playlist, const char *mrl)
 }
 
 static gboolean
-gtk_playlist_add_pls (GtkPlaylist *playlist, const char *mrl)
+gtk_playlist_add_pls (GtkPlaylist *playlist, const char *mrl, gpointer data)
 {
 	gboolean retval = FALSE;
 	char *contents, **lines;
@@ -1491,7 +1500,7 @@ parse_asx_entries (GtkPlaylist *playlist, char *base, xmlDocPtr doc,
 }
 
 static gboolean
-gtk_playlist_add_asx (GtkPlaylist *playlist, const char *mrl)
+gtk_playlist_add_asx (GtkPlaylist *playlist, const char *mrl, gpointer data)
 {
 	xmlDocPtr doc;
 	xmlNodePtr node;
@@ -1552,7 +1561,7 @@ gtk_playlist_add_ra (GtkPlaylist *playlist, const char *mrl, gpointer data)
 	}
 
 	/* How nice, same format as m3u it seems */
-	return gtk_playlist_add_m3u (playlist, mrl);
+	return gtk_playlist_add_m3u (playlist, mrl, NULL);
 }
 
 static gboolean
@@ -1646,7 +1655,7 @@ parse_smil_entries (GtkPlaylist *playlist, char *base, xmlDocPtr doc,
 }
 
 static gboolean
-gtk_playlist_add_smil (GtkPlaylist *playlist, const char *mrl)
+gtk_playlist_add_smil (GtkPlaylist *playlist, const char *mrl, gpointer data)
 {
 	xmlDocPtr doc;
 	xmlNodePtr node;
@@ -1714,7 +1723,7 @@ gtk_playlist_add_asf (GtkPlaylist *playlist, const char *mrl, gpointer data)
 }
 
 static gboolean
-gtk_playlist_add_desktop (GtkPlaylist *playlist, const char *mrl)
+gtk_playlist_add_desktop (GtkPlaylist *playlist, const char *mrl, gpointer data)
 {
 	GnomeDesktopItem *ditem;
 	int type;
@@ -1746,15 +1755,71 @@ gtk_playlist_add_desktop (GtkPlaylist *playlist, const char *mrl)
 }
 
 static gboolean
-gtk_playlist_add_nsv (GtkPlaylist *playlist, const char *mrl,
+gtk_playlist_add_directory (GtkPlaylist *playlist, const char *mrl,
+		gpointer data)
+{
+	return FALSE;
+}
+
+/* These ones need a special treatment, mostly playlist formats */
+static PlaylistTypes special_types[] = {
+	{ "audio/x-mpegurl", gtk_playlist_add_m3u },
+	{ "audio/x-ms-asx", gtk_playlist_add_asx },
+	{ "audio/x-scpls", gtk_playlist_add_pls },
+	{ "application/x-smil", gtk_playlist_add_smil },
+	{ "application/x-gnome-app-info", gtk_playlist_add_desktop },
+	{ "x-directory/normal", gtk_playlist_add_directory },
+};
+
+/* These ones are "dual" types, might be a video, might be a playlist */
+static PlaylistTypes dual_types[] = {
+	{ "audio/x-real-audio", gtk_playlist_add_ra },
+	{ "audio/x-pn-realaudio", gtk_playlist_add_ra },
+	{ "application/vnd.rn-realmedia", gtk_playlist_add_ra },
+	{ "audio/x-pn-realaudio-plugin", gtk_playlist_add_ra },
+	{ "video/x-ms-asf", gtk_playlist_add_asf },
+};
+
+gboolean
+gtk_playlist_add_mrl_with_data (GtkPlaylist *playlist, const char *mrl,
 		const char *display_name)
 {
-	/* Work around NSV streaming filter from Nullsoft */
-	if (strcmp ((char *)mrl + strlen (mrl) - 4, ".nsv") == 0)
-		return gtk_playlist_add_one_mrl (playlist,
-				mrl, display_name);
+	const char *mimetype;
+	gboolean retval;
+	gpointer data;
+	int i;
 
-	return FALSE;
+	g_message ("gtk_playlist_add_mrl_with_data %s", mrl);
+
+	mimetype = my_gnome_vfs_get_mime_type_with_data (mrl, &data);
+
+	g_message ("with data: mrl %s mimetype %s", mrl, mimetype);
+
+	for (i = 0; i < G_N_ELEMENTS(special_types); i++)
+	{
+		if (mimetype == NULL)
+			break;
+		if (strcmp (special_types[i].mimetype, mimetype) == 0)
+		{
+			retval = (* special_types[i].func) (playlist, mrl, data);
+			g_free (data);
+			return retval;
+		}
+	}
+
+	for (i = 0; i < G_N_ELEMENTS(dual_types); i++)
+	{
+		if (strcmp (dual_types[i].mimetype, mimetype) == 0)
+		{
+			retval = (* dual_types[i].func) (playlist, mrl, data);
+			g_free (data);
+			return retval;
+		}
+	}
+
+	g_free (data);
+
+	return gtk_playlist_add_one_mrl (playlist, mrl, display_name);
 }
 
 gboolean
@@ -1762,67 +1827,36 @@ gtk_playlist_add_mrl (GtkPlaylist *playlist, const char *mrl,
 		const char *display_name)
 {
 	const char *mimetype;
-	gpointer data;
 	gboolean retval = FALSE;
+	int i;
 
 	g_return_val_if_fail (mrl != NULL, FALSE);
 
-	mimetype = my_gnome_vfs_get_mime_type_with_data (mrl, &data);
+	g_message ("gtk_playlist_add_mrl");
 
+	mimetype = gnome_vfs_get_mime_type (mrl);
+g_message ("mrl %s mimetype %s", mrl, mimetype);
 	if (mimetype == NULL)
 	{
-		D("adding '%s' with no mimetype", mrl);
-		g_free (data);
-		return gtk_playlist_add_one_mrl (playlist, mrl, display_name);
-	} else if (strcmp ("audio/x-mpegurl", mimetype) == 0) {
-		g_free (data);
-		return gtk_playlist_add_m3u (playlist, mrl);
-	} else if (strcmp ("audio/x-scpls", mimetype) == 0) {
-		g_free (data);
-		return gtk_playlist_add_pls (playlist, mrl);
-	} else if (strcmp ("audio/x-ms-asx", mimetype) == 0) {
-		return gtk_playlist_add_asx (playlist, mrl);
-	} else if (strcmp ("audio/x-real-audio", mimetype) == 0
-			|| strcmp ("audio/x-pn-realaudio", mimetype) == 0
-			|| strcmp ("application/vnd.rn-realmedia",
-				mimetype) == 0
-			|| strcmp ("audio/x-pn-realaudio-plugin",
-				mimetype) == 0) {
-		retval = gtk_playlist_add_ra (playlist, mrl, data);
-		g_free (data);
-		return retval;
-	} else if (strcmp ("video/x-ms-asf", mimetype) == 0) {
-		retval = gtk_playlist_add_asf (playlist, mrl, data);
-		g_free (data);
-		return retval;
-	} else if (strcmp ("application/x-smil", mimetype) == 0) {
-		g_free (data);
-		return gtk_playlist_add_smil (playlist, mrl);
-	} else if (strcmp ("x-directory/normal", mimetype) == 0) {
-		//FIXME Load all the files in the dir ?
-	} else if (strcmp ("application/x-gnome-app-info", mimetype) == 0) {
-		g_free (data);
-		return gtk_playlist_add_desktop (playlist, mrl);
-	} else if (strcmp ("text/plain", mimetype) == 0) {
-		g_free (data);
-		return gtk_playlist_add_nsv (playlist, mrl, display_name);
+		return gtk_playlist_add_mrl_with_data (playlist,
+				mrl, display_name);
 	}
 
-	g_free (data);
-
-	if (strncmp ("audio/", mimetype, 6) != 0
-			&& strncmp ("video/", mimetype, 6) != 0
-			&& strcmp ("application/octet-stream", mimetype) != 0
-			&& strcmp ("application/x-ogg", mimetype) != 0
-			&& strcmp ("application/ogg", mimetype) != 0
-			&& strcmp ("application/x-flac", mimetype) != 0
-			&& strcmp ("application/x-shockwave-flash", mimetype) != 0
-			&& strcmp ("image/png", mimetype) != 0)
+	for (i = 0; i < G_N_ELEMENTS(special_types); i++)
 	{
-		//FIXME error message
-		D("not adding '%s' with mimetype '%s'",
-				mrl, mimetype);
-		return FALSE;
+		if (mimetype == NULL)
+			break;
+		if (strcmp (special_types[i].mimetype, mimetype) == 0)
+			return (* special_types[i].func) (playlist, mrl, NULL);
+	}
+
+	for (i = 0; i < G_N_ELEMENTS(dual_types); i++)
+	{
+		if (strcmp (dual_types[i].mimetype, mimetype) == 0)
+		{
+			return gtk_playlist_add_mrl_with_data (playlist,
+					mrl, NULL);
+		}
 	}
 
 	return gtk_playlist_add_one_mrl (playlist, mrl, display_name);

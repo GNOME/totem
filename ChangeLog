@@ -1,3 +1,15 @@
+2003-05-25  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-playlist.c: (gtk_playlist_add_m3u),
+	(gtk_playlist_add_asf_playlist), (gtk_playlist_add_pls),
+	(gtk_playlist_add_asx), (gtk_playlist_add_ra),
+	(gtk_playlist_add_smil), (gtk_playlist_add_desktop),
+	(gtk_playlist_add_directory), (gtk_playlist_add_mrl_with_data),
+	(gtk_playlist_add_mrl): only check for playlist and "playlist/video"
+	types and add the other types straight away, it will bug the user
+	when they add stuff that's not files to it, makes loading files in the
+	playlist a lot faster as well
+
 2003-05-23  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: added dependency on gconf for the xine backend
