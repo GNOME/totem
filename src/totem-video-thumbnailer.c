@@ -54,7 +54,7 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path, const char *video_path)
 		g_print ("totem-video-thumbnailer couln't write the thumbnail '%s' for video '%s'\n",
 				path, video_path);
 		gdk_pixbuf_unref (small);
-		exit (1);
+		exit (0);
 	}
 
 	gdk_pixbuf_unref (small);

@@ -1,5 +1,11 @@
 2003-01-07  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am: doh!, add the vfs files in again
+	* src/totem-video-thumbnailer.c: (save_pixbuf): only return 1 for
+	hardcore errors
+
+2003-01-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/gtk-xine.c: (gtk_xine_can_get_frames):
 	XINE_STREAM_INFO_VIDEO_HANDLED is broken for now, disable it
 	* src/totem-video-thumbnailer.c: (main): reenable the check for
