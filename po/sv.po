@@ -7,14 +7,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"POT-Creation-Date: 2004-04-15 11:16+0200\n"
-"PO-Revision-Date: 2004-04-15 11:17+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-04-17 12:24+0200\n"
+"PO-Revision-Date: 2004-04-17 12:24+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: data/playlist.glade.h:1 src/totem-playlist.c:1444
@@ -997,7 +997,7 @@ msgstr ""
 "Kunde inte läsa in ljuddrivrutinen \"%s\"\n"
 "Kontrollera att enheten inte är upptagen."
 
-#: src/bacon-video-widget-xine.c:1130 src/bacon-video-widget-xine.c:1530
+#: src/bacon-video-widget-xine.c:1130 src/bacon-video-widget-xine.c:1542
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -1059,35 +1059,35 @@ msgstr "Denna film kan inte spelas av säkerhetsskäl."
 msgid "The audio device is busy. Is another application using it?"
 msgstr "Ljudenheten är upptagen. Använder ett annat program den?"
 
-#: src/bacon-video-widget-xine.c:1274
+#: src/bacon-video-widget-xine.c:1272
 msgid "You are not allowed to open this file."
 msgstr "Du får inte öppna denna fil."
 
-#: src/bacon-video-widget-xine.c:1276
+#: src/bacon-video-widget-xine.c:1274
 msgid "The server refused access to this file or stream."
 msgstr "Servern vägrade åtkomst till denna fil eller detta flöde."
 
-#: src/bacon-video-widget-xine.c:1369
-msgid "There is no plugin to handle this movie"
-msgstr "Det finns ingen insticksmodul för att hantera denna film"
-
-#: src/bacon-video-widget-xine.c:1373
-msgid "This movie is broken and can not be played further"
-msgstr "Denna film är trasig, och kan inte spelas längre"
-
-#: src/bacon-video-widget-xine.c:1377
-msgid "This location is not a valid one"
-msgstr "Denna plats är inte giltig"
-
 #: src/bacon-video-widget-xine.c:1381
-msgid "This movie could not be opened"
-msgstr "Denna film kunde inte öppnas"
+msgid "There is no plugin to handle this movie."
+msgstr "Det finns ingen insticksmodul för att hantera denna film."
 
-#: src/bacon-video-widget-xine.c:1384
-msgid "Generic Error"
-msgstr "Allmänt fel"
+#: src/bacon-video-widget-xine.c:1385
+msgid "This movie is broken and can not be played further."
+msgstr "Denna film är trasig och kan inte spelas längre."
 
-#: src/bacon-video-widget-xine.c:1828
+#: src/bacon-video-widget-xine.c:1389
+msgid "This location is not a valid one."
+msgstr "Denna plats är inte giltig."
+
+#: src/bacon-video-widget-xine.c:1393
+msgid "This movie could not be opened."
+msgstr "Denna film kunde inte öppnas."
+
+#: src/bacon-video-widget-xine.c:1396
+msgid "Generic Error."
+msgstr "Allmänt fel."
+
+#: src/bacon-video-widget-xine.c:1840
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1096,21 +1096,21 @@ msgstr ""
 "Videokomprimeringsmetoden \"%s\" hanteras inte. Du kan behöva installera "
 "ytterligare insticksmoduler för att kunna spela en del typer av filmer"
 
-#: src/bacon-video-widget-xine.c:1847
-msgid "This is an audio-only file, and there is no audio output available"
-msgstr "Detta är en fil med endast ljud, och ingen ljuddata är tillgänglig"
+#: src/bacon-video-widget-xine.c:1859
+msgid "This is an audio-only file, and there is no audio output available."
+msgstr "Detta är en fil med endast ljud, och ingen ljuddata är tillgänglig."
 
-#: src/bacon-video-widget-xine.c:3312
-msgid "Movie is not playing"
-msgstr "Filmen spelas inte"
+#: src/bacon-video-widget-xine.c:3322
+msgid "Movie is not playing."
+msgstr "Filmen spelas inte."
 
-#: src/bacon-video-widget-xine.c:3320
-msgid "No video to capture"
-msgstr "Ingen video att fånga"
+#: src/bacon-video-widget-xine.c:3330
+msgid "No video to capture."
+msgstr "Ingen video att fånga."
 
-#: src/bacon-video-widget-xine.c:3327
-msgid "Video codec is not handled"
-msgstr "Videokomprimeringsmetoden hanteras inte"
+#: src/bacon-video-widget-xine.c:3337
+msgid "Video codec is not handled."
+msgstr "Videokomprimeringsmetoden hanteras inte."
 
 #: src/cd-drive.c:573
 #, c-format
@@ -1303,8 +1303,8 @@ msgid "Totem could not eject the optical media."
 msgstr "Totem kunde inte mata ut det optiska mediumet."
 
 #: src/totem.c:342
-msgid "No reason given"
-msgstr "Ingen orsak angiven"
+msgid "No reason given."
+msgstr "Ingen orsak angiven."
 
 #: src/totem.c:363 src/totem.c:391 src/totem.c:816 src/totem.c:925
 #, c-format
@@ -1403,9 +1403,9 @@ msgstr "Filmspelare som använder %s"
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem kunde inte ta en skärmdump från den filmen."
 
-#: src/totem.c:1993 src/vanity.c:324
-msgid "Please file a bug, this isn't supposed to happen"
-msgstr "Skicka en felrapport. Detta ska inte hända"
+#: src/totem.c:1993
+msgid "Please file a bug, this isn't supposed to happen."
+msgstr "Skicka en felrapport. Detta ska inte hända."
 
 #: src/totem.c:2020
 msgid "Totem couldn't show the movie properties window."
@@ -1470,6 +1470,10 @@ msgstr "Felsökningsläge på"
 msgid "Webcam utility using %s"
 msgstr "Webbkameraverktyg som använder %s"
 
+#: src/vanity.c:324
+msgid "Please file a bug, this isn't supposed to happen"
+msgstr "Skicka en felrapport. Detta ska inte hända"
+
 #: src/vanity.c:567
 #, c-format
 msgid ""
@@ -1531,6 +1535,27 @@ msgid ""
 msgstr ""
 "Kunde inte läsa in huvudgränssnittet (vanity.glade).\n"
 "Försäkra dig om att Vanity är korrekt installerat."
+
+#~ msgid "Generic Error"
+#~ msgstr "Allmänt fel"
+
+#~ msgid "Movie is not playing"
+#~ msgstr "Filmen spelas inte"
+
+#~ msgid "No video to capture"
+#~ msgstr "Ingen video att fånga"
+
+#~ msgid "Video codec is not handled"
+#~ msgstr "Videokomprimeringsmetoden hanteras inte"
+
+#~ msgid "There is no plugin to handle this movie"
+#~ msgstr "Det finns ingen insticksmodul för att hantera denna film"
+
+#~ msgid "This location is not a valid one"
+#~ msgstr "Denna plats är inte giltig"
+
+#~ msgid "No reason given"
+#~ msgstr "Ingen orsak angiven"
 
 #~ msgid "Save screenshot to desktop"
 #~ msgstr "Spara skärmdump på skrivbordet"
@@ -1708,12 +1733,6 @@ msgstr ""
 
 #~ msgid "An error occured."
 #~ msgstr "Ett fel inträffade."
-
-#~ msgid "No reason given."
-#~ msgstr "Ingen orsak angiven."
-
-#~ msgid "Please file a bug, this isn't supposed to happen."
-#~ msgstr "Skicka en felrapport. Detta ska inte hända."
 
 #~ msgid "The screenshot was not saved."
 #~ msgstr "Skärmdumpen sparades inte."
@@ -1980,12 +1999,6 @@ msgstr ""
 
 #~ msgid "Error"
 #~ msgstr "Fel"
-
-#~ msgid "There is no plugin to handle this movie."
-#~ msgstr "Det finns ingen insticksmodul för att hantera denna film."
-
-#~ msgid "This location is not a valid one."
-#~ msgstr "Denna plats är inte giltig."
 
 #~ msgid "Video type '%s' is not handled."
 #~ msgstr "Videotypen \"%s\" stöds inte."
