@@ -195,7 +195,7 @@ int main (int argc, char *argv[])
 	bacon_video_widget_play (bvw, (int) (65535 / 3), 0, &err);
 	if (err != NULL)
 	{
-		g_print ("totem-video-thumbnailer couln't play file: '%s'\n",
+		g_print ("totem-video-thumbnailer couln't play file: '%s'\n"
 				"Reason: %s.\n",
 				argv[1], err->message);
 		g_error_free (err);

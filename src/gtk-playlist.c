@@ -199,6 +199,7 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data)
 	/* Open the file. */
 	result = gnome_vfs_open (&handle, uri, GNOME_VFS_OPEN_READ);
 	if (result != GNOME_VFS_OK) {
+		g_message ("result: %s", gnome_vfs_result_to_string (result));
 		return NULL;
 	}
 
@@ -268,7 +269,7 @@ gtk_playlist_save_current_playlist (GtkPlaylist *playlist, const char *output)
 {
 	GnomeVFSHandle *handle;
 	GnomeVFSResult res;
-	int num_entries, i, written, len;
+	int num_entries, i;
 	char *buf;
 	gboolean success;
 
@@ -1349,6 +1350,7 @@ gtk_playlist_add_asf_playlist (GtkPlaylist *playlist, const char *mrl)
 	lines = g_strsplit (contents, "\n", 0);
 	g_free (contents);
 #endif
+	return FALSE;
 }
 
 static gboolean
@@ -1701,6 +1703,8 @@ gtk_playlist_add_asf (GtkPlaylist *playlist, const char *mrl, gpointer data)
 
 	return gtk_playlist_add_asf_playlist (playlist, mrl);
 #endif
+
+	return FALSE;
 }
 
 gboolean
