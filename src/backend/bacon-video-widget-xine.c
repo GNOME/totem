@@ -2725,7 +2725,9 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
-	g_return_if_fail ((value < 65535 && value > 0));
+
+	if ( !(value < 65535 && value > 0) )
+		return;
 
 	xine_set_param (bvw->priv->stream, video_props[type], value);
 	gconf_client_set_int (bvw->priv->gc, video_props_str[type], value, NULL);

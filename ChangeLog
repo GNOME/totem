@@ -1,5 +1,11 @@
 2004-01-16  Julien MOUTTE <julien@moutte.net>
 
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_set_video_property): Removing a warning when
+	slider reaches the edges.
+
+2004-01-16  Julien MOUTTE <julien@moutte.net>
+
 	* data/totem.schemas.in: Adding hue and saturation gconf keys.
 	* src/bacon-video-widget-gst.c: (bacon_video_widget_new): Removing
 	some debugging g_message.
