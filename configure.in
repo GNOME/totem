@@ -171,13 +171,14 @@ AC_SUBST(RANDR_LIBS)
 
 dnl Multimedia keys
 have_xfree=no
-AC_TRY_COMPILE([
+AC_COMPILE_IFELSE([
 	#include <X11/XF86keysym.h>
-	],[
-	int arg = 0;
-	],[
+	int main(int argc,char **argv) {
+	return 0;
+	}
+	],
 	have_xfree=yes
-])
+)
 AC_MSG_CHECKING(for X11 XFree86 headers)
 AC_MSG_RESULT($have_xfree)
 if test x"$have_xfree" = "xyes" ; then
@@ -185,13 +186,14 @@ if test x"$have_xfree" = "xyes" ; then
 fi
 
 have_xsun=no
-AC_TRY_COMPILE([
+AC_COMPILE_IFELSE([
 	#include <X11/Sunkeysym.h>
-	],[
-	int arg = 0;
-	],[
+	int main(int argc,char **argv) {
+	return 0;
+	}
+	],
 	have_xsun=yes
-])
+)
 AC_MSG_CHECKING(for X11 Sun headers)
 AC_MSG_RESULT($have_xsun)
 if test x"$have_xsun" = "xyes" ; then
