@@ -184,6 +184,35 @@ gtk_tree_path_equals (GtkTreePath *path1, GtkTreePath *path2)
 	return retval;
 }
 
+static void
+totem_playlist_error (char *title, char *reason, TotemPlaylist *playlist)
+{
+	GtkWidget *error_dialog;
+	char *title_esc, *reason_esc;
+
+	title_esc = g_markup_escape_text (title, -1);
+	reason_esc = g_markup_escape_text (reason, -1);
+
+	error_dialog =
+		gtk_message_dialog_new (GTK_WINDOW (playlist),
+				GTK_DIALOG_MODAL,
+				GTK_MESSAGE_ERROR,
+				GTK_BUTTONS_OK,
+				"<b>%s</b>\n%s.", title_esc, reason_esc);
+	g_free (title_esc);
+	g_free (reason_esc);
+	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
+			GTK_RESPONSE_OK);
+	gtk_label_set_use_markup (GTK_LABEL (GTK_MESSAGE_DIALOG (error_dialog)->label), TRUE);
+	g_signal_connect (G_OBJECT (error_dialog), "destroy", G_CALLBACK
+			(gtk_widget_destroy), error_dialog);
+	g_signal_connect (G_OBJECT (error_dialog), "response", G_CALLBACK
+			(gtk_widget_destroy), error_dialog);
+	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
+
+	gtk_widget_show (error_dialog);
+}
+
 /* This one returns a new string, in UTF8 even if the mrl is encoded
  * in the locale's encoding
  */
@@ -228,11 +257,20 @@ totem_playlist_save_get_iter_func (GtkTreeModel *model,
 void
 totem_playlist_save_current_playlist (TotemPlaylist *playlist, const char *output)
 {
-	//FIXME error
-	totem_pl_parser_write (playlist->_priv->parser,
+	GError *error = NULL;
+	gboolean retval;
+
+	retval = totem_pl_parser_write (playlist->_priv->parser,
 			playlist->_priv->model,
 			totem_playlist_save_get_iter_func,
-			output, NULL);
+			output, &error);
+
+	if (retval == FALSE)
+	{
+		totem_playlist_error (_("Could not save the playlist"),
+				error->message, playlist);
+		g_error_free (error);
+	}
 }
 
 static void

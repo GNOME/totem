@@ -46,6 +46,7 @@
 #define MIME_READ_CHUNK_SIZE 1024
 
 typedef gboolean (*PlaylistCallback) (TotemPlParser *parser, const char *url, gpointer data);
+static gboolean totem_pl_parser_ignore (const char *url);
 
 typedef struct {
 	char *mimetype;
@@ -244,7 +245,7 @@ totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
 		return FALSE;
 	}
 
-	buf = g_strdup ("[parser]\n");
+	buf = g_strdup ("[playlist]\n");
 	success = write_string (handle, buf, error);
 	g_free (buf);
 	if (success == FALSE)
@@ -591,8 +592,8 @@ totem_pl_parser_add_pls (TotemPlParser *parser, const char *url, gpointer data)
 	g_free (contents);
 
 	/* [parser] */
-	if (g_ascii_strncasecmp (lines[0], "[parser]",
-				(gsize)strlen ("[parser]")) != 0)
+	if (g_ascii_strncasecmp (lines[0], "[playlist]",
+				(gsize)strlen ("[playlist]")) != 0)
 		goto bail;
 
 	/* numberofentries=? */
@@ -917,8 +918,16 @@ totem_pl_parser_add_desktop (TotemPlParser *parser, const char *url, gpointer da
 		gnome_desktop_item_unref (ditem);
 		return FALSE;
 	}
+
+	retval = TRUE;
+
 	display_name = gnome_desktop_item_get_localestring (ditem, "Name");
-	retval = totem_pl_parser_add_url (parser, path, display_name);
+	if (totem_pl_parser_ignore (path) == FALSE) {
+		totem_pl_parser_add_one_url (parser, path, display_name);
+	} else {
+		if (totem_pl_parser_parse (parser, path) == FALSE)
+			totem_pl_parser_add_one_url (parser, path, display_name);
+	}
 	gnome_desktop_item_unref (ditem);
 
 	return retval;

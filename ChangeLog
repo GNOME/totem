@@ -1,5 +1,21 @@
 2003-10-13  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: enable HAVE_GNOME_DESKTOP by default in our
+	application
+	* src/bacon-video-widget-xine.c: 
+	(bacon_video_widget_set_proprietary_plugins_path): add
+	/usr/lib/RealPlayer9/Codecs/ as a possible path for Realplayer codecs
+	* src/totem-pl-parser.c: (totem_pl_parser_write),
+	(totem_pl_parser_add_pls), (totem_pl_parser_add_desktop): fix
+	.pls reading and writing (damn), fix .desktop parsing
+	* src/totem-playlist.c: (totem_playlist_error),
+	(totem_playlist_save_current_playlist): add an error message
+	when we couldn't save the playlist
+	* src/totem.c: (totem_action_error): escape the url for display
+	before showing it in the error message
+
+2003-10-13  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-xine.c:
 	(bacon_video_widget_set_proprietary_plugins_path): add some additional
 	paths to link to from Realplayer 8 and 9 (Closes: #124459)
