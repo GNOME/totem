@@ -2020,6 +2020,16 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget *bvw,
 	}
 }
 
+gboolean
+bacon_video_widget_get_auto_resize (BaconVideoWidget *bvw)
+{
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
+
+	return bvw->priv->auto_resize;
+}
+
 void
 bacon_video_widget_set_auto_resize (BaconVideoWidget *bvw, gboolean auto_resize)
 {

@@ -99,6 +99,8 @@ gboolean gst_video_widget_get_auto_resize (GstVideoWidget *vw);
 
 /* Set/Get scale factor used by the widget */
 
+gboolean gst_video_widget_get_scale_override (GstVideoWidget *vw);
+gboolean gst_video_widget_set_scale_override (GstVideoWidget *vw, gboolean override);
 gboolean gst_video_widget_set_scale (GstVideoWidget *vw, gfloat scale);
 gfloat gst_video_widget_get_scale (GstVideoWidget *vw);
 

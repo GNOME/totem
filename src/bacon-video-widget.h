@@ -137,6 +137,7 @@ gboolean bacon_video_widget_get_show_cursor      (BaconVideoWidget *bvw);
 
 void bacon_video_widget_set_media_device	 (BaconVideoWidget *bvw,
 						  const char *path);
+gboolean bacon_video_widget_get_auto_resize (BaconVideoWidget *bvw);
 void bacon_video_widget_set_auto_resize		 (BaconVideoWidget *bvw,
 						  gboolean auto_resize);
 

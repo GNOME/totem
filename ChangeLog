@@ -1,3 +1,19 @@
+2003-05-21  Julien MOUTTE  <julien@moutte.net>
+
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_set_visuals),
+	(bacon_video_widget_set_visuals_quality),
+	(bacon_video_widget_get_auto_resize),
+	(bacon_video_widget_set_scale_ratio): Implemented visuals quality and
+	scale ratio handling
+	* src/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_auto_resize):
+	* src/bacon-video-widget.h: New method for getting auto resize mode
+	* src/gstvideowidget.c: (gst_video_widget_size_request),
+	(gst_video_widget_allocate), (gst_video_widget_get_scale_override),
+	(gst_video_widget_set_scale_override),
+	(gst_video_widget_set_scale): Adding a new method for scale override
+	* src/gstvideowidget.h: Adding a new method for scale override
+
 2003-05-21  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.applications:

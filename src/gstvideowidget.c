@@ -362,10 +362,9 @@ gst_video_widget_size_request (GtkWidget *widget, GtkRequisition *requisition)
 	
 	vw = GST_VIDEO_WIDGET (widget);
 	
-	if (!vw->priv->auto_resize) {
+	if ( (!vw->priv->auto_resize) && (!vw->priv->scale_override) ){
 		requisition->width = vw->priv->width_mini;
 		requisition->height = vw->priv->height_mini;
-		/* g_message ("requesting %d,%d", requisition->width, requisition->height);*/
 		return;
 	}
 	
@@ -400,7 +399,12 @@ gst_video_widget_size_request (GtkWidget *widget, GtkRequisition *requisition)
 			height = 100;
 		}
 	}
-	/* g_message ("requesting %d,%d", width, height);*/
+	
+	if (width < vw->priv->width_mini)
+		width = vw->priv->width_mini;
+	if (height < vw->priv->height_mini)
+		height = vw->priv->height_mini;
+		
 	requisition->width = width;
 	requisition->height = height;
 }
@@ -418,14 +422,11 @@ gst_video_widget_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	g_return_if_fail(GST_IS_VIDEO_WIDGET(widget));
 	
 	vw = GST_VIDEO_WIDGET (widget);
-
-	/* g_message ("allocated %d, %d", allocation->width, allocation->height);*/
 	
 	/* Choosing best ratio */
 	
 	if (vw->priv->scale_override) {
 		scale_factor = vw->priv->scale_factor;
-		vw->priv->scale_override = FALSE;
 	}
 	else if (!vw->priv->auto_resize) {
 		
@@ -457,13 +458,17 @@ gst_video_widget_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	bigger than minimum size */
 	if (vw->priv->auto_resize) {
 		if (width < vw->priv->width_mini) {
-			width = vw->priv->width_mini;	
+			allocation->width = vw->priv->width_mini;
+		}
+		else {
+			allocation->width = width;
 		}
 		if (height < vw->priv->height_mini) {
-			height = vw->priv->height_mini;
+			allocation->height = vw->priv->height_mini;
 		}
-		allocation->width = width;
-		allocation->height = height;
+		else {
+			allocation->height = height;
+		}
 	} /* If not auto resizing we check that allocation is bigger */
 	else { /* than minimum size */
 		if (allocation->width < vw->priv->width_mini)
@@ -474,10 +479,7 @@ gst_video_widget_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	
 	widget->allocation = *allocation;
 	
-	/* g_message ("allocation now is %d, %d", allocation->width, allocation->height); */
-	
 	if (GTK_WIDGET_REALIZED (widget)) {
-		/* g_message ("source %d, %d size %d, %d auto %d scale %f", vw->priv->source_width, vw->priv->source_height, width,height, vw->priv->auto_resize, vw->priv->scale_factor); */
 		gdk_window_move_resize (	widget->window,
 									allocation->x, 
 									allocation->y,
@@ -1106,6 +1108,46 @@ gst_video_widget_get_auto_resize (GstVideoWidget *vw)
 }
 
 /**
+ * gst_video_widget_get_scale_override:
+ * @vw: a #GstVideoWidget
+ * 
+ * Get scale override mode for a #GstVideoWidget.
+ *
+ * Remember you can get this value trough "scale_override" property.
+ *
+ * Return value: a #gboolean indicating if scale ratio is enforced or not.
+ **/
+gboolean
+gst_video_widget_get_scale_override (GstVideoWidget *vw)
+{
+	g_return_val_if_fail(vw != NULL, FALSE);
+	g_return_val_if_fail (GST_IS_VIDEO_WIDGET (vw), FALSE);
+	return vw->priv->scale_override;
+}
+
+/**
+ * gst_video_widget_set_scale_override:
+ * @vw: a #GstVideoWidget
+ * @override: a #gboolean indicating scale override mode that will
+ * be used by @vw.
+ * 
+ * Set scale override mode for a #GstVideoWidget.
+ *
+ * Remember you can set this flag trough the "scale_override" property.
+ *
+ * Return value: a #gboolean indicating wether the call succeeded or not.
+ **/
+gboolean
+gst_video_widget_set_scale_override (GstVideoWidget *vw, gboolean override)
+{
+	g_return_val_if_fail(vw != NULL, FALSE);
+	g_return_val_if_fail (GST_IS_VIDEO_WIDGET (vw), FALSE);
+	vw->priv->scale_override = override;
+	gtk_widget_queue_resize (GTK_WIDGET(vw));
+	return TRUE;
+}
+
+/**
  * gst_video_widget_set_scale:
  * @vw: a #GstVideoWidget
  * @scale: a #gfloat indicating scale factor that will be used by @vw.
@@ -1122,8 +1164,8 @@ gst_video_widget_set_scale (GstVideoWidget *vw, gfloat scale)
 	g_return_val_if_fail(vw != NULL, FALSE);
 	g_return_val_if_fail (GST_IS_VIDEO_WIDGET (vw), FALSE);
 	vw->priv->scale_factor = scale;
-	vw->priv->scale_override = TRUE;
-	gtk_widget_queue_resize (GTK_WIDGET(vw));
+	if (vw->priv->scale_override)
+		gtk_widget_queue_resize (GTK_WIDGET(vw));
 	return TRUE;
 }
 

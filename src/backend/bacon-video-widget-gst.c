@@ -112,6 +112,7 @@ struct BaconVideoWidgetPrivate {
 	char *mrl;
 	gboolean show_vfx;
 	gboolean using_vfx;
+	GstElement *vis_element;
 
 	/* Other stuff */
 	int xpos, ypos;
@@ -882,7 +883,6 @@ bacon_video_widget_get_visuals_list (BaconVideoWidget *bvw)
 gboolean
 bacon_video_widget_set_visuals (BaconVideoWidget *bvw, const char *name)
 {
-	GstElement *vis_element = NULL;
 	gboolean paused = FALSE;
 	
 	g_return_val_if_fail (bvw != NULL, FALSE);
@@ -896,9 +896,10 @@ bacon_video_widget_set_visuals (BaconVideoWidget *bvw, const char *name)
 		paused = TRUE;
 	}
 	
-	vis_element = gst_element_factory_make ( name, "vis_plugin_element");
-	if (GST_IS_ELEMENT (vis_element)) {
-		gst_play_set_visualisation_element (bvw->priv->play, vis_element);
+	bvw->priv->vis_element = gst_element_factory_make ( name, "vis_plugin_element");
+	if (GST_IS_ELEMENT (bvw->priv->vis_element)) {
+		gst_play_set_visualisation_element (bvw->priv->play,
+			bvw->priv->vis_element);
 		if (paused) {
 			gst_play_seek_to_time (	bvw->priv->play,
 									bvw->priv->current_time_nanos);
@@ -917,7 +918,55 @@ void
 bacon_video_widget_set_visuals_quality (BaconVideoWidget *bvw,
 										VisualsQuality quality)
 {
+	int fps, w, h;
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
+	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
 	
+	g_message ("visual quality");
+	
+	switch (quality)
+	{
+	case VISUAL_SMALL:
+		fps = 25;
+		w = 160;
+		h = 120;
+		break;
+	case VISUAL_NORMAL:
+		fps = 15;
+		w = 320;
+		h = 240;
+		break;
+	case VISUAL_LARGE:
+		fps = 25;
+		w = 640;
+		h = 480;
+		break;
+	case VISUAL_EXTRA_LARGE:
+		fps = 25;
+		w = 1024;
+		h = 768;
+		break;
+	default:
+		/* shut up warnings */
+		fps = w = h = 0;
+		g_assert_not_reached ();
+	}
+
+	g_object_set(G_OBJECT(bvw->priv->vis_element),
+						"width", w, "height", h, "fps", fps, NULL);
+	
+}
+
+gboolean
+bacon_video_widget_get_auto_resize (BaconVideoWidget *bvw)
+{
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
+	g_return_if_fail (GST_IS_PLAY(bvw->priv->play));
+	g_return_if_fail (GST_IS_VIDEO_WIDGET(bvw->priv->vw));
+	
+	return gst_video_widget_get_auto_resize (bvw->priv->vw);
 }
 
 void
@@ -948,6 +997,7 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 	g_return_if_fail (GST_IS_VIDEO_WIDGET(bvw->priv->vw));
 	
 	gst_video_widget_set_scale (bvw->priv->vw, ratio);
+	gst_video_widget_set_scale_override (bvw->priv->vw, TRUE);
 }
 
 int
