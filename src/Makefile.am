@@ -47,6 +47,11 @@ BACON_CD_SELECTION = 			\
 	bacon-cd-selection.c		\
 	bacon-cd-selection.h
 
+cd-drive.c: regenerate-built-sources
+cd-drive.h: regenerate-built-sources
+bacon-cd-selection.c: regenerate-built-sources
+bacon-cd-selection.h: regenerate-built-sources
+
 EGGDIR=$(srcdir)/../../libegg/libegg/recent-files/
 BACONDIR=$(srcdir)/../../libbacon/src/
 regenerate-built-sources:
@@ -54,6 +59,8 @@ regenerate-built-sources:
 	EGGFILES="$(BACON_CD_SELECTION)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh
 
 totem_SOURCES = 			\
+	$(EGG_RECENT_FILES)		\
+	$(BACON_CD_SELECTION)		\
 	totem.c				\
 	totem.h				\
 	totem-remote.c			\
@@ -68,9 +75,7 @@ totem_SOURCES = 			\
 	video-utils.c video-utils.h	\
 	xdnd.c xdnd.h			\
 	gtk-message.c gtk-message.h	\
-	debug.h                         \
-	$(EGG_RECENT_FILES)		\
-	$(BACON_CD_SELECTION)
+	debug.h
 
 totem_LDADD = $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS)
 totem_LDFLAGS = -export-dynamic
