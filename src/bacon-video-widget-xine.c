@@ -207,7 +207,7 @@ bacon_video_widget_get_type (void)
 		};
 
 		bacon_video_widget_type = g_type_register_static
-			(GTK_TYPE_WIDGET, "BaconVideoWidget",
+			(GTK_TYPE_VBOX, "BaconVideoWidget",
 			 &bacon_video_widget_info, (GTypeFlags)0);
 	}
 
@@ -224,7 +224,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 	object_class = (GObjectClass *) klass;
 	widget_class = (GtkWidgetClass *) klass;
 
-	parent_class = gtk_type_class (gtk_widget_get_type ());
+	parent_class = gtk_type_class (gtk_vbox_get_type ());
 
 	/* GtkWidget */
 	widget_class->realize = bacon_video_widget_realize;
@@ -396,8 +396,8 @@ dest_size_cb (void *bvw_gen,
 		*dest_width = bvw->priv->fullscreen_rect.width;
 		*dest_height = bvw->priv->fullscreen_rect.height;
 	} else {
-		*dest_width = bvw->widget.allocation.width;
-		*dest_height = bvw->widget.allocation.height;
+		*dest_width = GTK_WIDGET(bvw)->allocation.width;
+		*dest_height = GTK_WIDGET(bvw)->allocation.height;
 	}
 
 	*dest_pixel_aspect = bvw->priv->display_ratio;
@@ -435,8 +435,8 @@ frame_output_cb (void *bvw_gen,
 		*dest_width = bvw->priv->fullscreen_rect.width;
 		*dest_height = bvw->priv->fullscreen_rect.height;
 	} else {
-		*dest_width = bvw->widget.allocation.width;
-		*dest_height = bvw->widget.allocation.height;
+		*dest_width = GTK_WIDGET(bvw)->allocation.width;
+		*dest_height = GTK_WIDGET(bvw)->allocation.height;
 
 		/* Size changed */
 		if (bvw->priv->video_width != video_width
@@ -1063,8 +1063,8 @@ bacon_video_widget_new (int width, int height, gboolean null_out, GError **err)
 		height = 0;
 	}
 
-	bvw->widget.requisition.width = width;
-	bvw->widget.requisition.height = height;
+	GTK_WIDGET(bvw)->requisition.width = width;
+	GTK_WIDGET(bvw)->requisition.height = height;
 
 	/* load the video drivers */
 	bvw->priv->ao_driver = load_audio_out_driver (bvw, err);
@@ -1548,7 +1548,7 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 		GdkWindow *parent;
 		GdkWindowAttr attr;
 
-		parent = gdk_window_get_toplevel (bvw->widget.window);
+		parent = gdk_window_get_toplevel (GTK_WIDGET(bvw)->window);
 
 		update_fullscreen_size (bvw);
 
@@ -1593,7 +1593,7 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 		gdk_window_set_title (bvw->priv->fullscreen_window,
 				DEFAULT_TITLE);
 	} else {
-		gdk_window_set_user_data (bvw->widget.window, bvw);
+		gdk_window_set_user_data (GTK_WIDGET(bvw)->window, bvw);
 
 		xine_gui_send_vo_data (bvw->priv->stream,
 			 XINE_GUI_SEND_DRAWABLE_CHANGED,
@@ -2004,9 +2004,9 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 
 	/* Calculate the new size of the window, depending on the size of the
 	 * video widget, and the new size of the video */
-	new_w = win_w - bvw->widget.allocation.width +
+	new_w = win_w - GTK_WIDGET(bvw)->allocation.width +
 		(bvw->priv->video_width * ratio);
-	new_h = win_h - bvw->widget.allocation.height +
+	new_h = win_h - GTK_WIDGET(bvw)->allocation.height +
 		(bvw->priv->video_height * ratio);
 
 	gtk_window_resize (GTK_WINDOW (toplevel), new_w, new_h);
@@ -2388,4 +2388,3 @@ bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 
 	return pixbuf;
 }
-

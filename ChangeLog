@@ -1,5 +1,22 @@
 2003-04-16  Julien MOUTTE  <julien@moutte.net>
 
+	* src/Makefile.am: Added gstvideowidget in EXTRA_DIST
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_size_request),
+	(bacon_video_widget_size_allocate),
+	(bacon_video_widget_class_init),
+	(bacon_video_widget_instance_init), (update_xid), (got_video_size),
+	(bacon_video_widget_open), (bacon_video_widget_play),
+	(bacon_video_widget_get_type), (bacon_video_widget_new): Integrated
+	gstvideowidget, scaling now works, fixed some initialisation problems.
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_get_type),
+	(bacon_video_widget_class_init), (dest_size_cb), (frame_output_cb),
+	(bacon_video_widget_new), (bacon_video_widget_set_fullscreen),
+	(bacon_video_widget_set_scale_ratio),
+	(bacon_video_widget_get_current_frame): bvw now inherits from GtkVbox.
+	* src/bacon-video-widget.h: bvw now inherits from GtkVbox
+
+2003-04-16  Julien MOUTTE  <julien@moutte.net>
+
 	* src/Makefile.am: GStreamer enabled builds with gstvideowidget
 	* src/gstvideowidget.c: Adding Gstreamer video widget 
 	* src/gstvideowidget.h: Adding Gstreamer video widget

@@ -104,5 +104,8 @@ INCLUDES = 						\
 	-DLIBGLADE_DISABLE_DEPRECATED
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(MARSHALFILES) $(desktop_DATA)
-EXTRA_DIST = bacon-video-widget-xine.c bacon-video-widget-gst.c
+EXTRA_DIST =	bacon-video-widget-xine.c \
+		bacon-video-widget-gst.c \
+		gstvideowidget.c \
+		gstvideowidget.h
 

@@ -40,6 +40,7 @@
 #include "baconvideowidget-marshal.h"
 #include "scrsaver.h"
 #include "video-utils.h"
+#include "gstvideowidget.h"
 
 #include <libintl.h>
 #define _(String) gettext (String)
@@ -88,6 +89,7 @@ struct BaconVideoWidgetPrivate {
 	double display_ratio;
 
 	GstPlay *play;
+	GstVideoWidget *vw;
 	
 	/* Configuration */
 	gboolean null_out;
@@ -107,7 +109,8 @@ struct BaconVideoWidgetPrivate {
 	gboolean logo_mode;
 	gboolean auto_resize;
 
-	int video_width, video_height;
+	gint video_width;
+	gint video_height;
 
 	/* fullscreen stuff */
 	gboolean fullscreen_mode;
@@ -118,8 +121,6 @@ static void bacon_video_widget_set_property (GObject *object, guint property_id,
 static void bacon_video_widget_get_property (GObject *object, guint property_id,
 		GValue *value, GParamSpec *pspec);
 
-static void bacon_video_widget_realize (GtkWidget *widget);
-static void bacon_video_widget_unrealize (GtkWidget *widget);
 static void bacon_video_widget_finalize (GObject *object);
 
 static gboolean bacon_video_widget_expose (GtkWidget *widget,
@@ -131,12 +132,48 @@ static gboolean bacon_video_widget_button_press (GtkWidget *widget,
 static gboolean bacon_video_widget_key_press (GtkWidget *widget,
 		GdkEventKey *event);
 
-static void bacon_video_widget_size_allocate (GtkWidget *widget,
-		GtkAllocation *allocation);
 
 static GtkWidgetClass *parent_class = NULL;
 
 static int bvw_table_signals[LAST_SIGNAL] = { 0 };
+
+static void
+bacon_video_widget_size_request (GtkWidget *widget, GtkRequisition *requisition)
+{
+	BaconVideoWidget *bvw;
+	GtkRequisition child_requisition;
+	
+	g_return_if_fail(widget != NULL);
+	g_return_if_fail(BACON_IS_VIDEO_WIDGET(widget));
+	
+	bvw = BACON_VIDEO_WIDGET (widget);
+	
+	gtk_widget_size_request (GTK_WIDGET(bvw->priv->vw), &child_requisition);
+	
+	requisition->width = child_requisition.width;
+	requisition->height = child_requisition.height;
+}
+
+static void
+bacon_video_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
+{
+	BaconVideoWidget *bvw;
+	GtkAllocation child_allocation;
+	
+	g_return_if_fail(widget != NULL);
+	g_return_if_fail(BACON_IS_VIDEO_WIDGET(widget));
+	
+	bvw = BACON_VIDEO_WIDGET (widget);
+	
+	widget->allocation = *allocation;
+	
+	child_allocation.x = allocation->x;
+	child_allocation.y = allocation->y;
+	child_allocation.width = allocation->width;
+	child_allocation.height = allocation->height;
+	
+	gtk_widget_size_allocate (GTK_WIDGET(bvw->priv->vw), &child_allocation);
+}
 
 static void
 bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
@@ -148,12 +185,11 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 	object_class = (GObjectClass *) klass;
 	widget_class = (GtkWidgetClass *) klass;
 
-	parent_class = gtk_type_class (gtk_widget_get_type ());
+	parent_class = gtk_type_class (gtk_vbox_get_type ());
 
 	/* GtkWidget */
-	widget_class->realize = bacon_video_widget_realize;
-	widget_class->unrealize = bacon_video_widget_unrealize;
-//	widget_class->size_allocate = bacon_video_widget_size_allocate;
+	widget_class->size_request = bacon_video_widget_size_request;
+	widget_class->size_allocate = bacon_video_widget_size_allocate;
 //	widget_class->expose_event = bacon_video_widget_expose;
 //	widget_class->motion_notify_event = bacon_video_widget_motion_notify;
 //	widget_class->button_press_event = bacon_video_widget_button_press;
@@ -244,6 +280,7 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 	char *argv[] = { "bacon_name", NULL };
 
 	GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_CAN_FOCUS);
+	GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_NO_WINDOW);
 	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
 
 	/* we could actually change this to have some more flags if some
@@ -251,65 +288,35 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 	 * FIXME */
 	gst_init (&argc, &argv);
 
+	/* Using opt as default scheduler */
+	gst_scheduler_factory_set_default_name ("opt");
+	
 	bvw->priv = g_new0 (BaconVideoWidgetPrivate, 1);
 }
 
 static void
 update_xid (GstPlay* play, gint xid, BaconVideoWidget *bvw)
 {
-	GdkWindow *window;
+	g_return_if_fail(bvw != NULL);
+	g_return_if_fail(BACON_IS_VIDEO_WIDGET(bvw));
 
 	g_message ("update_xid");
-	window = gdk_window_foreign_new (xid);
-	gdk_window_reparent (window, bvw->priv->video_window, 0, 0);
-	gdk_window_show (window);
-	gdk_flush ();
+	if (bvw->priv->vw)
+		gst_video_widget_set_xembed_xid(bvw->priv->vw, xid);
 }
 
 static void
-bacon_video_widget_realize (GtkWidget *widget)
+got_video_size (GstPlay* play, gint width, gint height, BaconVideoWidget *bvw)
 {
-	GdkWindowAttr attr;
-	BaconVideoWidget *bvw;
+	g_message ("have_video_size");
+	g_return_if_fail(bvw != NULL);
+	g_return_if_fail(BACON_IS_VIDEO_WIDGET(bvw));
 
-	bvw = BACON_VIDEO_WIDGET (widget);
-
-	/* set realized flag */
-	GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
-
-	/* Create the widget's window */
-	attr.x = widget->allocation.x;
-	attr.y = widget->allocation.y;
-	attr.width = widget->allocation.width;
-	attr.height = widget->allocation.height;
-	attr.window_type = GDK_WINDOW_CHILD;
-	attr.wclass = GDK_INPUT_OUTPUT;
-	attr.event_mask = gtk_widget_get_events (widget) | GDK_EXPOSURE_MASK
-		| GDK_POINTER_MOTION_MASK
-		| GDK_BUTTON_PRESS_MASK | GDK_KEY_PRESS_MASK;
-	widget->window = gdk_window_new (gtk_widget_get_parent_window (widget),
-			&attr, GDK_WA_X | GDK_WA_Y);
-	gdk_window_show (widget->window);
-	/* Flush, so that the window is really shown */
-	gdk_flush ();
-	gdk_window_set_user_data (widget->window, bvw);
-
-	bvw->priv->video_window = widget->window;
-
-	g_signal_connect (G_OBJECT (bvw->priv->play),
-			"have_xid", (GtkSignalFunc) update_xid, (gpointer) bvw);
-
-	/* Setup the default screen stuff */
-#if 0
-	update_fullscreen_size (bvw);
-	g_signal_connect (G_OBJECT (gdk_screen_get_default ()),
-			"size-changed", G_CALLBACK (size_changed_cb), bvw);
-#endif
-}
-
-static void
-bacon_video_widget_unrealize (GtkWidget *widget)
-{
+	bvw->priv->video_width = width;
+	bvw->priv->video_height = height;
+	
+	if (bvw->priv->vw)
+		gst_video_widget_set_source_size(bvw->priv->vw, width, height);
 }
 
 static void
@@ -399,6 +406,8 @@ gboolean
 bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 		GError **error)
 {
+	GstElement *datasrc = NULL;
+	
 	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (mrl != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
@@ -408,7 +417,19 @@ bacon_video_widget_open (BaconVideoWidget *bvw, const gchar *mrl,
 	g_message ("bacon_video_widget_open: %s", mrl);
 	bvw->priv->mrl = g_strdup (mrl);
 
-	return gst_play_set_location (bvw->priv->play, mrl);
+	gst_play_need_new_video_window ( bvw->priv->play);
+
+	if (g_file_test (mrl,G_FILE_TEST_EXISTS)) {
+		datasrc = gst_element_factory_make ("filesrc", "source");
+	}
+	else {
+		datasrc = gst_element_factory_make ("gnomevfssrc", "source");
+	}
+	
+	if (GST_IS_ELEMENT(datasrc))
+		gst_play_set_data_src (bvw->priv->play, datasrc);
+	
+	return gst_play_set_location (bvw->priv->play, mrl);;
 }
 
 /* This is used for seeking:
@@ -423,6 +444,7 @@ bacon_video_widget_play	(BaconVideoWidget *bvw,
 	//FIXME
 	g_message ("bacon_video_widget_play");
 	gst_play_set_state (bvw->priv->play, GST_STATE_PLAYING);
+	return TRUE;
 }
 
 void
@@ -742,7 +764,7 @@ bacon_video_widget_get_type (void)
 		};
 
 		bacon_video_widget_type = g_type_register_static
-			(GTK_TYPE_WIDGET, "BaconVideoWidget",
+			(GTK_TYPE_VBOX, "BaconVideoWidget",
 			 &bacon_video_widget_info, (GTypeFlags)0);
 	}
 
@@ -767,35 +789,46 @@ bacon_video_widget_new (int width, int height,
 		return NULL;
 	}
 
-	//FIXME get me error checking please
 	audio_sink = gst_gconf_get_default_audio_sink ();
-	g_assert (audio_sink != NULL);
+	if (!GST_IS_ELEMENT (audio_sink)) {
+		g_message ("failed to render default audio sink from gconf");
+		return NULL;
+	}
 	video_sink = gst_gconf_get_default_video_sink ();
-	g_assert (video_sink != NULL);
+	if (!GST_IS_ELEMENT (video_sink)) {
+		g_message ("failed to render default video sink from gconf");
+		return NULL;
+	}
 	vis_video_sink = gst_gconf_get_default_video_sink ();
-	g_assert (vis_video_sink != NULL);
-//	vis_element = gst_gconf_get_default_visualisation_element ();
+	if (!GST_IS_ELEMENT (vis_video_sink)) {
+		g_message ("failed to render default video sink from gconf for vis");
+		return NULL;
+	}
+/*	vis_element = gst_gconf_get_default_visualisation_element ();
+	if (!GST_IS_ELEMENT (vis_element)) {
+		g_message ("failed to render default visualisation element from gconf");
+		return NULL;
+	}*/
 
 	gst_play_set_video_sink (bvw->priv->play, video_sink);
 	gst_play_set_audio_sink (bvw->priv->play, audio_sink);
 //	gst_play_set_visualisation_video_sink (bvw->priv->play, vis_video_sink);
 //	gst_play_set_visualisation_element (bvw->priv->play, vis_element);
-#if 0
-	g_signal_connect (G_OBJECT (bvw->priv->play), "stream_end",
-			G_CALLBACK (gst_media_play_stream_end), mplay);
-	g_signal_connect (G_OBJECT (bvw->priv->play), "information",
-			G_CALLBACK (gst_media_play_information), mplay);
-	g_signal_connect (G_OBJECT (bvw->priv->play), "time_tick",
-			G_CALLBACK (gst_media_play_time_tick), mplay);
-	g_signal_connect (G_OBJECT (bvw->priv->play), "stream_length",
-			G_CALLBACK (gst_media_play_got_length), mplay);
-	g_signal_connect (G_OBJECT (bvw->priv->play), "have_xid",
-			G_CALLBACK (gst_media_play_have_xid), mplay);
-	g_signal_connect (G_OBJECT (bvw->priv->play), "have_video_size",
-			G_CALLBACK (gst_media_play_have_video_size), mplay);
-	g_signal_connect (G_OBJECT (bvw->priv->play), "state_change",
-			G_CALLBACK (gst_media_play_state_change), mplay);
-#endif
 
+	g_signal_connect (G_OBJECT (bvw->priv->play),
+			"have_xid", (GtkSignalFunc) update_xid, (gpointer) bvw);
+	g_signal_connect (G_OBJECT (bvw->priv->play),
+			"have_video_size", (GtkSignalFunc) got_video_size, (gpointer) bvw);
+	
+	bvw->priv->vw = GST_VIDEO_WIDGET(gst_video_widget_new ());
+	if (!GST_IS_VIDEO_WIDGET(bvw->priv->vw)) {
+		g_message ("failed to create video widget");
+		return NULL;
+	}
+	
+	gtk_box_pack_end (GTK_BOX(bvw), GTK_WIDGET(bvw->priv->vw), TRUE, TRUE, 0);
+	
+	gtk_widget_show (GTK_WIDGET(bvw->priv->vw));
+	
 	return GTK_WIDGET (bvw);
 }
