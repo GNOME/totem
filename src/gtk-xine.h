@@ -80,10 +80,10 @@ typedef enum {
 	GTX_INFO_AUDIO_CODEC
 } GtkXineMetadataType;
 
-#define GTK_XINE(obj)              (GTK_CHECK_CAST ((obj), gtk_xine_get_type (), GtkXine))
-#define GTK_XINE_CLASS(klass)      (GTK_CHECK_CLASS_CAST ((klass), gtk_xine_get_type (), GtkXineClass))
-#define GTK_IS_XINE(obj)           (GTK_CHECK_TYPE (obj, gtk_xine_get_type ()))
-#define GTK_IS_XINE_CLASS(klass)   (GTK_CHECK_CLASS_TYPE ((klass), gtk_xine_get_type ()))
+#define GTK_XINE(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), gtk_xine_get_type (), GtkXine))
+#define GTK_XINE_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), gtk_xine_get_type (), GtkXineClass))
+#define GTK_IS_XINE(obj)           (G_TYPE_CHECK_INSTANCE_TYPE (obj, gtk_xine_get_type ()))
+#define GTK_IS_XINE_CLASS(klass)   (G_CHECK_INSTANCE_GET_CLASS ((klass), gtk_xine_get_type ()))
 
 typedef struct GtkXinePrivate GtkXinePrivate;
 
@@ -102,7 +102,7 @@ typedef struct {
 			int current_position);
 } GtkXineClass;
 
-GtkType gtk_xine_get_type              (void);
+GType gtk_xine_get_type                (void);
 GtkWidget *gtk_xine_new		       (int width, int height,
 					gboolean null_video_out);
 
@@ -124,14 +124,14 @@ void  gtk_xine_set_logo_mode	       (GtkXine *gtx, gboolean logo_mode);
 gboolean gtk_xine_get_logo_mode	       (GtkXine *gtx);
 
 void gtk_xine_set_speed                (GtkXine *gtx, Speeds speed);
-gint gtk_xine_get_speed                (GtkXine *gtx);
+int gtk_xine_get_speed                 (GtkXine *gtx);
 
 void gtk_xine_set_fullscreen           (GtkXine *gtx, gboolean fullscreen);
-gint gtk_xine_is_fullscreen            (GtkXine *gtx);
+gboolean gtk_xine_is_fullscreen        (GtkXine *gtx);
 
 gboolean gtk_xine_can_set_volume       (GtkXine *gtx);
-void gtk_xine_set_volume               (GtkXine *gtx, gint volume);
-gint gtk_xine_get_volume               (GtkXine *gtx);
+void gtk_xine_set_volume               (GtkXine *gtx, int volume);
+int gtk_xine_get_volume                (GtkXine *gtx);
 
 void gtk_xine_set_show_cursor          (GtkXine *gtx, gboolean use_cursor);
 gboolean gtk_xine_get_show_cursor      (GtkXine *gtx);
@@ -139,15 +139,15 @@ gboolean gtk_xine_get_show_cursor      (GtkXine *gtx);
 void gtk_xine_set_media_device	       (GtkXine *gtx, const char *path);
 void gtk_xine_set_show_visuals	       (GtkXine *gtx, gboolean show_visuals);
 
-void gtk_xine_set_audio_channel        (GtkXine *gtx, gint audio_channel);
-gint gtk_xine_get_audio_channel        (GtkXine *gtx);
+void gtk_xine_set_audio_channel        (GtkXine *gtx, int audio_channel);
+int gtk_xine_get_audio_channel         (GtkXine *gtx);
 
 void gtk_xine_toggle_aspect_ratio      (GtkXine *gtx);
 void gtk_xine_set_scale_ratio          (GtkXine *gtx, gfloat ratio);
 
-gint gtk_xine_get_position             (GtkXine *gtx);
-gint gtk_xine_get_current_time         (GtkXine *gtx);
-gint gtk_xine_get_stream_length        (GtkXine *gtx);
+int gtk_xine_get_position              (GtkXine *gtx);
+int gtk_xine_get_current_time          (GtkXine *gtx);
+int gtk_xine_get_stream_length         (GtkXine *gtx);
 gboolean gtk_xine_is_playing           (GtkXine *gtx);
 gboolean gtk_xine_is_seekable          (GtkXine *gtx);
 

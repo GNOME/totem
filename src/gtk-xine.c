@@ -61,7 +61,7 @@
 /* this struct is used to decouple signals coming out of the Xine threads */
 typedef struct
 {
-	gint type;		/* one of the signals in the following enum */
+	int type;		/* one of the signals in the following enum */
 	GtkXineError error_type;
 	char *message;		/* or NULL */
 } GtkXineSignal;
@@ -176,10 +176,10 @@ static gboolean gtk_xine_idle_signal (GtkXine *gtx);
 
 static int gtx_table_signals[LAST_SIGNAL] = { 0 };
 
-GtkType
+GType
 gtk_xine_get_type (void)
 {
-	static GtkType gtk_xine_type = 0;
+	static GType gtk_xine_type = 0;
 
 	if (!gtk_xine_type) {
 		static const GTypeInfo gtk_xine_info = {
@@ -1397,7 +1397,7 @@ gtk_xine_set_speed (GtkXine *gtx, Speeds speed)
 	xine_set_param (gtx->priv->stream, XINE_PARAM_SPEED, speeds[speed]);
 }
 
-gint
+int
 gtk_xine_get_speed (GtkXine *gtx)
 {
 	g_return_val_if_fail (gtx != NULL, SPEED_NORMAL);
@@ -1407,7 +1407,7 @@ gtk_xine_get_speed (GtkXine *gtx)
 	return xine_get_param (gtx->priv->stream, XINE_PARAM_SPEED);
 }
 
-gint
+int
 gtk_xine_get_position (GtkXine *gtx)
 {
 	int pos_stream = 0, i = 0;
@@ -1442,7 +1442,7 @@ gtk_xine_get_position (GtkXine *gtx)
 }
 
 void
-gtk_xine_set_audio_channel (GtkXine *gtx, gint audio_channel)
+gtk_xine_set_audio_channel (GtkXine *gtx, int audio_channel)
 {
 	g_return_if_fail (gtx != NULL);
 	g_return_if_fail (GTK_IS_XINE (gtx));
@@ -1452,7 +1452,7 @@ gtk_xine_set_audio_channel (GtkXine *gtx, gint audio_channel)
 			XINE_PARAM_AUDIO_CHANNEL_LOGICAL, audio_channel);
 }
 
-gint
+int
 gtk_xine_get_audio_channel (GtkXine *gtx)
 {
 	g_return_val_if_fail (gtx != NULL, 0);
@@ -1547,12 +1547,11 @@ gtk_xine_set_fullscreen (GtkXine *gtx, gboolean fullscreen)
 	XUnlockDisplay (gtx->priv->display);
 }
 
-gint
+gboolean
 gtk_xine_is_fullscreen (GtkXine *gtx)
 {
 	g_return_val_if_fail (gtx != NULL, 0);
 	g_return_val_if_fail (GTK_IS_XINE (gtx), 0);
-	g_return_val_if_fail (gtx->priv->xine != NULL, 0);
 
 	return gtx->priv->fullscreen_mode;
 }
@@ -1576,7 +1575,7 @@ gtk_xine_can_set_volume (GtkXine *gtx)
 }
 
 void
-gtk_xine_set_volume (GtkXine *gtx, gint volume)
+gtk_xine_set_volume (GtkXine *gtx, int volume)
 {
 	g_return_if_fail (gtx != NULL);
 	g_return_if_fail (GTK_IS_XINE (gtx));
@@ -1590,7 +1589,7 @@ gtk_xine_set_volume (GtkXine *gtx, gint volume)
 	}
 }
 
-gint
+int
 gtk_xine_get_volume (GtkXine *gtx)
 {
 	int volume = 0;
@@ -1663,7 +1662,7 @@ gtk_xine_set_show_visuals (GtkXine *gtx, gboolean show_visuals)
 	gtx->priv->show_vfx = show_visuals;
 }
 
-gint
+int
 gtk_xine_get_current_time (GtkXine *gtx)
 {
 	int pos_time = 0, i = 0;
@@ -1694,7 +1693,7 @@ gtk_xine_get_current_time (GtkXine *gtx)
 	return pos_time;
 }
 
-gint
+int
 gtk_xine_get_stream_length (GtkXine *gtx)
 {
 	int length_time = 0;
@@ -2051,8 +2050,8 @@ char
 
 #define PIXSZ 3
 
-static guchar *gtk_xine_get_current_frame_rgb (GtkXine *gtx, gint *width_ret,
-					       gint * height_ret);
+static guchar *gtk_xine_get_current_frame_rgb (GtkXine *gtx, int *width_ret,
+					       int * height_ret);
 
 gboolean
 gtk_xine_can_get_frames (GtkXine *gtx)
@@ -2077,7 +2076,7 @@ GdkPixbuf *
 gtk_xine_get_current_frame (GtkXine *gtx)
 {
 	guchar *pixels;
-	gint width, height;
+	int width, height;
 	float ratio;
 	GdkPixbuf *pixbuf = NULL;
 
@@ -2143,13 +2142,13 @@ struct prvt_image_s
 static guchar *xine_frame_to_rgb (struct prvt_image_s *image);
 
 static guchar *
-gtk_xine_get_current_frame_rgb (GtkXine * gtx, gint * width_ret,
-				gint * height_ret)
+gtk_xine_get_current_frame_rgb (GtkXine * gtx, int * width_ret,
+				int * height_ret)
 {
-    gint    err = 0;
+    int    err = 0;
     struct prvt_image_s *image;
     guchar *rgb = NULL;
-    gint    width, height;
+    int    width, height;
 
     g_return_val_if_fail (gtx, NULL);
     g_return_val_if_fail (GTK_IS_XINE (gtx), NULL);
@@ -2240,7 +2239,7 @@ gtk_xine_get_current_frame_rgb (GtkXine * gtx, gint * width_ret,
  * 4:3 output format (720x480 -> 720x540)
  */
 static void
-scale_line_1_1 (guchar * source, guchar * dest, gint width, gint step)
+scale_line_1_1 (guchar * source, guchar * dest, int width, int step)
 {
     memcpy (dest, source, width);
 }
@@ -2254,9 +2253,9 @@ scale_line_1_1 (guchar * source, guchar * dest, gint width, gint step)
  */
 /* uuuuum */
 static void
-scale_line_45_64 (guchar * source, guchar * dest, gint width, gint step)
+scale_line_45_64 (guchar * source, guchar * dest, int width, int step)
 {
-    gint    p1, p2;
+    int    p1, p2;
 
     while ((width -= 64) >= 0)
     {
@@ -2574,9 +2573,9 @@ scale_line_45_64 (guchar * source, guchar * dest, gint width, gint step)
  */
 /* uum */
 static void
-scale_line_15_16 (guchar * source, guchar * dest, gint width, gint step)
+scale_line_15_16 (guchar * source, guchar * dest, int width, int step)
 {
-    gint    p1, p2;
+    int    p1, p2;
 
     while ((width -= 16) >= 0)
     {
@@ -2666,8 +2665,8 @@ scale_line_15_16 (guchar * source, guchar * dest, gint width, gint step)
 int
 scale_image (struct prvt_image_s *image)
 {
-    gint    i;
-    gint    step = 1;		/* unused variable for the scale functions */
+    int    i;
+    int    step = 1;		/* unused variable for the scale functions */
 
     /*
      * pointers for post-scaled line buffer 
@@ -2696,16 +2695,16 @@ scale_image (struct prvt_image_s *image)
     /*
      * old line widths 
      */
-    gint    oy_width = image->width;
-    gint    ou_width = image->u_width;
-    gint    ov_width = image->v_width;
+    int    oy_width = image->width;
+    int    ou_width = image->u_width;
+    int    ov_width = image->v_width;
 
     /*
      * new line widths NB scale factor is factored by 32768 for rounding 
      */
-    gint    ny_width = (oy_width * image->scale_factor) / 32768;
-    gint    nu_width = (ou_width * image->scale_factor) / 32768;
-    gint    nv_width = (ov_width * image->scale_factor) / 32768;
+    int    ny_width = (oy_width * image->scale_factor) / 32768;
+    int    nu_width = (ou_width * image->scale_factor) / 32768;
+    int    nv_width = (ov_width * image->scale_factor) / 32768;
 
     /*
      * allocate new buffer space space for post-scaled line buffers 
@@ -2784,7 +2783,7 @@ scale_image (struct prvt_image_s *image)
 static void
 yuy2toyv12 (struct prvt_image_s *image)
 {
-    gint    i, j, w2;
+    int    i, j, w2;
 
     /*
      * I420 
@@ -2795,8 +2794,8 @@ yuy2toyv12 (struct prvt_image_s *image)
 
     guchar *input = image->yuy2;
 
-    gint    width = image->width;
-    gint    height = image->height;
+    int    width = image->width;
+    int    height = image->height;
 
     w2 = width / 2;
 
@@ -2844,7 +2843,7 @@ yuy2toyv12 (struct prvt_image_s *image)
  *  a loss of image quality.
  */
 /* uuuuuuuuuuuuuuum. */
-static  gint
+static  int
 yuy2_fudge (struct prvt_image_s *image)
 {
 /* FIXME !!!!!!!!! */
@@ -2895,16 +2894,16 @@ yuy2_fudge (struct prvt_image_s *image)
 static guchar *
 yv12_2_rgb (struct prvt_image_s *image)
 {
-    gint    i, j;
+    int    i, j;
 
-    gint    y, u, v;
-    gint    r, g, b;
+    int    y, u, v;
+    int    r, g, b;
 
-    gint    sub_i_u;
-    gint    sub_i_v;
+    int    sub_i_u;
+    int    sub_i_v;
 
-    gint    sub_j_u;
-    gint    sub_j_v;
+    int    sub_j_u;
+    int    sub_j_v;
 
     guchar *rgb;
 

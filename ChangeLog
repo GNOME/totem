@@ -1,5 +1,18 @@
 2003-02-05  Bastien Nocera  <hadess@hadess.net>
 
+	* README:
+	* src/gtk-xine.c: (gtk_xine_get_type),
+	(gtk_xine_set_audio_channel), (gtk_xine_is_fullscreen),
+	(gtk_xine_set_volume), (gtk_xine_get_current_frame),
+	(gtk_xine_get_current_frame_rgb), (scale_line_1_1),
+	(scale_line_45_64), (scale_line_15_16), (scale_image),
+	(yuy2toyv12), (yv12_2_rgb):
+	* src/gtk-xine.h: remove usage of deprecated stuff (GtkType, gint,
+	etc.), fixed prototype for gtk_xine_is_fullscreen (), updated TODO
+	list in the README
+
+2003-02-05  Bastien Nocera  <hadess@hadess.net>
+
 	* README: updated requirements
 	* data/.cvsignore: updated
 	* data/Makefile.am:

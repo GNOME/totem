@@ -159,6 +159,19 @@ TODO
 ====
 
 - finish the playlist
+- Use of GError in _new and _open instead of error signal
+- gtk_xine_play/pause instead of set_speed (hmmm)
+- GStreamer backend (after 1.0, or if somebody sends in a patch :)
+- Other name (Maybe move it into monkeymedia? The only real gnome deps
+  are gnomevfs and gconf, and i believe gtkxine depends on them already
+  anyway. Would be nice to not have to pull the mm bits from a thousand
+  places :))
+- Properties for some stuff:
+  <hadess> i want to move all the config stuff to properties as well
+  <jorn> ah, well ideally the prefs would be shared automagically
+- Removing hard-coded deps in monkey-media:
+  <hadess> if you dl_open'ed the libraries when they are needed, i would
+  be 100 % with it
 
 Bugs should be lodged in Gnome's Bugzilla:
 http://bugzilla.gnome.org/enter_bug.cgi?product=totem 
