@@ -621,6 +621,18 @@ bacon_video_widget_get_tv_out (BaconVideoWidget * bvw)
   return TV_OUT_NONE;
 }
 
+BaconVideoWidgetAudioOutType
+bacon_video_widget_get_audio_out_type (BaconVideoWidget *bvw)
+{
+  return BVW_AUDIO_SOUND_STEREO;
+}
+
+void
+bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
+                                       BaconVideoWidgetAudioOutType type)
+{
+  
+}
 
 /* =========================================== */
 /*                                             */
@@ -640,6 +652,7 @@ bacon_video_widget_open (BaconVideoWidget * bvw, const gchar * mrl,
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
   g_return_val_if_fail (bvw->priv->mrl == NULL, FALSE);
 
+  g_message ("open %s", mrl);
   bvw->priv->mrl = g_strdup (mrl);
 
   /* Resetting last_error_message to NULL */
@@ -1177,7 +1190,18 @@ bacon_video_widget_can_play (BaconVideoWidget * bvw, MediaType type)
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_PLAY (bvw->priv->play), FALSE);
-  return FALSE;
+  
+  switch (type)
+    {
+      case MEDIA_DVD:
+        return FALSE;
+      case MEDIA_VCD:
+        return FALSE;
+      case MEDIA_CDDA:
+        return FALSE;
+      default:
+        return FALSE;
+    }
 }
 
 G_CONST_RETURN gchar **
