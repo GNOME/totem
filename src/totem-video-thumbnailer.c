@@ -164,7 +164,7 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path, const char *video_path)
 	gdk_pixbuf_unref (with_holes);
 }
 
-gpointer
+static gpointer
 time_monitor (gpointer data)
 {
 	g_usleep (30 * G_USEC_PER_SEC);

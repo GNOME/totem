@@ -1723,7 +1723,7 @@ bacon_video_widget_play (BaconVideoWidget *bvw, GError **gerror)
 gboolean bacon_video_widget_seek (BaconVideoWidget *bvw, float position,
 		GError **gerror)
 {
-	int error, length, speed;
+	int error, speed;
 
 	g_return_val_if_fail (bvw != NULL, -1);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -1);
@@ -1972,15 +1972,6 @@ bacon_video_widget_get_position (BaconVideoWidget *bvw)
 		return -1;
 
 	return pos_stream / 65535;
-}
-
-gboolean
-bacon_video_widget_is_fullscreen (BaconVideoWidget *bvw)
-{
-	g_return_val_if_fail (bvw != NULL, 0);
-	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
-
-	return bvw->priv->fullscreen_mode;
 }
 
 gboolean

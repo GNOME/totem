@@ -2070,7 +2070,7 @@ static PlaylistTypes dual_types[] = {
 
 static char * ignore_mime[] = { "cdda:", "dvd:", "vcd:" };
 
-gboolean
+static gboolean
 totem_playlist_add_mrl_with_data (TotemPlaylist *playlist, const char *mrl,
 		const char *display_name)
 {

@@ -244,7 +244,7 @@ totem_action_error_try_download (char *title, char *reason, Totem *totem)
 }
 #endif
 
-void
+static void
 totem_action_error_and_exit (char *title, char *reason, Totem *totem)
 {
 	GtkWidget *error_dialog;
@@ -320,7 +320,7 @@ totem_action_exit (Totem *totem)
 	exit (0);
 }
 
-gboolean
+static gboolean
 main_window_destroy_cb (GtkWidget *widget, GdkEvent *event, Totem *totem)
 {
 	totem_action_exit (totem);
@@ -442,7 +442,7 @@ totem_action_seek (Totem *totem, double pos)
 	}
 }
 
-void
+static void
 totem_action_set_mrl_and_play (Totem *totem, char *mrl)
 {
 	if (totem_action_set_mrl (totem, mrl) != FALSE)
@@ -1919,8 +1919,7 @@ on_about1_activate (GtkButton *button, Totem *totem)
 
 	g_signal_connect (G_OBJECT (about), "destroy", G_CALLBACK
 			(gtk_widget_destroyed), &about);
-	g_object_add_weak_pointer (G_OBJECT (about),
-			(void**)&(about));
+	g_object_add_weak_pointer (G_OBJECT (about), (gpointer *)&about);
 	gtk_window_set_transient_for (GTK_WINDOW (about),
 			GTK_WINDOW (totem->win));
 
@@ -2259,7 +2258,7 @@ on_volume_max_button (GtkButton *button, Totem *totem)
 	totem_action_volume_relative (totem, 100);
 }
 
-void
+static void
 totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 {
 	switch (cmd) {
@@ -2313,12 +2312,14 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 	}
 }
 
-void
+#ifdef HAVE_REMOTE
+static void
 totem_button_pressed_remote_cb (TotemRemote *remote, TotemRemoteCommand cmd,
 		Totem *totem)
 {
 	totem_action_remote (totem, cmd, NULL);
 }
+#endif /* HAVE_REMOTE */
 
 static int
 toggle_playlist_from_playlist (GtkWidget *playlist, int trash, Totem *totem)
@@ -3783,7 +3784,7 @@ main (int argc, char **argv)
 	totem->remote = totem_remote_new ();
 	g_signal_connect (totem->remote, "button_pressed",
 			  G_CALLBACK (totem_button_pressed_remote_cb), totem);
-#endif
+#endif /* HAVE_REMOTE */
 
 	gtk_main ();
 
