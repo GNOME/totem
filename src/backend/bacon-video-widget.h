@@ -239,8 +239,12 @@ GdkPixbuf *bacon_video_widget_get_current_frame (BaconVideoWidget *bvw);
 typedef enum {
 	TV_OUT_NONE,
 	TV_OUT_DXR3,
-	TV_OUT_TVMODE
+	TV_OUT_NVTV_PAL,
+	TV_OUT_NVTV_NTSC
 } TvOutType;
+
+gboolean bacon_video_widget_fullscreen_mode_available (BaconVideoWidget *bvw,
+						       TvOutType tvout);
 
 gboolean bacon_video_widget_set_tv_out           (BaconVideoWidget *bvw,
 						  TvOutType tvout);

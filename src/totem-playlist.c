@@ -482,7 +482,7 @@ totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist)
 
 	if (playlist->_priv->path != NULL)
 	{
-		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (fs),
+		gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (fs),
 				playlist->_priv->path);
 	}
 	response = gtk_dialog_run (GTK_DIALOG (fs));
@@ -660,7 +660,7 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 
 	if (playlist->_priv->save_path != NULL)
 	{
-		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (fs),
+		gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (fs),
 				playlist->_priv->save_path);
 	}
 

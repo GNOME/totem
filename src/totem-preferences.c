@@ -651,8 +651,11 @@ totem_preferences_tvout_setup (Totem *totem)
 	case TV_OUT_NONE:
 		name = "tpw_notvout_radio_button";
 		break;
-	case TV_OUT_TVMODE:
-		name = "tpw_tvoutmode_radio_button";
+	case TV_OUT_NVTV_PAL:
+		name = "tpw_nvtvpalmode_radio_button";
+		break;
+	case TV_OUT_NVTV_NTSC:
+		name = "tpw_nvtvntscmode_radio_button";
 		break;
 	case TV_OUT_DXR3:
 		name = "tpw_dxr3tvout_radio_button";
@@ -670,16 +673,32 @@ totem_preferences_tvout_setup (Totem *totem)
 			G_CALLBACK (on_tvout_toggled), totem);
 	g_object_set_data (G_OBJECT (item), "tvout_type",
 			GINT_TO_POINTER (TV_OUT_NONE));
-	item = glade_xml_get_widget (totem->xml, "tpw_tvoutmode_radio_button");
+	gtk_widget_set_sensitive(item, 
+			bacon_video_widget_fullscreen_mode_available (totem->bvw, TV_OUT_NONE));
+
+	item = glade_xml_get_widget (totem->xml, "tpw_nvtvpalmode_radio_button");
+        g_signal_connect (G_OBJECT (item), "toggled",
+                G_CALLBACK (on_tvout_toggled), totem);
+        g_object_set_data (G_OBJECT (item), "tvout_type",
+                GINT_TO_POINTER (TV_OUT_NVTV_PAL));
+	gtk_widget_set_sensitive(item, 
+			bacon_video_widget_fullscreen_mode_available (totem->bvw, TV_OUT_NVTV_PAL));
+
+	item = glade_xml_get_widget (totem->xml, "tpw_nvtvntscmode_radio_button");
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_tvout_toggled), totem);
 	g_object_set_data (G_OBJECT (item), "tvout_type",
-			GINT_TO_POINTER (TV_OUT_TVMODE));
+                GINT_TO_POINTER (TV_OUT_NVTV_NTSC));
+	gtk_widget_set_sensitive(item, 
+			bacon_video_widget_fullscreen_mode_available (totem->bvw, TV_OUT_NVTV_NTSC));
+	
 	item = glade_xml_get_widget (totem->xml, "tpw_dxr3tvout_radio_button");
 	g_signal_connect (G_OBJECT (item), "toggled",
 			G_CALLBACK (on_tvout_toggled), totem);
 	g_object_set_data (G_OBJECT (item), "tvout_type",
 			GINT_TO_POINTER (TV_OUT_DXR3));
+	gtk_widget_set_sensitive(item, 
+			bacon_video_widget_fullscreen_mode_available (totem->bvw, TV_OUT_DXR3));
 }
 
 void

@@ -22,6 +22,17 @@ dnl xine or gst ?
 GST_REQS=0.7.0.3
 XINE_REQS=1.0.0
 
+AC_ARG_ENABLE(nvtv, AC_HELP_STRING([--enable-nvtv],[Enable support for TV-output with nvtv]), enable_nvtv="$enableval", enable_nvtv=yes)
+
+if test x$enable_nvtv = xyes; then
+PKG_CHECK_MODULES(NVTV, nvtvsimple >= 0.4.5, found_nvtv=1,found_nvtv=0)
+AC_SUBST(NVTV_CFLAGS)
+AC_SUBST(NVTV_LIBS)
+	if test $found_nvtv -eq 1 ; then
+		AC_DEFINE(HAVE_NVTV,1,[Define to 1 if nvtv is available and used.])
+	fi
+fi
+
 AC_ARG_ENABLE(gstreamer,
 		AC_HELP_STRING([--enable-gstreamer],[use GStreamer instead of xine for the backend]),
 	[case "${enableval}" in

@@ -1455,7 +1455,6 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 
 		/* Get the subtitle part out for our tests */
 		filename = totem_create_full_path (data);
-		g_message ("filename: %s", filename);
 		local_path = gnome_vfs_get_local_path_from_uri (filename);
 		if (local_path != NULL && g_file_test (local_path, G_FILE_TEST_IS_DIR))
 		{
@@ -1533,7 +1532,7 @@ on_open1_activate (GtkButton *button, Totem *totem)
 
 	if (path != NULL)
 	{
-		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (fs), path);
+		gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (fs), path);
 		g_free (path);
 		path = NULL;
 	}

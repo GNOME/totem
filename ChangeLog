@@ -1,3 +1,24 @@
+2004-03-06  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in:
+	* data/totem.glade:
+	* src/Makefile.am:
+	* src/bacon-video-widget-gst.c:
+	(bacon_video_widget_fullscreen_mode_available):
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_realize),
+	(bacon_video_widget_unrealize),
+	(bacon_video_widget_fullscreen_mode_available),
+	(bacon_video_widget_set_fullscreen),
+	(bacon_video_widget_set_tv_out):
+	* src/bacon-video-widget.h:
+	* src/totem-playlist.c: (totem_playlist_add_files),
+	(totem_playlist_save_files):
+	* src/totem-preferences.c: (totem_preferences_tvout_setup):
+	* src/totem.c: (totem_action_open_files_list), (on_open1_activate):
+	patch from Mattias Eriksson <snaggen@acc.umu.se> to unbreak
+	NVidia TV-Output (Closes: #131080)
+	Fix crashes when opening the file choosers a second time
+
 2004-03-01  Bastien Nocera  <hadess@hadess.net>
 
 	* NEWS: updated
