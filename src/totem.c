@@ -990,7 +990,7 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 		char *filename, *subtitle;
 
 		filename = g_strdup (list[i]);
-		subtitle = strrchr (filename, '?');
+		subtitle = strrchr (filename, '#');
 		if (subtitle != NULL)
 		{
 			*subtitle = 0;
