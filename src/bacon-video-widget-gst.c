@@ -33,6 +33,7 @@
 #include <gst/colorbalance/colorbalance.h>
 
 /* system */
+#include <time.h>
 #include <string.h>
 #include <stdio.h>
 
@@ -347,6 +348,99 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
   return TRUE;
 }
 
+static gboolean
+bacon_video_widget_motion_notify (GtkWidget *widget,
+				  GdkEventMotion *event)
+{
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+  GstElement *videosink = NULL;
+
+  g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
+
+  g_object_get (G_OBJECT (bvw->priv->play), "video-sink", &videosink, NULL);
+  if (GST_IS_BIN (videosink)) {
+    videosink = gst_bin_get_by_interface (GST_BIN (videosink),
+        GST_TYPE_NAVIGATION);
+  }
+
+  if (videosink && GST_IS_NAVIGATION (videosink)) {
+    GstNavigation *nav = GST_NAVIGATION (videosink);
+
+    gst_navigation_send_mouse_event (nav,
+        "mouse-move", 0, event->x, event->y);
+
+    /* we need a return value... */
+    return TRUE;
+  }
+
+  if (GTK_WIDGET_CLASS (parent_class)->motion_notify_event)
+    return GTK_WIDGET_CLASS (parent_class)->motion_notify_event (widget, event);
+
+  return FALSE;
+}
+
+static gboolean
+bacon_video_widget_button_press (GtkWidget *widget,
+				 GdkEventButton *event)
+{
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+  GstElement *videosink = NULL;
+
+  g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
+
+  g_object_get (G_OBJECT (bvw->priv->play), "video-sink", &videosink, NULL);
+  if (GST_IS_BIN (videosink)) {
+    videosink = gst_bin_get_by_interface (GST_BIN (videosink),
+       GST_TYPE_NAVIGATION);
+  }
+
+  if (videosink && GST_IS_NAVIGATION (videosink)) {
+    GstNavigation *nav = GST_NAVIGATION (videosink);
+
+    gst_navigation_send_mouse_event (nav,
+        "mouse-button-press", event->button, event->x, event->y);
+
+    /* we need a return value... */
+    return TRUE;
+  }
+
+  if (GTK_WIDGET_CLASS (parent_class)->button_press_event)
+    return GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, event);
+
+  return FALSE;
+}
+
+static gboolean
+bacon_video_widget_button_release (GtkWidget *widget,
+				   GdkEventButton *event)
+{
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+  GstElement *videosink = NULL;
+
+  g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
+
+  g_object_get (G_OBJECT (bvw->priv->play), "video-sink", &videosink, NULL);
+  if (GST_IS_BIN (videosink)) {
+    videosink = gst_bin_get_by_interface (GST_BIN (videosink),
+        GST_TYPE_NAVIGATION);
+  }
+
+  if (videosink && GST_IS_NAVIGATION (videosink)) {
+    GstNavigation *nav = GST_NAVIGATION (videosink);
+
+    gst_navigation_send_mouse_event (nav,
+        "mouse-button-release", event->button, event->x, event->y);
+
+    /* we need a return value... */
+    return TRUE;
+  }
+
+  if (GTK_WIDGET_CLASS (parent_class)->button_release_event)
+    return GTK_WIDGET_CLASS (parent_class)->button_release_event (widget, event);
+
+  return FALSE;
+}
+
 static void
 bacon_video_widget_size_request (GtkWidget * widget,
 				 GtkRequisition * requisition)
@@ -426,6 +520,9 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   widget_class->size_allocate = bacon_video_widget_size_allocate;
   widget_class->realize = bacon_video_widget_realize;
   widget_class->expose_event = bacon_video_widget_expose_event;
+  widget_class->motion_notify_event = bacon_video_widget_motion_notify;
+  widget_class->button_press_event = bacon_video_widget_button_press;
+  widget_class->button_release_event = bacon_video_widget_button_release;
 
   /* FIXME:
    * - once I've re-added DVD supports, I want to add event handlers
@@ -2622,6 +2719,9 @@ bacon_video_widget_new (int width, int height,
   bvw->priv->logo_mode = TRUE;
   bvw->priv->auto_resize = TRUE;
 
+  /* gconf setting in backend */
+  bvw->priv->gc = gconf_client_get_default ();
+
   if (type == BVW_USE_TYPE_VIDEO || type == BVW_USE_TYPE_AUDIO) {
     audio_sink = gst_gconf_get_default_audio_sink ();
     if (!GST_IS_ELEMENT (audio_sink))
@@ -2633,11 +2733,38 @@ bacon_video_widget_new (int width, int height,
 
   if (type == BVW_USE_TYPE_VIDEO) {
     video_sink = gst_gconf_get_default_video_sink ();
-    if (!GST_IS_ELEMENT (video_sink))
-      {
+    if (!GST_IS_ELEMENT (video_sink)) {
         g_message ("failed to render default video sink from gconf");
         return NULL;
+    } else {
+      GDate d;
+
+      g_date_clear (&d, 1);
+      g_date_set_time (&d, time (NULL));
+      if (g_date_day (&d) == 1 && g_date_month (&d) == G_DATE_APRIL) {
+        confvalue = gconf_client_get_without_default (bvw->priv->gc,
+            GCONF_PREFIX"/puzzle_year", NULL);
+
+        if (!confvalue ||
+            gconf_value_get_int (confvalue) != g_date_year (&d)) {
+          GstElement *puzzle;
+
+          gconf_client_set_int (bvw->priv->gc, GCONF_PREFIX"/puzzle_year",
+              g_date_year (&d), NULL);
+
+          puzzle = gst_element_factory_make ("puzzle", NULL);
+          if (puzzle) {
+            GstElement *bin = gst_bin_new ("videosinkbin");
+
+            gst_bin_add_many (GST_BIN (bin), puzzle, video_sink, NULL);
+            gst_element_link (puzzle, video_sink);
+            gst_element_add_ghost_pad (bin,
+                gst_element_get_pad (puzzle, "sink"), "sink");
+            video_sink = bin;
+          }
+        }
       }
+    }
   }
 
   if (video_sink == NULL) {
@@ -2743,9 +2870,6 @@ bacon_video_widget_new (int width, int height,
         bvw->priv->balance = GST_COLOR_BALANCE (element);
       }
   }
-
-  /* gconf setting in backend */
-  bvw->priv->gc = gconf_client_get_default ();
 
   /* Setup brightness and contrast */
   for (i = 0; i < 4; i++) {
