@@ -27,13 +27,7 @@
 #include <eel/eel-gtk-macros.h>
 #include <glade/glade.h>
 
-/* #define DEBUG_PL_ENABLE */
-
-#ifdef DEBUG_PL_ENABLE
-#define D(x...) g_message (x)
-#else
-#define D(x...) 
-#endif
+#include "debug.h"
 
 struct GtkPlaylistPrivate
 {
@@ -157,7 +151,7 @@ gtk_playlist_foreach_selected (GtkTreeModel *model, GtkTreePath *path,
 	GtkTreeRowReference *ref;
 
 	D("gtk_playlist_foreach_selected");
-#ifdef DEBUG_PL_ENABLE
+#ifdef TOTEM_DEBUG
 	{
 		char *file;
 

@@ -4,7 +4,8 @@ bin_PROGRAMS = totem
 totem_SOURCES = 			\
 	totem.c				\
 	gtk-xine.c gtk-xine.h		\
-	gtk-playlist.c	gtk-playlist.h
+	gtk-playlist.c	gtk-playlist.h	\
+	debug.h
 
 totem_LDADD = $(EXTRA_GNOME_LIBS) $(XINE_LIBS)
 totem_LDFLAGS = -export-dynamic

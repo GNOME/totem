@@ -9,7 +9,7 @@
 #include "gtk-xine.h"
 #include "gtk-playlist.h"
 
-#define TOTEM_DEBUG
+#include "debug.h"
 
 #ifndef TOTEM_DEBUG
 #include <fcntl.h>
@@ -1021,7 +1021,7 @@ main (int argc, char **argv)
 		exit (1);
 	}
 	totem->xml = glade_xml_new (filename, NULL, NULL);
-	if (xml == NULL)
+	if (totem->xml == NULL)
 	{
 		action_error (_("Couldn't load the main Glade file"
 					" (totem.glade).\nMake sure that Totem"

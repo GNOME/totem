@@ -1,5 +1,17 @@
 2002-07-31  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: added --disable-debug flag
+	* src/Makefile.am:
+	* src/debug.h: added
+	* src/gtk-playlist.c: (gtk_playlist_foreach_selected):
+	* src/gtk-xine.c: (load_audio_out_driver), (xine_thread),
+	(configure_cb), (gtk_xine_realize), (gtk_xine_size_allocate),
+	(gtk_xine_play):
+	* src/totem.c: (main): make use of shared debug macros, fix some build
+	issues
+
+2002-07-31  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (action_error), (main): added more checks for the
 	interface loading, so that we fail gracefully if it doesn't work
 	Thanks thomasvs for pushing me into doing it

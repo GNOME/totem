@@ -21,6 +21,8 @@
  * the xine engine in a widget - implementation
  */
 
+#include <config.h>
+
 /* system */
 #include <math.h>
 #include <pthread.h>
@@ -40,13 +42,8 @@
 /* xine */
 #include <xine/video_out_x11.h>
 
+#include "debug.h"
 #include "gtk-xine.h"
-
-#ifdef DEBUG
-#define D(x) (x)
-#else
-#define D(x)
-#endif /* DEBUG */
 
 #define BLACK_PIXEL \
 	BlackPixel ((gtx->priv->display ? gtx->priv->display : gdk_display), \
@@ -385,9 +382,8 @@ load_audio_out_driver (GtkXine * gtx)
 						   driver_ids[i]);
 
 		if (ao_driver) {
-			D (printf
-			   ("main: ...worked, using '%s' audio driver.\n",
-			    driver_ids[i]));
+			D ("main: ...worked, using '%s' audio driver.\n",
+			    driver_ids[i]);
 
 			gtx->priv->config->update_string (gtx->priv-> config,
 							  "audio.driver",
@@ -411,7 +407,7 @@ xine_thread (void *gtx_gen)
 
 		XNextEvent (gtx->priv->display, &event);
 
-		D(g_print ("gtkxine: got an event (%d)\n", event.type));
+		D("gtkxine: got an event (%d)", event.type);
 
 		switch (event.type) {
 		case Expose:
@@ -436,7 +432,7 @@ xine_thread (void *gtx_gen)
 			gtx->priv->vo_driver->gui_data_exchange
 				(gtx->priv->vo_driver,
 				 GUI_DATA_EX_COMPLETION_EVENT, &event);
-			D(g_print ("gtkxine: completion event\n"));
+			D("gtkxine: completion event");
 		}
 	}
 
@@ -450,7 +446,7 @@ configure_cb (GtkWidget * widget,
 {
 	GtkXine *gtx;
 
-	D (g_message ("CONFIGURE"));
+	D ("CONFIGURE");
 	gtx = GTK_XINE (user_data);
 
 	gtx->priv->xpos = event->x;
@@ -500,7 +496,7 @@ gtk_xine_realize (GtkWidget * widget)
 			  "configure-event",
 			  GTK_SIGNAL_FUNC (configure_cb), gtx);
 
-	D(g_print ("xine_thread: init threads\n"));
+	D("xine_thread: init threads");
 
 	if (!XInitThreads ()) {
 		g_signal_emit (G_OBJECT (gtx),
@@ -510,7 +506,7 @@ gtk_xine_realize (GtkWidget * widget)
 		return;
 	}
 
-	D (printf ("xine_thread: open display\n"));
+	D ("xine_thread: open display\n");
 
 	gtx->priv->display = XOpenDisplay (NULL);
 
@@ -684,9 +680,9 @@ gtk_xine_size_allocate (GtkWidget * widget, GtkAllocation * allocation)
 	g_return_if_fail (widget != NULL);
 	g_return_if_fail (GTK_IS_XINE (widget));
 
-	D (g_message ("ALLOCATE x: %d y: %d w: %d h: %d", allocation->x,
+	D ("ALLOCATE x: %d y: %d w: %d h: %d", allocation->x,
 		      allocation->y, allocation->width,
-		      allocation->height));
+		      allocation->height);
 
 	gtx = GTK_XINE (widget);
 
@@ -715,9 +711,8 @@ gtk_xine_play (GtkXine * gtx, gchar * mrl, gint pos, gint start_time)
 	g_return_val_if_fail (GTK_IS_XINE (gtx), -1);
 	g_return_val_if_fail (gtx->priv->xine != NULL, -1);
 
-	D (g_print
-	   ("gtkxine: calling xine_play start_pos = %d, start_time = %d\n",
-	    pos, start_time));
+	D ("gtkxine: calling xine_play start_pos = %d, start_time = %d\n",
+	    pos, start_time);
 
 	error = xine_play (gtx->priv->xine, mrl, pos, start_time);
 	if (!error)
