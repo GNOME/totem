@@ -65,11 +65,6 @@ enum {
 	NUM_COLS
 };
 
-typedef struct BooleanPointer BooleanPointer;
-struct BooleanPointer {
-	gboolean boolean;
-};
-
 static int gtk_playlist_table_signals[LAST_SIGNAL] = { 0 };
 
 static const GtkTargetEntry target_table[] = {
@@ -131,24 +126,23 @@ static void
 gtk_tree_selection_has_selected_foreach (GtkTreeModel *model,
 		GtkTreePath *path, GtkTreeIter *iter, gpointer user_data)
 {
-	BooleanPointer *retval = (BooleanPointer *)user_data;
-	retval->boolean = TRUE;
+	int *retval = (gboolean *)user_data;
+	D("HAS SELECTED");
+
+	*retval = TRUE;
 }
 
 static gboolean
 gtk_tree_selection_has_selected (GtkTreeSelection *selection)
 {
-	BooleanPointer *boolean;
-	gboolean retval;
+	int retval, *boolean;
 
-	boolean = g_new (BooleanPointer, 1);
-	boolean->boolean = FALSE;
+	retval = FALSE;
+	boolean = &retval;
 	gtk_tree_selection_selected_foreach (selection,
 			gtk_tree_selection_has_selected_foreach,
 			(gpointer) (boolean));
 
-	retval = boolean->boolean;
-	g_free (boolean);
 	return retval;
 }
 

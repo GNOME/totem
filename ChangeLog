@@ -1,6 +1,11 @@
 2002-10-21  Bastien Nocera  <hadess@hadess.net>
 
 	* src/gtk-playlist.c: (gtk_tree_selection_has_selected_foreach),
+	(gtk_tree_selection_has_selected): urgh, still learning C bud ?
+
+2002-10-21  Bastien Nocera  <hadess@hadess.net>
+
+	* src/gtk-playlist.c: (gtk_tree_selection_has_selected_foreach),
 	(gtk_tree_selection_has_selected), (selection_changed),
 	(init_treeview): make the removed button's state depend on wether we
 	have a selection or not, fixed a bug in the class_init (wrong offset
