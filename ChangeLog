@@ -1,3 +1,11 @@
+2005-01-30  Bastien Nocera  <hadess@hadess.net>
+
+	* NEWS: upd
+	* data/uri.glade: change the name of the history ID to totem
+	* src/totem.c: (on_open_location1_activate): save the used URI in
+	the entry's history, prompting a save to GConf. Fixes the
+	"Open Location..." being always empty (Closes: #153675)
+
 2005-01-29  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.glade: fix the maximum value of the GtkAdjustments not

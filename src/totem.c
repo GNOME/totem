@@ -1534,7 +1534,7 @@ on_open_location1_activate (GtkButton *button, Totem *totem)
 {
 	GladeXML *glade;
 	char *mrl;
-	GtkWidget *dialog, *entry;
+	GtkWidget *dialog, *entry, *gentry;
 	int response;
 	const char *filenames[2];
 
@@ -1545,6 +1545,7 @@ on_open_location1_activate (GtkButton *button, Totem *totem)
 
 	dialog = glade_xml_get_widget (glade, "open_uri_dialog");
 	entry = glade_xml_get_widget (glade, "uri");
+	gentry = glade_xml_get_widget (glade, "uri_list");
 
 	response = gtk_dialog_run (GTK_DIALOG (dialog));
 
@@ -1562,6 +1563,9 @@ on_open_location1_activate (GtkButton *button, Totem *totem)
 			mrl = totem_playlist_get_current_mrl (totem->playlist);
 			totem_action_set_mrl_and_play (totem, mrl);
 			g_free (mrl);
+
+			gnome_entry_append_history (GNOME_ENTRY (gentry),
+					TRUE, uri);
 		}
 	}
 
