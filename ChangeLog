@@ -1,5 +1,11 @@
 2003-09-22  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (totem_action_open_files): close and stop the stream
+	before trying to open the CD tracks, fixes run-time warning, and
+	delay getting the CD track titles
+
+2003-09-22  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_action_add_recent),
 	(totem_add_cd_track_name), (totem_action_open_files):
 	fix memleaks when using "dvd:" or "cd:" on the command-line,

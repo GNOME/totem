@@ -1503,6 +1503,8 @@ totem_action_open_files (Totem *totem, char **list, gboolean ignore_first)
 					(G_OBJECT (totem->playlist),
 					 playlist_changed_cb, totem);
 				totem_playlist_clear (totem->playlist);
+				bacon_video_widget_stop (totem->bvw);
+				bacon_video_widget_close (totem->bvw);
 				cleared = TRUE;
 			}
 
