@@ -16,6 +16,7 @@ stuff_DATA =				\
 	totem.glade			\
 	playlist.glade			\
 	properties.glade		\
+	uri.glade			\
 	totem_logo.mpv
 
 pixmapdir = $(datadir)/pixmaps

@@ -1161,11 +1161,13 @@ on_open1_activate (GtkButton *button, Totem *totem)
 }
 
 static void
-open_location1_activate (GtkButton *button, Totem *totem)
+on_open_location1_activate (GtkButton *button, Totem *totem)
 {
 	GladeXML *glade;
-	char *filename;
+	char *filename, *mrl;
 	GtkWidget *dialog, *entry;
+	int response;
+	const char *filenames[1];
 
 	filename = gnome_program_locate_file (NULL,
 			GNOME_FILE_DOMAIN_APP_DATADIR,
@@ -1174,7 +1176,8 @@ open_location1_activate (GtkButton *button, Totem *totem)
 	{
 		totem_action_error (_("Couldn't load the 'Open Location...'"
 					" interface.\nMake sure that Totem"
-					" is properly installed."), totem->win);
+					" is properly installed."),
+				GTK_WINDOW (totem->win));
 		return;
 	}
 
@@ -1184,15 +1187,36 @@ open_location1_activate (GtkButton *button, Totem *totem)
 		g_free (filename);
 		totem_action_error (_("Couldn't load the 'Open Location...'"
 					" interface.\nMake sure that Totem"
-					" is properly installed."), totem->win);
+					" is properly installed."),
+				GTK_WINDOW (totem->win));
 		return;
 	}
 
 	g_free (filename);
-	item = glade_xml_get_widget (glade, "open_uri_dialog");
-	response = gtk_dialog_run (GTK_DIALOG (item));
+	dialog = glade_xml_get_widget (glade, "open_uri_dialog");
+	entry = glade_xml_get_widget (glade, "uri");
+	response = gtk_dialog_run (GTK_DIALOG (dialog));
 
-	//FIXME gone home
+	if (response == GTK_RESPONSE_OK)
+	{
+		const char *uri;
+
+		uri = gtk_entry_get_text (GTK_ENTRY (entry));
+		if (uri != NULL && strcmp (uri, "") != 0)
+		{
+			filenames[0] = uri;
+			totem_action_open_files (totem,
+					(char **) filenames, FALSE);
+
+			mrl = gtk_playlist_get_current_mrl (totem->playlist);
+			totem_action_set_mrl_and_play (totem, mrl);
+			g_free (mrl);
+		}
+	}
+
+	gtk_widget_destroy (dialog);
+	g_object_unref (glade);
+	return;
 }
 
 static void
