@@ -1,5 +1,10 @@
 2003-07-02  Bastien Nocera  <hadess@hadess.net>
 
+	* src/gtk-playlist.c: a real audio file starting with http:// will
+	be recognised as text/plain, let's handle that
+
+2003-07-02  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am: now it's totem depending on scrscaver, not the
 	whole video widget
 	* src/scrsaver.c: (fake_event), (scrsaver_new), (scrsaver_disable),

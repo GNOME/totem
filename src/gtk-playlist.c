@@ -1832,6 +1832,7 @@ static PlaylistTypes dual_types[] = {
 	{ "audio/x-pn-realaudio", gtk_playlist_add_ra },
 	{ "application/vnd.rn-realmedia", gtk_playlist_add_ra },
 	{ "audio/x-pn-realaudio-plugin", gtk_playlist_add_ra },
+	{ "text/plain", gtk_playlist_add_ra },
 	{ "video/x-ms-asf", gtk_playlist_add_asf },
 	{ "video/x-ms-wmv", gtk_playlist_add_asf },
 };
