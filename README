@@ -20,6 +20,7 @@ News
   fullscreen to work on the gstreamer backend)
 * Automatic GNOME-based Proxy configuration
 * Make the visual quality option menu actually work
+* Add the /apps/totem/debug entry to enable debug in the playback engine
 * Fixes concerning the colliding error and buffering dialogs
 * added a --disable-lirc argument to configure
 
@@ -271,7 +272,8 @@ TODO
 Bugs should be lodged in Gnome's Bugzilla:
 http://bugzilla.gnome.org/enter_bug.cgi?product=totem
 
-Rebuild totem with --enable-debug to get a better debug output
+To get a better debug output, run:
+gconftool-2 --set --type bool /apps/totem/debug true
 
 Contact
 =======

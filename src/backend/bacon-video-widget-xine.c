@@ -349,6 +349,7 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 	GtkWidget *widget = (GtkWidget *) bvw;
 	const char *const *autoplug_list;
 	int i = 0;
+	GConfClient *gc;
 
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -360,7 +361,7 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 	bvw->priv->xine = xine_new ();
 	bvw->priv->cursor_shown = TRUE;
 	bvw->priv->vis_name = g_strdup ("goom");
-	
+
 	bvw->priv->init_width = 0;
 	bvw->priv->init_height = 0;
 
@@ -371,15 +372,18 @@ bacon_video_widget_instance_init (BaconVideoWidget *bvw)
 
 	xine_init (bvw->priv->xine);
 
-#ifndef DEBUG
-	xine_engine_set_param (bvw->priv->xine,
-			XINE_ENGINE_PARAM_VERBOSITY,
-			XINE_VERBOSITY_NONE);
-#else
-	xine_engine_set_param (bvw->priv->xine,
-			XINE_ENGINE_PARAM_VERBOSITY,
-			XINE_VERBOSITY_DEBUG);
-#endif
+	/* Debug configuration */
+	gc = gconf_client_get_default ();
+	if (gconf_client_get_bool (gc, GCONF_PREFIX"/debug", NULL) == FALSE)
+	{
+		xine_engine_set_param (bvw->priv->xine,
+				XINE_ENGINE_PARAM_VERBOSITY,
+				XINE_VERBOSITY_NONE);
+	} else {
+		xine_engine_set_param (bvw->priv->xine,
+				XINE_ENGINE_PARAM_VERBOSITY,
+				XINE_VERBOSITY_DEBUG);
+	}
 
 	/* Can we play DVDs and VCDs ? */
 	autoplug_list = xine_get_autoplay_input_plugin_ids (bvw->priv->xine);
