@@ -53,9 +53,6 @@
 #   define N_(String) (String)
 #endif
 
-#ifndef XINE_LANG_LABEL_MAX_SIZE
-#define XINE_LANG_LABEL_MAX_SIZE 128
-#endif
 #define DEFAULT_HEIGHT 315
 #define DEFAULT_WIDTH 420
 #define CONFIG_FILE ".gnome2"G_DIR_SEPARATOR_S"totem_config"
@@ -3010,7 +3007,7 @@ GList
 {
 	GList *list = NULL;
 	int i;
-	char lang[XINE_LANG_LABEL_MAX_SIZE];
+	char lang[XINE_LANG_MAX];
 
 	for(i = 0; i < 32; i++)
 	{
@@ -3051,7 +3048,7 @@ GList
 {
 	GList *list = NULL;
 	int i;
-	char lang[XINE_LANG_LABEL_MAX_SIZE];
+	char lang[XINE_LANG_MAX];
 
 	for(i = 0; i < 32; i++)
 	{
