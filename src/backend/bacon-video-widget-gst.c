@@ -976,6 +976,11 @@ got_source (GObject    *play,
   GObject *source = NULL;
   GObjectClass *klass;
 
+  if (bvw->priv->tagcache) {
+    gst_tag_list_free (bvw->priv->tagcache);
+    bvw->priv->tagcache = NULL;
+  }
+
   if (!bvw->priv->media_device)
     return;
 
