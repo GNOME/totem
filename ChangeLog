@@ -1,5 +1,18 @@
 2005-01-13  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-xine.c: (setup_config),
+	(dvd_skip_behaviour), (bacon_video_widget_new),
+	(bacon_video_widget_set_media_device),
+	(bacon_video_widget_set_proprietary_plugins_path),
+	(bacon_video_widget_set_connection_speed),
+	(bacon_video_widget_get_connection_speed),
+	(bacon_video_widget_set_visuals_quality),
+	(bacon_video_widget_set_video_device),
+	(bacon_video_widget_set_audio_out_type):
+	modify the config entries to follow the xine-lib 1.0 rename
+
+2005-01-13  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-session.c: (totem_session_restore):
 	* src/totem.c: (on_eos_event): when restoring a playlist, or
 	when rewinding to the start of a playlist (without repeat), set the
