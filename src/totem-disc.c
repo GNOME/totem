@@ -39,11 +39,12 @@
 
 #include <sys/ioctl.h>
 #include <sys/stat.h>
-#include <linux/cdrom.h>
 
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <libgnomevfs/gnome-vfs.h>
+
+#include <linux/cdrom.h>
 
 #include "totem-disc.h"
 
