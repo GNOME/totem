@@ -3772,7 +3772,6 @@ main (int argc, char **argv)
 			GNOME_PARAM_NONE);
 #endif /* !HAVE_GTK_ONLY */
 
-	glade_init ();
 	gnome_vfs_init ();
 
 	if ((gc = gconf_client_get_default ()) == NULL)
@@ -3784,8 +3783,12 @@ main (int argc, char **argv)
 	gnome_authentication_manager_init ();
 #endif /* !HAVE_GTK_ONLY */
 
-	filename = g_build_filename (DATADIR,
-			"totem", "totem.glade", NULL);
+	if (g_file_test ("../data/totem.glade", G_FILE_TEST_EXISTS) != FALSE)
+		filename = g_strdup ("../data/totem.glade");
+	else
+		filename = g_build_filename (DATADIR,
+				"totem", "totem.glade", NULL);
+
 	if (g_file_test (filename, G_FILE_TEST_EXISTS) == FALSE)
 	{
 		g_free (filename);
