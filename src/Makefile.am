@@ -64,7 +64,7 @@ EGG_RECENT_FILES =                      \
 	egg-recent-util.c               \
 	egg-recent-util.h
 
-BACON_CD_SELECTION = 			\
+BACON_MESSAGE_CONNECTION = 		\
 	bacon-message-connection.c	\
 	bacon-message-connection.h
 
@@ -75,10 +75,10 @@ BACON_V4L_SELECTION =			\
 	bacon-v4l-selection.h
 
 EGGDIR=$(srcdir)/../../libegg/libegg/recent-files/
-BACONDIR=$(srcdir)/../../nautilus-cd-burner/
+BACONDIR=$(srcdir)/../../libbacon/src
 regenerate-built-sources:
 	EGGFILES="$(EGG_RECENT_FILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh || true
-	EGGFILES="$(BACON_CD_SELECTION)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
+	EGGFILES="$(BACON_MESSAGE_CONNECTION)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
 
 VIDEOWIDGET = \
 	baconvideowidget-marshal.list totemplparser-marshal.list \
@@ -92,7 +92,7 @@ libbaconpropertiespage_la_SOURCES = \
 
 totem_SOURCES = 					\
 	$(EGG_RECENT_FILES)				\
-	$(BACON_CD_SELECTION)				\
+	$(BACON_MESSAGE_CONNECTION)			\
 	totem.c totem.h					\
 	totem-remote.c totem-remote.h			\
 	totem-preferences.c totem-preferences.h		\
