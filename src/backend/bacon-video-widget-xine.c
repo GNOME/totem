@@ -182,6 +182,22 @@ static const char *mms_bandwidth_strs[]={"14.4 Kbps (Modem)",
 	"262.2 Kbps (Cable/DSL)", "393.2 Kbps (Cable/DSL)",
 	"524.3 Kbps (Cable/DSL)", "1.5 Mbps (T1)",
 	"10.5 Mbps (LAN)", NULL};
+static const char *audio_out_types_strs[] = {
+	"Mono",
+	"Stereo",
+	"Headphones",
+	"A52_Passthru",
+	"Surround21",
+	"Surround3",
+	"Surround4",
+	"Surround41",
+	"Surround5",
+	"Surround51",
+	"Surround6",
+	"Surround61",
+	"Surround71",
+	NULL
+};
 
 static void bacon_video_widget_class_init (BaconVideoWidgetClass *klass);
 static void bacon_video_widget_instance_init (BaconVideoWidget *bvw);
@@ -2996,51 +3012,47 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 		BaconVideoWidgetAudioOutType type)
 {
 	xine_cfg_entry_t entry;
-	int four_channel, five_channel, five_one_channel, passthru;
+	int value;
 
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
 
-	four_channel = five_channel = five_one_channel = passthru = 0;
+	xine_config_register_enum (bvw->priv->xine,
+			"audio.speaker_arrangement",
+			1,
+			(char **) audio_out_types_strs,
+			"Speaker arrangement",
+			NULL, 0, NULL, NULL); 
 
 	gconf_client_set_int (bvw->priv->gc,
 			GCONF_PREFIX"/audio_output_type",
 			type, NULL);
+
 	switch (type) {
 	case BVW_AUDIO_SOUND_STEREO:
-		/* Nothing to do */
+		value = 1;
 		break;
 	case BVW_AUDIO_SOUND_4CHANNEL:
-		four_channel = 1;
+		value = 6;
 		break;
 	case BVW_AUDIO_SOUND_5CHANNEL:
-		five_channel = 1;
+		value = 8;
 		break;
 	case BVW_AUDIO_SOUND_51CHANNEL:
-		five_one_channel = 1;
+		value = 9;
 		break;
 	case BVW_AUDIO_SOUND_AC3PASSTHRU:
-		passthru = 1;
+		value = 3;
 		break;
 	default:
-		g_assert_not_reached ();
+		value = 2;
+		g_warning ("Unsupported audio type %d selected", type);
 	}
 
-	bvw_config_help_num (bvw->priv->xine, "audio.four_channel", four_channel, &entry);
-	entry.num_value = four_channel;
-	xine_config_update_entry (bvw->priv->xine, &entry);
-
-	bvw_config_help_num (bvw->priv->xine, "audio.five_channel", five_channel,  &entry);
-	entry.num_value = five_channel;
-	xine_config_update_entry (bvw->priv->xine, &entry);
-
-	bvw_config_help_num (bvw->priv->xine, "audio.five_lfe_channel", five_one_channel, &entry);
-	entry.num_value = five_one_channel;
-	xine_config_update_entry (bvw->priv->xine, &entry);
-
-	bvw_config_help_num (bvw->priv->xine, "audio.a52_pass_through", passthru, &entry);
-	entry.num_value = passthru;
+	xine_config_lookup_entry (bvw->priv->xine,
+			"audio.speaker_arrangement", &entry);
+	entry.num_value = value;
 	xine_config_update_entry (bvw->priv->xine, &entry);
 }
 
