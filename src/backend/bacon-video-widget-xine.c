@@ -581,6 +581,11 @@ load_video_out_driver (BaconVideoWidget *bvw, gboolean null_out)
 	 * we need to try loading the other ones, skipping dxr3 */
 
 	/* The types are hardcoded for now */
+	vo_driver = xine_open_video_driver (bvw->priv->xine, "xvmc",
+			XINE_VISUAL_TYPE_X11, (void *) &vis);
+	if (vo_driver)
+		return vo_driver;
+
 	vo_driver = xine_open_video_driver (bvw->priv->xine, "xv",
 			XINE_VISUAL_TYPE_X11, (void *) &vis);
 	if (vo_driver)

@@ -12,6 +12,10 @@ http://mail.gnome.org/archives/gnome-announce-list/2003-October/msg00054.html
 News
 ====
 
+0.99.8:
+* Use the statusbar for buffering feedback
+* Use less memory when there's no video output
+
 0.99.7:
 * Fix .pls playlist parsing and saving, as well as .m3u, .asx and .desktop
   playlist parsing
@@ -348,6 +352,13 @@ A: You probably installed Totem in a different prefix. Here is how to fix it.
 
 TODO
 ====
+
+add an XINE_MSG_AUDIO_OUT_UNVAILABLE
+audio_oss_out.c ao_oss_open ()
+add check for open device in write()
+
+- support gxine and freevo playlist formats
+- use xpath where possible in playlist parsing
 
 - Maybe move it into monkeymedia? The only real gnome deps
   are gnomevfs and gconf, and i believe gtkxine depends on them already
