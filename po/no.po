@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-07 14:53+0100\n"
-"PO-Revision-Date: 2004-02-07 14:53+0100\n"
+"POT-Creation-Date: 2004-02-15 14:27+0100\n"
+"PO-Revision-Date: 2004-02-15 14:27+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1271
+#: data/playlist.glade.h:1 src/totem-playlist.c:1273
 msgid "Playlist"
 msgstr "Spilleliste"
 
@@ -343,7 +343,7 @@ msgstr "Språk"
 msgid "Large"
 msgstr "Stor"
 
-#: data/totem.glade.h:50 src/totem.c:77
+#: data/totem.glade.h:50 src/totem.c:78
 msgid "Next"
 msgstr "Neste"
 
@@ -403,11 +403,11 @@ msgstr "Spill av lyd-CD"
 msgid "Play or pause the movie"
 msgstr "Spill av eller sett filmen på pause"
 
-#: data/totem.glade.h:65 src/totem.c:76
+#: data/totem.glade.h:65 src/totem.c:77
 msgid "Play/Pause"
 msgstr "Spill/pause"
 
-#: data/totem.glade.h:66 src/totem.c:78
+#: data/totem.glade.h:66 src/totem.c:79
 msgid "Previous"
 msgstr "Forrige"
 
@@ -1020,7 +1020,7 @@ msgstr "Kunne ikke åpne denne filmen"
 msgid "Generic Error"
 msgstr "Generisk feil"
 
-#: src/bacon-video-widget-xine.c:1693
+#: src/bacon-video-widget-xine.c:1704
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1029,19 +1029,19 @@ msgstr ""
 "Video-kodek «%s» håndteres ikke. Du vil kanskje måtte installere flere "
 "tillegg for å kunne spille av noen typer filmer"
 
-#: src/bacon-video-widget-xine.c:1712
+#: src/bacon-video-widget-xine.c:1723
 msgid "This is an audio-only file, and there is no audio output available"
 msgstr "Dette er en lydfil, og det finnes innen mulighet for avspilling av lyd"
 
-#: src/bacon-video-widget-xine.c:3094
+#: src/bacon-video-widget-xine.c:3105
 msgid "Movie is not playing"
 msgstr "Filmen spilles ikke av"
 
-#: src/bacon-video-widget-xine.c:3102
+#: src/bacon-video-widget-xine.c:3113
 msgid "No video to capture"
 msgstr "Ingen video å fange"
 
-#: src/bacon-video-widget-xine.c:3109
+#: src/bacon-video-widget-xine.c:3120
 msgid "Video codec is not handled"
 msgstr "Videotypen er ikke støttet"
 
@@ -1093,19 +1093,19 @@ msgstr "_Passord:"
 msgid "Remember this password"
 msgstr "Husk dette passordet"
 
-#: src/totem-playlist.c:320
+#: src/totem-playlist.c:321
 msgid "Could not save the playlist"
 msgstr "Kunne ikke lagre spillelisten"
 
-#: src/totem-playlist.c:475 src/totem.c:1571
+#: src/totem-playlist.c:476 src/totem.c:1571
 msgid "Select files"
 msgstr "Velg filer"
 
-#: src/totem-playlist.c:640
+#: src/totem-playlist.c:641
 msgid "Save playlist"
 msgstr "Lagre spilleliste"
 
-#: src/totem-playlist.c:678
+#: src/totem-playlist.c:679
 #, c-format
 msgid ""
 "A file named '%s' already exists.\n"
@@ -1114,7 +1114,7 @@ msgstr ""
 "En fil med navn «%s» eksisterer allerede.\n"
 "Er du sikker på at du vil overskrive den?"
 
-#: src/totem-playlist.c:863
+#: src/totem-playlist.c:864
 msgid "Filename"
 msgstr "Filnavn"
 
@@ -1202,19 +1202,23 @@ msgstr "Henter data"
 msgid "%d %%"
 msgstr "%d %%"
 
-#: src/totem.c:79
+#: src/totem.c:76
+msgid "Backend options"
+msgstr "Alternativer for videomotor"
+
+#: src/totem.c:80
 msgid "Seek Forwards"
 msgstr "Søk fremover"
 
-#: src/totem.c:80
+#: src/totem.c:81
 msgid "Seek Backwards"
 msgstr "Søk bakover"
 
-#: src/totem.c:81
+#: src/totem.c:82
 msgid "Volume Up"
 msgstr "Volum opp"
 
-#: src/totem.c:82
+#: src/totem.c:83
 msgid "Volume Down"
 msgstr "Volum ned"
 
@@ -1408,11 +1412,11 @@ msgstr "Kunne ikke initiere trådsikre biblioteker."
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Sjekk systeminstallasjonen. Totem avslutter nå."
 
-#: src/totem.c:3715
+#: src/totem.c:3716
 msgid "Totem couln't initialise the configuration engine."
 msgstr "Totem kunne ikke initiere konfigurasjonsmotoren."
 
-#: src/totem.c:3715
+#: src/totem.c:3716
 msgid "Make sure that GNOME is properly installed."
 msgstr "Sjekk at GNOME er korrekt installert."
 
