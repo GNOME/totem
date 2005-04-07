@@ -131,7 +131,8 @@ totem_statusbar_init (TotemStatusbar *statusbar)
   gtk_progress_bar_set_orientation (GTK_PROGRESS_BAR (statusbar->progress),
 				    GTK_ORIENTATION_HORIZONTAL);
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (statusbar->progress), 0.);
-  gtk_box_pack_start (GTK_BOX (hbox), statusbar->progress, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), statusbar->progress, FALSE, TRUE, 0);
+  gtk_widget_set_size_request (statusbar->progress, 150, 10);
   gtk_widget_hide (statusbar->progress);
 
   packer = gtk_vseparator_new ();
@@ -539,7 +540,7 @@ totem_statusbar_size_request   (GtkWidget      *widget,
 
   gtk_widget_style_get (GTK_WIDGET (statusbar), "shadow_type", &shadow_type, NULL);  
   gtk_frame_set_shadow_type (GTK_FRAME (statusbar->frame), shadow_type);
-  
+
   GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
 
   if (statusbar->has_resize_grip)
