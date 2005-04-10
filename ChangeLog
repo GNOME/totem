@@ -1,3 +1,9 @@
+2005-04-10  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-playlist.c: (totem_playlist_set_previous):
+	Fix crasher bug when reaching the first element in a shuffled/repeat
+	playlist (Closes: #172943)
+
 2005-04-07  Bastien Nocera  <hadess@hadess.net>
 
 	* data/uri.glade: don't mention URI in the interface, close when

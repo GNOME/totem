@@ -1956,7 +1956,6 @@ void
 totem_playlist_set_previous (TotemPlaylist *playlist)
 {
 	GtkTreeIter iter;
-	char *path;
 
 	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
 
@@ -1965,18 +1964,19 @@ totem_playlist_set_previous (TotemPlaylist *playlist)
 
 	totem_playlist_unset_playing (playlist);
 
-	path = gtk_tree_path_to_string (playlist->_priv->current);
-	if (strcmp (path, "0") == 0)
-	{
-		totem_playlist_set_at_end (playlist);
-		g_free (path);
-		return;
-	}
-
-	g_free (path);
-
 	if (playlist->_priv->shuffle == FALSE)
 	{
+		char *path;
+
+		path = gtk_tree_path_to_string (playlist->_priv->current);
+		if (strcmp (path, "0") == 0)
+		{
+			totem_playlist_set_at_end (playlist);
+			g_free (path);
+			return;
+		}
+		g_free (path);
+
 		gtk_tree_model_get_iter (playlist->_priv->model,
 				&iter,
 				playlist->_priv->current);
@@ -1991,9 +1991,12 @@ totem_playlist_set_previous (TotemPlaylist *playlist)
 
 		gtk_tree_path_free (playlist->_priv->current);
 		playlist->_priv->current_shuffled--;
-		if (playlist->_priv->current_shuffled == 0)
+		if (playlist->_priv->current_shuffled < 0) {
 			indice = playlist->_priv->shuffled[PL_LEN -1];
-		indice = playlist->_priv->shuffled[playlist->_priv->current_shuffled];
+			playlist->_priv->current_shuffled = PL_LEN -1;
+		} else {
+			indice = playlist->_priv->shuffled[playlist->_priv->current_shuffled];
+		}
 		playlist->_priv->current = gtk_tree_path_new_from_indices
 			(indice, -1);
 	}
