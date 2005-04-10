@@ -1,5 +1,19 @@
 2005-04-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_add_directory),
+	(totem_pl_parser_parse):
+	* src/totem-uri.c: (totem_uri_escape_for_display):
+	* src/totem-uri.h:
+	* src/totem.c: (totem_action_play), (totem_action_seek),
+	(totem_action_set_mrl_with_warning), (totem_action_seek_relative),
+	(commit_hide_skip_to):
+	Add a totem_uri_escape_for_display function that tries harder
+	than gnome-vfs's unescape for display to create valid UTF-8,
+	don't use g_build_filename to construct a URI,
+	always escape the info->name of a file (Closes: #172838)
+
+2005-04-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-playlist.c: (totem_playlist_set_previous):
 	Fix crasher bug when reaching the first element in a shuffled/repeat
 	playlist (Closes: #172943)
