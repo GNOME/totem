@@ -1,3 +1,15 @@
+2005-04-10  Bastien Nocera  <hadess@hadess.net>
+
+        * src/totem-playlist.c: (totem_playlist_set_previous):
+	Fix crasher bug when reaching the first element in a shuffled/repeat
+	playlist (Closes: #172943)
+
+2005-04-10  Bastien Nocera  <hadess@hadess.net>
+
+	reviewed by: <delete if not using a buddy>
+
+	* src/totem-playlist.c: (totem_playlist_set_previous):
+
 2005-04-07  Bastien Nocera  <hadess@hadess.net>
 
 	* data/uri.glade: make the dialog go away when 'Esc' is pressed
