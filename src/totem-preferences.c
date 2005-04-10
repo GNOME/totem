@@ -600,7 +600,7 @@ totem_setup_preferences (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "font_sel_button");
 	g_signal_connect (item, "font-set", G_CALLBACK (on_font_set), totem);
 	gtk_font_button_set_title (GTK_FONT_BUTTON (item),
-				   _("Select subtitle rendering font"));
+				   _("Select Subtitle Font"));
 	font = gconf_client_get_string (totem->gc,
 		GCONF_PREFIX"/subtitle_font", NULL);
 	if (font && strcmp (font, "") != 0) {

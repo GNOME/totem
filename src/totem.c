@@ -587,7 +587,7 @@ update_mrl_label (Totem *totem, const char *name)
 		/* Update the mrl label */
 		text = g_strdup_printf
 			("<span size=\"medium\"><b>%s</b></span>",
-			 _("No file"));
+			 _("No File"));
 		widget = glade_xml_get_widget (totem->xml, "tcw_title_label");
 		gtk_label_set_markup (GTK_LABEL (widget), text);
 		widget = glade_xml_get_widget (totem->xml, "tmw_title_label");
@@ -1480,7 +1480,7 @@ on_open1_activate (GtkButton *button, Totem *totem)
 	int response;
 	static char *path = NULL;
 
-	fs = gtk_file_chooser_dialog_new (_("Select files"),
+	fs = gtk_file_chooser_dialog_new (_("Select Files"),
 			GTK_WINDOW (totem->win), GTK_FILE_CHOOSER_ACTION_OPEN,
 			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,

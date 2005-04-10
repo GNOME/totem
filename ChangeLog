@@ -1,3 +1,14 @@
+2005-04-08  Dennis Cranston <dennis_cranston@yahoo.com>
+ 
+ 	* data/uri.glade: Use header capitalization for window titles.
+ 	* data/totem.glade: Add a missing mnemonic to label. 
+ 	* src/totem-interface.c:  (totem_interface_error_dialog) Alerts 
+ 	should not have titles per HIG.
+ 	* src/totem.c: (update_mrl_label):  Use header capitalization.
+ 	* src/totem.c: (on_open1_activate): Use header capitalization. 
+ 	* src/totem-preferences.c: (totem_setup_preferences): Use header
+ 	capitalization. (Closes: #173129)
+
 2005-04-10  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/totem-pl-parser.c: (totem_pl_parser_add_directory),

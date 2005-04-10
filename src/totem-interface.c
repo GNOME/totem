@@ -55,6 +55,7 @@ totem_interface_error_dialog (const char *title, const char *reason,
 	gtk_message_dialog_format_secondary_text
 		(GTK_MESSAGE_DIALOG (error_dialog), "%s", reason);
 
+	gtk_window_set_title (GTK_WINDOW (error_dialog), ""); /* as per HIG */
 	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
 			GTK_RESPONSE_OK);
