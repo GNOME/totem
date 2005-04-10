@@ -1273,9 +1273,10 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 	MediaType type;
 	GList *list, *l;
 	GnomeVFSResult res;
-	char *media_url;
 
 	if (parser->priv->recurse_level == 1) {
+		char *media_url;
+
 		type = totem_cd_detect_type_from_dir (url, &media_url, NULL);
 		if (type != MEDIA_TYPE_DATA && type != MEDIA_TYPE_ERROR) {
 			if (media_url != NULL) {
@@ -1295,7 +1296,7 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 	l = list;
 
 	while (l != NULL) {
-		char *name, *str, *fullpath;
+		char *name, *fullpath;
 		GnomeVFSFileInfo *info = l->data;
 
 		if (info->name != NULL && (strcmp (info->name, ".") == 0
@@ -1304,22 +1305,13 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 			continue;
 		}
 
-		if (g_utf8_validate (info->name, -1, NULL) == FALSE)
-			name = g_strdup (info->name);
-		else
-			name = gnome_vfs_escape_string (info->name);
-		str = g_build_filename (url, info->name, NULL);
-
-		if (strstr (str, "://") != NULL && str[0] == '/')
-			fullpath = str + 1;
-		else
-			fullpath = str;
+		name = gnome_vfs_escape_string (info->name);
+		fullpath = g_strconcat (url, "/", name, NULL);
+		g_free (name);
 
 		if (totem_pl_parser_parse_internal (parser, fullpath) != TOTEM_PL_PARSER_RESULT_SUCCESS)
 			totem_pl_parser_add_one_url (parser, fullpath, NULL);
 
-		g_free (str);
-		g_free (name);
 		l = l->next;
 	}
 
@@ -1464,6 +1456,8 @@ totem_pl_parser_parse (TotemPlParser *parser, const char *url,
 {
 	g_return_val_if_fail (TOTEM_IS_PL_PARSER (parser), TOTEM_PL_PARSER_RESULT_UNHANDLED);
 	g_return_val_if_fail (url != NULL, TOTEM_PL_PARSER_RESULT_UNHANDLED);
+	g_return_val_if_fail (strstr (url, "://") != NULL,
+			TOTEM_PL_PARSER_RESULT_UNHANDLED);
 
 	parser->priv->recurse_level = 0;
 	parser->priv->fallback = fallback;

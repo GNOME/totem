@@ -165,3 +165,31 @@ totem_uri_get_subtitle_uri (const char *uri)
 	return NULL;
 }
 
+char*
+totem_uri_escape_for_display (const char *uri)
+{
+	char *disp, *tmp;
+
+	disp = gnome_vfs_unescape_string_for_display (uri);
+	/* If we don't have UTF-8, try to convert */
+	if (g_utf8_validate (disp, -1, NULL) != FALSE)
+		return disp;
+
+	/* If we don't have UTF-8, try to convert */
+	tmp = g_locale_to_utf8 (disp, -1, NULL, NULL, NULL);
+	/* If we couldn't convert using the current codeset, try
+	 * another one */
+	if (tmp != NULL) {
+		g_free (disp);
+		return tmp;
+	}
+
+	tmp = g_convert (disp, -1, "UTF-8", "ISO8859-1", NULL, NULL, NULL);
+	if (tmp != NULL) {
+		g_free (disp);
+		return tmp;
+	}
+
+	return g_strdup (uri);
+}
+

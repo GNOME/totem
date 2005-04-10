@@ -310,7 +310,7 @@ totem_action_play (Totem *totem)
 	{
 		char *msg, *disp;
 
-		disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+		disp = totem_uri_escape_for_display (totem->mrl);
 		msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
 		g_free (disp);
 
@@ -337,7 +337,7 @@ totem_action_seek (Totem *totem, double pos)
 	{
 		char *msg, *disp;
 
-		disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+		disp = totem_uri_escape_for_display (totem->mrl);
 		msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
 		g_free (disp);
 
@@ -711,7 +711,7 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		{
 			char *msg, *disp;
 
-			disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+			disp = totem_uri_escape_for_display (totem->mrl);
 			msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
 			g_free (disp);
 			totem_action_error (msg, err->message, totem);
@@ -816,7 +816,7 @@ totem_action_seek_relative (Totem *totem, int off_sec)
 	{
 		char *msg, *disp;
 
-		disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+		disp = totem_uri_escape_for_display (totem->mrl);
 		msg = g_strdup_printf(_("Totem could not play '%s'."), totem->mrl);
 		g_free (disp);
 
@@ -2076,7 +2076,7 @@ commit_hide_skip_to (GtkDialog *dialog, gint response, Totem *totem)
 	{
 		char *msg, *disp;
 
-		disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+		disp = totem_uri_escape_for_display (totem->mrl);
 		msg = g_strdup_printf(_("Totem could not seek in '%s'."), disp);
 		g_free (disp);
 		totem_action_stop (totem);

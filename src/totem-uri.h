@@ -32,6 +32,7 @@ gboolean	totem_is_media		(const char *uri);
 gboolean	totem_playing_dvd	(const char *uri);
 void		totem_setup_file_monitoring (Totem *totem);
 char*		totem_uri_get_subtitle_uri (const char *uri);
+char*		totem_uri_escape_for_display (const char *uri);
 
 G_END_DECLS
 
