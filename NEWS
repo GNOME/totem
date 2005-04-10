@@ -1,29 +1,34 @@
 New features and significant updates in version...
 
-1.1.0:
+1.1.1:
 * Major enhancements to the experimental mozilla plugin
 * Remove use of libnautilus-burn, and list all the CD drives in the main
   movie menu
+* Add a preference to select the subtitle font
+* Avoid the progress bar changing the status bar's height
 * Allow Totem to be passed multiple files by Nautilus
 * Translate the language names in Totem's menus
-* Memory leak fixes
 * Make the "Skip to..." dialog appear again
 * Don't crash if the playlist contains non-UTF8 data
 * Fix parsing of some ASX playlists
 * Slight performance increase in adding entries to the playlist
 * Fix Drag'n'drop of files and directories with broken UTF-8, and from
   Konqueror
+* Close the 'Open Location' dialogue when 'Esc' is pressed
+* Fix a crash when reaching the first element in a shuffled/repeat playlist
+* Fix parsing of directories with special characters and broken UTF-8
 * Use the new 'Leave fullscreen' icon and label
 * Add the Video bitrate in the properties
 * Prevent a click in the recent files really opening the first file twice
 * Add --play and --pause command-line options
 * Fix compilation with glibc 2.2 systems
-* Add a man page for totem-video-thumbnailer
+* Add a man page for totem-video-thumbnailer, and update the totem one
 * Fix possible crash in the BaconMessageConnection
 * Require glib 2.6.3 to fix the thumbnailer exiting too soon
 * Fix date shown from some OGG files (GStreamer)
 * Fix the cursor not disappearing (GStreamer)
 * Allow relative paths to be passed to the thumbnailer (GStreamer)
+* More HIG fixes
 
 1.0:
 * NVidia TV-Out support (GStreamer)
