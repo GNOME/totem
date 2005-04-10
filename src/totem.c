@@ -2491,6 +2491,7 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 		totem_gromit_clear (FALSE);
 		break;
 #endif /* !HAVE_GTK_ONLY */
+	case GDK_F11:
 	case GDK_f:
 	case GDK_F:
 		totem_action_fullscreen_toggle (totem);
