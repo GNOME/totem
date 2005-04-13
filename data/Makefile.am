@@ -88,4 +88,4 @@ EXTRA_DIST = $(stuff_DATA) $(desktop_in_in_files_all) lirc_example totem.schemas
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(desktop_DATA) $(schema_DATA) $(desktop_in_files_all)
 
-DISTCLEANFILES = $(schema_in_files) update-gconf.sh
+DISTCLEANFILES = totem-video-thumbnail.schemas.in totem-handlers.schemas.in update-gconf.sh
