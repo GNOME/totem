@@ -158,7 +158,8 @@ totem_session_setup (Totem *totem, char **argv)
 {
 }
 
-void totem_action_restore_pl (Totem *totem)
+void
+totem_session_restore (Totem *totem, char **argv)
 {
 }
 

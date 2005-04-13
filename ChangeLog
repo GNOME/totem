@@ -1,3 +1,11 @@
+2005-04-13  Bastien Nocera  <hadess@hadess.net>
+
+	* src/metadata-test.c:
+	* src/totem-session.c: (totem_session_restore):
+	* src/totem-video-thumbnailer.c:
+	* src/totem.c: (on_open_location1_activate):
+	Fix GTK+-only build (Closes: #300488), some warning fixes
+
 2005-04-13  Sebastien Bacher  <seb128@debian.org>
 
 	* data/Makefile.am: don't distclean totem.schemas.in.

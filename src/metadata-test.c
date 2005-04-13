@@ -11,6 +11,7 @@
 
 #include <bacon-video-widget.h>
 #include <glib/gthread.h>
+#include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <libgnomevfs/gnome-vfs-utils.h>

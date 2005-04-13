@@ -32,6 +32,7 @@
 #include <gnome.h>
 #include "totem-gromit.h"
 #else
+#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <stdlib.h>
@@ -1576,9 +1577,10 @@ on_open_location1_activate (GtkButton *button, Totem *totem)
 			mrl = totem_playlist_get_current_mrl (totem->playlist);
 			totem_action_set_mrl_and_play (totem, mrl);
 			g_free (mrl);
-
+#ifndef HAVE_GTK_ONLY
 			gnome_entry_append_history (GNOME_ENTRY (gentry),
 					TRUE, uri);
+#endif /* !HAVE_GTK_ONLY */
 		}
 	}
 

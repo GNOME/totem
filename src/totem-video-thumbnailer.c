@@ -36,6 +36,7 @@
 
 #include <popt.h>
 
+#include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
 #include "bacon-video-widget.h"
