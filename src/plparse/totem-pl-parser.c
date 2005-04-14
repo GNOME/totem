@@ -932,7 +932,7 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		xmlNodePtr parent, const char *pl_title)
 {
 	xmlNodePtr node;
-	char *title, *url;
+	guchar *title, *url;
 	gboolean retval = FALSE;
 
 	title = NULL;
@@ -943,15 +943,15 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 			continue;
 
 		/* ENTRY should only have one ref and one title nodes */
-		if (g_ascii_strcasecmp (node->name, "ref") == 0
-				|| g_ascii_strcasecmp (node->name, "entryref") == 0) {
-			url = xmlGetProp (node, "href");
+		if (g_ascii_strcasecmp ((char *)node->name, "ref") == 0
+				|| g_ascii_strcasecmp ((char *)node->name, "entryref") == 0) {
+			url = xmlGetProp (node, (guchar *)"href");
 			if (url == NULL)
-				url = xmlGetProp (node, "HREF");
+				url = xmlGetProp (node, (guchar *)"HREF");
 			continue;
 		}
 
-		if (g_ascii_strcasecmp (node->name, "title") == 0)
+		if (g_ascii_strcasecmp ((char *)node->name, "title") == 0)
 			title = xmlNodeListGetString(doc, node->children, 1);
 	}
 
@@ -960,9 +960,9 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		return FALSE;
 	}
 
-	if (strstr (url, "://") != NULL || url[0] == '/') {
-		totem_pl_parser_add_one_url (parser, url,
-				title ? title : pl_title);
+	if (strstr ((char *)url, "://") != NULL || url[0] == '/') {
+		totem_pl_parser_add_one_url (parser, (char *)url,
+				(char *)title ? (char *)title : pl_title);
 		retval = TRUE;
 	} else {
 		char *fullpath;
@@ -971,7 +971,7 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		/* .asx files can contain references to other .asx files */
 		if (totem_pl_parser_parse_internal (parser, fullpath) != TOTEM_PL_PARSER_RESULT_SUCCESS)
 			totem_pl_parser_add_one_url (parser, fullpath,
-					title ? title : pl_title);
+					(char *)title ? (char *)title : pl_title);
 
 		g_free (fullpath);
 	}
@@ -986,7 +986,7 @@ static gboolean
 parse_asx_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		xmlNodePtr parent)
 {
-	char *title = NULL;
+	guchar *title = NULL;
 	xmlNodePtr node;
 	gboolean retval = FALSE;
 
@@ -994,22 +994,22 @@ parse_asx_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		if (node->name == NULL)
 			continue;
 
-		if (g_ascii_strcasecmp (node->name, "title") == 0) {
+		if (g_ascii_strcasecmp ((char *)node->name, "title") == 0) {
 			title = xmlNodeListGetString(doc, node->children, 1);
 		}
 
-		if (g_ascii_strcasecmp (node->name, "entry") == 0) {
+		if (g_ascii_strcasecmp ((char *)node->name, "entry") == 0) {
 			/* Whee found an entry here, find the REF and TITLE */
-			if (parse_asx_entry (parser, base, doc, node, title) != FALSE)
+			if (parse_asx_entry (parser, base, doc, node, (char *)title) != FALSE)
 				retval = TRUE;
 		}
-		if (g_ascii_strcasecmp (node->name, "entryref") == 0) {
+		if (g_ascii_strcasecmp ((char *)node->name, "entryref") == 0) {
 			/* Found an entryref, give the parent instead of the
 			 * children to the parser */
-			if (parse_asx_entry (parser, base, doc, parent, title) != FALSE)
+			if (parse_asx_entry (parser, base, doc, parent, (char *)title) != FALSE)
 				retval = TRUE;
 		}
-		if (g_ascii_strcasecmp (node->name, "repeat") == 0) {
+		if (g_ascii_strcasecmp ((char *)node->name, "repeat") == 0) {
 			/* Repeat at the top-level */
 			if (parse_asx_entries (parser, base, doc, node) != FALSE)
 				retval = TRUE;
@@ -1096,7 +1096,7 @@ parse_smil_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		xmlNodePtr parent)
 {
 	xmlNodePtr node;
-	char *title, *url;
+	guchar *title, *url;
 	gboolean retval = FALSE;
 
 	title = NULL;
@@ -1108,13 +1108,13 @@ parse_smil_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 			continue;
 
 		/* ENTRY should only have one ref and one title nodes */
-		if (g_ascii_strcasecmp (node->name, "video") == 0) {
-			url = xmlGetProp (node, "src");
-			title = xmlGetProp (node, "title");
+		if (g_ascii_strcasecmp ((char *)node->name, "video") == 0) {
+			url = xmlGetProp (node, (guchar *)"src");
+			title = xmlGetProp (node, (guchar *)"title");
 
 			if (url != NULL) {
 				if (parse_smil_video_entry (parser,
-						base, url, title) != FALSE)
+						base, (char *)url, (char *)title) != FALSE)
 					retval = TRUE;
 			}
 
@@ -1141,7 +1141,7 @@ parse_smil_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		if (node->name == NULL)
 			continue;
 
-		if (g_ascii_strcasecmp (node->name, "body") == 0) {
+		if (g_ascii_strcasecmp ((char *)node->name, "body") == 0) {
 			if (parse_smil_entry (parser, base,
 						doc, node) != FALSE)
 				retval = TRUE;
@@ -1175,7 +1175,7 @@ totem_pl_parser_add_smil (TotemPlParser *parser, const char *url, gpointer data)
 	/* If the document has no root, or no name */
 	if(!doc || !doc->children
 			|| !doc->children->name
-			|| g_ascii_strcasecmp (doc->children->name,
+			|| g_ascii_strcasecmp ((char *)doc->children->name,
 				"smil") != 0) {
 		if (doc != NULL)
 			xmlFreeDoc (doc);

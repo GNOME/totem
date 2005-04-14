@@ -1,3 +1,14 @@
+2005-04-15  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* src/backend/bacon-video-widget-gst.c:
+	(bacon_video_widget_get_metadata_int):
+	* src/bacon-message-connection.c: (server_cb):
+	* src/plparse/totem-pl-parser.c: (parse_asx_entry),
+	(parse_asx_entries), (parse_smil_entry), (parse_smil_entries),
+	(totem_pl_parser_add_smil):
+	* src/totem-playlist.c: (drop_cb):
+	* src/totem-screenshot.c: (drag_data_get): Fix gcc4 warnings.
+
 2005-04-14  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in:

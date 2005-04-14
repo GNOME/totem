@@ -336,7 +336,7 @@ drop_cb (GtkWidget     *widget,
 {
 	GList *list, *p, *file_list;
 
-	list = gnome_vfs_uri_list_parse (data->data);
+	list = gnome_vfs_uri_list_parse ((char *)data->data);
 
 	if (list == NULL) {
 		gtk_drag_finish (context, FALSE, FALSE, time);

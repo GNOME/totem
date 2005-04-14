@@ -2833,14 +2833,14 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
       if (bvw->priv->audiotags == NULL)
         break;
       if (gst_tag_list_get_uint (bvw->priv->audiotags,
-				 GST_TAG_BITRATE, &integer)) {
+				 GST_TAG_BITRATE, (guint *)&integer)) {
 	integer /= 1000;
       }
     case BVW_INFO_VIDEO_BITRATE:
       if (bvw->priv->videotags == NULL)
 	break;
       if (gst_tag_list_get_uint (bvw->priv->videotags,
-				 GST_TAG_BITRATE, &integer)) {
+				 GST_TAG_BITRATE, (guint *)&integer)) {
 	integer /= 1000;
       }
       break;

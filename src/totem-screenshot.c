@@ -300,7 +300,7 @@ drag_data_get (GtkWidget          *widget,
 			screenshot->_priv->temp_file);
 	gtk_selection_data_set (selection_data,
 			selection_data->target,
-			8, string, strlen (string)+1);
+			8, (guchar *)string, strlen (string)+1);
 	g_free (string);
 }
 

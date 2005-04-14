@@ -92,7 +92,7 @@ server_cb (GIOChannel *source, GIOCondition condition, gpointer data)
 	g_print ("Server-cb\n");
 	offset = 0;
 	if (conn->serverfd == g_io_channel_unix_get_fd (source)) {
-		cd = accept (conn->serverfd, NULL, &alen);
+		cd = accept (conn->serverfd, NULL, (guint *)&alen);
 		conn->fd = cd;
 		setup_connection (conn);
 		return TRUE;
