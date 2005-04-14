@@ -1,3 +1,13 @@
+2005-04-14  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/totem-mozilla-plugin.cpp:
+	* src/totem-mozilla-viewer.c:
+	Require Mozilla >= 1.7, build with Firefox, resolve relative
+	URIs against the document's URI, patch by Christian Persch
+	<chpe@gnome.org> (Closes: #300510)
+
 2005-04-14  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/totem-properties-view.c: (on_got_metadata_event),

@@ -122,10 +122,10 @@ BUILT_SOURCES = \
 	libtotem_mozilla.xpt
 
 totem_mozilla_scripting.h: totem_mozilla_scripting.idl
-	$(MOZILLA_XPIDL) -m header -I $(MOZILLA_XPCFLAGS) $(srcdir)/totem_mozilla_scripting.idl
+	$(MOZILLA_XPIDL) -m header -I $(MOZILLA_IDLDIR) $(srcdir)/totem_mozilla_scripting.idl
 
 libtotem_mozilla.xpt: totem_mozilla_scripting.idl
-	$(MOZILLA_XPIDL) -m typelib -I $(MOZILLA_XPCFLAGS) $(srcdir)/totem_mozilla_scripting.idl
+	$(MOZILLA_XPIDL) -m typelib -I $(MOZILLA_IDLDIR) $(srcdir)/totem_mozilla_scripting.idl
 	mv totem_mozilla_scripting.xpt libtotem_mozilla.xpt
 
 typelib_DATA = libtotem_mozilla.xpt

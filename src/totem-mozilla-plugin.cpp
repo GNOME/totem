@@ -41,6 +41,13 @@
 #include "npapi.h"
 #include "npupp.h"
 
+#include <nsCOMPtr.h>
+#include <nsIDOMWindow.h>
+#include <nsIURI.h>
+#include <nsEmbedString.h>
+#include <nsIInterfaceRequestorUtils.h>
+#include <docshell/nsIWebNavigation.h>
+
 #define DEBUG(x) printf(x "\n")
 //#define DEBUG(x)
 
@@ -130,6 +137,21 @@ cb_data (const gchar * msg, gpointer user_data)
 	g_print ("Read msg '%s'\n", msg);
 }
 
+static char *
+resolve_relative_uri (nsIURI *docURI, const char *uri)
+{
+	if (docURI) {
+		nsresult rv;
+		nsEmbedCString resolved;
+		rv = docURI->Resolve (nsEmbedCString (uri), resolved);
+		if (NS_SUCCEEDED (rv)) {
+			return g_strdup (resolved.get());
+		}
+	}
+
+	return g_strdup (uri);
+}
+
 static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 		uint16_t mode, int16_t argc, char *argn[], char *argv[],
 		NPSavedData *saved)
@@ -169,6 +191,17 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 	plugin->instance = instance;
 	plugin->send_fd = -1;
 
+	/* to resolve relative URLs */
+	nsCOMPtr<nsIDOMWindow> domWin;
+	mozilla_functions.getvalue (instance, NPNVDOMWindow, 
+				    NS_STATIC_CAST (nsIDOMWindow **, getter_AddRefs (domWin)));
+	nsCOMPtr<nsIWebNavigation> webNav (do_GetInterface (domWin));
+
+	nsCOMPtr<nsIURI> docURI;
+	if (webNav) {
+		webNav->GetCurrentURI (getter_AddRefs (docURI));
+	}
+
 	for (i=0; i<argc; i++) {
 		printf ("argv[%d] %s %s\n", i, argn[i], argv[i]);
 		if (g_ascii_strcasecmp (argn[i],"width") == 0) {
@@ -177,12 +210,11 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 		if (g_ascii_strcasecmp (argn[i], "height") == 0) {
 			plugin->height = strtol (argv[i], NULL, 0);
 		}
-		//FIXME we can have some relative paths here as well!
 		if (g_ascii_strcasecmp (argn[i], "src") == 0) {
-			plugin->src = g_strdup (argv[i]);
+			plugin->src = resolve_relative_uri (docURI, argv[i]);
 		}
 		if (g_ascii_strcasecmp (argn[i], "href") == 0) {
-			plugin->href = g_strdup (argv[i]);
+			plugin->href = resolve_relative_uri (docURI, argv[i]);
 		}
 		if (g_ascii_strcasecmp (argn[i], "controller") == 0) {
 			if (g_ascii_strcasecmp (argv[i], "false") == 0) {
