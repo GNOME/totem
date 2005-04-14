@@ -39,6 +39,7 @@ struct TotemPropertiesViewPriv {
 	GtkWidget *vbox;
 	BaconVideoWidgetProperties *props;
 	BaconVideoWidget *bvw;
+	guint timeout_id, try;
 };
 
 static GObjectClass *parent_class = NULL;
@@ -66,10 +67,25 @@ on_got_metadata_event (BaconVideoWidget *bvw, TotemPropertiesView *props)
 {
 	bacon_video_widget_properties_update
 		(props->priv->props, props->priv->bvw, FALSE);
-	bacon_video_widget_close (props->priv->bvw);
-	g_free (props->priv->location);
-	props->priv->location = NULL;
 }
+
+static gboolean
+on_timeout_event (TotemPropertiesView *props)
+{
+	/* FIXME: hack for the GStreamer backend which signals metadata
+	 * in small chunks instead of all-at-once. */
+	if (props->priv->try++ >= 5) {
+		bacon_video_widget_close (props->priv->bvw);
+		g_free (props->priv->location);
+		props->priv->location = NULL;
+		props->priv->timeout_id = 0;
+
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
 static void
 totem_properties_view_init (TotemPropertiesView *props)
 {
@@ -116,6 +132,10 @@ totem_properties_view_finalize (GObject *object)
 		props->priv->bvw = NULL;
 		g_free (props->priv->location);
 		props->priv->location = NULL;
+		if (props->priv->timeout_id != 0) {
+	                g_source_remove (props->priv->timeout_id);
+        	        props->priv->timeout_id = 0;
+		}
 		g_free (props->priv);
 	}
 	props->priv = NULL;
@@ -166,6 +186,9 @@ totem_properties_view_set_location (TotemPropertiesView *props,
 			g_error_free (error);
 			bacon_video_widget_close (props->priv->bvw);
 		}
+		props->priv->timeout_id =
+			g_timeout_add (200, (GSourceFunc) on_timeout_event,
+				       props);
 	} else {
 		bacon_video_widget_properties_update (props->priv->props,
 				props->priv->bvw, TRUE);
