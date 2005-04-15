@@ -1,3 +1,10 @@
+2005-04-15  Christian Persch  <chpe@cvs.gnome.org>
+
+	* configure.in:
+	* src/Makefile.am: Fix compilation with stock mozilla 1.7
+	where idldir isn't in the .pc file, and CFLAGS doesn't include
+	the root include directory.
+
 2005-04-15  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* src/backend/bacon-video-widget-gst.c:

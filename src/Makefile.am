@@ -28,7 +28,7 @@ noinst_LTLIBRARIES = \
 	libbaconpropertiespage.la \
 	libbaconmessageconnection.la
 plugin_LTLIBRARIES = $(TOTEM_MOZILLA_PLUGIN)
-plugindir = $(libdir)/mozilla/plugins/
+plugindir = $(libdir)/mozilla/plugins
 nautilus_LTLIBRARIES = $(TOTEM_PROPERTIES_PAGE)
 
 modules_flags = -avoid-version -module
@@ -187,6 +187,7 @@ INCLUDES = 						\
 	-I$(srcdir)/backend				\
 	$(EXTRA_GNOME_CFLAGS)				\
 	$(MOZILLA_CFLAGS)				\
+	-I$(MOZILLA_INCLUDE_ROOT)			\
 	$(NVTV_CFLAGS)					\
 	$(NAUTILUS_CFLAGS)				\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
@@ -204,3 +205,4 @@ EXTRA_DIST = \
 	totem_mozilla_scripting.idl \
 	totem-mozilla-scriptable.cpp \
 	totem-mozilla-scriptable.h
+

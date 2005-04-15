@@ -236,7 +236,8 @@ fi
 dnl Check for xpidl
 if test "x$ENABLE_MOZILLA" = "xyes" ; then
 	MOZILLA_LIBDIR="`$PKG_CONFIG $MOZILLA-xpcom --variable=libdir`"
-	MOZILLA_IDLDIR="`$PKG_CONFIG $MOZILLA-xpcom --variable=idldir`"
+	MOZILLA_IDLDIR="`echo ${MOZILLA_LIBDIR} | sed -e s/lib/share\\\/idl/`"
+	MOZILLA_INCLUDE_ROOT="`$PKG_CONFIG --variable=includedir $MOZILLA-xpcom`"
 
 	AC_PATH_PROG([MOZILLA_XPIDL], [xpidl], [no], [$MOZILLA_LIBDIR])
 	if test "x$MOZILLA_XPIDL" = "xno"; then
@@ -246,6 +247,7 @@ if test "x$ENABLE_MOZILLA" = "xyes" ; then
 
 	AC_SUBST([MOZILLA_LIBDIR])
 	AC_SUBST([MOZILLA_IDLDIR])
+	AC_SUBST([MOZILLA_INCLUDE_ROOT])
 fi
 
 if test "x$ENABLE_MOZILLA" = "xyes" ; then
