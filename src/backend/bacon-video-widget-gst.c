@@ -1194,6 +1194,7 @@ parse_stream_info (BaconVideoWidget *bvw)
   } else if (bvw->priv->show_vfx && bvw->priv->vis_element) {
     fixate_visualization (NULL, NULL, bvw);
   }
+
   g_list_foreach (streaminfo, (GFunc) g_object_unref, NULL);
   g_list_free (streaminfo);
 }
@@ -1482,6 +1483,7 @@ get_list_of_type (BaconVideoWidget * bvw, const gchar * type_name)
     gint type;
     GParamSpec *pspec;
     GEnumValue *val;
+    gchar *lc = NULL, *cd = NULL;
 
     if (!info)
       continue;
@@ -1490,7 +1492,16 @@ get_list_of_type (BaconVideoWidget * bvw, const gchar * type_name)
     val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
 
     if (strstr (val->value_name, type_name)) {
-      ret = g_list_prepend (ret, g_strdup_printf ("%s %d", type_name, num++));
+      g_object_get (info, "codec", &cd, "language-code", &lc, NULL);
+
+      if (lc) {
+        ret = g_list_prepend (ret, lc);
+	g_free (cd);
+      } else if (cd) {
+        ret = g_list_prepend (ret, cd);
+      } else {
+        ret = g_list_prepend (ret, g_strdup_printf ("%s %d", type_name, num++));
+      }
     }
   }
   g_list_foreach (streaminfo, (GFunc) g_object_unref, NULL);
@@ -2284,7 +2295,7 @@ bacon_video_widget_set_show_visuals (BaconVideoWidget * bvw,
 
   bvw->priv->show_vfx = show_visuals;
   gconf_client_set_bool (bvw->priv->gc,
-      GCONF_PREFIX"/show_vfx", TRUE, NULL);
+      GCONF_PREFIX"/show_vfx", show_visuals, NULL);
 
   setup_vis (bvw);
 
