@@ -112,7 +112,8 @@ static char *video_props_str[4] = {
 
 struct BaconVideoWidgetPrivate
 {
-  double display_ratio;
+  double display_ratio, movie_ratio;
+  BaconVideoWidgetAspectRatio ratio_type;
 
   GstElement *play;
   guint update_id;
@@ -153,8 +154,8 @@ struct BaconVideoWidgetPrivate
   
   GAsyncQueue *queue;
   
-  gint video_width;
-  gint video_height;
+  gint video_width, video_width_pixels;
+  gint video_height, video_height_pixels;
   gdouble video_fps;
 
   guint init_width;
@@ -520,24 +521,16 @@ bacon_video_widget_size_allocate (GtkWidget * widget,
 
   if (GTK_WIDGET_REALIZED (widget)) {
     gfloat width, height, ratio;
+    guint w, h;
 
     gdk_window_move_resize (widget->window,
                             allocation->x, allocation->y,
                             allocation->width, allocation->height);
 
     /* resize video_window */
-    if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED &&
-        (bvw->priv->media_has_video ||
-         (bvw->priv->show_vfx && bvw->priv->vis_element))) {
-      width = bvw->priv->video_width;
-      height = bvw->priv->video_height;
-    } else if (bvw->priv->logo_pixbuf) {
-      width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
-      height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
-    } else {
-      width = bvw->priv->init_width;
-      height = bvw->priv->init_height;
-    }
+    get_media_size (bvw, &w, &h);
+    width = w;
+    height = h;
 
     if ((gfloat) allocation->width / width >
         (gfloat) allocation->height / height) {
@@ -949,8 +942,7 @@ got_redirect (GstElement *play, const gchar * new_location,
 }
 
 static void
-got_video_size (GstElement * play, guint width, guint height,
-		BaconVideoWidget * bvw)
+got_video_size (BaconVideoWidget * bvw)
 {
   BVWSignal *signal;
   
@@ -959,8 +951,8 @@ got_video_size (GstElement * play, guint width, guint height,
 
   signal = g_new0 (BVWSignal, 1);
   signal->signal_id = ASYNC_VIDEO_SIZE;
-  signal->signal_data.video_size.width = width;
-  signal->signal_data.video_size.height = height;
+  signal->signal_data.video_size.width = bvw->priv->video_width;
+  signal->signal_data.video_size.height = bvw->priv->video_height;
 
   g_async_queue_push (bvw->priv->queue, signal);
 
@@ -1092,8 +1084,7 @@ cb_iterate (BaconVideoWidget *bvw)
   /* check length/pos of stream */
   if (gst_element_query (GST_ELEMENT (bvw->priv->play),
 			 GST_QUERY_TOTAL, &fmt, &value) &&
-      GST_CLOCK_TIME_IS_VALID (value) &&
-      value / GST_MSECOND != bvw->priv->stream_length) {
+      value != -1 && value / GST_MSECOND != bvw->priv->stream_length) {
     got_stream_length (GST_ELEMENT (bvw->priv->play),
 		       value, bvw);
   }
@@ -1124,6 +1115,8 @@ caps_set (GObject * obj,
           gst_structure_get_int (s, "width", &bvw->priv->video_width) &&
           gst_structure_get_int (s, "height", &bvw->priv->video_height)))
       return;
+    bvw->priv->video_width_pixels = bvw->priv->video_width;
+    bvw->priv->video_height_pixels = bvw->priv->video_height;
     if ((par = gst_structure_get_value (s,
                    "pixel-aspect-ratio"))) {
       gint num = gst_value_get_fraction_numerator (par),
@@ -1134,9 +1127,11 @@ caps_set (GObject * obj,
       else
         bvw->priv->video_height *= (gfloat) den / num;
     }
+    bvw->priv->movie_ratio = (gfloat) bvw->priv->video_width /
+        bvw->priv->video_height;
 
-    got_video_size (bvw->priv->play, bvw->priv->video_width,
-		    bvw->priv->video_height, bvw);
+    /* now set for real */
+    bacon_video_widget_set_aspect_ratio (bvw, bvw->priv->ratio_type);
   }
 
   /* and disable ourselves */
@@ -2435,8 +2430,43 @@ void
 bacon_video_widget_set_aspect_ratio (BaconVideoWidget *bvw,
 				BaconVideoWidgetAspectRatio ratio)
 {
+  gfloat pixel_ratio, factor = 1.0;
+
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  bvw->priv->ratio_type = ratio;
+  pixel_ratio = (gfloat) bvw->priv->video_width_pixels /
+      bvw->priv->video_height_pixels;
+
+  switch (ratio) {
+    case BVW_RATIO_AUTO:
+      factor = bvw->priv->movie_ratio;
+      break;
+    case BVW_RATIO_SQUARE:
+      factor = 1.0;
+      break;
+    case BVW_RATIO_FOURBYTHREE:
+      factor = 4.0 / 3.0;
+      break;
+    case BVW_RATIO_ANAMORPHIC:
+      factor = 16.0 / 9.0;
+      break;
+    case BVW_RATIO_DVB:
+      factor = 2.11;
+      break;
+  }
+
+  factor /= pixel_ratio;
+  bvw->priv->video_width = bvw->priv->video_width_pixels;
+  bvw->priv->video_height = bvw->priv->video_height_pixels;
+  if (factor > 1.0) {
+    bvw->priv->video_width *= factor;
+  } else {
+    bvw->priv->video_height *= 1.0 / factor;
+  }
+
+  got_video_size (bvw);
 }
 
 BaconVideoWidgetAspectRatio
@@ -2445,7 +2475,7 @@ bacon_video_widget_get_aspect_ratio (BaconVideoWidget *bvw)
   g_return_val_if_fail (bvw != NULL, 0);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
 
-  return BVW_RATIO_AUTO;
+  return bvw->priv->ratio_type;
 }
 
 void
@@ -3134,6 +3164,7 @@ bacon_video_widget_new (int width, int height,
   bvw->priv->vis_element = NULL;
   bvw->priv->tv_out_type = TV_OUT_NONE;
   bvw->priv->connection_speed = 0;
+  bvw->priv->ratio_type = BVW_RATIO_AUTO;
 
   bvw->priv->cursor_shown = TRUE;
   bvw->priv->logo_mode = TRUE;
@@ -3254,10 +3285,6 @@ bacon_video_widget_new (int width, int height,
                                         GST_TYPE_X_OVERLAY);
     if (GST_IS_X_OVERLAY (element))
       bvw->priv->xoverlay = GST_X_OVERLAY (element);
-    
-    g_signal_connect (G_OBJECT (bvw->priv->xoverlay),
-		      "desired-size-changed", G_CALLBACK (got_video_size),
-		      (gpointer) bvw);
     
     /* Get them all and prefer hardware one */
     elements = gst_bin_get_all_by_interface (GST_BIN (bvw->priv->play),
