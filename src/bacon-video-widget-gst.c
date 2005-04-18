@@ -2143,7 +2143,7 @@ bacon_video_widget_set_show_visuals (BaconVideoWidget * bvw,
 
   bvw->priv->show_vfx = show_visuals;
   gconf_client_set_bool (bvw->priv->gc,
-      GCONF_PREFIX"/enable_visualization", TRUE, NULL);
+      GCONF_PREFIX"/enable_visualization", show_visuals, NULL);
 
   setup_vis (bvw);
 
