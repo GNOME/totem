@@ -199,8 +199,10 @@ if test "x$ENABLE_MOZILLA" = "xyes" ; then
 	if test "x$MOZILLA" = "x"; then
 		if $PKG_CONFIG --exists firefox-gtkmozembed; then
 			MOZILLA=firefox
+			MOZILLA_PLUGINDIR_SUFFIX=mozilla-firefox
 		elif $PKG_CONFIG --exists mozilla-gtkmozembed; then
 			MOZILLA=mozilla
+			MOZILLA_PLUGINDIR_SUFFIX=mozilla
 		else
 			ENABLE_MOZILLA=no
 		fi
@@ -235,8 +237,16 @@ fi
 
 dnl Check for xpidl
 if test "x$ENABLE_MOZILLA" = "xyes" ; then
+	MOZILLA_PREFIX="`$PKG_CONFIG $MOZILLA-xpcom --variable=prefix`"
+echo "PREFIX: ${MOZILLA_PREFIX}"
+	MOZILLA_PLUGINDIR="${MOZILLA_PREFIX}/lib/${MOZILLA_PLUGINDIR_SUFFIX}"
+
 	MOZILLA_LIBDIR="`$PKG_CONFIG $MOZILLA-xpcom --variable=libdir`"
 	MOZILLA_IDLDIR="`echo ${MOZILLA_LIBDIR} | sed -e s/lib/share\\\/idl/`"
+	if [ ! test -d $MOZILLA_IDLDIR ]; then
+		MOZILLA_INCDIR="`$PKG_CONFIG $MOZILLA-xpcom --variable=includedir`"
+		MOZILLA_IDLDIR="${MOZILLA_INCDIR}/idl"
+	fi
 	MOZILLA_INCLUDE_ROOT="`$PKG_CONFIG --variable=includedir $MOZILLA-xpcom`"
 
 	AC_PATH_PROG([MOZILLA_XPIDL], [xpidl], [no], [$MOZILLA_LIBDIR])
@@ -248,6 +258,7 @@ if test "x$ENABLE_MOZILLA" = "xyes" ; then
 	AC_SUBST([MOZILLA_LIBDIR])
 	AC_SUBST([MOZILLA_IDLDIR])
 	AC_SUBST([MOZILLA_INCLUDE_ROOT])
+	AC_SUBST([MOZILLA_PLUGINDIR])
 fi
 
 if test "x$ENABLE_MOZILLA" = "xyes" ; then
