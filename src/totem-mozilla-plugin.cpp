@@ -385,7 +385,7 @@ totem_plugin_get_value (NPP instance, NPPVariable variable,
 		break;
 	case NPPVpluginDescriptionString:
 		*((char **)value) =
-			"The <a href=\"http://hadess.net/totem.php3\">Totem</a> plugin handles video and audio streams.";
+			"The <a href=\"http://www.gnome.org/projects/totem/\">Totem</a> plugin handles video and audio streams.";
 		break;
 	case NPPVpluginNeedsXEmbed:
 		*((PRBool *)value) = PR_TRUE;
