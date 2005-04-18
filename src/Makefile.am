@@ -28,7 +28,7 @@ noinst_LTLIBRARIES = \
 	libbaconpropertiespage.la \
 	libbaconmessageconnection.la
 plugin_LTLIBRARIES = $(TOTEM_MOZILLA_PLUGIN)
-plugindir = ${MOZILLA_PLUGINDIR}/plugins
+plugindir = $(MOZILLA_PLUGINDIR)/plugins
 nautilus_LTLIBRARIES = $(TOTEM_PROPERTIES_PAGE)
 
 modules_flags = -avoid-version -module
@@ -122,10 +122,10 @@ BUILT_SOURCES = \
 	libtotem_mozilla.xpt
 
 totem_mozilla_scripting.h: totem_mozilla_scripting.idl
-	$(MOZILLA_XPIDL) -m header -I $(MOZILLA_IDLDIR) $(srcdir)/totem_mozilla_scripting.idl
+	$(MOZILLA_XPIDL) -m header -I $(MOZILLA_IDLDIR) $<
 
 libtotem_mozilla.xpt: totem_mozilla_scripting.idl
-	$(MOZILLA_XPIDL) -m typelib -I $(MOZILLA_IDLDIR) $(srcdir)/totem_mozilla_scripting.idl
+	$(MOZILLA_XPIDL) -m typelib -I $(MOZILLA_IDLDIR) $< && \
 	mv totem_mozilla_scripting.xpt libtotem_mozilla.xpt
 
 typelib_DATA = libtotem_mozilla.xpt
