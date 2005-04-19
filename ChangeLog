@@ -1,3 +1,11 @@
+2005-04-19  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_subtitles): don't hardcode the maximum
+	number of subtitle tracks (Closes: #172520)
+	* src/totem-video-thumbnailer.c: we don't actually need GNOME for the
+	thumbnailer
+
 2005-04-18  Christian Persch  <chpe@cvs.gnome.org>
 
 	* configure.in:

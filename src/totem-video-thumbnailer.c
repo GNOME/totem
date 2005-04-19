@@ -27,12 +27,8 @@
 
 #include "config.h"
 
-#ifndef HAVE_GTK_ONLY
-#include <gnome.h>
-#else
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
-#endif
 
 #include <popt.h>
 

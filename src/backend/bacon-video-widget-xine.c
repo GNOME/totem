@@ -3446,7 +3446,7 @@ GList
 *bacon_video_widget_get_subtitles (BaconVideoWidget *bvw)
 {
 	GList *list = NULL;
-	int i;
+	int i, num_channels;
 	char lang[XINE_LANG_MAX];
 
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
@@ -3455,7 +3455,13 @@ GList
 	if (bvw->priv->mrl == NULL)
 		return NULL;
 
-	for(i = 0; i < 32; i++)
+	num_channels = xine_get_stream_info
+		(bvw->priv->stream, XINE_STREAM_INFO_MAX_SPU_CHANNEL);
+
+	if (num_channels < 2)
+		return NULL;
+
+	for(i = 0; i < num_channels; i++)
 	{
 		memset (&lang, 0, sizeof (lang));
 
@@ -3468,6 +3474,11 @@ GList
 
 			list = g_list_prepend (list,
 					(gpointer) g_strdup (nospace));
+		} else {
+			/* An unnamed language, for example 'Language 2' */
+			list = g_list_prepend (list,
+					(gpointer) g_strdup_printf
+					(_("Language %d"), i + 1));
 		}
 	}
 
