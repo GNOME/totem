@@ -1,5 +1,11 @@
 2005-04-25  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* src/Makefile.am: avoid includes problems when we're not
+	compiling the Mozilla plugin (Closes: #301372)
+
+2005-04-25  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-mozilla-plugin.cpp: add video/x-ms-wmv as a supported
 	mime-type (Closes: #301837)
 

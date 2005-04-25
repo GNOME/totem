@@ -187,7 +187,7 @@ INCLUDES = 						\
 	-I$(srcdir)/backend				\
 	$(EXTRA_GNOME_CFLAGS)				\
 	$(MOZILLA_CFLAGS)				\
-	-I$(MOZILLA_INCLUDE_ROOT)			\
+	$(MOZILLA_XPCOM_CFLAGS)				\
 	$(NVTV_CFLAGS)					\
 	$(NAUTILUS_CFLAGS)				\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\

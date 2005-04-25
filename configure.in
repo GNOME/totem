@@ -238,6 +238,7 @@ if test "x$ENABLE_MOZILLA" = "xyes" ; then
 	MOZILLA_PREFIX="`$PKG_CONFIG $MOZILLA-xpcom --variable=prefix`"
 	MOZILLA_LIBDIR="`$PKG_CONFIG $MOZILLA-xpcom --variable=libdir`"
 	MOZILLA_INCLUDE_ROOT="`$PKG_CONFIG --variable=includedir $MOZILLA-xpcom`"
+	MOZILLA_XPCOM_CFLAGS="-I`$PKG_CONFIG --variable=includedir $MOZILLA-xpcom`"
 	MOZILLA_PLUGINDIR="${MOZILLA_PLUGINDIR:-$MOZILLA_LIBDIR}"
 
 	AC_PATH_PROG([MOZILLA_XPIDL], [xpidl], [no], [$MOZILLA_LIBDIR:$PATH])
@@ -248,7 +249,7 @@ if test "x$ENABLE_MOZILLA" = "xyes" ; then
 
 	AC_SUBST([MOZILLA_PREFIX])
 	AC_SUBST([MOZILLA_LIBDIR])
-	AC_SUBST([MOZILLA_INCLUDE_ROOT])
+	AC_SUBST([MOZILLA_XPCOM_CFLAGS])
 	AC_ARG_VAR([MOZILLA_PLUGINDIR],[Where to install the plugin to])
 fi
 
