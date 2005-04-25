@@ -495,7 +495,7 @@ NP_GetValue(void *future, NPPVariable variable, void *value)
 	return totem_plugin_get_value (NULL, variable, value);
 }
 
-#define NUM_MIME_TYPES 5
+#define NUM_MIME_TYPES 6
 static struct {
 	const char *mime_type;
 	const char *extensions;
@@ -505,6 +505,7 @@ static struct {
 	{ "application/x-mplayer2", "avi, wma, wmv", "video/x-msvideo" },
 	{ "video/mpeg", "mpg, mpeg, mpe" },
 	{ "video/x-ms-asf-plugin", "asf, wmv", "video/x-ms-asf" },
+	{ "video/x-ms-wmv", "wmv", "video/x-ms-asf" },
 	{ "application/ogg", "ogg" }
 };
 
