@@ -418,8 +418,6 @@ int main (int argc, char *argv[])
 		}
 	}
 
-	finished = TRUE;
-
 	if (bacon_video_widget_can_get_frames (bvw, &err) == FALSE)
 	{
 		g_print ("totem-video-thumbnailer: '%s' isn't thumbnailable\n"
@@ -445,6 +443,7 @@ int main (int argc, char *argv[])
 
 	/* Cleanup */
 	bacon_video_widget_close (bvw);
+	finished = TRUE;
 	gtk_widget_destroy (GTK_WIDGET (bvw));
 
 	if (pixbuf == NULL)
