@@ -427,6 +427,32 @@ on_recent_file_activate (EggRecentViewGtk *view, EggRecentItem *item,
 	g_free (uri);
 }
 
+static void
+totem_remove_deleted_recent (Totem *totem)
+{
+	GList *files, *l;
+
+	files = egg_recent_model_get_list (totem->recent_model);
+	for (l = files; l != NULL; l = l->next) {
+		EggRecentItem *item = l->data;
+		const char *txturi;
+		GnomeVFSURI *uri;
+
+		txturi = egg_recent_item_peek_uri (item);
+		if (txturi == NULL)
+			continue;
+
+		if (g_str_has_prefix (txturi, "file:") == FALSE)
+			continue;
+
+		uri = gnome_vfs_uri_new (txturi);
+		if (gnome_vfs_uri_exists (uri) == FALSE) {
+			egg_recent_model_delete (totem->recent_model, txturi);
+		}
+		gnome_vfs_uri_unref (uri);
+	}
+}
+
 void
 totem_setup_recent (Totem *totem)
 {
@@ -452,6 +478,8 @@ totem_setup_recent (Totem *totem)
 	egg_recent_model_set_filter_groups (totem->recent_model,
 			"Totem", NULL);
 	egg_recent_view_gtk_set_trailing_sep (totem->recent_view, TRUE);
+
+	totem_remove_deleted_recent (totem);
 
 	g_signal_connect (totem->recent_view, "activate",
 			G_CALLBACK (on_recent_file_activate), totem);
