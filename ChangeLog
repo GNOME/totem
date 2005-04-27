@@ -1,3 +1,14 @@
+2005-04-27  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/backend/bacon-video-widget-gst.c:
+	(bacon_video_widget_get_mrls):
+	  Implement per-track CDDA playback (#171600).
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_mrls):
+	* src/backend/bacon-video-widget.h:
+	* src/totem.c: (totem_action_load_media):
+	  Change API slightly for above;
+
 2005-04-27  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-menu.c: (totem_remove_deleted_recent),

@@ -2930,7 +2930,7 @@ bacon_video_widget_can_play (BaconVideoWidget *bvw, MediaType type)
 	}
 }
 
-G_CONST_RETURN char
+char
 **bacon_video_widget_get_mrls (BaconVideoWidget *bvw, MediaType type)
 {
 	char *plugin_id;
@@ -2949,8 +2949,8 @@ G_CONST_RETURN char
 	else
 		return NULL;
 
-	return (G_CONST_RETURN char **) xine_get_autoplay_mrls
-		(bvw->priv->xine, plugin_id, &num_mrls);
+	return g_strdupv 9xine_get_autoplay_mrls (
+		(bvw->priv->xine, plugin_id, &num_mrls));
 }
 
 void

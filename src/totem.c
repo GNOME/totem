@@ -366,7 +366,7 @@ totem_action_set_mrl_and_play (Totem *totem, const char *mrl)
 static gboolean
 totem_action_load_media (Totem *totem, MediaType type)
 {
-	const char **mrls;
+	char **mrls;
 	char *msg;
 
 	if (bacon_video_widget_can_play (totem->bvw, type) == FALSE)
@@ -386,7 +386,9 @@ totem_action_load_media (Totem *totem, MediaType type)
 		return FALSE;
 	}
 
-	totem_action_open_files (totem, (char **)mrls);
+	totem_action_open_files (totem, mrls);
+	g_strfreev (mrls);
+
 	return TRUE;
 }
 

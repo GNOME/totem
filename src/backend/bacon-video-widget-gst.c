@@ -2742,10 +2742,10 @@ bacon_video_widget_can_play (BaconVideoWidget * bvw, MediaType type)
   return res;
 }
 
-G_CONST_RETURN gchar **
+gchar **
 bacon_video_widget_get_mrls (BaconVideoWidget * bvw, MediaType type)
 {
-  const gchar **mrls;
+  gchar **mrls;
 
   g_return_val_if_fail (bvw != NULL, NULL);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
@@ -2753,18 +2753,45 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw, MediaType type)
 
   switch (type) {
     case MEDIA_TYPE_CDDA: {
-      static const gchar *uri[] = { "cdda://", NULL };
-      mrls = uri;
+      GstElement *cdda;
+      gint64 tracks;
+      GstFormat fmt;
+
+      cdda = gst_element_make_from_uri (GST_URI_SRC, "cdda://", NULL);
+      if (!cdda)
+       return NULL;
+      fmt = gst_format_get_by_nick ("track");
+      if (!fmt) {
+	gst_object_unref (GST_OBJECT (cdda));
+        return NULL;
+      }
+      if (gst_element_set_state (cdda, GST_STATE_PAUSED) !=
+              GST_STATE_SUCCESS) {
+	gst_object_unref (GST_OBJECT (cdda));
+	return NULL;
+      }
+      if (!gst_pad_query (gst_element_get_pad (cdda, "src"),
+              GST_QUERY_TOTAL, &fmt, &tracks)) {
+	gst_element_set_state (cdda, GST_STATE_NULL);
+	gst_object_unref (GST_OBJECT (cdda));
+        return NULL;
+      }
+      gst_element_set_state (cdda, GST_STATE_NULL);
+      gst_object_unref (GST_OBJECT (cdda));
+      mrls = g_new0 (gchar *, tracks + 1);
+      while (tracks-- > 0) {
+	mrls[tracks] = g_strdup_printf ("cdda://%d", (gint) tracks + 1);
+      }
       break;
     }
     case MEDIA_TYPE_VCD: {
-      static const gchar *uri[] = { "vcd://", NULL };
-      mrls = uri;
+      gchar *uri[] = { "vcd://", NULL };
+      mrls = g_strdupv (uri);
       break;
     }
     case MEDIA_TYPE_DVD: {
-      static const gchar *uri[] = { "dvd://", NULL };
-      mrls = uri;
+      gchar *uri[] = { "dvd://", NULL };
+      mrls = g_strdupv (uri);
       break;
     }
     default:

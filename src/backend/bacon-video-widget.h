@@ -176,8 +176,7 @@ void bacon_video_widget_set_media_device         (BaconVideoWidget *bvw,
 						  const char *path);
 gboolean bacon_video_widget_can_play             (BaconVideoWidget *bvw,
 						  MediaType type);
-G_CONST_RETURN gchar **bacon_video_widget_get_mrls
-						 (BaconVideoWidget *bvw,
+gchar **bacon_video_widget_get_mrls		 (BaconVideoWidget *bvw,
 						  MediaType type);
 void bacon_video_widget_set_subtitle_font	 (BaconVideoWidget *bvw,
 						  const char *font);
