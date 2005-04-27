@@ -1,3 +1,10 @@
+2005-04-27  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_mrls),
+	(bacon_video_widget_get_current_frame): use g_malloc when g_free is
+	used, fix compilation after API changed below
+
 2005-04-27  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/backend/bacon-video-widget-gst.c:

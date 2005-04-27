@@ -2949,7 +2949,7 @@ char
 	else
 		return NULL;
 
-	return g_strdupv 9xine_get_autoplay_mrls (
+	return g_strdupv (xine_get_autoplay_mrls
 		(bvw->priv->xine, plugin_id, &num_mrls));
 }
 
@@ -3556,7 +3556,7 @@ bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 	if (width == 0 || height == 0)
 		return NULL;
 
-	yuv = malloc ((width + 8) * (height + 1) * 2);
+	yuv = g_malloc ((width + 8) * (height + 1) * 2);
 	if (yuv == NULL)
 		return NULL;
 
@@ -3573,7 +3573,7 @@ bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 		{
 			uint8_t *yuy2 = yuv;
 
-			yuv = malloc (width * height * 2);
+			yuv = g_malloc (width * height * 2);
 			y = yuv;
 			u = yuv + width * height;
 			v = yuv + width * height * 5 / 4;
