@@ -1,3 +1,13 @@
+2005-04-28  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-message-connection.c: (server_cb),
+	(bacon_message_connection_send):
+	* src/totem-options.c: (totem_print_playing_cb),
+	(totem_options_process_for_server):
+	* src/totem-remote.h:
+	* src/totem.c: (totem_action_remote): Send back the title of the
+	currently playing track with "--print-playing"
+
 2005-04-27  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-xine.c:

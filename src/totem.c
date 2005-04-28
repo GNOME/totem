@@ -2178,6 +2178,18 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 			gtk_check_menu_item_set_active (item, !value);
 		}
 		break;
+	case TOTEM_REMOTE_COMMAND_SHOW_PLAYING:
+		{
+			char *title;
+			gboolean custom;
+
+			title = totem_playlist_get_current_title
+				(totem->playlist, &custom);
+			bacon_message_connection_send (totem->conn,
+					title ? title : SHOW_PLAYING_NO_TRACKS);
+			g_free (title);
+		}
+		break;
 	default:
 		handled = FALSE;
 		break;

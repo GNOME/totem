@@ -143,6 +143,14 @@ totem_options_process_early (GConfClient *gc, int argc, char **argv)
 	}
 }
 
+static void
+totem_print_playing_cb (const gchar *msg, gpointer user_data)
+{
+	if (strcmp (msg, SHOW_PLAYING_NO_TRACKS) != 0)
+		g_print ("%s\n", msg);
+	exit (0);
+}
+
 void
 totem_options_process_for_server (BaconMessageConnection *conn,
 		int argc, char **argv)
@@ -194,6 +202,18 @@ totem_options_process_for_server (BaconMessageConnection *conn,
 		command = TOTEM_REMOTE_COMMAND_REPLACE;
 	} else if (strcmp (argv[1], "--toggle-controls") == 0) {
 		command = TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS;
+	} else if (strcmp (argv[1], "--print-playing") == 0) {
+		GMainLoop *loop = g_main_loop_new (NULL, FALSE);
+
+		command = TOTEM_REMOTE_COMMAND_SHOW_PLAYING;
+		line = g_strdup_printf ("%03d ", command);
+		bacon_message_connection_set_callback (conn,
+				totem_print_playing_cb, loop);
+		bacon_message_connection_send (conn, line);
+		g_free (line);
+
+		g_main_loop_run (loop);
+		return;
 	} else {
 		return;
 	}
