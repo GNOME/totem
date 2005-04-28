@@ -2851,7 +2851,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
       break;
     case BVW_INFO_CDINDEX:
       res = gst_tag_list_get_string (bvw->priv->tagcache,
-				     "discid", &string);
+				     "musicbrainz-discid", &string);
       break;
     default:
       g_assert_not_reached ();
