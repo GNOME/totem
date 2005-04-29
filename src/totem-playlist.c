@@ -1446,22 +1446,7 @@ totem_playlist_unrealize (GtkWidget *widget)
 	}
 }
 
-static void
-totem_playlist_unmap (GtkWidget *widget)
-{
-	TotemPlaylist *playlist = TOTEM_PLAYLIST (widget);
-	int x, y;
 
-	g_return_if_fail (widget != NULL);
-
-	gtk_window_get_position (GTK_WINDOW (widget), &x, &y);
-	playlist->_priv->x = x;
-	playlist->_priv->y = y;
-
-	if (GTK_WIDGET_CLASS (parent_class)->unmap != NULL) {
-		(* GTK_WIDGET_CLASS (parent_class)->unmap) (widget);
-	}
-}
 
 static void
 totem_playlist_realize (GtkWidget *widget)
@@ -1481,12 +1466,56 @@ totem_playlist_realize (GtkWidget *widget)
 			GCONF_PREFIX"/playlist_x", NULL);
 	y = gconf_client_get_int (playlist->_priv->gc,
 			GCONF_PREFIX"/playlist_y", NULL);
+	playlist->_priv->x = x;
+	playlist->_priv->y = y;
 
 	if (x == -1 || y == -1
 			|| x > gdk_screen_width () || y > gdk_screen_height ())
 		return;
 
 	gtk_window_move (GTK_WINDOW (widget), x, y);
+}
+
+static void
+totem_playlist_map (GtkWidget *widget)
+{
+	TotemPlaylist *playlist = TOTEM_PLAYLIST (widget);
+	int x, y;
+
+	g_return_if_fail (widget != NULL);
+
+	g_message ("map");
+
+	x = playlist->_priv->x;
+	y = playlist->_priv->y;
+
+	if (GTK_WIDGET_CLASS (parent_class)->map != NULL) {
+		(* GTK_WIDGET_CLASS (parent_class)->map) (widget);
+	}
+
+	if (x == -1 || y == -1
+			|| x > gdk_screen_width () || y > gdk_screen_height ())
+		return;
+
+	gtk_window_move (GTK_WINDOW (widget),
+			playlist->_priv->x, playlist->_priv->y);
+}
+
+static void
+totem_playlist_unmap (GtkWidget *widget)
+{
+	TotemPlaylist *playlist = TOTEM_PLAYLIST (widget);
+	int x, y;
+
+	g_return_if_fail (widget != NULL);
+
+	gtk_window_get_position (GTK_WINDOW (widget), &x, &y);
+	playlist->_priv->x = x;
+	playlist->_priv->y = y;
+
+	if (GTK_WIDGET_CLASS (parent_class)->unmap != NULL) {
+		(* GTK_WIDGET_CLASS (parent_class)->unmap) (widget);
+	}
 }
 
 GtkWidget*
@@ -1514,10 +1543,6 @@ totem_playlist_new (void)
 			NULL);
 	gtk_window_set_default_size (GTK_WINDOW (playlist),
 			300, 375);
-	g_signal_connect_object (G_OBJECT (playlist), "response",
-			G_CALLBACK (gtk_widget_hide), 
-			GTK_WIDGET (playlist),
-			0);
 
 	/* Connect the buttons */
 	item = glade_xml_get_widget (playlist->_priv->xml, "add_button");
@@ -2168,6 +2193,7 @@ totem_playlist_class_init (TotemPlaylistClass *klass)
 	G_OBJECT_CLASS (klass)->finalize = totem_playlist_finalize;
 	GTK_WIDGET_CLASS (klass)->realize = totem_playlist_realize;
 	GTK_WIDGET_CLASS (klass)->unrealize = totem_playlist_unrealize;
+	GTK_WIDGET_CLASS (klass)->map = totem_playlist_map;
 	GTK_WIDGET_CLASS (klass)->unmap = totem_playlist_unmap;
 
 	/* Signals */

@@ -1,5 +1,12 @@
 2005-04-30  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c: (totem_playlist_realize),
+	(totem_playlist_map), (totem_playlist_unmap), (totem_playlist_new),
+	(totem_playlist_class_init): add an map method and move the dialog
+	where it was when we closed it (Closes: #300464)
+
+2005-04-30  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-playlist.c: (init_columns), (init_treeview):
 	Remove the treeview header as it's not useful (Closes: #300463)
 
