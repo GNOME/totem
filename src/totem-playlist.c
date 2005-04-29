@@ -1052,7 +1052,6 @@ init_columns (GtkTreeView *treeview)
 	gtk_tree_view_column_pack_start (column, renderer, FALSE);
 	gtk_tree_view_column_set_attributes (column, renderer,
 			"pixbuf", PIX_COL, NULL);
-	gtk_tree_view_column_set_title (column, _("Filename"));
 	gtk_tree_view_append_column (treeview, column);
 
 	/* Labels */
@@ -1123,6 +1122,7 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 	/* the treeview */
 	gtk_tree_view_set_model (GTK_TREE_VIEW (treeview), model);
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
+	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), FALSE);
 	g_object_unref (G_OBJECT (model));
 
 	init_columns (GTK_TREE_VIEW (treeview));
