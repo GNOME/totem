@@ -17,6 +17,9 @@ endif
 if HAVE_MOZILLA
 TOTEM_MOZILLA_VIEWER = totem-mozilla-viewer
 TOTEM_MOZILLA_PLUGIN = libtotem_mozilla.la
+
+plugin_LTLIBRARIES = $(TOTEM_MOZILLA_PLUGIN)
+plugindir = $(MOZILLA_PLUGINDIR)/plugins
 else
 TOTEM_MOZILLA_VIEWER = 
 TOTEM_MOZILLA_PLUGIN =
@@ -27,8 +30,6 @@ libexec_PROGRAMS = $(TOTEM_MOZILLA_VIEWER)
 noinst_LTLIBRARIES = \
 	libbaconpropertiespage.la \
 	libbaconmessageconnection.la
-plugin_LTLIBRARIES = $(TOTEM_MOZILLA_PLUGIN)
-plugindir = $(MOZILLA_PLUGINDIR)/plugins
 nautilus_LTLIBRARIES = $(TOTEM_PROPERTIES_PAGE)
 
 modules_flags = -avoid-version -module
