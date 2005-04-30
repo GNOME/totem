@@ -1,5 +1,14 @@
 2005-04-30  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-properties-main.c: (totem_properties_get_pages):
+	* src/totem-properties-view.c: (on_got_metadata_event),
+	(totem_properties_view_init), (totem_properties_view_finalize),
+	(totem_properties_view_new):
+	* src/totem-properties-view.h: Give the nautilus tab a label that
+	matches the file type (Closes: #172436)
+
+2005-04-30  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-menu.c: (totem_lang_table_parse_start_tag),
 	(totem_lang_get_full): also support iso-639-2 language names
 	for the main benefit of Matroska (Closes: #301102)

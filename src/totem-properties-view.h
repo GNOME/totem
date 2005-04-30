@@ -51,8 +51,9 @@ typedef struct {
 GType      totem_properties_view_get_type      (void);
 void       totem_properties_view_register_type (GTypeModule *module);
 
-GtkWidget *totem_properties_view_new           (const char *location);
+GtkWidget *totem_properties_view_new           (const char *location,
+						GtkWidget  *label);
 void       totem_properties_view_set_location  (TotemPropertiesView *view,
-						 const char        *location);
+						 const char         *location);
 
 #endif /* TOTEM_PROPERTIES_VIEW_H */

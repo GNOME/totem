@@ -35,6 +35,7 @@
 #include <gtk/gtk.h>
 
 struct TotemPropertiesViewPriv {
+	GtkWidget *label;
 	char *location;
 	GtkWidget *vbox;
 	BaconVideoWidgetProperties *props;
@@ -65,6 +66,37 @@ totem_properties_view_class_init (TotemPropertiesViewClass *class)
 static void
 on_got_metadata_event (BaconVideoWidget *bvw, TotemPropertiesView *props)
 {
+	GValue value = { 0, };
+	gboolean has_audio, has_video;
+	const char *label = NULL;
+
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_HAS_VIDEO, &value);
+	has_video = g_value_get_boolean (&value);
+	g_value_unset (&value);
+
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_HAS_AUDIO, &value);
+	has_audio = g_value_get_boolean (&value);
+	g_value_unset (&value);
+
+	if (has_audio == FALSE) {
+		if (has_video == FALSE) {
+			//FIXME this should be setting an error?
+			label = N_("Audio/Video");
+		} else {
+			label = N_("Video");
+		}
+	} else {
+		if (has_video == FALSE) {
+			label = N_("Audio");
+		} else {
+			label = N_("Audio/Video");
+		}
+	}
+
+	gtk_label_set_text (GTK_LABEL (props->priv->label), _(label));
+
 	bacon_video_widget_properties_update
 		(props->priv->props, props->priv->bvw, FALSE);
 }
@@ -101,8 +133,6 @@ totem_properties_view_init (TotemPropertiesView *props)
 		/* Reference it, so that it's not floating */
 		g_object_ref (props->priv->bvw);
 
-		//FIXME
-
 		g_signal_connect (G_OBJECT (props->priv->bvw),
 				"got-metadata",
 				G_CALLBACK (on_got_metadata_event),
@@ -129,6 +159,7 @@ totem_properties_view_finalize (GObject *object)
 	if (props->priv != NULL)
 	{
 		g_object_unref (G_OBJECT (props->priv->bvw));
+		g_object_unref (G_OBJECT (props->priv->label));
 		props->priv->bvw = NULL;
 		g_free (props->priv->location);
 		props->priv->location = NULL;
@@ -144,14 +175,16 @@ totem_properties_view_finalize (GObject *object)
 }
 
 GtkWidget *
-totem_properties_view_new (const char *location)
+totem_properties_view_new (const char *location, GtkWidget *label)
 {
-    TotemPropertiesView *self;
+	TotemPropertiesView *self;
 
-    self = g_object_new (TOTEM_TYPE_PROPERTIES_VIEW, NULL);
-    totem_properties_view_set_location (self, location);
+	self = g_object_new (TOTEM_TYPE_PROPERTIES_VIEW, NULL);
+	g_object_ref (label);
+	self->priv->label = label;
+	totem_properties_view_set_location (self, location);
 
-    return GTK_WIDGET (self);
+	return GTK_WIDGET (self);
 }
 
 void

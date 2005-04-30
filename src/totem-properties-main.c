@@ -110,7 +110,7 @@ totem_properties_get_pages (NautilusPropertyPageProvider *provider,
 	/* okay, make the page */
 	uri = nautilus_file_info_get_uri (file);
 	label = gtk_label_new (_("Audio/Video"));
-	page = totem_properties_view_new (uri);
+	page = totem_properties_view_new (uri, label);
 	property_page = nautilus_property_page_new ("video-properties",
 			label, page);
 
