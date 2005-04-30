@@ -50,7 +50,7 @@ totem_lang_table_parse_start_tag (GMarkupParseContext *ctx,
 		gpointer             data,
 		GError             **error)
 {
-	const char *ccode, *lang_name;
+	const char *ccode_longB, *ccode_longT, *ccode, *lang_name;
 
 	if (!g_str_equal (element_name, "iso_639_entry")
 			|| attr_names == NULL
@@ -58,6 +58,8 @@ totem_lang_table_parse_start_tag (GMarkupParseContext *ctx,
 		return;
 
 	ccode = NULL;
+	ccode_longB = NULL;
+	ccode_longT = NULL;
 	lang_name = NULL;
 
 	while (*attr_names && *attr_values)
@@ -70,9 +72,21 @@ totem_lang_table_parse_start_tag (GMarkupParseContext *ctx,
 				g_return_if_fail (strlen (*attr_values) == 2);
 				ccode = *attr_values;
 			}
-		}
-		else if (g_str_equal (*attr_names, "name"))
-		{
+		} else if (g_str_equal (*attr_names, "iso_639_2B_code")) {
+			/* skip if empty */
+			if (**attr_values)
+			{
+				g_return_if_fail (strlen (*attr_values) == 3);
+				ccode_longB = *attr_values;
+			}
+		} else if (g_str_equal (*attr_names, "iso_639_2T_code")) {
+			/* skip if empty */
+			if (**attr_values)
+			{
+				g_return_if_fail (strlen (*attr_values) == 3);
+				ccode_longT = *attr_values;
+			}
+		} else if (g_str_equal (*attr_names, "name")) {
 			lang_name = *attr_values;
 		}
 
@@ -80,11 +94,25 @@ totem_lang_table_parse_start_tag (GMarkupParseContext *ctx,
 		++attr_values;
 	}
 
-	if (ccode && lang_name)
+	if (lang_name == NULL)
+		return;
+
+	if (ccode != NULL)
 	{
-		/* th_log ("lang_table: added %s => %s\n", ccode, lang_name); */
 		g_hash_table_insert (lang_table,
 				g_strdup (ccode),
+				g_strdup (lang_name));
+	}
+	if (ccode_longB != NULL)
+	{
+		g_hash_table_insert (lang_table,
+				g_strdup (ccode_longB),
+				g_strdup (lang_name));
+	}
+	if (ccode_longT != NULL)
+	{
+		g_hash_table_insert (lang_table,
+				g_strdup (ccode_longT),
 				g_strdup (lang_name));
 	}
 }
@@ -136,12 +164,13 @@ totem_lang_table_init (void)
 static const char *
 totem_lang_get_full (const char *lang)
 {
-	static gchar  lang_code[3];
-	const gchar  *lang_name;
+	const char *lang_name;
+	int len;
 
 	g_return_val_if_fail (lang != NULL, NULL);
 
-	if (strlen (lang) != 2)
+	len = strlen (lang);
+	if (len != 2 && len != 3)
 		return NULL;
 	if (lang_table == NULL)
 		totem_lang_table_init ();
@@ -151,14 +180,7 @@ totem_lang_get_full (const char *lang)
 	if (lang_name)
 		return dgettext ("iso_639", lang_name);
 
-	g_return_val_if_fail (g_utf8_validate (lang, -1, NULL), NULL);
-
-	/* if we have a country code but no language name,
-	 *          *  at least return the country code - better than
-	 *                   *  nothing or 'Default language' */
-	g_snprintf (lang_code, sizeof (lang_code), "%s", lang);
-
-	return lang_code;
+	return NULL;
 }
 
 /* Subtitle and language menus */

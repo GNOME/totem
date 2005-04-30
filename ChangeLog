@@ -1,5 +1,11 @@
 2005-04-30  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-menu.c: (totem_lang_table_parse_start_tag),
+	(totem_lang_get_full): also support iso-639-2 language names
+	for the main benefit of Matroska (Closes: #301102)
+
+2005-04-30  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-playlist.c: (totem_playlist_realize),
 	(totem_playlist_map), (totem_playlist_unmap), (totem_playlist_new),
 	(totem_playlist_class_init): add an map method and move the dialog
