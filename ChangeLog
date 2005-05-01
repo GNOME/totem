@@ -1,5 +1,11 @@
 2005-05-01  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (update_fullscreen_size), (move_popups),
+	(size_changed_cb): fix the exit fullscreen button not appearing on the
+	right screen (Closes: #302418)
+
+2005-05-01  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am: fix build with --disable-mozilla, patch by
 	William Jon McCann <mccann@jhu.edu> (Closes: #302217)
 

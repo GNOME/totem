@@ -2299,10 +2299,12 @@ playlist_shuffle_toggle_cb (TotemPlaylist *playlist, gboolean shuffle, Totem *to
 static void
 update_fullscreen_size (Totem *totem)
 {
-	gdk_screen_get_monitor_geometry (gdk_screen_get_default (),
+	GdkScreen *screen;
+
+	screen = gtk_window_get_screen (GTK_WINDOW (totem->win));
+	gdk_screen_get_monitor_geometry (screen,
 			gdk_screen_get_monitor_at_window
-			(gdk_screen_get_default (),
-			 totem->win->window),
+			(screen, totem->win->window),
 			&totem->fullscreen_rect);
 }
 
@@ -2317,6 +2319,8 @@ move_popups (Totem *totem)
 {
 	int control_width, control_height;
 	int exit_width, exit_height;
+
+	update_fullscreen_size (totem);
 
 	gtk_window_get_size (GTK_WINDOW (totem->control_popup),
 			&control_width, &control_height);
@@ -2335,23 +2339,20 @@ move_popups (Totem *totem)
 				totem->fullscreen_rect.y);
 		gtk_window_move (GTK_WINDOW (totem->control_popup),
 				totem->fullscreen_rect.width - control_width,
-				totem->fullscreen_rect.height
-				- control_height);
+				totem->fullscreen_rect.height + totem->fullscreen_rect.y - control_height);
 	} else {
 		gtk_window_move (GTK_WINDOW (totem->exit_popup),
-				totem->fullscreen_rect.width - exit_width,
+				totem->fullscreen_rect.width + totem->fullscreen_rect.x - exit_width,
 				totem->fullscreen_rect.y);
 		gtk_window_move (GTK_WINDOW (totem->control_popup),
 				totem->fullscreen_rect.x,
-				totem->fullscreen_rect.height
-				- control_height);
+				totem->fullscreen_rect.height + totem->fullscreen_rect.y - control_height);
 	}
 }
 
 static void
 size_changed_cb (GdkScreen *screen, Totem *totem)
 {
-	update_fullscreen_size (totem);
 	move_popups (totem);
 }
 
