@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-23 16:12+0200\n"
-"PO-Revision-Date: 2005-04-23 16:18+0200\n"
+"POT-Creation-Date: 2005-05-01 15:42+0200\n"
+"PO-Revision-Date: 2005-05-01 15:42+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 "X-Generator: KBabel 1.9.1\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: ../data/playlist.glade.h:1 ../src/totem-playlist.c:1511
+#: ../data/playlist.glade.h:1 ../src/totem-playlist.c:1540
 msgid "Playlist"
 msgstr "Lista de reproducción"
 
@@ -181,7 +181,7 @@ msgstr "Tasa de fotogramas:"
 msgid "N/A"
 msgstr "N/D"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:1948
+#: ../data/properties.glade.h:17 ../src/totem.c:1950
 msgid "Properties"
 msgstr "Propiedades"
 
@@ -250,7 +250,7 @@ msgstr "Reproducir películas y canciones"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:2 ../data/totem.glade.h:99
-#: ../src/totem.c:600 ../src/totem.c:3335 ../src/totem.c:3352
+#: ../src/totem.c:602 ../src/totem.c:3349 ../src/totem.c:3366
 msgid "Totem Movie Player"
 msgstr "Reproductor de películas Totem"
 
@@ -342,11 +342,11 @@ msgstr "Siempre _encima"
 msgid "Always on top"
 msgstr "Siempre encima"
 
-#: ../data/totem.glade.h:29
+#: ../data/totem.glade.h:29 ../src/totem-properties-view.c:92
 msgid "Audio"
 msgstr "Sonido"
 
-#: ../data/totem.glade.h:30 ../src/totem-menu.c:248 ../src/totem-menu.c:269
+#: ../data/totem.glade.h:30 ../src/totem-menu.c:270 ../src/totem-menu.c:291
 msgid "Auto"
 msgstr "Auto"
 
@@ -718,7 +718,9 @@ msgstr "_Tipo de visualización:"
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)"
-msgstr "Cantidad de datos que almacenar para los flujos de red antes de empezar a mostrar el flujo (en segundos)"
+msgstr ""
+"Cantidad de datos que almacenar para los flujos de red antes de empezar a "
+"mostrar el flujo (en segundos)"
 
 #: ../data/totem.schemas.in.h:2
 msgid "Buffer size"
@@ -738,7 +740,9 @@ msgstr "Altura del widget de vídeo"
 
 #: ../data/totem.schemas.in.h:6
 msgid "Maximum amount of data to decode ahead of display (in seconds)"
-msgstr "Cantidad máxima de datos que decodificar por delante de la visualización (en segundos)"
+msgstr ""
+"Cantidad máxima de datos que decodificar por delante de la visualización (en "
+"segundos)"
 
 #: ../data/totem.schemas.in.h:7
 msgid "Name of the visual effects plugins"
@@ -977,11 +981,11 @@ msgstr "No se pudo cargar la interfaz «%s»."
 msgid "Make sure that Totem is properly installed."
 msgstr "Asegúrese de que Totem está instalado correctamente."
 
-#: ../src/totem-menu.c:244 ../src/totem-menu.c:266
+#: ../src/totem-menu.c:266 ../src/totem-menu.c:288
 msgid "None"
 msgstr "Ninguno"
 
-#: ../src/totem-menu.c:547
+#: ../src/totem-menu.c:597
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "Reproducir disco «%s»"
@@ -1065,19 +1069,15 @@ msgid ""
 "A file named '%s' already exists.  Are you sure you want to overwrite it?"
 msgstr "Ya existe un archivo llamado «%s». ¿Seguro que quiere sobreescribirlo?"
 
-#: ../src/totem-playlist.c:1055
-msgid "Filename"
-msgstr "Nombre del archivo"
-
-#: ../src/totem-playlist.c:1502
+#: ../src/totem-playlist.c:1531
 msgid "playlist"
 msgstr "lista de reproducción"
 
-#: ../src/totem-playlist.c:1645
+#: ../src/totem-playlist.c:1670
 msgid "Playlist error"
 msgstr "Error en la lista de reproducción"
 
-#: ../src/totem-playlist.c:1645
+#: ../src/totem-playlist.c:1670
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "La lista de reproducción «%s» no se pudo analizar, quizá esté dañada."
@@ -1125,9 +1125,15 @@ msgstr ""
 msgid "Select Subtitle Font"
 msgstr "Seleccionar tipografía de los subtítulos"
 
-#: ../src/totem-properties-main.c:112
+#. FIXME this should be setting an error?
+#: ../src/totem-properties-main.c:112 ../src/totem-properties-view.c:86
+#: ../src/totem-properties-view.c:94
 msgid "Audio/Video"
 msgstr "Sonido/Vídeo"
+
+#: ../src/totem-properties-view.c:88
+msgid "Video"
+msgstr "Vídeo"
 
 #: ../src/totem-screenshot.c:151 ../src/totem-screenshot.c:162
 #, c-format
@@ -1159,7 +1165,7 @@ msgstr "Tipo de sombra"
 msgid "Style of bevel around the statusbar text"
 msgstr "Estilo de borde alrededor del texto de la barra de estado"
 
-#: ../src/totem-statusbar.c:124 ../src/totem.c:253 ../src/totem.c:584
+#: ../src/totem-statusbar.c:124 ../src/totem.c:253 ../src/totem.c:586
 msgid "Stopped"
 msgstr "Detenido"
 
@@ -1206,7 +1212,7 @@ msgstr "Pausa"
 msgid "Totem could not eject the optical media."
 msgstr "Totem no pudo expulsar el soporte óptico."
 
-#: ../src/totem.c:321 ../src/totem.c:348 ../src/totem.c:733 ../src/totem.c:838
+#: ../src/totem.c:321 ../src/totem.c:348 ../src/totem.c:735 ../src/totem.c:840
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem no pudo reproducir «%s»."
@@ -1246,45 +1252,45 @@ msgstr ""
 "configurada."
 
 #. Title
-#: ../src/totem.c:577
+#: ../src/totem.c:579
 #, c-format
 msgid "%s - Totem Movie Player"
 msgstr "%s - Reproductor de películas Totem"
 
-#: ../src/totem.c:591
+#: ../src/totem.c:593
 msgid "No File"
 msgstr "Ningún archivo"
 
-#: ../src/totem.c:627 ../src/totem.c:1863
+#: ../src/totem.c:629 ../src/totem.c:1865
 msgid "Totem"
 msgstr "Totem"
 
-#: ../src/totem.c:1161 ../src/totem.c:1163
+#: ../src/totem.c:1163 ../src/totem.c:1165
 msgid "An error occured"
 msgstr "Ha ocurrido un error"
 
-#: ../src/totem.c:1484
+#: ../src/totem.c:1486
 msgid "Select Files"
 msgstr "Seleccionar archivos"
 
-#: ../src/totem.c:1555
+#: ../src/totem.c:1557
 msgid "Open Location..."
 msgstr "Abrir dirección..."
 
-#: ../src/totem.c:1821
+#: ../src/totem.c:1823
 msgid "Totem could not display the help contents."
 msgstr "Totem no pudo mostrar el contenido de la ayuda."
 
-#: ../src/totem.c:1859
+#: ../src/totem.c:1861
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Reproductor de películas usando %s"
 
-#: ../src/totem.c:1865 ../src/vanity.c:261
+#: ../src/totem.c:1867 ../src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Copyright © 2002-2005 Bastien Nocera"
 
-#: ../src/totem.c:1870 ../src/vanity.c:266
+#: ../src/totem.c:1872 ../src/vanity.c:266
 msgid "translator-credits"
 msgstr ""
 "Francisco F. Serrador <serrador@cvs.gnome.org>\n"
@@ -1292,58 +1298,58 @@ msgstr ""
 "Baltasar Pérez Díaz <baltasar.perez@hispalinux.es>\n"
 "Germán Poo Caamaño <gpoo@ubiobio.cl>"
 
-#: ../src/totem.c:1903 ../src/totem.c:1911 ../src/vanity.c:299
+#: ../src/totem.c:1905 ../src/totem.c:1913 ../src/vanity.c:299
 #: ../src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem no puede obtener una captura de pantalla de esa película."
 
-#: ../src/totem.c:1911 ../src/vanity.c:307
+#: ../src/totem.c:1913 ../src/vanity.c:307
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Esto no se supone que debe ocurrir; rellene un informe de errores."
 
-#: ../src/totem.c:1938
+#: ../src/totem.c:1940
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem no pudo mostrar la ventana de propiedades de la película."
 
-#: ../src/totem.c:1938
+#: ../src/totem.c:1940
 msgid "Make sure that Totem is correctly installed."
 msgstr "Asegúrese de que Totem está instalado correctamente."
 
-#: ../src/totem.c:2024
+#: ../src/totem.c:2026
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem no puede buscar en «%s»."
 
-#: ../src/totem.c:3185
+#: ../src/totem.c:3199
 msgid "Totem could not startup."
 msgstr "No se ha podido iniciar Totem."
 
-#: ../src/totem.c:3185
+#: ../src/totem.c:3199
 msgid "No reason."
 msgstr "No hay razón."
 
-#: ../src/totem.c:3336
+#: ../src/totem.c:3350
 msgid "Could not initialize the thread-safe libraries."
 msgstr "No se pudo inicializar el soporte de hilos seguro."
 
-#: ../src/totem.c:3336
+#: ../src/totem.c:3350
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verifique la instalación de su sistema. Totem ahora terminará."
 
-#: ../src/totem.c:3359
+#: ../src/totem.c:3373
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem no pudo inicializar el motor de configuración."
 
-#: ../src/totem.c:3359
+#: ../src/totem.c:3373
 msgid "Make sure that GNOME is properly installed."
 msgstr "Asegúrese de que Gnome está instalado correctamente."
 
 #. Main window
-#: ../src/totem.c:3386
+#: ../src/totem.c:3400
 msgid "main window"
 msgstr "ventana principal"
 
-#: ../src/totem.c:3391
+#: ../src/totem.c:3405
 msgid "video popup menu"
 msgstr "menú emergente de vídeo"
 
@@ -1426,7 +1432,7 @@ msgstr "Ventana de vídeo de Totem"
 msgid "Failed to retrieve working directory"
 msgstr "Falló al obtener un directorio de trabajo"
 
-#: ../src/backend/bacon-video-widget-gst.c:3164
+#: ../src/backend/bacon-video-widget-gst.c:3191
 msgid "Failed to create a GStreamer play object"
 msgstr "Falló al crear el objeto de reproducción GStreamer"
 
@@ -1690,6 +1696,9 @@ msgstr "No se pudo escribir el interpretador: %s"
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "No se pudo abrir el archivo «%s»: %s"
+
+#~ msgid "Filename"
+#~ msgstr "Nombre del archivo"
 
 #~ msgid "<b>Optical Device</b>"
 #~ msgstr "<b>Dispositivo óptico</b>"
