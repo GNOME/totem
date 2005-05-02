@@ -2904,6 +2904,7 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
 				 GST_TAG_BITRATE, (guint *)&integer)) {
 	integer /= 1000;
       }
+      break;
     case BVW_INFO_VIDEO_BITRATE:
       if (bvw->priv->videotags == NULL)
 	break;
