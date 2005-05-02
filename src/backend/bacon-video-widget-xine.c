@@ -551,7 +551,7 @@ load_video_out_driver (BaconVideoWidget *bvw, gboolean null_out)
 	x11_visual_t vis;
 	const char *video_driver_id;
 	xine_video_port_t *vo_driver;
-	static char *drivers[] = { "xxmc", "xv", "xshm" };
+	static char *drivers[] = { "xv", "xshm" };
 	guint i;
 
 	if (null_out != FALSE)
