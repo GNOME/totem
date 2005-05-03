@@ -25,6 +25,7 @@ for media metadata (both in Nautilus) and a browser plugin for Mozilla.
 %setup -q
 
 %build
+export MOZILLA_PLUGINDIR=%{buildroot}%{_libdir}/mozilla
 %configure --enable-gstreamer
 export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 make %{?_smp_mflags}
@@ -55,15 +56,25 @@ gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/totem-handlers.
 %{_libdir}/nautilus/extensions-1.0
 %{_libdir}/mozilla/plugins/libtotem_mozilla.*
 %{_libdir}/pkgconfig/totem-plparser.pc
+%{_libdir}/mozilla/plugins/*
+%{_libexecdir}/totem-mozilla-viewer
 %{_includedir}//totem/1/plparser/*.h
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/*
 %{_datadir}/gnome/help
 %{_datadir}/omf/totem/totem-*.omf
 %{_datadir}/%{name}
+%{_sysconfdir}/gconf/schemas/totem-handlers.schemas
+%{_mandir}/man1/totem.1.gz
+%{_mandir}/man1/totem-video-thumbnailer.1.gz
+%{_datadir}/omf/totem/totem-de.omf
+%{_datadir}/omf/totem/totem-es.omf
 %{_mandir}/man1/*.1.gz
 
 %changelog
+* Tue May 3 2005 Christian Schaller <uraeus@gnome.org>
+- Update spec file to handle the mozilla plugin install
+
 * Fri Jan 28 2005 Christian Schaller <Uraeus@gnome.org>
 - update spec file to reflect update to new nautilus version
 - add playlist
