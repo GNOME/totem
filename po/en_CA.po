@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-11 03:00-0400\n"
-"PO-Revision-Date: 2005-04-11 19:41-0400\n"
+"POT-Creation-Date: 2005-05-04 01:48-0400\n"
+"PO-Revision-Date: 2005-05-04 19:41-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../data/playlist.glade.h:1 ../src/totem-playlist.c:1511
+#: ../data/playlist.glade.h:1 ../src/totem-playlist.c:1540
 msgid "Playlist"
 msgstr "Playlist"
 
@@ -175,7 +175,7 @@ msgstr "Framerate:"
 msgid "N/A"
 msgstr "N/A"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:1946
+#: ../data/properties.glade.h:17 ../src/totem.c:1950
 msgid "Properties"
 msgstr "Properties"
 
@@ -244,7 +244,7 @@ msgstr "Play movies and songs"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:2 ../data/totem.glade.h:99
-#: ../src/totem.c:599 ../src/totem.c:3333 ../src/totem.c:3350
+#: ../src/totem.c:602 ../src/totem.c:3350 ../src/totem.c:3367
 msgid "Totem Movie Player"
 msgstr "Totem Movie Player"
 
@@ -336,11 +336,11 @@ msgstr "Always on _Top"
 msgid "Always on top"
 msgstr "Always on top"
 
-#: ../data/totem.glade.h:29
+#: ../data/totem.glade.h:29 ../src/totem-properties-view.c:92
 msgid "Audio"
 msgstr "Audio"
 
-#: ../data/totem.glade.h:30 ../src/totem-menu.c:248 ../src/totem-menu.c:269
+#: ../data/totem.glade.h:30 ../src/totem-menu.c:270 ../src/totem-menu.c:291
 msgid "Auto"
 msgstr "Auto"
 
@@ -967,11 +967,11 @@ msgstr "Could not load the '%s' interface."
 msgid "Make sure that Totem is properly installed."
 msgstr "Make sure that Totem is properly installed."
 
-#: ../src/totem-menu.c:244 ../src/totem-menu.c:266
+#: ../src/totem-menu.c:266 ../src/totem-menu.c:288
 msgid "None"
 msgstr "None"
 
-#: ../src/totem-menu.c:547
+#: ../src/totem-menu.c:597
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "Play Disc '%s'"
@@ -1056,19 +1056,15 @@ msgid ""
 msgstr ""
 "A file named '%s' already exists.  Are you sure you want to overwrite it?"
 
-#: ../src/totem-playlist.c:1055
-msgid "Filename"
-msgstr "Filename"
-
-#: ../src/totem-playlist.c:1502
+#: ../src/totem-playlist.c:1531
 msgid "playlist"
 msgstr "playlist"
 
-#: ../src/totem-playlist.c:1645
+#: ../src/totem-playlist.c:1670
 msgid "Playlist error"
 msgstr "Playlist error"
 
-#: ../src/totem-playlist.c:1645
+#: ../src/totem-playlist.c:1670
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "The playlist '%s' could not be parsed. It might be damaged."
@@ -1116,9 +1112,15 @@ msgstr ""
 msgid "Select Subtitle Font"
 msgstr "Select Subtitle Font"
 
-#: ../src/totem-properties-main.c:112
+#. FIXME this should be setting an error?
+#: ../src/totem-properties-main.c:112 ../src/totem-properties-view.c:86
+#: ../src/totem-properties-view.c:94
 msgid "Audio/Video"
 msgstr "Audio/Video"
+
+#: ../src/totem-properties-view.c:88
+msgid "Video"
+msgstr "Video"
 
 #: ../src/totem-screenshot.c:151 ../src/totem-screenshot.c:162
 #, c-format
@@ -1150,7 +1152,7 @@ msgstr "Shadow type"
 msgid "Style of bevel around the statusbar text"
 msgstr "Style of bevel around the statusbar text"
 
-#: ../src/totem-statusbar.c:124 ../src/totem.c:252 ../src/totem.c:583
+#: ../src/totem-statusbar.c:124 ../src/totem.c:253 ../src/totem.c:586
 msgid "Stopped"
 msgstr "Stopped"
 
@@ -1185,50 +1187,50 @@ msgstr "Buffering"
 msgid "%d %%"
 msgstr "%d %%"
 
-#: ../src/totem.c:242
+#: ../src/totem.c:243
 msgid "Playing"
 msgstr "Playing"
 
-#: ../src/totem.c:247
+#: ../src/totem.c:248
 msgid "Paused"
 msgstr "Paused"
 
-#: ../src/totem.c:292
+#: ../src/totem.c:293
 msgid "Totem could not eject the optical media."
 msgstr "Totem could not eject the optical media."
 
-#: ../src/totem.c:320 ../src/totem.c:347 ../src/totem.c:732 ../src/totem.c:837
+#: ../src/totem.c:321 ../src/totem.c:348 ../src/totem.c:735 ../src/totem.c:840
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem could not play '%s'."
 
-#: ../src/totem.c:373
-#, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because you do not have the "
-"appropriate plugins to handle it."
-msgstr ""
-"Totem cannot play this type of media (%s) because you do not have the "
-"appropriate plugins to handle it."
-
 #: ../src/totem.c:374
-msgid ""
-"Please install the necessary plugins and restart Totem to be able to play "
-"this media."
-msgstr ""
-"Please install the necessary plugins and restart Totem to be able to play "
-"this media."
-
-#: ../src/totem.c:382
 #, c-format
 msgid ""
-"Totem could not play this media (%s) although a plugin is present to handle "
-"it."
+"Totem cannot play this type of media (%s) because you do not have the "
+"appropriate plugins to handle it."
 msgstr ""
-"Totem could not play this media (%s) although a plugin is present to handle "
-"it."
+"Totem cannot play this type of media (%s) because you do not have the "
+"appropriate plugins to handle it."
+
+#: ../src/totem.c:375
+msgid ""
+"Please install the necessary plugins and restart Totem to be able to play "
+"this media."
+msgstr ""
+"Please install the necessary plugins and restart Totem to be able to play "
+"this media."
 
 #: ../src/totem.c:383
+#, c-format
+msgid ""
+"Totem could not play this media (%s) although a plugin is present to handle "
+"it."
+msgstr ""
+"Totem could not play this media (%s) although a plugin is present to handle "
+"it."
+
+#: ../src/totem.c:384
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1237,102 +1239,102 @@ msgstr ""
 "correctly configured."
 
 #. Title
-#: ../src/totem.c:576
+#: ../src/totem.c:579
 #, c-format
 msgid "%s - Totem Movie Player"
 msgstr "%s - Totem Movie Player"
 
-#: ../src/totem.c:590
+#: ../src/totem.c:593
 msgid "No File"
 msgstr "No File"
 
-#: ../src/totem.c:626 ../src/totem.c:1861
+#: ../src/totem.c:629 ../src/totem.c:1865
 msgid "Totem"
 msgstr "Totem"
 
-#: ../src/totem.c:1160 ../src/totem.c:1162
+#: ../src/totem.c:1163 ../src/totem.c:1165
 msgid "An error occured"
 msgstr "An error occured"
 
-#: ../src/totem.c:1483
+#: ../src/totem.c:1486
 msgid "Select Files"
 msgstr "Select Files"
 
-#: ../src/totem.c:1554
+#: ../src/totem.c:1557
 msgid "Open Location..."
 msgstr "Open Location..."
 
-#: ../src/totem.c:1819
+#: ../src/totem.c:1823
 msgid "Totem could not display the help contents."
 msgstr "Totem could not display the help contents."
 
-#: ../src/totem.c:1857
+#: ../src/totem.c:1861
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Movie Player using %s"
 
-#: ../src/totem.c:1863 ../src/vanity.c:261
+#: ../src/totem.c:1867 ../src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Copyright © 2002-2005 Bastien Nocera"
 
-#: ../src/totem.c:1868 ../src/vanity.c:266
+#: ../src/totem.c:1872 ../src/vanity.c:266
 msgid "translator-credits"
 msgstr ""
 "Maintainer: Adam Weinberger <adamw@gnome.org>\n"
 "Alexander Winston <alexander.winston@comcast.net>"
 
-#: ../src/totem.c:1901 ../src/totem.c:1909 ../src/vanity.c:299
+#: ../src/totem.c:1905 ../src/totem.c:1913 ../src/vanity.c:299
 #: ../src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem could not get a screenshot of that film."
 
-#: ../src/totem.c:1909 ../src/vanity.c:307
+#: ../src/totem.c:1913 ../src/vanity.c:307
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "This is not supposed to happen; please file a bug report."
 
-#: ../src/totem.c:1936
+#: ../src/totem.c:1940
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem could not show the movie properties window."
 
-#: ../src/totem.c:1936
+#: ../src/totem.c:1940
 msgid "Make sure that Totem is correctly installed."
 msgstr "Make sure that Totem is correctly installed."
 
-#: ../src/totem.c:2022
+#: ../src/totem.c:2026
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem could not seek in '%s'."
 
-#: ../src/totem.c:3183
+#: ../src/totem.c:3200
 msgid "Totem could not startup."
 msgstr "Totem could not startup."
 
-#: ../src/totem.c:3183
+#: ../src/totem.c:3200
 msgid "No reason."
 msgstr "No reason."
 
-#: ../src/totem.c:3334
+#: ../src/totem.c:3351
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Could not initialize the thread-safe libraries."
 
-#: ../src/totem.c:3334
+#: ../src/totem.c:3351
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verify your system installation. Totem will now exit."
 
-#: ../src/totem.c:3357
+#: ../src/totem.c:3374
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem could not initialize the configuration engine."
 
-#: ../src/totem.c:3357
+#: ../src/totem.c:3374
 msgid "Make sure that GNOME is properly installed."
 msgstr "Make sure that GNOME is properly installed."
 
 #. Main window
-#: ../src/totem.c:3384
+#: ../src/totem.c:3401
 msgid "main window"
 msgstr "main window"
 
-#: ../src/totem.c:3389
+#: ../src/totem.c:3406
 msgid "video popup menu"
 msgstr "video popup menu"
 
@@ -1411,11 +1413,11 @@ msgstr ""
 msgid "Totem Video Window"
 msgstr "Totem Video Window"
 
-#: ../src/backend/bacon-video-widget-gst.c:1786
+#: ../src/backend/bacon-video-widget-gst.c:1792
 msgid "Failed to retrieve working directory"
 msgstr "Failed to retrieve working directory"
 
-#: ../src/backend/bacon-video-widget-gst.c:3123
+#: ../src/backend/bacon-video-widget-gst.c:3192
 msgid "Failed to create a GStreamer play object"
 msgstr "Failed to create a GStreamer play object"
 
@@ -1544,19 +1546,20 @@ msgid "This is an audio-only file, and there is no audio output available."
 msgstr "This is an audio-only file, and there is no audio output available."
 
 #: ../src/backend/bacon-video-widget-xine.c:3418
+#: ../src/backend/bacon-video-widget-xine.c:3481
 #, c-format
 msgid "Language %d"
 msgstr "Language %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3506
+#: ../src/backend/bacon-video-widget-xine.c:3517
 msgid "Movie is not playing."
 msgstr "Movie is not playing."
 
-#: ../src/backend/bacon-video-widget-xine.c:3515
+#: ../src/backend/bacon-video-widget-xine.c:3526
 msgid "No video to capture."
 msgstr "No video to capture."
 
-#: ../src/backend/bacon-video-widget-xine.c:3523
+#: ../src/backend/bacon-video-widget-xine.c:3534
 msgid "Video codec is not handled."
 msgstr "Video codec is not handled."
 
