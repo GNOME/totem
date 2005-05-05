@@ -61,6 +61,7 @@ struct _TotemStatusbar
   guint timeout;
 
   GdkWindow *grip_window;
+  GdkCursor *cursor;
   
   guint has_resize_grip : 1;
   guint pushed : 1;

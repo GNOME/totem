@@ -392,6 +392,12 @@ totem_statusbar_create_window (TotemStatusbar *statusbar)
   statusbar->grip_window = gdk_window_new (widget->window,
                                            &attributes, attributes_mask);
   gdk_window_set_user_data (statusbar->grip_window, widget);
+
+  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
+    statusbar->cursor = gdk_cursor_new (GDK_BOTTOM_LEFT_CORNER);
+  else
+    statusbar->cursor = gdk_cursor_new (GDK_BOTTOM_RIGHT_CORNER);
+  gdk_window_set_cursor (statusbar->grip_window, statusbar->cursor);
 }
 
 static void
@@ -399,6 +405,8 @@ totem_statusbar_destroy_window (TotemStatusbar *statusbar)
 {
   gdk_window_set_user_data (statusbar->grip_window, NULL);
   gdk_window_destroy (statusbar->grip_window);
+  gdk_cursor_unref (statusbar->cursor);
+  statusbar->cursor = NULL;
   statusbar->grip_window = NULL;
 }
 
