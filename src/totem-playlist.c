@@ -32,6 +32,7 @@
 #include <libgnomevfs/gnome-vfs.h>
 #include <libgnomevfs/gnome-vfs-mime-utils.h>
 #include <string.h>
+#include <musicbrainz/mb_c.h>
 
 #include "totem-interface.h"
 #include "totem-pl-parser.h"
@@ -84,11 +85,15 @@ struct TotemPlaylistPrivate
 	GConfClient *gc;
 
 	int x, y;
+
+	/* CD index caching */
+	char *cdindex;
 };
 
 /* Signals */
 enum {
 	CHANGED,
+	ACTIVE_NAME_CHANGED,
 	CURRENT_REMOVED,
 	REPEAT_TOGGLED,
 	SHUFFLE_TOGGLED,
@@ -100,6 +105,9 @@ enum {
 	FILENAME_COL,
 	URI_COL,
 	TITLE_CUSTOM_COL,
+	CACHE_TITLE_COL,
+	CACHE_ARTIST_COL,
+	CACHE_ALBUM_COL,
 	NUM_COLS
 };
 
@@ -1117,7 +1125,10 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 				GDK_TYPE_PIXBUF,
 				G_TYPE_STRING,
 				G_TYPE_STRING,
-				G_TYPE_BOOLEAN));
+				G_TYPE_BOOLEAN,
+				G_TYPE_STRING,
+				G_TYPE_STRING,
+				G_TYPE_STRING));
 
 	/* the treeview */
 	gtk_tree_view_set_model (GTK_TREE_VIEW (treeview), model);
@@ -1687,6 +1698,8 @@ totem_playlist_clear (TotemPlaylist *playlist)
 	if (playlist->_priv->current != NULL)
 		gtk_tree_path_free (playlist->_priv->current);
 	playlist->_priv->current = NULL;
+	g_free (playlist->_priv->cdindex);
+	playlist->_priv->cdindex = NULL;
 }
 
 static void
@@ -1866,6 +1879,34 @@ char
 }
 
 gboolean
+totem_playlist_get_current_metadata (TotemPlaylist *playlist,
+				     char         **artist,
+				     char         **title,
+				     char         **album)
+{
+	GtkTreeIter iter;
+
+        g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), FALSE);
+
+	if (update_current_from_playlist (playlist) == FALSE)
+		return FALSE;
+
+	gtk_tree_model_get_iter (playlist->_priv->model,
+			&iter,
+			playlist->_priv->current);
+
+	*artist = NULL;
+	gtk_tree_model_get (playlist->_priv->model,
+			&iter,
+			CACHE_ARTIST_COL, artist,
+			CACHE_TITLE_COL, title,
+			CACHE_ALBUM_COL, album,
+			-1);
+
+	return (*artist != NULL);
+}
+
+gboolean
 totem_playlist_has_previous_mrl (TotemPlaylist *playlist)
 {
 	GtkTreeIter iter;
@@ -1923,7 +1964,7 @@ totem_playlist_has_next_mrl (TotemPlaylist *playlist)
 }
 
 gboolean
-totem_playlist_set_title (TotemPlaylist *playlist, const gchar *title)
+totem_playlist_set_title (TotemPlaylist *playlist, const char *title)
 {
 	GtkListStore *store;
 	GtkTreeIter iter;
@@ -1945,7 +1986,271 @@ totem_playlist_set_title (TotemPlaylist *playlist, const gchar *title)
 			FILENAME_COL, title,
 			-1);
 
+	g_signal_emit (playlist,
+		       totem_playlist_table_signals[ACTIVE_NAME_CHANGED], 0);
+
 	return TRUE;
+}
+
+#define CDDATALEN 256
+
+typedef struct _TotemCDData {
+	gpointer data;
+	TotemPlaylist *list;
+} TotemCDData;
+
+typedef struct _TotemCDMetadata {
+	char **titles, **artists;
+	char *album, *artist;
+	unsigned int num_tracks;
+} TotemCDMetadata;
+
+static void
+totem_playlist_set_cd_metadata (TotemPlaylist *playlist, TotemCDMetadata *meta)
+{
+	GtkListStore *store;
+	GtkTreeIter iter, active_iter;
+	gchar *title;
+	unsigned int n;
+	gboolean res;
+	GValue v = { 0 };
+	const gchar *old_uri;
+
+	if (update_current_from_playlist (playlist) == FALSE)
+		return;
+
+	store = GTK_LIST_STORE (playlist->_priv->model);
+	gtk_tree_model_get_iter (playlist->_priv->model,
+				 &active_iter, playlist->_priv->current);
+	for (res = gtk_tree_model_get_iter_first (playlist->_priv->model,
+						  &iter); res != FALSE;
+	     res = gtk_tree_model_iter_next (playlist->_priv->model, &iter)) {
+		gtk_tree_model_get_value (playlist->_priv->model, &iter,
+					  URI_COL, &v);
+		old_uri = g_value_get_string (&v);
+		if (old_uri != NULL &&
+		    sscanf (old_uri, "cdda://%d", &n) == 1 &&
+		    n > 0 && n <= meta->num_tracks) {
+			n--;
+			title = g_strdup_printf ("%s - %s", meta->artists[n],
+						 meta->titles[n]);
+			gtk_list_store_set (store, &iter,
+					    FILENAME_COL, title,
+					    CACHE_ARTIST_COL, meta->artists[n],
+					    CACHE_TITLE_COL, meta->titles[n],
+					    CACHE_ALBUM_COL, meta->album,
+					    -1);
+			if (memcmp (&iter, &active_iter,
+				    sizeof (GtkTreeIter)) == 0) {
+				g_signal_emit (playlist,
+					       totem_playlist_table_signals[ACTIVE_NAME_CHANGED], 0);
+			}
+			g_free (title);
+		}
+		g_value_unset (&v);
+	}
+}
+
+static gboolean
+idle_set_metadata (TotemCDData * data)
+{
+	TotemCDMetadata *meta;
+	GList *item, *list = data->data;
+	TotemPlaylist *playlist = data->list;
+	unsigned int n;
+	char *text;
+
+	g_free (data);
+	if (!list)
+		return FALSE;
+
+	/* choose? */
+	if (g_list_length (list) > 1) {
+		GtkWidget *box, *dialog, *label, *menu;
+		gint res;
+
+		dialog = gtk_dialog_new_with_buttons (_("Select CD"), NULL, 0,
+				GTK_STOCK_OK, GTK_RESPONSE_OK, NULL);
+		box = gtk_vbox_new (FALSE, 6);
+		gtk_container_set_border_width (GTK_CONTAINER (box), 6);
+
+		label = gtk_label_new (_("Please select the currently playing CD:"));
+		gtk_box_pack_start (GTK_BOX (box), label, TRUE, TRUE, 0);
+
+		menu = gtk_combo_box_new_text ();
+		for (n = 0; n  < g_list_length (list); n++) {
+			meta = g_list_nth_data (list, n);
+			if (meta->artist) {
+				text = g_strdup_printf ("%s - %s",
+							meta->artist,
+							meta->album);
+			} else {
+				text = g_strdup (meta->album);
+			}
+			gtk_combo_box_append_text (GTK_COMBO_BOX (menu), text);
+			g_free (text);
+		}
+		gtk_combo_box_set_active (GTK_COMBO_BOX (menu), 0);
+		gtk_box_pack_start (GTK_BOX (box), menu, TRUE, TRUE, 0);
+
+		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+				    box, TRUE, TRUE, 0);
+		gtk_widget_show_all (dialog);
+		res = gtk_dialog_run (GTK_DIALOG (dialog));
+		if (res == GTK_RESPONSE_OK) {
+			n = gtk_combo_box_get_active (GTK_COMBO_BOX (menu));
+			meta = g_list_nth_data (list, n);
+		} else {
+			meta = NULL;
+		}
+		gtk_widget_destroy (dialog);
+	} else {
+		meta = list->data;
+	}
+
+	/* put in playlist */
+	if (meta) {
+		totem_playlist_set_cd_metadata (playlist, meta);
+	}
+
+	/* clean up */
+	for (item = list; item != NULL; item = item->next) {
+		meta = item->data;
+		for (n = 0; n < meta->num_tracks; n++) {
+			g_free (meta->artists[n]);
+			g_free (meta->titles[n]);
+		}
+		g_free (meta->artist);
+		g_free (meta->album);
+		g_free (meta);
+	}
+	g_list_free (list);
+
+	return FALSE;
+}
+
+static gpointer
+cd_metadata_thread (TotemCDData *data)
+{
+	TotemPlaylist *playlist = data->list;
+	gchar *cdid = data->data;
+	musicbrainz_t mbo;
+	char *args[2] = { NULL, NULL }, str_data[CDDATALEN];
+	char artist[CDDATALEN], track[CDDATALEN];
+	gint i, n, t, x;
+	GList *metadata = NULL;
+	TotemCDMetadata *meta;
+	GConfClient *gc = gconf_client_get_default ();
+
+	g_free (data);
+	args[0] = cdid;
+
+	/* look up in musicbrainz */
+	mbo = mb_New ();
+	mb_UseUTF8 (mbo, 1);
+	mb_SetDepth (mbo, 2);
+	mb_SetMaxItems (mbo, 10);
+
+	/* proxy through GNOME */
+#define PROXY "/system/http_proxy/"
+	if (gconf_client_get_bool (gc, PROXY"use_http_proxy", NULL)) {
+		char *host;
+		int port;
+
+		host = gconf_client_get_string (gc, PROXY"host", NULL);
+		port = gconf_client_get_int (gc, PROXY"port", NULL);
+		if (host != NULL && port != 0) {
+			mb_SetProxy (mbo, host, port);
+		}
+		g_free (host);
+
+#if 0
+		/* proxy authentication, disabled because for some reason
+		 * the latest release of musicbrainz doesn't include this
+		 * yet (but their webdocs do). */
+		if (gconf_client_get_bool (gc, PROXY"use_authentication", NULL)) {
+			char *user, *pass;
+
+			user = gconf_client_get_string (gc,
+					PROXY"authentication_user", NULL);
+			pass = gconf_client_get_string (gc,
+					PROXY"authentication_password", NULL);
+			if (user && pass) {
+				mb_SetProxyCreds (mbo, user, pass);
+			}
+			g_free (user);
+			g_free (pass);
+		}
+#endif
+	}
+#undef PROXY
+
+	/* now get the artist info */
+	if (!mb_QueryWithArgs (mbo, MBQ_GetCDInfoFromCDIndexId, args))
+		goto fail;
+
+	n = mb_GetResultInt (mbo, MBE_GetNumAlbums);
+	for (i = 1; i <= n; i++) {
+		meta = g_new0 (TotemCDMetadata, 1);
+
+		mb_Select (mbo, MBS_Rewind);
+		mb_Select1 (mbo, MBS_SelectAlbum, i);
+		mb_GetResultData (mbo, MBE_AlbumGetAlbumName,
+				  str_data, CDDATALEN);
+		meta->album = g_strdup (str_data);
+		if (mb_GetResultData (mbo, MBE_AlbumGetArtistName,
+				      str_data, CDDATALEN))
+			meta->artist = g_strdup (str_data);
+		t = mb_GetResultInt (mbo, MBE_AlbumGetNumTracks);
+		meta->num_tracks = t;
+		meta->artists = g_new (gchar *, t);
+		meta->titles = g_new (gchar *, t);
+
+		for (x = 1; x <= t; x++) {
+			mb_GetResultData1 (mbo, MBE_AlbumGetArtistName,
+					   artist, CDDATALEN, x);
+			meta->artists[x-1] = g_strdup (artist);
+			mb_GetResultData1 (mbo, MBE_AlbumGetTrackName,
+					   track, CDDATALEN, x);
+			meta->titles[x-1] = g_strdup (track);
+		}
+
+		metadata = g_list_append (metadata, meta);
+	}
+
+	/* go back to main thread */
+	data = g_new (TotemCDData, 1);
+	data->list = playlist;
+	data->data = metadata;
+	g_idle_add ((GSourceFunc) idle_set_metadata, data);
+
+fail:
+	g_object_unref (G_OBJECT (gc));
+	mb_Delete (mbo);
+	g_free (cdid);
+
+	return NULL;
+}
+
+void
+totem_playlist_set_cdindex (TotemPlaylist *playlist, const char *cdindex_id)
+{
+	TotemCDData *data;
+
+	g_return_if_fail (cdindex_id != NULL);
+
+	/* caching */
+	if (playlist->_priv->cdindex &&
+	    strcmp (cdindex_id, playlist->_priv->cdindex) == 0)
+		return;
+	g_free (playlist->_priv->cdindex);
+	playlist->_priv->cdindex = g_strdup (cdindex_id);
+
+	data = g_new (TotemCDData, 1);
+	data->data = g_strdup (cdindex_id);
+	data->list = playlist;
+
+	g_thread_create ((GThreadFunc) cd_metadata_thread, data, FALSE, NULL);
 }
 
 gboolean
@@ -2202,6 +2507,14 @@ totem_playlist_class_init (TotemPlaylistClass *klass)
 				G_TYPE_FROM_CLASS (klass),
 				G_SIGNAL_RUN_LAST,
 				G_STRUCT_OFFSET (TotemPlaylistClass, changed),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__VOID,
+				G_TYPE_NONE, 0);
+	totem_playlist_table_signals[ACTIVE_NAME_CHANGED] =
+		g_signal_new ("active-name-changed",
+				G_TYPE_FROM_CLASS (klass),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (TotemPlaylistClass, active_name_changed),
 				NULL, NULL,
 				g_cclosure_marshal_VOID__VOID,
 				G_TYPE_NONE, 0);

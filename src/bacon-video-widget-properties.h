@@ -48,9 +48,13 @@ struct BaconVideoWidgetPropertiesClass {
 GtkType bacon_video_widget_properties_get_type		(void);
 GtkWidget *bacon_video_widget_properties_new		(void);
 
+void bacon_video_widget_properties_reset		(BaconVideoWidgetProperties *props);
 void bacon_video_widget_properties_update		(BaconVideoWidgetProperties *props,
-							BaconVideoWidget *bvw,
-							gboolean reset);
+							 BaconVideoWidget *bvw);
+void bacon_video_widget_properties_from_metadata	(BaconVideoWidgetProperties *props,
+							 const char *title,
+							 const char *artist,
+							 const char *album);
 
 char *bacon_video_widget_properties_time_to_string	(int time);
 

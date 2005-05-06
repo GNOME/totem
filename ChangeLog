@@ -1,3 +1,30 @@
+2005-05-06  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/bacon-video-widget-properties.c:
+	(bacon_video_widget_properties_reset),
+	(bacon_video_widget_properties_update),
+	(bacon_video_widget_properties_from_metadata),
+	(bacon_video_widget_properties_new):
+	* src/bacon-video-widget-properties.h:
+	* src/totem-properties-view.c: (on_got_metadata_event),
+	(totem_properties_view_set_location):
+	  Separate _update into _update and _reset, make _update act
+	  step-wise, also add _from_metadata (for audio-CDs).
+	* configure.in:
+	* src/totem-playlist.c: (init_treeview), (totem_playlist_clear),
+	(totem_playlist_get_current_metadata), (totem_playlist_set_title),
+	(totem_playlist_set_cd_metadata), (idle_set_metadata),
+	(cd_metadata_thread), (totem_playlist_set_cdindex),
+	(totem_playlist_class_init):
+	* src/totem-playlist.h:
+	* src/totem.c: (totem_action_set_mrl_with_warning),
+	(on_playlist_change_name), (on_got_metadata_event),
+	(totem_action_open_files_list), (totem_action_remote), (main):
+	  Add musicbrainz detection and CD-index-based metadata lookup
+	  code, and use this for audio-CD metadata. Expose this metadata
+	  in the API for use in the properties window and mainwindow,
+	  which fixes #302219.
+
 2005-05-05  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-statusbar.c: (totem_statusbar_create_window),

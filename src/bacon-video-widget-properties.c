@@ -32,6 +32,48 @@
 
 #include "debug.h"
 
+/* used in bacon_video_widget_properties_update() */
+#define UPDATE_FROM_STRING(type, name) \
+	do { \
+		const char *temp; \
+		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), \
+						 type, &value); \
+		if ((temp = g_value_get_string (&value)) != NULL) { \
+			bacon_video_widget_properties_set_label (props, name, \
+								 temp); \
+		} \
+		g_value_unset (&value); \
+	} while (0)
+
+#define UPDATE_FROM_INT(type, name, format) \
+	do { \
+		char *temp; \
+		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), \
+						 type, &value); \
+		temp = g_strdup_printf (gettext (format), \
+					g_value_get_int (&value)); \
+		bacon_video_widget_properties_set_label (props, name, temp); \
+		g_free (temp); \
+		g_value_unset (&value); \
+	} while (0)
+
+#define UPDATE_FROM_INT2(type1, type2, name, format) \
+	do { \
+		int x, y; \
+		char *temp; \
+		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), \
+						 type1, &value); \
+		x = g_value_get_int (&value); \
+		g_value_unset (&value); \
+		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), \
+						 type2, &value); \
+		y = g_value_get_int (&value); \
+		g_value_unset (&value); \
+		temp = g_strdup_printf (gettext (format), x, y); \
+		bacon_video_widget_properties_set_label (props, name, temp); \
+		g_free (temp); \
+	} while (0)
+
 struct BaconVideoWidgetPropertiesPrivate
 {
 	GladeXML *xml;
@@ -79,10 +121,13 @@ bacon_video_widget_properties_set_label (BaconVideoWidgetProperties *props,
 	gtk_label_set_text (GTK_LABEL (item), text);
 }
 
-static void
+void
 bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 {
 	GtkWidget *item;
+
+	g_return_if_fail (props != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
 
 	item = glade_xml_get_widget (props->priv->xml, "video_vbox");
 	gtk_widget_show (item);
@@ -118,45 +163,24 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 	bacon_video_widget_properties_set_label (props, "acodec", _("N/A"));
 }
 
-static void
-bacon_video_widget_properties_set_from_current
-(BaconVideoWidgetProperties *props, BaconVideoWidget *bvw)
+void
+bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
+				      BaconVideoWidget *bvw)
 {
 	GtkWidget *item;
 	GValue value = { 0, };
 	char *string;
-	int x, y;
 	gboolean has_type;
 
+	g_return_if_fail (props != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
+	g_return_if_fail (bvw != NULL);
+
 	/* General */
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_TITLE, &value);
-	bacon_video_widget_properties_set_label (props, "title",
-			g_value_get_string (&value)
-			? g_value_get_string (&value)
-			: _("Unknown"));
-	g_value_unset (&value);
-
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_ARTIST, &value);
-	bacon_video_widget_properties_set_label (props, "artist",
-			g_value_get_string (&value)
-			? g_value_get_string (&value) : _("Unknown"));
-	g_value_unset (&value);
-
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_ALBUM, &value);
-	bacon_video_widget_properties_set_label (props, "album",
-			g_value_get_string (&value)
-			? g_value_get_string (&value) : _("Unknown"));
-	g_value_unset (&value);
-
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_YEAR, &value);
-	bacon_video_widget_properties_set_label (props, "year",
-			g_value_get_string (&value)
-			? g_value_get_string (&value) : _("Unknown"));
-	g_value_unset (&value);
+	UPDATE_FROM_STRING (BVW_INFO_TITLE, "title");
+	UPDATE_FROM_STRING (BVW_INFO_ARTIST, "artist");
+	UPDATE_FROM_STRING (BVW_INFO_ALBUM, "album");
+	UPDATE_FROM_STRING (BVW_INFO_YEAR, "year");
 
 	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
 			BVW_INFO_DURATION, &value);
@@ -178,45 +202,13 @@ bacon_video_widget_properties_set_from_current
 
 	if (has_type != FALSE)
 	{
-		gtk_widget_show (item);
-		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-				BVW_INFO_DIMENSION_X, &value);
-		x = g_value_get_int (&value);
-		g_value_unset (&value);
-		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-				BVW_INFO_DIMENSION_Y, &value);
-		y = g_value_get_int (&value);
-		g_value_unset (&value);
-		string = g_strdup_printf ("%d x %d", x, y);
-		bacon_video_widget_properties_set_label
-			(props, "dimensions", string);
-		g_free (string);
-
-		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-				BVW_INFO_VIDEO_CODEC, &value);
-		bacon_video_widget_properties_set_label (props, "vcodec",
-				g_value_get_string (&value)
-				? g_value_get_string (&value) : _("N/A"));
-		g_value_unset (&value);
-
-		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-				BVW_INFO_FPS, &value);
-		string = g_strdup_printf (_("%d frames per second"),
-				g_value_get_int (&value));
-		g_value_unset (&value);
-		bacon_video_widget_properties_set_label
-			(props, "framerate", string);
-		g_free (string);
-
-		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-				BVW_INFO_VIDEO_BITRATE, &value);
-		string = g_strdup_printf (_("%d kbps"),
-				g_value_get_int (&value));
-		g_value_unset (&value);
-		bacon_video_widget_properties_set_label
-			(props, "video_bitrate", string);
-		g_free (string);
-
+		UPDATE_FROM_INT2 (BVW_INFO_DIMENSION_X, BVW_INFO_DIMENSION_Y,
+				  "dimensions", N_("%d x %d"));
+		UPDATE_FROM_STRING (BVW_INFO_VIDEO_CODEC, "vcodec");
+		UPDATE_FROM_INT (BVW_INFO_FPS, "framerate",
+				 N_("%d frames per second"));
+		UPDATE_FROM_INT (BVW_INFO_VIDEO_BITRATE, "video_bitrate",
+				 N_("%d kbps"));
 	} else {
 		gtk_widget_hide (item);
 	}
@@ -231,39 +223,31 @@ bacon_video_widget_properties_set_from_current
 
 	if (has_type != FALSE)
 	{
-		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-				BVW_INFO_AUDIO_BITRATE, &value);
-		string = g_strdup_printf (_("%d kbps"),
-				g_value_get_int (&value));
-		g_value_unset (&value);
-		bacon_video_widget_properties_set_label
-			(props, "audio_bitrate", string);
-		g_free (string);
-
-		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-				BVW_INFO_AUDIO_CODEC, &value);
-		bacon_video_widget_properties_set_label (props, "acodec",
-				g_value_get_string (&value)
-				? g_value_get_string (&value) : _("N/A"));
-		g_value_unset (&value);
+		UPDATE_FROM_INT (BVW_INFO_AUDIO_BITRATE, "audio_bitrate",
+				 N_("%d kbps"));
+		UPDATE_FROM_STRING (BVW_INFO_AUDIO_CODEC, "acodec");
 	}
+
+#undef UPDATE_FROM_STRING
+#undef UPDATE_FROM_INT
+#undef UPDATE_FROM_INT2
 }
 
 void
-bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
-		BaconVideoWidget *bvw,
-		gboolean reset)
+bacon_video_widget_properties_from_metadata (BaconVideoWidgetProperties *props,
+					     const char *title,
+					     const char *artist,
+					     const char *album)
 {
 	g_return_if_fail (props != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
+	g_return_if_fail (title != NULL);
+	g_return_if_fail (artist != NULL);
+	g_return_if_fail (album != NULL);
 
-	if (reset != FALSE)
-	{
-		bacon_video_widget_properties_reset (props);
-	} else {
-		g_return_if_fail (bvw != NULL);
-		bacon_video_widget_properties_set_from_current (props, bvw);
-	}
+	bacon_video_widget_properties_set_label (props, "title", title);
+	bacon_video_widget_properties_set_label (props, "artist", artist);
+	bacon_video_widget_properties_set_label (props, "album", album);
 }
 
 GtkWidget*
@@ -286,7 +270,7 @@ bacon_video_widget_properties_new (void)
 	vbox = glade_xml_get_widget (props->priv->xml, "vbox1");
 	gtk_box_pack_start (GTK_BOX (props), vbox, TRUE, TRUE, 0);
 
-	bacon_video_widget_properties_update (props, NULL, TRUE);
+	bacon_video_widget_properties_reset (props);
 
 	gtk_widget_show_all (GTK_WIDGET (props));
 

@@ -52,6 +52,7 @@ struct TotemPlaylistClass {
 	GtkDialogClass parent_class;
 
 	void (*changed) (TotemPlaylist *playlist);
+	void (*active_name_changed) (TotemPlaylist *playlist);
 	void (*current_removed) (TotemPlaylist *playlist);
 	void (*repeat_toggled) (TotemPlaylist *playlist, gboolean repeat);
 	void (*shuffle_toggled) (TotemPlaylist *playlist, gboolean toggled);
@@ -81,8 +82,14 @@ void       totem_playlist_clear_with_gnome_vfs_volume (TotemPlaylist *playlist,
 char      *totem_playlist_get_current_mrl (TotemPlaylist *playlist);
 char      *totem_playlist_get_current_title (TotemPlaylist *playlist,
 					     gboolean *custom);
+gboolean   totem_playlist_get_current_metadata (TotemPlaylist *playlist,
+						char         **artist,
+						char         **title,
+						char         **album);
 gboolean   totem_playlist_set_title (TotemPlaylist *playlist,
-				     const gchar *title);
+				     const char *title);
+void       totem_playlist_set_cdindex (TotemPlaylist *playlist,
+				       const char *cdindex_id);
 
 #define    totem_playlist_has_direction(playlist, direction) (direction == TOTEM_PLAYLIST_DIRECTION_NEXT ? totem_playlist_has_next_mrl (playlist) : totem_playlist_has_previous_mrl (playlist))
 gboolean   totem_playlist_has_previous_mrl (TotemPlaylist *playlist);

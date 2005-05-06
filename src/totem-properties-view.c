@@ -98,7 +98,7 @@ on_got_metadata_event (BaconVideoWidget *bvw, TotemPropertiesView *props)
 	gtk_label_set_text (GTK_LABEL (props->priv->label), _(label));
 
 	bacon_video_widget_properties_update
-		(props->priv->props, props->priv->bvw, FALSE);
+		(props->priv->props, props->priv->bvw);
 }
 
 static gboolean
@@ -199,8 +199,7 @@ totem_properties_view_set_location (TotemPropertiesView *props,
 		g_free(props->priv->location);
 		bacon_video_widget_close (props->priv->bvw);
 		props->priv->location = g_strdup (location);
-		bacon_video_widget_properties_update (props->priv->props,
-				props->priv->bvw, TRUE);
+		bacon_video_widget_properties_reset (props->priv->props);
 		if (bacon_video_widget_open (props->priv->bvw, location, &error) == FALSE) {
 			g_free (props->priv->location);
 			props->priv->location = NULL;
@@ -223,8 +222,7 @@ totem_properties_view_set_location (TotemPropertiesView *props,
 			g_timeout_add (200, (GSourceFunc) on_timeout_event,
 				       props);
 	} else {
-		bacon_video_widget_properties_update (props->priv->props,
-				props->priv->bvw, TRUE);
+		bacon_video_widget_properties_reset (props->priv->props);
 	}
 }
 

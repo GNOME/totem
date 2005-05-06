@@ -618,9 +618,8 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 	}
 
 	/* Reset the properties and wait for the signal*/
-	bacon_video_widget_properties_update
-		(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
-		 totem->bvw, TRUE);
+	bacon_video_widget_properties_reset
+		(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties));
 
 	if (mrl == NULL)
 	{
@@ -1123,33 +1122,57 @@ on_channels_change_event (BaconVideoWidget *bvw, Totem *totem)
 }
 
 static void
+on_playlist_change_name (TotemPlaylist *playlist, Totem *totem)
+{
+	char *name, *artist, *album, *title;
+	gboolean cur;
+
+	if ((name = totem_playlist_get_current_title (playlist,
+						      &cur)) != NULL) {
+		update_mrl_label (totem, name);
+		g_free (name);
+	}
+
+	if (totem_playlist_get_current_metadata (playlist, &artist,
+						 &title, &album) != FALSE) {
+		bacon_video_widget_properties_from_metadata (
+			BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
+			artist, title, album);
+
+		g_free (artist);
+		g_free (album);
+		g_free (title);
+	}
+}
+
+static void
 on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 {
         char *name = NULL;
-	gboolean custom;
 
         bacon_video_widget_properties_update
 		(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
-		 totem->bvw, FALSE);
+		 totem->bvw);
 
 	name = totem_get_nice_name_for_stream (totem);
 
-	if (name == NULL)
-	{
-		name = totem_playlist_get_current_title
-			(totem->playlist, &custom);
-		custom = TRUE;
-	} else {
-		custom = FALSE;
-	}
-
-	update_mrl_label (totem, name);
-
-	if (custom == FALSE)
+	if (name != NULL) {
 		totem_playlist_set_title
 			(TOTEM_PLAYLIST (totem->playlist), name);
+		g_free (name);
+	} else {
+		GValue v = { 0 };
+		const gchar *cdid;
 
-	g_free (name);
+		bacon_video_widget_get_metadata (totem->bvw, BVW_INFO_CDINDEX, &v);
+		if ((cdid = g_value_get_string (&v)) != NULL) {
+			totem_playlist_set_cdindex (
+				TOTEM_PLAYLIST (totem->playlist), cdid);
+			on_playlist_change_name (
+				TOTEM_PLAYLIST (totem->playlist), totem);
+		}
+		g_value_unset (&v);
+	}
 }
 
 static void
@@ -1374,18 +1397,6 @@ vol_cb (GtkWidget *widget, Totem *totem)
 	}
 }
 
-static void
-totem_add_cd_track_name (Totem *totem, const char *filename)
-{
-	char *name;
-
-	bacon_video_widget_open (totem->bvw, filename, NULL);
-	name = totem_get_nice_name_for_stream (totem);
-	bacon_video_widget_close (totem->bvw);
-	totem_playlist_add_mrl (totem->playlist, filename, name);
-	g_free (name);
-}
-
 static gboolean
 totem_action_open_files (Totem *totem, char **list)
 {
@@ -1455,7 +1466,7 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 			} else if (strcmp (data, "cd:") == 0) {
 				totem_action_load_media (totem, MEDIA_TYPE_CDDA);
 			} else if (strstr (filename, "cdda:/") != NULL) {
-				totem_add_cd_track_name (totem, filename);
+				totem_playlist_add_mrl (totem->playlist, data, NULL);
 			} else if (totem_playlist_add_mrl (totem->playlist,
 						filename, NULL) != FALSE) {
 				totem_action_add_recent (totem, filename);
@@ -2156,7 +2167,7 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		} else if (g_str_has_prefix (url, "cd:") != FALSE) {
 			totem_action_play_media (totem, MEDIA_TYPE_CDDA);
 		} else if (g_str_has_prefix (url, "cdda:/") != FALSE) {
-			totem_add_cd_track_name (totem, url);
+			totem_playlist_add_mrl (totem->playlist, url, NULL);
 		} else if (totem_playlist_add_mrl (totem->playlist,
 					url, NULL) != FALSE) {
 			totem_action_add_recent (totem, url);
@@ -3417,9 +3428,10 @@ main (int argc, char **argv)
 
 	/* The playlist */
 	totem->playlist = TOTEM_PLAYLIST (totem_playlist_new ());
-
 	if (totem->playlist == NULL)
 		totem_action_exit (totem);
+	g_signal_connect(totem->playlist, "active-name-changed",
+			 G_CALLBACK (on_playlist_change_name), totem);
 
 	/* The rest of the widgets */
 	totem->state = STATE_STOPPED;
