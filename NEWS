@@ -1,5 +1,22 @@
 New features and significant updates in version...
 
+1.1.2:
+* Use MusicBrainz to get Title, Album, etc. for audio CDs
+* Also read 3 letters country-codes for subtitles and languages
+* Remove unexisting local files from the recent files list
+* Have the nautilus properties page set the tab label according to the file type
+* Add the "--print-playing" command-line option that does what it says
+* Allow building the Mozilla plugin with Firefox
+* Avoid deadlocks/CPU burn with the thumbnailer
+* Fix GTK+ only build, remove GNOME dependency on the thumbnailer
+* Make the Exit fullscreen appear on the right screen for Xinerama setups
+* Misc Mozilla and playlist fixes
+
+* Implement per-track CD playback (GStreamer)
+* Improve metadata loading in the nautilus properties page (GStreamer)
+* Implement aspect-ratio switching (GStreamer)
+* Add subtitles/languages labels for audio streams (GStreamer)
+
 1.1.1:
 * Major enhancements to the experimental mozilla plugin
 * Remove use of libnautilus-burn, and list all the CD drives in the main
