@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-15 05:27+0000\n"
-"PO-Revision-Date: 2005-04-15 14:03+0200\n"
+"POT-Creation-Date: 2005-05-06 06:01+0000\n"
+"PO-Revision-Date: 2005-05-06 11:00+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: ../data/playlist.glade.h:1 ../src/totem-playlist.c:1511
+#: ../data/playlist.glade.h:1 ../src/totem-playlist.c:1540
 msgid "Playlist"
 msgstr "Seznam skladeb"
 
@@ -177,7 +177,7 @@ msgstr "Snímků:"
 msgid "N/A"
 msgstr "---"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:1948
+#: ../data/properties.glade.h:17 ../src/totem.c:1950
 msgid "Properties"
 msgstr "Vlastnosti"
 
@@ -246,7 +246,7 @@ msgstr "Přehrávání filmů a písniček"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:2 ../data/totem.glade.h:99
-#: ../src/totem.c:600 ../src/totem.c:3335 ../src/totem.c:3352
+#: ../src/totem.c:602 ../src/totem.c:3350 ../src/totem.c:3367
 msgid "Totem Movie Player"
 msgstr "Přehrávač filmů Totem"
 
@@ -338,11 +338,11 @@ msgstr "Vždy na_vrchu"
 msgid "Always on top"
 msgstr "Vždy navrchu"
 
-#: ../data/totem.glade.h:29
+#: ../data/totem.glade.h:29 ../src/totem-properties-view.c:92
 msgid "Audio"
 msgstr "Zvuk"
 
-#: ../data/totem.glade.h:30 ../src/totem-menu.c:248 ../src/totem-menu.c:269
+#: ../data/totem.glade.h:30 ../src/totem-menu.c:270 ../src/totem-menu.c:291
 msgid "Auto"
 msgstr "Auto"
 
@@ -969,11 +969,11 @@ msgstr "Nemohu načíst rozhraní '%s'."
 msgid "Make sure that Totem is properly installed."
 msgstr "Ujistěte se, že je Totem správně nainstalován."
 
-#: ../src/totem-menu.c:244 ../src/totem-menu.c:266
+#: ../src/totem-menu.c:266 ../src/totem-menu.c:288
 msgid "None"
 msgstr "Žádný"
 
-#: ../src/totem-menu.c:547
+#: ../src/totem-menu.c:597
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "Přehrát disk '%s'"
@@ -1057,19 +1057,15 @@ msgid ""
 "A file named '%s' already exists.  Are you sure you want to overwrite it?"
 msgstr "Soubor pojmenovaný '%s' již existuje. Opravdu jej chcete přepsat?"
 
-#: ../src/totem-playlist.c:1055
-msgid "Filename"
-msgstr "Název souboru"
-
-#: ../src/totem-playlist.c:1502
+#: ../src/totem-playlist.c:1531
 msgid "playlist"
 msgstr "seznam skladeb"
 
-#: ../src/totem-playlist.c:1645
+#: ../src/totem-playlist.c:1670
 msgid "Playlist error"
 msgstr "Chyba seznamu skladeb"
 
-#: ../src/totem-playlist.c:1645
+#: ../src/totem-playlist.c:1670
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "Seznam skladeb '%s' nelze zpracovat, možná je poškozen."
@@ -1112,9 +1108,15 @@ msgstr "Změna výstupu zvuku se projeví až po restartu Totemu."
 msgid "Select Subtitle Font"
 msgstr "Zvolte písmo titulků"
 
-#: ../src/totem-properties-main.c:112
+#. FIXME this should be setting an error?
+#: ../src/totem-properties-main.c:112 ../src/totem-properties-view.c:86
+#: ../src/totem-properties-view.c:94
 msgid "Audio/Video"
 msgstr "Zvuk/video"
+
+#: ../src/totem-properties-view.c:88
+msgid "Video"
+msgstr "Video"
 
 #: ../src/totem-screenshot.c:151 ../src/totem-screenshot.c:162
 #, c-format
@@ -1146,7 +1148,7 @@ msgstr "Typ stínování"
 msgid "Style of bevel around the statusbar text"
 msgstr "Styl ohraničení okolo textu ve stavové liště"
 
-#: ../src/totem-statusbar.c:124 ../src/totem.c:253 ../src/totem.c:584
+#: ../src/totem-statusbar.c:124 ../src/totem.c:253 ../src/totem.c:586
 msgid "Stopped"
 msgstr "Zastaveno"
 
@@ -1193,7 +1195,7 @@ msgstr "Pozastaveno"
 msgid "Totem could not eject the optical media."
 msgstr "Totem nemohl vysunout optické médium."
 
-#: ../src/totem.c:321 ../src/totem.c:348 ../src/totem.c:733 ../src/totem.c:838
+#: ../src/totem.c:321 ../src/totem.c:348 ../src/totem.c:735 ../src/totem.c:840
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem nemohl přehrát '%s'."
@@ -1233,103 +1235,103 @@ msgstr ""
 "zařízení správně nastaveno."
 
 #. Title
-#: ../src/totem.c:577
+#: ../src/totem.c:579
 #, c-format
 msgid "%s - Totem Movie Player"
 msgstr "%s - Přehrávač filmů Totem"
 
-#: ../src/totem.c:591
+#: ../src/totem.c:593
 msgid "No File"
 msgstr "Žádný soubor"
 
-#: ../src/totem.c:627 ../src/totem.c:1863
+#: ../src/totem.c:629 ../src/totem.c:1865
 msgid "Totem"
 msgstr "Totem"
 
-#: ../src/totem.c:1161 ../src/totem.c:1163
+#: ../src/totem.c:1163 ../src/totem.c:1165
 msgid "An error occured"
 msgstr "Došlo k chybě"
 
-#: ../src/totem.c:1484
+#: ../src/totem.c:1486
 msgid "Select Files"
 msgstr "Zvolte soubory"
 
-#: ../src/totem.c:1555
+#: ../src/totem.c:1557
 msgid "Open Location..."
 msgstr "Otevřít umístění..."
 
-#: ../src/totem.c:1821
+#: ../src/totem.c:1823
 msgid "Totem could not display the help contents."
 msgstr "Totem nemohl zobrazit obsah nápovědy."
 
-#: ../src/totem.c:1859
+#: ../src/totem.c:1861
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Přehrávač filmů používající %s"
 
-#: ../src/totem.c:1865 ../src/vanity.c:261
+#: ../src/totem.c:1867 ../src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Copyright © 2002-2005 Bastien Nocera"
 
-#: ../src/totem.c:1870 ../src/vanity.c:266
+#: ../src/totem.c:1872 ../src/vanity.c:266
 msgid "translator-credits"
 msgstr ""
 "Michal Bukovjan <bukm@centrum.cz>\n"
 "Miloslav Trmač <mitr@volny.cz>"
 
-#: ../src/totem.c:1903 ../src/totem.c:1911 ../src/vanity.c:299
+#: ../src/totem.c:1905 ../src/totem.c:1913 ../src/vanity.c:299
 #: ../src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem nemohl zachytit obrazovku s tímto filmem."
 
-#: ../src/totem.c:1911 ../src/vanity.c:307
+#: ../src/totem.c:1913 ../src/vanity.c:307
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Toto by se nemělo stát; ohlaste prosím chybu."
 
-#: ../src/totem.c:1938
+#: ../src/totem.c:1940
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem nemohl zobrazit okno vlastností filmu."
 
-#: ../src/totem.c:1938
+#: ../src/totem.c:1940
 msgid "Make sure that Totem is correctly installed."
 msgstr "Ujistěte se, že je Totem správně nainstalován."
 
-#: ../src/totem.c:2024
+#: ../src/totem.c:2026
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem se nemohl posouvat v '%s'."
 
-#: ../src/totem.c:3185
+#: ../src/totem.c:3200
 msgid "Totem could not startup."
 msgstr "Totem se nemohl spustit."
 
 # :-)
-#: ../src/totem.c:3185
+#: ../src/totem.c:3200
 msgid "No reason."
 msgstr "Žádný důvod."
 
-#: ../src/totem.c:3336
+#: ../src/totem.c:3351
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Nemohu inicializovat knihovny podporující thready."
 
-#: ../src/totem.c:3336
+#: ../src/totem.c:3351
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Zkontrolujte svou instalaci systému. Totem nyní skončí."
 
-#: ../src/totem.c:3359
+#: ../src/totem.c:3374
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem nemohl inicializovat rozhraní pro nastavení."
 
-#: ../src/totem.c:3359
+#: ../src/totem.c:3374
 msgid "Make sure that GNOME is properly installed."
 msgstr "Ujistěte se, že je GNOME správně nainstalováno."
 
 #. Main window
-#: ../src/totem.c:3386
+#: ../src/totem.c:3401
 msgid "main window"
 msgstr "hlavní okno"
 
-#: ../src/totem.c:3391
+#: ../src/totem.c:3406
 msgid "video popup menu"
 msgstr "kotextové menu videa"
 
@@ -1409,11 +1411,11 @@ msgstr ""
 msgid "Totem Video Window"
 msgstr "Video okno Totemu"
 
-#: ../src/backend/bacon-video-widget-gst.c:1786
+#: ../src/backend/bacon-video-widget-gst.c:1792
 msgid "Failed to retrieve working directory"
 msgstr "Nemohu získat pracovní adresář"
 
-#: ../src/backend/bacon-video-widget-gst.c:3123
+#: ../src/backend/bacon-video-widget-gst.c:3192
 msgid "Failed to create a GStreamer play object"
 msgstr "Nemohu vytvořit objekt GStreamer pro přehrávání"
 
@@ -1543,19 +1545,20 @@ msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Tento soubor obsahuje jen zvuk a zvukový výstup není k dispozici."
 
 #: ../src/backend/bacon-video-widget-xine.c:3418
+#: ../src/backend/bacon-video-widget-xine.c:3481
 #, c-format
 msgid "Language %d"
 msgstr "Jazyk %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3506
+#: ../src/backend/bacon-video-widget-xine.c:3517
 msgid "Movie is not playing."
 msgstr "Film se nepřehrává."
 
-#: ../src/backend/bacon-video-widget-xine.c:3515
+#: ../src/backend/bacon-video-widget-xine.c:3526
 msgid "No video to capture."
 msgstr "Žádné video k zachycení."
 
-#: ../src/backend/bacon-video-widget-xine.c:3523
+#: ../src/backend/bacon-video-widget-xine.c:3534
 msgid "Video codec is not handled."
 msgstr "Kodek videa není obsloužen."
 
@@ -1671,6 +1674,9 @@ msgstr "Nemohu zapsat parser: %s"
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "Nemohu otevřít soubor '%s': %s"
+
+#~ msgid "Filename"
+#~ msgstr "Název souboru"
 
 #~ msgid "Select subtitle rendering font"
 #~ msgstr "Zvolit písmo vykreslování titulků"
