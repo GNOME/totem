@@ -858,8 +858,13 @@ totem_pl_parser_add_pls (TotemPlParser *parser, const char *url, gpointer data)
 	lines = g_strsplit (contents, split_char, 0);
 	g_free (contents);
 
-	/* [parser] */
-	if (g_ascii_strncasecmp (lines[0], "[playlist]",
+	/* [playlist] */
+	i = 0;
+	while (lines[i] != NULL && strcmp (lines[i], "") == 0)
+		i++;
+	
+	if (lines[i] == NULL 
+			|| g_ascii_strncasecmp (lines[i], "[playlist]",
 				(gsize)strlen ("[playlist]")) != 0)
 		goto bail;
 

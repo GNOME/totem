@@ -1,5 +1,11 @@
 2005-05-07  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-pl-parser.c: (totem_pl_parser_add_pls):
+	Read further in the .pls playlists to find the header
+	(Patch by jonathan@kaolin.hn.org) (Closes: #303347)
+
+2005-05-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (update_fullscreen_size), (move_popups),
 	(size_changed_cb): fix the exit fullscreen button not appearing on the
 	right screen (Closes: #302418) (backported from HEAD)
