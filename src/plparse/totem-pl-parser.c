@@ -1413,9 +1413,6 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	if (parser->priv->recurse_level > RECURSE_LEVEL_MAX)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
-	if (totem_pl_parser_ignore (parser, url) != FALSE)
-		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
-
 	mimetype = gnome_vfs_get_mime_type (url);
 	if (!mimetype)
 		mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data);
@@ -1463,6 +1460,10 @@ totem_pl_parser_parse (TotemPlParser *parser, const char *url,
 {
 	g_return_val_if_fail (TOTEM_IS_PL_PARSER (parser), TOTEM_PL_PARSER_RESULT_UNHANDLED);
 	g_return_val_if_fail (url != NULL, TOTEM_PL_PARSER_RESULT_UNHANDLED);
+
+	if (totem_pl_parser_ignore (parser, url) != FALSE)
+		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
+
 	g_return_val_if_fail (strstr (url, "://") != NULL,
 			TOTEM_PL_PARSER_RESULT_UNHANDLED);
 

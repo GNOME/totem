@@ -1495,8 +1495,6 @@ totem_playlist_map (GtkWidget *widget)
 
 	g_return_if_fail (widget != NULL);
 
-	g_message ("map");
-
 	x = playlist->_priv->x;
 	y = playlist->_priv->y;
 

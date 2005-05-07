@@ -23,6 +23,9 @@ totem_create_full_path (const char *path)
 
 	g_return_val_if_fail (path != NULL, NULL);
 
+	if (g_str_has_prefix (path, "cdda:") != FALSE)
+		return g_strdup (path);
+
 	if (strstr (path, "://") != NULL)
 		return g_strdup (path);
 

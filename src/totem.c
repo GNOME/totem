@@ -514,14 +514,14 @@ totem_get_nice_name_for_stream (Totem *totem)
 	GValue value = { 0, };
 
 	bacon_video_widget_get_metadata (totem->bvw, BVW_INFO_TITLE, &value);
-	title = g_strdup (g_value_get_string (&value));
+	title = g_value_dup_string (&value);
 	g_value_unset (&value);
 
 	if (title == NULL)
 		return NULL;
 
 	bacon_video_widget_get_metadata (totem->bvw, BVW_INFO_ARTIST, &value);
-	artist = g_strdup (g_value_get_string (&value));
+	artist = g_value_dup_string (&value);
 	g_value_unset (&value);
 
 	if (artist == NULL)
@@ -716,7 +716,6 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		widget = glade_xml_get_widget (totem->xml_popup, "trcm_volume_up");                gtk_widget_set_sensitive (widget, caps);
 		widget = glade_xml_get_widget (totem->xml_popup, "trcm_volume_down");
 		gtk_widget_set_sensitive (widget, caps);
-
 
 		/* Take a screenshot */
 		widget = glade_xml_get_widget (totem->xml,
@@ -1166,11 +1165,11 @@ on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 
 		bacon_video_widget_get_metadata (totem->bvw, BVW_INFO_CDINDEX, &v);
 		if ((cdid = g_value_get_string (&v)) != NULL) {
-			totem_playlist_set_cdindex (
-				TOTEM_PLAYLIST (totem->playlist), cdid);
-			on_playlist_change_name (
-				TOTEM_PLAYLIST (totem->playlist), totem);
+			totem_playlist_set_cdindex
+				(TOTEM_PLAYLIST (totem->playlist), cdid);
 		}
+		on_playlist_change_name
+			(TOTEM_PLAYLIST (totem->playlist), totem);
 		g_value_unset (&v);
 	}
 }
