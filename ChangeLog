@@ -1,3 +1,13 @@
+2005-05-11  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/backend/bacon-video-widget-gst.c:
+	(bacon_video_widget_realize), (bacon_video_widget_show),
+	(bacon_video_widget_hide), (bacon_video_widget_class_init),
+	(got_source):
+	  Allow hiding of the video widget in the backend. No frontend
+	  use for this yet, but who knows... Also unref return values
+	  of g_object_get().
+
 2005-05-11  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c: (totem_action_remote): don't show the fullscreen popup

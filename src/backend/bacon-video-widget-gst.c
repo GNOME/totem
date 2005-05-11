@@ -275,7 +275,7 @@ bacon_video_widget_realize (GtkWidget * widget)
   widget->window = gdk_window_new (gtk_widget_get_parent_window (widget),
 				   &attributes, attributes_mask);
   gdk_window_set_user_data (widget->window, widget);
-  gdk_window_show (widget->window);
+  //gdk_window_show (widget->window);
 
   /* Creating our video window */
   attributes.window_type = GDK_WINDOW_CHILD;
@@ -294,7 +294,7 @@ bacon_video_widget_realize (GtkWidget * widget)
   bvw->priv->video_window = gdk_window_new (widget->window,
 				            &attributes, attributes_mask);
   gdk_window_set_user_data (bvw->priv->video_window, widget);
-  gdk_window_show (bvw->priv->video_window);
+  //gdk_window_show (bvw->priv->video_window);
 
   widget->style = gtk_style_attach (widget->style, widget->window);
 
@@ -324,6 +324,30 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 
   if (GTK_WIDGET_CLASS (parent_class)->unrealize)
     GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
+}
+
+static void
+bacon_video_widget_show (GtkWidget *widget)
+{
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+
+  gdk_window_show (widget->window);
+  gdk_window_show (bvw->priv->video_window);
+
+  if (GTK_WIDGET_CLASS (parent_class)->show)
+    GTK_WIDGET_CLASS (parent_class)->show (widget);
+}
+
+static void
+bacon_video_widget_hide (GtkWidget *widget)
+{
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+
+  gdk_window_hide (widget->window);
+  gdk_window_hide (bvw->priv->video_window);
+
+  if (GTK_WIDGET_CLASS (parent_class)->hide)
+    GTK_WIDGET_CLASS (parent_class)->hide (widget);
 }
 
 static gboolean
@@ -569,6 +593,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   widget_class->size_allocate = bacon_video_widget_size_allocate;
   widget_class->realize = bacon_video_widget_realize;
   widget_class->unrealize = bacon_video_widget_unrealize;
+  widget_class->show = bacon_video_widget_show;
+  widget_class->hide = bacon_video_widget_hide;
   widget_class->expose_event = bacon_video_widget_expose_event;
   widget_class->motion_notify_event = bacon_video_widget_motion_notify;
   widget_class->button_press_event = bacon_video_widget_button_press;
@@ -1069,10 +1095,10 @@ got_source (GObject    *play,
     return;
 
   klass = G_OBJECT_GET_CLASS (source);
-  if (!g_object_class_find_property (klass, "device"))
-    return;
-
-  g_object_set (source, "device", bvw->priv->media_device, NULL);
+  if (g_object_class_find_property (klass, "device")) {
+    g_object_set (source, "device", bvw->priv->media_device, NULL);
+  }
+  g_object_unref (G_OBJECT (source));
 }
 
 static gboolean
