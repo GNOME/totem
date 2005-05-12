@@ -51,8 +51,8 @@
 #include "video-utils.h"
 #include "bacon-resize.h"
 
-#define DEFAULT_HEIGHT 315
-#define DEFAULT_WIDTH 420
+#define DEFAULT_HEIGHT 180
+#define DEFAULT_WIDTH 240
 #define CONFIG_FILE ".gnome2"G_DIR_SEPARATOR_S"totem_config"
 
 /* Signals */
@@ -238,6 +238,8 @@ static gboolean bacon_video_widget_motion_notify (GtkWidget *widget,
 		GdkEventMotion *event);
 static gboolean bacon_video_widget_button_press (GtkWidget *widget,
 		GdkEventButton *event);
+static void bacon_video_widget_show (GtkWidget *widget);
+static void bacon_video_widget_hide (GtkWidget *widget);
 
 static void bacon_video_widget_size_request (GtkWidget *widget,
 		GtkRequisition *requisition);
@@ -279,6 +281,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 	widget_class->expose_event = bacon_video_widget_expose;
 	widget_class->motion_notify_event = bacon_video_widget_motion_notify;
 	widget_class->button_press_event = bacon_video_widget_button_press;
+	widget_class->show = bacon_video_widget_show;
+	widget_class->hide = bacon_video_widget_hide;
 
 	/* GObject */
 	object_class->set_property = bacon_video_widget_set_property;
@@ -1701,6 +1705,28 @@ bacon_video_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 		                (* GTK_WIDGET_CLASS (parent_class)->button_press_event) (widget, event);
 
 	return FALSE;
+}
+
+static void
+bacon_video_widget_show (GtkWidget *widget)
+{
+	BaconVideoWidget *bvw = (BaconVideoWidget *) widget;
+
+	gdk_window_show (bvw->priv->video_window);
+
+	if (GTK_WIDGET_CLASS (parent_class)->show != NULL)
+		(* GTK_WIDGET_CLASS (parent_class)->show) (widget);
+}
+
+static void
+bacon_video_widget_hide (GtkWidget *widget)
+{
+	BaconVideoWidget *bvw = (BaconVideoWidget *) widget;
+
+	gdk_window_hide (bvw->priv->video_window);
+
+	if (GTK_WIDGET_CLASS (parent_class)->hide != NULL)
+		(* GTK_WIDGET_CLASS (parent_class)->hide) (widget);
 }
 
 static void

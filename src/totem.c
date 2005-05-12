@@ -2206,7 +2206,7 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 	}
 
 	if (handled != FALSE &&
-			gtk_window_is_active (totem->win)) {
+			gtk_window_is_active (GTK_WINDOW (totem->win))) {
 		on_video_motion_notify_event (NULL, NULL, totem);
 	}
 }
