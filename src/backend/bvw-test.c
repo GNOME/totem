@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
 	XInitThreads();
 	gtk_init (&argc, &argv);
 	g_thread_init (NULL);
+	bacon_video_widget_init_backend (NULL, NULL);
 	gdk_threads_init ();
 
 	win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
