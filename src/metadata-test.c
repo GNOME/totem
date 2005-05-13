@@ -177,6 +177,7 @@ int main (int argc, char **argv)
 	gdk_threads_init ();
 	options[0].arg = bacon_video_widget_get_popt_table ();
 	g_type_init ();
+	gnome_vfs_init ();
 	bacon_video_widget_init_backend (&argc, &argv);
 
 	widget = bacon_video_widget_new (-1, -1, BVW_USE_TYPE_METADATA, &error);

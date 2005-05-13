@@ -1315,7 +1315,7 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 	}
 
 	sigdata = g_new0 (signal_data, 1);
-	sigdata->signal = MESSAGE_ASYNC;
+	sigdata->signal = ERROR_ASYNC;
 	sigdata->msg = message;
 	sigdata->num = num;
 	g_async_queue_push (bvw->priv->queue, sigdata);
@@ -1418,6 +1418,7 @@ xine_error (BaconVideoWidget *bvw, GError **error)
 	while ((data = g_async_queue_try_pop (bvw->priv->queue)) != NULL)
 	{
 		g_assert (data->signal == MESSAGE_ASYNC
+				|| data->signal == ERROR_ASYNC
 				|| data->signal == BUFFERING_ASYNC
 				|| data->signal == REDIRECT_ASYNC
 				|| data->signal == EOS_ASYNC);
@@ -1657,6 +1658,8 @@ bacon_video_widget_new (int width, int height,
 			bvw->priv->ao_driver, bvw->priv->vo_driver);
 	setup_config_stream (bvw);
 	bvw->priv->ev_queue = xine_event_new_queue (bvw->priv->stream);
+	xine_event_create_listener_thread (bvw->priv->ev_queue,
+			xine_event, (void *) bvw);
 
 	return GTK_WIDGET (bvw);
 }

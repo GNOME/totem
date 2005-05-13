@@ -339,6 +339,7 @@ int main (int argc, char *argv[])
 	gtk_init (&argc, &argv);
 #endif
 	bacon_video_widget_init_backend (&argc, &argv);
+	gnome_vfs_init ();
 
 	if (!strcmp (argv[1], "-s")) {
 		input = argv[3];
