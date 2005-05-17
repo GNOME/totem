@@ -14,14 +14,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  *
- * The Totem project hereby grant permission for non-gpl compatible GStreamer
- * plugins to be used and distributed together with GStreamer and Totem. This
- * permission are above and beyond the permissions granted by the GPL license
- * Totem is covered by.
- *
- * Monday 7th February 2005: Christian Schaller: Add excemption clause.
- * See license_change file for details.
- *
  * Authors:
  *   James Willcox <jwillcox@cs.indiana.edu>
  */
@@ -651,6 +643,8 @@ egg_recent_model_monitor_list (EggRecentModel *model, GList *list)
 static gboolean
 egg_recent_model_changed_timeout (EggRecentModel *model)
 {
+	model->priv->changed_timeout = 0;
+
 	egg_recent_model_changed (model);
 
 	return FALSE;
@@ -936,6 +930,10 @@ static void
 egg_recent_model_finalize (GObject *object)
 {
 	EggRecentModel *model = EGG_RECENT_MODEL (object);
+
+	if (model->priv->changed_timeout > 0) {
+		g_source_remove (model->priv->changed_timeout);
+	}
 
 	egg_recent_model_monitor (model, FALSE);
 
