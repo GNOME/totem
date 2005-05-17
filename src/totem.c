@@ -1250,6 +1250,11 @@ update_current_time (BaconVideoWidget *bvw,
 
 	if (totem->seek_lock == FALSE)
 	{
+		gtk_adjustment_set_value (totem->seekadj,
+				current_position * 65535);
+		gtk_adjustment_set_value (totem->fs_seekadj,
+				current_position * 65535);
+
 		if (stream_length == 0 && totem->mrl != NULL)
 		{
 			totem_statusbar_set_time_and_length
@@ -1261,11 +1266,6 @@ update_current_time (BaconVideoWidget *bvw,
 				(int) (current_time / 1000),
 				(int) (stream_length / 1000));
 		}
-
-		gtk_adjustment_set_value (totem->seekadj,
-				current_position * 65535);
-		gtk_adjustment_set_value (totem->fs_seekadj,
-				current_position * 65535);
 
 		totem_time_label_set_time
 			(TOTEM_TIME_LABEL (totem->tcw_time_label),

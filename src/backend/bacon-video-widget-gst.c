@@ -1031,7 +1031,7 @@ got_stream_length (GstElement * play, gint64 length_nanos,
 
   bvw->priv->stream_length = (gint64) length_nanos / GST_MSECOND;
   
-  g_signal_emit (G_OBJECT (bvw), bvw_table_signals[SIGNAL_GOT_METADATA], 0, NULL);
+  //g_signal_emit (G_OBJECT (bvw), bvw_table_signals[SIGNAL_GOT_METADATA], 0, NULL);
 }
 
 static void
