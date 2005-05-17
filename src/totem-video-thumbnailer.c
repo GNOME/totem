@@ -35,6 +35,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <libgnomevfs/gnome-vfs-init.h>
 #include "bacon-video-widget.h"
 
 /* #define THUMB_DEBUG */
