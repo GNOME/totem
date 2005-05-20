@@ -142,36 +142,35 @@ cd_cache_new (const char *dev,
 	      GError     **error)
 {
   CdCache *cache;
-  char *mountpoint = NULL, *device;
+  char *mountpoint = NULL, *device, *local;
   GnomeVFSVolumeMonitor *mon;
   GnomeVFSDrive *drive = NULL;
   GList *list, *or;
   gboolean is_dir;
 
   if (g_str_has_prefix (dev, "file://") != FALSE)
-    device = g_filename_from_uri (dev, NULL, NULL);
+    local = g_filename_from_uri (dev, NULL, NULL);
   else
-    device = g_strdup (dev);
+    local = g_strdup (dev);
 
-  if (device == NULL)
-    return NULL;
+  g_assert (local != NULL);
 
-  is_dir = g_file_test (device, G_FILE_TEST_IS_DIR);
+  is_dir = g_file_test (local, G_FILE_TEST_IS_DIR);
 
   if (is_dir) {
     cache = g_new0 (CdCache, 1);
-    cache->mountpoint = device;
+    cache->mountpoint = local;
     cache->fd = -1;
     cache->is_media = FALSE;
 
     return cache;
   }
 
-  g_free (device);
-
   /* retrieve mountpoint (/etc/fstab). We could also use HAL for this,
    * I think (gnome-volume-manager does that). */
-  if (!(device = get_device (dev, error)))
+  device = get_device (local, error);
+  g_free (local);
+  if (!device)
     return NULL;
   mon = gnome_vfs_get_volume_monitor ();
   for (or = list = gnome_vfs_volume_monitor_get_connected_drives (mon);
@@ -497,6 +496,22 @@ cd_cache_disc_is_dvd (CdCache *cache,
   return MEDIA_TYPE_DATA;
 }
 
+static char *
+totem_cd_mrl_from_type (const char *scheme, const char *dir)
+{
+  char *retval;
+
+  if (g_str_has_prefix (dir, "file://") != FALSE) {
+    char *local;
+    local = g_filename_from_uri (dir, NULL, NULL);
+    retval = g_strdup_printf ("%s://%s", scheme, local);
+    g_free (local);
+  } else {
+    retval = g_strdup_printf ("%s://%s", scheme, dir);
+  }
+  return retval;
+}
+
 MediaType
 totem_cd_detect_type_from_dir (const char *dir, char **url, GError **error)
 {
@@ -523,23 +538,9 @@ totem_cd_detect_type_from_dir (const char *dir, char **url, GError **error)
   }
 
   if (type == MEDIA_TYPE_DVD) {
-    if (g_str_has_prefix (dir, "file://") != FALSE) {
-      char *local;
-      local = g_filename_from_uri (dir, NULL, NULL);
-      *url = g_strdup_printf ("dvd://%s", local);
-      g_free (local);
-    } else {
-      *url = g_strdup_printf ("dvd://%s", dir);
-    }
+    *url = totem_cd_mrl_from_type ("dvd", dir);
   } else if (type == MEDIA_TYPE_VCD) {
-    if (g_str_has_prefix (dir, "file://") != FALSE) {
-      char *local;
-      local = g_filename_from_uri (dir, NULL, NULL);
-      *url = g_strdup_printf ("vcd://%s", local);
-      g_free (local);
-    } else {
-      *url = g_strdup_printf ("vcd://%s", dir);
-    }
+    *url = totem_cd_mrl_from_type ("vcd", dir);
   }
 
   return type;
@@ -554,7 +555,9 @@ totem_cd_detect_type (const char *device,
 
   if (!(cache = cd_cache_new (device, error)))
     return MEDIA_TYPE_ERROR;
-  if ((type = cd_cache_disc_is_cdda (cache, error)) == MEDIA_TYPE_DATA &&
+
+  type = cd_cache_disc_is_cdda (cache, error);
+  if ((type == MEDIA_TYPE_DATA || type == MEDIA_TYPE_ERROR) &&
       (type = cd_cache_disc_is_vcd (cache, error)) == MEDIA_TYPE_DATA &&
       (type = cd_cache_disc_is_dvd (cache, error)) == MEDIA_TYPE_DATA) {
     /* crap, nothing found */
@@ -562,6 +565,26 @@ totem_cd_detect_type (const char *device,
   cd_cache_free (cache);
 
   return type;
+}
+
+MediaType
+totem_cd_detect_type_with_url (const char  *device,
+			       char       **url,
+			       GError     **error)
+{
+  MediaType type;
+
+  type = totem_cd_detect_type (device, error);
+  switch (type) {
+  case MEDIA_TYPE_DVD:
+    *url = totem_cd_mrl_from_type ("dvd", device);
+    return type;
+  case MEDIA_TYPE_VCD:
+    *url = totem_cd_mrl_from_type ("vcd", device);
+    return type;
+  default:
+    return type;
+  }
 }
 
 const char *

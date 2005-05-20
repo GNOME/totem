@@ -1029,6 +1029,23 @@ parse_asx_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 }
 
 static TotemPlParserResult
+totem_pl_parser_add_block (TotemPlParser *parser, const char *url, gpointer data)
+{
+	MediaType type;
+	char *media_url;
+
+	type = totem_cd_detect_type_with_url (url, &media_url, NULL);
+	if (type == MEDIA_TYPE_DATA || media_url == NULL)
+		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
+	else if (type == MEDIA_TYPE_ERROR)
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+
+	totem_pl_parser_add_one_url (parser, media_url, NULL);
+	g_free (media_url);
+	return TOTEM_PL_PARSER_RESULT_SUCCESS;
+}
+
+static TotemPlParserResult
 totem_pl_parser_add_asx (TotemPlParser *parser, const char *url, gpointer data)
 {
 	xmlDocPtr doc;
@@ -1340,6 +1357,7 @@ static PlaylistTypes special_types[] = {
 	{ "x-directory/normal", totem_pl_parser_add_directory },
 	{ "video/x-ms-wvx", totem_pl_parser_add_asx },
 	{ "audio/x-ms-wax", totem_pl_parser_add_asx },
+	{ "x-special/device-block", totem_pl_parser_add_block },
 };
 
 /* These ones are "dual" types, might be a video, might be a parser */
