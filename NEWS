@@ -4,14 +4,24 @@ New features and significant updates in version...
 * Use MusicBrainz to get Title, Album, etc. for audio CDs
 * Also read 3 letters country-codes for subtitles and languages
 * Remove unexisting local files from the recent files list
+* Make subtitles and languages menus unsensitive rather than their submenus
 * Have the nautilus properties page set the tab label according to the file type
 * Add the "--print-playing" command-line option that does what it says
+* Desensitise zoom menu items when boundaries are reached
 * Allow building the Mozilla plugin with Firefox
 * Avoid deadlocks/CPU burn with the thumbnailer
 * Fix GTK+ only build, remove GNOME dependency on the thumbnailer
 * Make the Exit fullscreen appear on the right screen for Xinerama setups
 * Misc Mozilla and playlist fixes
+* Fix some playlist files from winamp.com not being parsed properly
+* Don't show the fullscreen popups when the video window isn't focused
+* Fix crash with some recent files
+* Allow to pass a device directly to the playlist, for DVD and VCD
 
+* Better error messages for some types of input (xine-lib)
+* Fix crashes when zooming out too far (xine-lib)
+
+* Prevent window flickering with some files (GStreamer)
 * Implement per-track CD playback (GStreamer)
 * Improve metadata loading in the nautilus properties page (GStreamer)
 * Implement aspect-ratio switching (GStreamer)
