@@ -355,6 +355,7 @@ totem_languages_update (Totem *totem, GList *list)
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), lang_menu);
 		totem->languages = lang_menu;
 	}
+	gtk_widget_set_sensitive (item, lang_menu != NULL);
 
 	totem_g_list_deep_free (totem->language_list);
 	totem->language_list = list;
@@ -385,6 +386,7 @@ totem_subtitles_update (Totem *totem, GList *list)
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), sub_menu);
 		totem->subtitles = sub_menu;
 	}
+	gtk_widget_set_sensitive (item, sub_menu != NULL);
 
 	totem_g_list_deep_free (totem->subtitles_list);
 	totem->subtitles_list = list;
