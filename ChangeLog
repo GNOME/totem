@@ -1,3 +1,11 @@
+2005-05-22  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-xine.c: (bacon_video_widget_set_zoom):
+	* src/totem.c: (totem_action_zoom), (totem_action_zoom_relative),
+	(totem_action_zoom_reset): avoid crashes when zoom rate gets negative
+	(Closes: #305137), desensitise menu items when boundaries are reached
+	(from HEAD)
+
 2005-05-20  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-video-thumbnailer.c: (main): consider it finished after

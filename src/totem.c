@@ -84,6 +84,9 @@
 
 #define ZOOM_IN_OFFSET 1
 #define ZOOM_OUT_OFFSET -1
+#define ZOOM_UPPER 200
+#define ZOOM_RESET 100
+#define ZOOM_LOWER 10
 
 #define FULLSCREEN_POPUP_TIMEOUT 5 * 1000
 
@@ -829,18 +832,59 @@ totem_action_seek_relative (Totem *totem, int off_sec)
 }
 
 static void
+totem_action_zoom (Totem *totem, int zoom)
+{
+	GtkWidget *item;
+
+	if (zoom < ZOOM_LOWER || zoom > ZOOM_UPPER)
+		return;
+
+	bacon_video_widget_set_zoom (totem->bvw, zoom);
+
+	if (zoom == ZOOM_UPPER) {
+		item = glade_xml_get_widget
+			(totem->xml, "tmw_zoom_in_menu_item");
+		gtk_widget_set_sensitive (item, FALSE);
+	} else if (zoom == ZOOM_LOWER) {
+		item = glade_xml_get_widget
+			(totem->xml, "tmw_zoom_out_menu_item");
+		gtk_widget_set_sensitive (item, FALSE);
+	} else if (zoom == ZOOM_RESET) {
+		item = glade_xml_get_widget
+			(totem->xml, "tmw_zoom_reset_menu_item");
+		gtk_widget_set_sensitive (item, FALSE);
+		item = glade_xml_get_widget
+			(totem->xml, "tmw_zoom_in_menu_item");
+		gtk_widget_set_sensitive (item, TRUE);
+		item = glade_xml_get_widget
+			(totem->xml, "tmw_zoom_out_menu_item");
+		gtk_widget_set_sensitive (item, TRUE);
+	} else {
+		item = glade_xml_get_widget
+			(totem->xml, "tmw_zoom_in_menu_item");
+		gtk_widget_set_sensitive (item, TRUE);
+		item = glade_xml_get_widget
+			(totem->xml, "tmw_zoom_out_menu_item");
+		gtk_widget_set_sensitive (item, TRUE);
+		item = glade_xml_get_widget
+			(totem->xml, "tmw_zoom_reset_menu_item");
+		gtk_widget_set_sensitive (item, TRUE);
+	}
+}
+
+static void
 totem_action_zoom_relative (Totem *totem, int off_pct)
 {
 	int zoom;
 
 	zoom = bacon_video_widget_get_zoom (totem->bvw);
-	bacon_video_widget_set_zoom (totem->bvw, zoom + off_pct);
+	totem_action_zoom (totem, zoom + off_pct);
 }
 
 static void
 totem_action_zoom_reset (Totem *totem)
 {
-	bacon_video_widget_set_zoom (totem->bvw, 100);
+	totem_action_zoom (totem, 100);
 }
 
 void
