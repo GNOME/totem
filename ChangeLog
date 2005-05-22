@@ -1,5 +1,13 @@
 2005-05-22  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_set_zoom):
+	* src/totem.c: (totem_action_zoom), (totem_action_zoom_relative),
+	(totem_action_zoom_reset): avoid crashes when zoom rate gets negative
+	(Closes: #305137), desensitise menu items when boundaries are reached
+
+2005-05-22  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.glade:
 	* src/totem-menu.c: (totem_languages_update),
 	(totem_subtitles_update): gray out the menu item rather than
