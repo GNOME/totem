@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-30 16:08+0200\n"
+"POT-Creation-Date: 2005-05-24 13:36+0200\n"
 "PO-Revision-Date: 2005-03-22 17:07+0200\n"
 "Last-Translator: Canonical Ltd <translations@canonical.com>\n"
 "Language-Team: Xhosa <xh-translate@ubuntu.com>\n"
@@ -175,7 +175,7 @@ msgstr "i-Framerate:"
 msgid "N/A"
 msgstr "i-N/A"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:2004
+#: ../data/properties.glade.h:17 ../src/totem.c:2048
 msgid "Properties"
 msgstr "Iimpawu"
 
@@ -244,7 +244,7 @@ msgstr "Dlala imifanekiso-bhanyabhanya neengoma"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:2 ../data/totem.glade.h:102
-#: ../src/totem.c:582 ../src/totem.c:3420
+#: ../src/totem.c:585 ../src/totem.c:3470 ../src/totem.c:3487
 msgid "Totem Movie Player"
 msgstr "Into Edlala Ibhanya-bhanya le-Totem"
 
@@ -1097,20 +1097,20 @@ msgstr ""
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Le yifayili yesandi kuphela, akukho ziphumo zsandi."
 
-#: ../src/bacon-video-widget-xine.c:3397
+#: ../src/bacon-video-widget-xine.c:3398
 #, c-format
 msgid "Language %d"
 msgstr "Ulwimi %d"
 
-#: ../src/bacon-video-widget-xine.c:3480
+#: ../src/bacon-video-widget-xine.c:3481
 msgid "Movie is not playing."
 msgstr "Umfanekiso-bhanyabhanya awudlali."
 
-#: ../src/bacon-video-widget-xine.c:3489
+#: ../src/bacon-video-widget-xine.c:3490
 msgid "No video to capture."
 msgstr "Akukho vidiyo yokubamba."
 
-#: ../src/bacon-video-widget-xine.c:3497
+#: ../src/bacon-video-widget-xine.c:3498
 msgid "Video codec is not handled."
 msgstr "Ividiyo codec ayiphathwanga."
 
@@ -1277,9 +1277,8 @@ msgid "Filename"
 msgstr "Igama lefayili"
 
 #: ../src/totem-playlist.c:1502
-#, fuzzy
 msgid "playlist"
-msgstr "Uludwe lokudlala"
+msgstr "uludwe lokudlala"
 
 #: ../src/totem-playlist.c:1645
 msgid "Playlist error"
@@ -1372,37 +1371,37 @@ msgstr ""
 "Indlela ethile yokuthambekisa umphetho ngokujikeleze umbhalo womgca "
 "obonakalisa ubume obuqhubekayo"
 
-#: ../src/totem-statusbar.c:124 ../src/totem.c:253 ../src/totem.c:566
+#: ../src/totem-statusbar.c:124 ../src/totem.c:256 ../src/totem.c:569
 msgid "Stopped"
 msgstr "Imile"
 
-#: ../src/totem-statusbar.c:141
+#: ../src/totem-statusbar.c:142
 msgid "0:00 / 0:00"
 msgstr "i-0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:166
+#: ../src/totem-statusbar.c:167
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (Iyaphephezela)"
 
 #. Elapsed / Total Length
-#: ../src/totem-statusbar.c:173 ../src/totem-time-label.c:70
+#: ../src/totem-statusbar.c:174 ../src/totem-time-label.c:70
 #, c-format
 msgid "%s / %s"
 msgstr "i-%s / %s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:176
+#: ../src/totem-statusbar.c:177
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "Funa uku %s / %s"
 
-#: ../src/totem-statusbar.c:234
+#: ../src/totem-statusbar.c:235
 msgid "Buffering"
 msgstr "Igcina ithutyana"
 
 #. eg: 75 %
-#: ../src/totem-statusbar.c:237
+#: ../src/totem-statusbar.c:238
 #, c-format
 msgid "%d %%"
 msgstr "i-%d %%"
@@ -1411,26 +1410,26 @@ msgstr "i-%d %%"
 msgid "None"
 msgstr "Akukho nanye"
 
-#: ../src/totem.c:243
+#: ../src/totem.c:246
 msgid "Playing"
 msgstr "Iyadlala"
 
-#: ../src/totem.c:248
+#: ../src/totem.c:251
 msgid "Paused"
 msgstr "Inqumamile"
 
-#: ../src/totem.c:289
+#: ../src/totem.c:292
 msgid "Totem could not eject the optical media."
 msgstr ""
 "i-Totem ayikwazanga ukukhupha isixhobo sokubona esiphathekayo sokugcina "
 "ulwazi."
 
-#: ../src/totem.c:314 ../src/totem.c:341 ../src/totem.c:715 ../src/totem.c:820
+#: ../src/totem.c:317 ../src/totem.c:344 ../src/totem.c:718 ../src/totem.c:823
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "I -Totem ayikwazanga kudllalai '%s'."
 
-#: ../src/totem.c:367
+#: ../src/totem.c:370
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1439,7 +1438,7 @@ msgstr ""
 "i-Totem ayinakho ukudlala olu hlobo lwesixhobo sokugcina ulwazi (%s) ngokuba "
 "awunazo izingenisi ezifanelekileyo zokuyiphatha."
 
-#: ../src/totem.c:368
+#: ../src/totem.c:371
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1447,7 +1446,7 @@ msgstr ""
 "Nceda useke izixhobo ezifunekayo zezingenisi uze ke uyiqale kwakhona i-Totem "
 "ukuze ubenakho ukudlala esi sixhobo sokugcina ulwazi."
 
-#: ../src/totem.c:376
+#: ../src/totem.c:379
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1456,7 +1455,7 @@ msgstr ""
 "i-Totem ayikwazanga kudlala esi sixhobo sokugcina ulwazi (%s) noxa "
 "isingenisi sokuyiphatha sikhona."
 
-#: ../src/totem.c:377
+#: ../src/totem.c:380
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1465,104 +1464,103 @@ msgstr ""
 "ngokuchanekileyo."
 
 #. Title
-#: ../src/totem.c:559
+#: ../src/totem.c:562
 #, c-format
 msgid "%s - Totem Movie Player"
 msgstr "%s - Isidlali soMfanekiso-bhanyabhanya se-Totem"
 
-#: ../src/totem.c:573
+#: ../src/totem.c:576
 msgid "No file"
 msgstr "Akukho fayili"
 
-#: ../src/totem.c:609 ../src/totem.c:1919
+#: ../src/totem.c:612 ../src/totem.c:1963
 msgid "Totem"
 msgstr "i-Totem"
 
-#: ../src/totem.c:1174 ../src/totem.c:1176
+#: ../src/totem.c:1218 ../src/totem.c:1220
 msgid "An error occured"
 msgstr "Impazamo yenzekile"
 
-#: ../src/totem.c:1510
+#: ../src/totem.c:1554
 msgid "Select files"
 msgstr "Khetha iifayili"
 
-#: ../src/totem.c:1581
-#, fuzzy
+#: ../src/totem.c:1625
 msgid "Open Location..."
-msgstr "Vula _Indawo..."
+msgstr "Vula Indawo..."
 
-#: ../src/totem.c:1877
+#: ../src/totem.c:1921
 msgid "Totem could not display the help contents."
 msgstr "i-Totem ayikwazanga kubonisa eskrinini okuqulathiweyo koncedo."
 
-#: ../src/totem.c:1915
+#: ../src/totem.c:1959
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Isidlali soMfanekiso-bhanyabhanya sisebenzisa i-%s"
 
-#: ../src/totem.c:1921 ../src/vanity.c:261
+#: ../src/totem.c:1965 ../src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "i-Copyright © 2002-2005 Bastien Nocera"
 
-#: ../src/totem.c:1926 ../src/vanity.c:266
+#: ../src/totem.c:1970 ../src/vanity.c:266
 msgid "translator-credits"
 msgstr "Canonical Ltd <translations@canonical.com>"
 
-#: ../src/totem.c:1959 ../src/totem.c:1967 ../src/vanity.c:299
+#: ../src/totem.c:2003 ../src/totem.c:2011 ../src/vanity.c:299
 #: ../src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
 msgstr "i-Totem ayikwazanga kufumana i-screenshot salo mfanekiso-bhanyabhanya."
 
-#: ../src/totem.c:1967
+#: ../src/totem.c:2011
 msgid "Please file a bug, this isn't supposed to happen."
 msgstr "Nceda ufayilishe isiphene, le nto ayifanelang' ukwenzeka."
 
-#: ../src/totem.c:1994
+#: ../src/totem.c:2038
 msgid "Totem couldn't show the movie properties window."
 msgstr ""
 "i-Totem ayikwazanga kubonisa ifestile yeempawu zomfanekiso-bhanyabhanya."
 
-#: ../src/totem.c:1994
+#: ../src/totem.c:2038
 msgid "Make sure that Totem is correctly installed."
 msgstr "Qiniseka ukuba i-Totem imiselwe ngokuchanekileyo."
 
-#: ../src/totem.c:2080
+#: ../src/totem.c:2124
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "i-Totem ayibanganako ukufuna kwi '%s'."
 
-#: ../src/totem.c:3240
+#: ../src/totem.c:3287
 msgid "Totem could not startup."
 msgstr "i-Totem ayikwazanga kuqalisa kakuhle."
 
-#: ../src/totem.c:3240
+#: ../src/totem.c:3287
 msgid "No reason."
 msgstr "Akukho sizathu."
 
-#: ../src/totem.c:3425
+#: ../src/totem.c:3471
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Ayikwazanga kuqala amathala eefayili akhuseleke njengomsonto."
 
-#: ../src/totem.c:3425
+#: ../src/totem.c:3471
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Qinisekisa ukusekwa kwenkqubo yakho. I-Totem iyaphuma ngoku."
 
-#: ../src/totem.c:3445
+#: ../src/totem.c:3492
 msgid "Totem couln't initialise the configuration engine."
 msgstr "i-Totem ayikwazanga kuqalisa ngenjini yomiselo-nkqubo."
 
-#: ../src/totem.c:3445
+#: ../src/totem.c:3492
 msgid "Make sure that GNOME is properly installed."
 msgstr "Qiniseka ukuba i-GNOME isekwe ngokufanelekileyo."
 
 #. Main window
-#: ../src/totem.c:3472
+#: ../src/totem.c:3519
 msgid "main window"
-msgstr ""
+msgstr "ifestile engundoqo"
 
-#: ../src/totem.c:3477
+#: ../src/totem.c:3524
 msgid "video popup menu"
-msgstr ""
+msgstr "ividiyo yemenyu yokukhetha okuvelayo"
 
 #: ../src/vanity.c:75
 msgid "Debug mode on"
@@ -1677,19 +1675,3 @@ msgstr "i-%s %s"
 #, c-format
 msgid "%s"
 msgstr "i-%s"
-
-#~ msgid "Couldn't load the main interface (mozilla-viewer.glade)."
-#~ msgstr ""
-#~ "Ayikwazanga kulayisha umdibaniso wemida oyintloko i-(mozilla-viewer."
-#~ "glade)."
-
-#~ msgid "Make sure that the Totem plugin is properly installed."
-#~ msgstr "Qinisekisa ukuba isingenisi se-Totem simiselwe ngokufanelikileyo."
-
-#~ msgid "The Totem plugin could not startup."
-#~ msgstr "Isingenisi se-Totem ayikwazanga kuqalisa."
-
-#~ msgid "Verify your system installation. The Totem plugin will now exit."
-#~ msgstr ""
-#~ "Qinisekisa ukumiselwa kwenkqubo yakho. Isingenisi se-Totem siya phuma ke "
-#~ "ngoku."
