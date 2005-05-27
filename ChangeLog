@@ -1,3 +1,18 @@
+2005-05-27  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst.c:
+	(bacon_video_widget_set_show_cursor):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_set_show_cursor):
+	* src/backend/video-utils.c:
+	(totem_gdk_window_set_invisible_cursor), (totem_create_symlinks),
+	(totem_display_is_local):
+	* src/backend/video-utils.h:
+	* src/totem.c: (on_always_on_top1_activate): remove
+	totem_gdk_window_set_always_on_top and use the GTK+ provided
+	gtk_window_set_keep_above instead, namespace the invisible cursor
+	function properly
+
 ============ Version 1.1.2
 
 2005-05-23  Bastien Nocera  <hadess@hadess.net>

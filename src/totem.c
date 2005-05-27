@@ -1763,7 +1763,7 @@ on_shuffle_mode1_toggled (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 static void
 on_always_on_top1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 {
-	totem_gdk_window_set_always_on_top (GTK_WIDGET (totem->win)->window,
+	gtk_window_set_keep_above (totem->win,
 			gtk_check_menu_item_get_active (checkmenuitem));
 	gconf_client_set_bool (totem->gc,
 			GCONF_PREFIX"/window_on_top",

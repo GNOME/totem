@@ -2,8 +2,7 @@
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 
-void eel_gdk_window_set_invisible_cursor (GdkWindow *window);
-void totem_gdk_window_set_always_on_top (GdkWindow *window, gboolean setting);
+void totem_gdk_window_set_invisible_cursor (GdkWindow *window);
 
 void yuy2toyv12 (guint8 *y, guint8 *u, guint8 *v, guint8 *input,
 		 int width, int height);

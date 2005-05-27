@@ -2483,7 +2483,7 @@ bacon_video_widget_set_show_cursor (BaconVideoWidget *bvw,
 
 	if (show_cursor == FALSE)
 	{
-		eel_gdk_window_set_invisible_cursor (bvw->priv->video_window);
+		totem_gdk_window_set_invisible_cursor (bvw->priv->video_window);
 	} else {
 		gdk_window_set_cursor (bvw->priv->video_window, NULL);
 	}

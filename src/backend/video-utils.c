@@ -121,44 +121,8 @@ guint8 * yv12torgb (guint8 *src_y, guint8 *src_u, guint8 *src_v,
 	  return rgb;
 }
 
-/* Stolen from GDK */
-static void
-gdk_wmspec_change_state (gboolean   add,
-			 GdkWindow *window,
-			 GdkAtom    state1,
-			 GdkAtom    state2)
-{
-  GdkDisplay *display = gdk_screen_get_display (gdk_drawable_get_screen (GDK_DRAWABLE (window)));
-  XEvent xev;
-  
-#define _NET_WM_STATE_REMOVE        0    /* remove/unset property */
-#define _NET_WM_STATE_ADD           1    /* add/set property */
-#define _NET_WM_STATE_TOGGLE        2    /* toggle property  */  
-  
-  xev.xclient.type = ClientMessage;
-  xev.xclient.serial = 0;
-  xev.xclient.send_event = True;
-  xev.xclient.window = GDK_WINDOW_XID (window);
-  xev.xclient.message_type = gdk_x11_get_xatom_by_name_for_display (display, "_NET_WM_STATE");
-  xev.xclient.format = 32;
-  xev.xclient.data.l[0] = add ? _NET_WM_STATE_ADD : _NET_WM_STATE_REMOVE;
-  xev.xclient.data.l[1] = gdk_x11_atom_to_xatom_for_display (display, state1);
-  xev.xclient.data.l[2] = gdk_x11_atom_to_xatom_for_display (display, state2);
-  
-  XSendEvent (GDK_WINDOW_XDISPLAY (window),
-	      GDK_WINDOW_XWINDOW (gdk_screen_get_root_window (gdk_drawable_get_screen (GDK_DRAWABLE (window)))),
-	      False, SubstructureRedirectMask | SubstructureNotifyMask,
-	      &xev);
-}
-
 void
-totem_gdk_window_set_always_on_top (GdkWindow *window, gboolean setting)
-{
-  gdk_wmspec_change_state (setting, window, gdk_atom_intern ("_NET_WM_STATE_ABOVE", FALSE), 0);
-}
-
-void
-eel_gdk_window_set_invisible_cursor (GdkWindow *window)
+totem_gdk_window_set_invisible_cursor (GdkWindow *window)
 {
 	GdkBitmap *empty_bitmap;
 	GdkCursor *cursor;
@@ -184,7 +148,8 @@ eel_gdk_window_set_invisible_cursor (GdkWindow *window)
 	g_object_unref (empty_bitmap);
 }
 
-void totem_create_symlinks (const char *orig, const char *dest)
+void
+totem_create_symlinks (const char *orig, const char *dest)
 {
 	GDir *dir;
 	const char *name;
@@ -217,7 +182,8 @@ void totem_create_symlinks (const char *orig, const char *dest)
 	g_dir_close (dir);
 }
 
-gboolean totem_display_is_local (void)
+gboolean
+totem_display_is_local (void)
 {
 	const char *name, *work;
 	int display, screen;
