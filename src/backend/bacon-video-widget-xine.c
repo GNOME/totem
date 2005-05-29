@@ -3099,6 +3099,9 @@ bacon_video_widget_set_zoom (BaconVideoWidget *bvw, int zoom)
 	g_return_if_fail (bvw->priv->xine != NULL);
 	g_return_if_fail (zoom >= 0 && zoom <= 400);
 
+	if (bvw->priv->stream == NULL)
+		return;
+
 	xine_set_param (bvw->priv->stream,
 			XINE_PARAM_VO_ZOOM_X, zoom);
 	xine_set_param (bvw->priv->stream,
@@ -3111,6 +3114,9 @@ bacon_video_widget_get_zoom (BaconVideoWidget *bvw)
 	g_return_val_if_fail (bvw != NULL, 100);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 100);
 	g_return_val_if_fail (bvw->priv->xine != NULL, 100);
+
+	if (bvw->priv->stream == NULL)
+		return 100;
 
 	return xine_get_param (bvw->priv->stream, XINE_PARAM_VO_ZOOM_X);
 }

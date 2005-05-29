@@ -1,5 +1,16 @@
 2005-05-29  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_set_zoom), (bacon_video_widget_get_zoom):
+	Don't crash when trying to get or set the zoom level and the stream
+	isn't setup yet
+	* src/totem.c: (totem_action_drop_files),
+	(on_always_on_top1_activate), (video_widget_create):
+	Reset the zoom in the Totem UI to 100 to disable the "Zoom Reset"
+	button in the View menu
+
+2005-05-29  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.glade: Move the repeat and shuffle menu items to the
 	Edit menu instead (Closes: #300472)
 

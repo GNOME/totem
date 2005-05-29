@@ -964,7 +964,7 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 	GList *list, *p, *file_list;
 	gboolean cleared = FALSE;
 
-	list = gnome_vfs_uri_list_parse (data->data);
+	list = gnome_vfs_uri_list_parse ((const char *)data->data);
 
 	if (list == NULL)
 		return FALSE;
@@ -1763,7 +1763,7 @@ on_shuffle_mode1_toggled (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 static void
 on_always_on_top1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
 {
-	gtk_window_set_keep_above (totem->win,
+	gtk_window_set_keep_above (GTK_WINDOW (totem->win),
 			gtk_check_menu_item_get_active (checkmenuitem));
 	gconf_client_set_bool (totem->gc,
 			GCONF_PREFIX"/window_on_top",
@@ -3260,6 +3260,7 @@ video_widget_create (Totem *totem)
 
 	totem_preferences_tvout_setup (totem);
 	totem_preferences_visuals_setup (totem);
+	totem_action_zoom (totem, ZOOM_RESET);
 
 	/* Let's set a name. Will make debugging easier */
 	gtk_widget_set_name (GTK_WIDGET(totem->bvw), "bvw");
