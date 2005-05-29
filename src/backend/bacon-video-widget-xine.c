@@ -1309,6 +1309,15 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		else
 			message = g_strdup (_("The server refused access to this file or stream."));
 		break;
+
+/* FIXME missing stuff from libxine includes (<= 1.1.x) */
+#ifndef XINE_MSG_FILE_EMPTY
+#define XINE_MSG_FILE_EMPTY 13
+#endif
+	case XINE_MSG_FILE_EMPTY:
+		num = BVW_ERROR_EMPTY_FILE;
+		message  = g_strdup (_("The file you tried to play is an empty file."));
+		break;
 	default:
 		D("xine_event_message: unhandled error\ntype: %d", data->type);
 		return;
@@ -1511,11 +1520,6 @@ bacon_video_widget_unrealize (GtkWidget *widget)
         nvtv_simple_exit();
 #endif
 
-
-/* FIXME missing stuff from libxine includes (<= 1-rc7) */
-#ifndef XINE_GUI_SEND_WILL_DESTROY_DRAWABLE
-#define XINE_GUI_SEND_WILL_DESTROY_DRAWABLE 9
-#endif
 	xine_port_send_gui_data (bvw->priv->vo_driver,
 			XINE_GUI_SEND_WILL_DESTROY_DRAWABLE,
 			(void*)bvw->priv->video_window);

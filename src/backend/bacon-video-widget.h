@@ -92,7 +92,8 @@ typedef enum {
 	BVW_ERROR_CANNOT_CAPTURE,
 	BVW_ERROR_READ_ERROR,
 	BVW_ERROR_PLUGIN_LOAD,
-	BVW_ERROR_STILL_IMAGE
+	BVW_ERROR_STILL_IMAGE,
+	BVW_ERROR_EMPTY_FILE
 } BvwError;
 
 GQuark bacon_video_widget_error_quark		 (void) G_GNUC_CONST;

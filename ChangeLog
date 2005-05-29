@@ -1,5 +1,13 @@
 2005-05-29  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c: (xine_event_message),
+	(bacon_video_widget_unrealize):
+	* src/backend/bacon-video-widget.h: add the new BVW_ERROR_EMPTY_FILE
+	error message, and use it for when we tried to play an empty file
+	(Closes: #164738)
+
+2005-05-29  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c:
 	(bacon_video_widget_set_zoom), (bacon_video_widget_get_zoom):
 	Don't crash when trying to get or set the zoom level and the stream
