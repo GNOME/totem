@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-23 14:08+0000\n"
-"PO-Revision-Date: 2005-05-23 23:06+0300\n"
+"POT-Creation-Date: 2005-06-01 14:55+0000\n"
+"PO-Revision-Date: 2005-06-01 21:01+0300\n"
 "Last-Translator: Priit Laes <amd@store20.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -140,7 +140,7 @@ msgstr "0 kb/s"
 #. 0 seconds
 #: ../data/properties.glade.h:4
 #: ../data/skip_to.glade.h:1
-#: ../src/backend/video-utils.c:310
+#: ../src/backend/video-utils.c:276
 msgid "0 seconds"
 msgstr "0 sekundit"
 
@@ -269,8 +269,8 @@ msgstr "Filmide ja muusika esitamine"
 #: ../data/totem.desktop.in.in.in.h:2
 #: ../data/totem.glade.h:99
 #: ../src/totem.c:605
-#: ../src/totem.c:3406
-#: ../src/totem.c:3423
+#: ../src/totem.c:3407
+#: ../src/totem.c:3424
 msgid "Totem Movie Player"
 msgstr "Totem filmiesitaja"
 
@@ -1341,28 +1341,28 @@ msgstr "Totem ei saa käivituda."
 msgid "No reason."
 msgstr "Põhjendus puudub."
 
-#: ../src/totem.c:3407
+#: ../src/totem.c:3408
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Thread-safe teeke pole võimalik lähtestada."
 
-#: ../src/totem.c:3407
+#: ../src/totem.c:3408
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Kontrolli oma süsteemi paigaldust. Totem lõpeab oma töö."
 
-#: ../src/totem.c:3430
+#: ../src/totem.c:3431
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem ei suuda lähtestada seadistusmootorit."
 
-#: ../src/totem.c:3430
+#: ../src/totem.c:3431
 msgid "Make sure that GNOME is properly installed."
 msgstr "Veendu, et GNOME on õigesti paigaldatud."
 
 #. Main window
-#: ../src/totem.c:3457
+#: ../src/totem.c:3458
 msgid "main window"
 msgstr "peaaken"
 
-#: ../src/totem.c:3462
+#: ../src/totem.c:3463
 msgid "video popup menu"
 msgstr "video hüpikmenüü"
 
@@ -1460,7 +1460,7 @@ msgstr ""
 "Veendu, et sead pole hõivatud."
 
 #: ../src/backend/bacon-video-widget-xine.c:1129
-#: ../src/backend/bacon-video-widget-xine.c:1648
+#: ../src/backend/bacon-video-widget-xine.c:1652
 msgid "No video output is available. Make sure that the program is correctly installed."
 msgstr "Videoväljund ei ole saadaval. Veendu, et Totem on õigesti paigaldatud."
 
@@ -1520,77 +1520,81 @@ msgstr "Sul pole lubatud seda faili avada."
 msgid "The server refused access to this file or stream."
 msgstr "Server piirab ligipääsu sellele failile või striimile."
 
-#: ../src/backend/bacon-video-widget-xine.c:1459
+#: ../src/backend/bacon-video-widget-xine.c:1319
+msgid "The file you tried to play is an empty file."
+msgstr "Fail mida sa üritasid esitada on tühi fail."
+
+#: ../src/backend/bacon-video-widget-xine.c:1468
 msgid "There is no plugin to handle this movie."
 msgstr "Puudub plugin selle filmitüübi käsitlemiseks."
 
-#: ../src/backend/bacon-video-widget-xine.c:1463
+#: ../src/backend/bacon-video-widget-xine.c:1472
 msgid "This movie is broken and can not be played further."
 msgstr "See film on katki ja seda pole võimalik edasi esitada."
 
-#: ../src/backend/bacon-video-widget-xine.c:1467
+#: ../src/backend/bacon-video-widget-xine.c:1476
 msgid "This location is not a valid one."
 msgstr "See asukoht ei ole korrektne."
 
-#: ../src/backend/bacon-video-widget-xine.c:1471
+#: ../src/backend/bacon-video-widget-xine.c:1480
 msgid "This movie could not be opened."
 msgstr "Seda filmi pole võimalik avada."
 
-#: ../src/backend/bacon-video-widget-xine.c:1475
+#: ../src/backend/bacon-video-widget-xine.c:1484
 msgid "Generic Error."
 msgstr "Üldine viga."
 
-#: ../src/backend/bacon-video-widget-xine.c:1971
+#: ../src/backend/bacon-video-widget-xine.c:1975
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr "See film on ikkagi pilt. Sa saad seda avada pildivaatlusprogrammiga."
 
-#: ../src/backend/bacon-video-widget-xine.c:1995
+#: ../src/backend/bacon-video-widget-xine.c:1999
 #, c-format
 msgid "Video codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"
 msgstr "Videokoodek '%s' pole käsitletud. Sa pead ilmselt paigaldama mõningate filmitüüpide vaatamiseks täiendavaid pluginaid."
 
-#: ../src/backend/bacon-video-widget-xine.c:1999
+#: ../src/backend/bacon-video-widget-xine.c:2003
 #, c-format
 msgid "Audio codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"
 msgstr "Audiokoodek '%s' pole käsitletud. Sa pead ilmselt paigaldama mõningate filmitüüpide vaatamiseks täiendavaid pluginaid."
 
-#: ../src/backend/bacon-video-widget-xine.c:2015
+#: ../src/backend/bacon-video-widget-xine.c:2019
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "See on audiofail aga hetkel pole audioväljundit saadaval."
 
-#: ../src/backend/bacon-video-widget-xine.c:3448
-#: ../src/backend/bacon-video-widget-xine.c:3511
+#: ../src/backend/bacon-video-widget-xine.c:3458
+#: ../src/backend/bacon-video-widget-xine.c:3521
 #, c-format
 msgid "Language %d"
 msgstr "Keel %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3547
+#: ../src/backend/bacon-video-widget-xine.c:3557
 msgid "Movie is not playing."
 msgstr "Filmi ei esitata."
 
-#: ../src/backend/bacon-video-widget-xine.c:3556
+#: ../src/backend/bacon-video-widget-xine.c:3566
 msgid "No video to capture."
 msgstr "Pole videot, mida haarata."
 
-#: ../src/backend/bacon-video-widget-xine.c:3564
+#: ../src/backend/bacon-video-widget-xine.c:3574
 msgid "Video codec is not handled."
 msgstr "Videokoodek pole käsitletud."
 
-#: ../src/backend/video-utils.c:290
+#: ../src/backend/video-utils.c:256
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d tund"
 msgstr[1] "%d tundi"
 
-#: ../src/backend/video-utils.c:292
+#: ../src/backend/video-utils.c:258
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minut"
 msgstr[1] "%d minutit"
 
-#: ../src/backend/video-utils.c:295
+#: ../src/backend/video-utils.c:261
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1598,19 +1602,19 @@ msgstr[0] "%d sekund"
 msgstr[1] "%d sekundit"
 
 #. hour:minutes:seconds
-#: ../src/backend/video-utils.c:301
+#: ../src/backend/video-utils.c:267
 #, c-format
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. minutes:seconds
-#: ../src/backend/video-utils.c:304
+#: ../src/backend/video-utils.c:270
 #, c-format
 msgid "%s %s"
 msgstr "%s %s"
 
 #. seconds
-#: ../src/backend/video-utils.c:307
+#: ../src/backend/video-utils.c:273
 #, c-format
 msgid "%s"
 msgstr "%s"
