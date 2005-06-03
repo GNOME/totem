@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-18 14:07+0000\n"
-"PO-Revision-Date: 2005-05-18 21:02+0200\n"
+"POT-Creation-Date: 2005-06-02 14:53+0000\n"
+"PO-Revision-Date: 2005-06-03 00:00+0200\n"
 "Last-Translator: Elian Myftiu <elian@alblinux.net>\n"
 "Language-Team: Albanian <gnome-albanian-perkthyesit@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -117,7 +117,7 @@ msgstr "0 kbps"
 
 #. 0 seconds
 #: ../data/properties.glade.h:4 ../data/skip_to.glade.h:1
-#: ../src/backend/video-utils.c:310
+#: ../src/backend/video-utils.c:276
 msgid "0 seconds"
 msgstr "0 sekonda"
 
@@ -173,7 +173,7 @@ msgstr "Shpejtësia e frame:"
 msgid "N/A"
 msgstr "Mungon"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:1960
+#: ../data/properties.glade.h:17 ../src/totem.c:2004
 msgid "Properties"
 msgstr "Pronësitë"
 
@@ -238,7 +238,7 @@ msgstr "Luaj filmat dhe këngët"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:2 ../data/totem.glade.h:99
-#: ../src/totem.c:602 ../src/totem.c:3362 ../src/totem.c:3379
+#: ../src/totem.c:605 ../src/totem.c:3407 ../src/totem.c:3424
 msgid "Totem Movie Player"
 msgstr "Totem - Lexues Filmash"
 
@@ -972,7 +972,7 @@ msgstr "Sigurohu që Totem është instaluar siç duhet."
 msgid "None"
 msgstr "Asnjë"
 
-#: ../src/totem-menu.c:597
+#: ../src/totem-menu.c:599
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "Luaj Diskun '%s'"
@@ -1155,7 +1155,7 @@ msgstr "Lloji i hijes"
 msgid "Style of bevel around the statusbar text"
 msgstr "Lloji i rilievit rreth tekstit të panelit të gjendjes"
 
-#: ../src/totem-statusbar.c:124 ../src/totem.c:253 ../src/totem.c:586
+#: ../src/totem-statusbar.c:124 ../src/totem.c:256 ../src/totem.c:589
 msgid "Stopped"
 msgstr "Ndalur"
 
@@ -1190,24 +1190,24 @@ msgstr "Duke regjistruar"
 msgid "%d %%"
 msgstr "%d %%"
 
-#: ../src/totem.c:243
+#: ../src/totem.c:246
 msgid "Playing"
 msgstr "Duke riprodhuar"
 
-#: ../src/totem.c:248
+#: ../src/totem.c:251
 msgid "Paused"
 msgstr "Pezulluar"
 
-#: ../src/totem.c:293
+#: ../src/totem.c:296
 msgid "Totem could not eject the optical media."
 msgstr "Totem nuk mundi të nxjerrë diskun optik."
 
-#: ../src/totem.c:321 ../src/totem.c:348 ../src/totem.c:733 ../src/totem.c:838
+#: ../src/totem.c:324 ../src/totem.c:351 ../src/totem.c:736 ../src/totem.c:841
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem nuk arriti të riprodhojë '%s'."
 
-#: ../src/totem.c:374
+#: ../src/totem.c:377
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1216,7 +1216,7 @@ msgstr ""
 "Totem nuk mundi të riprodhojë këtë lloj medieje (%s) pasi nuk ke plugin-at e "
 "duhur për të."
 
-#: ../src/totem.c:375
+#: ../src/totem.c:378
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1224,7 +1224,7 @@ msgstr ""
 "Të lutem instalo plugin-at e nevojshëm dhe rinis Totem për të riprodhuar "
 "këtë media."
 
-#: ../src/totem.c:383
+#: ../src/totem.c:386
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1233,7 +1233,7 @@ msgstr ""
 "Totem nuk mundi të riprodhojë këtë medie (%s) edhe pse një gjendet një "
 "plugin për të."
 
-#: ../src/totem.c:384
+#: ../src/totem.c:387
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1242,102 +1242,102 @@ msgstr ""
 "konfiguruar siç duhet."
 
 #. Title
-#: ../src/totem.c:579
+#: ../src/totem.c:582
 #, c-format
 msgid "%s - Totem Movie Player"
 msgstr "%s Riprodhuesi i Filmave Totem"
 
-#: ../src/totem.c:593
+#: ../src/totem.c:596
 msgid "No File"
 msgstr "Asnjë File"
 
-#: ../src/totem.c:628 ../src/totem.c:1875
+#: ../src/totem.c:631 ../src/totem.c:1919
 msgid "Totem"
 msgstr "Totem"
 
-#: ../src/totem.c:1185 ../src/totem.c:1187
+#: ../src/totem.c:1229 ../src/totem.c:1231
 msgid "An error occured"
 msgstr "Ndodhi një gabim"
 
-#: ../src/totem.c:1496
+#: ../src/totem.c:1540
 msgid "Select Files"
 msgstr "Zgjidh File-t"
 
-#: ../src/totem.c:1567
+#: ../src/totem.c:1611
 msgid "Open Location..."
 msgstr "Hap Vendndodhjen..."
 
-#: ../src/totem.c:1833
+#: ../src/totem.c:1877
 msgid "Totem could not display the help contents."
 msgstr "Totem nuk mundi të shfaqë përmbajtjen e ndihmës."
 
-#: ../src/totem.c:1871
+#: ../src/totem.c:1915
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Riprodhues Filmi duke përdorur %s"
 
-#: ../src/totem.c:1877 ../src/vanity.c:261
+#: ../src/totem.c:1921 ../src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Copyright © 2002-2005 Bastien Nocera"
 
-#: ../src/totem.c:1882 ../src/vanity.c:266
+#: ../src/totem.c:1926 ../src/vanity.c:266
 msgid "translator-credits"
 msgstr ""
 "Laurent Dhima <laurenti@alblinux.net>\n"
 "Elian Myftiu <elian@alblinux.net>"
 
-#: ../src/totem.c:1915 ../src/totem.c:1923 ../src/vanity.c:299
+#: ../src/totem.c:1959 ../src/totem.c:1967 ../src/vanity.c:299
 #: ../src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem nuk mundi të marrë një pamje ekrani nga ai film."
 
-#: ../src/totem.c:1923 ../src/vanity.c:307
+#: ../src/totem.c:1967 ../src/vanity.c:307
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Kjo nuk duhet të ndodhte, të lutem skedo një raportim defekti."
 
-#: ../src/totem.c:1950
+#: ../src/totem.c:1994
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem nuk mundi të shfaqë dritaren e pronësisë së filmit."
 
-#: ../src/totem.c:1950
+#: ../src/totem.c:1994
 msgid "Make sure that Totem is correctly installed."
 msgstr "Sigurohu që Totem është instaluar siç duhet."
 
-#: ../src/totem.c:2036
+#: ../src/totem.c:2080
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem nuk mundi të kërkojë në '%s'."
 
-#: ../src/totem.c:3212
+#: ../src/totem.c:3256
 msgid "Totem could not startup."
 msgstr "Totem nuk mundi të nisë."
 
-#: ../src/totem.c:3212
+#: ../src/totem.c:3256
 msgid "No reason."
 msgstr "Pa arsye."
 
-#: ../src/totem.c:3363
+#: ../src/totem.c:3408
 msgid "Could not initialize the thread-safe libraries."
 msgstr "E pamundur nisja e librarive thread-safe."
 
-#: ../src/totem.c:3363
+#: ../src/totem.c:3408
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Kontrollo instalimin e sistemit. Totem tani do dalë."
 
-#: ../src/totem.c:3386
+#: ../src/totem.c:3431
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem nuk mundi të niste motorin e konfigurimit."
 
-#: ../src/totem.c:3386
+#: ../src/totem.c:3431
 msgid "Make sure that GNOME is properly installed."
 msgstr "Sigurohu që GNOME është instaluar saktë."
 
 #. Main window
-#: ../src/totem.c:3413
+#: ../src/totem.c:3458
 msgid "main window"
 msgstr "dritarja kryesore"
 
-#: ../src/totem.c:3418
+#: ../src/totem.c:3463
 msgid "video popup menu"
 msgstr "menuja e videos"
 
@@ -1434,7 +1434,7 @@ msgstr ""
 "Kontrollo që dispozitivi nuk është i zënë."
 
 #: ../src/backend/bacon-video-widget-xine.c:1129
-#: ../src/backend/bacon-video-widget-xine.c:1648
+#: ../src/backend/bacon-video-widget-xine.c:1652
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -1503,32 +1503,36 @@ msgstr "Nuk lejohet ta hapësh këtë file."
 msgid "The server refused access to this file or stream."
 msgstr "Serveri nuk pranoi hyrjen me këtë file apo rrymë."
 
-#: ../src/backend/bacon-video-widget-xine.c:1459
+#: ../src/backend/bacon-video-widget-xine.c:1319
+msgid "The file you tried to play is an empty file."
+msgstr "File që po përpiqesh të luash është një file bosh."
+
+#: ../src/backend/bacon-video-widget-xine.c:1468
 msgid "There is no plugin to handle this movie."
 msgstr "Nuk ka asnjë plugin për të parë këtë film."
 
-#: ../src/backend/bacon-video-widget-xine.c:1463
+#: ../src/backend/bacon-video-widget-xine.c:1472
 msgid "This movie is broken and can not be played further."
 msgstr "Ky film ka gabime dhe nuk mund të shikohet më tej."
 
-#: ../src/backend/bacon-video-widget-xine.c:1467
+#: ../src/backend/bacon-video-widget-xine.c:1476
 msgid "This location is not a valid one."
 msgstr "Kjo vendndodhje nuk është e vlefshme."
 
-#: ../src/backend/bacon-video-widget-xine.c:1471
+#: ../src/backend/bacon-video-widget-xine.c:1480
 msgid "This movie could not be opened."
 msgstr "Ky film nuk mund të shikohej."
 
-#: ../src/backend/bacon-video-widget-xine.c:1475
+#: ../src/backend/bacon-video-widget-xine.c:1484
 msgid "Generic Error."
 msgstr "Gabim i Përgjithshëm."
 
-#: ../src/backend/bacon-video-widget-xine.c:1971
+#: ../src/backend/bacon-video-widget-xine.c:1975
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr ""
 "Ky film është një pamje në prehje. Mund ta hapësh me një shikues pamjesh."
 
-#: ../src/backend/bacon-video-widget-xine.c:1995
+#: ../src/backend/bacon-video-widget-xine.c:1999
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1537,7 +1541,7 @@ msgstr ""
 "Kodifikuesi i videos '%s' nuk punon. Ndoshta të duhet të instalosh plugin-a "
 "të tjerë për të parë disa lloje filmash."
 
-#: ../src/backend/bacon-video-widget-xine.c:1999
+#: ../src/backend/bacon-video-widget-xine.c:2003
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1546,43 +1550,43 @@ msgstr ""
 "Kodifikuesi i zërit '%s' nuk punon. Ndoshta të duhet të instalosh plugin-a "
 "të tjerë për të parë disa lloje filmash."
 
-#: ../src/backend/bacon-video-widget-xine.c:2015
+#: ../src/backend/bacon-video-widget-xine.c:2019
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Ky është vetëm një file audio, dhe nuk ka dalje zëri në dispozicion."
 
-#: ../src/backend/bacon-video-widget-xine.c:3447
-#: ../src/backend/bacon-video-widget-xine.c:3510
+#: ../src/backend/bacon-video-widget-xine.c:3458
+#: ../src/backend/bacon-video-widget-xine.c:3521
 #, c-format
 msgid "Language %d"
 msgstr "Gjuha %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3546
+#: ../src/backend/bacon-video-widget-xine.c:3557
 msgid "Movie is not playing."
 msgstr "Filmi ka ndalur."
 
-#: ../src/backend/bacon-video-widget-xine.c:3555
+#: ../src/backend/bacon-video-widget-xine.c:3566
 msgid "No video to capture."
 msgstr "Asnjë sinjal video."
 
-#: ../src/backend/bacon-video-widget-xine.c:3563
+#: ../src/backend/bacon-video-widget-xine.c:3574
 msgid "Video codec is not handled."
 msgstr "Kodifikuesi i videos nuk punon."
 
-#: ../src/backend/video-utils.c:290
+#: ../src/backend/video-utils.c:256
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d orë"
 msgstr[1] "%d orë"
 
-#: ../src/backend/video-utils.c:292
+#: ../src/backend/video-utils.c:258
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minutë"
 msgstr[1] "%d minutë"
 
-#: ../src/backend/video-utils.c:295
+#: ../src/backend/video-utils.c:261
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1590,19 +1594,19 @@ msgstr[0] "%d sekondë"
 msgstr[1] "%d sekonda"
 
 #. hour:minutes:seconds
-#: ../src/backend/video-utils.c:301
+#: ../src/backend/video-utils.c:267
 #, c-format
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. minutes:seconds
-#: ../src/backend/video-utils.c:304
+#: ../src/backend/video-utils.c:270
 #, c-format
 msgid "%s %s"
 msgstr "%s %s"
 
 #. seconds
-#: ../src/backend/video-utils.c:307
+#: ../src/backend/video-utils.c:273
 #, c-format
 msgid "%s"
 msgstr "%s"
@@ -1617,55 +1621,55 @@ msgstr "Dështoi në gjetjen e nyjes së vërtetë të dispozitivit për %s: %s"
 msgid "Failed to read symbolic link %s: %s"
 msgstr "Dështoi në leximin e lidhjes simbolike %s: %s"
 
-#: ../src/plparse/totem-disc.c:210
+#: ../src/plparse/totem-disc.c:209
 #, c-format
 msgid "Failed to find mountpoint for device %s in /etc/fstab"
 msgstr ""
 "Dështoi në gjetjen e pikës së montimit për dispozitivin %s në /etc/fstab"
 
-#: ../src/plparse/totem-disc.c:248
+#: ../src/plparse/totem-disc.c:247
 msgid "Please check that a disc is present in the drive."
 msgstr "Të lutem kontrollo që gjendet një disk brenda në lexues."
 
-#: ../src/plparse/totem-disc.c:251
+#: ../src/plparse/totem-disc.c:250
 #, c-format
 msgid "Failed to open device %s for reading: %s"
 msgstr "Dështoi në hapjen e dispozitivit %s për lexim: %s"
 
-#: ../src/plparse/totem-disc.c:262
+#: ../src/plparse/totem-disc.c:261
 #, c-format
 msgid "Failed to retrieve capabilities of device %s: %s"
 msgstr "Dështoi në marrjen e mundësive të dispozitivit %s: %s"
 
-#: ../src/plparse/totem-disc.c:295
+#: ../src/plparse/totem-disc.c:294
 #, c-format
 msgid "Drive status 0x%x (%s) - check disc"
 msgstr "Gjendja e lexuesit 0x%x (%s) - kontrollo diskun"
 
-#: ../src/plparse/totem-disc.c:328
+#: ../src/plparse/totem-disc.c:327
 #, c-format
 msgid "Unexpected error status %d while mounting %s"
 msgstr "Gabim i papritur %d ndërsa montohej %s"
 
-#: ../src/plparse/totem-disc.c:380
+#: ../src/plparse/totem-disc.c:379
 #, c-format
 msgid "Error getting %s disc status: %s"
 msgstr "Gabim në marrjen e gjendjes së diskut %s: %s"
 
-#: ../src/plparse/totem-disc.c:409
+#: ../src/plparse/totem-disc.c:408
 #, c-format
 msgid "Unexpected/unknown cd type 0x%x (%s)"
 msgstr "Lloj i papritur/panjohur cd-je 0x%x (%s)"
 
-#: ../src/plparse/totem-disc.c:573
+#: ../src/plparse/totem-disc.c:596
 msgid "Audio CD"
 msgstr "CD Audio"
 
-#: ../src/plparse/totem-disc.c:575
+#: ../src/plparse/totem-disc.c:598
 msgid "Video CD"
 msgstr "Video CD"
 
-#: ../src/plparse/totem-disc.c:577
+#: ../src/plparse/totem-disc.c:600
 msgid "DVD"
 msgstr "DVD"
 
