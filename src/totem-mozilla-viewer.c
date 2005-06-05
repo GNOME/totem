@@ -396,7 +396,8 @@ cb_data (const char * msg, gpointer user_data)
 int main (int argc, char **argv)
 {
 	TotemEmbedded *emb;
-	int i, xid;
+	int i;
+	Window xid;
 
 	emb = g_new0 (TotemEmbedded, 1);
 	emb->width = emb->height = -1;
@@ -431,7 +432,7 @@ int main (int argc, char **argv)
 		if (OPTION_IS (TOTEM_OPTION_XID)) {
 			if (i + 1 < argc) {
 				i++;
-				xid = atoi (argv[i]);
+				xid = (Window) g_ascii_strtoull (argv[i], NULL, 10);
 			}
 		} else if (OPTION_IS (TOTEM_OPTION_WIDTH)) {
 			if (i + 1 < argc) {

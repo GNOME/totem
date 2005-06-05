@@ -72,7 +72,7 @@ static void totem_plugin_fork (TotemPlugin *plugin)
 	}
 
 	argv[argc++] = g_strdup (TOTEM_OPTION_XID);
-	argv[argc++] = g_strdup_printf ("%d", plugin->window);
+	argv[argc++] = g_strdup_printf ("%lu", plugin->window);
 
 	if (plugin->width) {
 		argv[argc++] = g_strdup (TOTEM_OPTION_WIDTH);
@@ -291,7 +291,7 @@ static NPError totem_plugin_set_window (NPP instance, NPWindow* window)
 
 	if (plugin->window) {
 		DEBUG ("existing window");
-		if (plugin->window == (guint32) window->window) {
+		if (plugin->window == (Window) window->window) {
 			DEBUG("resize");
 			/* Resize event */
 			/* Not currently handled */
@@ -304,7 +304,7 @@ static NPError totem_plugin_set_window (NPP instance, NPWindow* window)
 
 		DEBUG("about to fork");
 
-		plugin->window = (guint32) window->window;
+		plugin->window = (Window) window->window;
 		totem_plugin_fork (plugin);
                 msg = plugin->iface->wait ();
 

@@ -32,7 +32,7 @@ class totemMozillaObject;
 
 typedef struct {
         NPP instance;
-        guint32 window;
+        Window window;
 	totemMozillaObject *iface;
 
         char *src, *href;
