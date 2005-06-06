@@ -1908,6 +1908,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 		const char *subtitle_uri, GError **error)
 {
 	int err;
+	const char *layer;
 
 	g_return_val_if_fail (mrl != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
@@ -1933,7 +1934,9 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 		return FALSE;
 	}
 
-	if (strcmp (xine_get_meta_info (bvw->priv->stream, XINE_META_INFO_SYSTEMLAYER), "MNG") == 0 && bvw->priv->logo_mode == FALSE)
+	layer = xine_get_meta_info (bvw->priv->stream,
+			XINE_META_INFO_SYSTEMLAYER);
+	if ((strcmp (layer, "MNG") == 0 || strcmp (layer, "imagedmx") == 0)&& bvw->priv->logo_mode == FALSE)
 	{
 		bacon_video_widget_close (bvw);
 		g_set_error (error, BVW_ERROR, BVW_ERROR_STILL_IMAGE,
