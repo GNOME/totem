@@ -133,7 +133,7 @@ struct BaconVideoWidgetPrivate
 
   GstTagList *tagcache, *audiotags, *videotags;
 
-  char *last_error_message;
+  GError *last_error;
   gboolean got_redirect;
 
   GdkWindow *video_window;
@@ -791,36 +791,31 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
         }
       case ASYNC_ERROR:
         {
-          char *error_message = NULL;
+	  GError *err = signal->signal_data.error.error;
           gboolean emit = TRUE;
           
-          if (signal->signal_data.error.error)
-            error_message = signal->signal_data.error.error->message;
-
-          if (bvw->priv->last_error_message) {
+          if (bvw->priv->last_error) {
             /* Let's check the latest error message */
-            if (g_ascii_strcasecmp (error_message,
-                                    bvw->priv->last_error_message) == 0)
-              emit = FALSE;
+	    if (bvw->priv->last_error->code == err->code &&
+		bvw->priv->last_error->domain == err->domain)
+	      emit = FALSE;
           }
 
           if (emit) {
             g_signal_emit (G_OBJECT (bvw),
                            bvw_table_signals[SIGNAL_ERROR], 0,
-			   error_message, TRUE, FALSE);
+			   err->message, TRUE, FALSE);
             
             /* Keep a copy of the last emitted message */
-            if (bvw->priv->last_error_message)
-              g_free (bvw->priv->last_error_message);
-            bvw->priv->last_error_message = g_strdup (error_message);
+            if (!bvw->priv->last_error) {
+              bvw->priv->last_error = g_error_copy (err);
+	    }
           }
           
           /* Cleaning the error infos */
-          if (signal->signal_data.error.error)
-            g_error_free (signal->signal_data.error.error);
+          g_error_free (signal->signal_data.error.error);
           if (signal->signal_data.error.debug_message)
             g_free (signal->signal_data.error.debug_message);
-          
           break;
         }
       case ASYNC_FOUND_TAG:
@@ -1296,8 +1291,8 @@ got_error (GstElement *play, GstElement *orig, GError *error,
    * until we return, so setting an idle handler doesn't
    * help... Anyway, let's prepare a message. */
   if (GST_STATE (play) != GST_STATE_PLAYING) {
-    g_free (bvw->priv->last_error_message);
-    bvw->priv->last_error_message = g_strdup (error->message);
+    if (!bvw->priv->last_error)
+      bvw->priv->last_error = g_error_copy (error);
     return;
   }
   
@@ -1814,7 +1809,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
       bvw->priv->mrl = g_strdup (mrl);
     } else {
       if (!getcwd (buf, 255)) {
-	g_set_error (error, 0, 0,
+	g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC,
 	     _("Failed to retrieve working directory"));
 	return FALSE;
       }
@@ -1824,12 +1819,11 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 
   gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_READY);
 
-  /* Resetting last_error_message to NULL */
-  if (bvw->priv->last_error_message)
-    {
-      g_free (bvw->priv->last_error_message);
-      bvw->priv->last_error_message = NULL;
-    }
+  /* Resetting last_error to NULL */
+  if (bvw->priv->last_error) {
+    g_error_free (bvw->priv->last_error);
+    bvw->priv->last_error = NULL;
+  }
   bvw->priv->got_redirect = FALSE;
 
   bvw->priv->media_has_video = FALSE;
@@ -1849,13 +1843,55 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 
   ret = (gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED) ==
       GST_STATE_SUCCESS);
-  if (!ret && !bvw->priv->got_redirect)
-    {
-      g_set_error (error, 0, 0, "%s", bvw->priv->last_error_message ?
-          bvw->priv->last_error_message : "Failed to open; reason unknown");
-      g_free (bvw->priv->mrl);
-      bvw->priv->mrl = NULL;
+  if (!ret && !bvw->priv->got_redirect) {
+    if (error) {
+      if (bvw->priv->last_error) {
+	GError *e = bvw->priv->last_error;
+
+#define is_error(e, d, c) \
+  (e->domain == GST_##d##_ERROR && \
+   e->code == GST_##d##_ERROR_##c)
+	if (is_error (e, RESOURCE, NOT_FOUND) ||
+	    is_error (e, RESOURCE, OPEN_READ)) {
+	  if (strchr (mrl, ':') &&
+	      (g_str_has_prefix (mrl, "dvd") ||
+	       g_str_has_prefix (mrl, "cd") ||
+	       g_str_has_prefix (mrl, "vcd"))) {
+	    *error = g_error_new_literal (BVW_ERROR, BVW_ERROR_INVALID_DEVICE,
+					  e->message);
+	  } else {
+	    if (e->code == GST_RESOURCE_ERROR_NOT_FOUND) {
+	      g_set_error (error, BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
+		  _("Location not found."));
+	    } else {
+	      g_set_error (error, BVW_ERROR, BVW_ERROR_FILE_PERMISSION,
+		  _("You don't have permission to open that location."));
+	    }
+	  }
+	} else if (e->domain == GST_RESOURCE_ERROR) {
+	  *error = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_GENERIC,
+					e->message);
+	} else if (is_error (e, STREAM, WRONG_TYPE) ||
+		   is_error (e, STREAM, CODEC_NOT_FOUND) ||
+		   is_error (e, STREAM, NOT_IMPLEMENTED)) {
+	  *error = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED,
+	      				e->message);
+	} else {
+	  /* generic error, no code; take message */
+	  *error = g_error_new_literal (BVW_ERROR, BVW_ERROR_GENERIC,
+					e->message);
+	}
+      }
+      if (!*error) {
+	/* well, I Really can't make anything out of the error... */
+	g_set_error (error, BVW_ERROR, BVW_ERROR_FILE_GENERIC,
+	    _("Failed to open media file; unknown error"));
+      }
     }
+
+    g_free (bvw->priv->mrl);
+    bvw->priv->mrl = NULL;
+  }
 
   if (ret)
     g_signal_emit (bvw, bvw_table_signals[SIGNAL_CHANNELS_CHANGE], 0);
@@ -1872,20 +1908,19 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  /* Resetting last_error_message to NULL */
-  if (bvw->priv->last_error_message)
-    {
-      g_free (bvw->priv->last_error_message);
-      bvw->priv->last_error_message = NULL;
-    }
+  /* Resetting last_error to NULL */
+  if (bvw->priv->last_error) {
+    g_error_free (bvw->priv->last_error);
+    bvw->priv->last_error = NULL;
+  }
 
   ret = (gst_element_set_state (GST_ELEMENT (bvw->priv->play),
       GST_STATE_PLAYING) == GST_STATE_SUCCESS);
-  if (!ret)
-    {
-      g_set_error (error, 0, 0, "%s", bvw->priv->last_error_message ?
-          bvw->priv->last_error_message : "Failed to play; reason unknown");
-    }
+  if (!ret) {
+    g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC, _("Failed to play: %s"),
+	 (bvw->priv->last_error != NULL) ?
+	 bvw->priv->last_error->message : _("unknown error"));
+  }
 
   return ret;
 }
@@ -1899,12 +1934,11 @@ bacon_video_widget_seek (BaconVideoWidget *bvw, float position, GError **gerror)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  /* Resetting last_error_message to NULL */
-  if (bvw->priv->last_error_message)
-    {
-      g_free (bvw->priv->last_error_message);
-      bvw->priv->last_error_message = NULL;
-    }
+  /* Resetting last_error to NULL */
+  if (bvw->priv->last_error) {
+    g_error_free (bvw->priv->last_error);
+    bvw->priv->last_error = NULL;
+  }
 
   length_nanos = (gint64) (bvw->priv->stream_length * GST_MSECOND);
   seek_time = (gint64) (length_nanos * position);
@@ -1923,12 +1957,11 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **gerro
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  /* Resetting last_error_message to NULL */
-  if (bvw->priv->last_error_message)
-    {
-      g_free (bvw->priv->last_error_message);
-      bvw->priv->last_error_message = NULL;
-    }
+  /* Resetting last_error to NULL */
+  if (bvw->priv->last_error) {
+    g_error_free (bvw->priv->last_error);
+    bvw->priv->last_error = NULL;
+  }
 
   gst_element_seek (bvw->priv->play, GST_SEEK_METHOD_SET |
 		    GST_SEEK_FLAG_FLUSH | GST_FORMAT_TIME,
@@ -3030,15 +3063,15 @@ bacon_video_widget_can_get_frames (BaconVideoWidget * bvw, GError ** error)
   /* check for version */
   if (!g_object_class_find_property (
            G_OBJECT_GET_CLASS (bvw->priv->play), "frame")) {
-    g_set_error (error, 0, 0,
-        "Too old version of GStreamer installed");
+    g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC,
+        _("Too old version of GStreamer installed."));
     return FALSE;
   }
 
   /* check for video */
   if (!bvw->priv->media_has_video) {
-    g_set_error (error, 0, 0,
-        "Media contains no supported video streams");
+    g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC,
+        _("Media contains no supported video streams."));
   }
 
   return bvw->priv->media_has_video;
@@ -3208,14 +3241,16 @@ bacon_video_widget_new (int width, int height,
   GstElement *audio_sink = NULL, *video_sink = NULL;
   gulong sig1, sig2;
   gint i;
+  GError *local_err = NULL;
 
   bvw = BACON_VIDEO_WIDGET (g_object_new
                             (bacon_video_widget_get_type (), NULL));
   
   bvw->priv->play = gst_element_factory_make ("playbin", "play");
   if (!bvw->priv->play) {
-    g_set_error (err, bacon_video_widget_error_quark (),
-		 0, _("Failed to create a GStreamer play object"));
+    g_set_error (err, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
+		 _("Failed to create a GStreamer play object. "
+		   "Please check your GStreamer installation."));
     g_object_unref (G_OBJECT (bvw));
     return NULL;
   }
@@ -3292,17 +3327,79 @@ bacon_video_widget_new (int width, int height,
     audio_sink = gst_element_factory_make ("fakesink", "fakeaudiosink");
   }
 
-  sig1 = g_signal_connect (video_sink, "error", G_CALLBACK (out_error), err);
-  sig2 = g_signal_connect (audio_sink, "error", G_CALLBACK (out_error), err);
+  /* check video */
+  sig1 = g_signal_connect (video_sink, "error", G_CALLBACK (out_error),
+      			   &local_err);
   if (gst_element_set_state (video_sink,
-			     GST_STATE_READY) != GST_STATE_SUCCESS ||
-      gst_element_set_state (audio_sink,
 			     GST_STATE_READY) != GST_STATE_SUCCESS) {
-    if (err && !*err) {
-      g_set_error (err, 0, 0,
-		   "Failed to intialize %s output; check your configuration",
-		   GST_STATE (video_sink) == GST_STATE_NULL ?
-		   "video" : "audio");
+    /* Videosink not available; give user feedback on what to do now */
+    if (err) {
+      if (local_err && local_err->domain == GST_RESOURCE_ERROR) {
+	switch (local_err->code) {
+	  case GST_RESOURCE_ERROR_NOT_FOUND:
+	  case GST_RESOURCE_ERROR_OPEN_WRITE:
+	    /* can use the default below... */
+	    break;
+	  case GST_RESOURCE_ERROR_BUSY:
+	    g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+		_("The video output is in use by another application. "
+		  "Please close other video applications, or select another video output in the Multimedia Systems Selector."));
+	    break;
+	  default:
+	    break;
+	}
+      }
+      if (!*err) {
+	/* "default" */
+	g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+	    _("Failed to open video output. It may not be available. "
+	      "Please select another video output in the Multimedia Systems Selector."));
+      }
+      if (local_err)
+	g_error_free (local_err);
+    }
+    gst_object_unref (GST_OBJECT (video_sink));
+    gst_object_unref (GST_OBJECT (audio_sink));
+    g_object_unref (G_OBJECT (bvw));
+    return NULL;
+  }
+  g_signal_handler_disconnect (video_sink, sig1);
+
+  /* check audio */
+  sig2 = g_signal_connect (audio_sink, "error", G_CALLBACK (out_error),
+			   &local_err);
+  if (gst_element_set_state (audio_sink,
+			     GST_STATE_READY) != GST_STATE_SUCCESS) {
+    if (err) {
+      if (local_err && local_err->domain == GST_RESOURCE_ERROR) {
+	switch (local_err->code) {
+	  case GST_RESOURCE_ERROR_OPEN_WRITE:
+	  case GST_RESOURCE_ERROR_OPEN_READ_WRITE:
+	    /* use default below */
+	    break;
+	  case GST_RESOURCE_ERROR_BUSY:
+	    g_set_error (err, BVW_ERROR, BVW_ERROR_AUDIO_BUSY,
+		_("The audio output is in use by another application. "
+		  "Please select another audio output in the Multimedia Systems Selector. "
+		  "You may want to consider using a sound server."));
+	    break;
+	  case GST_RESOURCE_ERROR_NOT_FOUND:
+	    g_set_error (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
+		_("The requested audio output was not found. "
+		  "Please select another audio output in the Multimedia Systems Selector"));
+	    break;
+	  default:
+	    break;
+	}
+      }
+      if (!*err) {
+	/* "default" */
+        g_set_error (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
+	    _("Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. "
+	      "Please select another audio output in the Multimedia Systems Selector."));
+      }
+      if (local_err)
+	g_error_free (local_err);
     }
     gst_object_unref (GST_OBJECT (video_sink));
     gst_object_unref (GST_OBJECT (audio_sink));
@@ -3311,8 +3408,9 @@ bacon_video_widget_new (int width, int height,
   }
   /* somehow, alsa hangs? */
   gst_element_set_state (audio_sink, GST_STATE_NULL);
-  g_signal_handler_disconnect (video_sink, sig1);
   g_signal_handler_disconnect (audio_sink, sig2);
+
+  /* now tell playbin */
   g_object_set (G_OBJECT (bvw->priv->play), "video-sink",
 		video_sink, NULL);
   g_object_set (G_OBJECT (bvw->priv->play), "audio-sink",

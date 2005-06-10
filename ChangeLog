@@ -1,3 +1,14 @@
+2005-06-10  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/backend/bacon-video-widget-gst.c:
+	(bacon_video_widget_signal_idler), (got_error),
+	(bacon_video_widget_open_with_subtitle), (bacon_video_widget_play),
+	(bacon_video_widget_seek), (bacon_video_widget_seek_time),
+	(bacon_video_widget_can_get_frames), (bacon_video_widget_new):
+	  Rework error messages. In case of startup errors, give the user
+	  a clue of how to fix it. In case of file error messages, be
+	  accurate in the problem reporting. Use BVW error domains.
+
 2005-06-08  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/bacon-message-connection.c: (server_cb):
