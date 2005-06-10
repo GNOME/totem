@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-01 14:55+0000\n"
-"PO-Revision-Date: 2005-06-01 21:01+0300\n"
+"POT-Creation-Date: 2005-06-10 14:48+0000\n"
+"PO-Revision-Date: 2005-06-10 21:53+0300\n"
 "Last-Translator: Priit Laes <amd@store20.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -1442,13 +1442,62 @@ msgstr ""
 msgid "Totem Video Window"
 msgstr "Totemi videoaken"
 
-#: ../src/backend/bacon-video-widget-gst.c:1818
+#: ../src/backend/bacon-video-widget-gst.c:1813
 msgid "Failed to retrieve working directory"
 msgstr "Tõrge aktiivse kataloogi kasutamisel"
 
-#: ../src/backend/bacon-video-widget-gst.c:3218
-msgid "Failed to create a GStreamer play object"
-msgstr "Tõrge GStreamer esitamisobjekti loomisel"
+#: ../src/backend/bacon-video-widget-gst.c:1865
+msgid "Location not found."
+msgstr "Asukohta ei leitud."
+
+#: ../src/backend/bacon-video-widget-gst.c:1868
+msgid "You don't have permission to open that location."
+msgstr "Sul ei ole selle asukoha avamiseks õiguseid."
+
+#: ../src/backend/bacon-video-widget-gst.c:1888
+msgid "Failed to open media file; unknown error"
+msgstr "Tõrge meediafaili avamisel; tundmatu viga"
+
+#: ../src/backend/bacon-video-widget-gst.c:1920
+#, c-format
+msgid "Failed to play: %s"
+msgstr "Tõrge esitamisel: %s"
+
+#: ../src/backend/bacon-video-widget-gst.c:1922
+msgid "unknown error"
+msgstr "tundmatu viga"
+
+#: ../src/backend/bacon-video-widget-gst.c:3067
+msgid "Too old version of GStreamer installed."
+msgstr "Paigaldatud GStreamer on liiga vana"
+
+#: ../src/backend/bacon-video-widget-gst.c:3074
+msgid "Media contains no supported video streams."
+msgstr "Meedia ei sisalda ühtegi toetatud videostriimi."
+
+#: ../src/backend/bacon-video-widget-gst.c:3252
+msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
+msgstr "Tõrge GStreamer esitusobjekti loomisel. Palun kontrolli GStreameri paigaldust."
+
+#: ../src/backend/bacon-video-widget-gst.c:3345
+msgid "The video output is in use by another application. Please close other video applications, or select another video output in the Multimedia Systems Selector."
+msgstr "Videoväljund on mõne teise rakenduse kasutuses. Palun sulge muud videorakendused või vali mõni teine videoväljund Multimeediasüsteemide valija abil."
+
+#: ../src/backend/bacon-video-widget-gst.c:3355
+msgid "Failed to open video output. It may not be available. Please select another video output in the Multimedia Systems Selector."
+msgstr "Tõrge videoväljundi avamisel. See võibolla ei eksisteeri. Palun vali Multimeediasüsteemide valija abil mõni muu videoväljund."
+
+#: ../src/backend/bacon-video-widget-gst.c:3382
+msgid "The audio output is in use by another application. Please select another audio output in the Multimedia Systems Selector. You may want to consider using a sound server."
+msgstr "Audioväljund on mõne teise rakenduse kasutuses. Palun vali mõni  Multimeediasüsteemide valija abil mõni muu audioväljund. Sa võiksid kaaluda audioserveri kasutamist."
+
+#: ../src/backend/bacon-video-widget-gst.c:3388
+msgid "The requested audio output was not found. Please select another audio output in the Multimedia Systems Selector"
+msgstr "Soovitud audioväljundit ei leitud. Palun vali Multimeediasüsteemide valija abil mõni teine audioväljund."
+
+#: ../src/backend/bacon-video-widget-gst.c:3398
+msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
+msgstr "Tõrge audioväljundi avamisel. Sul ei ole võibolla õiguseid audioväljundi avamiseks või audioserver ei ole käivitatud. Palun vali Multimeediasüsteemide valija abil mõni teine audioväljund."
 
 #: ../src/backend/bacon-video-widget-xine.c:674
 #, c-format
@@ -1544,39 +1593,39 @@ msgstr "Seda filmi pole võimalik avada."
 msgid "Generic Error."
 msgstr "Üldine viga."
 
-#: ../src/backend/bacon-video-widget-xine.c:1975
+#: ../src/backend/bacon-video-widget-xine.c:1978
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr "See film on ikkagi pilt. Sa saad seda avada pildivaatlusprogrammiga."
 
-#: ../src/backend/bacon-video-widget-xine.c:1999
+#: ../src/backend/bacon-video-widget-xine.c:2002
 #, c-format
 msgid "Video codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"
 msgstr "Videokoodek '%s' pole käsitletud. Sa pead ilmselt paigaldama mõningate filmitüüpide vaatamiseks täiendavaid pluginaid."
 
-#: ../src/backend/bacon-video-widget-xine.c:2003
+#: ../src/backend/bacon-video-widget-xine.c:2006
 #, c-format
 msgid "Audio codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"
 msgstr "Audiokoodek '%s' pole käsitletud. Sa pead ilmselt paigaldama mõningate filmitüüpide vaatamiseks täiendavaid pluginaid."
 
-#: ../src/backend/bacon-video-widget-xine.c:2019
+#: ../src/backend/bacon-video-widget-xine.c:2022
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "See on audiofail aga hetkel pole audioväljundit saadaval."
 
-#: ../src/backend/bacon-video-widget-xine.c:3458
-#: ../src/backend/bacon-video-widget-xine.c:3521
+#: ../src/backend/bacon-video-widget-xine.c:3461
+#: ../src/backend/bacon-video-widget-xine.c:3524
 #, c-format
 msgid "Language %d"
 msgstr "Keel %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3557
+#: ../src/backend/bacon-video-widget-xine.c:3560
 msgid "Movie is not playing."
 msgstr "Filmi ei esitata."
 
-#: ../src/backend/bacon-video-widget-xine.c:3566
+#: ../src/backend/bacon-video-widget-xine.c:3569
 msgid "No video to capture."
 msgstr "Pole videot, mida haarata."
 
-#: ../src/backend/bacon-video-widget-xine.c:3574
+#: ../src/backend/bacon-video-widget-xine.c:3577
 msgid "Video codec is not handled."
 msgstr "Videokoodek pole käsitletud."
 
