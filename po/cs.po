@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-30 23:00+0000\n"
-"PO-Revision-Date: 2005-05-31 13:07+0200\n"
+"POT-Creation-Date: 2005-06-12 06:47+0000\n"
+"PO-Revision-Date: 2005-06-12 15:39+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1418,13 +1418,77 @@ msgstr ""
 msgid "Totem Video Window"
 msgstr "Video okno Totemu"
 
-#: ../src/backend/bacon-video-widget-gst.c:1818
+#: ../src/backend/bacon-video-widget-gst.c:1813
 msgid "Failed to retrieve working directory"
 msgstr "Nemohu získat pracovní adresář"
 
-#: ../src/backend/bacon-video-widget-gst.c:3218
-msgid "Failed to create a GStreamer play object"
-msgstr "Nemohu vytvořit objekt GStreamer pro přehrávání"
+#: ../src/backend/bacon-video-widget-gst.c:1865
+msgid "Location not found."
+msgstr "Umístění nenalezeno."
+
+#: ../src/backend/bacon-video-widget-gst.c:1868
+msgid "You don't have permission to open that location."
+msgstr "Nemáte oprávnění otevřít toto umístění."
+
+#: ../src/backend/bacon-video-widget-gst.c:1888
+msgid "Failed to open media file; unknown error"
+msgstr "Nemohu otevřít soubor médií; neznámá chyba"
+
+#: ../src/backend/bacon-video-widget-gst.c:1920
+#, c-format
+msgid "Failed to play: %s"
+msgstr "Nemohu přehrávat: %s"
+
+#: ../src/backend/bacon-video-widget-gst.c:1922
+msgid "unknown error"
+msgstr "neznámá chyba"
+
+#: ../src/backend/bacon-video-widget-gst.c:3067
+msgid "Too old version of GStreamer installed."
+msgstr "Nainstalována příliš stará verze GStreameru."
+
+#: ../src/backend/bacon-video-widget-gst.c:3074
+msgid "Media contains no supported video streams."
+msgstr "Médium neobsahuje žádný podporovaný tok videa."
+
+#: ../src/backend/bacon-video-widget-gst.c:3252
+msgid ""
+"Failed to create a GStreamer play object. Please check your GStreamer "
+"installation."
+msgstr "Nemohu vytvořit objekt GStreamer pro přehrávání. Zkontrolujte prosím vaši instalaci GStreameru."
+
+#: ../src/backend/bacon-video-widget-gst.c:3345
+msgid ""
+"The video output is in use by another application. Please close other video "
+"applications, or select another video output in the Multimedia Systems "
+"Selector."
+msgstr "Výstup videa používá jiná aplikace. Zavřete prosím jiné aplikace videa nebo zvolte jiný výstup videa ve Výběru systému multimédií."
+
+#: ../src/backend/bacon-video-widget-gst.c:3355
+msgid ""
+"Failed to open video output. It may not be available. Please select another "
+"video output in the Multimedia Systems Selector."
+msgstr "Nemohu otevřít výstup videa. Možná není k dispozici. Zvolte prosím jiný výstup videa ve Výběru systému multimédií."
+
+#: ../src/backend/bacon-video-widget-gst.c:3382
+msgid ""
+"The audio output is in use by another application. Please select another "
+"audio output in the Multimedia Systems Selector. You may want to consider "
+"using a sound server."
+msgstr "Výstup zvuku používá jiná aplikace. Zvolte prosím jiný výstup zvuku ve Výběru systému multimédií. Možná budete chtít uvažovat o používání zvukového serveru."
+
+#: ../src/backend/bacon-video-widget-gst.c:3388
+msgid ""
+"The requested audio output was not found. Please select another audio output "
+"in the Multimedia Systems Selector"
+msgstr "Požadovaný výstup zvuku nebyl nalezen. Zvolte prosím jiný výstup zvuku ve Výběru systému multimédií"
+
+#: ../src/backend/bacon-video-widget-gst.c:3398
+msgid ""
+"Failed to open audio output. You may not have permission to open the sound "
+"device, or the sound server may not be running. Please select another audio "
+"output in the Multimedia Systems Selector."
+msgstr "Nemohu otevřít výstup zvuku, Možná nemáte oprávnění otevřít zvukové zařízení nebo neběží server zvuku. Zvolte prosím jiný výstup zvuku ve Výběru systému multimédií."
 
 #: ../src/backend/bacon-video-widget-xine.c:674
 #, c-format
@@ -1528,12 +1592,12 @@ msgstr "Tento film nelze otevřít."
 msgid "Generic Error."
 msgstr "Obecná chyba."
 
-#: ../src/backend/bacon-video-widget-xine.c:1975
+#: ../src/backend/bacon-video-widget-xine.c:1978
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr ""
 "Tento film je statický obrázek. Můžete jej otevřít prohlížečem obrázků."
 
-#: ../src/backend/bacon-video-widget-xine.c:1999
+#: ../src/backend/bacon-video-widget-xine.c:2002
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1542,7 +1606,7 @@ msgstr ""
 "Video kodek '%s' není obsloužen. Pro přehrávání některých typů filmů budete "
 "možná muset nainstalovat přídavné zásuvné moduly"
 
-#: ../src/backend/bacon-video-widget-xine.c:2003
+#: ../src/backend/bacon-video-widget-xine.c:2006
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1551,25 +1615,25 @@ msgstr ""
 "Audio kodek '%s' není obsloužen. Pro přehrávání některých typů filmů budete "
 "možná muset nainstalovat přídavné zásuvné moduly"
 
-#: ../src/backend/bacon-video-widget-xine.c:2019
+#: ../src/backend/bacon-video-widget-xine.c:2022
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Tento soubor obsahuje jen zvuk a zvukový výstup není k dispozici."
 
-#: ../src/backend/bacon-video-widget-xine.c:3458
-#: ../src/backend/bacon-video-widget-xine.c:3521
+#: ../src/backend/bacon-video-widget-xine.c:3461
+#: ../src/backend/bacon-video-widget-xine.c:3524
 #, c-format
 msgid "Language %d"
 msgstr "Jazyk %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3557
+#: ../src/backend/bacon-video-widget-xine.c:3560
 msgid "Movie is not playing."
 msgstr "Film se nepřehrává."
 
-#: ../src/backend/bacon-video-widget-xine.c:3566
+#: ../src/backend/bacon-video-widget-xine.c:3569
 msgid "No video to capture."
 msgstr "Žádné video k zachycení."
 
-#: ../src/backend/bacon-video-widget-xine.c:3574
+#: ../src/backend/bacon-video-widget-xine.c:3577
 msgid "Video codec is not handled."
 msgstr "Kodek videa není obsloužen."
 
