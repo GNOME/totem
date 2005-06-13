@@ -138,6 +138,7 @@ struct BaconVideoWidgetPrivate {
 	Display *display;
 	int screen;
 	GdkWindow *video_window;
+	GdkCursor *cursor;
 
 	/* Visual effects */
 	char *vis_name;
@@ -449,6 +450,9 @@ bacon_video_widget_finalize (GObject *object)
 	if (bvw->priv->xine != NULL) {
 		xine_exit (bvw->priv->xine);
 	}
+	if (bvw->priv->cursor != NULL) {
+		gdk_cursor_unref (bvw->priv->cursor);
+	}
 	g_free (bvw->priv->vis_name);
 	g_object_unref (G_OBJECT (bvw->priv->gc));
 	g_free (bvw->priv->codecs_path);
@@ -460,8 +464,7 @@ bacon_video_widget_finalize (GObject *object)
 	g_async_queue_unref (bvw->priv->queue);
 	G_OBJECT_CLASS (parent_class)->finalize (object);
 
-	bvw->priv = NULL;
-	bvw = NULL;
+	g_free (bvw->priv);
 }
 
 static void
@@ -1332,14 +1335,17 @@ xine_event (void *user_data, const xine_event_t *event)
 		spubtn = (xine_spu_button_t *) event->data;
 		if (spubtn->direction)
 		{
-			GdkCursor *cursor;
-			cursor = gdk_cursor_new (GDK_HAND2);
-			gdk_window_set_cursor
-				(bvw->priv->video_window, cursor);
-			gdk_cursor_unref (cursor);
+			if (bvw->priv->cursor == NULL) {
+				bvw->priv->cursor = gdk_cursor_new (GDK_HAND2);
+			}
 		} else {
-			gdk_window_set_cursor(bvw->priv->video_window, NULL);
+			if (bvw->priv->cursor != NULL) {
+				gdk_cursor_unref (bvw->priv->cursor);
+				bvw->priv->cursor = NULL;
+			}
 		}
+		gdk_window_set_cursor (bvw->priv->video_window,
+				bvw->priv->cursor);
 		break;
 	case XINE_EVENT_UI_PLAYBACK_FINISHED:
 		if (bvw->priv->got_redirect != FALSE)
@@ -2458,7 +2464,8 @@ bacon_video_widget_set_show_cursor (BaconVideoWidget *bvw,
 	{
 		eel_gdk_window_set_invisible_cursor (bvw->priv->video_window);
 	} else {
-		gdk_window_set_cursor (bvw->priv->video_window, NULL);
+		gdk_window_set_cursor (bvw->priv->video_window,
+				bvw->priv->cursor);
 	}
 
 	bvw->priv->cursor_shown = show_cursor;
