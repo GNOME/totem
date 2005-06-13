@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-02 14:53+0000\n"
-"PO-Revision-Date: 2005-06-03 00:00+0200\n"
+"POT-Creation-Date: 2005-06-12 14:46+0000\n"
+"PO-Revision-Date: 2005-06-12 19:46+0200\n"
 "Last-Translator: Elian Myftiu <elian@alblinux.net>\n"
 "Language-Team: Albanian <gnome-albanian-perkthyesit@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: ../data/playlist.glade.h:1 ../src/totem-playlist.c:1549
 msgid "Playlist"
-msgstr "Lista e riprodhimit të melodive"
+msgstr "Lista e riprodhimit"
 
 #: ../data/playlist.glade.h:2
 msgid "Repeat _mode"
@@ -1416,13 +1416,92 @@ msgstr ""
 msgid "Totem Video Window"
 msgstr "Dritarja Video e Totem-it"
 
-#: ../src/backend/bacon-video-widget-gst.c:1818
+#: ../src/backend/bacon-video-widget-gst.c:1813
 msgid "Failed to retrieve working directory"
 msgstr "Dështoi në tërheqjen e dosjes së punës"
 
-#: ../src/backend/bacon-video-widget-gst.c:3218
-msgid "Failed to create a GStreamer play object"
-msgstr "Dështoi në krijimin e një objekti GStreamer"
+#: ../src/backend/bacon-video-widget-gst.c:1865
+msgid "Location not found."
+msgstr "Vendndodhja nuk u gjet."
+
+#: ../src/backend/bacon-video-widget-gst.c:1868
+msgid "You don't have permission to open that location."
+msgstr "Nuk keni të drejtë të hapni atë vendndodhje."
+
+#: ../src/backend/bacon-video-widget-gst.c:1888
+msgid "Failed to open media file; unknown error"
+msgstr "Dështoi në hapjen e medias; gabim i panjohur"
+
+#: ../src/backend/bacon-video-widget-gst.c:1920
+#, c-format
+msgid "Failed to play: %s"
+msgstr "Dështoi të luajë: %s"
+
+#: ../src/backend/bacon-video-widget-gst.c:1922
+msgid "unknown error"
+msgstr "gabim i panjohur"
+
+#: ../src/backend/bacon-video-widget-gst.c:3067
+msgid "Too old version of GStreamer installed."
+msgstr "Versioni i instaluar për GStreamer është tepër i vjetër."
+
+#: ../src/backend/bacon-video-widget-gst.c:3074
+msgid "Media contains no supported video streams."
+msgstr "Media nuk përmban rrjedhë video."
+
+#: ../src/backend/bacon-video-widget-gst.c:3252
+msgid ""
+"Failed to create a GStreamer play object. Please check your GStreamer "
+"installation."
+msgstr ""
+"Dështoi në krijimin e një objekti GStreamer. Ju lutem kontrolloni instalimin "
+"e GStreamer."
+
+#: ../src/backend/bacon-video-widget-gst.c:3345
+msgid ""
+"The video output is in use by another application. Please close other video "
+"applications, or select another video output in the Multimedia Systems "
+"Selector."
+msgstr ""
+"Dalja e videos është duke u përdorur nga një program tjetër. Ju lutem "
+"mbyllni programe të tjerë videosh, ose zgjidhni një tjetër dalje videoje në "
+"Zgjedhësin e Sistemeve Multimedialë."
+
+#: ../src/backend/bacon-video-widget-gst.c:3355
+msgid ""
+"Failed to open video output. It may not be available. Please select another "
+"video output in the Multimedia Systems Selector."
+msgstr ""
+"Dështoi në hapjen e daljes së videos. Mund të mos jetë e pranishme. Ju lutem "
+"zgjidhni një dalje tjetër video në Zgjedhësin e Sistemeve Multimedialë."
+
+#: ../src/backend/bacon-video-widget-gst.c:3382
+msgid ""
+"The audio output is in use by another application. Please select another "
+"audio output in the Multimedia Systems Selector. You may want to consider "
+"using a sound server."
+msgstr ""
+"Dalja e zërit është duke u përdorur nga një program tjetër. Ju lutem zgjidhni "
+"një tjetër dalje audio në Zgjedhësin e Sistemeve Multimedialë. Mund të konsideroni "
+"përdorimin e një shërbyesi zëri."
+
+#: ../src/backend/bacon-video-widget-gst.c:3388
+msgid ""
+"The requested audio output was not found. Please select another audio output "
+"in the Multimedia Systems Selector"
+msgstr ""
+"Dalja e duhur e zërit nuk u gjet. Ju lutem zgjidhni një tjetër dalje zëri në "
+"Zgjedhësin e Sistemeve Multimedialë"
+
+#: ../src/backend/bacon-video-widget-gst.c:3398
+msgid ""
+"Failed to open audio output. You may not have permission to open the sound "
+"device, or the sound server may not be running. Please select another audio "
+"output in the Multimedia Systems Selector."
+msgstr ""
+"Dështoi në hapjen e daljes së zërit. Mund të mos keni të drejtën për të hapur "
+"dispozitivin e zërit, ose shërbyesi i zërit mund të mos jetë duke xhiruar. Ju "
+"lutem zgjidhni një tjetër dalje zëri në Zgjedhësin e Sistemeve Multimedialë."
 
 #: ../src/backend/bacon-video-widget-xine.c:674
 #, c-format
@@ -1527,12 +1606,12 @@ msgstr "Ky film nuk mund të shikohej."
 msgid "Generic Error."
 msgstr "Gabim i Përgjithshëm."
 
-#: ../src/backend/bacon-video-widget-xine.c:1975
+#: ../src/backend/bacon-video-widget-xine.c:1978
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr ""
 "Ky film është një pamje në prehje. Mund ta hapësh me një shikues pamjesh."
 
-#: ../src/backend/bacon-video-widget-xine.c:1999
+#: ../src/backend/bacon-video-widget-xine.c:2002
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1541,7 +1620,7 @@ msgstr ""
 "Kodifikuesi i videos '%s' nuk punon. Ndoshta të duhet të instalosh plugin-a "
 "të tjerë për të parë disa lloje filmash."
 
-#: ../src/backend/bacon-video-widget-xine.c:2003
+#: ../src/backend/bacon-video-widget-xine.c:2006
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1550,25 +1629,25 @@ msgstr ""
 "Kodifikuesi i zërit '%s' nuk punon. Ndoshta të duhet të instalosh plugin-a "
 "të tjerë për të parë disa lloje filmash."
 
-#: ../src/backend/bacon-video-widget-xine.c:2019
+#: ../src/backend/bacon-video-widget-xine.c:2022
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Ky është vetëm një file audio, dhe nuk ka dalje zëri në dispozicion."
 
-#: ../src/backend/bacon-video-widget-xine.c:3458
-#: ../src/backend/bacon-video-widget-xine.c:3521
+#: ../src/backend/bacon-video-widget-xine.c:3461
+#: ../src/backend/bacon-video-widget-xine.c:3524
 #, c-format
 msgid "Language %d"
 msgstr "Gjuha %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3557
+#: ../src/backend/bacon-video-widget-xine.c:3560
 msgid "Movie is not playing."
 msgstr "Filmi ka ndalur."
 
-#: ../src/backend/bacon-video-widget-xine.c:3566
+#: ../src/backend/bacon-video-widget-xine.c:3569
 msgid "No video to capture."
 msgstr "Asnjë sinjal video."
 
-#: ../src/backend/bacon-video-widget-xine.c:3574
+#: ../src/backend/bacon-video-widget-xine.c:3577
 msgid "Video codec is not handled."
 msgstr "Kodifikuesi i videos nuk punon."
 
