@@ -1,3 +1,12 @@
+2005-06-13  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c: (xine_event),
+	(bacon_video_widget_set_show_cursor), (bacon_video_widget_finalize):
+	Don't reset the cursor to the default pointer when showing it, but
+	to whatever the current pointer should have been (Closes: #163808)
+	* src/totem.c: (totem_action_exit): try to hide the Totem window
+	as soon as possible
+
 2005-06-10  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/backend/bacon-video-widget-gst.c:

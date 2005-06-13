@@ -160,25 +160,32 @@ totem_action_save_size (Totem *totem)
 void
 totem_action_exit (Totem *totem)
 {
+	GdkDisplay *display;
+
 	if (gtk_main_level () > 0)
 		gtk_main_quit ();
 
 	if (totem == NULL)
 		exit (0);
 
+	if (totem->playlist)
+		gtk_widget_hide (GTK_WIDGET (totem->playlist));
+
+	if (totem->win) {
+		gtk_widget_hide (totem->win);
+		display = gtk_widget_get_display (totem->win);
+	}
+
 #ifndef HAVE_GTK_ONLY
 	totem_gromit_clear (TRUE);
 #endif /* !HAVE_GTK_ONLY */
+
+	gdk_display_sync (display);
+
 	bacon_message_connection_free (totem->conn);
 	totem_action_save_size (totem);
 
 	totem_action_fullscreen (totem, FALSE);
-
-	if (totem->playlist)
-		gtk_widget_hide (GTK_WIDGET (totem->playlist));
-
-	if (totem->win)
-		gtk_widget_hide (totem->win);
 
 	totem_sublang_exit (totem);
 	totem_named_icons_dispose (totem);
