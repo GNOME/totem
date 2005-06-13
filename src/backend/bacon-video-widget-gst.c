@@ -1365,6 +1365,8 @@ bacon_video_widget_finalize (GObject * object)
     bvw->priv->videotags = NULL;
   }
   g_free (bvw->priv);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -3316,6 +3318,9 @@ bacon_video_widget_new (int width, int height,
             video_sink = bin;
           }
         }
+
+        if (confvalue)
+          gconf_value_free (confvalue);
       }
     }
   }
@@ -3496,6 +3501,7 @@ bacon_video_widget_new (int width, int height,
     if (confvalue != NULL) {
       bacon_video_widget_set_video_property (bvw, i,
         gconf_value_get_int (confvalue));
+      gconf_value_free (confvalue);
     }
   }
 
@@ -3505,6 +3511,7 @@ bacon_video_widget_new (int width, int height,
   if (confvalue != NULL &&
       (type != BVW_USE_TYPE_METADATA && type != BVW_USE_TYPE_CAPTURE)) {
     bvw->priv->speakersetup = gconf_value_get_int (confvalue);
+    gconf_value_free (confvalue);
   }
 
   /* visualization */
@@ -3512,11 +3519,13 @@ bacon_video_widget_new (int width, int height,
       GCONF_PREFIX"/show_vfx", NULL);
   if (confvalue != NULL) {
     bvw->priv->show_vfx = gconf_value_get_bool (confvalue);
+    gconf_value_free (confvalue);
   }
   confvalue = gconf_client_get_without_default (bvw->priv->gc,
       GCONF_PREFIX"/visual_quality", NULL);
   if (confvalue != NULL) {
     bvw->priv->visq = gconf_value_get_int (confvalue);
+    gconf_value_free (confvalue);
   }
 #if 0
   confvalue = gconf_client_get_without_default (bvw->priv->gc,
@@ -3524,6 +3533,7 @@ bacon_video_widget_new (int width, int height,
   if (confvalue != NULL) {
     bvw->priv->vis_element = 
         gst_element_factory_make (gconf_value_get_string (confvalue), NULL);
+    gconf_value_free (confvalue);
   }
 #endif
   setup_vis (bvw);
@@ -3533,11 +3543,13 @@ bacon_video_widget_new (int width, int height,
       GCONF_PREFIX"/tv_out_type", NULL);
   if (confvalue != NULL) {
     bvw->priv->tv_out_type = gconf_value_get_int (confvalue);
+    gconf_value_free (confvalue);
   }
   confvalue = gconf_client_get_without_default (bvw->priv->gc,
       GCONF_PREFIX"/connection_speed", NULL);
   if (confvalue != NULL) {
     bvw->priv->connection_speed = gconf_value_get_int (confvalue);
+    gconf_value_free (confvalue);
   }
 
   /* those are private to us, i.e. not Xine-compatible */
@@ -3546,12 +3558,14 @@ bacon_video_widget_new (int width, int height,
   if (confvalue != NULL) {
     g_object_set (G_OBJECT (bvw->priv->play), "queue-size",
         (guint64) GST_SECOND * gconf_value_get_float (confvalue), NULL);
+    gconf_value_free (confvalue);
   }
   confvalue = gconf_client_get_without_default (bvw->priv->gc,
       GCONF_PREFIX"/network-buffer-threshold", NULL);
   if (confvalue != NULL) {
     g_object_set (G_OBJECT (bvw->priv->play), "queue-threshold",
         (guint64) GST_SECOND * gconf_value_get_float (confvalue), NULL);
+    gconf_value_free (confvalue);
   }
 
   return GTK_WIDGET (bvw);
