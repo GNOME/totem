@@ -1783,6 +1783,9 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 	GtkWidget *menubar, *controlbar, *statusbar, *item, *bvw_vbox, *widget;
 	int width = 0, height = 0;
 
+	if (totem->bvw == NULL)
+		return;
+
 	menubar = glade_xml_get_widget (totem->xml, "tmw_menubar");
 	controlbar = glade_xml_get_widget (totem->xml, "tmw_controls_vbox");
 	statusbar = glade_xml_get_widget (totem->xml, "tmw_statusbar");
