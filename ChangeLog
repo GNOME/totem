@@ -1,5 +1,11 @@
 2005-06-17  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (show_controls): Don't allow for show_controls to be
+	called if there's no video widget, fixes a crash when 'h' is pressed
+	before the video widget is initialised (Closes: #308069)
+
+2005-06-17  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.glade: Make sure that the window isn't shown on startup,
 	otherwise it might resize before being used (patch from Trent Lloyd
 	<lathiat@bur.st>) (Closes: #308070)
