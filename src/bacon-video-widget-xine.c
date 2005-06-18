@@ -1213,6 +1213,7 @@ bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[ERROR], 0,
 				data->msg, TRUE, data->fatal);
+		break;
 	default:
 		g_assert_not_reached ();
 	}
