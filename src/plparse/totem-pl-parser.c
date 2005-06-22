@@ -634,9 +634,6 @@ totem_pl_parser_add_ram (TotemPlParser *parser, const char *url, gpointer data)
 	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
-	contents = g_realloc (contents, size + 1);
-	contents[size] = '\0';
-
 	/* figure out whether we're a unix or dos RAM file */
 	if (strstr(contents,"\x0d") == NULL)
 		split_char = "\n";
@@ -718,9 +715,6 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
 	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
 
-	contents = g_realloc (contents, size + 1);
-	contents[size] = '\0';
-
 	/* is TRUE if there's an EXTINF on the previous line */
 	extinfo = FALSE;
 
@@ -800,9 +794,6 @@ totem_pl_parser_add_asf_parser (TotemPlParser *parser, const char *url,
 	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
-	contents = g_realloc (contents, size + 1);
-	contents[size] = '\0';
-
 	lines = g_strsplit (contents, "\n", 0);
 	g_free (contents);
 
@@ -843,9 +834,6 @@ totem_pl_parser_add_pls (TotemPlParser *parser, const char *url, gpointer data)
 		g_free (contents);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
-
-	contents = g_realloc (contents, size + 1);
-	contents[size] = '\0';
 
 	/* figure out whether we're a unix pls or dos pls */
 	if (strstr(contents,"\x0d") == NULL)
@@ -1057,9 +1045,6 @@ totem_pl_parser_add_asx (TotemPlParser *parser, const char *url, gpointer data)
 	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return FALSE;
 
-	contents = g_realloc (contents, size + 1);
-	contents[size] = '\0';
-
 	doc = xmlParseMemory (contents, size);
 	if (doc == NULL)
 		doc = xmlRecoverMemory (contents, size);
@@ -1188,9 +1173,6 @@ totem_pl_parser_add_smil (TotemPlParser *parser, const char *url, gpointer data)
 	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
-	contents = g_realloc (contents, size + 1);
-	contents[size] = '\0';
-
 	doc = xmlParseMemory (contents, size);
 	if (doc == NULL)
 		doc = xmlRecoverMemory (contents, size);
@@ -1241,9 +1223,6 @@ totem_pl_parser_add_desktop (TotemPlParser *parser, const char *url, gpointer da
 
 	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
-
-	contents = g_realloc (contents, size + 1);
-	contents[size] = '\0';
 
 	lines = g_strsplit (contents, "\n", 0);
 	g_free (contents);
