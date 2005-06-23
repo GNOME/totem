@@ -132,6 +132,7 @@ struct BaconVideoWidgetPrivate
 
   GstTagList *tagcache, *audiotags, *videotags;
 
+  gboolean cache_errors;
   GError *last_error;
   gboolean got_redirect;
 
@@ -780,15 +781,19 @@ bacon_video_widget_bus_callback (GstBus * bus, GstMessage * message,
       char *debug;
       GError *error;
 
-      /* FIXME: don't emit signal during opening, just cache error
-       * instead. */
-
       gst_message_parse_error (message, &error, &debug);
-      g_signal_emit (G_OBJECT (bvw), bvw_table_signals[SIGNAL_ERROR], 0,
-		     error->message, TRUE, FALSE);
+      if (bvw->priv->cache_errors) {
+	if (!bvw->priv->last_error)
+          bvw->priv->last_error = error;
+	else
+	  g_error_free (error);
+      } else {
+        g_signal_emit (G_OBJECT (bvw), bvw_table_signals[SIGNAL_ERROR], 0,
+		       error->message, TRUE, FALSE);
+	g_error_free (error);
+      }
 
       /* Cleaning the error infos */
-      g_error_free (error);
       g_free (debug);
       break;
     }
@@ -1734,8 +1739,13 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 		  bvw->priv->mrl, "suburi", subtitle_uri, NULL);
   }
 
+  bvw->priv->cache_errors = TRUE;
   ret = (gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED) ==
       GST_STATE_SUCCESS);
+  if (!ret) {
+    while (!bvw->priv->last_error && g_main_iteration (FALSE)) ;
+  }
+  bvw->priv->cache_errors = FALSE;
   if (!ret && !bvw->priv->got_redirect) {
     if (error) {
       if (bvw->priv->last_error) {
@@ -1807,8 +1817,13 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
     bvw->priv->last_error = NULL;
   }
 
+  bvw->priv->cache_errors = TRUE;
   ret = (gst_element_set_state (GST_ELEMENT (bvw->priv->play),
       GST_STATE_PLAYING) == GST_STATE_SUCCESS);
+  if (!ret) {
+    while (!bvw->priv->last_error && g_main_iteration (FALSE)) ;
+  }
+  bvw->priv->cache_errors = FALSE;
   if (!ret) {
     g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC, _("Failed to play: %s"),
 	 (bvw->priv->last_error != NULL) ?
@@ -1839,10 +1854,12 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **gerro
   if (was_playing)
     gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
 
+  bvw->priv->cache_errors = TRUE;
   gst_element_seek (bvw->priv->play, GST_SEEK_METHOD_SET |
 		    GST_SEEK_FLAG_FLUSH | GST_FORMAT_TIME,
 		    time * GST_MSECOND);
   GST_PIPELINE (bvw->priv->play)->stream_time = time * GST_MSECOND;
+  bvw->priv->cache_errors = FALSE;
 
   if (was_playing)
     gst_element_set_state (bvw->priv->play, GST_STATE_PLAYING);
