@@ -1,3 +1,35 @@
+2005-06-23  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* configure.in:
+	  Update req. to gst 0.9.
+	* src/backend/bacon-video-widget-gst.c:
+	(bacon_video_widget_motion_notify),
+	(bacon_video_widget_button_press),
+	(bacon_video_widget_button_release), (bacon_video_widget_init),
+	(got_stream_length), (got_time_tick), (cb_iterate),
+	(bacon_video_widget_bus_callback), (got_video_size), (idle_resize),
+	(parse_video_caps), (parse_stream_info), (stream_info_set),
+	(bacon_video_widget_finalize), (has_subp),
+	(bacon_video_widget_get_subtitle),
+	(bacon_video_widget_set_subtitle),
+	(bacon_video_widget_get_subtitles), (set_audio_filter),
+	(bacon_video_widget_set_audio_out_type),
+	(bacon_video_widget_seek_time), (bacon_video_widget_seek),
+	(bacon_video_widget_dvd_event), (get_visualization_size),
+	(change_visualization_quality), (setup_vis), (filter_features),
+	(get_visualization_features), (add_longname),
+	(bacon_video_widget_get_visuals_list),
+	(bacon_video_widget_set_visuals),
+	(bacon_video_widget_set_visuals_quality),
+	(bacon_video_widget_get_mrls),
+	(bacon_video_widget_get_current_frame), (bacon_video_widget_new):
+	* src/backend/gstscreenshot.c: (have_data), (get_any),
+	(bvw_frame_conv_convert):
+	  Port to GStreamer 0.9.
+	* src/totem.c: (seek_slider_pressed_cb), (seek_slider_changed_cb),
+	(seek_slider_released_cb):
+	  Do direct seeking.
+
 2005-06-22  Bastien Nocera  <hadess@hadess.net>
 
 	* data/properties.glade: Patch from Michael Terry <mike@mterry.name>
