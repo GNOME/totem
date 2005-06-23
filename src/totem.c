@@ -3138,6 +3138,8 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (seek_slider_pressed_cb), totem);
 	g_signal_connect (G_OBJECT(totem->fs_seek), "button_release_event",
 			G_CALLBACK (seek_slider_released_cb), totem);
+	g_signal_connect (G_OBJECT (totem->fs_seekadj), "value_changed",
+			G_CALLBACK (seek_slider_changed_cb), totem);
 	g_signal_connect (G_OBJECT(totem->fs_volume), "value-changed",
 			G_CALLBACK (vol_cb), totem);
 	g_signal_connect (G_OBJECT(totem->fs_volume), "button_press_event",
