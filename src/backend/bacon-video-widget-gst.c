@@ -2250,7 +2250,7 @@ setup_vis (BaconVideoWidget * bvw)
     gst_object_unref (GST_OBJECT (pad));
 
     pad = gst_element_get_pad (bvw->priv->vis_capsfilter, "src");
-    gst_element_add_pad (bin, gst_ghost_pad_new ("sink", pad));
+    gst_element_add_pad (bin, gst_ghost_pad_new ("src", pad));
     gst_object_unref (GST_OBJECT (pad));
 
     gst_element_link_pads (bvw->priv->vis_element, "src",
