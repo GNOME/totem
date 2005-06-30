@@ -1,5 +1,20 @@
 2005-06-30  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_seek_time): remove duplicate call to
+	_get_stream_length()
+	* src/bacon-video-widget-properties.c:
+	(bacon_video_widget_properties_reset),
+	(bacon_video_widget_properties_from_time),
+	(bacon_video_widget_properties_update):
+	* src/bacon-video-widget-properties.h: add a _set_from_time function
+	to be able to update the time independently
+	* src/totem.c: (update_current_time): call _set_from_time as the
+	stream length is updated, xine_get_pos_length is a POS indeed
+	(Closes: #305027)
+
+2005-06-30  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst.c:
 	(bacon_video_widget_size_allocate), (bacon_video_widget_new):
 	Fix GCC4 warnings, use new TOTEM_OBJECT_HAS_SIGNAL() convenience to

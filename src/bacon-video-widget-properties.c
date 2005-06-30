@@ -78,6 +78,7 @@ struct BaconVideoWidgetPropertiesPrivate
 {
 	GladeXML *xml;
 	GtkWidget *vbox;
+	int time;
 };
 
 static GtkWidgetClass *parent_class = NULL;
@@ -145,7 +146,8 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 	/* Year */
 	bacon_video_widget_properties_set_label (props, "year", _("Unknown"));
 	/* Duration */
-	bacon_video_widget_properties_set_label (props, "duration", _("0 second"));
+	bacon_video_widget_properties_from_time (props, 0);
+
 	/* Dimensions */
 	bacon_video_widget_properties_set_label (props, "dimensions", _("0 x 0"));
 	/* Video Codec */
@@ -164,12 +166,30 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 }
 
 void
+bacon_video_widget_properties_from_time (BaconVideoWidgetProperties *props,
+					 int time)
+{
+	char *string;
+
+	g_return_if_fail (props != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
+
+	if (time == props->priv->time)
+		return;
+
+	string = totem_time_to_string_text (time);
+	bacon_video_widget_properties_set_label (props, "duration", string);
+	g_free (string);
+
+	props->priv->time = time;
+}
+
+void
 bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 				      BaconVideoWidget *bvw)
 {
 	GtkWidget *item;
 	GValue value = { 0, };
-	char *string;
 	gboolean has_type;
 
 	g_return_if_fail (props != NULL);
@@ -184,10 +204,8 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 
 	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
 			BVW_INFO_DURATION, &value);
-	string = totem_time_to_string_text
-		(g_value_get_int (&value) * 1000);
-	bacon_video_widget_properties_set_label (props, "duration", string);
-	g_free (string);
+	bacon_video_widget_properties_from_time (props,
+			g_value_get_int (&value) * 1000);
 	g_value_unset (&value);
 
 	/* Video */

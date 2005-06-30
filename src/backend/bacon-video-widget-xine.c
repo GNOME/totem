@@ -2156,8 +2156,6 @@ gboolean bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time,
 		return TRUE;
 	}
 
-	length = bacon_video_widget_get_stream_length (bvw);
-
 	error = xine_play (bvw->priv->stream, 0, CLAMP (time, 0, length));
 
 	if (error == 0)

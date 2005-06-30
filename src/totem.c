@@ -1322,6 +1322,9 @@ update_current_time (BaconVideoWidget *bvw,
 		totem_time_label_set_time
 			(TOTEM_TIME_LABEL (totem->tcw_time_label),
 			 current_time, stream_length);
+		bacon_video_widget_properties_from_time
+			(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
+			 stream_length);
 	}
 }
 

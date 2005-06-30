@@ -55,6 +55,8 @@ void bacon_video_widget_properties_from_metadata	(BaconVideoWidgetProperties *pr
 							 const char *title,
 							 const char *artist,
 							 const char *album);
+void bacon_video_widget_properties_from_time		(BaconVideoWidgetProperties *props,
+							 int time);
 
 char *bacon_video_widget_properties_time_to_string	(int time);
 
