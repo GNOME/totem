@@ -545,7 +545,7 @@ bacon_video_widget_size_allocate (GtkWidget * widget,
 
   if (GTK_WIDGET_REALIZED (widget)) {
     gfloat width, height, ratio;
-    guint w, h;
+    int w, h;
 
     gdk_window_move_resize (widget->window,
                             allocation->x, allocation->y,
@@ -3441,8 +3441,10 @@ bacon_video_widget_new (int width, int height,
 		    G_CALLBACK (stream_info_set), (gpointer) bvw);
   g_signal_connect (G_OBJECT (bvw->priv->play), "group-switch",
 		    G_CALLBACK (group_switch), (gpointer) bvw);
-  g_signal_connect (G_OBJECT (bvw->priv->play), "got-redirect",
-		    G_CALLBACK (got_redirect), (gpointer) bvw);
+  if (TOTEM_OBJECT_HAS_SIGNAL (bvw->priv->play, "got-redirect") != FALSE) {
+    g_signal_connect (G_OBJECT (bvw->priv->play), "got-redirect",
+		      G_CALLBACK (got_redirect), (gpointer) bvw);
+  }
 
   /* We try to get an element supporting XOverlay interface */
   if (type == BVW_USE_TYPE_VIDEO && GST_IS_BIN (bvw->priv->play)) {

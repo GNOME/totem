@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
+#include <libgnomevfs/gnome-vfs-init.h>
 
 static char*
 totem_create_full_path (const char *path)

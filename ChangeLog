@@ -1,3 +1,13 @@
+2005-06-30  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst.c:
+	(bacon_video_widget_size_allocate), (bacon_video_widget_new):
+	Fix GCC4 warnings, use new TOTEM_OBJECT_HAS_SIGNAL() convenience to
+	avoid triggering warning on startup
+	* src/backend/video-utils.h: add TOTEM_OBJECT_HAS_SIGNAL
+	* src/metadata-test.c: fix warning
+	* src/totem.c: (totem_action_exit): fix warning
+
 2005-06-22  Bastien Nocera  <hadess@hadess.net>
 
 	* data/properties.glade: Patch from Michael Terry <mike@mterry.name>
