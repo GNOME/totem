@@ -1457,6 +1457,41 @@ bacon_video_widget_get_backend_name (BaconVideoWidget * bvw)
   return g_strdup_printf ("GStreamer version %d.%d.%d", major, minor, micro);
 }
 
+static gboolean
+has_subp (BaconVideoWidget * bvw)
+{
+  GList *streaminfo = NULL;
+  gboolean res = FALSE;
+
+  if (bvw->priv->play == NULL || bvw->priv->mrl == NULL)
+    return FALSE;
+
+  g_object_get (G_OBJECT (bvw->priv->play), "stream-info", &streaminfo, NULL);
+  streaminfo = g_list_copy (streaminfo);
+  g_list_foreach (streaminfo, (GFunc) g_object_ref, NULL);
+  for ( ; streaminfo != NULL; streaminfo = streaminfo->next) {
+    GObject *info = streaminfo->data;
+    gint type;
+    GParamSpec *pspec;
+    GEnumValue *val;
+
+    if (!info)
+      continue;
+    g_object_get (info, "type", &type, NULL);
+    pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
+    val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
+
+    if (strstr (val->value_name, "SUBPICTURE")) {
+      res = TRUE;
+      break;
+    }
+  }
+  g_list_foreach (streaminfo, (GFunc) g_object_unref, NULL);
+  g_list_free (streaminfo);
+
+  return res;
+}
+
 int
 bacon_video_widget_get_subtitle (BaconVideoWidget * bvw)
 {
@@ -1466,7 +1501,10 @@ bacon_video_widget_get_subtitle (BaconVideoWidget * bvw)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -2);
   g_return_val_if_fail (bvw->priv->play != NULL, -2);
 
-  g_object_get (G_OBJECT (bvw->priv->play), "current-text", &subtitle, NULL);
+  if (has_subp (bvw))
+    g_object_get (G_OBJECT (bvw->priv->play), "current-subpicture", &subtitle, NULL);
+  else
+    g_object_get (G_OBJECT (bvw->priv->play), "current-text", &subtitle, NULL);
 
   if (subtitle == -1)
     subtitle = -2;
@@ -1486,7 +1524,10 @@ bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
   else if (subtitle == -2)
     subtitle = -1;
 
-  g_object_set (G_OBJECT (bvw->priv->play), "current-text", subtitle, NULL);
+  if (has_subp (bvw))
+    g_object_set (G_OBJECT (bvw->priv->play), "current-subpicture", subtitle, NULL);
+  else
+    g_object_set (G_OBJECT (bvw->priv->play), "current-text", subtitle, NULL);
 }
 
 static GList *
@@ -1535,11 +1576,16 @@ get_list_of_type (BaconVideoWidget * bvw, const gchar * type_name)
 
 GList * bacon_video_widget_get_subtitles (BaconVideoWidget * bvw)
 {
+  GList *list;
+
   g_return_val_if_fail (bvw != NULL, NULL);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
   g_return_val_if_fail (bvw->priv->play != NULL, NULL);
 
-  return get_list_of_type (bvw, "TEXT");
+  if (!(list =  get_list_of_type (bvw, "SUBPICTURE")))
+    list = get_list_of_type (bvw, "TEXT");
+
+  return list;
 }
 
 GList * bacon_video_widget_get_languages (BaconVideoWidget * bvw)
