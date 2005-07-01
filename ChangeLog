@@ -1,3 +1,13 @@
+2005-07-01  jonathan@kaolin.hn.org
+
+	Reviewed by:  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/backend/bacon-video-widget-gst.c:
+	(bacon_video_widget_signal_idler):
+	  Prepend tags, so later tags are shown first (for iradio).
+	* src/totem.c: (totem_get_nice_name_for_stream):
+	  Print title alone if no artist is known (for iradio tags).
+
 2005-07-01  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/backend/bacon-video-widget-gst.c: (has_subp),

@@ -536,10 +536,7 @@ totem_get_nice_name_for_stream (Totem *totem)
 	g_value_unset (&value);
 
 	if (artist == NULL)
-	{
-		g_free (title);
-		return NULL;
-	}
+		return title;
 
 	retval = g_strdup_printf ("%s - %s", artist, title);
 	g_free (artist);

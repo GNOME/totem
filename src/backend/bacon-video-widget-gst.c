@@ -825,7 +825,7 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
           GstElementFactory *f;
 
           result = gst_tag_list_merge (bvw->priv->tagcache, tag_list,
-				       GST_TAG_MERGE_APPEND);
+				       GST_TAG_MERGE_PREPEND);
           if (bvw->priv->tagcache)
             gst_tag_list_free (bvw->priv->tagcache);
           bvw->priv->tagcache = result;
@@ -842,7 +842,7 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
 
 	    if (cache) {
 	      result = gst_tag_list_merge (*cache, tag_list,
-					   GST_TAG_MERGE_APPEND);
+					   GST_TAG_MERGE_PREPEND);
 	      if (*cache)
 		gst_tag_list_free (*cache);
 	      *cache = result;
