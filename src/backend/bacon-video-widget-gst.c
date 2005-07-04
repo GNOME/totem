@@ -40,10 +40,10 @@
 #include <gst/gconf/gconf.h>
 
 /* GStreamer Interfaces */
-#include <gst/xoverlay/xoverlay.h>
-#include <gst/navigation/navigation.h>
-#include <gst/mixer/mixer.h>
-#include <gst/colorbalance/colorbalance.h>
+#include <gst/interfaces/xoverlay.h>
+#include <gst/interfaces/navigation.h>
+#include <gst/interfaces/mixer.h>
+#include <gst/interfaces/colorbalance.h>
 
 /* system */
 #include <unistd.h>
