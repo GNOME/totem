@@ -64,6 +64,8 @@ struct Totem {
 	BaconVideoWidget *bvw;
 	GtkWidget *prefs;
 	GtkWidget *statusbar;
+	GtkWidget *sidebar;
+	gboolean sidebar_shown;
 
 	/* Separate Dialogs */
 	GtkWidget *properties;

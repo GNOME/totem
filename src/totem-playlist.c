@@ -127,7 +127,7 @@ static void init_treeview (GtkWidget *treeview, TotemPlaylist *playlist);
 
 #define totem_playlist_unset_playing(x) totem_playlist_set_playing(x, FALSE)
 
-G_DEFINE_TYPE(TotemPlaylist, totem_playlist, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE(TotemPlaylist, totem_playlist, GTK_TYPE_VBOX)
 
 /* Helper functions */
 static gboolean
@@ -171,13 +171,19 @@ totem_playlist_gtk_tree_path_equals (GtkTreePath *path1, GtkTreePath *path2)
 	return retval;
 }
 
+static GtkWindow *
+totem_playlist_get_toplevel (TotemPlaylist *playlist)
+{
+	return GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (playlist)));
+}
+
 static void
 totem_playlist_error (char *title, char *reason, TotemPlaylist *playlist)
 {
 	GtkWidget *error_dialog;
 
 	error_dialog =
-		gtk_message_dialog_new (GTK_WINDOW (playlist),
+		gtk_message_dialog_new (totem_playlist_get_toplevel (playlist),
 				GTK_DIALOG_MODAL,
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK,
@@ -638,7 +644,8 @@ totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist)
 	int response;
 
 	fs = gtk_file_chooser_dialog_new (_("Select Movies or Playlists"),
-			GTK_WINDOW (playlist), GTK_FILE_CHOOSER_ACTION_OPEN,
+			totem_playlist_get_toplevel (playlist),
+			GTK_FILE_CHOOSER_ACTION_OPEN,
 			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			GTK_STOCK_ADD, GTK_RESPONSE_ACCEPT,
 			NULL);
@@ -815,7 +822,8 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 	int response;
 
 	fs = gtk_file_chooser_dialog_new (_("Save playlist"),
-			GTK_WINDOW (playlist), GTK_FILE_CHOOSER_ACTION_SAVE,
+			totem_playlist_get_toplevel (playlist),
+			GTK_FILE_CHOOSER_ACTION_SAVE,
 			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
 			NULL);
@@ -855,7 +863,7 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 			GtkWidget *dialog;
 
 			dialog = gtk_message_dialog_new
-				(GTK_WINDOW (playlist),
+				(totem_playlist_get_toplevel (playlist),
 				 GTK_DIALOG_MODAL,
 				 GTK_MESSAGE_QUESTION,
 				 GTK_BUTTONS_NONE,
@@ -1168,37 +1176,13 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 }
 
 static void
-repeat_button_toggled (GtkToggleButton *togglebutton, TotemPlaylist *playlist)
-{
-	gboolean repeat;
-
-	repeat = gtk_toggle_button_get_active (togglebutton);
-	gconf_client_set_bool (playlist->_priv->gc, GCONF_PREFIX"/repeat",
-			repeat, NULL);
-	playlist->_priv->repeat = repeat;
-
-	g_signal_emit (G_OBJECT (playlist),
-			totem_playlist_table_signals[REPEAT_TOGGLED], 0,
-			repeat, NULL);
-}
-
-static void
 update_repeat_cb (GConfClient *client, guint cnxn_id,
 		GConfEntry *entry, TotemPlaylist *playlist)
 {
-	GtkWidget *button;
 	gboolean repeat;
 
-	repeat = gconf_client_get_bool (client,
-			GCONF_PREFIX"/repeat", NULL);
-	button = glade_xml_get_widget (playlist->_priv->xml, "repeat_button");
-	g_signal_handlers_disconnect_by_func (G_OBJECT (button),
-			repeat_button_toggled, playlist);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), repeat);
+	repeat = gconf_value_get_bool (entry->value);
 	playlist->_priv->repeat = repeat;
-	g_signal_connect (G_OBJECT (button), "toggled",
-			G_CALLBACK (repeat_button_toggled),
-			(gpointer) playlist);
 
 	g_signal_emit (G_OBJECT (playlist),
 			totem_playlist_table_signals[CHANGED], 0,
@@ -1282,38 +1266,14 @@ ensure_shuffled (TotemPlaylist *playlist, gboolean shuffle)
 }
 
 static void
-shuffle_button_toggled (GtkToggleButton *togglebutton, TotemPlaylist *playlist)
-{
-	gboolean shuffle;
-
-	shuffle = gtk_toggle_button_get_active (togglebutton);
-	gconf_client_set_bool (playlist->_priv->gc, GCONF_PREFIX"/shuffle",
-			shuffle, NULL);
-	playlist->_priv->shuffle = shuffle;
-	ensure_shuffled (playlist, shuffle);
-
-	g_signal_emit (G_OBJECT (playlist),
-			totem_playlist_table_signals[SHUFFLE_TOGGLED], 0,
-			shuffle, NULL);
-}
-
-static void
 update_shuffle_cb (GConfClient *client, guint cnxn_id,
 		GConfEntry *entry, TotemPlaylist *playlist)
 {
-	GtkWidget *button;
 	gboolean shuffle;
 
-	shuffle = gconf_client_get_bool (client,
-			GCONF_PREFIX"/shuffle", NULL);
-	button = glade_xml_get_widget (playlist->_priv->xml, "shuffle_button");
-	g_signal_handlers_disconnect_by_func (G_OBJECT (button),
-			shuffle_button_toggled, playlist);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), shuffle);
+	shuffle = gconf_value_get_bool (entry->value);
 	playlist->_priv->shuffle = shuffle;
-	g_signal_connect (G_OBJECT (button), "toggled",
-			G_CALLBACK (shuffle_button_toggled),
-			(gpointer) playlist);
+	ensure_shuffled (playlist, shuffle);
 
 	g_signal_emit (G_OBJECT (playlist),
 			totem_playlist_table_signals[CHANGED], 0,
@@ -1340,25 +1300,9 @@ static void
 init_config (TotemPlaylist *playlist)
 {
 	GtkWidget *button;
-	gboolean repeat, shuffle, locked;
+	gboolean locked;
 
 	playlist->_priv->gc = gconf_client_get_default ();
-
-	button = glade_xml_get_widget (playlist->_priv->xml, "repeat_button");
-	repeat = gconf_client_get_bool (playlist->_priv->gc,
-			GCONF_PREFIX"/repeat", NULL);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), repeat);
-	g_signal_connect (G_OBJECT (button), "toggled",
-			G_CALLBACK (repeat_button_toggled),
-			(gpointer) playlist);
-
-	button = glade_xml_get_widget (playlist->_priv->xml, "shuffle_button");
-	shuffle = gconf_client_get_bool (playlist->_priv->gc,
-			GCONF_PREFIX"/shuffle", NULL);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), shuffle);
-	g_signal_connect (G_OBJECT (button), "toggled",
-			G_CALLBACK (shuffle_button_toggled),
-			(gpointer) playlist);
 
 	locked = gconf_client_get_bool (playlist->_priv->gc,
 			"/desktop/gnome/lockdown/disable_save_to_disk", NULL);
@@ -1381,8 +1325,10 @@ init_config (TotemPlaylist *playlist)
 			(GConfClientNotifyFunc) update_lockdown,
 			playlist, NULL, NULL);
 
-	playlist->_priv->repeat = repeat;
-	playlist->_priv->shuffle = shuffle;
+	playlist->_priv->repeat = gconf_client_get_bool (playlist->_priv->gc,
+			GCONF_PREFIX"/repeat", NULL);
+	playlist->_priv->shuffle = gconf_client_get_bool (playlist->_priv->gc,
+			GCONF_PREFIX"/shuffle", NULL);
 }
 
 static void
@@ -1407,8 +1353,6 @@ totem_playlist_init (TotemPlaylist *playlist)
 			"entry",
 			G_CALLBACK (totem_playlist_entry_parsed),
 			playlist);
-
-	gtk_container_set_border_width (GTK_CONTAINER (playlist), 5);
 }
 
 static void
@@ -1429,110 +1373,11 @@ totem_playlist_finalize (GObject *object)
 	}
 }
 
-static void
-totem_playlist_unrealize (GtkWidget *widget)
-{
-	TotemPlaylist *playlist = TOTEM_PLAYLIST (widget);
-	int x, y;
-
-	g_return_if_fail (widget != NULL);
-
-	if (GTK_WIDGET_MAPPED (widget) != FALSE)
-	{
-		gtk_window_get_position (GTK_WINDOW (widget), &x, &y);
-	} else {
-		x = playlist->_priv->x;
-		y = playlist->_priv->y;
-	}
-
-	gconf_client_set_int (playlist->_priv->gc, GCONF_PREFIX"/playlist_x",
-			x, NULL);
-	gconf_client_set_int (playlist->_priv->gc, GCONF_PREFIX"/playlist_y",
-			y, NULL);
-
-	GTK_WIDGET_UNSET_FLAGS (widget, GTK_REALIZED);
-
-	if (GTK_WIDGET_CLASS (parent_class)->unrealize != NULL) {
-		(* GTK_WIDGET_CLASS (parent_class)->unrealize) (widget);
-	}
-}
-
-
-
-static void
-totem_playlist_realize (GtkWidget *widget)
-{
-	TotemPlaylist *playlist = TOTEM_PLAYLIST (widget);
-	int x, y;
-
-	g_return_if_fail (widget != NULL);
-
-	GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
-
-	if (GTK_WIDGET_CLASS (parent_class)->realize != NULL) {
-		(* GTK_WIDGET_CLASS (parent_class)->realize) (widget);
-	}
-
-	x = gconf_client_get_int (playlist->_priv->gc,
-			GCONF_PREFIX"/playlist_x", NULL);
-	y = gconf_client_get_int (playlist->_priv->gc,
-			GCONF_PREFIX"/playlist_y", NULL);
-	playlist->_priv->x = x;
-	playlist->_priv->y = y;
-
-	if (x == -1 || y == -1
-			|| x > gdk_screen_width () || y > gdk_screen_height ())
-		return;
-
-	gtk_window_move (GTK_WINDOW (widget), x, y);
-}
-
-static void
-totem_playlist_map (GtkWidget *widget)
-{
-	TotemPlaylist *playlist = TOTEM_PLAYLIST (widget);
-	int x, y;
-
-	g_return_if_fail (widget != NULL);
-
-	x = playlist->_priv->x;
-	y = playlist->_priv->y;
-
-	if (GTK_WIDGET_CLASS (parent_class)->map != NULL) {
-		(* GTK_WIDGET_CLASS (parent_class)->map) (widget);
-	}
-
-	if (x == -1 || y == -1
-			|| x > gdk_screen_width () || y > gdk_screen_height ())
-		return;
-
-	gtk_window_move (GTK_WINDOW (widget),
-			playlist->_priv->x, playlist->_priv->y);
-}
-
-static void
-totem_playlist_unmap (GtkWidget *widget)
-{
-	TotemPlaylist *playlist = TOTEM_PLAYLIST (widget);
-	int x, y;
-
-	g_return_if_fail (widget != NULL);
-
-	gtk_window_get_position (GTK_WINDOW (widget), &x, &y);
-	playlist->_priv->x = x;
-	playlist->_priv->y = y;
-
-	if (GTK_WIDGET_CLASS (parent_class)->unmap != NULL) {
-		(* GTK_WIDGET_CLASS (parent_class)->unmap) (widget);
-	}
-}
-
 GtkWidget*
 totem_playlist_new (void)
 {
 	TotemPlaylist *playlist;
 	GtkWidget *container, *item;
-	char *filename;
 
 	playlist = TOTEM_PLAYLIST (g_object_new (GTK_TYPE_PLAYLIST, NULL));
 
@@ -1544,14 +1389,6 @@ totem_playlist_new (void)
 		totem_playlist_finalize (G_OBJECT (playlist));
 		return NULL;
 	}
-
-	gtk_dialog_set_has_separator (GTK_DIALOG (playlist), FALSE);
-	gtk_window_set_title (GTK_WINDOW (playlist), _("Playlist"));
-	gtk_dialog_add_buttons (GTK_DIALOG (playlist),
-			GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-			NULL);
-	gtk_window_set_default_size (GTK_WINDOW (playlist),
-			300, 375);
 
 	/* Connect the buttons */
 	item = glade_xml_get_widget (playlist->_priv->xml, "add_button");
@@ -1588,7 +1425,7 @@ totem_playlist_new (void)
 	container = glade_xml_get_widget (playlist->_priv->xml, "vbox4");
 	g_object_ref (container);
 	gtk_container_remove (GTK_CONTAINER (item), container);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (playlist)->vbox),
+	gtk_box_pack_start (GTK_BOX (playlist),
 			container,
 			TRUE,       /* expand */
 			TRUE,       /* fill */
@@ -1607,11 +1444,7 @@ totem_playlist_new (void)
 	playlist->_priv->icon =
 		totem_interface_load_pixbuf ("playlist-playing.png");
 
-	filename = totem_interface_get_full_path ("playlist-24.png");
-	gtk_window_set_icon_from_file (GTK_WINDOW (playlist), filename, NULL);
-	g_free (filename);
-
-	gtk_widget_show_all (GTK_DIALOG (playlist)->vbox);
+	gtk_widget_show_all (GTK_WIDGET (playlist));
 
 	return GTK_WIDGET (playlist);
 }
@@ -2379,12 +2212,10 @@ totem_playlist_get_repeat (TotemPlaylist *playlist)
 void
 totem_playlist_set_repeat (TotemPlaylist *playlist, gboolean repeat)
 {
-	GtkWidget *button;
-
 	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
 
-	button = glade_xml_get_widget (playlist->_priv->xml, "repeat_button");
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), repeat);
+	gconf_client_set_bool (playlist->_priv->gc, GCONF_PREFIX"/repeat",
+			repeat, NULL);
 }
 
 gboolean
@@ -2398,12 +2229,10 @@ totem_playlist_get_shuffle (TotemPlaylist *playlist)
 void
 totem_playlist_set_shuffle (TotemPlaylist *playlist, gboolean shuffle)
 {
-	GtkWidget *button;
-
 	g_return_if_fail (GTK_IS_PLAYLIST (playlist));
 
-	button = glade_xml_get_widget (playlist->_priv->xml, "shuffle_button");
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), shuffle);
+	gconf_client_set_bool (playlist->_priv->gc, GCONF_PREFIX"/shuffle",
+			shuffle, NULL);
 }
 
 void
@@ -2494,10 +2323,6 @@ totem_playlist_class_init (TotemPlaylistClass *klass)
 	parent_class = gtk_type_class (gtk_dialog_get_type ());
 
 	G_OBJECT_CLASS (klass)->finalize = totem_playlist_finalize;
-	GTK_WIDGET_CLASS (klass)->realize = totem_playlist_realize;
-	GTK_WIDGET_CLASS (klass)->unrealize = totem_playlist_unrealize;
-	GTK_WIDGET_CLASS (klass)->map = totem_playlist_map;
-	GTK_WIDGET_CLASS (klass)->unmap = totem_playlist_unmap;
 
 	/* Signals */
 	totem_playlist_table_signals[CHANGED] =

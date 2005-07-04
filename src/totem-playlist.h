@@ -1,6 +1,6 @@
-/* gtk-playlist.h: Simple playlist dialog
+/* totem-playlist.h: Simple playlist dialog
 
-   Copyright (C) 2002, 2003 Bastien Nocera <hadess@hadess.net>
+   Copyright (C) 2002, 2003, 2004, 2005 Bastien Nocera <hadess@hadess.net>
 
    The Gnome Library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public License as
@@ -23,7 +23,7 @@
 #ifndef TOTEM_PLAYLIST_H
 #define TOTEM_PLAYLIST_H
 
-#include <gtk/gtkdialog.h>
+#include <gtk/gtkvbox.h>
 #include <libgnomevfs/gnome-vfs-volume.h>
 
 G_BEGIN_DECLS
@@ -44,12 +44,12 @@ typedef struct TotemPlaylistClass      TotemPlaylistClass;
 typedef struct TotemPlaylistPrivate    TotemPlaylistPrivate;
 
 struct TotemPlaylist {
-	GtkDialog parent;
+	GtkVBox parent;
 	TotemPlaylistPrivate *_priv;
 };
 
 struct TotemPlaylistClass {
-	GtkDialogClass parent_class;
+	GtkVBoxClass parent_class;
 
 	void (*changed) (TotemPlaylist *playlist);
 	void (*active_name_changed) (TotemPlaylist *playlist);

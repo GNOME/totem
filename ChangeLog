@@ -1,3 +1,42 @@
+2005-07-04  Bastien Nocera  <hadess@hadess.net>
+
+	* data/Makefile.am:
+	* data/playlist-16.png:
+	* data/playlist-24.png:
+	* data/playlist.glade:
+	* data/totem.glade:
+	* data/totem.schemas.in:
+	* src/Makefile.am:
+	* src/ev-sidebar.[ch]:
+	* src/totem-menu.h:
+	* src/totem-playlist.c: (totem_playlist_get_toplevel),
+	(totem_playlist_error), (totem_playlist_add_files),
+	(totem_playlist_save_files), (update_repeat_cb),
+	(update_shuffle_cb), (init_config), (totem_playlist_init),
+	(totem_playlist_new), (totem_playlist_set_repeat),
+	(totem_playlist_set_shuffle), (totem_playlist_class_init):
+	* src/totem-playlist.h:
+	* src/totem-private.h:
+	* src/totem-sidebar.c: (totem_sidebar_toggle),
+	(on_sidebar_button_toggled), (on_show_sidebar1_activate),
+	(toggle_sidebar_from_sidebar), (totem_sidebar_is_visible),
+	(totem_sidebar_setup):
+	* src/totem-sidebar.h:
+	* src/totem-statusbar.c: (totem_statusbar_new_from_glade):
+	* src/totem-statusbar.h:
+	* src/totem-stock-icons.c: (totem_set_default_icons),
+	(totem_named_icons_init):
+	* src/totem-time-label.c: (totem_time_label_new_from_glade):
+	* src/totem-time-label.h:
+	* src/totem.c: (totem_action_fullscreen_toggle),
+	(update_mrl_label), (totem_action_set_mrl_with_warning),
+	(totem_action_handle_key), (totem_callback_connect),
+	(playlist_widget_setup), (video_widget_create), (main):
+	* src/totem.h:
+
+	Move the playlist dialog to a sidebar, remove the labels for the
+	playlist buttons
+
 2005-07-01  jonathan@kaolin.hn.org
 
 	Reviewed by:  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>

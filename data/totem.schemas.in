@@ -124,26 +124,14 @@
       </schema>
 
       <schema>
-        <key>/schemas/apps/totem/playlist_x</key>
-	<applyto>/apps/totem/playlist_x</applyto>
+        <key>/schemas/apps/totem/sidebar_shown</key>
+	<applyto>/apps/totem/sidebar_shown</applyto>
 	<owner>totem</owner>
-	<type>int</type>
-	<default>-1</default>
+	<type>bool</type>
+	<default>true</default>
 	<locale name="C">
-	  <short>X coordinate for the Playlist</short>
-	  <long>X coordinate for the Playlist.</long>
-	</locale>
-      </schema>
-
-      <schema>
-        <key>/schemas/apps/totem/playlist_y</key>
-	<applyto>/apps/totem/playlist_y</applyto>
-	<owner>totem</owner>
-	<type>int</type>
-	<default>-1</default>
-	<locale name="C">
-	<short>Y coordinate for the Playlist</short>
-	<long>Y coordinate for the Playlist.</long>
+	  <short>Whether the sidebar is shown</short>
+	  <long>Whether the sidebar is shown.</long>
 	</locale>
       </schema>
 

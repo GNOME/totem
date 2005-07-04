@@ -69,7 +69,4 @@ void    totem_action_error                      (const char *title,
 						 const char *reason,
 						 Totem *totem);
 
-GtkWidget * totem_statusbar_create (void);
-GtkWidget * totem_time_display_create (void);
-
 #endif /* __TOTEM_H__ */

@@ -110,18 +110,6 @@ totem_set_default_icons (Totem *totem)
 			"tefw_image");
 	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
 			PIXBUF_FOR_ID("stock_leave-fullscreen"));
-
-	/* Playlist button */
-	item = glade_xml_get_widget (totem->xml,
-			"tmw_playlist_button_image");
-	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
-			PIXBUF_FOR_ID("stock_playlist"));
-	item = glade_xml_get_widget (totem->xml,
-			"tmw_show_playlist_menu_item_image");
-	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
-			PIXBUF_FOR_ID("stock_playlist"));
-	gtk_window_set_icon (GTK_WINDOW (totem->playlist),
-			PIXBUF_FOR_ID("stock_playlist"));
 }
 
 static GdkPixbuf *
@@ -146,7 +134,6 @@ totem_named_icons_init (Totem *totem, gboolean refresh)
 	int i;
 	char *items[][4] = {
 		{ "panel-screenshot", "stock-panel-screenshot", "gnome-screenshot", "applets-screenshooter" },
-		{ "stock_playlist", "playlist-24", NULL, NULL },
 		{ "stock_leave-fullscreen", GTK_STOCK_QUIT, NULL, NULL },
 	};
 

@@ -1,4 +1,4 @@
-/* totem-menu.h
+/* totem-sidebar.h
 
    Copyright (C) 2004-2005 Bastien Nocera <hadess@hadess.net>
 
@@ -20,21 +20,16 @@
    Author: Bastien Nocera <hadess@hadess.net>
  */
 
-#ifndef TOTEM_MENU_H
-#define TOTEM_MENU_H
-
-#include "totem.h"
+#ifndef TOTEM_SIDEBAR_H
+#define TOTEM_SIDEBAR_H
 
 G_BEGIN_DECLS
 
-void totem_sublang_update (Totem *totem);
-void totem_sublang_exit (Totem *totem);
-
-void totem_setup_play_disc (Totem *totem);
-
-void totem_setup_recent (Totem *totem);
-void totem_action_add_recent (Totem *totem, const char *filename);
+void totem_sidebar_setup (Totem *totem);
+void totem_sidebar_toggle (Totem *totem);
+void totem_sidebar_set_visibility (Totem *totem, gboolean visible);
+gboolean totem_sidebar_is_visible (Totem *totem);
 
 G_END_DECLS
 
-#endif /* TOTEM_MENU_H */
+#endif /* TOTEM_SIDEBAR_H */

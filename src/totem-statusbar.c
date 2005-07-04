@@ -156,6 +156,19 @@ totem_statusbar_new (void)
   return g_object_new (TOTEM_TYPE_STATUSBAR, NULL);
 }
 
+GtkWidget *
+totem_statusbar_new_from_glade (gchar *widget_name,
+		gchar *string1, gchar *string2,
+		gint int1, gint int2)
+{
+	GtkWidget *widget;
+
+	widget = totem_statusbar_new ();
+	gtk_widget_show (widget);
+
+	return widget;
+}
+
 static void
 totem_statusbar_update_time (TotemStatusbar *statusbar)
 {

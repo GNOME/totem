@@ -1733,7 +1733,7 @@ AC3 Passthrough</property>
 	  <child>
 	    <widget class="Custom" id="tcw_time_display_label">
 	      <property name="visible">True</property>
-	      <property name="creation_function">totem_time_display_create</property>
+	      <property name="creation_function">totem_time_label_new_from_glade</property>
 	      <property name="int1">0</property>
 	      <property name="int2">0</property>
 	      <property name="last_modification_time">Sat, 03 Jul 2004 19:41:43 GMT</property>
@@ -2066,7 +2066,6 @@ AC3 Passthrough</property>
 		      <signal name="activate" handler="on_preferences1_activate" last_modification_time="Sat, 08 Jun 2002 22:29:16 GMT"/>
 		    </widget>
 		  </child>
-
 		</widget>
 	      </child>
 	    </widget>
@@ -2364,27 +2363,16 @@ AC3 Passthrough</property>
 		  </child>
 
 		  <child>
-		    <widget class="GtkImageMenuItem" id="tmw_show_playlist_menu_item">
+		    <widget class="GtkImageMenuItem" id="tmw_show_sidebar_menu_item">
 		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">Show or hide the playlist</property>
-		      <property name="label" translatable="yes">_Show/Hide Playlist</property>
+		      <property name="tooltip" translatable="yes">Show or hide the sidebar</property>
+		      <property name="label" translatable="yes">_Show/Hide Sidebar</property>
 		      <property name="use_underline">True</property>
-		      <signal name="activate" handler="on_show_playlist1_activate" last_modification_time="Fri, 14 Jun 2002 22:36:54 GMT"/>
+		      <signal name="activate" handler="on_show_sidebar1_activate" last_modification_time="Fri, 14 Jun 2002 22:36:54 GMT"/>
 		      <accelerator key="P" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
-		      <child internal-child="image">
-			<widget class="GtkImage" id="tmw_show_playlist_menu_item_image">
-			  <property name="visible">True</property>
-			  <property name="pixbuf">playlist-16.png</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
-			</widget>
-		      </child>
 		    </widget>
 		  </child>
-
 		</widget>
 	      </child>
 	    </widget>
@@ -2746,75 +2734,49 @@ AC3 Passthrough</property>
       </child>
 
       <child>
-	<widget class="GtkVBox" id="tmw_main_vbox">
+	<widget class="GtkHPaned" id="tmw_main_pane">
 	  <property name="visible">True</property>
-	  <property name="homogeneous">False</property>
-	  <property name="spacing">0</property>
+	  <property name="can_focus">True</property>
 
 	  <child>
-	    <widget class="GtkVBox" id="tmw_bvw_vbox">
-	      <property name="border_width">1</property>
-	      <property name="width_request">420</property>
-	      <property name="height_request">315</property>
+	    <widget class="GtkVBox" id="tmw_main_vbox">
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">0</property>
 
 	      <child>
-		<placeholder/>
-	      </child>
-	    </widget>
-	    <packing>
-	      <property name="padding">0</property>
-	      <property name="expand">True</property>
-	      <property name="fill">True</property>
-	    </packing>
-	  </child>
-
-	  <child>
-	    <widget class="GtkVBox" id="tmw_controls_vbox">
-	      <property name="border_width">6</property>
-	      <property name="visible">True</property>
-	      <property name="homogeneous">False</property>
-	      <property name="spacing">6</property>
-
-	      <child>
-		<widget class="GtkLabel" id="tmw_title_label">
+		<widget class="GtkVBox" id="tmw_bvw_vbox">
+		  <property name="border_width">1</property>
+		  <property name="width_request">420</property>
+		  <property name="height_request">315</property>
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">&lt;span size=&quot;medium&quot;&gt;&lt;b&gt;No File&lt;/b&gt;&lt;/span&gt;</property>
-		  <property name="use_underline">False</property>
-		  <property name="use_markup">True</property>
-		  <property name="justify">GTK_JUSTIFY_LEFT</property>
-		  <property name="wrap">False</property>
-		  <property name="selectable">False</property>
-		  <property name="xalign">0.5</property>
-		  <property name="yalign">0.5</property>
-		  <property name="xpad">0</property>
-		  <property name="ypad">0</property>
-		  <property name="ellipsize">PANGO_ELLIPSIZE_MIDDLE</property>
-		  <property name="width_chars">-1</property>
-		  <property name="single_line_mode">True</property>
-		  <property name="angle">0</property>
+		  <property name="homogeneous">False</property>
+		  <property name="spacing">0</property>
+
+		  <child>
+		    <placeholder/>
+		  </child>
 		</widget>
 		<packing>
 		  <property name="padding">0</property>
-		  <property name="expand">False</property>
-		  <property name="fill">False</property>
+		  <property name="expand">True</property>
+		  <property name="fill">True</property>
 		</packing>
 	      </child>
 
 	      <child>
-		<widget class="GtkHBox" id="tmw_seek_hbox">
+		<widget class="GtkVBox" id="tmw_controls_vbox">
+		  <property name="border_width">6</property>
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">6</property>
 
 		  <child>
-		    <widget class="GtkLabel" id="tmw_time_label">
+		    <widget class="GtkLabel" id="tmw_title_label">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">Time:</property>
+		      <property name="label" translatable="yes">&lt;span size=&quot;medium&quot;&gt;&lt;b&gt;No File&lt;/b&gt;&lt;/span&gt;</property>
 		      <property name="use_underline">False</property>
-		      <property name="use_markup">False</property>
+		      <property name="use_markup">True</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>
 		      <property name="wrap">False</property>
 		      <property name="selectable">False</property>
@@ -2822,9 +2784,9 @@ AC3 Passthrough</property>
 		      <property name="yalign">0.5</property>
 		      <property name="xpad">0</property>
 		      <property name="ypad">0</property>
-		      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		      <property name="ellipsize">PANGO_ELLIPSIZE_MIDDLE</property>
 		      <property name="width_chars">-1</property>
-		      <property name="single_line_mode">False</property>
+		      <property name="single_line_mode">True</property>
 		      <property name="angle">0</property>
 		    </widget>
 		    <packing>
@@ -2835,16 +2797,54 @@ AC3 Passthrough</property>
 		  </child>
 
 		  <child>
-		    <widget class="GtkHScale" id="tmw_seek_hscale">
+		    <widget class="GtkHBox" id="tmw_seek_hbox">
 		      <property name="visible">True</property>
-		      <property name="sensitive">False</property>
-		      <property name="can_focus">True</property>
-		      <property name="draw_value">False</property>
-		      <property name="value_pos">GTK_POS_TOP</property>
-		      <property name="digits">1</property>
-		      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-		      <property name="inverted">False</property>
-		      <property name="adjustment">10 0 65536 1 10 0</property>
+		      <property name="homogeneous">False</property>
+		      <property name="spacing">6</property>
+
+		      <child>
+			<widget class="GtkLabel" id="tmw_time_label">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">Time:</property>
+			  <property name="use_underline">False</property>
+			  <property name="use_markup">False</property>
+			  <property name="justify">GTK_JUSTIFY_LEFT</property>
+			  <property name="wrap">False</property>
+			  <property name="selectable">False</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			  <property name="width_chars">-1</property>
+			  <property name="single_line_mode">False</property>
+			  <property name="angle">0</property>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">False</property>
+			  <property name="fill">False</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkHScale" id="tmw_seek_hscale">
+			  <property name="visible">True</property>
+			  <property name="sensitive">False</property>
+			  <property name="can_focus">True</property>
+			  <property name="draw_value">False</property>
+			  <property name="value_pos">GTK_POS_TOP</property>
+			  <property name="digits">1</property>
+			  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+			  <property name="inverted">False</property>
+			  <property name="adjustment">10 0 65536 1 10 0</property>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">True</property>
+			  <property name="fill">True</property>
+			</packing>
+		      </child>
 		    </widget>
 		    <packing>
 		      <property name="padding">0</property>
@@ -2852,161 +2852,27 @@ AC3 Passthrough</property>
 		      <property name="fill">True</property>
 		    </packing>
 		  </child>
-		</widget>
-		<packing>
-		  <property name="padding">0</property>
-		  <property name="expand">True</property>
-		  <property name="fill">True</property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkHBox" id="tmw_buttons_hbox">
-		  <property name="visible">True</property>
-		  <property name="homogeneous">False</property>
-		  <property name="spacing">6</property>
 
 		  <child>
-		    <widget class="GtkButton" id="tmw_previous_button">
+		    <widget class="GtkHBox" id="tmw_buttons_hbox">
 		      <property name="visible">True</property>
-		      <property name="sensitive">False</property>
-		      <property name="tooltip" translatable="yes">Previous</property>
-		      <property name="can_focus">True</property>
-		      <property name="relief">GTK_RELIEF_NORMAL</property>
-		      <property name="focus_on_click">True</property>
-
-		      <child>
-			<widget class="GtkImage" id="image121">
-			  <property name="visible">True</property>
-			  <property name="stock">gtk-media-previous</property>
-			  <property name="icon_size">4</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
-			</widget>
-		      </child>
-		    </widget>
-		    <packing>
-		      <property name="padding">0</property>
-		      <property name="expand">False</property>
-		      <property name="fill">False</property>
-		    </packing>
-		  </child>
-
-		  <child>
-		    <widget class="GtkButton" id="tmw_play_pause_button">
-		      <property name="visible">True</property>
-		      <property name="sensitive">False</property>
-		      <property name="tooltip" translatable="yes">Play/Pause</property>
-		      <property name="can_focus">True</property>
-		      <property name="relief">GTK_RELIEF_NORMAL</property>
-		      <property name="focus_on_click">True</property>
-
-		      <child>
-			<widget class="GtkImage" id="tmw_play_pause_button_image">
-			  <property name="visible">True</property>
-			  <property name="stock">gtk-media-play</property>
-			  <property name="icon_size">4</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
-			</widget>
-		      </child>
-		    </widget>
-		    <packing>
-		      <property name="padding">0</property>
-		      <property name="expand">False</property>
-		      <property name="fill">False</property>
-		    </packing>
-		  </child>
-
-		  <child>
-		    <widget class="GtkButton" id="tmw_next_button">
-		      <property name="visible">True</property>
-		      <property name="sensitive">False</property>
-		      <property name="tooltip" translatable="yes">Next</property>
-		      <property name="can_focus">True</property>
-		      <property name="relief">GTK_RELIEF_NORMAL</property>
-		      <property name="focus_on_click">True</property>
-
-		      <child>
-			<widget class="GtkImage" id="image120">
-			  <property name="visible">True</property>
-			  <property name="stock">gtk-media-next</property>
-			  <property name="icon_size">4</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
-			</widget>
-		      </child>
-		    </widget>
-		    <packing>
-		      <property name="padding">0</property>
-		      <property name="expand">False</property>
-		      <property name="fill">False</property>
-		    </packing>
-		  </child>
-
-		  <child>
-		    <widget class="GtkToggleButton" id="tmw_playlist_button">
-		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">Show/Hide Playlist</property>
-		      <property name="can_focus">True</property>
-		      <property name="relief">GTK_RELIEF_NORMAL</property>
-		      <property name="focus_on_click">True</property>
-		      <property name="active">False</property>
-		      <property name="inconsistent">False</property>
-
-		      <child>
-			<widget class="GtkImage" id="tmw_playlist_button_image">
-			  <property name="visible">True</property>
-			  <property name="pixbuf">playlist-24.png</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
-			</widget>
-		      </child>
-		    </widget>
-		    <packing>
-		      <property name="padding">0</property>
-		      <property name="expand">False</property>
-		      <property name="fill">False</property>
-		    </packing>
-		  </child>
-
-		  <child>
-		    <widget class="GtkVSeparator" id="tmw_buttons_vseparator">
-		      <property name="visible">True</property>
-		    </widget>
-		    <packing>
-		      <property name="padding">0</property>
-		      <property name="expand">False</property>
-		      <property name="fill">True</property>
-		    </packing>
-		  </child>
-
-		  <child>
-		    <widget class="GtkHBox" id="tmw_volume_hbox">
-		      <property name="visible">True</property>
-		      <property name="sensitive">False</property>
 		      <property name="homogeneous">False</property>
-		      <property name="spacing">0</property>
+		      <property name="spacing">6</property>
 
 		      <child>
-			<widget class="GtkButton" id="tmw_volume_mute_button">
+			<widget class="GtkButton" id="tmw_previous_button">
 			  <property name="visible">True</property>
+			  <property name="sensitive">False</property>
+			  <property name="tooltip" translatable="yes">Previous</property>
 			  <property name="can_focus">True</property>
-			  <property name="relief">GTK_RELIEF_NONE</property>
+			  <property name="relief">GTK_RELIEF_NORMAL</property>
 			  <property name="focus_on_click">True</property>
 
 			  <child>
-			    <widget class="GtkImage" id="image8">
+			    <widget class="GtkImage" id="image121">
 			      <property name="visible">True</property>
-			      <property name="pixbuf">rhythmbox-volume-zero.png</property>
+			      <property name="stock">gtk-media-previous</property>
+			      <property name="icon_size">4</property>
 			      <property name="xalign">0.5</property>
 			      <property name="yalign">0.5</property>
 			      <property name="xpad">0</property>
@@ -3022,16 +2888,147 @@ AC3 Passthrough</property>
 		      </child>
 
 		      <child>
-			<widget class="GtkHScale" id="tmw_volume_hscale">
-			  <property name="width_request">100</property>
+			<widget class="GtkButton" id="tmw_play_pause_button">
 			  <property name="visible">True</property>
+			  <property name="sensitive">False</property>
+			  <property name="tooltip" translatable="yes">Play/Pause</property>
 			  <property name="can_focus">True</property>
-			  <property name="draw_value">False</property>
-			  <property name="value_pos">GTK_POS_TOP</property>
-			  <property name="digits">1</property>
-			  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-			  <property name="inverted">False</property>
-			  <property name="adjustment">0 0 100 1 10 0</property>
+			  <property name="relief">GTK_RELIEF_NORMAL</property>
+			  <property name="focus_on_click">True</property>
+
+			  <child>
+			    <widget class="GtkImage" id="tmw_play_pause_button_image">
+			      <property name="visible">True</property>
+			      <property name="stock">gtk-media-play</property>
+			      <property name="icon_size">4</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">False</property>
+			  <property name="fill">False</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkButton" id="tmw_next_button">
+			  <property name="visible">True</property>
+			  <property name="sensitive">False</property>
+			  <property name="tooltip" translatable="yes">Next</property>
+			  <property name="can_focus">True</property>
+			  <property name="relief">GTK_RELIEF_NORMAL</property>
+			  <property name="focus_on_click">True</property>
+
+			  <child>
+			    <widget class="GtkImage" id="image120">
+			      <property name="visible">True</property>
+			      <property name="stock">gtk-media-next</property>
+			      <property name="icon_size">4</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">False</property>
+			  <property name="fill">False</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkVSeparator" id="tmw_buttons_vseparator">
+			  <property name="visible">True</property>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">False</property>
+			  <property name="fill">False</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkHBox" id="tmw_volume_hbox">
+			  <property name="visible">True</property>
+			  <property name="sensitive">False</property>
+			  <property name="homogeneous">False</property>
+			  <property name="spacing">0</property>
+
+			  <child>
+			    <widget class="GtkButton" id="tmw_volume_mute_button">
+			      <property name="visible">True</property>
+			      <property name="can_focus">True</property>
+			      <property name="relief">GTK_RELIEF_NONE</property>
+			      <property name="focus_on_click">True</property>
+
+			      <child>
+				<widget class="GtkImage" id="image8">
+				  <property name="visible">True</property>
+				  <property name="pixbuf">rhythmbox-volume-zero.png</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				</widget>
+			      </child>
+			    </widget>
+			    <packing>
+			      <property name="padding">0</property>
+			      <property name="expand">False</property>
+			      <property name="fill">False</property>
+			    </packing>
+			  </child>
+
+			  <child>
+			    <widget class="GtkHScale" id="tmw_volume_hscale">
+			      <property name="width_request">100</property>
+			      <property name="visible">True</property>
+			      <property name="can_focus">True</property>
+			      <property name="draw_value">False</property>
+			      <property name="value_pos">GTK_POS_TOP</property>
+			      <property name="digits">1</property>
+			      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
+			      <property name="inverted">False</property>
+			      <property name="adjustment">0 0 100 1 10 0</property>
+			    </widget>
+			    <packing>
+			      <property name="padding">0</property>
+			      <property name="expand">True</property>
+			      <property name="fill">True</property>
+			    </packing>
+			  </child>
+
+			  <child>
+			    <widget class="GtkButton" id="tmw_volume_max_button">
+			      <property name="visible">True</property>
+			      <property name="can_focus">True</property>
+			      <property name="relief">GTK_RELIEF_NONE</property>
+			      <property name="focus_on_click">True</property>
+
+			      <child>
+				<widget class="GtkImage" id="image9">
+				  <property name="visible">True</property>
+				  <property name="pixbuf">rhythmbox-volume-max.png</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				</widget>
+			      </child>
+			    </widget>
+			    <packing>
+			      <property name="padding">0</property>
+			      <property name="expand">False</property>
+			      <property name="fill">False</property>
+			    </packing>
+			  </child>
 			</widget>
 			<packing>
 			  <property name="padding">0</property>
@@ -3041,20 +3038,75 @@ AC3 Passthrough</property>
 		      </child>
 
 		      <child>
-			<widget class="GtkButton" id="tmw_volume_max_button">
+			<widget class="GtkToggleButton" id="tmw_sidebar_button">
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
-			  <property name="relief">GTK_RELIEF_NONE</property>
+			  <property name="relief">GTK_RELIEF_NORMAL</property>
 			  <property name="focus_on_click">True</property>
+			  <property name="active">False</property>
+			  <property name="inconsistent">False</property>
 
 			  <child>
-			    <widget class="GtkImage" id="image9">
+			    <widget class="GtkAlignment" id="alignment1">
 			      <property name="visible">True</property>
-			      <property name="pixbuf">rhythmbox-volume-max.png</property>
 			      <property name="xalign">0.5</property>
 			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
+			      <property name="xscale">0</property>
+			      <property name="yscale">0</property>
+			      <property name="top_padding">0</property>
+			      <property name="bottom_padding">0</property>
+			      <property name="left_padding">0</property>
+			      <property name="right_padding">0</property>
+
+			      <child>
+				<widget class="GtkHBox" id="hbox25">
+				  <property name="visible">True</property>
+				  <property name="homogeneous">False</property>
+				  <property name="spacing">2</property>
+
+				  <child>
+				    <widget class="GtkArrow" id="arrow1">
+				      <property name="visible">True</property>
+				      <property name="arrow_type">GTK_ARROW_RIGHT</property>
+				      <property name="shadow_type">GTK_SHADOW_OUT</property>
+				      <property name="xalign">0.5</property>
+				      <property name="yalign">0.5</property>
+				      <property name="xpad">0</property>
+				      <property name="ypad">0</property>
+				    </widget>
+				    <packing>
+				      <property name="padding">0</property>
+				      <property name="expand">False</property>
+				      <property name="fill">False</property>
+				    </packing>
+				  </child>
+
+				  <child>
+				    <widget class="GtkLabel" id="label33">
+				      <property name="visible">True</property>
+				      <property name="label" translatable="yes">_Sidebar</property>
+				      <property name="use_underline">True</property>
+				      <property name="use_markup">False</property>
+				      <property name="justify">GTK_JUSTIFY_LEFT</property>
+				      <property name="wrap">False</property>
+				      <property name="selectable">False</property>
+				      <property name="xalign">0.5</property>
+				      <property name="yalign">0.5</property>
+				      <property name="xpad">0</property>
+				      <property name="ypad">0</property>
+				      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+				      <property name="width_chars">-1</property>
+				      <property name="single_line_mode">False</property>
+				      <property name="angle">0</property>
+				    </widget>
+				    <packing>
+				      <property name="padding">0</property>
+				      <property name="expand">False</property>
+				      <property name="fill">False</property>
+				    </packing>
+				  </child>
+				</widget>
+			      </child>
 			    </widget>
 			  </child>
 			</widget>
@@ -3074,36 +3126,39 @@ AC3 Passthrough</property>
 		</widget>
 		<packing>
 		  <property name="padding">0</property>
-		  <property name="expand">True</property>
+		  <property name="expand">False</property>
 		  <property name="fill">True</property>
 		</packing>
 	      </child>
 	    </widget>
 	    <packing>
-	      <property name="padding">0</property>
-	      <property name="expand">False</property>
-	      <property name="fill">True</property>
+	      <property name="shrink">False</property>
+	      <property name="resize">True</property>
 	    </packing>
 	  </child>
 
 	  <child>
-	    <widget class="Custom" id="tmw_statusbar">
-	      <property name="visible">True</property>
-	      <property name="creation_function">totem_statusbar_create</property>
-	      <property name="int1">0</property>
-	      <property name="int2">0</property>
-	      <property name="last_modification_time">Sat, 18 Jan 2003 09:28:29 GMT</property>
-	    </widget>
-	    <packing>
-	      <property name="padding">0</property>
-	      <property name="expand">False</property>
-	      <property name="fill">False</property>
-	    </packing>
+	    <placeholder/>
 	  </child>
 	</widget>
 	<packing>
 	  <property name="padding">0</property>
 	  <property name="expand">True</property>
+	  <property name="fill">True</property>
+	</packing>
+      </child>
+
+      <child>
+	<widget class="Custom" id="tmw_statusbar">
+	  <property name="visible">True</property>
+	  <property name="creation_function">totem_statusbar_new_from_glade</property>
+	  <property name="int1">0</property>
+	  <property name="int2">0</property>
+	  <property name="last_modification_time">Sat, 18 Jan 2003 09:28:29 GMT</property>
+	</widget>
+	<packing>
+	  <property name="padding">0</property>
+	  <property name="expand">False</property>
 	  <property name="fill">True</property>
 	</packing>
       </child>

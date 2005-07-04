@@ -39,6 +39,18 @@ totem_time_label_new (void)
 	return GTK_WIDGET (label);
 }
 
+GtkWidget *totem_time_label_new_from_glade (gchar *widget_name,
+		gchar *string1, gchar *string2,
+		gint int1, gint int2)
+{
+	GtkWidget *widget;
+
+	widget = totem_time_label_new ();
+	gtk_widget_show (widget);
+
+	return widget;
+}
+
 static void
 totem_time_label_class_init (TotemTimeLabelClass *klass)
 {

@@ -84,13 +84,15 @@ totem_SOURCES = 					\
 	totem-screenshot.c		\
 	totem-screenshot.h		\
 	totem-session.c totem-session.h	\
+	totem-sidebar.c totem-sidebar.h \
 	totem-skipto.c totem-skipto.h	\
 	totem-menu.c totem-menu.h	\
 	totem-time-label.c totem-time-label.h \
 	totem-uri.c totem-uri.h		\
 	totem-statusbar.c		\
 	totem-statusbar.h		\
-	totem-gromit.c totem-gromit.h
+	totem-gromit.c totem-gromit.h	\
+	ev-sidebar.c ev-sidebar.h
 
 totem_LDADD = \
 	$(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) \

@@ -94,6 +94,10 @@ void     totem_statusbar_set_has_resize_grip (TotemStatusbar *statusbar,
 					    gboolean      setting);
 gboolean totem_statusbar_get_has_resize_grip (TotemStatusbar *statusbar);
 
+GtkWidget *totem_statusbar_new_from_glade	(gchar *widget_name,
+						 gchar *string1, gchar *string2,
+						 gint int1, gint int2);
+
 #ifdef __cplusplus
 } 
 #endif /* __cplusplus */

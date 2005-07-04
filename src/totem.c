@@ -53,6 +53,7 @@
 #include "totem-time-label.h"
 #include "totem-session.h"
 #include "totem-screenshot.h"
+#include "totem-sidebar.h"
 #include "totem-menu.h"
 #include "totem-options.h"
 #include "totem-uri.h"
@@ -216,18 +217,6 @@ totem_action_menu_popup (Totem *totem, guint button)
 			"totem_right_click_menu");
 	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
 			button, gtk_get_current_event_time ());
-}
-
-static void
-action_toggle_playlist (Totem *totem)
-{
-	GtkWidget *toggle;
-	gboolean state;
-
-	toggle = glade_xml_get_widget (totem->xml, "tmw_playlist_button");
-
-	state = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), !state);
 }
 
 static gboolean
@@ -495,12 +484,19 @@ totem_action_fullscreen_toggle (Totem *totem)
 			totem->controls_visibility = TOTEM_CONTROLS_HIDDEN;
 			show_controls (totem, TRUE);
 		}
+
+		if (totem_sidebar_is_visible (totem) != FALSE)
+			gtk_widget_show (totem->sidebar);
+		else
+			gtk_widget_hide (totem->sidebar);
 	} else {
 		totem_action_save_size (totem);
 		update_fullscreen_size (totem);
 		bacon_video_widget_set_fullscreen (totem->bvw, TRUE);
 		bacon_video_widget_set_show_cursor (totem->bvw, FALSE);
 		gtk_window_fullscreen (GTK_WINDOW(totem->win));
+		gtk_widget_hide (totem->sidebar);
+
 		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
 			totem_scrsaver_disable (totem->scr);
 
@@ -584,9 +580,7 @@ update_mrl_label (Totem *totem, const char *name)
 		g_free (text);
 
 		/* Title */
-		text = g_strdup_printf (_("%s - Totem Movie Player"), name);
-		gtk_window_set_title (GTK_WINDOW (totem->win), text);
-		g_free (text);
+		gtk_window_set_title (GTK_WINDOW (totem->win), name);
 	} else {
 		totem_statusbar_set_time_and_length (TOTEM_STATUSBAR
 				(totem->statusbar), 0, 0);
@@ -632,8 +626,6 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 	if (mrl == NULL)
 	{
 		retval = FALSE;
-
-		gtk_window_set_title (GTK_WINDOW (totem->win), _("Totem"));
 
 		/* Play/Pause */
 		gtk_widget_set_sensitive (totem->pp_button, FALSE);
@@ -1131,18 +1123,6 @@ static void
 on_next_button_clicked (GtkButton *button, Totem *totem)
 {
 	TOTEM_PROFILE (totem_action_next (totem));
-}
-
-static void
-on_playlist_button_toggled (GtkToggleButton *button, Totem *totem)
-{
-	gboolean state;
-
-	state = gtk_toggle_button_get_active (button);
-	if (state != FALSE)
-		gtk_widget_show (GTK_WIDGET (totem->playlist));
-	else
-		gtk_widget_hide (GTK_WIDGET (totem->playlist));
 }
 
 static void
@@ -1737,12 +1717,6 @@ on_aspect_ratio_dvb_activate (GtkButton *button, Totem *totem)
 }
 
 static void
-on_show_playlist1_activate (GtkButton *button, Totem *totem)
-{
-	action_toggle_playlist (totem);
-}
-
-static void
 on_fs_exit1_activate (GtkButton *button, Totem *totem)
 {
 	totem_action_fullscreen_toggle (totem);
@@ -2275,17 +2249,6 @@ totem_button_pressed_remote_cb (TotemRemote *remote, TotemRemoteCommand cmd,
 }
 #endif /* HAVE_REMOTE */
 
-static int
-toggle_playlist_from_playlist (GtkWidget *playlist, int trash, Totem *totem)
-{
-	GtkWidget *button;
-
-	button = glade_xml_get_widget (totem->xml, "tmw_playlist_button");
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
-
-	return TRUE;
-}
-
 static void
 playlist_changed_cb (GtkWidget *playlist, Totem *totem)
 {
@@ -2624,7 +2587,7 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 	case GDK_P:
 		/* Playlist keyboard shortcut? */
 		if (event->state & GDK_CONTROL_MASK)
-			action_toggle_playlist (totem);
+			totem_sidebar_toggle (totem);
 		else
 			totem_action_play_pause (totem);
 		break;
@@ -2962,9 +2925,6 @@ totem_callback_connect (Totem *totem)
 			"tmw_aspect_ratio_dvb_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_aspect_ratio_dvb_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_show_playlist_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_show_playlist1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "tmw_repeat_mode_menu_item");
 	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
 			totem_playlist_get_repeat (totem->playlist));
@@ -3055,9 +3015,6 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "tmw_next_button");
 	g_signal_connect (G_OBJECT (item), "clicked", 
 			G_CALLBACK (on_next_button_clicked), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_playlist_button");
-	g_signal_connect (G_OBJECT (item), "clicked",
-			G_CALLBACK (on_playlist_button_toggled), totem);
 	item = glade_xml_get_widget (totem->xml, "tmw_volume_mute_button");
 	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (on_volume_mute_button), totem);
@@ -3066,7 +3023,7 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (on_volume_max_button), totem);
 
 	/* Drag'n'Drop */
-	item = glade_xml_get_widget (totem->xml, "tmw_playlist_button");
+	item = glade_xml_get_widget (totem->xml, "tmw_sidebar_button");
 	g_signal_connect (G_OBJECT (item), "drag_data_received",
 			G_CALLBACK (drop_playlist_cb), totem);
 	gtk_drag_dest_set (item, GTK_DEST_DEFAULT_ALL,
@@ -3173,13 +3130,6 @@ totem_callback_connect (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->volume), "value-changed",
 			G_CALLBACK (vol_cb), totem);
 
-	/* Playlist Disappearance, woop woop */
-	g_signal_connect (G_OBJECT (totem->playlist), "response",
-			G_CALLBACK (toggle_playlist_from_playlist), totem);
-	g_signal_connect (G_OBJECT (totem->playlist), "delete-event",
-			G_CALLBACK (toggle_playlist_from_playlist),
-			totem);
-
 	/* Playlist */
 	g_signal_connect (G_OBJECT (totem->playlist),
 			"changed", G_CALLBACK (playlist_changed_cb),
@@ -3244,6 +3194,20 @@ totem_callback_connect (Totem *totem)
 }
 
 static void
+playlist_widget_setup (Totem *totem)
+{
+	totem->playlist = TOTEM_PLAYLIST (totem_playlist_new ());
+
+	if (totem->playlist == NULL)
+		totem_action_exit (totem);
+
+	gtk_widget_show_all (GTK_WIDGET (totem->playlist));
+
+	g_signal_connect(totem->playlist, "active-name-changed",
+			G_CALLBACK (on_playlist_change_name), totem);
+}
+
+static void
 video_widget_create (Totem *totem) 
 {
 	GError *err = NULL;
@@ -3272,9 +3236,6 @@ video_widget_create (Totem *totem)
 	totem_preferences_tvout_setup (totem);
 	totem_preferences_visuals_setup (totem);
 	totem_action_zoom (totem, ZOOM_RESET);
-
-	/* Let's set a name. Will make debugging easier */
-	gtk_widget_set_name (GTK_WIDGET(totem->bvw), "bvw");
 
 	g_signal_connect (G_OBJECT (totem->bvw),
 			"motion-notify-event",
@@ -3354,28 +3315,6 @@ video_widget_create (Totem *totem)
 			gconf_client_get_int (totem->gc,
 				GCONF_PREFIX"/volume", NULL));
 	update_volume_sliders (totem);
-}
-
-GtkWidget *
-totem_statusbar_create (void)
-{
-	GtkWidget *widget;
-
-	widget = totem_statusbar_new ();
-	gtk_widget_show (widget);
-
-	return widget;
-}
-
-GtkWidget *
-totem_time_display_create (void)
-{
-	GtkWidget *widget;
-
-	widget = totem_time_label_new ();
-	gtk_widget_show (widget);
-
-	return widget;
 }
 
 static void
@@ -3483,12 +3422,9 @@ main (int argc, char **argv)
 
 	totem_named_icons_init (totem, FALSE);
 
-	/* The playlist */
-	totem->playlist = TOTEM_PLAYLIST (totem_playlist_new ());
-	if (totem->playlist == NULL)
-		totem_action_exit (totem);
-	g_signal_connect(totem->playlist, "active-name-changed",
-			 G_CALLBACK (on_playlist_change_name), totem);
+	/* The sidebar */
+	playlist_widget_setup (totem);
+	totem_sidebar_setup (totem);
 
 	/* The rest of the widgets */
 	totem->state = STATE_STOPPED;

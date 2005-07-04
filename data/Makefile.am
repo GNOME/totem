@@ -11,8 +11,6 @@ stuff_DATA =				\
 	stock_media_previous.png	\
 	stock_media_pause.png		\
 	stock_media_play.png		\
-	playlist-16.png			\
-	playlist-24.png			\
 	playlist-playing.png		\
 	rhythmbox-volume-max.png	\
 	rhythmbox-volume-zero.png	\
