@@ -60,6 +60,7 @@ typedef struct {
 struct TotemPlParserPrivate
 {
 	GList *ignore_schemes;
+	GList *ignore_mimetypes;
 	guint recurse_level;
 	gboolean fallback;
 };
@@ -67,6 +68,8 @@ struct TotemPlParserPrivate
 /* Signals */
 enum {
 	ENTRY,
+	PLAYLIST_START,
+	PLAYLIST_END,
 	LAST_SIGNAL
 };
 
@@ -98,6 +101,22 @@ totem_pl_parser_class_init (TotemPlParserClass *klass)
 			      NULL, NULL,
 			      totemplparser_marshal_VOID__STRING_STRING_STRING,
 			      G_TYPE_NONE, 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
+	totem_pl_parser_table_signals[PLAYLIST_START] =
+		g_signal_new ("playlist-start",
+			      G_TYPE_FROM_CLASS (klass),
+			      G_SIGNAL_RUN_LAST,
+			      G_STRUCT_OFFSET (TotemPlParserClass, playlist_start),
+			      NULL, NULL,
+			      g_cclosure_marshal_VOID__STRING,
+			      G_TYPE_NONE, 1, G_TYPE_STRING);
+	totem_pl_parser_table_signals[PLAYLIST_START] =
+		g_signal_new ("playlist-end",
+			      G_TYPE_FROM_CLASS (klass),
+			      G_SIGNAL_RUN_LAST,
+			      G_STRUCT_OFFSET (TotemPlParserClass, playlist_end),
+			      NULL, NULL,
+			      g_cclosure_marshal_VOID__STRING,
+			      G_TYPE_NONE, 1, G_TYPE_STRING);
 }
 
 GQuark
@@ -293,8 +312,9 @@ totem_pl_parser_relative (const char *url, const char *output)
 
 static gboolean
 totem_pl_parser_write_pls (TotemPlParser *parser, GtkTreeModel *model,
-                           TotemPlParserIterFunc func, 
-                           const char *output, gpointer user_data, GError **error)
+			   TotemPlParserIterFunc func, 
+			   const char *output, const char *title,
+			   gpointer user_data, GError **error)
 {
 	GnomeVFSHandle *handle;
 	GnomeVFSResult res;
@@ -328,6 +348,17 @@ totem_pl_parser_write_pls (TotemPlParser *parser, GtkTreeModel *model,
 	g_free (buf);
 	if (success == FALSE)
 		return FALSE;
+
+	if (title != NULL) {
+		buf = g_strdup_printf ("X-GNOME-Title=%s\n", title);
+		success = write_string (handle, buf, error);
+		g_free (buf);
+		if (success == FALSE)
+		{
+			gnome_vfs_close (handle);
+			return FALSE;
+		}
+	}
 
 	buf = g_strdup_printf ("NumberOfEntries=%d\n", num_entries);
 	success = write_string (handle, buf, error);
@@ -493,15 +524,17 @@ totem_pl_parser_write_m3u (TotemPlParser *parser, GtkTreeModel *model,
 }
 
 gboolean
-totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
-		TotemPlParserIterFunc func, const char *output,
-		TotemPlParserType type, gpointer user_data, GError **error)
+totem_pl_parser_write_with_title (TotemPlParser *parser, GtkTreeModel *model,
+				  TotemPlParserIterFunc func,
+				  const char *output, const char *title,
+				  TotemPlParserType type,
+				  gpointer user_data, GError **error)
 {
 	switch (type)
 	{
 	case TOTEM_PL_PARSER_PLS:
 		return totem_pl_parser_write_pls (parser, model, func,
-				output, user_data, error);
+				output, title, user_data, error);
 	case TOTEM_PL_PARSER_M3U:
 	case TOTEM_PL_PARSER_M3U_DOS:
 		return totem_pl_parser_write_m3u (parser, model, func,
@@ -512,6 +545,17 @@ totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
 	}
 
 	return FALSE;
+}
+
+gboolean
+totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
+		       TotemPlParserIterFunc func,
+		       const char *output, TotemPlParserType type,
+		       gpointer user_data,
+		       GError **error)
+{
+	return totem_pl_parser_write_with_title (parser, model, func, output,
+			NULL, type, user_data, error);
 }
 
 static int
@@ -590,6 +634,11 @@ totem_pl_parser_finalize (GObject *object)
 	g_return_if_fail (parser->priv != NULL);
 
 	g_list_foreach (parser->priv->ignore_schemes, (GFunc) g_free, NULL);
+	g_list_free (parser->priv->ignore_schemes);
+
+	g_list_foreach (parser->priv->ignore_mimetypes, (GFunc) g_free, NULL);
+	g_list_free (parser->priv->ignore_mimetypes);
+
 	g_free (parser->priv);
 	parser->priv = NULL;
 
@@ -823,7 +872,7 @@ totem_pl_parser_add_pls (TotemPlParser *parser, const char *url, gpointer data)
 	gboolean retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 	char *contents, **lines;
 	int size, i, num_entries;
-	char *split_char;
+	char *split_char, *playlist_title;
 	gboolean dos_mode = FALSE;
 
 	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
@@ -848,6 +897,7 @@ totem_pl_parser_add_pls (TotemPlParser *parser, const char *url, gpointer data)
 
 	/* [playlist] */
 	i = 0;
+	playlist_title = NULL;
 
 	/* Ignore empty lines */
 	while (lines[i] != NULL && strcmp (lines[i], "") == 0)
@@ -857,6 +907,15 @@ totem_pl_parser_add_pls (TotemPlParser *parser, const char *url, gpointer data)
 			|| g_ascii_strncasecmp (lines[i], "[playlist]",
 				(gsize)strlen ("[playlist]")) != 0)
 		goto bail;
+
+	playlist_title = read_ini_line_string (lines,
+			"X-GNOME-Title", dos_mode);
+
+	if (playlist_title != NULL) {
+		g_signal_emit (G_OBJECT (parser),
+				totem_pl_parser_table_signals[PLAYLIST_START],
+				0, playlist_title);
+	}
 
 	/* numberofentries=? */
 	num_entries = read_ini_line_int (lines, "numberofentries");
@@ -916,7 +975,14 @@ totem_pl_parser_add_pls (TotemPlParser *parser, const char *url, gpointer data)
 		g_free (genre);
 	}
 
+	if (playlist_title != NULL) {
+		g_signal_emit (G_OBJECT (parser),
+				totem_pl_parser_table_signals[PLAYLIST_END],
+				0, playlist_title);
+	}
+
 bail:
+	g_free (playlist_title);
 	g_strfreev (lines);
 
 	return retval;
@@ -1369,6 +1435,26 @@ totem_pl_parser_scheme_is_ignored (TotemPlParser *parser, const char *url)
 }
 
 static gboolean
+totem_pl_parser_mimetype_is_ignored (TotemPlParser *parser,
+				     const char *mimetype)
+{
+	GList *l;
+
+	if (parser->priv->ignore_mimetypes == NULL)
+		return FALSE;
+
+	for (l = parser->priv->ignore_mimetypes; l != NULL; l = l->next)
+	{
+		const char *item = l->data;
+		if (strcmp (mimetype, item) == 0)
+			return TRUE;
+	}
+
+	return FALSE;
+
+}
+
+static gboolean
 totem_pl_parser_ignore (TotemPlParser *parser, const char *url)
 {
 	const char *mimetype;
@@ -1416,6 +1502,11 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 
 	if (mimetype == NULL)
 		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
+
+	if (totem_pl_parser_mimetype_is_ignored (parser, mimetype) != FALSE) {
+		g_free (data);
+		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
+	}
 
 	parser->priv->recurse_level++;
 
@@ -1477,5 +1568,15 @@ totem_pl_parser_add_ignored_scheme (TotemPlParser *parser,
 
 	parser->priv->ignore_schemes = g_list_prepend
 		(parser->priv->ignore_schemes, g_strdup (scheme));
+}
+
+void
+totem_pl_parser_add_ignored_mimetype (TotemPlParser *parser,
+		const char *mimetype)
+{
+	g_return_if_fail (TOTEM_IS_PL_PARSER (parser));
+
+	parser->priv->ignore_mimetypes = g_list_prepend
+		(parser->priv->ignore_mimetypes, g_strdup (mimetype));
 }
 

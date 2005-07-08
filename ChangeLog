@@ -1,3 +1,17 @@
+2005-07-08  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in:
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_class_init),
+	(totem_pl_parser_write_pls), (totem_pl_parser_write_with_title),
+	(totem_pl_parser_write), (totem_pl_parser_finalize),
+	(totem_pl_parser_add_pls), (totem_pl_parser_mimetype_is_ignored),
+	(totem_pl_parser_parse_internal),
+	(totem_pl_parser_add_ignored_scheme),
+	(totem_pl_parser_add_ignored_mimetype):
+	* src/plparse/totem-pl-parser.h: add totem_pl_parser_write_with_title ()
+	and totem_pl_parser_add_ignored_mimetype() for the benefit of Rhythmbox
+	(Closes: #148347)
+
 2005-07-06  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: clean up the xine-lib version checking, thanks

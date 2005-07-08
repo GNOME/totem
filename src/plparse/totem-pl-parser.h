@@ -58,8 +58,10 @@ struct TotemPlParserClass {
 	GObjectClass parent_class;
 
 	/* signals */
-	void (*entry) (TotemPlParser *parser, const char *uri, const char *title,
-		       const char *genre);
+	void (*entry) (TotemPlParser *parser, const char *uri,
+		       const char *title, const char *genre);
+	void (*playlist_start) (TotemPlParser *parser, const char *title);
+	void (*playlist_end) (TotemPlParser *parser, const char *title);
 };
 
 typedef enum
@@ -85,12 +87,24 @@ typedef void (*TotemPlParserIterFunc) (GtkTreeModel *model, GtkTreeIter *iter,
 GType    totem_pl_parser_get_type (void);
 
 gboolean   totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
-				  TotemPlParserIterFunc func, 
+				  TotemPlParserIterFunc func,
 				  const char *output, TotemPlParserType type,
                                   gpointer user_data,
 				  GError **error);
+
+gboolean   totem_pl_parser_write_with_title (TotemPlParser *parser,
+					     GtkTreeModel *model,
+					     TotemPlParserIterFunc func,
+					     const char *output,
+					     const char *title,
+					     TotemPlParserType type,
+					     gpointer user_data,
+					     GError **error);
+
 void	   totem_pl_parser_add_ignored_scheme (TotemPlParser *parser,
 					       const char *scheme);
+void       totem_pl_parser_add_ignored_mimetype (TotemPlParser *parser,
+						 const char *mimetype);
 TotemPlParserResult totem_pl_parser_parse (TotemPlParser *parser, const char *url, gboolean fallback);
 
 TotemPlParser *totem_pl_parser_new (void);
