@@ -1,5 +1,10 @@
 2005-07-09  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_parse): ignored
+	schemes are unhandled by the playlist parser, not ignored
+
+2005-07-09  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c:
 	(bacon_video_widget_seek_time): when seeking and playing, a seek that
 	goes further than the end of the file generates an EOS
