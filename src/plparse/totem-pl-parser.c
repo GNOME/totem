@@ -1405,6 +1405,11 @@ static PlaylistTypes special_types[] = {
 	{ "x-special/device-block", totem_pl_parser_add_block },
 };
 
+static PlaylistTypes ignore_types[] = {
+	{ "image/", NULL },
+	{ "text/", NULL },
+};
+
 /* These ones are "dual" types, might be a video, might be a parser */
 static PlaylistTypes dual_types[] = {
 	{ "audio/x-real-audio", totem_pl_parser_add_ra },
@@ -1474,6 +1479,10 @@ totem_pl_parser_ignore (TotemPlParser *parser, const char *url)
 	for (i = 0; i < G_N_ELEMENTS (dual_types); i++)
 		if (strcmp (dual_types[i].mimetype, mimetype) == 0)
 			return FALSE;
+
+	for (i = 0; i < G_N_ELEMENTS (ignore_types); i++)
+		if (g_str_has_prefix (mimetype, ignore_types[i].mimetype) != FALSE)
+			return TRUE;
 
 	/* It's a remote file that could be an m3u file */
 	if (strcmp (mimetype, "audio/x-mp3") == 0)
