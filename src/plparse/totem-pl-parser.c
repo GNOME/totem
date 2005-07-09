@@ -1408,8 +1408,10 @@ static PlaylistTypes special_types[] = {
 };
 
 static PlaylistTypes ignore_types[] = {
-	{ "image/", NULL },
-	{ "text/", NULL },
+	{ "image/*", NULL },
+	{ "text/plain", NULL },
+	{ "application/x-rar", NULL },
+	{ "application/zip", NULL },
 };
 
 /* These ones are "dual" types, might be a video, might be a parser */
@@ -1499,6 +1501,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	guint i;
 	gpointer data = NULL;
 	gboolean ret = FALSE;
+	char *super;
 
 	if (parser->priv->recurse_level > RECURSE_LEVEL_MAX)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
@@ -1515,10 +1518,22 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 		return TOTEM_PL_PARSER_RESULT_IGNORED;
 	}
 
+	super = gnome_vfs_get_supertype_from_mime_type (mimetype);
 	for (i = 0; i < G_N_ELEMENTS (ignore_types); i++) {
-		if (g_str_has_prefix (mimetype, ignore_types[i].mimetype) != FALSE) {
-			g_free (data);
-			return TOTEM_PL_PARSER_RESULT_IGNORED;
+		if (gnome_vfs_mime_type_is_supertype (ignore_types[i].mimetype) != FALSE) {
+			if (strcmp (super, ignore_types[i].mimetype) == 0) {
+				g_free (data);
+				g_free (super);
+				return TOTEM_PL_PARSER_RESULT_IGNORED;
+			}
+		} else {
+			GnomeVFSMimeEquivalence eq;
+
+			eq = gnome_vfs_mime_type_get_equivalence (mimetype, ignore_types[i].mimetype);
+			if (eq == GNOME_VFS_MIME_PARENT || eq == GNOME_VFS_MIME_IDENTICAL) {
+				g_free (data);
+				return TOTEM_PL_PARSER_RESULT_IGNORED;
+			}
 		}
 	}
 
@@ -1563,7 +1578,7 @@ totem_pl_parser_parse (TotemPlParser *parser, const char *url,
 	g_return_val_if_fail (TOTEM_IS_PL_PARSER (parser), TOTEM_PL_PARSER_RESULT_UNHANDLED);
 	g_return_val_if_fail (url != NULL, TOTEM_PL_PARSER_RESULT_UNHANDLED);
 
-	if (totem_pl_parser_ignore (parser, url) != FALSE)
+	if (totem_pl_parser_scheme_is_ignored (parser, url) != FALSE)
 		return TOTEM_PL_PARSER_RESULT_IGNORED;
 
 	g_return_val_if_fail (strstr (url, "://") != NULL,

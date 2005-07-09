@@ -1,5 +1,17 @@
 2005-07-09  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_seek_time): when seeking and playing, a seek that
+	goes further than the end of the file generates an EOS
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_parse_internal),
+	(totem_pl_parser_parse): rework the ignores slightly to avoid adding
+	text/plain descendant, and don't mark as to ignore files that aren't
+	playlists
+	* src/totem-playlist.c: (totem_playlist_add_mrl): handle ignored entries
+	and don't add them to the list
+
+2005-07-09  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser.c: (totem_pl_parser_add_directory),
 	(totem_pl_parser_ignore), (totem_pl_parser_parse_internal),
 	(totem_pl_parser_parse):

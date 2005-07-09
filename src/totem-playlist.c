@@ -1505,6 +1505,7 @@ totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl,
 	g_return_val_if_fail (mrl != NULL, FALSE);
 
 	res = totem_pl_parser_parse (playlist->_priv->parser, mrl, TRUE);
+
 	if (res == TOTEM_PL_PARSER_RESULT_UNHANDLED)
 		return totem_playlist_add_one_mrl (playlist, mrl, display_name);
 	if (res == TOTEM_PL_PARSER_RESULT_ERROR)
@@ -1512,6 +1513,8 @@ totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl,
 		totem_playlist_error (_("Playlist error"), _("The playlist '%s' could not be parsed, it might be damaged."), playlist);
 		return FALSE;
 	}
+	if (res == TOTEM_PL_PARSER_RESULT_IGNORED)
+		return FALSE;
 
 	return TRUE;
 }

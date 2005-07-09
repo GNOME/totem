@@ -2156,6 +2156,16 @@ gboolean bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time,
 		return TRUE;
 	}
 
+	if (time > length) {
+		signal_data *data;
+
+		data = g_new0 (signal_data, 1);
+		data->signal = EOS_ASYNC;
+		g_async_queue_push (bvw->priv->queue, data);
+		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
+		return TRUE;
+	}
+
 	error = xine_play (bvw->priv->stream, 0, CLAMP (time, 0, length));
 
 	if (error == 0)
