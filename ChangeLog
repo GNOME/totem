@@ -1,5 +1,14 @@
 2005-07-09  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_add_directory),
+	(totem_pl_parser_ignore), (totem_pl_parser_parse_internal),
+	(totem_pl_parser_parse):
+	* src/plparse/totem-pl-parser.h: add a TOTEM_PL_PARSER_RESULT_IGNORED
+	retval, and use it to avoid ignored files getting in the playlist
+	as unhandled files would
+
+2005-07-09  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser.c: (totem_pl_parser_ignore):
 	ignore text/* and image/* files
 

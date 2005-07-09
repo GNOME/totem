@@ -1367,6 +1367,7 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 	while (l != NULL) {
 		char *name, *fullpath;
 		GnomeVFSFileInfo *info = l->data;
+		TotemPlParserResult ret;
 
 		if (info->name != NULL && (strcmp (info->name, ".") == 0
 					|| strcmp (info->name, "..") == 0)) {
@@ -1378,7 +1379,8 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 		fullpath = g_strconcat (url, "/", name, NULL);
 		g_free (name);
 
-		if (totem_pl_parser_parse_internal (parser, fullpath) != TOTEM_PL_PARSER_RESULT_SUCCESS)
+		ret = totem_pl_parser_parse_internal (parser, fullpath);
+		if (ret != TOTEM_PL_PARSER_RESULT_SUCCESS && ret != TOTEM_PL_PARSER_RESULT_IGNORED)
 			totem_pl_parser_add_one_url (parser, fullpath, NULL);
 
 		l = l->next;
@@ -1480,10 +1482,6 @@ totem_pl_parser_ignore (TotemPlParser *parser, const char *url)
 		if (strcmp (dual_types[i].mimetype, mimetype) == 0)
 			return FALSE;
 
-	for (i = 0; i < G_N_ELEMENTS (ignore_types); i++)
-		if (g_str_has_prefix (mimetype, ignore_types[i].mimetype) != FALSE)
-			return TRUE;
-
 	/* It's a remote file that could be an m3u file */
 	if (strcmp (mimetype, "audio/x-mp3") == 0)
 	{
@@ -1514,7 +1512,14 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 
 	if (totem_pl_parser_mimetype_is_ignored (parser, mimetype) != FALSE) {
 		g_free (data);
-		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
+		return TOTEM_PL_PARSER_RESULT_IGNORED;
+	}
+
+	for (i = 0; i < G_N_ELEMENTS (ignore_types); i++) {
+		if (g_str_has_prefix (mimetype, ignore_types[i].mimetype) != FALSE) {
+			g_free (data);
+			return TOTEM_PL_PARSER_RESULT_IGNORED;
+		}
 	}
 
 	parser->priv->recurse_level++;
@@ -1559,7 +1564,7 @@ totem_pl_parser_parse (TotemPlParser *parser, const char *url,
 	g_return_val_if_fail (url != NULL, TOTEM_PL_PARSER_RESULT_UNHANDLED);
 
 	if (totem_pl_parser_ignore (parser, url) != FALSE)
-		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
+		return TOTEM_PL_PARSER_RESULT_IGNORED;
 
 	g_return_val_if_fail (strstr (url, "://") != NULL,
 			TOTEM_PL_PARSER_RESULT_UNHANDLED);
