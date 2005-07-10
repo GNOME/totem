@@ -1,5 +1,11 @@
 2005-07-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-scrsaver.c: (totem_scrsaver_init): use XK_Hyper_R instead
+	of XK_Control_L to avoid triggering the pointer highlighting feature
+	(Closes: #306434)
+
+2005-07-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst.c:
 	(bacon_video_widget_get_metadata_int):
 	* src/backend/bacon-video-widget-xine.c:
