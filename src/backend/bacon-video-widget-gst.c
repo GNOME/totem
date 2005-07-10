@@ -317,10 +317,16 @@ bacon_video_widget_realize (GtkWidget * widget)
 static void
 bacon_video_widget_unrealize (GtkWidget *widget)
 {
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+
 #ifdef HAVE_NVTV
   /* Kill the TV out */
   nvtv_simple_exit();
 #endif
+
+  gdk_window_set_user_data (bvw->priv->video_window, NULL);
+  gdk_window_destroy (bvw->priv->video_window);
+  bvw->priv->video_window = NULL;
 
   if (GTK_WIDGET_CLASS (parent_class)->unrealize)
     GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
