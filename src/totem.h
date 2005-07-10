@@ -68,5 +68,7 @@ void	totem_action_set_scale_ratio		(Totem *totem, gfloat ratio);
 void    totem_action_error                      (const char *title,
 						 const char *reason,
 						 Totem *totem);
+char    *totem_action_open_dialog		(Totem *totem,
+						 const char *path);
 
 #endif /* __TOTEM_H__ */

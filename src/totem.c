@@ -1518,12 +1518,12 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 	return cleared;
 }
 
-static void
-on_open1_activate (GtkButton *button, Totem *totem)
+char *
+totem_action_open_dialog (Totem *totem, const char *path)
 {
 	GtkWidget *fs;
 	int response;
-	static char *path = NULL;
+	char *path_new = NULL;
 
 	fs = gtk_file_chooser_dialog_new (_("Select Files"),
 			GTK_WINDOW (totem->win), GTK_FILE_CHOOSER_ACTION_OPEN,
@@ -1569,10 +1569,7 @@ on_open1_activate (GtkButton *button, Totem *totem)
 
 		/* Save the path */
 		if (filenames->data != NULL)
-		{
-			g_free (path);
-			path = g_path_get_dirname (filenames->data);
-		}
+			path_new = g_path_get_dirname (filenames->data);
 
 		g_slist_foreach (filenames, (GFunc) g_free, NULL);
 		g_slist_free (filenames);
@@ -1584,6 +1581,20 @@ on_open1_activate (GtkButton *button, Totem *totem)
 	}
 
 	gtk_widget_destroy (fs);
+	return path_new;
+}
+
+static void
+on_open1_activate (GtkButton *button, Totem *totem)
+{
+	static char *path = NULL;
+	char *new_path;
+
+	new_path = totem_action_open_dialog (totem, path);
+	if (new_path != NULL) {
+		g_free (path);
+		path = new_path;
+	}
 }
 
 //FIXME move the URI to a separate widget

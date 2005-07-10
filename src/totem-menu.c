@@ -28,6 +28,7 @@
 #include <string.h>
 
 #include "totem-menu.h"
+#include "totem.h"
 #include "totem-private.h"
 #include "bacon-video-widget.h"
 #include "egg-recent-view.h"
@@ -545,10 +546,11 @@ on_play_disc_activate (GtkMenuItem *menu_item, Totem *totem)
 			 * this device?... */
 			{
 				GtkWidget *item;
+				char *uri, *s;
 
-				item = glade_xml_get_widget
-					(totem->xml, "tmw_open_menu_item");
-				gtk_menu_item_activate (GTK_MENU_ITEM (item));
+				uri = g_object_get_data (G_OBJECT (menu_item), "activation_uri");
+				s = totem_action_open_dialog (totem, uri);
+				g_free (s);
 			}
 			return;
 		case MEDIA_TYPE_DVD:
@@ -606,8 +608,13 @@ add_device_to_menu (GObject *device, GtkMenu *menu, gint position, Totem *totem)
 	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menu_item), icon);
 
 	g_object_set_data_full (G_OBJECT (menu_item), "device_path",
-			g_strdup (device_path), (GDestroyNotify) g_free);
-	g_free (device_path);
+			device_path, (GDestroyNotify) g_free);
+	if (GNOME_IS_VFS_VOLUME (device)) {
+		g_object_set_data_full (G_OBJECT (menu_item), "activation_uri",
+				gnome_vfs_volume_get_activation_uri (GNOME_VFS_VOLUME (device)),
+				(GDestroyNotify) g_free);
+	}
+
 	g_signal_connect (G_OBJECT (menu_item), "activate",
 			G_CALLBACK (on_play_disc_activate), totem);
 
