@@ -518,6 +518,7 @@ static char *
 totem_get_nice_name_for_stream (Totem *totem)
 {
 	char *title, *artist, *retval;
+	int tracknum;
 	GValue value = { 0, };
 
 	bacon_video_widget_get_metadata (totem->bvw, BVW_INFO_TITLE, &value);
@@ -534,7 +535,16 @@ totem_get_nice_name_for_stream (Totem *totem)
 	if (artist == NULL)
 		return title;
 
-	retval = g_strdup_printf ("%s - %s", artist, title);
+	bacon_video_widget_get_metadata (totem->bvw, BVW_INFO_TRACK_NUMBER,
+			&value);
+	tracknum = g_value_get_int (&value);
+
+	if (tracknum != 0) {
+		retval = g_strdup_printf ("%02d. %s - %s",
+				tracknum, artist, title);
+	} else {
+		retval = g_strdup_printf ("%s - %s", artist, title);
+	}
 	g_free (artist);
 	g_free (title);
 

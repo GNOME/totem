@@ -1,5 +1,18 @@
 2005-07-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst.c:
+	(bacon_video_widget_get_metadata_int):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_metadata_int),
+	(bacon_video_widget_get_metadata):
+	* src/backend/bacon-video-widget.h:
+	* src/metadata-test.c: (on_got_metadata_event):
+	* src/totem.c: (totem_get_nice_name_for_stream):
+	Add support for BVW_INFO_TRACK_NUMBER metadata, and use it in
+	the playlist's nice name if available
+
+2005-07-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-menu.c: (on_play_disc_activate), (add_device_to_menu):
 	* src/totem.c: (totem_action_open_dialog), (on_open1_activate):
 	* src/totem.h: add a totem_action_open_dialog() function to be

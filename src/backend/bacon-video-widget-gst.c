@@ -3020,6 +3020,9 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
 	integer /= 1000;
       }
       break;
+    case BVW_INFO_TRACK_NUMBER:
+      //FIXME
+      break;
     default:
       g_assert_not_reached ();
     }

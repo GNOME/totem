@@ -106,6 +106,11 @@ on_got_metadata_event (BaconVideoWidget *bvw, gpointer data)
 	g_value_unset (&value);
 
 	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+			BVW_INFO_TRACK_NUMBER, &value);
+	g_print ("Track Number: %d\n", g_value_get_int (&value));
+	g_value_unset (&value);
+
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
 			BVW_INFO_HAS_VIDEO, &value);
 	has_type = g_value_get_boolean (&value);
 	g_print ("Has video: %s\n", boolean_to_string (has_type));

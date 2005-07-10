@@ -3357,6 +3357,17 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget *bvw,
 		integer = xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_VIDEO_BITRATE) / 1000;
 		break;
+	 case BVW_INFO_TRACK_NUMBER:
+		{
+			const char *string;
+			string = xine_get_meta_info (bvw->priv->stream,
+					XINE_META_INFO_TRACK_NUMBER);
+			if (string == NULL)
+				return;
+
+			integer = (int) g_ascii_strtod (string, NULL);
+		}
+		break;
 	 default:
 		g_assert_not_reached ();
 	 }
@@ -3425,6 +3436,7 @@ bacon_video_widget_get_metadata (BaconVideoWidget *bvw,
 	case BVW_INFO_FPS:
 	case BVW_INFO_AUDIO_BITRATE:
 	case BVW_INFO_VIDEO_BITRATE:
+	case BVW_INFO_TRACK_NUMBER:
 		bacon_video_widget_get_metadata_int (bvw, type, value);
 		break;
 	case BVW_INFO_HAS_VIDEO:
