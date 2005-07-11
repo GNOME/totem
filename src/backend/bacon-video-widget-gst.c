@@ -3096,6 +3096,7 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
     case BVW_INFO_FPS:
     case BVW_INFO_AUDIO_BITRATE:
     case BVW_INFO_VIDEO_BITRATE:
+    case BVW_INFO_TRACK_NUMBER:
       bacon_video_widget_get_metadata_int (bvw, type, value);
       break;
     case BVW_INFO_HAS_VIDEO:
