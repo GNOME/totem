@@ -1,5 +1,13 @@
 2005-07-11  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
+	* src/totem-mozilla-viewer.c: (totem_embedded_add_children):
+	  Realize the widget before showing it, since the realize will create
+	  the GdkWindow that we use to embed properly later on when we are
+	  being shown. This is essentially a widget bug, too... Should fix
+	  the fact that the widget would not embed properly in firefox.
+
+2005-07-11  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
 	* src/backend/bacon-video-widget-gst.c:
 	(bacon_video_widget_get_metadata_int):
 	  Implement for real.

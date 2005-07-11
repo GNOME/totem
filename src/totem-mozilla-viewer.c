@@ -312,6 +312,7 @@ totem_embedded_add_children (TotemEmbedded *emb)
 
 	container = glade_xml_get_widget (emb->xml, "hbox4");
 	gtk_container_add (GTK_CONTAINER (container), GTK_WIDGET (emb->bvw));
+	gtk_widget_realize (GTK_WIDGET (emb->bvw));
 	gtk_widget_show (GTK_WIDGET (emb->bvw));
 
 	emb->seek = glade_xml_get_widget (emb->xml, "time_hscale");
