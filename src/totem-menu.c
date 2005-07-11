@@ -528,42 +528,10 @@ totem_action_add_recent (Totem *totem, const char *filename)
 static void
 on_play_disc_activate (GtkMenuItem *menu_item, Totem *totem)
 {
-	MediaType type;
-	GError *error = NULL;
 	char *device_path;
 
 	device_path = g_object_get_data (G_OBJECT (menu_item), "device_path");
-
-	type = totem_cd_detect_type (device_path, &error);
-	switch (type) {
-		case MEDIA_TYPE_ERROR:
-			totem_action_error ("Failed to play Audio/Video Disc",
-					    error ? error->message : "Reason unknown",
-					    totem);
-			return;
-		case MEDIA_TYPE_DATA:
-			/* Maybe set default location to the mountpoint of
-			 * this device?... */
-			{
-				GtkWidget *item;
-				char *uri, *s;
-
-				uri = g_object_get_data (G_OBJECT (menu_item), "activation_uri");
-				s = totem_action_open_dialog (totem, uri);
-				g_free (s);
-			}
-			return;
-		case MEDIA_TYPE_DVD:
-		case MEDIA_TYPE_VCD:
-		case MEDIA_TYPE_CDDA:
-			bacon_video_widget_set_media_device
-				(BACON_VIDEO_WIDGET (totem->bvw), device_path);
-			totem_action_play_media (totem, type);
-			break;
-		default:
-			g_assert_not_reached ();
-	}
-
+	totem_action_play_media_device (totem, device_path);
 	g_free (device_path);
 }
 

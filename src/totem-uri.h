@@ -30,6 +30,7 @@ G_BEGIN_DECLS
 char*		totem_create_full_path	(const char *path);
 gboolean	totem_is_media		(const char *uri);
 gboolean	totem_playing_dvd	(const char *uri);
+gboolean	totem_is_block_device	(const char *uri);
 void		totem_setup_file_monitoring (Totem *totem);
 char*		totem_uri_get_subtitle_uri (const char *uri);
 char*		totem_uri_escape_for_display (const char *uri);

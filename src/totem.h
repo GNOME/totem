@@ -68,7 +68,10 @@ void	totem_action_set_scale_ratio		(Totem *totem, gfloat ratio);
 void    totem_action_error                      (const char *title,
 						 const char *reason,
 						 Totem *totem);
-char    *totem_action_open_dialog		(Totem *totem,
-						 const char *path);
+void    totem_action_play_media_device		(Totem *totem,
+						 const char *device);
+char   *totem_action_open_dialog		(Totem *totem,
+						 const char *path,
+						 gboolean play);
 
 #endif /* __TOTEM_H__ */

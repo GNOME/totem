@@ -1,3 +1,21 @@
+2005-07-11  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/totem-disc.c: (totem_cd_detect_type_with_url),
+	(totem_cd_detect_type):
+	* src/plparse/totem-pl-parser.c:
+	* src/totem-menu.c: (on_play_disc_activate):
+	* src/totem-uri.c: (totem_is_media), (totem_is_block_device):
+	* src/totem-uri.h:
+	* src/totem.c: (totem_action_load_media_device),
+	(totem_action_play_media_device), (totem_action_play_media),
+	(totem_action_open_files_list), (totem_action_open_dialog),
+	(on_open1_activate), (main):
+	* src/totem.h:
+
+	Only support opening discs through either their mountpoint (data
+	discs, VCD, DVD), or block device path (all discs)
+	cd:, vcd: and dvd: are gone
+
 2005-07-11  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/totem-mozilla-viewer.c: (totem_embedded_add_children):

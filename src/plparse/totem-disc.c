@@ -547,11 +547,15 @@ totem_cd_detect_type_from_dir (const char *dir, char **url, GError **error)
 }
 
 MediaType
-totem_cd_detect_type (const char *device,
-    		      GError     **error)
+totem_cd_detect_type_with_url (const char *device,
+    			       char      **url,
+			       GError     **error)
 {
   CdCache *cache;
   MediaType type;
+
+  if (url != NULL)
+    *url = NULL;
 
   if (!(cache = cd_cache_new (device, error)))
     return MEDIA_TYPE_ERROR;
@@ -562,29 +566,39 @@ totem_cd_detect_type (const char *device,
       (type = cd_cache_disc_is_dvd (cache, error)) == MEDIA_TYPE_DATA) {
     /* crap, nothing found */
   }
+
+  if (url == NULL) {
+    cd_cache_free (cache);
+    return type;
+  }
+
+  switch (type) {
+  case MEDIA_TYPE_DVD:
+    *url = totem_cd_mrl_from_type ("dvd", device);
+    break;
+  case MEDIA_TYPE_VCD:
+    *url = totem_cd_mrl_from_type ("vcd", device);
+    break;
+  case MEDIA_TYPE_CDDA:
+    *url = totem_cd_mrl_from_type ("cdda", device);
+    break;
+  case MEDIA_TYPE_DATA:
+    *url = g_strdup (cache->mountpoint);
+    break;
+  default:
+    break;
+  }
+
   cd_cache_free (cache);
 
   return type;
 }
 
 MediaType
-totem_cd_detect_type_with_url (const char  *device,
-			       char       **url,
-			       GError     **error)
+totem_cd_detect_type (const char  *device,
+		      GError     **error)
 {
-  MediaType type;
-
-  type = totem_cd_detect_type (device, error);
-  switch (type) {
-  case MEDIA_TYPE_DVD:
-    *url = totem_cd_mrl_from_type ("dvd", device);
-    return type;
-  case MEDIA_TYPE_VCD:
-    *url = totem_cd_mrl_from_type ("vcd", device);
-    return type;
-  default:
-    return type;
-  }
+  return totem_cd_detect_type_with_url (device, NULL, error);
 }
 
 const char *

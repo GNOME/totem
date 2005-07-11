@@ -25,6 +25,9 @@
 #include <glib.h>
 #include <string.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #include "totem-uri.h"
 #include "totem-private.h"
@@ -54,6 +57,29 @@ totem_is_media (const char *uri)
 		return TRUE;
 
 	return FALSE;
+}
+
+gboolean
+totem_is_block_device (const char *uri)
+{
+	struct stat buf;
+	char *local;
+
+	if (uri == NULL)
+		return FALSE;
+
+	if (g_str_has_prefix (uri, "file:") == FALSE)
+		return FALSE;
+	local = g_filename_from_uri (uri, NULL, NULL);
+	if (local == NULL)
+		return FALSE;
+	if (stat (local, &buf) != 0) {
+		g_free (local);
+		return FALSE;
+	}
+	g_free (local);
+
+	return (S_ISBLK (buf.st_mode));
 }
 
 char*

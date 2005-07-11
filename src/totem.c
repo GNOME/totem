@@ -392,13 +392,74 @@ totem_action_load_media (Totem *totem, MediaType type)
 	return TRUE;
 }
 
+static gboolean
+totem_action_load_media_device (Totem *totem, const char *device)
+{
+	MediaType type;
+	GError *error = NULL;
+	char *device_path, *url;
+	gboolean retval;
+
+	if (g_str_has_prefix (device, "file://") != FALSE)
+		device_path = g_filename_from_uri (device, NULL, NULL);
+	else
+		device_path = g_strdup (device);
+
+	type = totem_cd_detect_type_with_url (device_path, &url, &error);
+
+	switch (type) {
+		case MEDIA_TYPE_ERROR:
+			totem_action_error ("Failed to play Audio/Video Disc",
+					    error ? error->message : "Reason unknown",
+					    totem);
+			retval = FALSE;
+			break;
+		case MEDIA_TYPE_DATA:
+			/* Set default location to the mountpoint of
+			 * this device */
+			{
+				char *s;
+				s = totem_action_open_dialog (totem, url, FALSE);
+				g_free (s);
+			}
+			retval = TRUE;
+			break;
+		case MEDIA_TYPE_DVD:
+		case MEDIA_TYPE_VCD:
+		case MEDIA_TYPE_CDDA:
+			bacon_video_widget_set_media_device
+				(BACON_VIDEO_WIDGET (totem->bvw), device_path);
+			totem_action_load_media (totem, type);
+			retval = TRUE;
+			break;
+		default:
+			g_assert_not_reached ();
+	}
+
+	g_free (url);
+	g_free (device_path);
+
+	return retval;
+}
+
+void
+totem_action_play_media_device (Totem *totem, const char *device)
+{
+	char *mrl;
+
+	if (totem_action_load_media_device (totem, device) != FALSE) {
+		mrl = totem_playlist_get_current_mrl (totem->playlist);
+		totem_action_set_mrl_and_play (totem, mrl);
+		g_free (mrl);
+	}
+}
+
 void
 totem_action_play_media (Totem *totem, MediaType type)
 {
 	char *mrl;
 
-	if (totem_action_load_media (totem, type) != FALSE)
-	{
+	if (totem_action_load_media (totem, type) != FALSE) {
 		mrl = totem_playlist_get_current_mrl (totem->playlist);
 		totem_action_set_mrl_and_play (totem, mrl);
 		g_free (mrl);
@@ -1499,13 +1560,8 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 				cleared = TRUE;
 			}
 
-			if (strcmp (data, "dvd:") == 0)
-			{
-				totem_action_load_media (totem, MEDIA_TYPE_DVD);
-			} else if (strcmp (data, "vcd:") == 0) {
-				totem_action_load_media (totem, MEDIA_TYPE_VCD);
-			} else if (strcmp (data, "cd:") == 0) {
-				totem_action_load_media (totem, MEDIA_TYPE_CDDA);
+			if (totem_is_block_device (filename) != FALSE) {
+				totem_action_load_media_device (totem, data);
 			} else if (strstr (filename, "cdda:/") != NULL) {
 				totem_playlist_add_mrl (totem->playlist, data, NULL);
 			} else if (totem_playlist_add_mrl (totem->playlist,
@@ -1529,7 +1585,7 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 }
 
 char *
-totem_action_open_dialog (Totem *totem, const char *path)
+totem_action_open_dialog (Totem *totem, const char *path, gboolean play)
 {
 	GtkWidget *fs;
 	int response;
@@ -1554,7 +1610,6 @@ totem_action_open_dialog (Totem *totem, const char *path)
 	while (1)
 	{
 		GSList *filenames;
-		char *mrl;
 		gboolean playlist_modified;
 
 		response = gtk_dialog_run (GTK_DIALOG (fs));
@@ -1584,9 +1639,13 @@ totem_action_open_dialog (Totem *totem, const char *path)
 		g_slist_foreach (filenames, (GFunc) g_free, NULL);
 		g_slist_free (filenames);
 
-		mrl = totem_playlist_get_current_mrl (totem->playlist);
-		totem_action_set_mrl_and_play (totem, mrl);
-		g_free (mrl);
+		if (play != FALSE) {
+			char *mrl;
+
+			mrl = totem_playlist_get_current_mrl (totem->playlist);
+			totem_action_set_mrl_and_play (totem, mrl);
+			g_free (mrl);
+		}
 		break;
 	}
 
@@ -1600,7 +1659,7 @@ on_open1_activate (GtkButton *button, Totem *totem)
 	static char *path = NULL;
 	char *new_path;
 
-	new_path = totem_action_open_dialog (totem, path);
+	new_path = totem_action_open_dialog (totem, path, TRUE);
 	if (new_path != NULL) {
 		g_free (path);
 		path = new_path;
@@ -3506,7 +3565,7 @@ main (int argc, char **argv)
 	{
 		totem_session_restore (totem, argv);
 	} else if (argc >= 1 && totem_action_open_files (totem, argv)) {
-			totem_action_play_pause (totem);
+		totem_action_play_pause (totem);
 	} else {
 		totem_action_set_mrl (totem, NULL);
 	}
