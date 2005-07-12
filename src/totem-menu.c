@@ -532,7 +532,6 @@ on_play_disc_activate (GtkMenuItem *menu_item, Totem *totem)
 
 	device_path = g_object_get_data (G_OBJECT (menu_item), "device_path");
 	totem_action_play_media_device (totem, device_path);
-	g_free (device_path);
 }
 
 /* A GnomeVFSDrive and GnomeVFSVolume share many similar methods, but do not

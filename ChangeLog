@@ -1,6 +1,13 @@
 2005-07-12  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_current_frame): remove unneeded line
+	* src/totem-menu.c: (on_play_disc_activate):
+	don't free object data from the menu item (Closes: #310108)
+
+2005-07-12  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c:
 	(bacon_video_widget_get_current_frame): work around
 	XINE_STREAM_INFO_VIDEO_RATIO breakage for MPEG streams
 	(Closes: #301020)

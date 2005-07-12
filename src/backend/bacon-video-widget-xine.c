@@ -3681,7 +3681,6 @@ bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 	default:
 		ratio = 0.0;
 	}
-		
 
 	/* Convert to rgb */
 	rgb = yv12torgb (y, u, v, width, height);
