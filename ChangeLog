@@ -1,5 +1,15 @@
 2005-07-12  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser.c:
+	(my_gnome_vfs_get_mime_type_with_data),
+	(totem_pl_parser_add_asf_parser), (totem_pl_parser_add_pls),
+	(parse_asx_entry): parse subplaylist unconditionally for asx files,
+	avoid triggering potential segfaults when reading past the end of the
+	data to determine the mime-type by null-terminating it, handle dos mode
+	asf reference files (Closes: #310147)
+
+2005-07-12  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-disc.c: (cd_cache_new): patch from James Livingston
 	<jrl@ids.org.au> to avoid a double-free (Closes: #310114)
 
