@@ -3569,6 +3569,23 @@ bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 		return NULL;
 	}
 
+	switch (ratio) {
+	case XINE_VO_ASPECT_SQUARE:
+		ratio = 10000.0;
+		break;
+	case XINE_VO_ASPECT_4_3:
+		ratio = 10000.0 * 4 / 3;
+		break;
+	case XINE_VO_ASPECT_ANAMORPHIC:
+		ratio = 10000.0 * 16 / 9;
+		break;
+	case XINE_VO_ASPECT_DVB:
+		ratio = 10000.0 * 2.11;
+		break;
+	default:
+		ratio = 0.0;
+	}
+
 	/* Convert to rgb */
 	rgb = yv12torgb (y, u, v, width, height);
 
@@ -3576,10 +3593,6 @@ bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 			GDK_COLORSPACE_RGB, FALSE,
 			8, width, height, 3 * width,
 			(GdkPixbufDestroyNotify) g_free, NULL);
-
-	/* MPEG streams have ratio information */
-	ratio = xine_get_stream_info (bvw->priv->stream,
-			XINE_STREAM_INFO_VIDEO_RATIO);
 
 	if (ratio != 10000.0 && ratio != 0.0)
 	{
