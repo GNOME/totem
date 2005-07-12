@@ -167,8 +167,11 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data)
 		return NULL;
 	}
 
-	/* Return the file. */
-	*data = g_realloc (buffer, total_bytes_read);
+	/* Return the file null-terminated. */
+	buffer = g_realloc (buffer, total_bytes_read + 1);
+	buffer[total_bytes_read] = '\0';
+	*data = buffer;
+
 	mimetype = gnome_vfs_get_mime_type_for_data (*data, total_bytes_read);
 
 	return mimetype;
@@ -794,7 +797,7 @@ totem_pl_parser_add_asf_parser (TotemPlParser *parser, const char *url,
 		gpointer data)
 {
 	gboolean retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
-	char *contents, **lines, *ref;
+	char *contents, **lines, *ref, *split_char;
 	int size;
 
 	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
@@ -803,7 +806,13 @@ totem_pl_parser_add_asf_parser (TotemPlParser *parser, const char *url,
 	contents = g_realloc (contents, size + 1);
 	contents[size] = '\0';
 
-	lines = g_strsplit (contents, "\n", 0);
+	if (strstr(contents,"\x0d") == NULL) {
+		split_char = "\n";
+	} else {
+		split_char = "\x0d\n";
+	}
+
+	lines = g_strsplit (contents, split_char, 0);
 	g_free (contents);
 
 	ref = read_ini_line_string (lines, "Ref1", FALSE);
@@ -848,8 +857,7 @@ totem_pl_parser_add_pls (TotemPlParser *parser, const char *url, gpointer data)
 	contents[size] = '\0';
 
 	/* figure out whether we're a unix pls or dos pls */
-	if (strstr(contents,"\x0d") == NULL)
-	{
+	if (strstr(contents,"\x0d") == NULL) {
 		split_char = "\n";
 	} else {
 		split_char = "\x0d\n";
@@ -937,7 +945,7 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		xmlNodePtr parent, const char *pl_title)
 {
 	xmlNodePtr node;
-	char *title, *url;
+	char *title, *url, *fullpath;
 	gboolean retval = FALSE;
 
 	title = NULL;
@@ -965,22 +973,19 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		return FALSE;
 	}
 
-	if (strstr (url, "://") != NULL || url[0] == '/') {
-		totem_pl_parser_add_one_url (parser, url,
-				title ? title : pl_title);
-		retval = TRUE;
-	} else {
-		char *fullpath;
-
+	if (strstr ((char *)url, "://") == NULL && url[0] != '/') {
 		fullpath = g_strdup_printf ("%s/%s", base, url);
-		/* .asx files can contain references to other .asx files */
-		if (totem_pl_parser_parse_internal (parser, fullpath) != TOTEM_PL_PARSER_RESULT_SUCCESS)
-			totem_pl_parser_add_one_url (parser, fullpath,
-					title ? title : pl_title);
-
-		g_free (fullpath);
+	} else {
+		fullpath = g_strdup ((char *)url);
 	}
 
+	/* .asx files can contain references to other .asx files */
+	if (totem_pl_parser_parse_internal (parser, fullpath) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
+		totem_pl_parser_add_one_url (parser, fullpath,
+				(char *)title ? (char *)title : pl_title);
+	}
+
+	g_free (fullpath);
 	g_free (title);
 	g_free (url);
 
