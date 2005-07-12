@@ -190,8 +190,8 @@ cd_cache_new (const char *dev,
       char *mnt;
 
       mnt = gnome_vfs_drive_get_activation_uri (drive);
-      g_free (pdev2);
       if (!strncmp (mnt, "file://", 7)) {
+	g_free (pdev2);
         mountpoint = g_strdup (mnt + 7);
         g_free (mnt);
         gnome_vfs_drive_ref (drive);

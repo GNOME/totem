@@ -1,5 +1,10 @@
 2005-07-12  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-disc.c: (cd_cache_new): patch from James Livingston
+	<jrl@ids.org.au> to avoid a double-free (Closes: #310114)
+
+2005-07-12  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c:
 	(bacon_video_widget_get_current_frame): remove unneeded line
 	* src/totem-menu.c: (on_play_disc_activate):
