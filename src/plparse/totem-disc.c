@@ -146,7 +146,7 @@ cd_cache_new (const char *dev,
   GnomeVFSVolumeMonitor *mon;
   GnomeVFSDrive *drive = NULL;
   GList *list, *or;
-  gboolean is_dir;
+  gboolean is_dir, found;
 
   if (g_str_has_prefix (dev, "file://") != FALSE)
     local = g_filename_from_uri (dev, NULL, NULL);
@@ -168,6 +168,7 @@ cd_cache_new (const char *dev,
 
   /* retrieve mountpoint (/etc/fstab). We could also use HAL for this,
    * I think (gnome-volume-manager does that). */
+  found = FALSE;
   device = get_device (local, error);
   g_free (local);
   if (!device)
@@ -190,12 +191,20 @@ cd_cache_new (const char *dev,
       char *mnt;
 
       mnt = gnome_vfs_drive_get_activation_uri (drive);
-      if (!strncmp (mnt, "file://", 7)) {
+      if (strncmp (mnt, "file://", 7) == 0) {
 	g_free (pdev2);
         mountpoint = g_strdup (mnt + 7);
         g_free (mnt);
         gnome_vfs_drive_ref (drive);
+	found = TRUE;
         break;
+      } else if (strncmp (mnt, "cdda://", 7) == 0) {
+	g_free (pdev2);
+	mountpoint = NULL;
+	g_free (mnt);
+	gnome_vfs_drive_ref (drive);
+	found = TRUE;
+	break;
       }
       g_free (mnt);
     }
@@ -204,10 +213,10 @@ cd_cache_new (const char *dev,
   g_list_foreach (or, (GFunc) gnome_vfs_drive_unref, NULL);
   g_list_free (or);
 
-  if (!mountpoint) {
+  if (!found) {
     g_set_error (error, 0, 0,
-        _("Failed to find mountpoint for device %s in /etc/fstab"),
-        device);
+	_("Failed to find mountpoint for device %s in /etc/fstab"),
+	device);
     return NULL;
   }
 
@@ -466,6 +475,8 @@ static MediaType
 cd_cache_disc_is_vcd (CdCache *cache,
                       GError **error)
 {
+  if (!cache->mountpoint)
+    return MEDIA_TYPE_ERROR;
   /* open disc and open mount */
   if (!cd_cache_open_device (cache, error))
     return MEDIA_TYPE_ERROR;
@@ -483,6 +494,8 @@ static MediaType
 cd_cache_disc_is_dvd (CdCache *cache,
 		      GError **error)
 {
+  if (!cache->mountpoint)
+    return MEDIA_TYPE_ERROR;
   /* open disc, check capabilities and open mount */
   if (!cd_cache_open_device (cache, error))
     return MEDIA_TYPE_ERROR;
