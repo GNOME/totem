@@ -709,6 +709,10 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		/* Volume */
 		widget = glade_xml_get_widget (totem->xml, "tcw_volume_button");
 		gtk_widget_set_sensitive (widget, FALSE);
+		widget = glade_xml_get_widget (totem->xml, "tmw_volume_up_menu_item");
+		gtk_widget_set_sensitive (widget, FALSE);
+		widget = glade_xml_get_widget (totem->xml, "tmw_volume_down_menu_item");
+		gtk_widget_set_sensitive (widget, FALSE);
 		widget = glade_xml_get_widget (totem->xml_popup, "trcm_volume_up");
 		gtk_widget_set_sensitive (widget, FALSE);
 		widget = glade_xml_get_widget (totem->xml_popup, "trcm_volume_down");
@@ -773,8 +777,13 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		gtk_widget_set_sensitive (widget, caps);
 		widget = glade_xml_get_widget (totem->xml, "tcw_volume_hbox");
 		gtk_widget_set_sensitive (widget, caps);
-		widget = glade_xml_get_widget (totem->xml_popup, "trcm_volume_up");                gtk_widget_set_sensitive (widget, caps);
+		widget = glade_xml_get_widget (totem->xml_popup, "trcm_volume_up");
+		gtk_widget_set_sensitive (widget, caps);
 		widget = glade_xml_get_widget (totem->xml_popup, "trcm_volume_down");
+		gtk_widget_set_sensitive (widget, caps);
+		widget = glade_xml_get_widget (totem->xml, "tmw_volume_up_menu_item");
+		gtk_widget_set_sensitive (widget, caps);
+		widget = glade_xml_get_widget (totem->xml, "tmw_volume_down_menu_item");
 		gtk_widget_set_sensitive (widget, caps);
 
 		/* Take a screenshot */
