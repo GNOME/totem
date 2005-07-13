@@ -66,22 +66,12 @@ HAVE_XINE=no
 AC_MSG_CHECKING(for backend libraries)
 
 if test x$ENABLE_GST = xno; then
-	MM="libxine >= $XINE_REQS gconf-2.0"
-
-	SAVE_CFLAGS="$CFLAGS"
-	SAVE_LIBS="$LIBS"
-	AC_TRY_COMPILE([
-		#include <xine.h>
-		],[
-		int arg = 0, foo;
-		foo = XINE_MSG_AUDIO_OUT_UNAVAILABLE;
-		],HAVE_XINE=yes,HAVE_XINE=no)
-	CFLAGS="$SAVE_CFLAGS"
-	LIBS="$SAVE_LIBS"
-
+        PKG_CHECK_MODULES(XINE, $MM, HAVE_XINE=yes, HAVE_XINE=no)
 	if test x$HAVE_XINE = xyes; then
 		AC_MSG_RESULT(xine-lib)
 	fi
+	MM_LIBS="$XINE_LIBS"
+	MM_CFLAGS="$XINE_CFLAGS"
 fi
 
 if test x$HAVE_XINE = xno; then
@@ -99,6 +89,8 @@ dnl Give error and exit if we don't have gstreamer
 	fi
 
 	AC_MSG_RESULT(GStreamer)
+	MM_LIBS="$GST_LIBS -lgstinterfaces-$GST_MAJORMINOR"
+	MM_CFLAGS="$GST_CFLAGS $MM_CFLAGS"
 fi
 
 AM_CONDITIONAL(TOTEM_GST, test x$HAVE_GSTREAMER = "xyes")
@@ -147,14 +139,16 @@ AC_ARG_ENABLE(gtk,
 dnl Seems that the order matters because libtool blows
 dnl Also check if we're going to be using GTK+ only
 if test x$ENABLE_GTK = "xno" ; then
-	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS libgnomeui-2.0 >= $GNOMEUI_REQS libglade-2.0 gnome-vfs-2.0 >= $GNOMEVFS_REQS gnome-vfs-module-2.0 >= $GNOMEVFS_REQS gnome-desktop-2.0 >= 2.1.5 iso-codes libmusicbrainz $MM)
+	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS libgnomeui-2.0 >= $GNOMEUI_REQS libglade-2.0 gnome-vfs-2.0 >= $GNOMEVFS_REQS gnome-vfs-module-2.0 >= $GNOMEVFS_REQS gnome-desktop-2.0 >= 2.1.5 iso-codes libmusicbrainz)
 	HAVE_GNOME=yes
 else
-	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS libglade-2.0 gnome-vfs-2.0 >= $GNOMEVFS_REQS gnome-vfs-module-2.0 >= $GNOMEVFS_REQS iso-codes libmusicbrainz $MM)
+	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS libglade-2.0 gnome-vfs-2.0 >= $GNOMEVFS_REQS gnome-vfs-module-2.0 >= $GNOMEVFS_REQS iso-codes libmusicbrainz)
 	AC_DEFINE(USE_STABLE_LIBGNOMEUI, 1, [defined if we don't have GNOME])
 	AC_DEFINE(HAVE_GTK_ONLY, 1, [defined if GNOME isn't used])
 	HAVE_GNOME=no
 fi
+EXTRA_GNOME_CFLAGS="$EXTRA_GNOME_CFLAGS $MM_CFLAGS"
+EXTRA_GNOME_LIBS="$EXTRA_GNOME_LIBS $MM_LIBS"
 
 AC_MSG_CHECKING([whether iso-codes has iso-639 domain])
 if $PKG_CONFIG --variable=domains iso-codes | grep -q 639 ; then
@@ -171,7 +165,9 @@ EXTRA_GNOME_LIBS="$EXTRA_GNOME_LIBS"
 AC_SUBST(EXTRA_GNOME_CFLAGS)
 AC_SUBST(EXTRA_GNOME_LIBS)
 
-PKG_CHECK_MODULES(GTK, gtk+-x11-2.0 $MM gthread-2.0)
+PKG_CHECK_MODULES(GTK, gtk+-x11-2.0 gthread-2.0)
+GTK_CFLAGS="$GTK_CFLAGS $MM_CFLAGS"
+GTK_LIBS="$GTK_LIBS $MM_LIBS"
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
 
@@ -228,13 +224,14 @@ dnl Check for mozilla CFLAGS/LDFLAGS
 if test "x$ENABLE_MOZILLA" = "xyes" ; then
 	PKG_CHECK_MODULES([MOZILLA],
 		[gtk+-x11-2.0 \
-		 $MM \
 		 gthread-2.0 \
 		 $MOZILLA-xpcom >= $MOZILLA_VERSION_MIN \
 		 $MOZILLA-plugin \
 		 gnome-vfs-2.0],,
 		[ENABLE_MOZILLA=no])
 
+	MOZILLA_CFLAGS="$MOZILLA_CFLAGS $MM_CFLAGS"
+	MOZILLA_LIBS="$MOZILLA_LIBS $MM_LIBS"
 	AC_SUBST([MOZILLA_CFLAGS])
 	AC_SUBST([MOZILLA_LIBS])
 fi
@@ -296,8 +293,10 @@ AC_ARG_ENABLE(nautilus,
 	[ENABLE_NAUTILUS=yes]) dnl Default value
 
 if test x$ENABLE_NAUTILUS = "xyes" ; then
-	PKG_CHECK_MODULES(NAUTILUS, gtk+-x11-2.0 $MM gthread-2.0 libnautilus-extension,
+	PKG_CHECK_MODULES(NAUTILUS, gtk+-x11-2.0 gthread-2.0 libnautilus-extension,
 			[HAVE_NAUTILUS=yes], [HAVE_NAUTILUS=no])
+	NAUTILUS_CFLAGS="$NAUTILUS_CFLAGS $MM_CFLAGS"
+	NAUTILUS_LIBS="$NAUTILUS_LIBS $MM_LIBS"
 fi
 
 AC_SUBST(NAUTILUS_CFLAGS)
