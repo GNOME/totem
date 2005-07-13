@@ -1,3 +1,10 @@
+2005-07-13  Bastien Nocera  <hadess@hadess.net>
+
+	* src/disc-test.c: (main): abort when we have a warning
+	* src/plparse/totem-disc.c: (totem_cd_detect_type_with_url):
+	Fix setting a GError on top of a GError when there's no medium in the
+	drive we're checking
+
 2005-07-12  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/totem-pl-parser.c:

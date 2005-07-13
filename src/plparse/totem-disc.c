@@ -561,6 +561,9 @@ totem_cd_detect_type_with_url (const char *device,
     return MEDIA_TYPE_ERROR;
 
   type = cd_cache_disc_is_cdda (cache, error);
+  if (type == MEDIA_TYPE_ERROR && *error != NULL)
+    return type;
+
   if ((type == MEDIA_TYPE_DATA || type == MEDIA_TYPE_ERROR) &&
       (type = cd_cache_disc_is_vcd (cache, error)) == MEDIA_TYPE_DATA &&
       (type = cd_cache_disc_is_dvd (cache, error)) == MEDIA_TYPE_DATA) {

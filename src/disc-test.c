@@ -45,6 +45,7 @@ main (gint   argc,
 
   g_type_init ();
   gnome_vfs_init ();
+  g_log_set_always_fatal (G_LOG_LEVEL_WARNING);
 
   if (g_file_test (argv[1], G_FILE_TEST_IS_DIR) != FALSE) {
     type = totem_cd_detect_type_from_dir (argv[1], &url, &error);
