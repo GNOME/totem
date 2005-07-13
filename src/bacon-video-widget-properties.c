@@ -77,7 +77,6 @@
 struct BaconVideoWidgetPropertiesPrivate
 {
 	GladeXML *xml;
-	GtkWidget *vbox;
 	int time;
 };
 
@@ -94,8 +93,6 @@ static void
 bacon_video_widget_properties_init (BaconVideoWidgetProperties *props)
 {
 	props->priv = g_new0 (BaconVideoWidgetPropertiesPrivate, 1);
-	props->priv->xml = NULL;
-	props->priv->vbox = NULL;
 }
 
 static void

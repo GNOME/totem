@@ -35,6 +35,8 @@
 //FIXME damn build system!
 #include "totem-interface.c"
 
+GtkWidget *totem_volume_create (void);
+
 #define OPTION_IS(x) (strcmp(argv[i], x) == 0)
 
 typedef struct TotemEmbedded TotemEmbedded;

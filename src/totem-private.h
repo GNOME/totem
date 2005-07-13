@@ -138,4 +138,6 @@ struct Totem {
 	TotemStates state;
 };
 
+GtkWidget *totem_volume_create (void);
+
 #endif /* __TOTEM_PRIVATE_H__ */
