@@ -1270,7 +1270,7 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		message = g_strdup (_("The specified movie could not be found."));
 		break;
 	case XINE_MSG_READ_ERROR:
-		if (bvw->priv->mrl && g_str_has_prefix (bvw->priv->mrl, "dvd:") != FALSE)
+		if (g_str_has_prefix (bvw->priv->mrl, "dvd:") != FALSE)
                 {
                         num = BVW_ERROR_DVD_ENCRYPTED;
                         message = g_strdup (_("The source seems encrypted, and can't be read. Are you trying to play an encrypted DVD without libdvdcss?"));
@@ -1421,7 +1421,7 @@ xine_event (void *user_data, const xine_event_t *event)
 }
 
 static void
-xine_error (BaconVideoWidget *bvw, GError **error)
+xine_try_error (BaconVideoWidget *bvw, gboolean probe_error, GError **error)
 {
 	signal_data *data, *save_data;
 	int err;
@@ -1433,12 +1433,6 @@ xine_error (BaconVideoWidget *bvw, GError **error)
 	 * xine_open() */
 	while ((data = g_async_queue_try_pop (bvw->priv->queue)) != NULL)
 	{
-		g_assert (data->signal == MESSAGE_ASYNC
-				|| data->signal == ERROR_ASYNC
-				|| data->signal == BUFFERING_ASYNC
-				|| data->signal == REDIRECT_ASYNC
-				|| data->signal == EOS_ASYNC);
-
 		if (data->signal == ERROR_ASYNC)
 		{
 			if (save_data != NULL)
@@ -1462,6 +1456,9 @@ xine_error (BaconVideoWidget *bvw, GError **error)
 
 		return;
 	}
+
+	if (probe_error != FALSE)
+		return;
 
 	err = xine_get_error (bvw->priv->stream);
 	if (err == XINE_ERROR_NONE)
@@ -1491,6 +1488,12 @@ xine_error (BaconVideoWidget *bvw, GError **error)
 				_("Generic Error."));
 		break;
 	}
+}
+
+static void
+xine_error (BaconVideoWidget *bvw, GError **error)
+{
+	xine_try_error (bvw, FALSE, error);
 }
 
 static void
@@ -1958,6 +1961,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 	g_return_val_if_fail (bvw->priv->mrl == NULL, FALSE);
 
 	bvw->priv->got_redirect = FALSE;
+	bvw->priv->mrl = g_strdup (mrl);
 
 	if (subtitle_uri != NULL)
 	{
@@ -1974,6 +1978,12 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 		bacon_video_widget_close (bvw);
 		xine_error (bvw, error);
 		return FALSE;
+	} else {
+		xine_try_error (bvw, TRUE, error);
+		if (*error != NULL) {
+			bacon_video_widget_close (bvw);
+			return FALSE;
+		}
 	}
 
 	layer = xine_get_meta_info (bvw->priv->stream,
@@ -2032,8 +2042,6 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 	}
 
 	show_vfx_update (bvw, bvw->priv->show_vfx);
-
-	bvw->priv->mrl = g_strdup (mrl);
 
 	g_signal_emit (G_OBJECT (bvw),
 			bvw_table_signals[GOT_METADATA], 0, NULL);

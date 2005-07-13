@@ -1,3 +1,12 @@
+2005-07-14  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c: (xine_event_message),
+	(xine_try_error), (xine_error),
+	(bacon_video_widget_open_with_subtitle): copy the mrl straight away for
+	us to be able to use when errors come in on open(), try harder
+	to look for errors on startup (corrects double-dialogue with
+	encrypted files)
+
 2005-07-13  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-video-widget-properties.c:
