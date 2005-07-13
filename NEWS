@@ -2,26 +2,43 @@ New features and significant updates in version...
 
 1.1.3:
 * Move the playlist dialog to a sidebar
+* Use a new volume widget in the main player window
+* Deprecate the use of vcd:, dvd: and cd: to play discs, and have the
+  user pass a directory (for vcd: and dvd:) or a device path (for all) instead
 * Avoid resizing on startup before we really show the window
 * Fix a crash when 'Hide controls' is called while starting up
 * Move the Repeat and Shuffle menu items to the Edit menu
 * Disable the Zoom menu items correctly on boundaries
 * Don't crash when trying to set the Zoom level during startup
-* Fix compilation of the Mozilla plugin with GCC4
 * Hide the main window quicker on exit
 * Make the album name selectable in the property dialogues
 * Update the length in the property window as the stream is played
+* Add the ability to write/read a title when saving a playlist
+* Ignore images and text files when reading playlists or parsing directories
+* Say that we support Shorten and 3GPP files
+* Show the track number in the window title if available
+* Avoid triggering the mouse pointer highlighter when in fullscreen
+* More resilient "Play disc" feature when trying to play back Audio CDs
+* Sort files before inserting them in the playlist when dropping them
+
+* Better Mozilla plugin headers detection
+* Fix compilation of the Mozilla plugin with GCC4
+* Add a working volume button
+
+* Fix the Mozilla plugin's window showing up outside the browser (GStreamer)
 * Better iradio title support (GStreamer)
 * Add DVD subtitles support (GStreamer)
 * Better error messages on startup and during playback (GStreamer)
 * Fix some memory leaks (GStreamer)
-* Remove a few startup warnings
+* Remove a few startup warnings (GStreamer)
+
 * Work-around problem in xine-lib that could mean files showing up as 0-length
+* Work-around errors when seeking near the end of an ASF/WMV file
 * Fix crashes when playing back some files with errors (xine-lib)
 * Add a proper warning when trying to play an empty file (xine-lib)
 * Fix hand icon not appearing on DVD menus in fullscreen (xine-lib)
 * Fix detection of still images with newer xine-lib
-* Say that we support Shorten and 3GPP files
+* Fix screenshot aspect ratio for some MPEG files
 
 1.1.2:
 * Use MusicBrainz to get Title, Album, etc. for audio CDs
