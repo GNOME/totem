@@ -1038,10 +1038,13 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 	}
 
 	gnome_vfs_uri_list_free (list);
-	file_list = g_list_reverse (file_list);
-
 	if (file_list == NULL)
 		return FALSE;
+
+	if (drop_type != 1)
+		file_list = g_list_sort (file_list, (GCompareFunc) strcmp);
+	else
+		file_list = g_list_reverse (file_list);
 
 	for (p = file_list; p != NULL; p = p->next)
 	{
