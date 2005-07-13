@@ -1,3 +1,35 @@
+2005-07-13  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* configure.in:
+	* data/mozilla-viewer.glade:
+	* data/totem.glade:
+	* src/Makefile.am:
+	* src/totem-mozilla-viewer.c: (on_about1_activate),
+	(on_video_button_press_event), (cb_vol),
+	(totem_embedded_add_children), (cb_data), (totem_volume_create):
+	* src/totem-private.h:
+	* src/totem-volume.c: (totem_volume_button_get_type),
+	(totem_volume_button_class_init), (totem_volume_button_init),
+	(totem_volume_button_dispose), (totem_volume_button_new),
+	(totem_volume_button_get_value), (totem_volume_button_set_value),
+	(totem_volume_button_scroll), (totem_volume_button_press),
+	(cb_button_timeout), (cb_button_press), (cb_button_release),
+	(totem_volume_release_grab), (cb_dock_press),
+	(totem_volume_scale_get_type), (totem_volume_scale_class_init),
+	(totem_volume_scale_new), (totem_volume_scale_press),
+	(totem_volume_scale_release), (totem_volume_scale_value_changed):
+	* src/totem-volume.h:
+	* src/totem.c: (update_mrl_label),
+	(totem_action_set_mrl_with_warning), (update_volume_sliders),
+	(vol_cb), (on_video_motion_notify_event), (totem_callback_connect),
+	(totem_volume_create), (main):
+	  Add volume button instead of slider to totem, add volume button
+	  to mozilla plugin and add a right-click menu with preferences and
+	  about box. There's supposed to be a fullscreen option too, but
+	  that breaks right now because of some weird X stuff. Remove title
+	  label from totem control area, since the window manager already
+	  has that information.
+
 2005-07-13  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/totem-disc.c: (cd_cache_new), (cd_cache_disc_is_vcd),

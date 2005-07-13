@@ -31,6 +31,7 @@
 #include "bacon-video-widget.h"
 #include "totem-interface.h"
 #include "totem-mozilla-options.h"
+#include "totem-volume.h"
 //FIXME damn build system!
 #include "totem-interface.c"
 
@@ -46,7 +47,8 @@ typedef enum {
 
 struct TotemEmbedded {
 	GtkWidget *window;
-	GladeXML *xml;
+	GladeXML *menuxml, *xml;
+	GtkWidget *about;
 	int width, height;
 	const char *orig_filename;
 	char *filename, *href;
@@ -177,6 +179,60 @@ totem_embedded_pause (TotemEmbedded *emb)
 }
 
 static void
+on_about1_activate (GtkButton *button, TotemEmbedded *emb)
+{
+	GdkPixbuf *pixbuf = NULL;
+	const char *authors[] =
+	{
+		"Bastien Nocera <hadess@hadess.net>",
+		"Ronald Bultje <rbultje@ronald.bitfreak.net>",
+		NULL
+	};
+	char *backend_version, *description;
+	char *filename;
+
+	if (emb->about != NULL)
+	{
+		gtk_window_present (GTK_WINDOW (emb->about));
+		return;
+	}
+
+	filename = g_build_filename (DATADIR,
+			"totem", "media-player-48.png", NULL);
+	pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+	g_free (filename);
+
+	backend_version = bacon_video_widget_get_backend_name (emb->bvw);
+	description = g_strdup_printf (_("Movie Player using %s"),
+				backend_version);
+
+	emb->about = g_object_new (GTK_TYPE_ABOUT_DIALOG,
+			"name", _("Totem Mozilla Plugin"),
+			"version", VERSION,
+			"copyright", _("Copyright \xc2\xa9 2002-2005 Bastien Nocera"),
+			"comments", description,
+			"authors", authors,
+			"translator-credits", _("translator-credits"),
+			"logo", pixbuf,
+			NULL);
+
+	g_free (backend_version);
+	g_free (description);
+
+	if (pixbuf != NULL)
+		gdk_pixbuf_unref (pixbuf);
+
+	g_object_add_weak_pointer (G_OBJECT (emb->about),
+			(gpointer *)&emb->about);
+	gtk_window_set_transient_for (GTK_WINDOW (emb->about),
+			GTK_WINDOW (emb->window));
+	g_signal_connect (G_OBJECT (emb->about), "response",
+			G_CALLBACK (gtk_widget_destroy), NULL);
+
+	gtk_widget_show(emb->about);
+}
+
+static void
 on_play_pause (GtkWidget *widget, TotemEmbedded *emb)
 {
 	if (emb->state == STATE_PLAYING) {
@@ -240,6 +296,14 @@ on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 			totem_embedded_play (emb);
 
 		return TRUE;
+	} else if (event->button == 3 && event->type == GDK_BUTTON_PRESS) {
+		GtkMenu *menu;
+
+		menu = GTK_MENU (glade_xml_get_widget (emb->menuxml, "menu"));
+		gtk_menu_popup (menu, NULL, NULL, NULL, NULL,
+				event->button, event->time);
+
+		return TRUE;
 	}
 
 	return FALSE;
@@ -253,6 +317,13 @@ on_eos_event (GtkWidget *bvw, TotemEmbedded *emb)
 	if (strcmp (emb->filename, "fd://0") == 0) {
 		totem_embedded_set_pp_state (emb, FALSE);
 	}
+}
+
+static void
+cb_vol (GtkWidget *val, TotemEmbedded *emb)
+{
+	bacon_video_widget_set_volume (emb->bvw,
+		totem_volume_button_get_value (TOTEM_VOLUME_BUTTON (val)));
 }
 
 static void
@@ -273,14 +344,17 @@ on_tick (GtkWidget *bvw,
 static void
 totem_embedded_add_children (TotemEmbedded *emb)
 {
-	GtkWidget *child, *container, *pp_button;
+	GtkWidget *child, *container, *pp_button, *vbut;
 	GError *err = NULL;
 
 	emb->xml = totem_interface_load_with_root ("mozilla-viewer.glade",
 			"vbox1", _("Plugin"), TRUE,
 			GTK_WINDOW (emb->window));
+	emb->menuxml = totem_interface_load_with_root ("mozilla-viewer.glade",
+			"menu", _("Menu"), TRUE,
+			GTK_WINDOW (emb->window));
 
-	if (emb->xml == NULL)
+	if (emb->xml == NULL || emb->menuxml == NULL)
 	{
 		totem_embedded_exit (emb);
 	}
@@ -297,9 +371,6 @@ totem_embedded_add_children (TotemEmbedded *emb)
 		if (err != NULL)
 			g_error_free (err);
 	}
-
-	//FIXME we need a decent volume controller
-	bacon_video_widget_set_volume (emb->bvw, 50);
 
 	g_signal_connect (G_OBJECT(emb->bvw), "got-redirect",
 			G_CALLBACK (on_got_redirect), emb);
@@ -322,6 +393,12 @@ totem_embedded_add_children (TotemEmbedded *emb)
 	g_signal_connect (G_OBJECT (pp_button), "clicked",
 			  G_CALLBACK (on_play_pause), emb);
 
+	vbut = glade_xml_get_widget (emb->xml, "volume_button");
+	totem_volume_button_set_value (TOTEM_VOLUME_BUTTON (vbut),
+			bacon_video_widget_get_volume (emb->bvw));
+	g_signal_connect (G_OBJECT (vbut), "value-changed",
+			  G_CALLBACK (cb_vol), emb);
+
 	gtk_widget_realize (emb->window);
 	gtk_widget_set_size_request (emb->window, emb->width, emb->height);
 
@@ -329,6 +406,11 @@ totem_embedded_add_children (TotemEmbedded *emb)
 		child = glade_xml_get_widget (emb->xml, "controls");
 		gtk_widget_hide (child);
 	}
+
+	/* popup */
+	child = glade_xml_get_widget (emb->menuxml, "about1");
+	g_signal_connect (G_OBJECT (child), "activate",
+			  G_CALLBACK (on_about1_activate), emb);
 }
 
 static void
@@ -392,6 +474,17 @@ cb_data (const char * msg, gpointer user_data)
 	}
 
 	totem_embedded_set_state (emb, state);
+}
+
+GtkWidget *
+totem_volume_create (void)
+{
+	GtkWidget *widget;
+
+	widget = totem_volume_button_new (0, 100, -1);
+	gtk_widget_show (widget);
+
+	return widget;
 }
 
 int main (int argc, char **argv)

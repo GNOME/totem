@@ -92,6 +92,7 @@ totem_SOURCES = 					\
 	totem-statusbar.c		\
 	totem-statusbar.h		\
 	totem-gromit.c totem-gromit.h	\
+	totem-volume.c totem-volume.h	\
 	ev-sidebar.c ev-sidebar.h
 
 totem_LDADD = \
@@ -147,7 +148,8 @@ libtotem_mozilla_la_LIBADD = \
 
 totem_mozilla_viewer_SOURCES = 		\
 	totem-mozilla-viewer.c		\
-	totem-mozilla-options.h
+	totem-mozilla-options.h		\
+	totem-volume.c totem-volume.h
 totem_mozilla_viewer_LDADD = \
 	$(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) \
 	$(NVTV_LIBS) backend/libbaconvideowidget.la libbaconpropertiespage.la \

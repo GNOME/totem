@@ -58,6 +58,7 @@
 #include "totem-options.h"
 #include "totem-uri.h"
 #include "totem-interface.h"
+#include "totem-volume.h"
 #include "video-utils.h"
 
 #include "totem.h"
@@ -645,8 +646,6 @@ update_mrl_label (Totem *totem, const char *name)
 
 		widget = glade_xml_get_widget (totem->xml, "tcw_title_label");
 		gtk_label_set_markup (GTK_LABEL (widget), text);
-		widget = glade_xml_get_widget (totem->xml, "tmw_title_label");
-		gtk_label_set_markup (GTK_LABEL (widget), text);
 
 		g_free (text);
 
@@ -665,8 +664,6 @@ update_mrl_label (Totem *totem, const char *name)
 			("<span size=\"medium\"><b>%s</b></span>",
 			 _("No File"));
 		widget = glade_xml_get_widget (totem->xml, "tcw_title_label");
-		gtk_label_set_markup (GTK_LABEL (widget), text);
-		widget = glade_xml_get_widget (totem->xml, "tmw_title_label");
 		gtk_label_set_markup (GTK_LABEL (widget), text);
 
 		g_free (text);
@@ -710,11 +707,7 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		update_seekable (totem, FALSE);
 
 		/* Volume */
-		widget = glade_xml_get_widget (totem->xml, "tmw_volume_hbox");
-		gtk_widget_set_sensitive (widget, FALSE);
-		widget = glade_xml_get_widget (totem->xml, "tmw_volume_up_menu_item");
-		gtk_widget_set_sensitive (widget, FALSE);
-		widget = glade_xml_get_widget (totem->xml, "tmw_volume_down_menu_item");
+		widget = glade_xml_get_widget (totem->xml, "tcw_volume_button");
 		gtk_widget_set_sensitive (widget, FALSE);
 		widget = glade_xml_get_widget (totem->xml_popup, "trcm_volume_up");
 		gtk_widget_set_sensitive (widget, FALSE);
@@ -776,11 +769,7 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 
 		/* Volume */
 		caps = bacon_video_widget_can_set_volume (totem->bvw);
-		widget = glade_xml_get_widget (totem->xml, "tmw_volume_hbox");
-		gtk_widget_set_sensitive (widget, caps);
-		widget = glade_xml_get_widget (totem->xml, "tmw_volume_up_menu_item");
-		gtk_widget_set_sensitive (widget, caps);
-		widget = glade_xml_get_widget (totem->xml, "tmw_volume_down_menu_item");
+		widget = glade_xml_get_widget (totem->xml, "tcw_volume_button");
 		gtk_widget_set_sensitive (widget, caps);
 		widget = glade_xml_get_widget (totem->xml, "tcw_volume_hbox");
 		gtk_widget_set_sensitive (widget, caps);
@@ -1401,8 +1390,8 @@ update_volume_sliders (Totem *totem)
 				totem->prev_volume != -1 && volume != -1))
 	{
 		totem->volume_first_time = 0;
-		gtk_adjustment_set_value (totem->voladj,
-				(float) volume);
+		totem_volume_button_set_value (
+			TOTEM_VOLUME_BUTTON (totem->volume), (float) volume);
 		gtk_adjustment_set_value (totem->fs_voladj,
 				(float) volume);
 	}
@@ -1482,17 +1471,16 @@ vol_cb (GtkWidget *widget, Totem *totem)
 				(totem->bvw, (gint) totem->fs_voladj->value);
 
 			/* Update the fullscreen volume adjustment */
-			gtk_adjustment_set_value (totem->voladj, 
-					gtk_adjustment_get_value
-					(totem->fs_voladj));
+			totem_volume_button_set_value (
+				TOTEM_VOLUME_BUTTON (totem->volume),
+				gtk_adjustment_get_value (totem->fs_voladj));
 		} else {
-			bacon_video_widget_set_volume
-				(totem->bvw, (gint) totem->voladj->value);
-			/* Update the volume adjustment */
-			gtk_adjustment_set_value (totem->fs_voladj, 
-					gtk_adjustment_get_value
-					(totem->voladj));
+			int value = totem_volume_button_get_value (
+				TOTEM_VOLUME_BUTTON (totem->volume));
 
+			bacon_video_widget_set_volume (totem->bvw, value);
+			/* Update the volume adjustment */
+			gtk_adjustment_set_value (totem->fs_voladj, value);
 		}
 
 		totem->vol_lock = FALSE;
@@ -2528,8 +2516,6 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 
 	item = glade_xml_get_widget (totem->xml, "tcw_hbox");
 	gtk_widget_show_all (item);
-	item = glade_xml_get_widget (totem->xml, "tmw_title_label");
-	gtk_widget_realize (item);
 	gdk_flush ();
 
 	move_popups (totem);
@@ -3094,13 +3080,7 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (on_previous_button_clicked), totem);
 	item = glade_xml_get_widget (totem->xml, "tmw_next_button");
 	g_signal_connect (G_OBJECT (item), "clicked", 
-			G_CALLBACK (on_next_button_clicked), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_volume_mute_button");
-	g_signal_connect (G_OBJECT (item), "clicked",
-			G_CALLBACK (on_volume_mute_button), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_volume_max_button");
-	g_signal_connect (G_OBJECT (item), "clicked",
-			G_CALLBACK (on_volume_max_button), totem);
+			  G_CALLBACK (on_next_button_clicked), totem);
 
 	/* Drag'n'Drop */
 	item = glade_xml_get_widget (totem->xml, "tmw_sidebar_button");
@@ -3420,6 +3400,17 @@ totem_message_connection_receive_cb (const char *msg, Totem *totem)
 	g_free (url);
 }
 
+GtkWidget *
+totem_volume_create (void)
+{
+	GtkWidget *widget;
+
+	widget = totem_volume_button_new (0, 100, -1);
+	gtk_widget_show (widget);
+
+	return widget;
+}
+
 int
 main (int argc, char **argv)
 {
@@ -3511,8 +3502,7 @@ main (int argc, char **argv)
 	totem->seek = glade_xml_get_widget (totem->xml, "tmw_seek_hscale");
 	totem->seekadj = gtk_range_get_adjustment (GTK_RANGE (totem->seek));
 	g_object_set_data (G_OBJECT (totem->seek), "fs", GINT_TO_POINTER (0));
-	totem->volume = glade_xml_get_widget (totem->xml, "tmw_volume_hscale");
-	totem->voladj = gtk_range_get_adjustment (GTK_RANGE (totem->volume));
+	totem->volume = glade_xml_get_widget (totem->xml, "tcw_volume_button");
 	g_object_set_data (G_OBJECT (totem->volume), "fs", GINT_TO_POINTER (0));
 	totem->exit_popup = glade_xml_get_widget
 		(totem->xml, "totem_exit_fullscreen_window");
