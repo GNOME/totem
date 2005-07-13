@@ -1,3 +1,9 @@
+2005-07-13  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/totem-volume.c: (totem_volume_scale_new):
+	  For some reason, it wants negative stepping if I use _set_inverted()
+	  so I will do that.
+
 2005-07-13  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.glade:
