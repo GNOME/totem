@@ -107,8 +107,8 @@ totem_scrsaver_init (TotemScrsaver *scr)
 	scr->priv->have_xtest = XTestQueryExtension (GDK_DISPLAY(), &a, &b, &c, &d);
 	if(scr->priv->have_xtest == True)
 	{
-		scr->priv->keycode1 = XKeysymToKeycode (GDK_DISPLAY(), XK_Shift_L);
-		scr->priv->keycode2 = XKeysymToKeycode (GDK_DISPLAY(), XK_Hyper_R);
+		scr->priv->keycode1 = XKeysymToKeycode (GDK_DISPLAY(), XK_Alt_L);
+		scr->priv->keycode2 = XKeysymToKeycode (GDK_DISPLAY(), XK_Alt_R);
 		scr->priv->keycode = &scr->priv->keycode1;
 	}
 	XUnlockDisplay (GDK_DISPLAY());

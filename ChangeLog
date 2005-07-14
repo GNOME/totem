@@ -1,5 +1,14 @@
 2005-07-14  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_open_with_subtitle): avoid a crash when trying
+	to pull an error and no errors were passed
+	* src/totem-scrsaver.c: (totem_scrsaver_init): avoid crash by not
+	using meta as a poking key, but alternating between the 2 Alts
+	(Closes: #310255)
+
+2005-07-14  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c: (xine_event_message),
 	(xine_try_error), (xine_error),
 	(bacon_video_widget_open_with_subtitle): copy the mrl straight away for

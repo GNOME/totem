@@ -1980,7 +1980,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 		return FALSE;
 	} else {
 		xine_try_error (bvw, TRUE, error);
-		if (*error != NULL) {
+		if (error != NULL && *error != NULL) {
 			bacon_video_widget_close (bvw);
 			return FALSE;
 		}
