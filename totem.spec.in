@@ -32,7 +32,9 @@ make %{?_smp_mflags}
 
 %install
 rm -rf %{buildroot}
+export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 %makeinstall
+unset GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL
 %find_lang %{name}
 
 %clean
