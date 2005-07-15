@@ -1,3 +1,15 @@
+2005-07-15  Andy Wingo  <wingo@pobox.com>
+
+	* src/backend/bacon-video-widget-gst.c
+	(bacon_video_widget_set_visuals): If the app tries to set an
+	unsupported visualization, fail silently. It could be an outdated
+	preference or something.
+	(find_colorbalance_element): Fold function for picking the best
+	colorspace element.
+	(bacon_video_widget_new): Unref the bus after use. Some
+	gst_object_ref cleanups. XOverlay and colorspace cleanups and
+	bugfixes.
+
 2005-07-13  Thomas Vander Stichele  <thomas at apestaart dot org>
 
 	* configure.in:

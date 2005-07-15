@@ -2367,7 +2367,9 @@ bacon_video_widget_set_visuals (BaconVideoWidget * bvw, const char *name)
     }
   }
   g_list_free (features);
-  g_return_val_if_fail (fac != NULL, FALSE);
+  /* could be the user has an outdated preference, etc -- fail silently */
+  if (!fac)
+    return FALSE;
 
   /* now create */
   bvw->priv->vis_element = gst_element_factory_create (fac, "vis-plugin");
@@ -3150,6 +3152,28 @@ bacon_video_widget_error_quark (void)
   return q;
 }
 
+/* fold function to pick the best colorspace element */
+static gboolean
+find_colorbalance_element (GstElement *element, GValue * ret, GstElement **cb)
+{
+  GstColorBalanceClass *cb_class;
+
+  if (!GST_IS_COLOR_BALANCE (element))
+    return TRUE;
+  
+  cb_class = GST_COLOR_BALANCE_GET_CLASS (element);
+  if (GST_COLOR_BALANCE_TYPE (cb_class) == GST_COLOR_BALANCE_HARDWARE) {
+    gst_object_replace ((GstObject **) cb, (GstObject *) element);
+    /* shortcuts the fold */
+    return FALSE;
+  } else if (*cb == NULL) {
+    gst_object_replace ((GstObject **) cb, (GstObject *) element);
+    return TRUE;
+  } else {
+    return TRUE;
+  }
+}
+
 GtkWidget *
 bacon_video_widget_new (int width, int height,
 			BvwUseType type, GError ** err)
@@ -3157,6 +3181,7 @@ bacon_video_widget_new (int width, int height,
   GConfValue *confvalue;
   BaconVideoWidget *bvw;
   GstElement *audio_sink = NULL, *video_sink = NULL;
+  GstBus *bus;
 #if 0
   gulong sig1, sig2;
 #endif
@@ -3175,8 +3200,9 @@ bacon_video_widget_new (int width, int height,
     return NULL;
   }
 
-  gst_bus_add_watch (gst_pipeline_get_bus (GST_PIPELINE (bvw->priv->play)),
-		     (GstBusHandler) bacon_video_widget_bus_callback, bvw);
+  bus = gst_pipeline_get_bus (GST_PIPELINE (bvw->priv->play));
+  gst_bus_add_watch (bus, (GstBusHandler) bacon_video_widget_bus_callback, bvw);
+  gst_object_unref (bus);
 
   /* bla die bla ... */
   bvw->priv->vis_capsfilter = gst_element_factory_make ("capsfilter",
@@ -3232,7 +3258,7 @@ bacon_video_widget_new (int width, int height,
 
     pad = gst_element_get_pad (bvw->priv->audioconvert, "sink");
     gst_element_add_pad (audio_sink, gst_ghost_pad_new ("sink", pad));
-    gst_object_unref (GST_OBJECT (pad));
+    gst_object_unref (pad);
   }
 
   if (type == BVW_USE_TYPE_VIDEO) {
@@ -3320,8 +3346,8 @@ bacon_video_widget_new (int width, int height,
       if (local_err)
 	g_error_free (local_err);
     }
-    gst_object_unref (GST_OBJECT (video_sink));
-    gst_object_unref (GST_OBJECT (audio_sink));
+    gst_object_unref (video_sink);
+    gst_object_unref (audio_sink);
     g_object_unref (G_OBJECT (bvw));
     return NULL;
   }
@@ -3367,8 +3393,8 @@ bacon_video_widget_new (int width, int height,
       if (local_err)
 	g_error_free (local_err);
     }
-    gst_object_unref (GST_OBJECT (video_sink));
-    gst_object_unref (GST_OBJECT (audio_sink));
+    gst_object_unref (video_sink);
+    gst_object_unref (audio_sink);
     g_object_unref (G_OBJECT (bvw));
     return NULL;
   }
@@ -3387,64 +3413,34 @@ bacon_video_widget_new (int width, int height,
   g_signal_connect (G_OBJECT (bvw->priv->play), "notify::stream-info",
 		    G_CALLBACK (stream_info_set), (gpointer) bvw);
 
-  /* We try to get an element supporting XOverlay interface */
   if (type == BVW_USE_TYPE_VIDEO) {
-    GstElement *element;
-    GstIterator *iter;
-    gboolean done = FALSE;
-
+    /* Try to get an element supporting the XOverlay interface */
     if (GST_IS_BIN (video_sink)) {
+      GstElement *element;
+
       element = gst_bin_get_by_interface (GST_BIN (video_sink),
 					  GST_TYPE_X_OVERLAY);
+      if (element)
+        bvw->priv->xoverlay = GST_X_OVERLAY (element);
     } else {
-      element = GST_ELEMENT (gst_object_ref (GST_OBJECT (element)));
-    }
-    if (element && GST_IS_X_OVERLAY (element)) {
-      /* FIXME: do we need to keep a reference here? */
-      bvw->priv->xoverlay = GST_X_OVERLAY (element);
-    }
-    if (element) {
-      gst_object_unref (GST_OBJECT (element));
+      if (GST_IS_X_OVERLAY (video_sink))
+        bvw->priv->xoverlay = GST_X_OVERLAY (video_sink);
     }
     
-    /* Get them all and prefer hardware one
-     * FIXME: this doesn't work. */
-    element = NULL;
-    iter = gst_bin_iterate_all_by_interface (GST_BIN (bvw->priv->play),
-					     GST_TYPE_COLOR_BALANCE);
-    while (!done) {
-      gpointer data;
-      GstColorBalanceClass *cb_class;
+    /* Get a colorbalance-supporting element too, preferring hardware support */
+    {
+      GstIterator *iter;
+      GstElement *element = NULL;
 
-      switch (gst_iterator_next (iter, &data)) {
-	case GST_ITERATOR_OK:
-          cb_class = GST_COLOR_BALANCE_GET_CLASS (data);
-          if (GST_COLOR_BALANCE_TYPE (cb_class) ==
-                  GST_COLOR_BALANCE_HARDWARE) {
-	    gst_object_replace ((GstObject **) &element, data);
-            done = TRUE;
-          } else if (!element) {
-	    gst_object_replace ((GstObject **) &element, data);
-          }
-	  gst_object_unref (data);
-          break;
-	case GST_ITERATOR_RESYNC:
-          gst_iterator_resync (iter);
-          element = NULL;
-          break;
-	case GST_ITERATOR_ERROR:
-	case GST_ITERATOR_DONE:
-	  done = TRUE;
-	  break;
-      }
-    }
-    gst_iterator_free (iter);
+      iter = gst_bin_iterate_all_by_interface (GST_BIN (bvw->priv->play),
+                                               GST_TYPE_COLOR_BALANCE);
+      /* naively assume no resync */
+      gst_iterator_fold (iter,
+          (GstIteratorFoldFunction) find_colorbalance_element, NULL, &element);
+      gst_iterator_free (iter);
 
-    if (element && GST_IS_COLOR_BALANCE (element)) {
-      bvw->priv->balance = GST_COLOR_BALANCE (element);
-    }
-    if (element) {
-      gst_object_unref (GST_OBJECT (element));
+      if (element)
+        bvw->priv->balance = GST_COLOR_BALANCE (element);
     }
   }
 
