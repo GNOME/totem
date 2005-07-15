@@ -108,7 +108,16 @@ totem_scrsaver_init (TotemScrsaver *scr)
 	if(scr->priv->have_xtest == True)
 	{
 		scr->priv->keycode1 = XKeysymToKeycode (GDK_DISPLAY(), XK_Alt_L);
+		if (scr->priv->keycode1 == 0) {
+			g_warning ("scr->priv->keycode1 not existant");
+		}
 		scr->priv->keycode2 = XKeysymToKeycode (GDK_DISPLAY(), XK_Alt_R);
+		if (scr->priv->keycode2 == 0) {
+			scr->priv->keycode2 = XKeysymToKeycode (GDK_DISPLAY(), XK_Alt_L);
+			if (scr->priv->keycode2 == 0) {
+				g_warning ("scr->priv->keycode2 not existant");
+			}
+		}
 		scr->priv->keycode = &scr->priv->keycode1;
 	}
 	XUnlockDisplay (GDK_DISPLAY());
