@@ -50,27 +50,6 @@ totemMozillaObject::invalidatePlugin ()
 }
 
 /*
- * Waiting for response.
- */
-
-gchar *
-totemMozillaObject::wait ()
-{
-  gchar *msg;
-
-  while (this->tm && !this->tm->last_msg) {
-    g_main_context_iteration (NULL, FALSE);
-  }
-  if (!this->tm)
-    return NULL;
-
-  msg = this->tm->last_msg;
-  this->tm->last_msg = NULL;
-
-  return msg;
-}
-
-/*
  * From here on start the javascript-callable implementations.
  */
 
@@ -81,11 +60,8 @@ totemMozillaObject::Play ()
     return NS_ERROR_FAILURE;
 
   g_message ("play");
-
-  bacon_message_connection_send (this->tm->conn, "PLAY");
-  gchar *msg = wait ();
-  g_message ("Response: %s", msg);
-  g_free (msg);
+  dbus_g_proxy_call (this->tm->proxy, "Play", NULL,
+		     G_TYPE_INVALID, G_TYPE_INVALID);
 
   return NS_OK;
 }
@@ -97,11 +73,8 @@ totemMozillaObject::Rewind ()
     return NS_ERROR_FAILURE;
 
   g_message ("stop");
-
-  bacon_message_connection_send (this->tm->conn, "STOP");
-  gchar *msg = wait ();
-  g_message ("Response: %s", msg);
-  g_free (msg);
+  dbus_g_proxy_call (this->tm->proxy, "Stop", NULL,
+		     G_TYPE_INVALID, G_TYPE_INVALID);
 
   return NS_OK;
 }
@@ -113,11 +86,8 @@ totemMozillaObject::Stop ()
     return NS_ERROR_FAILURE;
 
   g_message ("pause");
-
-  bacon_message_connection_send (this->tm->conn, "PAUSE");
-  gchar *msg = wait ();
-  g_message ("Response: %s", msg);
-  g_free (msg);
+  dbus_g_proxy_call (this->tm->proxy, "Pause", NULL,
+		     G_TYPE_INVALID, G_TYPE_INVALID);
 
   return NS_OK;
 }

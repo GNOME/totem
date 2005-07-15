@@ -22,6 +22,7 @@
 #ifndef __TOTEM_MOZILLA_SCRIPTABLE_H__
 #define __TOTEM_MOZILLA_SCRIPTABLE_H__
 
+#include <dbus/dbus-glib.h>
 #include "bacon-message-connection.h"
 #include "totem_mozilla_scripting.h"
 #include "nsIClassInfo.h"
@@ -37,8 +38,10 @@ typedef struct {
 
         char *src, *href;
         int width, height;
-	BaconMessageConnection *conn;
-	gchar *last_msg;
+	DBusGConnection *conn;
+	DBusGProxy *proxy;
+	char *wait_for_svc;
+	gboolean got_svc;
         int send_fd;
         int player_pid;
         gboolean controller_hidden;
@@ -81,8 +84,6 @@ public:
   totemMozillaObject (TotemPlugin *tm);
   ~totemMozillaObject ();
   void invalidatePlugin ();
-
-  gchar *wait ();
 
 protected:
   TotemPlugin *tm;

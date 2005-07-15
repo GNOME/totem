@@ -1,3 +1,20 @@
+2005-07-15  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/totem-mozilla-interface.xml:
+	* src/totem-mozilla-plugin.cpp:
+	* src/totem-mozilla-scriptable.cpp:
+	* src/totem-mozilla-scriptable.h:
+	* src/totem-mozilla-viewer.c: (totem_embedded_class_init),
+	(totem_embedded_init), (totem_embedded_play),
+	(totem_embedded_pause), (totem_embedded_stop), (on_play_pause),
+	(on_got_redirect), (on_video_button_press_event), (main):
+	  Use DBus for plugin<->helper communication, with nice function
+	  interfaces so it's all easy (no more totemMozillaObject::wait()),
+	  add some better error handling if the backend is not available
+	  or suddenly dies for no good reason. Fixes #172591 and #310016.
+
 2005-07-15  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-scrsaver.c: (totem_scrsaver_init): man, does X suck, we

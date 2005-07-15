@@ -239,6 +239,16 @@ if test "x$ENABLE_MOZILLA" = "xyes" ; then
 	AC_SUBST([MOZILLA_CFLAGS])
 	AC_SUBST([MOZILLA_LIBS])
 fi
+if test "x$ENABLE_MOZILLA" = "xyes" ; then
+	PKG_CHECK_MODULES([DBUS], [dbus-glib-1 >= 0.35],,[ENABLE_MOZILLA=no])
+	DBUSLIBDIR="`$PKG_CONFIG dbus-glib-1 --variable=libdir`"
+	DBUSBINDIR="`echo $DBUSLIBDIR | sed -e s/lib/bin/`"
+	AC_PATH_PROG([DBUS_BIND], [dbus-binding-tool], [no], [$DBUSBINDIR:$PATH])
+	if test "x$DBUS_BIND" = "xno"; then
+		AC_MSG_WARN([dbus-binding-tool not found])
+		ENABLE_MOZILLA=no
+	fi
+fi
 
 dnl Sets some variables, and check for xpidl
 if test "x$ENABLE_MOZILLA" = "xyes" ; then

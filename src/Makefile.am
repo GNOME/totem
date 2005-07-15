@@ -123,7 +123,8 @@ if HAVE_MOZILLA
 
 BUILT_SOURCES = \
 	totem_mozilla_scripting.h \
-	libtotem_mozilla.xpt
+	libtotem_mozilla.xpt \
+	totem-mozilla-interface.h
 
 totem_mozilla_scripting.h: totem_mozilla_scripting.idl
 	$(MOZILLA_XPIDL) -m header -I $(MOZILLA_IDLDIR) $<
@@ -136,7 +137,7 @@ typelib_DATA = libtotem_mozilla.xpt
 typelibdir = $(MOZILLA_PLUGINDIR)/plugins
 
 libtotem_mozilla_la_LDFLAGS = \
-	$(MOZILLA_LIBS) $(module_flags)
+	$(DBUS_LIBS) $(MOZILLA_LIBS) $(module_flags)
 libtotem_mozilla_la_SOURCES = \
 	totem-mozilla-plugin.cpp \
 	totem_mozilla_scripting.h \
@@ -146,14 +147,18 @@ libtotem_mozilla_la_SOURCES = \
 libtotem_mozilla_la_LIBADD = \
 	libbaconmessageconnection.la
 
+totem-mozilla-interface.h: totem-mozilla-interface.xml
+	$(DBUS_BIND) --prefix=totem_embedded --mode=glib-server \
+		--output=totem-mozilla-interface.h $<
+
 totem_mozilla_viewer_SOURCES = 		\
 	totem-mozilla-viewer.c		\
 	totem-mozilla-options.h		\
 	totem-volume.c totem-volume.h
 totem_mozilla_viewer_LDADD = \
 	$(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) \
-	$(NVTV_LIBS) backend/libbaconvideowidget.la libbaconpropertiespage.la \
-	libbaconmessageconnection.la
+	$(DBUS_LIBS) $(NVTV_LIBS) \
+	backend/libbaconvideowidget.la libbaconpropertiespage.la
 
 module_flags = -export_dynamic -avoid-version
 
@@ -191,6 +196,7 @@ INCLUDES = 						\
 	-I$(srcdir)/plparse				\
 	-I$(srcdir)/backend				\
 	$(EXTRA_GNOME_CFLAGS)				\
+	$(DBUS_CFLAGS)					\
 	$(MOZILLA_CFLAGS)				\
 	$(MOZILLA_XPCOM_CFLAGS)				\
 	$(NVTV_CFLAGS)					\
@@ -209,5 +215,5 @@ EXTRA_DIST = \
 	totem-mozilla-plugin.cpp \
 	totem_mozilla_scripting.idl \
 	totem-mozilla-scriptable.cpp \
-	totem-mozilla-scriptable.h
-
+	totem-mozilla-scriptable.h \
+	totem-mozilla-interface.xml

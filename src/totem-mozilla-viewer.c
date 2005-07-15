@@ -27,7 +27,10 @@
 #include <gdk/gdkx.h>
 #include <glade/glade.h>
 
-#include "bacon-message-connection.h"
+#include <dbus/dbus-glib.h>
+#include <sys/types.h>
+#include <unistd.h>
+
 #include "bacon-video-widget.h"
 #include "totem-interface.h"
 #include "totem-mozilla-options.h"
@@ -39,15 +42,17 @@ GtkWidget *totem_volume_create (void);
 
 #define OPTION_IS(x) (strcmp(argv[i], x) == 0)
 
-typedef struct TotemEmbedded TotemEmbedded;
-
 typedef enum {
 	STATE_PLAYING,
 	STATE_PAUSED,
 	STATE_STOPPED
 } TotemStates;
 
-struct TotemEmbedded {
+#define TOTEM_TYPE_EMBEDDED (totem_embedded_get_type ())
+typedef GObjectClass TotemEmbeddedClass;
+typedef struct _TotemEmbedded {
+	GObject parent;
+
 	GtkWidget *window;
 	GladeXML *menuxml, *xml;
 	GtkWidget *about;
@@ -65,10 +70,16 @@ struct TotemEmbedded {
 
 	/* XEmbed */
 	gboolean embedded_done;
+} TotemEmbedded;
+G_DEFINE_TYPE (TotemEmbedded, totem_embedded, G_TYPE_OBJECT);
+static void totem_embedded_class_init (TotemEmbeddedClass *klass) { }
+static void totem_embedded_init (TotemEmbedded *emb) { }
 
-	/* getting messages from the parent process */
-	BaconMessageConnection *conn;
-};
+gboolean totem_embedded_play (TotemEmbedded *emb, GError **err);
+gboolean totem_embedded_pause (TotemEmbedded *emb, GError **err);
+gboolean totem_embedded_stop (TotemEmbedded *emb, GError **err);
+
+#include "totem-mozilla-interface.h"
 
 static void
 totem_embedded_exit (TotemEmbedded *emb)
@@ -166,18 +177,28 @@ totem_embedded_open (TotemEmbedded *emb)
 	return retval;
 }
 
-static void
-totem_embedded_play (TotemEmbedded *emb)
+gboolean
+totem_embedded_play (TotemEmbedded *emb, GError **err)
 {
 	if (bacon_video_widget_play (emb->bvw, NULL))
 		totem_embedded_set_state (emb, STATE_PLAYING);
+	return TRUE;
 }
 
-static void
-totem_embedded_pause (TotemEmbedded *emb)
+gboolean
+totem_embedded_pause (TotemEmbedded *emb, GError **err)
 {
 	bacon_video_widget_pause (emb->bvw);
 	totem_embedded_set_state (emb, STATE_PAUSED);
+	return TRUE;
+}
+
+gboolean
+totem_embedded_stop (TotemEmbedded *emb, GError **err)
+{
+	bacon_video_widget_stop (emb->bvw);
+	totem_embedded_set_state (emb, STATE_STOPPED);
+	return TRUE;
 }
 
 static void
@@ -238,9 +259,9 @@ static void
 on_play_pause (GtkWidget *widget, TotemEmbedded *emb)
 {
 	if (emb->state == STATE_PLAYING) {
-		totem_embedded_pause (emb);
+		totem_embedded_pause (emb, NULL);
 	} else {
-		totem_embedded_play (emb);
+		totem_embedded_play (emb, NULL);
 	}
 }
 
@@ -269,7 +290,7 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 	totem_embedded_set_state (emb, STATE_STOPPED);
 
 	if (totem_embedded_open (emb) != FALSE)
-		totem_embedded_play (emb);
+		totem_embedded_play (emb, NULL);
 g_print ("open result\n");
 }
 
@@ -295,7 +316,7 @@ on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 
 
 		if (totem_embedded_open (emb) != FALSE)
-			totem_embedded_play (emb);
+			totem_embedded_play (emb, NULL);
 
 		return TRUE;
 	} else if (event->button == 3 && event->type == GDK_BUTTON_PRESS) {
@@ -437,47 +458,6 @@ static void embedded (GtkPlug *plug, TotemEmbedded *emb)
 	emb->embedded_done = TRUE;
 }
 
-static void
-cb_data (const char * msg, gpointer user_data)
-{
-	TotemEmbedded *emb = user_data;
-	GError *err = NULL;
-	gboolean res = TRUE;
-	TotemStates state;
-
-	g_print ("Got message: %s\n", msg);
-
-	state = STATE_STOPPED;
-
-	if (!strcmp (msg, "PLAY")) {
-		res = bacon_video_widget_play (emb->bvw, &err);
-		if (res != FALSE)
-			state = STATE_PLAYING;
-	} else if (!strcmp (msg, "PAUSE")) {
-		bacon_video_widget_pause (emb->bvw);
-		state = STATE_PAUSED;
-	} else if (!strcmp (msg, "STOP")) {
-		bacon_video_widget_stop (emb->bvw);
-		state = STATE_STOPPED;
-	} else {
-		g_set_error (&err, 0, 0, _("Unknown command"));
-		res = FALSE;
-	}
-
-	if (res) {
-		bacon_message_connection_send (emb->conn, "OK");
-	} else {
-		gchar *err_str;
-
-		err_str = g_strdup_printf ("ERROR: %s",
-			   err ? err->message : _("Programming error"));
-		bacon_message_connection_send (emb->conn, err_str);
-		g_free (err_str);
-	}
-
-	totem_embedded_set_state (emb, state);
-}
-
 GtkWidget *
 totem_volume_create (void)
 {
@@ -492,17 +472,13 @@ totem_volume_create (void)
 int main (int argc, char **argv)
 {
 	TotemEmbedded *emb;
+	DBusGProxy *proxy;
+	DBusGConnection *conn;
 	int i;
+	guint res;
 	Window xid;
-
-	emb = g_new0 (TotemEmbedded, 1);
-	emb->width = emb->height = -1;
-	emb->state = STATE_STOPPED;
-	emb->conn = bacon_message_connection_new ("totem-mozilla");
-	if (!emb->conn)
-		return 1;
-	bacon_message_connection_set_callback (emb->conn, cb_data, emb);
-	bacon_message_connection_send (emb->conn, "STARTUP OK");
+	gchar *svcname;
+	GError *e = NULL;
 
 	if (XInitThreads () == 0)
 	{
@@ -515,6 +491,31 @@ int main (int argc, char **argv)
 	//gdk_threads_init ();
 
 	gtk_init (&argc, &argv);
+	dbus_g_object_type_install_info (TOTEM_TYPE_EMBEDDED,
+		&dbus_glib_totem_embedded_object_info);
+	svcname = g_strdup_printf ("org.totem_%d.MozillaPluginService",
+				   getpid());
+	if (!(conn = dbus_g_bus_get (DBUS_BUS_SESSION, &e)) ||
+	    !(proxy = dbus_g_proxy_new_for_name (conn, "org.freedesktop.DBus",
+						 "/org/freedesktop/DBus",
+						 "org.freedesktop.DBus")) ||
+	    !dbus_g_proxy_call (proxy, "RequestName", &e,
+			G_TYPE_STRING, svcname,
+			G_TYPE_UINT, DBUS_NAME_FLAG_PROHIBIT_REPLACEMENT,
+			G_TYPE_INVALID,
+			G_TYPE_UINT, &res,
+			G_TYPE_INVALID)) {
+		g_print ("Failed to get DBUS connection for %s: %s\n",
+			 svcname, e->message);
+		return 1;
+	}
+	g_free (svcname);
+
+	emb = g_object_new (TOTEM_TYPE_EMBEDDED, NULL);
+	emb->width = emb->height = -1;
+	emb->state = STATE_STOPPED;
+	dbus_g_connection_register_g_object (conn, "/TotemEmbedded",
+					     G_OBJECT (emb));
 
 	g_print ("CMD line: ");
 	for (i = 0; i < argc; i++) {
@@ -587,7 +588,7 @@ int main (int argc, char **argv)
 	}
 
 	if (totem_embedded_open (emb) != FALSE)
-		totem_embedded_play (emb);
+		totem_embedded_play (emb, NULL);
 
 	gtk_main ();
 

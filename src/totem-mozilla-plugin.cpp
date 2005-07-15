@@ -53,11 +53,24 @@
 
 static NPNetscapeFuncs mozilla_functions;
 
+static void
+cb_update_name (DBusGProxy *proxy, char *svc, char *old_owner,
+		char *new_owner, TotemPlugin *plugin)
+{
+	g_print ("Received notification for %s\n", svc);
+	if (strcmp (svc, plugin->wait_for_svc) == 0) {
+		plugin->got_svc = TRUE;
+	}
+}
+
 /* You don't update, you die! */
 #define MAX_ARGV_LEN 14
 
-static void totem_plugin_fork (TotemPlugin *plugin)
+static gboolean
+ totem_plugin_fork (TotemPlugin *plugin)
 {
+	GTimeVal then, now;
+	char *svcname;
 	char **argv;
 	int argc = 0;
 	GError *err = NULL;
@@ -117,24 +130,61 @@ static void totem_plugin_fork (TotemPlugin *plugin)
 	{
 		DEBUG("Spawn failed");
 
-		if(err)
+		if (err)
 		{
 			fprintf(stderr, "%s\n", err->message);
 			g_error_free(err);
 		}
+
+		g_strfreev (argv);
+		return FALSE;
 	}
 
 	g_strfreev (argv);
-}
 
-static void
-cb_data (const gchar * msg, gpointer user_data)
-{
-	TotemPlugin *plugin = (TotemPlugin *) user_data;
+	/* now wait until startup is complete */
+	plugin->got_svc = FALSE;
+	plugin->wait_for_svc =
+		g_strdup_printf ("org.totem_%d.MozillaPluginService",
+				 plugin->player_pid);
+	g_print ("waiting for signal %s\n", plugin->wait_for_svc);
+	dbus_g_proxy_add_signal (plugin->proxy, "NameOwnerChanged",
+				 G_TYPE_STRING, G_TYPE_STRING,
+				 G_TYPE_STRING, G_TYPE_INVALID);
+	dbus_g_proxy_connect_signal (plugin->proxy, "NameOwnerChanged",
+				     G_CALLBACK (cb_update_name),
+				     plugin, NULL);
+	g_get_current_time (&then);
+	do {
+		g_main_context_iteration (NULL, TRUE);
+		g_get_current_time (&now);
+	} while (!plugin->got_svc &&
+		 ((guint64) now.tv_sec * 1000000 + now.tv_usec <=
+		  (guint64) (then.tv_sec + 5) * 1000000 + then.tv_usec));
+	dbus_g_proxy_disconnect_signal (plugin->proxy, "NameOwnerChanged",
+					G_CALLBACK (cb_update_name), plugin);
+	if (!plugin->got_svc) {
+		fprintf (stderr, "Failed to receive DBUS interface response\n");
+		g_free (plugin->wait_for_svc);
 
-	g_free (plugin->last_msg);
-	plugin->last_msg = g_strdup (msg);
-	g_print ("Read msg '%s'\n", msg);
+		if (plugin->player_pid) {
+			kill (plugin->player_pid, SIGKILL);
+			waitpid (plugin->player_pid, NULL, 0);
+			plugin->player_pid = 0;
+		}
+		return FALSE;
+	}
+	g_object_unref (plugin->proxy);
+
+	/* now get the proxy for the player functions */
+	plugin->proxy =
+		dbus_g_proxy_new_for_name (plugin->conn, plugin->wait_for_svc,
+					   "/TotemEmbedded",
+					   "org.totem.MozillaPluginInterface");
+	g_free (plugin->wait_for_svc);
+	g_print ("Done forking, new proxy=%p\n", plugin->proxy);
+
+	return TRUE;
 }
 
 static char *
@@ -157,6 +207,7 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 		NPSavedData *saved)
 {
 	TotemPlugin *plugin;
+	GError *e = NULL;
 	int i;
 
 	DEBUG("totem_plugin_new_instance");
@@ -176,13 +227,23 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 		mozilla_functions.memfree (plugin);
 		return NPERR_OUT_OF_MEMORY_ERROR;
 	}
-	plugin->conn = bacon_message_connection_new ("totem-mozilla");
-	if (!plugin->conn) {
+	if (!(plugin->conn = dbus_g_bus_get (DBUS_BUS_SESSION, &e))) {
+		printf ("Failed to open DBUS session: %s\n", e->message);
+		g_error_free (e);
+		delete plugin->iface;
+		mozilla_functions.memfree (plugin);
+		return NPERR_OUT_OF_MEMORY_ERROR;
+	} else if (!(plugin->proxy = dbus_g_proxy_new_for_name (plugin->conn,
+					"org.freedesktop.DBus",
+					"/org/freedesktop/DBus",
+					"org.freedesktop.DBus"))) {
+		printf ("Failed to open DBUS proxy: %s\n", e->message);
+		g_error_free (e);
+		g_object_unref (G_OBJECT (plugin->conn));
 		delete plugin->iface;
 		mozilla_functions.memfree (plugin);
 		return NPERR_OUT_OF_MEMORY_ERROR;
 	}
-	bacon_message_connection_set_callback (plugin->conn, cb_data, plugin);
 	//NS_ADDREF (plugin->iface);
 
 	/* mode is NP_EMBED, NP_FULL, or NP_BACKGROUND (see npapi.h) */
@@ -268,8 +329,8 @@ static NPError totem_plugin_destroy_instance (NPP instance, NPSavedData **save)
 		waitpid (plugin->player_pid, NULL, 0);
 	}
 
-	bacon_message_connection_free (plugin->conn);
-	g_free (plugin->last_msg);
+	g_object_unref (G_OBJECT (plugin->proxy));
+	//g_object_unref (G_OBJECT (plugin->conn));
 	mozilla_functions.memfree (instance->pdata);
 	instance->pdata = NULL;
 
@@ -305,8 +366,8 @@ static NPError totem_plugin_set_window (NPP instance, NPWindow* window)
 		DEBUG("about to fork");
 
 		plugin->window = (Window) window->window;
-		totem_plugin_fork (plugin);
-                msg = plugin->iface->wait ();
+		if (!totem_plugin_fork (plugin))
+			NPERR_GENERIC_ERROR;
 
 		if (plugin->send_fd > 0)
 			fcntl(plugin->send_fd, F_SETFL, O_NONBLOCK);
@@ -376,24 +437,23 @@ static int32 totem_plugin_write (NPP instance, NPStream *stream, int32 offset,
 	DEBUG("plugin_write");
 
 	if (instance == NULL)
-		return 0;
+		return -1;
 
 	plugin = (TotemPlugin *) instance->pdata;
 
 	if (plugin == NULL)
-		return 0;
+		return -1;
 
 	if (!plugin->player_pid)
-		return 0;
+		return -1;
 
 	if (plugin->send_fd < 0)
-		return 0;
+		return -1;
 
 //	g_message ("write %d %p %d", plugin->send_fd, buffer, len);
 	ret = write (plugin->send_fd, buffer, len);
 	if (ret < 0) {
 		g_message ("ret %d", ret);
-		ret = 0;
 	}
 
 	return ret;
