@@ -1858,7 +1858,6 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **gerro
   gst_element_seek (bvw->priv->play, GST_SEEK_METHOD_SET |
 		    GST_SEEK_FLAG_FLUSH | GST_FORMAT_TIME,
 		    time * GST_MSECOND);
-  GST_PIPELINE (bvw->priv->play)->stream_time = time * GST_MSECOND;
   bvw->priv->cache_errors = FALSE;
 
   if (was_playing)
