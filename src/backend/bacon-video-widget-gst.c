@@ -2999,8 +2999,8 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
       integer = bacon_video_widget_get_stream_length (bvw) / 1000;
       break;
     case BVW_INFO_TRACK_NUMBER:
-      if (!gst_tag_list_get_int (bvw->priv->tagcache,
-				 GST_TAG_TRACK_NUMBER, &integer))
+      if (!gst_tag_list_get_uint (bvw->priv->tagcache,
+				  GST_TAG_TRACK_NUMBER, &integer))
         integer = 0;
       break;
     case BVW_INFO_DIMENSION_X:
