@@ -36,9 +36,6 @@
 #include <nvtv_simple.h>
 #endif 
 
-/* gstgconf */
-#include <gst/gconf/gconf.h>
-
 /* GStreamer Interfaces */
 #include <gst/interfaces/xoverlay.h>
 #include <gst/interfaces/navigation.h>
@@ -3234,7 +3231,7 @@ bacon_video_widget_new (int width, int height,
   if (type == BVW_USE_TYPE_VIDEO || type == BVW_USE_TYPE_AUDIO) {
     GstPad *pad;
 
-    audio_sink = gst_gconf_get_default_audio_sink ();
+    audio_sink = gst_element_factory_make ("gconfaudiosink", "audio-sink");
     if (!GST_IS_ELEMENT (audio_sink)) {
       g_set_error (err, 0, 0,
 		   _("Failed to retrieve a video output - please run gstreamer-properties"));
@@ -3261,7 +3258,7 @@ bacon_video_widget_new (int width, int height,
   }
 
   if (type == BVW_USE_TYPE_VIDEO) {
-    video_sink = gst_gconf_get_default_video_sink ();
+    video_sink = gst_element_factory_make ("gconfvideosink", "video-sink");
     if (!GST_IS_ELEMENT (video_sink)) {
       g_set_error (err, 0, 0,
 		   _("Failed to retrieve a audio output - please run gstreamer-properties"));

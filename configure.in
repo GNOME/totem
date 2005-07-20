@@ -78,10 +78,10 @@ if test x$HAVE_XINE = xno; then
 	GST_MAJORMINOR=0.9
 	PKG_CHECK_MODULES(GST, \
 			gstreamer-$GST_MAJORMINOR >= $GST_REQS \
-			gstreamer-gconf-$GST_MAJORMINOR >= $GSTPLUG_REQS \
+			gconf-2.0 \
 			gstreamer-plugins-base-$GST_MAJORMINOR >= $GSTPLUG_REQS,
 			HAVE_GSTREAMER=yes, HAVE_GSTREAMER=no)
-	MM="gstreamer-$GST_MAJORMINOR >= $GST_REQS gstreamer-gconf-$GST_MAJORMINOR >= $GSTPLUG_REQS gstreamer-plugins-base-$GST_MAJORMINOR >= $GSTPLUG_REQS"
+	MM="gstreamer-$GST_MAJORMINOR >= $GST_REQS gconf-2.0 gstreamer-plugins-base-$GST_MAJORMINOR >= $GSTPLUG_REQS"
 
 dnl Give error and exit if we don't have gstreamer
 	if test "x$HAVE_GSTREAMER" = "xno"; then
