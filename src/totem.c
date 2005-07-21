@@ -546,18 +546,12 @@ totem_action_fullscreen_toggle (Totem *totem)
 			totem->controls_visibility = TOTEM_CONTROLS_HIDDEN;
 			show_controls (totem, TRUE);
 		}
-
-		if (totem_sidebar_is_visible (totem) != FALSE)
-			gtk_widget_show (totem->sidebar);
-		else
-			gtk_widget_hide (totem->sidebar);
 	} else {
 		totem_action_save_size (totem);
 		update_fullscreen_size (totem);
 		bacon_video_widget_set_fullscreen (totem->bvw, TRUE);
 		bacon_video_widget_set_show_cursor (totem->bvw, FALSE);
 		gtk_window_fullscreen (GTK_WINDOW(totem->win));
-		gtk_widget_hide (totem->sidebar);
 
 		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
 			totem_scrsaver_disable (totem->scr);
@@ -1859,6 +1853,11 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 		gtk_widget_show (menubar);
 		gtk_widget_show (controlbar);
 		gtk_widget_show (statusbar);
+		if (totem_sidebar_is_visible (totem) != FALSE)
+			gtk_widget_show (totem->sidebar);
+		else
+			gtk_widget_hide (totem->sidebar);
+
 		gtk_widget_hide (item);
 		gtk_container_set_border_width (GTK_CONTAINER (bvw_vbox),
 				BVW_VBOX_BORDER_WIDTH);
@@ -1878,6 +1877,7 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 		gtk_widget_hide (menubar);
 		gtk_widget_hide (controlbar);
 		gtk_widget_hide (statusbar);
+		gtk_widget_hide (totem->sidebar);
 
 		 /* We won't show controls in fullscreen */
 		if (totem_is_fullscreen (totem) != FALSE)
