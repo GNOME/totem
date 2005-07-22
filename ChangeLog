@@ -1,5 +1,10 @@
 2005-07-22  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
+	* src/totem-volume.c: (totem_volume_button_new):
+	  Manually call callback once so icon is always drawn (#310806).
+
+2005-07-22  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
 	* src/totem-volume.c: (totem_volume_button_press):
 	  Fix placement of the popup and coordinates of the generated event
 	  for the click on the slider afterwards (#310260).

@@ -60,6 +60,7 @@ static gboolean cb_button_press			(GtkWidget      * widget,
 static gboolean cb_button_release		(GtkWidget      * widget,
 						 GdkEventButton * event,
 						 gpointer         data);
+static void	totem_volume_scale_value_changed(GtkRange       * range);
 
 /* see below for scale definitions */
 static GtkWidget *totem_volume_scale_new	(TotemVolumeButton * button,
@@ -209,6 +210,9 @@ totem_volume_button_new (float min, float max,
   g_signal_connect (button->min, "button-release-event",
 		    G_CALLBACK (cb_button_release), button);
   gtk_box_pack_start (GTK_BOX (box), button->min, TRUE, FALSE, 0);
+
+  /* call callback once so original icon is drawn */
+  totem_volume_scale_value_changed (GTK_RANGE (button->scale));
 
   return GTK_WIDGET (button);
 }
@@ -461,7 +465,6 @@ static gboolean	totem_volume_scale_press	 (GtkWidget      * widget,
 						  GdkEventButton * event);
 static gboolean totem_volume_scale_release	 (GtkWidget      * widget,
 						  GdkEventButton * event);
-static void	totem_volume_scale_value_changed (GtkRange      * range);
 
 static GtkVScaleClass *scale_parent_class = NULL;
 
