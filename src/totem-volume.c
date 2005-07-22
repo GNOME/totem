@@ -266,7 +266,7 @@ totem_volume_button_press (GtkWidget      * widget,
 {
   TotemVolumeButton *button = TOTEM_VOLUME_BUTTON (widget);
   GtkAdjustment *adj = gtk_range_get_adjustment (GTK_RANGE (button->scale));
-  gint x, y, m, dx, dy, sx, sy, ystartoff;
+  gint x, y, m, dx, dy, sx, sy, ystartoff, mouse_y;
   float v;
   GdkEventButton *e;
 
@@ -279,17 +279,20 @@ totem_volume_button_press (GtkWidget      * widget,
   gdk_window_get_origin (button->scale->window, &sx, &sy);
   sy += button->scale->allocation.y;
   ystartoff = sy - dy;
+  mouse_y = event->y;
   button->timeout = TRUE;
 
   /* position (needs widget to be shown already) */
-  v = lrintf (totem_volume_button_get_value (button));
+  v = totem_volume_button_get_value (button) / (adj->upper - adj->lower);
   x += widget->allocation.x;
   x += (widget->allocation.width - button->dock->allocation.width) / 2;
   y += widget->allocation.y;
   y -= ystartoff;
-  m = button->scale->allocation.height - widget->allocation.height;
-  y -= m;
-  y += m * v / adj->upper;
+  y -= GTK_RANGE (button->scale)->min_slider_size / 2;
+  m = button->scale->allocation.height -
+      GTK_RANGE (button->scale)->min_slider_size;
+  y -= m * (1.0 - v);
+  y += mouse_y;
   gtk_window_move (GTK_WINDOW (button->dock), x, y);
   gdk_window_get_origin (button->scale->window, &sx, &sy);
 
@@ -306,10 +309,15 @@ totem_volume_button_press (GtkWidget      * widget,
   /* forward event to the slider */
   e = (GdkEventButton *) gdk_event_copy ((GdkEvent *) event);
   e->window = button->scale->window;
+
+  /* position: the X position isn't relevant, halfway will work just fine.
+   * The vertical position should be *exactly* in the middle of the slider
+   * of the scale; if we don't do that correctly, it'll move from its current
+   * position, which means a position change on-click, which is bad. */
   e->x = button->scale->allocation.width / 2;
-  /* FIXME: those magic numbers are numbers in the GtkScaleClass */
-  e->y = ((10 + (80 - v * 0.8)) / SCALE_SIZE) *
-      button->scale->allocation.height;
+  m = button->scale->allocation.height -
+      GTK_RANGE (button->scale)->min_slider_size;
+  e->y = ((1.0 - v) * m) + GTK_RANGE (button->scale)->min_slider_size / 2;
   gtk_widget_event (button->scale, (GdkEvent *) e);
   e->window = event->window;
   gdk_event_free ((GdkEvent *) e);
