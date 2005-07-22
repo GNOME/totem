@@ -251,11 +251,11 @@ totem_volume_button_scroll (GtkWidget      * widget,
 
   d = totem_volume_button_get_value (button);
   if (event->direction == GDK_SCROLL_UP) {
-    d += 5;
+    d += adj->step_increment;
     if (d > adj->upper)
       d = adj->upper;
   } else {
-    d -= 5;
+    d -= adj->step_increment;
     if (d < adj->lower)
       d = adj->lower;
   }
@@ -574,7 +574,7 @@ totem_volume_scale_value_changed (GtkRange * range)
   TotemVolumeScale *scale = TOTEM_VOLUME_SCALE (range);
   TotemVolumeButton *button = scale->button;
   GtkAdjustment *adj = gtk_range_get_adjustment (GTK_RANGE (button->scale));
-  int step = adj->upper / 4;
+  float step = (adj->upper - adj->lower) / 4;
   float val = gtk_range_get_value (range);
 #ifdef HAVE_GTK_ONLY
   char *s;
@@ -587,11 +587,13 @@ totem_volume_scale_value_changed (GtkRange * range)
   const char *s;
   GdkPixbuf *buf;
 
-  if (val >= 0 && val < step)
+  if (val == adj->lower)
+    s = "stock_volume-mute";
+  else if (val > adj->lower && val <= adj->lower + step)
     s = "stock_volume-0";
-  else if (val >= step && val < step * 2)
+  else if (val > adj->lower + step && val <= adj->lower + step * 2)
     s = "stock_volume-min";
-  else if (val >= step * 2 && val < step * 3)
+  else if (val > adj->lower + step * 2 && val <= adj->lower + step * 3)
     s = "stock_volume-med";
   else
     s = "stock_volume-max";

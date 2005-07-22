@@ -1,5 +1,12 @@
 2005-07-22  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
+	* src/totem-volume.c: (totem_volume_button_scroll),
+	(totem_volume_scale_value_changed):
+	  Work with any step/page_increment and with adj->lower != 0, which
+	  should make it more generally usable, and fixes #310810.
+
+2005-07-22  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
 	* src/totem-volume.c: (totem_volume_button_new):
 	  Manually call callback once so icon is always drawn (#310806).
 
