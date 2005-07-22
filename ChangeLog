@@ -1,3 +1,10 @@
+2005-07-22  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/totem-mozilla-plugin.cpp:
+	* src/totem-mozilla-scriptable.h:
+	  Be sure to still exist after each mainloop iteration. If not, get
+	  out ASAP so we don't crash. Fixes #310480.
+
 2005-07-22  Bastien Nocera  <hadess@hadess.net>
 
 	* src/ev-sidebar.c: (ev_sidebar_select_button_press_cb): make the

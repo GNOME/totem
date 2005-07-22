@@ -67,13 +67,14 @@ cb_update_name (DBusGProxy *proxy, char *svc, char *old_owner,
 #define MAX_ARGV_LEN 14
 
 static gboolean
- totem_plugin_fork (TotemPlugin *plugin)
+totem_plugin_fork (TotemPlugin *plugin)
 {
 	GTimeVal then, now;
 	char *svcname;
 	char **argv;
 	int argc = 0;
 	GError *err = NULL;
+	totemMozillaObject *iface = plugin->iface;
 
 	argv = (char **)g_new0 (char *, MAX_ARGV_LEN);
 
@@ -155,12 +156,20 @@ static gboolean
 				     G_CALLBACK (cb_update_name),
 				     plugin, NULL);
 	g_get_current_time (&then);
+	NS_ADDREF (iface);
 	do {
 		g_main_context_iteration (NULL, TRUE);
 		g_get_current_time (&now);
-	} while (!plugin->got_svc &&
+	} while (iface->tm != NULL && !plugin->got_svc &&
 		 ((guint64) now.tv_sec * 1000000 + now.tv_usec <=
 		  (guint64) (then.tv_sec + 5) * 1000000 + then.tv_usec));
+	if (!iface->tm) {
+		/* we were destroyed in one of the iterations of the
+		 * mainloop, get out ASAP */
+		NS_RELEASE (iface);
+		return FALSE;
+	}
+	NS_RELEASE (iface);
 	dbus_g_proxy_disconnect_signal (plugin->proxy, "NameOwnerChanged",
 					G_CALLBACK (cb_update_name), plugin);
 	if (!plugin->got_svc) {
@@ -367,7 +376,7 @@ static NPError totem_plugin_set_window (NPP instance, NPWindow* window)
 
 		plugin->window = (Window) window->window;
 		if (!totem_plugin_fork (plugin))
-			NPERR_GENERIC_ERROR;
+			return NPERR_GENERIC_ERROR;
 
 		if (plugin->send_fd > 0)
 			fcntl(plugin->send_fd, F_SETFL, O_NONBLOCK);

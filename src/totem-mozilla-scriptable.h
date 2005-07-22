@@ -85,7 +85,6 @@ public:
   ~totemMozillaObject ();
   void invalidatePlugin ();
 
-protected:
   TotemPlugin *tm;
 };
 
