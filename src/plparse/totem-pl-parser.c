@@ -836,8 +836,8 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
 }
 
 static TotemPlParserResult
-totem_pl_parser_add_asf_parser (TotemPlParser *parser, const char *url,
-		gpointer data)
+totem_pl_parser_add_asf_reference_parser (TotemPlParser *parser,
+		const char *url, gpointer data)
 {
 	gboolean retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 	char *contents, **lines, *ref, *split_char;
@@ -862,7 +862,7 @@ totem_pl_parser_add_asf_parser (TotemPlParser *parser, const char *url,
 		return totem_pl_parser_add_asx (parser, url, data);
 	}
 
-	/* change http to mms, thanks Microsoft */
+	/* change http to mmsh, thanks Microsoft */
 	if (g_str_has_prefix (ref, "http") != FALSE)
 		memcpy(ref, "mmsh", 4);
 
@@ -872,6 +872,38 @@ totem_pl_parser_add_asf_parser (TotemPlParser *parser, const char *url,
 
 	g_strfreev (lines);
 
+	return retval;
+}
+
+static TotemPlParserResult
+totem_pl_parser_add_asf_parser (TotemPlParser *parser,
+		const char *url, gpointer data)
+{
+	gboolean retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
+	char *contents, *ref;
+	int size;
+
+	if (g_str_has_prefix (data, "ASF ") == FALSE) {
+		return totem_pl_parser_add_asf_reference_parser (parser, url, data);
+	}
+
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+
+	if (size <= 4) {
+		g_free (contents);
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+	}
+
+	/* Skip 'ASF ' */
+	ref = contents + 4;
+	if (g_str_has_prefix (ref, "http") != FALSE) {
+		memcpy(ref, "mmsh", 4);
+		totem_pl_parser_add_one_url (parser, ref, NULL);
+		retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
+	}
+
+	g_free (contents);
 	return retval;
 }
 
@@ -1261,7 +1293,8 @@ totem_pl_parser_add_asf (TotemPlParser *parser, const char *url, gpointer data)
 	if (data != NULL &&
 		(g_str_has_prefix (data, "[Reference]") == FALSE
 		 && g_ascii_strncasecmp (data, "<ASX", strlen ("<ASX")) != 0
-		 && strstr (data, "<ASX") == NULL)) {
+		 && strstr (data, "<ASX") == NULL)
+		 && g_str_has_prefix (data, "ASF ") == FALSE) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
