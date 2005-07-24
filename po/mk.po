@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-20 14:45+0000\n"
-"PO-Revision-Date: 2005-07-20 21:49+0200\n"
+"POT-Creation-Date: 2005-07-24 14:46+0000\n"
+"PO-Revision-Date: 2005-07-24 21:20+0200\n"
 "Last-Translator: Арангел Ангов <ufo@linux.net.mk>\n"
 "Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Plural-Forms: nplurals=3; plural= n==1 || n%10==1 ? 0 : 1\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural= n==1 || n%10==1 ? 0 : 1\n"
 "X-Generator: KBabel 1.10\n"
 
 #: ../data/playlist.glade.h:1
@@ -179,7 +179,7 @@ msgstr "Фрејмови:"
 msgid "N/A"
 msgstr "N/A"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:2069
+#: ../data/properties.glade.h:17 ../src/totem.c:2018
 msgid "Properties"
 msgstr "Својства"
 
@@ -244,7 +244,7 @@ msgstr "Пушти филмови и песни"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:2 ../data/totem.glade.h:97
-#: ../src/totem.c:672 ../src/totem.c:3440 ../src/totem.c:3457
+#: ../src/totem.c:666 ../src/totem.c:3374 ../src/totem.c:3391
 msgid "Totem Movie Player"
 msgstr "Тотем гледач"
 
@@ -1106,7 +1106,7 @@ msgstr "Тип на сенка"
 msgid "Style of bevel around the statusbar text"
 msgstr "Стил на обвивка околу статусната линија"
 
-#: ../src/totem-statusbar.c:124 ../src/totem.c:254 ../src/totem.c:658
+#: ../src/totem-statusbar.c:124 ../src/totem.c:254 ../src/totem.c:652
 msgid "Stopped"
 msgstr "Запрено"
 
@@ -1141,6 +1141,16 @@ msgstr "Меѓумеморирање"
 msgid "%d %%"
 msgstr "%d %%"
 
+#. +
+#: ../src/totem-volume.c:190
+msgid "+"
+msgstr "+"
+
+#. -
+#: ../src/totem-volume.c:206
+msgid "-"
+msgstr "-"
+
 #: ../src/totem.c:244
 msgid "Playing"
 msgstr "Пушти"
@@ -1153,7 +1163,7 @@ msgstr "Пауза"
 msgid "Totem could not eject the optical media."
 msgstr "Тотем не може да го исфрли оптичкиот медиум."
 
-#: ../src/totem.c:322 ../src/totem.c:349 ../src/totem.c:802 ../src/totem.c:907
+#: ../src/totem.c:322 ../src/totem.c:349 ../src/totem.c:772 ../src/totem.c:876
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Тотем не може да го пушти: %s."
@@ -1193,99 +1203,99 @@ msgstr ""
 "Проверете дали има диск во уредот и дали уредот е соодветно конфигуриран.\n"
 "                        "
 
-#: ../src/totem.c:665
+#: ../src/totem.c:659
 msgid "No File"
 msgstr "Нема датотека"
 
-#: ../src/totem.c:1286 ../src/totem.c:1288
-msgid "An error occured"
+#: ../src/totem.c:1239 ../src/totem.c:1241
+msgid "An error occurred"
 msgstr "Се појави грешка"
 
-#: ../src/totem.c:1594
+#: ../src/totem.c:1537
 msgid "Select Files"
 msgstr "Одберете датотеки"
 
-#: ../src/totem.c:1679
+#: ../src/totem.c:1622
 msgid "Open Location..."
 msgstr "Отвори локација..."
 
-#: ../src/totem.c:1942
+#: ../src/totem.c:1891
 msgid "Totem could not display the help contents."
 msgstr "Тотем не може да ја прикаже помошната содржина."
 
-#: ../src/totem.c:1980
+#: ../src/totem.c:1929
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Пуштачот за филмови користи %s"
 
-#: ../src/totem.c:1984
+#: ../src/totem.c:1933
 msgid "Totem"
 msgstr "Тотем"
 
-#: ../src/totem.c:1986 ../src/vanity.c:261
+#: ../src/totem.c:1935 ../src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Copyright © 2002-2005 Bastien Nocera"
 
-#: ../src/totem.c:1991 ../src/vanity.c:266
+#: ../src/totem.c:1940 ../src/vanity.c:266
 msgid "translator-credits"
 msgstr "Арангел Ангов (ufo@linux.net.mk)"
 
-#: ../src/totem.c:2024 ../src/totem.c:2032 ../src/vanity.c:299
+#: ../src/totem.c:1973 ../src/totem.c:1981 ../src/vanity.c:299
 #: ../src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
 msgstr ""
 "Тотем не може да го сними екранот од овој филм.\n"
 "Причина: %s."
 
-#: ../src/totem.c:2032 ../src/vanity.c:307
+#: ../src/totem.c:1981 ../src/vanity.c:307
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Ова не требаше да се случи; Ве молам поднесете извештај за бубачка."
 
-#: ../src/totem.c:2059
+#: ../src/totem.c:2008
 msgid "Totem couldn't show the movie properties window."
 msgstr "Тотем не може да ги прикаже својствата на филмот."
 
-#: ../src/totem.c:2059
+#: ../src/totem.c:2008
 msgid "Make sure that Totem is correctly installed."
 msgstr "Осигурајте се дека Тотем е инсталиран како што треба."
 
-#: ../src/totem.c:2145
+#: ../src/totem.c:2094
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Тотем не може да мрдне на '%s'."
 
-#: ../src/totem.c:3303
+#: ../src/totem.c:3237
 msgid "Totem could not startup."
 msgstr ""
 "Тотем не може да се подигне.\n"
 "%s"
 
-#: ../src/totem.c:3303
+#: ../src/totem.c:3237
 msgid "No reason."
 msgstr "Без причина"
 
-#: ../src/totem.c:3441
+#: ../src/totem.c:3375
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Не можам да ги иницирам thread-safe библиотеките."
 
-#: ../src/totem.c:3441
+#: ../src/totem.c:3375
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Проверете ја инсталацијата на Вашиот ситем. Тотем сега ќе се исклучи."
 
-#: ../src/totem.c:3464
+#: ../src/totem.c:3398
 msgid "Totem could not initialize the configuration engine."
 msgstr "Тотем не може да ја иницира машината за конфигурација."
 
-#: ../src/totem.c:3464
+#: ../src/totem.c:3398
 msgid "Make sure that GNOME is properly installed."
 msgstr "Проверете ја инсталацијата на Гном."
 
 #. Main window
-#: ../src/totem.c:3491
+#: ../src/totem.c:3425
 msgid "main window"
 msgstr "главен прозорец"
 
-#: ../src/totem.c:3496
+#: ../src/totem.c:3430
 msgid "video popup menu"
 msgstr "скокачко видео мени"
 
@@ -1506,8 +1516,8 @@ msgstr "Филмот не може да биде прочитан."
 
 #: ../src/backend/bacon-video-widget-xine.c:1288
 #, c-format
-msgid "A problem occured while loading a library or a decoder (%s)."
-msgstr "Проблем при вчитување на библиотека или декодер (%s)."
+msgid "A problem occurred while loading a library or a decoder (%s)."
+msgstr "Проблем при вчитување на библиотека или декодерот (%s)."
 
 #: ../src/backend/bacon-video-widget-xine.c:1297
 msgid "This file is encrypted and cannot be played back."
