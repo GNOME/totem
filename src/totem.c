@@ -1215,9 +1215,9 @@ on_error_event (BaconVideoWidget *bvw, char *message,
 		play_pause_set_label (totem, STATE_STOPPED);
 
 	if (fatal == FALSE) {
-		totem_action_error (_("An error occured"), message, totem);
+		totem_action_error (_("An error occurred"), message, totem);
 	} else {
-		totem_action_error_and_exit (_("An error occured"),
+		totem_action_error_and_exit (_("An error occurred"),
 				message, totem);
 	}
 }
