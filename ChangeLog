@@ -1,3 +1,16 @@
+2005-07-24  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst.c:
+	(bacon_video_widget_set_logo):
+	* src/backend/bacon-video-widget-xine.c: (xine_event_message):
+	* src/totem-private.h:
+	* src/totem.c: (totem_action_set_mrl_with_warning),
+	(totem_action_zoom), (on_error_event), (update_seekable),
+	(update_media_menu_items), (update_buttons):
+	Fix "occured" typo (Closes: #311393), shave a bunch of lines
+	off totem.c by using a macro to set the sensitivity of a widget
+	in the GladeXML
+
 2005-07-22  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/totem-pl-parser.c:

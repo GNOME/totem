@@ -44,6 +44,15 @@
 #define totem_signal_block_by_data(obj, data) (g_signal_handlers_block_matched (obj, G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, data))
 #define totem_signal_unblock_by_data(obj, data) (g_signal_handlers_unblock_matched (obj, G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, data))
 
+#define totem_set_sensitivity(xml, name, state)		\
+	{							\
+		GtkWidget *widget;				\
+		widget = glade_xml_get_widget (xml, name);	\
+		gtk_widget_set_sensitive (widget, state);	\
+	}
+#define totem_main_set_sensitivity(name, state) totem_set_sensitivity (totem->xml, name, state)
+#define totem_popup_set_sensitivity(name, state) totem_set_sensitivity (totem->xml_popup, name, state)
+
 typedef enum {
 	TOTEM_CONTROLS_VISIBLE,
 	TOTEM_CONTROLS_HIDDEN,

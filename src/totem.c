@@ -691,46 +691,31 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 
 		/* Play/Pause */
 		gtk_widget_set_sensitive (totem->pp_button, FALSE);
-		widget = glade_xml_get_widget (totem->xml, "tmw_play_menu_item");
-		gtk_widget_set_sensitive (widget, FALSE);
 
-		widget = glade_xml_get_widget (totem->xml_popup, "trcm_play");
-		gtk_widget_set_sensitive (widget, FALSE);
+		totem_main_set_sensitivity ("tmw_play_menu_item", FALSE);
+		totem_popup_set_sensitivity ("trcm_play", FALSE);
 
 		/* Seek bar and seek buttons */
 		update_seekable (totem, FALSE);
 
 		/* Volume */
-		widget = glade_xml_get_widget (totem->xml, "tcw_volume_button");
-		gtk_widget_set_sensitive (widget, FALSE);
-		widget = glade_xml_get_widget (totem->xml, "tmw_volume_up_menu_item");
-		gtk_widget_set_sensitive (widget, FALSE);
-		widget = glade_xml_get_widget (totem->xml, "tmw_volume_down_menu_item");
-		gtk_widget_set_sensitive (widget, FALSE);
-		widget = glade_xml_get_widget (totem->xml_popup, "trcm_volume_up");
-		gtk_widget_set_sensitive (widget, FALSE);
-		widget = glade_xml_get_widget (totem->xml_popup, "trcm_volume_down");
-		gtk_widget_set_sensitive (widget, FALSE);
+		totem_main_set_sensitivity ("tcw_volume_button", FALSE);
+		totem_main_set_sensitivity ("tmw_volume_up_menu_item", FALSE);
+		totem_main_set_sensitivity ("tmw_volume_down_menu_item", FALSE);
+		totem_popup_set_sensitivity ("trcm_volume_up", FALSE);
+		totem_popup_set_sensitivity ("trcm_volume_down", FALSE);
 
 		/* Control popup */
 		gtk_widget_set_sensitive (totem->fs_seek, FALSE);
 		gtk_widget_set_sensitive (totem->fs_pp_button, FALSE);
-		widget = glade_xml_get_widget (totem->xml,
-				"tcw_previous_button");
-		gtk_widget_set_sensitive (widget, FALSE);
-		widget = glade_xml_get_widget (totem->xml, "tcw_next_button"); 
-		gtk_widget_set_sensitive (widget, FALSE);
-		widget = glade_xml_get_widget (totem->xml_popup, "trcm_next_chapter");
-		gtk_widget_set_sensitive (widget, FALSE);
-		widget = glade_xml_get_widget (totem->xml_popup, "trcm_previous_chapter");
-		gtk_widget_set_sensitive (widget, FALSE);
-		widget = glade_xml_get_widget (totem->xml, "tcw_volume_hbox");
-		gtk_widget_set_sensitive (widget, FALSE);
+		totem_main_set_sensitivity ("tcw_previous_button", FALSE);
+		totem_main_set_sensitivity ("tcw_next_button", FALSE);
+		totem_popup_set_sensitivity ("trcm_next_chapter", FALSE);
+		totem_popup_set_sensitivity ("trcm_previous_chapter", FALSE);
+		totem_main_set_sensitivity ("tcw_volume_hbox", FALSE);
 
 		/* Take a screenshot */
-		widget = glade_xml_get_widget (totem->xml,
-				"tmw_take_screenshot_menu_item");
-		gtk_widget_set_sensitive (widget, FALSE);
+		totem_main_set_sensitivity ("tmw_take_screenshot_menu_item", FALSE);
 
 		/* Set the logo */
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
@@ -754,11 +739,9 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		totem->mrl = g_strdup (mrl);
 
 		/* Play/Pause */
+		totem_main_set_sensitivity ("tmw_play_menu_item", TRUE);
 		gtk_widget_set_sensitive (totem->pp_button, TRUE);
-		widget = glade_xml_get_widget (totem->xml, "tmw_play_menu_item");
-		gtk_widget_set_sensitive (widget, TRUE);
-		widget = glade_xml_get_widget (totem->xml_popup, "trcm_play");
-		gtk_widget_set_sensitive (widget, TRUE);
+		totem_popup_set_sensitivity ("trcm_play", TRUE);
 		gtk_widget_set_sensitive (totem->fs_pp_button, TRUE);
 
 		/* Seek bar */
@@ -767,23 +750,16 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 
 		/* Volume */
 		caps = bacon_video_widget_can_set_volume (totem->bvw);
-		widget = glade_xml_get_widget (totem->xml, "tcw_volume_button");
-		gtk_widget_set_sensitive (widget, caps);
-		widget = glade_xml_get_widget (totem->xml, "tcw_volume_hbox");
-		gtk_widget_set_sensitive (widget, caps);
-		widget = glade_xml_get_widget (totem->xml_popup, "trcm_volume_up");
-		gtk_widget_set_sensitive (widget, caps);
-		widget = glade_xml_get_widget (totem->xml_popup, "trcm_volume_down");
-		gtk_widget_set_sensitive (widget, caps);
-		widget = glade_xml_get_widget (totem->xml, "tmw_volume_up_menu_item");
-		gtk_widget_set_sensitive (widget, caps);
-		widget = glade_xml_get_widget (totem->xml, "tmw_volume_down_menu_item");
-		gtk_widget_set_sensitive (widget, caps);
+		totem_main_set_sensitivity ("tcw_volume_button", caps);
+		totem_main_set_sensitivity ("tcw_volume_hbox", caps);
+		totem_popup_set_sensitivity ("trcm_volume_up", caps);
+		totem_popup_set_sensitivity ("trcm_volume_down", caps);
+		totem_main_set_sensitivity ("tmw_volume_up_menu_item", caps);
+		totem_main_set_sensitivity ("tmw_volume_down_menu_item", caps);
 
 		/* Take a screenshot */
-		widget = glade_xml_get_widget (totem->xml,
-				"tmw_take_screenshot_menu_item");
-		gtk_widget_set_sensitive (widget, retval);
+		totem_main_set_sensitivity ("tmw_take_screenshot_menu_item",
+				retval);
 
 		/* Set the playlist */
 		totem_playlist_set_playing (totem->playlist, retval);
@@ -810,8 +786,7 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 	update_buttons (totem);
 	update_media_menu_items (totem);
 
-	widget = glade_xml_get_widget (totem->xml, "tmw_properties_menu_item");
-	gtk_widget_set_sensitive (widget, retval);
+	totem_main_set_sensitivity ("tmw_properties_menu_item", retval);
 
 	return retval;
 }
@@ -920,33 +895,17 @@ totem_action_zoom (Totem *totem, int zoom)
 	bacon_video_widget_set_zoom (totem->bvw, zoom);
 
 	if (zoom == ZOOM_UPPER) {
-		item = glade_xml_get_widget
-			(totem->xml, "tmw_zoom_in_menu_item");
-		gtk_widget_set_sensitive (item, FALSE);
+		totem_main_set_sensitivity ("tmw_zoom_in_menu_item", FALSE);
 	} else if (zoom == ZOOM_LOWER) {
-		item = glade_xml_get_widget
-			(totem->xml, "tmw_zoom_out_menu_item");
-		gtk_widget_set_sensitive (item, FALSE);
+		totem_main_set_sensitivity ("tmw_zoom_out_menu_item", FALSE);
 	} else if (zoom == ZOOM_RESET) {
-		item = glade_xml_get_widget
-			(totem->xml, "tmw_zoom_reset_menu_item");
-		gtk_widget_set_sensitive (item, FALSE);
-		item = glade_xml_get_widget
-			(totem->xml, "tmw_zoom_in_menu_item");
-		gtk_widget_set_sensitive (item, TRUE);
-		item = glade_xml_get_widget
-			(totem->xml, "tmw_zoom_out_menu_item");
-		gtk_widget_set_sensitive (item, TRUE);
+		totem_main_set_sensitivity ("tmw_zoom_reset_menu_item", FALSE);
+		totem_main_set_sensitivity ("tmw_zoom_in_menu_item", TRUE);
+		totem_main_set_sensitivity ("tmw_zoom_out_menu_item", TRUE);
 	} else {
-		item = glade_xml_get_widget
-			(totem->xml, "tmw_zoom_in_menu_item");
-		gtk_widget_set_sensitive (item, TRUE);
-		item = glade_xml_get_widget
-			(totem->xml, "tmw_zoom_out_menu_item");
-		gtk_widget_set_sensitive (item, TRUE);
-		item = glade_xml_get_widget
-			(totem->xml, "tmw_zoom_reset_menu_item");
-		gtk_widget_set_sensitive (item, TRUE);
+		totem_main_set_sensitivity ("tmw_zoom_in_menu_item", TRUE);
+		totem_main_set_sensitivity ("tmw_zoom_out_menu_item", TRUE);
+		totem_main_set_sensitivity ("tmw_zoom_reset_menu_item", TRUE);
 	}
 }
 
@@ -1277,9 +1236,9 @@ on_error_event (BaconVideoWidget *bvw, char *message,
 		play_pause_set_label (totem, STATE_STOPPED);
 
 	if (fatal == FALSE) {
-		totem_action_error (_("An error occured"), message, totem);
+		totem_action_error (_("An error occurred"), message, totem);
 	} else {
-		totem_action_error_and_exit (_("An error occured"),
+		totem_action_error_and_exit (_("An error occurred"),
 				message, totem);
 	}
 }
@@ -1310,25 +1269,15 @@ update_seekable (Totem *totem, gboolean seekable)
 	gtk_widget_set_sensitive (totem->seek, seekable);
 	gtk_widget_set_sensitive (totem->fs_seek, seekable);
 
-	widget = glade_xml_get_widget (totem->xml, "tmw_seek_hbox");
-	gtk_widget_set_sensitive (widget, seekable);
+	totem_main_set_sensitivity ("tmw_seek_hbox", seekable);
 
-	widget = glade_xml_get_widget (totem->xml, "tcw_time_hbox");
-	gtk_widget_set_sensitive (widget, seekable);
+	totem_main_set_sensitivity ("tcw_time_hbox", seekable);
 
-	widget = glade_xml_get_widget (totem->xml,
-			"tmw_skip_forward_menu_item");
-	gtk_widget_set_sensitive (widget, seekable);
-	widget = glade_xml_get_widget (totem->xml,
-			"tmw_skip_backwards_menu_item");
-	gtk_widget_set_sensitive (widget, seekable);
-	widget = glade_xml_get_widget (totem->xml_popup, "trcm_skip_forward");
-	gtk_widget_set_sensitive (widget, seekable);
-	widget = glade_xml_get_widget (totem->xml_popup,
-			"trcm_skip_backwards");
-	gtk_widget_set_sensitive (widget, seekable);
-	widget = glade_xml_get_widget (totem->xml, "tmw_skip_to_menu_item");
-	gtk_widget_set_sensitive (widget, seekable);
+	totem_main_set_sensitivity ("tmw_skip_forward_menu_item", seekable);
+	totem_main_set_sensitivity ("tmw_skip_backwards_menu_item", seekable);
+	totem_popup_set_sensitivity ("trcm_skip_forward", seekable);
+	totem_popup_set_sensitivity ("trcm_skip_backwards", seekable);
+	totem_main_set_sensitivity ("tmw_skip_to_menu_item", seekable);
 	if (totem->skipto)
 		totem_skipto_set_seekable (totem->skipto, seekable);
 }
@@ -2848,21 +2797,15 @@ update_media_menu_items (Totem *totem)
 
 	playing = totem_playing_dvd (totem->mrl);
 
-	item = glade_xml_get_widget (totem->xml, "tmw_dvd_root_menu_item");
-	gtk_widget_set_sensitive (item, playing);
-        item = glade_xml_get_widget (totem->xml, "tmw_dvd_title_menu_item");
-	gtk_widget_set_sensitive (item, playing);
-        item = glade_xml_get_widget (totem->xml, "tmw_dvd_audio_menu_item");
-	gtk_widget_set_sensitive (item, playing);
-        item = glade_xml_get_widget (totem->xml, "tmw_dvd_angle_menu_item");
-	gtk_widget_set_sensitive (item, playing);
-        item = glade_xml_get_widget (totem->xml, "tmw_dvd_chapter_menu_item");
-	gtk_widget_set_sensitive (item, playing);
+	totem_main_set_sensitivity ("tmw_dvd_root_menu_item", playing);
+	totem_main_set_sensitivity ("tmw_dvd_title_menu_item", playing);
+	totem_main_set_sensitivity ("tmw_dvd_audio_menu_item", playing);
+	totem_main_set_sensitivity ("tmw_dvd_angle_menu_item", playing);
+	totem_main_set_sensitivity ("tmw_dvd_chapter_menu_item", playing);
 
 	playing = totem_is_media (totem->mrl);
 
-	item = glade_xml_get_widget (totem->xml, "tmw_eject_menu_item");
-	gtk_widget_set_sensitive (item, playing);
+	totem_main_set_sensitivity ("tmw_eject_menu_item", playing);
 }
 
 static void
@@ -2880,15 +2823,10 @@ update_buttons (Totem *totem)
 		has_item = totem_playlist_has_previous_mrl (totem->playlist);
 	}
 
-	item = glade_xml_get_widget (totem->xml, "tmw_previous_button");
-	gtk_widget_set_sensitive (item, has_item);
-	item = glade_xml_get_widget (totem->xml, "tcw_previous_button");
-	gtk_widget_set_sensitive (item, has_item);
-	item = glade_xml_get_widget (totem->xml,
-			"tmw_previous_chapter_menu_item");
-	gtk_widget_set_sensitive (item, has_item);
-	item = glade_xml_get_widget (totem->xml_popup, "trcm_previous_chapter");
-	gtk_widget_set_sensitive (item, has_item);
+	totem_main_set_sensitivity ("tmw_previous_button", has_item);
+	totem_main_set_sensitivity ("tcw_previous_button", has_item);
+	totem_main_set_sensitivity ("tmw_previous_chapter_menu_item", has_item);
+	totem_popup_set_sensitivity ("trcm_previous_chapter", has_item);
 
 	/* Next */
 	/* FIXME Need way to detect if DVD Title has no more chapters */
@@ -2899,14 +2837,10 @@ update_buttons (Totem *totem)
 		has_item = totem_playlist_has_next_mrl (totem->playlist);
 	}
 
-	item = glade_xml_get_widget (totem->xml, "tmw_next_button");
-	gtk_widget_set_sensitive (item, has_item);
-	item = glade_xml_get_widget (totem->xml, "tcw_next_button");
-	gtk_widget_set_sensitive (item, has_item);
-	item = glade_xml_get_widget (totem->xml, "tmw_next_chapter_menu_item");
-	gtk_widget_set_sensitive (item, has_item);
-	item = glade_xml_get_widget (totem->xml_popup, "trcm_next_chapter");
-	gtk_widget_set_sensitive (item, has_item);
+	totem_main_set_sensitivity ("tmw_next_button", has_item);
+	totem_main_set_sensitivity ("tcw_next_button", has_item);
+	totem_main_set_sensitivity ("tmw_next_chapter_menu_item", has_item);
+	totem_popup_set_sensitivity ("trcm_next_chapter", has_item);
 }
 
 static void
