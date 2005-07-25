@@ -1,3 +1,10 @@
+2005-07-25  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/totem.c: (totem_callback_connect):
+	  Make seek happen after UI update of seek-scale widget, by using
+	  g_signal_connect_after() instead of g_signal_connect(). Makes UI
+	  look a bit more responsive.
+
 2005-07-22  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/backend/bacon-video-widget-gst.c:
