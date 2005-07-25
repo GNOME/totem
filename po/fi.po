@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-24 20:44+0300\n"
-"PO-Revision-Date: 2005-07-24 20:52+0300\n"
+"POT-Creation-Date: 2005-07-25 05:52+0300\n"
+"PO-Revision-Date: 2005-07-25 05:55+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -179,7 +179,7 @@ msgstr "Kehysnopeus:"
 msgid "N/A"
 msgstr "-"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:2069
+#: ../data/properties.glade.h:17 ../src/totem.c:2018
 msgid "Properties"
 msgstr "Ominaisuudet"
 
@@ -244,7 +244,7 @@ msgstr "Toista elokuvia ja musiikkia"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:2 ../data/totem.glade.h:97
-#: ../src/totem.c:666 ../src/totem.c:3440 ../src/totem.c:3457
+#: ../src/totem.c:666 ../src/totem.c:3374 ../src/totem.c:3391
 msgid "Totem Movie Player"
 msgstr "Totem-elokuvasoitin"
 
@@ -1140,6 +1140,16 @@ msgstr "Puskuroidaan"
 msgid "%d %%"
 msgstr "%d %%"
 
+#. +
+#: ../src/totem-volume.c:190
+msgid "+"
+msgstr "+"
+
+#. -
+#: ../src/totem-volume.c:206
+msgid "-"
+msgstr "-"
+
 #: ../src/totem.c:244
 msgid "Playing"
 msgstr "Toistetaan"
@@ -1152,7 +1162,7 @@ msgstr "Tauko"
 msgid "Totem could not eject the optical media."
 msgstr "Totem ei voi työntää optista mediaa ulos."
 
-#: ../src/totem.c:322 ../src/totem.c:349 ../src/totem.c:796 ../src/totem.c:901
+#: ../src/totem.c:322 ../src/totem.c:349 ../src/totem.c:772 ../src/totem.c:876
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem ei voinut toistaa sijaintia \"%s\"."
@@ -1193,36 +1203,36 @@ msgstr "Varmista, että levy on asemassa ja että aseman asetukset ovat oikein."
 msgid "No File"
 msgstr "Ei tiedostoa"
 
-#: ../src/totem.c:1280 ../src/totem.c:1282
-msgid "An error occured"
+#: ../src/totem.c:1239 ../src/totem.c:1241
+msgid "An error occurred"
 msgstr "Tapahtui virhe"
 
-#: ../src/totem.c:1588
+#: ../src/totem.c:1537
 msgid "Select Files"
 msgstr "Valitse tiedostot"
 
-#: ../src/totem.c:1673
+#: ../src/totem.c:1622
 msgid "Open Location..."
 msgstr "Avaa sijainnista..."
 
-#: ../src/totem.c:1942
+#: ../src/totem.c:1891
 msgid "Totem could not display the help contents."
 msgstr "Totem ei voinut näyttää ohjeen sisältöä."
 
-#: ../src/totem.c:1980
+#: ../src/totem.c:1929
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Elokuvasoitin, joka käyttää %s"
 
-#: ../src/totem.c:1984
+#: ../src/totem.c:1933
 msgid "Totem"
 msgstr "Totem"
 
-#: ../src/totem.c:1986 ../src/vanity.c:261
+#: ../src/totem.c:1935 ../src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Copyright © 2002-2005 Bastien Nocera"
 
-#: ../src/totem.c:1991 ../src/vanity.c:266
+#: ../src/totem.c:1940 ../src/vanity.c:266
 msgid "translator-credits"
 msgstr ""
 "Tommi Vainikainen, 2003, 2005\n"
@@ -1230,58 +1240,58 @@ msgstr ""
 "\n"
 "http://gnome.fi/"
 
-#: ../src/totem.c:2024 ../src/totem.c:2032 ../src/vanity.c:299
+#: ../src/totem.c:1973 ../src/totem.c:1981 ../src/vanity.c:299
 #: ../src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem ei voinut kaapata kuvaa tästä elokuvasta."
 
-#: ../src/totem.c:2032 ../src/vanity.c:307
+#: ../src/totem.c:1981 ../src/vanity.c:307
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Näin ei pitäisi päästä tapahtumaan. Ole hyvä ja ilmoita viasta."
 
-#: ../src/totem.c:2059
+#: ../src/totem.c:2008
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem ei voinut näyttää elokuvan ominaisuuksia ikkunassa."
 
-#: ../src/totem.c:2059
+#: ../src/totem.c:2008
 msgid "Make sure that Totem is correctly installed."
 msgstr "Tarkista, että Totem on oikein asennettu."
 
-#: ../src/totem.c:2145
+#: ../src/totem.c:2094
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem ei voinut kelata \"%s\"."
 
-#: ../src/totem.c:3303
+#: ../src/totem.c:3237
 msgid "Totem could not startup."
 msgstr "Totemia ei voi käynnistää."
 
-#: ../src/totem.c:3303
+#: ../src/totem.c:3237
 msgid "No reason."
 msgstr "Ei syytä"
 
-#: ../src/totem.c:3441
+#: ../src/totem.c:3375
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Säieturvallisia kirjastoja ei voitu alustaa."
 
-#: ../src/totem.c:3441
+#: ../src/totem.c:3375
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Tarkista järjestelmäasennuksesi. Totem sulkeutuu."
 
-#: ../src/totem.c:3464
+#: ../src/totem.c:3398
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem ei voinut alustaa asetusmoottoria."
 
-#: ../src/totem.c:3464
+#: ../src/totem.c:3398
 msgid "Make sure that GNOME is properly installed."
 msgstr "Varmista, että GNOME on oikein asennettu.."
 
 #. Main window
-#: ../src/totem.c:3491
+#: ../src/totem.c:3425
 msgid "main window"
 msgstr "pääikkuna"
 
-#: ../src/totem.c:3496
+#: ../src/totem.c:3430
 msgid "video popup menu"
 msgstr "videoponnahdusikkuna"
 
@@ -1398,8 +1408,8 @@ msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr ""
-"GStreamer-soitto-olion luominen epäonnistui. Tarkista että GStreamer "
-"on asennettu oikein."
+"GStreamer-soitto-olion luominen epäonnistui. Tarkista että GStreamer on "
+"asennettu oikein."
 
 #: ../src/backend/bacon-video-widget-gst.c:3408
 msgid ""
@@ -1416,8 +1426,8 @@ msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
 msgstr ""
-"Videoulostulon avaus epäonnistui. Valitse toinen videoulostulo Multimedia"
-"järjestelmien valitsimesta."
+"Videoulostulon avaus epäonnistui. Valitse toinen videoulostulo "
+"Multimediajärjestelmien valitsimesta."
 
 #: ../src/backend/bacon-video-widget-gst.c:3445
 msgid ""
@@ -1502,8 +1512,8 @@ msgstr "Elokuvaa ei voida lukea."
 
 #: ../src/backend/bacon-video-widget-xine.c:1288
 #, c-format
-msgid "A problem occured while loading a library or a decoder (%s)."
-msgstr "Ladattaessa kirjastoa tai dekooderia (%s) tuli vastaan ongelma."
+msgid "A problem occurred while loading a library or a decoder (%s)."
+msgstr "Virhe ladattaessa kirjastoa tai dekooderia (%s)."
 
 #: ../src/backend/bacon-video-widget-xine.c:1297
 msgid "This file is encrypted and cannot be played back."
