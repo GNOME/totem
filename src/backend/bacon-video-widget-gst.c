@@ -1852,9 +1852,10 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **gerro
     gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
 
   bvw->priv->cache_errors = TRUE;
-  gst_element_seek (bvw->priv->play, GST_SEEK_METHOD_SET,
+  gst_element_seek (bvw->priv->play, 1.0,
 		    GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH,
-		    time * GST_MSECOND);
+		    GST_SEEK_TYPE_SET, time * GST_MSECOND,
+		    GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
   bvw->priv->cache_errors = FALSE;
 
   if (was_playing)
