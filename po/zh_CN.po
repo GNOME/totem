@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-17 22:44+0000\n"
+"POT-Creation-Date: 2005-07-30 15:44+0000\n"
 "PO-Revision-Date: 2005-07-18 12:53+0800\n"
 "Last-Translator: Funda Wang <fundawang@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -178,7 +178,7 @@ msgstr "帧速率："
 msgid "N/A"
 msgstr "不可用"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:2069
+#: ../data/properties.glade.h:17 ../src/totem.c:2018
 msgid "Properties"
 msgstr "属性"
 
@@ -243,7 +243,7 @@ msgstr "播放电影和歌曲"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:2 ../data/totem.glade.h:97
-#: ../src/totem.c:672 ../src/totem.c:3440 ../src/totem.c:3457
+#: ../src/totem.c:666 ../src/totem.c:3374 ../src/totem.c:3391
 msgid "Totem Movie Player"
 msgstr "Totem 电影播放机"
 
@@ -1093,7 +1093,7 @@ msgstr "阴影类型"
 msgid "Style of bevel around the statusbar text"
 msgstr "状态栏文字的立体样式"
 
-#: ../src/totem-statusbar.c:124 ../src/totem.c:254 ../src/totem.c:658
+#: ../src/totem-statusbar.c:124 ../src/totem.c:254 ../src/totem.c:652
 msgid "Stopped"
 msgstr "已停止"
 
@@ -1128,6 +1128,16 @@ msgstr "正在缓冲"
 msgid "%d %%"
 msgstr "%d %%"
 
+#. +
+#: ../src/totem-volume.c:190
+msgid "+"
+msgstr "+"
+
+#. -
+#: ../src/totem-volume.c:206
+msgid "-"
+msgstr "-"
+
 #: ../src/totem.c:244
 msgid "Playing"
 msgstr "播放中"
@@ -1140,7 +1150,7 @@ msgstr "已暂停"
 msgid "Totem could not eject the optical media."
 msgstr "Totem 无法弹出光存储介质。"
 
-#: ../src/totem.c:322 ../src/totem.c:349 ../src/totem.c:802 ../src/totem.c:907
+#: ../src/totem.c:322 ../src/totem.c:349 ../src/totem.c:772 ../src/totem.c:876
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem 无法播放“%s”。"
@@ -1171,98 +1181,98 @@ msgid ""
 "correctly configured."
 msgstr "您可能想要检查盘片是否位于驱动器中，以及配置是否正确。"
 
-#: ../src/totem.c:665
+#: ../src/totem.c:659
 msgid "No File"
 msgstr "无文件"
 
-#: ../src/totem.c:1286 ../src/totem.c:1288
-msgid "An error occured"
+#: ../src/totem.c:1239 ../src/totem.c:1241
+msgid "An error occurred"
 msgstr "发生了一个错误"
 
-#: ../src/totem.c:1594
+#: ../src/totem.c:1537
 msgid "Select Files"
 msgstr "选择文件"
 
-#: ../src/totem.c:1679
+#: ../src/totem.c:1622
 msgid "Open Location..."
 msgstr "打开位置..."
 
-#: ../src/totem.c:1942
+#: ../src/totem.c:1891
 msgid "Totem could not display the help contents."
 msgstr "Totem 无法显示帮助目录。"
 
-#: ../src/totem.c:1980
+#: ../src/totem.c:1929
 #, c-format
 msgid "Movie Player using %s"
 msgstr "使用 %s 的电影播放器"
 
-#: ../src/totem.c:1984
+#: ../src/totem.c:1933
 msgid "Totem"
 msgstr "Totem"
 
-#: ../src/totem.c:1986 ../src/vanity.c:261
+#: ../src/totem.c:1935 ../src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "版权 (C) 2002-2005 Bastien Nocera"
 
-#: ../src/totem.c:1991 ../src/vanity.c:266
+#: ../src/totem.c:1940 ../src/vanity.c:266
 msgid "translator-credits"
 msgstr ""
 "开源软件国际化简体中文组(http://i18n.linux.net.cn)\n"
 "Funda Wang <fundawang@linux.net.cn>\n"
 "jan2xue <75jan@163.com>"
 
-#: ../src/totem.c:2024 ../src/totem.c:2032 ../src/vanity.c:299
+#: ../src/totem.c:1973 ../src/totem.c:1981 ../src/vanity.c:299
 #: ../src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem 无法获取电影的抓图。"
 
-#: ../src/totem.c:2032 ../src/vanity.c:307
+#: ../src/totem.c:1981 ../src/vanity.c:307
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "不应该发生这种情况；请提交错误报告。"
 
-#: ../src/totem.c:2059
+#: ../src/totem.c:2008
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem 无法显示电影属性窗口。"
 
-#: ../src/totem.c:2059
+#: ../src/totem.c:2008
 msgid "Make sure that Totem is correctly installed."
 msgstr "请确保 Totem 已正确安装。"
 
-#: ../src/totem.c:2145
+#: ../src/totem.c:2094
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem 无法在“%s”中搜索。"
 
-#: ../src/totem.c:3303
+#: ../src/totem.c:3237
 msgid "Totem could not startup."
 msgstr "Totem 无法启动。"
 
-#: ../src/totem.c:3303
+#: ../src/totem.c:3237
 msgid "No reason."
 msgstr "无原因。"
 
-#: ../src/totem.c:3441
+#: ../src/totem.c:3375
 msgid "Could not initialize the thread-safe libraries."
 msgstr "无法初始化线程安全库。"
 
-#: ../src/totem.c:3441
+#: ../src/totem.c:3375
 msgid "Verify your system installation. Totem will now exit."
 msgstr "请检查您的系统安装。Totem 现将退出。"
 
-#: ../src/totem.c:3464
+#: ../src/totem.c:3398
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem 无法初始化配置引擎。"
 
-#: ../src/totem.c:3464
+#: ../src/totem.c:3398
 msgid "Make sure that GNOME is properly installed."
 msgstr "请确认 GNOME 安装正确。"
 
 #. Main window
-#: ../src/totem.c:3491
+#: ../src/totem.c:3425
 msgid "main window"
 msgstr "主窗口"
 
-#: ../src/totem.c:3496
+#: ../src/totem.c:3430
 msgid "video popup menu"
 msgstr "视频弹出菜单"
 
@@ -1472,7 +1482,7 @@ msgstr "无法读取电影。"
 
 #: ../src/backend/bacon-video-widget-xine.c:1288
 #, c-format
-msgid "A problem occured while loading a library or a decoder (%s)."
+msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "装入库或解码器(%s)时发生问题。"
 
 #: ../src/backend/bacon-video-widget-xine.c:1297
