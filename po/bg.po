@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-22 19:08+0300\n"
-"PO-Revision-Date: 2005-07-22 19:08+0300\n"
+"POT-Creation-Date: 2005-08-01 20:58+0300\n"
+"PO-Revision-Date: 2005-07-31 08:57+0300\n"
 "Last-Translator: Vladimir Petkov <vpetkov@i-space.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
@@ -89,7 +89,7 @@ msgstr "Прескачане напред"
 
 #: ../data/popup.glade.h:11 ../data/totem.glade.h:102
 msgid "Volume _Down"
-msgstr "_Намаляне на звука"
+msgstr "_Намаляване на звука"
 
 #: ../data/popup.glade.h:12 ../data/totem.glade.h:103
 msgid "Volume _Up"
@@ -134,7 +134,7 @@ msgstr "0 x 0"
 
 #: ../data/properties.glade.h:6
 msgid "<b>Audio</b>"
-msgstr "<b>Аудио</b>"
+msgstr "<b>Звук</b>"
 
 #: ../data/properties.glade.h:7
 msgid "<b>General</b>"
@@ -179,7 +179,7 @@ msgstr "Кадри/сек:"
 msgid "N/A"
 msgstr "Няма налични"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:2069
+#: ../data/properties.glade.h:17 ../src/totem.c:2018
 msgid "Properties"
 msgstr "Подробности"
 
@@ -244,7 +244,7 @@ msgstr "Изпълнение на филми и песни"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:2 ../data/totem.glade.h:97
-#: ../src/totem.c:666 ../src/totem.c:3440 ../src/totem.c:3457
+#: ../src/totem.c:666 ../src/totem.c:3374 ../src/totem.c:3391
 msgid "Totem Movie Player"
 msgstr "Гледане на филми (Totem)"
 
@@ -290,7 +290,7 @@ msgstr "4:3 (телевизия)"
 
 #: ../data/totem.glade.h:17
 msgid "<b>Audio Output</b>"
-msgstr "<b>Аудио изход</b>"
+msgstr "<b>Изход на звука</b>"
 
 #: ../data/totem.glade.h:18
 msgid "<b>Color balance</b>"
@@ -322,7 +322,7 @@ msgstr "<span size=\"medium\"><b>Няма файл</b></span>"
 
 #: ../data/totem.glade.h:25
 msgid "A_udio Menu"
-msgstr "А_удио меню"
+msgstr "Менщ за зв_ука"
 
 #: ../data/totem.glade.h:26
 msgid "Always on _Top"
@@ -334,7 +334,7 @@ msgstr "Винаги най-отгоре"
 
 #: ../data/totem.glade.h:28 ../src/totem-properties-view.c:92
 msgid "Audio"
-msgstr "Аудио"
+msgstr "Звук"
 
 #: ../data/totem.glade.h:29 ../src/totem-menu.c:271 ../src/totem-menu.c:292
 msgid "Auto"
@@ -354,7 +354,7 @@ msgstr "_Скорост на връзката:"
 
 #: ../data/totem.glade.h:33
 msgid "Deinterlace"
-msgstr "Корекция на презредовo изображение"
+msgstr "Заглаждане на картината"
 
 #: ../data/totem.glade.h:34
 msgid "Display"
@@ -378,7 +378,7 @@ msgstr "Отиване в менюто за избор на ъгъл"
 
 #: ../data/totem.glade.h:39
 msgid "Go to the audio menu"
-msgstr "Отиване в аудио менюто"
+msgstr "Отиване в менюто за звука"
 
 #: ../data/totem.glade.h:40
 msgid "Go to the chapter menu"
@@ -490,7 +490,7 @@ msgstr "Поставяне на квадратно съотношение шир
 
 #: ../data/totem.glade.h:72
 msgid "Show _visual effects when an audio file is played"
-msgstr "Показване на _визуалните ефекти при изпълнението на аудио файл"
+msgstr "Показване на _визуалните ефекти при изпълнението на звуков файл"
 
 #: ../data/totem.glade.h:74
 msgid "Show or hide the sidebar"
@@ -511,10 +511,10 @@ msgid ""
 "Large\n"
 "Extra Large"
 msgstr ""
-"Малко\n"
-"Нормално\n"
-"Голямо\n"
-"Много голямо"
+"Малък\n"
+"Среден\n"
+"Голям\n"
+"Много голям"
 
 #: ../data/totem.glade.h:85
 msgid "Square"
@@ -610,7 +610,7 @@ msgstr "_Съотношението на екрана"
 
 #: ../data/totem.glade.h:114
 msgid "_Audio output type:"
-msgstr "Тип _аудио изход:"
+msgstr "Тип на изхода на _звука:"
 
 #: ../data/totem.glade.h:115
 msgid "_Brightness:"
@@ -732,7 +732,7 @@ msgstr ""
 
 #: ../data/totem.schemas.in.h:6
 msgid "Name of the visual effects plugins"
-msgstr "Име на модулите за визуални ефекти"
+msgstr "Име на приставките за визуални ефекти"
 
 #: ../data/totem.schemas.in.h:7
 msgid "Network buffering threshold"
@@ -756,7 +756,7 @@ msgstr "Показване на визуални ефекти при липса 
 
 #: ../data/totem.schemas.in.h:12
 msgid "Show visual effects when playing an audio only file."
-msgstr "Показване на визуални ефекти при възпроизвеждане на аудио файлове."
+msgstr "Показване на визуални ефекти при възпроизвеждане на звукови файлове."
 
 #: ../data/totem.schemas.in.h:13
 msgid "Shuffle mode"
@@ -792,7 +792,7 @@ msgstr "Наситеност на видеосигнала"
 
 #: ../data/totem.schemas.in.h:21
 msgid "Type of audio output to use"
-msgstr "Използван тип аудио изход"
+msgstr "Използван тип на изхода на звука"
 
 #: ../data/totem.schemas.in.h:22
 msgid ""
@@ -800,7 +800,7 @@ msgid ""
 "\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
 "Passthrough."
 msgstr ""
-"Използван тип аудио изход: „0“ за стерео, „1“ за  4 канален изход, „2“ за "
+"Използван тип изход на звука: „0“ за стерео, „1“ за  4 канален изход, „2“ за "
 "5.0 канален изход, „3“ за 5.1 канален изход, „4“ за директен AC3."
 
 #: ../data/totem.schemas.in.h:23
@@ -927,7 +927,7 @@ msgstr "Настройки на ядрото"
 
 #: ../src/totem-options.c:37
 msgid "Enable debug"
-msgstr "Разрешаване откриването на грешки"
+msgstr "Включване откриването на грешки"
 
 #: ../src/totem-options.c:39
 msgid "Play"
@@ -1058,8 +1058,8 @@ msgid ""
 "The change of audio output type will only take effect when Totem is "
 "restarted."
 msgstr ""
-"Промените на типа на аудио изхода ще влязат в сила за следващия филм или при "
-"рестартиране на Totem."
+"Промените на типа на изхода на звука ще влязат в сила за следващия филм или "
+"при рестартиране на Totem."
 
 #: ../src/totem-preferences.c:603
 msgid "Select Subtitle Font"
@@ -1069,7 +1069,7 @@ msgstr "Шрифт за субтитрите"
 #: ../src/totem-properties-main.c:112 ../src/totem-properties-view.c:86
 #: ../src/totem-properties-view.c:94
 msgid "Audio/Video"
-msgstr "Аудио/видео"
+msgstr "Звук/видео"
 
 #: ../src/totem-properties-view.c:88
 msgid "Video"
@@ -1140,6 +1140,16 @@ msgstr "Буфериране"
 msgid "%d %%"
 msgstr "%d %%"
 
+#. +
+#: ../src/totem-volume.c:190
+msgid "+"
+msgstr "+"
+
+#. -
+#: ../src/totem-volume.c:206
+msgid "-"
+msgstr "-"
+
 #: ../src/totem.c:244
 msgid "Playing"
 msgstr "Изпълнява се"
@@ -1152,7 +1162,7 @@ msgstr "Паузирано"
 msgid "Totem could not eject the optical media."
 msgstr "Totem не може да извади оптичния носител."
 
-#: ../src/totem.c:322 ../src/totem.c:349 ../src/totem.c:796 ../src/totem.c:901
+#: ../src/totem.c:322 ../src/totem.c:349 ../src/totem.c:772 ../src/totem.c:876
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem не може да изпълни „%s“."
@@ -1164,15 +1174,15 @@ msgid ""
 "appropriate plugins to handle it."
 msgstr ""
 "Totem не може да изпълни този тип медия (%s) поради липса на подходящи "
-"модули."
+"приставки."
 
 #: ../src/totem.c:376
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
 msgstr ""
-"Инсталирайте съответния модул и рестартирайте Totem за бъдат възприети "
-"промените."
+"Инсталирайте съответната приставка и рестартирайте Totem, за да бъдат "
+"възприети промените."
 
 #: ../src/totem.c:384
 #, c-format
@@ -1181,7 +1191,7 @@ msgid ""
 "it."
 msgstr ""
 "Totem не може да възпроизведе този тип медия (%s), въпреки наличието на "
-"подходящ модул."
+"подходяща приставка."
 
 #: ../src/totem.c:385
 msgid ""
@@ -1194,36 +1204,36 @@ msgstr ""
 msgid "No File"
 msgstr "Липсва файл"
 
-#: ../src/totem.c:1280 ../src/totem.c:1282
-msgid "An error occured"
-msgstr "Появи се грешка"
+#: ../src/totem.c:1239 ../src/totem.c:1241
+msgid "An error occurred"
+msgstr "Получи се грешка"
 
-#: ../src/totem.c:1588
+#: ../src/totem.c:1537
 msgid "Select Files"
 msgstr "Избор на файлове"
 
-#: ../src/totem.c:1673
+#: ../src/totem.c:1622
 msgid "Open Location..."
 msgstr "Отваряне на местоположение..."
 
-#: ../src/totem.c:1942
+#: ../src/totem.c:1891
 msgid "Totem could not display the help contents."
 msgstr "Ръководството не може да бъде показано."
 
-#: ../src/totem.c:1980
+#: ../src/totem.c:1929
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Програма за гледане на филми, която използва %s"
 
-#: ../src/totem.c:1984
+#: ../src/totem.c:1933
 msgid "Totem"
 msgstr "Totem"
 
-#: ../src/totem.c:1986 ../src/vanity.c:261
+#: ../src/totem.c:1935 ../src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Авторски права © 2002-2005 Bastien Nocera"
 
-#: ../src/totem.c:1991 ../src/vanity.c:266
+#: ../src/totem.c:1940 ../src/vanity.c:266
 msgid "translator-credits"
 msgstr ""
 "Владимир „Kaladan“ Петков <vpetkov@i-space.org>\n"
@@ -1233,61 +1243,61 @@ msgstr ""
 "\n"
 "Проектът за превод на GNOME има нужда от подкрепа.\n"
 "Научете повече за нас на http://gnome.cult.bg\n"
-"Докладвайте за грешки на https://gnome.cult.bg/bugs"
+"Докладвайте за грешки на http://gnome.cult.bg/bugs"
 
-#: ../src/totem.c:2024 ../src/totem.c:2032 ../src/vanity.c:299
+#: ../src/totem.c:1973 ../src/totem.c:1981 ../src/vanity.c:299
 #: ../src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem не можа да запази кадър от този филм."
 
-#: ../src/totem.c:2032 ../src/vanity.c:307
+#: ../src/totem.c:1981 ../src/vanity.c:307
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Това не трябваше да се случи! Моля, подайте доклад за грешка."
 
-#: ../src/totem.c:2059
+#: ../src/totem.c:2008
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem не може да изобрази прозореца с информация за филма."
 
-#: ../src/totem.c:2059
+#: ../src/totem.c:2008
 msgid "Make sure that Totem is correctly installed."
 msgstr "Проверете дали Totem е инсталиран правилно."
 
-#: ../src/totem.c:2145
+#: ../src/totem.c:2094
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem не може да търси в „%s“."
 
-#: ../src/totem.c:3303
+#: ../src/totem.c:3237
 msgid "Totem could not startup."
 msgstr "Totem не може да се стартира."
 
-#: ../src/totem.c:3303
+#: ../src/totem.c:3237
 msgid "No reason."
 msgstr "Няма причина."
 
-#: ../src/totem.c:3441
+#: ../src/totem.c:3375
 msgid "Could not initialize the thread-safe libraries."
 msgstr ""
 "Библиотеките за безопасна работа с нишки не могат да бъдат инициализирани."
 
-#: ../src/totem.c:3441
+#: ../src/totem.c:3375
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Проверете системата си. Totem ще бъде спрян."
 
-#: ../src/totem.c:3464
+#: ../src/totem.c:3398
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem не може да инициализира ядрото за настройки."
 
-#: ../src/totem.c:3464
+#: ../src/totem.c:3398
 msgid "Make sure that GNOME is properly installed."
 msgstr "Проверете дали GNOME е инсталиран правилно."
 
 #. Main window
-#: ../src/totem.c:3491
+#: ../src/totem.c:3425
 msgid "main window"
 msgstr "основен прозорец"
 
-#: ../src/totem.c:3496
+#: ../src/totem.c:3430
 msgid "video popup menu"
 msgstr "видео меню"
 
@@ -1430,16 +1440,17 @@ msgid ""
 "audio output in the Multimedia Systems Selector. You may want to consider "
 "using a sound server."
 msgstr ""
-"Аудио изходът се използва от друга програма. Изберете друг аудио изход в "
-"„Избор на мултимедийни системи“. Замислете се за ползването на аудио сървър."
+"Изходът на звука се използва от друга програма. Изберете друг изход на звука "
+"в „Избор на мултимедийни системи“. Замислете се за ползването на звуков "
+"сървър."
 
 #: ../src/backend/bacon-video-widget-gst.c:3451
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector"
 msgstr ""
-"Необходимия аудио изход не е намерен. Изберете друг аудио изход в „Избор на "
-"мултимедийни системи“"
+"Необходимия изход на звука не е намерен. Изберете друг изход на звука в "
+"„Избор на мултимедийни системи“"
 
 #: ../src/backend/bacon-video-widget-gst.c:3461
 msgid ""
@@ -1447,9 +1458,9 @@ msgid ""
 "device, or the sound server may not be running. Please select another audio "
 "output in the Multimedia Systems Selector."
 msgstr ""
-"Неуспех при отварянето на аудио изхода. Възможно е да нямата право да "
-"отваряте аудио картата или е възможно аудио сървъра да не работи. Изберете "
-"друг аудио изход от „Избор на мултимедийни системи“."
+"Неуспех при отварянето на изхода за звука. Възможно е да нямата право да "
+"отваряте звуковата карта или е възможно звуковият сървър да не работи. "
+"Изберете друг звуков изход от „Избор на мултимедийни системи“."
 
 #: ../src/backend/bacon-video-widget-xine.c:677
 #, c-format
@@ -1457,7 +1468,7 @@ msgid ""
 "Couldn't load the '%s' audio driver\n"
 "Check that the device is not busy."
 msgstr ""
-"Грешка при зареждане на аудио драйвер „%s“\n"
+"Грешка при зареждане на звуков драйвер „%s“\n"
 "Проверете дали устройството не е заето."
 
 #: ../src/backend/bacon-video-widget-xine.c:1132
@@ -1505,7 +1516,7 @@ msgstr "Филмът не може да бъде прочетен."
 
 #: ../src/backend/bacon-video-widget-xine.c:1288
 #, c-format
-msgid "A problem occured while loading a library or a decoder (%s)."
+msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "Грешка при зареждане на библиотека или декодер (%s)."
 
 #: ../src/backend/bacon-video-widget-xine.c:1297
@@ -1535,7 +1546,7 @@ msgstr "Файлът, който се опитвате да пуснете, е �
 
 #: ../src/backend/bacon-video-widget-xine.c:1472
 msgid "There is no plugin to handle this movie."
-msgstr "Липсва подходящ модул за този филм."
+msgstr "Липсва подходяща приставка за гледане на този филм."
 
 #: ../src/backend/bacon-video-widget-xine.c:1476
 msgid "This movie is broken and can not be played further."
@@ -1566,7 +1577,7 @@ msgid ""
 "plugins to be able to play some types of movies"
 msgstr ""
 "Видео кодекът „%s“ не се поддържа. Ако се налага, инсталирайте допълнителни "
-"модули."
+"приставки."
 
 #: ../src/backend/bacon-video-widget-xine.c:2023
 #, c-format
@@ -1574,12 +1585,12 @@ msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr ""
-"Аудио кодекът „%s“ не се поддържа. Ако се налага, инсталирайте допълнителни "
-"модули."
+"Звуковия кодек „%s“ не се поддържа. Ако се налага, инсталирайте допълнителни "
+"приставки."
 
 #: ../src/backend/bacon-video-widget-xine.c:2039
 msgid "This is an audio-only file, and there is no audio output available."
-msgstr "Това е чист аудио файл, но няма наличен изходен аудио поток."
+msgstr "Това е чист звуков файл, но няма наличен изходен звуков поток."
 
 #: ../src/backend/bacon-video-widget-xine.c:3497
 #: ../src/backend/bacon-video-widget-xine.c:3560
@@ -1690,7 +1701,7 @@ msgstr "Неочакван/непознат вид CD - 0x%x (%s)"
 
 #: ../src/plparse/totem-disc.c:626
 msgid "Audio CD"
-msgstr "Аудио CD"
+msgstr "Звуково CD"
 
 #: ../src/plparse/totem-disc.c:628
 msgid "Video CD"
