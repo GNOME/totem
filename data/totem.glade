@@ -2362,13 +2362,14 @@ AC3 Passthrough</property>
 		  </child>
 
 		  <child>
-		    <widget class="GtkImageMenuItem" id="tmw_show_sidebar_menu_item">
+		    <widget class="GtkCheckMenuItem" id="tmw_sidebar_menu_item">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Show or hide the sidebar</property>
-		      <property name="label" translatable="yes">_Show/Hide Sidebar</property>
+		      <property name="label" translatable="yes">_Sidebar</property>
 		      <property name="use_underline">True</property>
+		      <property name="active">True</property>
 		      <signal name="activate" handler="on_show_sidebar1_activate" last_modification_time="Fri, 14 Jun 2002 22:36:54 GMT"/>
-		      <accelerator key="P" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+		      <accelerator key="F9" modifiers="0" signal="activate"/>
 		    </widget>
 		  </child>
 		</widget>

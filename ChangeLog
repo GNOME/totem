@@ -1,3 +1,15 @@
+2005-08-02  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem.glade:
+	* src/totem-sidebar.c: (on_sidebar_button_toggled),
+	(totem_sidebar_setup):
+	* src/totem.c: (totem_action_set_mrl_with_warning),
+	(totem_action_zoom), (update_seekable), (totem_action_handle_key),
+	(on_window_key_press_event), (update_media_menu_items),
+	(update_buttons): Make the "Show/Hide Sidebar" menu item into
+	a check menu item labelled "Sidebar", fix some build warnings
+	The new shortcut is F9 like in other GNOME apps (Closes: #310689)
+
 2005-08-01  Bastien Nocera  <hadess@hadess.net>
 
 	* NEWS: upd

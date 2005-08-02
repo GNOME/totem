@@ -671,7 +671,6 @@ gboolean
 totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		gboolean warn)
 {
-	GtkWidget *widget;
 	gboolean retval = TRUE;
 
 	if (totem->mrl != NULL)
@@ -887,8 +886,6 @@ totem_action_seek_relative (Totem *totem, int off_sec)
 static void
 totem_action_zoom (Totem *totem, int zoom)
 {
-	GtkWidget *item;
-
 	if (zoom < ZOOM_LOWER || zoom > ZOOM_UPPER)
 		return;
 
@@ -1258,8 +1255,6 @@ on_buffering_event (BaconVideoWidget *bvw, int percentage, Totem *totem)
 static void
 update_seekable (Totem *totem, gboolean seekable)
 {
-	GtkWidget *widget;
-
 	if (totem->seekable == seekable)
 		return;
 
@@ -2612,11 +2607,7 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 #endif /* HAVE_XFREE */
 	case GDK_p:
 	case GDK_P:
-		/* Playlist keyboard shortcut? */
-		if (event->state & GDK_CONTROL_MASK)
-			totem_sidebar_toggle (totem);
-		else
-			totem_action_play_pause (totem);
+		totem_action_play_pause (totem);
 		break;
 	case GDK_q:
 	case GDK_Q:
@@ -2744,14 +2735,12 @@ totem_action_handle_volume_scroll (Totem *totem, GdkScrollDirection direction)
 static int
 on_window_key_press_event (GtkWidget *win, GdkEventKey *event, Totem *totem)
 {
-	/* Special case the Playlist, Eject, Open, Open URI and
+	/* Special case Eject, Open, Open URI and
 	 * seeking keyboard shortcuts */
 	if (event->state != 0
 			&& (event->state & GDK_CONTROL_MASK))
 	{
 		switch (event->keyval)
-		case GDK_p:
-		case GDK_P:
 		case GDK_E:
 		case GDK_e:
 		case GDK_O:
@@ -2792,7 +2781,6 @@ on_volume_scroll_event (GtkWidget *win, GdkEventScroll *event, Totem *totem)
 static void
 update_media_menu_items (Totem *totem)
 {
-        GtkWidget *item;
         gboolean playing;
 
 	playing = totem_playing_dvd (totem->mrl);
@@ -2811,7 +2799,6 @@ update_media_menu_items (Totem *totem)
 static void
 update_buttons (Totem *totem)
 {
-	GtkWidget *item;
 	gboolean has_item;
 
 	/* Previous */

@@ -44,6 +44,7 @@ totem_sidebar_toggle (Totem *totem)
 static void
 on_sidebar_button_toggled (GtkToggleButton *button, Totem *totem)
 {
+	GtkWidget *item;
 	gboolean state;
 
 	state = gtk_toggle_button_get_active (button);
@@ -51,6 +52,11 @@ on_sidebar_button_toggled (GtkToggleButton *button, Totem *totem)
 		gtk_widget_show (GTK_WIDGET (totem->sidebar));
 	else
 		gtk_widget_hide (GTK_WIDGET (totem->sidebar));
+
+	item = glade_xml_get_widget (totem->xml, "tmw_sidebar_menu_item");
+	totem_signal_block_by_data (G_OBJECT (item), totem);
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), state);
+	totem_signal_unblock_by_data (G_OBJECT (item), totem);
 
 	gconf_client_set_bool (totem->gc,
 				GCONF_PREFIX"/sidebar_shown",
@@ -83,7 +89,7 @@ totem_sidebar_is_visible (Totem *totem)
 void
 totem_sidebar_setup (Totem *totem)
 {
-	GtkWidget *item;
+	GtkWidget *item, *item2;
 	gboolean visible;
 
 	item = glade_xml_get_widget (totem->xml, "tmw_main_pane");
@@ -99,19 +105,22 @@ totem_sidebar_setup (Totem *totem)
 	totem->sidebar_shown = visible;
 
 	item = glade_xml_get_widget (totem->xml, "tmw_sidebar_button");
+	item2 = glade_xml_get_widget (totem->xml, "tmw_sidebar_menu_item");
 
-	if (visible != FALSE) {
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), TRUE);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), visible);
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item2), visible);
+
+	if (visible != FALSE)
 		gtk_widget_show_all (totem->sidebar);
-	}
+	else
+		gtk_widget_hide (totem->sidebar);
 
 	/* Signals */
 	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (on_sidebar_button_toggled), totem);
 	g_signal_connect (G_OBJECT (totem->sidebar), "closed",
 			G_CALLBACK (toggle_sidebar_from_sidebar), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_show_sidebar_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
+	g_signal_connect (G_OBJECT (item2), "activate",
 			G_CALLBACK (on_show_sidebar1_activate), totem);
 
 	gtk_widget_show_all (GTK_WIDGET (totem->playlist));
