@@ -1,3 +1,23 @@
+2005-08-03  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/Makefile.am:
+	* src/bacon-volume.c: (bacon_volume_button_get_type),
+	(bacon_volume_button_class_init), (bacon_volume_button_init),
+	(bacon_volume_button_dispose), (bacon_volume_button_new),
+	(bacon_volume_button_get_value), (bacon_volume_button_set_value),
+	(bacon_volume_button_scroll), (bacon_volume_button_press),
+	(cb_button_timeout), (cb_button_press), (cb_button_release),
+	(bacon_volume_release_grab), (cb_dock_press),
+	(bacon_volume_scale_get_type), (bacon_volume_scale_class_init),
+	(bacon_volume_scale_new), (bacon_volume_scale_press),
+	(bacon_volume_scale_release), (bacon_volume_scale_value_changed):
+	* src/bacon-volume.h:
+	* src/totem-volume.c:
+	* src/totem-volume.h:
+	* src/totem.c: (update_volume_sliders), (vol_cb),
+	(totem_volume_create):
+	  TotemVolumeButton -> BaconVolumeButton.
+
 2005-08-03  Sunil Mohan Adapa  <sunil@atc.tcs.co.in>
 
 	* configure.in: Added "te" to ALL_LINGUAS

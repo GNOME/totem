@@ -1,4 +1,4 @@
-/* Totem Volume Button / popup widget
+/* Volume Button / popup widget
  * (c) copyright 2005 Ronald S. Bultje <rbultje@ronald.bitfreak.net>
  *
  * This library is free software; you can redistribute it and/or
@@ -15,11 +15,6 @@
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
- *
- * The Totem project hereby grant permission for non-gpl compatible GStreamer
- * plugins to be used and distributed together with GStreamer and Totem. This
- * permission are above and beyond the permissions granted by the GPL license
- * Totem is covered by.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -32,7 +27,7 @@
 #include <string.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include "totem-volume.h"
+#include "bacon-volume.h"
 
 #define SCALE_SIZE 100
 #define CLICK_TIMEOUT 250
@@ -42,13 +37,13 @@ enum {
   NUM_SIGNALS
 };
 
-static void	totem_volume_button_class_init	(TotemVolumeButtonClass * klass);
-static void	totem_volume_button_init	(TotemVolumeButton * button);
-static void	totem_volume_button_dispose	(GObject        * object);
+static void	bacon_volume_button_class_init	(BaconVolumeButtonClass * klass);
+static void	bacon_volume_button_init	(BaconVolumeButton * button);
+static void	bacon_volume_button_dispose	(GObject        * object);
 
-static gboolean	totem_volume_button_scroll	(GtkWidget      * widget,
+static gboolean	bacon_volume_button_scroll	(GtkWidget      * widget,
 						 GdkEventScroll * event);
-static gboolean	totem_volume_button_press	(GtkWidget      * widget,
+static gboolean	bacon_volume_button_press	(GtkWidget      * widget,
 						 GdkEventButton * event);
 static gboolean cb_dock_press			(GtkWidget      * widget,
 						 GdkEventButton * event,
@@ -60,10 +55,10 @@ static gboolean cb_button_press			(GtkWidget      * widget,
 static gboolean cb_button_release		(GtkWidget      * widget,
 						 GdkEventButton * event,
 						 gpointer         data);
-static void	totem_volume_scale_value_changed(GtkRange       * range);
+static void	bacon_volume_scale_value_changed(GtkRange       * range);
 
 /* see below for scale definitions */
-static GtkWidget *totem_volume_scale_new	(TotemVolumeButton * button,
+static GtkWidget *bacon_volume_scale_new	(BaconVolumeButton * button,
 						 float min, float max,
 						 float step);
 
@@ -71,35 +66,35 @@ static GtkButtonClass *parent_class = NULL;
 static guint signals[NUM_SIGNALS] = { 0 };
 
 GType
-totem_volume_button_get_type (void)
+bacon_volume_button_get_type (void)
 {
-  static GType totem_volume_button_type = 0;
+  static GType bacon_volume_button_type = 0;
 
-  if (!totem_volume_button_type) {
-    static const GTypeInfo totem_volume_button_info = {
-      sizeof (TotemVolumeButtonClass),
+  if (!bacon_volume_button_type) {
+    static const GTypeInfo bacon_volume_button_info = {
+      sizeof (BaconVolumeButtonClass),
       NULL,
       NULL,
-      (GClassInitFunc) totem_volume_button_class_init,
+      (GClassInitFunc) bacon_volume_button_class_init,
       NULL,
       NULL,
-      sizeof (TotemVolumeButton),
+      sizeof (BaconVolumeButton),
       0,
-      (GInstanceInitFunc) totem_volume_button_init,
+      (GInstanceInitFunc) bacon_volume_button_init,
       NULL
     };
 
-    totem_volume_button_type =
+    bacon_volume_button_type =
 	g_type_register_static (GTK_TYPE_BUTTON, 
-				"TotemVolumeButton",
-				&totem_volume_button_info, 0);
+				"BaconVolumeButton",
+				&bacon_volume_button_info, 0);
   }
 
-  return totem_volume_button_type;
+  return bacon_volume_button_type;
 }
 
 static void
-totem_volume_button_class_init (TotemVolumeButtonClass *klass)
+bacon_volume_button_class_init (BaconVolumeButtonClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *gtkwidget_class = GTK_WIDGET_CLASS (klass);
@@ -107,19 +102,19 @@ totem_volume_button_class_init (TotemVolumeButtonClass *klass)
   parent_class = g_type_class_ref (GTK_TYPE_BUTTON);
 
   /* events */
-  gobject_class->dispose = totem_volume_button_dispose;
-  gtkwidget_class->button_press_event = totem_volume_button_press;
-  gtkwidget_class->scroll_event = totem_volume_button_scroll;
+  gobject_class->dispose = bacon_volume_button_dispose;
+  gtkwidget_class->button_press_event = bacon_volume_button_press;
+  gtkwidget_class->scroll_event = bacon_volume_button_scroll;
 
   /* signals */
   signals[SIGNAL_VALUE_CHANGED] = g_signal_new ("value-changed",
       G_TYPE_FROM_CLASS (klass), G_SIGNAL_RUN_LAST,
-      G_STRUCT_OFFSET (TotemVolumeButtonClass, value_changed),
+      G_STRUCT_OFFSET (BaconVolumeButtonClass, value_changed),
       NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 }
 
 static void
-totem_volume_button_init (TotemVolumeButton *button)
+bacon_volume_button_init (BaconVolumeButton *button)
 {
   button->timeout = FALSE;
   button->click_id = 0;
@@ -130,9 +125,9 @@ totem_volume_button_init (TotemVolumeButton *button)
 }
 
 static void
-totem_volume_button_dispose (GObject *object)
+bacon_volume_button_dispose (GObject *object)
 {
-  TotemVolumeButton *button = TOTEM_VOLUME_BUTTON (object);
+  BaconVolumeButton *button = BACON_VOLUME_BUTTON (object);
 
   if (button->dock) {
     gtk_widget_destroy (button->dock);
@@ -157,13 +152,13 @@ totem_volume_button_dispose (GObject *object)
  */
 
 GtkWidget *
-totem_volume_button_new (float min, float max,
+bacon_volume_button_new (float min, float max,
 			 float step)
 {
-  TotemVolumeButton *button;
+  BaconVolumeButton *button;
   GtkWidget *frame, *box;
 
-  button = g_object_new (TOTEM_TYPE_VOLUME_BUTTON, NULL);
+  button = g_object_new (BACON_TYPE_VOLUME_BUTTON, NULL);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 
 #ifndef HAVE_GTK_ONLY
@@ -196,7 +191,7 @@ totem_volume_button_new (float min, float max,
   gtk_box_pack_start (GTK_BOX (box), button->plus, TRUE, FALSE, 0);
 
   /* scale */
-  button->scale = totem_volume_scale_new (button, min, max, step);
+  button->scale = bacon_volume_scale_new (button, min, max, step);
   gtk_widget_set_size_request (button->scale, -1, SCALE_SIZE);
   gtk_scale_set_draw_value (GTK_SCALE (button->scale), FALSE);
   gtk_range_set_inverted (GTK_RANGE (button->scale), TRUE);
@@ -212,13 +207,13 @@ totem_volume_button_new (float min, float max,
   gtk_box_pack_start (GTK_BOX (box), button->min, TRUE, FALSE, 0);
 
   /* call callback once so original icon is drawn */
-  totem_volume_scale_value_changed (GTK_RANGE (button->scale));
+  bacon_volume_scale_value_changed (GTK_RANGE (button->scale));
 
   return GTK_WIDGET (button);
 }
 
 float
-totem_volume_button_get_value (TotemVolumeButton * button)
+bacon_volume_button_get_value (BaconVolumeButton * button)
 {
   g_return_val_if_fail (button != NULL, 0);
 
@@ -226,7 +221,7 @@ totem_volume_button_get_value (TotemVolumeButton * button)
 }
 
 void
-totem_volume_button_set_value (TotemVolumeButton * button,
+bacon_volume_button_set_value (BaconVolumeButton * button,
 			       float value)
 {
   g_return_if_fail (button != NULL);
@@ -239,17 +234,17 @@ totem_volume_button_set_value (TotemVolumeButton * button,
  */
 
 static gboolean
-totem_volume_button_scroll (GtkWidget      * widget,
+bacon_volume_button_scroll (GtkWidget      * widget,
 			    GdkEventScroll * event)
 {
-  TotemVolumeButton *button = TOTEM_VOLUME_BUTTON (widget);
+  BaconVolumeButton *button = BACON_VOLUME_BUTTON (widget);
   GtkAdjustment *adj = gtk_range_get_adjustment (GTK_RANGE (button->scale));
   float d;
 
   if (event->type != GDK_SCROLL)
     return FALSE;
 
-  d = totem_volume_button_get_value (button);
+  d = bacon_volume_button_get_value (button);
   if (event->direction == GDK_SCROLL_UP) {
     d += adj->step_increment;
     if (d > adj->upper)
@@ -259,16 +254,16 @@ totem_volume_button_scroll (GtkWidget      * widget,
     if (d < adj->lower)
       d = adj->lower;
   }
-  totem_volume_button_set_value (button, d);
+  bacon_volume_button_set_value (button, d);
 
   return TRUE;
 }
 
 static gboolean
-totem_volume_button_press (GtkWidget      * widget,
+bacon_volume_button_press (GtkWidget      * widget,
 			   GdkEventButton * event)
 {
-  TotemVolumeButton *button = TOTEM_VOLUME_BUTTON (widget);
+  BaconVolumeButton *button = BACON_VOLUME_BUTTON (widget);
   GtkAdjustment *adj = gtk_range_get_adjustment (GTK_RANGE (button->scale));
   gint x, y, m, dx, dy, sx, sy, ystartoff, mouse_y;
   float v;
@@ -287,7 +282,7 @@ totem_volume_button_press (GtkWidget      * widget,
   button->timeout = TRUE;
 
   /* position (needs widget to be shown already) */
-  v = totem_volume_button_get_value (button) / (adj->upper - adj->lower);
+  v = bacon_volume_button_get_value (button) / (adj->upper - adj->lower);
   x += widget->allocation.x;
   x += (widget->allocation.width - button->dock->allocation.width) / 2;
   y += widget->allocation.y;
@@ -338,7 +333,7 @@ totem_volume_button_press (GtkWidget      * widget,
 static gboolean
 cb_button_timeout (gpointer data)
 {
-  TotemVolumeButton *button = TOTEM_VOLUME_BUTTON (data);
+  BaconVolumeButton *button = BACON_VOLUME_BUTTON (data);
   GtkAdjustment *adj = gtk_range_get_adjustment (GTK_RANGE (button->scale));
   float val;
   gboolean res = TRUE;
@@ -346,7 +341,7 @@ cb_button_timeout (gpointer data)
   if (button->click_id == 0)
     return FALSE;
 
-  val = totem_volume_button_get_value (button);
+  val = bacon_volume_button_get_value (button);
   val += button->direction;
   if (val <= adj->lower) {
     res = FALSE;
@@ -355,7 +350,7 @@ cb_button_timeout (gpointer data)
     res = FALSE;
     val = adj->upper;
   }
-  totem_volume_button_set_value (button, val);
+  bacon_volume_button_set_value (button, val);
 
   if (!res) {
     g_source_remove (button->click_id);
@@ -370,7 +365,7 @@ cb_button_press (GtkWidget      * widget,
 		 GdkEventButton * event,
 		 gpointer         data)
 {
-  TotemVolumeButton *button = TOTEM_VOLUME_BUTTON (data);
+  BaconVolumeButton *button = BACON_VOLUME_BUTTON (data);
   GtkAdjustment *adj = gtk_range_get_adjustment (GTK_RANGE (button->scale));
 
   if (button->click_id != 0)
@@ -389,7 +384,7 @@ cb_button_release (GtkWidget      * widget,
 		   GdkEventButton * event,
 		   gpointer         data)
 {
-  TotemVolumeButton *button = TOTEM_VOLUME_BUTTON (data);
+  BaconVolumeButton *button = BACON_VOLUME_BUTTON (data);
 
   if (button->click_id != 0) {
     g_source_remove (button->click_id);
@@ -404,7 +399,7 @@ cb_button_release (GtkWidget      * widget,
  */
 
 static void
-totem_volume_release_grab (TotemVolumeButton *button,
+bacon_volume_release_grab (BaconVolumeButton *button,
 			   GdkEventButton * event)
 {
   GdkEventButton *e;
@@ -432,10 +427,10 @@ cb_dock_press (GtkWidget      * widget,
 	       gpointer         data)
 {
   //GtkWidget *ewidget = gtk_get_event_widget ((GdkEvent *) event);
-  TotemVolumeButton *button = TOTEM_VOLUME_BUTTON (data);
+  BaconVolumeButton *button = BACON_VOLUME_BUTTON (data);
 
   if (/*ewidget == button->dock &&*/ event->type == GDK_BUTTON_PRESS) {
-    totem_volume_release_grab (button, event);
+    bacon_volume_release_grab (button, event);
     return TRUE;
   }
 
@@ -446,75 +441,75 @@ cb_dock_press (GtkWidget      * widget,
  * Scale stuff.
  */
 
-#define TOTEM_TYPE_VOLUME_SCALE \
-  (totem_volume_scale_get_type ())
-#define TOTEM_VOLUME_SCALE(obj) \
-  (G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_VOLUME_SCALE, \
-			       TotemVolumeScale))
+#define BACON_TYPE_VOLUME_SCALE \
+  (bacon_volume_scale_get_type ())
+#define BACON_VOLUME_SCALE(obj) \
+  (G_TYPE_CHECK_INSTANCE_CAST ((obj), BACON_TYPE_VOLUME_SCALE, \
+			       BaconVolumeScale))
 
-typedef struct _TotemVolumeScale {
+typedef struct _BaconVolumeScale {
   GtkVScale parent;
-  TotemVolumeButton *button;
-} TotemVolumeScale;
+  BaconVolumeButton *button;
+} BaconVolumeScale;
 
-static GType	totem_volume_scale_get_type	 (void);
+static GType	bacon_volume_scale_get_type	 (void);
 
-static void	totem_volume_scale_class_init    (GtkVScaleClass * klass);
+static void	bacon_volume_scale_class_init    (GtkVScaleClass * klass);
 
-static gboolean	totem_volume_scale_press	 (GtkWidget      * widget,
+static gboolean	bacon_volume_scale_press	 (GtkWidget      * widget,
 						  GdkEventButton * event);
-static gboolean totem_volume_scale_release	 (GtkWidget      * widget,
+static gboolean bacon_volume_scale_release	 (GtkWidget      * widget,
 						  GdkEventButton * event);
 
 static GtkVScaleClass *scale_parent_class = NULL;
 
 static GType
-totem_volume_scale_get_type (void)
+bacon_volume_scale_get_type (void)
 {
-  static GType totem_volume_scale_type = 0;
+  static GType bacon_volume_scale_type = 0;
 
-  if (!totem_volume_scale_type) {
-    static const GTypeInfo totem_volume_scale_info = {
+  if (!bacon_volume_scale_type) {
+    static const GTypeInfo bacon_volume_scale_info = {
       sizeof (GtkVScaleClass),
       NULL,
       NULL,
-      (GClassInitFunc) totem_volume_scale_class_init,
+      (GClassInitFunc) bacon_volume_scale_class_init,
       NULL,
       NULL,
-      sizeof (TotemVolumeScale),
+      sizeof (BaconVolumeScale),
       0,
       NULL,
       NULL
     };
 
-    totem_volume_scale_type =
+    bacon_volume_scale_type =
         g_type_register_static (GTK_TYPE_VSCALE,
-				"TotemVolumeScale",
-				&totem_volume_scale_info, 0);
+				"BaconVolumeScale",
+				&bacon_volume_scale_info, 0);
   }
 
-  return totem_volume_scale_type;
+  return bacon_volume_scale_type;
 }
 
 static void
-totem_volume_scale_class_init (GtkVScaleClass * klass)
+bacon_volume_scale_class_init (GtkVScaleClass * klass)
 {
   GtkWidgetClass *gtkwidget_class = GTK_WIDGET_CLASS (klass);
   GtkRangeClass *gtkrange_class = GTK_RANGE_CLASS (klass);
 
   scale_parent_class = g_type_class_ref (GTK_TYPE_VSCALE);
 
-  gtkwidget_class->button_press_event = totem_volume_scale_press;
-  gtkwidget_class->button_release_event = totem_volume_scale_release;
-  gtkrange_class->value_changed = totem_volume_scale_value_changed;
+  gtkwidget_class->button_press_event = bacon_volume_scale_press;
+  gtkwidget_class->button_release_event = bacon_volume_scale_release;
+  gtkrange_class->value_changed = bacon_volume_scale_value_changed;
 }
 
 static GtkWidget *
-totem_volume_scale_new (TotemVolumeButton * button,
+bacon_volume_scale_new (BaconVolumeButton * button,
 			float min, float max,
 			float step)
 {
-  TotemVolumeScale *scale = g_object_new (TOTEM_TYPE_VOLUME_SCALE, NULL);
+  BaconVolumeScale *scale = g_object_new (BACON_TYPE_VOLUME_SCALE, NULL);
   GtkObject *adj;
 
   adj = gtk_adjustment_new (min, min, max, -step, 10 * -step, 0);
@@ -525,11 +520,11 @@ totem_volume_scale_new (TotemVolumeButton * button,
 }
 
 static gboolean
-totem_volume_scale_press (GtkWidget      * widget,
+bacon_volume_scale_press (GtkWidget      * widget,
 			  GdkEventButton * event)
 {
-  TotemVolumeScale *scale = TOTEM_VOLUME_SCALE (widget);
-  TotemVolumeButton *button = scale->button;
+  BaconVolumeScale *scale = BACON_VOLUME_SCALE (widget);
+  BaconVolumeButton *button = scale->button;
 
   /* the scale will grab input; if we have input grabbed, all goes
    * horribly wrong, so let's not do that. */
@@ -539,17 +534,17 @@ totem_volume_scale_press (GtkWidget      * widget,
 }
 
 static gboolean
-totem_volume_scale_release (GtkWidget      * widget,
+bacon_volume_scale_release (GtkWidget      * widget,
 			    GdkEventButton * event)
 {
-  TotemVolumeScale *scale = TOTEM_VOLUME_SCALE (widget);
-  TotemVolumeButton *button = scale->button;
+  BaconVolumeScale *scale = BACON_VOLUME_SCALE (widget);
+  BaconVolumeButton *button = scale->button;
   gboolean res;
 
   if (button->timeout) {
     /* if we did a quick click, leave the window open; else, hide it */
     if (event->time > button->pop_time + CLICK_TIMEOUT) {
-      totem_volume_release_grab (button, event);
+      bacon_volume_release_grab (button, event);
       GTK_WIDGET_CLASS (scale_parent_class)->button_release_event (widget, event);
       return TRUE;
     }
@@ -569,10 +564,10 @@ totem_volume_scale_release (GtkWidget      * widget,
 }
 
 static void
-totem_volume_scale_value_changed (GtkRange * range)
+bacon_volume_scale_value_changed (GtkRange * range)
 {
-  TotemVolumeScale *scale = TOTEM_VOLUME_SCALE (range);
-  TotemVolumeButton *button = scale->button;
+  BaconVolumeScale *scale = BACON_VOLUME_SCALE (range);
+  BaconVolumeButton *button = scale->button;
   GtkAdjustment *adj = gtk_range_get_adjustment (GTK_RANGE (button->scale));
   float step = (adj->upper - adj->lower) / 4;
   float val = gtk_range_get_value (range);

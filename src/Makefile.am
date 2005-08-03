@@ -92,7 +92,7 @@ totem_SOURCES = 					\
 	totem-statusbar.c		\
 	totem-statusbar.h		\
 	totem-gromit.c totem-gromit.h	\
-	totem-volume.c totem-volume.h	\
+	bacon-volume.c bacon-volume.h	\
 	ev-sidebar.c ev-sidebar.h
 
 totem_LDADD = \

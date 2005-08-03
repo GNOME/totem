@@ -58,7 +58,7 @@
 #include "totem-options.h"
 #include "totem-uri.h"
 #include "totem-interface.h"
-#include "totem-volume.h"
+#include "bacon-volume.h"
 #include "video-utils.h"
 
 #include "totem.h"
@@ -1340,8 +1340,8 @@ update_volume_sliders (Totem *totem)
 				totem->prev_volume != -1 && volume != -1))
 	{
 		totem->volume_first_time = 0;
-		totem_volume_button_set_value (
-			TOTEM_VOLUME_BUTTON (totem->volume), (float) volume);
+		bacon_volume_button_set_value (
+			BACON_VOLUME_BUTTON (totem->volume), (float) volume);
 		gtk_adjustment_set_value (totem->fs_voladj,
 				(float) volume);
 	}
@@ -1421,12 +1421,12 @@ vol_cb (GtkWidget *widget, Totem *totem)
 				(totem->bvw, (gint) totem->fs_voladj->value);
 
 			/* Update the fullscreen volume adjustment */
-			totem_volume_button_set_value (
-				TOTEM_VOLUME_BUTTON (totem->volume),
+			bacon_volume_button_set_value (
+				BACON_VOLUME_BUTTON (totem->volume),
 				gtk_adjustment_get_value (totem->fs_voladj));
 		} else {
-			int value = totem_volume_button_get_value (
-				TOTEM_VOLUME_BUTTON (totem->volume));
+			int value = bacon_volume_button_get_value (
+				BACON_VOLUME_BUTTON (totem->volume));
 
 			bacon_video_widget_set_volume (totem->bvw, value);
 			/* Update the volume adjustment */
@@ -3338,7 +3338,7 @@ totem_volume_create (void)
 {
 	GtkWidget *widget;
 
-	widget = totem_volume_button_new (0, 100, -1);
+	widget = bacon_volume_button_new (0, 100, -1);
 	gtk_widget_show (widget);
 
 	return widget;

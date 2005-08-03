@@ -1,4 +1,4 @@
-/* Totem Volume Button / popup widget
+/* Volume Button / popup widget
  * (c) copyright 2005 Ronald S. Bultje <rbultje@ronald.bitfreak.net>
  *
  * This library is free software; you can redistribute it and/or
@@ -15,27 +15,22 @@
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
- *
- * The Totem project hereby grant permission for non-gpl compatible GStreamer
- * plugins to be used and distributed together with GStreamer and Totem. This
- * permission are above and beyond the permissions granted by the GPL license
- * Totem is covered by.
  */
 
-#ifndef __BUTTON_H__
-#define __BUTTON_H__
+#ifndef __BACON_VOLUME_BUTTON_H__
+#define __BACON_VOLUME_BUTTON_H__
 
 #include <gtk/gtkbutton.h>
 
 G_BEGIN_DECLS
 
-#define TOTEM_TYPE_VOLUME_BUTTON \
-  (totem_volume_button_get_type ())
-#define TOTEM_VOLUME_BUTTON(obj) \
-  (G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_VOLUME_BUTTON, \
-			       TotemVolumeButton))
+#define BACON_TYPE_VOLUME_BUTTON \
+  (bacon_volume_button_get_type ())
+#define BACON_VOLUME_BUTTON(obj) \
+  (G_TYPE_CHECK_INSTANCE_CAST ((obj), BACON_TYPE_VOLUME_BUTTON, \
+			       BaconVolumeButton))
 
-typedef struct _TotemVolumeButton {
+typedef struct _BaconVolumeButton {
   GtkButton parent;
 
   /* popup */
@@ -45,25 +40,25 @@ typedef struct _TotemVolumeButton {
   gboolean timeout;
   guint32 pop_time;
   GtkIconTheme *theme;
-} TotemVolumeButton;
+} BaconVolumeButton;
 
-typedef struct _TotemVolumeButtonClass {
+typedef struct _BaconVolumeButtonClass {
   GtkButtonClass parent_class;
 
   /* signals */
-  void	(* value_changed)	(TotemVolumeButton * button);
+  void	(* value_changed)	(BaconVolumeButton * button);
 
   gpointer __bla[4];
-} TotemVolumeButtonClass;
+} BaconVolumeButtonClass;
 
-GType		totem_volume_button_get_type	(void);
+GType		bacon_volume_button_get_type	(void);
 
-GtkWidget *	totem_volume_button_new		(float min, float max,
+GtkWidget *	bacon_volume_button_new		(float min, float max,
 						 float step);
-float		totem_volume_button_get_value	(TotemVolumeButton * button);
-void		totem_volume_button_set_value	(TotemVolumeButton * button,
+float		bacon_volume_button_get_value	(BaconVolumeButton * button);
+void		bacon_volume_button_set_value	(BaconVolumeButton * button,
 						 float value);
 
 G_END_DECLS
 
-#endif /* __BUTTON_H__ */
+#endif /* __BACON_VOLUME_BUTTON_H__ */
