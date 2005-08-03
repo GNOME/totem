@@ -21,6 +21,7 @@
 #define __BACON_VOLUME_BUTTON_H__
 
 #include <gtk/gtkbutton.h>
+#include <gtk/gtkicontheme.h>
 
 G_BEGIN_DECLS
 
