@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-19 22:44+0000\n"
-"PO-Revision-Date: 2005-07-21 13:15-0300\n"
+"POT-Creation-Date: 2005-08-01 14:46+0000\n"
+"PO-Revision-Date: 2005-08-01 16:28-0300\n"
 "Last-Translator: Raphael Higino <raphaelh@uai.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
@@ -178,7 +178,7 @@ msgstr "Taxa de quadros:"
 msgid "N/A"
 msgstr "N/D"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:2069
+#: ../data/properties.glade.h:17 ../src/totem.c:2018
 msgid "Properties"
 msgstr "Propriedades"
 
@@ -243,7 +243,7 @@ msgstr "Reproduzir filmes e músicas"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:2 ../data/totem.glade.h:97
-#: ../src/totem.c:672 ../src/totem.c:3440 ../src/totem.c:3457
+#: ../src/totem.c:666 ../src/totem.c:3374 ../src/totem.c:3391
 msgid "Totem Movie Player"
 msgstr "Reprodutor de Filmes Totem"
 
@@ -708,8 +708,8 @@ msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)"
 msgstr ""
-"Quantidade de dados no buffer para fluxo de rede antes de iniciar a "
-"exibição do fluxo (em segundos)"
+"Quantidade de dados no buffer para fluxo de rede antes de iniciar a exibição "
+"do fluxo (em segundos)"
 
 #: ../data/totem.schemas.in.h:2
 msgid "Buffer size"
@@ -725,7 +725,9 @@ msgstr "Altura do componente de vídeo"
 
 #: ../data/totem.schemas.in.h:5
 msgid "Maximum amount of data to decode ahead of display (in seconds)"
-msgstr "Quantidade máxima de dados a serem decodificados antes da exibição (em segundos)"
+msgstr ""
+"Quantidade máxima de dados a serem decodificados antes da exibição (em "
+"segundos)"
 
 #: ../data/totem.schemas.in.h:6
 msgid "Name of the visual effects plugins"
@@ -978,7 +980,7 @@ msgstr "A opção '%s' não é conhecida e foi ignorada\n"
 
 #: ../src/totem-playlist.c:313
 msgid "Could not save the playlist"
-msgstr "Impossível salvar a lista de reprodução"
+msgstr "Não foi possível salvar a lista de reprodução"
 
 #: ../src/totem-playlist.c:646
 msgid "Select Movies or Playlists"
@@ -1106,7 +1108,7 @@ msgstr "Tipo de sombra"
 msgid "Style of bevel around the statusbar text"
 msgstr "Estilo de chanfro ao redor do texto da barra de status"
 
-#: ../src/totem-statusbar.c:124 ../src/totem.c:254 ../src/totem.c:658
+#: ../src/totem-statusbar.c:124 ../src/totem.c:254 ../src/totem.c:652
 msgid "Stopped"
 msgstr "Parado"
 
@@ -1141,6 +1143,16 @@ msgstr "Armazenando"
 msgid "%d %%"
 msgstr "%d %%"
 
+#. +
+#: ../src/totem-volume.c:190
+msgid "+"
+msgstr "+"
+
+#. -
+#: ../src/totem-volume.c:206
+msgid "-"
+msgstr "-"
+
 #: ../src/totem.c:244
 msgid "Playing"
 msgstr "Reproduzindo"
@@ -1153,7 +1165,7 @@ msgstr "Pausado"
 msgid "Totem could not eject the optical media."
 msgstr "O Totem não pôde ejetar a mídia óptica."
 
-#: ../src/totem.c:322 ../src/totem.c:349 ../src/totem.c:802 ../src/totem.c:907
+#: ../src/totem.c:322 ../src/totem.c:349 ../src/totem.c:772 ../src/totem.c:876
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "O Totem não pôde reproduzir '%s'."
@@ -1192,40 +1204,40 @@ msgstr ""
 "Talvez você queira verificar se há um disco presente no drive e se ele está "
 "configurado corretamente."
 
-#: ../src/totem.c:665
+#: ../src/totem.c:659
 msgid "No File"
 msgstr "Nenhum Arquivo"
 
-#: ../src/totem.c:1286 ../src/totem.c:1288
-msgid "An error occured"
+#: ../src/totem.c:1239 ../src/totem.c:1241
+msgid "An error occurred"
 msgstr "Ocorreu um erro"
 
-#: ../src/totem.c:1594
+#: ../src/totem.c:1537
 msgid "Select Files"
 msgstr "Selecionar Arquivos"
 
-#: ../src/totem.c:1679
+#: ../src/totem.c:1622
 msgid "Open Location..."
 msgstr "Abrir Localização..."
 
-#: ../src/totem.c:1942
+#: ../src/totem.c:1891
 msgid "Totem could not display the help contents."
 msgstr "O Totem não pôde mostrar o conteúdo da ajuda."
 
-#: ../src/totem.c:1980
+#: ../src/totem.c:1929
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Reprodutor de Filmes usando %s"
 
-#: ../src/totem.c:1984
+#: ../src/totem.c:1933
 msgid "Totem"
 msgstr "Totem"
 
-#: ../src/totem.c:1986 ../src/vanity.c:261
+#: ../src/totem.c:1935 ../src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Copyright © 2002-2005 Bastien Nocera"
 
-#: ../src/totem.c:1991 ../src/vanity.c:266
+#: ../src/totem.c:1940 ../src/vanity.c:266
 msgid "translator-credits"
 msgstr ""
 "Alexandre Folle de Menezes <afmenez@terra.com.br>\n"
@@ -1233,58 +1245,59 @@ msgstr ""
 "Raphael Higino <raphaelh@uai.com.br>\n"
 "Afonso Celso Medina <afmedina@uol.com.br>"
 
-#: ../src/totem.c:2024 ../src/totem.c:2032 ../src/vanity.c:299
+#: ../src/totem.c:1973 ../src/totem.c:1981 ../src/vanity.c:299
 #: ../src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
 msgstr "O Totem não pôde capturar um quadro do filme."
 
-#: ../src/totem.c:2032 ../src/vanity.c:307
+#: ../src/totem.c:1981 ../src/vanity.c:307
 msgid "This is not supposed to happen; please file a bug report."
-msgstr "Isto não deveria ter acontecido; por favor, relate envie um relatório de bug."
+msgstr ""
+"Isto não deveria ter acontecido; por favor, relate envie um relatório de bug."
 
-#: ../src/totem.c:2059
+#: ../src/totem.c:2008
 msgid "Totem couldn't show the movie properties window."
 msgstr "O Totem não pôde mostrar a janela de propriedades do filme."
 
-#: ../src/totem.c:2059
+#: ../src/totem.c:2008
 msgid "Make sure that Totem is correctly installed."
 msgstr "Certifique-se de que o Totem está instalado corretamente."
 
-#: ../src/totem.c:2145
+#: ../src/totem.c:2094
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "O Totem não pôde ir para '%s'."
 
-#: ../src/totem.c:3303
+#: ../src/totem.c:3237
 msgid "Totem could not startup."
 msgstr "O Totem não pôde iniciar."
 
-#: ../src/totem.c:3303
+#: ../src/totem.c:3237
 msgid "No reason."
 msgstr "Sem motivo."
 
-#: ../src/totem.c:3441
+#: ../src/totem.c:3375
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Impossível inicializar as bibliotecas thread-safe."
 
-#: ../src/totem.c:3441
+#: ../src/totem.c:3375
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verifique a instalação do seu sistema. O Totem vai fechar agora."
 
-#: ../src/totem.c:3464
+#: ../src/totem.c:3398
 msgid "Totem could not initialize the configuration engine."
 msgstr "O Totem não pôde inicializar o mecanismo de configuração."
 
-#: ../src/totem.c:3464
+#: ../src/totem.c:3398
 msgid "Make sure that GNOME is properly installed."
 msgstr "Certifique-se de que o GNOME está instalado adequadamente."
 
 #. Main window
-#: ../src/totem.c:3491
+#: ../src/totem.c:3425
 msgid "main window"
 msgstr "janela principal"
 
-#: ../src/totem.c:3496
+#: ../src/totem.c:3430
 msgid "video popup menu"
 msgstr "menu de contexto de vídeo"
 
@@ -1401,8 +1414,8 @@ msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr ""
-"Falha ao criar um objeto de reprodução do GStreamer. Por favor, verifique "
-"a sua instalação do GStreamer."
+"Falha ao criar um objeto de reprodução do GStreamer. Por favor, verifique a "
+"sua instalação do GStreamer."
 
 #: ../src/backend/bacon-video-widget-gst.c:3408
 msgid ""
@@ -1418,8 +1431,9 @@ msgstr ""
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
-msgstr "Falha ao abrir a saída de vídeo. Ele pode não estar disponível. Por favor, selecione "
-"outra saída de vídeo no Seletor de Sistema Multimídia."
+msgstr ""
+"Falha ao abrir a saída de vídeo. Ele pode não estar disponível. Por favor, "
+"selecione outra saída de vídeo no Seletor de Sistema Multimídia."
 
 #: ../src/backend/bacon-video-widget-gst.c:3445
 msgid ""
@@ -1427,17 +1441,17 @@ msgid ""
 "audio output in the Multimedia Systems Selector. You may want to consider "
 "using a sound server."
 msgstr ""
-"A saída de áudio está sendo utilizada por outra aplicação. Por favor, selecione "
-"outra saída de vídeo no Seletor de Sistemas Multimídia. Você pode considerar "
-"o uso de um servidor de som."
+"A saída de áudio está sendo utilizada por outra aplicação. Por favor, "
+"selecione outra saída de vídeo no Seletor de Sistemas Multimídia. Você pode "
+"considerar o uso de um servidor de som."
 
 #: ../src/backend/bacon-video-widget-gst.c:3451
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector"
 msgstr ""
-"A saída de áudio requerida não foi encontrada. Por favor, selecione outra saída "
-"de áudio no Seletor de Sistemas Multimídia"
+"A saída de áudio requerida não foi encontrada. Por favor, selecione outra "
+"saída de áudio no Seletor de Sistemas Multimídia"
 
 #: ../src/backend/bacon-video-widget-gst.c:3461
 msgid ""
@@ -1505,9 +1519,8 @@ msgstr "O filme não pôde ser lido."
 
 #: ../src/backend/bacon-video-widget-xine.c:1288
 #, c-format
-msgid "A problem occured while loading a library or a decoder (%s)."
-msgstr ""
-"Ocorreu um problema ao carregar uma biblioteca ou um decodificador (%s)."
+msgid "A problem occurred while loading a library or a decoder (%s)."
+msgstr "Ocorreu um problema ao carregar uma biblioteca ou um decodificador (%s)."
 
 #: ../src/backend/bacon-video-widget-xine.c:1297
 msgid "This file is encrypted and cannot be played back."
