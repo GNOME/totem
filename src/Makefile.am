@@ -154,7 +154,7 @@ totem-mozilla-interface.h: totem-mozilla-interface.xml
 totem_mozilla_viewer_SOURCES = 		\
 	totem-mozilla-viewer.c		\
 	totem-mozilla-options.h		\
-	totem-volume.c totem-volume.h
+	bacon-volume.c bacon-volume.h
 totem_mozilla_viewer_LDADD = \
 	$(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) \
 	$(DBUS_LIBS) $(NVTV_LIBS) \

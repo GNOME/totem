@@ -34,7 +34,7 @@
 #include "bacon-video-widget.h"
 #include "totem-interface.h"
 #include "totem-mozilla-options.h"
-#include "totem-volume.h"
+#include "bacon-volume.h"
 //FIXME damn build system!
 #include "totem-interface.c"
 
@@ -346,7 +346,7 @@ static void
 cb_vol (GtkWidget *val, TotemEmbedded *emb)
 {
 	bacon_video_widget_set_volume (emb->bvw,
-		totem_volume_button_get_value (TOTEM_VOLUME_BUTTON (val)));
+		bacon_volume_button_get_value (BACON_VOLUME_BUTTON (val)));
 }
 
 static void
@@ -417,7 +417,7 @@ totem_embedded_add_children (TotemEmbedded *emb)
 			  G_CALLBACK (on_play_pause), emb);
 
 	vbut = glade_xml_get_widget (emb->xml, "volume_button");
-	totem_volume_button_set_value (TOTEM_VOLUME_BUTTON (vbut),
+	bacon_volume_button_set_value (BACON_VOLUME_BUTTON (vbut),
 			bacon_video_widget_get_volume (emb->bvw));
 	g_signal_connect (G_OBJECT (vbut), "value-changed",
 			  G_CALLBACK (cb_vol), emb);
@@ -463,7 +463,7 @@ totem_volume_create (void)
 {
 	GtkWidget *widget;
 
-	widget = totem_volume_button_new (0, 100, -1);
+	widget = bacon_volume_button_new (0, 100, -1);
 	gtk_widget_show (widget);
 
 	return widget;
