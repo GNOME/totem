@@ -1,5 +1,11 @@
 2005-08-07  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
+	* configure.in:
+	  Explicitely call PKG_PROG_PKG_CONFIG since our first
+	  PKG_CHECK_MODULES is wrapped inside an if; fixes #311911.
+
+2005-08-07  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
 	* src/bacon-volume.c: (bacon_volume_button_press):
 	  Backport fix from sound-juicer for flickering of widget when
 	  first popping it up (#312165).
