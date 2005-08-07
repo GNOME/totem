@@ -1,3 +1,11 @@
+2005-08-07  Michaël Arnauts  <michael.arnauts@gmail.com>
+
+	Reviewed by:  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/totem-time-label.c: (totem_time_label_set_time):
+	  Do not display length if it is unknown (0:00) in fullscreen-mode,
+	  fixing #312680.
+
 2005-08-07  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* totem.spec.in:

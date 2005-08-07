@@ -70,7 +70,7 @@ totem_time_label_set_time (TotemTimeLabel *label, gint64 time, gint64 length)
 			&& length / 1000 == label->priv->length / 1000)
 		return;
 
-	if (length < 0)
+	if (length <= 0)
 	{
 		label_str = totem_time_to_string (time);
 	} else {
