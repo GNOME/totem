@@ -271,7 +271,9 @@ bacon_volume_button_press (GtkWidget      * widget,
 
   /* position roughly */
   gdk_window_get_origin (widget->window, &x, &y);
-  gtk_window_move (GTK_WINDOW (button->dock), x, y - 50);
+  x += widget->allocation.x;
+  y += widget->allocation.y;
+  gtk_window_move (GTK_WINDOW (button->dock), x, y - (SCALE_SIZE / 2));
   gtk_widget_show_all (button->dock);
   gdk_window_get_origin (button->dock->window, &dx, &dy);
   dy += button->dock->allocation.y;
@@ -283,9 +285,7 @@ bacon_volume_button_press (GtkWidget      * widget,
 
   /* position (needs widget to be shown already) */
   v = bacon_volume_button_get_value (button) / (adj->upper - adj->lower);
-  x += widget->allocation.x;
   x += (widget->allocation.width - button->dock->allocation.width) / 2;
-  y += widget->allocation.y;
   y -= ystartoff;
   y -= GTK_RANGE (button->scale)->min_slider_size / 2;
   m = button->scale->allocation.height -
