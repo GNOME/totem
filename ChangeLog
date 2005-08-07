@@ -1,5 +1,10 @@
 2005-08-07  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
+	* totem.spec.in:
+	  Don't include mozilla/nautilus bits when not built (#311843).
+
+2005-08-07  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
 	* configure.in:
 	  Explicitely call PKG_PROG_PKG_CONFIG since our first
 	  PKG_CHECK_MODULES is wrapped inside an if; fixes #311911.

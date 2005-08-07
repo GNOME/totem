@@ -51,13 +51,11 @@ gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/totem-handlers.
 %config %{_sysconfdir}/gconf/schemas/*.schemas
 %{_bindir}/%{name}
 %{_bindir}/totem-video-thumbnailer
-%{_libexecdir}/totem-mozilla-viewer
+@HAVE_NAUTILUS_TRUE@%{_libdir}/nautilus/extensions-1.0
+@HAVE_MOZILLA_TRUE@%{_libdir}/mozilla/plugins/libtotem_mozilla.*
+@HAVE_MOZILLA_TRUE@%{_libexecdir}/totem-mozilla-viewer
 %{_libdir}/libtotem-plparser*
-%{_libdir}/nautilus/extensions-1.0
-%{_libdir}/mozilla/plugins/libtotem_mozilla.*
 %{_libdir}/pkgconfig/totem-plparser.pc
-%{_libdir}/mozilla/plugins/*
-%{_libexecdir}/totem-mozilla-viewer
 %{_includedir}//totem/1/plparser/*.h
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/*
