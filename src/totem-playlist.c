@@ -835,7 +835,7 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 	GtkWidget *fs;
 	int response;
 
-	fs = gtk_file_chooser_dialog_new (_("Save playlist"),
+	fs = gtk_file_chooser_dialog_new (_("Save Playlist"),
 			totem_playlist_get_toplevel (playlist),
 			GTK_FILE_CHOOSER_ACTION_SAVE,
 			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
