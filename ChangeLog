@@ -1,5 +1,13 @@
 2005-08-08  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: Fix compilation
+	* src/totem-playlist.c: (totem_playlist_update_save_button),
+	(totem_playlist_remove_files), (update_lockdown), (init_config),
+	(totem_playlist_add_one_mrl): patch from Michaël Arnauts to disable
+	the "Save" button in the playlist when it's empty (Closes: #309407)
+
+2005-08-08  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-preferences.c: (totem_action_info),
 	(audio_out_menu_changed): Parent the information dialogues on the
 	preferences window, not the main Totem window (Closes: #312773)

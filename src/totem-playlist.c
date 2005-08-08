@@ -88,6 +88,8 @@ struct TotemPlaylistPrivate
 
 	/* CD index caching */
 	char *cdindex;
+
+	gboolean disable_save_to_disk;
 };
 
 /* Signals */
@@ -248,6 +250,17 @@ totem_playlist_is_media (const char *mrl)
 		return TRUE;
 
 	return FALSE;
+}
+
+static void
+totem_playlist_update_save_button (TotemPlaylist *playlist)
+{
+	GtkWidget *button;
+	gboolean state;
+
+	button = glade_xml_get_widget (playlist->_priv->xml, "save_button");
+	state = (!playlist->_priv->disable_save_to_disk) && (PL_LEN != 0);
+	gtk_widget_set_sensitive (button, state);
 }
 
 static char*
@@ -813,6 +826,7 @@ totem_playlist_remove_files (GtkWidget *widget, TotemPlaylist *playlist)
 				totem_playlist_table_signals[CHANGED], 0,
 				NULL);
 	}
+	totem_playlist_update_save_button (playlist);
 }
 
 static void
@@ -1287,27 +1301,21 @@ static void
 update_lockdown (GConfClient *client, guint cnxn_id,
 		GConfEntry *entry, TotemPlaylist *playlist)
 {
-	GtkWidget *button;
-	gboolean locked;
-
-	locked = gconf_client_get_bool (playlist->_priv->gc,
+	playlist->_priv->disable_save_to_disk = gconf_client_get_bool
+			(playlist->_priv->gc,
 			"/desktop/gnome/lockdown/disable_save_to_disk", NULL);
-	button = glade_xml_get_widget (playlist->_priv->xml, "save_button");
-	gtk_widget_set_sensitive (button, !locked);
+	totem_playlist_update_save_button (playlist);
 }
 
 static void
 init_config (TotemPlaylist *playlist)
 {
-	GtkWidget *button;
-	gboolean locked;
-
 	playlist->_priv->gc = gconf_client_get_default ();
 
-	locked = gconf_client_get_bool (playlist->_priv->gc,
+	playlist->_priv->disable_save_to_disk = gconf_client_get_bool
+	       		(playlist->_priv->gc,
 			"/desktop/gnome/lockdown/disable_save_to_disk", NULL);
-	button = glade_xml_get_widget (playlist->_priv->xml, "save_button");
-	gtk_widget_set_sensitive (button, !locked);
+	totem_playlist_update_save_button (playlist);
 
 	gconf_client_add_dir (playlist->_priv->gc, GCONF_PREFIX,
 			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
@@ -1492,6 +1500,7 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 	g_signal_emit (G_OBJECT (playlist),
 			totem_playlist_table_signals[CHANGED], 0,
 			NULL);
+	totem_playlist_update_save_button (playlist);
 
 	return TRUE;
 }
