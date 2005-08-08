@@ -1,5 +1,12 @@
 2005-08-08  Bastien Nocera  <hadess@hadess.net>
 
+	* NEWS: upd
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_realize), (bacon_video_widget_new):
+	Only set the default vis plugin name if we don't already have one
+
+2005-08-08  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c: (bacon_video_widget_init),
 	(bacon_video_widget_realize), (bacon_video_widget_unrealize),
 	(show_vfx_update), (bacon_video_widget_set_visuals):

@@ -1140,7 +1140,11 @@ bacon_video_widget_realize (GtkWidget *widget)
 			&& bvw->priv->ao_driver != NULL
 			&& bvw->priv->ao_driver_none == FALSE)
 	{
-		bvw->priv->vis_name = g_strdup ("goom");
+		if (bvw->priv->vis_name == NULL)
+			bvw->priv->vis_name = g_strdup ("goom");
+	} else {
+		g_free (bvw->priv->vis_name);
+		bvw->priv->vis_name = NULL;
 	}
 
 	bvw->priv->have_xvidmode = bacon_resize_init ();
@@ -1654,7 +1658,6 @@ bacon_video_widget_new (int width, int height,
 		g_async_queue_unref (bvw->priv->queue);
 		g_free (bvw->priv->vis_name);
 		g_object_unref (G_OBJECT (bvw->priv->gc));
-		g_free (bvw->priv->vis_name);
 		g_free (bvw->priv);
 		g_free (bvw);
 
