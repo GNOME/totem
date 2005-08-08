@@ -52,7 +52,7 @@ totem_action_info (char *reason, Totem *totem)
 	if (totem == NULL)
 		parent = NULL;
 	else
-		parent = totem->win;
+		parent = totem->prefs;
 
 	error_dialog =
 		gtk_message_dialog_new (GTK_WINDOW (parent),
@@ -383,7 +383,6 @@ audio_out_menu_changed (GtkComboBox *combobox, Totem *totem)
 					"restarted."),
 				totem);
 	}
-
 }
 
 static void
