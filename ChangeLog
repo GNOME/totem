@@ -1,5 +1,13 @@
 2005-08-08  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c: (bacon_video_widget_init),
+	(bacon_video_widget_realize), (bacon_video_widget_unrealize),
+	(show_vfx_update), (bacon_video_widget_set_visuals):
+	Create the visual effects plugins when needed, instead of on startup,
+	this should make startup slightly faster
+
+2005-08-08  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: Fix compilation
 	* src/totem-playlist.c: (totem_playlist_update_save_button),
 	(totem_playlist_remove_files), (update_lockdown), (init_config),

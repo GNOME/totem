@@ -414,7 +414,6 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
 	bvw->priv = g_new0 (BaconVideoWidgetPrivate, 1);
 	bvw->priv->xine = xine_new ();
 	bvw->priv->cursor_shown = TRUE;
-	bvw->priv->vis_name = g_strdup ("goom");
 	bvw->priv->volume = -1;
 
 	bvw->priv->init_width = 0;
@@ -1141,9 +1140,7 @@ bacon_video_widget_realize (GtkWidget *widget)
 			&& bvw->priv->ao_driver != NULL
 			&& bvw->priv->ao_driver_none == FALSE)
 	{
-		bvw->priv->vis = xine_post_init (bvw->priv->xine,
-				bvw->priv->vis_name, 0,
-				&bvw->priv->ao_driver, &bvw->priv->vo_driver);
+		bvw->priv->vis_name = g_strdup ("goom");
 	}
 
 	bvw->priv->have_xvidmode = bacon_resize_init ();
@@ -1558,6 +1555,9 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 		xine_close_audio_driver (bvw->priv->xine,
 				bvw->priv->ao_driver);
 
+	if (bvw->priv->vis != NULL)
+		xine_post_dispose (bvw->priv->xine, bvw->priv->vis);
+
 	/* stop event thread */
 	xine_exit (bvw->priv->xine);
 	bvw->priv->xine = NULL;
@@ -1848,31 +1848,54 @@ static void
 show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals)
 {
 	xine_post_out_t *audio_source;
-	gboolean has_video;
+	gboolean has_video, enable;
+
+	if (bvw->priv->vis_name == NULL)
+		return;
 
 	has_video = xine_get_stream_info(bvw->priv->stream,
 			XINE_STREAM_INFO_HAS_VIDEO);
+	enable = FALSE;
 
+	/* Already has video, and we were showing visual effects */
 	if (has_video != FALSE && show_visuals != FALSE
 			&& bvw->priv->using_vfx != FALSE)
 	{
+		enable = FALSE;
+	/* Doesn't have video, should show visual effects, and wasn't doing
+	 * so before */
+	} else if (has_video == FALSE && show_visuals != FALSE
+			&& bvw->priv->using_vfx == FALSE)
+	{
+		if (bvw->priv->vis == NULL) {
+			bvw->priv->vis = xine_post_init (bvw->priv->xine,
+					bvw->priv->vis_name, 0,
+					&bvw->priv->ao_driver,
+					&bvw->priv->vo_driver);
+		}
+		if (bvw->priv->vis != NULL) {
+			enable = TRUE;
+		}
+	/* Doesn't have video, but visual effects are disabled */
+	} else if (has_video == FALSE && show_visuals == FALSE) {
+		enable = FALSE;
+	}
+
+	if (enable == FALSE) {
 		audio_source = xine_get_audio_source (bvw->priv->stream);
 		if (xine_post_wire_audio_port (audio_source,
 					bvw->priv->ao_driver))
 			bvw->priv->using_vfx = FALSE;
-	} else if (has_video == FALSE && show_visuals != FALSE
-			&& bvw->priv->using_vfx == FALSE
-			&& bvw->priv->vis != NULL)
-	{
+		if (bvw->priv->vis != NULL) {
+			xine_post_dispose (bvw->priv->xine,
+					bvw->priv->vis);
+			bvw->priv->vis = NULL;
+		}
+	} else {
 		audio_source = xine_get_audio_source (bvw->priv->stream);
 		if (xine_post_wire_audio_port (audio_source,
 					bvw->priv->vis->audio_input[0]))
 			bvw->priv->using_vfx = TRUE;
-	} else if (has_video == FALSE && show_visuals == FALSE) {
-		audio_source = xine_get_audio_source (bvw->priv->stream);
-		if (xine_post_wire_audio_port (audio_source,
-					bvw->priv->ao_driver))
-			bvw->priv->using_vfx = FALSE;
 	}
 }
 
@@ -2752,7 +2775,6 @@ bacon_video_widget_get_visuals_list (BaconVideoWidget *bvw)
 gboolean
 bacon_video_widget_set_visuals (BaconVideoWidget *bvw, const char *name)
 {
-	xine_post_t *newvis;
 	int speed;
 
 	g_return_val_if_fail (bvw != NULL, FALSE);
@@ -2782,31 +2804,11 @@ bacon_video_widget_set_visuals (BaconVideoWidget *bvw, const char *name)
 		return FALSE;
 	}
 
-	newvis = xine_post_init (bvw->priv->xine,
-			name, 0,
-			&bvw->priv->ao_driver, &bvw->priv->vo_driver);
-
-	if (newvis != NULL)
-	{
+	if (bvw->priv->using_vfx != FALSE) {
+		show_vfx_update (bvw, FALSE);
 		g_free (bvw->priv->vis_name);
 		bvw->priv->vis_name = g_strdup (name);
-
-		if (bvw->priv->vis != NULL)
-		{
-			xine_post_t *oldvis;
-
-			oldvis = bvw->priv->vis;
-			bvw->priv->vis = newvis;
-
-			if (bvw->priv->using_vfx != FALSE)
-			{
-				show_vfx_update (bvw, FALSE);
-				show_vfx_update (bvw, TRUE);
-			}
-			xine_post_dispose (bvw->priv->xine, oldvis);
-		} else {
-			bvw->priv->vis = newvis;
-		}
+		show_vfx_update (bvw, TRUE);
 	}
 
 	return FALSE;
