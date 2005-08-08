@@ -1,5 +1,12 @@
 2005-08-08  Bastien Nocera  <hadess@hadess.net>
 
+	* src/ev-sidebar.c: (ev_sidebar_destroy),
+	(ev_sidebar_menu_item_activate_cb), (ev_sidebar_add_page):
+	Port some leak fixes from Evince
+	http://cvs.gnome.org/viewcvs/evince/shell/ev-sidebar.c?r1=1.15&r2=1.16
+
+2005-08-08  Bastien Nocera  <hadess@hadess.net>
+
 	* NEWS: upd
 	* src/backend/bacon-video-widget-xine.c:
 	(bacon_video_widget_realize), (bacon_video_widget_new):
