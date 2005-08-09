@@ -1,3 +1,8 @@
+2005-08-09  Bastien Nocera  <hadess@hadess.net>
+
+	* src/ev-sidebar.c: (ev_sidebar_destroy): revert a leak fix that was
+	causing a crash on exit (Closes: #313010)
+
 2005-08-09  Michaël Arnauts  <michael.arnauts@gmail.com>
 
 	Reviewed by:  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
