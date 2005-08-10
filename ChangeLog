@@ -1,3 +1,24 @@
+2005-08-10  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/bacon-volume.c: (bacon_volume_button_new),
+	(bacon_volume_scale_value_changed):
+	* src/bacon-volume.h:
+	* src/totem-mozilla-plugin.cpp:
+	* src/totem-mozilla-scriptable.cpp:
+	* src/totem-mozilla-viewer.c: (totem_volume_create):
+	* src/totem.c: (totem_volume_create):
+
+2005-08-10  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/totem-mozilla-plugin.cpp:
+	  More refcount fixes, with help from Christian Persch
+	  <chpe@gnome.org>; now, if you kill the totem-mozilla-viewer (to
+	  simulate a crash at random points... It'll happen at some point),
+	  firefox happily lives on.
+	* src/totem-mozilla-scriptable.cpp:
+	  Remove support for old mozilla versions (NS_INIT_ISUPPORTS()),
+	  since they don't work anyway.
+
 2005-08-09  Bastien Nocera  <hadess@hadess.net>
 
 	* src/ev-sidebar.c: (ev_sidebar_destroy): revert a leak fix that was

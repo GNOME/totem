@@ -36,6 +36,7 @@ typedef struct _BaconVolumeButton {
 
   /* popup */
   GtkWidget *dock, *scale, *image, *plus, *min;
+  GtkIconSize size;
   gint click_id;
   float direction;
   gboolean timeout;
@@ -54,7 +55,8 @@ typedef struct _BaconVolumeButtonClass {
 
 GType		bacon_volume_button_get_type	(void);
 
-GtkWidget *	bacon_volume_button_new		(float min, float max,
+GtkWidget *	bacon_volume_button_new		(GtkIconSize size,
+						 float min, float max,
 						 float step);
 float		bacon_volume_button_get_value	(BaconVolumeButton * button);
 void		bacon_volume_button_set_value	(BaconVolumeButton * button,

@@ -152,13 +152,15 @@ bacon_volume_button_dispose (GObject *object)
  */
 
 GtkWidget *
-bacon_volume_button_new (float min, float max,
+bacon_volume_button_new (GtkIconSize size,
+			 float min, float max,
 			 float step)
 {
   BaconVolumeButton *button;
   GtkWidget *frame, *box;
 
   button = g_object_new (BACON_TYPE_VOLUME_BUTTON, NULL);
+  button->size = size;
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 
 #ifndef HAVE_GTK_ONLY
@@ -571,6 +573,7 @@ bacon_volume_scale_value_changed (GtkRange * range)
   GtkAdjustment *adj = gtk_range_get_adjustment (GTK_RANGE (button->scale));
   float step = (adj->upper - adj->lower) / 4;
   float val = gtk_range_get_value (range);
+  gint w, h;
 #ifdef HAVE_GTK_ONLY
   char *s;
 
@@ -594,7 +597,8 @@ bacon_volume_scale_value_changed (GtkRange * range)
     s = "stock_volume-max";
 
   /* update image */
-  buf = gtk_icon_theme_load_icon (button->theme, s, 16, 0, NULL);
+  gtk_icon_size_lookup (button->size, &w, &h);
+  buf = gtk_icon_theme_load_icon (button->theme, s, w, 0, NULL);
   gtk_image_set_from_pixbuf (GTK_IMAGE (button->image), buf);
 #endif
 

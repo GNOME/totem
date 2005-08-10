@@ -32,7 +32,6 @@
 totemMozillaObject::totemMozillaObject (TotemPlugin * _tm)
 {
   tm = _tm;
-  NS_INIT_ISUPPORTS();
   g_print ("Init scriptable instance\n");
 }
 

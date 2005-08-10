@@ -3338,7 +3338,8 @@ totem_volume_create (void)
 {
 	GtkWidget *widget;
 
-	widget = bacon_volume_button_new (0, 100, -1);
+	widget = bacon_volume_button_new (GTK_ICON_SIZE_SMALL_TOOLBAR,
+					  0, 100, -1);
 	gtk_widget_show (widget);
 
 	return widget;

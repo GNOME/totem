@@ -166,6 +166,7 @@ totem_plugin_fork (TotemPlugin *plugin)
 	if (!iface->tm) {
 		/* we were destroyed in one of the iterations of the
 		 * mainloop, get out ASAP */
+		fprintf (stderr, "We no longer exist\n");
 		NS_RELEASE (iface);
 		return FALSE;
 	}
@@ -236,10 +237,11 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 		mozilla_functions.memfree (plugin);
 		return NPERR_OUT_OF_MEMORY_ERROR;
 	}
+	NS_ADDREF (plugin->iface);
 	if (!(plugin->conn = dbus_g_bus_get (DBUS_BUS_SESSION, &e))) {
 		printf ("Failed to open DBUS session: %s\n", e->message);
 		g_error_free (e);
-		delete plugin->iface;
+		NS_RELEASE (plugin->iface);
 		mozilla_functions.memfree (plugin);
 		return NPERR_OUT_OF_MEMORY_ERROR;
 	} else if (!(plugin->proxy = dbus_g_proxy_new_for_name (plugin->conn,
@@ -249,11 +251,10 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 		printf ("Failed to open DBUS proxy: %s\n", e->message);
 		g_error_free (e);
 		g_object_unref (G_OBJECT (plugin->conn));
-		delete plugin->iface;
+		NS_RELEASE (plugin->iface);
 		mozilla_functions.memfree (plugin);
 		return NPERR_OUT_OF_MEMORY_ERROR;
 	}
-	//NS_ADDREF (plugin->iface);
 
 	/* mode is NP_EMBED, NP_FULL, or NP_BACKGROUND (see npapi.h) */
 	printf("mode %d\n",mode);
@@ -327,8 +328,11 @@ static NPError totem_plugin_destroy_instance (NPP instance, NPSavedData **save)
 	if (plugin == NULL)
 		return NPERR_NO_ERROR;
 
+	if (!plugin || !plugin->iface || !plugin->iface->tm)
+		return NPERR_INVALID_INSTANCE_ERROR;
+
+	plugin->iface->Stop ();
 	plugin->iface->invalidatePlugin ();
-	NS_RELEASE (plugin->iface);
 
 	if (plugin->send_fd >= 0)
 		close(plugin->send_fd);
@@ -337,6 +341,8 @@ static NPError totem_plugin_destroy_instance (NPP instance, NPSavedData **save)
 		kill (plugin->player_pid, SIGKILL);
 		waitpid (plugin->player_pid, NULL, 0);
 	}
+
+	NS_RELEASE (plugin->iface);
 
 	g_object_unref (G_OBJECT (plugin->proxy));
 	//g_object_unref (G_OBJECT (plugin->conn));
@@ -530,9 +536,8 @@ totem_plugin_get_value (NPP instance, NPPVariable variable,
 			err = NPERR_GENERIC_ERROR;
 		} else {
 		        plugin = (TotemPlugin *) instance->pdata;
-			NS_ENSURE_TRUE (plugin && plugin->iface, NPERR_INVALID_INSTANCE_ERROR);
+			NS_ENSURE_TRUE (plugin && plugin->iface && plugin->iface->tm, NPERR_INVALID_INSTANCE_ERROR);
 
-			NS_ADDREF (plugin->iface);
 			plugin->iface->QueryInterface (NS_GET_IID (nsISupports),
 						       (void **) value);
 //			* (nsISupports **) value = static_cast<totemMozillaScript *>(plugin->iface);
