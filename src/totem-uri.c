@@ -150,12 +150,9 @@ static const char *subtitle_ext[] = {
 char *
 totem_uri_get_subtitle_uri (const char *uri)
 {
-	char *suffix, *subtitle, *full;
+	char *suffix, *subtitle;
 	guint len, i;
-
-	if (g_str_has_prefix (uri, "file://") == FALSE) {
-		return NULL;
-	}
+	GnomeVFSURI *vfsuri;
 
 	if (strstr (uri, "#subtitle:") != NULL) {
 		return NULL;
@@ -166,27 +163,20 @@ totem_uri_get_subtitle_uri (const char *uri)
 		return NULL;
 	}
 
-	full = NULL;
 	subtitle = g_strdup (uri);
 	suffix = subtitle + len - 4;
 	for (i = 0; i < G_N_ELEMENTS(subtitle_ext) ; i++) {
-		char *fname;
-
 		memcpy (suffix + 1, subtitle_ext[i], 3);
-		fname = g_filename_from_uri (subtitle, NULL, NULL);
 
-		if (fname == NULL)
-			continue;
-
-		if (g_file_test (fname, G_FILE_TEST_IS_REGULAR) == FALSE) {
-			g_free (fname);
-			continue;
+		vfsuri = gnome_vfs_uri_new (subtitle);
+		if (vfsuri != NULL) {
+			if (gnome_vfs_uri_exists (vfsuri)) {
+				gnome_vfs_uri_unref (vfsuri);
+				return subtitle;
+			}
+		gnome_vfs_uri_unref (vfsuri);
 		}
-
-		g_free (fname);
-		return subtitle;
 	}
-
 	g_free (subtitle);
 	return NULL;
 }
