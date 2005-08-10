@@ -331,7 +331,7 @@ static NPError totem_plugin_destroy_instance (NPP instance, NPSavedData **save)
 	if (!plugin || !plugin->iface || !plugin->iface->tm)
 		return NPERR_INVALID_INSTANCE_ERROR;
 
-	plugin->iface->Stop ();
+	plugin->iface->Rewind ();
 	plugin->iface->invalidatePlugin ();
 
 	if (plugin->send_fd >= 0)

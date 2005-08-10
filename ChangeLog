@@ -1,12 +1,20 @@
 2005-08-10  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
+	* src/totem-mozilla-plugin.cpp:
+	  So, Apple's javascript API is confusing. Stop is Rewind, Pause is
+	  Stop and thus Stop is not Stop. So let's Rewind and not Stop on
+	  exit.
+
+2005-08-10  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
 	* src/bacon-volume.c: (bacon_volume_button_new),
 	(bacon_volume_scale_value_changed):
 	* src/bacon-volume.h:
-	* src/totem-mozilla-plugin.cpp:
-	* src/totem-mozilla-scriptable.cpp:
 	* src/totem-mozilla-viewer.c: (totem_volume_create):
 	* src/totem.c: (totem_volume_create):
+	  So those were volume control enhancements that are needed for
+	  Rhythmbox (different icon size). I apparently committed this.
+	  Oops. Ohwell.
 
 2005-08-10  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
