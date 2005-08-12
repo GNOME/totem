@@ -1,3 +1,10 @@
+2005-08-12  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/bacon-volume.c: (bacon_volume_scale_new):
+	* src/totem.c: (totem_volume_create):
+	  Ah, now I finally understand why the range direction was wrong;
+	  the stepping was negative!
+
 ============ Version 1.1.4
 
 2005-08-10  Bastien Nocera  <hadess@hadess.net>

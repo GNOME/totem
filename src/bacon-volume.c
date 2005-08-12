@@ -514,7 +514,7 @@ bacon_volume_scale_new (BaconVolumeButton * button,
   BaconVolumeScale *scale = g_object_new (BACON_TYPE_VOLUME_SCALE, NULL);
   GtkObject *adj;
 
-  adj = gtk_adjustment_new (min, min, max, -step, 10 * -step, 0);
+  adj = gtk_adjustment_new (min, min, max, step, 10 * step, 0);
   gtk_range_set_adjustment (GTK_RANGE (scale), GTK_ADJUSTMENT (adj));
   scale->button = button;
 
