@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-12 02:45+0300\n"
-"PO-Revision-Date: 2005-08-12 02:59+0300\n"
+"POT-Creation-Date: 2005-08-12 11:55+0300\n"
+"PO-Revision-Date: 2005-08-12 12:08+0300\n"
 "Last-Translator: Nikos Charonitakis <charosn@her.forthnet.gr>\n"
 "Language-Team:  <team@gnome.gr>\n"
 "MIME-Version: 1.0\n"
@@ -493,9 +493,8 @@ msgid "Show _visual effects when an audio file is played"
 msgstr "Εμφάνιση οπτικών ε_φέ κατά την αναπαραγωγή αρχείου ήχου"
 
 #: ../data/totem.glade.h:74
-#, fuzzy
 msgid "Show or hide the sidebar"
-msgstr "Εμφάνιση ή απόκρυψη της πλευρικής μπάρας"
+msgstr "Εμφάνιση ή απόκρυψη της πλευρικής στήλης"
 
 #: ../data/totem.glade.h:75
 msgid "Shuff_le Mode"
@@ -682,9 +681,8 @@ msgid "_Resize 1:2"
 msgstr "Α_λλαγή μεγέθους 1:2"
 
 #: ../data/totem.glade.h:134
-#, fuzzy
 msgid "_Sidebar"
-msgstr "_Πλευρική μπάρα"
+msgstr "_Πλευρική στήλη"
 
 #: ../data/totem.glade.h:135
 msgid "_Skip to..."
@@ -707,9 +705,10 @@ msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)"
 msgstr ""
+"Ποσότητα δεδομένων για streams δικτύου που θα γίνεται buffer μέχρι να εμφανιστεί"
+"το stream (σε δευτερόλεπτα)"
 
 #: ../data/totem.schemas.in.h:2
-#, fuzzy
 msgid "Buffer size"
 msgstr "Μέγεθος buffer"
 
@@ -723,7 +722,7 @@ msgstr "Ύψος του γραφικού συστατικού video"
 
 #: ../data/totem.schemas.in.h:5
 msgid "Maximum amount of data to decode ahead of display (in seconds)"
-msgstr ""
+msgstr "Μέγιστη ποσότητα δεδομένων για αποκωδικοποίηση πριν την εμφάνιση τους (σε δευτερόλεπτα) "
 
 #: ../data/totem.schemas.in.h:6
 msgid "Name of the visual effects plugins"
@@ -731,11 +730,11 @@ msgstr "Όνομα των προσθέτων λειτουργιών οπτικώ
 
 #: ../data/totem.schemas.in.h:7
 msgid "Network buffering threshold"
-msgstr ""
+msgstr "Network buffering threshold"
 
 #: ../data/totem.schemas.in.h:8
 msgid "Pango font description for subtitle rendering"
-msgstr ""
+msgstr "Περιγραφή γραμματοσειράς pango για την εμφάνιση υποτίτλων"
 
 #: ../data/totem.schemas.in.h:9
 msgid "Repeat mode"
@@ -808,7 +807,7 @@ msgstr "Αν το κύριο παράθυρο θα παραμένει πάντα
 
 #: ../data/totem.schemas.in.h:25
 msgid "Whether the sidebar is shown"
-msgstr ""
+msgstr "Αν θα εμφανίζεται η πλευρική στήλη"
 
 #: ../data/totem.schemas.in.h:26
 msgid "Whether to enable debug for the playback engine"
@@ -895,9 +894,8 @@ msgid "%d kbps"
 msgstr "%d kbps"
 
 #: ../src/bacon-video-widget-properties.c:276
-#, fuzzy
 msgid "Properties dialog"
-msgstr "Ιδιότητες"
+msgstr "Διάλογος ιδιοτήτων"
 
 #. +
 #: ../src/bacon-volume.c:187
@@ -1028,7 +1026,7 @@ msgstr "Επιλογή CD"
 
 #: ../src/totem-playlist.c:1920
 msgid "Please select the currently playing CD:"
-msgstr ""
+msgstr "Παρακαλώ επιλέξτε το CD που αναπαράγεται αυτή τη στιγμή."
 
 #: ../src/totem-preferences.c:86
 msgid "Enable visual effects?"
@@ -1244,7 +1242,8 @@ msgstr "Το Totem δε μπορεί λάβει στιγμιότυπο οθόν�
 
 #: ../src/totem.c:1976 ../src/vanity.c:307
 msgid "This is not supposed to happen; please file a bug report."
-msgstr "Αυτό δεν προβλεπόταν να συμβεί, παρακαλώ στείλτε μια αναφορά σφάλματος."
+msgstr ""
+"Αυτό δεν προβλεπόταν να συμβεί, παρακαλώ στείλτε μια αναφορά σφάλματος."
 
 #: ../src/totem.c:2003
 msgid "Totem couldn't show the movie properties window."
@@ -1278,9 +1277,8 @@ msgstr ""
 "τερματιστεί."
 
 #: ../src/totem.c:3386
-#, fuzzy
 msgid "Totem could not initialize the configuration engine."
-msgstr "Δεν είναι  δυνατή η αρχικοποίηση της μηχανής ρυθμίσεων από το Totem."
+msgstr "Δεν είναι δυνατή η εκκίνηση της μηχανής ρυθμίσεων από το Totem."
 
 #: ../src/totem.c:3386
 msgid "Make sure that GNOME is properly installed."
@@ -1340,12 +1338,11 @@ msgid "Vanity Webcam Utility"
 msgstr "Εργαλείο Vanity Webcam"
 
 #: ../src/vanity.c:646
-#, fuzzy
 msgid ""
 "Could not initialize the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
 msgstr ""
-"Αδυναμία αρχικοποίησης των βιβλιοθηκών thread-safe.\n"
+"Αδυναμία εκκίνησης των βιβλιοθηκών thread-safe.\n"
 "Επιβεβαιώστε την εγκατάσταση του συστήματος σας. Το Vanity τώρα θα "
 "τερματιστεί."
 
@@ -1374,7 +1371,7 @@ msgstr "Παράθυρο βίντεο του Totem "
 
 #: ../src/backend/bacon-video-widget-gst.c:1867
 msgid "Failed to retrieve working directory"
-msgstr ""
+msgstr "Αποτυχία ανάκτησης τρέχοντος καταλόγου"
 
 #: ../src/backend/bacon-video-widget-gst.c:1919
 msgid "Location not found."
@@ -1386,7 +1383,7 @@ msgstr "Δεν έχετε τα δικαιώματα για να ανοίξετε
 
 #: ../src/backend/bacon-video-widget-gst.c:1942
 msgid "Failed to open media file; unknown error"
-msgstr ""
+msgstr "Αποτυχία ανοίγματος αρχείου, άγνωστο σφάλμα"
 
 #: ../src/backend/bacon-video-widget-gst.c:1974
 #, c-format
@@ -1403,13 +1400,15 @@ msgstr "Η εγκατεστημένη έκδοση του GStreamer είναι �
 
 #: ../src/backend/bacon-video-widget-gst.c:3134
 msgid "Media contains no supported video streams."
-msgstr ""
+msgstr "Το αρχείο δεν περιέχει υποστηριζόμενα video streams."
 
 #: ../src/backend/bacon-video-widget-gst.c:3312
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
-msgstr "Αδυναμία δημιουργίας αντικειμένου αναπαραγωγής GStreamer. Παρακαλώ ελέγξτε την εγκατάσταση του GStreamer."
+msgstr ""
+"Αδυναμία δημιουργίας αντικειμένου αναπαραγωγής GStreamer. Παρακαλώ ελέγξτε "
+"την εγκατάσταση του GStreamer."
 
 #: ../src/backend/bacon-video-widget-gst.c:3408
 msgid ""
@@ -1417,12 +1416,16 @@ msgid ""
 "applications, or select another video output in the Multimedia Systems "
 "Selector."
 msgstr ""
+"Η έξοδος βίντεο χρησιμοποιείται από άλλη εφαρμογή. Παρακαλώ κλείστε τις άλλες"
+"εφαρμογές βίντεο, ή επιλέξτε μια άλλη έξοδο βίντεο από τον Επιλογέα συστημάτων πολυμέσων"
 
 #: ../src/backend/bacon-video-widget-gst.c:3418
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
 msgstr ""
+"Αποτυχία ανοίγματος εξόδου βίντεο. Μπορεί να μην είναι διαθέσιμη. Παρακαλώ"
+"επιλέξτε μια άλλη έξοδο βίντεο από τον Επιλογέα συστημάτων πολυμέσων."
 
 #: ../src/backend/bacon-video-widget-gst.c:3445
 msgid ""
@@ -1430,12 +1433,17 @@ msgid ""
 "audio output in the Multimedia Systems Selector. You may want to consider "
 "using a sound server."
 msgstr ""
+"Η έξοδος ήχου χρησιμοποιείται από άλλη εφαρμογή. Παρακαλώ κλείστε τις άλλες"
+"εφαρμογές ήχου, ή επιλέξτε μια άλλη έξοδο ήχου από τον Επιλογέα συστημάτων πολυμέσων."
+"Ισως να πρέπει να χρησιμοποιήσετε ένα εξυπηρετητή ήχου."
 
 #: ../src/backend/bacon-video-widget-gst.c:3451
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector"
 msgstr ""
+"Η απαιτούμενη έξοδος ήχου δεν βρέθηκε. Παρακαλώ"
+"επιλέξτε μια άλλη έξοδο ήχου από τον Επιλογέα συστημάτων πολυμέσων."
 
 #: ../src/backend/bacon-video-widget-gst.c:3461
 msgid ""
@@ -1443,6 +1451,9 @@ msgid ""
 "device, or the sound server may not be running. Please select another audio "
 "output in the Multimedia Systems Selector."
 msgstr ""
+"Αποτυχία ανοίγματος εξόδου ήχου. Μπορεί να μην έχετε τα απαραίτητα δικαιώματα για να ανοίξετε"
+"τη συσκευή ήχου, ή να μην εκτελείται ο εξυπηρετητής ήχου. Παρακαλώ"
+"επιλέξτε μια άλλη έξοδο βίντεο από τον Επιλογέα συστημάτων πολυμέσων."
 
 #: ../src/backend/bacon-video-widget-xine.c:676
 #, c-format
@@ -1501,11 +1512,9 @@ msgid "The movie could not be read."
 msgstr "Η ταινία  δεν είναι αναγνώσιμη."
 
 #: ../src/backend/bacon-video-widget-xine.c:1289
-#, fuzzy, c-format
+#, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
-msgstr ""
-"Δημιουργήθηκε πρόβλημα κατά τη φόρτωση μιας βιβλιοθήκης ή αποκωδικοποιητή (%"
-"s)."
+msgstr "Δημιουργήθηκε πρόβλημα κατά τη φόρτωση μιας βιβλιοθήκης ή αποκωδικοποιητή (%s)."
 
 #: ../src/backend/bacon-video-widget-xine.c:1298
 msgid "This file is encrypted and cannot be played back."
@@ -1533,7 +1542,6 @@ msgstr ""
 "Ο εξυπηρετητής δεν επέτρεψε την πρόσβαση σε αυτό το αρχείο ή το stream."
 
 #: ../src/backend/bacon-video-widget-xine.c:1324
-#, fuzzy
 msgid "The file you tried to play is an empty file."
 msgstr "Το αρχείο που προσπαθήσατε να αναπαραγάγετε είναι κενό."
 
