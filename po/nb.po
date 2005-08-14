@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 1.1.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-09 13:24+0200\n"
+"POT-Creation-Date: 2005-08-14 05:57+0200\n"
 "PO-Revision-Date: 2005-08-09 13:25+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmal <i18n-nb@lister.ping.uio.no>\n"
@@ -28,7 +28,7 @@ msgstr "Flytt ned"
 msgid "Move Up"
 msgstr "Flytt opp"
 
-#: ../data/playlist.glade.h:4 ../src/totem-sidebar.c:98
+#: ../data/playlist.glade.h:4 ../src/totem-sidebar.c:115
 msgid "Playlist"
 msgstr "Spilleliste"
 
@@ -241,7 +241,7 @@ msgstr "Spill av filmer og sanger"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:2 ../data/totem.glade.h:97
-#: ../src/totem.c:666 ../src/totem.c:3361 ../src/totem.c:3378
+#: ../src/totem.c:666 ../src/totem.c:3362 ../src/totem.c:3379
 msgid "Totem Movie Player"
 msgstr "Totem filmavspiller"
 
@@ -715,7 +715,7 @@ msgstr "Aktiver deinterlacing"
 
 #: ../data/totem.schemas.in.h:4
 msgid "Height of the video widget"
-msgstr "Høyde på videobildet"
+msgstr "Høyde på bildet"
 
 #: ../data/totem.schemas.in.h:5
 msgid "Maximum amount of data to decode ahead of display (in seconds)"
@@ -743,7 +743,7 @@ msgstr "Endre størrelse på kanvas automatisk ved lasting av fil"
 
 #: ../data/totem.schemas.in.h:11
 msgid "Show visual effects when no video is displayed"
-msgstr "Vis visuelle effekter hvis ingen video spilles av"
+msgstr "Vis visuelle effekter hvis ingen film spilles av"
 
 #: ../data/totem.schemas.in.h:12
 msgid "Show visual effects when playing an audio only file."
@@ -767,19 +767,19 @@ msgstr "Skrift for teksting"
 
 #: ../data/totem.schemas.in.h:17
 msgid "The brightness of the video"
-msgstr "Lyststyrke for videoen"
+msgstr "Lysstyrke for filmen"
 
 #: ../data/totem.schemas.in.h:18
 msgid "The contrast of the video"
-msgstr "Kontrast for videoen"
+msgstr "Kontrast for filmen"
 
 #: ../data/totem.schemas.in.h:19
 msgid "The hue of the video"
-msgstr "Lysglød i videoen"
+msgstr "Lysglød i filmen"
 
 #: ../data/totem.schemas.in.h:20
 msgid "The saturation of the video"
-msgstr "Metning for videoen"
+msgstr "Metning for filmen"
 
 #: ../data/totem.schemas.in.h:21
 msgid "Type of audio output to use"
@@ -812,7 +812,7 @@ msgstr "Om feilsøking skal aktiveres for avspillingsmotoren"
 
 #: ../data/totem.schemas.in.h:27
 msgid "Width of the video widget"
-msgstr "Bredde på videobildet"
+msgstr "Bredde på bildet"
 
 #: ../data/uri.glade.h:1
 msgid "Enter the _address of the file you would like to open:"
@@ -895,12 +895,12 @@ msgid "Properties dialog"
 msgstr "Dialog for egenskaper"
 
 #. +
-#: ../src/bacon-volume.c:185
+#: ../src/bacon-volume.c:187
 msgid "+"
 msgstr "+"
 
 #. -
-#: ../src/bacon-volume.c:201
+#: ../src/bacon-volume.c:203
 msgid "-"
 msgstr "-"
 
@@ -1075,7 +1075,7 @@ msgstr "Lyd/bilde"
 
 #: ../src/totem-properties-view.c:88
 msgid "Video"
-msgstr "Video"
+msgstr "Film"
 
 #: ../src/totem-screenshot.c:151 ../src/totem-screenshot.c:162
 #, c-format
@@ -1260,30 +1260,30 @@ msgstr "Totem kunne ikke starte opp."
 msgid "No reason."
 msgstr "Ingen årsak."
 
-#: ../src/totem.c:3362
+#: ../src/totem.c:3363
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Kunne ikke initiere trådsikre biblioteker."
 
-#: ../src/totem.c:3362
+#: ../src/totem.c:3363
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Sjekk systeminstallasjonen. Totem avslutter nå."
 
-#: ../src/totem.c:3385
+#: ../src/totem.c:3386
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem kunne ikke initiere konfigurasjonsmotoren."
 
-#: ../src/totem.c:3385
+#: ../src/totem.c:3386
 msgid "Make sure that GNOME is properly installed."
 msgstr "Sjekk at GNOME er korrekt installert."
 
 #. Main window
-#: ../src/totem.c:3412
+#: ../src/totem.c:3413
 msgid "main window"
 msgstr "hovedvindu"
 
-#: ../src/totem.c:3417
+#: ../src/totem.c:3418
 msgid "video popup menu"
-msgstr "oppsprettmeny for video"
+msgstr "oppsprettmeny for film"
 
 #: ../src/vanity.c:75
 msgid "Debug mode on"
@@ -1322,7 +1322,7 @@ msgid ""
 "Vanity could not play video from the webcam.\n"
 "Reason: %s"
 msgstr ""
-"Totem kunne ikke spille av video fra webkameraet.\n"
+"Totem kunne ikke spille av film fra webkameraet.\n"
 "Årsak: %s"
 
 #: ../src/vanity.c:641
@@ -1358,7 +1358,7 @@ msgstr ""
 
 #: ../src/backend/bacon-video-widget-gst.c:68
 msgid "Totem Video Window"
-msgstr "Totem videovindu"
+msgstr "Totem filmvindu"
 
 #: ../src/backend/bacon-video-widget-gst.c:1867
 msgid "Failed to retrieve working directory"
@@ -1391,7 +1391,7 @@ msgstr "Den installerte versjonen av GStreamer er for gammel"
 
 #: ../src/backend/bacon-video-widget-gst.c:3134
 msgid "Media contains no supported video streams."
-msgstr "Medier inneholder ingen støttede videstrømmer."
+msgstr "Medier inneholder ingen støttede videostrømmer."
 
 #: ../src/backend/bacon-video-widget-gst.c:3312
 msgid ""
