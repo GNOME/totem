@@ -6,17 +6,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: totem\n"
+"Project-Id-Version: totem.HEAD.hu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-03 14:49+0000\n"
-"PO-Revision-Date: 2005-08-03 21:27+0200\n"
+"POT-Creation-Date: 2005-08-14 06:54+0000\n"
+"PO-Revision-Date: 2005-08-14 14:41+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=1; plural=0;\n"
-"X-Generator: KBabel 1.10.2\n"
+"X-Generator: KBabel 1.10\n"
 
 #: ../data/playlist.glade.h:1
 msgid "Add..."
@@ -30,7 +30,7 @@ msgstr "Lefelé mozgatás"
 msgid "Move Up"
 msgstr "Felfelé mozgatás"
 
-#: ../data/playlist.glade.h:4 ../src/totem-sidebar.c:98
+#: ../data/playlist.glade.h:4 ../src/totem-sidebar.c:115
 msgid "Playlist"
 msgstr "Lejátszólista"
 
@@ -243,7 +243,7 @@ msgstr "Filmek és dalok lejátszása"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:2 ../data/totem.glade.h:97
-#: ../src/totem.c:666 ../src/totem.c:3361 ../src/totem.c:3378
+#: ../src/totem.c:666 ../src/totem.c:3362 ../src/totem.c:3379
 msgid "Totem Movie Player"
 msgstr "Totem filmlejátszó"
 
@@ -899,6 +899,16 @@ msgstr "%d kbps"
 msgid "Properties dialog"
 msgstr "Tulajdonságok párbeszédablak"
 
+#. +
+#: ../src/bacon-volume.c:187
+msgid "+"
+msgstr "+"
+
+#. -
+#: ../src/bacon-volume.c:203
+msgid "-"
+msgstr "-"
+
 #: ../src/totem-interface.c:114
 #, c-format
 msgid "Couldn't load the '%s' interface."
@@ -974,46 +984,45 @@ msgstr "Csere"
 msgid "Option '%s' is unknown and was ignored\n"
 msgstr "A(z) \"%s\" opció ismeretlen és figyelmen kívül lett hagyva\n"
 
-#: ../src/totem-playlist.c:313
+#: ../src/totem-playlist.c:326
 msgid "Could not save the playlist"
 msgstr "Nem lehet menteni a lejátszólistát"
 
-#: ../src/totem-playlist.c:646
+#: ../src/totem-playlist.c:659
 msgid "Select Movies or Playlists"
 msgstr "Válasszon ki filmeket vagy lejátszólistákat"
 
-#: ../src/totem-playlist.c:824
-msgid "Save playlist"
+#: ../src/totem-playlist.c:838
+msgid "Save Playlist"
 msgstr "Lejátszólista mentése"
 
-#: ../src/totem-playlist.c:870
+#: ../src/totem-playlist.c:884
 msgid "Overwrite file?"
 msgstr "Felülírja a fájlt?"
 
-#: ../src/totem-playlist.c:872
+#: ../src/totem-playlist.c:886
 #, c-format
-msgid ""
-"A file named '%s' already exists.  Are you sure you want to overwrite it?"
+msgid "A file named '%s' already exists.  Are you sure you want to overwrite it?"
 msgstr "Egy \"%s\" nevű fájl már létezik.  Biztos felülírja?"
 
-#: ../src/totem-playlist.c:1385
+#: ../src/totem-playlist.c:1393
 msgid "playlist"
 msgstr "lejátszólista"
 
-#: ../src/totem-playlist.c:1513
+#: ../src/totem-playlist.c:1522
 msgid "Playlist error"
 msgstr "Lejátszólista hiba"
 
-#: ../src/totem-playlist.c:1513
+#: ../src/totem-playlist.c:1522
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "Nem lehet értelmezni a(z) \"%s\" lejátszólistát, lehet, hogy sérült."
 
-#: ../src/totem-playlist.c:1906
+#: ../src/totem-playlist.c:1915
 msgid "Select CD"
 msgstr "CD kiválasztása"
 
-#: ../src/totem-playlist.c:1911
+#: ../src/totem-playlist.c:1920
 msgid "Please select the currently playing CD:"
 msgstr "Kérem válassza ki a jelenleg lejátszott CD-t:"
 
@@ -1038,8 +1047,7 @@ msgstr ""
 "akkor, ha újraindítja a Totem-et."
 
 #: ../src/totem-preferences.c:185
-msgid ""
-"Switching on or off this type of TV-Out requires a restart to take effect."
+msgid "Switching on or off this type of TV-Out requires a restart to take effect."
 msgstr ""
 "Ezen tévékimenet típus be- vagy kikapcsolásának érvénybe lépéséhez "
 "újraindítás szükséges."
@@ -1058,7 +1066,7 @@ msgstr ""
 "A hangkimenet típusának megváltoztatása csak a Totem újraindítását követően "
 "lép érvénybe."
 
-#: ../src/totem-preferences.c:603
+#: ../src/totem-preferences.c:602
 msgid "Select Subtitle Font"
 msgstr "Válassza ki a felirat betűtípusát"
 
@@ -1136,16 +1144,6 @@ msgstr "Pufferelés"
 #, c-format
 msgid "%d %%"
 msgstr "%d%%"
-
-#. +
-#: ../src/totem-volume.c:190
-msgid "+"
-msgstr "+"
-
-#. -
-#: ../src/totem-volume.c:206
-msgid "-"
-msgstr "-"
 
 #: ../src/totem.c:244
 msgid "Playing"
@@ -1267,28 +1265,28 @@ msgstr "A Totem nem tud elindulni."
 msgid "No reason."
 msgstr "Nincs ok."
 
-#: ../src/totem.c:3362
+#: ../src/totem.c:3363
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Nem lehet inicializálni a szálbiztos programkönyvtárakat."
 
-#: ../src/totem.c:3362
+#: ../src/totem.c:3363
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Ellenőrizze a rendszer telepítését. A Totem most kilép."
 
-#: ../src/totem.c:3385
+#: ../src/totem.c:3386
 msgid "Totem could not initialize the configuration engine."
 msgstr "A Totem nem tudja inicializálni a beállítómotort."
 
-#: ../src/totem.c:3385
+#: ../src/totem.c:3386
 msgid "Make sure that GNOME is properly installed."
 msgstr "Győződjön meg róla, hogy a GNOME megfelelően van telepítve."
 
 #. Main window
-#: ../src/totem.c:3412
+#: ../src/totem.c:3413
 msgid "main window"
 msgstr "főablak"
 
-#: ../src/totem.c:3417
+#: ../src/totem.c:3418
 msgid "video popup menu"
 msgstr "videó helyi menü"
 
@@ -1454,7 +1452,7 @@ msgstr ""
 "hangeszköz megnyitásához vagy a hangkiszolgáló nem fut. Kérem válassszon "
 "másik hangkimenetet a Multimédia rendszer választóban. "
 
-#: ../src/backend/bacon-video-widget-xine.c:677
+#: ../src/backend/bacon-video-widget-xine.c:676
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1463,8 +1461,8 @@ msgstr ""
 "Nem lehet betölteni a(z) \"%s\" hangmeghajtót\n"
 "Ellenőrizze, hogy az eszköz nem foglalt-e."
 
-#: ../src/backend/bacon-video-widget-xine.c:1132
-#: ../src/backend/bacon-video-widget-xine.c:1662
+#: ../src/backend/bacon-video-widget-xine.c:1131
+#: ../src/backend/bacon-video-widget-xine.c:1665
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -1472,30 +1470,30 @@ msgstr ""
 "A video kimenet nem érhető el. Győződjön meg róla, hogy a program "
 "megfelelően van telepítve."
 
-#: ../src/backend/bacon-video-widget-xine.c:1254
+#: ../src/backend/bacon-video-widget-xine.c:1255
 msgid "The server you are trying to connect to is not known."
 msgstr "A kiszolgáló, amelyhez kapcsolódni próbál ismeretlen."
 
-#: ../src/backend/bacon-video-widget-xine.c:1258
+#: ../src/backend/bacon-video-widget-xine.c:1259
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "A megadott eszköznév (%s) érvénytelennek tűnik."
 
-#: ../src/backend/bacon-video-widget-xine.c:1262
+#: ../src/backend/bacon-video-widget-xine.c:1263
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "A kiszolgáló, amelyhez kapcsolódni próbál (%s) nem érhető el."
 
-#: ../src/backend/bacon-video-widget-xine.c:1266
+#: ../src/backend/bacon-video-widget-xine.c:1267
 msgid "The connection to this server was refused."
 msgstr "Az ehhez a kiszolgálóhoz való kapcsolódás vissza lett utasítva."
 
-#: ../src/backend/bacon-video-widget-xine.c:1270
+#: ../src/backend/bacon-video-widget-xine.c:1271
 msgid "The specified movie could not be found."
 msgstr "A megadott film nem található."
 
-#: ../src/backend/bacon-video-widget-xine.c:1276
-#: ../src/backend/bacon-video-widget-xine.c:1294
+#: ../src/backend/bacon-video-widget-xine.c:1277
+#: ../src/backend/bacon-video-widget-xine.c:1295
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -1503,66 +1501,64 @@ msgstr ""
 "A forrás úgy tűnik, hogy titkosított, és nem lehet olvasni. Titkosított DVD-"
 "t próbált lejátszani libdvdcss nélkül?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1279
+#: ../src/backend/bacon-video-widget-xine.c:1280
 msgid "The movie could not be read."
 msgstr "A filmet nem lehet beolvasni."
 
-#: ../src/backend/bacon-video-widget-xine.c:1288
+#: ../src/backend/bacon-video-widget-xine.c:1289
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
-msgstr ""
-"Hiba történt egy programkönyvtár vagy egy dekódoló (%s) betöltése közben."
+msgstr "Hiba történt egy programkönyvtár vagy egy dekódoló (%s) betöltése közben."
 
-#: ../src/backend/bacon-video-widget-xine.c:1297
+#: ../src/backend/bacon-video-widget-xine.c:1298
 msgid "This file is encrypted and cannot be played back."
 msgstr "A fájl titkosított és nem lehet lejátszani."
 
-#: ../src/backend/bacon-video-widget-xine.c:1302
+#: ../src/backend/bacon-video-widget-xine.c:1303
 msgid "For security reasons, this movie can not be played back."
 msgstr "Biztonsági okokból nem lehet lejátszani a filmet."
 
-#: ../src/backend/bacon-video-widget-xine.c:1307
+#: ../src/backend/bacon-video-widget-xine.c:1308
 msgid "The audio device is busy. Is another application using it?"
 msgstr "A hangeszköz foglalt. Egy másik alkalmazás használja?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1312
+#: ../src/backend/bacon-video-widget-xine.c:1313
 msgid "You are not allowed to open this file."
 msgstr "Nincs engedélye ezen fájl megnyitásához."
 
-#: ../src/backend/bacon-video-widget-xine.c:1314
+#: ../src/backend/bacon-video-widget-xine.c:1315
 msgid "The server refused access to this file or stream."
-msgstr ""
-"A kiszolgáló visszautasította a hozzáférést ehhez a fájlhoz vagy folyamhoz."
+msgstr "A kiszolgáló visszautasította a hozzáférést ehhez a fájlhoz vagy folyamhoz."
 
-#: ../src/backend/bacon-video-widget-xine.c:1323
+#: ../src/backend/bacon-video-widget-xine.c:1324
 msgid "The file you tried to play is an empty file."
 msgstr "Egy üres fájlt próbált meg lejátszani."
 
-#: ../src/backend/bacon-video-widget-xine.c:1472
+#: ../src/backend/bacon-video-widget-xine.c:1473
 msgid "There is no plugin to handle this movie."
 msgstr "A film kezeléséhez nincs bővítmény."
 
-#: ../src/backend/bacon-video-widget-xine.c:1476
+#: ../src/backend/bacon-video-widget-xine.c:1477
 msgid "This movie is broken and can not be played further."
 msgstr "A film sérült és tovább már nem játszható le."
 
-#: ../src/backend/bacon-video-widget-xine.c:1480
+#: ../src/backend/bacon-video-widget-xine.c:1481
 msgid "This location is not a valid one."
 msgstr "A hely érvénytelen."
 
-#: ../src/backend/bacon-video-widget-xine.c:1484
+#: ../src/backend/bacon-video-widget-xine.c:1485
 msgid "This movie could not be opened."
 msgstr "A filmet nem lehet megnyitni."
 
-#: ../src/backend/bacon-video-widget-xine.c:1488
+#: ../src/backend/bacon-video-widget-xine.c:1489
 msgid "Generic Error."
 msgstr "Általános hiba."
 
-#: ../src/backend/bacon-video-widget-xine.c:1995
+#: ../src/backend/bacon-video-widget-xine.c:2021
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr "Ez a film egy állókép. Megnyithatja egy képnézővel."
 
-#: ../src/backend/bacon-video-widget-xine.c:2019
+#: ../src/backend/bacon-video-widget-xine.c:2045
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1571,7 +1567,7 @@ msgstr ""
 "A(z) \"%s\" videokodek nincs kezelve. További bővítményeket kell telepítenie "
 "néhány filmtípus lejátszásához"
 
-#: ../src/backend/bacon-video-widget-xine.c:2023
+#: ../src/backend/bacon-video-widget-xine.c:2049
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1580,25 +1576,25 @@ msgstr ""
 "A(z) \"%s\" hangkodek nincs kezelve. További bővítményeket kell telepítenie "
 "néhány filmtípus lejátszásához"
 
-#: ../src/backend/bacon-video-widget-xine.c:2039
+#: ../src/backend/bacon-video-widget-xine.c:2065
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Ez egy hangfájl, és nem érhető el hangkimenet."
 
-#: ../src/backend/bacon-video-widget-xine.c:3497
-#: ../src/backend/bacon-video-widget-xine.c:3560
+#: ../src/backend/bacon-video-widget-xine.c:3502
+#: ../src/backend/bacon-video-widget-xine.c:3565
 #, c-format
 msgid "Language %d"
 msgstr "%d nyelv"
 
-#: ../src/backend/bacon-video-widget-xine.c:3596
+#: ../src/backend/bacon-video-widget-xine.c:3601
 msgid "Movie is not playing."
 msgstr "Filmlejátszás áll."
 
-#: ../src/backend/bacon-video-widget-xine.c:3605
+#: ../src/backend/bacon-video-widget-xine.c:3610
 msgid "No video to capture."
 msgstr "Nincs rögzítendő videó."
 
-#: ../src/backend/bacon-video-widget-xine.c:3613
+#: ../src/backend/bacon-video-widget-xine.c:3618
 msgid "Video codec is not handled."
 msgstr "A videokodek nincs kezelve."
 
@@ -1713,3 +1709,4 @@ msgstr "Nem lehet írni az értelmezőt: %s"
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "Nem lehet megnyitni a(z) \"%s\" fájlt: %s"
+
