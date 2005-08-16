@@ -109,7 +109,7 @@ totem_pl_parser_class_init (TotemPlParserClass *klass)
 			      NULL, NULL,
 			      g_cclosure_marshal_VOID__STRING,
 			      G_TYPE_NONE, 1, G_TYPE_STRING);
-	totem_pl_parser_table_signals[PLAYLIST_START] =
+	totem_pl_parser_table_signals[PLAYLIST_END] =
 		g_signal_new ("playlist-end",
 			      G_TYPE_FROM_CLASS (klass),
 			      G_SIGNAL_RUN_LAST,
