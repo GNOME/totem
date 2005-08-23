@@ -137,6 +137,109 @@ get_device (const char *device,
   return dev;
 }
 
+static gboolean
+cd_cache_get_dev_from_volumes (GnomeVFSVolumeMonitor *mon, const char *device,
+			      char **mountpoint)
+{
+  gboolean found;
+  GnomeVFSVolume *volume = NULL;
+  GList *list, *or;
+
+  found = FALSE;
+
+  for (or = list = gnome_vfs_volume_monitor_get_mounted_volumes (mon);
+       list != NULL; list = list->next) {
+    char *pdev, *pdev2;
+
+    volume = list->data;
+    if (!(pdev = gnome_vfs_volume_get_device_path (volume)))
+      continue;
+    if (!(pdev2 = get_device (pdev, NULL))) {
+      g_free (pdev);
+      continue;
+    }
+    g_free (pdev);
+
+    if (strcmp (pdev2, device) == 0) {
+      char *mnt;
+
+      mnt = gnome_vfs_volume_get_activation_uri (volume);
+      if (mnt && strncmp (mnt, "file://", 7) == 0) {
+	g_free (pdev2);
+        *mountpoint = g_strdup (mnt + 7);
+        g_free (mnt);
+	found = TRUE;
+        break;
+      } else if (mnt && strncmp (mnt, "cdda://", 7) == 0) {
+	g_free (pdev2);
+	*mountpoint = NULL;
+	g_free (mnt);
+	found = TRUE;
+	break;
+      }
+      g_free (mnt);
+    }
+    g_free (pdev2);
+  }
+  g_list_foreach (or, (GFunc) gnome_vfs_volume_unref, NULL);
+  g_list_free (or);
+
+  return found;
+}
+static gboolean
+cd_cache_get_dev_from_drives (GnomeVFSVolumeMonitor *mon, const char *device,
+			      char **mountpoint, GnomeVFSDrive **d)
+{
+  gboolean found;
+  GnomeVFSDrive *drive = NULL;
+  GList *list, *or;
+
+  found = FALSE;
+
+  for (or = list = gnome_vfs_volume_monitor_get_connected_drives (mon);
+       list != NULL; list = list->next) {
+    char *pdev, *pdev2;
+
+    drive = list->data;
+    if (!(pdev = gnome_vfs_drive_get_device_path (drive)))
+      continue;
+    if (!(pdev2 = get_device (pdev, NULL))) {
+      g_free (pdev);
+      continue;
+    }
+    g_free (pdev);
+
+    if (strcmp (pdev2, device) == 0) {
+      char *mnt;
+
+      mnt = gnome_vfs_drive_get_activation_uri (drive);
+      if (mnt && strncmp (mnt, "file://", 7) == 0) {
+	g_free (pdev2);
+        *mountpoint = g_strdup (mnt + 7);
+        g_free (mnt);
+        gnome_vfs_drive_ref (drive);
+	found = TRUE;
+        break;
+      } else if (mnt && strncmp (mnt, "cdda://", 7) == 0) {
+	g_free (pdev2);
+	*mountpoint = NULL;
+	g_free (mnt);
+	gnome_vfs_drive_ref (drive);
+	found = TRUE;
+	break;
+      }
+      g_free (mnt);
+    }
+    g_free (pdev2);
+  }
+  g_list_foreach (or, (GFunc) gnome_vfs_drive_unref, NULL);
+  g_list_free (or);
+
+  *d = drive;
+
+  return found;
+}
+
 static CdCache *
 cd_cache_new (const char *dev,
 	      GError     **error)
@@ -145,7 +248,6 @@ cd_cache_new (const char *dev,
   char *mountpoint = NULL, *device, *local;
   GnomeVFSVolumeMonitor *mon;
   GnomeVFSDrive *drive = NULL;
-  GList *list, *or;
   gboolean is_dir, found;
 
   if (g_str_has_prefix (dev, "file://") != FALSE)
@@ -166,52 +268,17 @@ cd_cache_new (const char *dev,
     return cache;
   }
 
-  /* retrieve mountpoint (/etc/fstab). We could also use HAL for this,
-   * I think (gnome-volume-manager does that). */
-  found = FALSE;
+  /* retrieve mountpoint (/etc/fstab) */
   device = get_device (local, error);
   g_free (local);
   if (!device)
     return NULL;
   mon = gnome_vfs_get_volume_monitor ();
-  for (or = list = gnome_vfs_volume_monitor_get_connected_drives (mon);
-       list != NULL; list = list->next) {
-    char *pdev, *pdev2;
-
-    drive = list->data;
-    if (!(pdev = gnome_vfs_drive_get_device_path (drive)))
-      continue;
-    if (!(pdev2 = get_device (pdev, NULL))) {
-      g_free (pdev);
-      continue;
-    }
-    g_free (pdev);
-
-    if (strcmp (pdev2, device) == 0) {
-      char *mnt;
-
-      mnt = gnome_vfs_drive_get_activation_uri (drive);
-      if (mnt && strncmp (mnt, "file://", 7) == 0) {
-	g_free (pdev2);
-        mountpoint = g_strdup (mnt + 7);
-        g_free (mnt);
-        gnome_vfs_drive_ref (drive);
-	found = TRUE;
-        break;
-      } else if (mnt && strncmp (mnt, "cdda://", 7) == 0) {
-	g_free (pdev2);
-	mountpoint = NULL;
-	g_free (mnt);
-	gnome_vfs_drive_ref (drive);
-	found = TRUE;
-	break;
-      }
-      g_free (mnt);
-    }
-    g_free (pdev2);
+  found = cd_cache_get_dev_from_drives (mon, device, &mountpoint, &drive);
+  if (!found) {
+    drive = NULL;
+    found = cd_cache_get_dev_from_volumes (mon, device, &mountpoint);
   }
-  g_list_foreach (or, (GFunc) gnome_vfs_drive_unref, NULL);
-  g_list_free (or);
 
   if (!found) {
     g_set_error (error, 0, 0,
@@ -317,6 +384,8 @@ cd_cache_open_mountpoint (CdCache *cache,
     return TRUE;
 
   /* check for mounting - assume we'll mount ourselves */
+  if (cache->drive == NULL)
+    return TRUE;
   cache->self_mounted = !gnome_vfs_drive_is_mounted (cache->drive);
 
   /* mount if we have to */
@@ -361,7 +430,8 @@ cd_cache_free (CdCache *cache)
   }
 
   /* free mem */
-  gnome_vfs_drive_unref (cache->drive);
+  if (cache->drive)
+    gnome_vfs_drive_unref (cache->drive);
   g_free (cache->mountpoint);
   g_free (cache->device);
   g_free (cache);

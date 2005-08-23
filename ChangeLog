@@ -1,5 +1,13 @@
 2005-08-23  Bastien Nocera  <hadess@hadess.net>
 
+	* src/disc-test.c: (main): list the volumes as well as the drives
+	* src/plparse/totem-disc.c: (cd_cache_get_dev_from_volumes),
+	(cd_cache_get_dev_from_drives), (cd_cache_new),
+	(cd_cache_open_mountpoint), (cd_cache_free):
+	Also look in the mounted volumes for our device (Closes: #302615)
+
+2005-08-23  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst.c:
 	(bacon_video_widget_finalize),
 	(bacon_video_widget_open_with_subtitle),

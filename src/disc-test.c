@@ -70,6 +70,18 @@ main (gint   argc,
       if (or == NULL)
         g_print ("No connected drives!\n");
 
+      g_print ("List of mounted volumes:\n");
+      for (or = list = gnome_vfs_volume_monitor_get_mounted_volumes (mon);
+		      list != NULL; list = list->next) {
+        char *device;
+
+	device = gnome_vfs_volume_get_device_path ((GnomeVFSVolume *) list->data);
+	g_print ("%s\n", device);
+	g_free (device);
+      }
+      if (or == NULL)
+        g_print ("No mounted volumes!\n");
+
       return -1;
     case MEDIA_TYPE_DATA:
       type_s = "Data CD";
