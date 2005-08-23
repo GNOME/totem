@@ -45,6 +45,7 @@ main (gint   argc,
 
   g_type_init ();
   gnome_vfs_init ();
+  g_log_set_always_fatal (G_LOG_LEVEL_WARNING);
 
   if (g_file_test (argv[1], G_FILE_TEST_IS_DIR) != FALSE) {
     type = totem_cd_detect_type_from_dir (argv[1], &url, &error);
@@ -68,6 +69,18 @@ main (gint   argc,
       }
       if (or == NULL)
         g_print ("No connected drives!\n");
+
+      g_print ("List of mounted volumes:\n");
+      for (or = list = gnome_vfs_volume_monitor_get_mounted_volumes (mon);
+		      list != NULL; list = list->next) {
+        char *device;
+
+	device = gnome_vfs_volume_get_device_path ((GnomeVFSVolume *) list->data);
+	g_print ("%s\n", device);
+	g_free (device);
+      }
+      if (or == NULL)
+        g_print ("No mounted volumes!\n");
 
       return -1;
     case MEDIA_TYPE_DATA:

@@ -137,43 +137,65 @@ get_device (const char *device,
   return dev;
 }
 
-static CdCache *
-cd_cache_new (const char *dev,
-	      GError     **error)
+static gboolean
+cd_cache_get_dev_from_volumes (GnomeVFSVolumeMonitor *mon, const char *device,
+			      char **mountpoint)
 {
-  CdCache *cache;
-  char *mountpoint = NULL, *device;
-  GnomeVFSVolumeMonitor *mon;
+  gboolean found;
+  GnomeVFSVolume *volume = NULL;
+  GList *list, *or;
+
+  found = FALSE;
+
+  for (or = list = gnome_vfs_volume_monitor_get_mounted_volumes (mon);
+       list != NULL; list = list->next) {
+    char *pdev, *pdev2;
+
+    volume = list->data;
+    if (!(pdev = gnome_vfs_volume_get_device_path (volume)))
+      continue;
+    if (!(pdev2 = get_device (pdev, NULL))) {
+      g_free (pdev);
+      continue;
+    }
+    g_free (pdev);
+
+    if (strcmp (pdev2, device) == 0) {
+      char *mnt;
+
+      mnt = gnome_vfs_volume_get_activation_uri (volume);
+      if (mnt && strncmp (mnt, "file://", 7) == 0) {
+	g_free (pdev2);
+        *mountpoint = g_strdup (mnt + 7);
+        g_free (mnt);
+	found = TRUE;
+        break;
+      } else if (mnt && strncmp (mnt, "cdda://", 7) == 0) {
+	g_free (pdev2);
+	*mountpoint = NULL;
+	g_free (mnt);
+	found = TRUE;
+	break;
+      }
+      g_free (mnt);
+    }
+    g_free (pdev2);
+  }
+  g_list_foreach (or, (GFunc) gnome_vfs_volume_unref, NULL);
+  g_list_free (or);
+
+  return found;
+}
+static gboolean
+cd_cache_get_dev_from_drives (GnomeVFSVolumeMonitor *mon, const char *device,
+			      char **mountpoint, GnomeVFSDrive **d)
+{
+  gboolean found;
   GnomeVFSDrive *drive = NULL;
   GList *list, *or;
-  gboolean is_dir;
 
-  if (g_str_has_prefix (dev, "file://") != FALSE)
-    device = g_filename_from_uri (dev, NULL, NULL);
-  else
-    device = g_strdup (dev);
+  found = FALSE;
 
-  if (device == NULL)
-    return NULL;
-
-  is_dir = g_file_test (device, G_FILE_TEST_IS_DIR);
-
-  if (is_dir) {
-    cache = g_new0 (CdCache, 1);
-    cache->mountpoint = device;
-    cache->fd = -1;
-    cache->is_media = FALSE;
-
-    return cache;
-  }
-
-  g_free (device);
-
-  /* retrieve mountpoint (/etc/fstab). We could also use HAL for this,
-   * I think (gnome-volume-manager does that). */
-  if (!(device = get_device (dev, error)))
-    return NULL;
-  mon = gnome_vfs_get_volume_monitor ();
   for (or = list = gnome_vfs_volume_monitor_get_connected_drives (mon);
        list != NULL; list = list->next) {
     char *pdev, *pdev2;
@@ -191,12 +213,20 @@ cd_cache_new (const char *dev,
       char *mnt;
 
       mnt = gnome_vfs_drive_get_activation_uri (drive);
-      if (!strncmp (mnt, "file://", 7)) {
+      if (mnt && strncmp (mnt, "file://", 7) == 0) {
 	g_free (pdev2);
-        mountpoint = g_strdup (mnt + 7);
+        *mountpoint = g_strdup (mnt + 7);
         g_free (mnt);
         gnome_vfs_drive_ref (drive);
+	found = TRUE;
         break;
+      } else if (mnt && strncmp (mnt, "cdda://", 7) == 0) {
+	g_free (pdev2);
+	*mountpoint = NULL;
+	g_free (mnt);
+	gnome_vfs_drive_ref (drive);
+	found = TRUE;
+	break;
       }
       g_free (mnt);
     }
@@ -205,10 +235,55 @@ cd_cache_new (const char *dev,
   g_list_foreach (or, (GFunc) gnome_vfs_drive_unref, NULL);
   g_list_free (or);
 
-  if (!mountpoint) {
+  *d = drive;
+
+  return found;
+}
+
+static CdCache *
+cd_cache_new (const char *dev,
+	      GError     **error)
+{
+  CdCache *cache;
+  char *mountpoint = NULL, *device, *local;
+  GnomeVFSVolumeMonitor *mon;
+  GnomeVFSDrive *drive = NULL;
+  gboolean is_dir, found;
+
+  if (g_str_has_prefix (dev, "file://") != FALSE)
+    local = g_filename_from_uri (dev, NULL, NULL);
+  else
+    local = g_strdup (dev);
+
+  g_assert (local != NULL);
+
+  is_dir = g_file_test (local, G_FILE_TEST_IS_DIR);
+
+  if (is_dir) {
+    cache = g_new0 (CdCache, 1);
+    cache->mountpoint = local;
+    cache->fd = -1;
+    cache->is_media = FALSE;
+
+    return cache;
+  }
+
+  /* retrieve mountpoint (/etc/fstab) */
+  device = get_device (local, error);
+  g_free (local);
+  if (!device)
+    return NULL;
+  mon = gnome_vfs_get_volume_monitor ();
+  found = cd_cache_get_dev_from_drives (mon, device, &mountpoint, &drive);
+  if (!found) {
+    drive = NULL;
+    found = cd_cache_get_dev_from_volumes (mon, device, &mountpoint);
+  }
+
+  if (!found) {
     g_set_error (error, 0, 0,
-        _("Failed to find mountpoint for device %s in /etc/fstab"),
-        device);
+	_("Failed to find mountpoint for device %s in /etc/fstab"),
+	device);
     return NULL;
   }
 
@@ -309,6 +384,8 @@ cd_cache_open_mountpoint (CdCache *cache,
     return TRUE;
 
   /* check for mounting - assume we'll mount ourselves */
+  if (cache->drive == NULL)
+    return TRUE;
   cache->self_mounted = !gnome_vfs_drive_is_mounted (cache->drive);
 
   /* mount if we have to */
@@ -353,7 +430,8 @@ cd_cache_free (CdCache *cache)
   }
 
   /* free mem */
-  gnome_vfs_drive_unref (cache->drive);
+  if (cache->drive)
+    gnome_vfs_drive_unref (cache->drive);
   g_free (cache->mountpoint);
   g_free (cache->device);
   g_free (cache);
@@ -467,6 +545,8 @@ static MediaType
 cd_cache_disc_is_vcd (CdCache *cache,
                       GError **error)
 {
+  if (!cache->mountpoint)
+    return MEDIA_TYPE_ERROR;
   /* open disc and open mount */
   if (!cd_cache_open_device (cache, error))
     return MEDIA_TYPE_ERROR;
@@ -484,6 +564,8 @@ static MediaType
 cd_cache_disc_is_dvd (CdCache *cache,
 		      GError **error)
 {
+  if (!cache->mountpoint)
+    return MEDIA_TYPE_ERROR;
   /* open disc, check capabilities and open mount */
   if (!cd_cache_open_device (cache, error))
     return MEDIA_TYPE_ERROR;
@@ -495,6 +577,22 @@ cd_cache_disc_is_dvd (CdCache *cache,
     return MEDIA_TYPE_DVD;
 
   return MEDIA_TYPE_DATA;
+}
+
+static char *
+totem_cd_mrl_from_type (const char *scheme, const char *dir)
+{
+  char *retval;
+
+  if (g_str_has_prefix (dir, "file://") != FALSE) {
+    char *local;
+    local = g_filename_from_uri (dir, NULL, NULL);
+    retval = g_strdup_printf ("%s://%s", scheme, local);
+    g_free (local);
+  } else {
+    retval = g_strdup_printf ("%s://%s", scheme, dir);
+  }
+  return retval;
 }
 
 MediaType
@@ -523,45 +621,70 @@ totem_cd_detect_type_from_dir (const char *dir, char **url, GError **error)
   }
 
   if (type == MEDIA_TYPE_DVD) {
-    if (g_str_has_prefix (dir, "file://") != FALSE) {
-      char *local;
-      local = g_filename_from_uri (dir, NULL, NULL);
-      *url = g_strdup_printf ("dvd://%s", local);
-      g_free (local);
-    } else {
-      *url = g_strdup_printf ("dvd://%s", dir);
-    }
+    *url = totem_cd_mrl_from_type ("dvd", dir);
   } else if (type == MEDIA_TYPE_VCD) {
-    if (g_str_has_prefix (dir, "file://") != FALSE) {
-      char *local;
-      local = g_filename_from_uri (dir, NULL, NULL);
-      *url = g_strdup_printf ("vcd://%s", local);
-      g_free (local);
-    } else {
-      *url = g_strdup_printf ("vcd://%s", dir);
-    }
+    *url = totem_cd_mrl_from_type ("vcd", dir);
   }
 
   return type;
 }
 
 MediaType
-totem_cd_detect_type (const char *device,
-    		      GError     **error)
+totem_cd_detect_type_with_url (const char *device,
+    			       char      **url,
+			       GError     **error)
 {
   CdCache *cache;
   MediaType type;
 
+  if (url != NULL)
+    *url = NULL;
+
   if (!(cache = cd_cache_new (device, error)))
     return MEDIA_TYPE_ERROR;
-  if ((type = cd_cache_disc_is_cdda (cache, error)) == MEDIA_TYPE_DATA &&
+
+  type = cd_cache_disc_is_cdda (cache, error);
+  if (type == MEDIA_TYPE_ERROR && *error != NULL)
+    return type;
+
+  if ((type == MEDIA_TYPE_DATA || type == MEDIA_TYPE_ERROR) &&
       (type = cd_cache_disc_is_vcd (cache, error)) == MEDIA_TYPE_DATA &&
       (type = cd_cache_disc_is_dvd (cache, error)) == MEDIA_TYPE_DATA) {
     /* crap, nothing found */
   }
+
+  if (url == NULL) {
+    cd_cache_free (cache);
+    return type;
+  }
+
+  switch (type) {
+  case MEDIA_TYPE_DVD:
+    *url = totem_cd_mrl_from_type ("dvd", device);
+    break;
+  case MEDIA_TYPE_VCD:
+    *url = totem_cd_mrl_from_type ("vcd", device);
+    break;
+  case MEDIA_TYPE_CDDA:
+    *url = totem_cd_mrl_from_type ("cdda", device);
+    break;
+  case MEDIA_TYPE_DATA:
+    *url = g_strdup (cache->mountpoint);
+    break;
+  default:
+    break;
+  }
+
   cd_cache_free (cache);
 
   return type;
+}
+
+MediaType
+totem_cd_detect_type (const char  *device,
+		      GError     **error)
+{
+  return totem_cd_detect_type_with_url (device, NULL, error);
 }
 
 const char *
