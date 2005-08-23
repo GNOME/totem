@@ -1,3 +1,16 @@
+2005-08-23  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst.c:
+	(bacon_video_widget_finalize),
+	(bacon_video_widget_open_with_subtitle),
+	(bacon_video_widget_set_subtitle_font):
+	simplify the _finalize code, don't set the subtitle font if the
+	property isn't available, handle "dvd://<dir>" urls (Closes: #172941)
+	* src/totem-mozilla-plugin.cpp: simplify the while loop waiting for the
+	service to be up, add the version in the plugin description,
+	don't create the mime-list more than once to avoid leaking every time
+	about:plugins is reloaded (Closes: #313864)
+
 2005-08-20  Roozbeh Pournader  <roozbeh@farsiweb.info>
 
 	* confignure.in: Added "fa" (Persian) to ALL_LINGUAS.

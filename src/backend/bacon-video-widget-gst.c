@@ -1319,18 +1319,12 @@ bacon_video_widget_finalize (GObject * object)
 {
   BaconVideoWidget *bvw = (BaconVideoWidget *) object;
 
-  if (bvw->priv->media_device)
-    {
-      g_free (bvw->priv->media_device);
-      bvw->priv->media_device = NULL;
-    }
+  g_free (bvw->priv->media_device);
+  bvw->priv->media_device = NULL;
     
-  if (bvw->priv->mrl)
-    {
-      g_free (bvw->priv->mrl);
-      bvw->priv->mrl = NULL;
-    }
-    
+  g_free (bvw->priv->mrl);
+  bvw->priv->mrl = NULL;
+ 
   if (bvw->priv->queue)
     {
       g_async_queue_unref (bvw->priv->queue);
@@ -1871,6 +1865,13 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
     }
   }
 
+  /* this allows to play backups of dvds */
+  if (g_str_has_prefix (mrl, "dvd:///")) {
+    g_free (bvw->priv->mrl);
+    bvw->priv->mrl = g_strdup ("dvd://");
+    bacon_video_widget_set_media_device (bvw, mrl + strlen ("dvd://"));
+  }
+
   gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_READY);
 
   /* Resetting last_error to NULL */
@@ -2172,6 +2173,8 @@ bacon_video_widget_set_subtitle_font (BaconVideoWidget * bvw,
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
+  if (!g_object_class_find_property (G_OBJECT_GET_CLASS (bvw->priv->play), "subtitle-font-desc"))
+    return;
   g_object_set (G_OBJECT (bvw->priv->play), "subtitle-font-desc", font, NULL);
 }
 

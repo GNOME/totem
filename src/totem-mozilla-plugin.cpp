@@ -156,13 +156,13 @@ totem_plugin_fork (TotemPlugin *plugin)
 				     G_CALLBACK (cb_update_name),
 				     plugin, NULL);
 	g_get_current_time (&then);
+	g_time_val_add (&then, G_USEC_PER_SEC * 5);
 	NS_ADDREF (iface);
 	do {
 		g_main_context_iteration (NULL, TRUE);
 		g_get_current_time (&now);
 	} while (iface->tm != NULL && !plugin->got_svc &&
-		 ((guint64) now.tv_sec * 1000000 + now.tv_usec <=
-		  (guint64) (then.tv_sec + 5) * 1000000 + then.tv_usec));
+		 (now.tv_sec <= then.tv_sec));
 	if (!iface->tm) {
 		/* we were destroyed in one of the iterations of the
 		 * mainloop, get out ASAP */
@@ -498,6 +498,12 @@ totem_plugin_url_notify (NPP instance, const char* url,
 	DEBUG("plugin_url_notify");
 }
 
+static char *
+totem_plugin_get_description (void)
+{
+	return "The <a href=\"http://www.gnome.org/projects/totem/\">Totem</a> "PACKAGE_VERSION" plugin handles video and audio streams.";
+}
+
 static NPError
 totem_plugin_get_value (NPP instance, NPPVariable variable,
 		                        void *value)
@@ -512,8 +518,7 @@ totem_plugin_get_value (NPP instance, NPPVariable variable,
 		*((char **)value) = "Totem Mozilla Plugin";
 		break;
 	case NPPVpluginDescriptionString:
-		*((char **)value) =
-			"The <a href=\"http://www.gnome.org/projects/totem/\">Totem</a> plugin handles video and audio streams.";
+		*((char **)value) = totem_plugin_get_description();
 		break;
 	case NPPVpluginNeedsXEmbed:
 		*((PRBool *)value) = PR_TRUE;
@@ -586,8 +591,11 @@ static struct {
 char *NP_GetMIMEDescription(void)
 {
 	GString *list;
-	char *mime_list;
+	static char *mime_list = NULL;
 	guint i;
+
+	if (mime_list != NULL)
+		return mime_list;
 
 	list = g_string_new (NULL);
 
