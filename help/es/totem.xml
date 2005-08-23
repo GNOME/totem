@@ -1,19 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
-"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-  <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appversion "0.997">
-  <!ENTITY manrevision "2.0">
-  <!ENTITY date "Noviembre 2003">
-  <!ENTITY app "Reproductor de películas Totem">
-  <!-- Information about the entities
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY legal SYSTEM "legal.xml">
+<!ENTITY appversion "0.997">
+<!ENTITY manrevision "2.0">
+<!ENTITY date "November 2003">
+<!ENTITY app "Totem Movie Player">
+<!-- Information about the entities
        The legal.xml file contains legal information, there is no need to edit the file. 
        Use the appversion entity to specify the version of the application.
        Use the manrevision entity to specify the revision number of this manual.
        Use the date entity to specify the release date of this manual.
-       Use the app entity to specify the name of the application. -->
-]>
-
+       Use the app entity to specify the name of the application. -->]>
 <!-- 
       (Do not remove this comment block.)
   Maintained by the GNOME Documentation Project
@@ -21,23 +18,23 @@
   Template version: 2.0 beta
   Template last modified Apr 11, 2002
 -->
-
 <!-- =============Document Header ============================= -->
 <article id="index" lang="es">
 <!-- please do not change the id; for translations, change lang to -->
 <!-- appropriate code -->
   <articleinfo> 
-    <title>Manual de <application>&app;</application> V&manrevision;</title>       
+    <title><application>Totem Movie Player</application> Manual V2.0</title>       
     <copyright> 
       <year>2003</year> 
       <holder>Chee Bin HOH</holder> 
     </copyright> 
 
+<!-- translators: uncomment this:
     <copyright>
-      <year>2004</year>
-      <holder>Francisco Javier F. Serrador (Traducción al español)</holder>
+      <year>2002</year>
+      <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
     </copyright>
-
+-->
 
 <!-- An address can be added to the publisher information.  If a role is 
      not specified, the publisher/author is the same for all versions of the 
@@ -56,19 +53,23 @@
 	<firstname>Chee Bin</firstname> 
 	<surname>HOH</surname> 
 	<affiliation> 
-  	  <orgname>GNOME Documentation Project</orgname> 
+  	  <orgname>Proyecto de Documentación de Gnome</orgname> 
 	  <address> <email>cbhoh@gnome.org</email> </address> 
 	</affiliation> 
       </author> 
+
+<!-- This is appropriate place for other contributors: translators,
+     maintainers,  etc. Commented out by default.
       <othercredit role="translator">
-	<firstname>Francisco Javier</firstname> 
-	<surname>F. Serrador</surname> 
+	<firstname>Latin</firstname> 
+	<surname>Translator 1</surname> 
 	<affiliation> 
-          <orgname>Equipo de localización Hispano de Gnome</orgname> 
-  	  <address> <email>serrador@cvs.gnome.org</email> </address> 
+          <orgname>Latin Translation Team</orgname> 
+  	  <address> <email>translator@gnome.org</email> </address> 
         </affiliation>
-        <contrib>Traducción al español</contrib>
-      </othercredit> 
+        <contrib>Latin translation</contrib>
+      </othercredit>
+-->
     </authorgroup>
 
 <!-- According to GNU FDL, revision history is mandatory if you are -->
@@ -85,25 +86,19 @@
 <!-- to V3.0, and so on. -->  
     <revhistory>
       <revision> 
-        <revnumber>&app; Manual V&manrevision;</revnumber> 
+        <revnumber>Totem Movie Player Manual V2.0</revnumber> 
 	<date>&date;</date> 
 	<revdescription> 
-	  <para role="author">Chee Bin HOH
-	    <email>cbhoh@gnome.org</email>
-	  </para>
+	  <para role="author">Chee Bin HOH <email>cbhoh@gnome.org</email></para>
 	  <para role="publisher">Proyecto de Documentación de Gnome</para>
         </revdescription> 
       </revision> 
     </revhistory> 
 
-    <releaseinfo>Este manual describe la versión &appversion; de &app;.
-    </releaseinfo> 
+    <releaseinfo>This manual describes version 0.997 of Totem Movie Player.</releaseinfo> 
     <legalnotice> 
-      <title>Retroalimentacion</title> 
-      <para>Para informar de un fallo o hacer una sugerencia concerniente a la aplicación &app; o
-	este manual, siga las directrices en la 
-        <ulink url="ghelp:gnome-feedback" type="help">Página de retroalimentación de Gnome</ulink>. 
-      </para>
+      <title>Comentarios</title> 
+      <para>To report a bug or make a suggestion regarding the Totem Movie Player application or this manual, follow the directions in the <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>.</para>
 <!-- Translators may also add here feedback address for translations -->
     </legalnotice> 
   </articleinfo> 
@@ -122,20 +117,14 @@
      the application is and what it does. -->
   <sect1 id="totem-introduction"> 
     <title>Introducción</title> 
-    <para>La aplicación <application>&app;</application> es un
-reproductor de películas para el escritorio de Gnome basado en la
-biblioteca xine, que permite reproducir películas o canciones.
-    </para>
-    <para><application>&app;</application> proporciona las
-    características siguientes:</para>
+    <para>The <application>Totem Movie Player</application> application is a movie player for the GNOME desktop based on xine library, it enables you to play movies or songs.</para>
+    <para><application>Totem Movie Player</application> provides the following features:</para>
     <itemizedlist> 
       <listitem> 
-	<para>Soporta una variedad de archivos y sonido y video.</para>
+	<para>Soporta una variedad de archivos y sonido y vídeo.</para>
       </listitem> 
       <listitem> 
-	<para>Proporciona varios niveles de ampliación y proporciones,
-    y una vista a pantalla completa.
-        </para> 
+	<para>Proporciona varios niveles de ampliación y proporciones, y una vista a pantalla completa.</para> 
       </listitem>
       <listitem>
         <para>Controles de búsqueda y volumen.</para>
@@ -148,9 +137,7 @@ biblioteca xine, que permite reproducir películas o canciones.
       </listitem>
     </itemizedlist> 
     <note>
-      <para>El <application>&app;</application> también viene con
-      funcionalidades adicionales como:
-      </para>
+      <para><application>Totem Movie Player</application> also comes with additional functionalities such as:</para>
       <itemizedlist>
 	<listitem>
 	  <para>Miniaturizador de vídeo para Gnome.</para>
@@ -179,36 +166,24 @@ biblioteca xine, que permite reproducir películas o canciones.
     <title>Inicio de la aplicación</title> 
 
     <sect2 id="totem-start">
-      <title>Inicio del &app;</title>
-      <para>Puede iniciar el <application>&app;</application> de las
-      formas siguientes:
-      </para> 
+      <title>To Start Totem Movie Player</title>
+      <para>You can start <application>Totem Movie Player</application> in the following ways:</para> 
       <variablelist>
 	<varlistentry>
 	  <term>Menú <guimenu>Aplicaciones</guimenu></term>
 	  <listitem>
-	    <para>Elija  
-              <menuchoice>
-		<guisubmenu>Multimedia</guisubmenu>
-		<guimenuitem>&app;</guimenuitem>
-	      </menuchoice>. 
-            </para>
+	    <para>Choose <menuchoice><guisubmenu>Multimedia</guisubmenu><guimenuitem>Totem Movie Player</guimenuitem></menuchoice>.</para>
 	  </listitem>
 	</varlistentry>
 	<varlistentry>
 	  <term>Línea de comandos</term>
 	  <listitem>
-	    <para>Para iniciar el <application>&app;</application> desde
-    	      una línea de comandos, teclee el comando siguiente, y
-    	      después pulse <keycap>Retorno</keycap>:</para>
+	    <para>To start <application>Totem Movie Player</application> from a command line, type the following command, then press <keycap>Return</keycap>:</para>
 	    <para> 
             <command>totem</command> 
             </para> 
 	    <tip>
-	      <para>Para ver otras opciones de la línea de comandos
-                que estén disponibles, teclee <command>totem
-                --help</command>, y después pulse <keycap>Intro</keycap>.
-              </para>
+	      <para>Para ver otras opciones de la línea de comandos que estén disponibles, teclee <command>totem --help</command>, y después pulse <keycap>Intro</keycap>.</para>
 	    </tip>
 	  </listitem>
 	</varlistentry>
@@ -216,13 +191,12 @@ biblioteca xine, que permite reproducir películas o canciones.
     </sect2>
 
     <sect2 id="totem-when-start">
-      <title>Cuando se inicia &app;</title>
-      <para>Al iniciarse el <application>&app;</application>, se muestra
-      la ventana siguiente.</para>
+      <title>When You Start Totem Movie Player</title>
+      <para>When you start <application>Totem Movie Player</application>, the following window is displayed.</para>
 
       <!-- ==== Figure ==== -->
       <figure id="totem-start-fig"> 
-	<title>Ventana de inicio del &app;</title> 
+	<title>Totem Movie Player Start Up Window</title> 
 	<screenshot> 
 	  <mediaobject> 
 	    <imageobject>
@@ -235,12 +209,7 @@ biblioteca xine, que permite reproducir películas o canciones.
             </imageobject>
 -->
 	    <textobject> 
-	      <phrase>Muestra la ventana principal del
-	    <application>&app;</application>. Contiene una barra de
-	    menú, un área de visualización, un deslizador de tiempo
-	    transcurrido, botones de control de búsqueda, deslizador
-	    de volumen y barra de estado.
-              </phrase>
+	      <phrase>Shows <application>Totem Movie Player</application> main window. Contains menubar, display area, time elapsed slider, seek control buttons, volume slider and statusbar.</phrase>
 	    </textobject> 
 	  </mediaobject> 
 	</screenshot> 
@@ -249,37 +218,30 @@ biblioteca xine, que permite reproducir películas o canciones.
 
       <!-- Include any descriptions of the GUI immediately after the screenshot of the main UI, -->
       <!-- for example, the items on the menubar and on the toolbar. This section is optional. -->
-      <para>La ventana del <application>&app;</application> contiene
-      los siguientes elementos:
-      </para>
+      <para>The <application>Totem Movie Player</application> window contains the following elements:</para>
       <variablelist>
 	<varlistentry>
 	  <term>Barra de menú.</term>
   	  <listitem>
-  	    <para>Los menús de la barra de menú contienen todos los
-            comandos que necesita usar en el <application>&app;</application>.</para>
+  	    <para>The menus on the menubar contain all of the commands you need to use in <application>Totem Movie Player</application>.</para>
  	  </listitem>
    	</varlistentry>
 	<varlistentry>
 	  <term>Área de visualización.</term>
 	  <listitem>
-	    <para>El área de visualización muestra películas o visualizaciones de canciones.
-            </para>
+	    <para>El área de visualización muestra películas o visualizaciones de canciones.</para>
 	  </listitem>
 	</varlistentry>
 	<varlistentry>
 	  <term>Marcador deslizante de tiempo.</term>
 	  <listitem>
-	    <para>El marcador deslizante de tiempo muestra el tiempo de la película o canción que se está reproduciendo.
-              También permita saltar adelante o atrás una canción o película.
-            </para>
+	    <para>El marcador deslizante de tiempo muestra el tiempo de la película o canción que se está reproduciendo. También permita saltar adelante o atrás una canción o película.</para>
 	  </listitem>
         </varlistentry>
         <varlistentry>
           <term>Botones de control de búsqueda.</term>
           <listitem>
-            <para>Los controles de búsqueda permiten moverse a la siguiente o anterior pista, pausar o reproducir una  película o canción.
-            </para>
+            <para>Los controles de búsqueda permiten moverse a la siguiente o anterior pista, pausar o reproducir una película o canción.</para>
 	  </listitem>
         </varlistentry>
 	<varlistentry>
@@ -303,42 +265,22 @@ biblioteca xine, que permite reproducir películas o canciones.
 <!-- Use this section to describe how to use the application to perform the tasks for 
   which the application is designed. -->
   <sect1 id="totem-usage"> 
-    <title>Uso</title> 
+    <title><title>Uso</title></title> 
 
     <!-- ================ Usage Subsection ================================ -->
     <sect2 id="totem-open-file"> 
       <title>Para abrir un archivo</title> 
-      <para>Para abrir un arhivo de vídeo o sonido, elija
-        <menuchoice>
-	  <shortcut><keycombo><keycap>Ctrl</keycap><keycap>O</keycap></keycombo></shortcut>
-          <guimenu>Película</guimenu>
-	  <guisubmenu>Abrir</guisubmenu>
-        </menuchoice>.
-        Se muestra el diálogo <guilabel>Selección de archivos</guilabel>. Seleccione el archivo que quiere abrir y pulse 
-	<guibutton>Aceptar</guibutton>. 
-      </para>
-      <para>Puedes arrastrar un archivo desde otra aplicación como un gestor de archivos a la ventana del <application>&app;</application>. La aplicación <application>&app;</application>
-        abrirá el archivo y reproducirá la película o canción. El <application>&app;</application> 
-        muestra el título de la película o canción bajo el área de visualización y en la barra de títulos de la ventana.
-      </para>
-      <para>Si intenta abrir un formato de archivo que el <application>&app;</application> no reconoce, la aplicación muestra un mensaje de error.
-      </para>
+      <para>Para abrir un archivo de vídeo o sonido, elija <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>O</keycap></keycombo></shortcut> <guimenu>Película</guimenu> <guisubmenu>Abrir</guisubmenu> </menuchoice>. Se muestra el diálogo <guilabel>Selección de archivos</guilabel>. Seleccione el archivo que quiere abrir y pulse <guibutton>Aceptar</guibutton>.</para>
+      <para>You can drag a file from another application such as a file manager to the <application>Totem Movie Player</application> window. The <application>Totem Movie Player</application> application will open the file and play the movie or song. <application>Totem Movie Player</application> displays the title of the movie or song beneath the display area and in the titlebar of the window.</para>
+      <para>If you try to open a file format that <application>Totem Movie Player</application> does not recognize, the application displays an error message.</para>
       <tip>
-	<para>Puede pulsar dos veces en un archivo de sonido o vídeo en el gestor de archivos <application>Nautilus</application>
-          para abrirlo en la ventana del <application>&app;</application>.
-        </para>
+	<para>You can double-click on a video or an audio file in the <application>Nautilus</application> file manager to open it on the <application>Totem Movie Player</application> window.</para>
       </tip>
     </sect2> 
 
     <sect2 id="totem-usage-open-location">
       <title>Para abrir una dirección</title>
-      <para>Para abrir un archivo por dirección URI, elija
-        <menuchoice>
-	  <shortcut><keycombo><keycap>Ctrl</keycap><keycap>L</keycap></keycombo></shortcut>
-	  <guimenu>Película</guimenu>
-	  <guimenuitem>Abrir ubicación</guimenuitem>
-        </menuchoice>. Se muestra el diálogo <guilabel>Abrir desde URI</guilabel>. Use la caja de combinación desplegable para especificar una dirección URI del archivo que le gustaría abrir, después pulse en el botón <guibutton>Abrir</guibutton>.
-      </para>
+      <para>Para abrir un archivo por dirección URI, elija <menuchoice> <shortcut><keycombo><keycap>Ctrl</keycap><keycap>L</keycap></keycombo></shortcut> <guimenu>Película</guimenu> <guimenuitem>Abrir ubicación</guimenuitem> </menuchoice>. Se muestra el diálogo <guilabel>Abrir desde URI</guilabel>. Use la caja de combinación desplegable para especificar una dirección URI del archivo que le gustaría abrir, después pulse en el botón <guibutton>Abrir</guibutton>.</para>
     </sect2>
 
     <sect2 id="totem-usage-play">
@@ -347,34 +289,19 @@ biblioteca xine, que permite reproducir películas o canciones.
         <varlistentry>
   	  <term>Para reproducir un DVD</term>
 	  <listitem>
-            <para>Inserte el DVD en el dispositivo DVD de su equipo, después elija
-              <menuchoice>
-		<guimenu>Película</guimenu>
-		<guimenuitem>Reproducir DVD</guimenuitem>
-              </menuchoice>.
-            </para>
+            <para>Inserte el DVD en el dispositivo DVD de su equipo, después elija <menuchoice><guimenu>Película</guimenu><guimenuitem>Reproducir DVD</guimenuitem></menuchoice>.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
   	  <term>Para reproducir un VCD</term>
 	  <listitem>
-            <para>Inserte el VCD en el dispositivo VCD de su equipo, después elija
-              <menuchoice>
-	        <guimenu>Película</guimenu>
-		<guimenuitem>Reproducir VCD</guimenuitem>
-              </menuchoice>.
-            </para>
+            <para>Inserte el VCD en el dispositivo VCD de su equipo, después elija <menuchoice> <guimenu>Película</guimenu> <guimenuitem>Reproducir VCD</guimenuitem> </menuchoice>.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
   	  <term>Para reproducir un CD</term>
 	  <listitem>
-            <para>Inserte el CD en el dispositivo CD de su equipo, después elija
-              <menuchoice>
-	        <guimenu>Película</guimenu>
-		<guimenuitem>Reproducir CD</guimenuitem>
-              </menuchoice>.
-            </para>
+            <para>Inserte el CD en el dispositivo CD de su equipo, después elija <menuchoice> <guimenu>Película</guimenu><guimenuitem>Reproducir CD</guimenuitem> </menuchoice>.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -382,145 +309,52 @@ biblioteca xine, que permite reproducir películas o canciones.
 
     <sect2 id="totem-usage-eject">
       <title>Para expulsar un DVD, VCD o CD</title>
-      <para>Para expulsar un DVD, VCD, o CD, elija 
-        <menuchoice>
-	  <shortcut><keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo></shortcut>
-	  <guimenu>Película</guimenu>
-	  <guimenuitem>Expulsar</guimenuitem>
-        </menuchoice>.
-      </para>
+      <para>Para expulsar un DVD, VCD, o CD, elija <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo></shortcut><guimenu>Película</guimenu><guimenuitem>Expulsar</guimenuitem></menuchoice>.</para>
     </sect2>
 
     <sect2 id="totem-usage-pause">
       <title>Para pausar una película o canción</title>
-      <para>Para pausar una película o canción que se esté reproduciendo, pulse en el botón
-        <inlinemediaobject>
-	  <imageobject><imagedata fileref="figures/totem_pause_button.png" format="PNG"/></imageobject>
-          <textobject><phrase>Muestra el botón de pausa.</phrase></textobject>
-        </inlinemediaobject> o elija 
-        <menuchoice>
-	  <shortcut><keycap>P</keycap></shortcut>
-	  <guimenu>Película</guimenu>
-          <guimenuitem>Reproducir / Pausar</guimenuitem>
-        </menuchoice>. Cuando pause una película o canción, la barra de estado muestra <guilabel>Pausado</guilabel>
-        y el tiempo transcurrido de la película o canción actual.
-      </para>
-      <para>Para continuar reproduciendo la película o canción, pulse en el botón
-        <inlinemediaobject>
-	  <imageobject><imagedata fileref="figures/totem_play_button.png" format="PNG"/></imageobject>
-          <textobject><phrase>Muestra el botón de reproducción.</phrase></textobject>
-        </inlinemediaobject> o elija  
-        <menuchoice>
-	  <shortcut><keycap>P</keycap></shortcut>
-	  <guimenu>Película</guimenu>
-          <guimenuitem>Reproducir / Pausa</guimenuitem>
-        </menuchoice>.
-      </para>
+      <para>Para pausar una película o canción que se esté reproduciendo, pulse en el botón <inlinemediaobject><placeholder-1><placeholder-2> o elija PPel Reproducir / Pausar. Cuando pause una pelPausado y el tiempo transcurrido de la pel</placeholder-2></placeholder-1></inlinemediaobject></para>
+      <para>Para continuar reproduciendo la película o canción, pulse en el botón<inlinemediaobject><placeholder-1><placeholder-2>o elija  P Pel Reproducir / Pausa .</placeholder-2></placeholder-1></inlinemediaobject></para>
     </sect2>
 
     <sect2 id="totem-usage-view-properties">
       <title>Para ver las propiedades de una película o canción</title>
-      <para>Para ver las propiedades de una canción o película , elija
-        <menuchoice>
-	  <guimenu>Película</guimenu>
-	  <guimenuitem>Propiedades</guimenuitem>
-        </menuchoice>. Se muestra el diálogo <guilabel>Propiedades</guilabel>. El diálogo contine la siguiente información:
-        <variablelist>
-	  <varlistentry>
-            <term>General</term>
-            <listitem>
-	      <para>Título, artista, año y duración de la película o canción.</para>
-            </listitem>
-          </varlistentry>
-	  <varlistentry>
-            <term>Video</term>
-            <listitem>
-              <para>Dimensiones del vídeo, códec y tasa de fotogramas.</para>
-            </listitem>
-          </varlistentry>
-	  <varlistentry>
-            <term>Sonido</term>
-            <listitem>
-              <para>Tasa de bists de sonido y códec.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </para>
+      <para>Para ver las propiedades de una canción o película , elija <menuchoice> <guimenu>Película</guimenu> <guimenuitem>Propiedades</guimenuitem> </menuchoice>. Se muestra el diálogo <guilabel>Propiedades</guilabel>. El diálogo contiene la siguiente información:<variablelist><varlistentry><term>General</term><listitem><para>Título, artista, año y duración de la película o canción.</para></listitem></varlistentry><varlistentry><term>Vídeo</term><listitem><para>Dimensiones del vídeo, códec y tasa de fotogramas.</para></listitem></varlistentry><varlistentry><term>Sonido</term><listitem><para>Tasa de bits de sonido y códec.</para></listitem></varlistentry></variablelist></para>
     </sect2>
 
     <sect2 id="totem-usage-seek">
       <title>Para buscar a lo largo de películas o canciones</title>
-      <para>Para buscar a lo largo de películas o canciones, puede usar los métodos siguientes:
-      </para>
+      <para>Para buscar a lo largo de películas o canciones, puede usar los métodos siguientes:</para>
       <variablelist>
 	<varlistentry>
 	  <term>Para saltar adelante</term>
 	  <listitem>
-	    <para>Para saltar adelante una película o canción, elija
-              <menuchoice>
-		<shortcut><keycap>Derecha</keycap></shortcut>
-                <guimenu>Ir</guimenu>
-		<guimenuitem>Saltar adelante</guimenuitem>
-              </menuchoice>.
-            </para>
+	    <para>Para saltar adelante una película o canción, elija <menuchoice><shortcut><keycap>Derecha</keycap></shortcut><guimenu>Ir</guimenu> <guimenuitem>Saltar adelante</guimenuitem> </menuchoice>.</para>
           </listitem>
         </varlistentry>
 	<varlistentry>
 	  <term>Para saltar atrás</term>
 	  <listitem>
-	    <para>Para saltar atrás una película o canción, elija
-              <menuchoice>
-		<shortcut><keycap>Izquierda</keycap></shortcut>
-                <guimenu>Ir</guimenu>
-		<guimenuitem>Saltar atrás</guimenuitem>
-              </menuchoice>.
-             </para>
+	    <para>Para saltar atrás una película o canción, elija <menuchoice><shortcut><keycap>Izquierda</keycap></shortcut><guimenu>Ir</guimenu> <guimenuitem>Saltar atrás</guimenuitem></menuchoice>.</para>
           </listitem>
         </varlistentry>
 	<varlistentry>
 	  <term>Para saltar a un tiempo específico</term>
 	  <listitem>
-	    <para>Para saltar a un tiempo transcurrido específico, elija
-              <menuchoice>
-		<shortcut><keycap>S</keycap></shortcut>
-                <guimenu>Ir</guimenu>
-		<guimenuitem>Saltar a</guimenuitem>
-              </menuchoice>. Se muestra el diálogo <guilabel>Saltar a</guilabel>. Use la caja incrementable para 
-              especificar el tiempo transcurrido (en segundos) para saltar, después pulse
-              <guibutton>Aceptar</guibutton>.
-            </para>
+	    <para>Para saltar a un tiempo transcurrido específico, elija <menuchoice><shortcut><keycap>S</keycap></shortcut><guimenu>Ir</guimenu> <guimenuitem>Saltar a</guimenuitem> </menuchoice>. Se muestra el diálogo <guilabel>Saltar a</guilabel>. Use la caja incrementable para especificar el tiempo transcurrido (en segundos) para saltar, después pulse <guibutton>Aceptar</guibutton>.</para>
           </listitem>
         </varlistentry>
 	<varlistentry>
-	  <term>Para meverse a la siguiente película o canción</term>
+	  <term>Para moverse a la siguiente película o canción</term>
 	  <listitem>
-	    <para>Para moverse a la siguiente película o canción, elija 
-              <menuchoice>
-                <shortcut><keycap>N</keycap></shortcut>
-                <guimenu>Ir</guimenu>
-                <guimenuitem>Siguiente capítulo/película</guimenuitem>
-              </menuchoice> o pulse en el botón 
-              <inlinemediaobject> 
-	        <imageobject><imagedata fileref="figures/totem_next_button.png" format="PNG"/></imageobject>
-	        <textobject><phrase>Muestra un botón de siguiente búsqueda</phrase></textobject>
-              </inlinemediaobject>.
-            </para>
+	    <para>Para moverse a la siguiente película o canción, elija <menuchoice><shortcut><keycap>N</keycap></shortcut><guimenu>Ir</guimenu><guimenuitem>Siguiente capítulo/película</guimenuitem></menuchoice> o pulse en el botón<inlinemediaobject><imageobject><imagedata fileref="figures/totem_next_button.png" format="PNG"/></imageobject><textobject><phrase>Muestra un botón para buscar el siguiente</phrase></textobject></inlinemediaobject>.</para>
           </listitem>
         </varlistentry>
 	<varlistentry>
 	  <term>Para ir a la canción o película anterior</term>
 	  <listitem>
-	    <para>Para moverse a la anterior película o canción, elija 
-              <menuchoice>
-                <shortcut><keycap>B</keycap></shortcut>
-                <guimenu>Ir</guimenu>
-                <guimenuitem>Anterior capítulo/película</guimenuitem>
-              </menuchoice>, o pulse en el botón
-              <inlinemediaobject> 
-	        <imageobject><imagedata fileref="figures/totem_previous_button.png" format="PNG"/></imageobject>
-	        <textobject><phrase>Muestra un botón de búsqueda anterior</phrase></textobject>
-              </inlinemediaobject>.
-            </para>
+	    <para>Para moverse a la anterior película o canción, elija <menuchoice> <shortcut><keycap>B</keycap></shortcut> <guimenu>Ir</guimenu> <guimenuitem>Anterior capítulo/película</guimenuitem> </menuchoice>, o pulse en el botón <inlinemediaobject><imageobject><imagedata fileref="figures/totem_previous_button.png" format="PNG"/></imageobject><textobject><phrase>Muestra un botón buscar anterior</phrase></textobject></inlinemediaobject>.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -528,125 +362,41 @@ biblioteca xine, que permite reproducir películas o canciones.
 
     <sect2 id="totem-usage-change-zoom">
       <title>Para cambiar el factor de ampliación</title>
-      <para>Para cambiar el factor de ampliación del área de visualización, puede usar los métodos siguientes:
-      </para>
+      <para>Para cambiar el factor de ampliación del área de visualización, puede usar los métodos siguientes:</para>
       <itemizedlist>
 	<listitem>
-	  <para>Para ampliar al modo a pantalla completa, elija
-            <menuchoice>
-	      <shortcut><keycap>F</keycap></shortcut>
-	      <guimenu>Ver</guimenu>
-              <guimenuitem>Pantalla completa</guimenuitem>
-            </menuchoice>. Para salir del modo a pantalla completa, pulse en el botón <guibutton>Salir de pantalla completa</guibutton>
-            o pulse <keycap>Esc</keycap>.
-          </para>
+	  <para>Para ampliar al modo a pantalla completa, elija <menuchoice><shortcut><keycap>F</keycap></shortcut> <guimenu>Ver</guimenu> <guimenuitem>Pantalla completa</guimenuitem> </menuchoice>. Para salir del modo a pantalla completa, pulse en el botón <guibutton>Salir de pantalla completa</guibutton> o pulse <keycap>Esc</keycap>.</para>
         </listitem>
 	<listitem>
-	  <para>Para poner el factor de ampliación a la mitad del tamaño de la película original (50%) o visualización, elija 
-            <menuchoice>
-	      <shortcut><keycap>0</keycap></shortcut>
-	      <guimenu>Ver</guimenu>
-              <guimenuitem>Ampliación 1:2</guimenuitem>
-            </menuchoice>.
-          </para>
+	  <para>Para poner el factor de ampliación a la mitad del tamaño de la película original (50%) o visualización, elija <menuchoice> <shortcut><keycap>0</keycap></shortcut><guimenu>Ver</guimenu> <guimenuitem>Ampliación 1:2</guimenuitem></menuchoice>.</para>
         </listitem>
 	<listitem>
-	  <para>Para ampliar al tamaño (100%) original de la pelicula o visualización elija 
-            <menuchoice>
-	      <shortcut><keycap>1</keycap></shortcut>
-	      <guimenu>Ver</guimenu>
-              <guimenuitem>Ampliación 1:1</guimenuitem>
-            </menuchoice>.
-          </para>
+	  <para>Para ampliar al tamaño (100%) original de la película o visualización elija <menuchoice><shortcut><keycap>1</keycap></shortcut><guimenu>Ver</guimenu> <guimenuitem>Ampliación 1:1</guimenuitem></menuchoice>.</para>
         </listitem>
 	<listitem>
-	  <para>Para amplicar al tamaño doble (200%) del tamaño original de la película o visualización, elija
-            <menuchoice>
-	      <shortcut><keycap>2</keycap></shortcut>
-	      <guimenu>Ver</guimenu>
-              <guimenuitem>Ampliación 2:1</guimenuitem>
-            </menuchoice>.
-          </para>
+	  <para>Para ampliar al tamaño doble (200%) del tamaño original de la película o visualización, elija <menuchoice><shortcut><keycap>2</keycap></shortcut><guimenu>Ver</guimenu><guimenuitem>Ampliación 2:1</guimenuitem></menuchoice>.</para>
         </listitem>
 	<listitem>
-	  <para>Para cambiar entre disferentes proporciones, elija
-            <menuchoice>
-	      <shortcut><keycap>A</keycap></shortcut>
-	      <guimenu>Ver</guimenu>
-	      <guimenuitem>Conmutar proporción</guimenuitem>
-            </menuchoice>. Las proporciones soportadas son:
-            <itemizedlist>
-              <listitem><para>Apariencia automática</para></listitem>
-	      <listitem><para>Aspecto cuadrado (1:1)</para></listitem>
-              <listitem><para>Aspecto 4:3 (4:3)</para></listitem>
-              <listitem><para>ASpecto anamórfico (16:9)</para></listitem>
-              <listitem><para>Aspecto DVB (2.11:1)</para></listitem>
-            </itemizedlist>
-            <note>
-              <para>El aspecto predeterminado es Apariencia automática.
-              </para>
-            </note>
-          </para>
+	  <para>Para cambiar entre diferentes proporciones, elija <menuchoice> <shortcut><keycap>A</keycap></shortcut> <guimenu>Ver</guimenu> <guimenuitem>Conmutar proporción</guimenuitem> </menuchoice>. Las proporciones soportadas son:<itemizedlist><listitem><para>Apariencia automática</para></listitem><listitem><para>Aspecto cuadrado (1:1)</para></listitem><listitem><para>Aspecto 4:3 (4:3)</para></listitem><listitem><para>Aspecto anamórfico (16:9)</para></listitem><listitem><para>Aspecto DVB (2.11:1)</para></listitem></itemizedlist><note><para>El aspecto predeterminado es Aspecto automático.</para></note></para>
         </listitem>
       </itemizedlist>
     </sect2>
 
     <sect2 id="totem-usage-adjust-volume">
       <title>Para ajustar el volumen</title>
-      <para>Para incrementar el volumen, elija 
-        <menuchoice>
-	  <shortcut><keycap>Arriba</keycap></shortcut>
-          <guimenu>Sonido</guimenu>
-          <guimenuitem>Subir volumen</guimenuitem>
-        </menuchoice> o mueva el deslizador del volumen a la derecha. 
-        Para decrementar el volúmen, elija 
-        <menuchoice>
-	  <shortcut><keycap>Abajo</keycap></shortcut>
-          <guimenu>Sonido</guimenu>
-          <guimenuitem>Bajar volumen</guimenuitem>
-        </menuchoice> o mueva el deslizador del volumen hacia la izquierda.         
-      </para>
-      <para>Para bajar el volumen al mínimo, pulse en el botón
-        <inlinemediaobject> 
-	  <imageobject><imagedata fileref="figures/totem_volume_mute_button.png" format="PNG"/></imageobject>
-	  <textobject><phrase>Muestra un botón silenciar</phrase></textobject>
-        </inlinemediaobject>.
-        Para subir el volumen al máximo, puñse en el botón
-        <inlinemediaobject> 
-	  <imageobject><imagedata fileref="figures/totem_volume_maximum_button.png" format="PNG"/></imageobject>
-	  <textobject><phrase>Muestra un botón de volúmen al máximo</phrase></textobject>
-        </inlinemediaobject>.
-      </para>
+      <para>Para incrementar el volumen, elija <menuchoice><shortcut><keycap>Arriba</keycap></shortcut> <guimenu>Sonido</guimenu> <guimenuitem>Subir volumen</guimenuitem> </menuchoice> o mueva el deslizador del volumen a la derecha. Para decrementar el volumen, elija <menuchoice><shortcut><keycap>Abajo</keycap></shortcut><guimenu>Sonido</guimenu> <guimenuitem>Bajar volumen</guimenuitem></menuchoice> o mueva el deslizador del volumen hacia la izquierda.</para>
+      <para>To turn the volume down to minimum, click on the <inlinemediaobject><imageobject><imagedata fileref="figures/totem_volume_mute_button.png" format="PNG"/></imageobject><textobject><phrase>Muestra un botón enmudecer</phrase></textobject></inlinemediaobject> button. To turn the volume up to maximum, click on the <inlinemediaobject><imageobject><imagedata fileref="figures/totem_volume_maximum_button.png" format="PNG"/></imageobject><textobject><phrase>Muestra un botón máximo volumen</phrase></textobject></inlinemediaobject> button.</para>
     </sect2>
 
     <sect2 id="totem-usage-on-top">
       <title>Para hacer que la ventana siempre esté encima</title>
-      <para>Para hacer que la ventana del <application>&app;</application> esté siempre encima de otras ventanas de palicaciones, elija
-        <menuchoice>
-          <guimenu>Ver</guimenu>
-          <guimenuitem>Siempre encima</guimenuitem>
-        </menuchoice>.
-       </para>
+      <para>To make the <application>Totem Movie Player</application> window always on top of other application windows, choose <menuchoice><guimenu>View</guimenu><guimenuitem>Always on Top</guimenuitem></menuchoice>.</para>
     </sect2>
 
     <sect2 id="totem-usage-show-control">
-      <title>Para mostrar u oculatar los controles</title>
-      <para>Para ocultar los controles de ventana del <application>&app;</application>,  elija 
-        <menuchoice>
-	  <shortcut><keycap>H</keycap></shortcut>
-          <guimenu>Ver</guimenu>
-          <guimenuitem>Mostrar controles</guimenuitem>
-        </menuchoice> para deseleccionar la opción <guilabel>Mostrar controles</guilabel>. 
-        Para mostrar los controles en la ventana del <application>&app;</application>, 
-        pulse con el botón derecho en la ventana, después elija
-        <menuchoice>
-	  <shortcut><keycap>H</keycap></shortcut>
-	  <guimenuitem>Mostrar controles</guimenuitem>
-        </menuchoice> desde el menú emergente.
-      </para>
-      <para>Si se selecciona la opción <guilabel>Mostrar controles</guilabel>,
-        el <application>&app;</application> mostrará la barra de menús, deslizador de tiempo transcurrido, botones de control de búsqueda, deslizador de volumen y barra de estado en la ventana. Si la opción <guilabel>Mostrar controles</guilabel> está deseleccionada, la aplicación ocultará estos controles y mostrará sólo el área de visualización.
-      </para>
+      <title>Para mostrar u ocultar los controles</title>
+      <para>To hide the <application>Totem Movie Player</application> window controls, choose <menuchoice><shortcut><keycap>H</keycap></shortcut><guimenu>View</guimenu><guimenuitem>Show Controls</guimenuitem></menuchoice> to unselect the <guilabel>Show Controls</guilabel> option. To show the controls on the <application>Totem Movie Player</application> window, right-click on the window, then choose <menuchoice><shortcut><keycap>H</keycap></shortcut><guimenuitem>Show Controls</guimenuitem></menuchoice> from the popup menu.</para>
+      <para>If the <guilabel>Show Controls</guilabel> option is selected, <application>Totem Movie Player</application> will show the menubar, time elapsed slider, seek control buttons, volume slider and statusbar on the window. If the <guilabel>Show Controls</guilabel> option is unselected, the application will hide these controls and show only display area.</para>
     </sect2>
 
     <sect2 id="totem-usage-playlist">
@@ -670,134 +420,32 @@ biblioteca xine, que permite reproducir películas o canciones.
 
       <sect3 id="totem-usage-playlist-show-hide">
 	<title>Para mostrar u ocultar una lista de reproducción</title>
-	<para>Para mostra runa lista de reproducción, elija 
-          <menuchoice>
-	    <guimenu>Ver</guimenu>
-	    <guimenuitem>Mostrar/Ocultar lista de reproducción</guimenuitem>
-          </menuchoice>, o pulse en el botón 
-          <inlinemediaobject>
-	    <imageobject><imagedata fileref="figures/totem_show_playlist_button.png" format="PNG"/></imageobject>
-            <textobject><phrase>Muestra un botón para mostrar/ocultar la lista de reproducción</phrase></textobject>
-          </inlinemediaobject>. Se muestra el diálogo <guilabel>Lista de reproducción</guilabel>. Para ocultar la lista de reproducción, elija
-          <menuchoice>
-	    <guimenu>Ver</guimenu>
-	    <guimenuitem>Mostrar/ocultar lista de reproducción</guimenuitem>
-          </menuchoice> o pulse en el botón
-          <inlinemediaobject>
-	    <imageobject><imagedata fileref="figures/totem_show_playlist_button.png" format="PNG"/></imageobject>
-            <textobject><phrase>Muestra un botón para mostrar/ocultar una lista de reproducción</phrase></textobject>
-          </inlinemediaobject> otra vez.
-        </para>
+	<para>Para mostrar una lista de reproducción, elija <menuchoice><guimenu>Ver</guimenu> <guimenuitem>Mostrar/Ocultar lista de reproducción</guimenuitem> </menuchoice>, o pulse en el botón <inlinemediaobject><imageobject><imagedata fileref="figures/totem_show_playlist_button.png" format="PNG"/></imageobject><textobject><phrase>Shows a show/hide playlist button</phrase></textobject></inlinemediaobject>. Se muestra el diálogo <guilabel>Lista de reproducción</guilabel>. Para ocultar la lista de reproducción, elija <menuchoice> <guimenu>Ver</guimenu> <guimenuitem>Mostrar/ocultar lista de reproducción</guimenuitem> </menuchoice> o pulse en el botón <inlinemediaobject><imageobject><imagedata fileref="figures/totem_show_playlist_button.png" format="PNG"/></imageobject><textobject><phrase>Shows a show/hide playlist button</phrase></textobject></inlinemediaobject> otra vez.</para>
       </sect3>
 
       <sect3 id="totem-usage-playlist-manage">
 	<title>Administración de una lista de reproducción</title>
-	<para>Puede usar el diálogo <guilabel>Lista de reproducción</guilabel> para hacer lo siguiente:
-          <variablelist>
-	    <varlistentry>
-	      <term>Añadir una pista o película</term>
-	      <listitem>
-		<para>Para añadir una pista o película a la lista de reproducción, pulse en el botón <guibutton>Añadir</guibutton>. Se puestre el diálogo <guilabel>Seleccionar archivos</guilabel>. Seleccione el archivo que quiera añadir a lal lista de reproucción, después pulse <guibutton>Aceptar</guibutton>.
-                </para>
-              </listitem>
-            </varlistentry>
-	    <varlistentry>
-	      <term>Para eliminar una pista o película</term>
-	      <listitem>
-		<para>Para eliminar una pista o película de la lista de reproducción, seleccione los nombres de archivo de la lista <guilabel>Nombres de archivo</guilabel>, despuñes pulse en el botón <guibutton>Eliminar</guibutton> button.
-                </para>
-              </listitem>
-	    </varlistentry>
-	    <varlistentry>
-	      <term>Guardar una lista de reproducción en un archivo</term>
-	      <listitem>
-		<para>Para guardar una lista de reproducción en un archivo pulse en el botón <guibutton>Guardar</guibutton>. Se muestra el diálogo <guilabel>Guardar lista de reproducción</guilabel>, especifique
-                  el nombre del archivo que quiere usar para guardar la lista de reproducción.
-                </para>
-              </listitem>
-	    </varlistentry>
-	    <varlistentry>
-	      <term>Para subir una pista o película de la lista de reproducción</term>
-	      <listitem>
-		<para>Para subir una pista o película de la lista de reproducción, seleccione el nombre del archivo de la lista de <guilabel>nombres de archivo</guilabel>, después pulse en el botón <guibutton>Subir</guibutton>.
-                </para>
-              </listitem>
-	    </varlistentry>
-	    <varlistentry>
-	      <term>Para bajar una pista o película en la lista de reproducción</term>
-	      <listitem>
-		<para>Para bajar un pista o peícula de la lista de reporoducción, seleccione los nombres de archivo desde la lista de                 <guilabel>nombres de archivo</guilabel> y después pulse en el botón <guibutton>Bajar</guibutton>.
-                </para>
-              </listitem>
-	    </varlistentry>
-	    <varlistentry>
-              <term>Para establecer el modo repetición</term>
-	      <listitem>
-		<para>Seleccione la opción <guilabel>Modo de repetición</guilabel> para reproducir las películas o canciones repetidamente.
-                </para>
-              </listitem>
-	    </varlistentry>
-	    <varlistentry>
-	      <term>Para establecer el modo aleatorio</term>
-	      <listitem>
-		<para>Seleccione la opción <guilabel>Modo aleatorio</guilabel> para reproducir las películas o canciones aleatoriamente.
-                </para>
-              </listitem>
-            </varlistentry>
-          </variablelist>
-        </para>
+	<para>Puede usar el diálogo <guilabel>Lista de reproducción</guilabel> para hacer lo siguiente:<variablelist><varlistentry><term>Añadir una pista o película</term><listitem><para>Para añadir una pista o película a la lista de reproducción, pulse en el botón <guibutton>Añadir</guibutton>. Se muestra el diálogo <guilabel>Seleccionar archivos</guilabel>. Seleccione el archivo que quiera añadir a la lista de reproducción, después pulse <guibutton>Aceptar</guibutton>.</para></listitem></varlistentry><varlistentry><term>Para eliminar una pista o película</term><listitem><para>Para eliminar una pista o película de la lista de reproducción, seleccione los nombres de archivo de la lista <guilabel>Nombres de archivo</guilabel>, después pulse en el botón <guibutton>Eliminar</guibutton>.</para></listitem></varlistentry><varlistentry><term>Guardar una lista de reproducción en un archivo</term><listitem><para>Para guardar una lista de reproducción en un archivo pulse en el botón <guibutton>Guardar</guibutton>. Se muestra el diálogo <guilabel>Guardar lista de reproducción</guilabel>, especifique el nombre del archivo que quiere usar para guardar la lista de reproducción.</para></listitem></varlistentry><varlistentry><term>Para subir una pista o película de la lista de reproducción</term><listitem><para>Para subir una pista o película de la lista de reproducción, seleccione el nombre del archivo de la lista de <guilabel>nombres de archivo</guilabel>, después pulse en el botón <guibutton>Subir</guibutton>.</para></listitem></varlistentry><varlistentry><term>Para bajar una pista o película en la lista de reproducción</term><listitem><para>Para bajar un pista o película de la lista de reproducción, seleccione los nombres de archivo desde la lista de <guilabel>nombres de archivo</guilabel> y después pulse en el botón <guibutton>Bajar</guibutton>.</para></listitem></varlistentry><varlistentry><term>Para establecer el modo repetición</term><listitem><para>Seleccione la opción <guilabel>Modo de repetición</guilabel> para reproducir las películas o canciones repetidamente.</para></listitem></varlistentry><varlistentry><term>Para establecer el modo aleatorio</term><listitem><para>Seleccione la opción <guilabel>Modo aleatorio</guilabel> para reproducir las películas o canciones aleatoriamente.</para></listitem></varlistentry></variablelist></para>
       </sect3>
       <sect3 id="totem-usage-playlist-repeat">
 	<title>Para seleccionar o deseleccionar el modo de repetición</title>
-	<para>Para seleccionar o deseleccionar el modo de repetición, elija
-          <menuchoice>
-            <guimenu>Ver</guimenu>
-	    <guimenuitem>Modo de repetición</guimenuitem>
-	  </menuchoice>, o use la opción <guilabel>modo de Repetición</guilabel> del diálogo de la <guilabel>Lista de reproducción</guilabel>.
-        </para>
+	<para>Para seleccionar o deseleccionar el modo de repetición, elija <menuchoice><guimenu>Ver</guimenu> <guimenuitem>Modo de repetición</guimenuitem> </menuchoice>, o use la opción <guilabel>modo de Repetición</guilabel> del diálogo de la <guilabel>Lista de reproducción</guilabel>.</para>
       </sect3>
       <sect3 id="totem-usage-playlist-shuffle">
 	<title>Para seleccionar o deseleccionar el modo aleatorio</title>
-	<para>Seleccione o deseleccione el modo aleatorio,  elija
-          <menuchoice>
-            <guimenu>Ver</guimenu>
-	    <guimenuitem>Modo aleatorio</guimenuitem>
-	  </menuchoice>, o use la opción <guilabel>modo aleatorio</guilabel> del diálogo de la <guilabel>Lista de Reproducción</guilabel>.
-        </para>
+	<para>Seleccione o deseleccione el modo aleatorio, elija <menuchoice> <guimenu>Ver</guimenu> <guimenuitem>Modo aleatorio</guimenuitem> </menuchoice>, o use la opción <guilabel>modo aleatorio</guilabel> del diálogo de la <guilabel>Lista de Reproducción</guilabel>.</para>
       </sect3>
     </sect2>
 
     <sect2 id="totem-usage-take-screenshot">
       <title>Para tomar una instantánea</title>
-      <para>Para tomar una instantánea de la película o de la visualización de una canción que se está reproduciendo, elija
-        <menuchoice>
-          <guimenu>Editar</guimenu>
-          <guimenuitem>Tomar captura de pantalla</guimenuitem>
-        </menuchoice>. El diálogo <guilabel>Guardar captura</guilabel> se muestra, pulse el botón <guibutton>Guardar</guibutton> para guardar la captura de pantalla.
-      </para>
-      <para>Puede guardar una captura de pantalla a
-        <itemizedlist>
-          <listitem>
-	    <para>Archivo: seleccione la opción <guilabel>Guardar captura a un archivo</guilabel>, después pulse en el botón <guibutton>Examinar</guibutton> para especificar un archivo para guardar la captura de pantalla.
-            </para>
-          </listitem>
-	  <listitem>
-	    <para>El escritorio: seleccione la opción<guilabel>Guardar la captura de pantalla en un escritorio</guilabel>.
-            </para>
-	  </listitem>
-        </itemizedlist>
-      </para>
+      <para>Para tomar una instantánea de la película o de la visualización de una canción que se está reproduciendo, elija <menuchoice><guimenu>Editar</guimenu><guimenuitem>Tomar captura de pantalla</guimenuitem> </menuchoice>. El diálogo <guilabel>Guardar captura</guilabel> se muestra, pulse el botón <guibutton>Guardar</guibutton> para guardar la captura de pantalla.</para>
+      <para>Puede guardar una captura de pantalla a <itemizedlist><listitem><para>Archivo: seleccione la opción <guilabel>Guardar captura a un archivo</guilabel>, después pulse en el botón <guibutton>Examinar</guibutton> para especificar un archivo para guardar la captura de pantalla.</para></listitem><listitem><para>El escritorio: seleccione la opción<guilabel>Guardar la captura de pantalla en un escritorio</guilabel>.</para></listitem></itemizedlist></para>
     </sect2>
 
     <sect2 id="totem-usage-quit">
-      <title>Salir del &app;</title>
-      <para>Para salir del <application>&app;</application>, elija
-        <menuchoice>
-          <shortcut><keycombo><keycap>Ctrl</keycap><keycap>Q</keycap></keycombo></shortcut>
-          <guimenu>Película</guimenu>
-	  <guimenuitem>Salir</guimenuitem>
-        </menuchoice>.
-      </para>
+      <title>To Quit Totem Movie Player</title>
+      <para>To quit <application>Totem Movie Player</application>, choose <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>Q</keycap></keycombo></shortcut><guimenu>Movie</guimenu><guimenuitem>Quit</guimenuitem></menuchoice>.</para>
     </sect2>
   </sect1>
 
@@ -806,11 +454,7 @@ biblioteca xine, que permite reproducir películas o canciones.
      application. -->
   <sect1 id="totem-prefs">
     <title>Preferencias</title>
-    <para>Para modificar las preferencias de <application>&app;</application>, elija
-      <menuchoice>
-        <guimenu>Editar</guimenu>
-	<guimenuitem>Preferencias</guimenuitem>
-      </menuchoice>. El diálogo <guilabel>Preferencias</guilabel> contiene las siguientes secciones:</para> 
+    <para>To modify the preferences of <application>Totem Movie Player</application>, choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Preferences</guimenuitem></menuchoice>. The <guilabel>Preferences</guilabel> dialog contains the following tabbed sections:</para> 
     <itemizedlist> 
       <listitem> 
 	<para> 
@@ -835,15 +479,13 @@ biblioteca xine, que permite reproducir películas o canciones.
 	<varlistentry>
 	  <term>Dispositivo óptico</term>
 	  <listitem>
-	    <para>Selecccione el dispositivo óptico de la lista desplegable <guilabel>Ruta a dispositivo óptico</guilabel>.
-            </para>
+	    <para>Seleccione el dispositivo óptico de la lista desplegable <guilabel>Ruta a dispositivo óptico</guilabel>.</para>
           </listitem>
         </varlistentry>
 	<varlistentry>
-	  <term>Red</term>
+	  <term><term>Red</term></term>
 	  <listitem>
-	    <para>Seleccione la velocidad de la conexión de red desde la lista desplegable <guilabel>Velocidad de conexión</guilabel>.
-            </para>
+	    <para>Seleccione la velocidad de la conexión de red desde la lista desplegable <guilabel>Velocidad de conexión</guilabel>.</para>
           </listitem>
         </varlistentry>	
 	<varlistentry>
@@ -857,7 +499,7 @@ biblioteca xine, que permite reproducir películas o canciones.
 		<para><guilabel>Modo de salida TV</guilabel>: seleccione esta opción si quiere conexión de salida de TV normal.</para>
               </listitem>
 	      <listitem>
-		<para><guilabel>DXR3 TV</guilabel>: seleccioe esta opción si quiere una conexión de salida DXR3.</para>
+		<para><guilabel>DXR3 TV</guilabel>: seleccione esta opción si quiere una conexión de salida DXR3.</para>
 	      </listitem>
             </itemizedlist>
           </listitem>
@@ -865,23 +507,18 @@ biblioteca xine, que permite reproducir películas o canciones.
 	<varlistentry>
 	  <term>Complementos privativos</term>
 	  <listitem>
-	    <para>Puede añadir complementos privativos para manipular archivos de películas o canciones adicionales.
-              Para añadir complementos adicionales al <application>&app;</application>, pulse en el botón 
-              <guibutton>Añadir complementos privativos</guibutton>. 
-            </para>
+	    <para>You can add proprietary plugins to handle additional movie or audio files. To add proprietary plugins to <application>Totem Movie Player</application>, click on the <guibutton>Add Proprietary Plugins</guibutton> button.</para>
           </listitem>
         </varlistentry>
       </variablelist>
     </sect2>
     <sect2 id="totem-prefs-display">
-      <title>Pantalla</title>
+      <title>Área de visualización</title>
       <variablelist>
 	<varlistentry>
-	  <term>Pantalla</term>
+	  <term>Área de visualización</term>
 	  <listitem>
-	    <para>Seleccione la opción <guilabel>redimensionar</guilabel> si quiere que el <application>&app;</application>
-            redimensione automáticamente la ventana cuando se cargue un vídeo nuevo.
-            </para>
+	    <para>Select the <guilabel>resize</guilabel> option if you want <application>Totem Movie Player</application> to automatically resize the window when a new video is loaded.</para>
           </listitem>
         </varlistentry>
 	<varlistentry>
@@ -889,16 +526,13 @@ biblioteca xine, que permite reproducir películas o canciones.
 	  <listitem>
 	    <itemizedlist>
 	      <listitem>
-                <para><guilabel>visual</guilabel>: seleccione esta opción para mostrar efectos visuales mientras se está reproduciendo un fichero de sonido.
-                </para>
+                <para><guilabel>visual</guilabel>: seleccione esta opción para mostrar efectos visuales mientras se está reproduciendo un fichero de sonido.</para>
               </listitem>
 	      <listitem>
-		<para><guilabel>Tipo de visualización</guilabel>: seleccione el tipo de visualización de la lista desplegable.
-                </para>
+		<para><guilabel>Tipo de visualización</guilabel>: seleccione el tipo de visualización de la lista desplegable.</para>
               </listitem>
 	      <listitem>
-		<para><guilabel>Tamaño de visualización</guilabel>: seleccione el tamaño de visualización desde la lista desplegable.
-                </para>
+		<para><guilabel>Tamaño de visualización</guilabel>: seleccione el tamaño de visualización desde la lista desplegable.</para>
               </listitem>
             </itemizedlist>
           </listitem>
@@ -924,8 +558,7 @@ biblioteca xine, que permite reproducir películas o canciones.
 	<varlistentry>
 	  <term>Salida de sonido</term>
 	  <listitem>
-	    <para>Seleccione el tipo de salida de sonido desde la lista  desplegable <guilabel>Tipo de salida de sonido</guilabel>.
-            </para>
+	    <para>Seleccione el tipo de salida de sonido desde la lista desplegable <guilabel>Tipo de salida de sonido</guilabel>.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -951,21 +584,9 @@ biblioteca xine, que permite reproducir películas o canciones.
       the program. However, if you do wish to include this info in the
       manual, this is the place to put it. Alternatively, you can put this information in the title page.-->
   <sect1 id="totem-about"> 
-    <title>Acerca del <application>&app;</application></title> 
-    <para><application>&app;</application> ha sido escrita por
-      Bastien Nocera (<email>hadess@hadess.net</email>),
-      Julien Moutte (<email>julien@moutte.net</email>), el backend de GStreamer,
-      y Guenter Bartsch (<email>guenter@users.sourceforge.net</email>).
-      Para encontrar más información acerca del <application>&app;</application>, visite la 
-      <ulink url="http://www.hadess.net/totem.php3" type="http">
-      Página inicial de<application>&app;</application>  </ulink>. 
-    </para>
-    <para>
-      Para informar de un fallo o hacer alguna sugerencia  concerniente a esta aplicación o este manual, siga las indicaciones en este
-      <ulink url="ghelp:gnome-feedback" type="help">documento</ulink>.
-    </para>
-    <para> Este programa se distribuye bajo los términos de la Licencia Pública General GNU tal como la publica la Free Software Foundation; en cualquiera de las versiones 2 de la Licencia o (a su elección) cualquier versión posterior. Puede encontrar una copia de esta licencia en este
-      <ulink url="ghelp:gpl" type="help">enlace</ulink>, o en el archivo
-      COPYING incluido con el código fuente de este programa. </para>
+    <title>About <application>Totem Movie Player</application></title> 
+    <para><application>Totem Movie Player</application> is written by Bastien Nocera (<email>hadess@hadess.net</email>), Julien Moutte (<email>julien@moutte.net</email>) for GStreamer backend, and Guenter Bartsch (<email>guenter@users.sourceforge.net</email>). To find more information about <application>Totem Movie Player</application>, please visit the <ulink url="http://www.hadess.net/totem.php3" type="http"><application>Totem Movie Player</application> Home Page</ulink>.</para>
+    <para>Para informar de un fallo o hacer alguna sugerencia concerniente a esta aplicación o este manual, siga las indicaciones en este <ulink url="ghelp:gnome-feedback" type="help">documento</ulink>.</para>
+    <para>Este programa se distribuye bajo los términos de la Licencia Pública General GNU tal como la publica la Free Software Foundation; en cualquiera de las versiones 2 de la Licencia o (a su elección) cualquier versión posterior. Puede encontrar una copia de esta licencia en este <ulink url="ghelp:gpl" type="help">enlace</ulink>, o en el archivo COPYING incluido con el código fuente de este programa.</para>
   </sect1> 
 </article>
