@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Totem for Gnome v.2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-08 23:04+0000\n"
-"PO-Revision-Date: 2005-08-09 16:54+0930\n"
+"POT-Creation-Date: 2005-08-25 23:30+0000\n"
+"PO-Revision-Date: 2005-08-26 20:28+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgstr "Chuyổn xuống"
 msgid "Move Up"
 msgstr "Chuyển lên"
 
-#: ../data/playlist.glade.h:4 ../src/totem-sidebar.c:98
+#: ../data/playlist.glade.h:4 ../src/totem-sidebar.c:115
 msgid "Playlist"
 msgstr "Danh sách phát"
 
@@ -242,7 +242,7 @@ msgstr "Phát phim và nhạc"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:2 ../data/totem.glade.h:97
-#: ../src/totem.c:666 ../src/totem.c:3361 ../src/totem.c:3378
+#: ../src/totem.c:666 ../src/totem.c:3362 ../src/totem.c:3379
 msgid "Totem Movie Player"
 msgstr "Trình Phát Phim Totem"
 
@@ -911,12 +911,12 @@ msgid "Properties dialog"
 msgstr "Hộp thoại thuộc tính"
 
 #. +
-#: ../src/bacon-volume.c:185
+#: ../src/bacon-volume.c:187
 msgid "+"
 msgstr "+"
 
 #. -
-#: ../src/bacon-volume.c:201
+#: ../src/bacon-volume.c:203
 msgid "-"
 msgstr "-"
 
@@ -1209,6 +1209,14 @@ msgstr ""
 "Có thể bạn cần kiểm tra là đang có đĩa trong ổ và nó đã được cấu hình đúng "
 "hay chưa."
 
+#: ../src/totem.c:413
+msgid "Failed to play Audio/Video Disc"
+msgstr "Không phát đĩa âm thanh / ảnh động được"
+
+#: ../src/totem.c:414
+msgid "Reason unknown"
+msgstr "Không biết sao"
+
 #: ../src/totem.c:659
 msgid "No File"
 msgstr "Không có tập tin"
@@ -1277,28 +1285,28 @@ msgstr "Totem không thể khởi chạy."
 msgid "No reason."
 msgstr "Không lý do."
 
-#: ../src/totem.c:3362
+#: ../src/totem.c:3363
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Không thể sơ khởi thư viện «thread-safe» (mạch an toàn)."
 
-#: ../src/totem.c:3362
+#: ../src/totem.c:3363
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Hãy kiểm tra lại bản cài đặt hệ thống. Totem thoát ra ngay bây giờ."
 
-#: ../src/totem.c:3385
+#: ../src/totem.c:3386
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem không thể sơ khởi cơ chế cấu hình."
 
-#: ../src/totem.c:3385
+#: ../src/totem.c:3386
 msgid "Make sure that GNOME is properly installed."
 msgstr "Hãy bảo đảm là Gnome đã được cài đặt đúng."
 
 #. Main window
-#: ../src/totem.c:3412
+#: ../src/totem.c:3413
 msgid "main window"
 msgstr "cửa sổ chính"
 
-#: ../src/totem.c:3417
+#: ../src/totem.c:3418
 msgid "video popup menu"
 msgstr "trình đơn bật lên ảnh động"
 
@@ -1377,40 +1385,40 @@ msgstr ""
 msgid "Totem Video Window"
 msgstr "Cửa sổ ảnh động của Totem"
 
-#: ../src/backend/bacon-video-widget-gst.c:1867
+#: ../src/backend/bacon-video-widget-gst.c:1861
 msgid "Failed to retrieve working directory"
 msgstr "Không gọi được thư mục làm việc"
 
-#: ../src/backend/bacon-video-widget-gst.c:1919
+#: ../src/backend/bacon-video-widget-gst.c:1920
 msgid "Location not found."
 msgstr "Không tìm thấy địa điểm"
 
-#: ../src/backend/bacon-video-widget-gst.c:1922
+#: ../src/backend/bacon-video-widget-gst.c:1923
 msgid "You don't have permission to open that location."
 msgstr "Bạn không có quyền mở địa điểm đó."
 
-#: ../src/backend/bacon-video-widget-gst.c:1942
+#: ../src/backend/bacon-video-widget-gst.c:1943
 msgid "Failed to open media file; unknown error"
 msgstr "Không mở được tập tin môi giới: không biết lỗi."
 
-#: ../src/backend/bacon-video-widget-gst.c:1974
+#: ../src/backend/bacon-video-widget-gst.c:1975
 #, c-format
 msgid "Failed to play: %s"
 msgstr "Không phát được: %s"
 
-#: ../src/backend/bacon-video-widget-gst.c:1976
+#: ../src/backend/bacon-video-widget-gst.c:1977
 msgid "unknown error"
 msgstr "không biết lỗi"
 
-#: ../src/backend/bacon-video-widget-gst.c:3127
+#: ../src/backend/bacon-video-widget-gst.c:3130
 msgid "Too old version of GStreamer installed."
 msgstr "Có phiên bản GStreamer quá cũ đã cài đặt."
 
-#: ../src/backend/bacon-video-widget-gst.c:3134
+#: ../src/backend/bacon-video-widget-gst.c:3137
 msgid "Media contains no supported video streams."
 msgstr "Môi giới không chứa dòng ảnh động được hỗ trợ."
 
-#: ../src/backend/bacon-video-widget-gst.c:3312
+#: ../src/backend/bacon-video-widget-gst.c:3315
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1418,7 +1426,7 @@ msgstr ""
 "Không tạo được đối tượng phát GStreamer. Vui lòng kiểm tra bản cài đặt "
 "GStreamer là đúng."
 
-#: ../src/backend/bacon-video-widget-gst.c:3408
+#: ../src/backend/bacon-video-widget-gst.c:3411
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1428,7 +1436,7 @@ msgstr ""
 "các ứng ảnh động khác, hoặc chọn một kết xuất ảnh động khác trong Bộ chọn Hệ "
 "thống Đa phương tiên."
 
-#: ../src/backend/bacon-video-widget-gst.c:3418
+#: ../src/backend/bacon-video-widget-gst.c:3421
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1436,7 +1444,7 @@ msgstr ""
 "Không mở kết xuất ảnh động. Có thể không sẵn sàng. Vui lòng chọn một kết "
 "xuất ảnh động khác trong Bộ chọn Hệ thống Đa phương tiên."
 
-#: ../src/backend/bacon-video-widget-gst.c:3445
+#: ../src/backend/bacon-video-widget-gst.c:3448
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1446,7 +1454,7 @@ msgstr ""
 "một kết xuất âm thanh khác trong Bộ chọn Hệ thống Đa phương tiên. Có lẽ bạn "
 "cũng muốn suy tính dùng một trình phục vụ âm thanh."
 
-#: ../src/backend/bacon-video-widget-gst.c:3451
+#: ../src/backend/bacon-video-widget-gst.c:3454
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector"
@@ -1454,7 +1462,7 @@ msgstr ""
 "Không tìm thấy kết xuất âm thanh đã yêu cầu. Vui lòng chọn một kết xuất âm "
 "thanh khác trong Bộ chọn Hệ thống Đa phương tiên."
 
-#: ../src/backend/bacon-video-widget-gst.c:3461
+#: ../src/backend/bacon-video-widget-gst.c:3464
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1657,54 +1665,54 @@ msgstr "Không tìm được nút thiết bị thực cho %s: %s"
 msgid "Failed to read symbolic link %s: %s"
 msgstr "Không đọc được liên kết biểu tượng %s: %s"
 
-#: ../src/plparse/totem-disc.c:218
+#: ../src/plparse/totem-disc.c:285
 #, c-format
 msgid "Failed to find mountpoint for device %s in /etc/fstab"
 msgstr "Không tìm được điểm gắn kết cho thiết bị « %s » trong « /etc/fstab »."
 
-#: ../src/plparse/totem-disc.c:256
+#: ../src/plparse/totem-disc.c:323
 msgid "Please check that a disc is present in the drive."
 msgstr "Hãy kiểm tra xem đã có đĩa trong ổ chưa."
 
-#: ../src/plparse/totem-disc.c:259
+#: ../src/plparse/totem-disc.c:326
 #, c-format
 msgid "Failed to open device %s for reading: %s"
 msgstr "Không mở được thiết bị « %s » để đọc: %s"
 
-#: ../src/plparse/totem-disc.c:270
+#: ../src/plparse/totem-disc.c:337
 #, c-format
 msgid "Failed to retrieve capabilities of device %s: %s"
 msgstr "Không gọi được khả năng của thiết bị %s: %s"
 
-#: ../src/plparse/totem-disc.c:303
+#: ../src/plparse/totem-disc.c:370
 #, c-format
 msgid "Drive status 0x%x (%s) - check disc"
 msgstr "Trạng thái ổ «0x%x» (%s) — kiểm tra đĩa"
 
-#: ../src/plparse/totem-disc.c:336
+#: ../src/plparse/totem-disc.c:405
 #, c-format
 msgid "Unexpected error status %d while mounting %s"
 msgstr "Gặp trạng thá lỗi bất ngờ « %d » khi đang gắn kết « %s »."
 
-#: ../src/plparse/totem-disc.c:388
+#: ../src/plparse/totem-disc.c:458
 #, c-format
 msgid "Error getting %s disc status: %s"
 msgstr "Gặp lỗi gọi trạng thái đĩa « %s »: %s"
 
-#: ../src/plparse/totem-disc.c:417
+#: ../src/plparse/totem-disc.c:487
 #, c-format
 msgid "Unexpected/unknown cd type 0x%x (%s)"
 msgstr "Loại đĩa CD « 0x%x (%s) » bất ngờ hay không biết."
 
-#: ../src/plparse/totem-disc.c:626
+#: ../src/plparse/totem-disc.c:696
 msgid "Audio CD"
 msgstr "Đĩa CD âm thanh"
 
-#: ../src/plparse/totem-disc.c:628
+#: ../src/plparse/totem-disc.c:698
 msgid "Video CD"
 msgstr "Đĩa CD ảnh động"
 
-#: ../src/plparse/totem-disc.c:630
+#: ../src/plparse/totem-disc.c:700
 msgid "DVD"
 msgstr "Đĩa DVD"
 
