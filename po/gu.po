@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-22 23:27+0000\n"
-"PO-Revision-Date: 2005-08-23 11:45+0530\n"
+"POT-Creation-Date: 2005-08-25 23:30+0000\n"
+"PO-Revision-Date: 2005-08-26 09:42+0530\n"
 "Last-Translator: Ankit Patel <ankit644@yahoo.com>\n"
 "Language-Team: Gujarati <indianoss-gujarati@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -13,6 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
+"\n"
 "\n"
 "\n"
 
@@ -1183,6 +1184,14 @@ msgid ""
 "correctly configured."
 msgstr "તમારે ચકાસવાની જરૂર છે કે ડિસ્ક તેની ડ્રાઈવમાં હાજર છે ને અને તે યોગ્ય રીતે રૂપરેખાંકિત છે."
 
+#: ../src/totem.c:413
+msgid "Failed to play Audio/Video Disc"
+msgstr "ઓડિયો/વીડિયો ડિસ્ક વગાડવામાં નિષ્ફળ"
+
+#: ../src/totem.c:414
+msgid "Reason unknown"
+msgstr "અજ્ઞાત કારણ"
+
 #: ../src/totem.c:659
 msgid "No File"
 msgstr "કોઈ ફાઈલ નથી"
@@ -1350,40 +1359,40 @@ msgstr ""
 msgid "Totem Video Window"
 msgstr "ટોટેમ વિડીયો વિન્ડો"
 
-#: ../src/backend/bacon-video-widget-gst.c:1867
+#: ../src/backend/bacon-video-widget-gst.c:1861
 msgid "Failed to retrieve working directory"
 msgstr "કાર્યરત ડિરેક્ટરી પુનઃપ્રાપ્ત કરવામાં નિષ્ફળ"
 
-#: ../src/backend/bacon-video-widget-gst.c:1919
+#: ../src/backend/bacon-video-widget-gst.c:1920
 msgid "Location not found."
 msgstr "સ્થાન મળ્યું નથી."
 
-#: ../src/backend/bacon-video-widget-gst.c:1922
+#: ../src/backend/bacon-video-widget-gst.c:1923
 msgid "You don't have permission to open that location."
 msgstr "તમારી પાસે સ્થાન ખોલવા માટે પરવાનગી નથી."
 
-#: ../src/backend/bacon-video-widget-gst.c:1942
+#: ../src/backend/bacon-video-widget-gst.c:1943
 msgid "Failed to open media file; unknown error"
 msgstr "મીડિયા ફાઈલ ખોલવામાં નિષ્ફળ; અજ્ઞાત ભૂલ"
 
-#: ../src/backend/bacon-video-widget-gst.c:1974
+#: ../src/backend/bacon-video-widget-gst.c:1975
 #, c-format
 msgid "Failed to play: %s"
 msgstr "વગાડવામાં નિષ્ફળ: %s"
 
-#: ../src/backend/bacon-video-widget-gst.c:1976
+#: ../src/backend/bacon-video-widget-gst.c:1977
 msgid "unknown error"
 msgstr "અજ્ઞાત ભૂલ"
 
-#: ../src/backend/bacon-video-widget-gst.c:3127
+#: ../src/backend/bacon-video-widget-gst.c:3130
 msgid "Too old version of GStreamer installed."
 msgstr "સ્થાપિત GStreamer ની આવૃત્તિ ખૂબ જૂની છે."
 
-#: ../src/backend/bacon-video-widget-gst.c:3134
+#: ../src/backend/bacon-video-widget-gst.c:3137
 msgid "Media contains no supported video streams."
 msgstr "મીડિયા કોઈ આધારભૂત વીડિયો બંધારણો સમાવતું નથી."
 
-#: ../src/backend/bacon-video-widget-gst.c:3312
+#: ../src/backend/bacon-video-widget-gst.c:3315
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1391,7 +1400,7 @@ msgstr ""
 "GStreamer વગાડો ઓબ્જેક્ટ બનાવવામાં નિષ્ફળ. મહેરબાની કીરને તમારું GStreamer સ્થાપન "
 "ચકાસો."
 
-#: ../src/backend/bacon-video-widget-gst.c:3408
+#: ../src/backend/bacon-video-widget-gst.c:3411
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1400,7 +1409,7 @@ msgstr ""
 "વીડિયો આઉટપુટ એ અન્ય કાર્યક્રમ દ્વારા વપરાશમાં છે. મહેરબાની કરીને અન્ય વીડિયો કાર્યક્રમ "
 "બંધ કરો, અથવા મલ્ટીમીડિયા સિસ્ટમ પસંદગીકારકમાં અન્ય વીડિયો આઉટપુટ પસંદ કરો."
 
-#: ../src/backend/bacon-video-widget-gst.c:3418
+#: ../src/backend/bacon-video-widget-gst.c:3421
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1408,7 +1417,7 @@ msgstr ""
 "વીડિયો આઉટપુટ ખોલવામાં નિષ્ફળ. તે ઉપલબ્ધ હશે નહિં. મહેરબાની કરીને અન્ય મલ્ટીમીડિયા "
 "સિસ્ટમ પસંદગીકારકમાં અન્ય વીડિયો આઉટપુટ પસંદ કરો."
 
-#: ../src/backend/bacon-video-widget-gst.c:3445
+#: ../src/backend/bacon-video-widget-gst.c:3448
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1418,7 +1427,7 @@ msgstr ""
 "પસંદગીકારકમાં અન્ય ઓડિયો આઉટપુટ પસંદ કરો. તમે અન્ય સાઉન્ડ સર્વર વાપરવાનું ધ્યાનમાં લેવું "
 "જોઈએ."
 
-#: ../src/backend/bacon-video-widget-gst.c:3451
+#: ../src/backend/bacon-video-widget-gst.c:3454
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector"
@@ -1426,7 +1435,7 @@ msgstr ""
 "માંગણી થયેલ ઓડિયો આઉટપુટ મળ્યું નથી. મહેરબાની કરીને મલ્ટીમીડિયા સિસ્ટમ પસંદગીકારકમાં અન્ય "
 "ઓડિયો આઉટપુટ પસંદ કરો"
 
-#: ../src/backend/bacon-video-widget-gst.c:3461
+#: ../src/backend/bacon-video-widget-gst.c:3464
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1629,54 +1638,54 @@ msgstr "%s માટે વાસ્તવિક ઉપકરણ નોડ શ�
 msgid "Failed to read symbolic link %s: %s"
 msgstr "સાંકેતિક કડી %s વાંચવામાં નિષ્ફળ: %s"
 
-#: ../src/plparse/totem-disc.c:218
+#: ../src/plparse/totem-disc.c:285
 #, c-format
 msgid "Failed to find mountpoint for device %s in /etc/fstab"
 msgstr "ઉપકરણ %s માટે /etc/fstab માં માઉન્ટ બિંદુ શોધવામાં નિષ્ફળ"
 
-#: ../src/plparse/totem-disc.c:256
+#: ../src/plparse/totem-disc.c:323
 msgid "Please check that a disc is present in the drive."
 msgstr "મહેરબાની કરીને ચકાસો કે ડિસ્ક તમારી ડ્રાઈવમાં હાજર છે."
 
-#: ../src/plparse/totem-disc.c:259
+#: ../src/plparse/totem-disc.c:326
 #, c-format
 msgid "Failed to open device %s for reading: %s"
 msgstr "ઉપકરણ %s ને વાંચવામાં નિષ્ફળ: %s"
 
-#: ../src/plparse/totem-disc.c:270
+#: ../src/plparse/totem-disc.c:337
 #, c-format
 msgid "Failed to retrieve capabilities of device %s: %s"
 msgstr "ઉપકરણ %s ની ક્ષમતાઓ મેળવવામાં નિષ્ફળ: %s"
 
-#: ../src/plparse/totem-disc.c:303
+#: ../src/plparse/totem-disc.c:370
 #, c-format
 msgid "Drive status 0x%x (%s) - check disc"
 msgstr "ડ્રાઈવ સ્થિતિ 0x%x (%s) - ડિસ્ક ચકાસો"
 
-#: ../src/plparse/totem-disc.c:336
+#: ../src/plparse/totem-disc.c:405
 #, c-format
 msgid "Unexpected error status %d while mounting %s"
 msgstr "અનિચ્છનીય ભૂલ સ્થિતિ %d જ્યારે %s ને માઉન્ટ કરી રહ્યા હોય"
 
-#: ../src/plparse/totem-disc.c:388
+#: ../src/plparse/totem-disc.c:458
 #, c-format
 msgid "Error getting %s disc status: %s"
 msgstr "%s ડિસ્ક પરિસ્થિતિ મેળવવામાં ભૂલ: %s"
 
-#: ../src/plparse/totem-disc.c:417
+#: ../src/plparse/totem-disc.c:487
 #, c-format
 msgid "Unexpected/unknown cd type 0x%x (%s)"
 msgstr "અનિચ્છનીય/અજ્ઞાત cd પ્રકાર 0x%x (%s)"
 
-#: ../src/plparse/totem-disc.c:626
+#: ../src/plparse/totem-disc.c:696
 msgid "Audio CD"
 msgstr "ઓડિયો CD"
 
-#: ../src/plparse/totem-disc.c:628
+#: ../src/plparse/totem-disc.c:698
 msgid "Video CD"
 msgstr "વિડીયો CD"
 
-#: ../src/plparse/totem-disc.c:630
+#: ../src/plparse/totem-disc.c:700
 msgid "DVD"
 msgstr "DVD"
 
