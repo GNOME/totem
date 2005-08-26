@@ -6,16 +6,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: totem HEAD\n"
+"Project-Id-Version: totem.HEAD.sq\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-15 06:54+0000\n"
-"PO-Revision-Date: 2005-08-20 22:47+0200\n"
+"POT-Creation-Date: 2005-08-26 15:19+0000\n"
+"PO-Revision-Date: 2005-08-26 18:37+0200\n"
 "Last-Translator: Elian Myftiu <elian@alblinux.net>\n"
 "Language-Team: Albanian <gnome-albanian-perkthyesit@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/playlist.glade.h:1
 msgid "Add..."
@@ -340,8 +340,7 @@ msgstr "Automatikisht"
 
 #: ../data/totem.glade.h:30
 msgid "Automatically _resize the window when a new video is loaded"
-msgstr ""
-"Automatikisht nd_rysho madhësinë e dritares kur ngarkohet një video e re"
+msgstr "Automatikisht nd_rysho madhësinë e dritares kur ngarkohet një video e re"
 
 #: ../data/totem.glade.h:31
 msgid "Co_ntrast:"
@@ -721,8 +720,7 @@ msgstr "Lartësia e dritares së videos"
 
 #: ../data/totem.schemas.in.h:5
 msgid "Maximum amount of data to decode ahead of display (in seconds)"
-msgstr ""
-"Sasia maksimale e të dhënave për tu çkodifikuar përpara shfaqjes (në sekonda)"
+msgstr "Sasia maksimale e të dhënave për tu çkodifikuar përpara shfaqjes (në sekonda)"
 
 #: ../data/totem.schemas.in.h:6
 msgid "Name of the visual effects plugins"
@@ -1001,8 +999,7 @@ msgstr "Ta mbishkruaj file-n?"
 
 #: ../src/totem-playlist.c:886
 #, c-format
-msgid ""
-"A file named '%s' already exists.  Are you sure you want to overwrite it?"
+msgid "A file named '%s' already exists.  Are you sure you want to overwrite it?"
 msgstr "Një file i quajtur '%s' ekziston.  Je i sigurt që do ta mbishkruash?"
 
 #: ../src/totem-playlist.c:1393
@@ -1045,10 +1042,8 @@ msgid ""
 msgstr "Ky rregullim do ketë efekt filmin tjetër, ose kur Totem riniset."
 
 #: ../src/totem-preferences.c:185
-msgid ""
-"Switching on or off this type of TV-Out requires a restart to take effect."
-msgstr ""
-"Shuajtja apo ndezja e këtij lloji TV-Out kërkon rinisje për të patur efekt."
+msgid "Switching on or off this type of TV-Out requires a restart to take effect."
+msgstr "Shuajtja apo ndezja e këtij lloji TV-Out kërkon rinisje për të patur efekt."
 
 #: ../src/totem-preferences.c:297
 msgid "Changing the visuals effect type will require a restart to take effect."
@@ -1189,6 +1184,14 @@ msgid ""
 msgstr ""
 "Duhet të kontrollosh që një disk është gjendet në lexues dhe që është "
 "konfiguruar siç duhet."
+
+#: ../src/totem.c:413
+msgid "Failed to play Audio/Video Disc"
+msgstr "Dështoi luajtjen e diskut Audio/Video"
+
+#: ../src/totem.c:414
+msgid "Reason unknown"
+msgstr "Arsye e panjohur"
 
 #: ../src/totem.c:659
 msgid "No File"
@@ -1359,40 +1362,40 @@ msgstr ""
 msgid "Totem Video Window"
 msgstr "Dritarja Video e Totem-it"
 
-#: ../src/backend/bacon-video-widget-gst.c:1867
+#: ../src/backend/bacon-video-widget-gst.c:1861
 msgid "Failed to retrieve working directory"
 msgstr "Dështoi në tërheqjen e dosjes së punës"
 
-#: ../src/backend/bacon-video-widget-gst.c:1919
+#: ../src/backend/bacon-video-widget-gst.c:1920
 msgid "Location not found."
 msgstr "Vendndodhja nuk u gjet."
 
-#: ../src/backend/bacon-video-widget-gst.c:1922
+#: ../src/backend/bacon-video-widget-gst.c:1923
 msgid "You don't have permission to open that location."
 msgstr "Nuk keni të drejtë të hapni atë vendndodhje."
 
-#: ../src/backend/bacon-video-widget-gst.c:1942
+#: ../src/backend/bacon-video-widget-gst.c:1943
 msgid "Failed to open media file; unknown error"
 msgstr "Dështoi në hapjen e medias; gabim i panjohur"
 
-#: ../src/backend/bacon-video-widget-gst.c:1974
+#: ../src/backend/bacon-video-widget-gst.c:1975
 #, c-format
 msgid "Failed to play: %s"
 msgstr "Dështoi të luajë: %s"
 
-#: ../src/backend/bacon-video-widget-gst.c:1976
+#: ../src/backend/bacon-video-widget-gst.c:1977
 msgid "unknown error"
 msgstr "gabim i panjohur"
 
-#: ../src/backend/bacon-video-widget-gst.c:3127
+#: ../src/backend/bacon-video-widget-gst.c:3130
 msgid "Too old version of GStreamer installed."
 msgstr "Versioni i instaluar për GStreamer është tepër i vjetër."
 
-#: ../src/backend/bacon-video-widget-gst.c:3134
+#: ../src/backend/bacon-video-widget-gst.c:3137
 msgid "Media contains no supported video streams."
 msgstr "Media nuk përmban rrjedhë video."
 
-#: ../src/backend/bacon-video-widget-gst.c:3312
+#: ../src/backend/bacon-video-widget-gst.c:3315
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1400,7 +1403,7 @@ msgstr ""
 "Dështoi në krijimin e një objekti GStreamer. Ju lutem kontrolloni instalimin "
 "e GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst.c:3408
+#: ../src/backend/bacon-video-widget-gst.c:3411
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1410,7 +1413,7 @@ msgstr ""
 "mbyllni programe të tjerë videosh, ose zgjidhni një tjetër dalje videoje në "
 "Zgjedhësin e Sistemeve Multimedialë."
 
-#: ../src/backend/bacon-video-widget-gst.c:3418
+#: ../src/backend/bacon-video-widget-gst.c:3421
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1418,7 +1421,7 @@ msgstr ""
 "Dështoi në hapjen e daljes së videos. Mund të mos jetë e pranishme. Ju lutem "
 "zgjidhni një dalje tjetër video në Zgjedhësin e Sistemeve Multimedialë."
 
-#: ../src/backend/bacon-video-widget-gst.c:3445
+#: ../src/backend/bacon-video-widget-gst.c:3448
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1428,7 +1431,7 @@ msgstr ""
 "zgjidhni një tjetër dalje audio në Zgjedhësin e Sistemeve Multimedialë. Mund "
 "të konsideroni përdorimin e një shërbyesi zëri."
 
-#: ../src/backend/bacon-video-widget-gst.c:3451
+#: ../src/backend/bacon-video-widget-gst.c:3454
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector"
@@ -1436,7 +1439,7 @@ msgstr ""
 "Dalja e duhur e zërit nuk u gjet. Ju lutem zgjidhni një tjetër dalje zëri në "
 "Zgjedhësin e Sistemeve Multimedialë"
 
-#: ../src/backend/bacon-video-widget-gst.c:3461
+#: ../src/backend/bacon-video-widget-gst.c:3464
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1461,8 +1464,7 @@ msgstr ""
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
-msgstr ""
-"Asnjë dalje video në dispozicion. Sigurohu që programi është instaluar saktë."
+msgstr "Asnjë dalje video në dispozicion. Sigurohu që programi është instaluar saktë."
 
 #: ../src/backend/bacon-video-widget-xine.c:1255
 msgid "The server you are trying to connect to is not known."
@@ -1514,8 +1516,7 @@ msgstr "Për arsye sigurie, ky film nuk mund të shikohet."
 
 #: ../src/backend/bacon-video-widget-xine.c:1308
 msgid "The audio device is busy. Is another application using it?"
-msgstr ""
-"Dispozitivi i zërit është i zënë. Mos po e përdor ndonjë program tjetër?"
+msgstr "Dispozitivi i zërit është i zënë. Mos po e përdor ndonjë program tjetër?"
 
 #: ../src/backend/bacon-video-widget-xine.c:1313
 msgid "You are not allowed to open this file."
@@ -1551,8 +1552,7 @@ msgstr "Gabim i Përgjithshëm."
 
 #: ../src/backend/bacon-video-widget-xine.c:2021
 msgid "This movie is a still image. You can open it with an image viewer."
-msgstr ""
-"Ky film është një pamje në prehje. Mund ta hapësh me një shikues pamjesh."
+msgstr "Ky film është një pamje në prehje. Mund ta hapësh me një shikues pamjesh."
 
 #: ../src/backend/bacon-video-widget-xine.c:2045
 #, c-format
@@ -1643,55 +1643,54 @@ msgstr "Dështoi në gjetjen e nyjes së vërtetë të dispozitivit për %s: %s"
 msgid "Failed to read symbolic link %s: %s"
 msgstr "Dështoi në leximin e lidhjes simbolike %s: %s"
 
-#: ../src/plparse/totem-disc.c:218
+#: ../src/plparse/totem-disc.c:285
 #, c-format
 msgid "Failed to find mountpoint for device %s in /etc/fstab"
-msgstr ""
-"Dështoi në gjetjen e pikës së montimit për dispozitivin %s në /etc/fstab"
+msgstr "Dështoi në gjetjen e pikës së montimit për dispozitivin %s në /etc/fstab"
 
-#: ../src/plparse/totem-disc.c:256
+#: ../src/plparse/totem-disc.c:323
 msgid "Please check that a disc is present in the drive."
 msgstr "Të lutem kontrollo që gjendet një disk brenda në lexues."
 
-#: ../src/plparse/totem-disc.c:259
+#: ../src/plparse/totem-disc.c:326
 #, c-format
 msgid "Failed to open device %s for reading: %s"
 msgstr "Dështoi në hapjen e dispozitivit %s për lexim: %s"
 
-#: ../src/plparse/totem-disc.c:270
+#: ../src/plparse/totem-disc.c:337
 #, c-format
 msgid "Failed to retrieve capabilities of device %s: %s"
 msgstr "Dështoi në marrjen e mundësive të dispozitivit %s: %s"
 
-#: ../src/plparse/totem-disc.c:303
+#: ../src/plparse/totem-disc.c:370
 #, c-format
 msgid "Drive status 0x%x (%s) - check disc"
 msgstr "Gjendja e lexuesit 0x%x (%s) - kontrollo diskun"
 
-#: ../src/plparse/totem-disc.c:336
+#: ../src/plparse/totem-disc.c:405
 #, c-format
 msgid "Unexpected error status %d while mounting %s"
 msgstr "Gabim i papritur %d ndërsa montohej %s"
 
-#: ../src/plparse/totem-disc.c:388
+#: ../src/plparse/totem-disc.c:458
 #, c-format
 msgid "Error getting %s disc status: %s"
 msgstr "Gabim në marrjen e gjendjes së diskut %s: %s"
 
-#: ../src/plparse/totem-disc.c:417
+#: ../src/plparse/totem-disc.c:487
 #, c-format
 msgid "Unexpected/unknown cd type 0x%x (%s)"
 msgstr "Lloj i papritur/panjohur cd-je 0x%x (%s)"
 
-#: ../src/plparse/totem-disc.c:626
+#: ../src/plparse/totem-disc.c:696
 msgid "Audio CD"
 msgstr "CD Audio"
 
-#: ../src/plparse/totem-disc.c:628
+#: ../src/plparse/totem-disc.c:698
 msgid "Video CD"
 msgstr "Video CD"
 
-#: ../src/plparse/totem-disc.c:630
+#: ../src/plparse/totem-disc.c:700
 msgid "DVD"
 msgstr "DVD"
 
@@ -1705,118 +1704,3 @@ msgstr "Nuk munda të shkruaj analizën: %s"
 msgid "Couldn't open file '%s': %s"
 msgstr "Nuk munda të hap file-n '%s': %s"
 
-#~ msgid "Repeat _mode"
-#~ msgstr "Modalitet _përsëritje"
-
-#~ msgid "Shuf_fle mode"
-#~ msgstr "Modaliteti pa r_radhë"
-
-#~ msgid "<span size=\"medium\"><b>No File</b></span>"
-#~ msgstr "<span size=\"medium\"><b>Asnjë file</b></span>"
-
-#~ msgid "Show/Hide Playlist"
-#~ msgstr "Shfaq/Fshih Listën e riprodhimit"
-
-#~ msgid "_Show/Hide Playlist"
-#~ msgstr "Shfaq/Fshih Listën e Riprodhimit"
-
-#~ msgid "Enable deinterlacing."
-#~ msgstr "Aktivizo ndërzgjidhjen"
-
-#~ msgid "Name of the visual effects plugins."
-#~ msgstr "Emri i plugin-ave të efekteve vizuale."
-
-#~ msgid "Repeat mode."
-#~ msgstr "Mënyrë përsëritëse."
-
-#~ msgid "Resize the canvas automatically on file load."
-#~ msgstr "Ripërmaso automatikisht planin kur ngarkon një file."
-
-#~ msgid "Shuffle mode."
-#~ msgstr "Mënyrë pa rradhë."
-
-#~ msgid "The brightness of the video."
-#~ msgstr "Ndriçimi i videos."
-
-#~ msgid "The contrast of the video."
-#~ msgstr "Kontrasti i videos."
-
-#~ msgid "The hue of the video."
-#~ msgstr "Hiri i videos."
-
-#~ msgid "The saturation of the video."
-#~ msgstr "Ngopja e videos."
-
-#~ msgid "Whether to enable debug for the playback engine."
-#~ msgstr "Nëse duhet aktivizuar gjetja e gabimeve për motorin e riprodhimit."
-
-#~ msgid "X coordinate for the Playlist"
-#~ msgstr "Koordinata X për Listën e Riprodhimit"
-
-#~ msgid "X coordinate for the Playlist."
-#~ msgstr "Koordinata X për Listën e Riprodhimit."
-
-#~ msgid "Y coordinate for the Playlist"
-#~ msgstr "Koordinata Y për Listën e Riprodhimit"
-
-#~ msgid "Y coordinate for the Playlist."
-#~ msgstr "Koordinata Y për Listën e Riprodhimit."
-
-#~ msgid "0 second"
-#~ msgstr "0 sekonda"
-
-#~ msgid "%s - Totem Movie Player"
-#~ msgstr "%s Riprodhuesi i Filmave Totem"
-
-#~ msgid "Filename"
-#~ msgstr "Emri i file-t"
-
-#~ msgid "<b>Optical Device</b>"
-#~ msgstr "<b>Dispozitivi optik</b>"
-
-#~ msgid "<b>Proprietary Plugins</b>"
-#~ msgstr "<b> Plugins privat</b>"
-
-#~ msgid "Exit Fullscreen"
-#~ msgstr "Dil nga modaliteti me ekran të plotë"
-
-#~ msgid "Play a Video or Audio Disc"
-#~ msgstr "Luaj një disk video apo audio"
-
-#~ msgid "_Add Proprietary Plugins..."
-#~ msgstr "_Shto Plugin-a të Patentuar..."
-
-#~ msgid "_Optical device path:"
-#~ msgstr "Pozicioni i dispozitivit _optik:"
-
-#~ msgid "Path to the optical media device"
-#~ msgstr "Shtegu për tek dispozitivi i medias optike"
-
-#~ msgid "Path to the optical media device."
-#~ msgstr "Shtegu për tek dispozitivi i medias optike."
-
-#~ msgid "Open from URI"
-#~ msgstr "Hap nga URI"
-
-#~ msgid "Couldn't load the main interface (mozilla-viewer.glade)."
-#~ msgstr "Nuk munda të ngarkoj ndërfaqen kryesore (mozilla-viewer.glade)."
-
-#~ msgid "Make sure that the Totem plugin is properly installed."
-#~ msgstr "Sigurohu që plugin-i i Totem është instaluar siç duhet."
-
-#~ msgid "The Totem plugin could not startup."
-#~ msgstr "Plugin-i i Totem-it nuk mundi të niset."
-
-#~ msgid "Verify your system installation. The Totem plugin will now exit."
-#~ msgstr ""
-#~ "Kontrollo instalimin e sistemit tënd. Plugin-i i Totem-it do përfundojë "
-#~ "tani."
-
-#~ msgid "Totem could not start the file manager."
-#~ msgstr "Totem nuk mundi të nisë organizuesin e file-ve."
-
-#~ msgid "Please file a bug, this isn't supposed to happen."
-#~ msgstr "Të lutem njofto këtë difekt, kjo nuk duhet të ndodhte."
-
-#~ msgid "Please file a bug, this isn't supposed to happen"
-#~ msgstr "Të lutem nis këtë gabim, kjo nuk duhej të ndodhte"
