@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-10 06:59+0000\n"
-"PO-Revision-Date: 2005-08-17 10:06+0300\n"
+"POT-Creation-Date: 2005-08-26 07:26+0000\n"
+"PO-Revision-Date: 2005-08-26 12:06+0300\n"
 "Last-Translator: Priit Laes <amd@store20.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -274,8 +274,8 @@ msgstr "Filmide ja muusika esitamine"
 #: ../data/totem.desktop.in.in.in.h:2
 #: ../data/totem.glade.h:97
 #: ../src/totem.c:666
-#: ../src/totem.c:3361
-#: ../src/totem.c:3378
+#: ../src/totem.c:3362
+#: ../src/totem.c:3379
 msgid "Totem Movie Player"
 msgstr "Totem filmiesitaja"
 
@@ -927,12 +927,12 @@ msgid "Properties dialog"
 msgstr "Omaduste dialoog"
 
 #. +
-#: ../src/bacon-volume.c:185
+#: ../src/bacon-volume.c:187
 msgid "+"
 msgstr "+"
 
 #. -
-#: ../src/bacon-volume.c:201
+#: ../src/bacon-volume.c:203
 msgid "-"
 msgstr "-"
 
@@ -1205,6 +1205,14 @@ msgstr "Totem pole võimeline seda meediatüüpi (%s) esitama, kuigi selle käsi
 msgid "You might want to check that a disc is present in the drive and that it is correctly configured."
 msgstr "Sa võiksid kontrollida, kas plaat on seadmes ja kas seade on korralikult seadistatud."
 
+#: ../src/totem.c:413
+msgid "Failed to play Audio/Video Disc"
+msgstr "Tõrge audio/video plaadi esitamisel"
+
+#: ../src/totem.c:414
+msgid "Reason unknown"
+msgstr "Tundmatu põhjus"
+
 #: ../src/totem.c:659
 msgid "No File"
 msgstr "Fail puudub"
@@ -1281,28 +1289,28 @@ msgstr "Totem ei saa käivituda."
 msgid "No reason."
 msgstr "Põhjendus puudub."
 
-#: ../src/totem.c:3362
+#: ../src/totem.c:3363
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Thread-safe teeke pole võimalik lähtestada."
 
-#: ../src/totem.c:3362
+#: ../src/totem.c:3363
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Kontrolli oma süsteemi paigaldust. Totem lõpeab oma töö."
 
-#: ../src/totem.c:3385
+#: ../src/totem.c:3386
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem ei suuda lähtestada seadistusmootorit."
 
-#: ../src/totem.c:3385
+#: ../src/totem.c:3386
 msgid "Make sure that GNOME is properly installed."
 msgstr "Veendu, et GNOME on õigesti paigaldatud."
 
 #. Main window
-#: ../src/totem.c:3412
+#: ../src/totem.c:3413
 msgid "main window"
 msgstr "peaaken"
 
-#: ../src/totem.c:3417
+#: ../src/totem.c:3418
 msgid "video popup menu"
 msgstr "video hüpikmenüü"
 
@@ -1382,60 +1390,60 @@ msgstr ""
 msgid "Totem Video Window"
 msgstr "Totemi videoaken"
 
-#: ../src/backend/bacon-video-widget-gst.c:1867
+#: ../src/backend/bacon-video-widget-gst.c:1861
 msgid "Failed to retrieve working directory"
 msgstr "Tõrge aktiivse kataloogi kasutamisel"
 
-#: ../src/backend/bacon-video-widget-gst.c:1919
+#: ../src/backend/bacon-video-widget-gst.c:1920
 msgid "Location not found."
 msgstr "Asukohta ei leitud."
 
-#: ../src/backend/bacon-video-widget-gst.c:1922
+#: ../src/backend/bacon-video-widget-gst.c:1923
 msgid "You don't have permission to open that location."
 msgstr "Sul ei ole selle asukoha avamiseks õiguseid."
 
-#: ../src/backend/bacon-video-widget-gst.c:1942
+#: ../src/backend/bacon-video-widget-gst.c:1943
 msgid "Failed to open media file; unknown error"
 msgstr "Tõrge meediafaili avamisel; tundmatu viga"
 
-#: ../src/backend/bacon-video-widget-gst.c:1974
+#: ../src/backend/bacon-video-widget-gst.c:1975
 #, c-format
 msgid "Failed to play: %s"
 msgstr "Tõrge esitamisel: %s"
 
-#: ../src/backend/bacon-video-widget-gst.c:1976
+#: ../src/backend/bacon-video-widget-gst.c:1977
 msgid "unknown error"
 msgstr "tundmatu viga"
 
-#: ../src/backend/bacon-video-widget-gst.c:3127
+#: ../src/backend/bacon-video-widget-gst.c:3130
 msgid "Too old version of GStreamer installed."
 msgstr "Paigaldatud GStreamer on liiga vana"
 
-#: ../src/backend/bacon-video-widget-gst.c:3134
+#: ../src/backend/bacon-video-widget-gst.c:3137
 msgid "Media contains no supported video streams."
 msgstr "Meedia ei sisalda ühtegi toetatud videostriimi."
 
-#: ../src/backend/bacon-video-widget-gst.c:3312
+#: ../src/backend/bacon-video-widget-gst.c:3315
 msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
 msgstr "Tõrge GStreamer esitusobjekti loomisel. Palun kontrolli GStreameri paigaldust."
 
-#: ../src/backend/bacon-video-widget-gst.c:3408
+#: ../src/backend/bacon-video-widget-gst.c:3411
 msgid "The video output is in use by another application. Please close other video applications, or select another video output in the Multimedia Systems Selector."
 msgstr "Videoväljund on mõne teise rakenduse kasutuses. Palun sulge muud videorakendused või vali mõni teine videoväljund Multimeediasüsteemide valija abil."
 
-#: ../src/backend/bacon-video-widget-gst.c:3418
+#: ../src/backend/bacon-video-widget-gst.c:3421
 msgid "Failed to open video output. It may not be available. Please select another video output in the Multimedia Systems Selector."
 msgstr "Tõrge videoväljundi avamisel. See pole võibolla saadaval. Palun vali Multimeediasüsteemide valija abil mõni muu videoväljund."
 
-#: ../src/backend/bacon-video-widget-gst.c:3445
+#: ../src/backend/bacon-video-widget-gst.c:3448
 msgid "The audio output is in use by another application. Please select another audio output in the Multimedia Systems Selector. You may want to consider using a sound server."
 msgstr "Audioväljund on mõne teise rakenduse kasutuses. Palun vali mõni  Multimeediasüsteemide valija abil mõni muu audioväljund. Sa võiksid kaaluda audioserveri kasutamist."
 
-#: ../src/backend/bacon-video-widget-gst.c:3451
+#: ../src/backend/bacon-video-widget-gst.c:3454
 msgid "The requested audio output was not found. Please select another audio output in the Multimedia Systems Selector"
 msgstr "Soovitud audioväljundit ei leitud. Palun vali Multimeediasüsteemide valija abil mõni teine audioväljund."
 
-#: ../src/backend/bacon-video-widget-gst.c:3461
+#: ../src/backend/bacon-video-widget-gst.c:3464
 msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
 msgstr "Tõrge audioväljundi avamisel. Sul ei ole võibolla õiguseid audioväljundi avamiseks või audioserver ei ole käivitatud. Palun vali Multimeediasüsteemide valija abil mõni teine audioväljund."
 
@@ -1618,54 +1626,54 @@ msgstr "Tõrge seadme tegeliku sõlme leidmisel %s jaoks: %s"
 msgid "Failed to read symbolic link %s: %s"
 msgstr "Tõrge nimeviite %s lugemisel: %s"
 
-#: ../src/plparse/totem-disc.c:218
+#: ../src/plparse/totem-disc.c:285
 #, c-format
 msgid "Failed to find mountpoint for device %s in /etc/fstab"
 msgstr "Tõrge ühendumispunkti %s leidmisel failist /etc/fstab"
 
-#: ../src/plparse/totem-disc.c:256
+#: ../src/plparse/totem-disc.c:323
 msgid "Please check that a disc is present in the drive."
 msgstr "Palun veendu, et plaat on seadmes"
 
-#: ../src/plparse/totem-disc.c:259
+#: ../src/plparse/totem-disc.c:326
 #, c-format
 msgid "Failed to open device %s for reading: %s"
 msgstr "Tõrge seadme %s avamisel lugemiseks: %s"
 
-#: ../src/plparse/totem-disc.c:270
+#: ../src/plparse/totem-disc.c:337
 #, c-format
 msgid "Failed to retrieve capabilities of device %s: %s"
 msgstr "Tõrge seadme %s võimaluste tuvastamisel: %s"
 
-#: ../src/plparse/totem-disc.c:303
+#: ../src/plparse/totem-disc.c:370
 #, c-format
 msgid "Drive status 0x%x (%s) - check disc"
 msgstr "Seadme olek 0x%x (%s) - kontrolli plaati"
 
-#: ../src/plparse/totem-disc.c:336
+#: ../src/plparse/totem-disc.c:405
 #, c-format
 msgid "Unexpected error status %d while mounting %s"
 msgstr "Ootamatu veaolek %d, mis tekkis %s ühendamisel"
 
-#: ../src/plparse/totem-disc.c:388
+#: ../src/plparse/totem-disc.c:458
 #, c-format
 msgid "Error getting %s disc status: %s"
 msgstr "Viga plaadi %s oleku tuvastamisel: %s"
 
-#: ../src/plparse/totem-disc.c:417
+#: ../src/plparse/totem-disc.c:487
 #, c-format
 msgid "Unexpected/unknown cd type 0x%x (%s)"
 msgstr "Ootamatu/tundmatu cd tüüp 0x%x (%s)"
 
-#: ../src/plparse/totem-disc.c:626
+#: ../src/plparse/totem-disc.c:696
 msgid "Audio CD"
 msgstr "Audio CD"
 
-#: ../src/plparse/totem-disc.c:628
+#: ../src/plparse/totem-disc.c:698
 msgid "Video CD"
 msgstr "Video VCD"
 
-#: ../src/plparse/totem-disc.c:630
+#: ../src/plparse/totem-disc.c:700
 msgid "DVD"
 msgstr "DVD"
 
