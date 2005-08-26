@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 2.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-25 12:50+0200\n"
+"POT-Creation-Date: 2005-08-26 17:33+0200\n"
 "PO-Revision-Date: 2005-08-25 13:06+0200\n"
 "Last-Translator: Jordi Mallach <jordi@sindominio.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -702,7 +702,9 @@ msgstr "_Tipus de visualització:"
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)"
-msgstr "Quantitat de dades a posar a la memòria intermèdia per als fluxes de xarxa abans de començar a mostrar el flux (en segons)"
+msgstr ""
+"Quantitat de dades a posar a la memòria intermèdia per als fluxes de xarxa "
+"abans de començar a mostrar el flux (en segons)"
 
 #: ../data/totem.schemas.in.h:2
 msgid "Buffer size"
@@ -718,7 +720,8 @@ msgstr "Alçada del giny de vídeo"
 
 #: ../data/totem.schemas.in.h:5
 msgid "Maximum amount of data to decode ahead of display (in seconds)"
-msgstr "Màxima quantitat de dades a decodificar abans de la visualització (en segons)"
+msgstr ""
+"Màxima quantitat de dades a decodificar abans de la visualització (en segons)"
 
 #: ../data/totem.schemas.in.h:6
 msgid "Name of the visual effects plugins"
@@ -730,7 +733,8 @@ msgstr "Llindar de la memòria intermèdia de xarxa"
 
 #: ../data/totem.schemas.in.h:8
 msgid "Pango font description for subtitle rendering"
-msgstr "Descripció del tipus de lletra Pango per a la representació dels subtítols"
+msgstr ""
+"Descripció del tipus de lletra Pango per a la representació dels subtítols"
 
 #: ../data/totem.schemas.in.h:9
 msgid "Repeat mode"
@@ -1194,6 +1198,14 @@ msgstr ""
 "Pot ser voldreu comprovar que hi ha un disc en la unitat i que està "
 "correctament configurada."
 
+#: ../src/totem.c:413
+msgid "Failed to play Audio/Video Disc"
+msgstr "No s'ha pogut reproduir el disc d'àudio/vídeo: %s"
+
+#: ../src/totem.c:414
+msgid "Reason unknown"
+msgstr "La raó és desconeguda"
+
 #: ../src/totem.c:659
 msgid "No File"
 msgstr "Cap fitxer"
@@ -1376,7 +1388,8 @@ msgstr "No teniu permís per a obrir eixa ubicació."
 
 #: ../src/backend/bacon-video-widget-gst.c:1943
 msgid "Failed to open media file; unknown error"
-msgstr "No s'ha pogut obrir el fitxer de medi. S'ha produït un error desconegut"
+msgstr ""
+"No s'ha pogut obrir el fitxer de medi. S'ha produït un error desconegut"
 
 #: ../src/backend/bacon-video-widget-gst.c:1975
 #, c-format
@@ -1399,40 +1412,56 @@ msgstr "El medi no conté cap flux de vídeo suportat."
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
-msgstr "No s'ha pogut crear un objecte de reproducció de GStreamer. Comproveu la vostra instal·lació de GStreamer."
+msgstr ""
+"No s'ha pogut crear un objecte de reproducció de GStreamer. Comproveu la "
+"vostra instal·lació de GStreamer."
 
 #: ../src/backend/bacon-video-widget-gst.c:3411
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
 "Selector."
-msgstr "La sortida de vídeo és en us per una altra aplicació. Tanqueu les altres aplicacions de vídeo, o seleccioneu una altra sortida de vídeo al selector de sistemes mutimèdia."
+msgstr ""
+"La sortida de vídeo és en us per una altra aplicació. Tanqueu les altres "
+"aplicacions de vídeo, o seleccioneu una altra sortida de vídeo al selector "
+"de sistemes mutimèdia."
 
 #: ../src/backend/bacon-video-widget-gst.c:3421
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
-msgstr "No s'ha pogut obrir la sortida de vídeo. És possible que no siga disponible. Seleccioneu una altra sortida de vídeo al selector de sistemes multimèdia."
+msgstr ""
+"No s'ha pogut obrir la sortida de vídeo. És possible que no siga disponible. "
+"Seleccioneu una altra sortida de vídeo al selector de sistemes multimèdia."
 
 #: ../src/backend/bacon-video-widget-gst.c:3448
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
 "using a sound server."
-msgstr "La sortida d'àudio és en ús per una altra aplicació. Seleccioneu una altra sortida d'àudio al selector de sistemes mutimèdia. Haurieu de considerar utilitzar un servidor de so."
+msgstr ""
+"La sortida d'àudio és en ús per una altra aplicació. Seleccioneu una altra "
+"sortida d'àudio al selector de sistemes mutimèdia. Haurieu de considerar "
+"utilitzar un servidor de so."
 
 #: ../src/backend/bacon-video-widget-gst.c:3454
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector"
-msgstr "No s'ha trobat la sortida d'àudio demanada. Seleccioneu una altra sortida d'àudio al selector de sistemes multimèdia."
+msgstr ""
+"No s'ha trobat la sortida d'àudio demanada. Seleccioneu una altra sortida "
+"d'àudio al selector de sistemes multimèdia."
 
 #: ../src/backend/bacon-video-widget-gst.c:3464
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
 "output in the Multimedia Systems Selector."
-msgstr "No s'ha pogut obrir la sortida d'àudio. És possible que no tingueu permís per a obrir el dispositiu d'àudio, o que el servidor de so no s'estigui executant. Seleccioneu una altra sortida de so al selecctor de sistemes multimèdia."
+msgstr ""
+"No s'ha pogut obrir la sortida d'àudio. És possible que no tingueu permís "
+"per a obrir el dispositiu d'àudio, o que el servidor de so no s'estigui "
+"executant. Seleccioneu una altra sortida de so al selecctor de sistemes "
+"multimèdia."
 
 #: ../src/backend/bacon-video-widget-xine.c:676
 #, c-format
@@ -1490,7 +1519,8 @@ msgstr "No s'ha pogut llegir la pel·lícula."
 #: ../src/backend/bacon-video-widget-xine.c:1289
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
-msgstr "Ha ocorregut un problema en carregar una biblioteca o decodificador (%s)."
+msgstr ""
+"Ha ocorregut un problema en carregar una biblioteca o decodificador (%s)."
 
 #: ../src/backend/bacon-video-widget-xine.c:1298
 msgid "This file is encrypted and cannot be played back."
