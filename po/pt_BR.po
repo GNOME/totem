@@ -10,14 +10,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-12 14:55+0000\n"
-"PO-Revision-Date: 2005-08-12 17:38-0300\n"
-"Last-Translator: Afonso Celso Medina <afmedina@uol.com.br>\n"
+"POT-Creation-Date: 2005-08-26 23:42+0000\n"
+"PO-Revision-Date: 2005-08-26 23:42-0300\n"
+"Last-Translator: Evandro Fernandes Giovanini <evandrofg@ig.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../data/playlist.glade.h:1
 msgid "Add..."
@@ -1201,6 +1201,14 @@ msgstr ""
 "Talvez você queira verificar se há um disco presente no drive e se ele está "
 "configurado corretamente."
 
+#: ../src/totem.c:413
+msgid "Failed to play Audio/Video Disc"
+msgstr "Falha ao reproduzir Disco de Áudio/Vídeo"
+
+#: ../src/totem.c:414
+msgid "Reason unknown"
+msgstr "Problema Desconhecido"
+
 #: ../src/totem.c:659
 msgid "No File"
 msgstr "Nenhum Arquivo"
@@ -1373,40 +1381,40 @@ msgstr ""
 msgid "Totem Video Window"
 msgstr "Janela de Vídeo do Totem"
 
-#: ../src/backend/bacon-video-widget-gst.c:1867
+#: ../src/backend/bacon-video-widget-gst.c:1861
 msgid "Failed to retrieve working directory"
 msgstr "Falha ao obter o diretório de trabalho"
 
-#: ../src/backend/bacon-video-widget-gst.c:1919
+#: ../src/backend/bacon-video-widget-gst.c:1920
 msgid "Location not found."
 msgstr "Localização não encontrada."
 
-#: ../src/backend/bacon-video-widget-gst.c:1922
+#: ../src/backend/bacon-video-widget-gst.c:1923
 msgid "You don't have permission to open that location."
 msgstr "Você não tem permissão para abrir aquela localização."
 
-#: ../src/backend/bacon-video-widget-gst.c:1942
+#: ../src/backend/bacon-video-widget-gst.c:1943
 msgid "Failed to open media file; unknown error"
 msgstr "Falha ao abrir arquivo de mídia; erro desconhecido"
 
-#: ../src/backend/bacon-video-widget-gst.c:1974
+#: ../src/backend/bacon-video-widget-gst.c:1975
 #, c-format
 msgid "Failed to play: %s"
 msgstr "Falha ao executar: %s"
 
-#: ../src/backend/bacon-video-widget-gst.c:1976
+#: ../src/backend/bacon-video-widget-gst.c:1977
 msgid "unknown error"
 msgstr "erro desconhecido"
 
-#: ../src/backend/bacon-video-widget-gst.c:3127
+#: ../src/backend/bacon-video-widget-gst.c:3130
 msgid "Too old version of GStreamer installed."
 msgstr "Instalada uma versão muito antiga do GStream."
 
-#: ../src/backend/bacon-video-widget-gst.c:3134
+#: ../src/backend/bacon-video-widget-gst.c:3137
 msgid "Media contains no supported video streams."
 msgstr "A mídia não contém fluxos de vídeo suportados."
 
-#: ../src/backend/bacon-video-widget-gst.c:3312
+#: ../src/backend/bacon-video-widget-gst.c:3315
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1414,7 +1422,7 @@ msgstr ""
 "Falha ao criar um objeto de reprodução do GStreamer. Por favor, verifique a "
 "sua instalação do GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst.c:3408
+#: ../src/backend/bacon-video-widget-gst.c:3411
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1424,7 +1432,7 @@ msgstr ""
 "a outra aplicação de vídeo ou selecione outra saída de vídeo no Seletor de "
 "Sistemas Multimídia."
 
-#: ../src/backend/bacon-video-widget-gst.c:3418
+#: ../src/backend/bacon-video-widget-gst.c:3421
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1432,7 +1440,7 @@ msgstr ""
 "Falha ao abrir a saída de vídeo. Ele pode não estar disponível. Por favor, "
 "selecione outra saída de vídeo no Seletor de Sistema Multimídia."
 
-#: ../src/backend/bacon-video-widget-gst.c:3445
+#: ../src/backend/bacon-video-widget-gst.c:3448
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1442,7 +1450,7 @@ msgstr ""
 "selecione outra saída de vídeo no Seletor de Sistemas Multimídia. Você pode "
 "considerar o uso de um servidor de som."
 
-#: ../src/backend/bacon-video-widget-gst.c:3451
+#: ../src/backend/bacon-video-widget-gst.c:3454
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector"
@@ -1450,7 +1458,7 @@ msgstr ""
 "A saída de áudio requerida não foi encontrada. Por favor, selecione outra "
 "saída de áudio no Seletor de Sistemas Multimídia"
 
-#: ../src/backend/bacon-video-widget-gst.c:3461
+#: ../src/backend/bacon-video-widget-gst.c:3464
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1662,55 +1670,55 @@ msgstr "Falha ao encontrar o nó de dispositivo real para %s: %s"
 msgid "Failed to read symbolic link %s: %s"
 msgstr "Falha ao ler a ligação simbólica %s: %s"
 
-#: ../src/plparse/totem-disc.c:218
+#: ../src/plparse/totem-disc.c:285
 #, c-format
 msgid "Failed to find mountpoint for device %s in /etc/fstab"
 msgstr ""
 "Falha ao encontrar o ponto de montagem para o dispositivo %s em /etc/fstab"
 
-#: ../src/plparse/totem-disc.c:256
+#: ../src/plparse/totem-disc.c:323
 msgid "Please check that a disc is present in the drive."
 msgstr "Por favor, verifique se há um disco presente no drive."
 
-#: ../src/plparse/totem-disc.c:259
+#: ../src/plparse/totem-disc.c:326
 #, c-format
 msgid "Failed to open device %s for reading: %s"
 msgstr "Falha ao abrir o dispositivo %s para leitura: %s"
 
-#: ../src/plparse/totem-disc.c:270
+#: ../src/plparse/totem-disc.c:337
 #, c-format
 msgid "Failed to retrieve capabilities of device %s: %s"
 msgstr "Falha ao recuperar as capacidades do dispositivo %s: %s"
 
-#: ../src/plparse/totem-disc.c:303
+#: ../src/plparse/totem-disc.c:370
 #, c-format
 msgid "Drive status 0x%x (%s) - check disc"
 msgstr "Status do drive 0x%x (%s) - verifique o disco"
 
-#: ../src/plparse/totem-disc.c:336
+#: ../src/plparse/totem-disc.c:405
 #, c-format
 msgid "Unexpected error status %d while mounting %s"
 msgstr "Status de erro %d inesperado ao montar %s"
 
-#: ../src/plparse/totem-disc.c:388
+#: ../src/plparse/totem-disc.c:458
 #, c-format
 msgid "Error getting %s disc status: %s"
 msgstr "Erro ao obter o status do disco %s: %s"
 
-#: ../src/plparse/totem-disc.c:417
+#: ../src/plparse/totem-disc.c:487
 #, c-format
 msgid "Unexpected/unknown cd type 0x%x (%s)"
 msgstr "Tipo de CD inesperado/desconhecido 0x%x (%s)"
 
-#: ../src/plparse/totem-disc.c:626
+#: ../src/plparse/totem-disc.c:696
 msgid "Audio CD"
 msgstr "CD de Áudio"
 
-#: ../src/plparse/totem-disc.c:628
+#: ../src/plparse/totem-disc.c:698
 msgid "Video CD"
 msgstr "CD de Vídeo"
 
-#: ../src/plparse/totem-disc.c:630
+#: ../src/plparse/totem-disc.c:700
 msgid "DVD"
 msgstr "DVD"
 
