@@ -10,14 +10,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-12 11:55+0300\n"
-"PO-Revision-Date: 2005-08-12 12:08+0300\n"
+"POT-Creation-Date: 2005-08-27 11:31+0300\n"
+"PO-Revision-Date: 2005-08-27 11:31+0300\n"
 "Last-Translator: Nikos Charonitakis <charosn@her.forthnet.gr>\n"
 "Language-Team:  <team@gnome.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../data/playlist.glade.h:1
 msgid "Add..."
@@ -705,8 +705,8 @@ msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)"
 msgstr ""
-"Ποσότητα δεδομένων για streams δικτύου που θα γίνεται buffer μέχρι να εμφανιστεί"
-"το stream (σε δευτερόλεπτα)"
+"Ποσότητα δεδομένων για streams δικτύου που θα γίνεται buffer μέχρι να "
+"εμφανιστείτο stream (σε δευτερόλεπτα)"
 
 #: ../data/totem.schemas.in.h:2
 msgid "Buffer size"
@@ -722,7 +722,9 @@ msgstr "Ύψος του γραφικού συστατικού video"
 
 #: ../data/totem.schemas.in.h:5
 msgid "Maximum amount of data to decode ahead of display (in seconds)"
-msgstr "Μέγιστη ποσότητα δεδομένων για αποκωδικοποίηση πριν την εμφάνιση τους (σε δευτερόλεπτα) "
+msgstr ""
+"Μέγιστη ποσότητα δεδομένων για αποκωδικοποίηση πριν την εμφάνιση τους (σε "
+"δευτερόλεπτα) "
 
 #: ../data/totem.schemas.in.h:6
 msgid "Name of the visual effects plugins"
@@ -1198,6 +1200,14 @@ msgid ""
 "correctly configured."
 msgstr "Ελέγξτε ότι υπάρχει ο δίσκος στον οδηγό και ότι έχει ρυθμιστεί σωστά."
 
+#: ../src/totem.c:413
+msgid "Failed to play Audio/Video Disc"
+msgstr "Αποτυχία αναπαραγωγής δίσκου ήχου/βίντεο"
+
+#: ../src/totem.c:414
+msgid "Reason unknown"
+msgstr "Άγνωστος λόγος"
+
 #: ../src/totem.c:659
 msgid "No File"
 msgstr "Δεν υπάρχει αρχείο"
@@ -1369,40 +1379,40 @@ msgstr ""
 msgid "Totem Video Window"
 msgstr "Παράθυρο βίντεο του Totem "
 
-#: ../src/backend/bacon-video-widget-gst.c:1867
+#: ../src/backend/bacon-video-widget-gst.c:1861
 msgid "Failed to retrieve working directory"
 msgstr "Αποτυχία ανάκτησης τρέχοντος καταλόγου"
 
-#: ../src/backend/bacon-video-widget-gst.c:1919
+#: ../src/backend/bacon-video-widget-gst.c:1920
 msgid "Location not found."
 msgstr "Δε βρέθηκε η τοποθεσία."
 
-#: ../src/backend/bacon-video-widget-gst.c:1922
+#: ../src/backend/bacon-video-widget-gst.c:1923
 msgid "You don't have permission to open that location."
 msgstr "Δεν έχετε τα δικαιώματα για να ανοίξετε αυτή την τοποθεσία."
 
-#: ../src/backend/bacon-video-widget-gst.c:1942
+#: ../src/backend/bacon-video-widget-gst.c:1943
 msgid "Failed to open media file; unknown error"
 msgstr "Αποτυχία ανοίγματος αρχείου, άγνωστο σφάλμα"
 
-#: ../src/backend/bacon-video-widget-gst.c:1974
+#: ../src/backend/bacon-video-widget-gst.c:1975
 #, c-format
 msgid "Failed to play: %s"
 msgstr "Αποτυχία αναπαραγωγής: %s"
 
-#: ../src/backend/bacon-video-widget-gst.c:1976
+#: ../src/backend/bacon-video-widget-gst.c:1977
 msgid "unknown error"
 msgstr "άγνωστο σφάλμα"
 
-#: ../src/backend/bacon-video-widget-gst.c:3127
+#: ../src/backend/bacon-video-widget-gst.c:3130
 msgid "Too old version of GStreamer installed."
 msgstr "Η εγκατεστημένη έκδοση του GStreamer είναι πολύ παλιά."
 
-#: ../src/backend/bacon-video-widget-gst.c:3134
+#: ../src/backend/bacon-video-widget-gst.c:3137
 msgid "Media contains no supported video streams."
 msgstr "Το αρχείο δεν περιέχει υποστηριζόμενα video streams."
 
-#: ../src/backend/bacon-video-widget-gst.c:3312
+#: ../src/backend/bacon-video-widget-gst.c:3315
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1410,50 +1420,52 @@ msgstr ""
 "Αδυναμία δημιουργίας αντικειμένου αναπαραγωγής GStreamer. Παρακαλώ ελέγξτε "
 "την εγκατάσταση του GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst.c:3408
+#: ../src/backend/bacon-video-widget-gst.c:3411
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
 "Selector."
 msgstr ""
-"Η έξοδος βίντεο χρησιμοποιείται από άλλη εφαρμογή. Παρακαλώ κλείστε τις άλλες"
-"εφαρμογές βίντεο, ή επιλέξτε μια άλλη έξοδο βίντεο από τον Επιλογέα συστημάτων πολυμέσων"
+"Η έξοδος βίντεο χρησιμοποιείται από άλλη εφαρμογή. Παρακαλώ κλείστε τις "
+"άλλεςεφαρμογές βίντεο, ή επιλέξτε μια άλλη έξοδο βίντεο από τον Επιλογέα "
+"συστημάτων πολυμέσων"
 
-#: ../src/backend/bacon-video-widget-gst.c:3418
+#: ../src/backend/bacon-video-widget-gst.c:3421
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
 msgstr ""
-"Αποτυχία ανοίγματος εξόδου βίντεο. Μπορεί να μην είναι διαθέσιμη. Παρακαλώ"
-"επιλέξτε μια άλλη έξοδο βίντεο από τον Επιλογέα συστημάτων πολυμέσων."
+"Αποτυχία ανοίγματος εξόδου βίντεο. Μπορεί να μην είναι διαθέσιμη. "
+"Παρακαλώεπιλέξτε μια άλλη έξοδο βίντεο από τον Επιλογέα συστημάτων πολυμέσων."
 
-#: ../src/backend/bacon-video-widget-gst.c:3445
+#: ../src/backend/bacon-video-widget-gst.c:3448
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
 "using a sound server."
 msgstr ""
-"Η έξοδος ήχου χρησιμοποιείται από άλλη εφαρμογή. Παρακαλώ κλείστε τις άλλες"
-"εφαρμογές ήχου, ή επιλέξτε μια άλλη έξοδο ήχου από τον Επιλογέα συστημάτων πολυμέσων."
-"Ισως να πρέπει να χρησιμοποιήσετε ένα εξυπηρετητή ήχου."
+"Η έξοδος ήχου χρησιμοποιείται από άλλη εφαρμογή. Παρακαλώ κλείστε τις "
+"άλλεςεφαρμογές ήχου, ή επιλέξτε μια άλλη έξοδο ήχου από τον Επιλογέα "
+"συστημάτων πολυμέσων.Ισως να πρέπει να χρησιμοποιήσετε ένα εξυπηρετητή ήχου."
 
-#: ../src/backend/bacon-video-widget-gst.c:3451
+#: ../src/backend/bacon-video-widget-gst.c:3454
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector"
 msgstr ""
-"Η απαιτούμενη έξοδος ήχου δεν βρέθηκε. Παρακαλώ"
-"επιλέξτε μια άλλη έξοδο ήχου από τον Επιλογέα συστημάτων πολυμέσων."
+"Η απαιτούμενη έξοδος ήχου δεν βρέθηκε. Παρακαλώεπιλέξτε μια άλλη έξοδο ήχου "
+"από τον Επιλογέα συστημάτων πολυμέσων."
 
-#: ../src/backend/bacon-video-widget-gst.c:3461
+#: ../src/backend/bacon-video-widget-gst.c:3464
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
 "output in the Multimedia Systems Selector."
 msgstr ""
-"Αποτυχία ανοίγματος εξόδου ήχου. Μπορεί να μην έχετε τα απαραίτητα δικαιώματα για να ανοίξετε"
-"τη συσκευή ήχου, ή να μην εκτελείται ο εξυπηρετητής ήχου. Παρακαλώ"
-"επιλέξτε μια άλλη έξοδο βίντεο από τον Επιλογέα συστημάτων πολυμέσων."
+"Αποτυχία ανοίγματος εξόδου ήχου. Μπορεί να μην έχετε τα απαραίτητα "
+"δικαιώματα για να ανοίξετετη συσκευή ήχου, ή να μην εκτελείται ο "
+"εξυπηρετητής ήχου. Παρακαλώεπιλέξτε μια άλλη έξοδο βίντεο από τον Επιλογέα "
+"συστημάτων πολυμέσων."
 
 #: ../src/backend/bacon-video-widget-xine.c:676
 #, c-format
@@ -1514,7 +1526,9 @@ msgstr "Η ταινία  δεν είναι αναγνώσιμη."
 #: ../src/backend/bacon-video-widget-xine.c:1289
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
-msgstr "Δημιουργήθηκε πρόβλημα κατά τη φόρτωση μιας βιβλιοθήκης ή αποκωδικοποιητή (%s)."
+msgstr ""
+"Δημιουργήθηκε πρόβλημα κατά τη φόρτωση μιας βιβλιοθήκης ή αποκωδικοποιητή (%"
+"s)."
 
 #: ../src/backend/bacon-video-widget-xine.c:1298
 msgid "This file is encrypted and cannot be played back."
@@ -1665,54 +1679,54 @@ msgstr "Αποτυχία εύρεσης real device node για %s: %s"
 msgid "Failed to read symbolic link %s: %s"
 msgstr "Αποτυχία ανάγνωσης συμβολικού δεσμού %s: %s"
 
-#: ../src/plparse/totem-disc.c:218
+#: ../src/plparse/totem-disc.c:285
 #, c-format
 msgid "Failed to find mountpoint for device %s in /etc/fstab"
 msgstr "Αποτυχία εύρεσης σημείου προσάρτησης για τη συσκευή %s στο /etc/fstab"
 
-#: ../src/plparse/totem-disc.c:256
+#: ../src/plparse/totem-disc.c:323
 msgid "Please check that a disc is present in the drive."
 msgstr "Ελέγξτε ότι υπάρχει ο δίσκος στον οδηγό."
 
-#: ../src/plparse/totem-disc.c:259
+#: ../src/plparse/totem-disc.c:326
 #, c-format
 msgid "Failed to open device %s for reading: %s"
 msgstr "Αποτυχία ανοίγματος της συσκευής %s για ανάγνωση: %s"
 
-#: ../src/plparse/totem-disc.c:270
+#: ../src/plparse/totem-disc.c:337
 #, c-format
 msgid "Failed to retrieve capabilities of device %s: %s"
 msgstr "Αποτυχία ανάκτησης δυνατοτήτων της συσκευής %s: %s"
 
-#: ../src/plparse/totem-disc.c:303
+#: ../src/plparse/totem-disc.c:370
 #, c-format
 msgid "Drive status 0x%x (%s) - check disc"
 msgstr "Κατάσταση οδηγού 0x%x (%s) - ελέγξτε δίσκο"
 
-#: ../src/plparse/totem-disc.c:336
+#: ../src/plparse/totem-disc.c:405
 #, c-format
 msgid "Unexpected error status %d while mounting %s"
 msgstr "Απρόσμενο σφάλμα κατάστασης %d κατά την προσάρτηση %s"
 
-#: ../src/plparse/totem-disc.c:388
+#: ../src/plparse/totem-disc.c:458
 #, c-format
 msgid "Error getting %s disc status: %s"
 msgstr "Σφάλμα λήψης %s κατάστασης δίσκου: %s"
 
-#: ../src/plparse/totem-disc.c:417
+#: ../src/plparse/totem-disc.c:487
 #, c-format
 msgid "Unexpected/unknown cd type 0x%x (%s)"
 msgstr "Απρόσμενος/άγνωστος τύπος cd 0x%x (%s)"
 
-#: ../src/plparse/totem-disc.c:626
+#: ../src/plparse/totem-disc.c:696
 msgid "Audio CD"
 msgstr "Audio CD"
 
-#: ../src/plparse/totem-disc.c:628
+#: ../src/plparse/totem-disc.c:698
 msgid "Video CD"
 msgstr "Video CD"
 
-#: ../src/plparse/totem-disc.c:630
+#: ../src/plparse/totem-disc.c:700
 msgid "DVD"
 msgstr "DVD"
 
