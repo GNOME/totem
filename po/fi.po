@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-13 08:29+0300\n"
-"PO-Revision-Date: 2005-08-13 08:30+0300\n"
+"POT-Creation-Date: 2005-08-27 18:10+0300\n"
+"PO-Revision-Date: 2005-08-27 18:15+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -1194,6 +1194,14 @@ msgid ""
 "correctly configured."
 msgstr "Varmista, että levy on asemassa ja että aseman asetukset ovat oikein."
 
+#: ../src/totem.c:413
+msgid "Failed to play Audio/Video Disc"
+msgstr "Ääni- tai kuvalevyä ei voitu soittaa"
+
+#: ../src/totem.c:414
+msgid "Reason unknown"
+msgstr "Tuntematon syy"
+
 #: ../src/totem.c:659
 msgid "No File"
 msgstr "Ei tiedostoa"
@@ -1365,40 +1373,40 @@ msgstr ""
 msgid "Totem Video Window"
 msgstr "Totem-videoikkuna"
 
-#: ../src/backend/bacon-video-widget-gst.c:1867
+#: ../src/backend/bacon-video-widget-gst.c:1861
 msgid "Failed to retrieve working directory"
 msgstr "Työhakemiston nouto epäonnistui"
 
-#: ../src/backend/bacon-video-widget-gst.c:1919
+#: ../src/backend/bacon-video-widget-gst.c:1920
 msgid "Location not found."
 msgstr "Sijaintia ei löytynyt."
 
-#: ../src/backend/bacon-video-widget-gst.c:1922
+#: ../src/backend/bacon-video-widget-gst.c:1923
 msgid "You don't have permission to open that location."
 msgstr "Ei oikeuksia avata tätä sijaintia."
 
-#: ../src/backend/bacon-video-widget-gst.c:1942
+#: ../src/backend/bacon-video-widget-gst.c:1943
 msgid "Failed to open media file; unknown error"
 msgstr "Mediatiedoston avaus epäonnistui: tuntematon virhe"
 
-#: ../src/backend/bacon-video-widget-gst.c:1974
+#: ../src/backend/bacon-video-widget-gst.c:1975
 #, c-format
 msgid "Failed to play: %s"
 msgstr "Ei voitu soittaa: %s"
 
-#: ../src/backend/bacon-video-widget-gst.c:1976
+#: ../src/backend/bacon-video-widget-gst.c:1977
 msgid "unknown error"
 msgstr "tuntematon virhe"
 
-#: ../src/backend/bacon-video-widget-gst.c:3127
+#: ../src/backend/bacon-video-widget-gst.c:3130
 msgid "Too old version of GStreamer installed."
 msgstr "Liian vanha GStreamer-versio asennettuna."
 
-#: ../src/backend/bacon-video-widget-gst.c:3134
+#: ../src/backend/bacon-video-widget-gst.c:3137
 msgid "Media contains no supported video streams."
 msgstr "Media ei sisällä tuettuja videomuotoja."
 
-#: ../src/backend/bacon-video-widget-gst.c:3312
+#: ../src/backend/bacon-video-widget-gst.c:3315
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1406,7 +1414,7 @@ msgstr ""
 "GStreamer-soitto-olion luominen epäonnistui. Tarkista että GStreamer on "
 "asennettu oikein."
 
-#: ../src/backend/bacon-video-widget-gst.c:3408
+#: ../src/backend/bacon-video-widget-gst.c:3411
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1416,7 +1424,7 @@ msgstr ""
 "ohjelmat tai valitse toinen videoulostulo Multimediajärjestelmien "
 "valitsimesta."
 
-#: ../src/backend/bacon-video-widget-gst.c:3418
+#: ../src/backend/bacon-video-widget-gst.c:3421
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1424,7 +1432,7 @@ msgstr ""
 "Videoulostulon avaus epäonnistui. Valitse toinen videoulostulo "
 "Multimediajärjestelmien valitsimesta."
 
-#: ../src/backend/bacon-video-widget-gst.c:3445
+#: ../src/backend/bacon-video-widget-gst.c:3448
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1434,7 +1442,7 @@ msgstr ""
 "Multimediajärjestelmien valitsimesta. Voi myös olla että haluaisit käyttää "
 "äänipalvelinta."
 
-#: ../src/backend/bacon-video-widget-gst.c:3451
+#: ../src/backend/bacon-video-widget-gst.c:3454
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector"
@@ -1442,7 +1450,7 @@ msgstr ""
 "Haluttua äänen ulostuloa ei löytynyt. Valitse toinen äänen ulostulo "
 "Multimediajärjestelmien valitsimesta."
 
-#: ../src/backend/bacon-video-widget-gst.c:3461
+#: ../src/backend/bacon-video-widget-gst.c:3464
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1648,54 +1656,54 @@ msgstr "Oikeaa laitesolmua %s ei löytynyt: %s"
 msgid "Failed to read symbolic link %s: %s"
 msgstr "Symbolisen linkin %s lukeminen epäonnistui: %s"
 
-#: ../src/plparse/totem-disc.c:218
+#: ../src/plparse/totem-disc.c:285
 #, c-format
 msgid "Failed to find mountpoint for device %s in /etc/fstab"
 msgstr "Laitteen %s liitospistettä ei löytynyt /etc/fstab-tiedostosta"
 
-#: ../src/plparse/totem-disc.c:256
+#: ../src/plparse/totem-disc.c:323
 msgid "Please check that a disc is present in the drive."
 msgstr "Varmista, että levy on asemassa."
 
-#: ../src/plparse/totem-disc.c:259
+#: ../src/plparse/totem-disc.c:326
 #, c-format
 msgid "Failed to open device %s for reading: %s"
 msgstr "Laitteen %s avaaminen lukemista varten epäonnistui: %s"
 
-#: ../src/plparse/totem-disc.c:270
+#: ../src/plparse/totem-disc.c:337
 #, c-format
 msgid "Failed to retrieve capabilities of device %s: %s"
 msgstr "Laitteen %s ominaisuuksien noutaminen epäonnistui: %s"
 
-#: ../src/plparse/totem-disc.c:303
+#: ../src/plparse/totem-disc.c:370
 #, c-format
 msgid "Drive status 0x%x (%s) - check disc"
 msgstr "Aseman tila 0x%x (%s) - tarkista levy"
 
-#: ../src/plparse/totem-disc.c:336
+#: ../src/plparse/totem-disc.c:405
 #, c-format
 msgid "Unexpected error status %d while mounting %s"
 msgstr "Odottamaton virhetilanne %d liitettäessä %s"
 
-#: ../src/plparse/totem-disc.c:388
+#: ../src/plparse/totem-disc.c:458
 #, c-format
 msgid "Error getting %s disc status: %s"
 msgstr "Virhe noudettaessa laitteen %s levytilannetta: %s"
 
-#: ../src/plparse/totem-disc.c:417
+#: ../src/plparse/totem-disc.c:487
 #, c-format
 msgid "Unexpected/unknown cd type 0x%x (%s)"
 msgstr "Odottamaton/tuntematon CD-tyyppi 0x%x (%s)"
 
-#: ../src/plparse/totem-disc.c:626
+#: ../src/plparse/totem-disc.c:696
 msgid "Audio CD"
 msgstr "Ääni-CD"
 
-#: ../src/plparse/totem-disc.c:628
+#: ../src/plparse/totem-disc.c:698
 msgid "Video CD"
 msgstr "Video-CD"
 
-#: ../src/plparse/totem-disc.c:630
+#: ../src/plparse/totem-disc.c:700
 msgid "DVD"
 msgstr "DVD"
 
