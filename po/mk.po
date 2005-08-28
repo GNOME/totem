@@ -1,23 +1,25 @@
+# translation of totem.HEAD.mk.po to Macedonian
 # translation of mk.po to Macedonian
 # translation of totem.HEAD.mk.po to
 # This file is distributed under the same license as the totem.HEAD.mk package.
 # Copyright (C) 2005 THE totem.HEAD.mk'S COPYRIGHT HOLDER, 2003
 #  <ufo@linux.net.mk>, 2005.
 # Арангел Ангов <ufo@linux.net.mk>, 2005.
+# Arangel Angov <ufo@linux.net.mk>, 2005.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: mk\n"
+"Project-Id-Version: totem.HEAD.mk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-15 14:54+0000\n"
-"PO-Revision-Date: 2005-08-15 23:17+0200\n"
-"Last-Translator: Арангел Ангов <ufo@linux.net.mk>\n"
+"POT-Creation-Date: 2005-08-28 07:11+0000\n"
+"PO-Revision-Date: 2005-08-28 17:11+0200\n"
+"Last-Translator: Arangel Angov <ufo@linux.net.mk>\n"
 "Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural= n==1 || n%10==1 ? 0 : 1\n"
-"X-Generator: KBabel 1.10\n"
+"X-Generator: KBabel 1.10.2\n"
 
 #: ../data/playlist.glade.h:1
 msgid "Add..."
@@ -1199,6 +1201,14 @@ msgstr ""
 "Проверете дали има диск во уредот и дали уредот е соодветно конфигуриран.\n"
 "                        "
 
+#: ../src/totem.c:413
+msgid "Failed to play Audio/Video Disc"
+msgstr "Не успеав да пуштам аудио/видео диск"
+
+#: ../src/totem.c:414
+msgid "Reason unknown"
+msgstr "Непозната причина"
+
 #: ../src/totem.c:659
 msgid "No File"
 msgstr "Нема датотека"
@@ -1370,40 +1380,40 @@ msgstr ""
 msgid "Totem Video Window"
 msgstr "Тотем видео прозорец"
 
-#: ../src/backend/bacon-video-widget-gst.c:1867
+#: ../src/backend/bacon-video-widget-gst.c:1861
 msgid "Failed to retrieve working directory"
 msgstr "Не успеав да добијам папка што работи"
 
-#: ../src/backend/bacon-video-widget-gst.c:1919
+#: ../src/backend/bacon-video-widget-gst.c:1920
 msgid "Location not found."
 msgstr "Локацијата не е најдена."
 
-#: ../src/backend/bacon-video-widget-gst.c:1922
+#: ../src/backend/bacon-video-widget-gst.c:1923
 msgid "You don't have permission to open that location."
 msgstr "Немате пермисии за да ја отворите таа локација."
 
-#: ../src/backend/bacon-video-widget-gst.c:1942
+#: ../src/backend/bacon-video-widget-gst.c:1943
 msgid "Failed to open media file; unknown error"
 msgstr "Не успеав да отворам датотека; непозната грешка"
 
-#: ../src/backend/bacon-video-widget-gst.c:1974
+#: ../src/backend/bacon-video-widget-gst.c:1975
 #, c-format
 msgid "Failed to play: %s"
 msgstr "Не успеав да пуштам: %s"
 
-#: ../src/backend/bacon-video-widget-gst.c:1976
+#: ../src/backend/bacon-video-widget-gst.c:1977
 msgid "unknown error"
 msgstr "непозната грешка"
 
-#: ../src/backend/bacon-video-widget-gst.c:3127
+#: ../src/backend/bacon-video-widget-gst.c:3130
 msgid "Too old version of GStreamer installed."
 msgstr "Инсталирана е старата верзија на GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst.c:3134
+#: ../src/backend/bacon-video-widget-gst.c:3137
 msgid "Media contains no supported video streams."
 msgstr "Медиумот не содржи поддржани видео протоци."
 
-#: ../src/backend/bacon-video-widget-gst.c:3312
+#: ../src/backend/bacon-video-widget-gst.c:3315
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1411,7 +1421,7 @@ msgstr ""
 "Не успеав да креирам објект за GStreamer. Ве молам проверете ја "
 "инсталацијата на GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst.c:3408
+#: ../src/backend/bacon-video-widget-gst.c:3411
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1421,7 +1431,7 @@ msgstr ""
 "другаапликација за видео, или пак одберете друг видео излез во избирачот за "
 "мултимедијален систем."
 
-#: ../src/backend/bacon-video-widget-gst.c:3418
+#: ../src/backend/bacon-video-widget-gst.c:3421
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1429,7 +1439,7 @@ msgstr ""
 "Не успеав да отворам излез за видео. Може да не е достапен. Ве молам "
 "изберете друг излез за видео во избирачот за мултимедијален систем."
 
-#: ../src/backend/bacon-video-widget-gst.c:3445
+#: ../src/backend/bacon-video-widget-gst.c:3448
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1439,7 +1449,7 @@ msgstr ""
 "одберете друг излез за аудио во избирачот за мултимедијални системи. Можете "
 "да размислите и за користење на звучен сервер."
 
-#: ../src/backend/bacon-video-widget-gst.c:3451
+#: ../src/backend/bacon-video-widget-gst.c:3454
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector"
@@ -1447,7 +1457,7 @@ msgstr ""
 "Бараниот излез за аудио не е пронајден. Ве молам одберете друг излез за "
 "аудиово избирачот за мултимедијален систем."
 
-#: ../src/backend/bacon-video-widget-gst.c:3461
+#: ../src/backend/bacon-video-widget-gst.c:3464
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1655,54 +1665,54 @@ msgstr "Не успеав да го пронајдам вистинската т
 msgid "Failed to read symbolic link %s: %s"
 msgstr "Не успеав да ја прочитам симболичката врска %s: %s"
 
-#: ../src/plparse/totem-disc.c:218
+#: ../src/plparse/totem-disc.c:285
 #, c-format
 msgid "Failed to find mountpoint for device %s in /etc/fstab"
 msgstr "Не успеав да ја најдам точката за монтирање на уредот %s во /etc/fstab"
 
-#: ../src/plparse/totem-disc.c:256
+#: ../src/plparse/totem-disc.c:323
 msgid "Please check that a disc is present in the drive."
 msgstr "Ве молам проверете дали има диск во уредот."
 
-#: ../src/plparse/totem-disc.c:259
+#: ../src/plparse/totem-disc.c:326
 #, c-format
 msgid "Failed to open device %s for reading: %s"
 msgstr "Не успеав да го отворам уредот %s за да го прочитам:%s"
 
-#: ../src/plparse/totem-disc.c:270
+#: ../src/plparse/totem-disc.c:337
 #, c-format
 msgid "Failed to retrieve capabilities of device %s: %s"
 msgstr "Не успеав да ги добијам способностите на уредот %s: %s"
 
-#: ../src/plparse/totem-disc.c:303
+#: ../src/plparse/totem-disc.c:370
 #, c-format
 msgid "Drive status 0x%x (%s) - check disc"
 msgstr "Статус на уредот 0x%x (%s) - проверете го дискот"
 
-#: ../src/plparse/totem-disc.c:336
+#: ../src/plparse/totem-disc.c:405
 #, c-format
 msgid "Unexpected error status %d while mounting %s"
 msgstr "Неочекувана грешка на статусот %d при монтирање на %s"
 
-#: ../src/plparse/totem-disc.c:388
+#: ../src/plparse/totem-disc.c:458
 #, c-format
 msgid "Error getting %s disc status: %s"
 msgstr "Грешка при добивање на %s статусот на дискот: %s"
 
-#: ../src/plparse/totem-disc.c:417
+#: ../src/plparse/totem-disc.c:487
 #, c-format
 msgid "Unexpected/unknown cd type 0x%x (%s)"
 msgstr "Неочекуван/непознат тип на cd 0x%x (%s)"
 
-#: ../src/plparse/totem-disc.c:626
+#: ../src/plparse/totem-disc.c:696
 msgid "Audio CD"
 msgstr "Аудио CD"
 
-#: ../src/plparse/totem-disc.c:628
+#: ../src/plparse/totem-disc.c:698
 msgid "Video CD"
 msgstr "Видео CD"
 
-#: ../src/plparse/totem-disc.c:630
+#: ../src/plparse/totem-disc.c:700
 msgid "DVD"
 msgstr "DVD"
 
