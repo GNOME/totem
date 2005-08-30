@@ -3469,7 +3469,7 @@ bacon_video_widget_new (int width, int height,
     }
     gst_object_unref (GST_OBJECT (video_sink));
     gst_object_unref (GST_OBJECT (audio_sink));
-    g_object_unref (G_OBJECT (bvw));
+    g_free (bvw);
     return NULL;
   }
   /* somehow, alsa hangs? */
