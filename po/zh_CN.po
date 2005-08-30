@@ -7,10 +7,10 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: Totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-13 22:51+0000\n"
-"PO-Revision-Date: 2005-07-18 12:53+0800\n"
+"POT-Creation-Date: 2005-08-30 15:05+0000\n"
+"PO-Revision-Date: 2005-08-31 02:29+0800\n"
 "Last-Translator: Funda Wang <fundawang@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -1177,6 +1177,14 @@ msgid ""
 "correctly configured."
 msgstr "您可能想要检查盘片是否位于驱动器中，以及配置是否正确。"
 
+#: ../src/totem.c:413
+msgid "Failed to play Audio/Video Disc"
+msgstr "播放音频/视频碟片失败"
+
+#: ../src/totem.c:414
+msgid "Reason unknown"
+msgstr "原因未知"
+
 #: ../src/totem.c:659
 msgid "No File"
 msgstr "无文件"
@@ -1346,46 +1354,46 @@ msgstr ""
 msgid "Totem Video Window"
 msgstr "Totem 视频窗口"
 
-#: ../src/backend/bacon-video-widget-gst.c:1867
+#: ../src/backend/bacon-video-widget-gst.c:1861
 msgid "Failed to retrieve working directory"
 msgstr "获取工作目录失败"
 
-#: ../src/backend/bacon-video-widget-gst.c:1919
+#: ../src/backend/bacon-video-widget-gst.c:1920
 msgid "Location not found."
 msgstr "位置未找到。"
 
-#: ../src/backend/bacon-video-widget-gst.c:1922
+#: ../src/backend/bacon-video-widget-gst.c:1923
 msgid "You don't have permission to open that location."
 msgstr "您没有权限打开该位置。"
 
-#: ../src/backend/bacon-video-widget-gst.c:1942
+#: ../src/backend/bacon-video-widget-gst.c:1943
 msgid "Failed to open media file; unknown error"
 msgstr "打开媒体文件失败；未知错误"
 
-#: ../src/backend/bacon-video-widget-gst.c:1974
+#: ../src/backend/bacon-video-widget-gst.c:1975
 #, c-format
 msgid "Failed to play: %s"
 msgstr "播放失败：%s"
 
-#: ../src/backend/bacon-video-widget-gst.c:1976
+#: ../src/backend/bacon-video-widget-gst.c:1977
 msgid "unknown error"
 msgstr "未知错误"
 
-#: ../src/backend/bacon-video-widget-gst.c:3127
+#: ../src/backend/bacon-video-widget-gst.c:3130
 msgid "Too old version of GStreamer installed."
 msgstr "安装的 GStreamer 版本太旧。"
 
-#: ../src/backend/bacon-video-widget-gst.c:3134
+#: ../src/backend/bacon-video-widget-gst.c:3137
 msgid "Media contains no supported video streams."
 msgstr "媒体不包含支持的视频流。"
 
-#: ../src/backend/bacon-video-widget-gst.c:3312
+#: ../src/backend/bacon-video-widget-gst.c:3315
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr "创建 GStreamer 播放对象失败。请检查您的 GStreamer 安装。"
 
-#: ../src/backend/bacon-video-widget-gst.c:3408
+#: ../src/backend/bacon-video-widget-gst.c:3411
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1394,7 +1402,7 @@ msgstr ""
 "视频输出正被另外一个应用程序使用。请关闭其它视频应用程序，或者在多媒体系统选"
 "择器中选择另外一个视频输出。"
 
-#: ../src/backend/bacon-video-widget-gst.c:3418
+#: ../src/backend/bacon-video-widget-gst.c:3421
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1402,7 +1410,7 @@ msgstr ""
 "打开视频输出失败。该输出可能不可用。请在多媒体系统选择器中选择另外一个视频输"
 "出。"
 
-#: ../src/backend/bacon-video-widget-gst.c:3445
+#: ../src/backend/bacon-video-widget-gst.c:3448
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1411,13 +1419,13 @@ msgstr ""
 "音频输出正被另外一个应用程序使用。请在多媒体系统选择器中选择另外一个音频输"
 "出。您可能需要考虑使用另外一个声音服务器。"
 
-#: ../src/backend/bacon-video-widget-gst.c:3451
+#: ../src/backend/bacon-video-widget-gst.c:3454
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector"
 msgstr "所请求的音频输出未找到。请在多媒体系统选择器中选择另外一个音频输出。"
 
-#: ../src/backend/bacon-video-widget-gst.c:3461
+#: ../src/backend/bacon-video-widget-gst.c:3464
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1611,54 +1619,54 @@ msgstr "查找 %s 的实际设备节点失败：%s"
 msgid "Failed to read symbolic link %s: %s"
 msgstr "读取符号链接 %s 失败：%s"
 
-#: ../src/plparse/totem-disc.c:218
+#: ../src/plparse/totem-disc.c:285
 #, c-format
 msgid "Failed to find mountpoint for device %s in /etc/fstab"
 msgstr "在 /etc/fstab 查找设备 %s 的挂载点失败"
 
-#: ../src/plparse/totem-disc.c:256
+#: ../src/plparse/totem-disc.c:323
 msgid "Please check that a disc is present in the drive."
 msgstr "您可能想要检查盘片是否位于驱动器中。"
 
-#: ../src/plparse/totem-disc.c:259
+#: ../src/plparse/totem-disc.c:326
 #, c-format
 msgid "Failed to open device %s for reading: %s"
 msgstr "打开设备 %s 读取失败：%s"
 
-#: ../src/plparse/totem-disc.c:270
+#: ../src/plparse/totem-disc.c:337
 #, c-format
 msgid "Failed to retrieve capabilities of device %s: %s"
 msgstr "获取设备 %s 的能力失败：%s"
 
-#: ../src/plparse/totem-disc.c:303
+#: ../src/plparse/totem-disc.c:370
 #, c-format
 msgid "Drive status 0x%x (%s) - check disc"
 msgstr "驱动器状态 0x%x (%s) - 检查碟片"
 
-#: ../src/plparse/totem-disc.c:336
+#: ../src/plparse/totem-disc.c:405
 #, c-format
 msgid "Unexpected error status %d while mounting %s"
 msgstr "挂载 %2$s 时发生了意外错误状态 %1$d"
 
-#: ../src/plparse/totem-disc.c:388
+#: ../src/plparse/totem-disc.c:458
 #, c-format
 msgid "Error getting %s disc status: %s"
 msgstr "获取 %s 碟片状态出错：%s"
 
-#: ../src/plparse/totem-disc.c:417
+#: ../src/plparse/totem-disc.c:487
 #, c-format
 msgid "Unexpected/unknown cd type 0x%x (%s)"
 msgstr "意外/未知的 CD 类型 0x%x (%s)"
 
-#: ../src/plparse/totem-disc.c:626
+#: ../src/plparse/totem-disc.c:696
 msgid "Audio CD"
 msgstr "音频 CD"
 
-#: ../src/plparse/totem-disc.c:628
+#: ../src/plparse/totem-disc.c:698
 msgid "Video CD"
 msgstr "VCD"
 
-#: ../src/plparse/totem-disc.c:630
+#: ../src/plparse/totem-disc.c:700
 msgid "DVD"
 msgstr "DVD"
 
@@ -1672,5 +1680,3 @@ msgstr "不能写入解析器：%s"
 msgid "Couldn't open file '%s': %s"
 msgstr "无法打开文件“%s”：%s"
 
-#~ msgid "_Show/Hide Sidebar"
-#~ msgstr "显示/隐藏侧边栏(_S)"
