@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-29 14:44+0000\n"
-"PO-Revision-Date: 2005-08-10 23:36+0300\n"
+"POT-Creation-Date: 2005-08-30 23:58+0300\n"
+"PO-Revision-Date: 2005-08-30 23:59+0300\n"
 "Last-Translator: Žygimantas Beručka <uid0@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "Mažinti garsumą"
 msgid "Move Up"
 msgstr "Didinti garsumą"
 
-#: ../data/playlist.glade.h:4 ../src/totem-sidebar.c:92
+#: ../data/playlist.glade.h:4 ../src/totem-sidebar.c:115
 msgid "Playlist"
 msgstr "Grojaraštis"
 
@@ -183,7 +183,7 @@ msgstr "Kadrų dažnis:"
 msgid "N/A"
 msgstr "N/A"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:2018
+#: ../data/properties.glade.h:17 ../src/totem.c:2013
 msgid "Properties"
 msgstr "Savybės"
 
@@ -252,7 +252,7 @@ msgstr "Žiūrėti filmams ir klausytis muzikos"
 #  Title
 #. Title
 #: ../data/totem.desktop.in.in.in.h:2 ../data/totem.glade.h:97
-#: ../src/totem.c:666 ../src/totem.c:3374 ../src/totem.c:3391
+#: ../src/totem.c:666 ../src/totem.c:3362 ../src/totem.c:3379
 msgid "Totem Movie Player"
 msgstr "Totem filmų grotuvas"
 
@@ -689,26 +689,22 @@ msgid "_Resize 1:2"
 msgstr "_Keisti mastelį 1:2"
 
 #: ../data/totem.glade.h:134
-msgid "_Show/Hide Sidebar"
-msgstr "Rodyti/_slėpti šoninį skydelį"
-
-#: ../data/totem.glade.h:135
 msgid "_Sidebar"
 msgstr "Šoninis _skydelis"
 
-#: ../data/totem.glade.h:136
+#: ../data/totem.glade.h:135
 msgid "_Skip to..."
 msgstr "Praš_okti iki..."
 
-#: ../data/totem.glade.h:137
+#: ../data/totem.glade.h:136
 msgid "_Sound"
 msgstr "Gar_sas"
 
-#: ../data/totem.glade.h:138
+#: ../data/totem.glade.h:137
 msgid "_Title Menu"
 msgstr "_Pavadinimo meniu"
 
-#: ../data/totem.glade.h:139
+#: ../data/totem.glade.h:138
 msgid "_Type of visualisation:"
 msgstr "Vizualių efektų _tipas:"
 
@@ -910,6 +906,16 @@ msgstr "%d kbps"
 msgid "Properties dialog"
 msgstr "Savybių dialogas"
 
+#. +
+#: ../src/bacon-volume.c:187
+msgid "+"
+msgstr "+"
+
+#. -
+#: ../src/bacon-volume.c:203
+msgid "-"
+msgstr "-"
+
 #: ../src/totem-interface.c:114
 #, c-format
 msgid "Couldn't load the '%s' interface."
@@ -985,46 +991,46 @@ msgstr "Pakeisti"
 msgid "Option '%s' is unknown and was ignored\n"
 msgstr "Parametras „%s“ yra nežinomas ir buvo ignoruotas\n"
 
-#: ../src/totem-playlist.c:313
+#: ../src/totem-playlist.c:326
 msgid "Could not save the playlist"
 msgstr "Nepavyko išsaugoti grojaraščio"
 
-#: ../src/totem-playlist.c:646
+#: ../src/totem-playlist.c:659
 msgid "Select Movies or Playlists"
 msgstr "Pasirinkit filmus arba grojaraščius"
 
-#: ../src/totem-playlist.c:824
-msgid "Save playlist"
+#: ../src/totem-playlist.c:838
+msgid "Save Playlist"
 msgstr "Išsaugoti grojaraštį"
 
-#: ../src/totem-playlist.c:870
+#: ../src/totem-playlist.c:884
 msgid "Overwrite file?"
 msgstr "Perrašyti bylą?"
 
-#: ../src/totem-playlist.c:872
+#: ../src/totem-playlist.c:886
 #, c-format
 msgid ""
 "A file named '%s' already exists.  Are you sure you want to overwrite it?"
 msgstr "Byla vardu „%s“ jau egzistuoja. Ar tikrai norite ją perrašyti?"
 
-#: ../src/totem-playlist.c:1385
+#: ../src/totem-playlist.c:1393
 msgid "playlist"
 msgstr "grojaraštis"
 
-#: ../src/totem-playlist.c:1513
+#: ../src/totem-playlist.c:1522
 msgid "Playlist error"
 msgstr "Grojaraščio klaida"
 
-#: ../src/totem-playlist.c:1513
+#: ../src/totem-playlist.c:1522
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "Nepavyko perskaityti grojaraščio „%s“, jis gali būti sugadintas."
 
-#: ../src/totem-playlist.c:1906
+#: ../src/totem-playlist.c:1915
 msgid "Select CD"
 msgstr "Pasirinkite CD"
 
-#: ../src/totem-playlist.c:1911
+#: ../src/totem-playlist.c:1920
 msgid "Please select the currently playing CD:"
 msgstr "Pasirinkite šiuo metu grojamą CD:"
 
@@ -1065,7 +1071,7 @@ msgid ""
 "restarted."
 msgstr "Garso išvesties pakeitimas įsigalios tik iš naujo paleidus Totem."
 
-#: ../src/totem-preferences.c:603
+#: ../src/totem-preferences.c:602
 msgid "Select Subtitle Font"
 msgstr "Pasirinkite subtitrų šriftą"
 
@@ -1146,16 +1152,6 @@ msgstr "Buferizuojama"
 msgid "%d %%"
 msgstr "%d %%"
 
-#. +
-#: ../src/totem-volume.c:190
-msgid "+"
-msgstr "+"
-
-#. -
-#: ../src/totem-volume.c:206
-msgid "-"
-msgstr "-"
-
 #: ../src/totem.c:244
 msgid "Playing"
 msgstr "Grojama"
@@ -1168,7 +1164,7 @@ msgstr "Pristabdyta"
 msgid "Totem could not eject the optical media."
 msgstr "Totem negalėjo išstumti optinio disko."
 
-#: ../src/totem.c:322 ../src/totem.c:349 ../src/totem.c:772 ../src/totem.c:876
+#: ../src/totem.c:322 ../src/totem.c:349 ../src/totem.c:771 ../src/totem.c:875
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem nepavyko groti „%s“."
@@ -1207,40 +1203,48 @@ msgstr ""
 "Patikrinkite, ar diskas įdėtas į įrenginį ir ar įrenginys teisingai "
 "sukonfigūruotas."
 
+#: ../src/totem.c:413
+msgid "Failed to play Audio/Video Disc"
+msgstr "Nepavyko groti Audio/Video disko"
+
+#: ../src/totem.c:414
+msgid "Reason unknown"
+msgstr "Priežastis nežinoma"
+
 #: ../src/totem.c:659
 msgid "No File"
 msgstr "Nėra bylos"
 
-#: ../src/totem.c:1239 ../src/totem.c:1241
+#: ../src/totem.c:1236 ../src/totem.c:1238
 msgid "An error occurred"
 msgstr "Įvyko klaida"
 
-#: ../src/totem.c:1537
+#: ../src/totem.c:1532
 msgid "Select Files"
 msgstr "Pasirinkite bylas"
 
-#: ../src/totem.c:1622
+#: ../src/totem.c:1617
 msgid "Open Location..."
 msgstr "Atidaryti vietą..."
 
-#: ../src/totem.c:1891
+#: ../src/totem.c:1886
 msgid "Totem could not display the help contents."
 msgstr "Totem nepavyko parodyti pagalbos turinio."
 
-#: ../src/totem.c:1929
+#: ../src/totem.c:1924
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Filmų grotuvas, naudojantis %s"
 
-#: ../src/totem.c:1933
+#: ../src/totem.c:1928
 msgid "Totem"
 msgstr "Totem"
 
-#: ../src/totem.c:1935 ../src/vanity.c:261
+#: ../src/totem.c:1930 ../src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Autorinės teisės © 2002-2005 Bastien Nocera"
 
-#: ../src/totem.c:1940 ../src/vanity.c:266
+#: ../src/totem.c:1935 ../src/vanity.c:266
 msgid "translator-credits"
 msgstr ""
 "Paskutinieji vertėjai:\n"
@@ -1250,58 +1254,58 @@ msgstr ""
 "Ankstesnysis vertėjas:\n"
 "Artūras Šlajus <x11@h2o.pieva.net>"
 
-#: ../src/totem.c:1973 ../src/totem.c:1981 ../src/vanity.c:299
+#: ../src/totem.c:1968 ../src/totem.c:1976 ../src/vanity.c:299
 #: ../src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem negalėjo padaryti filmo vaizdo nuotraukos."
 
-#: ../src/totem.c:1981 ../src/vanity.c:307
+#: ../src/totem.c:1976 ../src/vanity.c:307
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Tai neturėjo nutikti; prašau praneškite apie klaidą."
 
-#: ../src/totem.c:2008
+#: ../src/totem.c:2003
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem negalėjo parodyti filmo savybių lango."
 
-#: ../src/totem.c:2008
+#: ../src/totem.c:2003
 msgid "Make sure that Totem is correctly installed."
 msgstr "Įsitikinkite, jog Totem deramai įdiegtas."
 
-#: ../src/totem.c:2094
+#: ../src/totem.c:2089
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem negalėjo peršokti byloje „%s“."
 
-#: ../src/totem.c:3237
+#: ../src/totem.c:3224
 msgid "Totem could not startup."
 msgstr "Totem negalėjo startuoti."
 
-#: ../src/totem.c:3237
+#: ../src/totem.c:3224
 msgid "No reason."
 msgstr "Jokios priežasties."
 
-#: ../src/totem.c:3375
+#: ../src/totem.c:3363
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Nepavyko inicializuoti saugių gijų bibliotekų."
 
-#: ../src/totem.c:3375
+#: ../src/totem.c:3363
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Patikrinkite savo sistemos įdiegimą. Totem dabar užsidarys."
 
-#: ../src/totem.c:3398
+#: ../src/totem.c:3386
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem nepavyko inicializuoti konfigūracijos varikliuko."
 
-#: ../src/totem.c:3398
+#: ../src/totem.c:3386
 msgid "Make sure that GNOME is properly installed."
 msgstr "Įsitikinkite, jog GNOME deramai įdiegtas."
 
 #. Main window
-#: ../src/totem.c:3425
+#: ../src/totem.c:3413
 msgid "main window"
 msgstr "pagrindinis langas"
 
-#: ../src/totem.c:3430
+#: ../src/totem.c:3418
 msgid "video popup menu"
 msgstr "iššokantis video meniu"
 
@@ -1380,23 +1384,23 @@ msgstr ""
 msgid "Totem Video Window"
 msgstr "Totem vaizdo langas"
 
-#: ../src/backend/bacon-video-widget-gst.c:1867
+#: ../src/backend/bacon-video-widget-gst.c:1861
 msgid "Failed to retrieve working directory"
 msgstr "Nepavyko gauti darbinio aplanko"
 
-#: ../src/backend/bacon-video-widget-gst.c:1919
+#: ../src/backend/bacon-video-widget-gst.c:1920
 msgid "Location not found."
 msgstr "Vieta nerasta."
 
-#: ../src/backend/bacon-video-widget-gst.c:1922
+#: ../src/backend/bacon-video-widget-gst.c:1923
 msgid "You don't have permission to open that location."
 msgstr "Jūs neturite leidimo atverti šią vietą."
 
-#: ../src/backend/bacon-video-widget-gst.c:1942
+#: ../src/backend/bacon-video-widget-gst.c:1943
 msgid "Failed to open media file; unknown error"
 msgstr "Nepavyko atverti laikmenos bylos; nežinoma klaida"
 
-#: ../src/backend/bacon-video-widget-gst.c:1974
+#: ../src/backend/bacon-video-widget-gst.c:1975
 #, c-format
 msgid "Failed to play: %s"
 msgstr "Nepavyko groti: %s"
@@ -1404,35 +1408,36 @@ msgstr "Nepavyko groti: %s"
 #  Title
 #  Artist
 #  Year
-#: ../src/backend/bacon-video-widget-gst.c:1976
+#: ../src/backend/bacon-video-widget-gst.c:1977
 msgid "unknown error"
 msgstr "nežinoma klaida"
 
-#: ../src/backend/bacon-video-widget-gst.c:3127
+#: ../src/backend/bacon-video-widget-gst.c:3130
 msgid "Too old version of GStreamer installed."
 msgstr "Įdiegta per sena GStreamer versija."
 
-#: ../src/backend/bacon-video-widget-gst.c:3134
+#: ../src/backend/bacon-video-widget-gst.c:3137
 msgid "Media contains no supported video streams."
 msgstr "Laikmenoje nėra palaikomų video srautų."
 
-#: ../src/backend/bacon-video-widget-gst.c:3312
+#: ../src/backend/bacon-video-widget-gst.c:3315
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr ""
 "Nepavyko sukurti GStreamer grojimo objekto. Patikrinkite GStreamer įdiegimą."
 
-#: ../src/backend/bacon-video-widget-gst.c:3408
+#: ../src/backend/bacon-video-widget-gst.c:3411
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
 "Selector."
 msgstr ""
-"Video išvestis yra naudojama kitos programos. Užverkite kitas video programas "
-"arba pasirinkite kitą video išvestį daugialypės terpės sistemų parinkiklyje."
+"Video išvestis yra naudojama kitos programos. Užverkite kitas video "
+"programas arba pasirinkite kitą video išvestį daugialypės terpės sistemų "
+"parinkiklyje."
 
-#: ../src/backend/bacon-video-widget-gst.c:3418
+#: ../src/backend/bacon-video-widget-gst.c:3421
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1440,7 +1445,7 @@ msgstr ""
 "Nepavyko atverti video išvesties. Ji gali būti neprieinama. Pasirinkite kitą "
 "video išvestį daugialypės terpės parinkiklyje."
 
-#: ../src/backend/bacon-video-widget-gst.c:3445
+#: ../src/backend/bacon-video-widget-gst.c:3448
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1450,7 +1455,7 @@ msgstr ""
 "daugialypės terpės sistemų parinkyklyje. Jūs galite norėti naudoti garso "
 "serverį."
 
-#: ../src/backend/bacon-video-widget-gst.c:3451
+#: ../src/backend/bacon-video-widget-gst.c:3454
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector"
@@ -1458,7 +1463,7 @@ msgstr ""
 "Užklausta audio išvestis nerasta. Pasirinkite kitą audio išvestį daugialypės "
 "terpės sistemų parinkiklyje"
 
-#: ../src/backend/bacon-video-widget-gst.c:3461
+#: ../src/backend/bacon-video-widget-gst.c:3464
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1468,7 +1473,7 @@ msgstr ""
 "įrenginį arba Jūsų garso serveris gali neveikti. Pasirinkite kitą audio "
 "išvestį daugialypės terpės sistemų parinkiklyje."
 
-#: ../src/backend/bacon-video-widget-xine.c:677
+#: ../src/backend/bacon-video-widget-xine.c:676
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1477,38 +1482,38 @@ msgstr ""
 "Nepavyko įkelti „%s“ garso valdyklės\n"
 "Patikrinkite ar įrenginys nėra užimtas."
 
-#: ../src/backend/bacon-video-widget-xine.c:1132
-#: ../src/backend/bacon-video-widget-xine.c:1662
+#: ../src/backend/bacon-video-widget-xine.c:1131
+#: ../src/backend/bacon-video-widget-xine.c:1665
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
 msgstr ""
 "Vaizdo išvestis negalima. Įsitikinkite, jog programa teisingai įdiegta."
 
-#: ../src/backend/bacon-video-widget-xine.c:1254
+#: ../src/backend/bacon-video-widget-xine.c:1255
 msgid "The server you are trying to connect to is not known."
 msgstr "Serveris, prie kurio bandote jungtis, nežinomas."
 
-#: ../src/backend/bacon-video-widget-xine.c:1258
+#: ../src/backend/bacon-video-widget-xine.c:1259
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "Nurodytas įrenginio vardas (%s) greičiausiai netaisyklingas."
 
-#: ../src/backend/bacon-video-widget-xine.c:1262
+#: ../src/backend/bacon-video-widget-xine.c:1263
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "Serveris, prie kurio bandote prisijungti (%s), nepasiekiamas."
 
-#: ../src/backend/bacon-video-widget-xine.c:1266
+#: ../src/backend/bacon-video-widget-xine.c:1267
 msgid "The connection to this server was refused."
 msgstr "Susijungimas su serveriu buvo atmestas."
 
-#: ../src/backend/bacon-video-widget-xine.c:1270
+#: ../src/backend/bacon-video-widget-xine.c:1271
 msgid "The specified movie could not be found."
 msgstr "Nurodytas filmas nerastas."
 
-#: ../src/backend/bacon-video-widget-xine.c:1276
-#: ../src/backend/bacon-video-widget-xine.c:1294
+#: ../src/backend/bacon-video-widget-xine.c:1277
+#: ../src/backend/bacon-video-widget-xine.c:1295
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -1516,66 +1521,66 @@ msgstr ""
 "Atrodo, jog šaltinis užšifruotas ir negali būti perskaitytas. Gal bandote "
 "groti užšifruotą DVD be libdvdcss bibliotekos?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1279
+#: ../src/backend/bacon-video-widget-xine.c:1280
 msgid "The movie could not be read."
 msgstr "Filmas negali būti perskaitytas."
 
-#: ../src/backend/bacon-video-widget-xine.c:1288
+#: ../src/backend/bacon-video-widget-xine.c:1289
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "Įkeliant biblioteką arba vaizdo dekoderį (%s) kilo problema."
 
-#: ../src/backend/bacon-video-widget-xine.c:1297
+#: ../src/backend/bacon-video-widget-xine.c:1298
 msgid "This file is encrypted and cannot be played back."
 msgstr "Ši byla yra užšifruota ir negali būti grojama."
 
-#: ../src/backend/bacon-video-widget-xine.c:1302
+#: ../src/backend/bacon-video-widget-xine.c:1303
 msgid "For security reasons, this movie can not be played back."
 msgstr "Dėl saugumo priežasčių šis filmas negali būti grojamas."
 
-#: ../src/backend/bacon-video-widget-xine.c:1307
+#: ../src/backend/bacon-video-widget-xine.c:1308
 msgid "The audio device is busy. Is another application using it?"
 msgstr "Audio įrenginys yra užimtas. Gal jį naudoja kita programa?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1312
+#: ../src/backend/bacon-video-widget-xine.c:1313
 msgid "You are not allowed to open this file."
 msgstr "Jums neleista atidaryti šios bylos."
 
-#: ../src/backend/bacon-video-widget-xine.c:1314
+#: ../src/backend/bacon-video-widget-xine.c:1315
 msgid "The server refused access to this file or stream."
 msgstr "Serveris atmetė priėjimą prie šios bylos ar srauto."
 
-#: ../src/backend/bacon-video-widget-xine.c:1323
+#: ../src/backend/bacon-video-widget-xine.c:1324
 msgid "The file you tried to play is an empty file."
 msgstr "Byla, kurią bandėte pagroti yra tuščia."
 
-#: ../src/backend/bacon-video-widget-xine.c:1472
+#: ../src/backend/bacon-video-widget-xine.c:1473
 msgid "There is no plugin to handle this movie."
 msgstr "Nėra tokio įskiepio, kuris galėtų apdoroti šį filmą."
 
-#: ../src/backend/bacon-video-widget-xine.c:1476
+#: ../src/backend/bacon-video-widget-xine.c:1477
 msgid "This movie is broken and can not be played further."
 msgstr "Šis filmas yra sugadintas ir negali būti grojamas toliau."
 
-#: ../src/backend/bacon-video-widget-xine.c:1480
+#: ../src/backend/bacon-video-widget-xine.c:1481
 msgid "This location is not a valid one."
 msgstr "Ši vieta nėra tinkama."
 
-#: ../src/backend/bacon-video-widget-xine.c:1484
+#: ../src/backend/bacon-video-widget-xine.c:1485
 msgid "This movie could not be opened."
 msgstr "Šis filmas negalėjo būti atidarytas."
 
-#: ../src/backend/bacon-video-widget-xine.c:1488
+#: ../src/backend/bacon-video-widget-xine.c:1489
 msgid "Generic Error."
 msgstr "Bendra klaida."
 
-#: ../src/backend/bacon-video-widget-xine.c:1995
+#: ../src/backend/bacon-video-widget-xine.c:2021
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr ""
 "Šis filmas yra nejudantis paveikslėlis. Galite jį atidaryti su paveikslėlių "
 "žiūrykle."
 
-#: ../src/backend/bacon-video-widget-xine.c:2019
+#: ../src/backend/bacon-video-widget-xine.c:2045
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1584,7 +1589,7 @@ msgstr ""
 "Vaizdo kodavimas „%s“ neapdorojamas. Galbūt reikia įdiegti papildomus "
 "priedus tam, kad galėtumėte groti kai kurių tipų filmus."
 
-#: ../src/backend/bacon-video-widget-xine.c:2023
+#: ../src/backend/bacon-video-widget-xine.c:2049
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1593,25 +1598,25 @@ msgstr ""
 "Audio kodavimas „%s“ neapdorojamas. Galbūt reikia įdiegti papildomus "
 "įskiepius tam, kad galėtumėte groti kai kurių tipų filmus."
 
-#: ../src/backend/bacon-video-widget-xine.c:2039
+#: ../src/backend/bacon-video-widget-xine.c:2065
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Tai yra garso byla, bet nėra nurodyta jokios garso išvesties."
 
-#: ../src/backend/bacon-video-widget-xine.c:3497
-#: ../src/backend/bacon-video-widget-xine.c:3560
+#: ../src/backend/bacon-video-widget-xine.c:3502
+#: ../src/backend/bacon-video-widget-xine.c:3565
 #, c-format
 msgid "Language %d"
 msgstr "Kalba %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3596
+#: ../src/backend/bacon-video-widget-xine.c:3601
 msgid "Movie is not playing."
 msgstr "Filmas nerodomas."
 
-#: ../src/backend/bacon-video-widget-xine.c:3605
+#: ../src/backend/bacon-video-widget-xine.c:3610
 msgid "No video to capture."
 msgstr "Nėra vaizdo, kurį būtų galima išsaugoti."
 
-#: ../src/backend/bacon-video-widget-xine.c:3613
+#: ../src/backend/bacon-video-widget-xine.c:3618
 msgid "Video codec is not handled."
 msgstr "Vaizdo kodavimas neapdorojamas."
 
@@ -1671,54 +1676,54 @@ msgstr "Nepavyko rasti tikro įrenginio mazgo, reikalingo %s: %s"
 msgid "Failed to read symbolic link %s: %s"
 msgstr "Nepavyko perskaityti simbolinės nuorodos %s: %s"
 
-#: ../src/plparse/totem-disc.c:218
+#: ../src/plparse/totem-disc.c:285
 #, c-format
 msgid "Failed to find mountpoint for device %s in /etc/fstab"
 msgstr "Nepavyko /etc/fstab byloje rasti įrenginio %s prijungimo taško"
 
-#: ../src/plparse/totem-disc.c:256
+#: ../src/plparse/totem-disc.c:323
 msgid "Please check that a disc is present in the drive."
 msgstr "Patikrinkite, ar diskas įdėtas į įrenginį."
 
-#: ../src/plparse/totem-disc.c:259
+#: ../src/plparse/totem-disc.c:326
 #, c-format
 msgid "Failed to open device %s for reading: %s"
 msgstr "Nepavyko skaitymui atidaryti įrenginio %s: %s"
 
-#: ../src/plparse/totem-disc.c:270
+#: ../src/plparse/totem-disc.c:337
 #, c-format
 msgid "Failed to retrieve capabilities of device %s: %s"
 msgstr "Nepavyko aptikti įrenginio %s galimybių: %s"
 
-#: ../src/plparse/totem-disc.c:303
+#: ../src/plparse/totem-disc.c:370
 #, c-format
 msgid "Drive status 0x%x (%s) - check disc"
 msgstr "Disko būsena 0x%x (%s) - patikrinkite diską"
 
-#: ../src/plparse/totem-disc.c:336
+#: ../src/plparse/totem-disc.c:405
 #, c-format
 msgid "Unexpected error status %d while mounting %s"
 msgstr "Gautas netikėtas klaidos pranešimas %d, kol buvo jungiamas %s"
 
-#: ../src/plparse/totem-disc.c:388
+#: ../src/plparse/totem-disc.c:458
 #, c-format
 msgid "Error getting %s disc status: %s"
 msgstr "Klaida gaunant %s disko būseną: %s"
 
-#: ../src/plparse/totem-disc.c:417
+#: ../src/plparse/totem-disc.c:487
 #, c-format
 msgid "Unexpected/unknown cd type 0x%x (%s)"
 msgstr "Netikėtas/nežinomas cd tipas 0x%x (%s)"
 
-#: ../src/plparse/totem-disc.c:626
+#: ../src/plparse/totem-disc.c:696
 msgid "Audio CD"
 msgstr "Garso CD"
 
-#: ../src/plparse/totem-disc.c:628
+#: ../src/plparse/totem-disc.c:698
 msgid "Video CD"
 msgstr "Video CD"
 
-#: ../src/plparse/totem-disc.c:630
+#: ../src/plparse/totem-disc.c:700
 msgid "DVD"
 msgstr "DVD"
 
@@ -1731,3 +1736,6 @@ msgstr "Nepavyko įrašyti apdoroklio: %s"
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "Nepavyko atidaryti bylos „%s“: %s"
+
+#~ msgid "_Show/Hide Sidebar"
+#~ msgstr "Rodyti/_slėpti šoninį skydelį"
