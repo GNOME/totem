@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-08 23:15-0400\n"
-"PO-Revision-Date: 2005-08-08 19:41-0400\n"
+"POT-Creation-Date: 2005-08-31 17:12-0400\n"
+"PO-Revision-Date: 2005-08-31 19:41-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgstr "Move Down"
 msgid "Move Up"
 msgstr "Move Up"
 
-#: data/playlist.glade.h:4 src/totem-sidebar.c:98
+#: data/playlist.glade.h:4 src/totem-sidebar.c:115
 msgid "Playlist"
 msgstr "Playlist"
 
@@ -241,7 +241,7 @@ msgstr "Play movies and songs"
 
 #. Title
 #: data/totem.desktop.in.in.in.h:2 data/totem.glade.h:97 src/totem.c:666
-#: src/totem.c:3361 src/totem.c:3378
+#: src/totem.c:3362 src/totem.c:3379
 msgid "Totem Movie Player"
 msgstr "Totem Movie Player"
 
@@ -896,12 +896,12 @@ msgid "Properties dialog"
 msgstr "Properties dialogue"
 
 #. +
-#: src/bacon-volume.c:185
+#: src/bacon-volume.c:187
 msgid "+"
 msgstr "+"
 
 #. -
-#: src/bacon-volume.c:201
+#: src/bacon-volume.c:203
 msgid "-"
 msgstr "-"
 
@@ -1193,6 +1193,14 @@ msgstr ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 
+#: src/totem.c:413
+msgid "Failed to play Audio/Video Disc"
+msgstr "Failed to play Audio/Video Disc"
+
+#: src/totem.c:414
+msgid "Reason unknown"
+msgstr "Reason unknown"
+
 #: src/totem.c:659
 msgid "No File"
 msgstr "No File"
@@ -1261,28 +1269,28 @@ msgstr "Totem could not startup."
 msgid "No reason."
 msgstr "No reason."
 
-#: src/totem.c:3362
+#: src/totem.c:3363
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Could not initialize the thread-safe libraries."
 
-#: src/totem.c:3362
+#: src/totem.c:3363
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verify your system installation. Totem will now exit."
 
-#: src/totem.c:3385
+#: src/totem.c:3386
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem could not initialize the configuration engine."
 
-#: src/totem.c:3385
+#: src/totem.c:3386
 msgid "Make sure that GNOME is properly installed."
 msgstr "Make sure that GNOME is properly installed."
 
 #. Main window
-#: src/totem.c:3412
+#: src/totem.c:3413
 msgid "main window"
 msgstr "main window"
 
-#: src/totem.c:3417
+#: src/totem.c:3418
 msgid "video popup menu"
 msgstr "video popup menu"
 
@@ -1361,40 +1369,40 @@ msgstr ""
 msgid "Totem Video Window"
 msgstr "Totem Video Window"
 
-#: src/backend/bacon-video-widget-gst.c:1867
+#: src/backend/bacon-video-widget-gst.c:1861
 msgid "Failed to retrieve working directory"
 msgstr "Failed to retrieve working directory"
 
-#: src/backend/bacon-video-widget-gst.c:1919
+#: src/backend/bacon-video-widget-gst.c:1920
 msgid "Location not found."
 msgstr "Location not found."
 
-#: src/backend/bacon-video-widget-gst.c:1922
+#: src/backend/bacon-video-widget-gst.c:1923
 msgid "You don't have permission to open that location."
 msgstr "You do not have permission to open that location."
 
-#: src/backend/bacon-video-widget-gst.c:1942
+#: src/backend/bacon-video-widget-gst.c:1943
 msgid "Failed to open media file; unknown error"
 msgstr "Failed to open media file; unknown error"
 
-#: src/backend/bacon-video-widget-gst.c:1974
+#: src/backend/bacon-video-widget-gst.c:1975
 #, c-format
 msgid "Failed to play: %s"
 msgstr "Failed to play: %s"
 
-#: src/backend/bacon-video-widget-gst.c:1976
+#: src/backend/bacon-video-widget-gst.c:1977
 msgid "unknown error"
 msgstr "unknown error"
 
-#: src/backend/bacon-video-widget-gst.c:3127
+#: src/backend/bacon-video-widget-gst.c:3130
 msgid "Too old version of GStreamer installed."
 msgstr "Too old version of GStreamer installed."
 
-#: src/backend/bacon-video-widget-gst.c:3134
+#: src/backend/bacon-video-widget-gst.c:3137
 msgid "Media contains no supported video streams."
 msgstr "Media contains no supported video streams."
 
-#: src/backend/bacon-video-widget-gst.c:3312
+#: src/backend/bacon-video-widget-gst.c:3315
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1402,7 +1410,7 @@ msgstr ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 
-#: src/backend/bacon-video-widget-gst.c:3408
+#: src/backend/bacon-video-widget-gst.c:3411
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1412,7 +1420,7 @@ msgstr ""
 "applications, or select another video output in the Multimedia Systems "
 "Selector."
 
-#: src/backend/bacon-video-widget-gst.c:3418
+#: src/backend/bacon-video-widget-gst.c:3421
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1420,7 +1428,7 @@ msgstr ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
 
-#: src/backend/bacon-video-widget-gst.c:3445
+#: src/backend/bacon-video-widget-gst.c:3448
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1430,7 +1438,7 @@ msgstr ""
 "audio output in the Multimedia Systems Selector. You may want to consider "
 "using a sound server."
 
-#: src/backend/bacon-video-widget-gst.c:3451
+#: src/backend/bacon-video-widget-gst.c:3454
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector"
@@ -1438,7 +1446,7 @@ msgstr ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector"
 
-#: src/backend/bacon-video-widget-gst.c:3461
+#: src/backend/bacon-video-widget-gst.c:3464
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1643,54 +1651,54 @@ msgstr "Failed to find real device node for %s: %s"
 msgid "Failed to read symbolic link %s: %s"
 msgstr "Failed to read symbolic link %s: %s"
 
-#: src/plparse/totem-disc.c:218
+#: src/plparse/totem-disc.c:285
 #, c-format
 msgid "Failed to find mountpoint for device %s in /etc/fstab"
 msgstr "Failed to find mount point for device %s in /etc/fstab"
 
-#: src/plparse/totem-disc.c:256
+#: src/plparse/totem-disc.c:323
 msgid "Please check that a disc is present in the drive."
 msgstr "Please check that a disc is present in the drive."
 
-#: src/plparse/totem-disc.c:259
+#: src/plparse/totem-disc.c:326
 #, c-format
 msgid "Failed to open device %s for reading: %s"
 msgstr "Failed to open device %s for reading: %s"
 
-#: src/plparse/totem-disc.c:270
+#: src/plparse/totem-disc.c:337
 #, c-format
 msgid "Failed to retrieve capabilities of device %s: %s"
 msgstr "Failed to retrieve capabilities of device %s: %s"
 
-#: src/plparse/totem-disc.c:303
+#: src/plparse/totem-disc.c:370
 #, c-format
 msgid "Drive status 0x%x (%s) - check disc"
 msgstr "Drive status 0x%x (%s) - check disc"
 
-#: src/plparse/totem-disc.c:336
+#: src/plparse/totem-disc.c:405
 #, c-format
 msgid "Unexpected error status %d while mounting %s"
 msgstr "Unexpected error status %d while mounting %s"
 
-#: src/plparse/totem-disc.c:388
+#: src/plparse/totem-disc.c:458
 #, c-format
 msgid "Error getting %s disc status: %s"
 msgstr "Error getting %s disc status: %s"
 
-#: src/plparse/totem-disc.c:417
+#: src/plparse/totem-disc.c:487
 #, c-format
 msgid "Unexpected/unknown cd type 0x%x (%s)"
 msgstr "Unexpected/unknown CD type 0x%x (%s)"
 
-#: src/plparse/totem-disc.c:626
+#: src/plparse/totem-disc.c:696
 msgid "Audio CD"
 msgstr "Audio CD"
 
-#: src/plparse/totem-disc.c:628
+#: src/plparse/totem-disc.c:698
 msgid "Video CD"
 msgstr "Video CD"
 
-#: src/plparse/totem-disc.c:630
+#: src/plparse/totem-disc.c:700
 msgid "DVD"
 msgstr "DVD"
 
