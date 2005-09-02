@@ -1136,8 +1136,7 @@ bacon_video_widget_realize (GtkWidget *widget)
 
 	bvw->priv->ao_driver = load_audio_out_driver (bvw, FALSE, NULL);
 
-	if (bvw->priv->type == BVW_USE_TYPE_VIDEO
-			&& bvw->priv->ao_driver != NULL
+	if (bvw->priv->ao_driver != NULL
 			&& bvw->priv->ao_driver_none == FALSE)
 	{
 		if (bvw->priv->vis_name == NULL)
@@ -1882,6 +1881,9 @@ show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals)
 	/* Doesn't have video, but visual effects are disabled */
 	} else if (has_video == FALSE && show_visuals == FALSE) {
 		enable = FALSE;
+	/* No changes */
+	} else {
+		return;
 	}
 
 	if (enable == FALSE) {
@@ -2812,6 +2814,10 @@ bacon_video_widget_set_visuals (BaconVideoWidget *bvw, const char *name)
 		g_free (bvw->priv->vis_name);
 		bvw->priv->vis_name = g_strdup (name);
 		show_vfx_update (bvw, TRUE);
+	} else {
+		g_free (bvw->priv->vis_name);
+		bvw->priv->vis_name = g_strdup (name);
+		show_vfx_update (bvw, FALSE);
 	}
 
 	return FALSE;

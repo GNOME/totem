@@ -1,3 +1,12 @@
+2005-09-02  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_realize), (show_vfx_update),
+	(bacon_video_widget_set_visuals): don't disable visuals when we are
+	already in the right state (fixes running with an audio-only file with
+	visuals enabled), correctly set the visual plugin even if we are not
+	currently using it
+
 2005-08-30  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-gst.c: (bacon_video_widget_new):
