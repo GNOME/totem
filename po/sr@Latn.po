@@ -5,14 +5,15 @@
 #
 # Maintainer: Veljko M. Stanojević <veljko@vms.homelinux.net>
 # Reviewed on 2005-07-11 by Danilo Šegan <danilo@gnome.org>
+# Reviewed on 2005-09-03 by Andrija Zarić <andrija@gmail.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-03 21:34+0200\n"
-"PO-Revision-Date: 2005-09-03 21:35+0200\n"
-"Last-Translator: Danilo Šegan <danilo@gnome.org>\n"
+"POT-Creation-Date: 2005-09-03 22:06+0200\n"
+"PO-Revision-Date: 2005-09-03 22:09+0200\n"
+"Last-Translator: Andrija Zarić <andrija@gmail.com>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -120,7 +121,7 @@ msgstr "0 kadrova u sekundi"
 #: ../data/properties.glade.h:3 ../src/bacon-video-widget-properties.c:154
 #: ../src/bacon-video-widget-properties.c:160
 msgid "0 kbps"
-msgstr "0 kb/s"
+msgstr "0 Kbit/s"
 
 #. 0 seconds
 #: ../data/properties.glade.h:4 ../data/skip_to.glade.h:1
@@ -159,7 +160,7 @@ msgstr "Brzina bita:"
 
 #: ../data/properties.glade.h:12
 msgid "Codec:"
-msgstr "Codec:"
+msgstr "Kodek:"
 
 #: ../data/properties.glade.h:13
 msgid "Dimensions:"
@@ -171,7 +172,7 @@ msgstr "Trajanje:"
 
 #: ../data/properties.glade.h:15
 msgid "Framerate:"
-msgstr "Brzina okvira:"
+msgstr "Brzina kadrova:"
 
 #. Video Codec
 #. Audio Codec
@@ -264,17 +265,17 @@ msgid ""
 "1.5 Mbps T1/Intranet/LAN\n"
 "Intranet/LAN"
 msgstr ""
-"14,4 Kb/s modem\n"
-"19,2 Kb/s modem\n"
-"28,8 Kb/s modem\n"
-"33,6 Kb/s modem\n"
-"34,4 Kb/s modem\n"
-"56 Kb/s modem/ISDN\n"
-"112 Kb/s dvokanalni ISDN/DSL\n"
-"256 Kb/s DSL/Kabl\n"
-"384 Kb/s DSL/Kabl\n"
-"512 Kb/s DSL/Kabl\n"
-"1,5 Mb/s T1/Intranet/LAN\n"
+"14,4 Kbit/s modem\n"
+"19,2 Kbit/s modem\n"
+"28,8 Kbit/s modem\n"
+"33,6 Kbit/s modem\n"
+"34,4 Kbit/s modem\n"
+"56 Kbit/s modem/ISDN\n"
+"112 Kbit/s dvokanalni ISDN/DSL\n"
+"256 Kbit/s DSL/Kabl\n"
+"384 Kbit/s DSL/Kabl\n"
+"512 Kbit/s DSL/Kabl\n"
+"1,5 Mbit/s T1/Intranet/LAN\n"
 "Internet/LAN"
 
 #: ../data/totem.glade.h:14
@@ -303,7 +304,7 @@ msgstr "<b>Prikaz</b>"
 
 #: ../data/totem.glade.h:20
 msgid "<b>Networking</b>"
-msgstr "<b>Mrežni rad</b>"
+msgstr "<b>Mreža</b>"
 
 #: ../data/totem.glade.h:21
 msgid "<b>Subtitles</b>"
@@ -795,9 +796,9 @@ msgid ""
 "\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
 "Passthrough."
 msgstr ""
-"Vrsta zvučnog izlaza koji se koristi: „0“ za stereo, „1“ za 4-okanalni "
-"izlaz, „2“ za izlaz sa 5.0 kanala, „3“ za izlaz sa 5.1 kanala, „4“ za "
-"propuštanje AC3."
+"Vrsta zvučnog izlaza koji se koristi: „0“ za stereo, „1“ za 4-kanalni izlaz, "
+"„2“ za izlaz sa 5.0 kanala, „3“ za izlaz sa 5.1 kanala, „4“ za propuštanje "
+"AC3."
 
 #: ../data/totem.schemas.in.h:23
 msgid "Whether the main window should stay on top"
@@ -813,7 +814,7 @@ msgstr "Da li se prikazuje bočna površ"
 
 #: ../data/totem.schemas.in.h:26
 msgid "Whether to enable debug for the playback engine"
-msgstr "Da li da se uključi opcija za otklanjanje grešaka za prikazivanje"
+msgstr "Da li da se uključi praćenje grešaka pri puštanju"
 
 #: ../data/totem.schemas.in.h:27
 msgid "Width of the video widget"
@@ -894,7 +895,7 @@ msgstr "%d kadrova u sekundi"
 #: ../src/bacon-video-widget-properties.c:242
 #, c-format
 msgid "%d kbps"
-msgstr "%d kb/s"
+msgstr "%d Kbit/s"
 
 #: ../src/bacon-video-widget-properties.c:276
 msgid "Properties dialog"
@@ -913,7 +914,7 @@ msgstr "-"
 #: ../src/totem-interface.c:114
 #, c-format
 msgid "Couldn't load the '%s' interface."
-msgstr "Nisam uspeo da učitam sučelje „%s“."
+msgstr "Nije uspelo učitavanje sučelja „%s“."
 
 #: ../src/totem-interface.c:116 ../src/totem-interface.c:118
 msgid "Make sure that Totem is properly installed."
@@ -1039,7 +1040,7 @@ msgid ""
 "Are you sure you want to enable the visual effects?"
 msgstr ""
 "Izgleda da ste pokrenuli Totem sa udaljene lokacije.\n"
-"Da li ste zaista želite da omogućite vizuelne efekte?"
+"Da li zaista želite da omogućite vizuelne efekte?"
 
 #: ../src/totem-preferences.c:141
 msgid ""
@@ -1053,14 +1054,14 @@ msgstr ""
 msgid ""
 "Switching on or off this type of TV-Out requires a restart to take effect."
 msgstr ""
-"Promena ove vrste TV izlaza zahteva iznovno pokretanje da bi stupilo na "
-"dejstvo."
+"Uključivanje ili isključivanje ove vrste TV izlaza zahteva iznovno pokretanje da "
+"bi stupilo u dejstvo."
 
 #: ../src/totem-preferences.c:297
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr ""
-"Promena vrste vizahteva iznovno pokretanje da bi stupilo na dejstvo.zuelnih "
-"efekata "
+"Promena vrste vizuelnih efekata zahteva iznovno pokretanje da bi stupila u "
+"dejstvo"
 
 #: ../src/totem-preferences.c:381
 msgid ""
@@ -1093,6 +1094,7 @@ msgstr "snimak-ekrana%d.png"
 msgid "File '%s' already exists."
 msgstr "Datoteka „%s“ već postoji."
 
+# andrija: ime datoteke snimak-ekrana nije u skladu sa porukama 
 #: ../src/totem-screenshot.c:206
 msgid "The screenshot was not saved"
 msgstr "Slika ekrana nije sačuvana."
@@ -1138,6 +1140,7 @@ msgstr "%s / %s"
 msgid "Seek to %s / %s"
 msgstr "Preskoči do %s / %s"
 
+# andrija: Baferovanje?
 #: ../src/totem-statusbar.c:248
 msgid "Buffering"
 msgstr "Prenos u bafer"
@@ -1163,7 +1166,7 @@ msgstr "Totem nije uspeo da izbaci optički disk."
 #: ../src/totem.c:322 ../src/totem.c:349 ../src/totem.c:771 ../src/totem.c:875
 #, c-format
 msgid "Totem could not play '%s'."
-msgstr "Totem nije mogao da prikaže „%s“."
+msgstr "Totem nije mogao da pusti „%s“."
 
 #: ../src/totem.c:375
 #, c-format
@@ -1200,7 +1203,7 @@ msgstr ""
 
 #: ../src/totem.c:413
 msgid "Failed to play Audio/Video Disc"
-msgstr "Neuspešno puštanje zvučnog/video diska"
+msgstr "Neuspeh pri puštanju audio/video diska"
 
 #: ../src/totem.c:414
 msgid "Reason unknown"
@@ -1253,10 +1256,9 @@ msgstr ""
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem nije uspeo da napravi snimak ekrana tog filma."
 
-# :)
 #: ../src/totem.c:1976 ../src/vanity.c:307
 msgid "This is not supposed to happen; please file a bug report."
-msgstr "Ovo se ne može dogoditi; prijavite grešku."
+msgstr "Ovo nije trebalo da se desi; molimo prijavite grešku."
 
 #: ../src/totem.c:2003
 msgid "Totem couldn't show the movie properties window."
@@ -1264,7 +1266,7 @@ msgstr "Totem nije mogao da prikaže prozor sa osobinama filma."
 
 #: ../src/totem.c:2003
 msgid "Make sure that Totem is correctly installed."
-msgstr "Proverite da li je Totem pravilno instaliran."
+msgstr "Uverite se da je Totem pravilno instaliran."
 
 #: ../src/totem.c:2089
 #, c-format
@@ -1279,9 +1281,10 @@ msgstr "Totem nije uspeo da se pokrene."
 msgid "No reason."
 msgstr "Bez razloga."
 
+# andrija: nepotpun prevod, a težak :)
 #: ../src/totem.c:3363
 msgid "Could not initialize the thread-safe libraries."
-msgstr "Nisam uspeo da pokrenem thread-safe biblioteke."
+msgstr "Nisam uspeo da učitam thread-safe biblioteke."
 
 #: ../src/totem.c:3363
 msgid "Verify your system installation. Totem will now exit."
@@ -1306,7 +1309,7 @@ msgstr "iskačući meni videa"
 
 #: ../src/vanity.c:75
 msgid "Debug mode on"
-msgstr "Režim za otklanjanje grešaka je uključen"
+msgstr "Režim za prikaz grešaka je uključen"
 
 #: ../src/vanity.c:255
 #, c-format
@@ -1332,7 +1335,7 @@ msgid ""
 "Vanity could not contact the webcam.\n"
 "Reason: %s"
 msgstr ""
-"Vanity nije uspeo da uspostavi kontakt sa mrežnom kamerom.\n"
+"Vanity nije uspeo da kontaktira mrežnu kameru.\n"
 "Razlog: %s."
 
 #: ../src/vanity.c:605
@@ -1406,7 +1409,7 @@ msgstr "nepoznata greška"
 
 #: ../src/backend/bacon-video-widget-gst.c:3130
 msgid "Too old version of GStreamer installed."
-msgstr "Instalirana je prestaro izdanje GStrimera."
+msgstr "Instalirano je prestaro izdanje GStrimera."
 
 #: ../src/backend/bacon-video-widget-gst.c:3137
 msgid "Media contains no supported video streams."
@@ -1417,7 +1420,7 @@ msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr ""
-"Neuspešno obrazovanje objekta GStrimera za puštanje. Proverite instalaciju "
+"Neuspešno obrazovanje GStrimerov objekat za puštanje. Proverite instalaciju "
 "GStrimera."
 
 #: ../src/backend/bacon-video-widget-gst.c:3411
@@ -1443,16 +1446,17 @@ msgid ""
 "audio output in the Multimedia Systems Selector. You may want to consider "
 "using a sound server."
 msgstr ""
-"Zvučni izlaz već koristi neki drugi program. Izaberite neki drugi zvučnii "
-"izlaz u „Izbiraču multimedijalnog sistema“. Možete koristiti i zvučni server."
+"Zvučni izlaz već koristi neki drugi program. Izaberite drugi zvučni izlaz u "
+"„Izbiraču multimedijalnog sistema“. Možete i razmotriti korišćenje zvučnog "
+"servera."
 
 #: ../src/backend/bacon-video-widget-gst.c:3454
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector"
 msgstr ""
-"Nije nađen traženi zvučni izlaz. Izaberite neki drugi zvučni izlaz u "
-"„Izbiraču multimedijalnog sistema“."
+"Nije nađen traženi zvučni izlaz. Izaberite drugi zvučni izlaz u „Izbiraču "
+"multimedijalnog sistema“."
 
 #: ../src/backend/bacon-video-widget-gst.c:3464
 msgid ""
@@ -1461,8 +1465,8 @@ msgid ""
 "output in the Multimedia Systems Selector."
 msgstr ""
 "Neuspešan pristup zvučnom izlazu. Niste ovlašćeni da pristupite zvučnom "
-"uređaju, ili nije pokrenut zvučni server. Izaberite neki drugi zvučni izlaz "
-"u „Izbiraču multimedijalnog sistema“."
+"uređaju, ili nije pokrenut zvučni server. Izaberite drugi zvučni izlaz u "
+"„Izbiraču multimedijalnog sistema“."
 
 #: ../src/backend/bacon-video-widget-xine.c:676
 #, c-format
@@ -1665,7 +1669,7 @@ msgstr "Neuspešno čitanje simboličke veze %s: %s"
 #: ../src/plparse/totem-disc.c:285
 #, c-format
 msgid "Failed to find mountpoint for device %s in /etc/fstab"
-msgstr "Neuspešno traženje tačke priključenja uređaja %s u /etc/fstab"
+msgstr "Nije nađena tačka priključenja uređaja %s u /etc/fstab"
 
 #: ../src/plparse/totem-disc.c:323
 msgid "Please check that a disc is present in the drive."
@@ -1928,13 +1932,13 @@ msgstr "Ne mogu da otvorim datoteku „%s“: %s"
 #~ msgstr "Neuspelo učitavanje sučelja za listu."
 
 #~ msgid "Play _Audio CD"
-#~ msgstr "Pusti Audio CD"
+#~ msgstr "Pusti audio CD"
 
 #~ msgid "Play _DVD"
 #~ msgstr "Pusti DVD"
 
 #~ msgid "Play a Video DVD"
-#~ msgstr "Pusti Video DVD"
+#~ msgstr "Pusti video DVD"
 
 #~ msgid "Play an audio CD"
 #~ msgstr "Pusti audio CD"
@@ -1949,13 +1953,13 @@ msgstr "Ne mogu da otvorim datoteku „%s“: %s"
 #~ msgstr "Razlog nije naveden."
 
 #~ msgid "Select the drive"
-#~ msgstr "Odaberi drajv"
+#~ msgstr "Odaberi pogon"
 
 #~ msgid "Unnamed Video Device"
 #~ msgstr "Neimenovani video uređaj"
 
 #~ msgid "_TV-out mode"
-#~ msgstr "Mod TV izlaza"
+#~ msgstr "Režim TV izlaza"
 
 #~ msgid "Connecting to the server"
 #~ msgstr "Priključivanje na server"
@@ -1973,7 +1977,7 @@ msgstr "Ne mogu da otvorim datoteku „%s“: %s"
 #~ msgstr "Preuzimanje dodataka"
 
 #~ msgid "Your HTTP Proxy requires you to log in.\n"
-#~ msgstr "Vaš HTTO proksi zahteva da se prijavite.\n"
+#~ msgstr "Vaš HTTP proksi zahteva da se prijavite.\n"
 
 #~ msgid ""
 #~ "You must log in to access \"%s\".\n"
@@ -1988,7 +1992,7 @@ msgstr "Ne mogu da otvorim datoteku „%s“: %s"
 #~ msgstr "Vaša lozinka će se preneti bez šifrovanja."
 
 #~ msgid "Your password will be transmitted encrypted."
-#~ msgstr "Vašaa lozinka će se preneti sa šifrovanjem."
+#~ msgstr "Vaša lozinka će se preneti šifrovana."
 
 #~ msgid "Authentication Required"
 #~ msgstr "Potrebna je identifikacija"
