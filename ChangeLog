@@ -1,3 +1,13 @@
+2005-09-05  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-video-widget-gst.c: (bacon_video_widget_new):
+	Fix warnings on startup when _new() fails
+	* src/totem-interface.c: (totem_interface_load_with_root):
+	load the glade files with the totem gettext package to force
+	totem translations to be used when loading as part of other applications
+	(fixes the property window not being translated in Nautilus)
+        (Closes: #307617)
+
 2005-08-23  Bastien Nocera  <hadess@hadess.net>
 
 	* NEWS: update
