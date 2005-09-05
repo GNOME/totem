@@ -439,21 +439,33 @@ totem_action_play_pause (Totem *totem)
 	}
 }
 
-void
-totem_action_fullscreen_toggle (Totem *totem)
+static gboolean
+window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
+		Totem *totem)
 {
-	if (totem_is_fullscreen (totem) != FALSE)
-	{
+	if (event->changed_mask != GDK_WINDOW_STATE_FULLSCREEN) {
+		return FALSE;
+	}
+
+	if (event->new_window_state & GDK_WINDOW_STATE_FULLSCREEN) {
+		totem_action_save_size (totem);
+		update_fullscreen_size (totem);
+		bacon_video_widget_set_fullscreen (totem->bvw, TRUE);
+		bacon_video_widget_set_show_cursor (totem->bvw, FALSE);
+
+		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
+			totem_scrsaver_disable (totem->scr);
+
+		totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
+		show_controls (totem, FALSE);
+	} else {
 		GtkWidget *item;
 
 		popup_hide (totem);
 		bacon_video_widget_set_fullscreen (totem->bvw, FALSE);
-		gtk_window_unfullscreen (GTK_WINDOW(totem->win));
 		bacon_video_widget_set_show_cursor (totem->bvw, TRUE);
 
 		totem_scrsaver_enable (totem->scr);
-
-		totem->controls_visibility = TOTEM_CONTROLS_VISIBLE;
 
 		item = glade_xml_get_widget
 			(totem->xml, "tmw_show_controls_menu_item");
@@ -467,17 +479,18 @@ totem_action_fullscreen_toggle (Totem *totem)
 			totem->controls_visibility = TOTEM_CONTROLS_HIDDEN;
 			show_controls (totem, TRUE);
 		}
-	} else {
-		totem_action_save_size (totem);
-		update_fullscreen_size (totem);
-		bacon_video_widget_set_fullscreen (totem->bvw, TRUE);
-		bacon_video_widget_set_show_cursor (totem->bvw, FALSE);
-		gtk_window_fullscreen (GTK_WINDOW(totem->win));
-		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
-			totem_scrsaver_disable (totem->scr);
+	}
 
-		totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
-		show_controls (totem, FALSE);
+	return FALSE;
+}
+
+void
+totem_action_fullscreen_toggle (Totem *totem)
+{
+	if (totem_is_fullscreen (totem) != FALSE) {
+		gtk_window_unfullscreen (GTK_WINDOW (totem->win));
+	} else {
+		gtk_window_fullscreen (GTK_WINDOW (totem->win));
 	}
 }
 
@@ -3102,6 +3115,8 @@ totem_callback_connect (Totem *totem)
 	g_object_notify (G_OBJECT (totem->win), "is-active");
 	g_signal_connect_swapped (G_OBJECT (totem->win), "notify",
 			G_CALLBACK (popup_hide), totem);
+	g_signal_connect (G_OBJECT (totem->win), "window-state-event",
+			G_CALLBACK (window_state_event_cb), totem);
 
 	/* Screen size and Theme changes */
 	g_signal_connect (G_OBJECT (gdk_screen_get_default ()),
