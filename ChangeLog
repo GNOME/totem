@@ -1,3 +1,12 @@
+2005-09-05  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_set_show_cursor):
+	* src/totem.c: (window_state_event_cb),
+	(totem_action_fullscreen_toggle), (totem_callback_connect):
+	Avoid weird states when using the "Toggle fullscreen mode" window
+	manager shortcut (Closes: #302592)
+
 ============ Version 1.2.0
 
 2005-09-05  Bastien Nocera  <hadess@hadess.net>
