@@ -99,7 +99,7 @@ totem_LDADD = \
 	$(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) \
 	$(XVIDMODE_LIBS) $(NVTV_LIBS) plparse/libtotem-plparser.la \
 	backend/libbaconvideowidget.la libbaconpropertiespage.la \
-	libbaconmessageconnection.la
+	libbaconmessageconnection.la $(DBUS_LIBS) 
 
 totem_video_thumbnailer_SOURCES = totem-video-thumbnailer.c
 totem_video_thumbnailer_LDADD = \

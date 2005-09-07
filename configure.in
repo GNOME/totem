@@ -24,6 +24,7 @@ GTK_REQS=2.5.6
 GNOMEVFS_REQS=2.9.92
 GNOMEUI_REQS=2.3.3
 GNOMEICON_REQS=2.9.3
+DBUS_REQS=0.35
 
 # Before making a release, the PLPARSER_LT_VERSION string should be modified.
 # The string is of the form C:R:A.
@@ -147,6 +148,28 @@ else
 	AC_DEFINE(HAVE_GTK_ONLY, 1, [defined if GNOME isn't used])
 	HAVE_GNOME=no
 fi
+
+dnl Check for DBus
+AC_MSG_CHECKING([for D-BUS])
+AC_ARG_WITH(dbus,
+            AC_HELP_STRING([--with-dbus],
+			   [Enable D-BUS support]),,
+	      with_dbus=auto)
+if test "x$with_dbus" != "xno"; then
+	PKG_CHECK_MODULES(DBUS, dbus-glib-1 >= $DBUS_REQS, enable_dbus=yes, enable_dbus=no)
+        if test "x$with_dbus" = xyes && test "x$enable_dbus" = xno; then
+	   AC_MSG_ERROR([D-BUS explicitly requested but no support found])	   
+	fi
+        if test "x$enable_dbus" = xyes; then
+		AC_DEFINE(WITH_DBUS, 1, [Define if D-BUS is enabled])	   
+		DBUS_CFLAGS="$DBUS_CFLAGS -DDBUS_API_SUBJECT_TO_CHANGE"
+		AC_MSG_RESULT([we're getting on D-BUS])
+	else
+		AC_MSG_RESULT([not found])
+	fi
+
+fi			  
+AM_CONDITIONAL(WITH_DBUS, test "x$enable_dbus" = "xyes")
 
 AC_MSG_CHECKING([whether iso-codes has iso-639 domain])
 if $PKG_CONFIG --variable=domains iso-codes | grep -q 639 ; then

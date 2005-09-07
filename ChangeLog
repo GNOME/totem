@@ -1,3 +1,19 @@
+2005-09-07  William Jon McCann  <mccann@jhu.edu>
+
+
+	* src/totem-scrsaver.c (screensaver_is_running_dbus) 
+	(screensaver_inhibit_dbus, screensaver_enable_dbus) 
+	(screensaver_disable_dbus, screensaver_init_dbus) 
+	(screensaver_enable_x11, screensaver_disable_x11) 
+	(screensaver_init_x11, totem_scrsaver_init) 
+	(totem_scrsaver_disable, totem_scrsaver_enable) 
+	(totem_scrsaver_finalize): Split X11 actions
+	into separate functions.  Try to inhibit
+	gnome-screensaver via DBus and fall back to
+	X11 if it isn't available.
+
+	* configure.in: Check for DBus.
+
 2005-09-05  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-xine.c:
