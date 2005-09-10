@@ -1,5 +1,12 @@
 2005-09-10  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* src/Makefile.am: Don't change a variable in the configure.in after
+	it's been AC_SUBST'ed, hardcode the D-Bus warning instead, fixes
+	the build when the Mozilla plugin is enabled (Closes: #315864)
+
+2005-09-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-mozilla-plugin.cpp: avoid passing undefined data to
 	gnome_vfs_mime_get_description (Closes: #315911)
 

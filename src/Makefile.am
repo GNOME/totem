@@ -196,6 +196,7 @@ INCLUDES = 						\
 	-I$(srcdir)/plparse				\
 	-I$(srcdir)/backend				\
 	$(EXTRA_GNOME_CFLAGS)				\
+	-DDBUS_API_SUBJECT_TO_CHANGE			\
 	$(DBUS_CFLAGS)					\
 	$(MOZILLA_CFLAGS)				\
 	$(MOZILLA_XPCOM_CFLAGS)				\
