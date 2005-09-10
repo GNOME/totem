@@ -574,19 +574,21 @@ NP_GetValue(void *future, NPPVariable variable, void *value)
 	return totem_plugin_get_value (NULL, variable, value);
 }
 
-#define NUM_MIME_TYPES 6
 static struct {
 	const char *mime_type;
 	const char *extensions;
 	const char *mime_alias;
 } mime_types[] = {
-	{ "video/quicktime", "mov" },
+	{ "video/quicktime", "mov", NULL },
 	{ "application/x-mplayer2", "avi, wma, wmv", "video/x-msvideo" },
-	{ "video/mpeg", "mpg, mpeg, mpe" },
+	{ "video/mpeg", "mpg, mpeg, mpe", NULL },
 	{ "video/x-ms-asf-plugin", "asf, wmv", "video/x-ms-asf" },
 	{ "video/x-ms-wmv", "wmv", "video/x-ms-asf" },
-	{ "application/ogg", "ogg" }
+	{ "application/ogg", "ogg", NULL },
+	{ "application/x-google-vlc-plugin", "", "Google VLC plugin" },
+	{ "application/x-vlc-plugin", "", "VideoLAN plugin" }
 };
+#define NUM_MIME_TYPES G_N_ELEMENTS(mime_types)
 
 char *NP_GetMIMEDescription(void)
 {
@@ -604,10 +606,14 @@ char *NP_GetMIMEDescription(void)
 		char *item;
 
 		desc = gnome_vfs_mime_get_description (mime_types[i].mime_type);
-		if (desc == NULL) {
+		if (desc == NULL && mime_types[i].mime_alias != NULL) {
 			desc = gnome_vfs_mime_get_description
 				(mime_types[i].mime_alias);
 		}
+		if (desc == NULL) {
+			desc = mime_types[i].mime_alias;
+		}
+
 		item = g_strdup_printf ("%s:%s:%s;", mime_types[i].mime_type,
 				mime_types[i].extensions, desc);
 		list = g_string_append (list, item);
