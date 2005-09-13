@@ -48,8 +48,8 @@
 #include <nsIInterfaceRequestorUtils.h>
 #include <docshell/nsIWebNavigation.h>
 
-#define DEBUG(x) printf(x "\n")
-//#define DEBUG(x)
+/* define TOTEM_DEBUG for more debug spew */
+#include "debug.h"
 
 static NPNetscapeFuncs mozilla_functions;
 
@@ -57,7 +57,7 @@ static void
 cb_update_name (DBusGProxy *proxy, char *svc, char *old_owner,
 		char *new_owner, TotemPlugin *plugin)
 {
-	g_print ("Received notification for %s\n", svc);
+	D("Received notification for %s\n", svc);
 	if (strcmp (svc, plugin->wait_for_svc) == 0) {
 		plugin->got_svc = TRUE;
 	}
@@ -115,6 +115,7 @@ totem_plugin_fork (TotemPlugin *plugin)
 	argv[argc++] = g_strdup ("fd://0");
 	argv[argc] = NULL;
 
+#ifdef TOTEM_DEBUG
 	{
 		int i;
 		g_print ("Launching: ");
@@ -123,13 +124,14 @@ totem_plugin_fork (TotemPlugin *plugin)
 		}
 		g_print ("\n");
 	}
+#endif
 
 	if (g_spawn_async_with_pipes (NULL, argv, NULL,
 				G_SPAWN_DO_NOT_REAP_CHILD,
 				NULL, NULL, &plugin->player_pid,
 				&plugin->send_fd, NULL, NULL, &err) == FALSE)
 	{
-		DEBUG("Spawn failed");
+		D("Spawn failed");
 
 		if (err)
 		{
@@ -148,7 +150,7 @@ totem_plugin_fork (TotemPlugin *plugin)
 	plugin->wait_for_svc =
 		g_strdup_printf ("org.totem_%d.MozillaPluginService",
 				 plugin->player_pid);
-	g_print ("waiting for signal %s\n", plugin->wait_for_svc);
+	D("waiting for signal %s", plugin->wait_for_svc);
 	dbus_g_proxy_add_signal (plugin->proxy, "NameOwnerChanged",
 				 G_TYPE_STRING, G_TYPE_STRING,
 				 G_TYPE_STRING, G_TYPE_INVALID);
@@ -166,7 +168,7 @@ totem_plugin_fork (TotemPlugin *plugin)
 	if (!iface->tm) {
 		/* we were destroyed in one of the iterations of the
 		 * mainloop, get out ASAP */
-		fprintf (stderr, "We no longer exist\n");
+		D(stderr, "We no longer exist");
 		NS_RELEASE (iface);
 		return FALSE;
 	}
@@ -192,7 +194,7 @@ totem_plugin_fork (TotemPlugin *plugin)
 					   "/TotemEmbedded",
 					   "org.totem.MozillaPluginInterface");
 	g_free (plugin->wait_for_svc);
-	g_print ("Done forking, new proxy=%p\n", plugin->proxy);
+	D("Done forking, new proxy=%p", plugin->proxy);
 
 	return TRUE;
 }
@@ -220,7 +222,7 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 	GError *e = NULL;
 	int i;
 
-	DEBUG("totem_plugin_new_instance");
+	D("totem_plugin_new_instance");
 
 	if (instance == NULL)
 		return NPERR_INVALID_INSTANCE_ERROR;
@@ -319,7 +321,7 @@ static NPError totem_plugin_destroy_instance (NPP instance, NPSavedData **save)
 {
 	TotemPlugin * plugin;
 
-	DEBUG("plugin_destroy");
+	D("plugin_destroy");
 
 	if (instance == NULL)
 		return NPERR_INVALID_INSTANCE_ERROR;
@@ -356,7 +358,7 @@ static NPError totem_plugin_set_window (NPP instance, NPWindow* window)
 {
 	TotemPlugin *plugin;
 
-	DEBUG("plugin_set_window");
+	D("plugin_set_window");
 
 	if (instance == NULL)
 		return NPERR_INVALID_INSTANCE_ERROR;
@@ -366,19 +368,19 @@ static NPError totem_plugin_set_window (NPP instance, NPWindow* window)
 		return NPERR_INVALID_INSTANCE_ERROR;
 
 	if (plugin->window) {
-		DEBUG ("existing window");
+		D ("existing window");
 		if (plugin->window == (Window) window->window) {
-			DEBUG("resize");
+			D("resize");
 			/* Resize event */
 			/* Not currently handled */
 		} else {
-			DEBUG("change");
+			D("change");
 			printf ("ack.  window changed!\n");
 		}
 	} else {
 		gchar *msg;
 
-		DEBUG("about to fork");
+		D("about to fork");
 
 		plugin->window = (Window) window->window;
 		if (!totem_plugin_fork (plugin))
@@ -388,7 +390,7 @@ static NPError totem_plugin_set_window (NPP instance, NPWindow* window)
 			fcntl(plugin->send_fd, F_SETFL, O_NONBLOCK);
 	}
 
-	DEBUG("leaving plugin_set_window");
+	D("leaving plugin_set_window");
 
 	return NPERR_NO_ERROR;
 }
@@ -396,7 +398,7 @@ static NPError totem_plugin_set_window (NPP instance, NPWindow* window)
 static NPError totem_plugin_new_stream (NPP instance, NPMIMEType type,
 		NPStream* stream_ptr, NPBool seekable, uint16* stype)
 {
-	DEBUG("plugin_new_stream");
+	D("plugin_new_stream");
 
 	if (instance == NULL)
 		return NPERR_INVALID_INSTANCE_ERROR;
@@ -409,10 +411,10 @@ static NPError totem_plugin_destroy_stream (NPP instance, NPStream* stream,
 {
 	TotemPlugin *plugin;
 
-	DEBUG("plugin_destroy_stream");
+	D("plugin_destroy_stream");
 
 	if (instance == NULL) {
-		DEBUG("totem_plugin_destroy_stream instance is NULL");
+		D("totem_plugin_destroy_stream instance is NULL");
 		return NPERR_NO_ERROR;
 	}
 
@@ -428,10 +430,10 @@ static int32 totem_plugin_write_ready (NPP instance, NPStream *stream)
 {
 	TotemPlugin *plugin;
 
-	DEBUG("plugin_write_ready");
+	D("plugin_write_ready");
 
 	if (instance == NULL) {
-		DEBUG("plugin_write_ready instance is NULL");
+		D("plugin_write_ready instance is NULL");
 		return 0;
 	}
 
@@ -449,7 +451,7 @@ static int32 totem_plugin_write (NPP instance, NPStream *stream, int32 offset,
 	TotemPlugin *plugin;
 	int ret;
 
-	DEBUG("plugin_write");
+	D("plugin_write");
 
 	if (instance == NULL)
 		return -1;
@@ -479,7 +481,7 @@ static void totem_plugin_stream_as_file (NPP instance, NPStream *stream,
 {
 	TotemPlugin *plugin;
 
-	DEBUG("plugin_stream_as_file");
+	D("plugin_stream_as_file");
 
 	if (instance == NULL)
 		return;
@@ -495,7 +497,7 @@ static void
 totem_plugin_url_notify (NPP instance, const char* url,
 		NPReason reason, void* notifyData)
 {
-	DEBUG("plugin_url_notify");
+	D("plugin_url_notify");
 }
 
 static char *
@@ -530,7 +532,7 @@ totem_plugin_get_value (NPP instance, NPPVariable variable,
 		if (ptr) {
 			*ptr = sIID;
 			* (nsIID **) value = ptr;
-			g_print ("Returning that we support iface\n");
+			D("Returning that we support iface");
 		} else {
 			err = NPERR_OUT_OF_MEMORY_ERROR;
 		}
@@ -546,12 +548,12 @@ totem_plugin_get_value (NPP instance, NPPVariable variable,
 			plugin->iface->QueryInterface (NS_GET_IID (nsISupports),
 						       (void **) value);
 //			* (nsISupports **) value = static_cast<totemMozillaScript *>(plugin->iface);
-			g_print ("Returning instance %p\n", plugin->iface);
+			D("Returning instance %p", plugin->iface);
 		}
 		break;
 	}
 	default:
-		g_message ("unhandled variable %d", variable);
+		D("unhandled variable %d", variable);
 		err = NPERR_INVALID_PARAM;
 		break;
 	}
@@ -563,7 +565,7 @@ static NPError
 totem_plugin_set_value (NPP instance, NPNVariable variable,
 		                        void *value)
 {
-	DEBUG("plugin_set_value");
+	D("plugin_set_value");
 
 	return NPERR_NO_ERROR;
 }
