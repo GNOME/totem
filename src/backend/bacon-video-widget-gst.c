@@ -858,6 +858,8 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
           if (tag_list)
             gst_tag_list_free (tag_list);
 
+	  gst_object_unref (signal->signal_data.found_tag.source);
+
           g_signal_emit (G_OBJECT (bvw),
 			 bvw_table_signals[SIGNAL_GOT_METADATA],
 			 0, NULL);
@@ -913,6 +915,8 @@ got_found_tag (GstElement *play, GstElement *source,
   signal->signal_id = ASYNC_FOUND_TAG;
   signal->signal_data.found_tag.source = source;
   signal->signal_data.found_tag.tag_list = gst_tag_list_copy (tag_list);
+
+  gst_object_ref (source);
 
   g_async_queue_push (bvw->priv->queue, signal);
 
