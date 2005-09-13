@@ -2429,6 +2429,13 @@ theme_changed_cb (GtkIconTheme *icon_theme, Totem *totem)
 }
 
 static void
+popup_timeout_add(Totem* totem)
+{
+	totem->popup_timeout = g_timeout_add (FULLSCREEN_POPUP_TIMEOUT,
+		(GSourceFunc) popup_hide, totem);
+}
+
+static void
 popup_timeout_remove (Totem *totem)
 {
 	if (totem->popup_timeout != 0)
@@ -2461,9 +2468,7 @@ static void
 on_mouse_click_fullscreen (GtkWidget *widget, Totem *totem)
 {
 	popup_timeout_remove (totem);
-
-	totem->popup_timeout = g_timeout_add (FULLSCREEN_POPUP_TIMEOUT,
-		(GSourceFunc) popup_hide, totem);
+	popup_timeout_add (totem);
 }
 
 static gboolean
@@ -2492,8 +2497,7 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 	gtk_widget_show_all (totem->control_popup);
 	bacon_video_widget_set_show_cursor (totem->bvw, TRUE);
 
-	totem->popup_timeout = g_timeout_add (FULLSCREEN_POPUP_TIMEOUT,
-			(GSourceFunc) popup_hide, totem);
+	popup_timeout_add (totem);
 	totem->popup_in_progress = FALSE;
 
 	return FALSE;
