@@ -2101,7 +2101,8 @@ totem_playlist_set_playing (TotemPlaylist *playlist, gboolean state)
 {
 	GtkListStore *store;
 	GtkTreeIter iter;
-
+	GtkTreePath *path;
+	
 	g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), FALSE);
 
 	if (update_current_from_playlist (playlist) == FALSE)
@@ -2122,6 +2123,13 @@ totem_playlist_set_playing (TotemPlaylist *playlist, gboolean state)
 		gtk_list_store_set (store, &iter,
 				PIX_COL, NULL,
 				-1);
+
+	path = gtk_tree_model_get_path (GTK_TREE_MODEL (store), &iter);
+	gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (playlist->_priv->treeview),
+				      path, NULL,
+				      TRUE, 0.5, 0);
+	gtk_tree_path_free (path);
+	
 	return TRUE;
 }
 
