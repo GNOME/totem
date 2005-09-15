@@ -1,5 +1,13 @@
 2005-09-15  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_seek_time): only send an EOS when reaching past
+	the end of the current stream *and* not playing a DVD or VCD
+	This fixes playback stopping when trying to skip the FBI warning, or
+	such on DVDs
+
+2005-09-15  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.glade:
 	* src/totem.c: (totem_action_handle_key),
 	(update_media_menu_items): Add menu item to switch angles

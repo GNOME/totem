@@ -2192,7 +2192,7 @@ gboolean bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time,
 		return TRUE;
 	}
 
-	if (time > length) {
+	if (time > length && g_str_has_prefix (bvw->priv->mrl, "dvd:") == FALSE && g_str_has_prefix (bvw->priv->mrl, "vcd:") == FALSE) {
 		signal_data *data;
 
 		data = g_new0 (signal_data, 1);
