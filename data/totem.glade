@@ -2307,6 +2307,17 @@ AC3 Passthrough</property>
 		  </child>
 
 		  <child>
+		    <widget class="GtkMenuItem" id="tmw_next_angle_menu_item">
+		      <property name="visible">True</property>
+		      <property name="tooltip" translatable="yes">Switch angles</property>
+		      <property name="label" translatable="yes">Switch An_gles</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_next_angle_activate" last_modification_time="Sat, 24 Aug 2002 12:49:15 GMT"/>
+		      <accelerator key="G" modifiers="0" signal="activate"/>
+		    </widget>
+		  </child>
+
+		  <child>
 		    <widget class="GtkCheckMenuItem" id="tmw_always_on_top_menu_item">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Always on top</property>

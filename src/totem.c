@@ -2581,6 +2581,11 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 	case GDK_F:
 		totem_action_fullscreen_toggle (totem);
 		break;
+	case GDK_g:
+	case GDK_G:
+		bacon_video_widget_dvd_event (totem->bvw,
+				BVW_DVD_NEXT_ANGLE);
+		break;
 	case GDK_h:
 	case GDK_H:
 		totem_action_toggle_controls (totem);
@@ -2806,6 +2811,8 @@ update_media_menu_items (Totem *totem)
 	totem_main_set_sensitivity ("tmw_dvd_audio_menu_item", playing);
 	totem_main_set_sensitivity ("tmw_dvd_angle_menu_item", playing);
 	totem_main_set_sensitivity ("tmw_dvd_chapter_menu_item", playing);
+	/* FIXME we should only show that if we have multiple angles */
+	totem_main_set_sensitivity ("tmw_next_angle_menu_item", playing);
 
 	playing = totem_is_media (totem->mrl);
 
