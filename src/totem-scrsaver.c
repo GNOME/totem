@@ -127,7 +127,7 @@ screensaver_inhibit_dbus (TotemScrsaver *scr,
 
 	if (inhibit) {
 		char *reason;
-		reason = g_strdup (_("Playing movie with totem"));
+		reason = g_strdup (_("Playing a movie with Totem"));
 		dbus_message_iter_init_append (message, &iter);
 		dbus_message_iter_append_basic (&iter, DBUS_TYPE_STRING, &reason);
 		g_free (reason);
