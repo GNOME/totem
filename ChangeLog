@@ -1,5 +1,10 @@
 2005-09-24  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (totem_action_exit): remove the timeout for the popup
+	when exiting to avoid the timeout being triggered during shutdown
+
+2005-09-24  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c:
 	(bacon_video_widget_open_with_subtitle):
 	* src/plparse/totem-disc.c: (cd_cache_new):

@@ -116,6 +116,7 @@ static void show_controls (Totem *totem, gboolean was_fullscreen);
 static gboolean totem_is_fullscreen (Totem *totem);
 static void play_pause_set_label (Totem *totem, TotemStates state);
 static gboolean on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event, Totem *totem);
+static void popup_timeout_remove (Totem *totem);
 
 static void
 long_action (void)
@@ -163,6 +164,8 @@ void
 totem_action_exit (Totem *totem)
 {
 	GdkDisplay *display = NULL;
+
+	popup_timeout_remove (totem);
 
 	if (gtk_main_level () > 0)
 		gtk_main_quit ();
