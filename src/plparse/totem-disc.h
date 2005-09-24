@@ -43,6 +43,7 @@ MediaType	totem_cd_detect_type_from_dir (const char *dir,
 					 char      **url, 
 					 GError    **error);
 const char *	totem_cd_get_human_readable_name (MediaType type);
+char *		totem_cd_mrl_from_type (const char *scheme, const char *dir);
 
 G_END_DECLS
 

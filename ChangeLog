@@ -1,3 +1,13 @@
+2005-09-24  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_open_with_subtitle):
+	* src/plparse/totem-disc.c: (cd_cache_new):
+	* src/plparse/totem-disc.h:
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_add_iso),
+	(totem_pl_parser_add_cue): Add some hacks to be able to play back
+	DVDs and VCDs from images (.cue and .iso files)
+
 2005-09-19  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-scrsaver.c: (screensaver_inhibit_dbus): fix wording in

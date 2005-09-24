@@ -1989,7 +1989,14 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 	g_return_val_if_fail (bvw->priv->mrl == NULL, FALSE);
 
 	bvw->priv->got_redirect = FALSE;
-	bvw->priv->mrl = g_strdup (mrl);
+
+	/* Hack to get VCD playback from .cue files */
+	if (g_str_has_prefix (mrl, "vcd:/") != FALSE
+			&& g_str_has_suffix (mrl, ".cue") != FALSE) {
+		bvw->priv->mrl = g_strdup_printf ("%s@", mrl);
+	} else {
+		bvw->priv->mrl = g_strdup (mrl);
+	}
 
 	if (subtitle_uri != NULL)
 	{

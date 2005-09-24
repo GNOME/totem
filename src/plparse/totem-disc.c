@@ -248,7 +248,7 @@ cd_cache_new (const char *dev,
   char *mountpoint = NULL, *device, *local;
   GnomeVFSVolumeMonitor *mon;
   GnomeVFSDrive *drive = NULL;
-  gboolean is_dir, found;
+  gboolean found;
 
   if (g_str_has_prefix (dev, "file://") != FALSE)
     local = g_filename_from_uri (dev, NULL, NULL);
@@ -257,9 +257,7 @@ cd_cache_new (const char *dev,
 
   g_assert (local != NULL);
 
-  is_dir = g_file_test (local, G_FILE_TEST_IS_DIR);
-
-  if (is_dir) {
+  if (g_file_test (local, G_FILE_TEST_IS_DIR) != FALSE) {
     cache = g_new0 (CdCache, 1);
     cache->mountpoint = local;
     cache->fd = -1;
@@ -579,7 +577,7 @@ cd_cache_disc_is_dvd (CdCache *cache,
   return MEDIA_TYPE_DATA;
 }
 
-static char *
+char *
 totem_cd_mrl_from_type (const char *scheme, const char *dir)
 {
   char *retval;

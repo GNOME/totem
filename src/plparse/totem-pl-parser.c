@@ -1,8 +1,8 @@
 /* 
    arch-tag: Implementation of Rhythmbox playlist parser
 
-   Copyright (C) 2002, 2003, 2004 Bastien Nocera
-   Copyright (C) 2003,2004 Colin Walters <walters@rhythmbox.org>
+   Copyright (C) 2002, 2003, 2004, 2005 Bastien Nocera
+   Copyright (C) 2003, 2004 Colin Walters <walters@rhythmbox.org>
 
    The Gnome Library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public License as
@@ -1358,6 +1358,49 @@ totem_pl_parser_dir_compare (GnomeVFSFileInfo *a, GnomeVFSFileInfo *b)
 }
 
 static TotemPlParserResult
+totem_pl_parser_add_iso (TotemPlParser *parser, const char *url,
+		gpointer data)
+{
+	GnomeVFSFileInfo *info;
+	char *item;
+
+	/* This is a hack, it could be a VCD or DVD */
+	if (g_str_has_prefix (url, "file://") == FALSE)
+		return TOTEM_PL_PARSER_RESULT_IGNORED;
+	info = gnome_vfs_file_info_new ();
+	if (gnome_vfs_get_file_info (url, info, GNOME_VFS_FILE_INFO_FOLLOW_LINKS) != GNOME_VFS_OK) {
+		gnome_vfs_file_info_unref (info);
+		return TOTEM_PL_PARSER_RESULT_IGNORED;
+	}
+
+	/* Less than 700 megs, and it's a VCD */
+	if (info->size < 700 * 1024 * 1024) {
+		item = totem_cd_mrl_from_type ("vcd", url);
+	} else {
+		item = totem_cd_mrl_from_type ("dvd", url);
+	}
+
+	gnome_vfs_file_info_unref (info);
+	totem_pl_parser_add_one_url (parser, item, NULL);
+	g_free (item);
+
+	return TOTEM_PL_PARSER_RESULT_SUCCESS;
+}
+
+static TotemPlParserResult
+totem_pl_parser_add_cue (TotemPlParser *parser, const char *url,
+		gpointer data)
+{
+	char *vcdurl;
+
+	vcdurl = totem_cd_mrl_from_type ("vcd", url);
+	totem_pl_parser_add_one_url (parser, vcdurl, NULL);
+	g_free (vcdurl);
+
+	return TOTEM_PL_PARSER_RESULT_SUCCESS;
+}
+
+static TotemPlParserResult
 totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 			   gpointer data)
 {
@@ -1426,6 +1469,8 @@ static PlaylistTypes special_types[] = {
 	{ "x-directory/normal", totem_pl_parser_add_directory },
 	{ "video/x-ms-wvx", totem_pl_parser_add_asx },
 	{ "audio/x-ms-wax", totem_pl_parser_add_asx },
+	{ "application/x-cd-image", totem_pl_parser_add_iso },
+	{ "application/x-cue", totem_pl_parser_add_cue },
 };
 
 static PlaylistTypes ignore_types[] = {
