@@ -104,7 +104,7 @@ totem_interface_load_with_root (const char *name, const char *root_widget,
 	filename = totem_interface_get_full_path (name);
 
 	if (filename != NULL)
-		glade = glade_xml_new (filename, root_widget, NULL);
+		glade = glade_xml_new (filename, root_widget, GETTEXT_PACKAGE);
 	g_free (filename);
 
 	if (glade == NULL)
