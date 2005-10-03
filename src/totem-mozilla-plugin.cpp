@@ -168,7 +168,7 @@ totem_plugin_fork (TotemPlugin *plugin)
 	if (!iface->tm) {
 		/* we were destroyed in one of the iterations of the
 		 * mainloop, get out ASAP */
-		D(stderr, "We no longer exist");
+		D("We no longer exist");
 		NS_RELEASE (iface);
 		return FALSE;
 	}
