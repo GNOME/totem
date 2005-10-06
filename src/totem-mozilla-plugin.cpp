@@ -52,6 +52,7 @@
 #include "debug.h"
 
 static NPNetscapeFuncs mozilla_functions;
+static char *mime_list = NULL;
 
 static void
 cb_update_name (DBusGProxy *proxy, char *svc, char *old_owner,
@@ -595,7 +596,6 @@ static struct {
 char *NP_GetMIMEDescription(void)
 {
 	GString *list;
-	static char *mime_list = NULL;
 	guint i;
 
 	if (mime_list != NULL)
@@ -729,6 +729,8 @@ NPError NP_Initialize (NPNetscapeFuncs * moz_funcs,
 
 NPError NP_Shutdown(void)
 {
+	g_free (mime_list);
+
 	return NPERR_NO_ERROR;
 }
 
