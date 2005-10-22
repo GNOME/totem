@@ -94,16 +94,16 @@ totem_lirc_to_command (const gchar *str)
 		return TOTEM_REMOTE_COMMAND_UNKNOWN;
 }
 
+static struct lirc_config *config;
+
 static gboolean
 totem_remote_read_code (GIOChannel *source, GIOCondition condition,
 		   gpointer user_data)
 {
-	struct lirc_config *config;
 	char *code;
 	char *str = NULL;
 	GList *tmp;
 	TotemRemoteCommand cmd;
-
 
 	/* this _could_ block, but it shouldn't */
 	lirc_nextcode (&code);
@@ -113,24 +113,13 @@ totem_remote_read_code (GIOChannel *source, GIOCondition condition,
 		return TRUE;
 	}
 	
-	/* FIXME:  we really should only do this once, but there appears to be
-	 * a bug in lirc where it will drop every other key press if we keep
-	 * a config struct around for more than one use.
-	 */
-	if (lirc_readconfig (NULL, &config, NULL) != 0) {
-		g_message ("Couldn't read lirc config.");
-		return FALSE;
-	}
-
 	if (lirc_code2char (config, code, &str) != 0) {
 		g_message ("Couldn't convert lirc code to string.");
-		lirc_freeconfig (config);
 		return TRUE;
 	}
 
 	if (str == NULL) {
 		/* there was no command associated with the code */
-		lirc_freeconfig (config);
 		g_free (code);
 		return TRUE;
 	}
@@ -147,7 +136,6 @@ totem_remote_read_code (GIOChannel *source, GIOCondition condition,
 		tmp = tmp->next;
 	}
 
-	lirc_freeconfig (config);
 	g_free (code);
 
 	/* this causes a crash, so I guess I'm not supposed to free it?
@@ -167,6 +155,9 @@ totem_remote_finalize (GObject *object)
 	g_return_if_fail (TOTEM_IS_REMOTE (object));
 
 	remote = TOTEM_REMOTE (object);
+
+	lirc_freeconfig (config);
+	g_free(config);
 
 	listeners = g_list_remove (listeners, remote);
 
@@ -220,6 +211,13 @@ totem_remote_init (TotemRemote *remote)
 			if (gconf_client_get_bool (gc, GCONF_PREFIX"/debug", NULL) != FALSE)
 				g_message ("Couldn't initialize lirc.\n");
 			g_object_unref (gc);
+			return;
+		}
+
+		config = g_new(struct lirc_config, 1);
+
+		if (lirc_readconfig (NULL, &config, NULL) != 0) {
+			g_message ("Couldn't read lirc config.");
 			return;
 		}
 
