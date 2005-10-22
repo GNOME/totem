@@ -1,5 +1,12 @@
 2005-10-22  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-properties.c:
+	(bacon_video_widget_properties_reset),
+	(bacon_video_widget_properties_update): use N/A when the bitrate or
+	number of frames per second isn't available (Closes: #315007)
+
+2005-10-22  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-remote.c: (totem_remote_read_code),
 	(totem_remote_finalize), (totem_remote_init): patch from George
 	Talusan <george@elitedudz.com> to make LIRC work again

@@ -45,13 +45,16 @@
 		g_value_unset (&value); \
 	} while (0)
 
-#define UPDATE_FROM_INT(type, name, format) \
+#define UPDATE_FROM_INT(type, name, format, empty) \
 	do { \
 		char *temp; \
 		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), \
 						 type, &value); \
-		temp = g_strdup_printf (gettext (format), \
+		if (g_value_get_int (&value) != 0) \
+			temp = g_strdup_printf (gettext (format), \
 					g_value_get_int (&value)); \
+		else \
+			temp = g_strdup (empty); \
 		bacon_video_widget_properties_set_label (props, name, temp); \
 		g_free (temp); \
 		g_value_unset (&value); \
@@ -146,18 +149,18 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 	bacon_video_widget_properties_from_time (props, 0);
 
 	/* Dimensions */
-	bacon_video_widget_properties_set_label (props, "dimensions", _("0 x 0"));
+	bacon_video_widget_properties_set_label (props, "dimensions", _("N/A"));
 	/* Video Codec */
 	bacon_video_widget_properties_set_label (props, "vcodec", _("N/A"));
 	/* Video Bitrate */
 	bacon_video_widget_properties_set_label (props, "video_bitrate",
-			_("0 kbps"));
+			_("N/A"));
 	/* Framerate */
 	bacon_video_widget_properties_set_label (props, "framerate",
-			_("0 frames per second"));
+			_("N/A"));
 	/* Audio Bitrate */
 	bacon_video_widget_properties_set_label (props, "audio_bitrate",
-			_("0 kbps"));
+			_("N/A"));
 	/* Audio Codec */
 	bacon_video_widget_properties_set_label (props, "acodec", _("N/A"));
 }
@@ -221,9 +224,9 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 				  "dimensions", N_("%d x %d"));
 		UPDATE_FROM_STRING (BVW_INFO_VIDEO_CODEC, "vcodec");
 		UPDATE_FROM_INT (BVW_INFO_FPS, "framerate",
-				 N_("%d frames per second"));
+				 N_("%d frames per second"), _("N/A"));
 		UPDATE_FROM_INT (BVW_INFO_VIDEO_BITRATE, "video_bitrate",
-				 N_("%d kbps"));
+				 N_("%d kbps"), _("N/A"));
 	} else {
 		gtk_widget_hide (item);
 	}
@@ -239,7 +242,7 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 	if (has_type != FALSE)
 	{
 		UPDATE_FROM_INT (BVW_INFO_AUDIO_BITRATE, "audio_bitrate",
-				 N_("%d kbps"));
+				 N_("%d kbps"), _("N/A"));
 		UPDATE_FROM_STRING (BVW_INFO_AUDIO_CODEC, "acodec");
 	}
 
