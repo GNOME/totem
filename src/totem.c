@@ -1540,70 +1540,37 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 char *
 totem_action_open_dialog (Totem *totem, const char *path, gboolean play)
 {
-	GtkWidget *fs;
-	int response;
-	char *path_new = NULL;
+	GSList *filenames;
+	char *new_path;
+	gboolean playlist_modified;
 
-	fs = gtk_file_chooser_dialog_new (_("Select Files"),
-			GTK_WINDOW (totem->win), GTK_FILE_CHOOSER_ACTION_OPEN,
-			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-			NULL);
-	gtk_dialog_set_default_response (GTK_DIALOG (fs), GTK_RESPONSE_ACCEPT);
+	filenames = totem_add_files (GTK_WINDOW (totem->win),
+			path, &new_path);
 
-	gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (fs), TRUE);
-	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
+	if (filenames == NULL)
+		return NULL;
 
-	if (path != NULL)
-	{
-		gtk_file_chooser_set_current_folder_uri
-			(GTK_FILE_CHOOSER (fs), path);
-	}
+	playlist_modified = totem_action_open_files_list (totem,
+			filenames);
 
-	while (1)
-	{
-		GSList *filenames;
-		gboolean playlist_modified;
-
-		response = gtk_dialog_run (GTK_DIALOG (fs));
-		if (response != GTK_RESPONSE_ACCEPT)
-			break;
-
-		filenames = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (fs));
-		if (filenames == NULL)
-			continue;
-
-		playlist_modified = totem_action_open_files_list (totem,
-				filenames);
-		if (playlist_modified == FALSE)
-		{
-			g_slist_foreach (filenames, (GFunc) g_free, NULL);
-			g_slist_free (filenames);
-			continue;
-		}
-
-		/* Hide the selection widget only if playlist is modified */
-		gtk_widget_hide (fs);
-
-		/* Save the path */
-		if (filenames->data != NULL)
-			path_new = g_path_get_dirname (filenames->data);
-
+	if (playlist_modified == FALSE) {
 		g_slist_foreach (filenames, (GFunc) g_free, NULL);
 		g_slist_free (filenames);
-
-		if (play != FALSE) {
-			char *mrl;
-
-			mrl = totem_playlist_get_current_mrl (totem->playlist);
-			totem_action_set_mrl_and_play (totem, mrl);
-			g_free (mrl);
-		}
-		break;
+		return NULL;
 	}
 
-	gtk_widget_destroy (fs);
-	return path_new;
+	g_slist_foreach (filenames, (GFunc) g_free, NULL);
+	g_slist_free (filenames);
+
+	if (play != FALSE) {
+		char *mrl;
+
+		mrl = totem_playlist_get_current_mrl (totem->playlist);
+		totem_action_set_mrl_and_play (totem, mrl);
+		g_free (mrl);
+	}
+
+	return new_path;
 }
 
 static void

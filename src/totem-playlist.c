@@ -645,59 +645,28 @@ update_current_from_playlist (TotemPlaylist *playlist)
 static void
 totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist)
 {
-	GtkWidget *fs;
-	int response;
+	GSList *filenames, *l;
+	char *new_path;
 
-	fs = gtk_file_chooser_dialog_new (_("Select Movies or Playlists"),
-			totem_playlist_get_toplevel (playlist),
-			GTK_FILE_CHOOSER_ACTION_OPEN,
-			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			GTK_STOCK_ADD, GTK_RESPONSE_ACCEPT,
-			NULL);
-	gtk_dialog_set_default_response (GTK_DIALOG (fs), GTK_RESPONSE_ACCEPT);
-	gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (fs), TRUE);
-	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
+	filenames = totem_add_files (totem_playlist_get_toplevel (playlist),
+			playlist->_priv->path, &new_path);
+	if (filenames == NULL)
+		return;
 
-	if (playlist->_priv->path != NULL)
-	{
-		gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (fs),
-				playlist->_priv->path);
+	if (new_path != NULL) {
+		g_free (playlist->_priv->path);
+		playlist->_priv->path = new_path;
 	}
-	response = gtk_dialog_run (GTK_DIALOG (fs));
-	gtk_widget_hide (fs);
-	while (gtk_events_pending())
-		gtk_main_iteration();
 
-	if (response == GTK_RESPONSE_ACCEPT)
-	{
-		GSList *filenames, *l;
+	for (l = filenames; l != NULL; l = l->next) {
 		char *mrl;
 
-		filenames = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (fs));
-		if (filenames == NULL)
-		{
-			gtk_widget_destroy (fs);
-			return;
-		}
-
-		mrl = filenames->data;
-		if (mrl != NULL)
-		{
-			g_free (playlist->_priv->path);
-			playlist->_priv->path = g_path_get_dirname (mrl);
-		}
-
-		for (l = filenames; l != NULL; l = l->next)
-		{
-			mrl = l->data;
-			totem_playlist_add_mrl (playlist, mrl, NULL);
-			g_free (mrl);
-		}
-
-		g_slist_free (filenames);
+		mrl = l->data;
+		totem_playlist_add_mrl (playlist, mrl, NULL);
+		g_free (mrl);
 	}
 
-	gtk_widget_destroy (fs);
+	g_slist_free (filenames);
 }
 
 static void

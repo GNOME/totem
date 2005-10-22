@@ -1,5 +1,14 @@
 2005-10-22  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c: (totem_playlist_add_files):
+	* src/totem-uri.c: (totem_uri_escape_for_display),
+	(totem_add_files):
+	* src/totem-uri.h:
+	* src/totem.c: (totem_action_open_dialog):
+	Move the file chooser to totem-uri.[ch] to allow for more code sharing
+
+2005-10-22  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-video-widget-properties.c:
 	(bacon_video_widget_properties_reset),
 	(bacon_video_widget_properties_update): use N/A when the bitrate or

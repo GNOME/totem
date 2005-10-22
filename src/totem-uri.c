@@ -23,6 +23,7 @@
 #include "config.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <string.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
 #include <sys/types.h>
@@ -207,5 +208,52 @@ totem_uri_escape_for_display (const char *uri)
 	}
 
 	return g_strdup (uri);
+}
+
+GSList *
+totem_add_files (GtkWindow *parent, const char *path, char **new_path)
+{
+	GtkWidget *fs;
+	int response;
+	GSList *filenames;
+	char *mrl;
+
+	fs = gtk_file_chooser_dialog_new (_("Select Movies or Playlists"),
+			parent,
+			GTK_FILE_CHOOSER_ACTION_OPEN,
+			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			GTK_STOCK_ADD, GTK_RESPONSE_ACCEPT,
+			NULL);
+	gtk_dialog_set_default_response (GTK_DIALOG (fs), GTK_RESPONSE_ACCEPT);
+	gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (fs), TRUE);
+	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
+
+	if (path != NULL) {
+		gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (fs),
+				path);
+	}
+
+	response = gtk_dialog_run (GTK_DIALOG (fs));
+	gtk_widget_hide (fs);
+	while (gtk_events_pending())
+		gtk_main_iteration();
+
+	if (response != GTK_RESPONSE_ACCEPT)
+		return NULL;
+
+	filenames = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (fs));
+	if (filenames == NULL) {
+		gtk_widget_destroy (fs);
+		return NULL;
+	}
+
+	mrl = filenames->data;
+	if (mrl != NULL && new_path != NULL) {
+		*new_path = g_path_get_dirname (mrl);
+	}
+
+	gtk_widget_destroy (fs);
+
+	return filenames;
 }
 

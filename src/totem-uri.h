@@ -24,6 +24,7 @@
 #define TOTEM_URI_H
 
 #include "totem.h"
+#include <gtk/gtkwindow.h>
 
 G_BEGIN_DECLS
 
@@ -34,6 +35,9 @@ gboolean	totem_is_block_device	(const char *uri);
 void		totem_setup_file_monitoring (Totem *totem);
 char*		totem_uri_get_subtitle_uri (const char *uri);
 char*		totem_uri_escape_for_display (const char *uri);
+GSList*		totem_add_files		(GtkWindow *parent,
+					 const char *path,
+					 char **new_path);
 
 G_END_DECLS
 
