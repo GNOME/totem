@@ -34,6 +34,7 @@
 #include <string.h>
 #include <musicbrainz/mb_c.h>
 
+#include "totem-uri.h"
 #include "totem-interface.h"
 #include "totem-pl-parser.h"
 #include "debug.h"
@@ -392,37 +393,28 @@ drop_cb (GtkWidget     *widget,
 
 	for (p = file_list; p != NULL; p = p->next)
 	{
-		char *filename;
+		char *filename, *title;
 
 		if (p->data == NULL)
 			continue;
 
-		filename = gnome_vfs_get_local_path_from_uri (p->data);
-		if (filename == NULL)
-			filename = g_strdup (p->data);
+		filename = totem_create_full_path (p->data);
+		title = NULL;
 
-		if (filename != NULL &&
-				(g_file_test (filename, G_FILE_TEST_IS_REGULAR
-					| G_FILE_TEST_EXISTS)
-				 || strstr (filename, "://") != NULL))
+		if (info == 1)
 		{
-			char *title = NULL;
-
-			/* Super _NETSCAPE_URL trick */
-			if (info == 1)
-			{
-				g_free (p->data);
-				p = p->next;
-				if (p != NULL) {
-					if (g_str_has_prefix (p->data, "file:") != FALSE)
-						title = (char *) p->data + 5;
-					else
-						title = p->data;
-				}
+			g_free (p->data);
+			p = p->next;
+			if (p != NULL) {
+				if (g_str_has_prefix (p->data, "file:") != FALSE)
+					title = (char *)p->data + 5;
+				else
+					title = p->data;
 			}
-
-			totem_playlist_add_mrl (playlist, p->data, title);
 		}
+
+		totem_playlist_add_mrl (playlist, p->data, title);
+
 		g_free (filename);
 		g_free (p->data);
 	}
