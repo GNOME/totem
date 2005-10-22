@@ -506,6 +506,7 @@ totem_playlist_set_reorderable (TotemPlaylist *playlist, gboolean set)
 		GtkTreeIter iter;
 		char *index;
 		GdkPixbuf *pixbuf;
+		GtkTreePath *path;
 
 		index = g_strdup_printf ("%d", i);
 		if (gtk_tree_model_get_iter_from_string
@@ -524,11 +525,19 @@ totem_playlist_set_reorderable (TotemPlaylist *playlist, gboolean set)
 			continue;
 
 		gdk_pixbuf_unref (pixbuf);
-		gtk_tree_path_free (playlist->_priv->current);
-		playlist->_priv->current = gtk_tree_path_new_from_indices (i, -1);
-		g_signal_emit (G_OBJECT (playlist),
-				totem_playlist_table_signals[CHANGED],
-				0, NULL);
+
+		/* Only emit the changed signal if we changed the ->current */
+		path = gtk_tree_path_new_from_indices (i, -1);
+		if (gtk_tree_path_compare (path, playlist->_priv->current) == 0)
+		{
+			gtk_tree_path_free (path);
+		} else {
+			gtk_tree_path_free (playlist->_priv->current);
+			playlist->_priv->current = path;
+			g_signal_emit (G_OBJECT (playlist),
+					totem_playlist_table_signals[CHANGED],
+					0, NULL);
+		}
 
 		break;
 	}
@@ -2063,7 +2072,7 @@ totem_playlist_set_playing (TotemPlaylist *playlist, gboolean state)
 	GtkListStore *store;
 	GtkTreeIter iter;
 	GtkTreePath *path;
-	
+
 	g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), FALSE);
 
 	if (update_current_from_playlist (playlist) == FALSE)
@@ -2084,6 +2093,9 @@ totem_playlist_set_playing (TotemPlaylist *playlist, gboolean state)
 		gtk_list_store_set (store, &iter,
 				PIX_COL, NULL,
 				-1);
+
+	if (state == FALSE)
+		return TRUE;
 
 	path = gtk_tree_model_get_path (GTK_TREE_MODEL (store), &iter);
 	gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (playlist->_priv->treeview),

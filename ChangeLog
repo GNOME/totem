@@ -1,5 +1,14 @@
 2005-10-22  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c: (totem_playlist_set_reorderable),
+	(totem_playlist_set_playing): only jump to the current cell if we
+	are setting it as playing, only emit the "changed" signal if the
+	currently playing item changed
+	This fix the scroll jumping when simply selecting an item in the
+	playlist
+
+2005-10-22  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c: (xine_try_error):
 	Slightly better error message when trying to play a file for which
 	there isn't an input plugin
