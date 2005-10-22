@@ -1,5 +1,11 @@
 2005-10-22  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: add gmodule-2.0 as a dependency for glade to be able
+	to find creation functions for the custom widgets (Closes: #316596)
+	* NEWS: updated
+
+2005-10-22  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c:
 	(bacon_video_widget_get_backend_name): get the xine-lib version
 	at run-time rather than at compile-time (Closes: #319131)
