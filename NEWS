@@ -1,13 +1,18 @@
 New features and significant updates in version...
 
 1.2.1:
+* New Ukrainian (uk) help files
 * Avoid weird startes when using the "Toggle fullscreen mode" shortcut
+* Fix drag'n'drop on the playlist itself not working
 * Support turning off the screensaver when gnome-screensaver is used
 * Fix a possible crash on startup in the Mozilla plugin
+* Fix possible i18n problems with the Nautilus properties window and the
+  Mozilla plugin
 * Scroll to the current file in the playlist when starting to play it
 * Add a menu item for switching angles on DVDs
 * Add ability to play back DVDs and VCDs from .iso and .bin/.cue files
-* Fix a access to invalid memory when getting metadata from a file (GStreamer)
+* Fix a memory leak in the Mozilla plugin
+* Fix an access to invalid memory when getting metadata from a file (GStreamer)
 * Avoid playback stopping when seeking forward in DVDs (xine-lib)
 
 1.2.0:
