@@ -1,11 +1,11 @@
 #!/bin/sh
 
 echo_mime () {
-	echo -n "$i;";
+	printf "$i;";
 }
 
 MIMETYPES=`cat $1`
-echo -n MimeType=;
+printf MimeType=;
 for i in $MIMETYPES ; do
 	echo_mime;
 done
