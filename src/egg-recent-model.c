@@ -29,6 +29,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/time.h>
+#include <sys/stat.h>
 #include <time.h>
 #include <gtk/gtk.h>
 #include <libgnomevfs/gnome-vfs.h>
@@ -43,6 +44,7 @@
 #define EGG_RECENT_MODEL_MAX_ITEMS 500
 #define EGG_RECENT_MODEL_DEFAULT_LIMIT 10
 #define EGG_RECENT_MODEL_TIMEOUT_LENGTH 200
+#define EGG_RECENT_MODEL_POLL_TIME 3
 
 #define EGG_RECENT_MODEL_KEY_DIR "/desktop/gnome/recent_files"
 #define EGG_RECENT_MODEL_DEFAULT_LIMIT_KEY EGG_RECENT_MODEL_KEY_DIR "/default_limit"
@@ -71,6 +73,8 @@ struct _EggRecentModelPrivate {
 	guint expiration_change_notify_id;
 
 	guint changed_timeout;
+	guint poll_timeout;
+	time_t last_mtime;
 };
 
 /* signals */
@@ -732,25 +736,60 @@ egg_recent_model_monitor_cb (GnomeVFSMonitorHandle *handle,
 	}
 }
 
+static gboolean
+egg_recent_model_poll_timeout (gpointer user_data)
+{
+	EggRecentModel *model;
+	struct stat stat_buf;
+	int stat_res;
+
+	model = EGG_RECENT_MODEL (user_data);
+	stat_res = stat (model->priv->path, &stat_buf);
+
+	if (!stat_res && stat_buf.st_mtime &&  
+	    stat_buf.st_mtime != model->priv->last_mtime) {
+		model->priv->last_mtime = stat_buf.st_mtime;
+		
+		if (model->priv->changed_timeout > 0)
+			g_source_remove (model->priv->changed_timeout);
+		
+		model->priv->changed_timeout = g_timeout_add (
+			EGG_RECENT_MODEL_TIMEOUT_LENGTH,
+			(GSourceFunc)egg_recent_model_changed_timeout,
+			model);
+	}
+	return TRUE;
+}
+
 static void
 egg_recent_model_monitor (EggRecentModel *model, gboolean should_monitor)
 {
 	if (should_monitor && model->priv->monitor == NULL) {
 		char *uri;
+		GnomeVFSResult result;
 
 		uri = gnome_vfs_get_uri_from_local_path (model->priv->path);
 
-		gnome_vfs_monitor_add (&model->priv->monitor,
-				       uri,
-				       GNOME_VFS_MONITOR_FILE,
-				       egg_recent_model_monitor_cb,
-				       model);
+		result = gnome_vfs_monitor_add (&model->priv->monitor,
+				       		uri,
+				       		GNOME_VFS_MONITOR_FILE,
+				       		egg_recent_model_monitor_cb,
+				       		model);
 
 		g_free (uri);
 
 		/* if the above fails, don't worry about it.
 		 * local notifications will still happen
 		 */
+		if (result == GNOME_VFS_ERROR_NOT_SUPPORTED) {
+			if (model->priv->poll_timeout > 0)
+				g_source_remove (model->priv->poll_timeout);
+			
+			model->priv->poll_timeout = g_timeout_add (
+				EGG_RECENT_MODEL_POLL_TIME * 1000,
+				egg_recent_model_poll_timeout,
+				model);
+		}
 
 	} else if (!should_monitor && model->priv->monitor != NULL) {
 		gnome_vfs_monitor_cancel (model->priv->monitor);
@@ -1040,6 +1079,9 @@ egg_recent_model_finalize (GObject *object)
 	g_hash_table_destroy (model->priv->monitors);
 	model->priv->monitors = NULL;
 
+	if (model->priv->poll_timeout > 0)
+		g_source_remove (model->priv->poll_timeout);
+	model->priv->poll_timeout =0;
 
 	g_free (model->priv);
 
@@ -1290,6 +1332,8 @@ egg_recent_model_init (EggRecentModel * model)
 					(GDestroyNotify) gnome_vfs_monitor_cancel);
 
 	model->priv->monitor = NULL;
+	model->priv->poll_timeout = 0;
+	model->priv->last_mtime = 0;
 	egg_recent_model_monitor (model, TRUE);
 }
 
@@ -1604,6 +1648,13 @@ egg_recent_model_clear (EggRecentModel *model)
 		g_warning ("Failed to unlock: %s", strerror (errno));
 
 	fclose (file);
+	
+	if (model->priv->monitor == NULL) {
+		/* since monitoring isn't working, at least give a
+		 * local notification
+		 */
+		egg_recent_model_changed (model);
+	}
 }
 
 static void

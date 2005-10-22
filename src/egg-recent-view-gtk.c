@@ -37,6 +37,13 @@
 #include "egg-recent-util.h"
 #include "egg-recent-item.h"
 
+#ifndef EGG_COMPILATION
+#include <glib/gi18n.h>
+#else
+#define _(x) (x)
+#define N_(x) (x)
+#endif
+
 #define DEFAULT_LABEL_WIDTH 30
 
 struct _EggRecentViewGtk {
@@ -94,6 +101,19 @@ enum {
 static guint view_signals[LAST_SIGNAL] = { 0 };
 
 static GObjectClass *parent_class;
+
+/* mark a menu item, so that we know which ones we own */
+static void
+egg_recent_view_gtk_set_item_tag (EggRecentViewGtk *view,
+				  GtkMenuItem      *menu_item)
+{
+	g_return_if_fail (EGG_IS_RECENT_VIEW_GTK (view));
+	g_return_if_fail (GTK_IS_MENU_ITEM (menu_item));
+
+	g_object_set_data (G_OBJECT (menu_item),
+			   view->uid,
+			   GINT_TO_POINTER (1));
+}
 
 static void
 egg_recent_view_gtk_clear (EggRecentViewGtk *view)
@@ -199,10 +219,7 @@ egg_recent_view_gtk_new_separator (EggRecentViewGtk *view)
 	 * this is a tag so we can distinguish our menu items
 	 * from others that may be in the menu.
 	 */
-	g_object_set_data (G_OBJECT (retval),
-			   view->uid,
-			   GINT_TO_POINTER (1));
-
+	egg_recent_view_gtk_set_item_tag (view, GTK_MENU_ITEM (retval));
 
 	gtk_widget_show (retval);
 
@@ -299,10 +316,7 @@ egg_recent_view_gtk_new_menu_item (EggRecentViewGtk *view,
 	 * this is a tag so we can distinguish our menu items
 	 * from others that may be in the menu.
 	 */
-	g_object_set_data (G_OBJECT (menu_item),
-			   view->uid,
-			   GINT_TO_POINTER (1));
-
+	egg_recent_view_gtk_set_item_tag (view, GTK_MENU_ITEM (menu_item));
 
 	gtk_widget_show (menu_item);
 
@@ -327,7 +341,7 @@ egg_recent_view_gtk_create_tooltip (EggRecentViewGtk *view,
 	if (!name)
 		return;
 
-	tip_text = g_strdup_printf ("Open '%s'", name);
+	tip_text = g_strdup_printf (_("Open '%s'"), name);
 	if (!tip_text) {
 		g_free (name);
 		return;
@@ -415,12 +429,33 @@ egg_recent_view_gtk_set_list (EggRecentViewGtk *view, GList *list)
 }
 
 static void
+egg_recent_view_gtk_set_empty_list (EggRecentViewGtk *view)
+{
+	gboolean is_menu_embedded = FALSE;
+
+	egg_recent_view_gtk_clear (view);
+	
+	is_menu_embedded = view->trailing_sep || (egg_recent_view_gtk_find_menu_offset (view) > 0);
+	if (!is_menu_embedded) {
+		GtkWidget *dummy_item;
+
+		dummy_item = gtk_menu_item_new_with_label (_("Empty"));
+		gtk_widget_set_sensitive (dummy_item, FALSE);
+		gtk_menu_shell_insert (GTK_MENU_SHELL (view->menu), dummy_item, 0);
+		gtk_widget_show (dummy_item);
+
+		/* we own this item */
+		egg_recent_view_gtk_set_item_tag (view, GTK_MENU_ITEM (dummy_item));
+	}
+}
+
+static void
 model_changed_cb (EggRecentModel *model, GList *list, EggRecentViewGtk *view)
 {
 	if (list != NULL)
 		egg_recent_view_gtk_set_list (view, list);
 	else
-		egg_recent_view_gtk_clear (view);
+		egg_recent_view_gtk_set_empty_list (view);
 }
 
 static EggRecentModel *

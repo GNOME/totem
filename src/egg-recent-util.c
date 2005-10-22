@@ -2,7 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <gtk/gtk.h>
+#ifndef USE_STABLE_LIBGNOMEUI
 #include <libgnomeui/gnome-icon-lookup.h>
+#endif
 #include <time.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -58,6 +60,7 @@ GdkPixbuf *
 egg_recent_util_get_icon (GtkIconTheme *theme, const gchar *uri,
 			  const gchar *mime_type, int size)
 {
+#ifndef USE_STABLE_LIBGNOMEUI
 	gchar *icon;
 	GdkPixbuf *pixbuf;
 	
@@ -70,6 +73,8 @@ egg_recent_util_get_icon (GtkIconTheme *theme, const gchar *uri,
 	g_free (icon);
 
 	return pixbuf;
+#endif
+	return NULL;
 }
 
 gchar *
