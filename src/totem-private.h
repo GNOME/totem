@@ -85,6 +85,7 @@ struct Totem {
 	GtkWidget *pp_button;
 	/* fullscreen Play/Pause */
 	GtkWidget *fs_pp_button;
+	GtkTooltips *tooltip;
 
 	/* Seek */
 	GtkWidget *seek;

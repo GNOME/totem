@@ -235,7 +235,7 @@ static void
 play_pause_set_label (Totem *totem, TotemStates state)
 {
 	GtkWidget *image;
-	const char *id;
+	const char *id, *tip;
 
 	if (state == totem->state)
 		return;
@@ -246,11 +246,13 @@ play_pause_set_label (Totem *totem, TotemStates state)
 		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
 				_("Playing"));
 		id = GTK_STOCK_MEDIA_PAUSE;
+		tip = N_("Pause");
 		break;
 	case STATE_PAUSED:
 		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
 				_("Paused"));
 		id = GTK_STOCK_MEDIA_PLAY;
+		tip = N_("Play");
 		break;
 	case STATE_STOPPED:
 		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
@@ -258,10 +260,16 @@ play_pause_set_label (Totem *totem, TotemStates state)
 		totem_statusbar_set_time_and_length
 			(TOTEM_STATUSBAR (totem->statusbar), 0, 0);
 		id = GTK_STOCK_MEDIA_PLAY;
+		tip = N_("Play");
 		break;
 	default:
 		return;
 	}
+
+	gtk_tooltips_set_tip (GTK_TOOLTIPS (totem->tooltip),
+			totem->pp_button, _(tip), NULL);
+	gtk_tooltips_set_tip (GTK_TOOLTIPS (totem->tooltip),
+			totem->fs_pp_button, _(tip), NULL);
 
 	image = glade_xml_get_widget (totem->xml,
 			"tmw_play_pause_button_image");
@@ -3445,6 +3453,7 @@ main (int argc, char **argv)
 		(totem->xml, "tcw_volume_hscale");
 	totem->fs_voladj = gtk_range_get_adjustment
 		(GTK_RANGE (totem->fs_volume));
+	totem->tooltip = gtk_tooltips_new ();
 	g_object_set_data (G_OBJECT (totem->fs_volume), "fs", GINT_TO_POINTER (1));
 	totem->volume_first_time = 1;
 	totem->fs_pp_button = glade_xml_get_widget
