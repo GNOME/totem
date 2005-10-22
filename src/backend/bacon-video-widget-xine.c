@@ -1962,11 +1962,9 @@ bacon_video_widget_get_nice_codec_name (BaconVideoWidget *bvw,
 
 char *
 bacon_video_widget_get_backend_name (BaconVideoWidget *bvw)
-{	
-	return g_strdup_printf ("xine-lib version %d.%d.%d",
-			XINE_MAJOR_VERSION,
-			XINE_MINOR_VERSION,
-			XINE_SUB_VERSION);
+{
+	return g_strdup_printf ("xine-lib version %s",
+			xine_get_version_string ());
 }
 
 static char *

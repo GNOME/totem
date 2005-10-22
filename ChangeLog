@@ -1,11 +1,14 @@
 2005-10-22  Bastien Nocera  <hadess@hadess.net>
 
-	* NEWS: Updated
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_backend_name): get the xine-lib version
+	at run-time rather than at compile-time (Closes: #319131)
+	* NEWS: updated
 
 2005-10-22  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-playlist.c: (drop_cb): fix DND on the playlist, which was
-	asking for the parser to insert local filenames
+	asking for the parser to insert local filenames (Closes: #319066)
 
 2005-10-20  Maxim Dziumanenko <mvd@mylinux.ua>
 
