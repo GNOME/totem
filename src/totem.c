@@ -181,8 +181,6 @@ totem_action_exit (Totem *totem)
 		display = gtk_widget_get_display (totem->win);
 	}
 
-	totem_destroy_file_filters ();
-
 #ifndef HAVE_GTK_ONLY
 	totem_gromit_clear (TRUE);
 #endif /* !HAVE_GTK_ONLY */

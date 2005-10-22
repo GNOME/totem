@@ -1,5 +1,16 @@
 2005-10-22  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c: (xine_try_error):
+	Slightly better error message when trying to play a file for which
+	there isn't an input plugin
+	* src/totem-uri.c:
+	* src/totem-uri.h:
+	* src/totem.c: (totem_action_exit):
+	Don't destroy the filters on exit, they seem to go away on their own,
+	somehow...
+
+2005-10-22  Bastien Nocera  <hadess@hadess.net>
+
 	* src/.cvsignore: upd
 
 2005-10-22  Bastien Nocera  <hadess@hadess.net>

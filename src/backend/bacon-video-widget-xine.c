@@ -1467,6 +1467,9 @@ xine_try_error (BaconVideoWidget *bvw, gboolean probe_error, GError **error)
 	switch (err)
 	{
 	case XINE_ERROR_NO_INPUT_PLUGIN:
+		g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
+				_("There is no input plugin to handle the location of this movie"));
+		break;
 	case XINE_ERROR_NO_DEMUX_PLUGIN:
 		g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
 				_("There is no plugin to handle this movie."));

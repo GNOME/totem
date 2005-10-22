@@ -231,15 +231,6 @@ totem_setup_file_filters (void)
 	}
 }
 
-void
-totem_destroy_file_filters (void)
-{
-	if (filter_supported != NULL)
-		g_object_unref (filter_supported);
-	if (filter_all != NULL)
-		g_object_unref (filter_all);
-}
-
 GSList *
 totem_add_files (GtkWindow *parent, const char *path, char **new_path)
 {
