@@ -181,6 +181,8 @@ totem_action_exit (Totem *totem)
 		display = gtk_widget_get_display (totem->win);
 	}
 
+	totem_destroy_file_filters ();
+
 #ifndef HAVE_GTK_ONLY
 	totem_gromit_clear (TRUE);
 #endif /* !HAVE_GTK_ONLY */
@@ -3469,6 +3471,7 @@ main (int argc, char **argv)
 	totem_session_setup (totem, argv);
 	totem_setup_recent (totem);
 	totem_setup_file_monitoring (totem);
+	totem_setup_file_filters ();
 	totem_setup_play_disc (totem);
 	totem_callback_connect (totem);
 	totem_setup_window (totem);

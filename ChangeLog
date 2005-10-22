@@ -1,5 +1,14 @@
 2005-10-22  Bastien Nocera  <hadess@hadess.net>
 
+	* data/mime-type-list.txt: add video/x-m4v
+	* src/totem-uri.c: (totem_setup_file_filters),
+	(totem_destroy_file_filters), (totem_add_files):
+	* src/totem-uri.h:
+	* src/totem.c: (totem_action_exit), (main):
+	Use filters in the "Open" file dialogs (Closes: #318350)
+
+2005-10-22  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-private.h:
 	* src/totem.c: (play_pause_set_label), (main): set the tooltip
 	depending on the image on the play/pause button (Closes: #300467)

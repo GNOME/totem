@@ -30,8 +30,12 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#include "data/totem-mime-types.h"
 #include "totem-uri.h"
 #include "totem-private.h"
+
+static GtkFileFilter *filter_all;
+static GtkFileFilter *filter_supported;
 
 gboolean
 totem_playing_dvd (const char *uri)
@@ -210,6 +214,32 @@ totem_uri_escape_for_display (const char *uri)
 	return g_strdup (uri);
 }
 
+void
+totem_setup_file_filters (void)
+{
+	guint i;
+
+	filter_all = gtk_file_filter_new ();
+	gtk_file_filter_set_name (filter_all, _("All files"));
+	gtk_file_filter_add_pattern (filter_all, "*");
+
+	filter_supported = gtk_file_filter_new ();
+	gtk_file_filter_set_name (filter_supported,
+			_("Supported files"));
+	for (i = 0; i < G_N_ELEMENTS (mime_types); i++) {
+		gtk_file_filter_add_mime_type (filter_supported, mime_types[i]);
+	}
+}
+
+void
+totem_destroy_file_filters (void)
+{
+	if (filter_supported != NULL)
+		g_object_unref (filter_supported);
+	if (filter_all != NULL)
+		g_object_unref (filter_all);
+}
+
 GSList *
 totem_add_files (GtkWindow *parent, const char *path, char **new_path)
 {
@@ -224,6 +254,9 @@ totem_add_files (GtkWindow *parent, const char *path, char **new_path)
 			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			GTK_STOCK_ADD, GTK_RESPONSE_ACCEPT,
 			NULL);
+	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_all);
+	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_supported);
+	gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (fs), filter_supported);
 	gtk_dialog_set_default_response (GTK_DIALOG (fs), GTK_RESPONSE_ACCEPT);
 	gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (fs), TRUE);
 	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
