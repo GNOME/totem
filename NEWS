@@ -1,22 +1,32 @@
 New features and significant updates in version...
 
 1.2.1:
-* New Ukrainian (uk) help files
-* Avoid weird startes when using the "Toggle fullscreen mode" shortcut
-* Fix drag'n'drop on the playlist itself not working
-* Fix possible crashes on startup when the widget creation functions cannot
+New features:
+  * New Ukrainian (uk) help files
+  * Use filters in the Open file dialogues
+  * Support turning off the screensaver when gnome-screensaver is used
+  * Scroll to the current file in the playlist when starting to play it
+  * Add ability to play back DVDs and VCDs from .iso and .bin/.cue files
+  * Add a menu item for switching angles on DVDs
+
+Bug fixes:
+  * Avoid weird startes when using the "Toggle fullscreen mode" shortcut
+  * Fix drag'n'drop on the playlist itself not working
+  * Set the play/pause buttons' tooltips according to the image
+  * Fix possible crashes on startup when the widget creation functions cannot
   be found
-* Support turning off the screensaver when gnome-screensaver is used
-* Fix a possible crash on startup in the Mozilla plugin
-* Fix possible i18n problems with the Nautilus properties window and the
+  * Use N/A instead of '0' when the bitrate or the number of frames per second
+  isn't available in the property window
+  * Fix a possible crash on startup in the Mozilla plugin
+  * Fix possible i18n problems with the Nautilus properties window and the
   Mozilla plugin
-* Scroll to the current file in the playlist when starting to play it
-* Add a menu item for switching angles on DVDs
-* Add ability to play back DVDs and VCDs from .iso and .bin/.cue files
-* Fix a memory leak in the Mozilla plugin
-* Fix an access to invalid memory when getting metadata from a file (GStreamer)
-* Avoid playback stopping when seeking forward in DVDs (xine-lib)
-* Get the xine-lib version at run-time (xine-lib)
+  * Fix a memory leak in the Mozilla plugin
+
+GStreamer:
+  * Fix an access to invalid memory when getting metadata from a file
+xine-lib:
+  * Avoid playback stopping when seeking forward in DVDs
+  * Get the xine-lib version at run-time
 
 1.2.0:
 * New French (fr) translation of the help files
