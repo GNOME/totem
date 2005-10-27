@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-21 12:09+0200\n"
-"PO-Revision-Date: 2005-09-08 09:41+0200\n"
+"POT-Creation-Date: 2005-10-27 19:41+0200\n"
+"PO-Revision-Date: 2005-10-27 19:41+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -113,12 +113,11 @@ msgstr "A_urreko atala/filma"
 msgid "    "
 msgstr "    "
 
-#: ../data/properties.glade.h:2 ../src/bacon-video-widget-properties.c:157
+#: ../data/properties.glade.h:2
 msgid "0 frames per second"
 msgstr "0 marko segundoko"
 
-#: ../data/properties.glade.h:3 ../src/bacon-video-widget-properties.c:154
-#: ../src/bacon-video-widget-properties.c:160
+#: ../data/properties.glade.h:3
 msgid "0 kbps"
 msgstr "0 kb/s"
 
@@ -128,8 +127,7 @@ msgstr "0 kb/s"
 msgid "0 seconds"
 msgstr "0 segundo"
 
-#. Dimensions
-#: ../data/properties.glade.h:5 ../src/bacon-video-widget-properties.c:149
+#: ../data/properties.glade.h:5
 msgid "0 x 0"
 msgstr "0 x 0"
 
@@ -173,14 +171,22 @@ msgstr "Iraupena:"
 msgid "Framerate:"
 msgstr "Marko-tasa:"
 
+#. Dimensions
 #. Video Codec
 #. Audio Codec
-#: ../data/properties.glade.h:16 ../src/bacon-video-widget-properties.c:151
-#: ../src/bacon-video-widget-properties.c:162
+#: ../data/properties.glade.h:16 ../src/bacon-video-widget-properties.c:152
+#: ../src/bacon-video-widget-properties.c:154
+#: ../src/bacon-video-widget-properties.c:157
+#: ../src/bacon-video-widget-properties.c:160
+#: ../src/bacon-video-widget-properties.c:163
+#: ../src/bacon-video-widget-properties.c:165
+#: ../src/bacon-video-widget-properties.c:227
+#: ../src/bacon-video-widget-properties.c:229
+#: ../src/bacon-video-widget-properties.c:245
 msgid "N/A"
 msgstr "E/E"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:2028
+#: ../data/properties.glade.h:17 ../src/totem.c:2003
 msgid "Properties"
 msgstr "Propietateak"
 
@@ -192,10 +198,10 @@ msgstr "Izenburua:"
 #. Artist
 #. Album
 #. Year
-#: ../data/properties.glade.h:19 ../src/bacon-video-widget-properties.c:138
-#: ../src/bacon-video-widget-properties.c:140
-#: ../src/bacon-video-widget-properties.c:142
-#: ../src/bacon-video-widget-properties.c:144
+#: ../data/properties.glade.h:19 ../src/bacon-video-widget-properties.c:141
+#: ../src/bacon-video-widget-properties.c:143
+#: ../src/bacon-video-widget-properties.c:145
+#: ../src/bacon-video-widget-properties.c:147
 msgid "Unknown"
 msgstr "Ezezaguna"
 
@@ -245,7 +251,7 @@ msgstr "Erreproduzitu filmak eta kantak"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:2 ../data/totem.glade.h:99
-#: ../src/totem.c:681 ../src/totem.c:3390 ../src/totem.c:3407
+#: ../src/totem.c:689 ../src/totem.c:3365 ../src/totem.c:3382
 msgid "Totem Movie Player"
 msgstr "Totem film-erreproduzigailua"
 
@@ -889,23 +895,23 @@ msgstr "_Zooma 1:2"
 msgid "Unnamed CDROM"
 msgstr "CD-ROM izengabea"
 
-#: ../src/bacon-video-widget-properties.c:221
+#: ../src/bacon-video-widget-properties.c:224
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: ../src/bacon-video-widget-properties.c:224
+#: ../src/bacon-video-widget-properties.c:227
 #, c-format
 msgid "%d frames per second"
 msgstr "%d marko segundoko"
 
-#: ../src/bacon-video-widget-properties.c:226
-#: ../src/bacon-video-widget-properties.c:242
+#: ../src/bacon-video-widget-properties.c:229
+#: ../src/bacon-video-widget-properties.c:245
 #, c-format
 msgid "%d kbps"
 msgstr "%d kb/s"
 
-#: ../src/bacon-video-widget-properties.c:276
+#: ../src/bacon-video-widget-properties.c:279
 msgid "Properties dialog"
 msgstr "Propietateen elkarrizketa-koadroa"
 
@@ -918,6 +924,15 @@ msgstr "+"
 #: ../src/bacon-volume.c:203
 msgid "-"
 msgstr "-"
+
+#: ../src/egg-recent-view-gtk.c:344
+#, c-format
+msgid "Open '%s'"
+msgstr "Ireki '%s'"
+
+#: ../src/egg-recent-view-gtk.c:442
+msgid "Empty"
+msgstr "Hutsa"
 
 #: ../src/totem-interface.c:114
 #, c-format
@@ -945,11 +960,11 @@ msgstr "\"Backend\" aukerak"
 msgid "Enable debug"
 msgstr "Gaitu arazketa"
 
-#: ../src/totem-options.c:39
+#: ../src/totem-options.c:39 ../src/totem.c:255 ../src/totem.c:263
 msgid "Play"
 msgstr "Erreproduzitu"
 
-#: ../src/totem-options.c:40
+#: ../src/totem-options.c:40 ../src/totem.c:249
 msgid "Pause"
 msgstr "Pausarazi"
 
@@ -994,23 +1009,19 @@ msgstr "Ordeztu"
 msgid "Option '%s' is unknown and was ignored\n"
 msgstr "'%s' aukera ezezaguna da, eta ezikusi egingo da\n"
 
-#: ../src/totem-playlist.c:326
+#: ../src/totem-playlist.c:327
 msgid "Could not save the playlist"
 msgstr "Ezin izan da erreprodukzio-zerrenda gorde"
 
-#: ../src/totem-playlist.c:659
-msgid "Select Movies or Playlists"
-msgstr "Hautatu filma edo erreprodukzio-zerrenda"
-
-#: ../src/totem-playlist.c:838
+#: ../src/totem-playlist.c:808
 msgid "Save Playlist"
 msgstr "Gorde erreprodukzio-zerrenda"
 
-#: ../src/totem-playlist.c:884
+#: ../src/totem-playlist.c:854
 msgid "Overwrite file?"
 msgstr "Gainidatzi fitxategia?"
 
-#: ../src/totem-playlist.c:886
+#: ../src/totem-playlist.c:856
 #, c-format
 msgid ""
 "A file named '%s' already exists.  Are you sure you want to overwrite it?"
@@ -1018,25 +1029,25 @@ msgstr ""
 "'%s' izeneko fitxategia badago lehendik ere. Ziur zaude gainidatzi nahi "
 "duzula?"
 
-#: ../src/totem-playlist.c:1393
+#: ../src/totem-playlist.c:1363
 msgid "playlist"
 msgstr "erreprodukzio-zerrenda"
 
-#: ../src/totem-playlist.c:1522
+#: ../src/totem-playlist.c:1492
 msgid "Playlist error"
 msgstr "Erreprodukzio-zerrendaren errorea"
 
-#: ../src/totem-playlist.c:1522
+#: ../src/totem-playlist.c:1492
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr ""
 "'%s' erreprodukzio-zerrenda ezin izan da analizatu, hondatuta egongo da."
 
-#: ../src/totem-playlist.c:1915
+#: ../src/totem-playlist.c:1885
 msgid "Select CD"
 msgstr "Hautatu CDa"
 
-#: ../src/totem-playlist.c:1920
+#: ../src/totem-playlist.c:1890
 msgid "Please select the currently playing CD:"
 msgstr "Hautatu unean erreproduzitzen ari den CDa:"
 
@@ -1126,7 +1137,7 @@ msgstr "Itzal-mota"
 msgid "Style of bevel around the statusbar text"
 msgstr "Egoera-barrako testuaren inguruko alaka-estiloa"
 
-#: ../src/totem-statusbar.c:124 ../src/totem.c:257 ../src/totem.c:667
+#: ../src/totem-statusbar.c:124 ../src/totem.c:259 ../src/totem.c:675
 msgid "Stopped"
 msgstr "Geldituta"
 
@@ -1161,24 +1172,36 @@ msgstr "Bufferreratzen"
 msgid "%d %%"
 msgstr "%d %%"
 
+#: ../src/totem-uri.c:223
+msgid "All files"
+msgstr "Fitxategi guztiak"
+
+#: ../src/totem-uri.c:228
+msgid "Supported files"
+msgstr "Onartutako fitxategiak"
+
+#: ../src/totem-uri.c:242
+msgid "Select Movies or Playlists"
+msgstr "Hautatu filma edo erreprodukzio-zerrenda"
+
 #: ../src/totem.c:247
 msgid "Playing"
 msgstr "Erreproduzitzen"
 
-#: ../src/totem.c:252
+#: ../src/totem.c:253
 msgid "Paused"
 msgstr "Pausarazita"
 
-#: ../src/totem.c:297
+#: ../src/totem.c:305
 msgid "Totem could not eject the optical media."
 msgstr "Totem-ek ezin izan du euskarri optikoa egotzi."
 
-#: ../src/totem.c:325 ../src/totem.c:352 ../src/totem.c:786 ../src/totem.c:890
+#: ../src/totem.c:333 ../src/totem.c:360 ../src/totem.c:794 ../src/totem.c:898
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem-ek ezin izan du '%s' erreproduzitu."
 
-#: ../src/totem.c:378
+#: ../src/totem.c:386
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1187,7 +1210,7 @@ msgstr ""
 "Totem-ek ezin du euskarri mota hori (%s) erreproduzitu, hura kudeatzeko "
 "plugin egokiak ez dituzulako."
 
-#: ../src/totem.c:379
+#: ../src/totem.c:387
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1195,7 +1218,7 @@ msgstr ""
 "Instalatu behar diren plugin-ak eta berrabiarazi Totem euskarri hori "
 "erreproduzitu ahal izateko."
 
-#: ../src/totem.c:387
+#: ../src/totem.c:395
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1204,7 +1227,7 @@ msgstr ""
 "Totem-ek ezin izan du euskarri hori (%s) erreproduzitu, nahiz eta hura "
 "kudeatzeko plugin-a instalatuta dagoen."
 
-#: ../src/totem.c:388
+#: ../src/totem.c:396
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1212,105 +1235,101 @@ msgstr ""
 "Komeni zaizu egiaztatzea unitatean diskoa dagoela eta unitatea behar bezala "
 "konfiguratuta dagoela."
 
-#: ../src/totem.c:416
+#: ../src/totem.c:424
 msgid "Failed to play Audio/Video Disc"
 msgstr "Huts egin du Audio/Bideo diskoa erreproduzitzean"
 
-#: ../src/totem.c:417
+#: ../src/totem.c:425
 msgid "Reason unknown"
 msgstr "Arrazoi ezezaguna"
 
-#: ../src/totem.c:674
+#: ../src/totem.c:682
 msgid "No File"
 msgstr "Fitxategirik ez"
 
-#: ../src/totem.c:1251 ../src/totem.c:1253
+#: ../src/totem.c:1259 ../src/totem.c:1261
 msgid "An error occurred"
 msgstr "Errorea gertatu da"
 
-#: ../src/totem.c:1547
-msgid "Select Files"
-msgstr "Hautatu fitxategiak"
-
-#: ../src/totem.c:1632
+#: ../src/totem.c:1607
 msgid "Open Location..."
 msgstr "Ireki helbidea..."
 
-#: ../src/totem.c:1901
+#: ../src/totem.c:1876
 msgid "Totem could not display the help contents."
 msgstr "Totem-ek ezin du laguntzako edukia bistaratu."
 
-#: ../src/totem.c:1939
+#: ../src/totem.c:1914
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Film-erreproduzigailua %s erabiltzen ari da"
 
-#: ../src/totem.c:1943
+#: ../src/totem.c:1918
 msgid "Totem"
 msgstr "Totem"
 
-#: ../src/totem.c:1945 ../src/vanity.c:261
+#: ../src/totem.c:1920 ../src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Copyright-a © 2002-2005 Bastien Nocera"
 
-#: ../src/totem.c:1950 ../src/vanity.c:266
+#: ../src/totem.c:1925 ../src/vanity.c:266
 msgid "translator-credits"
 msgstr ""
 "Hizkuntza Politikarako Sailburuordetza <hizkpol@ej-gv.es>\n"
 "Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>"
 
-#: ../src/totem.c:1983 ../src/totem.c:1991 ../src/vanity.c:299
+#: ../src/totem.c:1958 ../src/totem.c:1966 ../src/vanity.c:299
 #: ../src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem-ek ezin izan du film horren pantaila-argazkia egin."
 
-#: ../src/totem.c:1991 ../src/vanity.c:307
+#: ../src/totem.c:1966 ../src/vanity.c:307
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Honek ez luke gertatu behar: bidali honi buruzko txostena."
 
-#: ../src/totem.c:2018
+#: ../src/totem.c:1993
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem-ek ezin izan du filmaren propietate-leihoa erakutsi."
 
-#: ../src/totem.c:2018
+#: ../src/totem.c:1993
 msgid "Make sure that Totem is correctly installed."
 msgstr "Ziurtatu Totem behar bezala instalatuta dagoela."
 
-#: ../src/totem.c:2104
+#: ../src/totem.c:2079
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem-ek ezin izan du '%s'(e)n bilatu."
 
-#: ../src/totem.c:3252
+#: ../src/totem.c:3227
 msgid "Totem could not startup."
 msgstr "Ezin izan da Totem abiarazi."
 
-#: ../src/totem.c:3252
+#: ../src/totem.c:3227
 msgid "No reason."
 msgstr "Ez dago arrazoirik"
 
-#: ../src/totem.c:3391
+#: ../src/totem.c:3366
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Ezin izan dira hari seguruko liburutegiak abiarazi."
 
-#: ../src/totem.c:3391
+#: ../src/totem.c:3366
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Egiaztatu sistemaren instalazioa. Totem itxi egingo da orain."
 
-#: ../src/totem.c:3414
+#: ../src/totem.c:3389
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem-ek ezin izan du konfigurazio-motorra abiarazi."
 
-#: ../src/totem.c:3414
+#: ../src/totem.c:3389
 msgid "Make sure that GNOME is properly installed."
 msgstr "Ziurtatu GNOME behar bezala instalatuta dagoela."
 
 #. Main window
-#: ../src/totem.c:3441
+#: ../src/totem.c:3416
 msgid "main window"
 msgstr "leiho nagusia"
 
-#: ../src/totem.c:3446
+#: ../src/totem.c:3421
 msgid "video popup menu"
 msgstr "bideoaren laster-menua"
 
@@ -1485,7 +1504,7 @@ msgstr ""
 "Egiaztatu gailua ez dagoela okupatuta."
 
 #: ../src/backend/bacon-video-widget-xine.c:1131
-#: ../src/backend/bacon-video-widget-xine.c:1664
+#: ../src/backend/bacon-video-widget-xine.c:1667
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -1558,32 +1577,36 @@ msgstr "Zerbitzariak fitxategira edo korrontera atzitzea ukatu du."
 msgid "The file you tried to play is an empty file."
 msgstr "Erreproduzitzen saiatzen ari zaren fitxategia hitsuk dago."
 
-#: ../src/backend/bacon-video-widget-xine.c:1472
+#: ../src/backend/bacon-video-widget-xine.c:1471
+msgid "There is no input plugin to handle the location of this movie"
+msgstr "Ez dago sarrerako plugin-ik film honen helbidea kudeatzeko."
+
+#: ../src/backend/bacon-video-widget-xine.c:1475
 msgid "There is no plugin to handle this movie."
 msgstr "Ez dago plugin-ik film hau kudeatzeko."
 
-#: ../src/backend/bacon-video-widget-xine.c:1476
+#: ../src/backend/bacon-video-widget-xine.c:1479
 msgid "This movie is broken and can not be played further."
 msgstr "Film hau hondatuta dago eta ezin da gehiago erreproduzitu."
 
-#: ../src/backend/bacon-video-widget-xine.c:1480
+#: ../src/backend/bacon-video-widget-xine.c:1483
 msgid "This location is not a valid one."
 msgstr "Helbide hau ez da baliozkoa."
 
-#: ../src/backend/bacon-video-widget-xine.c:1484
+#: ../src/backend/bacon-video-widget-xine.c:1487
 msgid "This movie could not be opened."
 msgstr "Ezin izan da film hau ireki."
 
-#: ../src/backend/bacon-video-widget-xine.c:1488
+#: ../src/backend/bacon-video-widget-xine.c:1491
 msgid "Generic Error."
 msgstr "Errore generikoa."
 
-#: ../src/backend/bacon-video-widget-xine.c:2030
+#: ../src/backend/bacon-video-widget-xine.c:2031
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr ""
 "Filma hau irudi bat da oraindik. Irudi-ikustaile batekin ireki dezakezu."
 
-#: ../src/backend/bacon-video-widget-xine.c:2054
+#: ../src/backend/bacon-video-widget-xine.c:2055
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1592,7 +1615,7 @@ msgstr ""
 "'%s' bideo-kodeka ezin da kudeatu. Plugin osagarriak instalatzea komeni "
 "zaizu film-mota batzuk erreproduzitu ahal izateko"
 
-#: ../src/backend/bacon-video-widget-xine.c:2058
+#: ../src/backend/bacon-video-widget-xine.c:2059
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1601,26 +1624,26 @@ msgstr ""
 "'%s' audio-kodeka ezin da kudeatu. Plugin osagarriak instalatzea komeni "
 "zaizu film-mota batzuk erreproduzitu ahal izateko"
 
-#: ../src/backend/bacon-video-widget-xine.c:2074
+#: ../src/backend/bacon-video-widget-xine.c:2075
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr ""
 "Fitxategi honek audioa bakarrik du eta ez dago audio-irteerarik erabilgarri."
 
-#: ../src/backend/bacon-video-widget-xine.c:3514
-#: ../src/backend/bacon-video-widget-xine.c:3577
+#: ../src/backend/bacon-video-widget-xine.c:3515
+#: ../src/backend/bacon-video-widget-xine.c:3578
 #, c-format
 msgid "Language %d"
 msgstr "%d. hizkuntza"
 
-#: ../src/backend/bacon-video-widget-xine.c:3613
+#: ../src/backend/bacon-video-widget-xine.c:3614
 msgid "Movie is not playing."
 msgstr "Filma ez da erreproduzitzen ari."
 
-#: ../src/backend/bacon-video-widget-xine.c:3622
+#: ../src/backend/bacon-video-widget-xine.c:3623
 msgid "No video to capture."
 msgstr "Ez dago kapturatzeko bideorik."
 
-#: ../src/backend/bacon-video-widget-xine.c:3630
+#: ../src/backend/bacon-video-widget-xine.c:3631
 msgid "Video codec is not handled."
 msgstr "Bideoaren kodeka ezin da kudeatu."
 
@@ -1733,6 +1756,9 @@ msgstr "Ezin izan da analizatzailea idatzi: %s"
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "Ezin izan da '%s' fitxategia ireki: %s"
+
+#~ msgid "Select Files"
+#~ msgstr "Hautatu fitxategiak"
 
 #~ msgid "Repeat _mode"
 #~ msgstr "Errepikatze-_modua"
