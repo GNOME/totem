@@ -1,5 +1,12 @@
 2005-10-29  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (totem_action_load_media),
+	(totem_action_load_media_device), (totem_action_play_media_device),
+	(totem_action_remote): stop the currently playing song when
+	loading a media, and playing it fails (Closes: #317119)
+
+2005-10-29  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_action_load_media_device): avoid warnings
 	when trying to play a data CD using the "Play Disc" menu
 

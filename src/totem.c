@@ -380,6 +380,7 @@ totem_action_load_media (Totem *totem, MediaType type)
 {
 	char **mrls;
 	char *msg;
+	gboolean retval;
 
 	if (bacon_video_widget_can_play (totem->bvw, type) == FALSE)
 	{
@@ -398,10 +399,10 @@ totem_action_load_media (Totem *totem, MediaType type)
 		return FALSE;
 	}
 
-	totem_action_open_files (totem, mrls);
+	retval = totem_action_open_files (totem, mrls);
 	g_strfreev (mrls);
 
-	return TRUE;
+	return retval;
 }
 
 static gboolean
@@ -441,8 +442,10 @@ totem_action_load_media_device (Totem *totem, const char *device)
 		case MEDIA_TYPE_CDDA:
 			bacon_video_widget_set_media_device
 				(BACON_VIDEO_WIDGET (totem->bvw), device_path);
-			totem_action_load_media (totem, type);
-			retval = TRUE;
+			retval = totem_action_load_media (totem, type);
+			if (retval == FALSE) {
+				totem_action_set_mrl_and_play (totem, NULL);
+			}
 			break;
 		default:
 			g_assert_not_reached ();
@@ -463,7 +466,7 @@ totem_action_play_media_device (Totem *totem, const char *device)
 		mrl = totem_playlist_get_current_mrl (totem->playlist);
 		totem_action_set_mrl_and_play (totem, mrl);
 		g_free (mrl);
-	}
+	} 
 }
 
 void
@@ -2201,10 +2204,9 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 	case TOTEM_REMOTE_COMMAND_REPLACE:
 		g_assert (url != NULL);
 		totem_playlist_clear (totem->playlist);
-		if (g_str_has_prefix (url, "dvd:"))
-		{
+		if (strcmp (url, "dvd:") == 0) {
 			totem_action_play_media (totem, MEDIA_TYPE_DVD);
-		} else if (g_str_has_prefix (url, "vcd:") != FALSE) {
+		} else if (strcmp (url, "vcd:") == 0) {
 			totem_action_play_media (totem, MEDIA_TYPE_VCD);
 		} else if (g_str_has_prefix (url, "cd:") != FALSE) {
 			totem_action_play_media (totem, MEDIA_TYPE_CDDA);
@@ -2213,7 +2215,7 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		} else if (totem_playlist_add_mrl (totem->playlist,
 					url, NULL) != FALSE) {
 			totem_action_add_recent (totem, url);
-		}	
+		}
 		break;
 	case TOTEM_REMOTE_COMMAND_SHOW:
 		gtk_window_present (GTK_WINDOW (totem->win));
