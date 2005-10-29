@@ -1,3 +1,11 @@
+2005-10-30  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/totem-pl-parser.c:
+	(totem_pl_parser_add_pls_with_contents), (totem_pl_parser_add_pls),
+	(totem_pl_parser_get_extinfo_title), (totem_pl_parser_add_m3u):
+	Parse as .pls files .m3u playlists with [playlist] at the beginning
+	(Closes: #318558)
+
 2005-10-29  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c: (totem_action_load_media),
