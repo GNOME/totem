@@ -432,9 +432,9 @@ totem_action_load_media_device (Totem *totem, const char *device)
 			{
 				char *s;
 				s = totem_action_open_dialog (totem, url, FALSE);
+				retval = (s != NULL);
 				g_free (s);
 			}
-			retval = TRUE;
 			break;
 		case MEDIA_TYPE_DVD:
 		case MEDIA_TYPE_VCD:
