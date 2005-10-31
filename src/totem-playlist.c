@@ -96,6 +96,7 @@ struct TotemPlaylistPrivate
 /* Signals */
 enum {
 	CHANGED,
+	ITEM_ACTIVATED,
 	ACTIVE_NAME_CHANGED,
 	CURRENT_REMOVED,
 	REPEAT_TOGGLED,
@@ -1069,7 +1070,7 @@ treeview_row_changed (GtkTreeView *treeview, GtkTreePath *arg1,
 			(arg1, playlist->_priv->current) != FALSE)
 	{
 		g_signal_emit (G_OBJECT (playlist),
-				totem_playlist_table_signals[CHANGED], 0,
+				totem_playlist_table_signals[ITEM_ACTIVATED], 0,
 				NULL);
 		return;
 	}
@@ -2323,6 +2324,14 @@ totem_playlist_class_init (TotemPlaylistClass *klass)
 				G_TYPE_FROM_CLASS (klass),
 				G_SIGNAL_RUN_LAST,
 				G_STRUCT_OFFSET (TotemPlaylistClass, changed),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__VOID,
+				G_TYPE_NONE, 0);
+	totem_playlist_table_signals[ITEM_ACTIVATED] =
+		g_signal_new ("item-activated",
+				G_TYPE_FROM_CLASS (klass),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (TotemPlaylistClass, item_activated),
 				NULL, NULL,
 				g_cclosure_marshal_VOID__VOID,
 				G_TYPE_NONE, 0);

@@ -52,6 +52,7 @@ struct TotemPlaylistClass {
 	GtkVBoxClass parent_class;
 
 	void (*changed) (TotemPlaylist *playlist);
+	void (*item_activated) (TotemPlaylist *playlist);
 	void (*active_name_changed) (TotemPlaylist *playlist);
 	void (*current_removed) (TotemPlaylist *playlist);
 	void (*repeat_toggled) (TotemPlaylist *playlist, gboolean repeat);

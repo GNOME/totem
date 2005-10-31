@@ -349,6 +349,8 @@ totem_action_seek (Totem *totem, double pos)
 
 	if (totem->mrl == NULL)
 		return;
+	if (bacon_video_widget_is_seekable (totem->bvw) == FALSE)
+		return;
 
 	retval = bacon_video_widget_seek (totem->bvw, pos, &err);
 
@@ -882,9 +884,9 @@ totem_action_seek_relative (Totem *totem, int off_sec)
 	GError *err = NULL;
 	gint64 off_msec, oldsec, sec;
 
-	if (bacon_video_widget_is_seekable (totem->bvw) == FALSE)
-		return;
 	if (totem->mrl == NULL)
+		return;
+	if (bacon_video_widget_is_seekable (totem->bvw) == FALSE)
 		return;
 
 	off_msec = off_sec * 1000;
@@ -2289,6 +2291,12 @@ playlist_changed_cb (GtkWidget *playlist, Totem *totem)
 }
 
 static void
+item_activated_cb (GtkWidget *playlist, Totem *totem)
+{
+	totem_action_seek (totem, 0);
+}
+
+static void
 current_removed_cb (GtkWidget *playlist, Totem *totem)
 {
 	char *mrl;
@@ -3129,20 +3137,6 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (vol_cb), totem);
 
 	/* Playlist */
-	g_signal_connect (G_OBJECT (totem->playlist),
-			"changed", G_CALLBACK (playlist_changed_cb),
-			totem);
-	g_signal_connect (G_OBJECT (totem->playlist),
-			"current-removed", G_CALLBACK (current_removed_cb),
-			totem);
-	g_signal_connect (G_OBJECT (totem->playlist),
-			"repeat-toggled",
-			G_CALLBACK (playlist_repeat_toggle_cb),
-			totem);
-	g_signal_connect (G_OBJECT (totem->playlist),
-			"shuffle-toggled",
-			G_CALLBACK (playlist_shuffle_toggle_cb),
-			totem);
 
 	/* DVD menu callbacks */
 	item = glade_xml_get_widget (totem->xml, "tmw_dvd_root_menu_item");
@@ -3201,8 +3195,25 @@ playlist_widget_setup (Totem *totem)
 
 	gtk_widget_show_all (GTK_WIDGET (totem->playlist));
 
-	g_signal_connect(totem->playlist, "active-name-changed",
+	g_signal_connect (G_OBJECT (totem->playlist), "active-name-changed",
 			G_CALLBACK (on_playlist_change_name), totem);
+	g_signal_connect (G_OBJECT (totem->playlist), "item-activated",
+			G_CALLBACK (item_activated_cb), totem);
+	g_signal_connect (G_OBJECT (totem->playlist),
+			"changed", G_CALLBACK (playlist_changed_cb),
+			totem);
+	g_signal_connect (G_OBJECT (totem->playlist),
+			"current-removed", G_CALLBACK (current_removed_cb),
+			totem);
+	g_signal_connect (G_OBJECT (totem->playlist),
+			"repeat-toggled",
+			G_CALLBACK (playlist_repeat_toggle_cb),
+			totem);
+	g_signal_connect (G_OBJECT (totem->playlist),
+			"shuffle-toggled",
+			G_CALLBACK (playlist_shuffle_toggle_cb),
+			totem);
+
 }
 
 static void
