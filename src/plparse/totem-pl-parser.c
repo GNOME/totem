@@ -1499,6 +1499,7 @@ static PlaylistTypes ignore_types[] = {
 	{ "text/plain", NULL },
 	{ "application/x-rar", NULL },
 	{ "application/zip", NULL },
+	{ "application/x-trash", NULL },
 };
 
 /* These ones are "dual" types, might be a video, might be a parser */
