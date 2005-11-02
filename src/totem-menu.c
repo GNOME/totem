@@ -553,8 +553,18 @@ fake_gnome_vfs_device_get_something (GObject *device,
 static void
 add_device_to_menu (GObject *device, GtkMenu *menu, gint position, Totem *totem)
 {
-	char *name, *icon_name, *device_path, *label;
+	char *name, *icon_name, *device_path, *label, *activation_uri;
 	GtkWidget *menu_item, *icon;
+	gboolean disabled = FALSE;
+
+	/* Add devices with blank CDs in them, but disable them */
+	activation_uri = fake_gnome_vfs_device_get_something (device,
+		&gnome_vfs_volume_get_activation_uri,
+		&gnome_vfs_drive_get_activation_uri);
+	if (g_str_has_prefix (activation_uri, "burn://") != FALSE) {
+		g_free (activation_uri);
+		disabled = TRUE;
+	}
 
 	name = fake_gnome_vfs_device_get_something (device,
 		&gnome_vfs_volume_get_display_name,
@@ -586,6 +596,9 @@ add_device_to_menu (GObject *device, GtkMenu *menu, gint position, Totem *totem)
 			G_CALLBACK (on_play_disc_activate), totem);
 
 	gtk_menu_shell_insert (GTK_MENU_SHELL (menu), menu_item, position);
+	if (disabled != FALSE) {
+		gtk_widget_set_sensitive (menu_item, FALSE);
+	}
 	gtk_widget_show (menu_item);
 }
 

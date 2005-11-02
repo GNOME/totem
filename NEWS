@@ -10,8 +10,14 @@ New features:
   * Add a menu item for switching angles on DVDs
 
 Bug fixes:
+  * Play file from the beginning when double-clicking on it in the playlist
+  * Make CD drives with blank CDs in them unsensitive in the Play Disc menu
   * Avoid weird startes when using the "Toggle fullscreen mode" shortcut
   * Fix drag'n'drop on the playlist itself not working
+  * Don't add backup files to the playlist
+  * Parse Shoucast playlists in .m3u files properly
+  * Stop the currently playing song when loading a media, and playing this
+  media fails
   * Set the play/pause buttons' tooltips according to the image
   * Fix possible crashes on startup when the widget creation functions cannot
   be found
@@ -21,6 +27,7 @@ Bug fixes:
   * Fix possible i18n problems with the Nautilus properties window and the
   Mozilla plugin
   * Fix a memory leak in the Mozilla plugin
+
 
 GStreamer:
   * Fix an access to invalid memory when getting metadata from a file
