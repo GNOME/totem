@@ -2151,6 +2151,12 @@ bacon_video_widget_play (BaconVideoWidget *bvw, GError **gerror)
 	return TRUE;
 }
 
+gboolean
+bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
+{
+	return FALSE;
+}
+
 gboolean bacon_video_widget_seek (BaconVideoWidget *bvw, float position,
 		GError **gerror)
 {

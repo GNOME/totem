@@ -53,14 +53,15 @@ dnl the two versions here implicate the gstreamer core and gst-plugins
 dnl release versions. We want core newer than 0.8.6 (either cvs or a next
 dnl prerelease; 0.8.7 is preferred) and gst-plugins newer than 0.8.4
 dnl (either CVS or a prerelease; 0.8.5 is preferred).
-GST_REQS=0.8.6.1
-GSTPLUG_REQS=0.8.4.1
 XINE_REQS=1.0.1
+GST_MAJORMINOR=auto
 
 AC_ARG_ENABLE(gstreamer,
-	AC_HELP_STRING([--enable-gstreamer],[use GStreamer instead of xine for the backend]),
+	AC_HELP_STRING([--enable-gstreamer],[use GStreamer instead of xine for the backend (and optionally specify a version)]),
 	[case "${enableval}" in
 	yes) ENABLE_GST=yes ;;
+        0.8) ENABLE_GST=yes && GST_MAJORMINOR=0.8 ;;
+        0.9) ENABLE_GST=yes && GST_MAJORMINOR=0.9 ;;
         no)  ENABLE_GST=no ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-gstreamer) ;;
 	esac],
@@ -78,23 +79,40 @@ if test x$ENABLE_GST = xno; then
 fi
 
 if test x$HAVE_XINE = xno; then
-	GST_MAJORMINOR=0.8
-	PKG_CHECK_MODULES(GST, \
-			gstreamer-$GST_MAJORMINOR >= $GST_REQS \
-			gstreamer-gconf-$GST_MAJORMINOR >= $GSTPLUG_REQS \
-			gstreamer-interfaces-$GST_MAJORMINOR >= $GSTPLUG_REQS,
+	dnl some sort of autodetection
+	if test x$GST_MAJORMINOR = xauto; then
+		PKG_CHECK_MODULES(GST, gstreamer-0.8, [
+				  GST_MAJORMINOR=0.8],[GST_MAJORMINOR=0.9])
+	fi
+	dnl set different requirements for supported major versions
+	if test x$GST_MAJORMINOR = x0.8; then
+		GST_REQS=0.8.6.1
+		GSTPLUG_REQS=0.8.4.1
+		MM="gstreamer-0.8 >= $GST_REQS gstreamer-gconf-0.8 >= $GSTPLUG_REQS gstreamer-interfaces-0.8 >= $GSTPLUG_REQS"
+	else
+		GST_REQS=0.9.4
+		GSTPLUG_REQS=0.9.4
+		MM="gstreamer-0.9 >= $GST_REQS gstreamer-plugins-base-0.9 >= $GSTPLUG_REQS gconf-2.0"
+	fi
+	PKG_CHECK_MODULES(GST, $MM,
 			HAVE_GSTREAMER=yes, HAVE_GSTREAMER=no)
-	MM="gstreamer-$GST_MAJORMINOR >= $GST_REQS gstreamer-gconf-$GST_MAJORMINOR >= $GSTPLUG_REQS gstreamer-interfaces-$GST_MAJORMINOR >= $GSTPLUG_REQS"
+	if test x$GST_MAJORMINOR = x0.9; then
+		GST_LIBS="$GST_LIBS -lgstinterfaces-0.9"
+		AC_SUBST(GST_LIBS)
+		EXTRA_BACKEND_LIBS="-lgstinterfaces-0.9"
+		AC_DEFINE(HAVE_GSTREAMER_09, 1, [Whether we use Gst 0.8 or 0.9])
+	fi
 
 dnl Give error and exit if we don't have gstreamer
 	if test "x$HAVE_GSTREAMER" = "xno"; then
 		AC_MSG_ERROR(you need the GStreamer or the xine-lib development packages installed)
 	fi
 
-	AC_MSG_RESULT(GStreamer)
+	AC_MSG_RESULT(GStreamer-$GST_MAJORMINOR)
 fi
 
-AM_CONDITIONAL(TOTEM_GST, test x$HAVE_GSTREAMER = "xyes")
+AM_CONDITIONAL(TOTEM_GST, test "x$HAVE_GSTREAMER" = "xyes")
+AM_CONDITIONAL(TOTEM_GST_010, test "x$GST_MAJORMINOR" = "x0.9")
 
 AC_ARG_ENABLE(vanity,
 	AC_HELP_STRING([--enable-vanity],[do not compile and install vanity]),
@@ -181,12 +199,13 @@ AC_DEFINE_UNQUOTED([ISO_CODES_PREFIX],["`$PKG_CONFIG --variable=prefix iso-codes
 
 AM_CONDITIONAL(HAVE_GNOME, test x$HAVE_GNOME = "xyes")
 EXTRA_GNOME_CFLAGS="$EXTRA_GNOME_CFLAGS"
-EXTRA_GNOME_LIBS="$EXTRA_GNOME_LIBS"
+EXTRA_GNOME_LIBS="$EXTRA_GNOME_LIBS $EXTRA_BACKEND_LIBS"
 AC_SUBST(EXTRA_GNOME_CFLAGS)
 AC_SUBST(EXTRA_GNOME_LIBS)
 
 PKG_CHECK_MODULES(GTK, gtk+-x11-2.0 $MM gthread-2.0)
 AC_SUBST(GTK_CFLAGS)
+GTK_LIBS="$GTK_LIBS $EXTRA_BACKEND_LIBS"
 AC_SUBST(GTK_LIBS)
 
 dnl *******
@@ -261,6 +280,7 @@ if test "x$ENABLE_MOZILLA" = "xyes" ; then
 		 gnome-vfs-2.0],,
 		[ENABLE_MOZILLA=no])
 
+	MOZILLA_LIBS="$MOZILLA_LIBS $EXTRA_BACKEND_LIBS"
 	AC_SUBST([MOZILLA_CFLAGS])
 	AC_SUBST([MOZILLA_LIBS])
 fi
@@ -336,6 +356,7 @@ if test x$ENABLE_NAUTILUS = "xyes" ; then
 			[HAVE_NAUTILUS=yes], [HAVE_NAUTILUS=no])
 fi
 
+NAUTILUS_LIBS="$NAUTILUS_LIBS $EXTRA_BACKEND_LIBS"
 AC_SUBST(NAUTILUS_CFLAGS)
 AC_SUBST(NAUTILUS_LIBS)
 if test x$HAVE_NAUTILUS = "xyes"; then
@@ -516,7 +537,7 @@ help/uk/Makefile
 
 echo
 if test x$HAVE_XINE = xno ; then
-	echo "Using the GStreamer backend"
+	echo "Using the GStreamer-$GST_MAJORMINOR backend"
 else
 	echo "Using the xine backend"
 fi

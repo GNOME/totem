@@ -15,12 +15,18 @@ bvw_test_LDADD = \
 	$(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS) \
 	libbaconvideowidget.la
 
+if TOTEM_GST_010
+MM = bacon-video-widget-gst-0.10.c \
+	gstscreenshot.c \
+	gstscreenshot.h
+else
 if TOTEM_GST
 MM = bacon-video-widget-gst.c \
 	gstscreenshot.c \
 	gstscreenshot.h
 else
 MM = bacon-video-widget-xine.c
+endif
 endif
 
 BVWMARSHALFILES = baconvideowidget-marshal.c baconvideowidget-marshal.h
@@ -45,6 +51,7 @@ CLEANFILES = $(BUILT_SOURCES)
 EXTRA_DIST = \
 	bacon-video-widget-xine.c \
 	bacon-video-widget-gst.c \
+	bacon-video-widget-gst-0.10.c \
 	gstscreenshot.c \
 	gstscreenshot.h \
 	baconvideowidget-marshal.list

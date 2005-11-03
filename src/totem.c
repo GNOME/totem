@@ -1409,6 +1409,9 @@ seek_slider_changed_cb (GtkAdjustment *adj, Totem *totem)
 	time = bacon_video_widget_get_stream_length (totem->bvw);
 	totem_statusbar_set_time_and_length (TOTEM_STATUSBAR (totem->statusbar),
 			(int) (pos * time / 1000), time / 1000);
+
+	if (bacon_video_widget_can_direct_seek (totem->bvw))
+		totem_action_seek (totem, pos);
 }
 
 static gboolean
@@ -1416,14 +1419,16 @@ seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 {
 	if (g_object_get_data (G_OBJECT (widget), "fs") != FALSE)
 	{
-		totem_action_seek (totem,
+		if (!bacon_video_widget_can_direct_seek (totem->bvw))
+			totem_action_seek (totem,
 				gtk_adjustment_get_value (totem->fs_seekadj) / 65535);
 		/* Update the fullscreen seek adjustment */
 		gtk_adjustment_set_value (totem->seekadj,
 				gtk_adjustment_get_value
 				(totem->fs_seekadj));
 	} else {
-		totem_action_seek (totem,
+		if (!bacon_video_widget_can_direct_seek (totem->bvw))
+			totem_action_seek (totem,
 				gtk_adjustment_get_value (totem->seekadj) / 65535);
 		/* Update the seek adjustment */
 		gtk_adjustment_set_value (totem->fs_seekadj,

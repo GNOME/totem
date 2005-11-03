@@ -1,3 +1,39 @@
+2005-11-03  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* configure.in:
+	* src/backend/Makefile.am:
+	  Add configure magic GStreamer 0.9/0.10 backend: --enable-gstreamer
+	  now optionally accepts a GStreamer major/minor version as well
+	  (if none is specified it defaults to GStreamer 0.8).
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	  Add GStreamer 0.9/0.10 backend (based on Ronald's original
+	  patch, #313086).
+
+	* src/backend/bacon-video-widget-gst.c:
+	(bacon_video_widget_signal_idler), (got_found_tag),
+	(parse_stream_info), (cb_audio_fixate), (get_num_audio_channels),
+	(fixate_to_num), (bacon_video_widget_set_audio_out_type),
+	(bacon_video_widget_open_with_subtitle), (bacon_video_widget_play),
+	(bacon_video_widget_can_direct_seek),
+	(bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_metadata_int), (bacon_video_widget_new):
+	  Some fixes for the 0.8 backend: gcc4 signedness fixes; move some
+	  code from cb_audio_fixate() into helper functions; fix minor memory
+	  leak; improve error messages when sink could not be created.
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_can_direct_seek):
+	* src/backend/bacon-video-widget.h:
+	  Add new _can_direct_seek() method.
+
+	* src/backend/gstscreenshot.c: (have_data), (get_any),
+	(bvw_frame_conv_convert):
+	  Add code paths for GStreamer 0.9/0.10.
+
+	* src/totem.c: (seek_slider_changed_cb), (seek_slider_released_cb):
+	  Slider magic for direct seeking.
+
 2005-11-02  Bastien Nocera  <hadess@hadess.net>
 
 	* NEWS: upd
