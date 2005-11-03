@@ -1438,7 +1438,7 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
 	    bacon_video_widget_get_show_cursor (bvw));
 	break;
       case PROP_MEDIADEV:
-	g_value_take_string (value, bvw->priv->media_device);
+	g_value_set_string (value, bvw->priv->media_device);
 	break;
       default:
 	G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

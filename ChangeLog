@@ -1,3 +1,10 @@
+2005-11-03  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/backend/bacon-video-widget-gst.c:
+	(bacon_video_widget_get_property):
+	  Use _set_string() instead of _take_string() for a string that we
+	  want to continue owning (causes random crashers elsewhere).
+
 2005-11-02  Bastien Nocera  <hadess@hadess.net>
 
 	* NEWS: upd
