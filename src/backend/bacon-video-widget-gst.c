@@ -42,7 +42,6 @@
 /* GStreamer Interfaces */
 #include <gst/xoverlay/xoverlay.h>
 #include <gst/navigation/navigation.h>
-#include <gst/mixer/mixer.h>
 #include <gst/colorbalance/colorbalance.h>
 
 /* system */
@@ -117,8 +116,6 @@ struct BaconVideoWidgetPrivate
 
   GstElement *play;
   guint update_id;
-  GstMixer *mixer;
-  GstMixerTrack *mixer_track;
   GstXOverlay *xoverlay;
   GstColorBalance *balance;
 
@@ -858,7 +855,7 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
           if (tag_list)
             gst_tag_list_free (tag_list);
 
-	  gst_object_unref (signal->signal_data.found_tag.source);
+	  gst_object_unref (GST_OBJECT (signal->signal_data.found_tag.source));
 
           g_signal_emit (G_OBJECT (bvw),
 			 bvw_table_signals[SIGNAL_GOT_METADATA],
@@ -916,7 +913,7 @@ got_found_tag (GstElement *play, GstElement *source,
   signal->signal_data.found_tag.source = source;
   signal->signal_data.found_tag.tag_list = gst_tag_list_copy (tag_list);
 
-  gst_object_ref (source);
+  gst_object_ref (GST_OBJECT (source));
 
   g_async_queue_push (bvw->priv->queue, signal);
 
@@ -1197,10 +1194,6 @@ parse_stream_info (BaconVideoWidget *bvw)
     if (strstr (val->value_name, "AUDIO")) {
       if (!bvw->priv->media_has_audio) {
         bvw->priv->media_has_audio = TRUE;
-        /*if (!bvw->priv->media_has_video &&
-            bvw->priv->show_vfx && bvw->priv->vis_element) {
-          videopad = gst_element_get_pad (bvw->priv->vis_element, "src");
-        }*/
       }
     } else if (strstr (val->value_name, "VIDEO")) {
       bvw->priv->media_has_video = TRUE;
@@ -1219,9 +1212,8 @@ parse_stream_info (BaconVideoWidget *bvw)
     /* handle explicit caps as well - they're set later */
     if (((GstRealPad *) real)->link != NULL && GST_PAD_CAPS (real))
       caps_set (G_OBJECT (real), NULL, bvw);
-    //else
-      g_signal_connect (real, "notify::caps",
-          G_CALLBACK (caps_set), bvw);
+    g_signal_connect (real, "notify::caps",
+        G_CALLBACK (caps_set), bvw);
   } else if (bvw->priv->show_vfx && bvw->priv->vis_element) {
     fixate_visualization (NULL, NULL, bvw);
   }
@@ -1695,14 +1687,26 @@ bacon_video_widget_get_tv_out (BaconVideoWidget * bvw)
   return bvw->priv->tv_out_type;
 }
 
+static gint get_num_audio_channels (BaconVideoWidget * bvw);
+static GstCaps *fixate_to_num (const GstCaps * in_caps, gint channels);
+
 static GstCaps *
 cb_audio_fixate (GstPad *pad,
 		 const GstCaps *in_caps,
 		 BaconVideoWidget *bvw)
 {
-  gint channels = -1, n, count, diff = -1;
-  const GstStructure *s, *closest = NULL;
-  const GValue *v;
+  gint channels;
+
+  if ((channels = get_num_audio_channels (bvw)) == -1)
+    return NULL;
+
+  return fixate_to_num (in_caps, channels);
+}
+
+static gint
+get_num_audio_channels (BaconVideoWidget * bvw)
+{
+  gint channels;
 
   switch (bvw->priv->speakersetup) {
     case BVW_AUDIO_SOUND_STEREO:
@@ -1722,11 +1726,18 @@ cb_audio_fixate (GstPad *pad,
       break;
     case BVW_AUDIO_SOUND_AC3PASSTHRU:
     default:
-      break;
+      g_return_val_if_reached (-1);
   }
 
-  if (channels == -1)
-    return NULL;
+  return channels;
+}
+
+static GstCaps *
+fixate_to_num (const GstCaps * in_caps, gint channels)
+{
+  gint n, count, diff = -1;
+  const GstStructure *s, *closest = NULL;
+  const GValue *v;
 
   /* there might be multiple structures, and one might contain the
    * channelcount that we want. Try that. */
@@ -1792,7 +1803,10 @@ cb_audio_fixate (GstPad *pad,
     }
   }
 
-  /* FIXME: we could do something with closest here... */
+  /* close guess */
+  if (closest)
+    return gst_caps_new_full (gst_structure_copy (closest), NULL);
+
   return NULL;
 }
 
@@ -1809,22 +1823,17 @@ gboolean
 bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
                                        BaconVideoWidgetAudioOutType type)
 {
-  GstElement *audiosink = NULL;
-
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 
   if (type == bvw->priv->speakersetup)
     return FALSE;
+  else if (type == BVW_AUDIO_SOUND_AC3PASSTHRU)
+    return FALSE;
 
   bvw->priv->speakersetup = type;
   gconf_client_set_int (bvw->priv->gc,
       GCONF_PREFIX"/audio_output_type", type, NULL);
-
-  g_object_get (G_OBJECT (bvw->priv->play), "audio-sink", &audiosink, NULL);
-  if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED) {
-    //gst_pad_renegotiate (gst_element_get_pad (audiosink, "sink"));
-  }
 
   return FALSE;
 }
@@ -1902,6 +1911,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 
   ret = (gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED) ==
       GST_STATE_SUCCESS);
+
   if (!ret && !bvw->priv->got_redirect) {
     if (error) {
       if (bvw->priv->last_error) {
@@ -1910,6 +1920,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 #define is_error(e, d, c) \
   (e->domain == GST_##d##_ERROR && \
    e->code == GST_##d##_ERROR_##c)
+
 	if (is_error (e, RESOURCE, NOT_FOUND) ||
 	    is_error (e, RESOURCE, OPEN_READ)) {
 	  if (strchr (mrl, ':') &&
@@ -1924,7 +1935,8 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 		  _("Location not found."));
 	    } else {
 	      g_set_error (error, BVW_ERROR, BVW_ERROR_FILE_PERMISSION,
-		  _("You don't have permission to open that location."));
+		  _("Could not open location; "
+		    "You may not have permission to open the file."));
 	    }
 	  }
 	} else if (e->domain == GST_RESOURCE_ERROR) {
@@ -1975,6 +1987,7 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
 
   ret = (gst_element_set_state (GST_ELEMENT (bvw->priv->play),
       GST_STATE_PLAYING) == GST_STATE_SUCCESS);
+
   if (!ret) {
     g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC, _("Failed to play: %s"),
 	 (bvw->priv->last_error != NULL) ?
@@ -2954,6 +2967,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
 					GST_TAG_DATE, &julian))) {
 	GDate *d = g_date_new_julian (julian);
 	string = g_strdup_printf ("%d", g_date_get_year (d));
+        g_date_free (d);
       }
       break;
     }
@@ -3007,7 +3021,7 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
       break;
     case BVW_INFO_TRACK_NUMBER:
       if (!gst_tag_list_get_uint (bvw->priv->tagcache,
-				  GST_TAG_TRACK_NUMBER, &integer))
+				  GST_TAG_TRACK_NUMBER, (guint *) &integer))
         integer = 0;
       break;
     case BVW_INFO_DIMENSION_X:
@@ -3480,13 +3494,14 @@ bacon_video_widget_new (int width, int height,
   gst_element_set_state (audio_sink, GST_STATE_NULL);
   g_signal_handler_disconnect (audio_sink, sig2);
 
+  g_signal_connect (GST_PAD_REALIZE (gst_element_get_pad (audio_sink, "sink")),
+		    "fixate", G_CALLBACK (cb_audio_fixate), (gpointer) bvw);
+
   /* now tell playbin */
   g_object_set (G_OBJECT (bvw->priv->play), "video-sink",
 		video_sink, NULL);
   g_object_set (G_OBJECT (bvw->priv->play), "audio-sink",
 		audio_sink, NULL);
-  g_signal_connect (GST_PAD_REALIZE (gst_element_get_pad (audio_sink, "sink")),
-		    "fixate", G_CALLBACK (cb_audio_fixate), (gpointer) bvw);
 
   bvw->priv->vis_plugins_list = NULL;
 
@@ -3515,9 +3530,14 @@ bacon_video_widget_new (int width, int height,
   if (type == BVW_USE_TYPE_VIDEO && GST_IS_BIN (bvw->priv->play)) {
     GstElement *element = NULL;
     GList *elements = NULL, *l_elements = NULL;
-    
-    element = gst_bin_get_by_interface (GST_BIN (video_sink),
-                                        GST_TYPE_X_OVERLAY);
+
+    /* get videosink */
+    if (GST_IS_BIN (video_sink)) {
+      element = gst_bin_get_by_interface (GST_BIN (video_sink),
+					  GST_TYPE_X_OVERLAY);
+    } else {
+      element = video_sink;
+    }
     if (GST_IS_X_OVERLAY (element))
       bvw->priv->xoverlay = GST_X_OVERLAY (element);
     

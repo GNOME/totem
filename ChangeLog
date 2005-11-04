@@ -1,3 +1,16 @@
+2005-11-04  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst.c:
+	(bacon_video_widget_signal_idler), (got_found_tag),
+	(parse_stream_info), (cb_audio_fixate), (get_num_audio_channels),
+	(fixate_to_num), (bacon_video_widget_set_audio_out_type),
+	(bacon_video_widget_open_with_subtitle), (bacon_video_widget_play),
+	(bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_metadata_int), (bacon_video_widget_new):
+	  Miscellaneous fixes from MAIN: quieten gcc4; remove unused code;
+	  move some code from cb_audio_fixate() into helper functions; fix 
+	  minor memory leak.
+
 2005-11-03  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/backend/bacon-video-widget-gst.c:
