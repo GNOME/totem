@@ -1,5 +1,13 @@
 2005-11-04  Tim-Philipp Müller  <tim at centricular dot net>
 
+	* src/totem-private.h:
+	* src/totem.c: (seek_slider_pressed_cb), (seek_slider_released_cb):
+	  Pause playback while slider is pressed in direct seek mode in 
+	  order to prevent audio output while the slider position is being 
+	  changed; also fix an instance of dubious g_object_get_data usage.
+
+2005-11-04  Tim-Philipp Müller  <tim at centricular dot net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bacon_video_widget_expose_event), (bacon_video_widget_init),
 	(bacon_video_widget_finalize), (bacon_video_widget_get_property),

@@ -1393,6 +1393,13 @@ seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 {
 	totem->seek_lock = TRUE;
 	totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), TRUE);
+
+	if (bacon_video_widget_can_direct_seek (totem->bvw) != FALSE)
+	{
+		totem->was_playing = bacon_video_widget_is_playing (totem->bvw);
+		bacon_video_widget_pause (totem->bvw);
+	}
+
 	return FALSE;
 }
 
@@ -1417,7 +1424,7 @@ seek_slider_changed_cb (GtkAdjustment *adj, Totem *totem)
 static gboolean
 seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 {
-	if (g_object_get_data (G_OBJECT (widget), "fs") != FALSE)
+	if (GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "fs")) != FALSE)
 	{
 		if (bacon_video_widget_can_direct_seek (totem->bvw) == FALSE)
 			totem_action_seek (totem,
@@ -1434,6 +1441,12 @@ seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 		gtk_adjustment_set_value (totem->fs_seekadj,
 				gtk_adjustment_get_value
 				(totem->seekadj));
+	}
+
+	if (bacon_video_widget_can_direct_seek (totem->bvw) != FALSE)
+	{
+		if (totem->was_playing)
+			bacon_video_widget_play (totem->bvw, NULL);
 	}
 
 	totem->seek_lock = FALSE;

@@ -92,6 +92,7 @@ struct Totem {
 	GtkAdjustment *seekadj;
 	gboolean seek_lock;
 	gboolean seekable;
+	gboolean was_playing;
 
 	/* Volume */
 	GtkWidget *volume;
