@@ -1,3 +1,18 @@
+2005-11-04  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_expose_event), (bacon_video_widget_init),
+	(bacon_video_widget_finalize), (bacon_video_widget_get_property),
+	(bacon_video_widget_get_video_property),
+	(find_colorbalance_element),
+	(bvw_update_interface_implementations),
+	(bvw_changed_state_msg_sync), (got_new_video_sink_bin_element),
+	(bacon_video_widget_new):
+	  Fix 'video jumping out of its frame' at EOS; add fallback for
+	  not properly working colorbalance detection; use _set_string()
+	  instead of _take_string() for a string that we want to continue
+	  owning.
+
 2005-11-03  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c: (seek_slider_changed_cb), (seek_slider_released_cb):

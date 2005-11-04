@@ -109,8 +109,10 @@ struct BaconVideoWidgetPrivate
   BaconVideoWidgetAspectRatio  ratio_type;
 
   GstElement                  *play;
-  GstXOverlay                 *xoverlay;
-  GstColorBalance             *balance;
+  GstXOverlay                 *xoverlay; /* protect with lock */
+  GstColorBalance             *balance;  /* protect with lock */
+  GMutex                      *lock;
+
   guint                        update_id;
 
   GdkPixbuf                   *logo_pixbuf;
@@ -177,6 +179,8 @@ static void bacon_video_widget_get_property (GObject * object,
 					     GParamSpec * pspec);
 
 static void bacon_video_widget_finalize (GObject * object);
+
+static void bvw_update_interface_implementations (BaconVideoWidget *bvw);
 
 static GtkWidgetClass *parent_class = NULL;
 
@@ -315,25 +319,29 @@ static gboolean
 bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
 {
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+  GstXOverlay *xoverlay;
   XID window;
 
   if (event && event->count > 0)
     return TRUE;
 
-  g_return_val_if_fail (bvw->priv->xoverlay != NULL &&
-			GST_IS_X_OVERLAY (bvw->priv->xoverlay),
-			FALSE);
+  g_mutex_lock (bvw->priv->lock);
+  xoverlay = bvw->priv->xoverlay;
+  g_mutex_unlock (bvw->priv->lock);
+
+  g_return_val_if_fail (xoverlay != NULL, FALSE);
+  g_return_val_if_fail (GST_IS_X_OVERLAY (xoverlay), FALSE);
 
   window = GDK_WINDOW_XWINDOW (bvw->priv->video_window);
 
   gdk_draw_rectangle (widget->window, widget->style->black_gc, TRUE, 0, 0,
 		      widget->allocation.width, widget->allocation.height);
-  gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, window);
+  gst_x_overlay_set_xwindow_id (xoverlay, window);
 
   if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED &&
       (bvw->priv->media_has_video ||
        (bvw->priv->vis_element && bvw->priv->show_vfx))) {
-    gst_x_overlay_expose (bvw->priv->xoverlay);
+    gst_x_overlay_expose (xoverlay);
   } else if (bvw->priv->logo_pixbuf != NULL) {
     /* draw logo here */
     GdkPixbuf *logo;
@@ -371,7 +379,7 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
 		      bvw->priv->video_window_allocation.width,
 		      bvw->priv->video_window_allocation.height);
   }
-  
+
   return TRUE;
 }
 
@@ -711,6 +719,11 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   bvw->priv->tagcache = NULL;
   bvw->priv->audiotags = NULL;
   bvw->priv->videotags = NULL;
+
+  if (!g_thread_supported ())
+    g_thread_init (NULL);
+
+  bvw->priv->lock = g_mutex_new ();
 }
 
 static void
@@ -1262,8 +1275,7 @@ bacon_video_widget_finalize (GObject * object)
   }
 
   if (bvw->priv->play != NULL && GST_IS_ELEMENT (bvw->priv->play)) {
-    /* why not NULL? */
-    gst_element_set_state (bvw->priv->play, GST_STATE_READY);
+    gst_element_set_state (bvw->priv->play, GST_STATE_NULL);
     gst_object_unref (bvw->priv->play);
     bvw->priv->play = NULL;
   }
@@ -1287,6 +1299,7 @@ bacon_video_widget_finalize (GObject * object)
   }
   g_free (bvw->priv);
 
+  g_mutex_free (bvw->priv->lock);
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -1355,7 +1368,7 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
 	    bacon_video_widget_get_show_cursor (bvw));
 	break;
       case PROP_MEDIADEV:
-	g_value_take_string (value, bvw->priv->media_device);
+	g_value_set_string (value, bvw->priv->media_device);
 	break;
       default:
 	G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -2690,8 +2703,12 @@ bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
                                        BaconVideoWidgetVideoProperty type)
 {
   int value = 65535 / 2;
+  int ret;
+
   g_return_val_if_fail (bvw != NULL, value);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), value);
+
+  g_mutex_lock (bvw->priv->lock);
   
   if (bvw->priv->balance && GST_IS_COLOR_BALANCE (bvw->priv->balance))
     {
@@ -2731,20 +2748,23 @@ bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
           channels_list = g_list_next (channels_list);
         }
         
-      if (found_channel && GST_IS_COLOR_BALANCE_CHANNEL (found_channel))
-        {
-          value = gst_color_balance_get_value (bvw->priv->balance,
-                                               found_channel);
-          value = ((double) value - found_channel->min_value) * 65535 /
-                  ((double) found_channel->max_value - found_channel->min_value);
-          g_object_unref (found_channel);
-
-	  return value;
-        }
+      if (found_channel && GST_IS_COLOR_BALANCE_CHANNEL (found_channel)) {
+        ret = gst_color_balance_get_value (bvw->priv->balance,
+                                           found_channel);
+        ret = ((double) ret - found_channel->min_value) * 65535 /
+              ((double) found_channel->max_value - found_channel->min_value);
+        g_object_unref (found_channel);
+        goto done;
+      }
     }
 
   /* value wasn't found, get from gconf */
-  return gconf_client_get_int (bvw->priv->gc, video_props_str[type], NULL);
+  ret = gconf_client_get_int (bvw->priv->gc, video_props_str[type], NULL);
+
+done:
+
+  g_mutex_unlock (bvw->priv->lock);
+  return ret;
 }
 
 void
@@ -3348,8 +3368,12 @@ find_colorbalance_element (GstElement *element, GValue * ret, GstElement **cb)
 {
   GstColorBalanceClass *cb_class;
 
+  GST_DEBUG ("Checking element %s ...", GST_OBJECT_NAME (element));
+
   if (!GST_IS_COLOR_BALANCE (element))
     return TRUE;
+
+  GST_DEBUG ("Element %s is a color balance", GST_OBJECT_NAME (element));
 
   cb_class = GST_COLOR_BALANCE_GET_CLASS (element);
   if (GST_COLOR_BALANCE_TYPE (cb_class) == GST_COLOR_BALANCE_HARDWARE) {
@@ -3364,6 +3388,125 @@ find_colorbalance_element (GstElement *element, GValue * ret, GstElement **cb)
   }
 }
 
+static void
+bvw_update_interface_implementations (BaconVideoWidget *bvw)
+{
+  GstColorBalance *old_balance = bvw->priv->balance;
+  GstXOverlay *old_xoverlay = bvw->priv->xoverlay;
+  GConfValue *confvalue;
+  GstElement *video_sink = NULL;
+  GstElement *element = NULL;
+  GstIteratorResult ires;
+  GstIterator *iter;
+  gint i;
+
+  g_object_get (bvw->priv->play, "video-sink", &video_sink, NULL);
+  g_assert (video_sink != NULL);
+
+  /* We try to get an element supporting XOverlay interface */
+  if (GST_IS_BIN (video_sink)) {
+    element = gst_bin_get_by_interface (GST_BIN (video_sink),
+                                        GST_TYPE_X_OVERLAY);
+  } else {
+    element = video_sink;
+  }
+
+  if (GST_IS_X_OVERLAY (element)) {
+    GST_DEBUG ("Found xoverlay: %s", GST_OBJECT_NAME (element));
+    bvw->priv->xoverlay = GST_X_OVERLAY (element);
+  } else {
+    GST_DEBUG ("No xoverlay found");
+    bvw->priv->xoverlay = NULL;
+  }
+
+  /* Find best color balance element (using custom iterator so
+   * we can prefer hardware implementations to software ones) */
+
+  /* FIXME: this doesn't work reliably yet, most of the time
+   * the fold function doesn't even get called, while sometimes
+   * it does ... */
+  iter = gst_bin_iterate_all_by_interface (GST_BIN (bvw->priv->play),
+                                           GST_TYPE_COLOR_BALANCE);
+  /* naively assume no resync */
+  element = NULL;
+  ires = gst_iterator_fold (iter,
+      (GstIteratorFoldFunction) find_colorbalance_element, NULL, &element);
+  gst_iterator_free (iter);
+
+  if (element) {
+    bvw->priv->balance = GST_COLOR_BALANCE (element);
+    GST_DEBUG ("Best colorbalance found: %s",
+        GST_OBJECT_NAME (bvw->priv->balance));
+  } else if (GST_IS_COLOR_BALANCE (bvw->priv->xoverlay)) {
+    bvw->priv->balance = GST_COLOR_BALANCE (bvw->priv->xoverlay);
+    GST_DEBUG ("Colorbalance backup found: %s",
+        GST_OBJECT_NAME (bvw->priv->balance));
+  } else {
+    GST_DEBUG ("No colorbalance found");
+    bvw->priv->balance = NULL;
+  }
+
+  /* Setup brightness and contrast */
+  for (i = 0; i < 4; i++) {
+    confvalue = gconf_client_get_without_default (bvw->priv->gc,
+        video_props_str[i], NULL);
+    if (confvalue != NULL) {
+      bacon_video_widget_set_video_property (bvw, i,
+        gconf_value_get_int (confvalue));
+      gconf_value_free (confvalue);
+    }
+  }
+
+  if (old_xoverlay)
+    gst_object_unref (GST_OBJECT (old_xoverlay));
+
+  if (old_balance)
+    gst_object_unref (GST_OBJECT (old_balance));
+
+  gst_object_unref (video_sink);
+}
+
+static void
+bvw_changed_state_msg_sync (GstBus *bus, GstMessage *msg, gpointer data)
+{
+  BaconVideoWidget *bvw;
+  GstState cur, new, pending;
+
+  if (GST_IS_X_OVERLAY (msg->src) == FALSE)
+    return;
+
+  gst_message_parse_state_changed (msg, &cur, &new, &pending);
+
+  bvw = BACON_VIDEO_WIDGET (data);
+
+  g_mutex_lock (bvw->priv->lock);
+
+  if (GST_X_OVERLAY (msg->src) == bvw->priv->xoverlay) {
+    if (new > cur && cur <= GST_STATE_PAUSED && new <= GST_STATE_PAUSED) {
+      XID window;
+
+      g_assert (bvw->priv->xoverlay != NULL);
+      g_assert (bvw->priv->video_window != NULL);
+
+      window = GDK_WINDOW_XWINDOW (bvw->priv->video_window);
+      gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, window);
+    }
+  }
+
+  g_mutex_unlock (bvw->priv->lock);
+}
+
+static void
+got_new_video_sink_bin_element (GstBin *video_sink, GstElement *element,
+                                gpointer data)
+{
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (data);
+
+  g_mutex_lock (bvw->priv->lock);
+  bvw_update_interface_implementations (bvw);
+  g_mutex_unlock (bvw->priv->lock);
+}
+
 GtkWidget *
 bacon_video_widget_new (int width, int height,
 			BvwUseType type, GError ** err)
@@ -3371,7 +3514,6 @@ bacon_video_widget_new (int width, int height,
   GConfValue *confvalue;
   BaconVideoWidget *bvw;
   GstElement *audio_sink = NULL, *video_sink = NULL;
-  gint i;
   GstBus *bus;
 
   bvw = BACON_VIDEO_WIDGET (g_object_new
@@ -3598,53 +3740,32 @@ bacon_video_widget_new (int width, int height,
   bvw->priv->vis_plugins_list = NULL;
   bvw->priv->cache_errors = FALSE;
 
-  gst_object_unref (bus);
-
   g_signal_connect (bvw->priv->play, "notify::source",
 		    G_CALLBACK (got_source), bvw);
   g_signal_connect (bvw->priv->play, "notify::stream-info",
 		    G_CALLBACK (stream_info_set), bvw);
 
-  /* We try to get an element supporting XOverlay interface */
-  if (type == BVW_USE_TYPE_VIDEO && GST_IS_BIN (bvw->priv->play)) {
-    GstElement *element = NULL;
-    GstIterator *iter;
-
-    /* Find videosink */
-    if (GST_IS_BIN (video_sink)) {
-      element = gst_bin_get_by_interface (GST_BIN (video_sink),
-					  GST_TYPE_X_OVERLAY);
-    } else {
-      element = video_sink;
-    }
-    if (GST_IS_X_OVERLAY (element))
-      bvw->priv->xoverlay = GST_X_OVERLAY (element);
-
-    /* Find best color balance element (using custom iterator so
-     * we can prefer hardware implementations to software ones) */
-
-    iter = gst_bin_iterate_all_by_interface (GST_BIN (bvw->priv->play),
-					     GST_TYPE_COLOR_BALANCE);
-    /* naively assume no resync */
-    element = NULL;
-    gst_iterator_fold (iter,
-        (GstIteratorFoldFunction) find_colorbalance_element, NULL, &element);
-    gst_iterator_free (iter);
-
-    if (element)
-      bvw->priv->balance = GST_COLOR_BALANCE (element);
+  if (type == BVW_USE_TYPE_VIDEO) {
+    /* wait for video sink to finish changing to READY state, 
+     * otherwise we won't be able to detect the colorbalance interface */
+    (void) gst_element_get_state (video_sink, NULL, NULL, GST_CLOCK_TIME_NONE);
+    bvw_update_interface_implementations (bvw);
   }
 
-  /* Setup brightness and contrast */
-  for (i = 0; i < 4; i++) {
-    confvalue = gconf_client_get_without_default (bvw->priv->gc,
-        video_props_str[i], NULL);
-    if (confvalue != NULL) {
-      bacon_video_widget_set_video_property (bvw, i,
-        gconf_value_get_int (confvalue));
-      gconf_value_free (confvalue);
-    }
+  if (GST_IS_BIN (video_sink)) {
+    /* video sink bins like gconfvideosink might remove their children and
+     * create new ones when set to NULL state, and they are currently set
+     * to NULL state whenever playbin re-creates its internal video bin
+     * (it sets all elements to NULL state before gst_bin_remove()ing them) */
+    g_signal_connect (video_sink, "element-added",
+                      G_CALLBACK (got_new_video_sink_bin_element), bvw);
+
+    gst_bus_set_sync_handler (bus, gst_bus_sync_signal_handler, bvw);
+    g_signal_connect (bus, "sync-message::state-changed",
+                      G_CALLBACK (bvw_changed_state_msg_sync), bvw);
   }
+
+  gst_object_unref (bus);
 
   /* audio out, if any */
   confvalue = gconf_client_get_without_default (bvw->priv->gc,
