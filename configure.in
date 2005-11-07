@@ -230,7 +230,7 @@ if test "x$ENABLE_MOZILLA" != "xno" ; then
 	AC_ARG_WITH([mozilla],
 		AS_HELP_STRING([--with-mozilla],[Which gecko engine to use (default: autodetect)]))
 
-	GECKOS="firefox mozilla-firefox seamonkey mozilla"
+	GECKOS="firefox mozilla-firefox seamonkey mozilla xulrunner"
 	gecko=$with_mozilla
 
 	if test "x$gecko" = "x"; then
@@ -263,6 +263,7 @@ if test "x$ENABLE_MOZILLA" != "xno" ; then
 		mozilla) MOZILLA_VERSION_MIN=1.7 ;;
 		seamonkey) MOZILLA_VERSION_MIN=1.0 ;;
 		*firefox) MOZILLA_VERSION_MIN=1.0 ;;
+		xulrunner) MOZILLA_VERSION_MIN=1.8 ;;
 	esac
 
 	MOZILLA=$gecko
