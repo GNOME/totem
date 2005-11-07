@@ -424,8 +424,8 @@ totem_action_load_media_device (Totem *totem, const char *device)
 
 	switch (type) {
 		case MEDIA_TYPE_ERROR:
-			totem_action_error (_("Failed to play Audio/Video Disc"),
-					    error ? error->message : _("Reason unknown"),
+			totem_action_error (_("Totem was not able to play this disc."),
+					    error ? error->message : _("No reason."),
 					    totem);
 			retval = FALSE;
 			break;
