@@ -1,5 +1,12 @@
 2005-11-10  Andy Wingo  <wingo@pobox.com>
 
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_class_init): Remove obsolete comment.
+	(bacon_video_widget_init): Threads have already been enabled via
+	gstreamer.
+	(bvw_bus_message_cb): A "message" signal handler should not return
+	a value.
+
 	* src/backend/bacon-video-widget-gst-0.10.c (get_media_size)
 	(bacon_video_widget_expose_event)
 	(bacon_video_widget_button_press)

@@ -587,11 +587,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   widget_class->button_press_event = bacon_video_widget_button_press;
   widget_class->button_release_event = bacon_video_widget_button_release;
 
-  /* FIXME:
-   * - once I've re-added DVD supports, I want to add event handlers
-   *    ( keys, mouse buttons, mouse motion) here, too.
-   */
-  
   /* GObject */
   object_class->set_property = bacon_video_widget_set_property;
   object_class->get_property = bacon_video_widget_get_property;
@@ -725,9 +720,6 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   bvw->priv->audiotags = NULL;
   bvw->priv->videotags = NULL;
 
-  if (!g_thread_supported ())
-    g_thread_init (NULL);
-
   bvw->priv->lock = g_mutex_new ();
 }
 
@@ -803,16 +795,17 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
 static void
 bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
 {
-  const gchar *type_name;
+  const gchar *type_name = NULL;
   gchar *src_name;
 
   src_name = gst_object_get_name (msg->src);
-  type_name = gst_structure_get_name (msg->structure);
+  if (msg->structure)
+    type_name = gst_structure_get_name (msg->structure);
 
   GST_DEBUG ("Element message from element %s: %" GST_PTR_FORMAT, src_name,
       msg->structure);
 
-  if (strcmp (type_name, "redirect") == 0) {
+  if (type_name && strcmp (type_name, "redirect") == 0) {
     const gchar *new_location;
 
     new_location = gst_structure_get_string (msg->structure, "new-location");
@@ -824,21 +817,22 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     }
   }
 
-  g_message ("Unhandled element message '%s' from element '%s'", type_name, src_name);
+  g_message ("Unhandled element message '%s' from element '%s'",
+             GST_STR_NULL (type_name), src_name);
 
 done:
   g_free (src_name);
 }
 
-static gboolean
+static void
 bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 {
   BaconVideoWidget *bvw = (BaconVideoWidget *) data;
   GstMessageType msg_type;
   gchar *src_name;
 
-  g_return_val_if_fail (bvw != NULL, TRUE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), TRUE);
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
   msg_type = GST_MESSAGE_TYPE (message);
   src_name = gst_object_get_name (message->src);
@@ -1017,9 +1011,6 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
           gst_message_type_get_name (msg_type), msg_type);
       break;
   }
-
-  /* yes, remove the message from the queue */
-  return TRUE;
 }
 
 /* FIXME: how to recognise this in 0.9? */
