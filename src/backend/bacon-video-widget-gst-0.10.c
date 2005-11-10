@@ -325,6 +325,10 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
 
   g_mutex_lock (bvw->priv->lock);
   xoverlay = bvw->priv->xoverlay;
+  if (xoverlay == NULL) {
+    bvw_update_interface_implementations (bvw);
+    xoverlay = bvw->priv->xoverlay;
+  }
   g_mutex_unlock (bvw->priv->lock);
 
   g_return_val_if_fail (xoverlay != NULL, FALSE);
@@ -2004,6 +2008,9 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **gerro
 		    GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH,
 		    GST_SEEK_TYPE_SET, time * GST_MSECOND,
 		    GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
+
+  gst_element_get_state (bvw->priv->play, NULL, NULL,
+	          100 * GST_MSECOND);
 
   bvw->priv->cache_errors = FALSE;
 

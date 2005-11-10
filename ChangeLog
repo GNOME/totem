@@ -1,3 +1,10 @@
+2005-11-10  Wim Taymans  <wim@fluendo.com>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_expose_event), (bacon_video_widget_seek_time):
+	Handle the case where the xoverlay is NULL.
+	Make seeking feel faster by waiting for preroll to complete.
+
 2005-11-10  Andy Wingo  <wingo@pobox.com>
 
 	* src/backend/bacon-video-widget-gst-0.10.c
