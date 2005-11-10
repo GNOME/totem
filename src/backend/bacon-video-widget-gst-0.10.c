@@ -192,19 +192,17 @@ GST_DEBUG_CATEGORY_STATIC (totem_debug);
 static void
 get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
 {
-  if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED &&
-      (bvw->priv->media_has_video ||
-       (bvw->priv->show_vfx && bvw->priv->vis_element))) {
-    *width = bvw->priv->video_width;
-    *height = bvw->priv->video_height;
-  } else {
-    if (bvw->priv->logo_pixbuf != NULL) {
+  if (bvw->priv->logo_mode) {
+    if (bvw->priv->logo_pixbuf) {
       *width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
       *height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
     } else {
       *width = bvw->priv->init_width;
       *height = bvw->priv->init_height;
     }
+  } else {
+    *width = bvw->priv->video_width;
+    *height = bvw->priv->video_height;
   }
 }
 
@@ -338,50 +336,55 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
 		      widget->allocation.width, widget->allocation.height);
   gst_x_overlay_set_xwindow_id (xoverlay, window);
 
-  if (GST_STATE (bvw->priv->play) >= GST_STATE_PAUSED &&
-      (bvw->priv->media_has_video ||
-       (bvw->priv->vis_element && bvw->priv->show_vfx))) {
-    gst_x_overlay_expose (xoverlay);
-  } else if (bvw->priv->logo_pixbuf != NULL) {
-    /* draw logo here */
-    GdkPixbuf *logo;
-    gfloat width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf),
-           height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
-    gfloat ratio;
+  if (bvw->priv->logo_mode) {
+    if (bvw->priv->logo_pixbuf != NULL) {
+      /* draw logo here */
+      GdkPixbuf *logo;
+      gfloat width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf),
+             height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
+      gfloat ratio;
 
-    if ((gfloat) widget->allocation.width /
-        gdk_pixbuf_get_width (bvw->priv->logo_pixbuf) >
-        (gfloat) widget->allocation.height /
-        gdk_pixbuf_get_height (bvw->priv->logo_pixbuf)) {
-      ratio = (gfloat) widget->allocation.height /
-	      gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
+      if ((gfloat) widget->allocation.width /
+          gdk_pixbuf_get_width (bvw->priv->logo_pixbuf) >
+          (gfloat) widget->allocation.height /
+          gdk_pixbuf_get_height (bvw->priv->logo_pixbuf)) {
+        ratio = (gfloat) widget->allocation.height /
+  	      gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
+      } else {
+        ratio = (gfloat) widget->allocation.width /
+  	      gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
+      }
+      width *= ratio;
+      height *= ratio;
+
+      logo = gdk_pixbuf_scale_simple (bvw->priv->logo_pixbuf,
+  				    width, height,
+  				    GDK_INTERP_BILINEAR);
+
+      gdk_draw_pixbuf (GDK_DRAWABLE (bvw->priv->video_window),
+  		     widget->style->fg_gc[0], logo,
+  		     0, 0, 0, 0, width, height,
+  		     GDK_RGB_DITHER_NONE, 0, 0);
+
+      gdk_pixbuf_unref (logo);
     } else {
-      ratio = (gfloat) widget->allocation.width /
-	      gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
+      /* logo mode, but no pixbuf yet -- just paint it black */
+      gdk_draw_rectangle (bvw->priv->video_window, widget->style->black_gc, TRUE,
+			  0, 0,
+			  bvw->priv->video_window_allocation.width,
+			  bvw->priv->video_window_allocation.height);
     }
-    width *= ratio;
-    height *= ratio;
-
-    logo = gdk_pixbuf_scale_simple (bvw->priv->logo_pixbuf,
-				    width, height,
-				    GDK_INTERP_BILINEAR);
-
-    gdk_draw_pixbuf (GDK_DRAWABLE (bvw->priv->video_window),
-		     widget->style->fg_gc[0], logo,
-		     0, 0, 0, 0, width, height,
-		     GDK_RGB_DITHER_NONE, 0, 0);
-
-    gdk_pixbuf_unref (logo);
-  }
-  else {
-    gdk_draw_rectangle (bvw->priv->video_window, widget->style->black_gc, TRUE,
-		      0, 0,
-		      bvw->priv->video_window_allocation.width,
-		      bvw->priv->video_window_allocation.height);
+  } else {
+    /* no logo, pass the expose to gst */
+    gst_x_overlay_expose (xoverlay);
   }
 
   return TRUE;
 }
+
+/* need to use gstnavigation interface for these vmethods, to allow for the sink
+   to map screen coordinates to video coordinates in the presence of e.g.
+   hardware scaling */
 
 static gboolean
 bacon_video_widget_motion_notify (GtkWidget *widget,
@@ -392,25 +395,25 @@ bacon_video_widget_motion_notify (GtkWidget *widget,
 
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 
-  if (bvw->priv->media_has_video) {
+  if (!bvw->priv->logo_mode) {
     GstElement *videosink = NULL;
 
     g_object_get (bvw->priv->play, "video-sink", &videosink, NULL);
 
-    if (GST_IS_BIN (videosink)) {
+    if (videosink && GST_IS_BIN (videosink)) {
+      GstElement *newvideosink;
+      newvideosink = gst_bin_get_by_interface (GST_BIN (videosink),
+					       GST_TYPE_NAVIGATION);
       gst_object_unref (videosink);
-      videosink = gst_bin_get_by_interface (GST_BIN (videosink),
-          GST_TYPE_NAVIGATION);
+      videosink = newvideosink;
     }
 
-    if (videosink && GST_IS_NAVIGATION (videosink) &&
-        GST_STATE (videosink) >= GST_STATE_PAUSED) {
+    if (videosink && GST_IS_NAVIGATION (videosink)) {
       GstNavigation *nav = GST_NAVIGATION (videosink);
 
       gst_navigation_send_mouse_event (nav,
-          "mouse-move", 0, event->x, event->y);
+				       "mouse-move", 0, event->x, event->y);
 
-      /* we need a return value... */
       res = TRUE;
     }
 
@@ -433,25 +436,25 @@ bacon_video_widget_button_press (GtkWidget *widget,
 
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 
-  if (bvw->priv->media_has_video) {
+  if (!bvw->priv->logo_mode) {
     GstElement *videosink = NULL;
 
     g_object_get (bvw->priv->play, "video-sink", &videosink, NULL);
 
-    if (GST_IS_BIN (videosink)) {
+    if (videosink && GST_IS_BIN (videosink)) {
+      GstElement *newvideosink;
+      newvideosink = gst_bin_get_by_interface (GST_BIN (videosink),
+					       GST_TYPE_NAVIGATION);
       gst_object_unref (videosink);
-      videosink = gst_bin_get_by_interface (GST_BIN (videosink),
-         GST_TYPE_NAVIGATION);
+      videosink = newvideosink;
     }
 
-    if (videosink && GST_IS_NAVIGATION (videosink) &&
-        GST_STATE (videosink) >= GST_STATE_PAUSED) {
+    if (videosink && GST_IS_NAVIGATION (videosink)) {
       GstNavigation *nav = GST_NAVIGATION (videosink);
 
       gst_navigation_send_mouse_event (nav,
           "mouse-button-press", event->button, event->x, event->y);
 
-      /* we need a return value... */
       res = TRUE;
     }
 
@@ -474,23 +477,25 @@ bacon_video_widget_button_release (GtkWidget *widget,
 
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 
-  if (bvw->priv->media_has_video) {
+  if (!bvw->priv->logo_mode) {
     GstElement *videosink = NULL;
 
-    g_object_get (G_OBJECT (bvw->priv->play), "video-sink", &videosink, NULL);
-    if (GST_IS_BIN (videosink)) {
-      videosink = gst_bin_get_by_interface (GST_BIN (videosink),
-          GST_TYPE_NAVIGATION);
+    g_object_get (bvw->priv->play, "video-sink", &videosink, NULL);
+
+    if (videosink && GST_IS_BIN (videosink)) {
+      GstElement *newvideosink;
+      newvideosink = gst_bin_get_by_interface (GST_BIN (videosink),
+					       GST_TYPE_NAVIGATION);
+      gst_object_unref (videosink);
+      videosink = newvideosink;
     }
 
-    if (videosink && GST_IS_NAVIGATION (videosink) &&
-        GST_STATE (videosink) >= GST_STATE_PAUSED) {
+    if (videosink && GST_IS_NAVIGATION (videosink)) {
       GstNavigation *nav = GST_NAVIGATION (videosink);
 
       gst_navigation_send_mouse_event (nav,
           "mouse-button-release", event->button, event->x, event->y);
 
-      /* we need a return value... */
       res = TRUE;
     }
 

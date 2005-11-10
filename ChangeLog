@@ -1,3 +1,12 @@
+2005-11-10  Andy Wingo  <wingo@pobox.com>
+
+	* src/backend/bacon-video-widget-gst-0.10.c (get_media_size)
+	(bacon_video_widget_expose_event)
+	(bacon_video_widget_button_press)
+	(bacon_video_widget_button_release): Don't call GST_STATE on
+	elements, (!logo_mode) can only be true in >= PAUSED. Fix some
+	refcounting issues.
+
 2005-11-10  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/totem-menu.c: (add_device_to_menu):
