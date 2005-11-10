@@ -561,7 +561,7 @@ add_device_to_menu (GObject *device, GtkMenu *menu, gint position, Totem *totem)
 	activation_uri = fake_gnome_vfs_device_get_something (device,
 		&gnome_vfs_volume_get_activation_uri,
 		&gnome_vfs_drive_get_activation_uri);
-	if (g_str_has_prefix (activation_uri, "burn://") != FALSE) {
+	if (activation_uri != NULL && g_str_has_prefix (activation_uri, "burn://") != FALSE) {
 		g_free (activation_uri);
 		disabled = TRUE;
 	}
