@@ -1805,6 +1805,143 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 /*                                             */
 /* =========================================== */
 
+static GError*
+bvw_error_from_gst_error (GError *e, char *debug)
+{
+  GError *ret = NULL;
+
+#define is_error(e, d, c) \
+  (e->domain == GST_##d##_ERROR && \
+   e->code == GST_##d##_ERROR_##c)
+
+  /* FIXME: we aren't doing anything with debug right now */
+
+  if (is_error (e, RESOURCE, NOT_FOUND) ||
+      is_error (e, RESOURCE, OPEN_READ)) {
+#if 0
+    if (strchr (mrl, ':') &&
+	(g_str_has_prefix (mrl, "dvd") ||
+	 g_str_has_prefix (mrl, "cd") ||
+	 g_str_has_prefix (mrl, "vcd"))) {
+      ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_INVALID_DEVICE,
+				 e->message);
+    } else {
+#endif
+      if (e->code == GST_RESOURCE_ERROR_NOT_FOUND) {
+	ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
+				   _("Location not found."));
+      } else {
+	ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_PERMISSION,
+		     _("Could not open location; "
+		       "You may not have permission to open the file."));
+      }
+#if 0
+    }
+#endif
+  } else if (e->domain == GST_RESOURCE_ERROR) {
+    ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_GENERIC,
+			       e->message);
+  } else if (is_error (e, STREAM, WRONG_TYPE) ||
+	     is_error (e, STREAM, CODEC_NOT_FOUND) ||
+	     is_error (e, STREAM, NOT_IMPLEMENTED)) {
+    ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED,
+			       e->message);
+  } else {
+    /* generic error, no code; take message */
+    ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_GENERIC,
+			       e->message);
+  }
+
+  return ret;
+}
+
+static gboolean
+poll_for_state_change (BaconVideoWidget *bvw, GstState state, GError **error)
+{
+  GstElement *playbin;
+  GstBus *bus;
+  GstMessageType events;
+  
+  playbin = bvw->priv->play;
+  bus = gst_element_get_bus (playbin);
+
+  events = GST_MESSAGE_STATE_CHANGED | GST_MESSAGE_ERROR | GST_MESSAGE_EOS;
+
+  while (TRUE) {
+    GstMessage *message;
+    GstElement *src;
+
+    message = gst_bus_poll (bus, events, GST_SECOND * 5);
+    
+    if (!message)
+      goto timed_out;
+    
+    src = (GstElement*)GST_MESSAGE_SRC (message);
+
+    switch (GST_MESSAGE_TYPE (message)) {
+    case GST_MESSAGE_STATE_CHANGED:
+      {
+	GstState old, new, pending;
+
+	if (src == playbin) {
+	  gst_message_parse_state_changed (message, &old, &new, &pending);
+	  if (new == state) {
+	    gst_message_unref (message);
+	    goto success;
+	  }
+	}
+      }
+      break;
+    case GST_MESSAGE_ERROR:
+      {
+	gchar *debug = NULL;
+	GError *gsterror = NULL;
+
+	gst_message_parse_error (message, &gsterror, &debug);
+	if (error) {
+	  *error = bvw_error_from_gst_error (gsterror, debug);
+	} else {
+	  g_warning ("Error: %s (%s)", gsterror->message, debug);
+	}
+
+	gst_message_unref (message);
+	g_error_free (gsterror);
+	g_free (debug);
+	goto error;
+      }
+      break;
+    case GST_MESSAGE_EOS:
+      {
+	g_set_error (error, BVW_ERROR, BVW_ERROR_FILE_GENERIC,
+		     _("Media file could not be played."));
+	gst_message_unref (message);
+	goto error;
+      }
+      break;
+    default:
+      g_assert_not_reached ();
+      break;
+    }
+
+    gst_message_unref (message);
+  }
+    
+  g_assert_not_reached ();
+
+success:
+  /* state change succeeded */
+  return TRUE;
+
+timed_out:
+  g_set_error (error, BVW_ERROR, BVW_ERROR_FILE_GENERIC,
+	       _("Media file could not be opened."));
+  return FALSE;
+
+error:
+  /* already set *error */
+  return FALSE;
+}
+
 gboolean
 bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 		const gchar * mrl, const gchar *subtitle_uri, GError ** error)
@@ -1818,7 +1955,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   g_return_val_if_fail (bvw->priv->mrl == NULL, FALSE);
 
   /* hmm... */
-  if (bvw->priv->mrl && !strcmp (bvw->priv->mrl, mrl))
+  if (bvw->priv->mrl && strcmp (bvw->priv->mrl, mrl) == 0)
     return TRUE;
 
   /* this allows non-URI type of files in the thumbnailer and so on */
@@ -1847,16 +1984,14 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
     bacon_video_widget_set_media_device (bvw, mrl + strlen ("dvd://"));
   }
 
-  gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_READY);
-
   /* Resetting last_error to NULL */
   if (bvw->priv->last_error) {
     g_error_free (bvw->priv->last_error);
     bvw->priv->last_error = NULL;
   }
   bvw->priv->got_redirect = FALSE;
-
   bvw->priv->media_has_video = FALSE;
+  bvw->priv->media_has_audio = FALSE;
   bvw->priv->stream_length = 0;
 
   if (g_strrstr (bvw->priv->mrl, "#subtitle:")) {
@@ -1873,67 +2008,19 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 
   bvw->priv->cache_errors = TRUE;
 
-  ret = (gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED) !=
-      GST_STATE_CHANGE_FAILURE);
+  gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
 
-  if (!ret && !bvw->priv->got_redirect) {
-    if (error) {
-      bacon_video_widget_process_pending_bus_messages (bvw);
-      if (bvw->priv->last_error) {
-	GError *e = bvw->priv->last_error;
-
-#define is_error(e, d, c) \
-  (e->domain == GST_##d##_ERROR && \
-   e->code == GST_##d##_ERROR_##c)
-
-	if (is_error (e, RESOURCE, NOT_FOUND) ||
-	    is_error (e, RESOURCE, OPEN_READ)) {
-	  if (strchr (mrl, ':') &&
-	      (g_str_has_prefix (mrl, "dvd") ||
-	       g_str_has_prefix (mrl, "cd") ||
-	       g_str_has_prefix (mrl, "vcd"))) {
-	    *error = g_error_new_literal (BVW_ERROR, BVW_ERROR_INVALID_DEVICE,
-					  e->message);
-	  } else {
-	    if (e->code == GST_RESOURCE_ERROR_NOT_FOUND) {
-	      g_set_error (error, BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
-		  _("Location not found."));
-	    } else {
-	      g_set_error (error, BVW_ERROR, BVW_ERROR_FILE_PERMISSION,
-		  _("Could not open location; "
-		    "You may not have permission to open the file."));
-	    }
-	  }
-	} else if (e->domain == GST_RESOURCE_ERROR) {
-	  *error = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_GENERIC,
-					e->message);
-	} else if (is_error (e, STREAM, WRONG_TYPE) ||
-		   is_error (e, STREAM, CODEC_NOT_FOUND) ||
-		   is_error (e, STREAM, NOT_IMPLEMENTED)) {
-	  *error = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED,
-	      				e->message);
-	} else {
-	  /* generic error, no code; take message */
-	  *error = g_error_new_literal (BVW_ERROR, BVW_ERROR_GENERIC,
-					e->message);
-	}
-      }
-      if (!*error) {
-	/* well, I Really can't make anything out of the error... */
-	g_set_error (error, BVW_ERROR, BVW_ERROR_FILE_GENERIC,
-	    _("Failed to open media file; unknown error"));
-      }
-    }
-
+  ret = poll_for_state_change (bvw, GST_STATE_PAUSED, error);
+  
+  if (ret) {
+    g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
+  } else {
+    gst_element_set_state (bvw->priv->play, GST_STATE_NULL);
     g_free (bvw->priv->mrl);
     bvw->priv->mrl = NULL;
   }
-  bvw->priv->cache_errors = FALSE;
 
-  if (ret)
-    g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
-
-  return ret || bvw->priv->got_redirect;
+  return ret;
 }
 
 gboolean
