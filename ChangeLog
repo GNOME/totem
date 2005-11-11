@@ -1,3 +1,27 @@
+2005-11-11  Andy Wingo  <wingo@pobox.com>
+
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_process_pending_bus_messages): Remove, no
+	longer necessary.
+	(bvw_bus_message_cb): Don't handle messages that are in the
+	ignore_messages_mask.
+	(struct BaconVideoWidgetPrivate): New field, ignore_messages_mask.
+	(bvw_error_from_gst_error): Add some args so we get nicer errors.
+	Add nice errors for audio/video sinks.
+	(poll_for_state_change): New arg, the element whose state change
+	we're looking for. Also, set ignore_message_mask while we poll.
+	Lower timeout to a quarter of a second, and make timeouts return
+	TRUE instead of FALSE, so the user sees that it goes to playing
+	and later can stop with the pause button.
+	(bacon_video_widget_open_with_subtitle): Adapt for
+	poll_for_state_change change.
+	(bacon_video_widget_play): Use poll_for_state_change.
+	(bacon_video_widget_new): Refactor to use poll_for_state_change
+	when checking the sinks.
+
+	* configure.in: Link to the audio and video libraries for the 0.9
+	backend.
+
 2005-11-10  Wim Taymans  <wim@fluendo.com>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:

@@ -42,6 +42,9 @@
 #include <gst/interfaces/xoverlay.h>
 #include <gst/interfaces/navigation.h>
 #include <gst/interfaces/colorbalance.h>
+/* for detecting sources of errors */
+#include <gst/video/videosink.h>
+#include <gst/audio/gstbaseaudiosink.h>
 
 /* system */
 #include <unistd.h>
@@ -165,6 +168,8 @@ struct BaconVideoWidgetPrivate
   BaconVideoWidgetAudioOutType speakersetup;
   TvOutType                    tv_out_type;
   gint                         connection_speed;
+
+  GstMessageType               ignore_messages_mask;
 
   GConfClient                 *gc;
 };
@@ -741,22 +746,6 @@ static gboolean bvw_query_timeout (BaconVideoWidget *bvw);
 static void parse_stream_info (BaconVideoWidget *bvw);
 
 static void
-bacon_video_widget_process_pending_bus_messages (BaconVideoWidget *bvw)
-{
-  GstBus *bus;
-
-  g_return_if_fail (bvw->priv->play != NULL);
-
-  bus = gst_pipeline_get_bus (GST_PIPELINE (bvw->priv->play));
-
-  GST_LOG ("Making sure any pending bus messages get processed");
-  while (gst_bus_have_pending (bus))
-    g_main_context_iteration (NULL, FALSE);
-
-  gst_object_unref (bus);  
-}
-
-static void
 bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
 {
   const gchar *msg_name;
@@ -839,6 +828,11 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
   msg_type = GST_MESSAGE_TYPE (message);
+
+  /* somebody else is handling the message, probably in poll_for_state_change */
+  if (bvw->priv->ignore_messages_mask & msg_type)
+    return;
+
   src_name = gst_object_get_name (message->src);
 
   if (msg_type != GST_MESSAGE_STATE_CHANGED) {
@@ -1806,7 +1800,8 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 /* =========================================== */
 
 static GError*
-bvw_error_from_gst_error (GError *e, char *debug)
+bvw_error_from_gst_error (BaconVideoWidget *bvw, GstElement *src, GError *e,
+    char *debug)
 {
   GError *ret = NULL;
 
@@ -1828,8 +1823,16 @@ bvw_error_from_gst_error (GError *e, char *debug)
     } else {
 #endif
       if (e->code == GST_RESOURCE_ERROR_NOT_FOUND) {
-	ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
-				   _("Location not found."));
+	if (GST_IS_BASE_AUDIO_SINK (src)) {
+	  ret = g_error_new_literal
+	    (BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
+	     _("The requested audio output was not found. "
+	       "Please select another audio output in the Multimedia "
+	       "Systems Selector."));
+	} else {
+	  ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
+				     _("Location not found."));
+	}
       } else {
 	ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_PERMISSION,
 		     _("Could not open location; "
@@ -1838,6 +1841,21 @@ bvw_error_from_gst_error (GError *e, char *debug)
 #if 0
     }
 #endif
+  } else if (is_error (e, RESOURCE, BUSY)) {
+    if (GST_IS_VIDEO_SINK (src)) {
+      /* a somewhat evil check, but hey.. */
+      ret = g_error_new_literal
+	(BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+	 _("The video output is in use by another application. "
+	   "Please close other video applications, or select "
+	   "another video output in the Multimedia Systems Selector."));
+    } else if (GST_IS_BASE_AUDIO_SINK (src)) {
+      ret = g_error_new_literal
+	(BVW_ERROR, BVW_ERROR_AUDIO_BUSY,
+	 _("The audio output is in use by another application. "
+	   "Please select another audio output in the Multimedia Systems Selector. "
+	   "You may want to consider using a sound server."));
+    }
   } else if (e->domain == GST_RESOURCE_ERROR) {
     ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_GENERIC,
 			       e->message);
@@ -1856,22 +1874,24 @@ bvw_error_from_gst_error (GError *e, char *debug)
 }
 
 static gboolean
-poll_for_state_change (BaconVideoWidget *bvw, GstState state, GError **error)
+poll_for_state_change (BaconVideoWidget *bvw, GstElement *element,
+    GstState state, GError **error)
 {
-  GstElement *playbin;
   GstBus *bus;
-  GstMessageType events;
+  GstMessageType events, saved_events;
   
-  playbin = bvw->priv->play;
-  bus = gst_element_get_bus (playbin);
+  bus = gst_element_get_bus (element);
 
   events = GST_MESSAGE_STATE_CHANGED | GST_MESSAGE_ERROR | GST_MESSAGE_EOS;
+
+  saved_events = bvw->priv->ignore_messages_mask;
+  bvw->priv->ignore_messages_mask |= events;
 
   while (TRUE) {
     GstMessage *message;
     GstElement *src;
 
-    message = gst_bus_poll (bus, events, GST_SECOND * 5);
+    message = gst_bus_poll (bus, events, GST_SECOND/4);
     
     if (!message)
       goto timed_out;
@@ -1883,7 +1903,7 @@ poll_for_state_change (BaconVideoWidget *bvw, GstState state, GError **error)
       {
 	GstState old, new, pending;
 
-	if (src == playbin) {
+	if (src == element) {
 	  gst_message_parse_state_changed (message, &old, &new, &pending);
 	  if (new == state) {
 	    gst_message_unref (message);
@@ -1899,7 +1919,7 @@ poll_for_state_change (BaconVideoWidget *bvw, GstState state, GError **error)
 
 	gst_message_parse_error (message, &gsterror, &debug);
 	if (error) {
-	  *error = bvw_error_from_gst_error (gsterror, debug);
+	  *error = bvw_error_from_gst_error (bvw, src, gsterror, debug);
 	} else {
 	  g_warning ("Error: %s (%s)", gsterror->message, debug);
 	}
@@ -1930,15 +1950,18 @@ poll_for_state_change (BaconVideoWidget *bvw, GstState state, GError **error)
 
 success:
   /* state change succeeded */
+  bvw->priv->ignore_messages_mask = saved_events;
   return TRUE;
 
 timed_out:
-  g_set_error (error, BVW_ERROR, BVW_ERROR_FILE_GENERIC,
-	       _("Media file could not be opened."));
-  return FALSE;
+  /* it's taking a long time to open -- just tell totem it was ok, this allows
+   * the user to stop the loading process with the normal stop button */
+  bvw->priv->ignore_messages_mask = saved_events;
+  return TRUE;
 
 error:
   /* already set *error */
+  bvw->priv->ignore_messages_mask = saved_events;
   return FALSE;
 }
 
@@ -2008,9 +2031,9 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 
   bvw->priv->cache_errors = TRUE;
 
-  gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
+  gst_element_set_state (bvw->priv->play, GST_STATE_READY);
 
-  ret = poll_for_state_change (bvw, GST_STATE_PAUSED, error);
+  ret = poll_for_state_change (bvw, bvw->priv->play, GST_STATE_READY, error);
   
   if (ret) {
     g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
@@ -2032,25 +2055,9 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  /* Resetting last_error to NULL */
-  if (bvw->priv->last_error) {
-    g_error_free (bvw->priv->last_error);
-    bvw->priv->last_error = NULL;
-  }
+  gst_element_set_state (bvw->priv->play, GST_STATE_PLAYING);
 
-  bvw->priv->cache_errors = TRUE;
-
-  ret = (gst_element_set_state (GST_ELEMENT (bvw->priv->play),
-      GST_STATE_PLAYING) != GST_STATE_CHANGE_FAILURE);
-
-  if (!ret) {
-    bacon_video_widget_process_pending_bus_messages (bvw);
-    g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC, _("Failed to play: %s"),
-	 (bvw->priv->last_error != NULL) ?
-	 bvw->priv->last_error->message : _("unknown error"));
-  }
-
-  bvw->priv->cache_errors = FALSE;
+  ret = poll_for_state_change (bvw, bvw->priv->play, GST_STATE_PLAYING, error);
 
   return ret;
 }
@@ -3708,100 +3715,52 @@ bacon_video_widget_new (int width, int height,
     video_sink = gst_element_factory_make ("fakesink", "video-fake-sink");
   }
 
-  /* check video */
-  if (!video_sink ||
-      gst_element_set_state (video_sink,
-			     GST_STATE_READY) == GST_STATE_CHANGE_FAILURE) {
-    /* Videosink not available; give user feedback on what to do now */
-    if (err) {
-      bacon_video_widget_process_pending_bus_messages (bvw);
-      if (bvw->priv->last_error &&
-	  bvw->priv->last_error->domain == GST_RESOURCE_ERROR) {
-	switch (bvw->priv->last_error->code) {
-	  case GST_RESOURCE_ERROR_NOT_FOUND:
-	  case GST_RESOURCE_ERROR_OPEN_WRITE:
-	    /* can use the default below... */
-	    break;
-	  case GST_RESOURCE_ERROR_BUSY:
-	    g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
-		_("The video output is in use by another application. "
-		  "Please close other video applications, or select another video output in the Multimedia Systems Selector."));
-	    break;
-	  default:
-	    break;
-	}
+  if (video_sink) {
+    gboolean success;
+    gst_element_set_state (video_sink, GST_STATE_READY);
+    success = poll_for_state_change (bvw, video_sink, GST_STATE_READY, err);
+    if (!success) {
+      if (err && !*err) {
+	g_warning ("Should have gotten an error message, please file a bug.");
+	g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+		     _("Failed to open video output. It may not be available. "
+		       "Please select another video output in the Multimedia "
+		       "Systems Selector."));
       }
-      if (!*err) {
-	/* "default" */
-	if (video_sink) {
-	  g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
-	      _("Failed to open video output. It may not be available. "
-	        "Please select another video output in the Multimedia Systems Selector."));
-	} else {
-	  g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
-	      _("Could not find the video output. "
-		"You may need to install additional GStreamer plugins, or select another video output in the Multimedia Systems Selector."));
-	}
-      }
-      if (bvw->priv->last_error)
-	g_error_free (bvw->priv->last_error);
+      goto sink_error;
     }
-    if (video_sink)
-      gst_object_unref (video_sink);
-    if (audio_sink)
-      gst_object_unref (audio_sink);
-    g_free (bvw);
-    return NULL;
+  } else {
+    g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+		 _("Could not find the video output. "
+		   "You may need to install additional GStreamer plugins, "
+		   "or select another video output in the Multimedia Systems "
+		   "Selector."));
+    goto sink_error;
   }
 
-  if (!audio_sink ||
-      gst_element_set_state (audio_sink,
-			     GST_STATE_READY) == GST_STATE_CHANGE_FAILURE) {
-    if (err) {
-      bacon_video_widget_process_pending_bus_messages (bvw);
-      if (bvw->priv->last_error &&
-	  bvw->priv->last_error->domain == GST_RESOURCE_ERROR) {
-	switch (bvw->priv->last_error->code) {
-	  case GST_RESOURCE_ERROR_OPEN_WRITE:
-	  case GST_RESOURCE_ERROR_OPEN_READ_WRITE:
-	    /* use default below */
-	    break;
-	  case GST_RESOURCE_ERROR_BUSY:
-	    g_set_error (err, BVW_ERROR, BVW_ERROR_AUDIO_BUSY,
-		_("The audio output is in use by another application. "
-		  "Please select another audio output in the Multimedia Systems Selector. "
-		  "You may want to consider using a sound server."));
-	    break;
-	  case GST_RESOURCE_ERROR_NOT_FOUND:
-	    g_set_error (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
-		_("The requested audio output was not found. "
-		  "Please select another audio output in the Multimedia Systems Selector"));
-	    break;
-	  default:
-	    break;
-	}
+  if (audio_sink) {
+    gboolean success;
+    gst_element_set_state (audio_sink, GST_STATE_READY);
+    success = poll_for_state_change (bvw, audio_sink, GST_STATE_READY, err);
+    if (!success) {
+      if (err && !*err) {
+	g_warning ("Should have gotten an error message, please file a bug.");
+	g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+		     _("Failed to open audio output. You may not have "
+		       "permission to open the sound device, or the sound "
+		       "server may not be running. "
+		       "Please select another audio output in the Multimedia "
+		       "Systems Selector."));
       }
-      if (!*err) {
-	if (audio_sink) {
-	  /* "default" */
-          g_set_error (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
-	      _("Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. "
-	        "Please select another audio output in the Multimedia Systems Selector."));
-	} else {
-	  g_set_error (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
-	      _("Could not find the audio output. "
-		"You may need to install additional GStreamer plugins, or select another audio output in the Multimedia Systems Selector"));
-	}
-      }
-      if (bvw->priv->last_error)
-	g_error_free (bvw->priv->last_error);
+      goto sink_error;
     }
-    if (video_sink)
-      gst_object_unref (video_sink);
-    if (audio_sink)
-      gst_object_unref (audio_sink);
-    g_free (bvw);
-    return NULL;
+  } else {
+    g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+		 _("Could not find the audio output. "
+		   "You may need to install additional GStreamer plugins, or "
+		   "select another audio output in the Multimedia Systems "
+		   "Selector."));
+    goto sink_error;
   }
 
   do {
@@ -3926,8 +3885,25 @@ bacon_video_widget_new (int width, int height,
   }
 
   return GTK_WIDGET (bvw);
+
+  /* errors */
+sink_error:
+  {
+    if (video_sink)
+      gst_object_unref (video_sink);
+    if (audio_sink)
+      gst_object_unref (audio_sink);
+    g_free (bvw);
+
+    return NULL;
+  }
 }
 
 /*
  * vim: sw=2 ts=8 cindent noai bs=2
+ *
+ * Local Variables:
+ * indent-tabs-mode:t
+ * c-basic-offset:2
+ * End:
  */

@@ -97,9 +97,9 @@ if test x$HAVE_XINE = xno; then
 	PKG_CHECK_MODULES(GST, $MM,
 			HAVE_GSTREAMER=yes, HAVE_GSTREAMER=no)
 	if test x$GST_MAJORMINOR = x0.9; then
-		GST_LIBS="$GST_LIBS -lgstinterfaces-0.9"
+		GST_LIBS="$GST_LIBS -lgstinterfaces-0.9 -lgstvideo-0.9 -lgstaudio-0.9"
 		AC_SUBST(GST_LIBS)
-		EXTRA_BACKEND_LIBS="-lgstinterfaces-0.9"
+		EXTRA_BACKEND_LIBS="-lgstinterfaces-0.9 -lgstvideo-0.9 -lgstaudio-0.9"
 		AC_DEFINE(HAVE_GSTREAMER_09, 1, [Whether we use Gst 0.8 or 0.9])
 	fi
 
