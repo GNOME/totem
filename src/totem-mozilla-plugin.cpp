@@ -41,7 +41,6 @@
 #include "npapi.h"
 #include "npupp.h"
 
-#include <nsCOMPtr.h>
 #include <nsIDOMWindow.h>
 #include <nsIURI.h>
 #include <nsEmbedString.h>
@@ -266,14 +265,20 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 	plugin->send_fd = -1;
 
 	/* to resolve relative URLs */
-	nsCOMPtr<nsIDOMWindow> domWin;
-	mozilla_functions.getvalue (instance, NPNVDOMWindow, 
-				    NS_STATIC_CAST (nsIDOMWindow **, getter_AddRefs (domWin)));
-	nsCOMPtr<nsIWebNavigation> webNav (do_GetInterface (domWin));
+	nsIDOMWindow *domWin = nsnull;
+	mozilla_functions.getvalue (instance, NPNVDOMWindow,
+				    NS_REINTERPRET_CAST (void**, &domWin));
+	nsIWebNavigation *webNav = nsnull;
+	if (domWin) {
+		domWin->QueryInterface (NS_GET_IID (nsIWebNavigation),
+					NS_REINTERPRET_CAST (void**, &webNav));
+		NS_RELEASE (domWin);
+	}
 
-	nsCOMPtr<nsIURI> docURI;
+	nsIURI *docURI = nsnull;
 	if (webNav) {
-		webNav->GetCurrentURI (getter_AddRefs (docURI));
+		webNav->GetCurrentURI (&docURI);
+		NS_RELEASE (webNav);
 	}
 
 	for (i=0; i<argc; i++) {
@@ -314,6 +319,8 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 			//FIXME see above
 		}
 	}
+
+	NS_IF_RELEASE (docURI);	
 
 	return NPERR_NO_ERROR;
 }
