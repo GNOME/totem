@@ -131,8 +131,6 @@ struct BaconVideoWidgetPrivate
   GstTagList                  *audiotags;
   GstTagList                  *videotags;
 
-  GError                      *last_error;
-  gboolean                     cache_errors;
   gboolean                     got_redirect;
 
   GdkWindow                   *video_window;
@@ -850,16 +848,9 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       GST_DEBUG ("Error message: %s [%s]", GST_STR_NULL (error->message),
           GST_STR_NULL (debug));
 
-      if (bvw->priv->cache_errors) {
-	if (!bvw->priv->last_error)
-          bvw->priv->last_error = error;
-	else
-	  g_error_free (error);
-      } else {
-        g_signal_emit (bvw, bvw_signals[SIGNAL_ERROR], 0,
-		       error->message, TRUE, FALSE);
-	g_error_free (error);
-      }
+      g_signal_emit (bvw, bvw_signals[SIGNAL_ERROR], 0,
+		     error->message, TRUE, FALSE);
+      g_error_free (error);
 
       if (bvw->priv->play)
         gst_element_set_state (bvw->priv->play, GST_STATE_NULL);
@@ -1291,9 +1282,11 @@ bacon_video_widget_finalize (GObject * object)
     gst_tag_list_free (bvw->priv->videotags);
     bvw->priv->videotags = NULL;
   }
-  g_free (bvw->priv);
 
   g_mutex_free (bvw->priv->lock);
+
+  g_free (bvw->priv);
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -2007,11 +2000,6 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
     bacon_video_widget_set_media_device (bvw, mrl + strlen ("dvd://"));
   }
 
-  /* Resetting last_error to NULL */
-  if (bvw->priv->last_error) {
-    g_error_free (bvw->priv->last_error);
-    bvw->priv->last_error = NULL;
-  }
   bvw->priv->got_redirect = FALSE;
   bvw->priv->media_has_video = FALSE;
   bvw->priv->media_has_audio = FALSE;
@@ -2028,8 +2016,6 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
     g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,
 		  "suburi", subtitle_uri, NULL);
   }
-
-  bvw->priv->cache_errors = TRUE;
 
   gst_element_set_state (bvw->priv->play, GST_STATE_READY);
 
@@ -2088,14 +2074,6 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **gerro
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  /* Resetting last_error to NULL */
-  if (bvw->priv->last_error) {
-    g_error_free (bvw->priv->last_error);
-    bvw->priv->last_error = NULL;
-  }
-
-  bvw->priv->cache_errors = TRUE;
-
   GST_LOG ("Seeking to %" GST_TIME_FORMAT, GST_TIME_ARGS (time * GST_MSECOND));
 
   gst_element_seek (bvw->priv->play, 1.0,
@@ -2105,8 +2083,6 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **gerro
 
   gst_element_get_state (bvw->priv->play, NULL, NULL,
 	          100 * GST_MSECOND);
-
-  bvw->priv->cache_errors = FALSE;
 
   return TRUE;
 }
@@ -3649,7 +3625,6 @@ bacon_video_widget_new (int width, int height,
   bvw->priv->cursor_shown = TRUE;
   bvw->priv->logo_mode = TRUE;
   bvw->priv->auto_resize = TRUE;
-  bvw->priv->cache_errors = TRUE;
 
   /* gconf setting in backend */
   bvw->priv->gc = gconf_client_get_default ();
@@ -3787,7 +3762,6 @@ bacon_video_widget_new (int width, int height,
   g_object_set (bvw->priv->play, "audio-sink", audio_sink, NULL);
 
   bvw->priv->vis_plugins_list = NULL;
-  bvw->priv->cache_errors = FALSE;
 
   g_signal_connect (bvw->priv->play, "notify::source",
 		    G_CALLBACK (got_source), bvw);

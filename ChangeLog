@@ -1,6 +1,15 @@
 2005-11-11  Andy Wingo  <wingo@pobox.com>
 
 	* src/backend/bacon-video-widget-gst-0.10.c
+	(BaconVideoWidgetPrivate): Remove last_error and cache_errors
+	variables, they are no longer needed. Remove everywhere they were
+	referenced.
+	(bacon_video_widget_finalize): Free the lock before its containing
+	structure.
+
+2005-11-11  Andy Wingo  <wingo@pobox.com>
+
+	* src/backend/bacon-video-widget-gst-0.10.c
 	(bacon_video_widget_process_pending_bus_messages): Remove, no
 	longer necessary.
 	(bvw_bus_message_cb): Don't handle messages that are in the
