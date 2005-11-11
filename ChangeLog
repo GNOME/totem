@@ -1,3 +1,9 @@
+2005-11-11  Christian Persch  <chpe@cvs.gnome.org>
+
+	* src/totem-mozilla-plugin.cpp: Don't use nsCOMPtr in the plugin.
+	Fixes crash when running a normal plugin in a browser debug build,
+	bug #321254.
+
 2005-11-11  Andy Wingo  <wingo@pobox.com>
 
 	* src/backend/bacon-video-widget-gst-0.10.c
