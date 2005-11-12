@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-02 21:30+0100\n"
-"PO-Revision-Date: 2005-11-02 23:35+0100\n"
+"POT-Creation-Date: 2005-11-12 14:48+0100\n"
+"PO-Revision-Date: 2005-11-12 17:17+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -185,7 +185,7 @@ msgstr "Snímků:"
 msgid "N/A"
 msgstr "---"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:2008
+#: ../data/properties.glade.h:17 ../src/totem.c:2026
 msgid "Properties"
 msgstr "Vlastnosti"
 
@@ -250,7 +250,7 @@ msgstr "Přehrávání filmů a písniček"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:2 ../data/totem.glade.h:99
-#: ../src/totem.c:694 ../src/totem.c:3378 ../src/totem.c:3395
+#: ../src/totem.c:694 ../src/totem.c:3396 ../src/totem.c:3413
 msgid "Totem Movie Player"
 msgstr "Přehrávač filmů Totem"
 
@@ -1226,12 +1226,13 @@ msgstr ""
 "zařízení správně nastaveno."
 
 #: ../src/totem.c:427
-msgid "Failed to play Audio/Video Disc"
-msgstr "Nemohu přehrávat disk zvuku/videa"
+msgid "Totem was not able to play this disc."
+msgstr "Totem nemohl přehrát tento disk."
 
-#: ../src/totem.c:428
-msgid "Reason unknown"
-msgstr "Důvod není znám"
+# :-)
+#: ../src/totem.c:428 ../src/totem.c:3258
+msgid "No reason."
+msgstr "Žádný důvod."
 
 #: ../src/totem.c:687
 msgid "No File"
@@ -1241,86 +1242,81 @@ msgstr "Žádný soubor"
 msgid "An error occurred"
 msgstr "Došlo k chybě"
 
-#: ../src/totem.c:1612
+#: ../src/totem.c:1630
 msgid "Open Location..."
 msgstr "Otevřít umístění..."
 
-#: ../src/totem.c:1881
+#: ../src/totem.c:1899
 msgid "Totem could not display the help contents."
 msgstr "Totem nemohl zobrazit obsah nápovědy."
 
-#: ../src/totem.c:1919
+#: ../src/totem.c:1937
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Přehrávač filmů používající %s"
 
-#: ../src/totem.c:1923
+#: ../src/totem.c:1941
 msgid "Totem"
 msgstr "Totem"
 
-#: ../src/totem.c:1925 ../src/vanity.c:261
+#: ../src/totem.c:1943 ../src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Copyright © 2002-2005 Bastien Nocera"
 
-#: ../src/totem.c:1930 ../src/vanity.c:266
+#: ../src/totem.c:1948 ../src/vanity.c:266
 msgid "translator-credits"
 msgstr ""
 "Michal Bukovjan <bukm@centrum.cz>\n"
 "Miloslav Trmač <mitr@volny.cz>"
 
-#: ../src/totem.c:1963 ../src/totem.c:1971 ../src/vanity.c:299
+#: ../src/totem.c:1981 ../src/totem.c:1989 ../src/vanity.c:299
 #: ../src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem nemohl zachytit obrazovku s tímto filmem."
 
-#: ../src/totem.c:1971 ../src/vanity.c:307
+#: ../src/totem.c:1989 ../src/vanity.c:307
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Toto by se nemělo stát; ohlaste prosím chybu."
 
-#: ../src/totem.c:1998
+#: ../src/totem.c:2016
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem nemohl zobrazit okno vlastností filmu."
 
-#: ../src/totem.c:1998
+#: ../src/totem.c:2016
 msgid "Make sure that Totem is correctly installed."
 msgstr "Ujistěte se, že je Totem správně nainstalován."
 
-#: ../src/totem.c:2084
+#: ../src/totem.c:2102
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem se nemohl posouvat v '%s'."
 
-#: ../src/totem.c:3240
+#: ../src/totem.c:3258
 msgid "Totem could not startup."
 msgstr "Totem se nemohl spustit."
 
-# :-)
-#: ../src/totem.c:3240
-msgid "No reason."
-msgstr "Žádný důvod."
-
-#: ../src/totem.c:3379
+#: ../src/totem.c:3397
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Nemohu inicializovat knihovny podporující thready."
 
-#: ../src/totem.c:3379
+#: ../src/totem.c:3397
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Zkontrolujte svou instalaci systému. Totem nyní skončí."
 
-#: ../src/totem.c:3402
+#: ../src/totem.c:3420
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem nemohl inicializovat rozhraní pro nastavení."
 
-#: ../src/totem.c:3402
+#: ../src/totem.c:3420
 msgid "Make sure that GNOME is properly installed."
 msgstr "Ujistěte se, že je GNOME správně nainstalováno."
 
 #. Main window
-#: ../src/totem.c:3429
+#: ../src/totem.c:3447
 msgid "main window"
 msgstr "hlavní okno"
 
-#: ../src/totem.c:3434
+#: ../src/totem.c:3452
 msgid "video popup menu"
 msgstr "kotextové menu videa"
 
@@ -1396,52 +1392,29 @@ msgstr ""
 "Nemohu načíst hlavní rozhraní (vanity.glade).\n"
 "Ujistěte se, že je Vanity řádně nainstalována."
 
-#: ../src/backend/bacon-video-widget-gst.c:68
+#: ../src/backend/bacon-video-widget-gst-0.10.c:69
+#: ../src/backend/bacon-video-widget-gst.c:67
 msgid "Totem Video Window"
 msgstr "Video okno Totemu"
 
-#: ../src/backend/bacon-video-widget-gst.c:1865
-msgid "Failed to retrieve working directory"
-msgstr "Nemohu získat pracovní adresář"
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1822
+msgid ""
+"The requested audio output was not found. Please select another audio output "
+"in the Multimedia Systems Selector."
+msgstr "Požadovaný výstup zvuku nebyl nalezen. Zvolte prosím jiný výstup zvuku ve Výběru systému multimédií."
 
-#: ../src/backend/bacon-video-widget-gst.c:1924
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1827
+#: ../src/backend/bacon-video-widget-gst.c:1935
 msgid "Location not found."
 msgstr "Umístění nenalezeno."
 
-#: ../src/backend/bacon-video-widget-gst.c:1927
-msgid "You don't have permission to open that location."
-msgstr "Nemáte oprávnění otevřít toto umístění."
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1831
+#: ../src/backend/bacon-video-widget-gst.c:1938
+msgid "Could not open location; You may not have permission to open the file."
+msgstr "Nemohu otevřít umístění; možná nemáte oprávnění otevřít tento soubor."
 
-#: ../src/backend/bacon-video-widget-gst.c:1947
-msgid "Failed to open media file; unknown error"
-msgstr "Nemohu otevřít soubor médií; neznámá chyba"
-
-#: ../src/backend/bacon-video-widget-gst.c:1979
-#, c-format
-msgid "Failed to play: %s"
-msgstr "Nemohu přehrávat: %s"
-
-#: ../src/backend/bacon-video-widget-gst.c:1981
-msgid "unknown error"
-msgstr "neznámá chyba"
-
-#: ../src/backend/bacon-video-widget-gst.c:3134
-msgid "Too old version of GStreamer installed."
-msgstr "Nainstalována příliš stará verze GStreameru."
-
-#: ../src/backend/bacon-video-widget-gst.c:3141
-msgid "Media contains no supported video streams."
-msgstr "Médium neobsahuje žádný podporovaný tok videa."
-
-#: ../src/backend/bacon-video-widget-gst.c:3319
-msgid ""
-"Failed to create a GStreamer play object. Please check your GStreamer "
-"installation."
-msgstr ""
-"Nemohu vytvořit objekt GStreamer pro přehrávání. Zkontrolujte prosím vaši "
-"instalaci GStreameru."
-
-#: ../src/backend/bacon-video-widget-gst.c:3415
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1842
+#: ../src/backend/bacon-video-widget-gst.c:3435
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1450,15 +1423,8 @@ msgstr ""
 "Výstup videa používá jiná aplikace. Zavřete prosím jiné aplikace videa nebo "
 "zvolte jiný výstup videa ve Výběru systému multimédií."
 
-#: ../src/backend/bacon-video-widget-gst.c:3425
-msgid ""
-"Failed to open video output. It may not be available. Please select another "
-"video output in the Multimedia Systems Selector."
-msgstr ""
-"Nemohu otevřít výstup videa. Možná není k dispozici. Zvolte prosím jiný "
-"výstup videa ve Výběru systému multimédií."
-
-#: ../src/backend/bacon-video-widget-gst.c:3452
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1848
+#: ../src/backend/bacon-video-widget-gst.c:3478
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1468,15 +1434,53 @@ msgstr ""
 "Výběru systému multimédií. Možná budete chtít uvažovat o používání zvukového "
 "serveru."
 
-#: ../src/backend/bacon-video-widget-gst.c:3458
-msgid ""
-"The requested audio output was not found. Please select another audio output "
-"in the Multimedia Systems Selector"
-msgstr ""
-"Požadovaný výstup zvuku nebyl nalezen. Zvolte prosím jiný výstup zvuku ve "
-"Výběru systému multimédií"
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1929
+msgid "Media file could not be played."
+msgstr "Soubor médií nelze přehrát."
 
-#: ../src/backend/bacon-video-widget-gst.c:3468
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1988
+#: ../src/backend/bacon-video-widget-gst.c:1874
+msgid "Failed to retrieve working directory"
+msgstr "Nemohu získat pracovní adresář"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3263
+#: ../src/backend/bacon-video-widget-gst.c:3154
+msgid "Too old version of GStreamer installed."
+msgstr "Nainstalována příliš stará verze GStreameru."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3270
+#: ../src/backend/bacon-video-widget-gst.c:3161
+msgid "Media contains no supported video streams."
+msgstr "Médium neobsahuje žádný podporovaný tok videa."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3598
+#: ../src/backend/bacon-video-widget-gst.c:3339
+msgid ""
+"Failed to create a GStreamer play object. Please check your GStreamer "
+"installation."
+msgstr ""
+"Nemohu vytvořit objekt GStreamer pro přehrávání. Zkontrolujte prosím vaši "
+"instalaci GStreameru."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3701
+#: ../src/backend/bacon-video-widget-gst.c:3446
+msgid ""
+"Failed to open video output. It may not be available. Please select another "
+"video output in the Multimedia Systems Selector."
+msgstr ""
+"Nemohu otevřít výstup videa. Možná není k dispozici. Zvolte prosím jiný "
+"výstup videa ve Výběru systému multimédií."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3709
+#: ../src/backend/bacon-video-widget-gst.c:3450
+msgid ""
+"Could not find the video output. You may need to install additional "
+"GStreamer plugins, or select another video output in the Multimedia Systems "
+"Selector."
+msgstr "Nemohu najít výstup videa. Možná budete muset nainstalovat další zásuvné moduly GStreamer nebo vybrat jiný výstup videa ve Výběru systému multimédií."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3724
+#: ../src/backend/bacon-video-widget-gst.c:3495
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1485,6 +1489,41 @@ msgstr ""
 "Nemohu otevřít výstup zvuku, Možná nemáte oprávnění otevřít zvukové zařízení "
 "nebo neběží server zvuku. Zvolte prosím jiný výstup zvuku ve Výběru systému "
 "multimédií."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3734
+msgid ""
+"Could not find the audio output. You may need to install additional "
+"GStreamer plugins, or select another audio output in the Multimedia Systems "
+"Selector."
+msgstr "Nemohu najít výstup zvuku. Možná budete muset nainstalovat další zásuvné moduly GStreamer nebo vybrat jiný výstup zvuku ve Výběru systému multimédií."
+
+#: ../src/backend/bacon-video-widget-gst.c:1959
+msgid "Failed to open media file; unknown error"
+msgstr "Nemohu otevřít soubor médií; neznámá chyba"
+
+#: ../src/backend/bacon-video-widget-gst.c:1992
+#, c-format
+msgid "Failed to play: %s"
+msgstr "Nemohu přehrávat: %s"
+
+#: ../src/backend/bacon-video-widget-gst.c:1994
+msgid "unknown error"
+msgstr "neznámá chyba"
+
+#: ../src/backend/bacon-video-widget-gst.c:3484
+msgid ""
+"The requested audio output was not found. Please select another audio output "
+"in the Multimedia Systems Selector"
+msgstr ""
+"Požadovaný výstup zvuku nebyl nalezen. Zvolte prosím jiný výstup zvuku ve "
+"Výběru systému multimédií"
+
+#: ../src/backend/bacon-video-widget-gst.c:3499
+msgid ""
+"Could not find the audio output. You may need to install additional "
+"GStreamer plugins, or select another audio output in the Multimedia Systems "
+"Selector"
+msgstr "Nemohu najít výstup zvuku. Možná budete muset nainstalovat další zásuvné moduly GStreamer nebo vybrat jiný výstup zvuku ve Výběru systému multimédií."
 
 #: ../src/backend/bacon-video-widget-xine.c:676
 #, c-format
@@ -1619,21 +1658,21 @@ msgstr ""
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Tento soubor obsahuje jen zvuk a zvukový výstup není k dispozici."
 
-#: ../src/backend/bacon-video-widget-xine.c:3515
-#: ../src/backend/bacon-video-widget-xine.c:3578
+#: ../src/backend/bacon-video-widget-xine.c:3521
+#: ../src/backend/bacon-video-widget-xine.c:3584
 #, c-format
 msgid "Language %d"
 msgstr "Jazyk %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3614
+#: ../src/backend/bacon-video-widget-xine.c:3620
 msgid "Movie is not playing."
 msgstr "Film se nepřehrává."
 
-#: ../src/backend/bacon-video-widget-xine.c:3623
+#: ../src/backend/bacon-video-widget-xine.c:3629
 msgid "No video to capture."
 msgstr "Žádné video k zachycení."
 
-#: ../src/backend/bacon-video-widget-xine.c:3631
+#: ../src/backend/bacon-video-widget-xine.c:3637
 msgid "Video codec is not handled."
 msgstr "Kodek videa není obsloužen."
 
@@ -1749,6 +1788,12 @@ msgstr "Nemohu zapsat parser: %s"
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "Nemohu otevřít soubor '%s': %s"
+
+#~ msgid "Failed to play Audio/Video Disc"
+#~ msgstr "Nemohu přehrávat disk zvuku/videa"
+
+#~ msgid "Reason unknown"
+#~ msgstr "Důvod není znám"
 
 #~ msgid "Select Files"
 #~ msgstr "Zvolte soubory"
