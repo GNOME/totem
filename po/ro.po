@@ -1,3 +1,4 @@
+# translation of totem.gnome-2-12.ro.po to Română
 # translation of totem.HEAD.ro.po to Romanian
 # translation of totem.HEAD.ro.po to Română
 # translation of ro.po to
@@ -9,18 +10,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: totem.HEAD.ro\n"
+"Project-Id-Version: totem.gnome-2-12.ro\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-09 20:45+0200\n"
-"PO-Revision-Date: 2005-10-10 01:00+0300\n"
+"POT-Creation-Date: 2005-11-13 13:39+0100\n"
+"PO-Revision-Date: 2005-11-13 22:34+0200\n"
 "Last-Translator: Mugurel Tudor <mugurelu@gnome.ro>\n"
-"Language-Team: Română <gnomero-list@lists.sourceforge.net>\n"
+"Language-Team: Română <gnomero@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3;plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
-"2:1))\n"
-"X-Generator: KBabel 1.9.1\n"
+"Plural-Forms: nplurals=3;plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1))\n"
+"X-Generator: KBabel 1.10.2\n"
 
 #: ../data/playlist.glade.h:1
 msgid "Add..."
@@ -115,12 +115,11 @@ msgstr "_Precedentul capitol/film"
 msgid "    "
 msgstr "    "
 
-#: ../data/properties.glade.h:2 ../src/bacon-video-widget-properties.c:157
+#: ../data/properties.glade.h:2
 msgid "0 frames per second"
 msgstr "0 cadre pe secundă"
 
-#: ../data/properties.glade.h:3 ../src/bacon-video-widget-properties.c:154
-#: ../src/bacon-video-widget-properties.c:160
+#: ../data/properties.glade.h:3
 msgid "0 kbps"
 msgstr "0 kbps"
 
@@ -130,8 +129,7 @@ msgstr "0 kbps"
 msgid "0 seconds"
 msgstr "0 secunde"
 
-#. Dimensions
-#: ../data/properties.glade.h:5 ../src/bacon-video-widget-properties.c:149
+#: ../data/properties.glade.h:5
 msgid "0 x 0"
 msgstr "0 x 0"
 
@@ -175,14 +173,22 @@ msgstr "Durata:"
 msgid "Framerate:"
 msgstr "Rata de cadre:"
 
+#. Dimensions
 #. Video Codec
 #. Audio Codec
-#: ../data/properties.glade.h:16 ../src/bacon-video-widget-properties.c:151
-#: ../src/bacon-video-widget-properties.c:162
+#: ../data/properties.glade.h:16 ../src/bacon-video-widget-properties.c:152
+#: ../src/bacon-video-widget-properties.c:154
+#: ../src/bacon-video-widget-properties.c:157
+#: ../src/bacon-video-widget-properties.c:160
+#: ../src/bacon-video-widget-properties.c:163
+#: ../src/bacon-video-widget-properties.c:165
+#: ../src/bacon-video-widget-properties.c:227
+#: ../src/bacon-video-widget-properties.c:229
+#: ../src/bacon-video-widget-properties.c:245
 msgid "N/A"
 msgstr "N/A"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:2028
+#: ../data/properties.glade.h:17 ../src/totem.c:2008
 msgid "Properties"
 msgstr "Proprietăţi"
 
@@ -194,10 +200,10 @@ msgstr "Titlu:"
 #. Artist
 #. Album
 #. Year
-#: ../data/properties.glade.h:19 ../src/bacon-video-widget-properties.c:138
-#: ../src/bacon-video-widget-properties.c:140
-#: ../src/bacon-video-widget-properties.c:142
-#: ../src/bacon-video-widget-properties.c:144
+#: ../data/properties.glade.h:19 ../src/bacon-video-widget-properties.c:141
+#: ../src/bacon-video-widget-properties.c:143
+#: ../src/bacon-video-widget-properties.c:145
+#: ../src/bacon-video-widget-properties.c:147
 msgid "Unknown"
 msgstr "Necunoscut"
 
@@ -247,7 +253,7 @@ msgstr "Redă filme şi melodii"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:2 ../data/totem.glade.h:99
-#: ../src/totem.c:681 ../src/totem.c:3390 ../src/totem.c:3407
+#: ../src/totem.c:694 ../src/totem.c:3378 ../src/totem.c:3395
 msgid "Totem Movie Player"
 msgstr "Player-ul multimedia Totem"
 
@@ -890,23 +896,23 @@ msgstr "_Zoom 1:2"
 msgid "Unnamed CDROM"
 msgstr "CDROM fără nume"
 
-#: ../src/bacon-video-widget-properties.c:221
+#: ../src/bacon-video-widget-properties.c:224
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: ../src/bacon-video-widget-properties.c:224
+#: ../src/bacon-video-widget-properties.c:227
 #, c-format
 msgid "%d frames per second"
 msgstr "%d cadre pe secundă"
 
-#: ../src/bacon-video-widget-properties.c:226
-#: ../src/bacon-video-widget-properties.c:242
+#: ../src/bacon-video-widget-properties.c:229
+#: ../src/bacon-video-widget-properties.c:245
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: ../src/bacon-video-widget-properties.c:276
+#: ../src/bacon-video-widget-properties.c:279
 msgid "Properties dialog"
 msgstr "Dialogul proprietăţi"
 
@@ -919,6 +925,15 @@ msgstr "+"
 #: ../src/bacon-volume.c:203
 msgid "-"
 msgstr "-"
+
+#: ../src/egg-recent-view-gtk.c:344
+#, c-format
+msgid "Open '%s'"
+msgstr "Deschide „%s”"
+
+#: ../src/egg-recent-view-gtk.c:442
+msgid "Empty"
+msgstr "Gol"
 
 #: ../src/totem-interface.c:114
 #, c-format
@@ -933,7 +948,7 @@ msgstr "Verificaţi faptul că Totem este instalat corect."
 msgid "None"
 msgstr "Nici unul"
 
-#: ../src/totem-menu.c:568
+#: ../src/totem-menu.c:578
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "Redare disc „%s”"
@@ -946,11 +961,11 @@ msgstr "Opţiuni backend"
 msgid "Enable debug"
 msgstr "Activează depanarea"
 
-#: ../src/totem-options.c:39
+#: ../src/totem-options.c:39 ../src/totem.c:255 ../src/totem.c:263
 msgid "Play"
 msgstr "Redare"
 
-#: ../src/totem-options.c:40
+#: ../src/totem-options.c:40 ../src/totem.c:249
 msgid "Pause"
 msgstr "Pauză"
 
@@ -995,48 +1010,43 @@ msgstr "Înlocuieşte"
 msgid "Option '%s' is unknown and was ignored\n"
 msgstr "Opţiunea „%s” este necunoscută şi va fi ignorată\n"
 
-#: ../src/totem-playlist.c:326
+#: ../src/totem-playlist.c:328
 msgid "Could not save the playlist"
 msgstr "Nu am putut salva playlist-ul"
 
-#: ../src/totem-playlist.c:659
-msgid "Select Movies or Playlists"
-msgstr "Selectaţi filme sau playlist-uri"
-
-#: ../src/totem-playlist.c:838
+#: ../src/totem-playlist.c:809
 msgid "Save Playlist"
 msgstr "Salvaţi playlist-ul"
 
-#: ../src/totem-playlist.c:884
+#: ../src/totem-playlist.c:855
 msgid "Overwrite file?"
 msgstr "Suprascrieţi fişierul?"
 
-#: ../src/totem-playlist.c:886
+#: ../src/totem-playlist.c:857
 #, c-format
-msgid ""
-"A file named '%s' already exists.  Are you sure you want to overwrite it?"
+msgid "A file named '%s' already exists.  Are you sure you want to overwrite it?"
 msgstr ""
 "Un fişier numit „%s” există deja. Sunteţi sigur că doriţi să îl "
 "suprascrieţi ?"
 
-#: ../src/totem-playlist.c:1393
+#: ../src/totem-playlist.c:1364
 msgid "playlist"
 msgstr "playlist"
 
-#: ../src/totem-playlist.c:1522
+#: ../src/totem-playlist.c:1493
 msgid "Playlist error"
 msgstr "Eroare playlist"
 
-#: ../src/totem-playlist.c:1522
+#: ../src/totem-playlist.c:1493
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "Playlist-ul „%s” nu a putut fi parsat, ar putea fi corupt."
 
-#: ../src/totem-playlist.c:1915
+#: ../src/totem-playlist.c:1886
 msgid "Select CD"
 msgstr "Selectează CD"
 
-#: ../src/totem-playlist.c:1920
+#: ../src/totem-playlist.c:1891
 msgid "Please select the currently playing CD:"
 msgstr "Vă rugăm selectaţi CD-ul pentru redarea curentă:"
 
@@ -1061,8 +1071,7 @@ msgstr ""
 "ce restartaţi Totem."
 
 #: ../src/totem-preferences.c:185
-msgid ""
-"Switching on or off this type of TV-Out requires a restart to take effect."
+msgid "Switching on or off this type of TV-Out requires a restart to take effect."
 msgstr ""
 "Comutarea acestui tip de ieşire TV necesită repornirea aplicaţiei pentru a "
 "avea efect."
@@ -1129,7 +1138,7 @@ msgstr "Tipul de umbră"
 msgid "Style of bevel around the statusbar text"
 msgstr "Stilul de oblicitate din jurul textului din bara de status"
 
-#: ../src/totem-statusbar.c:124 ../src/totem.c:257 ../src/totem.c:667
+#: ../src/totem-statusbar.c:124 ../src/totem.c:259 ../src/totem.c:680
 msgid "Stopped"
 msgstr "Oprit"
 
@@ -1164,24 +1173,36 @@ msgstr "Creez buffer"
 msgid "%d %%"
 msgstr "%d %%"
 
+#: ../src/totem-uri.c:223
+msgid "All files"
+msgstr "Toate fişierele"
+
+#: ../src/totem-uri.c:228
+msgid "Supported files"
+msgstr "Fişiere suportate"
+
+#: ../src/totem-uri.c:242
+msgid "Select Movies or Playlists"
+msgstr "Selectaţi filme sau playlist-uri"
+
 #: ../src/totem.c:247
 msgid "Playing"
 msgstr "Redare"
 
-#: ../src/totem.c:252
+#: ../src/totem.c:253
 msgid "Paused"
 msgstr "Pauză"
 
-#: ../src/totem.c:297
+#: ../src/totem.c:305
 msgid "Totem could not eject the optical media."
 msgstr "Totem nu a putut ejecta suportul optic."
 
-#: ../src/totem.c:325 ../src/totem.c:352 ../src/totem.c:786 ../src/totem.c:890
+#: ../src/totem.c:333 ../src/totem.c:362 ../src/totem.c:799 ../src/totem.c:903
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem nu a putut reda '%s'."
 
-#: ../src/totem.c:378
+#: ../src/totem.c:389
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1190,7 +1211,7 @@ msgstr ""
 "Totem nu a putut reda acest tip de suport (%s) deoarece nu aveţi modulele "
 "necesare pentru a-l gestiona."
 
-#: ../src/totem.c:379
+#: ../src/totem.c:390
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1198,7 +1219,7 @@ msgstr ""
 "Vă rugăm instalaţi modulele necesare şi restartaţi Totem pentru a putea reda "
 "acest tip de suport."
 
-#: ../src/totem.c:387
+#: ../src/totem.c:398
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1207,7 +1228,7 @@ msgstr ""
 "Totem nu a putut reda acest tip de suport (%s) deşi un modul pentru "
 "gestionarea sa este deja instalat."
 
-#: ../src/totem.c:388
+#: ../src/totem.c:399
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1215,105 +1236,99 @@ msgstr ""
 "Verificaţi faptul că un disc a fost deja introdus în unitate şi că aceasta "
 "este configurată corect."
 
-#: ../src/totem.c:416
+#: ../src/totem.c:427
 msgid "Failed to play Audio/Video Disc"
 msgstr "Nu am putut reda discul audio/video"
 
-#: ../src/totem.c:417
+#: ../src/totem.c:428
 msgid "Reason unknown"
 msgstr "Motiv necunoscut"
 
-#: ../src/totem.c:674
+#: ../src/totem.c:687
 msgid "No File"
 msgstr "Nici un fişier"
 
-#: ../src/totem.c:1251 ../src/totem.c:1253
+#: ../src/totem.c:1264 ../src/totem.c:1266
 msgid "An error occurred"
 msgstr "A intervenit o eroare"
 
-#: ../src/totem.c:1547
-msgid "Select Files"
-msgstr "Selectaţi fişierele"
-
-#: ../src/totem.c:1632
+#: ../src/totem.c:1612
 msgid "Open Location..."
 msgstr "Deschide locaţia..."
 
-#: ../src/totem.c:1901
+#: ../src/totem.c:1881
 msgid "Totem could not display the help contents."
 msgstr "Totem nu a putut afişa conţinutul ajutorului."
 
-#: ../src/totem.c:1939
+#: ../src/totem.c:1919
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Player de filme folosind %s"
 
-#: ../src/totem.c:1943
+#: ../src/totem.c:1923
 msgid "Totem"
 msgstr "Totem"
 
-#: ../src/totem.c:1945 ../src/vanity.c:261
+#: ../src/totem.c:1925 ../src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Copyright © 2002-2005 Bastien Nocera"
 
-#: ../src/totem.c:1950 ../src/vanity.c:266
+#: ../src/totem.c:1930 ../src/vanity.c:266
 msgid "translator-credits"
 msgstr "Mugurel Tudor <mugurelu@gnome.ro>"
 
-#: ../src/totem.c:1983 ../src/totem.c:1991 ../src/vanity.c:299
+#: ../src/totem.c:1963 ../src/totem.c:1971 ../src/vanity.c:299
 #: ../src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem nu a putut face o captură de ecran pentru acest film."
 
-#: ../src/totem.c:1991 ../src/vanity.c:307
+#: ../src/totem.c:1971 ../src/vanity.c:307
 msgid "This is not supposed to happen; please file a bug report."
-msgstr ""
-"Acest lucru nu ar trebui să se întâmple, vă rugăm să raportaţi eroarea."
+msgstr "Acest lucru nu ar trebui să se întâmple, vă rugăm să raportaţi eroarea."
 
-#: ../src/totem.c:2018
+#: ../src/totem.c:1998
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem nu a putut afişa fereastra de proprietăţi a filmului."
 
-#: ../src/totem.c:2018
+#: ../src/totem.c:1998
 msgid "Make sure that Totem is correctly installed."
 msgstr "Vă rugăm verificaţi faptul că Totem este corect instalat."
 
-#: ../src/totem.c:2104
+#: ../src/totem.c:2084
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem nu a putut căuta în „%s”."
 
-#: ../src/totem.c:3252
+#: ../src/totem.c:3240
 msgid "Totem could not startup."
 msgstr "Totem nu a putut porni."
 
-#: ../src/totem.c:3252
+#: ../src/totem.c:3240
 msgid "No reason."
 msgstr "Nici un motiv."
 
-#: ../src/totem.c:3391
+#: ../src/totem.c:3379
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Nu am putut iniţializa bibliotecile thread-safe."
 
-#: ../src/totem.c:3391
+#: ../src/totem.c:3379
 msgid "Verify your system installation. Totem will now exit."
-msgstr ""
-"Verificaţi instalarea sistemului dumneavoastră. Totem se va închide acum."
+msgstr "Verificaţi instalarea sistemului dumneavoastră. Totem se va închide acum."
 
-#: ../src/totem.c:3414
+#: ../src/totem.c:3402
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem nu a putut iniţializa motorul de configurare."
 
-#: ../src/totem.c:3414
+#: ../src/totem.c:3402
 msgid "Make sure that GNOME is properly installed."
 msgstr "Verificaţi faptul că GNOME este instalat corect."
 
 #. Main window
-#: ../src/totem.c:3441
+#: ../src/totem.c:3429
 msgid "main window"
 msgstr "fereastra principală"
 
-#: ../src/totem.c:3446
+#: ../src/totem.c:3434
 msgid "video popup menu"
 msgstr "meniu video popup"
 
@@ -1388,44 +1403,44 @@ msgstr ""
 "Nu am putut încărca interfaţa principală (vanity.glade).\n"
 "Verificaţi faptul că Vanity este instalat corect."
 
-#: ../src/backend/bacon-video-widget-gst.c:68
+#: ../src/backend/bacon-video-widget-gst.c:67
 msgid "Totem Video Window"
 msgstr "Fereastra video Totem"
 
-#: ../src/backend/bacon-video-widget-gst.c:1865
+#: ../src/backend/bacon-video-widget-gst.c:1874
 msgid "Failed to retrieve working directory"
 msgstr "Nu s-as putut obţine dosarul curent"
 
-#: ../src/backend/bacon-video-widget-gst.c:1924
+#: ../src/backend/bacon-video-widget-gst.c:1935
 msgid "Location not found."
 msgstr "Locaţia nu a fost găsită."
 
-#: ../src/backend/bacon-video-widget-gst.c:1927
-msgid "You don't have permission to open that location."
-msgstr "Nu aveţi permisiunea pentru a deschide acea locaţie."
+#: ../src/backend/bacon-video-widget-gst.c:1938
+msgid "Could not open location; You may not have permission to open the file."
+msgstr "Nu am putut deschide locaţia; Poate nu aveţi permisiunea pentru a deschide fişierul."
 
-#: ../src/backend/bacon-video-widget-gst.c:1947
+#: ../src/backend/bacon-video-widget-gst.c:1959
 msgid "Failed to open media file; unknown error"
 msgstr "Eroare la deschiderea fişierului media, eroare necunoscută"
 
-#: ../src/backend/bacon-video-widget-gst.c:1979
+#: ../src/backend/bacon-video-widget-gst.c:1992
 #, c-format
 msgid "Failed to play: %s"
 msgstr "Nu am putut reda: %s"
 
-#: ../src/backend/bacon-video-widget-gst.c:1981
+#: ../src/backend/bacon-video-widget-gst.c:1994
 msgid "unknown error"
 msgstr "eroare necunoscută"
 
-#: ../src/backend/bacon-video-widget-gst.c:3134
+#: ../src/backend/bacon-video-widget-gst.c:3148
 msgid "Too old version of GStreamer installed."
 msgstr "O versiune prea veche de GStreamer este instalată."
 
-#: ../src/backend/bacon-video-widget-gst.c:3141
+#: ../src/backend/bacon-video-widget-gst.c:3155
 msgid "Media contains no supported video streams."
 msgstr "Mediul nu conţine vreun flux video suportat."
 
-#: ../src/backend/bacon-video-widget-gst.c:3319
+#: ../src/backend/bacon-video-widget-gst.c:3333
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1433,7 +1448,7 @@ msgstr ""
 "Nu am putut crea un obiect de redare GStreamer. Vă rugăm să verificaţi "
 "instalarea GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst.c:3415
+#: ../src/backend/bacon-video-widget-gst.c:3429
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1443,7 +1458,7 @@ msgstr ""
 "inchideţi alte aplicaţii video, sau să selectaţi o altă ieşire video în "
 "Selectorul pentru sisteme mltimedia."
 
-#: ../src/backend/bacon-video-widget-gst.c:3425
+#: ../src/backend/bacon-video-widget-gst.c:3439
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1452,7 +1467,7 @@ msgstr ""
 "fi disponibilă. Vă rugăm să selectaţi o altă ieşire video din Selectorul de "
 "sisteme multimedia."
 
-#: ../src/backend/bacon-video-widget-gst.c:3452
+#: ../src/backend/bacon-video-widget-gst.c:3466
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1462,7 +1477,7 @@ msgstr ""
 "selectaţi o altă ieşire audio din Selectorul de sisteme multimedia. Aţi "
 "putea lua în considerare şi folosirea unui server de sunet."
 
-#: ../src/backend/bacon-video-widget-gst.c:3458
+#: ../src/backend/bacon-video-widget-gst.c:3472
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector"
@@ -1470,7 +1485,7 @@ msgstr ""
 "Ieşirea audio solicitată nu a fost găsită. Vă rugăm să selectaţi o altă "
 "ieşire audio din Selectorul pentru sisteme multimedia."
 
-#: ../src/backend/bacon-video-widget-gst.c:3468
+#: ../src/backend/bacon-video-widget-gst.c:3482
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1491,7 +1506,7 @@ msgstr ""
 "Verificaţi dacă dispozitivul nu este ocupat."
 
 #: ../src/backend/bacon-video-widget-xine.c:1131
-#: ../src/backend/bacon-video-widget-xine.c:1664
+#: ../src/backend/bacon-video-widget-xine.c:1667
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -1551,8 +1566,7 @@ msgstr "Din motive de securitate, acest film nu poate fi redat din nou."
 
 #: ../src/backend/bacon-video-widget-xine.c:1307
 msgid "The audio device is busy. Is another application using it?"
-msgstr ""
-"Dispozitivul audio este ocupat. Este folosit cumva de o altă aplicaţie?"
+msgstr "Dispozitivul audio este ocupat. Este folosit cumva de o altă aplicaţie?"
 
 #: ../src/backend/bacon-video-widget-xine.c:1312
 msgid "You are not allowed to open this file."
@@ -1566,33 +1580,37 @@ msgstr "Serverul a refuzat accesul la acest fişier sau flux."
 msgid "The file you tried to play is an empty file."
 msgstr "Fişierul pe care încercaţi să îl redaţi este un fişier gol."
 
-#: ../src/backend/bacon-video-widget-xine.c:1472
+#: ../src/backend/bacon-video-widget-xine.c:1471
+msgid "There is no input plugin to handle the location of this movie"
+msgstr "Nu există nici un modul de intrare pentru a gestiona locaţia acestui film"
+
+#: ../src/backend/bacon-video-widget-xine.c:1475
 msgid "There is no plugin to handle this movie."
 msgstr "Nu există nici un modul pentru a reda acest film."
 
-#: ../src/backend/bacon-video-widget-xine.c:1476
+#: ../src/backend/bacon-video-widget-xine.c:1479
 msgid "This movie is broken and can not be played further."
 msgstr "Acest film este stricat şi nu poate fi redat în continuare."
 
-#: ../src/backend/bacon-video-widget-xine.c:1480
+#: ../src/backend/bacon-video-widget-xine.c:1483
 msgid "This location is not a valid one."
 msgstr "Această locaţie nu este validă."
 
-#: ../src/backend/bacon-video-widget-xine.c:1484
+#: ../src/backend/bacon-video-widget-xine.c:1487
 msgid "This movie could not be opened."
 msgstr "Acest film nu a putut fi deschis."
 
-#: ../src/backend/bacon-video-widget-xine.c:1488
+#: ../src/backend/bacon-video-widget-xine.c:1491
 msgid "Generic Error."
 msgstr "Eroare generică."
 
-#: ../src/backend/bacon-video-widget-xine.c:2030
+#: ../src/backend/bacon-video-widget-xine.c:2031
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr ""
 "Acest film este o imagine statică. Îl puteţi deschide cu un vizualizator de "
 "imagini."
 
-#: ../src/backend/bacon-video-widget-xine.c:2054
+#: ../src/backend/bacon-video-widget-xine.c:2055
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1601,7 +1619,7 @@ msgstr ""
 "Codecul video „%s” nu este suportat. Va trebui să instalaţi module "
 "suplimentare pentru a putea reda anumite tipuri de filme"
 
-#: ../src/backend/bacon-video-widget-xine.c:2058
+#: ../src/backend/bacon-video-widget-xine.c:2059
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1610,26 +1628,25 @@ msgstr ""
 "Codecul audio „%s” nu este suportat. Va trebui să instalaţi module "
 "suplimentare pentru a putea reda anumite tipuri de filme"
 
-#: ../src/backend/bacon-video-widget-xine.c:2074
+#: ../src/backend/bacon-video-widget-xine.c:2075
 msgid "This is an audio-only file, and there is no audio output available."
-msgstr ""
-"Acesta este un fişier audio, şi nu există nici o ieşire audio disponibilă."
+msgstr "Acesta este un fişier audio, şi nu există nici o ieşire audio disponibilă."
 
-#: ../src/backend/bacon-video-widget-xine.c:3514
-#: ../src/backend/bacon-video-widget-xine.c:3577
+#: ../src/backend/bacon-video-widget-xine.c:3515
+#: ../src/backend/bacon-video-widget-xine.c:3578
 #, c-format
 msgid "Language %d"
 msgstr "Limba %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3613
+#: ../src/backend/bacon-video-widget-xine.c:3614
 msgid "Movie is not playing."
 msgstr "Filmul nu este redat."
 
-#: ../src/backend/bacon-video-widget-xine.c:3622
+#: ../src/backend/bacon-video-widget-xine.c:3623
 msgid "No video to capture."
 msgstr "Nici un video pentru captură."
 
-#: ../src/backend/bacon-video-widget-xine.c:3630
+#: ../src/backend/bacon-video-widget-xine.c:3631
 msgid "Video codec is not handled."
 msgstr "Codecul video nu este suportat."
 
@@ -1688,8 +1705,7 @@ msgstr "Nu am putut citi legătura simbolică %s: %s"
 #: ../src/plparse/totem-disc.c:283
 #, c-format
 msgid "Failed to find mountpoint for device %s in /etc/fstab"
-msgstr ""
-"Nu am putut găsi punctul de montare pentru dispozitivul %s în /etc/fstab"
+msgstr "Nu am putut găsi punctul de montare pentru dispozitivul %s în /etc/fstab"
 
 #: ../src/plparse/totem-disc.c:321
 msgid "Please check that a disc is present in the drive."
@@ -1746,3 +1762,4 @@ msgstr "Nu am putut scrie parserul: %s"
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "Nu am putut deschide fişierul „%s”: %s"
+
