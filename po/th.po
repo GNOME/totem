@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-06 11:23+0700\n"
-"PO-Revision-Date: 2005-11-06 11:29+0700\n"
+"POT-Creation-Date: 2005-11-13 14:07+0700\n"
+"PO-Revision-Date: 2005-11-13 14:22+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <L10n@opentle.org>\n"
 "MIME-Version: 1.0\n"
@@ -250,7 +250,7 @@ msgstr "เล่นภาพยนตร์และเพลง"
 #: data/totem.desktop.in.in.in.h:2 data/totem.glade.h:99
 #: src/totem.c:694 src/totem.c:3396 src/totem.c:3413
 msgid "Totem Movie Player"
-msgstr "เล่นหนังด้วย Totem"
+msgstr "Totem: โปรแกรมเล่นภาพยนตร์"
 
 #: data/totem.glade.h:2
 msgid ""
@@ -418,7 +418,7 @@ msgstr "ไม่มีคำบรรยายให้เลือก"
 
 #: data/totem.glade.h:49
 msgid "Open _Location..."
-msgstr "เปิด_ที่อยู่..."
+msgstr "เปิด_ตำแหน่ง..."
 
 #: data/totem.glade.h:50
 msgid "Open a non-local file"
@@ -834,7 +834,7 @@ msgstr "ใส่_ที่อยู่ของแฟ้มที่ต้อ�
 
 #: data/uri.glade.h:2
 msgid "Open Location"
-msgstr "เปิดที่อยู่"
+msgstr "เปิดตำแหน่ง"
 
 #: data/vanity.desktop.in.in.h:1
 msgid "Vanity Webcam utility"
@@ -1212,14 +1212,14 @@ msgstr "Totem ไม่สามารถเล่นสื่อนี้ (%s) 
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
-msgstr "คุณอาจตรวจสอบว่าได้ใส่แผ่นในไดรฟ์หรือไม่ และได้ตั้งค่าไดรฟ์ไว้ถูกต้องหรือไม่"
+msgstr "คุณอาจตรวจสอบว่าได้ใส่แผ่นในไดรว์หรือไม่ และได้ตั้งค่าไดรว์ไว้ถูกต้องหรือไม่"
 
 #: src/totem.c:427
-msgid "Failed to play Audio/Video Disc"
-msgstr "เล่นแผ่นเพลง/หนังไม่สำเร็จ"
+msgid "Totem was not able to play this disc."
+msgstr "Totem ไม่สามารถเล่นแผ่นนี้ได้"
 
-#: src/totem.c:428
-msgid "Reason unknown"
+#: src/totem.c:428 src/totem.c:3258
+msgid "No reason."
 msgstr "ไม่ทราบสาเหตุ"
 
 #: src/totem.c:687
@@ -1232,7 +1232,7 @@ msgstr "เกิดปัญหา"
 
 #: src/totem.c:1630
 msgid "Open Location..."
-msgstr "เปิดที่อยู่..."
+msgstr "เปิดตำแหน่ง..."
 
 #: src/totem.c:1899
 msgid "Totem could not display the help contents."
@@ -1282,10 +1282,6 @@ msgstr "Totem ไม่สามารถเลื่อนตำแหน่ง
 #: src/totem.c:3258
 msgid "Totem could not startup."
 msgstr "ไม่สามารถเริ่มทำงาน Totem"
-
-#: src/totem.c:3258
-msgid "No reason."
-msgstr "ไม่มีข้อมูล"
 
 #: src/totem.c:3397
 msgid "Could not initialize the thread-safe libraries."
@@ -1383,61 +1379,29 @@ msgstr ""
 "ไม่สามารถโหลดส่วนติดต่อหลัก (vanity.glade)\n"
 "กรุณาตรวจสอบการติดตั้ง Vanity ว่าเรียบร้อยดีหรือไม่"
 
-#: src/backend/bacon-video-widget-gst-0.10.c:66
+#: src/backend/bacon-video-widget-gst-0.10.c:69
 #: src/backend/bacon-video-widget-gst.c:67
 msgid "Totem Video Window"
 msgstr "หน้าต่างวิดีโอ Totem"
 
-#: src/backend/bacon-video-widget-gst-0.10.c:1835
-#: src/backend/bacon-video-widget-gst.c:1874
-msgid "Failed to retrieve working directory"
-msgstr "ไม่สามารถอ่านไดเรกทอรีใช้งานปัจจุบัน"
+#: src/backend/bacon-video-widget-gst-0.10.c:1822
+msgid ""
+"The requested audio output was not found. Please select another audio output "
+"in the Multimedia Systems Selector."
+msgstr ""
+"ไม่พบเอาต์พุตเสียงที่ร้องขอ กรุณาเลือกเอาต์พุตเสียงช่องอื่นในตัวเลือกระบบสื่อผสม"
 
-#: src/backend/bacon-video-widget-gst-0.10.c:1900
+#: src/backend/bacon-video-widget-gst-0.10.c:1827
 #: src/backend/bacon-video-widget-gst.c:1935
 msgid "Location not found."
-msgstr "หาที่อยู่ที่กำหนดไม่พบ"
+msgstr "หาตำแหน่งที่กำหนดไม่พบ"
 
-#: src/backend/bacon-video-widget-gst-0.10.c:1903
+#: src/backend/bacon-video-widget-gst-0.10.c:1831
 #: src/backend/bacon-video-widget-gst.c:1938
 msgid "Could not open location; You may not have permission to open the file."
 msgstr "ไม่สามารถเปิดตำแหน่งได้ คุณอาจไม่ได้รับอนุญาตให้เปิดแฟ้มดังกล่าว"
 
-#: src/backend/bacon-video-widget-gst-0.10.c:1924
-#: src/backend/bacon-video-widget-gst.c:1959
-msgid "Failed to open media file; unknown error"
-msgstr "ไม่สามารถเปิดแฟ้มสื่อได้ ไม่ทราบสาเหตุข้อผิดพลาด"
-
-#: src/backend/bacon-video-widget-gst-0.10.c:1961
-#: src/backend/bacon-video-widget-gst.c:1992
-#, c-format
-msgid "Failed to play: %s"
-msgstr "เล่นไม่สำเร็จ: %s"
-
-#: src/backend/bacon-video-widget-gst-0.10.c:1963
-#: src/backend/bacon-video-widget-gst.c:1994
-msgid "unknown error"
-msgstr "ข้อผิดพลาดไม่รู้จัก"
-
-#: src/backend/bacon-video-widget-gst-0.10.c:3190
-#: src/backend/bacon-video-widget-gst.c:3154
-msgid "Too old version of GStreamer installed."
-msgstr "รุ่นของ GStreamer ที่ติดตั้งไว้เก่าเกินไป"
-
-#: src/backend/bacon-video-widget-gst-0.10.c:3197
-#: src/backend/bacon-video-widget-gst.c:3161
-msgid "Media contains no supported video streams."
-msgstr "สื่อไม่มีสตรีมวิดีโอที่สนับสนุน"
-
-#: src/backend/bacon-video-widget-gst-0.10.c:3525
-#: src/backend/bacon-video-widget-gst.c:3339
-msgid ""
-"Failed to create a GStreamer play object. Please check your GStreamer "
-"installation."
-msgstr ""
-"ไม่สามารถสร้างอ็อบเจกต์สำหรับเล่นสื่อของ GStreamer กรุณาตรวจสอบการติดตั้ง GStreamer ของคุณ"
-
-#: src/backend/bacon-video-widget-gst-0.10.c:3637
+#: src/backend/bacon-video-widget-gst-0.10.c:1842
 #: src/backend/bacon-video-widget-gst.c:3435
 msgid ""
 "The video output is in use by another application. Please close other video "
@@ -1447,25 +1411,7 @@ msgstr ""
 "มีโปรแกรมอื่นใช้เอาต์พุตภาพอยู่ กรุณาปิดโปรแกรมวิดีโออื่น "
 "หรือเลือกเอาต์พุตภาพช่องอื่นในตัวเลือกระบบสื่อผสม"
 
-#: src/backend/bacon-video-widget-gst-0.10.c:3648
-#: src/backend/bacon-video-widget-gst.c:3446
-msgid ""
-"Failed to open video output. It may not be available. Please select another "
-"video output in the Multimedia Systems Selector."
-msgstr ""
-"ไม่สามารถเปิดเอาต์พุตภาพได้ อาจไม่มีอุปกรณ์อยู่ กรุณาเลือกเอาต์พุตภาพช่องอื่นในตัวเลือกระบบสื่อผสม"
-
-#: src/backend/bacon-video-widget-gst-0.10.c:3652
-#: src/backend/bacon-video-widget-gst.c:3450
-msgid ""
-"Could not find the video output. You may need to install additional "
-"GStreamer plugins, or select another video output in the Multimedia Systems "
-"Selector."
-msgstr ""
-"ไม่พบเอาต์พุตภาพที่ร้องขอ คุณอาจต้องติดตั้งปลั๊กอิน GStreamer เพิ่มเติม "
-"หรือเลือกเอาต์พุตภาพช่องอื่นในตัวเลือกระบบสื่อผสม"
-
-#: src/backend/bacon-video-widget-gst-0.10.c:3681
+#: src/backend/bacon-video-widget-gst-0.10.c:1848
 #: src/backend/bacon-video-widget-gst.c:3478
 msgid ""
 "The audio output is in use by another application. Please select another "
@@ -1475,14 +1421,52 @@ msgstr ""
 "มีโปรแกรมอื่นใช้เอาต์พุตเสียงอยู่ กรุณาเลือกเอาต์พุตเสียงช่องอื่นในตัวเลือกระบบสื่อผสม "
 "และคุณอาจพิจารณาใช้เซิร์ฟเวอร์เสียง"
 
-#: src/backend/bacon-video-widget-gst-0.10.c:3687
-#: src/backend/bacon-video-widget-gst.c:3484
-msgid ""
-"The requested audio output was not found. Please select another audio output "
-"in the Multimedia Systems Selector"
-msgstr "ไม่พบเอาต์พุตเสียงที่ร้องขอ กรุณาเลือกเอาต์พุตเสียงช่องอื่นในตัวเลือกระบบสื่อผสม"
+#: src/backend/bacon-video-widget-gst-0.10.c:1929
+msgid "Media file could not be played."
+msgstr "ไม่สามารถเล่นภาพยนตร์ได้"
 
-#: src/backend/bacon-video-widget-gst-0.10.c:3698
+#: src/backend/bacon-video-widget-gst-0.10.c:1988
+#: src/backend/bacon-video-widget-gst.c:1874
+msgid "Failed to retrieve working directory"
+msgstr "ไม่สามารถอ่านไดเรกทอรีใช้งานปัจจุบัน"
+
+#: src/backend/bacon-video-widget-gst-0.10.c:3263
+#: src/backend/bacon-video-widget-gst.c:3154
+msgid "Too old version of GStreamer installed."
+msgstr "รุ่นของ GStreamer ที่ติดตั้งไว้เก่าเกินไป"
+
+#: src/backend/bacon-video-widget-gst-0.10.c:3270
+#: src/backend/bacon-video-widget-gst.c:3161
+msgid "Media contains no supported video streams."
+msgstr "สื่อไม่มีสตรีมวิดีโอที่สนับสนุน"
+
+#: src/backend/bacon-video-widget-gst-0.10.c:3598
+#: src/backend/bacon-video-widget-gst.c:3339
+msgid ""
+"Failed to create a GStreamer play object. Please check your GStreamer "
+"installation."
+msgstr ""
+"ไม่สามารถสร้างอ็อบเจกต์สำหรับเล่นสื่อของ GStreamer กรุณาตรวจสอบการติดตั้ง GStreamer ของคุณ"
+
+#: src/backend/bacon-video-widget-gst-0.10.c:3701
+#: src/backend/bacon-video-widget-gst.c:3446
+msgid ""
+"Failed to open video output. It may not be available. Please select another "
+"video output in the Multimedia Systems Selector."
+msgstr ""
+"ไม่สามารถเปิดเอาต์พุตภาพได้ อาจไม่มีอุปกรณ์อยู่ กรุณาเลือกเอาต์พุตภาพช่องอื่นในตัวเลือกระบบสื่อผสม"
+
+#: src/backend/bacon-video-widget-gst-0.10.c:3709
+#: src/backend/bacon-video-widget-gst.c:3450
+msgid ""
+"Could not find the video output. You may need to install additional "
+"GStreamer plugins, or select another video output in the Multimedia Systems "
+"Selector."
+msgstr ""
+"ไม่พบเอาต์พุตภาพที่ร้องขอ คุณอาจต้องติดตั้งปลั๊กอิน GStreamer เพิ่มเติม "
+"หรือเลือกเอาต์พุตภาพช่องอื่นในตัวเลือกระบบสื่อผสม"
+
+#: src/backend/bacon-video-widget-gst-0.10.c:3724
 #: src/backend/bacon-video-widget-gst.c:3495
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
@@ -1492,13 +1476,41 @@ msgstr ""
 "ไม่สามารถเปิดเอาต์พุตเสียงได้ คุณอาจไม่ได้รับอนุญาตให้เปิดอุปกรณ์เสียง "
 "หรือเซิร์ฟเวอร์เสียงอาจไม่ได้ทำงานอยู่ กรุณาเลือกเอาต์พุตเสียงช่องอื่นในตัวเลือกระบบสื่อผสม"
 
-#: src/backend/bacon-video-widget-gst-0.10.c:3702
+#: src/backend/bacon-video-widget-gst-0.10.c:3734
+msgid ""
+"Could not find the audio output. You may need to install additional "
+"GStreamer plugins, or select another audio output in the Multimedia Systems "
+"Selector."
+msgstr ""
+"ไม่พบเอาต์พุตเสียงที่ร้องขอ คุณอาจต้องติดตั้งปลั๊กอิน GStreamer เพิ่มเติม "
+"หรือเลือกเอาต์พุตเสียงช่องอื่นในตัวเลือกระบบสื่อผสม"
+
+#: src/backend/bacon-video-widget-gst.c:1959
+msgid "Failed to open media file; unknown error"
+msgstr "ไม่สามารถเปิดแฟ้มสื่อได้ ไม่ทราบสาเหตุข้อผิดพลาด"
+
+#: src/backend/bacon-video-widget-gst.c:1992
+#, c-format
+msgid "Failed to play: %s"
+msgstr "เล่นไม่สำเร็จ: %s"
+
+#: src/backend/bacon-video-widget-gst.c:1994
+msgid "unknown error"
+msgstr "ข้อผิดพลาดไม่รู้จัก"
+
+#: src/backend/bacon-video-widget-gst.c:3484
+msgid ""
+"The requested audio output was not found. Please select another audio output "
+"in the Multimedia Systems Selector"
+msgstr "ไม่พบเอาต์พุตเสียงที่ร้องขอ กรุณาเลือกเอาต์พุตเสียงช่องอื่นในตัวเลือกระบบสื่อผสม"
+
 #: src/backend/bacon-video-widget-gst.c:3499
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
 "Selector"
-msgstr "ไม่พบเอาต์พุตเสียงที่ร้องขอ คุณอาจต้องติดตั้งปลั๊กอิน GStreamer เพิ่มเติม "
+msgstr ""
+"ไม่พบเอาต์พุตเสียงที่ร้องขอ คุณอาจต้องติดตั้งปลั๊กอิน GStreamer เพิ่มเติม "
 "หรือเลือกเอาต์พุตเสียงช่องอื่นในตัวเลือกระบบสื่อผสม"
 
 #: src/backend/bacon-video-widget-xine.c:676
@@ -1633,7 +1645,7 @@ msgstr "ภาษา %d"
 
 #: src/backend/bacon-video-widget-xine.c:3620
 msgid "Movie is not playing."
-msgstr "ภาพยนตร์ไม่ถูกเล่น"
+msgstr "ภาพยนตร์ไม่ได้เล่นอยู่"
 
 #: src/backend/bacon-video-widget-xine.c:3629
 msgid "No video to capture."
@@ -1699,7 +1711,7 @@ msgstr "ไม่สามารถเมาท์อุปกรณ์ %s ต�
 
 #: src/plparse/totem-disc.c:321
 msgid "Please check that a disc is present in the drive."
-msgstr "กรุณาตรวจสอบว่ามีแผ่นในไดรฟ์"
+msgstr "กรุณาตรวจสอบว่ามีแผ่นในไดรว์หรือไม่"
 
 #: src/plparse/totem-disc.c:324
 #, c-format
@@ -1714,7 +1726,7 @@ msgstr "ไม่สามารถอ่านค่าความสามา
 #: src/plparse/totem-disc.c:368
 #, c-format
 msgid "Drive status 0x%x (%s) - check disc"
-msgstr "สถานะไดรฟ์ 0x%x (%s) - กำลังตรวจหาแผ่น"
+msgstr "สถานะไดรว์ 0x%x (%s) - กำลังตรวจหาแผ่น"
 
 #: src/plparse/totem-disc.c:403
 #, c-format
@@ -1752,6 +1764,12 @@ msgstr "ไม่สามารถเขียนไปยังตัวแจ
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "ไม่สามารถเปิดแฟ้ม '%s': %s"
+
+#~ msgid "Failed to play Audio/Video Disc"
+#~ msgstr "เล่นแผ่นเพลง/หนังไม่สำเร็จ"
+
+#~ msgid "Reason unknown"
+#~ msgstr "ไม่ทราบสาเหตุ"
 
 #~ msgid "Select Files"
 #~ msgstr "เลือกแฟ้ม"
