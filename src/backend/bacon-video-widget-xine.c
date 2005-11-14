@@ -1515,10 +1515,8 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	g_source_remove (bvw->priv->tick_id);
 
 	speed = xine_get_param (bvw->priv->stream, XINE_PARAM_SPEED);
-#if 0 /* Disable to work-around a xine-lib 1.1.x bug */
 	if (speed != XINE_SPEED_PAUSE)
 		show_vfx_update (bvw, FALSE);
-#endif
 
 	/* stop the playback */
 	xine_stop (bvw->priv->stream);

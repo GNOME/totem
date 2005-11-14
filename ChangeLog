@@ -1,6 +1,12 @@
 2005-11-14  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_unrealize): remove earlier work-around, fixed
+	in xine-lib/src/xine-engine video_out.c,1.220,1.221
+
+2005-11-14  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c:
 	(bacon_video_widget_finalize), (bacon_video_widget_unrealize),
 	(bacon_video_widget_new): work-around a crash-on-exit with the
 	1.1.x version of xine-lib, and using visualisations
