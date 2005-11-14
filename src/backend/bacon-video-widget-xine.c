@@ -453,6 +453,7 @@ bacon_video_widget_finalize (GObject *object)
 
 	if (bvw->priv->xine != NULL) {
 		xine_exit (bvw->priv->xine);
+		bvw->priv->xine = NULL;
 	}
 	if (bvw->priv->cursor != NULL) {
 		gdk_cursor_unref (bvw->priv->cursor);
@@ -1514,8 +1515,10 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	g_source_remove (bvw->priv->tick_id);
 
 	speed = xine_get_param (bvw->priv->stream, XINE_PARAM_SPEED);
+#if 0 /* Disable to work-around a xine-lib 1.1.x bug */
 	if (speed != XINE_SPEED_PAUSE)
 		show_vfx_update (bvw, FALSE);
+#endif
 
 	/* stop the playback */
 	xine_stop (bvw->priv->stream);
@@ -1553,6 +1556,9 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	xine_config_save (bvw->priv->xine, configfile);
 	g_free (configfile);
 
+	if (bvw->priv->vis != NULL)
+		xine_post_dispose (bvw->priv->xine, bvw->priv->vis);
+
 	/* Kill the drivers */
 	if (bvw->priv->vo_driver != NULL)
 		xine_close_video_driver (bvw->priv->xine,
@@ -1560,9 +1566,6 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	if (bvw->priv->ao_driver != NULL)
 		xine_close_audio_driver (bvw->priv->xine,
 				bvw->priv->ao_driver);
-
-	if (bvw->priv->vis != NULL)
-		xine_post_dispose (bvw->priv->xine, bvw->priv->vis);
 
 	/* stop event thread */
 	xine_exit (bvw->priv->xine);
@@ -1653,6 +1656,7 @@ bacon_video_widget_new (int width, int height,
 					bvw->priv->ao_driver);
 		}
 		xine_exit (bvw->priv->xine);
+		bvw->priv->xine = NULL;
 
 		/* get rid of all our crappety crap */
 		g_source_remove (bvw->priv->tick_id);
