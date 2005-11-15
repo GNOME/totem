@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-13 14:07+0700\n"
-"PO-Revision-Date: 2005-11-13 14:22+0700\n"
+"POT-Creation-Date: 2005-11-15 17:32+0700\n"
+"PO-Revision-Date: 2005-11-15 17:52+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <L10n@opentle.org>\n"
 "MIME-Version: 1.0\n"
@@ -350,7 +350,7 @@ msgstr "ปรับขนาดหน้าต่างอัตโนมัต
 
 #: data/totem.glade.h:31
 msgid "Co_ntrast:"
-msgstr "ความ_คมชัด:"
+msgstr "ความ_ต่างระดับสี:"
 
 #: data/totem.glade.h:32
 msgid "Connection _speed:"
@@ -458,7 +458,7 @@ msgstr "คำบ_รรยาย"
 
 #: data/totem.glade.h:62
 msgid "Sat_uration:"
-msgstr "ความ_อิ่มสี:"
+msgstr "ความส_ดของสี:"
 
 #: data/totem.glade.h:63
 msgid "Set the aspect ratio"
@@ -666,7 +666,7 @@ msgstr "ไ_ป"
 
 #: data/totem.glade.h:127
 msgid "_Hue:"
-msgstr "ความเ_ข้มอ่อนของสี:"
+msgstr "_สี:"
 
 #: data/totem.glade.h:128
 msgid "_Languages"
@@ -784,15 +784,15 @@ msgstr "ความสว่างภาพ"
 
 #: data/totem.schemas.in.h:18
 msgid "The contrast of the video"
-msgstr "ความคมชัด"
+msgstr "ความต่างระดับสีของภาพ"
 
 #: data/totem.schemas.in.h:19
 msgid "The hue of the video"
-msgstr "ความเข้มอ่อนของสี"
+msgstr "สีของภาพ"
 
 #: data/totem.schemas.in.h:20
 msgid "The saturation of the video"
-msgstr "ความอิ่มสี"
+msgstr "ความสดของสีภาพ"
 
 #: data/totem.schemas.in.h:21
 msgid "Type of audio output to use"
@@ -1388,8 +1388,7 @@ msgstr "หน้าต่างวิดีโอ Totem"
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
-msgstr ""
-"ไม่พบเอาต์พุตเสียงที่ร้องขอ กรุณาเลือกเอาต์พุตเสียงช่องอื่นในตัวเลือกระบบสื่อผสม"
+msgstr "ไม่พบเอาต์พุตเสียงที่ร้องขอ กรุณาเลือกเอาต์พุตเสียงช่องอื่นในตัวเลือกระบบสื่อผสม"
 
 #: src/backend/bacon-video-widget-gst-0.10.c:1827
 #: src/backend/bacon-video-widget-gst.c:1935
@@ -1513,7 +1512,7 @@ msgstr ""
 "ไม่พบเอาต์พุตเสียงที่ร้องขอ คุณอาจต้องติดตั้งปลั๊กอิน GStreamer เพิ่มเติม "
 "หรือเลือกเอาต์พุตเสียงช่องอื่นในตัวเลือกระบบสื่อผสม"
 
-#: src/backend/bacon-video-widget-xine.c:676
+#: src/backend/bacon-video-widget-xine.c:677
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1522,136 +1521,136 @@ msgstr ""
 "ไม่สามารถโหลดไดรเวอร์เสียง '%s'\n"
 "กรุณาตรวจสอบดูว่าไดรเวอร์ไม่ได้ถูกใช้งานอยู่"
 
-#: src/backend/bacon-video-widget-xine.c:1131
-#: src/backend/bacon-video-widget-xine.c:1667
+#: src/backend/bacon-video-widget-xine.c:1132
+#: src/backend/bacon-video-widget-xine.c:1669
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
 msgstr "ไม่มีเอาต์พุตภาพ ตรวจสอบว่าเอาต์พุตภาพถูกติดตั้งแล้ว"
 
-#: src/backend/bacon-video-widget-xine.c:1254
+#: src/backend/bacon-video-widget-xine.c:1255
 msgid "The server you are trying to connect to is not known."
 msgstr "ไม่รู้จักเซิร์ฟเวอร์ที่เรียก"
 
-#: src/backend/bacon-video-widget-xine.c:1258
+#: src/backend/bacon-video-widget-xine.c:1259
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "อุปกรณ์ (%s) ที่เรียกไม่ถูกต้อง"
 
-#: src/backend/bacon-video-widget-xine.c:1262
+#: src/backend/bacon-video-widget-xine.c:1263
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "ไม่สามารถติดต่อกับเซิร์ฟเวอร์ (%s) ได้"
 
-#: src/backend/bacon-video-widget-xine.c:1266
+#: src/backend/bacon-video-widget-xine.c:1267
 msgid "The connection to this server was refused."
 msgstr "การติดต่อถูกปฎิเสธ"
 
-#: src/backend/bacon-video-widget-xine.c:1270
+#: src/backend/bacon-video-widget-xine.c:1271
 msgid "The specified movie could not be found."
 msgstr "ไม่พบภาพยนตร์ที่เรียก"
 
-#: src/backend/bacon-video-widget-xine.c:1276
-#: src/backend/bacon-video-widget-xine.c:1294
+#: src/backend/bacon-video-widget-xine.c:1277
+#: src/backend/bacon-video-widget-xine.c:1295
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
 msgstr "ไม่สามารถอ่านข้อมูลที่ถูกเข้ารหัสได้ คุณกำลังเล่นดีวีดีโดยไม่มี libdvdcss หรือไม่?"
 
-#: src/backend/bacon-video-widget-xine.c:1279
+#: src/backend/bacon-video-widget-xine.c:1280
 msgid "The movie could not be read."
 msgstr "ไม่สามารถอ่านภาพยนตร์ได้"
 
-#: src/backend/bacon-video-widget-xine.c:1288
+#: src/backend/bacon-video-widget-xine.c:1289
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "เกิดปัญหาเมื่อโหลดไลบรารีหรือตัวถอดรหัส (%s)"
 
-#: src/backend/bacon-video-widget-xine.c:1297
+#: src/backend/bacon-video-widget-xine.c:1298
 msgid "This file is encrypted and cannot be played back."
 msgstr "แฟ้มถูกเข้ารหัสและไม่สามารถเล่นได้"
 
-#: src/backend/bacon-video-widget-xine.c:1302
+#: src/backend/bacon-video-widget-xine.c:1303
 msgid "For security reasons, this movie can not be played back."
 msgstr "ด้วยเหตุผลด้านความปลอดภัย ไม่สามารถเล่นภาพยนตร์นี้ได้"
 
-#: src/backend/bacon-video-widget-xine.c:1307
+#: src/backend/bacon-video-widget-xine.c:1308
 msgid "The audio device is busy. Is another application using it?"
 msgstr "อุปกรณ์เสียงถูกใช้งานอยู่"
 
-#: src/backend/bacon-video-widget-xine.c:1312
+#: src/backend/bacon-video-widget-xine.c:1313
 msgid "You are not allowed to open this file."
 msgstr "คุณไม่มีสิทธิ์เปิดแฟ้มนี้"
 
-#: src/backend/bacon-video-widget-xine.c:1314
+#: src/backend/bacon-video-widget-xine.c:1315
 msgid "The server refused access to this file or stream."
 msgstr "เซิร์ฟเวอร์ปฎิเสธการเข้าถึงแฟ้มหรือสตรีมนี้"
 
-#: src/backend/bacon-video-widget-xine.c:1323
+#: src/backend/bacon-video-widget-xine.c:1324
 msgid "The file you tried to play is an empty file."
 msgstr "แฟ้มที่คุณพยายามจะเล่นเป็นแฟ้มเปล่า"
 
-#: src/backend/bacon-video-widget-xine.c:1471
+#: src/backend/bacon-video-widget-xine.c:1472
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "ไม่มีปลั๊กอินสำหรับดำเนินการกับตำแหน่งที่ตั้งของภาพยนตร์นี้"
 
-#: src/backend/bacon-video-widget-xine.c:1475
+#: src/backend/bacon-video-widget-xine.c:1476
 msgid "There is no plugin to handle this movie."
 msgstr "ไม่มีปลั๊กอินสำหรับภาพยนตร์นี้"
 
-#: src/backend/bacon-video-widget-xine.c:1479
+#: src/backend/bacon-video-widget-xine.c:1480
 msgid "This movie is broken and can not be played further."
 msgstr "ภาพยนตร์นี้มีปัญหาและไม่สามารถเล่นต่อได้"
 
-#: src/backend/bacon-video-widget-xine.c:1483
+#: src/backend/bacon-video-widget-xine.c:1484
 msgid "This location is not a valid one."
 msgstr "ตำแหน่งไม่ถูกต้อง"
 
-#: src/backend/bacon-video-widget-xine.c:1487
+#: src/backend/bacon-video-widget-xine.c:1488
 msgid "This movie could not be opened."
 msgstr "ไม่สามารถเปิดภาพยนตร์ได้"
 
-#: src/backend/bacon-video-widget-xine.c:1491
+#: src/backend/bacon-video-widget-xine.c:1492
 msgid "Generic Error."
 msgstr "ผิดพลาด"
 
-#: src/backend/bacon-video-widget-xine.c:2031
+#: src/backend/bacon-video-widget-xine.c:2033
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr "ภาพยนตร์นี้เป็นภาพนิ่ง สามารถเปิดด้วยตัวดูภาพ"
 
-#: src/backend/bacon-video-widget-xine.c:2055
+#: src/backend/bacon-video-widget-xine.c:2057
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr "ไม่สนับสนุนการอ่านรหัส '%s' คุณอาจต้องติดตั้งปลั๊กอินเพิ่มเติม เพื่อจะเล่นภาพยนตร์บางชนิดได้"
 
-#: src/backend/bacon-video-widget-xine.c:2059
+#: src/backend/bacon-video-widget-xine.c:2061
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr "ไม่มีตัวถอดรหัสเสียง '%s' คุณต้องติดตั้งเองต่างหาก"
 
-#: src/backend/bacon-video-widget-xine.c:2075
+#: src/backend/bacon-video-widget-xine.c:2077
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "แฟ้มนี้เป็นแฟ้มเสียง และไม่มีเอาต์พุตสำหรับเสียงออก"
 
-#: src/backend/bacon-video-widget-xine.c:3521
-#: src/backend/bacon-video-widget-xine.c:3584
+#: src/backend/bacon-video-widget-xine.c:3523
+#: src/backend/bacon-video-widget-xine.c:3586
 #, c-format
 msgid "Language %d"
 msgstr "ภาษา %d"
 
-#: src/backend/bacon-video-widget-xine.c:3620
+#: src/backend/bacon-video-widget-xine.c:3622
 msgid "Movie is not playing."
 msgstr "ภาพยนตร์ไม่ได้เล่นอยู่"
 
-#: src/backend/bacon-video-widget-xine.c:3629
+#: src/backend/bacon-video-widget-xine.c:3631
 msgid "No video to capture."
 msgstr "ไม่มีภาพยนตร์สำหรับจับหน้าจอ"
 
-#: src/backend/bacon-video-widget-xine.c:3637
+#: src/backend/bacon-video-widget-xine.c:3639
 msgid "Video codec is not handled."
 msgstr "ตัวถอดรหัสภาพยนตร์ไม่ถูกต้อง"
 
