@@ -1,3 +1,18 @@
+2005-11-16  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c: (bvw_bus_message_cb),
+	(bacon_video_widget_open_with_subtitle),
+	(bacon_video_widget_is_playing),
+	(bvw_update_interface_implementations), (bacon_video_widget_new):
+	  Make sure position querying continues to work properly after a seek
+	  as well; fix bacon_video_widget_is_playing() and use _get_state()
+	  here; give the video sink five seconds to change into READY state
+	  and error out if that does not happen within that time frame.
+
+	* src/totem.c: (seek_slider_changed_cb), (seek_slider_released_cb),
+	(totem_callback_connect):
+	  Make instant seeking work in full screen mode as well.
+
 2005-11-14  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-xine.c:

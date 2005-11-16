@@ -946,16 +946,16 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
           gst_element_state_get_name (new_state));
 
       /* now do stuff */
-      if (old_state == GST_STATE_PLAYING) {
+      if (new_state <= GST_STATE_READY) {
         if (bvw->priv->update_id != 0) {
           g_source_remove (bvw->priv->update_id);
           bvw->priv->update_id = 0;
         }
-      } else if (new_state == GST_STATE_PLAYING) {
-        if (bvw->priv->update_id != 0)
-          g_source_remove (bvw->priv->update_id);
-        bvw->priv->update_id =
-	    g_timeout_add (200, (GSourceFunc) bvw_query_timeout, bvw);
+      } else if (new_state >= GST_STATE_PAUSED) {
+        if (bvw->priv->update_id == 0) {
+          bvw->priv->update_id =
+            g_timeout_add (200, (GSourceFunc) bvw_query_timeout, bvw);
+        }
       }
 
       if (old_state <= GST_STATE_READY &&
@@ -2024,6 +2024,8 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   if (ret) {
     g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
   } else {
+    GST_DEBUG ("Error on open: %s", (error) ? (*error)->message : "(unknown)");
+    /* FIXME: this deadlocks in playbin */
     gst_element_set_state (bvw->priv->play, GST_STATE_NULL);
     g_free (bvw->priv->mrl);
     bvw->priv->mrl = NULL;
@@ -2930,11 +2932,15 @@ bacon_video_widget_get_stream_length (BaconVideoWidget * bvw)
 gboolean
 bacon_video_widget_is_playing (BaconVideoWidget * bvw)
 {
+  GstState cur, pending;
+
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  if (GST_STATE (GST_ELEMENT (bvw->priv->play)) == GST_STATE_PLAYING)
+  gst_element_get_state (bvw->priv->play, &cur, &pending, 0);
+
+  if (cur == GST_STATE_PLAYING || pending == GST_STATE_PLAYING)
     return TRUE;
 
   return FALSE;
@@ -3478,6 +3484,7 @@ bvw_update_interface_implementations (BaconVideoWidget *bvw)
 
   /* We try to get an element supporting XOverlay interface */
   if (GST_IS_BIN (video_sink)) {
+    GST_DEBUG ("Retrieving xoverlay from bin ...");
     element = gst_bin_get_by_interface (GST_BIN (video_sink),
                                         GST_TYPE_X_OVERLAY);
   } else {
@@ -3769,9 +3776,18 @@ bacon_video_widget_new (int width, int height,
 		    G_CALLBACK (stream_info_set), bvw);
 
   if (type == BVW_USE_TYPE_VIDEO) {
+    GstStateChangeReturn ret;
+
     /* wait for video sink to finish changing to READY state, 
      * otherwise we won't be able to detect the colorbalance interface */
-    (void) gst_element_get_state (video_sink, NULL, NULL, GST_CLOCK_TIME_NONE);
+    ret = gst_element_get_state (video_sink, NULL, NULL, 5 * GST_SECOND);
+    if (ret != GST_STATE_CHANGE_SUCCESS) {
+      GST_WARNING ("Timeout setting videosink to READY");
+      g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+          _("Failed to open video output. It may not be available. "
+          "Please select another video output in the Multimedia Systems Selector."));
+      return NULL;
+    }
     bvw_update_interface_implementations (bvw);
   }
 

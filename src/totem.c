@@ -1411,7 +1411,7 @@ seek_slider_changed_cb (GtkAdjustment *adj, Totem *totem)
 
 	if (totem->seek_lock == FALSE)
 		return;
-  
+
 	pos = gtk_adjustment_get_value (adj) / 65535;
 	time = bacon_video_widget_get_stream_length (totem->bvw);
 	totem_statusbar_set_time_and_length (TOTEM_STATUSBAR (totem->statusbar),
@@ -1424,32 +1424,28 @@ seek_slider_changed_cb (GtkAdjustment *adj, Totem *totem)
 static gboolean
 seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 {
-	if (GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "fs")) != FALSE)
-	{
-		if (bacon_video_widget_can_direct_seek (totem->bvw) == FALSE)
-			totem_action_seek (totem,
-				gtk_adjustment_get_value (totem->fs_seekadj) / 65535);
-		/* Update the fullscreen seek adjustment */
-		gtk_adjustment_set_value (totem->seekadj,
-				gtk_adjustment_get_value
-				(totem->fs_seekadj));
-	} else {
-		if (bacon_video_widget_can_direct_seek (totem->bvw) == FALSE)
-			totem_action_seek (totem,
-				gtk_adjustment_get_value (totem->seekadj) / 65535);
-		/* Update the seek adjustment */
-		gtk_adjustment_set_value (totem->fs_seekadj,
-				gtk_adjustment_get_value
-				(totem->seekadj));
-	}
+	GtkAdjustment *adj, *other_adj;
+	gdouble val;
+
+	adj = gtk_range_get_adjustment (GTK_RANGE (widget));
+	other_adj = (adj == totem->seekadj) ? totem->fs_seekadj : totem->seekadj;
+
+	/* set to FALSE here to avoid triggering a final seek when
+	 * syncing the adjustments while being in direct seek mode */
+	totem->seek_lock = FALSE;
+
+	/* sync both adjustments */
+	val = gtk_adjustment_get_value (adj);
+	gtk_adjustment_set_value (other_adj, val);
 
 	if (bacon_video_widget_can_direct_seek (totem->bvw) != FALSE)
 	{
 		if (totem->was_playing)
 			bacon_video_widget_play (totem->bvw, NULL);
+	} else {
+		totem_action_seek (totem, val / 65535.0);
 	}
 
-	totem->seek_lock = FALSE;
 	totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), FALSE);
 	return FALSE;
 }
@@ -3115,6 +3111,8 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (seek_slider_pressed_cb), totem);
 	g_signal_connect (G_OBJECT(totem->fs_seek), "button_release_event",
 			G_CALLBACK (seek_slider_released_cb), totem);
+	g_signal_connect (G_OBJECT (totem->fs_seekadj), "value-changed",
+			  G_CALLBACK (seek_slider_changed_cb), totem);
 	g_signal_connect (G_OBJECT(totem->fs_volume), "value-changed",
 			G_CALLBACK (vol_cb), totem);
 	g_signal_connect (G_OBJECT(totem->fs_volume), "button_press_event",
