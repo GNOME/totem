@@ -737,6 +737,7 @@ NPError NP_Initialize (NPNetscapeFuncs * moz_funcs,
 NPError NP_Shutdown(void)
 {
 	g_free (mime_list);
+	mime_list = NULL;
 
 	return NPERR_NO_ERROR;
 }
