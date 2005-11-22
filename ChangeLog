@@ -1,3 +1,14 @@
+2005-11-22  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* configure.in:
+	  Bump requirements for GStreamer 0.9 backend to current GStreamer
+	  CVS or later.
+
+	* src/backend/bacon-video-widget-gst-0.10.c: (fixate_to_num),
+	(bacon_video_widget_set_audio_out_type),
+	(change_visualization_quality):
+	  Update for API changes; remove stream locks.
+
 2005-11-19  Christian Persch  <chpe@cvs.gnome.org>
 
 	* src/totem-mozilla-plugin.cpp: Fix double-free in NP_Shutdown.

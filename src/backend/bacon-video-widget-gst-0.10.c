@@ -1673,7 +1673,7 @@ fixate_to_num (const GstCaps * in_caps, gint channels)
         GstCaps *caps;
 
         caps = gst_caps_new_full (gst_structure_copy (s), NULL);
-        gst_caps_structure_fixate_field_nearest_int (
+        gst_structure_fixate_field_nearest_int (
             gst_caps_get_structure (caps, 0), "channels", channels);
 
         return caps;
@@ -1696,7 +1696,7 @@ fixate_to_num (const GstCaps * in_caps, gint channels)
           GstCaps *caps;
 
           caps = gst_caps_new_full (gst_structure_copy (s), NULL);
-          gst_caps_structure_fixate_field_nearest_int (
+          gst_structure_fixate_field_nearest_int (
               gst_caps_get_structure (caps, 0), "channels", channels);
 
           return caps;
@@ -1778,9 +1778,7 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
       GCONF_PREFIX"/audio_output_type", type, NULL);
 
   pad = gst_element_get_pad (bvw->priv->audio_capsfilter, "sink");
-  GST_STREAM_LOCK (pad);
   set_audio_filter (bvw);
-  GST_STREAM_UNLOCK (pad);
   gst_object_unref (pad);
 
   return FALSE;
@@ -2462,17 +2460,15 @@ change_visualization_quality (BaconVideoWidget *bvw)
 
   /* fixate */
   s = gst_caps_get_structure (caps, 0);
-  gst_caps_structure_fixate_field_nearest_int (s, "width", w);
-  gst_caps_structure_fixate_field_nearest_int (s, "height", h);
-  gst_caps_structure_fixate_field_nearest_double (s, "framerate", fps);
+  gst_structure_fixate_field_nearest_int (s, "width", w);
+  gst_structure_fixate_field_nearest_int (s, "height", h);
+  gst_structure_fixate_field_nearest_double (s, "framerate", fps);
 
   /* set this */
   g_object_set (bvw->priv->vis_capsfilter, "caps", caps, NULL);
 
   /* re-negotiate - FIXME: is this still needed? */
-  GST_STREAM_LOCK (spad);
   gst_pad_set_caps (pad, NULL);
-  GST_STREAM_UNLOCK (spad);
 
   gst_object_unref (spad);
   gst_object_unref (pad);

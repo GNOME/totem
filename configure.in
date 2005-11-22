@@ -90,8 +90,8 @@ if test x$HAVE_XINE = xno; then
 		GSTPLUG_REQS=0.8.4.1
 		MM="gstreamer-0.8 >= $GST_REQS gstreamer-gconf-0.8 >= $GSTPLUG_REQS gstreamer-interfaces-0.8 >= $GSTPLUG_REQS"
 	else
-		GST_REQS=0.9.4
-		GSTPLUG_REQS=0.9.4
+		GST_REQS=0.9.5.1
+		GSTPLUG_REQS=0.9.5.1
 		MM="gstreamer-0.9 >= $GST_REQS gstreamer-plugins-base-0.9 >= $GSTPLUG_REQS gconf-2.0"
 	fi
 	PKG_CHECK_MODULES(GST, $MM,
