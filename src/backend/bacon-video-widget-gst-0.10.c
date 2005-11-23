@@ -1177,7 +1177,7 @@ caps_set (GObject * obj,
 }
 
 static void get_visualization_size (BaconVideoWidget *bvw,
-				    int *w, int *h, int *fps);
+				    int *w, int *h, gint *fps_n, gint *fps_d);
 
 static void
 parse_stream_info (BaconVideoWidget *bvw)
@@ -1222,9 +1222,8 @@ parse_stream_info (BaconVideoWidget *bvw)
     g_signal_connect (videopad, "notify::caps",
         G_CALLBACK (caps_set), bvw);
   } else if (bvw->priv->show_vfx && bvw->priv->vis_element) {
-    int dummy;
     get_visualization_size (bvw, &bvw->priv->video_width,
-			    &bvw->priv->video_height, &dummy);
+			    &bvw->priv->video_height, NULL, NULL);
   }
 
   g_list_foreach (streaminfo, (GFunc) g_object_unref, NULL);
@@ -2407,35 +2406,47 @@ bacon_video_widget_set_media_device (BaconVideoWidget * bvw, const char *path)
 
 static void
 get_visualization_size (BaconVideoWidget *bvw,
-			int *w, int *h, int *fps)
+			int *w, int *h, gint *fps_n, gint *fps_d)
 {
+  gint new_fps_n, new_fps_d;
+
   /* now see how close we can go */
   switch (bvw->priv->visq) {
     case VISUAL_SMALL:
-      *fps = 10;
+      new_fps_n = 10;
+      new_fps_d = 1;
       *w = 200;
       *h = 150;
       break;
     case VISUAL_NORMAL:
-      *fps = 20;
+      new_fps_n = 20;
+      new_fps_d = 1;
       *w = 320;
       *h = 240;
       break;
     case VISUAL_LARGE:
-      *fps = 25;
+      new_fps_n = 25;
+      new_fps_d = 1;
       *w = 640;
       *h = 480;
       break;
     case VISUAL_EXTRA_LARGE:
-      *fps = 30;
+      new_fps_n = 30;
+      new_fps_d = 1;
       *w = 800;
       *h = 600;
       break;
     default:
       /* shut up warnings */
-      *fps = *w = *h = 0;
+      *w = *h = 0;
+      new_fps_n = 0;
+      new_fps_d = 1;
       g_assert_not_reached ();
   }
+  if (fps_n) 
+    *fps_n = new_fps_n;
+  if (fps_d) 
+    *fps_d = new_fps_d;
 }
 
 static void
@@ -2444,10 +2455,11 @@ change_visualization_quality (BaconVideoWidget *bvw)
   GstPad *pad, *spad;
   GstCaps *caps;
   GstStructure *s;
-  int fps, w, h;
+  int w, h;
+  gint fps_n, fps_d;
 
   /* get size */
-  get_visualization_size (bvw, &w, &h, &fps);
+  get_visualization_size (bvw, &w, &h, &fps_n, &fps_d);
 
   /* first unset any old filter, otherwise _get_allowed_caps takes the
    * old one into account. */
@@ -2462,7 +2474,7 @@ change_visualization_quality (BaconVideoWidget *bvw)
   s = gst_caps_get_structure (caps, 0);
   gst_structure_fixate_field_nearest_int (s, "width", w);
   gst_structure_fixate_field_nearest_int (s, "height", h);
-  gst_structure_fixate_field_nearest_double (s, "framerate", fps);
+  gst_structure_fixate_field_nearest_fraction (s, "framerate", fps_n, fps_d);
 
   /* set this */
   g_object_set (bvw->priv->vis_capsfilter, "caps", caps, NULL);
