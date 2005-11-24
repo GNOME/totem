@@ -213,21 +213,15 @@ cd_cache_get_dev_from_drives (GnomeVFSVolumeMonitor *mon, const char *device,
 
       mnt = gnome_vfs_drive_get_activation_uri (drive);
       if (mnt && strncmp (mnt, "file://", 7) == 0) {
-	g_free (pdev2);
         *mountpoint = g_strdup (mnt + 7);
-        g_free (mnt);
-        gnome_vfs_drive_ref (drive);
-	found = TRUE;
-        break;
-      } else if (mnt && strncmp (mnt, "cdda://", 7) == 0) {
-	g_free (pdev2);
+      } else /*if (mnt && strncmp (mnt, "cdda://", 7) == 0)*/ {
 	*mountpoint = NULL;
-	g_free (mnt);
-	gnome_vfs_drive_ref (drive);
-	found = TRUE;
-	break;
       }
+      found = TRUE;
+      g_free (pdev2);
       g_free (mnt);
+      gnome_vfs_drive_ref (drive);
+      break;
     }
     g_free (pdev2);
   }
@@ -372,10 +366,25 @@ cd_cache_open_device (CdCache *cache,
   return TRUE;
 }
 
+typedef struct _CdCacheCallbackData {
+  CdCache *cache;
+  gboolean called;
+} CdCacheCallbackData;
+
+static void
+cb_mount_done (gboolean success, char * error,
+               char * detail, CdCacheCallbackData * data)
+{
+  data->called = TRUE;
+  data->cache->mounted = success;
+}
+
 static gboolean
 cd_cache_open_mountpoint (CdCache *cache,
 			  GError **error)
 {
+  CdCacheCallbackData data;
+
   /* already opened? */
   if (cache->mounted || cache->is_media == FALSE)
     return TRUE;
@@ -387,26 +396,51 @@ cd_cache_open_mountpoint (CdCache *cache,
 
   /* mount if we have to */
   if (cache->self_mounted) {
-    char *command;
-    int status;
+    /* mount - wait for callback */
+    data.called = FALSE;
+    data.cache = cache;
+    gnome_vfs_drive_mount (cache->drive,
+	(GnomeVFSVolumeOpCallback) cb_mount_done, &data);
+    while (!data.called) g_main_iteration (TRUE);
 
-    command = g_strdup_printf ("mount %s", cache->mountpoint);
-    if (!g_spawn_command_line_sync (command,
-             NULL, NULL, &status, error)) {
-      g_free (command);
+    if (!cache->mounted) {
+      g_set_error (error, 0, 0,
+	  _("Failed to mount %s"), cache->device);
       return FALSE;
     }
-    g_free (command);
-    if (status != 0) {
-      g_set_error (error, 0, 0,
-          _("Unexpected error status %d while mounting %s"),
-          status, cache->mountpoint);
-      return FALSE;
+    if (!cache->mountpoint) {
+      GList *vol, *item;
+
+      for (vol = item = gnome_vfs_drive_get_mounted_volumes (cache->drive);
+           item != NULL; item = item->next) {
+        char *mnt = gnome_vfs_volume_get_activation_uri (item->data);
+
+        if (mnt && strncmp (mnt, "file://", 7) == 0) {
+          cache->mountpoint = g_strdup (mnt + 7);
+	  g_free (mnt);
+          break;
+        }
+	g_free (mnt);
+      }
+      g_list_foreach (vol, (GFunc) gnome_vfs_volume_unref, NULL);
+      g_list_free (vol);
+
+      if (!cache->mountpoint) {
+	g_set_error (error, 0, 0,
+	    _("Failed to find mountpoint for %s"), cache->device);
+	return FALSE;
+      }
     }
   }
 
-  cache->mounted = TRUE;
   return TRUE;
+}
+
+static void
+cb_umount_done (gboolean success, char * error,
+                char * detail, gboolean * called)
+{
+  *called = TRUE;
 }
 
 static void
@@ -414,11 +448,11 @@ cd_cache_free (CdCache *cache)
 {
   /* umount if we mounted */
   if (cache->self_mounted && cache->mounted) {
-    char *command;
+    gboolean called = FALSE;
 
-    command = g_strdup_printf ("umount %s", cache->mountpoint);
-    g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
-    g_free (command);
+    gnome_vfs_drive_unmount (cache->drive,
+	(GnomeVFSVolumeOpCallback) cb_umount_done, &called);
+    while (!called) g_main_iteration (TRUE);
   }
 
   /* close file descriptor to device */
@@ -542,12 +576,12 @@ static MediaType
 cd_cache_disc_is_vcd (CdCache *cache,
                       GError **error)
 {
-  if (!cache->mountpoint)
-    return MEDIA_TYPE_ERROR;
   /* open disc and open mount */
   if (!cd_cache_open_device (cache, error))
     return MEDIA_TYPE_ERROR;
   if (!cd_cache_open_mountpoint (cache, error))
+    return MEDIA_TYPE_ERROR;
+  if (!cache->mountpoint)
     return MEDIA_TYPE_ERROR;
   /* first is VCD, second is SVCD */
   if (cd_cache_file_exists (cache, "MPEGAV", "AVSEQ01.DAT") ||
@@ -561,14 +595,14 @@ static MediaType
 cd_cache_disc_is_dvd (CdCache *cache,
 		      GError **error)
 {
-  if (!cache->mountpoint)
-    return MEDIA_TYPE_ERROR;
   /* open disc, check capabilities and open mount */
   if (!cd_cache_open_device (cache, error))
     return MEDIA_TYPE_ERROR;
   if (!(cache->cap & CDC_DVD))
     return MEDIA_TYPE_DATA;
   if (!cd_cache_open_mountpoint (cache, error))
+    return MEDIA_TYPE_ERROR;
+  if (!cache->mountpoint)
     return MEDIA_TYPE_ERROR;
   if (cd_cache_file_exists (cache, "VIDEO_TS", "VIDEO_TS.IFO"))
     return MEDIA_TYPE_DVD;

@@ -1,5 +1,13 @@
 2005-11-24  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-disc.c: (cd_cache_get_dev_from_drives),
+	(cb_mount_done), (cd_cache_open_mountpoint), (cb_umount_done),
+	(cd_cache_free), (cd_cache_disc_is_vcd), (cd_cache_disc_is_dvd):
+	patch from Ronald Bultje <rbultje@ronald.bitfreak.net> to allow
+	playback of DVDs and VCDs on a pmount setup (Closes: #318401)
+
+2005-11-24  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-disc.c: remove unused mntent.h include
 
 2005-11-24  Bastien Nocera  <hadess@hadess.net>
