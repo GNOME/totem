@@ -89,8 +89,6 @@ gboolean   totem_playlist_get_current_metadata (TotemPlaylist *playlist,
 						char         **album);
 gboolean   totem_playlist_set_title (TotemPlaylist *playlist,
 				     const char *title);
-void       totem_playlist_set_cdindex (TotemPlaylist *playlist,
-				       const char *cdindex_id);
 
 #define    totem_playlist_has_direction(playlist, direction) (direction == TOTEM_PLAYLIST_DIRECTION_NEXT ? totem_playlist_has_next_mrl (playlist) : totem_playlist_has_previous_mrl (playlist))
 gboolean   totem_playlist_has_previous_mrl (TotemPlaylist *playlist);

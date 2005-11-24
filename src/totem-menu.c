@@ -557,13 +557,15 @@ add_device_to_menu (GObject *device, GtkMenu *menu, gint position, Totem *totem)
 	GtkWidget *menu_item, *icon;
 	gboolean disabled = FALSE;
 
-	/* Add devices with blank CDs in them, but disable them */
+	/* Add devices with blank CDs and audio CDs in them, but disable them */
 	activation_uri = fake_gnome_vfs_device_get_something (device,
 		&gnome_vfs_volume_get_activation_uri,
 		&gnome_vfs_drive_get_activation_uri);
-	if (activation_uri != NULL && g_str_has_prefix (activation_uri, "burn://") != FALSE) {
+	if (activation_uri != NULL) {
+		if (g_str_has_prefix (activation_uri, "burn://") != FALSE || g_str_has_prefix (activation_uri, "cdda://") != FALSE) {
+			disabled = TRUE;
+		}
 		g_free (activation_uri);
-		disabled = TRUE;
 	}
 
 	name = fake_gnome_vfs_device_get_something (device,

@@ -101,11 +101,6 @@ on_got_metadata_event (BaconVideoWidget *bvw, gpointer data)
 	g_value_unset (&value);
 
 	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_CDINDEX, &value);
-	g_print ("CD Index: %s\n", g_value_get_string (&value));
-	g_value_unset (&value);
-
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
 			BVW_INFO_TRACK_NUMBER, &value);
 	g_print ("Track Number: %d\n", g_value_get_int (&value));
 	g_value_unset (&value);

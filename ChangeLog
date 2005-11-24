@@ -1,5 +1,27 @@
 2005-11-24  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_metadata):
+	* src/backend/bacon-video-widget-gst.c:
+	(bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_metadata):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_metadata):
+	* src/backend/bacon-video-widget.h:
+	* src/metadata-test.c: (on_got_metadata_event):
+	* src/totem-menu.c: (add_device_to_menu):
+	* src/totem-playlist.c: (totem_playlist_clear),
+	(totem_playlist_set_title):
+	* src/totem-playlist.h:
+	* src/totem.c: (on_got_metadata_event):
+	remove CD playback from the UI (as to avoid double-use with sound-
+	juicer and Rhythmbox), as well as musicbrainz dependency
+
+2005-11-24  Bastien Nocera  <hadess@hadess.net>
+
 	* NEWS: upd
 	* src/bacon-message-connection.c: (is_owned_by_user),
 	(find_file_with_pattern), (socket_filename): update from libbacon CVS

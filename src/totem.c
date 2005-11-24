@@ -1228,7 +1228,7 @@ on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 {
         char *name = NULL;
 
-        bacon_video_widget_properties_update
+	bacon_video_widget_properties_update
 		(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
 		 totem->bvw);
 
@@ -1238,18 +1238,6 @@ on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 		totem_playlist_set_title
 			(TOTEM_PLAYLIST (totem->playlist), name);
 		g_free (name);
-	} else {
-		GValue v = { 0 };
-		const gchar *cdid;
-
-		bacon_video_widget_get_metadata (totem->bvw, BVW_INFO_CDINDEX, &v);
-		if ((cdid = g_value_get_string (&v)) != NULL) {
-			totem_playlist_set_cdindex
-				(TOTEM_PLAYLIST (totem->playlist), cdid);
-		}
-		on_playlist_change_name
-			(TOTEM_PLAYLIST (totem->playlist), totem);
-		g_value_unset (&v);
 	}
 }
 
