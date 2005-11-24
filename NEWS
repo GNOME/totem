@@ -1,6 +1,6 @@
 New features and significant updates in version...
 
-1.2.1:
+1.3.0:
 New features:
   * New Ukrainian (uk) help files
   * Use filters in the Open file dialogues
@@ -8,13 +8,13 @@ New features:
   * Scroll to the current file in the playlist when starting to play it
   * Add ability to play back DVDs and VCDs from .iso and .bin/.cue files
   * Add a menu item for switching angles on DVDs
+  * Don't add backup files to the playlist
 
 Bug fixes:
   * Play file from the beginning when double-clicking on it in the playlist
   * Make CD drives with blank CDs in them unsensitive in the Play Disc menu
   * Avoid weird startes when using the "Toggle fullscreen mode" shortcut
   * Fix drag'n'drop on the playlist itself not working
-  * Don't add backup files to the playlist
   * Parse Shoucast playlists in .m3u files properly
   * Stop the currently playing song when loading a media, and playing this
   media fails
@@ -27,10 +27,13 @@ Bug fixes:
   * Fix possible i18n problems with the Nautilus properties window and the
   Mozilla plugin
   * Fix a memory leak in the Mozilla plugin
-
+  * Fix a crasher when running the Mozilla plugin in a debug build
+  * Allow compiling the Mozilla plugin against xulrunner
 
 GStreamer:
+  * GStreamer 0.10 support
   * Fix an access to invalid memory when getting metadata from a file
+
 xine-lib:
   * Avoid playback stopping when seeking forward in DVDs
   * Get the xine-lib version at run-time
