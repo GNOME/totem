@@ -3528,6 +3528,7 @@ bvw_update_interface_implementations (BaconVideoWidget *bvw)
         GST_OBJECT_NAME (bvw->priv->balance));
   } else if (GST_IS_COLOR_BALANCE (bvw->priv->xoverlay)) {
     bvw->priv->balance = GST_COLOR_BALANCE (bvw->priv->xoverlay);
+    gst_object_ref (bvw->priv->balance);
     GST_DEBUG ("Colorbalance backup found: %s",
         GST_OBJECT_NAME (bvw->priv->balance));
   } else {

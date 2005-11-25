@@ -1,5 +1,12 @@
 2005-11-25  Jan Schmidt  <thaytan@mad.scientist.com>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_update_interface_implementations):
+	Hold an extra reference to the xoverlay if we're
+	also using it for color balance.
+
+2005-11-25  Jan Schmidt  <thaytan@mad.scientist.com>
+
 	* src/backend/bacon-video-widget-gst-0.10.c: (bvw_bus_message_cb),
 	(caps_set), (parse_stream_info),
 	(bacon_video_widget_get_metadata_int),
