@@ -1,3 +1,13 @@
+2005-11-25  Jan Schmidt  <thaytan@mad.scientist.com>
+
+	* src/backend/bacon-video-widget-gst-0.10.c: (bvw_bus_message_cb),
+	(caps_set), (parse_stream_info),
+	(bacon_video_widget_get_metadata_int),
+	(bacon_video_widget_get_current_frame):
+	More updates for fractional framerates. 
+	Fix up enum recognition for streaminfo type, which was leading
+	to strange issues such as invalid aspect ratio.
+
 2005-11-24  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/totem-disc.c: (cd_cache_get_dev_from_drives),

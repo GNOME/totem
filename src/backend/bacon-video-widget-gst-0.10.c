@@ -155,7 +155,8 @@ struct BaconVideoWidgetPrivate
   gint                         video_height;
   gint                         video_width_pixels;
   gint                         video_height_pixels;
-  gdouble                      video_fps;
+  gint                         video_fps_n;
+  gint                         video_fps_d;
 
   guint                        init_width;
   guint                        init_height;
@@ -820,7 +821,6 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 {
   BaconVideoWidget *bvw = (BaconVideoWidget *) data;
   GstMessageType msg_type;
-  gchar *src_name;
 
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -831,11 +831,11 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
   if (bvw->priv->ignore_messages_mask & msg_type)
     return;
 
-  src_name = gst_object_get_name (message->src);
-
   if (msg_type != GST_MESSAGE_STATE_CHANGED) {
+    gchar *src_name = gst_object_get_name (message->src);
     GST_LOG ("Handling %s message from element %s",
         gst_message_type_get_name (msg_type), src_name);
+    g_free (src_name);
   }
 
   switch (msg_type) {
@@ -933,6 +933,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
     }
     case GST_MESSAGE_STATE_CHANGED: {
       GstState old_state, new_state, pending_state;
+      gchar *src_name;
 
       gst_message_parse_state_changed (message, &old_state, &new_state,
           &pending_state);
@@ -941,9 +942,11 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       if (GST_MESSAGE_SRC (message) != GST_OBJECT (bvw->priv->play))
 	break;
 
+      src_name = gst_object_get_name (message->src);
       GST_DEBUG ("%s changed state from %s to %s", src_name,
           gst_element_state_get_name (old_state),
           gst_element_state_get_name (new_state));
+      g_free (src_name);
 
       /* now do stuff */
       if (new_state <= GST_STATE_READY) {
@@ -1150,7 +1153,8 @@ caps_set (GObject * obj,
   if (s) {
     const GValue *par;
 
-    if (!(gst_structure_get_double (s, "framerate", &bvw->priv->video_fps) &&
+    if (!(gst_structure_get_fraction (s, "framerate", &bvw->priv->video_fps_n, 
+          &bvw->priv->video_fps_d) &&
           gst_structure_get_int (s, "width", &bvw->priv->video_width) &&
           gst_structure_get_int (s, "height", &bvw->priv->video_height)))
       return;
@@ -1200,11 +1204,9 @@ parse_stream_info (BaconVideoWidget *bvw)
     pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
     val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
 
-    if (strstr (val->value_name, "AUDIO")) {
-      if (!bvw->priv->media_has_audio) {
-        bvw->priv->media_has_audio = TRUE;
-      }
-    } else if (strstr (val->value_name, "VIDEO")) {
+    if (!g_strcasecmp (val->value_nick, "audio")) {
+      bvw->priv->media_has_audio = TRUE;
+    } else if (!g_strcasecmp (val->value_nick, "video")) {
       bvw->priv->media_has_video = TRUE;
       if (!videopad) {
         g_object_get (info, "object", &videopad, NULL);
@@ -3157,10 +3159,13 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
       integer = bvw->priv->video_height;
       break;
     case BVW_INFO_FPS:
-      if (bvw->priv->video_fps - (int)bvw->priv->video_fps >= 0.5)
-        integer = bvw->priv->video_fps + 1;
+      if (bvw->priv->video_fps_d > 0) {
+            /* Round up/down to the nearest integer framerate */
+        integer = (bvw->priv->video_fps_n + bvw->priv->video_fps_d/2) /
+                  bvw->priv->video_fps_d;
+      }
       else
-        integer = bvw->priv->video_fps;
+        integer = 0;
       break;
     case BVW_INFO_AUDIO_BITRATE:
       if (bvw->priv->audiotags == NULL)
@@ -3349,7 +3354,8 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
           "depth", G_TYPE_INT, 24,
           "width", G_TYPE_INT, bvw->priv->video_width,
           "height", G_TYPE_INT, bvw->priv->video_height,
-          "framerate", G_TYPE_DOUBLE, bvw->priv->video_fps,
+          "framerate", GST_TYPE_FRACTION, 
+	  bvw->priv->video_fps_n, bvw->priv->video_fps_d,
           "pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
           "endianness", G_TYPE_INT, G_BIG_ENDIAN,
           "red_mask", G_TYPE_INT, 0xff0000,
