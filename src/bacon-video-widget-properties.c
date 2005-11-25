@@ -227,6 +227,7 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 				 N_("%d frames per second"), _("N/A"));
 		UPDATE_FROM_INT (BVW_INFO_VIDEO_BITRATE, "video_bitrate",
 				 N_("%d kbps"), _("N/A"));
+		gtk_widget_show (item);
 	} else {
 		gtk_widget_hide (item);
 	}
