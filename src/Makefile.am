@@ -97,9 +97,10 @@ totem_SOURCES = 					\
 
 totem_LDADD = \
 	$(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) \
-	$(XVIDMODE_LIBS) $(NVTV_LIBS) plparse/libtotem-plparser.la \
-	backend/libbaconvideowidget.la libbaconpropertiespage.la \
-	libbaconmessageconnection.la $(DBUS_LIBS) 
+	$(MUSICBRAINZ_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS) \
+	plparse/libtotem-plparser.la backend/libbaconvideowidget.la \
+	libbaconpropertiespage.la libbaconmessageconnection.la \
+	$(DBUS_LIBS) 
 
 totem_video_thumbnailer_SOURCES = totem-video-thumbnailer.c
 totem_video_thumbnailer_LDADD = \
@@ -200,6 +201,7 @@ INCLUDES = 						\
 	$(DBUS_CFLAGS)					\
 	$(MOZILLA_CFLAGS)				\
 	$(MOZILLA_XPCOM_CFLAGS)				\
+	$(MUSICBRAINZ_CFLAGS)				\
 	$(NVTV_CFLAGS)					\
 	$(NAUTILUS_CFLAGS)				\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\

@@ -32,7 +32,10 @@
 #include <libgnomevfs/gnome-vfs.h>
 #include <libgnomevfs/gnome-vfs-mime-utils.h>
 #include <string.h>
+
+#ifdef HAVE_LIBMUSICBRAINZ
 #include <musicbrainz/mb_c.h>
+#endif
 
 #include "totem-uri.h"
 #include "totem-interface.h"
@@ -1806,6 +1809,7 @@ totem_playlist_set_title (TotemPlaylist *playlist, const char *title)
 	return TRUE;
 }
 
+#ifdef HAVE_LIBMUSICBRAINZ
 #define CDDATALEN 256
 
 typedef struct _TotemCDData {
@@ -2045,10 +2049,12 @@ fail:
 
 	return NULL;
 }
+#endif
 
 void
 totem_playlist_set_cdindex (TotemPlaylist *playlist, const char *cdindex_id)
 {
+#ifdef HAVE_LIBMUSICBRAINZ
 	TotemCDData *data;
 
 	g_return_if_fail (cdindex_id != NULL);
@@ -2065,6 +2071,7 @@ totem_playlist_set_cdindex (TotemPlaylist *playlist, const char *cdindex_id)
 	data->list = playlist;
 
 	g_thread_create ((GThreadFunc) cd_metadata_thread, data, FALSE, NULL);
+#endif
 }
 
 gboolean
