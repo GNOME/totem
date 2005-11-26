@@ -9,6 +9,8 @@ New features:
   * Add ability to play back DVDs and VCDs from .iso and .bin/.cue files
   * Add a menu item for switching angles on DVDs
   * Don't add backup files to the playlist
+  * Remove audio CD playback from the UI, as to avoid duplication with sound-
+  juicer and Rhythmbox
 
 Bug fixes:
   * Play file from the beginning when double-clicking on it in the playlist
@@ -29,6 +31,13 @@ Bug fixes:
   * Fix a memory leak in the Mozilla plugin
   * Fix a crasher when running the Mozilla plugin in a debug build
   * Allow compiling the Mozilla plugin against xulrunner
+  * Fix duplicate access key in the display preferences
+  * Fix wrong accesskeys for the saturation and hue sliders
+  * Show the video properties again when a stream has video
+  * Move Totem's remote socket to TMPDIR
+  * Remove libmusicbrainz dependency
+  * Detect DVDs and VCDs properly on a pmount setup
+  * Remove installation of totem-disc.h
 
 GStreamer:
   * GStreamer 0.10 support
