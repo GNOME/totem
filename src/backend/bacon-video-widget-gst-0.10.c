@@ -216,6 +216,7 @@ bacon_video_widget_realize (GtkWidget * widget)
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
   GdkWindowAttr attributes;
   gint attributes_mask, w, h;
+  GdkColor colour;
 
   /* Creating our widget's window */
   attributes.window_type = GDK_WINDOW_CHILD;
@@ -257,10 +258,12 @@ bacon_video_widget_realize (GtkWidget * widget)
   gdk_window_set_user_data (bvw->priv->video_window, widget);
   //gdk_window_show (bvw->priv->video_window);
 
+  gdk_color_parse ("black", &colour);
+  gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, &colour);
   widget->style = gtk_style_attach (widget->style, widget->window);
-
   gtk_style_set_background (widget->style, widget->window, GTK_STATE_NORMAL);
 
+  gdk_window_set_background (bvw->priv->video_window, &colour);
   GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
 
   /* nice hack to show the logo fullsize, while still being resizable */
@@ -333,16 +336,19 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
     bvw_update_interface_implementations (bvw);
     xoverlay = bvw->priv->xoverlay;
   }
-  g_mutex_unlock (bvw->priv->lock);
+  if (xoverlay != NULL)
+    gst_object_ref (xoverlay);
 
-  g_return_val_if_fail (xoverlay != NULL, FALSE);
-  g_return_val_if_fail (GST_IS_X_OVERLAY (xoverlay), FALSE);
+  g_mutex_unlock (bvw->priv->lock);
 
   window = GDK_WINDOW_XWINDOW (bvw->priv->video_window);
 
+  if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay))
+    gst_x_overlay_set_xwindow_id (xoverlay, window);
+
+  /* Start with a nice black canvas */
   gdk_draw_rectangle (widget->window, widget->style->black_gc, TRUE, 0, 0,
 		      widget->allocation.width, widget->allocation.height);
-  gst_x_overlay_set_xwindow_id (xoverlay, window);
 
   if (bvw->priv->logo_mode) {
     if (bvw->priv->logo_pixbuf != NULL) {
@@ -377,15 +383,25 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
       gdk_pixbuf_unref (logo);
     } else {
       /* logo mode, but no pixbuf yet -- just paint it black */
-      gdk_draw_rectangle (bvw->priv->video_window, widget->style->black_gc, TRUE,
-			  0, 0,
-			  bvw->priv->video_window_allocation.width,
-			  bvw->priv->video_window_allocation.height);
+      gdk_draw_rectangle (bvw->priv->video_window, widget->style->black_gc, 
+                         TRUE, 0, 0,
+                         bvw->priv->video_window_allocation.width,
+                         bvw->priv->video_window_allocation.height);
     }
   } else {
     /* no logo, pass the expose to gst */
-    gst_x_overlay_expose (xoverlay);
+    if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay))
+      gst_x_overlay_expose (xoverlay);
+    else {
+      /* No xoverlay to expose yet */
+      gdk_draw_rectangle (bvw->priv->video_window, widget->style->black_gc, 
+                         TRUE, 0, 0,
+                         bvw->priv->video_window_allocation.width,
+                         bvw->priv->video_window_allocation.height);
+    }
   }
+  if (xoverlay != NULL)
+    gst_object_unref (xoverlay);
 
   return TRUE;
 }

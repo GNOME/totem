@@ -1,3 +1,15 @@
+2005-11-27  Jan Schmidt  <thaytan@mad.scientist.com>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_realize), (bacon_video_widget_expose_event):
+	Set the bacon video widget background colour to black to 
+	help with the nasty grey flashing effect on rapid window
+	resizes.
+	In the expose handler, bvw_update_interface_implementations 
+	might leave us without an xoverlay, in which case we should
+	just draw black.
+	Hold a reference to the xoverlay while we're exposing.
+
 2005-11-26  Bastien Nocera  <hadess@hadess.net>
 
 	* NEWS: upd
