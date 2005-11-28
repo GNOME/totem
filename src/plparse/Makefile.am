@@ -25,13 +25,13 @@ libtotem_plparser_la_SOURCES =			\
 	totemplparser-marshal.c			\
 	totemplparser-marshal.h			\
 	totem-disc.c				\
-	totem-disc.h				\
 	totem-pl-parser.c
 
 plparserincludedir = $(includedir)/totem/1/plparser
 plparserinclude_HEADERS =			\
 	totem-pl-parser-builtins.h		\
-	totem-pl-parser.h
+	totem-pl-parser.h			\
+	totem-disc.h
 
 libtotem_plparser_la_LDFLAGS =			\
 	-version-info $(PLPARSER_LT_VERSION)	\
