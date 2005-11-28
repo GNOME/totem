@@ -1,3 +1,13 @@
+2005-11-28  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_handle_element_message), (got_time_tick), (bvw_element_msg_sync), 
+	(bacon_video_widget_new):
+	  Synchroneously handle prepare-xwindow-id element messages that are
+	  emitted by xoverlay elements before they create their own window.
+	  Should fix any remaining issues of the video window jumping out of
+	  its frame.
+
 2005-11-28  Wim Taymans  <wim@fluendo.com>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:

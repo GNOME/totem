@@ -813,7 +813,10 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
   GST_DEBUG ("Element message from element %s: %" GST_PTR_FORMAT, src_name,
       msg->structure);
 
-  if (type_name && strcmp (type_name, "redirect") == 0) {
+  if (type_name == NULL)
+    goto unhandled;
+
+  if (strcmp (type_name, "redirect") == 0) {
     const gchar *new_location;
 
     new_location = gst_structure_get_string (msg->structure, "new-location");
@@ -823,8 +826,13 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
       g_signal_emit (bvw, bvw_signals[SIGNAL_REDIRECT], 0, new_location);
       goto done;
     }
+  } else if (strcmp (type_name, "prepare-xwindow-id") == 0 ||
+      strcmp (type_name, "have-xwindow-id") == 0) {
+    /* we handle these synchroneously or want to ignore them */
+    goto done;
   }
 
+unhandled:
   g_message ("Unhandled element message '%s' from element '%s'",
              GST_STR_NULL (type_name), src_name);
 
@@ -1088,6 +1096,11 @@ got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * bvw)
   }
   
   seekable = bacon_video_widget_is_seekable (bvw);
+
+  GST_DEBUG ("%" GST_TIME_FORMAT ",%" GST_TIME_FORMAT " %s",
+      GST_TIME_ARGS (bvw->priv->current_time),
+      GST_TIME_ARGS (bvw->priv->stream_length),
+      (seekable) ? "TRUE" : "FALSE");
 
   g_signal_emit (bvw, bvw_signals[SIGNAL_TICK], 0,
                  bvw->priv->current_time, bvw->priv->stream_length,
@@ -2094,8 +2107,7 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **gerro
   GST_LOG ("Seeking to %" GST_TIME_FORMAT, GST_TIME_ARGS (time * GST_MSECOND));
 
   gst_element_seek (bvw->priv->play, 1.0,
-		    GST_FORMAT_TIME, 
-		    GST_SEEK_FLAG_KEY_UNIT | GST_SEEK_FLAG_FLUSH,
+		    GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH,
 		    GST_SEEK_TYPE_SET, time * GST_MSECOND,
 		    GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
 
@@ -3574,33 +3586,32 @@ bvw_update_interface_implementations (BaconVideoWidget *bvw)
 }
 
 static void
-bvw_changed_state_msg_sync (GstBus *bus, GstMessage *msg, gpointer data)
+bvw_element_msg_sync (GstBus *bus, GstMessage *msg, gpointer data)
 {
-  BaconVideoWidget *bvw;
-  GstState cur, new, pending;
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (data);
 
-  if (GST_IS_X_OVERLAY (msg->src) == FALSE)
+  g_assert (msg->type == GST_MESSAGE_ELEMENT);
+
+  if (msg->structure == NULL)
     return;
 
-  gst_message_parse_state_changed (msg, &cur, &new, &pending);
+  /* This only gets sent if we haven't set an ID yet. This is our last
+   * chance to set it before the video sink will create its own window */
+  if (gst_structure_has_name (msg->structure, "prepare-xwindow-id")) {
+    XID window;
 
-  bvw = BACON_VIDEO_WIDGET (data);
+    GST_DEBUG ("Handling sync prepare-xwindow-id message");
 
-  g_mutex_lock (bvw->priv->lock);
+    g_mutex_lock (bvw->priv->lock);
+    bvw_update_interface_implementations (bvw);
+    g_mutex_unlock (bvw->priv->lock);
 
-  if (GST_X_OVERLAY (msg->src) == bvw->priv->xoverlay) {
-    if (new > cur && cur <= GST_STATE_PAUSED && new <= GST_STATE_PAUSED) {
-      XID window;
+    g_return_if_fail (bvw->priv->xoverlay != NULL);
+    g_return_if_fail (bvw->priv->video_window != NULL);
 
-      g_assert (bvw->priv->xoverlay != NULL);
-      g_assert (bvw->priv->video_window != NULL);
-
-      window = GDK_WINDOW_XWINDOW (bvw->priv->video_window);
-      gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, window);
-    }
+    window = GDK_WINDOW_XWINDOW (bvw->priv->video_window);
+    gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, window);
   }
-
-  g_mutex_unlock (bvw->priv->lock);
 }
 
 static void
@@ -3818,6 +3829,11 @@ bacon_video_widget_new (int width, int height,
     bvw_update_interface_implementations (bvw);
   }
 
+  /* we want to catch "prepare-xwindow-id" element messages synchroneously */
+  gst_bus_set_sync_handler (bus, gst_bus_sync_signal_handler, bvw);
+  g_signal_connect (bus, "sync-message::element",
+                    G_CALLBACK (bvw_element_msg_sync), bvw);
+
   if (GST_IS_BIN (video_sink)) {
     /* video sink bins like gconfvideosink might remove their children and
      * create new ones when set to NULL state, and they are currently set
@@ -3825,10 +3841,6 @@ bacon_video_widget_new (int width, int height,
      * (it sets all elements to NULL state before gst_bin_remove()ing them) */
     g_signal_connect (video_sink, "element-added",
                       G_CALLBACK (got_new_video_sink_bin_element), bvw);
-
-    gst_bus_set_sync_handler (bus, gst_bus_sync_signal_handler, bvw);
-    g_signal_connect (bus, "sync-message::state-changed",
-                      G_CALLBACK (bvw_changed_state_msg_sync), bvw);
   }
 
   gst_object_unref (bus);
