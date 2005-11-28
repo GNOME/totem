@@ -42,6 +42,11 @@ GtkWidget *totem_volume_create (void);
 
 #define OPTION_IS(x) (strcmp(argv[i], x) == 0)
 
+/* For newer D-Bus version */
+#ifndef DBUS_NAME_FLAG_PROHIBIT_REPLACEMENT
+#define DBUS_NAME_FLAG_PROHIBIT_REPLACEMENT 0
+#endif
+
 typedef enum {
 	STATE_PLAYING,
 	STATE_PAUSED,
