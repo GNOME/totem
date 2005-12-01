@@ -24,7 +24,7 @@
 #include <gst/gst.h>
 #include "gstscreenshot.h"
 
-#ifdef HAVE_GSTREAMER_09
+#ifdef HAVE_GSTREAMER_010
 
 static GstFlowReturn
 have_data (GstPad * pad, GstBuffer * buf)
@@ -116,7 +116,7 @@ bvw_frame_conv_convert (GstBuffer * buf,
   return ret;
 }
 
-#else /* HAVE_GSTREAMER_09 */
+#else /* HAVE_GSTREAMER_010 */
 
 #define BVW_TYPE_FRAME_CONV \
   (bvw_frame_conv_get_type ())
@@ -263,4 +263,4 @@ bvw_frame_conv_convert (GstBuffer * buf,
   return ret;
 }
 
-#endif /* HAVE_GSTREAMER_09 */
+#endif /* HAVE_GSTREAMER_010 */
