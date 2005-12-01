@@ -43,7 +43,7 @@
 #include <gst/interfaces/navigation.h>
 #include <gst/interfaces/colorbalance.h>
 /* for detecting sources of errors */
-#include <gst/video/videosink.h>
+#include <gst/video/gstvideosink.h>
 #include <gst/audio/gstbaseaudiosink.h>
 
 /* system */
