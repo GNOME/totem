@@ -171,6 +171,10 @@ struct BaconVideoWidgetPrivate
   GstMessageType               ignore_messages_mask;
 
   GConfClient                 *gc;
+
+  GstBus                      *bus;
+  gulong                       sig_bus_sync;
+  gulong                       sig_bus_async;
 };
 
 static void bacon_video_widget_set_property (GObject * object,
@@ -1277,6 +1281,23 @@ static void
 bacon_video_widget_finalize (GObject * object)
 {
   BaconVideoWidget *bvw = (BaconVideoWidget *) object;
+
+  GST_DEBUG ("finalizing");
+
+  if (bvw->priv->bus) {
+    /* make bus drop all messages to make sure none of our callbacks is ever
+     * called again (main loop might be run again to display error dialog) */
+    gst_bus_set_flushing (bvw->priv->bus, TRUE);
+
+    if (bvw->priv->sig_bus_sync)
+      g_signal_handler_disconnect (bvw->priv->bus, bvw->priv->sig_bus_sync);
+
+    if (bvw->priv->sig_bus_async)
+      g_signal_handler_disconnect (bvw->priv->bus, bvw->priv->sig_bus_async);
+
+    gst_object_unref (bvw->priv->bus);
+    bvw->priv->bus = NULL;
+  }
 
   g_free (bvw->priv->media_device);
   bvw->priv->media_device = NULL;
@@ -3632,7 +3653,6 @@ bacon_video_widget_new (int width, int height,
   GConfValue *confvalue;
   BaconVideoWidget *bvw;
   GstElement *audio_sink = NULL, *video_sink = NULL;
-  GstBus *bus;
 
   bvw = BACON_VIDEO_WIDGET (g_object_new
                             (bacon_video_widget_get_type (), NULL));
@@ -3646,12 +3666,14 @@ bacon_video_widget_new (int width, int height,
     return NULL;
   }
 
-  bus = gst_pipeline_get_bus (GST_PIPELINE (bvw->priv->play));
-  gst_bus_add_signal_watch (bus);
+  bvw->priv->bus = gst_pipeline_get_bus (GST_PIPELINE (bvw->priv->play));
+  
+  gst_bus_add_signal_watch (bvw->priv->bus);
 
-  g_signal_connect (bus, "message", 
-                    G_CALLBACK (bvw_bus_message_cb),
-                    bvw);
+  bvw->priv->sig_bus_async = 
+      g_signal_connect (bvw->priv->bus, "message", 
+                        G_CALLBACK (bvw_bus_message_cb),
+                        bvw);
 
   bvw->priv->vis_capsfilter = gst_element_factory_make ("capsfilter",
 							"vis-capsfilter");
@@ -3679,7 +3701,7 @@ bacon_video_widget_new (int width, int height,
   if (type == BVW_USE_TYPE_VIDEO || type == BVW_USE_TYPE_AUDIO) {
     audio_sink = gst_element_factory_make ("gconfaudiosink", "audio-sink");
     if (audio_sink) {
-      gst_element_set_bus (audio_sink, bus); /* FIXME: WHY THIS? */
+      gst_element_set_bus (audio_sink, bvw->priv->bus); /* FIXME: WHY THIS? */
     } else {
       g_warning ("Could not create element 'gconfaudiosink'");
     }
@@ -3690,7 +3712,7 @@ bacon_video_widget_new (int width, int height,
   if (type == BVW_USE_TYPE_VIDEO) {
     video_sink = gst_element_factory_make ("gconfvideosink", "video-sink");
     if (video_sink) {
-      gst_element_set_bus (video_sink, bus); /* FIXME: WHY THIS? */
+      gst_element_set_bus (video_sink, bvw->priv->bus); /* FIXME: WHY THIS? */
     } else {
       g_warning ("Could not create element 'gconfvideosink'");
     }
@@ -3830,9 +3852,11 @@ bacon_video_widget_new (int width, int height,
   }
 
   /* we want to catch "prepare-xwindow-id" element messages synchroneously */
-  gst_bus_set_sync_handler (bus, gst_bus_sync_signal_handler, bvw);
-  g_signal_connect (bus, "sync-message::element",
-                    G_CALLBACK (bvw_element_msg_sync), bvw);
+  gst_bus_set_sync_handler (bvw->priv->bus, gst_bus_sync_signal_handler, bvw);
+
+  bvw->priv->sig_bus_sync = 
+      g_signal_connect (bvw->priv->bus, "sync-message::element",
+                        G_CALLBACK (bvw_element_msg_sync), bvw);
 
   if (GST_IS_BIN (video_sink)) {
     /* video sink bins like gconfvideosink might remove their children and
@@ -3842,8 +3866,6 @@ bacon_video_widget_new (int width, int height,
     g_signal_connect (video_sink, "element-added",
                       G_CALLBACK (got_new_video_sink_bin_element), bvw);
   }
-
-  gst_object_unref (bus);
 
   /* audio out, if any */
   confvalue = gconf_client_get_without_default (bvw->priv->gc,
@@ -3918,11 +3940,18 @@ bacon_video_widget_new (int width, int height,
   /* errors */
 sink_error:
   {
-    if (video_sink)
+    if (video_sink) {
+      gst_element_set_state (video_sink, GST_STATE_NULL);
       gst_object_unref (video_sink);
-    if (audio_sink)
+    }
+    if (audio_sink) {
+      gst_element_set_state (audio_sink, GST_STATE_NULL);
       gst_object_unref (audio_sink);
-    g_free (bvw);
+    }
+
+    g_object_ref (bvw);
+    gtk_object_sink (GTK_OBJECT (bvw));
+    g_object_unref (bvw);
 
     return NULL;
   }

@@ -1,3 +1,11 @@
+2005-12-02  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_finalize), (bacon_video_widget_new):
+	  Clean up properly in finalize function and error out properly
+	  when either the audiosink or the videosink is not available
+	  at startup.
+
 2005-12-01  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* configure.in:
