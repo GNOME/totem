@@ -1,3 +1,13 @@
+2005-12-10  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/bacon-message-connection.c: (is_owned_by_user_and_socket),
+	(find_file_with_pattern), (socket_filename):
+	  Don't assume the const string returned by g_dir_read_name() stays
+	  valid even after g_dir_close() (fixes crash on amd64 if there is
+	  already a /tmp/totem.user.123 socket at startup). Ignore an existing
+	  /tmp/totem.user.123 not only if it is not owned by the current user,
+	  but also if it is something else than a socket.
+
 2005-12-02  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
