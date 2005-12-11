@@ -81,7 +81,7 @@ add_holes_to_pixbuf_small (GdkPixbuf *pixbuf, int width, int height)
 
 	g_assert (gdk_pixbuf_get_has_alpha (pixbuf) == FALSE);
 	g_assert (gdk_pixbuf_get_has_alpha (holes) != FALSE);
-	target = gdk_pixbuf_add_alpha (pixbuf, FALSE, 0, 0, 0);
+	target = gdk_pixbuf_ref (pixbuf);
 
 	for (i = 0; i < height; i += gdk_pixbuf_get_height (holes))
 	{
@@ -169,7 +169,7 @@ add_holes_to_pixbuf_large (GdkPixbuf *pixbuf, int size)
 		canvas_w = d_width + 2 * lw;
 	}
 
-	small = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
+	small = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
 			canvas_w, canvas_h);
 	gdk_pixbuf_fill (small, 0x000000ff);
 	ratio = ((double)d_width / (double) gdk_pixbuf_get_width (pixbuf));
