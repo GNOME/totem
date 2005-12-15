@@ -194,8 +194,8 @@ static GtkWidgetClass *parent_class = NULL;
 
 static int bvw_signals[LAST_SIGNAL] = { 0 };
 
-GST_DEBUG_CATEGORY_STATIC (totem_debug);
-#define GST_CAT_DEFAULT totem_debug
+GST_DEBUG_CATEGORY (_totem_gst_debug_cat);
+#define GST_CAT_DEFAULT _totem_gst_debug_cat
 
 static void
 get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
@@ -3488,7 +3488,7 @@ bacon_video_widget_init_gst (gpointer notused)
 
   gst_init (NULL, NULL);
 
-  GST_DEBUG_CATEGORY_INIT (totem_debug, "totem", 0,
+  GST_DEBUG_CATEGORY_INIT (_totem_gst_debug_cat, "totem", 0,
       "Totem GStreamer Backend");
 
   version_str = gst_version_string ();
