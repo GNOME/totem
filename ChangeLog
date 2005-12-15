@@ -1,3 +1,21 @@
+2005-12-15  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* configure.in:
+	  Bump requirements for GStreamer 0.10 backend to current CVS.
+
+	* src/backend/bacon-video-widget-gst-0.10.c: (got_time_tick),
+	(bvw_error_from_gst_error),
+	(bacon_video_widget_open_with_subtitle),
+	(bacon_video_widget_get_video_property),
+	(bacon_video_widget_set_video_property),
+	(bacon_video_widget_can_play),
+	(bacon_video_widget_get_current_frame):
+	* src/backend/gstscreenshot.c: (feed_fakesrc), (save_result),
+	(bvw_frame_conv_convert):
+	* src/backend/gstscreenshot.h:
+	  Fix screenshot taking with 0.10 backend and add debug
+	  messages here and there.
+
 2005-12-11  Jeroen Zwartepoorte  <jeroen.zwartepoorte@gmail.com>
 
 	* src/totem-video-thumbnailer.c: (add_holes_to_pixbuf_small),

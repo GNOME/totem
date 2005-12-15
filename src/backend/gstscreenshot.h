@@ -24,9 +24,18 @@
 
 G_BEGIN_DECLS
 
+#ifndef HAVE_GSTREAMER_010
+
 GstBuffer *	bvw_frame_conv_convert	(GstBuffer *buf,
 					 GstCaps   *from,
 					 GstCaps   *to);
+
+#else
+
+GstBuffer *     bvw_frame_conv_convert  (GstBuffer *buf,
+                                         GstCaps   *to);
+
+#endif /* HAVE_GSTREAMER_010 */
 
 G_END_DECLS
 

@@ -1101,10 +1101,12 @@ got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * bvw)
   
   seekable = bacon_video_widget_is_seekable (bvw);
 
+/*
   GST_DEBUG ("%" GST_TIME_FORMAT ",%" GST_TIME_FORMAT " %s",
       GST_TIME_ARGS (bvw->priv->current_time),
       GST_TIME_ARGS (bvw->priv->stream_length),
       (seekable) ? "TRUE" : "FALSE");
+*/
 
   g_signal_emit (bvw, bvw_signals[SIGNAL_TICK], 0,
                  bvw->priv->current_time, bvw->priv->stream_length,
@@ -1847,6 +1849,10 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstElement *src, GError *e,
 {
   GError *ret = NULL;
 
+  GST_DEBUG ("e->message = '%s'", GST_STR_NULL (e->message));
+  GST_DEBUG ("e->domain  = %d", e->domain);
+  GST_DEBUG ("e->code    = %d", e->code);
+
 #define is_error(e, d, c) \
   (e->domain == GST_##d##_ERROR && \
    e->code == GST_##d##_ERROR_##c)
@@ -2022,6 +2028,9 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   /* hmm... */
   if (bvw->priv->mrl && strcmp (bvw->priv->mrl, mrl) == 0)
     return TRUE;
+
+  GST_DEBUG ("mrl = %s", GST_STR_NULL (mrl));
+  GST_DEBUG ("subtitle_uri = %s", GST_STR_NULL (subtitle_uri));
 
   /* this allows non-URI type of files in the thumbnailer and so on */
   g_free (bvw->priv->mrl);
@@ -2837,11 +2846,10 @@ int
 bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
                                        BaconVideoWidgetVideoProperty type)
 {
-  int value = 65535 / 2;
   int ret;
 
-  g_return_val_if_fail (bvw != NULL, value);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), value);
+  g_return_val_if_fail (bvw != NULL, 65535/2);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 65535/2);
 
   g_mutex_lock (bvw->priv->lock);
   
@@ -2884,10 +2892,18 @@ bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
         }
         
       if (found_channel && GST_IS_COLOR_BALANCE_CHANNEL (found_channel)) {
-        ret = gst_color_balance_get_value (bvw->priv->balance,
+        gint cur;
+
+        cur = gst_color_balance_get_value (bvw->priv->balance,
                                            found_channel);
-        ret = ((double) ret - found_channel->min_value) * 65535 /
+
+        GST_DEBUG ("channel %s: cur=%d, min=%d, max=%d", found_channel->label,
+            cur, found_channel->min_value, found_channel->max_value);
+
+        ret = ((double) cur - found_channel->min_value) * 65535 /
               ((double) found_channel->max_value - found_channel->min_value);
+
+        GST_DEBUG ("channel %s: returning value %d", found_channel->label, ret);
         g_object_unref (found_channel);
         goto done;
       }
@@ -2895,6 +2911,9 @@ bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
 
   /* value wasn't found, get from gconf */
   ret = gconf_client_get_int (bvw->priv->gc, video_props_str[type], NULL);
+
+  GST_DEBUG ("nothing found for type %d, returning value %d from gconf key %s",
+      type, ret, video_props_str[type]);
 
 done:
 
@@ -2910,6 +2929,8 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   
+  GST_DEBUG ("set video property type %d to value %d", type, value);
+
   if ( !(value < 65535 && value > 0) )
     return;
 
@@ -2955,14 +2976,23 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
         {
           int i_value = value * ((double) found_channel->max_value -
 	      found_channel->min_value) / 65535 + found_channel->min_value;
+
+          GST_DEBUG ("channel %s: set to %d/65535", found_channel->label, value);
+
           gst_color_balance_set_value (bvw->priv->balance, found_channel,
                                        i_value);
+
+          GST_DEBUG ("channel %s: val=%d, min=%d, max=%d", found_channel->label,
+              i_value, found_channel->min_value, found_channel->max_value);
+
           g_object_unref (found_channel);
         }
     }
 
   /* save in gconf */
   gconf_client_set_int (bvw->priv->gc, video_props_str[type], value, NULL);
+
+  GST_DEBUG ("setting value %d on gconf key %s", value, video_props_str[type]);
 }
 
 float
@@ -3040,6 +3070,7 @@ bacon_video_widget_can_play (BaconVideoWidget * bvw, MediaType type)
       break;
   }
 
+  GST_DEBUG ("type=%d, can_play=%s", type, (res) ? "TRUE" : "FALSE");
   return res;
 }
 
@@ -3347,72 +3378,66 @@ GdkPixbuf *
 bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
 {
   GstBuffer *buf = NULL;
-  GList *streaminfo = NULL;
-  GstCaps *from = NULL;
   GdkPixbuf *pixbuf;
+  GstCaps *to_caps;
 
   g_return_val_if_fail (bvw != NULL, NULL);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), NULL);
 
   /* no video info */
-  if (!bvw->priv->video_width || !bvw->priv->video_height)
+  if (!bvw->priv->video_width || !bvw->priv->video_height) {
+    GST_DEBUG ("Could not take screenshot: %s", "no video info");
+    g_warning ("Could not take screenshot: %s", "no video info");
     return NULL;
+  }
 
   /* get frame */
-  g_object_get (G_OBJECT (bvw->priv->play), "frame", &buf, NULL);
-  if (!buf)
-    return NULL;
+  g_object_get (bvw->priv->play, "frame", &buf, NULL);
 
-  /* take our own reference, because we will eat it */
+  /* FIXME: remove this ref once we require at least a core >= 0.10.1 */
   gst_buffer_ref (buf);
 
-  /* get video size etc. */
-  g_object_get (G_OBJECT (bvw->priv->play),
-      "stream-info", &streaminfo, NULL);
-  streaminfo = g_list_copy (streaminfo);
-  g_list_foreach (streaminfo, (GFunc) g_object_ref, NULL);
-  for (; streaminfo != NULL; streaminfo = streaminfo->next) {
-    GObject *info = streaminfo->data;
-    gint type;
-    GParamSpec *pspec;
-    GEnumValue *val;
-
-    if (!info)
-      continue;
-    g_object_get (info, "type", &type, NULL);
-    pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
-    val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
-
-    if (strstr (val->value_name, "VIDEO")) {
-      GstPad *pad = NULL;
-
-      g_object_get (info, "object", &pad, NULL);
-      from = gst_pad_get_negotiated_caps (pad);
-      break;
-    }
+  if (!buf) {
+    GST_DEBUG ("Could not take screenshot: %s", "no last video frame");
+    g_warning ("Could not take screenshot: %s", "no last video frame");
+    return NULL;
   }
-  g_list_foreach (streaminfo, (GFunc) g_object_unref, NULL);
-  g_list_free (streaminfo);
-  if (!from)
-    return NULL;
 
-  /* convert to our own wanted format */
-  buf = bvw_frame_conv_convert (buf, from,
-      gst_caps_new_simple ("video/x-raw-rgb",
-          "bpp", G_TYPE_INT, 24,
-          "depth", G_TYPE_INT, 24,
-          "width", G_TYPE_INT, bvw->priv->video_width,
-          "height", G_TYPE_INT, bvw->priv->video_height,
-          "framerate", GST_TYPE_FRACTION, 
-	  bvw->priv->video_fps_n, bvw->priv->video_fps_d,
-          "pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
-          "endianness", G_TYPE_INT, G_BIG_ENDIAN,
-          "red_mask", G_TYPE_INT, 0xff0000,
-          "green_mask", G_TYPE_INT, 0x00ff00,
-          "blue_mask", G_TYPE_INT, 0x0000ff, NULL));
-  if (!buf)
+  if (GST_BUFFER_CAPS (buf) == NULL) {
+    GST_DEBUG ("Could not take screenshot: %s", "no caps on buffer");
+    g_warning ("Could not take screenshot: %s", "no caps on buffer");
     return NULL;
+  }
+
+  /* convert to our desired format (RGB24) */
+  to_caps = gst_caps_new_simple ("video/x-raw-rgb",
+      "bpp", G_TYPE_INT, 24,
+      "depth", G_TYPE_INT, 24,
+      "width", G_TYPE_INT, bvw->priv->video_width,
+      "height", G_TYPE_INT, bvw->priv->video_height,
+      "framerate", GST_TYPE_FRACTION, 
+      bvw->priv->video_fps_n, bvw->priv->video_fps_d,
+      "pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
+      "endianness", G_TYPE_INT, G_BIG_ENDIAN,
+      "red_mask", G_TYPE_INT, 0xff0000,
+      "green_mask", G_TYPE_INT, 0x00ff00,
+      "blue_mask", G_TYPE_INT, 0x0000ff,
+      NULL);
+
+  GST_DEBUG ("frame caps: %" GST_PTR_FORMAT, GST_BUFFER_CAPS (buf));
+  GST_DEBUG ("pixbuf caps: %" GST_PTR_FORMAT, to_caps);
+
+  /* bvw_frame_conv_convert () takes ownership of the buffer passed */
+  buf = bvw_frame_conv_convert (buf, to_caps);
+
+  gst_caps_unref (to_caps);
+
+  if (!buf) {
+    GST_DEBUG ("Could not take screenshot: %s", "conversion failed");
+    g_warning ("Could not take screenshot: %s", "conversion failed");
+    return NULL;
+  }
 
   /* create pixbuf from that - use our own destroy function */
   pixbuf = gdk_pixbuf_new_from_data (GST_BUFFER_DATA (buf),
@@ -3421,10 +3446,13 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
 			bvw->priv->video_height,
 			GST_ROUND_UP_4 (bvw->priv->video_width * 3),
 			destroy_pixbuf, buf);
-  if (!pixbuf)
-    gst_buffer_unref (buf);
 
-  /* that's all */
+  if (!pixbuf) {
+    GST_DEBUG ("Could not take screenshot: %s", "could not create pixbuf");
+    g_warning ("Could not take screenshot: %s", "could not create pixbuf");
+    gst_buffer_unref (buf);
+  }
+
   return pixbuf;
 }
 

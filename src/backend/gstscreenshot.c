@@ -22,98 +22,133 @@
 #endif
 
 #include <gst/gst.h>
+#include <string.h>
+
 #include "gstscreenshot.h"
 
 #ifdef HAVE_GSTREAMER_010
 
-static GstFlowReturn
-have_data (GstPad * pad, GstBuffer * buf)
+static void
+feed_fakesrc (GstElement * src, GstBuffer * buf, GstPad * pad, gpointer data)
 {
-  g_object_set_data (G_OBJECT (pad), "data", buf);
-  return GST_FLOW_OK;
+  GstBuffer *in_buf = GST_BUFFER (data);
+
+  g_assert (GST_BUFFER_SIZE (buf) >= GST_BUFFER_SIZE (in_buf));
+  g_assert (!GST_BUFFER_FLAG_IS_SET (buf, GST_BUFFER_FLAG_READONLY));
+
+  gst_buffer_set_caps (buf, GST_BUFFER_CAPS (in_buf));
+
+  memcpy (GST_BUFFER_DATA (buf), GST_BUFFER_DATA (in_buf),
+      GST_BUFFER_SIZE (in_buf));
+
+  GST_BUFFER_SIZE (buf) = GST_BUFFER_SIZE (in_buf);
+
+  GST_DEBUG ("feeding buffer %p, size %u, caps %" GST_PTR_FORMAT,
+      buf, GST_BUFFER_SIZE (buf), GST_BUFFER_CAPS (buf));
 }
 
-static GstCaps *
-get_any (GstPad * pad)
+static void
+save_result (GstElement * sink, GstBuffer * buf, GstPad * pad, gpointer data)
 {
-  return gst_caps_new_any ();
+  GstBuffer **p_buf = (GstBuffer **) data;
+
+  *p_buf = gst_buffer_ref (buf);
+
+  GST_DEBUG ("received converted buffer %p with caps %" GST_PTR_FORMAT,
+      *p_buf, GST_BUFFER_CAPS (*p_buf));
 }
 
+#define SCREENSHOT_CONVERSION_PIPELINE \
+  "   fakesrc name=src signal-handoffs=true "  \
+  " ! ffmpegcolorspace "                       \
+  " ! capsfilter name=capsfilter "             \
+  " ! fakesink name=sink signal-handoffs=true "
+
+/* takes ownership of the input buffer */
 GstBuffer *
-bvw_frame_conv_convert (GstBuffer * buf,
-    GstCaps * from, GstCaps * to)
+bvw_frame_conv_convert (GstBuffer * buf, GstCaps * to_caps)
 {
-  GstElement *pipe, *csp, *scl, *flt;
-  GstPad *in, *out, *tmp1, *tmp2;
-  GstBuffer *ret;
-  GstCaps *tcaps;
+  GstElement *capsfilter;
+  GstElement *pipeline;
+  GstElement *sink;
+  GstElement *src;
+  GstMessage *msg;
+  GstBuffer *result = NULL;
+  GError *error = NULL;
+  GstBus *bus;
 
-  /* setup */
-  pipe = gst_pipeline_new ("test");
-  csp = gst_element_factory_make ("ffmpegcolorspace", "csp");
-  scl = gst_element_factory_make ("identity", "scl");
-  flt = gst_element_factory_make ("capsfilter", "flt");
-  if (!csp || !scl || !flt) {
-    g_warning ("missing elements, please fix installation");
-    return NULL;
-  }
-  gst_bin_add_many (GST_BIN (pipe), csp, scl, flt, NULL);
+  g_return_val_if_fail (GST_BUFFER_CAPS (buf) != NULL, NULL);
 
-  /* own pads */
-  in = gst_pad_new ("in", GST_PAD_SRC);
-  out = gst_pad_new ("out", GST_PAD_SINK);
-  gst_pad_set_chain_function (out, have_data);
-  gst_pad_set_getcaps_function (in, get_any);
-  gst_pad_set_getcaps_function (out, get_any);
-  gst_element_add_pad (pipe, in);
-  gst_element_add_pad (pipe, out);
+  pipeline = gst_parse_launch (SCREENSHOT_CONVERSION_PIPELINE, &error);
 
-  /* link */
-  g_object_set (G_OBJECT (flt), "caps", to, NULL);
-  tmp1 = gst_element_get_pad (csp, "sink");
-  tmp2 = gst_element_get_pad (flt, "src");
-  if (gst_pad_link (in, tmp1) < 0 ||
-      !gst_element_link_pads (csp, "src", scl, "sink") ||
-      !gst_element_link_pads (scl, "src", flt, "sink") ||
-      gst_pad_link (tmp2, out) < 0) {
-    g_warning ("Setup failed");
-    return NULL;
-  }
-  gst_object_unref (GST_OBJECT (tmp1));
-  gst_object_unref (GST_OBJECT (tmp2));
-
-  /* activate */
-  if (gst_element_set_state (pipe, GST_STATE_PAUSED) != GST_STATE_CHANGE_SUCCESS) {
-    g_warning ("Failed to set state on elements - fixme");
-    return NULL;
-  } else if (!gst_pad_set_caps (in, from)) {
-    gchar *s = gst_caps_to_string (from);
-    g_warning ("Pad did not accept %s", s);
-    g_free (s);
+  if (error) {
+    g_warning ("Could not take screenshot: %s", error->message);
+    g_error_free (error);
     return NULL;
   }
 
-  /* now push data and the chain function will be called */
-  if (gst_pad_push (in, buf) != GST_FLOW_OK) {
-    g_warning ("Wrong state - fixme");
+  if (pipeline == NULL) {
+    g_warning ("Could not take screenshot: %s", "no pipeline (unknown error)");
     return NULL;
   }
-  ret = g_object_get_data (G_OBJECT (out), "data");
-  tcaps = gst_pad_get_negotiated_caps (out);
-  if (!gst_caps_is_equal (tcaps, to)) {
-    gchar *s1 = gst_caps_to_string (tcaps), *s2 = gst_caps_to_string (to);
-    g_warning ("Out caps (%s) is not what we requested (%s)", s1, s2);
-    g_free (s1);
-    g_free (s1);
-    gst_buffer_unref (ret);
-    return NULL;
+
+  src = gst_bin_get_by_name (GST_BIN (pipeline), "src");
+  sink = gst_bin_get_by_name (GST_BIN (pipeline), "sink");
+  capsfilter = gst_bin_get_by_name (GST_BIN (pipeline), "capsfilter");
+
+  g_return_val_if_fail (src != NULL, NULL);
+  g_return_val_if_fail (sink != NULL, NULL);
+  g_return_val_if_fail (capsfilter != NULL, NULL);
+
+  g_signal_connect (src, "handoff", G_CALLBACK (feed_fakesrc), buf);
+
+  /* set to 'fixed' sizetype */
+  g_object_set (src, "sizemax", GST_BUFFER_SIZE (buf), "sizetype", 2, 
+      "num-buffers", 1, NULL);
+
+  g_object_set (capsfilter, "caps", to_caps, NULL);
+
+  g_signal_connect (sink, "handoff", G_CALLBACK (save_result), &result);
+
+  g_object_set (sink, "preroll-queue-len", 1, NULL);
+
+  bus = gst_element_get_bus (pipeline);
+
+  gst_element_set_state (pipeline, GST_STATE_PLAYING);
+  msg = gst_bus_poll (bus, GST_MESSAGE_ERROR | GST_MESSAGE_EOS, 5*GST_SECOND);
+
+  if (msg) {
+    switch (GST_MESSAGE_TYPE (msg)) {
+      case GST_MESSAGE_EOS: {
+        if (result) {
+          GST_DEBUG ("conversion successful: result = %p", result);
+        }
+        break;
+      }
+      case GST_MESSAGE_ERROR: {
+        gchar *dbg = NULL;
+
+        gst_message_parse_error (msg, &error, dbg);
+        g_warning ("Could not take screenshot: %s", error->message);
+        GST_DEBUG ("%s [debug: %s]", error->message, GST_STR_NULL (dbg));
+        g_error_free (error);
+        g_free (dbg);
+        result = NULL;
+        break;
+      }
+      default: {
+        g_return_val_if_reached (NULL);
+      }
+    }
+  } else {
+    g_warning ("Could not take screenshot: %s", "timeout during conversion");
+    result = NULL;
   }
-  gst_caps_unref (tcaps);
 
-  /* unref */
-  gst_object_unref (GST_OBJECT (pipe));
+  gst_element_set_state (pipeline, GST_STATE_NULL);
+  gst_object_unref (pipeline);
 
-  return ret;
+  return result;
 }
 
 #else /* HAVE_GSTREAMER_010 */
