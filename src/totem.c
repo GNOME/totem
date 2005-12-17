@@ -1238,6 +1238,9 @@ on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 		totem_playlist_set_title
 			(TOTEM_PLAYLIST (totem->playlist), name);
 		g_free (name);
+	} else {
+		on_playlist_change_name 	 
+			(TOTEM_PLAYLIST (totem->playlist), totem);
 	}
 }
 
