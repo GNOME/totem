@@ -7,12 +7,24 @@
 <widget class="GtkMenu" id="totem_right_click_menu">
 
   <child>
-    <widget class="GtkMenuItem" id="trcm_play">
+    <widget class="GtkImageMenuItem" id="trcm_play">
       <property name="visible">True</property>
       <property name="tooltip" translatable="yes">Play or pause the movie</property>
       <property name="label" translatable="yes">Play / Pa_use</property>
       <property name="use_underline">True</property>
       <signal name="activate" handler="on_play_/_pause1_activate" last_modification_time="Fri, 18 Apr 2003 09:56:36 GMT"/>
+
+      <child internal-child="image">
+	<widget class="GtkImage" id="image7">
+	  <property name="visible">True</property>
+	  <property name="stock">gtk-media-play</property>
+	  <property name="icon_size">1</property>
+	  <property name="xalign">0.5</property>
+	  <property name="yalign">0.5</property>
+	  <property name="xpad">0</property>
+	  <property name="ypad">0</property>
+	</widget>
+      </child>
     </widget>
   </child>
 
