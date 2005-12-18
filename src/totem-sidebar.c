@@ -41,7 +41,7 @@ totem_sidebar_toggle (Totem *totem)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), !state);
 }
 
-static void
+static gboolean
 cb_resize (Totem * totem)
 {
 	gint w = totem->win->allocation.width,
@@ -50,10 +50,19 @@ cb_resize (Totem * totem)
 	if (totem->sidebar_shown) {
 		w += totem->sidebar->allocation.width;
 	} else {
-		w -= totem->sidebar->allocation.height;
+		w -= totem->sidebar->allocation.width;
 	}
 
 	gtk_window_resize (GTK_WINDOW (totem->win), w, h);
+
+	return FALSE;
+}
+
+static void
+cb_got_size (GtkWidget *widget, GtkAllocation *alloc, Totem *totem)
+{
+	g_signal_handlers_disconnect_by_func (widget, cb_got_size, totem);
+	cb_resize (totem);
 }
 
 static void
@@ -79,7 +88,14 @@ on_sidebar_button_toggled (GtkToggleButton *button, Totem *totem)
 				NULL);
 	totem->sidebar_shown = state;
 
-	cb_resize (totem);
+	if (!state || totem->sidebar_ever_shown)
+		cb_resize (totem);
+	else
+		g_signal_connect_after (totem->sidebar, "size-allocate",
+					G_CALLBACK (cb_got_size), totem);
+
+	if (state)
+		totem->sidebar_ever_shown = TRUE;
 }
 
 static void
