@@ -28,6 +28,7 @@ Bug fixes:
   * Fix a possible crash on startup in the Mozilla plugin
   * Fix possible i18n problems with the Nautilus properties window and the
   Mozilla plugin
+  * Fix compilation of the Mozilla plugin with newer versions of D-Bus
   * Fix a memory leak in the Mozilla plugin
   * Fix a crasher when running the Mozilla plugin in a debug build
   * Allow compiling the Mozilla plugin against xulrunner
@@ -37,7 +38,11 @@ Bug fixes:
   * Move Totem's remote socket to TMPDIR
   * Remove libmusicbrainz dependency
   * Detect DVDs and VCDs properly on a pmount setup
-  * Remove installation of totem-disc.h
+  * Don't save Totem's thumbnail with an alpha component, for recent
+  Nautilus changes
+  * Remove keyboard shortcuts from the main video popup menu
+  * Fix resizing of the sidebar
+  * Fix problems parsing remote ASX files
 
 GStreamer:
   * GStreamer 0.10 support
