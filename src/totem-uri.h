@@ -34,6 +34,7 @@ gboolean	totem_playing_dvd	(const char *uri);
 gboolean	totem_is_block_device	(const char *uri);
 void		totem_setup_file_monitoring (Totem *totem);
 void		totem_setup_file_filters (void);
+void		totem_destroy_file_filters (void);
 char*		totem_uri_get_subtitle_uri (const char *uri);
 char*		totem_uri_escape_for_display (const char *uri);
 GSList*		totem_add_files		(GtkWindow *parent,
