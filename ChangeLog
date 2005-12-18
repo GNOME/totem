@@ -1,3 +1,14 @@
+2005-12-18  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/test-parser.c: (push_parser):
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_set_method),
+	(totem_pl_parser_add_m3u), (parse_asx_entry), (parse_asx_entries),
+	(parse_smil_entry), (parse_smil_entries),
+	(totem_pl_parser_add_smil), (totem_pl_parser_add_asf),
+	(totem_pl_parser_parse_internal):
+	Fix for remote ASX files with broken mime-type, lower-case asx header,
+	return values from the sub-parsers, s/mms/mmsh/ (Closes: #323683)
+
 2005-12-18  Christian Persch  <chpe@cvs.gnome.org>
 
 	* data/Makefile.am:
