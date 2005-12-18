@@ -222,6 +222,7 @@ totem_setup_file_filters (void)
 	filter_all = gtk_file_filter_new ();
 	gtk_file_filter_set_name (filter_all, _("All files"));
 	gtk_file_filter_add_pattern (filter_all, "*");
+	g_object_ref (filter_all);
 
 	filter_supported = gtk_file_filter_new ();
 	gtk_file_filter_set_name (filter_supported,
@@ -229,6 +230,14 @@ totem_setup_file_filters (void)
 	for (i = 0; i < G_N_ELEMENTS (mime_types); i++) {
 		gtk_file_filter_add_mime_type (filter_supported, mime_types[i]);
 	}
+	g_object_ref (filter_supported);
+}
+
+void
+totem_destroy_file_filters (void)
+{
+	g_object_unref (filter_all);
+	g_object_unref (filter_supported);
 }
 
 GSList *
@@ -262,8 +271,10 @@ totem_add_files (GtkWindow *parent, const char *path, char **new_path)
 	while (gtk_events_pending())
 		gtk_main_iteration();
 
-	if (response != GTK_RESPONSE_ACCEPT)
+	if (response != GTK_RESPONSE_ACCEPT) {
+		gtk_widget_destroy (fs);
 		return NULL;
+	}
 
 	filenames = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (fs));
 	if (filenames == NULL) {

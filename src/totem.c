@@ -194,6 +194,7 @@ totem_action_exit (Totem *totem)
 	totem_action_fullscreen (totem, FALSE);
 
 	totem_sublang_exit (totem);
+	totem_destroy_file_filters ();
 	totem_named_icons_dispose (totem);
 
 	if (totem->bvw)

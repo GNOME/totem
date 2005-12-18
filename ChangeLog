@@ -1,5 +1,13 @@
 2005-12-18  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-uri.c: (totem_setup_file_filters),
+	(totem_destroy_file_filters), (totem_add_files):
+	* src/totem-uri.h:
+	* src/totem.c: (totem_action_exit): Fix crash when calling the "add
+	to playlist dialogue twice" (Closes: #324240)
+
+2005-12-18  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-private.h:
 	* src/totem-sidebar.c: (cb_resize), (cb_got_size),
 	(on_sidebar_button_toggled): patch from Ronald Bultje
