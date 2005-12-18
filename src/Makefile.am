@@ -195,6 +195,8 @@ INCLUDES = 						\
 	-I$(top_srcdir)					\
 	-I$(srcdir)/plparse				\
 	-I$(srcdir)/backend				\
+	-I$(top_builddir)/src/plparse			\
+	-I$(top_builddir)/src/backend			\
 	$(EXTRA_GNOME_CFLAGS)				\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
 	$(DBUS_CFLAGS)					\
