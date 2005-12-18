@@ -1,5 +1,13 @@
 2005-12-18  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-private.h:
+	* src/totem-sidebar.c: (cb_resize), (cb_got_size),
+	(on_sidebar_button_toggled): patch from Ronald Bultje
+	<rbultje@ronald.bitfreak.net> to fix resizing of the sidebar
+	(Closes: #324346)
+
+2005-12-18  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/test-parser.c: (push_parser):
 	* src/plparse/totem-pl-parser.c: (totem_pl_parser_set_method),
 	(totem_pl_parser_add_m3u), (parse_asx_entry), (parse_asx_entries),
