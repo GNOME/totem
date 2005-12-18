@@ -197,6 +197,16 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data)
 }
 
 static char*
+totem_pl_parser_set_method (const char *url, const char *method)
+{
+	char *start;
+
+	g_return_val_if_fail (strstr (url, "://"), NULL);
+	start = strstr (url, "://");
+	return g_strdup_printf ("%s%s", method, start);
+}
+
+static char*
 totem_pl_parser_base_url (const char *url)
 {
 	/* Yay, let's reconstruct the base by hand */
@@ -962,7 +972,7 @@ totem_pl_parser_get_extinfo_title (gboolean extinfo, char **lines, int i)
 static TotemPlParserResult
 totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
 {
-	gboolean retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
+	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 	char *contents, **lines;
 	int size, i;
 	const char *split_char;
@@ -1048,14 +1058,13 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
 	return retval;
 }
 
-
 static gboolean
 parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		xmlNodePtr parent, const char *pl_title)
 {
 	xmlNodePtr node;
+	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 	guchar *title, *url;
-	gboolean retval = FALSE;
 	char *fullpath = NULL;
 
 	title = NULL;
@@ -1080,7 +1089,7 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 
 	if (url == NULL) {
 		g_free (title);
-		return FALSE;
+		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
 	if (strstr ((char *)url, "://") == NULL && url[0] != '/') {
@@ -1089,15 +1098,24 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		fullpath = g_strdup ((char *)url);
 	}
 
+	g_free (url);
+
+	if (g_str_has_prefix (fullpath, "mms:") != FALSE) {
+		char *tmp;
+		tmp = totem_pl_parser_set_method (fullpath, "mmsh");
+		g_free (fullpath);
+		fullpath = tmp;
+	}
+
 	/* .asx files can contain references to other .asx files */
-	if (totem_pl_parser_parse_internal (parser, fullpath) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
+	retval = totem_pl_parser_parse_internal (parser, fullpath);
+	if (retval != TOTEM_PL_PARSER_RESULT_SUCCESS) {
 		totem_pl_parser_add_one_url (parser, fullpath,
 				(char *)title ? (char *)title : pl_title);
 	}
 
 	g_free (fullpath);
 	g_free (title);
-	g_free (url);
 
 	return retval;
 }
@@ -1108,7 +1126,7 @@ parse_asx_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 {
 	guchar *title = NULL;
 	xmlNodePtr node;
-	gboolean retval = FALSE;
+	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_ERROR;
 
 	for (node = parent->children; node != NULL; node = node->next) {
 		if (node->name == NULL)
@@ -1121,18 +1139,18 @@ parse_asx_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		if (g_ascii_strcasecmp ((char *)node->name, "entry") == 0) {
 			/* Whee found an entry here, find the REF and TITLE */
 			if (parse_asx_entry (parser, base, doc, node, (char *)title) != FALSE)
-				retval = TRUE;
+				retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 		}
 		if (g_ascii_strcasecmp ((char *)node->name, "entryref") == 0) {
 			/* Found an entryref, give the parent instead of the
 			 * children to the parser */
 			if (parse_asx_entry (parser, base, doc, parent, (char *)title) != FALSE)
-				retval = TRUE;
+				retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 		}
 		if (g_ascii_strcasecmp ((char *)node->name, "repeat") == 0) {
 			/* Repeat at the top-level */
 			if (parse_asx_entries (parser, base, doc, node) != FALSE)
-				retval = TRUE;
+				retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 		}
 	}
 
@@ -1214,7 +1232,7 @@ parse_smil_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 {
 	xmlNodePtr node;
 	guchar *title, *url;
-	gboolean retval = FALSE;
+	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_ERROR;
 
 	title = NULL;
 	url = NULL;
@@ -1232,7 +1250,7 @@ parse_smil_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 			if (url != NULL) {
 				if (parse_smil_video_entry (parser,
 						base, (char *)url, (char *)title) != FALSE)
-					retval = TRUE;
+					retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 			}
 
 			g_free (title);
@@ -1240,7 +1258,7 @@ parse_smil_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		} else {
 			if (parse_smil_entry (parser,
 						base, doc, node) != FALSE)
-				retval = TRUE;
+				retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 		}
 	}
 
@@ -1252,7 +1270,7 @@ parse_smil_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		xmlNodePtr parent)
 {
 	xmlNodePtr node;
-	gboolean retval = FALSE;
+	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_ERROR;
 
 	for (node = parent->children; node != NULL; node = node->next) {
 		if (node->name == NULL)
@@ -1261,7 +1279,7 @@ parse_smil_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		if (g_ascii_strcasecmp ((char *)node->name, "body") == 0) {
 			if (parse_smil_entry (parser, base,
 						doc, node) != FALSE)
-				retval = TRUE;
+				retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 		}
 
 	}
@@ -1276,7 +1294,7 @@ totem_pl_parser_add_smil (TotemPlParser *parser, const char *url, gpointer data)
 	xmlNodePtr node;
 	char *contents = NULL, *base;
 	int size;
-	gboolean retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
+	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 
 	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
@@ -1314,7 +1332,8 @@ totem_pl_parser_add_asf (TotemPlParser *parser, const char *url, gpointer data)
 	if (data != NULL &&
 		(g_str_has_prefix (data, "[Reference]") == FALSE
 		 && g_ascii_strncasecmp (data, "<ASX", strlen ("<ASX")) != 0
-		 && strstr (data, "<ASX") == NULL)
+		 && strstr (data, "<ASX") == NULL
+		 && strstr (data, "<asx") == NULL)
 		 && g_str_has_prefix (data, "ASF ") == FALSE) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
@@ -1588,15 +1607,16 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	const char *mimetype;
 	guint i;
 	gpointer data = NULL;
-	gboolean ret = FALSE;
+	TotemPlParserResult ret = FALSE;
 	char *super;
 
 	if (parser->priv->recurse_level > RECURSE_LEVEL_MAX)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
-	mimetype = gnome_vfs_get_mime_type (url);
-	if (!mimetype)
+	mimetype = gnome_vfs_mime_type_from_name (url);
+	if (mimetype == NULL || strcmp (GNOME_VFS_MIME_TYPE_UNKNOWN, mimetype) == 0) {
 		mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data);
+	}
 
 	if (mimetype == NULL)
 		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
@@ -1648,12 +1668,12 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 
 	parser->priv->recurse_level--;
 
-	if (ret == FALSE && parser->priv->fallback) {
+	if (ret != TOTEM_PL_PARSER_RESULT_SUCCESS && parser->priv->fallback) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
 
-	if (ret)
+	if (ret == TOTEM_PL_PARSER_RESULT_SUCCESS)
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	else
 		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
