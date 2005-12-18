@@ -2,6 +2,7 @@ noinst_PROGRAMS = test-parser
 
 INCLUDES = \
 	-I$(top_srcdir) \
+	-I$(top_builddir)/src/plparser \
 	$(EXTRA_GNOME_CFLAGS)
 
 test_parser_SOURCES = test-parser.c

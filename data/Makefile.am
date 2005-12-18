@@ -43,13 +43,13 @@ else
 desktop_in_files = totem.desktop.in
 endif
 
-desktopdir = $(datadir)/applications/
+desktopdir = $(datadir)/applications
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
 totem.desktop.in: totem.desktop.in.in mime-type-list.txt desktop.sh
-	cat $(srcdir)/totem.desktop.in.in > totem.desktop.in &&\
-	$(srcdir)/desktop.sh $(srcdir)/mime-type-list.txt	\
+	cat totem.desktop.in.in > totem.desktop.in &&\
+	$(SHELL) $(srcdir)/desktop.sh $(srcdir)/mime-type-list.txt	\
 	>> totem.desktop.in
 
 noinst_HEADERS = totem-mime-types.h
