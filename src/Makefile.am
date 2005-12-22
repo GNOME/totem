@@ -1,6 +1,5 @@
 SUBDIRS = backend plparse
 
-noinst_PROGRAMS = list_v4l disc-test metadata-test
 
 if TOTEM_VANITY
 VANITY=vanity
@@ -10,8 +9,10 @@ endif
 
 if HAVE_NAUTILUS
 TOTEM_PROPERTIES_PAGE = libtotem-properties-page.la
+TOTEM_PROPERTIES_PAGE_TEST = test-properties-page
 else
 TOTEM_PROPERTIES_PAGE =
+TOTEM_PROPERTIES_PAGE_TEST =
 endif
 
 if HAVE_MOZILLA
@@ -27,6 +28,8 @@ endif
 
 bin_PROGRAMS = totem totem-video-thumbnailer $(VANITY)
 libexec_PROGRAMS = $(TOTEM_MOZILLA_VIEWER)
+noinst_PROGRAMS = list_v4l disc-test metadata-test $(TOTEM_PROPERTIES_PAGE_TEST)
+
 noinst_LTLIBRARIES = \
 	libbaconpropertiespage.la \
 	libbaconmessageconnection.la
@@ -70,6 +73,7 @@ libbaconpropertiespage_la_SOURCES = \
 	totem-interface.c		\
 	totem-interface.h
 
+
 totem_SOURCES = 					\
 	$(EGG_RECENT_FILES)				\
 	totem.c totem.h					\
@@ -112,12 +116,18 @@ libtotem_properties_page_la_SOURCES = 	\
 	totem-properties-main.c		\
 	totem-properties-view.c		\
 	totem-properties-view.h
-
 libtotem_properties_page_la_LIBADD = \
 	$(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) \
 	$(NVTV_LIBS) $(NAUTILUS_LIBS) \
 	backend/libbaconvideowidget.la libbaconpropertiespage.la
 libtotem_properties_page_la_LDFLAGS = $(module_flags)
+
+test_properties_page_CFLAGS = $(top_srcdir)
+test_properties_page_SOURCES =		\
+	totem-properties-main.c		\
+	totem-properties-view.c		\
+	totem-properties-view.h		\
+	test-properties-page.c
 
 if HAVE_MOZILLA
 
