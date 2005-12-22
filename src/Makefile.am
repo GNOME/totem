@@ -128,6 +128,10 @@ test_properties_page_SOURCES =		\
 	totem-properties-view.c		\
 	totem-properties-view.h		\
 	test-properties-page.c
+test_properties_page_LDADD =		\
+	$(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) \
+	$(NVTV_LIBS) $(NAUTILUS_LIBS) \
+	backend/libbaconvideowidget.la libbaconpropertiespage.la
 
 if HAVE_MOZILLA
 
