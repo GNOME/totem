@@ -1,3 +1,11 @@
+2005-12-22  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-properties-main.c: (nautilus_module_initialize):
+	* src/totem-properties-view.c: (totem_properties_view_init),
+	(totem_properties_view_finalize),
+	(totem_properties_view_set_location): don't assert if we can't init
+	the backend, and fix resulting warnings
+
 2005-12-18  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-uri.c: (totem_setup_file_filters),

@@ -125,13 +125,13 @@ end:
 void
 nautilus_module_initialize (GTypeModule *module)
 {
-	bacon_video_widget_init_backend (NULL, NULL);
-	totem_properties_plugin_register_type (module);
-	totem_properties_view_register_type (module);
-
 	/* set up translation catalog */
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+
+	bacon_video_widget_init_backend (NULL, NULL);
+	totem_properties_plugin_register_type (module);
+	totem_properties_view_register_type (module);
 }
 
 void
