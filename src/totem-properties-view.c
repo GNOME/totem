@@ -138,7 +138,7 @@ totem_properties_view_init (TotemPropertiesView *props)
 				G_CALLBACK (on_got_metadata_event),
 				props);
 	} else {
-		g_error ("Error: %s", err ? err->message : "bla");
+		g_warning ("Error: %s", err ? err->message : "bla");
 	}
 
 	props->priv->vbox = bacon_video_widget_properties_new ();
@@ -158,9 +158,12 @@ totem_properties_view_finalize (GObject *object)
 
 	if (props->priv != NULL)
 	{
-		g_object_unref (G_OBJECT (props->priv->bvw));
+		if (props->priv->bvw != NULL)
+			g_object_unref (G_OBJECT (props->priv->bvw));
+		if (props->priv->label != NULL)
 		g_object_unref (G_OBJECT (props->priv->label));
 		props->priv->bvw = NULL;
+		props->priv->label = NULL;
 		g_free (props->priv->location);
 		props->priv->location = NULL;
 		if (props->priv->timeout_id != 0) {
@@ -193,7 +196,7 @@ totem_properties_view_set_location (TotemPropertiesView *props,
 {
 	g_assert (TOTEM_IS_PROPERTIES_VIEW (props));
 
-	if (location != NULL) {
+	if (location != NULL && props->priv->bvw != NULL) {
 		GError *error = NULL;
 
 		g_free(props->priv->location);
