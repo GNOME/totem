@@ -87,6 +87,7 @@ push_parser (gpointer data)
 {
 	TotemPlParser *pl = (TotemPlParser *)data;
 	//test_parsing_real (pl, "file:///mnt/cdrom");
+	test_parsing_real (pl, "file:///home/hadess/Movies");
 	/* Bugzilla 158052, 404 */
 	test_parsing_real (pl, "http://live.hujjat.org:7860/main");
 	/* Bugzilla 323683 */
