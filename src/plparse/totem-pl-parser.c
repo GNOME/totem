@@ -45,6 +45,7 @@
 #define READ_CHUNK_SIZE 8192
 #define MIME_READ_CHUNK_SIZE 1024
 #define RECURSE_LEVEL_MAX 4
+#define DIR_MIME_TYPE "x-directory/normal"
 
 typedef TotemPlParserResult (*PlaylistCallback) (TotemPlParser *parser, const char *url, gpointer data);
 static gboolean totem_pl_parser_scheme_is_ignored (TotemPlParser *parser, const char *url);
@@ -149,8 +150,11 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data)
 
 	/* Open the file. */
 	result = gnome_vfs_open (&handle, uri, GNOME_VFS_OPEN_READ);
-	if (result != GNOME_VFS_OK)
+	if (result != GNOME_VFS_OK) {
+		if (result == GNOME_VFS_ERROR_IS_DIRECTORY)
+			return DIR_MIME_TYPE;
 		return NULL;
+	}
 
 	/* Read the whole thing, up to MIME_READ_CHUNK_SIZE */
 	buffer = NULL;
