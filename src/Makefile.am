@@ -122,7 +122,7 @@ libtotem_properties_page_la_LIBADD = \
 	backend/libbaconvideowidget.la libbaconpropertiespage.la
 libtotem_properties_page_la_LDFLAGS = $(module_flags)
 
-test_properties_page_CFLAGS = $(top_srcdir)
+test_properties_page_CFLAGS = -I$(top_srcdir)
 test_properties_page_SOURCES =		\
 	totem-properties-main.c		\
 	totem-properties-view.c		\
