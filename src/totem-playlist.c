@@ -32,7 +32,6 @@
 #include <libgnomevfs/gnome-vfs.h>
 #include <libgnomevfs/gnome-vfs-mime-utils.h>
 #include <string.h>
-#include <musicbrainz/mb_c.h>
 
 #include "totem-uri.h"
 #include "totem-interface.h"
