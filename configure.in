@@ -44,6 +44,9 @@ AC_SUBST(NVTV_CFLAGS)
 AC_SUBST(NVTV_LIBS)
 	if test $found_nvtv -eq 1 ; then
 		AC_DEFINE(HAVE_NVTV,1,[Define to 1 if nvtv is available and used.])
+		AC_MSG_RESULT(yes)
+	else
+		AC_MSG_RESULT(no)
 	fi
 fi
 
