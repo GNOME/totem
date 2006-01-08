@@ -1,3 +1,21 @@
+2006-01-08  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* configure.in:
+	  Bump requirements for GStreamer-0.10 backend from the
+	  slightly confusing then-CVS version to 0.10.1 now that
+	  those have been released (#324411). Also, print result
+	  after check for NVTV.
+
+	* src/backend/bacon-video-widget-gst-0.10.c: (bvw_bus_message_cb),
+	(bacon_video_widget_can_direct_seek),
+	(bacon_video_widget_get_mrls),
+	(bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_metadata):
+	  Fix CD audio code for 0.10 backend (even if it seems
+	  unlikely that it will ever be used); add some more debug
+	  statements here and there, and fix up a comment; handle
+	  DURATION message on bus.
+
 2006-01-07  Chao-Hsiung Liao  <j_h_liau@yahoo.com.tw>
 
 	* configure.in: Add "zh_HK" to ALL_LINGUAS.

@@ -44,6 +44,9 @@ AC_SUBST(NVTV_CFLAGS)
 AC_SUBST(NVTV_LIBS)
 	if test $found_nvtv -eq 1 ; then
 		AC_DEFINE(HAVE_NVTV,1,[Define to 1 if nvtv is available and used.])
+		AC_MSG_RESULT(yes)
+	else 
+		AC_MSG_RESULT(no)
 	fi
 fi
 
@@ -100,9 +103,8 @@ if test x$HAVE_XINE = xno; then
 		GSTPLUG_REQS=0.8.4.1
 		MM="gstreamer-0.8 >= $GST_REQS gstreamer-gconf-0.8 >= $GSTPLUG_REQS gstreamer-interfaces-0.8 >= $GSTPLUG_REQS"
 	else
-		# 0.10.0.1 = CVS between 0.10.0 and 0.10.1
-		GST_REQS=0.10.0.1
-		GSTPLUG_REQS=0.10.0.1
+		GST_REQS=0.10.1
+		GSTPLUG_REQS=0.10.1
 		MM="gstreamer-0.10 >= $GST_REQS gstreamer-plugins-base-0.10 >= $GSTPLUG_REQS gconf-2.0"
 	fi
 	PKG_CHECK_MODULES(GST, $MM,

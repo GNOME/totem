@@ -1020,6 +1020,8 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       bvw_handle_element_message (bvw, message);
       break;
     }
+
+    case GST_MESSAGE_DURATION:
     case GST_MESSAGE_CLOCK_PROVIDE:
     case GST_MESSAGE_CLOCK_LOST:
     case GST_MESSAGE_NEW_CLOCK:
@@ -2118,7 +2120,7 @@ bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
   if (!bvw->priv->mrl)
     return FALSE;
 
-  /* FIXME: why not "cdda://" as well? */
+  /* (instant seeking only make sense with video, hence no cdda:// here) */
   if (g_str_has_prefix (bvw->priv->mrl, "file://") ||
       g_str_has_prefix (bvw->priv->mrl, "dvd://") ||
       g_str_has_prefix (bvw->priv->mrl, "vcd://"))
@@ -3083,52 +3085,60 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw, MediaType type)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), NULL);
 
+  GST_DEBUG ("type = %d", type);
+
   switch (type) {
     case MEDIA_TYPE_CDDA: {
-#if 0
-      GstElement *cdda;
+      GstStateChangeReturn ret;
+      GstElement *cddasrc;
       GstFormat fmt;
-      gint64 tracks;
+      GstPad *pad;
+      gint64 num_tracks = 0;
       gchar *uri[] = { "cdda://", NULL };
+      gint i;
 
-      cdda = gst_element_make_from_uri (GST_URI_SRC, "cdda://", NULL);
-      if (!cdda)
-       return NULL;
+      GST_DEBUG ("Checking for Audio CD sources (cdda://) ...");
+      cddasrc = gst_element_make_from_uri (GST_URI_SRC, "cdda://1", NULL);
+      if (!cddasrc) {
+        GST_DEBUG ("No Audio CD source plugins found");
+        return NULL;
+      }
 
       fmt = gst_format_get_by_nick ("track");
       if (!fmt) {
-	gst_object_unref (cdda);
+        gst_object_unref (cddasrc);
         return NULL;
       }
 
       /* FIXME: what about setting the device? */
-      if (gst_element_set_state (cdda, GST_STATE_PAUSED) ==
-              GST_STATE_CHANGE_FAILURE) {
-	gst_object_unref (cdda);
-	return NULL;
-      }
 
-      /* FIXME: state change can be async, need to wait
-       * for it to finish before we can query the tracks.
-       * Also, does element have to be in a pipeline? */
-      mrls = g_strdupv (uri);
+      GST_DEBUG ("Opening CD and getting number of tracks ...");
 
-      if (!gst_pad_query (gst_element_get_pad (cdda, "src"),
-              GST_QUERY_TOTAL, &fmt, &tracks)) {
-	gst_element_set_state (cdda, GST_STATE_NULL);
-	gst_object_unref (cdda);
+      /* wait for state change to complete or fail */
+      gst_element_set_state (cddasrc, GST_STATE_PAUSED);
+      ret = gst_element_get_state (cddasrc, NULL, NULL, -1);
+      if (ret == GST_STATE_CHANGE_FAILURE) {
+        GST_DEBUG ("Couldn't set cdda source to PAUSED");
+        gst_element_set_state (cddasrc, GST_STATE_NULL);
+        gst_object_unref (cddasrc);
         return NULL;
       }
-      gst_element_set_state (cdda, GST_STATE_NULL);
-      gst_object_unref (cdda);
-      mrls = g_new0 (gchar *, tracks + 1);
-      while (tracks-- > 0) {
-	mrls[tracks] = g_strdup_printf ("cdda://%d", (gint) tracks + 1);
-      }
-#endif /* 0 FIXME */
-      g_message ("%s: Fix CD mrls querying when cd plugins are ported\n", G_STRLOC);
-      return NULL;
 
+      pad = gst_element_get_pad (cddasrc, "src");
+      if (gst_pad_query_duration (pad, &fmt, &num_tracks) && num_tracks > 0) {
+        GST_DEBUG ("%" G_GINT64_FORMAT " tracks", num_tracks);
+        mrls = g_new0 (gchar *, num_tracks + 1);
+        for (i = 1; i <= num_tracks; ++i) {
+          mrls[i-1] = g_strdup_printf ("cdda://%d", i);
+        }
+      } else {
+        GST_DEBUG ("could not query track number");
+        mrls = g_strdupv (uri);
+      }
+      gst_object_unref (pad);
+
+      gst_element_set_state (cddasrc, GST_STATE_NULL);
+      gst_object_unref (cddasrc);
       break;
     }
     case MEDIA_TYPE_VCD: {
@@ -3179,7 +3189,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
       GDate *date;
       if ((res = gst_tag_list_get_date (bvw->priv->tagcache,
 					GST_TAG_DATE, &date))) {
-	string = g_strdup_printf ("%d", g_date_get_year (date));
+        string = g_strdup_printf ("%d", g_date_get_year (date));
         g_date_free (date);
       }
       break;
@@ -3313,6 +3323,8 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
+  GST_DEBUG ("type = %d", type);
+
   switch (type)
     {
     case BVW_INFO_TITLE:
@@ -3337,7 +3349,7 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
       bacon_video_widget_get_metadata_bool (bvw, type, value);
       break;
     default:
-      g_assert_not_reached ();
+      g_return_if_reached ();
     }
 
   return;
