@@ -1,6 +1,13 @@
 2006-01-08  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* configure.in:
+	  Check for required elements, most notably gconfaudiosink and
+	  gconfvideosink from gst-plugins-good, when GStreamer-0.10
+	  backend is selected (#324411).
+
+2006-01-08  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* configure.in:
 	  Bump requirements for GStreamer-0.10 backend from the
 	  slightly confusing then-CVS version to 0.10.1 now that
 	  those have been released (#324411). Also, print result

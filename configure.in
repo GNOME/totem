@@ -122,6 +122,42 @@ dnl Give error and exit if we don't have gstreamer
 	fi
 
 	AC_MSG_RESULT(GStreamer-$GST_MAJORMINOR)
+
+	dnl Check for required plugins
+	if test x$GST_MAJORMINOR = x0.10; then
+		gst010_prefix=`$PKG_CONFIG --variable=prefix gstreamer-0.10`
+		gst010_inspect="$gst010_prefix/bin/gst-inspect-0.10"
+
+		dnl Check for elements from gst-plugins-base
+		for base_element in playbin ffmpegcolorspace videoscale
+		do
+			AC_MSG_CHECKING([GStreamer 0.10 $base_element plugin])
+			if $gst010_inspect $base_element >/dev/null 2>/dev/null; then
+				AC_MSG_RESULT([yes])
+			else
+				AC_MSG_RESULT([no])
+				AC_MSG_ERROR([
+					Cannot find required GStreamer-0.10 plugin '$base_element'.
+					It should be part of gst-plugins-base. Please install it.
+				])
+			fi
+		done
+
+		dnl Check for elements from gst-plugins-good
+		for good_element in gconfaudiosink gconfvideosink
+		do
+			AC_MSG_CHECKING([GStreamer 0.10 $good_element plugin])
+			if $gst010_inspect $good_element >/dev/null 2>/dev/null; then
+				AC_MSG_RESULT([yes])
+			else
+				AC_MSG_RESULT([no])
+				AC_MSG_ERROR([
+					Cannot find required GStreamer-0.10 plugin '$good_element'.
+					It should be part of gst-plugins-good. Please install it.
+				])
+			fi
+		done
+	fi
 fi
 
 AM_CONDITIONAL(TOTEM_GST, test "x$HAVE_GSTREAMER" = "xyes")
