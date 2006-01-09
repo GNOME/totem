@@ -1,3 +1,10 @@
+2006-01-09  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-mozilla-plugin.cpp: make the Totem plugin resident in
+	memory to avoid re-registering its type via dbus-glib, fixes
+	crashes when viewing some videos a second time, with help from
+	Christian Persch <chpe@cvs.gnome.org> (Closes: #324352)
+
 2006-01-08  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* configure.in:
