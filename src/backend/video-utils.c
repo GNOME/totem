@@ -136,6 +136,10 @@ totem_gdk_window_set_invisible_cursor (GdkWindow *window)
 			invisible_cursor_bits,
 			1, 1);
 
+	/* When there's no window, there's no bitmap */
+	if (empty_bitmap == NULL)
+		return;
+
 	cursor = gdk_cursor_new_from_pixmap (empty_bitmap,
 			empty_bitmap,
 			&useless,
