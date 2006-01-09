@@ -1,3 +1,13 @@
+2006-01-09  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_num_entries),
+	(totem_pl_parser_write_pls), (totem_pl_parser_write_m3u):
+	* src/plparse/totem-pl-parser.h:
+	* src/totem-playlist.c: (totem_playlist_save_get_iter_func),
+	(totem_playlist_set_title): Only save the title for custom filenames,
+	Don't override the title when there's already a custom title
+	(Closes: #324975)
+
 2006-01-09  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:

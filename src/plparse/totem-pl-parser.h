@@ -83,7 +83,9 @@ typedef enum
 GQuark totem_pl_parser_error_quark (void);
 
 typedef void (*TotemPlParserIterFunc) (GtkTreeModel *model, GtkTreeIter *iter,
-                                       char **uri, char **title, gpointer user_data);
+				       char **uri, char **title,
+				       gboolean *custom_title,
+				       gpointer user_data);
 
 GType    totem_pl_parser_get_type (void);
 

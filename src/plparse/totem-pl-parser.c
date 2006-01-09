@@ -270,12 +270,13 @@ totem_pl_parser_num_entries (TotemPlParser *parser, GtkTreeModel *model,
 	{
 		GtkTreeIter iter;
 		char *path, *url, *title;
+		gboolean custom_title;
 
 		path = g_strdup_printf ("%d", i - 1);
 		gtk_tree_model_get_iter_from_string (model, &iter, path);
 		g_free (path);
 
-		func (model, &iter, &url, &title, user_data);
+		func (model, &iter, &url, &title, &custom_title, user_data);
 		if (totem_pl_parser_scheme_is_ignored (parser, url) != FALSE)
 			ignored++;
 
@@ -389,12 +390,13 @@ totem_pl_parser_write_pls (TotemPlParser *parser, GtkTreeModel *model,
 	for (i = 1; i <= num_entries_total; i++) {
 		GtkTreeIter iter;
 		char *path, *url, *title, *relative;
+		gboolean custom_title;
 
 		path = g_strdup_printf ("%d", i - 1);
 		gtk_tree_model_get_iter_from_string (model, &iter, path);
 		g_free (path);
 
-		func (model, &iter, &url, &title, user_data);
+		func (model, &iter, &url, &title, &custom_title, user_data);
 
 		if (totem_pl_parser_scheme_is_ignored (parser, url) != FALSE)
 		{
@@ -415,6 +417,11 @@ totem_pl_parser_write_pls (TotemPlParser *parser, GtkTreeModel *model,
 			gnome_vfs_close (handle);
 			g_free (title);
 			return FALSE;
+		}
+
+		if (custom_title == FALSE) {
+			g_free (title);
+			continue;
 		}
 
 		buf = g_strdup_printf ("Title%d=%s\n", i, title);
@@ -499,12 +506,13 @@ totem_pl_parser_write_m3u (TotemPlParser *parser, GtkTreeModel *model,
 	for (i = 1; i <= num_entries_total; i++) {
 		GtkTreeIter iter;
 		char *path, *url, *title;
+		gboolean custom_title;
 
 		path = g_strdup_printf ("%d", i - 1);
 		gtk_tree_model_get_iter_from_string (model, &iter, path);
 		g_free (path);
 
-		func (model, &iter, &url, &title, user_data);
+		func (model, &iter, &url, &title, &custom_title, user_data);
 
 		if (totem_pl_parser_scheme_is_ignored (parser, url) != FALSE)
 		{

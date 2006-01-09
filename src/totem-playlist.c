@@ -300,11 +300,13 @@ totem_playlist_create_full_path (const char *path)
 
 static void
 totem_playlist_save_get_iter_func (GtkTreeModel *model,
-		GtkTreeIter *iter, char **uri, char **title, gpointer user_data)
+		GtkTreeIter *iter, char **uri, char **title,
+		gboolean *custom_title, gpointer user_data)
 {
 	gtk_tree_model_get (model, iter,
 			URI_COL, uri,
 			FILENAME_COL, title,
+			TITLE_CUSTOM_COL, custom_title,
 			-1);
 }
 
@@ -1776,6 +1778,7 @@ totem_playlist_set_title (TotemPlaylist *playlist, const char *title)
 {
 	GtkListStore *store;
 	GtkTreeIter iter;
+	gboolean custom_title;
 
 	g_return_val_if_fail (GTK_IS_PLAYLIST (playlist), FALSE);
 
@@ -1790,8 +1793,15 @@ totem_playlist_set_title (TotemPlaylist *playlist, const char *title)
 	if (&iter == NULL)
 		return FALSE;
 
+	gtk_tree_model_get (playlist->_priv->model, &iter,
+			TITLE_CUSTOM_COL, &custom_title,
+			-1);
+	if (custom_title != FALSE)
+		return TRUE;
+
 	gtk_list_store_set (store, &iter,
 			FILENAME_COL, title,
+			TITLE_CUSTOM_COL, TRUE,
 			-1);
 
 	g_signal_emit (playlist,
