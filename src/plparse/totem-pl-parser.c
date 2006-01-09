@@ -46,6 +46,7 @@
 #define MIME_READ_CHUNK_SIZE 1024
 #define RECURSE_LEVEL_MAX 4
 #define DIR_MIME_TYPE "x-directory/normal"
+#define EXTINF "#EXTINF:"
 
 typedef TotemPlParserResult (*PlaylistCallback) (TotemPlParser *parser, const char *url, gpointer data);
 static gboolean totem_pl_parser_scheme_is_ignored (TotemPlParser *parser, const char *url);
@@ -482,6 +483,7 @@ totem_pl_parser_write_m3u (TotemPlParser *parser, GtkTreeModel *model,
 	int num_entries_total, i;
 	gboolean success;
 	char *buf;
+	char *cr;
 
 	res = gnome_vfs_open (&handle, output, GNOME_VFS_OPEN_WRITE);
 	if (res == GNOME_VFS_ERROR_NOT_FOUND) {
@@ -501,11 +503,14 @@ totem_pl_parser_write_m3u (TotemPlParser *parser, GtkTreeModel *model,
 		return FALSE;
 	}
 
+	cr = dos_compatible ? "\r\n" : "\n";
 	num_entries_total = gtk_tree_model_iter_n_children (model, NULL);
+	if (num_entries_total == 0)
+		return TRUE;
 
 	for (i = 1; i <= num_entries_total; i++) {
 		GtkTreeIter iter;
-		char *path, *url, *title;
+		char *path, *url, *title, *path2;
 		gboolean custom_title;
 
 		path = g_strdup_printf ("%d", i - 1);
@@ -521,22 +526,30 @@ totem_pl_parser_write_m3u (TotemPlParser *parser, GtkTreeModel *model,
 			continue;
 		}
 
-		if (dos_compatible != FALSE)
-		{
-			char *dos;
-
-			dos = totem_pl_parser_url_to_dos (url, output);
-			buf = g_strdup_printf ("%s\r\n", dos);
-			g_free (dos);
-		} else {
-			char *relative;
-
-			relative = totem_pl_parser_relative (url, output);
-			buf = g_strdup_printf ("%s\n", relative);
-			g_free (relative);
+		if (custom_title != FALSE) {
+			buf = g_strdup_printf (EXTINF",%s%s", title, cr);
+			success = write_string (handle, url, error);
+			g_free (buf);
+			if (success == FALSE) {
+				g_free (title);
+				g_free (url);
+				gnome_vfs_close (handle);
+				return FALSE;
+			}
 		}
+		g_free (title);
 
-		success = write_string (handle, url, error);
+		if (dos_compatible != FALSE)
+			path2 = totem_pl_parser_url_to_dos (url, output);
+		else
+			path2 = totem_pl_parser_relative (url, output);
+
+		buf = g_strdup_printf ("%s%s", path2, cr);
+		g_free (path2);
+		g_free (url);
+
+		success = write_string (handle, buf, error);
+		g_free (buf);
 
 		if (success == FALSE)
 		{
@@ -544,6 +557,8 @@ totem_pl_parser_write_m3u (TotemPlParser *parser, GtkTreeModel *model,
 			return FALSE;
 		}
 	}
+
+	gnome_vfs_close (handle);
 
 	return TRUE;
 }
@@ -960,25 +975,30 @@ totem_pl_parser_add_pls (TotemPlParser *parser, const char *url, gpointer data)
 	return retval;
 }
 
+
 static const char *
 totem_pl_parser_get_extinfo_title (gboolean extinfo, char **lines, int i)
 {
-	const char *retval;
+	const char *extinf, *comma;
 
-	if (extinfo == FALSE || lines == NULL)
+	if (extinfo == FALSE || lines == NULL || i <= 0)
 		return NULL;
 
-	if (i == 0)
+	/* It's bound to have an EXTINF if we have extinfo */
+	extinf = lines[i-1] + strlen(EXTINF);
+	if (extinf[0] == '\0')
 		return NULL;
+	comma = strstr (extinf, ",");
 
-	retval = strstr (lines[i-1], "#EXTINF:");
-	retval = strstr (retval, ",");
-	if (retval == NULL || retval[0] == '\0')
-		return NULL;
+	if (comma == NULL || comma[1] == '\0') {
+		if (extinf[1] == '\0')
+			return NULL;
+		return extinf;
+	}
 
-	retval++;
+	comma++;
 
-	return retval;
+	return comma;
 }
 
 static TotemPlParserResult
@@ -1022,8 +1042,7 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
 
 		/* Ignore comments, but mark it if we have extra info */
 		if (lines[i][0] == '#') {
-			if (strstr (lines[i], "#EXTINF") != NULL)
-				extinfo = TRUE;
+			extinfo = g_str_has_prefix (lines[i], EXTINF);
 			continue;
 		}
 
