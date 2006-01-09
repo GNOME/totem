@@ -125,8 +125,8 @@ dnl Give error and exit if we don't have gstreamer
 
 	dnl Check for required plugins
 	if test x$GST_MAJORMINOR = x0.10; then
-		gst010_prefix=`$PKG_CONFIG --variable=prefix gstreamer-0.10`
-		gst010_inspect="$gst010_prefix/bin/gst-inspect-0.10"
+		gst010_toolsdir=`$PKG_CONFIG --variable=toolsdir gstreamer-0.10`
+		gst010_inspect="$gst010_toolsdir/gst-inspect-0.10"
 
 		dnl Check for elements from gst-plugins-base
 		for base_element in playbin ffmpegcolorspace videoscale
