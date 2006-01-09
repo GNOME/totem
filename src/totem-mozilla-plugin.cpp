@@ -227,6 +227,10 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 	if (instance == NULL)
 		return NPERR_INVALID_INSTANCE_ERROR;
 
+	/* Make sure the plugin stays resident to avoid crashers when 
+	 * reloading the GObject types */
+	NPN_SetValue (instance, NPPVpluginKeepLibraryInMemory, (void *)TRUE);
+
 	instance->pdata = mozilla_functions.memalloc(sizeof(TotemPlugin));
 	plugin = (TotemPlugin *) instance->pdata;
 
