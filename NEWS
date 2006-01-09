@@ -1,5 +1,21 @@
 New features and significant updates in version...
 
+1.3.1:
+ * Fix crash when calling the "add to playlist dialogue twice"
+ * Fix parsing of sub-directories
+ * Fix crasher in the Mozilla plugin when bringing up a second instance
+   by making the plugin resident
+ * Call the authentication manager, so thumbnails with keyring-stored passwords
+   can be generated
+ * Don't make the properties page assert if we can't initialise the backend
+ * Don't overwrite the title when there's already a custom title in the playlist
+ * Write EXTM3U m3u files
+ * Add a test program for the properties page
+ * Fix warning on exit when in fullscreen
+ * Support Flash Video files
+ * Fix double error dialogues on open sometimes (xine-lib)
+ * Check for plugins in configure (GStreamer)
+
 1.3.0:
 New features:
   * New Ukrainian (uk) help files
