@@ -3841,7 +3841,7 @@ bacon_video_widget_new (int width, int height,
 		 _("Could not find the audio output. "
 		   "You may need to install additional GStreamer plugins, or "
 		   "select another audio output in the Multimedia Systems "
-		   "Selector."));
+		   "Selector"));
     goto sink_error;
   }
 
