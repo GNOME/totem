@@ -1,5 +1,13 @@
 2006-01-09  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c: (xine_try_error):
+	Yield so that we can receive the async errors before trying to get
+	the crummy default xine_open error, don't know why anyone removed
+	that call from xine-lib...
+	Fixed double error dialogue
+
+2006-01-09  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser.c: (totem_pl_parser_write_m3u),
 	(totem_pl_parser_get_extinfo_title), (totem_pl_parser_add_m3u):
 	Parser fixes for the m3u reader and writer

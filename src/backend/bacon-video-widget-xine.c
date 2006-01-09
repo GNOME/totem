@@ -34,6 +34,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sched.h>
 /* X11 */
 #include <X11/X.h>
 #include <X11/Xlib.h>
@@ -1428,6 +1429,8 @@ xine_try_error (BaconVideoWidget *bvw, gboolean probe_error, GError **error)
 	int err;
 
 	save_data = NULL;
+
+	sched_yield ();
 
 	/* Steal messages from the async queue, if there's an error,
 	 * to use as the error message rather than the crappy errors from
