@@ -143,6 +143,8 @@ egg_recent_view_gtk_clear (EggRecentViewGtk *view)
 		
 		p = p->next;
 	}
+
+	g_list_free (menu_children);
 }
 
 
