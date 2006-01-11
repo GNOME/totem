@@ -440,6 +440,8 @@ totem_setup_preferences (Totem *totem)
 
 	totem->prefs = glade_xml_get_widget (totem->xml,
 			"totem_preferences_window");
+	gtk_window_set_transient_for (GTK_WINDOW (totem->prefs),
+			GTK_WINDOW (totem->win));
 
 	g_signal_connect (G_OBJECT (totem->prefs), "response",
 			G_CALLBACK (gtk_widget_hide), NULL);
