@@ -1797,7 +1797,10 @@ set_audio_filter (BaconVideoWidget *bvw)
     res = NULL;
   }
   g_object_set (bvw->priv->audio_capsfilter, "caps", res, NULL);
-  gst_caps_unref (res);
+
+  if (res) {
+    gst_caps_unref (res);
+  }
 
   /* reset */
   pad = gst_element_get_pad (bvw->priv->audio_capsfilter, "src");
@@ -3706,7 +3709,7 @@ bacon_video_widget_new (int width, int height,
     return NULL;
   }
 
-  bvw->priv->bus = gst_pipeline_get_bus (GST_PIPELINE (bvw->priv->play));
+  bvw->priv->bus = gst_element_get_bus (bvw->priv->play);
   
   gst_bus_add_signal_watch (bvw->priv->bus);
 
@@ -3740,9 +3743,7 @@ bacon_video_widget_new (int width, int height,
 
   if (type == BVW_USE_TYPE_VIDEO || type == BVW_USE_TYPE_AUDIO) {
     audio_sink = gst_element_factory_make ("gconfaudiosink", "audio-sink");
-    if (audio_sink) {
-      gst_element_set_bus (audio_sink, bvw->priv->bus); /* FIXME: WHY THIS? */
-    } else {
+    if (audio_sink == NULL) {
       g_warning ("Could not create element 'gconfaudiosink'");
     }
   } else {
@@ -3751,9 +3752,7 @@ bacon_video_widget_new (int width, int height,
 
   if (type == BVW_USE_TYPE_VIDEO) {
     video_sink = gst_element_factory_make ("gconfvideosink", "video-sink");
-    if (video_sink) {
-      gst_element_set_bus (video_sink, bvw->priv->bus); /* FIXME: WHY THIS? */
-    } else {
+    if (video_sink == NULL) {
       g_warning ("Could not create element 'gconfvideosink'");
     }
 /* FIXME: April fool's day puzzle */
@@ -3799,6 +3798,10 @@ bacon_video_widget_new (int width, int height,
 
   if (video_sink) {
     gboolean success;
+
+    /* need to set bus explicitly as it's not in a bin yet and
+     * poll_for_state_change() needs one to catch error messages */
+    gst_element_set_bus (video_sink, bvw->priv->bus);
     gst_element_set_state (video_sink, GST_STATE_READY);
     success = poll_for_state_change (bvw, video_sink, GST_STATE_READY, err);
     if (!success) {
@@ -3822,6 +3825,10 @@ bacon_video_widget_new (int width, int height,
 
   if (audio_sink) {
     gboolean success;
+
+    /* need to set bus explicitly as it's not in a bin yet and
+     * poll_for_state_change() needs one to catch error messages */
+    gst_element_set_bus (audio_sink, bvw->priv->bus);
     gst_element_set_state (audio_sink, GST_STATE_READY);
     success = poll_for_state_change (bvw, audio_sink, GST_STATE_READY, err);
     if (!success) {
