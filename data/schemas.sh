@@ -27,7 +27,7 @@ schema()
 	upd_schema;
 }
 
-MIMETYPES=`cat $1 | grep -v audio | grep -v "application/x-flac"`
+MIMETYPES=`cat $1 | grep -v audio | grep -v "application/x-flac" | grep -v "+"`
 MIMETYPES="$MIMETYPES audio/x-pn-realaudio"
 
 echo "<gconfschemafile>";
@@ -47,7 +47,7 @@ for i in $MIMETYPES ; do
 	schema;
 done
 
-MIMETYPES=`cat $1 | grep -v short_list_application_ids_for_ | grep "\/" | grep audio | grep -v "audio/x-pn-realaudio"`
+MIMETYPES=`cat $1 | grep -v | grep "\/" | grep audio | grep -v "audio/x-pn-realaudio"`
 
 for i in $MIMETYPES ; do
 	DIR=`echo $i | sed 's,/,@,'`
@@ -61,7 +61,6 @@ for i in $MIMETYPES ; do
 	DEFAULT="$COMMAND";
 	upd_schema;
 done
-	
 
 echo "    </schemalist>";
 echo "</gconfschemafile>"
