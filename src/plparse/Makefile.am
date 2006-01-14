@@ -31,6 +31,7 @@ libtotem_plparser_la_SOURCES =			\
 plparserincludedir = $(includedir)/totem/1/plparser
 plparserinclude_HEADERS =			\
 	totem-pl-parser-builtins.h		\
+	totem-pl-parser-features.h		\
 	totem-pl-parser.h			\
 	totem-disc.h
 
@@ -71,4 +72,5 @@ CLEANFILES = \
 	$(BUILT_SOURCES)
 
 EXTRA_DIST = \
-	totemplparser-marshal.list
+	totemplparser-marshal.list \
+	totem-pl-parser-features.h.in
