@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
 
-   Copyright (C) 2004,2005 Bastien Nocera <hadess@hadess.net>
+   Copyright (C) 2004-2006 Bastien Nocera <hadess@hadess.net>
 
    The Gnome Library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public License as
@@ -34,11 +34,14 @@
 #ifdef WITH_DBUS
 #include <dbus/dbus.h>
 #include <dbus/dbus-glib.h>
-#include <dbus/dbus-glib-lowlevel.h>
 
-#define GS_SERVICE   "org.gnome.screensaver"
-#define GS_PATH      "/org/gnome/screensaver"
-#define GS_INTERFACE "org.gnome.screensaver"
+#define GS_LEGACY_SERVICE   "org.gnome.screensaver"
+#define GS_LEGACY_PATH      "/org/gnome/screensaver"
+#define GS_LEGACY_INTERFACE "org.gnome.screensaver"
+
+#define GS_SERVICE   "org.gnome.ScreenSaver"
+#define GS_PATH      "/org/gnome/ScreenSaver"
+#define GS_INTERFACE "org.gnome.ScreenSaver"
 #endif /* WITH_DBUS */
 
 #include "totem-scrsaver.h"
@@ -56,7 +59,8 @@ struct TotemScrsaverPrivate {
 	gboolean disabled;
 
 #ifdef WITH_DBUS
-	DBusConnection *connection;
+	DBusGConnection *connection;
+	DBusGProxy *gs_proxy;
 #endif /* WITH_DBUS */
 
 	/* To save the screensaver info */
@@ -77,16 +81,15 @@ static gboolean
 screensaver_is_running_dbus (TotemScrsaver *scr)
 {
 #ifdef WITH_DBUS
-	DBusError error;
 	gboolean  exists;
 
 	if (! scr->priv->connection)
 		return FALSE;
 
-	dbus_error_init (&error);
-	exists = dbus_bus_name_has_owner (scr->priv->connection, GS_SERVICE, &error);
-	if (dbus_error_is_set (&error))
-		dbus_error_free (&error);
+	if (! scr->priv->gs_proxy)
+		return FALSE;
+
+	exists = TRUE;
 
 	return exists;
 #else
@@ -99,52 +102,40 @@ screensaver_inhibit_dbus (TotemScrsaver *scr,
 			  gboolean	 inhibit)
 {
 #ifdef WITH_DBUS
-	DBusMessage    *message;
-	DBusMessage    *reply;
-	DBusMessageIter iter;
-	DBusError	error;
-	const char     *name;
+	GError *error;
+	gboolean res;
 
 	g_return_if_fail (scr != NULL);
 	g_return_if_fail (scr->priv->connection != NULL);
+	g_return_if_fail (scr->priv->gs_proxy != NULL);
 
-	if (inhibit) {
-		name = "InhibitActivation";
-	} else {
-		name = "AllowActivation";
-	}
-
-	dbus_error_init (&error);
-
-	message = dbus_message_new_method_call (GS_SERVICE,
-						GS_PATH,
-						GS_INTERFACE,
-						name);
-	if (message == NULL) {
-		g_warning ("Couldn't allocate the dbus message");
-		return;
-	}
-
+	error = NULL;
 	if (inhibit) {
 		char *reason;
 		reason = g_strdup (_("Playing a movie with Totem"));
-		dbus_message_iter_init_append (message, &iter);
-		dbus_message_iter_append_basic (&iter, DBUS_TYPE_STRING, &reason);
+		res = dbus_g_proxy_call (scr->priv->gs_proxy,
+					 "InhibitActivation",
+					 &error,
+					 G_TYPE_STRING, reason,
+					 G_TYPE_INVALID,
+					 G_TYPE_INVALID);
+
 		g_free (reason);
+	} else {
+		res = dbus_g_proxy_call (scr->priv->gs_proxy,
+					 "AllowActivation",
+					 &error,
+					 G_TYPE_INVALID,
+					 G_TYPE_INVALID,
+					 G_TYPE_INVALID);
 	}
 
-	reply = dbus_connection_send_with_reply_and_block (scr->priv->connection,
-							   message,
-							   -1, &error);
-	if (dbus_error_is_set (&error)) {
-		g_warning ("%s raised:\n %s\n\n", error.name, error.message);
-		reply = NULL;
+	if (! res) {
+		if (error) {
+			g_warning ("Problem inhibiting the screensaver: %s", error->message);
+			g_error_free (error);
+		}
 	}
-
-	dbus_connection_flush (scr->priv->connection);
-
-	dbus_message_unref (message);
-	dbus_error_free (&error);
 #endif /* WITH_DBUS */
 }
 
@@ -160,21 +151,58 @@ screensaver_disable_dbus (TotemScrsaver *scr)
 	screensaver_inhibit_dbus (scr, TRUE);
 }
 
+#ifdef WITH_DBUS
+static void
+gs_proxy_destroy_cb (GObject *proxy,
+		     TotemScrsaver *scr)
+{
+	g_warning ("Detected that GNOME screensaver has left the bus");
+
+	/* just invalidate for now */
+	scr->priv->gs_proxy = NULL;
+}
+#endif
+
 static void
 screensaver_init_dbus (TotemScrsaver *scr)
 {
 #ifdef WITH_DBUS
-	DBusError dbus_error;	     
+	GError *error = NULL;
 
-	dbus_error_init (&dbus_error);
-	scr->priv->connection = dbus_bus_get (DBUS_BUS_SESSION, &dbus_error);
+	scr->priv->connection = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
+
 	if (! scr->priv->connection) {
-		g_warning ("Failed to connect to the D-BUS daemon: %s", dbus_error.message);
-		dbus_error_free (&dbus_error);
+		if (error) {
+			g_warning ("Failed to connect to the session bus: %s", error->message);
+			g_error_free (error);
+		}
 		return;
 	}
 
-	dbus_connection_setup_with_g_main (scr->priv->connection, NULL);
+	scr->priv->gs_proxy = dbus_g_proxy_new_for_name_owner (scr->priv->connection,
+							       GS_SERVICE,
+							       GS_PATH,
+							       GS_INTERFACE,
+							       NULL);
+	if (scr->priv->gs_proxy == NULL) {
+		g_warning ("Trying to connect to an older version of the GNOME screensaver");
+
+		scr->priv->gs_proxy = dbus_g_proxy_new_for_name_owner (scr->priv->connection,
+								       GS_LEGACY_SERVICE,
+								       GS_LEGACY_PATH,
+								       GS_LEGACY_INTERFACE,
+								       NULL);
+	}
+
+	if (scr->priv->gs_proxy != NULL) {
+		g_signal_connect_object (scr->priv->gs_proxy,
+					 "destroy",
+					 G_CALLBACK (gs_proxy_destroy_cb),
+					 scr,
+					 0);
+
+	}
+
 #endif /* WITH_DBUS */
 }
 
@@ -182,8 +210,9 @@ static void
 screensaver_finalize_dbus (TotemScrsaver *scr)
 {
 #ifdef WITH_DBUS
-	if (scr->priv->connection)
-		dbus_connection_disconnect (scr->priv->connection);
+	if (scr->priv->gs_proxy) {
+		g_object_unref (scr->priv->gs_proxy);
+	}
 #endif /* WITH_DBUS */
 }
 
