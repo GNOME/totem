@@ -1260,6 +1260,7 @@ parse_stream_info (BaconVideoWidget *bvw)
     }
     g_signal_connect (videopad, "notify::caps",
         G_CALLBACK (caps_set), bvw);
+    /* FIXME: don't we need to unref the video pad? (tpm) */
   } else if (bvw->priv->show_vfx && bvw->priv->vis_element) {
     get_visualization_size (bvw, &bvw->priv->video_width,
 			    &bvw->priv->video_height, NULL, NULL);
@@ -2201,21 +2202,12 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
 
 void
 bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
-			      BaconVideoWidgetDVDEvent type)
+                              BaconVideoWidgetDVDEvent type)
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
-  if (1) {
-    static gboolean beenhere;
-    if (!beenhere) {
-      g_message ("Implement %s for GStreamer 0.9\n", __FUNCTION__);
-      beenhere = TRUE;
-    }
-  }
-
-#if 0
   switch (type) {
     case BVW_DVD_ROOT_MENU:
     case BVW_DVD_TITLE_MENU:
@@ -2224,6 +2216,7 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
     case BVW_DVD_ANGLE_MENU:
     case BVW_DVD_CHAPTER_MENU:
       /* FIXME */
+      GST_WARNING ("FIXME: implement type %d", type);
       break;
     case BVW_DVD_NEXT_CHAPTER:
     case BVW_DVD_PREV_CHAPTER:
@@ -2231,6 +2224,7 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
     case BVW_DVD_PREV_TITLE:
     case BVW_DVD_NEXT_ANGLE:
     case BVW_DVD_PREV_ANGLE: {
+      const gchar *fmt_name;
       GstFormat fmt;
       gint64 val;
       gint dir;
@@ -2243,24 +2237,28 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
         dir = -1;
 
       if (type == BVW_DVD_NEXT_CHAPTER || type == BVW_DVD_PREV_CHAPTER)
-        fmt = gst_format_get_by_nick ("chapter");
+        fmt_name = "chapter"; 
       else if (type == BVW_DVD_NEXT_TITLE || type == BVW_DVD_PREV_TITLE)
-        fmt == gst_format_get_by_nick ("title");
+        fmt_name = "title";
       else
-        fmt = gst_format_get_by_nick ("angle");
+        fmt_name = "angle";
 
-      if (gst_element_query (bvw->priv->play,
-          GST_QUERY_POSITION, &fmt, &val)) {
+      fmt = gst_format_get_by_nick (fmt_name);
+      if (gst_element_query_position (bvw->priv->play, &fmt, &val)) {
+        GST_DEBUG ("current %s is: %" G_GINT64_FORMAT, fmt_name, val);
         val += dir;
-        gst_element_seek (bvw->priv->play,
-            fmt | GST_SEEK_METHOD_SET | GST_SEEK_FLAG_FLUSH, val);
+        GST_DEBUG ("seeking to %s: %" G_GINT64_FORMAT, val);
+        gst_element_seek (bvw->priv->play, 1.0, fmt, GST_SEEK_FLAG_FLUSH,
+            GST_SEEK_TYPE_SET, val, GST_SEEK_TYPE_NONE, 0);
+      } else {
+        GST_DEBUG ("failed to query position (%s)", fmt_name);
       }
       break;
     }
     default:
+      GST_WARNING ("unhandled type %d", type);
       break;
   }
-#endif
 }
 
 void
@@ -3264,17 +3262,21 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
     case BVW_INFO_AUDIO_BITRATE:
       if (bvw->priv->audiotags == NULL)
         break;
-      if (gst_tag_list_get_uint (bvw->priv->audiotags,
-				 GST_TAG_BITRATE, (guint *)&integer)) {
-	integer /= 1000;
+      if (gst_tag_list_get_uint (bvw->priv->audiotags, GST_TAG_BITRATE,
+          (guint *)&integer) ||
+          gst_tag_list_get_uint (bvw->priv->audiotags, GST_TAG_NOMINAL_BITRATE,
+          (guint *)&integer)) {
+        integer /= 1000;
       }
       break;
     case BVW_INFO_VIDEO_BITRATE:
       if (bvw->priv->videotags == NULL)
-	break;
-      if (gst_tag_list_get_uint (bvw->priv->videotags,
-				 GST_TAG_BITRATE, (guint *)&integer)) {
-	integer /= 1000;
+        break;
+      if (gst_tag_list_get_uint (bvw->priv->videotags, GST_TAG_BITRATE,
+          (guint *)&integer) ||
+          gst_tag_list_get_uint (bvw->priv->videotags, GST_TAG_NOMINAL_BITRATE,
+          (guint *)&integer)) {
+        integer /= 1000;
       }
       break;
     default:

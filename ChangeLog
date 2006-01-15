@@ -1,3 +1,13 @@
+2006-01-15  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c: (parse_stream_info),
+	(bacon_video_widget_dvd_event),
+	(bacon_video_widget_get_metadata_int):
+	  Implement _dvd_event() function (even if it's not used yet). Should
+	  make things compile with Forte on Solaris (#326761). Try
+	  GST_TAG_NOMINAL_BITRATE if GST_TAG_BITRATE did not yield any
+	  results.
+
 2006-01-15  Bastien Nocera  <hadess@hadess.net>
 
 	* data/schemas.sh: allow for mime-types with a '+' in their names
