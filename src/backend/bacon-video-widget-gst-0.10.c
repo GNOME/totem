@@ -2171,7 +2171,7 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **gerro
   GST_LOG ("Seeking to %" GST_TIME_FORMAT, GST_TIME_ARGS (time * GST_MSECOND));
 
   gst_element_seek (bvw->priv->play, 1.0,
-		    GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH,
+		    GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT,
 		    GST_SEEK_TYPE_SET, time * GST_MSECOND,
 		    GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
 
