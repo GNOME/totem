@@ -2096,6 +2096,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   bvw->priv->media_has_video = FALSE;
   bvw->priv->media_has_audio = FALSE;
   bvw->priv->stream_length = 0;
+  bvw->priv->ignore_messages_mask = 0;
 
   if (g_strrstr (bvw->priv->mrl, "#subtitle:")) {
     gchar **uris;
@@ -2117,7 +2118,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
     g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
   } else {
     GST_DEBUG ("Error on open: %s", (error) ? (*error)->message : "(unknown)");
-    /* FIXME: this deadlocks in playbin */
+    bvw->priv->ignore_messages_mask |= GST_MESSAGE_ERROR;
     gst_element_set_state (bvw->priv->play, GST_STATE_NULL);
     g_free (bvw->priv->mrl);
     bvw->priv->mrl = NULL;
@@ -2207,7 +2208,7 @@ bacon_video_widget_stop (BaconVideoWidget * bvw)
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
   GST_LOG ("Stopping");
-  gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_READY);
+  gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_NULL);
 }
 
 void

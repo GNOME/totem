@@ -1,6 +1,13 @@
 2006-01-17  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_open_with_subtitle), (bacon_video_widget_stop):
+	  Ignore additional error messages if there's more than one (#327090).
+	  _stop() now sets the pipeline to NULL instead of READY.
+
+2006-01-17  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bacon_video_widget_seek_time):
 	  Use GST_SEEK_FLAG_KEY_UNIT for seeking; makes seeking
 	  considerably snappier for AVIs (#327079) and is probably
