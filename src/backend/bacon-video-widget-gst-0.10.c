@@ -856,8 +856,13 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
   msg_type = GST_MESSAGE_TYPE (message);
 
   /* somebody else is handling the message, probably in poll_for_state_change */
-  if (bvw->priv->ignore_messages_mask & msg_type)
+  if (bvw->priv->ignore_messages_mask & msg_type) {
+    gchar *src_name = gst_object_get_name (message->src);
+    GST_LOG ("Ignoring %s message from element %s as requested",
+        gst_message_type_get_name (msg_type), src_name);
+    g_free (src_name);
     return;
+  }
 
   if (msg_type != GST_MESSAGE_STATE_CHANGED) {
     gchar *src_name = gst_object_get_name (message->src);
@@ -960,15 +965,17 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       break;
     }
     case GST_MESSAGE_STATE_CHANGED: {
-      GstState old_state, new_state, pending_state;
+      GstState old_state, new_state;
       gchar *src_name;
 
-      gst_message_parse_state_changed (message, &old_state, &new_state,
-          &pending_state);
+      gst_message_parse_state_changed (message, &old_state, &new_state, NULL);
+
+      if (old_state == new_state)
+        break;
 
       /* we only care about playbin (pipeline) state changes */
       if (GST_MESSAGE_SRC (message) != GST_OBJECT (bvw->priv->play))
-	break;
+        break;
 
       src_name = gst_object_get_name (message->src);
       GST_DEBUG ("%s changed state from %s to %s", src_name,
@@ -979,21 +986,21 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       /* now do stuff */
       if (new_state <= GST_STATE_READY) {
         if (bvw->priv->update_id != 0) {
+          GST_DEBUG ("removing tick timeout");
           g_source_remove (bvw->priv->update_id);
           bvw->priv->update_id = 0;
         }
       } else if (new_state >= GST_STATE_PAUSED) {
         if (bvw->priv->update_id == 0) {
+          GST_DEBUG ("starting tick timeout");
           bvw->priv->update_id =
             g_timeout_add (200, (GSourceFunc) bvw_query_timeout, bvw);
         }
       }
 
-      if (old_state <= GST_STATE_READY &&
-          new_state >= GST_STATE_PAUSED) {
+      if (old_state == GST_STATE_READY && new_state == GST_STATE_PAUSED) {
         parse_stream_info (bvw);
-      } else if (new_state <= GST_STATE_READY &&
-                 old_state >= GST_STATE_PAUSED) {
+      } else if (old_state == GST_STATE_PAUSED && new_state == GST_STATE_READY) {
         bvw->priv->media_has_video = FALSE;
         bvw->priv->media_has_audio = FALSE;
 
@@ -1022,6 +1029,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
     }
 
     case GST_MESSAGE_DURATION:
+      /* FIXME: should we do something on duration? */
     case GST_MESSAGE_CLOCK_PROVIDE:
     case GST_MESSAGE_CLOCK_LOST:
     case GST_MESSAGE_NEW_CLOCK:
@@ -1100,8 +1108,13 @@ got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * bvw)
     bvw->priv->current_position =
       (gfloat) bvw->priv->current_time / bvw->priv->stream_length;
   }
-  
-  seekable = bacon_video_widget_is_seekable (bvw);
+
+
+  if (bvw->priv->stream_length == 0) {
+    seekable = bacon_video_widget_is_seekable (bvw);
+  } else {
+    seekable = TRUE;
+  }
 
 /*
   GST_DEBUG ("%" GST_TIME_FORMAT ",%" GST_TIME_FORMAT " %s",
@@ -1155,14 +1168,20 @@ static gboolean
 bvw_query_timeout (BaconVideoWidget *bvw)
 {
   GstFormat fmt = GST_FORMAT_TIME;
+  gint64 prev_len = -1;
   gint64 pos = -1, len = -1;
 
   /* check length/pos of stream */
+  prev_len = bvw->priv->stream_length;
   if (gst_element_query_duration (bvw->priv->play, &fmt, &len)) {
     if (len != -1 && fmt == GST_FORMAT_TIME) {
       bvw->priv->stream_length = len / GST_MSECOND;
-      //g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
+      if (bvw->priv->stream_length != prev_len) {
+        g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
+      }
     }
+  } else {
+    GST_DEBUG ("could not get duration");
   }
 
   if (gst_element_query_position (bvw->priv->play, &fmt, &pos)) {
@@ -1170,6 +1189,8 @@ bvw_query_timeout (BaconVideoWidget *bvw)
       got_time_tick (GST_ELEMENT (bvw->priv->play),
 		     pos, bvw);
     }
+  } else {
+    GST_DEBUG ("could not get position");
   }
 
   return TRUE;
@@ -1939,7 +1960,14 @@ poll_for_state_change (BaconVideoWidget *bvw, GstElement *element,
   events = GST_MESSAGE_STATE_CHANGED | GST_MESSAGE_ERROR | GST_MESSAGE_EOS;
 
   saved_events = bvw->priv->ignore_messages_mask;
-  bvw->priv->ignore_messages_mask |= events;
+
+  if (element != NULL && element == bvw->priv->play) {
+    /* we do want the main handler to process state changed messages for
+     * playbin as well, otherwise it won't hook up the timeout etc. */
+    bvw->priv->ignore_messages_mask |= (events ^ GST_MESSAGE_STATE_CHANGED);
+  } else {
+    bvw->priv->ignore_messages_mask |= events;
+  }
 
   while (TRUE) {
     GstMessage *message;
@@ -2081,9 +2109,9 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 		  "suburi", subtitle_uri, NULL);
   }
 
-  gst_element_set_state (bvw->priv->play, GST_STATE_READY);
+  gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
 
-  ret = poll_for_state_change (bvw, bvw->priv->play, GST_STATE_READY, error);
+  ret = poll_for_state_change (bvw, bvw->priv->play, GST_STATE_PAUSED, error);
   
   if (ret) {
     g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
@@ -3019,6 +3047,16 @@ bacon_video_widget_get_stream_length (BaconVideoWidget * bvw)
 {
   g_return_val_if_fail (bvw != NULL, -1);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -1);
+
+  if (bvw->priv->stream_length == 0 && bvw->priv->play != NULL) {
+    GstFormat fmt = GST_FORMAT_TIME;
+    gint64 len = -1;
+
+    if (gst_element_query_duration (bvw->priv->play, &fmt, &len) && len != -1) {
+      bvw->priv->stream_length = len / GST_MSECOND;
+    }
+  }
+
   return bvw->priv->stream_length;
 }
 
@@ -3042,15 +3080,20 @@ bacon_video_widget_is_playing (BaconVideoWidget * bvw)
 gboolean
 bacon_video_widget_is_seekable (BaconVideoWidget * bvw)
 {
+  gboolean res;
+
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  /* hmm... */
-  if (bvw->priv->stream_length)
-    return TRUE;
-  else
-    return FALSE;
+  if (bvw->priv->stream_length == 0) {
+    res = (bacon_video_widget_get_stream_length (bvw) > 0);
+  } else {
+    res = (bvw->priv->stream_length > 0);
+  }
+
+  GST_DEBUG ("stream is%s seekable", (res) ? "" : " not");
+  return res;
 }
 
 gboolean
@@ -3324,11 +3367,36 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
 				 BaconVideoWidgetMetadataType type,
 				 GValue * value)
 {
+  GstState cur_state;
+
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
   GST_DEBUG ("type = %d", type);
+
+  gst_element_get_state (bvw->priv->play, &cur_state, NULL, -1);
+  if (cur_state < GST_STATE_PAUSED) {
+    /* wait for any pending state changes to finish, so that
+     * test-properties-page works. Then make sure all pending bus
+     * messages have been processed */
+    gst_element_get_state (bvw->priv->play, NULL, NULL, -1);
+  }
+
+  /* process any pending tag messages on the bus NOW */
+  {
+    GstMessageType events;
+    GstMessage *msg;
+    GstBus *bus;
+    
+    /* application message is for stream-info */
+    events = GST_MESSAGE_TAG | GST_MESSAGE_DURATION | GST_MESSAGE_APPLICATION;
+	bus = gst_element_get_bus (bvw->priv->play);
+	while ((msg = gst_bus_poll (bus, events, 0))) {
+		gst_bus_async_signal_func (bus, msg, NULL);
+	}
+	gst_object_unref (bus);
+  }
 
   switch (type)
     {

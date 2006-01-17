@@ -1,3 +1,20 @@
+2006-01-17  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c: (bvw_bus_message_cb),
+	(got_time_tick), (bvw_query_timeout), (poll_for_state_change),
+	(bacon_video_widget_open_with_subtitle),
+	(bacon_video_widget_get_stream_length),
+	(bacon_video_widget_is_seekable),
+	(bacon_video_widget_get_metadata):
+	  Wait for any pending state change (like to PAUSED) to finish when
+	  metadata is requested, so that it can be returned right there if
+	  it is available. Should fix many issues with the properties dialog.
+	  Ensure that state-changed messages from playbin are seen by the main
+	  bus message handler even if we are using poll_for_state_change().
+	  Make _is_seekable() and duration querying a bit smarter (should fix
+	  issues with the seek slider being insensitive at startup and some
+	  properties dialog issues. #327074, #327150)
+
 2006-01-15  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c: (parse_stream_info),
