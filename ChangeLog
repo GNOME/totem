@@ -1,5 +1,15 @@
 2006-01-19  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_finalize), (bacon_video_widget_unrealize),
+	(bacon_video_widget_open_with_subtitle):
+	Do some plugin garbage collection after opening files
+	* src/test-properties-page.c: (create_props), (destroy_props),
+	(main): create and destroy the pages, instead of just setting a
+	different URI
+
+2006-01-19  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.desktop.in.in.in: remove dupe _Name entry
 	(Closes: #327606)
 

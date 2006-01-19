@@ -453,6 +453,7 @@ bacon_video_widget_finalize (GObject *object)
 	BaconVideoWidget *bvw = (BaconVideoWidget *) object;
 
 	if (bvw->priv->xine != NULL) {
+		xine_plugins_garbage_collector (bvw->priv->xine);
 		xine_exit (bvw->priv->xine);
 		bvw->priv->xine = NULL;
 	}
@@ -1569,6 +1570,7 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 				bvw->priv->ao_driver);
 
 	/* stop event thread */
+	xine_plugins_garbage_collector (bvw->priv->xine);
 	xine_exit (bvw->priv->xine);
 	bvw->priv->xine = NULL;
 
@@ -2013,6 +2015,8 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 	} else {
 		err = xine_open (bvw->priv->stream, mrl);
 	}
+
+	xine_plugins_garbage_collector (bvw->priv->xine);
 
 	if (err == 0)
 	{

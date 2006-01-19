@@ -32,6 +32,7 @@
 #include "bacon-video-widget.h"
 
 static int i;
+GtkWidget *window, *props, *label;
 
 static gboolean
 main_loop_exit (gpointer data)
@@ -41,9 +42,26 @@ main_loop_exit (gpointer data)
 	return FALSE;
 }
 
+static void
+create_props (const char *url)
+{
+	label = gtk_label_new ("Audio/Video");
+	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+	props = totem_properties_view_new (url, label);
+	gtk_container_add (GTK_CONTAINER (window), props);
+
+	gtk_widget_show_all (window);
+}
+
+static void
+destroy_props (void)
+{
+	gtk_widget_destroy (window);
+	gtk_widget_destroy (label);
+}
+
 int main (int argc, char **argv)
 {
-	GtkWidget *window, *props, *label;
 	int times = 10;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
@@ -59,25 +77,29 @@ int main (int argc, char **argv)
 	}
 
 	bacon_video_widget_init_backend (NULL, NULL);
-
-	label = gtk_label_new ("Audio/Video");
-	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	props = totem_properties_view_new (argv[1], label);
-	gtk_container_add (GTK_CONTAINER (window), props);
-
+#if 0
+	create_props (argv[1]);
+#endif
+	
 	if (argc == 3) {
 		times = g_strtod (argv[2], NULL);
 	}
 
-	gtk_widget_show_all (window);
 	for (i = 0; i < times; i++) {
 		g_print ("Setting %d\n", i);
+#if 0
 		totem_properties_view_set_location (TOTEM_PROPERTIES_VIEW (props), argv[1]);
+#else
+		create_props (argv[1]);
+#endif
 		g_timeout_add (4000, main_loop_exit, NULL);
 		gtk_main ();
+#if 1
+		destroy_props ();
+#endif
 	}
 
-	gtk_main ();
+//	gtk_main ();
 
 	return 0;
 }
