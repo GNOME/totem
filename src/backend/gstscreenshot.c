@@ -131,10 +131,14 @@ bvw_frame_conv_convert (GstBuffer * buf, GstCaps * to_caps)
       case GST_MESSAGE_ERROR: {
         gchar *dbg = NULL;
 
-        gst_message_parse_error (msg, &error, dbg);
-        g_warning ("Could not take screenshot: %s", error->message);
-        GST_DEBUG ("%s [debug: %s]", error->message, GST_STR_NULL (dbg));
-        g_error_free (error);
+        gst_message_parse_error (msg, &error, &dbg);
+        if (error) {
+          g_warning ("Could not take screenshot: %s", error->message);
+          GST_DEBUG ("%s [debug: %s]", error->message, GST_STR_NULL (dbg));
+          g_error_free (error);
+        } else {
+          g_warning ("Could not take screenshot (and NULL error!)");
+        }
         g_free (dbg);
         result = NULL;
         break;

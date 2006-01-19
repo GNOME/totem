@@ -22,10 +22,10 @@
  *
  * The Totem project hereby grant permission for non-gpl compatible GStreamer
  * plugins to be used and distributed together with GStreamer and Totem. This
- * permission are above and beyond the permissions granted by the GPL license
+ * permission is above and beyond the permissions granted by the GPL license
  * Totem is covered by.
  *
- * Monday 7th February 2005: Christian Schaller: Add excemption clause.
+ * Monday 7th February 2005: Christian Schaller: Add exemption clause.
  * See license_change file for details.
  *
  */
@@ -2059,12 +2059,15 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
   g_return_val_if_fail (bvw->priv->mrl == NULL, FALSE);
 
-  /* hmm... */
-  if (bvw->priv->mrl && strcmp (bvw->priv->mrl, mrl) == 0)
-    return TRUE;
-
   GST_DEBUG ("mrl = %s", GST_STR_NULL (mrl));
   GST_DEBUG ("subtitle_uri = %s", GST_STR_NULL (subtitle_uri));
+
+  /* hmm... */
+  if (bvw->priv->mrl && strcmp (bvw->priv->mrl, mrl) == 0) {
+    GST_DEBUG ("same as current mrl");
+    /* FIXME: shouldn't we ensure playing state here? */
+    return TRUE;
+  }
 
   /* this allows non-URI type of files in the thumbnailer and so on */
   g_free (bvw->priv->mrl);
@@ -2219,7 +2222,7 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
   GST_LOG ("Closing");
-  gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_READY);
+  gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_NULL);
   
   if (bvw->priv->mrl) {
     g_free (bvw->priv->mrl);

@@ -1,3 +1,15 @@
+2006-01-19  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_open_with_subtitle),
+	(bacon_video_widget_close):
+	  Set to NULL state in close as well. Move up debug statement
+	  in open. Fix typos in license addendum.
+
+	* src/backend/gstscreenshot.c: (bvw_frame_conv_convert):
+	  Don't crash in debug statement when an error with a debug
+	  message occurs. Also guard against NULL errors.
+	  
 ============ Version 1.3.1
 
 2006-01-19  Bastien Nocera  <hadess@hadess.net>
