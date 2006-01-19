@@ -1,21 +1,30 @@
 New features and significant updates in version...
 
 1.3.1:
+ * Add a "capabilities" mechanism to the playlist parser library
  * Fix crash when calling the "add to playlist dialogue twice"
  * Fix parsing of sub-directories
  * Fix crasher in the Mozilla plugin when bringing up a second instance
    by making the plugin resident
  * Call the authentication manager, so thumbnails with keyring-stored passwords
    can be generated
+ * Support newer versions of gnome-screensaver
  * Don't make the properties page assert if we can't initialise the backend
  * Don't overwrite the title when there's already a custom title in the playlist
  * Write EXTM3U m3u files
  * Add a test program for the properties page
  * Fix warning on exit when in fullscreen
- * Support Flash Video files
+ * Support Flash Video files, and OGM files
+ * Set the preferences dialogue as a child of the main window
  * Update libegg from CVS
  * Fix double error dialogues on open sometimes (xine-lib)
+ * Clean up unused plugins after opening a file (xine-lib)
  * Check for plugins in configure (GStreamer)
+ * Fix compilation with the Forte compiler (GStreamer 0.10)
+ * Fix multiple problems with the properties dialogue (GStreamer 0.10)
+ * Fix the seek slider being disabled on startup (GStreamer 0.10)
+ * Make seeking in AVI files snappier (GStreamer 0.10)
+ * Ignore errors beyond the first one when opening files (GStreamer 0.10)
 
 1.3.0:
 New features:
