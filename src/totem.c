@@ -1395,8 +1395,12 @@ seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 
 	if (bacon_video_widget_can_direct_seek (totem->bvw) != FALSE)
 	{
-		totem->was_playing = bacon_video_widget_is_playing (totem->bvw);
-		bacon_video_widget_pause (totem->bvw);
+		if (!totem->seek_in_progress) {
+			totem->was_playing = bacon_video_widget_is_playing (totem->bvw);
+			bacon_video_widget_pause (totem->bvw);
+			/* We need to remember that we are already paused and seeking */
+			totem->seek_in_progress = TRUE;
+		}
 	}
 
 	return FALSE;
@@ -1441,6 +1445,7 @@ seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 	{
 		if (totem->was_playing)
 			bacon_video_widget_play (totem->bvw, NULL);
+		totem->seek_in_progress = FALSE;
 	} else {
 		totem_action_seek (totem, val / 65535.0);
 	}

@@ -96,6 +96,7 @@ struct Totem {
 	gboolean seek_lock;
 	gboolean seekable;
 	gboolean was_playing;
+	gboolean seek_in_progress;
 
 	/* Volume */
 	GtkWidget *volume;

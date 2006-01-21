@@ -1,5 +1,13 @@
 2006-01-21  Julien MOUTTE  <julien@moutte.net>
 
+	* src/totem-private.h:
+	* src/totem.c: (seek_slider_pressed_cb), (seek_slider_released_cb):
+	We need to remember reliably if we are seeking with a memory
+	of previous pipeline state. Introducing a boolean for seek in
+	progress. Fixes #327074.
+
+2006-01-21  Julien MOUTTE  <julien@moutte.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bacon_video_widget_open_with_subtitle),
 	(bacon_video_widget_close): We might open without being closed.
