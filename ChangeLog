@@ -1,3 +1,13 @@
+2006-01-21  Bastien Nocera  <hadess@hadess.net>
+
+	* data/vanity.desktop.in.in:
+	* data/totem.desktop.in.in.in: Make sure GNOME;GTK; are in the
+	categories (Closes: #328023)
+	* data/totem.glade:
+	* src/totem.c: (on_window_key_press_event):
+	Add Ctrl+S as a shortcut for "Take Screenshot" (Closes: #327526),
+	add ellipsis to the "Take Screenshot" menu item
+
 2006-01-21  Julien MOUTTE  <julien@moutte.net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
