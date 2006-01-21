@@ -139,9 +139,9 @@ struct BaconVideoWidgetPrivate
   /* Visual effects */
   GList                       *vis_plugins_list;
   gboolean                     show_vfx;
+  gboolean                     vis_changed;
   VisualsQuality               visq;
-  GstElement                  *vis_element;
-  GstElement                  *vis_capsfilter;
+  gchar                       *vis_element_name;
   GstElement                  *audio_capsfilter;
 
   /* Other stuff */
@@ -189,6 +189,8 @@ static void bacon_video_widget_get_property (GObject * object,
 static void bacon_video_widget_finalize (GObject * object);
 
 static void bvw_update_interface_implementations (BaconVideoWidget *bvw);
+static void setup_vis (BaconVideoWidget * bvw);
+static GList * get_visualization_features (void);
 
 static GtkWidgetClass *parent_class = NULL;
 
@@ -1282,7 +1284,7 @@ parse_stream_info (BaconVideoWidget *bvw)
     g_signal_connect (videopad, "notify::caps",
         G_CALLBACK (caps_set), bvw);
     /* FIXME: don't we need to unref the video pad? (tpm) */
-  } else if (bvw->priv->show_vfx && bvw->priv->vis_element) {
+  } else if (bvw->priv->show_vfx) {
     get_visualization_size (bvw, &bvw->priv->video_width,
 			    &bvw->priv->video_height, NULL, NULL);
   }
@@ -1330,6 +1332,11 @@ bacon_video_widget_finalize (GObject * object)
     
   g_free (bvw->priv->mrl);
   bvw->priv->mrl = NULL;
+  
+  if (bvw->priv->vis_element_name) {
+    g_free (bvw->priv->vis_element_name);
+    bvw->priv->vis_element_name = NULL;
+  }
  
   if (bvw->priv->vis_plugins_list) {
     g_list_free (bvw->priv->vis_plugins_list);
@@ -2100,6 +2107,11 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   bvw->priv->media_has_audio = FALSE;
   bvw->priv->stream_length = 0;
   bvw->priv->ignore_messages_mask = 0;
+  
+  /* Visualization settings changed */
+  if (bvw->priv->vis_changed) {
+    setup_vis (bvw);
+  }
 
   if (g_strrstr (bvw->priv->mrl, "#subtitle:")) {
     gchar **uris;
@@ -2546,78 +2558,99 @@ get_visualization_size (BaconVideoWidget *bvw,
 }
 
 static void
-change_visualization_quality (BaconVideoWidget *bvw)
-{
-  GstPad *pad, *spad;
-  GstCaps *caps;
-  GstStructure *s;
-  int w, h;
-  gint fps_n, fps_d;
-
-  /* get size */
-  get_visualization_size (bvw, &w, &h, &fps_n, &fps_d);
-
-  /* first unset any old filter, otherwise _get_allowed_caps takes the
-   * old one into account. */
-  g_object_set (bvw->priv->vis_capsfilter, "caps", NULL, NULL);
-
-  /* see what we can do */
-  pad = gst_element_get_pad (bvw->priv->vis_element, "src");
-  spad = gst_element_get_pad (bvw->priv->vis_element, "sink");
-  caps = gst_pad_get_allowed_caps (pad);
-
-  /* fixate */
-  s = gst_caps_get_structure (caps, 0);
-  gst_structure_fixate_field_nearest_int (s, "width", w);
-  gst_structure_fixate_field_nearest_int (s, "height", h);
-  gst_structure_fixate_field_nearest_fraction (s, "framerate", fps_n, fps_d);
-
-  /* set this */
-  g_object_set (bvw->priv->vis_capsfilter, "caps", caps, NULL);
-
-  /* re-negotiate - FIXME: is this still needed? */
-  gst_pad_set_caps (pad, NULL);
-
-  gst_object_unref (spad);
-  gst_object_unref (pad);
-}
-
-static void
 setup_vis (BaconVideoWidget * bvw)
 {
-  GstElement *vis;
+  GstElement *vis_bin = NULL;
 
-  if (bvw->priv->show_vfx && bvw->priv->vis_element) {
-    GstElement *bin;
-    GstPad *pad;
-
-    /* unparent */
-    g_object_set (bvw->priv->play, "vis-plugin", NULL, NULL);
-
-    bin = gst_bin_new ("vis-bin");
-    gst_object_ref (bvw->priv->vis_capsfilter);
-    gst_object_ref (bvw->priv->vis_element);
-    gst_bin_add_many (GST_BIN (bin), bvw->priv->vis_element,
-		      bvw->priv->vis_capsfilter, NULL);
-    vis = bin;
-
-    pad = gst_element_get_pad (bvw->priv->vis_element, "sink");
-    gst_element_add_pad (bin, gst_ghost_pad_new ("sink", pad));
+  if (bvw->priv->show_vfx && bvw->priv->vis_element_name) {
+    GstElement *vis_element = NULL, *vis_capsfilter = NULL;
+    GstPad *pad = NULL;
+    GstCaps *caps = NULL;
+    GList *features = NULL, *item = NULL;
+    GstElementFactory *fac = NULL;
+  
+    /* find element factory using long name */
+    features = get_visualization_features ();
+    for (item = features; item != NULL; item = item->next) {
+      GstElementFactory *f = item->data;
+      
+      if (f) {
+        const gchar * name = gst_element_factory_get_longname (f);
+        
+        if (strcmp (bvw->priv->vis_element_name, name) == 0) {
+          fac = f;
+          break;
+        }
+      }
+    }
+    g_list_free (features);
+    
+    if (!fac) {
+      goto beach;
+    }
+    
+    vis_element = gst_element_factory_create (fac, "vis_element");
+    if (!GST_IS_ELEMENT (vis_element)) {
+      goto beach;
+    }
+    
+    vis_capsfilter = gst_element_factory_make ("capsfilter",
+        "vis_capsfilter");
+    if (!GST_IS_ELEMENT (vis_capsfilter)) {
+      gst_object_unref (vis_element);
+      goto beach;
+    }
+    
+    vis_bin = gst_bin_new ("vis_bin");
+    if (!GST_IS_ELEMENT (vis_bin)) {
+      gst_object_unref (vis_element);
+      gst_object_unref (vis_capsfilter);
+      goto beach;
+    }
+    
+    gst_bin_add_many (GST_BIN (vis_bin), vis_element, vis_capsfilter, NULL);
+    
+    /* Sink ghostpad */
+    pad = gst_element_get_pad (vis_element, "sink");
+    gst_element_add_pad (vis_bin, gst_ghost_pad_new ("sink", pad));
     gst_object_unref (pad);
-
-    pad = gst_element_get_pad (bvw->priv->vis_capsfilter, "src");
-    gst_element_add_pad (bin, gst_ghost_pad_new ("src", pad));
+    
+    /* Src ghostpad, link with vis_element and get allowed src caps */
+    pad = gst_element_get_pad (vis_capsfilter, "src");
+    gst_element_add_pad (vis_bin, gst_ghost_pad_new ("src", pad));
+    gst_element_link_pads (vis_element, "src", vis_capsfilter, "sink");
+    caps = gst_pad_get_allowed_caps (pad);
     gst_object_unref (pad);
+    
+    /* Can we fixate ? */
+    if (GST_IS_CAPS (caps) && !gst_caps_is_fixed (caps)) {
+      gint w, h, fps_n, fps_d;
+      GstStructure *s = gst_caps_get_structure (caps, 0);
 
-    gst_element_link_pads (bvw->priv->vis_element, "src",
-			   bvw->priv->vis_capsfilter, "sink");
+      /* Get visualization size */
+      get_visualization_size (bvw, &w, &h, &fps_n, &fps_d);
+      
+      /* Fixate */
+      gst_structure_fixate_field_nearest_int (s, "width", w);
+      gst_structure_fixate_field_nearest_int (s, "height", h);
+      gst_structure_fixate_field_nearest_fraction (s, "framerate", fps_n,
+          fps_d);
 
-    change_visualization_quality (bvw);
-  } else {
-    vis = NULL;
+      /* set this */
+      g_object_set (vis_capsfilter, "caps", caps, NULL);
+    }
+    
+    if (GST_IS_CAPS (caps)) {
+      gst_caps_unref (caps);
+    }
   }
-
-  g_object_set (bvw->priv->play, "vis-plugin", vis, NULL);
+  
+  bvw->priv->vis_changed = FALSE;
+  
+beach:
+  g_object_set (bvw->priv->play, "vis-plugin", vis_bin, NULL);
+  
+  return;
 }
 
 gboolean
@@ -2629,11 +2662,8 @@ bacon_video_widget_set_show_visuals (BaconVideoWidget * bvw,
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
   bvw->priv->show_vfx = show_visuals;
-  gconf_client_set_bool (bvw->priv->gc,
-      GCONF_PREFIX"/show_vfx", show_visuals, NULL);
-
-  setup_vis (bvw);
-
+  bvw->priv->vis_changed = TRUE;
+  
   return TRUE;
 }
 
@@ -2688,45 +2718,24 @@ bacon_video_widget_get_visuals_list (BaconVideoWidget * bvw)
 gboolean
 bacon_video_widget_set_visuals (BaconVideoWidget * bvw, const char *name)
 {
-  GList *features, *item;
-  GstElementFactory *fac = NULL;
-  GstElement *old_vis = bvw->priv->vis_element;
-
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
-
-  /* find */
-  features = get_visualization_features ();
-  for (item = features; item != NULL; item = item->next) {
-    GstElementFactory *f = item->data;
-
-    if (!strcmp (name, gst_element_factory_get_longname (f))) {
-      fac = f;
-      break;
+  
+  if (bvw->priv->vis_element_name) {
+    if (strcmp (bvw->priv->vis_element_name, name) == 0) {
+      return FALSE;
+    }
+    else {
+      g_free (bvw->priv->vis_element_name);
     }
   }
-  g_list_free (features);
-  /* could be the user has an outdated preference, etc -- fail silently */
-  if (!fac)
-    return FALSE;
-
-  /* now create */
-  bvw->priv->vis_element = gst_element_factory_create (fac, "vis-plugin");
-
-  if (!bvw->priv->vis_element) {
-    bvw->priv->vis_element = old_vis;
-    return FALSE;
-  }
-
-  gconf_client_set_string (bvw->priv->gc,
-      GCONF_PREFIX"/visual", name, NULL);
-
-  setup_vis (bvw);
-  if (old_vis) {
-    gst_object_unref (old_vis);
-  }
-
+  
+  bvw->priv->vis_element_name = g_strdup (name);
+  
+  /* Note that settings have changed */
+  bvw->priv->vis_changed = TRUE;
+  
   return TRUE;
 }
 
@@ -2742,12 +2751,7 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget * bvw,
     return;
 
   bvw->priv->visq = quality;
-  gconf_client_set_int (bvw->priv->gc,
-      GCONF_PREFIX"/visual_quality", quality, NULL);
-
-  if (bvw->priv->vis_element && bvw->priv->show_vfx) {
-    change_visualization_quality (bvw);
-  }
+  bvw->priv->vis_changed = TRUE;
 }
 
 gboolean
@@ -3792,16 +3796,13 @@ bacon_video_widget_new (int width, int height,
                         G_CALLBACK (bvw_bus_message_cb),
                         bvw);
 
-  bvw->priv->vis_capsfilter = gst_element_factory_make ("capsfilter",
-							"vis-capsfilter");
-
   bvw->priv->speakersetup = BVW_AUDIO_SOUND_STEREO;
   bvw->priv->media_device = g_strdup ("/dev/dvd");
   bvw->priv->init_width = 240;
   bvw->priv->init_height = 180;
   bvw->priv->visq = VISUAL_SMALL;
   bvw->priv->show_vfx = FALSE;
-  bvw->priv->vis_element = NULL;
+  bvw->priv->vis_element_name = NULL;
   bvw->priv->tv_out_type = TV_OUT_NONE;
   bvw->priv->connection_speed = 0;
   bvw->priv->ratio_type = BVW_RATIO_AUTO;

@@ -1,3 +1,14 @@
+2006-01-21  Julien MOUTTE  <julien@moutte.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c: (parse_stream_info),
+	(bacon_video_widget_finalize),
+	(bacon_video_widget_open_with_subtitle), (setup_vis),
+	(bacon_video_widget_set_show_visuals),
+	(bacon_video_widget_set_visuals),
+	(bacon_video_widget_set_visuals_quality), (bacon_video_widget_new):
+	Refactoring how visualization is handled in 0.10 GStreamer backend.
+	Fixes #327532.
+
 2006-01-20  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-message-connection.c: (setup_connection),
