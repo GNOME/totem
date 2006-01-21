@@ -1,5 +1,11 @@
 2006-01-21  Julien MOUTTE  <julien@moutte.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_set_show_cursor): Check that the video window
+	is still there before trying to show/hide cursor. Fixes #328016.
+
+2006-01-21  Julien MOUTTE  <julien@moutte.net>
+
 	* src/totem-private.h:
 	* src/totem.c: (seek_slider_pressed_cb), (seek_slider_released_cb):
 	We need to remember reliably if we are seeking with a memory
