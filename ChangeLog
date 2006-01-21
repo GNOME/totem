@@ -1,5 +1,13 @@
 2006-01-21  Julien MOUTTE  <julien@moutte.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_open_with_subtitle),
+	(bacon_video_widget_close): We might open without being closed.
+	* src/totem.c: (totem_action_set_mrl_with_warning): More
+	safety check on GError existence. Fixes #327579.
+
+2006-01-21  Julien MOUTTE  <julien@moutte.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c: (parse_stream_info),
 	(bacon_video_widget_finalize),
 	(bacon_video_widget_open_with_subtitle), (setup_vis),

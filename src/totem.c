@@ -799,13 +799,20 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 			disp = totem_uri_escape_for_display (totem->mrl);
 			msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
 			g_free (disp);
-			totem_action_error (msg, err->message, totem);
+			if (err && err->message) {
+				totem_action_error (msg, err->message, totem);
+			}
+			else {
+				totem_action_error (msg, _("No error message"), totem);
+			}
 			g_free (msg);
 		}
 
 		if (retval == FALSE)
 		{
-			g_error_free (err);
+			if (err) {
+				g_error_free (err);
+			}
 			g_free (totem->mrl);
 			totem->mrl = NULL;
 			play_pause_set_label (totem, STATE_STOPPED);

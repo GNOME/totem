@@ -2064,11 +2064,15 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   g_return_val_if_fail (mrl != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
-  g_return_val_if_fail (bvw->priv->mrl == NULL, FALSE);
-
+  
+  /* So we aren't closed yet... */
+  if (bvw->priv->mrl) {
+    bacon_video_widget_close (bvw);
+  }
+  
   GST_DEBUG ("mrl = %s", GST_STR_NULL (mrl));
   GST_DEBUG ("subtitle_uri = %s", GST_STR_NULL (subtitle_uri));
-
+  
   /* hmm... */
   if (bvw->priv->mrl && strcmp (bvw->priv->mrl, mrl) == 0) {
     GST_DEBUG ("same as current mrl");
@@ -2232,7 +2236,7 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
-
+  
   GST_LOG ("Closing");
   gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_NULL);
   
