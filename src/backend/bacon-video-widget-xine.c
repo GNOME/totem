@@ -34,6 +34,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sched.h>
 /* X11 */
 #include <X11/X.h>
 #include <X11/Xlib.h>
@@ -1420,6 +1421,21 @@ xine_event (void *user_data, const xine_event_t *event)
 	}
 }
 
+static int
+bacon_video_widget_sort_queue (gconstpointer a, gconstpointer b, gpointer data)
+{
+	signal_data *one, *two;
+
+	one = (signal_data *) a;
+	two = (signal_data *) b;
+
+	if (one->signal == two->signal)
+		return 0;
+	if (one->signal == ERROR_ASYNC || one->signal == MESSAGE_ASYNC)
+		return 1;
+	return -1;
+}
+
 static void
 xine_try_error (BaconVideoWidget *bvw, gboolean probe_error, GError **error)
 {
@@ -1428,12 +1444,17 @@ xine_try_error (BaconVideoWidget *bvw, gboolean probe_error, GError **error)
 
 	save_data = NULL;
 
+	sched_yield ();
+
+	/* Sort the queue with the errors first */
+	g_async_queue_sort (bvw->priv->queue, bacon_video_widget_sort_queue, bvw);
+
 	/* Steal messages from the async queue, if there's an error,
 	 * to use as the error message rather than the crappy errors from
 	 * xine_open() */
 	while ((data = g_async_queue_try_pop (bvw->priv->queue)) != NULL)
 	{
-		if (data->signal == ERROR_ASYNC)
+		if (data->signal == ERROR_ASYNC || data->signal == MESSAGE_ASYNC)
 		{
 			if (save_data != NULL)
 			{
@@ -1442,8 +1463,8 @@ xine_try_error (BaconVideoWidget *bvw, gboolean probe_error, GError **error)
 			}
 			save_data = data;
 		} else {
-			g_free (data->msg);
-			g_free (data);
+			g_async_queue_push (bvw->priv->queue, data);
+			break;
 		}
 	}
 
@@ -3555,7 +3576,7 @@ GList
 	num_channels = xine_get_stream_info
 		(bvw->priv->stream, XINE_STREAM_INFO_MAX_SPU_CHANNEL);
 
-	if (num_channels < 2)
+	if (num_channels < 1)
 		return NULL;
 
 	for(i = 0; i < num_channels; i++)
