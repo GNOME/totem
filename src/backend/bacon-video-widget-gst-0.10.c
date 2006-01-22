@@ -191,6 +191,8 @@ static void bacon_video_widget_finalize (GObject * object);
 static void bvw_update_interface_implementations (BaconVideoWidget *bvw);
 static void setup_vis (BaconVideoWidget * bvw);
 static GList * get_visualization_features (void);
+static gboolean bacon_video_widget_configure_event (GtkWidget *widget,
+    GdkEventConfigure *event, BaconVideoWidget *bvw);
 
 static GtkWidgetClass *parent_class = NULL;
 
@@ -271,6 +273,10 @@ bacon_video_widget_realize (GtkWidget * widget)
 
   gdk_window_set_background (bvw->priv->video_window, &colour);
   GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
+  
+  /* Connect to configure event on the top level window */
+  g_signal_connect (G_OBJECT (gtk_widget_get_toplevel (widget)),
+      "configure-event", G_CALLBACK (bacon_video_widget_configure_event), bvw);
 
   /* nice hack to show the logo fullsize, while still being resizable */
   get_media_size (BACON_VIDEO_WIDGET (widget), &w, &h);
@@ -324,6 +330,24 @@ bacon_video_widget_hide (GtkWidget *widget)
 
   if (GTK_WIDGET_CLASS (parent_class)->hide)
     GTK_WIDGET_CLASS (parent_class)->hide (widget);
+}
+
+static gboolean
+bacon_video_widget_configure_event (GtkWidget *widget, GdkEventConfigure *event,
+    BaconVideoWidget *bvw)
+{
+  GstXOverlay *xoverlay = NULL;
+  
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  
+  xoverlay = bvw->priv->xoverlay;
+  
+  if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay)) {
+    gst_x_overlay_expose (xoverlay);
+  }
+  
+  return FALSE;
 }
 
 static gboolean

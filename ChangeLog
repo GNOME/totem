@@ -1,6 +1,14 @@
 2006-01-22  Julien MOUTTE  <julien@moutte.net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_realize), (bacon_video_widget_hide),
+	(bacon_video_widget_configure_event): We need to react on toplevel
+	configure events to redraw our frames on XV port when totem moves.
+	Fixes #170829.
+
+2006-01-22  Julien MOUTTE  <julien@moutte.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bacon_video_widget_set_show_cursor): Apply set_show_cursor on
 	the widget's window, not only the video window.
 
