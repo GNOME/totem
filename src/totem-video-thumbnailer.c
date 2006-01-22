@@ -35,7 +35,9 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#ifndef HAVE_GTK_ONLY
 #include <libgnomeui/gnome-authentication-manager.h>
+#endif
 #include <libgnomevfs/gnome-vfs-init.h>
 #include "bacon-video-widget.h"
 
@@ -340,7 +342,11 @@ int main (int argc, char *argv[])
 #else
 	gtk_init (&argc, &argv);
 #endif
+
+#ifndef HAVE_GTK_ONLY
 	gnome_authentication_manager_init ();
+#endif
+
 	bacon_video_widget_init_backend (&argc, &argv);
 	gnome_vfs_init ();
 

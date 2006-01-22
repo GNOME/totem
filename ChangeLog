@@ -1,3 +1,12 @@
+2006-01-22  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_sort_queue), (xine_try_error),
+	(bacon_video_widget_get_subtitles): sort the queue before parsing it
+	to avoid non-messages, and non-errors to be dropped from the queue
+	(Closes: #316836), MAX_SPU at 1 means that we have one subtitle
+	* src/totem-video-thumbnailer.c: (main): fix GTK+-only compilation
+
 2006-01-22  Julien MOUTTE  <julien@moutte.net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
