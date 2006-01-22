@@ -1010,13 +1010,13 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       g_free (src_name);
 
       /* now do stuff */
-      if (new_state <= GST_STATE_READY) {
+      if (new_state <= GST_STATE_PAUSED) {
         if (bvw->priv->update_id != 0) {
           GST_DEBUG ("removing tick timeout");
           g_source_remove (bvw->priv->update_id);
           bvw->priv->update_id = 0;
         }
-      } else if (new_state >= GST_STATE_PAUSED) {
+      } else if (new_state > GST_STATE_PAUSED) {
         if (bvw->priv->update_id == 0) {
           GST_DEBUG ("starting tick timeout");
           bvw->priv->update_id =
