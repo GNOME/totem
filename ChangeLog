@@ -1,5 +1,13 @@
 2006-01-22  Julien MOUTTE  <julien@moutte.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_get_video_property),
+	(bacon_video_widget_set_video_property), (bacon_video_widget_new):
+	If for whatever reason GConf sinks aren't available or can't
+	switch to READY we fallback on sensible defaults. Fixes #314857.
+
+2006-01-22  Julien MOUTTE  <julien@moutte.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c: (bvw_bus_message_cb):
 	position does not change in PAUSED. We don't need that timeout.
 

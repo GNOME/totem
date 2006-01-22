@@ -2920,7 +2920,7 @@ bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
 
   g_return_val_if_fail (bvw != NULL, 65535/2);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 65535/2);
-
+  
   g_mutex_lock (bvw->priv->lock);
   
   if (bvw->priv->balance && GST_IS_COLOR_BALANCE (bvw->priv->balance))
@@ -3000,7 +3000,7 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   
   GST_DEBUG ("set video property type %d to value %d", type, value);
-
+  
   if ( !(value < 65535 && value > 0) )
     return;
 
@@ -3851,6 +3851,8 @@ bacon_video_widget_new (int width, int height,
     audio_sink = gst_element_factory_make ("gconfaudiosink", "audio-sink");
     if (audio_sink == NULL) {
       g_warning ("Could not create element 'gconfaudiosink'");
+      /* Try to fallback on autoaudiosink */
+      audio_sink = gst_element_factory_make ("autoaudiosink", "audio-sink");
     }
   } else {
     audio_sink = gst_element_factory_make ("fakesink", "audio-fake-sink");
@@ -3860,6 +3862,8 @@ bacon_video_widget_new (int width, int height,
     video_sink = gst_element_factory_make ("gconfvideosink", "video-sink");
     if (video_sink == NULL) {
       g_warning ("Could not create element 'gconfvideosink'");
+      /* Try to fallback on ximagesink */
+      video_sink = gst_element_factory_make ("ximagesink", "video-sink");
     }
 /* FIXME: April fool's day puzzle */
 #if 0
@@ -3911,14 +3915,24 @@ bacon_video_widget_new (int width, int height,
     gst_element_set_state (video_sink, GST_STATE_READY);
     success = poll_for_state_change (bvw, video_sink, GST_STATE_READY, err);
     if (!success) {
+      /* Drop this video sink */
+      gst_element_set_state (video_sink, GST_STATE_NULL);
+      gst_object_unref (video_sink);
+      /* Try again with ximagesink */
+      video_sink = gst_element_factory_make ("ximagesink", "video-sink");
+      gst_element_set_bus (video_sink, bvw->priv->bus);
+      gst_element_set_state (video_sink, GST_STATE_READY);
+      success = poll_for_state_change (bvw, video_sink, GST_STATE_READY, err);
+      if (!success) {
       if (err && !*err) {
-	g_warning ("Should have gotten an error message, please file a bug.");
-	g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
-		     _("Failed to open video output. It may not be available. "
-		       "Please select another video output in the Multimedia "
-		       "Systems Selector."));
+        g_warning ("Should have gotten an error message, please file a bug.");
+        g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+             _("Failed to open video output. It may not be available. "
+               "Please select another video output in the Multimedia "
+               "Systems Selector."));
       }
-      goto sink_error;
+        goto sink_error;
+      }
     }
   } else {
     g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
