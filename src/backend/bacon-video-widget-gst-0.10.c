@@ -1,6 +1,6 @@
 /* 
  * Copyright (C) 2003-2004 the Gstreamer project
- * 	Julien Moutte <julien@moutte.net>
+ *      Julien Moutte <julien@moutte.net>
  *      Ronald Bultje <rbultje@ronald.bitfreak.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -2488,14 +2488,14 @@ bacon_video_widget_set_show_cursor (BaconVideoWidget * bvw,
   
   bvw->priv->cursor_shown = show_cursor;
   
-  if (!bvw->priv->video_window) {
+  if (!GTK_WIDGET (bvw)->window) {
     return;
   }
 
   if (show_cursor == FALSE) {
-    totem_gdk_window_set_invisible_cursor (bvw->priv->video_window);
+    totem_gdk_window_set_invisible_cursor (GTK_WIDGET (bvw)->window);
   } else {
-    gdk_window_set_cursor (bvw->priv->video_window, NULL);
+    gdk_window_set_cursor (GTK_WIDGET (bvw)->window, NULL);
   }
 }
 
