@@ -1,6 +1,12 @@
 2006-01-22  Julien MOUTTE  <julien@moutte.net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_set_logo): Don't shrink the toplevel window
+	when setting logo. This is not very user friendly. Fixes #317734.
+
+2006-01-22  Julien MOUTTE  <julien@moutte.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bacon_video_widget_get_video_property),
 	(bacon_video_widget_set_video_property), (bacon_video_widget_new):
 	If for whatever reason GConf sinks aren't available or can't

@@ -2350,7 +2350,6 @@ bacon_video_widget_set_logo (BaconVideoWidget * bvw, gchar * filename)
   } else {
     gint w, h;
 
-    shrink_toplevel (bvw);
     get_media_size (bvw, &w, &h);
     totem_widget_set_preferred_size (GTK_WIDGET (bvw), w, h);
   }
