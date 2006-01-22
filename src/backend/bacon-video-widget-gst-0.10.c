@@ -17,9 +17,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * $Id$
- *
- *
  * The Totem project hereby grant permission for non-gpl compatible GStreamer
  * plugins to be used and distributed together with GStreamer and Totem. This
  * permission is above and beyond the permissions granted by the GPL license
@@ -175,6 +172,8 @@ struct BaconVideoWidgetPrivate
   GstBus                      *bus;
   gulong                       sig_bus_sync;
   gulong                       sig_bus_async;
+
+  BvwUseType                   use_type;
 };
 
 static void bacon_video_widget_set_property (GObject * object,
@@ -1054,8 +1053,15 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       break;
     }
 
-    case GST_MESSAGE_DURATION:
-      /* FIXME: should we do something on duration? */
+    case GST_MESSAGE_DURATION: {
+      /* force _get_stream_length() to do new duration query */
+      bvw->priv->stream_length = 0;
+      if (bacon_video_widget_get_stream_length (bvw) == 0) {
+        GST_DEBUG ("Failed to query duration after DURATION message?!");
+      }
+      break;
+    }
+
     case GST_MESSAGE_CLOCK_PROVIDE:
     case GST_MESSAGE_CLOCK_LOST:
     case GST_MESSAGE_NEW_CLOCK:
@@ -3400,6 +3406,25 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget * bvw,
   return;
 }
 
+static void
+bacon_video_widget_process_pending_tag_messages (BaconVideoWidget * bvw)
+{
+  GstMessageType events;
+  GstMessage *msg;
+  GstBus *bus;
+    
+  /* process any pending tag messages on the bus NOW, so we can get to
+   * the information without/before giving control back to the main loop */
+
+  /* application message is for stream-info */
+  events = GST_MESSAGE_TAG | GST_MESSAGE_DURATION | GST_MESSAGE_APPLICATION;
+  bus = gst_element_get_bus (bvw->priv->play);
+  while ((msg = gst_bus_poll (bus, events, 0))) {
+    gst_bus_async_signal_func (bus, msg, NULL);
+  }
+  gst_object_unref (bus);
+}
+
 void
 bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
 				 BaconVideoWidgetMetadataType type,
@@ -3421,20 +3446,7 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
     gst_element_get_state (bvw->priv->play, NULL, NULL, -1);
   }
 
-  /* process any pending tag messages on the bus NOW */
-  {
-    GstMessageType events;
-    GstMessage *msg;
-    GstBus *bus;
-    
-    /* application message is for stream-info */
-    events = GST_MESSAGE_TAG | GST_MESSAGE_DURATION | GST_MESSAGE_APPLICATION;
-	bus = gst_element_get_bus (bvw->priv->play);
-	while ((msg = gst_bus_poll (bus, events, 0))) {
-		gst_bus_async_signal_func (bus, msg, NULL);
-	}
-	gst_object_unref (bus);
-  }
+  bacon_video_widget_process_pending_tag_messages (bvw);
 
   switch (type)
     {
@@ -3482,6 +3494,14 @@ bacon_video_widget_can_get_frames (BaconVideoWidget * bvw, GError ** error)
     return FALSE;
   }
 
+  /* when used as thumbnailer, wait for pending seeks to complete and
+   * make sure we have processed any changed stream-info we posted on
+   * the bus and any other meta data */
+  if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE) {
+    gst_element_get_state (bvw->priv->play, NULL, NULL, -1);
+    bacon_video_widget_process_pending_tag_messages (bvw);
+  }
+
   /* check for video */
   if (!bvw->priv->media_has_video) {
     g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC,
@@ -3500,13 +3520,24 @@ destroy_pixbuf (guchar *pix, gpointer data)
 GdkPixbuf *
 bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
 {
+  GstStructure *s;
   GstBuffer *buf = NULL;
   GdkPixbuf *pixbuf;
   GstCaps *to_caps;
+  gint outwidth = 0;
+  gint outheight = 0;
 
   g_return_val_if_fail (bvw != NULL, NULL);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), NULL);
+
+  /* when used as thumbnailer, wait for pending seeks to complete and
+   * make sure we have processed any changed stream-info we posted on
+   * the bus and any other meta data */
+  if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE) {
+    gst_element_get_state (bvw->priv->play, NULL, NULL, -1);
+    bacon_video_widget_process_pending_tag_messages (bvw);
+  }
 
   /* no video info */
   if (!bvw->priv->video_width || !bvw->priv->video_height) {
@@ -3517,9 +3548,6 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
 
   /* get frame */
   g_object_get (bvw->priv->play, "frame", &buf, NULL);
-
-  /* FIXME: remove this ref once we require at least a core >= 0.10.1 */
-  gst_buffer_ref (buf);
 
   if (!buf) {
     GST_DEBUG ("Could not take screenshot: %s", "no last video frame");
@@ -3537,8 +3565,9 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
   to_caps = gst_caps_new_simple ("video/x-raw-rgb",
       "bpp", G_TYPE_INT, 24,
       "depth", G_TYPE_INT, 24,
-      "width", G_TYPE_INT, bvw->priv->video_width,
-      "height", G_TYPE_INT, bvw->priv->video_height,
+      /* Note: we don't ask for a specific width/height here, so that
+       * videoscale can adjust dimensions from a non-1/1 pixel aspect
+       * ratio to a 1/1 pixel-aspect-ratio */
       "framerate", GST_TYPE_FRACTION, 
       bvw->priv->video_fps_n, bvw->priv->video_fps_d,
       "pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
@@ -3562,12 +3591,22 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
     return NULL;
   }
 
+  if (!GST_BUFFER_CAPS (buf)) {
+    GST_DEBUG ("Could not take screenshot: %s", "no caps on output buffer");
+    g_warning ("Could not take screenshot: %s", "no caps on output buffer");
+    return NULL;
+  }
+
+  s = gst_caps_get_structure (GST_BUFFER_CAPS (buf), 0);
+  gst_structure_get_int (s, "width", &outwidth);
+  gst_structure_get_int (s, "height", &outheight);
+  g_return_val_if_fail (outwidth > 0 && outheight > 0, FALSE);
+
   /* create pixbuf from that - use our own destroy function */
   pixbuf = gdk_pixbuf_new_from_data (GST_BUFFER_DATA (buf),
 			GDK_COLORSPACE_RGB, FALSE,
-			8, bvw->priv->video_width,
-			bvw->priv->video_height,
-			GST_ROUND_UP_4 (bvw->priv->video_width * 3),
+			8, outwidth, outheight,
+			GST_ROUND_UP_4 (outwidth * 3),
 			destroy_pixbuf, buf);
 
   if (!pixbuf) {
@@ -3807,7 +3846,9 @@ bacon_video_widget_new (int width, int height,
 
   bvw = BACON_VIDEO_WIDGET (g_object_new
                             (bacon_video_widget_get_type (), NULL));
-  
+
+  bvw->priv->use_type = type;
+
   bvw->priv->play = gst_element_factory_make ("playbin", "play");
   if (!bvw->priv->play) {
     g_set_error (err, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,

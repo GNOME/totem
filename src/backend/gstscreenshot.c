@@ -61,9 +61,11 @@ save_result (GstElement * sink, GstBuffer * buf, GstPad * pad, gpointer data)
       *p_buf, GST_BUFFER_CAPS (*p_buf));
 }
 
+/* videoscale is here to correct for the pixel-aspect-ratio for us */
 #define SCREENSHOT_CONVERSION_PIPELINE \
   "   fakesrc name=src signal-handoffs=true "  \
   " ! ffmpegcolorspace "                       \
+  " ! videoscale "                             \
   " ! capsfilter name=capsfilter "             \
   " ! fakesink name=sink signal-handoffs=true "
 
