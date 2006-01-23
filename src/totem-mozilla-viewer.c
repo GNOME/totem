@@ -76,6 +76,7 @@ typedef struct _TotemEmbedded {
 	/* XEmbed */
 	gboolean embedded_done;
 } TotemEmbedded;
+
 G_DEFINE_TYPE (TotemEmbedded, totem_embedded, G_TYPE_OBJECT);
 static void totem_embedded_class_init (TotemEmbeddedClass *klass) { }
 static void totem_embedded_init (TotemEmbedded *emb) { }
@@ -206,6 +207,37 @@ totem_embedded_stop (TotemEmbedded *emb, GError **err)
 	return TRUE;
 }
 
+static GdkWindow *
+totem_gtk_plug_get_toplevel (GtkPlug *plug)
+{
+	Window root, parent, *children;
+	guint nchildren;
+	GdkNativeWindow xid;
+
+	g_return_val_if_fail (GTK_IS_PLUG (plug), NULL);
+
+	xid = gtk_plug_get_id (plug);
+
+	do
+	{
+		if (XQueryTree (GDK_DISPLAY (), xid, &root,
+					&parent, &children, &nchildren) == 0)
+		{
+			g_warning ("Couldn't find window manager window");
+			return None;
+		}
+
+		if (root == parent) {
+			GdkWindow *toplevel;
+			toplevel = gdk_window_foreign_new (xid);
+			return toplevel;
+		}
+
+		xid = parent;
+	}
+	while (TRUE);
+}
+
 static void
 on_about1_activate (GtkButton *button, TotemEmbedded *emb)
 {
@@ -247,17 +279,30 @@ on_about1_activate (GtkButton *button, TotemEmbedded *emb)
 	g_free (backend_version);
 	g_free (description);
 
+	if (GTK_IS_PLUG (emb->window)) {
+		GdkWindow *toplevel;
+
+		gtk_widget_realize (emb->about);
+		toplevel = totem_gtk_plug_get_toplevel (GTK_PLUG (emb->window));
+		if (toplevel != NULL) {
+			gdk_window_set_transient_for
+				(GTK_WIDGET (emb->about)->window, toplevel);
+			gdk_window_unref (toplevel);
+		}
+	} else {
+		gtk_window_set_transient_for (GTK_WINDOW (emb->about),
+				GTK_WINDOW (emb->window));
+	}
+
 	if (pixbuf != NULL)
 		gdk_pixbuf_unref (pixbuf);
 
 	g_object_add_weak_pointer (G_OBJECT (emb->about),
 			(gpointer *)&emb->about);
-	gtk_window_set_transient_for (GTK_WINDOW (emb->about),
-			GTK_WINDOW (emb->window));
 	g_signal_connect (G_OBJECT (emb->about), "response",
 			G_CALLBACK (gtk_widget_destroy), NULL);
 
-	gtk_widget_show(emb->about);
+	gtk_widget_show (emb->about);
 }
 
 static void
@@ -480,9 +525,9 @@ int main (int argc, char **argv)
 	TotemEmbedded *emb;
 	DBusGProxy *proxy;
 	DBusGConnection *conn;
+	Window xid;
 	int i;
 	guint res;
-	Window xid;
 	gchar *svcname;
 	GError *e = NULL;
 
@@ -494,7 +539,6 @@ int main (int argc, char **argv)
 
 	g_thread_init (NULL);
 	bacon_video_widget_init_backend (NULL, NULL);
-	//gdk_threads_init ();
 
 	gtk_init (&argc, &argv);
 	dbus_g_object_type_install_info (TOTEM_TYPE_EMBEDDED,
@@ -570,12 +614,14 @@ int main (int argc, char **argv)
 
 		/* The miraculous XEMBED protocol */
 		window = gtk_plug_new ((GdkNativeWindow)xid);
-		gtk_signal_connect(GTK_OBJECT(window), "embedded",
+		gtk_signal_connect (GTK_OBJECT(window), "embedded",
 				G_CALLBACK (embedded), NULL);
 		gtk_widget_realize (window);
 
 		emb->window = window;
 	} else {
+		if (emb->filename == NULL)
+			return 1;
 		/* Stand-alone version */
 		emb->window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	}

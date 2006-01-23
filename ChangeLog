@@ -1,3 +1,10 @@
+2006-01-23  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-mozilla-viewer.c: (totem_gtk_plug_get_toplevel),
+	(on_about1_activate), (main): Add a totem_gtk_plug_get_toplevel ()
+	function, and correctly set the about dialogue as a transient for the
+	Mozilla toplevel window (Closes: #323759)
+
 2006-01-22  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c: (bvw_bus_message_cb),
