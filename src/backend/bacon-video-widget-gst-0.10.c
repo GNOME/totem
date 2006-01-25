@@ -377,45 +377,37 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
 
   /* Start with a nice black canvas */
   gdk_draw_rectangle (widget->window, widget->style->black_gc, TRUE, 0, 0,
-		      widget->allocation.width, widget->allocation.height);
+      widget->allocation.width, widget->allocation.height);
 
   if (bvw->priv->logo_mode) {
     if (bvw->priv->logo_pixbuf != NULL) {
       /* draw logo here */
-      GdkPixbuf *logo;
-      gfloat width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf),
-             height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
+      GdkPixbuf *logo = NULL;
+      gint s_width, s_height, w_width, w_height;
       gfloat ratio;
-
-      if ((gfloat) widget->allocation.width /
-          gdk_pixbuf_get_width (bvw->priv->logo_pixbuf) >
-          (gfloat) widget->allocation.height /
-          gdk_pixbuf_get_height (bvw->priv->logo_pixbuf)) {
-        ratio = (gfloat) widget->allocation.height /
-  	      gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
+      
+      s_width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
+      s_height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
+      w_width = widget->allocation.width;
+      w_height = widget->allocation.height;
+      
+      if ((gfloat) w_width / s_width > (gfloat) w_height / s_height) {
+        ratio = (gfloat) w_height / s_height;
       } else {
-        ratio = (gfloat) widget->allocation.width /
-  	      gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
+        ratio = (gfloat) w_width / s_width;
       }
-      width *= ratio;
-      height *= ratio;
-
+      
+      s_width *= ratio;
+      s_height *= ratio;
+      
       logo = gdk_pixbuf_scale_simple (bvw->priv->logo_pixbuf,
-  				    width, height,
-  				    GDK_INTERP_BILINEAR);
+          s_width, s_height, GDK_INTERP_BILINEAR);
 
-      gdk_draw_pixbuf (GDK_DRAWABLE (bvw->priv->video_window),
-  		     widget->style->fg_gc[0], logo,
-  		     0, 0, 0, 0, width, height,
-  		     GDK_RGB_DITHER_NONE, 0, 0);
+      gdk_draw_pixbuf (widget->window, widget->style->fg_gc[0], logo,
+          0, 0, (w_width - s_width) / 2, (w_height - s_height) / 2,
+          s_width, s_height, GDK_RGB_DITHER_NONE, 0, 0);
 
       gdk_pixbuf_unref (logo);
-    } else {
-      /* logo mode, but no pixbuf yet -- just paint it black */
-      gdk_draw_rectangle (bvw->priv->video_window, widget->style->black_gc, 
-                         TRUE, 0, 0,
-                         bvw->priv->video_window_allocation.width,
-                         bvw->priv->video_window_allocation.height);
     }
   } else {
     /* no logo, pass the expose to gst */
@@ -564,12 +556,12 @@ bacon_video_widget_button_release (GtkWidget *widget,
 
 static void
 bacon_video_widget_size_request (GtkWidget * widget,
-				 GtkRequisition * requisition)
+    GtkRequisition * requisition)
 {
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
 
-  requisition->width = bvw->priv->init_width;
-  requisition->height = bvw->priv->init_height;
+  requisition->width = 240;
+  requisition->height = 180;
 }
 
 static void
@@ -612,8 +604,9 @@ bacon_video_widget_size_allocate (GtkWidget * widget,
     bvw->priv->video_window_allocation.y = (allocation->height - height) / 2;
     gdk_window_move_resize (bvw->priv->video_window,
                             (allocation->width - width) / 2,
-			    (allocation->height - height) / 2,
+                            (allocation->height - height) / 2,
                             width, height);
+    gtk_widget_queue_draw (widget);
   }
 }
 
@@ -2353,11 +2346,9 @@ bacon_video_widget_set_logo (BaconVideoWidget * bvw, gchar * filename)
     g_warning ("An error occurred trying to open logo %s: %s",
                filename, error->message);
     g_error_free (error);
-  } else {
-    gint w, h;
-
-    get_media_size (bvw, &w, &h);
-    totem_widget_set_preferred_size (GTK_WIDGET (bvw), w, h);
+  }
+  else {
+    bacon_video_widget_set_logo_mode (bvw, bvw->priv->logo_mode);
   }
 }
 
@@ -2367,9 +2358,17 @@ bacon_video_widget_set_logo_mode (BaconVideoWidget * bvw, gboolean logo_mode)
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-  /* this probably tells us to show logo or not? We already know
-   * that from the media...? */
   bvw->priv->logo_mode = logo_mode;
+  
+  if (logo_mode) {
+    gdk_window_hide (bvw->priv->video_window);
+  }
+  else {
+    gdk_window_show (bvw->priv->video_window);
+  }
+  
+  /* Queue a redraw of the widget */
+  gtk_widget_queue_draw (GTK_WIDGET (bvw));
 }
 
 gboolean
