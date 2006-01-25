@@ -203,6 +203,9 @@ totem_action_exit (Totem *totem)
 				bacon_video_widget_get_volume (totem->bvw),
 				NULL);
 
+	if (totem->gc)
+		g_object_unref (G_OBJECT (totem->gc));
+
 	if (totem->playlist)
 		gtk_widget_destroy (GTK_WIDGET (totem->playlist));
 	if (totem->win)

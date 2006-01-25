@@ -452,6 +452,9 @@ bacon_video_widget_finalize (GObject *object)
 {
 	BaconVideoWidget *bvw = (BaconVideoWidget *) object;
 
+	if (bvw->priv->gc)
+		g_object_unref (G_OBJECT (bvw->priv->gc));
+
 	if (bvw->priv->xine != NULL) {
 		xine_plugins_garbage_collector (bvw->priv->xine);
 		xine_exit (bvw->priv->xine);

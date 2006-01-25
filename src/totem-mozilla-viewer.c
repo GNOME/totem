@@ -26,6 +26,7 @@
 
 #include <gdk/gdkx.h>
 #include <glade/glade.h>
+#include <gconf/gconf-client.h>
 
 #include <dbus/dbus-glib.h>
 #include <sys/types.h>
@@ -419,6 +420,8 @@ totem_embedded_add_children (TotemEmbedded *emb)
 {
 	GtkWidget *child, *container, *pp_button, *vbut;
 	GError *err = NULL;
+	GConfClient *gc;
+	int volume;
 
 	emb->xml = totem_interface_load_with_root ("mozilla-viewer.glade",
 			"vbox1", _("Plugin"), TRUE,
@@ -466,9 +469,13 @@ totem_embedded_add_children (TotemEmbedded *emb)
 	g_signal_connect (G_OBJECT (pp_button), "clicked",
 			  G_CALLBACK (on_play_pause), emb);
 
+	gc = gconf_client_get_default ();
+	volume = gconf_client_get_int (gc, GCONF_PREFIX"/volume", NULL);
+	g_object_unref (G_OBJECT (gc));
+
+	bacon_video_widget_set_volume (emb->bvw, volume);
 	vbut = glade_xml_get_widget (emb->xml, "volume_button");
-	bacon_volume_button_set_value (BACON_VOLUME_BUTTON (vbut),
-			bacon_video_widget_get_volume (emb->bvw));
+	bacon_volume_button_set_value (BACON_VOLUME_BUTTON (vbut), volume);
 	g_signal_connect (G_OBJECT (vbut), "value-changed",
 			  G_CALLBACK (cb_vol), emb);
 
