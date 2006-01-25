@@ -1,3 +1,9 @@
+2006-01-24  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/backend/bacon-video-widget-gst.c: (bacon_video_widget_new):
+	  s/g_free/g_object_unref/ in error case (#326353). Patch contributed
+	  by Marco Barisione <marco.bari@vene.ws>.
+
 2006-01-23  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-mozilla-viewer.c: (totem_gtk_plug_get_toplevel),
