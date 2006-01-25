@@ -1,3 +1,11 @@
+2006-01-25  Bastien Nocera  <hadess@hadess.net>
+
+	* src/Makefile.am: don't link the totem plugin against the bacon
+	message connection, as it's not used anymore
+	* src/totem-mozilla-plugin.cpp: Avoid losing data when the buffer
+	to the plugin viewer is full, patch by Ronald Bultje
+	<rbultje@ronald.bitfreak.net> (Closes: #328379)
+
 2006-01-25  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/backend/bacon-video-widget-gst.c: (bacon_video_widget_new):

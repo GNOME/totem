@@ -23,6 +23,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <unistd.h>
@@ -442,6 +443,8 @@ static NPError totem_plugin_destroy_stream (NPP instance, NPStream* stream,
 static int32 totem_plugin_write_ready (NPP instance, NPStream *stream)
 {
 	TotemPlugin *plugin;
+	fd_set fds;
+	struct timeval t = { 0 , 0 };
 
 	D("plugin_write_ready");
 
@@ -452,8 +455,12 @@ static int32 totem_plugin_write_ready (NPP instance, NPStream *stream)
 
 	plugin = (TotemPlugin *) instance->pdata;
 
-	if (plugin->send_fd >0)
+	FD_ZERO (&fds);
+	FD_SET (plugin->send_fd, &fds);
+	if (select (plugin->send_fd + 1, NULL, &fds, NULL, &t) > 0 &&
+	    plugin->send_fd > 0) {
 		return (8*1024);
+	}
 
 	return 0;
 }
@@ -480,10 +487,9 @@ static int32 totem_plugin_write (NPP instance, NPStream *stream, int32 offset,
 	if (plugin->send_fd < 0)
 		return -1;
 
-//	g_message ("write %d %p %d", plugin->send_fd, buffer, len);
 	ret = write (plugin->send_fd, buffer, len);
 	if (ret < 0) {
-		g_message ("ret %d", ret);
+		D("ret %d: [%d]%s", ret, errno, g_strerror (errno));
 	}
 
 	return ret;
@@ -503,7 +509,7 @@ static void totem_plugin_stream_as_file (NPP instance, NPStream *stream,
 	if (plugin == NULL)
 		return;
 
-	printf("plugin_stream_as_file\n");
+	D("plugin_stream_as_file\n");
 }
 
 static void
@@ -526,7 +532,7 @@ totem_plugin_get_value (NPP instance, NPPVariable variable,
 	TotemPlugin *plugin;
 	NPError err = NPERR_NO_ERROR;
 
-	printf ("plugin_get_value %d\n", variable);
+	D("plugin_get_value %d\n", variable);
 
 	switch (variable) {
 	case NPPVpluginNameString:
@@ -600,8 +606,6 @@ static struct {
 	{ "video/x-ms-asf-plugin", "asf, wmv", "video/x-ms-asf" },
 	{ "video/x-ms-wmv", "wmv", "video/x-ms-asf" },
 	{ "application/ogg", "ogg", NULL },
-	{ "application/x-google-vlc-plugin", "", "Google VLC plugin" },
-	{ "application/x-vlc-plugin", "", "VideoLAN plugin" }
 };
 #define NUM_MIME_TYPES G_N_ELEMENTS(mime_types)
 
@@ -646,7 +650,7 @@ NPError NP_Initialize (NPNetscapeFuncs * moz_funcs,
 	PRBool supportsXEmbed = PR_FALSE;
 	NPNToolkitType toolkit = (NPNToolkitType) 0;
 
-	printf ("NP_Initialize\n");
+	D("NP_Initialize\n");
 
 	/* Do we support XEMBED? */
 	err = CallNPN_GetValueProc (moz_funcs->getvalue, NULL,

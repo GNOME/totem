@@ -158,8 +158,6 @@ libtotem_mozilla_la_SOURCES = \
 	totem-mozilla-scriptable.h \
 	totem-mozilla-scriptable.cpp \
 	totem-mozilla-options.h
-libtotem_mozilla_la_LIBADD = \
-	libbaconmessageconnection.la
 
 totem-mozilla-interface.h: totem-mozilla-interface.xml
 	$(DBUS_BIND) --prefix=totem_embedded --mode=glib-server \
