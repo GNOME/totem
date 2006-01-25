@@ -3477,7 +3477,7 @@ bacon_video_widget_new (int width, int height,
 	  case GST_RESOURCE_ERROR_NOT_FOUND:
 	    g_set_error (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
 		_("The requested audio output was not found. "
-		  "Please select another audio output in the Multimedia Systems Selector"));
+		  "Please select another audio output in the Multimedia Systems Selector."));
 	    break;
 	  default:
 	    break;
@@ -3492,7 +3492,7 @@ bacon_video_widget_new (int width, int height,
 	} else {
 	  g_set_error (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
 	      _("Could not find the audio output. "
-		"You may need to install additional GStreamer plugins, or select another audio output in the Multimedia Systems Selector"));
+		"You may need to install additional GStreamer plugins, or select another audio output in the Multimedia Systems Selector."));
 	}
       }
       if (local_err)
