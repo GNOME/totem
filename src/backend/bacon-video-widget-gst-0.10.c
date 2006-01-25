@@ -1147,7 +1147,7 @@ got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * bvw)
       GST_TIME_ARGS (bvw->priv->stream_length),
       (seekable) ? "TRUE" : "FALSE");
 */
-
+  
   g_signal_emit (bvw, bvw_signals[SIGNAL_TICK], 0,
                  bvw->priv->current_time, bvw->priv->stream_length,
                  bvw->priv->current_position,
@@ -1195,7 +1195,7 @@ bvw_query_timeout (BaconVideoWidget *bvw)
   GstFormat fmt = GST_FORMAT_TIME;
   gint64 prev_len = -1;
   gint64 pos = -1, len = -1;
-
+  
   /* check length/pos of stream */
   prev_len = bvw->priv->stream_length;
   if (gst_element_query_duration (bvw->priv->play, &fmt, &len)) {
@@ -1211,8 +1211,7 @@ bvw_query_timeout (BaconVideoWidget *bvw)
 
   if (gst_element_query_position (bvw->priv->play, &fmt, &pos)) {
     if (pos != -1 && fmt == GST_FORMAT_TIME) {
-      got_time_tick (GST_ELEMENT (bvw->priv->play),
-		     pos, bvw);
+      got_time_tick (GST_ELEMENT (bvw->priv->play), pos, bvw);
     }
   } else {
     GST_DEBUG ("could not get position");
@@ -2213,13 +2212,15 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **gerro
 
   GST_LOG ("Seeking to %" GST_TIME_FORMAT, GST_TIME_ARGS (time * GST_MSECOND));
 
+  /* Emit a time tick of where we are going, we are paused */
+  got_time_tick (bvw->priv->play, time * GST_MSECOND, bvw);
+  
   gst_element_seek (bvw->priv->play, 1.0,
-		    GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT,
-		    GST_SEEK_TYPE_SET, time * GST_MSECOND,
-		    GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
+      GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT,
+      GST_SEEK_TYPE_SET, time * GST_MSECOND,
+      GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
 
-  gst_element_get_state (bvw->priv->play, NULL, NULL,
-	          100 * GST_MSECOND);
+  gst_element_get_state (bvw->priv->play, NULL, NULL, 100 * GST_MSECOND);
 
   return TRUE;
 }
@@ -2251,6 +2252,9 @@ bacon_video_widget_stop (BaconVideoWidget * bvw)
 
   GST_LOG ("Stopping");
   gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_NULL);
+  
+  /* Reset position to 0 when stopping */
+  got_time_tick (GST_ELEMENT (bvw->priv->play), 0, bvw);
 }
 
 void
