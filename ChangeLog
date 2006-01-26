@@ -1,3 +1,8 @@
+2006-01-26  Jan Schmidt  <thaytan@mad.scientist.com>
+
+	* src/totem-mozilla-viewer.c: (totem_embedded_open):
+	Don't dereference a NULL GError.
+
 2006-01-26  Bastien Nocera  <hadess@hadess.net>
 
 	* data/mime-type-list.txt: add the application/smil and
