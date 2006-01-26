@@ -1,3 +1,13 @@
+2006-01-26  Bastien Nocera  <hadess@hadess.net>
+
+	* data/mime-type-list.txt: add the application/smil and
+	application/x-smil mime-types
+	* src/plparse/totem-pl-parser.c: (parse_smil_entry),
+	(totem_pl_parser_parse_internal): support the application/smil,
+	also look for the "audio" element in SMIL files, ignore files
+	of certain mime-types only after we've checked whether we supported
+	that type (Closes: #328720)
+
 2006-01-25  Julien MOUTTE  <julien@moutte.net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c: (got_time_tick),

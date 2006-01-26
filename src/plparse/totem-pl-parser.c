@@ -1274,7 +1274,7 @@ parse_smil_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 			continue;
 
 		/* ENTRY should only have one ref and one title nodes */
-		if (g_ascii_strcasecmp ((char *)node->name, "video") == 0) {
+		if (g_ascii_strcasecmp ((char *)node->name, "video") == 0 || g_ascii_strcasecmp ((char *)node->name, "audio") == 0) {
 			url = xmlGetProp (node, (guchar *)"src");
 			title = xmlGetProp (node, (guchar *)"title");
 
@@ -1535,6 +1535,7 @@ static PlaylistTypes special_types[] = {
 	{ "audio/x-ms-asx", totem_pl_parser_add_asx },
 	{ "audio/x-scpls", totem_pl_parser_add_pls },
 	{ "application/x-smil", totem_pl_parser_add_smil },
+	{ "application/smil", totem_pl_parser_add_smil },
 	{ "application/x-gnome-app-info", totem_pl_parser_add_desktop },
 	{ "application/x-desktop", totem_pl_parser_add_desktop },
 	{ "x-directory/normal", totem_pl_parser_add_directory },
@@ -1640,6 +1641,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	gpointer data = NULL;
 	TotemPlParserResult ret = FALSE;
 	char *super;
+	gboolean found;
 
 	if (parser->priv->recurse_level > RECURSE_LEVEL_MAX)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
@@ -1657,11 +1659,35 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 		return TOTEM_PL_PARSER_RESULT_IGNORED;
 	}
 
+	parser->priv->recurse_level++;
+
+	found = FALSE;
+	for (i = 0; i < G_N_ELEMENTS(special_types); i++) {
+		if (strcmp (special_types[i].mimetype, mimetype) == 0) {
+			ret = (* special_types[i].func) (parser, url, data);
+			found = TRUE;
+			break;
+		}
+	}
+
+	for (i = 0; i < G_N_ELEMENTS(dual_types) && found == FALSE; i++) {
+		if (strcmp (dual_types[i].mimetype, mimetype) == 0) {
+			if (data == NULL) {
+				mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data);
+			}
+			ret = (* dual_types[i].func) (parser, url, data);
+			break;
+		}
+	}
+
+	g_free (data);
+
+	parser->priv->recurse_level--;
+
 	super = gnome_vfs_get_supertype_from_mime_type (mimetype);
 	for (i = 0; i < G_N_ELEMENTS (ignore_types); i++) {
 		if (gnome_vfs_mime_type_is_supertype (ignore_types[i].mimetype) != FALSE) {
 			if (strcmp (super, ignore_types[i].mimetype) == 0) {
-				g_free (data);
 				g_free (super);
 				return TOTEM_PL_PARSER_RESULT_IGNORED;
 			}
@@ -1670,34 +1696,12 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 
 			eq = gnome_vfs_mime_type_get_equivalence (mimetype, ignore_types[i].mimetype);
 			if (eq == GNOME_VFS_MIME_PARENT || eq == GNOME_VFS_MIME_IDENTICAL) {
-				g_free (data);
+				g_free (super);
 				return TOTEM_PL_PARSER_RESULT_IGNORED;
 			}
 		}
 	}
-
-	parser->priv->recurse_level++;
-
-	for (i = 0; i < G_N_ELEMENTS(special_types); i++) {
-		if (strcmp (special_types[i].mimetype, mimetype) == 0) {
-			ret = (* special_types[i].func) (parser, url, data);
-			g_free (data);
-			break;
-		}
-	}
-
-	for (i = 0; i < G_N_ELEMENTS(dual_types); i++) {
-		if (strcmp (dual_types[i].mimetype, mimetype) == 0) {
-			if (data == NULL) {
-				mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data);
-			}
-			ret = (* dual_types[i].func) (parser, url, data);
-			g_free (data);
-			break;
-		}
-	}
-
-	parser->priv->recurse_level--;
+	g_free (super);
 
 	if (ret != TOTEM_PL_PARSER_RESULT_SUCCESS && parser->priv->fallback) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
