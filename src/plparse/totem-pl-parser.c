@@ -1646,6 +1646,13 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	if (parser->priv->recurse_level > RECURSE_LEVEL_MAX)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
+	/* Shouldn't gnome-vfs have a list of schemes it supports? */
+	if (g_str_has_prefix (url, "mms") != FALSE
+			|| g_str_has_prefix (url, "rtsp") != FALSE) {
+		totem_pl_parser_add_one_url (parser, url, NULL);
+		return TOTEM_PL_PARSER_RESULT_SUCCESS;
+	}
+
 	mimetype = gnome_vfs_mime_type_from_name (url);
 	if (mimetype == NULL || strcmp (GNOME_VFS_MIME_TYPE_UNKNOWN, mimetype) == 0) {
 		mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data);

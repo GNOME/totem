@@ -1,5 +1,11 @@
 2006-01-27  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_parse_internal):
+	Fix a crash when gnome-vfs doesn't support the URI scheme, and we
+	can't get a mime-type from data afterwards (Closes: #328828)
+
+2006-01-27  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c: (xine_try_error):
 	compile with glib 2.6.x which doesn't have g_async_queue_sort
 
