@@ -1426,6 +1426,7 @@ xine_event (void *user_data, const xine_event_t *event)
 	}
 }
 
+#if GLIB_CHECK_VERSION(2,8,0)
 static int
 bacon_video_widget_sort_queue (gconstpointer a, gconstpointer b, gpointer data)
 {
@@ -1440,6 +1441,7 @@ bacon_video_widget_sort_queue (gconstpointer a, gconstpointer b, gpointer data)
 		return 1;
 	return -1;
 }
+#endif /* GLIB_CHECK_VERSION 2.8.0 */
 
 static void
 xine_try_error (BaconVideoWidget *bvw, gboolean probe_error, GError **error)
@@ -1451,8 +1453,10 @@ xine_try_error (BaconVideoWidget *bvw, gboolean probe_error, GError **error)
 
 	sched_yield ();
 
+#if GLIB_CHECK_VERSION(2,8,0)
 	/* Sort the queue with the errors first */
 	g_async_queue_sort (bvw->priv->queue, bacon_video_widget_sort_queue, bvw);
+#endif
 
 	/* Steal messages from the async queue, if there's an error,
 	 * to use as the error message rather than the crappy errors from
