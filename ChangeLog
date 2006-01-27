@@ -1,3 +1,14 @@
+2006-01-27  Julien MOUTTE  <julien@moutte.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_expose_event), (parse_stream_info),
+	(bacon_video_widget_open_with_subtitle),
+	(bacon_video_widget_set_show_visuals),
+	(bacon_video_widget_set_visuals),
+	(bacon_video_widget_set_visuals_quality): Better handling of 
+	video window's visibility. Change vis on the fly reenabled for
+	the lucky ones with a recent GStreamer 0.10 checkout.
+
 2006-01-26  Jan Schmidt  <thaytan@mad.scientist.com>
 
 	* src/totem-mozilla-viewer.c: (totem_embedded_open):

@@ -378,7 +378,7 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
   /* Start with a nice black canvas */
   gdk_draw_rectangle (widget->window, widget->style->black_gc, TRUE, 0, 0,
       widget->allocation.width, widget->allocation.height);
-
+  
   if (bvw->priv->logo_mode) {
     if (bvw->priv->logo_pixbuf != NULL) {
       /* draw logo here */
@@ -1288,8 +1288,17 @@ parse_stream_info (BaconVideoWidget *bvw)
 
     if (!g_strcasecmp (val->value_nick, "audio")) {
       bvw->priv->media_has_audio = TRUE;
+      if (!bvw->priv->media_has_video) {
+        if (bvw->priv->show_vfx) {
+          gdk_window_show (bvw->priv->video_window);
+        }
+        else {
+          gdk_window_hide (bvw->priv->video_window);
+        }
+      }
     } else if (!g_strcasecmp (val->value_nick, "video")) {
       bvw->priv->media_has_video = TRUE;
+      gdk_window_show (bvw->priv->video_window);
       if (!videopad) {
         g_object_get (info, "object", &videopad, NULL);
       }
@@ -2134,6 +2143,9 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   bvw->priv->stream_length = 0;
   bvw->priv->ignore_messages_mask = 0;
   
+  /* We hide the video window for now. Will show when video of vfx comes up */
+  gdk_window_hide (bvw->priv->video_window);
+  
   /* Visualization settings changed */
   if (bvw->priv->vis_changed) {
     setup_vis (bvw);
@@ -2164,6 +2176,9 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
     g_free (bvw->priv->mrl);
     bvw->priv->mrl = NULL;
   }
+  
+  /* When opening a new media we want to redraw ourselves */
+  gtk_widget_queue_draw (GTK_WIDGET (bvw));
 
   return ret;
 }
@@ -2703,7 +2718,7 @@ bacon_video_widget_set_show_visuals (BaconVideoWidget * bvw,
   bvw->priv->show_vfx = show_visuals;
   bvw->priv->vis_changed = TRUE;
   
-  return TRUE;
+  return FALSE;
 }
 
 static gboolean
@@ -2772,10 +2787,9 @@ bacon_video_widget_set_visuals (BaconVideoWidget * bvw, const char *name)
   
   bvw->priv->vis_element_name = g_strdup (name);
   
-  /* Note that settings have changed */
-  bvw->priv->vis_changed = TRUE;
+  setup_vis (bvw);
   
-  return TRUE;
+  return FALSE;
 }
 
 void
@@ -2790,7 +2804,8 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget * bvw,
     return;
 
   bvw->priv->visq = quality;
-  bvw->priv->vis_changed = TRUE;
+  
+  setup_vis (bvw);
 }
 
 gboolean
