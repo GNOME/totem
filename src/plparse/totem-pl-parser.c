@@ -1105,12 +1105,23 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		if (node->name == NULL)
 			continue;
 
-		/* ENTRY should only have one ref and one title nodes */
+		/* ENTRY can only have one title node but multiple REFs */
 		if (g_ascii_strcasecmp ((char *)node->name, "ref") == 0
 				|| g_ascii_strcasecmp ((char *)node->name, "entryref") == 0) {
-			url = xmlGetProp (node, (guchar *)"href");
-			if (url == NULL)
-				url = xmlGetProp (node, (guchar *)"HREF");
+			unsigned char *tmp;
+
+			tmp = xmlGetProp (node, (guchar *)"href");
+			if (tmp == NULL)
+				tmp = xmlGetProp (node, (guchar *)"HREF");
+			if (tmp == NULL)
+				continue;
+			if (url == NULL || g_str_has_prefix ((char *)tmp, "mms:") != FALSE) {
+				g_free (url);
+				url = tmp;
+			} else {
+				g_free (tmp);
+			}
+
 			continue;
 		}
 
