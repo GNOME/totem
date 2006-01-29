@@ -1,5 +1,20 @@
 New features and significant updates in version...
 
+1.3.90:
+ * Use Ctrl+S as "Take Screenshot..." shortcut
+ * Fix a possible crash on start with multiple totem processes
+ * Support application/smil and application/x-smil mime-types
+ * Better parsing of SMIL playlists
+ * Better parsing of ASX playlists with multiple REF entries per ENTRY
+ * Make the about box parented on the Mozilla window (Mozilla plugin)
+ * Fix data being dropped when streaming from fast servers (Mozilla plugin)
+ * Fix the state of the volume button on startup (Mozilla plugin)
+ * Fix the Subtitles and Audio tracks not being available (xine-lib)
+ * Support on-the-fly visualisation plugins change (GStreamer)
+ * Fallback if the configured output plugins aren't available (GStreamer)
+ * Don't shrink the toplevel window when setting the logo (GStreamer)
+ * Fix video thumbnailing for movies with a non-1/1 aspect ratio
+
 1.3.1:
  * Add a "capabilities" mechanism to the playlist parser library
  * Fix crash when calling the "add to playlist dialogue twice"
