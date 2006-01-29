@@ -220,6 +220,7 @@ INCLUDES = 						\
 	-DGCONF_PREFIX=\""/apps/totem"\"		\
 	-DDATADIR=\""$(datadir)"\"			\
 	-DLIBEXECDIR=\""$(libexecdir)"\"		\
+	-DBINDIR=\""$(bindir)"\"				\
 	-DLOGO_PATH=DATADIR\"\"G_DIR_SEPARATOR_S\"totem\"G_DIR_SEPARATOR_S\"totem_logo.png\"
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(desktop_DATA) $(BUILT_SOURCES) 

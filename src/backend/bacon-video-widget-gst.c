@@ -66,6 +66,10 @@
 #define CONFIG_FILE ".gnome2"G_DIR_SEPARATOR_S"totem_config"
 #define DEFAULT_TITLE _("Totem Video Window")
 
+#ifndef GST_TAG_IMAGE
+#define GST_TAG_IMAGE "image"
+#endif
+
 /* Signals */
 enum
 {
@@ -119,7 +123,7 @@ struct BaconVideoWidgetPrivate
   GstXOverlay *xoverlay;
   GstColorBalance *balance;
 
-  GdkPixbuf *logo_pixbuf;
+  GdkPixbuf *logo_pixbuf, *media_pixbuf;
 
   gboolean media_has_video, media_has_audio;
 
@@ -236,7 +240,10 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
     *width = bvw->priv->video_width;
     *height = bvw->priv->video_height;
   } else {
-    if (bvw->priv->logo_pixbuf != NULL) {
+    if (bvw->priv->media_pixbuf != NULL) {
+      *width = gdk_pixbuf_get_width (bvw->priv->media_pixbuf);
+      *height = gdk_pixbuf_get_height (bvw->priv->media_pixbuf);
+    } else if (bvw->priv->logo_pixbuf != NULL) {
       *width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
       *height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
     } else {
@@ -376,29 +383,25 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
       (bvw->priv->media_has_video ||
        (bvw->priv->vis_element && bvw->priv->show_vfx))) {
     gst_x_overlay_expose (bvw->priv->xoverlay);
-  } else if (bvw->priv->logo_pixbuf != NULL) {
+  } else if (bvw->priv->media_pixbuf != NULL ||
+             bvw->priv->logo_pixbuf != NULL) {
     /* draw logo here */
-    GdkPixbuf *logo;
-    gfloat width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf),
-           height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
+    GdkPixbuf *pb = bvw->priv->media_pixbuf != NULL ? 
+        bvw->priv->media_pixbuf : bvw->priv->logo_pixbuf, *logo;
+    gfloat width = gdk_pixbuf_get_width (pb),
+           height = gdk_pixbuf_get_height (pb);
     gfloat ratio;
 
-    if ((gfloat) widget->allocation.width /
-        gdk_pixbuf_get_width (bvw->priv->logo_pixbuf) >
-        (gfloat) widget->allocation.height /
-        gdk_pixbuf_get_height (bvw->priv->logo_pixbuf)) {
-      ratio = (gfloat) widget->allocation.height /
-	      gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
+    if ((gfloat) widget->allocation.width / width >
+        (gfloat) widget->allocation.height / height) {
+      ratio = (gfloat) widget->allocation.height / height;
     } else {
-      ratio = (gfloat) widget->allocation.width /
-	      gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
+      ratio = (gfloat) widget->allocation.width / width;
     }
     width *= ratio;
     height *= ratio;
 
-    logo = gdk_pixbuf_scale_simple (bvw->priv->logo_pixbuf,
-				    width, height,
-				    GDK_INTERP_BILINEAR);
+    logo = gdk_pixbuf_scale_simple (pb, width, height, GDK_INTERP_BILINEAR);
 
     gdk_draw_pixbuf (GDK_DRAWABLE (bvw->priv->video_window),
 		     widget->style->fg_gc[0], logo,
@@ -884,9 +887,17 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
         }
       case ASYNC_REDIRECT:
 	{
+	  gchar *loc, *root;
+
+	  root = g_strndup (bvw->priv->mrl,
+	                    1 + strrchr (bvw->priv->mrl, '/') - bvw->priv->mrl);
+	  loc = g_strdup_printf ("%s%s", root,
+	                         signal->signal_data.redirect.new_location);
+	  g_free (root);
 	  g_signal_emit (G_OBJECT (bvw), bvw_table_signals[SIGNAL_REDIRECT],
-			 0, signal->signal_data.redirect.new_location);
+			 0, loc);
 	  g_free (signal->signal_data.redirect.new_location);
+	  g_free (loc);
 	  break;
 	}
       default:
@@ -1850,6 +1861,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 {
   gboolean ret;
   gchar buf[256];
+  const GValue *v;
 
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (mrl != NULL, FALSE);
@@ -1911,8 +1923,12 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 
   ret = (gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED) ==
       GST_STATE_SUCCESS);
+  while (g_main_iteration (FALSE));
 
-  if (!ret && !bvw->priv->got_redirect) {
+  if (!ret && !bvw->priv->got_redirect &&
+      !(bvw->priv->tagcache &&
+	gst_tag_list_get_value_index (bvw->priv->tagcache,
+				      GST_TAG_IMAGE, 0))) {
     if (error) {
       if (bvw->priv->last_error) {
 	GError *e = bvw->priv->last_error;
@@ -1962,12 +1978,31 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 
     g_free (bvw->priv->mrl);
     bvw->priv->mrl = NULL;
+  } else if (bvw->priv->tagcache &&
+             (v = gst_tag_list_get_value_index (bvw->priv->tagcache,
+						GST_TAG_IMAGE, 0))) {
+    GstBuffer *b = g_value_get_boxed (v);
+    gint w, h;
+    GdkPixbufLoader *loader = gdk_pixbuf_loader_new ();
+
+    if (gdk_pixbuf_loader_write (loader, GST_BUFFER_DATA (b),
+				 GST_BUFFER_SIZE (b), NULL)) {
+      if ((bvw->priv->media_pixbuf = gdk_pixbuf_loader_get_pixbuf (loader))) {
+	g_object_ref (G_OBJECT (bvw->priv->media_pixbuf));
+
+        shrink_toplevel (bvw);
+        get_media_size (bvw, &w, &h);
+        totem_widget_set_preferred_size (GTK_WIDGET (bvw), w, h);
+      }
+    }
   }
 
   if (ret)
     g_signal_emit (bvw, bvw_table_signals[SIGNAL_CHANNELS_CHANGE], 0);
 
-  return ret || bvw->priv->got_redirect;
+  return ret || bvw->priv->got_redirect ||
+      gst_tag_list_get_value_index (bvw->priv->tagcache,
+				    GST_TAG_IMAGE, 0) != NULL;
 }
 
 gboolean
@@ -1988,13 +2023,13 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
   ret = (gst_element_set_state (GST_ELEMENT (bvw->priv->play),
       GST_STATE_PLAYING) == GST_STATE_SUCCESS);
 
-  if (!ret) {
+  if (!ret && !bvw->priv->media_pixbuf) {
     g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC, _("Failed to play: %s"),
 	 (bvw->priv->last_error != NULL) ?
 	 bvw->priv->last_error->message : _("unknown error"));
   }
 
-  return ret;
+  return ret || bvw->priv->media_pixbuf != NULL;
 }
 
 gboolean
@@ -2070,6 +2105,11 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   if (bvw->priv->mrl) {
     g_free (bvw->priv->mrl);
     bvw->priv->mrl = NULL;
+  }
+
+  if (bvw->priv->media_pixbuf) {
+    gdk_pixbuf_unref (bvw->priv->media_pixbuf);
+    bvw->priv->media_pixbuf = NULL;
   }
 
   g_signal_emit (bvw, bvw_table_signals[SIGNAL_CHANNELS_CHANGE], 0);
@@ -3138,6 +3178,8 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
 gboolean
 bacon_video_widget_can_get_frames (BaconVideoWidget * bvw, GError ** error)
 {
+  gboolean cando = TRUE;
+
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
@@ -3151,12 +3193,13 @@ bacon_video_widget_can_get_frames (BaconVideoWidget * bvw, GError ** error)
   }
 
   /* check for video */
-  if (!bvw->priv->media_has_video) {
+  if (!bvw->priv->media_has_video && !bvw->priv->media_pixbuf) {
+    cando = FALSE;
     g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC,
         _("Media contains no supported video streams."));
   }
 
-  return bvw->priv->media_has_video;
+  return cando;
 }
 
 static void
@@ -3179,12 +3222,12 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
 
   /* no video info */
   if (!bvw->priv->video_width || !bvw->priv->video_height)
-    return NULL;
+    goto try_tag;
 
   /* get frame */
   g_object_get (G_OBJECT (bvw->priv->play), "frame", &buf, NULL);
   if (!buf)
-    return NULL;
+    goto try_tag;
 
   /* take our own reference, because we will eat it */
   gst_buffer_ref (buf);
@@ -3222,8 +3265,10 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
   }
   g_list_foreach (streaminfo, (GFunc) g_object_unref, NULL);
   g_list_free (streaminfo);
-  if (!from)
-    return NULL;
+  if (!from) {
+    gst_buffer_unref (buf);
+    goto try_tag;
+  }
 
   /* convert to our own wanted format */
   buf = bvw_frame_conv_convert (buf, from,
@@ -3239,7 +3284,7 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
           "green_mask", G_TYPE_INT, 0x00ff00,
           "blue_mask", G_TYPE_INT, 0x0000ff, NULL));
   if (!buf)
-    return NULL;
+    goto try_tag;
 
   /* create pixbuf from that - use our own destroy function */
   pixbuf = gdk_pixbuf_new_from_data (GST_BUFFER_DATA (buf),
@@ -3253,6 +3298,11 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
 
   /* that's all */
   return pixbuf;
+
+try_tag:
+  if (bvw->priv->media_pixbuf)
+    return gdk_pixbuf_copy (bvw->priv->media_pixbuf);
+  return NULL;
 }
 
 static void
@@ -3349,7 +3399,7 @@ bacon_video_widget_new (int width, int height,
   bvw->priv->ratio_type = BVW_RATIO_AUTO;
 
   bvw->priv->cursor_shown = TRUE;
-  bvw->priv->logo_mode = TRUE;
+  bvw->priv->logo_mode = FALSE;
   bvw->priv->auto_resize = TRUE;
 
   /* gconf setting in backend */
@@ -3503,7 +3553,6 @@ bacon_video_widget_new (int width, int height,
     g_object_unref (G_OBJECT (bvw));
     return NULL;
   }
-  /* somehow, alsa hangs? */
   gst_element_set_state (audio_sink, GST_STATE_NULL);
   g_signal_handler_disconnect (audio_sink, sig2);
 
@@ -3593,6 +3642,7 @@ bacon_video_widget_new (int width, int height,
         bvw->priv->balance = GST_COLOR_BALANCE (element);
       }
   }
+  gst_element_set_state (video_sink, GST_STATE_NULL);
 
   /* Setup brightness and contrast */
   for (i = 0; i < 4; i++) {

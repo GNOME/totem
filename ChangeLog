@@ -1,3 +1,39 @@
+2006-01-29  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
+
+	* src/Makefile.am:
+	  Add BINDIR so we can find the main totem binary if we want to
+	  open as separate video player window (part of #326476).
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_new):
+	  Set logo mode correctly, similar as in xine backend. Theoretically
+	  allows seeking in totem-mozilla plugin (untested).
+	* src/backend/bacon-video-widget-gst.c: (get_media_size),
+	(bacon_video_widget_expose_event),
+	(bacon_video_widget_signal_idler),
+	(bacon_video_widget_open_with_subtitle), (bacon_video_widget_play),
+	(bacon_video_widget_close), (bacon_video_widget_can_get_frames),
+	(bacon_video_widget_get_current_frame), (bacon_video_widget_new):
+	  Correct logo-mode default (see above). Add support for single-image
+	  tagged files (plus compiler magic so we don't need to up version
+	  requirements; #328380). Set videosink back to NULL after testing
+	  to allow multiple non-video instances to run, important for
+	  websites with multiple single-image movies embedded.
+	* src/totem-mozilla-options.h:
+	* src/totem-mozilla-plugin.cpp:
+	* src/totem-mozilla-scriptable.h:
+	* src/totem-mozilla-viewer.c: (on_got_redirect),
+	(on_video_button_press_event), (on_tick), (on_seek_start),
+	(cb_on_seek), (totem_embedded_add_children), (main):
+	  Add support for target property, which allows to open a movie
+	  given in the href property in either a separate window or in
+	  the Totem window, based on the target=X value (#326476). Don't
+	  use select(), since that may not work depending on the value of
+	  fd (see man 2 select). Instead, use poll(). Add declaration for
+	  totem_embedded_get_type() (would give compiler warning). Allow
+	  the helper app to not show() the window, which allows the plugin
+	  to be used for background music in websites without being visible
+	  on the website (#326564). Allow seeking (#326301).
+
 2006-01-29  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-xine.c:

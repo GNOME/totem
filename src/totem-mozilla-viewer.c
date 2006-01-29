@@ -64,7 +64,7 @@ typedef struct _TotemEmbedded {
 	GtkWidget *about;
 	int width, height;
 	const char *orig_filename;
-	char *filename, *href;
+	char *filename, *href, *target;
 	BaconVideoWidget *bvw;
 	gboolean controller_hidden;
 	TotemStates state;
@@ -73,10 +73,12 @@ typedef struct _TotemEmbedded {
 	/* Seek bits */
 	GtkAdjustment *seekadj;
 	GtkWidget *seek;
+	gboolean seeking;
 
 	/* XEmbed */
 	gboolean embedded_done;
 } TotemEmbedded;
+GType totem_embedded_get_type (void);
 
 G_DEFINE_TYPE (TotemEmbedded, totem_embedded, G_TYPE_OBJECT);
 static void totem_embedded_class_init (TotemEmbeddedClass *klass) { }
@@ -343,7 +345,6 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 
 	if (totem_embedded_open (emb) != FALSE)
 		totem_embedded_play (emb, NULL);
-g_print ("open result\n");
 }
 
 static gboolean
@@ -354,23 +355,45 @@ on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 			event->button == 1 &&
 			emb->href != NULL)
 	{
-		g_free (emb->filename);
-		emb->filename = emb->href;
-		emb->href = NULL;
-		bacon_video_widget_close (emb->bvw);
-		totem_embedded_set_state (emb, STATE_STOPPED);
+		if (emb->target != NULL &&
+		    !g_ascii_strcasecmp (emb->target, "QuicktimePlayer")) {
+			gchar *cmd;
+			GError *err = NULL;
 
-		if (emb->controller_hidden != FALSE) {
-			GtkWidget *controls;
-			controls = glade_xml_get_widget (emb->xml, "controls");
-			gtk_widget_show (controls);
+			if (g_file_test ("./totem",
+					 G_FILE_TEST_EXISTS) != FALSE) {
+				cmd = g_strdup_printf ("./totem %s",
+						       emb->href);
+			} else {
+				cmd = g_strdup_printf (BINDIR"/totem %s",
+						       emb->href);
+			}
+			if (!g_spawn_command_line_async (cmd, &err)) {
+				totem_interface_error_blocking (
+					_("Failed to start stand-alone movie player"),
+					err ? err->message : _("Unknown reason"),
+					GTK_WINDOW (emb->window));
+			}
+			g_free (cmd);
+		} else {
+			g_free (emb->filename);
+			emb->filename = emb->href;
+			emb->href = NULL;
+			bacon_video_widget_close (emb->bvw);
+			totem_embedded_set_state (emb, STATE_STOPPED);
+
+			if (emb->controller_hidden != FALSE) {
+				GtkWidget *controls;
+				controls = glade_xml_get_widget (emb->xml, "controls");
+				gtk_widget_show (controls);
+			}
+
+
+			if (totem_embedded_open (emb) != FALSE)
+				totem_embedded_play (emb, NULL);
+
+			return TRUE;
 		}
-
-
-		if (totem_embedded_open (emb) != FALSE)
-			totem_embedded_play (emb, NULL);
-
-		return TRUE;
 	} else if (event->button == 3 && event->type == GDK_BUTTON_PRESS) {
 		GtkMenu *menu;
 
@@ -411,9 +434,28 @@ on_tick (GtkWidget *bvw,
 {
 	if (emb->state != STATE_STOPPED) {
 		gtk_widget_set_sensitive (emb->seek, seekable);
-		gtk_adjustment_set_value (emb->seekadj,
-				current_position * 65535);
+		if (emb->seeking == FALSE)
+			gtk_adjustment_set_value (emb->seekadj,
+					current_position * 65535);
 	}
+}
+
+static gboolean
+on_seek_start (GtkWidget *widget, GdkEventButton *event, TotemEmbedded *emb)
+{
+	emb->seeking = TRUE;
+
+	return FALSE;
+}
+
+static gboolean
+cb_on_seek (GtkWidget *widget, GdkEventButton *event, TotemEmbedded *emb)
+{
+	bacon_video_widget_seek (emb->bvw,
+		gtk_range_get_value (GTK_RANGE (widget)) / 65535, NULL);
+	emb->seeking = FALSE;
+
+	return FALSE;
 }
 
 static void
@@ -465,6 +507,10 @@ totem_embedded_add_children (TotemEmbedded *emb)
 
 	emb->seek = glade_xml_get_widget (emb->xml, "time_hscale");
 	emb->seekadj = gtk_range_get_adjustment (GTK_RANGE (emb->seek));
+	g_signal_connect (emb->seek, "button-press-event",
+			  G_CALLBACK (on_seek_start), emb);
+	g_signal_connect (emb->seek, "button-release-event",
+			  G_CALLBACK (cb_on_seek), emb);
 
 	pp_button = glade_xml_get_widget (emb->xml, "pp_button");
 	g_signal_connect (G_OBJECT (pp_button), "clicked",
@@ -530,6 +576,7 @@ totem_volume_create (void)
 
 int main (int argc, char **argv)
 {
+	gboolean window_given = FALSE;
 	TotemEmbedded *emb;
 	DBusGProxy *proxy;
 	DBusGConnection *conn;
@@ -585,6 +632,7 @@ int main (int argc, char **argv)
 	/* TODO Add popt options */
 	for (i = 1; i < argc; i++) {
 		if (OPTION_IS (TOTEM_OPTION_XID)) {
+			window_given = TRUE;
 			if (i + 1 < argc) {
 				i++;
 				xid = (Window) g_ascii_strtoull (argv[i], NULL, 10);
@@ -611,6 +659,11 @@ int main (int argc, char **argv)
 				i++;
 				emb->href = g_strdup (argv[i]);
 			}
+		} else if (OPTION_IS (TOTEM_OPTION_TARGET)) {
+			if (i + 1 < argc) {
+				i++;
+				emb->target = g_strdup (argv[i]);
+			}
 		} else if (i + 1 == argc) {
 			emb->filename = g_strdup (argv[i]);
 		}
@@ -636,7 +689,11 @@ int main (int argc, char **argv)
 
 	totem_embedded_add_children (emb);
 	totem_embedded_create_cursor (emb);
-	gtk_widget_show (emb->window);
+	if (!window_given || xid != 0)
+		gtk_widget_show (emb->window);
+	else {
+		gtk_widget_realize (emb->window);
+	}
 
 	/* wait until we're embedded if we're to be, or shown */
 	if (xid != 0) {

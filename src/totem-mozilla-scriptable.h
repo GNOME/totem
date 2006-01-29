@@ -36,7 +36,7 @@ typedef struct {
         Window window;
 	totemMozillaObject *iface;
 
-        char *src, *href;
+        char *src, *href, *target;
         int width, height;
 	DBusGConnection *conn;
 	DBusGProxy *proxy;

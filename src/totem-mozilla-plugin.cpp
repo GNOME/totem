@@ -29,6 +29,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/wait.h>
+#include <sys/poll.h>
 #include <string.h>
 
 #include <glib.h>
@@ -65,7 +66,7 @@ cb_update_name (DBusGProxy *proxy, char *svc, char *old_owner,
 }
 
 /* You don't update, you die! */
-#define MAX_ARGV_LEN 14
+#define MAX_ARGV_LEN 16
 
 static gboolean
 totem_plugin_fork (TotemPlugin *plugin)
@@ -107,6 +108,11 @@ totem_plugin_fork (TotemPlugin *plugin)
 	if (plugin->href) {
 		argv[argc++] = g_strdup (TOTEM_OPTION_HREF);
 		argv[argc++] = g_strdup (plugin->href);
+	}
+
+	if (plugin->target) {
+		argv[argc++] = g_strdup (TOTEM_OPTION_TARGET);
+		argv[argc++] = g_strdup (plugin->target);
 	}
 
 	if (plugin->controller_hidden) {
@@ -301,6 +307,9 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 		if (g_ascii_strcasecmp (argn[i], "href") == 0) {
 			plugin->href = resolve_relative_uri (docURI, argv[i]);
 		}
+		if (g_ascii_strcasecmp (argn[i], "target") == 0) {
+			plugin->target = g_strdup (argv[i]);
+		}
 		if (g_ascii_strcasecmp (argn[i], "controller") == 0) {
 			if (g_ascii_strcasecmp (argv[i], "false") == 0) {
 				plugin->controller_hidden = TRUE;
@@ -359,6 +368,10 @@ static NPError totem_plugin_destroy_instance (NPP instance, NPSavedData **save)
 	}
 
 	NS_RELEASE (plugin->iface);
+
+	g_free (plugin->target);
+	g_free (plugin->src);
+	g_free (plugin->href);
 
 	g_object_unref (G_OBJECT (plugin->proxy));
 	//g_object_unref (G_OBJECT (plugin->conn));
@@ -443,8 +456,7 @@ static NPError totem_plugin_destroy_stream (NPP instance, NPStream* stream,
 static int32 totem_plugin_write_ready (NPP instance, NPStream *stream)
 {
 	TotemPlugin *plugin;
-	fd_set fds;
-	struct timeval t = { 0 , 0 };
+	struct pollfd fds;
 
 	D("plugin_write_ready");
 
@@ -455,12 +467,20 @@ static int32 totem_plugin_write_ready (NPP instance, NPStream *stream)
 
 	plugin = (TotemPlugin *) instance->pdata;
 
-	FD_ZERO (&fds);
-	FD_SET (plugin->send_fd, &fds);
-	if (select (plugin->send_fd + 1, NULL, &fds, NULL, &t) > 0 &&
-	    plugin->send_fd > 0) {
-		return (8*1024);
+	if (plugin->send_fd < 0) {
+		if (!totem_plugin_fork (plugin))
+			return 0;
+
+		if (plugin->send_fd > 0)
+			fcntl(plugin->send_fd, F_SETFL, O_NONBLOCK);
+		else
+			return 0;
 	}
+
+	fds.events = POLLOUT;
+	fds.fd = plugin->send_fd;
+	if (plugin->send_fd > 0 && poll (&fds, 1, 0) > 0)
+		return (8*1024);
 
 	return 0;
 }
@@ -606,6 +626,9 @@ static struct {
 	{ "video/x-ms-asf-plugin", "asf, wmv", "video/x-ms-asf" },
 	{ "video/x-ms-wmv", "wmv", "video/x-ms-asf" },
 	{ "application/ogg", "ogg", NULL },
+	{ "application/x-google-vlc-plugin", "", "Google VLC plugin" },
+	{ "application/x-vlc-plugin", "", "VideoLAN plugin" },
+	{ "audio/wav", "wav", NULL }
 };
 #define NUM_MIME_TYPES G_N_ELEMENTS(mime_types)
 

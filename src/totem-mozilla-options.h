@@ -24,3 +24,4 @@
 #define TOTEM_OPTION_URL		"--url"
 #define TOTEM_OPTION_CONTROLS_HIDDEN	"--nocontrols"
 #define TOTEM_OPTION_HREF		"--href"
+#define TOTEM_OPTION_TARGET		"--target"
