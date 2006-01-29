@@ -168,6 +168,7 @@ struct BaconVideoWidgetPrivate {
 	gboolean is_live;
 	char *codecs_path;
 	gboolean got_redirect;
+	gboolean has_subtitle;
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
@@ -2036,6 +2037,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 		char *subtitled;
 		subtitled = bacon_video_widget_get_subtitled (mrl, subtitle_uri);
 		err = xine_open (bvw->priv->stream, subtitled);
+		bvw->priv->has_subtitle = TRUE;
 		g_free (subtitled);
 	} else {
 		err = xine_open (bvw->priv->stream, mrl);
@@ -2280,6 +2282,7 @@ bacon_video_widget_close (BaconVideoWidget *bvw)
 
 	xine_stop (bvw->priv->stream);
 	xine_close (bvw->priv->stream);
+	bvw->priv->has_subtitle = FALSE;
 	g_free (bvw->priv->mrl);
 	bvw->priv->mrl = NULL;
 
@@ -3590,8 +3593,14 @@ GList
 	num_channels = xine_get_stream_info
 		(bvw->priv->stream, XINE_STREAM_INFO_MAX_SPU_CHANNEL);
 
-	if (num_channels < 1)
+	if (num_channels < 1) {
+		if (bvw->priv->has_subtitle != FALSE) {
+			return g_list_prepend (list,
+					(gpointer) g_strdup_printf
+					(_("Language %d"), 0));
+		}
 		return NULL;
+	}
 
 	for(i = 0; i < num_channels; i++)
 	{

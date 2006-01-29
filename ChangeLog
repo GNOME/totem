@@ -1,5 +1,13 @@
 2006-01-29  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_open_with_subtitle),
+	(bacon_video_widget_close), (bacon_video_widget_get_subtitles):
+	Add ability to disable text subtitles when Totem automatically loads
+	them (Closes: #314603)
+
+2006-01-29  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_action_handle_key_release),
 	(totem_action_handle_key_press), (on_window_key_press_event),
 	(totem_callback_connect), (video_widget_create):
