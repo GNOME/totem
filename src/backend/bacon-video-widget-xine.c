@@ -1438,8 +1438,8 @@ bacon_video_widget_sort_queue (gconstpointer a, gconstpointer b, gpointer data)
 	if (one->signal == two->signal)
 		return 0;
 	if (one->signal == ERROR_ASYNC || one->signal == MESSAGE_ASYNC)
-		return 1;
-	return -1;
+		return -1;
+	return 1;
 }
 #endif /* GLIB_CHECK_VERSION 2.8.0 */
 
