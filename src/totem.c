@@ -2553,7 +2553,29 @@ on_eos_event (GtkWidget *widget, Totem *totem)
 }
 
 static gboolean
-totem_action_handle_key (Totem *totem, GdkEventKey *event)
+totem_action_handle_key_release (Totem *totem, GdkEventKey *event)
+{
+	gboolean retval = TRUE;
+
+	/* Alphabetical */
+	switch (event->keyval) {
+	case GDK_Left:
+	case GDK_Right:
+		totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), FALSE);
+		if (bacon_video_widget_can_direct_seek (totem->bvw)) {
+			if (totem->was_playing) {
+				bacon_video_widget_play (totem->bvw, NULL);
+			}
+			totem->seek_in_progress = FALSE;
+		}
+		break;
+	}
+
+	return retval;
+}
+
+static gboolean
+totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 {
 	gboolean retval = TRUE;
 
@@ -2659,8 +2681,16 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 		totem_action_fullscreen (totem, FALSE);
 		break;
 	case GDK_Left:
-		if (event->state & GDK_SHIFT_MASK)
-		{
+		totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), TRUE);
+		if (bacon_video_widget_can_direct_seek (totem->bvw)) {
+			if (!totem->seek_in_progress) {
+				totem->was_playing = bacon_video_widget_is_playing (totem->bvw);
+				bacon_video_widget_pause (totem->bvw);
+				/* We need to remember that we are already paused and seeking */
+				totem->seek_in_progress = TRUE;
+			}
+		}
+		if (event->state & GDK_SHIFT_MASK) {
 			totem_action_seek_relative (totem,
 					SEEK_BACKWARD_SHORT_OFFSET);
 		} else if (event->state & GDK_CONTROL_MASK) {
@@ -2672,15 +2702,24 @@ totem_action_handle_key (Totem *totem, GdkEventKey *event)
 		}
 		break;
 	case GDK_Right:
-		if (event->state & GDK_SHIFT_MASK)
-		{
+		totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), TRUE);
+		if (bacon_video_widget_can_direct_seek (totem->bvw)) {
+			if (!totem->seek_in_progress) {
+				totem->was_playing = bacon_video_widget_is_playing (totem->bvw);
+				bacon_video_widget_pause (totem->bvw);
+				/* We need to remember that we are already paused and seeking */
+				totem->seek_in_progress = TRUE;
+			}
+		}
+		if (event->state & GDK_SHIFT_MASK) {
 			totem_action_seek_relative (totem,
 					SEEK_FORWARD_SHORT_OFFSET);
 		} else if (event->state & GDK_CONTROL_MASK) {
 			totem_action_seek_relative (totem,
 					SEEK_FORWARD_LONG_OFFSET);
 		} else {
-			totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET);
+			totem_action_seek_relative (totem,
+					SEEK_FORWARD_OFFSET);
 		}
 		break;
 	case GDK_space:
@@ -2781,7 +2820,12 @@ on_window_key_press_event (GtkWidget *win, GdkEventKey *event, Totem *totem)
 		case GDK_s:
 		case GDK_Right:
 		case GDK_Left:
-			return totem_action_handle_key (totem, event);
+			if (event->type == GDK_KEY_PRESS) {
+				return totem_action_handle_key_press (totem, event);
+			}
+			else {
+				return totem_action_handle_key_release (totem, event);
+			}
 	}
 
 	/* If we have modifiers, and either Ctrl, Mod1 (Alt), or any
@@ -2795,7 +2839,12 @@ on_window_key_press_event (GtkWidget *win, GdkEventKey *event, Totem *totem)
 			|| (event->state & GDK_MOD5_MASK)))
 		return FALSE;
 
-	return totem_action_handle_key (totem, event);
+	if (event->type == GDK_KEY_PRESS) {
+		return totem_action_handle_key_press (totem, event);
+	}
+	else {
+		return totem_action_handle_key_release (totem, event);
+	}
 }
 
 static int
@@ -3130,8 +3179,10 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (vol_slider_released_cb), totem);
 
 	/* Connect the keys */
-	gtk_widget_add_events (totem->win, GDK_KEY_PRESS_MASK);
+	gtk_widget_add_events (totem->win, GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
 	g_signal_connect (G_OBJECT(totem->win), "key_press_event",
+			G_CALLBACK (on_window_key_press_event), totem);
+	g_signal_connect (G_OBJECT(totem->win), "key_release_event",
 			G_CALLBACK (on_window_key_press_event), totem);
 
 	/* Connect the mouse wheel */
@@ -3321,8 +3372,11 @@ video_widget_create (Totem *totem)
 			GTK_WIDGET (totem->bvw));
 
 	/* Events for the widget video window as well */
-	gtk_widget_add_events (GTK_WIDGET (totem->bvw), GDK_KEY_PRESS_MASK);
+	gtk_widget_add_events (GTK_WIDGET (totem->bvw),
+			GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
 	g_signal_connect (G_OBJECT(totem->bvw), "key_press_event",
+			G_CALLBACK (on_window_key_press_event), totem);
+	g_signal_connect (G_OBJECT(totem->bvw), "key_release_event",
 			G_CALLBACK (on_window_key_press_event), totem);
 
 	g_signal_connect (G_OBJECT (totem->bvw), "drag_data_received",
