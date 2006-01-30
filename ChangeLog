@@ -1,5 +1,11 @@
 2006-01-30  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_queue_sort), (xine_try_error): queue sorting
+	function if we have glib < 2.8.0
+
+2006-01-30  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/Makefile.am:
 	* src/backend/bacon-video-widget-private.h:
 	* src/backend/bacon-video-widget-xine.c:
