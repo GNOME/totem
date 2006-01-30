@@ -1,5 +1,12 @@
 2006-01-30  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c: (totem_playlist_remove_files):
+	Force a column resize after having removed files from the playlist,
+	making the scrollbar disappear after having removed all the files
+	(Closes: #310665)
+
+2006-01-30  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c:
 	(bacon_video_widget_queue_sort), (xine_try_error): queue sorting
 	function if we have glib < 2.8.0
