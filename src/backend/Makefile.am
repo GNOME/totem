@@ -39,7 +39,8 @@ baconvideowidget-marshal.c: baconvideowidget-marshal.h
 	( $(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal $(srcdir)/baconvideowidget-marshal.list --body --header > baconvideowidget-marshal.c )
 
 libbaconvideowidget_la_SOURCES = \
-	$(BVWMARSHALFILES) $(MM) bacon-video-widget.h bacon-resize.h \
+	$(BVWMARSHALFILES) $(MM) bacon-video-widget.h \
+	bacon-video-widget-private.h bacon-resize.h \
 	bacon-resize.c video-utils.c video-utils.h debug.h
 libbaconvideowidget_la_CFLAGS = \
 	-D_REENTRANT \

@@ -218,7 +218,8 @@ typedef enum {
 	VISUAL_SMALL,
 	VISUAL_NORMAL,
 	VISUAL_LARGE,
-	VISUAL_EXTRA_LARGE
+	VISUAL_EXTRA_LARGE,
+	NUM_VISUAL_QUALITIES
 } VisualsQuality;
 
 gboolean bacon_video_widget_set_show_visuals	  (BaconVideoWidget *bvw,

@@ -48,6 +48,7 @@
 
 #include "debug.h"
 #include "bacon-video-widget.h"
+#include "bacon-video-widget-private.h"
 #include "baconvideowidget-marshal.h"
 #include "video-utils.h"
 #include "bacon-resize.h"
@@ -149,6 +150,7 @@ struct BaconVideoWidgetPrivate {
 	xine_post_t *vis;
 	GList *visuals;
 	char *queued_vis;
+	VisualsQuality quality;
 
 	/* Seeking stuff */
 	int seeking;
@@ -253,6 +255,8 @@ static xine_video_port_t * load_video_out_driver (BaconVideoWidget *bvw,
 static xine_audio_port_t * load_audio_out_driver (BaconVideoWidget *bvw,
 		gboolean null_out, GError **error);
 static gboolean bacon_video_widget_tick_send (BaconVideoWidget *bvw);
+static void bacon_video_widget_set_visuals_quality_size (BaconVideoWidget *bvw,
+		int h, int w, int fps);
 
 static GtkWidgetClass *parent_class = NULL;
 
@@ -463,6 +467,7 @@ bacon_video_widget_finalize (GObject *object)
 	}
 	if (bvw->priv->cursor != NULL) {
 		gdk_cursor_unref (bvw->priv->cursor);
+		bvw->priv->cursor = NULL;
 	}
 	g_free (bvw->priv->vis_name);
 	g_free (bvw->priv->mediadev);
@@ -1049,22 +1054,27 @@ configure_cb (GtkWidget *widget, GdkEventConfigure *event,
 static void
 size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw)
 {
-	double res_h, res_v;
+	double res_h, res_v, vis_width;
 
-	XLockDisplay (bvw->priv->display);
-	res_h = (DisplayWidth (bvw->priv->display, bvw->priv->screen) * 1000 /
-			DisplayWidthMM (bvw->priv->display,
-				bvw->priv->screen));
-	res_v = (DisplayHeight (bvw->priv->display, bvw->priv->screen) * 1000 /
-			DisplayHeightMM (bvw->priv->display,
-				bvw->priv->screen));
-	XUnlockDisplay (bvw->priv->display);
+	res_h = gdk_screen_get_width (screen) * 1000 /
+		gdk_screen_get_width_mm (screen);
+	res_v = gdk_screen_get_height (screen) * 1000 /
+		gdk_screen_get_height_mm (screen);
+
+	vis_width = vis_qualities[bvw->priv->quality].height *
+		gdk_screen_get_width (screen) /
+		gdk_screen_get_height (screen);
 
 	bvw->priv->display_ratio = res_v / res_h;
 
 	if (fabs (bvw->priv->display_ratio - 1.0) < 0.01) {
 		bvw->priv->display_ratio = 1.0;
 	}
+
+	bacon_video_widget_set_visuals_quality_size (bvw,
+			vis_width,
+			vis_qualities[bvw->priv->quality].height,
+			vis_qualities[bvw->priv->quality].fps);
 }
 
 static void
@@ -2873,44 +2883,11 @@ bacon_video_widget_set_visuals (BaconVideoWidget *bvw, const char *name)
 	return FALSE;
 }
 
-void
-bacon_video_widget_set_visuals_quality (BaconVideoWidget *bvw,
-		VisualsQuality quality)
+static void
+bacon_video_widget_set_visuals_quality_size (BaconVideoWidget *bvw,
+		int w, int h, int fps)
 {
 	xine_cfg_entry_t entry;
-	int fps, w, h;
-
-	g_return_if_fail (bvw != NULL);
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-	g_return_if_fail (bvw->priv->xine != NULL);
-
-	switch (quality)
-	{
-	case VISUAL_SMALL:
-		fps = 15;
-		w = 320;
-		h = 240;
-		break;
-	case VISUAL_NORMAL:
-		fps = 25;
-		w = 320;
-		h = 240;
-		break;
-	case VISUAL_LARGE:
-		fps = 25;
-		w = 640;
-		h = 480;
-		break;
-	case VISUAL_EXTRA_LARGE:
-		fps = 30;
-		w = 800;
-		h = 600;
-		break;
-	default:
-		/* shut up warnings */
-		fps = w = h = 0;
-		g_assert_not_reached ();
-	}
 
 	bvw_config_helper_num (bvw->priv->xine, "effects.goom.fps", fps, &entry);
 	entry.num_value = fps;
@@ -2923,6 +2900,31 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget *bvw,
 	bvw_config_helper_num (bvw->priv->xine, "effects.goom.height", h, &entry);
 	entry.num_value = h;
 	xine_config_update_entry (bvw->priv->xine, &entry);
+}
+
+void
+bacon_video_widget_set_visuals_quality (BaconVideoWidget *bvw,
+		VisualsQuality quality)
+{
+	int fps, h, w;
+
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
+	g_return_if_fail (quality < NUM_VISUAL_QUALITIES);
+
+	fps = vis_qualities[quality].fps;
+	h = vis_qualities[quality].height;
+
+	XLockDisplay (bvw->priv->display);
+	w = vis_qualities[quality].height *
+		DisplayWidth (bvw->priv->display, bvw->priv->screen) /
+		DisplayHeight (bvw->priv->display, bvw->priv->screen);
+	XUnlockDisplay (bvw->priv->display);
+
+	bacon_video_widget_set_visuals_quality_size (bvw, w, h, fps);
+
+	bvw->priv->quality = quality;
 }
 
 gboolean
@@ -3651,14 +3653,6 @@ bacon_video_widget_can_get_frames (BaconVideoWidget *bvw, GError **error)
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
 
-	if (xine_get_status (bvw->priv->stream) != XINE_STATUS_PLAY
-			&& bvw->priv->logo_mode == FALSE)
-	{
-		g_set_error (error, BVW_ERROR, BVW_ERROR_CANNOT_CAPTURE,
-				_("Movie is not playing."));
-		return FALSE;
-	}
-
 	if (xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_HAS_VIDEO) == FALSE
 			&& bvw->priv->using_vfx == FALSE)
@@ -3673,6 +3667,14 @@ bacon_video_widget_can_get_frames (BaconVideoWidget *bvw, GError **error)
 	{
 		g_set_error (error, BVW_ERROR, BVW_ERROR_CANNOT_CAPTURE,
 				_("Video codec is not handled."));
+		return FALSE;
+	}
+
+	if (xine_get_status (bvw->priv->stream) != XINE_STATUS_PLAY
+			&& bvw->priv->logo_mode == FALSE)
+	{
+		g_set_error (error, BVW_ERROR, BVW_ERROR_CANNOT_CAPTURE,
+				_("Movie is not playing."));
 		return FALSE;
 	}
 

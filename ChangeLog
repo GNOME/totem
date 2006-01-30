@@ -1,3 +1,16 @@
+2006-01-30  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/Makefile.am:
+	* src/backend/bacon-video-widget-private.h:
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_finalize), (size_changed_cb),
+	(bacon_video_widget_set_visuals_quality_size),
+	(bacon_video_widget_set_visuals_quality),
+	(bacon_video_widget_can_get_frames):
+	* src/backend/bacon-video-widget.h: take into account the aspect
+	ratio of the screen when selecting the goom aspect ratio
+	(Closes: #327811), slight changes to the _can_get_frames function
+
 2006-01-29  Ronald S. Bultje  <rbultje@ronald.bitfreak.net>
 
 	* src/Makefile.am:
