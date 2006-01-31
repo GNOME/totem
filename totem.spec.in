@@ -6,8 +6,8 @@ Version: @VERSION@
 Release: 1
 License: GPL
 Group: Applications/Multimedia
-Source: http://www.hadess.net/files/software/%{name}/%{name}-%{version}.tar.gz
-URL: http://www.hadess.net/totem.php3
+Source: http://www.hadess.net/files/software/%{name}/%{name}-%{version}.tar.bz2
+URL: http://www.gnome.org/projects/totem
 BuildRoot: %{_tmppath}/%{name}-root
 Requires: gnome-desktop >= 2.0.0
 BuildRequires: pkgconfig
@@ -26,12 +26,13 @@ for media metadata (both in Nautilus) and a browser plugin for Mozilla.
 
 %build
 export MOZILLA_PLUGINDIR=%{buildroot}%{_libdir}/mozilla
-%configure --enable-gstreamer
+%configure --enable-gstreamer=0.10
 export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 make %{?_smp_mflags}
 
 %install
 rm -rf %{buildroot}
+export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 %makeinstall
 %find_lang %{name}
 
