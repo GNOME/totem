@@ -159,6 +159,10 @@ totem_uri_get_subtitle_uri (const char *uri)
 	guint len, i;
 	GnomeVFSURI *vfsuri;
 
+	if (g_str_has_prefix (uri, "http") != FALSE) {
+		return NULL;
+	}
+
 	if (strstr (uri, "#subtitle:") != NULL) {
 		return NULL;
 	}

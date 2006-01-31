@@ -796,7 +796,7 @@ totem_playlist_remove_files (GtkWidget *widget, TotemPlaylist *playlist)
 				NULL);
 	}
 	totem_playlist_update_save_button (playlist);
-	gtk_tree_view_columns_autosize (playlist->_priv->treeview);
+	gtk_tree_view_columns_autosize (GTK_TREE_VIEW (playlist->_priv->treeview));
 }
 
 static void
