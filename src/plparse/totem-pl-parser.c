@@ -1650,7 +1650,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	const char *mimetype;
 	guint i;
 	gpointer data = NULL;
-	TotemPlParserResult ret = FALSE;
+	TotemPlParserResult ret = TOTEM_PL_PARSER_RESULT_ERROR;
 	char *super;
 	gboolean found;
 
@@ -1701,6 +1701,9 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	g_free (data);
 
 	parser->priv->recurse_level--;
+
+	if (ret == TOTEM_PL_PARSER_RESULT_SUCCESS)
+		return ret;
 
 	super = gnome_vfs_get_supertype_from_mime_type (mimetype);
 	for (i = 0; i < G_N_ELEMENTS (ignore_types); i++) {

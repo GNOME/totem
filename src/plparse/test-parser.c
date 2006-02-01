@@ -5,6 +5,7 @@
 #include "totem-pl-parser.c"
 
 static GMainLoop *loop = NULL;
+static GList *list = NULL;
 
 static void
 header (const char *message)
@@ -76,7 +77,11 @@ test_parsing_real (TotemPlParser *pl, const char *url)
 		case TOTEM_PL_PARSER_RESULT_ERROR:
 			g_print ("error handling url '%s'\n", url);
 			break;
+		case TOTEM_PL_PARSER_RESULT_IGNORED:
+			g_print ("ignored url '%s'\n", url);
+			break;
 		default:
+			g_assert_not_reached ();
 			;;
 		}
 	}
@@ -86,12 +91,22 @@ static gboolean
 push_parser (gpointer data)
 {
 	TotemPlParser *pl = (TotemPlParser *)data;
-	//test_parsing_real (pl, "file:///mnt/cdrom");
-	test_parsing_real (pl, "file:///home/hadess/Movies");
-	/* Bugzilla 158052, 404 */
-	test_parsing_real (pl, "http://live.hujjat.org:7860/main");
-	/* Bugzilla 323683 */
-	test_parsing_real (pl, "http://www.comedycentral.com/sitewide/media_player/videoswitcher.jhtml?showid=934&category=/shows/the_daily_show/videos/headlines&sec=videoId%3D36032%3BvideoFeatureId%3D%3BpoppedFrom%3D_shows_the_daily_show_index.jhtml%3BisIE%3Dfalse%3BisPC%3Dtrue%3Bpagename%3Dmedia_player%3Bzyg%3D%27%2Bif_nt_zyg%2B%27%3Bspan%3D%27%2Bif_nt_span%2B%27%3Bdemo%3D%27%2Bif_nt_demo%2B%27%3Bbps%3D%27%2Bif_nt_bandwidth%2B%27%3Bgateway%3Dshows%3Bsection_1%3Dthe_daily_show%3Bsection_2%3Dvideos%3Bsection_3%3Dheadlines%3Bzyg%3D%27%2Bif_nt_zyg%2B%27%3Bspan%3D%27%2Bif_nt_span%2B%27%3Bdemo%3D%27%2Bif_nt_demo%2B%27%3Bera%3D%27%2Bif_nt_era%2B%27%3Bbps%3D%27%2Bif_nt_bandwidth%2B%27%3Bfla%3D%27%2Bif_nt_Flash%2B%27&itemid=36032&clip=com/dailyshow/headlines/10156_headline.wmv&mswmext=.asx");
+
+	if (list != NULL) {
+		GList *l;
+
+		for (l = list; l != NULL; l = l->next) {
+			test_parsing_real (pl, l->data);
+		}
+		g_list_free (list);
+	} else {
+		//test_parsing_real (pl, "file:///mnt/cdrom");
+		test_parsing_real (pl, "file:///home/hadess/Movies");
+		/* Bugzilla 158052, 404 */
+		test_parsing_real (pl, "http://live.hujjat.org:7860/main");
+		/* Bugzilla 323683 */
+		test_parsing_real (pl, "http://www.comedycentral.com/sitewide/media_player/videoswitcher.jhtml?showid=934&category=/shows/the_daily_show/videos/headlines&sec=videoId%3D36032%3BvideoFeatureId%3D%3BpoppedFrom%3D_shows_the_daily_show_index.jhtml%3BisIE%3Dfalse%3BisPC%3Dtrue%3Bpagename%3Dmedia_player%3Bzyg%3D%27%2Bif_nt_zyg%2B%27%3Bspan%3D%27%2Bif_nt_span%2B%27%3Bdemo%3D%27%2Bif_nt_demo%2B%27%3Bbps%3D%27%2Bif_nt_bandwidth%2B%27%3Bgateway%3Dshows%3Bsection_1%3Dthe_daily_show%3Bsection_2%3Dvideos%3Bsection_3%3Dheadlines%3Bzyg%3D%27%2Bif_nt_zyg%2B%27%3Bspan%3D%27%2Bif_nt_span%2B%27%3Bdemo%3D%27%2Bif_nt_demo%2B%27%3Bera%3D%27%2Bif_nt_era%2B%27%3Bbps%3D%27%2Bif_nt_bandwidth%2B%27%3Bfla%3D%27%2Bif_nt_Flash%2B%27&itemid=36032&clip=com/dailyshow/headlines/10156_headline.wmv&mswmext=.asx");
+	}
 	g_main_loop_quit (loop);
 	return FALSE;
 }
@@ -112,9 +127,17 @@ int main (int argc, char **argv)
 {
 	gnome_vfs_init();
 
-	test_relative ();
-
-	test_parsing ();
+	if (argc == 0) {
+		test_relative ();
+		test_parsing ();
+	} else {
+		int i;
+		for (i = 1; i < argc; i++) {
+			list = g_list_prepend (list, argv[i]);
+		}
+		list = g_list_reverse (list);
+		test_parsing ();
+	}
 
 	return 0;
 }
