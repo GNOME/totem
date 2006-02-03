@@ -3261,6 +3261,38 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw, MediaType type)
   return mrls;
 }
 
+static struct _metadata_map_info {
+  BaconVideoWidgetMetadataType type;
+  const gchar *str;
+} metadata_str_map[] = {
+  { BVW_INFO_TITLE, "title" },
+  { BVW_INFO_ARTIST, "artist" },
+  { BVW_INFO_YEAR, "year" },
+  { BVW_INFO_ALBUM, "album" },
+  { BVW_INFO_DURATION, "duration" },
+  { BVW_INFO_TRACK_NUMBER, "track-number" },
+  { BVW_INFO_HAS_VIDEO, "has-video" },
+  { BVW_INFO_DIMENSION_X, "dimension-x" },
+  { BVW_INFO_DIMENSION_Y, "dimension-y" },
+  { BVW_INFO_VIDEO_BITRATE, "video-bitrate" },
+  { BVW_INFO_VIDEO_CODEC, "video-codec" },
+  { BVW_INFO_FPS, "fps" },
+  { BVW_INFO_HAS_AUDIO, "has-audio" },
+  { BVW_INFO_AUDIO_BITRATE, "audio-bitrate" },
+  { BVW_INFO_AUDIO_CODEC, "audio-codec" }
+};
+
+static const gchar *
+get_metadata_type_name (BaconVideoWidgetMetadataType type)
+{
+  guint i;
+  for (i = 0; i < G_N_ELEMENTS (metadata_str_map); ++i) {
+    if (metadata_str_map[i].type == type)
+      return metadata_str_map[i].str;
+  }
+  return "unknown";
+}
+
 static void
 bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
 					BaconVideoWidgetMetadataType type,
@@ -3312,10 +3344,12 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
       g_assert_not_reached ();
     }
 
-  if (res)
+  if (res) {
     g_value_take_string (value, string);
-  else
+    GST_DEBUG ("%s = '%s'", get_metadata_type_name (type), string);
+  } else {
     g_value_set_string (value, NULL);
+  }
 
   return;
 }
@@ -3385,6 +3419,7 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
     }
 
   g_value_set_int (value, integer);
+  GST_DEBUG ("%s = %d", get_metadata_type_name (type), integer);
 
   return;
 }
@@ -3403,19 +3438,38 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget * bvw,
     return;
   }
 
+  GST_DEBUG ("tagcache  = %" GST_PTR_FORMAT, bvw->priv->tagcache);
+  GST_DEBUG ("videotags = %" GST_PTR_FORMAT, bvw->priv->videotags);
+  GST_DEBUG ("audiotags = %" GST_PTR_FORMAT, bvw->priv->audiotags);
+
   switch (type)
   {
     case BVW_INFO_HAS_VIDEO:
       boolean = bvw->priv->media_has_video;
+      /* if properties dialog, show the metadata we
+       * have even if we cannot decode the stream */
+      if (!boolean && bvw->priv->use_type == BVW_USE_TYPE_METADATA &&
+          gst_structure_has_field ((GstStructure *) bvw->priv->tagcache,
+                                   GST_TAG_VIDEO_CODEC)) {
+        boolean = TRUE;
+      }
       break;
     case BVW_INFO_HAS_AUDIO:
       boolean = bvw->priv->media_has_audio;
+      /* if properties dialog, show the metadata we
+       * have even if we cannot decode the stream */
+      if (!boolean && bvw->priv->use_type == BVW_USE_TYPE_METADATA &&
+          gst_structure_has_field ((GstStructure *) bvw->priv->tagcache,
+                                   GST_TAG_AUDIO_CODEC)) {
+        boolean = TRUE;
+      }
       break;
     default:
       g_assert_not_reached ();
   }
 
   g_value_set_boolean (value, boolean);
+  GST_DEBUG ("%s = %s", get_metadata_type_name (type), (boolean) ? "yes" : "no");
 
   return;
 }
@@ -3447,8 +3501,6 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
-
-  GST_DEBUG ("type = %d", type);
 
   switch (type)
     {

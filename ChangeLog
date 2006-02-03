@@ -1,3 +1,16 @@
+2006-02-03  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(get_metadata_type_name), (bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_metadata_int),
+	(bacon_video_widget_get_metadata_bool),
+	(bacon_video_widget_get_metadata):
+	  Some more debug info. Also, when in metadata mode, answer yes to
+	  have_audio and have_video queries if we have the respective
+	  codec name available. That way some metadata is shown in the
+	  properties dialog even if the decoders to play it are actually
+	  not available.
+
 2006-02-03  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-playlist.c: (treeview_button_pressed),
