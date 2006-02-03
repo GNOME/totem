@@ -485,6 +485,7 @@ treeview_button_pressed (GtkTreeView *treeview, GdkEventButton *event,
 	menu = glade_xml_get_widget (playlist->_priv->xml, "menu1");
 	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
 			event->button, event->time);
+	gtk_menu_shell_select_first (GTK_MENU_SHELL (menu), FALSE);
 
 	return TRUE;
 }
@@ -1005,19 +1006,57 @@ totem_playlist_down_files (GtkWidget *widget, TotemPlaylist *playlist)
 	totem_playlist_move_files (playlist, FALSE);
 }
 
+static void
+totem_playlist_popup_menu (TotemPlaylist *playlist, guint time)
+{
+	GtkTreePath *path;
+	GtkWidget *menu;
+	int x, y;
+
+	if (gdk_window_get_pointer (playlist->_priv->treeview->window,
+			&x, &y, NULL) == NULL)
+		return;
+
+	if (gtk_tree_view_get_path_at_pos
+			(GTK_TREE_VIEW (playlist->_priv->treeview),
+			 x, y, &path, NULL, NULL, NULL) == FALSE) {
+		return;
+	}
+
+	gtk_tree_selection_unselect_all (playlist->_priv->selection);
+	gtk_tree_selection_select_path (playlist->_priv->selection, path);
+	gtk_tree_path_free (path);
+
+	menu = glade_xml_get_widget (playlist->_priv->xml, "menu1");
+	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
+			0, time);
+	gtk_menu_shell_select_first (GTK_MENU_SHELL (menu), FALSE);
+}
+
 static int
 totem_playlist_key_press (GtkWidget *win, GdkEventKey *event, TotemPlaylist *playlist)
 {
-	//FIXME add support for GDK_Menu and Ctrl+F10
 	/* Special case some shortcuts */
-	if (event->state != 0
-			&& (event->state &GDK_CONTROL_MASK))
-	{
-		switch (event->keyval)
-		case GDK_a:
-			gtk_tree_selection_select_all (playlist->_priv->selection);
+	if (event->state != 0) {
+		if ((event->state & GDK_CONTROL_MASK)
+		    && event->keyval == GDK_a) {
+			gtk_tree_selection_select_all
+				(playlist->_priv->selection);
 			return TRUE;
+		}
+
+		if (event->state & GDK_SHIFT_MASK
+		    && event->keyval == GDK_F10) {
+			totem_playlist_popup_menu (playlist, event->time);
+			return TRUE;
+		}
 	}
+
+	if (event->keyval == GDK_Menu) {
+		totem_playlist_popup_menu (playlist, event->time);
+		return TRUE;
+	}
+
 	/* If we have modifiers, and either Ctrl, Mod1 (Alt), or any
 	 * of Mod3 to Mod5 (Mod2 is num-lock...) are pressed, we
 	 * let Gtk+ handle the key */
@@ -1033,9 +1072,6 @@ totem_playlist_key_press (GtkWidget *win, GdkEventKey *event, TotemPlaylist *pla
 	{
 		totem_playlist_remove_files (NULL, playlist);
 		return TRUE;
-	} else if (event->keyval == GDK_Escape) {
-		gtk_dialog_response (GTK_DIALOG (playlist),
-				GTK_RESPONSE_CLOSE);
 	}
 
 	return FALSE;

@@ -225,6 +225,7 @@ totem_action_menu_popup (Totem *totem, guint button)
 			"totem_right_click_menu");
 	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
 			button, gtk_get_current_event_time ());
+	gtk_menu_shell_select_first (GTK_MENU_SHELL (menu), FALSE);
 }
 
 static gboolean
@@ -2649,9 +2650,6 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 	case GDK_m:
 		bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU);
 		break;
-	case GDK_Menu:
-		totem_action_menu_popup (totem, 0);
-		break;
 #ifdef HAVE_XFREE
 	case XF86XK_AudioNext:
 #endif /* HAVE_XFREE */
@@ -2755,11 +2753,21 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 	case GDK_2:
 		totem_action_set_scale_ratio (totem, 2);
 		break;
+	case GDK_Menu:
 	case GDK_F10:
-		if (event->state & GDK_SHIFT_MASK)
-			totem_action_menu_popup (totem, 0);
-		else
-			retval = FALSE;
+		/* Chain up if the playlist has the focuse */
+		{
+			GtkWidget *focused;
+
+			if (event->keyval != GDK_Menu && !(event->state & GDK_SHIFT_MASK))
+				return FALSE;
+
+			focused = gtk_window_get_focus (GTK_WINDOW (totem->win));
+			if (focused != NULL && gtk_widget_is_ancestor (focused, GTK_WIDGET (totem->playlist)) != FALSE)
+				return FALSE;
+		}
+
+		totem_action_menu_popup (totem, 0);
 		break;
 	default:
 		retval = FALSE;

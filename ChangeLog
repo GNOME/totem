@@ -1,3 +1,13 @@
+2006-02-03  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-playlist.c: (treeview_button_pressed),
+	(totem_playlist_popup_menu), (totem_playlist_key_press):
+	* src/totem.c: (totem_action_menu_popup),
+	(totem_action_handle_key_press):
+	Don't let the main window's key handler steal key shortcuts from
+	the playlist widget, implement popup menus in the playlist, select the
+	first menu item when popping up a menu (Closes: #323748)
+
 2006-02-03  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
