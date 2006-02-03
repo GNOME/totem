@@ -1,6 +1,13 @@
 2006-02-03  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_new):
+	  Add missing perdiod to error message string, which also
+	  makes it match the string used in the 0.8 backend.
+
+2006-02-03  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bvw_error_from_gst_error):
 	  Show a more meaningful error message when playback fails
 	  because the decoder/demuxer can only operate pull-based,
