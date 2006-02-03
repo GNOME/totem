@@ -1,7 +1,8 @@
 /* 
- * Copyright (C) 2003-2004 the Gstreamer project
+ * Copyright (C) 2003-2006 the GStreamer project
  *      Julien Moutte <julien@moutte.net>
  *      Ronald Bultje <rbultje@ronald.bitfreak.net>
+ *      Tim-Philipp Müller <tim centricular net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -192,6 +193,8 @@ static void setup_vis (BaconVideoWidget * bvw);
 static GList * get_visualization_features (void);
 static gboolean bacon_video_widget_configure_event (GtkWidget *widget,
     GdkEventConfigure *event, BaconVideoWidget *bvw);
+static void bvw_process_pending_tag_messages (BaconVideoWidget * bvw);
+static void bvw_stop_play_pipeline (BaconVideoWidget * bvw);
 
 static GtkWidgetClass *parent_class = NULL;
 
@@ -558,7 +561,7 @@ static void
 bacon_video_widget_size_request (GtkWidget * widget,
     GtkRequisition * requisition)
 {
-  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+  /* BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget); */
 
   requisition->width = 240;
   requisition->height = 180;
@@ -1928,8 +1931,8 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstElement *src, GError *e,
 }
 
 static gboolean
-poll_for_state_change (BaconVideoWidget *bvw, GstElement *element,
-    GstState state, GError **error)
+poll_for_state_change_full (BaconVideoWidget *bvw, GstElement *element,
+    GstState state, GError **error, gint64 timeout)
 {
   GstBus *bus;
   GstMessageType events, saved_events;
@@ -1952,7 +1955,7 @@ poll_for_state_change (BaconVideoWidget *bvw, GstElement *element,
     GstMessage *message;
     GstElement *src;
 
-    message = gst_bus_poll (bus, events, GST_SECOND/4);
+    message = gst_bus_poll (bus, events, timeout);
     
     if (!message)
       goto timed_out;
@@ -2011,19 +2014,32 @@ poll_for_state_change (BaconVideoWidget *bvw, GstElement *element,
 
 success:
   /* state change succeeded */
+  GST_DEBUG ("state change to %s succeeded", gst_element_state_get_name (state));
   bvw->priv->ignore_messages_mask = saved_events;
   return TRUE;
 
 timed_out:
   /* it's taking a long time to open -- just tell totem it was ok, this allows
    * the user to stop the loading process with the normal stop button */
+  GST_DEBUG ("state change to %s timed out, returning success and handling "
+      "errors asynchroneously", gst_element_state_get_name (state));
   bvw->priv->ignore_messages_mask = saved_events;
   return TRUE;
 
 error:
+  GST_DEBUG ("error while waiting for state change to %s: %s",
+      gst_element_state_get_name (state),
+      (error && *error) ? (*error)->message : "unknown");
   /* already set *error */
   bvw->priv->ignore_messages_mask = saved_events;
   return FALSE;
+}
+
+static gboolean
+poll_for_state_change (BaconVideoWidget *bvw, GstElement *element,
+    GstState state, GError **error)
+{
+  return poll_for_state_change_full (bvw,element, state, error, GST_SECOND/4);
 }
 
 gboolean
@@ -2106,14 +2122,30 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 
   gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
 
-  ret = poll_for_state_change (bvw, bvw->priv->play, GST_STATE_PAUSED, error);
+  if (bvw->priv->use_type == BVW_USE_TYPE_AUDIO ||
+      bvw->priv->use_type == BVW_USE_TYPE_VIDEO) {
+    /* normal interactive usage */
+    ret = poll_for_state_change (bvw, bvw->priv->play, GST_STATE_PAUSED, error);
+  } else {
+    /* used as thumbnailer or metadata extractor for properties dialog. In
+     * this case, wait for any state change to really finish and process any
+     * pending tag messages, so that the information is available right away */
+    ret = poll_for_state_change_full (bvw, bvw->priv->play,
+        GST_STATE_PAUSED, error, -1);
+
+    bvw_process_pending_tag_messages (bvw);
+    bacon_video_widget_get_stream_length (bvw);
+    /* even in case of an error (e.g. no decoders installed) we might still
+     * have useful metadata (like codec types, duration, etc.) */
+    g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
+  }
   
   if (ret) {
     g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
   } else {
     GST_DEBUG ("Error on open: %s", (error) ? (*error)->message : "(unknown)");
     bvw->priv->ignore_messages_mask |= GST_MESSAGE_ERROR;
-    gst_element_set_state (bvw->priv->play, GST_STATE_NULL);
+    bvw_stop_play_pipeline (bvw);
     g_free (bvw->priv->mrl);
     bvw->priv->mrl = NULL;
   }
@@ -2199,6 +2231,29 @@ bacon_video_widget_seek (BaconVideoWidget *bvw, float position, GError **error)
   return bacon_video_widget_seek_time (bvw, seek_time / GST_MSECOND, error);
 }
 
+static void
+bvw_stop_play_pipeline (BaconVideoWidget * bvw)
+{
+  GstElement *playbin = bvw->priv->play;
+  GstState current_state;
+
+  /* first go to ready, that way our state change handler gets to see
+   * our state change messages (before the bus goes to flushing) and
+   * cleans up */
+  gst_element_get_state (playbin, &current_state, NULL, 0);
+  if (current_state > GST_STATE_READY) {
+    GError *err = NULL;
+
+    gst_element_set_state (playbin, GST_STATE_READY);
+    poll_for_state_change_full (bvw, playbin, GST_STATE_READY, &err, -1);
+    if (err)
+      g_error_free (err);
+  }
+
+  /* now finally go to null state */
+  gst_element_set_state (playbin, GST_STATE_NULL);
+}
+
 void
 bacon_video_widget_stop (BaconVideoWidget * bvw)
 {
@@ -2207,7 +2262,7 @@ bacon_video_widget_stop (BaconVideoWidget * bvw)
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
   GST_LOG ("Stopping");
-  gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_NULL);
+  bvw_stop_play_pipeline (bvw);
   
   /* Reset position to 0 when stopping */
   got_time_tick (GST_ELEMENT (bvw->priv->play), 0, bvw);
@@ -2221,8 +2276,8 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
   
   GST_LOG ("Closing");
-  gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_NULL);
-  
+  bvw_stop_play_pipeline (bvw);
+
   if (bvw->priv->mrl) {
     g_free (bvw->priv->mrl);
     bvw->priv->mrl = NULL;
@@ -3366,7 +3421,7 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget * bvw,
 }
 
 static void
-bacon_video_widget_process_pending_tag_messages (BaconVideoWidget * bvw)
+bvw_process_pending_tag_messages (BaconVideoWidget * bvw)
 {
   GstMessageType events;
   GstMessage *msg;
@@ -3389,23 +3444,11 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
 				 BaconVideoWidgetMetadataType type,
 				 GValue * value)
 {
-  GstState cur_state;
-
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
   GST_DEBUG ("type = %d", type);
-
-  gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
-  if (cur_state < GST_STATE_PAUSED) {
-    /* wait for any pending state changes to finish, so that
-     * test-properties-page works. Then make sure all pending bus
-     * messages have been processed */
-    gst_element_get_state (bvw->priv->play, NULL, NULL, -1);
-  }
-
-  bacon_video_widget_process_pending_tag_messages (bvw);
 
   switch (type)
     {
@@ -3458,7 +3501,7 @@ bacon_video_widget_can_get_frames (BaconVideoWidget * bvw, GError ** error)
    * the bus and any other meta data */
   if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE) {
     gst_element_get_state (bvw->priv->play, NULL, NULL, -1);
-    bacon_video_widget_process_pending_tag_messages (bvw);
+    bvw_process_pending_tag_messages (bvw);
   }
 
   /* check for video */
@@ -3495,7 +3538,7 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
    * the bus and any other meta data */
   if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE) {
     gst_element_get_state (bvw->priv->play, NULL, NULL, -1);
-    bacon_video_widget_process_pending_tag_messages (bvw);
+    bvw_process_pending_tag_messages (bvw);
   }
 
   /* no video info */

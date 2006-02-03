@@ -1,3 +1,22 @@
+2006-02-03  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_size_request), (poll_for_state_change_full),
+	(poll_for_state_change), (bacon_video_widget_open_with_subtitle),
+	(bvw_stop_play_pipeline), (bacon_video_widget_stop),
+	(bacon_video_widget_close), (bvw_process_pending_tag_messages),
+	(bacon_video_widget_get_metadata),
+	(bacon_video_widget_can_get_frames),
+	(bacon_video_widget_get_current_frame):
+	  Don't wait in _get_metadata() for any state change to complete. It
+	  might be called from the message handler via poll_for_state_change()
+	  and then deadlock. Instead, wait in _open_with_subtitle() without
+	  a timeout in case we are used as thumbnailer or for metadata
+	  extraction (#329264). Also add bvw_stop_play_pipeline() to make sure
+	  our message handler gets to see the state change messages when we
+	  stop playback, so stuff gets cleaned up properly (otherwise the bus
+	  will flush all messages when going to NULL and it'll never see them).
+
 2006-02-03  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-xine.c:
