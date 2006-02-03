@@ -1856,11 +1856,17 @@ static GError*
 bvw_error_from_gst_error (BaconVideoWidget *bvw, GstElement *src, GError *e,
     char *debug)
 {
+  const gchar *src_typename;
   GError *ret = NULL;
+
+  src_typename = (src) ? G_OBJECT_TYPE_NAME (src) : NULL;
 
   GST_DEBUG ("e->message = '%s'", GST_STR_NULL (e->message));
   GST_DEBUG ("e->domain  = %d", e->domain);
   GST_DEBUG ("e->code    = %d", e->code);
+  GST_DEBUG ("debug      = %d", GST_STR_NULL (debug));
+  GST_DEBUG ("source     = %s (%s)", (src) ? GST_OBJECT_NAME (src) : "(null)",
+      GST_STR_NULL (src_typename));
 
 #define is_error(e, d, c) \
   (e->domain == GST_##d##_ERROR && \
@@ -1921,6 +1927,11 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstElement *src, GError *e,
 	     is_error (e, STREAM, NOT_IMPLEMENTED)) {
     ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED,
 			       e->message);
+  } else if (is_error (e, STREAM, FAILED) &&
+             src_typename && strncmp (src_typename, "GstTypeFind", 11) == 0) {
+    ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_READ_ERROR,
+        _("Cannot play this file over the network. "
+          "Try downloading it to disk first."));
   } else {
     /* generic error, no code; take message */
     ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_GENERIC,
