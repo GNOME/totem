@@ -538,6 +538,13 @@ totem_action_pause (Totem *totem)
 	}
 }
 
+static void
+totem_action_set_cursor (Totem *totem, gboolean state)
+{
+	totem->cursor_shown = state;
+	bacon_video_widget_set_show_cursor (totem->bvw, state);
+}
+
 static gboolean
 window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 		Totem *totem)
@@ -550,7 +557,7 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 		totem_action_save_size (totem);
 		update_fullscreen_size (totem);
 		bacon_video_widget_set_fullscreen (totem->bvw, TRUE);
-		bacon_video_widget_set_show_cursor (totem->bvw, FALSE);
+		totem_action_set_cursor (totem, FALSE);
 
 		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
 			totem_scrsaver_disable (totem->scr);
@@ -562,7 +569,7 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 
 		popup_hide (totem);
 		bacon_video_widget_set_fullscreen (totem->bvw, FALSE);
-		bacon_video_widget_set_show_cursor (totem->bvw, TRUE);
+		totem_action_set_cursor (totem, TRUE);
 
 		totem_scrsaver_enable (totem->scr);
 
@@ -765,8 +772,10 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		}
 
 		subtitle_uri = totem_uri_get_subtitle_uri (mrl);
+		totem_gdk_window_set_waiting_cursor (totem->win->window);
 		retval = bacon_video_widget_open_with_subtitle (totem->bvw,
 				mrl, subtitle_uri, &err);
+		gdk_window_set_cursor (totem->win->window, NULL);
 		totem->mrl = g_strdup (mrl);
 
 		/* Play/Pause */
@@ -1192,7 +1201,9 @@ on_got_redirect (BaconVideoWidget *bvw, const char *mrl, Totem *totem)
 	g_message ("on_got_redirect %s", mrl);
 	//FIXME we need to check for relative paths here
 	bacon_video_widget_close (totem->bvw);
+	totem_gdk_window_set_waiting_cursor (totem->win->window);
 	bacon_video_widget_open (totem->bvw, mrl, NULL);
+	gdk_window_set_cursor (totem->win->window, NULL);
 	bacon_video_widget_play (bvw, NULL);
 }
 
@@ -2468,7 +2479,7 @@ popup_hide (Totem *totem)
 
 	popup_timeout_remove (totem);
 
-	bacon_video_widget_set_show_cursor (totem->bvw, FALSE);
+	totem_action_set_cursor (totem, FALSE);
 
 	return FALSE;
 }
@@ -2504,7 +2515,7 @@ on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event,
 
 	gtk_widget_show_all (totem->exit_popup);
 	gtk_widget_show_all (totem->control_popup);
-	bacon_video_widget_set_show_cursor (totem->bvw, TRUE);
+	totem_action_set_cursor (totem, TRUE);
 
 	popup_timeout_add (totem);
 	totem->popup_in_progress = FALSE;
@@ -3503,6 +3514,7 @@ main (int argc, char **argv)
 	/* Init totem itself */
 	totem->prev_volume = -1;
 	totem->gc = gc;
+	totem->cursor_shown = TRUE;
 
 	/* Main window */
 	totem->xml = totem_interface_load ("totem.glade", _("main window"),

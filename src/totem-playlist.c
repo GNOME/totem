@@ -36,6 +36,7 @@
 #include "totem-uri.h"
 #include "totem-interface.h"
 #include "totem-pl-parser.h"
+#include "video-utils.h"
 #include "debug.h"
 
 #define PL_LEN (gtk_tree_model_iter_n_children (playlist->_priv->model, NULL))
@@ -1480,10 +1481,14 @@ totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl,
 		const char *display_name)
 {
 	TotemPlParserResult res;
+	GtkWidget *parent;
 
 	g_return_val_if_fail (mrl != NULL, FALSE);
 
+	parent = GTK_WIDGET (totem_playlist_get_toplevel (playlist));
+	totem_gdk_window_set_waiting_cursor (parent->window);
 	res = totem_pl_parser_parse (playlist->_priv->parser, mrl, TRUE);
+	gdk_window_set_cursor (parent->window, NULL);
 
 	if (res == TOTEM_PL_PARSER_RESULT_UNHANDLED)
 		return totem_playlist_add_one_mrl (playlist, mrl, display_name);

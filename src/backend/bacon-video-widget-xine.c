@@ -2056,9 +2056,6 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 
 	bvw->priv->got_redirect = FALSE;
 
-	if (bvw->priv->video_window != NULL)
-		totem_gdk_window_set_waiting_cursor (bvw->priv->video_window);
-
 	/* Hack to get VCD playback from .cue files */
 	if (g_str_has_prefix (mrl, "vcd:/") != FALSE
 			&& g_str_has_suffix (mrl, ".cue") != FALSE) {
@@ -2082,8 +2079,6 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 
 	if (err == 0)
 	{
-		if (bvw->priv->video_window != NULL)
-			gdk_window_set_cursor (bvw->priv->video_window, NULL);
 		bacon_video_widget_close (bvw);
 		xine_error (bvw, error);
 		return FALSE;
@@ -2091,10 +2086,6 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 		xine_try_error (bvw, TRUE, error);
 		if (error != NULL && *error != NULL) {
 			bacon_video_widget_close (bvw);
-			if (bvw->priv->video_window != NULL) {
-				gdk_window_set_cursor (bvw->priv->video_window,
-						NULL);
-			}
 			return FALSE;
 		}
 	}
@@ -2106,8 +2097,6 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 		bacon_video_widget_close (bvw);
 		g_set_error (error, BVW_ERROR, BVW_ERROR_STILL_IMAGE,
 				_("This movie is a still image. You can open it with an image viewer."));
-		if (bvw->priv->video_window != NULL)
-			gdk_window_set_cursor (bvw->priv->video_window, NULL);
 		return FALSE;
 	}
 
@@ -2140,9 +2129,6 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 
 		g_free (name);
 
-		if (bvw->priv->video_window != NULL)
-			gdk_window_set_cursor (bvw->priv->video_window, NULL);
-
 		return FALSE;
 	}
 
@@ -2156,9 +2142,6 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 		g_set_error (error, BVW_ERROR, BVW_ERROR_AUDIO_ONLY,
 				_("This is an audio-only file, and there is no audio output available."));
 
-		if (bvw->priv->video_window != NULL)
-			gdk_window_set_cursor (bvw->priv->video_window, NULL);
-
 		return FALSE;
 	}
 
@@ -2166,9 +2149,6 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 
 	g_signal_emit (G_OBJECT (bvw),
 			bvw_table_signals[GOT_METADATA], 0, NULL);
-
-	if (bvw->priv->video_window != NULL)
-		gdk_window_set_cursor (bvw->priv->video_window, NULL);
 
 	return TRUE;
 }

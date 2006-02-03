@@ -1,5 +1,18 @@
 2006-02-03  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_open_with_subtitle): revert the previous changes
+	to the backend
+	* src/totem-playlist.c: (totem_playlist_add_mrl):
+	* src/totem-private.h:
+	* src/totem.c: (totem_action_set_cursor), (window_state_event_cb),
+	(totem_action_set_mrl_with_warning), (on_got_redirect),
+	(popup_hide), (on_video_motion_notify_event), (main):
+	make the front-end itself show the spinning cursor for the whole
+	window when parsing playlists, and opening files
+
+2006-02-03  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c: (xine_try_error),
 	(bacon_video_widget_open_with_subtitle):
 	* src/backend/video-utils.c: (totem_gdk_window_set_waiting_cursor):

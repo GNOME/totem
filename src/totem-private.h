@@ -151,6 +151,7 @@ struct Totem {
 	TotemRemote *remote;
 	BaconMessageConnection *conn;
 	TotemStates state;
+	gboolean cursor_shown;
 };
 
 GtkWidget *totem_volume_create (void);
