@@ -1759,8 +1759,6 @@ fixate_to_num (const GstCaps * in_caps, gint channels)
   const GstStructure *s, *closest = NULL;
   const GValue *v;
 
-  /* there might be multiple structures, and one might contain the
-   * channelcount that we want. Try that. */
   count = gst_caps_get_size (in_caps);
   for (n = 0; n < count; n++) {
     s = gst_caps_get_structure (in_caps, n);
@@ -1769,65 +1767,11 @@ fixate_to_num (const GstCaps * in_caps, gint channels)
       continue;
 
     /* get channel count (or list of ~) */
-    if (G_VALUE_TYPE (v) == G_TYPE_INT) {
-      gint c = g_value_get_int (v);
-
-      if (channels == c) {
-        if (count == 1)
-          return NULL;
-        return gst_caps_new_full (gst_structure_copy (s), NULL);
-      } else if (!closest || abs (c - channels) < diff) {
-        diff = abs (c - channels);
-        closest = s;
-      }
-    } else if (G_VALUE_TYPE (v) == GST_TYPE_INT_RANGE) {
-      gint c1 = gst_value_get_int_range_min (v),
-           c2 = gst_value_get_int_range_max (v);
-
-      if (c1 <= channels  && c2 >= channels) {
-        GstCaps *caps;
-
-        caps = gst_caps_new_full (gst_structure_copy (s), NULL);
-        gst_structure_fixate_field_nearest_int (
-            gst_caps_get_structure (caps, 0), "channels", channels);
-
-        return caps;
-      } else if (!closest ||
-                 (c1 > channels && c1 - channels < diff) ||
-                 (c2 < channels && channels - c2 < diff)) {
-        closest = s; /* FIXME: fixate already? */
-        diff = c1 > channels ? c1 - channels : channels - c2;
-      }
-    } else if (G_VALUE_TYPE (v) == GST_TYPE_LIST) {
-      const GValue *kid;
-      gint nkid, kidcount = gst_value_list_get_size (v), kidc;
-
-      for (nkid = 0; nkid < kidcount; nkid++) {
-        kid = gst_value_list_get_value (v, nkid);
-        if (G_VALUE_TYPE (kid) != G_TYPE_INT)
-          continue;
-        kidc = g_value_get_int (kid);
-        if (kidc == channels) {
-          GstCaps *caps;
-
-          caps = gst_caps_new_full (gst_structure_copy (s), NULL);
-          gst_structure_fixate_field_nearest_int (
-              gst_caps_get_structure (caps, 0), "channels", channels);
-
-          return caps;
-        } else if (!closest || abs (kidc - channels) < diff) {
-          diff = abs (kidc - channels);
-          closest = s;
-        }
-      }
-    }
+    gst_structure_fixate_field_nearest_int (s, "channels", channels);
   }
 
-  /* close guess */
-  if (closest)
-    return gst_caps_new_full (gst_structure_copy (closest), NULL);
-
-  return NULL;
+  /* Transfer the ref to the returned caps */
+  return in_caps;
 }
 
 static void
@@ -1840,16 +1784,13 @@ set_audio_filter (BaconVideoWidget *bvw)
   /* reset old */
   g_object_set (bvw->priv->audio_capsfilter, "caps", NULL, NULL);
 
-  /* get possible caps */
-  pad = gst_element_get_pad (bvw->priv->audio_capsfilter, "src");
-  caps = gst_pad_get_allowed_caps (pad);
-  gst_object_unref (pad);
+  /* construct possible caps to filter down to our chosen caps */
+  caps = gst_caps_from_string ("audio/x-raw-int,channels=(int)[1,8]; audio/x-raw-float,channels=(int)[1,8]");
 
   if ((channels = get_num_audio_channels (bvw)) == -1)
     return;
 
   res = fixate_to_num (caps, channels);
-  gst_caps_unref (caps);
 
   /* set */
   if (res && gst_caps_is_empty (res)) {
@@ -3456,7 +3397,7 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
 
   GST_DEBUG ("type = %d", type);
 
-  gst_element_get_state (bvw->priv->play, &cur_state, NULL, -1);
+  gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
   if (cur_state < GST_STATE_PAUSED) {
     /* wait for any pending state changes to finish, so that
      * test-properties-page works. Then make sure all pending bus

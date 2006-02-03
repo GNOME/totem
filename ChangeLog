@@ -1,3 +1,15 @@
+2006-02-03  Jan Schmidt  <thaytan@mad.scientist.com>
+
+	* src/backend/bacon-video-widget-gst-0.10.c: (fixate_to_num),
+	(set_audio_filter), (bacon_video_widget_get_metadata):
+	Remove broken caps selection code in favour of filtering down
+	the allowed caps passing into the audio sink. The old method
+	broke when any element wanted to output anything other than 16 bit
+	audio.
+
+	When getting metadata, don't block in get_state unless the state is
+	< PAUSED.
+
 2006-02-02  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem_logo.png: thanks to Michaël Arnauts for rendering
