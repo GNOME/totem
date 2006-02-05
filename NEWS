@@ -1,5 +1,28 @@
 New features and significant updates in version...
 
+1.3.91:
+ * Show the waiting cursor when opening files, and parsing playlists
+ * Add popup menu support with the keyboard to the playlist
+ * Remove the scrollbars in the playlist when it's been emptied
+ * Don't look for subtitles on HTTP servers
+ * Don't show playlists as ignored after having parsed them successfully
+ * Bigger and better logo
+ * Add support for the target property, opening the movie in a stand-alone
+ Totem (Mozilla plugin)
+ * Add support for background music (Mozilla plugin)
+ * Take the aspect ratio of the screen when setting the size of the
+ visualisations (xine-lib)
+ * Fix compilation with glib < 2.8
+ * Add ability to disable text subtitles when Totem loads them automatically
+ (xine-lib)
+ * Better logo mode handling (GStreamer 0.8)
+ * Free the video output after showing images (GStreamer 0.8)
+ * Better key seek handling (GStreamer 0.10)
+ * Fix playback of files with non-16-bit audio (GStreamer 0.10)
+ * Don't block when getting metadata (GStreamer 0.10)
+ * Better error message when the decoder/demuxer doesn't support streaming
+ (GStreamer 0.10)
+
 1.3.90:
  * Use Ctrl+S as "Take Screenshot..." shortcut
  * Fix a possible crash on start with multiple totem processes
