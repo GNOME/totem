@@ -1,3 +1,17 @@
+2006-02-05  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_show), (bacon_video_widget_hide),
+	(bvw_handle_application_message), (bvw_bus_message_cb),
+	(parse_stream_info), (bacon_video_widget_open_with_subtitle),
+	(bacon_video_widget_set_logo_mode), (bacon_video_widget_new):
+	  When running in metadata mode, don't announce any metadata
+	  to totem until we are sure we got all of it, otherwise the
+	  nautilus properties page will only show whatever tags happen
+	  to come up first.
+	  Also, make sure we don't try to show or hide GdkWindows when
+	  they don't exist, like in metadata mode (#329527).
+
 2006-02-05  Bastien Nocera  <hadess@hadess.net>
 
 	* NEWS: upd

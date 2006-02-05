@@ -315,8 +315,10 @@ bacon_video_widget_show (GtkWidget *widget)
 {
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
 
-  gdk_window_show (widget->window);
-  gdk_window_show (bvw->priv->video_window);
+  if (widget->window)
+    gdk_window_show (widget->window);
+  if (bvw->priv->video_window)
+    gdk_window_show (bvw->priv->video_window);
 
   if (GTK_WIDGET_CLASS (parent_class)->show)
     GTK_WIDGET_CLASS (parent_class)->show (widget);
@@ -327,8 +329,10 @@ bacon_video_widget_hide (GtkWidget *widget)
 {
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
 
-  gdk_window_hide (widget->window);
-  gdk_window_hide (bvw->priv->video_window);
+  if (widget->window)
+    gdk_window_hide (widget->window);
+  if (bvw->priv->video_window)
+    gdk_window_hide (bvw->priv->video_window);
 
   if (GTK_WIDGET_CLASS (parent_class)->hide)
     GTK_WIDGET_CLASS (parent_class)->hide (widget);
@@ -796,11 +800,21 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
   GST_DEBUG ("Handling application message: %" GST_PTR_FORMAT, msg->structure);
 
   if (strcmp (msg_name, "notify-streaminfo") == 0) {
-    g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
-    g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
+    /* if we're not interactive, we want to announce metadata
+     * only later when we can be sure we got it all */
+    if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO ||
+        bvw->priv->use_type == BVW_USE_TYPE_AUDIO) {
+      g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
+      g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
+    }
   } 
   else if (strcmp (msg_name, "video-size") == 0) {
-    g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
+    /* if we're not interactive, we want to announce metadata
+     * only later when we can be sure we got it all */
+    if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO ||
+        bvw->priv->use_type == BVW_USE_TYPE_AUDIO) {
+      g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
+    }
 
     if (bvw->priv->auto_resize && !bvw->priv->fullscreen_mode) {
       gint w, h;
@@ -815,10 +829,12 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
       /* Uhm, so this ugly hack here makes media loading work for
        * weird laptops with NVIDIA graphics cards... Dunno what the
        * bug is really, but hey, it works. :). */
-      gdk_window_hide (GTK_WIDGET (bvw)->window);
-      gdk_window_show (GTK_WIDGET (bvw)->window);
-
-      bacon_video_widget_expose_event (GTK_WIDGET (bvw), NULL);
+      if (GTK_WIDGET (bvw)->window) {
+        gdk_window_hide (GTK_WIDGET (bvw)->window);
+        gdk_window_show (GTK_WIDGET (bvw)->window);
+        
+        bacon_video_widget_expose_event (GTK_WIDGET (bvw), NULL);
+      }
     }
   } else {
     g_message ("Unhandled application message %s", msg_name);
@@ -965,7 +981,12 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       /* clean up */
       gst_tag_list_free (tag_list);
 
-      g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0);
+      /* if we're not interactive, we want to announce metadata
+       * only later when we can be sure we got it all */
+      if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO ||
+          bvw->priv->use_type == BVW_USE_TYPE_AUDIO) {
+        g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0);
+      }
       break;
     }
     case GST_MESSAGE_EOS:
@@ -1291,17 +1312,17 @@ parse_stream_info (BaconVideoWidget *bvw)
 
     if (!g_strcasecmp (val->value_nick, "audio")) {
       bvw->priv->media_has_audio = TRUE;
-      if (!bvw->priv->media_has_video) {
+      if (!bvw->priv->media_has_video && bvw->priv->video_window) {
         if (bvw->priv->show_vfx) {
           gdk_window_show (bvw->priv->video_window);
-        }
-        else {
+        } else {
           gdk_window_hide (bvw->priv->video_window);
         }
       }
     } else if (!g_strcasecmp (val->value_nick, "video")) {
       bvw->priv->media_has_video = TRUE;
-      gdk_window_show (bvw->priv->video_window);
+      if (bvw->priv->video_window)
+        gdk_window_show (bvw->priv->video_window);
       if (!videopad) {
         g_object_get (info, "object", &videopad, NULL);
       }
@@ -2112,7 +2133,8 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   bvw->priv->ignore_messages_mask = 0;
   
   /* We hide the video window for now. Will show when video of vfx comes up */
-  gdk_window_hide (bvw->priv->video_window);
+  if (bvw->priv->video_window)
+    gdk_window_hide (bvw->priv->video_window);
   
   /* Visualization settings changed */
   if (bvw->priv->vis_changed) {
@@ -2385,12 +2407,13 @@ bacon_video_widget_set_logo_mode (BaconVideoWidget * bvw, gboolean logo_mode)
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
   bvw->priv->logo_mode = logo_mode;
-  
-  if (logo_mode) {
-    gdk_window_hide (bvw->priv->video_window);
-  }
-  else {
-    gdk_window_show (bvw->priv->video_window);
+
+  if (bvw->priv->video_window) {
+    if (logo_mode) {
+      gdk_window_hide (bvw->priv->video_window);
+    } else {
+      gdk_window_show (bvw->priv->video_window);
+    }
   }
   
   /* Queue a redraw of the widget */
@@ -3913,6 +3936,7 @@ bacon_video_widget_new (int width, int height,
                             (bacon_video_widget_get_type (), NULL));
 
   bvw->priv->use_type = type;
+  GST_DEBUG ("use_type = %d", type);
 
   bvw->priv->play = gst_element_factory_make ("playbin", "play");
   if (!bvw->priv->play) {
