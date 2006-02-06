@@ -3200,9 +3200,9 @@ bacon_video_widget_can_play (BaconVideoWidget * bvw, MediaType type)
   switch (type) {
     case MEDIA_TYPE_CDDA:
     case MEDIA_TYPE_VCD:
-    case MEDIA_TYPE_DVD:
       res = TRUE;
       break;
+    case MEDIA_TYPE_DVD:
     default:
       res = FALSE;
       break;
@@ -3282,11 +3282,13 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw, MediaType type)
       mrls = g_strdupv (uri);
       break;
     }
+/*
     case MEDIA_TYPE_DVD: {
       gchar *uri[] = { "dvd://", NULL };
       mrls = g_strdupv (uri);
       break;
     }
+*/
     default:
       mrls = NULL;
       break;

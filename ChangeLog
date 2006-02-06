@@ -1,3 +1,10 @@
+2006-02-06  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_can_play), (bacon_video_widget_get_mrls):
+	  Don't claim to be able to play back DVDs when we aren't
+	  (for now, at least) (#330086, patch by: Fernando Herrera).
+
 2006-02-06  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/totem-pl-parser.c: (totem_pl_parser_add_asf),
