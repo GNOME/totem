@@ -59,8 +59,8 @@ static void
 entry_added (TotemPlParser *parser, const char *uri, const char *title,
 		const char *genre, gpointer data)
 {
-	g_print ("added URI '%s' with title '%s'\n", uri,
-			title ? title : "empty");
+	g_print ("added URI '%s' with title '%s' genre '%s'\n", uri,
+			title ? title : "empty", genre);
 }
 
 static void
@@ -118,7 +118,7 @@ test_parsing (void)
 	g_signal_connect (G_OBJECT (pl), "entry", G_CALLBACK (entry_added), NULL);
 
 	header ("parsing");
-	g_timeout_add (1000, push_parser, pl);
+	g_idle_add (push_parser, pl);
 	loop = g_main_loop_new (NULL, FALSE);
 	g_main_loop_run (loop);
 }

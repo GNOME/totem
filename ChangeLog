@@ -1,3 +1,12 @@
+2006-02-06  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/test-parser.c: (entry_added), (test_parsing):
+	Also print the genre of the URI, if available, and make parsing faster
+	using an idle, instead of a timeout
+	* src/plparse/totem-pl-parser.c:
+	(totem_pl_parser_add_pls_with_contents): try to parse further inside
+	.pls playlists to work around broken setups (Closes: #318749)
+
 2006-02-05  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:

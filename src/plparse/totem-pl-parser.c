@@ -915,10 +915,10 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url, c
 			continue;
 		}
 
-		if (strstr (file, "://") != NULL
-				|| file[0] == G_DIR_SEPARATOR) {
-			totem_pl_parser_add_one_url_ext (parser,
-					file, title, genre);
+		if (strstr (file, "://") != NULL || file[0] == G_DIR_SEPARATOR) {
+			if (totem_pl_parser_parse (parser, file, FALSE) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
+				totem_pl_parser_add_one_url_ext (parser, file, title, genre);
+			}
 		} else {
 			char *uri, *base, *escaped;
 
@@ -928,8 +928,9 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url, c
 
 			uri = g_strdup_printf ("%s/%s", base, escaped);
 
-			totem_pl_parser_add_one_url_ext (parser,
-					uri, title, genre);
+			if (totem_pl_parser_parse (parser, uri, FALSE) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
+				totem_pl_parser_add_one_url_ext (parser, file, title, genre);
+			}
 
 			g_free (escaped);
 			g_free (uri);
