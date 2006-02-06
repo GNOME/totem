@@ -1,3 +1,11 @@
+2006-02-06  Jan Schmidt  <thaytan@mad.scientist.com>
+
+	* src/backend/bacon-video-widget-gst-0.10.c: (fixate_to_num),
+	(set_audio_filter):
+	Fix problems with setting the speaker arrangment as pointed out 
+	by Tim - that it will fail when selecting '5.1' output against 
+	a sound card that only supports stereo.
+
 2006-02-06  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:

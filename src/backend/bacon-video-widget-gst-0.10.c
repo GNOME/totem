@@ -1779,13 +1779,16 @@ get_num_audio_channels (BaconVideoWidget * bvw)
 static GstCaps *
 fixate_to_num (const GstCaps * in_caps, gint channels)
 {
-  gint n, count, diff = -1;
-  const GstStructure *s, *closest = NULL;
+  gint n, count;
+  GstStructure *s;
   const GValue *v;
+  GstCaps *out_caps;
 
-  count = gst_caps_get_size (in_caps);
+  out_caps = gst_caps_copy (in_caps);
+
+  count = gst_caps_get_size (out_caps);
   for (n = 0; n < count; n++) {
-    s = gst_caps_get_structure (in_caps, n);
+    s = gst_caps_get_structure (out_caps, n);
     v = gst_structure_get_value (s, "channels");
     if (!v)
       continue;
@@ -1794,8 +1797,7 @@ fixate_to_num (const GstCaps * in_caps, gint channels)
     gst_structure_fixate_field_nearest_int (s, "channels", channels);
   }
 
-  /* Transfer the ref to the returned caps */
-  return in_caps;
+  return out_caps;
 }
 
 static void
@@ -1809,12 +1811,17 @@ set_audio_filter (BaconVideoWidget *bvw)
   g_object_set (bvw->priv->audio_capsfilter, "caps", NULL, NULL);
 
   /* construct possible caps to filter down to our chosen caps */
-  caps = gst_caps_from_string ("audio/x-raw-int,channels=(int)[1,8]; audio/x-raw-float,channels=(int)[1,8]");
+  /* Start with what the audio sink supports, but limit the allowed
+   * channel count to our speaker output configuration */
+  pad = gst_element_get_pad (bvw->priv->audio_capsfilter, "src");
+  caps = gst_pad_peer_get_caps (pad);        
+  gst_object_unref (pad);
 
   if ((channels = get_num_audio_channels (bvw)) == -1)
     return;
 
   res = fixate_to_num (caps, channels);
+  gst_caps_unref (caps);
 
   /* set */
   if (res && gst_caps_is_empty (res)) {
@@ -1846,8 +1853,6 @@ gboolean
 bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
                                        BaconVideoWidgetAudioOutType type)
 {
-  GstPad *pad;
-
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 
@@ -1860,9 +1865,7 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
   gconf_client_set_int (bvw->priv->gc,
       GCONF_PREFIX"/audio_output_type", type, NULL);
 
-  pad = gst_element_get_pad (bvw->priv->audio_capsfilter, "sink");
   set_audio_filter (bvw);
-  gst_object_unref (pad);
 
   return FALSE;
 }
