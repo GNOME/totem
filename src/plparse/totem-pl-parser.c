@@ -1372,11 +1372,14 @@ totem_pl_parser_add_smil (TotemPlParser *parser, const char *url, gpointer data)
 static TotemPlParserResult
 totem_pl_parser_add_asf (TotemPlParser *parser, const char *url, gpointer data)
 {
-	if (data != NULL &&
-		(g_str_has_prefix (data, "[Reference]") == FALSE
+	if (data == NULL) {
+		return totem_pl_parser_add_one_url (parser, url, NULL);
+	}
+
+	if (g_str_has_prefix (data, "[Reference]") == FALSE
 		 && g_ascii_strncasecmp (data, "<ASX", strlen ("<ASX")) != 0
 		 && strstr (data, "<ASX") == NULL
-		 && strstr (data, "<asx") == NULL)
+		 && strstr (data, "<asx") == NULL
 		 && g_str_has_prefix (data, "ASF ") == FALSE) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
@@ -1707,7 +1710,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 		return ret;
 
 	super = gnome_vfs_get_supertype_from_mime_type (mimetype);
-	for (i = 0; i < G_N_ELEMENTS (ignore_types); i++) {
+	for (i = 0; i < G_N_ELEMENTS (ignore_types) && super != NULL; i++) {
 		if (gnome_vfs_mime_type_is_supertype (ignore_types[i].mimetype) != FALSE) {
 			if (strcmp (super, ignore_types[i].mimetype) == 0) {
 				g_free (super);

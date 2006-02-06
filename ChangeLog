@@ -1,5 +1,14 @@
 2006-02-06  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_add_asf),
+	(totem_pl_parser_parse_internal): Fix logic in the ASF parser,
+	we were doing work on the data even though we didn't have any,
+	don't look for super mime-types to ignore when we don't have one
+	(Closes: #330120)
+	* src/plparse/test-parser.c: add a test for the above bug
+
+2006-02-06  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/test-parser.c: (entry_added), (test_parsing):
 	Also print the genre of the URI, if available, and make parsing faster
 	using an idle, instead of a timeout
