@@ -934,7 +934,9 @@ totem_playlist_move_files (TotemPlaylist *playlist, gboolean direction_up)
 	g_list_foreach (paths, (GFunc) gtk_tree_path_free, NULL);
 	g_list_free (paths);
 
-	refs = g_list_reverse (refs);
+	/* Otherwise we reverse the items when moving down */
+	if (direction_up != FALSE)
+		refs = g_list_reverse (refs);
 
 	if (direction_up == FALSE)
 		pos = pos + 2;
