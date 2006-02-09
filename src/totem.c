@@ -3589,6 +3589,7 @@ main (int argc, char **argv)
 	/* Show ! gtk_main_iteration trickery to show all the widgets
 	 * we have so far */
 	gtk_widget_show (totem->win);
+	totem_gdk_window_set_waiting_cursor (totem->win->window);
 	update_fullscreen_size (totem);
 	long_action ();
 
@@ -3610,6 +3611,7 @@ main (int argc, char **argv)
 	} else {
 		totem_action_set_mrl (totem, NULL);
 	}
+	gdk_window_set_cursor (totem->win->window, NULL);
 
 	if (bacon_message_connection_get_is_server (totem->conn) != FALSE)
 	{
