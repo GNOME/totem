@@ -100,15 +100,17 @@ totem_SOURCES = 					\
 	ev-sidebar.c ev-sidebar.h
 
 totem_LDADD = \
-	$(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(REMOTE_LIBS) \
+	$(EXTRA_GNOME_LIBS) $(REMOTE_LIBS) \
 	$(XVIDMODE_LIBS) $(NVTV_LIBS) plparse/libtotem-plparser.la \
 	backend/libbaconvideowidget.la libbaconpropertiespage.la \
-	libbaconmessageconnection.la $(DBUS_LIBS) 
+	libbaconmessageconnection.la $(DBUS_LIBS) \
+	$(XTEST_LIBS) $(X_LIBS)
 
 totem_video_thumbnailer_SOURCES = totem-video-thumbnailer.c
 totem_video_thumbnailer_LDADD = \
-	$(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) \
-	$(NVTV_LIBS) $(EXTRA_GNOME_LIBS) backend/libbaconvideowidget.la
+	$(GTK_LIBS) $(XVIDMODE_LIBS) \
+	$(NVTV_LIBS) $(EXTRA_GNOME_LIBS) backend/libbaconvideowidget.la \
+	$(XTEST_LIBS) $(X_LIBS) 
 
 nautilusdir = $(libdir)/nautilus/extensions-1.0/
 libtotem_properties_page_la_CFLAGS = -I$(top_srcdir)
@@ -117,9 +119,11 @@ libtotem_properties_page_la_SOURCES = 	\
 	totem-properties-view.c		\
 	totem-properties-view.h
 libtotem_properties_page_la_LIBADD = \
-	$(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) \
+	$(EXTRA_GNOME_LIBS) $(XVIDMODE_LIBS) \
 	$(NVTV_LIBS) $(NAUTILUS_LIBS) \
-	backend/libbaconvideowidget.la libbaconpropertiespage.la
+	backend/libbaconvideowidget.la libbaconpropertiespage.la \
+	$(XTEST_LIBS) $(X_LIBS)
+
 libtotem_properties_page_la_LDFLAGS = $(module_flags)
 
 test_properties_page_CFLAGS = -I$(top_srcdir)
@@ -129,9 +133,10 @@ test_properties_page_SOURCES =		\
 	totem-properties-view.h		\
 	test-properties-page.c
 test_properties_page_LDADD =		\
-	$(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) \
+	$(EXTRA_GNOME_LIBS) $(XVIDMODE_LIBS) \
 	$(NVTV_LIBS) $(NAUTILUS_LIBS) \
-	backend/libbaconvideowidget.la libbaconpropertiespage.la
+	backend/libbaconvideowidget.la libbaconpropertiespage.la \
+	$(XTEST_LIBS) $(X_LIBS) 
 
 if HAVE_MOZILLA
 
@@ -168,9 +173,10 @@ totem_mozilla_viewer_SOURCES = 		\
 	totem-mozilla-options.h		\
 	bacon-volume.c bacon-volume.h
 totem_mozilla_viewer_LDADD = \
-	$(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) \
+	$(EXTRA_GNOME_LIBS) $(XVIDMODE_LIBS) \
 	$(DBUS_LIBS) $(NVTV_LIBS) \
-	backend/libbaconvideowidget.la libbaconpropertiespage.la
+	backend/libbaconvideowidget.la libbaconpropertiespage.la \
+	$(XTEST_LIBS) $(X_LIBS) 
 
 module_flags = -export_dynamic -avoid-version
 
@@ -186,13 +192,15 @@ vanity_SOURCES =					\
 	vanity.c
 
 vanity_LDADD = \
-	$(X_LIBS) $(EXTRA_GNOME_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) \
-	$(NVTV_LIBS) backend/libbaconvideowidget.la
+	$(EXTRA_GNOME_LIBS) $(XVIDMODE_LIBS) \
+	$(NVTV_LIBS) backend/libbaconvideowidget.la \
+	$(XTEST_LIBS) $(X_LIBS) 
 
 metadata_test_SOURCES = metadata-test.c
 metadata_test_LDADD = \
-	$(X_LIBS) $(GTK_LIBS) $(XTEST_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS) \
-	$(EXTRA_GNOME_LIBS) backend/libbaconvideowidget.la
+	$(GTK_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS) \
+	$(EXTRA_GNOME_LIBS) backend/libbaconvideowidget.la \
+	$(XTEST_LIBS) $(X_LIBS) 
 
 disc_test_SOURCES = disc-test.c
 disc_test_LDADD = \
