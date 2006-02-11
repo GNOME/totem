@@ -361,6 +361,7 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
 {
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
   GstXOverlay *xoverlay;
+  gboolean draw_logo;
   XID window;
 
   if (event && event->count > 0)
@@ -385,8 +386,12 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
   /* Start with a nice black canvas */
   gdk_draw_rectangle (widget->window, widget->style->black_gc, TRUE, 0, 0,
       widget->allocation.width, widget->allocation.height);
-  
-  if (bvw->priv->logo_mode) {
+
+  /* if there's only audio and no visualisation, draw the logo as well */
+  draw_logo = bvw->priv->media_has_audio &&
+      !bvw->priv->media_has_video && !bvw->priv->show_vfx;
+
+  if (bvw->priv->logo_mode || draw_logo) {
     if (bvw->priv->logo_pixbuf != NULL) {
       /* draw logo here */
       GdkPixbuf *logo = NULL;
@@ -415,6 +420,12 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
           s_width, s_height, GDK_RGB_DITHER_NONE, 0, 0);
 
       gdk_pixbuf_unref (logo);
+    } else if (widget->window) {
+      /* No pixbuf, just draw a black background then */
+      gdk_draw_rectangle (widget->window, widget->style->black_gc, 
+                         TRUE, 0, 0,
+                         widget->allocation.width,
+                         widget->allocation.height);
     }
   } else {
     /* no logo, pass the expose to gst */
@@ -2673,6 +2684,8 @@ setup_vis (BaconVideoWidget * bvw)
     g_list_free (features);
     
     if (!fac) {
+      GST_DEBUG ("Could not find element factory for visualisation '%s'",
+          GST_STR_NULL (bvw->priv->vis_element_name));
       goto beach;
     }
     
@@ -2819,6 +2832,8 @@ bacon_video_widget_set_visuals (BaconVideoWidget * bvw, const char *name)
   }
   
   bvw->priv->vis_element_name = g_strdup (name);
+
+  GST_DEBUG ("new visualisation element name = '%s'", GST_STR_NULL (name));
   
   setup_vis (bvw);
   
