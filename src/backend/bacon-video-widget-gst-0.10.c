@@ -603,6 +603,10 @@ bacon_video_widget_size_allocate (GtkWidget * widget,
 
     /* resize video_window */
     get_media_size (bvw, &w, &h);
+    if (!w || !h) {
+      w = allocation->width;
+      h = allocation->height;
+    }
     width = w;
     height = h;
 
