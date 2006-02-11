@@ -1,5 +1,12 @@
 2006-02-11  Tim-Philipp Müller  <tim at centricular dot net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c: (setup_vis):
+	  Honour the requested visualisation size again (must get
+	  allowed caps from the right pad; also, fixate all
+	  structures in the allowed caps, not just the first one).
+
+2006-02-11  Tim-Philipp Müller  <tim at centricular dot net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bacon_video_widget_expose_event), (setup_vis),
 	(bacon_video_widget_set_visuals):

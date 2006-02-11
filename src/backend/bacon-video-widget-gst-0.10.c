@@ -2714,31 +2714,45 @@ setup_vis (BaconVideoWidget * bvw)
     pad = gst_element_get_pad (vis_element, "sink");
     gst_element_add_pad (vis_bin, gst_ghost_pad_new ("sink", pad));
     gst_object_unref (pad);
-    
-    /* Src ghostpad, link with vis_element and get allowed src caps */
+
+    /* Source ghostpad, link with vis_element */
     pad = gst_element_get_pad (vis_capsfilter, "src");
     gst_element_add_pad (vis_bin, gst_ghost_pad_new ("src", pad));
     gst_element_link_pads (vis_element, "src", vis_capsfilter, "sink");
+    gst_object_unref (pad);
+
+    /* Get allowed output caps from visualisation element */
+    pad = gst_element_get_pad (vis_element, "src");
     caps = gst_pad_get_allowed_caps (pad);
     gst_object_unref (pad);
     
+    GST_DEBUG ("allowed caps: %" GST_PTR_FORMAT, caps);
+    
     /* Can we fixate ? */
-    if (GST_IS_CAPS (caps) && !gst_caps_is_fixed (caps)) {
+    if (caps && !gst_caps_is_fixed (caps)) {
+      guint i;
       gint w, h, fps_n, fps_d;
-      GstStructure *s = gst_caps_get_structure (caps, 0);
+
+      caps = gst_caps_make_writable (caps);
 
       /* Get visualization size */
       get_visualization_size (bvw, &w, &h, &fps_n, &fps_d);
+
+      for (i = 0; i < gst_caps_get_size (caps); ++i) {
+        GstStructure *s = gst_caps_get_structure (caps, i);
       
-      /* Fixate */
-      gst_structure_fixate_field_nearest_int (s, "width", w);
-      gst_structure_fixate_field_nearest_int (s, "height", h);
-      gst_structure_fixate_field_nearest_fraction (s, "framerate", fps_n,
-          fps_d);
+        /* Fixate */
+        gst_structure_fixate_field_nearest_int (s, "width", w);
+        gst_structure_fixate_field_nearest_int (s, "height", h);
+        gst_structure_fixate_field_nearest_fraction (s, "framerate", fps_n,
+            fps_d);
+      }
 
       /* set this */
       g_object_set (vis_capsfilter, "caps", caps, NULL);
     }
+
+    GST_DEBUG ("visualisation caps: %" GST_PTR_FORMAT, caps);
     
     if (GST_IS_CAPS (caps)) {
       gst_caps_unref (caps);
