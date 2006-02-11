@@ -953,7 +953,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
       /* all tags */
       result = gst_tag_list_merge (bvw->priv->tagcache, tag_list,
-				   GST_TAG_MERGE_APPEND);
+				   GST_TAG_MERGE_KEEP);
       if (bvw->priv->tagcache)
         gst_tag_list_free (bvw->priv->tagcache);
       bvw->priv->tagcache = result;
@@ -971,7 +971,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
         }
 
         if (cache) {
-          result = gst_tag_list_merge (*cache, tag_list, GST_TAG_MERGE_APPEND);
+          result = gst_tag_list_merge (*cache, tag_list, GST_TAG_MERGE_KEEP);
           if (*cache)
             gst_tag_list_free (*cache);
           *cache = result;
