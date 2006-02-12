@@ -1,3 +1,14 @@
+2006-02-12  Julien MOUTTE  <julien@moutte.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c: (get_media_size),
+	(bacon_video_widget_realize), (caps_set),
+	(bacon_video_widget_set_aspect_ratio): Refactored aspect ratio
+	handling. Indeed _set_aspect_ratio is here to force the movie
+	aspect ratio when the encoder/muxer did not set it correctly.
+	The display aspect ratio is obtained from the overlay object
+	and is then used to calculate how we should scale the video
+	so that it appears correctly on the screen.
+
 2006-02-12  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:

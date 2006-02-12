@@ -105,8 +105,6 @@ static const gchar *video_props_str[4] = {
 
 struct BaconVideoWidgetPrivate
 {
-  gdouble                      display_ratio;
-  gdouble                      movie_ratio;
   BaconVideoWidgetAspectRatio  ratio_type;
 
   GstElement                  *play;
@@ -149,10 +147,11 @@ struct BaconVideoWidgetPrivate
   gboolean                     fullscreen_mode;
   gboolean                     auto_resize;
   
-  gint                         video_width;
-  gint                         video_height;
-  gint                         video_width_pixels;
-  gint                         video_height_pixels;
+  gint                         video_width; /* Movie width */
+  gint                         video_height; /* Movie height */
+  const GValue                *movie_par; /* Movie pixel aspect ratio */
+  gint                         video_width_pixels; /* Scaled movie width */
+  gint                         video_height_pixels; /* Scaled movie height */
   gint                         video_fps_n;
   gint                         video_fps_d;
 
@@ -216,8 +215,120 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
     }
   } else {
     if (bvw->priv->media_has_video) {
-      *width = bvw->priv->video_width;
-      *height = bvw->priv->video_height;
+      GValue * disp_par = NULL, * disp_ratio = NULL;
+      guint movie_par_n, movie_par_d, disp_par_n, disp_par_d, num, den;
+      
+      /* Create and init the fraction value */
+      disp_ratio = g_new0 (GValue, 1);
+      disp_par = g_new0 (GValue, 1);
+      g_value_init (disp_par, GST_TYPE_FRACTION);
+      g_value_init (disp_ratio, GST_TYPE_FRACTION);
+    
+      /* Now try getting display's pixel aspect ratio */
+      if (bvw->priv->xoverlay) {
+        GValue disp_par_string = { 0, };
+      
+        /* Init the string value */
+        g_value_init (&disp_par_string, G_TYPE_STRING);
+        /* Get the string GValue from the video sink */
+        g_object_get_property (G_OBJECT (bvw->priv->xoverlay),
+            "pixel-aspect-ratio", &disp_par_string);
+        
+        /* Try transforming */
+        if (!g_value_transform (&disp_par_string, disp_par)) {
+          gst_value_set_fraction (disp_par, 1, 1);
+        }
+        
+        /* Free the string PAR */
+        g_value_unset (&disp_par_string);
+      }
+      else {
+        /* Square pixel is our default */
+        gst_value_set_fraction (disp_par, 1, 1);
+      }
+      
+      disp_par_n = gst_value_get_fraction_numerator (disp_par);
+      disp_par_d = gst_value_get_fraction_denominator (disp_par);
+      
+      GST_DEBUG ("display PAR is %d/%d", disp_par_n, disp_par_d);
+      
+      /* If movie pixel aspect ratio is enforced, use that */
+      if (bvw->priv->ratio_type != BVW_RATIO_AUTO) {
+        switch (bvw->priv->ratio_type) {
+          case BVW_RATIO_SQUARE:
+            movie_par_n = 1;
+            movie_par_d = 1;
+            break;
+          case BVW_RATIO_FOURBYTHREE:
+            movie_par_n = 4;
+            movie_par_d = 3;
+            break;
+          case BVW_RATIO_ANAMORPHIC:
+            movie_par_n = 16;
+            movie_par_d = 9;
+            break;
+          case BVW_RATIO_DVB:
+            movie_par_n = 211;
+            movie_par_d = 100;
+            break;
+        }
+      }
+      else {
+        /* Use the movie pixel aspect ratio if any */
+        if (bvw->priv->movie_par) {
+          movie_par_n = gst_value_get_fraction_numerator (bvw->priv->movie_par);
+          movie_par_d =
+              gst_value_get_fraction_denominator (bvw->priv->movie_par);
+        }
+        else {
+          /* Square pixels */
+          movie_par_n = 1;
+          movie_par_d = 1;
+        }
+      }
+      
+      GST_DEBUG ("movie PAR is %d/%d", movie_par_n, movie_par_d);
+      
+      gst_value_set_fraction (disp_ratio,
+          bvw->priv->video_width * movie_par_n * disp_par_d,
+          bvw->priv->video_height * movie_par_d * disp_par_n);
+      
+      num = gst_value_get_fraction_numerator (disp_ratio);
+      den = gst_value_get_fraction_denominator (disp_ratio);
+      
+      GST_DEBUG ("calculated scaling ratio %d/%d for video %dx%d", num, den,
+          bvw->priv->video_width, bvw->priv->video_height);
+      
+      /* now find a width x height that respects this display ratio.
+       * prefer those that have one of w/h the same as the incoming video
+       * using wd / hd = num / den */
+    
+      /* start with same height, because of interlaced video */
+      /* check hd / den is an integer scale factor, and scale wd with the PAR */
+      if (bvw->priv->video_height % den == 0) {
+        GST_DEBUG ("keeping video height");
+        bvw->priv->video_width_pixels = bvw->priv->video_height * num / den;
+        bvw->priv->video_height_pixels = bvw->priv->video_height;
+      } else if (bvw->priv->video_width % num == 0) {
+        GST_DEBUG ("keeping video width");
+        bvw->priv->video_width_pixels = bvw->priv->video_width;
+        bvw->priv->video_height_pixels = bvw->priv->video_width * den / num;
+      } else {
+        GST_DEBUG ("approximating while keeping video height");
+        bvw->priv->video_width_pixels = bvw->priv->video_height * num / den;
+        bvw->priv->video_height_pixels = bvw->priv->video_height;
+      }
+      GST_DEBUG ("scaling to %dx%d", bvw->priv->video_width_pixels,
+          bvw->priv->video_height_pixels);
+      
+      *width = bvw->priv->video_width_pixels;
+      *height = bvw->priv->video_height_pixels;
+      
+      /* Free the PAR fraction */
+      g_value_unset (disp_par);
+      g_value_unset (disp_ratio);
+      g_free (disp_par);
+      g_free (disp_ratio);
     }
     else {
       *width = 0;
@@ -245,15 +356,14 @@ bacon_video_widget_realize (GtkWidget * widget)
   attributes.colormap = gtk_widget_get_colormap (widget);
   attributes.event_mask = gtk_widget_get_events (widget);
   attributes.event_mask |= GDK_EXPOSURE_MASK |
-			   GDK_POINTER_MOTION_MASK |
-			   GDK_BUTTON_PRESS_MASK |
-			   GDK_KEY_PRESS_MASK;
+                           GDK_POINTER_MOTION_MASK |
+                           GDK_BUTTON_PRESS_MASK |
+                           GDK_KEY_PRESS_MASK;
   attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
 
   widget->window = gdk_window_new (gtk_widget_get_parent_window (widget),
-				   &attributes, attributes_mask);
+      &attributes, attributes_mask);
   gdk_window_set_user_data (widget->window, widget);
-  //gdk_window_show (widget->window);
 
   /* Creating our video window */
   attributes.window_type = GDK_WINDOW_CHILD;
@@ -264,15 +374,14 @@ bacon_video_widget_realize (GtkWidget * widget)
   attributes.wclass = GDK_INPUT_OUTPUT;
   attributes.event_mask = gtk_widget_get_events (widget);
   attributes.event_mask |= GDK_EXPOSURE_MASK |
-			  GDK_POINTER_MOTION_MASK |
-			  GDK_BUTTON_PRESS_MASK |
-			  GDK_KEY_PRESS_MASK;
+                           GDK_POINTER_MOTION_MASK |
+                           GDK_BUTTON_PRESS_MASK |
+                           GDK_KEY_PRESS_MASK;
   attributes_mask = GDK_WA_X | GDK_WA_Y;
 
   bvw->priv->video_window = gdk_window_new (widget->window,
-				            &attributes, attributes_mask);
+      &attributes, attributes_mask);
   gdk_window_set_user_data (bvw->priv->video_window, widget);
-  //gdk_window_show (bvw->priv->video_window);
 
   gdk_color_parse ("black", &colour);
   gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, &colour);
@@ -1274,31 +1383,20 @@ caps_set (GObject * obj,
   if (!(caps = gst_pad_get_negotiated_caps (pad)))
     return;
 
+  /* Get video decoder caps */
   s = gst_caps_get_structure (caps, 0);
   if (s) {
-    const GValue *par;
-
+    /* We need at least width/height and framerate */
     if (!(gst_structure_get_fraction (s, "framerate", &bvw->priv->video_fps_n, 
           &bvw->priv->video_fps_d) &&
           gst_structure_get_int (s, "width", &bvw->priv->video_width) &&
           gst_structure_get_int (s, "height", &bvw->priv->video_height)))
       return;
-    bvw->priv->video_width_pixels = bvw->priv->video_width;
-    bvw->priv->video_height_pixels = bvw->priv->video_height;
-    if ((par = gst_structure_get_value (s,
-                   "pixel-aspect-ratio"))) {
-      gint num = gst_value_get_fraction_numerator (par),
-          den = gst_value_get_fraction_denominator (par);
-
-      if (num > den)
-        bvw->priv->video_width *= (gfloat) num / den;
-      else
-        bvw->priv->video_height *= (gfloat) den / num;
-    }
-    bvw->priv->movie_ratio = (gfloat) bvw->priv->video_width /
-        bvw->priv->video_height;
-
-    /* now set for real */
+    
+    /* Get the movie PAR if available */
+    bvw->priv->movie_par = gst_structure_get_value (s, "pixel-aspect-ratio");
+    
+    /* Now set for real */
     bacon_video_widget_set_aspect_ratio (bvw, bvw->priv->ratio_type);
   }
 
@@ -2945,36 +3043,6 @@ bacon_video_widget_set_aspect_ratio (BaconVideoWidget *bvw,
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
   bvw->priv->ratio_type = ratio;
-  pixel_ratio = (gfloat) bvw->priv->video_width_pixels /
-      bvw->priv->video_height_pixels;
-
-  switch (ratio) {
-    case BVW_RATIO_AUTO:
-      factor = bvw->priv->movie_ratio;
-      break;
-    case BVW_RATIO_SQUARE:
-      factor = 1.0;
-      break;
-    case BVW_RATIO_FOURBYTHREE:
-      factor = 4.0 / 3.0;
-      break;
-    case BVW_RATIO_ANAMORPHIC:
-      factor = 16.0 / 9.0;
-      break;
-    case BVW_RATIO_DVB:
-      factor = 2.11;
-      break;
-  }
-
-  factor /= pixel_ratio;
-  bvw->priv->video_width = bvw->priv->video_width_pixels;
-  bvw->priv->video_height = bvw->priv->video_height_pixels;
-  if (factor > 1.0) {
-    bvw->priv->video_width *= factor;
-  } else {
-    bvw->priv->video_height *= 1.0 / factor;
-  }
-
   got_video_size (bvw);
 }
 
