@@ -1,6 +1,16 @@
 2006-02-12  Julien MOUTTE  <julien@moutte.net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c: (get_media_size),
+	(bacon_video_widget_set_video_property),
+	(bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_metadata_int),
+	(bacon_video_widget_get_metadata_bool),
+	(bacon_video_widget_get_metadata): Fix some indentations and
+	fix DVB aspect ratio fraction according to the spec 20/9 == 2.22:1
+
+2006-02-12  Julien MOUTTE  <julien@moutte.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c: (get_media_size),
 	(bacon_video_widget_realize), (caps_set),
 	(bacon_video_widget_set_aspect_ratio): Refactored aspect ratio
 	handling. Indeed _set_aspect_ratio is here to force the movie

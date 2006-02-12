@@ -268,8 +268,8 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
             movie_par_d = 9;
             break;
           case BVW_RATIO_DVB:
-            movie_par_n = 211;
-            movie_par_d = 100;
+            movie_par_n = 20;
+            movie_par_d = 9;
             break;
         }
       }
@@ -3242,7 +3242,7 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
       if (found_channel && GST_IS_COLOR_BALANCE_CHANNEL (found_channel))
         {
           int i_value = value * ((double) found_channel->max_value -
-	      found_channel->min_value) / 65535 + found_channel->min_value;
+              found_channel->min_value) / 65535 + found_channel->min_value;
 
           GST_DEBUG ("channel %s: set to %d/65535", found_channel->label, value);
 
@@ -3482,8 +3482,8 @@ get_metadata_type_name (BaconVideoWidgetMetadataType type)
 
 static void
 bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
-					BaconVideoWidgetMetadataType type,
-					GValue * value)
+                                        BaconVideoWidgetMetadataType type,
+                                        GValue * value)
 {
   char *string = NULL;
   gboolean res = FALSE;
@@ -3543,8 +3543,8 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
 
 static void
 bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
-				     BaconVideoWidgetMetadataType type,
-				     GValue * value)
+                                     BaconVideoWidgetMetadataType type,
+                                     GValue * value)
 {
   int integer = 0;
 
@@ -3563,7 +3563,7 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
       break;
     case BVW_INFO_TRACK_NUMBER:
       if (!gst_tag_list_get_uint (bvw->priv->tagcache,
-				  GST_TAG_TRACK_NUMBER, (guint *) &integer))
+              GST_TAG_TRACK_NUMBER, (guint *) &integer))
         integer = 0;
       break;
     case BVW_INFO_DIMENSION_X:
@@ -3574,7 +3574,7 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
       break;
     case BVW_INFO_FPS:
       if (bvw->priv->video_fps_d > 0) {
-            /* Round up/down to the nearest integer framerate */
+        /* Round up/down to the nearest integer framerate */
         integer = (bvw->priv->video_fps_n + bvw->priv->video_fps_d/2) /
                   bvw->priv->video_fps_d;
       }
@@ -3613,8 +3613,8 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
 
 static void
 bacon_video_widget_get_metadata_bool (BaconVideoWidget * bvw,
-				      BaconVideoWidgetMetadataType type,
-				      GValue * value)
+                                      BaconVideoWidgetMetadataType type,
+                                      GValue * value)
 {
   gboolean boolean = FALSE;
 
@@ -3682,8 +3682,8 @@ bvw_process_pending_tag_messages (BaconVideoWidget * bvw)
 
 void
 bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
-				 BaconVideoWidgetMetadataType type,
-				 GValue * value)
+                                 BaconVideoWidgetMetadataType type,
+                                 GValue * value)
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
