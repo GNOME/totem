@@ -1,3 +1,11 @@
+2006-02-12  Julien MOUTTE  <julien@moutte.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c: (get_media_size),
+	(bacon_video_widget_size_request),
+	(bacon_video_widget_open_with_subtitle): Fix subtitle playback from
+	recent items menu, make visualisation take the whole widget.
+	Indeed we should manipulate ratios only when we have video track.
+
 2006-02-11  Julien MOUTTE  <julien@moutte.net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:

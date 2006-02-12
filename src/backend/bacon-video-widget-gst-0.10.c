@@ -211,12 +211,18 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
       *width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
       *height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
     } else {
-      *width = bvw->priv->init_width;
-      *height = bvw->priv->init_height;
+      *width = 0;
+      *height = 0;
     }
   } else {
-    *width = bvw->priv->video_width;
-    *height = bvw->priv->video_height;
+    if (bvw->priv->media_has_video) {
+      *width = bvw->priv->video_width;
+      *height = bvw->priv->video_height;
+    }
+    else {
+      *width = 0;
+      *height = 0;
+    }
   }
 }
 
@@ -576,8 +582,6 @@ static void
 bacon_video_widget_size_request (GtkWidget * widget,
     GtkRequisition * requisition)
 {
-  /* BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget); */
-
   requisition->width = 240;
   requisition->height = 180;
 }
@@ -2151,8 +2155,13 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   bvw->priv->ignore_messages_mask = 0;
   
   /* We hide the video window for now. Will show when video of vfx comes up */
-  if (bvw->priv->video_window)
+  if (bvw->priv->video_window) {
     gdk_window_hide (bvw->priv->video_window);
+    /* We also take the whole widget until we know video size */
+    gdk_window_move_resize (bvw->priv->video_window, 0, 0,
+        GTK_WIDGET (bvw)->allocation.width,
+        GTK_WIDGET (bvw)->allocation.height);
+  }
   
   /* Visualization settings changed */
   if (bvw->priv->vis_changed) {
@@ -2161,10 +2170,30 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 
   if (g_strrstr (bvw->priv->mrl, "#subtitle:")) {
     gchar **uris;
+    gchar *subtitle_uri;
 
     uris = g_strsplit (bvw->priv->mrl, "#subtitle:", 2);
-    g_object_set (bvw->priv->play, "uri", uris[0],
-                  "suburi", uris[1], NULL);
+    /* Try to fix subtitle uri if needed */
+    if (uris[1][0] == '/') {
+      subtitle_uri = g_strdup_printf ("file://%s", uris[1]);
+    }
+    else {
+      if (strchr (uris[1], ':')) {
+        subtitle_uri = g_strdup (uris[1]);
+      } else {
+        gchar *cur_dir = g_get_current_dir ();
+        if (!cur_dir) {
+          g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC,
+              _("Failed to retrieve working directory"));
+          return FALSE;
+        }
+        subtitle_uri = g_strdup_printf ("file://%s/%s", cur_dir, uris[1]);
+        g_free (cur_dir);
+      }
+    }
+    g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,
+                  "suburi", subtitle_uri, NULL);
+    g_free (subtitle_uri);
     g_strfreev (uris);
   } else {
     g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,
