@@ -2210,11 +2210,14 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
     /* used as thumbnailer or metadata extractor for properties dialog. In
      * this case, wait for any state change to really finish and process any
      * pending tag messages, so that the information is available right away */
+    GST_DEBUG ("waiting for state changed to PAUSED to complete");
     ret = poll_for_state_change_full (bvw, bvw->priv->play,
         GST_STATE_PAUSED, error, -1);
 
     bvw_process_pending_tag_messages (bvw);
     bacon_video_widget_get_stream_length (bvw);
+    GST_DEBUG ("stream length = %u", bvw->priv->stream_length);
+
     /* even in case of an error (e.g. no decoders installed) we might still
      * have useful metadata (like codec types, duration, etc.) */
     g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
@@ -2244,6 +2247,14 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
+
+  /* no need to actually go into PLAYING in capture/metadata mode (esp.
+   * not with sinks that don't sync to the clock), we'll get everything
+   * we need by prerolling the pipeline, and that is done in _open() */
+  if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE ||
+      bvw->priv->use_type == BVW_USE_TYPE_METADATA) {
+    return TRUE;
+  }
 
   gst_element_set_state (bvw->priv->play, GST_STATE_PLAYING);
 
@@ -3231,6 +3242,13 @@ bacon_video_widget_is_playing (BaconVideoWidget * bvw)
   if (cur == GST_STATE_PLAYING || pending == GST_STATE_PLAYING)
     return TRUE;
 
+  /* just lie (see _play() above) */
+  if ((bvw->priv->use_type == BVW_USE_TYPE_CAPTURE
+       || bvw->priv->use_type == BVW_USE_TYPE_METADATA) &&
+       (cur >= GST_STATE_PAUSED || pending >= GST_STATE_PAUSED)) {
+    return TRUE;
+  }
+
   return FALSE;
 }
 
@@ -3649,14 +3667,6 @@ bacon_video_widget_can_get_frames (BaconVideoWidget * bvw, GError ** error)
     return FALSE;
   }
 
-  /* when used as thumbnailer, wait for pending seeks to complete and
-   * make sure we have processed any changed stream-info we posted on
-   * the bus and any other meta data */
-  if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE) {
-    gst_element_get_state (bvw->priv->play, NULL, NULL, -1);
-    bvw_process_pending_tag_messages (bvw);
-  }
-
   /* check for video */
   if (!bvw->priv->media_has_video) {
     g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC,
@@ -3686,12 +3696,9 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), NULL);
 
-  /* when used as thumbnailer, wait for pending seeks to complete and
-   * make sure we have processed any changed stream-info we posted on
-   * the bus and any other meta data */
+  /* when used as thumbnailer, wait for pending seeks to complete */
   if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE) {
     gst_element_get_state (bvw->priv->play, NULL, NULL, -1);
-    bvw_process_pending_tag_messages (bvw);
   }
 
   /* no video info */

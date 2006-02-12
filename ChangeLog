@@ -1,3 +1,22 @@
+2006-02-12  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_open_with_subtitle), (bacon_video_widget_play),
+	(bacon_video_widget_is_playing),
+	(bacon_video_widget_can_get_frames),
+	(bacon_video_widget_get_current_frame):
+	  When used for thumbnailing, don't ever go into PLAYING state,
+	  especially not with sinks that don't sync against the clock. All
+	  the information we need is available already when prerolled. No
+	  need to wait for state change any longer in _get_frames(), as that
+	  has already been done in _open_with_subtitle().
+
+	* src/backend/gstscreenshot.c: (create_element),
+	(bvw_frame_conv_convert):
+	  Create screenshot conversion pipeline 'manually' to avoid
+	  gst_parse_launch() overhead and add additional capsfilter
+	  to shave a few microseconds off linking time.
+
 2006-02-12  Julien MOUTTE  <julien@moutte.net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c: (get_media_size),

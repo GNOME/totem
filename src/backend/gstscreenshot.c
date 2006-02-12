@@ -61,72 +61,111 @@ save_result (GstElement * sink, GstBuffer * buf, GstPad * pad, gpointer data)
       *p_buf, GST_BUFFER_CAPS (*p_buf));
 }
 
-/* videoscale is here to correct for the pixel-aspect-ratio for us */
-#define SCREENSHOT_CONVERSION_PIPELINE \
-  "   fakesrc name=src signal-handoffs=true "  \
-  " ! ffmpegcolorspace "                       \
-  " ! videoscale "                             \
-  " ! capsfilter name=capsfilter "             \
-  " ! fakesink name=sink signal-handoffs=true "
+static gboolean
+create_element (const gchar *factory_name, GstElement **element, GError **err)
+{
+  *element = gst_element_factory_make (factory_name, NULL);
+  if (*element)
+    return TRUE;
+
+  if (err && *err == NULL) {
+    *err = g_error_new (GST_CORE_ERROR, GST_CORE_ERROR_MISSING_PLUGIN,
+        "cannot create element '%s' - please check your GStreamer installation",
+        factory_name);
+  }
+
+  return FALSE;
+}
 
 /* takes ownership of the input buffer */
 GstBuffer *
 bvw_frame_conv_convert (GstBuffer * buf, GstCaps * to_caps)
 {
-  GstElement *capsfilter;
-  GstElement *pipeline;
-  GstElement *sink;
-  GstElement *src;
+  GstElement *src, *csp, *filter1, *vscale, *filter2, *sink, *pipeline;
   GstMessage *msg;
   GstBuffer *result = NULL;
   GError *error = NULL;
   GstBus *bus;
+  GstCaps *to_caps_no_par;
 
   g_return_val_if_fail (GST_BUFFER_CAPS (buf) != NULL, NULL);
 
-  pipeline = gst_parse_launch (SCREENSHOT_CONVERSION_PIPELINE, &error);
-
-  if (error) {
+  /* videoscale is here to correct for the pixel-aspect-ratio for us */
+  GST_DEBUG ("creating elements");
+  if (!create_element ("fakesrc", &src, &error) ||
+      !create_element ("ffmpegcolorspace", &csp, &error) ||
+      !create_element ("videoscale", &vscale, &error) ||
+      !create_element ("capsfilter", &filter1, &error) ||
+      !create_element ("capsfilter", &filter2, &error) ||
+      !create_element ("fakesink", &sink, &error)) {
     g_warning ("Could not take screenshot: %s", error->message);
     g_error_free (error);
     return NULL;
   }
 
+  pipeline = gst_pipeline_new ("screenshot-pipeline");
   if (pipeline == NULL) {
     g_warning ("Could not take screenshot: %s", "no pipeline (unknown error)");
     return NULL;
   }
 
-  src = gst_bin_get_by_name (GST_BIN (pipeline), "src");
-  sink = gst_bin_get_by_name (GST_BIN (pipeline), "sink");
-  capsfilter = gst_bin_get_by_name (GST_BIN (pipeline), "capsfilter");
-
-  g_return_val_if_fail (src != NULL, NULL);
-  g_return_val_if_fail (sink != NULL, NULL);
-  g_return_val_if_fail (capsfilter != NULL, NULL);
+  GST_DEBUG ("adding elements");
+  gst_bin_add_many (GST_BIN (pipeline), src, csp, filter1, vscale, filter2,
+      sink, NULL);
 
   g_signal_connect (src, "handoff", G_CALLBACK (feed_fakesrc), buf);
 
   /* set to 'fixed' sizetype */
-  g_object_set (src, "sizemax", GST_BUFFER_SIZE (buf), "sizetype", 2, 
-      "num-buffers", 1, NULL);
+  g_object_set (src, "sizemax", GST_BUFFER_SIZE (buf), "sizetype", 2,
+      "num-buffers", 1, "signal-handoffs", TRUE, NULL);
 
-  g_object_set (capsfilter, "caps", to_caps, NULL);
+  /* adding this superfluous capsfilter makes linking cheaper */
+  to_caps_no_par = gst_caps_copy (to_caps);
+  gst_structure_remove_field (gst_caps_get_structure (to_caps_no_par, 0),
+      "pixel-aspect-ratio");
+  g_object_set (filter1, "caps", to_caps_no_par, NULL);
+  gst_caps_unref (to_caps_no_par);
+
+  g_object_set (filter2, "caps", to_caps, NULL);
 
   g_signal_connect (sink, "handoff", G_CALLBACK (save_result), &result);
 
-  g_object_set (sink, "preroll-queue-len", 1, NULL);
+  g_object_set (sink, "preroll-queue-len", 1, "signal-handoffs", TRUE, NULL);
+
+  /* FIXME: linking is still way too expensive, profile this properly */
+  GST_DEBUG ("linking src->csp");
+  if (!gst_element_link_pads (src, "src", csp, "sink"))
+    return NULL;
+
+  GST_DEBUG ("linking csp->filter1");
+  if (!gst_element_link_pads (csp, "src", filter1, "sink"))
+    return NULL;
+
+  GST_DEBUG ("linking filter1->vscale");
+  if (!gst_element_link_pads (filter1, "src", vscale, "sink"))
+    return NULL;
+
+  GST_DEBUG ("linking vscale->capsfilter");
+  if (!gst_element_link_pads (vscale, "src", filter2, "sink"))
+    return NULL;
+
+  GST_DEBUG ("linking capsfilter->sink");
+  if (!gst_element_link_pads (filter2, "src", sink, "sink"))
+    return NULL;
+
+  GST_DEBUG ("running conversion pipeline");
+  gst_element_set_state (pipeline, GST_STATE_PLAYING);
 
   bus = gst_element_get_bus (pipeline);
-
-  gst_element_set_state (pipeline, GST_STATE_PLAYING);
-  msg = gst_bus_poll (bus, GST_MESSAGE_ERROR | GST_MESSAGE_EOS, 5*GST_SECOND);
+  msg = gst_bus_poll (bus, GST_MESSAGE_ERROR | GST_MESSAGE_EOS, 25*GST_SECOND);
 
   if (msg) {
     switch (GST_MESSAGE_TYPE (msg)) {
       case GST_MESSAGE_EOS: {
         if (result) {
           GST_DEBUG ("conversion successful: result = %p", result);
+        } else {
+          GST_WARNING ("EOS but no result frame?!");
         }
         break;
       }
