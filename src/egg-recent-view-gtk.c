@@ -371,14 +371,16 @@ egg_recent_view_gtk_add_to_menu (EggRecentViewGtk *view,
 
 	menu_offset = egg_recent_view_gtk_find_menu_offset (view);
 
-	if (item != NULL) {
+	if (item) {
 		menu_item = egg_recent_view_gtk_new_menu_item (view, item, display);
+		if (!menu_item)
+			return;
 		
 		/* if present, use the custom tooltip function;
 		 * otherwise, use ours (which has been "borrowed"
 		 * from GEdit)
 		 */
-		if (view->tooltip_func != NULL) {
+		if (view->tooltip_func) {
 			view->tooltip_func (view->tooltips,
 					    menu_item,
 					    item,
