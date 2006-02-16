@@ -2000,9 +2000,9 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   if (ret)
     g_signal_emit (bvw, bvw_table_signals[SIGNAL_CHANNELS_CHANGE], 0);
 
-  return ret || bvw->priv->got_redirect ||
+  return ret || bvw->priv->got_redirect || (bvw->priv->tagcache &&
       gst_tag_list_get_value_index (bvw->priv->tagcache,
-				    GST_TAG_IMAGE, 0) != NULL;
+				    GST_TAG_IMAGE, 0) != NULL);
 }
 
 gboolean
