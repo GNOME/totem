@@ -1452,7 +1452,7 @@ bacon_video_widget_sort_queue (gconstpointer a, gconstpointer b, gpointer data)
 	return 1;
 }
 
-#if (!(GLIB_CHECK_VERSION(2,8,0)))
+#if (!(GLIB_CHECK_VERSION(2,9,1)))
 static void
 bacon_video_widget_queue_sort (GAsyncQueue *queue)
 {
@@ -1472,7 +1472,7 @@ bacon_video_widget_queue_sort (GAsyncQueue *queue)
 	g_list_free (list);
 }
 
-#endif /* ! GLIB_CHECK_VERSION 2.8.0 */
+#endif /* ! GLIB_CHECK_VERSION 2.9.1 */
 
 static void
 xine_try_error (BaconVideoWidget *bvw, gboolean probe_error, GError **error)
@@ -1485,7 +1485,7 @@ xine_try_error (BaconVideoWidget *bvw, gboolean probe_error, GError **error)
 	sched_yield ();
 
 	/* Sort the queue with the errors first */
-#if GLIB_CHECK_VERSION(2,8,0)
+#if GLIB_CHECK_VERSION(2,9,1)
 	g_async_queue_sort (bvw->priv->queue, bacon_video_widget_sort_queue, NULL);
 #else
 	bacon_video_widget_queue_sort (bvw->priv->queue);
