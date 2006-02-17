@@ -271,6 +271,12 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
             movie_par_n = 20;
             movie_par_d = 9;
             break;
+          /* handle these to avoid compiler warnings */
+          case BVW_RATIO_AUTO:
+          default:
+            movie_par_n = 0;
+            movie_par_d = 0;
+            g_assert_not_reached ();
         }
       }
       else {
@@ -3037,8 +3043,6 @@ void
 bacon_video_widget_set_aspect_ratio (BaconVideoWidget *bvw,
 				BaconVideoWidgetAspectRatio ratio)
 {
-  gfloat pixel_ratio, factor = 1.0;
-
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
