@@ -1,5 +1,11 @@
 2006-02-19  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c: (totem_playlist_is_media),
+	(totem_playlist_init): also handle the legacy cd:, fixes a critical
+	warning (Closes: #331429)
+
+2006-02-19  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (on_got_metadata_event): always update the window title
 	when we get new metadata, fixes a problem with the window title not
 	changing

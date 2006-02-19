@@ -247,6 +247,8 @@ totem_playlist_is_media (const char *mrl)
 		return TRUE;
 	if (g_str_has_prefix (mrl, "vcd:") != FALSE)
 		return TRUE;
+	if (g_str_has_prefix (mrl, "cd:") != FALSE)
+		return TRUE;
 
 	return FALSE;
 }
@@ -1365,6 +1367,7 @@ totem_playlist_init (TotemPlaylist *playlist)
 	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "dvd:");
 	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "cdda:");
 	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "vcd:");
+	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "cd:");
 
 	g_signal_connect (G_OBJECT (playlist->_priv->parser),
 			"entry",
