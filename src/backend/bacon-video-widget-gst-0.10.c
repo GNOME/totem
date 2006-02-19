@@ -1734,12 +1734,12 @@ get_list_of_type (BaconVideoWidget * bvw, const gchar * type_name)
     pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
     val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
 
-    if (strstr (val->value_name, type_name)) {
+    if (g_ascii_strcasecmp (val->value_nick, type_name) == 0) {
       g_object_get (info, "codec", &cd, "language-code", &lc, NULL);
 
       if (lc) {
         ret = g_list_prepend (ret, lc);
-	g_free (cd);
+        g_free (cd);
       } else if (cd) {
         ret = g_list_prepend (ret, cd);
       } else {
