@@ -174,6 +174,8 @@ struct BaconVideoWidgetPrivate
   gulong                       sig_bus_async;
 
   BvwUseType                   use_type;
+
+  gint                         eos_id;
 };
 
 static void bacon_video_widget_set_property (GObject * object,
@@ -1015,6 +1017,20 @@ done:
   g_free (src_name);
 }
 
+/* This is a hack to avoid doing poll_for_state_change() indirectly
+ * from the bus message callback (via EOS => totem => close => wait for READY)
+ * and deadlocking there. We need something like a
+ * gst_bus_set_auto_flushing(bus, FALSE) ... */
+static gboolean
+bvw_signal_eos_delayed (gpointer user_data)
+{
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (user_data);
+
+  g_signal_emit (bvw, bvw_signals[SIGNAL_EOS], 0, NULL);
+  bvw->priv->eos_id = 0;
+  return FALSE;
+}
+
 static void
 bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 {
@@ -1127,7 +1143,8 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       GST_DEBUG ("EOS message");
       /* update slider one last time */
       bvw_query_timeout (bvw);
-      g_signal_emit (bvw, bvw_signals[SIGNAL_EOS], 0, NULL);
+      if (bvw->priv->eos_id == 0)
+        bvw->priv->eos_id = g_idle_add (bvw_signal_eos_delayed, bvw);
       break;
     case GST_MESSAGE_BUFFERING: {
       gint percent = 0;
@@ -1544,6 +1561,9 @@ bacon_video_widget_finalize (GObject * object)
     gst_tag_list_free (bvw->priv->videotags);
     bvw->priv->videotags = NULL;
   }
+
+  if (bvw->priv->eos_id != 0)
+    g_source_remove (bvw->priv->eos_id);
 
   g_mutex_free (bvw->priv->lock);
 
@@ -2360,6 +2380,7 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
     return TRUE;
   }
 
+  GST_DEBUG ("play");
   gst_element_set_state (bvw->priv->play, GST_STATE_PLAYING);
 
   ret = poll_for_state_change (bvw, bvw->priv->play, GST_STATE_PLAYING, error);
@@ -2435,6 +2456,7 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   /* first go to ready, that way our state change handler gets to see
    * our state change messages (before the bus goes to flushing) and
    * cleans up */
+  GST_DEBUG ("stopping");
   gst_element_get_state (playbin, &current_state, NULL, 0);
   if (current_state > GST_STATE_READY) {
     GError *err = NULL;
@@ -2446,7 +2468,10 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   }
 
   /* now finally go to null state */
+  GST_DEBUG ("almost stopped");
   gst_element_set_state (playbin, GST_STATE_NULL);
+  gst_element_get_state (playbin, NULL, NULL, -1);
+  GST_DEBUG ("stopped");
 }
 
 void

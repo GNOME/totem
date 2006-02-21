@@ -1,3 +1,14 @@
+2006-02-21  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_signal_eos_delayed), (bvw_bus_message_cb),
+	(bacon_video_widget_finalize), (bacon_video_widget_play),
+	(bvw_stop_play_pipeline):
+	  Don't emit EOS signal from within the bus callback,
+	  otherwise we'll wait forever in poll_for_state_change()
+	  whilst trying to stop playbin when totem calls _close();
+	  some more debug messages.
+
 2006-02-19  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-playlist.c: (totem_playlist_is_media),
