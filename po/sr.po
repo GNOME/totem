@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-31 12:06+0100\n"
-"PO-Revision-Date: 2006-01-31 12:29+0100\n"
+"POT-Creation-Date: 2006-02-21 00:54+0100\n"
+"PO-Revision-Date: 2006-02-19 19:09+0100\n"
 "Last-Translator: Слободан Д. Средојевић <slobo@akrep.be>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
 "MIME-Version: 1.0\n"
@@ -124,7 +124,7 @@ msgstr "0 Kbit/s"
 
 #. 0 seconds
 #: ../data/properties.glade.h:4 ../data/skip_to.glade.h:1
-#: ../src/backend/video-utils.c:280
+#: ../src/backend/video-utils.c:292
 msgid "0 seconds"
 msgstr "0 секунди"
 
@@ -187,7 +187,7 @@ msgstr "Брзина кадрова:"
 msgid "N/A"
 msgstr "недоступно"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:2029
+#: ../data/properties.glade.h:17 ../src/totem.c:2040
 msgid "Properties"
 msgstr "Особине"
 
@@ -246,9 +246,12 @@ msgstr "Пре_скочи до:"
 msgid "seconds"
 msgstr "секунди"
 
+# note(slobo):Тотем је Гномов централни програм за пуштање
+# и филмова и музике а чини се да ће тако и остати
+# „Гномов биоскоп и музичка кутија“ ?
 #: ../data/totem.desktop.in.in.in.h:1
 msgid "Movie Player"
-msgstr "Пуштање филмова"
+msgstr "Гномов биоскоп и музичка кутија"
 
 #: ../data/totem.desktop.in.in.in.h:2
 msgid "Play movies and songs"
@@ -312,7 +315,7 @@ msgstr "<b>Мрежа</b>"
 
 #: ../data/totem.glade.h:21
 msgid "<b>Subtitles</b>"
-msgstr "<b>Титлови</b>"
+msgstr "<b>Преводи</b>"
 
 #: ../data/totem.glade.h:22
 msgid "<b>TV-Out</b>"
@@ -575,10 +578,10 @@ msgid "Time:"
 msgstr "Време:"
 
 #. Title
-#: ../data/totem.glade.h:100 ../src/totem.c:698 ../src/totem.c:3457
-#: ../src/totem.c:3474
+#: ../data/totem.glade.h:100 ../src/totem.c:706 ../src/totem.c:3475
+#: ../src/totem.c:3492
 msgid "Totem Movie Player"
-msgstr "Гномов биоскоп"
+msgstr "Тотем — Гномов биоскоп и музичка кутија"
 
 #: ../data/totem.glade.h:101
 msgid "Totem Preferences"
@@ -942,7 +945,7 @@ msgstr "-"
 msgid "Open '%s'"
 msgstr "Отвори „%s“"
 
-#: ../src/egg-recent-view-gtk.c:444
+#: ../src/egg-recent-view-gtk.c:446
 msgid "Empty"
 msgstr "Празно"
 
@@ -972,11 +975,11 @@ msgstr "Опције зачеља"
 msgid "Enable debug"
 msgstr "Омогући разбубирање"
 
-#: ../src/totem-options.c:39 ../src/totem.c:259 ../src/totem.c:267
+#: ../src/totem-options.c:39 ../src/totem.c:260 ../src/totem.c:268
 msgid "Play"
 msgstr "Пусти"
 
-#: ../src/totem-options.c:40 ../src/totem.c:253
+#: ../src/totem-options.c:40 ../src/totem.c:254
 msgid "Pause"
 msgstr "Паузирај"
 
@@ -1013,34 +1016,34 @@ msgstr "Замени"
 msgid "Option '%s' is unknown and was ignored\n"
 msgstr "Опција „%s“ је непозната и зато занемарена\n"
 
-#: ../src/totem-playlist.c:326
+#: ../src/totem-playlist.c:329
 msgid "Could not save the playlist"
 msgstr "Не могу да сачувам листу"
 
-#: ../src/totem-playlist.c:808
+#: ../src/totem-playlist.c:812
 msgid "Save Playlist"
 msgstr "Сачувај листу"
 
-#: ../src/totem-playlist.c:854
+#: ../src/totem-playlist.c:858
 msgid "Overwrite file?"
 msgstr "Пресними датотеку?"
 
-#: ../src/totem-playlist.c:856
+#: ../src/totem-playlist.c:860
 #, c-format
 msgid ""
 "A file named '%s' already exists.  Are you sure you want to overwrite it?"
 msgstr ""
 "Датотека „%s“ већ постоји. Да ли сте сигурни да желите да снимите преко ње?"
 
-#: ../src/totem-playlist.c:1363
+#: ../src/totem-playlist.c:1405
 msgid "playlist"
 msgstr "листа"
 
-#: ../src/totem-playlist.c:1492
+#: ../src/totem-playlist.c:1538
 msgid "Playlist error"
 msgstr "Грешка са листом"
 
-#: ../src/totem-playlist.c:1492
+#: ../src/totem-playlist.c:1538
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "Листа „%s“ се не може учитати, можда је оштећена."
@@ -1134,7 +1137,7 @@ msgstr "Врста сенке"
 msgid "Style of bevel around the statusbar text"
 msgstr "Облик ивице око текста линије стања"
 
-#: ../src/totem-statusbar.c:124 ../src/totem.c:263 ../src/totem.c:684
+#: ../src/totem-statusbar.c:124 ../src/totem.c:264 ../src/totem.c:692
 msgid "Stopped"
 msgstr "Заустављено"
 
@@ -1170,36 +1173,36 @@ msgstr "Пренос у бафер"
 msgid "%d %%"
 msgstr "%d %%"
 
-#: ../src/totem-uri.c:223
+#: ../src/totem-uri.c:227
 msgid "All files"
 msgstr "Све датотеке"
 
-#: ../src/totem-uri.c:229
+#: ../src/totem-uri.c:233
 msgid "Supported files"
 msgstr "Подржане датотеке"
 
-#: ../src/totem-uri.c:251
+#: ../src/totem-uri.c:255
 msgid "Select Movies or Playlists"
 msgstr "Изаберите филмове или листе"
 
-#: ../src/totem.c:251
+#: ../src/totem.c:252
 msgid "Playing"
 msgstr "Приказује"
 
-#: ../src/totem.c:257
+#: ../src/totem.c:258
 msgid "Paused"
 msgstr "Пауза"
 
-#: ../src/totem.c:309
+#: ../src/totem.c:310
 msgid "Totem could not eject the optical media."
 msgstr "Тотем није успео да избаци оптички диск."
 
-#: ../src/totem.c:337 ../src/totem.c:366 ../src/totem.c:803 ../src/totem.c:914
+#: ../src/totem.c:338 ../src/totem.c:367 ../src/totem.c:813 ../src/totem.c:924
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Тотем није могао да пусти „%s“."
 
-#: ../src/totem.c:393
+#: ../src/totem.c:394
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1208,7 +1211,7 @@ msgstr ""
 "Тотем не може да прикаже ову врсту медија (%s) јер немате одговарајуће "
 "додатке (plugins)."
 
-#: ../src/totem.c:394
+#: ../src/totem.c:395
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1216,7 +1219,7 @@ msgstr ""
 "Инсталирајте неопходне додатке и изнова покрените Тотем да би сте користили "
 "овај медиј."
 
-#: ../src/totem.c:402
+#: ../src/totem.c:403
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1225,114 +1228,114 @@ msgstr ""
 "Тотем није успео да пусти овај медиј (%s) иако је одговарајући додатак "
 "присутан."
 
-#: ../src/totem.c:403
+#: ../src/totem.c:404
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr ""
 "Могли би сте проверити да ли је диск убачен и да ли је исправно подешен."
 
-#: ../src/totem.c:431
+#: ../src/totem.c:432
 msgid "Totem was not able to play this disc."
 msgstr "Тотем није могао да пусти овај диск."
 
-#: ../src/totem.c:432 ../src/totem.c:3316
+#: ../src/totem.c:433 ../src/totem.c:3334
 msgid "No reason."
 msgstr "Без разлога."
 
-#: ../src/totem.c:691
+#: ../src/totem.c:699
 msgid "No File"
 msgstr "Нема датотеке"
 
-#: ../src/totem.c:809
+#: ../src/totem.c:819
 msgid "No error message"
 msgstr "Нема поруке о грешци"
 
-#: ../src/totem.c:1266 ../src/totem.c:1268
+#: ../src/totem.c:1277 ../src/totem.c:1279
 msgid "An error occurred"
 msgstr "Дошло је до грешке"
 
-#: ../src/totem.c:1633
+#: ../src/totem.c:1644
 msgid "Open Location..."
 msgstr "Отвори путању..."
 
-#: ../src/totem.c:1902
+#: ../src/totem.c:1913
 msgid "Totem could not display the help contents."
 msgstr "Тотем није могао да прикаже садржај помоћи."
 
 # bug: string composition
-#: ../src/totem.c:1940
+#: ../src/totem.c:1951
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Пуштање филмова помоћу %s"
 
-#: ../src/totem.c:1944
+#: ../src/totem.c:1955
 msgid "Totem"
 msgstr "Тотем"
 
-#: ../src/totem.c:1946 ../src/vanity.c:261
+#: ../src/totem.c:1957 ../src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Сва права задржана © 2002–2005 Бастијен Носера (Bastien Nocera)"
 
-#: ../src/totem.c:1951 ../src/vanity.c:266
+#: ../src/totem.c:1962 ../src/vanity.c:266
 msgid "translator-credits"
 msgstr ""
 "Вељко Станојевић <veljko@vms.homelinux.net>\n"
 "Данило Шеган <danilo@gnome.org>\n"
-"Андрија Зарић <andrija@gmail.com\n>"
-"Слободан Д. Средојевић <slobo@akrep.be>\n"
+"Андрија Зарић <andrija@gmail.com\n"
+">Слободан Д. Средојевић <slobo@akrep.be>\n"
 "\n"
 "http://prevod.org — превод на српски језик."
 
-#: ../src/totem.c:1984 ../src/totem.c:1992 ../src/vanity.c:299
+#: ../src/totem.c:1995 ../src/totem.c:2003 ../src/vanity.c:299
 #: ../src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
 msgstr "Тотем није успео да направи снимак екрана тог филма."
 
-#: ../src/totem.c:1992 ../src/vanity.c:307
+#: ../src/totem.c:2003 ../src/vanity.c:307
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Ово није требало да се деси; молимо пријавите грешку."
 
-#: ../src/totem.c:2019
+#: ../src/totem.c:2030
 msgid "Totem couldn't show the movie properties window."
 msgstr "Тотем није могао да прикаже прозор са особинама филма."
 
-#: ../src/totem.c:2019
+#: ../src/totem.c:2030
 msgid "Make sure that Totem is correctly installed."
 msgstr "Уверите се да је Тотем правилно инсталиран."
 
-#: ../src/totem.c:2105
+#: ../src/totem.c:2116
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Тотем није могао да тражи у „%s“."
 
-#: ../src/totem.c:3316
+#: ../src/totem.c:3334
 msgid "Totem could not startup."
 msgstr "Тотем није успео да се покрене."
 
 # andrija: непотпун превод, а тежак :)
-#: ../src/totem.c:3458
+#: ../src/totem.c:3476
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Нисам успео да учитам thread-safe библиотеке."
 
-#: ../src/totem.c:3458
+#: ../src/totem.c:3476
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Проверите инсталацију система. Тотем ће се сада угасити."
 
-#: ../src/totem.c:3481
+#: ../src/totem.c:3499
 msgid "Totem could not initialize the configuration engine."
 msgstr "Тотем није успео да покрене систем подешавања."
 
-#: ../src/totem.c:3481
+#: ../src/totem.c:3499
 msgid "Make sure that GNOME is properly installed."
 msgstr "Проверите да ли је Гном правилно инсталиран."
 
 #. Main window
-#: ../src/totem.c:3508
+#: ../src/totem.c:3527
 msgid "main window"
 msgstr "главни прозор"
 
-#: ../src/totem.c:3513
+#: ../src/totem.c:3532
 msgid "video popup menu"
 msgstr "искачући мени видеа"
 
@@ -1407,31 +1410,31 @@ msgstr ""
 "Неуспело учитавање главног сучеља (vanity.glade).\n"
 "Проверите да ли је Vanity правилно инсталиран."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:66
+#: ../src/backend/bacon-video-widget-gst-0.10.c:67
 #: ../src/backend/bacon-video-widget-gst.c:67
 msgid "Totem Video Window"
 msgstr "Тотемов видео прозор"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1942
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2039
 #: ../src/backend/bacon-video-widget-gst.c:3529
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
 msgstr ""
-"Није нађен тражени звучни излаз. Молим изаберите други звучни излаз у „Избирачу "
-"мултимедијалног система“."
+"Није нађен тражени звучни излаз. Молим изаберите други звучни излаз у "
+"„Избирачу мултимедијалног система“."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1947
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2044
 #: ../src/backend/bacon-video-widget-gst.c:1951
 msgid "Location not found."
 msgstr "Место није нађено."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1951
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2048
 #: ../src/backend/bacon-video-widget-gst.c:1954
 msgid "Could not open location; You may not have permission to open the file."
 msgstr "Не могу да отворим место — можда немате дозволе за читање датотеке."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1962
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2059
 #: ../src/backend/bacon-video-widget-gst.c:3480
 msgid ""
 "The video output is in use by another application. Please close other video "
@@ -1441,7 +1444,7 @@ msgstr ""
 "Видео излаз већ користи неки други програм. Затворите остале видео програме, "
 "или изаберите неки други видео излаз у „Избирачу мултимедијалног система“."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1968
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2065
 #: ../src/backend/bacon-video-widget-gst.c:3523
 msgid ""
 "The audio output is in use by another application. Please select another "
@@ -1452,26 +1455,34 @@ msgstr ""
 "„Избирачу мултимедијалног система“. Можете и размотрити коришћење звучног "
 "сервера."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2056
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2080
+msgid ""
+"Cannot play this file over the network. Try downloading it to disk first."
+msgstr ""
+"Не могу да пустим ову датотеку преко мреже. Покушајте да је прво пренесете "
+"на диск."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2158
 msgid "Media file could not be played."
 msgstr "Не могу пустити датотеку."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2125
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2240
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2291
 #: ../src/backend/bacon-video-widget-gst.c:1886
 msgid "Failed to retrieve working directory"
 msgstr "Неуспешно прибављање радног директоријума"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3511
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3738
 #: ../src/backend/bacon-video-widget-gst.c:3191
 msgid "Too old version of GStreamer installed."
 msgstr "Инсталиранo је престаро издање ГСтримера."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3526
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3745
 #: ../src/backend/bacon-video-widget-gst.c:3199
 msgid "Media contains no supported video streams."
 msgstr "Датотека не садржи подржане видео токове."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3873
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4090
 #: ../src/backend/bacon-video-widget-gst.c:3384
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
@@ -1480,8 +1491,8 @@ msgstr ""
 "Неуспешно образовање ГСтримеров објекат за пуштање. Проверите инсталацију "
 "ГСтримера."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3988
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4072
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4205
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4289
 #: ../src/backend/bacon-video-widget-gst.c:3491
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
@@ -1490,7 +1501,7 @@ msgstr ""
 "Неуспешан приступ видео излазу. Можда није доступан. Изаберите неки други "
 "видео излаз у „Избирачу мултимедијалног система“."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3997
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4214
 #: ../src/backend/bacon-video-widget-gst.c:3495
 msgid ""
 "Could not find the video output. You may need to install additional "
@@ -1500,7 +1511,7 @@ msgstr ""
 "Неуспешан приступ видео излазу. Можда треба да инсталирате још неке додатке "
 "или изаберете неки други видео излаз у „Избирачу мултимедијалног система“."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4016
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4233
 #: ../src/backend/bacon-video-widget-gst.c:3540
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
@@ -1511,11 +1522,12 @@ msgstr ""
 "уређају, или није покренут звучни сервер. Изаберите други звучни излаз у "
 "„Избирачу мултимедијалног система“."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4026
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4243
+#: ../src/backend/bacon-video-widget-gst.c:3544
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
-"Selector"
+"Selector."
 msgstr ""
 "Није нађен тражени звучни излаз. Можда треба да инсталирате још неке додатке "
 "или да изаберете други звучни излаз у „Избирачу мултимедијалног система“."
@@ -1533,15 +1545,6 @@ msgstr "Неуспешно пуштање: %s"
 msgid "unknown error"
 msgstr "непозната грешка"
 
-#: ../src/backend/bacon-video-widget-gst.c:3544
-msgid ""
-"Could not find the audio output. You may need to install additional "
-"GStreamer plugins, or select another audio output in the Multimedia Systems "
-"Selector."
-msgstr ""
-"Није нађен тражени звучни излаз. Можда треба да инсталирате још неке додатке "
-"или да изаберете други звучни излаз у „Избирачу мултимедијалног система“."
-
 #: ../src/backend/bacon-video-widget-xine.c:688
 #, c-format
 msgid ""
@@ -1552,7 +1555,7 @@ msgstr ""
 "Проверите да уређај није заузет."
 
 #: ../src/backend/bacon-video-widget-xine.c:1148
-#: ../src/backend/bacon-video-widget-xine.c:1733
+#: ../src/backend/bacon-video-widget-xine.c:1732
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -1623,35 +1626,35 @@ msgstr "Сервер одбија приступ овој датотеци ил�
 msgid "The file you tried to play is an empty file."
 msgstr "Датотека коју сте покушали да пустите је празна."
 
-#: ../src/backend/bacon-video-widget-xine.c:1535
+#: ../src/backend/bacon-video-widget-xine.c:1534
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "Не постоји улазни додатак који барата местом где је овај филм"
 
-#: ../src/backend/bacon-video-widget-xine.c:1539
+#: ../src/backend/bacon-video-widget-xine.c:1538
 msgid "There is no plugin to handle this movie."
 msgstr "Нема додатка за гледање овог филма."
 
-#: ../src/backend/bacon-video-widget-xine.c:1543
+#: ../src/backend/bacon-video-widget-xine.c:1542
 msgid "This movie is broken and can not be played further."
 msgstr "Овај филм је оштећен и не може се даље пуштати."
 
-#: ../src/backend/bacon-video-widget-xine.c:1547
+#: ../src/backend/bacon-video-widget-xine.c:1546
 msgid "This location is not a valid one."
 msgstr "Ово није исправна путања."
 
-#: ../src/backend/bacon-video-widget-xine.c:1551
+#: ../src/backend/bacon-video-widget-xine.c:1550
 msgid "This movie could not be opened."
 msgstr "Овај филм се не може отворити."
 
-#: ../src/backend/bacon-video-widget-xine.c:1555
+#: ../src/backend/bacon-video-widget-xine.c:1554
 msgid "Generic Error."
 msgstr "Општа грешка."
 
-#: ../src/backend/bacon-video-widget-xine.c:2100
+#: ../src/backend/bacon-video-widget-xine.c:2099
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr "Овај филм је обична слика. Можете је отворити прегледачем слика."
 
-#: ../src/backend/bacon-video-widget-xine.c:2124
+#: ../src/backend/bacon-video-widget-xine.c:2123
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1661,7 +1664,7 @@ msgstr ""
 "да инсталирате посебне додатке."
 
 # bug: some types of movies, or some type of audio?
-#: ../src/backend/bacon-video-widget-xine.c:2128
+#: ../src/backend/bacon-video-widget-xine.c:2127
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1670,30 +1673,30 @@ msgstr ""
 "Звучно кодирање „%s“ није подржано. За неке врсте филмова ћете можда морати "
 "да инсталирате посебне додатке."
 
-#: ../src/backend/bacon-video-widget-xine.c:2144
+#: ../src/backend/bacon-video-widget-xine.c:2143
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Ово је датотека са звуком, али нема доступног излаза за звук."
 
-#: ../src/backend/bacon-video-widget-xine.c:3578
-#: ../src/backend/bacon-video-widget-xine.c:3625
-#: ../src/backend/bacon-video-widget-xine.c:3647
+#: ../src/backend/bacon-video-widget-xine.c:3577
+#: ../src/backend/bacon-video-widget-xine.c:3624
+#: ../src/backend/bacon-video-widget-xine.c:3646
 #, c-format
 msgid "Language %d"
 msgstr "Језик %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3684
+#: ../src/backend/bacon-video-widget-xine.c:3683
 msgid "No video to capture."
 msgstr "Нема видео сигнала за снимање."
 
-#: ../src/backend/bacon-video-widget-xine.c:3692
+#: ../src/backend/bacon-video-widget-xine.c:3691
 msgid "Video codec is not handled."
 msgstr "Видео кодирање није подржано."
 
-#: ../src/backend/bacon-video-widget-xine.c:3700
+#: ../src/backend/bacon-video-widget-xine.c:3699
 msgid "Movie is not playing."
 msgstr "Филм се не приказује."
 
-#: ../src/backend/video-utils.c:260
+#: ../src/backend/video-utils.c:272
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -1701,7 +1704,7 @@ msgstr[0] "%d час"
 msgstr[1] "%d часа"
 msgstr[2] "%d часова"
 
-#: ../src/backend/video-utils.c:262
+#: ../src/backend/video-utils.c:274
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -1709,7 +1712,7 @@ msgstr[0] "%d минут"
 msgstr[1] "%d минута"
 msgstr[2] "%d минута"
 
-#: ../src/backend/video-utils.c:265
+#: ../src/backend/video-utils.c:277
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1718,19 +1721,19 @@ msgstr[1] "%d секунде"
 msgstr[2] "%d секунди"
 
 #. hour:minutes:seconds
-#: ../src/backend/video-utils.c:271
+#: ../src/backend/video-utils.c:283
 #, c-format
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. minutes:seconds
-#: ../src/backend/video-utils.c:274
+#: ../src/backend/video-utils.c:286
 #, c-format
 msgid "%s %s"
 msgstr "%s %s"
 
 #. seconds
-#: ../src/backend/video-utils.c:277
+#: ../src/backend/video-utils.c:289
 #, c-format
 msgid "%s"
 msgstr "%s"
@@ -1770,10 +1773,12 @@ msgid "Drive status 0x%x (%s) - check disc"
 msgstr "Стање уређаја 0x%x (%s) — проверите диск"
 
 #: ../src/plparse/totem-disc.c:408
+#, c-format
 msgid "Failed to mount %s"
 msgstr "Неуспешно прикључење %s"
 
 #: ../src/plparse/totem-disc.c:430
+#, c-format
 msgid "Failed to find mountpoint for %s"
 msgstr "Није нађена тачка прикључења уређаја %s"
 
@@ -1808,6 +1813,15 @@ msgstr "Не могу да испишем обрађивача: %s"
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "Не могу да отворим датотеку „%s“: %s"
+
+#~ msgid ""
+#~ "Could not find the audio output. You may need to install additional "
+#~ "GStreamer plugins, or select another audio output in the Multimedia "
+#~ "Systems Selector"
+#~ msgstr ""
+#~ "Није нађен тражени звучни излаз. Можда треба да инсталирате још неке "
+#~ "додатке или да изаберете други звучни излаз у „Избирачу мултимедијалног "
+#~ "система“."
 
 #~ msgid "Select CD"
 #~ msgstr "Одаберите ЦД"
