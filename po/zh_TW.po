@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 1.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-24 23:56+0100\n"
-"PO-Revision-Date: 2006-01-24 11:17+0800\n"
+"POT-Creation-Date: 2006-02-22 23:38+0100\n"
+"PO-Revision-Date: 2006-02-20 10:39+0800\n"
 "Last-Translator: Woodman Tuen <wmtuen@gmail.com>\n"
 "Language-Team: Chinese(Taiwan) <community@linuxhall.org>\n"
 "MIME-Version: 1.0\n"
@@ -120,7 +120,7 @@ msgstr "0 kbps"
 
 #. 0 seconds
 #: ../data/properties.glade.h:4 ../data/skip_to.glade.h:1
-#: ../src/backend/video-utils.c:280
+#: ../src/backend/video-utils.c:292
 msgid "0 seconds"
 msgstr "0 秒"
 
@@ -183,7 +183,7 @@ msgstr "幀率："
 msgid "N/A"
 msgstr "不適用"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:2026
+#: ../data/properties.glade.h:17 ../src/totem.c:2040
 msgid "Properties"
 msgstr "屬性"
 
@@ -572,8 +572,8 @@ msgid "Time:"
 msgstr "時間："
 
 #. Title
-#: ../data/totem.glade.h:100 ../src/totem.c:695 ../src/totem.c:3400
-#: ../src/totem.c:3417
+#: ../data/totem.glade.h:100 ../src/totem.c:706 ../src/totem.c:3475
+#: ../src/totem.c:3492
 msgid "Totem Movie Player"
 msgstr "Totem 影片播放器"
 
@@ -937,7 +937,7 @@ msgstr "-"
 msgid "Open '%s'"
 msgstr "開啟「%s」"
 
-#: ../src/egg-recent-view-gtk.c:444
+#: ../src/egg-recent-view-gtk.c:446
 msgid "Empty"
 msgstr "空的"
 
@@ -967,11 +967,11 @@ msgstr "後端選項"
 msgid "Enable debug"
 msgstr "啟用除錯"
 
-#: ../src/totem-options.c:39 ../src/totem.c:256 ../src/totem.c:264
+#: ../src/totem-options.c:39 ../src/totem.c:260 ../src/totem.c:268
 msgid "Play"
 msgstr "播放"
 
-#: ../src/totem-options.c:40 ../src/totem.c:250
+#: ../src/totem-options.c:40 ../src/totem.c:254
 msgid "Pause"
 msgstr "暫停"
 
@@ -1008,33 +1008,33 @@ msgstr "取代"
 msgid "Option '%s' is unknown and was ignored\n"
 msgstr "‘%s’是不明的選項，及已略過此選項\n"
 
-#: ../src/totem-playlist.c:326
+#: ../src/totem-playlist.c:329
 msgid "Could not save the playlist"
 msgstr "無法儲存播放清單"
 
-#: ../src/totem-playlist.c:807
+#: ../src/totem-playlist.c:812
 msgid "Save Playlist"
 msgstr "儲存播放清單"
 
-#: ../src/totem-playlist.c:853
+#: ../src/totem-playlist.c:858
 msgid "Overwrite file?"
 msgstr "覆寫檔案？"
 
-#: ../src/totem-playlist.c:855
+#: ../src/totem-playlist.c:860
 #, c-format
 msgid ""
 "A file named '%s' already exists.  Are you sure you want to overwrite it?"
 msgstr "名為‘%s’的檔案已經存在。您是否確定要覆寫它？"
 
-#: ../src/totem-playlist.c:1362
+#: ../src/totem-playlist.c:1405
 msgid "playlist"
 msgstr "播放清單"
 
-#: ../src/totem-playlist.c:1491
+#: ../src/totem-playlist.c:1538
 msgid "Playlist error"
 msgstr "播放清單錯誤"
 
-#: ../src/totem-playlist.c:1491
+#: ../src/totem-playlist.c:1538
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "無法解析播放清單‘%s’的內容，可能已經損壞。"
@@ -1121,7 +1121,7 @@ msgstr "陰影類型"
 msgid "Style of bevel around the statusbar text"
 msgstr "狀態列周圍加上的斜邊樣式"
 
-#: ../src/totem-statusbar.c:124 ../src/totem.c:260 ../src/totem.c:681
+#: ../src/totem-statusbar.c:124 ../src/totem.c:264 ../src/totem.c:692
 msgid "Stopped"
 msgstr "停止"
 
@@ -1156,103 +1156,103 @@ msgstr "正在建立緩衝區"
 msgid "%d %%"
 msgstr "%d %%"
 
-#: ../src/totem-uri.c:223
+#: ../src/totem-uri.c:227
 msgid "All files"
 msgstr "所有檔案"
 
-#: ../src/totem-uri.c:229
+#: ../src/totem-uri.c:233
 msgid "Supported files"
 msgstr "支援的檔案"
 
-#: ../src/totem-uri.c:251
+#: ../src/totem-uri.c:255
 msgid "Select Movies or Playlists"
 msgstr "選取影片或播放清單"
 
-#: ../src/totem.c:248
+#: ../src/totem.c:252
 msgid "Playing"
 msgstr "播放"
 
-#: ../src/totem.c:254
+#: ../src/totem.c:258
 msgid "Paused"
 msgstr "暫停"
 
-#: ../src/totem.c:306
+#: ../src/totem.c:310
 msgid "Totem could not eject the optical media."
 msgstr "Totem 無法退出該媒體。"
 
-#: ../src/totem.c:334 ../src/totem.c:363 ../src/totem.c:800 ../src/totem.c:911
+#: ../src/totem.c:338 ../src/totem.c:367 ../src/totem.c:813 ../src/totem.c:924
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem 無法播放‘%s’。"
 
-#: ../src/totem.c:390
+#: ../src/totem.c:394
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
 "appropriate plugins to handle it."
 msgstr "因為沒有適當的外掛程式，Totem 無法播放這個媒體 (%s)。"
 
-#: ../src/totem.c:391
+#: ../src/totem.c:395
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
 msgstr "請安裝適當的外掛程式，然後重新啟動 Totem，方可播放這個媒體。"
 
-#: ../src/totem.c:399
+#: ../src/totem.c:403
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
 "it."
 msgstr "即使適當的外掛程式已經存在，Totem 仍然無法播放這個媒體 (%s)。"
 
-#: ../src/totem.c:400
+#: ../src/totem.c:404
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr "您可能要檢查一下光碟是否已在光碟機內，和是否已經設置好。"
 
-#: ../src/totem.c:428
+#: ../src/totem.c:432
 msgid "Totem was not able to play this disc."
 msgstr "Totem 無法播放此碟片。"
 
-#: ../src/totem.c:429 ../src/totem.c:3262
+#: ../src/totem.c:433 ../src/totem.c:3334
 msgid "No reason."
 msgstr "沒有原因。"
 
-#: ../src/totem.c:688
+#: ../src/totem.c:699
 msgid "No File"
 msgstr "沒有檔案"
 
-#: ../src/totem.c:806
+#: ../src/totem.c:819
 msgid "No error message"
 msgstr "沒有錯誤訊息"
 
-#: ../src/totem.c:1263 ../src/totem.c:1265
+#: ../src/totem.c:1277 ../src/totem.c:1279
 msgid "An error occurred"
 msgstr "出現錯誤"
 
-#: ../src/totem.c:1630
+#: ../src/totem.c:1644
 msgid "Open Location..."
 msgstr "開啟位置..."
 
-#: ../src/totem.c:1899
+#: ../src/totem.c:1913
 msgid "Totem could not display the help contents."
 msgstr "Totem 無法顯示求助內容。"
 
-#: ../src/totem.c:1937
+#: ../src/totem.c:1951
 #, c-format
 msgid "Movie Player using %s"
 msgstr "使用 %s 的影片播放程式"
 
-#: ../src/totem.c:1941
+#: ../src/totem.c:1955
 msgid "Totem"
 msgstr "Totem"
 
-#: ../src/totem.c:1943 ../src/vanity.c:261
+#: ../src/totem.c:1957 ../src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "版權所有 © 2002-2005 Bastien Nocera"
 
-#: ../src/totem.c:1948 ../src/vanity.c:266
+#: ../src/totem.c:1962 ../src/vanity.c:266
 msgid "translator-credits"
 msgstr ""
 "如對翻譯有任何意見，請送一封電子郵件給\n"
@@ -1262,54 +1262,54 @@ msgstr ""
 "Woodman Tuen <wmtuen@gmail.com>, 2004-05\n"
 "Abel Cheung <abel@oaka.org>, 2003"
 
-#: ../src/totem.c:1981 ../src/totem.c:1989 ../src/vanity.c:299
+#: ../src/totem.c:1995 ../src/totem.c:2003 ../src/vanity.c:299
 #: ../src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem 無法為該影片擷取畫面快照。"
 
-#: ../src/totem.c:1989 ../src/vanity.c:307
+#: ../src/totem.c:2003 ../src/vanity.c:307
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "預設這是不會發生的，請報告錯誤。"
 
-#: ../src/totem.c:2016
+#: ../src/totem.c:2030
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem 無法顯示影片屬性視窗。"
 
-#: ../src/totem.c:2016
+#: ../src/totem.c:2030
 msgid "Make sure that Totem is correctly installed."
 msgstr "請檢查 Totem 是否已正確安裝。"
 
-#: ../src/totem.c:2102
+#: ../src/totem.c:2116
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem 無法在‘%s’中移動。"
 
-#: ../src/totem.c:3262
+#: ../src/totem.c:3334
 msgid "Totem could not startup."
 msgstr "Totem 無法啟動"
 
-#: ../src/totem.c:3401
+#: ../src/totem.c:3476
 msgid "Could not initialize the thread-safe libraries."
 msgstr "無法起動 thread-safe libraries。"
 
-#: ../src/totem.c:3401
+#: ../src/totem.c:3476
 msgid "Verify your system installation. Totem will now exit."
 msgstr "請先確認安裝時有沒有問題。Totem 會立刻結束。"
 
-#: ../src/totem.c:3424
+#: ../src/totem.c:3499
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem 無法起動設置引擊。"
 
-#: ../src/totem.c:3424
+#: ../src/totem.c:3499
 msgid "Make sure that GNOME is properly installed."
 msgstr "請檢查 GNOME 是否已正確安裝。"
 
 #. Main window
-#: ../src/totem.c:3451
+#: ../src/totem.c:3527
 msgid "main window"
 msgstr "主視窗"
 
-#: ../src/totem.c:3456
+#: ../src/totem.c:3532
 msgid "video popup menu"
 msgstr "視訊彈出式視窗"
 
@@ -1383,29 +1383,30 @@ msgstr ""
 "無法載入主視窗界面 (vanity.glade)。\n"
 "請檢查 Totem 是否已正確安裝。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:66
+#: ../src/backend/bacon-video-widget-gst-0.10.c:67
 #: ../src/backend/bacon-video-widget-gst.c:67
 msgid "Totem Video Window"
 msgstr "Totem 視訊視窗"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1941
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2059
+#: ../src/backend/bacon-video-widget-gst.c:3529
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
 msgstr "找不到所要求的音效輸出。請在多媒體系統選取程式中選擇其它的音效輸出。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1946
-#: ../src/backend/bacon-video-widget-gst.c:1935
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2064
+#: ../src/backend/bacon-video-widget-gst.c:1951
 msgid "Location not found."
 msgstr "找不到位置。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1950
-#: ../src/backend/bacon-video-widget-gst.c:1938
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2068
+#: ../src/backend/bacon-video-widget-gst.c:1954
 msgid "Could not open location; You may not have permission to open the file."
 msgstr "無法開啟位置，可能您沒有開啟該位置的權限。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1961
-#: ../src/backend/bacon-video-widget-gst.c:3430
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2079
+#: ../src/backend/bacon-video-widget-gst.c:3480
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1414,8 +1415,8 @@ msgstr ""
 "其它的應用程式正在使用視訊輸出。請關閉其它的視訊輸出，或是在多媒體系統選取程"
 "式中選擇其它的音效輸出。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1967
-#: ../src/backend/bacon-video-widget-gst.c:3473
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2085
+#: ../src/backend/bacon-video-widget-gst.c:3523
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1424,43 +1425,49 @@ msgstr ""
 "其它的應用程式正在使用音效輸出。請在多媒體系統選取程式中選擇其它的音效輸出。"
 "或者您要考慮一下使用音效伺服器。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2055
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2100
+msgid ""
+"Cannot play this file over the network. Try downloading it to disk first."
+msgstr "無法透過網路播放此檔案。先下載到磁碟後再試。。"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2178
 msgid "Media file could not be played."
 msgstr "媒體檔無法播放。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2124
-#: ../src/backend/bacon-video-widget-gst.c:1874
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2260
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2311
+#: ../src/backend/bacon-video-widget-gst.c:1886
 msgid "Failed to retrieve working directory"
 msgstr "無法取得工作目錄"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3493
-#: ../src/backend/bacon-video-widget-gst.c:3149
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3763
+#: ../src/backend/bacon-video-widget-gst.c:3191
 msgid "Too old version of GStreamer installed."
 msgstr "已安裝的 GStreamer 版本太舊。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3508
-#: ../src/backend/bacon-video-widget-gst.c:3156
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3770
+#: ../src/backend/bacon-video-widget-gst.c:3199
 msgid "Media contains no supported video streams."
 msgstr "媒體包含不支援的視訊串流。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3855
-#: ../src/backend/bacon-video-widget-gst.c:3334
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4115
+#: ../src/backend/bacon-video-widget-gst.c:3384
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr "無法建立 GStreamer 播放對像。請檢查 GStreamer 的安裝是否正確。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3970
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4054
-#: ../src/backend/bacon-video-widget-gst.c:3441
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4230
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4314
+#: ../src/backend/bacon-video-widget-gst.c:3491
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
 msgstr ""
 "無法開啟視訊輸出。可能它不存在。請在多媒體系統選取程式中選擇其它的音效輸出。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3979
-#: ../src/backend/bacon-video-widget-gst.c:3445
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4239
+#: ../src/backend/bacon-video-widget-gst.c:3495
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1469,8 +1476,8 @@ msgstr ""
 "無法找到視訊輸出。您可能需要安裝附加的 GStreamer 外掛程式，或在多媒體系統選取"
 "程式中選擇其它的視訊輸出。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3998
-#: ../src/backend/bacon-video-widget-gst.c:3490
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4258
+#: ../src/backend/bacon-video-widget-gst.c:3540
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1479,36 +1486,30 @@ msgstr ""
 "無法開啟音效輸出。您沒有足夠的權限開啟音效裝置，或是音效伺服器沒有執行。請在"
 "多媒體系統選取程式中選擇其它的音效輸出。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4008
-#: ../src/backend/bacon-video-widget-gst.c:3494
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4268
+#: ../src/backend/bacon-video-widget-gst.c:3544
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
-"Selector"
+"Selector."
 msgstr ""
 "無法找到音效輸出。您可能需要安裝附加的 GStreamer 外掛程式，或在多媒體系統選取"
-"程式中選擇其它的音效輸出"
+"程式中選擇其它的音效輸出。"
 
-#: ../src/backend/bacon-video-widget-gst.c:1959
+#: ../src/backend/bacon-video-widget-gst.c:1975
 msgid "Failed to open media file; unknown error"
 msgstr "無法開啟媒體檔案；錯誤不明"
 
-#: ../src/backend/bacon-video-widget-gst.c:1992
+#: ../src/backend/bacon-video-widget-gst.c:2027
 #, c-format
 msgid "Failed to play: %s"
 msgstr "播放失敗：%s"
 
-#: ../src/backend/bacon-video-widget-gst.c:1994
+#: ../src/backend/bacon-video-widget-gst.c:2029
 msgid "unknown error"
 msgstr "不明錯誤"
 
-#: ../src/backend/bacon-video-widget-gst.c:3479
-msgid ""
-"The requested audio output was not found. Please select another audio output "
-"in the Multimedia Systems Selector"
-msgstr "找不到所要求的音效輸出。請在多媒體系統選取程式中選擇其它的音效輸出。"
-
-#: ../src/backend/bacon-video-widget-xine.c:679
+#: ../src/backend/bacon-video-widget-xine.c:688
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1517,172 +1518,173 @@ msgstr ""
 "無法載入‘%s’音效驅動程式\n"
 "請確保音效裝置不是在使用中。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1134
-#: ../src/backend/bacon-video-widget-xine.c:1692
+#: ../src/backend/bacon-video-widget-xine.c:1148
+#: ../src/backend/bacon-video-widget-xine.c:1732
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
 msgstr "沒有視訊輸出存在，請檢查 Totem 是否已正確安裝。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1257
+#: ../src/backend/bacon-video-widget-xine.c:1271
 msgid "The server you are trying to connect to is not known."
 msgstr "無法聯絡您想連接的伺服器。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1261
+#: ../src/backend/bacon-video-widget-xine.c:1275
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "您指定的裝置名稱 (%s) 可能無效。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1265
+#: ../src/backend/bacon-video-widget-xine.c:1279
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "您指定的伺服器 (%s) 可能無法連接。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1269
+#: ../src/backend/bacon-video-widget-xine.c:1283
 msgid "The connection to this server was refused."
 msgstr "該伺服器拒絕接受連線。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1273
+#: ../src/backend/bacon-video-widget-xine.c:1287
 msgid "The specified movie could not be found."
 msgstr "找不到指定的影片。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1279
-#: ../src/backend/bacon-video-widget-xine.c:1297
+#: ../src/backend/bacon-video-widget-xine.c:1293
+#: ../src/backend/bacon-video-widget-xine.c:1311
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
 msgstr ""
 "來源資料已被加密，無法讀取。您是否正在播放加密的 DVD，而沒有使用 libdvdcss？"
 
-#: ../src/backend/bacon-video-widget-xine.c:1282
+#: ../src/backend/bacon-video-widget-xine.c:1296
 msgid "The movie could not be read."
 msgstr "無法讀取影片。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1291
+#: ../src/backend/bacon-video-widget-xine.c:1305
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "載入函式庫或解碼程序 (%s) 時出現問題。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1300
+#: ../src/backend/bacon-video-widget-xine.c:1314
 msgid "This file is encrypted and cannot be played back."
 msgstr "這檔案已被加密，所以無法播放。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1305
+#: ../src/backend/bacon-video-widget-xine.c:1319
 msgid "For security reasons, this movie can not be played back."
 msgstr "由於安全理由，因此這影片不能播放。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1310
+#: ../src/backend/bacon-video-widget-xine.c:1324
 msgid "The audio device is busy. Is another application using it?"
 msgstr "音效裝置正在忙碌中。其它程式正在使用它嗎？"
 
-#: ../src/backend/bacon-video-widget-xine.c:1315
+#: ../src/backend/bacon-video-widget-xine.c:1329
 msgid "You are not allowed to open this file."
 msgstr "您沒有權限開啟此檔案。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1317
+#: ../src/backend/bacon-video-widget-xine.c:1331
 msgid "The server refused access to this file or stream."
 msgstr "伺服器拒絕存取這檔案或串流。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1326
+#: ../src/backend/bacon-video-widget-xine.c:1340
 msgid "The file you tried to play is an empty file."
 msgstr "您嘗試播放的是一個空的檔案。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1494
+#: ../src/backend/bacon-video-widget-xine.c:1534
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "沒有任何輸入外置程式可以處理這種影片。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1498
+#: ../src/backend/bacon-video-widget-xine.c:1538
 msgid "There is no plugin to handle this movie."
 msgstr "沒有任何外置程式可以處理這種影片。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1502
+#: ../src/backend/bacon-video-widget-xine.c:1542
 msgid "This movie is broken and can not be played further."
 msgstr "影片已經損壞，無法繼續播放。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1506
+#: ../src/backend/bacon-video-widget-xine.c:1546
 msgid "This location is not a valid one."
 msgstr "這是一個無效的位置。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1510
+#: ../src/backend/bacon-video-widget-xine.c:1550
 msgid "This movie could not be opened."
 msgstr "這影片無法開啟。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1514
+#: ../src/backend/bacon-video-widget-xine.c:1554
 msgid "Generic Error."
 msgstr "一般錯誤。"
 
-#: ../src/backend/bacon-video-widget-xine.c:2058
+#: ../src/backend/bacon-video-widget-xine.c:2099
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr "這套所謂影片其實是圖片，您可以使用圖片瀏覽程式來開啟。"
 
-#: ../src/backend/bacon-video-widget-xine.c:2082
+#: ../src/backend/bacon-video-widget-xine.c:2123
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr "無法處理‘%s‘視訊編碼。您可能需要安裝額外的外掛程式才可以播放某類影片。"
 
-#: ../src/backend/bacon-video-widget-xine.c:2086
+#: ../src/backend/bacon-video-widget-xine.c:2127
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr "無法處理‘%s‘音效編碼。您可能需要安裝額外的外掛程式才可以播放某類影片。"
 
-#: ../src/backend/bacon-video-widget-xine.c:2102
+#: ../src/backend/bacon-video-widget-xine.c:2143
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "這個是音效檔，但沒有的音效輸出存在。"
 
-#: ../src/backend/bacon-video-widget-xine.c:3543
-#: ../src/backend/bacon-video-widget-xine.c:3606
+#: ../src/backend/bacon-video-widget-xine.c:3577
+#: ../src/backend/bacon-video-widget-xine.c:3624
+#: ../src/backend/bacon-video-widget-xine.c:3646
 #, c-format
 msgid "Language %d"
 msgstr "語言 %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3642
-msgid "Movie is not playing."
-msgstr "未播放影片。"
-
-#: ../src/backend/bacon-video-widget-xine.c:3651
+#: ../src/backend/bacon-video-widget-xine.c:3683
 msgid "No video to capture."
 msgstr "沒有視像可擷取。"
 
-#: ../src/backend/bacon-video-widget-xine.c:3659
+#: ../src/backend/bacon-video-widget-xine.c:3691
 msgid "Video codec is not handled."
 msgstr "無法處理視訊編碼。"
 
-#: ../src/backend/video-utils.c:260
+#: ../src/backend/bacon-video-widget-xine.c:3699
+msgid "Movie is not playing."
+msgstr "未播放影片。"
+
+#: ../src/backend/video-utils.c:272
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d 小時"
 
-#: ../src/backend/video-utils.c:262
+#: ../src/backend/video-utils.c:274
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d 分鐘"
 
-#: ../src/backend/video-utils.c:265
+#: ../src/backend/video-utils.c:277
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d 秒"
 
 #. hour:minutes:seconds
-#: ../src/backend/video-utils.c:271
+#: ../src/backend/video-utils.c:283
 #, c-format
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. minutes:seconds
-#: ../src/backend/video-utils.c:274
+#: ../src/backend/video-utils.c:286
 #, c-format
 msgid "%s %s"
 msgstr "%s %s"
 
 #. seconds
-#: ../src/backend/video-utils.c:277
+#: ../src/backend/video-utils.c:289
 #, c-format
 msgid "%s"
 msgstr "%s"
@@ -1766,10 +1768,16 @@ msgstr "無法開啟檔案‘%s’：%s"
 #~ msgid ""
 #~ "Could not find the audio output. You may need to install additional "
 #~ "GStreamer plugins, or select another audio output in the Multimedia "
-#~ "Systems Selector."
+#~ "Systems Selector"
 #~ msgstr ""
 #~ "無法找到音效輸出。您可能需要安裝附加的 GStreamer 外掛程式，或在多媒體系統"
-#~ "選取程式中選擇其它的音效輸出。"
+#~ "選取程式中選擇其它的音效輸出"
+
+#~ msgid ""
+#~ "The requested audio output was not found. Please select another audio "
+#~ "output in the Multimedia Systems Selector"
+#~ msgstr ""
+#~ "找不到所要求的音效輸出。請在多媒體系統選取程式中選擇其它的音效輸出。"
 
 #~ msgid "Select CD"
 #~ msgstr "選取 CD"
