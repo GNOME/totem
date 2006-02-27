@@ -1,3 +1,10 @@
+2006-02-27  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* configure.in:
+	  Require GLib-2.8 or newer for the GStreamer-0.10 backend (earlier
+	  GLib versions do not do object refcounting atomically, which is
+	  a sine qua non in heavily multi-threaded environments) (e.g. #327093).
+
 2006-02-23  Christian Schaller <uraeus at gnome dot org>
 
 	* COPYING: update exception text with spelling and language 

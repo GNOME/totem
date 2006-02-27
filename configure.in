@@ -136,7 +136,7 @@ if test x$HAVE_XINE = xno; then
 		AC_DEFINE(HAVE_GSTREAMER_010, 1, [Whether we use Gst 0.8 or 0.10])
 	fi
 
-dnl Give error and exit if we don't have gstreamer
+	dnl Give error and exit if we don't have gstreamer
 	if test "x$HAVE_GSTREAMER" = "xno"; then
 		AC_MSG_ERROR(you need the GStreamer or the xine-lib development packages installed)
 	fi
@@ -177,6 +177,20 @@ dnl Give error and exit if we don't have gstreamer
 				])
 			fi
 		done
+
+		dnl We want at least GLib-2.8 for the GStreamer-0.10 backend
+		AC_MSG_CHECKING([whether GLib has atomic refcounting for objects])
+		PKG_CHECK_MODULES(GLIB_WITH_ATOMIC_REFCOUNTING, glib-2.0 >= 2.8.0, [
+                	AC_MSG_RESULT([yes])
+		], [
+			AC_MSG_RESULT([no])
+			AC_MSG_ERROR([
+				The totem GStreamer-0.10 backend requires
+				GLib version 2.8.0 or newer. Please upgrade
+				your GLib version first.
+			])
+		])
+			
 	fi
 fi
 
