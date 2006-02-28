@@ -1,5 +1,11 @@
 2006-02-28  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-menu.c: (my_gnome_vfs_volume_get_mount_path),
+	(add_device_to_menu): pass the mount point onto Totem when the
+	disc is mounted, rather than the device path
+
+2006-02-28  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-video-thumbnailer.c: (save_pixbuf), (usage), (main):
 	Allow saving of thumbnails in JPEG format (Closes: #332424)
 

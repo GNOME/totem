@@ -550,6 +550,20 @@ fake_gnome_vfs_device_get_something (GObject *device,
         }
 }
 
+static char *
+my_gnome_vfs_volume_get_mount_path (GnomeVFSVolume *volume)
+{
+	char *uri, *path;
+
+	uri = gnome_vfs_volume_get_activation_uri (volume);
+	path = g_filename_from_uri (uri, NULL, NULL);
+	g_free (uri);
+
+	if (path == NULL)
+		return gnome_vfs_volume_get_device_path (volume);
+	return path;
+}
+
 static void
 add_device_to_menu (GObject *device, GtkMenu *menu, gint position, Totem *totem)
 {
@@ -574,7 +588,7 @@ add_device_to_menu (GObject *device, GtkMenu *menu, gint position, Totem *totem)
 	icon_name = fake_gnome_vfs_device_get_something (device,
 		&gnome_vfs_volume_get_icon, &gnome_vfs_drive_get_icon);
 	device_path = fake_gnome_vfs_device_get_something (device,
-		&gnome_vfs_volume_get_device_path,
+		&my_gnome_vfs_volume_get_mount_path,
 		&gnome_vfs_drive_get_device_path);
 
 	label = g_strdup_printf (_("Play Disc '%s'"), name);
