@@ -47,6 +47,7 @@
 #define HALF_SECOND G_USEC_PER_SEC * .5
 
 gboolean finished = FALSE;
+static char *format = "png";
 
 #ifdef THUMB_DEBUG
 static void
@@ -213,7 +214,7 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 	GdkPixbuf *small, *with_holes;
 	GError *err = NULL;
 
-	if (size <= 128)
+	if (size <= 256)
 	{
 		int width, height, d_width, d_height;
 
@@ -241,7 +242,7 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 		g_return_if_fail (with_holes != NULL);
 	}
 
-	if (gdk_pixbuf_save (with_holes, path, "png", &err, NULL) == FALSE)
+	if (gdk_pixbuf_save (with_holes, path, format, &err, NULL) == FALSE)
 	{
 		if (err != NULL)
 		{
@@ -320,6 +321,12 @@ time_monitor (gpointer data)
 	exit (0);
 }
 
+static void
+usage (const char *cmd)
+{
+	g_print ("Usage: %s [-s <size>] [-j] <input> <output> [backend options]\n", cmd);
+}
+
 int main (int argc, char *argv[])
 {
 	GError *err = NULL;
@@ -330,7 +337,7 @@ int main (int argc, char *argv[])
 
 	if (argc <= 2 || strcmp (argv[1], "-h") == 0 ||
 	    strcmp (argv[1], "--help") == 0) {
-		g_print ("Usage: %s [-s <size>] <input> <output> [backend options]\n", argv[0]);
+		usage (argv[0]);
 		return -1;
 	}
 
@@ -350,14 +357,28 @@ int main (int argc, char *argv[])
 	bacon_video_widget_init_backend (&argc, &argv);
 	gnome_vfs_init ();
 
-	if (!strcmp (argv[1], "-s")) {
-		input = argv[3];
-		output = argv[4];
-		size = g_strtod (argv[2], NULL);
-	} else {
-		input = argv[1];
-		output = argv[2];
-		size = 128;
+	size = 128;
+	input = output = NULL;
+	i = 1;
+	while (i < argc) {
+		if (strcmp (argv[i], "-s") == 0) {
+			size = g_strtod (argv[++i], NULL);
+			i++;
+			continue;
+		}
+		if (strcmp (argv[i], "-j") == 0) {
+			format = "jpeg";
+			i++;
+			continue;
+		}
+		input = argv[i];
+		output = argv[++i];
+		break;
+	}
+
+	if (output == NULL || input == NULL) {
+		usage (argv[0]);
+		return -1;
 	}
 
 	bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (-1, -1, BVW_USE_TYPE_CAPTURE, &err));
