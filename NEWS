@@ -1,5 +1,15 @@
 New features and significant updates in version...
 
+1.3.92:
+ * Get the list of subtitles and languages (GStreamer 0.10)
+ * Fix the window title not getting set properly when loading a new file
+ * Avoid hang when skipping to the next file (GStreamer 0.10)
+ * Require glib 2.8 to avoid crashers (GStreamer 0.10)
+ * Compilation fix with glib > 2.8.0 and < 2.9.1
+ * Fix a critical warning on startup when a particular file is in the recent
+ files list
+ * Fix a warning on open (GStreamer 0.8)
+
 1.3.91:
  * Show the waiting cursor when opening files, parsing playlists and starting up
  * Add popup menu support with the keyboard to the playlist
