@@ -1,1 +1,1 @@
-SUBDIRS = C de es fr ru uk
+SUBDIRS = C bg de es fr ru uk
