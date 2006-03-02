@@ -626,8 +626,7 @@ static struct {
 	{ "video/x-ms-asf-plugin", "asf, wmv", "video/x-ms-asf" },
 	{ "video/x-ms-wmv", "wmv", "video/x-ms-asf" },
 	{ "application/ogg", "ogg", NULL },
-	{ "application/x-google-vlc-plugin", "", "Google VLC plugin" },
-	{ "application/x-vlc-plugin", "", "VideoLAN plugin" },
+	{ "video/divx", "divx", "video/x-msvideo" },
 	{ "audio/wav", "wav", NULL }
 };
 #define NUM_MIME_TYPES G_N_ELEMENTS(mime_types)
