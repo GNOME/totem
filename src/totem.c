@@ -2743,6 +2743,12 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		totem_action_volume_relative (totem, VOLUME_DOWN_OFFSET);
 		break;
 	case GDK_0:
+		if (event->state & GDK_CONTROL_MASK) {
+			on_zoom_reset_activate (totem);
+		} else {
+			totem_action_set_scale_ratio (totem, 0.5);
+		}
+		break;
 	case GDK_onehalf:
 		totem_action_set_scale_ratio (totem, 0.5);
 		break;
@@ -2767,6 +2773,20 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		}
 
 		totem_action_menu_popup (totem, 0);
+		break;
+	case GDK_plus:
+	case GDK_KP_Add:
+		if (!(event->state & GDK_CONTROL_MASK))
+			return FALSE;
+
+		totem_action_zoom_relative (totem, ZOOM_IN_OFFSET);
+		break;
+	case GDK_minus:
+	case GDK_KP_Subtract:
+		if (!(event->state & GDK_CONTROL_MASK))
+			return FALSE;
+
+		totem_action_zoom_relative (totem, ZOOM_OUT_OFFSET);
 		break;
 	default:
 		retval = FALSE;
@@ -2838,6 +2858,11 @@ on_window_key_press_event (GtkWidget *win, GdkEventKey *event, Totem *totem)
 		case GDK_s:
 		case GDK_Right:
 		case GDK_Left:
+		case GDK_plus:
+		case GDK_KP_Add:
+		case GDK_minus:
+		case GDK_KP_Subtract:
+		case GDK_0:
 			if (event->type == GDK_KEY_PRESS) {
 				return totem_action_handle_key_press (totem, event);
 			}

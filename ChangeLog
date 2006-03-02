@@ -1,3 +1,11 @@
+2006-03-02  Bastien Nocera  <hadess@hadess.net>
+
+	* src/metadata-test.c: (main):
+	Init the locale properly, to avoid printing in the C locale
+	* src/totem.c: (totem_action_handle_key_press),
+	(on_window_key_press_event): handle the HIG recommended zooming
+	keyboard shortcuts: Ctrl++, Ctrl+- and Ctrl+0 (Closes: #302746)
+
 2006-02-28  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-menu.c: (my_gnome_vfs_volume_get_mount_path),
