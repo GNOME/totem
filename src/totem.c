@@ -2744,7 +2744,7 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		break;
 	case GDK_0:
 		if (event->state & GDK_CONTROL_MASK) {
-			on_zoom_reset_activate (totem);
+			totem_action_zoom_reset (totem);
 		} else {
 			totem_action_set_scale_ratio (totem, 0.5);
 		}
