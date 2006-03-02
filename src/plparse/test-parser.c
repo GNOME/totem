@@ -6,6 +6,7 @@
 
 static GMainLoop *loop = NULL;
 static GList *list = NULL;
+static gboolean option_recurse = TRUE;
 
 static void
 header (const char *message)
@@ -117,6 +118,8 @@ static void
 test_parsing (void)
 {
 	TotemPlParser *pl = totem_pl_parser_new ();
+
+	g_object_set (G_OBJECT (pl), "recurse", option_recurse, NULL);
 	g_signal_connect (G_OBJECT (pl), "entry", G_CALLBACK (entry_added), NULL);
 
 	header ("parsing");
@@ -129,7 +132,18 @@ int main (int argc, char **argv)
 {
 	gnome_vfs_init();
 
-	if (argc == 0) {
+	while (argc > 1 && argv[1]) {
+		if (strcmp (argv[1], "--no-recurse") == 0 || strcmp (argv[1], "-n") == 0) {
+			g_print ("Disabling recursion\n");
+			option_recurse = FALSE;
+			argv++;
+			argc--;
+		} else /* other options here */ {
+			break;
+		}
+	}
+
+	if (argc == 1) {
 		test_relative ();
 		test_parsing ();
 	} else {

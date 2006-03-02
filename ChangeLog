@@ -1,3 +1,20 @@
+2006-03-03  James Livingston  <jrl@ids.org.au>
+
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_class_init),
+	(totem_pl_parser_set_property), (totem_pl_parser_get_property): add a
+	new gobject property "recurse", which indicates whether playlists
+	should be processed recursively. Defaults to TRUE which is needed for
+	playlist, can be set to FALSE for loading the contents of playlists
+	into memory.
+
+	(totem_pl_parser_add_pls_with_contents): save and restore the fallback
+	flag when processing PLS recursively. Don't reset the recursion level
+	to 0.
+
+	* src/plparse/test-parser.c: (test_parsing), (main): Add a flag
+	--no-recurse/-n to the test parser, which turns of recursive
+	processing.
+
 2006-03-02  Bastien Nocera  <hadess@hadess.net>
 
 	* data/mime-type-list.txt:

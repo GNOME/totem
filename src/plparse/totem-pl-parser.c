@@ -54,6 +54,15 @@ static gboolean totem_pl_parser_ignore (TotemPlParser *parser, const char *url);
 static TotemPlParserResult totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url);
 static TotemPlParserResult totem_pl_parser_add_asx (TotemPlParser *parser, const char *url, gpointer data);
 
+static void totem_pl_parser_set_property (GObject *object,
+					  guint prop_id,
+					  const GValue *value,
+					  GParamSpec *pspec);
+static void totem_pl_parser_get_property (GObject *object,
+					  guint prop_id,
+					  GValue *value,
+					  GParamSpec *pspec);
+
 typedef struct {
 	char *mimetype;
 	PlaylistCallback func;
@@ -65,6 +74,12 @@ struct TotemPlParserPrivate
 	GList *ignore_mimetypes;
 	guint recurse_level;
 	gboolean fallback;
+	gboolean recurse;
+};
+
+enum {
+	PROP_NONE,
+	PROP_RECURSE,
 };
 
 /* Signals */
@@ -93,6 +108,17 @@ totem_pl_parser_class_init (TotemPlParserClass *klass)
 	parent_class = g_type_class_peek_parent (klass);
 
 	object_class->finalize = totem_pl_parser_finalize;
+	object_class->set_property = totem_pl_parser_set_property;
+	object_class->get_property = totem_pl_parser_get_property;
+
+	/* properties */
+	g_object_class_install_property (object_class,
+					 PROP_RECURSE,
+					 g_param_spec_boolean ("recurse",
+							       "recurse",
+							       "Whether or not to process URLs further", 
+							       TRUE,
+							       G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
 	/* Signals */
 	totem_pl_parser_table_signals[ENTRY] =
@@ -119,6 +145,46 @@ totem_pl_parser_class_init (TotemPlParserClass *klass)
 			      NULL, NULL,
 			      g_cclosure_marshal_VOID__STRING,
 			      G_TYPE_NONE, 1, G_TYPE_STRING);
+}
+
+static void
+totem_pl_parser_set_property (GObject *object,
+			      guint prop_id,
+			      const GValue *value,
+			      GParamSpec *pspec)
+{
+	TotemPlParser *parser = TOTEM_PL_PARSER (object);
+
+	switch (prop_id)
+	{
+	case PROP_RECURSE:
+		parser->priv->recurse = g_value_get_boolean (value);
+		break;
+
+	default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+		break;
+	}
+}
+
+static void
+totem_pl_parser_get_property (GObject *object,
+			      guint prop_id,
+			      GValue *value,
+			      GParamSpec *pspec)
+{
+	TotemPlParser *parser = TOTEM_PL_PARSER (object);
+
+	switch (prop_id)
+	{
+	case PROP_RECURSE:
+		g_value_set_boolean (value, parser->priv->recurse);
+		break;
+
+	default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+		break;
+	}
 }
 
 GQuark
@@ -851,6 +917,7 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url, c
 	int i, num_entries;
 	char *split_char, *playlist_title;
 	gboolean dos_mode = FALSE;
+	gboolean fallback;
 
 	/* figure out whether we're a unix pls or dos pls */
 	if (strstr(contents,"\x0d") == NULL) {
@@ -915,8 +982,11 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url, c
 			continue;
 		}
 
+		fallback = parser->priv->fallback;
+		parser->priv->fallback = FALSE;
+
 		if (strstr (file, "://") != NULL || file[0] == G_DIR_SEPARATOR) {
-			if (totem_pl_parser_parse (parser, file, FALSE) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
+			if (totem_pl_parser_parse_internal (parser, file) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
 				totem_pl_parser_add_one_url_ext (parser, file, title, genre);
 			}
 		} else {
@@ -928,7 +998,7 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url, c
 
 			uri = g_strdup_printf ("%s/%s", base, escaped);
 
-			if (totem_pl_parser_parse (parser, uri, FALSE) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
+			if (totem_pl_parser_parse_internal (parser, uri) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
 				totem_pl_parser_add_one_url_ext (parser, file, title, genre);
 			}
 
@@ -937,6 +1007,7 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url, c
 			g_free (base);
 		}
 
+		parser->priv->fallback = fallback;
 		g_free (file);
 		g_free (title);
 		g_free (genre);
@@ -1682,30 +1753,32 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 		return TOTEM_PL_PARSER_RESULT_IGNORED;
 	}
 
-	parser->priv->recurse_level++;
+	if (parser->priv->recurse || parser->priv->recurse_level == 0) {
+		parser->priv->recurse_level++;
 
-	found = FALSE;
-	for (i = 0; i < G_N_ELEMENTS(special_types); i++) {
-		if (strcmp (special_types[i].mimetype, mimetype) == 0) {
-			ret = (* special_types[i].func) (parser, url, data);
-			found = TRUE;
-			break;
-		}
-	}
-
-	for (i = 0; i < G_N_ELEMENTS(dual_types) && found == FALSE; i++) {
-		if (strcmp (dual_types[i].mimetype, mimetype) == 0) {
-			if (data == NULL) {
-				mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data);
+		found = FALSE;
+		for (i = 0; i < G_N_ELEMENTS(special_types); i++) {
+			if (strcmp (special_types[i].mimetype, mimetype) == 0) {
+				ret = (* special_types[i].func) (parser, url, data);
+				found = TRUE;
+				break;
 			}
-			ret = (* dual_types[i].func) (parser, url, data);
-			break;
 		}
+
+		for (i = 0; i < G_N_ELEMENTS(dual_types) && found == FALSE; i++) {
+			if (strcmp (dual_types[i].mimetype, mimetype) == 0) {
+				if (data == NULL) {
+					mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data);
+				}
+				ret = (* dual_types[i].func) (parser, url, data);
+				break;
+			}
+		}
+
+		g_free (data);
+
+		parser->priv->recurse_level--;
 	}
-
-	g_free (data);
-
-	parser->priv->recurse_level--;
 
 	if (ret == TOTEM_PL_PARSER_RESULT_SUCCESS)
 		return ret;
