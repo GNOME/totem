@@ -1,3 +1,10 @@
+2006-03-03  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_get_metadata_bool):
+	  Don't operate on NULL structures, causes assertion
+	  warnings (#333238).
+
 2006-03-03  Jérémy Ar Floc'h <jeremy.lefloch@gmail.com>
 
 	* po/br.po: Added breton translation by Jérémy Ar Floc'h.

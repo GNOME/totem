@@ -3665,6 +3665,7 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget * bvw,
       /* if properties dialog, show the metadata we
        * have even if we cannot decode the stream */
       if (!boolean && bvw->priv->use_type == BVW_USE_TYPE_METADATA &&
+          bvw->priv->tagcache != NULL &&
           gst_structure_has_field ((GstStructure *) bvw->priv->tagcache,
                                    GST_TAG_VIDEO_CODEC)) {
         boolean = TRUE;
@@ -3675,6 +3676,7 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget * bvw,
       /* if properties dialog, show the metadata we
        * have even if we cannot decode the stream */
       if (!boolean && bvw->priv->use_type == BVW_USE_TYPE_METADATA &&
+          bvw->priv->tagcache != NULL &&
           gst_structure_has_field ((GstStructure *) bvw->priv->tagcache,
                                    GST_TAG_AUDIO_CODEC)) {
         boolean = TRUE;
