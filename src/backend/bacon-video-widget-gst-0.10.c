@@ -2833,6 +2833,9 @@ setup_vis (BaconVideoWidget * bvw)
 {
   GstElement *vis_bin = NULL;
 
+  GST_DEBUG ("setup_vis called, show_vfx %d, vis element %s",
+      bvw->priv->show_vfx, bvw->priv->vis_element_name);
+  
   if (bvw->priv->show_vfx && bvw->priv->vis_element_name) {
     GstElement *vis_element = NULL, *vis_capsfilter = NULL;
     GstPad *pad = NULL;
@@ -2864,18 +2867,21 @@ setup_vis (BaconVideoWidget * bvw)
     
     vis_element = gst_element_factory_create (fac, "vis_element");
     if (!GST_IS_ELEMENT (vis_element)) {
+      GST_DEBUG ("failed creating visualisation element");
       goto beach;
     }
     
     vis_capsfilter = gst_element_factory_make ("capsfilter",
         "vis_capsfilter");
     if (!GST_IS_ELEMENT (vis_capsfilter)) {
+      GST_DEBUG ("failed creating visualisation capsfilter element");
       gst_object_unref (vis_element);
       goto beach;
     }
     
     vis_bin = gst_bin_new ("vis_bin");
     if (!GST_IS_ELEMENT (vis_bin)) {
+      GST_DEBUG ("failed creating visualisation bin");
       gst_object_unref (vis_element);
       gst_object_unref (vis_capsfilter);
       goto beach;
