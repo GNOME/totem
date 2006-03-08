@@ -1,3 +1,13 @@
+2006-03-05  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-time-label.c: (totem_time_label_init),
+	(totem_time_label_set_time), (totem_time_label_set_seeking):
+	* src/totem-time-label.h:
+	* src/totem.c: (seek_slider_pressed_cb), (seek_slider_changed_cb),
+	(seek_slider_released_cb): Patch from Julien MOUTTE <julien@moutte.net>
+	to show the "Seek to" label when seeking in fullscreen
+	(Closes: #333541)
+
 2006-03-05  Julien MOUTTE  <julien@moutte.net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c: (setup_vis): Add some

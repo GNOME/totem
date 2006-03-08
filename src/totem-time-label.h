@@ -27,6 +27,8 @@ GtkType    totem_time_label_get_type 	(void);
 GtkWidget *totem_time_label_new      	(void);
 void       totem_time_label_set_time    (TotemTimeLabel *label,
 					 gint64 time, gint64 length);
+void       totem_time_label_set_seeking (TotemTimeLabel *label,
+           gboolean seeking);
 GtkWidget *totem_time_label_new_from_glade
 					(gchar *widget_name,
 					 gchar *string1, gchar *string2,

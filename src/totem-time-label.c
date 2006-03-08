@@ -9,6 +9,7 @@ static void totem_time_label_init       (TotemTimeLabel      *label);
 struct TotemTimeLabelPrivate {
 	gint64 time;
 	gint64 length;
+	gboolean seeking;
 };
 
 static GObjectClass *parent_class = NULL;
@@ -27,6 +28,7 @@ totem_time_label_init (TotemTimeLabel *label)
 	label->priv = g_new0 (TotemTimeLabelPrivate, 1);
 	label->priv->time = 0;
 	label->priv->length = -1;
+	label->priv->seeking = FALSE;
 }
 
 GtkWidget*
@@ -78,8 +80,12 @@ totem_time_label_set_time (TotemTimeLabel *label, gint64 time, gint64 length)
 
 		time_str = totem_time_to_string (time);
 		length_str =  totem_time_to_string (length);
-		label_str = g_strdup_printf
-			(_("%s / %s"), time_str, length_str);
+		if (label->priv->seeking == FALSE)
+			/* Elapsed / Total Length */
+			label_str = g_strdup_printf (_("%s / %s"), time_str, length_str);
+		else 
+			/* Seeking to Time / Total Length */
+			label_str = g_strdup_printf (_("Seek to %s / %s"), time_str, length_str);
 		g_free (time_str);
 		g_free (length_str);
 	}
@@ -91,3 +97,10 @@ totem_time_label_set_time (TotemTimeLabel *label, gint64 time, gint64 length)
 	label->priv->length = length;
 }
 
+void
+totem_time_label_set_seeking (TotemTimeLabel *label, gboolean seeking)
+{
+  g_return_if_fail (TOTEM_IS_TIME_LABEL (label));
+  
+  label->priv->seeking = seeking;
+}

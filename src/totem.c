@@ -1406,6 +1406,7 @@ seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 {
 	totem->seek_lock = TRUE;
 	totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), TRUE);
+	totem_time_label_set_seeking (TOTEM_TIME_LABEL (totem->tcw_time_label), TRUE);
 
 	if (bacon_video_widget_can_direct_seek (totem->bvw) != FALSE)
 	{
@@ -1433,6 +1434,9 @@ seek_slider_changed_cb (GtkAdjustment *adj, Totem *totem)
 	time = bacon_video_widget_get_stream_length (totem->bvw);
 	totem_statusbar_set_time_and_length (TOTEM_STATUSBAR (totem->statusbar),
 			(int) (pos * time / 1000), time / 1000);
+	totem_time_label_set_time
+			(TOTEM_TIME_LABEL (totem->tcw_time_label),
+			 (int) (pos * time), time);
 
 	if (bacon_video_widget_can_direct_seek (totem->bvw) != FALSE)
 		totem_action_seek (totem, pos);
@@ -1465,6 +1469,8 @@ seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 	}
 
 	totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), FALSE);
+	totem_time_label_set_seeking (TOTEM_TIME_LABEL (totem->tcw_time_label),
+			FALSE);
 	return FALSE;
 }
 
