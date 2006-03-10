@@ -983,7 +983,8 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url, c
 		}
 
 		fallback = parser->priv->fallback;
-		parser->priv->fallback = FALSE;
+		if (parser->priv->recurse)
+			parser->priv->fallback = FALSE;
 
 		if (strstr (file, "://") != NULL || file[0] == G_DIR_SEPARATOR) {
 			if (totem_pl_parser_parse_internal (parser, file) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
@@ -1738,6 +1739,10 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 			|| g_str_has_prefix (url, "rtsp") != FALSE) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
+	}
+
+	if (!parser->priv->recurse && parser->priv->recurse_level > 0) {
+		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
 	}
 
 	mimetype = gnome_vfs_mime_type_from_name (url);

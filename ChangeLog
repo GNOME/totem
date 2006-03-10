@@ -1,3 +1,12 @@
+2006-03-10  James Livingston  <jrl@ids.org.au>
+
+	* src/plparse/totem-pl-parser.c:
+	(totem_pl_parser_add_pls_with_contents): don't reset the "fallback"
+	option when not recursing.
+	(totem_pl_parser_parse_internal): don't look up the mime-type of
+	"inner" entries if we are not recursively processing playlists. From
+	bug 331508.
+
 2006-03-05  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-time-label.c: (totem_time_label_init),
