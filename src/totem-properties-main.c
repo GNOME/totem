@@ -38,6 +38,7 @@
 #include "data/totem-mime-types.h"
 
 static GType tpp_type = 0;
+static gboolean backend_inited = FALSE;
 static void property_page_provider_iface_init
 	(NautilusPropertyPageProviderIface *iface);
 static GList *totem_properties_get_pages
@@ -107,7 +108,11 @@ totem_properties_get_pages (NautilusPropertyPageProvider *provider,
 	if (found == FALSE)
 		goto end;
 
-	/* okay, make the page */
+	/* okay, make the page, init'ing the backend first if necessary */
+	if (backend_inited == FALSE) {
+		bacon_video_widget_init_backend (NULL, NULL);
+		backend_inited = TRUE;
+	}
 	uri = nautilus_file_info_get_uri (file);
 	label = gtk_label_new (_("Audio/Video"));
 	page = totem_properties_view_new (uri, label);
@@ -129,7 +134,6 @@ nautilus_module_initialize (GTypeModule *module)
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 
-	bacon_video_widget_init_backend (NULL, NULL);
 	totem_properties_plugin_register_type (module);
 	totem_properties_view_register_type (module);
 }

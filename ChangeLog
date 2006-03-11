@@ -1,3 +1,10 @@
+2006-03-11  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-properties-main.c: (totem_properties_get_pages),
+	(nautilus_module_initialize): only initialise the backend when we
+	create the first page, making nautilus startup slightly faster with
+	the GStreamer backend (Closes: #334041)
+
 2006-03-10  James Livingston  <jrl@ids.org.au>
 
 	* src/plparse/totem-pl-parser.c:
