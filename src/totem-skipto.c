@@ -147,7 +147,7 @@ totem_skipto_new (const char *glade_filename)
 	/* Skipto dialog */
 	item = glade_xml_get_widget (skipto->_priv->xml,
 			"totem_skipto_window");
-	g_signal_connect (G_OBJECT (skipto->_priv->spinbutton), "changed",
+	g_signal_connect (G_OBJECT (skipto->_priv->spinbutton), "value-changed",
 			G_CALLBACK (spin_button_value_changed_cb), skipto);
 	g_signal_connect (G_OBJECT (skipto->_priv->spinbutton), "activate",
 			G_CALLBACK (spin_button_activate_cb), skipto);
