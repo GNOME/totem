@@ -1462,6 +1462,69 @@ totem_pl_parser_add_asf (TotemPlParser *parser, const char *url, gpointer data)
 }
 
 static TotemPlParserResult
+totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url, gpointer data)
+{
+	xmlDocPtr doc;
+	xmlNodePtr node;
+	char *contents = NULL, *src;
+	int size;
+
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+
+
+	doc = xmlParseMemory (contents, size);
+	if (doc == NULL)
+		doc = xmlRecoverMemory (contents, size);
+	g_free (contents);
+
+	/* If the document has no root, or no name */
+	if(!doc || !doc->children
+			|| !doc->children->name
+			|| g_ascii_strcasecmp ((char *)doc->children->name,
+				"quicktime") != 0) {
+		if (doc != NULL)
+			xmlFreeDoc (doc);
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+	}
+
+	if (strstr (doc->children->content, "type=\"application/x-quicktime-media-link\"") == NULL) {
+		xmlFreeDoc (doc);
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+	}
+
+	node = doc->children->next;
+	if (!node || !node->name
+			|| g_ascii_strcasecmp (node->name, "embed") != 0) {
+		xmlFreeDoc (doc);
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+	}
+
+	src = xmlGetProp (node, (guchar *)"src");
+	if (!src) {
+		xmlFreeDoc (doc);
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+	}
+
+	totem_pl_parser_add_one_url (parser, src, NULL);
+
+	xmlFreeDoc (doc);
+
+	return TOTEM_PL_PARSER_RESULT_SUCCESS;
+}
+
+static TotemPlParserResult
+totem_pl_parser_add_quicktime (TotemPlParser *parser, const char *url, gpointer data)
+{
+	if (data == NULL || strstr (data, "<?quicktime") == NULL) {
+		totem_pl_parser_add_one_url (parser, url, NULL);
+		return TOTEM_PL_PARSER_RESULT_SUCCESS;
+	}
+
+	return totem_pl_parser_add_quicktime_metalink (parser, url, data);
+}
+
+static TotemPlParserResult
 totem_pl_parser_add_desktop (TotemPlParser *parser, const char *url, gpointer data)
 {
 	char *contents, **lines;
@@ -1650,6 +1713,7 @@ static PlaylistTypes dual_types[] = {
 	{ "text/plain", totem_pl_parser_add_ra },
 	{ "video/x-ms-asf", totem_pl_parser_add_asf },
 	{ "video/x-ms-wmv", totem_pl_parser_add_asf },
+	{ "video/quicktime", totem_pl_parser_add_quicktime },
 };
 
 static gboolean
