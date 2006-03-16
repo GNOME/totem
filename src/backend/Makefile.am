@@ -12,8 +12,8 @@ bvw_test_CFLAGS = \
 	-DDATADIR=\""$(datadir)"\" \
 	-DLOGO_PATH=DATADIR\"\"G_DIR_SEPARATOR_S\"totem\"G_DIR_SEPARATOR_S\"totem_logo.png\"
 bvw_test_LDADD = \
-	$(GTK_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS) $(XTEST_LIBS) $(X_LIBS) \
-	libbaconvideowidget.la
+	libbaconvideowidget.la \
+	$(GTK_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS) $(XTEST_LIBS) $(X_LIBS)
 
 if TOTEM_GST_010
 MM = bacon-video-widget-gst-0.10.c \
