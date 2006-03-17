@@ -268,16 +268,6 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data)
 }
 
 static char*
-totem_pl_parser_set_method (const char *url, const char *method)
-{
-	char *start;
-
-	g_return_val_if_fail (strstr (url, "://"), NULL);
-	start = strstr (url, "://");
-	return g_strdup_printf ("%s%s", method, start);
-}
-
-static char*
 totem_pl_parser_base_url (const char *url)
 {
 	/* Yay, let's reconstruct the base by hand */
@@ -1214,13 +1204,6 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 	}
 
 	g_free (url);
-
-	if (g_str_has_prefix (fullpath, "mms:") != FALSE) {
-		char *tmp;
-		tmp = totem_pl_parser_set_method (fullpath, "mmsh");
-		g_free (fullpath);
-		fullpath = tmp;
-	}
 
 	/* .asx files can contain references to other .asx files */
 	retval = totem_pl_parser_parse_internal (parser, fullpath);
