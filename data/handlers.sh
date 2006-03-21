@@ -32,7 +32,7 @@ for i in $SCHEMES ; do
 	DEFAULT="totem \"%s\"";
 	schema;
 
-	KEY="need-terminal"
+	KEY="needs_terminal"
 	TYPE="bool";
 	DEFAULT="false";
 	schema;
