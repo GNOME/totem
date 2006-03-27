@@ -1,3 +1,12 @@
+2006-03-27  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_open_with_subtitle),
+	(bacon_video_widget_set_connection_speed): Only open with the
+	subtitled mrl if there is one, patch by Andreas Henriksson
+	<andreas@fjortis.info> (Closes: #336127), avoid error when setting
+	the connection speed to the maximum
+
 2006-03-22  Bastien Nocera  <hadess@hadess.net>
 
 	* MAINTAINERS: added (Closes: #335021)

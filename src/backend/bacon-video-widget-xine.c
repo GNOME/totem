@@ -2068,9 +2068,13 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 	{
 		char *subtitled;
 		subtitled = bacon_video_widget_get_subtitled (mrl, subtitle_uri);
-		err = xine_open (bvw->priv->stream, subtitled);
-		bvw->priv->has_subtitle = TRUE;
-		g_free (subtitled);
+		if (subtitled != NULL) {
+			err = xine_open (bvw->priv->stream, subtitled);
+			bvw->priv->has_subtitle = TRUE;
+			g_free (subtitled);
+		} else {
+			err = xine_open (bvw->priv->stream, mrl);
+		}
 	} else {
 		err = xine_open (bvw->priv->stream, mrl);
 	}
@@ -2715,7 +2719,9 @@ bacon_video_widget_set_connection_speed (BaconVideoWidget *bvw, int speed)
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
-	g_return_if_fail (speed > 0 || speed < 10);
+	g_return_if_fail (speed >= 0);
+	/* -1 for the NULL, -1 for the indexing from 0 */
+	g_return_if_fail (speed <= (int) (G_N_ELEMENTS (mms_bandwidth_strs) - 2));
 
 	xine_config_register_enum (bvw->priv->xine,
 			"media.network.bandwidth",
