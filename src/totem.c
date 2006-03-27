@@ -1827,6 +1827,7 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 			width =	widget->allocation.width;
 		}
 
+		gtk_widget_set_sensitive (menubar, TRUE);
 		gtk_widget_show (menubar);
 		gtk_widget_show (controlbar);
 		gtk_widget_show (statusbar);
@@ -1851,7 +1852,10 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 			height = widget->allocation.height;
 		}
 
+		/* Hide and make the menubar unsensitive */
+		gtk_widget_set_sensitive (menubar, FALSE);
 		gtk_widget_hide (menubar);
+
 		gtk_widget_hide (controlbar);
 		gtk_widget_hide (statusbar);
 		gtk_widget_hide (totem->sidebar);
