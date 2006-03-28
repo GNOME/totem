@@ -2031,7 +2031,7 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstElement *src, GError *e,
   GST_DEBUG ("e->message = '%s'", GST_STR_NULL (e->message));
   GST_DEBUG ("e->domain  = %d", e->domain);
   GST_DEBUG ("e->code    = %d", e->code);
-  GST_DEBUG ("debug      = %d", GST_STR_NULL (debug));
+  GST_DEBUG ("debug      = %s", GST_STR_NULL (debug));
   GST_DEBUG ("source     = %s (%s)", (src) ? GST_OBJECT_NAME (src) : "(null)",
       GST_STR_NULL (src_typename));
 

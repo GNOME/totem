@@ -1,3 +1,9 @@
+2006-03-28  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_error_from_gst_error):
+	  Fix printf format in debug message (string != integer).
+
 2006-03-27  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c: (show_controls): make the menubar unsensitive to avoid
