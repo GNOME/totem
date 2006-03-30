@@ -1455,7 +1455,6 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url, 
 	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
-
 	doc = xmlParseMemory (contents, size);
 	if (doc == NULL)
 		doc = xmlRecoverMemory (contents, size);
@@ -1776,7 +1775,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	gpointer data = NULL;
 	TotemPlParserResult ret = TOTEM_PL_PARSER_RESULT_ERROR;
 	char *super;
-	gboolean found;
+	gboolean found = FALSE;
 
 	if (parser->priv->recurse_level > RECURSE_LEVEL_MAX)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
@@ -1808,7 +1807,6 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	if (parser->priv->recurse || parser->priv->recurse_level == 0) {
 		parser->priv->recurse_level++;
 
-		found = FALSE;
 		for (i = 0; i < G_N_ELEMENTS(special_types); i++) {
 			if (strcmp (special_types[i].mimetype, mimetype) == 0) {
 				ret = (* special_types[i].func) (parser, url, data);
@@ -1823,6 +1821,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 					mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data);
 				}
 				ret = (* dual_types[i].func) (parser, url, data);
+				found = TRUE;
 				break;
 			}
 		}
@@ -1836,7 +1835,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 		return ret;
 
 	super = gnome_vfs_get_supertype_from_mime_type (mimetype);
-	for (i = 0; i < G_N_ELEMENTS (ignore_types) && super != NULL; i++) {
+	for (i = 0; i < G_N_ELEMENTS (ignore_types) && super != NULL && found == FALSE; i++) {
 		if (gnome_vfs_mime_type_is_supertype (ignore_types[i].mimetype) != FALSE) {
 			if (strcmp (super, ignore_types[i].mimetype) == 0) {
 				g_free (super);
