@@ -1997,6 +1997,9 @@ on_take_screenshot1_activate (GtkButton *button, Totem *totem)
 	char *filename;
 	GError *err = NULL;
 
+	if (bacon_video_widget_get_logo_mode (totem->bvw) != FALSE)
+		return;
+
 	if (bacon_video_widget_can_get_frames (totem->bvw, &err) == FALSE)
 	{
 		if (err == NULL)
@@ -2689,7 +2692,11 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		break;
 	case GDK_s:
 	case GDK_S:
-		on_skip_to1_activate (NULL, totem);
+		if (event->state & GDK_CONTROL_MASK) {
+			on_take_screenshot1_activate (NULL, totem);
+		} else {
+			on_skip_to1_activate (NULL, totem);
+		}
 		break;
 	case GDK_t:
 	case GDK_T:
