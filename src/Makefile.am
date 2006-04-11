@@ -49,6 +49,10 @@ EGG_RECENT_FILES =                      \
 	egg-recent-util.c               \
 	egg-recent-util.h
 
+BACON_VOLUME = \
+	bacon-volume.c			\
+	bacon-volume.h
+
 BACON_MESSAGE_CONNECTION = \
 	bacon-message-connection.c \
 	bacon-message-connection.h
@@ -65,7 +69,7 @@ EGGDIR=$(srcdir)/../../libegg/libegg/recent-files/
 BACONDIR=$(srcdir)/../../libbacon/src
 regenerate-built-sources:
 	EGGFILES="$(EGG_RECENT_FILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh || true
-	EGGFILES="$(BACON_MESSAGE_CONNECTION)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
+	EGGFILES="$(BACON_MESSAGE_CONNECTION) $(BACON_VOLUME)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
 
 libbaconpropertiespage_la_SOURCES = \
 	bacon-video-widget-properties.c \
@@ -96,8 +100,8 @@ totem_SOURCES = 					\
 	totem-statusbar.c		\
 	totem-statusbar.h		\
 	totem-gromit.c totem-gromit.h	\
-	bacon-volume.c bacon-volume.h	\
-	ev-sidebar.c ev-sidebar.h
+	ev-sidebar.c ev-sidebar.h	\
+	$(BACON_VOLUME)
 
 totem_LDADD = \
 	plparse/libtotem-plparser.la backend/libbaconvideowidget.la \
