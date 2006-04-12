@@ -106,6 +106,7 @@ bacon_video_widget_properties_finalize (GObject *object)
 	g_return_if_fail (object != NULL);
 
 	g_object_unref (props->priv->xml);
+	g_free (props->priv);
 
 	if (G_OBJECT_CLASS (parent_class)->finalize != NULL) {
 		(* G_OBJECT_CLASS (parent_class)->finalize) (object);
