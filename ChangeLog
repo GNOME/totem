@@ -1,3 +1,13 @@
+2006-04-18  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/test-parser.c: (test_parsing), (main):
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_class_init),
+	(totem_pl_parser_set_property), (totem_pl_parser_get_property),
+	(my_gnome_vfs_get_mime_type_with_data),
+	(totem_pl_parser_add_quicktime_metalink),
+	(totem_pl_parser_parse_internal): Add a debugging property to
+	the playlist parser to make it easier to debug
+
 2006-04-12  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-video-widget-properties.c:

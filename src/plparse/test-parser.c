@@ -7,6 +7,7 @@
 static GMainLoop *loop = NULL;
 static GList *list = NULL;
 static gboolean option_recurse = TRUE;
+static gboolean option_debug = FALSE;
 
 static void
 header (const char *message)
@@ -120,6 +121,7 @@ test_parsing (void)
 	TotemPlParser *pl = totem_pl_parser_new ();
 
 	g_object_set (G_OBJECT (pl), "recurse", option_recurse, NULL);
+	g_object_set (G_OBJECT (pl), "debug", option_debug, NULL);
 	g_signal_connect (G_OBJECT (pl), "entry", G_CALLBACK (entry_added), NULL);
 
 	header ("parsing");
@@ -138,6 +140,14 @@ int main (int argc, char **argv)
 			option_recurse = FALSE;
 			argv++;
 			argc--;
+		} else if (strcmp (argv[1], "--debug") == 0 || strcmp (argv[1], "-d") == 0) {
+			g_print ("Enabling debug\n");
+			option_debug = TRUE;
+			argv++;
+			argc--;
+		} else if (strcmp (argv[1], "--help") == 0 || strcmp (argv[1], "-h") == 0) {
+			g_print ("Usage: %s <-n | --no-recurse> <-d | --debug> <-h | --help> <url>\n", argv[0]);
+			return 0;
 		} else /* other options here */ {
 			break;
 		}

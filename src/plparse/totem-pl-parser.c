@@ -47,6 +47,7 @@
 #define RECURSE_LEVEL_MAX 4
 #define DIR_MIME_TYPE "x-directory/normal"
 #define EXTINF "#EXTINF:"
+#define DEBUG(x) { if (parser->priv->debug != FALSE) x; }
 
 typedef TotemPlParserResult (*PlaylistCallback) (TotemPlParser *parser, const char *url, gpointer data);
 static gboolean totem_pl_parser_scheme_is_ignored (TotemPlParser *parser, const char *url);
@@ -75,11 +76,13 @@ struct TotemPlParserPrivate
 	guint recurse_level;
 	gboolean fallback;
 	gboolean recurse;
+	gboolean debug;
 };
 
 enum {
 	PROP_NONE,
 	PROP_RECURSE,
+	PROP_DEBUG
 };
 
 /* Signals */
@@ -119,6 +122,14 @@ totem_pl_parser_class_init (TotemPlParserClass *klass)
 							       "Whether or not to process URLs further", 
 							       TRUE,
 							       G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+
+	g_object_class_install_property (object_class,
+					 PROP_DEBUG,
+					 g_param_spec_boolean ("debug",
+							       "debug",
+							       "Whether or not to enable debugging output", 
+							       FALSE,
+							       G_PARAM_READWRITE));
 
 	/* Signals */
 	totem_pl_parser_table_signals[ENTRY] =
@@ -160,7 +171,9 @@ totem_pl_parser_set_property (GObject *object,
 	case PROP_RECURSE:
 		parser->priv->recurse = g_value_get_boolean (value);
 		break;
-
+	case PROP_DEBUG:
+		parser->priv->debug = g_value_get_boolean (value);
+		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		break;
@@ -180,7 +193,9 @@ totem_pl_parser_get_property (GObject *object,
 	case PROP_RECURSE:
 		g_value_set_boolean (value, parser->priv->recurse);
 		break;
-
+	case PROP_DEBUG:
+		g_value_set_boolean (value, parser->priv->debug);
+		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		break;
@@ -204,7 +219,7 @@ totem_pl_parser_new (void)
 }
 
 static const char *
-my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data)
+my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data, TotemPlParser *parser)
 {
 	GnomeVFSResult result;
 	GnomeVFSHandle *handle;
@@ -220,6 +235,7 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data)
 	if (result != GNOME_VFS_OK) {
 		if (result == GNOME_VFS_ERROR_IS_DIRECTORY)
 			return DIR_MIME_TYPE;
+		DEBUG(g_print ("URL '%s' couldn't be opened in _get_mime_type_with_data: '%s'\n", uri, gnome_vfs_result_to_string (result)));
 		return NULL;
 	}
 
@@ -250,9 +266,14 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data)
 	} while (result == GNOME_VFS_OK
 			&& total_bytes_read < MIME_READ_CHUNK_SIZE);
 
-	/* Close the file. */
-	result = gnome_vfs_close (handle);
+	/* Close the file but don't overwrite the possible error */
+	if (result != GNOME_VFS_OK && result != GNOME_VFS_ERROR_EOF)
+		gnome_vfs_close (handle);
+	else
+		result = gnome_vfs_close (handle);
+
 	if (result != GNOME_VFS_OK) {
+		DEBUG(g_print ("URL '%s' couldn't be read or closed in _get_mime_type_with_data: '%s'\n", uri, gnome_vfs_result_to_string (result)));
 		g_free (buffer);
 		return NULL;
 	}
@@ -1470,19 +1491,20 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url, 
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
-	if (strstr (doc->children->content, "type=\"application/x-quicktime-media-link\"") == NULL) {
+	if (strstr ((char *) doc->children->content, "type=\"application/x-quicktime-media-link\"") == NULL) {
 		xmlFreeDoc (doc);
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
 	node = doc->children->next;
 	if (!node || !node->name
-			|| g_ascii_strcasecmp (node->name, "embed") != 0) {
+			|| g_ascii_strcasecmp ((char *) node->name,
+				"embed") != 0) {
 		xmlFreeDoc (doc);
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
-	src = xmlGetProp (node, (guchar *)"src");
+	src = (char *) xmlGetProp (node, (guchar *)"src");
 	if (!src) {
 		xmlFreeDoc (doc);
 		return TOTEM_PL_PARSER_RESULT_ERROR;
@@ -1783,6 +1805,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	/* Shouldn't gnome-vfs have a list of schemes it supports? */
 	if (g_str_has_prefix (url, "mms") != FALSE
 			|| g_str_has_prefix (url, "rtsp") != FALSE) {
+		DEBUG(g_print ("URL '%s' is MMS or RTSP, ignoring\n", url));
 		totem_pl_parser_add_one_url (parser, url, NULL);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
@@ -1792,8 +1815,10 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	}
 
 	mimetype = gnome_vfs_mime_type_from_name (url);
+	DEBUG(g_print ("_mime_type_from_name for '%s' returned '%s'\n", url, mimetype));
 	if (mimetype == NULL || strcmp (GNOME_VFS_MIME_TYPE_UNKNOWN, mimetype) == 0) {
-		mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data);
+		mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data, parser);
+		DEBUG(g_print ("_get_mime_type_with_data for '%s' returned '%s'\n", url, mimetype ? mimetype : "NULL"));
 	}
 
 	if (mimetype == NULL)
@@ -1809,6 +1834,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 
 		for (i = 0; i < G_N_ELEMENTS(special_types); i++) {
 			if (strcmp (special_types[i].mimetype, mimetype) == 0) {
+				DEBUG(g_print ("URL '%s' is special type '%s'\n", url, mimetype));
 				ret = (* special_types[i].func) (parser, url, data);
 				found = TRUE;
 				break;
@@ -1817,8 +1843,9 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 
 		for (i = 0; i < G_N_ELEMENTS(dual_types) && found == FALSE; i++) {
 			if (strcmp (dual_types[i].mimetype, mimetype) == 0) {
+				DEBUG(g_print ("URL '%s' is dual type '%s'\n", url, mimetype));
 				if (data == NULL) {
-					mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data);
+					mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data, parser);
 				}
 				ret = (* dual_types[i].func) (parser, url, data);
 				found = TRUE;
