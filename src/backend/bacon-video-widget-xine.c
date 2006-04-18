@@ -1156,8 +1156,12 @@ bacon_video_widget_realize (GtkWidget *widget)
 	if (bvw->priv->ao_driver != NULL
 			&& bvw->priv->ao_driver_none == FALSE)
 	{
+		BaconVideoWidgetAudioOutType type;
+
 		if (bvw->priv->vis_name == NULL)
 			bvw->priv->vis_name = g_strdup ("goom");
+		type = bacon_video_widget_get_audio_out_type (bvw);
+		bacon_video_widget_set_audio_out_type (bvw, type);
 	} else {
 		g_free (bvw->priv->vis_name);
 		bvw->priv->vis_name = NULL;
@@ -1676,6 +1680,7 @@ bacon_video_widget_new (int width, int height,
 	bvw->priv->init_width = width;
 	bvw->priv->init_height = height;
 	bvw->priv->type = type;
+	bvw->priv->audio_out_type = -1;
 
 	/* Don't load anything yet if we're looking for proper video
 	 * output */
@@ -1691,10 +1696,14 @@ bacon_video_widget_new (int width, int height,
 	/* load the output drivers */
 	if (type == BVW_USE_TYPE_AUDIO)
 	{
+		BaconVideoWidgetAudioOutType type;
+
 		bvw->priv->ao_driver = load_audio_out_driver (bvw,
 				FALSE, error);
 		if (error != NULL && *error != NULL)
 			return NULL;
+		type = bacon_video_widget_get_audio_out_type (bvw);
+		bacon_video_widget_set_audio_out_type (bvw, type);
 	} else if (type == BVW_USE_TYPE_METADATA) {
 		bvw->priv->ao_driver = load_audio_out_driver (bvw,
 				TRUE, error);
@@ -3287,7 +3296,6 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 {
 	xine_cfg_entry_t entry;
 	int value;
-	gboolean need_restart = FALSE;
 
 	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
@@ -3295,6 +3303,7 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 
 	if (type == bvw->priv->audio_out_type)
 		return FALSE;
+	bvw->priv->audio_out_type = type;
 
 	xine_config_register_enum (bvw->priv->xine,
 			"audio.output.speaker_arrangement",
@@ -3325,7 +3334,6 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 		break;
 	case BVW_AUDIO_SOUND_AC3PASSTHRU:
 		value = 12;
-		need_restart = TRUE;
 		break;
 	default:
 		value = 1;
@@ -3337,7 +3345,7 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 	entry.num_value = value;
 	xine_config_update_entry (bvw->priv->xine, &entry);
 
-	return need_restart;
+	return FALSE;
 }
 
 static void

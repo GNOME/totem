@@ -1,5 +1,14 @@
 2006-04-18  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_realize), (bacon_video_widget_new),
+	(bacon_video_widget_set_audio_out_type):
+	Set the audio output type when creating the widget, set the current
+	audio output properly, don't reset the audio output type on startup
+	(Closes: #330054)
+
+2006-04-18  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am: merge module_flags and modules_flags,
 	spotted by Frederic Crozat
 
