@@ -173,12 +173,13 @@ totem_action_exit (Totem *totem)
 	if (totem == NULL)
 		exit (0);
 
-	if (totem->playlist != NULL)
-		gtk_widget_hide (GTK_WIDGET (totem->playlist));
-
 	if (totem->win != NULL) {
 		gtk_widget_hide (totem->win);
 		display = gtk_widget_get_display (totem->win);
+	}
+
+	if (totem->prefs != NULL) {
+		gtk_widget_hide (totem->prefs);
 	}
 
 #ifndef HAVE_GTK_ONLY
@@ -206,8 +207,6 @@ totem_action_exit (Totem *totem)
 	if (totem->gc)
 		g_object_unref (G_OBJECT (totem->gc));
 
-	if (totem->playlist)
-		gtk_widget_destroy (GTK_WIDGET (totem->playlist));
 	if (totem->win)
 		gtk_widget_destroy (GTK_WIDGET (totem->win));
 
@@ -2150,8 +2149,7 @@ on_skip_to1_activate (GtkButton *button, Totem *totem)
 		return;
 	}
 
-	filename = g_build_filename (DATADIR,
-			"totem", "skip_to.glade", NULL);
+	filename = totem_interface_get_full_path ("skip_to.glade");
 	totem->skipto = TOTEM_SKIPTO (totem_skipto_new (filename));
 	g_free (filename);
 

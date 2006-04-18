@@ -1,5 +1,18 @@
 2006-04-18  Bastien Nocera  <hadess@hadess.net>
 
+	* data/skip_to.glade: make centered on parent
+	* src/totem-skipto.c: (totem_skipto_update_range),
+	(totem_skipto_get_range), (totem_skipto_set_seekable),
+	(totem_skipto_new): add more asserts, set the sensitivity of the OK
+	button properly
+	* src/totem-skipto.h: fix some macros
+	* src/totem.c: (totem_action_exit), (on_skip_to1_activate): don't
+	destroy the playlist by hand, it's already destroyed along with the
+	rest of the main window, hide the prefs window as well before exiting
+	Use the convenience functions to locate the skipto glade file
+
+2006-04-18  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/test-parser.c: (test_parsing), (main):
 	* src/plparse/totem-pl-parser.c: (totem_pl_parser_class_init),
 	(totem_pl_parser_set_property), (totem_pl_parser_get_property),

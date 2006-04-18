@@ -30,8 +30,8 @@ G_BEGIN_DECLS
 #define GTK_TYPE_SKIPTO            (totem_skipto_get_type ())
 #define TOTEM_SKIPTO(obj)            (GTK_CHECK_CAST ((obj), GTK_TYPE_SKIPTO, TotemSkipto))
 #define TOTEM_SKIPTO_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GTK_TYPE_SKIPTO, TotemSkiptoClass))
-#define GTK_IS_SKIPTO(obj)         (GTK_CHECK_TYPE ((obj), GTK_TYPE_SKIPTO))
-#define GTK_IS_SKIPTO_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GTK_TYPE_SKIPTO))
+#define TOTEM_IS_SKIPTO(obj)         (GTK_CHECK_TYPE ((obj), GTK_TYPE_SKIPTO))
+#define TOTEM_IS_SKIPTO_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GTK_TYPE_SKIPTO))
 
 typedef struct TotemSkipto	       TotemSkipto;
 typedef struct TotemSkiptoClass      TotemSkiptoClass;
