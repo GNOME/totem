@@ -438,10 +438,19 @@ totem_setup_preferences (Totem *totem)
 			disable_save_to_disk_changed_cb,
 			totem, NULL, NULL);
 
-	totem->prefs = glade_xml_get_widget (totem->xml,
-			"totem_preferences_window");
-	gtk_window_set_transient_for (GTK_WINDOW (totem->prefs),
-			GTK_WINDOW (totem->win));
+	/* Work-around glade dialogue not parenting properly for
+	 * On top windows */
+	item = glade_xml_get_widget (totem->xml, "tpw_notebook");
+	totem->prefs = gtk_dialog_new_with_buttons ("Preferences",
+			GTK_WINDOW (totem->win),
+			GTK_DIALOG_DESTROY_WITH_PARENT,
+			GTK_STOCK_CLOSE,
+			GTK_RESPONSE_ACCEPT,
+			NULL);
+	gtk_widget_reparent (item, GTK_DIALOG (totem->prefs)->vbox);
+	gtk_widget_show_all (GTK_DIALOG (totem->prefs)->vbox);
+	item = glade_xml_get_widget (totem->xml, "totem_preferences_window");
+	gtk_widget_destroy (item);
 
 	g_signal_connect (G_OBJECT (totem->prefs), "response",
 			G_CALLBACK (gtk_widget_hide), NULL);

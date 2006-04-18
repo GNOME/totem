@@ -1,5 +1,12 @@
 2006-04-18  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-preferences.c: (totem_setup_preferences):
+	Work-around a problem with libglade not putting the prefs window
+	on top of the main window when the main window is "On Top"
+	(Closes: #336939)
+
+2006-04-18  Bastien Nocera  <hadess@hadess.net>
+
 	* data/skip_to.glade: make centered on parent
 	* src/totem-skipto.c: (totem_skipto_update_range),
 	(totem_skipto_get_range), (totem_skipto_set_seekable),
