@@ -35,7 +35,7 @@ noinst_LTLIBRARIES = \
 	libbaconmessageconnection.la
 nautilus_LTLIBRARIES = $(TOTEM_PROPERTIES_PAGE)
 
-modules_flags = -avoid-version -module
+modules_flags = -export_dynamic -avoid-version -module
 
 EGG_RECENT_FILES =                      \
 	egg-recent-model.c              \
@@ -129,7 +129,7 @@ libtotem_properties_page_la_LIBADD = \
 	$(NVTV_LIBS) $(NAUTILUS_LIBS) \
 	$(XTEST_LIBS) $(X_LIBS)
 
-libtotem_properties_page_la_LDFLAGS = $(module_flags)
+libtotem_properties_page_la_LDFLAGS = $(modules_flags)
 
 test_properties_page_CFLAGS = -I$(top_srcdir)
 test_properties_page_SOURCES =		\
@@ -161,7 +161,7 @@ typelib_DATA = libtotem_mozilla.xpt
 typelibdir = $(MOZILLA_PLUGINDIR)/plugins
 
 libtotem_mozilla_la_LDFLAGS = \
-	$(DBUS_LIBS) $(MOZILLA_LIBS) $(module_flags)
+	$(DBUS_LIBS) $(MOZILLA_LIBS) $(modules_flags)
 libtotem_mozilla_la_SOURCES = \
 	totem-mozilla-plugin.cpp \
 	totem_mozilla_scripting.h \
@@ -182,8 +182,6 @@ totem_mozilla_viewer_LDADD = \
 	$(EXTRA_GNOME_LIBS) $(XVIDMODE_LIBS) \
 	$(DBUS_LIBS) $(NVTV_LIBS) \
 	$(XTEST_LIBS) $(X_LIBS) 
-
-module_flags = -export_dynamic -avoid-version
 
 else
 
