@@ -1,5 +1,21 @@
 2006-04-24  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_handle_element_message):
+	* src/backend/bacon-video-widget-gst.c:
+	(bacon_video_widget_signal_idler):
+	* src/backend/video-utils.c: (totem_resolve_relative_link):
+	* src/backend/video-utils.h:
+	* src/totem-mozilla-viewer.c: (on_got_redirect):
+	* src/totem.c: (on_got_redirect):
+	Make the GStreamer backends resolve relative redirects, as the
+	xine-lib backend does (Closes: #339000)
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_write_m3u):
+	Save the full path when we can't get a relative path when saving m3u
+	playlists (Closes: #338974)
+
+2006-04-24  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-scrsaver.c: (screensaver_inhibit_dbus),
 	(screensaver_init_dbus): Patch from William Jon McCann <mccann@jhu.edu>
 	to update the screensaver code to the new API in HEAD, and remove

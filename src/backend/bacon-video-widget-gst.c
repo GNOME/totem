@@ -887,17 +887,14 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
         }
       case ASYNC_REDIRECT:
 	{
-	  gchar *loc, *root;
+	  gchar *abs;
 
-	  root = g_strndup (bvw->priv->mrl,
-	                    1 + strrchr (bvw->priv->mrl, '/') - bvw->priv->mrl);
-	  loc = g_strdup_printf ("%s%s", root,
-	                         signal->signal_data.redirect.new_location);
-	  g_free (root);
+	  abs = totem_resolve_relative_link (bvw->priv->mrl,
+	      				     signal->signal_data.redirect.new_location);
 	  g_signal_emit (G_OBJECT (bvw), bvw_table_signals[SIGNAL_REDIRECT],
-			 0, loc);
+			 0, abs ? abs : loc);
 	  g_free (signal->signal_data.redirect.new_location);
-	  g_free (loc);
+	  g_free (abs);
 	  break;
 	}
       default:

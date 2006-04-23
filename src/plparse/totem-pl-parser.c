@@ -616,12 +616,19 @@ totem_pl_parser_write_m3u (TotemPlParser *parser, GtkTreeModel *model,
 		}
 		g_free (title);
 
-		if (dos_compatible != FALSE)
+		if (dos_compatible == FALSE) {
+			char *tmp;
+			tmp = totem_pl_parser_relative (url, output);
+			if (tmp == NULL && g_str_has_prefix (url, "file:")) {
+				path2 = g_filename_from_uri (url, NULL, NULL);
+			} else {
+				path2 = tmp;
+			}
+		} else {
 			path2 = totem_pl_parser_url_to_dos (url, output);
-		else
-			path2 = totem_pl_parser_relative (url, output);
+		}
 
-		buf = g_strdup_printf ("%s%s", path2, cr);
+		buf = g_strdup_printf ("%s%s", path2 ? path2 : url, cr);
 		g_free (path2);
 		g_free (url);
 

@@ -1198,8 +1198,6 @@ on_next_button_clicked (GtkButton *button, Totem *totem)
 static void
 on_got_redirect (BaconVideoWidget *bvw, const char *mrl, Totem *totem)
 {
-	g_message ("on_got_redirect %s", mrl);
-	//FIXME we need to check for relative paths here
 	bacon_video_widget_close (totem->bvw);
 	totem_gdk_window_set_waiting_cursor (totem->win->window);
 	bacon_video_widget_open (totem->bvw, mrl, NULL);

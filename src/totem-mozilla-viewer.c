@@ -322,24 +322,11 @@ on_play_pause (GtkWidget *widget, TotemEmbedded *emb)
 static void
 on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 {
-	char *new_mrl;
-
 	g_message ("url: %s", emb->orig_filename);
 	g_message ("redirect: %s", mrl);
 
-	//FIXME write a proper one...
-	if (mrl[0] != '/' && strstr (mrl, "://") == NULL) {
-		char *dir;
-
-		dir = g_path_get_dirname (emb->orig_filename);
-		new_mrl = g_strdup_printf ("%s/%s", dir, mrl);
-		g_free (dir);
-	} else {
-		new_mrl = g_strdup (mrl);
-	}
-
 	g_free (emb->filename);
-	emb->filename = new_mrl;
+	emb->filename = g_strdup (mrl);
 	bacon_video_widget_close (emb->bvw);
 	totem_embedded_set_state (emb, STATE_STOPPED);
 

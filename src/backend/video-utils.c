@@ -370,3 +370,25 @@ totem_ratio_fits_screen (GdkWindow *video_window, int video_width,
 
 	return TRUE;
 }
+
+char *
+totem_resolve_relative_link (const char *old_mrl, const char *new_mrl)
+{
+	char *ret, *tmp, *l;
+
+	g_return_val_if_fail (new_mrl != NULL, NULL);
+	g_return_val_if_fail (old_mrl != NULL, NULL);
+
+	if (strstr (new_mrl, "://") != NULL)
+		return NULL;
+
+	tmp = g_strdup (old_mrl);
+	if ((l = strrchr (tmp, '/')))
+		*l = '\0';
+
+	ret = g_strconcat (tmp, "/", new_mrl, NULL);
+	g_free (tmp);
+
+	return ret;
+}
+
