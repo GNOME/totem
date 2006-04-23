@@ -69,6 +69,18 @@ cb_update_name (DBusGProxy *proxy, char *svc, char *old_owner,
 #define MAX_ARGV_LEN 16
 
 static gboolean
+is_supported_scheme (const char *url)
+{
+	if (url == NULL)
+		return FALSE;
+
+	if (g_str_has_prefix (url, "mms:") != FALSE)
+		return FALSE;
+
+	return TRUE;
+}
+
+static gboolean
 totem_plugin_fork (TotemPlugin *plugin)
 {
 	GTimeVal then, now;
@@ -119,7 +131,11 @@ totem_plugin_fork (TotemPlugin *plugin)
 		argv[argc++] = g_strdup ("--nocontrols");
 	}
 
-	argv[argc++] = g_strdup ("fd://0");
+	if (is_supported_scheme (plugin->src) == FALSE)
+		argv[argc++] = g_strdup (plugin->src);
+	else
+		argv[argc++] = g_strdup ("fd://0");
+
 	argv[argc] = NULL;
 
 #ifdef TOTEM_DEBUG
@@ -467,6 +483,9 @@ static int32 totem_plugin_write_ready (NPP instance, NPStream *stream)
 
 	plugin = (TotemPlugin *) instance->pdata;
 
+	if (is_supported_scheme (plugin->src) == FALSE)
+		return 0;
+
 	if (plugin->send_fd < 0) {
 		if (!totem_plugin_fork (plugin))
 			return 0;
@@ -505,6 +524,9 @@ static int32 totem_plugin_write (NPP instance, NPStream *stream, int32 offset,
 		return -1;
 
 	if (plugin->send_fd < 0)
+		return -1;
+
+	if (is_supported_scheme (plugin->src) == FALSE)
 		return -1;
 
 	ret = write (plugin->send_fd, buffer, len);
@@ -624,7 +646,8 @@ static struct {
 	{ "application/x-mplayer2", "avi, wma, wmv", "video/x-msvideo" },
 	{ "video/mpeg", "mpg, mpeg, mpe", NULL },
 	{ "video/x-ms-asf-plugin", "asf, wmv", "video/x-ms-asf" },
-	{ "video/x-ms-wmv", "wmv", "video/x-ms-asf" },
+	{ "video/x-ms-wmv", "wmv", "video/x-ms-wmv" },
+	{ "video/x-wmv", "wmv", "video/x-ms-wmv" },
 	{ "application/ogg", "ogg", NULL },
 	{ "video/divx", "divx", "video/x-msvideo" },
 	{ "audio/wav", "wav", NULL }
