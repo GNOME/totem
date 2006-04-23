@@ -35,10 +35,6 @@
 #include <dbus/dbus.h>
 #include <dbus/dbus-glib.h>
 
-#define GS_LEGACY_SERVICE   "org.gnome.screensaver"
-#define GS_LEGACY_PATH      "/org/gnome/screensaver"
-#define GS_LEGACY_INTERFACE "org.gnome.screensaver"
-
 #define GS_SERVICE   "org.gnome.ScreenSaver"
 #define GS_PATH      "/org/gnome/ScreenSaver"
 #define GS_INTERFACE "org.gnome.ScreenSaver"
@@ -61,6 +57,7 @@ struct TotemScrsaverPrivate {
 #ifdef WITH_DBUS
 	DBusGConnection *connection;
 	DBusGProxy *gs_proxy;
+	guint32 cookie;
 #endif /* WITH_DBUS */
 
 	/* To save the screensaver info */
@@ -111,23 +108,56 @@ screensaver_inhibit_dbus (TotemScrsaver *scr,
 
 	error = NULL;
 	if (inhibit) {
-		char *reason;
-		reason = g_strdup (_("Playing a movie with Totem"));
+		char   *application;
+		char   *reason;
+		guint32 cookie;
+
+		application = g_strdup ("Totem");
+		reason = g_strdup (_("Playing a movie"));
+
 		res = dbus_g_proxy_call (scr->priv->gs_proxy,
-					 "InhibitActivation",
+					 "Inhibit",
 					 &error,
+					 G_TYPE_STRING, application,
 					 G_TYPE_STRING, reason,
 					 G_TYPE_INVALID,
+					 G_TYPE_UINT, &cookie,
 					 G_TYPE_INVALID);
 
+		if (res) {
+			/* save the cookie */
+			scr->priv->cookie = cookie;
+		} else {
+			/* try the old API */
+			res = dbus_g_proxy_call (scr->priv->gs_proxy,
+						 "InhibitActivation",
+						 &error,
+						 G_TYPE_STRING, reason,
+						 G_TYPE_INVALID,
+						 G_TYPE_INVALID);
+		}
+
 		g_free (reason);
+		g_free (application);
+
 	} else {
 		res = dbus_g_proxy_call (scr->priv->gs_proxy,
-					 "AllowActivation",
+					 "UnInhibit",
 					 &error,
-					 G_TYPE_INVALID,
+					 G_TYPE_UINT, scr->priv->cookie,
 					 G_TYPE_INVALID,
 					 G_TYPE_INVALID);
+		if (res) {
+			/* clear the cookie */
+			scr->priv->cookie = 0;
+		} else {
+			/* try the old API */
+			res = dbus_g_proxy_call (scr->priv->gs_proxy,
+						 "AllowActivation",
+						 &error,
+						 G_TYPE_INVALID,
+						 G_TYPE_INVALID);
+		}
 	}
 
 	if (! res) {
@@ -184,16 +214,6 @@ screensaver_init_dbus (TotemScrsaver *scr)
 							       GS_PATH,
 							       GS_INTERFACE,
 							       NULL);
-	if (scr->priv->gs_proxy == NULL) {
-		g_warning ("Trying to connect to an older version of the GNOME screensaver");
-
-		scr->priv->gs_proxy = dbus_g_proxy_new_for_name_owner (scr->priv->connection,
-								       GS_LEGACY_SERVICE,
-								       GS_LEGACY_PATH,
-								       GS_LEGACY_INTERFACE,
-								       NULL);
-	}
-
 	if (scr->priv->gs_proxy != NULL) {
 		g_signal_connect_object (scr->priv->gs_proxy,
 					 "destroy",
