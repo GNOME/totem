@@ -262,16 +262,16 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
             movie_par_d = 1;
             break;
           case BVW_RATIO_FOURBYTHREE:
-            movie_par_n = 4 * bvw->priv->video_width;
-            movie_par_d = 3 * bvw->priv->video_height;
+            movie_par_n = 4 * bvw->priv->video_height;
+            movie_par_d = 3 * bvw->priv->video_width;
             break;
           case BVW_RATIO_ANAMORPHIC:
-            movie_par_n = 16 * bvw->priv->video_width;
-            movie_par_d = 9 * bvw->priv->video_height;
+            movie_par_n = 16 * bvw->priv->video_height;
+            movie_par_d = 9 * bvw->priv->video_width;
             break;
           case BVW_RATIO_DVB:
-            movie_par_n = 20 * bvw->priv->video_width;
-            movie_par_d = 9 * bvw->priv->video_height;
+            movie_par_n = 20 * bvw->priv->video_height;
+            movie_par_d = 9 * bvw->priv->video_width;
             break;
           /* handle these to avoid compiler warnings */
           case BVW_RATIO_AUTO:
