@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-27 18:48+0200\n"
-"PO-Revision-Date: 2006-04-27 18:48+0200\n"
+"POT-Creation-Date: 2006-04-27 18:56+0200\n"
+"PO-Revision-Date: 2006-04-27 18:55+0200\n"
 "Last-Translator: Åsmund Skjæveland <aasmunds@fys.uio.no>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -356,7 +356,7 @@ msgstr "Tilkopling_sfart:"
 
 #: ../data/totem.glade.h:33
 msgid "Deinterlace"
-msgstr ""
+msgstr "Linjedobling"
 
 #: ../data/totem.glade.h:34
 msgid "Display"
@@ -1581,59 +1581,60 @@ msgstr "Klarte ikkje å lesa filmen."
 #: ../src/backend/bacon-video-widget-xine.c:1309
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
-msgstr ""
+msgstr "Eit problem oppstod under lasting av bibliotek eller dekodar (%s)."
 
 #: ../src/backend/bacon-video-widget-xine.c:1318
 msgid "This file is encrypted and cannot be played back."
-msgstr ""
+msgstr "Fila er kryptert og kan ikkje spelast av."
 
 #: ../src/backend/bacon-video-widget-xine.c:1323
 msgid "For security reasons, this movie can not be played back."
-msgstr ""
+msgstr "Av tryggleiksårsaker kan ikkje denne filmen spelast av."
 
 #: ../src/backend/bacon-video-widget-xine.c:1328
 msgid "The audio device is busy. Is another application using it?"
-msgstr ""
+msgstr "Lydeininga er oppteken. Brukar eit anna program henne?"
 
 #: ../src/backend/bacon-video-widget-xine.c:1333
 msgid "You are not allowed to open this file."
-msgstr ""
+msgstr "Du har ikkje lov til å opna denne fila."
 
 #: ../src/backend/bacon-video-widget-xine.c:1335
 msgid "The server refused access to this file or stream."
-msgstr ""
+msgstr "Tenaren nekta adgang til denne fila eller straumen."
 
 #: ../src/backend/bacon-video-widget-xine.c:1344
 msgid "The file you tried to play is an empty file."
-msgstr ""
+msgstr "Fila du prøvde å spela er ei tom fil."
 
 #: ../src/backend/bacon-video-widget-xine.c:1538
 msgid "There is no input plugin to handle the location of this movie"
 msgstr ""
+"Det er ikkje nokon inndata-tillegg som kan handsama adressa til denne filmen."
 
 #: ../src/backend/bacon-video-widget-xine.c:1542
 msgid "There is no plugin to handle this movie."
-msgstr ""
+msgstr "Det er ikkje nokon tillegg som kan handsama denne filmen."
 
 #: ../src/backend/bacon-video-widget-xine.c:1546
 msgid "This movie is broken and can not be played further."
-msgstr ""
+msgstr "Filmen er defekt og kan ikkje spelast vidare."
 
 #: ../src/backend/bacon-video-widget-xine.c:1550
 msgid "This location is not a valid one."
-msgstr ""
+msgstr "Plasseringa er ugyldig."
 
 #: ../src/backend/bacon-video-widget-xine.c:1554
 msgid "This movie could not be opened."
-msgstr ""
+msgstr "Klarte ikkje å opna filmen."
 
 #: ../src/backend/bacon-video-widget-xine.c:1558
 msgid "Generic Error."
-msgstr ""
+msgstr "Generisk feil."
 
 #: ../src/backend/bacon-video-widget-xine.c:2112
 msgid "This movie is a still image. You can open it with an image viewer."
-msgstr ""
+msgstr "Denne filmen er eit stillbilete. Du kan opna han med ein biletevisar."
 
 #: ../src/backend/bacon-video-widget-xine.c:2136
 #, c-format
@@ -1641,6 +1642,8 @@ msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr ""
+"Videokodeken «%s» er ikkje handsama. du må kanskje installera fleire tillegg "
+"for å spela av somme typar film"
 
 #: ../src/backend/bacon-video-widget-xine.c:2140
 #, c-format
@@ -1648,29 +1651,31 @@ msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr ""
+"Lydkodeken «%s» er ikkje handsama. du må kanskje installera fleire tillegg "
+"for å spela av somme typar film"
 
 #: ../src/backend/bacon-video-widget-xine.c:2156
 msgid "This is an audio-only file, and there is no audio output available."
-msgstr ""
+msgstr "Dette er ei lydfil, men det går ikkje å spela lyd."
 
 #: ../src/backend/bacon-video-widget-xine.c:3591
 #: ../src/backend/bacon-video-widget-xine.c:3638
 #: ../src/backend/bacon-video-widget-xine.c:3660
 #, c-format
 msgid "Language %d"
-msgstr ""
+msgstr "Språk: %d"
 
 #: ../src/backend/bacon-video-widget-xine.c:3697
 msgid "No video to capture."
-msgstr ""
+msgstr "Ingen film å ta opp."
 
 #: ../src/backend/bacon-video-widget-xine.c:3705
 msgid "Video codec is not handled."
-msgstr ""
+msgstr "Videokodeken er ikkje handsama."
 
 #: ../src/backend/bacon-video-widget-xine.c:3713
 msgid "Movie is not playing."
-msgstr ""
+msgstr "Filmen spelar ikkje."
 
 #: ../src/backend/video-utils.c:272
 #, c-format
@@ -1697,13 +1702,13 @@ msgstr[1] "%d sekund"
 #: ../src/backend/video-utils.c:283
 #, c-format
 msgid "%s %s %s"
-msgstr ""
+msgstr "%s %s %s"
 
 #. minutes:seconds
 #: ../src/backend/video-utils.c:286
 #, c-format
 msgid "%s %s"
-msgstr ""
+msgstr "%s %s"
 
 #. seconds
 #: ../src/backend/video-utils.c:289
@@ -1714,56 +1719,56 @@ msgstr "%s"
 #: ../src/plparse/totem-disc.c:114
 #, c-format
 msgid "Failed to find real device node for %s: %s"
-msgstr ""
+msgstr "Klarte ikkje å finna ekte einingsnode for %s: %s"
 
 #: ../src/plparse/totem-disc.c:125
 #, c-format
 msgid "Failed to read symbolic link %s: %s"
-msgstr ""
+msgstr "Klarte ikkje å lesa symbolsk lenkje %s: %s"
 
 #: ../src/plparse/totem-disc.c:276
 #, c-format
 msgid "Failed to find mountpoint for device %s in /etc/fstab"
-msgstr ""
+msgstr "Klarte ikkje å finna monteringspunkt for %s i /etc/fstab"
 
 #: ../src/plparse/totem-disc.c:314
 msgid "Please check that a disc is present in the drive."
-msgstr ""
+msgstr "Kontroller at det står ei plate i stasjonen."
 
 #: ../src/plparse/totem-disc.c:317
 #, c-format
 msgid "Failed to open device %s for reading: %s"
-msgstr ""
+msgstr "Klarte ikkje å opna eininga %s for å lesa: %s"
 
 #: ../src/plparse/totem-disc.c:328
 #, c-format
 msgid "Failed to retrieve capabilities of device %s: %s"
-msgstr ""
+msgstr "Klarte ikkje å henta evnene til eininga %s: %s"
 
 #: ../src/plparse/totem-disc.c:361
 #, c-format
 msgid "Drive status 0x%x (%s) - check disc"
-msgstr ""
+msgstr "Einingsstatus 0x%x (%s). Kontroller plata"
 
 #: ../src/plparse/totem-disc.c:408
 #, c-format
 msgid "Failed to mount %s"
-msgstr ""
+msgstr "Klarte ikkje å montera %s"
 
 #: ../src/plparse/totem-disc.c:430
 #, c-format
 msgid "Failed to find mountpoint for %s"
-msgstr ""
+msgstr "Klarte ikkje å finna monteringspunkt for %s"
 
 #: ../src/plparse/totem-disc.c:489
 #, c-format
 msgid "Error getting %s disc status: %s"
-msgstr ""
+msgstr "Feil ved henting av diskstatus for %s: %s"
 
 #: ../src/plparse/totem-disc.c:518
 #, c-format
 msgid "Unexpected/unknown cd type 0x%x (%s)"
-msgstr ""
+msgstr "Uventa/ukjend CD-type 0x%x (%s)"
 
 #: ../src/plparse/totem-disc.c:727
 msgid "Audio CD"
@@ -1771,7 +1776,7 @@ msgstr "Lyd-CD"
 
 #: ../src/plparse/totem-disc.c:729
 msgid "Video CD"
-msgstr ""
+msgstr "Video-CD"
 
 #: ../src/plparse/totem-disc.c:731
 msgid "DVD"
@@ -1780,9 +1785,9 @@ msgstr "DVD"
 #: ../src/plparse/totem-pl-parser.c:329
 #, c-format
 msgid "Couldn't write parser: %s"
-msgstr ""
+msgstr "Klarte ikkje å skriva tolkar: %s"
 
 #: ../src/plparse/totem-pl-parser.c:437 ../src/plparse/totem-pl-parser.c:578
 #, c-format
 msgid "Couldn't open file '%s': %s"
-msgstr ""
+msgstr "Klarte ikkje å opna fila «%s»: %s"
