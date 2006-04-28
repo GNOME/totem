@@ -1,5 +1,26 @@
 2006-04-28  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.glade:
+	* help/C/totem.xml:
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	* src/backend/bacon-video-widget-gst.c:
+	(bacon_video_widget_fullscreen_mode_available):
+	* src/backend/bacon-video-widget-xine.c: (load_video_out_driver),
+	(bacon_video_widget_fullscreen_mode_available),
+	(bacon_video_widget_set_tv_out):
+	* src/backend/bacon-video-widget.h:
+	* src/backend/video-utils.c:
+	* src/backend/video-utils.h:
+	* src/totem-menu.c: (add_device_to_menu):
+	* src/totem-preferences.c: (totem_setup_preferences),
+	(totem_preferences_tvout_setup):
+	Remove the DXR3 support, nobody uses that anymore, remove the
+	"proprietary plugins path" support, it was unused in GStreamer,
+	and everybody just uses /usr/lib/win32 (Closes: #335445)
+	Remove trailing spaces from disc names in the Movie menu
+
+2006-04-28  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_action_handle_key_press): fix a compile warning
 
 2006-04-28  Wouter Bolsterlee  <uws+gnome@xs4all.nl>

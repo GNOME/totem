@@ -42,8 +42,6 @@
 
 #include "debug.h"
 
-#define PROPRIETARY_PLUGINS ".gnome2"G_DIR_SEPARATOR_S"totem-addons"
-
 static void
 totem_action_info (char *reason, Totem *totem)
 {
@@ -414,7 +412,7 @@ totem_setup_preferences (Totem *totem)
 	GtkWidget *item, *menu;
 	gboolean show_visuals, auto_resize, is_local, deinterlace;
 	int connection_speed, i;
-	char *path, *visual, *font;
+	char *visual, *font;
 	GList *list, *l;
 	BaconVideoWidgetAudioOutType audio_out;
 
@@ -473,14 +471,6 @@ totem_setup_preferences (Totem *totem)
 	gtk_combo_box_set_active (GTK_COMBO_BOX (item), connection_speed);
 	g_signal_connect (item, "changed",
 			G_CALLBACK (connection_combobox_changed), totem);
-
-	/* Proprietary plugins */
-	path = g_build_path (G_DIR_SEPARATOR_S,
-			g_get_home_dir (), PROPRIETARY_PLUGINS, NULL);
-	if (g_file_test (path, G_FILE_TEST_IS_DIR) == FALSE)
-		mkdir (path, 0775);
-	bacon_video_widget_set_proprietary_plugins_path (totem->bvw, path);
-	g_free (path);
 
 	/* Enable visuals */
 	item = glade_xml_get_widget (totem->xml, "tpw_visuals_checkbutton");
@@ -642,9 +632,6 @@ totem_preferences_tvout_setup (Totem *totem)
 	case TV_OUT_NVTV_NTSC:
 		name = "tpw_nvtvntscmode_radio_button";
 		break;
-	case TV_OUT_DXR3:
-		name = "tpw_dxr3tvout_radio_button";
-		break;
 	default:
 		g_assert_not_reached ();
 		name = NULL;
@@ -676,14 +663,6 @@ totem_preferences_tvout_setup (Totem *totem)
                 GINT_TO_POINTER (TV_OUT_NVTV_NTSC));
 	gtk_widget_set_sensitive(item, 
 			bacon_video_widget_fullscreen_mode_available (totem->bvw, TV_OUT_NVTV_NTSC));
-	
-	item = glade_xml_get_widget (totem->xml, "tpw_dxr3tvout_radio_button");
-	g_signal_connect (G_OBJECT (item), "toggled",
-			G_CALLBACK (on_tvout_toggled), totem);
-	g_object_set_data (G_OBJECT (item), "tvout_type",
-			GINT_TO_POINTER (TV_OUT_DXR3));
-	gtk_widget_set_sensitive(item, 
-			bacon_video_widget_fullscreen_mode_available (totem->bvw, TV_OUT_DXR3));
 }
 
 void

@@ -155,10 +155,6 @@ void  bacon_video_widget_set_logo_mode		 (BaconVideoWidget *bvw,
 						  gboolean logo_mode);
 gboolean bacon_video_widget_get_logo_mode	 (BaconVideoWidget *bvw);
 
-void bacon_video_widget_set_proprietary_plugins_path
-						 (BaconVideoWidget *bvw,
-				                  const char *path);
-
 void bacon_video_widget_set_fullscreen		 (BaconVideoWidget *bvw,
 						  gboolean fullscreen);
 
@@ -309,7 +305,6 @@ GdkPixbuf *bacon_video_widget_get_current_frame (BaconVideoWidget *bvw);
 /* TV-Out functions */
 typedef enum {
 	TV_OUT_NONE,
-	TV_OUT_DXR3,
 	TV_OUT_NVTV_PAL,
 	TV_OUT_NVTV_NTSC
 } TvOutType;

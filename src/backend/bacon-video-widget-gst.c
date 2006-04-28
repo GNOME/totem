@@ -2220,12 +2220,6 @@ bacon_video_widget_pause (BaconVideoWidget * bvw)
 }
 
 void
-bacon_video_widget_set_proprietary_plugins_path (BaconVideoWidget * bvw,
-						 const char *path)
-{
-}
-
-void
 bacon_video_widget_set_subtitle_font (BaconVideoWidget * bvw,
     				      const gchar * font)
 {
@@ -2283,7 +2277,7 @@ bacon_video_widget_fullscreen_mode_available (BaconVideoWidget *bvw,
 {
 	switch(tvout) {
 	case TV_OUT_NONE:
-		/* Asume that ordinary fullscreen always works */
+		/* Assume that ordinary fullscreen always works */
 		return TRUE;
 	case TV_OUT_NVTV_NTSC:
 	case TV_OUT_NVTV_PAL:
@@ -2297,9 +2291,6 @@ bacon_video_widget_fullscreen_mode_available (BaconVideoWidget *bvw,
 #else
 		return FALSE;
 #endif
-	case TV_OUT_DXR3:
-		/* FIXME: Add DXR3 detection code */
-		return FALSE;
 	}
 	return FALSE;
 }

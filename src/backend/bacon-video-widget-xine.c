@@ -618,16 +618,8 @@ load_video_out_driver (BaconVideoWidget *bvw, gboolean null_out)
 						   XINE_VISUAL_TYPE_X11,
 						   (void *) &vis);
 		if (vo_driver)
-		{
-			if (strcmp (video_driver_id, "dxr3") == 0)
-				bvw->priv->tvout = TV_OUT_DXR3;
-
 			return vo_driver;
-		}
 	}
-
-	/* If the video driver is not dxr3, or the dxr3 failed to load
-	 * we need to try loading the other ones, skipping dxr3 */
 
 	/* The types are hardcoded for now */
 	for (i = 0; i < G_N_ELEMENTS (drivers); i++) {
@@ -2569,18 +2561,6 @@ bacon_video_widget_fullscreen_mode_available (BaconVideoWidget *bvw,
 #else
 		return FALSE;
 #endif
-	case TV_OUT_DXR3:
-		{
-			const char * const *list;
-			int i;
-
-			list = xine_list_video_output_plugins (bvw->priv->xine);
-			for (i = 0; list[i] != NULL; i++) {
-				if (strcmp ("dxr3", list[i]) == 0)
-					return TRUE;
-			}
-			return FALSE;
-		}
 	default:
 		g_assert_not_reached ();
 	}
@@ -2694,33 +2674,6 @@ bacon_video_widget_set_media_device (BaconVideoWidget *bvw, const char *path)
 }
 
 void
-bacon_video_widget_set_proprietary_plugins_path (BaconVideoWidget *bvw,
-		const char *path)
-{
-	xine_cfg_entry_t entry;
-
-	bvw_config_helper_string (bvw->priv->xine,
-			"decoder.external.win32_codecs_path", path, &entry);
-	entry.str_value = (char *) path;
-	xine_config_update_entry (bvw->priv->xine, &entry);
-
-	bvw_config_helper_string (bvw->priv->xine,
-			"decoder.external.real_codecs_path", path, &entry);
-	entry.str_value = (char *) path;
-	xine_config_update_entry (bvw->priv->xine, &entry);
-
-	/* And we try and create symlinks from /usr/lib/win32 to
-	 * the local user path */
-	totem_create_symlinks ("/usr/lib/win32", path);
-	totem_create_symlinks ("/usr/lib/RealPlayer9/Codecs/", path);
-	totem_create_symlinks ("/usr/lib/RealPlayer9/users/Real/Codecs/", path);
-	totem_create_symlinks ("/usr/lib/RealPlayer8/Codecs", path);
-
-	g_free (bvw->priv->codecs_path);
-	bvw->priv->codecs_path = g_strdup (path);
-}
-
-void
 bacon_video_widget_set_connection_speed (BaconVideoWidget *bvw, int speed)
 {
 	xine_cfg_entry_t entry;
@@ -2795,20 +2748,6 @@ bacon_video_widget_set_tv_out (BaconVideoWidget *bvw, TvOutType tvout)
 	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
-
-	if (tvout == TV_OUT_DXR3 || bvw->priv->tvout == TV_OUT_DXR3)
-	{
-		xine_cfg_entry_t entry;
-
-		xine_config_lookup_entry (bvw->priv->xine,
-				"video.driver", &entry);
-		entry.str_value = (tvout == TV_OUT_DXR3 ? "dxr3" : "auto");
-		xine_config_update_entry (bvw->priv->xine, &entry);
-
-		bvw->priv->tvout = tvout;
-
-		return TRUE;
-	}
 
 #ifdef HAVE_NVTV
 	if (tvout == TV_OUT_NVTV_PAL) {

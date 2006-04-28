@@ -591,6 +591,7 @@ add_device_to_menu (GObject *device, GtkMenu *menu, gint position, Totem *totem)
 		&my_gnome_vfs_volume_get_mount_path,
 		&gnome_vfs_drive_get_device_path);
 
+	g_strchomp (name);
 	label = g_strdup_printf (_("Play Disc '%s'"), name);
 	g_free (name);
 	menu_item = gtk_image_menu_item_new_with_label (label);
