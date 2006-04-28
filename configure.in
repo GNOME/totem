@@ -15,17 +15,17 @@ AM_INIT_AUTOMAKE([1.8 dist-bzip2 no-dist-gzip check-news])
 
 AC_DEFINE(PACKAGE, AC_PACKAGE_NAME, [package name])
 AC_DEFINE(VERSION, AC_PACKAGE_VERSION, [package version])
-AC_SUBST(VERSION)
-
-dnl Add the languages which your application supports to po/LINGUAS
 AC_DEFINE(GETTEXT_PACKAGE, "AC_PACKAGE_NAME", [Define to the Gettext package name])
 GETTEXT_PACKAGE=AC_PACKAGE_NAME
 AC_SUBST(GETTEXT_PACKAGE)
+AC_SUBST(VERSION)
+
+ALL_LINGUAS="am ar az be bg bn br ca cs cy da de el en_CA en_GB es et eu fa fi fr ga gl gu he hi hr hu id is it ja ka ko ku lt lv mk ml ms nb ne nl nn pa pl pt pt_BR ro ru rw sk sq sr sr@Latn sv te th tr ug uk vi wa xh zh_CN zh_HK zh_TW"
 AM_GLIB_GNU_GETTEXT
-IT_PROG_INTLTOOL([0.34.90])
 
 AC_PROG_CXX
 AC_PROG_LIBTOOL()
+AC_PROG_INTLTOOL([0.20])
 PKG_PROG_PKG_CONFIG
 
 # Requirements
