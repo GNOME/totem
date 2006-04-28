@@ -2744,7 +2744,7 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		}
 		break;
 	case GDK_space:
-		if (totem_is_fullscreen (totem) != FALSE || gtk_widget_is_focus (totem->bvw) != FALSE)
+		if (totem_is_fullscreen (totem) != FALSE || gtk_widget_is_focus (GTK_WIDGET (totem->bvw)) != FALSE)
 			totem_action_play_pause (totem);
 		else
 			retval = FALSE;
