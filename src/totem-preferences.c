@@ -445,6 +445,9 @@ totem_setup_preferences (Totem *totem)
 			GTK_STOCK_CLOSE,
 			GTK_RESPONSE_ACCEPT,
 			NULL);
+	gtk_dialog_set_has_separator (GTK_DIALOG (totem->prefs), FALSE);
+	gtk_container_set_border_width (GTK_CONTAINER (totem->prefs), 5);
+	gtk_box_set_spacing (GTK_BOX(GTK_DIALOG(totem->prefs)->vbox), 2);
 	gtk_widget_reparent (item, GTK_DIALOG (totem->prefs)->vbox);
 	gtk_widget_show_all (GTK_DIALOG (totem->prefs)->vbox);
 	item = glade_xml_get_widget (totem->xml, "totem_preferences_window");
