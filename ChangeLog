@@ -1,3 +1,11 @@
+2006-04-30  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_handle_element_message),
+	(bacon_video_widget_fullscreen_mode_available):
+	Fix a compile-time warning, and a missing brace from the DXR3 removal
+	commit (Closes: #340138)
+
 2006-04-29  Dennis Cranston  <dennis_cranston@yahoo.com>
 
 	* src/totem-preferences.c: (totem_setup_preferences):  Fix dialog
