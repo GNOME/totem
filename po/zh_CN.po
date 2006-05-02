@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-01 13:48+0200\n"
-"PO-Revision-Date: 2006-05-01 22:24+0800\n"
+"POT-Creation-Date: 2006-05-02 05:44+0200\n"
+"PO-Revision-Date: 2006-05-02 12:32+0800\n"
 "Last-Translator: Funda Wang <fundawang@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -98,11 +98,11 @@ msgstr "音量增加"
 msgid "Volume up"
 msgstr "音量增加"
 
-#: ../data/popup.glade.h:14 ../data/totem.glade.h:130
+#: ../data/popup.glade.h:14 ../data/totem.glade.h:131
 msgid "_Next Chapter/Movie"
 msgstr "下一章/电影(_N)"
 
-#: ../data/popup.glade.h:15 ../data/totem.glade.h:132
+#: ../data/popup.glade.h:15 ../data/totem.glade.h:133
 msgid "_Previous Chapter/Movie"
 msgstr "上一章/电影(_P)"
 
@@ -121,7 +121,7 @@ msgstr "0 kbps"
 
 #. 0 seconds
 #: ../data/properties.glade.h:4 ../data/skip_to.glade.h:1
-#: ../src/backend/video-utils.c:258
+#: ../src/backend/video-utils.c:292
 msgid "0 seconds"
 msgstr "0 秒"
 
@@ -658,66 +658,70 @@ msgid "_DVD Menu"
 msgstr "DVD 菜单(_D)"
 
 #: ../data/totem.glade.h:122
+msgid "_DXR3 TV-out"
+msgstr "DXR3 电视输出(_D)"
+
+#: ../data/totem.glade.h:123
 msgid "_Deinterlace"
 msgstr "逐行扫描(_D)"
 
-#: ../data/totem.glade.h:123
+#: ../data/totem.glade.h:124
 msgid "_Eject"
 msgstr "弹出(_E)"
 
-#: ../data/totem.glade.h:124
+#: ../data/totem.glade.h:125
 msgid "_Font:"
 msgstr "字体(_F)："
 
-#: ../data/totem.glade.h:125
+#: ../data/totem.glade.h:126
 msgid "_Fullscreen"
 msgstr "全屏(_F)"
 
-#: ../data/totem.glade.h:126
+#: ../data/totem.glade.h:127
 msgid "_Go"
 msgstr "转到(_G)"
 
-#: ../data/totem.glade.h:127
+#: ../data/totem.glade.h:128
 msgid "_Hue:"
 msgstr "色调(_H)："
 
-#: ../data/totem.glade.h:128
+#: ../data/totem.glade.h:129
 msgid "_Languages"
 msgstr "语言(_L)"
 
-#: ../data/totem.glade.h:129
+#: ../data/totem.glade.h:130
 msgid "_Movie"
 msgstr "电影(_M)"
 
-#: ../data/totem.glade.h:131
+#: ../data/totem.glade.h:132
 msgid "_No TV-out"
 msgstr "无电视输出(_N)"
 
-#: ../data/totem.glade.h:133
+#: ../data/totem.glade.h:134
 msgid "_Repeat Mode"
 msgstr "重复模式(_R)"
 
-#: ../data/totem.glade.h:134
+#: ../data/totem.glade.h:135
 msgid "_Resize 1:2"
 msgstr "缩放为 1:2(_R)"
 
-#: ../data/totem.glade.h:135
+#: ../data/totem.glade.h:136
 msgid "_Sidebar"
 msgstr "侧边栏(_S)"
 
-#: ../data/totem.glade.h:136
+#: ../data/totem.glade.h:137
 msgid "_Skip to..."
 msgstr "跳到(_S)..."
 
-#: ../data/totem.glade.h:137
+#: ../data/totem.glade.h:138
 msgid "_Sound"
 msgstr "声音(_S)"
 
-#: ../data/totem.glade.h:138
+#: ../data/totem.glade.h:139
 msgid "_Title Menu"
 msgstr "标题菜单(_T)"
 
-#: ../data/totem.glade.h:139
+#: ../data/totem.glade.h:140
 msgid "_Type of visualisation:"
 msgstr "视觉效果类型(_T)："
 
@@ -948,7 +952,7 @@ msgstr "请确保 Totem 已正确安装。"
 msgid "None"
 msgstr "无"
 
-#: ../src/totem-menu.c:595
+#: ../src/totem-menu.c:594
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "播放碟片“%s”"
@@ -1033,11 +1037,11 @@ msgstr "播放列表错误"
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "无法分析播放列表“%s”，该文件可能已损坏。"
 
-#: ../src/totem-preferences.c:84
+#: ../src/totem-preferences.c:86
 msgid "Enable visual effects?"
 msgstr "启用视觉效果吗？"
 
-#: ../src/totem-preferences.c:86
+#: ../src/totem-preferences.c:88
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1045,28 +1049,28 @@ msgstr ""
 "似乎您正从远程运行 Totem。\n"
 "您确实想要启用视觉效果吗？"
 
-#: ../src/totem-preferences.c:139
+#: ../src/totem-preferences.c:141
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted."
 msgstr "对此设置的更改将会在下部电影或 Totem 重新启动后生效。"
 
-#: ../src/totem-preferences.c:183
+#: ../src/totem-preferences.c:185
 msgid ""
 "Switching on or off this type of TV-Out requires a restart to take effect."
 msgstr "打开或关闭此类型的电影输出需要重新启动才能生效。"
 
-#: ../src/totem-preferences.c:295
+#: ../src/totem-preferences.c:297
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr "更改视觉效果类型需要重新启动才能生效。"
 
-#: ../src/totem-preferences.c:379
+#: ../src/totem-preferences.c:381
 msgid ""
 "The change of audio output type will only take effect when Totem is "
 "restarted."
 msgstr "对此设置的更改将会在下部电影或 Totem 重新启动后生效。"
 
-#: ../src/totem-preferences.c:606
+#: ../src/totem-preferences.c:613
 msgid "Select Subtitle Font"
 msgstr "选择字幕字体"
 
@@ -1373,25 +1377,30 @@ msgstr ""
 "无法装入主界面(vanity.glade)。\n"
 "请确保 Vanity 已正确安装。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2061
-#: ../src/backend/bacon-video-widget-gst.c:3517
+#: ../src/backend/bacon-video-widget-gst-0.10.c:67
+#: ../src/backend/bacon-video-widget-gst.c:67
+msgid "Totem Video Window"
+msgstr "Totem 视频窗口"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2062
+#: ../src/backend/bacon-video-widget-gst.c:3526
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
 msgstr "所请求的音频输出未找到。请在多媒体系统选择器中选择另外一个音频输出。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2066
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2067
 #: ../src/backend/bacon-video-widget-gst.c:1948
 msgid "Location not found."
 msgstr "位置未找到。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2070
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2071
 #: ../src/backend/bacon-video-widget-gst.c:1951
 msgid "Could not open location; You may not have permission to open the file."
 msgstr "无法打开位置。您可能没有权限打开该文件。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2081
-#: ../src/backend/bacon-video-widget-gst.c:3468
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2082
+#: ../src/backend/bacon-video-widget-gst.c:3477
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1400,8 +1409,8 @@ msgstr ""
 "视频输出正被另外一个应用程序使用。请关闭其它视频应用程序，或者在多媒体系统选"
 "择器中选择另外一个视频输出。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2087
-#: ../src/backend/bacon-video-widget-gst.c:3511
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2088
+#: ../src/backend/bacon-video-widget-gst.c:3520
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1410,41 +1419,41 @@ msgstr ""
 "音频输出正被另外一个应用程序使用。请在多媒体系统选择器中选择另外一个音频输"
 "出。您可能需要考虑使用另外一个声音服务器。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2102
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2103
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr "无法在网络上播放此文件。请尝试先下载此文件。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2180
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2181
 msgid "Media file could not be played."
 msgstr "无法播放媒体文件。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2262
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2313
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2263
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2314
 #: ../src/backend/bacon-video-widget-gst.c:1883
 msgid "Failed to retrieve working directory"
 msgstr "获取工作目录失败"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3764
-#: ../src/backend/bacon-video-widget-gst.c:3179
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3774
+#: ../src/backend/bacon-video-widget-gst.c:3188
 msgid "Too old version of GStreamer installed."
 msgstr "安装的 GStreamer 版本太旧。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3771
-#: ../src/backend/bacon-video-widget-gst.c:3187
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3781
+#: ../src/backend/bacon-video-widget-gst.c:3196
 msgid "Media contains no supported video streams."
 msgstr "媒体不包含支持的视频流。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4116
-#: ../src/backend/bacon-video-widget-gst.c:3372
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4126
+#: ../src/backend/bacon-video-widget-gst.c:3381
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr "创建 GStreamer 播放对象失败。请检查您的 GStreamer 安装。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4231
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4315
-#: ../src/backend/bacon-video-widget-gst.c:3479
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4241
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4325
+#: ../src/backend/bacon-video-widget-gst.c:3488
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1452,8 +1461,8 @@ msgstr ""
 "打开视频输出失败。该输出可能不可用。请在多媒体系统选择器中选择另外一个视频输"
 "出。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4240
-#: ../src/backend/bacon-video-widget-gst.c:3483
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4250
+#: ../src/backend/bacon-video-widget-gst.c:3492
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1462,8 +1471,8 @@ msgstr ""
 "找不到视频输出。您可能需要安装额外的 GStreamer 插件，或者多媒体系统选择器中选"
 "择另外一个视频输出。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4259
-#: ../src/backend/bacon-video-widget-gst.c:3528
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4269
+#: ../src/backend/bacon-video-widget-gst.c:3537
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1472,8 +1481,8 @@ msgstr ""
 "打开视频输出失败。您可能没有权限打开声音设备，或者声音服务器未运行。请在多媒"
 "体系统选择器中选择另外一个音频输出。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4269
-#: ../src/backend/bacon-video-widget-gst.c:3532
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4279
+#: ../src/backend/bacon-video-widget-gst.c:3541
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -1481,10 +1490,6 @@ msgid ""
 msgstr ""
 "找不到音频输出。您可能需要安装额外的 GStreamer 插件，或者多媒体系统选择器中选"
 "择另外一个音频输出。"
-
-#: ../src/backend/bacon-video-widget-gst.c:67
-msgid "Totem Video Window"
-msgstr "Totem 视频窗口"
 
 #: ../src/backend/bacon-video-widget-gst.c:1972
 msgid "Failed to open media file; unknown error"
@@ -1499,7 +1504,7 @@ msgstr "播放失败：%s"
 msgid "unknown error"
 msgstr "未知错误"
 
-#: ../src/backend/bacon-video-widget-xine.c:680
+#: ../src/backend/bacon-video-widget-xine.c:688
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1508,173 +1513,173 @@ msgstr ""
 "无法装入“%s”音频驱动程序\n"
 "请检查设备是否处于空闲。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1140
-#: ../src/backend/bacon-video-widget-xine.c:1733
+#: ../src/backend/bacon-video-widget-xine.c:1148
+#: ../src/backend/bacon-video-widget-xine.c:1741
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
 msgstr "没有可用的视频输出。请确保程序安装正确。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1267
+#: ../src/backend/bacon-video-widget-xine.c:1275
 msgid "The server you are trying to connect to is not known."
 msgstr "您试图连接的服务器未知。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1271
+#: ../src/backend/bacon-video-widget-xine.c:1279
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "您指定的设备名称(%s)似乎无效。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1275
+#: ../src/backend/bacon-video-widget-xine.c:1283
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "您试图连接的服务器(%s)无法接通。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1279
+#: ../src/backend/bacon-video-widget-xine.c:1287
 msgid "The connection to this server was refused."
 msgstr "到此服务器的连接被拒绝。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1283
+#: ../src/backend/bacon-video-widget-xine.c:1291
 msgid "The specified movie could not be found."
 msgstr "找不到指定电影。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1289
-#: ../src/backend/bacon-video-widget-xine.c:1307
+#: ../src/backend/bacon-video-widget-xine.c:1297
+#: ../src/backend/bacon-video-widget-xine.c:1315
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
 msgstr ""
 "节目源似乎被加密，所以无法读取。您是否在没有 libdvdcss 的情况下播放加密 DVD？"
 
-#: ../src/backend/bacon-video-widget-xine.c:1292
+#: ../src/backend/bacon-video-widget-xine.c:1300
 msgid "The movie could not be read."
 msgstr "无法读取电影。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1301
+#: ../src/backend/bacon-video-widget-xine.c:1309
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "装入库或解码器(%s)时发生问题。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1310
+#: ../src/backend/bacon-video-widget-xine.c:1318
 msgid "This file is encrypted and cannot be played back."
 msgstr "此文件是加密的，无法继续播放。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1315
+#: ../src/backend/bacon-video-widget-xine.c:1323
 msgid "For security reasons, this movie can not be played back."
 msgstr "基于安全原因，不能播放电影。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1320
+#: ../src/backend/bacon-video-widget-xine.c:1328
 msgid "The audio device is busy. Is another application using it?"
 msgstr "音频设备忙。是否正有其它程序在使用该设备？"
 
-#: ../src/backend/bacon-video-widget-xine.c:1325
+#: ../src/backend/bacon-video-widget-xine.c:1333
 msgid "You are not allowed to open this file."
 msgstr "您不允许打开此文件。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1327
+#: ../src/backend/bacon-video-widget-xine.c:1335
 msgid "The server refused access to this file or stream."
 msgstr "此服务器拒绝访问此文件或流。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1336
+#: ../src/backend/bacon-video-widget-xine.c:1344
 msgid "The file you tried to play is an empty file."
 msgstr "您试图播放的文件是空文件。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1530
+#: ../src/backend/bacon-video-widget-xine.c:1538
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "没有可处理此电影位置的输入插件。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1534
+#: ../src/backend/bacon-video-widget-xine.c:1542
 msgid "There is no plugin to handle this movie."
 msgstr "没有可处理此电影的插件。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1538
+#: ../src/backend/bacon-video-widget-xine.c:1546
 msgid "This movie is broken and can not be played further."
 msgstr "此电影已损坏，无法继续播放。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1542
+#: ../src/backend/bacon-video-widget-xine.c:1550
 msgid "This location is not a valid one."
 msgstr "此位置无效。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1546
+#: ../src/backend/bacon-video-widget-xine.c:1554
 msgid "This movie could not be opened."
 msgstr "无法打开此电影。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1550
+#: ../src/backend/bacon-video-widget-xine.c:1558
 msgid "Generic Error."
 msgstr "常规错误。"
 
-#: ../src/backend/bacon-video-widget-xine.c:2104
+#: ../src/backend/bacon-video-widget-xine.c:2112
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr "此电影是静态图像。您可以使用图像查看器打开它。"
 
-#: ../src/backend/bacon-video-widget-xine.c:2128
+#: ../src/backend/bacon-video-widget-xine.c:2136
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr "视频编解码器“%s”未处理。您可能需要安装额外的插件才能播放某些类型的电影"
 
-#: ../src/backend/bacon-video-widget-xine.c:2132
+#: ../src/backend/bacon-video-widget-xine.c:2140
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr "音频编解码器“%s”未处理。您可能需要安装额外的插件才能播放某些类型的电影"
 
-#: ../src/backend/bacon-video-widget-xine.c:2148
+#: ../src/backend/bacon-video-widget-xine.c:2156
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "这是纯音频文件，而没有可用的音频输出。"
 
-#: ../src/backend/bacon-video-widget-xine.c:3530
-#: ../src/backend/bacon-video-widget-xine.c:3577
-#: ../src/backend/bacon-video-widget-xine.c:3599
+#: ../src/backend/bacon-video-widget-xine.c:3591
+#: ../src/backend/bacon-video-widget-xine.c:3638
+#: ../src/backend/bacon-video-widget-xine.c:3660
 #, c-format
 msgid "Language %d"
 msgstr "语言 %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3636
+#: ../src/backend/bacon-video-widget-xine.c:3697
 msgid "No video to capture."
 msgstr "没有可抓取的视频。"
 
-#: ../src/backend/bacon-video-widget-xine.c:3644
+#: ../src/backend/bacon-video-widget-xine.c:3705
 msgid "Video codec is not handled."
 msgstr "视频编解码器未处理。"
 
-#: ../src/backend/bacon-video-widget-xine.c:3652
+#: ../src/backend/bacon-video-widget-xine.c:3713
 msgid "Movie is not playing."
 msgstr "电影未在播放。"
 
-#: ../src/backend/video-utils.c:238
+#: ../src/backend/video-utils.c:272
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d 小时"
 
-#: ../src/backend/video-utils.c:240
+#: ../src/backend/video-utils.c:274
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d 分"
 
-#: ../src/backend/video-utils.c:243
+#: ../src/backend/video-utils.c:277
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d 秒"
 
 #. hour:minutes:seconds
-#: ../src/backend/video-utils.c:249
+#: ../src/backend/video-utils.c:283
 #, c-format
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. minutes:seconds
-#: ../src/backend/video-utils.c:252
+#: ../src/backend/video-utils.c:286
 #, c-format
 msgid "%s %s"
 msgstr "%s %s"
 
 #. seconds
-#: ../src/backend/video-utils.c:255
+#: ../src/backend/video-utils.c:289
 #, c-format
 msgid "%s"
 msgstr "%s"
@@ -1754,4 +1759,3 @@ msgstr "不能写入解析器：%s"
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "无法打开文件“%s”：%s"
-
