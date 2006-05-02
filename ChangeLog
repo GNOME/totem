@@ -1,3 +1,11 @@
+2006-05-02  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/totem-pl-parser.c: (read_ini_line_int),
+	(read_ini_line_string), (totem_pl_parser_add_pls_with_contents):
+	Added more debug for pls parsing, ignore tabs and spaces at the
+	beginning of lines to work-around Virgin's broken playlists
+	(Closes: #340383)
+
 2006-04-28  Wouter Bolsterlee  <uws+gnome@xs4all.nl>
 
 	* configure.in: Revert po/LINGUAS stuff, because it

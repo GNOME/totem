@@ -692,10 +692,15 @@ read_ini_line_int (char **lines, const char *key)
 		return -1;
 
 	for (i = 0; (lines[i] != NULL && retval == -1); i++) {
-		if (g_ascii_strncasecmp (lines[i], key, strlen (key)) == 0) {
+		char *line = lines[i];
+
+		while (*line == '\t' || *line == ' ')
+			line++;
+
+		if (g_ascii_strncasecmp (line, key, strlen (key)) == 0) {
 			char **bits;
 
-			bits = g_strsplit (lines[i], "=", 2);
+			bits = g_strsplit (line, "=", 2);
 			if (bits[0] == NULL || bits [1] == NULL) {
 				g_strfreev (bits);
 				return -1;
@@ -719,11 +724,16 @@ read_ini_line_string (char **lines, const char *key, gboolean dos_mode)
 		return NULL;
 
 	for (i = 0; (lines[i] != NULL && retval == NULL); i++) {
-		if (g_ascii_strncasecmp (lines[i], key, strlen (key)) == 0) {
+		char *line = lines[i];
+
+		while (*line == '\t' || *line == ' ')
+			line++;
+
+		if (g_ascii_strncasecmp (line, key, strlen (key)) == 0) {
 			char **bits;
 			ssize_t len;
 
-			bits = g_strsplit (lines[i], "=", 2);
+			bits = g_strsplit (line, "=", 2);
 			if (bits[0] == NULL || bits [1] == NULL) {
 				g_strfreev (bits);
 				return NULL;
@@ -956,8 +966,10 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url, c
 
 	if (lines[i] == NULL
 			|| g_ascii_strncasecmp (lines[i], "[playlist]",
-				(gsize)strlen ("[playlist]")) != 0)
+				(gsize)strlen ("[playlist]")) != 0) {
+		DEBUG (g_print ("Couldn't recognise URL '%s' as a .pls playlist\n", url));
 		goto bail;
+	}
 
 	playlist_title = read_ini_line_string (lines,
 			"X-GNOME-Title", dos_mode);
@@ -970,8 +982,10 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url, c
 
 	/* numberofentries=? */
 	num_entries = read_ini_line_int (lines, "numberofentries");
-	if (num_entries == -1)
+	if (num_entries == -1) {
+		DEBUG (g_print ("Couldn't get the numberofentries for '%s'\n", url));
 		goto bail;
+	}
 
 	retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 
