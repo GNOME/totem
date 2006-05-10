@@ -1938,8 +1938,23 @@ AC3 Passthrough</property>
 		  <child>
 		    <widget class="GtkImageMenuItem" id="tmw_properties_menu_item">
 		      <property name="visible">True</property>
-		      <property name="stock_item">GNOMEUIINFO_MENU_PROPERTIES_ITEM</property>
-		      <signal name="activate" handler="on_properties1_activate" last_modification_time="Fri, 07 Feb 2003 20:29:18 GMT"/>
+		      <property name="sensitive">True</property>
+		      <property name="label" translatable="yes">_Properties</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_properties1_activate"/>
+		      <accelerator key="Return" modifiers="GDK_MOD1_MASK" signal="activate"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image177">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-properties</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
 		    </widget>
 		  </child>
 
@@ -1981,10 +1996,26 @@ AC3 Passthrough</property>
 		  <child>
 		    <widget class="GtkImageMenuItem" id="tmw_quit_menu_item">
 		      <property name="visible">True</property>
-		      <property name="stock_item">GNOMEUIINFO_MENU_EXIT_ITEM</property>
-		      <signal name="activate" handler="on_quit1_activate" last_modification_time="Sat, 08 Jun 2002 22:29:16 GMT"/>
+		      <property name="sensitive">True</property>
+		      <property name="label" translatable="yes">_Quit</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_quit1_activate"/>
+		      <accelerator key="Q" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image177">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-quit</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
 		    </widget>
 		  </child>
+
 		</widget>
 	      </child>
 	    </widget>
@@ -1993,7 +2024,8 @@ AC3 Passthrough</property>
 	  <child>
 	    <widget class="GtkMenuItem" id="tmw_menu_item_edit">
 	      <property name="visible">True</property>
-	      <property name="stock_item">GNOMEUIINFO_MENU_EDIT_TREE</property>
+	      <property name="label" translatable="yes">_Edit</property>
+	      <property name="use_underline">True</property>
 
 	      <child>
 		<widget class="GtkMenu" id="tmw_menu_edit">
@@ -2058,11 +2090,25 @@ AC3 Passthrough</property>
 		  <child>
 		    <widget class="GtkImageMenuItem" id="tmw_preferences_menu_item">
 		      <property name="visible">True</property>
-		      <property name="sensitive">False</property>
-		      <property name="stock_item">GNOMEUIINFO_MENU_PREFERENCES_ITEM</property>
-		      <signal name="activate" handler="on_preferences1_activate" last_modification_time="Sat, 08 Jun 2002 22:29:16 GMT"/>
+		      <property name="sensitive">True</property>
+		      <property name="label" translatable="yes">_Prefere_nces</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_preferences1_activate"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image177">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-preferences</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
 		    </widget>
 		  </child>
+
 		</widget>
 	      </child>
 	    </widget>
@@ -2071,7 +2117,8 @@ AC3 Passthrough</property>
 	  <child>
 	    <widget class="GtkMenuItem" id="tmw_menu_item_view">
 	      <property name="visible">True</property>
-	      <property name="stock_item">GNOMEUIINFO_MENU_VIEW_TREE</property>
+	      <property name="label" translatable="yes">_View</property>
+	      <property name="use_underline">True</property>
 
 	      <child>
 		<widget class="GtkMenu" id="tmw_menu_view">
@@ -2696,7 +2743,8 @@ AC3 Passthrough</property>
 	  <child>
 	    <widget class="GtkMenuItem" id="tmw_menu_item_help">
 	      <property name="visible">True</property>
-	      <property name="stock_item">GNOMEUIINFO_MENU_HELP_TREE</property>
+	      <property name="label" translatable="yes">_Help</property>
+	      <property name="use_underline">True</property>
 
 	      <child>
 		<widget class="GtkMenu" id="tmw_menu_help">
@@ -2727,10 +2775,25 @@ AC3 Passthrough</property>
 		  <child>
 		    <widget class="GtkImageMenuItem" id="tmw_about_menu_item">
 		      <property name="visible">True</property>
-		      <property name="stock_item">GNOMEUIINFO_MENU_ABOUT_ITEM</property>
-		      <signal name="activate" handler="on_about1_activate" last_modification_time="Sat, 08 Jun 2002 22:29:16 GMT"/>
+		      <property name="sensitive">True</property>
+		      <property name="label" translatable="yes">_About</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_about1_activate"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image177">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-about</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
 		    </widget>
 		  </child>
+
 		</widget>
 	      </child>
 	    </widget>

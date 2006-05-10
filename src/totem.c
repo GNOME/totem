@@ -1941,6 +1941,7 @@ on_about1_activate (GtkButton *button, Totem *totem)
 		"Chee Bin Hoh <cbhoh@gnome.org>",
 		NULL
 	};
+	const char *frontend_type;
 	char *backend_version, *description;
 	char *filename;
 
@@ -1955,9 +1956,17 @@ on_about1_activate (GtkButton *button, Totem *totem)
 	pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
 	g_free (filename);
 
+#ifdef HAVE_GTK_ONLY
+	frontend_type = N_("GTK+");
+#else
+	frontend_type = N_("GNOME");
+#endif
+
 	backend_version = bacon_video_widget_get_backend_name (totem->bvw);
-	description = g_strdup_printf (_("Movie Player using %s"),
-				backend_version);
+	/* This lists the back-end and front-end types and versions, such as
+	 * Movie Player using GStreamer 0.10.1 and GNOME */
+	description = g_strdup_printf (_("Movie Player using %s and %s"),
+				backend_version, _(frontend_type));
 
 	totem->about = g_object_new (GTK_TYPE_ABOUT_DIALOG,
 			"name", _("Totem"),

@@ -1,6 +1,13 @@
 2006-05-10  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.glade:
+	* src/totem.c: (on_about1_activate):
+	Use GTK+-only menu items, not stock GNOME ones (Closes: #327892),
+	display the type of front-end (GTK+ or GNOME) in use in the about box
+
+2006-05-10  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem.glade:
 	Use gtk+ only to create the Open menu item, loads more like that to go
 	* src/totem.c: (totem_action_exit):
 	Avoid crash removing the popups if the glade interface can't be
