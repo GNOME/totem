@@ -165,7 +165,8 @@ totem_action_exit (Totem *totem)
 {
 	GdkDisplay *display = NULL;
 
-	popup_timeout_remove (totem);
+	if (totem != NULL)
+		popup_timeout_remove (totem);
 
 	if (gtk_main_level () > 0)
 		gtk_main_quit ();

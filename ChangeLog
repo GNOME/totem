@@ -1,5 +1,13 @@
 2006-05-10  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.glade:
+	Use gtk+ only to create the Open menu item, loads more like that to go
+	* src/totem.c: (totem_action_exit):
+	Avoid crash removing the popups if the glade interface can't be
+	loaded
+
+2006-05-10  Bastien Nocera  <hadess@hadess.net>
+
 	* README:
 	* configure.in:
 	* src/backend/Makefile.am:
