@@ -72,6 +72,7 @@ static const GtkTargetEntry source_table[] = {
 static void vanity_action_exit (Vanity *vanity);
 
 static const struct poptOption options[] = {
+	{NULL, '\0', POPT_ARG_INCLUDE_TABLE, NULL, 0, N_("Backend options"), NULL},
 	{"debug", '\0', POPT_ARG_NONE, NULL, 0, N_("Debug mode on"), NULL},
 	{NULL, '\0', 0, NULL, 0} /* end the list */
 };
@@ -660,6 +661,7 @@ main (int argc, char **argv)
 			GNOME_PARAM_APP_DATADIR, DATADIR,
 			GNOME_PARAM_POPT_TABLE, options,
 			GNOME_PARAM_NONE);
+	options[0].arg = bacon_video_widget_get_popt_table ();
 #endif /* !HAVE_GTK_ONLY */
 
 	glade_init ();
