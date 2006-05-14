@@ -1,3 +1,15 @@
+2006-05-14  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_handle_element_message):
+	* src/backend/video-utils.c: (totem_resolve_relative_link):
+	* src/totem-mozilla-viewer.c: (on_got_redirect):
+	* src/totem.c: (on_got_redirect):
+	Patch from Tim-Philipp Müller <tim at centricular dot net> to handle
+	relative links in the front-end, as it knows the canonical mrl for the
+	stream, and the backend doesn't, fixes Apple trailers playback in the
+	Mozilla plugin (Closes: #339000)
+
 2006-05-10  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.glade:

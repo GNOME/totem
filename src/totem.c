@@ -1199,11 +1199,18 @@ on_next_button_clicked (GtkButton *button, Totem *totem)
 static void
 on_got_redirect (BaconVideoWidget *bvw, const char *mrl, Totem *totem)
 {
+	gchar *old_mrl, *new_mrl;
+
+	old_mrl = totem_playlist_get_current_mrl (TOTEM_PLAYLIST (totem->playlist));
+	new_mrl = totem_resolve_relative_link (old_mrl, mrl);
+	g_free (old_mrl);
+
 	bacon_video_widget_close (totem->bvw);
 	totem_gdk_window_set_waiting_cursor (totem->win->window);
-	bacon_video_widget_open (totem->bvw, mrl, NULL);
+	bacon_video_widget_open (totem->bvw, new_mrl, NULL);
 	gdk_window_set_cursor (totem->win->window, NULL);
 	bacon_video_widget_play (bvw, NULL);
+	g_free (new_mrl);
 }
 
 /* This is only called when we are playing a DVD */
