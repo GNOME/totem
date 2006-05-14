@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-22 01:52+0900\n"
-"PO-Revision-Date: 2006-02-22 01:51+0900\n"
+"POT-Creation-Date: 2006-05-14 22:15+0900\n"
+"PO-Revision-Date: 2006-05-14 22:13+0900\n"
 "Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -142,7 +142,7 @@ msgstr "<b>全般</b>"
 
 #: ../data/properties.glade.h:8
 msgid "<b>Video</b>"
-msgstr "<b>映像</b>"
+msgstr "<b>動画</b>"
 
 #: ../data/properties.glade.h:9
 msgid "Album:"
@@ -175,19 +175,19 @@ msgstr "フレームレート:"
 #. Dimensions
 #. Video Codec
 #. Audio Codec
-#: ../data/properties.glade.h:16 ../src/bacon-video-widget-properties.c:152
-#: ../src/bacon-video-widget-properties.c:154
-#: ../src/bacon-video-widget-properties.c:157
-#: ../src/bacon-video-widget-properties.c:160
-#: ../src/bacon-video-widget-properties.c:163
-#: ../src/bacon-video-widget-properties.c:165
-#: ../src/bacon-video-widget-properties.c:227
-#: ../src/bacon-video-widget-properties.c:229
-#: ../src/bacon-video-widget-properties.c:246
+#: ../data/properties.glade.h:16 ../src/bacon-video-widget-properties.c:153
+#: ../src/bacon-video-widget-properties.c:155
+#: ../src/bacon-video-widget-properties.c:158
+#: ../src/bacon-video-widget-properties.c:161
+#: ../src/bacon-video-widget-properties.c:164
+#: ../src/bacon-video-widget-properties.c:166
+#: ../src/bacon-video-widget-properties.c:228
+#: ../src/bacon-video-widget-properties.c:230
+#: ../src/bacon-video-widget-properties.c:247
 msgid "N/A"
 msgstr "N/A"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:2040
+#: ../data/properties.glade.h:17 ../src/totem.c:2057
 msgid "Properties"
 msgstr "プロパティ"
 
@@ -199,10 +199,10 @@ msgstr "タイトル:"
 #. Artist
 #. Album
 #. Year
-#: ../data/properties.glade.h:19 ../src/bacon-video-widget-properties.c:141
-#: ../src/bacon-video-widget-properties.c:143
-#: ../src/bacon-video-widget-properties.c:145
-#: ../src/bacon-video-widget-properties.c:147
+#: ../data/properties.glade.h:19 ../src/bacon-video-widget-properties.c:142
+#: ../src/bacon-video-widget-properties.c:144
+#: ../src/bacon-video-widget-properties.c:146
+#: ../src/bacon-video-widget-properties.c:148
 msgid "Unknown"
 msgstr "不明"
 
@@ -234,7 +234,7 @@ msgstr "デスクトップの背景にセットする(_D)"
 msgid "Save screenshot to _file:"
 msgstr "スクリーンショットを保存するファイル(_F):"
 
-#: ../data/skip_to.glade.h:2 ../src/totem-skipto.c:140
+#: ../data/skip_to.glade.h:2 ../src/totem-skipto.c:144
 msgid "Skip to"
 msgstr "スキップ"
 
@@ -348,7 +348,7 @@ msgstr "自動"
 
 #: ../data/totem.glade.h:30
 msgid "Automatically _resize the window when a new video is loaded"
-msgstr "新しい映像を読み込む際にウィンドウのサイズを自動的に変更する(_R)"
+msgstr "新しい動画を読み込む際にウィンドウのサイズを自動的に変更する(_R)"
 
 #: ../data/totem.glade.h:31
 msgid "Co_ntrast:"
@@ -448,15 +448,15 @@ msgstr "2:1 サイズ(_2)"
 
 #: ../data/totem.glade.h:59
 msgid "Resize to half the video size"
-msgstr "映像サイズの半分にします"
+msgstr "映像のサイズを半分にします"
 
 #: ../data/totem.glade.h:60
 msgid "Resize to twice the video size"
-msgstr "映像サイズの二倍にします"
+msgstr "映像のサイズを二倍にします"
 
 #: ../data/totem.glade.h:61
 msgid "Resize to video size"
-msgstr "映像のサイズにします"
+msgstr "オリジナルのサイズにします"
 
 #: ../data/totem.glade.h:62
 msgid "S_ubtitles"
@@ -575,8 +575,8 @@ msgid "Time:"
 msgstr "時間:"
 
 #. Title
-#: ../data/totem.glade.h:100 ../src/totem.c:706 ../src/totem.c:3475
-#: ../src/totem.c:3492
+#: ../data/totem.glade.h:100 ../src/totem.c:705 ../src/totem.c:3520
+#: ../src/totem.c:3537
 msgid "Totem Movie Player"
 msgstr "Totem 動画プレイヤー"
 
@@ -746,7 +746,7 @@ msgstr "イタレース除去"
 
 #: ../data/totem.schemas.in.h:4
 msgid "Height of the video widget"
-msgstr "映像ウィジットの高さ"
+msgstr "動画ウィジットの高さ"
 
 #: ../data/totem.schemas.in.h:5
 msgid "Maximum amount of data to decode ahead of display (in seconds)"
@@ -844,7 +844,7 @@ msgstr "プレイバック・エンジンのデバッグを有効にするかど
 
 #: ../data/totem.schemas.in.h:27
 msgid "Width of the video widget"
-msgstr "映像ウィジットの幅"
+msgstr "動画ウィジットの幅"
 
 #: ../data/uri.glade.h:1
 msgid "Enter the _address of the file you would like to open:"
@@ -866,7 +866,7 @@ msgstr "ライブ・ウェブカムを視聴したり画像をアップロード
 msgid "Save File"
 msgstr "ファイルの保存"
 
-#: ../data/vanity.glade.h:2 ../src/vanity.c:259
+#: ../data/vanity.glade.h:2 ../src/vanity.c:260
 msgid "Vanity"
 msgstr "Vanity"
 
@@ -906,23 +906,23 @@ msgstr "1:2 にズーム(_Z)"
 msgid "Unnamed CDROM"
 msgstr "名前なしの CD-ROM"
 
-#: ../src/bacon-video-widget-properties.c:224
+#: ../src/bacon-video-widget-properties.c:225
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: ../src/bacon-video-widget-properties.c:227
+#: ../src/bacon-video-widget-properties.c:228
 #, c-format
 msgid "%d frames per second"
 msgstr "%d フレーム/秒"
 
-#: ../src/bacon-video-widget-properties.c:229
-#: ../src/bacon-video-widget-properties.c:246
+#: ../src/bacon-video-widget-properties.c:230
+#: ../src/bacon-video-widget-properties.c:247
 #, c-format
 msgid "%d kbps"
 msgstr "%d Kバイト/秒"
 
-#: ../src/bacon-video-widget-properties.c:280
+#: ../src/bacon-video-widget-properties.c:281
 msgid "Properties dialog"
 msgstr "プロパティのダイアログ"
 
@@ -958,12 +958,12 @@ msgstr "Totem が正しくインストールされているか確認して下さ
 msgid "None"
 msgstr "なし"
 
-#: ../src/totem-menu.c:580
+#: ../src/totem-menu.c:594
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "ディスク '%s' の再生"
 
-#: ../src/totem-options.c:36
+#: ../src/totem-options.c:36 ../src/vanity.c:75
 msgid "Backend options"
 msgstr "バックエンドのオプション"
 
@@ -971,11 +971,11 @@ msgstr "バックエンドのオプション"
 msgid "Enable debug"
 msgstr "デバッグモード"
 
-#: ../src/totem-options.c:39 ../src/totem.c:260 ../src/totem.c:268
+#: ../src/totem-options.c:39 ../src/totem.c:259 ../src/totem.c:267
 msgid "Play"
 msgstr "再生"
 
-#: ../src/totem-options.c:40 ../src/totem.c:254
+#: ../src/totem-options.c:40 ../src/totem.c:253
 msgid "Pause"
 msgstr "一時停止"
 
@@ -1080,19 +1080,19 @@ msgid ""
 "restarted."
 msgstr "ここで変更した音声出力の種類は Totem を再起動したときに反映されます。"
 
-#: ../src/totem-preferences.c:604
+#: ../src/totem-preferences.c:613
 msgid "Select Subtitle Font"
 msgstr "サブタイトルのフォントの選択"
 
 #. FIXME this should be setting an error?
-#: ../src/totem-properties-main.c:112 ../src/totem-properties-view.c:86
+#: ../src/totem-properties-main.c:117 ../src/totem-properties-view.c:86
 #: ../src/totem-properties-view.c:94
 msgid "Audio/Video"
-msgstr "音声/映像"
+msgstr "音声/動画"
 
 #: ../src/totem-properties-view.c:88
 msgid "Video"
-msgstr "映像"
+msgstr "動画"
 
 #: ../src/totem-screenshot.c:151 ../src/totem-screenshot.c:162
 #, c-format
@@ -1116,9 +1116,9 @@ msgstr "スクリーンショットの保存中にエラーが発生しました
 msgid "Screenshot.png"
 msgstr "Screenshot.png"
 
-#: ../src/totem-scrsaver.c:115
-msgid "Playing a movie with Totem"
-msgstr "Totem を使って映像を再生する"
+#: ../src/totem-scrsaver.c:116
+msgid "Playing a movie"
+msgstr "動画を再生する"
 
 #: ../src/totem-statusbar.c:91
 msgid "Shadow type"
@@ -1128,7 +1128,7 @@ msgstr "影の種類"
 msgid "Style of bevel around the statusbar text"
 msgstr "ステータスバー・テキスト周りのベベルのスタイル"
 
-#: ../src/totem-statusbar.c:124 ../src/totem.c:264 ../src/totem.c:692
+#: ../src/totem-statusbar.c:124 ../src/totem.c:263 ../src/totem.c:691
 msgid "Stopped"
 msgstr "停止"
 
@@ -1142,13 +1142,13 @@ msgid "%s (Streaming)"
 msgstr "%s (ストリーミング)"
 
 #. Elapsed / Total Length
-#: ../src/totem-statusbar.c:187 ../src/totem-time-label.c:82
+#: ../src/totem-statusbar.c:187 ../src/totem-time-label.c:85
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:190
+#: ../src/totem-statusbar.c:190 ../src/totem-time-label.c:88
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "%s / %s へスキップ"
@@ -1175,24 +1175,24 @@ msgstr "サポートしているファイル"
 msgid "Select Movies or Playlists"
 msgstr "動画または再生一覧を選択して下さい"
 
-#: ../src/totem.c:252
+#: ../src/totem.c:251
 msgid "Playing"
 msgstr "再生中"
 
-#: ../src/totem.c:258
+#: ../src/totem.c:257
 msgid "Paused"
 msgstr "一時停止中"
 
-#: ../src/totem.c:310
+#: ../src/totem.c:309
 msgid "Totem could not eject the optical media."
 msgstr "Totem は光学メディアを取り出すことができませんでした。"
 
-#: ../src/totem.c:338 ../src/totem.c:367 ../src/totem.c:813 ../src/totem.c:924
+#: ../src/totem.c:337 ../src/totem.c:366 ../src/totem.c:812 ../src/totem.c:923
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem は '%s' を再生できませんでした。"
 
-#: ../src/totem.c:394
+#: ../src/totem.c:393
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1201,7 +1201,7 @@ msgstr ""
 "この種類のメディア (%s) を操作する適切なプラグインがないため、Totem はそのメ"
 "ディアを再生できません。"
 
-#: ../src/totem.c:395
+#: ../src/totem.c:394
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1209,7 +1209,7 @@ msgstr ""
 "必要なプラグインをインストールして Totem を再起動すると、このメディアを再生で"
 "きます。"
 
-#: ../src/totem.c:403
+#: ../src/totem.c:402
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1218,7 +1218,7 @@ msgstr ""
 "このメディア (%s) を操作するプラグインはありますが、Totem はそのメディアを再"
 "生できませんでした。"
 
-#: ../src/totem.c:404
+#: ../src/totem.c:403
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1226,48 +1226,48 @@ msgstr ""
 "ドライブの中にディスクがあるか確認して、そのドライブが正しく設定されているこ"
 "とを確認して下さい。"
 
-#: ../src/totem.c:432
+#: ../src/totem.c:431
 msgid "Totem was not able to play this disc."
 msgstr "このディスクを再生できませんでした。"
 
-#: ../src/totem.c:433 ../src/totem.c:3334
+#: ../src/totem.c:432 ../src/totem.c:3379
 msgid "No reason."
 msgstr "原因が不明です。"
 
-#: ../src/totem.c:699
+#: ../src/totem.c:698
 msgid "No File"
 msgstr "ファイルなし"
 
-#: ../src/totem.c:819
+#: ../src/totem.c:818
 msgid "No error message"
 msgstr "エラー・メッセージなし"
 
-#: ../src/totem.c:1277 ../src/totem.c:1279
+#: ../src/totem.c:1281 ../src/totem.c:1283
 msgid "An error occurred"
 msgstr "エラーが発生しました"
 
-#: ../src/totem.c:1644
+#: ../src/totem.c:1654
 msgid "Open Location..."
 msgstr "場所を開く..."
 
-#: ../src/totem.c:1913
+#: ../src/totem.c:1927
 msgid "Totem could not display the help contents."
 msgstr "Totem はヘルプの目次を表示できませんでした。"
 
-#: ../src/totem.c:1951
+#: ../src/totem.c:1965
 #, c-format
 msgid "Movie Player using %s"
 msgstr "%s を使った動画プレイヤーです。"
 
-#: ../src/totem.c:1955
+#: ../src/totem.c:1969
 msgid "Totem"
 msgstr "Totem"
 
-#: ../src/totem.c:1957 ../src/vanity.c:261
+#: ../src/totem.c:1971 ../src/vanity.c:262
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Copyright © 2002-2005 Bastien Nocera"
 
-#: ../src/totem.c:1962 ../src/vanity.c:266
+#: ../src/totem.c:1976 ../src/vanity.c:267
 msgid "translator-credits"
 msgstr ""
 "草野 貴之 <AE5T-KSN@asahi-net.or.jp>\n"
@@ -1277,67 +1277,67 @@ msgstr ""
 "James Hashida <khashida@redhat.com>\n"
 "日本GNOMEユーザー会 <http://www.gnome.gr.jp>"
 
-#: ../src/totem.c:1995 ../src/totem.c:2003 ../src/vanity.c:299
-#: ../src/vanity.c:307
+#: ../src/totem.c:2012 ../src/totem.c:2020 ../src/vanity.c:300
+#: ../src/vanity.c:308
 msgid "Totem could not get a screenshot of that film."
-msgstr "Totem はこの映像のスクリーンショットを撮れませんでした。"
+msgstr "Totem はこの動画のスクリーンショットを撮れませんでした。"
 
-#: ../src/totem.c:2003 ../src/vanity.c:307
+#: ../src/totem.c:2020 ../src/vanity.c:308
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "これは発生してはいけない現象です; バグとして報告して下さい。"
 
-#: ../src/totem.c:2030
+#: ../src/totem.c:2047
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem は動画プロパティ・ウィンドウを表示できませんでした。"
 
-#: ../src/totem.c:2030
+#: ../src/totem.c:2047
 msgid "Make sure that Totem is correctly installed."
 msgstr "Totem が正しくインストールされているか確認して下さい。"
 
-#: ../src/totem.c:2116
+#: ../src/totem.c:2133
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem は '%s' 中を検索できませんでした。 "
 
-#: ../src/totem.c:3334
+#: ../src/totem.c:3379
 msgid "Totem could not startup."
 msgstr "Totem を起動できませんでした。"
 
-#: ../src/totem.c:3476
+#: ../src/totem.c:3521
 msgid "Could not initialize the thread-safe libraries."
 msgstr "スレッドセーフなライグラリを初期化できませんでした。"
 
-#: ../src/totem.c:3476
+#: ../src/totem.c:3521
 msgid "Verify your system installation. Totem will now exit."
 msgstr "システムのインストールを確認して下さい。Totem を終了します。"
 
-#: ../src/totem.c:3499
+#: ../src/totem.c:3544
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem は設定エンジンを初期化できませんでした。"
 
-#: ../src/totem.c:3499
+#: ../src/totem.c:3544
 msgid "Make sure that GNOME is properly installed."
 msgstr "GNOME が正しくインストールされているか確認して下さい。"
 
 #. Main window
-#: ../src/totem.c:3527
+#: ../src/totem.c:3572
 msgid "main window"
 msgstr "メイン・ウィンドウ"
 
-#: ../src/totem.c:3532
+#: ../src/totem.c:3577
 msgid "video popup menu"
-msgstr "映像のポップアップ・メニュー"
+msgstr "動画のポップアップ・メニュー"
 
-#: ../src/vanity.c:75
+#: ../src/vanity.c:76
 msgid "Debug mode on"
 msgstr "デバッグモードを有効にする"
 
-#: ../src/vanity.c:255
+#: ../src/vanity.c:256
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "%s を使ったウェブカム・ユーティリティです。"
 
-#: ../src/vanity.c:550
+#: ../src/vanity.c:551
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1346,11 +1346,11 @@ msgstr ""
 "Vanity を起動できませんでした:\n"
 "%s"
 
-#: ../src/vanity.c:551
+#: ../src/vanity.c:552
 msgid "No reason"
 msgstr "理由なし"
 
-#: ../src/vanity.c:589
+#: ../src/vanity.c:590
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1359,7 +1359,7 @@ msgstr ""
 "Vanity はウェブカムに接続できませんでした。\n"
 "理由: %s"
 
-#: ../src/vanity.c:605
+#: ../src/vanity.c:606
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1368,11 +1368,11 @@ msgstr ""
 "Vanity はウェブカムからの映像を再生できませんでした。\n"
 "理由: %s"
 
-#: ../src/vanity.c:641
+#: ../src/vanity.c:642
 msgid "Vanity Webcam Utility"
 msgstr "Vanity ウェブカム・ユーティリティ"
 
-#: ../src/vanity.c:646
+#: ../src/vanity.c:647
 msgid ""
 "Could not initialize the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1380,7 +1380,7 @@ msgstr ""
 "スレッドセーフなライブラリを初期化できませんでした。\n"
 "システムのインストールを確認して下さい。Vanity を終了します。"
 
-#: ../src/vanity.c:671
+#: ../src/vanity.c:673
 #, c-format
 msgid ""
 "Vanity could not initialize the \n"
@@ -1391,7 +1391,7 @@ msgstr ""
 "初期化できませんでした:\n"
 "%s"
 
-#: ../src/vanity.c:691 ../src/vanity.c:706
+#: ../src/vanity.c:693 ../src/vanity.c:708
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
@@ -1402,10 +1402,10 @@ msgstr ""
 #: ../src/backend/bacon-video-widget-gst-0.10.c:67
 #: ../src/backend/bacon-video-widget-gst.c:67
 msgid "Totem Video Window"
-msgstr "Totem 映像ウィンドウ"
+msgstr "Totem 動画ウィンドウ"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2039
-#: ../src/backend/bacon-video-widget-gst.c:3529
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2059
+#: ../src/backend/bacon-video-widget-gst.c:3521
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1413,18 +1413,18 @@ msgstr ""
 "指定した音声出力デバイスが見つかりませんでした。[マルチメディア・システム・セ"
 "レクタ] から別のデバイスを選択してみて下さい。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2044
-#: ../src/backend/bacon-video-widget-gst.c:1951
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2064
+#: ../src/backend/bacon-video-widget-gst.c:1943
 msgid "Location not found."
 msgstr "指定した場所が見つかりません。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2048
-#: ../src/backend/bacon-video-widget-gst.c:1954
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2068
+#: ../src/backend/bacon-video-widget-gst.c:1946
 msgid "Could not open location; You may not have permission to open the file."
 msgstr "場所を開けませんでした (そのファイルを開く権限がありません)。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2059
-#: ../src/backend/bacon-video-widget-gst.c:3480
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2079
+#: ../src/backend/bacon-video-widget-gst.c:3472
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1434,8 +1434,8 @@ msgstr ""
 "を終了するか、[マルチメディア・システム・セレクタ] から別のデバイスを選択して"
 "みて下さい。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2065
-#: ../src/backend/bacon-video-widget-gst.c:3523
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2085
+#: ../src/backend/bacon-video-widget-gst.c:3515
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1445,35 +1445,35 @@ msgstr ""
 "テム・セレクタ] から別のデバイスを選択してみて下さい (サウンド・サーバを利用"
 "を考慮した方が良いかもしれません)。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2080
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2100
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "このファイルをネットワーク越しに再生することはできません。ダウンロードして直"
 "接再生してみて下さい。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2158
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2178
 msgid "Media file could not be played."
 msgstr "メディア・ファイルを再生/演奏できませんでした。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2240
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2291
-#: ../src/backend/bacon-video-widget-gst.c:1886
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2260
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2311
+#: ../src/backend/bacon-video-widget-gst.c:1878
 msgid "Failed to retrieve working directory"
 msgstr "作業フォルダ名の取得に失敗しました"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3738
-#: ../src/backend/bacon-video-widget-gst.c:3191
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3771
+#: ../src/backend/bacon-video-widget-gst.c:3183
 msgid "Too old version of GStreamer installed."
 msgstr "ご利用の GStreamer のバージョンが古すぎます。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3745
-#: ../src/backend/bacon-video-widget-gst.c:3199
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3778
+#: ../src/backend/bacon-video-widget-gst.c:3191
 msgid "Media contains no supported video streams."
 msgstr "このメディアには映像ストリームが含まれていません。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4090
-#: ../src/backend/bacon-video-widget-gst.c:3384
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4123
+#: ../src/backend/bacon-video-widget-gst.c:3376
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1481,9 +1481,9 @@ msgstr ""
 "GStreamer 演奏オブジェクトの生成に失敗しました。GStreamer が正しくインストー"
 "ルされているか確認して下さい。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4205
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4289
-#: ../src/backend/bacon-video-widget-gst.c:3491
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4238
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4322
+#: ../src/backend/bacon-video-widget-gst.c:3483
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1491,8 +1491,8 @@ msgstr ""
 "映像出力デバイスを開けませんでした。おそらく利用可能な状態ではありません。[マ"
 "ルチメディア・システム・セレクタ] から別のデバイスを選択してみて下さい。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4214
-#: ../src/backend/bacon-video-widget-gst.c:3495
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4247
+#: ../src/backend/bacon-video-widget-gst.c:3487
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1502,8 +1502,8 @@ msgstr ""
 "ルするか、あるいは [マルチメディア・システム・セレクタ] から別のデバイスを選"
 "択してみて下さい。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4233
-#: ../src/backend/bacon-video-widget-gst.c:3540
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4266
+#: ../src/backend/bacon-video-widget-gst.c:3532
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1513,8 +1513,8 @@ msgstr ""
 "るいはサウンド・サーバが起動されていないかもしれません。[マルチメディア・シス"
 "テム・セレクタ] から別のデバイスを選択してみて下さい。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4243
-#: ../src/backend/bacon-video-widget-gst.c:3544
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4276
+#: ../src/backend/bacon-video-widget-gst.c:3536
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -1524,16 +1524,16 @@ msgstr ""
 "トールするか、あるいは [マルチメディア・システム・セレクタ] から別の音声出力"
 "デバイスを選択してみて下さい。"
 
-#: ../src/backend/bacon-video-widget-gst.c:1975
+#: ../src/backend/bacon-video-widget-gst.c:1967
 msgid "Failed to open media file; unknown error"
 msgstr "メディアを開けませんでした; 原因は不明です。"
 
-#: ../src/backend/bacon-video-widget-gst.c:2027
+#: ../src/backend/bacon-video-widget-gst.c:2019
 #, c-format
 msgid "Failed to play: %s"
 msgstr "演奏に失敗しました: %s"
 
-#: ../src/backend/bacon-video-widget-gst.c:2029
+#: ../src/backend/bacon-video-widget-gst.c:2021
 msgid "unknown error"
 msgstr "原因は不明"
 
@@ -1547,7 +1547,7 @@ msgstr ""
 "デバイスが使用中でないか確認して下さい。"
 
 #: ../src/backend/bacon-video-widget-xine.c:1148
-#: ../src/backend/bacon-video-widget-xine.c:1732
+#: ../src/backend/bacon-video-widget-xine.c:1741
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -1555,30 +1555,30 @@ msgstr ""
 "映像出力デバイスを利用できません。プログラムが正しくインストールされているか"
 "確認して下さい。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1271
+#: ../src/backend/bacon-video-widget-xine.c:1275
 msgid "The server you are trying to connect to is not known."
 msgstr "接続しようとしているサーバが不明です。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1275
+#: ../src/backend/bacon-video-widget-xine.c:1279
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "指定したデバイス名 (%s) が正しくないようです。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1279
+#: ../src/backend/bacon-video-widget-xine.c:1283
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "接続しようとしているサーバ (%s) に届きません。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1283
+#: ../src/backend/bacon-video-widget-xine.c:1287
 msgid "The connection to this server was refused."
 msgstr "このサーバへの接続が拒否されました。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1287
+#: ../src/backend/bacon-video-widget-xine.c:1291
 msgid "The specified movie could not be found."
 msgstr "指定した動画が見つかりませんでした。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1293
-#: ../src/backend/bacon-video-widget-xine.c:1311
+#: ../src/backend/bacon-video-widget-xine.c:1297
+#: ../src/backend/bacon-video-widget-xine.c:1315
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -1586,68 +1586,68 @@ msgstr ""
 "ソースは暗号化されていので読めません。libdvdcss なしで暗号化 DVD を再生してみ"
 "ますか？"
 
-#: ../src/backend/bacon-video-widget-xine.c:1296
+#: ../src/backend/bacon-video-widget-xine.c:1300
 msgid "The movie could not be read."
 msgstr "動画を読み込めませんでした。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1305
+#: ../src/backend/bacon-video-widget-xine.c:1309
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "ライブラリまたはデコーダ (%s) を読み込む際に問題が発生しました。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1314
+#: ../src/backend/bacon-video-widget-xine.c:1318
 msgid "This file is encrypted and cannot be played back."
 msgstr "このファイルは暗号化されているので再生できません。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1319
+#: ../src/backend/bacon-video-widget-xine.c:1323
 msgid "For security reasons, this movie can not be played back."
 msgstr "セキュリティの理由により、この動画を再生することはできません。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1324
+#: ../src/backend/bacon-video-widget-xine.c:1328
 msgid "The audio device is busy. Is another application using it?"
 msgstr "音声デバイスがビジーです。他のアプリケーションで使用していませんか?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1329
+#: ../src/backend/bacon-video-widget-xine.c:1333
 msgid "You are not allowed to open this file."
 msgstr "このファイルを開く権限がありません。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1331
+#: ../src/backend/bacon-video-widget-xine.c:1335
 msgid "The server refused access to this file or stream."
 msgstr "サーバがこのファイルまたはストリームへのアクセスを拒否しました。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1340
+#: ../src/backend/bacon-video-widget-xine.c:1344
 msgid "The file you tried to play is an empty file."
 msgstr "再生/演奏しようとしているファイルは空ファイルです。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1534
+#: ../src/backend/bacon-video-widget-xine.c:1538
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "この動画を場所を扱う入力プラグインはありません。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1538
+#: ../src/backend/bacon-video-widget-xine.c:1542
 msgid "There is no plugin to handle this movie."
 msgstr "この動画を扱うプラグインはありません。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1542
+#: ../src/backend/bacon-video-widget-xine.c:1546
 msgid "This movie is broken and can not be played further."
 msgstr "この動画は破損しているので、これ以上は再生できません。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1546
+#: ../src/backend/bacon-video-widget-xine.c:1550
 msgid "This location is not a valid one."
 msgstr "この場所は適切ではありません。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1550
+#: ../src/backend/bacon-video-widget-xine.c:1554
 msgid "This movie could not be opened."
 msgstr "この動画を開けませんでした。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1554
+#: ../src/backend/bacon-video-widget-xine.c:1558
 msgid "Generic Error."
 msgstr "一般的なエラーです。"
 
-#: ../src/backend/bacon-video-widget-xine.c:2099
+#: ../src/backend/bacon-video-widget-xine.c:2112
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr "この映像は未だ画像の状態です。それは画像ビューアで開いて下さい。"
 
-#: ../src/backend/bacon-video-widget-xine.c:2123
+#: ../src/backend/bacon-video-widget-xine.c:2136
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1656,7 +1656,7 @@ msgstr ""
 "ビデオ・コーデック '%s' は扱えません。この種類の動画を再生するには、追加でプ"
 "ラグインをインストールする必要があるかも知れません。"
 
-#: ../src/backend/bacon-video-widget-xine.c:2127
+#: ../src/backend/bacon-video-widget-xine.c:2140
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1665,26 +1665,26 @@ msgstr ""
 "オーディオ・コーデック '%s' は扱えません。この種類の動画を再生するには、追加"
 "でプラグインをインストールする必要があるかも知れません。"
 
-#: ../src/backend/bacon-video-widget-xine.c:2143
+#: ../src/backend/bacon-video-widget-xine.c:2156
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "これは楽曲ファイルですが、利用可能な音声出力デバイスがありません。"
 
-#: ../src/backend/bacon-video-widget-xine.c:3577
-#: ../src/backend/bacon-video-widget-xine.c:3624
-#: ../src/backend/bacon-video-widget-xine.c:3646
+#: ../src/backend/bacon-video-widget-xine.c:3591
+#: ../src/backend/bacon-video-widget-xine.c:3638
+#: ../src/backend/bacon-video-widget-xine.c:3660
 #, c-format
 msgid "Language %d"
 msgstr "言語 %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3683
+#: ../src/backend/bacon-video-widget-xine.c:3697
 msgid "No video to capture."
 msgstr "キャプチャする映像がありません。"
 
-#: ../src/backend/bacon-video-widget-xine.c:3691
+#: ../src/backend/bacon-video-widget-xine.c:3705
 msgid "Video codec is not handled."
 msgstr "ビデオ・コーデックは扱いません。"
 
-#: ../src/backend/bacon-video-widget-xine.c:3699
+#: ../src/backend/bacon-video-widget-xine.c:3713
 msgid "Movie is not playing."
 msgstr "動画を再生していません。"
 
@@ -1794,12 +1794,12 @@ msgstr "ビデオ CD"
 msgid "DVD"
 msgstr "DVD"
 
-#: ../src/plparse/totem-pl-parser.c:252
+#: ../src/plparse/totem-pl-parser.c:329
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "パーサに書き込めませんでした: %s"
 
-#: ../src/plparse/totem-pl-parser.c:360 ../src/plparse/totem-pl-parser.c:501
+#: ../src/plparse/totem-pl-parser.c:437 ../src/plparse/totem-pl-parser.c:578
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "ファイル '%s' を開けませんでした: %s"
