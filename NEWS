@@ -1,5 +1,32 @@
 New features and significant updates in version...
 
+1.5.0
+ * Remove unused DXR3 support
+ * Remove GStreamer 0.8 support
+ * Fix the GTK+-only version not displaying some menu items
+ * Update the "Skip to" time label when entering time manually, fix sensitivity
+ of the OK button in that dialogue
+ * Fix crash on exit if the interface couldn't be loaded
+ * Add basic support for the Quicktime Metalink playlists
+ * Avoid deadlocks when forcing opening with a subtitle when there's none
+ * Fix crash when setting the connection speed setting to the maximum
+ * Make the previous/next icons in the popup the same as in the rest
+ of the interface
+ * Make menu shortcuts unaccessible in fullscreen
+ * Make Ctrl+S show the "Skip to" dialogue as it should
+ * Fix a small memory leak in the Nautilus properties plugin
+ * Add debugging to the playlist parser
+ * Make the preferences window appear on top of the main window at all times,
+ and hide it straight away when exiting
+ * Fix playback of non-Mozilla streams (such as mms) in the Mozilla plugin
+ * Fix saving non-relative m3u playlists
+ * Handle space as Play/pause in windowed mode if the video widget has
+ the focus
+ * Work-around broken .pls files from Virgin radio
+ * Fix problems with sound not coming out when audio output selected
+ isn't Stereo (xine-lib)
+ * Fix pixel aspect ratio settings (GStreamer)
+
 1.4.0
  * Added Bulgarian user guide
  * Show the "Seeking to" label in fullscreen as well
