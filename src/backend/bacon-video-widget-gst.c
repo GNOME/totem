@@ -887,14 +887,9 @@ bacon_video_widget_signal_idler (BaconVideoWidget *bvw)
         }
       case ASYNC_REDIRECT:
 	{
-	  gchar *abs;
-
-	  abs = totem_resolve_relative_link (bvw->priv->mrl,
-	      				     signal->signal_data.redirect.new_location);
 	  g_signal_emit (G_OBJECT (bvw), bvw_table_signals[SIGNAL_REDIRECT],
-			 0, abs ? abs : loc);
+			 0, loc);
 	  g_free (signal->signal_data.redirect.new_location);
-	  g_free (abs);
 	  break;
 	}
       default:

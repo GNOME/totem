@@ -38,6 +38,7 @@
 #include "bacon-volume.h"
 //FIXME damn build system!
 #include "totem-interface.c"
+#include "video-utils.h"
 
 GtkWidget *totem_volume_create (void);
 
@@ -322,11 +323,19 @@ on_play_pause (GtkWidget *widget, TotemEmbedded *emb)
 static void
 on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 {
+	gchar *new_filename;
+
 	g_message ("url: %s", emb->orig_filename);
 	g_message ("redirect: %s", mrl);
 
+	if (emb->orig_filename)
+		new_filename = totem_resolve_relative_link (emb->orig_filename, mrl);
+	else
+		new_filename = totem_resolve_relative_link (emb->filename, mrl);
+
 	g_free (emb->filename);
-	emb->filename = g_strdup (mrl);
+	emb->filename = new_filename;
+
 	bacon_video_widget_close (emb->bvw);
 	totem_embedded_set_state (emb, STATE_STOPPED);
 

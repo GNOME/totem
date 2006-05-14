@@ -994,16 +994,13 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     goto unhandled;
 
   if (strcmp (type_name, "redirect") == 0) {
-    const gchar *new_location, *absolute;
+    const gchar *new_location;
 
     new_location = gst_structure_get_string (msg->structure, "new-location");
     GST_DEBUG ("Got redirect to '%s'", GST_STR_NULL (new_location));
 
     if (new_location && *new_location) {
-      absolute = totem_resolve_relative_link (bvw->priv->mrl, new_location);
-      g_signal_emit (bvw, bvw_signals[SIGNAL_REDIRECT], 0,
-		     absolute ? absolute : new_location);
-      g_free (absolute);
+      g_signal_emit (bvw, bvw_signals[SIGNAL_REDIRECT], 0, new_location);
       goto done;
     }
   } else if (strcmp (type_name, "prepare-xwindow-id") == 0 ||
