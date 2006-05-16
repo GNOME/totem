@@ -35,7 +35,6 @@
 
 #include "totem-uri.h"
 #include "totem-interface.h"
-#include "totem-pl-parser.h"
 #include "video-utils.h"
 #include "debug.h"
 
@@ -51,6 +50,12 @@ typedef struct {
 	char *mimetype;
 	PlaylistCallback func;
 } PlaylistTypes;
+
+typedef struct {
+	const char *name;
+	const char *suffix;
+	TotemPlParserType type;
+} PlaylistSaveType;
 
 struct TotemPlaylistPrivate
 {
@@ -110,6 +115,13 @@ enum {
 	CACHE_ARTIST_COL,
 	CACHE_ALBUM_COL,
 	NUM_COLS
+};
+
+static PlaylistSaveType save_types [] = {
+	{".PLS", ".pls", TOTEM_PL_PARSER_PLS},
+	{".M3U", ".m3u", TOTEM_PL_PARSER_M3U},
+	{".M3U (DOS)", ".m3u", TOTEM_PL_PARSER_M3U_DOS},
+	{".XSPF", ".xspf", TOTEM_PL_PARSER_XSPF},
 };
 
 static int totem_playlist_table_signals[LAST_SIGNAL] = { 0 };
@@ -316,13 +328,19 @@ totem_playlist_save_get_iter_func (GtkTreeModel *model,
 void
 totem_playlist_save_current_playlist (TotemPlaylist *playlist, const char *output)
 {
+	totem_playlist_save_current_playlist_ext (playlist, output, TOTEM_PL_PARSER_PLS);
+}
+
+void
+totem_playlist_save_current_playlist_ext (TotemPlaylist *playlist, const char *output, TotemPlParserType type)
+{
 	GError *error = NULL;
 	gboolean retval;
 
 	retval = totem_pl_parser_write (playlist->_priv->parser,
 			playlist->_priv->model,
                         totem_playlist_save_get_iter_func,
-			output, TOTEM_PL_PARSER_PLS, NULL, &error);
+			output, type, NULL, &error);
 
 	if (retval == FALSE)
 	{
@@ -804,9 +822,58 @@ totem_playlist_remove_files (GtkWidget *widget, TotemPlaylist *playlist)
 }
 
 static void
+totem_playlist_save_playlist (TotemPlaylist *playlist, char *filename, gint active_format)
+{
+	PlaylistSaveType *cur = NULL;
+	guint i;
+
+	if (active_format > 0)
+		totem_playlist_save_current_playlist_ext (playlist, filename,
+							save_types[active_format - 1].type);
+	else {
+		for (i = 0; i < G_N_ELEMENTS(save_types); i++) {
+			if(g_str_has_suffix (filename, save_types[i].suffix)) {
+				cur = &save_types[i];
+				break;
+			}
+		}
+		if (cur == NULL)
+			totem_playlist_error (_("Could not save the playlist"), _("Unknown file extension."), playlist);
+		else
+			totem_playlist_save_current_playlist_ext (playlist, filename, cur->type);
+	}
+}
+
+static GtkWidget *
+totem_playlist_save_add_format_combo_box (GtkFileChooser *fc)
+{
+	GtkWidget *hbox, *label, *combo_box;
+	guint i;
+
+	hbox = gtk_hbox_new (FALSE, 4);
+	label = gtk_label_new (_("Select playlist format:"));
+	gtk_widget_show (label);
+
+	combo_box = gtk_combo_box_new_text ();
+	gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box), _("By extension"));
+	gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), 0);
+	for (i = 0; i < G_N_ELEMENTS(save_types); i++) {
+		gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box), save_types[i].name);
+	}
+	gtk_widget_show (combo_box);
+
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), combo_box, TRUE, TRUE, 0);
+	gtk_widget_show (hbox);
+	gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (fc), hbox);
+
+	return combo_box;
+}
+
+static void
 totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 {
-	GtkWidget *fs;
+	GtkWidget *fs, *combo_box;
 	int response;
 
 	fs = gtk_file_chooser_dialog_new (_("Save Playlist"),
@@ -817,6 +884,7 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 			NULL);
 	gtk_dialog_set_default_response (GTK_DIALOG (fs), GTK_RESPONSE_ACCEPT);
 	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
+	combo_box = totem_playlist_save_add_format_combo_box (GTK_FILE_CHOOSER (fs));
 
 	if (playlist->_priv->save_path != NULL)
 	{
@@ -834,8 +902,10 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 		char *filename;
 		GnomeVFSResult res;
 		GnomeVFSFileInfo info;
+		gint active_format;
 
 		filename = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (fs));
+		active_format = gtk_combo_box_get_active (GTK_COMBO_BOX (combo_box));
 
 		gtk_widget_destroy (fs);
 
@@ -874,8 +944,7 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 				return;
 			}
 		}
-
-		totem_playlist_save_current_playlist (playlist, filename);
+		totem_playlist_save_playlist (playlist, filename, active_format);
 		g_free (filename);
 	} else {
 		gtk_widget_destroy (fs);

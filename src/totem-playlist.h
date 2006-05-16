@@ -26,6 +26,8 @@
 #include <gtk/gtkvbox.h>
 #include <libgnomevfs/gnome-vfs-volume.h>
 
+#include "totem-pl-parser.h"
+
 G_BEGIN_DECLS
 
 #define GTK_TYPE_PLAYLIST            (totem_playlist_get_type ())
@@ -72,6 +74,8 @@ gboolean totem_playlist_add_mrl  (TotemPlaylist *playlist, const char *mrl,
 
 void totem_playlist_save_current_playlist (TotemPlaylist *playlist,
 					   const char *output);
+void totem_playlist_save_current_playlist_ext (TotemPlaylist *playlist,
+					   const char *output, TotemPlParserType type);
 
 /* totem_playlist_clear doesn't emit the current_removed signal, even if it does
  * because the caller should know what to do after it's done with clearing */

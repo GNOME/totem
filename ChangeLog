@@ -1,3 +1,25 @@
+2006-05-16  Bastien Nocera  <hadess@hadess.net>
+
+	* data/mime-type-list.txt:
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_write_m3u),
+	(totem_pl_parser_write_xspf), (totem_pl_parser_write_with_title),
+	(totem_pl_resolve_url), (totem_pl_parser_add_pls_with_contents),
+	(parse_asx_entry), (parse_smil_video_entry), (parse_xspf_track),
+	(parse_xspf_trackList), (parse_xspf_entries),
+	(totem_pl_parser_add_xspf):
+	* src/plparse/totem-pl-parser.h:
+	* src/totem-playlist.c: (totem_playlist_save_current_playlist),
+	(totem_playlist_save_current_playlist_ext),
+	(totem_playlist_save_playlist),
+	(totem_playlist_save_add_format_combo_box),
+	(totem_playlist_save_files):
+	* src/totem-playlist.h:
+	Patch from Przemysław Grzegorczyk <pgrzegorczyk@gmail.com> to add XSPF
+	save and load support to TotemPlaylistParser, and add a way to choose
+	the playlist type when saving them.
+	Also fixes using the wrong buffer when writing an m3u playlist,
+	and adding the wrong URI when using relative URIs in PLS playlists.
+
 2006-05-15  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: require intltool 0.35.0

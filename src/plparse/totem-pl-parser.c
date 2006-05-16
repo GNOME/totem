@@ -605,7 +605,7 @@ totem_pl_parser_write_m3u (TotemPlParser *parser, GtkTreeModel *model,
 
 		if (custom_title != FALSE) {
 			buf = g_strdup_printf (EXTINF",%s%s", title, cr);
-			success = write_string (handle, url, error);
+			success = write_string (handle, buf, error);
 			g_free (buf);
 			if (success == FALSE) {
 				g_free (title);
@@ -647,6 +647,109 @@ totem_pl_parser_write_m3u (TotemPlParser *parser, GtkTreeModel *model,
 	return TRUE;
 }
 
+static gboolean
+totem_pl_parser_write_xspf (TotemPlParser *parser, GtkTreeModel *model,
+			   TotemPlParserIterFunc func, 
+			   const char *output, const char *title,
+			   gpointer user_data, GError **error)
+{
+	GnomeVFSHandle *handle;
+	GnomeVFSResult res;
+	int num_entries_total, num_entries, i;
+	char *buf;
+	gboolean success;
+
+	num_entries = totem_pl_parser_num_entries (parser, model, func, user_data);
+	num_entries_total = gtk_tree_model_iter_n_children (model, NULL);
+
+	res = gnome_vfs_open (&handle, output, GNOME_VFS_OPEN_WRITE);
+	if (res == GNOME_VFS_ERROR_NOT_FOUND) {
+		res = gnome_vfs_create (&handle, output,
+				GNOME_VFS_OPEN_WRITE, FALSE,
+				GNOME_VFS_PERM_USER_WRITE
+				| GNOME_VFS_PERM_USER_READ
+				| GNOME_VFS_PERM_GROUP_READ);
+	}
+
+	if (res != GNOME_VFS_OK) {
+		g_set_error(error,
+			    TOTEM_PL_PARSER_ERROR,
+			    TOTEM_PL_PARSER_ERROR_VFS_OPEN,
+			    _("Couldn't open file '%s': %s"),
+			    output, gnome_vfs_result_to_string (res));
+		return FALSE;
+	}
+
+	buf = g_strdup_printf ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+				"<playlist version=\"1\" xmlns=\"http://xspf.org/ns/0/\">\n"
+				" <trackList>\n");
+	success = write_string (handle, buf, error);
+	g_free (buf);
+	if (success == FALSE)
+	{
+		gnome_vfs_close (handle);
+		return FALSE;
+	}
+
+	for (i = 1; i <= num_entries_total; i++) {
+		GtkTreeIter iter;
+		char *path, *url, *url_escaped, *relative, *title;
+		gboolean custom_title;
+
+		path = g_strdup_printf ("%d", i - 1);
+		gtk_tree_model_get_iter_from_string (model, &iter, path);
+		g_free (path);
+
+		func (model, &iter, &url, &title, &custom_title, user_data);
+
+		if (totem_pl_parser_scheme_is_ignored (parser, url) != FALSE)
+		{
+			g_free (url);
+			g_free (title);
+			continue;
+		}
+
+		relative = totem_pl_parser_relative (url, output);
+		url_escaped = g_markup_escape_text (relative ? relative : url, -1);
+		buf = g_strdup_printf ("  <track>\n"
+					"   <location>%s</location>\n", url_escaped);
+		success = write_string (handle, buf, error);
+		g_free (url);
+		g_free (url_escaped);
+		g_free (relative);
+		g_free (buf);
+		if (success == FALSE)
+		{
+			gnome_vfs_close (handle);
+			g_free (title);
+			return FALSE;
+		}
+
+		if (custom_title == TRUE)
+			buf = g_strdup_printf ("   <title>%s</title>\n"
+						"  </track>\n", title);
+		else
+			buf = g_strdup_printf ("  </track>\n");
+		
+		success = write_string (handle, buf, error);
+		g_free (buf);
+		g_free (title);
+		if (success == FALSE)
+		{
+			gnome_vfs_close (handle);
+			return FALSE;
+		}
+	}
+
+	buf = g_strdup_printf (" </trackList>\n"
+				"</playlist>");
+	success = write_string (handle, buf, error);
+	g_free (buf);
+	gnome_vfs_close (handle);
+
+	return success;
+}
+
 gboolean
 totem_pl_parser_write_with_title (TotemPlParser *parser, GtkTreeModel *model,
 				  TotemPlParserIterFunc func,
@@ -664,6 +767,9 @@ totem_pl_parser_write_with_title (TotemPlParser *parser, GtkTreeModel *model,
 		return totem_pl_parser_write_m3u (parser, model, func,
 				output, (type == TOTEM_PL_PARSER_M3U_DOS),
                                 user_data, error);
+	case TOTEM_PL_PARSER_XSPF:
+		return totem_pl_parser_write_xspf (parser, model, func,
+				output, title, user_data, error);
 	default:
 		g_assert_not_reached ();
 	}
@@ -804,6 +910,19 @@ totem_pl_parser_add_one_url_ext (TotemPlParser *parser, const char *url,
 		       0, url,
 		       totem_pl_parser_check_utf8 (title) ? title : NULL,
 		       genre);
+}
+
+static gchar*
+totem_pl_resolve_url (char *base, char *url)
+{
+	char *fullpath;
+
+	if (g_strrstr (url, "://") == NULL && url[0] != '/')
+		fullpath = g_strdup_printf ("%s/%s", base, url);
+	else
+		fullpath = g_strdup (url);
+
+	return fullpath;
 }
 
 static TotemPlParserResult
@@ -1032,7 +1151,7 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url, c
 			uri = g_strdup_printf ("%s/%s", base, escaped);
 
 			if (totem_pl_parser_parse_internal (parser, uri) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
-				totem_pl_parser_add_one_url_ext (parser, file, title, genre);
+				totem_pl_parser_add_one_url_ext (parser, uri, title, genre);
 			}
 
 			g_free (escaped);
@@ -1239,11 +1358,7 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
-	if (strstr ((char *)url, "://") == NULL && url[0] != '/') {
-		fullpath = g_strdup_printf ("%s/%s", base, url);
-	} else {
-		fullpath = g_strdup ((char *)url);
-	}
+	fullpath = totem_pl_resolve_url (base, (char *)url);
 
 	g_free (url);
 
@@ -1352,16 +1467,12 @@ static gboolean
 parse_smil_video_entry (TotemPlParser *parser, char *base,
 		char *url, char *title)
 {
-	if (strstr (url, "://") != NULL || url[0] == '/') {
-		totem_pl_parser_add_one_url (parser, url, title);
-	} else {
-		char *fullpath;
+	char *fullpath;
 
-		fullpath = g_strdup_printf ("%s/%s", base, url);
-		totem_pl_parser_add_one_url (parser, fullpath, title);
+	fullpath = totem_pl_resolve_url (base, url);
+	totem_pl_parser_add_one_url (parser, fullpath, title);
 
-		g_free (fullpath);
-	}
+	g_free (fullpath);
 
 	return TRUE;
 }
@@ -1647,6 +1758,119 @@ totem_pl_parser_add_cue (TotemPlParser *parser, const char *url,
 	return TOTEM_PL_PARSER_RESULT_SUCCESS;
 }
 
+static gboolean
+parse_xspf_track (TotemPlParser *parser, char *base, xmlDocPtr doc,
+		xmlNodePtr parent)
+{
+	xmlNodePtr node;
+	guchar *title, *url;
+	gchar *fullpath;
+	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_ERROR;
+	
+	title = NULL;
+	url = NULL;
+
+	for (node = parent->children; node != NULL; node = node->next)
+	{
+		if (node->name == NULL)
+			continue;
+
+		if (g_ascii_strcasecmp ((char *)node->name, "location") == 0)
+			url = xmlNodeListGetString(doc, node->xmlChildrenNode, 1);
+
+		if (g_ascii_strcasecmp ((char *)node->name, "title") == 0)
+			title = xmlNodeListGetString(doc, node->xmlChildrenNode, 1);
+	}
+
+	fullpath = totem_pl_resolve_url (base, (char *)url);
+	totem_pl_parser_add_one_url (parser, fullpath, (char *)title);
+	retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
+
+	g_free (title);
+	g_free (url);
+	g_free (fullpath);
+
+	return retval;
+}
+
+static gboolean
+parse_xspf_trackList (TotemPlParser *parser, char *base, xmlDocPtr doc,
+		xmlNodePtr parent)
+{
+	xmlNodePtr node;
+	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_ERROR;
+
+	for (node = parent->children; node != NULL; node = node->next)
+	{
+		if (node->name == NULL)
+			continue;
+
+		if (g_ascii_strcasecmp ((char *)node->name, "track") == 0)
+			if (parse_xspf_track (parser, base, doc, node) != FALSE)
+				retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
+	}
+
+	return retval;
+}
+
+static gboolean
+parse_xspf_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
+		xmlNodePtr parent)
+{
+	xmlNodePtr node;
+	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_ERROR;
+
+	for (node = parent->children; node != NULL; node = node->next) {
+		if (node->name == NULL)
+			continue;
+
+		if (g_ascii_strcasecmp ((char *)node->name, "trackList") == 0)
+			if (parse_xspf_trackList (parser, base, doc, node) != FALSE)
+				retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
+	}
+
+	return retval;
+}
+
+static TotemPlParserResult
+totem_pl_parser_add_xspf (TotemPlParser *parser, const char *url,
+		gpointer data)
+{
+	xmlDocPtr doc;
+	xmlNodePtr node;
+	char *contents = NULL, *base;
+	int size;
+	gboolean retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
+
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+		return FALSE;
+
+	doc = xmlParseMemory (contents, size);
+	if (doc == NULL)
+		doc = xmlRecoverMemory (contents, size);
+	g_free (contents);
+
+	/* If the document has no root, or no name */
+	if(!doc || !doc->children
+			|| !doc->children->name
+			|| g_ascii_strcasecmp ((char *)doc->children->name,
+				"playlist") != 0) {
+		if (doc != NULL)
+			xmlFreeDoc(doc);
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+	}
+
+	base = totem_pl_parser_base_url (url);
+
+	for (node = doc->children; node != NULL; node = node->next)
+		if (parse_xspf_entries (parser, base, doc, node) != FALSE)
+			retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
+
+	g_free (base);
+	xmlFreeDoc(doc);
+	return retval;
+}
+
 static TotemPlParserResult
 totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 			   gpointer data)
@@ -1719,6 +1943,7 @@ static PlaylistTypes special_types[] = {
 	{ "audio/x-ms-wax", totem_pl_parser_add_asx },
 	{ "application/x-cd-image", totem_pl_parser_add_iso },
 	{ "application/x-cue", totem_pl_parser_add_cue },
+	{ "application/xspf+xml", totem_pl_parser_add_xspf},
 };
 
 static PlaylistTypes ignore_types[] = {
