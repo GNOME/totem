@@ -605,7 +605,7 @@ totem_pl_parser_write_m3u (TotemPlParser *parser, GtkTreeModel *model,
 
 		if (custom_title != FALSE) {
 			buf = g_strdup_printf (EXTINF",%s%s", title, cr);
-			success = write_string (handle, url, error);
+			success = write_string (handle, buf, error);
 			g_free (buf);
 			if (success == FALSE) {
 				g_free (title);
@@ -1032,7 +1032,7 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url, c
 			uri = g_strdup_printf ("%s/%s", base, escaped);
 
 			if (totem_pl_parser_parse_internal (parser, uri) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
-				totem_pl_parser_add_one_url_ext (parser, file, title, genre);
+				totem_pl_parser_add_one_url_ext (parser, uri, title, genre);
 			}
 
 			g_free (escaped);

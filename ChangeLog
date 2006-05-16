@@ -1,3 +1,10 @@
+2006-05-16  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_write_m3u),
+	(totem_pl_parser_add_pls_with_contents): Fix use of the wrong
+	buffer when writing m3u playlists, and the wrong URI being added
+	when parsing a PLS file with relative paths
+
 ============ Version 1.4.1
 
 2006-05-14  Bastien Nocera  <hadess@hadess.net>
