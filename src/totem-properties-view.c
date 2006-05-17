@@ -196,6 +196,11 @@ totem_properties_view_set_location (TotemPropertiesView *props,
 {
 	g_assert (TOTEM_IS_PROPERTIES_VIEW (props));
 
+	if (props->priv->timeout_id != 0) {
+		g_source_remove (props->priv->timeout_id);
+		props->priv->timeout_id = 0;
+	}
+
 	if (location != NULL && props->priv->bvw != NULL) {
 		GError *error = NULL;
 
@@ -225,6 +230,9 @@ totem_properties_view_set_location (TotemPropertiesView *props,
 			g_timeout_add (200, (GSourceFunc) on_timeout_event,
 				       props);
 	} else {
+		bacon_video_widget_close (props->priv->bvw);
+		g_free (props->priv->location);
+		props->priv->location = NULL;
 		bacon_video_widget_properties_reset (props->priv->props);
 	}
 }
