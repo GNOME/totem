@@ -1,5 +1,10 @@
 2006-05-17  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am: patch from Josh Nichols <nichoj@gentoo.org> to
+	allow building with LDFLAGS="-Wl,--as-needed" (Closes: #341486)
+
+2006-05-17  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/video-utils.c: (totem_time_to_string): make the
 	time labels localisable, patch from Roozbeh Pournader
 	<roozbeh@farsiweb.info> (Closes: #341930)
