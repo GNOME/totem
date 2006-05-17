@@ -1,5 +1,11 @@
 2006-05-17  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/video-utils.c: (totem_time_to_string): make the
+	time labels localisable, patch from Roozbeh Pournader
+	<roozbeh@farsiweb.info> (Closes: #341930)
+
+2006-05-17  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-properties-view.c:
 	(totem_properties_view_set_location):
 	Stop lingering timeouts before resetting the view (Closes: #341626)

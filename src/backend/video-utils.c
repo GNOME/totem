@@ -213,10 +213,24 @@ totem_time_to_string (gint64 msecs)
 	if (hour > 0)
 	{
 		/* hour:minutes:seconds */
-		return g_strdup_printf ("%d:%02d:%02d", hour, min, sec);
+		/* Translators: This is a time format, like "9:05:02" for 9
+		 * hours, 5 minutes, and 2 seconds. You may change ":" to
+		 * the separator that your locale uses or use "%Id" instead
+		 * of "%d" if your locale uses localized digits. Do not
+		 * translate the "long time format|" part. Remove it from
+		 * the translation.
+		 */
+		return g_strdup_printf (Q_("long time format|%d:%02d:%02d"), hour, min, sec);
 	} else {
 		/* minutes:seconds */
-		return g_strdup_printf ("%d:%02d", min, sec);
+		/* Translators: This is a time format, like "5:02" for 5
+		 * minutes and 2 seconds. You may change ":" to the
+		 * separator that your locale uses or use "%Id" instead of
+		 * "%d" if your locale uses localized digits. Do not
+		 * translate the "short time format|" part. Remove it from
+		 * the translation.
+		 */
+		return g_strdup_printf (Q_("short time format|%d:%02d"), min, sec);
 	}
 
 	return NULL;
