@@ -273,7 +273,7 @@ cd_cache_new (const char *dev,
 
   if (!found) {
     g_set_error (error, 0, 0,
-	_("Failed to find mountpoint for device %s in /etc/fstab"),
+	_("Failed to find mountpoint for device %s"),
 	device);
     return NULL;
   }
@@ -408,28 +408,29 @@ cd_cache_open_mountpoint (CdCache *cache,
 	  _("Failed to mount %s"), cache->device);
       return FALSE;
     }
-    if (!cache->mountpoint) {
-      GList *vol, *item;
+  }
 
-      for (vol = item = gnome_vfs_drive_get_mounted_volumes (cache->drive);
-           item != NULL; item = item->next) {
-        char *mnt = gnome_vfs_volume_get_activation_uri (item->data);
+  if (!cache->mountpoint) {
+    GList *vol, *item;
 
-        if (mnt && strncmp (mnt, "file://", 7) == 0) {
-          cache->mountpoint = g_strdup (mnt + 7);
-	  g_free (mnt);
-          break;
-        }
+    for (vol = item = gnome_vfs_drive_get_mounted_volumes (cache->drive);
+	item != NULL; item = item->next) {
+      char *mnt = gnome_vfs_volume_get_activation_uri (item->data);
+
+      if (mnt && strncmp (mnt, "file://", 7) == 0) {
+	cache->mountpoint = g_strdup (mnt + 7);
 	g_free (mnt);
+	break;
       }
-      g_list_foreach (vol, (GFunc) gnome_vfs_volume_unref, NULL);
-      g_list_free (vol);
+      g_free (mnt);
+    }
+    g_list_foreach (vol, (GFunc) gnome_vfs_volume_unref, NULL);
+    g_list_free (vol);
 
-      if (!cache->mountpoint) {
-	g_set_error (error, 0, 0,
-	    _("Failed to find mountpoint for %s"), cache->device);
-	return FALSE;
-      }
+    if (!cache->mountpoint) {
+      g_set_error (error, 0, 0,
+	  _("Failed to find mountpoint for %s"), cache->device);
+      return FALSE;
     }
   }
 

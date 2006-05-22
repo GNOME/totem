@@ -46,6 +46,7 @@
 #define MIME_READ_CHUNK_SIZE 1024
 #define RECURSE_LEVEL_MAX 4
 #define DIR_MIME_TYPE "x-directory/normal"
+#define BLOCK_DEVICE_TYPE "x-special/device-block"
 #define EXTINF "#EXTINF:"
 #define DEBUG(x) { if (parser->priv->debug != FALSE) x; }
 
@@ -230,6 +231,16 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data, TotemPlPa
 
 	*data = NULL;
 
+	/* Stat for a block device, we're screwed as far as speed
+	 * is concerned now */
+	if (g_str_has_prefix (uri, "file://") != FALSE) {
+		struct stat buf;
+		if (stat (uri + strlen ("file://"), &buf) == 0) {
+			if (S_ISBLK (buf.st_mode))
+				return BLOCK_DEVICE_TYPE;
+		}
+	}
+
 	/* Open the file. */
 	result = gnome_vfs_open (&handle, uri, GNOME_VFS_OPEN_READ);
 	if (result != GNOME_VFS_OK) {
@@ -238,6 +249,7 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data, TotemPlPa
 		DEBUG(g_print ("URL '%s' couldn't be opened in _get_mime_type_with_data: '%s'\n", uri, gnome_vfs_result_to_string (result)));
 		return NULL;
 	}
+	DEBUG(g_print ("URL '%s' was opened successfully in _get_mime_type_with_data:\n", uri));
 
 	/* Read the whole thing, up to MIME_READ_CHUNK_SIZE */
 	buffer = NULL;
@@ -1450,6 +1462,26 @@ totem_pl_parser_add_asx (TotemPlParser *parser, const char *url, gpointer data)
 }
 
 static TotemPlParserResult
+totem_pl_parser_add_block (TotemPlParser *parser, const char *url, gpointer data)
+{
+	MediaType type;
+	char *media_url;
+	GError *err = NULL;
+
+	type = totem_cd_detect_type_with_url (url, &media_url, &err);
+	if (err != NULL)
+		DEBUG(g_print ("Couldn't get CD type for URL '%s': %s\n", url, err->message));
+	if (type == MEDIA_TYPE_DATA || media_url == NULL)
+		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
+	else if (type == MEDIA_TYPE_ERROR)
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+
+	totem_pl_parser_add_one_url (parser, media_url, NULL);
+	g_free (media_url);
+	return TOTEM_PL_PARSER_RESULT_SUCCESS;
+}
+
+static TotemPlParserResult
 totem_pl_parser_add_ra (TotemPlParser *parser, const char *url, gpointer data)
 {
 	if (data == NULL
@@ -1944,6 +1976,7 @@ static PlaylistTypes special_types[] = {
 	{ "application/x-cd-image", totem_pl_parser_add_iso },
 	{ "application/x-cue", totem_pl_parser_add_cue },
 	{ "application/xspf+xml", totem_pl_parser_add_xspf},
+	{ "x-special/device-block", totem_pl_parser_add_block },
 };
 
 static PlaylistTypes ignore_types[] = {

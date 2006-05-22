@@ -1,5 +1,16 @@
 2006-05-22  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-disc.c: (cd_cache_new),
+	(cd_cache_open_mountpoint):
+	* src/plparse/totem-pl-parser.c:
+	(my_gnome_vfs_get_mime_type_with_data),
+	(totem_pl_parser_add_block):
+	Re-add support for "parsing" block devices, look for mountpoints
+	when we don't have any, change the message when not being able to find
+	a mountpoint, we don't use fstab anymore (Closes: #337506)
+
+2006-05-22  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bvw-test.c: (main): exit when the window is closed
 
 2006-05-22  Bastien Nocera  <hadess@hadess.net>
