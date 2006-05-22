@@ -113,7 +113,7 @@ totem_LDADD = \
 
 totem_video_thumbnailer_SOURCES = totem-video-thumbnailer.c
 totem_video_thumbnailer_LDADD = \
-	backend/libbaconvideowidget.la
+	backend/libbaconvideowidget.la \
 	$(GTK_LIBS) $(XVIDMODE_LIBS) \
 	$(NVTV_LIBS) $(EXTRA_GNOME_LIBS) \
 	$(XTEST_LIBS) $(X_LIBS) 
@@ -202,7 +202,7 @@ vanity_LDADD = \
 
 metadata_test_SOURCES = metadata-test.c
 metadata_test_LDADD = \
-	backend/libbaconvideowidget.la
+	backend/libbaconvideowidget.la \
 	$(GTK_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS) \
 	$(EXTRA_GNOME_LIBS) \
 	$(XTEST_LIBS) $(X_LIBS) 
