@@ -104,18 +104,18 @@ totem_SOURCES = 					\
 	$(BACON_VOLUME)
 
 totem_LDADD = \
-	plparse/libtotem-plparser.la backend/libbaconvideowidget.la \
-	libbaconpropertiespage.la libbaconmessageconnection.la \
-	$(EXTRA_GNOME_LIBS) $(REMOTE_LIBS) \
-	$(XVIDMODE_LIBS) $(NVTV_LIBS) \
-	$(DBUS_LIBS) \
+	plparse/libtotem-plparser.la backend/libbaconvideowidget.la	\
+	libbaconpropertiespage.la libbaconmessageconnection.la		\
+	$(EXTRA_GNOME_LIBS) $(REMOTE_LIBS)				\
+	$(XVIDMODE_LIBS) $(NVTV_LIBS)					\
+	$(DBUS_LIBS)							\
 	$(XTEST_LIBS) $(X_LIBS)
 
 totem_video_thumbnailer_SOURCES = totem-video-thumbnailer.c
-totem_video_thumbnailer_LDADD = \
-	backend/libbaconvideowidget.la
-	$(GTK_LIBS) $(XVIDMODE_LIBS) \
-	$(NVTV_LIBS) $(EXTRA_GNOME_LIBS) \
+totem_video_thumbnailer_LDADD =			\
+	backend/libbaconvideowidget.la		\
+	$(GTK_LIBS) $(XVIDMODE_LIBS)		\
+	$(NVTV_LIBS) $(EXTRA_GNOME_LIBS)	\
 	$(XTEST_LIBS) $(X_LIBS) 
 
 nautilusdir = $(libdir)/nautilus/extensions-1.0/
@@ -124,10 +124,10 @@ libtotem_properties_page_la_SOURCES = 	\
 	totem-properties-main.c		\
 	totem-properties-view.c		\
 	totem-properties-view.h
-libtotem_properties_page_la_LIBADD = \
-	backend/libbaconvideowidget.la libbaconpropertiespage.la \
-	$(EXTRA_GNOME_LIBS) $(XVIDMODE_LIBS) \
-	$(NVTV_LIBS) $(NAUTILUS_LIBS) \
+libtotem_properties_page_la_LIBADD =					\
+	backend/libbaconvideowidget.la libbaconpropertiespage.la	\
+	$(EXTRA_GNOME_LIBS) $(XVIDMODE_LIBS)				\
+	$(NVTV_LIBS) $(NAUTILUS_LIBS)					\
 	$(XTEST_LIBS) $(X_LIBS)
 
 libtotem_properties_page_la_LDFLAGS = $(modules_flags)
@@ -139,9 +139,9 @@ test_properties_page_SOURCES =		\
 	totem-properties-view.h		\
 	test-properties-page.c
 test_properties_page_LDADD =		\
-	backend/libbaconvideowidget.la libbaconpropertiespage.la \
-	$(EXTRA_GNOME_LIBS) $(XVIDMODE_LIBS) \
-	$(NVTV_LIBS) $(NAUTILUS_LIBS) \
+	backend/libbaconvideowidget.la libbaconpropertiespage.la	\
+	$(EXTRA_GNOME_LIBS) $(XVIDMODE_LIBS)				\
+	$(NVTV_LIBS) $(NAUTILUS_LIBS)					\
 	$(XTEST_LIBS) $(X_LIBS) 
 
 if HAVE_MOZILLA
@@ -201,10 +201,10 @@ vanity_LDADD = \
 	$(XTEST_LIBS) $(X_LIBS) 
 
 metadata_test_SOURCES = metadata-test.c
-metadata_test_LDADD = \
-	backend/libbaconvideowidget.la
-	$(GTK_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS) \
-	$(EXTRA_GNOME_LIBS) \
+metadata_test_LDADD =					\
+	backend/libbaconvideowidget.la			\
+	$(GTK_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS)	\
+	$(EXTRA_GNOME_LIBS)				\
 	$(XTEST_LIBS) $(X_LIBS) 
 
 disc_test_SOURCES = disc-test.c
