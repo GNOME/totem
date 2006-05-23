@@ -150,7 +150,7 @@ if test x$HAVE_XINE = xno; then
 	done
 
 	dnl Check for elements from gst-plugins-good
-	for good_element in gconfaudiosink gconfvideosink
+	for good_element in gconfaudiosink gconfvideosink goom
 	do
 		AC_MSG_CHECKING([GStreamer 0.10 $good_element plugin])
 		if $gst010_inspect $good_element >/dev/null 2>/dev/null; then

@@ -1,3 +1,16 @@
+2006-05-23  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* configure.in:
+	  Add the 'goom' plugin from gst-plugins-good to the list of
+	  required plugins for the GStreamer backend.
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_stop_play_pipeline), (setup_vis_find_factory), (setup_vis):
+	  Fix visualisation factory lookup: check for short name if we
+	  don't find a match with the long name (necessary because the
+	  schema contains a short name). Use 'goom' as fallback if we
+	  can't find the visualisation originally configured. Fixes #340506.
+
 2006-05-22  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/totem-disc.c: (cd_cache_new),

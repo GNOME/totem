@@ -2466,9 +2466,8 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   }
 
   /* now finally go to null state */
-  GST_DEBUG ("almost stopped");
+  GST_DEBUG ("almost stopped, setting to NULL");
   gst_element_set_state (playbin, GST_STATE_NULL);
-  gst_element_get_state (playbin, NULL, NULL, -1);
   GST_DEBUG ("stopped");
 }
 
@@ -2817,6 +2816,42 @@ get_visualization_size (BaconVideoWidget *bvw,
     *fps_d = new_fps_d;
 }
 
+static GstElementFactory *
+setup_vis_find_factory (BaconVideoWidget * bvw, const gchar * vis_name)
+{
+  GstElementFactory *fac = NULL;
+  GList *l, *features;
+
+  features = get_visualization_features ();
+
+  /* find element factory using long name */
+  for (l = features; l != NULL; l = l->next) {
+    GstElementFactory *f = GST_ELEMENT_FACTORY (l->data);
+       
+    if (f && strcmp (vis_name, gst_element_factory_get_longname (f)) == 0) {
+      fac = f;
+      goto done;
+    }
+  }
+
+  /* if nothing was found, try the short name (the default schema uses this) */
+  for (l = features; l != NULL; l = l->next) {
+    GstElementFactory *f = GST_ELEMENT_FACTORY (l->data);
+
+    /* set to long name as key so that the preferences dialog gets it right */
+    if (f && strcmp (vis_name, GST_PLUGIN_FEATURE_NAME (f)) == 0) {
+      gconf_client_set_string (bvw->priv->gc, GCONF_PREFIX "/visual",
+          gst_element_factory_get_longname (f), NULL);
+      fac = f;
+      goto done;
+    }
+  }
+
+done:
+  g_list_free (features);
+  return fac;
+}
+
 static void
 setup_vis (BaconVideoWidget * bvw)
 {
@@ -2829,29 +2864,19 @@ setup_vis (BaconVideoWidget * bvw)
     GstElement *vis_element = NULL, *vis_capsfilter = NULL;
     GstPad *pad = NULL;
     GstCaps *caps = NULL;
-    GList *features = NULL, *item = NULL;
     GstElementFactory *fac = NULL;
-  
-    /* find element factory using long name */
-    features = get_visualization_features ();
-    for (item = features; item != NULL; item = item->next) {
-      GstElementFactory *f = item->data;
-      
-      if (f) {
-        const gchar * name = gst_element_factory_get_longname (f);
-        
-        if (strcmp (bvw->priv->vis_element_name, name) == 0) {
-          fac = f;
-          break;
-        }
-      }
-    }
-    g_list_free (features);
     
+    fac = setup_vis_find_factory (bvw, bvw->priv->vis_element_name);
     if (!fac) {
       GST_DEBUG ("Could not find element factory for visualisation '%s'",
           GST_STR_NULL (bvw->priv->vis_element_name));
-      goto beach;
+      /* use goom as fallback, better than nothing */
+      fac = setup_vis_find_factory (bvw, "goom");
+      if (fac == NULL) {
+        goto beach;
+      } else {
+        GST_DEBUG ("Falling back on 'goom' for visualisation");
+      }     
     }
     
     vis_element = gst_element_factory_create (fac, "vis_element");
