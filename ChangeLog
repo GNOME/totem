@@ -1,3 +1,14 @@
+2006-05-25  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in:
+	* src/plparse/Makefile.am:
+	* src/plparse/totem-disc.c: (cd_cache_new_hal_ctx), (cd_cache_new),
+	(cd_cache_has_medium), (cd_cache_open_device), (cd_cache_free),
+	(cd_cache_disc_is_cdda), (cd_cache_disc_is_dvd):
+	Use HAL to detect whether a disc is present in the device, rather
+	than using Linux specific calls. No HAL means that the disc detection
+	will return FALSE (Closes: #316902)
+
 2006-05-23  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* configure.in:

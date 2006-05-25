@@ -3,7 +3,8 @@ noinst_PROGRAMS = test-parser
 INCLUDES = \
 	-I$(top_srcdir) \
 	-I$(top_builddir)/src/plparser \
-	$(EXTRA_GNOME_CFLAGS)
+	$(EXTRA_GNOME_CFLAGS) \
+	$(HAL_CFLAGS)
 
 test_parser_SOURCES = test-parser.c
 test_parser_LDADD = \
@@ -38,7 +39,8 @@ plparserinclude_HEADERS =			\
 libtotem_plparser_la_LDFLAGS =			\
 	-version-info $(PLPARSER_LT_VERSION)	\
 	-no-undefined				\
-	$(TOTEM_PLPARSER_LIBS)
+	$(TOTEM_PLPARSER_LIBS)			\
+	$(HAL_LIBS)
 
 GLIB_MKENUMS=`pkg-config --variable=glib_mkenums glib-2.0`
 totem-pl-parser-builtins.h: stamp-totem-pl-parser-builtins.h

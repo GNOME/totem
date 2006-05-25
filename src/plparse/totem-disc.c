@@ -43,7 +43,10 @@
 #include <glib/gi18n.h>
 #include <libgnomevfs/gnome-vfs.h>
 
-#include <linux/cdrom.h>
+#ifdef HAVE_HAL
+#include <libhal.h>
+#include <dbus/dbus.h>
+#endif
 
 #include "totem-disc.h"
 
@@ -52,8 +55,12 @@ typedef struct _CdCache {
   char *device, *mountpoint;
   GnomeVFSDrive *drive;
 
+#ifdef HAVE_HAL
+  LibHalContext *ctx;
+#endif
+
   /* file descriptor to the device */
-  int fd;
+//  int fd;
 
   /* capabilities of the device */
   int cap;
@@ -233,6 +240,41 @@ cd_cache_get_dev_from_drives (GnomeVFSVolumeMonitor *mon, const char *device,
   return found;
 }
 
+#ifdef HAVE_HAL_0_2
+static LibHalContext *
+cd_cache_new_hal_ctx (void)
+{
+  LibHalContext *ctx;
+
+  ctx = hal_initialize (NULL, FALSE);
+
+  return ctx;
+}
+#elif HAVE_HAL_0_5
+static LibHalContext *
+cd_cache_new_hal_ctx (void)
+{
+  LibHalContext *ctx;
+  DBusConnection *conn;
+  DBusError error;
+
+  ctx = libhal_ctx_new ();
+  if (ctx == NULL)
+    return NULL;
+  conn = dbus_bus_get (DBUS_BUS_SYSTEM, &error);
+  if (conn != NULL && !dbus_error_is_set (&error)) {
+    libhal_ctx_set_dbus_connection (ctx, conn);
+    return ctx;
+  }
+
+  if (dbus_error_is_set (&error))
+    dbus_error_free (&error);
+
+  libhal_ctx_shutdown (ctx, NULL);
+  libhal_ctx_free(ctx);
+}
+#endif
+
 static CdCache *
 cd_cache_new (const char *dev,
 	      GError     **error)
@@ -241,6 +283,7 @@ cd_cache_new (const char *dev,
   char *mountpoint = NULL, *device, *local;
   GnomeVFSVolumeMonitor *mon;
   GnomeVFSDrive *drive = NULL;
+  LibHalContext *ctx = NULL;
   gboolean found;
 
   if (g_str_has_prefix (dev, "file://") != FALSE)
@@ -253,13 +296,12 @@ cd_cache_new (const char *dev,
   if (g_file_test (local, G_FILE_TEST_IS_DIR) != FALSE) {
     cache = g_new0 (CdCache, 1);
     cache->mountpoint = local;
-    cache->fd = -1;
     cache->is_media = FALSE;
 
     return cache;
   }
 
-  /* retrieve mountpoint (/etc/fstab) */
+  /* retrieve mountpoint from gnome-vfs volumes and drives */
   device = get_device (local, error);
   g_free (local);
   if (!device)
@@ -278,30 +320,108 @@ cd_cache_new (const char *dev,
     return NULL;
   }
 
+#ifdef HAVE_HAL
+  ctx = cd_cache_new_hal_ctx ();
+  if (!ctx) {
+    g_set_error (error, 0, 0,
+	_("Could not connect to the HAL daemon"));
+    return NULL;
+  }
+#endif
+
   /* create struture */
   cache = g_new0 (CdCache, 1);
   cache->device = device;
   cache->mountpoint = mountpoint;
-  cache->fd = -1;
   cache->self_mounted = FALSE;
   cache->drive = drive;
   cache->is_media = TRUE;
+  cache->ctx = ctx;
 
   return cache;
 }
+
+#ifndef HAVE_HAL
+static gboolean
+cd_cache_has_medium (CdCache *cache)
+{
+  return FALSE;
+}
+#endif
+
+#ifdef HAVE_HAL_0_5
+static gboolean
+cd_cache_has_medium (CdCache *cache)
+{
+  char **devices;
+  int num_devices;
+  char *udi;
+  gboolean retval = FALSE;
+
+  if (cache->drive == NULL)
+    return FALSE;
+
+  udi = gnome_vfs_drive_get_hal_udi (cache->drive);
+  if (udi == NULL)
+    return FALSE;
+
+  devices = libhal_manager_find_device_string_match (cache->ctx,
+      "info.parent", udi, &num_devices, NULL);
+  if (devices != NULL && num_devices >= 1)
+    retval = TRUE;
+
+  libhal_free_string_array (device_names);
+  g_free (udi);
+
+  return retval;
+}
+#elif HAVE_HAL_0_2
+static gboolean
+cd_cache_has_medium (CdCache *cache)
+{
+  char **devices;
+  int num_devices;
+  char *udi;
+  gboolean retval = FALSE;
+
+  if (cache->drive == NULL)
+    return FALSE;
+ 
+  udi = gnome_vfs_drive_get_hal_udi (cache->drive);
+  if (udi == NULL)
+    return FALSE;
+
+  devices = hal_manager_find_device_string_match (cache->ctx,
+      "info.parent", udi, &num_devices);
+  if (devices != NULL && num_devices >= 1)
+    retval = TRUE;
+
+  hal_free_string_array (devices);
+  g_free (udi);
+
+  return retval;
+}
+#endif
 
 static gboolean
 cd_cache_open_device (CdCache *cache,
 		      GError **error)
 {
-  int drive, err;
+  //int drive, err;
 
   /* not a medium? */
   if (cache->is_media == FALSE) {
-    cache->cap = CDC_DVD;
     return TRUE;
   }
 
+  if (cd_cache_has_medium (cache) == FALSE) {
+    g_set_error (error, 0, 0,
+	_("Please check that a disc is present in the drive."));
+    return FALSE;
+  }
+  //FIXME use HAL here to determine whether we have a CD in the drive
+
+#if 0
   /* already open? */
   if (cache->fd > 0)
     return TRUE;
@@ -362,7 +482,7 @@ cd_cache_open_device (CdCache *cache,
         drive, drive_s);
     return FALSE;
   }
-
+#endif
   return TRUE;
 }
 
@@ -456,11 +576,6 @@ cd_cache_free (CdCache *cache)
     while (!called) g_main_iteration (TRUE);
   }
 
-  /* close file descriptor to device */
-  if (cache->fd > 0) {
-    close (cache->fd);
-  }
-
   /* free mem */
   if (cache->drive)
     gnome_vfs_drive_unref (cache->drive);
@@ -474,52 +589,24 @@ cd_cache_disc_is_cdda (CdCache *cache,
 		       GError **error)
 {
   MediaType type = MEDIA_TYPE_DATA;
-  int disc;
-  const char *disc_s;
+  GList *vol, *item;
 
   /* We can't have audio CDs on disc, yet */
   if (cache->is_media == FALSE)
     return type;
 
-  /* open disc and open mount */
-  if (!cd_cache_open_device (cache, error))
-    return MEDIA_TYPE_ERROR;
-
-  if ((disc = ioctl (cache->fd, CDROM_DISC_STATUS, NULL)) < 0) {
-    g_set_error (error, 0, 0,
-        _("Error getting %s disc status: %s"),
-        cache->device, g_strerror (errno));
-    return MEDIA_TYPE_ERROR;
-  }
-
-  switch (disc) {
-    case CDS_NO_INFO:
-      /* The drive doesn't implement CDROM_DISC_STATUS */
-      break;
-    case CDS_NO_DISC:
-      disc_s = "No disc in tray";
-      type = MEDIA_TYPE_ERROR;
-      break;
-    case CDS_AUDIO:
-    case CDS_MIXED:
+  for (vol = item = gnome_vfs_drive_get_mounted_volumes (cache->drive);
+      item != NULL; item = item->next) {
+    char *mnt = gnome_vfs_volume_get_activation_uri (item->data);
+    if (mnt && strncmp (mnt, "cdda://", 7) == 0) {
+      g_free (mnt);
       type = MEDIA_TYPE_CDDA;
       break;
-    case CDS_DATA_1:
-    case CDS_DATA_2:
-    case CDS_XA_2_1:
-    case CDS_XA_2_2:
-      break;
-    default:
-      disc_s = "Unknown";
-      type = MEDIA_TYPE_ERROR;
-      break;
+    }
+    g_free (mnt);
   }
-  if (type == MEDIA_TYPE_ERROR) {
-    g_set_error (error, 0, 0,
-        _("Unexpected/unknown cd type 0x%x (%s)"),
-        disc, disc_s);
-    return MEDIA_TYPE_ERROR;
-  }
+  g_list_foreach (vol, (GFunc) gnome_vfs_volume_unref, NULL);
+  g_list_free (vol);
 
   return type;
 }
@@ -599,8 +686,6 @@ cd_cache_disc_is_dvd (CdCache *cache,
   /* open disc, check capabilities and open mount */
   if (!cd_cache_open_device (cache, error))
     return MEDIA_TYPE_ERROR;
-  if (!(cache->cap & CDC_DVD))
-    return MEDIA_TYPE_DATA;
   if (!cd_cache_open_mountpoint (cache, error))
     return MEDIA_TYPE_ERROR;
   if (!cache->mountpoint)
