@@ -284,7 +284,9 @@ cd_cache_new (const char *dev,
   char *mountpoint = NULL, *device, *local;
   GnomeVFSVolumeMonitor *mon;
   GnomeVFSDrive *drive = NULL;
+#ifdef HAVE_HAL
   LibHalContext *ctx = NULL;
+#endif
   gboolean found;
 
   if (g_str_has_prefix (dev, "file://") != FALSE)
@@ -337,7 +339,9 @@ cd_cache_new (const char *dev,
   cache->self_mounted = FALSE;
   cache->drive = drive;
   cache->is_media = TRUE;
+#ifdef HAVE_HAL
   cache->ctx = ctx;
+#endif
 
   return cache;
 }
