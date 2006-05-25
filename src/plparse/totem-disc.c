@@ -261,6 +261,8 @@ cd_cache_new_hal_ctx (void)
   ctx = libhal_ctx_new ();
   if (ctx == NULL)
     return NULL;
+
+  dbus_error_init (&error);
   conn = dbus_bus_get (DBUS_BUS_SYSTEM, &error);
   if (conn != NULL && !dbus_error_is_set (&error)) {
     libhal_ctx_set_dbus_connection (ctx, conn);
@@ -272,6 +274,8 @@ cd_cache_new_hal_ctx (void)
 
   libhal_ctx_shutdown (ctx, NULL);
   libhal_ctx_free(ctx);
+
+  return NULL;
 }
 #endif
 
@@ -370,7 +374,7 @@ cd_cache_has_medium (CdCache *cache)
   if (devices != NULL && num_devices >= 1)
     retval = TRUE;
 
-  libhal_free_string_array (device_names);
+  libhal_free_string_array (devices);
   g_free (udi);
 
   return retval;
