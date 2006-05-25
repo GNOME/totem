@@ -59,9 +59,6 @@ typedef struct _CdCache {
   LibHalContext *ctx;
 #endif
 
-  /* file descriptor to the device */
-//  int fd;
-
   /* capabilities of the device */
   int cap;
 
@@ -411,8 +408,6 @@ static gboolean
 cd_cache_open_device (CdCache *cache,
 		      GError **error)
 {
-  //int drive, err;
-
   /* not a medium? */
   if (cache->is_media == FALSE) {
     return TRUE;
@@ -423,70 +418,7 @@ cd_cache_open_device (CdCache *cache,
 	_("Please check that a disc is present in the drive."));
     return FALSE;
   }
-  //FIXME use HAL here to determine whether we have a CD in the drive
 
-#if 0
-  /* already open? */
-  if (cache->fd > 0)
-    return TRUE;
-
-  /* try to open the CD before creating anything */
-  if ((cache->fd = open (cache->device, O_RDONLY)) < 0) {
-    err = errno;
-    if (err == ENOMEDIUM) {
-      g_set_error (error, 0, 0,
-          _("Please check that a disc is present in the drive."));
-    } else {
-      g_set_error (error, 0, 0,
-          _("Failed to open device %s for reading: %s"),
-        cache->device, g_strerror (err));
-    }
-    return FALSE;
-  }
-
-  /* get capabilities */
-  if ((cache->cap = ioctl (cache->fd, CDROM_GET_CAPABILITY, NULL)) < 0) {
-    close (cache->fd);
-    cache->fd = -1;
-    g_set_error (error, 0, 0,
-        _("Failed to retrieve capabilities of device %s: %s"),
-        cache->device, g_strerror (errno));
-    return FALSE;
-  }
-
-  /* is there a disc in the tray? */
-  if ((drive = ioctl (cache->fd, CDROM_DRIVE_STATUS, NULL)) != CDS_DISC_OK) {
-    const char *drive_s;
-
-    close (cache->fd);
-    cache->fd = -1;
-
-    switch (drive) {
-      case CDS_NO_INFO:
-        drive_s = "Not implemented";
-        break;
-      case CDS_NO_DISC:
-        drive_s = "No disc in tray";
-        break;
-      case CDS_TRAY_OPEN:
-        drive_s = "Tray open";
-        break;
-      case CDS_DRIVE_NOT_READY:
-        drive_s = "Drive not ready";
-        break;
-      case CDS_DISC_OK:
-        drive_s = "OK";
-        break;
-      default:
-        drive_s = "Unknown";
-        break;
-    }
-    g_set_error (error, 0, 0,
-        _("Drive status 0x%x (%s) - check disc"),
-        drive, drive_s);
-    return FALSE;
-  }
-#endif
   return TRUE;
 }
 
