@@ -580,6 +580,17 @@ cd_cache_free (CdCache *cache)
     while (!called) g_main_iteration (TRUE);
   }
 
+#ifdef HAVE_HAL
+  if (cache->ctx != NULL) {
+#ifdef HAVE_HAL_0_5
+    libhal_ctx_shutdown (cache->ctx, NULL);
+    libhal_ctx_free(cache->ctx);
+#elif HAVE_HAL_0_2
+    hal_shutdown (cache->ctx);
+#endif
+  }
+#endif /* HAVE_HAL */
+
   /* free mem */
   if (cache->drive)
     gnome_vfs_drive_unref (cache->drive);
