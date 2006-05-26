@@ -1,3 +1,13 @@
+2006-05-26  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c: (get_media_size):
+	  Avoid integer overflows when doing aspect ratio calculations.
+
+	* configure.in:
+	  Require gst-plugins-base >= 0.10.7 for the GStreamer backend
+	  for the recently added gst_video_calculate_display_ratio()
+	  function used above.
+
 2006-05-26  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.glade: Use Prefere_nces as accesskey for the menu entry,

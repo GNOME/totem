@@ -42,6 +42,7 @@
 #include <gst/interfaces/colorbalance.h>
 /* for detecting sources of errors */
 #include <gst/video/gstvideosink.h>
+#include <gst/video/video.h>
 #include <gst/audio/gstbaseaudiosink.h>
 
 /* system */
@@ -215,14 +216,12 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
     }
   } else {
     if (bvw->priv->media_has_video) {
-      GValue * disp_par = NULL, * disp_ratio = NULL;
+      GValue * disp_par = NULL;
       guint movie_par_n, movie_par_d, disp_par_n, disp_par_d, num, den;
       
       /* Create and init the fraction value */
-      disp_ratio = g_new0 (GValue, 1);
       disp_par = g_new0 (GValue, 1);
       g_value_init (disp_par, GST_TYPE_FRACTION);
-      g_value_init (disp_ratio, GST_TYPE_FRACTION);
     
       /* Now try getting display's pixel aspect ratio */
       if (bvw->priv->xoverlay) {
@@ -294,14 +293,15 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
       }
       
       GST_DEBUG ("movie PAR is %d/%d", movie_par_n, movie_par_d);
-      
-      gst_value_set_fraction (disp_ratio,
-          bvw->priv->video_width * movie_par_n * disp_par_d,
-          bvw->priv->video_height * movie_par_d * disp_par_n);
-      
-      num = gst_value_get_fraction_numerator (disp_ratio);
-      den = gst_value_get_fraction_denominator (disp_ratio);
-      
+
+      if (!gst_video_calculate_display_ratio (&num, &den,
+          bvw->priv->video_width, bvw->priv->video_height,
+          movie_par_n, movie_par_d, disp_par_n, disp_par_d)) {
+        GST_WARNING ("overflow calculating display aspect ratio!");
+        num = 1;   /* FIXME: what values to use here? */
+        den = 1;
+      }
+
       GST_DEBUG ("calculated scaling ratio %d/%d for video %dx%d", num, den,
           bvw->priv->video_width, bvw->priv->video_height);
       
@@ -313,15 +313,18 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
       /* check hd / den is an integer scale factor, and scale wd with the PAR */
       if (bvw->priv->video_height % den == 0) {
         GST_DEBUG ("keeping video height");
-        bvw->priv->video_width_pixels = bvw->priv->video_height * num / den;
+        bvw->priv->video_width_pixels =
+            (guint) gst_util_uint64_scale (bvw->priv->video_height, num, den);
         bvw->priv->video_height_pixels = bvw->priv->video_height;
       } else if (bvw->priv->video_width % num == 0) {
         GST_DEBUG ("keeping video width");
         bvw->priv->video_width_pixels = bvw->priv->video_width;
-        bvw->priv->video_height_pixels = bvw->priv->video_width * den / num;
+        bvw->priv->video_height_pixels =
+            (guint) gst_util_uint64_scale (bvw->priv->video_width, den, num);
       } else {
         GST_DEBUG ("approximating while keeping video height");
-        bvw->priv->video_width_pixels = bvw->priv->video_height * num / den;
+        bvw->priv->video_width_pixels =
+            (guint) gst_util_uint64_scale (bvw->priv->video_height, num, den);
         bvw->priv->video_height_pixels = bvw->priv->video_height;
       }
       GST_DEBUG ("scaling to %dx%d", bvw->priv->video_width_pixels,
@@ -332,9 +335,7 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
       
       /* Free the PAR fraction */
       g_value_unset (disp_par);
-      g_value_unset (disp_ratio);
       g_free (disp_par);
-      g_free (disp_ratio);
     }
     else {
       *width = 0;
