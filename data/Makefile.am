@@ -6,7 +6,6 @@ stuff_DATA =				\
 	filmholes.png			\
 	filmholes-big-left.png		\
 	filmholes-big-right.png		\
-	media-player-48.png		\
 	stock_media_next.png		\
 	stock_media_previous.png	\
 	stock_media_pause.png		\
@@ -28,7 +27,21 @@ stuff_DATA =				\
 	vanity.png
 
 pixmapdir = $(datadir)/pixmaps
-pixmap_DATA = media-player-48.png vanity.png
+pixmap_DATA = vanity.png
+
+icondir = $(datadir)/icons/hicolor/48x48/apps
+icon_DATA = media-player-48.png
+
+gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
+
+install-data-hook:
+	@-if test -z "$(DESTDIR)"; then \
+		echo "Updating Gtk icon cache."; \
+		$(gtk_update_icon_cache); \
+	else \
+		echo "*** Icon cache not updated.  After install, run this:"; \
+		echo "***   $(gtk_update_icon_cache)"; \
+	fi
 
 # totem.desktop.in.in.in = original
 # totem.desktop.in.in = by configure, includes the X-Gnome-Bugzilla
@@ -82,7 +95,7 @@ else
 install-data-local:
 endif
 
-EXTRA_DIST = $(stuff_DATA) $(desktop_in_in_files_all) lirc_example totem.schemas.in schemas.sh desktop.sh handlers.sh $(man_MANS) mime-type-list.txt mime-type-include.sh totem-video-thumbnailer.1 totem-video-thumbnailer.pod
+EXTRA_DIST = $(icon_DATA) $(stuff_DATA) $(desktop_in_in_files_all) lirc_example totem.schemas.in schemas.sh desktop.sh handlers.sh $(man_MANS) mime-type-list.txt mime-type-include.sh totem-video-thumbnailer.1 totem-video-thumbnailer.pod
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(desktop_DATA) $(schema_DATA) $(desktop_in_files_all)
 

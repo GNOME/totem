@@ -1934,7 +1934,9 @@ on_help_activate (GtkButton *button, Totem *totem)
 static void
 on_about1_activate (GtkButton *button, Totem *totem)
 {
-	GdkPixbuf *pixbuf = NULL;
+	char *backend_version, *description;
+	const char *frontend_type;
+
 	const char *authors[] =
 	{
 		"Bastien Nocera <hadess@hadess.net>",
@@ -1948,20 +1950,12 @@ on_about1_activate (GtkButton *button, Totem *totem)
 		"Chee Bin Hoh <cbhoh@gnome.org>",
 		NULL
 	};
-	const char *frontend_type;
-	char *backend_version, *description;
-	char *filename;
 
 	if (totem->about != NULL)
 	{
 		gtk_window_present (GTK_WINDOW (totem->about));
 		return;
 	}
-
-	filename = g_build_filename (DATADIR,
-			"totem", "media-player-48.png", NULL);
-	pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
-	g_free (filename);
 
 #ifdef HAVE_GTK_ONLY
 	frontend_type = N_("GTK+");
@@ -1973,25 +1967,21 @@ on_about1_activate (GtkButton *button, Totem *totem)
 	/* This lists the back-end and front-end types and versions, such as
 	 * Movie Player using GStreamer 0.10.1 and GNOME */
 	description = g_strdup_printf (_("Movie Player using %s and %s"),
-				backend_version, _(frontend_type));
+				       backend_version, _(frontend_type));
 
 	totem->about = g_object_new (GTK_TYPE_ABOUT_DIALOG,
-			"name", _("Totem"),
-			"version", VERSION,
-			"copyright", _("Copyright \xc2\xa9 2002-2005 Bastien Nocera"),
-			"comments", description,
-			"authors", authors,
-			"documenters", documenters,
-			"artists", artists, 
-			"translator-credits", _("translator-credits"),
-			"logo", pixbuf,
-			NULL);
+				     "version", VERSION,
+				     "copyright", _("Copyright \xc2\xa9 2002-2006 Bastien Nocera"),
+				     "comments", description,
+				     "authors", authors,
+				     "documenters", documenters,
+				     "artists", artists,
+				     "translator-credits", _("translator-credits"),
+				     "logo-icon-name", "media-player-48",
+				     NULL);
 
 	g_free (backend_version);
 	g_free (description);
-
-	if (pixbuf != NULL)
-		gdk_pixbuf_unref (pixbuf);
 
 	g_object_add_weak_pointer (G_OBJECT (totem->about),
 			(gpointer *)&totem->about);
@@ -3508,6 +3498,7 @@ totem_volume_create (void)
 
 	widget = bacon_volume_button_new (GTK_ICON_SIZE_SMALL_TOOLBAR,
 					  0, 100, 1);
+	gtk_widget_set_sensitive (widget, FALSE);
 	gtk_widget_show (widget);
 
 	return widget;
@@ -3517,7 +3508,6 @@ int
 main (int argc, char **argv)
 {
 	Totem *totem;
-	char *filename;
 	GConfClient *gc;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
@@ -3545,6 +3535,7 @@ main (int argc, char **argv)
 #endif /* HAVE_GTK_ONLY */
 
 	g_set_application_name (_("Totem Movie Player"));
+	gtk_window_set_default_icon_name ("media-player-48");
 
 	gnome_vfs_init ();
 
@@ -3590,10 +3581,7 @@ main (int argc, char **argv)
 		totem_action_exit (NULL);
 
 	totem->win = glade_xml_get_widget (totem->xml, "totem_main_window");
-	filename = totem_interface_get_full_path ("media-player-48.png");
-	gtk_window_set_default_icon_from_file (filename, NULL);
-	g_free (filename);
-
+	
 	totem_named_icons_init (totem, FALSE);
 
 	/* The sidebar */

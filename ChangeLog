@@ -1,5 +1,15 @@
 2006-05-27  Bastien Nocera  <hadess@hadess.net>
 
+	* data/Makefile.am:
+	* data/totem.desktop.in.in.in:
+	* data/totem.glade:
+	* src/totem-mozilla-viewer.c: (on_about1_activate):
+	* src/totem.c: (on_about1_activate), (totem_volume_create), (main):
+	Patch from Brian Pepple <bdpepple@gmail.com> to use theme friendly
+	icon names (Closes: #336852), disable the volume button by default
+
+2006-05-27  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-disc.c: (cd_cache_new_hal_ctx),
 	(cd_cache_has_medium): Fix detection of whether a drive
 	has a medium when using HAL >= 0.5

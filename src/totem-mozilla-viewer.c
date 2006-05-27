@@ -246,40 +246,34 @@ totem_gtk_plug_get_toplevel (GtkPlug *plug)
 static void
 on_about1_activate (GtkButton *button, TotemEmbedded *emb)
 {
-	GdkPixbuf *pixbuf = NULL;
+	char *backend_version, *description;
+
 	const char *authors[] =
 	{
 		"Bastien Nocera <hadess@hadess.net>",
 		"Ronald Bultje <rbultje@ronald.bitfreak.net>",
 		NULL
 	};
-	char *backend_version, *description;
-	char *filename;
-
+	
 	if (emb->about != NULL)
 	{
 		gtk_window_present (GTK_WINDOW (emb->about));
 		return;
 	}
 
-	filename = g_build_filename (DATADIR,
-			"totem", "media-player-48.png", NULL);
-	pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
-	g_free (filename);
-
 	backend_version = bacon_video_widget_get_backend_name (emb->bvw);
 	description = g_strdup_printf (_("Movie Player using %s"),
-				backend_version);
+				       backend_version);
 
 	emb->about = g_object_new (GTK_TYPE_ABOUT_DIALOG,
-			"name", _("Totem Mozilla Plugin"),
-			"version", VERSION,
-			"copyright", _("Copyright \xc2\xa9 2002-2005 Bastien Nocera"),
-			"comments", description,
-			"authors", authors,
-			"translator-credits", _("translator-credits"),
-			"logo", pixbuf,
-			NULL);
+				   "name", _("Totem Mozilla Plugin"),
+				   "version", VERSION,
+				   "copyright", _("Copyright \xc2\xa9 2002-2006 Bastien Nocera"),
+				   "comments", description,
+				   "authors", authors,
+				   "translator-credits", _("translator-credits"),
+				   "logo-icon-name", "media-player-48",
+				   NULL);
 
 	g_free (backend_version);
 	g_free (description);
@@ -298,9 +292,6 @@ on_about1_activate (GtkButton *button, TotemEmbedded *emb)
 		gtk_window_set_transient_for (GTK_WINDOW (emb->about),
 				GTK_WINDOW (emb->window));
 	}
-
-	if (pixbuf != NULL)
-		gdk_pixbuf_unref (pixbuf);
 
 	g_object_add_weak_pointer (G_OBJECT (emb->about),
 			(gpointer *)&emb->about);
