@@ -3640,6 +3640,7 @@ main (int argc, char **argv)
 	/* Show ! (again) the video widget this time. */
 	video_widget_create (totem);
 	long_action ();
+	gtk_widget_grab_focus (GTK_WIDGET (totem->bvw));
 
 	/* The prefs after the video widget is connected */
 	totem_setup_preferences (totem);
