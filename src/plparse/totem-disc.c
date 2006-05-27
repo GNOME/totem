@@ -266,8 +266,10 @@ cd_cache_new_hal_ctx (void)
     return ctx;
   }
 
-  if (dbus_error_is_set (&error))
+  if (dbus_error_is_set (&error)) {
+    g_warning ("Couldn't get the system D-Bus: %s", error.message);
     dbus_error_free (&error);
+  }
 
   libhal_ctx_shutdown (ctx, NULL);
   libhal_ctx_free(ctx);
@@ -362,6 +364,7 @@ cd_cache_has_medium (CdCache *cache)
   int num_devices;
   char *udi;
   gboolean retval = FALSE;
+  DBusError error;
 
   if (cache->drive == NULL)
     return FALSE;
@@ -370,12 +373,36 @@ cd_cache_has_medium (CdCache *cache)
   if (udi == NULL)
     return FALSE;
 
+  dbus_error_init (&error);
   devices = libhal_manager_find_device_string_match (cache->ctx,
-      "info.parent", udi, &num_devices, NULL);
+      "info.parent", udi, &num_devices, &error);
   if (devices != NULL && num_devices >= 1)
     retval = TRUE;
 
-  libhal_free_string_array (devices);
+  if (dbus_error_is_set (&error)) {
+    g_warning ("Error getting the children: %s", error.message);
+    dbus_error_free (&error);
+    g_free (udi);
+    return FALSE;
+  }
+
+  if (retval == FALSE) {
+    dbus_bool_t volume;
+
+    volume = libhal_device_get_property_bool (cache->ctx,
+	udi, "volume.is_disc", &error);
+    if (dbus_error_is_set (&error)) {
+      g_warning ("Error checking whether the volume is a disc: %s",
+	  error.message);
+      dbus_error_free (&error);
+      g_free (udi);
+      return FALSE;
+    }
+    retval = TRUE;
+  }
+
+  if (devices != NULL)
+    libhal_free_string_array (devices);
   g_free (udi);
 
   return retval;
