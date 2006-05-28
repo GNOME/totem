@@ -1,15 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Dzongkha translation of totem.
+# Copyright @ 2006, Free software foundation, Inc.
+# Mindu Dorji.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.dz\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-06 05:29+0100\n"
-"PO-Revision-Date: 2006-03-28 11:14-0500\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2006-05-03 23:22+0200\n"
+"PO-Revision-Date: 2006-05-23 09:21+0530\n"
+"Last-Translator: Mindu Dorji\n"
 "Language-Team: DZONGKHA <pgeyleg@dit.gov.bt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -99,14 +98,14 @@ msgid "Skip forward"
 msgstr "གདོང་ཕྱོགས་གོམ་འགྱོ།"
 
 #: ../data/popup.glade.h:11
-#: ../data/totem.glade.h:105
-msgid "Volume _Down"
-msgstr "སྐད་ཤུགས་ཕབ།(_D)"
+#: ../src/totem-options.c:46
+msgid "Volume Down"
+msgstr "སྐད་ཤུགས་ཕབ།"
 
 #: ../data/popup.glade.h:12
-#: ../data/totem.glade.h:106
-msgid "Volume _Up"
-msgstr "སྐད་ཤུགས་སེང་།(_U)"
+#: ../src/totem-options.c:45
+msgid "Volume Up"
+msgstr "སྐད་ཤུགས་སེང་།"
 
 #: ../data/popup.glade.h:13
 #: ../data/totem.glade.h:108
@@ -114,12 +113,12 @@ msgid "Volume up"
 msgstr "སྐད་ཤུགས་སེང་།"
 
 #: ../data/popup.glade.h:14
-#: ../data/totem.glade.h:131
+#: ../data/totem.glade.h:130
 msgid "_Next Chapter/Movie"
 msgstr "ལེའུ་/གློག་བརྙན་ཤུལ་མམ།(_N)"
 
 #: ../data/popup.glade.h:15
-#: ../data/totem.glade.h:133
+#: ../data/totem.glade.h:132
 msgid "_Previous Chapter/Movie"
 msgstr "ལེའུ་/གློག་བརྙནཧེ་མམ།(_P)"
 
@@ -140,7 +139,7 @@ msgstr "ཀེ་བི་པི་ཨེསི་༠།"
 #. 0 seconds
 #: ../data/properties.glade.h:4
 #: ../data/skip_to.glade.h:1
-#: ../src/backend/video-utils.c:280
+#: ../src/backend/video-utils.c:258
 msgid "0 seconds"
 msgstr "སྐར་ཆ་༠།"
 
@@ -192,20 +191,20 @@ msgstr "གཞི་ཁྲམ་མགྱོགས་ཚད་:"
 #. Video Codec
 #. Audio Codec
 #: ../data/properties.glade.h:16
-#: ../src/bacon-video-widget-properties.c:152
-#: ../src/bacon-video-widget-properties.c:154
-#: ../src/bacon-video-widget-properties.c:157
-#: ../src/bacon-video-widget-properties.c:160
-#: ../src/bacon-video-widget-properties.c:163
-#: ../src/bacon-video-widget-properties.c:165
-#: ../src/bacon-video-widget-properties.c:227
-#: ../src/bacon-video-widget-properties.c:229
-#: ../src/bacon-video-widget-properties.c:246
+#: ../src/bacon-video-widget-properties.c:153
+#: ../src/bacon-video-widget-properties.c:155
+#: ../src/bacon-video-widget-properties.c:158
+#: ../src/bacon-video-widget-properties.c:161
+#: ../src/bacon-video-widget-properties.c:164
+#: ../src/bacon-video-widget-properties.c:166
+#: ../src/bacon-video-widget-properties.c:228
+#: ../src/bacon-video-widget-properties.c:230
+#: ../src/bacon-video-widget-properties.c:247
 msgid "N/A"
 msgstr "ཨེན་/ཨེ།"
 
 #: ../data/properties.glade.h:17
-#: ../src/totem.c:2009
+#: ../src/totem.c:2050
 msgid "Properties"
 msgstr "རྒྱུ་དངོས་ཚུ།"
 
@@ -218,10 +217,10 @@ msgstr "མགོ་མིང་:"
 #. Album
 #. Year
 #: ../data/properties.glade.h:19
-#: ../src/bacon-video-widget-properties.c:141
-#: ../src/bacon-video-widget-properties.c:143
-#: ../src/bacon-video-widget-properties.c:145
-#: ../src/bacon-video-widget-properties.c:147
+#: ../src/bacon-video-widget-properties.c:142
+#: ../src/bacon-video-widget-properties.c:144
+#: ../src/bacon-video-widget-properties.c:146
+#: ../src/bacon-video-widget-properties.c:148
 msgid "Unknown"
 msgstr "ངོ་མ་ཤེསཔ།"
 
@@ -255,7 +254,7 @@ msgid "Save screenshot to _file:"
 msgstr "གསལ་གཞིའི་པར་ ཡིག་སྣོད་ལུ་སྲུངས་:(_f)"
 
 #: ../data/skip_to.glade.h:2
-#: ../src/totem-skipto.c:140
+#: ../src/totem-skipto.c:144
 msgid "Skip to"
 msgstr "ལུ་གོམ་འགྱོ།"
 
@@ -268,17 +267,12 @@ msgid "seconds"
 msgstr "སྐར་ཆ་ཚུ"
 
 #: ../data/totem.desktop.in.in.in.h:1
+msgid "Movie Player"
+msgstr "ཊོ་ཊེམ་གློག་བརྙན་གཏང་འཕྲུལ།"
+
+#: ../data/totem.desktop.in.in.in.h:2
 msgid "Play movies and songs"
 msgstr "གློག་བརྙན་དང་ ཞབས་ཁྲ་གཏང་།"
-
-#. Title
-#: ../data/totem.desktop.in.in.in.h:2
-#: ../data/totem.glade.h:100
-#: ../src/totem.c:695
-#: ../src/totem.c:3379
-#: ../src/totem.c:3396
-msgid "Totem Movie Player"
-msgstr "ཊོ་ཊེམ་གློག་བརྙན་གཏང་འཕྲུལ།"
 
 #: ../data/totem.glade.h:2
 msgid ""
@@ -595,8 +589,8 @@ msgid "Switch to fullscreen"
 msgstr "གསལ་གཞི་གངམ་ལུ་ སོར་བསྒྱུར་འབད།"
 
 #: ../data/totem.glade.h:97
-msgid "Take _Screenshot"
-msgstr "གསལ་གཞིའི་པར་བཏབ།(_S)"
+msgid "Take _Screenshot..."
+msgstr "གསལ་གཞིའི་པར་བཏབ་...(_S)"
 
 #: ../data/totem.glade.h:98
 msgid "Take a screenshot"
@@ -605,6 +599,14 @@ msgstr "གསལ་གཞིའི་ པར་ཅིག་བཏབ།"
 #: ../data/totem.glade.h:99
 msgid "Time:"
 msgstr "ཆུ་ཚོད་:"
+
+#. Title
+#: ../data/totem.glade.h:100
+#: ../src/totem.c:705
+#: ../src/totem.c:3513
+#: ../src/totem.c:3530
+msgid "Totem Movie Player"
+msgstr "ཊོ་ཊེམ་གློག་བརྙན་གཏང་འཕྲུལ།"
 
 #: ../data/totem.glade.h:101
 msgid "Totem Preferences"
@@ -621,6 +623,14 @@ msgstr "ནི་བི་ཌི་ཡ་གིས་ གསལ་གཞི་�
 #: ../data/totem.glade.h:104
 msgid "Visualisation _size:"
 msgstr "མཐོང་གསལ་གྱི་ཚད་:(_s)"
+
+#: ../data/totem.glade.h:105
+msgid "Volume _Down"
+msgstr "སྐད་ཤུགས་ཕབ།(_D)"
+
+#: ../data/totem.glade.h:106
+msgid "Volume _Up"
+msgstr "སྐད་ཤུགས་སེང་།(_U)"
 
 #: ../data/totem.glade.h:107
 msgid "Volume down"
@@ -679,70 +689,66 @@ msgid "_DVD Menu"
 msgstr "ཌི་བི་ཌི་ དཀར་ཆག(_D)"
 
 #: ../data/totem.glade.h:122
-msgid "_DXR3 TV-out"
-msgstr "ཌི་ཨེགསི་ཨར་༣ རྒྱང་མཐོང་-ཕྱིར་གཏང་།(_D)"
-
-#: ../data/totem.glade.h:123
 msgid "_Deinterlace"
 msgstr "ལྷས་བཤོལ་འབད།(_D)"
 
-#: ../data/totem.glade.h:124
+#: ../data/totem.glade.h:123
 msgid "_Eject"
 msgstr "ཕྱིར་བཏོན།(_E)"
 
-#: ../data/totem.glade.h:125
+#: ../data/totem.glade.h:124
 msgid "_Font:"
 msgstr "ཡིག་གཟུགས།(_F)"
 
-#: ../data/totem.glade.h:126
+#: ../data/totem.glade.h:125
 msgid "_Fullscreen"
 msgstr "གསལ་གཞི་གངམ།(_F)"
 
-#: ../data/totem.glade.h:127
+#: ../data/totem.glade.h:126
 msgid "_Go"
 msgstr "འགྱོ།(_G)"
 
-#: ../data/totem.glade.h:128
+#: ../data/totem.glade.h:127
 msgid "_Hue:"
 msgstr "ཚོན་མདངས:(_H)"
 
-#: ../data/totem.glade.h:129
+#: ../data/totem.glade.h:128
 msgid "_Languages"
 msgstr "སྐད་ཡིག་ཚུ།(_L)"
 
-#: ../data/totem.glade.h:130
+#: ../data/totem.glade.h:129
 msgid "_Movie"
 msgstr "གློག་བརྙན།(_M)"
 
-#: ../data/totem.glade.h:132
+#: ../data/totem.glade.h:131
 msgid "_No TV-out"
 msgstr "རྒྱང་མཐོང་-ཕྱིར་གཏང་མ་འབད།(_N)"
 
-#: ../data/totem.glade.h:134
+#: ../data/totem.glade.h:133
 msgid "_Repeat Mode"
 msgstr "ཡང་བསྐྱར་ཐབས་ལམ།(_R)"
 
-#: ../data/totem.glade.h:135
+#: ../data/totem.glade.h:134
 msgid "_Resize 1:2"
-msgstr "༡:༢ ལུ་ སླར་ཚད་སྒྲིག་འབད།(_R)"
+msgstr "༡:༢ ལུ་ སླར་ཚད་སྒྲིག(_R)"
 
-#: ../data/totem.glade.h:136
+#: ../data/totem.glade.h:135
 msgid "_Sidebar"
 msgstr "ཟུར་ཁའི་ཕྲ་རིང་།(_S)"
 
-#: ../data/totem.glade.h:137
+#: ../data/totem.glade.h:136
 msgid "_Skip to..."
-msgstr "ལུ་གོམ་འགྱོ་...(_S)"
+msgstr "གོམ་འགྱོ་...(_S)"
 
-#: ../data/totem.glade.h:138
+#: ../data/totem.glade.h:137
 msgid "_Sound"
 msgstr "སྒྲ་སྐད།(_S)"
 
-#: ../data/totem.glade.h:139
+#: ../data/totem.glade.h:138
 msgid "_Title Menu"
 msgstr "མགོ་མིང་དཀར་ཆག(_T)"
 
-#: ../data/totem.glade.h:140
+#: ../data/totem.glade.h:139
 msgid "_Type of visualisation:"
 msgstr "མཐོང་གསལ་གྱི་དབྱེ་བ་:(_T)"
 
@@ -915,23 +921,23 @@ msgstr "རྒྱས་ཟུམ་༡:༢(_Z)"
 msgid "Unnamed CDROM"
 msgstr "མིང་མ་བཏགས་པའི་ སི་ཌི་རཱོམ།"
 
-#: ../src/bacon-video-widget-properties.c:224
+#: ../src/bacon-video-widget-properties.c:225
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: ../src/bacon-video-widget-properties.c:227
+#: ../src/bacon-video-widget-properties.c:228
 #, c-format
 msgid "%d frames per second"
 msgstr "སྐར་ཆ་རེར་ གཞི་ཁྲམ་%d"
 
-#: ../src/bacon-video-widget-properties.c:229
-#: ../src/bacon-video-widget-properties.c:246
+#: ../src/bacon-video-widget-properties.c:230
+#: ../src/bacon-video-widget-properties.c:247
 #, c-format
 msgid "%d kbps"
 msgstr "ཀེ་བི་པི་ཨེསི་%d"
 
-#: ../src/bacon-video-widget-properties.c:280
+#: ../src/bacon-video-widget-properties.c:281
 msgid "Properties dialog"
 msgstr "རྒྱུ་དངོས་ཀྱི་ཌའི་ལོག"
 
@@ -950,7 +956,7 @@ msgstr "-"
 msgid "Open '%s'"
 msgstr "'%s' ཁ་ཕྱེ།"
 
-#: ../src/egg-recent-view-gtk.c:444
+#: ../src/egg-recent-view-gtk.c:446
 msgid "Empty"
 msgstr "སྟོངམ།"
 
@@ -969,7 +975,7 @@ msgstr "ཊོ་ཊེམ་ངེས་བདེན་སྦེ་ གཞི�
 msgid "None"
 msgstr "ཅི་མེད།"
 
-#: ../src/totem-menu.c:578
+#: ../src/totem-menu.c:595
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "ཌིཀསི་'%s'གཏང་།"
@@ -983,13 +989,13 @@ msgid "Enable debug"
 msgstr "རྐྱེན་སེལ་ལྕོགས་ཅན་བཟོ།"
 
 #: ../src/totem-options.c:39
-#: ../src/totem.c:256
-#: ../src/totem.c:264
+#: ../src/totem.c:259
+#: ../src/totem.c:267
 msgid "Play"
 msgstr "གཏང་"
 
 #: ../src/totem-options.c:40
-#: ../src/totem.c:250
+#: ../src/totem.c:253
 msgid "Pause"
 msgstr "ཐེམ།"
 
@@ -1000,14 +1006,6 @@ msgstr "གདོང་ཕྱོགས་ལུ་འཚོལ།"
 #: ../src/totem-options.c:44
 msgid "Seek Backwards"
 msgstr "རྒྱབ་ཕྱོགས་ལུ་འཚོལ།"
-
-#: ../src/totem-options.c:45
-msgid "Volume Up"
-msgstr "སྐད་ཤུགས་སེང་།"
-
-#: ../src/totem-options.c:46
-msgid "Volume Down"
-msgstr "སྐད་ཤུགས་ཕབ།"
 
 #: ../src/totem-options.c:47
 msgid "Toggle Fullscreen"
@@ -1034,7 +1032,7 @@ msgstr "ཚབ་བཙུགས།"
 msgid "Option '%s' is unknown and was ignored\n"
 msgstr "གདམ་ཁ་'%s' དེ་ ངོ་མ་ཤེསཔ་ལས་ སྣང་མེད་བཞག་ཅི།\n"
 
-#: ../src/totem-playlist.c:331
+#: ../src/totem-playlist.c:329
 msgid "Could not save the playlist"
 msgstr "གླུ་ཐོ་སྲུང་མ་ཚུགས།"
 
@@ -1051,32 +1049,24 @@ msgstr "ཡིག་སྣོད་ཚབ་སྲུང་འབད་ག?"
 msgid "A file named '%s' already exists.  Are you sure you want to overwrite it?"
 msgstr "ཡིག་སྣོད་མིང་%s' འབད་མི་ཅིག་ ཧེ་མ་ལས་རང་འདུག འདི་ཁྱོད་ཀྱིས་ ཚབ་སྲུང་འབད་ནི་ ངེས་ཏིག་ཨིན་ན?"
 
-#: ../src/totem-playlist.c:1369
+#: ../src/totem-playlist.c:1405
 msgid "playlist"
 msgstr "གླུ་ཐོ།"
 
-#: ../src/totem-playlist.c:1498
+#: ../src/totem-playlist.c:1538
 msgid "Playlist error"
 msgstr "གླུ་ཐོའི་འཛོལ་བ།"
 
-#: ../src/totem-playlist.c:1498
+#: ../src/totem-playlist.c:1538
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "གླུ་ཐོ་'%s' དེ་ མིང་དཔྱད་འབད་མ་ཚུགས། འདི་མེདཔ་བཏང་ཡོདཔ་འོང་ནི་མས།"
 
-#: ../src/totem-playlist.c:1892
-msgid "Select CD"
-msgstr "སི་ཌི་སེལ་འཐུ་འབད།"
-
-#: ../src/totem-playlist.c:1897
-msgid "Please select the currently playing CD:"
-msgstr "ད་ལྟོ་གཏང་བའི་བསྒང་གི་སི་ཌི་དེ་ སེལ་འཐུ་འབད།"
-
-#: ../src/totem-preferences.c:86
+#: ../src/totem-preferences.c:84
 msgid "Enable visual effects?"
 msgstr "པར་གྱི་འཆར་སྣང་ ལྕོགས་ཅན་བཟོ།"
 
-#: ../src/totem-preferences.c:88
+#: ../src/totem-preferences.c:86
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1084,28 +1074,28 @@ msgstr ""
 "ཁྱོད་ཀྱིས་ཊོ་ཊེམ་ཐག་རིང་ལས་ གཡོག་བཀོལ་དོ་བཟུམ་ཅིག་འདུག \n"
 "ཁྱོད་ཀྱིས་པར་གྱི་འཆར་སྣང་ ལྕོགས་ཅན་བཟོ་ནི་ ངེས་ཏིག་ཨིན་ན?"
 
-#: ../src/totem-preferences.c:141
+#: ../src/totem-preferences.c:139
 msgid "The change of this setting will only take effect for the next movie, or when Totem is restarted."
 msgstr "གཞི་སྒྲིག་འདི་གི་བསྒྱུར་བཅོས་དེ་ གློག་བརྙན་ཤུལ་མམ་གྱི་དོན་ལུ་དང་ ཡང་ཅིན་ ཊོ་ཊེམ་ལོག་འགོ་བཙུགསཔ་ད་རྐྱངམ་གཅིག་ ནུས་པ་འཐོབ་ཚུགས།"
 
-#: ../src/totem-preferences.c:185
+#: ../src/totem-preferences.c:183
 msgid "Switching on or off this type of TV-Out requires a restart to take effect."
 msgstr "འདི་བཟུམ་མའི་ རྒྱང་མཐོང་ཕྱིར་གཏང་ཚུ་ ཨཱོན་བརྐྱབ་ནི་དང་ ཨོཕ་བརྐྱབ་ནི་ལུ་ ནུས་པ་འཐོབ་ནིའི་དོན་ལས་ ལོག་འགོ་བཙུགས་དགོཔ་ཨིན།"
 
-#: ../src/totem-preferences.c:297
+#: ../src/totem-preferences.c:295
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr "པར་གྱི་འཆར་སྣང་དབྱེ་བ་ བསྒྱུར་བཅོས་འབདཝ་ད་ ནུས་པ་འཐོབ་ནི་ལུ་ ལོག་འགོ་བཙུགས་དགོ"
 
-#: ../src/totem-preferences.c:381
+#: ../src/totem-preferences.c:379
 msgid "The change of audio output type will only take effect when Totem is restarted."
 msgstr "རྣར་ཉན་ཨའུཊི་པུཊི་གི་དབྱེ་བ་ བསྒྱུར་བཅོས་འབད་མི་དེ་ ཊོ་ཊེམ་ལོག་འགོ་བཙུགསཔ་ད་མ་གཏོགས་ ནུས་པ་མི་འཐོབ།"
 
-#: ../src/totem-preferences.c:604
+#: ../src/totem-preferences.c:606
 msgid "Select Subtitle Font"
 msgstr "མགོ་མིང་ཡན་ལག་ཡིག་གཟུགས་སེལ་འཐུ་འབད།"
 
 #. FIXME this should be setting an error?
-#: ../src/totem-properties-main.c:112
+#: ../src/totem-properties-main.c:117
 #: ../src/totem-properties-view.c:86
 #: ../src/totem-properties-view.c:94
 msgid "Audio/Video"
@@ -1138,9 +1128,9 @@ msgstr "གསལ་གཞིའི་པར་ སྲུང་བཞག་འ�
 msgid "Screenshot.png"
 msgstr "གསལ་གཞིའི་པར་.པི་ཨེན་ཇི།"
 
-#: ../src/totem-scrsaver.c:115
-msgid "Playing a movie with Totem"
-msgstr "ཊོ་ཊེམ་ཐོག་ལས་ གློག་བརྙན་ཅིག་གཏང་དོ།"
+#: ../src/totem-scrsaver.c:116
+msgid "Playing a movie"
+msgstr "གློག་བརྙན་ཅིག་གཏང་དོ།"
 
 #: ../src/totem-statusbar.c:91
 msgid "Shadow type"
@@ -1151,8 +1141,8 @@ msgid "Style of bevel around the statusbar text"
 msgstr "གནས་ཚད་ཕྲ་རིང་ ཚིག་ཡིག་གི་མཐའ་སྐོར་གྱི་ སེར་ཁའི་བཟོ་རྣམ།"
 
 #: ../src/totem-statusbar.c:124
-#: ../src/totem.c:260
-#: ../src/totem.c:681
+#: ../src/totem.c:263
+#: ../src/totem.c:691
 msgid "Stopped"
 msgstr "བཀག་ཡོདཔ།"
 
@@ -1167,13 +1157,14 @@ msgstr "%s(སི་ཊི་མིང་)"
 
 #. Elapsed / Total Length
 #: ../src/totem-statusbar.c:187
-#: ../src/totem-time-label.c:82
+#: ../src/totem-time-label.c:85
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
 #: ../src/totem-statusbar.c:190
+#: ../src/totem-time-label.c:88
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "%s / %sལུ་འཚོལ།"
@@ -1188,155 +1179,156 @@ msgstr "གནད་ཁོངས་ནང་གསོག་འཇོག་འབ
 msgid "%d %%"
 msgstr "%d %%"
 
-#: ../src/totem-uri.c:223
+#: ../src/totem-uri.c:227
 msgid "All files"
 msgstr "ཡིག་སྣོད་ཆ་མཉམ།"
 
-#: ../src/totem-uri.c:229
+#: ../src/totem-uri.c:233
 msgid "Supported files"
 msgstr "རྒྱབ་སྐྱོར་ལྡན་པའི་ཡིག་སྣོད་ཚུ།"
 
-#: ../src/totem-uri.c:251
+#: ../src/totem-uri.c:255
 msgid "Select Movies or Playlists"
 msgstr "གློག་བརྙན་ནམ་ གླུ་ཐོ་སེལ་འཐུ་འབད།"
 
-#: ../src/totem.c:248
+#: ../src/totem.c:251
 msgid "Playing"
 msgstr "གཏང་དོ།"
 
-#: ../src/totem.c:254
+#: ../src/totem.c:257
 msgid "Paused"
 msgstr "ཐེམ་ཡོད།"
 
-#: ../src/totem.c:306
+#: ../src/totem.c:309
 msgid "Totem could not eject the optical media."
 msgstr "ཊོ་ཊེམ་གྱིས་ མཐོང་བའི་བརྡ་ལམ་ ཕྱིར་བཏོན་འབད་མ་ཚུགས།"
 
-#: ../src/totem.c:334
-#: ../src/totem.c:363
-#: ../src/totem.c:800
-#: ../src/totem.c:904
+#: ../src/totem.c:337
+#: ../src/totem.c:366
+#: ../src/totem.c:812
+#: ../src/totem.c:923
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "ཊོ་ཊེམ་གྱིས་'%s'གཏང་མ་ཚུགས།"
 
-#: ../src/totem.c:390
+#: ../src/totem.c:393
 #, c-format
 msgid "Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."
 msgstr "ཊོ་ཊེམ་གྱིས་ འདི་བཟུམ་མའི་བརྡ་ལམ་(%s) གཏང་མི་ཚུགས་པས་ ག་ཅི་སྦེ་ཟེར་བ་ཅིན་ ཁྱོད་ལུ་འདི་ལེགས་སྐྱོང་འཐབ་ནིའི་དོན་ལུ་ འོས་ལྡན་གྱི་ པ་ལག་ཨིནསི་མིན་འདུག"
 
-#: ../src/totem.c:391
+#: ../src/totem.c:394
 msgid "Please install the necessary plugins and restart Totem to be able to play this media."
 msgstr "བརྡ་ལམ་འདི་ གཏང་ཚུགས་ནིའི་དོན་ལུ་ ཉེར་མཁོའི་པ་ལག་ཨིནསི་ཚུ་ གཞི་བཙུགས་འབད་ཞིནམ་ལས་ ཊོ་ཊེམ་ལོག་འགོ་བཙུགས།"
 
-#: ../src/totem.c:399
+#: ../src/totem.c:402
 #, c-format
 msgid "Totem could not play this media (%s) although a plugin is present to handle it."
 msgstr "འདི་ལེགས་སྐྱོང་འཐབ་ནིའི་ པ་ལག་ཨིན་ཅིག་ ཡོད་དེ་རང་འབད་རུང་ ཊོ་ཊེམ་གྱིས་ བརྡ་ལམ་(%s)འདི་ གཏང་མི་ཚུགས་པས།"
 
-#: ../src/totem.c:400
+#: ../src/totem.c:403
 msgid "You might want to check that a disc is present in the drive and that it is correctly configured."
 msgstr "ཁྱོད་ཀྱིས་འདྲེན་བྱེད་ནང་ལུ་ ཌིཀསིཡོད་མེད་དང་ དེ་ཚུལ་བཞིན་དུ་ རིམ་སྒྲིག་འབད་མ་འབད་ ཞིབ་དཔྱད་འབད་དགོཔ་འོང་།"
 
-#: ../src/totem.c:428
-msgid "Failed to play Audio/Video Disc"
-msgstr "རྣར་ཉན་/ཝི་ཌིའོ་ཌིཀསི་ གཏང་མ་ཚུགས།"
+#: ../src/totem.c:431
+msgid "Totem was not able to play this disc."
+msgstr "ཊོ་ཊེམ་གྱིས་ཌིཀསི་འདི་ གཏང་མི་ཚུགས་པས།"
 
-#: ../src/totem.c:429
-msgid "Reason unknown"
-msgstr "རྒྱུ་མཚན་མ་ཤེས།"
+#: ../src/totem.c:432
+#: ../src/totem.c:3372
+msgid "No reason."
+msgstr "རྒྱུ་མཚན་མིན་འདུག"
 
-#: ../src/totem.c:688
+#: ../src/totem.c:698
 msgid "No File"
 msgstr "ཡིག་སྣོད་མིན་འདུག"
 
-#: ../src/totem.c:1265
-#: ../src/totem.c:1267
+#: ../src/totem.c:818
+msgid "No error message"
+msgstr "འཛོལ་བའི་འཕྲིན་དོན་མིན་འདུག"
+
+#: ../src/totem.c:1274
+#: ../src/totem.c:1276
 msgid "An error occurred"
 msgstr "འཛོལ་བ་ཅིག་བྱུང་ཡི།"
 
-#: ../src/totem.c:1613
+#: ../src/totem.c:1647
 msgid "Open Location..."
 msgstr "གནས་ཁོངས་ཁ་ཕྱེ།..."
 
-#: ../src/totem.c:1882
+#: ../src/totem.c:1920
 msgid "Totem could not display the help contents."
 msgstr "ཊོ་ཊེམ་གྱིས་ གྲོགས་རམ་གྱི་ནང་དོན་ཚུ་ བཀྲམ་སྟོན་འབད་མ་ཚུགས།"
 
-#: ../src/totem.c:1920
+#: ../src/totem.c:1958
 #, c-format
 msgid "Movie Player using %s"
 msgstr "གློག་བརྙན་གཏང་འཕྲུལ་གྱིས་%sལག་ལེན་འཐབ་དོ།"
 
-#: ../src/totem.c:1924
+#: ../src/totem.c:1962
 msgid "Totem"
 msgstr "ཊོ་ཊེམ།"
 
-#: ../src/totem.c:1926
+#: ../src/totem.c:1964
 #: ../src/vanity.c:261
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "འདྲ་བཤུས་དབང་ཆ་© ༢༠༠༢-༢༠༠༥ བཱསི་ཊིན་ ནོ་སི་ར།"
 
-#: ../src/totem.c:1931
+#: ../src/totem.c:1969
 #: ../src/vanity.c:266
 msgid "translator-credits"
 msgstr "ཨའི་ཌི་ཨར་སི་གི་མ་དངུལ་རྒྱབ་སྐྱོར་ཐོག་ལས་ བརྡ་དོན་འཕྲུལ་རིག་ལས་ཁུངས་ནང་ སྐད་བསྒྱུར་འབད་ཡི། ཁ་གསལ་གྱི་དོན་ལུ་ འབྲེལ་བ་འཐབ་ས་: <pema_geyleg@druknet.bt>/<pgeyleg@dit.gov.bt>"
 
-#: ../src/totem.c:1964
-#: ../src/totem.c:1972
+#: ../src/totem.c:2005
+#: ../src/totem.c:2013
 #: ../src/vanity.c:299
 #: ../src/vanity.c:307
 msgid "Totem could not get a screenshot of that film."
 msgstr "ཊོ་ཊེམ་གྱིས་ གློག་བརྙན་དེ་གི་ གསལ་གཞིའི་པར་ཅིག་ ཐོབ་མ་ཚུགས།"
 
-#: ../src/totem.c:1972
+#: ../src/totem.c:2013
 #: ../src/vanity.c:307
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "དེ་སྦེ་འབྱུང་དགོཔ་ཅིག་མེདཔ་ལས་ རྐྱེན་གྱི་སྙན་ཞུ་ཅིག་གཏང་གནང་།"
 
-#: ../src/totem.c:1999
+#: ../src/totem.c:2040
 msgid "Totem couldn't show the movie properties window."
 msgstr "ཊོ་ཊེམ་གྱིས་ གློག་བརྙན་རྒྱུ་དངོས་ཀྱི་སྒོ་སྒྲིག་ སྟོན་མ་ཚུགས།"
 
-#: ../src/totem.c:1999
+#: ../src/totem.c:2040
 msgid "Make sure that Totem is correctly installed."
 msgstr "ཊོ་ཊེམ་ངེས་བདེན་་སྦེ་ གཞི་བཙུགས་འབད་ཡོདཔ་ ངེས་ཏིག་བཟོ།"
 
-#: ../src/totem.c:2085
+#: ../src/totem.c:2126
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "'%s' ནང་ལུ་ ཊོ་ཊེམ་གྱིས་ འཚོལ་མ་ཐོབ།"
 
-#: ../src/totem.c:3241
+#: ../src/totem.c:3372
 msgid "Totem could not startup."
 msgstr "ཊོ་ཊེམ་འགོ་བཙུགས་མ་ཚུགས།"
 
-#: ../src/totem.c:3241
-msgid "No reason."
-msgstr "རྒྱུ་མཚན་མིན་འདུག"
-
-#: ../src/totem.c:3380
+#: ../src/totem.c:3514
 msgid "Could not initialize the thread-safe libraries."
 msgstr "ཐེརེཌི་སེཕ་ དཔེ་མཛོད་དེ་ འགོ་འབྱེད་འབད་མ་ཚུགས།"
 
-#: ../src/totem.c:3380
+#: ../src/totem.c:3514
 msgid "Verify your system installation. Totem will now exit."
 msgstr "ཁྱོད་རའི་རིམ་ལུགས་གཞི་བཙུགས་ལུ་ བདེན་སྦྱོར་འབད། ཊོ་ཊེམ་ད་ལྟོ་རང་ ཕྱིར་འཐོན་འགྱོ་འོང་།"
 
-#: ../src/totem.c:3403
+#: ../src/totem.c:3537
 msgid "Totem could not initialize the configuration engine."
 msgstr "ཊོ་ཊེམ་གྱིས་ རིམ་སྒྲིག་མ་འཕྲུལ་ འགོ་འབྱེད་འབད་མ་ཚུགས།"
 
-#: ../src/totem.c:3403
+#: ../src/totem.c:3537
 msgid "Make sure that GNOME is properly installed."
 msgstr "ཇི་ནོམ་ངེས་བདེན་སྦེ་ གཞི་བཙུགས་འབད་ཡོདཔ་ ངེས་ཏིག་བཟོ།"
 
 #. Main window
-#: ../src/totem.c:3430
+#: ../src/totem.c:3565
 msgid "main window"
 msgstr "སྒོ་སྒྲིག་གཙོ་བོ།"
 
-#: ../src/totem.c:3435
+#: ../src/totem.c:3570
 msgid "video popup menu"
 msgstr "ཝི་ཌིའོ་ པོཔ་ཨཔ་ དཀར་ཆག"
 
@@ -1412,68 +1404,99 @@ msgstr ""
 "ངོས་འདྲ་བ་གཙོ་བོ་ (vanity.glade)མངོན་གསལ་འབད་མ་ཚུགས། \n"
 "Vanity ངེས་བདེན་སྦེ་ གཞི་བཙུགས་འབད་ཡོདཔ་ ངེས་ཏིག་བཟོ།"
 
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2061
+#: ../src/backend/bacon-video-widget-gst.c:3517
+msgid "The requested audio output was not found. Please select another audio output in the Multimedia Systems Selector."
+msgstr "ཞུ་བ་འབད་མི་ རྣར་ཉན་ཨའུཊི་པུཊི་དེ་ འཚོལ་མ་ཐོབ། སྣ་མང་བརྡ་ལམ་རིམ་ལུགས་སེལ་བྱེད་ནང་ལས་ རྣར་ཉན་ཨའུཊི་པུཊི་གཞན་ཅིག་ སེལ་འཐུ་འབད་གནང་།"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2066
+#: ../src/backend/bacon-video-widget-gst.c:1948
+msgid "Location not found."
+msgstr "གནས་ཁོངས་འཚོལ་མ་ཐོབ།"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2070
+#: ../src/backend/bacon-video-widget-gst.c:1951
+msgid "Could not open location; You may not have permission to open the file."
+msgstr "གནས་ཁོངས་ཁ་ཕྱེ་མ་ཚུགས། ཁྱོད་ལུ་ཡིག་སྣོད་དེ་ ཁ་ཕྱེ་ནིའི་གནང་བ་མེདཔ་འོང་ནི་མས།"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2081
+#: ../src/backend/bacon-video-widget-gst.c:3468
+msgid "The video output is in use by another application. Please close other video applications, or select another video output in the Multimedia Systems Selector."
+msgstr "ཝི་ཌིའོ་ཨའུཊི་པུཊི་དེ་ གློག་རིམ་གཞན་ཅིག་གིས་ ལག་ལེན་འཐབ་སྟེ་འདུག ཝི་ཌིའོ་གློག་རིམ་གཞན་ཚུ་ ཁ་བསྡམས་ ཡང་ན་ སྣ་མང་བརྡ་ལམ་ རིམ་ལུགས་སེལ་བྱེད་ནང་ལས་ ཝི་ཌིའོ་ཨའུཊི་པུཊི་གཞན་ཅིག་སེལ་འཐུ་འབད།"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2087
+#: ../src/backend/bacon-video-widget-gst.c:3511
+msgid "The audio output is in use by another application. Please select another audio output in the Multimedia Systems Selector. You may want to consider using a sound server."
+msgstr "རྣར་ཉན་ཨའུཊི་པུཊི་དེ་ གློག་རིམ་གཞན་ཅིག་གིས་ ལག་ལེན་འཐབ་སྟེ་འདུག སྣ་མང་བརྡ་ལམ་རིམ་ལུགས་སེལ་བྱེད་ནང་ལས་ རྣར་ཉན་ཨའུཊི་པུཊི་གཞན་ཅིག་ སེལ་འཐུ་འབད་གནང་། ཁྱོད་ཀྱིས་སྒྲ་སྐད་སར་བར་ཅིག་ ལག་ལེན་འཐབ་དགོཔ་འོང་།"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2102
+msgid "Cannot play this file over the network. Try downloading it to disk first."
+msgstr "ཡིག་སྣོད་འདི་ཡོངས་འབྲེལ་ཐོག་ལུ་ གཏང་མི་ཚུགས་པས། དང་པ་རང་ ཌིཀསི་གུ་ཕབ་ལེན་འབད།"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2180
+msgid "Media file could not be played."
+msgstr "བརྡ་ལམ་ཡིག་སྣོད་དེ་གཏང་མ་ཚུགས།"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2262
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2313
+#: ../src/backend/bacon-video-widget-gst.c:1883
+msgid "Failed to retrieve working directory"
+msgstr "ལཱ་འབད་བའི་བསྒང་གི་སྣོད་ཐོ་ སླར་འདྲེན་འབད་མ་ཚུགས།"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3764
+#: ../src/backend/bacon-video-widget-gst.c:3179
+msgid "Too old version of GStreamer installed."
+msgstr "རྙིང་དྲགས་ཐལ་མི་ ཇི་སི་ཊི་མར་ཐོན་རིམ་ གཞི་བཙུགས་འབད་ནུག"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3771
+#: ../src/backend/bacon-video-widget-gst.c:3187
+msgid "Media contains no supported video streams."
+msgstr "བརྡ་ལམ་ནང་ལུ་ རྒྱབ་སྐྱོར་ལྡན་པའི་ ཝི་ཌིའོ་རྒྱུན་རིམ་མིན་འདུག"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4116
+#: ../src/backend/bacon-video-widget-gst.c:3372
+msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
+msgstr "ཇི་སི་ཊི་མར་ གཏང་ནིའི་དངོས་པོ་ཅིག་ གསར་བསྐྲུན་འབད་མ་ཚུགས། ཁྱོད་རའི་ཇི་སི་ཊི་མར་གཞི་བཙུགས་ལུ་ ཞིབ་དཔྱད་འབད་གནང་།"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4231
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4315
+#: ../src/backend/bacon-video-widget-gst.c:3479
+msgid "Failed to open video output. It may not be available. Please select another video output in the Multimedia Systems Selector."
+msgstr "ཝི་ཌིའོ་ཨའུཊི་པུཊི་ ཁ་ཕྱེ་མ་ཚུགས། འདི་མེདཔ་འོང་ནི་མས། སྣ་མང་བརྡ་ལམ་རིམ་ལུགས་སེལ་བྱེད་ནང་ལས་ ཝི་ཌིའོ་ཨའུཊི་པུཊི་གཞན་ཅིག་ སེལ་འཐུ་འབད།"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4240
+#: ../src/backend/bacon-video-widget-gst.c:3483
+msgid "Could not find the video output. You may need to install additional GStreamer plugins, or select another video output in the Multimedia Systems Selector."
+msgstr "ཝི་ཌིའོ་ཨའུཊི་པུཊི་འཚོལ་མ་ཐོབ། ཁྱོད་ཀྱིས་ཇི་སི་ཊི་མར་པ་ལག་ཨིན་ ཧེང་བཀལ་གཞི་བཙུགས་འབད་དགོཔ་འོང་ནི་དང་ ཡང་ན་ མང་བརྡ་ལམ་རིམ་ལུགས་སེལ་བྱེད་ནང་ལས་ ཝི་ཌིའོ་ཨའུཊི་པུཊི་གཞན་ཅིག་ སེལ་འཐུ་འབད་དགོང་འོང་།"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4259
+#: ../src/backend/bacon-video-widget-gst.c:3528
+msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
+msgstr "རྣར་ཉན་ཨའུཊི་པུཊི་ ཁ་ཕྱེ་མ་ཚུགས། ཁྱོད་ལུ་སྒྲ་སྐད་ཐབས་འཕྲུལ་དེ་ ཁ་ཕྱེ་ནིའི་གནང་བ་མེདཔ་འོང་ནི་དང་ ཡང་ན་ སྒྲ་སྐད་སར་བར་དེ་ གཡོག་བཀོལ་དོ་མེདཔ་འོང་ནི་མས། སྣ་མང་བརྡ་ལམ་རིམ་ལུགས་སེལ་བྱེད་ནང་ལས་ རྣར་ཉན་ཨའུཊི་པུཊི་གཞན་ཅིག་ སེལ་འཐུ་འབད་གནང་།"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4269
+#: ../src/backend/bacon-video-widget-gst.c:3532
+msgid "Could not find the audio output. You may need to install additional GStreamer plugins, or select another audio output in the Multimedia Systems Selector."
+msgstr " རྣར་ཉན་ཨའུཊི་པུཊི་དེ་ འཚོལ་མ་ཐོབ། ཁྱོད་ཀྱིས་ཇི་སི་ཊི་མར་པ་ལག་ཨིན་ ཧེང་བཀལ་གཞི་བཙུགས་འབད་དགོཔ་འོང་ནི་དང་ ཡང་ན་ མང་བརྡ་ལམ་རིམ་ལུགས་སེལ་བྱེད་ནང་ལས་ རྣར་ཉན་ཨའུཊི་པུཊི་གཞན་ཅིག་ སེལ་འཐུ་འབད་དགོང་འོང་།"
+
 #: ../src/backend/bacon-video-widget-gst.c:67
 msgid "Totem Video Window"
 msgstr "ཊོ་ཊེམ་ ཝི་ཌིའོ་སྒོ་སྒྲིག"
 
-#: ../src/backend/bacon-video-widget-gst.c:1874
-msgid "Failed to retrieve working directory"
-msgstr "ལཱ་འབད་བའི་བསྒང་གི་སྣོད་ཐོ་ སླར་འདྲེན་འབད་མ་ཚུགས།"
-
-#: ../src/backend/bacon-video-widget-gst.c:1935
-msgid "Location not found."
-msgstr "གནས་ཁོངས་འཚོལ་མ་ཐོབ།"
-
-#: ../src/backend/bacon-video-widget-gst.c:1938
-msgid "Could not open location; You may not have permission to open the file."
-msgstr "གནས་ཁོངས་ཁ་ཕྱེ་མ་ཚུགས། ཁྱོད་ལུ་ཡིག་སྣོད་དེ་ ཁ་ཕྱེ་ནིའི་གནང་བ་མེདཔ་འོང་ནི་མས།"
-
-#: ../src/backend/bacon-video-widget-gst.c:1959
+#: ../src/backend/bacon-video-widget-gst.c:1972
 msgid "Failed to open media file; unknown error"
 msgstr "བརྡ་ལམ་ཡིག་སྣོད་ཁ་ཕྱེ་མ་ཚུགས། འཛོལ་བ་ག་ཅི་ཨིན་ན་མ་ཤེས།"
 
-#: ../src/backend/bacon-video-widget-gst.c:1992
+#: ../src/backend/bacon-video-widget-gst.c:2024
 #, c-format
 msgid "Failed to play: %s"
 msgstr "%s གཏང་མ་ཚུགས།"
 
-#: ../src/backend/bacon-video-widget-gst.c:1994
+#: ../src/backend/bacon-video-widget-gst.c:2026
 msgid "unknown error"
 msgstr "མ་ཤེས་པའི་འཛོལ་བ།"
 
-#: ../src/backend/bacon-video-widget-gst.c:3148
-msgid "Too old version of GStreamer installed."
-msgstr "རྙིང་དྲགས་ཐལ་མི་ ཇི་སི་ཊི་མར་ཐོན་རིམ་ གཞི་བཙུགས་འབད་ནུག"
-
-#: ../src/backend/bacon-video-widget-gst.c:3155
-msgid "Media contains no supported video streams."
-msgstr "བརྡ་ལམ་ནང་ལུ་ རྒྱབ་སྐྱོར་ལྡན་པའི་ ཝི་ཌིའོ་རྒྱུན་རིམ་མིན་འདུག"
-
-#: ../src/backend/bacon-video-widget-gst.c:3333
-msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
-msgstr "ཇི་སི་ཊི་མར་ གཏང་ནིའི་དངོས་པོ་ཅིག་ གསར་བསྐྲུན་འབད་མ་ཚུགས། ཁྱོད་རའི་ཇི་སི་ཊི་མར་གཞི་བཙུགས་ལུ་ ཞིབ་དཔྱད་འབད་གནང་།"
-
-#: ../src/backend/bacon-video-widget-gst.c:3429
-msgid "The video output is in use by another application. Please close other video applications, or select another video output in the Multimedia Systems Selector."
-msgstr "ཝི་ཌིའོ་ཨའུཊི་པུཊི་དེ་ གློག་རིམ་གཞན་ཅིག་གིས་ ལག་ལེན་འཐབ་སྟེ་འདུག ཝི་ཌིའོ་གློག་རིམ་གཞན་ཚུ་ ཁ་བསྡམས་ ཡང་ན་ སྣ་མང་བརྡ་ལམ་ རིམ་ལུགས་སེལ་བྱེད་ནང་ལས་ ཝི་ཌིའོ་ཨའུཊི་པུཊི་གཞན་ཅིག་སེལ་འཐུ་འབད།"
-
-#: ../src/backend/bacon-video-widget-gst.c:3439
-msgid "Failed to open video output. It may not be available. Please select another video output in the Multimedia Systems Selector."
-msgstr "ཝི་ཌིའོ་ཨའུཊི་པུཊི་ ཁ་ཕྱེ་མ་ཚུགས། འདི་མེདཔ་འོང་ནི་མས། སྣ་མང་བརྡ་ལམ་རིམ་ལུགས་སེལ་བྱེད་ནང་ལས་ ཝི་ཌིའོ་ཨའུཊི་པུཊི་གཞན་ཅིག་ སེལ་འཐུ་འབད།"
-
-#: ../src/backend/bacon-video-widget-gst.c:3466
-msgid "The audio output is in use by another application. Please select another audio output in the Multimedia Systems Selector. You may want to consider using a sound server."
-msgstr "རྣར་ཉན་ཨའུཊི་པུཊི་དེ་ གློག་རིམ་གཞན་ཅིག་གིས་ ལག་ལེན་འཐབ་སྟེ་འདུག སྣ་མང་བརྡ་ལམ་རིམ་ལུགས་སེལ་བྱེད་ནང་ལས་ རྣར་ཉན་ཨའུཊི་པུཊི་གཞན་ཅིག་ སེལ་འཐུ་འབད་གནང་། ཁྱོད་ཀྱིས་སྒྲ་སྐད་སར་བར་ཅིག་ ལག་ལེན་འཐབ་དགོཔ་འོང་།"
-
-#: ../src/backend/bacon-video-widget-gst.c:3472
-msgid "The requested audio output was not found. Please select another audio output in the Multimedia Systems Selector"
-msgstr "ཞུ་བ་འབད་མི་ རྣར་ཉན་ཨའུཊི་པུཊི་དེ་ འཚོལ་མ་ཐོབ། སྣ་མང་བརྡ་ལམ་རིམ་ལུགས་སེལ་བྱེད་ནང་ལས་ རྣར་ཉན་ཨའུཊི་པུཊི་གཞན་ཅིག་ སེལ་འཐུ་འབད་གནང་།"
-
-#: ../src/backend/bacon-video-widget-gst.c:3482
-msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
-msgstr "རྣར་ཉན་ཨའུཊི་པུཊི་ ཁ་ཕྱེ་མ་ཚུགས། ཁྱོད་ལུ་སྒྲ་སྐད་ཐབས་འཕྲུལ་དེ་ ཁ་ཕྱེ་ནིའི་གནང་བ་མེདཔ་འོང་ནི་དང་ ཡང་ན་ སྒྲ་སྐད་སར་བར་དེ་ གཡོག་བཀོལ་དོ་མེདཔ་འོང་ནི་མས། སྣ་མང་བརྡ་ལམ་རིམ་ལུགས་སེལ་བྱེད་ནང་ལས་ རྣར་ཉན་ཨའུཊི་པུཊི་གཞན་ཅིག་ སེལ་འཐུ་འབད་གནང་།"
-
-#: ../src/backend/bacon-video-widget-xine.c:677
+#: ../src/backend/bacon-video-widget-xine.c:680
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1482,146 +1505,147 @@ msgstr ""
 "རྣར་ཉན་འདྲེན་བྱེད་'%s' མངོན་གསལ་འབད་མ་ཚུགས། \n"
 "ཐབས་འཕྲུལ་དེ་ ཁོམ་མེད་ཨིནམ་མེནམ་ ཞིབ་དཔྱད་འབད།"
 
-#: ../src/backend/bacon-video-widget-xine.c:1132
-#: ../src/backend/bacon-video-widget-xine.c:1688
+#: ../src/backend/bacon-video-widget-xine.c:1140
+#: ../src/backend/bacon-video-widget-xine.c:1733
 msgid "No video output is available. Make sure that the program is correctly installed."
 msgstr "ཝི་ཌིའོ་གི་ཨའུཊི་པུཊི་ མི་འཐོབ་པས། ལས་རིམ་དེ་ ངེས་བདེན་སྦེ་ གཞི་བཙུགས་འབད་ཡོདཔ་ ངེས་ཏིག་བཟོ།"
 
-#: ../src/backend/bacon-video-widget-xine.c:1255
+#: ../src/backend/bacon-video-widget-xine.c:1267
 msgid "The server you are trying to connect to is not known."
 msgstr "ཁྱོད་ཀྱིས་མཐུད་ཐབས་འབད་མི་ སར་བར་དེ་ ངོ་མི་ཤེས་པས།"
 
-#: ../src/backend/bacon-video-widget-xine.c:1259
+#: ../src/backend/bacon-video-widget-xine.c:1271
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "ཁྱོད་ཀྱིས་གསལ་བཀོད་འབད་མི་ ཐབས་འཕྲུལ་མིང་(%s)དེ་ ནུས་མེད་ཨིནམ་བཟུམ་ཅིག་འདུག"
 
-#: ../src/backend/bacon-video-widget-xine.c:1263
+#: ../src/backend/bacon-video-widget-xine.c:1275
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "ཁྱོད་ཀྱིས་མཐུད་ཐབས་འབད་མི་ སར་བར་(%s)དེ་ བདའ་མི་ཟུན་པས།"
 
-#: ../src/backend/bacon-video-widget-xine.c:1267
+#: ../src/backend/bacon-video-widget-xine.c:1279
 msgid "The connection to this server was refused."
 msgstr "སར་བར་འདི་གི་ མཐུད་ལམ་ལུ་ ངོས་ལེན་མིན་འདུག"
 
-#: ../src/backend/bacon-video-widget-xine.c:1271
+#: ../src/backend/bacon-video-widget-xine.c:1283
 msgid "The specified movie could not be found."
 msgstr "གསལ་བཀོད་འབད་མི་ གློག་བརྙན་དེ་ འཚོལ་མ་ཐོབ།"
 
-#: ../src/backend/bacon-video-widget-xine.c:1277
-#: ../src/backend/bacon-video-widget-xine.c:1295
+#: ../src/backend/bacon-video-widget-xine.c:1289
+#: ../src/backend/bacon-video-widget-xine.c:1307
 msgid "The source seems encrypted, and can't be read. Are you trying to play an encrypted DVD without libdvdcss?"
 msgstr "འབྱུང་ཁུངས་དེ་ གསང་བ་བཟོ་བཟོཝ་བཟུམ་ཅིག་ཨིནམ་ལས་ ལྷག་མི་ཚུགས། ཁྱོད་ཀྱིས་ libdvdcss ་མེད་པའི་ གསང་བཟོས་ཌི་བི་ཌི་ཅིག་ གཏང་ཐབས་འབདཝ་ཨིན་ན?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1280
+#: ../src/backend/bacon-video-widget-xine.c:1292
 msgid "The movie could not be read."
 msgstr "གློག་བརྙན་དེ་ ལྷག་མ་ཚུགས།"
 
-#: ../src/backend/bacon-video-widget-xine.c:1289
+#: ../src/backend/bacon-video-widget-xine.c:1301
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "དཔེ་མཛོད་ཅིག་ ཡང་ན་ ཌི་ཀོ་ཌར་(%s)ཅིག་ མངོན་གསལ་འབད་བའི་སྐབས་ལུ་ དཀའ་ངལ་ཅིག་བྱུང་ཡི།"
 
-#: ../src/backend/bacon-video-widget-xine.c:1298
+#: ../src/backend/bacon-video-widget-xine.c:1310
 msgid "This file is encrypted and cannot be played back."
 msgstr "ཡིག་སྣོད་འདི་ གསང་བཟོས་ཨིནམ་ལས་ གཏང་མི་ཚུགས།"
 
-#: ../src/backend/bacon-video-widget-xine.c:1303
+#: ../src/backend/bacon-video-widget-xine.c:1315
 msgid "For security reasons, this movie can not be played back."
 msgstr "སྲུང་སྐྱོབ་ཀྱི་རྒྱུ་མཚན་ལུ་བརྟེན་ཏེ་ གློག་བརྙན་འདི་གཏང་་མི་ཚུགས།"
 
-#: ../src/backend/bacon-video-widget-xine.c:1308
+#: ../src/backend/bacon-video-widget-xine.c:1320
 msgid "The audio device is busy. Is another application using it?"
 msgstr "རྣར་ཉན་ཐབས་འཕྲུལ་དེ་ ཁོམ་མེད་ཨིན་པས། གློག་རིམ་གཞན་ཅིག་གིས་ འདི་ལག་ལེན་འཐབ་དོ་ཡོདཔ་ཨིན་ན?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1313
+#: ../src/backend/bacon-video-widget-xine.c:1325
 msgid "You are not allowed to open this file."
 msgstr "ཁྱོད་ཀྱིས་ཡིག་སྣོད་འདི་ ཁ་ཕྱེ་མི་ཆོག"
 
-#: ../src/backend/bacon-video-widget-xine.c:1315
+#: ../src/backend/bacon-video-widget-xine.c:1327
 msgid "The server refused access to this file or stream."
 msgstr "སར་བར་དེ་གིས་ ཡིག་སྣོད་འདིའམ་ སིཊིམ་འདི་ལུ་ འཛུལ་སྤྱོད་ངོས་ལེན་འབད་མ་བཏུབ།"
 
-#: ../src/backend/bacon-video-widget-xine.c:1324
+#: ../src/backend/bacon-video-widget-xine.c:1336
 msgid "The file you tried to play is an empty file."
 msgstr "ཁྱོད་ཀྱིས་གཏང་ནི་སྦེ་ འབད་རྩོལ་བསྐྱེད་མི་ ཡིག་སྣོད་དེ་ སྟོངམ་ཨིན་པས།"
 
-#: ../src/backend/bacon-video-widget-xine.c:1492
+#: ../src/backend/bacon-video-widget-xine.c:1530
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "གློག་བརྙན་འདི་ ལེགས་སྐྱོང་འཐབ་ནིའི་དོན་ལུ་ ཨིན་པུཊི་གི་པ་ལག་ཨིན་མིན་འདུག"
 
-#: ../src/backend/bacon-video-widget-xine.c:1496
+#: ../src/backend/bacon-video-widget-xine.c:1534
 msgid "There is no plugin to handle this movie."
 msgstr "གློག་བརྙན་འདི་ ལེགས་སྐྱོང་འཐབ་ནིའི་དོན་ལུ་ པ་ལག་ཨིན་མིན་འདུག"
 
-#: ../src/backend/bacon-video-widget-xine.c:1500
+#: ../src/backend/bacon-video-widget-xine.c:1538
 msgid "This movie is broken and can not be played further."
 msgstr "གློག་བརྙན་དེ་ མེདཔ་ཐལ་ཡོདཔ་ལས་ དེ་ལས་བརྒལ་ཏེ་ གཏང་འབད་མི་བཏུབ།"
 
-#: ../src/backend/bacon-video-widget-xine.c:1504
+#: ../src/backend/bacon-video-widget-xine.c:1542
 msgid "This location is not a valid one."
 msgstr "གནས་ཁོངས་དེ་ ནུས་ཅན་གཅིག་མེན་པས།"
 
-#: ../src/backend/bacon-video-widget-xine.c:1508
+#: ../src/backend/bacon-video-widget-xine.c:1546
 msgid "This movie could not be opened."
 msgstr "གློག་བརྙན་འདི་ ཁ་ཕྱེ་མ་ཚུགས།"
 
-#: ../src/backend/bacon-video-widget-xine.c:1512
+#: ../src/backend/bacon-video-widget-xine.c:1550
 msgid "Generic Error."
 msgstr "ཇེ་ནི་རིཀ་ འཛོལ་བ།"
 
-#: ../src/backend/bacon-video-widget-xine.c:2052
+#: ../src/backend/bacon-video-widget-xine.c:2104
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr "གློག་བརྙན་འདི་ འགུལ་མེད་གཟུགས་བརྙན་ཅིག་ཨིན་པས། འདི་གཟུགས་བརྙན་མཐོང་བྱེད་ཅིག་གིས་འབད་ ཁ་ཕྱེ་ཚུགས།"
 
-#: ../src/backend/bacon-video-widget-xine.c:2076
+#: ../src/backend/bacon-video-widget-xine.c:2128
 #, c-format
 msgid "Video codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"
 msgstr "ཝི་ཌིའོ་ ཀོ་ཌེཀ་'%s'དེ་ ལེགས་སྐྱོང་མ་འཐབ་པས། གློག་བརྙན་གྱི་དབྱེ་བ་ ལ་ལོ་ཅིག་གཏང་ཚུགས་ནིའི་དོན་ལུ་ ཁྱོད་ཀྱིས་ པ་ལག་ཨིནསི་ ཁ་སྐོང་གཞི་བཙུགས་འབད་དགོཔ་འོང་།"
 
-#: ../src/backend/bacon-video-widget-xine.c:2080
+#: ../src/backend/bacon-video-widget-xine.c:2132
 #, c-format
 msgid "Audio codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"
 msgstr "རྣར་ཉན་ཀོ་ཌེཀ་'%s'དེ་ ལེགས་སྐྱོང་མ་འཐབ་པས། གློག་བརྙན་གྱི་དབྱེ་བ་ ལ་ལོ་ཅིག་གཏང་ཚུགས་ནིའི་དོན་ལུ་ ཁྱོད་ཀྱིས་ པ་ལག་ཨིནསི་ ཁ་སྐོང་གཞི་བཙུགས་འབད་དགོཔ་འོང་། "
 
-#: ../src/backend/bacon-video-widget-xine.c:2096
+#: ../src/backend/bacon-video-widget-xine.c:2148
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "འདི་རྣར་ཉན་ཙམ་གྱི་ཡིག་སྣོད་ཅིག་ཨིནམ་ལས་ རྣར་ཉན་གྱི་ཨའུཊི་པུཊི་ འཐོབ་མི་ཚུགས་པས།"
 
-#: ../src/backend/bacon-video-widget-xine.c:3536
+#: ../src/backend/bacon-video-widget-xine.c:3530
+#: ../src/backend/bacon-video-widget-xine.c:3577
 #: ../src/backend/bacon-video-widget-xine.c:3599
 #, c-format
 msgid "Language %d"
 msgstr "སྐད་ཡིག་%d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3635
-msgid "Movie is not playing."
-msgstr "གློག་བརྙན་དེ་ གཏང་མི་བཏུབ་པས།"
-
-#: ../src/backend/bacon-video-widget-xine.c:3644
+#: ../src/backend/bacon-video-widget-xine.c:3636
 msgid "No video to capture."
 msgstr "བཟུང་ནིའི་ཝི་ཌིའོ་མིན་འདུག"
 
-#: ../src/backend/bacon-video-widget-xine.c:3652
+#: ../src/backend/bacon-video-widget-xine.c:3644
 msgid "Video codec is not handled."
 msgstr "ཝི་ཌིའོ་ཀོ་ཌེཀ་ ལེགས་སྐྱོང་མ་འཐབ་པས།"
 
-#: ../src/backend/video-utils.c:260
+#: ../src/backend/bacon-video-widget-xine.c:3652
+msgid "Movie is not playing."
+msgstr "གློག་བརྙན་དེ་ གཏང་མི་བཏུབ་པས།"
+
+#: ../src/backend/video-utils.c:238
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "ཆུ་ཚོད་%d"
 msgstr[1] "ཆུ་ཚོད་%d"
 
-#: ../src/backend/video-utils.c:262
+#: ../src/backend/video-utils.c:240
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "སྐར་མ་%d"
 msgstr[1] "སྐར་མ་%d"
 
-#: ../src/backend/video-utils.c:265
+#: ../src/backend/video-utils.c:243
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1629,95 +1653,112 @@ msgstr[0] "སྐར་ཆ་%d"
 msgstr[1] "སྐར་ཆ་%d"
 
 #. hour:minutes:seconds
-#: ../src/backend/video-utils.c:271
+#: ../src/backend/video-utils.c:249
 #, c-format
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. minutes:seconds
-#: ../src/backend/video-utils.c:274
+#: ../src/backend/video-utils.c:252
 #, c-format
 msgid "%s %s"
 msgstr "%s %s"
 
 #. seconds
-#: ../src/backend/video-utils.c:277
+#: ../src/backend/video-utils.c:255
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: ../src/plparse/totem-disc.c:115
+#: ../src/plparse/totem-disc.c:114
 #, c-format
 msgid "Failed to find real device node for %s: %s"
 msgstr "%s: %sགི་དོན་ལུ་ ཐབས་ལམ་ནོཌི་ ངོ་མ་དེ་ འཚོལ་མ་ཐོབ།"
 
-#: ../src/plparse/totem-disc.c:126
+#: ../src/plparse/totem-disc.c:125
 #, c-format
 msgid "Failed to read symbolic link %s: %s"
 msgstr "བརྡ་མཚོན་འབྲེལ་ལམ་%s: %s ལྷག་མ་ཚུགས།"
 
-#: ../src/plparse/totem-disc.c:283
+#: ../src/plparse/totem-disc.c:276
 #, c-format
 msgid "Failed to find mountpoint for device %s in /etc/fstab"
 msgstr "//etc/fstab ཐབས་ལམ་%s གི་དོན་ལུ་སྦྱར་་བརྩེགས་འབད་ས་ འཚོལ་མ་ཐོབ།"
 
-#: ../src/plparse/totem-disc.c:321
+#: ../src/plparse/totem-disc.c:314
 msgid "Please check that a disc is present in the drive."
 msgstr "འདྲེན་འཕྲུལ་ནང་ ཌིཀསི་ཅིག་ཡོད་མེད་ ཞིབ་དཔྱད་འབད།"
 
-#: ../src/plparse/totem-disc.c:324
+#: ../src/plparse/totem-disc.c:317
 #, c-format
 msgid "Failed to open device %s for reading: %s"
 msgstr "ཐབས་འཕྲུལ་%s དེ་%sལྷག་ནིའི་དོན་ལུ་ ཁ་ཕྱེ་མ་ཚུགས།"
 
-#: ../src/plparse/totem-disc.c:335
+#: ../src/plparse/totem-disc.c:328
 #, c-format
 msgid "Failed to retrieve capabilities of device %s: %s"
 msgstr "ཐབས་འཕྲུལ་%s: %sགི་ལྕོགས་གྲུབ་ སླར་འདྲེན་འབད་མ་ཚུགས།"
 
-#: ../src/plparse/totem-disc.c:368
+#: ../src/plparse/totem-disc.c:361
 #, c-format
 msgid "Drive status 0x%x (%s) - check disc"
 msgstr "འདྲེན་བྱེད་གནས་ཚད་0x%x (%s) - ཌིཀསི་ལུ་ ཞིབ་དཔྱད་འབད།"
 
-#: ../src/plparse/totem-disc.c:403
+#: ../src/plparse/totem-disc.c:408
 #, c-format
-msgid "Unexpected error status %d while mounting %s"
-msgstr "རེ་བ་མེད་པའི་འཛོལ་བའི་གནས་ཚད་ %d བྱུང་ཡི། %s སྦྱར་བརྩེགས་འབད་བའི་སྐབས།"
+msgid "Failed to mount %s"
+msgstr "%s སྦྱར་བརྩེགས་འབད་མ་ཚུགས།"
 
-#: ../src/plparse/totem-disc.c:456
+#: ../src/plparse/totem-disc.c:430
+#, c-format
+msgid "Failed to find mountpoint for %s"
+msgstr "%sགི་དོན་ལུ་སྦྱར་་བརྩེགས་འབད་ས་ འཚོལ་མ་ཐོབ།"
+
+#: ../src/plparse/totem-disc.c:489
 #, c-format
 msgid "Error getting %s disc status: %s"
 msgstr "%s ལེན་ནི་ལུ་འཛོལ་བ། ཌིཀསི་གི་གནས་ཚད་%sཨིན་པས།"
 
-#: ../src/plparse/totem-disc.c:485
+#: ../src/plparse/totem-disc.c:518
 #, c-format
 msgid "Unexpected/unknown cd type 0x%x (%s)"
 msgstr "རེ་བ་མེདཔ་/ངོ་མ་ཤེས་པའི་ སི་ཌི་དབྱེ་བ་0x%x (%s)"
 
-#: ../src/plparse/totem-disc.c:694
+#: ../src/plparse/totem-disc.c:727
 msgid "Audio CD"
 msgstr "རྣར་ཉན་སི་ཌི།"
 
-#: ../src/plparse/totem-disc.c:696
+#: ../src/plparse/totem-disc.c:729
 msgid "Video CD"
 msgstr "ཝི་ཌིའོ་སི་ཌི།"
 
-#: ../src/plparse/totem-disc.c:698
+#: ../src/plparse/totem-disc.c:731
 msgid "DVD"
 msgstr "ཌི་བི་ཌི།"
 
-#: ../src/plparse/totem-pl-parser.c:251
+#: ../src/plparse/totem-pl-parser.c:329
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "མིང་དཔྱད་པ་: %s འབྲི་མ་ཚུགས།"
 
-#: ../src/plparse/totem-pl-parser.c:358
-#: ../src/plparse/totem-pl-parser.c:492
+#: ../src/plparse/totem-pl-parser.c:437
+#: ../src/plparse/totem-pl-parser.c:578
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "ཡིག་སྣོད་%s': %sཁ་ཕྱེ་མ་ཚུགས།"
 
+#~ msgid "_DXR3 TV-out"
+#~ msgstr "ཌི་ཨེགསི་ཨར་༣ རྒྱང་མཐོང་-ཕྱིར་གཏང་།(_D)"
+#~ msgid "Select CD"
+#~ msgstr "སི་ཌི་སེལ་འཐུ་འབད།"
+#~ msgid "Please select the currently playing CD:"
+#~ msgstr "ད་ལྟོ་གཏང་བའི་བསྒང་གི་སི་ཌི་དེ་ སེལ་འཐུ་འབད།"
+#~ msgid "Failed to play Audio/Video Disc"
+#~ msgstr "རྣར་ཉན་/ཝི་ཌིའོ་ཌིཀསི་ གཏང་མ་ཚུགས།"
+#~ msgid "Reason unknown"
+#~ msgstr "རྒྱུ་མཚན་མ་ཤེས།"
+#~ msgid "Unexpected error status %d while mounting %s"
+#~ msgstr "རེ་བ་མེད་པའི་འཛོལ་བའི་གནས་ཚད་ %d བྱུང་ཡི། %s སྦྱར་བརྩེགས་འབད་བའི་སྐབས།"
 #~ msgid "Repeat _mode"
 #~ msgstr "བསྐྱར་ལོག་ཐབས་ལམ།(_m)"
 #~ msgid "Shuf_fle mode"
