@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-27 12:56+0700\n"
-"PO-Revision-Date: 2006-05-27 13:00+0700\n"
+"POT-Creation-Date: 2006-05-29 22:54+0700\n"
+"PO-Revision-Date: 2006-05-29 22:55+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <L10n@opentle.org>\n"
 "MIME-Version: 1.0\n"
@@ -183,7 +183,7 @@ msgstr "เฟรมเรท"
 msgid "N/A"
 msgstr "ไม่ปรากฏ"
 
-#: data/properties.glade.h:17 src/totem.c:2067
+#: data/properties.glade.h:17 src/totem.c:2057
 msgid "Properties"
 msgstr "คุณสมบัติ"
 
@@ -579,8 +579,8 @@ msgid "Time:"
 msgstr "เวลา:"
 
 #. Title
-#: data/totem.glade.h:102 src/totem.c:706 src/totem.c:3530
-#: src/totem.c:3547
+#: data/totem.glade.h:102 src/totem.c:706 src/totem.c:3520
+#: src/totem.c:3537
 msgid "Totem Movie Player"
 msgstr "Totem: โปรแกรมเล่นภาพยนตร์"
 
@@ -1258,7 +1258,7 @@ msgstr "คุณอาจตรวจสอบว่าได้ใส่แผ
 msgid "Totem was not able to play this disc."
 msgstr "Totem ไม่สามารถเล่นแผ่นนี้ได้"
 
-#: src/totem.c:433 src/totem.c:3389
+#: src/totem.c:433 src/totem.c:3379
 msgid "No reason."
 msgstr "ไม่ทราบสาเหตุ"
 
@@ -1282,83 +1282,79 @@ msgstr "เปิดตำแหน่ง..."
 msgid "Totem could not display the help contents."
 msgstr "Totem ไม่สามารถแสดงวิธีใช้"
 
-#: src/totem.c:1967
+#: src/totem.c:1961
 msgid "GTK+"
 msgstr "GTK+"
 
-#: src/totem.c:1969
+#: src/totem.c:1963
 msgid "GNOME"
 msgstr "GNOME"
 
 #. This lists the back-end and front-end types and versions, such as
 #. * Movie Player using GStreamer 0.10.1 and GNOME
-#: src/totem.c:1975
+#: src/totem.c:1969
 #, c-format
 msgid "Movie Player using %s and %s"
 msgstr "โปรแกรมเล่นภาพยนตร์โดยใช้ %s และ %s"
 
-#: src/totem.c:1979
-msgid "Totem"
-msgstr "Totem"
+#: src/totem.c:1974
+msgid "Copyright © 2002-2006 Bastien Nocera"
+msgstr "Copyright © 2002-2006 Bastien Nocera"
 
-#: src/totem.c:1981 src/vanity.c:262
-msgid "Copyright © 2002-2005 Bastien Nocera"
-msgstr "Copyright © 2002-2005 Bastien Nocera"
-
-#: src/totem.c:1986 src/vanity.c:267
+#: src/totem.c:1979 src/vanity.c:267
 msgid "translator-credits"
 msgstr ""
 "อิสริยะ ไพรีพ่ายฤทธิ์ <markpeak@gmail.com>\n"
 "เทพพิทักษ์ การุญบุญญานันท์ <thep@linux.thai.net>"
 
-#: src/totem.c:2022 src/totem.c:2030 src/vanity.c:300
+#: src/totem.c:2012 src/totem.c:2020 src/vanity.c:300
 #: src/vanity.c:308
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem ไม่สามารถจับหน้าจอได้"
 
-#: src/totem.c:2030 src/vanity.c:308
+#: src/totem.c:2020 src/vanity.c:308
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "เหตุการณ์นี้ไม่น่าจะเกิด กรุณารายงานข้อผิดพลาดนี้"
 
-#: src/totem.c:2057
+#: src/totem.c:2047
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem ไม่สามารถแสดงหน้าต่างคุณสมบัติได้"
 
-#: src/totem.c:2057
+#: src/totem.c:2047
 msgid "Make sure that Totem is correctly installed."
 msgstr "กรุณาตรวจสอบว่าติดตั้ง Totem ถูกต้อง"
 
-#: src/totem.c:2143
+#: src/totem.c:2133
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem ไม่สามารถเลื่อนตำแหน่งใน '%s' ได้"
 
-#: src/totem.c:3389
+#: src/totem.c:3379
 msgid "Totem could not startup."
 msgstr "ไม่สามารถเริ่มทำงาน Totem"
 
-#: src/totem.c:3531
+#: src/totem.c:3521
 msgid "Could not initialize the thread-safe libraries."
 msgstr "ไม่สามารถเริ่มใช้ไลบรารีสำหรับการใช้งานเธรดอย่างปลอดภัย"
 
-#: src/totem.c:3531
+#: src/totem.c:3521
 msgid "Verify your system installation. Totem will now exit."
 msgstr "กรุณาตรวจสอบการติดตั้งของระบบ Totem จะเลิกทำงาน"
 
-#: src/totem.c:3554
+#: src/totem.c:3545
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem ไม่สามารถเริ่มใช้ระบบจัดการค่าตั้ง"
 
-#: src/totem.c:3554
+#: src/totem.c:3545
 msgid "Make sure that GNOME is properly installed."
 msgstr "กรุณาตรวจสอบว่าติดตั้ง GNOME ถูกต้องหรือไม่"
 
 #. Main window
-#: src/totem.c:3582
+#: src/totem.c:3573
 msgid "main window"
 msgstr "หน้าต่างหลัก"
 
-#: src/totem.c:3587
+#: src/totem.c:3578
 msgid "video popup menu"
 msgstr "เมนูผุดขึ้นสำหรับวิดีโอ"
 
@@ -1370,6 +1366,10 @@ msgstr "เปิดใช้การดีบั๊ก"
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "โปรแกรมเว็บแคมซึ่งใช้ %s"
+
+#: src/vanity.c:262
+msgid "Copyright © 2002-2005 Bastien Nocera"
+msgstr "Copyright © 2002-2005 Bastien Nocera"
 
 #: src/vanity.c:551
 #, c-format
@@ -1747,38 +1747,38 @@ msgstr "ไม่สามารถเปิดอุปกรณ์ %s: %s"
 msgid "Failed to read symbolic link %s: %s"
 msgstr "ไม่สามารถเปิดลิงก์ %s: %s"
 
-#: src/plparse/totem-disc.c:321
+#: src/plparse/totem-disc.c:323
 #, c-format
 msgid "Failed to find mountpoint for device %s"
 msgstr "หาตำแหน่งเมานท์สำหรับอุปกรณ์ %s ไม่พบ"
 
-#: src/plparse/totem-disc.c:330
+#: src/plparse/totem-disc.c:332
 msgid "Could not connect to the HAL daemon"
 msgstr "ไม่สามารถติดต่อดีมอน HAL ได้"
 
-#: src/plparse/totem-disc.c:422
+#: src/plparse/totem-disc.c:449
 msgid "Please check that a disc is present in the drive."
 msgstr "กรุณาตรวจสอบว่ามีแผ่นในไดรว์หรือไม่"
 
-#: src/plparse/totem-disc.c:468
+#: src/plparse/totem-disc.c:495
 #, c-format
 msgid "Failed to mount %s"
 msgstr "เมานท์ %s ไม่สำเร็จ"
 
-#: src/plparse/totem-disc.c:492
+#: src/plparse/totem-disc.c:519
 #, c-format
 msgid "Failed to find mountpoint for %s"
 msgstr "หาตำแหน่งเมานท์สำหรับ %s ไม่พบ"
 
-#: src/plparse/totem-disc.c:764
+#: src/plparse/totem-disc.c:791
 msgid "Audio CD"
 msgstr "ซีดีเพลง"
 
-#: src/plparse/totem-disc.c:766
+#: src/plparse/totem-disc.c:793
 msgid "Video CD"
 msgstr "วิดีโอซีดี"
 
-#: src/plparse/totem-disc.c:768
+#: src/plparse/totem-disc.c:795
 msgid "DVD"
 msgstr "ดีวีดี"
 
@@ -1792,6 +1792,9 @@ msgstr "ไม่สามารถเขียนไปยังตัวแจ
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "ไม่สามารถเปิดแฟ้ม '%s': %s"
+
+#~ msgid "Totem"
+#~ msgstr "Totem"
 
 #~ msgid "Failed to open device %s for reading: %s"
 #~ msgstr "ไม่สามารถเปิดอุปกรณ์ %s เพื่ออ่าน: %s"
