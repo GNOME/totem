@@ -584,7 +584,7 @@ totem_plugin_get_value (NPP instance, NPPVariable variable,
 		*((char **)value) = totem_plugin_get_description();
 		break;
 	case NPPVpluginNeedsXEmbed:
-		*((PRBool *)value) = PR_TRUE;
+		*((NPBool *)value) = PR_TRUE;
 		break;
 	case NPPVpluginScriptableIID: {
 		static nsIID sIID = TOTEMMOZILLASCRIPT_IID;
@@ -692,7 +692,7 @@ NPError NP_Initialize (NPNetscapeFuncs * moz_funcs,
 		NPPluginFuncs * plugin_funcs)
 {
 	NPError err = NPERR_NO_ERROR;
-	PRBool supportsXEmbed = PR_FALSE;
+	NPBool supportsXEmbed = PR_FALSE;
 	NPNToolkitType toolkit = (NPNToolkitType) 0;
 
 	D("NP_Initialize\n");
