@@ -300,6 +300,20 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data, TotemPlPa
 	return mimetype;
 }
 
+static char *
+totem_pl_parser_read_entire_file (const char *url, int *size)
+{
+	char *contents;
+
+	if (gnome_vfs_read_entire_file (url, size, &contents) != GNOME_VFS_OK)
+		return NULL;
+
+	contents = g_realloc ((gpointer) contents, *size + 1);
+	contents[*size] = '\0';
+
+	return contents;
+}
+
 static char*
 totem_pl_parser_base_url (const char *url)
 {
@@ -826,7 +840,8 @@ totem_pl_parser_add_ram (TotemPlParser *parser, const char *url, gpointer data)
 	int size, i;
 	const char *split_char;
 
-	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+	contents = totem_pl_parser_read_entire_file (url, &size);
+	if (contents == NULL)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	/* figure out whether we're a unix or dos RAM file */
@@ -885,7 +900,8 @@ totem_pl_parser_add_asf_reference_parser (TotemPlParser *parser,
 	char *contents, **lines, *ref, *split_char;
 	int size;
 
-	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+	contents = totem_pl_parser_read_entire_file (url, &size);
+	if (contents == NULL)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	if (strstr(contents,"\x0d") == NULL) {
@@ -929,7 +945,8 @@ totem_pl_parser_add_asf_parser (TotemPlParser *parser,
 		return totem_pl_parser_add_asf_reference_parser (parser, url, data);
 	}
 
-	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+	contents = totem_pl_parser_read_entire_file (url, &size);
+	if (contents == NULL)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	if (size <= 4) {
@@ -1078,7 +1095,8 @@ totem_pl_parser_add_pls (TotemPlParser *parser, const char *url, gpointer data)
 	char *contents;
 	int size;
 
-	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+	contents = totem_pl_parser_read_entire_file (url, &size);
+	if (contents == NULL)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	if (size == 0) {
@@ -1127,7 +1145,8 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
 	const char *split_char;
 	gboolean extinfo;
 
-	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+	contents = totem_pl_parser_read_entire_file (url, &size);
+	if (contents == NULL)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	/* .pls files with a .m3u extension, the nasties */
@@ -1320,7 +1339,8 @@ totem_pl_parser_add_asx (TotemPlParser *parser, const char *url, gpointer data)
 	int size;
 	gboolean retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 
-	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+	contents = totem_pl_parser_read_entire_file (url, &size);
+	if (contents == NULL)
 		return FALSE;
 
 	doc = xmlParseMemory (contents, size);
@@ -1468,7 +1488,8 @@ totem_pl_parser_add_smil (TotemPlParser *parser, const char *url, gpointer data)
 	int size;
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 
-	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+	contents = totem_pl_parser_read_entire_file (url, &size);
+	if (contents == NULL)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	doc = xmlParseMemory (contents, size);
@@ -1526,7 +1547,8 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url, 
 	char *contents = NULL, *src;
 	int size;
 
-	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+	contents = totem_pl_parser_read_entire_file (url, &size);
+	if (contents == NULL)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	doc = xmlParseMemory (contents, size);
@@ -1588,7 +1610,8 @@ totem_pl_parser_add_desktop (TotemPlParser *parser, const char *url, gpointer da
 	const char *path, *display_name, *type;
 	int size;
 
-	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+	contents = totem_pl_parser_read_entire_file (url, &size);
+	if (contents == NULL)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	lines = g_strsplit (contents, "\n", 0);

@@ -1,3 +1,16 @@
+2006-06-06  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/totem-pl-parser.c:
+	(totem_pl_parser_read_entire_file), (totem_pl_parser_add_ram),
+	(totem_pl_parser_add_asf_reference_parser),
+	(totem_pl_parser_add_asf_parser), (totem_pl_parser_add_pls),
+	(totem_pl_parser_add_m3u), (totem_pl_parser_add_asx),
+	(totem_pl_parser_add_smil),
+	(totem_pl_parser_add_quicktime_metalink),
+	(totem_pl_parser_add_desktop): use totem_pl_parser_read_entire_file
+	to make sure that gnome_vfs_read_entire_file null-terminates the
+	strings
+
 2006-06-05  Bastien Nocera  <hadess@hadess.net>
 
 	* data/mime-type-list.txt: add Impulse Tracker and MOD files
