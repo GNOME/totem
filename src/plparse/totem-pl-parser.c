@@ -1791,6 +1791,7 @@ static PlaylistTypes dual_types[] = {
 	{ "audio/x-pn-realaudio", totem_pl_parser_add_ra },
 	{ "application/vnd.rn-realmedia", totem_pl_parser_add_ra },
 	{ "audio/x-pn-realaudio-plugin", totem_pl_parser_add_ra },
+	{ "audio/vnd.rn-realaudio", totem_pl_parser_add_ra },
 	{ "text/plain", totem_pl_parser_add_ra },
 	{ "video/x-ms-asf", totem_pl_parser_add_asf },
 	{ "video/x-ms-wmv", totem_pl_parser_add_asf },
