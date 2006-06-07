@@ -1,5 +1,13 @@
 2006-06-07  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-disc.c: (cd_cache_new_hal_ctx),
+	(totem_cd_detect_type_with_url): free the device cache when getting
+	an error checking for a CDDA (spotted by William Jon McCann
+	<mccann@jhu.edu>, unref the D-Bus connection when we get an error
+	initialising HAL
+
+2006-06-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser.c: Add audio/vnd.rn-realaudio as a
 	possible mime-type for Real Audio playlists (Closes: #344020)
 

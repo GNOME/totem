@@ -262,7 +262,10 @@ cd_cache_new_hal_ctx (void)
   dbus_error_init (&error);
   conn = dbus_bus_get (DBUS_BUS_SYSTEM, &error);
   if (conn != NULL && !dbus_error_is_set (&error)) {
-    libhal_ctx_set_dbus_connection (ctx, conn);
+    if (!libhal_ctx_set_dbus_connection (ctx, conn)) {
+      libhal_ctx_free (ctx);
+      return NULL;
+    }
     return ctx;
   }
 
@@ -272,7 +275,9 @@ cd_cache_new_hal_ctx (void)
   }
 
   libhal_ctx_shutdown (ctx, NULL);
-  libhal_ctx_free(ctx);
+  libhal_ctx_free (ctx);
+  if (conn != NULL)
+    dbus_connection_unref (conn);
 
   return NULL;
 }
@@ -739,8 +744,10 @@ totem_cd_detect_type_with_url (const char *device,
     return MEDIA_TYPE_ERROR;
 
   type = cd_cache_disc_is_cdda (cache, error);
-  if (type == MEDIA_TYPE_ERROR && *error != NULL)
+  if (type == MEDIA_TYPE_ERROR && *error != NULL) {
+    cd_cache_free (cache);
     return type;
+  }
 
   if ((type == MEDIA_TYPE_DATA || type == MEDIA_TYPE_ERROR) &&
       (type = cd_cache_disc_is_vcd (cache, error)) == MEDIA_TYPE_DATA &&
