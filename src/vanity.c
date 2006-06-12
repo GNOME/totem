@@ -258,7 +258,7 @@ on_about1_activate (GtkButton *button, Vanity *vanity)
 
 	vanity->about = g_object_new (GTK_TYPE_ABOUT_DIALOG,
 			"name", _("Vanity"),
-			"version", VERSION,
+			"version", PACKAGE_VERSION,
 			"copyright", _("Copyright \xc2\xa9 2002-2005 Bastien Nocera"),
 			"comments", description,
 			"authors", authors,
@@ -655,7 +655,7 @@ main (int argc, char **argv)
 
 	gtk_init (&argc, &argv);
 #ifndef HAVE_GTK_ONLY
-	gnome_program_init ("vanity", VERSION,
+	gnome_program_init ("vanity", PACKAGE_VERSION,
 			LIBGNOMEUI_MODULE,
 			argc, argv,
 			GNOME_PARAM_APP_DATADIR, DATADIR,
