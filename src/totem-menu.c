@@ -334,7 +334,7 @@ totem_sublang_equal_lists (GList *orig, GList *new)
 static void
 totem_languages_update (Totem *totem, GList *list)
 {
-	GtkWidget *item, *submenu;
+	GtkWidget *item, *submenu, *old_submenu;
 	GtkWidget *lang_menu;
 	int current;
 
@@ -348,6 +348,11 @@ totem_languages_update (Totem *totem, GList *list)
 
 	/* Languages */
 	item = glade_xml_get_widget (totem->xml, "tmw_languages_menu_item");
+
+	old_submenu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (item));
+	if (old_submenu != NULL)
+		gtk_menu_popdown (GTK_MENU (old_submenu));
+
 	submenu = glade_xml_get_widget (totem->xml, "tmw_menu_languages");
 	if (lang_menu == NULL)
 	{
@@ -365,7 +370,7 @@ totem_languages_update (Totem *totem, GList *list)
 static void
 totem_subtitles_update (Totem *totem, GList *list)
 {
-	GtkWidget *item, *submenu;
+	GtkWidget *item, *submenu, *old_submenu;
 	GtkWidget *sub_menu;
 	int current;
 
@@ -379,6 +384,11 @@ totem_subtitles_update (Totem *totem, GList *list)
 
 	/* Subtitles */
 	item = glade_xml_get_widget (totem->xml, "tmw_subtitles_menu_item");
+
+	old_submenu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (item));
+	if (old_submenu != NULL)
+		gtk_menu_popdown (GTK_MENU (old_submenu));
+
 	submenu = glade_xml_get_widget (totem->xml, "tmw_menu_subtitles");
 	if (sub_menu == NULL)
 	{
