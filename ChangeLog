@@ -1,5 +1,15 @@
 2006-06-13  Tim-Philipp Müller  <tim at centricular dot net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c: (get_media_size):
+	  Avoid integer overflows when doing aspect ratio calculations.
+
+	* configure.in:
+	  Require gst-plugins-base >= 0.10.7 for the GStreamer backend
+	  for the recently added gst_video_calculate_display_ratio()
+	  function used above.
+
+2006-06-13  Tim-Philipp Müller  <tim at centricular dot net>
+
 	* src/totem-menu.c: (totem_languages_update),
 	(totem_subtitles_update):
 	  Pop down language/subtitle menus before replacing them
