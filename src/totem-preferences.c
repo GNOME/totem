@@ -39,6 +39,7 @@
 #include "totem-private.h"
 #include "totem-preferences.h"
 #include "video-utils.h"
+#include "totem-subtitle-encoding.h"
 
 #include "debug.h"
 
@@ -394,6 +395,18 @@ on_font_set (GtkFontButton * fb, Totem * totem)
 }
 
 static void
+on_encoding_set (GtkComboBox *cb, Totem *totem)
+{
+	const gchar *encoding;
+
+	encoding = totem_subtitle_encoding_get_selected (cb);
+	if (encoding)
+		gconf_client_set_string (totem->gc,
+				GCONF_PREFIX"/subtitle_encoding",
+				encoding, NULL);
+}
+
+static void
 font_changed_cb (GConfClient *client, guint cnxn_id,
 		 GConfEntry *entry, Totem *totem)
 {
@@ -406,15 +419,29 @@ font_changed_cb (GConfClient *client, guint cnxn_id,
 	bacon_video_widget_set_subtitle_font (totem->bvw, font);
 }
 
+static void
+encoding_changed_cb (GConfClient *client, guint cnxn_id,
+		 GConfEntry *entry, Totem *totem)
+{
+	const gchar *encoding;
+	GtkWidget *item;
+
+	item = glade_xml_get_widget (totem->xml, "subtitle_encoding_combo");
+	encoding = gconf_value_get_string (entry->value);
+	totem_subtitle_encoding_set (GTK_COMBO_BOX(item), encoding);
+	bacon_video_widget_set_subtitle_encoding (totem->bvw, encoding);
+}
+
 void
 totem_setup_preferences (Totem *totem)
 {
 	GtkWidget *item, *menu;
 	gboolean show_visuals, auto_resize, is_local, deinterlace;
 	int connection_speed, i;
-	char *visual, *font;
+	char *visual, *font, *encoding;
 	GList *list, *l;
 	BaconVideoWidgetAudioOutType audio_out;
+	GConfValue *value;
 
 	g_return_if_fail (totem->gc != NULL);
 
@@ -599,7 +626,7 @@ totem_setup_preferences (Totem *totem)
 				"/desktop/gnome/lockdown/disable_save_to_disk",
 				NULL));
 
-	/* subtitle font selection */
+	/* Subtitle font selection */
 	item = glade_xml_get_widget (totem->xml, "font_sel_button");
 	g_signal_connect (item, "font-set", G_CALLBACK (on_font_set), totem);
 	gtk_font_button_set_title (GTK_FONT_BUTTON (item),
@@ -614,6 +641,37 @@ totem_setup_preferences (Totem *totem)
 	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/subtitle_font",
 			(GConfClientNotifyFunc) font_changed_cb,
 			totem, NULL, NULL);
+
+	/* Subtitle encoding selection */
+	item = glade_xml_get_widget (totem->xml, "subtitle_encoding_combo");
+	totem_subtitle_encoding_init (GTK_COMBO_BOX (item));
+	g_signal_connect (item, "changed", G_CALLBACK (on_encoding_set), totem);
+	value = gconf_client_get_without_default (totem->gc,
+			GCONF_PREFIX"/subtitle_encoding", NULL);
+	/* Make sure the default is UTF-8 */
+	if (value != NULL) {
+		if (gconf_value_get_string (value) == NULL) {
+			encoding = g_strdup ("UTF-8");
+		} else {
+			encoding = g_strdup (gconf_value_get_string (value));
+			if (encoding[0] == '\0') {
+				g_free (encoding);
+				encoding = g_strdup ("UTF-8");
+			}
+		}
+		gconf_value_free (value);
+	} else {
+		encoding = g_strdup ("UTF-8");
+	}
+	totem_subtitle_encoding_set (GTK_COMBO_BOX(item), encoding);
+	if (encoding && strcasecmp (encoding, "") != 0) {
+		bacon_video_widget_set_subtitle_encoding (totem->bvw, encoding);
+	}
+	g_free (encoding);
+	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/subtitle_encoding",
+			(GConfClientNotifyFunc) encoding_changed_cb,
+			totem, NULL, NULL);
+
 }
 
 void

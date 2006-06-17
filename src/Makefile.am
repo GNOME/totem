@@ -101,6 +101,8 @@ totem_SOURCES = 					\
 	totem-statusbar.h		\
 	totem-gromit.c totem-gromit.h	\
 	ev-sidebar.c ev-sidebar.h	\
+	totem-subtitle-encoding.c	\
+	totem-subtitle-encoding.h	\
 	$(BACON_VOLUME)
 
 totem_LDADD = \

@@ -1,5 +1,26 @@
 2006-06-17  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am:
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_set_subtitle_encoding):
+	lower-case the encoding string, as it's the way xine-lib
+	expects it
+	* src/totem-preferences.c: (on_encoding_set),
+	(encoding_changed_cb), (totem_setup_preferences):
+	* src/totem-subtitle-encoding.c: (find_encoding_by_charset),
+	(subtitle_encoding_init), (subtitle_encoding_get_index),
+	(subtitle_encoding_get_charset), (compare),
+	(is_encoding_sensitive), (subtitle_encoding_create_store),
+	(subtitle_encoding_combo_render),
+	(totem_subtitle_encoding_get_selected),
+	(totem_subtitle_encoding_set), (totem_subtitle_encoding_init):
+	* src/totem-subtitle-encoding.h:
+	* src/totem.c:
+	Patch from Young-Ho Cha <ganadist at chollian net> to add
+	subtitle selection to the Totem preferences (Closes: #342235)
+
+2006-06-17  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.schemas.in: patch from Young-Ho Cha
 	<ganadist at chollian net> to add text subtitles
 	encoding selection to GConf
