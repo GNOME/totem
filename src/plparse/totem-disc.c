@@ -260,7 +260,12 @@ cd_cache_new_hal_ctx (void)
     return NULL;
 
   dbus_error_init (&error);
+#if (DBUS_VERSION_MAJOR == 0) && (DBUS_VERSION_MINOR < 60)
   conn = dbus_bus_get (DBUS_BUS_SYSTEM, &error);
+  g_warning ("might crash, see http://bugzilla.gnome.org/show_bug.cgi?id=345203");
+#else
+  conn = dbus_bus_get_private (DBUS_BUS_SYSTEM, &error);
+#endif
   if (conn != NULL && !dbus_error_is_set (&error)) {
     if (!libhal_ctx_set_dbus_connection (ctx, conn)) {
       libhal_ctx_free (ctx);
@@ -551,8 +556,12 @@ cd_cache_free (CdCache *cache)
 #ifdef HAVE_HAL
   if (cache->ctx != NULL) {
 #ifdef HAVE_HAL_0_5
+    DBusConnection *conn;
+
+    conn = libhal_ctx_get_dbus_connection (cache->ctx);
     libhal_ctx_shutdown (cache->ctx, NULL);
     libhal_ctx_free(cache->ctx);
+    dbus_connection_disconnect (conn);
 #elif HAVE_HAL_0_2
     hal_shutdown (cache->ctx);
 #endif

@@ -1,3 +1,11 @@
+2006-06-18  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/totem-disc.c: (cd_cache_new_hal_ctx),
+	(cd_cache_free): avoid crashes in Rhythmbox when using
+	the new playlist parser, see
+	http://bugzilla.gnome.org/show_bug.cgi?id=345203 for
+	details
+
 2006-06-17  Bastien Nocera  <hadess@hadess.net>
 
 	* src/Makefile.am:
