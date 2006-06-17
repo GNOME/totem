@@ -178,6 +178,8 @@ gchar **bacon_video_widget_get_mrls		 (BaconVideoWidget *bvw,
 						  MediaType type);
 void bacon_video_widget_set_subtitle_font	 (BaconVideoWidget *bvw,
 						  const char *font);
+void bacon_video_widget_set_subtitle_encoding	 (BaconVideoWidget *bvw,
+						  const char *encoding);
 
 /* Video devices */
 void bacon_video_widget_set_video_device	 (BaconVideoWidget *bvw,

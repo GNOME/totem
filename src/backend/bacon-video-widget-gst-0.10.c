@@ -2638,6 +2638,19 @@ bacon_video_widget_set_subtitle_font (BaconVideoWidget * bvw,
   g_object_set (bvw->priv->play, "subtitle-font-desc", font, NULL);
 }
 
+void
+bacon_video_widget_set_subtitle_encoding (BaconVideoWidget *bvw,
+					  const char *encoding)
+{
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
+
+  if (!g_object_class_find_property (G_OBJECT_GET_CLASS (bvw->priv->play), "subtitle-encoding"))
+    return;
+  g_object_set (bvw->priv->play, "subtitle-encoding", encoding, NULL);
+}
+
 gboolean
 bacon_video_widget_can_set_volume (BaconVideoWidget * bvw)
 {

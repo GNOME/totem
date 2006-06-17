@@ -3059,6 +3059,22 @@ bacon_video_widget_set_subtitle_font (BaconVideoWidget *bvw, const char *font)
 }
 
 void
+bacon_video_widget_set_subtitle_encoding (BaconVideoWidget *bvw, const char *encoding)
+{
+	xine_cfg_entry_t entry;
+
+	g_return_val_if_fail (bvw != NULL);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_val_if_fail (bvw->priv->xine != NULL);
+	g_return_val_if_fail (encoding != NULL);
+
+	bvw_config_helper_string (bvw->priv->xine,
+			"subtitles.separate.src_encoding", encoding, &entry);
+	entry.str_value = (char *) encoding;
+	xine_config_update_entry (bvw->priv->xine, &entry);
+}
+
+void
 bacon_video_widget_set_video_device (BaconVideoWidget *bvw, const char *path)
 {
 	xine_cfg_entry_t entry;
