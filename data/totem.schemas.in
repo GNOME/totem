@@ -239,5 +239,23 @@
         </locale>
       </schema>
 
+      <schema>
+        <key>/schemas/apps/totem/subtitle_encoding</key>
+        <applyto>/apps/totem/subtitle_encoding</applyto>
+        <owner>totem</owner>
+        <type>string</type>
+        <locale name="C">
+          <default>
+	  <!-- Translators: This is default subtitle encoding
+	  character set. You can change this to be the most common
+	  encoding for fansub subtitles in your language. File a bug
+	  against Totem, and leave UTF-8 as the default if in doubt. -->
+          UTF-8
+	  </default>
+          <short>Subtitle encoding</short>
+          <long>Encoding charset for subtitle</long>
+        </locale>
+      </schema>
+
   </schemalist>
 </gconfschemafile>
