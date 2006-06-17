@@ -1,5 +1,13 @@
 2006-06-17  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.glade: patch from Young-Ho Cha <ganadist at chollian net>
+	to add a widget to select the text subtitles encoding
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_set_subtitle_encoding):
+	really fix build
+
+2006-06-17  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bacon_video_widget_set_subtitle_encoding):
 	* src/backend/bacon-video-widget-xine.c:
