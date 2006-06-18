@@ -1,3 +1,12 @@
+2006-06-18  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-private.h:
+	* src/totem-sidebar.c: (cb_resize), (on_sidebar_button_toggled),
+	(totem_sidebar_setup):
+	Patch from Eric Anderson <ejona86@gmail.com> to make showing
+	and hiding the sidebar not resize the video window
+	(Closes: #324346)
+
 2006-06-13  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c: (get_media_size):
