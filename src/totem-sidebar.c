@@ -41,28 +41,28 @@ totem_sidebar_toggle (Totem *totem)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), !state);
 }
 
-static gboolean
+static void
 cb_resize (Totem * totem)
 {
+	GValue gvalue_size = { 0, };
+	gint handle_size;
+	GtkWidget *pane;
+
 	gint w = totem->win->allocation.width,
 	    h = totem->win->allocation.height;
 
+	g_value_init (&gvalue_size, G_TYPE_INT);
+	pane = glade_xml_get_widget (totem->xml, "tmw_main_pane");
+	gtk_widget_style_get_property(pane, "handle-size", &gvalue_size);
+	handle_size = g_value_get_int (&gvalue_size);
+	
 	if (totem->sidebar_shown) {
-		w += totem->sidebar->allocation.width;
+		w += totem->sidebar->allocation.width + handle_size;
 	} else {
-		w -= totem->sidebar->allocation.width;
+		w -= totem->sidebar->allocation.width + handle_size;
 	}
 
 	gtk_window_resize (GTK_WINDOW (totem->win), w, h);
-
-	return FALSE;
-}
-
-static void
-cb_got_size (GtkWidget *widget, GtkAllocation *alloc, Totem *totem)
-{
-	g_signal_handlers_disconnect_by_func (widget, cb_got_size, totem);
-	cb_resize (totem);
 }
 
 static void
@@ -87,21 +87,7 @@ on_sidebar_button_toggled (GtkToggleButton *button, Totem *totem)
 				state,
 				NULL);
 	totem->sidebar_shown = state;
-
-	if (!state || totem->sidebar_ever_shown)
-		cb_resize (totem);
-	else
-		g_signal_connect_after (totem->sidebar, "size-allocate",
-					G_CALLBACK (cb_got_size), totem);
-
-	if (state)
-		totem->sidebar_ever_shown = TRUE;
-}
-
-static void
-on_show_sidebar1_activate (GtkButton *button, Totem *totem)
-{
-	totem_sidebar_toggle (totem);
+	cb_resize(totem);
 }
 
 static void
@@ -130,7 +116,7 @@ totem_sidebar_setup (Totem *totem)
 	ev_sidebar_add_page (EV_SIDEBAR (totem->sidebar),
 			"playlist", _("Playlist"),
 			GTK_WIDGET (totem->playlist));
-	gtk_paned_pack2 (GTK_PANED (item), totem->sidebar, TRUE, FALSE);
+	gtk_paned_pack2 (GTK_PANED (item), totem->sidebar, FALSE, FALSE);
 
 	visible = gconf_client_get_bool (totem->gc,
 				GCONF_PREFIX"/sidebar_shown",
@@ -143,19 +129,19 @@ totem_sidebar_setup (Totem *totem)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), visible);
 	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item2), visible);
 
-	if (visible != FALSE)
-		gtk_widget_show_all (totem->sidebar);
-	else
-		gtk_widget_hide (totem->sidebar);
-
 	/* Signals */
 	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (on_sidebar_button_toggled), totem);
 	g_signal_connect (G_OBJECT (totem->sidebar), "closed",
 			G_CALLBACK (toggle_sidebar_from_sidebar), totem);
-	g_signal_connect (G_OBJECT (item2), "activate",
-			G_CALLBACK (on_show_sidebar1_activate), totem);
+	g_signal_connect_swapped (G_OBJECT (item2), "activate",
+			G_CALLBACK (totem_sidebar_toggle), totem);
 
-	gtk_widget_show_all (GTK_WIDGET (totem->playlist));
+	gtk_widget_show_all (totem->sidebar);
+	
+	gtk_widget_realize (totem->sidebar);
+	
+	if (!visible)
+		gtk_widget_hide (totem->sidebar);
 }
 
