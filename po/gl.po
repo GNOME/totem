@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-30 15:04+0200\n"
-"PO-Revision-Date: 2006-05-30 15:06+0200\n"
+"POT-Creation-Date: 2006-06-19 15:28+0200\n"
+"PO-Revision-Date: 2006-06-19 15:44+0200\n"
 "Last-Translator: Ignacio Casal Quinteiro <nacho.resa@gmail.com>\n"
 "Language-Team: Galego <trasno@ceu.fi.udc.es>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "Baixar"
 msgid "Move Up"
 msgstr "Subir"
 
-#: ../data/playlist.glade.h:4 ../src/totem-sidebar.c:131
+#: ../data/playlist.glade.h:4 ../src/totem-sidebar.c:117
 msgid "Playlist"
 msgstr "Lista de reproducción"
 
@@ -98,11 +98,11 @@ msgstr "Subir volume"
 msgid "Volume up"
 msgstr "Subir volume"
 
-#: ../data/popup.glade.h:14 ../data/totem.glade.h:135
+#: ../data/popup.glade.h:14 ../data/totem.glade.h:136
 msgid "_Next Chapter/Movie"
 msgstr "Capítulo/Película se_guinte"
 
-#: ../data/popup.glade.h:15 ../data/totem.glade.h:138
+#: ../data/popup.glade.h:15 ../data/totem.glade.h:139
 msgid "_Previous Chapter/Movie"
 msgstr "Capítulo/Película _anterior"
 
@@ -308,12 +308,12 @@ msgid "<b>Networking</b>"
 msgstr "<b>Rede</b>"
 
 #: ../data/totem.glade.h:21
-msgid "<b>Subtitles</b>"
-msgstr "<b>Subtítulos</b>"
-
-#: ../data/totem.glade.h:22
 msgid "<b>TV-Out</b>"
 msgstr "<b>Saída de TV</b>"
+
+#: ../data/totem.glade.h:22
+msgid "<b>Text Subtitles</b>"
+msgstr "<b>Subtítulos</b>"
 
 #: ../data/totem.glade.h:23
 msgid "<b>Visual Effects</b>"
@@ -682,78 +682,82 @@ msgid "_Eject"
 msgstr "_Expulsar"
 
 #: ../data/totem.glade.h:128
+msgid "_Encoding:"
+msgstr "_Codificación:"
+
+#: ../data/totem.glade.h:129
 msgid "_Font:"
 msgstr "_Tipografía:"
 
-#: ../data/totem.glade.h:129
+#: ../data/totem.glade.h:130
 msgid "_Fullscreen"
 msgstr "_Pantalla completa"
 
-#: ../data/totem.glade.h:130
+#: ../data/totem.glade.h:131
 msgid "_Go"
 msgstr "_Ir"
 
-#: ../data/totem.glade.h:131
+#: ../data/totem.glade.h:132
 msgid "_Help"
 msgstr "A_xuda"
 
-#: ../data/totem.glade.h:132
+#: ../data/totem.glade.h:133
 msgid "_Hue:"
 msgstr "_Ton:"
 
-#: ../data/totem.glade.h:133
+#: ../data/totem.glade.h:134
 msgid "_Languages"
 msgstr "_Idiomas"
 
-#: ../data/totem.glade.h:134
+#: ../data/totem.glade.h:135
 msgid "_Movie"
 msgstr "_Película"
 
-#: ../data/totem.glade.h:136
+#: ../data/totem.glade.h:137
 msgid "_No TV-out"
 msgstr "Se_n saída de TV"
 
-#: ../data/totem.glade.h:137
+#: ../data/totem.glade.h:138
 msgid "_Open..."
 msgstr "_Abrir..."
 
-#: ../data/totem.glade.h:139
+#: ../data/totem.glade.h:140
 msgid "_Properties"
 msgstr "_Propiedades"
 
-#: ../data/totem.glade.h:140
+#: ../data/totem.glade.h:141
 msgid "_Quit"
 msgstr "_Saír"
 
-#: ../data/totem.glade.h:141
+#: ../data/totem.glade.h:142
 msgid "_Repeat Mode"
 msgstr "Modo de _repetición"
 
-#: ../data/totem.glade.h:142
+#: ../data/totem.glade.h:143
 msgid "_Resize 1:2"
 msgstr "_Redimensionar 1:2"
 
-#: ../data/totem.glade.h:143
+#: ../data/totem.glade.h:144
 msgid "_Sidebar"
 msgstr "_Barra lateral"
 
-#: ../data/totem.glade.h:144
+#: ../data/totem.glade.h:145
 msgid "_Skip to..."
 msgstr "_Saltar a..."
 
-#: ../data/totem.glade.h:145
+#: ../data/totem.glade.h:146
 msgid "_Sound"
 msgstr "_Son"
 
-#: ../data/totem.glade.h:146
+#: ../data/totem.glade.h:147
 msgid "_Title Menu"
 msgstr "Menú de _título"
 
-#: ../data/totem.glade.h:147
+#: ../data/totem.glade.h:148
 msgid "_Type of visualisation:"
 msgstr "_Tipo de visualización:"
 
-#: ../data/totem.glade.h:148
+#: ../data/totem.glade.h:149
 msgid "_View"
 msgstr "_Ver"
 
@@ -774,80 +778,88 @@ msgid "Enable deinterlacing"
 msgstr "Activar desentrelazado"
 
 #: ../data/totem.schemas.in.h:4
+msgid "Encoding charset for subtitle"
+msgstr "Conxunto de caracteres para o subtítulo"
+
+#: ../data/totem.schemas.in.h:5
 msgid "Height of the video widget"
 msgstr "Altura do widget de video"
 
-#: ../data/totem.schemas.in.h:5
+#: ../data/totem.schemas.in.h:6
 msgid "Maximum amount of data to decode ahead of display (in seconds)"
 msgstr ""
 "Cantidade máxima de datos que decodificar por diante da visualización (en "
 "segundos)"
 
-#: ../data/totem.schemas.in.h:6
+#: ../data/totem.schemas.in.h:7
 msgid "Name of the visual effects plugins"
 msgstr "Nome dos complementos de efectos visuais"
 
-#: ../data/totem.schemas.in.h:7
+#: ../data/totem.schemas.in.h:8
 msgid "Network buffering threshold"
 msgstr "Umbral do buffer de rede"
 
-#: ../data/totem.schemas.in.h:8
+#: ../data/totem.schemas.in.h:9
 msgid "Pango font description for subtitle rendering"
 msgstr "Descripción de tipografía pango para o renderizado de subtítulos"
 
-#: ../data/totem.schemas.in.h:9
+#: ../data/totem.schemas.in.h:10
 msgid "Repeat mode"
 msgstr "Modo de repetición"
 
-#: ../data/totem.schemas.in.h:10
+#: ../data/totem.schemas.in.h:11
 msgid "Resize the canvas automatically on file load"
 msgstr "Auto-redimensionar o lenzo o cargar o archivo"
 
-#: ../data/totem.schemas.in.h:11
+#: ../data/totem.schemas.in.h:12
 msgid "Show visual effects when no video is displayed"
 msgstr "Mostrar os efectos visuais cando non se mostre video"
 
-#: ../data/totem.schemas.in.h:12
+#: ../data/totem.schemas.in.h:13
 msgid "Show visual effects when playing an audio only file."
 msgstr "Mostrar efectos visuais cando se reproduza un arquivo de son."
 
-#: ../data/totem.schemas.in.h:13
+#: ../data/totem.schemas.in.h:14
 msgid "Shuffle mode"
 msgstr "Modo aleatorio"
 
-#: ../data/totem.schemas.in.h:14
+#: ../data/totem.schemas.in.h:15
 msgid "Sound volume"
 msgstr "Volume do son"
 
-#: ../data/totem.schemas.in.h:15
+#: ../data/totem.schemas.in.h:16
 msgid "Sound volume, in percent, between 0 and 100"
 msgstr "Volume do son, en porcentaxe, entre 0 e 100"
 
-#: ../data/totem.schemas.in.h:16
+#: ../data/totem.schemas.in.h:17
+msgid "Subtitle encoding"
+msgstr "Codificación dos subtítulos"
+
+#: ../data/totem.schemas.in.h:18
 msgid "Subtitle font"
 msgstr "Tipografía para os subtítulos"
 
-#: ../data/totem.schemas.in.h:17
+#: ../data/totem.schemas.in.h:19
 msgid "The brightness of the video"
 msgstr "O brillo do video"
 
-#: ../data/totem.schemas.in.h:18
+#: ../data/totem.schemas.in.h:20
 msgid "The contrast of the video"
 msgstr "O contraste do video"
 
-#: ../data/totem.schemas.in.h:19
+#: ../data/totem.schemas.in.h:21
 msgid "The hue of the video"
 msgstr "O ton do video"
 
-#: ../data/totem.schemas.in.h:20
+#: ../data/totem.schemas.in.h:22
 msgid "The saturation of the video"
 msgstr "A saturación do video"
 
-#: ../data/totem.schemas.in.h:21
+#: ../data/totem.schemas.in.h:23
 msgid "Type of audio output to use"
 msgstr "Tipo de saída de son a usar"
 
-#: ../data/totem.schemas.in.h:22
+#: ../data/totem.schemas.in.h:24
 msgid ""
 "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
 "\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
@@ -856,23 +868,31 @@ msgstr ""
 "Tipo de saída de son a usar: \"0\" para estéreo, \"1\" para 4 canles, \"2\" "
 "para 5.0 canles, \"3\" para 5.1 canles, \"4\" para saída a través de AC3."
 
-#: ../data/totem.schemas.in.h:23
+#. Translators: This is default subtitle encoding
+#. character set. You can change this to be the most common
+#. encoding for fansub subtitles in your language. File a bug
+#. against Totem, and leave UTF-8 as the default if in doubt.
+#: ../data/totem.schemas.in.h:29
+msgid "UTF-8"
+msgstr "UTF-8"
+
+#: ../data/totem.schemas.in.h:30
 msgid "Whether the main window should stay on top"
 msgstr "Indica se a fiestra principal debería permanecer enriba"
 
-#: ../data/totem.schemas.in.h:24
+#: ../data/totem.schemas.in.h:31
 msgid "Whether the main window should stay on top of the other ones"
 msgstr "Indica se a fiestra principal debería permanecer enriba das outras fiestras"
 
-#: ../data/totem.schemas.in.h:25
+#: ../data/totem.schemas.in.h:32
 msgid "Whether the sidebar is shown"
 msgstr "Indica se se amosa a barra lateral"
 
-#: ../data/totem.schemas.in.h:26
+#: ../data/totem.schemas.in.h:33
 msgid "Whether to enable debug for the playback engine"
 msgstr "Indica se se debe activar a depuración para o motor de reproducción de video"
 
-#: ../data/totem.schemas.in.h:27
+#: ../data/totem.schemas.in.h:34
 msgid "Width of the video widget"
 msgstr "Anchura do widget de video"
 
@@ -988,7 +1008,7 @@ msgstr "Asegúrese de que Totem está instaldo correctamente."
 msgid "None"
 msgstr "Ningún"
 
-#: ../src/totem-menu.c:595
+#: ../src/totem-menu.c:605
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "Reproducir disco '%s'"
@@ -1084,11 +1104,11 @@ msgstr "Erro na lista de reproducción"
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "A lista de reproducción '%s' non se puido analizar, quizá esté danado."
 
-#: ../src/totem-preferences.c:84
+#: ../src/totem-preferences.c:85
 msgid "Enable visual effects?"
 msgstr "¿Activar efectos visuais?"
 
-#: ../src/totem-preferences.c:86
+#: ../src/totem-preferences.c:87
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1096,7 +1116,7 @@ msgstr ""
 "Parece que está executando Totem remotamente.\n"
 "¿Está seguro de que quere activar os efectos visuais?"
 
-#: ../src/totem-preferences.c:139
+#: ../src/totem-preferences.c:140
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted."
@@ -1104,25 +1124,25 @@ msgstr ""
 "O cambio deste axuste terá efecto para a seguinte película, ou cando o Totem "
 "sexa reiniciado."
 
-#: ../src/totem-preferences.c:183
+#: ../src/totem-preferences.c:184
 msgid "Switching on or off this type of TV-Out requires a restart to take effect."
 msgstr ""
 "Encender ou apagar este tipo de saída de TV require un inicio para que surta "
 "efecto."
 
-#: ../src/totem-preferences.c:295
+#: ../src/totem-preferences.c:296
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr ""
 "Cambiar os tipos de efectos visuais requerirá un reinicio para que surta "
 "efecto."
 
-#: ../src/totem-preferences.c:379
+#: ../src/totem-preferences.c:380
 msgid ""
 "The change of audio output type will only take effect when Totem is "
 "restarted."
 msgstr "O cambio do tipo de saída de son só terá efecto cando se reinicie o Totem."
 
-#: ../src/totem-preferences.c:606
+#: ../src/totem-preferences.c:633
 msgid "Select Subtitle Font"
 msgstr "Seleccionar a tipografía dos subtítulos"
 
@@ -1204,6 +1224,147 @@ msgstr "Buffering"
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
+
+#: ../src/totem-subtitle-encoding.c:158
+msgid "Current Locale"
+msgstr "Configuración local actual"
+
+#: ../src/totem-subtitle-encoding.c:161 ../src/totem-subtitle-encoding.c:163
+#: ../src/totem-subtitle-encoding.c:165 ../src/totem-subtitle-encoding.c:167
+msgid "Arabic"
+msgstr "Árabe"
+
+#: ../src/totem-subtitle-encoding.c:170
+msgid "Armenian"
+msgstr "Armenio"
+
+#: ../src/totem-subtitle-encoding.c:173 ../src/totem-subtitle-encoding.c:175
+#: ../src/totem-subtitle-encoding.c:177
+msgid "Baltic"
+msgstr "Báltico"
+
+#: ../src/totem-subtitle-encoding.c:180
+msgid "Celtic"
+msgstr "Celta"
+
+#: ../src/totem-subtitle-encoding.c:183 ../src/totem-subtitle-encoding.c:185
+#: ../src/totem-subtitle-encoding.c:187 ../src/totem-subtitle-encoding.c:189
+msgid "Central European"
+msgstr "Europa central"
+
+#: ../src/totem-subtitle-encoding.c:192 ../src/totem-subtitle-encoding.c:194
+#: ../src/totem-subtitle-encoding.c:196 ../src/totem-subtitle-encoding.c:198
+msgid "Chinese Simplified"
+msgstr "Chinés simplificado"
+
+#: ../src/totem-subtitle-encoding.c:201 ../src/totem-subtitle-encoding.c:203
+#: ../src/totem-subtitle-encoding.c:205
+msgid "Chinese Traditional"
+msgstr "Chinés tradicional"
+
+#: ../src/totem-subtitle-encoding.c:208
+msgid "Croatian"
+msgstr "Croata"
+
+#: ../src/totem-subtitle-encoding.c:211 ../src/totem-subtitle-encoding.c:213
+#: ../src/totem-subtitle-encoding.c:215 ../src/totem-subtitle-encoding.c:217
+#: ../src/totem-subtitle-encoding.c:219 ../src/totem-subtitle-encoding.c:221
+msgid "Cyrillic"
+msgstr "Cirílico"
+
+#: ../src/totem-subtitle-encoding.c:224
+msgid "Cyrillic/Russian"
+msgstr "Cirílico/Ruso"
+
+#: ../src/totem-subtitle-encoding.c:227 ../src/totem-subtitle-encoding.c:229
+msgid "Cyrillic/Ukrainian"
+msgstr "Cirílico/Ucranián"
+
+#: ../src/totem-subtitle-encoding.c:232
+msgid "Georgian"
+msgstr "Xeorxiano"
+
+#: ../src/totem-subtitle-encoding.c:235 ../src/totem-subtitle-encoding.c:237
+#: ../src/totem-subtitle-encoding.c:239
+msgid "Greek"
+msgstr "Grego"
+
+#: ../src/totem-subtitle-encoding.c:242
+msgid "Gujarati"
+msgstr "Guxarati"
+
+#: ../src/totem-subtitle-encoding.c:245
+msgid "Gurmukhi"
+msgstr "Gurmukhi"
+
+#: ../src/totem-subtitle-encoding.c:248 ../src/totem-subtitle-encoding.c:250
+#: ../src/totem-subtitle-encoding.c:252 ../src/totem-subtitle-encoding.c:254
+msgid "Hebrew"
+msgstr "Hebreo"
+
+#: ../src/totem-subtitle-encoding.c:257
+msgid "Hebrew Visual"
+msgstr "Hebreo visual"
+
+#: ../src/totem-subtitle-encoding.c:260
+msgid "Hindi"
+msgstr "Hindi"
+
+#: ../src/totem-subtitle-encoding.c:263
+msgid "Icelandic"
+msgstr "Islandés"
+
+#: ../src/totem-subtitle-encoding.c:266 ../src/totem-subtitle-encoding.c:268
+#: ../src/totem-subtitle-encoding.c:270
+msgid "Japanese"
+msgstr "Xaponés"
+
+#: ../src/totem-subtitle-encoding.c:273 ../src/totem-subtitle-encoding.c:275
+#: ../src/totem-subtitle-encoding.c:277 ../src/totem-subtitle-encoding.c:279
+msgid "Korean"
+msgstr "Coreán"
+
+#: ../src/totem-subtitle-encoding.c:282
+msgid "Nordic"
+msgstr "Nórdico"
+
+#: ../src/totem-subtitle-encoding.c:285
+msgid "Persian"
+msgstr "Persa"
+
+#: ../src/totem-subtitle-encoding.c:288 ../src/totem-subtitle-encoding.c:290
+msgid "Romanian"
+msgstr "Rumano"
+
+#: ../src/totem-subtitle-encoding.c:293
+msgid "South European"
+msgstr "Sureuropeo"
+
+#: ../src/totem-subtitle-encoding.c:296
+msgid "Thai"
+msgstr "Tailandés"
+
+#: ../src/totem-subtitle-encoding.c:299 ../src/totem-subtitle-encoding.c:301
+#: ../src/totem-subtitle-encoding.c:303 ../src/totem-subtitle-encoding.c:305
+msgid "Turkish"
+msgstr "Turco"
+
+#: ../src/totem-subtitle-encoding.c:308 ../src/totem-subtitle-encoding.c:310
+#: ../src/totem-subtitle-encoding.c:312 ../src/totem-subtitle-encoding.c:314
+#: ../src/totem-subtitle-encoding.c:316
+msgid "Unicode"
+msgstr "Unicode"
+
+#: ../src/totem-subtitle-encoding.c:319 ../src/totem-subtitle-encoding.c:321
+#: ../src/totem-subtitle-encoding.c:323 ../src/totem-subtitle-encoding.c:325
+#: ../src/totem-subtitle-encoding.c:327
+msgid "Western"
+msgstr "Occidental"
+
+#: ../src/totem-subtitle-encoding.c:330 ../src/totem-subtitle-encoding.c:332
+#: ../src/totem-subtitle-encoding.c:334
+msgid "Vietnamese"
+msgstr "Vietnamita"
 
 #: ../src/totem-uri.c:227
 msgid "All files"
@@ -1496,15 +1657,15 @@ msgstr "O ficheiro do medio non se puido reproducir."
 msgid "Failed to retrieve working directory"
 msgstr "Fallou ao obter un directorio de traballo"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3786
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3799
 msgid "Too old version of GStreamer installed."
 msgstr "A versión GStreamer que está instalada é demasiado antiga."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3793
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3806
 msgid "Media contains no supported video streams."
 msgstr "O medio non contén ningún fluxo e vídeo soportado."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4138
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4151
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1512,8 +1673,8 @@ msgstr ""
 "Fallou ao crear o obxeto de reproducción GStreamer. Por favor comprobe súa "
 "instalación de GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4253
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4337
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4266
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4350
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1521,7 +1682,7 @@ msgstr ""
 "Fallou ao abrir a saída de vídeo. Quizás non esté dispoñible. Seleccione "
 "outra saída de vídeo no Selector de Sistemas Multimedia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4262
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4275
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1531,7 +1692,7 @@ msgstr ""
 "adicionais de GStreamer, ou seleccionar outra saída de vídeo no Selector de "
 "Sistemas Multimedia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4281
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4294
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1541,7 +1702,7 @@ msgstr ""
 "dispositivo de son, ou o servidor de son quizás non estea funcionando. "
 "Seleccione outra saída de son no Selector de Sistemas Multimedia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4291
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4304
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -1685,22 +1846,22 @@ msgstr ""
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Este é un arquivo que só ten son, e non hai unha saída de son dispoñible."
 
-#: ../src/backend/bacon-video-widget-xine.c:3530
-#: ../src/backend/bacon-video-widget-xine.c:3577
-#: ../src/backend/bacon-video-widget-xine.c:3599
+#: ../src/backend/bacon-video-widget-xine.c:3550
+#: ../src/backend/bacon-video-widget-xine.c:3597
+#: ../src/backend/bacon-video-widget-xine.c:3619
 #, c-format
 msgid "Language %d"
 msgstr "Idioma %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3636
+#: ../src/backend/bacon-video-widget-xine.c:3656
 msgid "No video to capture."
 msgstr "Non hai video para capturar."
 
-#: ../src/backend/bacon-video-widget-xine.c:3644
+#: ../src/backend/bacon-video-widget-xine.c:3664
 msgid "Video codec is not handled."
 msgstr "Non é posible manexar o códec de video. "
 
-#: ../src/backend/bacon-video-widget-xine.c:3652
+#: ../src/backend/bacon-video-widget-xine.c:3672
 msgid "Movie is not playing."
 msgstr "A película non se está reproducindo."
 
@@ -1769,58 +1930,58 @@ msgstr "%s %s"
 msgid "%s"
 msgstr "%s"
 
-#: ../src/plparse/totem-disc.c:118
+#: ../src/plparse/totem-disc.c:117
 #, c-format
 msgid "Failed to find real device node for %s: %s"
 msgstr "Fallou ao atopar o nodo do dispositivo real para %s: %s"
 
-#: ../src/plparse/totem-disc.c:129
+#: ../src/plparse/totem-disc.c:128
 #, c-format
 msgid "Failed to read symbolic link %s: %s"
 msgstr "Fallou ao ler o enlace simbólico %s: %s"
 
-#: ../src/plparse/totem-disc.c:323
+#: ../src/plparse/totem-disc.c:332
 #, c-format
 msgid "Failed to find mountpoint for device %s"
 msgstr "Fallou ao atopar o punto de montaxe para o dispositivo %s"
 
-#: ../src/plparse/totem-disc.c:332
+#: ../src/plparse/totem-disc.c:341
 msgid "Could not connect to the HAL daemon"
 msgstr "Non se puido conectar ao daemon HAL"
 
-#: ../src/plparse/totem-disc.c:449
+#: ../src/plparse/totem-disc.c:458
 msgid "Please check that a disc is present in the drive."
 msgstr "Comprobe que hai un disco presente na unidade."
 
-#: ../src/plparse/totem-disc.c:495
+#: ../src/plparse/totem-disc.c:504
 #, c-format
 msgid "Failed to mount %s"
 msgstr "Fallou ao montar %s"
 
-#: ../src/plparse/totem-disc.c:519
+#: ../src/plparse/totem-disc.c:528
 #, c-format
 msgid "Failed to find mountpoint for %s"
 msgstr "Fallou ao atopar o punto de montaxe para %s"
 
-#: ../src/plparse/totem-disc.c:791
+#: ../src/plparse/totem-disc.c:806
 msgid "Audio CD"
 msgstr "Audio CD"
 
-#: ../src/plparse/totem-disc.c:793
+#: ../src/plparse/totem-disc.c:808
 msgid "Video CD"
 msgstr "Vídeo CD"
 
-#: ../src/plparse/totem-disc.c:795
+#: ../src/plparse/totem-disc.c:810
 msgid "DVD"
 msgstr "DVD"
 
-#: ../src/plparse/totem-pl-parser.c:341
+#: ../src/plparse/totem-pl-parser.c:355
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "Non se puido escribir o interpretador: %s"
 
-#: ../src/plparse/totem-pl-parser.c:449 ../src/plparse/totem-pl-parser.c:590
-#: ../src/plparse/totem-pl-parser.c:690
+#: ../src/plparse/totem-pl-parser.c:463 ../src/plparse/totem-pl-parser.c:604
+#: ../src/plparse/totem-pl-parser.c:704
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "Non se puido abrir o arquivo '%s': %s"
