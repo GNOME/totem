@@ -3923,10 +3923,10 @@ cb_gconf (GConfClient * client,
 
   if (!strcmp (entry->key, "/apps/totem/network-buffer-threshold")) {
     g_object_set (bvw->priv->play, "queue-threshold",
-        (guint64) GST_SECOND * gconf_value_get_float (entry->value), NULL);
+        (guint64) (GST_SECOND * gconf_value_get_float (entry->value)), NULL);
   } else if (!strcmp (entry->key, "/apps/totem/buffer-size")) {
     g_object_set (bvw->priv->play, "queue-threshold",
-        (guint64) GST_SECOND * gconf_value_get_float (entry->value), NULL);
+        (guint64) (GST_SECOND * gconf_value_get_float (entry->value)), NULL);
   }
 }
 
