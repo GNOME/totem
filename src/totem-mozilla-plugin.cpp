@@ -49,6 +49,7 @@
 #include <nsIInterfaceRequestorUtils.h>
 #include <docshell/nsIWebNavigation.h>
 
+#define TOTEM_DEBUG 1
 /* define TOTEM_DEBUG for more debug spew */
 #include "debug.h"
 
@@ -288,7 +289,7 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 
 	/* mode is NP_EMBED, NP_FULL, or NP_BACKGROUND (see npapi.h) */
 	printf("mode %d\n",mode);
-	//printf("mime type: %s\n",pluginType);
+	printf("mime type: %s\n", mime_type);
 	plugin->instance = instance;
 	plugin->send_fd = -1;
 
@@ -441,10 +442,26 @@ static NPError totem_plugin_set_window (NPP instance, NPWindow* window)
 static NPError totem_plugin_new_stream (NPP instance, NPMIMEType type,
 		NPStream* stream_ptr, NPBool seekable, uint16* stype)
 {
+	TotemPlugin *plugin;
+
 	D("plugin_new_stream");
 
 	if (instance == NULL)
 		return NPERR_INVALID_INSTANCE_ERROR;
+
+	plugin = (TotemPlugin *) instance->pdata;
+
+	D("plugin_new_stream type: %s url: %s", type, plugin->src);
+
+	//FIXME need to find better semantics?
+	//what about saving the state, do we get confused?
+	if (g_str_has_prefix (plugin->src, "file://")) {
+		*stype = NP_ASFILEONLY;
+		plugin->stream_type = NP_ASFILEONLY;
+	} else {
+		*stype = NP_ASFILE;
+		plugin->stream_type = NP_ASFILE;
+	}
 
 	return NPERR_NO_ERROR;
 }
@@ -541,8 +558,9 @@ static void totem_plugin_stream_as_file (NPP instance, NPStream *stream,
 	const char* fname)
 {
 	TotemPlugin *plugin;
+	GError *err = NULL;
 
-	D("plugin_stream_as_file");
+	D("plugin_stream_as_file: %s", fname);
 
 	if (instance == NULL)
 		return;
@@ -550,6 +568,12 @@ static void totem_plugin_stream_as_file (NPP instance, NPStream *stream,
 
 	if (plugin == NULL)
 		return;
+
+	if (!dbus_g_proxy_call (plugin->proxy, "SetLocalFile", &err,
+			G_TYPE_STRING, fname, G_TYPE_INVALID,
+			G_TYPE_INVALID)) {
+		g_printerr ("Error: %s\n", err->message);
+	}
 
 	D("plugin_stream_as_file\n");
 }
@@ -574,6 +598,7 @@ totem_plugin_get_value (NPP instance, NPPVariable variable,
 	TotemPlugin *plugin;
 	NPError err = NPERR_NO_ERROR;
 
+	/* See NPPVariable in npapi.h */
 	D("plugin_get_value %d\n", variable);
 
 	switch (variable) {

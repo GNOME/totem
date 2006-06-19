@@ -32,21 +32,22 @@
 class totemMozillaObject;
 
 typedef struct {
-        NPP instance;
-        Window window;
+	NPP instance;
+	Window window;
 	totemMozillaObject *iface;
 
-        char *src, *href, *target;
-        int width, height;
+	char *src, *href, *target;
+	int width, height;
 	DBusGConnection *conn;
 	DBusGProxy *proxy;
 	char *wait_for_svc;
 	gboolean got_svc;
-        int send_fd;
-        int player_pid;
-        gboolean controller_hidden;
+	int send_fd;
+	int player_pid;
+	gboolean controller_hidden;
+	guint8 stream_type;
 
-        GByteArray *bytes;
+	GByteArray *bytes;
 } TotemPlugin;
 
 class totemMozillaMix : public nsIClassInfo {

@@ -1,3 +1,15 @@
+2006-06-19  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-mozilla-interface.xml:
+	* src/totem-mozilla-plugin.cpp:
+	* src/totem-mozilla-scriptable.h:
+	* src/totem-mozilla-viewer.c: (totem_embedded_open),
+	(totem_embedded_set_local_file), (on_eos_event):
+	Use NP_ASFILEONLY for remote files, and NP_ASFILE for local files,
+	to cache the files on the local filesystems. Push the filename to the
+	viewer when it's available, and allow to replay the files from the
+	local cache (Closes: #331821)
+
 2006-06-18  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/totem-disc.c: remove unused ioctl.h include

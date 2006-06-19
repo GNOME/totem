@@ -88,6 +88,7 @@ static void totem_embedded_init (TotemEmbedded *emb) { }
 gboolean totem_embedded_play (TotemEmbedded *emb, GError **err);
 gboolean totem_embedded_pause (TotemEmbedded *emb, GError **err);
 gboolean totem_embedded_stop (TotemEmbedded *emb, GError **err);
+gboolean totem_embedded_set_local_file (TotemEmbedded *emb, const char *url, GError **err);
 
 #include "totem-mozilla-interface.h"
 
@@ -180,6 +181,7 @@ totem_embedded_open (TotemEmbedded *emb)
 		g_free (msg);
 
 		g_error_free (err);
+		totem_embedded_set_pp_state (emb, FALSE);
 	} else {
 		totem_embedded_set_state (emb, STATE_PAUSED);
 		totem_embedded_set_pp_state (emb, TRUE);
@@ -209,6 +211,18 @@ totem_embedded_stop (TotemEmbedded *emb, GError **err)
 {
 	bacon_video_widget_stop (emb->bvw);
 	totem_embedded_set_state (emb, STATE_STOPPED);
+	return TRUE;
+}
+
+gboolean
+totem_embedded_set_local_file (TotemEmbedded *emb,
+			       const char *path, GError **err)
+{
+	g_message ("Setting the current path to %s", path);
+
+	g_free (emb->filename);
+	emb->filename = g_filename_to_uri (path, NULL, NULL);
+
 	return TRUE;
 }
 
@@ -401,6 +415,9 @@ on_eos_event (GtkWidget *bvw, TotemEmbedded *emb)
 	gtk_adjustment_set_value (emb->seekadj, 0);
 	if (strcmp (emb->filename, "fd://0") == 0) {
 		totem_embedded_set_pp_state (emb, FALSE);
+	} else if (g_str_has_prefix (emb->filename, "file://") != FALSE) {
+		bacon_video_widget_close (emb->bvw);
+		totem_embedded_open (emb);
 	}
 }
 
