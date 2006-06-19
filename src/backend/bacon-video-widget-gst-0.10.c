@@ -4427,14 +4427,14 @@ bacon_video_widget_new (int width, int height,
       GCONF_PREFIX "/buffer-size", NULL);
   if (confvalue != NULL) {
     g_object_set (bvw->priv->play, "queue-size",
-        (guint64) GST_SECOND * gconf_value_get_float (confvalue), NULL);
+        (guint64) (GST_SECOND * gconf_value_get_float (confvalue)), NULL);
     gconf_value_free (confvalue);
   }
   confvalue = gconf_client_get_without_default (bvw->priv->gc,
       GCONF_PREFIX "/network-buffer-threshold", NULL);
   if (confvalue != NULL) {
     g_object_set (bvw->priv->play, "queue-threshold",
-        (guint64) GST_SECOND * gconf_value_get_float (confvalue), NULL);
+        (guint64) (GST_SECOND * gconf_value_get_float (confvalue)), NULL);
     gconf_value_free (confvalue);
   }
 

@@ -1,3 +1,12 @@
+2006-06-19  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_new):
+	  Fix crash on 64-bit systems when gconf values for buffering are
+	  set to non-default values. Misplaced cast made compiler pass a
+	  float instead of a guint64 to g_object_set vararg function
+	  (Fixes: #342699)
+	  
 2006-06-19  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-mozilla-interface.xml:
