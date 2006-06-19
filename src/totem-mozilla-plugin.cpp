@@ -46,6 +46,7 @@
 #include <nsIDOMWindow.h>
 #include <nsIURI.h>
 #include <nsEmbedString.h>
+#include <nsIInterfaceRequestor.h>
 #include <nsIInterfaceRequestorUtils.h>
 #include <docshell/nsIWebNavigation.h>
 
@@ -297,11 +298,18 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 	nsIDOMWindow *domWin = nsnull;
 	mozilla_functions.getvalue (instance, NPNVDOMWindow,
 				    NS_REINTERPRET_CAST (void**, &domWin));
-	nsIWebNavigation *webNav = nsnull;
+	nsIInterfaceRequestor *irq = nsnull;
 	if (domWin) {
-		domWin->QueryInterface (NS_GET_IID (nsIWebNavigation),
-					NS_REINTERPRET_CAST (void**, &webNav));
+		domWin->QueryInterface (NS_GET_IID (nsIInterfaceRequestor),
+					NS_REINTERPRET_CAST (void**, &irq));
 		NS_RELEASE (domWin);
+	}
+
+	nsIWebNavigation *webNav = nsnull;
+	if (irq) {
+		irq->GetInterface (NS_GET_IID (nsIWebNavigation),
+				   NS_REINTERPRET_CAST (void**, &webNav));
+		NS_RELEASE (irq);
 	}
 
 	nsIURI *docURI = nsnull;

@@ -1,5 +1,11 @@
 2006-06-19  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-mozilla-plugin.cpp: patch from Christian Persch to fix
+	the relative path resolver broken by the patch from #321254
+	(Closes: #300510)
+
+2006-06-19  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-mozilla-plugin.cpp:
 	* src/totem-mozilla-scriptable.h: add basic support for
 	cache=true (Closes: #343068)
@@ -17,7 +23,7 @@
 	  set to non-default values. Misplaced cast made compiler pass a
 	  float instead of a guint64 to g_object_set vararg function
 	  (Fixes: #342699)
-	  
+
 2006-06-19  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-mozilla-interface.xml:
