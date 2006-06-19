@@ -46,6 +46,7 @@ typedef struct {
 	int player_pid;
 	gboolean controller_hidden;
 	guint8 stream_type;
+	gboolean cache;
 
 	GByteArray *bytes;
 } TotemPlugin;

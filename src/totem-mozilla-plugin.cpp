@@ -1,7 +1,7 @@
 /* Totem Mozilla plugin
  * 
- * Copyright (C) <2004> Bastien Nocera <hadess@hadess.net>
- * Copyright (C) <2002> David A. Schleef <ds@schleef.org>
+ * Copyright (C) 2004-2006 Bastien Nocera <hadess@hadess.net>
+ * Copyright (C) 2002 David A. Schleef <ds@schleef.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -117,7 +117,7 @@ totem_plugin_fork (TotemPlugin *plugin)
 		argv[argc++] = g_strdup (TOTEM_OPTION_URL);
 		argv[argc++] = g_strdup (plugin->src);
 	}
-	
+
 	if (plugin->href) {
 		argv[argc++] = g_strdup (TOTEM_OPTION_HREF);
 		argv[argc++] = g_strdup (plugin->href);
@@ -324,6 +324,12 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 		if (g_ascii_strcasecmp (argn[i], "href") == 0) {
 			plugin->href = resolve_relative_uri (docURI, argv[i]);
 		}
+		if (g_ascii_strcasecmp (argn[i], "cache") == 0) {
+			plugin->cache = TRUE;
+			if (g_ascii_strcasecmp (argv[i], "false") == 0) {
+				plugin->cache = FALSE;
+			}
+		}
 		if (g_ascii_strcasecmp (argn[i], "target") == 0) {
 			plugin->target = g_strdup (argv[i]);
 		}
@@ -458,10 +464,14 @@ static NPError totem_plugin_new_stream (NPP instance, NPMIMEType type,
 	if (g_str_has_prefix (plugin->src, "file://")) {
 		*stype = NP_ASFILEONLY;
 		plugin->stream_type = NP_ASFILEONLY;
-	} else {
+	} else if (plugin->cache != FALSE) {
 		*stype = NP_ASFILE;
 		plugin->stream_type = NP_ASFILE;
+	} else {
+		*stype = NP_NORMAL;
+		plugin->stream_type = NP_NORMAL;
 	}
+		
 
 	return NPERR_NO_ERROR;
 }
