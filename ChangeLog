@@ -1,3 +1,8 @@
+2006-06-20  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-mozilla-plugin.cpp: always cache even if cache=true
+	isn't present, but only if we're not a video/quicktime
+
 2006-06-19  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-mozilla-plugin.cpp: patch from Christian Persch to fix
@@ -316,7 +321,7 @@
 	* src/totem-playlist.h:
 	Patch from Przemysław Grzegorczyk <pgrzegorczyk@gmail.com> to add XSPF
 	save and load support to TotemPlaylistParser, and add a way to choose
-	the playlist type when saving them.
+	the playlist type when saving them (Closes: #339067)
 	Also fixes using the wrong buffer when writing an m3u playlist,
 	and adding the wrong URI when using relative URIs in PLS playlists.
 

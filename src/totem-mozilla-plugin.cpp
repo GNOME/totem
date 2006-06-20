@@ -289,6 +289,7 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 	}
 
 	/* mode is NP_EMBED, NP_FULL, or NP_BACKGROUND (see npapi.h) */
+	//FIXME we should error out if we are in fullscreen mode
 	printf("mode %d\n",mode);
 	printf("mime type: %s\n", mime_type);
 	plugin->instance = instance;
@@ -316,6 +317,11 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 	if (webNav) {
 		webNav->GetCurrentURI (&docURI);
 		NS_RELEASE (webNav);
+	}
+
+	/* Set the default cache behaviour */
+	if (strcmp (mime_type, "video/quicktime") != 0) {
+		plugin->cache = TRUE;
 	}
 
 	for (i=0; i<argc; i++) {
