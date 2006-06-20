@@ -358,11 +358,18 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 		if (g_ascii_strcasecmp (argn[i], "target") == 0) {
 			plugin->target = g_strdup (argv[i]);
 		}
+		/* Quicktime parameter */
 		if (g_ascii_strcasecmp (argn[i], "controller") == 0) {
 			if (g_ascii_strcasecmp (argv[i], "false") == 0) {
 				plugin->controller_hidden = TRUE;
 			}
 			//FIXME see http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_CONTROLS.html
+		}
+		/* Windows Media Player parameter */
+		if (g_ascii_strcasecmp (argn[i], "uimode") == 0) {
+			if (g_ascii_strcasecmp (argv[i], "none") == 0) {
+				plugin->controller_hidden = TRUE;
+			}
 		}
 		if (g_ascii_strcasecmp (argn[i], "hidden") == 0) {
 			if (g_ascii_strcasecmp (argv[i], "false") != 0) {
