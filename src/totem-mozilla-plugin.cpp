@@ -366,7 +366,7 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 			//FIXME see http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_CONTROLS.html
 		}
 		if (g_ascii_strcasecmp (argn[i], "hidden") == 0) {
-			if (g_ascii_strcasecmp (argv[i], "true") == 0) {
+			if (g_ascii_strcasecmp (argv[i], "false") != 0) {
 				plugin->hidden = TRUE;
 			}
 		}
