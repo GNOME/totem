@@ -1,5 +1,11 @@
 2006-06-20  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-mozilla-plugin.cpp: remove the crappy command-line
+	construction code, so that nobody dies if they don't update the
+	MAX_ARGV_LEN
+
+2006-06-20  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-mozilla-plugin.cpp: fix handling of the hidden parameter
 	when not given a value
 

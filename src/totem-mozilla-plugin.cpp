@@ -79,16 +79,13 @@ is_supported_scheme (const char *url)
 	return TRUE;
 }
 
-/* You don't update, you die! */
-#define MAX_ARGV_LEN 16
-
 static gboolean
 totem_plugin_fork (TotemPlugin *plugin)
 {
 	GTimeVal then, now;
 	char *svcname;
+	GPtrArray *arr;
 	char **argv;
-	int argc = 0;
 	GError *err = NULL;
 	totemMozillaObject *iface = plugin->iface;
 
@@ -98,65 +95,67 @@ totem_plugin_fork (TotemPlugin *plugin)
 		return FALSE;
 	}
 
-	argv = (char **)g_new0 (char *, MAX_ARGV_LEN);
+	arr = g_ptr_array_new ();
 
 	if (g_file_test ("./totem-mozilla-viewer",
 				G_FILE_TEST_EXISTS) != FALSE) {
-		argv[argc++] = g_strdup ("./totem-mozilla-viewer");
+		g_ptr_array_add (arr, g_strdup ("./totem-mozilla-viewer"));
 	} else {
-		argv[argc++] = g_strdup (LIBEXECDIR"/totem-mozilla-viewer");
+		g_ptr_array_add (arr,
+				g_strdup (LIBEXECDIR"/totem-mozilla-viewer"));
 	}
 
 	if (plugin->window) {
-		argv[argc++] = g_strdup (TOTEM_OPTION_XID);
-		argv[argc++] = g_strdup_printf ("%lu", plugin->window);
+		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_XID));
+		g_ptr_array_add (arr, g_strdup_printf ("%lu", plugin->window));
 	}
 
 	if (plugin->width) {
-		argv[argc++] = g_strdup (TOTEM_OPTION_WIDTH);
-		argv[argc++] = g_strdup_printf ("%d", plugin->width);
+		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_WIDTH));
+		g_ptr_array_add (arr, g_strdup_printf ("%d", plugin->width));
 	}
 
 	if (plugin->height) {
-		argv[argc++] = g_strdup (TOTEM_OPTION_HEIGHT);
-		argv[argc++] = g_strdup_printf ("%d", plugin->height);
+		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_HEIGHT));
+		g_ptr_array_add (arr, g_strdup_printf ("%d", plugin->height));
 	}
 
 	if (plugin->src) {
-		argv[argc++] = g_strdup (TOTEM_OPTION_URL);
-		argv[argc++] = g_strdup (plugin->src);
+		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_URL));
+		g_ptr_array_add (arr, g_strdup (plugin->src));
 	}
 
 	if (plugin->href) {
-		argv[argc++] = g_strdup (TOTEM_OPTION_HREF);
-		argv[argc++] = g_strdup (plugin->href);
+		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_HREF));
+		g_ptr_array_add (arr, g_strdup (plugin->href));
 	}
 
 	if (plugin->target) {
-		argv[argc++] = g_strdup (TOTEM_OPTION_TARGET);
-		argv[argc++] = g_strdup (plugin->target);
+		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_TARGET));
+		g_ptr_array_add (arr, g_strdup (plugin->target));
 	}
 
 	if (plugin->controller_hidden) {
-		argv[argc++] = g_strdup (TOTEM_OPTION_CONTROLS_HIDDEN);
+		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_CONTROLS_HIDDEN));
 	}
 
 	if (plugin->hidden) {
-		argv[argc++] = g_strdup (TOTEM_OPTION_HIDDEN);
+		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_HIDDEN));
 	}
 
 	if (is_supported_scheme (plugin->src) == FALSE)
-		argv[argc++] = g_strdup (plugin->src);
+		g_ptr_array_add (arr, g_strdup (plugin->src));
 	else
-		argv[argc++] = g_strdup ("fd://0");
+		g_ptr_array_add (arr, g_strdup ("fd://0"));
 
-	argv[argc] = NULL;
+	g_ptr_array_add (arr, NULL);
+	argv = (char **) g_ptr_array_free (arr, FALSE);
 
 #ifdef TOTEM_DEBUG
 	{
 		int i;
 		g_print ("Launching: ");
-		for (i = 0; i < argc; i++) {
+		for (i = 0; argv[i] != NULL; i++) {
 			g_print ("%s ", argv[i]);
 		}
 		g_print ("\n");
