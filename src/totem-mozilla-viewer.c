@@ -68,6 +68,7 @@ typedef struct _TotemEmbedded {
 	char *filename, *href, *target;
 	BaconVideoWidget *bvw;
 	gboolean controller_hidden;
+	gboolean hidden;
 	TotemStates state;
 	GdkCursor *cursor;
 
@@ -137,7 +138,8 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 
 	image = glade_xml_get_widget (emb->xml, "emb_pp_button_image");
 	gtk_image_set_from_stock (GTK_IMAGE (image), id, GTK_ICON_SIZE_MENU);
-	gdk_window_set_cursor (GTK_WIDGET (emb->bvw)->window, cursor);
+	if (emb->hidden == FALSE)
+		gdk_window_set_cursor (GTK_WIDGET (emb->bvw)->window, cursor);
 
 	emb->state = state;
 }
@@ -466,6 +468,7 @@ static void
 totem_embedded_add_children (TotemEmbedded *emb)
 {
 	GtkWidget *child, *container, *pp_button, *vbut;
+	BvwUseType type = BVW_USE_TYPE_VIDEO;
 	GError *err = NULL;
 	GConfClient *gc;
 	int volume;
@@ -478,15 +481,16 @@ totem_embedded_add_children (TotemEmbedded *emb)
 			GTK_WINDOW (emb->window));
 
 	if (emb->xml == NULL || emb->menuxml == NULL)
-	{
 		totem_embedded_exit (emb);
-	}
 
 	child = glade_xml_get_widget (emb->xml, "vbox1");
 	gtk_container_add (GTK_CONTAINER (emb->window), child);
 
+	if (emb->hidden)
+		type = BVW_USE_TYPE_AUDIO;
+
 	emb->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new
-			(-1, -1, BVW_USE_TYPE_VIDEO, &err));
+			(-1, -1, type, &err));
 
 	if (emb->bvw == NULL)
 	{
@@ -506,8 +510,10 @@ totem_embedded_add_children (TotemEmbedded *emb)
 
 	container = glade_xml_get_widget (emb->xml, "hbox4");
 	gtk_container_add (GTK_CONTAINER (container), GTK_WIDGET (emb->bvw));
-	gtk_widget_realize (GTK_WIDGET (emb->bvw));
-	gtk_widget_show (GTK_WIDGET (emb->bvw));
+	if (type == BVW_USE_TYPE_VIDEO) {
+		gtk_widget_realize (GTK_WIDGET (emb->bvw));
+		gtk_widget_show (GTK_WIDGET (emb->bvw));
+	}
 
 	emb->seek = glade_xml_get_widget (emb->xml, "time_hscale");
 	emb->seekadj = gtk_range_get_adjustment (GTK_RANGE (emb->seek));
@@ -580,7 +586,6 @@ totem_volume_create (void)
 
 int main (int argc, char **argv)
 {
-	gboolean window_given = FALSE;
 	TotemEmbedded *emb;
 	DBusGProxy *proxy;
 	DBusGConnection *conn;
@@ -636,7 +641,6 @@ int main (int argc, char **argv)
 	/* TODO Add popt options */
 	for (i = 1; i < argc; i++) {
 		if (OPTION_IS (TOTEM_OPTION_XID)) {
-			window_given = TRUE;
 			if (i + 1 < argc) {
 				i++;
 				xid = (Window) g_ascii_strtoull (argv[i], NULL, 10);
@@ -667,7 +671,9 @@ int main (int argc, char **argv)
 			if (i + 1 < argc) {
 				i++;
 				emb->target = g_strdup (argv[i]);
-			}
+			} 
+		} else if (OPTION_IS (TOTEM_OPTION_HIDDEN)) {
+			emb->hidden = TRUE;
 		} else if (i + 1 == argc) {
 			emb->filename = g_strdup (argv[i]);
 		}
@@ -691,13 +697,11 @@ int main (int argc, char **argv)
 		emb->window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	}
 
+	/* Hidden or not as well? */
 	totem_embedded_add_children (emb);
 	totem_embedded_create_cursor (emb);
-	if (!window_given || xid != 0)
+	if (emb->hidden == FALSE)
 		gtk_widget_show (emb->window);
-	else {
-		gtk_widget_realize (emb->window);
-	}
 
 	/* wait until we're embedded if we're to be, or shown */
 	if (xid != 0) {

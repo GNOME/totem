@@ -67,9 +67,6 @@ cb_update_name (DBusGProxy *proxy, char *svc, char *old_owner,
 	}
 }
 
-/* You don't update, you die! */
-#define MAX_ARGV_LEN 16
-
 static gboolean
 is_supported_scheme (const char *url)
 {
@@ -82,6 +79,9 @@ is_supported_scheme (const char *url)
 	return TRUE;
 }
 
+/* You don't update, you die! */
+#define MAX_ARGV_LEN 16
+
 static gboolean
 totem_plugin_fork (TotemPlugin *plugin)
 {
@@ -92,6 +92,12 @@ totem_plugin_fork (TotemPlugin *plugin)
 	GError *err = NULL;
 	totemMozillaObject *iface = plugin->iface;
 
+	/* Make sure we don't get both an XID and hidden */
+	if (plugin->window && plugin->hidden) {
+		g_warning ("Both hidden and a window!");
+		return FALSE;
+	}
+
 	argv = (char **)g_new0 (char *, MAX_ARGV_LEN);
 
 	if (g_file_test ("./totem-mozilla-viewer",
@@ -101,8 +107,10 @@ totem_plugin_fork (TotemPlugin *plugin)
 		argv[argc++] = g_strdup (LIBEXECDIR"/totem-mozilla-viewer");
 	}
 
-	argv[argc++] = g_strdup (TOTEM_OPTION_XID);
-	argv[argc++] = g_strdup_printf ("%lu", plugin->window);
+	if (plugin->window) {
+		argv[argc++] = g_strdup (TOTEM_OPTION_XID);
+		argv[argc++] = g_strdup_printf ("%lu", plugin->window);
+	}
 
 	if (plugin->width) {
 		argv[argc++] = g_strdup (TOTEM_OPTION_WIDTH);
@@ -130,7 +138,11 @@ totem_plugin_fork (TotemPlugin *plugin)
 	}
 
 	if (plugin->controller_hidden) {
-		argv[argc++] = g_strdup ("--nocontrols");
+		argv[argc++] = g_strdup (TOTEM_OPTION_CONTROLS_HIDDEN);
+	}
+
+	if (plugin->hidden) {
+		argv[argc++] = g_strdup (TOTEM_OPTION_HIDDEN);
 	}
 
 	if (is_supported_scheme (plugin->src) == FALSE)
@@ -354,7 +366,9 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 			//FIXME see http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_CONTROLS.html
 		}
 		if (g_ascii_strcasecmp (argn[i], "hidden") == 0) {
-			//FIXME
+			if (g_ascii_strcasecmp (argv[i], "true") == 0) {
+				plugin->hidden = TRUE;
+			}
 		}
 		if (g_ascii_strcasecmp (argn[i], "autostart") == 0
 				|| g_ascii_strcasecmp (argn[i], "autoplay") == 0) {
@@ -393,7 +407,6 @@ static NPError totem_plugin_destroy_instance (NPP instance, NPSavedData **save)
 	if (!plugin || !plugin->iface || !plugin->iface->tm)
 		return NPERR_INVALID_INSTANCE_ERROR;
 
-	plugin->iface->Rewind ();
 	plugin->iface->invalidatePlugin ();
 
 	if (plugin->send_fd >= 0)
@@ -540,7 +553,7 @@ static int32 totem_plugin_write_ready (NPP instance, NPStream *stream)
 	fds.events = POLLOUT;
 	fds.fd = plugin->send_fd;
 	if (plugin->send_fd > 0 && poll (&fds, 1, 0) > 0)
-		return (8*1024);
+		return (8 * 1024);
 
 	return 0;
 }

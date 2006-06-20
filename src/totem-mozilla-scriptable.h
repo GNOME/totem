@@ -47,6 +47,7 @@ typedef struct {
 	gboolean controller_hidden;
 	guint8 stream_type;
 	gboolean cache;
+	gboolean hidden;
 
 	GByteArray *bytes;
 } TotemPlugin;

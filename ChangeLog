@@ -1,5 +1,16 @@
 2006-06-20  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-mozilla-options.h:
+	* src/totem-mozilla-plugin.cpp:
+	* src/totem-mozilla-scriptable.h:
+	* src/totem-mozilla-viewer.c: (totem_embedded_set_state),
+	(totem_embedded_add_children), (main):
+	add support for the hidden parameter, use the BVW_USE_TYPE_AUDIO
+	hint to the video widget to avoid having to realize or do other hacks
+	(Closes: #326564)
+
+2006-06-20  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-mozilla-plugin.cpp: always cache even if cache=true
 	isn't present, but only if we're not a video/quicktime
 
