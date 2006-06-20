@@ -318,6 +318,20 @@ on_about1_activate (GtkButton *button, TotemEmbedded *emb)
 }
 
 static void
+on_copy_location1_activate (GtkButton *button, TotemEmbedded *emb)
+{
+	GtkClipboard *clip;
+
+	/* Set both the middle-click and the super-paste buffers */
+	clip = gtk_clipboard_get_for_display
+		(gdk_display_get_default(), GDK_SELECTION_CLIPBOARD);
+	gtk_clipboard_set_text (clip, emb->filename, -1);
+	clip = gtk_clipboard_get_for_display
+		(gdk_display_get_default(), GDK_SELECTION_PRIMARY);
+	gtk_clipboard_set_text (clip, emb->filename, -1);
+}
+
+static void
 on_play_pause (GtkWidget *widget, TotemEmbedded *emb)
 {
 	if (emb->state == STATE_PLAYING) {
@@ -399,6 +413,16 @@ on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 		}
 	} else if (event->button == 3 && event->type == GDK_BUTTON_PRESS) {
 		GtkMenu *menu;
+		GtkWidget *item;
+
+		item = glade_xml_get_widget (emb->menuxml, "copy_location1");
+
+		if (emb->filename == NULL
+				|| strcmp ("fd://0", emb->filename) == 0) {
+			gtk_widget_set_sensitive (item, FALSE);
+		} else {
+			gtk_widget_set_sensitive (item, TRUE);
+		}
 
 		menu = GTK_MENU (glade_xml_get_widget (emb->menuxml, "menu"));
 		gtk_menu_popup (menu, NULL, NULL, NULL, NULL,
@@ -548,6 +572,9 @@ totem_embedded_add_children (TotemEmbedded *emb)
 	child = glade_xml_get_widget (emb->menuxml, "about1");
 	g_signal_connect (G_OBJECT (child), "activate",
 			  G_CALLBACK (on_about1_activate), emb);
+	child = glade_xml_get_widget (emb->menuxml, "copy_location1");
+	g_signal_connect (G_OBJECT (child), "activate",
+			G_CALLBACK (on_copy_location1_activate), emb);
 }
 
 static void
