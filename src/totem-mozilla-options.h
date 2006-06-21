@@ -26,4 +26,5 @@
 #define TOTEM_OPTION_HREF		"--href"
 #define TOTEM_OPTION_TARGET		"--target"
 #define TOTEM_OPTION_HIDDEN		"--hidden"
+#define TOTEM_OPTION_MIMETYPE		"--mimetype"
 

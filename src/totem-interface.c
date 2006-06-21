@@ -34,6 +34,7 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkx.h>
 
 #include "totem-interface.h"
 
@@ -47,7 +48,7 @@ totem_interface_error_dialog (const char *title, const char *reason,
 		g_warning ("totem_action_error called with reason == NULL");
 
 	error_dialog =
-		gtk_message_dialog_new (GTK_WINDOW (parent),
+		gtk_message_dialog_new (NULL,
 				GTK_DIALOG_MODAL,
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK,
@@ -55,6 +56,8 @@ totem_interface_error_dialog (const char *title, const char *reason,
 	gtk_message_dialog_format_secondary_text
 		(GTK_MESSAGE_DIALOG (error_dialog), "%s", reason);
 
+	totem_interface_set_transient_for (GTK_WINDOW (error_dialog),
+				GTK_WINDOW (parent));
 	gtk_window_set_title (GTK_WINDOW (error_dialog), ""); /* as per HIG */
 	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
@@ -168,5 +171,55 @@ totem_interface_get_full_path (const char *name)
 	}
 
 	return filename;
+}
+
+static GdkWindow *
+totem_gtk_plug_get_toplevel (GtkPlug *plug)
+{
+	Window root, parent, *children;
+	guint nchildren;
+	GdkNativeWindow xid;
+
+	g_return_val_if_fail (GTK_IS_PLUG (plug), NULL);
+
+	xid = gtk_plug_get_id (plug);
+
+	do
+	{
+		if (XQueryTree (GDK_DISPLAY (), xid, &root,
+					&parent, &children, &nchildren) == 0)
+		{
+			g_warning ("Couldn't find window manager window");
+			return None;
+		}
+
+		if (root == parent) {
+			GdkWindow *toplevel;
+			toplevel = gdk_window_foreign_new (xid);
+			return toplevel;
+		}
+
+		xid = parent;
+	}
+	while (TRUE);
+}
+
+void
+totem_interface_set_transient_for (GtkWindow *window, GtkWindow *parent)
+{
+	if (GTK_IS_PLUG (parent)) {
+		GdkWindow *toplevel;
+
+		gtk_widget_realize (GTK_WIDGET (window));
+		toplevel = totem_gtk_plug_get_toplevel (GTK_PLUG (parent));
+		if (toplevel != NULL) {
+			gdk_window_set_transient_for
+				(GTK_WIDGET (window)->window, toplevel);
+			gdk_window_unref (toplevel);
+		}
+	} else {
+		gtk_window_set_transient_for (GTK_WINDOW (window),
+				GTK_WINDOW (parent));
+	}
 }
 

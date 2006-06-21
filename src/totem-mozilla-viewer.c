@@ -32,6 +32,9 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#include <libgnomevfs/gnome-vfs.h>
+#include <libgnomevfs/gnome-vfs-mime-handlers.h>
+
 #include "bacon-video-widget.h"
 #include "totem-interface.h"
 #include "totem-mozilla-options.h"
@@ -65,12 +68,17 @@ typedef struct _TotemEmbedded {
 	GtkWidget *about;
 	int width, height;
 	const char *orig_filename;
+	const char *mimetype;
 	char *filename, *href, *target;
 	BaconVideoWidget *bvw;
 	gboolean controller_hidden;
 	gboolean hidden;
 	TotemStates state;
 	GdkCursor *cursor;
+
+	/* Open menu item */
+	GnomeVFSMimeApplication *app;
+	GtkWidget *menu_item;
 
 	/* Seek bits */
 	GtkAdjustment *seekadj;
@@ -90,6 +98,9 @@ gboolean totem_embedded_play (TotemEmbedded *emb, GError **err);
 gboolean totem_embedded_pause (TotemEmbedded *emb, GError **err);
 gboolean totem_embedded_stop (TotemEmbedded *emb, GError **err);
 gboolean totem_embedded_set_local_file (TotemEmbedded *emb, const char *url, GError **err);
+
+static void totem_embedded_set_menu (TotemEmbedded *emb, gboolean enable);
+static void on_open1_activate (GtkButton *button, TotemEmbedded *emb);
 
 #include "totem-mozilla-interface.h"
 
@@ -189,6 +200,12 @@ totem_embedded_open (TotemEmbedded *emb)
 		totem_embedded_set_pp_state (emb, TRUE);
 	}
 
+	if (retval == FALSE || strcmp ("fd://0", emb->filename) == 0) {
+		totem_embedded_set_menu (emb, FALSE);
+	} else {
+		totem_embedded_set_menu (emb, TRUE);
+	}
+
 	return retval;
 }
 
@@ -228,35 +245,60 @@ totem_embedded_set_local_file (TotemEmbedded *emb,
 	return TRUE;
 }
 
-static GdkWindow *
-totem_gtk_plug_get_toplevel (GtkPlug *plug)
+static void
+totem_embedded_set_menu (TotemEmbedded *emb, gboolean enable)
 {
-	Window root, parent, *children;
-	guint nchildren;
-	GdkNativeWindow xid;
+	GtkWidget *menu, *item, *image;
+	GtkWidget *copy;
+	char *label;
 
-	g_return_val_if_fail (GTK_IS_PLUG (plug), NULL);
+	copy = glade_xml_get_widget (emb->menuxml, "copy_location1");
+	gtk_widget_set_sensitive (copy, enable);
 
-	xid = gtk_plug_get_id (plug);
-
-	do
-	{
-		if (XQueryTree (GDK_DISPLAY (), xid, &root,
-					&parent, &children, &nchildren) == 0)
-		{
-			g_warning ("Couldn't find window manager window");
-			return None;
-		}
-
-		if (root == parent) {
-			GdkWindow *toplevel;
-			toplevel = gdk_window_foreign_new (xid);
-			return toplevel;
-		}
-
-		xid = parent;
+	if (emb->menu_item != NULL) {
+		gtk_widget_destroy (emb->menu_item);
+		emb->menu_item = NULL;
 	}
-	while (TRUE);
+	if (emb->app != NULL) {
+		gnome_vfs_mime_application_free (emb->app);
+		emb->app = NULL;
+	}
+
+	if (enable == FALSE)
+		return;
+
+	emb->app = gnome_vfs_mime_get_default_application_for_uri (emb->filename, emb->mimetype);
+
+	/* translators: this is:
+	 * Open With ApplicationName
+	 * as in nautilus' right-click menu */
+	label = g_strdup_printf ("_Open with \"%s\"", emb->app->name);
+	item = gtk_image_menu_item_new_with_mnemonic (label);
+	g_free (label);
+	image = gtk_image_new_from_stock (GTK_STOCK_OPEN, GTK_ICON_SIZE_MENU);
+	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item), image);
+	g_signal_connect (G_OBJECT (item), "activate",
+			G_CALLBACK (on_open1_activate), emb);
+	gtk_widget_show (item);
+	emb->menu_item = item;
+
+	menu = glade_xml_get_widget (emb->menuxml, "menu");
+	gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), item);
+}
+
+static void
+on_open1_activate (GtkButton *button, TotemEmbedded *emb)
+{
+	GList *l = NULL;
+
+	g_return_if_fail (emb->app != NULL);
+
+	l = g_list_prepend (l, emb->filename);
+	if (gnome_vfs_mime_application_launch (emb->app, l) == GNOME_VFS_OK) {
+		totem_embedded_stop (emb, NULL);
+	}
+
+	g_list_free (l);
 }
 
 static void
@@ -294,20 +336,8 @@ on_about1_activate (GtkButton *button, TotemEmbedded *emb)
 	g_free (backend_version);
 	g_free (description);
 
-	if (GTK_IS_PLUG (emb->window)) {
-		GdkWindow *toplevel;
-
-		gtk_widget_realize (emb->about);
-		toplevel = totem_gtk_plug_get_toplevel (GTK_PLUG (emb->window));
-		if (toplevel != NULL) {
-			gdk_window_set_transient_for
-				(GTK_WIDGET (emb->about)->window, toplevel);
-			gdk_window_unref (toplevel);
-		}
-	} else {
-		gtk_window_set_transient_for (GTK_WINDOW (emb->about),
-				GTK_WINDOW (emb->window));
-	}
+	totem_interface_set_transient_for (GTK_WINDOW (emb->about),
+			GTK_WINDOW (emb->window));
 
 	g_object_add_weak_pointer (G_OBJECT (emb->about),
 			(gpointer *)&emb->about);
@@ -413,16 +443,6 @@ on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 		}
 	} else if (event->button == 3 && event->type == GDK_BUTTON_PRESS) {
 		GtkMenu *menu;
-		GtkWidget *item;
-
-		item = glade_xml_get_widget (emb->menuxml, "copy_location1");
-
-		if (emb->filename == NULL
-				|| strcmp ("fd://0", emb->filename) == 0) {
-			gtk_widget_set_sensitive (item, FALSE);
-		} else {
-			gtk_widget_set_sensitive (item, TRUE);
-		}
 
 		menu = GTK_MENU (glade_xml_get_widget (emb->menuxml, "menu"));
 		gtk_menu_popup (menu, NULL, NULL, NULL, NULL,
@@ -632,6 +652,7 @@ int main (int argc, char **argv)
 	bacon_video_widget_init_backend (NULL, NULL);
 
 	gtk_init (&argc, &argv);
+	gnome_vfs_init ();
 	dbus_g_object_type_install_info (TOTEM_TYPE_EMBEDDED,
 		&dbus_glib_totem_embedded_object_info);
 	svcname = g_strdup_printf ("org.totem_%d.MozillaPluginService",
@@ -698,7 +719,12 @@ int main (int argc, char **argv)
 			if (i + 1 < argc) {
 				i++;
 				emb->target = g_strdup (argv[i]);
-			} 
+			}
+		} else if (OPTION_IS (TOTEM_OPTION_MIMETYPE)) {
+			if (i + 1 < argc) {
+				i++;
+				emb->mimetype = (const char *) argv[i];
+			}
 		} else if (OPTION_IS (TOTEM_OPTION_HIDDEN)) {
 			emb->hidden = TRUE;
 		} else if (i + 1 == argc) {

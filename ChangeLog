@@ -1,3 +1,23 @@
+2006-06-21  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-interface.c: (totem_interface_error_dialog),
+	(totem_interface_get_full_path), (totem_gtk_plug_get_toplevel),
+	(totem_interface_set_transient_for):
+	* src/totem-interface.h:
+	Move the GtkPlug specific transient dialogue handling to
+	totem-interface, so that error messages in the Mozilla viewer
+	get correctly parented as well
+	* src/totem-mozilla-options.h:
+	* src/totem-mozilla-plugin.cpp:
+	* src/totem-mozilla-scriptable.h:
+	* src/totem-mozilla-viewer.c: (totem_embedded_open),
+	(totem_embedded_set_menu), (on_open1_activate),
+	(on_about1_activate), (on_video_button_press_event), (main):
+	Don't actually use the hints from Quicktime about caching, we cache
+	everything, why would we not?
+	Add a "Open in Movie Player" item to the right-click popup menu
+	(Closes: #300059)
+
 2006-06-20  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-mozilla-plugin.cpp: add support for the uimode parameter

@@ -135,6 +135,11 @@ totem_plugin_fork (TotemPlugin *plugin)
 		g_ptr_array_add (arr, g_strdup (plugin->target));
 	}
 
+	if (plugin->mimetype) {
+		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_MIMETYPE));
+		g_ptr_array_add (arr, g_strdup (plugin->mimetype));
+	}
+
 	if (plugin->controller_hidden) {
 		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_CONTROLS_HIDDEN));
 	}
@@ -250,7 +255,7 @@ resolve_relative_uri (nsIURI *docURI, const char *uri)
 	return g_strdup (uri);
 }
 
-static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
+static NPError totem_plugin_new_instance (NPMIMEType mimetype, NPP instance,
 		uint16_t mode, int16_t argc, char *argn[], char *argv[],
 		NPSavedData *saved)
 {
@@ -302,7 +307,7 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 	/* mode is NP_EMBED, NP_FULL, or NP_BACKGROUND (see npapi.h) */
 	//FIXME we should error out if we are in fullscreen mode
 	printf("mode %d\n",mode);
-	printf("mime type: %s\n", mime_type);
+	printf("mime type: %s\n", mimetype);
 	plugin->instance = instance;
 	plugin->send_fd = -1;
 
@@ -331,9 +336,10 @@ static NPError totem_plugin_new_instance (NPMIMEType mime_type, NPP instance,
 	}
 
 	/* Set the default cache behaviour */
-	if (strcmp (mime_type, "video/quicktime") != 0) {
+	if (strcmp (mimetype, "video/quicktime") != 0) {
 		plugin->cache = TRUE;
 	}
+	plugin->mimetype = g_strdup (mimetype);
 
 	for (i=0; i<argc; i++) {
 		printf ("argv[%d] %s %s\n", i, argn[i], argv[i]);
@@ -497,14 +503,10 @@ static NPError totem_plugin_new_stream (NPP instance, NPMIMEType type,
 	if (g_str_has_prefix (plugin->src, "file://")) {
 		*stype = NP_ASFILEONLY;
 		plugin->stream_type = NP_ASFILEONLY;
-	} else if (plugin->cache != FALSE) {
+	} else {
 		*stype = NP_ASFILE;
 		plugin->stream_type = NP_ASFILE;
-	} else {
-		*stype = NP_NORMAL;
-		plugin->stream_type = NP_NORMAL;
 	}
-		
 
 	return NPERR_NO_ERROR;
 }
@@ -706,10 +708,10 @@ NP_GetValue(void *future, NPPVariable variable, void *value)
 }
 
 static struct {
-	const char *mime_type;
+	const char *mimetype;
 	const char *extensions;
 	const char *mime_alias;
-} mime_types[] = {
+} mimetypes[] = {
 	{ "video/quicktime", "mov", NULL },
 	{ "application/x-mplayer2", "avi, wma, wmv", "video/x-msvideo" },
 	{ "video/mpeg", "mpg, mpeg, mpe", NULL },
@@ -720,7 +722,7 @@ static struct {
 	{ "video/divx", "divx", "video/x-msvideo" },
 	{ "audio/wav", "wav", NULL }
 };
-#define NUM_MIME_TYPES G_N_ELEMENTS(mime_types)
+#define NUM_MIME_TYPES G_N_ELEMENTS(mimetypes)
 
 char *NP_GetMIMEDescription(void)
 {
@@ -736,17 +738,17 @@ char *NP_GetMIMEDescription(void)
 		const char *desc;
 		char *item;
 
-		desc = gnome_vfs_mime_get_description (mime_types[i].mime_type);
-		if (desc == NULL && mime_types[i].mime_alias != NULL) {
+		desc = gnome_vfs_mime_get_description (mimetypes[i].mimetype);
+		if (desc == NULL && mimetypes[i].mime_alias != NULL) {
 			desc = gnome_vfs_mime_get_description
-				(mime_types[i].mime_alias);
+				(mimetypes[i].mime_alias);
 		}
 		if (desc == NULL) {
-			desc = mime_types[i].mime_alias;
+			desc = mimetypes[i].mime_alias;
 		}
 
-		item = g_strdup_printf ("%s:%s:%s;", mime_types[i].mime_type,
-				mime_types[i].extensions, desc);
+		item = g_strdup_printf ("%s:%s:%s;", mimetypes[i].mimetype,
+				mimetypes[i].extensions, desc);
 		list = g_string_append (list, item);
 		g_free (item);
 	}

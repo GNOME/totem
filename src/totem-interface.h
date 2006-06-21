@@ -45,6 +45,8 @@ void		 totem_interface_error		(const char *title,
 void		 totem_interface_error_blocking	(const char *title,
 						 const char *reason,
 						 GtkWindow *parent);
+void		 totem_interface_set_transient_for (GtkWindow *window,
+						    GtkWindow *parent);
 
 G_END_DECLS
 
