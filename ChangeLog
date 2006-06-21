@@ -1,5 +1,12 @@
 2006-06-21  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-mozilla-plugin.cpp: only spawn the viewer in _write
+	instead of _write_ready so that we can do something with the data
+	before passing it on to the viewer, fixup the warnings vs. error
+	messages on the console
+
+2006-06-21  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-mozilla-plugin.cpp: change plugin's name to
 	"Totem Web Browser Plugin"
 	* src/vanity.c: fix compilation

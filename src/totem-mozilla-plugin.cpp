@@ -158,12 +158,16 @@ totem_plugin_fork (TotemPlugin *plugin)
 
 #ifdef TOTEM_DEBUG
 	{
+		GString *s;
 		int i;
-		g_print ("Launching: ");
+
+		s = g_string_new ("Launching: ");
 		for (i = 0; argv[i] != NULL; i++) {
-			g_print ("%s ", argv[i]);
+			g_string_append (s, argv[i]);
 		}
-		g_print ("\n");
+		g_string_append (s, "\n");
+		D("%s", s->str);
+		g_string_free (s, TRUE);
 	}
 #endif
 
@@ -174,9 +178,8 @@ totem_plugin_fork (TotemPlugin *plugin)
 	{
 		D("Spawn failed");
 
-		if (err)
-		{
-			fprintf(stderr, "%s\n", err->message);
+		if (err) {
+			g_warning ("%s\n", err->message);
 			g_error_free(err);
 		}
 
@@ -186,11 +189,12 @@ totem_plugin_fork (TotemPlugin *plugin)
 
 	g_strfreev (argv);
 
+	fcntl(plugin->send_fd, F_SETFL, O_NONBLOCK);
+
 	/* now wait until startup is complete */
 	plugin->got_svc = FALSE;
-	plugin->wait_for_svc =
-		g_strdup_printf ("org.totem_%d.MozillaPluginService",
-				 plugin->player_pid);
+	plugin->wait_for_svc = g_strdup_printf
+		("org.totem_%d.MozillaPluginService", plugin->player_pid);
 	D("waiting for signal %s", plugin->wait_for_svc);
 	dbus_g_proxy_add_signal (plugin->proxy, "NameOwnerChanged",
 				 G_TYPE_STRING, G_TYPE_STRING,
@@ -206,6 +210,7 @@ totem_plugin_fork (TotemPlugin *plugin)
 		g_get_current_time (&now);
 	} while (iface->tm != NULL && !plugin->got_svc &&
 		 (now.tv_sec <= then.tv_sec));
+
 	if (!iface->tm) {
 		/* we were destroyed in one of the iterations of the
 		 * mainloop, get out ASAP */
@@ -217,7 +222,7 @@ totem_plugin_fork (TotemPlugin *plugin)
 	dbus_g_proxy_disconnect_signal (plugin->proxy, "NameOwnerChanged",
 					G_CALLBACK (cb_update_name), plugin);
 	if (!plugin->got_svc) {
-		fprintf (stderr, "Failed to receive DBUS interface response\n");
+		g_warning ("Failed to receive DBUS interface response\n");
 		g_free (plugin->wait_for_svc);
 
 		if (plugin->player_pid) {
@@ -474,9 +479,6 @@ static NPError totem_plugin_set_window (NPP instance, NPWindow* window)
 		plugin->window = (Window) window->window;
 		if (!totem_plugin_fork (plugin))
 			return NPERR_GENERIC_ERROR;
-
-		if (plugin->send_fd > 0)
-			fcntl(plugin->send_fd, F_SETFL, O_NONBLOCK);
 	}
 
 	D("leaving plugin_set_window");
@@ -548,15 +550,8 @@ static int32 totem_plugin_write_ready (NPP instance, NPStream *stream)
 	if (is_supported_scheme (plugin->src) == FALSE)
 		return 0;
 
-	if (plugin->send_fd < 0) {
-		if (!totem_plugin_fork (plugin))
-			return 0;
-
-		if (plugin->send_fd > 0)
-			fcntl(plugin->send_fd, F_SETFL, O_NONBLOCK);
-		else
-			return 0;
-	}
+	if (plugin->send_fd < 0)
+		return (8 * 1024);
 
 	fds.events = POLLOUT;
 	fds.fd = plugin->send_fd;
@@ -582,8 +577,13 @@ static int32 totem_plugin_write (NPP instance, NPStream *stream, int32 offset,
 	if (plugin == NULL)
 		return -1;
 
-	if (!plugin->player_pid)
-		return -1;
+	if (!plugin->player_pid) {
+		//FIXME push the data to the playlist parser to get
+		//something recognised first?
+
+		if (!totem_plugin_fork (plugin))
+			return -1;
+	}
 
 	if (plugin->send_fd < 0)
 		return -1;
@@ -617,7 +617,7 @@ static void totem_plugin_stream_as_file (NPP instance, NPStream *stream,
 	if (!dbus_g_proxy_call (plugin->proxy, "SetLocalFile", &err,
 			G_TYPE_STRING, fname, G_TYPE_INVALID,
 			G_TYPE_INVALID)) {
-		g_printerr ("Error: %s\n", err->message);
+		g_warning ("Error: %s\n", err->message);
 	}
 
 	D("plugin_stream_as_file\n");
