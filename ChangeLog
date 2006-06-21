@@ -1,5 +1,11 @@
 2006-06-21  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* src/plparse/Makefile.am: export DBUS_*_VERSION via the DBUS_CFLAGS,
+	spotted by William Jon McCann
+
+2006-06-21  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-mozilla-plugin.cpp: only spawn the viewer in _write
 	instead of _write_ready so that we can do something with the data
 	before passing it on to the viewer, fixup the warnings vs. error

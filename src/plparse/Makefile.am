@@ -4,7 +4,8 @@ INCLUDES = \
 	-I$(top_srcdir) \
 	-I$(top_builddir)/src/plparser \
 	$(EXTRA_GNOME_CFLAGS) \
-	$(HAL_CFLAGS)
+	$(HAL_CFLAGS) \
+	$(DBUS_CFLAGS)
 
 test_parser_SOURCES = test-parser.c
 test_parser_LDADD = \
