@@ -268,6 +268,8 @@ totem_embedded_set_menu (TotemEmbedded *emb, gboolean enable)
 		return;
 
 	emb->app = gnome_vfs_mime_get_default_application_for_uri (emb->filename, emb->mimetype);
+	if (emb->app == NULL)
+		return;
 
 	/* translators: this is:
 	 * Open With ApplicationName

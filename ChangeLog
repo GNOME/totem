@@ -1,5 +1,10 @@
 2006-06-21  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-mozilla-viewer.c: (totem_embedded_set_menu): don't crash
+	if there's no stand-alone app to handle the stream
+
+2006-06-21  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-interface.c: (totem_interface_error_dialog),
 	(totem_interface_get_full_path), (totem_gtk_plug_get_toplevel),
 	(totem_interface_set_transient_for):
