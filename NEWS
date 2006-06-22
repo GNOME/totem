@@ -1,6 +1,7 @@
 New features and significant updates in version...
 
 1.4.2
+ * Make showing/hiding the sidebar not resize the video or the window
  * Fix saving non-relative m3u playlists, and parsing relative PLS playlists
  * Fix DVD playback when started from gnome-volume-manager
  * Pop down language and subtitle menus to avoid hangs when the language or
@@ -8,6 +9,8 @@ New features and significant updates in version...
  * Add Impulse Tracker and MOD files to the list of supported types
  * Add audio/vnd.rn-realaudio as a supported playlist format
  * Fix a new installation of Totem not using visualisation (GStreamer)
+ * Fix a possible crash when the buffering is set to non-default values
+   (GStreamer)
 
 1.4.1
  * Fix relative redirections in the Mozilla plugin
