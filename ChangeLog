@@ -1,3 +1,12 @@
+2006-06-29  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_expose), (bacon_video_widget_set_logo_mode),
+	(bacon_video_widget_set_logo):
+	Draw the logo from the video widget itself, instead of relying on
+	xine-lib to show it. Crashes on startup when the logo doesn't fit
+	the video memory available to Xv
+
 2006-06-21  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in:
