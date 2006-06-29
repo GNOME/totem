@@ -157,10 +157,13 @@ struct BaconVideoWidgetPrivate {
 	float seek_dest;
 	gint64 seek_dest_time;
 
+	/* Logo */
+	gboolean logo_mode;
+	GdkPixbuf *logo_pixbuf;
+
 	/* Other stuff */
 	int xpos, ypos;
 	gboolean can_dvd, can_vcd, can_cdda;
-	gboolean logo_mode;
 	guint tick_id;
 	gboolean have_xvidmode;
 	gboolean auto_resize;
@@ -1761,18 +1764,58 @@ static gboolean
 bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 {
 	BaconVideoWidget *bvw = (BaconVideoWidget *) widget;
-	XExposeEvent *expose;
+	gboolean draw_logo, has_video;
 
-	if (event->count != 0)
-		return FALSE;
+	/* if there's only audio and no visualisation, draw the logo as well */
+	has_video = xine_get_stream_info(bvw->priv->stream,
+			XINE_STREAM_INFO_HAS_VIDEO);
+	draw_logo = !has_video && !bvw->priv->show_vfx;
 
-	expose = g_new0 (XExposeEvent, 1);
-	expose->count = event->count;
+	if (bvw->priv->logo_mode == FALSE) {
+		XExposeEvent *expose;
 
-	xine_port_send_gui_data (bvw->priv->vo_driver,
-			XINE_GUI_SEND_EXPOSE_EVENT, expose);
+		if (event->count != 0)
+			return FALSE;
 
-	g_free (expose);
+		expose = g_new0 (XExposeEvent, 1);
+		expose->count = event->count;
+
+		xine_port_send_gui_data (bvw->priv->vo_driver,
+				XINE_GUI_SEND_EXPOSE_EVENT, expose);
+
+		g_free (expose);
+	} else {
+		int s_width, s_height, w_width, w_height;
+		GdkPixbuf *logo = NULL;
+		gfloat ratio;
+
+		/* Start with a nice black canvas */
+		gdk_draw_rectangle (widget->window, widget->style->black_gc, TRUE, 0, 0,
+				widget->allocation.width, widget->allocation.height);
+
+		s_width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
+		s_height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
+		w_width = widget->allocation.width;
+		w_height = widget->allocation.height;
+
+		if ((gfloat) w_width / s_width > (gfloat) w_height / s_height) {
+			ratio = (gfloat) w_height / s_height;
+		} else {
+			ratio = (gfloat) w_width / s_width;
+		}
+
+		s_width *= ratio;
+		s_height *= ratio;
+
+		logo = gdk_pixbuf_scale_simple (bvw->priv->logo_pixbuf,
+				s_width, s_height, GDK_INTERP_BILINEAR);
+
+		gdk_draw_pixbuf (widget->window, widget->style->fg_gc[0], logo,
+				0, 0, (w_width - s_width) / 2, (w_height - s_height) / 2,
+				s_width, s_height, GDK_RGB_DITHER_NONE, 0, 0);
+
+		gdk_pixbuf_unref (logo);
+	}
 
 	return FALSE;
 }
@@ -2417,18 +2460,29 @@ bacon_video_widget_set_logo_mode (BaconVideoWidget *bvw, gboolean logo_mode)
 	g_return_if_fail (bvw->priv->xine != NULL);
 
 	bvw->priv->logo_mode = logo_mode;
+
+	if (logo_mode == FALSE) {
+		gdk_pixbuf_unref (bvw->priv->logo_pixbuf);
+		bvw->priv->logo_pixbuf = NULL;
+	}
 }
 
 void
 bacon_video_widget_set_logo (BaconVideoWidget *bvw, char *filename)
 {
+	GError *err = NULL;
+
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
 	g_return_if_fail (filename != NULL);
+	g_return_if_fail (bvw->priv->logo_pixbuf == NULL);
 
-	if (bacon_video_widget_open (bvw, filename, NULL) != FALSE) {
-		bacon_video_widget_play (bvw, NULL);
+	bvw->priv->logo_pixbuf = gdk_pixbuf_new_from_file (filename, &err);
+	if (err) {
+		g_warning ("Couldn't open logo image: %s",
+				err->message ? err->message : "No reason");
+		g_error_free (err);
 	}
 }
 
