@@ -2572,6 +2572,7 @@ bacon_video_widget_set_logo (BaconVideoWidget * bvw, gchar * filename)
   
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (bvw->priv->logo_pixbuf == NULL);
 
   bvw->priv->logo_pixbuf = gdk_pixbuf_new_from_file (filename, &error);
 
@@ -2579,9 +2580,6 @@ bacon_video_widget_set_logo (BaconVideoWidget * bvw, gchar * filename)
     g_warning ("An error occurred trying to open logo %s: %s",
                filename, error->message);
     g_error_free (error);
-  }
-  else {
-    bacon_video_widget_set_logo_mode (bvw, bvw->priv->logo_mode);
   }
 }
 

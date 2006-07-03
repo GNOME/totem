@@ -594,8 +594,8 @@ video_widget_create (Vanity *vanity)
 
 		bacon_video_widget_play (vanity->bvw, &err);
 	} else {
-		bacon_video_widget_set_logo_mode (vanity->bvw, TRUE);
 		bacon_video_widget_set_logo (vanity->bvw, LOGO_PATH);
+		bacon_video_widget_set_logo_mode (vanity->bvw, TRUE);
 		g_message ("%s", LOGO_PATH);
 	}
 

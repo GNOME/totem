@@ -758,19 +758,13 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 
 		/* Set the logo */
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
-		bacon_video_widget_set_logo (totem->bvw, LOGO_PATH);
-
 		update_mrl_label (totem, NULL);
 	} else {
 		gboolean caps;
 		char *subtitle_uri;
 		GError *err = NULL;
 
-		if (bacon_video_widget_get_logo_mode (totem->bvw) != FALSE)
-		{
-			bacon_video_widget_close (totem->bvw);
-			bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
-		}
+		bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
 
 		subtitle_uri = totem_uri_get_subtitle_uri (mrl);
 		totem_gdk_window_set_waiting_cursor (totem->win->window);
@@ -3641,6 +3635,7 @@ main (int argc, char **argv)
 	video_widget_create (totem);
 	long_action ();
 	gtk_widget_grab_focus (GTK_WIDGET (totem->bvw));
+	bacon_video_widget_set_logo (totem->bvw, LOGO_PATH);
 
 	/* The prefs after the video widget is connected */
 	totem_setup_preferences (totem);

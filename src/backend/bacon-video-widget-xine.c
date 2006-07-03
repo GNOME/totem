@@ -1763,7 +1763,7 @@ bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 			XINE_STREAM_INFO_HAS_VIDEO);
 	draw_logo = !has_video && !bvw->priv->show_vfx;
 
-	if (bvw->priv->logo_mode == FALSE) {
+	if (bvw->priv->logo_mode == FALSE && draw_logo == FALSE) {
 		XExposeEvent *expose;
 
 		if (event->count != 0)
@@ -1782,8 +1782,13 @@ bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 		gfloat ratio;
 
 		/* Start with a nice black canvas */
-		gdk_draw_rectangle (widget->window, widget->style->black_gc, TRUE, 0, 0,
-				widget->allocation.width, widget->allocation.height);
+		gdk_draw_rectangle (widget->window, widget->style->black_gc,
+				TRUE, 0, 0,
+				widget->allocation.width,
+				widget->allocation.height);
+
+		if (bvw->priv->logo_pixbuf == NULL)
+			return FALSE;
 
 		s_width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
 		s_height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
@@ -1803,7 +1808,9 @@ bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 				s_width, s_height, GDK_INTERP_BILINEAR);
 
 		gdk_draw_pixbuf (widget->window, widget->style->fg_gc[0], logo,
-				0, 0, (w_width - s_width) / 2, (w_height - s_height) / 2,
+				0, 0,
+				(w_width - s_width) / 2,
+				(w_height - s_height) / 2,
 				s_width, s_height, GDK_RGB_DITHER_NONE, 0, 0);
 
 		gdk_pixbuf_unref (logo);
@@ -2001,8 +2008,12 @@ show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals)
 	if (enable == FALSE) {
 		audio_source = xine_get_audio_source (bvw->priv->stream);
 		if (xine_post_wire_audio_port (audio_source,
-					bvw->priv->ao_driver))
+					bvw->priv->ao_driver)) {
 			bvw->priv->using_vfx = FALSE;
+
+			/* Queue a redraw of the widget */
+			gtk_widget_queue_draw (GTK_WIDGET (bvw));
+		}
 		if (bvw->priv->vis != NULL) {
 			xine_post_dispose (bvw->priv->xine,
 					bvw->priv->vis);
@@ -2011,8 +2022,12 @@ show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals)
 	} else {
 		audio_source = xine_get_audio_source (bvw->priv->stream);
 		if (xine_post_wire_audio_port (audio_source,
-					bvw->priv->vis->audio_input[0]))
+					bvw->priv->vis->audio_input[0])) {
 			bvw->priv->using_vfx = TRUE;
+
+			/* Queue a redraw of the widget */
+			gtk_widget_queue_draw (GTK_WIDGET (bvw));
+		}
 	}
 }
 
@@ -2453,10 +2468,8 @@ bacon_video_widget_set_logo_mode (BaconVideoWidget *bvw, gboolean logo_mode)
 
 	bvw->priv->logo_mode = logo_mode;
 
-	if (logo_mode == FALSE) {
-		gdk_pixbuf_unref (bvw->priv->logo_pixbuf);
-		bvw->priv->logo_pixbuf = NULL;
-	}
+	/* Queue a redraw of the widget */
+	gtk_widget_queue_draw (GTK_WIDGET (bvw));
 }
 
 void

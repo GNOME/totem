@@ -1,3 +1,18 @@
+2006-07-03  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_set_logo):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_expose), (show_vfx_update),
+	(bacon_video_widget_set_logo_mode):
+	* src/totem.c: (totem_action_set_mrl_with_warning), (main):
+	* src/vanity.c: (video_widget_create):
+	Change the semantics for the logo-related functions, set the logo
+	only once, and only change the logo mode for the expose mode.
+	Fixes the GStreamer backend leaking one huge pixbuf per set_logo call,
+	Shows the logo when no viz is selected and playing audio with the
+	xine-lib backend
+
 2006-06-29  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-xine.c:
