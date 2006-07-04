@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-20 20:47+0700\n"
-"PO-Revision-Date: 2006-06-20 23:39+0700\n"
+"POT-Creation-Date: 2006-07-04 11:27+0700\n"
+"PO-Revision-Date: 2006-07-04 11:35+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <L10n@opentle.org>\n"
 "MIME-Version: 1.0\n"
@@ -183,7 +183,7 @@ msgstr "เฟรมเรท"
 msgid "N/A"
 msgstr "ไม่ปรากฏ"
 
-#: data/properties.glade.h:17 src/totem.c:2057
+#: data/properties.glade.h:17 src/totem.c:2051
 msgid "Properties"
 msgstr "คุณสมบัติ"
 
@@ -579,8 +579,8 @@ msgid "Time:"
 msgstr "เวลา:"
 
 #. Title
-#: data/totem.glade.h:102 src/totem.c:706 src/totem.c:3520
-#: src/totem.c:3537
+#: data/totem.glade.h:102 src/totem.c:706 src/totem.c:3514
+#: src/totem.c:3531
 msgid "Totem Movie Player"
 msgstr "Totem: โปรแกรมเล่นภาพยนตร์"
 
@@ -991,12 +991,12 @@ msgstr "เปิด '%s'"
 msgid "Empty"
 msgstr "ว่างเปล่า"
 
-#: src/totem-interface.c:114
+#: src/totem-interface.c:117
 #, c-format
 msgid "Couldn't load the '%s' interface."
 msgstr "ไม่สามารถโหลดอินเทอร์เฟซ '%s'"
 
-#: src/totem-interface.c:116 src/totem-interface.c:118
+#: src/totem-interface.c:119 src/totem-interface.c:121
 msgid "Make sure that Totem is properly installed."
 msgstr "กรุณาตรวจสอบติดตั้ง Totem ว่าเรียบร้อยดีหรือไม่"
 
@@ -1008,6 +1008,64 @@ msgstr "ไม่มี"
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "เล่นแผ่น '%s'"
+
+#. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+#: src/totem-mozilla-viewer.c:186 src/totem.c:338 src/totem.c:367
+#: src/totem.c:807 src/totem.c:918
+#, c-format
+msgid "Totem could not play '%s'."
+msgstr "Totem ไม่สามารถเล่น '%s'"
+
+#: src/totem-mozilla-viewer.c:325
+#, c-format
+msgid "Movie Player using %s"
+msgstr "โปรแกรมเล่นภาพยนตร์โดยใช้ %s"
+
+#: src/totem-mozilla-viewer.c:329
+msgid "Totem Mozilla Plugin"
+msgstr "ปลั๊กอิน Totem สำหรับ Mozilla"
+
+#: src/totem-mozilla-viewer.c:331 src/totem.c:1968
+msgid "Copyright © 2002-2006 Bastien Nocera"
+msgstr "Copyright © 2002-2006 Bastien Nocera"
+
+#: src/totem-mozilla-viewer.c:334 src/totem.c:1973 src/vanity.c:267
+msgid "translator-credits"
+msgstr ""
+"อิสริยะ ไพรีพ่ายฤทธิ์ <markpeak@gmail.com>\n"
+"เทพพิทักษ์ การุญบุญญานันท์ <thep@linux.thai.net>"
+
+#: src/totem-mozilla-viewer.c:422
+msgid "Failed to start stand-alone movie player"
+msgstr "ไม่สามารถตั้งต้นโปรแกรมเล่นภาพยนตร์ในหน้าต่างอิสระได้"
+
+#: src/totem-mozilla-viewer.c:423
+msgid "Unknown reason"
+msgstr "ไม่ทราบสาเหตุ"
+
+#: src/totem-mozilla-viewer.c:523
+msgid "Plugin"
+msgstr "ปลั๊กอิน"
+
+#: src/totem-mozilla-viewer.c:526
+msgid "Menu"
+msgstr "เมนู"
+
+#: src/totem-mozilla-viewer.c:543
+msgid "The Totem plugin could not startup."
+msgstr "ไม่สามารถเริ่มปลั๊กอิน Totem"
+
+#: src/totem-mozilla-viewer.c:543 src/totem.c:433 src/totem.c:3373
+msgid "No reason."
+msgstr "ไม่ทราบสาเหตุ"
+
+#: src/totem-mozilla-viewer.c:654
+msgid "Could not initialise the thread-safe libraries."
+msgstr "ไม่สามารถเริ่มใช้ไลบรารีสำหรับการใช้งานเธรดอย่างปลอดภัย"
+
+#: src/totem-mozilla-viewer.c:654
+msgid "Verify your system installation. The Totem plugin will now exit."
+msgstr "กรุณาตรวจสอบการติดตั้งของระบบ ปลั๊กอิน Totem จะเลิกทำงาน"
 
 #: src/totem-options.c:36 src/vanity.c:75
 msgid "Backend options"
@@ -1384,11 +1442,6 @@ msgstr "กำลังพัก"
 msgid "Totem could not eject the optical media."
 msgstr "Totem ไม่สามารถดันแผ่นออกได้"
 
-#: src/totem.c:338 src/totem.c:367 src/totem.c:813 src/totem.c:924
-#, c-format
-msgid "Totem could not play '%s'."
-msgstr "Totem ไม่สามารถเล่น '%s'"
-
 #: src/totem.c:394
 #, c-format
 msgid ""
@@ -1419,103 +1472,89 @@ msgstr "คุณอาจตรวจสอบว่าได้ใส่แผ
 msgid "Totem was not able to play this disc."
 msgstr "Totem ไม่สามารถเล่นแผ่นนี้ได้"
 
-#: src/totem.c:433 src/totem.c:3379
-msgid "No reason."
-msgstr "ไม่ทราบสาเหตุ"
-
 #: src/totem.c:699
 msgid "No File"
 msgstr "ไม่มีแฟ้ม"
 
-#: src/totem.c:819
+#: src/totem.c:813
 msgid "No error message"
 msgstr "ไม่มีข้อมูลเกี่ยวกับข้อผิดพลาดที่เกิดขึ้น"
 
-#: src/totem.c:1282 src/totem.c:1284
+#: src/totem.c:1276 src/totem.c:1278
 msgid "An error occurred"
 msgstr "เกิดปัญหา"
 
-#: src/totem.c:1655
+#: src/totem.c:1649
 msgid "Open Location..."
 msgstr "เปิดตำแหน่ง..."
 
-#: src/totem.c:1928
+#: src/totem.c:1922
 msgid "Totem could not display the help contents."
 msgstr "Totem ไม่สามารถแสดงวิธีใช้"
 
-#: src/totem.c:1961
+#: src/totem.c:1955
 msgid "GTK+"
 msgstr "GTK+"
 
-#: src/totem.c:1963
+#: src/totem.c:1957
 msgid "GNOME"
 msgstr "GNOME"
 
 #. This lists the back-end and front-end types and versions, such as
 #. * Movie Player using GStreamer 0.10.1 and GNOME
-#: src/totem.c:1969
+#: src/totem.c:1963
 #, c-format
 msgid "Movie Player using %s and %s"
 msgstr "โปรแกรมเล่นภาพยนตร์โดยใช้ %s และ %s"
 
-#: src/totem.c:1974
-msgid "Copyright © 2002-2006 Bastien Nocera"
-msgstr "Copyright © 2002-2006 Bastien Nocera"
-
-#: src/totem.c:1979 src/vanity.c:267
-msgid "translator-credits"
-msgstr ""
-"อิสริยะ ไพรีพ่ายฤทธิ์ <markpeak@gmail.com>\n"
-"เทพพิทักษ์ การุญบุญญานันท์ <thep@linux.thai.net>"
-
-#: src/totem.c:2012 src/totem.c:2020 src/vanity.c:300
+#: src/totem.c:2006 src/totem.c:2014 src/vanity.c:300
 #: src/vanity.c:308
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem ไม่สามารถจับหน้าจอได้"
 
-#: src/totem.c:2020 src/vanity.c:308
+#: src/totem.c:2014 src/vanity.c:308
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "เหตุการณ์นี้ไม่น่าจะเกิด กรุณารายงานข้อผิดพลาดนี้"
 
-#: src/totem.c:2047
+#: src/totem.c:2041
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem ไม่สามารถแสดงหน้าต่างคุณสมบัติได้"
 
-#: src/totem.c:2047
+#: src/totem.c:2041
 msgid "Make sure that Totem is correctly installed."
 msgstr "กรุณาตรวจสอบว่าติดตั้ง Totem ถูกต้อง"
 
-#: src/totem.c:2133
+#: src/totem.c:2127
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem ไม่สามารถเลื่อนตำแหน่งใน '%s' ได้"
 
-#: src/totem.c:3379
+#: src/totem.c:3373
 msgid "Totem could not startup."
 msgstr "ไม่สามารถเริ่มทำงาน Totem"
 
-#: src/totem.c:3521
+#: src/totem.c:3515
 msgid "Could not initialize the thread-safe libraries."
 msgstr "ไม่สามารถเริ่มใช้ไลบรารีสำหรับการใช้งานเธรดอย่างปลอดภัย"
 
-#: src/totem.c:3521
+#: src/totem.c:3515
 msgid "Verify your system installation. Totem will now exit."
 msgstr "กรุณาตรวจสอบการติดตั้งของระบบ Totem จะเลิกทำงาน"
 
-#: src/totem.c:3545
+#: src/totem.c:3539
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem ไม่สามารถเริ่มใช้ระบบจัดการค่าตั้ง"
 
-#: src/totem.c:3545
+#: src/totem.c:3539
 msgid "Make sure that GNOME is properly installed."
 msgstr "กรุณาตรวจสอบว่าติดตั้ง GNOME ถูกต้องหรือไม่"
 
 #. Main window
-#: src/totem.c:3573
+#: src/totem.c:3567
 msgid "main window"
 msgstr "หน้าต่างหลัก"
 
-#: src/totem.c:3578
+#: src/totem.c:3572
 msgid "video popup menu"
 msgstr "เมนูผุดขึ้นสำหรับวิดีโอ"
 
@@ -1640,30 +1679,30 @@ msgstr "ไม่สามารถเล่นภาพยนตร์ได้
 msgid "Failed to retrieve working directory"
 msgstr "ไม่สามารถอ่านไดเรกทอรีใช้งานปัจจุบัน"
 
-#: src/backend/bacon-video-widget-gst-0.10.c:3799
+#: src/backend/bacon-video-widget-gst-0.10.c:3797
 msgid "Too old version of GStreamer installed."
 msgstr "รุ่นของ GStreamer ที่ติดตั้งไว้เก่าเกินไป"
 
-#: src/backend/bacon-video-widget-gst-0.10.c:3806
+#: src/backend/bacon-video-widget-gst-0.10.c:3804
 msgid "Media contains no supported video streams."
 msgstr "สื่อไม่มีสตรีมวิดีโอที่สนับสนุน"
 
-#: src/backend/bacon-video-widget-gst-0.10.c:4151
+#: src/backend/bacon-video-widget-gst-0.10.c:4149
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr ""
 "ไม่สามารถสร้างอ็อบเจกต์สำหรับเล่นสื่อของ GStreamer กรุณาตรวจสอบการติดตั้ง GStreamer ของคุณ"
 
-#: src/backend/bacon-video-widget-gst-0.10.c:4266
-#: src/backend/bacon-video-widget-gst-0.10.c:4350
+#: src/backend/bacon-video-widget-gst-0.10.c:4264
+#: src/backend/bacon-video-widget-gst-0.10.c:4348
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
 msgstr ""
 "ไม่สามารถเปิดเอาต์พุตภาพได้ อาจไม่มีอุปกรณ์อยู่ กรุณาเลือกเอาต์พุตภาพช่องอื่นในตัวเลือกระบบสื่อผสม"
 
-#: src/backend/bacon-video-widget-gst-0.10.c:4275
+#: src/backend/bacon-video-widget-gst-0.10.c:4273
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1672,7 +1711,7 @@ msgstr ""
 "ไม่พบเอาต์พุตภาพที่ร้องขอ คุณอาจต้องติดตั้งปลั๊กอิน GStreamer เพิ่มเติม "
 "หรือเลือกเอาต์พุตภาพช่องอื่นในตัวเลือกระบบสื่อผสม"
 
-#: src/backend/bacon-video-widget-gst-0.10.c:4294
+#: src/backend/bacon-video-widget-gst-0.10.c:4292
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1681,7 +1720,7 @@ msgstr ""
 "ไม่สามารถเปิดเอาต์พุตเสียงได้ คุณอาจไม่ได้รับอนุญาตให้เปิดอุปกรณ์เสียง "
 "หรือเซิร์ฟเวอร์เสียงอาจไม่ได้ทำงานอยู่ กรุณาเลือกเอาต์พุตเสียงช่องอื่นในตัวเลือกระบบสื่อผสม"
 
-#: src/backend/bacon-video-widget-gst-0.10.c:4304
+#: src/backend/bacon-video-widget-gst-0.10.c:4302
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -1690,7 +1729,7 @@ msgstr ""
 "ไม่พบเอาต์พุตเสียงที่ร้องขอ คุณอาจต้องติดตั้งปลั๊กอิน GStreamer เพิ่มเติม "
 "หรือเลือกเอาต์พุตเสียงช่องอื่นในตัวเลือกระบบสื่อผสม"
 
-#: src/backend/bacon-video-widget-xine.c:680
+#: src/backend/bacon-video-widget-xine.c:683
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1699,137 +1738,137 @@ msgstr ""
 "ไม่สามารถโหลดไดรเวอร์เสียง '%s'\n"
 "กรุณาตรวจสอบดูว่าไดรเวอร์ไม่ได้ถูกใช้งานอยู่"
 
-#: src/backend/bacon-video-widget-xine.c:1140
-#: src/backend/bacon-video-widget-xine.c:1733
+#: src/backend/bacon-video-widget-xine.c:1143
+#: src/backend/bacon-video-widget-xine.c:1736
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
 msgstr "ไม่มีเอาต์พุตภาพ ตรวจสอบว่าเอาต์พุตภาพถูกติดตั้งแล้ว"
 
-#: src/backend/bacon-video-widget-xine.c:1267
+#: src/backend/bacon-video-widget-xine.c:1270
 msgid "The server you are trying to connect to is not known."
 msgstr "ไม่รู้จักเซิร์ฟเวอร์ที่เรียก"
 
-#: src/backend/bacon-video-widget-xine.c:1271
+#: src/backend/bacon-video-widget-xine.c:1274
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "อุปกรณ์ (%s) ที่เรียกไม่ถูกต้อง"
 
-#: src/backend/bacon-video-widget-xine.c:1275
+#: src/backend/bacon-video-widget-xine.c:1278
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "ไม่สามารถติดต่อกับเซิร์ฟเวอร์ (%s) ได้"
 
-#: src/backend/bacon-video-widget-xine.c:1279
+#: src/backend/bacon-video-widget-xine.c:1282
 msgid "The connection to this server was refused."
 msgstr "การติดต่อถูกปฎิเสธ"
 
-#: src/backend/bacon-video-widget-xine.c:1283
+#: src/backend/bacon-video-widget-xine.c:1286
 msgid "The specified movie could not be found."
 msgstr "ไม่พบภาพยนตร์ที่เรียก"
 
-#: src/backend/bacon-video-widget-xine.c:1289
-#: src/backend/bacon-video-widget-xine.c:1307
+#: src/backend/bacon-video-widget-xine.c:1292
+#: src/backend/bacon-video-widget-xine.c:1310
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
 msgstr "ไม่สามารถอ่านข้อมูลที่ถูกเข้ารหัสได้ คุณกำลังเล่นดีวีดีโดยไม่มี libdvdcss หรือไม่?"
 
-#: src/backend/bacon-video-widget-xine.c:1292
+#: src/backend/bacon-video-widget-xine.c:1295
 msgid "The movie could not be read."
 msgstr "ไม่สามารถอ่านภาพยนตร์ได้"
 
-#: src/backend/bacon-video-widget-xine.c:1301
+#: src/backend/bacon-video-widget-xine.c:1304
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "เกิดปัญหาเมื่อโหลดไลบรารีหรือตัวถอดรหัส (%s)"
 
-#: src/backend/bacon-video-widget-xine.c:1310
+#: src/backend/bacon-video-widget-xine.c:1313
 msgid "This file is encrypted and cannot be played back."
 msgstr "แฟ้มถูกเข้ารหัสและไม่สามารถเล่นได้"
 
-#: src/backend/bacon-video-widget-xine.c:1315
+#: src/backend/bacon-video-widget-xine.c:1318
 msgid "For security reasons, this movie can not be played back."
 msgstr "ด้วยเหตุผลด้านความปลอดภัย ไม่สามารถเล่นภาพยนตร์นี้ได้"
 
-#: src/backend/bacon-video-widget-xine.c:1320
+#: src/backend/bacon-video-widget-xine.c:1323
 msgid "The audio device is busy. Is another application using it?"
 msgstr "อุปกรณ์เสียงถูกใช้งานอยู่"
 
-#: src/backend/bacon-video-widget-xine.c:1325
+#: src/backend/bacon-video-widget-xine.c:1328
 msgid "You are not allowed to open this file."
 msgstr "คุณไม่มีสิทธิ์เปิดแฟ้มนี้"
 
-#: src/backend/bacon-video-widget-xine.c:1327
+#: src/backend/bacon-video-widget-xine.c:1330
 msgid "The server refused access to this file or stream."
 msgstr "เซิร์ฟเวอร์ปฎิเสธการเข้าถึงแฟ้มหรือสตรีมนี้"
 
-#: src/backend/bacon-video-widget-xine.c:1336
+#: src/backend/bacon-video-widget-xine.c:1339
 msgid "The file you tried to play is an empty file."
 msgstr "แฟ้มที่คุณพยายามจะเล่นเป็นแฟ้มเปล่า"
 
-#: src/backend/bacon-video-widget-xine.c:1530
+#: src/backend/bacon-video-widget-xine.c:1533
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "ไม่มีปลั๊กอินสำหรับดำเนินการกับตำแหน่งที่ตั้งของภาพยนตร์นี้"
 
-#: src/backend/bacon-video-widget-xine.c:1534
+#: src/backend/bacon-video-widget-xine.c:1537
 msgid "There is no plugin to handle this movie."
 msgstr "ไม่มีปลั๊กอินสำหรับภาพยนตร์นี้"
 
-#: src/backend/bacon-video-widget-xine.c:1538
+#: src/backend/bacon-video-widget-xine.c:1541
 msgid "This movie is broken and can not be played further."
 msgstr "ภาพยนตร์นี้มีปัญหาและไม่สามารถเล่นต่อได้"
 
-#: src/backend/bacon-video-widget-xine.c:1542
+#: src/backend/bacon-video-widget-xine.c:1545
 msgid "This location is not a valid one."
 msgstr "ตำแหน่งไม่ถูกต้อง"
 
-#: src/backend/bacon-video-widget-xine.c:1546
+#: src/backend/bacon-video-widget-xine.c:1549
 msgid "This movie could not be opened."
 msgstr "ไม่สามารถเปิดภาพยนตร์ได้"
 
-#: src/backend/bacon-video-widget-xine.c:1550
+#: src/backend/bacon-video-widget-xine.c:1553
 msgid "Generic Error."
 msgstr "ผิดพลาด"
 
-#: src/backend/bacon-video-widget-xine.c:2104
+#: src/backend/bacon-video-widget-xine.c:2162
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr "ภาพยนตร์นี้เป็นภาพนิ่ง สามารถเปิดด้วยตัวดูภาพ"
 
-#: src/backend/bacon-video-widget-xine.c:2128
+#: src/backend/bacon-video-widget-xine.c:2186
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr "ไม่สนับสนุนการอ่านรหัส '%s' คุณอาจต้องติดตั้งปลั๊กอินเพิ่มเติม เพื่อจะเล่นภาพยนตร์บางชนิดได้"
 
-#: src/backend/bacon-video-widget-xine.c:2132
+#: src/backend/bacon-video-widget-xine.c:2190
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr "ไม่มีตัวถอดรหัสเสียง '%s' คุณต้องติดตั้งเองต่างหาก"
 
-#: src/backend/bacon-video-widget-xine.c:2148
+#: src/backend/bacon-video-widget-xine.c:2206
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "แฟ้มนี้เป็นแฟ้มเสียง และไม่มีเอาต์พุตสำหรับเสียงออก"
 
-#: src/backend/bacon-video-widget-xine.c:3550
-#: src/backend/bacon-video-widget-xine.c:3597
-#: src/backend/bacon-video-widget-xine.c:3619
+#: src/backend/bacon-video-widget-xine.c:3617
+#: src/backend/bacon-video-widget-xine.c:3664
+#: src/backend/bacon-video-widget-xine.c:3686
 #, c-format
 msgid "Language %d"
 msgstr "ภาษา %d"
 
-#: src/backend/bacon-video-widget-xine.c:3656
+#: src/backend/bacon-video-widget-xine.c:3723
 msgid "No video to capture."
 msgstr "ไม่มีภาพยนตร์สำหรับจับหน้าจอ"
 
-#: src/backend/bacon-video-widget-xine.c:3664
+#: src/backend/bacon-video-widget-xine.c:3731
 msgid "Video codec is not handled."
 msgstr "ตัวถอดรหัสภาพยนตร์ไม่ถูกต้อง"
 
-#: src/backend/bacon-video-widget-xine.c:3672
+#: src/backend/bacon-video-widget-xine.c:3739
 msgid "Movie is not playing."
 msgstr "ภาพยนตร์ไม่ได้เล่นอยู่"
 
@@ -2116,9 +2155,6 @@ msgstr "ไม่สามารถเปิดแฟ้ม '%s': %s"
 
 #~ msgid "Make sure that the Totem plugin is properly installed."
 #~ msgstr "ตรวจสอบว่าติดตั้งปลั๊กอินของ Totem ถูกต้อง"
-
-#~ msgid "The Totem plugin could not startup."
-#~ msgstr "ไม่สามารถเริ่มปลั๊กอิน Totem"
 
 #~ msgid "Please file a bug, this isn't supposed to happen."
 #~ msgstr "นี่เป็นปัญหาที่ไม่ควรเกิดขึ้น กรุณาแจ้งบั้ก"
