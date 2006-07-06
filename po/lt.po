@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-01 12:21+0300\n"
-"PO-Revision-Date: 2006-07-01 12:21+0300\n"
+"POT-Creation-Date: 2006-07-06 15:40+0300\n"
+"PO-Revision-Date: 2006-07-06 16:03+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -970,6 +970,69 @@ msgstr "Nėra"
 msgid "Play Disc '%s'"
 msgstr "Groti diską „%s“"
 
+#. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+#: ../src/totem-mozilla-viewer.c:172 ../src/totem.c:337 ../src/totem.c:366
+#: ../src/totem.c:812 ../src/totem.c:923
+#, c-format
+msgid "Totem could not play '%s'."
+msgstr "Totem nepavyko groti „%s“."
+
+#: ../src/totem-mozilla-viewer.c:271 ../src/totem.c:1965
+#, c-format
+msgid "Movie Player using %s"
+msgstr "Filmų grotuvas, naudojantis %s"
+
+#  Title
+#: ../src/totem-mozilla-viewer.c:275
+msgid "Totem Mozilla Plugin"
+msgstr "Totem Mozilla įskiepis"
+
+#: ../src/totem-mozilla-viewer.c:277 ../src/totem.c:1971 ../src/vanity.c:262
+msgid "Copyright © 2002-2005 Bastien Nocera"
+msgstr "Autorinės teisės © 2002-2005 Bastien Nocera"
+
+#: ../src/totem-mozilla-viewer.c:280 ../src/totem.c:1976 ../src/vanity.c:267
+msgid "translator-credits"
+msgstr ""
+"Paskutinieji vertėjai:\n"
+"Žygimantas Beručka <zygis@gnome.org>,\n"
+"Justina Klingaitė <justina.klingaite@gmail.com>\n"
+"\n"
+"Ankstesnysis vertėjas:\n"
+"Artūras Šlajus <x11@h2o.pieva.net>"
+
+#: ../src/totem-mozilla-viewer.c:369
+msgid "Failed to start stand-alone movie player"
+msgstr "Nepavyko paleisi atskiro filmų grotuvo"
+
+#: ../src/totem-mozilla-viewer.c:370
+msgid "Unknown reason"
+msgstr "Nežinoma priežastis"
+
+#: ../src/totem-mozilla-viewer.c:466
+msgid "Plugin"
+msgstr "Įskiepis"
+
+#: ../src/totem-mozilla-viewer.c:469
+msgid "Menu"
+msgstr "Meniu"
+
+#: ../src/totem-mozilla-viewer.c:485
+msgid "The Totem plugin could not startup."
+msgstr "Totem įskiepis negalėjo startuoti."
+
+#: ../src/totem-mozilla-viewer.c:485 ../src/totem.c:432 ../src/totem.c:3379
+msgid "No reason."
+msgstr "Jokios priežasties."
+
+#: ../src/totem-mozilla-viewer.c:592
+msgid "Could not initialise the thread-safe libraries."
+msgstr "Nepavyko inicializuoti saugių gijų bibliotekų."
+
+#: ../src/totem-mozilla-viewer.c:592
+msgid "Verify your system installation. The Totem plugin will now exit."
+msgstr "Patikrinkite savo sistemos įdiegimą. Totem įskipis dabar užsidarys."
+
 #: ../src/totem-options.c:36 ../src/vanity.c:75
 msgid "Backend options"
 msgstr "Posistemės nustatymai"
@@ -1196,11 +1259,6 @@ msgstr "Pristabdyta"
 msgid "Totem could not eject the optical media."
 msgstr "Totem negalėjo išstumti optinio disko."
 
-#: ../src/totem.c:337 ../src/totem.c:366 ../src/totem.c:812 ../src/totem.c:923
-#, c-format
-msgid "Totem could not play '%s'."
-msgstr "Totem nepavyko groti „%s“."
-
 #: ../src/totem.c:393
 #, c-format
 msgid ""
@@ -1239,10 +1297,6 @@ msgstr ""
 msgid "Totem was not able to play this disc."
 msgstr "Totem nepavyko paleisti šio disko."
 
-#: ../src/totem.c:432 ../src/totem.c:3379
-msgid "No reason."
-msgstr "Jokios priežasties."
-
 #: ../src/totem.c:698
 msgid "No File"
 msgstr "Nėra rinkmenos"
@@ -1263,28 +1317,9 @@ msgstr "Atverti vietą..."
 msgid "Totem could not display the help contents."
 msgstr "Totem nepavyko parodyti pagalbos turinio."
 
-#: ../src/totem.c:1965
-#, c-format
-msgid "Movie Player using %s"
-msgstr "Filmų grotuvas, naudojantis %s"
-
 #: ../src/totem.c:1969
 msgid "Totem"
 msgstr "Totem"
-
-#: ../src/totem.c:1971 ../src/vanity.c:262
-msgid "Copyright © 2002-2005 Bastien Nocera"
-msgstr "Autorinės teisės © 2002-2005 Bastien Nocera"
-
-#: ../src/totem.c:1976 ../src/vanity.c:267
-msgid "translator-credits"
-msgstr ""
-"Paskutinieji vertėjai:\n"
-"Žygimantas Beručka <zygis@gnome.org>,\n"
-"Justina Klingaitė <justina.klingaite@gmail.com>\n"
-"\n"
-"Ankstesnysis vertėjas:\n"
-"Artūras Šlajus <x11@h2o.pieva.net>"
 
 #: ../src/totem.c:2012 ../src/totem.c:2020 ../src/vanity.c:300
 #: ../src/vanity.c:308
@@ -1414,7 +1449,7 @@ msgid "Totem Video Window"
 msgstr "Totem vaizdo langas"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2060
-#: ../src/backend/bacon-video-widget-gst.c:3521
+#: ../src/backend/bacon-video-widget-gst.c:3525
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1433,7 +1468,7 @@ msgid "Could not open location; You may not have permission to open the file."
 msgstr "Nepavyko atverti vietos; galite neturėti leidimo atverti šią rinkmeną."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2080
-#: ../src/backend/bacon-video-widget-gst.c:3472
+#: ../src/backend/bacon-video-widget-gst.c:3476
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1444,7 +1479,7 @@ msgstr ""
 "parinkiklyje."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2086
-#: ../src/backend/bacon-video-widget-gst.c:3515
+#: ../src/backend/bacon-video-widget-gst.c:3519
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1471,27 +1506,27 @@ msgstr "Nepavyko paleisti rinkmenos."
 msgid "Failed to retrieve working directory"
 msgstr "Nepavyko gauti darbinio aplanko"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3797
-#: ../src/backend/bacon-video-widget-gst.c:3183
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3801
+#: ../src/backend/bacon-video-widget-gst.c:3187
 msgid "Too old version of GStreamer installed."
 msgstr "Įdiegta per sena GStreamer versija."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3804
-#: ../src/backend/bacon-video-widget-gst.c:3191
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3808
+#: ../src/backend/bacon-video-widget-gst.c:3195
 msgid "Media contains no supported video streams."
 msgstr "Laikmenoje nėra palaikomų video srautų."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4149
-#: ../src/backend/bacon-video-widget-gst.c:3376
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4153
+#: ../src/backend/bacon-video-widget-gst.c:3380
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr ""
 "Nepavyko sukurti GStreamer grojimo objekto. Patikrinkite GStreamer įdiegimą."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4264
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4348
-#: ../src/backend/bacon-video-widget-gst.c:3483
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4268
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4352
+#: ../src/backend/bacon-video-widget-gst.c:3487
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1499,8 +1534,8 @@ msgstr ""
 "Nepavyko atverti video išvesties. Ji gali būti neprieinama. Pasirinkite kitą "
 "video išvestį daugialypės terpės parinkiklyje."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4273
-#: ../src/backend/bacon-video-widget-gst.c:3487
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4277
+#: ../src/backend/bacon-video-widget-gst.c:3491
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1510,8 +1545,8 @@ msgstr ""
 "gstreamer įskiepius, arba pasirinkti kitą video išvestį daugialypės terpės "
 "sistemų parinkiklyje."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4292
-#: ../src/backend/bacon-video-widget-gst.c:3532
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4296
+#: ../src/backend/bacon-video-widget-gst.c:3536
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1521,8 +1556,8 @@ msgstr ""
 "įrenginį arba Jūsų garso serveris gali neveikti. Pasirinkite kitą audio "
 "išvestį daugialypės terpės sistemų parinkiklyje."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4302
-#: ../src/backend/bacon-video-widget-gst.c:3536
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4306
+#: ../src/backend/bacon-video-widget-gst.c:3540
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
