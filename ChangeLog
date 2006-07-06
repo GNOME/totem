@@ -1,3 +1,10 @@
+2006-07-06  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_realize): Fix warning on exit with GtkStyle,
+	with GTK+ 2.10, patch from Rene Vahtel <vahtel@starman.ee>
+	(Closes: #346762)
+
 2006-07-04  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-mozilla-viewer.c: (on_about1_activate):
