@@ -1108,6 +1108,8 @@ bacon_video_widget_realize (GtkWidget *widget)
 
 	bvw->priv->video_window = widget->window;
 
+	widget->style = gtk_style_attach (widget->style, widget->window);
+
 	/* Set a black background */
 	gdk_draw_rectangle (widget->window, widget->style->black_gc, TRUE,
 			attr.x, attr.y,
