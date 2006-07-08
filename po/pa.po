@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.gnome-2-14\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-13 05:51+0200\n"
-"PO-Revision-Date: 2006-05-13 14:27+0530\n"
+"POT-Creation-Date: 2006-07-08 22:35+0200\n"
+"PO-Revision-Date: 2006-07-09 03:05+0530\n"
 "Last-Translator: A S Alam <apbrar@gmail.com>\n"
 "Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,7 @@ msgstr "ਹੇਠਾਂ"
 msgid "Move Up"
 msgstr "ਉੱਪਰ"
 
-#: ../data/playlist.glade.h:4 ../src/totem-sidebar.c:131
+#: ../data/playlist.glade.h:4 ../src/totem-sidebar.c:117
 msgid "Playlist"
 msgstr "ਸੰਗੀਤ-ਸੂਚੀ"
 
@@ -186,7 +186,7 @@ msgstr "ਫਰੇਮ-ਰੇਟ:"
 msgid "N/A"
 msgstr "ਉਪਲੱਬਧ ਨਹੀ"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:2050
+#: ../data/properties.glade.h:17 ../src/totem.c:2057
 msgid "Properties"
 msgstr "ਵਿਸ਼ੇਸਤਾ"
 
@@ -574,8 +574,8 @@ msgid "Time:"
 msgstr "ਸਮਾਂ:"
 
 #. Title
-#: ../data/totem.glade.h:100 ../src/totem.c:705 ../src/totem.c:3513
-#: ../src/totem.c:3530
+#: ../data/totem.glade.h:100 ../src/totem.c:705 ../src/totem.c:3520
+#: ../src/totem.c:3537
 msgid "Totem Movie Player"
 msgstr "ਟੋਟੇਮ ਵੀਡਿਓ ਪਲੇਅਰ"
 
@@ -956,10 +956,70 @@ msgstr "ਪੜਤਾਲ ਕਰੋ ਕਿ ਟੋਟੇਮ ਠੀਕ ਤਰਾਂ 
 msgid "None"
 msgstr "ਕੋਈ ਨਹੀਂ"
 
-#: ../src/totem-menu.c:594
+#: ../src/totem-menu.c:604
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "ਡਿਸਕ '%s' ਚਲਾਓ"
+
+#. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+#: ../src/totem-mozilla-viewer.c:172 ../src/totem.c:337 ../src/totem.c:366
+#: ../src/totem.c:812 ../src/totem.c:923
+#, c-format
+msgid "Totem could not play '%s'."
+msgstr "ਟੋਟੇਮ '%s' ਨੂੰ ਚਲਾ ਨਹੀਂ ਸਕਦਾ ਹੈ।"
+
+#: ../src/totem-mozilla-viewer.c:271 ../src/totem.c:1965
+#, c-format
+msgid "Movie Player using %s"
+msgstr "%s ਦੀ ਵਰਤੋਂ ਕਰਨ ਵਾਲਾ ਫਿਲਮ ਦਰਸ਼ਕ"
+
+#: ../src/totem-mozilla-viewer.c:275
+msgid "Totem Mozilla Plugin"
+msgstr "ਟੋਟੇਮ ਮੌਜੀਲਾ ਪਲੱਗਇਨ"
+
+#: ../src/totem-mozilla-viewer.c:277 ../src/totem.c:1971 ../src/vanity.c:262
+msgid "Copyright © 2002-2005 Bastien Nocera"
+msgstr "Copyright © 2002-2005 Bastien Nocera"
+
+#: ../src/totem-mozilla-viewer.c:280 ../src/totem.c:1976 ../src/vanity.c:267
+msgid "translator-credits"
+msgstr ""
+"ਅਮਨਪ੍ਰੀਤ ਸਿੰਘ ਆਲਮ\n"
+"amanpreetalam@yahoo.com\n"
+"Punjab Open Source Team\n"
+"http://punlinux.sf.net"
+
+#: ../src/totem-mozilla-viewer.c:369
+msgid "Failed to start stand-alone movie player"
+msgstr "ਇੱਕਲਾ ਮੂਵੀ ਪਲੇਅਰ ਚਲਾਉਣ ਲਈ ਆਯੋਗ ਹੈ"
+
+#: ../src/totem-mozilla-viewer.c:370
+msgid "Unknown reason"
+msgstr "ਅਣਜਾਣ ਕਾਰਨ"
+
+#: ../src/totem-mozilla-viewer.c:466
+msgid "Plugin"
+msgstr "ਪਲੱਗਇਨ"
+
+#: ../src/totem-mozilla-viewer.c:469
+msgid "Menu"
+msgstr "ਮੇਨੂ"
+
+#: ../src/totem-mozilla-viewer.c:485
+msgid "The Totem plugin could not startup."
+msgstr "ਟੋਟੇਮ ਪਲੱਗਇਨ ਨੂੰ ਸ਼ੁਰੂ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ ਹੈ।"
+
+#: ../src/totem-mozilla-viewer.c:485 ../src/totem.c:432 ../src/totem.c:3379
+msgid "No reason."
+msgstr "ਕੋਈ ਕਾਰਨ ਨਹੀਂ ਹੈ।"
+
+#: ../src/totem-mozilla-viewer.c:592
+msgid "Could not initialise the thread-safe libraries."
+msgstr "ਥਰਿੱਡ-ਸੁਰੱਖਿਆ ਲਾਇਬਰੇਰੀ ਸ਼ੁਰੂ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕੀ ਹੈ।"
+
+#: ../src/totem-mozilla-viewer.c:592
+msgid "Verify your system installation. The Totem plugin will now exit."
+msgstr "ਆਪਣੇ ਸਿਸਟਮ ਦੀ ਇੰਸਟਾਲ ਦੀ ਪੜਤਾਲ ਕਰੋ। ਟੋਟੇਮ ਪਲੱਗਇਨ ਹੁਣ ਬੰਦ ਹੋ ਰਹੀ ਹੈ।"
 
 #: ../src/totem-options.c:36 ../src/vanity.c:75
 msgid "Backend options"
@@ -1179,11 +1239,6 @@ msgstr "ਰੁਕਿਆ"
 msgid "Totem could not eject the optical media."
 msgstr "ਟੋਟੇਮ ਮਾਧਿਅਮ ਨੂੰ ਬਾਹਰ ਨਹੀਂ ਕੱਢ ਸਕਦਾ ਹੈ।"
 
-#: ../src/totem.c:337 ../src/totem.c:366 ../src/totem.c:812 ../src/totem.c:923
-#, c-format
-msgid "Totem could not play '%s'."
-msgstr "ਟੋਟੇਮ '%s' ਨੂੰ ਚਲਾ ਨਹੀਂ ਸਕਦਾ ਹੈ।"
-
 #: ../src/totem.c:393
 #, c-format
 msgid ""
@@ -1216,10 +1271,6 @@ msgstr "ਤੁਹਾਨੂੰ ਇਹ ਪੜਤਾਲ ਕਰਨੀ ਚਾਹੀ�
 msgid "Totem was not able to play this disc."
 msgstr "ਟੋਟੇਮ ਇਹ ਡਿਸਕ ਚਲਾਉਣ ਦੇ ਯੋਗ ਨਹੀਂ ਹੈ।"
 
-#: ../src/totem.c:432 ../src/totem.c:3372
-msgid "No reason."
-msgstr "ਕੋਈ ਕਾਰਨ ਨਹੀਂ ਹੈ।"
-
 #: ../src/totem.c:698
 msgid "No File"
 msgstr "ਕੋਈ ਫਾਇਲ ਨਹੀਂ"
@@ -1228,87 +1279,70 @@ msgstr "ਕੋਈ ਫਾਇਲ ਨਹੀਂ"
 msgid "No error message"
 msgstr "ਕੋਈ ਗਲਤੀ ਸੁਨੇਹਾ ਨਹੀਂ"
 
-#: ../src/totem.c:1274 ../src/totem.c:1276
+#: ../src/totem.c:1281 ../src/totem.c:1283
 msgid "An error occurred"
 msgstr "ਇੱਕ ਗਲਤੀ ਆਈ ਹੈ"
 
-#: ../src/totem.c:1647
+#: ../src/totem.c:1654
 msgid "Open Location..."
 msgstr "ਟਿਕਾਣਾ ਖੋਲੋ..."
 
-#: ../src/totem.c:1920
+#: ../src/totem.c:1927
 msgid "Totem could not display the help contents."
 msgstr "ਟੋਟੇਮ ਸਹਾਇਤਾ ਅੰਸ਼ ਨਹੀਂ ਵੇਖਾ ਸਕਦਾ ਹੈ।"
 
-#: ../src/totem.c:1958
-#, c-format
-msgid "Movie Player using %s"
-msgstr "%s ਦੀ ਵਰਤੋਂ ਕਰਨ ਵਾਲਾ ਫਿਲਮ ਦਰਸ਼ਕ"
-
-#: ../src/totem.c:1962
+#: ../src/totem.c:1969
 msgid "Totem"
 msgstr "ਟੋਟੇਮ"
 
-#: ../src/totem.c:1964 ../src/vanity.c:262
-msgid "Copyright © 2002-2005 Bastien Nocera"
-msgstr "Copyright © 2002-2005 Bastien Nocera"
-
-#: ../src/totem.c:1969 ../src/vanity.c:267
-msgid "translator-credits"
-msgstr ""
-"ਅਮਨਪ੍ਰੀਤ ਸਿੰਘ ਆਲਮ\n"
-"amanpreetalam@yahoo.com\n"
-"Punjab Team\n"
-"http://punlinux.sf.net"
-
-#: ../src/totem.c:2005 ../src/totem.c:2013 ../src/vanity.c:300
+#: ../src/totem.c:2012 ../src/totem.c:2020 ../src/vanity.c:300
 #: ../src/vanity.c:308
 msgid "Totem could not get a screenshot of that film."
 msgstr "ਟੋਟੇਮ ਇਸ ਫਿਲਮ ਦੀ ਪਰਦਾ ਤਸਵੀਰ ਪ੍ਰਾਪਤ ਨਹੀਂ ਕਰ ਸਕਿਆ ਹੈ।"
 
-#: ../src/totem.c:2013 ../src/vanity.c:308
+#: ../src/totem.c:2020 ../src/vanity.c:308
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "ਇਹ ਅਜੇ ਹੋਇਆ ਨਹੀਂ ਹੈ; ਕਿਰਪਾ ਕਰਕੇ ਇੱਕ ਬੱਗ ਰਿਪੋਰਟ ਦਿਓ।"
 
-#: ../src/totem.c:2040
+#: ../src/totem.c:2047
 msgid "Totem couldn't show the movie properties window."
 msgstr "ਟੋਟੇਮ ਫਿਲਮ ਵਿਸ਼ੇਸਤਾ ਝਰੋਖਾ ਵੇਖਾ ਨਹੀਂ ਸਕਦਾ ਹੈ।"
 
-#: ../src/totem.c:2040
+#: ../src/totem.c:2047
 msgid "Make sure that Totem is correctly installed."
 msgstr "ਪੜਤਾਲ ਕਰੋ ਕਿ ਟੋਟੇਮ ਠੀਕ ਤਰਾਂ ਇੰਸਟਾਲ ਹੈ।"
 
-#: ../src/totem.c:2126
+#: ../src/totem.c:2133
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "ਟੋਟੇਮ '%s' ਵਿੱਚ ਖੋਜ ਨਹੀਂ ਸਕਿਆ ਹੈ।"
 
-#: ../src/totem.c:3372
+#: ../src/totem.c:3379
 msgid "Totem could not startup."
 msgstr "ਟੋਟੇਮ ਸ਼ੁਰੂ ਨਹੀਂ ਹੋ ਸਕਿਆ ਹੈ।"
 
-#: ../src/totem.c:3514
+#: ../src/totem.c:3521
 msgid "Could not initialize the thread-safe libraries."
 msgstr "ਥਰਿੱਡ-ਸੁਰੱਖਿਆ ਲਾਇਬਰੇਰੀ ਸ਼ੁਰੂ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕੀ ਹੈ।"
 
-#: ../src/totem.c:3514
+#: ../src/totem.c:3521
 msgid "Verify your system installation. Totem will now exit."
 msgstr "ਤੁਹਾਡੇ ਸਿਸਟਮ ਦੀ ਇੰਸਟਾਲ ਦੀ ਪੜਤਾਲ ਹੈ। ਟੋਟੇਮ ਹੁਣ ਬੰਦ ਹੋ ਰਿਹਾ ਹੈ।"
 
-#: ../src/totem.c:3537
+#: ../src/totem.c:3544
 msgid "Totem could not initialize the configuration engine."
 msgstr "ਟੋਟੇਮ ਸੰਰਚਨਾ ਇੰਜਣ ਨੂੰ ਸ਼ੁਰੂ ਨਹੀਂ ਕਰ ਸਕਿਆ ਹੈ।"
 
-#: ../src/totem.c:3537
+#: ../src/totem.c:3544
 msgid "Make sure that GNOME is properly installed."
 msgstr "ਇਹ ਯਕੀਨੀ ਬਣਾਓ ਕਿ ਗਨੋਮ ਠੀਕ ਤਰਾਂ ਇੰਸਟਾਲ ਹੈ।"
 
 #. Main window
-#: ../src/totem.c:3565
+#: ../src/totem.c:3572
 msgid "main window"
 msgstr "ਮੁੱਖ ਝਰੋਖਾ"
 
-#: ../src/totem.c:3570
+#: ../src/totem.c:3577
 msgid "video popup menu"
 msgstr "ਵੀਡਿਓ ਪੋਪਅੱਪ ਮੇਨੂ"
 
@@ -1383,13 +1417,13 @@ msgstr ""
 "ਮੁੱਖ ਇੰਟਰਫੇਸ ਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ (vanity.glade).\n"
 "ਪੁਸ਼ਟੀ ਕਰੋ ਕਿ ਵੈਂਟੀ ਠੀਕ ਤਰਾਂ ਇੰਸਟਾਲ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:67
+#: ../src/backend/bacon-video-widget-gst-0.10.c:68
 #: ../src/backend/bacon-video-widget-gst.c:67
 msgid "Totem Video Window"
 msgstr "ਟੋਟੇਮ ਵੀਡਿਓ ਝਰੋਖਾ"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2062
-#: ../src/backend/bacon-video-widget-gst.c:3526
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2060
+#: ../src/backend/bacon-video-widget-gst.c:3525
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1397,18 +1431,18 @@ msgstr ""
 "ਲੋੜੀਦੀਂ ਆਡੀਓ ਆਉਟਪੁੱਟ ਨਹੀਂ ਲੱਭੀ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਬਹੁ-ਰੰਗ ਸਿਸਟਮ ਚੋਣਕਾਰ ਵਿੱਚ ਹੋਰ ਆਡੀਓ ਆਉਟਪੁੱਟ ਦੀ "
 "ਚੋਣ ਕਰੋ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2067
-#: ../src/backend/bacon-video-widget-gst.c:1948
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2065
+#: ../src/backend/bacon-video-widget-gst.c:1943
 msgid "Location not found."
 msgstr "ਟਿਕਾਣਾ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2071
-#: ../src/backend/bacon-video-widget-gst.c:1951
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2069
+#: ../src/backend/bacon-video-widget-gst.c:1946
 msgid "Could not open location; You may not have permission to open the file."
 msgstr "ਟਿਕਾਣਾ ਖੋਲਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ ਹੈ। ਤੁਹਾਨੂੰ ਫਾਇਲ ਖੋਲਣ ਲਈ ਅਧਿਕਾਰ ਨਹੀਂ ਹੋ ਸਕਦੇ ਹਨ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2082
-#: ../src/backend/bacon-video-widget-gst.c:3477
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2080
+#: ../src/backend/bacon-video-widget-gst.c:3476
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1417,8 +1451,8 @@ msgstr ""
 "ਵੀਡਿਓ ਆਉਟਪੁੱਟ ਨੂੰ ਹੋਰ ਕਾਰਜ ਰਾਹੀਂ ਵਰਤਿਆ ਜਾ ਰਿਹਾ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਹੋਰ ਵੀਡਿਆ ਕਾਰਜ ਬੰਦ ਕਰੋ ਜਾਂ "
 "ਬਹੁ-ਰੰਗ ਸਿਸਟਮ ਚੋਣਕਾਰ 'ਚੋਂ ਹੋਰ ਵੀਡਿਆ ਆਉਟ-ਪੁੱਟ ਦੀ ਚੋਣ ਕਰੋ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2088
-#: ../src/backend/bacon-video-widget-gst.c:3520
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2086
+#: ../src/backend/bacon-video-widget-gst.c:3519
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1427,34 +1461,34 @@ msgstr ""
 "ਆਡੀਓ ਆਉਟਪੁੱਟ ਨੂੰ ਹੋਰ ਕਾਰਜ ਰਾਹੀਂ ਵਰਤਿਆ ਜਾ ਰਿਹਾ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਬਹੁ-ਰੰਗ ਸਿਸਟਮ ਚੋਣਕਾਰ 'ਚੋਂ ਹੋਰ "
 "ਆਡੀਓ ਆਉਟ-ਪੁੱਟ ਦੀ ਚੋਣ ਕਰੋ। ਤੁਸੀਂ ਇੱਕ ਸਾਊਂਡ ਸਰਵਰ ਦੀ ਵਰਤੋਂ ਵੀ ਕਰ ਸਕਦੇ ਹੋ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2103
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2101
 msgid "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "ਇਹ ਫਾਇਲ ਨੂੰ ਨੈੱਟਵਰਕ ਉੱਤੇ ਚਲਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ। ਇਹ ਨੂੰ ਪਹਿਲਾਂ ਡਿਸਕ ਉੱਤੇ ਡਾਊਨਲੋਡ ਕਰਨ ਦੀ "
 "ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2181
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2179
 msgid "Media file could not be played."
 msgstr "ਮੀਡਿਆ ਫਾਇਲ ਚਲਾਈ ਨਹੀਂ ਜਾ ਸਕਦੀ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2263
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2314
-#: ../src/backend/bacon-video-widget-gst.c:1883
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2261
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2312
+#: ../src/backend/bacon-video-widget-gst.c:1878
 msgid "Failed to retrieve working directory"
 msgstr "ਵਰਕਿੰਗ ਡਾਇਰੈਕਟਰੀ ਪਰਾਪਤ ਕਰਨ ਲਈ ਫੇਲ ਹੋਇਆ"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3774
-#: ../src/backend/bacon-video-widget-gst.c:3188
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3801
+#: ../src/backend/bacon-video-widget-gst.c:3187
 msgid "Too old version of GStreamer installed."
 msgstr "ਜੀ-ਸਟੀਰਮਰ ਦਾ ਬਹੁਤ ਹੀ ਪੁਰਾਣਾ ਵਰਜਨ ਇੰਸਟਾਲ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3781
-#: ../src/backend/bacon-video-widget-gst.c:3196
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3808
+#: ../src/backend/bacon-video-widget-gst.c:3195
 msgid "Media contains no supported video streams."
 msgstr "ਮੀਡਿਆ ਵੀਡਿਓ ਸਟਰੀਮ ਲਈ ਕੋਈ ਸਹਿਯੋਗ ਨਹੀਂ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4126
-#: ../src/backend/bacon-video-widget-gst.c:3381
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4153
+#: ../src/backend/bacon-video-widget-gst.c:3380
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1462,9 +1496,9 @@ msgstr ""
 "GStreamer ਚੱਲਣ ਇਕਾਈ ਬਣਾਉਣ ਵਿੱਚ ਅਸਫਲ ਹੈ। ਕਿਰਪਾ ਆਪਣੀ ਜੀ-ਸਟਰੀਮਰ ਇੰਸਟਰਫੇਸ ਇੰਸਟਾਲੇਸ਼ਨ ਦੀ "
 "ਜਾਂਚ ਕਰੋ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4241
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4325
-#: ../src/backend/bacon-video-widget-gst.c:3488
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4268
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4352
+#: ../src/backend/bacon-video-widget-gst.c:3487
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1472,8 +1506,8 @@ msgstr ""
 "ਵੀਡਿਓ ਆਉਟਪੁੱਟ ਖੋਲਣ ਲਈ ਫੇਲ ਹੋਇਆ। ਇਹ ਉਪਲੱਬਧ ਨਹੀਂ ਹੋ ਸਕਦਾ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਬਹੁ-ਰੰਗ ਸਿਸਟਮ "
 "ਚੋਣਕਾਰ 'ਚੋਂ ਹੋਰ ਵੀਡਿਓ ਆਉਟ-ਪੁੱਟ ਦੀ ਚੋਣ ਕਰੋ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4250
-#: ../src/backend/bacon-video-widget-gst.c:3492
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4277
+#: ../src/backend/bacon-video-widget-gst.c:3491
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1482,8 +1516,8 @@ msgstr ""
 "ਵੀਡਿਓ ਆਉਟਪੁੱਟ ਨਹੀਂ ਲੱਭੀ ਜਾ ਸਕੀ ਹੈ। ਤੁਹਾਨੂੰ ਹੋਰ ਜੀ-ਸਟਰੀਮਰ ਪਲੱਗਿੰਨ ਦੀ ਚੋਣ ਕਰਨੀ ਚਾਹੀਦੀ ਹੈ ਜਾਂ "
 "ਬਹੁ-ਰੰਗ ਸਿਸਟਮ ਚੋਣਕਾਰ ਵਿੱਚ ਹੋਰ ਵੀਡਿਓ ਆਉਟਪੁੱਟ ਦੀ ਚੋਣ ਕਰੋ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4269
-#: ../src/backend/bacon-video-widget-gst.c:3537
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4296
+#: ../src/backend/bacon-video-widget-gst.c:3536
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1493,8 +1527,8 @@ msgstr ""
 "ਸਰਵਰ ਚੱਲਦਾ ਨਹੀਂ ਹੋ ਸਕਦਾ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਬਹੁ-ਰੰਗ ਸਿਸਟਮ ਚੋਣਕਾਰ 'ਚੋਂ ਹੋਰ ਆਡੀਓ ਆਉਟ-ਪੁੱਟ ਦੀ ਚੋਣ "
 "ਕਰੋ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4279
-#: ../src/backend/bacon-video-widget-gst.c:3541
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4306
+#: ../src/backend/bacon-video-widget-gst.c:3540
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -1503,20 +1537,20 @@ msgstr ""
 "ਆਡੀਓ ਆਉਟਪੁੱਟ ਨਹੀਂ ਲੱਭੀ ਜਾ ਸਕੀ ਹੈ। ਤੁਹਾਨੂੰ ਹੋਰ ਜੀ-ਸਟਰੀਮਰ ਪਲੱਗਿੰਨ ਦੀ ਚੋਣ ਕਰਨੀ ਚਾਹੀਦੀ ਹੈ ਜਾਂ "
 "ਬਹੁ-ਰੰਗ ਸਿਸਟਮ ਚੋਣਕਾਰ ਵਿੱਚ ਹੋਰ ਆਡੀਓ ਆਉਟਪੁੱਟ ਦੀ ਚੋਣ ਕਰੋ।"
 
-#: ../src/backend/bacon-video-widget-gst.c:1972
+#: ../src/backend/bacon-video-widget-gst.c:1967
 msgid "Failed to open media file; unknown error"
 msgstr "ਮੀਡਿਆ ਫਾਇਲ ਖੋਲਣ ਲਈ ਫੇਲ; ਅਣਜਾਣ ਗਲਤੀ"
 
-#: ../src/backend/bacon-video-widget-gst.c:2024
+#: ../src/backend/bacon-video-widget-gst.c:2019
 #, c-format
 msgid "Failed to play: %s"
 msgstr "ਚਲਾਉਣ 'ਚ ਫੇਲ: %s"
 
-#: ../src/backend/bacon-video-widget-gst.c:2026
+#: ../src/backend/bacon-video-widget-gst.c:2021
 msgid "unknown error"
 msgstr "ਅਣਜਾਣ ਗਲਤੀ"
 
-#: ../src/backend/bacon-video-widget-xine.c:688
+#: ../src/backend/bacon-video-widget-xine.c:691
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1525,37 +1559,37 @@ msgstr ""
 "'%s' ਆਡੀਓ ਡਰਾਇਵਰ ਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ\n"
 "ਇਹ ਜਾਂਚ ਕਰੋ ਕਿ ਕੀ ਜੰਤਰ ਰੁੱਝਿਆ ਤਾਂ ਨਹੀਂ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1148
-#: ../src/backend/bacon-video-widget-xine.c:1741
+#: ../src/backend/bacon-video-widget-xine.c:1153
+#: ../src/backend/bacon-video-widget-xine.c:1746
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
 msgstr "ਕੋਈ ਵੀਡਿਓ ਆਉਟਪੁੱਟ ਉਪਲੱਬਧ ਨਹੀਂ ਹੈ। ਇਹ ਯਕੀਨੀ ਬਣਾਉ ਕਿ ਕਾਰਜ ਠੀਕ ਤਰਾਂ ਇੰਸਟਾਲ ਨਹੀਂ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1275
+#: ../src/backend/bacon-video-widget-xine.c:1280
 msgid "The server you are trying to connect to is not known."
 msgstr "ਸਰਵਰ, ਜਿਸ ਨਾਲ ਤੁਸੀਂ ਜੁੜਨ ਦੀ ਕੋਸ਼ਿਸ ਕਰ ਰਹੇ ਹੋ, ਪਛਾਣਿਆ ਨਹੀਂ ਗਿਆ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1279
+#: ../src/backend/bacon-video-widget-xine.c:1284
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "ਜੰਤਰ ਨਾਂ, ਜੋ ਕਿ ਤੁਸੀਂ ਦਿੱਤਾ ਹੈ (%s), ਠੀਕ ਨਹੀਂ ਜਾਪਦਾ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1283
+#: ../src/backend/bacon-video-widget-xine.c:1288
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "ਸਰਵਰ, ਜਿਸ ਨਾਲ ਤੁਸੀਂ ਜੁੜਨ ਦੀ ਕੋਸ਼ਿਸ ਕਰ ਰਹੇ ਹੋ (%s), ਪਹੁੰਚਯੋਗ ਨਹੀਂ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1287
+#: ../src/backend/bacon-video-widget-xine.c:1292
 msgid "The connection to this server was refused."
 msgstr "ਇਸ ਸਰਵਰ ਨਾਲ ਕੁਨੈਕਸ਼ਨ ਤੋਂ ਇਨਕਾਰ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1291
+#: ../src/backend/bacon-video-widget-xine.c:1296
 msgid "The specified movie could not be found."
 msgstr "ਖਾਸ ਫਿਲਮ ਨਹੀਂ ਲੱਭੀ ਹੈ"
 
-#: ../src/backend/bacon-video-widget-xine.c:1297
-#: ../src/backend/bacon-video-widget-xine.c:1315
+#: ../src/backend/bacon-video-widget-xine.c:1302
+#: ../src/backend/bacon-video-widget-xine.c:1320
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -1563,68 +1597,68 @@ msgstr ""
 "ਸਰੋਤ ਇਕ੍ਰਿਪਟਡ ਜਾਪਦਾ ਹੈ ਅਤੇ ਪੜਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ। ਕੀ ਤੁਸੀਂ ਇੱਕ ਇਕ੍ਰਿਪਟਡ DVD ਬਿਨਾਂ "
 "libdvdcss ਤੇ ਚਲਾਉਣ ਦੀ ਕੋਸ਼ਿਸ ਕਰਨੀ ਚਾਹੁੰਦੇ ਹੋ?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1300
+#: ../src/backend/bacon-video-widget-xine.c:1305
 msgid "The movie could not be read."
 msgstr "ਫਿਲਮ ਪੜੀ ਨਹੀਂ ਜਾ ਸਕਦੀ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1309
+#: ../src/backend/bacon-video-widget-xine.c:1314
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "ਲਾਇਬਰੇਰੀ ਜਾਂ ਡੀਕੋਡਰ (%s) ਨੂੰ ਲੋਡ ਕਰਨ ਦੌਰਾਨ ਗਲਤੀ ਆਈ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1318
+#: ../src/backend/bacon-video-widget-xine.c:1323
 msgid "This file is encrypted and cannot be played back."
 msgstr "ਇਹ ਫਾਇਲ ਇਕਰਿਪਟਡ ਹੈ ਅਤੇ ਚਲਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1323
+#: ../src/backend/bacon-video-widget-xine.c:1328
 msgid "For security reasons, this movie can not be played back."
 msgstr "ਸੁਰੱਖਿਆ ਕਾਰਨਾਂ ਕਰਕੇ, ਇਹ ਫਿਲਮ ਨੂੰ ਚਲਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1328
+#: ../src/backend/bacon-video-widget-xine.c:1333
 msgid "The audio device is busy. Is another application using it?"
 msgstr "ਆਡੀਓ ਜੰਤਰ ਰੁਝਿਆ ਹੋਇਆ ਹੈ। ਕੀ ਹੋਰ ਕਾਰਜ ਚੁਣਨਾ ਹੈ?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1333
+#: ../src/backend/bacon-video-widget-xine.c:1338
 msgid "You are not allowed to open this file."
 msgstr "ਤੁਹਾਨੂੰ ਇਹ ਫਾਇਲ ਖੋਲਣ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1335
+#: ../src/backend/bacon-video-widget-xine.c:1340
 msgid "The server refused access to this file or stream."
 msgstr "ਸਰਵਰ ਨੇ ਇਹ ਫਾਇਲ ਜਾਂ ਸਟਰੀਮ ਲਈ ਪਹੁੰਚ ਤੋਂ ਇਨਕਾਰ ਕਰ ਦਿੱਤਾ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1344
+#: ../src/backend/bacon-video-widget-xine.c:1349
 msgid "The file you tried to play is an empty file."
 msgstr "ਫਾਇਲ, ਜੋ ਤੁਸੀਂ ਚਲਾਉਣ ਦੀ ਕੋਸ਼ਿਸ ਕਰ ਰਹੇ ਹੋ, ਖਾਲੀ ਫਾਇਲ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1538
+#: ../src/backend/bacon-video-widget-xine.c:1543
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "ਇਸ ਫਿਲਮ ਦੇ ਟਿਕਾਣੇ ਲਈ ਕੋਈ ਪਲੱਗਿੰਨ ਇੰਸਟਾਲ ਨਹੀਂ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1542
+#: ../src/backend/bacon-video-widget-xine.c:1547
 msgid "There is no plugin to handle this movie."
 msgstr "ਇਸ ਫਿਲਮ ਨੂੰ ਇੰਸਟਾਲ ਕਰਨ ਲਈ ਕੋਈ ਪਲੱਗਿੰਨ ਇੰਸਟਾਲ ਨਹੀਂ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1546
+#: ../src/backend/bacon-video-widget-xine.c:1551
 msgid "This movie is broken and can not be played further."
 msgstr "ਇਹ ਫਿਲਮ ਟੁੱਟ ਗਈ ਹੈ ਅਤੇ ਹੋਰ ਨਹੀਂ ਚਲਾਈ ਜਾ ਸਕਦੀ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1550
+#: ../src/backend/bacon-video-widget-xine.c:1555
 msgid "This location is not a valid one."
 msgstr "ਇਸ ਟਿਕਾਣਾ ਖੋਲਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1554
+#: ../src/backend/bacon-video-widget-xine.c:1559
 msgid "This movie could not be opened."
 msgstr "ਇਹ ਫਿਲਮ ਖੋਲੀ ਨਹੀਂ ਜਾ ਸਕਦੀ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1558
+#: ../src/backend/bacon-video-widget-xine.c:1563
 msgid "Generic Error."
 msgstr "ਸਧਾਰਨ ਗਲਤੀ ਹੈ"
 
-#: ../src/backend/bacon-video-widget-xine.c:2112
+#: ../src/backend/bacon-video-widget-xine.c:2157
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr "ਇਹ ਫਿਲਮ ਸਥਿਰ ਚਿੱਤਰ ਹੈ। ਤੁਸੀਂ ਇਸ ਨੂੰ ਚਿੱਤਰ ਦਰਸ਼ਕ ਨਾਲ ਖੋਲ ਸਕਦੇ ਹੋ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:2136
+#: ../src/backend/bacon-video-widget-xine.c:2181
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1633,7 +1667,7 @@ msgstr ""
 "ਵੀਡਿਓ ਕੋਡ '%s' ਕੰਟਰੋਲ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ। ਤੁਹਾਨੂੰ ਇਸ ਕਿਸਮ ਦੀਆਂ ਵਾਧੂ ਪਲੱਗਿੰਨਾਂ ਇਸ ਫਿਲਮ "
 "ਕਿਸਮ ਚਲਾਉਣ ਲਈ ਇੰਸਟਾਲ ਕਰਨੀਆਂ ਚਾਹੀਦੀਆਂ ਹਨ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:2140
+#: ../src/backend/bacon-video-widget-xine.c:2185
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1642,26 +1676,26 @@ msgstr ""
 "ਆਡੀਓ ਕੋਡ '%s' ਕੰਟਰੋਲ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ। ਤੁਹਾਨੂੰ ਇਸ ਕਿਸਮ ਦੀਆਂ ਵਾਧੂ ਪਲੱਗਿੰਨਾਂ ਇਸ ਫਿਲਮ "
 "ਕਿਸਮ ਚਲਾਉਣ ਲਈ ਇੰਸਟਾਲ ਕਰਨੀਆਂ ਚਾਹੀਦੀਆਂ ਹਨ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:2156
+#: ../src/backend/bacon-video-widget-xine.c:2201
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "ਇਹ ਫਾਇਲ ਸਿਰਫ ਆਡੀਓ ਹੀ ਹੈ ਅਤੇ ਕੋਈ ਆਡੀਓ ਆਉਟਪੁੱਟ ਉਪਲੱਬਧ ਨਹੀਂ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:3591
-#: ../src/backend/bacon-video-widget-xine.c:3638
-#: ../src/backend/bacon-video-widget-xine.c:3660
+#: ../src/backend/bacon-video-widget-xine.c:3647
+#: ../src/backend/bacon-video-widget-xine.c:3694
+#: ../src/backend/bacon-video-widget-xine.c:3716
 #, c-format
 msgid "Language %d"
 msgstr "ਭਾਸ਼ਾ %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3697
+#: ../src/backend/bacon-video-widget-xine.c:3753
 msgid "No video to capture."
 msgstr "ਕੋਈ ਵੀਡਿਓ ਕੈਪਚਰ ਨਹੀਂ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:3705
+#: ../src/backend/bacon-video-widget-xine.c:3761
 msgid "Video codec is not handled."
 msgstr "ਵੀਡਿਓ ਕੋਡ ਕੰਟਰੋਲ ਨਹੀਂ ਕੀਤੇ ਜਾ ਸਕਦੇ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:3713
+#: ../src/backend/bacon-video-widget-xine.c:3769
 msgid "Movie is not playing."
 msgstr "ਫਿਲਮ ਚੱਲ ਨਹੀਂ ਰਹੀ ਹੈ।"
 
@@ -1743,39 +1777,39 @@ msgstr "ਡਰਾਇਵ ਹਾਲਤ 0x%x (%s) - ਡਿਸਕ ਜਾਂਚ"
 msgid "Failed to mount %s"
 msgstr "%s ਮਾਊਂਟ ਕਰਨ ਲਈ ਅਸਫ਼ਲ"
 
-#: ../src/plparse/totem-disc.c:430
+#: ../src/plparse/totem-disc.c:432
 #, c-format
 msgid "Failed to find mountpoint for %s"
 msgstr "%s ਲਈ ਮਾਊਂਟ-ਥਾਂ ਲੱਭਣ ਲਈ ਅਸਫ਼ਲ"
 
-#: ../src/plparse/totem-disc.c:489
+#: ../src/plparse/totem-disc.c:490
 #, c-format
 msgid "Error getting %s disc status: %s"
 msgstr "%s ਡਿਸਕ ਹਾਲਤ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿੱਚ ਗਲਤੀ: %s"
 
-#: ../src/plparse/totem-disc.c:518
+#: ../src/plparse/totem-disc.c:519
 #, c-format
 msgid "Unexpected/unknown cd type 0x%x (%s)"
 msgstr "ਅਣਜਾਣ cd ਕਿਸਮ 0x%x (%s)"
 
-#: ../src/plparse/totem-disc.c:727
+#: ../src/plparse/totem-disc.c:728
 msgid "Audio CD"
 msgstr "ਆਡੀਓ CD"
 
-#: ../src/plparse/totem-disc.c:729
+#: ../src/plparse/totem-disc.c:730
 msgid "Video CD"
 msgstr "ਵੀਡਿਓ CD"
 
-#: ../src/plparse/totem-disc.c:731
+#: ../src/plparse/totem-disc.c:732
 msgid "DVD"
 msgstr "DVD"
 
-#: ../src/plparse/totem-pl-parser.c:329
+#: ../src/plparse/totem-pl-parser.c:355
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "ਪਾਰਸਰ ਨੂੰ ਲਿਖਿਆ ਨਹੀ ਜਾ ਸਕਦਾ: %s"
 
-#: ../src/plparse/totem-pl-parser.c:437 ../src/plparse/totem-pl-parser.c:578
+#: ../src/plparse/totem-pl-parser.c:463 ../src/plparse/totem-pl-parser.c:604
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "ਫਾਇਲ '%s' ਨੂੰ ਖੋਲਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ: %s"
