@@ -2289,6 +2289,45 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 			g_free (title);
 		}
 		break;
+	case TOTEM_REMOTE_COMMAND_UP:
+		bacon_video_widget_dvd_event (totem->bvw,
+				BVW_DVD_ROOT_MENU_UP);
+		break;
+	case TOTEM_REMOTE_COMMAND_DOWN:
+		bacon_video_widget_dvd_event (totem->bvw,
+				BVW_DVD_ROOT_MENU_DOWN);
+		break;
+	case TOTEM_REMOTE_COMMAND_LEFT:
+		bacon_video_widget_dvd_event (totem->bvw,
+				BVW_DVD_ROOT_MENU_LEFT);
+		break;
+	case TOTEM_REMOTE_COMMAND_RIGHT:
+		bacon_video_widget_dvd_event (totem->bvw,
+				BVW_DVD_ROOT_MENU_RIGHT);
+		break;
+	case TOTEM_REMOTE_COMMAND_SELECT:
+		bacon_video_widget_dvd_event (totem->bvw,
+				BVW_DVD_ROOT_MENU_SELECT);
+		break;
+	case TOTEM_REMOTE_COMMAND_DVD_MENU:
+		bacon_video_widget_dvd_event (totem->bvw,
+				BVW_DVD_ROOT_MENU);
+		break;
+	case TOTEM_REMOTE_COMMAND_ZOOM_UP:
+		totem_action_zoom_relative (totem, ZOOM_IN_OFFSET);
+		break;
+	case TOTEM_REMOTE_COMMAND_ZOOM_DOWN:
+		totem_action_zoom_relative (totem, ZOOM_OUT_OFFSET);
+		break;
+	case TOTEM_REMOTE_COMMAND_EJECT:
+		totem_action_eject (totem);
+		break;
+	case TOTEM_REMOTE_COMMAND_PLAY_DVD:
+		// TODO - how to see if can, and play the DVD (like the menu item)
+		break;
+	case TOTEM_REMOTE_COMMAND_MUTE:
+		totem_action_volume_relative (totem, -100);
+		break;
 	default:
 		handled = FALSE;
 		break;

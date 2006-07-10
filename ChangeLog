@@ -1,5 +1,16 @@
 2006-07-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_dvd_event):
+	* src/backend/bacon-video-widget.h:
+	* src/totem-remote.c: (totem_lirc_to_command):
+	* src/totem-remote.h:
+	* src/totem.c: (totem_action_remote): patch from Gabriel Ortiz Lour
+	<elbriga@ufpr.br> to add more DVD-related remote buttons
+	(Closes: #346792)
+
+2006-07-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-playlist.c: (totem_playlist_save_files):
 	Add a default filename for the save playlist dialogue
 

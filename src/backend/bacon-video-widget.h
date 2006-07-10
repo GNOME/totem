@@ -283,7 +283,12 @@ typedef enum {
 	BVW_DVD_NEXT_TITLE,
 	BVW_DVD_PREV_TITLE,
 	BVW_DVD_NEXT_ANGLE,
-	BVW_DVD_PREV_ANGLE
+	BVW_DVD_PREV_ANGLE,
+	BVW_DVD_ROOT_MENU_UP,
+	BVW_DVD_ROOT_MENU_DOWN,
+	BVW_DVD_ROOT_MENU_LEFT,
+	BVW_DVD_ROOT_MENU_RIGHT,
+	BVW_DVD_ROOT_MENU_SELECT
 } BaconVideoWidgetDVDEvent;
 
 void bacon_video_widget_dvd_event                (BaconVideoWidget *bvw,

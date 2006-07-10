@@ -50,6 +50,19 @@
 #define TOTEM_IR_COMMAND_VOLUME_DOWN "volume_down"
 #define TOTEM_IR_COMMAND_FULLSCREEN "fullscreen"
 #define TOTEM_IR_COMMAND_QUIT "quit"
+#define TOTEM_IR_COMMAND_UP "up"
+#define TOTEM_IR_COMMAND_DOWN "down"
+#define TOTEM_IR_COMMAND_LEFT "left"
+#define TOTEM_IR_COMMAND_RIGHT "right"
+#define TOTEM_IR_COMMAND_SELECT "select"
+#define TOTEM_IR_COMMAND_MENU "menu"
+#define TOTEM_IR_COMMAND_PLAYPAUSE "play_pause"
+#define TOTEM_IR_COMMAND_ZOOM_UP "zoom_up"
+#define TOTEM_IR_COMMAND_ZOOM_DOWN "zoom_down"
+#define TOTEM_IR_COMMAND_SHOW_PLAYING "show_playing"
+#define TOTEM_IR_COMMAND_EJECT "eject"
+#define TOTEM_IR_COMMAND_PLAY_DVD "play_dvd"
+#define TOTEM_IR_COMMAND_MUTE "mute"
 
 struct _TotemRemote {
 	GObject parent;
@@ -74,6 +87,8 @@ totem_lirc_to_command (const gchar *str)
 		return TOTEM_REMOTE_COMMAND_PLAY;
 	else if (strcmp (str, TOTEM_IR_COMMAND_PAUSE) == 0)
 		return TOTEM_REMOTE_COMMAND_PAUSE;
+	else if (strcmp (str, TOTEM_IR_COMMAND_PLAYPAUSE) == 0)
+		return TOTEM_REMOTE_COMMAND_PLAYPAUSE;
 	else if (strcmp (str, TOTEM_IR_COMMAND_NEXT) == 0)
 		return TOTEM_REMOTE_COMMAND_NEXT;
 	else if (strcmp (str, TOTEM_IR_COMMAND_PREVIOUS) == 0)
@@ -90,6 +105,30 @@ totem_lirc_to_command (const gchar *str)
 		return TOTEM_REMOTE_COMMAND_FULLSCREEN;
 	else if (strcmp (str, TOTEM_IR_COMMAND_QUIT) == 0)
 		return TOTEM_REMOTE_COMMAND_QUIT;
+	else if (strcmp (str, TOTEM_IR_COMMAND_UP) == 0)
+		return TOTEM_REMOTE_COMMAND_UP;
+	else if (strcmp (str, TOTEM_IR_COMMAND_DOWN) == 0)
+		return TOTEM_REMOTE_COMMAND_DOWN;
+	else if (strcmp (str, TOTEM_IR_COMMAND_LEFT) == 0)
+		return TOTEM_REMOTE_COMMAND_LEFT;
+	else if (strcmp (str, TOTEM_IR_COMMAND_RIGHT) == 0)
+		return TOTEM_REMOTE_COMMAND_RIGHT;
+	else if (strcmp (str, TOTEM_IR_COMMAND_SELECT) == 0)
+		return TOTEM_REMOTE_COMMAND_SELECT;
+	else if (strcmp (str, TOTEM_IR_COMMAND_MENU) == 0)
+		return TOTEM_REMOTE_COMMAND_DVD_MENU;
+	else if (strcmp (str, TOTEM_IR_COMMAND_ZOOM_UP) == 0)
+		return TOTEM_REMOTE_COMMAND_ZOOM_UP;
+	else if (strcmp (str, TOTEM_IR_COMMAND_ZOOM_DOWN) == 0)
+		return TOTEM_REMOTE_COMMAND_ZOOM_DOWN;
+	else if (strcmp (str, TOTEM_IR_COMMAND_SHOW_PLAYING) == 0)
+		return TOTEM_REMOTE_COMMAND_SHOW_PLAYING;
+	else if (strcmp (str, TOTEM_IR_COMMAND_EJECT) == 0)
+		return TOTEM_REMOTE_COMMAND_EJECT;
+	else if (strcmp (str, TOTEM_IR_COMMAND_PLAY_DVD) == 0)
+		return TOTEM_REMOTE_COMMAND_PLAY_DVD;
+	else if (strcmp (str, TOTEM_IR_COMMAND_MUTE) == 0)
+		return TOTEM_REMOTE_COMMAND_MUTE;
 	else
 		return TOTEM_REMOTE_COMMAND_UNKNOWN;
 }

@@ -972,6 +972,21 @@ bacon_video_widget_dvd_event (BaconVideoWidget *bvw, BaconVideoWidgetDVDEvent ty
         case BVW_DVD_PREV_ANGLE:
                 event.type = XINE_EVENT_INPUT_ANGLE_PREVIOUS;
                 break;
+        case BVW_DVD_ROOT_MENU_UP:
+                event.type = XINE_EVENT_INPUT_UP;
+                break;
+        case BVW_DVD_ROOT_MENU_DOWN:
+                event.type = XINE_EVENT_INPUT_DOWN;
+                break;
+        case BVW_DVD_ROOT_MENU_LEFT:
+                event.type = XINE_EVENT_INPUT_LEFT;
+                break;
+        case BVW_DVD_ROOT_MENU_RIGHT:
+                event.type = XINE_EVENT_INPUT_RIGHT;
+                break;
+        case BVW_DVD_ROOT_MENU_SELECT:
+                event.type = XINE_EVENT_INPUT_SELECT;
+                break;
         default:
                 return;
         }
