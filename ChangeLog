@@ -1,3 +1,11 @@
+2006-07-10  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_reconfigure_tick_timeout), (bvw_bus_message_cb):
+	  Do keep emitting tick timeouts with the current position
+	  and duration of the file even in PAUSED state, needed 
+	  for things like the 'Skip To' dialog (#313739).
+
 2006-07-09  Bastien Nocera  <hadess@hadess.net>
 
 	* data/mime-type-list.txt: add audio/ac3
