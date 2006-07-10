@@ -2,7 +2,7 @@ AC_PREREQ(2.52)
 
 m4_define(totem_version_major, 1)
 m4_define(totem_version_minor, 5)
-m4_define(totem_version_micro, 3)
+m4_define(totem_version_micro, 4)
 
 AC_INIT(totem,
         totem_version_major.totem_version_minor.totem_version_micro,
@@ -77,7 +77,7 @@ dnl xine or gst ?
 
 dnl the two versions here implicate the gstreamer core and gst-plugins
 dnl release versions.
-XINE_REQS=1.0.1
+XINE_REQS=1.1.2
 GST_MAJORMINOR=0.10
 
 AC_ARG_ENABLE(gstreamer,
