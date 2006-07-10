@@ -1,5 +1,25 @@
 New features and significant updates in version...
 
+1.5.3
+ * Text subtitle encoding is now selectable
+ * Numerous Browser Plugin enhancements:
+   - Try to cache files while playing them
+   - Add support for cache=true hint
+   - Fix getting the true path for relative paths
+   - Add support for audio-only playback
+   - Add a way to copy the URL from the right-click menu
+   - Add "Open in Movie Player" in the right-click menu
+ * Make showing/hiding the sidebar not resize the video or the window
+ * Pop down language and subtitle menus to avoid hangs when the language or
+ subtitle changes while the menu is open
+ * Add AC3 and Monkey's audio to the known filetypes
+ * Draw the logo ourselves, so we don't crash on startup if the logo is too
+ big for the X video buffer (xine-lib)
+ * Show the logo when playing audio without visualisations
+ * Fix a crash with non-default buffering values (GStreamer)
+ * Fix a leak each time the logo was set (GStreamer)
+ * Fix the "Skip to" dialogue not working when paused (GStreamer)
+
 1.5.2
  * Make Space Play/Pause when the video widget has the focus
  * Fix DVD playback when started from gnome-volume-manager
