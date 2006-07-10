@@ -874,6 +874,7 @@ static void
 totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 {
 	GtkWidget *fs, *combo_box;
+	char *filename;
 	int response;
 
 	fs = gtk_file_chooser_dialog_new (_("Save Playlist"),
@@ -884,6 +885,11 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 			NULL);
 	gtk_dialog_set_default_response (GTK_DIALOG (fs), GTK_RESPONSE_ACCEPT);
 	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
+	/* translators: Playlist is the default saved playlist filename,
+	 * without the suffix */
+	filename = g_strconcat (_("Playlist"), save_types[0].suffix, NULL);
+	gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (fs), filename);
+	g_free (filename);
 	combo_box = totem_playlist_save_add_format_combo_box (GTK_FILE_CHOOSER (fs));
 
 	if (playlist->_priv->save_path != NULL)
