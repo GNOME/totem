@@ -1,5 +1,11 @@
 New features and significant updates in version...
 
+1.4.3
+ * Add AC3 and Monkey's audio to the known filetypes
+ * Draw the logo ourselves, so we don't crash on startup if the logo is too
+ big for the X video buffer (xine-lib)
+ * Fix a leak each time the logo was set (GStreamer)
+
 1.4.2
  * Make showing/hiding the sidebar not resize the video or the window
  * Fix saving non-relative m3u playlists, and parsing relative PLS playlists
