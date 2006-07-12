@@ -1,3 +1,16 @@
+2006-07-12  Bastien Nocera  <hadess@hadess.net>
+
+	* data/properties.glade:
+	* data/totem.glade:
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_metadata_bool):
+	* src/bacon-video-widget-properties.c:
+	(bacon_video_widget_properties_new):
+	* src/totem-sidebar.c: (totem_sidebar_setup):
+	* src/totem.c: (totem_action_set_mrl_with_warning),
+	(totem_callback_connect), (main):
+	Move the properties dialogue to the sidebar (Closes: #310409)
+
 2006-07-10  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-xine.c:

@@ -758,13 +758,17 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 
 		/* Set the logo */
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (totem->properties),
+				FALSE);
 		update_mrl_label (totem, NULL);
 	} else {
 		gboolean caps;
 		char *subtitle_uri;
 		GError *err = NULL;
 
-		bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
+		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
+		gtk_widget_set_sensitive
+			(GTK_WIDGET (totem->properties), TRUE);
 
 		subtitle_uri = totem_uri_get_subtitle_uri (mrl);
 		totem_gdk_window_set_waiting_cursor (totem->win->window);
@@ -827,8 +831,6 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 	}
 	update_buttons (totem);
 	update_media_menu_items (totem);
-
-	totem_main_set_sensitivity ("tmw_properties_menu_item", retval);
 
 	return retval;
 }
@@ -2026,46 +2028,6 @@ on_take_screenshot1_activate (GtkButton *button, Totem *totem)
 }
 
 static void
-hide_props_dialog (GtkWidget *widget, int trash, gpointer user_data)
-{
-	gtk_widget_hide (widget);
-}
-
-static void
-on_properties1_activate (GtkButton *button, Totem *totem)
-{
-	static GtkWidget *dialog;
-
-	if (totem->properties == NULL)
-	{
-		totem_action_error (_("Totem couldn't show the movie properties window."), _("Make sure that Totem is correctly installed."), totem);
-		return;
-	}
-
-	if (dialog != NULL)
-	{
-		gtk_widget_show (dialog);
-		return;
-	}
-
-	dialog = gtk_dialog_new_with_buttons (_("Properties"),
-			GTK_WINDOW (totem->win),
-			GTK_DIALOG_DESTROY_WITH_PARENT
-			| GTK_DIALOG_NO_SEPARATOR,
-			GTK_STOCK_CLOSE,
-			GTK_RESPONSE_ACCEPT,
-			NULL);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
-			totem->properties, TRUE, TRUE, 0);
-	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
-	g_signal_connect (G_OBJECT (dialog), "response",
-			G_CALLBACK (hide_props_dialog), NULL);
-	g_signal_connect (G_OBJECT (dialog), "delete-event",
-			G_CALLBACK (hide_props_dialog), NULL);
-	gtk_widget_show (dialog);
-}
-
-static void
 on_preferences1_activate (GtkButton *button, Totem *totem)
 {
 	gtk_widget_show (totem->prefs);
@@ -3138,9 +3100,6 @@ totem_callback_connect (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "tmw_preferences_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_preferences1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_properties_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_properties1_activate), totem);
 	item = glade_xml_get_widget (totem->xml, "tmw_volume_up_menu_item");
 	g_signal_connect (G_OBJECT (item), "activate",
 			G_CALLBACK (on_volume_up1_activate), totem);
@@ -3619,6 +3578,7 @@ main (int argc, char **argv)
 
 	/* The sidebar */
 	playlist_widget_setup (totem);
+	totem->properties = bacon_video_widget_properties_new ();
 	totem_sidebar_setup (totem);
 
 	/* The rest of the widgets */
@@ -3649,9 +3609,6 @@ main (int argc, char **argv)
 	totem->tcw_time_label = glade_xml_get_widget (totem->xml,
 			"tcw_time_display_label");
 	totem->seek_lock = totem->vol_lock = totem->vol_fs_lock = FALSE;
-
-	/* Properties */
-	totem->properties = bacon_video_widget_properties_new ();
 
 	totem_session_setup (totem, argv);
 	totem_setup_recent (totem);

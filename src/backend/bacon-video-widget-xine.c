@@ -3540,12 +3540,14 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget *bvw,
 	switch (type)
 	{
 	case BVW_INFO_HAS_VIDEO:
-		boolean = xine_get_stream_info (bvw->priv->stream,
-				XINE_STREAM_INFO_HAS_VIDEO);
+		if (bvw->priv->logo_mode != FALSE)
+			boolean = xine_get_stream_info (bvw->priv->stream,
+					XINE_STREAM_INFO_HAS_VIDEO);
 		break;
 	case BVW_INFO_HAS_AUDIO:
-		boolean = xine_get_stream_info (bvw->priv->stream,
-				XINE_STREAM_INFO_HAS_AUDIO);
+		if (bvw->priv->logo_mode != FALSE)
+			boolean = xine_get_stream_info (bvw->priv->stream,
+					XINE_STREAM_INFO_HAS_AUDIO);
 		break;
 	default:
 		g_assert_not_reached ();

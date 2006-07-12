@@ -288,7 +288,7 @@ bacon_video_widget_properties_new (void)
 
 	props->priv->xml = xml;
 	vbox = glade_xml_get_widget (props->priv->xml, "vbox1");
-	gtk_box_pack_start (GTK_BOX (props), vbox, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (props), vbox, FALSE, FALSE, 0);
 
 	bacon_video_widget_properties_reset (props);
 

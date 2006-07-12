@@ -116,6 +116,10 @@ totem_sidebar_setup (Totem *totem)
 	ev_sidebar_add_page (EV_SIDEBAR (totem->sidebar),
 			"playlist", _("Playlist"),
 			GTK_WIDGET (totem->playlist));
+	ev_sidebar_add_page (EV_SIDEBAR (totem->sidebar),
+			"properties", _("Properties"),
+			GTK_WIDGET (totem->properties));
+	gtk_widget_set_sensitive (GTK_WIDGET (totem->properties), FALSE);
 	gtk_paned_pack2 (GTK_PANED (item), totem->sidebar, FALSE, FALSE);
 
 	visible = gconf_client_get_bool (totem->gc,
