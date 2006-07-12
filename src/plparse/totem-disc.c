@@ -560,7 +560,7 @@ cd_cache_free (CdCache *cache)
     conn = libhal_ctx_get_dbus_connection (cache->ctx);
     libhal_ctx_shutdown (cache->ctx, NULL);
     libhal_ctx_free(cache->ctx);
-    dbus_connection_disconnect (conn);
+    dbus_connection_close (conn);
 #elif HAVE_HAL_0_2
     hal_shutdown (cache->ctx);
 #endif

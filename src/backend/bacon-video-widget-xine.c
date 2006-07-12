@@ -1778,7 +1778,7 @@ bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 	/* if there's only audio and no visualisation, draw the logo as well */
 	has_video = xine_get_stream_info(bvw->priv->stream,
 			XINE_STREAM_INFO_HAS_VIDEO);
-	draw_logo = !has_video && !bvw->priv->show_vfx;
+	draw_logo = !has_video && !bvw->priv->using_vfx;
 
 	if (bvw->priv->logo_mode == FALSE && draw_logo == FALSE) {
 		XExposeEvent *expose;
@@ -2483,10 +2483,12 @@ bacon_video_widget_set_logo_mode (BaconVideoWidget *bvw, gboolean logo_mode)
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
 
-	bvw->priv->logo_mode = logo_mode;
+	if (logo_mode != bvw->priv->logo_mode) {
+		bvw->priv->logo_mode = logo_mode;
 
-	/* Queue a redraw of the widget */
-	gtk_widget_queue_draw (GTK_WIDGET (bvw));
+		/* Queue a redraw of the widget */
+		gtk_widget_queue_draw (GTK_WIDGET (bvw));
+	}
 }
 
 void
@@ -3540,12 +3542,12 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget *bvw,
 	switch (type)
 	{
 	case BVW_INFO_HAS_VIDEO:
-		if (bvw->priv->logo_mode != FALSE)
+		if (bvw->priv->logo_mode == FALSE)
 			boolean = xine_get_stream_info (bvw->priv->stream,
 					XINE_STREAM_INFO_HAS_VIDEO);
 		break;
 	case BVW_INFO_HAS_AUDIO:
-		if (bvw->priv->logo_mode != FALSE)
+		if (bvw->priv->logo_mode == FALSE)
 			boolean = xine_get_stream_info (bvw->priv->stream,
 					XINE_STREAM_INFO_HAS_AUDIO);
 		break;

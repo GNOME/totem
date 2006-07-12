@@ -1,5 +1,20 @@
 2006-07-12  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_expose), (bacon_video_widget_set_logo_mode),
+	(bacon_video_widget_get_metadata_bool):
+	Use ->using_vfx to check whether we're using the visuals, and not
+	->show_vfx (whether the "use visuals" pref is on)
+	Only queue a redraw for the change of logo mode if it really changed
+	Get the HAS_VIDEO and HAS_AUDIO the right way around when in logo mode
+	* src/plparse/totem-disc.c: (cd_cache_free):
+	Use the non-deprecated dbus_connection_close()
+	* src/totem.c: (totem_action_set_mrl_with_warning):
+	Set the properties' sensitivity properly when failing to open a file,
+	draw the logo if we couldn't open a file, and not otherwise
+
+2006-07-12  Bastien Nocera  <hadess@hadess.net>
+
 	* data/properties.glade:
 	* data/totem.glade:
 	* src/backend/bacon-video-widget-xine.c:
