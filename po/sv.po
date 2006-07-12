@@ -1,7 +1,7 @@
 # Swedish messages for totem.
 # Copyright (C) 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
-# Christian Rose <menthos@menthos.com>, 2002, 2003, 2004, 2005.
 # Daniel Nylander <po@danielnylander.se>, 2006.
+# Christian Rose <menthos@menthos.com>, 2002, 2003, 2004, 2005.
 #
 # $Id$
 #
@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-25 13:58+0200\n"
-"PO-Revision-Date: 2006-04-25 16:33+0100\n"
+"POT-Creation-Date: 2006-07-12 15:22+0200\n"
+"PO-Revision-Date: 2006-07-12 16:12+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -24,14 +24,14 @@ msgstr "Lägg till..."
 
 #: ../data/playlist.glade.h:2
 msgid "Move Down"
-msgstr "Flytta ned"
+msgstr "Flytta nedåt"
 
 #: ../data/playlist.glade.h:3
 msgid "Move Up"
-msgstr "Flytta upp"
+msgstr "Flytta uppåt"
 
 #: ../data/playlist.glade.h:4
-#: ../src/totem-sidebar.c:131
+#: ../src/totem-sidebar.c:117
 msgid "Playlist"
 msgstr "Spellista"
 
@@ -204,7 +204,7 @@ msgid "N/A"
 msgstr "-"
 
 #: ../data/properties.glade.h:17
-#: ../src/totem.c:2050
+#: ../src/totem.c:2057
 msgid "Properties"
 msgstr "Egenskaper"
 
@@ -609,8 +609,8 @@ msgstr "Tid:"
 #. Title
 #: ../data/totem.glade.h:100
 #: ../src/totem.c:705
-#: ../src/totem.c:3513
-#: ../src/totem.c:3530
+#: ../src/totem.c:3520
+#: ../src/totem.c:3537
 msgid "Totem Movie Player"
 msgstr "Filmuppspelaren Totem"
 
@@ -893,7 +893,7 @@ msgid "Save File"
 msgstr "Spara fil"
 
 #: ../data/vanity.glade.h:2
-#: ../src/vanity.c:259
+#: ../src/vanity.c:260
 msgid "Vanity"
 msgstr "Vanity"
 
@@ -987,12 +987,82 @@ msgstr "Försäkra dig om att Totem är korrekt installerat."
 msgid "None"
 msgstr "Ingen"
 
-#: ../src/totem-menu.c:594
+#: ../src/totem-menu.c:604
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "Spela upp skivan \"%s\""
 
+#. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+#: ../src/totem-mozilla-viewer.c:172
+#: ../src/totem.c:337
+#: ../src/totem.c:366
+#: ../src/totem.c:812
+#: ../src/totem.c:923
+#, c-format
+msgid "Totem could not play '%s'."
+msgstr "Totem kunde inte spela upp \"%s\"."
+
+#: ../src/totem-mozilla-viewer.c:271
+#: ../src/totem.c:1965
+#, c-format
+msgid "Movie Player using %s"
+msgstr "Filmuppspelare som använder %s"
+
+#: ../src/totem-mozilla-viewer.c:275
+msgid "Totem Mozilla Plugin"
+msgstr "Totem-insticksmodul för Mozilla"
+
+#: ../src/totem-mozilla-viewer.c:277
+#: ../src/totem.c:1971
+#: ../src/vanity.c:262
+msgid "Copyright © 2002-2005 Bastien Nocera"
+msgstr "Copyright © 2002-2005 Bastien Nocera"
+
+#: ../src/totem-mozilla-viewer.c:280
+#: ../src/totem.c:1976
+#: ../src/vanity.c:267
+msgid "translator-credits"
+msgstr ""
+"Daniel Nylander\n"
+"Christian Rose\n"
+"Skicka synpunkter på översättningen till tp-sv@listor.tp-sv.se"
+
+#: ../src/totem-mozilla-viewer.c:369
+msgid "Failed to start stand-alone movie player"
+msgstr "Misslyckades med att starta fristående filmuppspelare"
+
+#: ../src/totem-mozilla-viewer.c:370
+msgid "Unknown reason"
+msgstr "Okänd anledning"
+
+#: ../src/totem-mozilla-viewer.c:466
+msgid "Plugin"
+msgstr "Insticksmodul"
+
+#: ../src/totem-mozilla-viewer.c:469
+msgid "Menu"
+msgstr "Meny"
+
+#: ../src/totem-mozilla-viewer.c:485
+msgid "The Totem plugin could not startup."
+msgstr "Totem-insticksmodulen kunde inte startas upp."
+
+#: ../src/totem-mozilla-viewer.c:485
+#: ../src/totem.c:432
+#: ../src/totem.c:3379
+msgid "No reason."
+msgstr "Ingen orsak."
+
+#: ../src/totem-mozilla-viewer.c:592
+msgid "Could not initialise the thread-safe libraries."
+msgstr "Kunde inte initiera de trådsäkra biblioteken."
+
+#: ../src/totem-mozilla-viewer.c:592
+msgid "Verify your system installation. The Totem plugin will now exit."
+msgstr "Kontrollera din systeminstallation. Totem-insticksmodulen kommer nu att avslutas."
+
 #: ../src/totem-options.c:36
+#: ../src/vanity.c:75
 msgid "Backend options"
 msgstr "Bakändesalternativ"
 
@@ -1215,14 +1285,6 @@ msgstr "Gör paus"
 msgid "Totem could not eject the optical media."
 msgstr "Totem kunde inte mata ut det optiska mediumet."
 
-#: ../src/totem.c:337
-#: ../src/totem.c:366
-#: ../src/totem.c:812
-#: ../src/totem.c:923
-#, c-format
-msgid "Totem could not play '%s'."
-msgstr "Totem kunde inte spela upp \"%s\"."
-
 #: ../src/totem.c:393
 #, c-format
 msgid "Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."
@@ -1245,11 +1307,6 @@ msgstr "Du bör kontrollera om det finns en skiva i enheten och att den är korr
 msgid "Totem was not able to play this disc."
 msgstr "Totem kunde inte spela upp den här skivan."
 
-#: ../src/totem.c:432
-#: ../src/totem.c:3372
-msgid "No reason."
-msgstr "Ingen orsak."
-
 #: ../src/totem.c:698
 msgid "No File"
 msgstr "Ingen fil"
@@ -1258,105 +1315,87 @@ msgstr "Ingen fil"
 msgid "No error message"
 msgstr "Inget felmeddelande"
 
-#: ../src/totem.c:1274
-#: ../src/totem.c:1276
+#: ../src/totem.c:1281
+#: ../src/totem.c:1283
 msgid "An error occurred"
 msgstr "Ett fel inträffade"
 
-#: ../src/totem.c:1647
+#: ../src/totem.c:1654
 msgid "Open Location..."
 msgstr "Öppna plats..."
 
-#: ../src/totem.c:1920
+#: ../src/totem.c:1927
 msgid "Totem could not display the help contents."
 msgstr "Totem kunde inte visa hjälpinnehållet."
 
-#: ../src/totem.c:1958
-#, c-format
-msgid "Movie Player using %s"
-msgstr "Filmuppspelare som använder %s"
-
-#: ../src/totem.c:1962
+#: ../src/totem.c:1969
 msgid "Totem"
 msgstr "Totem"
 
-#: ../src/totem.c:1964
-#: ../src/vanity.c:261
-msgid "Copyright © 2002-2005 Bastien Nocera"
-msgstr "Copyright © 2002-2005 Bastien Nocera"
-
-#: ../src/totem.c:1969
-#: ../src/vanity.c:266
-msgid "translator-credits"
-msgstr ""
-"Daniel Nylander\n"
-"Christian Rose\n"
-"Skicka synpunkter på översättningen till tp-sv@listor.tp-sv.se"
-
-#: ../src/totem.c:2005
-#: ../src/totem.c:2013
-#: ../src/vanity.c:299
-#: ../src/vanity.c:307
+#: ../src/totem.c:2012
+#: ../src/totem.c:2020
+#: ../src/vanity.c:300
+#: ../src/vanity.c:308
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem kunde inte ta en skärmdump från den filmen."
 
-#: ../src/totem.c:2013
-#: ../src/vanity.c:307
+#: ../src/totem.c:2020
+#: ../src/vanity.c:308
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Detta ska inte hända; skicka en felrapport."
 
-#: ../src/totem.c:2040
+#: ../src/totem.c:2047
 msgid "Totem couldn't show the movie properties window."
 msgstr "Totem kunde inte visa filmegenskapsfönstret."
 
-#: ../src/totem.c:2040
+#: ../src/totem.c:2047
 msgid "Make sure that Totem is correctly installed."
 msgstr "Försäkra dig om att Totem är korrekt installerat."
 
-#: ../src/totem.c:2126
+#: ../src/totem.c:2133
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem kunde inte spola i \"%s\"."
 
-#: ../src/totem.c:3372
+#: ../src/totem.c:3379
 msgid "Totem could not startup."
 msgstr "Totem kunde inte starta."
 
-#: ../src/totem.c:3514
+#: ../src/totem.c:3521
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Kunde inte initiera de trådsäkra biblioteken."
 
-#: ../src/totem.c:3514
+#: ../src/totem.c:3521
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Kontrollera din systeminstallation. Totem kommer nu att avslutas."
 
-#: ../src/totem.c:3537
+#: ../src/totem.c:3544
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem kunde inte initiera konfigurationsmotorn."
 
-#: ../src/totem.c:3537
+#: ../src/totem.c:3544
 msgid "Make sure that GNOME is properly installed."
 msgstr "Försäkra dig om att GNOME är korrekt installerat."
 
 #. Main window
-#: ../src/totem.c:3565
+#: ../src/totem.c:3572
 msgid "main window"
 msgstr "huvudfönster"
 
-#: ../src/totem.c:3570
+#: ../src/totem.c:3577
 msgid "video popup menu"
 msgstr "videopopupmeny"
 
-#: ../src/vanity.c:75
+#: ../src/vanity.c:76
 msgid "Debug mode on"
 msgstr "Felsökningsläge på"
 
-#: ../src/vanity.c:255
+#: ../src/vanity.c:256
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "Webbkameraverktyg som använder %s"
 
-#: ../src/vanity.c:550
+#: ../src/vanity.c:551
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1365,11 +1404,11 @@ msgstr ""
 "Vanity kunde inte starta:\n"
 "%s"
 
-#: ../src/vanity.c:551
+#: ../src/vanity.c:552
 msgid "No reason"
 msgstr "Ingen orsak"
 
-#: ../src/vanity.c:589
+#: ../src/vanity.c:590
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1378,7 +1417,7 @@ msgstr ""
 "Vanity kunde inte kontakta webbkameran.\n"
 "Orsak: %s"
 
-#: ../src/vanity.c:605
+#: ../src/vanity.c:606
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1387,11 +1426,11 @@ msgstr ""
 "Vanity kunde inte spela upp video från webbkameran.\n"
 "Orsak: %s"
 
-#: ../src/vanity.c:641
+#: ../src/vanity.c:642
 msgid "Vanity Webcam Utility"
 msgstr "Webbkameraverktyget Vanity"
 
-#: ../src/vanity.c:646
+#: ../src/vanity.c:647
 msgid ""
 "Could not initialize the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1399,7 +1438,7 @@ msgstr ""
 "Kunde inte initiera de trådsäkra biblioteken.\n"
 "Kontrollera din systeminstallation. Vanity kommer nu att avslutas."
 
-#: ../src/vanity.c:671
+#: ../src/vanity.c:673
 #, c-format
 msgid ""
 "Vanity could not initialize the \n"
@@ -1410,8 +1449,8 @@ msgstr ""
 "konfigurationsmotorn:\n"
 "%s"
 
-#: ../src/vanity.c:691
-#: ../src/vanity.c:706
+#: ../src/vanity.c:693
+#: ../src/vanity.c:708
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
@@ -1419,7 +1458,7 @@ msgstr ""
 "Kunde inte läsa in huvudgränssnittet (vanity.glade).\n"
 "Försäkra dig om att Vanity är korrekt installerat."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:67
+#: ../src/backend/bacon-video-widget-gst-0.10.c:68
 #: ../src/backend/bacon-video-widget-gst.c:67
 msgid "Totem Video Window"
 msgstr "Totem-videofönster"
@@ -1427,98 +1466,98 @@ msgstr "Totem-videofönster"
 # FIXME: Bör ha punkt på slutet.
 # http://bugzilla.gnome.org/show_bug.cgi?id=318817
 #
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2062
-#: ../src/backend/bacon-video-widget-gst.c:3526
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2060
+#: ../src/backend/bacon-video-widget-gst.c:3525
 msgid "The requested audio output was not found. Please select another audio output in the Multimedia Systems Selector."
 msgstr "Den begärda ljudutgången hittades inte. Välj en annan ljudutgång i väljaren för multimediasystem."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2067
-#: ../src/backend/bacon-video-widget-gst.c:1948
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2065
+#: ../src/backend/bacon-video-widget-gst.c:1943
 msgid "Location not found."
 msgstr "Platsen hittades inte."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2071
-#: ../src/backend/bacon-video-widget-gst.c:1951
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2069
+#: ../src/backend/bacon-video-widget-gst.c:1946
 msgid "Could not open location; You may not have permission to open the file."
 msgstr "Kunde inte öppna platsen; Du kanske inte har rättighet att öppna filen."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2082
-#: ../src/backend/bacon-video-widget-gst.c:3477
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2080
+#: ../src/backend/bacon-video-widget-gst.c:3476
 msgid "The video output is in use by another application. Please close other video applications, or select another video output in the Multimedia Systems Selector."
 msgstr "Videoutgången används av ett annat program. Stäng andra videoprogram eller välj en annan videoutgång i väljaren för multimediasystem."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2088
-#: ../src/backend/bacon-video-widget-gst.c:3520
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2086
+#: ../src/backend/bacon-video-widget-gst.c:3519
 msgid "The audio output is in use by another application. Please select another audio output in the Multimedia Systems Selector. You may want to consider using a sound server."
 msgstr "Ljudutgången används av ett annat program. Välj en annan ljudutgång i väljaren för multimediasystem. Du kanske bör överväga att använda en ljudserver."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2103
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2101
 msgid "Cannot play this file over the network. Try downloading it to disk first."
 msgstr "Kan inte spela upp den här filen över nätverket. Försök hämta ner den till disk först."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2181
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2179
 msgid "Media file could not be played."
 msgstr "Mediafilen kunde inte spelas upp."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2263
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2314
-#: ../src/backend/bacon-video-widget-gst.c:1883
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2261
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2312
+#: ../src/backend/bacon-video-widget-gst.c:1878
 msgid "Failed to retrieve working directory"
 msgstr "Misslyckades med att hämta arbetskatalogen"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3774
-#: ../src/backend/bacon-video-widget-gst.c:3188
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3801
+#: ../src/backend/bacon-video-widget-gst.c:3187
 msgid "Too old version of GStreamer installed."
 msgstr "En för gammal version av GStreamer är installerad."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3781
-#: ../src/backend/bacon-video-widget-gst.c:3196
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3808
+#: ../src/backend/bacon-video-widget-gst.c:3195
 msgid "Media contains no supported video streams."
 msgstr "Mediumet innehåller inga videoflöden som stöds."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4126
-#: ../src/backend/bacon-video-widget-gst.c:3381
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4153
+#: ../src/backend/bacon-video-widget-gst.c:3380
 msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
 msgstr "Misslyckades med att skapa ett GStreamer-spelobjekt. Kontrollera din installation av GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4241
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4325
-#: ../src/backend/bacon-video-widget-gst.c:3488
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4268
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4352
+#: ../src/backend/bacon-video-widget-gst.c:3487
 msgid "Failed to open video output. It may not be available. Please select another video output in the Multimedia Systems Selector."
 msgstr "Misslyckades med att öppna videoutgången. Den kanske inte är tillgänglig. Välj en annan videoutgång i väljaren för multimediasystem."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4250
-#: ../src/backend/bacon-video-widget-gst.c:3492
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4277
+#: ../src/backend/bacon-video-widget-gst.c:3491
 msgid "Could not find the video output. You may need to install additional GStreamer plugins, or select another video output in the Multimedia Systems Selector."
 msgstr "Kunde inte hitta videoutgången. Du kanske behöver installera ytterligare insticksmoduler för GStreamer eller välja en annan videoutgång i väljaren för multimediasystem."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4269
-#: ../src/backend/bacon-video-widget-gst.c:3537
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4296
+#: ../src/backend/bacon-video-widget-gst.c:3536
 msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
 msgstr "Misslyckades med att öppna ljudutgången. Du kanske inte har rättigheter att öppna ljudutgången, eller så kanske inte ljudservern körs. Välj en annan ljudutgång i väljaren för multimediasystem."
 
 # FIXME: Bör ha punkt på slutet.
 # http://bugzilla.gnome.org/show_bug.cgi?id=318817
 #
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4279
-#: ../src/backend/bacon-video-widget-gst.c:3541
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4306
+#: ../src/backend/bacon-video-widget-gst.c:3540
 msgid "Could not find the audio output. You may need to install additional GStreamer plugins, or select another audio output in the Multimedia Systems Selector."
 msgstr "Kunde inte hitta ljudutgången. Du kanske behöver installera ytterligare insticksmoduler för GStreamer eller välja en annan ljudutgång i väljaren för multimediasystem."
 
-#: ../src/backend/bacon-video-widget-gst.c:1972
+#: ../src/backend/bacon-video-widget-gst.c:1967
 msgid "Failed to open media file; unknown error"
 msgstr "Misslyckades med att öppna mediafil; okänt fel"
 
-#: ../src/backend/bacon-video-widget-gst.c:2024
+#: ../src/backend/bacon-video-widget-gst.c:2019
 #, c-format
 msgid "Failed to play: %s"
 msgstr "Misslyckades med att spela upp: %s"
 
-#: ../src/backend/bacon-video-widget-gst.c:2026
+#: ../src/backend/bacon-video-widget-gst.c:2021
 msgid "unknown error"
 msgstr "okänt fel"
 
-#: ../src/backend/bacon-video-widget-xine.c:688
+#: ../src/backend/bacon-video-widget-xine.c:691
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1527,129 +1566,129 @@ msgstr ""
 "Kunde inte läsa in ljuddrivrutinen \"%s\"\n"
 "Kontrollera att enheten inte är upptagen."
 
-#: ../src/backend/bacon-video-widget-xine.c:1148
-#: ../src/backend/bacon-video-widget-xine.c:1741
+#: ../src/backend/bacon-video-widget-xine.c:1153
+#: ../src/backend/bacon-video-widget-xine.c:1746
 msgid "No video output is available. Make sure that the program is correctly installed."
 msgstr "Ingen videoutmatning är tillgänglig. Försäkra dig om att programmet är korrekt installerat."
 
-#: ../src/backend/bacon-video-widget-xine.c:1275
+#: ../src/backend/bacon-video-widget-xine.c:1280
 msgid "The server you are trying to connect to is not known."
 msgstr "Servern du försöker ansluta till är inte känd."
 
-#: ../src/backend/bacon-video-widget-xine.c:1279
+#: ../src/backend/bacon-video-widget-xine.c:1284
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "Enhetsnamnet du angav (%s) verkar vara ogiltigt."
 
-#: ../src/backend/bacon-video-widget-xine.c:1283
+#: ../src/backend/bacon-video-widget-xine.c:1288
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "Servern du försöker ansluta till (%s) är onåbar."
 
-#: ../src/backend/bacon-video-widget-xine.c:1287
+#: ../src/backend/bacon-video-widget-xine.c:1292
 msgid "The connection to this server was refused."
 msgstr "Anslutning till denna server nekades."
 
-#: ../src/backend/bacon-video-widget-xine.c:1291
+#: ../src/backend/bacon-video-widget-xine.c:1296
 msgid "The specified movie could not be found."
 msgstr "Den angivna filmen kunde inte hittas."
 
-#: ../src/backend/bacon-video-widget-xine.c:1297
-#: ../src/backend/bacon-video-widget-xine.c:1315
+#: ../src/backend/bacon-video-widget-xine.c:1302
+#: ../src/backend/bacon-video-widget-xine.c:1320
 msgid "The source seems encrypted, and can't be read. Are you trying to play an encrypted DVD without libdvdcss?"
 msgstr "Källan verkar krypterad och kan inte läsas. Försöker du spela upp en krypterad DVD utan libdvdcss?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1300
+#: ../src/backend/bacon-video-widget-xine.c:1305
 msgid "The movie could not be read."
 msgstr "Filmen kunde inte läsas."
 
-#: ../src/backend/bacon-video-widget-xine.c:1309
+#: ../src/backend/bacon-video-widget-xine.c:1314
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "Ett problem inträffade vid inläsning av ett bibliotek eller en avkodare (%s)."
 
-#: ../src/backend/bacon-video-widget-xine.c:1318
+#: ../src/backend/bacon-video-widget-xine.c:1323
 msgid "This file is encrypted and cannot be played back."
 msgstr "Denna film är krypterad och kan inte spelas upp."
 
-#: ../src/backend/bacon-video-widget-xine.c:1323
+#: ../src/backend/bacon-video-widget-xine.c:1328
 msgid "For security reasons, this movie can not be played back."
 msgstr "Denna film kan inte spelas upp av säkerhetsskäl."
 
-#: ../src/backend/bacon-video-widget-xine.c:1328
+#: ../src/backend/bacon-video-widget-xine.c:1333
 msgid "The audio device is busy. Is another application using it?"
 msgstr "Ljudenheten är upptagen. Använder ett annat program den?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1333
+#: ../src/backend/bacon-video-widget-xine.c:1338
 msgid "You are not allowed to open this file."
 msgstr "Du får inte öppna denna fil."
 
-#: ../src/backend/bacon-video-widget-xine.c:1335
+#: ../src/backend/bacon-video-widget-xine.c:1340
 msgid "The server refused access to this file or stream."
 msgstr "Servern vägrade åtkomst till denna fil eller detta flöde."
 
-#: ../src/backend/bacon-video-widget-xine.c:1344
+#: ../src/backend/bacon-video-widget-xine.c:1349
 msgid "The file you tried to play is an empty file."
 msgstr "Filen du försökte spela upp är en tom fil."
 
-#: ../src/backend/bacon-video-widget-xine.c:1538
+#: ../src/backend/bacon-video-widget-xine.c:1543
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "Det finns ingen inmatningsinsticksmodul för att hantera platsen för denna film"
 
-#: ../src/backend/bacon-video-widget-xine.c:1542
+#: ../src/backend/bacon-video-widget-xine.c:1547
 msgid "There is no plugin to handle this movie."
 msgstr "Det finns ingen insticksmodul för att hantera denna film."
 
-#: ../src/backend/bacon-video-widget-xine.c:1546
+#: ../src/backend/bacon-video-widget-xine.c:1551
 msgid "This movie is broken and can not be played further."
 msgstr "Denna film är trasig och kan inte spelas upp längre."
 
-#: ../src/backend/bacon-video-widget-xine.c:1550
+#: ../src/backend/bacon-video-widget-xine.c:1555
 msgid "This location is not a valid one."
 msgstr "Denna plats är inte giltig."
 
-#: ../src/backend/bacon-video-widget-xine.c:1554
+#: ../src/backend/bacon-video-widget-xine.c:1559
 msgid "This movie could not be opened."
 msgstr "Denna film kunde inte öppnas."
 
-#: ../src/backend/bacon-video-widget-xine.c:1558
+#: ../src/backend/bacon-video-widget-xine.c:1563
 msgid "Generic Error."
 msgstr "Allmänt fel."
 
-#: ../src/backend/bacon-video-widget-xine.c:2112
+#: ../src/backend/bacon-video-widget-xine.c:2157
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr "Denna film är en stillbild. Du kan öppna den med en bildvisare."
 
-#: ../src/backend/bacon-video-widget-xine.c:2136
+#: ../src/backend/bacon-video-widget-xine.c:2181
 #, c-format
 msgid "Video codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"
 msgstr "Videokodeken \"%s\" hanteras inte. Du kan behöva installera ytterligare insticksmoduler för att kunna spela upp en del filmtyper"
 
-#: ../src/backend/bacon-video-widget-xine.c:2140
+#: ../src/backend/bacon-video-widget-xine.c:2185
 #, c-format
 msgid "Audio codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"
 msgstr "Ljudkodeken \"%s\" hanteras inte. Du kan behöva installera ytterligare insticksmoduler för att kunna spela upp en del filmtyper"
 
-#: ../src/backend/bacon-video-widget-xine.c:2156
+#: ../src/backend/bacon-video-widget-xine.c:2201
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Detta är en fil med endast ljud, och ingen ljuddata är tillgänglig."
 
-#: ../src/backend/bacon-video-widget-xine.c:3591
-#: ../src/backend/bacon-video-widget-xine.c:3638
-#: ../src/backend/bacon-video-widget-xine.c:3660
+#: ../src/backend/bacon-video-widget-xine.c:3647
+#: ../src/backend/bacon-video-widget-xine.c:3694
+#: ../src/backend/bacon-video-widget-xine.c:3716
 #, c-format
 msgid "Language %d"
 msgstr "Språk %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3697
+#: ../src/backend/bacon-video-widget-xine.c:3753
 msgid "No video to capture."
 msgstr "Ingen video att fånga."
 
-#: ../src/backend/bacon-video-widget-xine.c:3705
+#: ../src/backend/bacon-video-widget-xine.c:3761
 msgid "Video codec is not handled."
 msgstr "Videokodeken hanteras inte."
 
-#: ../src/backend/bacon-video-widget-xine.c:3713
+#: ../src/backend/bacon-video-widget-xine.c:3769
 msgid "Movie is not playing."
 msgstr "Filmen spelas inte upp."
 
@@ -1731,40 +1770,40 @@ msgstr "Enhetsstatus 0x%x (%s) - kontrollera skivan"
 msgid "Failed to mount %s"
 msgstr "Misslyckades med att montera %s"
 
-#: ../src/plparse/totem-disc.c:430
+#: ../src/plparse/totem-disc.c:432
 #, c-format
 msgid "Failed to find mountpoint for %s"
 msgstr "Misslyckades med att hitta monteringspunkten för %s"
 
-#: ../src/plparse/totem-disc.c:489
+#: ../src/plparse/totem-disc.c:490
 #, c-format
 msgid "Error getting %s disc status: %s"
 msgstr "Fel vid hämtande av skivstatusen %s: %s"
 
-#: ../src/plparse/totem-disc.c:518
+#: ../src/plparse/totem-disc.c:519
 #, c-format
 msgid "Unexpected/unknown cd type 0x%x (%s)"
 msgstr "Oväntad/okänd cd-typ 0x%x (%s)"
 
-#: ../src/plparse/totem-disc.c:727
+#: ../src/plparse/totem-disc.c:728
 msgid "Audio CD"
 msgstr "Ljud-cd"
 
-#: ../src/plparse/totem-disc.c:729
+#: ../src/plparse/totem-disc.c:730
 msgid "Video CD"
 msgstr "Video-cd"
 
-#: ../src/plparse/totem-disc.c:731
+#: ../src/plparse/totem-disc.c:732
 msgid "DVD"
 msgstr "DVD"
 
-#: ../src/plparse/totem-pl-parser.c:329
+#: ../src/plparse/totem-pl-parser.c:355
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "Kunde inte skriva tolk: %s"
 
-#: ../src/plparse/totem-pl-parser.c:437
-#: ../src/plparse/totem-pl-parser.c:578
+#: ../src/plparse/totem-pl-parser.c:463
+#: ../src/plparse/totem-pl-parser.c:604
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "Kunde inte öppna filen \"%s\": %s"
