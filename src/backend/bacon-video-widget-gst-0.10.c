@@ -1033,6 +1033,21 @@ bvw_signal_eos_delayed (gpointer user_data)
 }
 
 static void
+bvw_reconfigure_tick_timeout (BaconVideoWidget *bvw, guint msecs)
+{
+  if (bvw->priv->update_id != 0) {
+    GST_DEBUG ("removing tick timeout");
+    g_source_remove (bvw->priv->update_id);
+    bvw->priv->update_id = 0;
+  }
+  if (msecs > 0) {
+    GST_DEBUG ("adding tick timeout (at %ums)", msecs);
+    bvw->priv->update_id =
+      g_timeout_add (msecs, (GSourceFunc) bvw_query_timeout, bvw);
+  }
+}
+
+static void
 bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 {
   BaconVideoWidget *bvw = (BaconVideoWidget *) data;
@@ -1178,18 +1193,14 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       g_free (src_name);
 
       /* now do stuff */
-      if (new_state <= GST_STATE_PAUSED) {
-        if (bvw->priv->update_id != 0) {
-          GST_DEBUG ("removing tick timeout");
-          g_source_remove (bvw->priv->update_id);
-          bvw->priv->update_id = 0;
-        }
+      if (new_state < GST_STATE_PAUSED) {
+        bvw_reconfigure_tick_timeout (bvw, 0);
+      } else if (new_state == GST_STATE_PAUSED) {
+        /* yes, we need to keep the tick timeout running in PAUSED state
+         * as well, totem depends on that (use lower frequency though) */
+        bvw_reconfigure_tick_timeout (bvw, 500);
       } else if (new_state > GST_STATE_PAUSED) {
-        if (bvw->priv->update_id == 0) {
-          GST_DEBUG ("starting tick timeout");
-          bvw->priv->update_id =
-            g_timeout_add (200, (GSourceFunc) bvw_query_timeout, bvw);
-        }
+        bvw_reconfigure_tick_timeout (bvw, 200);
       }
 
       if (old_state == GST_STATE_READY && new_state == GST_STATE_PAUSED) {
