@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: AC_PACKAGE_NAME AC_PACKAGE_VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-09 01:06+0900\n"
-"PO-Revision-Date: 2006-07-09 01:39+0900\n"
+"PO-Revision-Date: 2006-07-16 22:35+0900\n"
 "Last-Translator: Young-Ho Cha <ganadist@gmail.com>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
 "MIME-Version: 1.0\n"
@@ -355,7 +355,7 @@ msgstr "접속 속도(_S):"
 
 #: ../data/totem.glade.h:33
 msgid "Deinterlace"
-msgstr "비 인터레이스"
+msgstr "인터레이스 없애기"
 
 #: ../data/totem.glade.h:34
 msgid "Display"
@@ -567,7 +567,7 @@ msgstr "전체 화면으로 전환"
 
 #: ../data/totem.glade.h:99
 msgid "Take _Screenshot..."
-msgstr "화면 잡기(_S)..."
+msgstr "스크린샷 찍기(_S)..."
 
 #: ../data/totem.glade.h:100
 msgid "Take a screenshot"
@@ -669,7 +669,7 @@ msgstr "DVD 메뉴(_D)"
 
 #: ../data/totem.glade.h:125
 msgid "_Deinterlace"
-msgstr "비 인터레이스(_D)"
+msgstr "인터레이스 없애기(_D)"
 
 #: ../data/totem.glade.h:126
 msgid "_Edit"
@@ -771,7 +771,7 @@ msgstr "버퍼 크기"
 
 #: ../data/totem.schemas.in.h:3
 msgid "Enable deinterlacing"
-msgstr "비 인터레이스 사용"
+msgstr "인터레이스 없애기 사용"
 
 #: ../data/totem.schemas.in.h:4
 msgid "Encoding charset for subtitle"
@@ -900,7 +900,7 @@ msgstr "위치 열기"
 
 #: ../data/vanity.desktop.in.in.h:1
 msgid "Vanity Webcam utility"
-msgstr "Vanity 웹캠 유틸리티"
+msgstr "배니티 웹캠 유틸리티"
 
 #: ../data/vanity.desktop.in.in.h:2
 msgid "View live webcam and upload pictures"
@@ -912,11 +912,11 @@ msgstr "파일 저장"
 
 #: ../data/vanity.glade.h:2 ../src/vanity.c:260
 msgid "Vanity"
-msgstr "Vanity"
+msgstr "배니티"
 
 #: ../data/vanity.glade.h:3
 msgid "Vanity Preferences"
-msgstr "Vanity 기본 설정"
+msgstr "배니티 기본 설정"
 
 #: ../data/vanity.glade.h:4
 msgid "Zoom 1:1"
@@ -1575,7 +1575,7 @@ msgid ""
 "Vanity could not startup:\n"
 "%s"
 msgstr ""
-"Vanity가 시작할 수 없습니다:\n"
+"배니티를 시작할 수 없습니다:\n"
 "%s"
 
 #: ../src/vanity.c:552
@@ -1588,7 +1588,7 @@ msgid ""
 "Vanity could not contact the webcam.\n"
 "Reason: %s"
 msgstr ""
-"Vanity가 웹캠에 접근할 수 없습니다.\n"
+"배니티가 웹캠에 접근할 수 없습니다.\n"
 "이유: %s"
 
 #: ../src/vanity.c:606
@@ -1597,12 +1597,12 @@ msgid ""
 "Vanity could not play video from the webcam.\n"
 "Reason: %s"
 msgstr ""
-"Vanity가 웹캠에서 비디오를 재생할 수 없습니다.\n"
+"배니티가 웹캠에서 비디오를 재생할 수 없습니다.\n"
 "이유: %s"
 
 #: ../src/vanity.c:642
 msgid "Vanity Webcam Utility"
-msgstr "Vanity 웹캠 유틸리티"
+msgstr "배니티 웹캠 유틸리티"
 
 #: ../src/vanity.c:647
 msgid ""
@@ -1610,7 +1610,7 @@ msgid ""
 "Verify your system installation. Vanity will now exit."
 msgstr ""
 "쓰레드에 안전한 라이브러리를 초기화할 수 없습니다.\n"
-"시스템 설치가 올바른지 확인하십시오. Vanity를 끝냅니다."
+"시스템 설치가 올바른지 확인하십시오. 배니티를 끝냅니다."
 
 #: ../src/vanity.c:673
 #, c-format
@@ -1619,7 +1619,7 @@ msgid ""
 "configuration engine:\n"
 "%s"
 msgstr ""
-"Vanity가 설정 엔진을 \n"
+"배니티가 설정 엔진을 \n"
 "초기화할 수 없습니다:\n"
 "%s"
 
@@ -1629,7 +1629,7 @@ msgid ""
 "Make sure that Vanity is properly installed."
 msgstr ""
 "주 인터페이스 파일(totem.glade)을 읽어들일 수 없습니다.\n"
-"Vanity가 올바르게 설치되었는 지 확인하십시오."
+"배니티가 올바르게 설치되었는 지 확인하십시오."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2058
 msgid ""
@@ -1801,7 +1801,7 @@ msgstr "보안 문제때문에, 동영상을 재생할 수 없습니다."
 
 #: ../src/backend/bacon-video-widget-xine.c:1325
 msgid "The audio device is busy. Is another application using it?"
-msgstr "오디오 장치가 사용중입니다. 다른 프로그램이 사용하고 있지 않습니까?"
+msgstr "오디오 장치를 사용하는 중입니다. 다른 프로그램이 사용하고 있지 않습니까?"
 
 #: ../src/backend/bacon-video-widget-xine.c:1330
 msgid "You are not allowed to open this file."
