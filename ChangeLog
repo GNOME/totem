@@ -1,3 +1,10 @@
+2006-07-17  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: patch from Loïc Minier <lool+gnome@via.ecp.fr> to
+	avoid linking the plugin directly against the Mozilla libs, and let
+	the dependencies be resolved when the plugin is loaded. Should allow
+	build-time and run-time engines to be different (Closes: #347390)
+
 2006-07-12  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-xine.c:

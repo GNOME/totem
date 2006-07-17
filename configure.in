@@ -353,18 +353,26 @@ if test "x$ENABLE_MOZILLA" != "xno" ; then
 	AC_SUBST([MOZILLA])
 fi
 
-dnl Check for mozilla CFLAGS/LDFLAGS
+dnl Check for mozilla modules, but keep the CFLAGS and LIBS in
+dnl separate vars
+if test "x$ENABLE_MOZILLA" = "xyes" ; then
+	PKG_CHECK_MODULES([MOZILLA_NOT_LINKED],
+		[$MOZILLA-xpcom >= $MOZILLA_VERSION_MIN \
+		 $MOZILLA-plugin],,
+                [ENABLE_MOZILLA=no])
+fi
+dnl Check for other required modules, and merge CFLAGS, but not link
+dnl flags to avoid linking against -lxpcom -lplds4 -lplc4 -lnspr4
 if test "x$ENABLE_MOZILLA" = "xyes" ; then
 	PKG_CHECK_MODULES([MOZILLA],
 		[gtk+-x11-2.0 \
 		 $MM \
 		 gthread-2.0 \
-		 $MOZILLA-xpcom >= $MOZILLA_VERSION_MIN \
-		 $MOZILLA-plugin \
 		 gnome-vfs-2.0],,
 		[ENABLE_MOZILLA=no])
 
 	MOZILLA_LIBS="$MOZILLA_LIBS $EXTRA_BACKEND_LIBS"
+	MOZILLA_CFLAGS="$MOZILLA_NOT_LINKED_CFLAGS $MOZILLA_CFLAGS"
 	AC_SUBST([MOZILLA_CFLAGS])
 	AC_SUBST([MOZILLA_LIBS])
 fi
