@@ -1,5 +1,16 @@
 2006-07-17  Tim-Philipp Müller  <tim at centricular dot net>
 
+	* src/totem-skipto.c: (totem_skipto_response_cb),
+	(totem_skipto_init), (totem_skipto_finalize), (totem_skipto_new),
+	(totem_skipto_class_init):
+	  Force update of spin button value on activate and dialog
+	  response; makes the 'Seek To' dialog easier to use when using
+	  keys only (#313739).
+	  Also remove superfluous parent_class variable, G_DEFINE_TYPE
+	  already does this for us.
+	  
+2006-07-17  Tim-Philipp Müller  <tim at centricular dot net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bvw_reconfigure_tick_timeout), (bvw_bus_message_cb):
 	  Do keep emitting tick timeouts with the current position

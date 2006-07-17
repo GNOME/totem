@@ -44,18 +44,28 @@ struct TotemSkiptoPrivate
 	gint64 time;
 };
 
-static GtkWidgetClass *parent_class = NULL;
-
 static void totem_skipto_class_init (TotemSkiptoClass *class);
 static void totem_skipto_init       (TotemSkipto      *skipto);
 
 G_DEFINE_TYPE(TotemSkipto, totem_skipto, GTK_TYPE_DIALOG)
 
 static void
+totem_skipto_response_cb (GtkDialog *dialog, gint response_id, gpointer data)
+{
+  TotemSkipto *skipto;
+
+  skipto = TOTEM_SKIPTO (dialog);
+  gtk_spin_button_update (GTK_SPIN_BUTTON (skipto->_priv->spinbutton));
+}
+
+static void
 totem_skipto_init (TotemSkipto *skipto)
 {
 	skipto->_priv = g_new0 (TotemSkiptoPrivate, 1);
 	gtk_container_set_border_width (GTK_CONTAINER (skipto), 5);
+
+	g_signal_connect (skipto, "response",
+			G_CALLBACK (totem_skipto_response_cb), NULL);
 }
 
 static void
@@ -63,8 +73,8 @@ totem_skipto_finalize (GObject *object)
 {
 	g_return_if_fail (object != NULL);
 
-	if (G_OBJECT_CLASS (parent_class)->finalize != NULL) {
-		(* G_OBJECT_CLASS (parent_class)->finalize) (object);
+	if (G_OBJECT_CLASS (totem_skipto_parent_class)->finalize != NULL) {
+		(* G_OBJECT_CLASS (totem_skipto_parent_class)->finalize) (object);
 	}
 }
 
@@ -153,7 +163,7 @@ totem_skipto_new (const char *glade_filename)
 			"totem_skipto_window");
 	g_signal_connect (G_OBJECT (skipto->_priv->spinbutton), "value-changed",
 			G_CALLBACK (spin_button_value_changed_cb), skipto);
-	g_signal_connect (G_OBJECT (skipto->_priv->spinbutton), "activate",
+	g_signal_connect_after (G_OBJECT (skipto->_priv->spinbutton), "activate",
 			G_CALLBACK (spin_button_activate_cb), skipto);
 
 	container = glade_xml_get_widget (skipto->_priv->xml,
@@ -172,8 +182,6 @@ totem_skipto_new (const char *glade_filename)
 static void
 totem_skipto_class_init (TotemSkiptoClass *klass)
 {
-	parent_class = gtk_type_class (gtk_dialog_get_type ());
-
 	G_OBJECT_CLASS (klass)->finalize = totem_skipto_finalize;
 }
 
