@@ -1,3 +1,9 @@
+2006-07-20  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_finalize): finalize the logo pixbuf before we exit,
+	if it exists
+
 2006-07-17  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/totem-skipto.c: (totem_skipto_response_cb),

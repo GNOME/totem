@@ -472,6 +472,10 @@ bacon_video_widget_finalize (GObject *object)
 		gdk_cursor_unref (bvw->priv->cursor);
 		bvw->priv->cursor = NULL;
 	}
+	if (bvw->priv->logo_pixbuf != NULL) {
+		gdk_pixbuf_unref (bvw->priv->logo_pixbuf);
+		bvw->priv->logo_pixbuf = NULL;
+	}
 	g_free (bvw->priv->vis_name);
 	g_free (bvw->priv->mediadev);
 	g_object_unref (G_OBJECT (bvw->priv->gc));
