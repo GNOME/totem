@@ -1,22 +1,23 @@
 # French translation of totem.
-# Copyright (C) 2002-2005 Bastien Nocera.
+# Copyright (C) 2002-2006 Bastien Nocera.
 # This file is distributed under the same license as the totem package.
-# 
+#
 # Christophe Fergeau <christophe.fergeau@laposte.net>, 2002.
 # Sébastien Oustric <sebastien.oustric@laposte.net>, 2002.
 # Baptiste Mille-Mathias <bmm80@ifrance.com>, 2003.
-# Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2003-2005.
-# Stéphane Raimbault <stephane.raimbault@free.fr>, 2005. 
+# Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2003-2006.
+# Stéphane Raimbault <stephane.raimbault@free.fr>, 2005.
 # Laurent Richard <laurent.richard@ael.be>, 2006.
-# 
+# Jonathan Ernst <jonathan@ernstfamily.ch>, 2006.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: totem 1.2.1\n"
+"Project-Id-Version: totem 1.4.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-11 11:12+0100\n"
-"PO-Revision-Date: 2006-03-07 23:29+0100\n"
-"Last-Translator: Laurent Richard <laurent.richard@ael.be>\n"
-"Language-Team:  GNOME French Team <gnomefr@traduc.org>\n"
+"POT-Creation-Date: 2006-07-21 19:13+0200\n"
+"PO-Revision-Date: 2006-07-21 19:06+0200\n"
+"Last-Translator: Jonathan Ernst <jonathan@ernstfamily.ch>\n"
+"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -34,7 +35,10 @@ msgstr "Descendre"
 msgid "Move Up"
 msgstr "Monter"
 
-#: ../data/playlist.glade.h:4 ../src/totem-sidebar.c:131
+#. translators: Playlist is the default saved playlist filename,
+#. * without the suffix
+#: ../data/playlist.glade.h:4 ../src/totem-playlist.c:890
+#: ../src/totem-sidebar.c:117
 msgid "Playlist"
 msgstr "Liste de lecture"
 
@@ -62,31 +66,31 @@ msgstr "_Lecture / Pause"
 msgid "Play or pause the movie"
 msgstr "Joue ou suspend la vidéo"
 
-#: ../data/popup.glade.h:4 ../data/totem.glade.h:55
+#: ../data/popup.glade.h:4 ../data/totem.glade.h:56
 msgid "Previous chapter or movie"
 msgstr "Chapitre ou film précédent"
 
-#: ../data/popup.glade.h:5 ../data/totem.glade.h:72
+#: ../data/popup.glade.h:5 ../data/totem.glade.h:73
 msgid "Show _Controls"
 msgstr "Afficher les _contrôles"
 
-#: ../data/popup.glade.h:6 ../data/totem.glade.h:74
+#: ../data/popup.glade.h:6 ../data/totem.glade.h:75
 msgid "Show controls"
 msgstr "Afficher les contrôles"
 
-#: ../data/popup.glade.h:7 ../data/totem.glade.h:77
+#: ../data/popup.glade.h:7 ../data/totem.glade.h:79
 msgid "Skip _Backwards"
 msgstr "_Retour rapide"
 
-#: ../data/popup.glade.h:8 ../data/totem.glade.h:78
+#: ../data/popup.glade.h:8 ../data/totem.glade.h:80
 msgid "Skip _Forward"
 msgstr "_Avance rapide"
 
-#: ../data/popup.glade.h:9 ../data/totem.glade.h:79
+#: ../data/popup.glade.h:9 ../data/totem.glade.h:81
 msgid "Skip backwards"
 msgstr "Retour rapide"
 
-#: ../data/popup.glade.h:10 ../data/totem.glade.h:80
+#: ../data/popup.glade.h:10 ../data/totem.glade.h:82
 msgid "Skip forward"
 msgstr "Avance rapide"
 
@@ -98,15 +102,15 @@ msgstr "Diminuer"
 msgid "Volume Up"
 msgstr "Augmenter"
 
-#: ../data/popup.glade.h:13 ../data/totem.glade.h:108
+#: ../data/popup.glade.h:13 ../data/totem.glade.h:110
 msgid "Volume up"
 msgstr "Augmenter le volume"
 
-#: ../data/popup.glade.h:14 ../data/totem.glade.h:131
+#: ../data/popup.glade.h:14 ../data/totem.glade.h:136
 msgid "_Next Chapter/Movie"
 msgstr "Chapitre/Film _suivant"
 
-#: ../data/popup.glade.h:15 ../data/totem.glade.h:133
+#: ../data/popup.glade.h:15 ../data/totem.glade.h:139
 msgid "_Previous Chapter/Movie"
 msgstr "Chapitre/Film _précédent"
 
@@ -125,7 +129,7 @@ msgstr "0 kbps"
 
 #. 0 seconds
 #: ../data/properties.glade.h:4 ../data/skip_to.glade.h:1
-#: ../src/backend/video-utils.c:292
+#: ../src/backend/video-utils.c:272
 msgid "0 seconds"
 msgstr "0 seconde"
 
@@ -155,7 +159,7 @@ msgstr "Artiste :"
 
 #: ../data/properties.glade.h:11
 msgid "Bitrate:"
-msgstr "Débit des données :"
+msgstr "Débit des données :"
 
 #: ../data/properties.glade.h:12
 msgid "Codec:"
@@ -176,19 +180,19 @@ msgstr "Images par seconde :"
 #. Dimensions
 #. Video Codec
 #. Audio Codec
-#: ../data/properties.glade.h:16 ../src/bacon-video-widget-properties.c:152
-#: ../src/bacon-video-widget-properties.c:154
-#: ../src/bacon-video-widget-properties.c:157
-#: ../src/bacon-video-widget-properties.c:160
-#: ../src/bacon-video-widget-properties.c:163
-#: ../src/bacon-video-widget-properties.c:165
-#: ../src/bacon-video-widget-properties.c:227
-#: ../src/bacon-video-widget-properties.c:229
-#: ../src/bacon-video-widget-properties.c:246
+#: ../data/properties.glade.h:16 ../src/bacon-video-widget-properties.c:153
+#: ../src/bacon-video-widget-properties.c:155
+#: ../src/bacon-video-widget-properties.c:158
+#: ../src/bacon-video-widget-properties.c:161
+#: ../src/bacon-video-widget-properties.c:164
+#: ../src/bacon-video-widget-properties.c:166
+#: ../src/bacon-video-widget-properties.c:228
+#: ../src/bacon-video-widget-properties.c:230
+#: ../src/bacon-video-widget-properties.c:247
 msgid "N/A"
 msgstr "N/D"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:2046
+#: ../data/properties.glade.h:17 ../src/totem-sidebar.c:120
 msgid "Properties"
 msgstr "Propriétés"
 
@@ -200,10 +204,10 @@ msgstr "Titre :"
 #. Artist
 #. Album
 #. Year
-#: ../data/properties.glade.h:19 ../src/bacon-video-widget-properties.c:141
-#: ../src/bacon-video-widget-properties.c:143
-#: ../src/bacon-video-widget-properties.c:145
-#: ../src/bacon-video-widget-properties.c:147
+#: ../data/properties.glade.h:19 ../src/bacon-video-widget-properties.c:142
+#: ../src/bacon-video-widget-properties.c:144
+#: ../src/bacon-video-widget-properties.c:146
+#: ../src/bacon-video-widget-properties.c:148
 msgid "Unknown"
 msgstr "Inconnu"
 
@@ -235,7 +239,7 @@ msgstr "Enregistrer l'image capturée sur le _bureau"
 msgid "Save screenshot to _file:"
 msgstr "Enregistrer l'image capturée dans un _fichier :"
 
-#: ../data/skip_to.glade.h:2 ../src/totem-skipto.c:140
+#: ../data/skip_to.glade.h:2 ../src/totem-skipto.c:154
 msgid "Skip to"
 msgstr "Sauter vers"
 
@@ -270,17 +274,17 @@ msgid ""
 "1.5 Mbps T1/Intranet/LAN\n"
 "Intranet/LAN"
 msgstr ""
-"14.4 kbps Modem\n"
-"19.2 kbps Modem\n"
-"28.8 kbps Modem\n"
-"33.6 kbps Modem\n"
-"34.4 kbps Modem\n"
-"56 kbps Modem/RNIS\n"
-"112 kbps Dual RNIS/DSL\n"
-"256 kbps DSL/Cable\n"
-"384 kbps DSL/Cable\n"
-"512 kbps DSL/Cable\n"
-"1.5 Mbps T1/Intranet/LAN\n"
+"Modem 14.4 kbps\n"
+"Modem 19.2 kbps\n"
+"Modem 28.8 kbps\n"
+"Modem 33.6 kbps\n"
+"Modem 34.4 kbps\n"
+"Modem/RNIS à 56 kbps\n"
+"Dual RNIS/DSL à 112 kbps\n"
+"ADSL/Câble à 256 kbps\n"
+"ADSL/Câble à 384 kbps\n"
+"ADSL/Câble à 512 kbps\n"
+"T1/Intranet/LAN à 1.5 Mbps\n"
 "Intranet/LAN"
 
 #: ../data/totem.glade.h:14
@@ -312,12 +316,13 @@ msgid "<b>Networking</b>"
 msgstr "<b>Réseau</b>"
 
 #: ../data/totem.glade.h:21
-msgid "<b>Subtitles</b>"
-msgstr "<b>Sous-titres</b>"
-
-#: ../data/totem.glade.h:22
 msgid "<b>TV-Out</b>"
 msgstr "<b>Sortie TV</b>"
+
+#: ../data/totem.glade.h:22
+#, fuzzy
+msgid "<b>Text Subtitles</b>"
+msgstr "<b>Sous-titres</b>"
 
 #: ../data/totem.glade.h:23
 msgid "<b>Visual Effects</b>"
@@ -432,91 +437,101 @@ msgstr "Ouvre un fichier non-local"
 msgid "Play/Pause"
 msgstr "Lecture/Pause"
 
-#: ../data/totem.glade.h:54 ../src/totem-options.c:42
+#: ../data/totem.glade.h:54
+#, fuzzy
+msgid "Prefere_nces"
+msgstr "Préférences de Totem"
+
+#: ../data/totem.glade.h:55 ../src/totem-options.c:42
 msgid "Previous"
 msgstr "Précédent"
 
-#: ../data/totem.glade.h:56
+#: ../data/totem.glade.h:57
 msgid "Reset To _Defaults"
 msgstr "_Réinitialiser par défaut"
 
-#: ../data/totem.glade.h:57
+#: ../data/totem.glade.h:58
 msgid "Resize _1:1"
 msgstr "Ratio _1:1"
 
-#: ../data/totem.glade.h:58
+#: ../data/totem.glade.h:59
 msgid "Resize _2:1"
 msgstr "Ratio _2:1"
 
-#: ../data/totem.glade.h:59
+#: ../data/totem.glade.h:60
 msgid "Resize to half the video size"
 msgstr "Redimensionne à la moitié de la résolution du film"
 
-#: ../data/totem.glade.h:60
+#: ../data/totem.glade.h:61
 msgid "Resize to twice the video size"
 msgstr "Redimensionne au double de la résolution du film"
 
-#: ../data/totem.glade.h:61
+#: ../data/totem.glade.h:62
 msgid "Resize to video size"
 msgstr "Redimensionne à la résolution exacte du film"
 
-#: ../data/totem.glade.h:62
+#: ../data/totem.glade.h:63
 msgid "S_ubtitles"
 msgstr "_Sous-titres"
 
-#: ../data/totem.glade.h:63
+#: ../data/totem.glade.h:64
 msgid "Sat_uration:"
 msgstr "Sat_uration :"
 
-#: ../data/totem.glade.h:64
+#: ../data/totem.glade.h:65
 msgid "Set the aspect ratio"
 msgstr "Basculer le rapport d'affichage"
 
-#: ../data/totem.glade.h:65
-msgid "Set the repeat mode"
-msgstr "Définit le mode de lecture en boucle (répétition)"
-
 #: ../data/totem.glade.h:66
-msgid "Set the shuffle mode"
-msgstr "Définit le mode de lecture aléatoire"
+msgid "Set the repeat mode"
+msgstr "Active la lecture en boucle (répétition)"
 
 #: ../data/totem.glade.h:67
-msgid "Sets 16:9 (Anamorphic) aspect ratio"
-msgstr "Définit le rapport d'affichage 16:9 (anamorphique)"
+msgid "Set the shuffle mode"
+msgstr "Active la lecture aléatoire"
 
 #: ../data/totem.glade.h:68
-msgid "Sets 2.11:1 (DVB) aspect ratio"
-msgstr "Définit le rapport d'affichage 2.11:1 (DVB)"
+msgid "Sets 16:9 (Anamorphic) aspect ratio"
+msgstr "Règle le rapport d'affichage en 16:9 (anamorphique)"
 
 #: ../data/totem.glade.h:69
-msgid "Sets 4:3 (TV) aspect ratio"
-msgstr "Définit le rapport d'affichage 4:3 (TV)"
+msgid "Sets 2.11:1 (DVB) aspect ratio"
+msgstr "Règle le rapport d'affichage en 2.11:1 (DVB)"
 
 #: ../data/totem.glade.h:70
-msgid "Sets automatic aspect ratio"
-msgstr "Définit le rapport d'affichage automatique"
+msgid "Sets 4:3 (TV) aspect ratio"
+msgstr "Règle le rapport d'affichage en 4:3 (TV)"
 
 #: ../data/totem.glade.h:71
+msgid "Sets automatic aspect ratio"
+msgstr "Active le rapport d'affichage automatique"
+
+#: ../data/totem.glade.h:72
 msgid "Sets square aspect ratio"
-msgstr "Définit le rapport d'affichage carré"
+msgstr "Active le rapport d'affichage carré"
 
-#: ../data/totem.glade.h:73
+#: ../data/totem.glade.h:74
 msgid "Show _visual effects when an audio file is played"
-msgstr "_Afficher des effets visuels lorsqu'un fichier son est lu"
+msgstr "_Afficher des effets visuels lors de la lecture d'un fichier son"
 
-#: ../data/totem.glade.h:75
+#: ../data/totem.glade.h:76
 msgid "Show or hide the sidebar"
 msgstr "Affiche ou masque la liste de lecture"
 
-#: ../data/totem.glade.h:76
+#: ../data/totem.glade.h:77
 msgid "Shuff_le Mode"
 msgstr "Lecture a_léatoire"
 
-#: ../data/totem.glade.h:81
+#: ../data/totem.glade.h:78
+#, fuzzy
+msgid "Side_bar"
+msgstr "_Liste"
+
+#: ../data/totem.glade.h:83
 msgid "Skip to a specific time"
 msgstr "Saute à une durée spécifique"
 
-#: ../data/totem.glade.h:82
+#: ../data/totem.glade.h:84
 msgid ""
 "Small\n"
 "Normal\n"
@@ -528,11 +543,11 @@ msgstr ""
 "Grand\n"
 "Très grand"
 
-#: ../data/totem.glade.h:86
+#: ../data/totem.glade.h:88
 msgid "Square"
 msgstr "Carré"
 
-#: ../data/totem.glade.h:87
+#: ../data/totem.glade.h:89
 msgid ""
 "Stereo\n"
 "4-channel\n"
@@ -548,187 +563,215 @@ msgstr ""
 "5.1 canaux\n"
 "Sortie directe AC3"
 
-#: ../data/totem.glade.h:93
+#: ../data/totem.glade.h:95
 msgid "Subtitles"
 msgstr "Sous-titres"
 
-#: ../data/totem.glade.h:94
+#: ../data/totem.glade.h:96
 msgid "Switch An_gles"
-msgstr "Changer d'an_gles"
+msgstr "Changer d'an_gle"
 
-#: ../data/totem.glade.h:95
+#: ../data/totem.glade.h:97
 msgid "Switch angles"
 msgstr "Change d'angle"
 
-#: ../data/totem.glade.h:96
+#: ../data/totem.glade.h:98
 msgid "Switch to fullscreen"
 msgstr "Bascule en mode plein écran"
 
-#: ../data/totem.glade.h:97
+#: ../data/totem.glade.h:99
 msgid "Take _Screenshot..."
-msgstr "_Capturer une image ..."
+msgstr "_Capturer une image..."
 
-#: ../data/totem.glade.h:98
+#: ../data/totem.glade.h:100
 msgid "Take a screenshot"
 msgstr "Capture une image de la vidéo en cours"
 
-#: ../data/totem.glade.h:99
+#: ../data/totem.glade.h:101
 msgid "Time:"
 msgstr "Temps :"
 
 #. Title
-#: ../data/totem.glade.h:100 ../src/totem.c:706 ../src/totem.c:3506
-#: ../src/totem.c:3523
+#: ../data/totem.glade.h:102 ../src/totem.c:706 ../src/totem.c:3513
+#: ../src/totem.c:3530
 msgid "Totem Movie Player"
 msgstr "Lecteur vidéo Totem"
 
-#: ../data/totem.glade.h:101
+#: ../data/totem.glade.h:103
 msgid "Totem Preferences"
 msgstr "Préférences de Totem"
 
-#: ../data/totem.glade.h:102
+#: ../data/totem.glade.h:104
 msgid "Tv-out in fullscreen by Nvidia (NTSC)"
 msgstr "Sortie TV en plein écran par NVIDIA (NTSC)"
 
-#: ../data/totem.glade.h:103
+#: ../data/totem.glade.h:105
 msgid "Tv-out in fullscreen by Nvidia (PAL)"
 msgstr "Sortie TV en plein écran par NVIDIA (PAL)"
 
-#: ../data/totem.glade.h:104
+#: ../data/totem.glade.h:106
 msgid "Visualisation _size:"
 msgstr "_Taille de visualisation :"
 
-#: ../data/totem.glade.h:105
+#: ../data/totem.glade.h:107
 msgid "Volume _Down"
 msgstr "_Diminuer le volume"
 
-#: ../data/totem.glade.h:106
+#: ../data/totem.glade.h:108
 msgid "Volume _Up"
 msgstr "_Augmenter le volume"
 
-#: ../data/totem.glade.h:107
+#: ../data/totem.glade.h:109
 msgid "Volume down"
 msgstr "Diminuer le volume"
 
-#: ../data/totem.glade.h:109
+#: ../data/totem.glade.h:111
 msgid "Zoom In"
 msgstr "Zoom avant"
 
-#: ../data/totem.glade.h:110
+#: ../data/totem.glade.h:112
 msgid "Zoom Out"
 msgstr "Zoom arrière"
 
-#: ../data/totem.glade.h:111
+#: ../data/totem.glade.h:113
 msgid "Zoom Reset"
 msgstr "Taille normale"
 
-#: ../data/totem.glade.h:112
+#: ../data/totem.glade.h:114
 msgid "Zoom in"
 msgstr "Zoom en avant"
 
-#: ../data/totem.glade.h:113
+#: ../data/totem.glade.h:115
 msgid "Zoom out"
 msgstr "Zoom en arrière"
 
-#: ../data/totem.glade.h:114
+#: ../data/totem.glade.h:116
 msgid "Zoom reset"
 msgstr "Zoom à la taille normale"
 
-#: ../data/totem.glade.h:115
+#: ../data/totem.glade.h:117
+#, fuzzy
+msgid "_About"
+msgstr "Auto"
+
+#: ../data/totem.glade.h:118
 msgid "_Angle Menu"
 msgstr "Menu _angle"
 
-#: ../data/totem.glade.h:116
+#: ../data/totem.glade.h:119
 msgid "_Aspect Ratio"
 msgstr "Basculer le rapport d'_affichage"
 
-#: ../data/totem.glade.h:117
+#: ../data/totem.glade.h:120
 msgid "_Audio output type:"
 msgstr "Type de sortie _audio :"
 
-#: ../data/totem.glade.h:118
+#: ../data/totem.glade.h:121
 msgid "_Brightness:"
 msgstr "_Luminosité :"
 
-#: ../data/totem.glade.h:119
+#: ../data/totem.glade.h:122
 msgid "_Chapter Menu"
 msgstr "Menu _chapitre"
 
-#: ../data/totem.glade.h:120
+#: ../data/totem.glade.h:123
 msgid "_Contents"
 msgstr "_Sommaire"
 
-#: ../data/totem.glade.h:121
+#: ../data/totem.glade.h:124
 msgid "_DVD Menu"
 msgstr "Menu _DVD"
 
-#: ../data/totem.glade.h:122
-msgid "_DXR3 TV-out"
-msgstr "Sortie TV _DXR3"
-
-#: ../data/totem.glade.h:123
+#: ../data/totem.glade.h:125
 msgid "_Deinterlace"
 msgstr "_Désentrelacer"
 
-#: ../data/totem.glade.h:124
+#: ../data/totem.glade.h:126
+msgid "_Edit"
+msgstr ""
+
+#: ../data/totem.glade.h:127
 msgid "_Eject"
 msgstr "É_jecter"
 
-#: ../data/totem.glade.h:125
+#: ../data/totem.glade.h:128
+msgid "_Encoding:"
+msgstr ""
+
+#: ../data/totem.glade.h:129
 msgid "_Font:"
 msgstr "_Police :"
 
-#: ../data/totem.glade.h:126
+#: ../data/totem.glade.h:130
 msgid "_Fullscreen"
 msgstr "_Plein écran"
 
-#: ../data/totem.glade.h:127
+#: ../data/totem.glade.h:131
 msgid "_Go"
-msgstr "A_ller"
+msgstr "A_ller à"
 
-#: ../data/totem.glade.h:128
+#: ../data/totem.glade.h:132
+#, fuzzy
+msgid "_Help"
+msgstr "_Teinte :"
+
+#: ../data/totem.glade.h:133
 msgid "_Hue:"
 msgstr "_Teinte :"
 
-#: ../data/totem.glade.h:129
+#: ../data/totem.glade.h:134
 msgid "_Languages"
 msgstr "_Langues"
 
-#: ../data/totem.glade.h:130
+#: ../data/totem.glade.h:135
 msgid "_Movie"
 msgstr "_Film"
 
-#: ../data/totem.glade.h:132
+#: ../data/totem.glade.h:137
 msgid "_No TV-out"
 msgstr "_Aucune sortie TV"
 
-#: ../data/totem.glade.h:134
+#: ../data/totem.glade.h:138
+msgid "_Open..."
+msgstr ""
+
+#: ../data/totem.glade.h:140
+#, fuzzy
+msgid "_Quit"
+msgstr "Quitter"
+
+#: ../data/totem.glade.h:141
 msgid "_Repeat Mode"
 msgstr "Lecture en _boucle"
 
-#: ../data/totem.glade.h:135
+#: ../data/totem.glade.h:142
 msgid "_Resize 1:2"
 msgstr "_Ratio 1:2"
 
-#: ../data/totem.glade.h:136
+#: ../data/totem.glade.h:143
 msgid "_Sidebar"
-msgstr "_Navigateur"
+msgstr "_Liste"
 
-#: ../data/totem.glade.h:137
+#: ../data/totem.glade.h:144
 msgid "_Skip to..."
 msgstr "_Sauter vers..."
 
-#: ../data/totem.glade.h:138
+#: ../data/totem.glade.h:145
 msgid "_Sound"
 msgstr "_Son"
 
-#: ../data/totem.glade.h:139
+#: ../data/totem.glade.h:146
 msgid "_Title Menu"
 msgstr "Menu _titre"
 
-#: ../data/totem.glade.h:140
+#: ../data/totem.glade.h:147
 msgid "_Type of visualisation:"
 msgstr "T_ype de visualisation :"
+
+#: ../data/totem.glade.h:148
+#, fuzzy
+msgid "_View"
+msgstr "Vidéo"
 
 #: ../data/totem.schemas.in.h:1
 msgid ""
@@ -747,80 +790,89 @@ msgid "Enable deinterlacing"
 msgstr "Activer le désentrelacement"
 
 #: ../data/totem.schemas.in.h:4
+msgid "Encoding charset for subtitle"
+msgstr ""
+
+#: ../data/totem.schemas.in.h:5
 msgid "Height of the video widget"
 msgstr "Hauteur du composant graphique vidéo"
 
-#: ../data/totem.schemas.in.h:5
+#: ../data/totem.schemas.in.h:6
 msgid "Maximum amount of data to decode ahead of display (in seconds)"
 msgstr "Quantité maximale de données à décoder avant l'affichage (en secondes)"
 
-#: ../data/totem.schemas.in.h:6
+#: ../data/totem.schemas.in.h:7
 msgid "Name of the visual effects plugins"
 msgstr "Nom des greffons d'effets visuels"
 
-#: ../data/totem.schemas.in.h:7
+#: ../data/totem.schemas.in.h:8
 msgid "Network buffering threshold"
 msgstr "Seuil de tampon réseaux"
 
-#: ../data/totem.schemas.in.h:8
+#: ../data/totem.schemas.in.h:9
 msgid "Pango font description for subtitle rendering"
 msgstr "Description de la police Pango pour le rendu des sous-titres"
 
-#: ../data/totem.schemas.in.h:9
+#: ../data/totem.schemas.in.h:10
 msgid "Repeat mode"
 msgstr "Lecture en boucle"
 
-#: ../data/totem.schemas.in.h:10
+#: ../data/totem.schemas.in.h:11
 msgid "Resize the canvas automatically on file load"
 msgstr ""
 "Redimensionner automatiquement le canevas lors du chargement du fichier"
 
-#: ../data/totem.schemas.in.h:11
+#: ../data/totem.schemas.in.h:12
 msgid "Show visual effects when no video is displayed"
 msgstr "Afficher des effets visuels lorsqu'aucune vidéo n'est lue"
 
-#: ../data/totem.schemas.in.h:12
+#: ../data/totem.schemas.in.h:13
 msgid "Show visual effects when playing an audio only file."
 msgstr ""
 "Afficher des effets visuels lors de la lecture d'un fichier son uniquement."
 
-#: ../data/totem.schemas.in.h:13
+#: ../data/totem.schemas.in.h:14
 msgid "Shuffle mode"
 msgstr "Lecture aléatoire"
 
-#: ../data/totem.schemas.in.h:14
+#: ../data/totem.schemas.in.h:15
 msgid "Sound volume"
 msgstr "Volume sonore"
 
-#: ../data/totem.schemas.in.h:15
+#: ../data/totem.schemas.in.h:16
 msgid "Sound volume, in percent, between 0 and 100"
 msgstr "Le volume sonore, en pourcentage, compris entre 0 et 100"
 
-#: ../data/totem.schemas.in.h:16
+#: ../data/totem.schemas.in.h:17
+#, fuzzy
+msgid "Subtitle encoding"
+msgstr "Police des sous-titres"
+
+#: ../data/totem.schemas.in.h:18
 msgid "Subtitle font"
 msgstr "Police des sous-titres"
 
-#: ../data/totem.schemas.in.h:17
+#: ../data/totem.schemas.in.h:19
 msgid "The brightness of the video"
 msgstr "La luminosité de la vidéo"
 
-#: ../data/totem.schemas.in.h:18
+#: ../data/totem.schemas.in.h:20
 msgid "The contrast of the video"
 msgstr "Le contraste de la vidéo"
 
-#: ../data/totem.schemas.in.h:19
+#: ../data/totem.schemas.in.h:21
 msgid "The hue of the video"
 msgstr "La teinte de la vidéo"
 
-#: ../data/totem.schemas.in.h:20
+#: ../data/totem.schemas.in.h:22
 msgid "The saturation of the video"
 msgstr "La saturation de la vidéo"
 
-#: ../data/totem.schemas.in.h:21
+#: ../data/totem.schemas.in.h:23
 msgid "Type of audio output to use"
 msgstr "Type de sortie audio à utiliser"
 
-#: ../data/totem.schemas.in.h:22
+#: ../data/totem.schemas.in.h:24
 msgid ""
 "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
 "\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
@@ -830,23 +882,31 @@ msgstr ""
 "sortie sur 4 canaux, « 2 » pour une sortie sur 5.0 canaux, « 3 » pour une "
 "sortie sur 5.1 canaux, « 4 » pour une sortie directe AC3."
 
-#: ../data/totem.schemas.in.h:23
+#. Translators: This is default subtitle encoding
+#. character set. You can change this to be the most common
+#. encoding for fansub subtitles in your language. File a bug
+#. against Totem, and leave UTF-8 as the default if in doubt.
+#: ../data/totem.schemas.in.h:29
+msgid "UTF-8"
+msgstr ""
+
+#: ../data/totem.schemas.in.h:30
 msgid "Whether the main window should stay on top"
 msgstr "Indique si la fenêtre principale doit rester au-dessus"
 
-#: ../data/totem.schemas.in.h:24
+#: ../data/totem.schemas.in.h:31
 msgid "Whether the main window should stay on top of the other ones"
 msgstr "Indique si la fenêtre principale doit rester au-dessus des autres"
 
-#: ../data/totem.schemas.in.h:25
+#: ../data/totem.schemas.in.h:32
 msgid "Whether the sidebar is shown"
 msgstr "Indique si la liste de lecture doit être affichée"
 
-#: ../data/totem.schemas.in.h:26
+#: ../data/totem.schemas.in.h:33
 msgid "Whether to enable debug for the playback engine"
-msgstr "Indique si il faut activer le débogage pour le moteur de lecture"
+msgstr "Indique s'il faut activer le débogage pour le moteur de lecture"
 
-#: ../data/totem.schemas.in.h:27
+#: ../data/totem.schemas.in.h:34
 msgid "Width of the video widget"
 msgstr "Largeur du composant graphique vidéo"
 
@@ -870,7 +930,7 @@ msgstr "Affiche la webcam et publie les images"
 msgid "Save File"
 msgstr "Enregistrer le fichier"
 
-#: ../data/vanity.glade.h:2 ../src/vanity.c:259
+#: ../data/vanity.glade.h:2 ../src/vanity.c:260
 msgid "Vanity"
 msgstr "Vanity"
 
@@ -910,23 +970,23 @@ msgstr "_Zoom 1:2"
 msgid "Unnamed CDROM"
 msgstr "CD-ROM sans nom"
 
-#: ../src/bacon-video-widget-properties.c:224
+#: ../src/bacon-video-widget-properties.c:225
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: ../src/bacon-video-widget-properties.c:227
+#: ../src/bacon-video-widget-properties.c:228
 #, c-format
 msgid "%d frames per second"
 msgstr "%d images par seconde"
 
-#: ../src/bacon-video-widget-properties.c:229
-#: ../src/bacon-video-widget-properties.c:246
+#: ../src/bacon-video-widget-properties.c:230
+#: ../src/bacon-video-widget-properties.c:247
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: ../src/bacon-video-widget-properties.c:280
+#: ../src/bacon-video-widget-properties.c:281
 msgid "Properties dialog"
 msgstr "Fenêtre des propriétés"
 
@@ -949,12 +1009,12 @@ msgstr "Ouvrir « %s »"
 msgid "Empty"
 msgstr "Vide"
 
-#: ../src/totem-interface.c:114
+#: ../src/totem-interface.c:117
 #, c-format
 msgid "Couldn't load the '%s' interface."
 msgstr "Impossible de charger l'interface « %s »."
 
-#: ../src/totem-interface.c:116 ../src/totem-interface.c:118
+#: ../src/totem-interface.c:119 ../src/totem-interface.c:121
 msgid "Make sure that Totem is properly installed."
 msgstr "Veuillez vérifier que Totem est correctement installé."
 
@@ -962,12 +1022,78 @@ msgstr "Veuillez vérifier que Totem est correctement installé."
 msgid "None"
 msgstr "Aucun"
 
-#: ../src/totem-menu.c:594
+#: ../src/totem-menu.c:605
 #, c-format
 msgid "Play Disc '%s'"
-msgstr "Lire le disque « %s »"
+msgstr "Lire le disque « %s »"
 
-#: ../src/totem-options.c:36
+#. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+#: ../src/totem-mozilla-viewer.c:186 ../src/totem.c:338 ../src/totem.c:367
+#: ../src/totem.c:811 ../src/totem.c:921
+#, c-format
+msgid "Totem could not play '%s'."
+msgstr "Totem n'a pas pu lire « %s »."
+
+#: ../src/totem-mozilla-viewer.c:325
+#, c-format
+msgid "Movie Player using %s"
+msgstr "Lecteur vidéo utilisant %s"
+
+#: ../src/totem-mozilla-viewer.c:329
+msgid "Totem Mozilla Plugin"
+msgstr "Plugin Totem pour Mozilla"
+
+#: ../src/totem-mozilla-viewer.c:331 ../src/totem.c:1971
+#, fuzzy
+msgid "Copyright © 2002-2006 Bastien Nocera"
+msgstr "Copyright © 2002-2005 Bastien Nocera"
+
+#: ../src/totem-mozilla-viewer.c:334 ../src/totem.c:1976 ../src/vanity.c:267
+msgid "translator-credits"
+msgstr ""
+"Christophe Fergeau <teuf@gnome.org>\n"
+"Sébastien Oustric <sebastien.oustric@laposte.net>\n"
+"Baptiste Mille-Mathias <bmm80@ifrance.com>\n"
+"Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
+"Stéphane Raimbault <stephane.raimbault@free.fr>\n"
+"Laurent Richard <laurent.richard@ael.be>\n"
+"Jonathan Ernst <jonathan@ernstfamily.ch>"
+
+#: ../src/totem-mozilla-viewer.c:422
+msgid "Failed to start stand-alone movie player"
+msgstr "Le démarrage du lecteur de film autonome a échoué"
+
+#: ../src/totem-mozilla-viewer.c:423
+msgid "Unknown reason"
+msgstr "Raison inconnue"
+
+#: ../src/totem-mozilla-viewer.c:523
+msgid "Plugin"
+msgstr "Plugin"
+
+#: ../src/totem-mozilla-viewer.c:526
+msgid "Menu"
+msgstr "Menu"
+
+#: ../src/totem-mozilla-viewer.c:543
+msgid "The Totem plugin could not startup."
+msgstr "Le plugin Totem n'a pas pu démarrer."
+
+#: ../src/totem-mozilla-viewer.c:543 ../src/totem.c:433 ../src/totem.c:3372
+msgid "No reason."
+msgstr "Aucune raison."
+
+#: ../src/totem-mozilla-viewer.c:654
+msgid "Could not initialise the thread-safe libraries."
+msgstr "Impossible d'initialiser les bibliothèques thread-safe."
+
+#: ../src/totem-mozilla-viewer.c:654
+msgid "Verify your system installation. The Totem plugin will now exit."
+msgstr ""
+"Vérifiez l'installation de votre système. Le plugin Totem va maintenant "
+"s'arrêter."
+
+#: ../src/totem-options.c:36 ../src/vanity.c:75
 msgid "Backend options"
 msgstr "Options du moteur"
 
@@ -1016,43 +1142,56 @@ msgstr "Remplacer"
 msgid "Option '%s' is unknown and was ignored\n"
 msgstr "L'option « %s » est inconnue et a été ignorée\n"
 
-#: ../src/totem-playlist.c:329
+#: ../src/totem-playlist.c:347 ../src/totem-playlist.c:841
 msgid "Could not save the playlist"
 msgstr "Impossible d'enregistrer la liste de lecture"
 
-#: ../src/totem-playlist.c:812
+#: ../src/totem-playlist.c:841
+#, fuzzy
+msgid "Unknown file extension."
+msgstr "Raison inconnue"
+
+#: ../src/totem-playlist.c:854
+msgid "Select playlist format:"
+msgstr ""
+
+#: ../src/totem-playlist.c:858
+msgid "By extension"
+msgstr ""
+
+#: ../src/totem-playlist.c:880
 msgid "Save Playlist"
 msgstr "Enregistrer la liste de lecture"
 
-#: ../src/totem-playlist.c:858
+#: ../src/totem-playlist.c:934
 msgid "Overwrite file?"
 msgstr "Voulez-vous vraiment écraser le fichier ?"
 
-#: ../src/totem-playlist.c:860
+#: ../src/totem-playlist.c:936
 #, c-format
 msgid ""
 "A file named '%s' already exists.  Are you sure you want to overwrite it?"
 msgstr "Un fichier nommé « %s » existe déjà. Voulez-vous vraiment l'écraser ?"
 
-#: ../src/totem-playlist.c:1405
+#: ../src/totem-playlist.c:1480
 msgid "playlist"
 msgstr "liste de lecture"
 
-#: ../src/totem-playlist.c:1538
+#: ../src/totem-playlist.c:1613
 msgid "Playlist error"
 msgstr "Erreur de liste de lecture"
 
-#: ../src/totem-playlist.c:1538
+#: ../src/totem-playlist.c:1613
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr ""
-"La liste de lecture « %s » n'a pu être lue car elle est peut-être endommagée."
+"La liste de lecture « %s » n'a pu être lue, elle est peut-être endommagée."
 
-#: ../src/totem-preferences.c:86
+#: ../src/totem-preferences.c:85
 msgid "Enable visual effects?"
 msgstr "Activation des effets visuels"
 
-#: ../src/totem-preferences.c:88
+#: ../src/totem-preferences.c:87
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1060,39 +1199,39 @@ msgstr ""
 "Il semble que vous utilisez Totem à distance.\n"
 "Voulez-vous vraiment activer les effets visuels ?"
 
-#: ../src/totem-preferences.c:141
+#: ../src/totem-preferences.c:140
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted."
 msgstr ""
 "La modification de ce paramètre ne prendra effet qu'au prochain film ou bien "
-"lorsque que Totem sera redémarré."
+"lorsque Totem sera redémarré."
 
-#: ../src/totem-preferences.c:185
+#: ../src/totem-preferences.c:184
 msgid ""
 "Switching on or off this type of TV-Out requires a restart to take effect."
 msgstr ""
-"Activer ou arrêter ce type de sortie télé nécessite une redémarrage pour "
+"Activer ou arrêter ce type de sortie télé nécessite un redémarrage pour "
 "prendre effet."
 
-#: ../src/totem-preferences.c:297
+#: ../src/totem-preferences.c:296
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr "Changer l'effet visuel nécessite un redémarrage pour prendre effet."
 
-#: ../src/totem-preferences.c:381
+#: ../src/totem-preferences.c:380
 msgid ""
 "The change of audio output type will only take effect when Totem is "
 "restarted."
 msgstr ""
 "La modification de ce paramètre audio ne prendra effet que lorsque Totem "
-"sera redémarré"
+"sera redémarré."
 
-#: ../src/totem-preferences.c:604
+#: ../src/totem-preferences.c:633
 msgid "Select Subtitle Font"
 msgstr "Sélection des polices de sous-titres"
 
 #. FIXME this should be setting an error?
-#: ../src/totem-properties-main.c:112 ../src/totem-properties-view.c:86
+#: ../src/totem-properties-main.c:117 ../src/totem-properties-view.c:86
 #: ../src/totem-properties-view.c:94
 msgid "Audio/Video"
 msgstr "Audio/Vidéo"
@@ -1123,9 +1262,9 @@ msgstr "Une erreur est survenue lors de l'enregistrement de l'image capturée."
 msgid "Screenshot.png"
 msgstr "Capture.png"
 
-#: ../src/totem-scrsaver.c:115
-msgid "Playing a movie with Totem"
-msgstr "Lire un film avec Totem"
+#: ../src/totem-scrsaver.c:116
+msgid "Playing a movie"
+msgstr "Lecture d'un film"
 
 #: ../src/totem-statusbar.c:91
 msgid "Shadow type"
@@ -1170,6 +1309,148 @@ msgstr "Remplissage du tampon"
 msgid "%d %%"
 msgstr "%d %%"
 
+#: ../src/totem-subtitle-encoding.c:158
+msgid "Current Locale"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:161 ../src/totem-subtitle-encoding.c:163
+#: ../src/totem-subtitle-encoding.c:165 ../src/totem-subtitle-encoding.c:167
+msgid "Arabic"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:170
+msgid "Armenian"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:173 ../src/totem-subtitle-encoding.c:175
+#: ../src/totem-subtitle-encoding.c:177
+msgid "Baltic"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:180
+msgid "Celtic"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:183 ../src/totem-subtitle-encoding.c:185
+#: ../src/totem-subtitle-encoding.c:187 ../src/totem-subtitle-encoding.c:189
+msgid "Central European"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:192 ../src/totem-subtitle-encoding.c:194
+#: ../src/totem-subtitle-encoding.c:196 ../src/totem-subtitle-encoding.c:198
+msgid "Chinese Simplified"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:201 ../src/totem-subtitle-encoding.c:203
+#: ../src/totem-subtitle-encoding.c:205
+msgid "Chinese Traditional"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:208
+msgid "Croatian"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:211 ../src/totem-subtitle-encoding.c:213
+#: ../src/totem-subtitle-encoding.c:215 ../src/totem-subtitle-encoding.c:217
+#: ../src/totem-subtitle-encoding.c:219 ../src/totem-subtitle-encoding.c:221
+msgid "Cyrillic"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:224
+msgid "Cyrillic/Russian"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:227 ../src/totem-subtitle-encoding.c:229
+msgid "Cyrillic/Ukrainian"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:232
+msgid "Georgian"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:235 ../src/totem-subtitle-encoding.c:237
+#: ../src/totem-subtitle-encoding.c:239
+msgid "Greek"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:242
+msgid "Gujarati"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:245
+msgid "Gurmukhi"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:248 ../src/totem-subtitle-encoding.c:250
+#: ../src/totem-subtitle-encoding.c:252 ../src/totem-subtitle-encoding.c:254
+msgid "Hebrew"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:257
+msgid "Hebrew Visual"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:260
+msgid "Hindi"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:263
+msgid "Icelandic"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:266 ../src/totem-subtitle-encoding.c:268
+#: ../src/totem-subtitle-encoding.c:270
+msgid "Japanese"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:273 ../src/totem-subtitle-encoding.c:275
+#: ../src/totem-subtitle-encoding.c:277 ../src/totem-subtitle-encoding.c:279
+#, fuzzy
+msgid "Korean"
+msgstr "Aucune raison"
+
+#: ../src/totem-subtitle-encoding.c:282
+msgid "Nordic"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:285
+msgid "Persian"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:288 ../src/totem-subtitle-encoding.c:290
+msgid "Romanian"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:293
+msgid "South European"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:296
+msgid "Thai"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:299 ../src/totem-subtitle-encoding.c:301
+#: ../src/totem-subtitle-encoding.c:303 ../src/totem-subtitle-encoding.c:305
+msgid "Turkish"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:308 ../src/totem-subtitle-encoding.c:310
+#: ../src/totem-subtitle-encoding.c:312 ../src/totem-subtitle-encoding.c:314
+#: ../src/totem-subtitle-encoding.c:316
+msgid "Unicode"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:319 ../src/totem-subtitle-encoding.c:321
+#: ../src/totem-subtitle-encoding.c:323 ../src/totem-subtitle-encoding.c:325
+#: ../src/totem-subtitle-encoding.c:327
+msgid "Western"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:330 ../src/totem-subtitle-encoding.c:332
+#: ../src/totem-subtitle-encoding.c:334
+msgid "Vietnamese"
+msgstr ""
+
 #: ../src/totem-uri.c:227
 msgid "All files"
 msgstr "Tous les fichiers"
@@ -1194,26 +1475,21 @@ msgstr "Suspendu"
 msgid "Totem could not eject the optical media."
 msgstr "Totem ne peut éjecter le média optique."
 
-#: ../src/totem.c:338 ../src/totem.c:367 ../src/totem.c:813 ../src/totem.c:924
-#, c-format
-msgid "Totem could not play '%s'."
-msgstr "Totem n'a pas pu lire « %s »."
-
 #: ../src/totem.c:394
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
 "appropriate plugins to handle it."
 msgstr ""
-"Totem ne peut pas lire ce type de média (%s) car vous n'avez pas le greffon "
-"correspondant."
+"Totem ne peut pas lire ce type de média (%s) car vous n'avez pas le ou les "
+"greffons appropriés."
 
 #: ../src/totem.c:395
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
 msgstr ""
-"Veuillez installer les greffons nécessaire et redémarrez Totem pour lire ce "
+"Veuillez installer les greffons nécessaires et redémarrez Totem pour lire ce "
 "média."
 
 #: ../src/totem.c:403
@@ -1222,7 +1498,8 @@ msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
 "it."
 msgstr ""
-"Totem n'a pas pu lire ce média (%s) bien qu'un greffon le supportant existe."
+"Totem n'a pas pu lire ce média (%s) bien qu'un greffon le supportant soit "
+"installé."
 
 #: ../src/totem.c:404
 msgid ""
@@ -1236,117 +1513,101 @@ msgstr ""
 msgid "Totem was not able to play this disc."
 msgstr "Totem n'a pas été capable de lire ce disque."
 
-#: ../src/totem.c:433 ../src/totem.c:3365
-msgid "No reason."
-msgstr "Aucune raison."
-
 #: ../src/totem.c:699
 msgid "No File"
 msgstr "Aucun fichier"
 
-#: ../src/totem.c:819
+#: ../src/totem.c:817
 msgid "No error message"
 msgstr "Aucun message d'erreur"
 
-#: ../src/totem.c:1277 ../src/totem.c:1279
+#: ../src/totem.c:1279 ../src/totem.c:1281
 msgid "An error occurred"
 msgstr "Une erreur est survenue"
 
-#: ../src/totem.c:1650
+#: ../src/totem.c:1652
 msgid "Open Location..."
 msgstr "Ouvrir un emplacement..."
 
-#: ../src/totem.c:1919
+#: ../src/totem.c:1925
 msgid "Totem could not display the help contents."
 msgstr "Totem ne peut afficher le contenu de l'aide."
 
-#: ../src/totem.c:1957
-#, c-format
-msgid "Movie Player using %s"
+#: ../src/totem.c:1958
+msgid "GTK+"
+msgstr ""
+
+#: ../src/totem.c:1960
+msgid "GNOME"
+msgstr ""
+
+#. This lists the back-end and front-end types and versions, such as
+#. * Movie Player using GStreamer 0.10.1 and GNOME
+#: ../src/totem.c:1966
+#, fuzzy, c-format
+msgid "Movie Player using %s and %s"
 msgstr "Lecteur vidéo utilisant %s"
 
-#: ../src/totem.c:1961
-msgid "Totem"
-msgstr "Totem"
-
-#: ../src/totem.c:1963 ../src/vanity.c:261
-msgid "Copyright © 2002-2005 Bastien Nocera"
-msgstr "Copyright © 2002-2005 Bastien Nocera"
-
-#: ../src/totem.c:1968 ../src/vanity.c:266
-msgid "translator-credits"
-msgstr ""
-"Christophe Fergeau <teuf@users.sourceforge.net>\n"
-"Sébastien Oustric <sebastien.oustric@laposte.net>\n"
-"Baptiste Mille-Mathias <bmm80@ifrance.com>\n"
-"Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
-"Stéphane Raimbault <stephane.raimbault@free.fr>\n"
-"Laurent Richard <laurent.richard@ael.be>"
-
-#: ../src/totem.c:2001 ../src/totem.c:2009 ../src/vanity.c:299
-#: ../src/vanity.c:307
+#: ../src/totem.c:2009 ../src/totem.c:2017 ../src/vanity.c:300
+#: ../src/vanity.c:308
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem ne peut pas capturer une image de ce film."
 
-#: ../src/totem.c:2009 ../src/vanity.c:307
+#: ../src/totem.c:2017 ../src/vanity.c:308
 msgid "This is not supposed to happen; please file a bug report."
 msgstr ""
 "Ce problème n'est pas censé de produire, veuillez remplir un rapport de "
 "bogue."
 
-#: ../src/totem.c:2036
-msgid "Totem couldn't show the movie properties window."
-msgstr "Totem n'a pas pu afficher la fenêtre de propriétés du film."
-
-#: ../src/totem.c:2036
-msgid "Make sure that Totem is correctly installed."
-msgstr "Veuillez vérifier que Totem est correctement installé."
-
-#: ../src/totem.c:2122
+#: ../src/totem.c:2090
 #, c-format
 msgid "Totem could not seek in '%s'."
-msgstr "Totem n'a pas pu lire « %s » :"
+msgstr "Totem n'a pas pu lire « %s »."
 
-#: ../src/totem.c:3365
+#: ../src/totem.c:3372
 msgid "Totem could not startup."
 msgstr "Totem n'a pas pu démarrer."
 
-#: ../src/totem.c:3507
+#: ../src/totem.c:3514
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Impossible d'initialiser le support des bibliothèques thread-safe ."
 
-#: ../src/totem.c:3507
+#: ../src/totem.c:3514
 msgid "Verify your system installation. Totem will now exit."
 msgstr ""
 "Vérifiez l'installation de votre système. Totem va maintenant s'arrêter."
 
-#: ../src/totem.c:3530
+#: ../src/totem.c:3538
 msgid "Totem could not initialize the configuration engine."
 msgstr "Impossible d'initialiser le moteur de configuration."
 
-#: ../src/totem.c:3530
+#: ../src/totem.c:3538
 msgid "Make sure that GNOME is properly installed."
 msgstr "Vérifiez que GNOME est correctement installé."
 
 #. Main window
-#: ../src/totem.c:3558
+#: ../src/totem.c:3566
 msgid "main window"
-msgstr "fenêtre principal"
+msgstr "fenêtre principale"
 
-#: ../src/totem.c:3563
+#: ../src/totem.c:3571
 msgid "video popup menu"
 msgstr "menu popup vidéo"
 
-#: ../src/vanity.c:75
+#: ../src/vanity.c:76
 msgid "Debug mode on"
 msgstr "Mode debogage activé"
 
-#: ../src/vanity.c:255
+#: ../src/vanity.c:256
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "Utilitaire pour webcam utilisant %s"
 
-#: ../src/vanity.c:550
+#: ../src/vanity.c:262
+msgid "Copyright © 2002-2005 Bastien Nocera"
+msgstr "Copyright © 2002-2005 Bastien Nocera"
+
+#: ../src/vanity.c:551
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1355,11 +1616,11 @@ msgstr ""
 "Impossible de démarrer Vanity :\n"
 "%s"
 
-#: ../src/vanity.c:551
+#: ../src/vanity.c:552
 msgid "No reason"
 msgstr "Aucune raison"
 
-#: ../src/vanity.c:589
+#: ../src/vanity.c:590
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1368,7 +1629,7 @@ msgstr ""
 "Vanity n'a pas pu accéder à la webcam.\n"
 "Raison : %s"
 
-#: ../src/vanity.c:605
+#: ../src/vanity.c:606
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1377,19 +1638,19 @@ msgstr ""
 "Vanity n'a pas pu lire la vidéo depuis la webcam.\n"
 "Raison : %s"
 
-#: ../src/vanity.c:641
+#: ../src/vanity.c:642
 msgid "Vanity Webcam Utility"
 msgstr "Utilitaire pour webcam Vanity"
 
-#: ../src/vanity.c:646
+#: ../src/vanity.c:647
 msgid ""
 "Could not initialize the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
 msgstr ""
 "Impossible d'initialiser le support des bibliothèques thread-safe.\n"
-"Vérifier l'installation de votre système. Vanity va maintenant s'arrêter."
+"Vérifiez l'installation de votre système. Vanity va maintenant s'arrêter."
 
-#: ../src/vanity.c:671
+#: ../src/vanity.c:673
 #, c-format
 msgid ""
 "Vanity could not initialize the \n"
@@ -1400,42 +1661,33 @@ msgstr ""
 "moteur de configuration :\n"
 "%s"
 
-#: ../src/vanity.c:691 ../src/vanity.c:706
+#: ../src/vanity.c:693 ../src/vanity.c:708
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
 msgstr ""
 "Impossible de charger l'interface principale (vanity.glade).\n"
-"Vérifier que Vanity est correctement installé."
+"Vérifiez que Vanity est correctement installé."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:67
-#: ../src/backend/bacon-video-widget-gst.c:67
-msgid "Totem Video Window"
-msgstr "Fenêtre vidéo de Totem"
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2059
-#: ../src/backend/bacon-video-widget-gst.c:3529
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2069
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
 msgstr ""
 "Impossible de trouver la sortie audio sélectionnée. Sélectionnez une autre "
-"sortie audio dans le Sélecteur Système Multimédia"
+"sortie audio dans le Sélecteur de systèmes multimédia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2064
-#: ../src/backend/bacon-video-widget-gst.c:1951
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2074
 msgid "Location not found."
 msgstr "Impossible d'accéder à l'emplacement."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2068
-#: ../src/backend/bacon-video-widget-gst.c:1954
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2078
 msgid "Could not open location; You may not have permission to open the file."
 msgstr ""
 "Impossible d'ouvrir l'emplacement ; Vous n'avez peut-être pas la permission "
 "d'ouvrir le fichier."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2079
-#: ../src/backend/bacon-video-widget-gst.c:3480
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2089
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1443,48 +1695,43 @@ msgid ""
 msgstr ""
 "La sortie vidéo est utilisée par une autre application. Pour résoudre ce "
 "problème, vous pouvez fermer les autres applications vidéo ou bien "
-"sélectionner une autre sortie vidéo dans le Sélecteur Système Multimédia."
+"sélectionner une autre sortie vidéo dans le Sélecteur de systèmes multimédia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2085
-#: ../src/backend/bacon-video-widget-gst.c:3523
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2095
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
 "using a sound server."
 msgstr ""
 "La sortie audio est utilisée par une autre application. Sélectionnez une "
-"autre sortie audio dans le Sélecteur Système Multimédia ou considérez la "
-"possibilité d'utiliser un serveur audio."
+"autre sortie audio dans le Sélecteur de systèmes multimédia ou envisagez "
+"l'utilisation d'un serveur audio."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2100
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2110
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "Impossible de lire ce fichier au travers du réseau. Veuillez essayer de le "
 "télécharger sur le disque."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2178
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2188
 msgid "Media file could not be played."
 msgstr "Le fichier vidéo ne peut être lu."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2260
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2311
-#: ../src/backend/bacon-video-widget-gst.c:1886
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2270
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2321
 msgid "Failed to retrieve working directory"
 msgstr "Échec d'accès au dossier courant"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3771
-#: ../src/backend/bacon-video-widget-gst.c:3191
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3808
 msgid "Too old version of GStreamer installed."
 msgstr "La version de GStreamer installée est trop ancienne."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3778
-#: ../src/backend/bacon-video-widget-gst.c:3199
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3815
 msgid "Media contains no supported video streams."
-msgstr "Le support ne contient pas de flux vidéos supportés."
+msgstr "Le support ne contient pas de flux vidéo supporté."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4123
-#: ../src/backend/bacon-video-widget-gst.c:3384
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4160
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1492,30 +1739,27 @@ msgstr ""
 "Échec à la création d'un objet de lecture GStreamer. Vérifiez votre "
 "installation de GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4238
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4322
-#: ../src/backend/bacon-video-widget-gst.c:3491
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4275
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4359
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
 msgstr ""
 "Échec à l'ouverture de la sortie vidéo, elle est certainement non "
-"disponible. Sélectionnez une autre sortie vidéo dans le Sélecteur Système "
-"Multimédia."
+"disponible. Sélectionnez une autre sortie vidéo dans le Sélecteur de "
+"systèmes multimédia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4247
-#: ../src/backend/bacon-video-widget-gst.c:3495
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4284
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
 "Selector."
 msgstr ""
 "Impossible de trouver la sortie vidéo. Vous pourriez avoir besoin "
-"d'installer des greffons GStreamer additionnels ou sélectionner une autre "
-"sortie vidéo dans le Sélecteur Système Multimédia"
+"d'installer des greffons GStreamer additionnels ou de sélectionner une autre "
+"sortie vidéo dans le Sélecteur de systèmes multimédia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4266
-#: ../src/backend/bacon-video-widget-gst.c:3540
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4303
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1523,44 +1767,29 @@ msgid ""
 msgstr ""
 "Échec à l'ouverture de la sortie audio. Vous ne disposez pas des permissions "
 "pour accéder au périphérique audio ou bien le serveur audio est arrêté. "
-"Sélectionnez une autre sortie audio dans le Sélecteur Système Multimédia."
+"Sélectionnez une autre sortie audio dans le Sélecteur de systèmes multimédia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4276
-#: ../src/backend/bacon-video-widget-gst.c:3544
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4313
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
 "Selector."
 msgstr ""
 "Impossible de trouver la sortie audio. Vous pourriez avoir besoin "
-"d'installer des greffons GStreamer additionnels ou sélectionner une autre "
-"sortie audio dans le Sélecteur Système Multimédia"
+"d'installer des greffons GStreamer additionnels ou de sélectionner une autre "
+"sortie audio dans le Sélecteur de systèmes multimédia."
 
-#: ../src/backend/bacon-video-widget-gst.c:1975
-msgid "Failed to open media file; unknown error"
-msgstr ""
-"L'ouverture du fichier média a échoué ; une erreur inconnue est survenue"
-
-#: ../src/backend/bacon-video-widget-gst.c:2027
-#, c-format
-msgid "Failed to play: %s"
-msgstr "La lecture a échoué : %s"
-
-#: ../src/backend/bacon-video-widget-gst.c:2029
-msgid "unknown error"
-msgstr "Erreur inconnue"
-
-#: ../src/backend/bacon-video-widget-xine.c:688
+#: ../src/backend/bacon-video-widget-xine.c:687
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
 "Check that the device is not busy."
 msgstr ""
 "Impossible de charger le pilote audio « %s »\n"
-"Vérifier que le périphérique n'est pas occupé."
+"Vérifiez que le périphérique n'est pas occupé."
 
-#: ../src/backend/bacon-video-widget-xine.c:1148
-#: ../src/backend/bacon-video-widget-xine.c:1732
+#: ../src/backend/bacon-video-widget-xine.c:1164
+#: ../src/backend/bacon-video-widget-xine.c:1757
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -1568,31 +1797,31 @@ msgstr ""
 "Aucune sortie vidéo n'est disponible. Veuillez vérifier que le programme est "
 "correctement installé."
 
-#: ../src/backend/bacon-video-widget-xine.c:1271
+#: ../src/backend/bacon-video-widget-xine.c:1291
 msgid "The server you are trying to connect to is not known."
 msgstr "Le serveur auquel vous essayez de vous connecter n'est pas connu."
 
-#: ../src/backend/bacon-video-widget-xine.c:1275
+#: ../src/backend/bacon-video-widget-xine.c:1295
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr ""
 "Le nom du périphérique que vous avez spécifié (%s) ne semble pas être valide."
 
-#: ../src/backend/bacon-video-widget-xine.c:1279
+#: ../src/backend/bacon-video-widget-xine.c:1299
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "Le serveur auquel vous essayez de vous connectez (%s) est injoignable."
 
-#: ../src/backend/bacon-video-widget-xine.c:1283
+#: ../src/backend/bacon-video-widget-xine.c:1303
 msgid "The connection to this server was refused."
 msgstr "La connexion vers ce serveur a été refusée."
 
-#: ../src/backend/bacon-video-widget-xine.c:1287
+#: ../src/backend/bacon-video-widget-xine.c:1307
 msgid "The specified movie could not be found."
 msgstr "Le film spécifié n'a pas été trouvé."
 
-#: ../src/backend/bacon-video-widget-xine.c:1293
-#: ../src/backend/bacon-video-widget-xine.c:1311
+#: ../src/backend/bacon-video-widget-xine.c:1313
+#: ../src/backend/bacon-video-widget-xine.c:1331
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -1600,73 +1829,73 @@ msgstr ""
 "La source semble être chiffrée et ne peut être lue. Êtes-vous en train "
 "d'essayer de lire un DVD chiffré sans libdvdcss ?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1296
+#: ../src/backend/bacon-video-widget-xine.c:1316
 msgid "The movie could not be read."
 msgstr "Le film ne peut être lu."
 
-#: ../src/backend/bacon-video-widget-xine.c:1305
+#: ../src/backend/bacon-video-widget-xine.c:1325
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr ""
 "Un problème est survenu lors du chargement d'une bibliothèque ou d'un "
 "décodeur (%s)."
 
-#: ../src/backend/bacon-video-widget-xine.c:1314
+#: ../src/backend/bacon-video-widget-xine.c:1334
 msgid "This file is encrypted and cannot be played back."
 msgstr "Ce fichier est chiffré, la lecture ne peut continuer."
 
-#: ../src/backend/bacon-video-widget-xine.c:1319
+#: ../src/backend/bacon-video-widget-xine.c:1339
 msgid "For security reasons, this movie can not be played back."
 msgstr "Pour des raisons de sécurité, ce film ne peut être lu."
 
-#: ../src/backend/bacon-video-widget-xine.c:1324
+#: ../src/backend/bacon-video-widget-xine.c:1344
 msgid "The audio device is busy. Is another application using it?"
 msgstr ""
 "Le périphérique audio est occupé. Est-ce qu'une autre application l'utilise "
 "actuellement ?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1329
+#: ../src/backend/bacon-video-widget-xine.c:1349
 msgid "You are not allowed to open this file."
 msgstr "Vous n'êtes pas autorisé à ouvrir ce fichier."
 
-#: ../src/backend/bacon-video-widget-xine.c:1331
+#: ../src/backend/bacon-video-widget-xine.c:1351
 msgid "The server refused access to this file or stream."
 msgstr "Le serveur a refusé l'accès à ce fichier ou flux."
 
-#: ../src/backend/bacon-video-widget-xine.c:1340
+#: ../src/backend/bacon-video-widget-xine.c:1360
 msgid "The file you tried to play is an empty file."
 msgstr "Le fichier que vous essayez de lire est vide."
 
-#: ../src/backend/bacon-video-widget-xine.c:1534
+#: ../src/backend/bacon-video-widget-xine.c:1554
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "Il n'y a aucun greffon d'entrée pour gérer l'emplacement de ce film"
 
-#: ../src/backend/bacon-video-widget-xine.c:1538
+#: ../src/backend/bacon-video-widget-xine.c:1558
 msgid "There is no plugin to handle this movie."
-msgstr "Il n'y a aucun greffon pour lire ce film"
+msgstr "Il n'y a aucun greffon pour lire ce film."
 
-#: ../src/backend/bacon-video-widget-xine.c:1542
+#: ../src/backend/bacon-video-widget-xine.c:1562
 msgid "This movie is broken and can not be played further."
-msgstr "Ce film est corrompu, la lecture ne peut continuer"
+msgstr "Ce film est corrompu, la lecture ne peut continuer."
 
-#: ../src/backend/bacon-video-widget-xine.c:1546
+#: ../src/backend/bacon-video-widget-xine.c:1566
 msgid "This location is not a valid one."
-msgstr "Cet emplacement n'est pas valide"
+msgstr "Cet emplacement n'est pas valide."
 
-#: ../src/backend/bacon-video-widget-xine.c:1550
+#: ../src/backend/bacon-video-widget-xine.c:1570
 msgid "This movie could not be opened."
 msgstr "Ce film ne peut pas être ouvert."
 
-#: ../src/backend/bacon-video-widget-xine.c:1554
+#: ../src/backend/bacon-video-widget-xine.c:1574
 msgid "Generic Error."
 msgstr "Erreur générique."
 
-#: ../src/backend/bacon-video-widget-xine.c:2099
+#: ../src/backend/bacon-video-widget-xine.c:2183
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr ""
 "Ce film est une image fixe. Vous pouvez l'ouvrir avec un visionneur d'image."
 
-#: ../src/backend/bacon-video-widget-xine.c:2123
+#: ../src/backend/bacon-video-widget-xine.c:2207
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1676,7 +1905,7 @@ msgstr ""
 "des greffons supplémentaires pour être capable de lire certains types de "
 "films"
 
-#: ../src/backend/bacon-video-widget-xine.c:2127
+#: ../src/backend/bacon-video-widget-xine.c:2211
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1686,45 +1915,71 @@ msgstr ""
 "des greffons supplémentaires pour être capable de lire certains types de "
 "films"
 
-#: ../src/backend/bacon-video-widget-xine.c:2143
+#: ../src/backend/bacon-video-widget-xine.c:2227
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr ""
 "C'est un fichier audio uniquement, et aucune sortie audio n'est disponible."
 
-#: ../src/backend/bacon-video-widget-xine.c:3577
-#: ../src/backend/bacon-video-widget-xine.c:3624
-#: ../src/backend/bacon-video-widget-xine.c:3646
+#: ../src/backend/bacon-video-widget-xine.c:3642
+#: ../src/backend/bacon-video-widget-xine.c:3689
+#: ../src/backend/bacon-video-widget-xine.c:3711
 #, c-format
 msgid "Language %d"
 msgstr "Langue %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3683
+#: ../src/backend/bacon-video-widget-xine.c:3748
 msgid "No video to capture."
-msgstr "Aucune vidéo à capturer"
+msgstr "Aucune vidéo à capturer."
 
-#: ../src/backend/bacon-video-widget-xine.c:3691
+#: ../src/backend/bacon-video-widget-xine.c:3756
 msgid "Video codec is not handled."
-msgstr "Le codec vidéo n'est pas supporté"
+msgstr "Le codec vidéo n'est pas supporté."
 
-#: ../src/backend/bacon-video-widget-xine.c:3699
+#: ../src/backend/bacon-video-widget-xine.c:3764
 msgid "Movie is not playing."
 msgstr "Le film n'est pas en lecture."
 
-#: ../src/backend/video-utils.c:272
+#. hour:minutes:seconds
+#. Translators: This is a time format, like "9:05:02" for 9
+#. * hours, 5 minutes, and 2 seconds. You may change ":" to
+#. * the separator that your locale uses or use "%Id" instead
+#. * of "%d" if your locale uses localized digits. Do not
+#. * translate the "long time format|" part. Remove it from
+#. * the translation.
+#.
+#: ../src/backend/video-utils.c:223
+#, c-format
+msgid "long time format|%d:%02d:%02d"
+msgstr ""
+
+#. minutes:seconds
+#. Translators: This is a time format, like "5:02" for 5
+#. * minutes and 2 seconds. You may change ":" to the
+#. * separator that your locale uses or use "%Id" instead of
+#. * "%d" if your locale uses localized digits. Do not
+#. * translate the "short time format|" part. Remove it from
+#. * the translation.
+#.
+#: ../src/backend/video-utils.c:233
+#, c-format
+msgid "short time format|%d:%02d"
+msgstr ""
+
+#: ../src/backend/video-utils.c:252
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d heure"
 msgstr[1] "%d heures"
 
-#: ../src/backend/video-utils.c:274
+#: ../src/backend/video-utils.c:254
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minute"
 msgstr[1] "%d minutes"
 
-#: ../src/backend/video-utils.c:277
+#: ../src/backend/video-utils.c:257
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1732,127 +1987,120 @@ msgstr[0] "%d seconde"
 msgstr[1] "%d secondes"
 
 #. hour:minutes:seconds
-#: ../src/backend/video-utils.c:283
+#: ../src/backend/video-utils.c:263
 #, c-format
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. minutes:seconds
-#: ../src/backend/video-utils.c:286
+#: ../src/backend/video-utils.c:266
 #, c-format
 msgid "%s %s"
 msgstr "%s %s"
 
 #. seconds
-#: ../src/backend/video-utils.c:289
+#: ../src/backend/video-utils.c:269
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: ../src/plparse/totem-disc.c:114
+#: ../src/plparse/totem-disc.c:117
 #, c-format
 msgid "Failed to find real device node for %s: %s"
 msgstr "Impossible de trouver le véritable noeud de périphérique pour %s : %s"
 
-#: ../src/plparse/totem-disc.c:125
+#: ../src/plparse/totem-disc.c:128
 #, c-format
 msgid "Failed to read symbolic link %s: %s"
 msgstr "Impossible de lire le lien symbolique %s : %s"
 
-#: ../src/plparse/totem-disc.c:276
-#, c-format
-msgid "Failed to find mountpoint for device %s in /etc/fstab"
-msgstr ""
-"Impossible de trouver le point de montage du périphérique %s dans /etc/fstab"
+#: ../src/plparse/totem-disc.c:332
+#, fuzzy, c-format
+msgid "Failed to find mountpoint for device %s"
+msgstr "Impossible de trouver le point de montage pour %s"
 
-#: ../src/plparse/totem-disc.c:314
+#: ../src/plparse/totem-disc.c:341
+msgid "Could not connect to the HAL daemon"
+msgstr ""
+
+#: ../src/plparse/totem-disc.c:458
 msgid "Please check that a disc is present in the drive."
 msgstr "Veuillez vérifier qu'un disque est présent dans le lecteur."
 
-#: ../src/plparse/totem-disc.c:317
-#, c-format
-msgid "Failed to open device %s for reading: %s"
-msgstr "Impossible d'ouvrir le périphérique %s en lecture : %s"
-
-#: ../src/plparse/totem-disc.c:328
-#, c-format
-msgid "Failed to retrieve capabilities of device %s: %s"
-msgstr "La récupération des capacités du périphérique %s a échoué : %s"
-
-#: ../src/plparse/totem-disc.c:361
-#, c-format
-msgid "Drive status 0x%x (%s) - check disc"
-msgstr "État du lecteur 0x%x (%s) - vérifier le disque"
-
-#: ../src/plparse/totem-disc.c:408
+#: ../src/plparse/totem-disc.c:504
 #, c-format
 msgid "Failed to mount %s"
 msgstr "Impossible de monter %s"
 
-#: ../src/plparse/totem-disc.c:430
+#: ../src/plparse/totem-disc.c:528
 #, c-format
 msgid "Failed to find mountpoint for %s"
 msgstr "Impossible de trouver le point de montage pour %s"
 
-#: ../src/plparse/totem-disc.c:489
-#, c-format
-msgid "Error getting %s disc status: %s"
-msgstr "Erreur lors de l'obtention de l'état du disque %s : %s"
-
-#: ../src/plparse/totem-disc.c:518
-#, c-format
-msgid "Unexpected/unknown cd type 0x%x (%s)"
-msgstr "Type de CD 0x%x (%s) inattendu/inconnu"
-
-#: ../src/plparse/totem-disc.c:727
+#: ../src/plparse/totem-disc.c:806
 msgid "Audio CD"
 msgstr "CD audio"
 
-#: ../src/plparse/totem-disc.c:729
+#: ../src/plparse/totem-disc.c:808
 msgid "Video CD"
 msgstr "Vidéo CD"
 
-#: ../src/plparse/totem-disc.c:731
+#: ../src/plparse/totem-disc.c:810
 msgid "DVD"
 msgstr "DVD"
 
-#: ../src/plparse/totem-pl-parser.c:318
+#: ../src/plparse/totem-pl-parser.c:355
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "Impossible d'écrire l'interpréteur : %s"
 
-#: ../src/plparse/totem-pl-parser.c:426 ../src/plparse/totem-pl-parser.c:567
+#: ../src/plparse/totem-pl-parser.c:463 ../src/plparse/totem-pl-parser.c:604
+#: ../src/plparse/totem-pl-parser.c:704
 #, c-format
 msgid "Couldn't open file '%s': %s"
-msgstr "Impossible d'ouvrir le fichier « %s » : %s"
+msgstr "Impossible d'ouvrir le fichier « %s » : %s"
 
-#~ msgid ""
-#~ "The requested audio output was not found. Please select another audio "
-#~ "output in the Multimedia Systems Selector"
+#~ msgid "_DXR3 TV-out"
+#~ msgstr "Sortie TV _DXR3"
+
+#~ msgid "Totem"
+#~ msgstr "Totem"
+
+#~ msgid "Totem couldn't show the movie properties window."
+#~ msgstr "Totem n'a pas pu afficher la fenêtre de propriétés du film."
+
+#~ msgid "Make sure that Totem is correctly installed."
+#~ msgstr "Veuillez vérifier que Totem est correctement installé."
+
+#~ msgid "Totem Video Window"
+#~ msgstr "Fenêtre vidéo de Totem"
+
+#~ msgid "Failed to open media file; unknown error"
 #~ msgstr ""
-#~ "Impossible de trouver la sortie audio sélectionnée. Sélectionnez une "
-#~ "autre sortie audio dans le Sélecteur Système Multimédia"
+#~ "L'ouverture du fichier média a échoué ; une erreur inconnue est survenue"
 
-#~ msgid ""
-#~ "Could not find the audio output. You may need to install additional "
-#~ "GStreamer plugins, or select another audio output in the Multimedia "
-#~ "Systems Selector"
+#~ msgid "Failed to play: %s"
+#~ msgstr "La lecture a échoué : %s"
+
+#~ msgid "unknown error"
+#~ msgstr "Erreur inconnue"
+
+#~ msgid "Failed to find mountpoint for device %s in /etc/fstab"
 #~ msgstr ""
-#~ "Impossible de trouver la sortie audio. Vous pourriez avoir besoin "
-#~ "d'installer des greffons GStreamer additionnels ou sélectionner une autre "
-#~ "sortie audio dans le Sélecteur Système Multimédia"
+#~ "Impossible de trouver le point de montage du périphérique %s dans /etc/"
+#~ "fstab"
 
-#~ msgid "Select CD"
-#~ msgstr "Sélectionnez un CD"
+#~ msgid "Failed to open device %s for reading: %s"
+#~ msgstr "Impossible d'ouvrir le périphérique %s en lecture : %s"
 
-#~ msgid "Please select the currently playing CD:"
-#~ msgstr "Sélectionnez le CD en cours de lecture :"
+#~ msgid "Failed to retrieve capabilities of device %s: %s"
+#~ msgstr "La récupération des capacités du périphérique %s a échoué : %s"
 
-#~ msgid "Failed to play Audio/Video Disc"
-#~ msgstr "Échec à la lecture du disque audio/vidéo"
+#~ msgid "Drive status 0x%x (%s) - check disc"
+#~ msgstr "État du lecteur 0x%x (%s) - vérifier le disque"
 
-#~ msgid "Reason unknown"
-#~ msgstr "Raison inconnue"
+#~ msgid "Error getting %s disc status: %s"
+#~ msgstr "Erreur lors de l'obtention de l'état du disque %s : %s"
 
-#~ msgid "Unexpected error status %d while mounting %s"
-#~ msgstr "Erreur inattendue d'état %d lors du montage de %s"
+#~ msgid "Unexpected/unknown cd type 0x%x (%s)"
+#~ msgstr "Type de CD 0x%x (%s) inattendu/inconnu"
