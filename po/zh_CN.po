@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-04 06:35+0200\n"
-"PO-Revision-Date: 2006-06-04 13:40+0800\n"
+"POT-Creation-Date: 2006-07-23 09:05+0200\n"
+"PO-Revision-Date: 2006-07-23 15:34+0800\n"
 "Last-Translator: Funda Wang <fundawang@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,10 @@ msgstr "下移"
 msgid "Move Up"
 msgstr "上移"
 
-#: ../data/playlist.glade.h:4 ../src/totem-sidebar.c:131
+#. translators: Playlist is the default saved playlist filename,
+#. * without the suffix
+#: ../data/playlist.glade.h:4 ../src/totem-playlist.c:890
+#: ../src/totem-sidebar.c:117
 msgid "Playlist"
 msgstr "播放列表"
 
@@ -98,11 +101,11 @@ msgstr "音量增加"
 msgid "Volume up"
 msgstr "音量增加"
 
-#: ../data/popup.glade.h:14 ../data/totem.glade.h:135
+#: ../data/popup.glade.h:14 ../data/totem.glade.h:136
 msgid "_Next Chapter/Movie"
 msgstr "下一章/电影(_N)"
 
-#: ../data/popup.glade.h:15 ../data/totem.glade.h:138
+#: ../data/popup.glade.h:15 ../data/totem.glade.h:139
 msgid "_Previous Chapter/Movie"
 msgstr "上一章/电影(_P)"
 
@@ -184,7 +187,7 @@ msgstr "帧速率："
 msgid "N/A"
 msgstr "不可用"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:2057
+#: ../data/properties.glade.h:17 ../src/totem-sidebar.c:120
 msgid "Properties"
 msgstr "属性"
 
@@ -231,7 +234,7 @@ msgstr "将抓图保存到桌面(_D)"
 msgid "Save screenshot to _file:"
 msgstr "抓图保存到文件(_F)："
 
-#: ../data/skip_to.glade.h:2 ../src/totem-skipto.c:144
+#: ../data/skip_to.glade.h:2 ../src/totem-skipto.c:154
 msgid "Skip to"
 msgstr "跳到"
 
@@ -308,12 +311,12 @@ msgid "<b>Networking</b>"
 msgstr "<b>网络</b>"
 
 #: ../data/totem.glade.h:21
-msgid "<b>Subtitles</b>"
-msgstr "<b>字幕</b>"
-
-#: ../data/totem.glade.h:22
 msgid "<b>TV-Out</b>"
 msgstr "<b>电视输出</b>"
+
+#: ../data/totem.glade.h:22
+msgid "<b>Text Subtitles</b>"
+msgstr "<b>字幕</b>"
 
 #: ../data/totem.glade.h:23
 msgid "<b>Visual Effects</b>"
@@ -580,8 +583,8 @@ msgid "Time:"
 msgstr "时间："
 
 #. Title
-#: ../data/totem.glade.h:102 ../src/totem.c:706 ../src/totem.c:3520
-#: ../src/totem.c:3537
+#: ../data/totem.glade.h:102 ../src/totem.c:706 ../src/totem.c:3513
+#: ../src/totem.c:3530
 msgid "Totem Movie Player"
 msgstr "Totem 电影播放机"
 
@@ -682,44 +685,44 @@ msgid "_Eject"
 msgstr "弹出(_E)"
 
 #: ../data/totem.glade.h:128
+msgid "_Encoding:"
+msgstr "编码(_E)："
+
+#: ../data/totem.glade.h:129
 msgid "_Font:"
 msgstr "字体(_F)："
 
-#: ../data/totem.glade.h:129
+#: ../data/totem.glade.h:130
 msgid "_Fullscreen"
 msgstr "全屏(_F)"
 
-#: ../data/totem.glade.h:130
+#: ../data/totem.glade.h:131
 msgid "_Go"
 msgstr "转到(_G)"
 
-#: ../data/totem.glade.h:131
+#: ../data/totem.glade.h:132
 msgid "_Help"
 msgstr "帮助(_H)"
 
-#: ../data/totem.glade.h:132
+#: ../data/totem.glade.h:133
 msgid "_Hue:"
 msgstr "色调(_H)："
 
-#: ../data/totem.glade.h:133
+#: ../data/totem.glade.h:134
 msgid "_Languages"
 msgstr "语言(_L)"
 
-#: ../data/totem.glade.h:134
+#: ../data/totem.glade.h:135
 msgid "_Movie"
 msgstr "电影(_M)"
 
-#: ../data/totem.glade.h:136
+#: ../data/totem.glade.h:137
 msgid "_No TV-out"
 msgstr "无电视输出(_N)"
 
-#: ../data/totem.glade.h:137
+#: ../data/totem.glade.h:138
 msgid "_Open..."
 msgstr "打开(_O)..."
-
-#: ../data/totem.glade.h:139
-msgid "_Properties"
-msgstr "属性(_P)"
 
 #: ../data/totem.glade.h:140
 msgid "_Quit"
@@ -772,78 +775,86 @@ msgid "Enable deinterlacing"
 msgstr "启用逐行扫描"
 
 #: ../data/totem.schemas.in.h:4
+msgid "Encoding charset for subtitle"
+msgstr "字幕的编码字符集"
+
+#: ../data/totem.schemas.in.h:5
 msgid "Height of the video widget"
 msgstr "视频窗口高度"
 
-#: ../data/totem.schemas.in.h:5
+#: ../data/totem.schemas.in.h:6
 msgid "Maximum amount of data to decode ahead of display (in seconds)"
 msgstr "数据解码的超前量最大值(以秒计)"
 
-#: ../data/totem.schemas.in.h:6
+#: ../data/totem.schemas.in.h:7
 msgid "Name of the visual effects plugins"
 msgstr "视觉效果插件名称"
 
-#: ../data/totem.schemas.in.h:7
+#: ../data/totem.schemas.in.h:8
 msgid "Network buffering threshold"
 msgstr "网络缓冲区阀值"
 
-#: ../data/totem.schemas.in.h:8
+#: ../data/totem.schemas.in.h:9
 msgid "Pango font description for subtitle rendering"
 msgstr "字幕渲染所用的 Pango 字体描述"
 
-#: ../data/totem.schemas.in.h:9
+#: ../data/totem.schemas.in.h:10
 msgid "Repeat mode"
 msgstr "重复模式"
 
-#: ../data/totem.schemas.in.h:10
+#: ../data/totem.schemas.in.h:11
 msgid "Resize the canvas automatically on file load"
 msgstr "文件装入后自动更改画布大小"
 
-#: ../data/totem.schemas.in.h:11
+#: ../data/totem.schemas.in.h:12
 msgid "Show visual effects when no video is displayed"
 msgstr "不显示视频时显示视觉效果"
 
-#: ../data/totem.schemas.in.h:12
+#: ../data/totem.schemas.in.h:13
 msgid "Show visual effects when playing an audio only file."
 msgstr "播放纯音频文件时显示视觉效果。"
 
-#: ../data/totem.schemas.in.h:13
+#: ../data/totem.schemas.in.h:14
 msgid "Shuffle mode"
 msgstr "乱序模式"
 
-#: ../data/totem.schemas.in.h:14
+#: ../data/totem.schemas.in.h:15
 msgid "Sound volume"
 msgstr "音量"
 
-#: ../data/totem.schemas.in.h:15
+#: ../data/totem.schemas.in.h:16
 msgid "Sound volume, in percent, between 0 and 100"
 msgstr "音量百分比，在 0 到 100 之间"
 
-#: ../data/totem.schemas.in.h:16
+#: ../data/totem.schemas.in.h:17
+msgid "Subtitle encoding"
+msgstr "字幕编码"
+
+#: ../data/totem.schemas.in.h:18
 msgid "Subtitle font"
 msgstr "字幕字体"
 
-#: ../data/totem.schemas.in.h:17
+#: ../data/totem.schemas.in.h:19
 msgid "The brightness of the video"
 msgstr "视频亮度"
 
-#: ../data/totem.schemas.in.h:18
+#: ../data/totem.schemas.in.h:20
 msgid "The contrast of the video"
 msgstr "视频对比度"
 
-#: ../data/totem.schemas.in.h:19
+#: ../data/totem.schemas.in.h:21
 msgid "The hue of the video"
 msgstr "视频色调"
 
-#: ../data/totem.schemas.in.h:20
+#: ../data/totem.schemas.in.h:22
 msgid "The saturation of the video"
 msgstr "视频饱和度"
 
-#: ../data/totem.schemas.in.h:21
+#: ../data/totem.schemas.in.h:23
 msgid "Type of audio output to use"
 msgstr "使用的音频输出类型"
 
-#: ../data/totem.schemas.in.h:22
+#: ../data/totem.schemas.in.h:24
 msgid ""
 "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
 "\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
@@ -852,23 +863,31 @@ msgstr ""
 "使用的音频输出类型：“0”为立体声，“1”为 4 声道输出，“2”为 5.0 声道输出，“3”为 "
 "5.1 声道输出，“4”为通过 AC3 输出。"
 
-#: ../data/totem.schemas.in.h:23
+#. Translators: This is default subtitle encoding
+#. character set. You can change this to be the most common
+#. encoding for fansub subtitles in your language. File a bug
+#. against Totem, and leave UTF-8 as the default if in doubt.
+#: ../data/totem.schemas.in.h:29
+msgid "UTF-8"
+msgstr "GB18030"
+
+#: ../data/totem.schemas.in.h:30
 msgid "Whether the main window should stay on top"
 msgstr "是否主窗口显示在最前端"
 
-#: ../data/totem.schemas.in.h:24
+#: ../data/totem.schemas.in.h:31
 msgid "Whether the main window should stay on top of the other ones"
 msgstr "是否主窗口显示在别的窗口前面。"
 
-#: ../data/totem.schemas.in.h:25
+#: ../data/totem.schemas.in.h:32
 msgid "Whether the sidebar is shown"
 msgstr "是否显示侧边栏"
 
-#: ../data/totem.schemas.in.h:26
+#: ../data/totem.schemas.in.h:33
 msgid "Whether to enable debug for the playback engine"
 msgstr "是否启用回放引擎的调试功能"
 
-#: ../data/totem.schemas.in.h:27
+#: ../data/totem.schemas.in.h:34
 msgid "Width of the video widget"
 msgstr "视频窗口宽度"
 
@@ -971,12 +990,12 @@ msgstr "打开“%s”"
 msgid "Empty"
 msgstr "空"
 
-#: ../src/totem-interface.c:114
+#: ../src/totem-interface.c:117
 #, c-format
 msgid "Couldn't load the '%s' interface."
 msgstr "无法装入“%s”界面。"
 
-#: ../src/totem-interface.c:116 ../src/totem-interface.c:118
+#: ../src/totem-interface.c:119 ../src/totem-interface.c:121
 msgid "Make sure that Totem is properly installed."
 msgstr "请确保 Totem 已正确安装。"
 
@@ -984,10 +1003,69 @@ msgstr "请确保 Totem 已正确安装。"
 msgid "None"
 msgstr "无"
 
-#: ../src/totem-menu.c:595
+#: ../src/totem-menu.c:605
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "播放碟片“%s”"
+
+#. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+#: ../src/totem-mozilla-viewer.c:186 ../src/totem.c:338 ../src/totem.c:367
+#: ../src/totem.c:811 ../src/totem.c:921
+#, c-format
+msgid "Totem could not play '%s'."
+msgstr "Totem 无法播放“%s”。"
+
+#: ../src/totem-mozilla-viewer.c:325
+#, c-format
+msgid "Movie Player using %s"
+msgstr "使用 %s 的电影播放器"
+
+#: ../src/totem-mozilla-viewer.c:329
+msgid "Totem Mozilla Plugin"
+msgstr "Totem Mozilla 插件"
+
+#: ../src/totem-mozilla-viewer.c:331 ../src/totem.c:1971
+msgid "Copyright © 2002-2006 Bastien Nocera"
+msgstr "版权 (C) 2002-2006 Bastien Nocera"
+
+#: ../src/totem-mozilla-viewer.c:334 ../src/totem.c:1976 ../src/vanity.c:267
+msgid "translator-credits"
+msgstr ""
+"开源软件国际化简体中文组(http://i18n.linux.net.cn)\n"
+"Funda Wang <fundawang@linux.net.cn>\n"
+"jan2xue <75jan@163.com>"
+
+#: ../src/totem-mozilla-viewer.c:422
+msgid "Failed to start stand-alone movie player"
+msgstr "启动独立电影播放器失败"
+
+#: ../src/totem-mozilla-viewer.c:423
+msgid "Unknown reason"
+msgstr "未知原因"
+
+#: ../src/totem-mozilla-viewer.c:523
+msgid "Plugin"
+msgstr "插件"
+
+#: ../src/totem-mozilla-viewer.c:526
+msgid "Menu"
+msgstr "菜单"
+
+#: ../src/totem-mozilla-viewer.c:543
+msgid "The Totem plugin could not startup."
+msgstr "Totem 插件无法启动。"
+
+#: ../src/totem-mozilla-viewer.c:543 ../src/totem.c:433 ../src/totem.c:3372
+msgid "No reason."
+msgstr "无原因。"
+
+#: ../src/totem-mozilla-viewer.c:654
+msgid "Could not initialise the thread-safe libraries."
+msgstr "无法初始化线程安全库。"
+
+#: ../src/totem-mozilla-viewer.c:654
+msgid "Verify your system installation. The Totem plugin will now exit."
+msgstr "请检查您的系统安装。Totem 插件现将退出。"
 
 #: ../src/totem-options.c:36 ../src/vanity.c:75
 msgid "Backend options"
@@ -1054,38 +1132,38 @@ msgstr "选择播放列表格式："
 msgid "By extension"
 msgstr "按扩展名"
 
-#: ../src/totem-playlist.c:879
+#: ../src/totem-playlist.c:880
 msgid "Save Playlist"
 msgstr "保存播放列表"
 
-#: ../src/totem-playlist.c:928
+#: ../src/totem-playlist.c:934
 msgid "Overwrite file?"
 msgstr "覆盖文件吗？"
 
-#: ../src/totem-playlist.c:930
+#: ../src/totem-playlist.c:936
 #, c-format
 msgid ""
 "A file named '%s' already exists.  Are you sure you want to overwrite it?"
 msgstr "名为“%s”的文件已经存在。您是否想要覆盖该文件？"
 
-#: ../src/totem-playlist.c:1474
+#: ../src/totem-playlist.c:1480
 msgid "playlist"
 msgstr "播放列表"
 
-#: ../src/totem-playlist.c:1607
+#: ../src/totem-playlist.c:1613
 msgid "Playlist error"
 msgstr "播放列表错误"
 
-#: ../src/totem-playlist.c:1607
+#: ../src/totem-playlist.c:1613
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "无法分析播放列表“%s”，该文件可能已损坏。"
 
-#: ../src/totem-preferences.c:84
+#: ../src/totem-preferences.c:85
 msgid "Enable visual effects?"
 msgstr "启用视觉效果吗？"
 
-#: ../src/totem-preferences.c:86
+#: ../src/totem-preferences.c:87
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1093,28 +1171,28 @@ msgstr ""
 "似乎您正从远程运行 Totem。\n"
 "您确实想要启用视觉效果吗？"
 
-#: ../src/totem-preferences.c:139
+#: ../src/totem-preferences.c:140
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted."
 msgstr "对此设置的更改将会在下部电影或 Totem 重新启动后生效。"
 
-#: ../src/totem-preferences.c:183
+#: ../src/totem-preferences.c:184
 msgid ""
 "Switching on or off this type of TV-Out requires a restart to take effect."
 msgstr "打开或关闭此类型的电影输出需要重新启动才能生效。"
 
-#: ../src/totem-preferences.c:295
+#: ../src/totem-preferences.c:296
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr "更改视觉效果类型需要重新启动才能生效。"
 
-#: ../src/totem-preferences.c:379
+#: ../src/totem-preferences.c:380
 msgid ""
 "The change of audio output type will only take effect when Totem is "
 "restarted."
 msgstr "对此设置的更改将会在下部电影或 Totem 重新启动后生效。"
 
-#: ../src/totem-preferences.c:606
+#: ../src/totem-preferences.c:633
 msgid "Select Subtitle Font"
 msgstr "选择字幕字体"
 
@@ -1197,6 +1275,147 @@ msgstr "正在缓冲"
 msgid "%d %%"
 msgstr "%d %%"
 
+#: ../src/totem-subtitle-encoding.c:158
+msgid "Current Locale"
+msgstr "当前语系"
+
+#: ../src/totem-subtitle-encoding.c:161 ../src/totem-subtitle-encoding.c:163
+#: ../src/totem-subtitle-encoding.c:165 ../src/totem-subtitle-encoding.c:167
+msgid "Arabic"
+msgstr "阿拉伯语"
+
+#: ../src/totem-subtitle-encoding.c:170
+msgid "Armenian"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:173 ../src/totem-subtitle-encoding.c:175
+#: ../src/totem-subtitle-encoding.c:177
+msgid "Baltic"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:180
+msgid "Celtic"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:183 ../src/totem-subtitle-encoding.c:185
+#: ../src/totem-subtitle-encoding.c:187 ../src/totem-subtitle-encoding.c:189
+msgid "Central European"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:192 ../src/totem-subtitle-encoding.c:194
+#: ../src/totem-subtitle-encoding.c:196 ../src/totem-subtitle-encoding.c:198
+msgid "Chinese Simplified"
+msgstr "简体中文"
+
+#: ../src/totem-subtitle-encoding.c:201 ../src/totem-subtitle-encoding.c:203
+#: ../src/totem-subtitle-encoding.c:205
+msgid "Chinese Traditional"
+msgstr "繁体中文"
+
+#: ../src/totem-subtitle-encoding.c:208
+msgid "Croatian"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:211 ../src/totem-subtitle-encoding.c:213
+#: ../src/totem-subtitle-encoding.c:215 ../src/totem-subtitle-encoding.c:217
+#: ../src/totem-subtitle-encoding.c:219 ../src/totem-subtitle-encoding.c:221
+msgid "Cyrillic"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:224
+msgid "Cyrillic/Russian"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:227 ../src/totem-subtitle-encoding.c:229
+msgid "Cyrillic/Ukrainian"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:232
+msgid "Georgian"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:235 ../src/totem-subtitle-encoding.c:237
+#: ../src/totem-subtitle-encoding.c:239
+msgid "Greek"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:242
+msgid "Gujarati"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:245
+msgid "Gurmukhi"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:248 ../src/totem-subtitle-encoding.c:250
+#: ../src/totem-subtitle-encoding.c:252 ../src/totem-subtitle-encoding.c:254
+msgid "Hebrew"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:257
+msgid "Hebrew Visual"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:260
+msgid "Hindi"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:263
+msgid "Icelandic"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:266 ../src/totem-subtitle-encoding.c:268
+#: ../src/totem-subtitle-encoding.c:270
+msgid "Japanese"
+msgstr "日语"
+
+#: ../src/totem-subtitle-encoding.c:273 ../src/totem-subtitle-encoding.c:275
+#: ../src/totem-subtitle-encoding.c:277 ../src/totem-subtitle-encoding.c:279
+msgid "Korean"
+msgstr "韩语"
+
+#: ../src/totem-subtitle-encoding.c:282
+msgid "Nordic"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:285
+msgid "Persian"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:288 ../src/totem-subtitle-encoding.c:290
+msgid "Romanian"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:293
+msgid "South European"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:296
+msgid "Thai"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:299 ../src/totem-subtitle-encoding.c:301
+#: ../src/totem-subtitle-encoding.c:303 ../src/totem-subtitle-encoding.c:305
+msgid "Turkish"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:308 ../src/totem-subtitle-encoding.c:310
+#: ../src/totem-subtitle-encoding.c:312 ../src/totem-subtitle-encoding.c:314
+#: ../src/totem-subtitle-encoding.c:316
+msgid "Unicode"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:319 ../src/totem-subtitle-encoding.c:321
+#: ../src/totem-subtitle-encoding.c:323 ../src/totem-subtitle-encoding.c:325
+#: ../src/totem-subtitle-encoding.c:327
+msgid "Western"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:330 ../src/totem-subtitle-encoding.c:332
+#: ../src/totem-subtitle-encoding.c:334
+msgid "Vietnamese"
+msgstr "越南语"
+
 #: ../src/totem-uri.c:227
 msgid "All files"
 msgstr "全部文件"
@@ -1220,11 +1439,6 @@ msgstr "已暂停"
 #: ../src/totem.c:310
 msgid "Totem could not eject the optical media."
 msgstr "Totem 无法弹出光存储介质。"
-
-#: ../src/totem.c:338 ../src/totem.c:367 ../src/totem.c:813 ../src/totem.c:924
-#, c-format
-msgid "Totem could not play '%s'."
-msgstr "Totem 无法播放“%s”。"
 
 #: ../src/totem.c:394
 #, c-format
@@ -1256,104 +1470,81 @@ msgstr "您可能想要检查盘片是否位于驱动器中，以及配置是否
 msgid "Totem was not able to play this disc."
 msgstr "Totem 无法播放此碟片。"
 
-#: ../src/totem.c:433 ../src/totem.c:3379
-msgid "No reason."
-msgstr "无原因。"
-
 #: ../src/totem.c:699
 msgid "No File"
 msgstr "无文件"
 
-#: ../src/totem.c:819
+#: ../src/totem.c:817
 msgid "No error message"
 msgstr "无错误消息"
 
-#: ../src/totem.c:1282 ../src/totem.c:1284
+#: ../src/totem.c:1279 ../src/totem.c:1281
 msgid "An error occurred"
 msgstr "发生了一个错误"
 
-#: ../src/totem.c:1655
+#: ../src/totem.c:1652
 msgid "Open Location..."
 msgstr "打开位置..."
 
-#: ../src/totem.c:1928
+#: ../src/totem.c:1925
 msgid "Totem could not display the help contents."
 msgstr "Totem 无法显示帮助目录。"
 
-#: ../src/totem.c:1961
+#: ../src/totem.c:1958
 msgid "GTK+"
 msgstr "GTK+"
 
-#: ../src/totem.c:1963
+#: ../src/totem.c:1960
 msgid "GNOME"
 msgstr "GNOME"
 
 #. This lists the back-end and front-end types and versions, such as
 #. * Movie Player using GStreamer 0.10.1 and GNOME
-#: ../src/totem.c:1969
+#: ../src/totem.c:1966
 #, c-format
 msgid "Movie Player using %s and %s"
 msgstr "使用 %s 和 %s 的电影播放器"
 
-#: ../src/totem.c:1974
-msgid "Copyright © 2002-2006 Bastien Nocera"
-msgstr "版权 (C) 2002-2006 Bastien Nocera"
-
-#: ../src/totem.c:1979 ../src/vanity.c:267
-msgid "translator-credits"
-msgstr ""
-"开源软件国际化简体中文组(http://i18n.linux.net.cn)\n"
-"Funda Wang <fundawang@linux.net.cn>\n"
-"jan2xue <75jan@163.com>"
-
-#: ../src/totem.c:2012 ../src/totem.c:2020 ../src/vanity.c:300
+#: ../src/totem.c:2009 ../src/totem.c:2017 ../src/vanity.c:300
 #: ../src/vanity.c:308
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem 无法获取电影的抓图。"
 
-#: ../src/totem.c:2020 ../src/vanity.c:308
+#: ../src/totem.c:2017 ../src/vanity.c:308
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "不应该发生这种情况；请提交错误报告。"
 
-#: ../src/totem.c:2047
-msgid "Totem couldn't show the movie properties window."
-msgstr "Totem 无法显示电影属性窗口。"
-
-#: ../src/totem.c:2047
-msgid "Make sure that Totem is correctly installed."
-msgstr "请确保 Totem 已正确安装。"
-
-#: ../src/totem.c:2133
+#: ../src/totem.c:2090
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem 无法在“%s”中搜索。"
 
-#: ../src/totem.c:3379
+#: ../src/totem.c:3372
 msgid "Totem could not startup."
 msgstr "Totem 无法启动。"
 
-#: ../src/totem.c:3521
+#: ../src/totem.c:3514
 msgid "Could not initialize the thread-safe libraries."
 msgstr "无法初始化线程安全库。"
 
-#: ../src/totem.c:3521
+#: ../src/totem.c:3514
 msgid "Verify your system installation. Totem will now exit."
 msgstr "请检查您的系统安装。Totem 现将退出。"
 
-#: ../src/totem.c:3545
+#: ../src/totem.c:3538
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem 无法初始化配置引擎。"
 
-#: ../src/totem.c:3545
+#: ../src/totem.c:3538
 msgid "Make sure that GNOME is properly installed."
 msgstr "请确认 GNOME 安装正确。"
 
 #. Main window
-#: ../src/totem.c:3573
+#: ../src/totem.c:3566
 msgid "main window"
 msgstr "主窗口"
 
-#: ../src/totem.c:3578
+#: ../src/totem.c:3571
 msgid "video popup menu"
 msgstr "视频弹出菜单"
 
@@ -1431,21 +1622,21 @@ msgstr ""
 "无法装入主界面(vanity.glade)。\n"
 "请确保 Vanity 已正确安装。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2058
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2069
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
 msgstr "所请求的音频输出未找到。请在多媒体系统选择器中选择另外一个音频输出。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2063
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2074
 msgid "Location not found."
 msgstr "位置未找到。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2067
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2078
 msgid "Could not open location; You may not have permission to open the file."
 msgstr "无法打开位置。您可能没有权限打开该文件。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2078
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2089
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1454,7 +1645,7 @@ msgstr ""
 "视频输出正被另外一个应用程序使用。请关闭其它视频应用程序，或者在多媒体系统选"
 "择器中选择另外一个视频输出。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2084
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2095
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1463,36 +1654,36 @@ msgstr ""
 "音频输出正被另外一个应用程序使用。请在多媒体系统选择器中选择另外一个音频输"
 "出。您可能需要考虑使用另外一个声音服务器。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2099
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2110
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr "无法在网络上播放此文件。请尝试先下载此文件。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2177
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2188
 msgid "Media file could not be played."
 msgstr "无法播放媒体文件。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2259
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2310
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2270
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2321
 msgid "Failed to retrieve working directory"
 msgstr "获取工作目录失败"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3786
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3808
 msgid "Too old version of GStreamer installed."
 msgstr "安装的 GStreamer 版本太旧。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3793
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3815
 msgid "Media contains no supported video streams."
 msgstr "媒体不包含支持的视频流。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4138
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4160
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr "创建 GStreamer 播放对象失败。请检查您的 GStreamer 安装。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4253
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4337
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4275
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4359
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1500,7 +1691,7 @@ msgstr ""
 "打开视频输出失败。该输出可能不可用。请在多媒体系统选择器中选择另外一个视频输"
 "出。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4262
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4284
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1509,7 +1700,7 @@ msgstr ""
 "找不到视频输出。您可能需要安装额外的 GStreamer 插件，或者多媒体系统选择器中选"
 "择另外一个视频输出。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4281
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4303
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1518,7 +1709,7 @@ msgstr ""
 "打开视频输出失败。您可能没有权限打开声音设备，或者声音服务器未运行。请在多媒"
 "体系统选择器中选择另外一个音频输出。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4291
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4313
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -1527,7 +1718,7 @@ msgstr ""
 "找不到音频输出。您可能需要安装额外的 GStreamer 插件，或者多媒体系统选择器中选"
 "择另外一个音频输出。"
 
-#: ../src/backend/bacon-video-widget-xine.c:680
+#: ../src/backend/bacon-video-widget-xine.c:687
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1536,138 +1727,138 @@ msgstr ""
 "无法装入“%s”音频驱动程序\n"
 "请检查设备是否处于空闲。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1140
-#: ../src/backend/bacon-video-widget-xine.c:1733
+#: ../src/backend/bacon-video-widget-xine.c:1164
+#: ../src/backend/bacon-video-widget-xine.c:1757
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
 msgstr "没有可用的视频输出。请确保程序安装正确。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1267
+#: ../src/backend/bacon-video-widget-xine.c:1291
 msgid "The server you are trying to connect to is not known."
 msgstr "您试图连接的服务器未知。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1271
+#: ../src/backend/bacon-video-widget-xine.c:1295
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "您指定的设备名称(%s)似乎无效。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1275
+#: ../src/backend/bacon-video-widget-xine.c:1299
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "您试图连接的服务器(%s)无法接通。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1279
+#: ../src/backend/bacon-video-widget-xine.c:1303
 msgid "The connection to this server was refused."
 msgstr "到此服务器的连接被拒绝。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1283
+#: ../src/backend/bacon-video-widget-xine.c:1307
 msgid "The specified movie could not be found."
 msgstr "找不到指定电影。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1289
-#: ../src/backend/bacon-video-widget-xine.c:1307
+#: ../src/backend/bacon-video-widget-xine.c:1313
+#: ../src/backend/bacon-video-widget-xine.c:1331
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
 msgstr ""
 "节目源似乎被加密，所以无法读取。您是否在没有 libdvdcss 的情况下播放加密 DVD？"
 
-#: ../src/backend/bacon-video-widget-xine.c:1292
+#: ../src/backend/bacon-video-widget-xine.c:1316
 msgid "The movie could not be read."
 msgstr "无法读取电影。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1301
+#: ../src/backend/bacon-video-widget-xine.c:1325
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "装入库或解码器(%s)时发生问题。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1310
+#: ../src/backend/bacon-video-widget-xine.c:1334
 msgid "This file is encrypted and cannot be played back."
 msgstr "此文件是加密的，无法继续播放。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1315
+#: ../src/backend/bacon-video-widget-xine.c:1339
 msgid "For security reasons, this movie can not be played back."
 msgstr "基于安全原因，不能播放电影。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1320
+#: ../src/backend/bacon-video-widget-xine.c:1344
 msgid "The audio device is busy. Is another application using it?"
 msgstr "音频设备忙。是否正有其它程序在使用该设备？"
 
-#: ../src/backend/bacon-video-widget-xine.c:1325
+#: ../src/backend/bacon-video-widget-xine.c:1349
 msgid "You are not allowed to open this file."
 msgstr "您不允许打开此文件。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1327
+#: ../src/backend/bacon-video-widget-xine.c:1351
 msgid "The server refused access to this file or stream."
 msgstr "此服务器拒绝访问此文件或流。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1336
+#: ../src/backend/bacon-video-widget-xine.c:1360
 msgid "The file you tried to play is an empty file."
 msgstr "您试图播放的文件是空文件。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1530
+#: ../src/backend/bacon-video-widget-xine.c:1554
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "没有可处理此电影位置的输入插件。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1534
+#: ../src/backend/bacon-video-widget-xine.c:1558
 msgid "There is no plugin to handle this movie."
 msgstr "没有可处理此电影的插件。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1538
+#: ../src/backend/bacon-video-widget-xine.c:1562
 msgid "This movie is broken and can not be played further."
 msgstr "此电影已损坏，无法继续播放。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1542
+#: ../src/backend/bacon-video-widget-xine.c:1566
 msgid "This location is not a valid one."
 msgstr "此位置无效。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1546
+#: ../src/backend/bacon-video-widget-xine.c:1570
 msgid "This movie could not be opened."
 msgstr "无法打开此电影。"
 
-#: ../src/backend/bacon-video-widget-xine.c:1550
+#: ../src/backend/bacon-video-widget-xine.c:1574
 msgid "Generic Error."
 msgstr "常规错误。"
 
-#: ../src/backend/bacon-video-widget-xine.c:2104
+#: ../src/backend/bacon-video-widget-xine.c:2183
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr "此电影是静态图像。您可以使用图像查看器打开它。"
 
-#: ../src/backend/bacon-video-widget-xine.c:2128
+#: ../src/backend/bacon-video-widget-xine.c:2207
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr "视频编解码器“%s”未处理。您可能需要安装额外的插件才能播放某些类型的电影"
 
-#: ../src/backend/bacon-video-widget-xine.c:2132
+#: ../src/backend/bacon-video-widget-xine.c:2211
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr "音频编解码器“%s”未处理。您可能需要安装额外的插件才能播放某些类型的电影"
 
-#: ../src/backend/bacon-video-widget-xine.c:2148
+#: ../src/backend/bacon-video-widget-xine.c:2227
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "这是纯音频文件，而没有可用的音频输出。"
 
-#: ../src/backend/bacon-video-widget-xine.c:3530
-#: ../src/backend/bacon-video-widget-xine.c:3577
-#: ../src/backend/bacon-video-widget-xine.c:3599
+#: ../src/backend/bacon-video-widget-xine.c:3642
+#: ../src/backend/bacon-video-widget-xine.c:3689
+#: ../src/backend/bacon-video-widget-xine.c:3711
 #, c-format
 msgid "Language %d"
 msgstr "语言 %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3636
+#: ../src/backend/bacon-video-widget-xine.c:3748
 msgid "No video to capture."
 msgstr "没有可抓取的视频。"
 
-#: ../src/backend/bacon-video-widget-xine.c:3644
+#: ../src/backend/bacon-video-widget-xine.c:3756
 msgid "Video codec is not handled."
 msgstr "视频编解码器未处理。"
 
-#: ../src/backend/bacon-video-widget-xine.c:3652
+#: ../src/backend/bacon-video-widget-xine.c:3764
 msgid "Movie is not playing."
 msgstr "电影未在播放。"
 
@@ -1733,58 +1924,58 @@ msgstr "%s %s"
 msgid "%s"
 msgstr "%s"
 
-#: ../src/plparse/totem-disc.c:118
+#: ../src/plparse/totem-disc.c:117
 #, c-format
 msgid "Failed to find real device node for %s: %s"
 msgstr "查找 %s 的实际设备节点失败：%s"
 
-#: ../src/plparse/totem-disc.c:129
+#: ../src/plparse/totem-disc.c:128
 #, c-format
 msgid "Failed to read symbolic link %s: %s"
 msgstr "读取符号链接 %s 失败：%s"
 
-#: ../src/plparse/totem-disc.c:323
+#: ../src/plparse/totem-disc.c:332
 #, c-format
 msgid "Failed to find mountpoint for device %s"
 msgstr "查找设备 %s 的挂载点失败"
 
-#: ../src/plparse/totem-disc.c:332
+#: ../src/plparse/totem-disc.c:341
 msgid "Could not connect to the HAL daemon"
 msgstr "无法连接到 HAL 守护程序"
 
-#: ../src/plparse/totem-disc.c:449
+#: ../src/plparse/totem-disc.c:458
 msgid "Please check that a disc is present in the drive."
 msgstr "您可能想要检查盘片是否位于驱动器中。"
 
-#: ../src/plparse/totem-disc.c:495
+#: ../src/plparse/totem-disc.c:504
 #, c-format
 msgid "Failed to mount %s"
 msgstr "挂载 %s 失败"
 
-#: ../src/plparse/totem-disc.c:519
+#: ../src/plparse/totem-disc.c:528
 #, c-format
 msgid "Failed to find mountpoint for %s"
 msgstr "查找 %s 的挂载点失败"
 
-#: ../src/plparse/totem-disc.c:791
+#: ../src/plparse/totem-disc.c:806
 msgid "Audio CD"
 msgstr "音频 CD"
 
-#: ../src/plparse/totem-disc.c:793
+#: ../src/plparse/totem-disc.c:808
 msgid "Video CD"
 msgstr "VCD"
 
-#: ../src/plparse/totem-disc.c:795
+#: ../src/plparse/totem-disc.c:810
 msgid "DVD"
 msgstr "DVD"
 
-#: ../src/plparse/totem-pl-parser.c:341
+#: ../src/plparse/totem-pl-parser.c:355
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "不能写入解析器：%s"
 
-#: ../src/plparse/totem-pl-parser.c:449 ../src/plparse/totem-pl-parser.c:590
-#: ../src/plparse/totem-pl-parser.c:690
+#: ../src/plparse/totem-pl-parser.c:463 ../src/plparse/totem-pl-parser.c:604
+#: ../src/plparse/totem-pl-parser.c:704
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "无法打开文件“%s”：%s"
