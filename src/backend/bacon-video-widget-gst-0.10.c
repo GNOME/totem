@@ -1340,13 +1340,11 @@ got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * bvw)
 }
 
 static void
-got_source (GObject    *play,
-	    GParamSpec *pspec,
-	    BaconVideoWidget *bvw)
+playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *bvw)
 {
   GObject *source = NULL;
-  GObjectClass *klass;
 
+  /* CHECKME: do we really need these taglist frees here (tpm)? */
   if (bvw->priv->tagcache) {
     gst_tag_list_free (bvw->priv->tagcache);
     bvw->priv->tagcache = NULL;
@@ -1360,17 +1358,19 @@ got_source (GObject    *play,
     bvw->priv->videotags = NULL;
   }
 
-  if (!bvw->priv->media_device)
-    return;
-
   g_object_get (play, "source", &source, NULL);
   if (!source)
     return;
 
-  klass = G_OBJECT_GET_CLASS (source);
-  if (g_object_class_find_property (klass, "device")) {
-    g_object_set (source, "device", bvw->priv->media_device, NULL);
+  GST_DEBUG ("Got source of type %s", G_OBJECT_TYPE_NAME (source));
+
+  if (bvw->priv->media_device) {
+    if (g_object_class_find_property (G_OBJECT_GET_CLASS (source), "device")) {
+      GST_DEBUG ("Setting device to '%s'", bvw->priv->media_device);
+      g_object_set (source, "device", bvw->priv->media_device, NULL);
+    }
   }
+
   g_object_unref (source);
 }
 
@@ -1499,8 +1499,9 @@ parse_stream_info (BaconVideoWidget *bvw)
 }
 
 static void
-stream_info_set (GObject * obj, GParamSpec * pspec, BaconVideoWidget * bvw)
+playbin_stream_info_notify_cb (GObject * obj, GParamSpec * pspec, gpointer data)
 {
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (data);
   GstMessage *msg;
 
   parse_stream_info (bvw);
@@ -1763,7 +1764,6 @@ get_list_of_type (BaconVideoWidget * bvw, const gchar * type_name)
     g_object_get (info, "type", &type, NULL);
     pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
     val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
-
     if (g_ascii_strcasecmp (val->value_nick, type_name) == 0) {
       g_object_get (info, "codec", &cd, "language-code", &lc, NULL);
 
@@ -2789,7 +2789,8 @@ bacon_video_widget_set_media_device (BaconVideoWidget * bvw, const char *path)
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
-  
+
+  /* FIXME: totally not thread-safe, used in the notify::source callback */  
   g_free (bvw->priv->media_device);
   bvw->priv->media_device = g_strdup (path);
 }
@@ -4343,9 +4344,9 @@ bacon_video_widget_new (int width, int height,
   bvw->priv->vis_plugins_list = NULL;
 
   g_signal_connect (bvw->priv->play, "notify::source",
-		    G_CALLBACK (got_source), bvw);
+		    G_CALLBACK (playbin_source_notify_cb), bvw);
   g_signal_connect (bvw->priv->play, "notify::stream-info",
-		    G_CALLBACK (stream_info_set), bvw);
+		    G_CALLBACK (playbin_stream_info_notify_cb), bvw);
 
   if (type == BVW_USE_TYPE_VIDEO) {
     GstStateChangeReturn ret;

@@ -1,3 +1,13 @@
+2006-07-24  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(playbin_source_notify_cb), (playbin_stream_info_notify_cb),
+	(get_list_of_type), (bacon_video_widget_set_media_device),
+	(bacon_video_widget_new):
+	  Rename notify::foo callbacks to make it clearer what they are
+	  and that they are probably called from the streaming thread;
+	  add some more debug info to playbin_source_notify_cb.
+
 2006-07-20  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-xine.c:
