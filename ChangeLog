@@ -1,6 +1,21 @@
 2006-07-24  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_update_stream_info), (bvw_handle_application_message),
+	(bvw_bus_message_cb), (playbin_stream_info_notify_cb):
+	  notify::stream-info is fired from the streaming thread,
+	  don't do anything there, just post a message on the bus so
+	  we handle it later from the application thread.
+	  Also, since the notify is not a deep-notify, we might not
+	  be called when stream-info properties (like languages etc.)
+	  update, so make sure we parse the stream-properties again
+	  when we reach PAUSED state. This makes totem extract the
+	  audio/subtitle languages properly for some files where it
+	  didn't work before (e.g. #343763).
+
+2006-07-24  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
 	(playbin_source_notify_cb), (playbin_stream_info_notify_cb),
 	(get_list_of_type), (bacon_video_widget_set_media_device),
 	(bacon_video_widget_new):

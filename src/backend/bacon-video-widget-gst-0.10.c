@@ -925,6 +925,20 @@ static gboolean bvw_query_timeout (BaconVideoWidget *bvw);
 static void parse_stream_info (BaconVideoWidget *bvw);
 
 static void
+bvw_update_stream_info (BaconVideoWidget *bvw)
+{
+  parse_stream_info (bvw);
+
+  /* if we're not interactive, we want to announce metadata
+   * only later when we can be sure we got it all */
+  if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO ||
+      bvw->priv->use_type == BVW_USE_TYPE_AUDIO) {
+    g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
+    g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
+  }
+}
+
+static void
 bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
 {
   const gchar *msg_name;
@@ -935,13 +949,7 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
   GST_DEBUG ("Handling application message: %" GST_PTR_FORMAT, msg->structure);
 
   if (strcmp (msg_name, "notify-streaminfo") == 0) {
-    /* if we're not interactive, we want to announce metadata
-     * only later when we can be sure we got it all */
-    if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO ||
-        bvw->priv->use_type == BVW_USE_TYPE_AUDIO) {
-      g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
-      g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
-    }
+    bvw_update_stream_info (bvw);
   } 
   else if (strcmp (msg_name, "video-size") == 0) {
     /* if we're not interactive, we want to announce metadata
@@ -1202,7 +1210,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       }
 
       if (old_state == GST_STATE_READY && new_state == GST_STATE_PAUSED) {
-        parse_stream_info (bvw);
+        bvw_update_stream_info (bvw);
       } else if (old_state == GST_STATE_PAUSED && new_state == GST_STATE_READY) {
         bvw->priv->media_has_video = FALSE;
         bvw->priv->media_has_audio = FALSE;
@@ -1504,8 +1512,8 @@ playbin_stream_info_notify_cb (GObject * obj, GParamSpec * pspec, gpointer data)
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (data);
   GstMessage *msg;
 
-  parse_stream_info (bvw);
-
+  /* we're being called from the streaming thread, so don't do anything here */
+  GST_LOG ("stream info changed");
   msg = gst_message_new_application (GST_OBJECT (bvw->priv->play),
       gst_structure_new ("notify-streaminfo", NULL));
   gst_element_post_message (bvw->priv->play, msg);
