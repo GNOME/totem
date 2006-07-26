@@ -3251,6 +3251,9 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 	new_h = win_h - widget->allocation.height +
 		bvw->priv->video_height * ratio;
 
+	if (new_w == win_w && new_h == win_h)
+		return;
+
 	/* Change the minimum size of the widget
 	 * but only if we're getting a smaller window */
 	if (new_w < widget->allocation.width

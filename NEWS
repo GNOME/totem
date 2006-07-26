@@ -1,5 +1,17 @@
 New features and significant updates in version...
 
+1.5.90
+* Add a default filename to the save playlist dialogue
+* Add supprot for more DVD related remote buttons
+* Move the properties dialogue to the sidebar
+* Fix build with newer versions of D-Bus
+* Avoid linking directly against the Mozilla libraries, should allow
+  build-time and run-time engines to be different (build against Mozilla,
+  run in Firefox)
+* Make the "Seek To" dialogue work correctly when using the keyboard
+* Fix logo related redraws (xine-lib)
+* Try harder to extract audio/subtitles languages from files (GStreamer)
+
 1.5.4
  * update xine-lib requirement to avoid startup crashes
 
