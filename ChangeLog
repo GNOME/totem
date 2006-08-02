@@ -1,5 +1,10 @@
 2006-08-02  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-mozilla-viewer.c: make sure totem-interface.c is included
+	first, so config.h is included at the earliest
+
+2006-08-02  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in:
 	* src/Makefile.am: Add some known subdirs to the include paths to
 	work-around some .pc files not having the subdirs in the cflags

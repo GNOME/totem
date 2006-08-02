@@ -19,6 +19,9 @@
  * Boston, MA 02111-1307, USA.
  */
 
+//FIXME damn build system!
+#include "totem-interface.c"
+
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <stdlib.h>
@@ -39,8 +42,6 @@
 #include "totem-interface.h"
 #include "totem-mozilla-options.h"
 #include "bacon-volume.h"
-//FIXME damn build system!
-#include "totem-interface.c"
 #include "video-utils.h"
 
 GtkWidget *totem_volume_create (void);
