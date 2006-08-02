@@ -1,5 +1,13 @@
 2006-08-02  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_num_entries),
+	(totem_pl_parser_write_pls), (totem_pl_parser_write_m3u),
+	(totem_pl_parser_write_xspf): add more checks to the retval of
+	gtk_tree_model_get_iter_from_string(), reported by
+	Kjartan Maraas <kmaraas@gnome.org> (Closes: #349678)
+
+2006-08-02  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-mozilla-viewer.c: make sure totem-interface.c is included
 	first, so config.h is included at the earliest
 

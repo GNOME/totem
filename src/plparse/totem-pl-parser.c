@@ -377,7 +377,10 @@ totem_pl_parser_num_entries (TotemPlParser *parser, GtkTreeModel *model,
 		gboolean custom_title;
 
 		path = g_strdup_printf ("%d", i - 1);
-		gtk_tree_model_get_iter_from_string (model, &iter, path);
+		if (gtk_tree_model_get_iter_from_string (model, &iter, path) == FALSE) {
+			g_free (path);
+			return i - ignored;
+		}
 		g_free (path);
 
 		func (model, &iter, &url, &title, &custom_title, user_data);
@@ -497,7 +500,10 @@ totem_pl_parser_write_pls (TotemPlParser *parser, GtkTreeModel *model,
 		gboolean custom_title;
 
 		path = g_strdup_printf ("%d", i - 1);
-		gtk_tree_model_get_iter_from_string (model, &iter, path);
+		if (gtk_tree_model_get_iter_from_string (model, &iter, path) == FALSE) {
+			g_free (path);
+			continue;
+		}
 		g_free (path);
 
 		func (model, &iter, &url, &title, &custom_title, user_data);
@@ -617,7 +623,10 @@ totem_pl_parser_write_m3u (TotemPlParser *parser, GtkTreeModel *model,
 		gboolean custom_title;
 
 		path = g_strdup_printf ("%d", i - 1);
-		gtk_tree_model_get_iter_from_string (model, &iter, path);
+		if (gtk_tree_model_get_iter_from_string (model, &iter, path) == FALSE) {
+			g_free (path);
+			continue;
+		}
 		g_free (path);
 
 		func (model, &iter, &url, &title, &custom_title, user_data);
@@ -723,7 +732,10 @@ totem_pl_parser_write_xspf (TotemPlParser *parser, GtkTreeModel *model,
 		gboolean custom_title;
 
 		path = g_strdup_printf ("%d", i - 1);
-		gtk_tree_model_get_iter_from_string (model, &iter, path);
+		if (gtk_tree_model_get_iter_from_string (model, &iter, path) == FALSE) {
+			g_free (path);
+			continue;
+		}
 		g_free (path);
 
 		func (model, &iter, &url, &title, &custom_title, user_data);
