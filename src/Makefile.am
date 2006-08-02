@@ -21,9 +21,19 @@ TOTEM_MOZILLA_PLUGIN = libtotem_mozilla.la
 
 plugin_LTLIBRARIES = $(TOTEM_MOZILLA_PLUGIN)
 plugindir = $(MOZILLA_PLUGINDIR)/plugins
+
+gecko_include_subdirs =	\
+	.		\
+	docshell	\
+	dom		\
+	necko
+
+MOZILLA_SUBDIR_INCLUDES=$(addprefix -I$(MOZILLA_INCLUDE_ROOT)/,$(gecko_include_subdirs))
+
 else
 TOTEM_MOZILLA_VIEWER = 
 TOTEM_MOZILLA_PLUGIN =
+MOZILLA_SUBDIR_INCLUDES=
 endif
 
 bin_PROGRAMS = totem totem-video-thumbnailer $(VANITY)
@@ -227,6 +237,7 @@ INCLUDES = 						\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
 	$(DBUS_CFLAGS)					\
 	$(MOZILLA_CFLAGS)				\
+	$(MOZILLA_SUBDIR_INCLUDES)			\
 	$(MOZILLA_XPCOM_CFLAGS)				\
 	$(NVTV_CFLAGS)					\
 	$(NAUTILUS_CFLAGS)				\
