@@ -1,5 +1,13 @@
 2006-08-03  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_set_logo_mode),
+	(bacon_video_widget_set_scale_ratio): Make sure we can't call
+	_set_scale_ratio when the logo mode is on, but still make sure
+	->video_width and ->video_height are set (Closes: #348184)
+
+2006-08-03  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser.c: (totem_pl_parser_num_entries),
 	(totem_pl_parser_write_pls), (totem_pl_parser_write_m3u),
 	(totem_pl_parser_write_xspf): Use gtk_tree_model_iter_nth_child instead

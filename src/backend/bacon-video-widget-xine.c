@@ -2492,6 +2492,15 @@ bacon_video_widget_set_logo_mode (BaconVideoWidget *bvw, gboolean logo_mode)
 
 		/* Queue a redraw of the widget */
 		gtk_widget_queue_draw (GTK_WIDGET (bvw));
+
+		/* And set a decent size for the video output */
+		if (logo_mode != FALSE && bvw->priv->logo_pixbuf != NULL) {
+			bvw->priv->video_width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
+			bvw->priv->video_height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
+		} else if (logo_mode != FALSE) {
+			bvw->priv->video_width = DEFAULT_WIDTH;
+			bvw->priv->video_height = DEFAULT_HEIGHT;
+		}
 	}
 }
 
@@ -3211,7 +3220,8 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 	g_return_if_fail (bvw->priv->xine != NULL);
 	g_return_if_fail (ratio >= 0);
 
-	if (bvw->priv->fullscreen_mode != FALSE)
+	if (bvw->priv->fullscreen_mode != FALSE
+			|| bvw->priv->logo_mode != FALSE)
 		return;
 
 	/* Try best fit for the screen */
