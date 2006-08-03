@@ -1,5 +1,12 @@
 2006-08-03  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c: (frame_output_cb):
+	Pass saved coordinates to the xine-engine so it doesn't try to 
+	redraw us when we're in logo mode, have already played a film, and
+	we're moving the window (phew!)
+
+2006-08-03  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c:
 	(bacon_video_widget_set_logo_mode),
 	(bacon_video_widget_set_scale_ratio): Make sure we can't call

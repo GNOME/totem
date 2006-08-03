@@ -160,6 +160,9 @@ struct BaconVideoWidgetPrivate {
 	/* Logo */
 	gboolean logo_mode;
 	GdkPixbuf *logo_pixbuf;
+	/* Logo, save frame_output_cb members */
+	int dest_x, dest_y, dest_width, dest_height, win_x, win_y;
+	double dest_pixel_aspect;
 
 	/* Other stuff */
 	int xpos, ypos;
@@ -526,6 +529,16 @@ frame_output_cb (void *bvw_gen,
 
 	if (bvw == NULL || bvw->priv == NULL)
 		return;
+	if (bvw->priv->logo_mode != FALSE) {
+		*dest_x = bvw->priv->dest_x;
+		*dest_y = bvw->priv->dest_y;
+		*dest_width = bvw->priv->dest_width;
+		*dest_height = bvw->priv->dest_height;
+		*win_x = bvw->priv->win_x;
+		*win_y = bvw->priv->win_y;
+		*dest_pixel_aspect = bvw->priv->dest_pixel_aspect;
+		return;
+	}
 
 	/* correct size with video_pixel_aspect */
 	if (video_pixel_aspect >= bvw->priv->display_ratio)
@@ -567,6 +580,15 @@ frame_output_cb (void *bvw_gen,
 	}
 
 	*dest_pixel_aspect = bvw->priv->display_ratio;
+
+	/* Save them */
+	bvw->priv->dest_x = *dest_x;
+	bvw->priv->dest_y = *dest_y;
+	bvw->priv->dest_width = *dest_width;
+	bvw->priv->dest_height = *dest_height;
+	bvw->priv->win_x = *win_x;
+	bvw->priv->win_y = *win_y;
+	bvw->priv->dest_pixel_aspect = *dest_pixel_aspect;
 }
 
 static xine_video_port_t *
