@@ -160,6 +160,9 @@ struct BaconVideoWidgetPrivate {
 	/* Logo */
 	gboolean logo_mode;
 	GdkPixbuf *logo_pixbuf;
+	/* Logo, save frame_output_cb members */
+	int dest_x, dest_y, dest_width, dest_height, win_x, win_y;
+	double dest_pixel_aspect;
 
 	/* Other stuff */
 	int xpos, ypos;
@@ -472,6 +475,10 @@ bacon_video_widget_finalize (GObject *object)
 		gdk_cursor_unref (bvw->priv->cursor);
 		bvw->priv->cursor = NULL;
 	}
+	if (bvw->priv->logo_pixbuf != NULL) {
+		gdk_pixbuf_unref (bvw->priv->logo_pixbuf);
+		bvw->priv->logo_pixbuf = NULL;
+	}
 	g_free (bvw->priv->vis_name);
 	g_free (bvw->priv->mediadev);
 	g_object_unref (G_OBJECT (bvw->priv->gc));
@@ -522,6 +529,16 @@ frame_output_cb (void *bvw_gen,
 
 	if (bvw == NULL || bvw->priv == NULL)
 		return;
+	if (bvw->priv->logo_mode != FALSE) {
+		*dest_x = bvw->priv->dest_x;
+		*dest_y = bvw->priv->dest_y;
+		*dest_width = bvw->priv->dest_width;
+		*dest_height = bvw->priv->dest_height;
+		*win_x = bvw->priv->win_x;
+		*win_y = bvw->priv->win_y;
+		*dest_pixel_aspect = bvw->priv->dest_pixel_aspect;
+		return;
+	}
 
 	/* correct size with video_pixel_aspect */
 	if (video_pixel_aspect >= bvw->priv->display_ratio)
@@ -563,6 +580,15 @@ frame_output_cb (void *bvw_gen,
 	}
 
 	*dest_pixel_aspect = bvw->priv->display_ratio;
+
+	/* Save them */
+	bvw->priv->dest_x = *dest_x;
+	bvw->priv->dest_y = *dest_y;
+	bvw->priv->dest_width = *dest_width;
+	bvw->priv->dest_height = *dest_height;
+	bvw->priv->win_x = *win_x;
+	bvw->priv->win_y = *win_y;
+	bvw->priv->dest_pixel_aspect = *dest_pixel_aspect;
 }
 
 static xine_video_port_t *
@@ -1771,9 +1797,9 @@ bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 	/* if there's only audio and no visualisation, draw the logo as well */
 	has_video = xine_get_stream_info(bvw->priv->stream,
 			XINE_STREAM_INFO_HAS_VIDEO);
-	draw_logo = !has_video && !bvw->priv->show_vfx;
+	draw_logo = !has_video && !bvw->priv->using_vfx;
 
-	if (bvw->priv->logo_mode == FALSE) {
+	if (bvw->priv->logo_mode == FALSE && draw_logo == FALSE) {
 		XExposeEvent *expose;
 
 		if (event->count != 0)
@@ -1792,8 +1818,13 @@ bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 		gfloat ratio;
 
 		/* Start with a nice black canvas */
-		gdk_draw_rectangle (widget->window, widget->style->black_gc, TRUE, 0, 0,
-				widget->allocation.width, widget->allocation.height);
+		gdk_draw_rectangle (widget->window, widget->style->black_gc,
+				TRUE, 0, 0,
+				widget->allocation.width,
+				widget->allocation.height);
+
+		if (bvw->priv->logo_pixbuf == NULL)
+			return FALSE;
 
 		s_width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
 		s_height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
@@ -1813,7 +1844,9 @@ bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 				s_width, s_height, GDK_INTERP_BILINEAR);
 
 		gdk_draw_pixbuf (widget->window, widget->style->fg_gc[0], logo,
-				0, 0, (w_width - s_width) / 2, (w_height - s_height) / 2,
+				0, 0,
+				(w_width - s_width) / 2,
+				(w_height - s_height) / 2,
 				s_width, s_height, GDK_RGB_DITHER_NONE, 0, 0);
 
 		gdk_pixbuf_unref (logo);
@@ -2011,8 +2044,12 @@ show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals)
 	if (enable == FALSE) {
 		audio_source = xine_get_audio_source (bvw->priv->stream);
 		if (xine_post_wire_audio_port (audio_source,
-					bvw->priv->ao_driver))
+					bvw->priv->ao_driver)) {
 			bvw->priv->using_vfx = FALSE;
+
+			/* Queue a redraw of the widget */
+			gtk_widget_queue_draw (GTK_WIDGET (bvw));
+		}
 		if (bvw->priv->vis != NULL) {
 			xine_post_dispose (bvw->priv->xine,
 					bvw->priv->vis);
@@ -2021,8 +2058,12 @@ show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals)
 	} else {
 		audio_source = xine_get_audio_source (bvw->priv->stream);
 		if (xine_post_wire_audio_port (audio_source,
-					bvw->priv->vis->audio_input[0]))
+					bvw->priv->vis->audio_input[0])) {
 			bvw->priv->using_vfx = TRUE;
+
+			/* Queue a redraw of the widget */
+			gtk_widget_queue_draw (GTK_WIDGET (bvw));
+		}
 	}
 }
 
@@ -2461,11 +2502,20 @@ bacon_video_widget_set_logo_mode (BaconVideoWidget *bvw, gboolean logo_mode)
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
 
-	bvw->priv->logo_mode = logo_mode;
+	if (logo_mode != bvw->priv->logo_mode) {
+		bvw->priv->logo_mode = logo_mode;
 
-	if (logo_mode == FALSE) {
-		gdk_pixbuf_unref (bvw->priv->logo_pixbuf);
-		bvw->priv->logo_pixbuf = NULL;
+		/* Queue a redraw of the widget */
+		gtk_widget_queue_draw (GTK_WIDGET (bvw));
+
+		/* And set a decent size for the video output */
+		if (logo_mode != FALSE && bvw->priv->logo_pixbuf != NULL) {
+			bvw->priv->video_width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
+			bvw->priv->video_height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
+		} else if (logo_mode != FALSE) {
+			bvw->priv->video_width = DEFAULT_WIDTH;
+			bvw->priv->video_height = DEFAULT_HEIGHT;
+		}
 	}
 }
 
@@ -3218,7 +3268,8 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 	g_return_if_fail (bvw->priv->xine != NULL);
 	g_return_if_fail (ratio >= 0);
 
-	if (bvw->priv->fullscreen_mode != FALSE)
+	if (bvw->priv->fullscreen_mode != FALSE
+			|| bvw->priv->logo_mode != FALSE)
 		return;
 
 	/* Try best fit for the screen */
@@ -3257,6 +3308,9 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 		bvw->priv->video_width * ratio;
 	new_h = win_h - widget->allocation.height +
 		bvw->priv->video_height * ratio;
+
+	if (new_w == win_w && new_h == win_h)
+		return;
 
 	/* Change the minimum size of the widget
 	 * but only if we're getting a smaller window */
@@ -3553,12 +3607,14 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget *bvw,
 	switch (type)
 	{
 	case BVW_INFO_HAS_VIDEO:
-		boolean = xine_get_stream_info (bvw->priv->stream,
-				XINE_STREAM_INFO_HAS_VIDEO);
+		if (bvw->priv->logo_mode == FALSE)
+			boolean = xine_get_stream_info (bvw->priv->stream,
+					XINE_STREAM_INFO_HAS_VIDEO);
 		break;
 	case BVW_INFO_HAS_AUDIO:
-		boolean = xine_get_stream_info (bvw->priv->stream,
-				XINE_STREAM_INFO_HAS_AUDIO);
+		if (bvw->priv->logo_mode == FALSE)
+			boolean = xine_get_stream_info (bvw->priv->stream,
+					XINE_STREAM_INFO_HAS_AUDIO);
 		break;
 	default:
 		g_assert_not_reached ();

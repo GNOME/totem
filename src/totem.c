@@ -757,19 +757,13 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 
 		/* Set the logo */
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
-		bacon_video_widget_set_logo (totem->bvw, LOGO_PATH);
-
 		update_mrl_label (totem, NULL);
 	} else {
 		gboolean caps;
 		char *subtitle_uri;
 		GError *err = NULL;
 
-		if (bacon_video_widget_get_logo_mode (totem->bvw) != FALSE)
-		{
-			bacon_video_widget_close (totem->bvw);
-			bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
-		}
+		bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
 
 		subtitle_uri = totem_uri_get_subtitle_uri (mrl);
 		totem_gdk_window_set_waiting_cursor (totem->win->window);
@@ -800,6 +794,8 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		/* Take a screenshot */
 		totem_main_set_sensitivity ("tmw_take_screenshot_menu_item",
 				retval);
+		gtk_widget_set_sensitive
+			(GTK_WIDGET (totem->properties), retval);
 
 		/* Set the playlist */
 		totem_playlist_set_playing (totem->playlist, retval);
@@ -828,6 +824,7 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 			g_free (totem->mrl);
 			totem->mrl = NULL;
 			play_pause_set_label (totem, STATE_STOPPED);
+			bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
 		}
 	}
 	update_buttons (totem);
@@ -3642,6 +3639,7 @@ main (int argc, char **argv)
 	/* Show ! (again) the video widget this time. */
 	video_widget_create (totem);
 	long_action ();
+	bacon_video_widget_set_logo (totem->bvw, LOGO_PATH);
 
 	/* The prefs after the video widget is connected */
 	totem_setup_preferences (totem);

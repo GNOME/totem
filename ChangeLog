@@ -1,3 +1,15 @@
+2006-08-03  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_finalize), (frame_output_cb),
+	(bacon_video_widget_expose), (show_vfx_update),
+	(bacon_video_widget_set_logo_mode),
+	(bacon_video_widget_set_scale_ratio),
+	(bacon_video_widget_get_metadata_bool):
+	* src/totem.c: (totem_action_set_mrl_with_warning), (main):
+	* src/vanity.c: (video_widget_create):
+	Backport logo related fixes from HEAD (Closes: #348184, among others)
+
 2006-07-17  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/totem-skipto.c: (totem_skipto_response_cb),
