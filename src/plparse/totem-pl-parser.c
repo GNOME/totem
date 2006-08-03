@@ -373,15 +373,11 @@ totem_pl_parser_num_entries (TotemPlParser *parser, GtkTreeModel *model,
 	for (i = 1; i <= num_entries; i++)
 	{
 		GtkTreeIter iter;
-		char *path, *url, *title;
+		char *url, *title;
 		gboolean custom_title;
 
-		path = g_strdup_printf ("%d", i - 1);
-		if (gtk_tree_model_get_iter_from_string (model, &iter, path) == FALSE) {
-			g_free (path);
+		if (gtk_tree_model_iter_nth_child (model, &iter, NULL, i -1) == FALSE)
 			return i - ignored;
-		}
-		g_free (path);
 
 		func (model, &iter, &url, &title, &custom_title, user_data);
 		if (totem_pl_parser_scheme_is_ignored (parser, url) != FALSE)
@@ -496,15 +492,11 @@ totem_pl_parser_write_pls (TotemPlParser *parser, GtkTreeModel *model,
 
 	for (i = 1; i <= num_entries_total; i++) {
 		GtkTreeIter iter;
-		char *path, *url, *title, *relative;
+		char *url, *title, *relative;
 		gboolean custom_title;
 
-		path = g_strdup_printf ("%d", i - 1);
-		if (gtk_tree_model_get_iter_from_string (model, &iter, path) == FALSE) {
-			g_free (path);
+		if (gtk_tree_model_iter_nth_child (model, &iter, NULL, i - 1) == FALSE)
 			continue;
-		}
-		g_free (path);
 
 		func (model, &iter, &url, &title, &custom_title, user_data);
 
@@ -619,15 +611,11 @@ totem_pl_parser_write_m3u (TotemPlParser *parser, GtkTreeModel *model,
 
 	for (i = 1; i <= num_entries_total; i++) {
 		GtkTreeIter iter;
-		char *path, *url, *title, *path2;
+		char *url, *title, *path2;
 		gboolean custom_title;
 
-		path = g_strdup_printf ("%d", i - 1);
-		if (gtk_tree_model_get_iter_from_string (model, &iter, path) == FALSE) {
-			g_free (path);
+		if (gtk_tree_model_iter_nth_child (model, &iter, NULL, i - 1) == FALSE)
 			continue;
-		}
-		g_free (path);
 
 		func (model, &iter, &url, &title, &custom_title, user_data);
 
@@ -728,15 +716,11 @@ totem_pl_parser_write_xspf (TotemPlParser *parser, GtkTreeModel *model,
 
 	for (i = 1; i <= num_entries_total; i++) {
 		GtkTreeIter iter;
-		char *path, *url, *url_escaped, *relative, *title;
+		char *url, *url_escaped, *relative, *title;
 		gboolean custom_title;
 
-		path = g_strdup_printf ("%d", i - 1);
-		if (gtk_tree_model_get_iter_from_string (model, &iter, path) == FALSE) {
-			g_free (path);
+		if (gtk_tree_model_iter_nth_child (model, &iter, NULL, i - 1) == FALSE)
 			continue;
-		}
-		g_free (path);
 
 		func (model, &iter, &url, &title, &custom_title, user_data);
 
