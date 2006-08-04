@@ -1,3 +1,4 @@
+SUBDIRS = icons
 
 man_MANS = totem.1 totem-video-thumbnailer.1
 
@@ -28,9 +29,6 @@ stuff_DATA =				\
 
 pixmapdir = $(datadir)/pixmaps
 pixmap_DATA = vanity.png
-
-icondir = $(datadir)/icons/hicolor/48x48/apps
-icon_DATA = media-player-48.png
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
 
@@ -95,7 +93,7 @@ else
 install-data-local:
 endif
 
-EXTRA_DIST = $(icon_DATA) $(stuff_DATA) $(desktop_in_in_files_all) lirc_example totem.schemas.in schemas.sh desktop.sh handlers.sh $(man_MANS) mime-type-list.txt mime-type-include.sh totem-video-thumbnailer.1 totem-video-thumbnailer.pod
+EXTRA_DIST = $(stuff_DATA) $(desktop_in_in_files_all) lirc_example totem.schemas.in schemas.sh desktop.sh handlers.sh $(man_MANS) mime-type-list.txt mime-type-include.sh totem-video-thumbnailer.1 totem-video-thumbnailer.pod
 
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(desktop_DATA) $(schema_DATA) $(desktop_in_files_all)
 

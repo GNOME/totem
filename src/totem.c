@@ -1974,7 +1974,7 @@ on_about1_activate (GtkButton *button, Totem *totem)
 				     "documenters", documenters,
 				     "artists", artists,
 				     "translator-credits", _("translator-credits"),
-				     "logo-icon-name", "media-player-48",
+				     "logo-icon-name", "movie-player",
 				     NULL);
 
 	g_free (backend_version);
@@ -3528,7 +3528,7 @@ main (int argc, char **argv)
 #endif /* HAVE_GTK_ONLY */
 
 	g_set_application_name (_("Totem Movie Player"));
-	gtk_window_set_default_icon_name ("media-player-48");
+	gtk_window_set_default_icon_name ("movie-player");
 
 	gnome_vfs_init ();
 

@@ -333,7 +333,7 @@ on_about1_activate (GtkButton *button, TotemEmbedded *emb)
 				   "comments", description,
 				   "authors", authors,
 				   "translator-credits", _("translator-credits"),
-				   "logo-icon-name", "media-player-48",
+				   "logo-icon-name", "movie-player",
 				   NULL);
 
 	g_free (backend_version);
