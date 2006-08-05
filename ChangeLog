@@ -1,3 +1,10 @@
+2006-08-05  Bastien Nocera  <hadess@hadess.net>
+
+	* data/Makefile.am: make distcheck fixes
+	* src/Makefile.am: move the plugins to $(libdir)/mozilla/plugins
+	to pass make distcheck and make the plugin available to all
+	mozilla-based browsers (Closes: #350077)
+
 2006-08-04  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.desktop.in.in.in:
