@@ -20,7 +20,7 @@ TOTEM_MOZILLA_VIEWER = totem-mozilla-viewer
 TOTEM_MOZILLA_PLUGIN = libtotem_mozilla.la
 
 plugin_LTLIBRARIES = $(TOTEM_MOZILLA_PLUGIN)
-plugindir = $(MOZILLA_PLUGINDIR)/plugins
+plugindir = $(libdir)/mozilla/plugins
 else
 TOTEM_MOZILLA_VIEWER = 
 TOTEM_MOZILLA_PLUGIN =
@@ -158,8 +158,10 @@ libtotem_mozilla.xpt: totem_mozilla_scripting.idl
 	$(MOZILLA_XPIDL) -m typelib -I $(MOZILLA_IDLDIR) $< && \
 	mv totem_mozilla_scripting.xpt libtotem_mozilla.xpt
 
+
+
 typelib_DATA = libtotem_mozilla.xpt
-typelibdir = $(MOZILLA_PLUGINDIR)/plugins
+typelibdir = $(libdir)/mozilla/plugins
 
 libtotem_mozilla_la_LDFLAGS = \
 	$(DBUS_LIBS) $(MOZILLA_LIBS) $(modules_flags)

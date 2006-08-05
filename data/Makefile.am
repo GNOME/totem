@@ -77,7 +77,7 @@ totem-video-thumbnailer.1: totem-video-thumbnailer.pod
 
 if GCONF_SCHEMAS_INSTALL
 install-data-local:
-	-GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(srcdir)/$(schema_DATA)
+	-GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(builddir)/$(schema_DATA)
 else
 install-data-local:
 endif
