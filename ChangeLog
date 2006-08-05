@@ -1,5 +1,15 @@
 2006-08-05  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-disc.c: (cd_cache_get_dev_from_volumes),
+	(cd_cache_get_dev_from_drives), (cd_cache_has_medium),
+	(cd_cache_open_device), (cd_cache_free), (cd_cache_disc_is_cdda),
+	(cd_cache_disc_is_vcd), (cd_cache_disc_is_dvd):
+	Use HAL to determine the disc type as well, don't check multiple
+	times per Cache life-time whether we have a disc, once is enough
+	(Closes: #348554)
+
+2006-08-05  Bastien Nocera  <hadess@hadess.net>
+
 	* data/icons/.cvsignore:
 	* data/icons/16x16/.cvsignore:
 	* data/icons/22x22/.cvsignore:

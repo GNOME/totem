@@ -56,6 +56,11 @@ typedef struct _CdCache {
 
 #ifdef HAVE_HAL
   LibHalContext *ctx;
+  gboolean has_medium;
+#endif
+#ifdef HAVE_HAL_0_5
+  /* If the disc is a media, have the UDI available here */
+  char *disc_udi;
 #endif
 
   /* capabilities of the device */
@@ -156,7 +161,8 @@ cd_cache_get_dev_from_volumes (GnomeVFSVolumeMonitor *mon, const char *device,
     volume = list->data;
     if (!(pdev = gnome_vfs_volume_get_device_path (volume)))
       continue;
-    if (!(pdev2 = get_device (pdev, NULL))) {
+    pdev2 = get_device (pdev, NULL);
+    if (!pdev2) {
       g_free (pdev);
       continue;
     }
@@ -188,6 +194,7 @@ cd_cache_get_dev_from_volumes (GnomeVFSVolumeMonitor *mon, const char *device,
 
   return found;
 }
+
 static gboolean
 cd_cache_get_dev_from_drives (GnomeVFSVolumeMonitor *mon, const char *device,
 			      char **mountpoint, GnomeVFSDrive **d)
@@ -205,7 +212,8 @@ cd_cache_get_dev_from_drives (GnomeVFSVolumeMonitor *mon, const char *device,
     drive = list->data;
     if (!(pdev = gnome_vfs_drive_get_device_path (drive)))
       continue;
-    if (!(pdev2 = get_device (pdev, NULL))) {
+    pdev2 = get_device (pdev, NULL);
+    if (!pdev2) {
       g_free (pdev);
       continue;
     }
@@ -217,7 +225,7 @@ cd_cache_get_dev_from_drives (GnomeVFSVolumeMonitor *mon, const char *device,
       mnt = gnome_vfs_drive_get_activation_uri (drive);
       if (mnt && strncmp (mnt, "file://", 7) == 0) {
         *mountpoint = g_strdup (mnt + 7);
-      } else /*if (mnt && strncmp (mnt, "cdda://", 7) == 0)*/ {
+      } else {
 	*mountpoint = NULL;
       }
       found = TRUE;
@@ -408,11 +416,13 @@ cd_cache_has_medium (CdCache *cache)
       return FALSE;
     }
     retval = TRUE;
+    cache->disc_udi = udi;
+  } else {
+    g_free (udi);
   }
 
   if (devices != NULL)
     libhal_free_string_array (devices);
-  g_free (udi);
 
   return retval;
 }
@@ -449,7 +459,7 @@ cd_cache_open_device (CdCache *cache,
 		      GError **error)
 {
   /* not a medium? */
-  if (cache->is_media == FALSE) {
+  if (cache->is_media == FALSE || cache->has_medium != FALSE) {
     return TRUE;
   }
 
@@ -458,6 +468,7 @@ cd_cache_open_device (CdCache *cache,
 	_("Please check that a disc is present in the drive."));
     return FALSE;
   }
+  cache->has_medium = TRUE;
 
   return TRUE;
 }
@@ -561,6 +572,8 @@ cd_cache_free (CdCache *cache)
     libhal_ctx_shutdown (cache->ctx, NULL);
     libhal_ctx_free(cache->ctx);
     dbus_connection_close (conn);
+
+    g_free (cache->disc_udi);
 #elif HAVE_HAL_0_2
     hal_shutdown (cache->ctx);
 #endif
@@ -579,27 +592,51 @@ static MediaType
 cd_cache_disc_is_cdda (CdCache *cache,
 		       GError **error)
 {
-  MediaType type = MEDIA_TYPE_DATA;
-  GList *vol, *item;
-
   /* We can't have audio CDs on disc, yet */
   if (cache->is_media == FALSE)
-    return type;
+    return MEDIA_TYPE_DATA;
+  if (!cd_cache_open_device (cache, error))
+    return MEDIA_TYPE_ERROR;
 
-  for (vol = item = gnome_vfs_drive_get_mounted_volumes (cache->drive);
-      item != NULL; item = item->next) {
-    char *mnt = gnome_vfs_volume_get_activation_uri (item->data);
-    if (mnt && strncmp (mnt, "cdda://", 7) == 0) {
-      g_free (mnt);
-      type = MEDIA_TYPE_CDDA;
-      break;
+#ifdef HAVE_HAL_0_5
+  {
+    DBusError error;
+    dbus_bool_t is_cdda;
+
+    dbus_error_init (&error);
+
+    is_cdda = libhal_device_get_property_bool (cache->ctx,
+	cache->disc_udi, "volume.disc.has_audio", &error);
+
+    if (dbus_error_is_set (&error)) {
+      g_warning ("Error checking whether the volume is an audio CD: %s",
+	  error.message);
+      dbus_error_free (&error);
+      return MEDIA_TYPE_ERROR;
     }
-    g_free (mnt);
+    return is_cdda ? MEDIA_TYPE_CDDA : MEDIA_TYPE_DATA;
   }
-  g_list_foreach (vol, (GFunc) gnome_vfs_volume_unref, NULL);
-  g_list_free (vol);
+#else
+  {
+    MediaType type = MEDIA_TYPE_DATA;
+    GList *vol, *item;
+
+    for (vol = item = gnome_vfs_drive_get_mounted_volumes (cache->drive);
+	item != NULL; item = item->next) {
+      char *mnt = gnome_vfs_volume_get_activation_uri (item->data);
+      if (mnt && strncmp (mnt, "cdda://", 7) == 0) {
+	g_free (mnt);
+	type = MEDIA_TYPE_CDDA;
+	break;
+      }
+      g_free (mnt);
+    }
+    g_list_foreach (vol, (GFunc) gnome_vfs_volume_unref, NULL);
+    g_list_free (vol);
+  }
 
   return type;
+#endif
 }
 
 static gboolean
@@ -662,6 +699,36 @@ cd_cache_disc_is_vcd (CdCache *cache,
     return MEDIA_TYPE_ERROR;
   if (!cache->mountpoint)
     return MEDIA_TYPE_ERROR;
+#ifdef HAVE_HAL_0_5
+  if (cache->is_media != FALSE) {
+    DBusError error;
+    dbus_bool_t is_vcd;
+
+    dbus_error_init (&error);
+
+    is_vcd = libhal_device_get_property_bool (cache->ctx,
+	cache->disc_udi, "volume.disc.is_vcd", &error);
+
+    if (dbus_error_is_set (&error)) {
+      g_warning ("Error checking whether the volume is a VCD: %s",
+	  error.message);
+      dbus_error_free (&error);
+      return MEDIA_TYPE_ERROR;
+    }
+    if (is_vcd != FALSE)
+      return MEDIA_TYPE_VCD;
+    is_vcd = libhal_device_get_property_bool (cache->ctx,
+	cache->disc_udi, "volume.disc.is_svcd", &error);
+
+    if (dbus_error_is_set (&error)) {
+      g_warning ("Error checking whether the volume is an SVCD: %s",
+	  error.message);
+      dbus_error_free (&error);
+      return MEDIA_TYPE_ERROR;
+    }
+    return is_vcd ? MEDIA_TYPE_VCD : MEDIA_TYPE_DATA;
+  }
+#endif
   /* first is VCD, second is SVCD */
   if (cd_cache_file_exists (cache, "MPEGAV", "AVSEQ01.DAT") ||
       cd_cache_file_exists (cache, "MPEG2", "AVSEQ01.MPG"))
@@ -681,6 +748,25 @@ cd_cache_disc_is_dvd (CdCache *cache,
     return MEDIA_TYPE_ERROR;
   if (!cache->mountpoint)
     return MEDIA_TYPE_ERROR;
+#ifdef HAVE_HAL_0_5
+  if (cache->is_media != FALSE) {
+    DBusError error;
+    dbus_bool_t is_dvd;
+
+    dbus_error_init (&error);
+
+    is_dvd = libhal_device_get_property_bool (cache->ctx,
+	cache->disc_udi, "volume.disc.is_videodvd", &error);
+
+    if (dbus_error_is_set (&error)) {
+      g_warning ("Error checking whether the volume is a DVD: %s",
+	  error.message);
+      dbus_error_free (&error);
+      return MEDIA_TYPE_ERROR;
+    }
+    return is_dvd ? MEDIA_TYPE_DVD : MEDIA_TYPE_DATA;
+  }
+#endif
   if (cd_cache_file_exists (cache, "VIDEO_TS", "VIDEO_TS.IFO"))
     return MEDIA_TYPE_DVD;
 
