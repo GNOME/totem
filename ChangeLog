@@ -1,5 +1,14 @@
 2006-08-07  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_is_ra),
+	(totem_pl_parser_add_ra), (totem_pl_parser_is_quicktime):
+	Add checks to detect Real Audio/Video playlists
+	* src/totem-mozilla-plugin.cpp:
+	Add audio/x-pn-realaudio-plugin to the supported list,
+	hide the video window is height && width == 0
+
+2006-08-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am: link to the playlist parser
 	* src/totem-mozilla-plugin.cpp:
 	* src/totem-mozilla-scriptable.h:

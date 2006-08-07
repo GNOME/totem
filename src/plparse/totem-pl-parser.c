@@ -1499,13 +1499,21 @@ totem_pl_parser_add_block (TotemPlParser *parser, const char *url, gpointer data
 	return TOTEM_PL_PARSER_RESULT_SUCCESS;
 }
 
+static gboolean
+totem_pl_parser_is_ra (gpointer data, guint len)
+{
+	if (g_str_has_prefix (data, "http://") != FALSE
+			|| g_str_has_prefix (data, "rtsp://") != FALSE
+			|| g_str_has_prefix (data, "pnm://") != FALSE) {
+		return TRUE;
+	}
+	return FALSE;
+}
+
 static TotemPlParserResult
 totem_pl_parser_add_ra (TotemPlParser *parser, const char *url, gpointer data)
 {
-	if (data == NULL
-			|| (g_str_has_prefix (data, "http://") == FALSE
-			&& g_str_has_prefix (data, "rtsp://") == FALSE
-			&& g_str_has_prefix (data, "pnm://") == FALSE)) {
+	if (data == NULL || totem_pl_parser_is_ra (data, strlen (data)) == FALSE) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
@@ -1724,7 +1732,7 @@ totem_pl_parser_is_quicktime (gpointer data, guint len)
 {
 	char *buffer;
 
-	 /* FIXME would be nicer to have an strnstr */
+	/* FIXME would be nicer to have an strnstr */
 	buffer = g_memdup (data, len);
 	buffer[len] = '\0';
 	if (strstr (data, "<?quicktime") != NULL) {
@@ -2045,12 +2053,12 @@ static PlaylistTypes ignore_types[] = {
 
 /* These ones are "dual" types, might be a video, might be a parser */
 static PlaylistTypes dual_types[] = {
-	{ "audio/x-real-audio", totem_pl_parser_add_ra, NULL },
-	{ "audio/x-pn-realaudio", totem_pl_parser_add_ra, NULL },
-	{ "application/vnd.rn-realmedia", totem_pl_parser_add_ra, NULL },
-	{ "audio/x-pn-realaudio-plugin", totem_pl_parser_add_ra, NULL },
-	{ "audio/vnd.rn-realaudio", totem_pl_parser_add_ra, NULL },
-	{ "text/plain", totem_pl_parser_add_ra, NULL },
+	{ "audio/x-real-audio", totem_pl_parser_add_ra, totem_pl_parser_is_ra },
+	{ "audio/x-pn-realaudio", totem_pl_parser_add_ra, totem_pl_parser_is_ra },
+	{ "application/vnd.rn-realmedia", totem_pl_parser_add_ra, totem_pl_parser_is_ra },
+	{ "audio/x-pn-realaudio-plugin", totem_pl_parser_add_ra, totem_pl_parser_is_ra },
+	{ "audio/vnd.rn-realaudio", totem_pl_parser_add_ra, totem_pl_parser_is_ra },
+	{ "text/plain", totem_pl_parser_add_ra, totem_pl_parser_is_ra },
 	{ "video/x-ms-asf", totem_pl_parser_add_asf, totem_pl_parser_is_asf },
 	{ "video/x-ms-wmv", totem_pl_parser_add_asf, totem_pl_parser_is_asf },
 	{ "video/quicktime", totem_pl_parser_add_quicktime, totem_pl_parser_is_quicktime },

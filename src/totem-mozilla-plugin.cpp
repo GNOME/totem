@@ -106,6 +106,12 @@ totem_plugin_fork (TotemPlugin *plugin)
 				g_strdup (LIBEXECDIR"/totem-mozilla-viewer"));
 	}
 
+	/* For the RealAudio streams */
+	if (plugin->width == 0 && plugin->height == 0) {
+		plugin->window = 0;
+		plugin->hidden = TRUE;
+	}
+
 	if (plugin->window) {
 		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_XID));
 		g_ptr_array_add (arr, g_strdup_printf ("%lu", plugin->window));
@@ -728,7 +734,8 @@ static struct {
 	{ "video/x-wmv", "wmv", "video/x-ms-wmv" },
 	{ "application/ogg", "ogg", NULL },
 	{ "video/divx", "divx", "video/x-msvideo" },
-	{ "audio/wav", "wav", NULL }
+	{ "audio/wav", "wav", NULL },
+	{ "audio/x-pn-realaudio-plugin", "rpm", "audio/vnd.rn-realaudio" },
 };
 #define NUM_MIME_TYPES G_N_ELEMENTS(mimetypes)
 
