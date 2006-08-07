@@ -8,6 +8,7 @@ static GMainLoop *loop = NULL;
 static GList *list = NULL;
 static gboolean option_recurse = TRUE;
 static gboolean option_debug = FALSE;
+static gboolean option_data = FALSE;
 
 static void
 header (const char *message)
@@ -115,6 +116,95 @@ push_parser (gpointer data)
 	return FALSE;
 }
 
+#define READ_CHUNK_SIZE 8192
+#define MIME_READ_CHUNK_SIZE 1024
+
+static char *
+test_data_get_data (const char *uri, guint *len)
+{
+	GnomeVFSResult result;
+	GnomeVFSHandle *handle;
+	char *buffer;
+	GnomeVFSFileSize total_bytes_read;
+	GnomeVFSFileSize bytes_read;
+
+	*len = 0;
+
+	/* Open the file. */
+	result = gnome_vfs_open (&handle, uri, GNOME_VFS_OPEN_READ);
+	if (result != GNOME_VFS_OK)
+		return NULL;
+
+	/* Read the whole thing, up to MIME_READ_CHUNK_SIZE */
+	buffer = NULL;
+	total_bytes_read = 0;
+	do {
+		buffer = g_realloc (buffer, total_bytes_read
+				+ MIME_READ_CHUNK_SIZE);
+		result = gnome_vfs_read (handle,
+				buffer + total_bytes_read,
+				MIME_READ_CHUNK_SIZE,
+				&bytes_read);
+		if (result != GNOME_VFS_OK && result != GNOME_VFS_ERROR_EOF) {
+			g_free (buffer);
+			gnome_vfs_close (handle);
+			return NULL;
+		}
+
+		/* Check for overflow. */
+		if (total_bytes_read + bytes_read < total_bytes_read) {
+			g_free (buffer);
+			gnome_vfs_close (handle);
+			return NULL;
+		}
+
+		total_bytes_read += bytes_read;
+	} while (result == GNOME_VFS_OK
+			&& total_bytes_read < MIME_READ_CHUNK_SIZE);
+
+	/* Close the file but don't overwrite the possible error */
+	if (result != GNOME_VFS_OK && result != GNOME_VFS_ERROR_EOF)
+		gnome_vfs_close (handle);
+	else
+		result = gnome_vfs_close (handle);
+
+	if (result != GNOME_VFS_OK) {
+		g_message ("URL '%s' couldn't be read or closed in _get_mime_type_with_data: '%s'\n", uri, gnome_vfs_result_to_string (result));
+		g_free (buffer);
+		return NULL;
+	}
+
+	/* Return the file null-terminated. */
+	buffer = g_realloc (buffer, total_bytes_read + 1);
+	buffer[total_bytes_read] = '\0';
+	*len = total_bytes_read;
+
+	return buffer;
+}
+
+static void
+test_data (void)
+{
+	GList *l;
+	guint len;
+
+	for (l = list; l != NULL; l = l->next) {
+		char *data;
+
+		data = test_data_get_data (l->data, &len);
+		if (data == NULL) {
+			g_message ("Couldn't get data for %s", (char *) l->data);
+			continue;
+		}
+		if (totem_pl_parser_can_parse_from_data (data, len)) {
+			g_message ("IS a playlist: %s", (char *) l->data);
+		} else {
+			g_message ("ISNOT playlist: %s", (char *) l->data);
+		}
+		g_free (data);
+	}
+}
+
 static void
 test_parsing (void)
 {
@@ -146,11 +236,21 @@ int main (int argc, char **argv)
 			argv++;
 			argc--;
 		} else if (strcmp (argv[1], "--help") == 0 || strcmp (argv[1], "-h") == 0) {
-			g_print ("Usage: %s <-n | --no-recurse> <-d | --debug> <-h | --help> <url>\n", argv[0]);
+			g_print ("Usage: %s <-n | --no-recurse> <-d | --debug> <-h | --help> <-d | --data > <url>\n", argv[0]);
 			return 0;
+		} else if (strcmp (argv[1], "--data") == 0 || strcmp (argv[1], "-t") == 0) {
+			g_print ("Using data, instead of filenames\n");
+			option_data = TRUE;
+			argv++;
+			argc--;
 		} else /* other options here */ {
 			break;
 		}
+	}
+
+	if (argc < 2 && option_data != FALSE) {
+		g_message ("Please pass specific files to check by data");
+		return 1;
 	}
 
 	if (argc == 1) {
@@ -162,7 +262,11 @@ int main (int argc, char **argv)
 			list = g_list_prepend (list, argv[i]);
 		}
 		list = g_list_reverse (list);
-		test_parsing ();
+		if (option_data == FALSE) {
+			test_parsing ();
+		} else {
+			test_data ();
+		}
 	}
 
 	return 0;

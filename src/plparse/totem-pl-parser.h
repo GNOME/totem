@@ -106,6 +106,8 @@ gboolean   totem_pl_parser_write_with_title (TotemPlParser *parser,
 					     gpointer user_data,
 					     GError **error);
 
+gboolean   totem_pl_parser_can_parse_from_data (gpointer data, guint len);
+
 void	   totem_pl_parser_add_ignored_scheme (TotemPlParser *parser,
 					       const char *scheme);
 void       totem_pl_parser_add_ignored_mimetype (TotemPlParser *parser,

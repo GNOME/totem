@@ -51,6 +51,7 @@
 #define DEBUG(x) { if (parser->priv->debug != FALSE) x; }
 
 typedef TotemPlParserResult (*PlaylistCallback) (TotemPlParser *parser, const char *url, gpointer data);
+typedef gboolean (*PlaylistIdenCallback) (gpointer data, guint len);
 static gboolean totem_pl_parser_scheme_is_ignored (TotemPlParser *parser, const char *url);
 static gboolean totem_pl_parser_ignore (TotemPlParser *parser, const char *url);
 static TotemPlParserResult totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url);
@@ -68,6 +69,7 @@ static void totem_pl_parser_get_property (GObject *object,
 typedef struct {
 	char *mimetype;
 	PlaylistCallback func;
+	PlaylistIdenCallback iden;
 } PlaylistTypes;
 
 struct TotemPlParserPrivate
@@ -1626,6 +1628,28 @@ totem_pl_parser_add_smil (TotemPlParser *parser, const char *url, gpointer data)
 	return retval;
 }
 
+static gboolean
+totem_pl_parser_is_asf (gpointer data, guint len)
+{
+	char *buffer;
+	if (g_str_has_prefix (data, "[Reference]") != FALSE
+			|| g_ascii_strncasecmp (data, "<ASX", strlen ("<ASX")) == 0
+			|| g_str_has_prefix (data, "ASF ") != FALSE) {
+		return TRUE;
+	}
+
+	/* FIXME would be nicer to have an strnstr */
+	buffer = g_memdup (data, len);
+	buffer[len] = '\0';
+	if (strstr (data, "<ASX") != NULL
+			|| strstr (data, "<asx") != NULL) {
+		g_free (buffer);
+		return TRUE;
+	}
+	g_free (buffer);
+	return FALSE;
+}
+
 static TotemPlParserResult
 totem_pl_parser_add_asf (TotemPlParser *parser, const char *url, gpointer data)
 {
@@ -1634,11 +1658,7 @@ totem_pl_parser_add_asf (TotemPlParser *parser, const char *url, gpointer data)
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
 
-	if (g_str_has_prefix (data, "[Reference]") == FALSE
-		 && g_ascii_strncasecmp (data, "<ASX", strlen ("<ASX")) != 0
-		 && strstr (data, "<ASX") == NULL
-		 && strstr (data, "<asx") == NULL
-		 && g_str_has_prefix (data, "ASF ") == FALSE) {
+	if (totem_pl_parser_is_asf (data, strlen (data)) == FALSE) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
@@ -1699,10 +1719,26 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url, 
 	return TOTEM_PL_PARSER_RESULT_SUCCESS;
 }
 
+static gboolean
+totem_pl_parser_is_quicktime (gpointer data, guint len)
+{
+	char *buffer;
+
+	 /* FIXME would be nicer to have an strnstr */
+	buffer = g_memdup (data, len);
+	buffer[len] = '\0';
+	if (strstr (data, "<?quicktime") != NULL) {
+		g_free (buffer);
+		return TRUE;
+	}
+	g_free (buffer);
+	return FALSE;
+}
+
 static TotemPlParserResult
 totem_pl_parser_add_quicktime (TotemPlParser *parser, const char *url, gpointer data)
 {
-	if (data == NULL || strstr (data, "<?quicktime") == NULL) {
+	if (data == NULL || totem_pl_parser_is_quicktime (data, strlen (data) == FALSE)) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
@@ -1982,42 +2018,43 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 
 /* These ones need a special treatment, mostly parser formats */
 static PlaylistTypes special_types[] = {
-	{ "audio/x-mpegurl", totem_pl_parser_add_m3u },
-	{ "audio/playlist", totem_pl_parser_add_m3u },
-	{ "audio/x-ms-asx", totem_pl_parser_add_asx },
-	{ "audio/x-scpls", totem_pl_parser_add_pls },
-	{ "application/x-smil", totem_pl_parser_add_smil },
-	{ "application/smil", totem_pl_parser_add_smil },
-	{ "application/x-gnome-app-info", totem_pl_parser_add_desktop },
-	{ "application/x-desktop", totem_pl_parser_add_desktop },
-	{ "x-directory/normal", totem_pl_parser_add_directory },
-	{ "video/x-ms-wvx", totem_pl_parser_add_asx },
-	{ "audio/x-ms-wax", totem_pl_parser_add_asx },
-	{ "application/x-cd-image", totem_pl_parser_add_iso },
-	{ "application/x-cue", totem_pl_parser_add_cue },
-	{ "application/xspf+xml", totem_pl_parser_add_xspf},
-	{ "x-special/device-block", totem_pl_parser_add_block },
+	{ "audio/x-mpegurl", totem_pl_parser_add_m3u, NULL },
+	{ "audio/playlist", totem_pl_parser_add_m3u, NULL },
+	{ "audio/x-ms-asx", totem_pl_parser_add_asx, NULL },
+	{ "audio/x-scpls", totem_pl_parser_add_pls, NULL },
+	{ "application/x-smil", totem_pl_parser_add_smil, NULL },
+	{ "application/smil", totem_pl_parser_add_smil, NULL },
+	{ "application/x-gnome-app-info", totem_pl_parser_add_desktop, NULL },
+	{ "application/x-desktop", totem_pl_parser_add_desktop, NULL },
+	{ "x-directory/normal", totem_pl_parser_add_directory, NULL },
+	{ "video/x-ms-wvx", totem_pl_parser_add_asx, NULL },
+	{ "audio/x-ms-wax", totem_pl_parser_add_asx, NULL },
+	{ "application/x-cd-image", totem_pl_parser_add_iso, NULL },
+	{ "application/x-cue", totem_pl_parser_add_cue, NULL },
+	{ "application/xspf+xml", totem_pl_parser_add_xspf, NULL },
+	{ "x-special/device-block", totem_pl_parser_add_block, NULL },
 };
 
 static PlaylistTypes ignore_types[] = {
-	{ "image/*", NULL },
-	{ "text/plain", NULL },
-	{ "application/x-rar", NULL },
-	{ "application/zip", NULL },
-	{ "application/x-trash", NULL },
+	{ "image/*", NULL, NULL },
+	{ "text/plain", NULL, NULL},
+	{ "application/x-rar", NULL, NULL },
+	{ "application/zip", NULL, NULL },
+	{ "application/x-trash", NULL, NULL },
 };
 
 /* These ones are "dual" types, might be a video, might be a parser */
 static PlaylistTypes dual_types[] = {
-	{ "audio/x-real-audio", totem_pl_parser_add_ra },
-	{ "audio/x-pn-realaudio", totem_pl_parser_add_ra },
-	{ "application/vnd.rn-realmedia", totem_pl_parser_add_ra },
-	{ "audio/x-pn-realaudio-plugin", totem_pl_parser_add_ra },
-	{ "audio/vnd.rn-realaudio", totem_pl_parser_add_ra },
-	{ "text/plain", totem_pl_parser_add_ra },
-	{ "video/x-ms-asf", totem_pl_parser_add_asf },
-	{ "video/x-ms-wmv", totem_pl_parser_add_asf },
-	{ "video/quicktime", totem_pl_parser_add_quicktime },
+	{ "audio/x-real-audio", totem_pl_parser_add_ra, NULL },
+	{ "audio/x-pn-realaudio", totem_pl_parser_add_ra, NULL },
+	{ "application/vnd.rn-realmedia", totem_pl_parser_add_ra, NULL },
+	{ "audio/x-pn-realaudio-plugin", totem_pl_parser_add_ra, NULL },
+	{ "audio/vnd.rn-realaudio", totem_pl_parser_add_ra, NULL },
+	{ "text/plain", totem_pl_parser_add_ra, NULL },
+	{ "video/x-ms-asf", totem_pl_parser_add_asf, totem_pl_parser_is_asf },
+	{ "video/x-ms-wmv", totem_pl_parser_add_asf, totem_pl_parser_is_asf },
+	{ "video/quicktime", totem_pl_parser_add_quicktime, totem_pl_parser_is_quicktime },
+	{ "application/x-quicktime-media-link", totem_pl_parser_add_quicktime, totem_pl_parser_is_quicktime },
 };
 
 static gboolean
@@ -2068,7 +2105,7 @@ totem_pl_parser_ignore (TotemPlParser *parser, const char *url)
 		return TRUE;
 
 	mimetype = gnome_vfs_get_file_mime_type (url, NULL, TRUE);
-	if (mimetype == NULL || strcmp (mimetype, "application/octet-stream") == 0)
+	if (mimetype == NULL || strcmp (mimetype, GNOME_VFS_MIME_TYPE_UNKNOWN) == 0)
 		return FALSE;
 
 	for (i = 0; i < G_N_ELEMENTS (special_types); i++)
@@ -2089,6 +2126,34 @@ totem_pl_parser_ignore (TotemPlParser *parser, const char *url)
 	return TRUE;
 }
 
+static gboolean
+totem_pl_parser_ignore_from_mimetype (TotemPlParser *parser, const char *mimetype)
+{
+	char *super;
+	guint i;
+
+	super = gnome_vfs_get_supertype_from_mime_type (mimetype);
+	for (i = 0; i < G_N_ELEMENTS (ignore_types) && super != NULL; i++) {
+		if (gnome_vfs_mime_type_is_supertype (ignore_types[i].mimetype) != FALSE) {
+			if (strcmp (super, ignore_types[i].mimetype) == 0) {
+				g_free (super);
+				return TRUE;
+			}
+		} else {
+			GnomeVFSMimeEquivalence eq;
+
+			eq = gnome_vfs_mime_type_get_equivalence (mimetype, ignore_types[i].mimetype);
+			if (eq == GNOME_VFS_MIME_PARENT || eq == GNOME_VFS_MIME_IDENTICAL) {
+				g_free (super);
+				return TRUE;
+			}
+		}
+	}
+	g_free (super);
+
+	return FALSE;
+}
+
 static TotemPlParserResult
 totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 {
@@ -2096,7 +2161,6 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	guint i;
 	gpointer data = NULL;
 	TotemPlParserResult ret = TOTEM_PL_PARSER_RESULT_ERROR;
-	char *super;
 	gboolean found = FALSE;
 
 	if (parser->priv->recurse_level > RECURSE_LEVEL_MAX)
@@ -2161,24 +2225,8 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	if (ret == TOTEM_PL_PARSER_RESULT_SUCCESS)
 		return ret;
 
-	super = gnome_vfs_get_supertype_from_mime_type (mimetype);
-	for (i = 0; i < G_N_ELEMENTS (ignore_types) && super != NULL && found == FALSE; i++) {
-		if (gnome_vfs_mime_type_is_supertype (ignore_types[i].mimetype) != FALSE) {
-			if (strcmp (super, ignore_types[i].mimetype) == 0) {
-				g_free (super);
-				return TOTEM_PL_PARSER_RESULT_IGNORED;
-			}
-		} else {
-			GnomeVFSMimeEquivalence eq;
-
-			eq = gnome_vfs_mime_type_get_equivalence (mimetype, ignore_types[i].mimetype);
-			if (eq == GNOME_VFS_MIME_PARENT || eq == GNOME_VFS_MIME_IDENTICAL) {
-				g_free (super);
-				return TOTEM_PL_PARSER_RESULT_IGNORED;
-			}
-		}
-	}
-	g_free (super);
+	if (totem_pl_parser_ignore_from_mimetype (parser, mimetype))
+		return TOTEM_PL_PARSER_RESULT_IGNORED;
 
 	if (ret != TOTEM_PL_PARSER_RESULT_SUCCESS && parser->priv->fallback) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
@@ -2207,6 +2255,37 @@ totem_pl_parser_parse (TotemPlParser *parser, const char *url,
 	parser->priv->recurse_level = 0;
 	parser->priv->fallback = fallback;
 	return totem_pl_parser_parse_internal (parser, url);
+}
+
+gboolean
+totem_pl_parser_can_parse_from_data (gpointer data, guint len)
+{
+	const char *mimetype;
+	guint i;
+
+	mimetype = gnome_vfs_get_mime_type_for_data (data, len);
+	if (mimetype == NULL || strcmp (GNOME_VFS_MIME_TYPE_UNKNOWN, mimetype) == 0) {
+		g_message ("totem_pl_parser_can_parse_from_data couldn't get mimetype");
+		return FALSE;
+	}
+
+	for (i = 0; i < G_N_ELEMENTS(special_types); i++) {
+		if (strcmp (special_types[i].mimetype, mimetype) == 0) {
+			g_message ("Is special type '%s'\n", mimetype);
+			return TRUE;
+		}
+	}
+
+	for (i = 0; i < G_N_ELEMENTS(dual_types); i++) {
+		if (strcmp (dual_types[i].mimetype, mimetype) == 0) {
+			g_message ("Is dual type '%s'\n", mimetype);
+			if (dual_types[i].iden != NULL)
+				return (* dual_types[i].iden) (data, len);
+			return FALSE;
+		}
+	}
+
+	return FALSE;
 }
 
 void

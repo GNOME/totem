@@ -1,3 +1,21 @@
+2006-08-07  Bastien Nocera  <hadess@hadess.net>
+
+	* data/mime-type-list.txt: add application/x-quicktime-media-link
+	* src/plparse/test-parser.c: (test_data_get_data), (test_data),
+	(main):
+	Add test code for the below
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_is_asf),
+	(totem_pl_parser_add_asf), (totem_pl_parser_is_quicktime),
+	(totem_pl_parser_add_quicktime), (totem_pl_parser_ignore),
+	(totem_pl_parser_ignore_from_mimetype),
+	(totem_pl_parser_parse_internal), (totem_pl_parser_parse),
+	(totem_pl_parser_can_parse_from_data):
+	* src/plparse/totem-pl-parser.h:
+	Add totem_pl_parser_can_parse_from_data which takes data in
+	and tells us whether the data is a playlist or not, this is useful
+	for the browser plugin so it knows whether to wait until the file
+	is finished downloading before passing it on to the -viewer
+
 2006-08-05  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/totem-disc.c: (cd_cache_get_dev_from_volumes),
