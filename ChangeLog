@@ -1,5 +1,15 @@
 2006-08-07  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am: link to the playlist parser
+	* src/totem-mozilla-plugin.cpp:
+	* src/totem-mozilla-scriptable.h:
+	Check whether we have a playlist when getting the first bit of
+	data, and only launch the viewer with the playlist on the local
+	filesystem when it's all downloaded, rather than passing it
+	directly to the player
+
+2006-08-07  Bastien Nocera  <hadess@hadess.net>
+
 	* data/mime-type-list.txt: add application/x-quicktime-media-link
 	* src/plparse/test-parser.c: (test_data_get_data), (test_data),
 	(main):

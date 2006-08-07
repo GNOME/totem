@@ -36,6 +36,7 @@
 #include <glib/gi18n.h>
 #include <libgnomevfs/gnome-vfs-mime-handlers.h>
 #include <libgnomevfs/gnome-vfs-mime-info.h>
+#include <totem-pl-parser.h>
 
 #include "totem-mozilla-options.h"
 #include "totem-mozilla-scriptable.h"
@@ -164,6 +165,7 @@ totem_plugin_fork (TotemPlugin *plugin)
 		s = g_string_new ("Launching: ");
 		for (i = 0; argv[i] != NULL; i++) {
 			g_string_append (s, argv[i]);
+			g_string_append (s, " ");
 		}
 		g_string_append (s, "\n");
 		D("%s", s->str);
@@ -472,13 +474,8 @@ static NPError totem_plugin_set_window (NPP instance, NPWindow* window)
 			printf ("ack.  window changed!\n");
 		}
 	} else {
-		gchar *msg;
-
-		D("about to fork");
-
+		/* If not, wait for the first bits of data to come */
 		plugin->window = (Window) window->window;
-		if (!totem_plugin_fork (plugin))
-			return NPERR_GENERIC_ERROR;
 	}
 
 	D("leaving plugin_set_window");
@@ -578,8 +575,11 @@ static int32 totem_plugin_write (NPP instance, NPStream *stream, int32 offset,
 		return -1;
 
 	if (!plugin->player_pid) {
-		//FIXME push the data to the playlist parser to get
-		//something recognised first?
+		if (totem_pl_parser_can_parse_from_data (buffer, len) != FALSE) {
+			D("Need to wait for the file to be downloaded completely");
+			plugin->is_playlist = TRUE;
+			return len;
+		}
 
 		if (!totem_plugin_fork (plugin))
 			return -1;
@@ -613,6 +613,14 @@ static void totem_plugin_stream_as_file (NPP instance, NPStream *stream,
 
 	if (plugin == NULL)
 		return;
+
+	if (!plugin->player_pid && plugin->is_playlist != FALSE) {
+		if (plugin->src != NULL)
+			g_free (plugin->src);
+		plugin->src = g_strdup (fname);
+		if (!totem_plugin_fork (plugin))
+			return;
+	}
 
 	if (!dbus_g_proxy_call (plugin->proxy, "SetLocalFile", &err,
 			G_TYPE_STRING, fname, G_TYPE_INVALID,

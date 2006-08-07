@@ -173,6 +173,8 @@ libtotem_mozilla.xpt: totem_mozilla_scripting.idl
 typelib_DATA = libtotem_mozilla.xpt
 typelibdir = $(libdir)/mozilla/plugins
 
+libtotem_mozilla_la_LIBADD = \
+	plparse/libtotem-plparser.la
 libtotem_mozilla_la_LDFLAGS = \
 	$(DBUS_LIBS) $(MOZILLA_LIBS) $(modules_flags)
 libtotem_mozilla_la_SOURCES = \
