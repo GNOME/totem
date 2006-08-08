@@ -1,6 +1,6 @@
 /* Totem Mozilla plugin
  *
- * Copyright (C) <2004-2005> Bastien Nocera <hadess@hadess.net>
+ * Copyright (C) <2004-2006> Bastien Nocera <hadess@hadess.net>
  * Copyright (C) <2002> David A. Schleef <ds@schleef.org>
  *
  * This library is free software; you can redistribute it and/or
@@ -30,6 +30,7 @@
 #include <gdk/gdkx.h>
 #include <glade/glade.h>
 #include <gconf/gconf-client.h>
+#include <totem-pl-parser.h>
 
 #include <dbus/dbus-glib.h>
 #include <sys/types.h>
@@ -77,6 +78,13 @@ typedef struct _TotemEmbedded {
 	TotemStates state;
 	GdkCursor *cursor;
 
+	/* Playlist */
+	gboolean is_playlist;
+	GList *playlist, *current;
+	GMainLoop *loop;
+	int num_items;
+	gboolean repeat;
+
 	/* Open menu item */
 	GnomeVFSMimeApplication *app;
 	GtkWidget *menu_item;
@@ -89,6 +97,7 @@ typedef struct _TotemEmbedded {
 	/* XEmbed */
 	gboolean embedded_done;
 } TotemEmbedded;
+
 GType totem_embedded_get_type (void);
 
 G_DEFINE_TYPE (TotemEmbedded, totem_embedded, G_TYPE_OBJECT);
@@ -462,11 +471,39 @@ on_eos_event (GtkWidget *bvw, TotemEmbedded *emb)
 {
 	totem_embedded_set_state (emb, STATE_STOPPED);
 	gtk_adjustment_set_value (emb->seekadj, 0);
+
+	/* No playlist if we have fd://0, right? */
 	if (strcmp (emb->filename, "fd://0") == 0) {
 		totem_embedded_set_pp_state (emb, FALSE);
-	} else if (g_str_has_prefix (emb->filename, "file://") != FALSE) {
+	} else if (emb->num_items == 1) {
+		if (g_str_has_prefix (emb->filename, "file://") != FALSE) {
+			//FIXME seek back so we don't have to reopen the file
+			bacon_video_widget_close (emb->bvw);
+			totem_embedded_open (emb);
+		} else {
+			bacon_video_widget_close (emb->bvw);
+			totem_embedded_open (emb);
+		}
+	} else {
+		/* Multiple items on the playlist */
+		gboolean eop = FALSE, res;
+
+		if (emb->current->next == NULL) {
+			emb->current = emb->playlist;
+			eop = TRUE;
+		} else {
+			emb->current = emb->current->next;
+		}
+
+		g_free (emb->filename);
+		emb->filename = g_strdup (emb->current->data);
 		bacon_video_widget_close (emb->bvw);
-		totem_embedded_open (emb);
+		res = totem_embedded_open (emb);
+		if (res != FALSE &&
+				((eop != FALSE && emb->repeat != FALSE)
+				 || (eop == FALSE))) {
+			totem_embedded_play (emb, NULL);
+		}
 	}
 }
 
@@ -617,6 +654,71 @@ totem_embedded_create_cursor (TotemEmbedded *emb)
 	gdk_pixbuf_unref (icon);
 }
 
+static void
+entry_added (TotemPlParser *parser, const char *uri, const char *title,
+		                const char *genre, gpointer data)
+{
+	TotemEmbedded *emb = (TotemEmbedded *) data;
+
+	g_print ("added URI '%s' with title '%s' genre '%s'\n", uri,
+			title ? title : "empty", genre);
+
+	//FIXME need new struct to hold that
+	emb->playlist = g_list_prepend (emb->playlist, g_strdup (uri));
+	emb->num_items++;
+}
+
+static gboolean
+totem_embedded_push_parser (gpointer data)
+{
+	TotemPlParser *parser = totem_pl_parser_new ();
+	TotemEmbedded *emb = (TotemEmbedded *) data;
+	TotemPlParserResult res;
+
+	parser = totem_pl_parser_new ();
+	g_signal_connect (G_OBJECT (parser), "entry", G_CALLBACK (entry_added), emb);
+	g_object_set (G_OBJECT (parser), "recurse", FALSE, NULL);
+	res = totem_pl_parser_parse (parser, emb->filename, FALSE);
+	g_object_unref (parser);
+
+	if (res != TOTEM_PL_PARSER_RESULT_SUCCESS) {
+		//FIXME show a proper error message
+		switch (res) {
+		case TOTEM_PL_PARSER_RESULT_UNHANDLED:
+			g_print ("url '%s' unhandled\n", emb->filename);
+			break;
+		case TOTEM_PL_PARSER_RESULT_ERROR:
+			g_print ("error handling url '%s'\n", emb->filename);
+			break;
+		case TOTEM_PL_PARSER_RESULT_IGNORED:
+			g_print ("ignored url '%s'\n", emb->filename);
+			break;
+		default:
+			g_assert_not_reached ();
+			;;
+		}
+	}
+
+	/* Check if we have anything in the playlist now */
+	if (emb->playlist == NULL) {
+		g_message ("NO PLAYLIST");
+		totem_embedded_error_and_exit ("Can't parse that",
+				"no files",
+				emb);
+		//FIXME error out
+		return FALSE;
+	}
+
+	emb->playlist = g_list_reverse (emb->playlist);
+	g_free (emb->filename);
+	emb->filename = g_strdup (emb->playlist->data);
+	emb->current = emb->playlist;
+
+	g_main_loop_quit (emb->loop);
+
+	return FALSE;
+}
+
 static void embedded (GtkPlug *plug, TotemEmbedded *emb)
 {
 	emb->embedded_done = TRUE;
@@ -734,6 +836,10 @@ int main (int argc, char **argv)
 			}
 		} else if (OPTION_IS (TOTEM_OPTION_HIDDEN)) {
 			emb->hidden = TRUE;
+		} else if (OPTION_IS (TOTEM_OPTION_PLAYLIST)) {
+			emb->is_playlist = TRUE;
+		} else if (OPTION_IS (TOTEM_OPTION_REPEAT)) {
+			emb->repeat = TRUE;
 		} else if (i + 1 == argc) {
 			emb->filename = g_strdup (argv[i]);
 		}
@@ -770,6 +876,14 @@ int main (int argc, char **argv)
 	} else {
 		while (gtk_events_pending ())
 			gtk_main_iteration ();
+	}
+
+	/* Do we have a playlist we need to setup ourselves? */
+	if (emb->is_playlist != FALSE) {
+		g_idle_add (totem_embedded_push_parser, emb);
+		emb->loop = g_main_loop_new (NULL, FALSE);
+		g_main_loop_run (emb->loop);
+		g_main_loop_unref (emb->loop);
 	}
 
 	if (totem_embedded_open (emb) != FALSE)

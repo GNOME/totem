@@ -1,3 +1,19 @@
+2006-08-08  Bastien Nocera  <hadess@hadess.net>
+
+	* src/Makefile.am: link the browser plugin against the playlist
+	parser
+	* src/plparse/test-parser.c: (playlist_started), (playlist_ended),
+	(test_parsing): show the playlist start and end signals
+	* src/totem-mozilla-options.h:
+	* src/totem-mozilla-plugin.cpp:
+	* src/totem-mozilla-scriptable.h:
+	* src/totem-mozilla-viewer.c: (on_eos_event), (entry_added),
+	(totem_embedded_push_parser), (main):
+	Add support for reading playlists from the disk, instead of
+	passing them to the backend, keep a list of files to be played,
+	and pass from one to the other allowing a repeat mode
+	(Closes: #329138, #171884)
+
 2006-08-08  Christian Persch  <chpe@cvs.gnome.org>
 
 	* data/Makefile.am:

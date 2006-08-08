@@ -27,4 +27,5 @@
 #define TOTEM_OPTION_TARGET		"--target"
 #define TOTEM_OPTION_HIDDEN		"--hidden"
 #define TOTEM_OPTION_MIMETYPE		"--mimetype"
-
+#define TOTEM_OPTION_PLAYLIST		"--playlist"
+#define TOTEM_OPTION_REPEAT		"--repeat"

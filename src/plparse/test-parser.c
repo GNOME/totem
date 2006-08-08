@@ -206,6 +206,18 @@ test_data (void)
 }
 
 static void
+playlist_started (TotemPlParser *parser, const char *title)
+{
+	g_message ("Playlist with name '%s' started", title);
+}
+
+static void
+playlist_ended (TotemPlParser *parser, const char *title)
+{
+	g_message ("Playlist with name '%s' ended", title);
+}
+
+static void
 test_parsing (void)
 {
 	TotemPlParser *pl = totem_pl_parser_new ();
@@ -213,6 +225,8 @@ test_parsing (void)
 	g_object_set (G_OBJECT (pl), "recurse", option_recurse, NULL);
 	g_object_set (G_OBJECT (pl), "debug", option_debug, NULL);
 	g_signal_connect (G_OBJECT (pl), "entry", G_CALLBACK (entry_added), NULL);
+	g_signal_connect (G_OBJECT (pl), "playlist-start", G_CALLBACK (playlist_started), NULL);
+	g_signal_connect (G_OBJECT (pl), "playlist-end", G_CALLBACK (playlist_ended), NULL);
 
 	header ("parsing");
 	g_idle_add (push_parser, pl);

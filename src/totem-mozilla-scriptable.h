@@ -48,6 +48,7 @@ typedef struct {
 	guint8 stream_type;
 	gboolean cache;
 	gboolean hidden;
+	gboolean repeat;
 	gboolean is_playlist;
 
 	GByteArray *bytes;

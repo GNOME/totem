@@ -155,10 +155,19 @@ totem_plugin_fork (TotemPlugin *plugin)
 		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_HIDDEN));
 	}
 
-	if (is_supported_scheme (plugin->src) == FALSE)
+	if (plugin->repeat) {
+		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_REPEAT));
+	}
+
+	if (plugin->is_playlist) {
+		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_PLAYLIST));
 		g_ptr_array_add (arr, g_strdup (plugin->src));
-	else
-		g_ptr_array_add (arr, g_strdup ("fd://0"));
+	} else {
+		if (is_supported_scheme (plugin->src) == FALSE)
+			g_ptr_array_add (arr, g_strdup (plugin->src));
+		else
+			g_ptr_array_add (arr, g_strdup ("fd://0"));
+	}
 
 	g_ptr_array_add (arr, NULL);
 	argv = (char **) g_ptr_array_free (arr, FALSE);
@@ -399,9 +408,14 @@ static NPError totem_plugin_new_instance (NPMIMEType mimetype, NPP instance,
 				|| g_ascii_strcasecmp (argn[i], "autoplay") == 0) {
 			//FIXME
 		}
-		if (g_ascii_strcasecmp (argn[i], "loop") == 0 ||
-				g_ascii_strcasecmp (argn[i], "playcount") == 0) {
-			//FIXME see http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_LOOP.html
+		if (g_ascii_strcasecmp (argn[i], "loop") == 0
+				|| g_ascii_strcasecmp (argn[i], "repeat")) {
+			if (g_ascii_strcasecmp (argv[i], "true") == 0) {
+				plugin->repeat = TRUE;
+			}
+
+			// FIXME Doesn't handle playcount, or loop with numbers
+			// http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_LOOP.html
 		}
 		if (g_ascii_strcasecmp (argn[i], "starttime") == 0) {
 			//FIXME see http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_STARTTIME.html
@@ -623,7 +637,10 @@ static void totem_plugin_stream_as_file (NPP instance, NPStream *stream,
 	if (!plugin->player_pid && plugin->is_playlist != FALSE) {
 		if (plugin->src != NULL)
 			g_free (plugin->src);
-		plugin->src = g_strdup (fname);
+		plugin->src = g_filename_to_uri (fname, NULL, NULL);
+		totem_plugin_fork (plugin);
+		return;
+	} else if (!plugin->player_pid) {
 		if (!totem_plugin_fork (plugin))
 			return;
 	}

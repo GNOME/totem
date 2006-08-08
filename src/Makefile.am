@@ -194,6 +194,7 @@ totem_mozilla_viewer_SOURCES = 		\
 	bacon-volume.c bacon-volume.h
 totem_mozilla_viewer_LDADD = \
 	backend/libbaconvideowidget.la libbaconpropertiespage.la \
+	plparse/libtotem-plparser.la \
 	$(EXTRA_GNOME_LIBS) $(XVIDMODE_LIBS) \
 	$(DBUS_LIBS) $(NVTV_LIBS) \
 	$(XTEST_LIBS) $(X_LIBS) 
