@@ -1,16 +1,19 @@
 # Dutch translation of Totem
 # Copyright (C) 2002, 2003 Free Software Foundation, Inc.
+#
 # Huib Kleinhout <huib@stack.nl>, 2002, 2003, 2004.
 # Tino Meinen <a.t.meinen@chello.nl>, 2004, 2005, 2006.
-# ------------------------------------------------
+# Wouter Bolsterlee <uws+gnome@xs4all.nl>, 2006.
+# 
 # subtitels      ondertiteling/ondertitels (niet ondertitelingen)
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Totem 05-09-2004 cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-28 00:18+0200\n"
-"PO-Revision-Date: 2006-06-28 00:38+0200\n"
-"Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
+"POT-Creation-Date: 2006-08-09 00:12+0200\n"
+"PO-Revision-Date: 2006-08-09 00:12+0200 \n"
+"Last-Translator: Wouter Bolsterlee <uws+gnome@xs4all.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,7 +34,10 @@ msgstr "Zachter"
 msgid "Move Up"
 msgstr "Harder"
 
-#: ../data/playlist.glade.h:4 ../src/totem-sidebar.c:117
+#. translators: Playlist is the default saved playlist filename,
+#. * without the suffix
+#: ../data/playlist.glade.h:4 ../src/totem-playlist.c:890
+#: ../src/totem-sidebar.c:117
 msgid "Playlist"
 msgstr "Afspeellijst"
 
@@ -187,7 +193,7 @@ msgstr "Beeldsnelheid:"
 msgid "N/A"
 msgstr "Niet beschikbaar"
 
-#: ../data/properties.glade.h:17 ../src/totem.c:2057
+#: ../data/properties.glade.h:17 ../src/totem-sidebar.c:120
 msgid "Properties"
 msgstr "Eigenschappen"
 
@@ -234,7 +240,7 @@ msgstr "Schermafdruk op _bureaublad opslaan"
 msgid "Save screenshot to _file:"
 msgstr "Schermafdruk in bestand _opslaan:"
 
-#: ../data/skip_to.glade.h:2 ../src/totem-skipto.c:144
+#: ../data/skip_to.glade.h:2 ../src/totem-skipto.c:154
 msgid "Skip to"
 msgstr "Verplaatsen naar"
 
@@ -596,8 +602,8 @@ msgid "Time:"
 msgstr "Tijd:"
 
 #. Title
-#: ../data/totem.glade.h:102 ../src/totem.c:706 ../src/totem.c:3520
-#: ../src/totem.c:3537
+#: ../data/totem.glade.h:102 ../src/totem.c:706 ../src/totem.c:3513
+#: ../src/totem.c:3530
 msgid "Totem Movie Player"
 msgstr "Totem mediaspeler"
 
@@ -739,43 +745,39 @@ msgid "_Open..."
 msgstr "_Openen..."
 
 #: ../data/totem.glade.h:140
-msgid "_Properties"
-msgstr "_Eigenschappen"
-
-#: ../data/totem.glade.h:141
 msgid "_Quit"
 msgstr "A_fsluiten"
 
-#: ../data/totem.glade.h:142
+#: ../data/totem.glade.h:141
 msgid "_Repeat Mode"
 msgstr "_Herhalen"
 
-#: ../data/totem.glade.h:143
+#: ../data/totem.glade.h:142
 msgid "_Resize 1:2"
 msgstr "_Grootte 1:2"
 
 # zijbalk is hier de afspeellijst
-#: ../data/totem.glade.h:144
+#: ../data/totem.glade.h:143
 msgid "_Sidebar"
 msgstr "_Afspeellijst"
 
-#: ../data/totem.glade.h:145
+#: ../data/totem.glade.h:144
 msgid "_Skip to..."
 msgstr "Verplaat_sen naar..."
 
-#: ../data/totem.glade.h:146
+#: ../data/totem.glade.h:145
 msgid "_Sound"
 msgstr "Gel_uid"
 
-#: ../data/totem.glade.h:147
+#: ../data/totem.glade.h:146
 msgid "_Title Menu"
 msgstr "_Titelmenu"
 
-#: ../data/totem.glade.h:148
+#: ../data/totem.glade.h:147
 msgid "_Type of visualisation:"
 msgstr "_Visualisatietype:"
 
-#: ../data/totem.glade.h:149
+#: ../data/totem.glade.h:148
 msgid "_View"
 msgstr "Beel_d"
 
@@ -1036,6 +1038,67 @@ msgstr "Geen"
 msgid "Play Disc '%s'"
 msgstr "Schijf '%s' afspelen"
 
+#. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
+#: ../src/totem-mozilla-viewer.c:196 ../src/totem.c:338 ../src/totem.c:367
+#: ../src/totem.c:811 ../src/totem.c:921
+#, c-format
+msgid "Totem could not play '%s'."
+msgstr "Totem kan '%s' niet afspelen."
+
+#: ../src/totem-mozilla-viewer.c:335
+#, c-format
+msgid "Movie Player using %s"
+msgstr "Mediaspeler, maakt gebruik van %s"
+
+#: ../src/totem-mozilla-viewer.c:339
+msgid "Totem Mozilla Plugin"
+msgstr "Totem Mozilla-plugin"
+
+#: ../src/totem-mozilla-viewer.c:341 ../src/totem.c:1971
+msgid "Copyright © 2002-2006 Bastien Nocera"
+msgstr "Copyright © 2002-2006 Bastien Nocera"
+
+#: ../src/totem-mozilla-viewer.c:344 ../src/totem.c:1976 ../src/vanity.c:267
+msgid "translator-credits"
+msgstr ""
+"Wouter Bolsterlee\n"
+"Tino Meinen\n"
+"Huib Kleinhout\n"
+"\n"
+"Kijk voor meer informatie op http://nl.gnome.org/"
+
+#: ../src/totem-mozilla-viewer.c:432
+msgid "Failed to start stand-alone movie player"
+msgstr "Opstarten van losse mediaspeler is mislukt"
+
+#: ../src/totem-mozilla-viewer.c:433
+msgid "Unknown reason"
+msgstr "Onbekende reden"
+
+#: ../src/totem-mozilla-viewer.c:561
+msgid "Plugin"
+msgstr "Plugin"
+
+#: ../src/totem-mozilla-viewer.c:564
+msgid "Menu"
+msgstr "Menu"
+
+#: ../src/totem-mozilla-viewer.c:581
+msgid "The Totem plugin could not startup."
+msgstr "De Totem-plugin kan niet worden opgestart."
+
+#: ../src/totem-mozilla-viewer.c:581 ../src/totem.c:433 ../src/totem.c:3372
+msgid "No reason."
+msgstr "Geen reden."
+
+#: ../src/totem-mozilla-viewer.c:757
+msgid "Could not initialise the thread-safe libraries."
+msgstr "Kon thread-veilige bibliotheken niet initialiseren."
+
+#: ../src/totem-mozilla-viewer.c:757
+msgid "Verify your system installation. The Totem plugin will now exit."
+msgstr "Verifieer uw systeeminstallatie. De Totem-plugin zal nu afsluiten."
+
 #: ../src/totem-options.c:36 ../src/vanity.c:75
 msgid "Backend options"
 msgstr "Opties functionaliteitsmodule"
@@ -1102,15 +1165,15 @@ msgstr "Afspeellijstformaat selecteren:"
 msgid "By extension"
 msgstr "Op extensie"
 
-#: ../src/totem-playlist.c:879
+#: ../src/totem-playlist.c:880
 msgid "Save Playlist"
 msgstr "Afspeellijst opslaan"
 
-#: ../src/totem-playlist.c:928
+#: ../src/totem-playlist.c:934
 msgid "Overwrite file?"
 msgstr "Bestand overschrijven?"
 
-#: ../src/totem-playlist.c:930
+#: ../src/totem-playlist.c:936
 #, c-format
 msgid ""
 "A file named '%s' already exists.  Are you sure you want to overwrite it?"
@@ -1118,15 +1181,15 @@ msgstr ""
 "Een bestand genaamd '%s'  bestaat al. Weet u zeker dat u het wilt "
 "overschrijven?"
 
-#: ../src/totem-playlist.c:1474
+#: ../src/totem-playlist.c:1480
 msgid "playlist"
 msgstr "afspeellijst"
 
-#: ../src/totem-playlist.c:1607
+#: ../src/totem-playlist.c:1613
 msgid "Playlist error"
 msgstr "Afspeellijst fout"
 
-#: ../src/totem-playlist.c:1607
+#: ../src/totem-playlist.c:1613
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr ""
@@ -1425,11 +1488,6 @@ msgstr "Gepauzeerd"
 msgid "Totem could not eject the optical media."
 msgstr "Totem kan de optische media niet uitwerpen."
 
-#: ../src/totem.c:338 ../src/totem.c:367 ../src/totem.c:813 ../src/totem.c:924
-#, c-format
-msgid "Totem could not play '%s'."
-msgstr "Totem kan '%s' niet afspelen."
-
 #: ../src/totem.c:394
 #, c-format
 msgid ""
@@ -1468,106 +1526,82 @@ msgstr ""
 msgid "Totem was not able to play this disc."
 msgstr "Totem kon deze schijf niet afspelen."
 
-#: ../src/totem.c:433 ../src/totem.c:3379
-msgid "No reason."
-msgstr "Geen reden."
-
 #: ../src/totem.c:699
 msgid "No File"
 msgstr "Geen bestand"
 
-#: ../src/totem.c:819
+#: ../src/totem.c:817
 msgid "No error message"
 msgstr "Geen foutmelding"
 
-#: ../src/totem.c:1282 ../src/totem.c:1284
+#: ../src/totem.c:1279 ../src/totem.c:1281
 msgid "An error occurred"
 msgstr "Er is een fout opgetreden"
 
-#: ../src/totem.c:1655
+#: ../src/totem.c:1652
 msgid "Open Location..."
 msgstr "Locatie openen..."
 
-#: ../src/totem.c:1928
+#: ../src/totem.c:1925
 msgid "Totem could not display the help contents."
 msgstr "Totem kan de hulpinhoud niet weergeven."
 
-#: ../src/totem.c:1961
+#: ../src/totem.c:1958
 msgid "GTK+"
 msgstr "GTK+"
 
-#: ../src/totem.c:1963
+#: ../src/totem.c:1960
 msgid "GNOME"
 msgstr "GNOME"
 
 #. This lists the back-end and front-end types and versions, such as
 #. * Movie Player using GStreamer 0.10.1 and GNOME
-#: ../src/totem.c:1969
+#: ../src/totem.c:1966
 #, c-format
 msgid "Movie Player using %s and %s"
 msgstr "Mediaspeler, maakt gebruik van %s en %s"
 
-#: ../src/totem.c:1974
-msgid "Copyright © 2002-2006 Bastien Nocera"
-msgstr "Copyright © 2002-2006 Bastien Nocera"
-
-#: ../src/totem.c:1979 ../src/vanity.c:267
-msgid "translator-credits"
-msgstr ""
-"Tino Meinen\n"
-"Huib Kleinhout\n"
-"\n"
-"Kijk voor meer informatie op http://nl.gnome.org/"
-
-#: ../src/totem.c:2012 ../src/totem.c:2020 ../src/vanity.c:300
+#: ../src/totem.c:2009 ../src/totem.c:2017 ../src/vanity.c:300
 #: ../src/vanity.c:308
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem kan van deze film geen schermafdruk maken."
 
-#: ../src/totem.c:2020 ../src/vanity.c:308
+#: ../src/totem.c:2017 ../src/vanity.c:308
 msgid "This is not supposed to happen; please file a bug report."
 msgstr ""
 "Dit hoort eigenlijk niet te gebeuren; maak alstublieft een foutrapport."
 
-#: ../src/totem.c:2047
-msgid "Totem couldn't show the movie properties window."
-msgstr "Het venster met filmeigenschappen kan niet worden weergegeven."
-
-#: ../src/totem.c:2047
-msgid "Make sure that Totem is correctly installed."
-msgstr "Controleer of Totem juist is geïnstalleerd."
-
-#: ../src/totem.c:2133
+#: ../src/totem.c:2090
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem kan niet zoeken in '%s'."
 
-#: ../src/totem.c:3379
+#: ../src/totem.c:3372
 msgid "Totem could not startup."
 msgstr "Totem kan niet worden opgestart."
 
-#: ../src/totem.c:3521
+#: ../src/totem.c:3514
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Kon thread-veilige bibliotheken niet initialiseren."
 
-#: ../src/totem.c:3521
+#: ../src/totem.c:3514
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verifieer uw systeeminstallatie. Totem zal nu afsluiten."
 
-#: ../src/totem.c:3545
+#: ../src/totem.c:3538
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem kon het configuratiesysteem niet initialiseren."
 
-#: ../src/totem.c:3545
+#: ../src/totem.c:3538
 msgid "Make sure that GNOME is properly installed."
 msgstr "Controleer of GNOME juist is geïnstalleerd."
 
 #. Main window
-#: ../src/totem.c:3573
+#: ../src/totem.c:3566
 msgid "main window"
 msgstr "hoofdvenster"
 
-#: ../src/totem.c:3578
+#: ../src/totem.c:3571
 msgid "video popup menu"
 msgstr "video popupmenu"
 
@@ -1647,7 +1681,7 @@ msgstr ""
 "Het hoofdinterface kan niet worden geladen (vanity.glade)\n"
 "Controleer of Vanity juist is geïnstalleerd."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2058
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2077
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1655,17 +1689,17 @@ msgstr ""
 "De gevraagde audiouitgang is niet gevonden. Selecteer een andere "
 "audiouitgang in 'Multimediasystemen selecteren'."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2063
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2082
 msgid "Location not found."
 msgstr "Locatie niet gevonden."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2067
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2086
 msgid "Could not open location; You may not have permission to open the file."
 msgstr ""
 "Kon de locatie niet openen; Mogelijk heeft u geen rechten om het bestand te "
 "openen."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2078
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2097
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1675,7 +1709,7 @@ msgstr ""
 "andere videotoepassingen of selecteer een andere videouitgang in "
 "'Multimediasystemen selecteren'."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2084
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2103
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1685,33 +1719,33 @@ msgstr ""
 "audiouitgang in 'Multimediasystemen selecteren'. U kunt wellicht eens het "
 "gebruik maken van een geluid-server in overweging nemen."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2099
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2118
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "Kan dit bestand niet over het netwerk afspelen. Probeer eerst het bestand te "
 "downloaden en op te slaan."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2177
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2196
 msgid "Media file could not be played."
 msgstr "Het mediabestand kon niet worden afgespeeld."
 
 # grhmmm
 # bepalen/ophalen
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2259
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2310
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2278
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2329
 msgid "Failed to retrieve working directory"
 msgstr "Kon de huidige map niet ophalen"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3799
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3817
 msgid "Too old version of GStreamer installed."
 msgstr "De geïnstalleerde versie van GStreamer is te oud."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3806
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3824
 msgid "Media contains no supported video streams."
 msgstr "Media bevat geen ondersteunde videostromen."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4151
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4169
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1719,8 +1753,8 @@ msgstr ""
 "Aanmaken van een GStreamer afspeelobject is mislukt. Controleer uw GStreamer "
 "installatie."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4266
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4350
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4284
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4368
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1728,7 +1762,7 @@ msgstr ""
 "Openen van de videouitgang is mislukt. Mogelijk is die niet beschikbaar. "
 "Selecteer een andere videouitgang in 'Multimediasystemen selecteren'."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4275
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4293
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1738,7 +1772,7 @@ msgstr ""
 "plugins installeren, of een andere videouitgang kiezen in "
 "'Multimediasystemen selecteren'."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4294
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4312
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1748,7 +1782,7 @@ msgstr ""
 "geluidsapparaat te openen of de geluid-server draait niet. Selecteer een "
 "andere audiouitgang in 'Multimediasystemen selecteren'."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4304
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4322
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -1758,7 +1792,7 @@ msgstr ""
 "plugins installeren, of een andere audiouitgang kiezen in "
 "'Multimediasystemen selecteren'."
 
-#: ../src/backend/bacon-video-widget-xine.c:680
+#: ../src/backend/bacon-video-widget-xine.c:709
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1767,8 +1801,8 @@ msgstr ""
 "De '%s' audiodriver kan niet geladen worden\n"
 "Controleer of het apparaat niet bezet is."
 
-#: ../src/backend/bacon-video-widget-xine.c:1140
-#: ../src/backend/bacon-video-widget-xine.c:1733
+#: ../src/backend/bacon-video-widget-xine.c:1186
+#: ../src/backend/bacon-video-widget-xine.c:1779
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -1776,31 +1810,31 @@ msgstr ""
 "Er is geen videoweergave beschikbaar. Controleer of het programma juist is "
 "geïnstalleerd."
 
-#: ../src/backend/bacon-video-widget-xine.c:1267
+#: ../src/backend/bacon-video-widget-xine.c:1313
 msgid "The server you are trying to connect to is not known."
 msgstr "De server waarmee u verbinding probeert te maken is niet bekend."
 
-#: ../src/backend/bacon-video-widget-xine.c:1271
+#: ../src/backend/bacon-video-widget-xine.c:1317
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "De apparaatnaam (%s) die u ingegeven hebt lijkt ongeldig te zijn."
 
-#: ../src/backend/bacon-video-widget-xine.c:1275
+#: ../src/backend/bacon-video-widget-xine.c:1321
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "server (%s) waarmee u verbinding probeert te maken is onbereikbaar."
 
-#: ../src/backend/bacon-video-widget-xine.c:1279
+#: ../src/backend/bacon-video-widget-xine.c:1325
 msgid "The connection to this server was refused."
 msgstr "De verbinding met de server is geweigerd."
 
-#: ../src/backend/bacon-video-widget-xine.c:1283
+#: ../src/backend/bacon-video-widget-xine.c:1329
 msgid "The specified movie could not be found."
 msgstr "De ingegeven film kan niet gevonden worden."
 
 # DVD ipv dvd?
-#: ../src/backend/bacon-video-widget-xine.c:1289
-#: ../src/backend/bacon-video-widget-xine.c:1307
+#: ../src/backend/bacon-video-widget-xine.c:1335
+#: ../src/backend/bacon-video-widget-xine.c:1353
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -1808,74 +1842,74 @@ msgstr ""
 "De bron lijkt versleuteld te zijn en kan niet gelezen worden. Probeert u een "
 "versleutelde dvd af te spelen zonder libdvdcss?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1292
+#: ../src/backend/bacon-video-widget-xine.c:1338
 msgid "The movie could not be read."
 msgstr "De film kan niet gelezen worden."
 
 # er is een fout opgetreden tijdens/er was een probleem bij
-#: ../src/backend/bacon-video-widget-xine.c:1301
+#: ../src/backend/bacon-video-widget-xine.c:1347
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr ""
 "Er was een probleem bij het laden van een bibliotheek of een decoder (%s)."
 
-#: ../src/backend/bacon-video-widget-xine.c:1310
+#: ../src/backend/bacon-video-widget-xine.c:1356
 msgid "This file is encrypted and cannot be played back."
 msgstr "Deze film is versleuteld en kan niet worden afgespeeld."
 
-#: ../src/backend/bacon-video-widget-xine.c:1315
+#: ../src/backend/bacon-video-widget-xine.c:1361
 msgid "For security reasons, this movie can not be played back."
 msgstr "Wegens beveiligingsredenen kan deze film niet worden afgespeeld."
 
-#: ../src/backend/bacon-video-widget-xine.c:1320
+#: ../src/backend/bacon-video-widget-xine.c:1366
 msgid "The audio device is busy. Is another application using it?"
 msgstr ""
 "Het audioapparaat is bezet. Wordt het door een andere toepassing gebruikt?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1325
+#: ../src/backend/bacon-video-widget-xine.c:1371
 msgid "You are not allowed to open this file."
 msgstr "U heeft geen toestemming om dit bestand te openen."
 
-#: ../src/backend/bacon-video-widget-xine.c:1327
+#: ../src/backend/bacon-video-widget-xine.c:1373
 msgid "The server refused access to this file or stream."
 msgstr "De server heeft toegang tot dit bestand of deze stroom geweigerd."
 
-#: ../src/backend/bacon-video-widget-xine.c:1336
+#: ../src/backend/bacon-video-widget-xine.c:1382
 msgid "The file you tried to play is an empty file."
 msgstr "Het bestand dat u probeerde af te spelen is een leeg bestand."
 
-#: ../src/backend/bacon-video-widget-xine.c:1530
+#: ../src/backend/bacon-video-widget-xine.c:1576
 msgid "There is no input plugin to handle the location of this movie"
 msgstr ""
 "Er is geen invoerplugin waarmee de locatie van deze film bereikt kan worden."
 
-#: ../src/backend/bacon-video-widget-xine.c:1534
+#: ../src/backend/bacon-video-widget-xine.c:1580
 msgid "There is no plugin to handle this movie."
 msgstr "Er is geen plugin waarmee deze film afgespeeld kan worden."
 
-#: ../src/backend/bacon-video-widget-xine.c:1538
+#: ../src/backend/bacon-video-widget-xine.c:1584
 msgid "This movie is broken and can not be played further."
 msgstr "Deze film is beschadigd en kan niet verder worden afgespeeld."
 
-#: ../src/backend/bacon-video-widget-xine.c:1542
+#: ../src/backend/bacon-video-widget-xine.c:1588
 msgid "This location is not a valid one."
 msgstr "Deze locatie is niet geldig."
 
-#: ../src/backend/bacon-video-widget-xine.c:1546
+#: ../src/backend/bacon-video-widget-xine.c:1592
 msgid "This movie could not be opened."
 msgstr "Deze film kon niet worden geopend."
 
-#: ../src/backend/bacon-video-widget-xine.c:1550
+#: ../src/backend/bacon-video-widget-xine.c:1596
 msgid "Generic Error."
 msgstr "Algemene fout."
 
-#: ../src/backend/bacon-video-widget-xine.c:2104
+#: ../src/backend/bacon-video-widget-xine.c:2205
 msgid "This movie is a still image. You can open it with an image viewer."
 msgstr ""
 "Deze film bestaat uit een niet-bewegende afbeelding. U kunt deze openen met "
 "een afbeeldingsweergave-programma."
 
-#: ../src/backend/bacon-video-widget-xine.c:2128
+#: ../src/backend/bacon-video-widget-xine.c:2229
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1884,7 +1918,7 @@ msgstr ""
 "Videocodec '%s' kan niet verwerkt worden. U zult wellicht extra plugins "
 "moeten installeren om bepaalde type films af te kunnen spelen."
 
-#: ../src/backend/bacon-video-widget-xine.c:2132
+#: ../src/backend/bacon-video-widget-xine.c:2233
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1893,30 +1927,30 @@ msgstr ""
 "Audiocodec '%s' kan niet verwerkt worden. U zult wellicht extra plugins "
 "moeten installeren om bepaalde type films af te kunnen spelen."
 
-#: ../src/backend/bacon-video-widget-xine.c:2148
+#: ../src/backend/bacon-video-widget-xine.c:2249
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr ""
 "Dit is een bestand met alleen geluid en er is geen geluidsuitvoer "
 "beschikbaar."
 
-#: ../src/backend/bacon-video-widget-xine.c:3550
-#: ../src/backend/bacon-video-widget-xine.c:3597
-#: ../src/backend/bacon-video-widget-xine.c:3619
+#: ../src/backend/bacon-video-widget-xine.c:3677
+#: ../src/backend/bacon-video-widget-xine.c:3724
+#: ../src/backend/bacon-video-widget-xine.c:3746
 #, c-format
 msgid "Language %d"
 msgstr "Taal %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3656
+#: ../src/backend/bacon-video-widget-xine.c:3783
 msgid "No video to capture."
 msgstr "Geen video die opgeslagen kan worden."
 
 # verwerkt/afgespeeld
-#: ../src/backend/bacon-video-widget-xine.c:3664
+#: ../src/backend/bacon-video-widget-xine.c:3791
 msgid "Video codec is not handled."
 msgstr "Videocodec kan niet worden afgespeeld."
 
 # de film wordt niet gedraaid?
-#: ../src/backend/bacon-video-widget-xine.c:3672
+#: ../src/backend/bacon-video-widget-xine.c:3799
 msgid "Movie is not playing."
 msgstr "De film wordt niet afgespeeld."
 
@@ -1985,62 +2019,71 @@ msgstr "%s %s"
 msgid "%s"
 msgstr "%s"
 
-#: ../src/plparse/totem-disc.c:117
+#: ../src/plparse/totem-disc.c:122
 #, c-format
 msgid "Failed to find real device node for %s: %s"
 msgstr "Kon de werkelijke 'device node' voor %s niet vinden: %s"
 
-#: ../src/plparse/totem-disc.c:128
+#: ../src/plparse/totem-disc.c:133
 #, c-format
 msgid "Failed to read symbolic link %s: %s"
 msgstr "Kon symbolische link %s niet lezen: %s"
 
-#: ../src/plparse/totem-disc.c:332
+#: ../src/plparse/totem-disc.c:340
 #, c-format
 msgid "Failed to find mountpoint for device %s"
 msgstr "Kon koppelingspunt voor station %s niet vinden"
 
-#: ../src/plparse/totem-disc.c:341
+#: ../src/plparse/totem-disc.c:349
 msgid "Could not connect to the HAL daemon"
 msgstr "Kon niet verbinden met de HAL daemon"
 
-#: ../src/plparse/totem-disc.c:458
+#: ../src/plparse/totem-disc.c:468
 msgid "Please check that a disc is present in the drive."
 msgstr "Controleer of er wel een schijfje in het station aanwezig is."
 
-#: ../src/plparse/totem-disc.c:504
+#: ../src/plparse/totem-disc.c:515
 #, c-format
 msgid "Failed to mount %s"
 msgstr "Kon %s niet aankoppelen"
 
-#: ../src/plparse/totem-disc.c:528
+#: ../src/plparse/totem-disc.c:539
 #, c-format
 msgid "Failed to find mountpoint for %s"
 msgstr "Kon koppelingspunt voor station %s niet vinden"
 
-#: ../src/plparse/totem-disc.c:806
+#: ../src/plparse/totem-disc.c:892
 msgid "Audio CD"
 msgstr "audio-cd"
 
-#: ../src/plparse/totem-disc.c:808
+#: ../src/plparse/totem-disc.c:894
 msgid "Video CD"
 msgstr "video-cd"
 
 # DVD ipv dvd?
-#: ../src/plparse/totem-disc.c:810
+#: ../src/plparse/totem-disc.c:896
 msgid "DVD"
 msgstr "dvd"
 
-#: ../src/plparse/totem-pl-parser.c:355
+#: ../src/plparse/totem-pl-parser.c:357
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "De parser kan niet worden geschreven: %s"
 
-#: ../src/plparse/totem-pl-parser.c:463 ../src/plparse/totem-pl-parser.c:604
-#: ../src/plparse/totem-pl-parser.c:704
+#: ../src/plparse/totem-pl-parser.c:464 ../src/plparse/totem-pl-parser.c:604
+#: ../src/plparse/totem-pl-parser.c:703
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "Kon bestand '%s' niet openen: %s"
+
+#~ msgid "_Properties"
+#~ msgstr "_Eigenschappen"
+
+#~ msgid "Totem couldn't show the movie properties window."
+#~ msgstr "Het venster met filmeigenschappen kan niet worden weergegeven."
+
+#~ msgid "Make sure that Totem is correctly installed."
+#~ msgstr "Controleer of Totem juist is geïnstalleerd."
 
 #~ msgid "Totem"
 #~ msgstr "Totem"
@@ -2218,12 +2261,6 @@ msgstr "Kon bestand '%s' niet openen: %s"
 
 #~ msgid "Make sure that the Totem plugin is properly installed."
 #~ msgstr "Controleer of de Totem-plugin juist is geïnstalleerd."
-
-#~ msgid "The Totem plugin could not startup."
-#~ msgstr "De Totem-plugin kan niet worden opgestart."
-
-#~ msgid "Verify your system installation. The Totem plugin will now exit."
-#~ msgstr "Verifieer uw systeeminstallatie. De Totem-plugin zal nu afsluiten."
 
 #~ msgid "URI currently displayed"
 #~ msgstr "Huidig weergegeven URI"
