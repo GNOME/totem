@@ -1,3 +1,11 @@
+2006-08-08  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_is_ra),
+	(totem_pl_parser_is_asf), (totem_pl_parser_is_quicktime),
+	(totem_pl_parser_add_quicktime):
+	Fix stupidly placed bracket breaking Quicktime, make sure
+	we don't get called with '0' len (Closes: #350343)
+
 2006-08-07  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/totem-pl-parser.c: (totem_pl_parser_is_ra),

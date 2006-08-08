@@ -1502,6 +1502,10 @@ totem_pl_parser_add_block (TotemPlParser *parser, const char *url, gpointer data
 static gboolean
 totem_pl_parser_is_ra (gpointer data, guint len)
 {
+	/* pnm is the smallest, 6 chars */
+	if (len < 7)
+		return FALSE;
+
 	if (g_str_has_prefix (data, "http://") != FALSE
 			|| g_str_has_prefix (data, "rtsp://") != FALSE
 			|| g_str_has_prefix (data, "pnm://") != FALSE) {
@@ -1640,6 +1644,10 @@ static gboolean
 totem_pl_parser_is_asf (gpointer data, guint len)
 {
 	char *buffer;
+
+	if (len == 0)
+		return FALSE;
+
 	if (g_str_has_prefix (data, "[Reference]") != FALSE
 			|| g_ascii_strncasecmp (data, "<ASX", strlen ("<ASX")) == 0
 			|| g_str_has_prefix (data, "ASF ") != FALSE) {
@@ -1649,8 +1657,8 @@ totem_pl_parser_is_asf (gpointer data, guint len)
 	/* FIXME would be nicer to have an strnstr */
 	buffer = g_memdup (data, len);
 	buffer[len] = '\0';
-	if (strstr (data, "<ASX") != NULL
-			|| strstr (data, "<asx") != NULL) {
+	if (strstr (buffer, "<ASX") != NULL
+			|| strstr (buffer, "<asx") != NULL) {
 		g_free (buffer);
 		return TRUE;
 	}
@@ -1732,10 +1740,13 @@ totem_pl_parser_is_quicktime (gpointer data, guint len)
 {
 	char *buffer;
 
+	if (len == 0)
+		return FALSE;
+
 	/* FIXME would be nicer to have an strnstr */
 	buffer = g_memdup (data, len);
 	buffer[len] = '\0';
-	if (strstr (data, "<?quicktime") != NULL) {
+	if (strstr (buffer, "<?quicktime") != NULL) {
 		g_free (buffer);
 		return TRUE;
 	}
@@ -1746,7 +1757,7 @@ totem_pl_parser_is_quicktime (gpointer data, guint len)
 static TotemPlParserResult
 totem_pl_parser_add_quicktime (TotemPlParser *parser, const char *url, gpointer data)
 {
-	if (data == NULL || totem_pl_parser_is_quicktime (data, strlen (data) == FALSE)) {
+	if (data == NULL || totem_pl_parser_is_quicktime (data, strlen (data)) == FALSE) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
