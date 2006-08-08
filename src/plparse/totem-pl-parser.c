@@ -1348,7 +1348,7 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 {
 	xmlNodePtr node;
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
-	guchar *title, *url;
+	xmlChar *title, *url;
 	char *fullpath = NULL;
 
 	title = NULL;
@@ -1363,16 +1363,16 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 				|| g_ascii_strcasecmp ((char *)node->name, "entryref") == 0) {
 			unsigned char *tmp;
 
-			tmp = xmlGetProp (node, (guchar *)"href");
+			tmp = xmlGetProp (node, (const xmlChar *)"href");
 			if (tmp == NULL)
-				tmp = xmlGetProp (node, (guchar *)"HREF");
+				tmp = xmlGetProp (node, (const xmlChar *)"HREF");
 			if (tmp == NULL)
 				continue;
 			if (url == NULL || g_str_has_prefix ((char *)tmp, "mms:") != FALSE) {
-				g_free (url);
+				xmlFree (url);
 				url = tmp;
 			} else {
-				g_free (tmp);
+				xmlFree (tmp);
 			}
 
 			continue;
@@ -1383,13 +1383,13 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 	}
 
 	if (url == NULL) {
-		g_free (title);
+		xmlFree (title);
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
 	fullpath = totem_pl_resolve_url (base, (char *)url);
 
-	g_free (url);
+	xmlFree (url);
 
 	/* .asx files can contain references to other .asx files */
 	retval = totem_pl_parser_parse_internal (parser, fullpath);
@@ -1399,7 +1399,7 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 	}
 
 	g_free (fullpath);
-	g_free (title);
+	xmlFree (title);
 
 	return retval;
 }
@@ -1408,7 +1408,7 @@ static gboolean
 parse_asx_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		xmlNodePtr parent)
 {
-	guchar *title = NULL;
+	xmlChar *title = NULL;
 	xmlNodePtr node;
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_ERROR;
 
@@ -1438,7 +1438,7 @@ parse_asx_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		}
 	}
 
-	g_free (title);
+	xmlFree (title);
 
 	return retval;
 }
@@ -1544,7 +1544,7 @@ parse_smil_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		xmlNodePtr parent)
 {
 	xmlNodePtr node;
-	guchar *title, *url;
+	xmlChar *title, *url;
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_ERROR;
 
 	title = NULL;
@@ -1557,8 +1557,8 @@ parse_smil_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 
 		/* ENTRY should only have one ref and one title nodes */
 		if (g_ascii_strcasecmp ((char *)node->name, "video") == 0 || g_ascii_strcasecmp ((char *)node->name, "audio") == 0) {
-			url = xmlGetProp (node, (guchar *)"src");
-			title = xmlGetProp (node, (guchar *)"title");
+			url = xmlGetProp (node, (const xmlChar *)"src");
+			title = xmlGetProp (node, (const xmlChar *)"title");
 
 			if (url != NULL) {
 				if (parse_smil_video_entry (parser,
@@ -1566,8 +1566,8 @@ parse_smil_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 					retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 			}
 
-			g_free (title);
-			g_free (url);
+			xmlFree (title);
+			xmlFree (url);
 		} else {
 			if (parse_smil_entry (parser,
 						base, doc, node) != FALSE)
@@ -1869,7 +1869,7 @@ parse_xspf_track (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		xmlNodePtr parent)
 {
 	xmlNodePtr node;
-	guchar *title, *url;
+	xmlChar *title, *url;
 	gchar *fullpath;
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_ERROR;
 	
@@ -1892,8 +1892,8 @@ parse_xspf_track (TotemPlParser *parser, char *base, xmlDocPtr doc,
 	totem_pl_parser_add_one_url (parser, fullpath, (char *)title);
 	retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 
-	g_free (title);
-	g_free (url);
+	xmlFree (title);
+	xmlFree (url);
 	g_free (fullpath);
 
 	return retval;
