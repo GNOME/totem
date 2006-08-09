@@ -716,7 +716,6 @@ totem_embedded_push_parser (gpointer data)
 
 	parser = totem_pl_parser_new ();
 	g_signal_connect (G_OBJECT (parser), "entry", G_CALLBACK (entry_added), emb);
-	g_object_set (G_OBJECT (parser), "recurse", FALSE, NULL);
 	res = totem_pl_parser_parse (parser, emb->filename, FALSE);
 	g_object_unref (parser);
 

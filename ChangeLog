@@ -1,7 +1,13 @@
 2006-08-09  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-mozilla-viewer.c: (totem_embedded_push_parser):
+	Recurse in the playlist, so that MS stuff actually plays
+	(Helps: #350599)
+
+2006-08-09  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-mozilla-plugin.cpp: Don't hide the video if
-	the width and height aren't given
+	the width and height aren't given (Helps: #350599)
 
 2006-08-09  Bastien Nocera  <hadess@hadess.net>
 
