@@ -1231,7 +1231,7 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 {
 	xmlNodePtr node;
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
-	guchar *title, *url;
+	xmlChar *title, *url;
 	char *fullpath = NULL;
 
 	title = NULL;
@@ -1244,18 +1244,20 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		/* ENTRY can only have one title node but multiple REFs */
 		if (g_ascii_strcasecmp ((char *)node->name, "ref") == 0
 				|| g_ascii_strcasecmp ((char *)node->name, "entryref") == 0) {
-			unsigned char *tmp;
+			xmlChar *tmp;
 
-			tmp = xmlGetProp (node, (guchar *)"href");
+			tmp = xmlGetProp (node, (const xmlChar *)"href");
 			if (tmp == NULL)
-				tmp = xmlGetProp (node, (guchar *)"HREF");
+				tmp = xmlGetProp (node, (const xmlChar *)"HREF");
 			if (tmp == NULL)
 				continue;
 			if (url == NULL || g_str_has_prefix ((char *)tmp, "mms:") != FALSE) {
-				g_free (url);
+				if (url)
+					xmlFree (url);
 				url = tmp;
 			} else {
-				g_free (tmp);
+				if (tmp)
+					xmlFree (tmp);
 			}
 
 			continue;
@@ -1266,7 +1268,8 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 	}
 
 	if (url == NULL) {
-		g_free (title);
+		if (title)
+			xmlFree (title);
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
@@ -1276,7 +1279,7 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		fullpath = g_strdup ((char *)url);
 	}
 
-	g_free (url);
+	xmlFree (url);
 
 	/* .asx files can contain references to other .asx files */
 	retval = totem_pl_parser_parse_internal (parser, fullpath);
@@ -1286,7 +1289,8 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 	}
 
 	g_free (fullpath);
-	g_free (title);
+	if (title)
+		xmlFree (title);
 
 	return retval;
 }
@@ -1295,7 +1299,7 @@ static gboolean
 parse_asx_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		xmlNodePtr parent)
 {
-	guchar *title = NULL;
+	xmlChar *title = NULL;
 	xmlNodePtr node;
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_ERROR;
 
@@ -1325,7 +1329,8 @@ parse_asx_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		}
 	}
 
-	g_free (title);
+	if (title)
+		xmlFree (title);
 
 	return retval;
 }
@@ -1423,7 +1428,7 @@ parse_smil_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		xmlNodePtr parent)
 {
 	xmlNodePtr node;
-	guchar *title, *url;
+	xmlChar *title, *url;
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_ERROR;
 
 	title = NULL;
@@ -1436,8 +1441,8 @@ parse_smil_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 
 		/* ENTRY should only have one ref and one title nodes */
 		if (g_ascii_strcasecmp ((char *)node->name, "video") == 0 || g_ascii_strcasecmp ((char *)node->name, "audio") == 0) {
-			url = xmlGetProp (node, (guchar *)"src");
-			title = xmlGetProp (node, (guchar *)"title");
+			url = xmlGetProp (node, (const xmlChar *)"src");
+			title = xmlGetProp (node, (const xmlChar *)"title");
 
 			if (url != NULL) {
 				if (parse_smil_video_entry (parser,
@@ -1445,8 +1450,10 @@ parse_smil_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 					retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 			}
 
-			g_free (title);
-			g_free (url);
+			if (title != NULL)
+				xmlFree (title);
+			if (url != NULL)
+				xmlFree (url);
 		} else {
 			if (parse_smil_entry (parser,
 						base, doc, node) != FALSE)
@@ -1544,7 +1551,8 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url, 
 {
 	xmlDocPtr doc;
 	xmlNodePtr node;
-	char *contents = NULL, *src;
+	char *contents = NULL;
+	xmlChar *src;
 	int size;
 
 	contents = totem_pl_parser_read_entire_file (url, &size);
@@ -1579,14 +1587,15 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url, 
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
-	src = (char *) xmlGetProp (node, (guchar *)"src");
+	src = xmlGetProp (node, (const xmlChar *)"src");
 	if (!src) {
 		xmlFreeDoc (doc);
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
-	totem_pl_parser_add_one_url (parser, src, NULL);
+	totem_pl_parser_add_one_url (parser, (char *) src, NULL);
 
+	xmlFree (src);
 	xmlFreeDoc (doc);
 
 	return TOTEM_PL_PARSER_RESULT_SUCCESS;
