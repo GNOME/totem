@@ -48,6 +48,7 @@
 GtkWidget *totem_volume_create (void);
 
 #define OPTION_IS(x) (strcmp(argv[i], x) == 0)
+#define IS_FD_STREAM (strcmp(emb->filename, "fd://0") == 0)
 
 /* For newer D-Bus version */
 #ifndef DBUS_NAME_FLAG_PROHIBIT_REPLACEMENT
@@ -61,7 +62,12 @@ typedef enum {
 } TotemStates;
 
 #define TOTEM_TYPE_EMBEDDED (totem_embedded_get_type ())
-typedef GObjectClass TotemEmbeddedClass;
+typedef struct {
+	GObjectClass parent_class;
+
+	void (*stop_sending_data) (GObject *emb);
+} TotemEmbeddedClass;
+
 typedef struct _TotemEmbedded {
 	GObject parent;
 
@@ -100,7 +106,6 @@ typedef struct _TotemEmbedded {
 GType totem_embedded_get_type (void);
 
 G_DEFINE_TYPE (TotemEmbedded, totem_embedded, G_TYPE_OBJECT);
-static void totem_embedded_class_init (TotemEmbeddedClass *klass) { }
 static void totem_embedded_init (TotemEmbedded *emb) { }
 
 gboolean totem_embedded_play (TotemEmbedded *emb, GError **err);
@@ -112,6 +117,28 @@ static void totem_embedded_set_menu (TotemEmbedded *emb, gboolean enable);
 static void on_open1_activate (GtkButton *button, TotemEmbedded *emb);
 
 #include "totem-mozilla-interface.h"
+
+enum {
+	STOP_SENDING_DATA,
+	LAST_SIGNAL
+};
+static int totem_emb_table_signals[LAST_SIGNAL] = { 0 };
+
+static void totem_embedded_class_init (TotemEmbeddedClass *klass)
+{
+	GObjectClass *object_class;
+
+	object_class = (GObjectClass *) klass;
+
+	totem_emb_table_signals[STOP_SENDING_DATA] =
+		g_signal_new ("stop-sending-data",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (TotemEmbeddedClass, stop_sending_data),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__VOID,
+				G_TYPE_NONE, 0);
+}
 
 static void
 totem_embedded_exit (TotemEmbedded *emb)
@@ -126,6 +153,17 @@ totem_embedded_error_and_exit (char *title, char *reason, TotemEmbedded *emb)
 	totem_interface_error_blocking (title, reason,
 			GTK_WINDOW (emb->window));
 	totem_embedded_exit (emb);
+}
+
+static void
+totem_embedded_emit_stop_sending_data (TotemEmbedded *emb)
+{
+	g_return_if_fail (emb->filename != NULL);
+	if (IS_FD_STREAM) {
+		g_signal_emit (G_OBJECT (emb),
+				totem_emb_table_signals[STOP_SENDING_DATA],
+				0, NULL);
+	}
 }
 
 static void
@@ -186,6 +224,8 @@ totem_embedded_open (TotemEmbedded *emb)
 	{
 		char *msg, *disp;
 
+		totem_embedded_emit_stop_sending_data (emb);
+
 		totem_embedded_set_state (emb, STATE_STOPPED);
 
 		//FIXME if emb->filename is fd://0 or stdin:///
@@ -201,15 +241,15 @@ totem_embedded_open (TotemEmbedded *emb)
 		}
 
 		g_free (msg);
-
 		g_error_free (err);
+
 		totem_embedded_set_pp_state (emb, FALSE);
 	} else {
 		totem_embedded_set_state (emb, STATE_PAUSED);
 		totem_embedded_set_pp_state (emb, TRUE);
 	}
 
-	if (retval == FALSE || strcmp ("fd://0", emb->filename) == 0) {
+	if (retval == FALSE || IS_FD_STREAM) {
 		totem_embedded_set_menu (emb, FALSE);
 	} else {
 		totem_embedded_set_menu (emb, TRUE);
@@ -472,7 +512,7 @@ on_eos_event (GtkWidget *bvw, TotemEmbedded *emb)
 	gtk_adjustment_set_value (emb->seekadj, 0);
 
 	/* No playlist if we have fd://0, right? */
-	if (strcmp (emb->filename, "fd://0") == 0) {
+	if (IS_FD_STREAM) {
 		totem_embedded_set_pp_state (emb, FALSE);
 	} else if (emb->num_items == 1) {
 		if (g_str_has_prefix (emb->filename, "file://") != FALSE) {

@@ -33,6 +33,7 @@ class totemMozillaObject;
 
 typedef struct {
 	NPP instance;
+	NPStream *stream;
 	Window window;
 	totemMozillaObject *iface;
 
@@ -47,12 +48,12 @@ typedef struct {
 
 	GByteArray *bytes;
 
-	gboolean got_svc : 1;
-	gboolean controller_hidden : 1;
-	gboolean cache : 1;
-	gboolean hidden : 1;
-	gboolean repeat : 1;
-	gboolean is_playlist : 1;
+	guint got_svc : 1;
+	guint controller_hidden : 1;
+	guint cache : 1;
+	guint hidden : 1;
+	guint repeat : 1;
+	guint is_playlist : 1;
 } TotemPlugin;
 
 class totemMozillaMix : public nsIClassInfo {

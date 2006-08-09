@@ -68,6 +68,23 @@ cb_update_name (DBusGProxy *proxy, char *svc, char *old_owner,
 	}
 }
 
+static void
+cb_stop_sending_data (DBusGProxy  *proxy, void *data)
+{
+	TotemPlugin *plugin = (TotemPlugin *) data;
+
+	D("Stop sending data signal received");
+	if (CallNPN_DestroyStreamProc (mozilla_functions.destroystream,
+				plugin->instance,
+				plugin->stream,
+				NPRES_DONE) != NPERR_NO_ERROR) {
+		g_warning ("Couldn't destroy the stream");
+		return;
+	}
+
+	plugin->stream = NULL;
+}
+
 static gboolean
 is_supported_scheme (const char *url)
 {
@@ -256,6 +273,13 @@ totem_plugin_fork (TotemPlugin *plugin)
 		dbus_g_proxy_new_for_name (plugin->conn, plugin->wait_for_svc,
 					   "/TotemEmbedded",
 					   "org.totem.MozillaPluginInterface");
+	dbus_g_proxy_add_signal (plugin->proxy, "StopSendingData",
+				 G_TYPE_INVALID);
+	dbus_g_proxy_connect_signal (plugin->proxy, "StopSendingData",
+				     G_CALLBACK (cb_stop_sending_data),
+				     plugin, NULL);
+	g_message ("%p plugin", plugin);
+
 	g_free (plugin->wait_for_svc);
 	D("Done forking, new proxy=%p", plugin->proxy);
 
@@ -526,6 +550,7 @@ static NPError totem_plugin_new_stream (NPP instance, NPMIMEType type,
 		*stype = NP_ASFILE;
 		plugin->stream_type = NP_ASFILE;
 	}
+	plugin->stream = stream_ptr;
 
 	return NPERR_NO_ERROR;
 }
@@ -557,10 +582,8 @@ static int32 totem_plugin_write_ready (NPP instance, NPStream *stream)
 
 	D("plugin_write_ready");
 
-	if (instance == NULL) {
-		D("plugin_write_ready instance is NULL");
+	if (instance == NULL)
 		return 0;
-	}
 
 	plugin = (TotemPlugin *) instance->pdata;
 
