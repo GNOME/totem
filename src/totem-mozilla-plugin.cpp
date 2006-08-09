@@ -134,12 +134,12 @@ totem_plugin_fork (TotemPlugin *plugin)
 		g_ptr_array_add (arr, g_strdup_printf ("%lu", plugin->window));
 	}
 
-	if (plugin->width) {
+	if (plugin->width > 0) {
 		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_WIDTH));
 		g_ptr_array_add (arr, g_strdup_printf ("%d", plugin->width));
 	}
 
-	if (plugin->height) {
+	if (plugin->height > 0) {
 		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_HEIGHT));
 		g_ptr_array_add (arr, g_strdup_printf ("%d", plugin->height));
 	}
@@ -356,6 +356,7 @@ static NPError totem_plugin_new_instance (NPMIMEType mimetype, NPP instance,
 	printf("mime type: %s\n", mimetype);
 	plugin->instance = instance;
 	plugin->send_fd = -1;
+	plugin->width = plugin->height = -1;
 
 	/* to resolve relative URLs */
 	nsIDOMWindow *domWin = nsnull;
