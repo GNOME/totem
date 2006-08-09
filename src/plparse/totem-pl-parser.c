@@ -48,7 +48,7 @@
 #define DIR_MIME_TYPE "x-directory/normal"
 #define BLOCK_DEVICE_TYPE "x-special/device-block"
 #define EXTINF "#EXTINF:"
-#define DEBUG(x) { if (parser->priv->debug != FALSE) x; }
+#define DEBUG(x) { if (parser->priv->debug) x; }
 
 typedef TotemPlParserResult (*PlaylistCallback) (TotemPlParser *parser, const char *url, gpointer data);
 typedef gboolean (*PlaylistIdenCallback) (gpointer data, guint len);
@@ -77,9 +77,9 @@ struct TotemPlParserPrivate
 	GList *ignore_schemes;
 	GList *ignore_mimetypes;
 	guint recurse_level;
-	gboolean fallback;
-	gboolean recurse;
-	gboolean debug;
+	guint fallback : 1;
+	guint recurse : 1;
+	guint debug : 1;
 };
 
 enum {
@@ -172,10 +172,10 @@ totem_pl_parser_set_property (GObject *object,
 	switch (prop_id)
 	{
 	case PROP_RECURSE:
-		parser->priv->recurse = g_value_get_boolean (value);
+		parser->priv->recurse = g_value_get_boolean (value) != FALSE;
 		break;
 	case PROP_DEBUG:
-		parser->priv->debug = g_value_get_boolean (value);
+		parser->priv->debug = g_value_get_boolean (value) != FALSE;
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -2283,7 +2283,7 @@ totem_pl_parser_parse (TotemPlParser *parser, const char *url,
 			TOTEM_PL_PARSER_RESULT_IGNORED);
 
 	parser->priv->recurse_level = 0;
-	parser->priv->fallback = fallback;
+	parser->priv->fallback = fallback != FALSE;
 	return totem_pl_parser_parse_internal (parser, url);
 }
 
