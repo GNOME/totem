@@ -1361,7 +1361,7 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		/* ENTRY can only have one title node but multiple REFs */
 		if (g_ascii_strcasecmp ((char *)node->name, "ref") == 0
 				|| g_ascii_strcasecmp ((char *)node->name, "entryref") == 0) {
-			unsigned char *tmp;
+			xmlChar *tmp;
 
 			tmp = xmlGetProp (node, (const xmlChar *)"href");
 			if (tmp == NULL)
@@ -1369,10 +1369,12 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 			if (tmp == NULL)
 				continue;
 			if (url == NULL || g_str_has_prefix ((char *)tmp, "mms:") != FALSE) {
-				xmlFree (url);
+				if (url)
+					xmlFree (url);
 				url = tmp;
 			} else {
-				xmlFree (tmp);
+				if (tmp)
+					xmlFree (tmp);
 			}
 
 			continue;
@@ -1383,7 +1385,8 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 	}
 
 	if (url == NULL) {
-		xmlFree (title);
+		if (title)
+			xmlFree (title);
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
@@ -1399,7 +1402,8 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 	}
 
 	g_free (fullpath);
-	xmlFree (title);
+	if (title)
+		xmlFree (title);
 
 	return retval;
 }
@@ -1438,7 +1442,8 @@ parse_asx_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 		}
 	}
 
-	xmlFree (title);
+	if (title)
+		xmlFree (title);
 
 	return retval;
 }
@@ -1566,8 +1571,10 @@ parse_smil_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 					retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 			}
 
-			xmlFree (title);
-			xmlFree (url);
+			if (title)
+				xmlFree (title);
+			if (url)
+				xmlFree (url);
 		} else {
 			if (parse_smil_entry (parser,
 						base, doc, node) != FALSE)
@@ -1687,7 +1694,8 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url, 
 {
 	xmlDocPtr doc;
 	xmlNodePtr node;
-	char *contents = NULL, *src;
+	char *contents = NULL;
+	xmlChar *src;
 	int size;
 
 	contents = totem_pl_parser_read_entire_file (url, &size);
@@ -1722,14 +1730,15 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url, 
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
-	src = (char *) xmlGetProp (node, (guchar *)"src");
+	src = xmlGetProp (node, (const xmlChar *)"src");
 	if (!src) {
 		xmlFreeDoc (doc);
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
-	totem_pl_parser_add_one_url (parser, src, NULL);
+	totem_pl_parser_add_one_url (parser, (char *) src, NULL);
 
+	xmlFree (src);
 	xmlFreeDoc (doc);
 
 	return TOTEM_PL_PARSER_RESULT_SUCCESS;
@@ -1892,8 +1901,10 @@ parse_xspf_track (TotemPlParser *parser, char *base, xmlDocPtr doc,
 	totem_pl_parser_add_one_url (parser, fullpath, (char *)title);
 	retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 
-	xmlFree (title);
-	xmlFree (url);
+	if (title)
+		xmlFree (title);
+	if (url)
+		xmlFree (url);
 	g_free (fullpath);
 
 	return retval;
