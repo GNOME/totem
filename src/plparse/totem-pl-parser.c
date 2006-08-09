@@ -1013,7 +1013,6 @@ static TotemPlParserResult
 totem_pl_parser_add_asf_reference_parser (TotemPlParser *parser,
 		const char *url, gpointer data)
 {
-	gboolean retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 	char *contents, **lines, *ref, *split_char;
 	int size;
 
@@ -1030,8 +1029,8 @@ totem_pl_parser_add_asf_reference_parser (TotemPlParser *parser,
 	lines = g_strsplit (contents, split_char, 0);
 	g_free (contents);
 
+	/* Try to get Ref1 first */
 	ref = read_ini_line_string (lines, "Ref1", FALSE);
-
 	if (ref == NULL) {
 		g_strfreev (lines);
 		return totem_pl_parser_add_asx (parser, url, data);
@@ -1042,12 +1041,14 @@ totem_pl_parser_add_asf_reference_parser (TotemPlParser *parser,
 		memcpy(ref, "mmsh", 4);
 
 	totem_pl_parser_add_one_url (parser, ref, NULL);
-	retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 	g_free (ref);
+
+	/* Don't try to get Ref2, as it's only ever
+	 * supposed to be a fallback */
 
 	g_strfreev (lines);
 
-	return retval;
+	return TOTEM_PL_PARSER_RESULT_SUCCESS;
 }
 
 static TotemPlParserResult
