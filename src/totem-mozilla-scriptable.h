@@ -41,17 +41,18 @@ typedef struct {
 	DBusGConnection *conn;
 	DBusGProxy *proxy;
 	char *wait_for_svc;
-	gboolean got_svc;
 	int send_fd;
 	int player_pid;
-	gboolean controller_hidden;
 	guint8 stream_type;
-	gboolean cache;
-	gboolean hidden;
-	gboolean repeat;
-	gboolean is_playlist;
 
 	GByteArray *bytes;
+
+	gboolean got_svc : 1;
+	gboolean controller_hidden : 1;
+	gboolean cache : 1;
+	gboolean hidden : 1;
+	gboolean repeat : 1;
+	gboolean is_playlist : 1;
 } TotemPlugin;
 
 class totemMozillaMix : public nsIClassInfo {

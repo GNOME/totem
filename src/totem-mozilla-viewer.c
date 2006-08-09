@@ -1,4 +1,4 @@
-/* Totem Mozilla plugin
+/* Totem Mozilla Embedded Viewer
  *
  * Copyright (C) <2004-2006> Bastien Nocera <hadess@hadess.net>
  * Copyright (C) <2002> David A. Schleef <ds@schleef.org>
@@ -73,8 +73,6 @@ typedef struct _TotemEmbedded {
 	const char *mimetype;
 	char *filename, *href, *target;
 	BaconVideoWidget *bvw;
-	gboolean controller_hidden;
-	gboolean hidden;
 	TotemStates state;
 	GdkCursor *cursor;
 
@@ -83,7 +81,6 @@ typedef struct _TotemEmbedded {
 	GList *playlist, *current;
 	GMainLoop *loop;
 	int num_items;
-	gboolean repeat;
 
 	/* Open menu item */
 	GnomeVFSMimeApplication *app;
@@ -92,10 +89,12 @@ typedef struct _TotemEmbedded {
 	/* Seek bits */
 	GtkAdjustment *seekadj;
 	GtkWidget *seek;
-	gboolean seeking;
 
-	/* XEmbed */
-	gboolean embedded_done;
+	guint embedded_done : 1;
+	guint controller_hidden : 1;
+	guint hidden : 1;
+	guint repeat : 1;
+	guint seeking : 1;
 } TotemEmbedded;
 
 GType totem_embedded_get_type (void);
