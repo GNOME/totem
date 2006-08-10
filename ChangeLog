@@ -1,5 +1,10 @@
 2006-08-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (on_window_key_press_event):
+	Fix Ctrl+Q not exiting when in fullscreen (Closes: #345841)
+
+2006-08-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c:
 	(bacon_video_widget_set_visuals_quality):
 	Fix visuals effects' ratio when using Xinerama

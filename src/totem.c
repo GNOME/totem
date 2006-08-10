@@ -2870,6 +2870,8 @@ on_window_key_press_event (GtkWidget *win, GdkEventKey *event, Totem *totem)
 		case GDK_o:
 		case GDK_L:
 		case GDK_l:
+		case GDK_q:
+		case GDK_Q:
 		case GDK_S:
 		case GDK_s:
 		case GDK_Right:
