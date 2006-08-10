@@ -3003,6 +3003,7 @@ void
 bacon_video_widget_set_visuals_quality (BaconVideoWidget *bvw,
 		VisualsQuality quality)
 {
+	GdkScreen *screen;
 	int fps, h, w;
 
 	g_return_if_fail (bvw != NULL);
@@ -3013,12 +3014,10 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget *bvw,
 	fps = vis_qualities[quality].fps;
 	h = vis_qualities[quality].height;
 
-	XLockDisplay (bvw->priv->display);
+	screen = gtk_widget_get_screen (GTK_WIDGET (bvw));
 	w = vis_qualities[quality].height *
-		DisplayWidth (bvw->priv->display, bvw->priv->screen) /
-		DisplayHeight (bvw->priv->display, bvw->priv->screen);
-	XUnlockDisplay (bvw->priv->display);
-
+		gdk_screen_get_width (screen) /
+		gdk_screen_get_height (screen);
 	bacon_video_widget_set_visuals_quality_size (bvw, w, h, fps);
 
 	bvw->priv->quality = quality;
