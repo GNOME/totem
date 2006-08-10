@@ -3,6 +3,7 @@ noinst_PROGRAMS = test-parser
 INCLUDES = \
 	-I$(top_srcdir) \
 	-I$(top_builddir)/src/plparser \
+	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	$(EXTRA_GNOME_CFLAGS) \
 	$(HAL_CFLAGS) \
 	$(DBUS_CFLAGS)

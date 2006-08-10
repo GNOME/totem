@@ -94,7 +94,7 @@ GType    totem_pl_parser_get_type (void);
 gboolean   totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
 				  TotemPlParserIterFunc func,
 				  const char *output, TotemPlParserType type,
-                                  gpointer user_data,
+				  gpointer user_data,
 				  GError **error);
 
 gboolean   totem_pl_parser_write_with_title (TotemPlParser *parser,

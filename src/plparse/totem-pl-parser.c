@@ -32,7 +32,7 @@
 #include "totem-disc.h"
 
 #include <glib.h>
-#include <glib/gi18n.h>
+#include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
 #include <libxml/tree.h>
 #include <libxml/parser.h>
@@ -97,6 +97,7 @@ enum {
 };
 
 static int totem_pl_parser_table_signals[LAST_SIGNAL] = { 0 };
+static gboolean i18n_done = FALSE;
 
 static GObjectClass *parent_class = NULL;
 
@@ -215,9 +216,21 @@ totem_pl_parser_error_quark (void)
 	return quark;
 }
 
+static void
+totem_pl_parser_init_i18n (void)
+{
+	if (i18n_done == FALSE) {
+		/* set up translation catalog */
+		bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
+		bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+		i18n_done = TRUE;
+	}
+}
+
 TotemPlParser *
 totem_pl_parser_new (void)
 {
+	totem_pl_parser_init_i18n ();
 	return TOTEM_PL_PARSER (g_object_new (TOTEM_TYPE_PL_PARSER, NULL));
 }
 
@@ -2293,6 +2306,8 @@ totem_pl_parser_can_parse_from_data (gpointer data, guint len)
 {
 	const char *mimetype;
 	guint i;
+
+	totem_pl_parser_init_i18n ();
 
 	mimetype = gnome_vfs_get_mime_type_for_data (data, len);
 	if (mimetype == NULL || strcmp (GNOME_VFS_MIME_TYPE_UNKNOWN, mimetype) == 0) {

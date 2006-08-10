@@ -238,6 +238,10 @@ int main (int argc, char **argv)
 {
 	gnome_vfs_init();
 
+	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
+	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+	textdomain (GETTEXT_PACKAGE);
+
 	while (argc > 1 && argv[1]) {
 		if (strcmp (argv[1], "--no-recurse") == 0 || strcmp (argv[1], "-n") == 0) {
 			g_print ("Disabling recursion\n");
