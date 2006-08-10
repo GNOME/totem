@@ -75,7 +75,8 @@ totem-video-thumbnail.schemas.in: schemas.sh mime-type-list.txt
 totem-handlers.schemas.in: handlers.sh
 	$(srcdir)/handlers.sh > $@
 
-schema_in_files = totem.schemas.in totem-video-thumbnail.schemas.in totem-handlers.schemas.in
+generated_schema_in_files = totem.schemas.in totem-video-thumbnail.schemas.in totem-handlers.schemas.in
+schema_in_files = totem.schemas.in $(generated_schema_in_files)
 schemadir = $(GCONF_SCHEMA_FILE_DIR)
 schema_DATA = $(schema_in_files:.schemas.in=.schemas)
 @INTLTOOL_SCHEMAS_RULE@
@@ -109,7 +110,7 @@ CLEANFILES = \
  	*.bak *.gladep core* *.orig *~ 	\
 	$(desktop_in_files)		\
 	$(desktop_DATA)			\
-	$(schema_in_files)		\
+	$(generated_schema_in_files)	\
 	$(schema_DATA)			\
 	totem-handlers.schemas.in 	\
 	totem-mime-types.h		\
