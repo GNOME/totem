@@ -368,6 +368,7 @@ if test "x$ENABLE_MOZILLA" = "xyes" ; then
 		[gtk+-x11-2.0 \
 		 $MM \
 		 gthread-2.0 \
+		 shared-mime-info >= 0.17 \
 		 gnome-vfs-2.0],,
 		[ENABLE_MOZILLA=no])
 
