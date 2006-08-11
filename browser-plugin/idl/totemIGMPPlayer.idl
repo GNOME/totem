@@ -1,0 +1,46 @@
+/*
+ *  Copyright (C) 2006
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ *  Boston, MA 02111-1307, USA.
+ *
+ *  $Id$
+ */
+
+#include "nsISupports.idl"
+
+interface totemIGMPControls;
+
+/**
+ * totemIGMPPlayer interface
+ * 
+ * The interface containing the core plugin interfaces from WMP.
+ * 
+ * @status: EXTERNAL
+ * XXX incomplete
+ */
+[scriptable, uuid(e1b5b905-6833-4386-9acb-1e1537e7f7a2)]
+interface totemIGMPPlayer : nsISupports
+{
+  /* Properties */
+
+  /**
+   * Gets the Controls object
+   */
+  readonly attribute totemIGMPControls controls;
+
+
+  /* Methods */
+};

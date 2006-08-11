@@ -1,3 +1,39 @@
+2006-08-11  Christian Persch  <chpe@cvs.gnome.org>
+
+	* autogen.sh:
+	* configure.in:
+	* Makefile.am:
+	* src/Makefile.am:
+	R src/totem-mozilla-plugin.cpp:
+	R totem-mozilla-scriptable.cpp:
+	R totem-mozilla-scriptable.h:
+	A browser-plugin/.cvsignore:
+	A browser-plugin/Makefile.am:
+	A browser-plugin/TODO:
+	A browser-plugin/idl/.cvsignore:
+	A browser-plugin/idl/Makefile.am:
+	A browser-plugin/idl/totemIBasicPlayer.idl:
+	A browser-plugin/idl/totemIComplexPlayer.idl:
+	A browser-plugin/idl/totemIGMPControls.idl:
+	A browser-plugin/idl/totemIGMPPlayer.idl:
+	A browser-plugin/idl/totemINarrowSpacePlayer.idl:
+	A browser-plugin/plugin.symbols:
+	A browser-plugin/totemBasicPlugin.cpp:
+	A browser-plugin/totemBasicPlugin.h:
+	A browser-plugin/totemComplexPlugin.cpp:
+	A browser-plugin/totemComplexPlugin.h:
+	A browser-plugin/totemGMPPlugin.cpp:
+	A browser-plugin/totemGMPPlugin.h:
+	A browser-plugin/totemNarrowSpacePlugin.cpp:
+	A browser-plugin/totemNarrowSpacePlugin.h:
+	A browser-plugin/totemPlugin.cpp:
+	A browser-plugin/totemPlugin.h:
+	A browser-plugin/totemScriptableBase.cpp:
+	A browser-plugin/totemScriptableBase.h:
+
+	Move plugin to browser-plugin/ and build 4 variants of it
+	with different JS interface and plugin name. Bug #343007.
+
 2006-08-11  Bastien Nocera  <hadess@hadess.net>
 
 	* src/ev-sidebar.c: (ev_sidebar_init): Use a

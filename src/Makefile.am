@@ -15,30 +15,13 @@ TOTEM_PROPERTIES_PAGE =
 TOTEM_PROPERTIES_PAGE_TEST =
 endif
 
-if HAVE_MOZILLA
-TOTEM_MOZILLA_VIEWER = totem-mozilla-viewer
-TOTEM_MOZILLA_PLUGIN = libtotem_mozilla.la
-
-plugin_LTLIBRARIES = $(TOTEM_MOZILLA_PLUGIN)
-plugindir = $(libdir)/mozilla/plugins
-
-gecko_include_subdirs =	\
-	.		\
-	docshell	\
-	dom		\
-	necko
-
-MOZILLA_SUBDIR_INCLUDES=$(addprefix -I$(MOZILLA_INCLUDE_ROOT)/,$(gecko_include_subdirs))
-
-else
-TOTEM_MOZILLA_VIEWER = 
-TOTEM_MOZILLA_PLUGIN =
-MOZILLA_SUBDIR_INCLUDES=
-endif
-
 bin_PROGRAMS = totem totem-video-thumbnailer $(VANITY)
-libexec_PROGRAMS = $(TOTEM_MOZILLA_VIEWER)
+libexec_PROGRAMS =
 noinst_PROGRAMS = list_v4l disc-test metadata-test $(TOTEM_PROPERTIES_PAGE_TEST)
+
+if HAVE_MOZILLA
+libexec_PROGRAMS += totem-mozilla-viewer
+endif
 
 noinst_LTLIBRARIES = \
 	libbaconpropertiespage.la \
@@ -156,33 +139,13 @@ test_properties_page_LDADD =		\
 	$(NVTV_LIBS) $(NAUTILUS_LIBS)					\
 	$(XTEST_LIBS) $(X_LIBS) 
 
+
+BUILT_SOURCES = 
+
 if HAVE_MOZILLA
 
-BUILT_SOURCES = \
-	totem_mozilla_scripting.h \
-	libtotem_mozilla.xpt \
+BUILT_SOURCES += \
 	totem-mozilla-interface.h
-
-totem_mozilla_scripting.h: totem_mozilla_scripting.idl
-	$(MOZILLA_XPIDL) -m header -I $(MOZILLA_IDLDIR) $<
-
-libtotem_mozilla.xpt: totem_mozilla_scripting.idl
-	$(MOZILLA_XPIDL) -m typelib -I $(MOZILLA_IDLDIR) $< && \
-	mv totem_mozilla_scripting.xpt libtotem_mozilla.xpt
-
-typelib_DATA = libtotem_mozilla.xpt
-typelibdir = $(libdir)/mozilla/plugins
-
-libtotem_mozilla_la_LIBADD = \
-	plparse/libtotem-plparser-mini.la
-libtotem_mozilla_la_LDFLAGS = \
-	$(DBUS_LIBS) $(MOZILLA_LIBS) $(modules_flags)
-libtotem_mozilla_la_SOURCES = \
-	totem-mozilla-plugin.cpp \
-	totem_mozilla_scripting.h \
-	totem-mozilla-scriptable.h \
-	totem-mozilla-scriptable.cpp \
-	totem-mozilla-options.h
 
 totem-mozilla-interface.h: totem-mozilla-interface.xml
 	$(DBUS_BIND) --prefix=totem_embedded --mode=glib-server \
@@ -198,11 +161,6 @@ totem_mozilla_viewer_LDADD = \
 	$(EXTRA_GNOME_LIBS) $(XVIDMODE_LIBS) \
 	$(DBUS_LIBS) $(NVTV_LIBS) \
 	$(XTEST_LIBS) $(X_LIBS) 
-
-else
-
-BUILT_SOURCES = 
-
 endif
 
 vanity_SOURCES =					\
@@ -256,8 +214,4 @@ EXTRA_DIST = \
 	$(BACON_V4L_SELECTION) \
 	vanity.c \
 	totem-mozilla-viewer.c \
-	totem-mozilla-plugin.cpp \
-	totem_mozilla_scripting.idl \
-	totem-mozilla-scriptable.cpp \
-	totem-mozilla-scriptable.h \
 	totem-mozilla-interface.xml

@@ -19,8 +19,7 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#include "mozilla-config.h"
-
+#include <mozilla-config.h>
 #include "config.h"
 
 #include <errno.h>
@@ -33,13 +32,13 @@
 #include <string.h>
 
 #include <glib.h>
-#include <glib/gi18n.h>
 #include <libgnomevfs/gnome-vfs-mime-handlers.h>
 #include <libgnomevfs/gnome-vfs-mime-info.h>
-#include <totem-pl-parser-mini.h>
+#include <libgnomevfs/gnome-vfs-utils.h>
 
+#include "debug.h"
+#include "totem-pl-parser-mini.h"
 #include "totem-mozilla-options.h"
-#include "totem-mozilla-scriptable.h"
 
 #include "npapi.h"
 #include "npupp.h"
@@ -49,18 +48,64 @@
 #include <nsEmbedString.h>
 #include <nsIInterfaceRequestor.h>
 #include <nsIInterfaceRequestorUtils.h>
-#include <docshell/nsIWebNavigation.h>
+#include <nsIWebNavigation.h>
 
 #define TOTEM_DEBUG 1
 /* define TOTEM_DEBUG for more debug spew */
 #include "debug.h"
 
+#if defined(TOTEM_BASIC_PLUGIN)
+#include "totemBasicPlugin.h"
+#elif defined(TOTEM_GMP_PLUGIN)
+#include "totemGMPPlugin.h"
+#elif defined(TOTEM_COMPLEX_PLUGIN)
+#include "totemComplexPlugin.h"
+#elif defined(TOTEM_NARROWSPACE_PLUGIN)
+#include "totemNarrowSpacePlugin.h"
+#else
+#error Unknown plugin type
+#endif
+
+/* How much data bytes to request */
+#define PLUGIN_STREAM_CHUNK_SIZE (8 * 1024)
+
 static NPNetscapeFuncs mozilla_functions;
 static char *mime_list = NULL;
 
+/* public functions */
+
+void
+totem_plugin_play (totemPlugin *plugin)
+{
+	D ("play");
+	dbus_g_proxy_call (plugin->proxy, "Play", NULL,
+			   G_TYPE_INVALID, G_TYPE_INVALID);
+}
+
+void
+totem_plugin_stop (totemPlugin *plugin)
+{
+	D ("stop");
+	dbus_g_proxy_call (plugin->proxy, "Stop", NULL,
+			   G_TYPE_INVALID, G_TYPE_INVALID);
+}
+
+void
+totem_plugin_pause (totemPlugin *plugin)
+{
+	D ("pause");
+	dbus_g_proxy_call (plugin->proxy, "Pause", NULL,
+			   G_TYPE_INVALID, G_TYPE_INVALID);
+}
+
+/* private functions */
+
 static void
-cb_update_name (DBusGProxy *proxy, char *svc, char *old_owner,
-		char *new_owner, TotemPlugin *plugin)
+cb_update_name (DBusGProxy *proxy,
+		const char *svc,
+		const char *old_owner,
+		const char *new_owner,
+		totemPlugin *plugin)
 {
 	D("Received notification for %s\n", svc);
 	if (strcmp (svc, plugin->wait_for_svc) == 0) {
@@ -69,10 +114,9 @@ cb_update_name (DBusGProxy *proxy, char *svc, char *old_owner,
 }
 
 static void
-cb_stop_sending_data (DBusGProxy  *proxy, void *data)
+cb_stop_sending_data (DBusGProxy  *proxy,
+		      totemPlugin *plugin)
 {
-	TotemPlugin *plugin = (TotemPlugin *) data;
-
 	D("Stop sending data signal received");
 	if (CallNPN_DestroyStreamProc (mozilla_functions.destroystream,
 				plugin->instance,
@@ -91,21 +135,21 @@ is_supported_scheme (const char *url)
 	if (url == NULL)
 		return FALSE;
 
-	if (g_str_has_prefix (url, "mms:") != FALSE)
+	if (g_str_has_prefix (url, "mms:"))
 		return FALSE;
 
 	return TRUE;
 }
 
 static gboolean
-totem_plugin_fork (TotemPlugin *plugin)
+totem_plugin_fork (totemPlugin *plugin)
 {
 	GTimeVal then, now;
 	char *svcname;
 	GPtrArray *arr;
 	char **argv;
 	GError *err = NULL;
-	totemMozillaObject *iface = plugin->iface;
+	totemScriptablePlugin *scriptable = plugin->scriptable;
 
 	/* Make sure we don't get both an XID and hidden */
 	if (plugin->window && plugin->hidden) {
@@ -172,19 +216,20 @@ totem_plugin_fork (TotemPlugin *plugin)
 		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_HIDDEN));
 	}
 
-	if (plugin->repeat) {
-		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_REPEAT));
-	}
-
-	if (plugin->is_playlist) {
-		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_PLAYLIST));
-		g_ptr_array_add (arr, g_strdup (plugin->src));
-	} else {
-		if (is_supported_scheme (plugin->src) == FALSE)
-			g_ptr_array_add (arr, g_strdup (plugin->src));
-		else
-			g_ptr_array_add (arr, g_strdup ("fd://0"));
-	}
+ 	if (plugin->repeat) {
+ 		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_REPEAT));
+ 	}
+ 
+ 	if (plugin->is_playlist) {
+ 		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_PLAYLIST));
+ 		g_ptr_array_add (arr, g_strdup (plugin->src));
+ 	} else {
+		// if (!plugin->srcSupported)
+ 		if (is_supported_scheme (plugin->src) == FALSE)
+ 			g_ptr_array_add (arr, g_strdup (plugin->src));
+ 		else
+ 			g_ptr_array_add (arr, g_strdup ("fd://0"));
+ 	}
 
 	g_ptr_array_add (arr, NULL);
 	argv = (char **) g_ptr_array_free (arr, FALSE);
@@ -238,21 +283,21 @@ totem_plugin_fork (TotemPlugin *plugin)
 				     plugin, NULL);
 	g_get_current_time (&then);
 	g_time_val_add (&then, G_USEC_PER_SEC * 5);
-	NS_ADDREF (iface);
+	NS_ADDREF (scriptable);
 	do {
 		g_main_context_iteration (NULL, TRUE);
 		g_get_current_time (&now);
-	} while (iface->tm != NULL && !plugin->got_svc &&
+	} while (scriptable->IsValid () && !plugin->got_svc &&
 		 (now.tv_sec <= then.tv_sec));
 
-	if (!iface->tm) {
+	if (!scriptable->IsValid ()) {
 		/* we were destroyed in one of the iterations of the
 		 * mainloop, get out ASAP */
 		D("We no longer exist");
-		NS_RELEASE (iface);
+		NS_RELEASE (scriptable);
 		return FALSE;
 	}
-	NS_RELEASE (iface);
+	NS_RELEASE (scriptable);
 	dbus_g_proxy_disconnect_signal (plugin->proxy, "NameOwnerChanged",
 					G_CALLBACK (cb_update_name), plugin);
 	if (!plugin->got_svc) {
@@ -287,7 +332,8 @@ totem_plugin_fork (TotemPlugin *plugin)
 }
 
 static char *
-resolve_relative_uri (nsIURI *docURI, const char *uri)
+resolve_relative_uri (nsIURI *docURI,
+		      const char *uri)
 {
 	if (docURI) {
 		nsresult rv;
@@ -301,11 +347,16 @@ resolve_relative_uri (nsIURI *docURI, const char *uri)
 	return g_strdup (uri);
 }
 
-static NPError totem_plugin_new_instance (NPMIMEType mimetype, NPP instance,
-		uint16_t mode, int16_t argc, char *argn[], char *argv[],
-		NPSavedData *saved)
+static NPError
+totem_plugin_new_instance (NPMIMEType mimetype,
+			   NPP instance,
+			   uint16_t mode,
+			   int16_t argc,
+			   char *argn[],
+			   char *argv[],
+			   NPSavedData *saved)
 {
-	TotemPlugin *plugin;
+	totemPlugin *plugin;
 	GError *e = NULL;
 	int i;
 
@@ -319,23 +370,23 @@ static NPError totem_plugin_new_instance (NPMIMEType mimetype, NPP instance,
 	mozilla_functions.setvalue (instance,
 			NPPVpluginKeepLibraryInMemory, (void *)TRUE);
 
-	instance->pdata = mozilla_functions.memalloc(sizeof(TotemPlugin));
-	plugin = (TotemPlugin *) instance->pdata;
+	instance->pdata = mozilla_functions.memalloc(sizeof(totemPlugin));
+	plugin = (totemPlugin *) instance->pdata;
 
 	if (plugin == NULL)
 		return NPERR_OUT_OF_MEMORY_ERROR;
 
-	memset(plugin, 0, sizeof(TotemPlugin));
-	plugin->iface = new totemMozillaObject (plugin);
-	if (!plugin->iface) {
+	memset(plugin, 0, sizeof(totemPlugin));
+	plugin->scriptable = new totemScriptablePlugin (plugin);
+	if (!plugin->scriptable) {
 		mozilla_functions.memfree (plugin);
 		return NPERR_OUT_OF_MEMORY_ERROR;
 	}
-	NS_ADDREF (plugin->iface);
+	NS_ADDREF (plugin->scriptable);
 	if (!(plugin->conn = dbus_g_bus_get (DBUS_BUS_SESSION, &e))) {
 		printf ("Failed to open DBUS session: %s\n", e->message);
 		g_error_free (e);
-		NS_RELEASE (plugin->iface);
+		NS_RELEASE (plugin->scriptable);
 		mozilla_functions.memfree (plugin);
 		return NPERR_OUT_OF_MEMORY_ERROR;
 	} else if (!(plugin->proxy = dbus_g_proxy_new_for_name (plugin->conn,
@@ -345,7 +396,7 @@ static NPError totem_plugin_new_instance (NPMIMEType mimetype, NPP instance,
 		printf ("Failed to open DBUS proxy: %s\n", e->message);
 		g_error_free (e);
 		g_object_unref (G_OBJECT (plugin->conn));
-		NS_RELEASE (plugin->iface);
+		NS_RELEASE (plugin->scriptable);
 		mozilla_functions.memfree (plugin);
 		return NPERR_OUT_OF_MEMORY_ERROR;
 	}
@@ -398,6 +449,7 @@ static NPError totem_plugin_new_instance (NPMIMEType mimetype, NPP instance,
 		}
 		if (g_ascii_strcasecmp (argn[i], "src") == 0) {
 			plugin->src = resolve_relative_uri (docURI, argv[i]);
+			//plugin->srcSupported = is_supported_scheme (plugin->src);
 		}
 		if (g_ascii_strcasecmp (argn[i], "href") == 0) {
 			plugin->href = resolve_relative_uri (docURI, argv[i]);
@@ -455,23 +507,23 @@ static NPError totem_plugin_new_instance (NPMIMEType mimetype, NPP instance,
 	return NPERR_NO_ERROR;
 }
 
-static NPError totem_plugin_destroy_instance (NPP instance, NPSavedData **save)
+static NPError
+totem_plugin_destroy_instance (NPP instance,
+			       NPSavedData **save)
 {
-	TotemPlugin * plugin;
-
 	D("plugin_destroy");
 
 	if (instance == NULL)
 		return NPERR_INVALID_INSTANCE_ERROR;
 
-	plugin = (TotemPlugin *) instance->pdata;
+	totemPlugin *plugin = (totemPlugin *) instance->pdata;
 	if (plugin == NULL)
 		return NPERR_NO_ERROR;
 
-	if (!plugin || !plugin->iface || !plugin->iface->tm)
+	if (!plugin || !plugin->scriptable || !plugin->scriptable->IsValid ())
 		return NPERR_INVALID_INSTANCE_ERROR;
 
-	plugin->iface->invalidatePlugin ();
+	plugin->scriptable->UnsetPlugin ();
 
 	if (plugin->send_fd >= 0)
 		close(plugin->send_fd);
@@ -481,7 +533,7 @@ static NPError totem_plugin_destroy_instance (NPP instance, NPSavedData **save)
 		waitpid (plugin->player_pid, NULL, 0);
 	}
 
-	NS_RELEASE (plugin->iface);
+	NS_RELEASE (plugin->scriptable);
 
 	g_free (plugin->target);
 	g_free (plugin->src);
@@ -495,16 +547,16 @@ static NPError totem_plugin_destroy_instance (NPP instance, NPSavedData **save)
 	return NPERR_NO_ERROR;
 }
 
-static NPError totem_plugin_set_window (NPP instance, NPWindow* window)
+static NPError
+totem_plugin_set_window (NPP instance,
+			 NPWindow* window)
 {
-	TotemPlugin *plugin;
-
 	D("plugin_set_window");
 
 	if (instance == NULL)
 		return NPERR_INVALID_INSTANCE_ERROR;
 
-	plugin = (TotemPlugin *) instance->pdata;
+	totemPlugin *plugin = (totemPlugin *) instance->pdata;
 	if (plugin == NULL)
 		return NPERR_INVALID_INSTANCE_ERROR;
 
@@ -528,17 +580,23 @@ static NPError totem_plugin_set_window (NPP instance, NPWindow* window)
 	return NPERR_NO_ERROR;
 }
 
-static NPError totem_plugin_new_stream (NPP instance, NPMIMEType type,
-		NPStream* stream_ptr, NPBool seekable, uint16* stype)
+static NPError
+totem_plugin_new_stream (NPP instance,
+			 NPMIMEType type,
+			 NPStream* stream_ptr,
+			 NPBool seekable,
+			 uint16* stype)
 {
-	TotemPlugin *plugin;
-
 	D("plugin_new_stream");
 
 	if (instance == NULL)
 		return NPERR_INVALID_INSTANCE_ERROR;
 
-	plugin = (TotemPlugin *) instance->pdata;
+	totemPlugin *plugin = (totemPlugin *) instance->pdata;
+
+	/* We already have a live stream */
+	if (plugin->stream)
+		return NPERR_GENERIC_ERROR;
 
 	D("plugin_new_stream type: %s url: %s", type, plugin->src);
 
@@ -551,16 +609,17 @@ static NPError totem_plugin_new_stream (NPP instance, NPMIMEType type,
 		*stype = NP_ASFILE;
 		plugin->stream_type = NP_ASFILE;
 	}
+
 	plugin->stream = stream_ptr;
 
 	return NPERR_NO_ERROR;
 }
 
-static NPError totem_plugin_destroy_stream (NPP instance, NPStream* stream,
-		NPError reason)
+static NPError
+totem_plugin_destroy_stream (NPP instance,
+			     NPStream* stream,
+			     NPError reason)
 {
-	TotemPlugin *plugin;
-
 	D("plugin_destroy_stream");
 
 	if (instance == NULL) {
@@ -568,36 +627,39 @@ static NPError totem_plugin_destroy_stream (NPP instance, NPStream* stream,
 		return NPERR_NO_ERROR;
 	}
 
-	plugin = (TotemPlugin *) instance->pdata;
+	totemPlugin *plugin = (totemPlugin *) instance->pdata;
 
 	close(plugin->send_fd);
 	plugin->send_fd = -1;
+
+	plugin->stream = nsnull;
 
 	return NPERR_NO_ERROR;
 }
 
 static int32 totem_plugin_write_ready (NPP instance, NPStream *stream)
 {
-	TotemPlugin *plugin;
+	totemPlugin *plugin;
 	struct pollfd fds;
 
-	D("plugin_write_ready");
+	// D("plugin_write_ready");
 
 	if (instance == NULL)
 		return 0;
 
-	plugin = (TotemPlugin *) instance->pdata;
+	plugin = (totemPlugin *) instance->pdata;
 
+//	if (!plugin->srcSupported)
 	if (is_supported_scheme (plugin->src) == FALSE)
 		return 0;
 
 	if (plugin->send_fd < 0)
-		return (8 * 1024);
+		return (PLUGIN_STREAM_CHUNK_SIZE);
 
 	fds.events = POLLOUT;
 	fds.fd = plugin->send_fd;
 	if (plugin->send_fd > 0 && poll (&fds, 1, 0) > 0)
-		return (8 * 1024);
+		return (PLUGIN_STREAM_CHUNK_SIZE);
 
 	return 0;
 }
@@ -605,22 +667,28 @@ static int32 totem_plugin_write_ready (NPP instance, NPStream *stream)
 static int32 totem_plugin_write (NPP instance, NPStream *stream, int32 offset,
 	int32 len, void *buffer)
 {
-	TotemPlugin *plugin;
 	int ret;
 
-	D("plugin_write");
+	// D("plugin_write");
 
 	if (instance == NULL)
 		return -1;
 
-	plugin = (TotemPlugin *) instance->pdata;
-
+	totemPlugin *plugin = (totemPlugin *) instance->pdata;
 	if (plugin == NULL)
 		return -1;
 
 	if (!plugin->player_pid) {
-		if (totem_pl_parser_can_parse_from_data ((const char *) buffer,
-					len, TRUE) != FALSE) {
+		/* FIXME this looks wrong since it'll look at the current data buffer,
+		 * not the cumulative data since the stream started 
+		 */
+		if (!plugin->stream)
+		{
+			g_message ("No stream in NPP_Write!?");
+			return -1;
+		}
+			
+		if (totem_pl_parser_can_parse_from_data ((const char *) buffer, len, TRUE /* FIXME */) != FALSE) {
 			D("Need to wait for the file to be downloaded completely");
 			plugin->is_playlist = TRUE;
 			return len;
@@ -633,6 +701,7 @@ static int32 totem_plugin_write (NPP instance, NPStream *stream, int32 offset,
 	if (plugin->send_fd < 0)
 		return -1;
 
+	// if (!plugin->srcSupported)
 	if (is_supported_scheme (plugin->src) == FALSE)
 		return -1;
 
@@ -647,14 +716,14 @@ static int32 totem_plugin_write (NPP instance, NPStream *stream, int32 offset,
 static void totem_plugin_stream_as_file (NPP instance, NPStream *stream,
 	const char* fname)
 {
-	TotemPlugin *plugin;
+	totemPlugin *plugin;
 	GError *err = NULL;
 
 	D("plugin_stream_as_file: %s", fname);
 
 	if (instance == NULL)
 		return;
-	plugin = (TotemPlugin *) instance->pdata;
+	plugin = (totemPlugin *) instance->pdata;
 
 	if (plugin == NULL)
 		return;
@@ -693,18 +762,19 @@ totem_plugin_get_description (void)
 }
 
 static NPError
-totem_plugin_get_value (NPP instance, NPPVariable variable,
-		                        void *value)
+totem_plugin_get_value (NPP instance,
+			NPPVariable variable,
+		        void *value)
 {
-	TotemPlugin *plugin;
+	totemPlugin *plugin;
 	NPError err = NPERR_NO_ERROR;
 
 	/* See NPPVariable in npapi.h */
-	D("plugin_get_value %d\n", variable);
+	D("plugin_get_value %d (%x)\n", variable, variable);
 
 	switch (variable) {
 	case NPPVpluginNameString:
-		*((char **)value) = "Totem Web Browser Plugin (Windows Media)";
+		*((char **)value) = totemScriptablePlugin::PluginDescription ();
 		break;
 	case NPPVpluginDescriptionString:
 		*((char **)value) = totem_plugin_get_description();
@@ -713,13 +783,10 @@ totem_plugin_get_value (NPP instance, NPPVariable variable,
 		*((NPBool *)value) = PR_TRUE;
 		break;
 	case NPPVpluginScriptableIID: {
-		static nsIID sIID = TOTEMMOZILLASCRIPT_IID;
-		nsIID* ptr = (nsIID *) mozilla_functions.memalloc (sizeof (nsIID));
-
+		nsIID* ptr = NS_STATIC_CAST (nsIID *, mozilla_functions.memalloc (sizeof (nsIID)));
 		if (ptr) {
-			*ptr = sIID;
-			* (nsIID **) value = ptr;
-			D("Returning that we support iface");
+			*ptr = NS_GET_IID (nsISupports);
+			*NS_STATIC_CAST (nsIID **, value) = ptr;
 		} else {
 			err = NPERR_OUT_OF_MEMORY_ERROR;
 		}
@@ -729,18 +796,19 @@ totem_plugin_get_value (NPP instance, NPPVariable variable,
 	        if (instance == NULL) {
 			err = NPERR_GENERIC_ERROR;
 		} else {
-		        plugin = (TotemPlugin *) instance->pdata;
-			NS_ENSURE_TRUE (plugin && plugin->iface && plugin->iface->tm, NPERR_INVALID_INSTANCE_ERROR);
+		        plugin = (totemPlugin *) instance->pdata;
+			if (!plugin ||
+			    !plugin->scriptable ||
+			    !plugin->scriptable->IsValid ())
+				return NPERR_INVALID_INSTANCE_ERROR;
 
-			plugin->iface->QueryInterface (NS_GET_IID (nsISupports),
-						       (void **) value);
-//			* (nsISupports **) value = static_cast<totemMozillaScript *>(plugin->iface);
-			D("Returning instance %p", plugin->iface);
+			plugin->scriptable->QueryInterface (NS_GET_IID (nsISupports),
+							    NS_REINTERPRET_CAST (void **, value));
 		}
 		break;
 	}
 	default:
-		D("unhandled variable %d", variable);
+		D("unhandled variable %d (%x)", variable, variable);
 		err = NPERR_INVALID_PARAM;
 		break;
 	}
@@ -749,39 +817,25 @@ totem_plugin_get_value (NPP instance, NPPVariable variable,
 }
 
 static NPError
-totem_plugin_set_value (NPP instance, NPNVariable variable,
-		                        void *value)
+totem_plugin_set_value (NPP instance,
+			NPNVariable variable,
+			void *value)
 {
-	D("plugin_set_value");
+	D("plugin_set_value %d (%x)", variable, variable);
 
 	return NPERR_NO_ERROR;
 }
 
 NPError
-NP_GetValue(void *future, NPPVariable variable, void *value)
+NP_GetValue (void *future,
+	     NPPVariable variable,
+	     void *value)
 {
 	return totem_plugin_get_value (NULL, variable, value);
 }
 
-static struct {
-	const char *mimetype;
-	const char *extensions;
-	const char *mime_alias;
-} mimetypes[] = {
-	{ "video/quicktime", "mov", NULL },
-	{ "application/x-mplayer2", "avi, wma, wmv", "video/x-msvideo" },
-	{ "video/mpeg", "mpg, mpeg, mpe", NULL },
-	{ "video/x-ms-asf-plugin", "asf, wmv", "video/x-ms-asf" },
-	{ "video/x-ms-wmv", "wmv", "video/x-ms-wmv" },
-	{ "video/x-wmv", "wmv", "video/x-ms-wmv" },
-	{ "application/ogg", "ogg", NULL },
-	{ "video/divx", "divx", "video/x-msvideo" },
-	{ "audio/wav", "wav", NULL },
-	{ "audio/x-pn-realaudio-plugin", "rpm", "audio/vnd.rn-realaudio" },
-};
-#define NUM_MIME_TYPES G_N_ELEMENTS(mimetypes)
-
-char *NP_GetMIMEDescription(void)
+char *
+NP_GetMIMEDescription (void)
 {
 	GString *list;
 	guint i;
@@ -791,7 +845,10 @@ char *NP_GetMIMEDescription(void)
 
 	list = g_string_new (NULL);
 
-	for (i = 0; i < NUM_MIME_TYPES; i++) {
+	const totemPluginMimeEntry *mimetypes;
+	PRUint32 count;
+	totemScriptablePlugin::PluginMimeTypes (&mimetypes, &count);
+	for (PRUint32 i = 0; i < count; ++i) {
 		const char *desc;
 		char *item;
 
@@ -804,10 +861,10 @@ char *NP_GetMIMEDescription(void)
 			desc = mimetypes[i].mime_alias;
 		}
 
-		item = g_strdup_printf ("%s:%s:%s;", mimetypes[i].mimetype,
-				mimetypes[i].extensions, desc);
-		list = g_string_append (list, item);
-		g_free (item);
+		g_string_append_printf (list,"%s:%s:%s;",
+					mimetypes[i].mimetype,
+					mimetypes[i].extensions,
+					desc ? desc : "-");
 	}
 
 	mime_list = g_string_free (list, FALSE);
@@ -815,8 +872,9 @@ char *NP_GetMIMEDescription(void)
 	return mime_list;
 }
 
-NPError NP_Initialize (NPNetscapeFuncs * moz_funcs,
-		NPPluginFuncs * plugin_funcs)
+NPError
+NP_Initialize (NPNetscapeFuncs * moz_funcs,
+	       NPPluginFuncs * plugin_funcs)
 {
 	NPError err = NPERR_NO_ERROR;
 	NPBool supportsXEmbed = PR_FALSE;
@@ -922,4 +980,3 @@ NPError NP_Shutdown(void)
 
 	return NPERR_NO_ERROR;
 }
-

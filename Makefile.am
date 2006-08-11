@@ -1,4 +1,4 @@
-SUBDIRS = po data src help
+SUBDIRS = po data src browser-plugin help
 
 install-data-local:
 	@$(NORMAL_INSTALL)
