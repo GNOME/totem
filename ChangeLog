@@ -1,5 +1,11 @@
 2006-08-11  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-mozilla-viewer.c: (main):
+	Fix crash on EOS when there's only one URL and no playlist
+	(Closes: #350903)
+
+2006-08-11  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser.c: (totem_pl_parser_is_asf),
 	(totem_pl_parser_is_quicktime),
 	(totem_pl_parser_can_parse_from_data):

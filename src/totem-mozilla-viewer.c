@@ -922,6 +922,10 @@ int main (int argc, char **argv)
 		emb->loop = g_main_loop_new (NULL, FALSE);
 		g_main_loop_run (emb->loop);
 		g_main_loop_unref (emb->loop);
+	} else {
+		emb->playlist = g_list_prepend (emb->playlist,
+				g_strdup (emb->filename));
+		emb->num_items++;
 	}
 
 	if (totem_embedded_open (emb) != FALSE)
