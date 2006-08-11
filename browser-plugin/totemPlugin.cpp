@@ -36,7 +36,6 @@
 #include <libgnomevfs/gnome-vfs-mime-info.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
 
-#include "debug.h"
 #include "totem-pl-parser-mini.h"
 #include "totem-mozilla-options.h"
 
