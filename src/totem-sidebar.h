@@ -25,7 +25,7 @@
 
 G_BEGIN_DECLS
 
-void totem_sidebar_setup (Totem *totem);
+void totem_sidebar_setup (Totem *totem, gboolean visible);
 void totem_sidebar_toggle (Totem *totem);
 void totem_sidebar_set_visibility (Totem *totem, gboolean visible);
 gboolean totem_sidebar_is_visible (Totem *totem);

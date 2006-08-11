@@ -151,13 +151,35 @@ totem_action_save_size (Totem *totem)
 		return;
 
 	/* Save the size of the video widget */
-	gconf_client_set_int (totem->gc,
-			GCONF_PREFIX"/window_w",
-			GTK_WIDGET(totem->bvw)->allocation.width, NULL);
-	gconf_client_set_int (totem->gc,
-			GCONF_PREFIX"/window_h",
-			GTK_WIDGET(totem->bvw)->allocation.height,
-			NULL);
+	totem->bvw_size_w = GTK_WIDGET(totem->bvw)->allocation.width
+		+ BVW_VBOX_BORDER_WIDTH;
+	totem->bvw_size_h = GTK_WIDGET(totem->bvw)->allocation.height
+		+ BVW_VBOX_BORDER_WIDTH;
+}
+
+static void
+totem_action_save_state (Totem *totem)
+{
+	GKeyFile *keyfile;
+	char *contents, *filename;
+
+	keyfile = g_key_file_new ();
+	g_key_file_set_integer (keyfile, "State",
+			"window_w", totem->bvw_size_w);
+	g_key_file_set_integer (keyfile, "State",
+			"window_h", totem->bvw_size_h);
+	g_key_file_set_boolean (keyfile, "State",
+			"show_sidebar", totem_sidebar_is_visible (totem));
+	g_key_file_set_boolean (keyfile, "State",
+			"maximised", totem->maximised);
+
+	contents = g_key_file_to_data (keyfile, NULL, NULL);
+	g_key_file_free (keyfile);
+	filename = g_build_filename (g_get_home_dir (), ".gnome2", "totem", NULL);
+	g_file_set_contents (filename, contents, -1, NULL);
+
+	g_free (filename);
+	g_free (contents);
 }
 
 void
@@ -190,20 +212,23 @@ totem_action_exit (Totem *totem)
 	if (display != NULL)
 		gdk_display_sync (display);
 
+	if (totem->bvw) {
+		//FIXME move the volume to the static file?
+		gconf_client_set_int (totem->gc,
+				GCONF_PREFIX"/volume",
+				bacon_video_widget_get_volume (totem->bvw),
+				NULL);
+		totem_action_save_size (totem);
+	}
+
 	bacon_message_connection_free (totem->conn);
-	totem_action_save_size (totem);
+	totem_action_save_state (totem);
 
 	totem_action_fullscreen (totem, FALSE);
 
 	totem_sublang_exit (totem);
 	totem_destroy_file_filters ();
 	totem_named_icons_dispose (totem);
-
-	if (totem->bvw)
-		gconf_client_set_int (totem->gc,
-				GCONF_PREFIX"/volume",
-				bacon_video_widget_get_volume (totem->bvw),
-				NULL);
 
 	if (totem->gc)
 		g_object_unref (G_OBJECT (totem->gc));
@@ -550,6 +575,12 @@ static gboolean
 window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 		Totem *totem)
 {
+	if (event->changed_mask == GDK_WINDOW_STATE_MAXIMIZED) {
+		totem->maximised = (event->new_window_state
+				& GDK_WINDOW_STATE_MAXIMIZED);
+		return;
+	}
+
 	if (event->changed_mask != GDK_WINDOW_STATE_FULLSCREEN) {
 		return FALSE;
 	}
@@ -2977,18 +3008,62 @@ update_buttons (Totem *totem)
 static void
 totem_setup_window (Totem *totem)
 {
-	GtkWidget *item;
+	GKeyFile *keyfile;
 	int w, h;
+	gboolean show_sidebar;
+	char *filename;
+	GError *err = NULL;
 
-	w = gconf_client_get_int (totem->gc, GCONF_PREFIX"/window_w", NULL);
-	h = gconf_client_get_int (totem->gc, GCONF_PREFIX"/window_h", NULL);
+	filename = g_build_filename (g_get_home_dir (), ".gnome2", "totem", NULL);
+	keyfile = g_key_file_new ();
+	if (g_key_file_load_from_file (keyfile, filename,
+			G_KEY_FILE_NONE, NULL) == FALSE) {
+		w = h = 0;
+		show_sidebar = TRUE;
+		g_free (filename);
+	} else {
+		g_free (filename);
 
-	if (w <= 0 || h <= 0)
-		return;
+		w = g_key_file_get_integer (keyfile, "State", "window_w", &err);
+		if (err != NULL) {
+			w = 0;
+			g_error_free (err);
+			err = NULL;
+		}
 
-	item = glade_xml_get_widget (totem->xml, "tmw_bvw_vbox");
-	gtk_widget_set_size_request (item,
-			w + BVW_VBOX_BORDER_WIDTH, h + BVW_VBOX_BORDER_WIDTH);
+		h = g_key_file_get_integer (keyfile, "State", "window_h", &err);
+		if (err != NULL) {
+			h = 0;
+			g_error_free (err);
+			err = NULL;
+		}
+
+		show_sidebar = g_key_file_get_boolean (keyfile, "State",
+				"show_sidebar", &err);
+		if (err != NULL) {
+			show_sidebar = TRUE;
+			g_error_free (err);
+			err = NULL;
+		}
+
+		totem->maximised = g_key_file_get_boolean (keyfile, "State",
+				"maximised", &err);
+		if (err != NULL)
+			g_error_free (err);
+		g_key_file_free (keyfile);
+	}
+
+	if (w > 0 && h > 0 && totem->maximised == FALSE) {
+		GtkWidget *item;
+
+		item = glade_xml_get_widget (totem->xml, "tmw_bvw_vbox");
+		gtk_widget_set_size_request (item,
+				w + BVW_VBOX_BORDER_WIDTH, h + BVW_VBOX_BORDER_WIDTH);
+	} else if (totem->maximised != FALSE) {
+		gtk_window_maximize (GTK_WINDOW (totem->win));
+	}
+
+	totem_sidebar_setup (totem, show_sidebar);
 }
 
 static void
@@ -3582,7 +3657,6 @@ main (int argc, char **argv)
 	/* The sidebar */
 	playlist_widget_setup (totem);
 	totem->properties = bacon_video_widget_properties_new ();
-	totem_sidebar_setup (totem);
 
 	/* The rest of the widgets */
 	totem->state = STATE_STOPPED;

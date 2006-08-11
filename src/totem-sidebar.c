@@ -106,10 +106,9 @@ totem_sidebar_is_visible (Totem *totem)
 }
 
 void
-totem_sidebar_setup (Totem *totem)
+totem_sidebar_setup (Totem *totem, gboolean visible)
 {
 	GtkWidget *item, *item2;
-	gboolean visible;
 
 	item = glade_xml_get_widget (totem->xml, "tmw_main_pane");
 	totem->sidebar = ev_sidebar_new ();
@@ -122,9 +121,6 @@ totem_sidebar_setup (Totem *totem)
 	gtk_widget_set_sensitive (GTK_WIDGET (totem->properties), FALSE);
 	gtk_paned_pack2 (GTK_PANED (item), totem->sidebar, FALSE, FALSE);
 
-	visible = gconf_client_get_bool (totem->gc,
-				GCONF_PREFIX"/sidebar_shown",
-				NULL);
 	totem->sidebar_shown = visible;
 
 	item = glade_xml_get_widget (totem->xml, "tmw_sidebar_button");
@@ -142,9 +138,8 @@ totem_sidebar_setup (Totem *totem)
 			G_CALLBACK (totem_sidebar_toggle), totem);
 
 	gtk_widget_show_all (totem->sidebar);
-	
 	gtk_widget_realize (totem->sidebar);
-	
+
 	if (!visible)
 		gtk_widget_hide (totem->sidebar);
 }

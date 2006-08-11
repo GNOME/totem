@@ -143,6 +143,10 @@ struct Totem {
 	gint64 seek_to;
 	guint index;
 
+	/* Window State */
+	int bvw_size_w, bvw_size_h;
+	gboolean maximised;
+
 	/* other */
 	char *mrl;
 	TotemPlaylist *playlist;

@@ -1,3 +1,18 @@
+2006-08-11  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: up the requirements to glib 2.8, sorry
+	* data/totem.schemas.in: remove the window width, height and
+	sidebar shown entries, and moved them to a local file
+	* src/totem-private.h:
+	* src/totem-sidebar.c: (totem_sidebar_setup):
+	* src/totem-sidebar.h:
+	* src/totem.c: (totem_action_save_size), (totem_action_save_state),
+	(totem_action_exit), (window_state_event_cb), (totem_setup_window),
+	(main):
+	Save the video widget's width, height, maximised state and whether
+	the sidebar is shown in a local file, rather than saving those
+	(wrongly) in GConf (Closes: #340014)
+
 2006-08-10  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: check for a newer version of shated-mime-info >= 0.17
