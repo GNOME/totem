@@ -43,7 +43,7 @@ static const nsCID kClassID =
     { 0xb0, 0x60, 0xc2, 0x18, 0x7d, 0xf9, 0xa2, 0x7c } };
 
 static const char kClassDescription[] = "totemGMPPlugin";
-static const char kPluginDescription[] = "XXX";
+static const char kPluginDescription[] = "Windows Media Player Plug-in 10 (compatible; Totem)";
 
 static const totemPluginMimeEntry kMimeTypes[] = {
 	{ "application/x-mplayer2", "avi, wma, wmv", "video/x-msvideo" },

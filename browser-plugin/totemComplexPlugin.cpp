@@ -40,7 +40,7 @@ static const nsCID kClassID =
   { 0x91, 0x8c, 0x09, 0xaa, 0x92, 0x36, 0xe3, 0xbb } };
 
 static const char kClassDescription[] = "totemComplexPlugin";
-static const char kPluginDescription[] = "XXX";
+static const char kPluginDescription[] = "Helix DNA Plugin: RealPlayer G2 Plug-In Compatible (compatible; Totem)";
 
 static const totemPluginMimeEntry kMimeTypes[] = {
 	{ "audio/x-pn-realaudio-plugin", "rpm", "audio/vnd.rn-realaudio" }
