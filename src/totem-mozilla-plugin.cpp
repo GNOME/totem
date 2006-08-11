@@ -704,7 +704,7 @@ totem_plugin_get_value (NPP instance, NPPVariable variable,
 
 	switch (variable) {
 	case NPPVpluginNameString:
-		*((char **)value) = "Totem Web Browser Plugin";
+		*((char **)value) = "Totem Web Browser Plugin (Windows Media)";
 		break;
 	case NPPVpluginDescriptionString:
 		*((char **)value) = totem_plugin_get_description();
