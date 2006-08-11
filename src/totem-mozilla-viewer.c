@@ -376,7 +376,7 @@ on_about1_activate (GtkButton *button, TotemEmbedded *emb)
 
 	emb->about = g_object_new (GTK_TYPE_ABOUT_DIALOG,
 				   "name", _("Totem Mozilla Plugin"),
-				   "version", PACKAGE_VERSION,
+				   "version", VERSION,
 				   "copyright", _("Copyright \xc2\xa9 2002-2006 Bastien Nocera"),
 				   "comments", description,
 				   "authors", authors,

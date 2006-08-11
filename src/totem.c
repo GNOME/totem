@@ -2003,7 +2003,7 @@ on_about1_activate (GtkButton *button, Totem *totem)
 				       backend_version, _(frontend_type));
 
 	totem->about = g_object_new (GTK_TYPE_ABOUT_DIALOG,
-				     "version", PACKAGE_VERSION,
+				     "version", VERSION,
 				     "copyright", _("Copyright \xc2\xa9 2002-2006 Bastien Nocera"),
 				     "comments", description,
 				     "authors", authors,
@@ -3612,7 +3612,7 @@ main (int argc, char **argv)
 #ifdef HAVE_GTK_ONLY
 	gtk_init (&argc, &argv);
 #else
-	gnome_program_init ("totem", PACKAGE_VERSION,
+	gnome_program_init ("totem", VERSION,
 			LIBGNOMEUI_MODULE,
 			argc, argv,
 			GNOME_PARAM_APP_DATADIR, DATADIR,

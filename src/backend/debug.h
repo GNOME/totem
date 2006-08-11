@@ -1,7 +1,7 @@
+#ifndef __TOTEM_DEBUG_H__
+#define __TOTEM_DEBUG_H__ 1
 
-#include <config.h>
-
-#ifdef TOTEM_DEBUG
+#ifdef GNOME_ENABLE_DEBUG
 
 #include <sys/time.h>
 
@@ -35,3 +35,4 @@
 #define TOTEM_PROFILE(function) function
 #endif
 
+#endif /* __TOTEM_DEBUG_H__ */

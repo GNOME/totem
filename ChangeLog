@@ -1,5 +1,14 @@
 2006-08-11  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/debug.h:
+	* src/totem-mozilla-viewer.c: (on_about1_activate):
+	* src/totem.c: (on_about1_activate), (main):
+	* src/vanity.c: (on_about1_activate), (main):
+	Patch from Christian Persch <chpe@cvs.gnome.org>
+	to use VERSION again instead of PACKAGE_VERSION
+
+2006-08-11  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemPlugin.cpp:
 	Fix double-include
 
