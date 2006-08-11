@@ -1,5 +1,24 @@
 2006-08-11  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* src/Makefile.am:
+	* src/plparse/Makefile.am:
+	* src/plparse/test-parser.c: (test_data), (main):
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_class_init),
+	(totem_pl_parser_finalize), (totem_pl_parser_is_ra),
+	(totem_pl_parser_is_asf), (totem_pl_parser_is_quicktime),
+	(totem_pl_parser_add_ignored_scheme),
+	(totem_pl_parser_add_ignored_mimetype),
+	(totem_pl_parser_can_parse_from_data):
+	* src/plparse/totem-pl-parser.h:
+	* src/totem-mozilla-plugin.cpp:
+	Patch from Christian Persch <chpe@cvs.gnome.org> to create a
+	non-installable version of the totem-pl-parser library
+	and link the Browser plugin against it, instead of the full-fledged
+	installed version (Closes: #350461)
+
+2006-08-11  Bastien Nocera  <hadess@hadess.net>
+
 	* src/ev-sidebar.c: (ev_sidebar_destroy),
 	(ev_sidebar_menu_item_activate_cb), (ev_sidebar_get_current_page),
 	(ev_sidebar_set_current_page), (ev_sidebar_add_page):

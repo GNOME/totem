@@ -174,7 +174,7 @@ typelib_DATA = libtotem_mozilla.xpt
 typelibdir = $(libdir)/mozilla/plugins
 
 libtotem_mozilla_la_LIBADD = \
-	plparse/libtotem-plparser.la
+	plparse/libtotem-plparser-mini.la
 libtotem_mozilla_la_LDFLAGS = \
 	$(DBUS_LIBS) $(MOZILLA_LIBS) $(modules_flags)
 libtotem_mozilla_la_SOURCES = \

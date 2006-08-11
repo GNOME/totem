@@ -1,35 +1,33 @@
 noinst_PROGRAMS = test-parser
 
-INCLUDES = \
-	-I$(top_srcdir) \
-	-I$(top_builddir)/src/plparser \
-	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
-	$(EXTRA_GNOME_CFLAGS) \
-	$(HAL_CFLAGS) \
-	$(DBUS_CFLAGS)
-
 test_parser_SOURCES = test-parser.c
+
+test_parser_CPPFLAGS = \
+	-I$(top_srcdir)			\
+	-I$(top_builddir)/src/plparser	\
+	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"\
+	$(AM_CPPFLAGS)
+
+test_parser_CFLAGS = \
+	$(EXTRA_GNOME_CFLAGS)	\
+	$(HAL_CFLAGS)		\
+	$(DBUS_CFLAGS)		\
+	$(AM_CFLAGS)
+
 test_parser_LDADD = \
 	$(EXTRA_GNOME_LIBS) \
 	libtotem-plparser.la
 
 lib_LTLIBRARIES = libtotem-plparser.la
+noinst_LTLIBRARIES = libtotem-plparser-mini.la
 
 MARSHALFILES = totemplparser-marshal.c totemplparser-marshal.h
-GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
 BUILT_SOURCES = $(MARSHALFILES)
 
 totemplparser-marshal.c: totemplparser-marshal.h
 	 ( $(GLIB_GENMARSHAL) --prefix=totemplparser_marshal $(srcdir)/totemplparser-marshal.list --header --body > totemplparser-marshal.c )
 totemplparser-marshal.h: totemplparser-marshal.list
 	( $(GLIB_GENMARSHAL) --prefix=totemplparser_marshal $(srcdir)/totemplparser-marshal.list --header > totemplparser-marshal.h )
-
-libtotem_plparser_la_SOURCES =			\
-	totem-pl-parser-builtins.c		\
-	totemplparser-marshal.c			\
-	totemplparser-marshal.h			\
-	totem-disc.c				\
-	totem-pl-parser.c
 
 plparserincludedir = $(includedir)/totem/1/plparser
 plparserinclude_HEADERS =			\
@@ -38,13 +36,55 @@ plparserinclude_HEADERS =			\
 	totem-pl-parser.h			\
 	totem-disc.h
 
-libtotem_plparser_la_LDFLAGS =			\
-	-version-info $(PLPARSER_LT_VERSION)	\
-	-no-undefined				\
+libtotem_plparser_la_SOURCES =			\
+	totem-pl-parser-builtins.c		\
+	totemplparser-marshal.c			\
+	totemplparser-marshal.h			\
+	totem-disc.c				\
+	totem-pl-parser.c
+
+libtotem_plparser_la_CPPFLAGS = \
+	-I$(top_srcdir)				\
+	-I$(top_builddir)/src/plparser		\
+	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"\
+	$(AM_CPPFLAGS)
+
+libtotem_plparser_la_CFLAGS = \
+	$(EXTRA_GNOME_CFLAGS)	\
+	$(HAL_CFLAGS)		\
+	$(DBUS_CFLAGS)		\
+	$(AM_CFLAGS)
+
+libtotem_plparser_la_LIBADD = \
 	$(TOTEM_PLPARSER_LIBS)			\
 	$(HAL_LIBS)
 
-GLIB_MKENUMS=`pkg-config --variable=glib_mkenums glib-2.0`
+libtotem_plparser_la_LDFLAGS =			\
+	-version-info $(PLPARSER_LT_VERSION)	\
+	-no-undefined				\
+	$(AM_LDFLAGS)
+
+libtotem_plparser_mini_la_SOURCES = \
+	totem-pl-parser-mini.h	\
+	totem-pl-parser.c
+
+libtotem_plparser_mini_la_CPPFLAGS = \
+	-I$(top_srcdir)			\
+	-I$(top_builddir)/src/plparser	\
+	-DTOTEM_PL_PARSER_MINI		\
+	$(AM_CPPFLAGS)
+
+libtotem_plparser_mini_la_CFLAGS = \
+	$(TOTEM_PLPARSER_MINI_CFLAGS)	\
+	$(AM_CFLAGS)
+
+libtotem_plparser_mini_la_LIBADD = \
+	$(TOTEM_PLPARSER_MINI_LIBS)
+
+libtotem_plparser_mini_la_LDFLAGS = \
+	-no-undefined	\
+	$(AM_LDFLAGS)
+
 totem-pl-parser-builtins.h: stamp-totem-pl-parser-builtins.h
 	@true
 

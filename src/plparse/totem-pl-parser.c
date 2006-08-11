@@ -1,7 +1,5 @@
 /* 
-   arch-tag: Implementation of Rhythmbox playlist parser
-
-   Copyright (C) 2002, 2003, 2004, 2005 Bastien Nocera
+   Copyright (C) 2002, 2003, 2004, 2005, 2006 Bastien Nocera
    Copyright (C) 2003, 2004 Colin Walters <walters@rhythmbox.org>
 
    The Gnome Library is free software; you can redistribute it and/or
@@ -26,21 +24,24 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
-#include "totem-pl-parser.h"
-
-#include "totemplparser-marshal.h"
-#include "totem-disc.h"
-
+#include <string.h>
 #include <glib.h>
 #include <glib/gi18n-lib.h>
-#include <gtk/gtk.h>
+#include <libgnomevfs/gnome-vfs-mime-utils.h>
+
+#ifndef TOTEM_PL_PARSER_MINI
 #include <libxml/tree.h>
 #include <libxml/parser.h>
+#include <gtk/gtk.h>
 #include <libgnomevfs/gnome-vfs.h>
 #include <libgnomevfs/gnome-vfs-mime.h>
-#include <libgnomevfs/gnome-vfs-mime-utils.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
-#include <string.h>
+#include "totem-pl-parser.h"
+#include "totemplparser-marshal.h"
+#include "totem-disc.h"
+#endif /* !TOTEM_PL_PARSER_MINI */
+
+#include "totem-pl-parser-mini.h"
 
 #define READ_CHUNK_SIZE 8192
 #define MIME_READ_CHUNK_SIZE 1024
@@ -50,27 +51,30 @@
 #define EXTINF "#EXTINF:"
 #define DEBUG(x) { if (parser->priv->debug) x; }
 
+typedef gboolean (*PlaylistIdenCallback) (const char *data, gsize len);
+
+#ifndef TOTEM_PL_PARSER_MINI
 typedef TotemPlParserResult (*PlaylistCallback) (TotemPlParser *parser, const char *url, gpointer data);
-typedef gboolean (*PlaylistIdenCallback) (gpointer data, guint len);
+#endif
+
+typedef struct {
+	char *mimetype;
+#ifndef TOTEM_PL_PARSER_MINI
+	PlaylistCallback func;
+#endif
+	PlaylistIdenCallback iden;
+} PlaylistTypes;
+
+static gboolean totem_pl_parser_is_ra (const char *data, gsize len);
+static gboolean totem_pl_parser_is_asf (const char *data, gsize len);
+static gboolean totem_pl_parser_is_quicktime (const char *data, gsize len);
+
+#ifndef TOTEM_PL_PARSER_MINI
+
 static gboolean totem_pl_parser_scheme_is_ignored (TotemPlParser *parser, const char *url);
 static gboolean totem_pl_parser_ignore (TotemPlParser *parser, const char *url);
 static TotemPlParserResult totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url);
 static TotemPlParserResult totem_pl_parser_add_asx (TotemPlParser *parser, const char *url, gpointer data);
-
-static void totem_pl_parser_set_property (GObject *object,
-					  guint prop_id,
-					  const GValue *value,
-					  GParamSpec *pspec);
-static void totem_pl_parser_get_property (GObject *object,
-					  guint prop_id,
-					  GValue *value,
-					  GParamSpec *pspec);
-
-typedef struct {
-	char *mimetype;
-	PlaylistCallback func;
-	PlaylistIdenCallback iden;
-} PlaylistTypes;
 
 struct TotemPlParserPrivate
 {
@@ -81,6 +85,15 @@ struct TotemPlParserPrivate
 	guint recurse : 1;
 	guint debug : 1;
 };
+
+static void totem_pl_parser_set_property (GObject *object,
+					  guint prop_id,
+					  const GValue *value,
+					  GParamSpec *pspec);
+static void totem_pl_parser_get_property (GObject *object,
+					  guint prop_id,
+					  GValue *value,
+					  GParamSpec *pspec);
 
 enum {
 	PROP_NONE,
@@ -96,10 +109,8 @@ enum {
 	LAST_SIGNAL
 };
 
-static int totem_pl_parser_table_signals[LAST_SIGNAL] = { 0 };
+static int totem_pl_parser_table_signals[LAST_SIGNAL];
 static gboolean i18n_done = FALSE;
-
-static GObjectClass *parent_class = NULL;
 
 static void totem_pl_parser_class_init (TotemPlParserClass *class);
 static void totem_pl_parser_init       (TotemPlParser      *parser);
@@ -111,8 +122,6 @@ static void
 totem_pl_parser_class_init (TotemPlParserClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	parent_class = g_type_class_peek_parent (klass);
 
 	object_class->finalize = totem_pl_parser_finalize;
 	object_class->set_property = totem_pl_parser_set_property;
@@ -446,6 +455,7 @@ totem_pl_parser_relative (const char *url, const char *output)
 	return base;
 }
 
+#ifndef TOTEM_PL_PARSER_MINI
 static gboolean
 totem_pl_parser_write_pls (TotemPlParser *parser, GtkTreeModel *model,
 			   TotemPlParserIterFunc func, 
@@ -825,6 +835,8 @@ totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
 			NULL, type, user_data, error);
 }
 
+#endif /* TOTEM_PL_PARSER_MINI */
+
 static int
 read_ini_line_int (char **lines, const char *key)
 {
@@ -919,9 +931,7 @@ totem_pl_parser_finalize (GObject *object)
 	g_free (parser->priv);
 	parser->priv = NULL;
 
-	if (G_OBJECT_CLASS (parent_class)->finalize != NULL) {
-		(* G_OBJECT_CLASS (parent_class)->finalize) (object);
-	}
+	G_OBJECT_CLASS (totem_pl_parser_parent_class)->finalize (object);
 }
 
 static gboolean
@@ -1518,21 +1528,6 @@ totem_pl_parser_add_block (TotemPlParser *parser, const char *url, gpointer data
 	return TOTEM_PL_PARSER_RESULT_SUCCESS;
 }
 
-static gboolean
-totem_pl_parser_is_ra (gpointer data, guint len)
-{
-	/* pnm is the smallest, 6 chars */
-	if (len < 7)
-		return FALSE;
-
-	if (g_str_has_prefix (data, "http://") != FALSE
-			|| g_str_has_prefix (data, "rtsp://") != FALSE
-			|| g_str_has_prefix (data, "pnm://") != FALSE) {
-		return TRUE;
-	}
-	return FALSE;
-}
-
 static TotemPlParserResult
 totem_pl_parser_add_ra (TotemPlParser *parser, const char *url, gpointer data)
 {
@@ -1661,32 +1656,6 @@ totem_pl_parser_add_smil (TotemPlParser *parser, const char *url, gpointer data)
 	return retval;
 }
 
-static gboolean
-totem_pl_parser_is_asf (gpointer data, guint len)
-{
-	char *buffer;
-
-	if (len == 0)
-		return FALSE;
-
-	if (g_str_has_prefix (data, "[Reference]") != FALSE
-			|| g_ascii_strncasecmp (data, "<ASX", strlen ("<ASX")) == 0
-			|| g_str_has_prefix (data, "ASF ") != FALSE) {
-		return TRUE;
-	}
-
-	/* FIXME would be nicer to have an strnstr */
-	buffer = g_memdup (data, len);
-	buffer[len] = '\0';
-	if (strstr (buffer, "<ASX") != NULL
-			|| strstr (buffer, "<asx") != NULL) {
-		g_free (buffer);
-		return TRUE;
-	}
-	g_free (buffer);
-	return FALSE;
-}
-
 static TotemPlParserResult
 totem_pl_parser_add_asf (TotemPlParser *parser, const char *url, gpointer data)
 {
@@ -1756,25 +1725,6 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url, 
 	xmlFreeDoc (doc);
 
 	return TOTEM_PL_PARSER_RESULT_SUCCESS;
-}
-
-static gboolean
-totem_pl_parser_is_quicktime (gpointer data, guint len)
-{
-	char *buffer;
-
-	if (len == 0)
-		return FALSE;
-
-	/* FIXME would be nicer to have an strnstr */
-	buffer = g_memdup (data, len);
-	buffer[len] = '\0';
-	if (strstr (buffer, "<?quicktime") != NULL) {
-		g_free (buffer);
-		return TRUE;
-	}
-	g_free (buffer);
-	return FALSE;
 }
 
 static TotemPlParserResult
@@ -2060,45 +2010,119 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 	return TOTEM_PL_PARSER_RESULT_SUCCESS;
 }
 
+#endif /* !TOTEM_PL_PARSER_MINI */
+
+static gboolean
+totem_pl_parser_is_ra (const char *data, gsize len)
+{
+	/* pnm is the smallest, 6 chars */
+	if (len < 7)
+		return FALSE;
+
+	if (g_str_has_prefix (data, "http://") != FALSE
+			|| g_str_has_prefix (data, "rtsp://") != FALSE
+			|| g_str_has_prefix (data, "pnm://") != FALSE) {
+		return TRUE;
+	}
+	return FALSE;
+}
+
+static gboolean
+totem_pl_parser_is_asf (const char *data, gsize len)
+{
+	char *buffer;
+
+	if (len == 0)
+		return FALSE;
+
+	if (g_str_has_prefix (data, "[Reference]") != FALSE
+			|| g_ascii_strncasecmp (data, "<ASX", strlen ("<ASX")) == 0
+			|| g_str_has_prefix (data, "ASF ") != FALSE) {
+		return TRUE;
+	}
+
+	/* FIXME would be nicer to have an strnstr */
+	buffer = g_memdup (data, len);
+	buffer[len] = '\0';
+	if (strstr (buffer, "<ASX") != NULL
+			|| strstr (buffer, "<asx") != NULL) {
+		g_free (buffer);
+		return TRUE;
+	}
+	g_free (buffer);
+	return FALSE;
+}
+
+static gboolean
+totem_pl_parser_is_quicktime (const char *data, gsize len)
+{
+	char *buffer;
+
+	if (len == 0)
+		return FALSE;
+
+	/* FIXME would be nicer to have an strnstr */
+	buffer = g_memdup (data, len);
+	buffer[len] = '\0';
+	if (strstr (buffer, "<?quicktime") != NULL) {
+		g_free (buffer);
+		return TRUE;
+	}
+	g_free (buffer);
+	return FALSE;
+}
+
+#ifndef TOTEM_PL_PARSER_MINI
+#define PLAYLIST_TYPE(mime,cb,identcb) { mime, cb, identcb }
+#define PLAYLIST_TYPE2(mime,cb,identcb) { mime, cb, identcb }
+#else
+#define PLAYLIST_TYPE(mime,cb,identcb) { mime }
+#define PLAYLIST_TYPE2(mime,cb,identcb) { mime, identcb }
+#endif
+
 /* These ones need a special treatment, mostly parser formats */
 static PlaylistTypes special_types[] = {
-	{ "audio/x-mpegurl", totem_pl_parser_add_m3u, NULL },
-	{ "audio/playlist", totem_pl_parser_add_m3u, NULL },
-	{ "audio/x-ms-asx", totem_pl_parser_add_asx, NULL },
-	{ "audio/x-scpls", totem_pl_parser_add_pls, NULL },
-	{ "application/x-smil", totem_pl_parser_add_smil, NULL },
-	{ "application/smil", totem_pl_parser_add_smil, NULL },
-	{ "application/x-gnome-app-info", totem_pl_parser_add_desktop, NULL },
-	{ "application/x-desktop", totem_pl_parser_add_desktop, NULL },
-	{ "x-directory/normal", totem_pl_parser_add_directory, NULL },
-	{ "video/x-ms-wvx", totem_pl_parser_add_asx, NULL },
-	{ "audio/x-ms-wax", totem_pl_parser_add_asx, NULL },
-	{ "application/x-cd-image", totem_pl_parser_add_iso, NULL },
-	{ "application/x-cue", totem_pl_parser_add_cue, NULL },
-	{ "application/xspf+xml", totem_pl_parser_add_xspf, NULL },
-	{ "x-special/device-block", totem_pl_parser_add_block, NULL },
-};
-
-static PlaylistTypes ignore_types[] = {
-	{ "image/*", NULL, NULL },
-	{ "text/plain", NULL, NULL},
-	{ "application/x-rar", NULL, NULL },
-	{ "application/zip", NULL, NULL },
-	{ "application/x-trash", NULL, NULL },
+	PLAYLIST_TYPE ("audio/x-mpegurl", totem_pl_parser_add_m3u, NULL),
+	PLAYLIST_TYPE ("audio/playlist", totem_pl_parser_add_m3u, NULL),
+	PLAYLIST_TYPE ("audio/x-ms-asx", totem_pl_parser_add_asx, NULL),
+	PLAYLIST_TYPE ("audio/x-scpls", totem_pl_parser_add_pls, NULL),
+	PLAYLIST_TYPE ("application/x-smil", totem_pl_parser_add_smil, NULL),
+	PLAYLIST_TYPE ("application/smil", totem_pl_parser_add_smil, NULL),
+	PLAYLIST_TYPE ("video/x-ms-wvx", totem_pl_parser_add_asx, NULL),
+	PLAYLIST_TYPE ("audio/x-ms-wax", totem_pl_parser_add_asx, NULL),
+	PLAYLIST_TYPE ("application/xspf+xml", totem_pl_parser_add_xspf, NULL),
+#ifndef TOTEM_PL_PARSER_MINI
+	PLAYLIST_TYPE ("application/x-desktop", totem_pl_parser_add_desktop, NULL),
+	PLAYLIST_TYPE ("application/x-gnome-app-info", totem_pl_parser_add_desktop, NULL),
+	PLAYLIST_TYPE ("application/x-cd-image", totem_pl_parser_add_iso, NULL),
+	PLAYLIST_TYPE ("application/x-cue", totem_pl_parser_add_cue, NULL),
+	PLAYLIST_TYPE ("x-directory/normal", totem_pl_parser_add_directory, NULL),
+	PLAYLIST_TYPE ("x-special/device-block", totem_pl_parser_add_block, NULL),
+#endif
 };
 
 /* These ones are "dual" types, might be a video, might be a parser */
 static PlaylistTypes dual_types[] = {
-	{ "audio/x-real-audio", totem_pl_parser_add_ra, totem_pl_parser_is_ra },
-	{ "audio/x-pn-realaudio", totem_pl_parser_add_ra, totem_pl_parser_is_ra },
-	{ "application/vnd.rn-realmedia", totem_pl_parser_add_ra, totem_pl_parser_is_ra },
-	{ "audio/x-pn-realaudio-plugin", totem_pl_parser_add_ra, totem_pl_parser_is_ra },
-	{ "audio/vnd.rn-realaudio", totem_pl_parser_add_ra, totem_pl_parser_is_ra },
-	{ "text/plain", totem_pl_parser_add_ra, totem_pl_parser_is_ra },
-	{ "video/x-ms-asf", totem_pl_parser_add_asf, totem_pl_parser_is_asf },
-	{ "video/x-ms-wmv", totem_pl_parser_add_asf, totem_pl_parser_is_asf },
-	{ "video/quicktime", totem_pl_parser_add_quicktime, totem_pl_parser_is_quicktime },
-	{ "application/x-quicktime-media-link", totem_pl_parser_add_quicktime, totem_pl_parser_is_quicktime },
+	PLAYLIST_TYPE2 ("audio/x-real-audio", totem_pl_parser_add_ra, totem_pl_parser_is_ra),
+	PLAYLIST_TYPE2 ("audio/x-pn-realaudio", totem_pl_parser_add_ra, totem_pl_parser_is_ra),
+	PLAYLIST_TYPE2 ("application/vnd.rn-realmedia", totem_pl_parser_add_ra, totem_pl_parser_is_ra),
+	PLAYLIST_TYPE2 ("audio/x-pn-realaudio-plugin", totem_pl_parser_add_ra, totem_pl_parser_is_ra),
+	PLAYLIST_TYPE2 ("audio/vnd.rn-realaudio", totem_pl_parser_add_ra, totem_pl_parser_is_ra),
+	PLAYLIST_TYPE2 ("text/plain", totem_pl_parser_add_ra, totem_pl_parser_is_ra),
+	PLAYLIST_TYPE2 ("video/x-ms-asf", totem_pl_parser_add_asf, totem_pl_parser_is_asf),
+	PLAYLIST_TYPE2 ("video/x-ms-wmv", totem_pl_parser_add_asf, totem_pl_parser_is_asf),
+	PLAYLIST_TYPE2 ("video/quicktime", totem_pl_parser_add_quicktime, totem_pl_parser_is_quicktime),
+	PLAYLIST_TYPE2 ("application/x-quicktime-media-link", totem_pl_parser_add_quicktime, totem_pl_parser_is_quicktime),
+};
+
+#ifndef TOTEM_PL_PARSER_MINI
+
+static PlaylistTypes ignore_types[] = {
+	PLAYLIST_TYPE ("image/*", NULL, NULL),
+	PLAYLIST_TYPE ("text/plain", NULL, NULL),
+	PLAYLIST_TYPE ("application/x-rar", NULL, NULL),
+	PLAYLIST_TYPE ("application/zip", NULL, NULL),
+	PLAYLIST_TYPE ("application/x-trash", NULL, NULL),
 };
 
 static gboolean
@@ -2301,39 +2325,6 @@ totem_pl_parser_parse (TotemPlParser *parser, const char *url,
 	return totem_pl_parser_parse_internal (parser, url);
 }
 
-gboolean
-totem_pl_parser_can_parse_from_data (gpointer data, guint len)
-{
-	const char *mimetype;
-	guint i;
-
-	totem_pl_parser_init_i18n ();
-
-	mimetype = gnome_vfs_get_mime_type_for_data (data, len);
-	if (mimetype == NULL || strcmp (GNOME_VFS_MIME_TYPE_UNKNOWN, mimetype) == 0) {
-		g_message ("totem_pl_parser_can_parse_from_data couldn't get mimetype");
-		return FALSE;
-	}
-
-	for (i = 0; i < G_N_ELEMENTS(special_types); i++) {
-		if (strcmp (special_types[i].mimetype, mimetype) == 0) {
-			g_message ("Is special type '%s'\n", mimetype);
-			return TRUE;
-		}
-	}
-
-	for (i = 0; i < G_N_ELEMENTS(dual_types); i++) {
-		if (strcmp (dual_types[i].mimetype, mimetype) == 0) {
-			g_message ("Is dual type '%s'\n", mimetype);
-			if (dual_types[i].iden != NULL)
-				return (* dual_types[i].iden) (data, len);
-			return FALSE;
-		}
-	}
-
-	return FALSE;
-}
-
 void
 totem_pl_parser_add_ignored_scheme (TotemPlParser *parser,
 		const char *scheme)
@@ -2354,3 +2345,41 @@ totem_pl_parser_add_ignored_mimetype (TotemPlParser *parser,
 		(parser->priv->ignore_mimetypes, g_strdup (mimetype));
 }
 
+#endif /* !TOTEM_PL_PARSER_MINI */
+
+gboolean
+totem_pl_parser_can_parse_from_data (const char *data,
+				     gsize len,
+				     gboolean debug)
+{
+	const char *mimetype;
+	guint i;
+
+#define D(x) if (debug) x
+
+	/* Bad cast! */
+	mimetype = gnome_vfs_get_mime_type_for_data ((gpointer) data, (int) len);
+
+	if (mimetype == NULL || strcmp (GNOME_VFS_MIME_TYPE_UNKNOWN, mimetype) == 0) {
+		D(g_message ("totem_pl_parser_can_parse_from_data couldn't get mimetype"));
+		return FALSE;
+	}
+
+	for (i = 0; i < G_N_ELEMENTS(special_types); i++) {
+		if (strcmp (special_types[i].mimetype, mimetype) == 0) {
+			D(g_message ("Is special type '%s'\n", mimetype));
+			return TRUE;
+		}
+	}
+
+	for (i = 0; i < G_N_ELEMENTS(dual_types); i++) {
+		if (strcmp (dual_types[i].mimetype, mimetype) == 0) {
+			D(g_message ("Is dual type '%s'\n", mimetype));
+			if (dual_types[i].iden != NULL)
+				return (* dual_types[i].iden) (data, len);
+			return FALSE;
+		}
+	}
+
+	return FALSE;
+}

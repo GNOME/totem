@@ -196,7 +196,7 @@ test_data (void)
 			g_message ("Couldn't get data for %s", (char *) l->data);
 			continue;
 		}
-		if (totem_pl_parser_can_parse_from_data (data, len)) {
+		if (totem_pl_parser_can_parse_from_data (data, len, TRUE)) {
 			g_message ("IS a playlist: %s", (char *) l->data);
 		} else {
 			g_message ("ISNOT playlist: %s", (char *) l->data);
@@ -237,10 +237,6 @@ test_parsing (void)
 int main (int argc, char **argv)
 {
 	gnome_vfs_init();
-
-	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
-	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-	textdomain (GETTEXT_PACKAGE);
 
 	while (argc > 1 && argv[1]) {
 		if (strcmp (argv[1], "--no-recurse") == 0 || strcmp (argv[1], "-n") == 0) {

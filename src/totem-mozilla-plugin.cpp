@@ -36,7 +36,7 @@
 #include <glib/gi18n.h>
 #include <libgnomevfs/gnome-vfs-mime-handlers.h>
 #include <libgnomevfs/gnome-vfs-mime-info.h>
-#include <totem-pl-parser.h>
+#include <totem-pl-parser-mini.h>
 
 #include "totem-mozilla-options.h"
 #include "totem-mozilla-scriptable.h"
@@ -619,7 +619,8 @@ static int32 totem_plugin_write (NPP instance, NPStream *stream, int32 offset,
 		return -1;
 
 	if (!plugin->player_pid) {
-		if (totem_pl_parser_can_parse_from_data (buffer, len) != FALSE) {
+		if (totem_pl_parser_can_parse_from_data ((const char *) buffer,
+					len, TRUE) != FALSE) {
 			D("Need to wait for the file to be downloaded completely");
 			plugin->is_playlist = TRUE;
 			return len;

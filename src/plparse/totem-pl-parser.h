@@ -1,7 +1,5 @@
 /* 
-   arch-tag: Header for Rhythmbox playlist parser
-
-   Copyright (C) 2002, 2003 Bastien Nocera <hadess@hadess.net>
+   2002, 2003, 2004, 2005, 2006 Bastien Nocera
    Copyright (C) 2003 Colin Walters <walters@verbum.org>
 
    The Gnome Library is free software; you can redistribute it and/or
@@ -26,8 +24,8 @@
 #define TOTEM_PL_PARSER_H
 
 #include <glib.h>
-#include <gtk/gtktreemodel.h>
 
+#include <gtk/gtktreemodel.h>
 #include "totem-pl-parser-features.h"
 #include "totem-pl-parser-builtins.h"
 
@@ -105,8 +103,6 @@ gboolean   totem_pl_parser_write_with_title (TotemPlParser *parser,
 					     TotemPlParserType type,
 					     gpointer user_data,
 					     GError **error);
-
-gboolean   totem_pl_parser_can_parse_from_data (gpointer data, guint len);
 
 void	   totem_pl_parser_add_ignored_scheme (TotemPlParser *parser,
 					       const char *scheme);
