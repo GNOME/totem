@@ -134,7 +134,7 @@ is_supported_scheme (const char *url)
 	if (url == NULL)
 		return FALSE;
 
-	if (g_str_has_prefix (url, "mms:"))
+	if (g_str_has_prefix (url, "mms:") != FALSE)
 		return FALSE;
 
 	return TRUE;

@@ -452,7 +452,7 @@ AM_CONDITIONAL([ENABLE_BASIC_PLUGIN],[test "$enable_basic_plugin" = "yes"])
 AC_MSG_CHECKING([whether to enable the GMP browser plugin])
 AC_ARG_ENABLE([gmp-plugin],
 	AS_HELP_STRING([--enable-gmp-plugin],[Whether to enable the GMP browser plugin]),
-	[],[enable_gmp_plugin=no])
+	[],[enable_gmp_plugin=yes])
 AC_MSG_RESULT([$enable_gmp_plugin])
 
 AM_CONDITIONAL([ENABLE_GMP_PLUGIN],[test "$enable_gmp_plugin" = "yes"])
