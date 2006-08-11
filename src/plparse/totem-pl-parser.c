@@ -2041,8 +2041,15 @@ totem_pl_parser_is_asf (const char *data, gsize len)
 		return TRUE;
 	}
 
+	if (len > MIME_READ_CHUNK_SIZE)
+		len = MIME_READ_CHUNK_SIZE;
+
 	/* FIXME would be nicer to have an strnstr */
 	buffer = g_memdup (data, len);
+	if (buffer == NULL) {
+		g_warning ("Couldn't dup data in totem_pl_parser_is_asf");
+		return FALSE;
+	}
 	buffer[len] = '\0';
 	if (strstr (buffer, "<ASX") != NULL
 			|| strstr (buffer, "<asx") != NULL) {
@@ -2060,10 +2067,16 @@ totem_pl_parser_is_quicktime (const char *data, gsize len)
 
 	if (len == 0)
 		return FALSE;
+	if (len > MIME_READ_CHUNK_SIZE)
+		len = MIME_READ_CHUNK_SIZE;
 
 	/* FIXME would be nicer to have an strnstr */
 	buffer = g_memdup (data, len);
-	buffer[len] = '\0';
+	if (buffer == NULL) {
+		g_warning ("Couldn't dup data in totem_pl_parser_is_quicktime");
+		return FALSE;
+	}
+	buffer[len - 1] = '\0';
 	if (strstr (buffer, "<?quicktime") != NULL) {
 		g_free (buffer);
 		return TRUE;
@@ -2354,6 +2367,8 @@ totem_pl_parser_can_parse_from_data (const char *data,
 {
 	const char *mimetype;
 	guint i;
+
+	g_return_val_if_fail (data != NULL, FALSE);
 
 #define D(x) if (debug) x
 

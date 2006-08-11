@@ -1,5 +1,13 @@
 2006-08-11  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_is_asf),
+	(totem_pl_parser_is_quicktime),
+	(totem_pl_parser_can_parse_from_data):
+	Be much more careful about dup'ing large amounts of data,
+	and about retvals if we fail to allocate the data
+
+2006-08-11  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemComplexPlugin.cpp:
 	* browser-plugin/totemGMPPlugin.cpp:
 	* browser-plugin/totemNarrowSpacePlugin.cpp:
