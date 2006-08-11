@@ -1,5 +1,20 @@
 2006-08-11  Bastien Nocera  <hadess@hadess.net>
 
+	* src/ev-sidebar.c: (ev_sidebar_destroy),
+	(ev_sidebar_menu_item_activate_cb), (ev_sidebar_get_current_page),
+	(ev_sidebar_set_current_page), (ev_sidebar_add_page):
+	* src/ev-sidebar.h:
+	Add ev_sidebar_set_current_page and ev_sidebar_get_current_page
+	which use page_id's
+	* src/totem-sidebar.c: (totem_sidebar_setup),
+	(totem_sidebar_get_current_page):
+	* src/totem-sidebar.h:
+	* src/totem.c: (totem_action_save_state), (window_state_event_cb),
+	(totem_setup_window):
+	Save and restore which sidebar page was selected (Closes: #347294)
+
+2006-08-11  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: up the requirements to glib 2.8, sorry
 	* data/totem.schemas.in: remove the window width, height and
 	sidebar shown entries, and moved them to a local file

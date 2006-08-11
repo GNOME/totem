@@ -57,6 +57,13 @@ void       ev_sidebar_add_page     (EvSidebar   *ev_sidebar,
 				    const gchar *page_id,
 				    const gchar *title,
 				    GtkWidget   *main_widget);
+void       ev_sidebar_set_current_page
+				   (EvSidebar *ev_sidebar,
+				    const char *page_id);
+const char *ev_sidebar_get_current_page
+				   (EvSidebar *ev_sidebar);
+
+
 G_END_DECLS
 
 #endif /* __EV_SIDEBAR_H__ */

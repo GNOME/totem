@@ -162,6 +162,7 @@ totem_action_save_state (Totem *totem)
 {
 	GKeyFile *keyfile;
 	char *contents, *filename;
+	const char *page_id;
 
 	keyfile = g_key_file_new ();
 	g_key_file_set_integer (keyfile, "State",
@@ -172,6 +173,10 @@ totem_action_save_state (Totem *totem)
 			"show_sidebar", totem_sidebar_is_visible (totem));
 	g_key_file_set_boolean (keyfile, "State",
 			"maximised", totem->maximised);
+
+	page_id = totem_sidebar_get_current_page (totem);
+	g_key_file_set_string (keyfile, "State",
+			"sidebar_page", page_id);
 
 	contents = g_key_file_to_data (keyfile, NULL, NULL);
 	g_key_file_free (keyfile);
@@ -578,7 +583,7 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 	if (event->changed_mask == GDK_WINDOW_STATE_MAXIMIZED) {
 		totem->maximised = (event->new_window_state
 				& GDK_WINDOW_STATE_MAXIMIZED);
-		return;
+		return FALSE;
 	}
 
 	if (event->changed_mask != GDK_WINDOW_STATE_FULLSCREEN) {
@@ -3011,7 +3016,7 @@ totem_setup_window (Totem *totem)
 	GKeyFile *keyfile;
 	int w, h;
 	gboolean show_sidebar;
-	char *filename;
+	char *filename, *page_id;
 	GError *err = NULL;
 
 	filename = g_build_filename (g_get_home_dir (), ".gnome2", "totem", NULL);
@@ -3020,6 +3025,7 @@ totem_setup_window (Totem *totem)
 			G_KEY_FILE_NONE, NULL) == FALSE) {
 		w = h = 0;
 		show_sidebar = TRUE;
+		page_id = NULL;
 		g_free (filename);
 	} else {
 		g_free (filename);
@@ -3048,8 +3054,18 @@ totem_setup_window (Totem *totem)
 
 		totem->maximised = g_key_file_get_boolean (keyfile, "State",
 				"maximised", &err);
-		if (err != NULL)
+		if (err != NULL) {
 			g_error_free (err);
+			err = NULL;
+		}
+
+		page_id = g_key_file_get_string (keyfile, "State",
+				"sidebar_page", &err);
+		if (err != NULL) {
+			g_error_free (err);
+			page_id = NULL;
+			err = NULL;
+		}
 		g_key_file_free (keyfile);
 	}
 
@@ -3063,7 +3079,7 @@ totem_setup_window (Totem *totem)
 		gtk_window_maximize (GTK_WINDOW (totem->win));
 	}
 
-	totem_sidebar_setup (totem, show_sidebar);
+	totem_sidebar_setup (totem, show_sidebar, page_id);
 }
 
 static void

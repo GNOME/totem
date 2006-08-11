@@ -52,8 +52,9 @@ struct _EvSidebarPrivate {
 	GtkWidget *menu;
 	GtkWidget *hbox;
 	GtkWidget *label;
-	   
+
 	GtkTreeModel *page_model;
+	char *current;
 };
 
 enum {
@@ -72,6 +73,9 @@ static void
 ev_sidebar_destroy (GtkObject *object)
 {
 	EvSidebar *ev_sidebar = EV_SIDEBAR (object);
+
+	g_free (ev_sidebar->priv->current);
+	ev_sidebar->priv->current = NULL;
 
 	if (ev_sidebar->priv->menu) {
 		gtk_menu_detach (GTK_MENU (ev_sidebar->priv->menu));
@@ -217,7 +221,7 @@ ev_sidebar_menu_item_activate_cb (GtkWidget *widget,
 	EvSidebar *ev_sidebar = EV_SIDEBAR (user_data);
 	GtkTreeIter iter;
 	GtkWidget *menu_item, *item;
-	gchar *title;
+	gchar *title, *page_id;
 	gboolean valid;
 	gint index;
 
@@ -227,6 +231,7 @@ ev_sidebar_menu_item_activate_cb (GtkWidget *widget,
 	while (valid) {
 		gtk_tree_model_get (ev_sidebar->priv->page_model,
 				    &iter,
+				    PAGE_COLUMN_ID, &page_id,
 				    PAGE_COLUMN_TITLE, &title, 
 				    PAGE_COLUMN_MENU_ITEM, &item,
 				    PAGE_COLUMN_NOTEBOOK_INDEX, &index,
@@ -236,9 +241,12 @@ ev_sidebar_menu_item_activate_cb (GtkWidget *widget,
 			gtk_notebook_set_current_page
 				(GTK_NOTEBOOK (ev_sidebar->priv->notebook), index);
 			gtk_label_set_text (GTK_LABEL (ev_sidebar->priv->label), title);
+			g_free (ev_sidebar->priv->current);
+			ev_sidebar->priv->current = page_id;
 			valid = FALSE;
 		} else {
 			valid = gtk_tree_model_iter_next (ev_sidebar->priv->page_model, &iter);
+			g_free (page_id);
 		}
 		g_object_unref (item);
 		g_free (title);
@@ -342,6 +350,52 @@ ev_sidebar_new (void)
 	return ev_sidebar;
 }
 
+const char *
+ev_sidebar_get_current_page (EvSidebar *ev_sidebar)
+{
+	g_return_val_if_fail (EV_IS_SIDEBAR (ev_sidebar), NULL);
+	g_return_val_if_fail (ev_sidebar->priv != NULL, NULL);
+
+	return ev_sidebar->priv->current;
+}
+
+void
+ev_sidebar_set_current_page (EvSidebar *ev_sidebar, const char *new_page_id)
+{
+	GtkTreeIter iter;
+	GtkWidget *menu_item;
+	gchar *page_id;
+	gboolean valid;
+	gint index;
+
+	g_return_if_fail (EV_IS_SIDEBAR (ev_sidebar));
+	g_return_if_fail (new_page_id != NULL);
+
+	if (strcmp (new_page_id, ev_sidebar->priv->current) == 0)
+		return;
+
+	valid = gtk_tree_model_get_iter_first (ev_sidebar->priv->page_model, &iter);
+
+	while (valid) {
+		gtk_tree_model_get (ev_sidebar->priv->page_model,
+				    &iter,
+				    PAGE_COLUMN_ID, &page_id,
+				    PAGE_COLUMN_MENU_ITEM, &menu_item,
+				    PAGE_COLUMN_NOTEBOOK_INDEX, &index,
+				    -1);
+
+		if (page_id != NULL && strcmp (new_page_id, page_id) == 0) {
+			gtk_menu_set_active (GTK_MENU (ev_sidebar->priv->menu), index);
+			gtk_menu_item_activate (GTK_MENU_ITEM (menu_item));
+			valid = FALSE;
+		} else {
+			valid = gtk_tree_model_iter_next (ev_sidebar->priv->page_model, &iter);
+		}
+		g_object_unref (menu_item);
+		g_free (page_id);
+	}
+}
+
 void
 ev_sidebar_add_page (EvSidebar   *ev_sidebar,
 		     const gchar *page_id,
@@ -350,7 +404,7 @@ ev_sidebar_add_page (EvSidebar   *ev_sidebar,
 {
 	GtkTreeIter iter;
 	GtkWidget *menu_item;
-	gchar *label_title;
+	gchar *label_title, *new_page_id;
 	int index;
 	   
 	g_return_if_fail (EV_IS_SIDEBAR (ev_sidebar));
@@ -368,7 +422,7 @@ ev_sidebar_add_page (EvSidebar   *ev_sidebar,
 	gtk_widget_show (menu_item);
 	gtk_menu_shell_append (GTK_MENU_SHELL (ev_sidebar->priv->menu),
 			       menu_item);
-	   
+
 	gtk_list_store_insert_with_values (GTK_LIST_STORE (ev_sidebar->priv->page_model),
 					   &iter, 0,
 					   PAGE_COLUMN_ID, page_id,
@@ -382,6 +436,7 @@ ev_sidebar_add_page (EvSidebar   *ev_sidebar,
 	gtk_tree_model_get_iter_first (ev_sidebar->priv->page_model, &iter);
 	gtk_tree_model_get (ev_sidebar->priv->page_model,
 			    &iter,
+			    PAGE_COLUMN_ID, &new_page_id,
 			    PAGE_COLUMN_TITLE, &label_title,
 			    PAGE_COLUMN_NOTEBOOK_INDEX, &index,
 			    -1);
@@ -390,6 +445,7 @@ ev_sidebar_add_page (EvSidebar   *ev_sidebar,
 	gtk_label_set_text (GTK_LABEL (ev_sidebar->priv->label), label_title);
 	gtk_notebook_set_current_page (GTK_NOTEBOOK (ev_sidebar->priv->notebook),
 				       index);
+	ev_sidebar->priv->current = new_page_id;
 	g_free (label_title);
 }
 

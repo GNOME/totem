@@ -106,7 +106,7 @@ totem_sidebar_is_visible (Totem *totem)
 }
 
 void
-totem_sidebar_setup (Totem *totem, gboolean visible)
+totem_sidebar_setup (Totem *totem, gboolean visible, const char *page_id)
 {
 	GtkWidget *item, *item2;
 
@@ -118,6 +118,13 @@ totem_sidebar_setup (Totem *totem, gboolean visible)
 	ev_sidebar_add_page (EV_SIDEBAR (totem->sidebar),
 			"properties", _("Properties"),
 			GTK_WIDGET (totem->properties));
+	if (page_id != NULL) {
+		ev_sidebar_set_current_page (EV_SIDEBAR (totem->sidebar),
+				page_id);
+	} else {
+		ev_sidebar_set_current_page (EV_SIDEBAR (totem->sidebar),
+				"playlist");
+	}
 	gtk_widget_set_sensitive (GTK_WIDGET (totem->properties), FALSE);
 	gtk_paned_pack2 (GTK_PANED (item), totem->sidebar, FALSE, FALSE);
 
@@ -144,3 +151,8 @@ totem_sidebar_setup (Totem *totem, gboolean visible)
 		gtk_widget_hide (totem->sidebar);
 }
 
+const char *
+totem_sidebar_get_current_page (Totem *totem)
+{
+	return ev_sidebar_get_current_page (EV_SIDEBAR (totem->sidebar));
+}

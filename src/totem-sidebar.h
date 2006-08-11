@@ -25,10 +25,12 @@
 
 G_BEGIN_DECLS
 
-void totem_sidebar_setup (Totem *totem, gboolean visible);
+void totem_sidebar_setup (Totem *totem, gboolean visible,
+			  const char *page_id);
 void totem_sidebar_toggle (Totem *totem);
 void totem_sidebar_set_visibility (Totem *totem, gboolean visible);
 gboolean totem_sidebar_is_visible (Totem *totem);
+const char *totem_sidebar_get_current_page (Totem *totem);
 
 G_END_DECLS
 
