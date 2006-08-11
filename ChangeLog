@@ -1,5 +1,14 @@
 2006-08-11  Christian Persch  <chpe@cvs.gnome.org>
 
+	* browser-plugin/totemBasicPlugin.cpp:
+	* browser-plugin/totemComplexPlugin.cpp:
+	* browser-plugin/totemGMPPlugin.cpp:
+	* browser-plugin/totemNarrowSpacePlugin.cpp:
+
+	Use nsMemory::Alloc, for gecko 1.7 compatibility.
+
+2006-08-11  Christian Persch  <chpe@cvs.gnome.org>
+
 	* autogen.sh:
 	* configure.in:
 	* Makefile.am:

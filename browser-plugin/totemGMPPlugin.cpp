@@ -106,7 +106,7 @@ NS_IMETHODIMP
 totemScriptablePlugin::GetInterfaces (PRUint32 *count,
 				      nsIID * **array)
 {
-  *array = NS_STATIC_CAST (nsIID**, NS_Alloc (sizeof (nsIID)));
+  *array = NS_STATIC_CAST (nsIID**, nsMemory::Alloc (2 * sizeof (nsIID)));
   if (!*array)
     return NS_ERROR_OUT_OF_MEMORY;
 
