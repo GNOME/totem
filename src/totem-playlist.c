@@ -238,8 +238,12 @@ totem_playlist_mrl_to_title (const gchar *mrl)
 	{
 		filename_for_display = g_locale_to_utf8 (unescaped,
 				-1, NULL, NULL, NULL);
-		if (filename_for_display == NULL)
-			return unescaped;
+		if (filename_for_display == NULL) {
+			char *display;
+			display = g_filename_display_name (unescaped);
+			g_free (unescaped);
+			return display;
+		}
 	}
 
 	g_free (unescaped);
