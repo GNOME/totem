@@ -221,13 +221,19 @@ totem_plugin_fork (totemPlugin *plugin)
  
  	if (plugin->is_playlist) {
  		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_PLAYLIST));
- 		g_ptr_array_add (arr, g_strdup (plugin->src));
+ 		g_ptr_array_add (arr, g_strdup (plugin->local));
  	} else {
-		// if (!plugin->srcSupported)
- 		if (is_supported_scheme (plugin->src) == FALSE)
- 			g_ptr_array_add (arr, g_strdup (plugin->src));
- 		else
- 			g_ptr_array_add (arr, g_strdup ("fd://0"));
+		if (plugin->local == NULL) {
+			if (is_supported_scheme (plugin->local) == FALSE)
+				g_ptr_array_add (arr, g_strdup (plugin->src));
+			else
+				g_ptr_array_add (arr, g_strdup ("fd://0"));
+		} else {
+			if (is_supported_scheme (plugin->src) == FALSE)
+				g_ptr_array_add (arr, g_strdup (plugin->src));
+			else
+				g_ptr_array_add (arr, g_strdup ("fd://0"));
+		}
  	}
 
 	g_ptr_array_add (arr, NULL);
@@ -534,6 +540,7 @@ totem_plugin_destroy_instance (NPP instance,
 
 	NS_RELEASE (plugin->scriptable);
 
+	g_free (plugin->local);
 	g_free (plugin->target);
 	g_free (plugin->src);
 	g_free (plugin->href);
@@ -686,7 +693,7 @@ static int32 totem_plugin_write (NPP instance, NPStream *stream, int32 offset,
 			g_message ("No stream in NPP_Write!?");
 			return -1;
 		}
-			
+
 		if (totem_pl_parser_can_parse_from_data ((const char *) buffer, len, TRUE /* FIXME */) != FALSE) {
 			D("Need to wait for the file to be downloaded completely");
 			plugin->is_playlist = TRUE;
@@ -728,9 +735,7 @@ static void totem_plugin_stream_as_file (NPP instance, NPStream *stream,
 		return;
 
 	if (!plugin->player_pid && plugin->is_playlist != FALSE) {
-		if (plugin->src != NULL)
-			g_free (plugin->src);
-		plugin->src = g_filename_to_uri (fname, NULL, NULL);
+		plugin->local = g_filename_to_uri (fname, NULL, NULL);
 		totem_plugin_fork (plugin);
 		return;
 	} else if (!plugin->player_pid) {

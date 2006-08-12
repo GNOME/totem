@@ -1,3 +1,13 @@
+2006-08-12  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totemPlugin.cpp:
+	* browser-plugin/totemPlugin.h:
+	* src/plparse/totem-pl-parser.c: (totem_pl_resolve_url):
+	* src/totem-mozilla-viewer.c: (totem_embedded_set_state):
+	Try harder to pass the original filename to the viewer
+	rather than the new local filename, hopefully helping the
+	backend figure out the relatives paths properly
+
 2006-08-11  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-mozilla-viewer.c: (main):

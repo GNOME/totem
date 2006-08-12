@@ -35,7 +35,7 @@ typedef struct {
 	Window window;
 	totemScriptablePlugin *scriptable;
 
-	char *src, *href, *target, *mimetype;
+	char *src, *local, *href, *target, *mimetype;
 	int width, height;
 	DBusGConnection *conn;
 	DBusGProxy *proxy;

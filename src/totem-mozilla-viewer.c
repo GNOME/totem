@@ -196,7 +196,7 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 
 	image = glade_xml_get_widget (emb->xml, "emb_pp_button_image");
 	gtk_image_set_from_stock (GTK_IMAGE (image), id, GTK_ICON_SIZE_MENU);
-	if (emb->hidden == FALSE)
+	if (emb->hidden == FALSE && cursor)
 		gdk_window_set_cursor (GTK_WIDGET (emb->bvw)->window, cursor);
 
 	emb->state = state;

@@ -962,14 +962,12 @@ totem_pl_parser_add_one_url_ext (TotemPlParser *parser, const char *url,
 static gchar*
 totem_pl_resolve_url (char *base, char *url)
 {
-	char *fullpath;
-
-	if (g_strrstr (url, "://") == NULL && url[0] != '/')
-		fullpath = g_strdup_printf ("%s/%s", base, url);
-	else
-		fullpath = g_strdup (url);
-
-	return fullpath;
+	if (g_strrstr (url, "://") == NULL) {
+		if (url[0] != '/' || g_str_has_prefix (base, "file://") == FALSE) {
+			return g_strdup_printf ("%s/%s", base, url);
+		}
+	}
+	return g_strdup (url);
 }
 
 static TotemPlParserResult
