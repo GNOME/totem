@@ -1,5 +1,11 @@
 2006-08-12  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-mozilla-viewer.c: (on_volume_scroll_event),
+	(totem_embedded_add_children): handle scroll-wheel events on
+	the volume button as they should be handled (Closes: #341867)
+
+2006-08-12  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-playlist.c: (totem_playlist_mrl_to_title):
 	Fix up brain-damage in the previous commit
 

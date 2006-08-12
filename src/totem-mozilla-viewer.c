@@ -50,6 +50,9 @@ GtkWidget *totem_volume_create (void);
 #define OPTION_IS(x) (strcmp(argv[i], x) == 0)
 #define IS_FD_STREAM (strcmp(emb->filename, "fd://0") == 0)
 
+#define VOLUME_DOWN_OFFSET -8
+#define VOLUME_UP_OFFSET 8
+
 /* For newer D-Bus version */
 #ifndef DBUS_NAME_FLAG_PROHIBIT_REPLACEMENT
 #define DBUS_NAME_FLAG_PROHIBIT_REPLACEMENT 0
@@ -553,6 +556,31 @@ cb_vol (GtkWidget *val, TotemEmbedded *emb)
 		bacon_volume_button_get_value (BACON_VOLUME_BUTTON (val)));
 }
 
+static gboolean
+on_volume_scroll_event (GtkWidget *win, GdkEventScroll *event, TotemEmbedded *emb)
+{
+	GtkWidget *vbut;
+	int vol, offset;
+
+	switch (event->direction) {
+	case GDK_SCROLL_UP:
+		offset = VOLUME_UP_OFFSET;
+		break;
+	case GDK_SCROLL_DOWN:
+		offset = VOLUME_DOWN_OFFSET;
+		break;
+	default:
+		return FALSE;
+	}
+
+	vbut = glade_xml_get_widget (emb->xml, "volume_button");
+	vol = bacon_volume_button_get_value (BACON_VOLUME_BUTTON (vbut));
+	bacon_volume_button_set_value (BACON_VOLUME_BUTTON (vbut),
+			vol + offset);
+
+	return FALSE;
+}
+
 static void
 on_tick (GtkWidget *bvw,
 		gint64 current_time,
@@ -658,6 +686,9 @@ totem_embedded_add_children (TotemEmbedded *emb)
 	bacon_volume_button_set_value (BACON_VOLUME_BUTTON (vbut), volume);
 	g_signal_connect (G_OBJECT (vbut), "value-changed",
 			  G_CALLBACK (cb_vol), emb);
+	gtk_widget_add_events (vbut, GDK_SCROLL_MASK);
+	g_signal_connect (G_OBJECT (vbut), "scroll_event",
+			G_CALLBACK (on_volume_scroll_event), emb);
 
 	gtk_widget_realize (emb->window);
 	gtk_widget_set_size_request (emb->window, emb->width, emb->height);
