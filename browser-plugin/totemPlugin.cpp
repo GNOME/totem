@@ -49,8 +49,8 @@
 #include <nsIInterfaceRequestorUtils.h>
 #include <nsIWebNavigation.h>
 
-#define TOTEM_DEBUG 1
-/* define TOTEM_DEBUG for more debug spew */
+#define GNOME_ENABLE_DEBUG 1
+/* define GNOME_ENABLE_DEBUG for more debug spew */
 #include "debug.h"
 
 #if defined(TOTEM_BASIC_PLUGIN)
@@ -218,6 +218,10 @@ totem_plugin_fork (totemPlugin *plugin)
  	if (plugin->repeat) {
  		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_REPEAT));
  	}
+
+	if (plugin->noautostart) {
+		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_NOAUTOSTART));
+	}
  
  	if (plugin->is_playlist) {
  		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_PLAYLIST));
@@ -488,7 +492,9 @@ totem_plugin_new_instance (NPMIMEType mimetype,
 		}
 		if (g_ascii_strcasecmp (argn[i], "autostart") == 0
 				|| g_ascii_strcasecmp (argn[i], "autoplay") == 0) {
-			//FIXME
+			if (g_ascii_strcasecmp (argv[i], "false") == 0) {
+				plugin->noautostart = TRUE;
+			}
 		}
 		if (g_ascii_strcasecmp (argn[i], "loop") == 0
 				|| g_ascii_strcasecmp (argn[i], "repeat")) {
@@ -648,7 +654,7 @@ static int32 totem_plugin_write_ready (NPP instance, NPStream *stream)
 	totemPlugin *plugin;
 	struct pollfd fds;
 
-	// D("plugin_write_ready");
+	//D("plugin_write_ready");
 
 	if (instance == NULL)
 		return 0;
@@ -675,7 +681,7 @@ static int32 totem_plugin_write (NPP instance, NPStream *stream, int32 offset,
 {
 	int ret;
 
-	// D("plugin_write");
+	//D("plugin_write");
 
 	if (instance == NULL)
 		return -1;
@@ -713,7 +719,19 @@ static int32 totem_plugin_write (NPP instance, NPStream *stream, int32 offset,
 
 	ret = write (plugin->send_fd, buffer, len);
 	if (ret < 0) {
-		D("ret %d: [%d]%s", ret, errno, g_strerror (errno));
+		int err = errno;
+		D("ret %d: [%d]%s", ret, errno, g_strerror (err));
+		if (err == EPIPE) {
+			/* fd://0 got closed, probably because the backend
+			 * crashed on us */
+			if (CallNPN_DestroyStreamProc
+					(mozilla_functions.destroystream,
+					 plugin->instance,
+					 plugin->stream,
+					 NPRES_DONE) != NPERR_NO_ERROR) {
+				g_warning ("Couldn't destroy the stream");
+			}
+		}
 	}
 
 	return ret;

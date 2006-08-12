@@ -104,6 +104,7 @@ typedef struct _TotemEmbedded {
 	guint hidden : 1;
 	guint repeat : 1;
 	guint seeking : 1;
+	guint noautostart : 1;
 } TotemEmbedded;
 
 GType totem_embedded_get_type (void);
@@ -519,13 +520,19 @@ on_eos_event (GtkWidget *bvw, TotemEmbedded *emb)
 		totem_embedded_set_pp_state (emb, FALSE);
 	} else if (emb->num_items == 1) {
 		if (g_str_has_prefix (emb->filename, "file://") != FALSE) {
-			//FIXME seek back so we don't have to reopen the file
-			bacon_video_widget_close (emb->bvw);
-			totem_embedded_open (emb);
+			if (bacon_video_widget_is_seekable (emb->bvw) != FALSE) {
+				bacon_video_widget_pause (emb->bvw);
+				bacon_video_widget_seek (emb->bvw, 0.0, NULL);
+			} else {
+				bacon_video_widget_close (emb->bvw);
+				totem_embedded_open (emb);
+			}
 		} else {
 			bacon_video_widget_close (emb->bvw);
 			totem_embedded_open (emb);
 		}
+		if (emb->repeat != FALSE && emb->noautostart == FALSE)
+			totem_embedded_play (emb, NULL);
 	} else {
 		/* Multiple items on the playlist */
 		gboolean eop = FALSE, res;
@@ -909,6 +916,8 @@ int main (int argc, char **argv)
 			emb->is_playlist = TRUE;
 		} else if (OPTION_IS (TOTEM_OPTION_REPEAT)) {
 			emb->repeat = TRUE;
+		} else if (OPTION_IS (TOTEM_OPTION_NOAUTOSTART)) {
+			emb->noautostart = TRUE;
 		} else if (i + 1 == argc) {
 			emb->filename = g_strdup (argv[i]);
 		}
@@ -959,8 +968,10 @@ int main (int argc, char **argv)
 		emb->num_items++;
 	}
 
-	if (totem_embedded_open (emb) != FALSE)
+	if (totem_embedded_open (emb) != FALSE
+			&& emb->noautostart == FALSE) {
 		totem_embedded_play (emb, NULL);
+	}
 
 	gtk_main ();
 

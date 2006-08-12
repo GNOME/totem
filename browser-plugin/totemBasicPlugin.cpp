@@ -45,7 +45,8 @@ static const char kPluginDescription[] = "Totem Web Browser Plugin " VERSION;
 static const totemPluginMimeEntry kMimeTypes[] = {
 	{ "application/ogg", "ogg", NULL },
 	{ "video/mpeg", "mpg, mpeg, mpe", NULL },
-	{ "audio/wav", "wav", NULL }
+	{ "audio/wav", "wav", NULL },
+	{ "audio/mpeg", "mp3", NULL }
 };
 
 totemScriptablePlugin::totemScriptablePlugin (totemPlugin *aPlugin)

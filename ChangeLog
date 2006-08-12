@@ -1,5 +1,19 @@
 2006-08-12  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemBasicPlugin.cpp:
+	* browser-plugin/totemPlugin.cpp:
+	* browser-plugin/totemPlugin.h:
+	* src/totem-mozilla-options.h:
+	* src/totem-mozilla-viewer.c: (on_eos_event), (main):
+	- Add audio/mpeg to the list of supported mime-types, will hopefully
+	speed up the Mozilla unbreakage (Closes: #301913)
+	- Fix debugging information in the main plugin
+	- Add support for the "autostart" parameter
+	- Destroy the stream if the child viewer died
+	- Make repeat=true work even if we only have one video file
+
+2006-08-12  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-mozilla-viewer.c: (on_volume_scroll_event),
 	(totem_embedded_add_children): handle scroll-wheel events on
 	the volume button as they should be handled (Closes: #341867)
