@@ -1,5 +1,24 @@
 New features and significant updates in version...
 
+1.5.91
+* Numerous Browser Plugin enhancements:
+  - Playlist support
+  - Split the plugin in 4 different plugins, to allow
+    name-based detection to work, and different Javascript interfaces
+    to be used (Real Player/Helix, Windows Media Player and Quicktime
+    compatible, and basic Totem)
+  - Handle repeat and autostart parameters
+  - Make sure the plugin is available for all Mozilla-based browsers
+  - Make scrolling on the volume widget work as it should
+* New icon
+* Use HAL to determine the disc type
+* Save and restore which sidebar was showing, and whether Totem was
+  maximised
+* Fix the window title not changing when playing files with broken names
+* Fix Ctrl+Q not working in fullscreen
+* More logo mode fixes (xine-lib)
+* Fix aspect ratio of visuals (xine-lib)
+
 1.5.90
 * Add a default filename to the save playlist dialogue
 * Add supprot for more DVD related remote buttons
