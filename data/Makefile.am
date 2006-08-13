@@ -75,7 +75,7 @@ totem-video-thumbnail.schemas.in: schemas.sh mime-type-list.txt
 totem-handlers.schemas.in: handlers.sh
 	$(srcdir)/handlers.sh > $@
 
-generated_schema_in_files = totem.schemas.in totem-video-thumbnail.schemas.in totem-handlers.schemas.in
+generated_schema_in_files = totem-video-thumbnail.schemas.in totem-handlers.schemas.in
 schema_in_files = totem.schemas.in $(generated_schema_in_files)
 schemadir = $(GCONF_SCHEMA_FILE_DIR)
 schema_DATA = $(schema_in_files:.schemas.in=.schemas)
