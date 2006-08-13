@@ -447,15 +447,11 @@ AC_ARG_ENABLE([basic-plugin],
 	[],[enable_basic_plugin=yes])
 AC_MSG_RESULT([$enable_basic_plugin])
 
-AM_CONDITIONAL([ENABLE_BASIC_PLUGIN],[test "$enable_basic_plugin" = "yes"])
-
 AC_MSG_CHECKING([whether to enable the GMP browser plugin])
 AC_ARG_ENABLE([gmp-plugin],
 	AS_HELP_STRING([--enable-gmp-plugin],[Whether to enable the GMP browser plugin]),
 	[],[enable_gmp_plugin=yes])
 AC_MSG_RESULT([$enable_gmp_plugin])
-
-AM_CONDITIONAL([ENABLE_GMP_PLUGIN],[test "$enable_gmp_plugin" = "yes"])
 
 AC_MSG_CHECKING([whether to enable the Complex browser plugin])
 AC_ARG_ENABLE([complex-plugin],
@@ -463,17 +459,18 @@ AC_ARG_ENABLE([complex-plugin],
 	[],[enable_complex_plugin=yes])
 AC_MSG_RESULT([$enable_complex_plugin])
 
-AM_CONDITIONAL([ENABLE_COMPLEX_PLUGIN],[test "$enable_complex_plugin" = "yes"])
-
 AC_MSG_CHECKING([whether to enable the NarrowSpace browser plugin])
 AC_ARG_ENABLE([narrowspace-plugin],
 	AS_HELP_STRING([--enable-narrowspace-plugin],[Whether to enable the NarrowSpace browser plugin]),
 	[],[enable_narrowspace_plugin=yes])
 AC_MSG_RESULT([$enable_narrowspace_plugin])
 
-AM_CONDITIONAL([ENABLE_NARROWSPACE_PLUGIN],[test "$enable_narrowspace_plugin" = "yes"])
-
 fi
+
+AM_CONDITIONAL([ENABLE_BASIC_PLUGIN],[test "$enable_basic_plugin" = "yes"])
+AM_CONDITIONAL([ENABLE_GMP_PLUGIN],[test "$enable_gmp_plugin" = "yes"])
+AM_CONDITIONAL([ENABLE_COMPLEX_PLUGIN],[test "$enable_complex_plugin" = "yes"])
+AM_CONDITIONAL([ENABLE_NARROWSPACE_PLUGIN],[test "$enable_narrowspace_plugin" = "yes"])
 
 dnl ********
 dnl Nautilus
