@@ -1,5 +1,14 @@
 2006-08-13  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-private.h:
+	* src/totem-sidebar.c: (cb_resize):
+	* src/totem.c: (totem_action_save_size), (totem_action_save_state),
+	(totem_setup_window), (video_widget_create):
+	Resize the sidebar after the video widget has been shown, still not
+	perfect, but better than nothing (Helps: #316286)
+
+2006-08-13  Bastien Nocera  <hadess@hadess.net>
+
 	* data/Makefile.am: Patch from Loïc Minier <lool+gnome@via.ecp.fr> to
 	not delete totem.schemas.in on make clean (Closes: #351148)
 

@@ -144,6 +144,8 @@ totem_action_error_and_exit (const char *title,
 static void
 totem_action_save_size (Totem *totem)
 {
+	GtkWidget *item;
+
 	if (totem->bvw == NULL)
 		return;
 
@@ -151,11 +153,12 @@ totem_action_save_size (Totem *totem)
 		return;
 
 	/* Save the size of the video widget */
-	totem->bvw_size_w = GTK_WIDGET(totem->bvw)->allocation.width
-		+ BVW_VBOX_BORDER_WIDTH;
-	totem->bvw_size_h = GTK_WIDGET(totem->bvw)->allocation.height
-		+ BVW_VBOX_BORDER_WIDTH;
-	totem->sidebar_w = GTK_WIDGET(totem->sidebar)->allocation.width;
+	item = glade_xml_get_widget (totem->xml, "tmw_main_pane");
+	gtk_window_get_size (GTK_WINDOW (totem->win), &totem->window_w,
+			&totem->window_h);
+	totem->sidebar_w = totem->window_w
+		- gtk_paned_get_position (GTK_PANED (item));
+	g_message ("w %d h %d sidebar %d", totem->window_w, totem->window_h, totem->sidebar_w);
 }
 
 static void
@@ -167,9 +170,9 @@ totem_action_save_state (Totem *totem)
 
 	keyfile = g_key_file_new ();
 	g_key_file_set_integer (keyfile, "State",
-			"window_w", totem->bvw_size_w);
+			"window_w", totem->window_w);
 	g_key_file_set_integer (keyfile, "State",
-			"window_h", totem->bvw_size_h);
+			"window_h", totem->window_h);
 	g_key_file_set_boolean (keyfile, "State",
 			"show_sidebar", totem_sidebar_is_visible (totem));
 	g_key_file_set_boolean (keyfile, "State",
@@ -3082,22 +3085,25 @@ totem_setup_window (Totem *totem)
 	}
 
 	if (w > 0 && h > 0 && totem->maximised == FALSE) {
-		GtkWidget *item;
-
-		item = glade_xml_get_widget (totem->xml, "tmw_bvw_vbox");
-		gtk_widget_set_size_request (item,
-				w + BVW_VBOX_BORDER_WIDTH, h + BVW_VBOX_BORDER_WIDTH);
+		gtk_window_set_default_size (GTK_WINDOW (totem->win),
+				w, h);
+		totem->window_w = w;
+		totem->window_h = h;
 	} else if (totem->maximised != FALSE) {
 		gtk_window_maximize (GTK_WINDOW (totem->win));
 	}
 
-	totem_sidebar_setup (totem, show_sidebar, page_id);
-
 	if (sidebar_w > 0 && totem->maximised == FALSE) {
-		gtk_widget_set_size_request (totem->sidebar,
-				sidebar_w,
-				 h + BVW_VBOX_BORDER_WIDTH);
+		GtkWidget *item;
+
+		totem->sidebar_w = sidebar_w;
+		totem_sidebar_setup (totem, show_sidebar, page_id);
+		item = glade_xml_get_widget (totem->xml, "tmw_main_pane");
+		gtk_paned_set_position (GTK_PANED (item), w - sidebar_w);
+	} else {
+		totem_sidebar_setup (totem, show_sidebar, page_id);
 	}
+	g_message ("w %d h %d sidebar %d", totem->window_w, totem->window_h, totem->sidebar_w);
 }
 
 static void
@@ -3463,16 +3469,12 @@ static void
 video_widget_create (Totem *totem) 
 {
 	GError *err = NULL;
-	GtkWidget *container;
-	int w, h;
+	GtkWidget *container, *container2;
 
 	totem->scr = totem_scrsaver_new ();
 
-	w = gconf_client_get_int (totem->gc, GCONF_PREFIX"/window_w", NULL);
-	h = gconf_client_get_int (totem->gc, GCONF_PREFIX"/window_h", NULL);
-
 	totem->bvw = BACON_VIDEO_WIDGET
-		(bacon_video_widget_new (w, h, BVW_USE_TYPE_VIDEO, &err));
+		(bacon_video_widget_new (-1, -1, BVW_USE_TYPE_VIDEO, &err));
 
 	if (totem->bvw == NULL)
 	{
@@ -3564,7 +3566,8 @@ video_widget_create (Totem *totem)
 
 	gtk_widget_show (GTK_WIDGET (totem->bvw));
 
-	gtk_widget_set_size_request (container, -1, -1);
+	container2 = glade_xml_get_widget (totem->xml, "tmw_main_pane");
+	gtk_paned_set_position (GTK_PANED (container2), totem->window_w - totem->sidebar_w);
 
 	bacon_video_widget_set_volume (totem->bvw,
 			gconf_client_get_int (totem->gc,

@@ -145,7 +145,7 @@ struct Totem {
 	guint index;
 
 	/* Window State */
-	int bvw_size_w, bvw_size_h;
+	int window_w, window_h;
 	gboolean maximised;
 
 	/* other */

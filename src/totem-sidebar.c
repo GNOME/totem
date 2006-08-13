@@ -47,9 +47,10 @@ cb_resize (Totem * totem)
 	GValue gvalue_size = { 0, };
 	gint handle_size;
 	GtkWidget *pane;
+	int w, h;
 
-	gint w = totem->win->allocation.width,
-	    h = totem->win->allocation.height;
+	w = totem->win->allocation.width;
+	h = totem->win->allocation.height;
 
 	g_value_init (&gvalue_size, G_TYPE_INT);
 	pane = glade_xml_get_widget (totem->xml, "tmw_main_pane");
