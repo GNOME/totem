@@ -155,6 +155,7 @@ totem_action_save_size (Totem *totem)
 		+ BVW_VBOX_BORDER_WIDTH;
 	totem->bvw_size_h = GTK_WIDGET(totem->bvw)->allocation.height
 		+ BVW_VBOX_BORDER_WIDTH;
+	totem->sidebar_w = GTK_WIDGET(totem->sidebar)->allocation.width;
 }
 
 static void
@@ -173,6 +174,10 @@ totem_action_save_state (Totem *totem)
 			"show_sidebar", totem_sidebar_is_visible (totem));
 	g_key_file_set_boolean (keyfile, "State",
 			"maximised", totem->maximised);
+	if (totem->maximised == FALSE) {
+		g_key_file_set_integer (keyfile, "State",
+				"sidebar_w", totem->sidebar_w);
+	}
 
 	page_id = totem_sidebar_get_current_page (totem);
 	g_key_file_set_string (keyfile, "State",
@@ -3014,7 +3019,7 @@ static void
 totem_setup_window (Totem *totem)
 {
 	GKeyFile *keyfile;
-	int w, h;
+	int w, h, sidebar_w;
 	gboolean show_sidebar;
 	char *filename, *page_id;
 	GError *err = NULL;
@@ -3023,7 +3028,7 @@ totem_setup_window (Totem *totem)
 	keyfile = g_key_file_new ();
 	if (g_key_file_load_from_file (keyfile, filename,
 			G_KEY_FILE_NONE, NULL) == FALSE) {
-		w = h = 0;
+		sidebar_w = w = h = 0;
 		show_sidebar = TRUE;
 		page_id = NULL;
 		g_free (filename);
@@ -3066,6 +3071,13 @@ totem_setup_window (Totem *totem)
 			page_id = NULL;
 			err = NULL;
 		}
+
+		sidebar_w = g_key_file_get_integer (keyfile, "State",
+				"sidebar_w", &err);
+		if (err != NULL) {
+			g_error_free (err);
+			sidebar_w = 0;
+		}
 		g_key_file_free (keyfile);
 	}
 
@@ -3080,6 +3092,12 @@ totem_setup_window (Totem *totem)
 	}
 
 	totem_sidebar_setup (totem, show_sidebar, page_id);
+
+	if (sidebar_w > 0 && totem->maximised == FALSE) {
+		gtk_widget_set_size_request (totem->sidebar,
+				sidebar_w,
+				 h + BVW_VBOX_BORDER_WIDTH);
+	}
 }
 
 static void

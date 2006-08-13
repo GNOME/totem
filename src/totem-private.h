@@ -77,6 +77,7 @@ struct Totem {
 	/* Sidebar */
 	GtkWidget *sidebar;
 	gboolean sidebar_shown;
+	int sidebar_w;
 
 	/* Separate Dialogs */
 	GtkWidget *properties;
