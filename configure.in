@@ -15,7 +15,7 @@ AM_INIT_AUTOMAKE([1.9 dist-bzip2 no-dist-gzip check-news])
 
 dnl Add the languages which your application supports to po/LINGUAS
 GETTEXT_PACKAGE=totem
-AC_DEFINE(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [Define to the Gettext package name])
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, ["$GETTEXT_PACKAGE"], [Define to the Gettext package name])
 AC_SUBST(GETTEXT_PACKAGE)
 AM_GLIB_GNU_GETTEXT
 IT_PROG_INTLTOOL([0.35.0])
