@@ -278,7 +278,8 @@ cd_cache_new_hal_ctx (void)
       libhal_ctx_free (ctx);
       return NULL;
     }
-    return ctx;
+    if (libhal_ctx_init (ctx, &error))
+      return ctx;
   }
 
   if (dbus_error_is_set (&error)) {
@@ -286,7 +287,6 @@ cd_cache_new_hal_ctx (void)
     dbus_error_free (&error);
   }
 
-  libhal_ctx_shutdown (ctx, NULL);
   libhal_ctx_free (ctx);
   if (conn != NULL)
     dbus_connection_unref (conn);
