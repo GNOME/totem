@@ -2681,8 +2681,10 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		break;
 	case GDK_g:
 	case GDK_G:
-		bacon_video_widget_dvd_event (totem->bvw,
-				BVW_DVD_NEXT_ANGLE);
+		if (totem_playing_dvd (totem->mrl) != FALSE) {
+				bacon_video_widget_dvd_event (totem->bvw,
+					BVW_DVD_NEXT_ANGLE);
+		}
 		break;
 	case GDK_h:
 	case GDK_H:

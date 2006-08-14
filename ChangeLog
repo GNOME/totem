@@ -1,5 +1,10 @@
 2006-08-14  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (totem_action_handle_key_press): Don't try
+	to switch angles if we're not playing a DVD (Closes: #351355)
+
+2006-08-14  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: Fix quoting on the GETTEXT_PACKAGE macro, fixing
 	translations not working (Closes: #351357)
 
