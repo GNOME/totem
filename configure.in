@@ -61,14 +61,9 @@ AC_SUBST(TOTEM_PL_PARSER_VERSION_MICRO)
 AC_ARG_ENABLE(nvtv, AC_HELP_STRING([--enable-nvtv],[Enable support for TV-output with nvtv]), enable_nvtv="$enableval", enable_nvtv=yes)
 
 if test x$enable_nvtv = xyes; then
-PKG_CHECK_MODULES(NVTV, nvtvsimple >= 0.4.5, found_nvtv=1,found_nvtv=0)
-AC_SUBST(NVTV_CFLAGS)
-AC_SUBST(NVTV_LIBS)
-	if test $found_nvtv -eq 1 ; then
+PKG_CHECK_MODULES(NVTV, nvtvsimple >= 0.4.5, found_nvtv=yes,found_nvtv=no)
+	if test x"$found_nvtv" = "xyes" ; then
 		AC_DEFINE(HAVE_NVTV,1,[Define to 1 if nvtv is available and used.])
-		AC_MSG_RESULT(yes)
-	else 
-		AC_MSG_RESULT(no)
 	fi
 fi
 
@@ -94,18 +89,18 @@ AC_ARG_ENABLE(gstreamer,
 	[ENABLE_GST=auto]) dnl Default value
 
 HAVE_XINE=no
-AC_MSG_CHECKING(for backend libraries)
-
 if test x$ENABLE_GST = xno || test x$ENABLE_GST = xauto; then
 	MM="libxine >= $XINE_REQS gconf-2.0"
 	PKG_CHECK_MODULES(XINE, $MM, HAVE_XINE=yes, HAVE_XINE=no)
+	AC_MSG_CHECKING(for backend libraries)
 	if test x$HAVE_XINE = xyes; then
-		AC_MSG_RESULT(xine-lib)
+		AC_MSG_RESULT([xine-lib])
 	fi
 fi
 
 if test x$ENABLE_GST = xno && test x$HAVE_XINE = xno; then
-	AC_MSG_RESULT(none)
+	AC_MSG_CHECKING(for backend libraries)
+	AC_MSG_RESULT([none])
 	AC_MSG_ERROR(you need the GStreamer or the xine-lib development packages installed)
 fi
 
@@ -162,19 +157,6 @@ if test x$HAVE_XINE = xno; then
 			])
 		fi
 	done
-
-	dnl We want at least GLib-2.8 for the GStreamer-0.10 backend
-	AC_MSG_CHECKING([whether GLib has atomic refcounting for objects])
-	PKG_CHECK_EXISTS([glib-2.0 >= 2.8.0], [
-               	AC_MSG_RESULT([yes])
-	], [
-		AC_MSG_RESULT([no])
-		AC_MSG_ERROR([
-			The totem GStreamer-0.10 backend requires
-			GLib version 2.8.0 or newer. Please upgrade
-			your GLib version first.
-		])
-	])
 fi
 
 AM_CONDITIONAL(TOTEM_GST, test "x$HAVE_GSTREAMER" = "xyes")
@@ -191,11 +173,11 @@ AC_ARG_ENABLE(vanity,
 AC_MSG_CHECKING(for Linux)
 case `uname` in
         *Linux*)
-	AC_MSG_RESULT(yes)
+	AC_MSG_RESULT([yes])
 	IS_LINUX="yes"
 	;;
 	*)
-	AC_MSG_RESULT(no)
+	AC_MSG_RESULT([no])
         IS_LINUX="no"
 	;;
 esac
@@ -208,7 +190,7 @@ fi
 
 AM_CONDITIONAL(TOTEM_VANITY, test x$COMPILE_VANITY = "xyes")
 AC_MSG_CHECKING(whether to compile vanity)
-AC_MSG_RESULT($COMPILE_VANITY);
+AC_MSG_RESULT([$COMPILE_VANITY])
 
 dnl Check for GTK+ only build
 AC_ARG_ENABLE(gtk,
@@ -378,7 +360,11 @@ if test "x$ENABLE_MOZILLA" = "xyes" ; then
 	AC_SUBST([BROWSER_PLUGIN_LIBS])
 
 	# Earlier versions misdetect playlists
-	PKG_CHECK_EXISTS([shared-mime-info >= 0.17])
+	PKG_CHECK_EXISTS(SMI, [shared-mime-info >= 0.17],
+			[AC_MSG_RESULT([yes])],
+			[AC_MSG_ERROR([
+				The Browser plugin requires shared-mime-info
+				>= 0.17 to function.])])
 fi
 
 if test "x$ENABLE_MOZILLA" = "xyes" ; then
@@ -613,22 +599,22 @@ AC_COMPILE_IFELSE([
 	have_xfree=yes
 )
 AC_MSG_CHECKING(for X11 XFree86 headers)
-AC_MSG_RESULT($have_xfree)
+AC_MSG_RESULT([$have_xfree])
 if test x"$have_xfree" = "xyes" ; then
 	AC_DEFINE(HAVE_XFREE, 1, [defined if you have X11/XF86keysym.h])
 fi
 
 AC_MSG_CHECKING(for broken old architecture)
 if test "`uname -m`x" = "i686x" ; then
-       AC_MSG_RESULT(h0rk3d)
+       AC_MSG_RESULT([h0rk3d])
 else
-       AC_MSG_RESULT(n334)
+       AC_MSG_RESULT([n334])
 fi
 AC_MSG_CHECKING(for broken user)
 if test "`whoami`x" = "hadessx" ; then
-       AC_MSG_RESULT(h0rk3d)
+       AC_MSG_RESULT([h0rk3d])
 else
-       AC_MSG_RESULT(n334)
+       AC_MSG_RESULT([n334])
 fi
 
 AC_MSG_CHECKING(for bad taste in TV series)
@@ -637,17 +623,6 @@ if test "`whoami`x" = "mickex" ; then
 else
        AC_MSG_RESULT(pheew nope)
 fi
-
-
-_system_is_x86="no"
-AC_CHECK_HEADER( asm/vm86.h, _system_is_x86="yes" )
-if `test "x$_system_is_x86" = "xyes" && test "x$CURL_CONFIG" != "xno"` ; then
-	HAVE_X86=1
-	AC_DEFINE(HAVE_X86, 1, [defined on x86 machines])
-else
-	HAVE_X86=0
-fi
-AM_CONDITIONAL(HAVE_X86, `test "x$_system_is_x86" = "xyes" && test "x$CURL_CONFIG" != "xno"`)
 
 AC_PATH_PROG(GCONFTOOL, gconftool-2)
 AM_GCONF_SOURCE_2
