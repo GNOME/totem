@@ -592,6 +592,8 @@ static MediaType
 cd_cache_disc_is_cdda (CdCache *cache,
 		       GError **error)
 {
+  MediaType type;
+
   /* We can't have audio CDs on disc, yet */
   if (cache->is_media == FALSE)
     return MEDIA_TYPE_DATA;
@@ -607,6 +609,7 @@ cd_cache_disc_is_cdda (CdCache *cache,
 
     is_cdda = libhal_device_get_property_bool (cache->ctx,
 	cache->disc_udi, "volume.disc.has_audio", &error);
+    type = is_cdda ? MEDIA_TYPE_CDDA : MEDIA_TYPE_DATA;
 
     if (dbus_error_is_set (&error)) {
       g_warning ("Error checking whether the volume is an audio CD: %s",
@@ -614,11 +617,10 @@ cd_cache_disc_is_cdda (CdCache *cache,
       dbus_error_free (&error);
       return MEDIA_TYPE_ERROR;
     }
-    return is_cdda ? MEDIA_TYPE_CDDA : MEDIA_TYPE_DATA;
+    return type;
   }
 #else
   {
-    MediaType type = MEDIA_TYPE_DATA;
     GList *vol, *item;
 
     for (vol = item = gnome_vfs_drive_get_mounted_volumes (cache->drive);
