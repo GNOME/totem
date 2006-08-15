@@ -360,8 +360,8 @@ if test "x$ENABLE_MOZILLA" = "xyes" ; then
 	AC_SUBST([BROWSER_PLUGIN_LIBS])
 
 	# Earlier versions misdetect playlists
-	PKG_CHECK_EXISTS(SMI, [shared-mime-info >= 0.17],
-			[AC_MSG_RESULT([yes])],
+	PKG_CHECK_EXISTS([shared-mime-info >= 0.17],
+			[],
 			[AC_MSG_ERROR([
 				The Browser plugin requires shared-mime-info
 				>= 0.17 to function.])])
@@ -602,26 +602,6 @@ AC_MSG_CHECKING(for X11 XFree86 headers)
 AC_MSG_RESULT([$have_xfree])
 if test x"$have_xfree" = "xyes" ; then
 	AC_DEFINE(HAVE_XFREE, 1, [defined if you have X11/XF86keysym.h])
-fi
-
-AC_MSG_CHECKING(for broken old architecture)
-if test "`uname -m`x" = "i686x" ; then
-       AC_MSG_RESULT([h0rk3d])
-else
-       AC_MSG_RESULT([n334])
-fi
-AC_MSG_CHECKING(for broken user)
-if test "`whoami`x" = "hadessx" ; then
-       AC_MSG_RESULT([h0rk3d])
-else
-       AC_MSG_RESULT([n334])
-fi
-
-AC_MSG_CHECKING(for bad taste in TV series)
-if test "`whoami`x" = "mickex" ; then
-       AC_MSG_RESULT(oh my god yes)
-else
-       AC_MSG_RESULT(pheew nope)
 fi
 
 AC_PATH_PROG(GCONFTOOL, gconftool-2)
