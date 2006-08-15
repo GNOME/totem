@@ -1846,6 +1846,20 @@ bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
   g_object_set (bvw->priv->play, "current-audio", language, NULL);
 }
 
+static guint
+connection_speed_enum_to_kbps (gint speed)
+{
+  static const gint conv_table[] = { 14400, 19200, 28800, 33600, 34400, 56000,
+      112000, 256000, 384000, 512000, 1536000, 10752000 };
+
+  g_return_val_if_fail (speed >= 0 && speed < G_N_ELEMENTS (conv_table), 0);
+
+  /* must round up so that the correct streams are chosen and not ignored
+   * due to rounding errors when doing kbps <=> bps */
+  return (conv_table[speed] / 1000) +
+    (((conv_table[speed] % 1000) != 0) ? 1 : 0);
+}
+
 int
 bacon_video_widget_get_connection_speed (BaconVideoWidget * bvw)
 {
@@ -1861,9 +1875,19 @@ bacon_video_widget_set_connection_speed (BaconVideoWidget * bvw, int speed)
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-  bvw->priv->connection_speed = speed;
-  gconf_client_set_int (bvw->priv->gc,
-       GCONF_PREFIX"/connection_speed", speed, NULL);
+  if (bvw->priv->connection_speed != speed) {
+    bvw->priv->connection_speed = speed;
+    gconf_client_set_int (bvw->priv->gc,
+         GCONF_PREFIX"/connection_speed", speed, NULL);
+  }
+
+  if (bvw->priv->play != NULL &&
+      g_object_class_find_property (G_OBJECT_GET_CLASS (bvw->priv->play), "connection-speed")) {
+    guint kbps = connection_speed_enum_to_kbps (speed);
+
+    GST_LOG ("Setting connection speed %d (= %d kbps)", speed, kbps);
+    g_object_set (bvw->priv->play, "connection-speed", kbps, NULL);
+  }
 }
 
 void
@@ -4436,7 +4460,8 @@ bacon_video_widget_new (int width, int height,
   confvalue = gconf_client_get_without_default (bvw->priv->gc,
       GCONF_PREFIX "/connection_speed", NULL);
   if (confvalue != NULL) {
-    bvw->priv->connection_speed = gconf_value_get_int (confvalue);
+    bacon_video_widget_set_connection_speed (bvw,
+        gconf_value_get_int (confvalue)); 
     gconf_value_free (confvalue);
   }
 

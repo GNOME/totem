@@ -1,3 +1,11 @@
+2006-08-15  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(connection_speed_enum_to_kbps),
+	(bacon_video_widget_set_connection_speed),
+	(bacon_video_widget_new):
+	  Set connection-speed property on playbin if it exists (#351349).
+
 2006-08-14  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c: (totem_action_handle_key_press): Don't try
