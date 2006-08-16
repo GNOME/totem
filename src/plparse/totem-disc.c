@@ -56,7 +56,6 @@ typedef struct _CdCache {
 
 #ifdef HAVE_HAL
   LibHalContext *ctx;
-  gboolean has_medium;
 #endif
 #ifdef HAVE_HAL_0_5
   /* If the disc is a media, have the UDI available here */
@@ -66,13 +65,15 @@ typedef struct _CdCache {
   /* capabilities of the device */
   int cap;
 
+  /* Whether we have a medium */
+  guint has_medium : 1;
   /* if we're checking a media, or a dir */
-  gboolean is_media;
+  guint is_media : 1;
 
   /* indicates if we mounted this mountpoint ourselves or if it
    * was already mounted. */
-  gboolean self_mounted;
-  gboolean mounted;
+  guint self_mounted : 1;
+  guint mounted : 1;
 } CdCache;
 
 /* 
@@ -622,6 +623,8 @@ cd_cache_disc_is_cdda (CdCache *cache,
 #else
   {
     GList *vol, *item;
+
+    type = MEDIA_TYPE_DATA;
 
     for (vol = item = gnome_vfs_drive_get_mounted_volumes (cache->drive);
 	item != NULL; item = item->next) {
