@@ -1,3 +1,9 @@
+2006-08-20  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-volume.c: (bacon_volume_scale_value_changed):
+	Fix missing unref'ing of the volume pixbuf, patch from
+	Paolo Borelli <pborelli@katamail.com> (Closes: #352136)
+
 2006-08-16  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/totem-disc.c: (cd_cache_disc_is_cdda):
