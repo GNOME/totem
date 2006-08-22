@@ -2850,6 +2850,26 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 
 		totem_action_zoom_relative (totem, ZOOM_OUT_OFFSET);
 		break;
+	case GDK_KP_Up:
+	case GDK_KP_8:
+		bacon_video_widget_dvd_event (totem->bvw, 
+				BVW_DVD_ROOT_MENU_UP);
+		break;
+	case GDK_KP_Down:
+	case GDK_KP_2:
+		bacon_video_widget_dvd_event (totem->bvw, 
+				BVW_DVD_ROOT_MENU_DOWN);
+		break;
+	case GDK_KP_Right:
+	case GDK_KP_6:
+		bacon_video_widget_dvd_event (totem->bvw, 
+				BVW_DVD_ROOT_MENU_RIGHT);
+		break;
+	case GDK_KP_Left:
+	case GDK_KP_4:
+		bacon_video_widget_dvd_event (totem->bvw, 
+				BVW_DVD_ROOT_MENU_LEFT);
+		break;
 	default:
 		retval = FALSE;
 	}
