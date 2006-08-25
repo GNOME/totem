@@ -36,11 +36,9 @@
 
 struct TotemPropertiesViewPriv {
 	GtkWidget *label;
-	char *location;
 	GtkWidget *vbox;
 	BaconVideoWidgetProperties *props;
 	BaconVideoWidget *bvw;
-	guint timeout_id, try;
 };
 
 static GObjectClass *parent_class = NULL;
@@ -101,23 +99,6 @@ on_got_metadata_event (BaconVideoWidget *bvw, TotemPropertiesView *props)
 		(props->priv->props, props->priv->bvw);
 }
 
-static gboolean
-on_timeout_event (TotemPropertiesView *props)
-{
-	/* FIXME: hack for the GStreamer backend which signals metadata
-	 * in small chunks instead of all-at-once. */
-	if (props->priv->try++ >= 5) {
-		bacon_video_widget_close (props->priv->bvw);
-		g_free (props->priv->location);
-		props->priv->location = NULL;
-		props->priv->timeout_id = 0;
-
-		return FALSE;
-	}
-
-	return TRUE;
-}
-
 static void
 totem_properties_view_init (TotemPropertiesView *props)
 {
@@ -164,12 +145,6 @@ totem_properties_view_finalize (GObject *object)
 		g_object_unref (G_OBJECT (props->priv->label));
 		props->priv->bvw = NULL;
 		props->priv->label = NULL;
-		g_free (props->priv->location);
-		props->priv->location = NULL;
-		if (props->priv->timeout_id != 0) {
-	                g_source_remove (props->priv->timeout_id);
-        	        props->priv->timeout_id = 0;
-		}
 		g_free (props->priv);
 	}
 	props->priv = NULL;
@@ -196,43 +171,28 @@ totem_properties_view_set_location (TotemPropertiesView *props,
 {
 	g_assert (TOTEM_IS_PROPERTIES_VIEW (props));
 
-	if (props->priv->timeout_id != 0) {
-		g_source_remove (props->priv->timeout_id);
-		props->priv->timeout_id = 0;
-	}
-
 	if (location != NULL && props->priv->bvw != NULL) {
 		GError *error = NULL;
 
-		g_free(props->priv->location);
 		bacon_video_widget_close (props->priv->bvw);
-		props->priv->location = g_strdup (location);
 		bacon_video_widget_properties_reset (props->priv->props);
+
 		if (bacon_video_widget_open (props->priv->bvw, location, &error) == FALSE) {
-			g_free (props->priv->location);
-			props->priv->location = NULL;
 			g_warning ("Couldn't open %s: %s", location, error->message);
 			g_error_free (error);
 			return;
 		}
-		/* Already closed? */
-		if (props->priv->location == NULL)
-			return;
 
 		if (bacon_video_widget_play (props->priv->bvw, &error) == FALSE) {
-			g_free (props->priv->location);
-			props->priv->location = NULL;
 			g_warning ("Couldn't play %s: %s", location, error->message);
 			g_error_free (error);
 			bacon_video_widget_close (props->priv->bvw);
+			return;
 		}
-		props->priv->timeout_id =
-			g_timeout_add (200, (GSourceFunc) on_timeout_event,
-				       props);
+
+		bacon_video_widget_close (props->priv->bvw);
 	} else {
 		bacon_video_widget_close (props->priv->bvw);
-		g_free (props->priv->location);
-		props->priv->location = NULL;
 		bacon_video_widget_properties_reset (props->priv->props);
 	}
 }

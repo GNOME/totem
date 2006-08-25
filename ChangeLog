@@ -1,3 +1,11 @@
+2006-08-25  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/totem-properties-view.c: (totem_properties_view_finalize),
+	(totem_properties_view_set_location):
+	* src/totem-video-thumbnailer.c: (main):
+	  Remove hacks needed to deal with certain GStreamer-0.8 backend
+	  issues (#352831).
+
 2006-08-24  Bastien Nocera  <hadess@hadess.net>
 
 	* data/mime-type-list.txt: add audio/AMR and audio/AMR-WB mime-types
