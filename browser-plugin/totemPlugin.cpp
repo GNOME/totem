@@ -460,6 +460,13 @@ totem_plugin_new_instance (NPMIMEType mimetype,
 			plugin->src = resolve_relative_uri (docURI, argv[i]);
 			//plugin->srcSupported = is_supported_scheme (plugin->src);
 		}
+		/* Windows Media Player parameter */
+		if (g_ascii_strcasecmp (argn[i], "filename") == 0) {
+			if (plugin->src == NULL) {
+				plugin->src = resolve_relative_uri (docURI, argv[i]);
+				g_message ("plugin->src = %s", plugin->src);
+			}
+		}
 		if (g_ascii_strcasecmp (argn[i], "href") == 0) {
 			plugin->href = resolve_relative_uri (docURI, argv[i]);
 		}
@@ -584,6 +591,7 @@ totem_plugin_set_window (NPP instance,
 		}
 	} else {
 		/* If not, wait for the first bits of data to come */
+		D("waiting for data to come");
 		plugin->window = (Window) window->window;
 	}
 
