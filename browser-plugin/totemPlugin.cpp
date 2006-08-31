@@ -504,7 +504,7 @@ totem_plugin_new_instance (NPMIMEType mimetype,
 			}
 		}
 		if (g_ascii_strcasecmp (argn[i], "loop") == 0
-				|| g_ascii_strcasecmp (argn[i], "repeat")) {
+				|| g_ascii_strcasecmp (argn[i], "repeat") == 0) {
 			if (g_ascii_strcasecmp (argv[i], "true") == 0) {
 				plugin->repeat = TRUE;
 			}
