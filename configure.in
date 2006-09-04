@@ -473,7 +473,7 @@ AC_ARG_ENABLE(nautilus,
 	[ENABLE_NAUTILUS=yes]) dnl Default value
 
 if test x$ENABLE_NAUTILUS = "xyes" ; then
-	PKG_CHECK_MODULES(NAUTILUS, gtk+-x11-2.0 $MM gthread-2.0 libnautilus-extension,
+	PKG_CHECK_MODULES(NAUTILUS, gtk+-2.0 $MM gthread-2.0 libnautilus-extension,
 			[HAVE_NAUTILUS=yes], [HAVE_NAUTILUS=no])
 fi
 
