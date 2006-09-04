@@ -1,5 +1,13 @@
 2006-09-04  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-skipto.c: (totem_skipto_set_current):
+	* src/totem-skipto.h: add totem_skipto_set_current()
+	* src/totem.c: (on_skip_to1_activate): set the range as soon as
+	we create the "Skip to..." dialogue, as well as setting the
+	current time as the default (Closes: #335649)
+
+2006-09-04  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-mozilla-viewer.c: (totem_embedded_add_children):
 	Hide the preferences menu item as it doesn't do anything yet
 	(Closes: #353405)

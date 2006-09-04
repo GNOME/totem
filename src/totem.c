@@ -2145,6 +2145,7 @@ static void
 on_skip_to1_activate (GtkButton *button, Totem *totem)
 {
 	char *filename;
+	gint64 time;
 
 	if (totem->seekable == FALSE)
 		return;
@@ -2158,6 +2159,11 @@ on_skip_to1_activate (GtkButton *button, Totem *totem)
 	filename = totem_interface_get_full_path ("skip_to.glade");
 	totem->skipto = TOTEM_SKIPTO (totem_skipto_new (filename));
 	g_free (filename);
+
+	time = bacon_video_widget_get_stream_length (totem->bvw);
+	totem_skipto_update_range (TOTEM_SKIPTO (totem->skipto), time);
+	time = bacon_video_widget_get_current_time (totem->bvw);
+	totem_skipto_set_current (TOTEM_SKIPTO (totem->skipto), time);
 
 	g_signal_connect (G_OBJECT (totem->skipto), "delete-event",
 			G_CALLBACK (gtk_widget_destroy), NULL);

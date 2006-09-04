@@ -112,6 +112,15 @@ totem_skipto_set_seekable (TotemSkipto *skipto, gboolean seekable)
 			GTK_RESPONSE_OK, seekable);
 }
 
+void
+totem_skipto_set_current (TotemSkipto *skipto, gint64 time)
+{
+	g_return_if_fail (TOTEM_IS_SKIPTO (skipto));
+
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON (skipto->_priv->spinbutton),
+			(gdouble) (time / 1000));
+}
+
 static void
 spin_button_activate_cb (GtkEntry *entry, TotemSkipto *skipto)
 {
