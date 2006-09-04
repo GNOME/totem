@@ -1,3 +1,10 @@
+2006-09-04  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totemPlugin.cpp: Use the aliased mime-type if there
+	is one, rather than the "embed" mime-type, fixes most Windows Media, 
+	and Real embedded movies not having an "Open with..." menu item
+	(Closes: #354182)
+
 ============ Version 2.16.0
 
 2006-09-03  Bastien Nocera  <hadess@hadess.net>

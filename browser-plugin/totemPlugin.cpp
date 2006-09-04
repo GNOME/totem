@@ -128,6 +128,28 @@ cb_stop_sending_data (DBusGProxy  *proxy,
 	plugin->stream = NULL;
 }
 
+static char *
+get_real_mimetype (const char *mimetype)
+{
+	const totemPluginMimeEntry *mimetypes;
+	char *real;
+	PRUint32 count;
+
+	totemScriptablePlugin::PluginMimeTypes (&mimetypes, &count);
+
+	for (PRUint32 i = 0; i < count; ++i) {
+		if (strcmp (mimetypes[i].mimetype, mimetype) == 0) {
+			if (mimetypes[i].mime_alias != NULL)
+				return g_strdup (mimetypes[i].mime_alias);
+			else
+				return g_strdup (mimetype);
+		}
+	}
+
+	g_warning ("Real mime-type for '%s' not found\n", mimetype);
+	return NULL;
+}
+
 static gboolean
 is_supported_scheme (const char *url)
 {
@@ -446,9 +468,10 @@ totem_plugin_new_instance (NPMIMEType mimetype,
 	if (strcmp (mimetype, "video/quicktime") != 0) {
 		plugin->cache = TRUE;
 	}
-	plugin->mimetype = g_strdup (mimetype);
+	/* Find the "real" mime-type */
+	plugin->mimetype = get_real_mimetype (mimetype);
 
-	for (i=0; i<argc; i++) {
+	for (i = 0; i < argc; i++) {
 		printf ("argv[%d] %s %s\n", i, argn[i], argv[i]);
 		if (g_ascii_strcasecmp (argn[i],"width") == 0) {
 			plugin->width = strtol (argv[i], NULL, 0);
