@@ -1,5 +1,11 @@
 2006-09-04  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-mozilla-viewer.c: (totem_embedded_add_children):
+	Hide the preferences menu item as it doesn't do anything yet
+	(Closes: #353405)
+
+2006-09-04  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemPlugin.cpp: Use the aliased mime-type if there
 	is one, rather than the "embed" mime-type, fixes most Windows Media, 
 	and Real embedded movies not having an "Open with..." menu item

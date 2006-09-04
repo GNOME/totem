@@ -712,6 +712,8 @@ totem_embedded_add_children (TotemEmbedded *emb)
 	child = glade_xml_get_widget (emb->menuxml, "copy_location1");
 	g_signal_connect (G_OBJECT (child), "activate",
 			G_CALLBACK (on_copy_location1_activate), emb);
+	child = glade_xml_get_widget (emb->menuxml, "preferences1");
+	gtk_widget_hide (child);
 }
 
 static void
