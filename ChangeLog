@@ -1,5 +1,11 @@
 2006-09-05  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemPlugin.cpp: when we won't get a NewStream call
+	(for an unsupported protocol for example), instanciate the viewer
+	ASAP (fixes playback of video on the http://www.viftv.no website)
+
+2006-09-05  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser.c: (parse_smil_entry),
 	(parse_smil_head), (parse_smil_entries): Use the top-level
 	title from the SMIL playlist if there isn't an entry-specific

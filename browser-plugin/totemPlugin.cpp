@@ -125,7 +125,7 @@ cb_stop_sending_data (DBusGProxy  *proxy,
 		return;
 	}
 
-	plugin->stream = NULL;
+	plugin->stream = nsnull;
 }
 
 static char *
@@ -522,7 +522,8 @@ totem_plugin_new_instance (NPMIMEType mimetype,
 		}
 		if (g_ascii_strcasecmp (argn[i], "autostart") == 0
 				|| g_ascii_strcasecmp (argn[i], "autoplay") == 0) {
-			if (g_ascii_strcasecmp (argv[i], "false") == 0) {
+			if (g_ascii_strcasecmp (argv[i], "false") == 0
+					|| g_ascii_strcasecmp (argv[i], "0") == 0) {
 				plugin->noautostart = TRUE;
 			}
 		}
@@ -613,9 +614,15 @@ totem_plugin_set_window (NPP instance,
 			printf ("ack.  window changed!\n");
 		}
 	} else {
-		/* If not, wait for the first bits of data to come */
-		D("waiting for data to come");
+		/* If not, wait for the first bits of data to come,
+		 * but not when the stream type isn't supported */
 		plugin->window = (Window) window->window;
+		if (!is_supported_scheme (plugin->src)) {
+			if (!totem_plugin_fork (plugin))
+				return NPERR_GENERIC_ERROR;
+		} else {
+			D("waiting for data to come");
+		}
 	}
 
 	D("leaving plugin_set_window");
@@ -663,7 +670,7 @@ totem_plugin_destroy_stream (NPP instance,
 			     NPStream* stream,
 			     NPError reason)
 {
-	D("plugin_destroy_stream");
+	D("plugin_destroy_stream, reason: %d", reason);
 
 	if (instance == NULL) {
 		D("totem_plugin_destroy_stream instance is NULL");
