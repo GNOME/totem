@@ -1,3 +1,9 @@
+2006-09-05  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_is_asf):
+	Fix possible buffer overflow that would cause a crash in the
+	ASF recognition code (Closes: #354284)
+
 2006-09-04  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: the nautilus extension requires gtk-2.0, not

@@ -2048,7 +2048,7 @@ totem_pl_parser_is_asf (const char *data, gsize len)
 		g_warning ("Couldn't dup data in totem_pl_parser_is_asf");
 		return FALSE;
 	}
-	buffer[len] = '\0';
+	buffer[len - 1] = '\0';
 	if (strstr (buffer, "<ASX") != NULL
 			|| strstr (buffer, "<asx") != NULL) {
 		g_free (buffer);
