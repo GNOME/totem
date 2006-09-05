@@ -1,4 +1,4 @@
-# Chinese (Taiwan) translation of totem.
+# Chinese (Hong Kong) translation of totem.
 # Copyright (C) 2003-06 Free Software Foundation, Inc.
 # Abel Cheung <abel@oaka.org>, 2003.
 # Woodman Tuen <wmtuen@gmail.com>, 2004-2006.
@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: totem 1.5.90\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-08-06 00:11+0800\n"
-"PO-Revision-Date: 2006-07-04 16:43+0800\n"
+"PO-Revision-Date: 2006-09-05 14:25+0800\n"
 "Last-Translator: Woodman Tuen <wmtuen@gmail.com>\n"
-"Language-Team: Chinese(Taiwan) <community@linuxhall.org>\n"
+"Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -141,7 +141,7 @@ msgstr "<b>一般</b>"
 
 #: ../data/properties.glade.h:8
 msgid "<b>Video</b>"
-msgstr "<b>視訊</b>"
+msgstr "<b>視像</b>"
 
 #: ../data/properties.glade.h:9
 msgid "Album:"
@@ -149,7 +149,7 @@ msgstr "專輯："
 
 #: ../data/properties.glade.h:10
 msgid "Artist:"
-msgstr "藝人："
+msgstr "演出者："
 
 #: ../data/properties.glade.h:11
 msgid "Bitrate:"
@@ -778,11 +778,11 @@ msgstr "啟用交錯式"
 
 #: ../data/totem.schemas.in.h:4
 msgid "Encoding charset for subtitle"
-msgstr "字幕的字元編碼"
+msgstr "字幕的字符編碼"
 
 #: ../data/totem.schemas.in.h:5
 msgid "Height of the video widget"
-msgstr "視訊部份高度"
+msgstr "視像部份高度"
 
 #: ../data/totem.schemas.in.h:6
 msgid "Maximum amount of data to decode ahead of display (in seconds)"
@@ -861,9 +861,7 @@ msgid ""
 "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
 "\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
 "Passthrough."
-msgstr ""
-"使用的輸出類型：“0” 代表音體聲，“1”代表四聲道輸出。“2”代表 5.0聲道輸出。“3”代"
-"表 5.1聲道輸出，“4”代表 AC3 Passthrough。"
+msgstr "使用的輸出類型：“0” 代表音體聲，“1”代表四聲道輸出。“2”代表 5.0聲道輸出。“3”代表 5.1聲道輸出，“4”代表 AC3 Passthrough。"
 
 #. Translators: This is default subtitle encoding
 #. character set. You can change this to be the most common
@@ -891,7 +889,7 @@ msgstr "應否顯示播放引擎的偵錯訊息"
 
 #: ../data/totem.schemas.in.h:34
 msgid "Width of the video widget"
-msgstr "視訊部份寬度"
+msgstr "視像部份闊度"
 
 #: ../data/uri.glade.h:1
 msgid "Enter the _address of the file you would like to open:"
@@ -907,7 +905,7 @@ msgstr "Vanity 網絡攝影機工具"
 
 #: ../data/vanity.desktop.in.in.h:2
 msgid "View live webcam and upload pictures"
-msgstr "觀看網絡攝影機即時影像及上傳圖片"
+msgstr "觀看網絡攝影機及上傳圖片"
 
 #: ../data/vanity.glade.h:1
 msgid "Save File"
@@ -1033,7 +1031,7 @@ msgstr "版權所有 © 2002-2006 Bastien Nocera"
 #: ../src/totem-mozilla-viewer.c:335 ../src/totem.c:1976 ../src/vanity.c:267
 msgid "translator-credits"
 msgstr ""
-"如對翻譯有任何意見，請送一封電郵給\n"
+"如對翻譯有任何意見，請送一封電子郵件給\n"
 "以下地址，GNOME 翻譯隊伍會盡快回覆你：\n"
 "community@linuxhall.org\n"
 "\n"
@@ -1195,8 +1193,7 @@ msgstr "必須重新啟動程式，更改視覺效果方會生效。"
 msgid ""
 "The change of audio output type will only take effect when Totem is "
 "restarted."
-msgstr ""
-"改變音效輸出的類型後，需要在播放下一齣影片或者重新啟動 Totem 時方會生效。"
+msgstr "改變音效輸出的類型後，需要在播放下一齣影片或者重新啟動 Totem 時方會生效。"
 
 #: ../src/totem-preferences.c:633
 msgid "Select Subtitle Font"
@@ -1552,7 +1549,7 @@ msgstr "主視窗"
 
 #: ../src/totem.c:3571
 msgid "video popup menu"
-msgstr "視訊彈出式視窗"
+msgstr "視像彈出式視窗"
 
 #: ../src/vanity.c:76
 msgid "Debug mode on"
@@ -1595,7 +1592,7 @@ msgid ""
 "Vanity could not play video from the webcam.\n"
 "Reason: %s"
 msgstr ""
-"Vanity 無法自網絡攝影機播放影像。\n"
+"Vanity 無法自網絡攝影機播放視像。\n"
 "原因：%s"
 
 #: ../src/vanity.c:642
@@ -1647,18 +1644,14 @@ msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
 "Selector."
-msgstr ""
-"其它的應用程式正在使用視訊輸出。請關閉其它的視訊輸出，或是在多媒體系統選取程"
-"式中選擇其它的音效輸出。"
+msgstr "其它的應用程式正在使用視像輸出。請關閉其它的視像輸出，或是在多媒體系統選取程式中選擇其它的音效輸出。"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2103
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
 "using a sound server."
-msgstr ""
-"其它的應用程式正在使用音效輸出。請在多媒體系統選取程式中選擇其它的音效輸出。"
-"或者你要考慮一下使用音效伺服器。"
+msgstr "其它的應用程式正在使用音效輸出。請在多媒體系統選取程式中選擇其它的音效輸出。或者你要考慮一下使用音效伺服器。"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2118
 msgid ""
@@ -1680,7 +1673,7 @@ msgstr "已安裝的 GStreamer 版本太舊。"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:3824
 msgid "Media contains no supported video streams."
-msgstr "媒體包含不支援的視訊串流。"
+msgstr "媒體包含不支援的視像串流。"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4169
 msgid ""
@@ -1693,35 +1686,28 @@ msgstr "無法建立 GStreamer 播放對像。請檢查 GStreamer 的安裝是�
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
-msgstr ""
-"無法開啟視訊輸出。可能它不存在。請在多媒體系統選取程式中選擇其它的音效輸出。"
+msgstr "無法開啟視像輸出。可能它不存在。請在多媒體系統選取程式中選擇其它的音效輸出。"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4293
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
 "Selector."
-msgstr ""
-"無法找到視訊輸出。你可能需要安裝附加的 GStreamer 外掛程式，或在多媒體系統選取"
-"程式中選擇其它的視訊輸出。"
+msgstr "無法找到視像輸出。你可能需要安裝附加的 GStreamer 外掛程式，或在多媒體系統選取程式中選擇其它的視像輸出。"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4312
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
 "output in the Multimedia Systems Selector."
-msgstr ""
-"無法開啟音效輸出。你沒有足夠的權限開啟音效裝置，或是音效伺服器沒有執行。請在"
-"多媒體系統選取程式中選擇其它的音效輸出。"
+msgstr "無法開啟音效輸出。你沒有足夠的權限開啟音效裝置，或是音效伺服器沒有執行。請在多媒體系統選取程式中選擇其它的音效輸出。"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4322
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
 "Selector."
-msgstr ""
-"無法找到音效輸出。你可能需要安裝附加的 GStreamer 外掛程式，或在多媒體系統選取"
-"程式中選擇其它的音效輸出。"
+msgstr "無法找到音效輸出。你可能需要安裝附加的 GStreamer 外掛程式，或在多媒體系統選取程式中選擇其它的音效輸出。"
 
 #: ../src/backend/bacon-video-widget-xine.c:709
 #, c-format
@@ -1737,7 +1723,7 @@ msgstr ""
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
-msgstr "沒有視訊輸出存在，請檢查 Totem 是否已正確安裝。"
+msgstr "沒有視像輸出存在，請檢查 Totem 是否已正確安裝。"
 
 #: ../src/backend/bacon-video-widget-xine.c:1313
 msgid "The server you are trying to connect to is not known."
@@ -1766,8 +1752,7 @@ msgstr "找不到指定的影片。"
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
-msgstr ""
-"來源資料已被加密，無法讀取。你是否正在播放加密的 DVD，而沒有使用 libdvdcss？"
+msgstr "來源資料已被加密，無法讀取。你是否正在播放加密的 DVD，而沒有使用 libdvdcss？"
 
 #: ../src/backend/bacon-video-widget-xine.c:1338
 msgid "The movie could not be read."
@@ -1835,7 +1820,7 @@ msgstr "這套所謂影片其實是圖片，你可以使用圖片瀏覽程式來
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
-msgstr "無法處理‘%s’視訊編碼。你可能需要安裝額外的外掛程式才可以播放某類影片。"
+msgstr "無法處理‘%s’視像編碼。你可能需要安裝額外的外掛程式才可以播放某類影片。"
 
 #: ../src/backend/bacon-video-widget-xine.c:2233
 #, c-format
@@ -1861,7 +1846,7 @@ msgstr "沒有視像可擷取。"
 
 #: ../src/backend/bacon-video-widget-xine.c:3791
 msgid "Video codec is not handled."
-msgstr "無法處理視訊編碼。"
+msgstr "無法處理視像編碼。"
 
 #: ../src/backend/bacon-video-widget-xine.c:3799
 msgid "Movie is not playing."
