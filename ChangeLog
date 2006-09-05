@@ -1,5 +1,12 @@
 2006-09-05  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser.c: (parse_smil_entry),
+	(parse_smil_head), (parse_smil_entries): Use the top-level
+	title from the SMIL playlist if there isn't an entry-specific
+	one (Closes: #329451)
+
+2006-09-05  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser.c: (totem_pl_parser_is_asf):
 	Fix possible buffer overflow that would cause a crash in the
 	ASF recognition code (Closes: #354284)

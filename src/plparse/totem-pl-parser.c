@@ -1553,7 +1553,7 @@ parse_smil_video_entry (TotemPlParser *parser, char *base,
 
 static gboolean
 parse_smil_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
-		xmlNodePtr parent)
+		xmlNodePtr parent, xmlChar *parent_title)
 {
 	xmlNodePtr node;
 	xmlChar *title, *url;
@@ -1574,7 +1574,9 @@ parse_smil_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 
 			if (url != NULL) {
 				if (parse_smil_video_entry (parser,
-						base, (char *)url, (char *)title) != FALSE)
+						base, (char *)url,
+						title ? (char *)title
+						: (char *)parent_title) != FALSE)
 					retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 			}
 
@@ -1584,12 +1586,36 @@ parse_smil_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 				xmlFree (url);
 		} else {
 			if (parse_smil_entry (parser,
-						base, doc, node) != FALSE)
+						base, doc, node, parent_title) != FALSE)
 				retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 		}
 	}
 
 	return retval;
+}
+
+static xmlChar *
+parse_smil_head (TotemPlParser *parser, xmlDocPtr doc, xmlNodePtr parent)
+{
+	xmlNodePtr node;
+	xmlChar *title = NULL;
+
+	for (node = parent->children; node != NULL; node = node->next) {
+		if (g_ascii_strcasecmp ((char *)node->name, "meta") == 0) {
+			xmlChar *prop;
+			prop = xmlGetProp (node, (const xmlChar *)"name");
+			if (prop != NULL && g_ascii_strcasecmp ((char *)prop, "title") == 0) {
+				title = xmlGetProp (node, (const xmlChar *)"content");
+				if (title != NULL) {
+					xmlFree (prop);
+					break;
+				}
+			}
+			xmlFree (prop);
+		}
+	}
+
+	return title;
 }
 
 static gboolean
@@ -1598,6 +1624,7 @@ parse_smil_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 {
 	xmlNodePtr node;
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_ERROR;
+	xmlChar *title = NULL;
 
 	for (node = parent->children; node != NULL; node = node->next) {
 		if (node->name == NULL)
@@ -1605,11 +1632,16 @@ parse_smil_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 
 		if (g_ascii_strcasecmp ((char *)node->name, "body") == 0) {
 			if (parse_smil_entry (parser, base,
-						doc, node) != FALSE)
+						doc, node, title) != FALSE)
 				retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
+		} else if (title == NULL) {
+			if (g_ascii_strcasecmp ((char *)node->name, "head") == 0)
+				title = parse_smil_head (parser, doc, node);
 		}
-
 	}
+
+	if (title != NULL)
+		xmlFree (title);
 
 	return retval;
 }
