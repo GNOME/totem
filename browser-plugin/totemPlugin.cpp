@@ -282,8 +282,7 @@ totem_plugin_fork (totemPlugin *plugin)
 #endif
 
 	if (g_spawn_async_with_pipes (NULL, argv, NULL,
-				G_SPAWN_DO_NOT_REAP_CHILD,
-				NULL, NULL, &plugin->player_pid,
+				0, NULL, NULL, &plugin->player_pid,
 				&plugin->send_fd, NULL, NULL, &err) == FALSE)
 	{
 		D("Spawn failed");
@@ -337,7 +336,7 @@ totem_plugin_fork (totemPlugin *plugin)
 
 		if (plugin->player_pid) {
 			kill (plugin->player_pid, SIGKILL);
-			waitpid (plugin->player_pid, NULL, 0);
+			g_spawn_close_pid (plugin->player_pid);
 			plugin->player_pid = 0;
 		}
 		return FALSE;

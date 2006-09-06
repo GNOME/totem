@@ -1,5 +1,10 @@
 2006-09-06  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemPlugin.cpp: don't set the
+	G_SPAWN_DO_NOT_REAP_CHILD flag, so we don't have to waitpid
+
+2006-09-06  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemPlugin.cpp: memset to zero the portions of
 	memory allocated by the browser, as we can't be sure they were
 
