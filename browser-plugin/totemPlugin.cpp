@@ -403,6 +403,7 @@ totem_plugin_new_instance (NPMIMEType mimetype,
 
 	instance->pdata = mozilla_functions.memalloc(sizeof(totemPlugin));
 	plugin = (totemPlugin *) instance->pdata;
+	memset (plugin, 0, sizeof(totemPlugin));
 
 	if (plugin == NULL)
 		return NPERR_OUT_OF_MEMORY_ERROR;
@@ -844,6 +845,7 @@ totem_plugin_get_value (NPP instance,
 		break;
 	case NPPVpluginScriptableIID: {
 		nsIID* ptr = NS_STATIC_CAST (nsIID *, mozilla_functions.memalloc (sizeof (nsIID)));
+		memset (ptr, 0, sizeof (nsIID));
 		if (ptr) {
 			*ptr = NS_GET_IID (nsISupports);
 			*NS_STATIC_CAST (nsIID **, value) = ptr;
