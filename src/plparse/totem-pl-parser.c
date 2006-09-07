@@ -1390,14 +1390,12 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 				tmp = xmlGetProp (node, (const xmlChar *)"HREF");
 			if (tmp == NULL)
 				continue;
-			if (url == NULL || g_str_has_prefix ((char *)tmp, "mms:") != FALSE) {
-				if (url)
-					xmlFree (url);
+			/* FIXME, should we prefer mms streams, or non-mms?
+			 * See bug #352559 */
+			if (url == NULL)
 				url = tmp;
-			} else {
-				if (tmp)
-					xmlFree (tmp);
-			}
+			else
+				xmlFree (tmp);
 
 			continue;
 		}
@@ -2391,6 +2389,8 @@ totem_pl_parser_add_ignored_mimetype (TotemPlParser *parser,
 
 #endif /* !TOTEM_PL_PARSER_MINI */
 
+#define D(x) if (debug) x
+
 gboolean
 totem_pl_parser_can_parse_from_data (const char *data,
 				     gsize len,
@@ -2400,8 +2400,6 @@ totem_pl_parser_can_parse_from_data (const char *data,
 	guint i;
 
 	g_return_val_if_fail (data != NULL, FALSE);
-
-#define D(x) if (debug) x
 
 	/* Bad cast! */
 	mimetype = gnome_vfs_get_mime_type_for_data ((gpointer) data, (int) len);
@@ -2429,3 +2427,25 @@ totem_pl_parser_can_parse_from_data (const char *data,
 
 	return FALSE;
 }
+
+gboolean
+totem_pl_parser_can_parse_from_filename (const char *filename, gboolean debug)
+{
+	char *contents;
+	gsize len;
+	gboolean retval;
+
+	g_return_val_if_fail (filename != NULL, FALSE);
+
+	/* FIXME probably a good idea to only get the first few chunks */
+	if (g_file_get_contents (filename, &contents, &len, NULL) == FALSE) {
+		D(g_message ("couldn't get the contents of %s", filename));
+		return FALSE;
+	}
+
+	retval = totem_pl_parser_can_parse_from_data (contents, len, debug);
+	g_free (contents);
+
+	return retval;
+}
+

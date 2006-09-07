@@ -1,6 +1,27 @@
 2006-09-07  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totemPlugin.cpp:
+	- Don't fork a viewer in set_window if we don't have a stream yet,
+	it'll come later
+	- Note whether we tested for a playlist in _write
+	- Test whether we have a playlist in _stream_as_file, if we haven't
+	already done so
+	- Don't set the "local filename" if we have a playlist
+	* browser-plugin/totemPlugin.h: add a tried_write member
+	* src/plparse/totem-pl-parser-mini.h:
+	* src/plparse/totem-pl-parser.c: (parse_asx_entry),
+	(totem_pl_parser_can_parse_from_filename):
+	- Add totem_pl_parser_can_parse_from_filename, to test whether we
+	have a playlist, from a local file
+	- Don't prefer mms: streams to http: ones when parsing ASX entries
+	with alternate locations
+
+	All this fixes playback of videos on the news.sky.com website
+	(Closes: #352559)
+
+2006-09-07  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totemPlugin.cpp:
 	* browser-plugin/totemPlugin.h: mark rtsp: as an unsupported
 	scheme, cache whether a scheme is supported, rather than check
 	it all the time, support the "filename" parameter fully, by

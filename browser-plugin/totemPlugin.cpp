@@ -353,7 +353,6 @@ totem_plugin_fork (totemPlugin *plugin)
 	dbus_g_proxy_connect_signal (plugin->proxy, "StopSendingData",
 				     G_CALLBACK (cb_stop_sending_data),
 				     plugin, NULL);
-	g_message ("%p plugin", plugin);
 
 	g_free (plugin->wait_for_svc);
 	D("Done forking, new proxy=%p", plugin->proxy);
@@ -620,7 +619,7 @@ totem_plugin_set_window (NPP instance,
 		/* If not, wait for the first bits of data to come,
 		 * but not when the stream type isn't supported */
 		plugin->window = (Window) window->window;
-		if (plugin->is_supported_src) {
+		if (plugin->stream && plugin->is_supported_src) {
 			if (!totem_plugin_fork (plugin))
 				return NPERR_GENERIC_ERROR;
 		} else {
@@ -733,15 +732,16 @@ static int32 totem_plugin_write (NPP instance, NPStream *stream, int32 offset,
 		return -1;
 
 	if (!plugin->player_pid) {
-		/* FIXME this looks wrong since it'll look at the current data buffer,
-		 * not the cumulative data since the stream started 
-		 */
-		if (!plugin->stream)
-		{
-			g_message ("No stream in NPP_Write!?");
+		if (!plugin->stream) {
+			g_warning ("No stream in NPP_Write!?");
 			return -1;
 		}
 
+		plugin->tried_write = TRUE;
+
+		/* FIXME this looks wrong since it'll look at the current data buffer,
+		 * not the cumulative data since the stream started 
+		 */
 		if (totem_pl_parser_can_parse_from_data ((const char *) buffer, len, TRUE /* FIXME */) != FALSE) {
 			D("Need to wait for the file to be downloaded completely");
 			plugin->is_playlist = TRUE;
@@ -793,6 +793,11 @@ static void totem_plugin_stream_as_file (NPP instance, NPStream *stream,
 	if (plugin == NULL)
 		return;
 
+	if (plugin->tried_write == FALSE) {
+		plugin->is_playlist = totem_pl_parser_can_parse_from_filename
+			(fname, TRUE);
+	}
+
 	if (!plugin->player_pid && plugin->is_playlist != FALSE) {
 		plugin->local = g_filename_to_uri (fname, NULL, NULL);
 		totem_plugin_fork (plugin);
@@ -801,6 +806,9 @@ static void totem_plugin_stream_as_file (NPP instance, NPStream *stream,
 		if (!totem_plugin_fork (plugin))
 			return;
 	}
+
+	if (plugin->is_playlist != FALSE)
+		return;
 
 	if (!dbus_g_proxy_call (plugin->proxy, "SetLocalFile", &err,
 			G_TYPE_STRING, fname, G_TYPE_INVALID,

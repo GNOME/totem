@@ -50,6 +50,7 @@ typedef struct {
 	guint hidden : 1;
 	guint repeat : 1;
 	guint is_playlist : 1;
+	guint tried_write : 1;
 	guint noautostart : 1;
 	guint is_supported_src : 1;
 } totemPlugin;
