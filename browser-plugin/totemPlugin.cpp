@@ -282,7 +282,7 @@ totem_plugin_fork (totemPlugin *plugin)
 #endif
 
 	if (g_spawn_async_with_pipes (NULL, argv, NULL,
-				0, NULL, NULL, &plugin->player_pid,
+				(GSpawnFlags) 0, NULL, NULL, &plugin->player_pid,
 				&plugin->send_fd, NULL, NULL, &err) == FALSE)
 	{
 		D("Spawn failed");
@@ -402,7 +402,6 @@ totem_plugin_new_instance (NPMIMEType mimetype,
 
 	instance->pdata = mozilla_functions.memalloc(sizeof(totemPlugin));
 	plugin = (totemPlugin *) instance->pdata;
-	memset (plugin, 0, sizeof(totemPlugin));
 
 	if (plugin == NULL)
 		return NPERR_OUT_OF_MEMORY_ERROR;
@@ -567,12 +566,15 @@ totem_plugin_destroy_instance (NPP instance,
 
 	plugin->scriptable->UnsetPlugin ();
 
-	if (plugin->send_fd >= 0)
-		close(plugin->send_fd);
+	if (plugin->send_fd >= 0) {
+		close (plugin->send_fd);
+		plugin->send_fd = -1;
+	}
 
 	if (plugin->player_pid) {
 		kill (plugin->player_pid, SIGKILL);
-		waitpid (plugin->player_pid, NULL, 0);
+		g_spawn_close_pid (plugin->player_pid);
+		plugin->player_pid = 0;
 	}
 
 	NS_RELEASE (plugin->scriptable);
@@ -679,8 +681,10 @@ totem_plugin_destroy_stream (NPP instance,
 
 	totemPlugin *plugin = (totemPlugin *) instance->pdata;
 
-	close(plugin->send_fd);
-	plugin->send_fd = -1;
+	if (plugin->send_fd >= 0) {
+		close(plugin->send_fd);
+		plugin->send_fd = -1;
+	}
 
 	plugin->stream = nsnull;
 
@@ -708,7 +712,7 @@ static int32 totem_plugin_write_ready (NPP instance, NPStream *stream)
 
 	fds.events = POLLOUT;
 	fds.fd = plugin->send_fd;
-	if (plugin->send_fd > 0 && poll (&fds, 1, 0) > 0)
+	if (poll (&fds, 1, 0) > 0)
 		return (PLUGIN_STREAM_CHUNK_SIZE);
 
 	return 0;
@@ -844,7 +848,6 @@ totem_plugin_get_value (NPP instance,
 		break;
 	case NPPVpluginScriptableIID: {
 		nsIID* ptr = NS_STATIC_CAST (nsIID *, mozilla_functions.memalloc (sizeof (nsIID)));
-		memset (ptr, 0, sizeof (nsIID));
 		if (ptr) {
 			*ptr = NS_GET_IID (nsISupports);
 			*NS_STATIC_CAST (nsIID **, value) = ptr;

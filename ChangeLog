@@ -1,3 +1,13 @@
+2006-09-07  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totemPlugin.cpp: fix compilation with anal
+	c++ compilers (GSpawnFlags/int cast), remove useless memsets from 
+	previous commit as pointed out by Christian Persch
+	<chpe@cvs.gnome.org> (Closes: #354696), Really don't waitpid on the
+	player anymore, make sure all the tests and re-init for send_fd
+	and player_pid are consistent (send_fd defaults to -1,
+	player_pid to 0)
+
 2006-09-06  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totemPlugin.cpp: don't set the
