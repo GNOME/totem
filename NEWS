@@ -1,5 +1,19 @@
 New features and significant updates in version...
 
+2.16.1
+* Browser enhancement:
+  - Fix the "Open with..." menu item not showing for some supported types
+  - Hide the preferences menu item
+  - Fix playback for http://www.viftv.no
+  - Fix videos on http://www.apple.com/getamac/ stopping playing
+  - Support the "showcontrols=false" parameter, for http://www.k9media.se
+  - Fix playback of videos on http://news.sky.com
+  - Add a new plugin to support videos on http://stage6.divx.com/
+* When opening the "Skip to" dialogue, set the default to the current time
+* Fix a possible crasher when checking for an ASF reference file
+* Use the top-level title from the SMIL playlist, when there isn't an
+  entry specific one
+
 2.16.0
 * Add keyboard support for the DVD keys: Up, Down, Left, Right
 * Add support for audio/AMR, audio/AMR-WB and Musepack
