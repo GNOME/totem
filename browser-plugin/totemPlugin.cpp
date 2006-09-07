@@ -472,59 +472,52 @@ totem_plugin_new_instance (NPMIMEType mimetype,
 		printf ("argv[%d] %s %s\n", i, argn[i], argv[i]);
 		if (g_ascii_strcasecmp (argn[i],"width") == 0) {
 			plugin->width = strtol (argv[i], NULL, 0);
-		}
-		if (g_ascii_strcasecmp (argn[i], "height") == 0) {
+		} else if (g_ascii_strcasecmp (argn[i], "height") == 0) {
 			plugin->height = strtol (argv[i], NULL, 0);
-		}
-		if (g_ascii_strcasecmp (argn[i], "src") == 0) {
+		} else if (g_ascii_strcasecmp (argn[i], "src") == 0) {
 			plugin->src = resolve_relative_uri (docURI, argv[i]);
 			//plugin->srcSupported = is_supported_scheme (plugin->src);
-		}
-		/* Windows Media Player parameter */
-		if (g_ascii_strcasecmp (argn[i], "filename") == 0) {
+		} else if (g_ascii_strcasecmp (argn[i], "filename") == 0) {
+			/* Windows Media Player parameter */
 			if (plugin->src == NULL) {
 				plugin->src = resolve_relative_uri (docURI, argv[i]);
 				g_message ("plugin->src = %s", plugin->src);
 			}
-		}
-		if (g_ascii_strcasecmp (argn[i], "href") == 0) {
+		} else if (g_ascii_strcasecmp (argn[i], "href") == 0) {
 			plugin->href = resolve_relative_uri (docURI, argv[i]);
-		}
-		if (g_ascii_strcasecmp (argn[i], "cache") == 0) {
+		} else if (g_ascii_strcasecmp (argn[i], "cache") == 0) {
 			plugin->cache = TRUE;
 			if (g_ascii_strcasecmp (argv[i], "false") == 0) {
 				plugin->cache = FALSE;
 			}
-		}
-		if (g_ascii_strcasecmp (argn[i], "target") == 0) {
+		} else if (g_ascii_strcasecmp (argn[i], "target") == 0) {
 			plugin->target = g_strdup (argv[i]);
-		}
-		/* Quicktime parameter */
-		if (g_ascii_strcasecmp (argn[i], "controller") == 0) {
+		} else if (g_ascii_strcasecmp (argn[i], "controller") == 0) {
+			/* Quicktime parameter */
 			if (g_ascii_strcasecmp (argv[i], "false") == 0) {
 				plugin->controller_hidden = TRUE;
 			}
 			//FIXME see http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_CONTROLS.html
-		}
-		/* Windows Media Player parameter */
-		if (g_ascii_strcasecmp (argn[i], "uimode") == 0) {
+		} else if (g_ascii_strcasecmp (argn[i], "uimode") == 0) {
+			/* Windows Media Player parameter */
 			if (g_ascii_strcasecmp (argv[i], "none") == 0) {
 				plugin->controller_hidden = TRUE;
 			}
-		}
-		if (g_ascii_strcasecmp (argn[i], "hidden") == 0) {
+		} else if (g_ascii_strcasecmp (argn[i], "showcontrols") == 0) {
+			if (g_ascii_strcasecmp (argv[i], "false") == 0) {
+				plugin->controller_hidden = TRUE;
+			}
+		} else if (g_ascii_strcasecmp (argn[i], "hidden") == 0) {
 			if (g_ascii_strcasecmp (argv[i], "false") != 0) {
 				plugin->hidden = TRUE;
 			}
-		}
-		if (g_ascii_strcasecmp (argn[i], "autostart") == 0
+		} else if (g_ascii_strcasecmp (argn[i], "autostart") == 0
 				|| g_ascii_strcasecmp (argn[i], "autoplay") == 0) {
 			if (g_ascii_strcasecmp (argv[i], "false") == 0
 					|| g_ascii_strcasecmp (argv[i], "0") == 0) {
 				plugin->noautostart = TRUE;
 			}
-		}
-		if (g_ascii_strcasecmp (argn[i], "loop") == 0
+		} else if (g_ascii_strcasecmp (argn[i], "loop") == 0
 				|| g_ascii_strcasecmp (argn[i], "repeat") == 0) {
 			if (g_ascii_strcasecmp (argv[i], "true") == 0) {
 				plugin->repeat = TRUE;
@@ -532,11 +525,9 @@ totem_plugin_new_instance (NPMIMEType mimetype,
 
 			// FIXME Doesn't handle playcount, or loop with numbers
 			// http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_LOOP.html
-		}
-		if (g_ascii_strcasecmp (argn[i], "starttime") == 0) {
+		} else if (g_ascii_strcasecmp (argn[i], "starttime") == 0) {
 			//FIXME see http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_STARTTIME.html
-		}
-		if (g_ascii_strcasecmp (argn[i], "endtime") == 0) {
+		} else if (g_ascii_strcasecmp (argn[i], "endtime") == 0) {
 			//FIXME see above
 		}
 	}

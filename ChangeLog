@@ -1,5 +1,11 @@
 2006-09-07  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemPlugin.cpp: speed-up the parameter parsing
+	a tad bit, implement support for "showcontrols=false"
+	(Closes: #354725)
+
+2006-09-07  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemPlugin.cpp: fix logic in using fd://0 (we
 	never have a local file when we haven't got a playlist), only
 	open a file descriptor if the viewer will be using fd://0
