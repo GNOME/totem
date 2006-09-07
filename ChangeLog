@@ -1,5 +1,18 @@
 2006-09-07  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/Makefile.am:
+	* browser-plugin/idl/Makefile.am:
+	* browser-plugin/idl/totemIMullYPlayer.idl:
+	* browser-plugin/totemGMPPlugin.cpp:
+	* browser-plugin/totemMullYPlugin.cpp:
+	* browser-plugin/totemMullYPlugin.h:
+	* browser-plugin/totemPlugin.cpp:
+	* configure.in: Add a new "MullY" plugin, to handle videos on the
+	DivX website, masquerading as the "DivX Web Player"
+	(Closes: #345554)
+
+2006-09-07  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemPlugin.cpp:
 	- Don't fork a viewer in set_window if we don't have a stream yet,
 	it'll come later

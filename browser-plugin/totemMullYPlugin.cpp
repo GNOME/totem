@@ -1,4 +1,4 @@
-/* Totem Basic Plugin
+/* Totem MullY Plugin
  *
  * Copyright (C) 2004 Bastien Nocera <hadess@hadess.net>
  * Copyright (C) 2002 David A. Schleef <ds@schleef.org>
@@ -32,26 +32,20 @@
 #include <nsMemory.h>
 #include <nsXPCOM.h>
 
-#include "totemIGMPPlayer.h"
-#include "totemIGMPControls.h"
+#include "totemIMullYPlayer.h"
 
-#include "totemGMPPlugin.h"
+#include "totemMullYPlugin.h"
 
-/* 89cf81a7-1156-456f-b060-c2187df9a27c */
+/* 67DABFBF-D0AB-41fa-9C46-CC0F21721616 */
 static const nsCID kClassID = 
-  { 0x89cf81a7, 0x1156, 0x456f,
-    { 0xb0, 0x60, 0xc2, 0x18, 0x7d, 0xf9, 0xa2, 0x7c } };
+  { 0x67dabfbf, 0xd0ab, 0x41fa,
+    { 0x9c, 0x46, 0xcc, 0x0f, 0x21, 0x72, 0x16, 0x16 } };
 
-static const char kClassDescription[] = "totemGMPPlugin";
-static const char kPluginDescription[] = "Windows Media Player Plug-in 10 (compatible; Totem)";
+static const char kClassDescription[] = "totemMullYPlugin";
+static const char kPluginDescription[] = "DivX\xC2\xAE Web Player";
 
 static const totemPluginMimeEntry kMimeTypes[] = {
-	{ "application/x-mplayer2", "avi, wma, wmv", "video/x-msvideo" },
-	{ "video/x-ms-asf-plugin", "asf, wmv", "video/x-ms-asf" },
-	{ "video/x-msvideo", "asf, wmv", NULL },
-	{ "video/x-ms-asf", "asf", NULL },
-	{ "video/x-ms-wmv", "wmv", "video/x-ms-wmv" },
-	{ "video/x-wmv", "wmv", "video/x-ms-wmv" },
+	{ "video/divx", "divx", "video/x-msvideo" },
 };
 
 totemScriptablePlugin::totemScriptablePlugin (totemPlugin *aPlugin)
@@ -81,9 +75,8 @@ totemScriptablePlugin::PluginMimeTypes (const totemPluginMimeEntry **_entries,
 
 /* Interface implementations */
 
-NS_IMPL_ISUPPORTS3 (totemScriptablePlugin,
-		    totemIGMPPlayer,
-		    totemIGMPControls,
+NS_IMPL_ISUPPORTS2 (totemScriptablePlugin,
+		    totemIMullYPlayer,
 		    nsIClassInfo)
 
 /* nsIClassInfo */
@@ -106,24 +99,17 @@ NS_IMETHODIMP
 totemScriptablePlugin::GetInterfaces (PRUint32 *count,
 				      nsIID * **array)
 {
-  *array = NS_STATIC_CAST (nsIID**, nsMemory::Alloc (2 * sizeof (nsIID)));
+  *array = NS_STATIC_CAST (nsIID**, nsMemory::Alloc (sizeof (nsIID)));
   if (!*array)
     return NS_ERROR_OUT_OF_MEMORY;
 
-  *count = 2;
+  *count = 1;
 
   (*array)[0] = NS_STATIC_CAST (nsIID*,
-  				nsMemory::Clone (&NS_GET_IID (totemIGMPPlayer),
+  				nsMemory::Clone (&NS_GET_IID (totemIMullYPlayer),
 						 sizeof(nsIID)));
   if (!(*array)[0]) {
     NS_FREE_XPCOM_ALLOCATED_POINTER_ARRAY (0, *array);
-    return NS_ERROR_OUT_OF_MEMORY;
-  }
-  (*array)[1] = NS_STATIC_CAST (nsIID*,
-  				nsMemory::Clone (&NS_GET_IID (totemIGMPControls),
-						 sizeof(nsIID)));
-  if (!(*array)[1]) {
-    NS_FREE_XPCOM_ALLOCATED_POINTER_ARRAY (1, *array);
     return NS_ERROR_OUT_OF_MEMORY;
   }
 
@@ -181,19 +167,10 @@ totemScriptablePlugin::GetClassIDNoAlloc (nsCID *aClassIDNoAlloc)
   return NS_OK;
 }
 
-/* totemIGMPPlayer */
-
-/* readonly attribute totemIGMPControls controls; */
-NS_IMETHODIMP
-totemScriptablePlugin::GetControls(totemIGMPControls * *aControls)
-{
-  return CallQueryInterface (this, aControls);
-}
-
-/* totemIGMPControls */
+/* totemIMullYPlayer */
 
 NS_IMETHODIMP
-totemScriptablePlugin::Pause ()
+totemScriptablePlugin::Rewind ()
 {
   NS_ENSURE_STATE (mPlugin);
 

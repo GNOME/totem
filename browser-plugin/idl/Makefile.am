@@ -14,6 +14,9 @@ GMP_IDLS = \
 NARROWSPACE_IDLS = \
 	totemINarrowSpacePlayer.idl
 
+MULLY_IDLS = \
+	totemIMullYPlayer.idl
+
 xptdir = $(libdir)/mozilla/plugins
 xpt_DATA =
 
@@ -39,6 +42,11 @@ ALL_IDLS += $(NARROWSPACE_IDLS)
 xpt_DATA += libtotem-narrowspace-plugin.xpt
 endif
 
+if ENABLE_MULLY_PLUGIN
+ALL_IDLS += $(MULLY_IDLS)
+xpt_DATA += libtotem-mully-plugin.xpt
+endif
+
 noinst_DATA = \
 	$(ALL_IDLS:.idl=.xpt)	\
 	$(ALL_IDLS:.idl=.h)
@@ -56,7 +64,8 @@ EXTRA_DIST = \
 	$(BASIC_IDLS)		\
 	$(GMP_IDLS)		\
 	$(COMPLEX_IDLS)		\
-	$(NARROWSPACE_IDLS)
+	$(NARROWSPACE_IDLS)	\
+	$(MULLY_IDLS)
 
 %.h: %.idl
 	$(MOZILLA_XPIDL) -w -m header -I $(MOZILLA_IDLDIR) -I $(srcdir) $<
@@ -81,3 +90,7 @@ libtotem-gmp-plugin.xpt: $(GMP_IDLS:.idl=.xpt)
 
 libtotem-narrowspace-plugin.xpt: $(NARROWSPACE_IDLS:.idl=.xpt)
 	$(MOZILLA_XPT_LINK) $@ $^
+
+libtotem-mully-plugin.xpt: $(MULLY_IDLS:.idl=.xpt)
+	$(MOZILLA_XPT_LINK) $@ $^
+
