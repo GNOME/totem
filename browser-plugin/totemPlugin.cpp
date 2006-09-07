@@ -171,6 +171,7 @@ totem_plugin_fork (totemPlugin *plugin)
 	char **argv;
 	GError *err = NULL;
 	totemScriptablePlugin *scriptable = plugin->scriptable;
+	gboolean use_fd = FALSE;
 
 	/* Make sure we don't get both an XID and hidden */
 	if (plugin->window && plugin->hidden) {
@@ -249,23 +250,19 @@ totem_plugin_fork (totemPlugin *plugin)
  		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_PLAYLIST));
  		g_ptr_array_add (arr, g_strdup (plugin->local));
  	} else {
-		if (plugin->local == NULL) {
-			if (is_supported_scheme (plugin->local) == FALSE)
-				g_ptr_array_add (arr, g_strdup (plugin->src));
-			else
-				g_ptr_array_add (arr, g_strdup ("fd://0"));
+		/* plugin->local is only TRUE for playlists */
+		if (is_supported_scheme (plugin->src) == FALSE) {
+			g_ptr_array_add (arr, g_strdup (plugin->src));
 		} else {
-			if (is_supported_scheme (plugin->src) == FALSE)
-				g_ptr_array_add (arr, g_strdup (plugin->src));
-			else
-				g_ptr_array_add (arr, g_strdup ("fd://0"));
+			g_ptr_array_add (arr, g_strdup ("fd://0"));
+			use_fd = TRUE;
 		}
- 	}
+	}
 
 	g_ptr_array_add (arr, NULL);
 	argv = (char **) g_ptr_array_free (arr, FALSE);
 
-#ifdef TOTEM_DEBUG
+#ifdef GNOME_ENABLE_DEBUG
 	{
 		GString *s;
 		int i;
@@ -283,7 +280,7 @@ totem_plugin_fork (totemPlugin *plugin)
 
 	if (g_spawn_async_with_pipes (NULL, argv, NULL,
 				(GSpawnFlags) 0, NULL, NULL, &plugin->player_pid,
-				&plugin->send_fd, NULL, NULL, &err) == FALSE)
+				use_fd ? &plugin->send_fd : NULL, NULL, NULL, &err) == FALSE)
 	{
 		D("Spawn failed");
 
@@ -298,7 +295,8 @@ totem_plugin_fork (totemPlugin *plugin)
 
 	g_strfreev (argv);
 
-	fcntl(plugin->send_fd, F_SETFL, O_NONBLOCK);
+	if (plugin->send_fd > 0)
+		fcntl(plugin->send_fd, F_SETFL, O_NONBLOCK);
 
 	/* now wait until startup is complete */
 	plugin->got_svc = FALSE;
