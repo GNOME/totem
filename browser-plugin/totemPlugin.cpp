@@ -158,6 +158,8 @@ is_supported_scheme (const char *url)
 
 	if (g_str_has_prefix (url, "mms:") != FALSE)
 		return FALSE;
+	if (g_str_has_prefix (url, "rtsp:") != FALSE)
+		return FALSE;
 
 	return TRUE;
 }
@@ -251,7 +253,7 @@ totem_plugin_fork (totemPlugin *plugin)
  		g_ptr_array_add (arr, g_strdup (plugin->local));
  	} else {
 		/* plugin->local is only TRUE for playlists */
-		if (is_supported_scheme (plugin->src) == FALSE) {
+		if (plugin->is_supported_src == FALSE) {
 			g_ptr_array_add (arr, g_strdup (plugin->src));
 		} else {
 			g_ptr_array_add (arr, g_strdup ("fd://0"));
@@ -386,6 +388,7 @@ totem_plugin_new_instance (NPMIMEType mimetype,
 {
 	totemPlugin *plugin;
 	GError *e = NULL;
+	gboolean need_req = FALSE;
 	int i;
 
 	D("totem_plugin_new_instance");
@@ -476,12 +479,11 @@ totem_plugin_new_instance (NPMIMEType mimetype,
 			plugin->height = strtol (argv[i], NULL, 0);
 		} else if (g_ascii_strcasecmp (argn[i], "src") == 0) {
 			plugin->src = resolve_relative_uri (docURI, argv[i]);
-			//plugin->srcSupported = is_supported_scheme (plugin->src);
 		} else if (g_ascii_strcasecmp (argn[i], "filename") == 0) {
 			/* Windows Media Player parameter */
 			if (plugin->src == NULL) {
 				plugin->src = resolve_relative_uri (docURI, argv[i]);
-				g_message ("plugin->src = %s", plugin->src);
+				need_req = TRUE;
 			}
 		} else if (g_ascii_strcasecmp (argn[i], "href") == 0) {
 			plugin->href = resolve_relative_uri (docURI, argv[i]);
@@ -532,7 +534,17 @@ totem_plugin_new_instance (NPMIMEType mimetype,
 		}
 	}
 
-	NS_IF_RELEASE (docURI);	
+	NS_IF_RELEASE (docURI);
+
+	plugin->is_supported_src = is_supported_scheme (plugin->src);
+
+	/* If filename is used, we need to request the stream ourselves */
+	if (need_req == TRUE) {
+		if (plugin->is_supported_src != FALSE) {
+			CallNPN_GetURLProc(mozilla_functions.geturl,
+					instance, plugin->src, NULL);
+		}
+	}
 
 	return NPERR_NO_ERROR;
 }
@@ -608,7 +620,7 @@ totem_plugin_set_window (NPP instance,
 		/* If not, wait for the first bits of data to come,
 		 * but not when the stream type isn't supported */
 		plugin->window = (Window) window->window;
-		if (!is_supported_scheme (plugin->src)) {
+		if (plugin->is_supported_src) {
 			if (!totem_plugin_fork (plugin))
 				return NPERR_GENERIC_ERROR;
 		} else {
@@ -692,8 +704,7 @@ static int32 totem_plugin_write_ready (NPP instance, NPStream *stream)
 
 	plugin = (totemPlugin *) instance->pdata;
 
-//	if (!plugin->srcSupported)
-	if (is_supported_scheme (plugin->src) == FALSE)
+	if (plugin->is_supported_src == FALSE)
 		return 0;
 
 	if (plugin->send_fd < 0)
@@ -744,8 +755,7 @@ static int32 totem_plugin_write (NPP instance, NPStream *stream, int32 offset,
 	if (plugin->send_fd < 0)
 		return -1;
 
-	// if (!plugin->srcSupported)
-	if (is_supported_scheme (plugin->src) == FALSE)
+	if (plugin->is_supported_src == FALSE)
 		return -1;
 
 	ret = write (plugin->send_fd, buffer, len);

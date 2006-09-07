@@ -1,5 +1,14 @@
 2006-09-07  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemPlugin.cpp:
+	* browser-plugin/totemPlugin.h: mark rtsp: as an unsupported
+	scheme, cache whether a scheme is supported, rather than check
+	it all the time, support the "filename" parameter fully, by
+	requesting a new stream if there's no "src" parameter
+	(Closes: #352559)
+
+2006-09-07  Bastien Nocera  <hadess@hadess.net>
+
 	* data/mime-type-list.txt:
 	* src/plparse/totem-pl-parser.c: add support for audio/x-realaudio,
 	as is used by some websites

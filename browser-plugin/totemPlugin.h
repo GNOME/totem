@@ -51,7 +51,7 @@ typedef struct {
 	guint repeat : 1;
 	guint is_playlist : 1;
 	guint noautostart : 1;
-	//guint srcSupported : 1;
+	guint is_supported_src : 1;
 } totemPlugin;
 
 typedef struct {
