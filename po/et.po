@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-06 07:43+0200\n"
-"PO-Revision-Date: 2006-07-06 17:34+0100\n"
-"Last-Translator: Priit Laes <amd@store20.com>\n"
+"PO-Revision-Date: 2006-09-08 16:51+0300\n"
+"Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -374,7 +374,7 @@ msgstr "Automaatne"
 
 #: ../data/totem.glade.h:30
 msgid "Automatically _resize the window when a new video is loaded"
-msgstr "Akna suu_rust muudetakse uue video laadimisel automaatselt"
+msgstr "Akna suu_ruse automaatne muutmine uue video laadimisel"
 
 #: ../data/totem.glade.h:31
 msgid "Co_ntrast:"
@@ -685,7 +685,7 @@ msgstr "_Kuvasuhe"
 
 #: ../data/totem.glade.h:120
 msgid "_Audio output type:"
-msgstr "_Heliväljundi tüüp:"
+msgstr "_Heliväljundi liik:"
 
 #: ../data/totem.glade.h:121
 msgid "_Brightness:"
@@ -717,7 +717,7 @@ msgstr "_Väljasta"
 
 #: ../data/totem.glade.h:128
 msgid "_Encoding:"
-msgstr "_Kodeering:"
+msgstr "Koo_ditabel:"
 
 #: ../data/totem.glade.h:129
 msgid "_Font:"
@@ -729,7 +729,7 @@ msgstr "_Täisekraanvaade"
 
 #: ../data/totem.glade.h:131
 msgid "_Go"
-msgstr "_Liigu"
+msgstr "_Liikumine"
 
 #: ../data/totem.glade.h:132
 msgid "_Help"
@@ -753,7 +753,7 @@ msgstr "TV-väljund _puudub"
 
 #: ../data/totem.glade.h:138
 msgid "_Open..."
-msgstr "_Avamine..."
+msgstr "_Ava..."
 
 #: ../data/totem.glade.h:140
 msgid "_Properties"
@@ -761,7 +761,7 @@ msgstr "_Omadused"
 
 #: ../data/totem.glade.h:141
 msgid "_Quit"
-msgstr "_Lõpetamine"
+msgstr "_Lõpeta"
 
 #: ../data/totem.glade.h:142
 msgid "_Repeat Mode"
@@ -925,7 +925,7 @@ msgstr "Sisesta faili aadress, mida sa soovid avada:"
 
 #: ../data/uri.glade.h:2
 msgid "Open Location"
-msgstr "Ava asukoht"
+msgstr "Asukoha avamine"
 
 #: ../data/vanity.desktop.in.in.h:1
 msgid "Vanity Webcam utility"
@@ -1037,7 +1037,7 @@ msgstr "Puudub"
 #: ../src/totem-menu.c:605
 #, c-format
 msgid "Play Disc '%s'"
-msgstr "Esita plaat '%s'"
+msgstr "Plaadi '%s' esitamine"
 
 #. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
 #: ../src/totem-mozilla-viewer.c:186
@@ -1068,9 +1068,9 @@ msgstr "Autoriõigused © 2002-2006 Bastien Nocera"
 #: ../src/vanity.c:267
 msgid "translator-credits"
 msgstr ""
-"Ilmar Kerm <ikerm@hot.ee>, 2002\n"
-"Ivar Smolin <okul@linux.ee>, 2005, 2006\n"
-"Priit Laes <amd@store20.com>, 2005, 2006"
+"Ilmar Kerm <ikerm@hot.ee>, 2002.\n"
+"Ivar Smolin <okul@linux.ee>, 2005, 2006.\n"
+"Priit Laes <amd@store20.com>, 2005, 2006."
 
 #: ../src/totem-mozilla-viewer.c:422
 msgid "Failed to start stand-alone movie player"
@@ -1224,7 +1224,7 @@ msgstr "Selle TV-väljundi tüübi sisse- ja väljalülitamisel tuleb muutuste r
 
 #: ../src/totem-preferences.c:296
 msgid "Changing the visuals effect type will require a restart to take effect."
-msgstr "Visuaalsete efektide tüüpide muutmisel tuleb muutuste rakendamiseks programm taaskäivitada."
+msgstr "Visuaalefektide liikide muutmisel tuleb muutuste rakendamiseks programm taaskäivitada."
 
 #: ../src/totem-preferences.c:380
 msgid "The change of audio output type will only take effect when Totem is restarted."
@@ -1274,7 +1274,7 @@ msgstr "Filmi esitamine"
 
 #: ../src/totem-statusbar.c:91
 msgid "Shadow type"
-msgstr "Varju tüüp"
+msgstr "Varju liik"
 
 #: ../src/totem-statusbar.c:92
 msgid "Style of bevel around the statusbar text"
@@ -2016,27 +2016,3 @@ msgstr "Parserit pole võimalik kirjutada: %s"
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "Faili '%s' pole võimalik avada: %s"
-
-#~ msgid "Totem"
-#~ msgstr "Totem"
-#~ msgid "Totem Video Window"
-#~ msgstr "Totemi videoaken"
-#~ msgid "Failed to open media file; unknown error"
-#~ msgstr "Tõrge meediafaili avamisel; tundmatu viga"
-#~ msgid "Failed to play: %s"
-#~ msgstr "Tõrge esitamisel: %s"
-#~ msgid "unknown error"
-#~ msgstr "tundmatu viga"
-#~ msgid "Failed to find mountpoint for device %s in /etc/fstab"
-#~ msgstr "Tõrge ühendumispunkti %s leidmisel failist /etc/fstab"
-#~ msgid "Failed to open device %s for reading: %s"
-#~ msgstr "Tõrge seadme %s avamisel lugemiseks: %s"
-#~ msgid "Failed to retrieve capabilities of device %s: %s"
-#~ msgstr "Tõrge seadme %s võimaluste tuvastamisel: %s"
-#~ msgid "Drive status 0x%x (%s) - check disc"
-#~ msgstr "Seadme olek 0x%x (%s) - kontrolli plaati"
-#~ msgid "Error getting %s disc status: %s"
-#~ msgstr "Viga plaadi %s oleku tuvastamisel: %s"
-#~ msgid "Unexpected/unknown cd type 0x%x (%s)"
-#~ msgstr "Ootamatu/tundmatu cd tüüp 0x%x (%s)"
-
