@@ -2002,17 +2002,22 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 	MediaType type;
 	GList *list, *l;
 	GnomeVFSResult res;
+	char *media_url;
 
-	if (parser->priv->recurse_level == 1) {
-		char *media_url;
+	type = totem_cd_detect_type_from_dir (url, &media_url, NULL);
+	if (type != MEDIA_TYPE_DATA && type != MEDIA_TYPE_ERROR) {
+		if (media_url != NULL) {
+			char *basename = NULL, *fname;
 
-		type = totem_cd_detect_type_from_dir (url, &media_url, NULL);
-		if (type != MEDIA_TYPE_DATA && type != MEDIA_TYPE_ERROR) {
-			if (media_url != NULL) {
-				totem_pl_parser_add_one_url (parser, media_url, NULL);
-				g_free (media_url);
-				return TOTEM_PL_PARSER_RESULT_SUCCESS;
+			fname = g_filename_from_uri (url, NULL, NULL);
+			if (fname != NULL) {
+				basename = g_filename_display_basename (fname);
+				g_free (fname);
 			}
+			totem_pl_parser_add_one_url (parser, media_url, basename);
+			g_free (basename);
+			g_free (media_url);
+			return TOTEM_PL_PARSER_RESULT_SUCCESS;
 		}
 	}
 
