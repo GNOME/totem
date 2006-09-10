@@ -1836,12 +1836,82 @@ totem_pl_parser_dir_compare (GnomeVFSFileInfo *a, GnomeVFSFileInfo *b)
 	}
 }
 
+static char *
+totem_pl_parser_iso_get_title (const char *url)
+{
+	char *fname;
+	FILE  *file;
+#define BUFFER_SIZE 128
+	char buf [BUFFER_SIZE+1];
+	int res;
+	char *str;
+
+	fname = g_filename_from_uri (url, NULL, NULL);
+	if (fname == NULL)
+		return NULL;
+
+	file = fopen (fname, "rb");
+	if (file == NULL)
+		return NULL;
+
+	/* Verify we have an ISO image */
+	/* This check is for the raw sector images */
+	res = fseek (file, 37633L, SEEK_SET);
+	if (res != 0) {
+		fclose (file);
+		return NULL;
+	}
+
+	res = fread (buf, sizeof (char), 5, file);
+	if (res != 5 || strncmp (buf, "CD001", 5) != 0) {
+		/* Standard ISO images */
+		res = fseek (file, 32769L, SEEK_SET);
+		if (res != 0) {
+			fclose (file);
+			return NULL;
+		}
+		res = fread (buf, sizeof (char), 5, file);
+		if (res != 5 || strncmp (buf, "CD001", 5) != 0) {
+			/* High Sierra images */
+			res = fseek (file, 32776L, SEEK_SET);
+			if (res != 0) {
+				fclose (file);
+				return NULL;
+			}
+			res = fread (buf, sizeof (char), 5, file);
+			if (res != 5 || strncmp (buf, "CDROM", 5) != 0) {
+				fclose (file);
+				return NULL;
+			}
+		}
+	}
+	/* Extract the volume label from the image */
+	res = fseek (file, 32808L, SEEK_SET);
+	if (res != 0) {
+		fclose (file);
+		return NULL;
+	}
+	res = fread (buf, sizeof(char), BUFFER_SIZE, file);
+	fclose (file);
+	if (res != BUFFER_SIZE)
+		return NULL;
+
+	buf [BUFFER_SIZE] = '\0';
+	str = g_strdup (g_strstrip (buf));
+	if (!g_utf8_validate (str, -1, NULL)) {
+		g_free (str);
+		return NULL;
+	}
+
+	return str;
+}
+
 static TotemPlParserResult
 totem_pl_parser_add_iso (TotemPlParser *parser, const char *url,
 		gpointer data)
 {
 	GnomeVFSFileInfo *info;
-	char *item;
+	char *item, *label;
 
 	/* This is a hack, it could be a VCD or DVD */
 	if (g_str_has_prefix (url, "file://") == FALSE)
@@ -1860,7 +1930,10 @@ totem_pl_parser_add_iso (TotemPlParser *parser, const char *url,
 	}
 
 	gnome_vfs_file_info_unref (info);
-	totem_pl_parser_add_one_url (parser, item, NULL);
+
+	label = totem_pl_parser_iso_get_title (url);
+	totem_pl_parser_add_one_url (parser, item, label);
+	g_free (label);
 	g_free (item);
 
 	return TOTEM_PL_PARSER_RESULT_SUCCESS;

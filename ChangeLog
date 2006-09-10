@@ -1,5 +1,12 @@
 2006-09-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_iso_get_title),
+	(totem_pl_parser_add_iso): Add totem_pl_parser_iso_get_title
+	so that ISO images use their labels as a default title, code
+	stolen from nautilus-cd-burner
+
+2006-09-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser.c: (totem_pl_parser_add_directory):
 	Detect DVDs even if they're deeper in the folder hierarchy, and
 	set a default title for them
