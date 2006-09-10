@@ -1435,6 +1435,7 @@ parse_asx_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 	xmlChar *title = NULL;
 	xmlNodePtr node;
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_ERROR;
+	xmlChar *newbase = NULL;
 
 	for (node = parent->children; node != NULL; node = node->next) {
 		if (node->name == NULL)
@@ -1442,6 +1443,13 @@ parse_asx_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 
 		if (g_ascii_strcasecmp ((char *)node->name, "title") == 0) {
 			title = xmlNodeListGetString(doc, node->children, 1);
+		}
+		if (g_ascii_strcasecmp ((char *)node->name, "base") == 0) {
+			newbase = xmlGetProp (node, (const xmlChar *)"href");
+			if (newbase == NULL)
+				newbase = xmlGetProp (node, (const xmlChar *)"HREF");
+			if (newbase != NULL)
+				base = (char *)newbase;
 		}
 
 		if (g_ascii_strcasecmp ((char *)node->name, "entry") == 0) {
@@ -1461,6 +1469,9 @@ parse_asx_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 				retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 		}
 	}
+
+	if (newbase)
+		xmlFree (newbase);
 
 	if (title)
 		xmlFree (title);
