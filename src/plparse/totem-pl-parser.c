@@ -1324,8 +1324,11 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
 		/* Either it's a URI, or it has a proper path ... */
 		if (strstr(lines[i], "://") != NULL
 				|| lines[i][0] == G_DIR_SEPARATOR) {
-			totem_pl_parser_add_one_url (parser, lines[i],
-					totem_pl_parser_get_extinfo_title (extinfo, lines, i));
+			if (totem_pl_parser_parse_internal (parser, lines[i])
+					!= TOTEM_PL_PARSER_RESULT_SUCCESS) {
+				totem_pl_parser_add_one_url (parser, lines[i],
+						totem_pl_parser_get_extinfo_title (extinfo, lines, i));
+			}
 			extinfo = FALSE;
 		} else if (lines[i][0] == '\\' && lines[i][1] == '\\') {
 			/* ... Or it's in the windows smb form

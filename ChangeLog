@@ -1,5 +1,11 @@
 2006-09-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_add_m3u):
+	Handle playlists linked inside playlists, as used on
+	http://www.kinkfm.com (Closes: #354954)
+
+2006-09-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser.c: (parse_asx_entries): patch from
 	Jonathan Matthew <jonathan@kaolin.wh9.net> to handle "BASE HREF"
 	in ASX files (Closes: #355222)
