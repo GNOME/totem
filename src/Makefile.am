@@ -30,18 +30,6 @@ nautilus_LTLIBRARIES = $(TOTEM_PROPERTIES_PAGE)
 
 modules_flags = -export_dynamic -avoid-version -module
 
-EGG_RECENT_FILES =                      \
-	egg-recent-model.c              \
-        egg-recent-model.h              \
-	egg-recent-item.c               \
-	egg-recent-item.h               \
-	egg-recent-view.c               \
-	egg-recent-view.h               \
-	egg-recent-view-gtk.c           \
-        egg-recent-view-gtk.h           \
-	egg-recent-util.c               \
-	egg-recent-util.h
-
 BACON_VOLUME = \
 	bacon-volume.c			\
 	bacon-volume.h
@@ -61,7 +49,6 @@ BACON_V4L_SELECTION =			\
 EGGDIR=$(srcdir)/../../libegg/libegg/recent-files/
 BACONDIR=$(srcdir)/../../libbacon/src
 regenerate-built-sources:
-	EGGFILES="$(EGG_RECENT_FILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh || true
 	EGGFILES="$(BACON_MESSAGE_CONNECTION) $(BACON_VOLUME)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
 
 libbaconpropertiespage_la_SOURCES = \
@@ -72,7 +59,6 @@ libbaconpropertiespage_la_SOURCES = \
 
 
 totem_SOURCES = 					\
-	$(EGG_RECENT_FILES)				\
 	totem.c totem.h					\
 	totem-remote.c totem-remote.h			\
 	totem-preferences.c totem-preferences.h		\

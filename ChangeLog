@@ -1,5 +1,73 @@
 2006-09-11  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* data/Makefile.am:
+	* data/popup.glade:
+	* data/totem.glade:
+	* src/Makefile.am:
+	* src/egg-recent-item.c:
+	* src/egg-recent-item.h:
+	* src/egg-recent-model.c:
+	* src/egg-recent-model.h:
+	* src/egg-recent-util.c:
+	* src/egg-recent-util.h:
+	* src/egg-recent-view-gtk.c:
+	* src/egg-recent-view-gtk.h:
+	* src/egg-recent-view.c:
+	* src/egg-recent-view.h:
+	* src/totem-menu.c: (subtitles_changed_callback),
+	(languages_changed_callback), (add_lang_action),
+	(create_lang_actions), (totem_languages_update),
+	(totem_subtitles_update), (on_recent_file_item_activated),
+	(totem_compare_recent_items),
+	(totem_recent_manager_changed_callback), (totem_setup_recent),
+	(totem_action_add_recent), (on_play_disc_activate),
+	(add_device_to_menu), (on_movie_menu_select),
+	(totem_setup_play_disc), (open_action_callback),
+	(open_location_action_callback), (eject_action_callback),
+	(play_action_callback), (quit_action_callback),
+	(take_screenshot_action_callback), (preferences_action_callback),
+	(fullscreen_action_callback), (zoom_1_2_action_callback),
+	(zoom_1_1_action_callback), (zoom_2_1_action_callback),
+	(zoom_in_action_callback), (zoom_reset_action_callback),
+	(zoom_out_action_callback), (next_angle_action_callback),
+	(dvd_root_menu_action_callback), (dvd_title_menu_action_callback),
+	(dvd_audio_menu_action_callback), (dvd_angle_menu_action_callback),
+	(dvd_chapter_menu_action_callback), (next_chapter_action_callback),
+	(previous_chapter_action_callback), (skip_to_action_callback),
+	(skip_forward_action_callback), (skip_backwards_action_callback),
+	(volume_up_action_callback), (volume_down_action_callback),
+	(contents_action_callback), (about_action_callback),
+	(repeat_mode_action_callback), (shuffle_mode_action_callback),
+	(deinterlace_action_callback), (always_on_top_action_callback),
+	(show_controls_action_callback), (show_sidebar_action_callback),
+	(aspect_ratio_changed_callback),
+	(totem_ui_manager_connect_proxy_callback),
+	(totem_ui_manager_setup):
+	* src/totem-menu.h:
+	* src/totem-preferences.c: (deinterlace_changed_cb),
+	(totem_setup_preferences):
+	* src/totem-private.h:
+	* src/totem-sidebar.c: (totem_sidebar_toggle),
+	(toggle_sidebar_from_sidebar), (totem_sidebar_setup):
+	* src/totem-sidebar.h:
+	* src/totem-stock-icons.c: (totem_set_default_icons):
+	* src/totem.c: (totem_action_menu_popup), (play_pause_set_label),
+	(window_state_event_cb), (totem_action_open),
+	(totem_action_open_location), (totem_action_take_screenshot),
+	(totem_action_set_mrl_with_warning), (totem_action_zoom),
+	(totem_action_toggle_aspect_ratio), (totem_action_show_help),
+	(update_seekable), (commit_hide_skip_to), (totem_action_skip_to),
+	(show_controls), (totem_action_toggle_controls),
+	(playlist_repeat_toggle_cb), (playlist_shuffle_toggle_cb),
+	(totem_action_handle_key_press), (update_media_menu_items),
+	(update_buttons), (totem_callback_connect), (main):
+
+	Huge patch from Jan Arne Petersen <jpetersen@jpetersen.org> to move
+	Totem to GtkUIManager, instead of the old menus (Closes: #353560)
+
+2006-09-11  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bacon_video_widget_has_next_track),
 	(bacon_video_widget_has_previous_track):

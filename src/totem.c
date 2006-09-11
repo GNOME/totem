@@ -71,20 +71,12 @@
 
 #define REWIND_OR_PREVIOUS 4000
 
-#define SEEK_FORWARD_OFFSET 60
-#define SEEK_BACKWARD_OFFSET -15
-
 #define SEEK_FORWARD_SHORT_OFFSET 15
 #define SEEK_BACKWARD_SHORT_OFFSET -5
 
 #define SEEK_FORWARD_LONG_OFFSET 10*60
 #define SEEK_BACKWARD_LONG_OFFSET -3*60
 
-#define VOLUME_DOWN_OFFSET -8
-#define VOLUME_UP_OFFSET 8
-
-#define ZOOM_IN_OFFSET 1
-#define ZOOM_OUT_OFFSET -1
 #define ZOOM_UPPER 200
 #define ZOOM_RESET 100
 #define ZOOM_LOWER 10
@@ -109,11 +101,7 @@ static gboolean popup_hide (Totem *totem);
 static void update_buttons (Totem *totem);
 static void update_media_menu_items (Totem *totem);
 static void update_seekable (Totem *totem, gboolean force_false);
-static void on_play_pause_button_clicked (GtkToggleButton *button,
-		Totem *totem);
 static void playlist_changed_cb (GtkWidget *playlist, Totem *totem);
-static void show_controls (Totem *totem, gboolean was_fullscreen);
-static gboolean totem_is_fullscreen (Totem *totem);
 static void play_pause_set_label (Totem *totem, TotemStates state);
 static gboolean on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event, Totem *totem);
 static void popup_timeout_remove (Totem *totem);
@@ -258,8 +246,8 @@ totem_action_menu_popup (Totem *totem, guint button)
 {
 	GtkWidget *menu;
 
-	menu = glade_xml_get_widget (totem->xml_popup,
-			"totem_right_click_menu");
+	menu = gtk_ui_manager_get_widget (totem->ui_manager,
+			"/totem-main-popup");
 	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
 			button, gtk_get_current_event_time ());
 	gtk_menu_shell_select_first (GTK_MENU_SHELL (menu), FALSE);
@@ -276,7 +264,7 @@ main_window_destroy_cb (GtkWidget *widget, GdkEvent *event, Totem *totem)
 static void
 play_pause_set_label (Totem *totem, TotemStates state)
 {
-	GtkWidget *image;
+	GtkAction *action;
 	const char *id, *tip;
 
 	if (state == totem->state)
@@ -308,21 +296,15 @@ play_pause_set_label (Totem *totem, TotemStates state)
 		return;
 	}
 
-	gtk_tooltips_set_tip (GTK_TOOLTIPS (totem->tooltip),
-			totem->pp_button, _(tip), NULL);
-	gtk_tooltips_set_tip (GTK_TOOLTIPS (totem->tooltip),
-			totem->fs_pp_button, _(tip), NULL);
-
-	image = glade_xml_get_widget (totem->xml,
-			"tmw_play_pause_button_image");
-	gtk_image_set_from_stock (GTK_IMAGE (image), id, GTK_ICON_SIZE_BUTTON);
-	image = glade_xml_get_widget (totem->xml, "tcw_pp_button_image");
-	gtk_image_set_from_stock (GTK_IMAGE (image), id, GTK_ICON_SIZE_BUTTON);
+	action = gtk_action_group_get_action (totem->main_action_group, "play");
+	g_object_set (G_OBJECT (action),
+			"tooltip", _(tip),
+			"stock-id", id, NULL);
 
 	totem->state = state;
 }
 
-static void
+void
 totem_action_eject (Totem *totem)
 {
 	GError *err = NULL;
@@ -609,7 +591,7 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 		totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
 		show_controls (totem, FALSE);
 	} else {
-		GtkWidget *item;
+		GtkAction *action;
 
 		popup_hide (totem);
 		bacon_video_widget_set_fullscreen (totem->bvw, FALSE);
@@ -617,11 +599,10 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 
 		totem_scrsaver_enable (totem->scr);
 
-		item = glade_xml_get_widget
-			(totem->xml, "tmw_show_controls_menu_item");
+		action = gtk_action_group_get_action (totem->main_action_group,
+			"show-controls");
 
-		if (gtk_check_menu_item_get_active
-				(GTK_CHECK_MENU_ITEM (item)))
+		if (gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)))
 		{
 			totem->controls_visibility = TOTEM_CONTROLS_VISIBLE;
 			show_controls (totem, TRUE);
@@ -629,6 +610,8 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 			totem->controls_visibility = TOTEM_CONTROLS_HIDDEN;
 			show_controls (totem, TRUE);
 		}
+
+		g_object_unref (action);
 	}
 
 	return FALSE;
@@ -651,6 +634,103 @@ totem_action_fullscreen (Totem *totem, gboolean state)
 		return;
 
 	totem_action_fullscreen_toggle (totem);
+}
+
+void
+totem_action_open (Totem *totem)
+{
+	static char *path = NULL;
+	char *new_path;
+
+	new_path = totem_action_open_dialog (totem, path, TRUE);
+	if (new_path != NULL) {
+		g_free (path);
+		path = new_path;
+	}
+}
+
+//FIXME move the URI to a separate widget
+void
+totem_action_open_location (Totem *totem)
+{
+	GladeXML *glade;
+	char *mrl;
+	GtkWidget *dialog, *entry, *gentry;
+	int response;
+	const char *filenames[2];
+
+	glade = totem_interface_load ("uri.glade", _("Open Location..."),
+			FALSE, GTK_WINDOW (totem->win));
+	if (glade == NULL)
+		return;
+
+	dialog = glade_xml_get_widget (glade, "open_uri_dialog");
+	entry = glade_xml_get_widget (glade, "uri");
+	gentry = glade_xml_get_widget (glade, "uri_list");
+
+	response = gtk_dialog_run (GTK_DIALOG (dialog));
+
+	if (response == GTK_RESPONSE_OK)
+	{
+		const char *uri;
+
+		uri = gtk_entry_get_text (GTK_ENTRY (entry));
+		if (uri != NULL && strcmp (uri, "") != 0)
+		{
+			filenames[0] = uri;
+			filenames[1] = NULL;
+			totem_action_open_files (totem, (char **) filenames);
+
+			mrl = totem_playlist_get_current_mrl (totem->playlist);
+			totem_action_set_mrl_and_play (totem, mrl);
+			g_free (mrl);
+#ifndef HAVE_GTK_ONLY
+			gnome_entry_append_history (GNOME_ENTRY (gentry),
+					TRUE, uri);
+#endif /* !HAVE_GTK_ONLY */
+		}
+	}
+
+	gtk_widget_destroy (dialog);
+	g_object_unref (glade);
+}
+
+void
+totem_action_take_screenshot (Totem *totem)
+{
+	GdkPixbuf *pixbuf;
+	GtkWidget *dialog;
+	char *filename;
+	GError *err = NULL;
+
+	if (bacon_video_widget_get_logo_mode (totem->bvw) != FALSE)
+		return;
+
+	if (bacon_video_widget_can_get_frames (totem->bvw, &err) == FALSE)
+	{
+		if (err == NULL)
+			return;
+
+		totem_action_error (_("Totem could not get a screenshot of that film."), err->message, totem);
+		g_error_free (err);
+		return;
+	}
+
+	pixbuf = bacon_video_widget_get_current_frame (totem->bvw);
+	if (pixbuf == NULL)
+	{
+		totem_action_error (_("Totem could not get a screenshot of that film."), _("This is not supposed to happen; please file a bug report."), totem);
+		return;
+	}
+
+	filename = g_build_filename (DATADIR,
+			"totem", "screenshot.glade", NULL);
+	dialog = totem_screenshot_new (filename, pixbuf);
+	g_free (filename);
+
+	gtk_dialog_run (GTK_DIALOG (dialog));
+	gtk_widget_destroy (dialog);
+	gdk_pixbuf_unref (pixbuf);
 }
 
 static char *
@@ -772,32 +852,24 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		retval = FALSE;
 
 		/* Play/Pause */
-		gtk_widget_set_sensitive (totem->pp_button, FALSE);
-
-		totem_main_set_sensitivity ("tmw_play_menu_item", FALSE);
-		totem_popup_set_sensitivity ("trcm_play", FALSE);
+		totem_action_set_sensitivity ("play", FALSE);
 
 		/* Seek bar and seek buttons */
 		update_seekable (totem, FALSE);
 
 		/* Volume */
 		totem_main_set_sensitivity ("tcw_volume_button", FALSE);
-		totem_main_set_sensitivity ("tmw_volume_up_menu_item", FALSE);
-		totem_main_set_sensitivity ("tmw_volume_down_menu_item", FALSE);
-		totem_popup_set_sensitivity ("trcm_volume_up", FALSE);
-		totem_popup_set_sensitivity ("trcm_volume_down", FALSE);
+		totem_action_set_sensitivity ("volume-up", FALSE);
+		totem_action_set_sensitivity ("volume-down", FALSE);
 
 		/* Control popup */
 		gtk_widget_set_sensitive (totem->fs_seek, FALSE);
-		gtk_widget_set_sensitive (totem->fs_pp_button, FALSE);
-		totem_main_set_sensitivity ("tcw_previous_button", FALSE);
-		totem_main_set_sensitivity ("tcw_next_button", FALSE);
-		totem_popup_set_sensitivity ("trcm_next_chapter", FALSE);
-		totem_popup_set_sensitivity ("trcm_previous_chapter", FALSE);
+		totem_action_set_sensitivity ("next-chapter", FALSE);
+		totem_action_set_sensitivity ("previous-chapter", FALSE);
 		totem_main_set_sensitivity ("tcw_volume_hbox", FALSE);
 
 		/* Take a screenshot */
-		totem_main_set_sensitivity ("tmw_take_screenshot_menu_item", FALSE);
+		totem_action_set_sensitivity ("take-screenshot", FALSE);
 
 		/* Set the logo */
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
@@ -819,10 +891,7 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		totem->mrl = g_strdup (mrl);
 
 		/* Play/Pause */
-		totem_main_set_sensitivity ("tmw_play_menu_item", TRUE);
-		gtk_widget_set_sensitive (totem->pp_button, TRUE);
-		totem_popup_set_sensitivity ("trcm_play", TRUE);
-		gtk_widget_set_sensitive (totem->fs_pp_button, TRUE);
+		totem_action_set_sensitivity ("play", TRUE);
 
 		/* Seek bar */
 		update_seekable (totem,
@@ -832,14 +901,11 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		caps = bacon_video_widget_can_set_volume (totem->bvw);
 		totem_main_set_sensitivity ("tcw_volume_button", caps);
 		totem_main_set_sensitivity ("tcw_volume_hbox", caps);
-		totem_popup_set_sensitivity ("trcm_volume_up", caps);
-		totem_popup_set_sensitivity ("trcm_volume_down", caps);
-		totem_main_set_sensitivity ("tmw_volume_up_menu_item", caps);
-		totem_main_set_sensitivity ("tmw_volume_down_menu_item", caps);
+		totem_action_set_sensitivity ("volume-up", caps);
+		totem_action_set_sensitivity ("volume-down", caps);
 
 		/* Take a screenshot */
-		totem_main_set_sensitivity ("tmw_take_screenshot_menu_item",
-				retval);
+		totem_action_set_sensitivity ("take-screenshot", retval);
 		gtk_widget_set_sensitive
 			(GTK_WIDGET (totem->properties), retval);
 
@@ -975,27 +1041,27 @@ totem_action_seek_relative (Totem *totem, int off_sec)
 static void
 totem_action_zoom (Totem *totem, int zoom)
 {
+	GtkAction *action;
+
 	if (zoom < ZOOM_LOWER || zoom > ZOOM_UPPER)
 		return;
 
 	bacon_video_widget_set_zoom (totem->bvw, zoom);
 
-	if (zoom == ZOOM_UPPER) {
-		totem_main_set_sensitivity ("tmw_zoom_in_menu_item", FALSE);
-	} else if (zoom == ZOOM_LOWER) {
-		totem_main_set_sensitivity ("tmw_zoom_out_menu_item", FALSE);
-	} else if (zoom == ZOOM_RESET) {
-		totem_main_set_sensitivity ("tmw_zoom_reset_menu_item", FALSE);
-		totem_main_set_sensitivity ("tmw_zoom_in_menu_item", TRUE);
-		totem_main_set_sensitivity ("tmw_zoom_out_menu_item", TRUE);
-	} else {
-		totem_main_set_sensitivity ("tmw_zoom_in_menu_item", TRUE);
-		totem_main_set_sensitivity ("tmw_zoom_out_menu_item", TRUE);
-		totem_main_set_sensitivity ("tmw_zoom_reset_menu_item", TRUE);
-	}
+	action = gtk_action_group_get_action (totem->zoom_action_group,
+			"zoom-in");
+	gtk_action_set_sensitive (action, zoom != ZOOM_UPPER);
+
+	action = gtk_action_group_get_action (totem->zoom_action_group,
+			"zoom-out");
+	gtk_action_set_sensitive (action, zoom != ZOOM_LOWER);
+
+	action = gtk_action_group_get_action (totem->zoom_action_group,
+			"zoom-reset");
+	gtk_action_set_sensitive (action, zoom != ZOOM_RESET);
 }
 
-static void
+void
 totem_action_zoom_relative (Totem *totem, int off_pct)
 {
 	int zoom;
@@ -1004,7 +1070,7 @@ totem_action_zoom_relative (Totem *totem, int off_pct)
 	totem_action_zoom (totem, zoom + off_pct);
 }
 
-static void
+void
 totem_action_zoom_reset (Totem *totem)
 {
 	totem_action_zoom (totem, 100);
@@ -1025,23 +1091,16 @@ totem_action_volume_relative (Totem *totem, int off_pct)
 void
 totem_action_toggle_aspect_ratio (Totem *totem)
 {		
-	GtkWidget  *item;
-	int  tmp;
-	const char const *widgets[] = {
-		"tmw_aspect_ratio_auto_menu_item",
-		"tmw_aspect_ratio_square_menu_item",
-		"tmw_aspect_ratio_fbt_menu_item",
-		"tmw_aspect_ratio_anamorphic_menu_item",
-		"tmw_aspect_ratio_dvb_menu_item",
-	};
+	GtkAction *action;
+	int tmp;
 
 	tmp = totem_action_get_aspect_ratio (totem);
 	tmp++;
 	if (tmp > 4)
 		tmp = 0;
 
-	item = glade_xml_get_widget (totem->xml, widgets[tmp]);
-	gtk_check_menu_item_set_active ((GtkCheckMenuItem *) item, TRUE);
+	action = gtk_action_group_get_action (totem->main_action_group, "aspect-ratio-auto");
+	gtk_radio_action_set_current_value (GTK_RADIO_ACTION (action), tmp);
 }
 
 void
@@ -1060,6 +1119,20 @@ void
 totem_action_set_scale_ratio (Totem *totem, gfloat ratio)
 {
 	bacon_video_widget_set_scale_ratio (totem->bvw, ratio);
+}
+
+void
+totem_action_show_help (Totem *totem)
+{
+#ifndef HAVE_GTK_ONLY
+	GError *err = NULL;
+
+	if (gnome_help_display ("totem.xml", NULL, &err) == FALSE)
+	{
+		totem_action_error (_("Totem could not display the help contents."), err->message, totem);
+		g_error_free (err);
+	}
+#endif /* !HAVE_GTK_ONLY */
 }
 
 static gboolean
@@ -1219,24 +1292,6 @@ drag_video_cb (GtkWidget *widget,
 }
 
 static void
-on_play_pause_button_clicked (GtkToggleButton *button, Totem *totem)
-{
-	TOTEM_PROFILE (totem_action_play_pause (totem));
-}
-
-static void
-on_previous_button_clicked (GtkButton *button, Totem *totem)
-{
-	TOTEM_PROFILE (totem_action_previous (totem));
-}
-
-static void
-on_next_button_clicked (GtkButton *button, Totem *totem)
-{
-	TOTEM_PROFILE (totem_action_next (totem));
-}
-
-static void
 on_got_redirect (BaconVideoWidget *bvw, const char *mrl, Totem *totem)
 {
 	gchar *old_mrl, *new_mrl;
@@ -1356,11 +1411,9 @@ update_seekable (Totem *totem, gboolean seekable)
 
 	totem_main_set_sensitivity ("tcw_time_hbox", seekable);
 
-	totem_main_set_sensitivity ("tmw_skip_forward_menu_item", seekable);
-	totem_main_set_sensitivity ("tmw_skip_backwards_menu_item", seekable);
-	totem_popup_set_sensitivity ("trcm_skip_forward", seekable);
-	totem_popup_set_sensitivity ("trcm_skip_backwards", seekable);
-	totem_main_set_sensitivity ("tmw_skip_to_menu_item", seekable);
+	totem_action_set_sensitivity ("skip-forward", seekable);
+	totem_action_set_sensitivity ("skip-backwards", seekable);
+	totem_action_set_sensitivity ("skip-to", seekable);
 	if (totem->skipto)
 		totem_skipto_set_seekable (totem->skipto, seekable);
 }
@@ -1672,444 +1725,6 @@ totem_action_open_dialog (Totem *totem, const char *path, gboolean play)
 }
 
 static void
-on_open1_activate (GtkButton *button, Totem *totem)
-{
-	static char *path = NULL;
-	char *new_path;
-
-	new_path = totem_action_open_dialog (totem, path, TRUE);
-	if (new_path != NULL) {
-		g_free (path);
-		path = new_path;
-	}
-}
-
-//FIXME move the URI to a separate widget
-static void
-on_open_location1_activate (GtkButton *button, Totem *totem)
-{
-	GladeXML *glade;
-	char *mrl;
-	GtkWidget *dialog, *entry, *gentry;
-	int response;
-	const char *filenames[2];
-
-	glade = totem_interface_load ("uri.glade", _("Open Location..."),
-			FALSE, GTK_WINDOW (totem->win));
-	if (glade == NULL)
-		return;
-
-	dialog = glade_xml_get_widget (glade, "open_uri_dialog");
-	entry = glade_xml_get_widget (glade, "uri");
-	gentry = glade_xml_get_widget (glade, "uri_list");
-
-	response = gtk_dialog_run (GTK_DIALOG (dialog));
-
-	if (response == GTK_RESPONSE_OK)
-	{
-		const char *uri;
-
-		uri = gtk_entry_get_text (GTK_ENTRY (entry));
-		if (uri != NULL && strcmp (uri, "") != 0)
-		{
-			filenames[0] = uri;
-			filenames[1] = NULL;
-			totem_action_open_files (totem, (char **) filenames);
-
-			mrl = totem_playlist_get_current_mrl (totem->playlist);
-			totem_action_set_mrl_and_play (totem, mrl);
-			g_free (mrl);
-#ifndef HAVE_GTK_ONLY
-			gnome_entry_append_history (GNOME_ENTRY (gentry),
-					TRUE, uri);
-#endif /* !HAVE_GTK_ONLY */
-		}
-	}
-
-	gtk_widget_destroy (dialog);
-	g_object_unref (glade);
-}
-
-static void
-on_eject1_activate (GtkButton *button, Totem *totem)
-{
-	totem_action_eject (totem);
-}
-
-static void
-on_play1_activate (GtkButton *button, Totem *totem)
-{
-	totem_action_play_pause (totem);
-}
-
-static void
-on_full_screen1_activate (GtkButton *button, Totem *totem)
-{
-	totem_action_fullscreen_toggle (totem);
-}
-
-static void
-on_resize_1_2_activate (GtkButton *button, Totem *totem)
-{
-	totem_action_set_scale_ratio (totem, 0.5); 
-}
-
-static void
-on_resize_1_1_activate (GtkButton *button, Totem *totem)
-{
-	totem_action_set_scale_ratio (totem, 1);
-}
-
-static void
-on_resize_2_1_activate (GtkButton *button, Totem *totem)
-{                       
-	totem_action_set_scale_ratio (totem, 2);
-}
-
-static void
-on_zoom_in_activate (GtkButton *button, Totem *totem)
-{
-	totem_action_zoom_relative (totem, ZOOM_IN_OFFSET);
-}
-
-static void
-on_zoom_reset_activate (GtkButton *button, Totem *totem)
-{
-	totem_action_zoom_reset (totem);
-}
-
-static void
-on_zoom_out_activate (GtkButton *button, Totem *totem)
-{
-	totem_action_zoom_relative (totem, ZOOM_OUT_OFFSET);
-}
-
-static void
-on_aspect_ratio_auto_activate (GtkButton *button, Totem *totem)
-{
-	totem_action_set_aspect_ratio (totem, BVW_RATIO_AUTO);
-}
-
-static void
-on_aspect_ratio_square_activate (GtkButton *button, Totem *totem)
-{
-	totem_action_set_aspect_ratio (totem, BVW_RATIO_SQUARE);
-}
-
-static void
-on_aspect_ratio_fbt_activate (GtkButton *button, Totem *totem)
-{
-	totem_action_set_aspect_ratio (totem, BVW_RATIO_FOURBYTHREE);
-}
-
-static void
-on_aspect_anamorphic_activate (GtkButton *button, Totem *totem)
-{
-	totem_action_set_aspect_ratio (totem, BVW_RATIO_ANAMORPHIC);
-}
-
-static void
-on_aspect_ratio_dvb_activate (GtkButton *button, Totem *totem)
-{
-	totem_action_set_aspect_ratio (totem, BVW_RATIO_DVB);
-}
-
-static void
-on_fs_exit1_activate (GtkButton *button, Totem *totem)
-{
-	totem_action_fullscreen_toggle (totem);
-}
-
-static void
-on_quit1_activate (GtkButton *button, Totem *totem)
-{
-	totem_action_exit (totem);
-}
-
-static void
-on_repeat_mode1_toggled (GtkCheckMenuItem *checkmenuitem, Totem *totem)
-{
-	totem_playlist_set_repeat (totem->playlist,
-			gtk_check_menu_item_get_active (checkmenuitem));
-}
-
-static void
-on_shuffle_mode1_toggled (GtkCheckMenuItem *checkmenuitem, Totem *totem)
-{
-	totem_playlist_set_shuffle (totem->playlist,
-			gtk_check_menu_item_get_active (checkmenuitem));
-}
-
-static void
-on_always_on_top1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
-{
-	gtk_window_set_keep_above (GTK_WINDOW (totem->win),
-			gtk_check_menu_item_get_active (checkmenuitem));
-	gconf_client_set_bool (totem->gc,
-			GCONF_PREFIX"/window_on_top",
-			gtk_check_menu_item_get_active (checkmenuitem), NULL);
-}
-
-static void
-show_controls (Totem *totem, gboolean was_fullscreen)
-{
-	GtkWidget *menubar, *controlbar, *statusbar, *item, *bvw_vbox, *widget;
-	int width = 0, height = 0;
-
-	if (totem->bvw == NULL)
-		return;
-
-	menubar = glade_xml_get_widget (totem->xml, "tmw_menubar");
-	controlbar = glade_xml_get_widget (totem->xml, "tmw_controls_vbox");
-	statusbar = glade_xml_get_widget (totem->xml, "tmw_statusbar");
-	item = glade_xml_get_widget (totem->xml_popup, "trcm_show_controls");
-	bvw_vbox = glade_xml_get_widget (totem->xml, "tmw_bvw_vbox");
-	widget = GTK_WIDGET (totem->bvw);
-
-	if (totem->controls_visibility == TOTEM_CONTROLS_VISIBLE)
-	{
-		if (was_fullscreen == FALSE)
-		{
-			height = widget->allocation.height;
-			width =	widget->allocation.width;
-		}
-
-		gtk_widget_set_sensitive (menubar, TRUE);
-		gtk_widget_show (menubar);
-		gtk_widget_show (controlbar);
-		gtk_widget_show (statusbar);
-		if (totem_sidebar_is_visible (totem) != FALSE)
-			gtk_widget_show (totem->sidebar);
-		else
-			gtk_widget_hide (totem->sidebar);
-
-		gtk_widget_hide (item);
-		gtk_container_set_border_width (GTK_CONTAINER (bvw_vbox),
-				BVW_VBOX_BORDER_WIDTH);
-
-		if (was_fullscreen == FALSE)
-		{
-			totem_widget_set_preferred_size (widget,
-					width, height);
-		}
-	} else {
-		if (totem->controls_visibility == TOTEM_CONTROLS_HIDDEN)
-		{
-			width = widget->allocation.width;
-			height = widget->allocation.height;
-		}
-
-		/* Hide and make the menubar unsensitive */
-		gtk_widget_set_sensitive (menubar, FALSE);
-		gtk_widget_hide (menubar);
-
-		gtk_widget_hide (controlbar);
-		gtk_widget_hide (statusbar);
-		gtk_widget_hide (totem->sidebar);
-
-		 /* We won't show controls in fullscreen */
-		if (totem_is_fullscreen (totem) != FALSE)
-			gtk_widget_hide (item);
-		else
-			gtk_widget_show (item);
-		gtk_container_set_border_width (GTK_CONTAINER (bvw_vbox), 0);
-
-		if (totem->controls_visibility == TOTEM_CONTROLS_HIDDEN)
-		{
-			gtk_window_resize (GTK_WINDOW(totem->win),
-					width, height);
-		}
-	}
-}
-
-static void
-on_show_controls1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
-{
-	gboolean show;
-
-	show = gtk_check_menu_item_get_active (checkmenuitem);
-
-	/* Let's update our controls visibility */
-	if (show)
-		totem->controls_visibility = TOTEM_CONTROLS_VISIBLE;
-	else
-		totem->controls_visibility = TOTEM_CONTROLS_HIDDEN;
-
-	show_controls (totem, FALSE);
-}
-
-static void
-on_show_controls2_activate (GtkMenuItem *menuitem, Totem *totem)
-{
-	totem_action_toggle_controls (totem);
-}
-
-void
-totem_action_toggle_controls (Totem *totem)
-{
-	GtkWidget *item;
-	gboolean state;
-
-	if (totem_is_fullscreen (totem) != FALSE)
-		return;
-
-	item = glade_xml_get_widget (totem->xml,
-			"tmw_show_controls_menu_item");
-	state = gtk_check_menu_item_get_active (GTK_CHECK_MENU_ITEM (item));
-	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), !state);
-}
-
-#ifndef HAVE_GTK_ONLY
-static void
-on_help_activate (GtkButton *button, Totem *totem)
-{
-	GError *err = NULL;
-
-	if (gnome_help_display ("totem.xml", NULL, &err) == FALSE)
-	{
-		totem_action_error (_("Totem could not display the help contents."), err->message, totem);
-		g_error_free (err);
-	}
-}
-#endif /* !HAVE_GTK_ONLY */
-
-static void
-on_about1_activate (GtkButton *button, Totem *totem)
-{
-	char *backend_version, *description;
-	const char *frontend_type;
-
-	const char *authors[] =
-	{
-		"Bastien Nocera <hadess@hadess.net>",
-		"Ronald Bultje <rbultje@ronald.bitfreak.net>",
-		"Julien Moutte <julien@moutte.net> (GStreamer backend)",
-		NULL
-	};
-	const char *artists[] = { "Jakub Steiner <jimmac@ximian.com>", NULL };
-	const char *documenters[] =
-	{
-		"Chee Bin Hoh <cbhoh@gnome.org>",
-		NULL
-	};
-
-	if (totem->about != NULL)
-	{
-		gtk_window_present (GTK_WINDOW (totem->about));
-		return;
-	}
-
-#ifdef HAVE_GTK_ONLY
-	frontend_type = N_("GTK+");
-#else
-	frontend_type = N_("GNOME");
-#endif
-
-	backend_version = bacon_video_widget_get_backend_name (totem->bvw);
-	/* This lists the back-end and front-end types and versions, such as
-	 * Movie Player using GStreamer 0.10.1 and GNOME */
-	description = g_strdup_printf (_("Movie Player using %s and %s"),
-				       backend_version, _(frontend_type));
-
-	totem->about = g_object_new (GTK_TYPE_ABOUT_DIALOG,
-				     "version", VERSION,
-				     "copyright", _("Copyright \xc2\xa9 2002-2006 Bastien Nocera"),
-				     "comments", description,
-				     "authors", authors,
-				     "documenters", documenters,
-				     "artists", artists,
-				     "translator-credits", _("translator-credits"),
-				     "logo-icon-name", "totem",
-				     NULL);
-
-	g_free (backend_version);
-	g_free (description);
-
-	g_object_add_weak_pointer (G_OBJECT (totem->about),
-			(gpointer *)&totem->about);
-	gtk_window_set_transient_for (GTK_WINDOW (totem->about),
-			GTK_WINDOW (totem->win));
-	g_signal_connect (G_OBJECT (totem->about), "response",
-			G_CALLBACK (gtk_widget_destroy), NULL);
-
-	gtk_widget_show(totem->about);
-}
-
-static void
-on_take_screenshot1_activate (GtkButton *button, Totem *totem)
-{
-	GdkPixbuf *pixbuf;
-	GtkWidget *dialog;
-	char *filename;
-	GError *err = NULL;
-
-	if (bacon_video_widget_get_logo_mode (totem->bvw) != FALSE)
-		return;
-
-	if (bacon_video_widget_can_get_frames (totem->bvw, &err) == FALSE)
-	{
-		if (err == NULL)
-			return;
-
-		totem_action_error (_("Totem could not get a screenshot of that film."), err->message, totem);
-		g_error_free (err);
-		return;
-	}
-
-	pixbuf = bacon_video_widget_get_current_frame (totem->bvw);
-	if (pixbuf == NULL)
-	{
-		totem_action_error (_("Totem could not get a screenshot of that film."), _("This is not supposed to happen; please file a bug report."), totem);
-		return;
-	}
-
-	filename = g_build_filename (DATADIR,
-			"totem", "screenshot.glade", NULL);
-	dialog = totem_screenshot_new (filename, pixbuf);
-	g_free (filename);
-
-	gtk_dialog_run (GTK_DIALOG (dialog));
-	gtk_widget_destroy (dialog);
-	gdk_pixbuf_unref (pixbuf);
-}
-
-static void
-on_preferences1_activate (GtkButton *button, Totem *totem)
-{
-	gtk_widget_show (totem->prefs);
-}
-
-static void
-on_dvd_root_menu1_activate (GtkButton *button, Totem *totem)
-{
-        bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU);
-}
-
-static void
-on_dvd_title_menu1_activate (GtkButton *button, Totem *totem)
-{
-        bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_TITLE_MENU);
-}
-
-static void
-on_dvd_audio_menu1_activate (GtkButton *button, Totem *totem)
-{
-        bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_AUDIO_MENU);
-}
-
-static void
-on_dvd_angle_menu1_activate (GtkButton *button, Totem *totem)
-{
-        bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ANGLE_MENU);
-}
-
-static void
-on_dvd_chapter_menu1_activate (GtkButton *button, Totem *totem)
-{
-        bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_CHAPTER_MENU);
-}
-
-static void
 commit_hide_skip_to (GtkDialog *dialog, gint response, Totem *totem)
 {
 	GError *err = NULL;
@@ -2142,11 +1757,10 @@ commit_hide_skip_to (GtkDialog *dialog, gint response, Totem *totem)
 	}
 }
 
-static void
-on_skip_to1_activate (GtkButton *button, Totem *totem)
+void
+totem_action_skip_to (Totem *totem)
 {
 	char *filename;
-	gint64 time;
 
 	if (totem->seekable == FALSE)
 		return;
@@ -2161,11 +1775,6 @@ on_skip_to1_activate (GtkButton *button, Totem *totem)
 	totem->skipto = TOTEM_SKIPTO (totem_skipto_new (filename));
 	g_free (filename);
 
-	time = bacon_video_widget_get_stream_length (totem->bvw);
-	totem_skipto_update_range (TOTEM_SKIPTO (totem->skipto), time);
-	time = bacon_video_widget_get_current_time (totem->bvw);
-	totem_skipto_set_current (TOTEM_SKIPTO (totem->skipto), time);
-
 	g_signal_connect (G_OBJECT (totem->skipto), "delete-event",
 			G_CALLBACK (gtk_widget_destroy), NULL);
 	g_signal_connect (G_OBJECT (totem->skipto), "response",
@@ -2178,27 +1787,94 @@ on_skip_to1_activate (GtkButton *button, Totem *totem)
 }
 
 static void
-on_skip_forward1_activate (GtkButton *button, Totem *totem)
+on_fs_exit1_activate (GtkButton *button, Totem *totem)
 {
-	totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET);
+	totem_action_fullscreen_toggle (totem);
 }
 
-static void
-on_skip_backwards1_activate (GtkButton *button, Totem *totem)
+void
+show_controls (Totem *totem, gboolean was_fullscreen)
 {
-	totem_action_seek_relative (totem, SEEK_BACKWARD_OFFSET);
+	GtkAction *action;
+	GtkWidget *menubar, *controlbar, *statusbar, *bvw_vbox, *widget;
+	int width = 0, height = 0;
+
+	if (totem->bvw == NULL)
+		return;
+
+	menubar = glade_xml_get_widget (totem->xml, "tmw_menubar_box");
+	controlbar = glade_xml_get_widget (totem->xml, "tmw_controls_vbox");
+	statusbar = glade_xml_get_widget (totem->xml, "tmw_statusbar");
+	bvw_vbox = glade_xml_get_widget (totem->xml, "tmw_bvw_vbox");
+	widget = GTK_WIDGET (totem->bvw);
+
+	action = gtk_action_group_get_action (totem->main_action_group, "show-controls");
+	gtk_action_set_sensitive (action, !totem_is_fullscreen (totem));
+
+	if (totem->controls_visibility == TOTEM_CONTROLS_VISIBLE)
+	{
+		if (was_fullscreen == FALSE)
+		{
+			height = widget->allocation.height;
+			width =	widget->allocation.width;
+		}
+
+		gtk_widget_set_sensitive (menubar, TRUE);
+		gtk_widget_show (menubar);
+		gtk_widget_show (controlbar);
+		gtk_widget_show (statusbar);
+		if (totem_sidebar_is_visible (totem) != FALSE)
+			gtk_widget_show (totem->sidebar);
+		else
+			gtk_widget_hide (totem->sidebar);
+
+		gtk_container_set_border_width (GTK_CONTAINER (bvw_vbox),
+				BVW_VBOX_BORDER_WIDTH);
+
+		if (was_fullscreen == FALSE)
+		{
+			totem_widget_set_preferred_size (widget,
+					width, height);
+		}
+	} else {
+		if (totem->controls_visibility == TOTEM_CONTROLS_HIDDEN)
+		{
+			width = widget->allocation.width;
+			height = widget->allocation.height;
+		}
+
+		/* Hide and make the menubar unsensitive */
+		gtk_widget_set_sensitive (menubar, FALSE);
+		gtk_widget_hide (menubar);
+
+		gtk_widget_hide (controlbar);
+		gtk_widget_hide (statusbar);
+		gtk_widget_hide (totem->sidebar);
+
+		 /* We won't show controls in fullscreen */
+		gtk_container_set_border_width (GTK_CONTAINER (bvw_vbox), 0);
+
+		if (totem->controls_visibility == TOTEM_CONTROLS_HIDDEN)
+		{
+			gtk_window_resize (GTK_WINDOW(totem->win),
+					width, height);
+		}
+	}
 }
 
-static void
-on_volume_up1_activate (GtkButton *button, Totem *totem)
+void
+totem_action_toggle_controls (Totem *totem)
 {
-	totem_action_volume_relative (totem, VOLUME_UP_OFFSET);
-}
+	GtkAction *action;
+	gboolean state;
 
-static void
-on_volume_down1_activate (GtkButton *button, Totem *totem)
-{
-	totem_action_volume_relative (totem, VOLUME_DOWN_OFFSET);
+	if (totem_is_fullscreen (totem) != FALSE)
+		return;
+
+ 	action = gtk_action_group_get_action (totem->main_action_group,
+ 		"show-controls");
+ 	state = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+ 	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), !state);
 }
 
 static void
@@ -2416,33 +2092,33 @@ current_removed_cb (GtkWidget *playlist, Totem *totem)
 static void
 playlist_repeat_toggle_cb (TotemPlaylist *playlist, gboolean repeat, Totem *totem)
 {
-	GtkWidget *item;
+	GtkAction *action;
 
-	item = glade_xml_get_widget (totem->xml, "tmw_repeat_mode_menu_item");
+	action = gtk_action_group_get_action (totem->main_action_group, "repeat-mode");
 
-	g_signal_handlers_disconnect_by_func (G_OBJECT (item),
-			on_repeat_mode1_toggled, totem);
+	g_signal_handlers_block_matched (G_OBJECT (action), G_SIGNAL_MATCH_DATA, 0, 0,
+			NULL, NULL, totem);
 
-	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), repeat);
+	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), repeat);
 
-	g_signal_connect (G_OBJECT (item), "toggled",
-			G_CALLBACK (on_repeat_mode1_toggled), totem);
+	g_signal_handlers_unblock_matched (G_OBJECT (action), G_SIGNAL_MATCH_DATA, 0, 0,
+			NULL, NULL, totem);
 }
 
 static void
 playlist_shuffle_toggle_cb (TotemPlaylist *playlist, gboolean shuffle, Totem *totem)
 {
-	GtkWidget *item;
+	GtkAction *action;
 
-	item = glade_xml_get_widget (totem->xml, "tmw_shuffle_mode_menu_item");
+	action = gtk_action_group_get_action (totem->main_action_group, "shuffle-mode");
 
-	g_signal_handlers_disconnect_by_func (G_OBJECT (item),
-			on_shuffle_mode1_toggled, totem);
+	g_signal_handlers_block_matched (G_OBJECT (action), G_SIGNAL_MATCH_DATA, 0, 0,
+			NULL, NULL, totem);
 
-	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), shuffle);
+	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), shuffle);
 
-	g_signal_connect (G_OBJECT (item), "toggled",
-			G_CALLBACK (on_shuffle_mode1_toggled), totem);
+	g_signal_handlers_unblock_matched (G_OBJECT (action), G_SIGNAL_MATCH_DATA, 0, 0,
+			NULL, NULL, totem);
 }
 
 static void
@@ -2457,7 +2133,7 @@ update_fullscreen_size (Totem *totem)
 			&totem->fullscreen_rect);
 }
 
-static gboolean
+gboolean
 totem_is_fullscreen (Totem *totem)
 {
 	return (totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN);
@@ -2724,7 +2400,7 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 	case GDK_O:
 	case GDK_o:
 		totem_action_fullscreen (totem, FALSE);
-		on_open1_activate (NULL, totem);
+		totem_action_open (totem);
 		break;
 #ifdef HAVE_XFREE
 	case XF86XK_AudioPlay:
@@ -2745,9 +2421,9 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 	case GDK_s:
 	case GDK_S:
 		if (event->state & GDK_CONTROL_MASK) {
-			on_take_screenshot1_activate (NULL, totem);
+			totem_action_take_screenshot (totem);
 		} else {
-			on_skip_to1_activate (NULL, totem);
+			totem_action_skip_to (totem);
 		}
 		break;
 	case GDK_t:
@@ -3000,17 +2676,17 @@ update_media_menu_items (Totem *totem)
 
 	playing = totem_playing_dvd (totem->mrl);
 
-	totem_main_set_sensitivity ("tmw_dvd_root_menu_item", playing);
-	totem_main_set_sensitivity ("tmw_dvd_title_menu_item", playing);
-	totem_main_set_sensitivity ("tmw_dvd_audio_menu_item", playing);
-	totem_main_set_sensitivity ("tmw_dvd_angle_menu_item", playing);
-	totem_main_set_sensitivity ("tmw_dvd_chapter_menu_item", playing);
+	totem_action_set_sensitivity ("dvd-root-menu", playing);
+	totem_action_set_sensitivity ("dvd-title-menu", playing);
+	totem_action_set_sensitivity ("dvd-audio-menu", playing);
+	totem_action_set_sensitivity ("dvd-angle-menu", playing);
+	totem_action_set_sensitivity ("dvd-chapter-menu", playing);
 	/* FIXME we should only show that if we have multiple angles */
-	totem_main_set_sensitivity ("tmw_next_angle_menu_item", playing);
+	totem_action_set_sensitivity ("next-angle", playing);
 
 	playing = totem_is_media (totem->mrl);
 
-	totem_main_set_sensitivity ("tmw_eject_menu_item", playing);
+	totem_action_set_sensitivity ("eject", playing);
 }
 
 static void
@@ -3024,10 +2700,7 @@ update_buttons (Totem *totem)
 	else
 		has_item = totem_playlist_has_previous_mrl (totem->playlist);
 
-	totem_main_set_sensitivity ("tmw_previous_button", has_item);
-	totem_main_set_sensitivity ("tcw_previous_button", has_item);
-	totem_main_set_sensitivity ("tmw_previous_chapter_menu_item", has_item);
-	totem_popup_set_sensitivity ("trcm_previous_chapter", has_item);
+	totem_action_set_sensitivity ("previous-chapter", has_item);
 
 	/* Next */
 	if (totem_playing_dvd (totem->mrl) != FALSE)
@@ -3035,10 +2708,7 @@ update_buttons (Totem *totem)
 	else
 		has_item = totem_playlist_has_next_mrl (totem->playlist);
 
-	totem_main_set_sensitivity ("tmw_next_button", has_item);
-	totem_main_set_sensitivity ("tcw_next_button", has_item);
-	totem_main_set_sensitivity ("tmw_next_chapter_menu_item", has_item);
-	totem_popup_set_sensitivity ("trcm_next_chapter", has_item);
+	totem_action_set_sensitivity ("next-chapter", has_item);
 }
 
 static void
@@ -3131,170 +2801,45 @@ totem_setup_window (Totem *totem)
 static void
 totem_callback_connect (Totem *totem)
 {
-	GtkWidget *item;
+	GtkWidget *item, *box;
+	GtkAction *action;
 
 	/* Menu items */
-	item = glade_xml_get_widget (totem->xml, "tmw_open_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_open1_activate), totem);
-	item = glade_xml_get_widget (totem->xml,
-			"tmw_open_location_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_open_location1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_eject_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_eject1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_play_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_play1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_fullscreen_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_full_screen1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_resize_1_2_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_resize_1_2_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_resize_1_1_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_resize_1_1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_resize_2_1_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_resize_2_1_activate), totem);
-	if (bacon_video_widget_can_set_zoom (totem->bvw) != FALSE)
-	{
-		item = glade_xml_get_widget
-			(totem->xml, "tmw_zoom_in_menu_item");
-		g_signal_connect (G_OBJECT (item), "activate",
-				G_CALLBACK (on_zoom_in_activate), totem);
-		item = glade_xml_get_widget
-			(totem->xml, "tmw_zoom_reset_menu_item");
-		g_signal_connect (G_OBJECT (item), "activate",
-				G_CALLBACK (on_zoom_reset_activate), totem);
-		item = glade_xml_get_widget
-			(totem->xml, "tmw_zoom_out_menu_item");
-		g_signal_connect (G_OBJECT (item), "activate",
-				G_CALLBACK (on_zoom_out_activate), totem);
-	} else {
-		item = glade_xml_get_widget
-			(totem->xml, "tmw_zoom_in_menu_item");
-		gtk_widget_hide (item);
-		item = glade_xml_get_widget
-			(totem->xml, "tmw_zoom_reset_menu_item");
-		gtk_widget_hide (item);
-		item = glade_xml_get_widget
-			(totem->xml, "tmw_zoom_out_menu_item");
-		gtk_widget_hide (item);
-	}
+	gtk_action_group_set_visible (totem->zoom_action_group,
+		bacon_video_widget_can_set_zoom (totem->bvw));
 
-	item = glade_xml_get_widget (totem->xml,
-			"tmw_aspect_ratio_auto_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_aspect_ratio_auto_activate), totem);
-	item = glade_xml_get_widget (totem->xml,
-			"tmw_aspect_ratio_square_menu_item");
-        g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_aspect_ratio_square_activate), totem);
-	item = glade_xml_get_widget (totem->xml,
-			"tmw_aspect_ratio_fbt_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_aspect_ratio_fbt_activate), totem);
-	item = glade_xml_get_widget (totem->xml,
-			"tmw_aspect_ratio_anamorphic_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_aspect_anamorphic_activate), totem);
-	item = glade_xml_get_widget (totem->xml,
-			"tmw_aspect_ratio_dvb_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_aspect_ratio_dvb_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_repeat_mode_menu_item");
-	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
-			totem_playlist_get_repeat (totem->playlist));
-	g_signal_connect (G_OBJECT (item), "toggled",
-			G_CALLBACK (on_repeat_mode1_toggled), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_shuffle_mode_menu_item");
-	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
-			totem_playlist_get_shuffle (totem->playlist));
-	g_signal_connect (G_OBJECT (item), "toggled",
-			G_CALLBACK (on_shuffle_mode1_toggled), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_quit_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_quit1_activate), totem);
+	action = gtk_action_group_get_action (totem->main_action_group, "repeat-mode");
+	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
+		totem_playlist_get_repeat (totem->playlist));
+	action = gtk_action_group_get_action (totem->main_action_group, "shuffle-mode");
+	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
+		totem_playlist_get_shuffle (totem->playlist));
 
-	/* Help */
-	item = glade_xml_get_widget (totem->xml, "tmw_about_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_about1_activate), totem);
-
-#ifndef HAVE_GTK_ONLY
-	item = glade_xml_get_widget (totem->xml, "tmw_contents_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_help_activate), totem);
-#else
-	item = glade_xml_get_widget (totem->xml, "tmw_contents_menu_item");
-	gtk_widget_hide (item);
-#endif /* !HAVE_GTK_ONLY */
-
-	item = glade_xml_get_widget (totem->xml,
-			"tmw_take_screenshot_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_take_screenshot1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_preferences_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_preferences1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_volume_up_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_volume_up1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_volume_down_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_volume_down1_activate), totem);
-	item = glade_xml_get_widget (totem->xml,
-			"tmw_always_on_top_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_always_on_top1_activate), totem);
-	item = glade_xml_get_widget (totem->xml,
-			"tmw_show_controls_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_show_controls1_activate), totem);
-
-	/* Popup menu */
-	item = glade_xml_get_widget (totem->xml_popup, "trcm_play");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_play1_activate), totem);
-	item = glade_xml_get_widget (totem->xml_popup, "trcm_next_chapter");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_next_button_clicked), totem);
-	item = glade_xml_get_widget (totem->xml_popup, "trcm_previous_chapter");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_previous_button_clicked), totem);
-	item = glade_xml_get_widget (totem->xml_popup, "trcm_skip_forward");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_skip_forward1_activate), totem);
-	item = glade_xml_get_widget (totem->xml_popup, "trcm_skip_backwards");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_skip_backwards1_activate), totem);
-	item = glade_xml_get_widget (totem->xml_popup, "trcm_volume_up");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_volume_up1_activate), totem);
-	item = glade_xml_get_widget (totem->xml_popup, "trcm_volume_down");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_volume_down1_activate), totem);
-	item = glade_xml_get_widget (totem->xml_popup, "trcm_show_controls");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_show_controls2_activate), totem);
+#ifdef HAVE_GTK_ONLY
+	action = gtk_action_group_get_action (totem->main_action_group, "contents");
+	gtk_action_set_visible (action, FALSE)
+#endif /* HAVE_GTK_ONLY */
 
 	/* Controls */
-	totem->pp_button = glade_xml_get_widget
-		(totem->xml, "tmw_play_pause_button");
-	g_signal_connect (G_OBJECT (totem->pp_button), "clicked",
-			G_CALLBACK (on_play_pause_button_clicked), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_previous_button");
-	g_signal_connect (G_OBJECT (item), "clicked",
-			G_CALLBACK (on_previous_button_clicked), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_next_button");
-	g_signal_connect (G_OBJECT (item), "clicked", 
-			  G_CALLBACK (on_next_button_clicked), totem);
+	box = glade_xml_get_widget (totem->xml, "tmw_buttons_hbox");
 
-	/* Drag'n'Drop */
-	item = glade_xml_get_widget (totem->xml, "tmw_sidebar_button");
+	action = gtk_action_group_get_action (totem->main_action_group, "previous-chapter");
+	item = gtk_action_create_tool_item (action);
+	gtk_box_pack_start (GTK_BOX (box), item, FALSE, FALSE, 0);
+
+	action = gtk_action_group_get_action (totem->main_action_group, "play");
+	item = gtk_action_create_tool_item (action);
+	gtk_box_pack_start (GTK_BOX (box), item, FALSE, FALSE, 0);
+
+	action = gtk_action_group_get_action (totem->main_action_group, "next-chapter");
+	item = gtk_action_create_tool_item (action);
+	gtk_box_pack_start (GTK_BOX (box), item, FALSE, FALSE, 0);
+
+	/* Sidebar button (Drag'n'Drop) */
+	box = glade_xml_get_widget (totem->xml, "tmw_sidebar_button_hbox");
+	action = gtk_action_group_get_action (totem->main_action_group, "sidebar");
+	item = gtk_action_create_tool_item (action);
+	gtk_box_pack_start (GTK_BOX (box), item, FALSE, FALSE, 0);
 	g_signal_connect (G_OBJECT (item), "drag_data_received",
 			G_CALLBACK (drop_playlist_cb), totem);
 	gtk_drag_dest_set (item, GTK_DEST_DEFAULT_ALL,
@@ -3335,22 +2880,26 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (on_video_motion_notify_event), totem);
 
 	/* Control Popup */
-	g_signal_connect (G_OBJECT (totem->fs_pp_button), "clicked",
-			G_CALLBACK (on_play_pause_button_clicked), totem);
-	g_signal_connect (G_OBJECT (totem->fs_pp_button), "clicked",
-			G_CALLBACK (on_mouse_click_fullscreen), totem);
+	box = glade_xml_get_widget (totem->xml, "tcw_buttons_hbox");
 
-	item = glade_xml_get_widget (totem->xml, "tcw_previous_button");
-	g_signal_connect (G_OBJECT (item), "clicked",
-			G_CALLBACK (on_previous_button_clicked), totem);
+	action = gtk_action_group_get_action (totem->main_action_group, "previous-chapter");
+	item = gtk_action_create_tool_item (action);
+	gtk_box_pack_start (GTK_BOX (box), item, FALSE, FALSE, 0);
 	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (on_mouse_click_fullscreen), totem);
 
-	item = glade_xml_get_widget (totem->xml, "tcw_next_button");
-	g_signal_connect (G_OBJECT (item), "clicked", 
-			G_CALLBACK (on_next_button_clicked), totem);
+	action = gtk_action_group_get_action (totem->main_action_group, "play");
+	item = gtk_action_create_tool_item (action);
+	gtk_box_pack_start (GTK_BOX (box), item, FALSE, FALSE, 0);
 	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (on_mouse_click_fullscreen), totem);
+
+	action = gtk_action_group_get_action (totem->main_action_group, "next-chapter");
+	item = gtk_action_create_tool_item (action);
+	gtk_box_pack_start (GTK_BOX (box), item, FALSE, FALSE, 0);
+	g_signal_connect (G_OBJECT (item), "clicked",
+			G_CALLBACK (on_mouse_click_fullscreen), totem);
+
 
 	item = glade_xml_get_widget (totem->xml, "tcw_volume_mute_button");
 	g_signal_connect (G_OBJECT (item), "clicked",
@@ -3407,50 +2956,13 @@ totem_callback_connect (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->volume), "value-changed",
 			G_CALLBACK (vol_cb), totem);
 
-	/* Playlist */
-
-	/* DVD menu callbacks */
-	item = glade_xml_get_widget (totem->xml, "tmw_dvd_root_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_dvd_root_menu1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_dvd_title_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_dvd_title_menu1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_dvd_audio_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_dvd_audio_menu1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_dvd_angle_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_dvd_angle_menu1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_dvd_chapter_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_dvd_chapter_menu1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_skip_to_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_skip_to1_activate), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_next_chapter_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_next_button_clicked), totem);
-	item = glade_xml_get_widget (totem->xml,
-			"tmw_previous_chapter_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_previous_button_clicked), totem);
-	item = glade_xml_get_widget (totem->xml, "tmw_skip_forward_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_skip_forward1_activate), totem);
-	item = glade_xml_get_widget (totem->xml,
-			"tmw_skip_backwards_menu_item");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_skip_backwards1_activate), totem);
-
-	/* Subtitle and Languages submenu */
-	item = glade_xml_get_widget (totem->xml, "tmw_menu_languages");
-	g_object_ref (item);
-	item = glade_xml_get_widget (totem->xml, "tmw_menu_subtitles");
-	g_object_ref (item);
-
 	/* Named icon support */
 	totem_set_default_icons (totem);
+
+	/* Set sensitivity of the toolbar buttons */
+	totem_action_set_sensitivity ("play", FALSE);
+	totem_action_set_sensitivity ("next-chapter", FALSE);
+	totem_action_set_sensitivity ("previous-chapter", FALSE);
 
 	/* Update the UI */
 	g_timeout_add (600, (GSourceFunc) gui_update_cb, totem);
@@ -3703,15 +3215,13 @@ main (int argc, char **argv)
 			TRUE, NULL);
 	if (totem->xml == NULL)
 		totem_action_exit (NULL);
-	totem->xml_popup = totem_interface_load ("popup.glade",
-			_("video popup menu"),
-			TRUE, NULL);
-	if (totem->xml_popup == NULL)
-		totem_action_exit (NULL);
 
 	totem->win = glade_xml_get_widget (totem->xml, "totem_main_window");
 	
 	totem_named_icons_init (totem, FALSE);
+
+	/* Menubar */
+	totem_ui_manager_setup (totem);
 
 	/* The sidebar */
 	playlist_widget_setup (totem);
@@ -3739,8 +3249,6 @@ main (int argc, char **argv)
 	totem->tooltip = gtk_tooltips_new ();
 	g_object_set_data (G_OBJECT (totem->fs_volume), "fs", GINT_TO_POINTER (1));
 	totem->volume_first_time = 1;
-	totem->fs_pp_button = glade_xml_get_widget
-		(totem->xml, "tcw_pp_button");
 	totem->statusbar = glade_xml_get_widget (totem->xml, "tmw_statusbar");
 	totem->tcw_time_label = glade_xml_get_widget (totem->xml,
 			"tcw_time_display_label");

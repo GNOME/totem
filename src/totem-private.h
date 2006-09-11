@@ -30,12 +30,11 @@
 
 #include <glade/glade.h>
 #include <gconf/gconf-client.h>
+#include <gtk/gtk.h>
 #include <libgnomevfs/gnome-vfs.h>
 
 #include "totem-remote.h"
 #include "totem-scrsaver.h"
-#include "egg-recent-model.h"
-#include "egg-recent-view-gtk.h"
 #include "totem-playlist.h"
 #include "bacon-message-connection.h"
 #include "bacon-video-widget.h"
@@ -51,7 +50,13 @@
 		gtk_widget_set_sensitive (widget, state);	\
 	}
 #define totem_main_set_sensitivity(name, state) totem_set_sensitivity (totem->xml, name, state)
-#define totem_popup_set_sensitivity(name, state) totem_set_sensitivity (totem->xml_popup, name, state)
+
+#define totem_action_set_sensitivity(name, state)					\
+	{										\
+		GtkAction *action;							\
+		action = gtk_action_group_get_action (totem->main_action_group, name);	\
+		gtk_action_set_sensitive (action, state);				\
+	}
 
 typedef enum {
 	TOTEM_CONTROLS_VISIBLE,
@@ -68,11 +73,24 @@ typedef enum {
 struct Totem {
 	/* Control window */
 	GladeXML *xml;
-	GladeXML *xml_popup;
 	GtkWidget *win;
 	BaconVideoWidget *bvw;
 	GtkWidget *prefs;
 	GtkWidget *statusbar;
+
+	/* UI manager */
+	GtkActionGroup *main_action_group;
+	GtkActionGroup *zoom_action_group;
+	GtkUIManager *ui_manager;
+
+	GtkActionGroup *devices_action_group;
+	guint devices_ui_id;
+
+	GtkActionGroup *languages_action_group;
+	guint languages_ui_id;
+
+	GtkActionGroup *subtitles_action_group;
+	guint subtitles_ui_id;
 
 	/* Sidebar */
 	GtkWidget *sidebar;
@@ -132,8 +150,9 @@ struct Totem {
 	TotemScrsaver *scr;
 
 	/* recent file stuff */
-	EggRecentModel *recent_model;
-	EggRecentViewGtk *recent_view;
+	GtkRecentManager *recent_manager;
+	GtkActionGroup *recent_action_group;
+	guint recent_ui_id;
 
 	/* Monitor for playlist unmounts and drives/volumes monitoring */
 	GnomeVFSVolumeMonitor *monitor;
@@ -159,5 +178,29 @@ struct Totem {
 };
 
 GtkWidget *totem_volume_create (void);
+
+#define SEEK_FORWARD_OFFSET 60
+#define SEEK_BACKWARD_OFFSET -15
+
+#define VOLUME_DOWN_OFFSET -8
+#define VOLUME_UP_OFFSET 8
+
+#define ZOOM_IN_OFFSET 1
+#define ZOOM_OUT_OFFSET -1
+
+void	totem_action_open			(Totem *totem);
+void	totem_action_open_location		(Totem *totem);
+void	totem_action_eject			(Totem *totem);
+void	totem_action_take_screenshot		(Totem *totem);
+void	totem_action_zoom_relative		(Totem *totem, int off_pct);
+void	totem_action_zoom_reset			(Totem *totem);
+void	totem_action_show_help			(Totem *totem);
+void	totem_action_skip_to			(Totem *totem);
+
+void	show_controls				(Totem *totem, gboolean was_fullscreen);
+
+gboolean totem_is_fullscreen			(Totem *totem);
+
+
 
 #endif /* __TOTEM_PRIVATE_H__ */

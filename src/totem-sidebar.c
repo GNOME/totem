@@ -29,18 +29,6 @@
 #include "totem-private.h"
 #include "ev-sidebar.h"
 
-void
-totem_sidebar_toggle (Totem *totem)
-{
-	GtkWidget *toggle;
-	gboolean state;
-
-	toggle = glade_xml_get_widget (totem->xml, "tmw_sidebar_button");
-
-	state = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), !state);
-}
-
 static void
 cb_resize (Totem * totem)
 {
@@ -66,22 +54,20 @@ cb_resize (Totem * totem)
 	gtk_window_resize (GTK_WINDOW (totem->win), w, h);
 }
 
-static void
-on_sidebar_button_toggled (GtkToggleButton *button, Totem *totem)
+void
+totem_sidebar_toggle (Totem *totem, gboolean state)
 {
-	GtkWidget *item;
-	gboolean state;
+	GtkAction *action;
 
-	state = gtk_toggle_button_get_active (button);
 	if (state != FALSE)
 		gtk_widget_show (GTK_WIDGET (totem->sidebar));
 	else
 		gtk_widget_hide (GTK_WIDGET (totem->sidebar));
 
-	item = glade_xml_get_widget (totem->xml, "tmw_sidebar_menu_item");
-	totem_signal_block_by_data (G_OBJECT (item), totem);
-	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), state);
-	totem_signal_unblock_by_data (G_OBJECT (item), totem);
+	action = gtk_action_group_get_action (totem->main_action_group, "sidebar");
+	totem_signal_block_by_data (G_OBJECT (action), totem);
+	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), state);
+	totem_signal_unblock_by_data (G_OBJECT (action), totem);
 
 	gconf_client_set_bool (totem->gc,
 				GCONF_PREFIX"/sidebar_shown",
@@ -94,10 +80,7 @@ on_sidebar_button_toggled (GtkToggleButton *button, Totem *totem)
 static void
 toggle_sidebar_from_sidebar (GtkWidget *playlist, Totem *totem)
 {
-	GtkWidget *button;
-
-	button = glade_xml_get_widget (totem->xml, "tmw_sidebar_button");
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
+	totem_sidebar_toggle (totem, FALSE);
 }
 
 gboolean
@@ -109,7 +92,8 @@ totem_sidebar_is_visible (Totem *totem)
 void
 totem_sidebar_setup (Totem *totem, gboolean visible, const char *page_id)
 {
-	GtkWidget *item, *item2;
+	GtkWidget *item;
+	GtkAction *action;
 
 	item = glade_xml_get_widget (totem->xml, "tmw_main_pane");
 	totem->sidebar = ev_sidebar_new ();
@@ -131,19 +115,14 @@ totem_sidebar_setup (Totem *totem, gboolean visible, const char *page_id)
 
 	totem->sidebar_shown = visible;
 
-	item = glade_xml_get_widget (totem->xml, "tmw_sidebar_button");
-	item2 = glade_xml_get_widget (totem->xml, "tmw_sidebar_menu_item");
+	action = gtk_action_group_get_action (totem->main_action_group,
+			"sidebar");
 
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), visible);
-	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item2), visible);
+	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), visible);
 
 	/* Signals */
-	g_signal_connect (G_OBJECT (item), "clicked",
-			G_CALLBACK (on_sidebar_button_toggled), totem);
 	g_signal_connect (G_OBJECT (totem->sidebar), "closed",
 			G_CALLBACK (toggle_sidebar_from_sidebar), totem);
-	g_signal_connect_swapped (G_OBJECT (item2), "activate",
-			G_CALLBACK (totem_sidebar_toggle), totem);
 
 	gtk_widget_show_all (totem->sidebar);
 	gtk_widget_realize (totem->sidebar);

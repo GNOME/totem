@@ -185,32 +185,23 @@ on_tvout_toggled (GtkToggleButton *togglebutton, Totem *totem)
 }
 
 static void
-on_deinterlace1_activate (GtkCheckMenuItem *checkmenuitem, Totem *totem)
-{
-	gboolean value;
-
-	value = gtk_check_menu_item_get_active (checkmenuitem);
-	bacon_video_widget_set_deinterlacing (totem->bvw, value);
-	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/deinterlace",
-			value, NULL);
-}
-
-static void
 deinterlace_changed_cb (GConfClient *client, guint cnxn_id,
 		GConfEntry *entry, Totem *totem)
 {
-	GtkWidget *item;
+	GtkAction *action;
 
-	item = glade_xml_get_widget (totem->xml, "tmw_deinterlace_menu_item");
-	g_signal_handlers_disconnect_by_func (G_OBJECT (item),
-			on_deinterlace1_activate, totem);
+	action = gtk_action_group_get_action (totem->main_action_group,
+			"deinterlace");
 
-	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
+	g_signal_handlers_block_matched (G_OBJECT (action),
+			G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, totem);
+
+	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
 			gconf_client_get_bool (totem->gc,
 				GCONF_PREFIX"/deinterlace", NULL));
 
-	g_signal_connect (G_OBJECT (item),  "activate",
-			G_CALLBACK (on_deinterlace1_activate), totem);
+	g_signal_handlers_unblock_matched (G_OBJECT (action),
+			G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, totem);
 }
 
 static void
@@ -436,6 +427,7 @@ void
 totem_setup_preferences (Totem *totem)
 {
 	GtkWidget *item, *menu;
+	GtkAction *action;
 	gboolean show_visuals, auto_resize, is_local, deinterlace;
 	int connection_speed, i;
 	char *visual, *font, *encoding;
@@ -600,28 +592,28 @@ totem_setup_preferences (Totem *totem)
 
 	/* This one is for the deinterlacing menu, not really our dialog
 	 * but we do it anyway */
-	item = glade_xml_get_widget (totem->xml, "tmw_deinterlace_menu_item");
+	action = gtk_action_group_get_action (totem->main_action_group,
+			"deinterlace");
 	deinterlace = gconf_client_get_bool (totem->gc,
 			GCONF_PREFIX"/deinterlace", NULL);
-	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
-				deinterlace);
+	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
+			deinterlace);
 	bacon_video_widget_set_deinterlacing (totem->bvw, deinterlace);
 	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/deinterlace",
 			(GConfClientNotifyFunc) deinterlace_changed_cb,
 			totem, NULL, NULL);
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_deinterlace1_activate), totem);
 
 	/* Always On Top */
-	item = glade_xml_get_widget (totem->xml, "tmw_always_on_top_menu_item");
-	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
+	action = gtk_action_group_get_action (totem->main_action_group,
+			"always-on-top");
+	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
 			gconf_client_get_bool (totem->gc,
 				GCONF_PREFIX"/window_on_top", NULL));
 
 	/* Save to disk Lockdown */
-	item = glade_xml_get_widget
-		(totem->xml, "tmw_take_screenshot_menu_item");
-	gtk_widget_set_sensitive (item,
+	action = gtk_action_group_get_action (totem->main_action_group,
+			"take-screenshot");
+	gtk_action_set_sensitive (action,
 			!gconf_client_get_bool (totem->gc,
 				"/desktop/gnome/lockdown/disable_save_to_disk",
 				NULL));

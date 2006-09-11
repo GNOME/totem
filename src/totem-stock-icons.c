@@ -97,13 +97,20 @@ totem_default_theme_changed (GtkIconTheme *theme, Totem *totem)
 void
 totem_set_default_icons (Totem *totem)
 {
+	GtkAction *action;
+	GSList *proxies, *p;
 	GtkWidget *item;
 
 	/* Screenshot button */
-	item = glade_xml_get_widget (totem->xml,
-			"tmw_take_screenshot_menu_item_image");
-	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
+	action = gtk_action_group_get_action (totem->main_action_group,
+			"take-screenshot");
+
+	g_object_set_data (G_OBJECT (action), "pixbuf-icon",
 			PIXBUF_FOR_ID("panel-screenshot"));
+	proxies = gtk_action_get_proxies (action);
+	for (p = proxies; p != NULL; p = p->next) {
+		gtk_action_connect_proxy (action, GTK_WIDGET (p->data));
+	}
 
 	/* Leave fullscreen button */
 	item = glade_xml_get_widget (totem->xml,

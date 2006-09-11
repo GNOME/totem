@@ -18,11 +18,11 @@ stuff_DATA =				\
 	totem.glade			\
 	playlist.glade			\
 	mozilla-viewer.glade		\
-	popup.glade			\
 	properties.glade		\
 	skip_to.glade			\
 	uri.glade			\
 	screenshot.glade		\
+	totem-ui.xml			\
 	totem_logo.png			\
 	vanity.glade			\
 	vanity.png
