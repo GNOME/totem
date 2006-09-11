@@ -1900,7 +1900,7 @@ totem_playlist_has_next_mrl (TotemPlaylist *playlist)
 }
 
 gboolean
-totem_playlist_set_title (TotemPlaylist *playlist, const char *title)
+totem_playlist_set_title (TotemPlaylist *playlist, const char *title, gboolean force)
 {
 	GtkListStore *store;
 	GtkTreeIter iter;
@@ -1919,11 +1919,13 @@ totem_playlist_set_title (TotemPlaylist *playlist, const char *title)
 	if (&iter == NULL)
 		return FALSE;
 
-	gtk_tree_model_get (playlist->_priv->model, &iter,
-			TITLE_CUSTOM_COL, &custom_title,
-			-1);
-	if (custom_title != FALSE)
-		return TRUE;
+	if (force == FALSE) {
+		gtk_tree_model_get (playlist->_priv->model, &iter,
+				TITLE_CUSTOM_COL, &custom_title,
+				-1);
+		if (custom_title != FALSE)
+			return TRUE;
+	}
 
 	gtk_list_store_set (store, &iter,
 			FILENAME_COL, title,

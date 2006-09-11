@@ -1748,6 +1748,20 @@ bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
     g_object_set (bvw->priv->play, "current-text", subtitle, NULL);
 }
 
+gboolean
+bacon_video_widget_has_next_track (BaconVideoWidget *bvw)
+{
+  //FIXME
+  return TRUE;
+}
+
+gboolean
+bacon_video_widget_has_previous_track (BaconVideoWidget *bvw)
+{
+  //FIXME
+  return TRUE;
+}
+
 static GList *
 get_list_of_type (BaconVideoWidget * bvw, const gchar * type_name)
 {

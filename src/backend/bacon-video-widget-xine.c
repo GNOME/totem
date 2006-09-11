@@ -3768,6 +3768,58 @@ bacon_video_widget_set_subtitle (BaconVideoWidget *bvw, int subtitle)
 }
 
 gboolean
+bacon_video_widget_has_next_track (BaconVideoWidget *bvw)
+{
+	int num, current;
+
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), TRUE);
+	g_return_val_if_fail (bvw->priv->stream != NULL, TRUE);
+
+	if (g_str_has_prefix (bvw->priv->mrl, "dvd:") == FALSE
+			|| bvw->priv->mrl == NULL)
+		return TRUE;
+
+	/* Check whether there's additional chapters first */
+	num = xine_get_stream_info (bvw->priv->stream,
+			XINE_STREAM_INFO_DVD_CHAPTER_COUNT);
+	if (num == 0)
+		return FALSE;
+
+	current = xine_get_stream_info (bvw->priv->stream,
+			XINE_STREAM_INFO_DVD_CHAPTER_NUMBER);
+	if (current < num)
+		return TRUE;
+
+	/* And now with titles */
+	num = xine_get_stream_info (bvw->priv->stream,
+			XINE_STREAM_INFO_DVD_TITLE_COUNT);
+	current = xine_get_stream_info (bvw->priv->stream,
+			XINE_STREAM_INFO_DVD_TITLE_NUMBER);
+
+	return (current < num);
+}
+
+gboolean
+bacon_video_widget_has_previous_track (BaconVideoWidget *bvw)
+{
+	int current;
+
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), TRUE);
+	g_return_val_if_fail (bvw->priv->stream != NULL, TRUE);
+
+	if (g_str_has_prefix (bvw->priv->mrl, "dvd:") == FALSE
+			|| bvw->priv->mrl == NULL)
+		return TRUE;
+
+	current = xine_get_stream_info (bvw->priv->stream,
+			XINE_STREAM_INFO_DVD_CHAPTER_NUMBER);
+
+	/* We can't go back across titles */
+
+	return (current > 1);
+}
+
+gboolean
 bacon_video_widget_can_get_frames (BaconVideoWidget *bvw, GError **error)
 {
 	g_return_val_if_fail (bvw != NULL, FALSE);

@@ -1,5 +1,22 @@
 2006-09-11  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_has_next_track),
+	(bacon_video_widget_has_previous_track):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_has_next_track),
+	(bacon_video_widget_has_previous_track):
+	* src/backend/bacon-video-widget.h:
+	* src/totem-playlist.c: (totem_playlist_set_title):
+	* src/totem-playlist.h:
+	* src/totem.c: (totem_action_save_size), (on_title_change_event),
+	(on_got_metadata_event), (update_buttons), (totem_setup_window):
+	- remove useless debug
+	- force setting the playlist title when we're playing a DVD
+	- set Next/Previous properly when playing back DVDs
+
+2006-09-11  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-video-thumbnailer.c: (is_image_interesting), (main):
 	Patch from Paul Betts <paul.betts@gmail.com> to try and get a
 	useful thumbnail picture, avoiding solid-colour backgrounds

@@ -92,7 +92,8 @@ gboolean   totem_playlist_get_current_metadata (TotemPlaylist *playlist,
 						char         **title,
 						char         **album);
 gboolean   totem_playlist_set_title (TotemPlaylist *playlist,
-				     const char *title);
+				     const char *title,
+				     gboolean force);
 
 #define    totem_playlist_has_direction(playlist, direction) (direction == TOTEM_PLAYLIST_DIRECTION_NEXT ? totem_playlist_has_next_mrl (playlist) : totem_playlist_has_previous_mrl (playlist))
 gboolean   totem_playlist_has_previous_mrl (TotemPlaylist *playlist);

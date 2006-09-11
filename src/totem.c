@@ -158,7 +158,6 @@ totem_action_save_size (Totem *totem)
 			&totem->window_h);
 	totem->sidebar_w = totem->window_w
 		- gtk_paned_get_position (GTK_PANED (item));
-	g_message ("w %d h %d sidebar %d", totem->window_w, totem->window_h, totem->sidebar_w);
 }
 
 static void
@@ -1259,7 +1258,9 @@ static void
 on_title_change_event (BaconVideoWidget *bvw, const char *string, Totem *totem)
 {
 	update_mrl_label (totem, string);
-	totem_playlist_set_title (TOTEM_PLAYLIST (totem->playlist), string);
+	update_buttons (totem);
+	totem_playlist_set_title (TOTEM_PLAYLIST (totem->playlist),
+			string, TRUE);
 }
 
 static void
@@ -1305,7 +1306,7 @@ on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 
 	if (name != NULL) {
 		totem_playlist_set_title
-			(TOTEM_PLAYLIST (totem->playlist), name);
+			(TOTEM_PLAYLIST (totem->playlist), name, FALSE);
 		g_free (name);
 	}
 	on_playlist_change_name 	 
@@ -3018,13 +3019,10 @@ update_buttons (Totem *totem)
 	gboolean has_item;
 
 	/* Previous */
-	/* FIXME Need way to detect if DVD Title is at first chapter */
 	if (totem_playing_dvd (totem->mrl) != FALSE)
-	{
-		has_item = TRUE;
-	} else {
+		has_item = bacon_video_widget_has_previous_track (totem->bvw);
+	else
 		has_item = totem_playlist_has_previous_mrl (totem->playlist);
-	}
 
 	totem_main_set_sensitivity ("tmw_previous_button", has_item);
 	totem_main_set_sensitivity ("tcw_previous_button", has_item);
@@ -3032,13 +3030,10 @@ update_buttons (Totem *totem)
 	totem_popup_set_sensitivity ("trcm_previous_chapter", has_item);
 
 	/* Next */
-	/* FIXME Need way to detect if DVD Title has no more chapters */
 	if (totem_playing_dvd (totem->mrl) != FALSE)
-	{
-		has_item = TRUE;
-	} else {
+		has_item = bacon_video_widget_has_next_track (totem->bvw);
+	else
 		has_item = totem_playlist_has_next_mrl (totem->playlist);
-	}
 
 	totem_main_set_sensitivity ("tmw_next_button", has_item);
 	totem_main_set_sensitivity ("tcw_next_button", has_item);
@@ -3131,7 +3126,6 @@ totem_setup_window (Totem *totem)
 	} else {
 		totem_sidebar_setup (totem, show_sidebar, page_id);
 	}
-	g_message ("w %d h %d sidebar %d", totem->window_w, totem->window_h, totem->sidebar_w);
 }
 
 static void
