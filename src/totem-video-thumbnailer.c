@@ -45,6 +45,7 @@
 
 #define MIN_LEN_FOR_SEEK 25000
 #define HALF_SECOND G_USEC_PER_SEC * .5
+#define BORING_IMAGE_VARIANCE 256.0		/* Tweak this if necessary */
 
 gboolean finished = FALSE;
 static char *format = "png";
@@ -207,6 +208,42 @@ add_holes_to_pixbuf_large (GdkPixbuf *pixbuf, int size)
 	return small;
 }
 
+/* This function attempts to detect images that are mostly solid images 
+ * It does this by calculating the statistical variance of the
+ * black-and-white image */
+static gboolean
+is_image_interesting (GdkPixbuf *pixbuf)
+{
+	/* We're gonna assume 8-bit samples. If anyone uses anything different,
+	 * it doesn't really matter cause it's gonna be ugly anyways */
+	int rowstride = gdk_pixbuf_get_rowstride(pixbuf);
+	int height = gdk_pixbuf_get_height(pixbuf);
+	guchar* buffer = gdk_pixbuf_get_pixels(pixbuf);
+	int num_samples = (rowstride * height);
+	int i;
+	float x_bar = 0.0f;
+	float variance = 0.0f;
+
+	/* FIXME: If this proves to be a performance issue, this function
+	 * can be modified to perhaps only check 3 rows. I doubt this'll
+	 * be a problem though. */
+
+	/* Iterate through the image to calculate x-bar */
+	for (i = 0; i < num_samples; i++) {
+		x_bar += (float)buffer[i];
+	}
+	x_bar /= ((float)num_samples);
+
+	/* Calculate the variance */
+	for (i = 0; i < num_samples; i++) {
+		float tmp = ((float)buffer[i] - x_bar);
+		variance += tmp * tmp;
+	}
+	variance /= ((float)(num_samples - 1));
+
+	return (variance > BORING_IMAGE_VARIANCE);
+}
+
 static void
 save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 	     const char *video_path, int size)
@@ -335,6 +372,11 @@ int main (int argc, char *argv[])
 	int i, length, size;
 	char *input, *output;
 
+	const float frame_locations[] =
+	{ 1.0 / 3.0, 2.0 / 3.0, 0.1,0.9, 0.5 };
+	const int frame_locations_length = 5;
+	int current;
+
 	if (argc <= 2 || strcmp (argv[1], "-h") == 0 ||
 	    strcmp (argv[1], "--help") == 0) {
 		usage (argv[0]);
@@ -429,30 +471,42 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	/* Jump a 3rd into the file */
-	length = bacon_video_widget_get_stream_length (bvw);
-	if (length > MIN_LEN_FOR_SEEK)
+	/* Test at multiple points in the file to see if we can get an 
+	 * interesting frame */
+	for (current = 0; current < frame_locations_length; current++)
 	{
-		if (bacon_video_widget_seek
-				(bvw, ((float) 1 / 3), NULL) == FALSE)
+		length = bacon_video_widget_get_stream_length (bvw);
+		if (length > MIN_LEN_FOR_SEEK)
 		{
-			bacon_video_widget_play (bvw, NULL);
+			if (bacon_video_widget_seek
+					(bvw, frame_locations[current], NULL) == FALSE)
+			{
+				bacon_video_widget_play (bvw, NULL);
+			}
 		}
+
+		if (bacon_video_widget_can_get_frames (bvw, &err) == FALSE)
+		{
+			g_print ("totem-video-thumbnailer: '%s' isn't thumbnailable\n"
+					"Reason: %s\n",
+					input, err ? err->message : "programming error");
+			bacon_video_widget_close (bvw);
+			gtk_widget_destroy (GTK_WIDGET (bvw));
+			g_error_free (err);
+
+			exit (1);
+		}
+
+		/* Pull the frame, if it's interesting we bail early */
+		pixbuf = bacon_video_widget_get_current_frame (bvw);
+		if (is_image_interesting (pixbuf) != FALSE)
+			break;
+
+		/* If we get to the end of this loop, we'll end up using the last image
+		 * we pulled */
+		if(current + 1 < frame_locations_length)
+			gdk_pixbuf_unref (pixbuf);
 	}
-
-	if (bacon_video_widget_can_get_frames (bvw, &err) == FALSE)
-	{
-		g_print ("totem-video-thumbnailer: '%s' isn't thumbnailable\n"
-				"Reason: %s\n",
-				input, err ? err->message : "programming error");
-		bacon_video_widget_close (bvw);
-		gtk_widget_destroy (GTK_WIDGET (bvw));
-		g_error_free (err);
-
-		exit (1);
-	}
-
-	pixbuf = bacon_video_widget_get_current_frame (bvw);
 
 	/* Cleanup */
 	bacon_video_widget_close (bvw);
