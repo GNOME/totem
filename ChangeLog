@@ -1,5 +1,20 @@
 2006-09-11  Bastien Nocera  <hadess@hadess.net>
 
+	* data/properties.glade:
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_metadata_int),
+	(bacon_video_widget_get_metadata):
+	* src/backend/bacon-video-widget-xine.c:
+	* src/backend/bacon-video-widget.h:
+	* src/bacon-video-widget-properties.c:
+	(bacon_video_widget_properties_reset),
+	(bacon_video_widget_properties_update):
+	Add support for the audio sample rate, and audio
+	channels to the properties widget (Closes: #332831)
+
+2006-09-11  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_action_handle_key_press),
 	(on_window_key_press_event): handle the Apple remote's
 	"Menu" button, when playing a DVD (Helps: #355474)

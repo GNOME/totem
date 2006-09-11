@@ -204,6 +204,8 @@ typedef enum {
 	BVW_INFO_HAS_AUDIO,
 	BVW_INFO_AUDIO_BITRATE,
 	BVW_INFO_AUDIO_CODEC,
+	BVW_INFO_AUDIO_SAMPLE_RATE,
+	BVW_INFO_AUDIO_CHANNELS
 } BaconVideoWidgetMetadataType;
 
 void bacon_video_widget_get_metadata		 (BaconVideoWidget *bvw,

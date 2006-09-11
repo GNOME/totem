@@ -164,6 +164,10 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 			_("N/A"));
 	/* Audio Codec */
 	bacon_video_widget_properties_set_label (props, "acodec", _("N/A"));
+	/* Sample rate */
+	bacon_video_widget_properties_set_label (props, "samplerate", _("0 Hz"));
+	/* Channels */
+	bacon_video_widget_properties_set_label (props, "channels", _("0 Channels"));
 }
 
 void
@@ -246,6 +250,9 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 		UPDATE_FROM_INT (BVW_INFO_AUDIO_BITRATE, "audio_bitrate",
 				 N_("%d kbps"), _("N/A"));
 		UPDATE_FROM_STRING (BVW_INFO_AUDIO_CODEC, "acodec");
+		UPDATE_FROM_INT (BVW_INFO_AUDIO_SAMPLE_RATE, "samplerate",
+				N_("%d Hz"), _("N/A"));
+		UPDATE_FROM_STRING (BVW_INFO_AUDIO_CHANNELS, "channels");
 	}
 
 #undef UPDATE_FROM_STRING

@@ -3471,6 +3471,19 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetM
 		string = xine_get_meta_info (bvw->priv->stream,
 				XINE_META_INFO_AUDIOCODEC);
 		break;
+	 case BVW_INFO_AUDIO_CHANNELS:
+		{
+		//FIXME xine-lib sucks at this, it gives the
+		//mode of the output, not the one of the file
+#if 0
+			int mode;
+
+			mode = xine_get_stream_info (bvw->priv->stream,
+					XINE_STREAM_INFO_AUDIO_MODE);
+			switch (mode) {
+#endif
+		}
+		break;
 	default:
 		g_assert_not_reached ();
 	}
@@ -3554,6 +3567,10 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget *bvw,
 			integer = (int) g_ascii_strtod (string, NULL);
 		}
 		break;
+	 case BVW_INFO_AUDIO_SAMPLE_RATE:
+		integer = xine_get_stream_info (bvw->priv->stream,
+				XINE_STREAM_INFO_AUDIO_SAMPLERATE);
+		break;
 	 default:
 		g_assert_not_reached ();
 	 }
@@ -3615,6 +3632,7 @@ bacon_video_widget_get_metadata (BaconVideoWidget *bvw,
 	case BVW_INFO_YEAR:
 	case BVW_INFO_VIDEO_CODEC:
 	case BVW_INFO_AUDIO_CODEC:
+	case BVW_INFO_AUDIO_CHANNELS:
 		bacon_video_widget_get_metadata_string (bvw, type, value);
 		break;
 	case BVW_INFO_DURATION:
@@ -3624,6 +3642,7 @@ bacon_video_widget_get_metadata (BaconVideoWidget *bvw,
 	case BVW_INFO_AUDIO_BITRATE:
 	case BVW_INFO_VIDEO_BITRATE:
 	case BVW_INFO_TRACK_NUMBER:
+	case BVW_INFO_AUDIO_SAMPLE_RATE:
 		bacon_video_widget_get_metadata_int (bvw, type, value);
 		break;
 	case BVW_INFO_HAS_VIDEO:
