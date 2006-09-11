@@ -2431,7 +2431,10 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		totem_action_zoom_relative (totem, ZOOM_OUT_OFFSET);
 		break;
 	case GDK_Escape:
-		totem_action_fullscreen (totem, FALSE);
+		if (event->state & GDK_SUPER_MASK)
+			bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU);
+		else
+			totem_action_fullscreen (totem, FALSE);
 		break;
 	case GDK_Left:
 		totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), TRUE);
@@ -2632,11 +2635,22 @@ on_window_key_press_event (GtkWidget *win, GdkEventKey *event, Totem *totem)
 		case GDK_0:
 			if (event->type == GDK_KEY_PRESS) {
 				return totem_action_handle_key_press (totem, event);
-			}
-			else {
+			} else {
 				return totem_action_handle_key_release (totem, event);
 			}
 	}
+
+	if (event->state != 0
+			&& (event->state & GDK_SUPER_MASK)) {
+		switch (event->keyval)
+		case GDK_Escape:
+			if (event->type == GDK_KEY_PRESS) {
+				return totem_action_handle_key_press (totem, event);
+			} else {
+				return totem_action_handle_key_release (totem, event);
+			}
+	}
+
 
 	/* If we have modifiers, and either Ctrl, Mod1 (Alt), or any
 	 * of Mod3 to Mod5 (Mod2 is num-lock...) are pressed, we
@@ -2651,8 +2665,7 @@ on_window_key_press_event (GtkWidget *win, GdkEventKey *event, Totem *totem)
 
 	if (event->type == GDK_KEY_PRESS) {
 		return totem_action_handle_key_press (totem, event);
-	}
-	else {
+	} else {
 		return totem_action_handle_key_release (totem, event);
 	}
 }
