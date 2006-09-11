@@ -158,7 +158,6 @@ totem_action_save_size (Totem *totem)
 			&totem->window_h);
 	totem->sidebar_w = totem->window_w
 		- gtk_paned_get_position (GTK_PANED (item));
-	g_message ("w %d h %d sidebar %d", totem->window_w, totem->window_h, totem->sidebar_w);
 }
 
 static void
@@ -3131,7 +3130,6 @@ totem_setup_window (Totem *totem)
 	} else {
 		totem_sidebar_setup (totem, show_sidebar, page_id);
 	}
-	g_message ("w %d h %d sidebar %d", totem->window_w, totem->window_h, totem->sidebar_w);
 }
 
 static void
