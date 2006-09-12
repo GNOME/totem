@@ -1,11 +1,25 @@
 2006-09-12  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_get_stream_info_of_current_stream),
+	(bvw_get_caps_of_current_stream),
+	(bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_metadata_int):
+	  Try to get the audio/video codec from the current stream-info
+	  first, so that they relate to the currently playing stream
+	  (playbin needs some fixing first for the info to update
+	  correctly after switching streams though).
+
+2006-09-12  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
 	(get_stream_info_objects_for_type),
 	(bvw_get_caps_of_current_audio_stream), (audio_caps_have_LFE),
 	(bacon_video_widget_get_metadata_string),
 	(bacon_video_widget_get_metadata_int):
 	  Get channel/sample rate information for current stream (#355511).
+	  (Note that playbin needs fixing before this will update correctly
+	  when switching streams).
 
 	* src/metadata-test.c: (on_got_metadata_event):
 	  Show channel/sample rate here too.

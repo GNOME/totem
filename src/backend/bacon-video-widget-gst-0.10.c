@@ -3645,24 +3645,46 @@ get_metadata_type_name (BaconVideoWidgetMetadataType type)
   return "unknown";
 }
 
-static GstCaps *
-bvw_get_caps_of_current_audio_stream (BaconVideoWidget * bvw)
+static GObject *
+bvw_get_stream_info_of_current_stream (BaconVideoWidget * bvw,
+    const gchar *stream_type)
 {
-  GstCaps *caps = NULL;
-  GObject *current;
-  GList *audio_streams = NULL;
-  gint stream = -1;
+  GObject *current_info;
+  GList *streams;
+  gchar *lower, *cur_prop_str;
+  gint stream_num = -1;
 
   if (bvw->priv->play == NULL)
     return NULL;
 
-  g_object_get (bvw->priv->play, "current-audio", &stream, NULL);
-  GST_LOG ("current audio stream: %d", stream);
-  if (stream < 0)
+  lower = g_ascii_strdown (stream_type, -1);
+  cur_prop_str = g_strconcat ("current-", lower, NULL);
+  g_object_get (bvw->priv->play, cur_prop_str, &stream_num, NULL);
+  g_free (cur_prop_str);
+  g_free (lower);
+
+  GST_LOG ("current %s stream: %d", stream_type, stream_num);
+  if (stream_num < 0)
     return NULL;
 
-  audio_streams = get_stream_info_objects_for_type (bvw, "AUDIO");
-  current = g_list_nth_data (audio_streams, stream);
+  streams = get_stream_info_objects_for_type (bvw, stream_type);
+  current_info = g_list_nth_data (streams, stream_num);
+  if (current_info != NULL)
+    g_object_ref (current_info);
+  g_list_foreach (streams, (GFunc) g_object_unref, NULL);
+  g_list_free (streams);
+  GST_LOG ("current %s stream info object %p", stream_type, current_info);
+  return current_info;
+}
+
+static GstCaps *
+bvw_get_caps_of_current_stream (BaconVideoWidget * bvw,
+    const gchar *stream_type)
+{
+  GstCaps *caps = NULL;
+  GObject *current;
+
+  current = bvw_get_stream_info_of_current_stream (bvw, stream_type);
   if (current != NULL) {
     GstObject *obj = NULL;
 
@@ -3676,10 +3698,9 @@ bvw_get_caps_of_current_audio_stream (BaconVideoWidget * bvw)
       }
       gst_object_unref (obj);
     }
+    gst_object_unref (current);
   }
-  g_list_foreach (audio_streams, (GFunc) g_object_unref, NULL);
-  g_list_free (audio_streams);
-  GST_LOG ("current audio stream caps: %" GST_PTR_FORMAT, caps);
+  GST_LOG ("current %s stream caps: %" GST_PTR_FORMAT, stream_type, caps);
   return caps;
 }
 
@@ -3748,19 +3769,45 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
       res = gst_tag_list_get_string_index (bvw->priv->tagcache,
 					   GST_TAG_ALBUM, 0, &string);
       break;
-    case BVW_INFO_VIDEO_CODEC:
-      res = gst_tag_list_get_string (bvw->priv->tagcache,
-				     GST_TAG_VIDEO_CODEC, &string);
+    case BVW_INFO_VIDEO_CODEC: {
+      GObject *info;
+
+      /* try to get this from the stream info first */
+      if ((info = bvw_get_stream_info_of_current_stream (bvw, "video"))) {
+        g_object_get (info, "codec", &string, NULL);
+        res = (string != NULL);
+        gst_object_unref (info);
+      }
+
+      /* if that didn't work, try the aggregated tags */
+      if (!res) {
+        res = gst_tag_list_get_string (bvw->priv->tagcache,
+            GST_TAG_VIDEO_CODEC, &string);
+      }
       break;
-    case BVW_INFO_AUDIO_CODEC:
-      res = gst_tag_list_get_string (bvw->priv->tagcache,
-				     GST_TAG_AUDIO_CODEC, &string);
+    }
+    case BVW_INFO_AUDIO_CODEC: {
+      GObject *info;
+
+      /* try to get this from the stream info first */
+      if ((info = bvw_get_stream_info_of_current_stream (bvw, "audio"))) {
+        g_object_get (info, "codec", &string, NULL);
+        res = (string != NULL);
+        gst_object_unref (info);
+      }
+
+      /* if that didn't work, try the aggregated tags */
+      if (!res) {
+        res = gst_tag_list_get_string (bvw->priv->tagcache,
+            GST_TAG_AUDIO_CODEC, &string);
+      }
       break;
+    }
     case BVW_INFO_AUDIO_CHANNELS: {
       GstStructure *s;
       GstCaps *caps;
 
-      caps = bvw_get_caps_of_current_audio_stream (bvw);
+      caps = bvw_get_caps_of_current_stream (bvw, "audio");
       if (caps) {
         gint channels = 0;
 
@@ -3855,7 +3902,7 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
       GstStructure *s;
       GstCaps *caps;
 
-      caps = bvw_get_caps_of_current_audio_stream (bvw);
+      caps = bvw_get_caps_of_current_stream (bvw, "audio");
       if (caps) {
         s = gst_caps_get_structure (caps, 0);
         gst_structure_get_int (s, "rate", &integer);
