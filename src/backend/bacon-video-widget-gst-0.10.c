@@ -44,6 +44,8 @@
 #include <gst/video/gstvideosink.h>
 #include <gst/video/video.h>
 #include <gst/audio/gstbaseaudiosink.h>
+/* for pretty multichannel strings */
+#include <gst/audio/multichannel.h>
 
 /* system */
 #include <unistd.h>
@@ -1763,6 +1765,39 @@ bacon_video_widget_has_previous_track (BaconVideoWidget *bvw)
 }
 
 static GList *
+get_stream_info_objects_for_type (BaconVideoWidget * bvw, const gchar * typestr)
+{
+  GList *streaminfo = NULL, *ret = NULL;
+
+  if (bvw->priv->play == NULL || bvw->priv->mrl == NULL)
+    return NULL;
+
+  g_object_get (G_OBJECT (bvw->priv->play), "stream-info", &streaminfo, NULL);
+  streaminfo = g_list_copy (streaminfo);
+  g_list_foreach (streaminfo, (GFunc) g_object_ref, NULL);
+  for ( ; streaminfo != NULL; streaminfo = streaminfo->next) {
+    GObject *info;
+
+    info = streaminfo->data;
+    if (info) {
+      GParamSpec *pspec;
+      GEnumValue *val;
+      gint type;
+
+      g_object_get (info, "type", &type, NULL);
+      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
+      val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
+      if (val && g_ascii_strcasecmp (val->value_nick, typestr) == 0) {
+        ret = g_list_prepend (ret, g_object_ref (info));
+      }
+    }
+  }
+  g_list_foreach (streaminfo, (GFunc) g_object_unref, NULL);
+  g_list_free (streaminfo);
+  return g_list_reverse (ret);
+}
+
+static GList *
 get_list_of_type (BaconVideoWidget * bvw, const gchar * type_name)
 {
   GList *streaminfo = NULL, *ret = NULL;
@@ -1857,7 +1892,16 @@ bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
   else if (language == -2)
     language = -1;
 
+  GST_DEBUG ("setting language to %d", language);
+
   g_object_set (bvw->priv->play, "current-audio", language, NULL);
+
+  g_object_get (bvw->priv->play, "current-audio", &language, NULL);
+  GST_DEBUG ("current-audio now: %d", language);
+
+  /* so it updates its metadata for the newly-selected stream */
+  g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
+  g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
 }
 
 static guint
@@ -3585,7 +3629,9 @@ static struct _metadata_map_info {
   { BVW_INFO_FPS, "fps" },
   { BVW_INFO_HAS_AUDIO, "has-audio" },
   { BVW_INFO_AUDIO_BITRATE, "audio-bitrate" },
-  { BVW_INFO_AUDIO_CODEC, "audio-codec" }
+  { BVW_INFO_AUDIO_CODEC, "audio-codec" },
+  { BVW_INFO_AUDIO_SAMPLE_RATE, "samplerate" },
+  { BVW_INFO_AUDIO_CHANNELS, "channels" }
 };
 
 static const gchar *
@@ -3597,6 +3643,70 @@ get_metadata_type_name (BaconVideoWidgetMetadataType type)
       return metadata_str_map[i].str;
   }
   return "unknown";
+}
+
+static GstCaps *
+bvw_get_caps_of_current_audio_stream (BaconVideoWidget * bvw)
+{
+  GstCaps *caps = NULL;
+  GObject *current;
+  GList *audio_streams = NULL;
+  gint stream = -1;
+
+  if (bvw->priv->play == NULL)
+    return NULL;
+
+  g_object_get (bvw->priv->play, "current-audio", &stream, NULL);
+  GST_LOG ("current audio stream: %d", stream);
+  if (stream < 0)
+    return NULL;
+
+  audio_streams = get_stream_info_objects_for_type (bvw, "AUDIO");
+  current = g_list_nth_data (audio_streams, stream);
+  if (current != NULL) {
+    GstObject *obj = NULL;
+
+    /* we get the caps from the pad here instead of using the "caps" property
+     * directly since the latter will not give us fixed/negotiated caps
+     * (playbin bug as of gst-plugins-base 0.10.10) */
+    g_object_get (G_OBJECT (current), "object", &obj, NULL);
+    if (obj) {
+      if (GST_IS_PAD (obj)) {
+        caps = gst_pad_get_caps (GST_PAD_CAST (obj));
+      }
+      gst_object_unref (obj);
+    }
+  }
+  g_list_foreach (audio_streams, (GFunc) g_object_unref, NULL);
+  g_list_free (audio_streams);
+  GST_LOG ("current audio stream caps: %" GST_PTR_FORMAT, caps);
+  return caps;
+}
+
+static gboolean
+audio_caps_have_LFE (GstStructure * s)
+{
+  GstAudioChannelPosition *positions;
+  gint i, channels;
+
+  if (!gst_structure_get_value (s, "channel-positions") ||
+      !gst_structure_get_int (s, "channels", &channels)) {
+    return FALSE;
+  }
+
+  positions = gst_audio_get_channel_positions (s);
+  if (positions == NULL)
+    return FALSE;
+
+  for (i = 0; i < channels; ++i) {
+    if (positions[i] == GST_AUDIO_CHANNEL_POSITION_LFE) {
+      g_free (positions);
+      return TRUE;
+    }
+  }
+
+  g_free (positions);
+  return FALSE;
 }
 
 static void
@@ -3646,9 +3756,27 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
       res = gst_tag_list_get_string (bvw->priv->tagcache,
 				     GST_TAG_AUDIO_CODEC, &string);
       break;
-    case BVW_INFO_AUDIO_CHANNELS:
-      //FIXME
+    case BVW_INFO_AUDIO_CHANNELS: {
+      GstStructure *s;
+      GstCaps *caps;
+
+      caps = bvw_get_caps_of_current_audio_stream (bvw);
+      if (caps) {
+        gint channels = 0;
+
+        s = gst_caps_get_structure (caps, 0);
+        if ((res = gst_structure_get_int (s, "channels", &channels))) {
+          /* FIXME: do something more sophisticated - but what? */
+          if (channels > 2 && audio_caps_have_LFE (s)) {
+            string = g_strdup_printf ("%d.1", channels - 1);
+          } else {
+            string = g_strdup_printf ("%d", channels);
+          }
+        }
+        gst_caps_unref (caps);
+      }
       break;
+    }
     default:
       g_assert_not_reached ();
     }
@@ -3723,9 +3851,18 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
         integer /= 1000;
       }
       break;
-    case BVW_INFO_AUDIO_SAMPLE_RATE:
-      //FIXME
+    case BVW_INFO_AUDIO_SAMPLE_RATE: {
+      GstStructure *s;
+      GstCaps *caps;
+
+      caps = bvw_get_caps_of_current_audio_stream (bvw);
+      if (caps) {
+        s = gst_caps_get_structure (caps, 0);
+        gst_structure_get_int (s, "rate", &integer);
+        gst_caps_unref (caps);
+      }
       break;
+    }
     default:
       g_assert_not_reached ();
     }

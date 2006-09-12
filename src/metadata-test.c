@@ -152,6 +152,16 @@ on_got_metadata_event (BaconVideoWidget *bvw, gpointer data)
 				BVW_INFO_AUDIO_CODEC, &value);
 		g_print ("Audio Codec: %s\n", g_value_get_string (&value));
 		g_value_unset (&value);
+
+		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+				BVW_INFO_AUDIO_SAMPLE_RATE, &value);
+		g_print ("Audio Sample Rate: %d\n", g_value_get_int (&value));
+		g_value_unset (&value);
+
+		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+				BVW_INFO_AUDIO_CHANNELS, &value);
+		g_print ("Audio Channels: %s\n", g_value_get_string (&value));
+		g_value_unset (&value);
 	}
 	bacon_video_widget_close (bvw);
 	exit (0);

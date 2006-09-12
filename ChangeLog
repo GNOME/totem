@@ -1,3 +1,15 @@
+2006-09-12  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(get_stream_info_objects_for_type),
+	(bvw_get_caps_of_current_audio_stream), (audio_caps_have_LFE),
+	(bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_metadata_int):
+	  Get channel/sample rate information for current stream (#355511).
+
+	* src/metadata-test.c: (on_got_metadata_event):
+	  Show channel/sample rate here too.
+
 2006-09-12  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem-ui.xml: add missing file, thanks Tim
