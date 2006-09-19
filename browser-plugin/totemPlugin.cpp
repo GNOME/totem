@@ -134,7 +134,6 @@ static char *
 get_real_mimetype (const char *mimetype)
 {
 	const totemPluginMimeEntry *mimetypes;
-	char *real;
 	PRUint32 count;
 
 	totemScriptablePlugin::PluginMimeTypes (&mimetypes, &count);
@@ -150,6 +149,22 @@ get_real_mimetype (const char *mimetype)
 
 	g_warning ("Real mime-type for '%s' not found\n", mimetype);
 	return NULL;
+}
+
+static gboolean
+is_mimetype_supported (const char *mimetype)
+{
+	const totemPluginMimeEntry *mimetypes;
+	PRUint32 count;
+
+	totemScriptablePlugin::PluginMimeTypes (&mimetypes, &count);
+
+	for (PRUint32 i = 0; i < count; ++i) {
+		if (strcmp (mimetypes[i].mimetype, mimetype) == 0)
+			return TRUE;
+	}
+
+	return FALSE;
 }
 
 static gboolean
@@ -653,6 +668,9 @@ totem_plugin_new_stream (NPP instance,
 		return NPERR_GENERIC_ERROR;
 
 	D("plugin_new_stream type: %s url: %s", type, plugin->src);
+
+	if (is_mimetype_supported (type) == FALSE)
+		return NPERR_INVALID_PLUGIN_ERROR;
 
 	//FIXME need to find better semantics?
 	//what about saving the state, do we get confused?
