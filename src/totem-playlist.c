@@ -889,6 +889,7 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 			NULL);
 	gtk_dialog_set_default_response (GTK_DIALOG (fs), GTK_RESPONSE_ACCEPT);
 	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
+	gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (fs), TRUE);
 	/* translators: Playlist is the default saved playlist filename,
 	 * without the suffix */
 	filename = g_strconcat (_("Playlist"), save_types[0].suffix, NULL);
@@ -910,8 +911,6 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 	if (response == GTK_RESPONSE_ACCEPT)
 	{
 		char *filename;
-		GnomeVFSResult res;
-		GnomeVFSFileInfo info;
 		gint active_format;
 
 		filename = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (fs));
@@ -925,35 +924,6 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 		g_free (playlist->_priv->save_path);
 		playlist->_priv->save_path = g_path_get_dirname (filename);
 
-		res = gnome_vfs_get_file_info (filename, &info, GNOME_VFS_FILE_INFO_DEFAULT);
-		if (res != GNOME_VFS_ERROR_NOT_FOUND && res == GNOME_VFS_OK)
-		{
-			GtkWidget *dialog;
-
-			dialog = gtk_message_dialog_new
-				(totem_playlist_get_toplevel (playlist),
-				 GTK_DIALOG_MODAL,
-				 GTK_MESSAGE_QUESTION,
-				 GTK_BUTTONS_NONE,
-				 _("Overwrite file?"));
-			gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-								  _("A file named '%s' already exists.  Are you sure you want to overwrite it?"),
-								  filename);
-
-			gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
-			gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-					GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
-					GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
-					NULL);
-
-			response = gtk_dialog_run (GTK_DIALOG (dialog));
-			gtk_widget_destroy (dialog);
-			if (response != GTK_RESPONSE_ACCEPT)
-			{
-				g_free (filename);
-				return;
-			}
-		}
 		totem_playlist_save_playlist (playlist, filename, active_format);
 		g_free (filename);
 	} else {
