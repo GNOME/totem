@@ -2823,7 +2823,7 @@ totem_setup_window (Totem *totem)
 static void
 totem_callback_connect (Totem *totem)
 {
-	GtkWidget *item, *box;
+	GtkWidget *item, *box, *arrow;
 	GtkAction *action;
 
 	/* Menu items */
@@ -2860,7 +2860,11 @@ totem_callback_connect (Totem *totem)
 	/* Sidebar button (Drag'n'Drop) */
 	box = glade_xml_get_widget (totem->xml, "tmw_sidebar_button_hbox");
 	action = gtk_action_group_get_action (totem->main_action_group, "sidebar");
-	item = gtk_action_create_tool_item (action);
+	item = gtk_toggle_button_new ();
+	gtk_action_connect_proxy (action, item);
+	arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_NONE);
+	gtk_widget_show (arrow);
+	gtk_button_set_image (GTK_BUTTON (item), arrow);
 	gtk_box_pack_start (GTK_BOX (box), item, FALSE, FALSE, 0);
 	g_signal_connect (G_OBJECT (item), "drag_data_received",
 			G_CALLBACK (drop_playlist_cb), totem);
