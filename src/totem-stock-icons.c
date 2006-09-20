@@ -94,23 +94,32 @@ totem_default_theme_changed (GtkIconTheme *theme, Totem *totem)
 	totem_set_default_icons (totem);
 }
 
-void
-totem_set_default_icons (Totem *totem)
+static void
+set_icon_for_action (Totem *totem, const char *name, const char *icon_id)
 {
 	GtkAction *action;
 	GSList *proxies, *p;
-	GtkWidget *item;
 
-	/* Screenshot button */
-	action = gtk_action_group_get_action (totem->main_action_group,
-			"take-screenshot");
+	action = gtk_action_group_get_action (totem->main_action_group, name);
 
 	g_object_set_data (G_OBJECT (action), "pixbuf-icon",
-			PIXBUF_FOR_ID("panel-screenshot"));
-	proxies = gtk_action_get_proxies (action);
+			PIXBUF_FOR_ID(icon_id));
+	proxies = g_slist_copy (gtk_action_get_proxies (action));
 	for (p = proxies; p != NULL; p = p->next) {
 		gtk_action_connect_proxy (action, GTK_WIDGET (p->data));
 	}
+	g_slist_free (proxies);
+}
+
+void
+totem_set_default_icons (Totem *totem)
+{
+	GtkWidget *item;
+
+	/* Screenshot button */
+	set_icon_for_action (totem, "take-screenshot", "panel-screenshot");
+	set_icon_for_action (totem, "volume-up", "audio-volume-high");
+	set_icon_for_action (totem, "volume-down", "audio-volume-low");
 
 	/* Leave fullscreen button */
 	item = glade_xml_get_widget (totem->xml,
@@ -142,6 +151,8 @@ totem_named_icons_init (Totem *totem, gboolean refresh)
 	char *items[][4] = {
 		{ "panel-screenshot", "stock-panel-screenshot", "gnome-screenshot", "applets-screenshooter" },
 		{ "stock_leave-fullscreen", GTK_STOCK_QUIT, NULL, NULL },
+		{ "audio-volume-high", "stock-volume-high", NULL, NULL },
+		{ "audio-volume-low", "stock-volume-low", NULL, NULL },
 	};
 
 	if (refresh == FALSE) {
