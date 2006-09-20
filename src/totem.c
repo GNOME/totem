@@ -861,6 +861,7 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		totem_main_set_sensitivity ("tcw_volume_button", FALSE);
 		totem_action_set_sensitivity ("volume-up", FALSE);
 		totem_action_set_sensitivity ("volume-down", FALSE);
+		totem->volume_sensitive = FALSE;
 
 		/* Control popup */
 		gtk_widget_set_sensitive (totem->fs_seek, FALSE);
@@ -901,8 +902,9 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		caps = bacon_video_widget_can_set_volume (totem->bvw);
 		totem_main_set_sensitivity ("tcw_volume_button", caps);
 		totem_main_set_sensitivity ("tcw_volume_hbox", caps);
-		totem_action_set_sensitivity ("volume-up", caps);
-		totem_action_set_sensitivity ("volume-down", caps);
+		totem_action_set_sensitivity ("volume-up", caps && totem->prev_volume < 100);
+		totem_action_set_sensitivity ("volume-down", caps && totem->prev_volume > 0);
+		totem->volume_sensitive = caps;
 
 		/* Take a screenshot */
 		totem_action_set_sensitivity ("take-screenshot", retval);
@@ -1474,6 +1476,7 @@ static void
 update_volume_sliders (Totem *totem)
 {
 	int volume;
+	GtkAction *action;
 
 	volume = bacon_video_widget_get_volume (totem->bvw);
 
@@ -1485,6 +1488,12 @@ update_volume_sliders (Totem *totem)
 			BACON_VOLUME_BUTTON (totem->volume), (float) volume);
 		gtk_adjustment_set_value (totem->fs_voladj,
 				(float) volume);
+
+		action = gtk_action_group_get_action (totem->main_action_group, "volume-down");
+		gtk_action_set_sensitive (action, volume > 0 && totem->volume_sensitive);
+		
+		action = gtk_action_group_get_action (totem->main_action_group, "volume-up");
+		gtk_action_set_sensitive (action, volume < 100 && totem->volume_sensitive);
 	}
 
 	totem->prev_volume = volume;

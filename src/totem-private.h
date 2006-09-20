@@ -122,6 +122,7 @@ struct Totem {
 	gboolean vol_fs_lock;
 	gfloat prev_volume;
 	int volume_first_time;
+	gboolean volume_sensitive;
 
 	/* Subtitles/Languages menus */
 	GtkWidget *subtitles;
