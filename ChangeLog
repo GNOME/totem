@@ -1,3 +1,14 @@
+2006-09-20  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-video-thumbnailer.c: (save_pixbuf), (main):
+	Remove duplicate code in the image saving functions, save
+	original video/image's in the PNG's tEXt::Thumb::Image::Width
+	and tEXt::Thumb::Image::Height attributes (Closes: #356930)
+
+2006-09-20  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/test-parser.c: (main): Fix help string
+
 2006-09-20  Jan Arne Petersen  <jpetersen@jpetersen.org>
 
 	* src/totem.c: (totem_callback_connect): use a GtkToggleButton with

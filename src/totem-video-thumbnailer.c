@@ -246,14 +246,19 @@ is_image_interesting (GdkPixbuf *pixbuf)
 
 static void
 save_pixbuf (GdkPixbuf *pixbuf, const char *path,
-	     const char *video_path, int size)
+	     const char *video_path, int size, gboolean is_still)
 {
+	int width, height;
 	GdkPixbuf *small, *with_holes;
 	GError *err = NULL;
+	char *a_width, *a_height;
+
+	height = gdk_pixbuf_get_height (pixbuf);
+	width = gdk_pixbuf_get_width (pixbuf);
 
 	if (size <= 256)
 	{
-		int width, height, d_width, d_height;
+		int d_width, d_height;
 
 		height = gdk_pixbuf_get_height (pixbuf);
 		width = gdk_pixbuf_get_width (pixbuf);
@@ -270,17 +275,30 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 		small = gdk_pixbuf_scale_simple (pixbuf, d_width, d_height,
 				GDK_INTERP_TILES);
 
-		with_holes = add_holes_to_pixbuf_small (small,
-				d_width, d_height);
-		g_return_if_fail (with_holes != NULL);
-		gdk_pixbuf_unref (small);
+		if (is_still == FALSE) {
+			with_holes = add_holes_to_pixbuf_small (small,
+					d_width, d_height);
+			g_return_if_fail (with_holes != NULL);
+			gdk_pixbuf_unref (small);
+		} else {
+			with_holes = small;
+		}
 	} else {
 		with_holes = add_holes_to_pixbuf_large (pixbuf, size);
 		g_return_if_fail (with_holes != NULL);
 	}
 
-	if (gdk_pixbuf_save (with_holes, path, format, &err, NULL) == FALSE)
+	a_width = g_strdup_printf ("%d", width);
+	a_height = g_strdup_printf ("%d", height);
+
+	if (gdk_pixbuf_save (with_holes, path, format, &err,
+				"tEXt::Thumb::Image::Width", a_width,
+				"tEXt::Thumb::Image::Height", a_height,
+				NULL) == FALSE)
 	{
+		g_free (a_width);
+		g_free (a_height);
+
 		if (err != NULL)
 		{
 			g_print ("totem-video-thumbnailer couln't write the thumbnail '%s' for video '%s': %s\n", path, video_path, err->message);
@@ -298,50 +316,6 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 #endif
 
 	gdk_pixbuf_unref (with_holes);
-}
-
-static void
-save_still_pixbuf (GdkPixbuf *pixbuf, const char *path,
-		const char *video_path, int size)
-{
-	GdkPixbuf *small;
-	int width, height, d_width, d_height;
-	GError *err = NULL;
-
-	height = gdk_pixbuf_get_height (pixbuf);
-	width = gdk_pixbuf_get_width (pixbuf);
-
-	if (width > height)
-	{
-		d_width = size;
-		d_height = size * height / width;
-	} else {
-		d_height = size;
-		d_width = size * width / height;
-	}
-
-	small = gdk_pixbuf_scale_simple (pixbuf, d_width, d_height,
-			GDK_INTERP_TILES);
-
-	if (gdk_pixbuf_save (small, path, "png", &err, NULL) == FALSE)
-	{
-		if (err != NULL)
-		{
-			g_print ("totem-video-thumbnailer couln't write the thumbnail '%s' for video '%s': %s\n", path, video_path, err->message);
-			g_error_free (err);
-		} else {
-			g_print ("totem-video-thumbnailer couln't write the thumbnail '%s' for video '%s'\n", path, video_path);
-		}
-
-		gdk_pixbuf_unref (small);
-		return;
-	}
-
-#ifdef THUMB_DEBUG
-	show_pixbuf (small);
-#endif
-
-	gdk_pixbuf_unref (small);
 }
 
 static gpointer
@@ -443,8 +417,7 @@ int main (int argc, char *argv[])
 			pixbuf = gdk_pixbuf_new_from_file (input, &err);
 			if (pixbuf != NULL)
 			{
-				save_still_pixbuf (pixbuf,
-						output, input, size);
+				save_pixbuf (pixbuf, output, input, size, TRUE);
 				gdk_pixbuf_unref (pixbuf);
 				exit (0);
 			}
@@ -520,7 +493,7 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	save_pixbuf (pixbuf, output, input, size);
+	save_pixbuf (pixbuf, output, input, size, FALSE);
 	gdk_pixbuf_unref (pixbuf);
 
 	return 0;
