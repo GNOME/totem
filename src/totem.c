@@ -1323,7 +1323,23 @@ on_title_change_event (BaconVideoWidget *bvw, const char *string, Totem *totem)
 static void
 on_channels_change_event (BaconVideoWidget *bvw, Totem *totem)
 {
+	gchar *name;
+
 	totem_sublang_update (totem);
+
+	/* updated stream info (new song) */
+	name = totem_get_nice_name_for_stream (totem);
+
+	bacon_video_widget_properties_update
+		(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
+		 totem->bvw);
+
+	if (name != NULL) {
+		update_mrl_label (totem, name);
+		totem_playlist_set_title
+			(TOTEM_PLAYLIST (totem->playlist), name, TRUE);
+		g_free (name);
+	}
 }
 
 static void
