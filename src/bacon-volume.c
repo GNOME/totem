@@ -586,7 +586,7 @@ bacon_volume_scale_value_changed (GtkRange * range)
   GdkPixbuf *buf;
 
   if (val == adj->lower)
-    s = "stock_volume-0";
+    s = "stock_volume-mute";
   else if (val > adj->lower && val <= adj->lower + step)
     s = "stock_volume-min";
   else if (val > adj->lower + step && val <= adj->lower + step * 2)

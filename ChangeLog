@@ -1,3 +1,16 @@
+2006-09-21  Jan Arne Petersen  <jpetersen@jpetersen.org>
+
+	* data/totem.glade:
+	* src/bacon-volume.c: (bacon_volume_scale_value_changed):
+	* src/totem-stock-icons.c: (totem_set_default_icons),
+	(totem_named_icons_init): use stock (or themed) volume icons in
+	full-screen volume slider; fix names of stock volume icons. (Closes:
+	#356444)
+
+	* data/Makefile.am:
+	* data/rhythmbox-volume-max.png:
+	* data/rhythmbox-volume-zero.png: remove no longer needed icons
+
 2006-09-20  Jan Arne Petersen  <jpetersen@jpetersen.org>
 
 	* src/totem-playlist.c: (totem_playlist_save_files): use the builtin

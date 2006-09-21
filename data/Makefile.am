@@ -12,8 +12,6 @@ stuff_DATA =				\
 	stock_media_pause.png		\
 	stock_media_play.png		\
 	playlist-playing.png		\
-	rhythmbox-volume-max.png	\
-	rhythmbox-volume-zero.png	\
 	stock-tool-brightness-contrast-22.png	\
 	totem.glade			\
 	playlist.glade			\

@@ -126,6 +126,16 @@ totem_set_default_icons (Totem *totem)
 			"tefw_image");
 	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
 			PIXBUF_FOR_ID("stock_leave-fullscreen"));
+
+	/* Fullscreen audio-volume buttons */
+	item = glade_xml_get_widget (totem->xml,
+			"tcw_volume_mute_image");
+	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
+			PIXBUF_FOR_ID("audio-volume-mute"));
+	item = glade_xml_get_widget (totem->xml,
+			"tcw_volume_max_image");
+	gtk_image_set_from_pixbuf (GTK_IMAGE (item),
+			PIXBUF_FOR_ID("audio-volume-high"));
 }
 
 static GdkPixbuf *
@@ -151,8 +161,9 @@ totem_named_icons_init (Totem *totem, gboolean refresh)
 	char *items[][4] = {
 		{ "panel-screenshot", "stock-panel-screenshot", "gnome-screenshot", "applets-screenshooter" },
 		{ "stock_leave-fullscreen", GTK_STOCK_QUIT, NULL, NULL },
-		{ "audio-volume-high", "stock-volume-high", NULL, NULL },
-		{ "audio-volume-low", "stock-volume-low", NULL, NULL },
+		{ "audio-volume-high", "stock_volume-max", NULL, NULL },
+		{ "audio-volume-low", "stock_volume-min", NULL, NULL },
+		{ "audio-volume-mute", "stock_volume-mute", NULL, NULL },
 	};
 
 	if (refresh == FALSE) {
