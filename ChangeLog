@@ -1,3 +1,9 @@
+2006-09-21  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-sidebar.c: (cb_resize): don't try to set a size
+	if the width or height is negative (Closes: #355594)
+	
+
 2006-09-21  Jan Arne Petersen  <jpetersen@jpetersen.org>
 
 	* data/totem.glade:

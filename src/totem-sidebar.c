@@ -51,7 +51,8 @@ cb_resize (Totem * totem)
 		w -= totem->sidebar->allocation.width + handle_size;
 	}
 
-	gtk_window_resize (GTK_WINDOW (totem->win), w, h);
+	if (w > 0 && h > 0)
+		gtk_window_resize (GTK_WINDOW (totem->win), w, h);
 }
 
 void
