@@ -19,6 +19,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 //FIXME damn build system!
 #include "totem-interface.c"
 
@@ -47,7 +49,6 @@
 
 GtkWidget *totem_volume_create (void);
 
-#define OPTION_IS(x) (strcmp(argv[i], x) == 0)
 #define IS_FD_STREAM (strcmp(emb->filename, "fd://0") == 0)
 
 #define VOLUME_DOWN_OFFSET -8
@@ -86,7 +87,6 @@ typedef struct _TotemEmbedded {
 	GdkCursor *cursor;
 
 	/* Playlist */
-	gboolean is_playlist;
 	GList *playlist, *current;
 	GMainLoop *loop;
 	int num_items;
@@ -99,6 +99,7 @@ typedef struct _TotemEmbedded {
 	GtkAdjustment *seekadj;
 	GtkWidget *seek;
 
+	guint is_playlist : 1;
 	guint embedded_done : 1;
 	guint controller_hidden : 1;
 	guint hidden : 1;
@@ -814,12 +815,55 @@ totem_volume_create (void)
 	return widget;
 }
 
+static int arg_width = -1;
+static int arg_height = -1;
+static char *arg_url = NULL;
+static char *arg_href = NULL;
+static char *arg_target = NULL;
+static char *arg_mime_type = NULL;
+static char **arg_remaining = NULL;
+static Window xid;
+static gboolean arg_no_controls = FALSE;
+static gboolean arg_hidden = FALSE;
+static gboolean arg_is_playlist = FALSE;
+static gboolean arg_repeat = FALSE;
+static gboolean arg_no_autostart = FALSE;
+
+static gboolean
+parse_xid (const gchar *option_name,
+	   const gchar *value,
+	   gpointer data,
+	   GError **error)
+{
+	xid = (Window) g_ascii_strtoull (value, NULL, 10);
+
+	return TRUE;
+}
+
+static GOptionEntry option_entries [] =
+{
+	{ TOTEM_OPTION_WIDTH, 0, 0, G_OPTION_ARG_INT, &arg_width, NULL, NULL },
+	{ TOTEM_OPTION_HEIGHT, 0, 0, G_OPTION_ARG_INT, &arg_height, NULL, NULL },
+	{ TOTEM_OPTION_URL, 0, 0, G_OPTION_ARG_FILENAME /* FIXME: this should be STRING */, &arg_url, NULL, NULL },
+	{ TOTEM_OPTION_HREF, 0, 0, G_OPTION_ARG_STRING, &arg_href, NULL, NULL },
+	{ TOTEM_OPTION_XID, 0, 0, G_OPTION_ARG_CALLBACK, parse_xid, NULL, NULL },
+	{ TOTEM_OPTION_TARGET, 0, 0, G_OPTION_ARG_STRING, &arg_target, NULL, NULL },
+	{ TOTEM_OPTION_MIMETYPE, 0, 0, G_OPTION_ARG_STRING, &arg_mime_type, NULL, NULL },
+	{ TOTEM_OPTION_CONTROLS_HIDDEN, 0, 0, G_OPTION_ARG_NONE, &arg_no_controls, NULL, NULL },
+	{ TOTEM_OPTION_HIDDEN, 0, 0, G_OPTION_ARG_NONE, &arg_hidden, NULL, NULL },
+	{ TOTEM_OPTION_PLAYLIST, 0, 0, G_OPTION_ARG_NONE, &arg_is_playlist, NULL, NULL },
+	{ TOTEM_OPTION_REPEAT, 0, 0, G_OPTION_ARG_NONE, &arg_repeat, NULL, NULL },
+	{ TOTEM_OPTION_NOAUTOSTART, 0, 0, G_OPTION_ARG_NONE, &arg_no_autostart, NULL, NULL },
+	{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY /* STRING? */, &arg_remaining, NULL },
+	{ NULL }
+};
+
+
 int main (int argc, char **argv)
 {
 	TotemEmbedded *emb;
 	DBusGProxy *proxy;
 	DBusGConnection *conn;
-	Window xid;
 	int i;
 	guint res;
 	gchar *svcname;
@@ -829,6 +873,16 @@ int main (int argc, char **argv)
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
+#ifdef GNOME_ENABLE_DEBUG
+        g_print ("Viewer args: ");
+        for (i = 0; i < argc; i++)
+	{
+		g_print ("%s ", argv[i]);
+	}
+	g_print ("\n");
+#endif
+	
+	/* FIXME: are we really threaded? */
 	if (XInitThreads () == 0)
 	{
 		gtk_init (&argc, &argv);
@@ -836,10 +890,19 @@ int main (int argc, char **argv)
 	}
 
 	g_thread_init (NULL);
-	bacon_video_widget_init_backend (NULL, NULL);
 
-	gtk_init (&argc, &argv);
+	if (!gtk_init_with_args (&argc, &argv, NULL, option_entries, GETTEXT_PACKAGE, &e))
+	{
+		g_print ("%s\n", e->message);
+		g_error_free (e);
+		exit (1);
+	}
+
+        // FIXME check that necessary params were given!
+
+	bacon_video_widget_init_backend (NULL, NULL);
 	gnome_vfs_init ();
+
 	dbus_g_object_type_install_info (TOTEM_TYPE_EMBEDDED,
 		&dbus_glib_totem_embedded_object_info);
 	svcname = g_strdup_printf ("org.totem_%d.MozillaPluginService",
@@ -861,76 +924,30 @@ int main (int argc, char **argv)
 	g_free (svcname);
 
 	emb = g_object_new (TOTEM_TYPE_EMBEDDED, NULL);
-	emb->width = emb->height = -1;
+
 	emb->state = STATE_STOPPED;
+	emb->width = arg_width;
+	emb->height = arg_height;
+	emb->controller_hidden = arg_no_controls;
+	emb->orig_filename = arg_url;
+	emb->href = arg_href;
+	emb->filename = arg_remaining ? arg_remaining[0] : NULL;
+	emb->target = arg_target;
+	emb->mimetype = arg_mime_type;
+	emb->hidden = arg_hidden;
+	emb->is_playlist = arg_is_playlist;
+	emb->repeat = arg_repeat;
+	emb->noautostart = arg_no_autostart;
+
 	dbus_g_connection_register_g_object (conn, "/TotemEmbedded",
 					     G_OBJECT (emb));
-
-	g_print ("CMD line: ");
-	for (i = 0; i < argc; i++) {
-		g_print ("%s ", argv[i]);
-	}
-	g_print ("\n");
-
-	xid = 0;
-	/* TODO Add popt options */
-	for (i = 1; i < argc; i++) {
-		if (OPTION_IS (TOTEM_OPTION_XID)) {
-			if (i + 1 < argc) {
-				i++;
-				xid = (Window) g_ascii_strtoull (argv[i], NULL, 10);
-			}
-		} else if (OPTION_IS (TOTEM_OPTION_WIDTH)) {
-			if (i + 1 < argc) {
-				i++;
-				emb->width = atoi (argv[i]);
-			}
-		} else if (OPTION_IS (TOTEM_OPTION_HEIGHT)) {
-			if (i + 1 < argc) {
-				i++;
-				emb->height = atoi (argv[i]);
-			}
-		} else if (OPTION_IS (TOTEM_OPTION_URL)) {
-			if (i + 1 < argc) {
-				i++;
-				emb->orig_filename = (const char *) argv[i];
-			}
-		} else if (OPTION_IS (TOTEM_OPTION_CONTROLS_HIDDEN)) {
-			emb->controller_hidden = TRUE;
-		} else if (OPTION_IS (TOTEM_OPTION_HREF)) {
-			if (i + 1 < argc) {
-				i++;
-				emb->href = g_strdup (argv[i]);
-			}
-		} else if (OPTION_IS (TOTEM_OPTION_TARGET)) {
-			if (i + 1 < argc) {
-				i++;
-				emb->target = g_strdup (argv[i]);
-			}
-		} else if (OPTION_IS (TOTEM_OPTION_MIMETYPE)) {
-			if (i + 1 < argc) {
-				i++;
-				emb->mimetype = (const char *) argv[i];
-			}
-		} else if (OPTION_IS (TOTEM_OPTION_HIDDEN)) {
-			emb->hidden = TRUE;
-		} else if (OPTION_IS (TOTEM_OPTION_PLAYLIST)) {
-			emb->is_playlist = TRUE;
-		} else if (OPTION_IS (TOTEM_OPTION_REPEAT)) {
-			emb->repeat = TRUE;
-		} else if (OPTION_IS (TOTEM_OPTION_NOAUTOSTART)) {
-			emb->noautostart = TRUE;
-		} else if (i + 1 == argc) {
-			emb->filename = g_strdup (argv[i]);
-		}
-	}
 
 	/* XEMBED or stand-alone */
 	if (xid != 0) {
 		GtkWidget *window;
 
 		/* The miraculous XEMBED protocol */
-		window = gtk_plug_new ((GdkNativeWindow)xid);
+		window = gtk_plug_new ((GdkNativeWindow) xid);
 		gtk_signal_connect (GTK_OBJECT(window), "embedded",
 				G_CALLBACK (embedded), NULL);
 		gtk_widget_realize (window);

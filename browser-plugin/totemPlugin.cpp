@@ -67,6 +67,8 @@
 #error Unknown plugin type
 #endif
 
+#define DASHES "--"
+
 /* How much data bytes to request */
 #define PLUGIN_STREAM_CHUNK_SIZE (8 * 1024)
 
@@ -215,58 +217,58 @@ totem_plugin_fork (totemPlugin *plugin)
 	}
 
 	if (plugin->window) {
-		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_XID));
+		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_XID));
 		g_ptr_array_add (arr, g_strdup_printf ("%lu", plugin->window));
 	}
 
 	if (plugin->width > 0) {
-		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_WIDTH));
+		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_WIDTH));
 		g_ptr_array_add (arr, g_strdup_printf ("%d", plugin->width));
 	}
 
 	if (plugin->height > 0) {
-		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_HEIGHT));
+		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_HEIGHT));
 		g_ptr_array_add (arr, g_strdup_printf ("%d", plugin->height));
 	}
 
 	if (plugin->src) {
-		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_URL));
+		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_URL));
 		g_ptr_array_add (arr, g_strdup (plugin->src));
 	}
 
 	if (plugin->href) {
-		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_HREF));
+		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_HREF));
 		g_ptr_array_add (arr, g_strdup (plugin->href));
 	}
 
 	if (plugin->target) {
-		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_TARGET));
+		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_TARGET));
 		g_ptr_array_add (arr, g_strdup (plugin->target));
 	}
 
 	if (plugin->mimetype) {
-		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_MIMETYPE));
+		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_MIMETYPE));
 		g_ptr_array_add (arr, g_strdup (plugin->mimetype));
 	}
 
 	if (plugin->controller_hidden) {
-		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_CONTROLS_HIDDEN));
+		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_CONTROLS_HIDDEN));
 	}
 
 	if (plugin->hidden) {
-		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_HIDDEN));
+		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_HIDDEN));
 	}
 
  	if (plugin->repeat) {
- 		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_REPEAT));
+ 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_REPEAT));
  	}
 
 	if (plugin->noautostart) {
-		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_NOAUTOSTART));
+		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_NOAUTOSTART));
 	}
  
  	if (plugin->is_playlist) {
- 		g_ptr_array_add (arr, g_strdup (TOTEM_OPTION_PLAYLIST));
+ 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_PLAYLIST));
  		g_ptr_array_add (arr, g_strdup (plugin->local));
  	} else {
 		/* plugin->local is only TRUE for playlists */

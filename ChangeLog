@@ -1,3 +1,10 @@
+2006-09-22  Christian Persch  <chpe@cvs.gnome.org>
+
+	* browser-plugin/totemPlugin.cpp:
+	* src/totem-mozilla-options.h:
+	* src/totem-mozilla-viewer.c: (parse_xid), (main):
+	Use GOption for argument parsing in the plugin viewer. Bug #338954.
+
 2006-09-21  Jan Arne Petersen  <jpetersen@jpetersen.org>
 
 	* src/totem.c: (on_channels_change_event): update stream properties
