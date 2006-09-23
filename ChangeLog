@@ -1,3 +1,12 @@
+2006-09-23  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c: (bvw_bus_message_cb),
+	(bacon_video_widget_open_with_subtitle), (bacon_video_widget_play),
+	(bvw_stop_play_pipeline), (bacon_video_widget_pause),
+	(bacon_video_widget_is_playing):
+	  Pause playback while we are re-buffering (#356860). Might only
+	  work correctly with -base CVS.
+
 2006-09-22  Christian Persch  <chpe@cvs.gnome.org>
 
 	* browser-plugin/totemPlugin.cpp:
