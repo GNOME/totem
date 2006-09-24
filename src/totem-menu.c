@@ -1079,70 +1079,70 @@ aspect_ratio_changed_callback (GtkRadioAction *action, GtkRadioAction *current, 
 }
 
 static const GtkActionEntry entries[] = {
-	{ "movie-menu", NULL, "_Movie" },
-	{ "open", GTK_STOCK_OPEN, "_Open...", "<control>O", "Open a file", G_CALLBACK (open_action_callback) },
-	{ "open-location", NULL, "Open _Location...", "<control>L", "Open a non-local file", G_CALLBACK (open_location_action_callback) },
-	{ "eject", NULL, "_Eject", "<control>E", NULL, G_CALLBACK (eject_action_callback) },
-	{ "play", GTK_STOCK_MEDIA_PLAY, "Play / Pa_use", "P", "Play or pause the movie", G_CALLBACK (play_action_callback) },
-	{ "quit", GTK_STOCK_QUIT, "_Quit", "<control>Q", "Quit the program", G_CALLBACK (quit_action_callback) },
+	{ "movie-menu", NULL, N_("_Movie") },
+	{ "open", GTK_STOCK_OPEN, N_("_Open..."), "<control>O", N_("Open a file"), G_CALLBACK (open_action_callback) },
+	{ "open-location", NULL, N_("Open _Location..."), "<control>L", N_("Open a non-local file"), G_CALLBACK (open_location_action_callback) },
+	{ "eject", NULL, N_("_Eject"), "<control>E", NULL, G_CALLBACK (eject_action_callback) },
+	{ "play", GTK_STOCK_MEDIA_PLAY, N_("Play / Pa_use"), "P", N_("Play or pause the movie"), G_CALLBACK (play_action_callback) },
+	{ "quit", GTK_STOCK_QUIT, N_("_Quit"), "<control>Q", N_("Quit the program"), G_CALLBACK (quit_action_callback) },
 
-	{ "edit-menu", NULL, "_Edit" },
-	{ "take-screenshot", GTK_STOCK_CONVERT, "Take _Screenshot...", "<control>S", "Take a screenshot", G_CALLBACK (take_screenshot_action_callback) },
-	{ "preferences", GTK_STOCK_PREFERENCES, "Prefere_nces", NULL, NULL, G_CALLBACK (preferences_action_callback) },
+	{ "edit-menu", NULL, N_("_Edit") },
+	{ "take-screenshot", GTK_STOCK_CONVERT, N_("Take _Screenshot..."), "<control>S", N_("Take a screenshot"), G_CALLBACK (take_screenshot_action_callback) },
+	{ "preferences", GTK_STOCK_PREFERENCES, N_("Prefere_nces"), NULL, NULL, G_CALLBACK (preferences_action_callback) },
 
-	{ "view-menu", NULL, "_View" },
-	{ "fullscreen", GTK_STOCK_ZOOM_FIT, "_Fullscreen", "F", "Switch to fullscreen", G_CALLBACK (fullscreen_action_callback) },
-	{ "zoom-window-menu", NULL, "Fit Window to Movie" },
-	{ "zoom-1-2", NULL, "_Resize 1:2", "0", "Resize to half the video size", G_CALLBACK (zoom_1_2_action_callback) },
-	{ "zoom-1-1", NULL, "Resize _1:1", "1", "Resize to video size", G_CALLBACK (zoom_1_1_action_callback) },
-	{ "zoom-2-1", NULL, "Resize _2:1", "2", "Resize to twice the video size", G_CALLBACK (zoom_2_1_action_callback) },
-	{ "aspect-ratio-menu", NULL, "_Aspect Ratio" },
-	{ "next-angle", NULL, "Switch An_gles", "G", "Switch angles", G_CALLBACK (next_angle_action_callback) },
-/*	{ "subtitles-menu", NULL, "S_ubtitles" },*/
+	{ "view-menu", NULL, N_("_View") },
+	{ "fullscreen", GTK_STOCK_ZOOM_FIT, N_("_Fullscreen"), "F", N_("Switch to fullscreen"), G_CALLBACK (fullscreen_action_callback) },
+	{ "zoom-window-menu", NULL, N_("Fit Window to Movie") },
+	{ "zoom-1-2", NULL, N_("_Resize 1:2"), "0", N_("Resize to half the video size"), G_CALLBACK (zoom_1_2_action_callback) },
+	{ "zoom-1-1", NULL, N_("Resize _1:1"), "1", N_("Resize to video size"), G_CALLBACK (zoom_1_1_action_callback) },
+	{ "zoom-2-1", NULL, N_("Resize _2:1"), "2", N_("Resize to twice the video size"), G_CALLBACK (zoom_2_1_action_callback) },
+	{ "aspect-ratio-menu", NULL, N_("_Aspect Ratio") },
+	{ "next-angle", NULL, N_("Switch An_gles"), "G", N_("Switch angles"), G_CALLBACK (next_angle_action_callback) },
+/*	{ "subtitles-menu", NULL, N_("S_ubtitles") },*/
 
-	{ "go-menu", NULL, "_Go" },
-	{ "dvd-root-menu", GTK_STOCK_INDEX, "_DVD Menu", "m", "Go to the DVD menu", G_CALLBACK (dvd_root_menu_action_callback) },
-	{ "dvd-title-menu", NULL, "_Title Menu", NULL, "Go to the title menu", G_CALLBACK (dvd_title_menu_action_callback) },
-	{ "dvd-audio-menu", NULL, "A_udio Menu", NULL, "Go to the audio menu", G_CALLBACK (dvd_audio_menu_action_callback) },
-	{ "dvd-angle-menu", NULL, "_Angle Menu", NULL, "Go to the angle menu", G_CALLBACK (dvd_angle_menu_action_callback) },
-	{ "dvd-chapter-menu", GTK_STOCK_INDEX, "_Chapter Menu", "c", "Go to the chapter menu", G_CALLBACK (dvd_chapter_menu_action_callback) },
-	{ "next-chapter", GTK_STOCK_MEDIA_NEXT, "_Next Chapter/Movie", "n", "Next chapter or movie", G_CALLBACK (next_chapter_action_callback) },
-	{ "previous-chapter", GTK_STOCK_MEDIA_PREVIOUS, "_Previous Chapter/Movie", "b", "Previous chapter or movie", G_CALLBACK (previous_chapter_action_callback) },
-	{ "skip-to", GTK_STOCK_JUMP_TO, "_Skip to...", "S", "Skip to a specific time", G_CALLBACK (skip_to_action_callback) },
-	{ "skip-forward", GTK_STOCK_MEDIA_FORWARD, "Skip _Forward", "Right", "Skip forward", G_CALLBACK (skip_forward_action_callback) },
-	{ "skip-backwards", GTK_STOCK_MEDIA_REWIND, "Skip _Backwards", "Left", "Skip backwards", G_CALLBACK (skip_backwards_action_callback) },
+	{ "go-menu", NULL, N_("_Go") },
+	{ "dvd-root-menu", GTK_STOCK_INDEX, N_("_DVD Menu"), "m", N_("Go to the DVD menu"), G_CALLBACK (dvd_root_menu_action_callback) },
+	{ "dvd-title-menu", NULL, N_("_Title Menu"), NULL, N_("Go to the title menu"), G_CALLBACK (dvd_title_menu_action_callback) },
+	{ "dvd-audio-menu", NULL, N_("A_udio Menu"), NULL, N_("Go to the audio menu"), G_CALLBACK (dvd_audio_menu_action_callback) },
+	{ "dvd-angle-menu", NULL, N_("_Angle Menu"), NULL, N_("Go to the angle menu"), G_CALLBACK (dvd_angle_menu_action_callback) },
+	{ "dvd-chapter-menu", GTK_STOCK_INDEX, N_("_Chapter Menu"), "c", N_("Go to the chapter menu"), G_CALLBACK (dvd_chapter_menu_action_callback) },
+	{ "next-chapter", GTK_STOCK_MEDIA_NEXT, N_("_Next Chapter/Movie"), "n", N_("Next chapter or movie"), G_CALLBACK (next_chapter_action_callback) },
+	{ "previous-chapter", GTK_STOCK_MEDIA_PREVIOUS, N_("_Previous Chapter/Movie"), "b", N_("Previous chapter or movie"), G_CALLBACK (previous_chapter_action_callback) },
+	{ "skip-to", GTK_STOCK_JUMP_TO, N_("_Skip to..."), "S", N_("Skip to a specific time"), G_CALLBACK (skip_to_action_callback) },
+	{ "skip-forward", GTK_STOCK_MEDIA_FORWARD, N_("Skip _Forward"), "Right", N_("Skip forward"), G_CALLBACK (skip_forward_action_callback) },
+	{ "skip-backwards", GTK_STOCK_MEDIA_REWIND, N_("Skip _Backwards"), "Left", N_("Skip backwards"), G_CALLBACK (skip_backwards_action_callback) },
 
-	{ "sound-menu", NULL, "_Sound" },
-/*	{ "languages-menu", NULL, "_Languages" }, */
-	{ "volume-up", NULL, "Volume _Up", "Up", "Volume up", G_CALLBACK (volume_up_action_callback) },
-	{ "volume-down", NULL, "Volume _Down", "Down", "Volume down", G_CALLBACK (volume_down_action_callback) },
+	{ "sound-menu", NULL, N_("_Sound") },
+/*	{ "languages-menu", NULL, N_("_Languages") }, */
+	{ "volume-up", NULL, N_("Volume _Up"), "Up", N_("Volume up"), G_CALLBACK (volume_up_action_callback) },
+	{ "volume-down", NULL, N_("Volume _Down"), "Down", N_("Volume down"), G_CALLBACK (volume_down_action_callback) },
 
-	{ "help-menu", NULL, "_Help" },
-	{ "contents", GTK_STOCK_HELP, "_Contents", "F1", "Help contents", G_CALLBACK (contents_action_callback) },
-	{ "about", GTK_STOCK_ABOUT, "_About", NULL, NULL, G_CALLBACK (about_action_callback) }
+	{ "help-menu", NULL, N_("_Help") },
+	{ "contents", GTK_STOCK_HELP, N_("_Contents"), "F1", N_("Help contents"), G_CALLBACK (contents_action_callback) },
+	{ "about", GTK_STOCK_ABOUT, N_("_About"), NULL, NULL, G_CALLBACK (about_action_callback) }
 };
 
 static const GtkActionEntry zoom_entries[] = {
-	{ "zoom-in", GTK_STOCK_ZOOM_IN, "Zoom In", "R", "Zoom in", G_CALLBACK (zoom_in_action_callback) },
-	{ "zoom-reset", GTK_STOCK_ZOOM_100, "Zoom Reset", NULL, "Zoom reset", G_CALLBACK (zoom_reset_action_callback) },
-	{ "zoom-out", GTK_STOCK_ZOOM_OUT, "Zoom Out", "T", "Zoom out", G_CALLBACK (zoom_out_action_callback) }
+	{ "zoom-in", GTK_STOCK_ZOOM_IN, N_("Zoom In"), "R", N_("Zoom in"), G_CALLBACK (zoom_in_action_callback) },
+	{ "zoom-reset", GTK_STOCK_ZOOM_100, N_("Zoom Reset"), NULL, N_("Zoom reset"), G_CALLBACK (zoom_reset_action_callback) },
+	{ "zoom-out", GTK_STOCK_ZOOM_OUT, N_("Zoom Out"), "T", N_("Zoom out"), G_CALLBACK (zoom_out_action_callback) }
 };
 
 static const GtkToggleActionEntry toggle_entries[] = {
-	{ "repeat-mode", NULL, "_Repeat Mode", NULL, "Set the repeat mode", G_CALLBACK (repeat_mode_action_callback), FALSE },
-	{ "shuffle-mode", NULL, "Shuff_le Mode", NULL, "Set the shuffle mode", G_CALLBACK (shuffle_mode_action_callback), FALSE },
-	{ "deinterlace", NULL, "_Deinterlace", "I", "Deinterlace", G_CALLBACK (deinterlace_action_callback), FALSE },
-	{ "always-on-top", NULL, "Always on _Top", NULL, "Always on top", G_CALLBACK (always_on_top_action_callback), FALSE },
-	{ "show-controls", NULL, "Show _Controls", "H", "Show controls", G_CALLBACK (show_controls_action_callback), TRUE },
-	{ "sidebar", NULL, "_Sidebar", "F9", "Show or hide the sidebar", G_CALLBACK (show_sidebar_action_callback), TRUE }
+	{ "repeat-mode", NULL, N_("_Repeat Mode"), NULL, N_("Set the repeat mode"), G_CALLBACK (repeat_mode_action_callback), FALSE },
+	{ "shuffle-mode", NULL, N_("Shuff_le Mode"), NULL, N_("Set the shuffle mode"), G_CALLBACK (shuffle_mode_action_callback), FALSE },
+	{ "deinterlace", NULL, N_("_Deinterlace"), "I", N_("Deinterlace"), G_CALLBACK (deinterlace_action_callback), FALSE },
+	{ "always-on-top", NULL, N_("Always on _Top"), NULL, N_("Always on top"), G_CALLBACK (always_on_top_action_callback), FALSE },
+	{ "show-controls", NULL, N_("Show _Controls"), "H", N_("Show controls"), G_CALLBACK (show_controls_action_callback), TRUE },
+	{ "sidebar", NULL, N_("_Sidebar"), "F9", N_("Show or hide the sidebar"), G_CALLBACK (show_sidebar_action_callback), TRUE }
 };
 
 static const GtkRadioActionEntry aspect_ratio_entries[] = {
-	{ "aspect-ratio-auto", NULL, "Auto", NULL, "Sets automatic aspect ratio", BVW_RATIO_AUTO },
-	{ "aspect-ratio-square", NULL, "Square", NULL, "Sets square aspect ratio", BVW_RATIO_SQUARE },
-	{ "aspect-ratio-fbt", NULL, "4:3 (TV)", NULL, "Sets 4:3 (TV) aspect ratio", BVW_RATIO_FOURBYTHREE },
-	{ "aspect-ratio-anamorphic", NULL, "16:9 (Widescreen)", NULL, "Sets 16:9 (Anamorphic) aspect ratio", BVW_RATIO_ANAMORPHIC },
-	{ "aspect-ratio-dvb", NULL, "2.11:1 (DVB)", NULL, "Sets 2.11:1 (DVB) aspect ratio", BVW_RATIO_DVB }
+	{ "aspect-ratio-auto", NULL, N_("Auto"), NULL, N_("Sets automatic aspect ratio"), BVW_RATIO_AUTO },
+	{ "aspect-ratio-square", NULL, N_("Square"), NULL, N_("Sets square aspect ratio"), BVW_RATIO_SQUARE },
+	{ "aspect-ratio-fbt", NULL, N_("4:3 (TV)"), NULL, N_("Sets 4:3 (TV) aspect ratio"), BVW_RATIO_FOURBYTHREE },
+	{ "aspect-ratio-anamorphic", NULL, N_("16:9 (Widescreen)"), NULL, N_("Sets 16:9 (Anamorphic) aspect ratio"), BVW_RATIO_ANAMORPHIC },
+	{ "aspect-ratio-dvb", NULL, N_("2.11:1 (DVB)"), NULL, N_("Sets 2.11:1 (DVB) aspect ratio"), BVW_RATIO_DVB }
 };
 
 static void
@@ -1180,13 +1180,13 @@ totem_ui_manager_setup (Totem *totem)
 
 	action = g_object_new (GTK_TYPE_ACTION,
 			"name", "subtitles-menu",
-			"label", "S_ubtitles",
+			"label", _("S_ubtitles"),
 			"hide-if-empty", FALSE, NULL);
 	gtk_action_group_add_action (totem->main_action_group, action);
 	g_object_unref (action);
 	action = g_object_new (GTK_TYPE_ACTION,
 			"name", "languages-menu",
-			"label", "_Languages",
+			"label", _("_Languages"),
 			"hide-if-empty", FALSE, NULL);
 	gtk_action_group_add_action (totem->main_action_group, action);
 	g_object_unref (action);
