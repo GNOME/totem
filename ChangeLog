@@ -1,3 +1,13 @@
+2006-09-25  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(connection_speed_enum_to_kbps),
+	(bacon_video_widget_set_scale_ratio),
+	(bvw_get_caps_of_current_stream):
+	  Get negotiated caps properly (for channel/codec/samplerate); fix
+	  silly compiler warning; make _set_scale_ratio() output more debug
+	  info.
+
 2006-09-25  Christian Persch  <chpe@cvs.gnome.org>
 
 	* data/playlist.glade:

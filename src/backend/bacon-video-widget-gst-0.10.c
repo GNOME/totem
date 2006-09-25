@@ -1942,10 +1942,10 @@ bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
 static guint
 connection_speed_enum_to_kbps (gint speed)
 {
-  static const gint conv_table[] = { 14400, 19200, 28800, 33600, 34400, 56000,
+  static const guint conv_table[] = { 14400, 19200, 28800, 33600, 34400, 56000,
       112000, 256000, 384000, 512000, 1536000, 10752000 };
 
-  g_return_val_if_fail (speed >= 0 && speed < G_N_ELEMENTS (conv_table), 0);
+  g_return_val_if_fail (speed >= 0 && (guint) speed < G_N_ELEMENTS (conv_table), 0);
 
   /* must round up so that the correct streams are chosen and not ignored
    * due to rounding errors when doing kbps <=> bps */
@@ -3270,8 +3270,10 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
+  GST_DEBUG ("ratio = %.2f", ratio);
+
   get_media_size (bvw, &w, &h);
-  if (ratio == 0) {
+  if (ratio == 0.0) {
     if (totem_ratio_fits_screen (bvw->priv->video_window, w, h, 2.0))
       ratio = 2.0;
     else if (totem_ratio_fits_screen (bvw->priv->video_window, w, h, 1.0))
@@ -3281,12 +3283,17 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
     else
       return;
   } else {
-    if (!totem_ratio_fits_screen (bvw->priv->video_window, w, h, ratio))
+    if (!totem_ratio_fits_screen (bvw->priv->video_window, w, h, ratio)) {
+      GST_DEBUG ("movie doesn't fit on screen @ %.1fx (%dx%d)", w, h, ratio);
       return;
+    }
   }
   w = (gfloat) w * ratio;
   h = (gfloat) h * ratio;
+
   shrink_toplevel (bvw);
+
+  GST_DEBUG ("setting preferred size %dx%d", w, h);
   totem_widget_set_preferred_size (GTK_WIDGET (bvw), w, h);
 }
 
@@ -3726,7 +3733,7 @@ bvw_get_caps_of_current_stream (BaconVideoWidget * bvw,
     g_object_get (G_OBJECT (current), "object", &obj, NULL);
     if (obj) {
       if (GST_IS_PAD (obj)) {
-        caps = gst_pad_get_caps (GST_PAD_CAST (obj));
+        caps = gst_pad_get_negotiated_caps (GST_PAD_CAST (obj));
       }
       gst_object_unref (obj);
     }
