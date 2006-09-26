@@ -610,8 +610,6 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 			totem->controls_visibility = TOTEM_CONTROLS_HIDDEN;
 			show_controls (totem, TRUE);
 		}
-
-		g_object_unref (action);
 	}
 
 	return FALSE;
