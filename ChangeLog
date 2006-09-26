@@ -1,3 +1,12 @@
+2006-09-26  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c: (get_media_size),
+	(bacon_video_widget_play), (bacon_video_widget_is_playing):
+	  Assume a pixel-aspect-ratio of 1:1 if the videosink doesn't
+	  have a pixel-aspect-ratio property (such as sdlvideosink or
+	  glimagesink). Don't assume the GType of the property is
+	  always a G_TYPE_STRING, it might be a fraction as well.
+
 2006-09-25  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:

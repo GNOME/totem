@@ -229,28 +229,32 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
       /* Create and init the fraction value */
       disp_par = g_new0 (GValue, 1);
       g_value_init (disp_par, GST_TYPE_FRACTION);
+
+      /* Square pixel is our default */
+      gst_value_set_fraction (disp_par, 1, 1);
     
       /* Now try getting display's pixel aspect ratio */
       if (bvw->priv->xoverlay) {
-        GValue disp_par_string = { 0, };
+        GObjectClass *klass;
+        GParamSpec *pspec;
+
+        klass = G_OBJECT_GET_CLASS (bvw->priv->xoverlay);
+        pspec = g_object_class_find_property (klass, "pixel-aspect-ratio");
       
-        /* Init the string value */
-        g_value_init (&disp_par_string, G_TYPE_STRING);
-        /* Get the string GValue from the video sink */
-        g_object_get_property (G_OBJECT (bvw->priv->xoverlay),
-            "pixel-aspect-ratio", &disp_par_string);
+        if (pspec != NULL) {
+          GValue disp_par_prop = { 0, };
+
+          g_value_init (&disp_par_prop, pspec->value_type);
+          g_object_get_property (G_OBJECT (bvw->priv->xoverlay),
+              "pixel-aspect-ratio", &disp_par_prop);
+
+          if (!g_value_transform (&disp_par_prop, disp_par)) {
+            GST_WARNING ("Transform failed, assuming pixel-aspect-ratio = 1/1");
+            gst_value_set_fraction (disp_par, 1, 1);
+          }
         
-        /* Try transforming */
-        if (!g_value_transform (&disp_par_string, disp_par)) {
-          gst_value_set_fraction (disp_par, 1, 1);
+          g_value_unset (&disp_par_prop);
         }
-        
-        /* Free the string PAR */
-        g_value_unset (&disp_par_string);
-      }
-      else {
-        /* Square pixel is our default */
-        gst_value_set_fraction (disp_par, 1, 1);
       }
       
       disp_par_n = gst_value_get_fraction_numerator (disp_par);
@@ -2523,7 +2527,7 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
   gst_element_set_state (bvw->priv->play, GST_STATE_PLAYING);
 
   ret = poll_for_state_change (bvw, bvw->priv->play, GST_STATE_PLAYING, error);
-
+  GST_DEBUG ("returning %s", (ret) ? "TRUE" : "FALSE");
   return ret;
 }
 
@@ -3512,14 +3516,16 @@ bacon_video_widget_get_stream_length (BaconVideoWidget * bvw)
 gboolean
 bacon_video_widget_is_playing (BaconVideoWidget * bvw)
 {
+  gboolean ret;
+
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  if (bvw->priv->target_state == GST_STATE_PLAYING)
-    return TRUE;
+  ret = (bvw->priv->target_state == GST_STATE_PLAYING);
+  GST_LOG ("%splaying", (ret) ? "" : "not ");
 
-  return FALSE;
+  return ret;
 }
 
 gboolean
