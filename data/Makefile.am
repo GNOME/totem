@@ -15,6 +15,7 @@ stuff_DATA =				\
 	stock-tool-brightness-contrast-22.png	\
 	totem.glade			\
 	playlist.glade			\
+	playlist-ui.xml			\
 	mozilla-viewer.glade		\
 	properties.glade		\
 	skip_to.glade			\

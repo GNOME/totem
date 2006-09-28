@@ -70,6 +70,9 @@ struct TotemPlaylistPrivate
 	/* This is the playing icon */
 	GdkPixbuf *icon;
 
+	GtkActionGroup *action_group;
+	GtkUIManager *ui_manager;
+
 	/* This is a scratch list for when we're removing files */
 	GList *list;
 
@@ -129,6 +132,14 @@ static int totem_playlist_table_signals[LAST_SIGNAL] = { 0 };
 static const GtkTargetEntry target_table[] = {
 	{ "text/uri-list", 0, 0 },
 	{ "_NETSCAPE_URL", 0, 1 },
+};
+
+static void playlist_remove_action_activated (GtkAction *action, TotemPlaylist *playlist);
+static void playlist_copy_location_action_activated (GtkAction *action, TotemPlaylist *playlist);
+
+static const GtkActionEntry entries[] = {
+	{ "remove", GTK_STOCK_REMOVE, N_("_Remove"), NULL, N_("Remove file from playlist"), G_CALLBACK (playlist_remove_action_activated) },
+	{ "copy-location", GTK_STOCK_COPY, N_("_Copy location"), NULL, N_("Copy the location to the clipboard"), G_CALLBACK (playlist_copy_location_action_activated) }
 };
 
 static GtkWidgetClass *parent_class = NULL;
@@ -452,7 +463,7 @@ drop_cb (GtkWidget     *widget,
 }
 
 static void
-on_copy1_activate (GtkButton *button, TotemPlaylist *playlist)
+playlist_copy_location_action_activated (GtkAction *action, TotemPlaylist *playlist)
 {
 	GList *l;
 	GtkTreePath *path;
@@ -485,33 +496,67 @@ on_copy1_activate (GtkButton *button, TotemPlaylist *playlist)
 }
 
 static gboolean
-treeview_button_pressed (GtkTreeView *treeview, GdkEventButton *event,
-		TotemPlaylist *playlist)
+playlist_show_popup_menu (TotemPlaylist *playlist, GdkEventButton *event)
 {
+	guint button = 0;
+       	guint32 time;
 	GtkTreePath *path;
+	gint count;
 	GtkWidget *menu;
+	GtkAction *action; 
 
-	if (event->type != GDK_BUTTON_PRESS
-			|| event->button != 3)
-		return FALSE;
+	if (event != NULL) {
+		button = event->button;
+		time = event->time;
 
-	if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (treeview),
-				event->x, event->y, &path,
-				NULL, NULL, NULL) == FALSE)
-	{
+		if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (playlist->_priv->treeview),
+				 event->x, event->y, &path, NULL, NULL, NULL)) {
+			if (!gtk_tree_selection_path_is_selected (playlist->_priv->selection, path)) {
+				gtk_tree_selection_unselect_all (playlist->_priv->selection);
+				gtk_tree_selection_select_path (playlist->_priv->selection, path);
+			}
+			gtk_tree_path_free (path);
+		} else {
+			gtk_tree_selection_unselect_all (playlist->_priv->selection);
+		}
+	} else {
+		time = gtk_get_current_event_time ();
+	}
+
+	count = gtk_tree_selection_count_selected_rows (playlist->_priv->selection);
+	
+	if (count == 0) {
 		return FALSE;
 	}
 
-	gtk_tree_selection_unselect_all (playlist->_priv->selection);
-	gtk_tree_selection_select_path (playlist->_priv->selection, path);
-	gtk_tree_path_free (path);
+	action = gtk_action_group_get_action (playlist->_priv->action_group, "copy-location");
+	gtk_action_set_sensitive (action, count == 1);
 
-	menu = glade_xml_get_widget (playlist->_priv->xml, "menu1");
-	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
-			event->button, event->time);
+	menu = gtk_ui_manager_get_widget (playlist->_priv->ui_manager, "/totem-playlist-popup");
+
 	gtk_menu_shell_select_first (GTK_MENU_SHELL (menu), FALSE);
 
+	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
+			button, time);
+
 	return TRUE;
+}
+
+static gboolean
+treeview_button_pressed (GtkTreeView *treeview, GdkEventButton *event,
+		TotemPlaylist *playlist)
+{
+	if (event->type == GDK_BUTTON_PRESS && event->button == 3) {
+		return playlist_show_popup_menu (playlist, event);
+	}
+
+	return FALSE;
+}
+
+static gboolean
+playlist_treeview_popup_menu (GtkTreeView *treeview, TotemPlaylist *playlist)
+{
+	return playlist_show_popup_menu (playlist, NULL);
 }
 
 static void
@@ -718,7 +763,7 @@ totem_playlist_foreach_selected (GtkTreeModel *model, GtkTreePath *path,
 }
 
 static void
-totem_playlist_remove_files (GtkWidget *widget, TotemPlaylist *playlist)
+playlist_remove_files (TotemPlaylist *playlist)
 {
 	GtkTreeSelection *selection;
 	GtkTreeRowReference *ref;
@@ -823,6 +868,18 @@ totem_playlist_remove_files (GtkWidget *widget, TotemPlaylist *playlist)
 	}
 	totem_playlist_update_save_button (playlist);
 	gtk_tree_view_columns_autosize (GTK_TREE_VIEW (playlist->_priv->treeview));
+}
+
+static void
+playlist_remove_button_clicked (GtkWidget *button, TotemPlaylist *playlist)
+{
+	playlist_remove_files (playlist);
+}
+
+static void
+playlist_remove_action_activated (GtkAction *action, TotemPlaylist *playlist)
+{
+	playlist_remove_files (playlist);
 }
 
 static void
@@ -1059,33 +1116,6 @@ totem_playlist_down_files (GtkWidget *widget, TotemPlaylist *playlist)
 	totem_playlist_move_files (playlist, FALSE);
 }
 
-static void
-totem_playlist_popup_menu (TotemPlaylist *playlist, guint time)
-{
-	GtkTreePath *path;
-	GtkWidget *menu;
-	int x, y;
-
-	if (gdk_window_get_pointer (playlist->_priv->treeview->window,
-			&x, &y, NULL) == NULL)
-		return;
-
-	if (gtk_tree_view_get_path_at_pos
-			(GTK_TREE_VIEW (playlist->_priv->treeview),
-			 x, y, &path, NULL, NULL, NULL) == FALSE) {
-		return;
-	}
-
-	gtk_tree_selection_unselect_all (playlist->_priv->selection);
-	gtk_tree_selection_select_path (playlist->_priv->selection, path);
-	gtk_tree_path_free (path);
-
-	menu = glade_xml_get_widget (playlist->_priv->xml, "menu1");
-	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
-			0, time);
-	gtk_menu_shell_select_first (GTK_MENU_SHELL (menu), FALSE);
-}
-
 static int
 totem_playlist_key_press (GtkWidget *win, GdkEventKey *event, TotemPlaylist *playlist)
 {
@@ -1097,17 +1127,6 @@ totem_playlist_key_press (GtkWidget *win, GdkEventKey *event, TotemPlaylist *pla
 				(playlist->_priv->selection);
 			return TRUE;
 		}
-
-		if (event->state & GDK_SHIFT_MASK
-		    && event->keyval == GDK_F10) {
-			totem_playlist_popup_menu (playlist, event->time);
-			return TRUE;
-		}
-	}
-
-	if (event->keyval == GDK_Menu) {
-		totem_playlist_popup_menu (playlist, event->time);
-		return TRUE;
 	}
 
 	/* If we have modifiers, and either Ctrl, Mod1 (Alt), or any
@@ -1123,7 +1142,7 @@ totem_playlist_key_press (GtkWidget *win, GdkEventKey *event, TotemPlaylist *pla
 
 	if (event->keyval == GDK_Delete)
 	{
-		totem_playlist_remove_files (NULL, playlist);
+		playlist_remove_files (playlist);
 		return TRUE;
 	}
 
@@ -1228,6 +1247,8 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 			G_CALLBACK (treeview_row_changed), playlist);
 	g_signal_connect (G_OBJECT (treeview), "button-press-event",
 			G_CALLBACK (treeview_button_pressed), playlist);
+	g_signal_connect (G_OBJECT (treeview), "popup-menu",
+			G_CALLBACK (playlist_treeview_popup_menu), playlist);
 
 	/* Drag'n'Drop */
 	g_signal_connect (G_OBJECT (treeview), "drag_data_received",
@@ -1437,6 +1458,14 @@ totem_playlist_finalize (GObject *object)
 		gdk_pixbuf_unref (playlist->_priv->icon);
 	g_object_unref (playlist->_priv->parser);
 
+	if (playlist->_priv->ui_manager != NULL) {
+		g_object_unref (G_OBJECT (playlist->_priv->ui_manager));
+	}
+
+	if (playlist->_priv->action_group != NULL) {
+		g_object_unref (G_OBJECT (playlist->_priv->action_group));
+	}
+
 	if (G_OBJECT_CLASS (parent_class)->finalize != NULL) {
 		(* G_OBJECT_CLASS (parent_class)->finalize) (object);
 	}
@@ -1447,6 +1476,7 @@ totem_playlist_new (void)
 {
 	TotemPlaylist *playlist;
 	GtkWidget *container, *item;
+	char *filename;
 
 	playlist = TOTEM_PLAYLIST (g_object_new (GTK_TYPE_PLAYLIST, NULL));
 
@@ -1459,6 +1489,25 @@ totem_playlist_new (void)
 		return NULL;
 	}
 
+	/* popup menu */
+	playlist->_priv->action_group = 
+		gtk_action_group_new ("playlist-action-group");
+	gtk_action_group_set_translation_domain (playlist->_priv->action_group,
+			GETTEXT_PACKAGE);
+	gtk_action_group_add_actions (playlist->_priv->action_group, entries,
+			G_N_ELEMENTS (entries), playlist);
+
+	playlist->_priv->ui_manager = gtk_ui_manager_new ();
+	gtk_ui_manager_insert_action_group (playlist->_priv->ui_manager,
+			playlist->_priv->action_group, -1);
+
+	filename = totem_interface_get_full_path ("playlist-ui.xml");
+	if (!gtk_ui_manager_add_ui_from_file (playlist->_priv->ui_manager, filename, NULL)) {
+		totem_playlist_finalize (G_OBJECT (playlist));
+		return NULL;
+	}
+	g_free (filename);
+
 	/* Connect the buttons */
 	item = glade_xml_get_widget (playlist->_priv->xml, "add_button");
 	g_signal_connect (G_OBJECT (item), "clicked",
@@ -1466,7 +1515,7 @@ totem_playlist_new (void)
 			playlist);
 	item = glade_xml_get_widget (playlist->_priv->xml, "remove_button");
 	g_signal_connect (G_OBJECT (item), "clicked",
-			G_CALLBACK (totem_playlist_remove_files),
+			G_CALLBACK (playlist_remove_button_clicked),
 			playlist);
 	item = glade_xml_get_widget (playlist->_priv->xml, "save_button");
 	g_signal_connect (G_OBJECT (item), "clicked",
@@ -1480,10 +1529,6 @@ totem_playlist_new (void)
 	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (totem_playlist_down_files),
 			playlist);
-
-	item = glade_xml_get_widget (playlist->_priv->xml, "copy1");
-	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_copy1_activate), playlist);
 
 	gtk_widget_add_events (GTK_WIDGET (playlist), GDK_KEY_PRESS_MASK);
 	g_signal_connect (G_OBJECT (playlist), "key_press_event",

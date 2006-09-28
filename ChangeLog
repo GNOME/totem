@@ -1,3 +1,17 @@
+2006-09-28  Jan Arne Petersen  <jpetersen@jpetersen.org>
+
+	* data/Makefile.am:
+	* data/playlist-ui.xml:
+	* data/playlist.glade:
+	* src/totem-playlist.c: (playlist_copy_location_action_activated),
+	(playlist_show_popup_menu), (treeview_button_pressed),
+	(playlist_treeview_popup_menu), (playlist_remove_files),
+	(playlist_remove_button_clicked),
+	(playlist_remove_action_activated), (totem_playlist_key_press),
+	(init_treeview), (totem_playlist_finalize), (totem_playlist_new):
+	cleanup the playlist popup menu. Use GtkUIManager, add support for
+	multiple selections, add 'Remove' item. (Closes: #309902)
+
 2006-09-28  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/totem-statusbar.c: (totem_statusbar_set_text):
