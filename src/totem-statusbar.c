@@ -202,6 +202,8 @@ void
 totem_statusbar_set_text (TotemStatusbar *statusbar, const char *label)
 {
   gtk_label_set_text (GTK_LABEL (statusbar->label), label);
+  g_free (statusbar->saved_label);
+  statusbar->saved_label = g_strdup (label);
 }
 
 void

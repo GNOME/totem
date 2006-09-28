@@ -1,3 +1,9 @@
+2006-09-28  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/totem-statusbar.c: (totem_statusbar_set_text):
+	  Restore playing/stopped text in statusbar properly
+	  if has changed while we were buffering (#341233).
+
 2006-09-19  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totemPlugin.cpp: don't accept streams from
