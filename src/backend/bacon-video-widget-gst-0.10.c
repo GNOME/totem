@@ -175,6 +175,11 @@ struct BaconVideoWidgetPrivate
   BvwUseType                   use_type;
 
   gint                         eos_id;
+
+  /* state we want to be in, as opposed to actual pipeline state
+   * which may change asynchronously or during buffering */
+  GstState                     target_state;
+  gboolean                     buffering;
 };
 
 static void bacon_video_widget_set_property (GObject * object,
@@ -1097,6 +1102,9 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       if (bvw->priv->play)
         gst_element_set_state (bvw->priv->play, GST_STATE_NULL);
 
+      bvw->priv->target_state = GST_STATE_NULL;
+      bvw->priv->buffering = FALSE;
+
       g_free (debug);
       break;
     }
@@ -1170,9 +1178,36 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       break;
     case GST_MESSAGE_BUFFERING: {
       gint percent = 0;
+
+      /* FIXME: use gst_message_parse_buffering() once core 0.10.11 is out */
       gst_structure_get_int (message->structure, "buffer-percent", &percent);
-      GST_DEBUG ("Buffering message (%u%%)", percent);
       g_signal_emit (bvw, bvw_signals[SIGNAL_BUFFERING], 0, percent);
+
+      if (percent >= 100) {
+        /* a 100% message means buffering is done */
+        bvw->priv->buffering = FALSE;
+        /* if the desired state is playing, go back */
+        if (bvw->priv->target_state == GST_STATE_PLAYING) {
+          GST_DEBUG ("Buffering done, setting pipeline back to PLAYING");
+          gst_element_set_state (bvw->priv->play, GST_STATE_PLAYING);
+        } else {
+          GST_DEBUG ("Buffering done, keeping pipeline PAUSED");
+        }
+      } else if (bvw->priv->buffering == FALSE &&
+          bvw->priv->target_state == GST_STATE_PLAYING) {
+        GstState cur_state;
+
+        gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
+        if (cur_state == GST_STATE_PLAYING) {
+          GST_DEBUG ("Buffering ... temporarily pausing playback");
+          gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
+        } else {
+          GST_DEBUG ("Buffering ... prerolling, not doing anything");
+        }
+        bvw->priv->buffering = TRUE;
+      } else {
+        GST_LOG ("Buffering ... %d", percent);
+      }
       break;
     }
     case GST_MESSAGE_APPLICATION: {
@@ -2366,6 +2401,8 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 		  "suburi", subtitle_uri, NULL);
   }
 
+  bvw->priv->target_state = GST_STATE_PAUSED;
+
   gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
 
   if (bvw->priv->use_type == BVW_USE_TYPE_AUDIO ||
@@ -2413,6 +2450,8 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
+
+  bvw->priv->target_state = GST_STATE_PLAYING;
 
   /* no need to actually go into PLAYING in capture/metadata mode (esp.
    * not with sinks that don't sync to the clock), we'll get everything
@@ -2499,6 +2538,7 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
    * our state change messages (before the bus goes to flushing) and
    * cleans up */
   GST_DEBUG ("stopping");
+  bvw->priv->target_state = GST_STATE_NULL;
   gst_element_get_state (playbin, &current_state, NULL, 0);
   if (current_state > GST_STATE_READY) {
     GError *err = NULL;
@@ -2513,6 +2553,8 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   GST_DEBUG ("almost stopped, setting to NULL");
   gst_element_set_state (playbin, GST_STATE_NULL);
   GST_DEBUG ("stopped");
+
+  bvw->priv->buffering = FALSE;
 }
 
 void
@@ -2664,6 +2706,7 @@ bacon_video_widget_pause (BaconVideoWidget * bvw)
 
   GST_LOG ("Pausing");
   gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_PAUSED);
+  bvw->priv->target_state = GST_STATE_PAUSED;
 }
 
 void
@@ -3404,23 +3447,12 @@ bacon_video_widget_get_stream_length (BaconVideoWidget * bvw)
 gboolean
 bacon_video_widget_is_playing (BaconVideoWidget * bvw)
 {
-  GstState cur, pending;
-
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  gst_element_get_state (bvw->priv->play, &cur, &pending, 0);
-
-  if (cur == GST_STATE_PLAYING || pending == GST_STATE_PLAYING)
+  if (bvw->priv->target_state == GST_STATE_PLAYING)
     return TRUE;
-
-  /* just lie (see _play() above) */
-  if ((bvw->priv->use_type == BVW_USE_TYPE_CAPTURE
-       || bvw->priv->use_type == BVW_USE_TYPE_METADATA) &&
-       (cur >= GST_STATE_PAUSED || pending >= GST_STATE_PAUSED)) {
-    return TRUE;
-  }
 
   return FALSE;
 }
