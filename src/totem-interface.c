@@ -154,6 +154,7 @@ totem_interface_get_full_path (const char *name)
 {
 	char *filename;
 
+#ifdef TOTEM_RUN_IN_SOURCE_TREE
 	/* Try the glade file in the source tree first */
 	filename = g_build_filename ("..", "data", name, NULL);
 	if (g_file_test (filename, G_FILE_TEST_EXISTS) == FALSE)
@@ -169,6 +170,10 @@ totem_interface_get_full_path (const char *name)
 			return NULL;
 		}
 	}
+#else
+	filename = g_build_filename (DATADIR,
+	                                "totem", name, NULL);
+#endif
 
 	return filename;
 }

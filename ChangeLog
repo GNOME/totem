@@ -1,3 +1,13 @@
+2006-09-29  Frederic Crozat  <fcrozat@mandriva.com>
+
+	* browser-plugin/totemPlugin.cpp:
+	* configure.in:
+	* src/totem-interface.c: (totem_interface_get_full_path):
+	* src/vanity.c: (main):
+	Add --disable-run-in-source-tree option to configure, allowing
+	to disable searching for glade file in directory relative
+	to current directory (Closes: #358340)
+
 2006-09-28  Jan Arne Petersen  <jpetersen@jpetersen.org>
 
 	* data/Makefile.am:

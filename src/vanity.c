@@ -682,9 +682,11 @@ main (int argc, char **argv)
 	gnome_authentication_manager_init ();
 #endif /* !HAVE_GTK_ONLY */
 
+#ifdef TOTEM_RUN_IN_SOURCE_TREE
 	if (g_file_test ("../data/vanity.glade", G_FILE_TEST_EXISTS) != FALSE)
 		filename = g_strdup ("../data/vanity.glade");
 	else
+#endif
 		filename = g_build_filename (DATADIR,
 				"totem", "vanity.glade", NULL);
 

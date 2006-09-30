@@ -202,6 +202,7 @@ totem_plugin_fork (totemPlugin *plugin)
 
 	arr = g_ptr_array_new ();
 
+#ifdef TOTEM_RUN_IN_SOURCE_TREE
 	if (g_file_test ("./totem-mozilla-viewer",
 				G_FILE_TEST_EXISTS) != FALSE) {
 		g_ptr_array_add (arr, g_strdup ("./totem-mozilla-viewer"));
@@ -209,6 +210,11 @@ totem_plugin_fork (totemPlugin *plugin)
 		g_ptr_array_add (arr,
 				g_strdup (LIBEXECDIR"/totem-mozilla-viewer"));
 	}
+#else
+	g_ptr_array_add (arr,
+			g_strdup (LIBEXECDIR"/totem-mozilla-viewer"));
+#endif
+
 
 	/* For the RealAudio streams */
 	if (plugin->width == 0 && plugin->height == 0) {
