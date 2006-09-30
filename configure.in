@@ -526,7 +526,7 @@ AC_ARG_WITH(hal,
 	      AC_HELP_STRING([--without-hal],
 			     [Disable HAL support]))
 if test "x$with_hal" != "xno"; then
-  PKG_CHECK_MODULES(HAL, hal >= 0.5 hal < 0.6, enable_hal05=yes, enable_hal05=no)
+  PKG_CHECK_MODULES(HAL, hal >= 0.5 hal < 0.6 dbus >= 0.61, enable_hal05=yes, enable_hal05=no)
   if test x$enable_hal05 != xyes; then
      PKG_CHECK_MODULES(HAL, hal >= 0.2.92 hal < 0.5, enable_hal02=yes, enable_hal02=no)
   fi
