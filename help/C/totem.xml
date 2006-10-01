@@ -2,9 +2,9 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appversion "0.997">
+  <!ENTITY appversion "1.6.0">
   <!ENTITY manrevision "2.0">
-  <!ENTITY date "November 2003">
+  <!ENTITY date "August 2006">
   <!ENTITY app "Totem Movie Player">
   <!-- Information about the entities
        The legal.xml file contains legal information, there is no need to edit the file. 
@@ -37,16 +37,6 @@
       <para>&app; is a movie player for the GNOME desktop</para>
     </abstract>
 
-<!-- translators: uncomment this:
-    <copyright>
-      <year>2002</year>
-      <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
-    </copyright>
--->
-
-<!-- An address can be added to the publisher information.  If a role is 
-     not specified, the publisher/author is the same for all versions of the 
-     document.  -->
     <publisher> 
       <publishername> GNOME Documentation Project </publishername> 
     </publisher> 
@@ -64,7 +54,16 @@
   	  <orgname>GNOME Documentation Project</orgname> 
 	  <address> <email>cbhoh@gnome.org</email> </address> 
 	</affiliation> 
-      </author> 
+      </author>
+      <author>
+	<firstname>Baptiste</firstname> 
+	<surname>Mille-Mathias</surname> 
+	<affiliation> 
+      <orgname>GNOME Documentation project</orgname> 
+  	<address> <email>baptiste.millemathias@gmail.org</email> </address> 
+  </affiliation>
+        <contrib>Update documentation</contrib>      
+      </author>      
 
 <!-- This is appropriate place for other contributors: translators,
      maintainers,  etc. Commented out by default.
@@ -112,7 +111,6 @@
         this manual, follow the directions in the 
         <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. 
       </para>
-<!-- Translators may also add here feedback address for translations -->
     </legalnotice> 
   </articleinfo> 
 
@@ -131,7 +129,7 @@
   <sect1 id="totem-introduction"> 
     <title>Introduction</title> 
     <para>The <application>&app;</application> application is a movie player for the GNOME desktop based on
-      xine library, it enables you to play movies or songs.
+      Gstreamer framework and xine library, it enables you to play movies or songs.
     </para>
     <para><application>&app;</application> provides the following features:</para>
     <itemizedlist> 
@@ -158,9 +156,6 @@
       <itemizedlist>
 	<listitem>
 	  <para>Video thumbnailer for GNOME.</para>
-        </listitem>
-	<listitem>
-	  <para>Webcam utility.</para>
         </listitem>
 	<listitem>
 	  <para>Nautilus properties tab.</para>
@@ -228,16 +223,12 @@
 	    <imageobject>
 	      <imagedata fileref="figures/totem_start_window.png" format="PNG"/> 
 	    </imageobject>
-	    <!-- EPS versions of the figures are not required at the moment. -->
-<!-- 
-	    <imageobject>
-      	      <imagedata fileref="figures/image.eps" format="EPS"/>
-            </imageobject>
--->
 	    <textobject> 
-	      <phrase>Shows <application>&app;</application> main window. Contains menubar, display area, 
-                time elapsed slider, seek control buttons, volume slider and statusbar.
-              </phrase>
+	      <phrase>Shows <application>&app;</application> main window with
+		  sidebar opened on playlist. Contains
+		  menubar, display area, sidebar, time elapsed slider, seek control
+		  buttons, volume slider and statusbar.
+          </phrase>
 	    </textobject> 
 	  </mediaobject> 
 	</screenshot> 
@@ -260,6 +251,14 @@
 	  <term>Display area.</term>
 	  <listitem>
 	    <para>The display area displays movie or visualisation of song.
+            </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Sidebar.</term>
+	  <listitem>
+	    <para>The sidebar displays properties of file played and acts as
+		playlist.
             </para>
 	  </listitem>
 	</varlistentry>
@@ -311,8 +310,8 @@
           <guimenu>Movie</guimenu>
 	  <guisubmenu>Open</guisubmenu>
         </menuchoice>.
-        The <guilabel>Select files</guilabel> dialog is displayed. Select the file
-	you want to open, then click 
+        The <guilabel>Select Movies or Playlists</guilabel> dialog is displayed.
+		Select the file(s) you want to open, then click 
 	<guibutton>OK</guibutton>. 
       </para>
       <para>You can drag a file from another application such as a file manager to the
@@ -345,43 +344,11 @@
     </sect2>
 
     <sect2 id="totem-usage-play">
-      <title>To Play a DVD, VCD or CD</title>
-      <variablelist>
-        <varlistentry>
-  	  <term>To play a DVD</term>
-	  <listitem>
-            <para>Insert the DVD in the DVD device of your computer, then choose
-              <menuchoice>
-		<guimenu>Movie</guimenu>
-		<guimenuitem>Play DVD</guimenuitem>
-              </menuchoice>.
-            </para>
-          </listitem>
-        </varlistentry>
-        <varlistentry>
-  	  <term>To play a VCD</term>
-	  <listitem>
-            <para>Insert the VCD in the VCD device of your computer, then choose
-              <menuchoice>
-	        <guimenu>Movie</guimenu>
-		<guimenuitem>Play VCD</guimenuitem>
-              </menuchoice>.
-            </para>
-          </listitem>
-        </varlistentry>
-        <varlistentry>
-  	  <term>To play a CD</term>
-	  <listitem>
-            <para>Insert the CD in the CD device of your computer, then choose
-              <menuchoice>
-	        <guimenu>Movie</guimenu>
-		<guimenuitem>Play CD</guimenuitem>
-              </menuchoice>.
-            </para>
-          </listitem>
-        </varlistentry>
-      </variablelist>
-    </sect2>
+      <title>To Play a Movie (DVD, VCD or CD)</title>
+	      <para>Insert the disc in the optical device of your computer, then choose
+          	<menuchoice><guimenu>Movie</guimenu><guimenuitem>Play Disc</guimenuitem>
+              </menuchoice>.</para>
+       </sect2>
 
     <sect2 id="totem-usage-eject">
       <title>To Eject a DVD, VCD or CD</title>
@@ -425,10 +392,10 @@
       <title>To View Properties of a Movie or Song</title>
       <para>To view properties of a movie or song, choose 
         <menuchoice>
-	  <guimenu>Movie</guimenu>
-	  <guimenuitem>Properties</guimenuitem>
-        </menuchoice>. The <guilabel>Properties</guilabel> dialog is displayed. The dialog contains the
-        following information:
+	  <guimenu>View</guimenu>
+	  <guimenuitem>Sidebar</guimenuitem></menuchoice> to make the sidebar
+	  appear, and choose <guimenu>Properties</guimenu> in the grop-down list.</para>
+	  <para>The dialog contains the following information:
         <variablelist>
 	  <varlistentry>
             <term>General</term>
@@ -532,72 +499,74 @@
 
     <sect2 id="totem-usage-change-zoom">
       <title>To Change the Zoom Factor</title>
+	  <sect3 id="totem-usage-change-size">
+		<title>To Change the Video Size</title>
       <para>To change the zoom factor of display area, you can use the 
         following methods:
       </para>
       <itemizedlist>
 	<listitem>
-	  <para>To zoom to full screen mode,
-            choose 
-            <menuchoice>
-	      <shortcut><keycap>F</keycap></shortcut>
-	      <guimenu>View</guimenu>
-              <guimenuitem>Fullscreen</guimenuitem>
-            </menuchoice>. To exit fullscreen mode, click on the <guibutton>Exit Fullscreen</guibutton>
-            button or press <keycap>Esc</keycap>.
+	  <para>To zoom to full screen mode, choose
+	  <menuchoice><shortcut><keycap>F</keycap></shortcut>
+	  <guimenu>View</guimenu><guimenuitem>Fullscreen</guimenuitem></menuchoice>
+	  . To exit fullscreen mode, click on the
+			<guibutton>Leave Fullscreen</guibutton> button or press
+			<keycap>Esc</keycap> or <keycap>F</keycap>.
           </para>
-        </listitem>
+    </listitem>
 	<listitem>
 	  <para>To zoom to half size (50%) of the original movie or visualisation,
             choose 
             <menuchoice>
 	      <shortcut><keycap>0</keycap></shortcut>
-	      <guimenu>View</guimenu>
-              <guimenuitem>Zoom 1:2</guimenuitem>
+	      <guimenu>View</guimenu><guisubmenu>Fit Window to Movie</guisubmenu>
+              <guimenuitem>Resize 1:2</guimenuitem>
             </menuchoice>.
-          </para>
-        </listitem>
+      </para>
+    </listitem>
 	<listitem>
 	  <para>To zoom to size (100%) of the original movie or visualisation,
             choose 
             <menuchoice>
 	      <shortcut><keycap>1</keycap></shortcut>
-	      <guimenu>View</guimenu>
-              <guimenuitem>Zoom 1:1</guimenuitem>
+	      <guimenu>View</guimenu><guisubmenu>Fit Window to Movie</guisubmenu>
+              <guimenuitem>Resize 1:1</guimenuitem>
             </menuchoice>.
-          </para>
-        </listitem>
+      </para>
+    </listitem>
 	<listitem>
 	  <para>To zoom to double size (200%) of the original movie or visualisation,
             choose 
             <menuchoice>
 	      <shortcut><keycap>2</keycap></shortcut>
-	      <guimenu>View</guimenu>
-              <guimenuitem>Zoom 2:1</guimenuitem>
+	      <guimenu>View</guimenu><guisubmenu>Fit Window to Movie</guisubmenu>
+              <guimenuitem>Resize 2:1</guimenuitem>
             </menuchoice>.
           </para>
         </listitem>
-	<listitem>
-	  <para>To switch between different aspect ratios, choose
+	</itemizedlist>
+	</sect3>
+	 <sect3 id="totem-usage-change-ratio">
+		<title>To Change the Video Aspect Ratio</title>
+	      <para>To switch between different aspect ratios, choose
             <menuchoice>
 	      <shortcut><keycap>A</keycap></shortcut>
 	      <guimenu>View</guimenu>
-	      <guimenuitem>Toggle Aspect Ratio</guimenuitem>
-            </menuchoice>. The supported aspect ratios are:
+	      <guisubmenu>Aspect Ratio</guisubmenu>
+            </menuchoice>. The supported aspect ratios available are:
             <itemizedlist>
-              <listitem><para>Automatic Aspect</para></listitem>
-	      <listitem><para>Square Aspect (1:1)</para></listitem>
-              <listitem><para>4:3 Aspect (4:3)</para></listitem>
-              <listitem><para>Anamorphic Aspect (16:9)</para></listitem>
-              <listitem><para>DVB Aspect (2.11:1)</para></listitem>
+              <listitem><para>Auto</para></listitem>
+	          <listitem><para>Square</para></listitem>
+              <listitem><para>4:3 (TV)</para></listitem>
+              <listitem><para>16:9 (Widescreen)</para></listitem>
+              <listitem><para>2.11:1 (DVB)</para></listitem>
             </itemizedlist>
             <note>
-              <para>The default aspect ratio is Automatic Aspect.
+              <para>The default aspect ratio is Auto.
               </para>
             </note>
           </para>
-        </listitem>
-      </itemizedlist>
+	  </sect3>
     </sect2>
 
     <sect2 id="totem-usage-adjust-volume">
@@ -615,16 +584,8 @@
           <guimenuitem>Volume Down</guimenuitem>
         </menuchoice> or move the volume slider to the left.         
       </para>
-      <para>To turn the volume down to minimum, click on the 
-        <inlinemediaobject> 
-	  <imageobject><imagedata fileref="figures/totem_volume_mute_button.png" format="PNG"/></imageobject>
-	  <textobject><phrase>Shows a mute button</phrase></textobject>
-        </inlinemediaobject> button.
-        To turn the volume up to maximum, click on the
-        <inlinemediaobject> 
-	  <imageobject><imagedata fileref="figures/totem_volume_maximum_button.png" format="PNG"/></imageobject>
-	  <textobject><phrase>Shows a maximum volume button</phrase></textobject>
-        </inlinemediaobject> button.
+      <para>To adjust the sound volume, you can also use the volume button.
+	  Press the volume button and choose the volume level with the slider.
       </para>
     </sect2>
 
@@ -685,22 +646,13 @@
 	<title>To Show or Hide Playlist</title>
 	<para>To show playlist, choose 
           <menuchoice>
-	    <guimenu>View</guimenu>
-	    <guimenuitem>Show/Hide Playlist</guimenuitem>
-          </menuchoice>, or click on the 
-          <inlinemediaobject>
-	    <imageobject><imagedata fileref="figures/totem_show_playlist_button.png" format="PNG"/></imageobject>
-            <textobject><phrase>Shows a show/hide playlist button</phrase></textobject>
-          </inlinemediaobject> button. The <guilabel>Playlist</guilabel> dialog is displayed. To hide Playlist, 
-          choose
-          <menuchoice>
-	    <guimenu>View</guimenu>
-	    <guimenuitem>Show/Hide Playlist</guimenuitem>
-          </menuchoice> or click on the
-          <inlinemediaobject>
-	    <imageobject><imagedata fileref="figures/totem_show_playlist_button.png" format="PNG"/></imageobject>
-            <textobject><phrase>Shows a show/hide playlist button</phrase></textobject>
-          </inlinemediaobject> button again.
+	    <guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem>
+          </menuchoice>, or click the <guilabel>Sidebar</guilabel> button, and
+		  choose <guimenu>Playlist</guimenu> on the top of 
+		  the sidebar. The <guilabel>Playlist</guilabel> dialog is displayed.</para>
+		  <para>To hide Playlist, choose <menuchoice><guimenu>View</guimenu>
+	    <guimenuitem>Sidebar</guimenuitem></menuchoice> or click on the
+         <guilabel>Sidebar</guilabel> button again.
         </para>
       </sect3>
 
@@ -750,44 +702,39 @@
                 </para>
               </listitem>
 	    </varlistentry>
-	    <varlistentry>
-              <term>To set repeat mode</term>
-	      <listitem>
-		<para>Select the <guilabel>Repeat mode</guilabel> option to play the movies or songs repeatedly.
-                </para>
-              </listitem>
-	    </varlistentry>
-	    <varlistentry>
-	      <term>To set shuffle mode</term>
-	      <listitem>
-		<para>Select the <guilabel>Shuffle mode</guilabel> option to play the movies or songs randomly.
-                </para>
-              </listitem>
-            </varlistentry>
           </variablelist>
         </para>
       </sect3>
       <sect3 id="totem-usage-playlist-repeat">
 	<title>To Select or Unselect Repeat Mode</title>
-	<para>To select or unselect repeat mode, choose
-          <menuchoice>
-            <guimenu>View</guimenu>
-	    <guimenuitem>Repeat Mode</guimenuitem>
-	  </menuchoice>, or use the <guilabel>Repeat mode</guilabel> option from 
-          the <guilabel>Playlist</guilabel> dialog.
+	<para>To enable or disable repeat mode, choose
+          <menuchoice><guimenu>Edit</guimenu><guimenuitem>Repeat Mode</guimenuitem></menuchoice>.
         </para>
       </sect3>
       <sect3 id="totem-usage-playlist-shuffle">
 	<title>To Select or Unselect Shuffle Mode</title>
-	<para>To select or unselect shuffle mode, choose
-          <menuchoice>
-            <guimenu>View</guimenu>
-	    <guimenuitem>Shuffle Mode</guimenuitem>
-	  </menuchoice>, or use the <guilabel>Shuffle mode</guilabel> option from 
-          the <guilabel>Playlist</guilabel> dialog.
+	<para>To enable or disable shuffle mode, choose
+          <menuchoice><guimenu>Edit</guimenu><guimenuitem>Shuffle
+		  Mode</guimenuitem></menuchoice>.
         </para>
       </sect3>
     </sect2>
+
+    <sect2 id="totem-usage-subtitle">
+	  <title>To Choose Subtitle</title>
+	  <para>To choose
+	  the langage of the subtitles, select
+	  <menuchoice><guimenu>View</guimenu><guisubmenu>Subtitles</guisubmenu></menuchoice>
+	  and choose the subtitles langage you want to display.</para>
+	  <para>To disable the display of subtitles, select
+	  <menuchoice><guimenu>View</guimenu><guisubmenu>Subtitles</guisubmenu><guimenuitem>None</guimenuitem></menuchoice>.</para>
+	  <note><para>By default, &app; will choose the same langage for the
+	  subtitles that the one you use  on your computer.</para></note>
+	  <tip><para>&app; will automatically load and display subtitles if the file which content them has the same
+	  name than the video file played and the extention <filename>asc</filename>, <filename>txt</filename>,
+	  <filename>sub</filename>, <filename>smi</filename>, or <filename>ssa</filename>.
+	  </para></tip>
+	</sect2>
 
     <sect2 id="totem-usage-take-screenshot">
       <title>To Take Screenshot</title>
@@ -814,16 +761,6 @@
       </para>
     </sect2>
 
-    <sect2 id="totem-usage-quit">
-      <title>To Quit &app;</title>
-      <para>To quit <application>&app;</application>, choose
-        <menuchoice>
-          <shortcut><keycombo><keycap>Ctrl</keycap><keycap>Q</keycap></keycombo></shortcut>
-          <guimenu>Movie</guimenu>
-	  <guimenuitem>Quit</guimenuitem>
-        </menuchoice>.
-      </para>
-    </sect2>
   </sect1>
 
 <!-- =========== Usage ======================================= -->
@@ -872,10 +809,32 @@
 	  <listitem>
 	    <itemizedlist>
 	      <listitem>
-                <para><guilabel>No TV-out</guilabel>: select this option if you have no TV-out connection.</para>
+                <para><guilabel>No TV-out</guilabel>: select this option if you
+				have no TV-out connection (Selected by default if you don't have an
+				TV-out interface).</para>
               </listitem>
 	      <listitem>
-		<para><guilabel>TV-out mode</guilabel>: select this option if you want normal TV-out connection.</para>
+			<para><guilabel>TV-out in fullscreen by Nvidia (NTSC)</guilabel>:
+			select this option if you want TV-out connection in NTSC.</para>
+              </listitem>
+			  <listitem>
+			  	<para><guilabel>TV-out in fullscreen by Nvidia (PAL)</guilabel>:
+			select this option if you want TV-out connection in PAL.</para>
+			  </listitem>
+            </itemizedlist>
+          </listitem>
+        </varlistentry>
+		<varlistentry>
+	  <term>Text Subtitles</term>
+	  <listitem>
+	    <itemizedlist>
+	      <listitem>
+                <para><guilabel>Font</guilabel>: select this option to change
+				the font used to display subtitles.</para>
+              </listitem>
+	          <listitem>
+				<para><guilabel>Encoding</guilabel>: select this option to the
+				encoding used to display subtitles.</para>
               </listitem>
             </itemizedlist>
           </listitem>
@@ -898,7 +857,7 @@
 	  <listitem>
 	    <itemizedlist>
 	      <listitem>
-                <para><guilabel>visual</guilabel>: select this option to show visual effects
+                <para><guilabel>Visual</guilabel>: select this option to show visual effects
                   while an audio file is playing.
                 </para>
               </listitem>
@@ -916,17 +875,25 @@
           </listitem>
         </varlistentry>
 	<varlistentry>
-	  <term>Brightness/Contrast</term>
+	  <term>Color balance</term>
 	  <listitem>
 	    <itemizedlist>
 	      <listitem>
-		<para><guilabel>Brightness</guilabel>: use the slider to specify the level of brightness.</para>
-              </listitem>
-	      <listitem>
-		<para><guilabel>Contrast</guilabel>: use the slider to specify the level of contrast.</para>
-              </listitem>
-	    </itemizedlist>
+		    <para><guilabel>Brightness</guilabel>: use the slider to specify the level of brightness.</para>
           </listitem>
+	      <listitem>
+		     <para><guilabel>Contrast</guilabel>: use the slider to specify the level of contrast.</para>
+          </listitem>
+	      <listitem>
+		    <para><guilabel>Saturation</guilabel>: use the slider to specify the
+			level of saturation.</para>
+          </listitem>
+	      <listitem>
+		     <para><guilabel>Hue</guilabel>: use the slider to specify the level
+			 of hue.</para>
+          </listitem>
+	    </itemizedlist>
+      </listitem>
 	</varlistentry>
       </variablelist>
     </sect2>
