@@ -1,5 +1,16 @@
 New features and significant updates in version...
 
+2.16.2
+* Playlist parser:
+  - Handle playlists linked inside playlists as used on kinkfm.com
+  - Handle "BASE HREF" in ASX files
+  - When adding ISO images, or on-disk DVDs, set a title
+* Browser plugin:
+  - Don't accept streams that aren't from the supported mime-type
+* GStreamer backend:
+  - Restore the statusbar text when we've been buffering
+  - Fix buffering when streaming
+
 2.16.1
 * Browser enhancement:
   - Fix the "Open with..." menu item not showing for some supported types
