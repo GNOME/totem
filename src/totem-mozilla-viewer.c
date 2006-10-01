@@ -376,11 +376,11 @@ on_about1_activate (GtkButton *button, TotemEmbedded *emb)
 	}
 
 	backend_version = bacon_video_widget_get_backend_name (emb->bvw);
-	description = g_strdup_printf (_("Movie Player using %s"),
+	description = g_strdup_printf (_("Browser Plugin using %s"),
 				       backend_version);
 
 	emb->about = g_object_new (GTK_TYPE_ABOUT_DIALOG,
-				   "name", _("Totem Mozilla Plugin"),
+				   "name", _("Totem Browser Plugin"),
 				   "version", VERSION,
 				   "copyright", _("Copyright \xc2\xa9 2002-2006 Bastien Nocera"),
 				   "comments", description,
