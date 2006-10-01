@@ -509,6 +509,20 @@ totem_plugin_new_instance (NPMIMEType mimetype,
 				plugin->src = resolve_relative_uri (docURI, argv[i]);
 				need_req = TRUE;
 			}
+		} else if (g_ascii_strcasecmp (argn[i], "qtsrc") == 0) {
+			/* Quicktime parameter documented in
+			 * http://developer.apple.com/documentation/QuickTime/QT6WhatsNew/Chap1/chapter_1_section_13.html */
+			if (plugin->src != NULL)
+				g_free (plugin->src);
+			if (plugin->stream != nsnull) {
+				CallNPN_DestroyStreamProc
+					(mozilla_functions.destroystream,
+					 plugin->instance, plugin->stream,
+					 NPRES_DONE);
+				plugin->stream = nsnull;
+			}
+			plugin->src = resolve_relative_uri (docURI, argv[i]);
+			need_req = TRUE;
 		} else if (g_ascii_strcasecmp (argn[i], "href") == 0) {
 			plugin->href = resolve_relative_uri (docURI, argv[i]);
 		} else if (g_ascii_strcasecmp (argn[i], "cache") == 0) {

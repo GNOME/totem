@@ -1,5 +1,11 @@
 2006-10-01  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemPlugin.cpp: add support for QTSRC,
+	for which we need to close the current stream, and open a new
+	one with the QTSRC (Closes: #351077)
+
+2006-10-01  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemNarrowSpacePlugin.cpp: add image/x-macpaint
 	and image/x-quicktime to the supported mime-types, as per
 	http://developer.apple.com/documentation/QuickTime/QT6WhatsNew/Chap1/chapter_1_section_13.html
