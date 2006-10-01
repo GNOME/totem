@@ -9,6 +9,7 @@ static GList *list = NULL;
 static gboolean option_recurse = TRUE;
 static gboolean option_debug = FALSE;
 static gboolean option_data = FALSE;
+static gboolean option_force = FALSE;
 
 static void
 header (const char *message)
@@ -224,6 +225,7 @@ test_parsing (void)
 
 	g_object_set (G_OBJECT (pl), "recurse", option_recurse, NULL);
 	g_object_set (G_OBJECT (pl), "debug", option_debug, NULL);
+	g_object_set (G_OBJECT (pl), "force", option_force, NULL);
 	g_signal_connect (G_OBJECT (pl), "entry", G_CALLBACK (entry_added), NULL);
 	g_signal_connect (G_OBJECT (pl), "playlist-start", G_CALLBACK (playlist_started), NULL);
 	g_signal_connect (G_OBJECT (pl), "playlist-end", G_CALLBACK (playlist_ended), NULL);
@@ -255,6 +257,11 @@ int main (int argc, char **argv)
 		} else if (strcmp (argv[1], "--data") == 0 || strcmp (argv[1], "-t") == 0) {
 			g_print ("Using data, instead of filenames\n");
 			option_data = TRUE;
+			argv++;
+			argc--;
+		} else if (strcmp (argv[1], "--force") == 0 || strcmp (argv[1], "-f") == 0) {
+			g_print ("Forcing parsing\n");
+			option_force = TRUE;
 			argv++;
 			argc--;
 		} else /* other options here */ {

@@ -756,6 +756,7 @@ totem_embedded_push_parser (gpointer data)
 	TotemPlParserResult res;
 
 	parser = totem_pl_parser_new ();
+	g_object_set (G_OBJECT (parser), "force", TRUE, NULL);
 	g_signal_connect (G_OBJECT (parser), "entry", G_CALLBACK (entry_added), emb);
 	res = totem_pl_parser_parse (parser, emb->filename, FALSE);
 	g_object_unref (parser);
@@ -864,7 +865,6 @@ int main (int argc, char **argv)
 	TotemEmbedded *emb;
 	DBusGProxy *proxy;
 	DBusGConnection *conn;
-	int i;
 	guint res;
 	gchar *svcname;
 	GError *e = NULL;
@@ -874,12 +874,13 @@ int main (int argc, char **argv)
 	textdomain (GETTEXT_PACKAGE);
 
 #ifdef GNOME_ENABLE_DEBUG
-        g_print ("Viewer args: ");
-        for (i = 0; i < argc; i++)
 	{
-		g_print ("%s ", argv[i]);
+		int i;
+		g_print ("Viewer args: ");
+		for (i = 0; i < argc; i++)
+			g_print ("%s ", argv[i]);
+		g_print ("\n");
 	}
-	g_print ("\n");
 #endif
 	
 	/* FIXME: are we really threaded? */

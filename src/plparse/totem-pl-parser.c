@@ -84,6 +84,7 @@ struct TotemPlParserPrivate
 	guint fallback : 1;
 	guint recurse : 1;
 	guint debug : 1;
+	guint force : 1;
 };
 
 static void totem_pl_parser_set_property (GObject *object,
@@ -98,7 +99,8 @@ static void totem_pl_parser_get_property (GObject *object,
 enum {
 	PROP_NONE,
 	PROP_RECURSE,
-	PROP_DEBUG
+	PROP_DEBUG,
+	PROP_FORCE
 };
 
 /* Signals */
@@ -141,6 +143,14 @@ totem_pl_parser_class_init (TotemPlParserClass *klass)
 					 g_param_spec_boolean ("debug",
 							       "debug",
 							       "Whether or not to enable debugging output", 
+							       FALSE,
+							       G_PARAM_READWRITE));
+
+	g_object_class_install_property (object_class,
+					 PROP_FORCE,
+					 g_param_spec_boolean ("force",
+							       "force",
+							       "Whether or not to force parsing the file if the playlist looks unsupported", 
 							       FALSE,
 							       G_PARAM_READWRITE));
 
@@ -187,6 +197,9 @@ totem_pl_parser_set_property (GObject *object,
 	case PROP_DEBUG:
 		parser->priv->debug = g_value_get_boolean (value) != FALSE;
 		break;
+	case PROP_FORCE:
+		parser->priv->force = g_value_get_boolean (value) != FALSE;
+		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		break;
@@ -208,6 +221,9 @@ totem_pl_parser_get_property (GObject *object,
 		break;
 	case PROP_DEBUG:
 		g_value_set_boolean (value, parser->priv->debug);
+		break;
+	case PROP_FORCE:
+		g_value_set_boolean (value, parser->priv->force);
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -2380,15 +2396,23 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
 	}
 
-	mimetype = gnome_vfs_mime_type_from_name (url);
+	/* In force mode we want to get the data */
+	if (parser->priv->force != FALSE) {
+		mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data, parser);
+	} else {
+		mimetype = gnome_vfs_mime_type_from_name (url);
+	}
+
 	DEBUG(g_print ("_mime_type_from_name for '%s' returned '%s'\n", url, mimetype));
 	if (mimetype == NULL || strcmp (GNOME_VFS_MIME_TYPE_UNKNOWN, mimetype) == 0) {
 		mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data, parser);
 		DEBUG(g_print ("_get_mime_type_with_data for '%s' returned '%s'\n", url, mimetype ? mimetype : "NULL"));
 	}
 
-	if (mimetype == NULL)
+	if (mimetype == NULL) {
+		g_free (data);
 		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
+	}
 
 	if (totem_pl_parser_mimetype_is_ignored (parser, mimetype) != FALSE) {
 		g_free (data);
