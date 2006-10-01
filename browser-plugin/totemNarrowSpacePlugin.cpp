@@ -44,7 +44,9 @@ static const char kPluginDescription[] = "QuickTime Plug-in 7.0 (compatible; Tot
 
 static const totemPluginMimeEntry kMimeTypes[] = {
 	{ "video/quicktime", "mov", NULL },
-	{ "video/mp4", "mp4", NULL }
+	{ "video/mp4", "mp4", NULL },
+	{ "image/x-macpaint", "pntg", NULL },
+	{ "image/x-quicktime", "pict, pict1, pict2", "image/x-pict" }
 };
 
 totemScriptablePlugin::totemScriptablePlugin (totemPlugin *aPlugin)
