@@ -14,11 +14,15 @@ EXTRA_DIST =			\
 	totem.spec		\
 	omf.make		\
 	totem-plparser.pc.in	\
-	xmldocs.make
+	xmldocs.make		\
+	gnome-doc-utils.make
 
 CLEANFILES = totem.spec totem-plparser.pc
 
-DISTCLEANFILES = intltool-extract intltool-merge intltool-update
+DISTCLEANFILES = intltool-extract intltool-merge intltool-update \
+		 gnome-doc-utils.make
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = totem-plparser.pc
+
+DISTCHECK_CONFIGURE_FLAGS = --disable-scrollkeeper

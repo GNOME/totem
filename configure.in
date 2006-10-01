@@ -20,6 +20,8 @@ AC_SUBST(GETTEXT_PACKAGE)
 AM_GLIB_GNU_GETTEXT
 IT_PROG_INTLTOOL([0.35.0])
 
+GNOME_DOC_INIT
+
 AC_PROG_CXX
 AC_PROG_LIBTOOL()
 PKG_PROG_PKG_CONFIG
@@ -689,10 +691,7 @@ data/icons/32x32/Makefile
 data/icons/scalable/Makefile
 po/Makefile.in
 help/Makefile
-help/C/Makefile
 help/bg/Makefile
-help/de/Makefile
-help/es/Makefile
 help/fr/Makefile
 help/ru/Makefile
 help/uk/Makefile
