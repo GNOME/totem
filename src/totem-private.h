@@ -100,7 +100,6 @@ struct Totem {
 	/* Separate Dialogs */
 	GtkWidget *properties;
 	TotemSkipto *skipto;
-	GtkWidget *about;
 
 	/* Play/Pause */
 	GtkWidget *pp_button;

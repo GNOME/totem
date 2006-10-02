@@ -970,12 +970,6 @@ about_action_callback (GtkAction *action, Totem *totem)
 		NULL
 	};
 
-	if (totem->about != NULL)
-	{
-		gtk_window_present (GTK_WINDOW (totem->about));
-		return;
-	}
-
 #ifdef HAVE_GTK_ONLY
 	frontend_type = N_("GTK+");
 #else
@@ -988,7 +982,7 @@ about_action_callback (GtkAction *action, Totem *totem)
 	description = g_strdup_printf (_("Movie Player using %s and %s"),
 				       backend_version, _(frontend_type));
 
-	totem->about = g_object_new (GTK_TYPE_ABOUT_DIALOG,
+	gtk_show_about_dialog (GTK_WINDOW (totem->win),
 				     "version", VERSION,
 				     "copyright", _("Copyright \xc2\xa9 2002-2006 Bastien Nocera"),
 				     "comments", description,
@@ -1001,15 +995,6 @@ about_action_callback (GtkAction *action, Totem *totem)
 
 	g_free (backend_version);
 	g_free (description);
-
-	g_object_add_weak_pointer (G_OBJECT (totem->about),
-			(gpointer *)&totem->about);
-	gtk_window_set_transient_for (GTK_WINDOW (totem->about),
-			GTK_WINDOW (totem->win));
-	g_signal_connect (G_OBJECT (totem->about), "response",
-			G_CALLBACK (gtk_widget_destroy), NULL);
-
-	gtk_widget_show(totem->about);
 }
 
 static void
