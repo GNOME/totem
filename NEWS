@@ -1,5 +1,36 @@
 New features and significant updates in version...
 
+2.17.0
+* Updated documentation
+* Use new GtkRecentManager as the rest of GNOME 2.16
+* Handle the Apple Remote's menu button when playing back DVDs
+* Add audio sample rate and audio channels in the properties
+* Set volume up/down sensitivity properly when reaching a boundary
+* Use the builtin overwrite confirmation when saving playlists
+* Change the title when changing songs on Shoutcasts streams
+* Add support for multiple selections in the playlist popup menu
+* Playlist parser:
+  - Handle playlists linked inside playlists as used on kinkfm.com
+  - Handle "BASE HREF" in ASX files
+  - When adding ISO images, or on-disk DVDs, set a title
+  - Allow forcing the playlist to be parsed based on data rather than
+    filename
+* Browser plugin:
+  - Don't accept streams that aren't from the supported mime-type
+  - Add support for video/mp4
+  - Add support for image/x-macpaint, image/x-quicktime, and QTSRC
+    (fixes playback for Yahoo!'s Quicktime trailers page)
+  - Fix playback of streams at http://gametrailers.com/
+* Thumbnailer:
+  - Try harder to get a useful picture
+  - Save the original width and height in the PNG's
+  tEXt::Thumb::Image::Width and tEXt::Thumb::Image::Height attributes
+* GStreamer backend:
+  - Restore the statusbar text when we've been buffering
+  - Fix buffering when streaming
+* xine-lib backend:
+  - Set previous/next states, and title properly when playing back a DVD
+
 2.16.1
 * Browser enhancement:
   - Fix the "Open with..." menu item not showing for some supported types
