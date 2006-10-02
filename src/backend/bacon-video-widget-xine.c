@@ -2149,7 +2149,6 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 		const char *subtitle_uri, GError **error)
 {
 	int err;
-	const char *layer;
 
 	g_return_val_if_fail (mrl != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
@@ -2194,16 +2193,6 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 			bacon_video_widget_close (bvw);
 			return FALSE;
 		}
-	}
-
-	layer = xine_get_meta_info (bvw->priv->stream,
-			XINE_META_INFO_SYSTEMLAYER);
-	if ((strcmp (layer, "MNG") == 0 || strcmp (layer, "imagedmx") == 0)&& bvw->priv->logo_mode == FALSE)
-	{
-		bacon_video_widget_close (bvw);
-		g_set_error (error, BVW_ERROR, BVW_ERROR_STILL_IMAGE,
-				_("This movie is a still image. You can open it with an image viewer."));
-		return FALSE;
 	}
 
 	if (xine_get_stream_info (bvw->priv->stream,
@@ -3606,6 +3595,15 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget *bvw,
 			boolean = xine_get_stream_info (bvw->priv->stream,
 					XINE_STREAM_INFO_HAS_AUDIO);
 		break;
+	case BVW_INFO_STILL_IMAGE:
+		{
+			const char *layer;
+			layer = xine_get_meta_info (bvw->priv->stream,
+					XINE_META_INFO_SYSTEMLAYER);
+			if (strcmp (layer, "MNG") == 0 || strcmp (layer, "imagedmx") == 0)
+				boolean = TRUE;
+		}
+		break;
 	default:
 		g_assert_not_reached ();
 	}
@@ -3647,6 +3645,7 @@ bacon_video_widget_get_metadata (BaconVideoWidget *bvw,
 		break;
 	case BVW_INFO_HAS_VIDEO:
 	case BVW_INFO_HAS_AUDIO:
+	case BVW_INFO_STILL_IMAGE:
 		bacon_video_widget_get_metadata_bool (bvw, type, value);
 		break;
 	default:

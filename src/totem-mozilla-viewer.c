@@ -239,12 +239,10 @@ totem_embedded_open (TotemEmbedded *emb)
 		//disp = gnome_vfs_unescape_string_for_display (totem->mrl);
 		msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
 		g_free (disp);
-		if (err != NULL) {
-			g_message ("error: %s", err->message);
-			totem_interface_error_blocking (msg, err->message,
-				GTK_WINDOW (emb->window));
-		}
 
+		g_message ("error: %s", err->message);
+		totem_interface_error_blocking (msg, err->message,
+				GTK_WINDOW (emb->window));
 		g_free (msg);
 		g_error_free (err);
 

@@ -338,6 +338,15 @@ usage (const char *cmd)
 	g_print ("Usage: %s [-s <size>] [-j] <input> <output> [backend options]\n", cmd);
 }
 
+static gboolean
+video_is_still_image (BaconVideoWidget *bvw)
+{
+	GValue value = { 0, };
+
+	bacon_video_widget_get_metadata (bvw, BVW_INFO_STILL_IMAGE, &value);
+	return g_value_get_boolean (&value);
+}
+
 int main (int argc, char *argv[])
 {
 	GError *err = NULL;
@@ -410,26 +419,23 @@ int main (int argc, char *argv[])
 
 	if (bacon_video_widget_open (bvw, input, &err) == FALSE)
 	{
-		if (err->code == BVW_ERROR_STILL_IMAGE)
-		{
-			g_error_free (err);
-			err = NULL;
-			pixbuf = gdk_pixbuf_new_from_file (input, &err);
-			if (pixbuf != NULL)
-			{
-				save_pixbuf (pixbuf, output, input, size, TRUE);
-				gdk_pixbuf_unref (pixbuf);
-				exit (0);
-			}
-			g_print ("totem-video-thumbnailer couln't open file '%s'\n"
-					"Reason: %s.\n", input, err->message);
-			g_error_free (err);
-			exit (1);
-		}
-
 		g_print ("totem-video-thumbnailer couln't open file '%s'\n"
 				"Reason: %s.\n",
 				input, err->message);
+		g_error_free (err);
+		exit (1);
+	}
+
+	if (video_is_still_image (bvw) != FALSE) {
+		pixbuf = gdk_pixbuf_new_from_file (input, &err);
+		if (pixbuf != NULL)
+		{
+			save_pixbuf (pixbuf, output, input, size, TRUE);
+			gdk_pixbuf_unref (pixbuf);
+			exit (0);
+		}
+		g_print ("totem-video-thumbnailer couln't open file '%s'\n"
+				"Reason: %s.\n", input, err->message);
 		g_error_free (err);
 		exit (1);
 	}
