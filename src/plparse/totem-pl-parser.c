@@ -259,17 +259,18 @@ totem_pl_parser_new (void)
 	return TOTEM_PL_PARSER (g_object_new (TOTEM_TYPE_PL_PARSER, NULL));
 }
 
-static const char *
+static char *
 my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data, TotemPlParser *parser)
 {
 	GnomeVFSResult result;
 	GnomeVFSHandle *handle;
-	char *buffer;
+	char *buffer, *server_mimetype;
 	const char *mimetype;
 	GnomeVFSFileSize total_bytes_read;
 	GnomeVFSFileSize bytes_read;
 
 	*data = NULL;
+	server_mimetype = NULL;
 
 	/* Stat for a block device, we're screwed as far as speed
 	 * is concerned now */
@@ -290,6 +291,19 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data, TotemPlPa
 		return NULL;
 	}
 	DEBUG(g_print ("URL '%s' was opened successfully in _get_mime_type_with_data:\n", uri));
+
+	/* Try to get a mime-type, from the server itself */
+	if (g_str_has_prefix (uri, "http://") != FALSE) {
+		GnomeVFSResult res;
+		GnomeVFSFileInfo *info;
+		info = gnome_vfs_file_info_new ();
+		res = gnome_vfs_get_file_info_from_handle (handle,
+				info, GNOME_VFS_FILE_INFO_GET_MIME_TYPE);
+		if (res == GNOME_VFS_OK)
+			server_mimetype = g_strdup (info->mime_type);
+		gnome_vfs_file_info_unref (info);
+	}
+
 
 	/* Read the whole thing, up to MIME_READ_CHUNK_SIZE */
 	buffer = NULL;
@@ -337,7 +351,12 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data, TotemPlPa
 
 	mimetype = gnome_vfs_get_mime_type_for_data (*data, total_bytes_read);
 
-	return mimetype;
+	if (server_mimetype != NULL && strcmp (mimetype, "text/plain") == 0) {
+		return server_mimetype;
+	}
+	g_free (server_mimetype);
+
+	return g_strdup (mimetype);
 }
 
 static char *
@@ -377,6 +396,21 @@ totem_pl_parser_base_url (const char *url)
 	}
 
 	return base;
+}
+
+static gboolean
+totem_pl_parser_line_is_empty (const char *line)
+{
+	guint i;
+
+	if (line == NULL)
+		return TRUE;
+
+	for (i = 0; line[i] != '\0'; i++) {
+		if (line[i] != '\t' && line[i] != ' ')
+			return FALSE;
+	}
+	return TRUE;
 }
 
 static gboolean
@@ -1008,7 +1042,8 @@ totem_pl_parser_add_ram (TotemPlParser *parser, const char *url, gpointer data)
 	g_free (contents);
 
 	for (i = 0; lines[i] != NULL; i++) {
-		if (strcmp (lines[i], "") == 0)
+		/* Empty line */
+		if (totem_pl_parser_line_is_empty (lines[i]) != FALSE)
 			continue;
 
 		retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
@@ -1145,7 +1180,7 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url, c
 	playlist_title = NULL;
 
 	/* Ignore empty lines */
-	while (lines[i] != NULL && strcmp (lines[i], "") == 0)
+	while (totem_pl_parser_line_is_empty (lines[i]) != FALSE)
 		i++;
 
 	if (lines[i] == NULL
@@ -2151,13 +2186,23 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 static gboolean
 totem_pl_parser_is_ra (const char *data, gsize len)
 {
+	guint i;
+	const char *buf;
+
 	/* pnm is the smallest, 6 chars */
 	if (len < 7)
 		return FALSE;
 
-	if (g_str_has_prefix (data, "http://") != FALSE
-			|| g_str_has_prefix (data, "rtsp://") != FALSE
-			|| g_str_has_prefix (data, "pnm://") != FALSE) {
+	/* Start ignoring the spaces and such */
+	for (i = 0; i < len; i++) {
+		if (data[i] != '\n' && data[i] != '\t' && data[i] != ' ')
+			break;
+	}
+	buf = data + i;
+
+	if (g_str_has_prefix (buf, "http://") != FALSE
+			|| g_str_has_prefix (buf, "rtsp://") != FALSE
+			|| g_str_has_prefix (buf, "pnm://") != FALSE) {
 		return TRUE;
 	}
 	return FALSE;
@@ -2375,7 +2420,7 @@ totem_pl_parser_ignore_from_mimetype (TotemPlParser *parser, const char *mimetyp
 static TotemPlParserResult
 totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 {
-	const char *mimetype;
+	char *mimetype;
 	guint i;
 	gpointer data = NULL;
 	TotemPlParserResult ret = TOTEM_PL_PARSER_RESULT_ERROR;
@@ -2400,7 +2445,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	if (parser->priv->force != FALSE) {
 		mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data, parser);
 	} else {
-		mimetype = gnome_vfs_mime_type_from_name (url);
+		mimetype = g_strdup (gnome_vfs_mime_type_from_name (url));
 	}
 
 	DEBUG(g_print ("_mime_type_from_name for '%s' returned '%s'\n", url, mimetype));
@@ -2415,6 +2460,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	}
 
 	if (totem_pl_parser_mimetype_is_ignored (parser, mimetype) != FALSE) {
+		g_free (mimetype);
 		g_free (data);
 		return TOTEM_PL_PARSER_RESULT_IGNORED;
 	}
@@ -2435,6 +2481,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 			if (strcmp (dual_types[i].mimetype, mimetype) == 0) {
 				DEBUG(g_print ("URL '%s' is dual type '%s'\n", url, mimetype));
 				if (data == NULL) {
+					g_free (mimetype);
 					mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data, parser);
 				}
 				ret = (* dual_types[i].func) (parser, url, data);
@@ -2448,11 +2495,16 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 		parser->priv->recurse_level--;
 	}
 
-	if (ret == TOTEM_PL_PARSER_RESULT_SUCCESS)
+	if (ret == TOTEM_PL_PARSER_RESULT_SUCCESS) {
+		g_free (mimetype);
 		return ret;
+	}
 
-	if (totem_pl_parser_ignore_from_mimetype (parser, mimetype))
+	if (totem_pl_parser_ignore_from_mimetype (parser, mimetype)) {
+		g_free (mimetype);
 		return TOTEM_PL_PARSER_RESULT_IGNORED;
+	}
+	g_free (mimetype);
 
 	if (ret != TOTEM_PL_PARSER_RESULT_SUCCESS && parser->priv->fallback) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
