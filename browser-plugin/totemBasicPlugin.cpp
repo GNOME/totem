@@ -46,6 +46,7 @@ static const totemPluginMimeEntry kMimeTypes[] = {
 	{ "application/ogg", "ogg", NULL },
 	{ "video/mpeg", "mpg, mpeg, mpe", NULL },
 	{ "audio/wav", "wav", NULL },
+	{ "audio/x-wav", "wav", NULL },
 	{ "audio/mpeg", "mp3", NULL }
 };
 
