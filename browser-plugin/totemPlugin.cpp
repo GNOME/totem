@@ -669,8 +669,10 @@ totem_plugin_new_stream (NPP instance,
 
 	D("plugin_new_stream type: %s url: %s", type, plugin->src);
 
-	if (is_mimetype_supported (type) == FALSE)
+	if (is_mimetype_supported (type) == FALSE) {
+		 D("plugin_new_stream type: %s is not supported\n", type);
 		return NPERR_INVALID_PLUGIN_ERROR;
+	}
 
 	//FIXME need to find better semantics?
 	//what about saving the state, do we get confused?
