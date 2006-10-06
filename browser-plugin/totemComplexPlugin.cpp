@@ -32,6 +32,10 @@
 #include <nsMemory.h>
 #include <nsXPCOM.h>
 
+#define GNOME_ENABLE_DEBUG 1
+/* define GNOME_ENABLE_DEBUG for more debug spew */
+#include "debug.h"
+
 #include "totemComplexPlugin.h"
 
 /* 4ccca83d-30e7-4e9a-918c-09aa9236e3bb */
@@ -49,12 +53,12 @@ static const totemPluginMimeEntry kMimeTypes[] = {
 totemScriptablePlugin::totemScriptablePlugin (totemPlugin *aPlugin)
   : mPlugin(aPlugin)
 {
-  g_print ("%s ctor [%p]\n", kClassDescription, (void*) this);
+  D ("%s ctor [%p]", kClassDescription, (void*) this);
 }
 
 totemScriptablePlugin::~totemScriptablePlugin ()
 {
-  g_print ("%s dtor [%p]\n", kClassDescription, (void*) this);
+  D ("%s dtor [%p]", kClassDescription, (void*) this);
 }
 
 /* static */ char *
@@ -172,32 +176,32 @@ totemScriptablePlugin::GetClassIDNoAlloc (nsCID *aClassIDNoAlloc)
 NS_IMETHODIMP
 totemScriptablePlugin::DoPause (PRBool *_retval)
 {
-  NS_ENSURE_STATE (mPlugin);
+  NS_ENSURE_STATE (IsValid ());
 
-  totem_plugin_pause (mPlugin);
+  nsresult rv = mPlugin->Pause ();
 
   *_retval = PR_TRUE;
-  return NS_OK;
+  return rv;
 }
 
 NS_IMETHODIMP
 totemScriptablePlugin::DoPlay (PRBool *_retval)
 {
-  NS_ENSURE_STATE (mPlugin);
+  NS_ENSURE_STATE (IsValid ());
 
-  totem_plugin_play (mPlugin);
+  nsresult rv = mPlugin->Play ();
 
   *_retval = PR_TRUE;
-  return NS_OK;
+  return rv;
 }
 
 NS_IMETHODIMP
 totemScriptablePlugin::DoStop (PRBool *_retval)
 {
-  NS_ENSURE_STATE (mPlugin);
+  NS_ENSURE_STATE (IsValid ());
 
-  totem_plugin_stop (mPlugin);
+  nsresult rv = mPlugin->Stop ();
 
   *_retval = PR_TRUE;
-  return NS_OK;
+  return rv;
 }

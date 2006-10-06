@@ -2,6 +2,7 @@
  * 
  * Copyright (C) 2004-2006 Bastien Nocera <hadess@hadess.net>
  * Copyright (C) 2002 David A. Schleef <ds@schleef.org>
+ * Copyright (C) 2006 Christian Persch
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -32,9 +33,6 @@
 #include <string.h>
 
 #include <glib.h>
-#include <libgnomevfs/gnome-vfs-mime-handlers.h>
-#include <libgnomevfs/gnome-vfs-mime-info.h>
-#include <libgnomevfs/gnome-vfs-utils.h>
 
 #include "totem-pl-parser-mini.h"
 #include "totem-mozilla-options.h"
@@ -53,87 +51,159 @@
 /* define GNOME_ENABLE_DEBUG for more debug spew */
 #include "debug.h"
 
-#if defined(TOTEM_BASIC_PLUGIN)
-#include "totemBasicPlugin.h"
-#elif defined(TOTEM_GMP_PLUGIN)
-#include "totemGMPPlugin.h"
-#elif defined(TOTEM_COMPLEX_PLUGIN)
-#include "totemComplexPlugin.h"
-#elif defined(TOTEM_NARROWSPACE_PLUGIN)
-#include "totemNarrowSpacePlugin.h"
-#elif defined(TOTEM_MULLY_PLUGIN)
-#include "totemMullYPlugin.h"
-#else
-#error Unknown plugin type
-#endif
+#include "totemPluginGlue.h"
+#include "totemPlugin.h"
 
 #define DASHES "--"
 
 /* How much data bytes to request */
 #define PLUGIN_STREAM_CHUNK_SIZE (8 * 1024)
 
-static NPNetscapeFuncs mozilla_functions;
-static char *mime_list = NULL;
+extern NPNetscapeFuncs sMozillaFuncs;
+
+void*
+totemPlugin::operator new (size_t aSize) CPP_THROW_NEW
+{
+  void *object = ::operator new (aSize);
+  if (object) {
+    memset (object, 0, aSize);
+  }
+
+  return object;
+}
+
+totemPlugin::totemPlugin (NPP aInstance)
+: mInstance(aInstance),
+  mSendFD(-1),
+  mWidth(-1),
+  mHeight(-1)
+{
+  D ("totemPlugin ctor [%p]", (void*) this);
+}
+
+totemPlugin::~totemPlugin ()
+{
+  if (mScriptable) {
+    mScriptable->UnsetPlugin ();
+    NS_RELEASE (mScriptable);
+  }
+
+  if (mSendFD >= 0) {
+    close (mSendFD);
+    mSendFD = -1;
+  }
+
+  if (mPlayerPID) {
+    kill (mPlayerPID, SIGKILL);
+    g_spawn_close_pid (mPlayerPID);
+    mPlayerPID = 0;
+  }
+
+  g_free (mLocal);
+  g_free (mTarget);
+  g_free (mSrc);
+  g_free (mHref);
+
+  if (mProxy)
+    g_object_unref (mProxy);
+
+  D ("totemPlugin dtor [%p]", (void*) this);
+}
 
 /* public functions */
 
-void
-totem_plugin_play (totemPlugin *plugin)
+nsresult
+totemPlugin::Play ()
 {
 	D ("play");
-	dbus_g_proxy_call (plugin->proxy, "Play", NULL,
+
+	if (!mGotSvc)
+		return NS_OK;
+
+	NS_ASSERTION (mProxy, "No DBUS proxy!");
+	/* FIXME: do an ASYNC call here!! */
+	dbus_g_proxy_call (mProxy, "Play", NULL,
 			   G_TYPE_INVALID, G_TYPE_INVALID);
+
+	return NS_OK;
 }
 
-void
-totem_plugin_stop (totemPlugin *plugin)
+nsresult
+totemPlugin::Stop ()
 {
 	D ("stop");
-	dbus_g_proxy_call (plugin->proxy, "Stop", NULL,
+
+	if (!mGotSvc)
+		return NS_OK;
+
+	NS_ASSERTION (mProxy, "No DBUS proxy!");
+	/* FIXME: do an ASYNC call here!! */
+	dbus_g_proxy_call (mProxy, "Stop", NULL,
 			   G_TYPE_INVALID, G_TYPE_INVALID);
+
+	return NS_OK;
+}
+
+nsresult
+totemPlugin::Pause ()
+{
+	D ("pause");
+
+	if (!mGotSvc)
+		return NS_OK;
+
+	NS_ASSERTION (mProxy, "No DBUS proxy!");
+	/* FIXME: do an ASYNC call here!! */
+	dbus_g_proxy_call (mProxy, "Pause", NULL,
+			   G_TYPE_INVALID, G_TYPE_INVALID);
+
+	return NS_OK;
 }
 
 void
-totem_plugin_pause (totemPlugin *plugin)
+totemPlugin::UnsetStream ()
 {
-	D ("pause");
-	dbus_g_proxy_call (plugin->proxy, "Pause", NULL,
-			   G_TYPE_INVALID, G_TYPE_INVALID);
+	NS_ASSERTION (mStream, "UnsetStream called when we had no stream!");
+
+	if (CallNPN_DestroyStreamProc (sMozillaFuncs.destroystream,
+	    			       mInstance,
+				       mStream,
+				       NPRES_DONE) != NPERR_NO_ERROR) {
+		    g_warning ("Couldn't destroy the stream");
+		    return;
+	}
+
+	mStream = nsnull;
 }
 
-/* private functions */
-
-static void
-cb_update_name (DBusGProxy *proxy,
-		const char *svc,
-		const char *old_owner,
-		const char *new_owner,
-		totemPlugin *plugin)
+/* static */ void PR_CALLBACK 
+totemPlugin::NameOwnerChangedCallback (DBusGProxy *proxy,
+				       const char *svc,
+				       const char *old_owner,
+				       const char *new_owner,
+				       totemPlugin *plugin)
 {
-	D("Received notification for %s\n", svc);
-	if (strcmp (svc, plugin->wait_for_svc) == 0) {
-		plugin->got_svc = TRUE;
+	D ("Received notification for '%s' old-owner '%s' new-owner '%s'",
+	   svc, old_owner, new_owner);
+
+	if (plugin->mWaitForSvc &&
+	    strcmp (svc, plugin->mWaitForSvc) == 0) {
+		plugin->mGotSvc = TRUE;
 	}
 }
 
-static void
-cb_stop_sending_data (DBusGProxy  *proxy,
-		      totemPlugin *plugin)
+/* static */ void PR_CALLBACK
+totemPlugin::StopSendingDataCallback (DBusGProxy *proxy,
+				      totemPlugin *plugin)
 {
 	D("Stop sending data signal received");
-	if (CallNPN_DestroyStreamProc (mozilla_functions.destroystream,
-				plugin->instance,
-				plugin->stream,
-				NPRES_DONE) != NPERR_NO_ERROR) {
-		g_warning ("Couldn't destroy the stream");
-		return;
-	}
 
-	plugin->stream = nsnull;
+	/* FIXME do it from a timer? */
+	plugin->UnsetStream ();
 }
 
-static char *
-get_real_mimetype (const char *mimetype)
+char *
+totemPlugin::GetRealMimeType (const char *mimetype)
 {
 	const totemPluginMimeEntry *mimetypes;
 	PRUint32 count;
@@ -149,12 +219,12 @@ get_real_mimetype (const char *mimetype)
 		}
 	}
 
-	g_warning ("Real mime-type for '%s' not found\n", mimetype);
+	D ("Real mime-type for '%s' not found", mimetype);
 	return NULL;
 }
 
-static gboolean
-is_mimetype_supported (const char *mimetype)
+PRBool
+totemPlugin::IsMimeTypeSupported (const char *mimetype)
 {
 	const totemPluginMimeEntry *mimetypes;
 	PRUint32 count;
@@ -163,39 +233,38 @@ is_mimetype_supported (const char *mimetype)
 
 	for (PRUint32 i = 0; i < count; ++i) {
 		if (strcmp (mimetypes[i].mimetype, mimetype) == 0)
-			return TRUE;
+			return PR_TRUE;
 	}
 
-	return FALSE;
+	return PR_FALSE;
 }
 
-static gboolean
-is_supported_scheme (const char *url)
+PRBool
+totemPlugin::IsSchemeSupported (const char *url)
 {
 	if (url == NULL)
-		return FALSE;
+		return PR_FALSE;
 
 	if (g_str_has_prefix (url, "mms:") != FALSE)
-		return FALSE;
+		return PR_FALSE;
 	if (g_str_has_prefix (url, "rtsp:") != FALSE)
-		return FALSE;
+		return PR_FALSE;
 
-	return TRUE;
+	return PR_TRUE;
 }
 
-static gboolean
-totem_plugin_fork (totemPlugin *plugin)
+PRBool
+totemPlugin::Fork ()
 {
 	GTimeVal then, now;
 	char *svcname;
 	GPtrArray *arr;
 	char **argv;
 	GError *err = NULL;
-	totemScriptablePlugin *scriptable = plugin->scriptable;
 	gboolean use_fd = FALSE;
 
 	/* Make sure we don't get both an XID and hidden */
-	if (plugin->window && plugin->hidden) {
+	if (mWindow && mHidden) {
 		g_warning ("Both hidden and a window!");
 		return FALSE;
 	}
@@ -215,71 +284,71 @@ totem_plugin_fork (totemPlugin *plugin)
 			g_strdup (LIBEXECDIR"/totem-mozilla-viewer"));
 #endif
 
-
 	/* For the RealAudio streams */
-	if (plugin->width == 0 && plugin->height == 0) {
-		plugin->window = 0;
-		plugin->hidden = TRUE;
+	/* FIXME: shouldn't this be #ifdef TOTEM_COMPLEX_PLUGIN then? */
+	if (mWidth == 0 && mHeight == 0) {
+		mWindow = 0;
+		mHidden = TRUE;
 	}
 
-	if (plugin->window) {
+	if (mWindow) {
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_XID));
-		g_ptr_array_add (arr, g_strdup_printf ("%lu", plugin->window));
+		g_ptr_array_add (arr, g_strdup_printf ("%lu", mWindow));
 	}
 
-	if (plugin->width > 0) {
+	if (mWidth > 0) {
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_WIDTH));
-		g_ptr_array_add (arr, g_strdup_printf ("%d", plugin->width));
+		g_ptr_array_add (arr, g_strdup_printf ("%d", mWidth));
 	}
 
-	if (plugin->height > 0) {
+	if (mHeight > 0) {
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_HEIGHT));
-		g_ptr_array_add (arr, g_strdup_printf ("%d", plugin->height));
+		g_ptr_array_add (arr, g_strdup_printf ("%d", mHeight));
 	}
 
-	if (plugin->src) {
+	if (mSrc) {
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_URL));
-		g_ptr_array_add (arr, g_strdup (plugin->src));
+		g_ptr_array_add (arr, g_strdup (mSrc));
 	}
 
-	if (plugin->href) {
+	if (mHref) {
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_HREF));
-		g_ptr_array_add (arr, g_strdup (plugin->href));
+		g_ptr_array_add (arr, g_strdup (mHref));
 	}
 
-	if (plugin->target) {
+	if (mTarget) {
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_TARGET));
-		g_ptr_array_add (arr, g_strdup (plugin->target));
+		g_ptr_array_add (arr, g_strdup (mTarget));
 	}
 
-	if (plugin->mimetype) {
+	if (mMimeType) {
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_MIMETYPE));
-		g_ptr_array_add (arr, g_strdup (plugin->mimetype));
+		g_ptr_array_add (arr, g_strdup (mMimeType));
 	}
 
-	if (plugin->controller_hidden) {
+	if (mControllerHidden) {
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_CONTROLS_HIDDEN));
 	}
 
-	if (plugin->hidden) {
+	if (mHidden) {
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_HIDDEN));
 	}
 
- 	if (plugin->repeat) {
+ 	if (mRepeat) {
  		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_REPEAT));
  	}
 
-	if (plugin->noautostart) {
+	if (mNoAutostart) {
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_NOAUTOSTART));
 	}
  
- 	if (plugin->is_playlist) {
+ 	if (mIsPlaylist) {
  		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_PLAYLIST));
- 		g_ptr_array_add (arr, g_strdup (plugin->local));
+ 		g_ptr_array_add (arr, g_strdup (mLocal));
  	} else {
-		/* plugin->local is only TRUE for playlists */
-		if (plugin->is_supported_src == FALSE) {
-			g_ptr_array_add (arr, g_strdup (plugin->src));
+		/* mLocal is only TRUE for playlists */
+		if (mIsSupportedSrc == FALSE) {
+			g_ptr_array_add (arr, g_strdup (mSrc));
 		} else {
 			g_ptr_array_add (arr, g_strdup ("fd://0"));
 			use_fd = TRUE;
@@ -306,8 +375,8 @@ totem_plugin_fork (totemPlugin *plugin)
 #endif
 
 	if (g_spawn_async_with_pipes (NULL, argv, NULL,
-				(GSpawnFlags) 0, NULL, NULL, &plugin->player_pid,
-				use_fd ? &plugin->send_fd : NULL, NULL, NULL, &err) == FALSE)
+				      GSpawnFlags(0), NULL, NULL, &mPlayerPID,
+				      use_fd ? &mSendFD : NULL, NULL, NULL, &err) == FALSE)
 	{
 		D("Spawn failed");
 
@@ -322,27 +391,35 @@ totem_plugin_fork (totemPlugin *plugin)
 
 	g_strfreev (argv);
 
-	if (plugin->send_fd > 0)
-		fcntl(plugin->send_fd, F_SETFL, O_NONBLOCK);
+	D("player PID: %d", mPlayerPID);
+
+	/* FIXME: not >= 0 ? */
+	if (mSendFD > 0)
+		fcntl(mSendFD, F_SETFL, O_NONBLOCK);
 
 	/* now wait until startup is complete */
-	plugin->got_svc = FALSE;
-	plugin->wait_for_svc = g_strdup_printf
-		("org.totem_%d.MozillaPluginService", plugin->player_pid);
-	D("waiting for signal %s", plugin->wait_for_svc);
-	dbus_g_proxy_add_signal (plugin->proxy, "NameOwnerChanged",
+	mGotSvc = FALSE;
+	mWaitForSvc = g_strdup_printf
+		("org.totem_%d.MozillaPluginService", mPlayerPID);
+	D("waiting for signal %s", mWaitForSvc);
+	dbus_g_proxy_add_signal (mProxy, "NameOwnerChanged",
 				 G_TYPE_STRING, G_TYPE_STRING,
 				 G_TYPE_STRING, G_TYPE_INVALID);
-	dbus_g_proxy_connect_signal (plugin->proxy, "NameOwnerChanged",
-				     G_CALLBACK (cb_update_name),
-				     plugin, NULL);
+	dbus_g_proxy_connect_signal (mProxy, "NameOwnerChanged",
+				     G_CALLBACK (NameOwnerChangedCallback),
+				     this, NULL);
+
+	/* Store this in a local, since we cannot access mScriptable if we get deleted in the loop */
+	totemScriptablePlugin *scriptable = mScriptable;
 	g_get_current_time (&then);
 	g_time_val_add (&then, G_USEC_PER_SEC * 5);
 	NS_ADDREF (scriptable);
+	/* FIXME FIXME! this loop is evil! */
 	do {
 		g_main_context_iteration (NULL, TRUE);
 		g_get_current_time (&now);
-	} while (scriptable->IsValid () && !plugin->got_svc &&
+	} while (scriptable->IsValid () &&
+		 !mGotSvc &&
 		 (now.tv_sec <= then.tv_sec));
 
 	if (!scriptable->IsValid ()) {
@@ -353,34 +430,37 @@ totem_plugin_fork (totemPlugin *plugin)
 		return FALSE;
 	}
 	NS_RELEASE (scriptable);
-	dbus_g_proxy_disconnect_signal (plugin->proxy, "NameOwnerChanged",
-					G_CALLBACK (cb_update_name), plugin);
-	if (!plugin->got_svc) {
-		g_warning ("Failed to receive DBUS interface response\n");
-		g_free (plugin->wait_for_svc);
 
-		if (plugin->player_pid) {
-			kill (plugin->player_pid, SIGKILL);
-			g_spawn_close_pid (plugin->player_pid);
-			plugin->player_pid = 0;
+	dbus_g_proxy_disconnect_signal (mProxy, "NameOwnerChanged",
+					G_CALLBACK (NameOwnerChangedCallback), this);
+	if (!mGotSvc) {
+		g_warning ("Failed to receive DBUS interface response");
+		g_free (mWaitForSvc);
+		mWaitForSvc = nsnull;
+
+		if (mPlayerPID) {
+			kill (mPlayerPID, SIGKILL);
+			g_spawn_close_pid (mPlayerPID);
+			mPlayerPID = 0;
 		}
 		return FALSE;
 	}
-	g_object_unref (plugin->proxy);
+	g_object_unref (mProxy);
 
 	/* now get the proxy for the player functions */
-	plugin->proxy =
-		dbus_g_proxy_new_for_name (plugin->conn, plugin->wait_for_svc,
+	mProxy =
+		dbus_g_proxy_new_for_name (mConn, mWaitForSvc,
 					   "/TotemEmbedded",
 					   "org.totem.MozillaPluginInterface");
-	dbus_g_proxy_add_signal (plugin->proxy, "StopSendingData",
+	dbus_g_proxy_add_signal (mProxy, "StopSendingData",
 				 G_TYPE_INVALID);
-	dbus_g_proxy_connect_signal (plugin->proxy, "StopSendingData",
-				     G_CALLBACK (cb_stop_sending_data),
-				     plugin, NULL);
+	dbus_g_proxy_connect_signal (mProxy, "StopSendingData",
+				     G_CALLBACK (StopSendingDataCallback),
+				     this, NULL);
 
-	g_free (plugin->wait_for_svc);
-	D("Done forking, new proxy=%p", plugin->proxy);
+	g_free (mWaitForSvc);
+	mWaitForSvc = nsnull;
+	D("Done forking, new proxy=%p", mProxy);
 
 	return TRUE;
 }
@@ -401,58 +481,34 @@ resolve_relative_uri (nsIURI *docURI,
 	return g_strdup (uri);
 }
 
-static NPError
-totem_plugin_new_instance (NPMIMEType mimetype,
-			   NPP instance,
-			   uint16_t mode,
-			   int16_t argc,
-			   char *argn[],
-			   char *argv[],
-			   NPSavedData *saved)
+NPError
+totemPlugin::Init (NPMIMEType mimetype,
+		   uint16_t mode,
+		   int16_t argc,
+		   char *argn[],
+		   char *argv[],
+		   NPSavedData *saved)
 {
-	totemPlugin *plugin;
 	GError *e = NULL;
 	gboolean need_req = FALSE;
 	int i;
 
-	D("totem_plugin_new_instance");
-
-	if (instance == NULL)
-		return NPERR_INVALID_INSTANCE_ERROR;
-
-	/* Make sure the plugin stays resident to avoid crashers when 
-	 * reloading the GObject types */
-	mozilla_functions.setvalue (instance,
-			NPPVpluginKeepLibraryInMemory, (void *)TRUE);
-
-	instance->pdata = mozilla_functions.memalloc(sizeof(totemPlugin));
-	plugin = (totemPlugin *) instance->pdata;
-
-	if (plugin == NULL)
+	mScriptable = new totemScriptablePlugin (this);
+	if (!mScriptable)
 		return NPERR_OUT_OF_MEMORY_ERROR;
 
-	memset(plugin, 0, sizeof(totemPlugin));
-	plugin->scriptable = new totemScriptablePlugin (plugin);
-	if (!plugin->scriptable) {
-		mozilla_functions.memfree (plugin);
-		return NPERR_OUT_OF_MEMORY_ERROR;
-	}
-	NS_ADDREF (plugin->scriptable);
-	if (!(plugin->conn = dbus_g_bus_get (DBUS_BUS_SESSION, &e))) {
+	NS_ADDREF (mScriptable);
+
+	if (!(mConn = dbus_g_bus_get (DBUS_BUS_SESSION, &e))) {
 		printf ("Failed to open DBUS session: %s\n", e->message);
 		g_error_free (e);
-		NS_RELEASE (plugin->scriptable);
-		mozilla_functions.memfree (plugin);
 		return NPERR_OUT_OF_MEMORY_ERROR;
-	} else if (!(plugin->proxy = dbus_g_proxy_new_for_name (plugin->conn,
+	} else if (!(mProxy = dbus_g_proxy_new_for_name (mConn,
 					"org.freedesktop.DBus",
 					"/org/freedesktop/DBus",
 					"org.freedesktop.DBus"))) {
 		printf ("Failed to open DBUS proxy: %s\n", e->message);
 		g_error_free (e);
-		g_object_unref (G_OBJECT (plugin->conn));
-		NS_RELEASE (plugin->scriptable);
-		mozilla_functions.memfree (plugin);
 		return NPERR_OUT_OF_MEMORY_ERROR;
 	}
 
@@ -460,13 +516,10 @@ totem_plugin_new_instance (NPMIMEType mimetype,
 	//FIXME we should error out if we are in fullscreen mode
 	printf("mode %d\n",mode);
 	printf("mime type: %s\n", mimetype);
-	plugin->instance = instance;
-	plugin->send_fd = -1;
-	plugin->width = plugin->height = -1;
 
 	/* to resolve relative URLs */
 	nsIDOMWindow *domWin = nsnull;
-	mozilla_functions.getvalue (instance, NPNVDOMWindow,
+	sMozillaFuncs.getvalue (mInstance, NPNVDOMWindow,
 				    NS_REINTERPRET_CAST (void**, &domWin));
 	nsIInterfaceRequestor *irq = nsnull;
 	if (domWin) {
@@ -488,79 +541,97 @@ totem_plugin_new_instance (NPMIMEType mimetype,
 		NS_RELEASE (webNav);
 	}
 
+#ifdef TOTEM_NARROWSPACE_PLUGIN
 	/* Set the default cache behaviour */
 	if (strcmp (mimetype, "video/quicktime") != 0) {
-		plugin->cache = TRUE;
+		mCache = TRUE;
 	}
+#endif /* TOTEM_NARROWSPACE_PLUGIN */
+
 	/* Find the "real" mime-type */
-	plugin->mimetype = get_real_mimetype (mimetype);
+	mMimeType = GetRealMimeType (mimetype);
 
 	for (i = 0; i < argc; i++) {
 		printf ("argv[%d] %s %s\n", i, argn[i], argv[i]);
 		if (g_ascii_strcasecmp (argn[i],"width") == 0) {
-			plugin->width = strtol (argv[i], NULL, 0);
+			/* FIXME! sanitize this value */
+			mWidth = strtol (argv[i], NULL, 0);
 		} else if (g_ascii_strcasecmp (argn[i], "height") == 0) {
-			plugin->height = strtol (argv[i], NULL, 0);
+			/* FIXME! sanitize this value */
+			mHeight = strtol (argv[i], NULL, 0);
 		} else if (g_ascii_strcasecmp (argn[i], "src") == 0) {
-			plugin->src = resolve_relative_uri (docURI, argv[i]);
-		} else if (g_ascii_strcasecmp (argn[i], "filename") == 0) {
+			mSrc = resolve_relative_uri (docURI, argv[i]);
+		}
+#ifdef TOTEM_GMP_PLUGIN
+		else if (g_ascii_strcasecmp (argn[i], "filename") == 0) {
 			/* Windows Media Player parameter */
-			if (plugin->src == NULL) {
-				plugin->src = resolve_relative_uri (docURI, argv[i]);
+			if (!mSrc) {
+				mSrc = resolve_relative_uri (docURI, argv[i]);
 				need_req = TRUE;
 			}
-		} else if (g_ascii_strcasecmp (argn[i], "qtsrc") == 0) {
+		}
+#endif /* TOTEM_GMP_PLUGIN */
+#ifdef TOTEM_NARROWSPACE_PLUGIN
+		else if (g_ascii_strcasecmp (argn[i], "qtsrc") == 0) {
 			/* Quicktime parameter documented in
 			 * http://developer.apple.com/documentation/QuickTime/QT6WhatsNew/Chap1/chapter_1_section_13.html */
-			if (plugin->src != NULL)
-				g_free (plugin->src);
-			if (plugin->stream != nsnull) {
+			g_free (mSrc);
+			mSrc = nsnull;
+			/* FIXME: this is unnecessary, we do not have a stream in Init() ! */
+			if (mStream) {
 				CallNPN_DestroyStreamProc
-					(mozilla_functions.destroystream,
-					 plugin->instance, plugin->stream,
+					(sMozillaFuncs.destroystream,
+					 mInstance, mStream,
 					 NPRES_DONE);
-				plugin->stream = nsnull;
+				/* FIXME: this should have called our DestroyStream impl which
+				 * should have set mStream to 0, assert this instead!
+				 */
+				// g_assert (mStream == nsnull);
+				mStream = nsnull;
 			}
-			plugin->src = resolve_relative_uri (docURI, argv[i]);
+			mSrc = resolve_relative_uri (docURI, argv[i]);
 			need_req = TRUE;
-		} else if (g_ascii_strcasecmp (argn[i], "href") == 0) {
-			plugin->href = resolve_relative_uri (docURI, argv[i]);
+		}
+#endif /* TOTEM_NARROWSPACE_PLUGIN */
+		else if (g_ascii_strcasecmp (argn[i], "href") == 0) {
+			mHref = resolve_relative_uri (docURI, argv[i]);
 		} else if (g_ascii_strcasecmp (argn[i], "cache") == 0) {
-			plugin->cache = TRUE;
+			mCache = TRUE;
 			if (g_ascii_strcasecmp (argv[i], "false") == 0) {
-				plugin->cache = FALSE;
+				mCache = FALSE;
 			}
 		} else if (g_ascii_strcasecmp (argn[i], "target") == 0) {
-			plugin->target = g_strdup (argv[i]);
+			mTarget = g_strdup (argv[i]);
 		} else if (g_ascii_strcasecmp (argn[i], "controller") == 0) {
 			/* Quicktime parameter */
 			if (g_ascii_strcasecmp (argv[i], "false") == 0) {
-				plugin->controller_hidden = TRUE;
+				mControllerHidden = TRUE;
 			}
 			//FIXME see http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_CONTROLS.html
 		} else if (g_ascii_strcasecmp (argn[i], "uimode") == 0) {
 			/* Windows Media Player parameter */
 			if (g_ascii_strcasecmp (argv[i], "none") == 0) {
-				plugin->controller_hidden = TRUE;
+				mControllerHidden = TRUE;
 			}
 		} else if (g_ascii_strcasecmp (argn[i], "showcontrols") == 0) {
+			/* FIXME is this WMP or QT param? */
 			if (g_ascii_strcasecmp (argv[i], "false") == 0) {
-				plugin->controller_hidden = TRUE;
+				mControllerHidden = TRUE;
 			}
 		} else if (g_ascii_strcasecmp (argn[i], "hidden") == 0) {
 			if (g_ascii_strcasecmp (argv[i], "false") != 0) {
-				plugin->hidden = TRUE;
+				mHidden = TRUE;
 			}
 		} else if (g_ascii_strcasecmp (argn[i], "autostart") == 0
 				|| g_ascii_strcasecmp (argn[i], "autoplay") == 0) {
 			if (g_ascii_strcasecmp (argv[i], "false") == 0
 					|| g_ascii_strcasecmp (argv[i], "0") == 0) {
-				plugin->noautostart = TRUE;
+				mNoAutostart = TRUE;
 			}
 		} else if (g_ascii_strcasecmp (argn[i], "loop") == 0
 				|| g_ascii_strcasecmp (argn[i], "repeat") == 0) {
 			if (g_ascii_strcasecmp (argv[i], "true") == 0) {
-				plugin->repeat = TRUE;
+				mRepeat = TRUE;
 			}
 
 			// FIXME Doesn't handle playcount, or loop with numbers
@@ -574,79 +645,27 @@ totem_plugin_new_instance (NPMIMEType mimetype,
 
 	NS_IF_RELEASE (docURI);
 
-	plugin->is_supported_src = is_supported_scheme (plugin->src);
+	mIsSupportedSrc = IsSchemeSupported (mSrc);
 
 	/* If filename is used, we need to request the stream ourselves */
 	if (need_req == TRUE) {
-		if (plugin->is_supported_src != FALSE) {
-			CallNPN_GetURLProc(mozilla_functions.geturl,
-					instance, plugin->src, NULL);
+		if (mIsSupportedSrc != FALSE) {
+			CallNPN_GetURLProc(sMozillaFuncs.geturl,
+					mInstance, mSrc, NULL);
 		}
 	}
 
 	return NPERR_NO_ERROR;
 }
 
-static NPError
-totem_plugin_destroy_instance (NPP instance,
-			       NPSavedData **save)
+NPError
+totemPlugin::SetWindow (NPWindow *window)
 {
-	D("plugin_destroy");
+	D("SetWindow [%p]", (void*) this);
 
-	if (instance == NULL)
-		return NPERR_INVALID_INSTANCE_ERROR;
-
-	totemPlugin *plugin = (totemPlugin *) instance->pdata;
-	if (plugin == NULL)
-		return NPERR_NO_ERROR;
-
-	if (!plugin || !plugin->scriptable || !plugin->scriptable->IsValid ())
-		return NPERR_INVALID_INSTANCE_ERROR;
-
-	plugin->scriptable->UnsetPlugin ();
-
-	if (plugin->send_fd >= 0) {
-		close (plugin->send_fd);
-		plugin->send_fd = -1;
-	}
-
-	if (plugin->player_pid) {
-		kill (plugin->player_pid, SIGKILL);
-		g_spawn_close_pid (plugin->player_pid);
-		plugin->player_pid = 0;
-	}
-
-	NS_RELEASE (plugin->scriptable);
-
-	g_free (plugin->local);
-	g_free (plugin->target);
-	g_free (plugin->src);
-	g_free (plugin->href);
-
-	g_object_unref (G_OBJECT (plugin->proxy));
-	//g_object_unref (G_OBJECT (plugin->conn));
-	mozilla_functions.memfree (instance->pdata);
-	instance->pdata = NULL;
-
-	return NPERR_NO_ERROR;
-}
-
-static NPError
-totem_plugin_set_window (NPP instance,
-			 NPWindow* window)
-{
-	D("plugin_set_window");
-
-	if (instance == NULL)
-		return NPERR_INVALID_INSTANCE_ERROR;
-
-	totemPlugin *plugin = (totemPlugin *) instance->pdata;
-	if (plugin == NULL)
-		return NPERR_INVALID_INSTANCE_ERROR;
-
-	if (plugin->window) {
+	if (mWindow) {
 		D ("existing window");
-		if (plugin->window == (Window) window->window) {
+		if (mWindow == (Window) window->window) {
 			D("resize");
 			/* Resize event */
 			/* Not currently handled */
@@ -657,9 +676,9 @@ totem_plugin_set_window (NPP instance,
 	} else {
 		/* If not, wait for the first bits of data to come,
 		 * but not when the stream type isn't supported */
-		plugin->window = (Window) window->window;
-		if (plugin->stream && plugin->is_supported_src) {
-			if (!totem_plugin_fork (plugin))
+		mWindow = (Window) window->window;
+		if (mStream && mIsSupportedSrc) {
+			if (!Fork ())
 				return NPERR_GENERIC_ERROR;
 		} else {
 			D("waiting for data to come");
@@ -671,427 +690,182 @@ totem_plugin_set_window (NPP instance,
 	return NPERR_NO_ERROR;
 }
 
-static NPError
-totem_plugin_new_stream (NPP instance,
-			 NPMIMEType type,
-			 NPStream* stream_ptr,
-			 NPBool seekable,
-			 uint16* stype)
+NPError
+totemPlugin::NewStream (NPMIMEType type,
+			NPStream* stream_ptr,
+			NPBool seekable,
+			uint16* stype)
 {
 	D("plugin_new_stream");
 
-	if (instance == NULL)
-		return NPERR_INVALID_INSTANCE_ERROR;
-
-	totemPlugin *plugin = (totemPlugin *) instance->pdata;
-
 	/* We already have a live stream */
-	if (plugin->stream)
+	if (mStream)
 		return NPERR_GENERIC_ERROR;
 
-	D("plugin_new_stream type: %s url: %s", type, plugin->src);
+	D("plugin_new_stream type: %s url: %s", type, mSrc);
 
-	if (is_mimetype_supported (type) == FALSE) {
+	if (IsMimeTypeSupported (type) == FALSE) {
 		D("plugin_new_stream type: %s not supported, exiting\n", type);
 		return NPERR_INVALID_PLUGIN_ERROR;
 	}
 
 	//FIXME need to find better semantics?
 	//what about saving the state, do we get confused?
-	if (g_str_has_prefix (plugin->src, "file://")) {
+	if (g_str_has_prefix (mSrc, "file://")) {
 		*stype = NP_ASFILEONLY;
-		plugin->stream_type = NP_ASFILEONLY;
+		mStreamType = NP_ASFILEONLY;
 	} else {
 		*stype = NP_ASFILE;
-		plugin->stream_type = NP_ASFILE;
+		mStreamType = NP_ASFILE;
 	}
 
-	plugin->stream = stream_ptr;
+	mStream = stream_ptr;
 
 	return NPERR_NO_ERROR;
 }
 
-static NPError
-totem_plugin_destroy_stream (NPP instance,
-			     NPStream* stream,
-			     NPError reason)
+NPError
+totemPlugin::DestroyStream (NPStream* stream,
+			    NPError reason)
 {
 	D("plugin_destroy_stream, reason: %d", reason);
 
-	if (instance == NULL) {
-		D("totem_plugin_destroy_stream instance is NULL");
-		return NPERR_NO_ERROR;
+	if (mSendFD >= 0) {
+		close(mSendFD);
+		mSendFD = -1;
 	}
 
-	totemPlugin *plugin = (totemPlugin *) instance->pdata;
-
-	if (plugin->send_fd >= 0) {
-		close(plugin->send_fd);
-		plugin->send_fd = -1;
-	}
-
-	plugin->stream = nsnull;
+	mStream = nsnull;
 
 	return NPERR_NO_ERROR;
 }
 
-static int32 totem_plugin_write_ready (NPP instance, NPStream *stream)
+int32
+totemPlugin::WriteReady (NPStream *stream)
 {
-	totemPlugin *plugin;
-	struct pollfd fds;
-
 	//D("plugin_write_ready");
 
-	if (instance == NULL)
-		return 0;
+	if (mIsSupportedSrc == FALSE)
+		return 0; /* FIXME not -1 ? */
 
-	plugin = (totemPlugin *) instance->pdata;
-
-	if (plugin->is_supported_src == FALSE)
-		return 0;
-
-	if (plugin->send_fd < 0)
+	if (mSendFD < 0)
 		return (PLUGIN_STREAM_CHUNK_SIZE);
 
+	struct pollfd fds;
 	fds.events = POLLOUT;
-	fds.fd = plugin->send_fd;
+	fds.fd = mSendFD;
 	if (poll (&fds, 1, 0) > 0)
 		return (PLUGIN_STREAM_CHUNK_SIZE);
 
 	return 0;
 }
 
-static int32 totem_plugin_write (NPP instance, NPStream *stream, int32 offset,
-	int32 len, void *buffer)
+int32
+totemPlugin::Write (NPStream *stream,
+		    int32 offset,
+		    int32 len,
+		    void *buffer)
 {
 	int ret;
 
 	//D("plugin_write");
 
-	if (instance == NULL)
-		return -1;
-
-	totemPlugin *plugin = (totemPlugin *) instance->pdata;
-	if (plugin == NULL)
-		return -1;
-
-	if (!plugin->player_pid) {
-		if (!plugin->stream) {
+	if (!mPlayerPID) {
+		if (!mStream) {
 			g_warning ("No stream in NPP_Write!?");
 			return -1;
 		}
 
-		plugin->tried_write = TRUE;
+		mTriedWrite = TRUE;
 
 		/* FIXME this looks wrong since it'll look at the current data buffer,
 		 * not the cumulative data since the stream started 
 		 */
 		if (totem_pl_parser_can_parse_from_data ((const char *) buffer, len, TRUE /* FIXME */) != FALSE) {
 			D("Need to wait for the file to be downloaded completely");
-			plugin->is_playlist = TRUE;
+			mIsPlaylist = TRUE;
 			return len;
 		}
 
-		if (!totem_plugin_fork (plugin))
+		if (!Fork ())
 			return -1;
 	}
 
-	if (plugin->send_fd < 0)
+	if (mSendFD < 0)
 		return -1;
 
-	if (plugin->is_supported_src == FALSE)
+	if (mIsSupportedSrc == FALSE)
 		return -1;
 
-	ret = write (plugin->send_fd, buffer, len);
+	ret = write (mSendFD, buffer, len);
 	if (ret < 0) {
+		/* FIXME what's this for? gecko will destroy the stream automatically if we return -1 */
 		int err = errno;
 		D("ret %d: [%d]%s", ret, errno, g_strerror (err));
 		if (err == EPIPE) {
 			/* fd://0 got closed, probably because the backend
 			 * crashed on us */
 			if (CallNPN_DestroyStreamProc
-					(mozilla_functions.destroystream,
-					 plugin->instance,
-					 plugin->stream,
+					(sMozillaFuncs.destroystream,
+					 mInstance,
+					 mStream,
 					 NPRES_DONE) != NPERR_NO_ERROR) {
 				g_warning ("Couldn't destroy the stream");
 			}
 		}
+		/* FIXME shouldn't we set ret=0 here? otherwise the stream will be destroyed */
 	}
 
 	return ret;
 }
 
-static void totem_plugin_stream_as_file (NPP instance, NPStream *stream,
-	const char* fname)
+void
+totemPlugin::StreamAsFile (NPStream *stream,
+			   const char* fname)
 {
-	totemPlugin *plugin;
-	GError *err = NULL;
+	NS_ASSERTION (stream == mStream, "Unknown stream");
 
 	D("plugin_stream_as_file: %s", fname);
 
-	if (instance == NULL)
-		return;
-	plugin = (totemPlugin *) instance->pdata;
-
-	if (plugin == NULL)
-		return;
-
-	if (plugin->tried_write == FALSE) {
-		plugin->is_playlist = totem_pl_parser_can_parse_from_filename
+	if (!mTriedWrite) {
+		mIsPlaylist = totem_pl_parser_can_parse_from_filename
 			(fname, TRUE);
 	}
 
-	if (!plugin->player_pid && plugin->is_playlist != FALSE) {
-		plugin->local = g_filename_to_uri (fname, NULL, NULL);
-		totem_plugin_fork (plugin);
+	if (!mPlayerPID && mIsPlaylist) {
+		mLocal = g_filename_to_uri (fname, NULL, NULL);
+		Fork ();
 		return;
-	} else if (!plugin->player_pid) {
-		if (!totem_plugin_fork (plugin))
+	} else if (!mPlayerPID) {
+		if (!Fork ())
 			return;
 	}
 
-	if (plugin->is_playlist != FALSE)
+	if (mIsPlaylist != FALSE)
 		return;
 
-	if (!dbus_g_proxy_call (plugin->proxy, "SetLocalFile", &err,
+	GError *err = NULL;
+	if (!dbus_g_proxy_call (mProxy, "SetLocalFile", &err,
 			G_TYPE_STRING, fname, G_TYPE_INVALID,
 			G_TYPE_INVALID)) {
-		g_warning ("Error: %s\n", err->message);
+		g_warning ("Error: %s", err->message);
+		g_error_free (err);
 	}
 
-	D("plugin_stream_as_file\n");
-}
-
-static void
-totem_plugin_url_notify (NPP instance, const char* url,
-		NPReason reason, void* notifyData)
-{
-	D("plugin_url_notify");
-}
-
-static char *
-totem_plugin_get_description (void)
-{
-	return "The <a href=\"http://www.gnome.org/projects/totem/\">Totem</a> "PACKAGE_VERSION" plugin handles video and audio streams.";
-}
-
-static NPError
-totem_plugin_get_value (NPP instance,
-			NPPVariable variable,
-		        void *value)
-{
-	totemPlugin *plugin;
-	NPError err = NPERR_NO_ERROR;
-
-	/* See NPPVariable in npapi.h */
-	D("plugin_get_value %d (%x)\n", variable, variable);
-
-	switch (variable) {
-	case NPPVpluginNameString:
-		*((char **)value) = totemScriptablePlugin::PluginDescription ();
-		break;
-	case NPPVpluginDescriptionString:
-		*((char **)value) = totem_plugin_get_description();
-		break;
-	case NPPVpluginNeedsXEmbed:
-		*((NPBool *)value) = PR_TRUE;
-		break;
-	case NPPVpluginScriptableIID: {
-		nsIID* ptr = NS_STATIC_CAST (nsIID *, mozilla_functions.memalloc (sizeof (nsIID)));
-		if (ptr) {
-			*ptr = NS_GET_IID (nsISupports);
-			*NS_STATIC_CAST (nsIID **, value) = ptr;
-		} else {
-			err = NPERR_OUT_OF_MEMORY_ERROR;
-		}
-		break;
-	}
-	case NPPVpluginScriptableInstance: {
-	        if (instance == NULL) {
-			err = NPERR_GENERIC_ERROR;
-		} else {
-		        plugin = (totemPlugin *) instance->pdata;
-			if (!plugin ||
-			    !plugin->scriptable ||
-			    !plugin->scriptable->IsValid ())
-				return NPERR_INVALID_INSTANCE_ERROR;
-
-			plugin->scriptable->QueryInterface (NS_GET_IID (nsISupports),
-							    NS_REINTERPRET_CAST (void **, value));
-		}
-		break;
-	}
-	default:
-		D("unhandled variable %d (%x)", variable, variable);
-		err = NPERR_INVALID_PARAM;
-		break;
-	}
-
-	return err;
-}
-
-static NPError
-totem_plugin_set_value (NPP instance,
-			NPNVariable variable,
-			void *value)
-{
-	D("plugin_set_value %d (%x)", variable, variable);
-
-	return NPERR_NO_ERROR;
+	D("plugin_stream_as_file done");
 }
 
 NPError
-NP_GetValue (void *future,
-	     NPPVariable variable,
-	     void *value)
+totemPlugin::GetScriptable (void *_retval)
 {
-	return totem_plugin_get_value (NULL, variable, value);
-}
+	D ("GetScriptable [%p], mInstance %p", (void*) this, mInstance);
 
-char *
-NP_GetMIMEDescription (void)
-{
-	GString *list;
-	guint i;
+	/* FIXME this shouldn't happen, but seems to happen nevertheless?!? */
+	if (!mScriptable)
+		return NPERR_INVALID_PLUGIN_ERROR;
 
-	if (mime_list != NULL)
-		return mime_list;
+	nsresult rv = mScriptable->QueryInterface (NS_GET_IID (nsISupports),
+						   NS_REINTERPRET_CAST (void **, _retval));
 
-	list = g_string_new (NULL);
-
-	const totemPluginMimeEntry *mimetypes;
-	PRUint32 count;
-	totemScriptablePlugin::PluginMimeTypes (&mimetypes, &count);
-	for (PRUint32 i = 0; i < count; ++i) {
-		const char *desc;
-		char *item;
-
-		desc = gnome_vfs_mime_get_description (mimetypes[i].mimetype);
-		if (desc == NULL && mimetypes[i].mime_alias != NULL) {
-			desc = gnome_vfs_mime_get_description
-				(mimetypes[i].mime_alias);
-		}
-		if (desc == NULL) {
-			desc = mimetypes[i].mime_alias;
-		}
-
-		g_string_append_printf (list,"%s:%s:%s;",
-					mimetypes[i].mimetype,
-					mimetypes[i].extensions,
-					desc ? desc : "-");
-	}
-
-	mime_list = g_string_free (list, FALSE);
-
-	return mime_list;
-}
-
-NPError
-NP_Initialize (NPNetscapeFuncs * moz_funcs,
-	       NPPluginFuncs * plugin_funcs)
-{
-	NPError err = NPERR_NO_ERROR;
-	NPBool supportsXEmbed = PR_FALSE;
-	NPNToolkitType toolkit = (NPNToolkitType) 0;
-
-	D("NP_Initialize\n");
-
-	/* Do we support XEMBED? */
-	err = CallNPN_GetValueProc (moz_funcs->getvalue, NULL,
-			NPNVSupportsXEmbedBool,
-			(void *)&supportsXEmbed);
-
-	if (err != NPERR_NO_ERROR || supportsXEmbed != PR_TRUE)
-		return NPERR_INCOMPATIBLE_VERSION_ERROR;
-
-	/* Are we using a GTK+ 2.x Moz? */
-	err = CallNPN_GetValueProc (moz_funcs->getvalue, NULL,
-			NPNVToolkit, (void *)&toolkit);
-
-	if (err != NPERR_NO_ERROR || toolkit != NPNVGtk2)
-		return NPERR_INCOMPATIBLE_VERSION_ERROR;
-
-	if(moz_funcs == NULL || plugin_funcs == NULL)
-		return NPERR_INVALID_FUNCTABLE_ERROR;
-
-	if ((moz_funcs->version >> 8) > NP_VERSION_MAJOR)
-		return NPERR_INCOMPATIBLE_VERSION_ERROR;
-	if (moz_funcs->size < sizeof (NPNetscapeFuncs))
-		return NPERR_INVALID_FUNCTABLE_ERROR;
-	if (plugin_funcs->size < sizeof (NPPluginFuncs))
-		return NPERR_INVALID_FUNCTABLE_ERROR;
-
-	/*
-	 * Copy all of the fields of the Mozilla function table into our
-	 * copy so we can call back into Mozilla later.  Note that we need
-	 * to copy the fields one by one, rather than assigning the whole
-	 * structure, because the Mozilla function table could actually be
-	 * bigger than what we expect.
-	 */
-	mozilla_functions.size             = moz_funcs->size;
-	mozilla_functions.version          = moz_funcs->version;
-	mozilla_functions.geturl           = moz_funcs->geturl;
-	mozilla_functions.posturl          = moz_funcs->posturl;
-	mozilla_functions.requestread      = moz_funcs->requestread;
-	mozilla_functions.newstream        = moz_funcs->newstream;
-	mozilla_functions.write            = moz_funcs->write;
-	mozilla_functions.destroystream    = moz_funcs->destroystream;
-	mozilla_functions.status           = moz_funcs->status;
-	mozilla_functions.uagent           = moz_funcs->uagent;
-	mozilla_functions.memalloc         = moz_funcs->memalloc;
-	mozilla_functions.memfree          = moz_funcs->memfree;
-	mozilla_functions.memflush         = moz_funcs->memflush;
-	mozilla_functions.reloadplugins    = moz_funcs->reloadplugins;
-	mozilla_functions.getJavaEnv       = moz_funcs->getJavaEnv;
-	mozilla_functions.getJavaPeer      = moz_funcs->getJavaPeer;
-	mozilla_functions.geturlnotify     = moz_funcs->geturlnotify;
-	mozilla_functions.posturlnotify    = moz_funcs->posturlnotify;
-	mozilla_functions.getvalue         = moz_funcs->getvalue;
-	mozilla_functions.setvalue         = moz_funcs->setvalue;
-	mozilla_functions.invalidaterect   = moz_funcs->invalidaterect;
-	mozilla_functions.invalidateregion = moz_funcs->invalidateregion;
-	mozilla_functions.forceredraw      = moz_funcs->forceredraw;
-
-	/*
-	 * Set up a plugin function table that Mozilla will use to call
-	 * into us.  Mozilla needs to know about our version and size and
-	 * have a UniversalProcPointer for every function we implement.
-	 */
-
-	plugin_funcs->size = sizeof(NPPluginFuncs);
-	plugin_funcs->version = (NP_VERSION_MAJOR << 8) + NP_VERSION_MINOR;
-	plugin_funcs->newp = NewNPP_NewProc(totem_plugin_new_instance);
-	plugin_funcs->destroy =
-		NewNPP_DestroyProc(totem_plugin_destroy_instance);
-	plugin_funcs->setwindow =
-		NewNPP_SetWindowProc(totem_plugin_set_window);
-	plugin_funcs->newstream =
-		NewNPP_NewStreamProc(totem_plugin_new_stream);
-	plugin_funcs->destroystream =
-		NewNPP_DestroyStreamProc(totem_plugin_destroy_stream);
-	plugin_funcs->asfile =
-		NewNPP_StreamAsFileProc(totem_plugin_stream_as_file);
-	plugin_funcs->writeready =
-		NewNPP_WriteReadyProc(totem_plugin_write_ready);
-	plugin_funcs->write = NewNPP_WriteProc(totem_plugin_write);
-	/* Printing ? */
-	plugin_funcs->print = NewNPP_PrintProc(NULL);
-	/* What's that for ? */
-	plugin_funcs->event = NewNPP_HandleEventProc(NULL);
-	plugin_funcs->urlnotify =
-		NewNPP_URLNotifyProc(totem_plugin_url_notify);
-	plugin_funcs->javaClass = NULL;
-	plugin_funcs->getvalue = NewNPP_GetValueProc(totem_plugin_get_value);
-	plugin_funcs->setvalue = NewNPP_SetValueProc(totem_plugin_set_value);
-
-	return NPERR_NO_ERROR;
-}
-
-NPError NP_Shutdown(void)
-{
-	g_free (mime_list);
-	mime_list = NULL;
-
-	return NPERR_NO_ERROR;
+	return NS_SUCCEEDED (rv) ? NPERR_NO_ERROR : NPERR_GENERIC_ERROR;
 }

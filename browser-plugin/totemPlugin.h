@@ -19,52 +19,111 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __TOTEM_MOZILLA_PLUGIN_H__
-#define __TOTEM_MOZILLA_PLUGIN_H__
+#ifndef __TOTEM_PLUGIN_H__
+#define __TOTEM_PLUGIN_H__
 
+#include <stdint.h>
 #include <dbus/dbus-glib.h>
-#include "bacon-message-connection.h"
-#include "npupp.h"
 #include "npapi.h"
 
 class totemScriptablePlugin;
 
+class totemPlugin {
+  public:
+    totemPlugin (NPP aInstance);
+    ~totemPlugin ();
+  
+    void* operator new (size_t aSize) CPP_THROW_NEW;
+
+    nsresult Play ();
+    nsresult Stop ();
+    nsresult Pause ();
+
+    NPError Init (NPMIMEType mimetype,
+                  uint16_t mode,
+                  int16_t argc,
+                  char *argn[],
+                  char *argv[],
+                  NPSavedData *saved);
+  
+    NPError SetWindow (NPWindow *aWindow);
+  
+    NPError NewStream (NPMIMEType type,
+                      NPStream* stream_ptr,
+                      NPBool seekable,
+                      uint16* stype);
+    NPError DestroyStream (NPStream* stream,
+                          NPError reason);
+  
+    int32 WriteReady (NPStream *stream);
+    int32 Write (NPStream *stream,
+                int32 offset,
+                int32 len,
+                void *buffer);
+    void StreamAsFile (NPStream *stream,
+                      const char* fname);
+  
+    NPError GetScriptable (void *_retval);
+
+    static void PR_CALLBACK NameOwnerChangedCallback (DBusGProxy *proxy,
+						      const char *svc,
+						      const char *old_owner,
+						      const char *new_owner,
+						      totemPlugin *plugin);
+
+    static void PR_CALLBACK StopSendingDataCallback (DBusGProxy  *proxy,
+						     totemPlugin *plugin);
+
+  private:
+
+    PRBool Fork ();
+    void UnsetStream ();
+
+    PRBool IsMimeTypeSupported (const char *aMimeType);
+    PRBool IsSchemeSupported (const char *aURL);
+    char *GetRealMimeType (const char *aMimeType);
+
+    NPP mInstance;
+
+    /* FIXME make this a nsCOMPtr */
+    totemScriptablePlugin *mScriptable;
+
+    NPStream *mStream;
+    char *mMimeType;
+    PRUint8 mStreamType;
+
+    Window mWindow;
+
+    char *mSrc;
+    char *mLocal;
+    char *mHref;
+    char *mTarget;
+
+    int mWidth;
+    int mHeight;
+
+    DBusGConnection *mConn;
+    DBusGProxy *mProxy;
+    char *mWaitForSvc;
+
+    int mSendFD;
+    int mPlayerPID;
+
+    PRUint32 mCache : 1;
+    PRUint32 mControllerHidden : 1;
+    PRUint32 mGotSvc : 1;
+    PRUint32 mHidden : 1;
+    PRUint32 mIsPlaylist : 1;
+    PRUint32 mIsSupportedSrc : 1;
+    PRUint32 mNoAutostart : 1;
+    PRUint32 mRepeat : 1;
+    PRUint32 mTriedWrite : 1;
+};
+
 typedef struct {
-	NPP instance;
-	NPStream *stream;
-	Window window;
-	totemScriptablePlugin *scriptable;
-
-	char *src, *local, *href, *target, *mimetype;
-	int width, height;
-	DBusGConnection *conn;
-	DBusGProxy *proxy;
-	char *wait_for_svc;
-	int send_fd;
-	int player_pid;
-	guint8 stream_type;
-
-	guint got_svc : 1;
-	guint controller_hidden : 1;
-	guint cache : 1;
-	guint hidden : 1;
-	guint repeat : 1;
-	guint is_playlist : 1;
-	guint tried_write : 1;
-	guint noautostart : 1;
-	guint is_supported_src : 1;
-} totemPlugin;
-
-typedef struct {
-	const char *mimetype;
-	const char *extensions;
-	const char *mime_alias;
+  const char *mimetype;
+  const char *extensions;
+  const char *mime_alias;
 } totemPluginMimeEntry;
 
-void	totem_plugin_play	(totemPlugin *plugin);
-
-void	totem_plugin_stop	(totemPlugin *plugin);
-
-void	totem_plugin_pause	(totemPlugin *plugin);
-
-#endif /* __TOTEM_MOZILLA_PLUGIN_H__ */
+#endif /* __TOTEM_PLUGIN_H__ */

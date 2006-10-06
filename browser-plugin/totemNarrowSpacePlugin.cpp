@@ -32,6 +32,10 @@
 #include <nsMemory.h>
 #include <nsXPCOM.h>
 
+#define GNOME_ENABLE_DEBUG 1
+/* define GNOME_ENABLE_DEBUG for more debug spew */
+#include "debug.h"
+
 #include "totemNarrowSpacePlugin.h"
 
 /* 2e390ee1-f0e3-423c-9764-f5ab50a40c06 */
@@ -52,12 +56,12 @@ static const totemPluginMimeEntry kMimeTypes[] = {
 totemScriptablePlugin::totemScriptablePlugin (totemPlugin *aPlugin)
   : mPlugin(aPlugin)
 {
-  g_print ("%s ctor [%p]\n", kClassDescription, (void*) this);
+  D ("%s ctor [%p]", kClassDescription, (void*) this);
 }
 
 totemScriptablePlugin::~totemScriptablePlugin ()
 {
-  g_print ("%s dtor [%p]\n", kClassDescription, (void*) this);
+  D ("%s dtor [%p]", kClassDescription, (void*) this);
 }
 
 /* static */ char *
@@ -175,29 +179,23 @@ totemScriptablePlugin::GetClassIDNoAlloc (nsCID *aClassIDNoAlloc)
 NS_IMETHODIMP
 totemScriptablePlugin::Play ()
 {
-  NS_ENSURE_STATE (mPlugin);
+  NS_ENSURE_STATE (IsValid ());
 
-  totem_plugin_play (mPlugin);
-
-  return NS_OK;
+  return mPlugin->Play ();
 }
 
 NS_IMETHODIMP
 totemScriptablePlugin::Rewind ()
 {
-  NS_ENSURE_STATE (mPlugin);
+  NS_ENSURE_STATE (IsValid ());
 
-  totem_plugin_pause (mPlugin);
-
-  return NS_OK;
+  return mPlugin->Pause ();
 }
 
 NS_IMETHODIMP
 totemScriptablePlugin::Stop ()
 {
-  NS_ENSURE_STATE (mPlugin);
+  NS_ENSURE_STATE (IsValid ());
 
-  totem_plugin_stop (mPlugin);
-
-  return NS_OK;
+  return mPlugin->Stop ();
 }
