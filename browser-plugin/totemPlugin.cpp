@@ -848,6 +848,13 @@ totem_plugin_url_notify (NPP instance, const char* url,
 	D("plugin_url_notify");
 }
 
+static void
+totem_plugin_print (NPP instance,
+                    NPPrint* platformPrint)
+{
+	D("plugin_print");
+}
+
 static char *
 totem_plugin_get_description (void)
 {
@@ -1054,7 +1061,7 @@ NP_Initialize (NPNetscapeFuncs * moz_funcs,
 		NewNPP_WriteReadyProc(totem_plugin_write_ready);
 	plugin_funcs->write = NewNPP_WriteProc(totem_plugin_write);
 	/* Printing ? */
-	plugin_funcs->print = NewNPP_PrintProc(NULL);
+	plugin_funcs->print = NewNPP_PrintProc(totem_plugin_print);
 	/* What's that for ? */
 	plugin_funcs->event = NewNPP_HandleEventProc(NULL);
 	plugin_funcs->urlnotify =
