@@ -50,9 +50,6 @@ totem_plugin_new_instance (NPMIMEType mimetype,
 			   NPSavedData *savedData)
 {
 	totemPlugin *plugin;
-	GError *e = NULL;
-	gboolean need_req = FALSE;
-	int i;
 
 	D("totem_plugin_new_instance");
 
@@ -204,6 +201,13 @@ totem_plugin_url_notify (NPP instance,
 	D("plugin_url_notify");
 }
 
+static void
+totem_plugin_print (NPP instance,
+                    NPPrint* platformPrint)
+{
+	D("plugin_print");
+}
+
 static char *
 totem_plugin_get_description (void)
 {
@@ -285,7 +289,6 @@ char *
 NP_GetMIMEDescription (void)
 {
 	GString *list;
-	guint i;
 
 	if (mime_list != NULL)
 		return mime_list;
@@ -297,7 +300,6 @@ NP_GetMIMEDescription (void)
 	totemScriptablePlugin::PluginMimeTypes (&mimetypes, &count);
 	for (PRUint32 i = 0; i < count; ++i) {
 		const char *desc;
-		char *item;
 
 		desc = gnome_vfs_mime_get_description (mimetypes[i].mimetype);
 		if (desc == NULL && mimetypes[i].mime_alias != NULL) {
@@ -408,7 +410,7 @@ NP_Initialize (NPNetscapeFuncs * aMozillaFuncs,
 		NewNPP_WriteReadyProc(totem_plugin_write_ready);
 	plugin_funcs->write = NewNPP_WriteProc(totem_plugin_write);
 	/* Printing ? */
-	plugin_funcs->print = NewNPP_PrintProc(NULL);
+	plugin_funcs->print = NewNPP_PrintProc(totem_plugin_print);
 	/* What's that for ? */
 	plugin_funcs->event = NewNPP_HandleEventProc(NULL);
 	plugin_funcs->urlnotify =
