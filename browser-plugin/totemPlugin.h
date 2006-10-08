@@ -79,7 +79,7 @@ class totemPlugin {
     PRBool Fork ();
     void UnsetStream ();
 
-    PRBool IsMimeTypeSupported (const char *aMimeType);
+    PRBool IsMimeTypeSupported (const char *aMimeType, const char *aURL);
     PRBool IsSchemeSupported (const char *aURL);
     char *GetRealMimeType (const char *aMimeType);
 
@@ -124,6 +124,7 @@ typedef struct {
   const char *mimetype;
   const char *extensions;
   const char *mime_alias;
+  gboolean    ignore;
 } totemPluginMimeEntry;
 
 #endif /* __TOTEM_PLUGIN_H__ */

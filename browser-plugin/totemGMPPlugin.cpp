@@ -50,12 +50,13 @@ static const char kClassDescription[] = "totemGMPPlugin";
 static const char kPluginDescription[] = "Windows Media Player Plug-in 10 (compatible; Totem)";
 
 static const totemPluginMimeEntry kMimeTypes[] = {
-	{ "application/x-mplayer2", "avi, wma, wmv", "video/x-msvideo" },
-	{ "video/x-ms-asf-plugin", "asf, wmv", "video/x-ms-asf" },
-	{ "video/x-msvideo", "asf, wmv", NULL },
-	{ "video/x-ms-asf", "asf", NULL },
-	{ "video/x-ms-wmv", "wmv", "video/x-ms-wmv" },
-	{ "video/x-wmv", "wmv", "video/x-ms-wmv" },
+	{ "application/x-mplayer2", "avi, wma, wmv", "video/x-msvideo", FALSE },
+	{ "video/x-ms-asf-plugin", "asf, wmv", "video/x-ms-asf", FALSE },
+	{ "video/x-msvideo", "asf, wmv", NULL, FALSE },
+	{ "video/x-ms-asf", "asf", NULL, FALSE },
+	{ "video/x-ms-wmv", "wmv", "video/x-ms-wmv", FALSE },
+	{ "video/x-wmv", "wmv", "video/x-ms-wmv", FALSE },
+	{ "video/x-ms-wvx", "wmv", NULL, TRUE },
 };
 
 totemScriptablePlugin::totemScriptablePlugin (totemPlugin *aPlugin)

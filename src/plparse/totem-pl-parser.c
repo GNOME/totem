@@ -2445,7 +2445,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	if (parser->priv->force != FALSE) {
 		mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data, parser);
 	} else {
-		mimetype = g_strdup (gnome_vfs_mime_type_from_name (url));
+		mimetype = g_strdup (gnome_vfs_get_mime_type_for_name (url));
 	}
 
 	DEBUG(g_print ("_mime_type_from_name for '%s' returned '%s'\n", url, mimetype));

@@ -34,6 +34,8 @@
 
 #include <glib.h>
 
+#include <libgnomevfs/gnome-vfs-mime-utils.h>
+
 #include "totem-pl-parser-mini.h"
 #include "totem-mozilla-options.h"
 
@@ -224,15 +226,25 @@ totemPlugin::GetRealMimeType (const char *mimetype)
 }
 
 PRBool
-totemPlugin::IsMimeTypeSupported (const char *mimetype)
+totemPlugin::IsMimeTypeSupported (const char *mimetype, const char *url)
 {
 	const totemPluginMimeEntry *mimetypes;
 	PRUint32 count;
+	const char *guessed;
 
 	totemScriptablePlugin::PluginMimeTypes (&mimetypes, &count);
 
 	for (PRUint32 i = 0; i < count; ++i) {
 		if (strcmp (mimetypes[i].mimetype, mimetype) == 0)
+			return PR_TRUE;
+	}
+
+	/* Not supported? Probably a broken webserver */
+	guessed = gnome_vfs_get_mime_type_for_name (url);
+
+	D ("Guessed mime-type '%s' for '%s'", guessed, url);
+	for (PRUint32 i = 0; i < count; ++i) {
+		if (strcmp (mimetypes[i].mimetype, guessed) == 0)
 			return PR_TRUE;
 	}
 
@@ -704,7 +716,7 @@ totemPlugin::NewStream (NPMIMEType type,
 
 	D("plugin_new_stream type: %s url: %s", type, mSrc);
 
-	if (IsMimeTypeSupported (type) == FALSE) {
+	if (IsMimeTypeSupported (type, mSrc) == FALSE) {
 		D("plugin_new_stream type: %s not supported, exiting\n", type);
 		return NPERR_INVALID_PLUGIN_ERROR;
 	}
