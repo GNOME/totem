@@ -1,5 +1,13 @@
 2006-10-08  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/Makefile.am:
+	* browser-plugin/totemPlugin.cpp:
+	* configure.in: Patch from Christian Persch <chpe@cvs.gnome.org>,
+	to add more warnings to the C++ build, and fix a few warnings as well
+	(Closes: #360416)
+
+2006-10-08  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemPlugin.cpp: return immediately in ::Write if
 	we already have a playlist, as we need to wait for it to be on-disk
 	(Closes: #360592)

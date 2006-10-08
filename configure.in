@@ -337,6 +337,13 @@ if test "x$ENABLE_MOZILLA" != "xno" ; then
 
 	MOZILLA=$gecko
 	AC_SUBST([MOZILLA])
+
+	if test "$enable_cxx_warnings" != "no" -a "$GCC" = "yes"; then
+		PLUGIN_EXTRA_WARN_CXXFLAGS="-Wno-ctor-dtor-privacy -Wno-non-virtual-dtor"
+	else
+		PLUGIN_EXTRA_WARN_CXXFLAGS=
+	fi
+	AC_SUBST([PLUGIN_EXTRA_WARN_CXXFLAGS])
 fi
 
 dnl Check for mozilla modules, but keep the CFLAGS and LIBS in

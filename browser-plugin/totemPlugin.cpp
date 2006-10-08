@@ -76,9 +76,9 @@ totemPlugin::operator new (size_t aSize) CPP_THROW_NEW
 
 totemPlugin::totemPlugin (NPP aInstance)
 : mInstance(aInstance),
-  mSendFD(-1),
   mWidth(-1),
-  mHeight(-1)
+  mHeight(-1),
+  mSendFD(-1)
 {
   D ("totemPlugin ctor [%p]", (void*) this);
 }
@@ -269,7 +269,6 @@ PRBool
 totemPlugin::Fork ()
 {
 	GTimeVal then, now;
-	char *svcname;
 	GPtrArray *arr;
 	char **argv;
 	GError *err = NULL;

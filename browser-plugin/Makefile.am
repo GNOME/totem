@@ -51,12 +51,15 @@ libtotem_basic_plugin_la_CFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
 	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
+	$(WARN_CFLAGS)			\
 	$(AM_CFLAGS)
 
 libtotem_basic_plugin_la_CXXFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
 	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
+	$(WARN_CXXFLAGS)		\
+	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CFLAGS)
 
 libtotem_basic_plugin_la_LIBADD = \
@@ -110,12 +113,15 @@ libtotem_gmp_plugin_la_CFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
 	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
+	$(WARN_CFLAGS)			\
 	$(AM_CFLAGS)
 
 libtotem_gmp_plugin_la_CXXFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
 	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
+	$(WARN_CXXFLAGS)		\
+	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CFLAGS)
 
 libtotem_gmp_plugin_la_LIBADD = \
@@ -169,12 +175,15 @@ libtotem_complex_plugin_la_CFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
 	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
+	$(WARN_CFLAGS)			\
 	$(AM_CFLAGS)
 
 libtotem_complex_plugin_la_CXXFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
 	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
+	$(WARN_CXXFLAGS)		\
+	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CFLAGS)
 
 libtotem_complex_plugin_la_LIBADD = \
@@ -228,12 +237,15 @@ libtotem_narrowspace_plugin_la_CFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
 	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
+	$(WARN_CFLAGS)			\
 	$(AM_CFLAGS)
 
 libtotem_narrowspace_plugin_la_CXXFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
 	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
+	$(WARN_CXXFLAGS)		\
+	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CFLAGS)
 
 libtotem_narrowspace_plugin_la_LIBADD = \
@@ -287,12 +299,15 @@ libtotem_mully_plugin_la_CFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
 	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
+	$(WARN_CFLAGS)			\
 	$(AM_CFLAGS)
 
 libtotem_mully_plugin_la_CXXFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
 	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
+	$(WARN_CXXFLAGS)		\
+	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CFLAGS)
 
 libtotem_mully_plugin_la_LIBADD = \
