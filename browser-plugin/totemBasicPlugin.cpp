@@ -51,7 +51,8 @@ static const totemPluginMimeEntry kMimeTypes[] = {
 	{ "video/mpeg", "mpg, mpeg, mpe", NULL, FALSE },
 	{ "audio/wav", "wav", NULL, FALSE },
 	{ "audio/x-wav", "wav", NULL, TRUE },
-	{ "audio/mpeg", "mp3", NULL, FALSE }
+	{ "audio/mpeg", "mp3", NULL, FALSE },
+	{ "audio/x-mpeg", "mp3", NULL, TRUE }
 };
 
 totemScriptablePlugin::totemScriptablePlugin (totemPlugin *aPlugin)
