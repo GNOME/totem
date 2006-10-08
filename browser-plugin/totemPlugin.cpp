@@ -782,6 +782,11 @@ totemPlugin::Write (NPStream *stream,
 
 	//D("plugin_write");
 
+	/* We already know it's a playlist, don't try to check it again
+	 * and just wait for it to be on-disk */
+	if (mIsPlaylist != FALSE)
+		return len;
+
 	if (!mPlayerPID) {
 		if (!mStream) {
 			g_warning ("No stream in NPP_Write!?");

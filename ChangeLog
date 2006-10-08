@@ -1,5 +1,11 @@
 2006-10-08  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemPlugin.cpp: return immediately in ::Write if
+	we already have a playlist, as we need to wait for it to be on-disk
+	(Closes: #360592)
+
+2006-10-08  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemBasicPlugin.cpp:
 	* browser-plugin/totemComplexPlugin.cpp:
 	* browser-plugin/totemGMPPlugin.cpp:
