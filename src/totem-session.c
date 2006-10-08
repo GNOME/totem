@@ -56,6 +56,9 @@ totem_save_yourself_cb (GnomeClient *client, int phase, GnomeSaveStyle style,
 	int i = 0;
 	char *path_id, *current, *seek;
 
+	if (style == GNOME_SAVE_GLOBAL)
+		return TRUE;
+
 	path_id = totem_session_create_key ();
 	totem_playlist_save_current_playlist (totem->playlist, path_id);
 

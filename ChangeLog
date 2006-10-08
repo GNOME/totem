@@ -1,5 +1,11 @@
 2006-10-08  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-session.c: (totem_save_yourself_cb): Don't save the state
+	if the save style is Global, thanks to Dan Winship <danw@novell.com>
+	for pointing that out
+
+2006-10-08  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemBasicPlugin.cpp: add audio/x-mpeg to the list
 	of supported mime-types (allows playback at
 	http://www.joscho-stephan.de/html/sounds.html) (Closes: #360470)
