@@ -1846,17 +1846,40 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 		gtk_widget_show (menubar);
 		gtk_widget_show (controlbar);
 		gtk_widget_show (statusbar);
-		if (totem_sidebar_is_visible (totem) != FALSE)
+		if (totem_sidebar_is_visible (totem) != FALSE) {
+			/* This is uglier then you might expect because of the
+			   resize handle between the video and sidebar. There
+			   is no convenience method to get the handle's width.
+			   */
+			GValue value = { 0, };
+			GtkWidget *pane;
+			int handle_size;
+
+			g_value_init (&value, G_TYPE_INT);
+			pane = glade_xml_get_widget (totem->xml,
+					"tmw_main_pane");
+			gtk_widget_style_get_property (pane, "handle-size",
+					&value);
+			handle_size = g_value_get_int (&value);
+			
 			gtk_widget_show (totem->sidebar);
-		else
+			width += totem->sidebar->allocation.width
+				+ handle_size;
+		} else {
 			gtk_widget_hide (totem->sidebar);
+		}
 
 		gtk_container_set_border_width (GTK_CONTAINER (bvw_vbox),
 				BVW_VBOX_BORDER_WIDTH);
 
 		if (was_fullscreen == FALSE)
 		{
-			totem_widget_set_preferred_size (widget,
+			height += menubar->allocation.height
+				+ controlbar->allocation.height
+				+ statusbar->allocation.height
+				+ 2 * BVW_VBOX_BORDER_WIDTH;
+			width += 2 * BVW_VBOX_BORDER_WIDTH;
+			gtk_window_resize (GTK_WINDOW(totem->win),
 					width, height);
 		}
 	} else {
