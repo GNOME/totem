@@ -232,6 +232,10 @@ totemPlugin::IsMimeTypeSupported (const char *mimetype, const char *url)
 	PRUint32 count;
 	const char *guessed;
 
+	/* Stupid web servers will do that */
+	if (strcmp (mimetype, GNOME_VFS_MIME_TYPE_UNKNOWN) == 0)
+		return PR_TRUE;
+
 	totemScriptablePlugin::PluginMimeTypes (&mimetypes, &count);
 
 	for (PRUint32 i = 0; i < count; ++i) {
