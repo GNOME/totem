@@ -15,7 +15,7 @@ TOTEM_PROPERTIES_PAGE =
 TOTEM_PROPERTIES_PAGE_TEST =
 endif
 
-bin_PROGRAMS = totem totem-video-thumbnailer $(VANITY)
+bin_PROGRAMS = totem totem-video-thumbnailer totem-video-indexer $(VANITY)
 libexec_PROGRAMS =
 noinst_PROGRAMS = list_v4l disc-test metadata-test $(TOTEM_PROPERTIES_PAGE_TEST)
 
@@ -161,6 +161,13 @@ vanity_LDADD = \
 
 metadata_test_SOURCES = metadata-test.c
 metadata_test_LDADD =					\
+	backend/libbaconvideowidget.la			\
+	$(GTK_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS)	\
+	$(EXTRA_GNOME_LIBS)				\
+	$(XTEST_LIBS) $(X_LIBS) 
+
+totem_video_indexer_SOURCES = totem-video-indexer.c
+totem_video_indexer_LDADD =				\
 	backend/libbaconvideowidget.la			\
 	$(GTK_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS)	\
 	$(EXTRA_GNOME_LIBS)				\
