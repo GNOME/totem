@@ -1,5 +1,12 @@
 2006-10-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser.c:
+	(my_gnome_vfs_get_mime_type_with_data): always return duped strings
+	otherwise we'll crash trying to free it later on, fixes parsing of
+	directories and block devices (Closes: #360646)
+
+2006-10-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am:
 	* src/totem-video-indexer.c: Add the new video indexer for use
 	with Beagle (or Tracker, or anything else for that matter)

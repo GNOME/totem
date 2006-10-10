@@ -278,7 +278,7 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data, TotemPlPa
 		struct stat buf;
 		if (stat (uri + strlen ("file://"), &buf) == 0) {
 			if (S_ISBLK (buf.st_mode))
-				return BLOCK_DEVICE_TYPE;
+				return g_strdup (BLOCK_DEVICE_TYPE);
 		}
 	}
 
@@ -286,7 +286,7 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data, TotemPlPa
 	result = gnome_vfs_open (&handle, uri, GNOME_VFS_OPEN_READ);
 	if (result != GNOME_VFS_OK) {
 		if (result == GNOME_VFS_ERROR_IS_DIRECTORY)
-			return DIR_MIME_TYPE;
+			return g_strdup (DIR_MIME_TYPE);
 		DEBUG(g_print ("URL '%s' couldn't be opened in _get_mime_type_with_data: '%s'\n", uri, gnome_vfs_result_to_string (result)));
 		return NULL;
 	}
