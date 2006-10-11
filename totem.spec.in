@@ -108,6 +108,7 @@ done
 %doc AUTHORS COPYING ChangeLog NEWS README TODO
 %config %{_sysconfdir}/gconf/schemas/*.schemas
 %{_bindir}/%{name}
+%{_bindir}/totem-video-indexer
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/gnome/help/%{name}/
 %{_datadir}/omf/%{name}/
@@ -120,7 +121,7 @@ done
 %{_mandir}/man1/totem-video-thumbnailer.1.gz
 %{_datadir}/locale
 %exclude %{_datadir}/%{name}/vanity.*
-
+%exclude /var/lib/scrollkeeper
 
 %files mozplugin
 %defattr(-, root, root)
