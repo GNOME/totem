@@ -118,6 +118,9 @@ static void
 cb_stop_sending_data (DBusGProxy  *proxy,
 		      totemPlugin *plugin)
 {
+	if (!plugin->stream)
+		return;
+
 	D("Stop sending data signal received");
 	if (CallNPN_DestroyStreamProc (mozilla_functions.destroystream,
 				plugin->instance,
