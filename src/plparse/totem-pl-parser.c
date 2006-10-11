@@ -403,6 +403,20 @@ totem_pl_parser_parse_xml_file (const char *url)
 	if (contents == NULL)
 		return NULL;
 
+	/* Try to remove HTML style comments */
+	{
+		char *needle;
+
+		while ((needle = strstr (contents, "<!--")) != NULL) {
+			while (strncmp (needle, "-->", 3) != 0) {
+				*needle = ' ';
+				needle++;
+				if (*needle == '\0')
+					break;
+			}
+		}
+	}
+
 	doc = xmlParseMemory (contents, size);
 	if (doc == NULL)
 		doc = xmlRecoverMemory (contents, size);

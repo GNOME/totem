@@ -1,5 +1,11 @@
 2006-10-11  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_parse_xml_file):
+	Remove HTML comments from the XML before parsing it (Closes: #360713),
+	allows playback from http://streaming.liwest.at
+
+2006-10-11  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser.c: (totem_pl_parser_parse_xml_file),
 	(totem_pl_parser_add_asx), (totem_pl_parser_add_smil),
 	(totem_pl_parser_add_quicktime_metalink),
