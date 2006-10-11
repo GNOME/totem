@@ -63,6 +63,9 @@ typedef struct {
 	PlaylistCallback func;
 #endif
 	PlaylistIdenCallback iden;
+#ifndef TOTEM_PL_PARSER_MINI
+	guint unsafe : 1;
+#endif
 } PlaylistTypes;
 
 static gboolean totem_pl_parser_is_ra (const char *data, gsize len);
@@ -85,6 +88,7 @@ struct TotemPlParserPrivate
 	guint recurse : 1;
 	guint debug : 1;
 	guint force : 1;
+	guint disable_unsafe : 1;
 };
 
 static void totem_pl_parser_set_property (GObject *object,
@@ -100,7 +104,8 @@ enum {
 	PROP_NONE,
 	PROP_RECURSE,
 	PROP_DEBUG,
-	PROP_FORCE
+	PROP_FORCE,
+	PROP_DISABLE_UNSAFE
 };
 
 /* Signals */
@@ -154,6 +159,14 @@ totem_pl_parser_class_init (TotemPlParserClass *klass)
 							       FALSE,
 							       G_PARAM_READWRITE));
 
+	g_object_class_install_property (object_class,
+					 PROP_DISABLE_UNSAFE,
+					 g_param_spec_boolean ("disable-unsafe",
+							       "disable-unsafe",
+							       "Whether or not to disable parsing of unsafe locations", 
+							       FALSE,
+							       G_PARAM_READWRITE));
+
 	/* Signals */
 	totem_pl_parser_table_signals[ENTRY] =
 		g_signal_new ("entry",
@@ -200,6 +213,9 @@ totem_pl_parser_set_property (GObject *object,
 	case PROP_FORCE:
 		parser->priv->force = g_value_get_boolean (value) != FALSE;
 		break;
+	case PROP_DISABLE_UNSAFE:
+		parser->priv->disable_unsafe = g_value_get_boolean (value) != FALSE;
+		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		break;
@@ -224,6 +240,9 @@ totem_pl_parser_get_property (GObject *object,
 		break;
 	case PROP_FORCE:
 		g_value_set_boolean (value, parser->priv->force);
+		break;
+	case PROP_DISABLE_UNSAFE:
+		g_value_set_boolean (value, parser->priv->disable_unsafe);
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -2267,31 +2286,33 @@ totem_pl_parser_is_quicktime (const char *data, gsize len)
 }
 
 #ifndef TOTEM_PL_PARSER_MINI
-#define PLAYLIST_TYPE(mime,cb,identcb) { mime, cb, identcb }
+#define PLAYLIST_TYPE(mime,cb,identcb,unsafe) { mime, cb, identcb, unsafe }
 #define PLAYLIST_TYPE2(mime,cb,identcb) { mime, cb, identcb }
+#define PLAYLIST_TYPE3(mime) { mime, NULL, NULL, FALSE }
 #else
-#define PLAYLIST_TYPE(mime,cb,identcb) { mime }
+#define PLAYLIST_TYPE(mime,cb,identcb,unsafe) { mime }
 #define PLAYLIST_TYPE2(mime,cb,identcb) { mime, identcb }
+#define PLAYLIST_TYPE3(mime) { mime }
 #endif
 
 /* These ones need a special treatment, mostly parser formats */
 static PlaylistTypes special_types[] = {
-	PLAYLIST_TYPE ("audio/x-mpegurl", totem_pl_parser_add_m3u, NULL),
-	PLAYLIST_TYPE ("audio/playlist", totem_pl_parser_add_m3u, NULL),
-	PLAYLIST_TYPE ("audio/x-ms-asx", totem_pl_parser_add_asx, NULL),
-	PLAYLIST_TYPE ("audio/x-scpls", totem_pl_parser_add_pls, NULL),
-	PLAYLIST_TYPE ("application/x-smil", totem_pl_parser_add_smil, NULL),
-	PLAYLIST_TYPE ("application/smil", totem_pl_parser_add_smil, NULL),
-	PLAYLIST_TYPE ("video/x-ms-wvx", totem_pl_parser_add_asx, NULL),
-	PLAYLIST_TYPE ("audio/x-ms-wax", totem_pl_parser_add_asx, NULL),
-	PLAYLIST_TYPE ("application/xspf+xml", totem_pl_parser_add_xspf, NULL),
+	PLAYLIST_TYPE ("audio/x-mpegurl", totem_pl_parser_add_m3u, NULL, FALSE),
+	PLAYLIST_TYPE ("audio/playlist", totem_pl_parser_add_m3u, NULL, FALSE),
+	PLAYLIST_TYPE ("audio/x-ms-asx", totem_pl_parser_add_asx, NULL, FALSE),
+	PLAYLIST_TYPE ("audio/x-scpls", totem_pl_parser_add_pls, NULL, FALSE),
+	PLAYLIST_TYPE ("application/x-smil", totem_pl_parser_add_smil, NULL, FALSE),
+	PLAYLIST_TYPE ("application/smil", totem_pl_parser_add_smil, NULL, FALSE),
+	PLAYLIST_TYPE ("video/x-ms-wvx", totem_pl_parser_add_asx, NULL, FALSE),
+	PLAYLIST_TYPE ("audio/x-ms-wax", totem_pl_parser_add_asx, NULL, FALSE),
+	PLAYLIST_TYPE ("application/xspf+xml", totem_pl_parser_add_xspf, NULL, FALSE),
 #ifndef TOTEM_PL_PARSER_MINI
-	PLAYLIST_TYPE ("application/x-desktop", totem_pl_parser_add_desktop, NULL),
-	PLAYLIST_TYPE ("application/x-gnome-app-info", totem_pl_parser_add_desktop, NULL),
-	PLAYLIST_TYPE ("application/x-cd-image", totem_pl_parser_add_iso, NULL),
-	PLAYLIST_TYPE ("application/x-cue", totem_pl_parser_add_cue, NULL),
-	PLAYLIST_TYPE ("x-directory/normal", totem_pl_parser_add_directory, NULL),
-	PLAYLIST_TYPE ("x-special/device-block", totem_pl_parser_add_block, NULL),
+	PLAYLIST_TYPE ("application/x-desktop", totem_pl_parser_add_desktop, NULL, TRUE),
+	PLAYLIST_TYPE ("application/x-gnome-app-info", totem_pl_parser_add_desktop, NULL, TRUE),
+	PLAYLIST_TYPE ("application/x-cd-image", totem_pl_parser_add_iso, NULL, TRUE),
+	PLAYLIST_TYPE ("application/x-cue", totem_pl_parser_add_cue, NULL, TRUE),
+	PLAYLIST_TYPE ("x-directory/normal", totem_pl_parser_add_directory, NULL, TRUE),
+	PLAYLIST_TYPE ("x-special/device-block", totem_pl_parser_add_block, NULL, TRUE),
 #endif
 };
 
@@ -2313,11 +2334,11 @@ static PlaylistTypes dual_types[] = {
 #ifndef TOTEM_PL_PARSER_MINI
 
 static PlaylistTypes ignore_types[] = {
-	PLAYLIST_TYPE ("image/*", NULL, NULL),
-	PLAYLIST_TYPE ("text/plain", NULL, NULL),
-	PLAYLIST_TYPE ("application/x-rar", NULL, NULL),
-	PLAYLIST_TYPE ("application/zip", NULL, NULL),
-	PLAYLIST_TYPE ("application/x-trash", NULL, NULL),
+	PLAYLIST_TYPE3 ("image/*"),
+	PLAYLIST_TYPE3 ("text/plain"),
+	PLAYLIST_TYPE3 ("application/x-rar"),
+	PLAYLIST_TYPE3 ("application/zip"),
+	PLAYLIST_TYPE3 ("application/x-trash"),
 };
 
 static gboolean
@@ -2471,6 +2492,11 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 		for (i = 0; i < G_N_ELEMENTS(special_types); i++) {
 			if (strcmp (special_types[i].mimetype, mimetype) == 0) {
 				DEBUG(g_print ("URL '%s' is special type '%s'\n", url, mimetype));
+				if (parser->priv->disable_unsafe != FALSE && special_types[i].unsafe != FALSE) {
+					g_free (mimetype);
+					g_free (data);
+					return TOTEM_PL_PARSER_RESULT_IGNORED;
+				}
 				ret = (* special_types[i].func) (parser, url, data);
 				found = TRUE;
 				break;

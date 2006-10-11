@@ -1,5 +1,17 @@
 2006-10-11  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/test-parser.c: (test_parsing), (main):
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_class_init),
+	(totem_pl_parser_set_property), (totem_pl_parser_get_property),
+	(totem_pl_parser_parse_internal):
+	* src/totem-mozilla-viewer.c: (totem_embedded_push_parser):
+	Add a "disable-unsafe" property on the playlist parser, and mark
+	some mime-types as unsafe (incidentally, the same ones that are
+	disabled for the mini-version). Disable those mime-types when
+	"disable-unsafe" is used, as used in the -viewer (Closes: #361426)
+
+2006-10-11  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemPlugin.cpp: start the viewer immediately
 	when the src points to an unsupported scheme, in ::SetWindow,
 	allows playback at channeluk.com (Closes: #361212)
