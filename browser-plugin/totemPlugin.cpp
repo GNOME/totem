@@ -165,7 +165,8 @@ totemPlugin::Pause ()
 void
 totemPlugin::UnsetStream ()
 {
-	NS_ASSERTION (mStream, "UnsetStream called when we had no stream!");
+	if (!mStream)
+		return;
 
 	if (CallNPN_DestroyStreamProc (sMozillaFuncs.destroystream,
 	    			       mInstance,
