@@ -1,5 +1,14 @@
 2006-10-11  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_parse_xml_file),
+	(totem_pl_parser_add_asx), (totem_pl_parser_add_smil),
+	(totem_pl_parser_add_quicktime_metalink),
+	(totem_pl_parser_add_xspf): Use a convenience function to grab a file
+	and parse the XML file, so we can insert some XML unbreaking-fu
+	in there
+
+2006-10-11  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemGMPPlugin.cpp: add "video/x-ms-wm"
 	as a supported and advertised, to avoid error messages
 	on the mixmegapol website website as in (Closes: #350930)

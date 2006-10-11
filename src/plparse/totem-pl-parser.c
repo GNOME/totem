@@ -392,6 +392,25 @@ totem_pl_parser_read_entire_file (const char *url, int *size)
 	return contents;
 }
 
+static xmlDocPtr
+totem_pl_parser_parse_xml_file (const char *url)
+{
+	xmlDocPtr doc;
+	char *contents;
+	int size;
+
+	contents = totem_pl_parser_read_entire_file (url, &size);
+	if (contents == NULL)
+		return NULL;
+
+	doc = xmlParseMemory (contents, size);
+	if (doc == NULL)
+		doc = xmlRecoverMemory (contents, size);
+	g_free (contents);
+
+	return doc;
+}
+
 static char*
 totem_pl_parser_base_url (const char *url)
 {
@@ -1557,18 +1576,10 @@ totem_pl_parser_add_asx (TotemPlParser *parser, const char *url, gpointer data)
 {
 	xmlDocPtr doc;
 	xmlNodePtr node;
-	char *contents = NULL, *base;
-	int size;
+	char *base;
 	gboolean retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 
-	contents = totem_pl_parser_read_entire_file (url, &size);
-	if (contents == NULL)
-		return FALSE;
-
-	doc = xmlParseMemory (contents, size);
-	if (doc == NULL)
-		doc = xmlRecoverMemory (contents, size);
-	g_free (contents);
+	doc = totem_pl_parser_parse_xml_file (url);
 
 	/* If the document has no root, or no name */
 	if(!doc || !doc->children || !doc->children->name) {
@@ -1733,18 +1744,10 @@ totem_pl_parser_add_smil (TotemPlParser *parser, const char *url, gpointer data)
 {
 	xmlDocPtr doc;
 	xmlNodePtr node;
-	char *contents = NULL, *base;
-	int size;
+	char *base;
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 
-	contents = totem_pl_parser_read_entire_file (url, &size);
-	if (contents == NULL)
-		return TOTEM_PL_PARSER_RESULT_ERROR;
-
-	doc = xmlParseMemory (contents, size);
-	if (doc == NULL)
-		doc = xmlRecoverMemory (contents, size);
-	g_free (contents);
+	doc = totem_pl_parser_parse_xml_file (url);
 
 	/* If the document has no root, or no name */
 	if(!doc || !doc->children
@@ -1809,9 +1812,7 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url, 
 {
 	xmlDocPtr doc;
 	xmlNodePtr node;
-	char *contents = NULL;
 	xmlChar *src;
-	int size;
 
 	if (g_str_has_prefix (data, "RTSPtextRTSP://") != FALSE
 			|| g_str_has_prefix (data, "rtsptextrtsp://") != FALSE
@@ -1819,14 +1820,7 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url, 
 		return totem_pl_parser_add_quicktime_rtsptextrtsp (parser, url, data);
 	}
 
-	contents = totem_pl_parser_read_entire_file (url, &size);
-	if (contents == NULL)
-		return TOTEM_PL_PARSER_RESULT_ERROR;
-
-	doc = xmlParseMemory (contents, size);
-	if (doc == NULL)
-		doc = xmlRecoverMemory (contents, size);
-	g_free (contents);
+	doc = totem_pl_parser_parse_xml_file (url);
 
 	/* If the document has no root, or no name */
 	if(!doc || !doc->children
@@ -2130,18 +2124,10 @@ totem_pl_parser_add_xspf (TotemPlParser *parser, const char *url,
 {
 	xmlDocPtr doc;
 	xmlNodePtr node;
-	char *contents = NULL, *base;
-	int size;
+	char *base;
 	gboolean retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 
-	contents = totem_pl_parser_read_entire_file (url, &size);
-	if (contents == NULL)
-		return FALSE;
-
-	doc = xmlParseMemory (contents, size);
-	if (doc == NULL)
-		doc = xmlRecoverMemory (contents, size);
-	g_free (contents);
+	doc = totem_pl_parser_parse_xml_file (url);
 
 	/* If the document has no root, or no name */
 	if(!doc || !doc->children
