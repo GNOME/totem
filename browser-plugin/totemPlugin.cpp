@@ -696,6 +696,11 @@ totemPlugin::SetWindow (NPWindow *window)
 		if (mStream && mIsSupportedSrc) {
 			if (!Fork ())
 				return NPERR_GENERIC_ERROR;
+		/* If it's not a supported stream, we need
+		 * to launch now */
+		} else if (!mIsSupportedSrc) {
+			if (!Fork ())
+				return NPERR_GENERIC_ERROR;
 		} else {
 			D("waiting for data to come");
 		}
@@ -715,8 +720,10 @@ totemPlugin::NewStream (NPMIMEType type,
 	D("plugin_new_stream");
 
 	/* We already have a live stream */
-	if (mStream)
+	if (mStream) {
+		D("plugin_new_stream exiting, already have a live stream");
 		return NPERR_GENERIC_ERROR;
+	}
 
 	D("plugin_new_stream type: %s url: %s", type, mSrc);
 

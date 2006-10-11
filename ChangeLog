@@ -1,5 +1,11 @@
 2006-10-11  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemPlugin.cpp: start the viewer immediately
+	when the src points to an unsupported scheme, in ::SetWindow,
+	allows playback at channeluk.com (Closes: #361212)
+
+2006-10-11  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemGMPPlugin.cpp: add "video/x-ms-wma"
 	as a supported mime-type (Closes: #361504)
 
