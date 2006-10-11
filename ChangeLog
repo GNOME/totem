@@ -1,5 +1,11 @@
 2006-10-11  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemGMPPlugin.cpp: add "video/x-ms-wm"
+	as a supported and advertised, to avoid error messages
+	on the mixmegapol website website as in (Closes: #350930)
+
+2006-10-11  Bastien Nocera  <hadess@hadess.net>
+
 	* data/mime-type-list.txt: add application/x-quicktimeplayer
 	as a supported mime-type
 	* src/plparse/test-parser.c: (main): update the help output for
