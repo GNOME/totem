@@ -1,5 +1,18 @@
 2006-10-11  Bastien Nocera  <hadess@hadess.net>
 
+	* data/mime-type-list.txt: add application/x-quicktimeplayer
+	as a supported mime-type
+	* src/plparse/test-parser.c: (main): update the help output for
+	"disable-unsafe"
+	* src/plparse/totem-pl-parser.c:
+	(totem_pl_parser_add_quicktime_rtsptextrtsp),
+	(totem_pl_parser_add_quicktime_metalink),
+	(totem_pl_parser_is_quicktime):
+	Add a basic parser for RTSPtextRTSP quicktime reference files
+	(Closes: #302482)
+
+2006-10-11  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/test-parser.c: (test_parsing), (main):
 	* src/plparse/totem-pl-parser.c: (totem_pl_parser_class_init),
 	(totem_pl_parser_set_property), (totem_pl_parser_get_property),

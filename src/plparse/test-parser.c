@@ -254,7 +254,7 @@ int main (int argc, char **argv)
 			argv++;
 			argc--;
 		} else if (strcmp (argv[1], "--help") == 0 || strcmp (argv[1], "-h") == 0) {
-			g_print ("Usage: %s <-n | --no-recurse> <-d | --debug> <-h | --help> <-t | --data > <url>\n", argv[0]);
+			g_print ("Usage: %s <-n | --no-recurse> <-d | --debug> <-h | --help> <-t | --data > <-u | --disable-unsafe> <url>\n", argv[0]);
 			return 0;
 		} else if (strcmp (argv[1], "--data") == 0 || strcmp (argv[1], "-t") == 0) {
 			g_print ("Using data, instead of filenames\n");

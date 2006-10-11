@@ -1785,6 +1785,26 @@ totem_pl_parser_add_asf (TotemPlParser *parser, const char *url, gpointer data)
 }
 
 static TotemPlParserResult
+totem_pl_parser_add_quicktime_rtsptextrtsp (TotemPlParser *parser, const char *url, gpointer data)
+{
+	char *contents = NULL;
+	int size;
+	char **lines;
+
+	contents = totem_pl_parser_read_entire_file (url, &size);
+	if (contents == NULL)
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+
+	lines = g_strsplit (contents, "\n", 0);
+	g_free (contents);
+
+	totem_pl_parser_add_one_url (parser, lines[0] + strlen ("RTSPtext"), NULL);
+	g_strfreev (lines);
+
+	return TOTEM_PL_PARSER_RESULT_SUCCESS;
+}
+
+static TotemPlParserResult
 totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url, gpointer data)
 {
 	xmlDocPtr doc;
@@ -1792,6 +1812,12 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url, 
 	char *contents = NULL;
 	xmlChar *src;
 	int size;
+
+	if (g_str_has_prefix (data, "RTSPtextRTSP://") != FALSE
+			|| g_str_has_prefix (data, "rtsptextrtsp://") != FALSE
+			|| g_str_has_prefix (data, "RTSPtextrtsp://") != FALSE) {
+		return totem_pl_parser_add_quicktime_rtsptextrtsp (parser, url, data);
+	}
 
 	contents = totem_pl_parser_read_entire_file (url, &size);
 	if (contents == NULL)
@@ -2270,6 +2296,15 @@ totem_pl_parser_is_quicktime (const char *data, gsize len)
 	if (len > MIME_READ_CHUNK_SIZE)
 		len = MIME_READ_CHUNK_SIZE;
 
+	/* Check for RTSPtextRTSP Quicktime references */
+	if (len <= strlen ("RTSPtextRTSP://"))
+		return FALSE;
+	if (g_str_has_prefix (data, "RTSPtextRTSP://") != FALSE
+			|| g_str_has_prefix (data, "rtsptextrtsp://") != FALSE
+			|| g_str_has_prefix (data, "RTSPtextrtsp://") != FALSE) {
+		return TRUE;
+	}
+
 	/* FIXME would be nicer to have an strnstr */
 	buffer = g_memdup (data, len);
 	if (buffer == NULL) {
@@ -2329,6 +2364,7 @@ static PlaylistTypes dual_types[] = {
 	PLAYLIST_TYPE2 ("video/x-ms-wmv", totem_pl_parser_add_asf, totem_pl_parser_is_asf),
 	PLAYLIST_TYPE2 ("video/quicktime", totem_pl_parser_add_quicktime, totem_pl_parser_is_quicktime),
 	PLAYLIST_TYPE2 ("application/x-quicktime-media-link", totem_pl_parser_add_quicktime, totem_pl_parser_is_quicktime),
+	PLAYLIST_TYPE2 ("application/x-quicktimeplayer", totem_pl_parser_add_quicktime, totem_pl_parser_is_quicktime),
 };
 
 #ifndef TOTEM_PL_PARSER_MINI
