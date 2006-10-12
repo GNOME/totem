@@ -619,21 +619,39 @@ totemPlugin::Init (NPMIMEType mimetype,
 		} else if (g_ascii_strcasecmp (argn[i], "target") == 0) {
 			mTarget = g_strdup (argv[i]);
 		} else if (g_ascii_strcasecmp (argn[i], "controller") == 0) {
-			/* Quicktime parameter */
+			/* MSIE parameter */
 			if (g_ascii_strcasecmp (argv[i], "false") == 0) {
 				mControllerHidden = TRUE;
 			}
 			//FIXME see http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_CONTROLS.html
+#ifdef TOTEM_GMP_PLUGIN
+		/* uimode is either invisible, none, mini, or full
+		 * http://windowssdk.msdn.microsoft.com/en-us/library/aa392439(VS.80).aspx */
 		} else if (g_ascii_strcasecmp (argn[i], "uimode") == 0) {
-			/* Windows Media Player parameter */
 			if (g_ascii_strcasecmp (argv[i], "none") == 0) {
 				mControllerHidden = TRUE;
+			} else if (g_ascii_strcasecmp (argv[i], "invisible") == 0) {
+				mHidden = TRUE;
+			} else if (g_ascii_strcasecmp (argv[i], "mini") == 0) {
+				//FIXME hide the status bar?
 			}
+		/* ShowXXX parameters as per http://support.microsoft.com/kb/285154 */
 		} else if (g_ascii_strcasecmp (argn[i], "showcontrols") == 0) {
-			/* FIXME is this WMP or QT param? */
-			if (g_ascii_strcasecmp (argv[i], "false") == 0) {
+			if (g_ascii_strcasecmp (argv[i], "false") == 0
+					|| g_ascii_strcasecmp (argv[i], "0") == 0) {
 				mControllerHidden = TRUE;
 			}
+		} else if (g_ascii_strcasecmp (argn[i], "showdisplay") == 0) {
+			if (g_ascii_strcasecmp (argv[i], "false") == 0
+					|| g_ascii_strcasecmp (argv[i], "0") == 0) {
+				//FIXME
+			}
+		} else if (g_ascii_strcasecmp (argn[i], "showstatusbar") == 0) {
+			if (g_ascii_strcasecmp (argv[i], "false") == 0
+					|| g_ascii_strcasecmp (argv[i], "0") == 0) {
+				//FIXME
+			}
+#endif /* TOTEM_GMP_PLUGIN */
 		} else if (g_ascii_strcasecmp (argn[i], "hidden") == 0) {
 			if (g_ascii_strcasecmp (argv[i], "false") != 0) {
 				mHidden = TRUE;
