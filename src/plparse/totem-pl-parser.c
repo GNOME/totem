@@ -48,6 +48,7 @@
 #define RECURSE_LEVEL_MAX 4
 #define DIR_MIME_TYPE "x-directory/normal"
 #define BLOCK_DEVICE_TYPE "x-special/device-block"
+#define EMPTY_FILE_TYPE "application/x-zerosize"
 #define EXTINF "#EXTINF:"
 #define DEBUG(x) { if (parser->priv->debug) x; }
 
@@ -361,6 +362,12 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data, TotemPlPa
 		DEBUG(g_print ("URL '%s' couldn't be read or closed in _get_mime_type_with_data: '%s'\n", uri, gnome_vfs_result_to_string (result)));
 		g_free (buffer);
 		return NULL;
+	}
+
+	/* Empty file */
+	if (total_bytes_read == 0) {
+		DEBUG(g_print ("URL '%s' is empty in _get_mime_type_with_data\n", uri));
+		return g_strdup (EMPTY_FILE_TYPE);
 	}
 
 	/* Return the file null-terminated. */
@@ -2505,7 +2512,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 		mimetype = g_strdup (gnome_vfs_get_mime_type_for_name (url));
 	}
 
-	DEBUG(g_print ("_mime_type_from_name for '%s' returned '%s'\n", url, mimetype));
+	DEBUG(g_print ("_get_mime_type_for_name for '%s' returned '%s'\n", url, mimetype));
 	if (mimetype == NULL || strcmp (GNOME_VFS_MIME_TYPE_UNKNOWN, mimetype) == 0) {
 		mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data, parser);
 		DEBUG(g_print ("_get_mime_type_with_data for '%s' returned '%s'\n", url, mimetype ? mimetype : "NULL"));
@@ -2514,6 +2521,11 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 	if (mimetype == NULL) {
 		g_free (data);
 		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
+	}
+
+	if (strcmp (mimetype, EMPTY_FILE_TYPE) == 0) {
+		g_free (data);
+		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
 
 	if (totem_pl_parser_mimetype_is_ignored (parser, mimetype) != FALSE) {
