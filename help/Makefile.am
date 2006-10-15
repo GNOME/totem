@@ -14,6 +14,6 @@ DOC_FIGURES  = 	figures/totem_show_playlist_button.png 	\
 		figures/totem_volume_mute_button.png	\
 		figures/totem_previous_button.png
 
-DOC_LINGUAS = de es sv
+DOC_LINGUAS = de es fr sv
 
-SUBDIRS = bg fr ru uk
+SUBDIRS = bg ru uk
