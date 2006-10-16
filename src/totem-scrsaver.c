@@ -78,17 +78,13 @@ static gboolean
 screensaver_is_running_dbus (TotemScrsaver *scr)
 {
 #ifdef WITH_DBUS
-	gboolean  exists;
-
 	if (! scr->priv->connection)
 		return FALSE;
 
 	if (! scr->priv->gs_proxy)
 		return FALSE;
 
-	exists = TRUE;
-
-	return exists;
+	return TRUE;
 #else
 	return FALSE;
 #endif /* WITH_DBUS */
@@ -383,7 +379,7 @@ totem_scrsaver_disable (TotemScrsaver *scr)
 
 	scr->priv->disabled = TRUE;
 
-	if (screensaver_is_running_dbus (scr))
+	if (screensaver_is_running_dbus (scr) != FALSE)
 		screensaver_disable_dbus (scr);
 	else 
 		screensaver_disable_x11 (scr);
@@ -397,7 +393,7 @@ totem_scrsaver_enable (TotemScrsaver *scr)
 
 	scr->priv->disabled = FALSE;
 
-	if (screensaver_is_running_dbus (scr))
+	if (screensaver_is_running_dbus (scr) != FALSE)
 		screensaver_enable_dbus (scr);
 	else 
 		screensaver_enable_x11 (scr);
