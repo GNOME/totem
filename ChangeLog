@@ -1,5 +1,13 @@
 2006-10-16  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemPlugin.cpp: Prefer the filename parameter
+	to the src one, allows playback of streams at
+	http://www.ucvtv.cl/popup_online.htm (Closes: #362655), remove
+	some unneeded code as pointed out by Christian Persch
+	<chpe@cvs.gnome.org>
+
+2006-10-16  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemGMPPlugin.cpp: add "audio/x-ms-wax" as a 
 	supported mime-type, allows playback of streams at
 	http://www.tvcaraibes.com/2.html (Closes: #362676)

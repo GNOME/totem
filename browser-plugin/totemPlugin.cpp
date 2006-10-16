@@ -581,10 +581,11 @@ totemPlugin::Init (NPMIMEType mimetype,
 #ifdef TOTEM_GMP_PLUGIN
 		else if (g_ascii_strcasecmp (argn[i], "filename") == 0) {
 			/* Windows Media Player parameter */
-			if (!mSrc) {
-				mSrc = resolve_relative_uri (docURI, argv[i]);
-				need_req = TRUE;
-			}
+			g_free (mSrc);
+			mSrc = nsnull;
+			g_assert (mStream == nsnull);
+			mSrc = resolve_relative_uri (docURI, argv[i]);
+			need_req = TRUE;
 		}
 #endif /* TOTEM_GMP_PLUGIN */
 #ifdef TOTEM_NARROWSPACE_PLUGIN
@@ -593,18 +594,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 			 * http://developer.apple.com/documentation/QuickTime/QT6WhatsNew/Chap1/chapter_1_section_13.html */
 			g_free (mSrc);
 			mSrc = nsnull;
-			/* FIXME: this is unnecessary, we do not have a stream in Init() ! */
-			if (mStream) {
-				CallNPN_DestroyStreamProc
-					(sMozillaFuncs.destroystream,
-					 mInstance, mStream,
-					 NPRES_DONE);
-				/* FIXME: this should have called our DestroyStream impl which
-				 * should have set mStream to 0, assert this instead!
-				 */
-				// g_assert (mStream == nsnull);
-				mStream = nsnull;
-			}
+			g_assert (mStream == nsnull);
 			mSrc = resolve_relative_uri (docURI, argv[i]);
 			need_req = TRUE;
 		}
@@ -682,7 +672,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 	mIsSupportedSrc = IsSchemeSupported (mSrc);
 
 	/* If filename is used, we need to request the stream ourselves */
-	if (need_req == TRUE) {
+	if (need_req != FALSE) {
 		if (mIsSupportedSrc != FALSE) {
 			CallNPN_GetURLProc(sMozillaFuncs.geturl,
 					mInstance, mSrc, NULL);
