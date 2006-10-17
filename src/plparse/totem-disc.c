@@ -56,8 +56,6 @@ typedef struct _CdCache {
 
 #ifdef HAVE_HAL
   LibHalContext *ctx;
-#endif
-#ifdef HAVE_HAL_0_5
   /* If the disc is a media, have the UDI available here */
   char *disc_udi;
 #endif
@@ -245,17 +243,7 @@ cd_cache_get_dev_from_drives (GnomeVFSVolumeMonitor *mon, const char *device,
   return found;
 }
 
-#ifdef HAVE_HAL_0_2
-static LibHalContext *
-cd_cache_new_hal_ctx (void)
-{
-  LibHalContext *ctx;
-
-  ctx = hal_initialize (NULL, FALSE);
-
-  return ctx;
-}
-#elif HAVE_HAL_0_5
+#ifdef HAVE_HAL
 static LibHalContext *
 cd_cache_new_hal_ctx (void)
 {
@@ -370,7 +358,7 @@ cd_cache_has_medium (CdCache *cache)
 }
 #endif
 
-#ifdef HAVE_HAL_0_5
+#ifdef HAVE_HAL
 static gboolean
 cd_cache_has_medium (CdCache *cache)
 {
@@ -420,32 +408,6 @@ cd_cache_has_medium (CdCache *cache)
 
   if (devices != NULL)
     libhal_free_string_array (devices);
-
-  return retval;
-}
-#elif HAVE_HAL_0_2
-static gboolean
-cd_cache_has_medium (CdCache *cache)
-{
-  char **devices;
-  int num_devices;
-  char *udi;
-  gboolean retval = FALSE;
-
-  if (cache->drive == NULL)
-    return FALSE;
- 
-  udi = gnome_vfs_drive_get_hal_udi (cache->drive);
-  if (udi == NULL)
-    return FALSE;
-
-  devices = hal_manager_find_device_string_match (cache->ctx,
-      "info.parent", udi, &num_devices);
-  if (devices != NULL && num_devices >= 1)
-    retval = TRUE;
-
-  hal_free_string_array (devices);
-  g_free (udi);
 
   return retval;
 }
@@ -562,7 +524,6 @@ cd_cache_free (CdCache *cache)
 
 #ifdef HAVE_HAL
   if (cache->ctx != NULL) {
-#ifdef HAVE_HAL_0_5
     DBusConnection *conn;
 
     conn = libhal_ctx_get_dbus_connection (cache->ctx);
@@ -571,9 +532,6 @@ cd_cache_free (CdCache *cache)
     dbus_connection_unref (conn);
 
     g_free (cache->disc_udi);
-#elif HAVE_HAL_0_2
-    hal_shutdown (cache->ctx);
-#endif
   }
 #endif /* HAVE_HAL */
 
@@ -597,7 +555,7 @@ cd_cache_disc_is_cdda (CdCache *cache,
   if (!cd_cache_open_device (cache, error))
     return MEDIA_TYPE_ERROR;
 
-#ifdef HAVE_HAL_0_5
+#ifdef HAVE_HAL
   {
     DBusError error;
     dbus_bool_t is_cdda;
@@ -700,7 +658,7 @@ cd_cache_disc_is_vcd (CdCache *cache,
     return MEDIA_TYPE_ERROR;
   if (!cache->mountpoint)
     return MEDIA_TYPE_ERROR;
-#ifdef HAVE_HAL_0_5
+#ifdef HAVE_HAL
   if (cache->is_media != FALSE) {
     DBusError error;
     dbus_bool_t is_vcd;
@@ -749,7 +707,7 @@ cd_cache_disc_is_dvd (CdCache *cache,
     return MEDIA_TYPE_ERROR;
   if (!cache->mountpoint)
     return MEDIA_TYPE_ERROR;
-#ifdef HAVE_HAL_0_5
+#ifdef HAVE_HAL
   if (cache->is_media != FALSE) {
     DBusError error;
     dbus_bool_t is_dvd;

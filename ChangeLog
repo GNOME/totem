@@ -1,5 +1,14 @@
 2006-10-17  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* src/plparse/totem-disc.c: (cd_cache_has_medium), (cd_cache_free),
+	(cd_cache_disc_is_cdda), (cd_cache_disc_is_vcd),
+	(cd_cache_disc_is_dvd): remove support for HAL < 0.5, we shouldn't
+	need that anymore now that we need so recent everything else
+	(Closes: #362888)
+
+2006-10-17  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-disc.c: (cd_cache_free): Don't close the
 	(possibly shared) connection, and unref it instead. See
 	http://www.j5live.com/?p=264 for details
