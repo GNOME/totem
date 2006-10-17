@@ -1,4 +1,4 @@
-uNULL =
+NULL =
 
 BASIC_IDLS = \
 	totemIBasicPlayer.idl
