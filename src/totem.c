@@ -2876,7 +2876,7 @@ totem_callback_connect (Totem *totem)
 
 #ifdef HAVE_GTK_ONLY
 	action = gtk_action_group_get_action (totem->main_action_group, "contents");
-	gtk_action_set_visible (action, FALSE)
+	gtk_action_set_visible (action, FALSE);
 #endif /* HAVE_GTK_ONLY */
 
 	/* Controls */
