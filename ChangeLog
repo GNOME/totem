@@ -1,5 +1,11 @@
 2006-10-17  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-disc.c: (cd_cache_free): Don't close the
+        (possibly shared) connection, and unref it instead. See
+	http://www.j5live.com/?p=264 for details
+
+2006-10-17  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/idl/Makefile.am: Fix typo spotted by James
 	Livingston <jrl@ids.org.au>
 
