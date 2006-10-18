@@ -1,3 +1,21 @@
+2006-10-18  James Livingston  <doclivingston@gmail.com>
+
+	Initial Win32 porting stuff.
+
+	* configure.in:
+	* src/backend/bvw-test.c: (main):
+	* src/backend/video-utils.c:
+	* src/totem-screenshot.c: (totem_screenshot_temp_file):
+	* src/totem-video-thumbnailer.c: (main):
+	* src/totem.c: (main):
+
+	* src/totem-scrsaver.c: (screensaver_enable_x11),
+	(screensaver_disable_x11), (screensaver_init_x11),
+	(totem_scrsaver_init), (totem_scrsaver_disable),
+	(totem_scrsaver_enable), (totem_scrsaver_finalize): leave the
+	implementation of this blank on non-X11 systems, and emit a warning.
+	From #342926
+
 2006-10-17  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totemComplexPlugin.cpp: add "application/smil"

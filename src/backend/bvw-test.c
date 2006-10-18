@@ -2,7 +2,9 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include "bacon-video-widget.h"
+#ifdef GDK_WINDOWING_X11
 #include <X11/Xlib.h>
+#endif
 
 GtkWidget *win;
 GtkWidget *xine;
@@ -35,9 +37,11 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
+#ifdef GDK_WINDOWING_X11
 	XInitThreads();
-	gtk_init (&argc, &argv);
+#endif
 	g_thread_init (NULL);
+	gtk_init (&argc, &argv);
 	bacon_video_widget_init_backend (NULL, NULL);
 	gdk_threads_init ();
 

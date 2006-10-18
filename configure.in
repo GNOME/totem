@@ -271,7 +271,7 @@ EXTRA_GNOME_LIBS="$EXTRA_GNOME_LIBS $EXTRA_BACKEND_LIBS"
 AC_SUBST(EXTRA_GNOME_CFLAGS)
 AC_SUBST(EXTRA_GNOME_LIBS)
 
-PKG_CHECK_MODULES(GTK, gtk+-x11-2.0 $MM gthread-2.0)
+PKG_CHECK_MODULES(GTK, gtk+-2.0 $MM gthread-2.0)
 AC_SUBST(GTK_CFLAGS)
 GTK_LIBS="$GTK_LIBS $EXTRA_BACKEND_LIBS"
 AC_SUBST(GTK_LIBS)
@@ -587,8 +587,11 @@ if test $have_randr = yes -a $have_xvidmode = yes; then
 	AC_DEFINE(HAVE_XVIDMODE,, [Define this if you have the XVidMode and XRandR extension installed])
 fi
 
-dnl Explicitely link against libX11 to avoid problems with crappy linkers
-X_LIBS="$X_LIBRARIES -lX11"
+X_LIBS=""
+if test x$(pkg-config --variable=target gtk+-2.0) = xx11; then
+	dnl Explicitely link against libX11 to avoid problems with crappy linkers
+	X_LIBS="$X_LIBRARIES -lX11"
+fi
 AC_SUBST(X_LIBS)
 
 dnl Multimedia keys

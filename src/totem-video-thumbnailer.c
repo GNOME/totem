@@ -366,7 +366,9 @@ int main (int argc, char *argv[])
 		return -1;
 	}
 
+#ifdef G_OS_UNIX
 	nice (20);
+#endif
 
 	g_thread_init (NULL);
 #ifndef THUMB_DEBUG

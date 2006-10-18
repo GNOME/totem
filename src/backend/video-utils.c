@@ -7,8 +7,6 @@
 #include <libintl.h>
 
 #include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-#include <X11/Xlib.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>

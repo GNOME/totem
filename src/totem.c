@@ -40,11 +40,13 @@
 
 #include <string.h>
 
+#ifdef GDK_WINDOWING_X11
 /* X11 headers */
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
 #ifdef HAVE_XFREE
 #include <X11/XF86keysym.h>
+#endif
 #endif
 
 #include "bacon-video-widget.h"
@@ -3218,12 +3220,14 @@ main (int argc, char **argv)
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
+#ifdef GDK_WINDOWING_X11
 	if (XInitThreads () == 0)
 	{
 		gtk_init (&argc, &argv);
 		g_set_application_name (_("Totem Movie Player"));
 		totem_action_error_and_exit (_("Could not initialize the thread-safe libraries."), _("Verify your system installation. Totem will now exit."), NULL);
 	}
+#endif
 
 	g_thread_init (NULL);
 

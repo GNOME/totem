@@ -240,7 +240,7 @@ totem_screenshot_temp_file (TotemScreenshot *screenshot, gboolean create)
 
 		dir = g_strdup_printf ("totem-screenshot-%d", getpid ());
 		fulldir = g_build_filename (g_get_tmp_dir (), dir, NULL);
-		if (mkdir (fulldir, 0700) < 0) {
+		if (g_mkdir (fulldir, 0700) < 0) {
 			g_free (fulldir);
 			g_free (dir);
 			return;
