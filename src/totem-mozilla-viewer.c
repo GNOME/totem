@@ -882,7 +882,6 @@ int main (int argc, char **argv)
 	}
 #endif
 	
-	/* FIXME: are we really threaded? */
 	if (XInitThreads () == 0)
 	{
 		gtk_init (&argc, &argv);
@@ -898,7 +897,10 @@ int main (int argc, char **argv)
 		exit (1);
 	}
 
-        // FIXME check that necessary params were given!
+	/* FIXME: are there enough checks? */
+	if (arg_remaining == NULL) {
+		return 1;
+	}
 
 	bacon_video_widget_init_backend (NULL, NULL);
 	gnome_vfs_init ();
@@ -954,8 +956,6 @@ int main (int argc, char **argv)
 
 		emb->window = window;
 	} else {
-		if (emb->filename == NULL)
-			return 1;
 		/* Stand-alone version */
 		emb->window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	}

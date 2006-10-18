@@ -1186,7 +1186,7 @@ static TotemPlParserResult
 totem_pl_parser_add_asf_parser (TotemPlParser *parser,
 		const char *url, gpointer data)
 {
-	gboolean retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
+	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 	char *contents, *ref;
 	int size;
 
@@ -1218,7 +1218,7 @@ totem_pl_parser_add_asf_parser (TotemPlParser *parser,
 static TotemPlParserResult
 totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url, const char *contents)
 {
-	gboolean retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
+	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 	char **lines;
 	int i, num_entries;
 	char *split_char, *playlist_title;
@@ -1340,7 +1340,7 @@ bail:
 static TotemPlParserResult
 totem_pl_parser_add_pls (TotemPlParser *parser, const char *url, gpointer data)
 {
-	gboolean retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
+	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 	char *contents;
 	int size;
 
@@ -1598,7 +1598,7 @@ totem_pl_parser_add_asx (TotemPlParser *parser, const char *url, gpointer data)
 	xmlDocPtr doc;
 	xmlNodePtr node;
 	char *base;
-	gboolean retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
+	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 
 	doc = totem_pl_parser_parse_xml_file (url);
 
@@ -2146,7 +2146,7 @@ totem_pl_parser_add_xspf (TotemPlParser *parser, const char *url,
 	xmlDocPtr doc;
 	xmlNodePtr node;
 	char *base;
-	gboolean retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
+	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 
 	doc = totem_pl_parser_parse_xml_file (url);
 

@@ -279,6 +279,11 @@ totemPlugin::Fork ()
 	GError *err = NULL;
 	gboolean use_fd = FALSE;
 
+	if (mSrc == NULL) {
+		g_warning ("No URLs passed!");
+		return FALSE;
+	}
+
 	/* Make sure we don't get both an XID and hidden */
 	if (mWindow && mHidden) {
 		g_warning ("Both hidden and a window!");
@@ -579,8 +584,10 @@ totemPlugin::Init (NPMIMEType mimetype,
 			mSrc = resolve_relative_uri (docURI, argv[i]);
 		}
 #ifdef TOTEM_GMP_PLUGIN
-		else if (g_ascii_strcasecmp (argn[i], "filename") == 0) {
-			/* Windows Media Player parameter */
+		else if (g_ascii_strcasecmp (argn[i], "filename") == 0
+				|| g_ascii_strcasecmp (argn[i], "url") == 0) {
+			/* Windows Media Player parameters
+			 * http://windowssdk.msdn.microsoft.com/en-us/library/aa392440(VS.80).aspx */
 			g_free (mSrc);
 			mSrc = nsnull;
 			g_assert (mStream == nsnull);

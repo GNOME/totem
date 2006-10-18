@@ -1,3 +1,14 @@
+2006-10-18  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totemPlugin.cpp: add support for the URL parameter
+	(Closes: #362702), exit _fork if we don't have a URL
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_add_asf_parser),
+	(totem_pl_parser_add_pls_with_contents), (totem_pl_parser_add_pls),
+	(totem_pl_parser_add_asx), (totem_pl_parser_add_xspf):
+	Fix return values, they're not gbooleans
+	* src/totem-mozilla-viewer.c: (main): exit if we don't have any
+	URLs passed, even when embedded
+
 2006-10-18  James Livingston  <doclivingston@gmail.com>
 
 	Initial Win32 porting stuff.
