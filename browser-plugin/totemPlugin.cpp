@@ -502,6 +502,31 @@ resolve_relative_uri (nsIURI *docURI,
 	return g_strdup (uri);
 }
 
+#ifdef TOTEM_NARROWSPACE_PLUGIN
+static char *
+parse_url_extensions (char *href, gboolean *has_extended_url)
+{
+	char *uri, *s1, *s2;
+
+	g_return_val_if_fail (href != NULL, NULL);
+
+	*has_extended_url = FALSE;
+
+	if (href[0] != '<')
+		return g_strdup (href);
+
+	s1 = href + 1;
+	s2 = strchr (s1, '>');
+	if (s2 == NULL)
+		return g_strdup (href);
+
+	uri = g_strndup (s1, s2 - s1);
+	*has_extended_url = TRUE;
+
+	return uri;
+}
+#endif
+
 NPError
 totemPlugin::Init (NPMIMEType mimetype,
 		   uint16_t mode,
@@ -513,6 +538,11 @@ totemPlugin::Init (NPMIMEType mimetype,
 	GError *e = NULL;
 	gboolean need_req = FALSE;
 	int i;
+
+#ifdef TOTEM_NARROWSPACE_PLUGIN
+	gboolean has_extended_url = FALSE;
+	char *extended_url;
+#endif
 
 	mScriptable = new totemScriptablePlugin (this);
 	if (!mScriptable)
@@ -604,11 +634,22 @@ totemPlugin::Init (NPMIMEType mimetype,
 			g_assert (mStream == nsnull);
 			mSrc = resolve_relative_uri (docURI, argv[i]);
 			need_req = TRUE;
+		} else if (g_ascii_strcasecmp (argn[i], "href") == 0) {
+			/* New URLs extensions:
+			 * http://developer.apple.com/documentation/QuickTime/WhatsNewQT5/QT5NewChapt1/chapter_1_section_32.html
+			 * http://developer.apple.com/documentation/QuickTime/Conceptual/QTScripting_HTML/QTScripting_HTML_Document/chapter_1000_section_3.html */
+			char *href = parse_url_extensions (argv[i], &has_extended_url);
+
+			//FIXME
+			// http://developer.apple.com/documentation/QuickTime/Conceptual/QTScripting_HTML/QTScripting_HTML_Document/chapter_1000_section_3.html
+			// "Important: If you pass a relative URL in the HREF parameter, it must be relative to the currentlyloadedmovie, not relative to the current web page. If your movies are in a separate folder, specify URLs relative to the movies folder."
+			mHref = resolve_relative_uri (docURI, href);
+			g_free (href);
+			if (has_extended_url != FALSE)
+				extended_url = g_strdup (argv[i]);
 		}
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
-		else if (g_ascii_strcasecmp (argn[i], "href") == 0) {
-			mHref = resolve_relative_uri (docURI, argv[i]);
-		} else if (g_ascii_strcasecmp (argn[i], "cache") == 0) {
+		else if (g_ascii_strcasecmp (argn[i], "cache") == 0) {
 			mCache = TRUE;
 			if (g_ascii_strcasecmp (argv[i], "false") == 0) {
 				mCache = FALSE;
@@ -673,6 +714,17 @@ totemPlugin::Init (NPMIMEType mimetype,
 			//FIXME see above
 		}
 	}
+
+#ifdef TOTEM_NARROWSPACE_PLUGIN
+	/* New URLs extensions:
+	 * http://developer.apple.com/documentation/QuickTime/WhatsNewQT5/QT5NewChapt1/chapter_1_section_32.html
+	 * http://developer.apple.com/documentation/QuickTime/Conceptual/QTScripting_HTML/QTScripting_HTML_Document/chapter_1000_section_3.html */
+	if (has_extended_url != FALSE) {
+		//FIXME parse more extended_url shite
+		//it has more prio than the embed params
+		g_free (extended_url);
+	}
+#endif
 
 	NS_IF_RELEASE (docURI);
 
