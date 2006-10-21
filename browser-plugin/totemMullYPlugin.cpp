@@ -50,6 +50,7 @@ static const char kPluginDescription[] = "DivX\xC2\xAE Web Player";
 
 static const totemPluginMimeEntry kMimeTypes[] = {
 	{ "video/divx", "divx", "video/x-msvideo", FALSE },
+	{ "video/x-msvideo", "avi", NULL, TRUE }
 };
 
 totemScriptablePlugin::totemScriptablePlugin (totemPlugin *aPlugin)
