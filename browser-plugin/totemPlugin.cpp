@@ -237,6 +237,14 @@ totemPlugin::IsMimeTypeSupported (const char *mimetype, const char *url)
 	if (strcmp (mimetype, GNOME_VFS_MIME_TYPE_UNKNOWN) == 0)
 		return PR_TRUE;
 
+#if defined(TOTEM_MULLY_PLUGIN) || defined (TOTEM_GMP_PLUGIN)
+	/* We can always play those image types */
+	if (strcmp (mimetype, "image/jpeg") == 0)
+		return PR_TRUE;
+	if (strcmp (mimetype, "image/gif") == 0)
+		return PR_TRUE;
+#endif /* TOTEM_MULLY_PLUGIN || TOTEM_GMP_PLUGIN */
+
 	totemScriptablePlugin::PluginMimeTypes (&mimetypes, &count);
 
 	for (PRUint32 i = 0; i < count; ++i) {
@@ -504,16 +512,11 @@ resolve_relative_uri (nsIURI *docURI,
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
 static char *
-parse_url_extensions (char *href, gboolean *has_extended_url)
+parse_url_extensions (char *href)
 {
 	char *uri, *s1, *s2;
 
-	g_return_val_if_fail (href != NULL, NULL);
-
-	*has_extended_url = FALSE;
-
-	if (href[0] != '<')
-		return g_strdup (href);
+	g_return_val_if_fail (href != NULL || href[0] != '<', NULL);
 
 	s1 = href + 1;
 	s2 = strchr (s1, '>');
@@ -521,11 +524,46 @@ parse_url_extensions (char *href, gboolean *has_extended_url)
 		return g_strdup (href);
 
 	uri = g_strndup (s1, s2 - s1);
-	*has_extended_url = TRUE;
 
 	return uri;
 }
 #endif
+
+gboolean
+totem_parse_boolean (char *key, char *value, gboolean default_val)
+{
+	if (value == NULL || strcmp (value, "") == 0)
+		return default_val;
+	if (g_ascii_strcasecmp (value, "false") == 0
+			|| g_ascii_strcasecmp (value, "0") == 0)
+		return FALSE;
+	if (g_ascii_strcasecmp (value, "true") == 0
+			|| g_ascii_strcasecmp (value, "1") == 0)
+		return TRUE;
+
+	g_warning ("Unknown value '%s' for parameter '%s'", value, key);
+	return default_val;
+}
+
+gboolean
+totem_get_boolean_value (GHashTable *args, char *key, gboolean default_val)
+{
+	char *value;
+
+	value = (char *) g_hash_table_lookup (args, "cache");
+	if (value == NULL)
+		return default_val;
+	return totem_parse_boolean (key, value, default_val);
+}
+
+gboolean
+totem_strcase_equal (gconstpointer v1, gconstpointer v2)
+{
+	const char *string1 = (const char *) v1;
+	const char *string2 = (const char *) v2;
+	return g_ascii_strcasecmp (string1, string2) == 0;
+}
+
 
 NPError
 totemPlugin::Init (NPMIMEType mimetype,
@@ -538,11 +576,8 @@ totemPlugin::Init (NPMIMEType mimetype,
 	GError *e = NULL;
 	gboolean need_req = FALSE;
 	int i;
-
-#ifdef TOTEM_NARROWSPACE_PLUGIN
-	gboolean has_extended_url = FALSE;
-	char *extended_url;
-#endif
+	GHashTable *args;
+	char *value;
 
 	mScriptable = new totemScriptablePlugin (this);
 	if (!mScriptable)
@@ -592,140 +627,143 @@ totemPlugin::Init (NPMIMEType mimetype,
 		NS_RELEASE (webNav);
 	}
 
-#ifdef TOTEM_NARROWSPACE_PLUGIN
-	/* Set the default cache behaviour */
-	if (strcmp (mimetype, "video/quicktime") != 0) {
-		mCache = TRUE;
-	}
-#endif /* TOTEM_NARROWSPACE_PLUGIN */
-
 	/* Find the "real" mime-type */
 	mMimeType = GetRealMimeType (mimetype);
 
+	args = g_hash_table_new_full (g_str_hash, totem_strcase_equal,
+			NULL, (GDestroyNotify) g_free);
 	for (i = 0; i < argc; i++) {
 		printf ("argv[%d] %s %s\n", i, argn[i], argv[i]);
-		if (g_ascii_strcasecmp (argn[i],"width") == 0) {
-			/* FIXME! sanitize this value */
-			mWidth = strtol (argv[i], NULL, 0);
-		} else if (g_ascii_strcasecmp (argn[i], "height") == 0) {
-			/* FIXME! sanitize this value */
-			mHeight = strtol (argv[i], NULL, 0);
-		} else if (g_ascii_strcasecmp (argn[i], "src") == 0) {
-			mSrc = resolve_relative_uri (docURI, argv[i]);
-		}
-#ifdef TOTEM_GMP_PLUGIN
-		else if (g_ascii_strcasecmp (argn[i], "filename") == 0
-				|| g_ascii_strcasecmp (argn[i], "url") == 0) {
-			/* Windows Media Player parameters
-			 * http://windowssdk.msdn.microsoft.com/en-us/library/aa392440(VS.80).aspx */
-			g_free (mSrc);
-			mSrc = nsnull;
-			g_assert (mStream == nsnull);
-			mSrc = resolve_relative_uri (docURI, argv[i]);
-			need_req = TRUE;
-		}
-#endif /* TOTEM_GMP_PLUGIN */
+		g_hash_table_insert (args, argn[i], g_strdup (argv[i]));
+	}
+
+	/* The QuickTime href system, with the src video just being a link
+	 * to this video */
 #ifdef TOTEM_NARROWSPACE_PLUGIN
-		else if (g_ascii_strcasecmp (argn[i], "qtsrc") == 0) {
-			/* Quicktime parameter documented in
-			 * http://developer.apple.com/documentation/QuickTime/QT6WhatsNew/Chap1/chapter_1_section_13.html */
-			g_free (mSrc);
-			mSrc = nsnull;
-			g_assert (mStream == nsnull);
-			mSrc = resolve_relative_uri (docURI, argv[i]);
-			need_req = TRUE;
-		} else if (g_ascii_strcasecmp (argn[i], "href") == 0) {
-			/* New URLs extensions:
-			 * http://developer.apple.com/documentation/QuickTime/WhatsNewQT5/QT5NewChapt1/chapter_1_section_32.html
-			 * http://developer.apple.com/documentation/QuickTime/Conceptual/QTScripting_HTML/QTScripting_HTML_Document/chapter_1000_section_3.html */
-			char *href = parse_url_extensions (argv[i], &has_extended_url);
+	/* New URLs extensions:
+	 * http://developer.apple.com/documentation/QuickTime/WhatsNewQT5/QT5NewChapt1/chapter_1_section_32.html
+	 * http://developer.apple.com/documentation/QuickTime/Conceptual/QTScripting_HTML/QTScripting_HTML_Document/chapter_1000_section_3.html */
+
+	value = (char *) g_hash_table_lookup (args, "href");
+	if (value != NULL) {
+		if (value[0] == '<') {
+			//FIXME fill the hashtable with the new values
+			//from the extended URLs
+			char *href = parse_url_extensions (value);
 
 			//FIXME
 			// http://developer.apple.com/documentation/QuickTime/Conceptual/QTScripting_HTML/QTScripting_HTML_Document/chapter_1000_section_3.html
 			// "Important: If you pass a relative URL in the HREF parameter, it must be relative to the currentlyloadedmovie, not relative to the current web page. If your movies are in a separate folder, specify URLs relative to the movies folder."
 			mHref = resolve_relative_uri (docURI, href);
 			g_free (href);
-			if (has_extended_url != FALSE)
-				extended_url = g_strdup (argv[i]);
-		}
-#endif /* TOTEM_NARROWSPACE_PLUGIN */
-		else if (g_ascii_strcasecmp (argn[i], "cache") == 0) {
-			mCache = TRUE;
-			if (g_ascii_strcasecmp (argv[i], "false") == 0) {
-				mCache = FALSE;
-			}
-		} else if (g_ascii_strcasecmp (argn[i], "target") == 0) {
-			mTarget = g_strdup (argv[i]);
-		} else if (g_ascii_strcasecmp (argn[i], "controller") == 0) {
-			/* MSIE parameter */
-			if (g_ascii_strcasecmp (argv[i], "false") == 0) {
-				mControllerHidden = TRUE;
-			}
-			//FIXME see http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_CONTROLS.html
-#ifdef TOTEM_GMP_PLUGIN
-		/* uimode is either invisible, none, mini, or full
-		 * http://windowssdk.msdn.microsoft.com/en-us/library/aa392439(VS.80).aspx */
-		} else if (g_ascii_strcasecmp (argn[i], "uimode") == 0) {
-			if (g_ascii_strcasecmp (argv[i], "none") == 0) {
-				mControllerHidden = TRUE;
-			} else if (g_ascii_strcasecmp (argv[i], "invisible") == 0) {
-				mHidden = TRUE;
-			} else if (g_ascii_strcasecmp (argv[i], "mini") == 0) {
-				//FIXME hide the status bar?
-			}
-		/* ShowXXX parameters as per http://support.microsoft.com/kb/285154 */
-		} else if (g_ascii_strcasecmp (argn[i], "showcontrols") == 0) {
-			if (g_ascii_strcasecmp (argv[i], "false") == 0
-					|| g_ascii_strcasecmp (argv[i], "0") == 0) {
-				mControllerHidden = TRUE;
-			}
-		} else if (g_ascii_strcasecmp (argn[i], "showdisplay") == 0) {
-			if (g_ascii_strcasecmp (argv[i], "false") == 0
-					|| g_ascii_strcasecmp (argv[i], "0") == 0) {
-				//FIXME
-			}
-		} else if (g_ascii_strcasecmp (argn[i], "showstatusbar") == 0) {
-			if (g_ascii_strcasecmp (argv[i], "false") == 0
-					|| g_ascii_strcasecmp (argv[i], "0") == 0) {
-				//FIXME
-			}
-#endif /* TOTEM_GMP_PLUGIN */
-		} else if (g_ascii_strcasecmp (argn[i], "hidden") == 0) {
-			if (g_ascii_strcasecmp (argv[i], "false") != 0) {
-				mHidden = TRUE;
-			}
-		} else if (g_ascii_strcasecmp (argn[i], "autostart") == 0
-				|| g_ascii_strcasecmp (argn[i], "autoplay") == 0) {
-			if (g_ascii_strcasecmp (argv[i], "false") == 0
-					|| g_ascii_strcasecmp (argv[i], "0") == 0) {
-				mNoAutostart = TRUE;
-			}
-		} else if (g_ascii_strcasecmp (argn[i], "loop") == 0
-				|| g_ascii_strcasecmp (argn[i], "repeat") == 0) {
-			if (g_ascii_strcasecmp (argv[i], "true") == 0) {
-				mRepeat = TRUE;
-			}
-
-			// FIXME Doesn't handle playcount, or loop with numbers
-			// http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_LOOP.html
-		} else if (g_ascii_strcasecmp (argn[i], "starttime") == 0) {
-			//FIXME see http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_STARTTIME.html
-		} else if (g_ascii_strcasecmp (argn[i], "endtime") == 0) {
+		} else {
 			//FIXME see above
+			mHref = resolve_relative_uri (docURI, value);
 		}
+	}
+#endif /* TOTEM_NARROWSPACE_PLUGIN */
+
+	value = (char *) g_hash_table_lookup (args, "width");
+	if (value != NULL) {
+		/* FIXME! sanitize this value */
+		mWidth = strtol (value, NULL, 0);
+	}
+
+	value = (char *) g_hash_table_lookup (args, "height");
+	if (value != NULL) {
+		/* FIXME! sanitize this value */
+		mHeight = strtol (value, NULL, 0);
+	}
+
+	//FIXME get the base URL here
+
+	value = (char *) g_hash_table_lookup (args, "src");
+	if (value != NULL)
+		mSrc = resolve_relative_uri (docURI, value);
+
+	/* Those parameters might replace the current src */
+#ifdef TOTEM_GMP_PLUGIN
+	/* http://windowssdk.msdn.microsoft.com/en-us/library/aa392440(VS.80).aspx */
+	value = (char *) g_hash_table_lookup (args, "filename");
+	if (value == NULL)
+		value = (char *) g_hash_table_lookup (args, "url");
+#elif TOTEM_NARROWSPACE_PLUGIN
+	/* http://developer.apple.com/documentation/QuickTime/QT6WhatsNew/Chap1/chapter_1_section_13.html */
+	value = (char *) g_hash_table_lookup (args, "qtsrc");
+#elif TOTEM_MULLY_PLUGIN
+	/* Click to play behaviour of the DivX plugin */
+	value = (char *) g_hash_table_lookup (args, "previewimage");
+	if (value != NULL)
+		mHref = g_strdup (mSrc);
+#else
+	value = NULL;
+#endif
+	if (value != NULL) {
+		g_free (mSrc);
+		mSrc = resolve_relative_uri (docURI, value);
+		need_req = TRUE;
 	}
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
-	/* New URLs extensions:
-	 * http://developer.apple.com/documentation/QuickTime/WhatsNewQT5/QT5NewChapt1/chapter_1_section_32.html
-	 * http://developer.apple.com/documentation/QuickTime/Conceptual/QTScripting_HTML/QTScripting_HTML_Document/chapter_1000_section_3.html */
-	if (has_extended_url != FALSE) {
-		//FIXME parse more extended_url shite
-		//it has more prio than the embed params
-		g_free (extended_url);
-	}
-#endif
+	/* Caching behaviour */
+	mCache = totem_get_boolean_value (args, "cache", FALSE);
+	/* Target */
+	value = (char *) g_hash_table_lookup (args, "target");
+	if (value != NULL)
+		mTarget = g_strdup (value);
+#endif /* TOTEM_NARROWSPACE_PLUGIN */
 
+	/* Whether the controls are all hidden, MSIE parameter
+	 * http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_CONTROLLER.html */
+	mControllerHidden = totem_get_boolean_value (args, "controller", FALSE);
+
+	//FIXME add Netscape controls support
+	// http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_CONTROLS.html
+
+	/* Are we hidden? */
+	mHidden = totem_get_boolean_value (args, "hidden", FALSE);
+
+#ifdef TOTEM_GMP_PLUGIN
+	/* uimode is either invisible, none, mini, or full
+	 * http://windowssdk.msdn.microsoft.com/en-us/library/aa392439(VS.80).aspx */
+	value = (char *) g_hash_table_lookup (args, "uimode");
+	if (value != NULL) {
+		if (g_ascii_strcasecmp (value, "none") == 0)
+			mControllerHidden = TRUE;
+		else if (g_ascii_strcasecmp (value, "invisible") == 0)
+			mHidden = TRUE;
+		else if (g_ascii_strcasecmp (value, "mini") == 0)
+			//FIXME hide the status bar?
+			;
+	}
+	/* ShowXXX parameters as per http://support.microsoft.com/kb/285154 */
+	mControllerHidden = totem_get_boolean_value (args, "showcontrols", FALSE);
+	//FIXME add showdisplay and showstatusbar
+#endif /* TOTEM_GMP_PLUGIN */
+
+	/* Whether to NOT autostart */
+	//FIXME Doesn't handle playcount, or loop with numbers
+	// http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_LOOP.html
+	mNoAutostart = totem_get_boolean_value (args, "autostart", FALSE);
+	mNoAutostart = totem_get_boolean_value (args, "autoplay", mNoAutostart);
+
+	/* Whether to loop */
+	mRepeat = totem_get_boolean_value (args, "loop", FALSE);
+	mRepeat = totem_get_boolean_value (args, "repeat", mRepeat);
+
+	g_message ("mSrc: %s", mSrc);
+	g_message ("mHref: %s", mHref);
+	g_message ("mHeight: %d mWidth: %d", mHeight, mWidth);
+	g_message ("mCache: %d", mCache);
+	g_message ("mTarget: %s", mTarget);
+	g_message ("mControllerHidden: %d", mControllerHidden);
+	g_message ("mHidden: %d", mHidden);
+	g_message ("mNoAutostart: %d mRepeat: %d", mNoAutostart, mRepeat);
+
+	//FIXME handle starttime and endtime
+	// http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_STARTTIME.html
+
+	g_hash_table_destroy (args);
 	NS_IF_RELEASE (docURI);
 
 	mIsSupportedSrc = IsSchemeSupported (mSrc);
