@@ -1,5 +1,27 @@
 New features and significant updates in version...
 
+2.17.1
+* Add a new video indexer for use by Beagle
+* Some Win32 compilation fixes
+* Browser plugin:
+  - Add support for a lot of mime-types that were barred from
+  use following 2.17.0 changes
+  - Fix parsing some longer playlists
+  - Don't crash when printing a page with a plugin
+  - Fix playback of non-browser supported schemes
+  - Prefer the filename parameter to the src one
+  - Add basic QuickTime URL extensions support
+* Playlist parser:
+  - Add basic RTSPtext support
+  - Better support for Real playlists on web servers
+  - Disable unsafe items to be parsed from the playlist
+  - Try harder to sanitise XML files before parsing them
+  - Fix parsing of empty files
+  - Fix some old D-Bus usage
+  - Remove HAL < 0.5 support
+* Make Totem the only application that fully implements session saving
+* Resize the window properly when showing/hiding the controls
+
 2.17.0
 * Updated documentation
 * Use new GtkRecentManager as the rest of GNOME 2.16
