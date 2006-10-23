@@ -49,6 +49,7 @@
 #define DIR_MIME_TYPE "x-directory/normal"
 #define BLOCK_DEVICE_TYPE "x-special/device-block"
 #define EMPTY_FILE_TYPE "application/x-zerosize"
+#define TEXT_URI_TYPE "text/uri-list"
 #define EXTINF "#EXTINF:"
 #define DEBUG(x) { if (parser->priv->debug) x; }
 
@@ -69,7 +70,7 @@ typedef struct {
 #endif
 } PlaylistTypes;
 
-static gboolean totem_pl_parser_is_ra (const char *data, gsize len);
+static gboolean totem_pl_parser_is_uri_list (const char *data, gsize len);
 static gboolean totem_pl_parser_is_asf (const char *data, gsize len);
 static gboolean totem_pl_parser_is_quicktime (const char *data, gsize len);
 
@@ -284,13 +285,12 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data, TotemPlPa
 {
 	GnomeVFSResult result;
 	GnomeVFSHandle *handle;
-	char *buffer, *server_mimetype;
+	char *buffer;
 	const char *mimetype;
 	GnomeVFSFileSize total_bytes_read;
 	GnomeVFSFileSize bytes_read;
 
 	*data = NULL;
-	server_mimetype = NULL;
 
 	/* Stat for a block device, we're screwed as far as speed
 	 * is concerned now */
@@ -311,19 +311,6 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data, TotemPlPa
 		return NULL;
 	}
 	DEBUG(g_print ("URL '%s' was opened successfully in _get_mime_type_with_data:\n", uri));
-
-	/* Try to get a mime-type, from the server itself */
-	if (g_str_has_prefix (uri, "http://") != FALSE) {
-		GnomeVFSResult res;
-		GnomeVFSFileInfo *info;
-		info = gnome_vfs_file_info_new ();
-		res = gnome_vfs_get_file_info_from_handle (handle,
-				info, GNOME_VFS_FILE_INFO_GET_MIME_TYPE);
-		if (res == GNOME_VFS_OK)
-			server_mimetype = g_strdup (info->mime_type);
-		gnome_vfs_file_info_unref (info);
-	}
-
 
 	/* Read the whole thing, up to MIME_READ_CHUNK_SIZE */
 	buffer = NULL;
@@ -377,10 +364,10 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data, TotemPlPa
 
 	mimetype = gnome_vfs_get_mime_type_for_data (*data, total_bytes_read);
 
-	if (server_mimetype != NULL && strcmp (mimetype, "text/plain") == 0) {
-		return server_mimetype;
+	if (mimetype != NULL && strcmp (mimetype, "text/plain") == 0) {
+		if (totem_pl_parser_is_uri_list (*data, total_bytes_read) != FALSE)
+			return g_strdup (TEXT_URI_TYPE);
 	}
-	g_free (server_mimetype);
 
 	return g_strdup (mimetype);
 }
@@ -1600,6 +1587,10 @@ totem_pl_parser_add_asx (TotemPlParser *parser, const char *url, gpointer data)
 	char *base;
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 
+	if (data != NULL && totem_pl_parser_is_uri_list (data, strlen (data)) != FALSE) {
+		return totem_pl_parser_add_ram (parser, url, data);
+	}
+
 	doc = totem_pl_parser_parse_xml_file (url);
 
 	/* If the document has no root, or no name */
@@ -1643,7 +1634,7 @@ totem_pl_parser_add_block (TotemPlParser *parser, const char *url, gpointer data
 static TotemPlParserResult
 totem_pl_parser_add_ra (TotemPlParser *parser, const char *url, gpointer data)
 {
-	if (data == NULL || totem_pl_parser_is_ra (data, strlen (data)) == FALSE) {
+	if (data == NULL || totem_pl_parser_is_uri_list (data, strlen (data)) == FALSE) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
@@ -2235,29 +2226,45 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 
 #endif /* !TOTEM_PL_PARSER_MINI */
 
-static gboolean
-totem_pl_parser_is_ra (const char *data, gsize len)
-{
-	guint i;
-	const char *buf;
+#define CHECK_LEN if (i >= len) { return FALSE; }
 
-	/* pnm is the smallest, 6 chars */
-	if (len < 7)
+static gboolean
+totem_pl_parser_is_uri_list (const char *data, gsize len)
+{
+	guint i = 0;
+
+	/* Find the first bits of text */
+	while (data[i] == '\n' || data[i] == '\t' || data[i] == ' ') {
+		i++;
+		CHECK_LEN;
+	}
+	CHECK_LEN;
+
+	/* scheme always starts with a letter */
+	if (g_ascii_isalpha (data[i]) == FALSE)
+		return FALSE;
+	while (g_ascii_isalnum (data[i]) != FALSE) {
+		i++;
+		CHECK_LEN;
+	}
+
+	CHECK_LEN;
+
+	/* First non-alphanum character should be a ':' */
+	if (data[i] != ':')
+		return FALSE;
+	i++;
+	CHECK_LEN;
+
+	if (data[i] != '/')
+		return FALSE;
+	i++;
+	CHECK_LEN;
+
+	if (data[i] != '/')
 		return FALSE;
 
-	/* Start ignoring the spaces and such */
-	for (i = 0; i < len; i++) {
-		if (data[i] != '\n' && data[i] != '\t' && data[i] != ' ')
-			break;
-	}
-	buf = data + i;
-
-	if (g_str_has_prefix (buf, "http://") != FALSE
-			|| g_str_has_prefix (buf, "rtsp://") != FALSE
-			|| g_str_has_prefix (buf, "pnm://") != FALSE) {
-		return TRUE;
-	}
-	return FALSE;
+	return TRUE;
 }
 
 static gboolean
@@ -2341,13 +2348,13 @@ totem_pl_parser_is_quicktime (const char *data, gsize len)
 static PlaylistTypes special_types[] = {
 	PLAYLIST_TYPE ("audio/x-mpegurl", totem_pl_parser_add_m3u, NULL, FALSE),
 	PLAYLIST_TYPE ("audio/playlist", totem_pl_parser_add_m3u, NULL, FALSE),
-	PLAYLIST_TYPE ("audio/x-ms-asx", totem_pl_parser_add_asx, NULL, FALSE),
 	PLAYLIST_TYPE ("audio/x-scpls", totem_pl_parser_add_pls, NULL, FALSE),
 	PLAYLIST_TYPE ("application/x-smil", totem_pl_parser_add_smil, NULL, FALSE),
 	PLAYLIST_TYPE ("application/smil", totem_pl_parser_add_smil, NULL, FALSE),
 	PLAYLIST_TYPE ("video/x-ms-wvx", totem_pl_parser_add_asx, NULL, FALSE),
 	PLAYLIST_TYPE ("audio/x-ms-wax", totem_pl_parser_add_asx, NULL, FALSE),
 	PLAYLIST_TYPE ("application/xspf+xml", totem_pl_parser_add_xspf, NULL, FALSE),
+	PLAYLIST_TYPE ("text/uri-list", totem_pl_parser_add_ra, totem_pl_parser_is_uri_list, FALSE),
 #ifndef TOTEM_PL_PARSER_MINI
 	PLAYLIST_TYPE ("application/x-desktop", totem_pl_parser_add_desktop, NULL, TRUE),
 	PLAYLIST_TYPE ("application/x-gnome-app-info", totem_pl_parser_add_desktop, NULL, TRUE),
@@ -2360,13 +2367,14 @@ static PlaylistTypes special_types[] = {
 
 /* These ones are "dual" types, might be a video, might be a parser */
 static PlaylistTypes dual_types[] = {
-	PLAYLIST_TYPE2 ("audio/x-real-audio", totem_pl_parser_add_ra, totem_pl_parser_is_ra),
-	PLAYLIST_TYPE2 ("audio/x-pn-realaudio", totem_pl_parser_add_ra, totem_pl_parser_is_ra),
-	PLAYLIST_TYPE2 ("application/vnd.rn-realmedia", totem_pl_parser_add_ra, totem_pl_parser_is_ra),
-	PLAYLIST_TYPE2 ("audio/x-pn-realaudio-plugin", totem_pl_parser_add_ra, totem_pl_parser_is_ra),
-	PLAYLIST_TYPE2 ("audio/vnd.rn-realaudio", totem_pl_parser_add_ra, totem_pl_parser_is_ra),
-	PLAYLIST_TYPE2 ("audio/x-realaudio", totem_pl_parser_add_ra, totem_pl_parser_is_ra),
-	PLAYLIST_TYPE2 ("text/plain", totem_pl_parser_add_ra, totem_pl_parser_is_ra),
+	PLAYLIST_TYPE2 ("audio/x-real-audio", totem_pl_parser_add_ra, totem_pl_parser_is_uri_list),
+	PLAYLIST_TYPE2 ("audio/x-pn-realaudio", totem_pl_parser_add_ra, totem_pl_parser_is_uri_list),
+	PLAYLIST_TYPE2 ("application/vnd.rn-realmedia", totem_pl_parser_add_ra, totem_pl_parser_is_uri_list),
+	PLAYLIST_TYPE2 ("audio/x-pn-realaudio-plugin", totem_pl_parser_add_ra, totem_pl_parser_is_uri_list),
+	PLAYLIST_TYPE2 ("audio/vnd.rn-realaudio", totem_pl_parser_add_ra, totem_pl_parser_is_uri_list),
+	PLAYLIST_TYPE2 ("audio/x-realaudio", totem_pl_parser_add_ra, totem_pl_parser_is_uri_list),
+	PLAYLIST_TYPE2 ("text/plain", totem_pl_parser_add_ra, totem_pl_parser_is_uri_list),
+	PLAYLIST_TYPE ("audio/x-ms-asx", totem_pl_parser_add_asx, NULL, FALSE),
 	PLAYLIST_TYPE2 ("video/x-ms-asf", totem_pl_parser_add_asf, totem_pl_parser_is_asf),
 	PLAYLIST_TYPE2 ("video/x-ms-wmv", totem_pl_parser_add_asf, totem_pl_parser_is_asf),
 	PLAYLIST_TYPE2 ("video/quicktime", totem_pl_parser_add_quicktime, totem_pl_parser_is_quicktime),

@@ -65,7 +65,7 @@ entry_added (TotemPlParser *parser, const char *uri, const char *title,
 		const char *genre, gpointer data)
 {
 	g_print ("added URI '%s' with title '%s' genre '%s'\n", uri,
-			title ? title : "empty", genre);
+			title ? title : "empty", genre ? genre : "empty");
 }
 
 static void

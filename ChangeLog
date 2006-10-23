@@ -1,5 +1,15 @@
 2006-10-23  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/test-parser.c: (entry_added): fix printing an empty genre
+	* src/plparse/totem-pl-parser.c:
+	(my_gnome_vfs_get_mime_type_with_data), (totem_pl_parser_add_asx),
+	(totem_pl_parser_add_ra), (totem_pl_parser_is_uri_list): add a better
+	text/uri-list detector for "plain text" playlists, and try to check
+	whether we have a text/uri-list before parsing would-be-ASX playlists
+	(Closes: #362622)
+
+2006-10-23  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemPlugin.cpp: Fix parsing of all in caps parameters,
 	fix thinko that completely broke boolean parsing, fix other thinko that
 	made made mNoAutostart have the opposite value to what it should
