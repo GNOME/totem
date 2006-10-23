@@ -707,7 +707,9 @@ totemPlugin::Init (NPMIMEType mimetype,
 
 	/* Whether the controls are all hidden, MSIE parameter
 	 * http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_CONTROLLER.html */
-	mControllerHidden = totem_get_boolean_value (args, "controller", FALSE);
+	gboolean controller;
+	controller = totem_get_boolean_value (args, "controller", TRUE);
+	mControllerHidden = (controller == FALSE);
 
 	//FIXME add Netscape controls support
 	// http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_CONTROLS.html

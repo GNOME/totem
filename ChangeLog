@@ -1,5 +1,13 @@
 2006-10-23  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemPlugin.cpp: fix the same thinko as below for
+	mNoAutostart, but with mControllerHidden
+	* data/mime-type-list.txt: add image/x-pict as a support mime-type, it's
+	used to masquerade some movies, as per Apple's instructions
+	(Closes: #363182)
+
+2006-10-23  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/test-parser.c: (entry_added): fix printing an empty genre
 	* src/plparse/totem-pl-parser.c:
 	(my_gnome_vfs_get_mime_type_with_data), (totem_pl_parser_add_asx),
