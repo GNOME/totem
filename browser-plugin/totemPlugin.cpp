@@ -313,8 +313,8 @@ totemPlugin::Fork ()
 			g_strdup (LIBEXECDIR"/totem-mozilla-viewer"));
 #endif
 
-	/* For the RealAudio streams */
-	/* FIXME: shouldn't this be #ifdef TOTEM_COMPLEX_PLUGIN then? */
+	/* Most for RealAudio streams, but also used as a replacement for
+	 * HIDDEN=TRUE */
 	if (mWidth == 0 && mHeight == 0) {
 		mWindow = 0;
 		mHidden = TRUE;
@@ -550,20 +550,11 @@ totem_get_boolean_value (GHashTable *args, char *key, gboolean default_val)
 {
 	char *value;
 
-	value = (char *) g_hash_table_lookup (args, "cache");
+	value = (char *) g_hash_table_lookup (args, key);
 	if (value == NULL)
 		return default_val;
 	return totem_parse_boolean (key, value, default_val);
 }
-
-gboolean
-totem_strcase_equal (gconstpointer v1, gconstpointer v2)
-{
-	const char *string1 = (const char *) v1;
-	const char *string2 = (const char *) v2;
-	return g_ascii_strcasecmp (string1, string2) == 0;
-}
-
 
 NPError
 totemPlugin::Init (NPMIMEType mimetype,
@@ -630,11 +621,12 @@ totemPlugin::Init (NPMIMEType mimetype,
 	/* Find the "real" mime-type */
 	mMimeType = GetRealMimeType (mimetype);
 
-	args = g_hash_table_new_full (g_str_hash, totem_strcase_equal,
-			NULL, (GDestroyNotify) g_free);
+	args = g_hash_table_new_full (g_str_hash, g_str_equal,
+			(GDestroyNotify) g_free, (GDestroyNotify) g_free);
 	for (i = 0; i < argc; i++) {
 		printf ("argv[%d] %s %s\n", i, argn[i], argv[i]);
-		g_hash_table_insert (args, argn[i], g_strdup (argv[i]));
+		g_hash_table_insert (args, g_ascii_strdown (argn[i], -1),
+				g_strdup (argv[i]));
 	}
 
 	/* The QuickTime href system, with the src video just being a link
@@ -744,8 +736,10 @@ totemPlugin::Init (NPMIMEType mimetype,
 	/* Whether to NOT autostart */
 	//FIXME Doesn't handle playcount, or loop with numbers
 	// http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_LOOP.html
-	mNoAutostart = totem_get_boolean_value (args, "autostart", FALSE);
-	mNoAutostart = totem_get_boolean_value (args, "autoplay", mNoAutostart);
+	gboolean autostart;
+	autostart = totem_get_boolean_value (args, "autostart", TRUE);
+	autostart = totem_get_boolean_value (args, "autoplay", autostart);
+	mNoAutostart = (autostart == FALSE);
 
 	/* Whether to loop */
 	mRepeat = totem_get_boolean_value (args, "loop", FALSE);
