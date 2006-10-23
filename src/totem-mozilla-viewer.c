@@ -252,7 +252,7 @@ totem_embedded_open (TotemEmbedded *emb)
 		totem_embedded_set_pp_state (emb, TRUE);
 	}
 
-	if (retval == FALSE || IS_FD_STREAM) {
+	if (IS_FD_STREAM && emb->num_items > 1) {
 		totem_embedded_set_menu (emb, FALSE);
 	} else {
 		totem_embedded_set_menu (emb, TRUE);
@@ -319,7 +319,14 @@ totem_embedded_set_menu (TotemEmbedded *emb, gboolean enable)
 	if (enable == FALSE)
 		return;
 
-	emb->app = gnome_vfs_mime_get_default_application_for_uri (emb->filename, emb->mimetype);
+	if (IS_FD_STREAM) {
+		emb->app = gnome_vfs_mime_get_default_application_for_uri
+			(emb->orig_filename, emb->mimetype);
+	} else {
+		emb->app = gnome_vfs_mime_get_default_application_for_uri
+			(emb->filename, emb->mimetype);
+	}
+
 	if (emb->app == NULL)
 		return;
 
@@ -405,14 +412,23 @@ static void
 on_copy_location1_activate (GtkButton *button, TotemEmbedded *emb)
 {
 	GtkClipboard *clip;
+	const char *filename;
+
+	if (IS_FD_STREAM) {
+		filename = emb->orig_filename;
+	} else if (emb->href != NULL) {
+		filename = emb->href;
+	} else {
+		filename = emb->filename;
+	}
 
 	/* Set both the middle-click and the super-paste buffers */
 	clip = gtk_clipboard_get_for_display
 		(gdk_display_get_default(), GDK_SELECTION_CLIPBOARD);
-	gtk_clipboard_set_text (clip, emb->filename, -1);
+	gtk_clipboard_set_text (clip, filename, -1);
 	clip = gtk_clipboard_get_for_display
 		(gdk_display_get_default(), GDK_SELECTION_PRIMARY);
-	gtk_clipboard_set_text (clip, emb->filename, -1);
+	gtk_clipboard_set_text (clip, filename, -1);
 }
 
 static void
