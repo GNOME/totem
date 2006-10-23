@@ -155,22 +155,6 @@ get_real_mimetype (const char *mimetype)
 }
 
 static gboolean
-is_mimetype_supported (const char *mimetype)
-{
-	const totemPluginMimeEntry *mimetypes;
-	PRUint32 count;
-
-	totemScriptablePlugin::PluginMimeTypes (&mimetypes, &count);
-
-	for (PRUint32 i = 0; i < count; ++i) {
-		if (strcmp (mimetypes[i].mimetype, mimetype) == 0)
-			return TRUE;
-	}
-
-	return FALSE;
-}
-
-static gboolean
 is_supported_scheme (const char *url)
 {
 	if (url == NULL)
@@ -672,11 +656,6 @@ totem_plugin_new_stream (NPP instance,
 
 	D("plugin_new_stream type: %s url: %s", type, plugin->src);
 
-	if (is_mimetype_supported (type) == FALSE) {
-		 D("plugin_new_stream type: %s is not supported\n", type);
-		return NPERR_INVALID_PLUGIN_ERROR;
-	}
-
 	//FIXME need to find better semantics?
 	//what about saving the state, do we get confused?
 	if (g_str_has_prefix (plugin->src, "file://")) {
@@ -755,6 +734,11 @@ static int32 totem_plugin_write (NPP instance, NPStream *stream, int32 offset,
 	totemPlugin *plugin = (totemPlugin *) instance->pdata;
 	if (plugin == NULL)
 		return -1;
+
+	/* We already know it's a playlist, don't try to check it again
+	 * and just wait for it to be on-disk */
+	if (plugin->is_playlist != FALSE)
+		return len;
 
 	if (!plugin->player_pid) {
 		if (!plugin->stream) {

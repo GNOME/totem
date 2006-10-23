@@ -1,3 +1,16 @@
+2006-10-23  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totemPlugin.cpp: return immediately in _rite if
+	we already have a playlist, as we need to wait for it to be on-disk
+	(Closes: #360592)
+
+2006-10-23  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totemPlugin.cpp: remove is_mimetype_supported call,
+	it was to work-around the broken server in bug #355881, for which
+	the work isn't finished anyway. Same code is still on HEAD
+	(Closes: #364307)
+
 2006-10-17  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/totem-disc.c: (cd_cache_free): Don't close the
