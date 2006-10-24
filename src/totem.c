@@ -2355,15 +2355,14 @@ totem_action_handle_key_release (Totem *totem, GdkEventKey *event)
 {
 	gboolean retval = TRUE;
 
-	/* Alphabetical */
 	switch (event->keyval) {
 	case GDK_Left:
 	case GDK_Right:
-		totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), FALSE);
-		if (bacon_video_widget_can_direct_seek (totem->bvw)) {
-			if (totem->was_playing) {
+		totem_statusbar_set_seeking
+			(TOTEM_STATUSBAR (totem->statusbar), FALSE);
+		if (bacon_video_widget_can_direct_seek (totem->bvw) != FALSE) {
+			if (totem->was_playing != FALSE)
 				bacon_video_widget_play (totem->bvw, NULL);
-			}
 			totem->seek_in_progress = FALSE;
 		}
 		break;
@@ -2375,9 +2374,15 @@ totem_action_handle_key_release (Totem *totem, GdkEventKey *event)
 static gboolean
 totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 {
-	gboolean retval = TRUE;
+	gboolean retval = TRUE, playlist_focused = FALSE;
+	GtkWidget *focused;
 
-	/* Alphabetical */
+	focused = gtk_window_get_focus (GTK_WINDOW (totem->win));
+	if (focused != NULL && gtk_widget_is_ancestor
+			(focused, GTK_WIDGET (totem->playlist)) != FALSE) {
+		playlist_focused = TRUE;
+	}
+
 	switch (event->keyval) {
 	case GDK_A:
 	case GDK_a:
@@ -2485,6 +2490,9 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 			totem_action_fullscreen (totem, FALSE);
 		break;
 	case GDK_Left:
+		if (playlist_focused != FALSE)
+			return FALSE;
+
 		totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), TRUE);
 		if (bacon_video_widget_can_direct_seek (totem->bvw)) {
 			if (!totem->seek_in_progress) {
@@ -2506,6 +2514,9 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		}
 		break;
 	case GDK_Right:
+		if (playlist_focused != FALSE)
+			return FALSE;
+
 		totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), TRUE);
 		if (bacon_video_widget_can_direct_seek (totem->bvw)) {
 			if (!totem->seek_in_progress) {
@@ -2533,9 +2544,13 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 			retval = FALSE;
 		break;
 	case GDK_Up:
+		if (playlist_focused != FALSE)
+			return FALSE;
 		totem_action_volume_relative (totem, VOLUME_UP_OFFSET);
 		break;
 	case GDK_Down:
+		if (playlist_focused != FALSE)
+			return FALSE;
 		totem_action_volume_relative (totem, VOLUME_DOWN_OFFSET);
 		break;
 	case GDK_0:
@@ -2555,18 +2570,15 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		totem_action_set_scale_ratio (totem, 2);
 		break;
 	case GDK_Menu:
+		if (playlist_focused != FALSE)
+			return FALSE;
+		totem_action_menu_popup (totem, 0);
+		break;
 	case GDK_F10:
-		/* Chain up if the playlist has the focuse */
-		{
-			GtkWidget *focused;
-
-			if (event->keyval != GDK_Menu && !(event->state & GDK_SHIFT_MASK))
-				return FALSE;
-
-			focused = gtk_window_get_focus (GTK_WINDOW (totem->win));
-			if (focused != NULL && gtk_widget_is_ancestor (focused, GTK_WIDGET (totem->playlist)) != FALSE)
-				return FALSE;
-		}
+		if (playlist_focused != FALSE)
+			return FALSE;
+		if (!(event->state & GDK_SHIFT_MASK))
+			return FALSE;
 
 		totem_action_menu_popup (totem, 0);
 		break;
