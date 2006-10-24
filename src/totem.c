@@ -268,6 +268,7 @@ play_pause_set_label (Totem *totem, TotemStates state)
 {
 	GtkAction *action;
 	const char *id, *tip;
+	GSList *l, *proxies;
 
 	if (state == totem->state)
 		return;
@@ -302,6 +303,12 @@ play_pause_set_label (Totem *totem, TotemStates state)
 	g_object_set (G_OBJECT (action),
 			"tooltip", _(tip),
 			"stock-id", id, NULL);
+
+	proxies = gtk_action_get_proxies (action);
+	for (l = proxies; l != NULL; l = l->next) {
+		atk_object_set_name (gtk_widget_get_accessible (l->data),
+				_(tip));
+	}
 
 	totem->state = state;
 }
@@ -2896,16 +2903,24 @@ totem_callback_connect (Totem *totem)
 	/* Controls */
 	box = glade_xml_get_widget (totem->xml, "tmw_buttons_hbox");
 
-	action = gtk_action_group_get_action (totem->main_action_group, "previous-chapter");
+	action = gtk_action_group_get_action (totem->main_action_group,
+			"previous-chapter");
 	item = gtk_action_create_tool_item (action);
+	atk_object_set_name (gtk_widget_get_accessible (item),
+			_("Previous Chapter/Movie"));
 	gtk_box_pack_start (GTK_BOX (box), item, FALSE, FALSE, 0);
 
 	action = gtk_action_group_get_action (totem->main_action_group, "play");
 	item = gtk_action_create_tool_item (action);
+	atk_object_set_name (gtk_widget_get_accessible (item),
+			_("Play / Pause"));
 	gtk_box_pack_start (GTK_BOX (box), item, FALSE, FALSE, 0);
 
-	action = gtk_action_group_get_action (totem->main_action_group, "next-chapter");
+	action = gtk_action_group_get_action (totem->main_action_group,
+			"next-chapter");
 	item = gtk_action_create_tool_item (action);
+	atk_object_set_name (gtk_widget_get_accessible (item),
+			_("Next Chapter/Movie"));
 	gtk_box_pack_start (GTK_BOX (box), item, FALSE, FALSE, 0);
 
 	/* Sidebar button (Drag'n'Drop) */
