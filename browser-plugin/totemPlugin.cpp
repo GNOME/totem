@@ -735,6 +735,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 	if (mControllerHidden == FALSE)
 		mControllerHidden = (controller == FALSE);
 	//FIXME add showdisplay and showstatusbar
+	// see http://msdn.microsoft.com/library/default.asp?url=/library/en-us/wmp6sdk/htm/userinterfaceelements.asp
 #endif /* TOTEM_GMP_PLUGIN */
 
 	/* Whether to NOT autostart */

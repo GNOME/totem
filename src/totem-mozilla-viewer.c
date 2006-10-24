@@ -200,7 +200,7 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 	}
 
 	image = glade_xml_get_widget (emb->xml, "emb_pp_button_image");
-	gtk_image_set_from_stock (GTK_IMAGE (image), id, GTK_ICON_SIZE_MENU);
+	gtk_image_set_from_icon_name (GTK_IMAGE (image), id, GTK_ICON_SIZE_MENU);
 	if (emb->hidden == FALSE && cursor)
 		gdk_window_set_cursor (GTK_WIDGET (emb->bvw)->window, cursor);
 
@@ -824,7 +824,7 @@ totem_volume_create (void)
 {
 	GtkWidget *widget;
 
-	widget = bacon_volume_button_new (GTK_ICON_SIZE_SMALL_TOOLBAR,
+	widget = bacon_volume_button_new (GTK_ICON_SIZE_MENU,
 					  0, 100, -1);
 	gtk_widget_show (widget);
 
@@ -838,7 +838,7 @@ static char *arg_href = NULL;
 static char *arg_target = NULL;
 static char *arg_mime_type = NULL;
 static char **arg_remaining = NULL;
-static Window xid;
+static Window xid = 0;
 static gboolean arg_no_controls = FALSE;
 static gboolean arg_hidden = FALSE;
 static gboolean arg_is_playlist = FALSE;
@@ -860,7 +860,7 @@ static GOptionEntry option_entries [] =
 {
 	{ TOTEM_OPTION_WIDTH, 0, 0, G_OPTION_ARG_INT, &arg_width, NULL, NULL },
 	{ TOTEM_OPTION_HEIGHT, 0, 0, G_OPTION_ARG_INT, &arg_height, NULL, NULL },
-	{ TOTEM_OPTION_URL, 0, 0, G_OPTION_ARG_FILENAME /* FIXME: this should be STRING */, &arg_url, NULL, NULL },
+	{ TOTEM_OPTION_URL, 0, 0, G_OPTION_ARG_STRING, &arg_url, NULL, NULL },
 	{ TOTEM_OPTION_HREF, 0, 0, G_OPTION_ARG_STRING, &arg_href, NULL, NULL },
 	{ TOTEM_OPTION_XID, 0, 0, G_OPTION_ARG_CALLBACK, parse_xid, NULL, NULL },
 	{ TOTEM_OPTION_TARGET, 0, 0, G_OPTION_ARG_STRING, &arg_target, NULL, NULL },
@@ -951,7 +951,11 @@ int main (int argc, char **argv)
 	emb->href = arg_href;
 	emb->filename = arg_remaining ? arg_remaining[0] : NULL;
 	emb->target = arg_target;
-	emb->mimetype = arg_mime_type;
+	if (arg_mime_type != NULL) {
+		emb->mimetype = arg_mime_type;
+	} else {
+		emb->mimetype = g_strdup (gnome_vfs_get_mime_type_for_name (emb->filename));
+	}
 	emb->hidden = arg_hidden;
 	emb->is_playlist = arg_is_playlist;
 	emb->repeat = arg_repeat;
