@@ -174,7 +174,7 @@ totem_embedded_emit_stop_sending_data (TotemEmbedded *emb)
 static void
 totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 {
-	const char *id = NULL;
+	char *id = NULL;
 	GtkWidget *image;
 	GdkCursor *cursor;
 
@@ -182,26 +182,27 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 		return;
 
 	cursor = NULL;
+	image = glade_xml_get_widget (emb->xml, "emb_pp_button_image");
 
 	switch (state) {
 	case STATE_STOPPED:
-		id = GTK_STOCK_MEDIA_PLAY;
 		if (emb->href != NULL)
 			cursor = emb->cursor;
-		break;
+		/* Follow through */
 	case STATE_PAUSED:
-		id = GTK_STOCK_MEDIA_PLAY;
+		id = g_strdup_printf ("gtk-media-play-%s",
+				gtk_widget_get_direction (image) ? "ltr" : "rtl");
 		break;
 	case STATE_PLAYING:
-		id = GTK_STOCK_MEDIA_PAUSE;
+		id = g_strdup ("gtk-media-pause");
 		break;
 	default:
 		break;
 	}
 
-	image = glade_xml_get_widget (emb->xml, "emb_pp_button_image");
 	gtk_image_set_from_icon_name (GTK_IMAGE (image), id, GTK_ICON_SIZE_MENU);
-	if (emb->hidden == FALSE && cursor)
+	g_free (id);
+	if (emb->hidden == FALSE && cursor != NULL)
 		gdk_window_set_cursor (GTK_WIDGET (emb->bvw)->window, cursor);
 
 	emb->state = state;
