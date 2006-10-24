@@ -731,7 +731,9 @@ totemPlugin::Init (NPMIMEType mimetype,
 			;
 	}
 	/* ShowXXX parameters as per http://support.microsoft.com/kb/285154 */
-	mControllerHidden = totem_get_boolean_value (args, "showcontrols", FALSE);
+	controller = totem_get_boolean_value (args, "showcontrols", TRUE);
+	if (mControllerHidden == FALSE)
+		mControllerHidden = (controller == FALSE);
 	//FIXME add showdisplay and showstatusbar
 #endif /* TOTEM_GMP_PLUGIN */
 
