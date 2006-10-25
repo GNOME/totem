@@ -3668,11 +3668,12 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
       g_assert_not_reached ();
     }
 
-  if (res) {
+  if (res && string && g_utf8_validate (string, -1, NULL)) {
     g_value_take_string (value, string);
     GST_DEBUG ("%s = '%s'", get_metadata_type_name (type), string);
   } else {
     g_value_set_string (value, NULL);
+    g_free (string);
   }
 
   return;
