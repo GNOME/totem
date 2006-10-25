@@ -1,3 +1,11 @@
+2006-10-25  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_get_metadata_string):
+	  Make extra sure we only return valid UTF-8 strings as metadata,
+	  since g_markup_escape_text() tends to just crash if the input is
+	  not valid UTF-8 (see #360552).
+
 2006-10-25  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-mozilla-viewer.c: (totem_embedded_set_state):
