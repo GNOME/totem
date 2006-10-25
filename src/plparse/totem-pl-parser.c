@@ -2268,18 +2268,15 @@ totem_pl_parser_is_uri_list (const char *data, gsize len)
 }
 
 static gboolean
-totem_pl_parser_is_asf (const char *data, gsize len)
+totem_pl_parser_is_asx (const char *data, gsize len)
 {
 	char *buffer;
 
 	if (len == 0)
 		return FALSE;
 
-	if (g_str_has_prefix (data, "[Reference]") != FALSE
-			|| g_ascii_strncasecmp (data, "<ASX", strlen ("<ASX")) == 0
-			|| g_str_has_prefix (data, "ASF ") != FALSE) {
+	if (g_ascii_strncasecmp (data, "<ASX", strlen ("<ASX")) == 0)
 		return TRUE;
-	}
 
 	if (len > MIME_READ_CHUNK_SIZE)
 		len = MIME_READ_CHUNK_SIZE;
@@ -2287,7 +2284,7 @@ totem_pl_parser_is_asf (const char *data, gsize len)
 	/* FIXME would be nicer to have an strnstr */
 	buffer = g_memdup (data, len);
 	if (buffer == NULL) {
-		g_warning ("Couldn't dup data in totem_pl_parser_is_asf");
+		g_warning ("Couldn't dup data in totem_pl_parser_is_asx");
 		return FALSE;
 	}
 	buffer[len - 1] = '\0';
@@ -2297,7 +2294,22 @@ totem_pl_parser_is_asf (const char *data, gsize len)
 		return TRUE;
 	}
 	g_free (buffer);
+
 	return FALSE;
+}
+
+static gboolean
+totem_pl_parser_is_asf (const char *data, gsize len)
+{
+	if (len == 0)
+		return FALSE;
+
+	if (g_str_has_prefix (data, "[Reference]") != FALSE
+			|| g_str_has_prefix (data, "ASF ") != FALSE) {
+		return TRUE;
+	}
+
+	return totem_pl_parser_is_asx (data, len);
 }
 
 static gboolean
@@ -2374,7 +2386,7 @@ static PlaylistTypes dual_types[] = {
 	PLAYLIST_TYPE2 ("audio/vnd.rn-realaudio", totem_pl_parser_add_ra, totem_pl_parser_is_uri_list),
 	PLAYLIST_TYPE2 ("audio/x-realaudio", totem_pl_parser_add_ra, totem_pl_parser_is_uri_list),
 	PLAYLIST_TYPE2 ("text/plain", totem_pl_parser_add_ra, totem_pl_parser_is_uri_list),
-	PLAYLIST_TYPE ("audio/x-ms-asx", totem_pl_parser_add_asx, NULL, FALSE),
+	PLAYLIST_TYPE2 ("audio/x-ms-asx", totem_pl_parser_add_asx, totem_pl_parser_is_asx),
 	PLAYLIST_TYPE2 ("video/x-ms-asf", totem_pl_parser_add_asf, totem_pl_parser_is_asf),
 	PLAYLIST_TYPE2 ("video/x-ms-wmv", totem_pl_parser_add_asf, totem_pl_parser_is_asf),
 	PLAYLIST_TYPE2 ("video/quicktime", totem_pl_parser_add_quicktime, totem_pl_parser_is_quicktime),
@@ -2668,9 +2680,13 @@ totem_pl_parser_can_parse_from_data (const char *data,
 
 	for (i = 0; i < G_N_ELEMENTS(dual_types); i++) {
 		if (strcmp (dual_types[i].mimetype, mimetype) == 0) {
-			D(g_message ("Is dual type '%s'\n", mimetype));
-			if (dual_types[i].iden != NULL)
-				return (* dual_types[i].iden) (data, len);
+			D(g_message ("Should be dual type '%s', making sure now\n", mimetype));
+			if (dual_types[i].iden != NULL) {
+				gboolean retval = (* dual_types[i].iden) (data, len);
+				D(g_message ("%s dual type '%s'\n",
+							retval ? "Is" : "Is not", mimetype));
+				return retval;
+			}
 			return FALSE;
 		}
 	}

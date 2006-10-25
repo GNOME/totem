@@ -233,10 +233,6 @@ totemPlugin::IsMimeTypeSupported (const char *mimetype, const char *url)
 	PRUint32 count;
 	const char *guessed;
 
-	/* Stupid web servers will do that */
-	if (strcmp (mimetype, GNOME_VFS_MIME_TYPE_UNKNOWN) == 0)
-		return PR_TRUE;
-
 #if defined(TOTEM_MULLY_PLUGIN) || defined (TOTEM_GMP_PLUGIN)
 	/* We can always play those image types */
 	if (strcmp (mimetype, "image/jpeg") == 0)
@@ -244,6 +240,10 @@ totemPlugin::IsMimeTypeSupported (const char *mimetype, const char *url)
 	if (strcmp (mimetype, "image/gif") == 0)
 		return PR_TRUE;
 #endif /* TOTEM_MULLY_PLUGIN || TOTEM_GMP_PLUGIN */
+
+	/* Stupid web servers will do that */
+	if (strcmp (mimetype, GNOME_VFS_MIME_TYPE_UNKNOWN) == 0)
+		return PR_TRUE;
 
 	totemScriptablePlugin::PluginMimeTypes (&mimetypes, &count);
 
@@ -256,6 +256,22 @@ totemPlugin::IsMimeTypeSupported (const char *mimetype, const char *url)
 	guessed = gnome_vfs_get_mime_type_for_name (url);
 
 	D ("Guessed mime-type '%s' for '%s'", guessed, url);
+	for (PRUint32 i = 0; i < count; ++i) {
+		if (strcmp (mimetypes[i].mimetype, guessed) == 0)
+			return PR_TRUE;
+	}
+
+	/* Still unsupported? Try to get it without the arguments
+	 * passed to the script */
+	const char *s = strchr (url, '?');
+	if (s == NULL)
+		return PR_FALSE;
+
+	char *no_args = g_strndup (url, s - url);
+	guessed = gnome_vfs_get_mime_type_for_name (no_args);
+	D ("Guessed mime-type '%s' for '%s' without the arguments", guessed, url);
+	g_free (no_args);
+
 	for (PRUint32 i = 0; i < count; ++i) {
 		if (strcmp (mimetypes[i].mimetype, guessed) == 0)
 			return PR_TRUE;
@@ -672,6 +688,13 @@ totemPlugin::Init (NPMIMEType mimetype,
 	value = (char *) g_hash_table_lookup (args, "src");
 	if (value != NULL)
 		mSrc = resolve_relative_uri (docURI, value);
+	/* DATA is only used in OBJECTs, see:
+	 * http://developer.mozilla.org/en/docs/Gecko_Plugin_API_Reference:Plug-in_Basics#Plug-in_Display_Modes */
+	if (mSrc == NULL) {
+		value = (char *) g_hash_table_lookup (args, "data");
+		if (value != NULL)
+			mSrc = resolve_relative_uri (docURI, value);
+	}
 
 	/* Those parameters might replace the current src */
 #ifdef TOTEM_GMP_PLUGIN
@@ -691,9 +714,12 @@ totemPlugin::Init (NPMIMEType mimetype,
 	value = NULL;
 #endif
 	if (value != NULL) {
-		g_free (mSrc);
-		mSrc = resolve_relative_uri (docURI, value);
-		need_req = TRUE;
+		if (mSrc == NULL || strcmp (mSrc, value) != 0) {
+			//FIXME need to cancel SRC if there's one
+			g_free (mSrc);
+			mSrc = resolve_relative_uri (docURI, value);
+			need_req = TRUE;
+		}
 	}
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN

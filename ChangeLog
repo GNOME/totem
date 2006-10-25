@@ -1,3 +1,21 @@
+2006-10-25  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totemPlugin.cpp:
+	
+	If we still don't have a supported mime-type when we get a new stream,
+	try getting the mime-type from the URL minus the possible script arguments,
+	helps getting the mime-type from broken IIS web servers.
+
+	Don't request a new stream if the SRC is given, and is the same URL as
+	our filename/url/qtsrc parameter
+
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_is_asx),
+	(totem_pl_parser_is_asf), (totem_pl_parser_can_parse_from_data):
+	Add more debug to totem_pl_parser_can_parse_from_data's dual-types
+	detection, and fix ASX playlist detection from data
+
+	(Closes: #365025)
+
 2006-10-25  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
