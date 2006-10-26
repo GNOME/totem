@@ -1,5 +1,13 @@
 2006-10-26  Tim-Philipp Müller  <tim at centricular dot net>
 
+	* src/totem-private.h:
+	* src/totem.c: (seek_slider_pressed_cb), (seek_slider_released_cb),
+	(totem_action_handle_key_release), (totem_action_handle_key_press):
+	  When seeking while playing, go straight back into playing mode after
+	  the seek (ie. do full audio scrubbing as well). (Closes: #363699)
+
+2006-10-26  Tim-Philipp Müller  <tim at centricular dot net>
+
 	* src/.cvsignore:
 	  Add totem-video-indexer.
 

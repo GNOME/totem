@@ -1540,16 +1540,6 @@ seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 	totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), TRUE);
 	totem_time_label_set_seeking (TOTEM_TIME_LABEL (totem->tcw_time_label), TRUE);
 
-	if (bacon_video_widget_can_direct_seek (totem->bvw) != FALSE)
-	{
-		if (!totem->seek_in_progress) {
-			totem->was_playing = bacon_video_widget_is_playing (totem->bvw);
-			bacon_video_widget_pause (totem->bvw);
-			/* We need to remember that we are already paused and seeking */
-			totem->seek_in_progress = TRUE;
-		}
-	}
-
 	return FALSE;
 }
 
@@ -1591,12 +1581,8 @@ seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 	val = gtk_adjustment_get_value (adj);
 	gtk_adjustment_set_value (other_adj, val);
 
-	if (bacon_video_widget_can_direct_seek (totem->bvw) != FALSE)
+	if (bacon_video_widget_can_direct_seek (totem->bvw) == FALSE)
 	{
-		if (totem->was_playing)
-			bacon_video_widget_play (totem->bvw, NULL);
-		totem->seek_in_progress = FALSE;
-	} else {
 		totem_action_seek (totem, val / 65535.0);
 	}
 
@@ -2367,11 +2353,6 @@ totem_action_handle_key_release (Totem *totem, GdkEventKey *event)
 	case GDK_Right:
 		totem_statusbar_set_seeking
 			(TOTEM_STATUSBAR (totem->statusbar), FALSE);
-		if (bacon_video_widget_can_direct_seek (totem->bvw) != FALSE) {
-			if (totem->was_playing != FALSE)
-				bacon_video_widget_play (totem->bvw, NULL);
-			totem->seek_in_progress = FALSE;
-		}
 		break;
 	}
 
@@ -2501,14 +2482,6 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 			return FALSE;
 
 		totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), TRUE);
-		if (bacon_video_widget_can_direct_seek (totem->bvw)) {
-			if (!totem->seek_in_progress) {
-				totem->was_playing = bacon_video_widget_is_playing (totem->bvw);
-				bacon_video_widget_pause (totem->bvw);
-				/* We need to remember that we are already paused and seeking */
-				totem->seek_in_progress = TRUE;
-			}
-		}
 		if (event->state & GDK_SHIFT_MASK) {
 			totem_action_seek_relative (totem,
 					SEEK_BACKWARD_SHORT_OFFSET);
@@ -2525,14 +2498,6 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 			return FALSE;
 
 		totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), TRUE);
-		if (bacon_video_widget_can_direct_seek (totem->bvw)) {
-			if (!totem->seek_in_progress) {
-				totem->was_playing = bacon_video_widget_is_playing (totem->bvw);
-				bacon_video_widget_pause (totem->bvw);
-				/* We need to remember that we are already paused and seeking */
-				totem->seek_in_progress = TRUE;
-			}
-		}
 		if (event->state & GDK_SHIFT_MASK) {
 			totem_action_seek_relative (totem,
 					SEEK_FORWARD_SHORT_OFFSET);
