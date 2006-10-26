@@ -2531,30 +2531,31 @@ bacon_video_widget_seek (BaconVideoWidget *bvw, float position, GError **error)
 static void
 bvw_stop_play_pipeline (BaconVideoWidget * bvw)
 {
-  GstElement *playbin = bvw->priv->play;
-  GstState current_state;
+  GstState cur_state;
 
-  /* first go to ready, that way our state change handler gets to see
-   * our state change messages (before the bus goes to flushing) and
-   * cleans up */
-  GST_DEBUG ("stopping");
-  bvw->priv->target_state = GST_STATE_NULL;
-  gst_element_get_state (playbin, &current_state, NULL, 0);
-  if (current_state > GST_STATE_READY) {
-    GError *err = NULL;
+  gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
+  if (cur_state > GST_STATE_READY) {
+    GstMessage *msg;
+    GstBus *bus;
 
-    gst_element_set_state (playbin, GST_STATE_READY);
-    poll_for_state_change_full (bvw, playbin, GST_STATE_READY, &err, -1);
-    if (err)
-      g_error_free (err);
+    GST_DEBUG ("stopping");
+    gst_element_set_state (bvw->priv->play, GST_STATE_READY);
+
+    /* process all remaining state-change messages so everything gets
+     * cleaned up properly (before the state change to NULL flushes them) */
+    GST_DEBUG ("processing pending state-change messages");
+    bus = gst_element_get_bus (bvw->priv->play);
+    while ((msg = gst_bus_poll (bus, GST_MESSAGE_STATE_CHANGED, 0))) {
+      gst_bus_async_signal_func (bus, msg, NULL);
+      gst_message_unref (msg);
+    }
+    gst_object_unref (bus);
   }
 
-  /* now finally go to null state */
-  GST_DEBUG ("almost stopped, setting to NULL");
-  gst_element_set_state (playbin, GST_STATE_NULL);
-  GST_DEBUG ("stopped");
-
+  gst_element_set_state (bvw->priv->play, GST_STATE_NULL);
+  bvw->priv->target_state = GST_STATE_NULL;
   bvw->priv->buffering = FALSE;
+  GST_DEBUG ("stopped");
 }
 
 void
