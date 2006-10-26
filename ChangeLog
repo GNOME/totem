@@ -1,5 +1,13 @@
 2006-10-26  Tim-Philipp Müller  <tim at centricular dot net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_stop_play_pipeline):
+	  Don't use poll_for_state_change() when stopping, it can lead to
+	  deadlocks when called from the bus handler (e.g. after redirect
+	  message) and isn't really necessary anyway. (Closes: #361787)
+
+2006-10-26  Tim-Philipp Müller  <tim at centricular dot net>
+
 	* src/totem-private.h:
 	* src/totem.c: (seek_slider_pressed_cb), (seek_slider_released_cb),
 	(totem_action_handle_key_release), (totem_action_handle_key_press):
