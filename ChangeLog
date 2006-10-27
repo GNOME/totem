@@ -1,3 +1,13 @@
+2006-10-27  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c: (bvw_bus_message_cb),
+	(bacon_video_widget_open_with_subtitle), (bacon_video_widget_play):
+	  Don't go through lots of trouble to catch errors and fake non-async
+	  behaviour to the frontend when the frontend doesn't even check for
+	  errors. In other words: skip poll_for_state_change() and handle
+	  errors asynchroneously if the frontend supplies a NULL error,
+	  otherwise errors may be lost in some corner cases (#361787).
+
 2006-10-27  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c: (totem_action_remote),
@@ -1779,7 +1789,6 @@
 	with GTK+ 2.10, patch from Rene Vahtel <vahtel@starman.ee>
 	(Closes: #346762)
 
->>>>>>> 1.1914
 2006-07-03  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-mozilla-viewer.c: (main): add i18n support
