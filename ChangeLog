@@ -1,5 +1,10 @@
 2006-10-27  Bastien Nocera  <hadess@hadess.net>
 
+	* src/ev-sidebar.c: (ev_sidebar_init): remove some extraneous padding
+	around the sidebar pages, there's already padding outside
+
+2006-10-27  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: fix dbus detection (it's dbus-1, not dbus since 2003)
 	(Closes: #365387)
 	* src/plparse/totem-disc.c: (cd_cache_free): close the dbus connection

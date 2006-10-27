@@ -334,7 +334,7 @@ ev_sidebar_init (EvSidebar *ev_sidebar)
 	gtk_notebook_set_show_border (GTK_NOTEBOOK (ev_sidebar->priv->notebook), FALSE);
 	gtk_notebook_set_show_tabs (GTK_NOTEBOOK (ev_sidebar->priv->notebook), FALSE);
 	gtk_box_pack_start (GTK_BOX (ev_sidebar), ev_sidebar->priv->notebook,
-			    TRUE, TRUE, 6);
+			    TRUE, TRUE, 0);
 	gtk_widget_show (ev_sidebar->priv->notebook);
 }
 
