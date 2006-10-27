@@ -1,5 +1,11 @@
 2006-10-27  Tim-Philipp Müller  <tim at centricular dot net>
 
+	* src/totem-mozilla-viewer.c: (on_error_event),
+	(totem_embedded_add_children):
+	  Catch errors that occur after we initiated playback (#361787).
+
+2006-10-27  Tim-Philipp Müller  <tim at centricular dot net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c: (bvw_bus_message_cb),
 	(bacon_video_widget_open_with_subtitle), (bacon_video_widget_play):
 	  Don't go through lots of trouble to catch errors and fake non-async
