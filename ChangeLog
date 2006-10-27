@@ -1,5 +1,12 @@
 2006-10-27  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (totem_action_remote),
+	(totem_action_handle_key_press): fix remotely setting whether to
+	show the controls, and trying to use the deinterlace on/off key
+	shortcut
+
+2006-10-27  Bastien Nocera  <hadess@hadess.net>
+
 	* src/ev-sidebar.c: (ev_sidebar_init): remove some extraneous padding
 	around the sidebar pages, there's already padding outside
 

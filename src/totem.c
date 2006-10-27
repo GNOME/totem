@@ -1998,14 +1998,14 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 	case TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS:
 		if (totem->controls_visibility != TOTEM_CONTROLS_FULLSCREEN)
 		{
-			GtkCheckMenuItem *item;
-			gboolean value;
+			GtkToggleAction *action;
+			gboolean state;
 
-			item = GTK_CHECK_MENU_ITEM (glade_xml_get_widget
-					(totem->xml,
-					 "tmw_show_controls_menu_item"));
-			value = gtk_check_menu_item_get_active (item);
-			gtk_check_menu_item_set_active (item, !value);
+			action = GTK_TOGGLE_ACTION (gtk_action_group_get_action
+					(totem->main_action_group,
+					 "show-controls"));
+			state = gtk_toggle_action_get_active (action);
+			gtk_toggle_action_set_active (action, !state);
 		}
 		break;
 	case TOTEM_REMOTE_COMMAND_SHOW_PLAYING:
@@ -2417,14 +2417,14 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 	case GDK_i:
 	case GDK_I:
 		{
-			GtkCheckMenuItem *item;
-			gboolean value;
+			GtkToggleAction *action;
+			gboolean state;
 
-			item = GTK_CHECK_MENU_ITEM (glade_xml_get_widget
-					(totem->xml,
-					 "tmw_deinterlace_menu_item"));
-			value = gtk_check_menu_item_get_active (item);
-			gtk_check_menu_item_set_active (item, !value);
+			action = GTK_TOGGLE_ACTION (gtk_action_group_get_action
+					(totem->main_action_group,
+					 "deinterlace"));
+			state = gtk_toggle_action_get_active (action);
+			gtk_toggle_action_set_active (action, !state);
 		}
 		break;
 	case GDK_M:
