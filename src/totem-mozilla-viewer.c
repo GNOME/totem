@@ -557,6 +557,22 @@ on_eos_event (GtkWidget *bvw, TotemEmbedded *emb)
 }
 
 static void
+on_error_event (BaconVideoWidget *bvw, char *message,
+                gboolean playback_stopped, gboolean fatal, TotemEmbedded *emb)
+{
+	if (playback_stopped)
+		totem_embedded_set_state (emb, STATE_STOPPED);
+
+	if (fatal == FALSE) {
+		totem_interface_error (_("An error occurred"), message,
+		                       GTK_WINDOW (emb->window));
+	} else {
+		totem_embedded_error_and_exit (_("An error occurred"),
+				message, emb);
+	}
+}
+
+static void
 cb_vol (GtkWidget *val, TotemEmbedded *emb)
 {
 	bacon_video_widget_set_volume (emb->bvw,
@@ -661,6 +677,8 @@ totem_embedded_add_children (TotemEmbedded *emb)
 			G_CALLBACK (on_got_redirect), emb);
 	g_signal_connect (G_OBJECT (emb->bvw), "eos",
 			G_CALLBACK (on_eos_event), emb);
+	g_signal_connect (G_OBJECT (emb->bvw), "error",
+			G_CALLBACK (on_error_event), emb);
 	g_signal_connect (G_OBJECT(emb->bvw), "button-press-event",
 			G_CALLBACK (on_video_button_press_event), emb);
 	g_signal_connect (G_OBJECT(emb->bvw), "tick",
