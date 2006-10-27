@@ -1071,10 +1071,9 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
   /* somebody else is handling the message, probably in poll_for_state_change */
   if (bvw->priv->ignore_messages_mask & msg_type) {
-    gchar *src_name = gst_object_get_name (message->src);
-    GST_LOG ("Ignoring %s message from element %s as requested",
-        gst_message_type_get_name (msg_type), src_name);
-    g_free (src_name);
+    GST_LOG ("Ignoring %s message from element %" GST_PTR_FORMAT
+        " as requested: %" GST_PTR_FORMAT, GST_MESSAGE_TYPE_NAME (message),
+        message->src, message);
     return;
   }
 
@@ -2408,7 +2407,12 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   if (bvw->priv->use_type == BVW_USE_TYPE_AUDIO ||
       bvw->priv->use_type == BVW_USE_TYPE_VIDEO) {
     /* normal interactive usage */
-    ret = poll_for_state_change (bvw, bvw->priv->play, GST_STATE_PAUSED, error);
+    if (error) {
+      ret = poll_for_state_change (bvw, bvw->priv->play, GST_STATE_PAUSED, error);
+    } else {
+      GST_WARNING ("caller not checking error, handling errors asynchroneously");
+      ret = TRUE;
+    }
   } else {
     /* used as thumbnailer or metadata extractor for properties dialog. In
      * this case, wait for any state change to really finish and process any
@@ -2429,7 +2433,11 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   if (ret) {
     g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
   } else {
-    GST_DEBUG ("Error on open: %s", (error) ? (*error)->message : "(unknown)");
+    if (error == NULL) {
+      GST_WARNING ("Got error, but caller is not collecting error details!");
+    } else {
+      GST_DEBUG ("Error on open: %s", (*error)->message);
+    }
     bvw->priv->ignore_messages_mask |= GST_MESSAGE_ERROR;
     bvw_stop_play_pipeline (bvw);
     g_free (bvw->priv->mrl);
@@ -2464,7 +2472,13 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
   GST_DEBUG ("play");
   gst_element_set_state (bvw->priv->play, GST_STATE_PLAYING);
 
-  ret = poll_for_state_change (bvw, bvw->priv->play, GST_STATE_PLAYING, error);
+  if (error) {
+    ret = poll_for_state_change (bvw, bvw->priv->play, GST_STATE_PLAYING, error);
+  } else {
+    GST_WARNING ("caller not checking error details, handling errors asynchroneously");
+    ret = TRUE;
+  }
+
 
   return ret;
 }
