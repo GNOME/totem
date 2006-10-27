@@ -529,6 +529,8 @@ cd_cache_free (CdCache *cache)
     conn = libhal_ctx_get_dbus_connection (cache->ctx);
     libhal_ctx_shutdown (cache->ctx, NULL);
     libhal_ctx_free(cache->ctx);
+    /* Close the connection before doing the last unref */
+    dbus_connection_close (conn);
     dbus_connection_unref (conn);
 
     g_free (cache->disc_udi);

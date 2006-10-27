@@ -35,7 +35,7 @@ GTK_REQS=2.10.0
 GNOMEVFS_REQS=2.8.2
 GNOMEUI_REQS=2.3.3
 GNOMEICON_REQS=2.9.3
-DBUS_REQS=0.35
+DBUS_REQS=0.61
 
 # Before making a release, the PLPARSER_LT_VERSION string should be modified.
 # The string is of the form C:R:A.
@@ -377,7 +377,8 @@ if test "x$ENABLE_MOZILLA" = "xyes" ; then
 fi
 
 if test "x$ENABLE_MOZILLA" = "xyes" ; then
-	PKG_CHECK_MODULES([DBUS], [dbus-glib-1 >= 0.35],,[ENABLE_MOZILLA=no])
+	PKG_CHECK_MODULES([DBUS], [dbus-glib-1 >= $DBUS_REQS],,
+			[ENABLE_MOZILLA=no])
 	DBUSLIBDIR="`$PKG_CONFIG dbus-glib-1 --variable=libdir`"
 	DBUSBINDIR="`echo $DBUSLIBDIR | sed -e s/lib/bin/`"
 	AC_PATH_PROG([DBUS_BIND], [dbus-binding-tool], [no], [$DBUSBINDIR:$PATH])
@@ -535,7 +536,7 @@ AC_ARG_WITH(hal,
 	      AC_HELP_STRING([--without-hal],
 			     [Disable HAL support]))
 if test "x$with_hal" != "xno"; then
-  PKG_CHECK_MODULES(HAL, hal >= 0.5 hal < 0.6 dbus >= 0.61, enable_hal05=yes, enable_hal05=no)
+  PKG_CHECK_MODULES(HAL, hal >= 0.5 hal < 0.6 dbus-1 >= $DBUS_REQS, enable_hal05=yes, enable_hal05=no)
   if test x$enable_hal05 = xyes; then
       enable_hal=yes
       AC_DEFINE(HAVE_HAL, 1, [Define if you HAL support])
