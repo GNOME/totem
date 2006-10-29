@@ -278,6 +278,7 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data, TotemPlPa
 	/* Read the whole thing, up to MIME_READ_CHUNK_SIZE */
 	buffer = NULL;
 	total_bytes_read = 0;
+	bytes_read = 0;
 	do {
 		buffer = g_realloc (buffer, total_bytes_read
 				+ MIME_READ_CHUNK_SIZE);

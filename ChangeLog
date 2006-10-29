@@ -1,3 +1,10 @@
+2006-10-29  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/totem-pl-parser.c:
+	(my_gnome_vfs_get_mime_type_with_data): initialise bytes_read
+	to avoid problems with gnome-vfs not initialising it
+	(See bug #366331)
+
 2006-10-27  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/totem-mozilla-viewer.c: (on_error_event),
