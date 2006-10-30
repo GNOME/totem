@@ -77,6 +77,7 @@ typedef struct _TotemEmbedded {
 	GtkWidget *window;
 	GladeXML *menuxml, *xml;
 	GtkWidget *about;
+	TotemStatusbar *statusbar;
 	int width, height;
 	const char *orig_filename;
 	const char *mimetype;
@@ -187,13 +188,19 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 	case STATE_STOPPED:
 		if (emb->href != NULL)
 			cursor = emb->cursor;
-		/* Follow through */
+		id = g_strdup_printf ("gtk-media-play-%s",
+				gtk_widget_get_direction (image) ? "ltr" : "rtl");
+		totem_statusbar_set_text (emb->statusbar, _("Stopped"));
+		totem_statusbar_set_time_and_length (emb->statusbar, 0, 0);
+		break;
 	case STATE_PAUSED:
 		id = g_strdup_printf ("gtk-media-play-%s",
 				gtk_widget_get_direction (image) ? "ltr" : "rtl");
+		totem_statusbar_set_text (emb->statusbar, _("Paused"));
 		break;
 	case STATE_PLAYING:
 		id = g_strdup ("gtk-media-pause");
+		totem_statusbar_set_text (emb->statusbar, _("Playing"));
 		break;
 	default:
 		break;
@@ -639,6 +646,14 @@ on_tick (GtkWidget *bvw,
 		if (emb->seeking == FALSE)
 			gtk_adjustment_set_value (emb->seekadj,
 					current_position * 65535);
+		if (stream_length == 0) {
+			totem_statusbar_set_time_and_length (emb->statusbar,
+					(int) (current_time / 1000), -1);
+		} else {
+			totem_statusbar_set_time_and_length (emb->statusbar,
+					(int) (current_time / 1000),
+					(int) (stream_length / 1000));
+		}
 	}
 }
 
@@ -736,6 +751,9 @@ totem_embedded_add_children (TotemEmbedded *emb)
 	gtk_widget_add_events (vbut, GDK_SCROLL_MASK);
 	g_signal_connect (G_OBJECT (vbut), "scroll_event",
 			G_CALLBACK (on_volume_scroll_event), emb);
+
+	emb->statusbar = TOTEM_STATUSBAR (glade_xml_get_widget
+			(emb->xml, "emb_statusbar"));
 
 	gtk_widget_realize (emb->window);
 	gtk_widget_set_size_request (emb->window, emb->width, emb->height);
@@ -853,7 +871,7 @@ static char *arg_mime_type = NULL;
 static char **arg_remaining = NULL;
 static Window xid = 0;
 static gboolean arg_no_controls = FALSE;
-static gboolean arg_no_statusbar = TRUE;
+static gboolean arg_statusbar = FALSE;
 static gboolean arg_hidden = FALSE;
 static gboolean arg_is_playlist = FALSE;
 static gboolean arg_repeat = FALSE;
@@ -878,7 +896,7 @@ totem_statusbar_create (void)
 
 	widget = totem_statusbar_new ();
 	totem_statusbar_set_has_resize_grip (TOTEM_STATUSBAR (widget), FALSE);
-	if (arg_no_statusbar == FALSE)
+	if (arg_statusbar != FALSE)
 		gtk_widget_show (widget);
 
 	return widget;
@@ -905,7 +923,7 @@ static GOptionEntry option_entries [] =
 	{ TOTEM_OPTION_TARGET, 0, 0, G_OPTION_ARG_STRING, &arg_target, NULL, NULL },
 	{ TOTEM_OPTION_MIMETYPE, 0, 0, G_OPTION_ARG_STRING, &arg_mime_type, NULL, NULL },
 	{ TOTEM_OPTION_CONTROLS_HIDDEN, 0, 0, G_OPTION_ARG_NONE, &arg_no_controls, NULL, NULL },
-	{ TOTEM_OPTION_STATUSBAR_HIDDEN, 0, 0, G_OPTION_ARG_NONE, &arg_no_statusbar, NULL, NULL },
+	{ TOTEM_OPTION_STATUSBAR, 0, 0, G_OPTION_ARG_NONE, &arg_statusbar, NULL, NULL },
 	{ TOTEM_OPTION_HIDDEN, 0, 0, G_OPTION_ARG_NONE, &arg_hidden, NULL, NULL },
 	{ TOTEM_OPTION_PLAYLIST, 0, 0, G_OPTION_ARG_NONE, &arg_is_playlist, NULL, NULL },
 	{ TOTEM_OPTION_REPEAT, 0, 0, G_OPTION_ARG_NONE, &arg_repeat, NULL, NULL },

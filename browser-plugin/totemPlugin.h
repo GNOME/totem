@@ -118,7 +118,7 @@ class totemPlugin {
     PRUint32 mNoAutostart : 1;
     PRUint32 mRepeat : 1;
     PRUint32 mTriedWrite : 1;
-    PRUint32 mStatusbarHidden : 1;
+    PRUint32 mStatusbar : 1;
 };
 
 typedef struct {

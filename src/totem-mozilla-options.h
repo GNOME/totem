@@ -23,7 +23,7 @@
 #define TOTEM_OPTION_HEIGHT		"height"
 #define TOTEM_OPTION_URL		"url"
 #define TOTEM_OPTION_CONTROLS_HIDDEN	"nocontrols"
-#define TOTEM_OPTION_STATUSBAR_HIDDEN	"nostatusbar"
+#define TOTEM_OPTION_STATUSBAR		"statusbar"
 #define TOTEM_OPTION_HREF		"href"
 #define TOTEM_OPTION_TARGET		"target"
 #define TOTEM_OPTION_HIDDEN		"hidden"
