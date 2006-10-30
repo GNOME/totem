@@ -112,7 +112,7 @@
 		      <property name="column_spacing">12</property>
 
 		      <child>
-			<widget class="GtkLabel" id="label12">
+			<widget class="GtkLabel" id="title_label">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes">Title:</property>
 			  <property name="use_underline">False</property>
@@ -128,6 +128,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="title" type="label-for"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">0</property>
@@ -140,7 +143,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkLabel" id="label13">
+			<widget class="GtkLabel" id="artist_label">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes">Artist:</property>
 			  <property name="use_underline">False</property>
@@ -156,6 +159,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="artist" type="label-for"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">0</property>
@@ -168,7 +174,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkLabel" id="label15">
+			<widget class="GtkLabel" id="duration_label">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes">Duration:</property>
 			  <property name="use_underline">False</property>
@@ -184,6 +190,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="duration" type="label-for"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">0</property>
@@ -196,7 +205,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkLabel" id="label14">
+			<widget class="GtkLabel" id="year_label">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes">Year:</property>
 			  <property name="use_underline">False</property>
@@ -212,6 +221,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="year" type="label-for"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">0</property>
@@ -224,7 +236,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkLabel" id="label23">
+			<widget class="GtkLabel" id="album_label">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes">Album:</property>
 			  <property name="use_underline">False</property>
@@ -240,6 +252,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="album" type="label-for"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">0</property>
@@ -269,6 +284,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="title_label" type="labelled-by"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">1</property>
@@ -298,6 +316,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="artist_label" type="labelled-by"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">1</property>
@@ -327,6 +348,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="album_label" type="labelled-by"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">1</property>
@@ -356,6 +380,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="year_label" type="labelled-by"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">1</property>
@@ -385,6 +412,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="duration_label" type="labelled-by"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">1</property>
@@ -465,7 +495,7 @@
 		      <property name="column_spacing">12</property>
 
 		      <child>
-			<widget class="GtkLabel" id="label3">
+			<widget class="GtkLabel" id="dimensions_label">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes">Dimensions:</property>
 			  <property name="use_underline">False</property>
@@ -481,6 +511,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="dimensions" type="label-for"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">0</property>
@@ -493,7 +526,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkLabel" id="label5">
+			<widget class="GtkLabel" id="vcodec_label">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes">Codec:</property>
 			  <property name="use_underline">False</property>
@@ -509,6 +542,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="vcodec" type="label-for"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">0</property>
@@ -521,7 +557,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkLabel" id="label6">
+			<widget class="GtkLabel" id="framerate_label">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes">Framerate:</property>
 			  <property name="use_underline">False</property>
@@ -537,6 +573,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="framerate" type="label-for"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">0</property>
@@ -549,7 +588,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkLabel" id="label24">
+			<widget class="GtkLabel" id="vbitrate_label">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes">Bitrate:</property>
 			  <property name="use_underline">False</property>
@@ -565,6 +604,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="video_bitrate" type="label-for"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">0</property>
@@ -594,6 +636,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="dimensions_label" type="labelled-by"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">1</property>
@@ -623,6 +668,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="vcodec_label" type="labelled-by"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">1</property>
@@ -652,6 +700,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="framerate_label" type="labelled-by"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">1</property>
@@ -681,6 +732,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="vbitrate_label" type="labelled-by"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">1</property>
@@ -761,7 +815,7 @@
 		      <property name="column_spacing">12</property>
 
 		      <child>
-			<widget class="GtkLabel" id="label10">
+			<widget class="GtkLabel" id="abitrate_label">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes">Bitrate:</property>
 			  <property name="use_underline">False</property>
@@ -777,6 +831,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="audio_bitrate" type="label-for"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">0</property>
@@ -789,7 +846,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkLabel" id="label11">
+			<widget class="GtkLabel" id="acodec_label">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes">Codec:</property>
 			  <property name="use_underline">False</property>
@@ -805,6 +862,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="acodec" type="label-for"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">0</property>
@@ -834,6 +894,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="abitrate_label" type="labelled-by"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">1</property>
@@ -863,6 +926,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="acodec_label" type="labelled-by"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">1</property>
@@ -875,7 +941,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkLabel" id="label25">
+			<widget class="GtkLabel" id="samplerate_label">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes">Sample rate:</property>
 			  <property name="use_underline">False</property>
@@ -891,6 +957,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="samplerate" type="label-for"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">0</property>
@@ -903,7 +972,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkLabel" id="label26">
+			<widget class="GtkLabel" id="channels_label">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes">Channels:</property>
 			  <property name="use_underline">False</property>
@@ -919,6 +988,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="channels" type="label-for"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">0</property>
@@ -948,6 +1020,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="samplerate_label" type="labelled-by"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">1</property>
@@ -977,6 +1052,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
+			  <accessibility>
+			    <atkrelation target="channels_label" type="labelled-by"/>
+			  </accessibility>
 			</widget>
 			<packing>
 			  <property name="left_attach">1</property>
