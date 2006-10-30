@@ -909,6 +909,9 @@ static GtkWidget *
 totem_playlist_save_add_format_combo_box (GtkFileChooser *fc)
 {
 	GtkWidget *hbox, *label, *combo_box;
+	AtkObject *atk_object;
+	AtkRelation *atk_relation;
+	AtkRelationSet *atk_relations;
 	guint i;
 
 	hbox = gtk_hbox_new (FALSE, 4);
@@ -916,10 +919,12 @@ totem_playlist_save_add_format_combo_box (GtkFileChooser *fc)
 	gtk_widget_show (label);
 
 	combo_box = gtk_combo_box_new_text ();
-	gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box), _("By extension"));
+	gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box),
+			_("By extension"));
 	gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), 0);
 	for (i = 0; i < G_N_ELEMENTS(save_types); i++) {
-		gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box), save_types[i].name);
+		gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box),
+				save_types[i].name);
 	}
 	gtk_widget_show (combo_box);
 
@@ -927,6 +932,22 @@ totem_playlist_save_add_format_combo_box (GtkFileChooser *fc)
 	gtk_box_pack_start (GTK_BOX (hbox), combo_box, TRUE, TRUE, 0);
 	gtk_widget_show (hbox);
 	gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (fc), hbox);
+
+	atk_object = gtk_widget_get_accessible (combo_box);
+	atk_relations = atk_object_ref_relation_set
+		(gtk_widget_get_accessible (label));
+	atk_relation = atk_relation_new (&atk_object, 1,
+			ATK_RELATION_LABEL_FOR);
+	atk_relation_set_add (atk_relations, atk_relation);
+	g_object_unref (G_OBJECT (atk_relation));
+
+	atk_object = gtk_widget_get_accessible (label);
+	atk_relations = atk_object_ref_relation_set
+		(gtk_widget_get_accessible (combo_box));
+	atk_relation = atk_relation_new (&atk_object, 1,
+			ATK_RELATION_LABELLED_BY);
+	atk_relation_set_add (atk_relations, atk_relation);
+	g_object_unref (G_OBJECT (atk_relation));
 
 	return combo_box;
 }
