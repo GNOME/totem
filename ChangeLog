@@ -1,5 +1,19 @@
 2006-10-30  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-statusbar.c: (totem_statusbar_init),
+	(totem_statusbar_new_from_glade), (totem_statusbar_update_time),
+	(totem_statusbar_set_text), (totem_statusbar_timeout_pop),
+	(totem_statusbar_push), (totem_statusbar_pop),
+	(totem_statusbar_set_seeking), (totem_statusbar_sync_description):
+	* src/totem-statusbar.h:
+	Set the Atk description on the statusbar whenever the status changes,
+	or we're buffering
+
+	* src/totem-subtitle-encoding.c: (subtitle_encoding_create_store):
+	identation changes
+
+2006-10-30  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-playlist.c: (totem_playlist_save_add_format_combo_box):
 	Simplify the relationship code, thanks Maciej
 

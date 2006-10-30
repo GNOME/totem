@@ -499,11 +499,11 @@ subtitle_encoding_create_store (void)
         gtk_tree_store_set (store, &iter, INDEX_COL,
             -1, NAME_COL, lastlang, -1);
       }
-	  label = g_strdup_printf("%s (%s)", lastlang, encodings[i].charset);
+      label = g_strdup_printf("%s (%s)", lastlang, encodings[i].charset);
       gtk_tree_store_append (store, &iter2, &iter);
       gtk_tree_store_set (store, &iter2, INDEX_COL,
           encodings[i].index, NAME_COL, label, -1);
-	  g_free(label);
+      g_free(label);
     }
   }
   gtk_tree_sortable_set_default_sort_func (GTK_TREE_SORTABLE (store),

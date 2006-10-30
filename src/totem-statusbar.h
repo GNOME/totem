@@ -59,10 +59,11 @@ struct _TotemStatusbar
   gint length;
   char *saved_label;
   guint timeout;
+  guint percentage;
 
   GdkWindow *grip_window;
   GdkCursor *cursor;
-  
+
   guint has_resize_grip : 1;
   guint pushed : 1;
   guint seeking : 1;

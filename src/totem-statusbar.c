@@ -55,6 +55,7 @@ static void     totem_statusbar_size_allocate  (GtkWidget         *widget,
                                               GtkAllocation     *allocation);
 static void     totem_statusbar_create_window  (TotemStatusbar      *statusbar);
 static void     totem_statusbar_destroy_window (TotemStatusbar      *statusbar);
+static void	totem_statusbar_sync_description (TotemStatusbar *statusbar);
 
 static GtkContainerClass *parent_class;
 
@@ -101,7 +102,8 @@ totem_statusbar_init (TotemStatusbar *statusbar)
   GtkBox *box;
   GtkShadowType shadow_type;
   GtkWidget *packer, *hbox;
-  
+  AtkObject *obj;
+
   box = GTK_BOX (statusbar);
 
   box->spacing = 2;
@@ -144,6 +146,11 @@ totem_statusbar_init (TotemStatusbar *statusbar)
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->time_label, FALSE, FALSE, 0);
   gtk_widget_show (statusbar->time_label);
 
+
+  obj = gtk_widget_get_accessible (GTK_WIDGET (box));
+  atk_object_set_role (obj, ATK_ROLE_STATUSBAR);
+  totem_statusbar_sync_description (statusbar);
+
   /* don't expand the size request for the label; if we
    * do that then toplevels weirdly resize
    */
@@ -161,12 +168,12 @@ totem_statusbar_new_from_glade (gchar *widget_name,
 		gchar *string1, gchar *string2,
 		gint int1, gint int2)
 {
-	GtkWidget *widget;
+  GtkWidget *widget;
 
-	widget = totem_statusbar_new ();
-	gtk_widget_show (widget);
+  widget = totem_statusbar_new ();
+  gtk_widget_show (widget);
 
-	return widget;
+  return widget;
 }
 
 static void
@@ -191,11 +198,12 @@ totem_statusbar_update_time (TotemStatusbar *statusbar)
 
     g_free (length);
   }
+  g_free (time);
 
   gtk_label_set_text (GTK_LABEL (statusbar->time_label), label);
-
-  g_free (time);
   g_free (label);
+
+  totem_statusbar_sync_description (statusbar);
 }
 
 void
@@ -204,6 +212,8 @@ totem_statusbar_set_text (TotemStatusbar *statusbar, const char *label)
   gtk_label_set_text (GTK_LABEL (statusbar->label), label);
   g_free (statusbar->saved_label);
   statusbar->saved_label = g_strdup (label);
+
+  totem_statusbar_sync_description (statusbar);
 }
 
 void
@@ -224,8 +234,12 @@ totem_statusbar_timeout_pop (TotemStatusbar *statusbar)
   gtk_label_set_text (GTK_LABEL (statusbar->label), statusbar->saved_label);
   g_free (statusbar->saved_label);
   statusbar->saved_label = NULL;
-  statusbar->pushed = 0;
+  statusbar->pushed = FALSE;
   gtk_widget_hide (statusbar->progress);
+
+  totem_statusbar_sync_description (statusbar);
+
+  statusbar->percentage = 101;
 
   return FALSE;
 }
@@ -234,12 +248,19 @@ void
 totem_statusbar_push (TotemStatusbar *statusbar, guint percentage)
 {
   char *label;
-  statusbar->pushed = 1;
+  statusbar->pushed = TRUE;
 
   if (statusbar->timeout != 0)
   {
     g_source_remove (statusbar->timeout);
+    if (statusbar->percentage == percentage) {
+      statusbar->timeout = g_timeout_add (3000,
+	  (GSourceFunc) totem_statusbar_timeout_pop, statusbar);
+      return;
+    }
   }
+
+  statusbar->percentage = percentage;
 
   if (statusbar->saved_label == NULL)
   {
@@ -259,12 +280,18 @@ totem_statusbar_push (TotemStatusbar *statusbar, guint percentage)
 
   statusbar->timeout = g_timeout_add (3000,
 		  (GSourceFunc) totem_statusbar_timeout_pop, statusbar);
+
+  totem_statusbar_sync_description (statusbar);
 }
 
 void
 totem_statusbar_pop (TotemStatusbar *statusbar)
 {
-  statusbar->pushed = 0;
+  if (statusbar->pushed != FALSE)
+  {
+    g_source_remove (statusbar->timeout);
+    totem_statusbar_timeout_pop (statusbar);
+  }
 }
 
 void
@@ -288,9 +315,35 @@ totem_statusbar_set_seeking (TotemStatusbar *statusbar,
 {
   g_return_if_fail (TOTEM_IS_STATUSBAR (statusbar));
 
+  if (statusbar->seeking == seeking)
+    return;
+
   statusbar->seeking = seeking;
 
   totem_statusbar_update_time (statusbar);
+}
+
+static void
+totem_statusbar_sync_description (TotemStatusbar *statusbar)
+{
+  AtkObject *obj;
+  char *text;
+
+  obj = gtk_widget_get_accessible (GTK_WIDGET (statusbar));
+  if (statusbar->pushed == FALSE) {
+    /* eg: Paused, 0:32 / 1:05 */
+    text = g_strdup_printf (_("%s, %s"),
+	gtk_label_get_text (GTK_LABEL (statusbar->label)),
+	gtk_label_get_text (GTK_LABEL (statusbar->time_label)));
+  } else {
+    /* eg: Buffering, 75 % */
+    text = g_strdup_printf (_("%s, %d %%"),
+	gtk_label_get_text (GTK_LABEL (statusbar->label)),
+	statusbar->percentage);
+  }
+
+  atk_object_set_name (obj, text);
+  g_free (text);
 }
 
 void
@@ -615,3 +668,7 @@ totem_statusbar_size_allocate  (GtkWidget     *widget,
       GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
     }
 }
+
+/*
+ * vim: sw=2 ts=8 cindent noai bs=2
+ */
