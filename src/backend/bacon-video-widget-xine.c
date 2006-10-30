@@ -67,7 +67,6 @@ enum {
 	TICK,
 	GOT_METADATA,
 	BUFFERING,
-	SPEED_WARNING,
 	LAST_SIGNAL
 };
 
@@ -80,7 +79,6 @@ enum {
 	CHANNELS_CHANGE_ASYNC,
 	BUFFERING_ASYNC,
 	MESSAGE_ASYNC,
-	SPEED_WARNING_ASYNC,
 	ERROR_ASYNC
 };
 
@@ -400,15 +398,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 				NULL, NULL,
 				g_cclosure_marshal_VOID__INT,
 				G_TYPE_NONE, 1, G_TYPE_INT);
-
-	bvw_table_signals[SPEED_WARNING] =
-		g_signal_new ("speed-warning",
-				G_TYPE_FROM_CLASS (object_class),
-				G_SIGNAL_RUN_LAST,
-				G_STRUCT_OFFSET (BaconVideoWidgetClass, speed_warning),
-				NULL, NULL,
-				g_cclosure_marshal_VOID__VOID,
-				G_TYPE_NONE, 0);
 }
 
 static void
@@ -1269,11 +1258,6 @@ bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 				bvw_table_signals[ERROR],
 				0, data->msg, TRUE, FALSE);
 		break;
-	case SPEED_WARNING_ASYNC:
-		g_signal_emit (G_OBJECT (bvw),
-				bvw_table_signals[SPEED_WARNING],
-				0, NULL);
-		break;
 	case ERROR_ASYNC:
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[ERROR], 0,
@@ -1468,10 +1452,6 @@ xine_event (void *user_data, const xine_event_t *event)
 		xine_event_message (bvw, (xine_ui_message_data_t *)event->data);
 		break;
 	case XINE_EVENT_DROPPED_FRAMES:
-		data = g_new0 (signal_data, 1);
-		data->signal = SPEED_WARNING_ASYNC;
-		g_async_queue_push (bvw->priv->queue, data);
-		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
 		break;
 	case XINE_EVENT_AUDIO_LEVEL:
 		/* Unhandled, we use the software mixer, not the hardware one */
@@ -2317,6 +2297,19 @@ bacon_video_widget_play (BaconVideoWidget *bvw, GError **gerror)
 gboolean
 bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
 {
+	g_return_val_if_fail (bvw != NULL, FALSE);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
+
+	if (!bvw->priv->mrl)
+		return FALSE;
+
+	/* (instant seeking only make sense with video, hence no cdda:// here) */
+	if (g_str_has_prefix (bvw->priv->mrl, "file://") ||
+			g_str_has_prefix (bvw->priv->mrl, "dvd://") ||
+			g_str_has_prefix (bvw->priv->mrl, "vcd://"))
+		return TRUE;
+
 	return FALSE;
 }
 

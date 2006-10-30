@@ -78,7 +78,6 @@ enum
   SIGNAL_TICK,
   SIGNAL_GOT_METADATA,
   SIGNAL_BUFFERING,
-  SIGNAL_SPEED_WARNING,
   LAST_SIGNAL
 };
 
@@ -891,15 +890,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 		  G_STRUCT_OFFSET (BaconVideoWidgetClass, buffering),
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__INT, G_TYPE_NONE, 1, G_TYPE_INT);
-
-  bvw_signals[SIGNAL_SPEED_WARNING] =
-    g_signal_new ("speed-warning",
-		  G_TYPE_FROM_CLASS (object_class),
-		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (BaconVideoWidgetClass, speed_warning),
-		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
 }
 
 static void

@@ -62,7 +62,6 @@ typedef struct {
 	void (*tick) (GtkWidget *bvw, gint64 current_time, gint64 stream_length,
 			float current_position, gboolean seekable);
 	void (*buffering) (GtkWidget *bvw, guint progress);
-	void (*speed_warning) (GtkWidget *bvw);
 } BaconVideoWidgetClass;
 
 typedef enum {

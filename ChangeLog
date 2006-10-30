@@ -1,5 +1,24 @@
 2006-10-30  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_class_init):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_class_init), (bacon_video_widget_idle_signal),
+	(xine_event), (bacon_video_widget_can_direct_seek):
+	* src/backend/bacon-video-widget.h:
+	* src/totem-playlist.c: (totem_playlist_save_add_format_combo_box):
+	* src/totem.c: (video_widget_create):
+
+	Remove the speed-warning signal, we weren't using it, and it's more
+	annoying than anything else
+
+	Implement direct seeking for local URIs and DVDs when using xine-lib
+	(Closes: #151909)
+
+	Remove unused variables in totem-playlist.c
+
+2006-10-30  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemPlugin.cpp:
 	* browser-plugin/totemPlugin.h:
 	* src/totem-mozilla-options.h:

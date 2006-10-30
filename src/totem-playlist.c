@@ -909,9 +909,6 @@ static GtkWidget *
 totem_playlist_save_add_format_combo_box (GtkFileChooser *fc)
 {
 	GtkWidget *hbox, *label, *combo_box;
-	AtkObject *atk_object;
-	AtkRelation *atk_relation;
-	AtkRelationSet *atk_relations;
 	guint i;
 
 	hbox = gtk_hbox_new (FALSE, 4);
