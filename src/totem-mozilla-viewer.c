@@ -21,9 +21,6 @@
 
 #include "config.h"
 
-//FIXME damn build system!
-#include "totem-interface.c"
-
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <stdlib.h>
@@ -44,6 +41,7 @@
 #include "bacon-video-widget.h"
 #include "totem-interface.h"
 #include "totem-mozilla-options.h"
+#include "totem-statusbar.h"
 #include "bacon-volume.h"
 #include "video-utils.h"
 

@@ -25,7 +25,8 @@ endif
 
 noinst_LTLIBRARIES = \
 	libbaconpropertiespage.la \
-	libbaconmessageconnection.la
+	libbaconmessageconnection.la \
+	libtotem_player.la
 nautilus_LTLIBRARIES = $(TOTEM_PROPERTIES_PAGE)
 
 modules_flags = -export_dynamic -avoid-version -module
@@ -57,6 +58,10 @@ libbaconpropertiespage_la_SOURCES = \
 	totem-interface.c		\
 	totem-interface.h
 
+libtotem_player_la_SOURCES =		\
+	totem-statusbar.c		\
+	totem-statusbar.h		\
+	$(BACON_VOLUME)
 
 totem_SOURCES = 					\
 	totem.c totem.h					\
@@ -76,17 +81,15 @@ totem_SOURCES = 					\
 	totem-menu.c totem-menu.h	\
 	totem-time-label.c totem-time-label.h \
 	totem-uri.c totem-uri.h		\
-	totem-statusbar.c		\
-	totem-statusbar.h		\
 	totem-gromit.c totem-gromit.h	\
 	ev-sidebar.c ev-sidebar.h	\
 	totem-subtitle-encoding.c	\
-	totem-subtitle-encoding.h	\
-	$(BACON_VOLUME)
+	totem-subtitle-encoding.h
 
 totem_LDADD = \
 	plparse/libtotem-plparser.la backend/libbaconvideowidget.la	\
 	libbaconpropertiespage.la libbaconmessageconnection.la		\
+	libtotem_player.la						\
 	$(EXTRA_GNOME_LIBS) $(REMOTE_LIBS)				\
 	$(XVIDMODE_LIBS) $(NVTV_LIBS)					\
 	$(DBUS_LIBS)							\
@@ -110,7 +113,6 @@ libtotem_properties_page_la_LIBADD =					\
 	$(EXTRA_GNOME_LIBS) $(XVIDMODE_LIBS)				\
 	$(NVTV_LIBS) $(NAUTILUS_LIBS)					\
 	$(XTEST_LIBS) $(X_LIBS)
-
 libtotem_properties_page_la_LDFLAGS = $(modules_flags)
 
 test_properties_page_CFLAGS = -I$(top_srcdir)
@@ -139,11 +141,11 @@ totem-mozilla-interface.h: totem-mozilla-interface.xml
 
 totem_mozilla_viewer_SOURCES = 		\
 	totem-mozilla-viewer.c		\
-	totem-mozilla-options.h		\
-	bacon-volume.c bacon-volume.h
+	totem-mozilla-options.h
+
 totem_mozilla_viewer_LDADD = \
 	backend/libbaconvideowidget.la libbaconpropertiespage.la \
-	plparse/libtotem-plparser.la \
+	libtotem_player.la plparse/libtotem-plparser.la \
 	$(EXTRA_GNOME_LIBS) $(XVIDMODE_LIBS) \
 	$(DBUS_LIBS) $(NVTV_LIBS) \
 	$(XTEST_LIBS) $(X_LIBS) 

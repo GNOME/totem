@@ -1,5 +1,12 @@
 2006-10-30  Bastien Nocera  <hadess@hadess.net>
 
+	* data/mozilla-viewer.glade:
+	* src/Makefile.am:
+	* src/totem-mozilla-viewer.c: Try to unbreak the build (especially
+	wrt. totem-interface.c), and add a statusbar to the browser plugin
+
+2006-10-30  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-statusbar.c: (totem_statusbar_init),
 	(totem_statusbar_new_from_glade), (totem_statusbar_update_time),
 	(totem_statusbar_set_text), (totem_statusbar_timeout_pop),
