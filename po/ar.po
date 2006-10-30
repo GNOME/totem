@@ -1,186 +1,315 @@
-# translation of totem.HEAD.ar.po to 
-# translation of totem.HEAD.po to Arabic
+# translation of totem.HEAD.ar.po to
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) 2003 THE PACKAGE'S COPYRIGHT HOLDER.
-# FIXME: CHECK THE PLURAL FORMS; I JUST PUT A Plural-Forms DEFINITION
-# THAT MATCHES THE ACTUALLY PRESENT TRANSLATIONS, SO THE FILE DOESN'T
-# FAIL, BUT IT HAS TO BE CHECKED AND MAYBE CORRECTED.
 # Arafat Medini <lumina@silverpen.de>, 2003, 2005.
-# 
-# 
+# Djihed Afifi <djihed@gmail.com>, 2006.
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-04 06:17+0100\n"
-"PO-Revision-Date: 2005-02-24 18:16+0100\n"
-"Last-Translator:  <kinryu@silverpen.de>\n"
-"Language-Team:  <en@li.org>\n"
+"POT-Creation-Date: 2006-10-30 00:54+0000\n"
+"PO-Revision-Date: 2006-10-06 17:27-0000\n"
+"Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
+"Language-Team:  <support@arabeyes.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: KBabel 1.11.2\n"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1484
+#: ../data/playlist.glade.h:1
+#, fuzzy
+msgid "Add..."
+msgstr "إ_ضافة"
+
+#: ../data/playlist.glade.h:2
+#, fuzzy
+msgid "Move Down"
+msgstr "التحرك للأسفل"
+
+#: ../data/playlist.glade.h:3
+#, fuzzy
+msgid "Move Up"
+msgstr "التحرك للأعلى"
+
+#. translators: Playlist is the default saved playlist filename,
+#. * without the suffix
+#: ../data/playlist.glade.h:4 ../src/totem-playlist.c:894
+#: ../src/totem-sidebar.c:117
+#, fuzzy
 msgid "Playlist"
 msgstr "قائمة التشغيل"
 
-#: data/playlist.glade.h:2
-msgid "Repeat _mode"
-msgstr "_نمط الاعادة"
+#: ../data/playlist.glade.h:5
+#, fuzzy
+msgid "Remove"
+msgstr "حذف"
 
-#: data/playlist.glade.h:3
-msgid "Shuf_fle mode"
-msgstr "نسق ال_خلط"
+#: ../data/playlist.glade.h:6
+#, fuzzy
+msgid "Save..."
+msgstr "حفظ"
 
-#: data/playlist.glade.h:4
-msgid "_Add..."
-msgstr "_اضافة..."
-
-#: data/playlist.glade.h:5
+#: ../data/playlist.glade.h:7
+#, fuzzy
 msgid "_Copy Location"
-msgstr "نسخ الم_وقع"
+msgstr "_نسخ موقع الوصلة"
 
-#: data/playlist.glade.h:6
-msgid "_Save..."
-msgstr "_حفظ..."
+#: ../data/popup.glade.h:1 ../data/totem.glade.h:46
+#, fuzzy
+msgid "Next chapter or movie"
+msgstr "ايجاد الحدث التالي لالسلسلة أو الجملة"
 
-#: data/properties.glade.h:1 data/screenshot.glade.h:1 data/totem.glade.h:1
+#: ../data/popup.glade.h:2 ../data/totem.glade.h:51
+#, fuzzy
+msgid "Play / Pa_use"
+msgstr "ا_ستعمل امرا مخصصا"
+
+#: ../data/popup.glade.h:3 ../data/totem.glade.h:52
+#, fuzzy
+msgid "Play or pause the movie"
+msgstr "مختصر مفتاح العزف (أو العزف/التّمهّل)."
+
+#: ../data/popup.glade.h:4 ../data/totem.glade.h:56
+#, fuzzy
+msgid "Previous chapter or movie"
+msgstr "ايجاد الحدث السابق لالسلسة أو الجملة"
+
+#: ../data/popup.glade.h:5 ../data/totem.glade.h:73
+#, fuzzy
+msgid "Show _Controls"
+msgstr "متحكمات لوحة المفاتيح"
+
+#: ../data/popup.glade.h:6 ../data/totem.glade.h:75
+#, fuzzy
+msgid "Show controls"
+msgstr "متحكمات لوحة المفاتيح"
+
+#: ../data/popup.glade.h:7 ../data/totem.glade.h:79
+#, fuzzy
+msgid "Skip _Backwards"
+msgstr "بحث إلى ال_خلف"
+
+#: ../data/popup.glade.h:8 ../data/totem.glade.h:80
+#, fuzzy
+msgid "Skip _Forward"
+msgstr "حوّل المكالمات"
+
+#: ../data/popup.glade.h:9 ../data/totem.glade.h:81
+#, fuzzy
+msgid "Skip backwards"
+msgstr "بحث إلى ال_خلف"
+
+#: ../data/popup.glade.h:10 ../data/totem.glade.h:82
+#, fuzzy
+msgid "Skip forward"
+msgstr "حوّل المكالمات"
+
+#: ../data/popup.glade.h:11 ../src/totem-options.c:46
+#, fuzzy
+msgid "Volume Down"
+msgstr "تخفيض شدّة الصوت"
+
+#: ../data/popup.glade.h:12 ../src/totem-options.c:45
+#, fuzzy
+msgid "Volume Up"
+msgstr "رفع شدّة الصوت"
+
+#: ../data/popup.glade.h:13 ../data/totem.glade.h:110
+#, fuzzy
+msgid "Volume up"
+msgstr "رفع شدّة الصوت"
+
+#: ../data/popup.glade.h:14 ../data/totem.glade.h:136
+#, fuzzy
+msgid "_Next Chapter/Movie"
+msgstr "عارض أفلام يستخدم %s"
+
+#: ../data/popup.glade.h:15 ../data/totem.glade.h:139
+#, fuzzy
+msgid "_Previous Chapter/Movie"
+msgstr "عارض أفلام يستخدم %s"
+
+#: ../data/properties.glade.h:1 ../data/screenshot.glade.h:1
+#: ../data/totem.glade.h:1
+#, fuzzy
 msgid "    "
 msgstr "    "
 
-#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:109
+#: ../data/properties.glade.h:2
+#, fuzzy
 msgid "0 frames per second"
-msgstr "0 اطارات في الثانية"
+msgstr "%d إطارا كل ثانية"
 
-#. Bitrate
-#: data/properties.glade.h:3 src/bacon-video-widget-properties.c:111
+#: ../data/properties.glade.h:3
+#, fuzzy
 msgid "0 kbps"
-msgstr "0·كيلوبت في الثانية"
+msgstr "%d كيلوبت في الثانية"
 
 #. 0 seconds
-#: data/properties.glade.h:4 data/skip_to.glade.h:1 src/video-utils.c:310
+#: ../data/properties.glade.h:4 ../data/skip_to.glade.h:1
+#: ../src/backend/video-utils.c:272
+#, fuzzy
 msgid "0 seconds"
 msgstr "0 ثوان"
 
-#. Dimensions
-#: data/properties.glade.h:5 src/bacon-video-widget-properties.c:104
+#: ../data/properties.glade.h:5
+#, fuzzy
 msgid "0 x 0"
 msgstr "0 x 0"
 
-#: data/properties.glade.h:6
+#: ../data/properties.glade.h:6
+#, fuzzy
 msgid "<b>Audio</b>"
-msgstr "<b>صوت</b>"
+msgstr "الصوت"
 
-#: data/properties.glade.h:7
+#: ../data/properties.glade.h:7
+#, fuzzy
 msgid "<b>General</b>"
 msgstr "<b>عام</b>"
 
-#: data/properties.glade.h:8
+#: ../data/properties.glade.h:8
+#, fuzzy
 msgid "<b>Video</b>"
-msgstr "<b>فيديو</b>"
+msgstr "الفيديو"
 
-#: data/properties.glade.h:9
+#: ../data/properties.glade.h:9
+#, fuzzy
 msgid "Album:"
-msgstr "الألبوم:"
+msgstr "ألبوم مجهول"
 
-#: data/properties.glade.h:10
+#: ../data/properties.glade.h:10
+#, fuzzy
 msgid "Artist:"
-msgstr "الفنان:"
+msgstr "ال_فنان:"
 
-#: data/properties.glade.h:11
+#: ../data/properties.glade.h:11
+#, fuzzy
 msgid "Bitrate:"
 msgstr "معدّل البايتات:"
 
-#: data/properties.glade.h:12
+#: ../data/properties.glade.h:12
+#, fuzzy
 msgid "Codec:"
-msgstr "كودك (مشفر فاك):"
+msgstr "لايوجد كودك مشترك"
 
-#: data/properties.glade.h:13
+#: ../data/properties.glade.h:13
+#, fuzzy
 msgid "Dimensions:"
-msgstr "الابعاد:"
+msgstr "الأبعاد:"
 
-#: data/properties.glade.h:14
+#: ../data/properties.glade.h:14
+#, fuzzy
 msgid "Duration:"
-msgstr "المدة:"
+msgstr "<b>المدة:</b>"
 
-#: data/properties.glade.h:15
+#: ../data/properties.glade.h:15
+#, fuzzy
 msgid "Framerate:"
 msgstr "تردد الاطارات:"
 
+#. Dimensions
 #. Video Codec
 #. Audio Codec
-#: data/properties.glade.h:16 src/bacon-video-widget-properties.c:106
-#: src/bacon-video-widget-properties.c:113
-#: src/bacon-video-widget-properties.c:194
-#: src/bacon-video-widget-properties.c:232
+#: ../data/properties.glade.h:16 ../src/bacon-video-widget-properties.c:153
+#: ../src/bacon-video-widget-properties.c:155
+#: ../src/bacon-video-widget-properties.c:158
+#: ../src/bacon-video-widget-properties.c:161
+#: ../src/bacon-video-widget-properties.c:164
+#: ../src/bacon-video-widget-properties.c:166
+#: ../src/bacon-video-widget-properties.c:228
+#: ../src/bacon-video-widget-properties.c:230
+#: ../src/bacon-video-widget-properties.c:247
+#, fuzzy
 msgid "N/A"
-msgstr "غير معلوم"
+msgstr "غير متوفر"
 
-#: data/properties.glade.h:17 src/totem.c:1964
+#: ../data/properties.glade.h:17 ../src/totem-sidebar.c:120
+#, fuzzy
 msgid "Properties"
-msgstr "الخصائص"
+msgstr "خصائص"
 
-#: data/properties.glade.h:18
+#: ../data/properties.glade.h:18
+#, fuzzy
 msgid "Title:"
-msgstr "العنوان:"
+msgstr "ال_عنوان:"
 
 #. Title
 #. Artist
 #. Album
 #. Year
-#: data/properties.glade.h:19 src/bacon-video-widget-properties.c:94
-#: src/bacon-video-widget-properties.c:96
-#: src/bacon-video-widget-properties.c:98
-#: src/bacon-video-widget-properties.c:100
-#: src/bacon-video-widget-properties.c:132
-#: src/bacon-video-widget-properties.c:139
-#: src/bacon-video-widget-properties.c:146
-#: src/bacon-video-widget-properties.c:153
+#: ../data/properties.glade.h:19 ../src/bacon-video-widget-properties.c:142
+#: ../src/bacon-video-widget-properties.c:144
+#: ../src/bacon-video-widget-properties.c:146
+#: ../src/bacon-video-widget-properties.c:148
+#, fuzzy
 msgid "Unknown"
 msgstr "مجهول"
 
-#: data/properties.glade.h:20
+#: ../data/properties.glade.h:20
+#, fuzzy
 msgid "Year:"
-msgstr "السنة:"
+msgstr "السّنة"
 
-#: data/screenshot.glade.h:2 data/uri.glade.h:1
+#: ../data/screenshot.glade.h:2
+#, fuzzy
 msgid "*"
 msgstr "*"
 
-#: data/screenshot.glade.h:3
+#: ../data/screenshot.glade.h:3
+#, fuzzy
 msgid "<b>Preview</b>"
 msgstr "<b>لمحة</b>"
 
-#: data/screenshot.glade.h:4 src/totem-screenshot.c:346
+#: ../data/screenshot.glade.h:4 ../src/totem-screenshot.c:346
+#, fuzzy
 msgid "Save Screenshot"
-msgstr "حفظ صورة الشاشة"
+msgstr "اخذ صورة شاشة"
 
-#: data/screenshot.glade.h:5
+#: ../data/screenshot.glade.h:5
+#, fuzzy
 msgid "Save screenshot"
-msgstr "حفظ صورة الشاشة"
+msgstr "اخذ صورة شاشة"
 
-#: data/screenshot.glade.h:6
+#: ../data/screenshot.glade.h:6
+#, fuzzy
 msgid "Save screenshot to _desktop"
-msgstr "حفظ صورة الشاشة على الم_كتب"
+msgstr "مرحبا بك في مكتب جنوم"
 
-#: data/screenshot.glade.h:7
+#: ../data/screenshot.glade.h:7
+#, fuzzy
 msgid "Save screenshot to _file:"
-msgstr "حفظ صورة الشاشة لل_ملف:"
+msgstr "الملف الذي فيه سيحفظ تقرير الخلال"
 
-#: data/skip_to.glade.h:2 src/totem-skipto.c:140
+#: ../data/skip_to.glade.h:2 ../src/totem-skipto.c:163
+#, fuzzy
 msgid "Skip to"
-msgstr "تخطي إلى"
+msgstr "التّخطّي إلى المقطوعة التّالية"
 
-#: data/skip_to.glade.h:3
+#: ../data/skip_to.glade.h:3
+#, fuzzy
 msgid "_Skip to:"
-msgstr "_تخطي إلى:"
+msgstr "التّخطّي إلى المقطوعة التّالية"
 
-#: data/skip_to.glade.h:4
+#: ../data/skip_to.glade.h:4
+#, fuzzy
 msgid "seconds"
 msgstr "ثوان"
 
-#: data/totem.glade.h:2
+#: ../data/totem.desktop.in.in.in.h:1
+#, fuzzy
+msgid "Movie Player"
+msgstr "عارض أفلام يستخدم %s"
+
+#: ../data/totem.desktop.in.in.in.h:2
+#, fuzzy
+msgid "Play movies and songs"
+msgstr "عرض أفلام و موسيقى"
+
+#: ../data/totem.glade.h:2
+#, fuzzy
 msgid ""
 "14.4 Kbps Modem\n"
 "19.2 Kbps Modem\n"
@@ -194,7 +323,8 @@ msgid ""
 "512 Kbps DSL/Cable\n"
 "1.5 Mbps T1/Intranet/LAN\n"
 "Intranet/LAN"
-msgstr "14.4 Kbps Modem\n"
+msgstr ""
+"14.4 Kbps Modem\n"
 "19.2 Kbps Modem\n"
 "28.8 Kbps Modem\n"
 "33.6 Kbps Modem\n"
@@ -207,295 +337,308 @@ msgstr "14.4 Kbps Modem\n"
 "1.5 Mbps T1/Intranet/LAN\n"
 "Intranet/LAN"
 
-#: data/totem.glade.h:14
+#: ../data/totem.glade.h:14
+#, fuzzy
 msgid "16:9 (Widescreen)"
-msgstr "16:9·(شاشة عريضة)"
+msgstr "&amp;16"
 
-#: data/totem.glade.h:15
+#: ../data/totem.glade.h:15
+#, fuzzy
 msgid "2.11:1 (DVB)"
-msgstr "·إذاعات·فيديو·رقمي 1:2.11 (DVB)"
+msgstr "Sans 11"
 
-#: data/totem.glade.h:16
+#: ../data/totem.glade.h:16
+#, fuzzy
 msgid "4:3 (TV)"
 msgstr "4:3 (تلفاز)"
 
-#: data/totem.glade.h:17
+#: ../data/totem.glade.h:17
+#, fuzzy
 msgid "<b>Audio Output</b>"
-msgstr "<b>اخراج صوتي</b>"
+msgstr "جهاز خرج الصوت"
 
-#: data/totem.glade.h:18
+#: ../data/totem.glade.h:18
+#, fuzzy
 msgid "<b>Color balance</b>"
-msgstr "<b>توازن اللون</b>"
+msgstr "إضبط الألوان"
 
-#: data/totem.glade.h:19
+#: ../data/totem.glade.h:19
+#, fuzzy
 msgid "<b>Display</b>"
-msgstr "<b>الشاشة</b>"
+msgstr "الشاشة"
 
-#: data/totem.glade.h:20
+#: ../data/totem.glade.h:20
+#, fuzzy
 msgid "<b>Networking</b>"
-msgstr "<b>الشبكة</b>"
+msgstr "الشّبكيّة"
 
-#: data/totem.glade.h:21
-msgid "<b>Optical Device</b>"
-msgstr "<b>الجهاز البصري</b>"
-
-#: data/totem.glade.h:22
-msgid "<b>Proprietary Plugins</b>"
-msgstr "<b>ملحقات مملوكة</b>"
-
-#: data/totem.glade.h:23
+#: ../data/totem.glade.h:21
+#, fuzzy
 msgid "<b>TV-Out</b>"
-msgstr "<b>اخراج للتلفزة</b>"
+msgstr "خروج"
 
-#: data/totem.glade.h:24
+#: ../data/totem.glade.h:22
+#, fuzzy
+msgid "<b>Text Subtitles</b>"
+msgstr "نص العلامة."
+
+#: ../data/totem.glade.h:23
+#, fuzzy
 msgid "<b>Visual Effects</b>"
-msgstr "<b>مؤثرات بصرية</b>"
+msgstr "عبري مرئي"
 
-#: data/totem.glade.h:25
-msgid "<span size=\"medium\"><b>No File</b></span>"
-msgstr "<span size=\"medium\"><b>لا ملفّ</b></span>"
-
-#: data/totem.glade.h:26
+#: ../data/totem.glade.h:24
+#, fuzzy
 msgid "<span size=\"medium\"><b>No file</b></span>"
 msgstr "<span size=\"medium\"><b>لا ملفّ</b></span>"
 
-#: data/totem.glade.h:27
+#: ../data/totem.glade.h:25
+#, fuzzy
 msgid "A_udio Menu"
-msgstr "قائمة ال_صوت"
+msgstr "مخطط القائمة"
 
-#: data/totem.glade.h:28
+#: ../data/totem.glade.h:26
+#, fuzzy
 msgid "Always on _Top"
-msgstr "دائما إلى ال_أعلى"
+msgstr "تحوّل دائم للحالة العليا"
 
-#: data/totem.glade.h:29
+#: ../data/totem.glade.h:27
+#, fuzzy
 msgid "Always on top"
-msgstr "دائما إلى الأعلى"
+msgstr "تحوّل دائم للحالة العليا"
 
-#: data/totem.glade.h:30
+#: ../data/totem.glade.h:28 ../src/totem-properties-view.c:90
+#, fuzzy
 msgid "Audio"
-msgstr "صوت"
+msgstr "الصوت"
 
-#: data/totem.glade.h:31 src/totem-sublang.c:112 src/totem-sublang.c:133
+#: ../data/totem.glade.h:29 ../src/totem-menu.c:271 ../src/totem-menu.c:292
+#, fuzzy
 msgid "Auto"
-msgstr "آلي"
+msgstr "تلقائي"
 
-#: data/totem.glade.h:32
+#: ../data/totem.glade.h:30
+#, fuzzy
 msgid "Automatically _resize the window when a new video is loaded"
 msgstr "اعادة _تحجيم النافذة آليا عند تحميل فيديو جديد"
 
-#: data/totem.glade.h:33
+#: ../data/totem.glade.h:31
+#, fuzzy
 msgid "Co_ntrast:"
-msgstr "الت_باين:"
+msgstr "أفضل ت_باين"
 
-#: data/totem.glade.h:34
+#: ../data/totem.glade.h:32
+#, fuzzy
 msgid "Connection _speed:"
-msgstr "_سرعة الاتصال:"
+msgstr "الاتصال السريع"
 
-#: data/totem.glade.h:35
+#: ../data/totem.glade.h:33
+#, fuzzy
 msgid "Deinterlace"
 msgstr "حل الدمج"
 
-#: data/totem.glade.h:36
+#: ../data/totem.glade.h:34
+#, fuzzy
 msgid "Display"
-msgstr "عرض"
+msgstr "الشاشة"
 
-#: data/totem.glade.h:37
-msgid "Exit Fullscreen"
-msgstr "إنهاء نمط ملئ الشاشة"
-
-#: data/totem.glade.h:38
+#: ../data/totem.glade.h:35
+#, fuzzy
 msgid "Fit Window to Movie"
-msgstr "ملائمة النّافذة للفلم"
+msgstr "ن_قل إلى نافذةٍ جديدة"
 
-#: data/totem.glade.h:39
+#: ../data/totem.glade.h:36
+#, fuzzy
 msgid "General"
-msgstr "عام"
+msgstr "عامّ"
 
-#: data/totem.glade.h:40
+#: ../data/totem.glade.h:37
+#, fuzzy
 msgid "Go to the DVD menu"
-msgstr "إذهب إلى قائمة القرص الفيديو الرقمي"
+msgstr "الذّهاب إلى منشئ الأقراص المدمجة/أقراص الـDVD"
 
-#: data/totem.glade.h:41
+#: ../data/totem.glade.h:38
+#, fuzzy
 msgid "Go to the angle menu"
-msgstr "تنقل للقائمة الجانبية"
+msgstr "أضف التشفير إلى القائمة"
 
-#: data/totem.glade.h:42
+#: ../data/totem.glade.h:39
+#, fuzzy
 msgid "Go to the audio menu"
-msgstr "اذهب إلى قائمة المقطوعات الصوتية"
+msgstr "أضف التشفير إلى القائمة"
 
-#: data/totem.glade.h:43
+#: ../data/totem.glade.h:40
+#, fuzzy
 msgid "Go to the chapter menu"
-msgstr "اذهب إلى قائمة الأبواب"
+msgstr "أضف التشفير إلى القائمة"
 
-#: data/totem.glade.h:44
+#: ../data/totem.glade.h:41
+#, fuzzy
 msgid "Go to the title menu"
-msgstr "اذهب إلى قائمة العناوين"
+msgstr "أضف التشفير إلى القائمة"
 
-#: data/totem.glade.h:45
+#: ../data/totem.glade.h:42
+#, fuzzy
 msgid "Help contents"
 msgstr "محتويات المساعدة"
 
-#: data/totem.glade.h:46
+#: ../data/totem.glade.h:43
+#, fuzzy
 msgid "Languages"
 msgstr "لغات"
 
-#: data/totem.glade.h:47 src/totem-options.c:39
+#: ../data/totem.glade.h:44
+#, fuzzy
+msgid "Leave Fullscreen"
+msgstr "الخروج من نمط ملئ الشاشة"
+
+#: ../data/totem.glade.h:45 ../src/totem-options.c:41
+#, fuzzy
 msgid "Next"
-msgstr "التالي"
+msgstr "التّالية"
 
-#: data/totem.glade.h:48
-msgid "Next chapter or movie"
-msgstr "الباب أو الفلم التالي"
-
-#: data/totem.glade.h:49
+#: ../data/totem.glade.h:47
+#, fuzzy
 msgid "No Language Selection Available"
-msgstr "لا اختيار لغة متوفر"
+msgstr "لا مُقدّم متوفّر للبرتوكول `%s'"
 
-#: data/totem.glade.h:50
+#: ../data/totem.glade.h:48
+#, fuzzy
 msgid "No subtitles selection available"
-msgstr "لا تتوفّر باقة عناوين فرعيّة"
+msgstr "لا مُقدّم متوفّر للبرتوكول `%s'"
 
-#: data/totem.glade.h:51
+#: ../data/totem.glade.h:49
+#, fuzzy
 msgid "Open _Location..."
 msgstr "فتح الم_وقع..."
 
-#: data/totem.glade.h:52
+#: ../data/totem.glade.h:50
+#, fuzzy
 msgid "Open a non-local file"
-msgstr "فتح ملف غير محلي"
+msgstr "مؤشّر لملف محلّي (%s)"
 
-#: data/totem.glade.h:53
-msgid "Play / Pa_use"
-msgstr "تشغيل / ايقاف مؤقت"
-
-#: data/totem.glade.h:54
-msgid "Play _Disc"
-msgstr "عرض _قرص"
-
-#: data/totem.glade.h:55
-msgid "Play a Video or Audio Disc"
-msgstr "عرض قرص فيديو أو عزف قرص صوتي"
-
-#: data/totem.glade.h:56
-msgid "Play or pause the movie"
-msgstr "تشغيل او ايقاف مؤقت للفلم"
-
-#: data/totem.glade.h:57 src/totem-options.c:38
+#: ../data/totem.glade.h:53 ../src/totem-options.c:38
+#, fuzzy
 msgid "Play/Pause"
-msgstr "تشغيل / إيقاف مؤقت"
+msgstr "تش_غيل / ايقاف مؤقّت"
 
-#: data/totem.glade.h:58 src/totem-options.c:40
+#: ../data/totem.glade.h:54
+#, fuzzy
+msgid "Prefere_nces"
+msgstr "التّف_ضيلات"
+
+#: ../data/totem.glade.h:55 ../src/totem-options.c:42
+#, fuzzy
 msgid "Previous"
-msgstr "السابق"
+msgstr "السّابقة"
 
-#: data/totem.glade.h:59
-msgid "Previous chapter or movie"
-msgstr "الباب أو الفلم السابق"
+#: ../data/totem.glade.h:57
+#, fuzzy
+msgid "Reset To _Defaults"
+msgstr "إعادة ضبط المشهد للا_فتراضات"
 
-#: data/totem.glade.h:60
+#: ../data/totem.glade.h:58
+#, fuzzy
 msgid "Resize _1:1"
-msgstr "ال_حجم العادي"
+msgstr "ت_حجيم"
 
-#: data/totem.glade.h:61
+#: ../data/totem.glade.h:59
+#, fuzzy
 msgid "Resize _2:1"
-msgstr "تكبير _2:1"
+msgstr "ت_حجيم"
 
-#: data/totem.glade.h:62
+#: ../data/totem.glade.h:60
+#, fuzzy
 msgid "Resize to half the video size"
 msgstr "تصغير لنصف حجم الفيديو"
 
-#: data/totem.glade.h:63
+#: ../data/totem.glade.h:61
+#, fuzzy
 msgid "Resize to twice the video size"
 msgstr "تكبير لضعف حجم الفيديو"
 
-#: data/totem.glade.h:64
+#: ../data/totem.glade.h:62
+#, fuzzy
 msgid "Resize to video size"
-msgstr "تحجيم لحجم الفيديو"
+msgstr "حجم نافذة الفيديو المحلية"
 
-#: data/totem.glade.h:65
+#: ../data/totem.glade.h:63
+#, fuzzy
 msgid "S_ubtitles"
 msgstr "عناوين _فرعيّة"
 
-#: data/totem.glade.h:66
+#: ../data/totem.glade.h:64
+#, fuzzy
 msgid "Sat_uration:"
 msgstr "الت_شبيع:"
 
-#: data/totem.glade.h:67
+#: ../data/totem.glade.h:65
+#, fuzzy
 msgid "Set the aspect ratio"
-msgstr "ضبط نسبة الإمتداد"
+msgstr "نسبة الجانب \"%s\" مجهولة"
 
-#: data/totem.glade.h:68
+#: ../data/totem.glade.h:66
+#, fuzzy
 msgid "Set the repeat mode"
-msgstr "ضبط نمط الاعادة"
+msgstr "تعيين نظام الالتواء"
 
-#: data/totem.glade.h:69
+#: ../data/totem.glade.h:67
+#, fuzzy
 msgid "Set the shuffle mode"
-msgstr "ضبط نمط الخلط"
+msgstr "تعيين نظام الالتواء"
 
-#: data/totem.glade.h:70
+#: ../data/totem.glade.h:68
+#, fuzzy
 msgid "Sets 16:9 (Anamorphic) aspect ratio"
 msgstr "ضبط لنسبة عرض 16:9"
 
-#: data/totem.glade.h:71
+#: ../data/totem.glade.h:69
+#, fuzzy
 msgid "Sets 2.11:1 (DVB) aspect ratio"
 msgstr "ضبط لنسبة عرض 2.11:1 (لإذاعات الفيديو الرقمي)"
 
-#: data/totem.glade.h:72
+#: ../data/totem.glade.h:70
+#, fuzzy
 msgid "Sets 4:3 (TV) aspect ratio"
-msgstr "ضبط لنسبة عرض 4:3 (تلفزيون)"
+msgstr "نسبة الجانب \"%s\" مجهولة"
 
-#: data/totem.glade.h:73
+#: ../data/totem.glade.h:71
+#, fuzzy
 msgid "Sets automatic aspect ratio"
-msgstr "ضبط آلي لنسبة العرض"
+msgstr "نسبة الجانب \"%s\" مجهولة"
 
-#: data/totem.glade.h:74
+#: ../data/totem.glade.h:72
+#, fuzzy
 msgid "Sets square aspect ratio"
-msgstr "ضبط نسبة إمتداد المربّعات"
+msgstr "نسبة الجانب \"%s\" مجهولة"
 
-#: data/totem.glade.h:75
-msgid "Show _Controls"
-msgstr "اظهار ادوات الت_حكم"
-
-#: data/totem.glade.h:76
+#: ../data/totem.glade.h:74
+#, fuzzy
 msgid "Show _visual effects when an audio file is played"
 msgstr "اظهار مؤثرات _مرئية عند عزف ملف مقطوعة صوتية"
 
-#: data/totem.glade.h:77
-msgid "Show controls"
-msgstr "اظهار اداوات التحكم"
+#: ../data/totem.glade.h:76
+#, fuzzy
+msgid "Show or hide the sidebar"
+msgstr "إظهار أو إخفاء عمود الأدوات"
 
-#: data/totem.glade.h:78
-msgid "Show or hide the playlist"
-msgstr "اظهار او اخفاء قائمة التشغيل"
-
-#: data/totem.glade.h:79
-msgid "Show/Hide Playlist"
-msgstr "إظهار/إخفاء قائمة التشغيل"
-
-#: data/totem.glade.h:80
+#: ../data/totem.glade.h:77
+#, fuzzy
 msgid "Shuff_le Mode"
-msgstr "نسق ال_خلط"
+msgstr "وضع المكالمة الواردة"
 
-#: data/totem.glade.h:81
-msgid "Skip _Backwards"
-msgstr "تخطي إلى ال_خلف"
+#: ../data/totem.glade.h:78
+#, fuzzy
+msgid "Side_bar"
+msgstr "بار هاربور"
 
-#: data/totem.glade.h:82
-msgid "Skip _Forward"
-msgstr "تخطي إلى الأ_مام"
-
-#: data/totem.glade.h:83
-msgid "Skip backwards"
-msgstr "تخطي إلى الخلف"
-
-#: data/totem.glade.h:84
-msgid "Skip forward"
-msgstr "تخطي إلى الأمام"
-
-#: data/totem.glade.h:85
+#: ../data/totem.glade.h:83
+#, fuzzy
 msgid "Skip to a specific time"
-msgstr "تخطي إلى وقت معين"
+msgstr "زمن نسبيّ للوقت الحالي"
 
-#: data/totem.glade.h:86
+#: ../data/totem.glade.h:84
+#, fuzzy
 msgid ""
 "Small\n"
 "Normal\n"
@@ -507,11 +650,13 @@ msgstr ""
 "عريض\n"
 "عريض جدّا"
 
-#: data/totem.glade.h:90
+#: ../data/totem.glade.h:88
+#, fuzzy
 msgid "Square"
-msgstr "مربّع"
+msgstr "الجذر التربيعي لـ 2"
 
-#: data/totem.glade.h:91
+#: ../data/totem.glade.h:89
+#, fuzzy
 msgid ""
 "Stereo\n"
 "4-channel\n"
@@ -527,305 +672,374 @@ msgstr ""
 "5.1-channel\n"
 "AC3 Passthrough"
 
-#: data/totem.glade.h:97
+#: ../data/totem.glade.h:95
+#, fuzzy
 msgid "Subtitles"
 msgstr "عناوين فرعيّة"
 
-#: data/totem.glade.h:98
+#: ../data/totem.glade.h:96
+#, fuzzy
+msgid "Switch An_gles"
+msgstr "تبديل المستخدم"
+
+#: ../data/totem.glade.h:97
+#, fuzzy
+msgid "Switch angles"
+msgstr "تبديل المستخدم"
+
+#: ../data/totem.glade.h:98
+#, fuzzy
 msgid "Switch to fullscreen"
-msgstr "تحويل لكامل الشاشة"
+msgstr "بدّل إلى ملء الشاشة"
 
-#: data/totem.glade.h:99
-msgid "Take _Screenshot"
-msgstr "اخذ _صورة شاشة"
+#: ../data/totem.glade.h:99
+#, fuzzy
+msgid "Take _Screenshot..."
+msgstr "اخذ صورة شاشة"
 
-#: data/totem.glade.h:100
+#: ../data/totem.glade.h:100
+#, fuzzy
 msgid "Take a screenshot"
 msgstr "اخذ صورة شاشة"
 
-#: data/totem.glade.h:101
+#: ../data/totem.glade.h:101
+#, fuzzy
 msgid "Time:"
 msgstr "الوقت:"
 
 #. Title
-#: data/totem.glade.h:102 data/totem.desktop.in.in.in.h:2 src/totem.c:563
-#: src/totem.c:3376
+#: ../data/totem.glade.h:102 ../src/totem.c:749 ../src/totem.c:3653
+#: ../src/totem.c:3670
+#, fuzzy
 msgid "Totem Movie Player"
-msgstr "عارض الأفلام طوطم"
+msgstr "عارض أفلام يستخدم %s"
 
-#: data/totem.glade.h:103
+#: ../data/totem.glade.h:103
+#, fuzzy
 msgid "Totem Preferences"
-msgstr "تفضيلات طوطم"
+msgstr "خيارات داشر"
 
-#: data/totem.glade.h:104
+#: ../data/totem.glade.h:104
+#, fuzzy
 msgid "Tv-out in fullscreen by Nvidia (NTSC)"
 msgstr "إخراج تلفزي بنسق كامل الشاشة من قبل Nvidia·(NTSC)"
 
-#: data/totem.glade.h:105
+#: ../data/totem.glade.h:105
+#, fuzzy
 msgid "Tv-out in fullscreen by Nvidia (PAL)"
 msgstr "إخراج·تلفزي·بنسق·كامل·الشاشة من قبل Nvidia·(PAL)"
 
-#: data/totem.glade.h:106
+#: ../data/totem.glade.h:106
+#, fuzzy
 msgid "Visualisation _size:"
-msgstr "_حجم العرض:"
+msgstr "<b>حجم الشاشة:</b>"
 
-#: data/totem.glade.h:107
+#: ../data/totem.glade.h:107
+#, fuzzy
 msgid "Volume _Down"
-msgstr "ت_خفيض حدة الصوت"
+msgstr "تخفيض شدّة الصوت"
 
-#: data/totem.glade.h:108
+#: ../data/totem.glade.h:108
+#, fuzzy
 msgid "Volume _Up"
-msgstr "رفع _حدة الصوت"
+msgstr "رفع شدّة الصوت"
 
-#: data/totem.glade.h:109
+#: ../data/totem.glade.h:109
+#, fuzzy
 msgid "Volume down"
-msgstr "تخفيض حدة الصوت"
+msgstr "تخفيض شدّة الصوت"
 
-#: data/totem.glade.h:110
-msgid "Volume up"
-msgstr "رفع حدة الصوت"
-
-#: data/totem.glade.h:111
+#: ../data/totem.glade.h:111
+#, fuzzy
 msgid "Zoom In"
 msgstr "تكبير"
 
-#: data/totem.glade.h:112
+#: ../data/totem.glade.h:112
+#, fuzzy
 msgid "Zoom Out"
 msgstr "تصغير"
 
-#: data/totem.glade.h:113
+#: ../data/totem.glade.h:113
+#, fuzzy
 msgid "Zoom Reset"
-msgstr "إعادة ضبط الحجم"
+msgstr "إعا_دة ضبط الخطوط"
 
-#: data/totem.glade.h:114
+#: ../data/totem.glade.h:114
+#, fuzzy
 msgid "Zoom in"
 msgstr "تكبير"
 
-#: data/totem.glade.h:115
+#: ../data/totem.glade.h:115
+#, fuzzy
 msgid "Zoom out"
 msgstr "تصغير"
 
-#: data/totem.glade.h:116
+#: ../data/totem.glade.h:116
+#, fuzzy
 msgid "Zoom reset"
-msgstr "إعادة ضبط الحجم"
+msgstr "إعا_دة ضبط الخطوط"
 
-#: data/totem.glade.h:117
-msgid "_Add Proprietary Plugins..."
-msgstr "ا_ضافة ملحقات مملوكة..."
+#: ../data/totem.glade.h:117
+#, fuzzy
+msgid "_About"
+msgstr "_حول"
 
-#: data/totem.glade.h:118
+#: ../data/totem.glade.h:118
+#, fuzzy
 msgid "_Angle Menu"
-msgstr "قائمة _جانبيّة"
+msgstr "مخطط القائمة"
 
-#: data/totem.glade.h:119
+#: ../data/totem.glade.h:119
+#, fuzzy
 msgid "_Aspect Ratio"
-msgstr "_نسبة الإمتداد"
+msgstr "نسبة الجانب \"%s\" مجهولة"
 
-#: data/totem.glade.h:120
+#: ../data/totem.glade.h:120
+#, fuzzy
 msgid "_Audio output type:"
-msgstr "نوع الاخراج ال_صوتي:"
+msgstr "نوع جهاز الخرج"
 
-#: data/totem.glade.h:121
+#: ../data/totem.glade.h:121
+#, fuzzy
 msgid "_Brightness:"
-msgstr "_سطوع:"
+msgstr "إضبط الإنارة"
 
-#: data/totem.glade.h:122
+#: ../data/totem.glade.h:122
+#, fuzzy
 msgid "_Chapter Menu"
-msgstr "_قائمة الأبواب"
+msgstr "مخطط القائمة"
 
-#: data/totem.glade.h:123
+#: ../data/totem.glade.h:123
+#, fuzzy
 msgid "_Contents"
-msgstr "الم_حتويات"
+msgstr "_المحتويات"
 
-#: data/totem.glade.h:124
+#: ../data/totem.glade.h:124
+#, fuzzy
 msgid "_DVD Menu"
-msgstr "_قائمة قرص الفيديو الرقمي"
+msgstr "مخطط القائمة"
 
-#: data/totem.glade.h:125
-msgid "_DXR3 TV-out"
-msgstr "إخراج _تلفزي DXR3"
-
-#: data/totem.glade.h:126
+#: ../data/totem.glade.h:125
+#, fuzzy
 msgid "_Deinterlace"
 msgstr "_فكّ الدمج"
 
-#: data/totem.glade.h:127
+#: ../data/totem.glade.h:126
+#, fuzzy
+msgid "_Edit"
+msgstr "_تحرير"
+
+#: ../data/totem.glade.h:127
+#, fuzzy
 msgid "_Eject"
 msgstr "_طرد"
 
-#: data/totem.glade.h:128
+#: ../data/totem.glade.h:128
+#, fuzzy
+msgid "_Encoding:"
+msgstr "_تشفيرات"
+
+#: ../data/totem.glade.h:129
+#, fuzzy
+msgid "_Font:"
+msgstr "_خط:"
+
+#: ../data/totem.glade.h:130
+#, fuzzy
 msgid "_Fullscreen"
 msgstr "_كامل الشاشة"
 
-#: data/totem.glade.h:129
+#: ../data/totem.glade.h:131
+#, fuzzy
 msgid "_Go"
-msgstr "ا_ذهب"
+msgstr "إ_ذهب"
 
-#: data/totem.glade.h:130
+#: ../data/totem.glade.h:132
+#, fuzzy
+msgid "_Help"
+msgstr "م_ساعدة"
+
+#: ../data/totem.glade.h:133
+#, fuzzy
 msgid "_Hue:"
-msgstr "ال_سطوع:"
+msgstr "ال_فارق بين الألوان:"
 
-#: data/totem.glade.h:131
+#: ../data/totem.glade.h:134
+#, fuzzy
 msgid "_Languages"
-msgstr "ال_لغات"
+msgstr "لغات"
 
-#: data/totem.glade.h:132
+#: ../data/totem.glade.h:135
+#, fuzzy
 msgid "_Movie"
-msgstr "_الفلم"
+msgstr "عارض أفلام يستخدم %s"
 
-#: data/totem.glade.h:133
-msgid "_Next Chapter/Movie"
-msgstr "الباب/الفلم ال_تالي"
-
-#: data/totem.glade.h:134
+#: ../data/totem.glade.h:137
+#, fuzzy
 msgid "_No TV-out"
-msgstr "_لا اخراج تلفزي"
+msgstr "<b>رسالة خارج المكتب:</b>"
 
-#: data/totem.glade.h:135
-msgid "_Optical device path:"
-msgstr "مسار الجهاز الب_صري:"
+#: ../data/totem.glade.h:138
+#, fuzzy
+msgid "_Open..."
+msgstr "_فتح..."
 
-#: data/totem.glade.h:136
-msgid "_Previous Chapter/Movie"
-msgstr "الباب/الفلم السابق"
+#: ../data/totem.glade.h:140
+#, fuzzy
+msgid "_Quit"
+msgstr "إ_نهاء"
 
-#: data/totem.glade.h:137
+#: ../data/totem.glade.h:141
+#, fuzzy
 msgid "_Repeat Mode"
-msgstr "_نمط الاعادة"
+msgstr "نسق القطعة"
 
-#: data/totem.glade.h:138
-msgid "_Reset To Defaults"
-msgstr "إ_عادة الضّبط للإفتراضات"
-
-#: data/totem.glade.h:139
+#: ../data/totem.glade.h:142
+#, fuzzy
 msgid "_Resize 1:2"
-msgstr "ت_صغير 1:2"
+msgstr "ت_حجيم"
 
-#: data/totem.glade.h:140
-msgid "_Show/Hide Playlist"
-msgstr "ا_ظهار / اخفاء قائمة التشغيل"
+#: ../data/totem.glade.h:143
+#, fuzzy
+msgid "_Sidebar"
+msgstr "مطلوب إمتداد العمود الجانبي"
 
-#: data/totem.glade.h:141
+#: ../data/totem.glade.h:144
+#, fuzzy
 msgid "_Skip to..."
-msgstr "_تخطي إلى..."
+msgstr "التّخطّي إلى المقطوعة التّالية"
 
-#: data/totem.glade.h:142
+#: ../data/totem.glade.h:145
+#, fuzzy
 msgid "_Sound"
-msgstr "_صوت"
+msgstr "صوت"
 
-#: data/totem.glade.h:143
+#: ../data/totem.glade.h:146
+#, fuzzy
 msgid "_Title Menu"
-msgstr "قائمة ال_عناوين"
+msgstr "مخطط القائمة"
 
-#: data/totem.glade.h:144
+#: ../data/totem.glade.h:147
+#, fuzzy
 msgid "_Type of visualisation:"
-msgstr "_نوع العرض:"
+msgstr "نوع التّنبيه"
 
-#: data/totem.schemas.in.h:1
+#: ../data/totem.glade.h:148
+#, fuzzy
+msgid "_View"
+msgstr "_عرض"
+
+#: ../data/totem.schemas.in.h:1
+msgid ""
+"Amount of data to buffer for network streams before starting to display the "
+"stream (in seconds)"
+msgstr ""
+
+#: ../data/totem.schemas.in.h:2
+#, fuzzy
+msgid "Buffer size"
+msgstr "<b>حجم الشاشة:</b>"
+
+#: ../data/totem.schemas.in.h:3
+#, fuzzy
 msgid "Enable deinterlacing"
-msgstr "تفعيل فكّ الدمج"
+msgstr "مكّن ال_تّسجيل"
 
-#: data/totem.schemas.in.h:2
-msgid "Enable deinterlacing."
-msgstr "تفعيل·فكّ·الدمج."
+#: ../data/totem.schemas.in.h:4
+#, fuzzy
+msgid "Encoding charset for subtitle"
+msgstr "بروفيل الصوت لجنوم لتشفير الصوت"
 
-#: data/totem.schemas.in.h:3
-msgid "Height of the video widget"
-msgstr "إرتفاع قطعة الفيديو"
+#: ../data/totem.schemas.in.h:5
+msgid "Maximum amount of data to decode ahead of display (in seconds)"
+msgstr ""
 
-#: data/totem.schemas.in.h:4
+#: ../data/totem.schemas.in.h:6
+#, fuzzy
 msgid "Name of the visual effects plugins"
-msgstr "اسماء ملاحق المؤثرات المرئية"
+msgstr "قلب القطع مع بعض المؤثّرات البصريّة"
 
-#: data/totem.schemas.in.h:5
-msgid "Name of the visual effects plugins."
-msgstr "اسماء ملاحق المؤثرات المرئية."
+#: ../data/totem.schemas.in.h:7
+#, fuzzy
+msgid "Network buffering threshold"
+msgstr "فتح مكان شبكة %s"
 
-#: data/totem.schemas.in.h:6
-msgid "Path to the optical media device"
-msgstr "مسار جهاز الوسيط البصري"
+#: ../data/totem.schemas.in.h:8
+msgid "Pango font description for subtitle rendering"
+msgstr ""
 
-#: data/totem.schemas.in.h:7
-msgid "Path to the optical media device."
-msgstr "مسار جهاز الوسيط البصري."
-
-#: data/totem.schemas.in.h:8
+#: ../data/totem.schemas.in.h:9
+#, fuzzy
 msgid "Repeat mode"
-msgstr "نمط الاعادة"
+msgstr "نسق القطعة"
 
-#: data/totem.schemas.in.h:9
-msgid "Repeat mode."
-msgstr "نمط الاعادة."
-
-#: data/totem.schemas.in.h:10
+#: ../data/totem.schemas.in.h:10
+#, fuzzy
 msgid "Resize the canvas automatically on file load"
 msgstr "تحجيم مساحة الرسم آليا عند تحميل الملف"
 
-#: data/totem.schemas.in.h:11
-msgid "Resize the canvas automatically on file load."
-msgstr "تحجيم مساحة الرسم آليا عند تحميل الملف."
-
-#: data/totem.schemas.in.h:12
+#: ../data/totem.schemas.in.h:11
+#, fuzzy
 msgid "Show visual effects when no video is displayed"
 msgstr "عرض مؤثّرات بصرية عند عدم عرض فيديو"
 
-#: data/totem.schemas.in.h:13
+#: ../data/totem.schemas.in.h:12
+#, fuzzy
 msgid "Show visual effects when playing an audio only file."
 msgstr "عرض مؤثّرات يصرية عند عزف ملف صوتي فقط."
 
-#: data/totem.schemas.in.h:14
+#: ../data/totem.schemas.in.h:13
+#, fuzzy
 msgid "Shuffle mode"
-msgstr "نمط الخلط"
+msgstr "نسق القطعة"
 
-#: data/totem.schemas.in.h:15
-msgid "Shuffle mode."
-msgstr "نمط الخلط."
-
-#: data/totem.schemas.in.h:16
+#: ../data/totem.schemas.in.h:14
+#, fuzzy
 msgid "Sound volume"
-msgstr "شدّة الصوت"
+msgstr "تكييف شدة الصوت"
 
-#: data/totem.schemas.in.h:17
+#: ../data/totem.schemas.in.h:15
+#, fuzzy
 msgid "Sound volume, in percent, between 0 and 100"
 msgstr "شدّة الصّوت بالمائة بين 0 و 100"
 
-#: data/totem.schemas.in.h:18
+#: ../data/totem.schemas.in.h:16
+#, fuzzy
+msgid "Subtitle encoding"
+msgstr "التشفير الإفتراضي"
+
+#: ../data/totem.schemas.in.h:17
+#, fuzzy
+msgid "Subtitle font"
+msgstr "<b>خط داشر:</b>"
+
+#: ../data/totem.schemas.in.h:18
+#, fuzzy
 msgid "The brightness of the video"
-msgstr "سطوع الفيديو"
+msgstr "قناة الفيديو"
 
-#: data/totem.schemas.in.h:19
-msgid "The brightness of the video."
-msgstr "سطوع الفيديو."
-
-#: data/totem.schemas.in.h:20
+#: ../data/totem.schemas.in.h:19
+#, fuzzy
 msgid "The contrast of the video"
-msgstr "تباين الفيديو"
+msgstr "قناة الفيديو"
 
-#: data/totem.schemas.in.h:21
-msgid "The contrast of the video."
-msgstr "تباين الفيديو."
-
-#: data/totem.schemas.in.h:22
+#: ../data/totem.schemas.in.h:20
+#, fuzzy
 msgid "The hue of the video"
-msgstr "سطوع الفيديو"
+msgstr "قناة الفيديو"
 
-#: data/totem.schemas.in.h:23
-msgid "The hue of the video."
-msgstr "سطوع الفيديو."
-
-#: data/totem.schemas.in.h:24
+#: ../data/totem.schemas.in.h:21
+#, fuzzy
 msgid "The saturation of the video"
-msgstr "تشبع الفيديو"
+msgstr "قناة الفيديو"
 
-#: data/totem.schemas.in.h:25
-msgid "The saturation of the video."
-msgstr "تشبع الفيديو."
-
-#: data/totem.schemas.in.h:26
+#: ../data/totem.schemas.in.h:22
+#, fuzzy
 msgid "Type of audio output to use"
-msgstr "نوع الاخراج الصوتي للاستخدام"
+msgstr "إختر جهاز خرج الصوت لاستخدامه"
 
-#: data/totem.schemas.in.h:27
+#: ../data/totem.schemas.in.h:23
+#, fuzzy
 msgid ""
 "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
 "\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
@@ -835,465 +1049,359 @@ msgstr ""
 "\"·لإخراج قناة 5.0 و \"3\" لإخراج قناة 5.1 و أخيرا \"4\" لإخراج AC3 "
 "Passthrough."
 
-#: data/totem.schemas.in.h:28
+#. Translators: This is default subtitle encoding
+#. character set. You can change this to be the most common
+#. encoding for fansub subtitles in your language. File a bug
+#. against Totem, and leave UTF-8 as the default if in doubt.
+#: ../data/totem.schemas.in.h:28
+#, fuzzy
+msgid "UTF-8"
+msgstr "يو تي أف-8:"
+
+#: ../data/totem.schemas.in.h:29
+#, fuzzy
 msgid "Whether the main window should stay on top"
 msgstr "فيما اذا يجب على النافذة الرئيسية أن تبقى في الأعلى"
 
-#: data/totem.schemas.in.h:29
+#: ../data/totem.schemas.in.h:30
+#, fuzzy
 msgid "Whether the main window should stay on top of the other ones"
 msgstr "فيما إذا ستكون النافذة الرئيسية فوق جميع النوافذ الأخرى"
 
-#: data/totem.schemas.in.h:30
+#: ../data/totem.schemas.in.h:31
+#, fuzzy
 msgid "Whether to enable debug for the playback engine"
 msgstr "فيما إذا يفعل التنقيح لمحركّ العرض"
 
-#: data/totem.schemas.in.h:31
-msgid "Whether to enable debug for the playback engine."
-msgstr "فيما·إذا·يفعل·التنقيح·لمحركّ·العرض."
+#: ../data/uri.glade.h:1
+#, fuzzy
+msgid "Enter the _address of the file you would like to open:"
+msgstr "إدخال _موقع الملف (URI) الذي تريد فتحه:"
 
-#: data/totem.schemas.in.h:32
-msgid "Width of the video widget"
-msgstr "عرض قطعة الفيديو"
+#: ../data/uri.glade.h:2
+#, fuzzy
+msgid "Open Location"
+msgstr "فتح الموقع"
 
-#: data/totem.schemas.in.h:33
-msgid "X coordinate for the Playlist"
-msgstr "إحداثية س لقائمة التشغيل"
-
-#: data/totem.schemas.in.h:34
-msgid "X coordinate for the Playlist."
-msgstr "إحداثية س لقائمة التشغيل"
-
-#: data/totem.schemas.in.h:35
-msgid "Y coordinate for the Playlist"
-msgstr "إحداثية ص لقائمة التشغيل"
-
-#: data/totem.schemas.in.h:36
-msgid "Y coordinate for the Playlist."
-msgstr "إحداثية ص لقائمة التشغيل"
-
-#: data/uri.glade.h:2
-msgid "Enter the _location (URI) of the file you would like to open:"
-msgstr "ادخل _موقع الملف (URI) الذي تريد فتحه:"
-
-#: data/uri.glade.h:3
-msgid "Open from URI"
-msgstr "فتح من العنوان"
-
-#: data/vanity.glade.h:1
-msgid "Save File"
-msgstr "حفظ ملف"
-
-#: data/vanity.glade.h:2 src/vanity.c:251
-msgid "Vanity"
-msgstr "فنتي"
-
-#: data/vanity.glade.h:3
-msgid "Vanity Preferences"
-msgstr "تفضيلات فنتي"
-
-#: data/vanity.glade.h:4
-msgid "Zoom 1:1"
-msgstr "الحجم العادي 1:1"
-
-#: data/vanity.glade.h:5
-msgid "Zoom 1:2"
-msgstr "تصغير 1:2"
-
-#: data/vanity.glade.h:6
-msgid "Zoom 2:1"
-msgstr "تكبير 2:1"
-
-#: data/vanity.glade.h:7
-msgid "Zoom _1:1"
-msgstr "تكبير _1:1"
-
-#: data/vanity.glade.h:8
-msgid "Zoom _2:1"
-msgstr "تكبير _2:1"
-
-#: data/vanity.glade.h:9
-msgid "_Picture"
-msgstr "ال_صورة"
-
-#: data/vanity.glade.h:10
-msgid "_Zoom 1:2"
-msgstr "ت_صغير 1:2"
-
-#: data/vanity.desktop.in.in.h:1
+#: ../data/vanity.desktop.in.in.h:1
+#, fuzzy
 msgid "Vanity Webcam utility"
-msgstr "أدات الوابكام فانِتي"
+msgstr "أدات وابكام تستخدم %s"
 
-#: data/vanity.desktop.in.in.h:2
+#: ../data/vanity.desktop.in.in.h:2
+#, fuzzy
 msgid "View live webcam and upload pictures"
 msgstr "عرض وابكام مباشر و تحميل الصور"
 
-#: data/totem.desktop.in.in.in.h:1
-msgid "Play movies and songs"
-msgstr "عرض أفلام و موسيقى"
+#: ../data/vanity.glade.h:1
+#, fuzzy
+msgid "Save File"
+msgstr "حفظ الملف"
 
-#: src/bacon-v4l-selection.c:182
+#: ../data/vanity.glade.h:2 ../src/vanity.c:260
+#, fuzzy
+msgid "Vanity"
+msgstr "فنتي"
+
+#: ../data/vanity.glade.h:3
+#, fuzzy
+msgid "Vanity Preferences"
+msgstr "خيارات داشر"
+
+#: ../data/vanity.glade.h:4
+#, fuzzy
+msgid "Zoom 1:1"
+msgstr "ضبط الحجم 1:1"
+
+#: ../data/vanity.glade.h:5
+#, fuzzy
+msgid "Zoom 1:2"
+msgstr "التكبير"
+
+#: ../data/vanity.glade.h:6
+#, fuzzy
+msgid "Zoom 2:1"
+msgstr "التكبير"
+
+#: ../data/vanity.glade.h:7
+#, fuzzy
+msgid "Zoom _1:1"
+msgstr "التكبير"
+
+#: ../data/vanity.glade.h:8
+#, fuzzy
+msgid "Zoom _2:1"
+msgstr "التكبير"
+
+#: ../data/vanity.glade.h:9
+#, fuzzy
+msgid "_Picture"
+msgstr "الصورة"
+
+#: ../data/vanity.glade.h:10
+#, fuzzy
+msgid "_Zoom 1:2"
+msgstr "التكبير"
+
+#: ../src/bacon-v4l-selection.c:191
+#, fuzzy
 msgid "Unnamed CDROM"
-msgstr "قرص مدمج "
+msgstr "ليس قرصا مدمجا"
 
-#: src/bacon-video-widget-gst.c:59
-msgid "Totem Video Window"
-msgstr "نافذة طوطم للفيديو"
+#: ../src/bacon-video-widget-properties.c:225
+#, fuzzy, c-format
+msgid "%d x %d"
+msgstr "%d x %d"
 
-#: src/bacon-video-widget-gst.c:2882
-msgid "Failed to create a GStreamer play object"
-msgstr "فشل إنشاء جسم عرض جستريمر"
-
-#. Duration
-#: src/bacon-video-widget-properties.c:102
-msgid "0 second"
-msgstr "0 ثانية"
-
-#: src/bacon-video-widget-properties.c:199
+#: ../src/bacon-video-widget-properties.c:228
 #, c-format
 msgid "%d frames per second"
 msgstr "%d إطارا كل ثانية"
 
-#: src/bacon-video-widget-properties.c:221
+#: ../src/bacon-video-widget-properties.c:230
+#: ../src/bacon-video-widget-properties.c:247
 #, c-format
 msgid "%d kbps"
 msgstr "%d كيلوبت في الثانية"
 
-#: src/bacon-video-widget-xine.c:657
+#: ../src/bacon-video-widget-properties.c:281
+#, fuzzy
+msgid "Properties dialog"
+msgstr "غلق الحوار"
+
+#. +
+#: ../src/bacon-volume.c:201
+#, fuzzy
+msgid "+"
+msgstr "+"
+
+#. -
+#: ../src/bacon-volume.c:217
+#, fuzzy
+msgid "-"
+msgstr "-"
+
+#: ../src/egg-recent-view-gtk.c:346
 #, c-format
-msgid ""
-"Couldn't load the '%s' audio driver\n"
-"Check that the device is not busy."
-msgstr ""
-"لم يمكن تحميل الدافع الصوتي '%s'\n"
-"تأكد من الجهاز ليس شاغلا."
+msgid "Open '%s'"
+msgstr "افتح %s"
 
-#: src/bacon-video-widget-xine.c:1109 src/bacon-video-widget-xine.c:1614
-msgid ""
-"No video output is available. Make sure that the program is correctly "
-"installed."
-msgstr "لا إخراج فيديو متوفر. الرجاء التأكد من أن البرنامج مثبّت بسلامة."
+#: ../src/egg-recent-view-gtk.c:446
+#, fuzzy
+msgid "Empty"
+msgstr "فارغ"
 
-#: src/bacon-video-widget-xine.c:1225
-msgid "The server you are trying to connect to is not known."
-msgstr "النادل الذي تحاول الإتصال به مجهول."
-
-#: src/bacon-video-widget-xine.c:1229
-#, c-format
-msgid "The device name you specified (%s) seems to be invalid."
-msgstr "يبدو أن إسم الجهاز الذي حددته (%s) غير صالح."
-
-#: src/bacon-video-widget-xine.c:1233
-#, c-format
-msgid "The server you are trying to connect to (%s) is unreachable."
-msgstr "لم يمكن الإتصال بالنادل (%s)."
-
-#: src/bacon-video-widget-xine.c:1237
-msgid "The connection to this server was refused."
-msgstr "رفض الإتصال بهذا النادل."
-
-#: src/bacon-video-widget-xine.c:1241
-msgid "The specified movie could not be found."
-msgstr "لم يمكن أيجاد الفلم المنتقى."
-
-#: src/bacon-video-widget-xine.c:1247 src/bacon-video-widget-xine.c:1265
-msgid ""
-"The source seems encrypted, and can't be read. Are you trying to play an "
-"encrypted DVD without libdvdcss?"
-msgstr ""
-"يبدو المصدر مشفّرا، و لن يمكن قراءته. هل تحاول عرض دي في دي مشفّر بدون "
-"libdvdcss؟"
-
-#: src/bacon-video-widget-xine.c:1250
-msgid "The movie could not be read."
-msgstr "لم يمكن قراءة الفلم."
-
-#: src/bacon-video-widget-xine.c:1259
-#, c-format
-msgid "A problem occured while loading a library or a decoder (%s)."
-msgstr "حدث خطأ عند تحميل مكتبة أو دِكودر (%s)."
-
-#: src/bacon-video-widget-xine.c:1268
-msgid "This file is encrypted and cannot be played back."
-msgstr "هذا الملف مشفر و لن يمكن عرضه."
-
-#: src/bacon-video-widget-xine.c:1273
-msgid "For security reasons, this movie can not be played back."
-msgstr "لن يعرض هذا الفلم لأسباب أمنية."
-
-#: src/bacon-video-widget-xine.c:1278
-msgid "The audio device is busy. Is another application using it?"
-msgstr "الجهاز الصوتي شاغل. ربما كان برنامج آخر يصدد استخدامه."
-
-#: src/bacon-video-widget-xine.c:1283
-msgid "You are not allowed to open this file."
-msgstr "إنك لا تملك التصاريح الكافية لفتح هذا الملف."
-
-#: src/bacon-video-widget-xine.c:1285
-msgid "The server refused access to this file or stream."
-msgstr "رفض النادل النفاذ إلى هذا الملف أو التيّار."
-
-#: src/bacon-video-widget-xine.c:1425
-msgid "There is no plugin to handle this movie."
-msgstr "لا يوجد ملحق لمعالجة هذا الفلم."
-
-#: src/bacon-video-widget-xine.c:1429
-msgid "This movie is broken and can not be played further."
-msgstr "هذا الفلم مكسور و لا يمكن عرضه."
-
-#: src/bacon-video-widget-xine.c:1433
-msgid "This location is not a valid one."
-msgstr "الموقع ليس سليما."
-
-#: src/bacon-video-widget-xine.c:1437
-msgid "This movie could not be opened."
-msgstr "لم فتح هذا الفلم."
-
-#: src/bacon-video-widget-xine.c:1441
-msgid "Generic Error."
-msgstr "خطأ عام."
-
-#: src/bacon-video-widget-xine.c:1911
-msgid "This movie is a still image. You can open it with an image viewer."
-msgstr "هذا الفلم صورة متواصلة. يمكنك فتحها بعارض صور."
-
-#: src/bacon-video-widget-xine.c:1935
-#, c-format
-msgid ""
-"Video codec '%s' is not handled. You might need to install additional "
-"plugins to be able to play some types of movies"
-msgstr ""
-"لم يمكن معالجة كودِك الفيديو '%s'. قد يتطلب منك تثبيت ملحقاتإضافية لعرض بعض "
-"أنواع الأفلام"
-
-#: src/bacon-video-widget-xine.c:1939
-#, c-format
-msgid ""
-"Audio codec '%s' is not handled. You might need to install additional "
-"plugins to be able to play some types of movies"
-msgstr ""
-"لم يمكن معالجة كودِك الصوت '%s'. قد يتطلّب منك تثبيت ملحقات إضافيّة لعرض بعض "
-"أنواع الأفلام"
-
-#: src/bacon-video-widget-xine.c:1955
-msgid "This is an audio-only file, and there is no audio output available."
-msgstr "هذا ملف صوتي فقط و لا يتوفر إخراج صوتي منه."
-
-#: src/bacon-video-widget-xine.c:3359
-#, c-format
-msgid "Language %d"
-msgstr "اللّغة %d"
-
-#: src/bacon-video-widget-xine.c:3430
-msgid "Movie is not playing."
-msgstr "الفلم ليس بصدد العرض."
-
-#: src/bacon-video-widget-xine.c:3439
-msgid "No video to capture."
-msgstr "لا فيديو لمسكه."
-
-#: src/bacon-video-widget-xine.c:3447
-msgid "Video codec is not handled."
-msgstr "لا يمكن معالجة كودِك الفيديو."
-
-#: src/totem-disc.c:98
-#, c-format
-msgid "Failed to find real device node for %s: %s"
-msgstr "فشل ايجاد عقدة جهاز حقيقيّة لـ %s: %s"
-
-#: src/totem-disc.c:109
-#, c-format
-msgid "Failed to read symbolic link %s: %s"
-msgstr "فشل قراءة الوصلة الرمزيّة %s: %s"
-
-#: src/totem-disc.c:193
-#, c-format
-msgid "Failed to find mountpoint for device %s in /etc/fstab"
-msgstr "فشل ايجاد نقطة التجهيز للجهاز %s في /etc/fstab"
-
-#: src/totem-disc.c:231
-msgid "Please check that a disc is present in the drive."
-msgstr "الرّجاء التثبّت من وجود قرص في السوّاقة."
-
-#: src/totem-disc.c:234
-#, c-format
-msgid "Failed to open device %s for reading: %s"
-msgstr "فشل فتح الجهاز %s للقراءة: %s"
-
-#: src/totem-disc.c:245
-#, c-format
-msgid "Failed to retrieve capabilities of device %s: %s"
-msgstr "فشل تلقّي امكانيّات الجهاز %s: %s"
-
-#: src/totem-disc.c:278
-#, c-format
-msgid "Drive status 0x%x (%s) - check disc"
-msgstr "حالة السّوّاقة 0x%x (%s) - الرجاء مراجعة القرص"
-
-#: src/totem-disc.c:311
-#, c-format
-msgid "Unexpected error status %d while mounting %s"
-msgstr "حالة خطأ %d عند تجهيز %s"
-
-#: src/totem-disc.c:363
-#, c-format
-msgid "Error getting %s disc status: %s"
-msgstr "خطأ تلقّي حالة القرص %s: %s"
-
-#: src/totem-disc.c:392
-#, c-format
-msgid "Unexpected/unknown cd type 0x%x (%s)"
-msgstr "نوع قرص مدمج غير مترقّب/مجهول 0x%x (%s)"
-
-#: src/totem-disc.c:556
-msgid "Audio CD"
-msgstr "قرص مدمج صوتي"
-
-#: src/totem-disc.c:558
-msgid "Video CD"
-msgstr "قرص مدمج فيديو"
-
-#: src/totem-disc.c:560
-msgid "DVD"
-msgstr "قرص فيديو رقمي"
-
-#: src/totem-interface.c:103
+#: ../src/totem-interface.c:117
 #, c-format
 msgid "Couldn't load the '%s' interface."
 msgstr "لم يمكن تحميل واجهة '%s'."
 
-#: src/totem-interface.c:105 src/totem-interface.c:107
+#: ../src/totem-interface.c:119 ../src/totem-interface.c:121
+#, fuzzy
 msgid "Make sure that Totem is properly installed."
-msgstr "الرجاء التأكد من أنّك ثبت طوطم بسلامة."
+msgstr "الرجاء التثبت من أن حافظ الشاشة مثبت بنجاح"
+
+#: ../src/totem-menu.c:267 ../src/totem-menu.c:289
+#, fuzzy
+msgid "None"
+msgstr "لا شيء"
+
+#: ../src/totem-menu.c:605
+#, fuzzy, c-format
+msgid "Play Disc '%s'"
+msgstr "هوية القرص"
 
 #. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
-#: src/totem-mozilla-viewer.c:59 src/totem.c:301 src/totem.c:328
-#: src/totem.c:692 src/totem.c:797
+#: ../src/totem-mozilla-viewer.c:239 ../src/totem.c:375 ../src/totem.c:404
+#: ../src/totem.c:854 ../src/totem.c:964
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "لم يتمكن طوطم من عزف '%s'."
 
-#: src/totem-mozilla-viewer.c:91 src/totem-mozilla-viewer.c:98
-msgid "Couldn't load the main interface (mozilla-viewer.glade)."
-msgstr "لم يمكن تحميل الواجهة الرئيسيّة (mozilla-viewer.glade)."
+#: ../src/totem-mozilla-viewer.c:378
+#, c-format
+msgid "Movie Player using %s"
+msgstr "عارض أفلام يستخدم %s"
 
-#: src/totem-mozilla-viewer.c:91 src/totem-mozilla-viewer.c:98
-msgid "Make sure that the Totem plugin is properly installed."
-msgstr "الرجاء التأكد من أنّك ثبت ملحق طوطم بسلامة."
+#: ../src/totem-mozilla-viewer.c:382
+#, fuzzy
+msgid "Totem Mozilla Plugin"
+msgstr "إعداد الملحق المنتقى"
 
-#: src/totem-mozilla-viewer.c:109
+#: ../src/totem-mozilla-viewer.c:384 ../src/totem.c:2014
+#, fuzzy
+msgid "Copyright © 2002-2006 Bastien Nocera"
+msgstr "حقوق النّشر © 2002-2005 باستيان نوتشيرة"
+
+#: ../src/totem-mozilla-viewer.c:387 ../src/totem.c:2019 ../src/vanity.c:267
+#, fuzzy
+msgid "translator-credits"
+msgstr "Yousef Raffah يوسف رفه (yousef@raffah.com)"
+
+#: ../src/totem-mozilla-viewer.c:475
+#, fuzzy
+msgid "Failed to start stand-alone movie player"
+msgstr "فشل في فتح مشغل افلام مستقل"
+
+#: ../src/totem-mozilla-viewer.c:476
+#, fuzzy
+msgid "Unknown reason"
+msgstr "سبب مجهول"
+
+#: ../src/totem-mozilla-viewer.c:567 ../src/totem-mozilla-viewer.c:570
+#: ../src/totem.c:1322 ../src/totem.c:1324
+#, fuzzy
+msgid "An error occurred"
+msgstr "حدث خطأ مجهول."
+
+#: ../src/totem-mozilla-viewer.c:651
+#, fuzzy
+msgid "Plugin"
+msgstr "ملحق"
+
+#: ../src/totem-mozilla-viewer.c:654
+#, fuzzy
+msgid "Menu"
+msgstr "القائمة"
+
+#: ../src/totem-mozilla-viewer.c:671
+#, fuzzy
 msgid "The Totem plugin could not startup."
-msgstr "لم يتمكن ملحق طوطم من التشغيل."
+msgstr "لم يتمكن طوطم من البحث '%s'."
 
-#: src/totem-mozilla-viewer.c:109 src/totem.c:3200
+#: ../src/totem-mozilla-viewer.c:671 ../src/totem.c:470 ../src/totem.c:3511
+#, fuzzy
 msgid "No reason."
-msgstr "لا سبب."
+msgstr "سبب مجهول"
 
-#: src/totem-mozilla-viewer.c:141 src/totem.c:3381
+#: ../src/totem-mozilla-viewer.c:853
+#, fuzzy
 msgid "Could not initialise the thread-safe libraries."
 msgstr "لم يمكن تشغيل المكتبات النظامية السليمة"
 
-#: src/totem-mozilla-viewer.c:141
+#: ../src/totem-mozilla-viewer.c:853
+#, fuzzy
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "تثبت من تثبيت نظامك. سيخرج ملحق طوطم الآن."
 
-#: src/totem-options.c:36
+#: ../src/totem-options.c:36 ../src/vanity.c:75
+#, fuzzy
 msgid "Backend options"
-msgstr "خيارات الخلفيّة"
+msgstr "<b>خيارات العرض:</b>"
 
-#: src/totem-options.c:37
+#: ../src/totem-options.c:37
+#, fuzzy
 msgid "Enable debug"
-msgstr "تفعيل التنقيح"
+msgstr "تمكين التّنقيح"
 
-#: src/totem-options.c:41
+#: ../src/totem-options.c:39 ../src/totem.c:297 ../src/totem.c:305
+#, fuzzy
+msgid "Play"
+msgstr "العب"
+
+#: ../src/totem-options.c:40 ../src/totem.c:291
+#, fuzzy
+msgid "Pause"
+msgstr "ايقاف مؤقّت"
+
+#: ../src/totem-options.c:43
+#, fuzzy
 msgid "Seek Forwards"
-msgstr "بحث إلى الأمام"
+msgstr "يحث حتّى %s / %s"
 
-#: src/totem-options.c:42
+#: ../src/totem-options.c:44
+#, fuzzy
 msgid "Seek Backwards"
-msgstr "بحث إلى الوراء"
+msgstr "بحث إلى ال_خلف"
 
-#: src/totem-options.c:43
-msgid "Volume Up"
-msgstr "رفع شدّة الصوت"
-
-#: src/totem-options.c:44
-msgid "Volume Down"
-msgstr "خفض شدّة الصوت"
-
-#: src/totem-options.c:45
+#: ../src/totem-options.c:47
+#, fuzzy
 msgid "Toggle Fullscreen"
-msgstr "تحول من/إلى نسق ملئ الشاشة"
+msgstr "تحول إلى نسق كامل الشاشة"
 
-#: src/totem-options.c:46
+#: ../src/totem-options.c:48
+#, fuzzy
 msgid "Show/Hide Controls"
-msgstr "إظهار/إخفاء أدوات التحكّم"
+msgstr "إظهار أ_زرار الإخفاء"
 
-#: src/totem-options.c:47
+#: ../src/totem-options.c:49
+#, fuzzy
 msgid "Quit"
-msgstr "إنهاء"
+msgstr "خروج"
 
-#: src/totem-options.c:48
+#: ../src/totem-options.c:50
+#, fuzzy
 msgid "Enqueue"
 msgstr "تذييل"
 
-#: src/totem-options.c:49
+#: ../src/totem-options.c:51
+#, fuzzy
 msgid "Replace"
-msgstr "تبديل"
+msgstr "استبدال"
 
-#: src/totem-options.c:110
+#: ../src/totem-options.c:112
 #, c-format
 msgid "Option '%s' is unknown and was ignored\n"
 msgstr "الخيار '%s' مجهول و تم تجاهله\n"
 
-#: src/totem-playlist.c:299
+#: ../src/totem-playlist.c:351 ../src/totem-playlist.c:845
+#, fuzzy
 msgid "Could not save the playlist"
-msgstr "لم يمكن حفظ قائمة التشغيل"
+msgstr "لم يمكن حفظ الملخّص: %s: %s"
 
-#: src/totem-playlist.c:631
-msgid "Select Movies or Playlists"
-msgstr "إنتقاء أفلام أو قائمات التشغيل"
+#: ../src/totem-playlist.c:845
+#, fuzzy
+msgid "Unknown file extension."
+msgstr "غير معروف"
 
-#: src/totem-playlist.c:807
-msgid "Save playlist"
-msgstr "حفظ قائمة التشغيل"
+#: ../src/totem-playlist.c:858
+#, fuzzy
+msgid "Select playlist format:"
+msgstr "تهيئة توقيع غير مدعومة"
 
-#: src/totem-playlist.c:852
+#: ../src/totem-playlist.c:862
+#, fuzzy
+msgid "By extension"
+msgstr "ا_متداد الملف:"
+
+#: ../src/totem-playlist.c:884
+#, fuzzy
+msgid "Save Playlist"
+msgstr "لا تحفظ"
+
+#: ../src/totem-playlist.c:938
+#, fuzzy
 msgid "Overwrite file?"
-msgstr "هل تريد تنميق الملفّ؟"
+msgstr "تنميق الملف؟"
 
-#: src/totem-playlist.c:854
+#: ../src/totem-playlist.c:940
 #, c-format
-msgid "A file named '%s' already exists.  Are you sure you want to overwrite it?"
+msgid ""
+"A file named '%s' already exists.  Are you sure you want to overwrite it?"
 msgstr "ملف بإسم '%s' موجود. هل أنت متأكد من أنك تريد تنميقه؟"
 
-#: src/totem-playlist.c:1053
-msgid "Filename"
-msgstr "إسم الملف "
+#: ../src/totem-playlist.c:1484
+#, fuzzy
+msgid "playlist"
+msgstr "قائمة التشغيل"
 
-#: src/totem-playlist.c:1619
+#: ../src/totem-playlist.c:1617
+#, fuzzy
 msgid "Playlist error"
-msgstr "خطأ قائمة التشغيل"
+msgstr "حدث خطأ"
 
-#: src/totem-playlist.c:1619
+#: ../src/totem-playlist.c:1617
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "لم يمكن ترجمة قائمة التشغيل '%s'، من الممكن أنّها تالفة."
 
-#: src/totem-pl-parser.c:215
-#, c-format
-msgid "Couldn't write parser: %s"
-msgstr "لم يمكن كتابة المعرب: %s"
-
-#: src/totem-pl-parser.c:321 src/totem-pl-parser.c:444
-#, c-format
-msgid "Couldn't open file '%s': %s"
-msgstr "لم يمكن فتح الملفّ '%s': %s"
-
-#: src/totem-preferences.c:78
+#: ../src/totem-preferences.c:85
+#, fuzzy
 msgid "Enable visual effects?"
-msgstr "تفعيل المؤثّرات البصريّة؟"
+msgstr "تفعيل الناقوس المرئي"
 
-#: src/totem-preferences.c:80
+#: ../src/totem-preferences.c:87
+#, fuzzy
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1301,118 +1409,336 @@ msgstr ""
 "يبدو أنك بصدد تشغيل طوطم عن بعد.\n"
 "هل أنت متأكد من أنك تريد تفعيل المؤثرّات البصريّة؟"
 
-#: src/totem-preferences.c:133
+#: ../src/totem-preferences.c:140
+#, fuzzy
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted."
 msgstr ""
-"تغيير هذا التّعيين لن يكون له تأثير إلّا على الفلم التّالي أو عند إعادة تشغيل طوطم."
+"تغيير هذا التّعيين لن يكون له تأثير إلّا على الفلم التّالي أو عند إعادة تشغيل "
+"طوطم."
 
-#: src/totem-preferences.c:177
-msgid "Switching on or off this type of TV-Out requires a restart to take effect."
+#: ../src/totem-preferences.c:184
+#, fuzzy
+msgid ""
+"Switching on or off this type of TV-Out requires a restart to take effect."
 msgstr "يتطلب تفعيل أو تعطيل هذا النوع من الإخراج التلفزي إعادة تشغيل."
 
-#: src/totem-preferences.c:310
-msgid "Totem could not start the file manager."
-msgstr "لم يتمكن طوطم من تشغيل مدير الملفات."
-
-#: src/totem-preferences.c:338
+#: ../src/totem-preferences.c:296
+#, fuzzy
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr "يتطلب تغيير نوع مؤثّرات الإخراج المرئي إعادة تشغيل."
 
-#: src/totem-preferences.c:431
+#: ../src/totem-preferences.c:380
+#, fuzzy
 msgid ""
 "The change of audio output type will only take effect when Totem is "
 "restarted."
-msgstr ""
-"تغيير الإخراج الصّوتي لن يكون له تأثير إلّا عند إعادة تشغيل طوطم."
+msgstr "تغيير الإخراج الصّوتي لن يكون له تأثير إلّا عند إعادة تشغيل طوطم."
 
-#: src/totem-properties-main.c:103
+#: ../src/totem-preferences.c:633
+#, fuzzy
+msgid "Select Subtitle Font"
+msgstr "إنتقاء خط HTML الثّابت العرض"
+
+#. FIXME this should be setting an error?
+#: ../src/totem-properties-main.c:117 ../src/totem-properties-view.c:84
+#: ../src/totem-properties-view.c:92
+#, fuzzy
 msgid "Audio/Video"
-msgstr "صوت/فيديو"
+msgstr "قناة الفيديو"
 
-#: src/totem-screenshot.c:151 src/totem-screenshot.c:162
+#: ../src/totem-properties-view.c:86
+#, fuzzy
+msgid "Video"
+msgstr "الفيديو"
+
+#: ../src/totem-screenshot.c:151 ../src/totem-screenshot.c:162
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "صورة شاشة%d.png"
 
-#: src/totem-screenshot.c:204
+#: ../src/totem-screenshot.c:204
 #, c-format
 msgid "File '%s' already exists."
 msgstr "الملف '%s'· موجود."
 
-#: src/totem-screenshot.c:206
+#: ../src/totem-screenshot.c:206
+#, fuzzy
 msgid "The screenshot was not saved"
-msgstr "لم يمكن حفظ صورة الشاشة"
+msgstr "(لم يحفظ) %s"
 
-#: src/totem-screenshot.c:217
+#: ../src/totem-screenshot.c:217
+#, fuzzy
 msgid "There was an error saving the screenshot."
-msgstr "حدث خطأ عند حفظ صورة الشاشة."
+msgstr ""
+"حدث خطأ عند تشغيل gdb:\n"
+"\n"
+"%s"
 
-#: src/totem-screenshot.c:250
+#: ../src/totem-screenshot.c:250
+#, fuzzy
 msgid "Screenshot.png"
-msgstr "صورة شاشة.png"
+msgstr "صورة شاشة%d.png"
 
-#: src/totem-statusbar.c:91
+#: ../src/totem-scrsaver.c:112
+#, fuzzy
+msgid "Playing a movie"
+msgstr "عارض أفلام يستخدم %s"
+
+#: ../src/totem-statusbar.c:91
+#, fuzzy
 msgid "Shadow type"
 msgstr "نوع الظل"
 
-#: src/totem-statusbar.c:92
+#: ../src/totem-statusbar.c:92
+#, fuzzy
 msgid "Style of bevel around the statusbar text"
-msgstr "نمط الحافة حول نص عمود الحالة"
+msgstr "أسلوب الحافة حول نص عمود الحالة"
 
-#: src/totem-statusbar.c:124 src/totem.c:243 src/totem.c:547
+#: ../src/totem-statusbar.c:124 ../src/totem.c:301 ../src/totem.c:735
+#, fuzzy
 msgid "Stopped"
 msgstr "اوقف"
 
-#: src/totem-statusbar.c:141
+#: ../src/totem-statusbar.c:142
+#, fuzzy
 msgid "0:00 / 0:00"
-msgstr "0:00·/·0:00"
+msgstr "00/00/00"
 
-#: src/totem-statusbar.c:166
+#: ../src/totem-statusbar.c:180
 #, c-format
 msgid "%s (Streaming)"
 msgstr "(جاري انسياب) %s"
 
 #. Elapsed / Total Length
-#: src/totem-statusbar.c:173 src/totem-time-label.c:70
+#: ../src/totem-statusbar.c:187 ../src/totem-time-label.c:85
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: src/totem-statusbar.c:176
+#: ../src/totem-statusbar.c:190 ../src/totem-time-label.c:88
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "يحث حتّى %s / %s"
 
-#: src/totem-statusbar.c:234
+#: ../src/totem-statusbar.c:250
+#, fuzzy
 msgid "Buffering"
 msgstr "جاري الخزن المؤقت"
 
 #. eg: 75 %
-#: src/totem-statusbar.c:237
+#: ../src/totem-statusbar.c:253
 #, c-format
 msgid "%d %%"
 msgstr "%d·%%"
 
-#: src/totem-sublang.c:108 src/totem-sublang.c:130
-msgid "None"
-msgstr "لا شيء"
+#: ../src/totem-subtitle-encoding.c:158
+#, fuzzy
+msgid "Current Locale"
+msgstr "اللغة الحالية"
 
-#: src/totem.c:233
+#: ../src/totem-subtitle-encoding.c:161 ../src/totem-subtitle-encoding.c:163
+#: ../src/totem-subtitle-encoding.c:165 ../src/totem-subtitle-encoding.c:167
+#, fuzzy
+msgid "Arabic"
+msgstr "عربي"
+
+#: ../src/totem-subtitle-encoding.c:170
+#, fuzzy
+msgid "Armenian"
+msgstr "ارميني"
+
+#: ../src/totem-subtitle-encoding.c:173 ../src/totem-subtitle-encoding.c:175
+#: ../src/totem-subtitle-encoding.c:177
+#, fuzzy
+msgid "Baltic"
+msgstr "البلطيقيّة"
+
+#: ../src/totem-subtitle-encoding.c:180
+#, fuzzy
+msgid "Celtic"
+msgstr "كلتي"
+
+#: ../src/totem-subtitle-encoding.c:183 ../src/totem-subtitle-encoding.c:185
+#: ../src/totem-subtitle-encoding.c:187 ../src/totem-subtitle-encoding.c:189
+#, fuzzy
+msgid "Central European"
+msgstr "وسط أوروبيّة"
+
+#: ../src/totem-subtitle-encoding.c:192 ../src/totem-subtitle-encoding.c:194
+#: ../src/totem-subtitle-encoding.c:196 ../src/totem-subtitle-encoding.c:198
+#, fuzzy
+msgid "Chinese Simplified"
+msgstr "صيني مبسّط"
+
+#: ../src/totem-subtitle-encoding.c:201 ../src/totem-subtitle-encoding.c:203
+#: ../src/totem-subtitle-encoding.c:205
+#, fuzzy
+msgid "Chinese Traditional"
+msgstr "صيني تقليدي"
+
+#: ../src/totem-subtitle-encoding.c:208
+#, fuzzy
+msgid "Croatian"
+msgstr "الكرواتية"
+
+#: ../src/totem-subtitle-encoding.c:211 ../src/totem-subtitle-encoding.c:213
+#: ../src/totem-subtitle-encoding.c:215 ../src/totem-subtitle-encoding.c:217
+#: ../src/totem-subtitle-encoding.c:219 ../src/totem-subtitle-encoding.c:221
+#, fuzzy
+msgid "Cyrillic"
+msgstr "السّريليّة"
+
+#: ../src/totem-subtitle-encoding.c:224
+#, fuzzy
+msgid "Cyrillic/Russian"
+msgstr "سرياني/روسي"
+
+#: ../src/totem-subtitle-encoding.c:227 ../src/totem-subtitle-encoding.c:229
+#, fuzzy
+msgid "Cyrillic/Ukrainian"
+msgstr "سرياني/اكرايني"
+
+#: ../src/totem-subtitle-encoding.c:232
+#, fuzzy
+msgid "Georgian"
+msgstr "جورجي"
+
+#: ../src/totem-subtitle-encoding.c:235 ../src/totem-subtitle-encoding.c:237
+#: ../src/totem-subtitle-encoding.c:239
+#, fuzzy
+msgid "Greek"
+msgstr "اليونانيّة"
+
+#: ../src/totem-subtitle-encoding.c:242
+#, fuzzy
+msgid "Gujarati"
+msgstr "كوجراتي"
+
+#: ../src/totem-subtitle-encoding.c:245
+#, fuzzy
+msgid "Gurmukhi"
+msgstr "غورموخي"
+
+#: ../src/totem-subtitle-encoding.c:248 ../src/totem-subtitle-encoding.c:250
+#: ../src/totem-subtitle-encoding.c:252 ../src/totem-subtitle-encoding.c:254
+#, fuzzy
+msgid "Hebrew"
+msgstr "العبريّة"
+
+#: ../src/totem-subtitle-encoding.c:257
+#, fuzzy
+msgid "Hebrew Visual"
+msgstr "عبري مرئي"
+
+#: ../src/totem-subtitle-encoding.c:260
+#, fuzzy
+msgid "Hindi"
+msgstr "الهندية"
+
+#: ../src/totem-subtitle-encoding.c:263
+#, fuzzy
+msgid "Icelandic"
+msgstr "الآيسلاندية"
+
+#: ../src/totem-subtitle-encoding.c:266 ../src/totem-subtitle-encoding.c:268
+#: ../src/totem-subtitle-encoding.c:270
+#, fuzzy
+msgid "Japanese"
+msgstr "اليابانية"
+
+#: ../src/totem-subtitle-encoding.c:273 ../src/totem-subtitle-encoding.c:275
+#: ../src/totem-subtitle-encoding.c:277 ../src/totem-subtitle-encoding.c:279
+#, fuzzy
+msgid "Korean"
+msgstr "الكوريّة"
+
+#: ../src/totem-subtitle-encoding.c:282
+#, fuzzy
+msgid "Nordic"
+msgstr "شمالي"
+
+#: ../src/totem-subtitle-encoding.c:285
+#, fuzzy
+msgid "Persian"
+msgstr "الفارسية"
+
+#: ../src/totem-subtitle-encoding.c:288 ../src/totem-subtitle-encoding.c:290
+#, fuzzy
+msgid "Romanian"
+msgstr "روماني"
+
+#: ../src/totem-subtitle-encoding.c:293
+#, fuzzy
+msgid "South European"
+msgstr "جنوب اوروبا"
+
+#: ../src/totem-subtitle-encoding.c:296
+#, fuzzy
+msgid "Thai"
+msgstr "تايلندي"
+
+#: ../src/totem-subtitle-encoding.c:299 ../src/totem-subtitle-encoding.c:301
+#: ../src/totem-subtitle-encoding.c:303 ../src/totem-subtitle-encoding.c:305
+#, fuzzy
+msgid "Turkish"
+msgstr "التركيّة"
+
+#: ../src/totem-subtitle-encoding.c:308 ../src/totem-subtitle-encoding.c:310
+#: ../src/totem-subtitle-encoding.c:312 ../src/totem-subtitle-encoding.c:314
+#: ../src/totem-subtitle-encoding.c:316
+#, fuzzy
+msgid "Unicode"
+msgstr "يونيكود"
+
+#: ../src/totem-subtitle-encoding.c:319 ../src/totem-subtitle-encoding.c:321
+#: ../src/totem-subtitle-encoding.c:323 ../src/totem-subtitle-encoding.c:325
+#: ../src/totem-subtitle-encoding.c:327
+#, fuzzy
+msgid "Western"
+msgstr "غربي"
+
+#: ../src/totem-subtitle-encoding.c:330 ../src/totem-subtitle-encoding.c:332
+#: ../src/totem-subtitle-encoding.c:334
+#, fuzzy
+msgid "Vietnamese"
+msgstr "فياتنامي"
+
+#: ../src/totem-uri.c:227
+#, fuzzy
+msgid "All files"
+msgstr "جميع الملفات"
+
+#: ../src/totem-uri.c:233
+#, fuzzy
+msgid "Supported files"
+msgstr "كل الملفّات"
+
+#: ../src/totem-uri.c:255
+#, fuzzy
+msgid "Select Movies or Playlists"
+msgstr "اختيار كل المؤشّرات أو النّصوص"
+
+#: ../src/totem.c:289
+#, fuzzy
 msgid "Playing"
-msgstr "جاري تشغيل"
+msgstr ""
+"قراءة %s - %s\n"
+"%s"
 
-#: src/totem.c:238
+#: ../src/totem.c:295
+#, fuzzy
 msgid "Paused"
-msgstr "توقيف مؤقت"
+msgstr "إوقف مؤقتا"
 
-#: src/totem.c:279
+#: ../src/totem.c:347
+#, fuzzy
 msgid "Totem could not eject the optical media."
 msgstr "لم يتمكن طوطم من طرد الوسيط البصري."
 
-#: src/totem.c:354
+#: ../src/totem.c:431
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1421,115 +1747,140 @@ msgstr ""
 "لا يستطيع طوطم عرض هذا النوع من الوسائط (%s) لأنك لا تملك الملحقات الملائمة "
 "لمعالجتها."
 
-#: src/totem.c:355
+#: ../src/totem.c:432
+#, fuzzy
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
-msgstr "الرجاء تثبيت الملحقات المطلوبة و إعادة تشغيل طوطم حتى يمكنه عرض هذا الوسيط."
+msgstr ""
+"الرجاء تثبيت الملحقات المطلوبة و إعادة تشغيل طوطم حتى يمكنه عرض هذا الوسيط."
 
-#: src/totem.c:363
+#: ../src/totem.c:440
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
 "it."
 msgstr "لم يتمكن طوطم من عرض هذا الوسيط (%s)·بالرغم من وجود ملحق لمعالجته."
 
-#: src/totem.c:364
+#: ../src/totem.c:441
+#, fuzzy
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr "الرجاء التثبت من وجود قرص في السواقة و أن الشواقة معدة بسلامة."
 
-#. Title
-#: src/totem.c:540
-#, c-format
-msgid "%s - Totem Movie Player"
-msgstr "عارض الأفلام طوطم %s·-·"
+#: ../src/totem.c:469
+#, fuzzy
+msgid "Totem was not able to play this disc."
+msgstr "إنك لا تملك التصاريح الكافية لفتح هذا الملف."
 
-#: src/totem.c:554
-msgid "No file"
-msgstr "لا ملف"
+#: ../src/totem.c:742
+#, fuzzy
+msgid "No File"
+msgstr "لا ملف مختار"
 
-#: src/totem.c:590 src/totem.c:1879
-msgid "Totem"
-msgstr "طوطم"
+#: ../src/totem.c:860
+#, fuzzy
+msgid "No error message"
+msgstr "خطأ في جلب الرسالة"
 
-#: src/totem.c:1137 src/totem.c:1139
-msgid "An error occured"
-msgstr "حدث خطأ"
+#: ../src/totem.c:1695
+#, fuzzy
+msgid "Open Location..."
+msgstr "فتح الموقع %s"
 
-#: src/totem.c:1470
-msgid "Select files"
-msgstr "اختيار الملفات"
-
-#: src/totem.c:1837
+#: ../src/totem.c:1968
+#, fuzzy
 msgid "Totem could not display the help contents."
-msgstr "لم يتمكن طوطم من عرض محتويات المساعدة."
+msgstr "تعذّر عرض المساعدة لآي أوف جنوم"
 
-#: src/totem.c:1875
-#, c-format
-msgid "Movie Player using %s"
+#: ../src/totem.c:2001
+#, fuzzy
+msgid "GTK+"
+msgstr "GTK+"
+
+#: ../src/totem.c:2003
+#, fuzzy
+msgid "GNOME"
+msgstr "جنوم"
+
+#. This lists the back-end and front-end types and versions, such as
+#. * Movie Player using GStreamer 0.10.1 and GNOME
+#: ../src/totem.c:2009
+#, fuzzy, c-format
+msgid "Movie Player using %s and %s"
 msgstr "عارض أفلام يستخدم %s"
 
-#: src/totem.c:1881 src/vanity.c:253
-msgid "Copyright © 2002-2005 Bastien Nocera"
-msgstr "حقوق النّشر © 2002-2005 باستيان نوتشيرة"
-
-#: src/totem.c:1886 src/vanity.c:258
-msgid "translator-credits"
-msgstr "عرفات المديني، تونس <kinryu at silverpen dot de>"
-
-#: src/totem.c:1919 src/totem.c:1927 src/vanity.c:291 src/vanity.c:299
+#: ../src/totem.c:2052 ../src/totem.c:2060 ../src/vanity.c:300
+#: ../src/vanity.c:308
+#, fuzzy
 msgid "Totem could not get a screenshot of that film."
 msgstr "لم يتمكن طوطم من أخذ صورة شاشة عن ذلك الفلم."
 
-#: src/totem.c:1927
-msgid "Please file a bug, this isn't supposed to happen."
-msgstr "الرجاء كتابة تقرير خلل، المفروض أن لا يحدث هذا."
+#: ../src/totem.c:2060 ../src/vanity.c:308
+#, fuzzy
+msgid "This is not supposed to happen; please file a bug report."
+msgstr "من المفترض ان لا يحدث هذا رجا ارسل تقرير عطل"
 
-#: src/totem.c:1954
-msgid "Totem couldn't show the movie properties window."
-msgstr "لم يتمكن طوطم من إظهار نافذة خصائص الفلم."
-
-#: src/totem.c:1954
-msgid "Make sure that Totem is correctly installed."
-msgstr "الرجاء التثبت من أنك ثبت طوطم بسلامة."
-
-#: src/totem.c:2040
+#: ../src/totem.c:2133
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "لم يتمكن طوطم من البحث '%s'."
 
-#: src/totem.c:3200
+#: ../src/totem.c:3511
+#, fuzzy
 msgid "Totem could not startup."
-msgstr "لم يتمكن طوطم من التشغيل."
+msgstr ""
+"لم يتمكن فانتي من التشغيل:\n"
+"%s"
 
-#: src/totem.c:3381
+#: ../src/totem.c:3654
+#, fuzzy
+msgid "Could not initialize the thread-safe libraries."
+msgstr "لم يمكن تشغيل المكتبات النظامية السليمة"
+
+#: ../src/totem.c:3654
+#, fuzzy
 msgid "Verify your system installation. Totem will now exit."
 msgstr "تثبت من تثبيت نظامك. سيخرج طوطم الآن."
 
-#: src/totem.c:3402
-msgid "Totem couln't initialise the configuration engine."
+#: ../src/totem.c:3678
+#, fuzzy
+msgid "Totem could not initialize the configuration engine."
 msgstr "لم يمكن تشغيل محرّك الإعداد."
 
-#: src/totem.c:3402
+#: ../src/totem.c:3678
+#, fuzzy
 msgid "Make sure that GNOME is properly installed."
-msgstr "الرجاء التثبّت من أن جنوم مثبّت بسلامة."
+msgstr "الرجاء التثبت من أن حافظ الشاشة مثبت بنجاح"
 
-#: src/vanity.c:67
+#. Main window
+#: ../src/totem.c:3706
+#, fuzzy
+msgid "main window"
+msgstr "ارتفاع النّافذة الرّئيسيّة."
+
+#: ../src/totem.c:3711
+#, fuzzy
+msgid "video popup menu"
+msgstr "استثناء من popup_menu '%s'\n"
+
+#: ../src/vanity.c:76
+#, fuzzy
 msgid "Debug mode on"
-msgstr "نسق التنقيح مفعل"
+msgstr "فشل ضبط النسق لـ `%s': %s"
 
-#: src/vanity.c:247
+#: ../src/vanity.c:256
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "أدات وابكام تستخدم %s"
 
-#: src/vanity.c:299
-msgid "Please file a bug, this isn't supposed to happen"
-msgstr "الرجاء كتابة تقرير خلل، المفروض أن لا يحدث هذا"
+#: ../src/vanity.c:262
+#, fuzzy
+msgid "Copyright © 2002-2005 Bastien Nocera"
+msgstr "حقوق النّشر © 2002-2005 باستيان نوتشيرة"
 
-#: src/vanity.c:542
+#: ../src/vanity.c:551
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1538,11 +1889,12 @@ msgstr ""
 "لم يتمكن فانتي من التشغيل:\n"
 "%s"
 
-#: src/vanity.c:543
+#: ../src/vanity.c:552
+#, fuzzy
 msgid "No reason"
-msgstr "لا سبب"
+msgstr "سبب مجهول"
 
-#: src/vanity.c:581
+#: ../src/vanity.c:590
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1551,7 +1903,7 @@ msgstr ""
 "لم يتمكن فانتي من الاتصال بالوابكام.\n"
 "السبب: %s"
 
-#: src/vanity.c:597
+#: ../src/vanity.c:606
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1560,22 +1912,24 @@ msgstr ""
 "لم يتمكن فانتي من عرض الفيديو من الوابكام.\n"
 "السبب: %s"
 
-#: src/vanity.c:633
+#: ../src/vanity.c:642
+#, fuzzy
 msgid "Vanity Webcam Utility"
-msgstr "أدات الوابكام فانِتي"
+msgstr "أدات وابكام تستخدم %s"
 
-#: src/vanity.c:638
+#: ../src/vanity.c:647
+#, fuzzy
 msgid ""
-"Could not initialise the thread-safe libraries.\n"
+"Could not initialize the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
 msgstr ""
 "لم يمكن تشغيل المكتبات النظاميّة.\n"
 "الرجاء مراجعة نظامك. سيخرج فانِتي الآن."
 
-#: src/vanity.c:663
-#, c-format
+#: ../src/vanity.c:673
+#, fuzzy, c-format
 msgid ""
-"Vanity couln't initialise the \n"
+"Vanity could not initialize the \n"
 "configuration engine:\n"
 "%s"
 msgstr ""
@@ -1583,7 +1937,8 @@ msgstr ""
 "محرك الإعداد:\n"
 "%s"
 
-#: src/vanity.c:683 src/vanity.c:698
+#: ../src/vanity.c:693 ../src/vanity.c:708
+#, fuzzy
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
@@ -1591,39 +1946,414 @@ msgstr ""
 "لم يمكن تحميل الواجهة الأساسية (vanity.glade).\n"
 "تأكد من أن فانتي قد ثبت بسلامة."
 
-#: src/video-utils.c:290
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2135
+#, fuzzy
+msgid ""
+"The requested audio output was not found. Please select another audio output "
+"in the Multimedia Systems Selector."
+msgstr ""
+"مخرج الصوت المطلوب غير موجود رجا اختار مخرج صوت اخر في مختار نضام تعدد "
+"الوسائط ( Multimedia systems Selector )"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2140
+#, fuzzy
+msgid "Location not found."
+msgstr "لم يعثر على المستخدم"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2144
+#, fuzzy
+msgid "Could not open location; You may not have permission to open the file."
+msgstr "لا يمكن فتح الملف ربما لا تملك الصلاحيات الكافية"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2155
+#, fuzzy
+msgid ""
+"The video output is in use by another application. Please close other video "
+"applications, or select another video output in the Multimedia Systems "
+"Selector."
+msgstr ""
+"مخرج الصورة مستخدم من قبل برنامخ اخر الرجا اغلاق برامج الصورة (video) او  "
+"اختر مخرج صورة اخر من مختار نضام تعدد الوسائط ( Multimedia systems "
+"Selector ) "
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2161
+#, fuzzy
+msgid ""
+"The audio output is in use by another application. Please select another "
+"audio output in the Multimedia Systems Selector. You may want to consider "
+"using a sound server."
+msgstr ""
+"مخرج الصوت مستخدم من قبل برنامخ اخر رجا اختر مخرج صوت اخر من مختار نضام تعدد "
+"الوسائط ( Multimedia systems Selector ) ربما تحتاج ان تستخدم خادم صوت "
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2176
+#, fuzzy
+msgid ""
+"Cannot play this file over the network. Try downloading it to disk first."
+msgstr ""
+"لا يمكن تشغيل هذا الملف عن طريق الشبكة حاول ان تحمل هذا الملف علي القرص اولا"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2254
+#, fuzzy
+msgid "Media file could not be played."
+msgstr "تعذر حفظ الملف باسم \"%s\""
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2336
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2387
+#, fuzzy
+msgid "Failed to retrieve working directory"
+msgstr "فشل إنشاء المجلد “%s”."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3889
+#, fuzzy
+msgid "Too old version of GStreamer installed."
+msgstr "نسخة GStreamer المثبتة قديمة جدا"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3896
+msgid "Media contains no supported video streams."
+msgstr ""
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4241
+#, fuzzy
+msgid ""
+"Failed to create a GStreamer play object. Please check your GStreamer "
+"installation."
+msgstr "فشل إنشاء جسم عرض جستريمر الرجاء مراجعة تثبيت GStreamer"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4356
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4440
+#, fuzzy
+msgid ""
+"Failed to open video output. It may not be available. Please select another "
+"video output in the Multimedia Systems Selector."
+msgstr ""
+"فشل في فتح مخرج الصورة ربما غير متوفرةرجا اختار مخرج صورة اخر في مختار نضام "
+"تعدد الوسائط ( Multimedia systems Selector )"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4365
+#, fuzzy
+msgid ""
+"Could not find the video output. You may need to install additional "
+"GStreamer plugins, or select another video output in the Multimedia Systems "
+"Selector."
+msgstr ""
+"لايمكن العثور علي مخرج الصورة تحتاج الي تركيب GStreamer plugins اضافية او "
+"اختار مخرج صوت اخر في مختار نضام تعدد الوسائط ( Multimedia systems Selector )"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4384
+#, fuzzy
+msgid ""
+"Failed to open audio output. You may not have permission to open the sound "
+"device, or the sound server may not be running. Please select another audio "
+"output in the Multimedia Systems Selector."
+msgstr ""
+"فشل في فتح مخرج الصوت ربما انت لاتملك الصلاحيات لفتح ادات مخرج الصوت او خادم "
+"الصوت لا يعمل رجا اختار مخرج صوت اخر في مختار نضام تعدد الوسائط ( Multimedia "
+"systems Selector )"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4394
+#, fuzzy
+msgid ""
+"Could not find the audio output. You may need to install additional "
+"GStreamer plugins, or select another audio output in the Multimedia Systems "
+"Selector."
+msgstr ""
+"لايمكن العثور علي مخرج الصوت تحتاج الي تركيب GStreamer plugins اضافية او "
+"اختار مخرج صوت اخر في مختار نضام تعدد الوسائط ( Multimedia systems Selector )"
+
+#: ../src/backend/bacon-video-widget-xine.c:709
+#, c-format
+msgid ""
+"Couldn't load the '%s' audio driver\n"
+"Check that the device is not busy."
+msgstr ""
+"لم يمكن تحميل الدافع الصوتي '%s'\n"
+"تأكد من الجهاز ليس شاغلا."
+
+#: ../src/backend/bacon-video-widget-xine.c:1186
+#: ../src/backend/bacon-video-widget-xine.c:1779
+#, fuzzy
+msgid ""
+"No video output is available. Make sure that the program is correctly "
+"installed."
+msgstr "لا إخراج فيديو متوفر. الرجاء التأكد من أن البرنامج مثبّت بسلامة."
+
+#: ../src/backend/bacon-video-widget-xine.c:1313
+#, fuzzy
+msgid "The server you are trying to connect to is not known."
+msgstr "النادل الذي تحاول الإتصال به مجهول."
+
+#: ../src/backend/bacon-video-widget-xine.c:1317
+#, c-format
+msgid "The device name you specified (%s) seems to be invalid."
+msgstr "يبدو أن إسم الجهاز الذي حددته (%s) غير صالح."
+
+#: ../src/backend/bacon-video-widget-xine.c:1321
+#, c-format
+msgid "The server you are trying to connect to (%s) is unreachable."
+msgstr "لم يمكن الإتصال بالنادل (%s)."
+
+#: ../src/backend/bacon-video-widget-xine.c:1325
+#, fuzzy
+msgid "The connection to this server was refused."
+msgstr "إنشاء اتّصالٍ دائم بهذا النّادل"
+
+#: ../src/backend/bacon-video-widget-xine.c:1329
+#, fuzzy
+msgid "The specified movie could not be found."
+msgstr "نادل X الموجود في إعداد جي دي ام غير موجود."
+
+#: ../src/backend/bacon-video-widget-xine.c:1335
+#: ../src/backend/bacon-video-widget-xine.c:1353
+#, fuzzy
+msgid ""
+"The source seems encrypted, and can't be read. Are you trying to play an "
+"encrypted DVD without libdvdcss?"
+msgstr ""
+"يبدو المصدر مشفّرا، و لن يمكن قراءته. هل تحاول عرض دي في دي مشفّر بدون "
+"libdvdcss؟"
+
+#: ../src/backend/bacon-video-widget-xine.c:1338
+#, fuzzy
+msgid "The movie could not be read."
+msgstr "لم يمكن قراءة التّحيّة من %s: %s"
+
+#: ../src/backend/bacon-video-widget-xine.c:1347
+#, fuzzy, c-format
+msgid "A problem occurred while loading a library or a decoder (%s)."
+msgstr "حدث خطأ عند تحميل مكتبة أو دِكودر (%s)."
+
+#: ../src/backend/bacon-video-widget-xine.c:1356
+#, fuzzy
+msgid "This file is encrypted and cannot be played back."
+msgstr "هذا الملف مشفر و لن يمكن عرضه."
+
+#: ../src/backend/bacon-video-widget-xine.c:1361
+#, fuzzy
+msgid "For security reasons, this movie can not be played back."
+msgstr "لن يعرض هذا الفلم لأسباب أمنية."
+
+#: ../src/backend/bacon-video-widget-xine.c:1366
+#, fuzzy
+msgid "The audio device is busy. Is another application using it?"
+msgstr "الجهاز الصوتي شاغل. ربما كان برنامج آخر يصدد استخدامه."
+
+#: ../src/backend/bacon-video-widget-xine.c:1371
+#, fuzzy
+msgid "You are not allowed to open this file."
+msgstr "الملف الذي تحاول فتحه ليس عاديا."
+
+#: ../src/backend/bacon-video-widget-xine.c:1373
+#, fuzzy
+msgid "The server refused access to this file or stream."
+msgstr "رفض النادل النفاذ إلى هذا الملف أو التيّار."
+
+#: ../src/backend/bacon-video-widget-xine.c:1382
+#, fuzzy
+msgid "The file you tried to play is an empty file."
+msgstr "الملف الذي تحاول تشغيلة ملف فارغ"
+
+#: ../src/backend/bacon-video-widget-xine.c:1576
+#, fuzzy
+msgid "There is no input plugin to handle the location of this movie"
+msgstr "لا يوجد ملحق لمعالجة هذا الفلم."
+
+#: ../src/backend/bacon-video-widget-xine.c:1580
+#, fuzzy
+msgid "There is no plugin to handle this movie."
+msgstr "لا يوجد ملحق لمعالجة هذا الفلم."
+
+#: ../src/backend/bacon-video-widget-xine.c:1584
+#, fuzzy
+msgid "This movie is broken and can not be played further."
+msgstr "هذا الفلم مكسور و لا يمكن عرضه."
+
+#: ../src/backend/bacon-video-widget-xine.c:1588
+#, fuzzy
+msgid "This location is not a valid one."
+msgstr ""
+"هذا ليس ملف لوحة مفاتيح سليم:\n"
+"%s"
+
+#: ../src/backend/bacon-video-widget-xine.c:1592
+#, fuzzy
+msgid "This movie could not be opened."
+msgstr "لم يمكن السّؤال عن هذا القرص المدمج: %s\n"
+
+#: ../src/backend/bacon-video-widget-xine.c:1596
+#, fuzzy
+msgid "Generic Error."
+msgstr "خطأ عام"
+
+#: ../src/backend/bacon-video-widget-xine.c:2205
+#, fuzzy
+msgid "This movie is a still image. You can open it with an image viewer."
+msgstr "هذا الفلم صورة متواصلة. يمكنك فتحها بعارض صور."
+
+#: ../src/backend/bacon-video-widget-xine.c:2229
+#, c-format
+msgid ""
+"Video codec '%s' is not handled. You might need to install additional "
+"plugins to be able to play some types of movies"
+msgstr ""
+"لم يمكن معالجة كودِك الفيديو '%s'. قد يتطلب منك تثبيت ملحقاتإضافية لعرض بعض "
+"أنواع الأفلام"
+
+#: ../src/backend/bacon-video-widget-xine.c:2233
+#, c-format
+msgid ""
+"Audio codec '%s' is not handled. You might need to install additional "
+"plugins to be able to play some types of movies"
+msgstr ""
+"لم يمكن معالجة كودِك الصوت '%s'. قد يتطلّب منك تثبيت ملحقات إضافيّة لعرض بعض "
+"أنواع الأفلام"
+
+#: ../src/backend/bacon-video-widget-xine.c:2249
+#, fuzzy
+msgid "This is an audio-only file, and there is no audio output available."
+msgstr "هذا ملف صوتي فقط و لا يتوفر إخراج صوتي منه."
+
+#: ../src/backend/bacon-video-widget-xine.c:3676
+#: ../src/backend/bacon-video-widget-xine.c:3723
+#: ../src/backend/bacon-video-widget-xine.c:3745
+#, c-format
+msgid "Language %d"
+msgstr "اللّغة %d"
+
+#: ../src/backend/bacon-video-widget-xine.c:3782
+#, fuzzy
+msgid "No video to capture."
+msgstr "لا يوجد اسم ملف لحفظه"
+
+#: ../src/backend/bacon-video-widget-xine.c:3790
+#, fuzzy
+msgid "Video codec is not handled."
+msgstr "لا يمكن معالجة كودِك الفيديو."
+
+#: ../src/backend/bacon-video-widget-xine.c:3798
+#, fuzzy
+msgid "Movie is not playing."
+msgstr "“%s” لا يجيب"
+
+#. hour:minutes:seconds
+#. Translators: This is a time format, like "9:05:02" for 9
+#. * hours, 5 minutes, and 2 seconds. You may change ":" to
+#. * the separator that your locale uses or use "%Id" instead
+#. * of "%d" if your locale uses localized digits. Do not
+#. * translate the "long time format|" part. Remove it from
+#. * the translation.
+#.
+#: ../src/backend/video-utils.c:223
+#, c-format
+msgid "long time format|%d:%02d:%02d"
+msgstr ""
+
+#. minutes:seconds
+#. Translators: This is a time format, like "5:02" for 5
+#. * minutes and 2 seconds. You may change ":" to the
+#. * separator that your locale uses or use "%Id" instead of
+#. * "%d" if your locale uses localized digits. Do not
+#. * translate the "short time format|" part. Remove it from
+#. * the translation.
+#.
+#: ../src/backend/video-utils.c:233
+#, c-format
+msgid "short time format|%d:%02d"
+msgstr ""
+
+#: ../src/backend/video-utils.c:252
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d ساعات"
 
-#: src/video-utils.c:292
+#: ../src/backend/video-utils.c:254
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d دقائق"
 
-#: src/video-utils.c:295
+#: ../src/backend/video-utils.c:257
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d ثانية"
 
 #. hour:minutes:seconds
-#: src/video-utils.c:301
+#: ../src/backend/video-utils.c:263
 #, c-format
 msgid "%s %s %s"
 msgstr "%s·%s·%s"
 
 #. minutes:seconds
-#: src/video-utils.c:304
+#: ../src/backend/video-utils.c:266
 #, c-format
 msgid "%s %s"
 msgstr "%s·%s"
 
 #. seconds
-#: src/video-utils.c:307
+#: ../src/backend/video-utils.c:269
 #, c-format
 msgid "%s"
 msgstr "%s"
 
+#: ../src/plparse/totem-disc.c:123
+#, c-format
+msgid "Failed to find real device node for %s: %s"
+msgstr "فشل ايجاد عقدة جهاز حقيقيّة لـ %s: %s"
+
+#: ../src/plparse/totem-disc.c:134
+#, c-format
+msgid "Failed to read symbolic link %s: %s"
+msgstr "فشل قراءة الوصلة الرمزيّة %s: %s"
+
+#: ../src/plparse/totem-disc.c:341
+#, fuzzy, c-format
+msgid "Failed to find mountpoint for device %s"
+msgstr "فشل ايجاد عقدة جهاز حقيقيّة لـ %s: %s"
+
+#: ../src/plparse/totem-disc.c:350
+#, fuzzy
+msgid "Could not connect to the HAL daemon"
+msgstr "لم يمكن الاتصال بالمضيف البعيد"
+
+#: ../src/plparse/totem-disc.c:469
+#, fuzzy
+msgid "Please check that a disc is present in the drive."
+msgstr "الرّجاء التثبّت من وجود قرص في السوّاقة."
+
+#: ../src/plparse/totem-disc.c:516
+#, fuzzy, c-format
+msgid "Failed to mount %s"
+msgstr "فشل تسجيل %s إلى %s"
+
+#: ../src/plparse/totem-disc.c:540
+#, fuzzy, c-format
+msgid "Failed to find mountpoint for %s"
+msgstr "فشل ايجاد عقدة جهاز حقيقيّة لـ %s: %s"
+
+#: ../src/plparse/totem-disc.c:902
+#, fuzzy
+msgid "Audio CD"
+msgstr "قرص صوتي"
+
+#: ../src/plparse/totem-disc.c:904
+#, fuzzy
+msgid "Video CD"
+msgstr "شاشة القرص مدمج"
+
+#: ../src/plparse/totem-disc.c:906
+#, fuzzy
+msgid "DVD"
+msgstr "DVD"
+
+#: ../src/plparse/totem-pl-parser.c:380
+#, c-format
+msgid "Couldn't write parser: %s"
+msgstr "لم يمكن كتابة المعرب: %s"
+
+#: ../src/plparse/totem-pl-parser.c:488 ../src/plparse/totem-pl-parser.c:628
+#: ../src/plparse/totem-pl-parser.c:727
+#, c-format
+msgid "Couldn't open file '%s': %s"
+msgstr "لم يمكن فتح الملفّ '%s': %s"
