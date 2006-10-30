@@ -1,5 +1,11 @@
 2006-10-30  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-mozilla-viewer.c: (on_open1_activate): Launch the original
+	URL, or the HREF pointed to when launching from a browser provided
+	stream (Closes: #365278)
+
+2006-10-30  Bastien Nocera  <hadess@hadess.net>
+
 	* data/mozilla-viewer.glade:
 	* src/Makefile.am:
 	* src/totem-mozilla-viewer.c: Try to unbreak the build (especially

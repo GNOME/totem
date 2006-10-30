@@ -353,7 +353,14 @@ on_open1_activate (GtkButton *button, TotemEmbedded *emb)
 
 	g_return_if_fail (emb->app != NULL);
 
-	l = g_list_prepend (l, emb->filename);
+	if (IS_FD_STREAM) {
+		l = g_list_prepend (l, emb->orig_filename);
+	} else if (emb->href != NULL) {
+		l = g_list_prepend (l, emb->href);
+	} else {
+		l = g_list_prepend (l, emb->filename);
+	}
+
 	if (gnome_vfs_mime_application_launch (emb->app, l) == GNOME_VFS_OK) {
 		totem_embedded_stop (emb, NULL);
 	}
