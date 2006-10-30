@@ -1,5 +1,16 @@
 2006-10-30  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemPlugin.cpp:
+	* browser-plugin/totemPlugin.h:
+	* data/mozilla-viewer.glade:
+	* src/totem-mozilla-options.h:
+	* src/totem-mozilla-viewer.c: (on_open1_activate),
+	(totem_volume_create), (totem_statusbar_create): Finish the statusbar
+	work, and disable the statusbar by default. Adds support for the "full"
+	WMP interface, and the showstatusbar parameter (Closes: #367900)
+
+2006-10-30  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-mozilla-viewer.c: (on_open1_activate): Launch the original
 	URL, or the HREF pointed to when launching from a browser provided
 	stream (Closes: #365278)

@@ -375,6 +375,10 @@ totemPlugin::Fork ()
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_CONTROLS_HIDDEN));
 	}
 
+	if (mStatusbarHidden) {
+		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_STATUSBAR_HIDDEN));
+	}
+
 	if (mHidden) {
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_HIDDEN));
 	}
@@ -743,24 +747,30 @@ totemPlugin::Init (NPMIMEType mimetype,
 	/* Are we hidden? */
 	mHidden = totem_get_boolean_value (args, "hidden", FALSE);
 
+	mStatusbarHidden = TRUE;
 #ifdef TOTEM_GMP_PLUGIN
 	/* uimode is either invisible, none, mini, or full
 	 * http://windowssdk.msdn.microsoft.com/en-us/library/aa392439(VS.80).aspx */
 	value = (char *) g_hash_table_lookup (args, "uimode");
 	if (value != NULL) {
-		if (g_ascii_strcasecmp (value, "none") == 0)
+		if (g_ascii_strcasecmp (value, "none") == 0) {
 			mControllerHidden = TRUE;
-		else if (g_ascii_strcasecmp (value, "invisible") == 0)
+		} else if (g_ascii_strcasecmp (value, "invisible") == 0) {
 			mHidden = TRUE;
-		else if (g_ascii_strcasecmp (value, "mini") == 0)
-			//FIXME hide the status bar?
+		} else if (g_ascii_strcasecmp (value, "full") == 0) {
+			mStatusbarHidden = FALSE;
+		} else if (g_ascii_strcasecmp (value, "mini") == 0) {
 			;
+		}
 	}
 	/* ShowXXX parameters as per http://support.microsoft.com/kb/285154 */
 	controller = totem_get_boolean_value (args, "showcontrols", TRUE);
 	if (mControllerHidden == FALSE)
 		mControllerHidden = (controller == FALSE);
-	//FIXME add showdisplay and showstatusbar
+
+	controller = totem_get_boolean_value (args, "showstatusbar", FALSE);
+	mStatusbarHidden = (controller == FALSE);
+	//FIXME add showdisplay
 	// see http://msdn.microsoft.com/library/default.asp?url=/library/en-us/wmp6sdk/htm/userinterfaceelements.asp
 #endif /* TOTEM_GMP_PLUGIN */
 
@@ -782,6 +792,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 	g_message ("mCache: %d", mCache);
 	g_message ("mTarget: %s", mTarget);
 	g_message ("mControllerHidden: %d", mControllerHidden);
+	g_message ("mStatusbarHidden: %d", mStatusbarHidden);
 	g_message ("mHidden: %d", mHidden);
 	g_message ("mNoAutostart: %d mRepeat: %d", mNoAutostart, mRepeat);
 

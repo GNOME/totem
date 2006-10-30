@@ -45,6 +45,7 @@
 #include "bacon-volume.h"
 #include "video-utils.h"
 
+GtkWidget *totem_statusbar_create (void);
 GtkWidget *totem_volume_create (void);
 
 #define IS_FD_STREAM (strcmp(emb->filename, "fd://0") == 0)
@@ -354,7 +355,7 @@ on_open1_activate (GtkButton *button, TotemEmbedded *emb)
 	g_return_if_fail (emb->app != NULL);
 
 	if (IS_FD_STREAM) {
-		l = g_list_prepend (l, emb->orig_filename);
+		l = g_list_prepend (l, (gpointer) emb->orig_filename);
 	} else if (emb->href != NULL) {
 		l = g_list_prepend (l, emb->href);
 	} else {
@@ -843,6 +844,21 @@ static void embedded (GtkPlug *plug, TotemEmbedded *emb)
 	emb->embedded_done = TRUE;
 }
 
+static int arg_width = -1;
+static int arg_height = -1;
+static char *arg_url = NULL;
+static char *arg_href = NULL;
+static char *arg_target = NULL;
+static char *arg_mime_type = NULL;
+static char **arg_remaining = NULL;
+static Window xid = 0;
+static gboolean arg_no_controls = FALSE;
+static gboolean arg_no_statusbar = TRUE;
+static gboolean arg_hidden = FALSE;
+static gboolean arg_is_playlist = FALSE;
+static gboolean arg_repeat = FALSE;
+static gboolean arg_no_autostart = FALSE;
+
 GtkWidget *
 totem_volume_create (void)
 {
@@ -855,19 +871,18 @@ totem_volume_create (void)
 	return widget;
 }
 
-static int arg_width = -1;
-static int arg_height = -1;
-static char *arg_url = NULL;
-static char *arg_href = NULL;
-static char *arg_target = NULL;
-static char *arg_mime_type = NULL;
-static char **arg_remaining = NULL;
-static Window xid = 0;
-static gboolean arg_no_controls = FALSE;
-static gboolean arg_hidden = FALSE;
-static gboolean arg_is_playlist = FALSE;
-static gboolean arg_repeat = FALSE;
-static gboolean arg_no_autostart = FALSE;
+GtkWidget *
+totem_statusbar_create (void)
+{
+	GtkWidget *widget;
+
+	widget = totem_statusbar_new ();
+	totem_statusbar_set_has_resize_grip (TOTEM_STATUSBAR (widget), FALSE);
+	if (arg_no_statusbar == FALSE)
+		gtk_widget_show (widget);
+
+	return widget;
+}
 
 static gboolean
 parse_xid (const gchar *option_name,
@@ -890,6 +905,7 @@ static GOptionEntry option_entries [] =
 	{ TOTEM_OPTION_TARGET, 0, 0, G_OPTION_ARG_STRING, &arg_target, NULL, NULL },
 	{ TOTEM_OPTION_MIMETYPE, 0, 0, G_OPTION_ARG_STRING, &arg_mime_type, NULL, NULL },
 	{ TOTEM_OPTION_CONTROLS_HIDDEN, 0, 0, G_OPTION_ARG_NONE, &arg_no_controls, NULL, NULL },
+	{ TOTEM_OPTION_STATUSBAR_HIDDEN, 0, 0, G_OPTION_ARG_NONE, &arg_no_statusbar, NULL, NULL },
 	{ TOTEM_OPTION_HIDDEN, 0, 0, G_OPTION_ARG_NONE, &arg_hidden, NULL, NULL },
 	{ TOTEM_OPTION_PLAYLIST, 0, 0, G_OPTION_ARG_NONE, &arg_is_playlist, NULL, NULL },
 	{ TOTEM_OPTION_REPEAT, 0, 0, G_OPTION_ARG_NONE, &arg_repeat, NULL, NULL },
