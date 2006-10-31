@@ -169,6 +169,11 @@ int main (int argc, char **argv)
 	gdk_threads_init ();
 	options[0].arg = bacon_video_widget_get_popt_table ();
 	g_type_init ();
+
+#ifndef HAVE_GTK_ONLY
+	gnome_authentication_manager_init ();
+#endif
+
 	gnome_vfs_init ();
 	bacon_video_widget_init_backend (&argc, &argv);
 

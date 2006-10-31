@@ -1,3 +1,18 @@
+2006-10-31  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in:
+	* src/.cvsignore:
+	* src/Makefile.am:
+	* src/backend/gstscreenshot.c:
+	* src/backend/gstscreenshot.h:
+	* src/metadata-test.c:
+	* src/totem-video-indexer.c: (main):
+	Remove dead-code:
+	- GStreamer 0.8 code in gstscreenshot.[ch]
+	- metadata-test which doesn't add anything to totem-video-indexer
+
+	Add GNOME authentication manager support to totem-video-indexer
+
 2006-10-30  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:

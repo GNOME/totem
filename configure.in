@@ -112,12 +112,9 @@ if test x$HAVE_XINE = xno; then
 	MM="gstreamer-0.10 >= $GST_REQS gstreamer-plugins-base-0.10 >= $GSTPLUG_REQS gconf-2.0"
 	PKG_CHECK_MODULES(GST, $MM,
 			HAVE_GSTREAMER=yes, HAVE_GSTREAMER=no)
-	if test x$GST_MAJORMINOR = x0.10; then
-		GST_LIBS="$GST_LIBS -lgstinterfaces-$GST_MAJORMINOR -lgstvideo-$GST_MAJORMINOR -lgstaudio-$GST_MAJORMINOR"
-		AC_SUBST(GST_LIBS)
-		EXTRA_BACKEND_LIBS="-lgstinterfaces-$GST_MAJORMINOR -lgstvideo-$GST_MAJORMINOR -lgstaudio-$GST_MAJORMINOR"
-		AC_DEFINE(HAVE_GSTREAMER_010, 1, [Whether we use Gst 0.8 or 0.10])
-	fi
+	GST_LIBS="$GST_LIBS -lgstinterfaces-$GST_MAJORMINOR -lgstvideo-$GST_MAJORMINOR -lgstaudio-$GST_MAJORMINOR"
+	AC_SUBST(GST_LIBS)
+	EXTRA_BACKEND_LIBS="-lgstinterfaces-$GST_MAJORMINOR -lgstvideo-$GST_MAJORMINOR -lgstaudio-$GST_MAJORMINOR"
 
 	dnl Give error and exit if we don't have gstreamer
 	if test "x$HAVE_GSTREAMER" = "xno"; then
