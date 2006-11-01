@@ -80,14 +80,14 @@ totem_lang_table_parse_start_tag (GMarkupParseContext *ctx,
 			/* skip if empty */
 			if (**attr_values)
 			{
-				g_return_if_fail (strlen (*attr_values) == 3);
+				g_return_if_fail (strlen (*attr_values) == 3 || strcmp (*attr_values, "qaa-qtz") == 0);
 				ccode_longB = *attr_values;
 			}
 		} else if (g_str_equal (*attr_names, "iso_639_2T_code")) {
 			/* skip if empty */
 			if (**attr_values)
 			{
-				g_return_if_fail (strlen (*attr_values) == 3);
+				g_return_if_fail (strlen (*attr_values) == 3 || strcmp (*attr_values, "qaa-qtz") == 0);
 				ccode_longT = *attr_values;
 			}
 		} else if (g_str_equal (*attr_names, "name")) {
