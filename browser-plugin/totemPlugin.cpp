@@ -123,9 +123,8 @@ totemPlugin::Play ()
 		return NS_OK;
 
 	NS_ASSERTION (mProxy, "No DBUS proxy!");
-	/* FIXME: do an ASYNC call here!! */
-	dbus_g_proxy_call (mProxy, "Play", NULL,
-			   G_TYPE_INVALID, G_TYPE_INVALID);
+	dbus_g_proxy_call_no_reply(mProxy, "Play",
+				   G_TYPE_INVALID, G_TYPE_INVALID);
 
 	return NS_OK;
 }
@@ -139,9 +138,8 @@ totemPlugin::Stop ()
 		return NS_OK;
 
 	NS_ASSERTION (mProxy, "No DBUS proxy!");
-	/* FIXME: do an ASYNC call here!! */
-	dbus_g_proxy_call (mProxy, "Stop", NULL,
-			   G_TYPE_INVALID, G_TYPE_INVALID);
+	dbus_g_proxy_call_no_reply (mProxy, "Stop",
+				    G_TYPE_INVALID, G_TYPE_INVALID);
 
 	return NS_OK;
 }
@@ -155,9 +153,8 @@ totemPlugin::Pause ()
 		return NS_OK;
 
 	NS_ASSERTION (mProxy, "No DBUS proxy!");
-	/* FIXME: do an ASYNC call here!! */
-	dbus_g_proxy_call (mProxy, "Pause", NULL,
-			   G_TYPE_INVALID, G_TYPE_INVALID);
+	dbus_g_proxy_call_no_reply (mProxy, "Pause",
+				    G_TYPE_INVALID, G_TYPE_INVALID);
 
 	return NS_OK;
 }
