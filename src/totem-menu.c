@@ -424,11 +424,13 @@ static void
 on_recent_file_item_activated (GtkAction *action,
                                Totem *totem)
 {
-	char *uri;
+	GtkRecentInfo *recent_info;
+	const gchar *uri;
 	gboolean playlist_changed;
 	guint end;
 
-	uri = g_object_get_data (G_OBJECT (action), "recent-uri");
+	recent_info = g_object_get_data (G_OBJECT (action), "recent-info");
+	uri = gtk_recent_info_get_uri (recent_info);
 
 	totem_signal_block_by_data (totem->playlist, totem);
 
@@ -515,12 +517,9 @@ totem_recent_manager_changed_callback (GtkRecentManager *recent_manager, Totem *
 			       "label", label,
 			       NULL);
 
-		g_object_set_data_full (G_OBJECT (action), "recent-uri",
-				g_strdup (gtk_recent_info_get_uri (info)),
-				g_free);
-		g_object_set_data_full (G_OBJECT (action), "pixbuf-icon",
-				gtk_recent_info_get_icon (info, GTK_ICON_SIZE_MENU),
-				g_object_unref);
+		g_object_set_data_full (G_OBJECT (action), "recent-info",
+				gtk_recent_info_ref (info),
+				(GDestroyNotify) gtk_recent_info_unref);
 		g_signal_connect (G_OBJECT (action), "activate",
 			  	G_CALLBACK (on_recent_file_item_activated),
 				totem);
@@ -1067,16 +1066,16 @@ static const GtkActionEntry entries[] = {
 	{ "movie-menu", NULL, N_("_Movie") },
 	{ "open", GTK_STOCK_OPEN, N_("_Open..."), "<control>O", N_("Open a file"), G_CALLBACK (open_action_callback) },
 	{ "open-location", NULL, N_("Open _Location..."), "<control>L", N_("Open a non-local file"), G_CALLBACK (open_location_action_callback) },
-	{ "eject", NULL, N_("_Eject"), "<control>E", NULL, G_CALLBACK (eject_action_callback) },
+	{ "eject", "media-eject", N_("_Eject"), "<control>E", NULL, G_CALLBACK (eject_action_callback) },
 	{ "play", GTK_STOCK_MEDIA_PLAY, N_("Play / Pa_use"), "P", N_("Play or pause the movie"), G_CALLBACK (play_action_callback) },
 	{ "quit", GTK_STOCK_QUIT, N_("_Quit"), "<control>Q", N_("Quit the program"), G_CALLBACK (quit_action_callback) },
 
 	{ "edit-menu", NULL, N_("_Edit") },
-	{ "take-screenshot", GTK_STOCK_CONVERT, N_("Take _Screenshot..."), "<control>S", N_("Take a screenshot"), G_CALLBACK (take_screenshot_action_callback) },
+	{ "take-screenshot", "camera-photo", N_("Take _Screenshot..."), "<control>S", N_("Take a screenshot"), G_CALLBACK (take_screenshot_action_callback) },
 	{ "preferences", GTK_STOCK_PREFERENCES, N_("Prefere_nces"), NULL, NULL, G_CALLBACK (preferences_action_callback) },
 
 	{ "view-menu", NULL, N_("_View") },
-	{ "fullscreen", GTK_STOCK_ZOOM_FIT, N_("_Fullscreen"), "F", N_("Switch to fullscreen"), G_CALLBACK (fullscreen_action_callback) },
+	{ "fullscreen", "view-fullscreen", N_("_Fullscreen"), "F", N_("Switch to fullscreen"), G_CALLBACK (fullscreen_action_callback) },
 	{ "zoom-window-menu", NULL, N_("Fit Window to Movie") },
 	{ "zoom-1-2", NULL, N_("_Resize 1:2"), "0", N_("Resize to half the video size"), G_CALLBACK (zoom_1_2_action_callback) },
 	{ "zoom-1-1", NULL, N_("Resize _1:1"), "1", N_("Resize to video size"), G_CALLBACK (zoom_1_1_action_callback) },
@@ -1099,8 +1098,8 @@ static const GtkActionEntry entries[] = {
 
 	{ "sound-menu", NULL, N_("_Sound") },
 /*	{ "languages-menu", NULL, N_("_Languages") }, */
-	{ "volume-up", NULL, N_("Volume _Up"), "Up", N_("Volume up"), G_CALLBACK (volume_up_action_callback) },
-	{ "volume-down", NULL, N_("Volume _Down"), "Down", N_("Volume down"), G_CALLBACK (volume_down_action_callback) },
+	{ "volume-up", "audio-volume-high", N_("Volume _Up"), "Up", N_("Volume up"), G_CALLBACK (volume_up_action_callback) },
+	{ "volume-down", "audio-volume-low", N_("Volume _Down"), "Down", N_("Volume down"), G_CALLBACK (volume_down_action_callback) },
 
 	{ "help-menu", NULL, N_("_Help") },
 	{ "contents", GTK_STOCK_HELP, N_("_Contents"), "F1", N_("Help contents"), G_CALLBACK (contents_action_callback) },
@@ -1134,14 +1133,26 @@ static void
 totem_ui_manager_connect_proxy_callback (GtkUIManager *ui_manager,
 		GtkAction *action, GtkWidget *widget, Totem *totem)
 {
+	GtkRecentInfo *recent_info;
 	GdkPixbuf *icon;
 	GtkWidget *image;
+	gint w, h;
 
-	icon = g_object_get_data (G_OBJECT (action), "pixbuf-icon");
-	if (icon != NULL && GTK_IS_IMAGE_MENU_ITEM (widget)) {
-		image = gtk_image_new_from_pixbuf (icon);
-		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (widget),
+	recent_info = g_object_get_data (G_OBJECT (action), "recent-info");
+
+	if (recent_info == NULL) {
+		return;
+	}
+
+	if (GTK_IS_IMAGE_MENU_ITEM (widget)) {
+		gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &w, &h);
+		icon = gtk_recent_info_get_icon (recent_info, w);
+
+		if (icon != NULL) {
+			image = gtk_image_new_from_pixbuf (icon);
+			gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (widget),
 				image);
+		}
 	}
 }
 

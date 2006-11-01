@@ -110,7 +110,7 @@ enum {
 };
 
 enum {
-	PIX_COL,
+	PLAYING_COL,
 	FILENAME_COL,
 	URI_COL,
 	TITLE_CUSTOM_COL,
@@ -575,8 +575,8 @@ totem_playlist_set_reorderable (TotemPlaylist *playlist, gboolean set)
 	{
 		GtkTreeIter iter;
 		char *index;
-		GdkPixbuf *pixbuf;
 		GtkTreePath *path;
+		gboolean playing;
 
 		index = g_strdup_printf ("%d", i);
 		if (gtk_tree_model_get_iter_from_string
@@ -588,13 +588,10 @@ totem_playlist_set_reorderable (TotemPlaylist *playlist, gboolean set)
 		}
 		g_free (index);
 
-		gtk_tree_model_get (playlist->_priv->model, &iter,
-				PIX_COL, &pixbuf, -1);
-
-		if (pixbuf == NULL)
+		gtk_tree_model_get (playlist->_priv->model, &iter, PLAYING_COL, &playing, -1);
+		if (!playing) {
 			continue;
-
-		gdk_pixbuf_unref (pixbuf);
+		}
 
 		/* Only emit the changed signal if we changed the ->current */
 		path = gtk_tree_path_new_from_indices (i, -1);
@@ -689,6 +686,26 @@ selection_changed (GtkTreeSelection *treeselection, TotemPlaylist *playlist)
 	gtk_widget_set_sensitive (remove_button, sensitivity);
 	gtk_widget_set_sensitive (up_button, sensitivity);
 	gtk_widget_set_sensitive (down_button, sensitivity);
+}
+
+static void
+load_icon (TotemPlaylist *playlist)
+{
+	GtkIconTheme *theme = gtk_icon_theme_get_default ();
+	gint w, h;
+
+	if (playlist->_priv->icon != NULL) {
+		g_object_unref (G_OBJECT (playlist->_priv->icon));
+	}
+
+	gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &w, &h);
+	playlist->_priv->icon = gtk_icon_theme_load_icon (theme, "audio-volume-medium", w, 0, NULL);
+}
+
+static void
+icon_theme_changed (GtkIconTheme *theme, TotemPlaylist *playlist)
+{
+	load_icon (playlist);
 }
 
 /* This function checks if the current item is NULL, and try to update it
@@ -893,7 +910,7 @@ totem_playlist_save_playlist (TotemPlaylist *playlist, char *filename, gint acti
 							save_types[active_format - 1].type);
 	else {
 		for (i = 0; i < G_N_ELEMENTS(save_types); i++) {
-			if(g_str_has_suffix (filename, save_types[i].suffix)) {
+			if (g_str_has_suffix (filename, save_types[i].suffix)) {
 				cur = &save_types[i];
 				break;
 			}
@@ -1159,7 +1176,26 @@ totem_playlist_key_press (GtkWidget *win, GdkEventKey *event, TotemPlaylist *pla
 }
 
 static void
-init_columns (GtkTreeView *treeview)
+set_playing_icon (GtkTreeViewColumn *column, GtkCellRenderer *renderer,
+		GtkTreeModel *model, GtkTreeIter *iter, TotemPlaylist *playlist)
+{
+	gboolean playing;
+
+	gtk_tree_model_get (model, iter, PLAYING_COL, &playing, -1);
+
+	if (playing) {
+		g_object_set (G_OBJECT (renderer),
+				"pixbuf", playlist->_priv->icon,
+				NULL);
+	} else {
+		g_object_set (G_OBJECT (renderer),
+				"pixbuf", NULL,
+				NULL);
+	}
+}
+
+static void
+init_columns (GtkTreeView *treeview, TotemPlaylist *playlist)
 {
 	GtkCellRenderer *renderer;
 	GtkTreeViewColumn *column;
@@ -1168,8 +1204,8 @@ init_columns (GtkTreeView *treeview)
 	renderer = gtk_cell_renderer_pixbuf_new ();
 	column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_pack_start (column, renderer, FALSE);
-	gtk_tree_view_column_set_attributes (column, renderer,
-			"pixbuf", PIX_COL, NULL);
+	gtk_tree_view_column_set_cell_data_func (column, renderer,
+			(GtkTreeCellDataFunc) set_playing_icon, playlist, NULL);
 	gtk_tree_view_append_column (treeview, column);
 
 	/* Labels */
@@ -1229,10 +1265,11 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 {
 	GtkTreeModel *model;
 	GtkTreeSelection *selection;
+	GtkIconTheme *theme;
 
 	/* the model */
 	model = GTK_TREE_MODEL (gtk_list_store_new (NUM_COLS,
-				GDK_TYPE_PIXBUF,
+				G_TYPE_BOOLEAN,
 				G_TYPE_STRING,
 				G_TYPE_STRING,
 				G_TYPE_BOOLEAN,
@@ -1246,7 +1283,7 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), FALSE);
 	g_object_unref (G_OBJECT (model));
 
-	init_columns (GTK_TREE_VIEW (treeview));
+	init_columns (GTK_TREE_VIEW (treeview), playlist);
 
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
@@ -1268,7 +1305,7 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 			G_CALLBACK (button_release_cb), playlist);
 	g_signal_connect (G_OBJECT (treeview), "drag_begin",
                         G_CALLBACK (drag_begin_cb), playlist);
-         g_signal_connect (G_OBJECT (treeview), "drag_end",
+	g_signal_connect (G_OBJECT (treeview), "drag_end",
                         G_CALLBACK (drag_end_cb), playlist);
 	gtk_drag_dest_set (treeview, GTK_DEST_DEFAULT_ALL,
 			target_table, G_N_ELEMENTS (target_table),
@@ -1277,6 +1314,11 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 	playlist->_priv->selection = selection;
 
 	gtk_widget_show (treeview);
+
+	theme = gtk_icon_theme_get_default ();
+	g_signal_connect (G_OBJECT (theme), "changed",
+			G_CALLBACK (icon_theme_changed), playlist);
+	icon_theme_changed (theme, playlist);
 }
 
 static void
@@ -1438,6 +1480,12 @@ totem_playlist_entry_parsed (TotemPlParser *parser,
 }
 
 static void
+totem_playlist_realize (GtkWidget *widget, TotemPlaylist *playlist)
+{
+	load_icon (playlist);
+}
+
+static void
 totem_playlist_init (TotemPlaylist *playlist)
 {
 	playlist->_priv = g_new0 (TotemPlaylistPrivate, 1);
@@ -1452,6 +1500,11 @@ totem_playlist_init (TotemPlaylist *playlist)
 			"entry",
 			G_CALLBACK (totem_playlist_entry_parsed),
 			playlist);
+
+	g_signal_connect (G_OBJECT (playlist),
+			"realize",
+			G_CALLBACK (totem_playlist_realize),
+			playlist);
 }
 
 static void
@@ -1463,8 +1516,10 @@ totem_playlist_finalize (GObject *object)
 
 	if (playlist->_priv->current != NULL)
 		gtk_tree_path_free (playlist->_priv->current);
-	if (playlist->_priv->icon != NULL)
-		gdk_pixbuf_unref (playlist->_priv->icon);
+	if (playlist->_priv->icon != NULL) {
+		g_object_unref (playlist->_priv->icon);
+		playlist->_priv->icon = NULL;
+	}
 	g_object_unref (playlist->_priv->parser);
 
 	if (playlist->_priv->ui_manager != NULL) {
@@ -1564,9 +1619,6 @@ totem_playlist_new (void)
 	/* The configuration */
 	init_config (playlist);
 
-	playlist->_priv->icon =
-		totem_interface_load_pixbuf ("playlist-playing.png");
-
 	gtk_widget_show_all (GTK_WIDGET (playlist));
 
 	return GTK_WIDGET (playlist);
@@ -1597,7 +1649,7 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 
 	store = GTK_LIST_STORE (playlist->_priv->model);
 	gtk_list_store_insert_with_values (store, &iter, G_MAXINT32,
-			PIX_COL, NULL,
+			PLAYING_COL, FALSE,
 			FILENAME_COL, filename_for_display,
 			URI_COL, uri,
 			TITLE_CUSTOM_COL, display_name ? TRUE : FALSE,
@@ -1981,14 +2033,9 @@ totem_playlist_set_playing (TotemPlaylist *playlist, gboolean state)
 
 	g_return_val_if_fail (&iter != NULL, FALSE);
 
-	if (state != FALSE)
-		gtk_list_store_set (store, &iter,
-				PIX_COL, playlist->_priv->icon,
-				-1);
-	else
-		gtk_list_store_set (store, &iter,
-				PIX_COL, NULL,
-				-1);
+	gtk_list_store_set (store, &iter,
+			PLAYING_COL, state,
+			-1);
 
 	if (state == FALSE)
 		return TRUE;

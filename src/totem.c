@@ -66,7 +66,6 @@
 #include "totem.h"
 #include "totem-private.h"
 #include "totem-preferences.h"
-#include "totem-stock-icons.h"
 #include "totem-disc.h"
 
 #include "debug.h"
@@ -230,7 +229,6 @@ totem_action_exit (Totem *totem)
 
 	totem_sublang_exit (totem);
 	totem_destroy_file_filters ();
-	totem_named_icons_dispose (totem);
 
 	if (totem->gc)
 		g_object_unref (G_OBJECT (totem->gc));
@@ -3007,9 +3005,6 @@ totem_callback_connect (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->volume), "value-changed",
 			G_CALLBACK (vol_cb), totem);
 
-	/* Named icon support */
-	totem_set_default_icons (totem);
-
 	/* Set sensitivity of the toolbar buttons */
 	totem_action_set_sensitivity ("play", FALSE);
 	totem_action_set_sensitivity ("next-chapter", FALSE);
@@ -3267,8 +3262,6 @@ main (int argc, char **argv)
 
 	totem->win = glade_xml_get_widget (totem->xml, "totem_main_window");
 	
-	totem_named_icons_init (totem, FALSE);
-
 	/* Menubar */
 	totem_ui_manager_setup (totem);
 

@@ -20,6 +20,7 @@
 #ifndef __BACON_VOLUME_BUTTON_H__
 #define __BACON_VOLUME_BUTTON_H__
 
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gtk/gtkbutton.h>
 #include <gtk/gtkicontheme.h>
 
@@ -41,7 +42,7 @@ typedef struct _BaconVolumeButton {
   float direction;
   gboolean timeout;
   guint32 pop_time;
-  GtkIconTheme *theme;
+  GdkPixbuf *icon[4];
 } BaconVolumeButton;
 
 typedef struct _BaconVolumeButtonClass {

@@ -1,3 +1,35 @@
+2006-11-01  Bastien Nocera  <hadess@hadess.net>
+
+	* data/Makefile.am:
+	* data/playlist-playing.png:
+	* data/stock_media_next.png:
+	* data/stock_media_pause.png:
+	* data/stock_media_play.png:
+	* data/stock_media_previous.png:
+	* data/totem.glade:
+	* src/Makefile.am:
+	* src/bacon-volume.c: (bacon_volume_button_init),
+	(bacon_volume_button_dispose), (bacon_volume_button_new),
+	(bacon_volume_scale_value_changed), (bacon_volume_theme_changed),
+	(bacon_volume_load_icons):
+	* src/bacon-volume.h:
+	* src/totem-menu.c: (on_recent_file_item_activated),
+	(totem_recent_manager_changed_callback),
+	(totem_ui_manager_connect_proxy_callback):
+	* src/totem-playlist.c: (totem_playlist_set_reorderable),
+	(load_icon), (icon_theme_changed), (totem_playlist_save_playlist),
+	(set_playing_icon), (init_columns), (init_treeview),
+	(totem_playlist_realize), (totem_playlist_init),
+	(totem_playlist_finalize), (totem_playlist_new),
+	(totem_playlist_add_one_mrl), (totem_playlist_set_playing):
+	* src/totem-stock-icons.c:
+	* src/totem-stock-icons.h:
+	* src/totem.c: (totem_action_exit), (totem_callback_connect),
+	(main):
+
+	Big patch from Jan Arne Petersen <jpetersen@jpetersen.org> to make
+	use of named icons instead of stock icons (Closes: #357143)
+
 2006-10-31  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in:

@@ -7,11 +7,6 @@ stuff_DATA =				\
 	filmholes.png			\
 	filmholes-big-left.png		\
 	filmholes-big-right.png		\
-	stock_media_next.png		\
-	stock_media_previous.png	\
-	stock_media_pause.png		\
-	stock_media_play.png		\
-	playlist-playing.png		\
 	stock-tool-brightness-contrast-22.png	\
 	totem.glade			\
 	playlist.glade			\

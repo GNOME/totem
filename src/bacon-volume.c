@@ -65,6 +65,11 @@ static gboolean cb_button_release		(GtkWidget      * widget,
 						 GdkEventButton * event,
 						 gpointer         data);
 static void	bacon_volume_scale_value_changed(GtkRange       * range);
+#ifndef HAVE_GTK_ONLY
+static void	bacon_volume_theme_changed	(GtkIconTheme	* theme,
+						 gpointer         data);
+static void	bacon_volume_load_icons		(BaconVolumeButton * button);
+#endif
 
 /* see below for scale definitions */
 static GtkWidget *bacon_volume_scale_new	(BaconVolumeButton * button,
@@ -129,29 +134,28 @@ bacon_volume_button_init (BaconVolumeButton *button)
   button->timeout = FALSE;
   button->click_id = 0;
   button->dock = button->scale = NULL;
-#ifndef HAVE_GTK_ONLY
-  button->theme = gtk_icon_theme_get_default ();
-#endif
 }
 
 static void
 bacon_volume_button_dispose (GObject *object)
 {
   BaconVolumeButton *button = BACON_VOLUME_BUTTON (object);
+  guint i;
 
   if (button->dock) {
     gtk_widget_destroy (button->dock);
     button->dock = NULL;
   }
 
-  if (button->theme) {
-    g_object_unref (G_OBJECT (button->theme));
-    button->theme = NULL;
-  }
-
   if (button->click_id != 0) {
     g_source_remove (button->click_id);
     button->click_id = 0;
+  }
+  for (i = 0; i < 4; i++) {
+    if (button->icon[i] != NULL) {
+      g_object_unref (button->icon[i]);
+      button->icon[i] = NULL;
+    }
   }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -168,6 +172,9 @@ bacon_volume_button_new (GtkIconSize size,
 {
   BaconVolumeButton *button;
   GtkWidget *frame, *box;
+#ifndef HAVE_GTK_ONLY
+  GtkIconTheme *theme;
+#endif
 
   button = g_object_new (BACON_TYPE_VOLUME_BUTTON, NULL);
   atk_object_set_name (gtk_widget_get_accessible (GTK_WIDGET (button)),
@@ -180,6 +187,11 @@ bacon_volume_button_new (GtkIconSize size,
   button->image = gtk_image_new ();
   gtk_container_add (GTK_CONTAINER (button), button->image);
   gtk_widget_show_all (button->image);
+
+  /* theme */
+  theme = gtk_icon_theme_get_default ();
+  g_signal_connect (G_OBJECT (theme), "changed",
+		    G_CALLBACK (bacon_volume_theme_changed), button);
 #endif
 
   /* window */
@@ -677,7 +689,6 @@ bacon_volume_scale_value_changed (GtkRange * range)
   GtkAdjustment *adj = gtk_range_get_adjustment (GTK_RANGE (button->scale));
   float step = (adj->upper - adj->lower) / 4;
   float val = gtk_range_get_value (range);
-  gint w, h;
 #ifdef HAVE_GTK_ONLY
   char *s;
 
@@ -686,27 +697,59 @@ bacon_volume_scale_value_changed (GtkRange * range)
   gtk_button_set_label (GTK_BUTTON (button), s);
   g_free (s);
 #else
-  const char *s;
-  GdkPixbuf *buf;
+  GdkPixbuf *pixbuf;
+
+  if (button->icon[0] == NULL)
+    bacon_volume_load_icons (button);
 
   if (val == adj->lower)
-    s = "stock_volume-0";
+    pixbuf = button->icon[0];
   else if (val > adj->lower && val <= adj->lower + step)
-    s = "stock_volume-min";
+    pixbuf = button->icon[1];
   else if (val > adj->lower + step && val <= adj->lower + step * 2)
-    s = "stock_volume-med";
+    pixbuf = button->icon[2];
   else
-    s = "stock_volume-max";
+    pixbuf = button->icon[3];
 
   /* update image */
-  gtk_icon_size_lookup (button->size, &w, &h);
-  buf = gtk_icon_theme_load_icon (button->theme, s, w, 0, NULL);
-  gtk_image_set_from_pixbuf (GTK_IMAGE (button->image), buf);
+  gtk_image_set_from_pixbuf (GTK_IMAGE (button->image), pixbuf);
 #endif
 
   /* signal */
   g_signal_emit (button, signals[SIGNAL_VALUE_CHANGED], 0);
 }
+ 
+#ifndef HAVE_GTK_ONLY
+static void
+bacon_volume_theme_changed (GtkIconTheme * theme,
+			    gpointer       data)
+{
+  BaconVolumeButton *button = BACON_VOLUME_BUTTON (data);
+
+  bacon_volume_load_icons (button);
+  bacon_volume_scale_value_changed (GTK_RANGE (button->scale));
+}
+
+static void
+bacon_volume_load_icons	(BaconVolumeButton * button)
+{
+  guint i;
+  gint w, h;
+  GtkIconTheme *theme = gtk_icon_theme_get_default ();
+  const char *icon_name[] = {"audio-volume-muted", "audio-volume-low",
+    "audio-volume-medium", "audio-volume-high"};
+
+  gtk_icon_size_lookup (button->size, &w, &h);
+
+  for (i = 0; i < 4; i++) {
+    if (button->icon[i] != NULL) {
+      g_object_unref (button->icon[i]);
+      button->icon[i] = NULL;
+    }
+    button->icon[i] = gtk_icon_theme_load_icon (theme, icon_name[i], w, 0, NULL);
+  }
+}
+#endif
 
 /*
  * vim: sw=2 ts=8 cindent noai bs=2
