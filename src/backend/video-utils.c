@@ -327,6 +327,7 @@ totem_ratio_fits_screen (GdkWindow *video_window, int video_width,
 {
 	GdkRectangle fullscreen_rect;
 	int new_w, new_h;
+	GdkScreen *screen;
 
 	if (video_width <= 0 || video_height <= 0)
 		return TRUE;
@@ -334,10 +335,10 @@ totem_ratio_fits_screen (GdkWindow *video_window, int video_width,
 	new_w = video_width * ratio;
 	new_h = video_height * ratio;
 
-	gdk_screen_get_monitor_geometry (gdk_screen_get_default (),
+	screen = gdk_drawable_get_screen (GDK_DRAWABLE (video_window));
+	gdk_screen_get_monitor_geometry (screen,
 			gdk_screen_get_monitor_at_window
-			(gdk_screen_get_default (),
-			 video_window),
+			(screen, video_window),
 			&fullscreen_rect);
 
 	if (new_w > (fullscreen_rect.width - 128) ||

@@ -2221,6 +2221,18 @@ theme_changed_cb (GtkIconTheme *icon_theme, Totem *totem)
 }
 
 static void
+window_realize_cb (GtkWidget *widget, Totem *totem)
+{
+	GdkScreen *screen;
+
+	screen = gtk_widget_get_screen (widget);
+	g_signal_connect (G_OBJECT (screen), "size-changed",
+			G_CALLBACK (size_changed_cb), totem);
+	g_signal_connect (G_OBJECT (gtk_icon_theme_get_for_screen (screen)),
+			"changed", G_CALLBACK (theme_changed_cb), totem);
+}
+
+static void
 popup_timeout_add(Totem* totem)
 {
 	totem->popup_timeout = g_timeout_add (FULLSCREEN_POPUP_TIMEOUT,
@@ -2905,10 +2917,8 @@ totem_callback_connect (Totem *totem)
 			G_CALLBACK (window_state_event_cb), totem);
 
 	/* Screen size and Theme changes */
-	g_signal_connect (G_OBJECT (gdk_screen_get_default ()),
-			"size-changed", G_CALLBACK (size_changed_cb), totem);
-	g_signal_connect (G_OBJECT (gtk_icon_theme_get_default ()),
-			"changed", G_CALLBACK (theme_changed_cb), totem);
+	g_signal_connect (totem->win, "realize",
+			G_CALLBACK (window_realize_cb), totem);
 
 	/* Motion notify for the Popups */
 	item = glade_xml_get_widget (totem->xml,

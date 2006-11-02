@@ -215,44 +215,6 @@ else
 	HAVE_GNOME=no
 fi
 
-dnl Check for DBus
-AC_MSG_CHECKING([for D-BUS])
-AC_ARG_WITH(dbus,
-            AC_HELP_STRING([--with-dbus],
-			   [Enable D-BUS support]),,
-	      with_dbus=auto)
-if test "x$with_dbus" != "xno"; then
-	PKG_CHECK_MODULES(DBUS, dbus-glib-1 >= $DBUS_REQS, enable_dbus=yes, enable_dbus=no)
-        if test "x$with_dbus" = xyes && test "x$enable_dbus" = xno; then
-	   AC_MSG_ERROR([D-BUS explicitly requested but no support found])
-	fi
-        if test "x$enable_dbus" = xyes; then
-		dbus_version=`pkg-config --modversion dbus-1`
-		DBUS_VERSION_MAJOR=`echo $dbus_version | awk -F. '{print $1}'`
-		DBUS_VERSION_MINOR=`echo $dbus_version | awk -F. '{print $2}'`
-		DBUS_VERSION_MICRO=`echo $dbus_version | awk -F. '{print $3}'`
-		if test "z$DBUS_VERSION_MAJOR" = "z"; then
-			DBUS_VERSION_MAJOR="0"
-		fi
-		if test "z$DBUS_VERSION_MINOR" = "z"; then
-			DBUS_VERSION_MINOR="0"
-		fi
-		if test "z$DBUS_VERSION_MICRO" = "z"; then
-			DBUS_VERSION_MICRO="0"
-		fi
-		DBUS_CFLAGS="$DBUS_CFLAGS -DDBUS_VERSION_MAJOR=$DBUS_VERSION_MAJOR"
-		DBUS_CFLAGS="$DBUS_CFLAGS -DDBUS_VERSION_MINOR=$DBUS_VERSION_MINOR"
-		DBUS_CFLAGS="$DBUS_CFLAGS -DDBUS_VERSION_MICRO=$DBUS_VERSION_MICRO"
-
-		AC_DEFINE(WITH_DBUS, 1, [Define if D-BUS is enabled])
-		AC_MSG_RESULT([we're getting on D-BUS])
-	else
-		AC_MSG_RESULT([not found])
-	fi
-
-fi			  
-AM_CONDITIONAL(WITH_DBUS, test "x$enable_dbus" = "xyes")
-
 AC_MSG_CHECKING([whether iso-codes has iso-639 domain])
 if $PKG_CONFIG --variable=domains iso-codes | grep -q 639 ; then
 	AC_MSG_RESULT([yes])

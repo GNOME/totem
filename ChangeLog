@@ -1,3 +1,27 @@
+2006-11-02  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: remove unused d-bus checks
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_realize):
+	* src/backend/video-utils.c: (totem_ratio_fits_screen):
+	* src/bacon-volume.c: (bacon_volume_button_get_type),
+	(bacon_volume_button_new), (bacon_volume_button_realize),
+	(bacon_volume_button_press), (bacon_volume_key_release),
+	(bacon_volume_release_grab), (cb_dock_key_release),
+	(bacon_volume_scale_get_type), (bacon_volume_scale_value_changed),
+	(bacon_volume_theme_changed), (bacon_volume_load_icons):
+	* src/totem-playlist.c: (load_icon), (init_treeview),
+	(totem_playlist_realize), (totem_playlist_unrealize),
+	(totem_playlist_init):
+	* src/totem.c: (window_realize_cb), (totem_callback_connect):
+
+	Patches from Christian Persch <chpe@cvs.gnome.org> to fix the
+	volume button not popping up on the 2nd screen (Closes: #369136)
+
+	Fix multi-screen awareness (ie. don't use gtk_icon_theme_get_default
+	or gdk_screen_get_default) (Closes: #369337)
+
 2006-11-01  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-menu.c: (totem_lang_table_parse_start_tag): avoid warnings when

@@ -1151,7 +1151,7 @@ bacon_video_widget_realize (GtkWidget *widget)
 			G_CALLBACK (configure_cb), bvw);
 
 	/* get screen size changes */
-	g_signal_connect (G_OBJECT (gdk_screen_get_default ()),
+	g_signal_connect (G_OBJECT (gtk_widget_get_screen (widget)),
 			"size-changed", G_CALLBACK (size_changed_cb), bvw);
 
 	/* Now onto the video out driver */

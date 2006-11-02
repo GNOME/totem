@@ -69,6 +69,7 @@ struct TotemPlaylistPrivate
 
 	/* This is the playing icon */
 	GdkPixbuf *icon;
+	GtkIconTheme *theme;
 
 	GtkActionGroup *action_group;
 	GtkUIManager *ui_manager;
@@ -691,7 +692,6 @@ selection_changed (GtkTreeSelection *treeselection, TotemPlaylist *playlist)
 static void
 load_icon (TotemPlaylist *playlist)
 {
-	GtkIconTheme *theme = gtk_icon_theme_get_default ();
 	gint w, h;
 
 	if (playlist->_priv->icon != NULL) {
@@ -699,7 +699,8 @@ load_icon (TotemPlaylist *playlist)
 	}
 
 	gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &w, &h);
-	playlist->_priv->icon = gtk_icon_theme_load_icon (theme, "audio-volume-medium", w, 0, NULL);
+	playlist->_priv->icon = gtk_icon_theme_load_icon
+		(playlist->_priv->theme, "audio-volume-medium", w, 0, NULL);
 }
 
 static void
@@ -1265,7 +1266,6 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 {
 	GtkTreeModel *model;
 	GtkTreeSelection *selection;
-	GtkIconTheme *theme;
 
 	/* the model */
 	model = GTK_TREE_MODEL (gtk_list_store_new (NUM_COLS,
@@ -1314,11 +1314,6 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 	playlist->_priv->selection = selection;
 
 	gtk_widget_show (treeview);
-
-	theme = gtk_icon_theme_get_default ();
-	g_signal_connect (G_OBJECT (theme), "changed",
-			G_CALLBACK (icon_theme_changed), playlist);
-	icon_theme_changed (theme, playlist);
 }
 
 static void
@@ -1482,7 +1477,20 @@ totem_playlist_entry_parsed (TotemPlParser *parser,
 static void
 totem_playlist_realize (GtkWidget *widget, TotemPlaylist *playlist)
 {
+	playlist->_priv->theme = gtk_icon_theme_get_for_screen
+		(gtk_widget_get_screen (GTK_WIDGET (widget)));
+	g_signal_connect (G_OBJECT (playlist->_priv->theme), "changed",
+			G_CALLBACK (icon_theme_changed), playlist);
 	load_icon (playlist);
+}
+
+static void
+totem_playlist_unrealize (GtkWidget *widget, TotemPlaylist *playlist)
+{
+	if (playlist->_priv->theme != NULL) {
+		g_object_unref (playlist->_priv->theme);
+		playlist->_priv->theme = NULL;
+	}
 }
 
 static void
@@ -1504,6 +1512,10 @@ totem_playlist_init (TotemPlaylist *playlist)
 	g_signal_connect (G_OBJECT (playlist),
 			"realize",
 			G_CALLBACK (totem_playlist_realize),
+			playlist);
+	g_signal_connect (G_OBJECT (playlist),
+			"unrealize",
+			G_CALLBACK (totem_playlist_unrealize),
 			playlist);
 }
 
