@@ -1093,8 +1093,6 @@ static const GtkActionEntry entries[] = {
 	{ "next-chapter", GTK_STOCK_MEDIA_NEXT, N_("_Next Chapter/Movie"), "n", N_("Next chapter or movie"), G_CALLBACK (next_chapter_action_callback) },
 	{ "previous-chapter", GTK_STOCK_MEDIA_PREVIOUS, N_("_Previous Chapter/Movie"), "b", N_("Previous chapter or movie"), G_CALLBACK (previous_chapter_action_callback) },
 	{ "skip-to", GTK_STOCK_JUMP_TO, N_("_Skip to..."), "S", N_("Skip to a specific time"), G_CALLBACK (skip_to_action_callback) },
-	{ "skip-forward", GTK_STOCK_MEDIA_FORWARD, N_("Skip _Forward"), "Right", N_("Skip forward"), G_CALLBACK (skip_forward_action_callback) },
-	{ "skip-backwards", GTK_STOCK_MEDIA_REWIND, N_("Skip _Backwards"), "Left", N_("Skip backwards"), G_CALLBACK (skip_backwards_action_callback) },
 
 	{ "sound-menu", NULL, N_("_Sound") },
 /*	{ "languages-menu", NULL, N_("_Languages") }, */
@@ -1110,6 +1108,16 @@ static const GtkActionEntry zoom_entries[] = {
 	{ "zoom-in", GTK_STOCK_ZOOM_IN, N_("Zoom In"), "R", N_("Zoom in"), G_CALLBACK (zoom_in_action_callback) },
 	{ "zoom-reset", GTK_STOCK_ZOOM_100, N_("Zoom Reset"), NULL, N_("Zoom reset"), G_CALLBACK (zoom_reset_action_callback) },
 	{ "zoom-out", GTK_STOCK_ZOOM_OUT, N_("Zoom Out"), "T", N_("Zoom out"), G_CALLBACK (zoom_out_action_callback) }
+};
+
+static const GtkActionEntry seek_entries_ltr[] = {
+	{ "skip-forward", GTK_STOCK_MEDIA_FORWARD, N_("Skip _Forward"), "Right", N_("Skip forward"), G_CALLBACK (skip_forward_action_callback) },
+	{ "skip-backwards", GTK_STOCK_MEDIA_REWIND, N_("Skip _Backwards"), "Left", N_("Skip backwards"), G_CALLBACK (skip_backwards_action_callback) }
+};
+
+static const GtkActionEntry seek_entries_rtl[] = {
+	{ "skip-forward", GTK_STOCK_MEDIA_FORWARD, N_("Skip _Forward"), "Left", N_("Skip forward"), G_CALLBACK (skip_forward_action_callback) },
+	{ "skip-backwards", GTK_STOCK_MEDIA_REWIND, N_("Skip _Backwards"), "Right", N_("Skip backwards"), G_CALLBACK (skip_backwards_action_callback) }
 };
 
 static const GtkToggleActionEntry toggle_entries[] = {
@@ -1150,8 +1158,8 @@ totem_ui_manager_connect_proxy_callback (GtkUIManager *ui_manager,
 
 		if (icon != NULL) {
 			image = gtk_image_new_from_pixbuf (icon);
-			gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (widget),
-				image);
+			gtk_image_menu_item_set_image
+				(GTK_IMAGE_MENU_ITEM (widget), image);
 		}
 	}
 }
@@ -1165,12 +1173,22 @@ totem_ui_manager_setup (Totem *totem)
 	GtkAction *action;
 
 	totem->main_action_group = gtk_action_group_new ("main-action-group");
-	gtk_action_group_set_translation_domain (totem->main_action_group, GETTEXT_PACKAGE);
+	gtk_action_group_set_translation_domain (totem->main_action_group,
+			GETTEXT_PACKAGE);
 	gtk_action_group_add_actions (totem->main_action_group, entries,
 		G_N_ELEMENTS (entries), totem);
+	if (gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_RTL) {
+		gtk_action_group_add_actions (totem->main_action_group,
+				seek_entries_rtl,
+				G_N_ELEMENTS (seek_entries_rtl), totem);
+	} else {
+		gtk_action_group_add_actions (totem->main_action_group,
+				seek_entries_ltr,
+				G_N_ELEMENTS (seek_entries_ltr), totem);
+	}
 	gtk_action_group_add_toggle_actions (totem->main_action_group, 
 		toggle_entries, G_N_ELEMENTS (toggle_entries), totem);
-	gtk_action_group_add_radio_actions (totem->main_action_group, 
+	gtk_action_group_add_radio_actions (totem->main_action_group,
 		aspect_ratio_entries, G_N_ELEMENTS (aspect_ratio_entries), 0,
 		G_CALLBACK (aspect_ratio_changed_callback), totem);
 
@@ -1188,30 +1206,35 @@ totem_ui_manager_setup (Totem *totem)
 	g_object_unref (action);
 
 	totem->zoom_action_group = gtk_action_group_new ("zoom-action-group");
-	gtk_action_group_set_translation_domain (totem->zoom_action_group, GETTEXT_PACKAGE);
+	gtk_action_group_set_translation_domain (totem->zoom_action_group,
+			GETTEXT_PACKAGE);
 	gtk_action_group_add_actions (totem->zoom_action_group, zoom_entries,
 		G_N_ELEMENTS (zoom_entries), totem);
 
 	totem->ui_manager = gtk_ui_manager_new ();
 	g_signal_connect (G_OBJECT (totem->ui_manager), "connect-proxy",
-			G_CALLBACK (totem_ui_manager_connect_proxy_callback), totem);
+			G_CALLBACK (totem_ui_manager_connect_proxy_callback),
+			totem);
 	gtk_ui_manager_insert_action_group (totem->ui_manager,
-		totem->main_action_group, 0);
+			totem->main_action_group, 0);
 	gtk_ui_manager_insert_action_group (totem->ui_manager,
-		totem->zoom_action_group, -1);
+			totem->zoom_action_group, -1);
 
 	totem->devices_action_group = NULL;
 	totem->devices_ui_id = gtk_ui_manager_new_merge_id (totem->ui_manager);
 	totem->languages_action_group = NULL;
-	totem->languages_ui_id = gtk_ui_manager_new_merge_id (totem->ui_manager);
+	totem->languages_ui_id = gtk_ui_manager_new_merge_id
+		(totem->ui_manager);
 	totem->subtitles_action_group = NULL;
-	totem->subtitles_ui_id = gtk_ui_manager_new_merge_id (totem->ui_manager);
+	totem->subtitles_ui_id = gtk_ui_manager_new_merge_id
+		(totem->ui_manager);
 
 	gtk_window_add_accel_group (GTK_WINDOW (totem->win),
-		gtk_ui_manager_get_accel_group (totem->ui_manager));
+			gtk_ui_manager_get_accel_group (totem->ui_manager));
 
 	filename = totem_interface_get_full_path ("totem-ui.xml");
-	if (!gtk_ui_manager_add_ui_from_file (totem->ui_manager, filename, NULL)) {
+	if (gtk_ui_manager_add_ui_from_file (totem->ui_manager,
+				filename, NULL) == 0) {
 		totem_interface_error_blocking (
 			_("Couldn't load the 'ui description' file"),
 			_("Make sure that Totem is properly installed."),

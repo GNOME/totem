@@ -49,10 +49,10 @@ libtotem_plparser_la_CPPFLAGS = \
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"\
 	$(AM_CPPFLAGS)
 
-libtotem_plparser_la_CFLAGS = \
-	$(EXTRA_GNOME_CFLAGS)	\
-	$(HAL_CFLAGS)		\
-	$(DBUS_CFLAGS)		\
+libtotem_plparser_la_CFLAGS =		\
+	$(TOTEM_PLPARSER_CFLAGS)	\
+	$(HAL_CFLAGS)			\
+	$(DBUS_CFLAGS)			\
 	$(AM_CFLAGS)
 
 libtotem_plparser_la_LIBADD = \

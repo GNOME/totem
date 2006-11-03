@@ -2363,6 +2363,34 @@ totem_action_handle_key_release (Totem *totem, GdkEventKey *event)
 	return retval;
 }
 
+static void
+totem_action_handle_seek (Totem *totem, GdkEventKey *event, gboolean is_forward)
+{
+	if (is_forward != FALSE) {
+		if (event->state & GDK_SHIFT_MASK) {
+			totem_action_seek_relative (totem,
+					SEEK_FORWARD_SHORT_OFFSET);
+		} else if (event->state & GDK_CONTROL_MASK) {
+			totem_action_seek_relative (totem,
+					SEEK_FORWARD_LONG_OFFSET);
+		} else {
+			totem_action_seek_relative (totem,
+					SEEK_FORWARD_OFFSET);
+		}
+	} else {
+		if (event->state & GDK_SHIFT_MASK) {
+			totem_action_seek_relative (totem,
+					SEEK_BACKWARD_SHORT_OFFSET);
+		} else if (event->state & GDK_CONTROL_MASK) {
+			totem_action_seek_relative (totem,
+					SEEK_BACKWARD_LONG_OFFSET);
+		} else {
+			totem_action_seek_relative (totem,
+					SEEK_BACKWARD_OFFSET);
+		}
+	}
+}
+
 static gboolean
 totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 {
@@ -2485,33 +2513,23 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		if (playlist_focused != FALSE)
 			return FALSE;
 
-		totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), TRUE);
-		if (event->state & GDK_SHIFT_MASK) {
-			totem_action_seek_relative (totem,
-					SEEK_BACKWARD_SHORT_OFFSET);
-		} else if (event->state & GDK_CONTROL_MASK) {
-			totem_action_seek_relative (totem,
-					SEEK_BACKWARD_LONG_OFFSET);
-		} else {
-			totem_action_seek_relative (totem,
-					SEEK_BACKWARD_OFFSET);
-		}
+		totem_statusbar_set_seeking
+			(TOTEM_STATUSBAR (totem->statusbar), TRUE);
+		if (gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_RTL)
+			totem_action_handle_seek (totem, event, TRUE);
+		else
+			totem_action_handle_seek (totem, event, FALSE);
 		break;
 	case GDK_Right:
 		if (playlist_focused != FALSE)
 			return FALSE;
 
-		totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), TRUE);
-		if (event->state & GDK_SHIFT_MASK) {
-			totem_action_seek_relative (totem,
-					SEEK_FORWARD_SHORT_OFFSET);
-		} else if (event->state & GDK_CONTROL_MASK) {
-			totem_action_seek_relative (totem,
-					SEEK_FORWARD_LONG_OFFSET);
-		} else {
-			totem_action_seek_relative (totem,
-					SEEK_FORWARD_OFFSET);
-		}
+		totem_statusbar_set_seeking
+			(TOTEM_STATUSBAR (totem->statusbar), TRUE);
+		if (gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_RTL)
+			totem_action_handle_seek (totem, event, FALSE);
+		else
+			totem_action_handle_seek (totem, event, TRUE);
 		break;
 	case GDK_space:
 		if (totem_is_fullscreen (totem) != FALSE || gtk_widget_is_focus (GTK_WIDGET (totem->bvw)) != FALSE)

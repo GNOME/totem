@@ -1,3 +1,14 @@
+2006-11-03  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/Makefile.am: fix CFLAGS
+	* src/totem-menu.c: (totem_ui_manager_connect_proxy_callback),
+	(totem_ui_manager_setup): Invert Left/Right in the menu entries when
+	using an RTL language
+	* src/totem.c: (totem_action_handle_seek),
+	(totem_action_handle_key_press): swap GDK_Right and GDK_Left actions
+	when using an RTL language, so that it matches the directions used
+	in the icons (Closes: #369440)
+
 2006-11-02  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: remove unused d-bus checks
