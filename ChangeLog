@@ -1,5 +1,27 @@
 2006-11-03  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c: (drag_begin_cb),
+	(totem_playlist_style_set), (update_repeat_cb), (update_lockdown),
+	(init_config), (totem_playlist_init), (totem_playlist_finalize),
+	(totem_playlist_new), (totem_playlist_add_one_mrl),
+	(totem_playlist_clear), (totem_playlist_get_current_mrl),
+	(totem_playlist_get_current_title),
+	(totem_playlist_get_current_metadata),
+	(totem_playlist_has_previous_mrl), (totem_playlist_has_next_mrl),
+	(totem_playlist_set_title), (totem_playlist_set_playing),
+	(totem_playlist_set_previous), (totem_playlist_set_next),
+	(totem_playlist_get_repeat), (totem_playlist_set_repeat),
+	(totem_playlist_get_shuffle), (totem_playlist_set_shuffle),
+	(totem_playlist_set_at_start), (totem_playlist_set_at_end),
+	(totem_playlist_get_current), (totem_playlist_get_last),
+	(totem_playlist_set_current), (totem_playlist_class_init):
+	* src/totem-playlist.h: Patch from Christian Persch
+	<chpe@cvs.gnome.org> to simplify the icon theme use, and fix a few nits
+	(and catch left-overs from when TotemPlaylist was GtkPlaylist, circa
+	2003) (Closes: #370028)
+
+2006-11-03  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-resize.c: (bacon_resize), (bacon_restore):
 	Trap errors calling XRandR and co. to avoid annoying crashes
 

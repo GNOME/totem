@@ -30,11 +30,11 @@
 
 G_BEGIN_DECLS
 
-#define GTK_TYPE_PLAYLIST            (totem_playlist_get_type ())
-#define TOTEM_PLAYLIST(obj)            (GTK_CHECK_CAST ((obj), GTK_TYPE_PLAYLIST, TotemPlaylist))
-#define TOTEM_PLAYLIST_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GTK_TYPE_PLAYLIST, TotemPlaylistClass))
-#define GTK_IS_PLAYLIST(obj)         (GTK_CHECK_TYPE ((obj), GTK_TYPE_PLAYLIST))
-#define GTK_IS_PLAYLIST_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GTK_TYPE_PLAYLIST))
+#define TOTEM_TYPE_PLAYLIST            (totem_playlist_get_type ())
+#define TOTEM_PLAYLIST(obj)            (GTK_CHECK_CAST ((obj), TOTEM_TYPE_PLAYLIST, TotemPlaylist))
+#define TOTEM_PLAYLIST_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), TOTEM_TYPE_PLAYLIST, TotemPlaylistClass))
+#define TOTEM_IS_PLAYLIST(obj)         (GTK_CHECK_TYPE ((obj), TOTEM_TYPE_PLAYLIST))
+#define TOTEM_IS_PLAYLIST_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), TOTEM_TYPE_PLAYLIST))
 
 typedef enum {
 	TOTEM_PLAYLIST_DIRECTION_NEXT,
