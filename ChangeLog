@@ -1,3 +1,19 @@
+============ Version 2.17.2
+
+2006-11-03  Bastien Nocera  <hadess@hadess.net>
+
+	* NEWS: upd
+	* configure.in: 2.17.2, detect a non-deadlock-y version of XRandR
+	* src/backend/Makefile.am:
+	* src/backend/bacon-resize.c: (bacon_resize_init):
+	Re-enable XRandR/XF86VideoMode resizing (Closes: #129986)
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_realize),
+	(bacon_video_widget_fullscreen_mode_available),
+	(bacon_video_widget_set_fullscreen):
+	Implement XRandR/XF86VideoMode resizing when setting fullscreen
+	in the GStreamer backend
+
 2006-11-03  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.glade: Patch from Lubomir Marinov to make the "Zoom

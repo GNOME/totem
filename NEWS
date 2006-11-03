@@ -1,5 +1,35 @@
 New features and significant updates in version...
 
+2.17.2
+* Many a11y and multi-screen support fixes
+* Make use of icons from the themes instead of our own
+* Browser plugin:
+  - Always support GIF and PNG images
+  - Rework parsing of parameters
+  - Handle image/x-pict as Apple recommends to force use of QuickTime
+  - Make sure we don't copy "fd://0" to the clipboard, or use it to launch
+    the Movie Player when streaming from the Web Browser
+  - Support MPEG streams in the Windows Media plugin
+  - Add work-arounds for broken Microsoft IIS webservers
+  - Catch possible errors that occur after the playback has started
+* Playlist parser:
+  - Add better "plain text" playlist detection
+  - Add ASX playlists detection
+  - Fix D-Bus warnings
+  - Work around a possible assertion when reading from HTTP fails
+* Movie Player:
+  - Numerous accessibility fixes
+  - Add support for Wave and Au files
+  - Fix --toggle-controls, and using the "Deinterlace" menu item
+  - Avoid warnings when parsing languages translation
+  - Fix seek not working as expected in Right-to-Left languages
+* GStreamer backend:
+  - Do full audio scrubbing
+  - Avoid crashing when a file's metadata is invalid UTF-8
+  - Avoid possible hangs when getting a redirect message
+* xine-lib backend:
+  - Implement direct-seeking when playing back a local file
+
 2.17.1
 * Add a new video indexer for use by Beagle
 * Some Win32 compilation fixes

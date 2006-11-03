@@ -40,6 +40,7 @@ libbaconvideowidget_la_CFLAGS = \
 	-D_REENTRANT \
 	$(NVTV_CFLAGS) \
 	-DGCONF_PREFIX=\""/apps/totem"\"
+libbaconvideowidget_la_LIBADD = $(XVIDMODE_LIBS)
 
 CLEANFILES = $(BUILT_SOURCES)
 

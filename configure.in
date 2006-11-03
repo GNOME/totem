@@ -2,7 +2,7 @@ AC_PREREQ(2.52)
 
 m4_define(totem_version_major, 2)
 m4_define(totem_version_minor, 17)
-m4_define(totem_version_micro, 1)
+m4_define(totem_version_micro, 2)
 
 AC_INIT([totem],
         [totem_version_major.totem_version_minor.totem_version_micro],
@@ -526,24 +526,11 @@ AC_CHECK_LIB(Xtst, XTestFakeKeyEvent,
 		$X_LIBRARIES)
 AC_SUBST(XTEST_LIBS)
 
-have_xvidmode=no
-AC_CHECK_LIB(Xxf86vm, XF86VidModeQueryExtension,
-	XVIDMODE_LIBS="-lXxf86vm"
-	have_xvidmode=yes,,
-	$X_LIBRARIES -lXext)
+PKG_CHECK_MODULES(XVIDMODE, xrandr >= 1.1.1 xxf86vm >= 1.0.1,
+		have_xvidmode=yes, have_xvidmode=no)
 
-have_randr=no
-AC_CHECK_LIB(Xrandr, XRRUpdateConfiguration,
-	[AC_CHECK_HEADER(X11/extensions/Xrandr.h,
-	have_randr=yes
-	RANDR_LIBS="-lX11 -lXrandr -lXrender",
-	:, [#include <X11/Xlib.h>])], : ,
-	$X_LIBRARIES -lXrandr -lXrender)
-
-XVIDMODE_LIBS="$XVIDMODE_LIBS $RANDR_LIBS"
-AC_SUBST(XVIDMODE_LIBS)
-AM_CONDITIONAL(HAVE_XVIDMODE, [test $have_randr = yes -a $have_xvidmode = yes])
-if test $have_randr = yes -a $have_xvidmode = yes; then
+AM_CONDITIONAL(HAVE_XVIDMODE, [test x$have_xvidmode = xyes])
+if test x$have_xvidmode = xyes; then
 	AC_DEFINE(HAVE_XVIDMODE,, [Define this if you have the XVidMode and XRandR extension installed])
 fi
 

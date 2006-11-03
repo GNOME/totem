@@ -63,6 +63,7 @@
 #include "baconvideowidget-marshal.h"
 #include "video-utils.h"
 #include "gstscreenshot.h"
+#include "bacon-resize.h"
 
 #define DEFAULT_HEIGHT 420
 #define DEFAULT_WIDTH  315
@@ -146,6 +147,7 @@ struct BaconVideoWidgetPrivate
   gboolean                     cursor_shown;
   gboolean                     fullscreen_mode;
   gboolean                     auto_resize;
+  gboolean                     have_xvidmode;
   
   gint                         video_width; /* Movie width */
   gint                         video_height; /* Movie height */
@@ -422,6 +424,7 @@ bacon_video_widget_realize (GtkWidget * widget)
   } 
 #endif
 
+  bvw->priv->have_xvidmode = bacon_resize_init ();
 }
 
 static void
@@ -2845,24 +2848,24 @@ gboolean
 bacon_video_widget_fullscreen_mode_available (BaconVideoWidget *bvw,
 		TvOutType tvout) 
 {
-	switch(tvout) {
-	case TV_OUT_NONE:
-		/* Asume that ordinary fullscreen always works */
-		return TRUE;
-	case TV_OUT_NVTV_NTSC:
-	case TV_OUT_NVTV_PAL:
+  switch(tvout) {
+  case TV_OUT_NONE:
+	  /* Assume that ordinary fullscreen always works */
+    return TRUE;
+  case TV_OUT_NVTV_NTSC:
+  case TV_OUT_NVTV_PAL:
 #ifdef HAVE_NVTV
-		/* Make sure nvtv is initialized, it will not do any harm 
-		 * if it is done twice any way */
-		if (!(nvtv_simple_init() && nvtv_enable_autoresize(TRUE))) {
-			nvtv_simple_enable(FALSE);
-		}
-		return (nvtv_simple_is_available());
+    /* Make sure nvtv is initialized, it will not do any harm 
+     * if it is done twice any way */
+    if (!(nvtv_simple_init() && nvtv_enable_autoresize(TRUE))) {
+      nvtv_simple_enable(FALSE);
+    }
+    return (nvtv_simple_is_available());
 #else
-		return FALSE;
+    return FALSE;
 #endif
-	}
-	return FALSE;
+  }
+  return FALSE;
 }
 
 void
@@ -2872,28 +2875,37 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget * bvw,
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-  bvw->priv->fullscreen_mode = fullscreen;
-
-#ifdef HAVE_NVTV
-  if (bvw->priv->tv_out_type != TV_OUT_NVTV_NTSC &&
-      bvw->priv->tv_out_type != TV_OUT_NVTV_PAL)
+  if (bvw->priv->have_xvidmode == FALSE &&
+		  bvw->priv->tv_out_type != TV_OUT_NVTV_NTSC &&
+		  bvw->priv->tv_out_type != TV_OUT_NVTV_PAL)
     return;
+
+  bvw->priv->fullscreen_mode = fullscreen;
 
   if (fullscreen == FALSE)
   {
+#ifdef HAVE_NVTV
     /* If NVTV is used */
     if (nvtv_simple_get_state() == NVTV_SIMPLE_TV_ON) {
       nvtv_simple_switch(NVTV_SIMPLE_TV_OFF,0,0);
 
-    }
-    /* Turn fullscreen on with NVTV if that option is on */
-  } else if ((bvw->priv->tv_out_type == TV_OUT_NVTV_NTSC) ||
-      (bvw->priv->tv_out_type == TV_OUT_NVTV_PAL)) {
-    nvtv_simple_switch(NVTV_SIMPLE_TV_ON,
-	bvw->priv->video_width,
-	bvw->priv->video_height);
-  }
+    /* Else if just auto resize is used */
+    } else if (bvw->priv->auto_resize != FALSE) {
 #endif
+      bacon_restore ();
+#ifdef HAVE_NVTV
+    }
+  /* Turn fullscreen on with NVTV if that option is on */
+  } else if ((bvw->priv->tvout == TV_OUT_NVTV_NTSC) ||
+		  (bvw->priv->tvout == TV_OUT_NVTV_PAL)) {
+    nvtv_simple_switch(NVTV_SIMPLE_TV_ON,
+		    bvw->priv->video_width,
+		    bvw->priv->video_height);
+#endif
+    /* Turn fullscreen on when we have xvidmode */
+  } else if (bvw->priv->have_xvidmode != FALSE) {
+    bacon_resize ();
+  }
 }
 
 void

@@ -50,9 +50,6 @@ bacon_resize_init (void)
 #ifdef HAVE_XVIDMODE
 	int event_basep, error_basep, res;
 
-	//FIXME https://bugs.freedesktop.org/show_bug.cgi?id=1976
-	return FALSE;
-
 	XLockDisplay (GDK_DISPLAY());
 
 	res = XF86VidModeQueryExtension (GDK_DISPLAY(), &event_basep, &error_basep) || !XRRQueryExtension (GDK_DISPLAY(), &event_basep, &error_basep);
