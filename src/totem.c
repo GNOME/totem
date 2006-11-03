@@ -597,6 +597,7 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 
 		totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
 		show_controls (totem, FALSE);
+		totem_action_set_sensitivity ("fullscreen", FALSE);
 	} else {
 		GtkAction *action;
 
@@ -607,16 +608,15 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 		totem_scrsaver_enable (totem->scr);
 
 		action = gtk_action_group_get_action (totem->main_action_group,
-			"show-controls");
+				"show-controls");
 
 		if (gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)))
-		{
 			totem->controls_visibility = TOTEM_CONTROLS_VISIBLE;
-			show_controls (totem, TRUE);
-		} else {
+		else
 			totem->controls_visibility = TOTEM_CONTROLS_HIDDEN;
-			show_controls (totem, TRUE);
-		}
+
+		show_controls (totem, TRUE);
+		totem_action_set_sensitivity ("fullscreen", TRUE);
 	}
 
 	return FALSE;
