@@ -1,5 +1,11 @@
 2006-11-03  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.glade: Patch from Lubomir Marinov to make the "Zoom
+	1:2", etc. menu items work again by not setting the width and height
+	request on the video widget (Closes: #351798)
+
+2006-11-03  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem-ui.xml:
 	* src/totem.c: (window_state_event_cb): add a fullscreen menu item
 	in the contextual menu (Closes: #331956)
