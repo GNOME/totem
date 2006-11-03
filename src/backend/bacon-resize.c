@@ -90,10 +90,13 @@ bacon_resize (void)
 		return;
 	}
 
+	gdk_error_trap_push ();
 	/* Find the xrandr mode that corresponds to the real size */
 	xr_sizes = XRRConfigSizes (xr_screen_conf, &xr_nsize);
 	xr_original_size = XRRConfigCurrentConfiguration
 		(xr_screen_conf, &xr_current_rotation);
+	if (gdk_error_trap_pop ())
+		g_warning ("XRRConfigSizes or XRRConfigCurrentConfiguration failed");
 
 	for (i = 0; i < xr_nsize; i++) {
 		if (modelines[0]->hdisplay == xr_sizes[i].width
@@ -107,13 +110,16 @@ bacon_resize (void)
 		XUnlockDisplay (GDK_DISPLAY());
 		return;
 	}
-
+	gdk_error_trap_push ();
 	XRRSetScreenConfig (GDK_DISPLAY(),
 			xr_screen_conf,
 			GDK_ROOT_WINDOW(),
 			(SizeID) i,
 			xr_current_rotation,
 			CurrentTime);
+	gdk_flush ();
+	if (gdk_error_trap_pop ())
+		g_warning ("XRRSetScreenConfig failed");
 
 	XUnlockDisplay (GDK_DISPLAY());
 #endif /* HAVE_XVIDMODE */
@@ -123,13 +129,28 @@ void
 bacon_restore (void)
 {
 #ifdef HAVE_XVIDMODE
+	int width, height;
+
 	XLockDisplay (GDK_DISPLAY());
+
+	/* Check if there's a viewport */
+	width = gdk_screen_width ();
+	height = gdk_screen_height ();
+	if (width == modelines[0]->hdisplay
+			&& height == modelines[0]->vdisplay) {
+		XUnlockDisplay (GDK_DISPLAY());
+		return;
+	}
+	gdk_error_trap_push ();
 	XRRSetScreenConfig (GDK_DISPLAY(),
 			xr_screen_conf,
 			GDK_ROOT_WINDOW(),
 			xr_original_size,
 			xr_current_rotation,
 			CurrentTime);
+	gdk_flush ();
+	if (gdk_error_trap_pop ())
+		g_warning ("XRRSetScreenConfig failed");
 	XUnlockDisplay (GDK_DISPLAY());
 #endif
 }
