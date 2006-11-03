@@ -1,5 +1,17 @@
 2006-11-03  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-volume.c: (bacon_volume_button_class_init),
+	(bacon_volume_button_new), (bacon_volume_button_style_set),
+	(bacon_volume_scale_class_init), (bacon_volume_button_update_icon),
+	(bacon_volume_scale_value_changed),
+	(bacon_volume_button_load_icons):
+	* src/bacon-volume.h: Patch from Christian Persch
+	<chpe@cvs.gnome.org> to simplify the icon theme use, and remove the
+	old useless HAVE_GTK_ONLY bits, they looked naf anyway
+	(Closes: #370028)
+
+2006-11-03  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-playlist.c: (drag_begin_cb),
 	(totem_playlist_style_set), (update_repeat_cb), (update_lockdown),
 	(init_config), (totem_playlist_init), (totem_playlist_finalize),
