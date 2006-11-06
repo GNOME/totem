@@ -801,6 +801,12 @@ eject_action_callback (GtkAction *action, Totem *totem)
 }
 
 static void
+properties_action_callback (GtkAction *action, Totem *totem)
+{
+	totem_action_show_properties (totem);
+}
+
+static void
 play_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_play_pause (totem);
@@ -1067,6 +1073,7 @@ static const GtkActionEntry entries[] = {
 	{ "open", GTK_STOCK_OPEN, N_("_Open..."), "<control>O", N_("Open a file"), G_CALLBACK (open_action_callback) },
 	{ "open-location", NULL, N_("Open _Location..."), "<control>L", N_("Open a non-local file"), G_CALLBACK (open_location_action_callback) },
 	{ "eject", "media-eject", N_("_Eject"), "<control>E", NULL, G_CALLBACK (eject_action_callback) },
+	{ "properties", GTK_STOCK_PROPERTIES, N_("_Properties"), "<control>P", NULL, G_CALLBACK (properties_action_callback) },
 	{ "play", GTK_STOCK_MEDIA_PLAY, N_("Play / Pa_use"), "P", N_("Play or pause the movie"), G_CALLBACK (play_action_callback) },
 	{ "quit", GTK_STOCK_QUIT, N_("_Quit"), "<control>Q", N_("Quit the program"), G_CALLBACK (quit_action_callback) },
 

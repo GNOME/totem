@@ -60,6 +60,9 @@ totem_sidebar_toggle (Totem *totem, gboolean state)
 {
 	GtkAction *action;
 
+	if (GTK_WIDGET_VISIBLE (GTK_WIDGET (totem->sidebar)) == state)
+		return;
+
 	if (state != FALSE)
 		gtk_widget_show (GTK_WIDGET (totem->sidebar));
 	else
@@ -137,3 +140,11 @@ totem_sidebar_get_current_page (Totem *totem)
 {
 	return ev_sidebar_get_current_page (EV_SIDEBAR (totem->sidebar));
 }
+
+void
+totem_sidebar_set_current_page (Totem *totem, const char *name)
+{
+	ev_sidebar_set_current_page (EV_SIDEBAR (totem->sidebar), name);
+	totem_sidebar_toggle (totem, TRUE);
+}
+

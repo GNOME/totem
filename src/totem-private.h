@@ -194,6 +194,7 @@ void	totem_action_zoom_relative		(Totem *totem, int off_pct);
 void	totem_action_zoom_reset			(Totem *totem);
 void	totem_action_show_help			(Totem *totem);
 void	totem_action_skip_to			(Totem *totem);
+void	totem_action_show_properties		(Totem *totem);
 
 void	show_controls				(Totem *totem, gboolean was_fullscreen);
 

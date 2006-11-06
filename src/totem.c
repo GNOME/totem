@@ -340,6 +340,12 @@ totem_action_eject (Totem *totem)
 }
 
 void
+totem_action_show_properties (Totem *totem)
+{
+	totem_sidebar_set_current_page (totem, "properties");
+}
+
+void
 totem_action_play (Totem *totem)
 {
 	GError *err = NULL;
@@ -2481,7 +2487,10 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 #endif /* HAVE_XFREE */
 	case GDK_p:
 	case GDK_P:
-		totem_action_play_pause (totem);
+		if (event->state & GDK_CONTROL_MASK)
+			totem_action_show_properties (totem);
+		else 
+			totem_action_play_pause (totem);
 		break;
 	case GDK_q:
 	case GDK_Q:
@@ -2548,11 +2557,10 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		totem_action_volume_relative (totem, VOLUME_DOWN_OFFSET);
 		break;
 	case GDK_0:
-		if (event->state & GDK_CONTROL_MASK) {
+		if (event->state & GDK_CONTROL_MASK)
 			totem_action_zoom_reset (totem);
-		} else {
+		else
 			totem_action_set_scale_ratio (totem, 0.5);
-		}
 		break;
 	case GDK_onehalf:
 		totem_action_set_scale_ratio (totem, 0.5);
