@@ -1,5 +1,23 @@
 New features and significant updates in version...
 
+2.16.3:
+ * Better accessibility support in the volume button
+ * Browser plugin:
+   - Restart accepting streams that aren't from the supported mime-type
+     there are too many broken sites for now
+   - Don't crash when printing a page with the plugin
+   - Don't destroy a stream if we don't have one
+   - Fix some cases where the server gives a playlist, and we never start the
+     video viewer
+   - Catch errors after playback has started
+ * Playlist parser:
+   - Avoid D-Bus warnings with newer D-Bus versions
+   - Avoid trying to allocate loads of memory when gnome-vfs fails
+ * GStreamer backend:
+   - Avoid crashes when files contain non-UTF-8 metadata
+   - Avoid deadlocks when getting redirect streams
+   - Make the "automatically resize window" and resize menu items work again
+
 2.16.2
 * Playlist parser:
   - Handle playlists linked inside playlists as used on kinkfm.com
