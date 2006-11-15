@@ -1,3 +1,40 @@
+2006-11-15  Christian Persch  <chpe@cvs.gnome.org>
+
+	* Makefile.am:
+	* browser-plugin/Makefile.am:
+	* browser-plugin/README:
+	* browser-plugin/TODO:
+	A browser-plugin/org_gnome_totem_PluginViewer.xml:
+	A browser-plugin/totem-plugin-viewer-commands.h:
+	A browser-plugin/totem-plugin-viewer-options.h:
+	A browser-plugin/totem-plugin-viewer.c:
+	* browser-plugin/totemBasicPlugin.cpp:
+	* browser-plugin/totemBasicPlugin.h:
+	* browser-plugin/totemComplexPlugin.cpp:
+	* browser-plugin/totemComplexPlugin.h:
+	* browser-plugin/totemGMPPlugin.cpp:
+	* browser-plugin/totemGMPPlugin.h:
+	* browser-plugin/totemMullYPlugin.cpp:
+	* browser-plugin/totemMullYPlugin.h:
+	* browser-plugin/totemNarrowSpacePlugin.cpp:
+	* browser-plugin/totemNarrowSpacePlugin.h:
+	* browser-plugin/totemPlugin.cpp:
+	* browser-plugin/totemPlugin.h:
+	* browser-plugin/totemPluginGlue.cpp:
+	* configure.in:
+	* data/mozilla-viewer.glade:
+	* po/POTFILES.in:
+	* src/Makefile.am:
+	* src/backend/bvw-test.c: (on_redirect), (main):
+	* src/plparse/totem-pl-parser.c:
+	(totem_pl_parser_can_parse_from_data):
+	R src/totem-mozilla-interface.xml:
+	R src/totem-mozilla-options.h:
+	R src/totem-mozilla-viewer.c:
+
+	Make plugin / viewer interaction completely async. Bug #350297.
+	Move plugin viewer from src/ to browser-plugin/.
+
 ============ Version 2.17.3
 
 2006-11-15  Bastien Nocera  <hadess@hadess.net>

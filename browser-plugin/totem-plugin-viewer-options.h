@@ -1,6 +1,6 @@
-/* Totem Mozilla plugin
+/* Totem Plugin Viewer options
  *
- * Copyright (C) <2005> Bastien Nocera <hadess@hadess.net>
+ * Copyright © 2005 Bastien Nocera <hadess@hadess.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -18,16 +18,22 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#define TOTEM_OPTION_XID		"xid"
-#define TOTEM_OPTION_WIDTH		"width"
-#define TOTEM_OPTION_HEIGHT		"height"
-#define TOTEM_OPTION_URL		"url"
-#define TOTEM_OPTION_CONTROLS_HIDDEN	"nocontrols"
-#define TOTEM_OPTION_STATUSBAR		"statusbar"
-#define TOTEM_OPTION_HREF		"href"
-#define TOTEM_OPTION_TARGET		"target"
+#ifndef __TOTEM_PLUGIN_VIEWER_OPTIONS_H__
+#define __TOTEM_PLUGIN_VIEWER_OPTIONS_H__
+
+#define TOTEM_PLUGIN_VIEWER_INTERFACE_NAME	"org.gnome.totem.PluginViewer"
+#define TOTEM_PLUGIN_VIEWER_NAME_TEMPLATE	"org.gnome.totem.PluginViewer_%d"
+#define TOTEM_PLUGIN_VIEWER_DBUS_PATH		"/org/gnome/totem/PluginViewer"
+
+#define TOTEM_OPTION_BASE_URI		"base-uri"
+#define TOTEM_OPTION_CONTROLS_HIDDEN	"no-controls"
 #define TOTEM_OPTION_HIDDEN		"hidden"
 #define TOTEM_OPTION_MIMETYPE		"mimetype"
+#define TOTEM_OPTION_NOAUTOSTART	"no-autostart"
 #define TOTEM_OPTION_PLAYLIST		"playlist"
+#define TOTEM_OPTION_PLUGIN_TYPE	"plugin-type"
 #define TOTEM_OPTION_REPEAT		"repeat"
-#define TOTEM_OPTION_NOAUTOSTART	"noautostart"
+#define TOTEM_OPTION_USER_AGENT		"user-agent"
+#define TOTEM_OPTION_STATUSBAR		"statusbar"
+
+#endif /* !__TOTEM_PLUGIN_VIEWER_OPTIONS_H__ */

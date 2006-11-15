@@ -181,7 +181,7 @@ totemScriptablePlugin::DoPause (PRBool *_retval)
 {
   NS_ENSURE_STATE (IsValid ());
 
-  nsresult rv = mPlugin->Pause ();
+  nsresult rv = mPlugin->DoCommand (TOTEM_COMMAND_PAUSE);
 
   *_retval = PR_TRUE;
   return rv;
@@ -192,7 +192,7 @@ totemScriptablePlugin::DoPlay (PRBool *_retval)
 {
   NS_ENSURE_STATE (IsValid ());
 
-  nsresult rv = mPlugin->Play ();
+  nsresult rv = mPlugin->DoCommand (TOTEM_COMMAND_PLAY);
 
   *_retval = PR_TRUE;
   return rv;
@@ -203,7 +203,7 @@ totemScriptablePlugin::DoStop (PRBool *_retval)
 {
   NS_ENSURE_STATE (IsValid ());
 
-  nsresult rv = mPlugin->Stop ();
+  nsresult rv = mPlugin->DoCommand (TOTEM_COMMAND_STOP);
 
   *_retval = PR_TRUE;
   return rv;

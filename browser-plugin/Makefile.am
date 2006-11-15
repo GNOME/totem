@@ -3,6 +3,8 @@ SUBDIRS = idl
 plugindir = $(libdir)/mozilla/plugins
 plugin_LTLIBRARIES =
 
+BUILT_SOURCES =
+
 EXTRA_DIST = \
 	plugin.symbols	\
 	TODO
@@ -11,7 +13,65 @@ gecko_include_subdirs = \
 	.		\
 	docshell	\
 	dom		\
-	necko
+	necko		\
+	xpcom
+
+# Totem Plugin Viewer
+
+libexec_PROGRAMS = totem-plugin-viewer
+
+totem_plugin_viewer_SOURCES = \
+	totem-plugin-viewer.c		\
+	totem-plugin-viewer-interface.h	\
+	totem-plugin-viewer-commands.h	\
+	totem-plugin-viewer-options.h
+
+totem_plugin_viewer_CPPFLAGS = \
+	-D_REENTRANT					\
+	-DDBUS_API_SUBJECT_TO_CHANGE			\
+	-I$(top_srcdir)					\
+	-I$(top_srcdir)/src				\
+	-I$(top_srcdir)/src/plparse			\
+	-I$(top_srcdir)/src/backend			\
+	-I$(top_builddir)/src				\
+	-I$(top_builddir)/src/plparse			\
+	-I$(top_builddir)/src/backend			\
+	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
+	-DGCONF_PREFIX="\"/apps/totem\""		\
+	-DDATADIR="\"$(datadir)\""			\
+	-DLIBEXECDIR="\"$(libexecdir)\""		\
+	-DBINDIR="\"$(bindir)\""			\
+	-DSHAREDIR="\"$(pkgdatadir)\""			\
+	-DLOGO_NAME="\"totem_logo.png\""		\
+	$(AM_CPPFLAGS)
+
+totem_plugin_viewer_CFLAGS = \
+	$(EXTRA_GNOME_CFLAGS)	\
+	$(WARN_CFLAGS)		\
+	$(DBUS_CFLAGS)		\
+	$(NVTV_CFLAGS)		\
+	$(AM_CFLAGS)
+
+totem_plugin_viewer_LDADD = \
+	$(top_builddir)/src/backend/libbaconvideowidget.la	\
+	$(top_builddir)/src/libbaconpropertiespage.la		\
+	$(top_builddir)/src/libtotem_player.la			\
+	$(top_builddir)/src/plparse/libtotem-plparser.la	\
+	$(EXTRA_GNOME_LIBS)	\
+	$(XVIDMODE_LIBS) 	\
+	$(DBUS_LIBS)		\
+	$(NVTV_LIBS) 		\
+	$(XTEST_LIBS)		\
+	$(X_LIBS)
+
+BUILT_SOURCES += \
+	totem-plugin-viewer-interface.h
+
+totem-plugin-viewer-interface.h: org_gnome_totem_PluginViewer.xml
+	$(DBUS_BIND) --prefix=totem_embedded --mode=glib-server $< > $@
+
+EXTRA_DIST += \
+	org_gnome_totem_PluginViewer.xml
 
 # Totem Basic Plugin
 
@@ -25,7 +85,8 @@ libtotem_basic_plugin_la_SOURCES = \
 	totemPlugin.cpp		\
 	totemPlugin.h		\
 	totemBasicPlugin.cpp	\
-	totemBasicPlugin.h
+	totemBasicPlugin.h	\
+	totem-plugin-viewer-commands.h
 
 libtotem_basic_plugin_la_CPPFLAGS = \
 	-I$(top_srcdir)/src				\
@@ -40,11 +101,11 @@ libtotem_basic_plugin_la_CPPFLAGS = \
 	-DTOTEM_PL_PARSER_MINI				\
 	-D_REENTRANT					\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-DGCONF_PREFIX=\""/apps/totem"\"		\
-	-DDATADIR=\""$(pkgdatadir)"\"			\
-	-DLIBEXECDIR=\""$(libexecdir)"\"		\
-	-DBINDIR=\""$(bindir)"\"			\
+	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
+	-DGCONF_PREFIX="\"/apps/totem\""		\
+	-DDATADIR="\"$(pkgdatadir)\""			\
+	-DLIBEXECDIR="\"$(libexecdir)\""		\
+	-DBINDIR="\"$(bindir)\""			\
 	$(AM_CPPFLAGS)
 
 libtotem_basic_plugin_la_CFLAGS = \
@@ -65,7 +126,8 @@ libtotem_basic_plugin_la_CXXFLAGS = \
 libtotem_basic_plugin_la_LIBADD = \
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la	\
 	$(DBUS_LIBS)	\
- 	$(MOZILLA_LIBS)
+ 	$(MOZILLA_LIBS)	\
+	$(LIBXPCOMGLUE_S)
 
 libtotem_basic_plugin_la_LDFLAGS = \
 	-avoid-version	\
@@ -87,7 +149,8 @@ libtotem_gmp_plugin_la_SOURCES = \
 	totemPlugin.cpp		\
 	totemPlugin.h		\
 	totemGMPPlugin.cpp	\
-	totemGMPPlugin.h
+	totemGMPPlugin.h	\
+	totem-plugin-viewer-commands.h
 
 libtotem_gmp_plugin_la_CPPFLAGS = \
 	-I$(top_srcdir)/src				\
@@ -102,11 +165,11 @@ libtotem_gmp_plugin_la_CPPFLAGS = \
 	-DTOTEM_PL_PARSER_MINI				\
 	-D_REENTRANT					\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-DGCONF_PREFIX=\""/apps/totem"\"		\
-	-DDATADIR=\""$(pkgdatadir)"\"			\
-	-DLIBEXECDIR=\""$(libexecdir)"\"		\
-	-DBINDIR=\""$(bindir)"\"			\
+	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
+	-DGCONF_PREFIX="\"/apps/totem\""		\
+	-DDATADIR="\"$(pkgdatadir)\""			\
+	-DLIBEXECDIR="\"$(libexecdir)\""		\
+	-DBINDIR="\"$(bindir)\""			\
 	$(AM_CPPFLAGS)
 
 libtotem_gmp_plugin_la_CFLAGS = \
@@ -127,7 +190,8 @@ libtotem_gmp_plugin_la_CXXFLAGS = \
 libtotem_gmp_plugin_la_LIBADD = \
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la	\
 	$(DBUS_LIBS)	\
- 	$(MOZILLA_LIBS)
+ 	$(MOZILLA_LIBS)	\
+	$(LIBXPCOMGLUE_S)
 
 libtotem_gmp_plugin_la_LDFLAGS = \
 	-avoid-version	\
@@ -149,7 +213,8 @@ libtotem_complex_plugin_la_SOURCES = \
 	totemPlugin.cpp		\
 	totemPlugin.h		\
 	totemComplexPlugin.cpp	\
-	totemComplexPlugin.h
+	totemComplexPlugin.h	\
+	totem-plugin-viewer-commands.h
 
 libtotem_complex_plugin_la_CPPFLAGS = \
 	-I$(top_srcdir)/src				\
@@ -164,11 +229,11 @@ libtotem_complex_plugin_la_CPPFLAGS = \
 	-DTOTEM_PL_PARSER_MINI				\
 	-D_REENTRANT					\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-DGCONF_PREFIX=\""/apps/totem"\"		\
-	-DDATADIR=\""$(pkgdatadir)"\"			\
-	-DLIBEXECDIR=\""$(libexecdir)"\"		\
-	-DBINDIR=\""$(bindir)"\"			\
+	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
+	-DGCONF_PREFIX="\"/apps/totem\""		\
+	-DDATADIR="\"$(pkgdatadir)\""			\
+	-DLIBEXECDIR="\"$(libexecdir)\""		\
+	-DBINDIR="\"$(bindir)\""			\
 	$(AM_CPPFLAGS)
 
 libtotem_complex_plugin_la_CFLAGS = \
@@ -189,7 +254,8 @@ libtotem_complex_plugin_la_CXXFLAGS = \
 libtotem_complex_plugin_la_LIBADD = \
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la	\
 	$(DBUS_LIBS)	\
- 	$(MOZILLA_LIBS)
+ 	$(MOZILLA_LIBS)	\
+	$(LIBXPCOMGLUE_S)
 
 libtotem_complex_plugin_la_LDFLAGS = \
 	-avoid-version	\
@@ -211,7 +277,8 @@ libtotem_narrowspace_plugin_la_SOURCES = \
 	totemPlugin.cpp			\
 	totemPlugin.h			\
 	totemNarrowSpacePlugin.cpp	\
-	totemNarrowSpacePlugin.h
+	totemNarrowSpacePlugin.h	\
+	totem-plugin-viewer-commands.h
 
 libtotem_narrowspace_plugin_la_CPPFLAGS = \
 	-I$(top_srcdir)/src				\
@@ -226,11 +293,11 @@ libtotem_narrowspace_plugin_la_CPPFLAGS = \
 	-DTOTEM_PL_PARSER_MINI				\
 	-D_REENTRANT					\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-DGCONF_PREFIX=\""/apps/totem"\"		\
-	-DDATADIR=\""$(pkgdatadir)"\"			\
-	-DLIBEXECDIR=\""$(libexecdir)"\"		\
-	-DBINDIR=\""$(bindir)"\"			\
+	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
+	-DGCONF_PREFIX="\"/apps/totem\""		\
+	-DDATADIR="\"$(pkgdatadir)\""			\
+	-DLIBEXECDIR="\"$(libexecdir)\""		\
+	-DBINDIR="\"$(bindir)\""			\
 	$(AM_CPPFLAGS)
 
 libtotem_narrowspace_plugin_la_CFLAGS = \
@@ -251,7 +318,8 @@ libtotem_narrowspace_plugin_la_CXXFLAGS = \
 libtotem_narrowspace_plugin_la_LIBADD = \
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la	\
 	$(DBUS_LIBS)	\
- 	$(MOZILLA_LIBS)
+ 	$(MOZILLA_LIBS)	\
+	$(LIBXPCOMGLUE_S)
 
 libtotem_narrowspace_plugin_la_LDFLAGS = \
 	-avoid-version	\
@@ -273,7 +341,8 @@ libtotem_mully_plugin_la_SOURCES = \
 	totemPlugin.cpp		\
 	totemPlugin.h		\
 	totemMullYPlugin.cpp	\
-	totemMullYPlugin.h
+	totemMullYPlugin.h	\
+	totem-plugin-viewer-commands.h
 
 libtotem_mully_plugin_la_CPPFLAGS = \
 	-I$(top_srcdir)/src				\
@@ -288,11 +357,11 @@ libtotem_mully_plugin_la_CPPFLAGS = \
 	-DTOTEM_PL_PARSER_MINI				\
 	-D_REENTRANT					\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-DGCONF_PREFIX=\""/apps/totem"\"		\
-	-DDATADIR=\""$(pkgdatadir)"\"			\
-	-DLIBEXECDIR=\""$(libexecdir)"\"		\
-	-DBINDIR=\""$(bindir)"\"			\
+	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
+	-DGCONF_PREFIX="\"/apps/totem\""		\
+	-DDATADIR="\"$(pkgdatadir)\""			\
+	-DLIBEXECDIR="\"$(libexecdir)\""		\
+	-DBINDIR="\"$(bindir)\""			\
 	$(AM_CPPFLAGS)
 
 libtotem_mully_plugin_la_CFLAGS = \
@@ -313,7 +382,8 @@ libtotem_mully_plugin_la_CXXFLAGS = \
 libtotem_mully_plugin_la_LIBADD = \
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la	\
 	$(DBUS_LIBS)	\
- 	$(MOZILLA_LIBS)
+ 	$(MOZILLA_LIBS)	\
+	$(LIBXPCOMGLUE_S)
 
 libtotem_mully_plugin_la_LDFLAGS = \
 	-avoid-version	\

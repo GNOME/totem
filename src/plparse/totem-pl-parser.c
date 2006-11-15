@@ -2674,17 +2674,17 @@ totem_pl_parser_can_parse_from_data (const char *data,
 
 	for (i = 0; i < G_N_ELEMENTS(special_types); i++) {
 		if (strcmp (special_types[i].mimetype, mimetype) == 0) {
-			D(g_message ("Is special type '%s'\n", mimetype));
+			D(g_message ("Is special type '%s'", mimetype));
 			return TRUE;
 		}
 	}
 
 	for (i = 0; i < G_N_ELEMENTS(dual_types); i++) {
 		if (strcmp (dual_types[i].mimetype, mimetype) == 0) {
-			D(g_message ("Should be dual type '%s', making sure now\n", mimetype));
+			D(g_message ("Should be dual type '%s', making sure now", mimetype));
 			if (dual_types[i].iden != NULL) {
 				gboolean retval = (* dual_types[i].iden) (data, len);
-				D(g_message ("%s dual type '%s'\n",
+				D(g_message ("%s dual type '%s'",
 							retval ? "Is" : "Is not", mimetype));
 				return retval;
 			}

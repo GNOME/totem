@@ -183,7 +183,7 @@ totemScriptablePlugin::Play ()
 {
   NS_ENSURE_STATE (IsValid ());
 
-  return mPlugin->Play ();
+  return mPlugin->DoCommand (TOTEM_COMMAND_PLAY);
 }
 
 NS_IMETHODIMP
@@ -191,7 +191,7 @@ totemScriptablePlugin::Rewind ()
 {
   NS_ENSURE_STATE (IsValid ());
 
-  return mPlugin->Pause ();
+  return mPlugin->DoCommand (TOTEM_COMMAND_PAUSE);
 }
 
 NS_IMETHODIMP
@@ -199,5 +199,5 @@ totemScriptablePlugin::Stop ()
 {
   NS_ENSURE_STATE (IsValid ());
 
-  return mPlugin->Stop ();
+  return mPlugin->DoCommand (TOTEM_COMMAND_STOP);
 }

@@ -40,7 +40,7 @@ class totemScriptablePlugin : public totemIComplexPlayer,
     totemScriptablePlugin (totemPlugin *aPlugin);
 
     PRBool IsValid () { return mPlugin != nsnull; }
-    void UnsetPlugin () { mPlugin = nsnull; }
+    void SetPlugin (totemPlugin *aPlugin) { mPlugin = aPlugin; }
 
     static char *PluginDescription ();
     static void PluginMimeTypes (const totemPluginMimeEntry **, PRUint32 *);

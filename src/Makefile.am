@@ -1,6 +1,5 @@
 SUBDIRS = backend plparse
 
-
 if TOTEM_VANITY
 VANITY=vanity
 else
@@ -18,10 +17,6 @@ endif
 bin_PROGRAMS = totem totem-video-thumbnailer totem-video-indexer $(VANITY)
 libexec_PROGRAMS =
 noinst_PROGRAMS = list_v4l disc-test $(TOTEM_PROPERTIES_PAGE_TEST)
-
-if HAVE_MOZILLA
-libexec_PROGRAMS += totem-mozilla-viewer
-endif
 
 noinst_LTLIBRARIES = \
 	libbaconpropertiespage.la \
@@ -102,7 +97,7 @@ totem_video_thumbnailer_LDADD =			\
 	$(XTEST_LIBS) $(X_LIBS) 
 
 nautilusdir = $(libdir)/nautilus/extensions-1.0/
-libtotem_properties_page_la_CFLAGS = -I$(top_srcdir)
+libtotem_properties_page_la_CFLAGS = -I$(top_srcdir) $(WARN_CFLAGS)
 libtotem_properties_page_la_SOURCES = 	\
 	totem-properties-main.c		\
 	totem-properties-view.c		\
@@ -114,7 +109,7 @@ libtotem_properties_page_la_LIBADD =					\
 	$(XTEST_LIBS) $(X_LIBS)
 libtotem_properties_page_la_LDFLAGS = $(modules_flags)
 
-test_properties_page_CFLAGS = -I$(top_srcdir)
+test_properties_page_CFLAGS = -I$(top_srcdir) $(WARN_CFLAGS)
 test_properties_page_SOURCES =		\
 	totem-properties-main.c		\
 	totem-properties-view.c		\
@@ -128,27 +123,6 @@ test_properties_page_LDADD =		\
 
 
 BUILT_SOURCES = 
-
-if HAVE_MOZILLA
-
-BUILT_SOURCES += \
-	totem-mozilla-interface.h
-
-totem-mozilla-interface.h: totem-mozilla-interface.xml
-	$(DBUS_BIND) --prefix=totem_embedded --mode=glib-server \
-		--output=totem-mozilla-interface.h $<
-
-totem_mozilla_viewer_SOURCES = 		\
-	totem-mozilla-viewer.c		\
-	totem-mozilla-options.h
-
-totem_mozilla_viewer_LDADD = \
-	backend/libbaconvideowidget.la libbaconpropertiespage.la \
-	libtotem_player.la plparse/libtotem-plparser.la \
-	$(EXTRA_GNOME_LIBS) $(XVIDMODE_LIBS) \
-	$(DBUS_LIBS) $(NVTV_LIBS) \
-	$(XTEST_LIBS) $(X_LIBS) 
-endif
 
 vanity_SOURCES =					\
 	$(BACON_V4L_SELECTION)				\
@@ -182,11 +156,9 @@ INCLUDES = 						\
 	-I$(top_builddir)/src/plparse			\
 	-I$(top_builddir)/src/backend			\
 	$(EXTRA_GNOME_CFLAGS)				\
+	$(WARN_CFLAGS)					\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
 	$(DBUS_CFLAGS)					\
-	$(MOZILLA_CFLAGS)				\
-	$(MOZILLA_SUBDIR_INCLUDES)			\
-	$(MOZILLA_XPCOM_CFLAGS)				\
 	$(NVTV_CFLAGS)					\
 	$(NAUTILUS_CFLAGS)				\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
@@ -199,6 +171,4 @@ INCLUDES = 						\
 CLEANFILES = *.bak *.gladep core* *.orig *~ $(desktop_DATA) $(BUILT_SOURCES) 
 EXTRA_DIST = \
 	$(BACON_V4L_SELECTION) \
-	vanity.c \
-	totem-mozilla-viewer.c \
-	totem-mozilla-interface.xml
+	vanity.c

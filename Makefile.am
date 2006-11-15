@@ -1,7 +1,8 @@
-SUBDIRS = po data src browser-plugin help
+SUBDIRS = po data src help
 
-install-data-local:
-	@$(NORMAL_INSTALL)
+if ENABLE_BROWSER_PLUGINS
+SUBDIRS += browser-plugin
+endif
 
 EXTRA_DIST =			\
 	COPYING.LIB		\

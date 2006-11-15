@@ -37,7 +37,6 @@
 #include "totemPluginGlue.h"
 #include "totemPlugin.h"
 
-NPNetscapeFuncs sMozillaFuncs;
 static char *mime_list = NULL;
 
 static NPError
@@ -49,20 +48,10 @@ totem_plugin_new_instance (NPMIMEType mimetype,
 			   char *argv[],
 			   NPSavedData *savedData)
 {
-	totemPlugin *plugin;
-
-	D("totem_plugin_new_instance");
-
 	if (!instance)
 		return NPERR_INVALID_INSTANCE_ERROR;
 
-	/* Make sure the plugin stays resident to avoid crashers when 
-	 * reloading the GObject types.
-	 */
-	CallNPN_SetValueProc (sMozillaFuncs.setvalue, instance,
-			      NPPVpluginKeepLibraryInMemory, NS_INT32_TO_PTR(PR_TRUE));
-
-	plugin = new totemPlugin (instance);
+	totemPlugin *plugin = new totemPlugin (instance);
 	if (!plugin)
 		return NPERR_OUT_OF_MEMORY_ERROR;
 
@@ -81,8 +70,6 @@ static NPError
 totem_plugin_destroy_instance (NPP instance,
 			       NPSavedData **save)
 {
-	D("plugin_destroy");
-
 	if (!instance)
 		return NPERR_INVALID_INSTANCE_ERROR;
 
@@ -198,14 +185,21 @@ totem_plugin_url_notify (NPP instance,
 			 NPReason reason,
 			 void* notifyData)
 {
-	D("plugin_url_notify");
+	if (!instance)
+		return;
+
+	totemPlugin *plugin = (totemPlugin *) instance->pdata;
+	if (!plugin)
+		return;
+
+	plugin->URLNotify (url, reason, notifyData);
 }
 
 static void
 totem_plugin_print (NPP instance,
                     NPPrint* platformPrint)
 {
-	D("plugin_print");
+	D ("Print");
 }
 
 static char *
@@ -223,7 +217,7 @@ totem_plugin_get_value (NPP instance,
 	NPError err = NPERR_NO_ERROR;
 
 	/* See NPPVariable in npapi.h */
-	D("plugin_get_value %d (%x)\n", variable, variable);
+	D ("GetValue variable %d (%x)", variable, variable);
 
 	if (instance) {
 		plugin = (totemPlugin *) instance->pdata;
@@ -240,7 +234,7 @@ totem_plugin_get_value (NPP instance,
 		*((NPBool *)value) = TRUE;
 		break;
 	case NPPVpluginScriptableIID: {
-		nsIID* ptr = NS_STATIC_CAST (nsIID *, sMozillaFuncs.memalloc (sizeof (nsIID)));
+		nsIID* ptr = NS_STATIC_CAST (nsIID *, totemPlugin::sNPN.memalloc (sizeof (nsIID)));
 		if (ptr) {
 			*ptr = NS_GET_IID (nsISupports);
 			*NS_STATIC_CAST (nsIID **, value) = ptr;
@@ -259,7 +253,7 @@ totem_plugin_get_value (NPP instance,
 		break;
 	}
 	default:
-		D("unhandled variable %d (%x)", variable, variable);
+		D ("Unhandled variable");
 		err = NPERR_INVALID_PARAM;
 		break;
 	}
@@ -272,7 +266,7 @@ totem_plugin_set_value (NPP instance,
 			NPNVariable variable,
 			void *value)
 {
-	D("plugin_set_value %d (%x)", variable, variable);
+	D ("SetValue variable %d (%x)", variable, variable);
 
 	return NPERR_NO_ERROR;
 }
@@ -332,7 +326,7 @@ NP_Initialize (NPNetscapeFuncs * aMozillaFuncs,
 	NPBool supportsXEmbed = PR_FALSE;
 	NPNToolkitType toolkit = (NPNToolkitType) 0;
 
-	D("NP_Initialize\n");
+	D ("NP_Initialize");
 
 	/* Do we support XEMBED? */
 	err = CallNPN_GetValueProc (aMozillaFuncs->getvalue, NULL,
@@ -354,6 +348,7 @@ NP_Initialize (NPNetscapeFuncs * aMozillaFuncs,
 
 	if ((aMozillaFuncs->version >> 8) > NP_VERSION_MAJOR)
 		return NPERR_INCOMPATIBLE_VERSION_ERROR;
+	/* FIXME: check instead: indexof (last known entry in NPNetscapeFuncs) */
 	if (aMozillaFuncs->size < sizeof (NPNetscapeFuncs))
 		return NPERR_INVALID_FUNCTABLE_ERROR;
 	if (plugin_funcs->size < sizeof (NPPluginFuncs))
@@ -366,29 +361,29 @@ NP_Initialize (NPNetscapeFuncs * aMozillaFuncs,
 	 * structure, because the Mozilla function table could actually be
 	 * bigger than what we expect.
 	 */
-	sMozillaFuncs.size             = aMozillaFuncs->size;
-	sMozillaFuncs.version          = aMozillaFuncs->version;
-	sMozillaFuncs.geturl           = aMozillaFuncs->geturl;
-	sMozillaFuncs.posturl          = aMozillaFuncs->posturl;
-	sMozillaFuncs.requestread      = aMozillaFuncs->requestread;
-	sMozillaFuncs.newstream        = aMozillaFuncs->newstream;
-	sMozillaFuncs.write            = aMozillaFuncs->write;
-	sMozillaFuncs.destroystream    = aMozillaFuncs->destroystream;
-	sMozillaFuncs.status           = aMozillaFuncs->status;
-	sMozillaFuncs.uagent           = aMozillaFuncs->uagent;
-	sMozillaFuncs.memalloc         = aMozillaFuncs->memalloc;
-	sMozillaFuncs.memfree          = aMozillaFuncs->memfree;
-	sMozillaFuncs.memflush         = aMozillaFuncs->memflush;
-	sMozillaFuncs.reloadplugins    = aMozillaFuncs->reloadplugins;
-	sMozillaFuncs.getJavaEnv       = aMozillaFuncs->getJavaEnv;
-	sMozillaFuncs.getJavaPeer      = aMozillaFuncs->getJavaPeer;
-	sMozillaFuncs.geturlnotify     = aMozillaFuncs->geturlnotify;
-	sMozillaFuncs.posturlnotify    = aMozillaFuncs->posturlnotify;
-	sMozillaFuncs.getvalue         = aMozillaFuncs->getvalue;
-	sMozillaFuncs.setvalue         = aMozillaFuncs->setvalue;
-	sMozillaFuncs.invalidaterect   = aMozillaFuncs->invalidaterect;
-	sMozillaFuncs.invalidateregion = aMozillaFuncs->invalidateregion;
-	sMozillaFuncs.forceredraw      = aMozillaFuncs->forceredraw;
+	totemPlugin::sNPN.size             = aMozillaFuncs->size;
+	totemPlugin::sNPN.version          = aMozillaFuncs->version;
+	totemPlugin::sNPN.geturl           = aMozillaFuncs->geturl;
+	totemPlugin::sNPN.posturl          = aMozillaFuncs->posturl;
+	totemPlugin::sNPN.requestread      = aMozillaFuncs->requestread;
+	totemPlugin::sNPN.newstream        = aMozillaFuncs->newstream;
+	totemPlugin::sNPN.write            = aMozillaFuncs->write;
+	totemPlugin::sNPN.destroystream    = aMozillaFuncs->destroystream;
+	totemPlugin::sNPN.status           = aMozillaFuncs->status;
+	totemPlugin::sNPN.uagent           = aMozillaFuncs->uagent;
+	totemPlugin::sNPN.memalloc         = aMozillaFuncs->memalloc;
+	totemPlugin::sNPN.memfree          = aMozillaFuncs->memfree;
+	totemPlugin::sNPN.memflush         = aMozillaFuncs->memflush;
+	totemPlugin::sNPN.reloadplugins    = aMozillaFuncs->reloadplugins;
+	totemPlugin::sNPN.getJavaEnv       = aMozillaFuncs->getJavaEnv;
+	totemPlugin::sNPN.getJavaPeer      = aMozillaFuncs->getJavaPeer;
+	totemPlugin::sNPN.geturlnotify     = aMozillaFuncs->geturlnotify;
+	totemPlugin::sNPN.posturlnotify    = aMozillaFuncs->posturlnotify;
+	totemPlugin::sNPN.getvalue         = aMozillaFuncs->getvalue;
+	totemPlugin::sNPN.setvalue         = aMozillaFuncs->setvalue;
+	totemPlugin::sNPN.invalidaterect   = aMozillaFuncs->invalidaterect;
+	totemPlugin::sNPN.invalidateregion = aMozillaFuncs->invalidateregion;
+	totemPlugin::sNPN.forceredraw      = aMozillaFuncs->forceredraw;
 
 	/*
 	 * Set up a plugin function table that Mozilla will use to call
@@ -422,14 +417,18 @@ NP_Initialize (NPNetscapeFuncs * aMozillaFuncs,
 	plugin_funcs->getvalue = NewNPP_GetValueProc(totem_plugin_get_value);
 	plugin_funcs->setvalue = NewNPP_SetValueProc(totem_plugin_set_value);
 
-	return NPERR_NO_ERROR;
+	D ("NP_Initialize succeeded");
+
+	return totemPlugin::Initialise ();
 }
 
 NPError
 NP_Shutdown(void)
 {
+	D ("NP_Shutdown");
+
 	g_free (mime_list);
 	mime_list = NULL;
 
-	return NPERR_NO_ERROR;
+	return totemPlugin::Shutdown ();
 }

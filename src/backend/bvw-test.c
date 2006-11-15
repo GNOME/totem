@@ -16,6 +16,11 @@ static void test_xine_set_mrl(char *path)
 	bacon_video_widget_open (BACON_VIDEO_WIDGET (xine), mrl, NULL);
 }
 
+static void on_redirect (GtkWidget *bvw, const char *mrl, gpointer data)
+{
+	g_message ("Redirect to: %s", mrl);
+}
+
 static void on_eos_event(GtkWidget *widget, gpointer user_data)
 {
 	bacon_video_widget_stop (BACON_VIDEO_WIDGET (xine));
@@ -59,6 +64,7 @@ int main(int argc, char *argv[])
 	gtk_widget_realize (xine);
 
 	g_signal_connect(G_OBJECT (xine),"eos",G_CALLBACK (on_eos_event),NULL);
+	g_signal_connect (G_OBJECT(xine), "got-redirect", G_CALLBACK (on_redirect), NULL);
 
 	gtk_widget_show(win);
 	gtk_widget_show(xine);
