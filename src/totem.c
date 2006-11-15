@@ -165,10 +165,8 @@ totem_action_save_state (Totem *totem)
 			"show_sidebar", totem_sidebar_is_visible (totem));
 	g_key_file_set_boolean (keyfile, "State",
 			"maximised", totem->maximised);
-	if (totem->maximised == FALSE) {
-		g_key_file_set_integer (keyfile, "State",
-				"sidebar_w", totem->sidebar_w);
-	}
+	g_key_file_set_integer (keyfile, "State",
+			"sidebar_w", totem->sidebar_w);
 
 	page_id = totem_sidebar_get_current_page (totem);
 	g_key_file_set_string (keyfile, "State",
@@ -2787,19 +2785,36 @@ update_buttons (Totem *totem)
 }
 
 static void
+main_pane_size_allocated (GtkWidget *main_pane, GtkAllocation *allocation, Totem *totem)
+{
+	gulong handler_id;
+
+	if (!totem->maximised || GTK_WIDGET_MAPPED (totem->win)) {
+		handler_id = g_signal_handler_find (main_pane, 
+				G_SIGNAL_MATCH_FUNC | G_SIGNAL_MATCH_DATA,
+				0, 0, NULL,
+				main_pane_size_allocated, totem);
+		g_signal_handler_disconnect (main_pane, handler_id);
+
+		gtk_paned_set_position (GTK_PANED (main_pane), allocation->width - totem->sidebar_w);
+	}
+}
+
+static void
 totem_setup_window (Totem *totem)
 {
 	GKeyFile *keyfile;
-	int w, h, sidebar_w;
+	int w, h;
 	gboolean show_sidebar;
 	char *filename, *page_id;
 	GError *err = NULL;
+	GtkWidget *main_pane;
 
 	filename = g_build_filename (g_get_home_dir (), ".gnome2", "totem", NULL);
 	keyfile = g_key_file_new ();
 	if (g_key_file_load_from_file (keyfile, filename,
 			G_KEY_FILE_NONE, NULL) == FALSE) {
-		sidebar_w = w = h = 0;
+		totem->sidebar_w = w = h = 0;
 		show_sidebar = TRUE;
 		page_id = NULL;
 		g_free (filename);
@@ -2843,11 +2858,11 @@ totem_setup_window (Totem *totem)
 			err = NULL;
 		}
 
-		sidebar_w = g_key_file_get_integer (keyfile, "State",
+		totem->sidebar_w = g_key_file_get_integer (keyfile, "State",
 				"sidebar_w", &err);
 		if (err != NULL) {
 			g_error_free (err);
-			sidebar_w = 0;
+			totem->sidebar_w = 0;
 		}
 		g_key_file_free (keyfile);
 	}
@@ -2860,17 +2875,11 @@ totem_setup_window (Totem *totem)
 	} else if (totem->maximised != FALSE) {
 		gtk_window_maximize (GTK_WINDOW (totem->win));
 	}
+	
+	main_pane = glade_xml_get_widget (totem->xml, "tmw_main_pane");
+	g_signal_connect (G_OBJECT (main_pane), "size-allocate", G_CALLBACK (main_pane_size_allocated), totem);
 
-	if (sidebar_w > 0 && totem->maximised == FALSE) {
-		GtkWidget *item;
-
-		totem->sidebar_w = sidebar_w;
-		totem_sidebar_setup (totem, show_sidebar, page_id);
-		item = glade_xml_get_widget (totem->xml, "tmw_main_pane");
-		gtk_paned_set_position (GTK_PANED (item), w - sidebar_w);
-	} else {
-		totem_sidebar_setup (totem, show_sidebar, page_id);
-	}
+	totem_sidebar_setup (totem, show_sidebar, page_id);
 }
 
 static void
@@ -3085,7 +3094,7 @@ static void
 video_widget_create (Totem *totem) 
 {
 	GError *err = NULL;
-	GtkWidget *container, *container2;
+	GtkWidget *container;
 
 	totem->scr = totem_scrsaver_new ();
 
@@ -3177,9 +3186,6 @@ video_widget_create (Totem *totem)
 			(void**)&(totem->bvw));
 
 	gtk_widget_show (GTK_WIDGET (totem->bvw));
-
-	container2 = glade_xml_get_widget (totem->xml, "tmw_main_pane");
-	gtk_paned_set_position (GTK_PANED (container2), totem->window_w - totem->sidebar_w);
 
 	bacon_video_widget_set_volume (totem->bvw,
 			gconf_client_get_int (totem->gc,
