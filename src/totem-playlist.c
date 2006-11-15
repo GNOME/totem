@@ -96,6 +96,9 @@ struct TotemPlaylistPrivate
 	/* Reorder Flag */
 	guint drag_started : 1;
 
+	/* Drop disabled flag */
+	guint drop_disabled : 1;
+
 	/* Shuffle mode */
 	guint shuffle : 1;
 };
@@ -613,10 +616,16 @@ totem_playlist_set_reorderable (TotemPlaylist *playlist, gboolean set)
 static gboolean 
 button_press_cb (GtkWidget *treeview, GdkEventButton *event, gpointer data)
 { 
+	TotemPlaylist *playlist = (TotemPlaylist *)data;
+
+	if (playlist->_priv->drop_disabled)
+		return FALSE;
+
+	playlist->_priv->drop_disabled = TRUE;
 	gtk_drag_dest_unset (treeview);
 	g_signal_handlers_block_by_func (treeview, (GFunc) drop_cb, data);
 
-	totem_playlist_set_reorderable ((TotemPlaylist *) data, TRUE);
+	totem_playlist_set_reorderable (playlist, TRUE);
 
 	return FALSE;
 }
@@ -626,8 +635,9 @@ button_release_cb (GtkWidget *treeview, GdkEventButton *event, gpointer data)
 {
 	TotemPlaylist *playlist = (TotemPlaylist *)data;
 
-	if (!playlist->_priv->drag_started)
+	if (!playlist->_priv->drag_started && playlist->_priv->drop_disabled)
 	{
+		playlist->_priv->drop_disabled = FALSE;
 		totem_playlist_set_reorderable (playlist, FALSE);
 		gtk_drag_dest_set (treeview, GTK_DEST_DEFAULT_ALL,
 				target_table, G_N_ELEMENTS (target_table),
@@ -655,6 +665,7 @@ drag_end_cb (GtkWidget *treeview, GdkDragContext *context, gpointer data)
 {
 	TotemPlaylist *playlist = (TotemPlaylist *)data;
 
+	playlist->_priv->drop_disabled = FALSE;
 	playlist->_priv->drag_started = FALSE;
 	totem_playlist_set_reorderable (playlist, FALSE);
 	gtk_drag_dest_set (treeview, GTK_DEST_DEFAULT_ALL, target_table,
@@ -1264,8 +1275,16 @@ treeview_row_changed (GtkTreeView *treeview, GtkTreePath *arg1,
 			totem_playlist_table_signals[CHANGED], 0,
 			NULL);
 
-	g_signal_handlers_unblock_by_func (treeview,
-			(GFunc) drop_cb, playlist);
+	if (playlist->_priv->drop_disabled) {
+		playlist->_priv->drop_disabled = FALSE;
+		totem_playlist_set_reorderable (playlist, FALSE);
+		gtk_drag_dest_set (GTK_WIDGET (treeview), GTK_DEST_DEFAULT_ALL,
+				target_table, G_N_ELEMENTS (target_table),
+				GDK_ACTION_COPY | GDK_ACTION_MOVE);
+
+		g_signal_handlers_unblock_by_func (treeview,
+				(GFunc) drop_cb, playlist);
+	}
 }
 
 static void

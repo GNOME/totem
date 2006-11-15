@@ -1,5 +1,13 @@
 2006-11-15  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c: (button_press_cb), (button_release_cb),
+	(drag_end_cb), (treeview_row_changed): Patch from
+	Jan Arne Petersen <jpetersen@jpetersen.org> to avoid the playlist
+	not accepting new drops after a drop caused an error dialogue
+	to appear (Closes: #370736)
+
+2006-11-15  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-sidebar.c: (totem_sidebar_setup):
 	* src/totem.c: (totem_action_save_state),
 	(main_pane_size_allocated), (totem_setup_window),
