@@ -68,10 +68,11 @@ echo "ErrorLog log"                             >> conf
 echo                                            >> conf
 echo                                            >> conf
 echo "LoadModule env_module /etc/httpd/modules/mod_env.so" >> conf
-echo "LoadModule mime_magic_module /etc/httpd/modules/mod_mime_magic.so" >> conf
+#echo "LoadModule mime_magic_module /etc/httpd/modules/mod_mime_magic.so" >> conf
 echo "LoadModule mime_module /etc/httpd/modules/mod_mime.so" >> conf
 echo "LoadModule dir_module /etc/httpd/modules/mod_dir.so" >> conf
 echo "LoadModule autoindex_module /etc/httpd/modules/mod_autoindex.so" >> conf
+echo "LoadModule rewrite_module  /etc/httpd/modules/mod_rewrite.so" >> conf
 echo                                            >> conf
 echo "TypesConfig /etc/mime.types"              >> conf
 echo "DocumentRoot \"$DOCDIR\""                 >> conf

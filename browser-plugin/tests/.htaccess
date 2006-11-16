@@ -1,2 +1,15 @@
 Options Indexes FollowSymLinks
+RewriteEngine on
 
+#AddType video/x-msvideo .avi
+
+# For test #1
+AddType video/divx .avi
+# FIXME this should be video/x-msvideo instead
+
+# For test #2
+# FIXME RewriteRule will actually redirect, so totem-href.mov ends up being image/jpeg
+#RewriteRule totem-href.mov totem-href.jpg
+#Addtype video/quicktime totem-href.mov
+RewriteRule mjpeg-totem-logo.mov mjpeg-totem-logo.avi
+Addtype video/quicktime mjpeg-totem-logo.mov
