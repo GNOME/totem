@@ -680,6 +680,7 @@ totemPlugin::RequestStream ()
 		baseURI = mSrcURI; /* FIXME: that correct? */
 	}
 #endif
+
 #ifdef TOTEM_NARROWSPACE_PLUGIN
 	/* Prefer qtsrc over src */
 	if (mQtsrcURI) {
@@ -946,13 +947,13 @@ totemPlugin::IsMimeTypeSupported (const char *mimetype,
 {
 	NS_ENSURE_TRUE (mimetype, PR_FALSE);
 
-#if defined(TOTEM_MULLY_PLUGIN) || defined(TOTEM_GMP_PLUGIN)
+#if defined(TOTEM_NARROWSPACE_PLUGIN) || defined(TOTEM_GMP_PLUGIN) || defined(TOTEM_MULLY_PLUGIN)
 	/* We can always play those image types */
 	if (strcmp (mimetype, "image/jpeg") == 0)
 		return PR_TRUE;
 	if (strcmp (mimetype, "image/gif") == 0)
 		return PR_TRUE;
-#endif /* TOTEM_MULLY_PLUGIN || TOTEM_GMP_PLUGIN */
+#endif /* TOTEM_NARROWSPACE_PLUGIN || TOTEM_GMP_PLUGIN || TOTEM_MULLY_PLUGIN */
 
 	/* Stupid web servers will do that */
 	if (strcmp (mimetype, GNOME_VFS_MIME_TYPE_UNKNOWN) == 0)
