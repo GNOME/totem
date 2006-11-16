@@ -2698,20 +2698,24 @@ totem_pl_parser_can_parse_from_data (const char *data,
 gboolean
 totem_pl_parser_can_parse_from_filename (const char *filename, gboolean debug)
 {
-	char *contents;
-	gsize len;
+	GMappedFile *map;
+	GError *err = NULL;
 	gboolean retval;
 
 	g_return_val_if_fail (filename != NULL, FALSE);
 
-	/* FIXME probably a good idea to only get the first few chunks */
-	if (g_file_get_contents (filename, &contents, &len, NULL) == FALSE) {
-		D(g_message ("couldn't get the contents of %s", filename));
+	map = g_mapped_file_new (filename, FALSE, &err);
+	if (map == NULL) {
+		D(g_message ("couldn't mmap %s: %s", filename, err->message));
+		g_error_free (err);
 		return FALSE;
 	}
 
-	retval = totem_pl_parser_can_parse_from_data (contents, len, debug);
-	g_free (contents);
+	retval = totem_pl_parser_can_parse_from_data
+		(g_mapped_file_get_contents (map),
+		 g_mapped_file_get_length (map), debug);
+
+	g_mapped_file_free (map);
 
 	return retval;
 }

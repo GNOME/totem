@@ -4,6 +4,8 @@
 
 #include "totem-pl-parser.c"
 
+#define USE_DATA
+
 static GMainLoop *loop = NULL;
 static GList *list = NULL;
 static gboolean option_recurse = TRUE;
@@ -118,6 +120,8 @@ push_parser (gpointer data)
 	return FALSE;
 }
 
+#ifdef USE_DATA
+
 #define READ_CHUNK_SIZE 8192
 #define MIME_READ_CHUNK_SIZE 1024
 
@@ -183,27 +187,35 @@ test_data_get_data (const char *uri, guint *len)
 
 	return buffer;
 }
+#endif /* USE_DATA */
 
 static void
 test_data (void)
 {
 	GList *l;
-	guint len;
 
 	for (l = list; l != NULL; l = l->next) {
+		gboolean retval;
+#ifdef USE_DATA
 		char *data;
+		guint len;
 
 		data = test_data_get_data (l->data, &len);
 		if (data == NULL) {
 			g_message ("Couldn't get data for %s", (char *) l->data);
 			continue;
 		}
-		if (totem_pl_parser_can_parse_from_data (data, len, TRUE)) {
+		retval = totem_pl_parser_can_parse_from_data (data, len, TRUE);
+		g_free (data);
+#else
+		retval = totem_pl_parser_can_parse_from_filename (l->data, TRUE);
+#endif /* USE_DATA */
+
+		if (retval != FALSE) {
 			g_message ("IS a playlist: %s", (char *) l->data);
 		} else {
 			g_message ("ISNOT playlist: %s", (char *) l->data);
 		}
-		g_free (data);
 	}
 }
 
