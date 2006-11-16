@@ -108,20 +108,13 @@ libtotem_basic_plugin_la_CPPFLAGS = \
 	-DBINDIR="\"$(bindir)\""			\
 	$(AM_CPPFLAGS)
 
-libtotem_basic_plugin_la_CFLAGS = \
-	$(BROWSER_PLUGIN_CFLAGS)	\
-	$(MOZILLA_XPCOM_CFLAGS)		\
-	$(DBUS_CFLAGS)			\
-	$(WARN_CFLAGS)			\
-	$(AM_CFLAGS)
-
 libtotem_basic_plugin_la_CXXFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
 	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
 	$(WARN_CXXFLAGS)		\
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
-	$(AM_CFLAGS)
+	$(AM_CXXFLAGS)
 
 libtotem_basic_plugin_la_LIBADD = \
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la	\
@@ -172,20 +165,13 @@ libtotem_gmp_plugin_la_CPPFLAGS = \
 	-DBINDIR="\"$(bindir)\""			\
 	$(AM_CPPFLAGS)
 
-libtotem_gmp_plugin_la_CFLAGS = \
-	$(BROWSER_PLUGIN_CFLAGS)	\
-	$(MOZILLA_XPCOM_CFLAGS)		\
-	$(DBUS_CFLAGS)			\
-	$(WARN_CFLAGS)			\
-	$(AM_CFLAGS)
-
 libtotem_gmp_plugin_la_CXXFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
 	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
 	$(WARN_CXXFLAGS)		\
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
-	$(AM_CFLAGS)
+	$(AM_CXXFLAGS)
 
 libtotem_gmp_plugin_la_LIBADD = \
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la	\
@@ -236,20 +222,13 @@ libtotem_complex_plugin_la_CPPFLAGS = \
 	-DBINDIR="\"$(bindir)\""			\
 	$(AM_CPPFLAGS)
 
-libtotem_complex_plugin_la_CFLAGS = \
-	$(BROWSER_PLUGIN_CFLAGS)	\
-	$(MOZILLA_XPCOM_CFLAGS)		\
-	$(DBUS_CFLAGS)			\
-	$(WARN_CFLAGS)			\
-	$(AM_CFLAGS)
-
 libtotem_complex_plugin_la_CXXFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
 	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
 	$(WARN_CXXFLAGS)		\
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
-	$(AM_CFLAGS)
+	$(AM_CXXFLAGS)
 
 libtotem_complex_plugin_la_LIBADD = \
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la	\
@@ -300,20 +279,13 @@ libtotem_narrowspace_plugin_la_CPPFLAGS = \
 	-DBINDIR="\"$(bindir)\""			\
 	$(AM_CPPFLAGS)
 
-libtotem_narrowspace_plugin_la_CFLAGS = \
-	$(BROWSER_PLUGIN_CFLAGS)	\
-	$(MOZILLA_XPCOM_CFLAGS)		\
-	$(DBUS_CFLAGS)			\
-	$(WARN_CFLAGS)			\
-	$(AM_CFLAGS)
-
 libtotem_narrowspace_plugin_la_CXXFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
 	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
 	$(WARN_CXXFLAGS)		\
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
-	$(AM_CFLAGS)
+	$(AM_CXXFLAGS)
 
 libtotem_narrowspace_plugin_la_LIBADD = \
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la	\
@@ -364,20 +336,13 @@ libtotem_mully_plugin_la_CPPFLAGS = \
 	-DBINDIR="\"$(bindir)\""			\
 	$(AM_CPPFLAGS)
 
-libtotem_mully_plugin_la_CFLAGS = \
-	$(BROWSER_PLUGIN_CFLAGS)	\
-	$(MOZILLA_XPCOM_CFLAGS)		\
-	$(DBUS_CFLAGS)			\
-	$(WARN_CFLAGS)			\
-	$(AM_CFLAGS)
-
 libtotem_mully_plugin_la_CXXFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
 	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
 	$(WARN_CXXFLAGS)		\
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
-	$(AM_CFLAGS)
+	$(AM_CXXFLAGS)
 
 libtotem_mully_plugin_la_LIBADD = \
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la	\

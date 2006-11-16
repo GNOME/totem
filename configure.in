@@ -444,6 +444,25 @@ fi
 
 AC_SUBST([LIBXPCOMGLUE_S])
 
+# check for -fno-rtti flag
+
+if test "$enable_browser_plugins" = "yes"; then
+	AC_LANG_PUSH([C++])
+	__SAVE_CXXFLAGS=$CXXFLAGS
+	CXXFLAGS="-fno-rtti $CXXFLAGS"
+
+	AC_MSG_CHECKING([for -fno-rtti compiler flag])
+	AC_TRY_COMPILE([ ],[],[have_no_rtti_flag=yes],[have_no_rtti_flag=no])
+	AC_MSG_RESULT([$have_no_rtti_flag])
+
+	CXXFLAGS=$__SAVE_CXXFLAGS
+	AC_LANG_POP([C++])
+
+	if test "$have_no_rtti_flag" = "yes"; then
+		AM_CXXFLAGS="-fno-rtti $AM_CXXFLAGS"
+	fi
+fi
+
 # check for some additional xpcom headers
 
 if test "$enable_browser_plugins" = "yes"; then
