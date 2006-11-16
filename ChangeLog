@@ -1,6 +1,11 @@
 2006-11-16  Christian Persch  <chpe@cvs.gnome.org>
 
 	* configure.in:
+	Use AC_COMPILE_IFELSE instead of deprecated variant.
+
+2006-11-16  Christian Persch  <chpe@cvs.gnome.org>
+
+	* configure.in:
 	* brower-plugin/Makefile.am:
 	Compile with -fno-rtti. Cleanup unused CFLAGS. Bug #375881.
 

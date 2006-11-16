@@ -452,7 +452,7 @@ if test "$enable_browser_plugins" = "yes"; then
 	CXXFLAGS="-fno-rtti $CXXFLAGS"
 
 	AC_MSG_CHECKING([for -fno-rtti compiler flag])
-	AC_TRY_COMPILE([ ],[],[have_no_rtti_flag=yes],[have_no_rtti_flag=no])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([],[])],[have_no_rtti_flag=yes],[have_no_rtti_flag=no])
 	AC_MSG_RESULT([$have_no_rtti_flag])
 
 	CXXFLAGS=$__SAVE_CXXFLAGS
