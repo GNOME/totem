@@ -58,6 +58,7 @@
 #include <nsITimer.h>
 #include <nsIComponentManager.h>
 #include <nsIServiceManager.h>
+#include <nsIProtocolHandler.h>
 
 /* for NS_IOSERVICE_CONTRACTID */
 #include <nsNetCID.h>
@@ -1002,17 +1003,18 @@ totemPlugin::IsSchemeSupported (nsIURI *aURI)
 	if (!aURI)
 		return PR_FALSE;
 
-	/* FIXME: use protocol handler to find out if gecko supports this proto, instead */
-
-	PRBool value;
-	/* FIXME what about mmsh etc? */
-	if (NS_SUCCEEDED (aURI->SchemeIs ("mms", &value)) && value)
+	nsCString scheme;
+	nsresult rv = aURI->GetScheme (scheme);
+	if (NS_FAILED (rv) || scheme.IsEmpty ())
 		return PR_FALSE;
 
-	if (NS_SUCCEEDED (aURI->SchemeIs ("rtsp", &value)) && value)
-		return PR_FALSE;
+	nsIProtocolHandler *handler = nsnull;
+	rv = mIOService->GetProtocolHandler (scheme.get (), &handler);
+	NS_IF_RELEASE (handler);
 
-	return PR_TRUE;
+	D ("IsSchemeSupported scheme '%s': %s", scheme.get (), NS_SUCCEEDED (rv) ? "yes" : "no");
+
+	return NS_SUCCEEDED (rv) != PR_FALSE;
 }
 
 PRBool
