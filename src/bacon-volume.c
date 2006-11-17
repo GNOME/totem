@@ -769,6 +769,8 @@ bacon_volume_button_load_icons (GtkWidget *widget)
   GtkIconTheme *theme;
   const char *icon_name[] = {"audio-volume-muted", "audio-volume-low",
     "audio-volume-medium", "audio-volume-high"};
+  const char *fallback_icon_name[] = {"stock_volume-0", "stock_volume-min",
+    "stock_volume-med", "stock_volume-max"};
 
   screen = gtk_widget_get_screen (widget);
   theme = gtk_icon_theme_get_for_screen (screen);
@@ -784,7 +786,13 @@ bacon_volume_button_load_icons (GtkWidget *widget)
     button->icon[i] = gtk_icon_theme_load_icon (theme, icon_name[i], w, 0, &error);
     if (error) {
       g_print ("Couldn't load themed icon '%s': %s\n", icon_name[i], error->message);
-      g_error_free (error);
+      g_clear_error (&error);
+
+      button->icon[i] = gtk_icon_theme_load_icon (theme, fallback_icon_name[i], w, 0, &error);
+      if (error) {
+	g_print ("Couldn't load themed icon '%s': %s\n", icon_name[i], error->message);
+	g_clear_error (&error);
+      }
     }
   }
 
