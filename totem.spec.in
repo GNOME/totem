@@ -22,9 +22,9 @@ BuildRequires: gcc-c++, pkgconfig, gettext, scrollkeeper
 BuildRequires: gstreamer-devel >= %gstreamer_version
 BuildRequires: gstreamer-plugins-base-devel >= %gstreamer_plugins_base_version
 BuildRequires: gnome-desktop-devel >= 2.6.0, gnome-vfs2-devel, libglade2-devel
+BuildRequires: nautilus-devel
 BuildRequires: perl-XML-Parser
 BuildRequires: iso-codes-devel
-BuildRequires: mozilla-devel
 Obsoletes: nautilus-media
 
 %description
@@ -126,7 +126,7 @@ done
 %files mozplugin
 %defattr(-, root, root)
 %{_libdir}/mozilla/plugins/*
-%{_libexecdir}/totem-mozilla-viewer
+%{_libexecdir}/totem-plugin-viewer
 
 %files devel
 %defattr(-, root, root)
