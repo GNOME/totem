@@ -1650,7 +1650,9 @@ totemPlugin::Init (NPMIMEType mimetype,
 	}
 	
 	/* Are we hidden? */
-	mHidden = GetBooleanValue (args, "hidden", PR_FALSE);
+	/* Treat hidden without a value as TRUE */
+	mHidden = g_hash_table_lookup (args, "hidden") != NULL &&
+		  GetBooleanValue (args, "hidden", PR_TRUE);
 
 	/* Most for RealAudio streams, but also used as a replacement for
 	 * HIDDEN=TRUE attribute.
