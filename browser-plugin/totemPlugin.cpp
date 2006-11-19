@@ -244,9 +244,9 @@ totemPlugin::ViewerFork ()
 
 	/* FIXME what use is this anyway? */
 #ifdef TOTEM_RUN_IN_SOURCE_TREE
-	if (g_file_test ("../src/totem-plugin-viewer",
+	if (g_file_test ("./totem-plugin-viewer",
 			 G_FILE_TEST_EXISTS) != FALSE) {
-			 g_ptr_array_add (arr, g_strdup ("../src/totem-plugin-viewer"));
+			 g_ptr_array_add (arr, g_strdup ("./totem-plugin-viewer"));
 	} else {
 		g_ptr_array_add (arr,
 				 g_build_filename (LIBEXECDIR, "totem-plugin-viewer", NULL));
@@ -321,8 +321,7 @@ totemPlugin::ViewerFork ()
 			g_string_append (s, argv[i]);
 			g_string_append (s, " ");
 		}
-		g_string_append (s, "\n");
-		D("%s", s->str);
+		D ("%s", s->str);
 		g_string_free (s, TRUE);
 	}
 #endif
@@ -436,6 +435,8 @@ totemPlugin::ViewerSetup ()
 void
 totemPlugin::ViewerCleanup ()
 {
+	mViewerReady = PR_FALSE;
+
 	mViewerBusAddress.SetLength (0);
 	mViewerServiceName.SetLength (0);
 
@@ -879,14 +880,16 @@ totemPlugin::ViewerOpenStreamCallback (DBusGProxy *aProxy,
 	nsCString spec;
 	plugin->mRequestURI->GetSpec (spec);
 
-	NPError err = CallNPN_GetURLProc (sNPN.geturl,
-					  plugin->mInstance,
-					  spec.get (),
-					  NULL);
+	/* Use GetURLNotify so we can reset mExpectingStream on failure */
+	NPError err = CallNPN_GetURLNotifyProc (sNPN.geturlnotify,
+						plugin->mInstance,
+						spec.get (),
+						nsnull,
+						nsnull);
 	if (err != NPERR_NO_ERROR) {
 		plugin->mExpectingStream = PR_FALSE;
 
-		D ("GetURL '%s' failed with error %d", spec.get (), err);
+		D ("GetURLNotify '%s' failed with error %d", spec.get (), err);
 	}
 }
 
@@ -2168,9 +2171,12 @@ totemPlugin::URLNotify (const char *url,
 	/* If we get called when we expect a stream,
 	 * it means that the stream failed.
 	 */
-	if (reason == NPRES_NETWORK_ERR &&
-	    mExpectingStream) {
-		/* FIXME: set/show error */
+	if (mExpectingStream) {
+		if (reason != NPRES_DONE) {
+			D ("Failed to get stream");
+			/* FIXME: show error to user? */
+		}
+
 		mExpectingStream = PR_FALSE;
 	}
 }
