@@ -189,9 +189,9 @@ ev_sidebar_close_clicked_cb (GtkWidget *widget,
 {
 	EvSidebar *ev_sidebar = EV_SIDEBAR (user_data);
 
-	gtk_widget_hide (GTK_WIDGET (ev_sidebar));
 	g_signal_emit (G_OBJECT (ev_sidebar),
 			ev_sidebar_table_signals[CLOSED], 0, NULL);
+	gtk_widget_hide (GTK_WIDGET (ev_sidebar));
 }
 
 static void

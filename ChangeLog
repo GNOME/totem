@@ -1,3 +1,9 @@
+2006-11-19  Bastien Nocera  <hadess@hadess.net>
+
+	* src/ev-sidebar.c: (ev_sidebar_close_clicked_cb): send the "closed"
+	signal before hiding the sidebar, so that the sidebar button's state
+	is correct after using the "Close" button (Closes: #376805)
+
 2006-11-17  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/.cvsignore:
