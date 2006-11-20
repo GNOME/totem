@@ -1013,9 +1013,10 @@ totemPlugin::IsSchemeSupported (nsIURI *aURI)
 
 	nsIProtocolHandler *handler = nsnull;
 	rv = mIOService->GetProtocolHandler (scheme.get (), &handler);
-	NS_IF_RELEASE (handler);
 
 	PRBool isSupported = NS_SUCCEEDED (rv) && handler != nsnull;
+
+	NS_IF_RELEASE (handler); /* this nullifies |handler| */
 
 	D ("IsSchemeSupported scheme '%s': %s", scheme.get (), isSupported ? "yes" : "no");
 
