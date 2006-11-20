@@ -475,17 +475,30 @@ if test "$enable_browser_plugins" = "yes"; then
 	fi
 fi
 
-# check for some additional xpcom headers
+# check for some additional xpcom headers and for string compatibility
 
 if test "$enable_browser_plugins" = "yes"; then
-		AC_LANG_PUSH([C++])
-		__SAVE_CPPFLAGS=$CPPFLAGS
-		CPPFLAGS="$CPPFLAGS $MOZILLA_NOT_LINKED_CFLAGS -I$MOZILLA_INCLUDE_ROOT/xpcom"
+	AC_LANG_PUSH([C++])
+	__SAVE_CPPFLAGS=$CPPFLAGS
+	CPPFLAGS="$CPPFLAGS $MOZILLA_NOT_LINKED_CFLAGS -I$MOZILLA_INCLUDE_ROOT/xpcom"
 
-		AC_CHECK_HEADERS([nsTArray.h])
+	AC_CHECK_HEADERS([nsTArray.h])
 
-		CPPFLAGS=$__SAVE_CPPFLAGS
-		AC_LANG_POP([C++])
+	AC_MSG_CHECKING([whether we need string glue])
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([
+				#include <mozilla-config.h>
+				#include <nsStringAPI.h>
+		],[
+				nsDependentCString test("Test");
+		])],[need_string_glue=no],[need_string_glue=yes])
+	AC_MSG_RESULT([$need_string_glue])
+
+	CPPFLAGS=$__SAVE_CPPFLAGS
+	AC_LANG_POP([C++])
+
+	if test "$need_string_glue" = "yes"; then
+		AC_DEFINE([NEED_STRING_GLUE],[1],[Define if we need string glue])
+	fi
 fi
 
 # check which plugins to enable

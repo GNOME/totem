@@ -925,7 +925,7 @@ void
 totemPlugin::GetRealMimeType (const char *mimetype,
 			      nsACString &_retval)
 {
-	_retval.SetLength (0);
+	_retval.Assign ("");
 
 	const totemPluginMimeEntry *mimetypes;
 	PRUint32 count;
@@ -1090,7 +1090,7 @@ totemPlugin::SetSrc (const nsACString& aURL)
 	/* If |src| is empty, don't resolve the URI! Otherwise we may
 	 * try to load an (probably iframe) html document as our video stream.
 	 */
-	if (mSrc.IsEmpty ())
+	if (mSrc.Length () == 0)
 		return NS_OK;
 
 	nsresult rv = mIOService->NewURI (aURL, nsnull /* FIXME! use document charset */,
@@ -1114,7 +1114,7 @@ totemPlugin::SetURL (const nsACString& aURL)
 	}
 
 	/* Don't allow empty URL */
-	if (aURL.IsEmpty ())
+	if (aURL.Length () == 0)
 		return NS_OK;
 
 	/* FIXME: what is the correct base for the URL param? */
@@ -1142,7 +1142,7 @@ totemPlugin::SetURL (const nsACString& aURL)
 #ifdef TOTEM_NARROWSPACE_PLUGIN
 
 nsresult
-totemPlugin::SetQtsrc (const nsACString& aURL)
+totemPlugin::SetQtsrc (const nsCString& aURL)
 {
 	/* FIXME can qtsrc have URL extensions? */
 
@@ -1152,7 +1152,7 @@ totemPlugin::SetQtsrc (const nsACString& aURL)
 	}
 
 	/* Don't allow empty qtsrc */
-	if (aURL.IsEmpty ())
+	if (aURL.Length () == 0)
 		return NS_OK;
 
 	nsresult rv;
@@ -1175,7 +1175,7 @@ totemPlugin::SetQtsrc (const nsACString& aURL)
 }
 
 nsresult
-totemPlugin::SetHref (const nsACString& aURL)
+totemPlugin::SetHref (const nsCString& aURL)
 {
 	nsCString url, target;
 	PRBool hasExtensions = ParseURLExtensions (aURL, url, target);

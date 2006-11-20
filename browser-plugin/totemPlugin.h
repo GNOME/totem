@@ -26,7 +26,12 @@
 #include <stdint.h>
 #include <dbus/dbus-glib.h>
 #include <npapi.h>
+
 #include <nsStringAPI.h>
+
+#ifdef NEED_STRING_GLUE
+#include "totemStringGlue.h"
+#endif
 
 #if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
 #include <nsTArray.h>
@@ -201,8 +206,8 @@ class totemPlugin {
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
   public:
-    nsresult SetQtsrc (const nsACString &aURL);
-    nsresult SetHref (const nsACString& aURL);
+    nsresult SetQtsrc (const nsCString &aURL);
+    nsresult SetHref (const nsCString& aURL);
 
   private:
     PRBool ParseURLExtensions (const nsACString &aString,
