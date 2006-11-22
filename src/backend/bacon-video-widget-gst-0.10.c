@@ -2896,8 +2896,8 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget * bvw,
 #ifdef HAVE_NVTV
     }
   /* Turn fullscreen on with NVTV if that option is on */
-  } else if ((bvw->priv->tvout == TV_OUT_NVTV_NTSC) ||
-		  (bvw->priv->tvout == TV_OUT_NVTV_PAL)) {
+  } else if ((bvw->priv->tv_out_type == TV_OUT_NVTV_NTSC) ||
+		  (bvw->priv->tv_out_type == TV_OUT_NVTV_PAL)) {
     nvtv_simple_switch(NVTV_SIMPLE_TV_ON,
 		    bvw->priv->video_width,
 		    bvw->priv->video_height);
