@@ -32,11 +32,11 @@ class nsString : public nsEmbedString {
 
 class nsCString : public nsEmbedCString {
   public:
-    nsCString () { ::nsEmbedCString (); }
-    explicit nsCString (const char *aData, PRUint32 aLength) { ::nsEmbedCString (aData, aLength); }
+    nsCString () : nsEmbedCString () { }
+    explicit nsCString (const char *aData, PRUint32 aLength) : nsEmbedCString (aData, aLength) { }
     explicit nsCString (const abstract_string_type& aOther) { Assign (aOther); }
     explicit nsCString (const char *&aOther) { Assign (aOther); }
-    explicit nsCString (const nsCString& aData, int aStartPos, PRUint32 aLength) { ::nsEmbedCString (aData.get() + aStartPos, aLength-aStartPos); }
+    explicit nsCString (const nsCString& aData, int aStartPos, PRUint32 aLength) : nsEmbedCString (aData.get() + aStartPos, aLength-aStartPos) { }
     PRBool IsEmpty () { return !Length (); }
     PRBool Equals (const self_type& aOther) { return !strcmp (aOther.get (), get ()); }
     PRBool Equals (const char_type *aOther) { return !strcmp (aOther, get ()); }
@@ -50,7 +50,6 @@ class NS_ConvertUTF16toUTF8 : public nsCString {
     explicit NS_ConvertUTF16toUTF8 (const nsAString& aString) {
 	 NS_UTF16ToCString (aString, NS_CSTRING_ENCODING_UTF8, *this);
       }
-    void SetLength (PRUint32 aLen) { Assign (""); }
 };
 
 typedef nsString nsDependentString;
