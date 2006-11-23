@@ -1,5 +1,14 @@
 2006-11-23  Bastien Nocera  <hadess@hadess.net>
 
+	* data/properties.glade:
+	* src/bacon-video-widget-properties.c:
+	(bacon_video_widget_properties_new):
+	* src/totem-properties-main.c: (totem_properties_get_pages): Patch
+	from Eskil Bylund to fix spacing in the properties pages
+	(Closes: #373171)
+
+2006-11-23  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-session.c: (totem_session_restore): Patch from
 	Marek Schmidt <xschmi01@stud.fit.vutbr.cz> to fix restoring the
 	session. The playlist expects URI, we fed it a local filename

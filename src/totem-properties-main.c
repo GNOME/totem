@@ -116,6 +116,7 @@ totem_properties_get_pages (NautilusPropertyPageProvider *provider,
 	uri = nautilus_file_info_get_uri (file);
 	label = gtk_label_new (_("Audio/Video"));
 	page = totem_properties_view_new (uri, label);
+	gtk_container_set_border_width (GTK_CONTAINER (page), 6);
 	property_page = nautilus_property_page_new ("video-properties",
 			label, page);
 

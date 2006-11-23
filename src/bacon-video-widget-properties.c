@@ -283,6 +283,12 @@ bacon_video_widget_properties_new (void)
 	BaconVideoWidgetProperties *props;
 	GladeXML *xml;
 	GtkWidget *vbox;
+	GtkSizeGroup *group;
+	const char *labels[] = { "title_label", "artist_label", "album_label",
+			"year_label", "duration_label", "dimensions_label", "vcodec_label",
+			"framerate_label", "vbitrate_label", "abitrate_label",
+			"acodec_label", "samplerate_label", "channels_label" };
+	int i;
 
 	xml = totem_interface_load_with_root ("properties.glade",
 			"vbox1", _("Properties dialog"), TRUE, NULL);
@@ -298,6 +304,14 @@ bacon_video_widget_properties_new (void)
 	gtk_box_pack_start (GTK_BOX (props), vbox, FALSE, FALSE, 0);
 
 	bacon_video_widget_properties_reset (props);
+
+	group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
+	for (i = 0; i < G_N_ELEMENTS (labels); i++)
+		gtk_size_group_add_widget (group, glade_xml_get_widget (xml,
+				labels[i]));
+
+	g_object_unref (group);
 
 	gtk_widget_show_all (GTK_WIDGET (props));
 
