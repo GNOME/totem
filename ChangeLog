@@ -1,3 +1,10 @@
+2006-11-23  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-session.c: (totem_session_restore): Patch from
+	Marek Schmidt <xschmi01@stud.fit.vutbr.cz> to fix restoring the
+	session. The playlist expects URI, we fed it a local filename
+	(Closes: Debian #399983)
+
 2006-11-22  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:

@@ -114,7 +114,7 @@ totem_session_setup (Totem *totem, char **argv)
 void
 totem_session_restore (Totem *totem, char **argv)
 {
-	char *path, *mrl;
+	char *path, *mrl, *uri;
 
 	g_return_if_fail (argv[0] != NULL);
 	path = argv[0];
@@ -125,14 +125,20 @@ totem_session_restore (Totem *totem, char **argv)
 		return;
 	}
 
+	uri = g_filename_to_uri (path, NULL, NULL);
+	g_return_if_fail (uri != NULL);
+
 	totem_signal_block_by_data (totem->playlist, totem);
 
-	if (totem_playlist_add_mrl (totem->playlist, path, NULL) == FALSE)
+	if (totem_playlist_add_mrl (totem->playlist, uri, NULL) == FALSE)
 	{
 		totem_signal_unblock_by_data (totem->playlist, totem);
 		totem_action_set_mrl (totem, NULL);
+		g_free (uri);
 		return;
 	}
+
+	g_free (uri);
 
 	totem_signal_unblock_by_data (totem->playlist, totem);
 
