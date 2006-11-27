@@ -7,12 +7,12 @@
 #define USE_DATA
 
 static GMainLoop *loop = NULL;
-static GList *list = NULL;
-static gboolean option_recurse = TRUE;
+static gboolean option_no_recurse = FALSE;
 static gboolean option_debug = FALSE;
 static gboolean option_data = FALSE;
 static gboolean option_force = FALSE;
 static gboolean option_disable_unsafe = FALSE;
+static char **files = NULL;
 
 static void
 header (const char *message)
@@ -99,13 +99,12 @@ push_parser (gpointer data)
 {
 	TotemPlParser *pl = (TotemPlParser *)data;
 
-	if (list != NULL) {
-		GList *l;
+	if (files != NULL) {
+		guint i;
 
-		for (l = list; l != NULL; l = l->next) {
-			test_parsing_real (pl, l->data);
+		for (i = 0; files[i] != NULL; ++i) {
+			test_parsing_real (pl, files[i]);
 		}
-		g_list_free (list);
 	} else {
 		//test_parsing_real (pl, "file:///mnt/cdrom");
 		test_parsing_real (pl, "file:///home/hadess/Movies");
@@ -192,29 +191,30 @@ test_data_get_data (const char *uri, guint *len)
 static void
 test_data (void)
 {
-	GList *l;
+	guint i;
 
-	for (l = list; l != NULL; l = l->next) {
+	for (i = 0; files[i] != NULL; ++i) {
+		char *filename = files[i];
 		gboolean retval;
 #ifdef USE_DATA
 		char *data;
 		guint len;
 
-		data = test_data_get_data (l->data, &len);
+		data = test_data_get_data (filename, &len);
 		if (data == NULL) {
-			g_message ("Couldn't get data for %s", (char *) l->data);
+			g_message ("Couldn't get data for %s", filename);
 			continue;
 		}
 		retval = totem_pl_parser_can_parse_from_data (data, len, TRUE);
 		g_free (data);
 #else
-		retval = totem_pl_parser_can_parse_from_filename (l->data, TRUE);
+		retval = totem_pl_parser_can_parse_from_filename (filename, TRUE);
 #endif /* USE_DATA */
 
 		if (retval != FALSE) {
-			g_message ("IS a playlist: %s", (char *) l->data);
+			g_message ("IS a playlist: %s", filename);
 		} else {
-			g_message ("ISNOT playlist: %s", (char *) l->data);
+			g_message ("ISNOT playlist: %s", filename);
 		}
 	}
 }
@@ -236,10 +236,11 @@ test_parsing (void)
 {
 	TotemPlParser *pl = totem_pl_parser_new ();
 
-	g_object_set (G_OBJECT (pl), "recurse", option_recurse, NULL);
-	g_object_set (G_OBJECT (pl), "debug", option_debug, NULL);
-	g_object_set (G_OBJECT (pl), "force", option_force, NULL);
-	g_object_set (G_OBJECT (pl), "disable-unsafe", option_disable_unsafe, NULL);
+	g_object_set (pl, "recurse", !option_no_recurse,
+			  "debug", option_debug,
+			  "force", option_force,
+			  "disable-unsafe", option_disable_unsafe,
+			  NULL);
 	g_signal_connect (G_OBJECT (pl), "entry", G_CALLBACK (entry_added), NULL);
 	g_signal_connect (G_OBJECT (pl), "playlist-start", G_CALLBACK (playlist_started), NULL);
 	g_signal_connect (G_OBJECT (pl), "playlist-end", G_CALLBACK (playlist_ended), NULL);
@@ -252,63 +253,51 @@ test_parsing (void)
 
 int main (int argc, char **argv)
 {
-	gnome_vfs_init();
+	GOptionEntry option_entries [] =
+	{
+		{ "no-recurse", 'n', 0, G_OPTION_ARG_NONE, &option_no_recurse, "Disable recursion", NULL },
+		{ "debug", 'd', 0, G_OPTION_ARG_NONE, &option_debug, "Enable debug", NULL },
+		{ "data", 't', 0, G_OPTION_ARG_NONE, &option_data, "Use data instead of filename", NULL },
+		{ "force", 'f', 0, G_OPTION_ARG_NONE, &option_force, "Force parsing", NULL },
+		{ "disable-unsafe", 'u', 0, G_OPTION_ARG_NONE, &option_disable_unsafe, "Disabling unsafe playlist-types", NULL },
+		{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &files, NULL, "[FILE...]" },
+		{ NULL }
+	};
+	GOptionContext *context;
+	GError *error = NULL;
+	gboolean retval;
 
-	while (argc > 1 && argv[1]) {
-		if (strcmp (argv[1], "--no-recurse") == 0 || strcmp (argv[1], "-n") == 0) {
-			g_print ("Disabling recursion\n");
-			option_recurse = FALSE;
-			argv++;
-			argc--;
-		} else if (strcmp (argv[1], "--debug") == 0 || strcmp (argv[1], "-d") == 0) {
-			g_print ("Enabling debug\n");
-			option_debug = TRUE;
-			argv++;
-			argc--;
-		} else if (strcmp (argv[1], "--help") == 0 || strcmp (argv[1], "-h") == 0) {
-			g_print ("Usage: %s <-n | --no-recurse> <-d | --debug> <-h | --help> <-t | --data > <-u | --disable-unsafe> <url>\n", argv[0]);
-			return 0;
-		} else if (strcmp (argv[1], "--data") == 0 || strcmp (argv[1], "-t") == 0) {
-			g_print ("Using data, instead of filenames\n");
-			option_data = TRUE;
-			argv++;
-			argc--;
-		} else if (strcmp (argv[1], "--force") == 0 || strcmp (argv[1], "-f") == 0) {
-			g_print ("Forcing parsing\n");
-			option_force = TRUE;
-			argv++;
-			argc--;
-		} else if (strcmp (argv[1], "--disable-unsafe") == 0 || strcmp (argv[1], "-u") == 0) {
-			g_print ("Disabling unsafe playlist-types\n");
-			option_disable_unsafe = TRUE;
-			argv++;
-			argc--;
-		} else /* other options here */ {
-			break;
-		}
+	context = g_option_context_new (NULL);
+	g_option_context_add_main_entries (context, option_entries, NULL);
+
+	retval = g_option_context_parse (context, &argc, &argv, &error);
+	g_option_context_free (context);
+
+	if (!retval) {
+		g_print ("Error parsing arguments: %s\n", error->message);
+		g_error_free (error);
+
+		g_print ("Usage: %s <-n | --no-recurse> <-d | --debug> <-h | --help> <-t | --data > <-u | --disable-unsafe> <url>\n", argv[0]);
+		exit (1);
 	}
 
-	if (argc < 2 && option_data != FALSE) {
+	gnome_vfs_init();
+
+	if (option_data != FALSE && files == NULL) {
 		g_message ("Please pass specific files to check by data");
 		return 1;
 	}
 
-	if (argc == 1) {
+	if (files == NULL) {
 		test_relative ();
 		test_parsing ();
 	} else {
-		int i;
-		for (i = 1; i < argc; i++) {
-			list = g_list_prepend (list, argv[i]);
-		}
-		list = g_list_reverse (list);
-		if (option_data == FALSE) {
-			test_parsing ();
-		} else {
+		if (option_data) {
 			test_data ();
+		} else {
+			test_parsing ();
 		}
 	}
 
 	return 0;
 }
-
