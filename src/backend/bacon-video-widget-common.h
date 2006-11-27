@@ -25,23 +25,23 @@
  *
  */
 
-#ifndef HAVE_BACON_VIDEO_WIDGET_PRIVATE_H
-#define HAVE_BACON_VIDEO_WIDGET_PRIVATE_H
+#ifndef HAVE_BACON_VIDEO_WIDGET_COMMON_H
+#define HAVE_BACON_VIDEO_WIDGET_COMMON_H
 
 #include "bacon-video-widget.h"
+#include <glib.h>
 
 G_BEGIN_DECLS
 
-struct {
-	int height;
-	int fps;
-} vis_qualities[] = {
-	{ 240, 15 }, /* VISUAL_SMALL */
-	{ 320, 25 }, /* VISUAL_NORMAL */
-	{ 480, 25 }, /* VISUAL_LARGE */
-	{ 600, 30 }  /* VISUAL_EXTRA_LARGE */
+struct BaconVideoWidgetCommon {
+	char *mrl;
 };
+
+gboolean bacon_video_widget_common_can_direct_seek (BaconVideoWidgetCommon *com);
+gboolean bacon_video_widget_common_get_vis_quality (VisualsQuality q,
+						    int *height,
+						    int *fps);
 
 G_END_DECLS
 
-#endif				/* HAVE_BACON_VIDEO_WIDGET_PRIVATE_H */
+#endif				/* HAVE_BACON_VIDEO_WIDGET_COMMON_H */

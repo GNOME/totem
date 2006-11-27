@@ -1,3 +1,27 @@
+2006-11-27  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-common.c:
+	(bacon_video_widget_common_can_direct_seek),
+	(bacon_video_widget_common_get_vis_quality):
+	* src/backend/bacon-video-widget-common.h:
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_init), (bacon_video_widget_finalize),
+	(has_subp), (get_stream_info_objects_for_type), (get_list_of_type),
+	(bacon_video_widget_open_with_subtitle),
+	(bacon_video_widget_can_direct_seek), (bacon_video_widget_close):
+	* src/backend/bacon-video-widget-private.h:
+	* src/backend/bacon-video-widget-xine.c: (bacon_video_widget_init),
+	(xine_event_message), (bacon_video_widget_tick_send),
+	(bacon_video_widget_open_with_subtitle),
+	(bacon_video_widget_can_direct_seek),
+	(bacon_video_widget_seek_time), (bacon_video_widget_close),
+	(bacon_video_widget_get_position),
+	(bacon_video_widget_get_stream_length),
+	(bacon_video_widget_is_seekable):
+	* src/backend/bacon-video-widget.h: Move
+	bacon_video_widget_can_direct_seek to a common file, move vis_qualities
+	there as well
+
 2006-11-20  Christian Persch  <chpe@cvs.gnome.org>
 
 	* src/plparser/test-parser.c:

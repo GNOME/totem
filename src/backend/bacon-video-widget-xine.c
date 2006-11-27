@@ -48,7 +48,7 @@
 
 #include "debug.h"
 #include "bacon-video-widget.h"
-#include "bacon-video-widget-private.h"
+#include "bacon-video-widget-common.h"
 #include "baconvideowidget-marshal.h"
 #include "video-utils.h"
 #include "bacon-resize.h"
@@ -131,7 +131,6 @@ struct BaconVideoWidgetPrivate {
 
 	/* Configuration */
 	GConfClient *gc;
-	char *mrl;
 	BvwUseType type;
 	char *mediadev;
 
@@ -412,6 +411,7 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
 	GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_CAN_FOCUS);
 	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
 
+	bvw->com = g_new0 (BaconVideoWidgetCommon, 1);
 	bvw->priv = g_new0 (BaconVideoWidgetPrivate, 1);
 	bvw->priv->xine = xine_new ();
 	bvw->priv->cursor_shown = TRUE;
@@ -1313,7 +1313,7 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		message = g_strdup (_("The specified movie could not be found."));
 		break;
 	case XINE_MSG_READ_ERROR:
-		if (g_str_has_prefix (bvw->priv->mrl, "dvd:") != FALSE)
+		if (g_str_has_prefix (bvw->com->mrl, "dvd:") != FALSE)
                 {
                         num = BVW_ERROR_DVD_ENCRYPTED;
                         message = g_strdup (_("The source seems encrypted, and can't be read. Are you trying to play an encrypted DVD without libdvdcss?"));
@@ -1331,7 +1331,7 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		message = g_strdup_printf (_("A problem occurred while loading a library or a decoder (%s)."), params);
 		break;
 	case XINE_MSG_ENCRYPTED_SOURCE:
-		if (g_str_has_prefix (bvw->priv->mrl, "dvd:") != FALSE)
+		if (g_str_has_prefix (bvw->com->mrl, "dvd:") != FALSE)
 		{
 			num = BVW_ERROR_DVD_ENCRYPTED;
 			message = g_strdup (_("The source seems encrypted, and can't be read. Are you trying to play an encrypted DVD without libdvdcss?"));
@@ -1351,7 +1351,7 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		break;
 	case XINE_MSG_PERMISSION_ERROR:
 		num = BVW_ERROR_FILE_PERMISSION;
-		if (g_str_has_prefix (bvw->priv->mrl, "file:") != FALSE)
+		if (g_str_has_prefix (bvw->com->mrl, "file:") != FALSE)
 			message = g_strdup (_("You are not allowed to open this file."));
 		else
 			message = g_strdup (_("The server refused access to this file or stream."));
@@ -1940,7 +1940,7 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 	if (bvw->priv->stream == NULL || bvw->priv->logo_mode != FALSE)
 		return TRUE;
 
-	if (bvw->priv->mrl == NULL)
+	if (bvw->com->mrl == NULL)
 	{
 		current_time = 0;
 		stream_length = 0;
@@ -1971,7 +1971,7 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 	else
 		bvw->priv->is_live = TRUE;
 
-	if (stream_length != 0 && bvw->priv->mrl != NULL) {
+	if (stream_length != 0 && bvw->com->mrl != NULL) {
 		seekable = xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_SEEKABLE);
 	} else {
@@ -2133,16 +2133,16 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 	g_return_val_if_fail (mrl != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
-	g_return_val_if_fail (bvw->priv->mrl == NULL, FALSE);
+	g_return_val_if_fail (bvw->com->mrl == NULL, FALSE);
 
 	bvw->priv->got_redirect = FALSE;
 
 	/* Hack to get VCD playback from .cue files */
 	if (g_str_has_prefix (mrl, "vcd:/") != FALSE
 			&& g_str_has_suffix (mrl, ".cue") != FALSE) {
-		bvw->priv->mrl = g_strdup_printf ("%s@", mrl);
+		bvw->com->mrl = g_strdup_printf ("%s@", mrl);
 	} else {
-		bvw->priv->mrl = g_strdup (mrl);
+		bvw->com->mrl = g_strdup (mrl);
 	}
 
 	if (subtitle_uri != NULL)
@@ -2299,18 +2299,8 @@ bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
 {
 	g_return_val_if_fail (bvw != NULL, FALSE);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
 
-	if (!bvw->priv->mrl)
-		return FALSE;
-
-	/* (instant seeking only make sense with video, hence no cdda:// here) */
-	if (g_str_has_prefix (bvw->priv->mrl, "file://") ||
-			g_str_has_prefix (bvw->priv->mrl, "dvd://") ||
-			g_str_has_prefix (bvw->priv->mrl, "vcd://"))
-		return TRUE;
-
-	return FALSE;
+	return bacon_video_widget_common_can_direct_seek (bvw->com);
 }
 
 gboolean bacon_video_widget_seek (BaconVideoWidget *bvw, float position,
@@ -2362,7 +2352,7 @@ gboolean bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time,
 		return TRUE;
 	}
 
-	if (time > length && g_str_has_prefix (bvw->priv->mrl, "dvd:") == FALSE && g_str_has_prefix (bvw->priv->mrl, "vcd:") == FALSE) {
+	if (time > length && g_str_has_prefix (bvw->com->mrl, "dvd:") == FALSE && g_str_has_prefix (bvw->com->mrl, "vcd:") == FALSE) {
 		signal_data *data;
 
 		data = g_new0 (signal_data, 1);
@@ -2403,8 +2393,8 @@ bacon_video_widget_close (BaconVideoWidget *bvw)
 	xine_stop (bvw->priv->stream);
 	xine_close (bvw->priv->stream);
 	bvw->priv->has_subtitle = FALSE;
-	g_free (bvw->priv->mrl);
-	bvw->priv->mrl = NULL;
+	g_free (bvw->com->mrl);
+	bvw->com->mrl = NULL;
 
 	if (bvw->priv->logo_mode == FALSE)
 		g_signal_emit (G_OBJECT (bvw),
@@ -2565,7 +2555,7 @@ bacon_video_widget_get_position (BaconVideoWidget *bvw)
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
 	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
 
-	if (bvw->priv->mrl == NULL)
+	if (bvw->com->mrl == NULL)
 		return 0;
 
 	if (bacon_video_widget_is_playing (bvw) == FALSE)
@@ -3076,7 +3066,7 @@ bacon_video_widget_get_stream_length (BaconVideoWidget *bvw)
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
 	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
 
-	if (bvw->priv->mrl == NULL)
+	if (bvw->com->mrl == NULL)
 		return 0;
 
 	xine_get_pos_length (bvw->priv->stream, &pos_stream,
@@ -3105,7 +3095,7 @@ bacon_video_widget_is_seekable (BaconVideoWidget *bvw)
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
 	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
 
-	if (bvw->priv->mrl == NULL)
+	if (bvw->com->mrl == NULL)
 		return FALSE;
 
 	if (bacon_video_widget_get_stream_length (bvw) == 0)
@@ -3479,7 +3469,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetM
 		{
 			char *utf8;
 
-			g_warning ("Metadata for index %d not in UTF-8 for mrl '%s'", type, bvw->priv->mrl);
+			g_warning ("Metadata for index %d not in UTF-8 for mrl '%s'", type, bvw->com->mrl);
 			utf8 = g_locale_to_utf8 (string, -1, NULL, NULL, NULL);
 			g_value_set_string (value, utf8);
 			g_free (utf8);
@@ -3658,7 +3648,7 @@ GList
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
 	g_return_val_if_fail (bvw->priv->stream != NULL, NULL);
 
-	if (bvw->priv->mrl == NULL)
+	if (bvw->com->mrl == NULL)
 		return NULL;
 
 	num_channels = xine_get_stream_info
@@ -3721,7 +3711,7 @@ GList
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
 	g_return_val_if_fail (bvw->priv->stream != NULL, NULL);
 
-	if (bvw->priv->mrl == NULL)
+	if (bvw->com->mrl == NULL)
 		return NULL;
 
 	num_channels = xine_get_stream_info
@@ -3786,8 +3776,8 @@ bacon_video_widget_has_next_track (BaconVideoWidget *bvw)
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), TRUE);
 	g_return_val_if_fail (bvw->priv->stream != NULL, TRUE);
 
-	if (g_str_has_prefix (bvw->priv->mrl, "dvd:") == FALSE
-			|| bvw->priv->mrl == NULL)
+	if (g_str_has_prefix (bvw->com->mrl, "dvd:") == FALSE
+			|| bvw->com->mrl == NULL)
 		return TRUE;
 
 	/* Check whether there's additional chapters first */
@@ -3818,8 +3808,8 @@ bacon_video_widget_has_previous_track (BaconVideoWidget *bvw)
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), TRUE);
 	g_return_val_if_fail (bvw->priv->stream != NULL, TRUE);
 
-	if (g_str_has_prefix (bvw->priv->mrl, "dvd:") == FALSE
-			|| bvw->priv->mrl == NULL)
+	if (g_str_has_prefix (bvw->com->mrl, "dvd:") == FALSE
+			|| bvw->com->mrl == NULL)
 		return TRUE;
 
 	current = xine_get_stream_info (bvw->priv->stream,

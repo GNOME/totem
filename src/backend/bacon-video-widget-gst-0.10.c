@@ -60,6 +60,7 @@
 #include <gconf/gconf-client.h>
 
 #include "bacon-video-widget.h"
+#include "bacon-video-widget-common.h"
 #include "baconvideowidget-marshal.h"
 #include "video-utils.h"
 #include "gstscreenshot.h"
@@ -160,7 +161,6 @@ struct BaconVideoWidgetPrivate
   guint                        init_width;
   guint                        init_height;
   
-  gchar                       *mrl;
   gchar                       *media_device;
 
   BaconVideoWidgetAudioOutType speakersetup;
@@ -906,6 +906,7 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
 
   bvw->priv = g_new0 (BaconVideoWidgetPrivate, 1);
+  bvw->com = g_new0 (BaconVideoWidgetCommon, 1);
   
   bvw->priv->update_id = 0;
   bvw->priv->tagcache = NULL;
@@ -1577,8 +1578,8 @@ bacon_video_widget_finalize (GObject * object)
   g_free (bvw->priv->media_device);
   bvw->priv->media_device = NULL;
     
-  g_free (bvw->priv->mrl);
-  bvw->priv->mrl = NULL;
+  g_free (bvw->com->mrl);
+  bvw->com->mrl = NULL;
   
   if (bvw->priv->vis_element_name) {
     g_free (bvw->priv->vis_element_name);
@@ -1620,6 +1621,7 @@ bacon_video_widget_finalize (GObject * object)
   g_mutex_free (bvw->priv->lock);
 
   g_free (bvw->priv);
+  g_free (bvw->com);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -1714,7 +1716,7 @@ has_subp (BaconVideoWidget * bvw)
   GList *streaminfo = NULL;
   gboolean res = FALSE;
 
-  if (bvw->priv->play == NULL || bvw->priv->mrl == NULL)
+  if (bvw->priv->play == NULL || bvw->com->mrl == NULL)
     return FALSE;
 
   g_object_get (G_OBJECT (bvw->priv->play), "stream-info", &streaminfo, NULL);
@@ -1800,7 +1802,7 @@ get_stream_info_objects_for_type (BaconVideoWidget * bvw, const gchar * typestr)
 {
   GList *streaminfo = NULL, *ret = NULL;
 
-  if (bvw->priv->play == NULL || bvw->priv->mrl == NULL)
+  if (bvw->priv->play == NULL || bvw->com->mrl == NULL)
     return NULL;
 
   g_object_get (G_OBJECT (bvw->priv->play), "stream-info", &streaminfo, NULL);
@@ -1834,7 +1836,7 @@ get_list_of_type (BaconVideoWidget * bvw, const gchar * type_name)
   GList *streaminfo = NULL, *ret = NULL;
   gint num = 0;
 
-  if (bvw->priv->play == NULL || bvw->priv->mrl == NULL)
+  if (bvw->priv->play == NULL || bvw->com->mrl == NULL)
     return NULL;
 
   g_object_get (G_OBJECT (bvw->priv->play), "stream-info", &streaminfo, NULL);
@@ -2363,7 +2365,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
   
   /* So we aren't closed yet... */
-  if (bvw->priv->mrl) {
+  if (bvw->com->mrl) {
     bacon_video_widget_close (bvw);
   }
   
@@ -2371,19 +2373,19 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   GST_DEBUG ("subtitle_uri = %s", GST_STR_NULL (subtitle_uri));
   
   /* hmm... */
-  if (bvw->priv->mrl && strcmp (bvw->priv->mrl, mrl) == 0) {
+  if (bvw->com->mrl && strcmp (bvw->com->mrl, mrl) == 0) {
     GST_DEBUG ("same as current mrl");
     /* FIXME: shouldn't we ensure playing state here? */
     return TRUE;
   }
 
   /* this allows non-URI type of files in the thumbnailer and so on */
-  g_free (bvw->priv->mrl);
+  g_free (bvw->com->mrl);
   if (mrl[0] == '/') {
-    bvw->priv->mrl = g_strdup_printf ("file://%s", mrl);
+    bvw->com->mrl = g_strdup_printf ("file://%s", mrl);
   } else {
     if (strchr (mrl, ':')) {
-      bvw->priv->mrl = g_strdup (mrl);
+      bvw->com->mrl = g_strdup (mrl);
     } else {
       gchar *cur_dir = g_get_current_dir ();
       if (!cur_dir) {
@@ -2391,15 +2393,15 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 	     _("Failed to retrieve working directory"));
 	return FALSE;
       }
-      bvw->priv->mrl = g_strdup_printf ("file://%s/%s", cur_dir, mrl);
+      bvw->com->mrl = g_strdup_printf ("file://%s/%s", cur_dir, mrl);
       g_free (cur_dir);
     }
   }
 
   /* this allows to play backups of dvds */
   if (g_str_has_prefix (mrl, "dvd:///")) {
-    g_free (bvw->priv->mrl);
-    bvw->priv->mrl = g_strdup ("dvd://");
+    g_free (bvw->com->mrl);
+    bvw->com->mrl = g_strdup ("dvd://");
     bacon_video_widget_set_media_device (bvw, mrl + strlen ("dvd://"));
   }
 
@@ -2423,11 +2425,11 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
     setup_vis (bvw);
   }
 
-  if (g_strrstr (bvw->priv->mrl, "#subtitle:")) {
+  if (g_strrstr (bvw->com->mrl, "#subtitle:")) {
     gchar **uris;
     gchar *subtitle_uri;
 
-    uris = g_strsplit (bvw->priv->mrl, "#subtitle:", 2);
+    uris = g_strsplit (bvw->com->mrl, "#subtitle:", 2);
     /* Try to fix subtitle uri if needed */
     if (uris[1][0] == '/') {
       subtitle_uri = g_strdup_printf ("file://%s", uris[1]);
@@ -2446,12 +2448,12 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
         g_free (cur_dir);
       }
     }
-    g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,
+    g_object_set (bvw->priv->play, "uri", bvw->com->mrl,
                   "suburi", subtitle_uri, NULL);
     g_free (subtitle_uri);
     g_strfreev (uris);
   } else {
-    g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,
+    g_object_set (bvw->priv->play, "uri", bvw->com->mrl,
 		  "suburi", subtitle_uri, NULL);
   }
 
@@ -2495,8 +2497,8 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
     }
     bvw->priv->ignore_messages_mask |= GST_MESSAGE_ERROR;
     bvw_stop_play_pipeline (bvw);
-    g_free (bvw->priv->mrl);
-    bvw->priv->mrl = NULL;
+    g_free (bvw->com->mrl);
+    bvw->com->mrl = NULL;
   }
   
   /* When opening a new media we want to redraw ourselves */
@@ -2545,16 +2547,7 @@ bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  if (!bvw->priv->mrl)
-    return FALSE;
-
-  /* (instant seeking only make sense with video, hence no cdda:// here) */
-  if (g_str_has_prefix (bvw->priv->mrl, "file://") ||
-      g_str_has_prefix (bvw->priv->mrl, "dvd://") ||
-      g_str_has_prefix (bvw->priv->mrl, "vcd://"))
-    return TRUE;
-
-  return FALSE;
+  return bacon_video_widget_common_can_direct_seek (bvw->com);
 }
 
 gboolean
@@ -2651,9 +2644,9 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   GST_LOG ("Closing");
   bvw_stop_play_pipeline (bvw);
 
-  if (bvw->priv->mrl) {
-    g_free (bvw->priv->mrl);
-    bvw->priv->mrl = NULL;
+  if (bvw->com->mrl) {
+    g_free (bvw->com->mrl);
+    bvw->com->mrl = NULL;
   }
 
   g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
