@@ -354,7 +354,7 @@ cd_cache_new (const char *dev,
 static gboolean
 cd_cache_has_medium (CdCache *cache)
 {
-  return FALSE;
+  return TRUE;
 }
 #endif
 
@@ -390,6 +390,12 @@ cd_cache_has_medium (CdCache *cache)
 
   if (retval == FALSE) {
     dbus_bool_t volume;
+
+    if (libhal_device_property_exists (cache->ctx,
+	  udi, "volume.is_disc", NULL) == FALSE) {
+      g_free (udi);
+      return FALSE;
+    }
 
     volume = libhal_device_get_property_bool (cache->ctx,
 	udi, "volume.is_disc", &error);
@@ -842,6 +848,21 @@ totem_cd_detect_type (const char  *device,
 		      GError     **error)
 {
   return totem_cd_detect_type_with_url (device, NULL, error);
+}
+
+gboolean
+totem_cd_has_medium (const char  *device)
+{
+  CdCache *cache;
+  gboolean retval = TRUE;
+
+  if (!(cache = cd_cache_new (device, NULL)))
+    return TRUE;
+
+  retval = cd_cache_has_medium (cache);
+  cd_cache_free (cache);
+
+  return retval;
 }
 
 const char *

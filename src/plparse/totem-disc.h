@@ -44,6 +44,7 @@ MediaType	totem_cd_detect_type_from_dir (const char *dir,
 					 GError    **error);
 const char *	totem_cd_get_human_readable_name (MediaType type);
 char *		totem_cd_mrl_from_type (const char *scheme, const char *dir);
+gboolean	totem_cd_has_medium (const char  *device);
 
 G_END_DECLS
 
