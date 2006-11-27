@@ -481,6 +481,7 @@ bacon_video_widget_finalize (GObject *object)
 	G_OBJECT_CLASS (parent_class)->finalize (object);
 
 	g_free (bvw->priv);
+	g_free (bvw->com);
 }
 
 static void
@@ -1080,14 +1081,17 @@ static void
 size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw)
 {
 	double res_h, res_v, vis_width;
+	int vis_height, fps;
 
 	res_h = gdk_screen_get_width (screen) * 1000 /
 		gdk_screen_get_width_mm (screen);
 	res_v = gdk_screen_get_height (screen) * 1000 /
 		gdk_screen_get_height_mm (screen);
 
-	vis_width = vis_qualities[bvw->priv->quality].height *
-		gdk_screen_get_width (screen) /
+	if (bacon_video_widget_common_get_vis_quality (bvw->priv->quality, &h, &fps) == FALSE)
+		return;
+
+	vis_width = vis_height * gdk_screen_get_width (screen) /
 		gdk_screen_get_height (screen);
 
 	bvw->priv->display_ratio = res_v / res_h;
@@ -1097,9 +1101,7 @@ size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw)
 	}
 
 	bacon_video_widget_set_visuals_quality_size (bvw,
-			vis_width,
-			vis_qualities[bvw->priv->quality].height,
-			vis_qualities[bvw->priv->quality].fps);
+			vis_width, vis_height, fps);
 }
 
 static void
@@ -2981,15 +2983,12 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget *bvw,
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
-	g_return_if_fail (quality < NUM_VISUAL_QUALITIES);
 
-	fps = vis_qualities[quality].fps;
-	h = vis_qualities[quality].height;
+	if (bacon_video_widget_common_get_vis_quality (quality, &h, &fps) == FALSE)
+		return;
 
 	screen = gtk_widget_get_screen (GTK_WIDGET (bvw));
-	w = vis_qualities[quality].height *
-		gdk_screen_get_width (screen) /
-		gdk_screen_get_height (screen);
+	w = h * gdk_screen_get_width (screen) / gdk_screen_get_height (screen);
 	bacon_video_widget_set_visuals_quality_size (bvw, w, h, fps);
 
 	bvw->priv->quality = quality;

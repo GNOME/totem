@@ -1,5 +1,15 @@
 2006-11-27  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_realize), (size_changed_cb),
+	(get_visualization_size):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_finalize), (size_changed_cb),
+	(bacon_video_widget_set_visuals_quality): Hopefully fix xine-lib build,
+	Make the GStreamer backend respect widescreen output for visualisations
+
+2006-11-27  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-common.c:
 	(bacon_video_widget_common_can_direct_seek),
 	(bacon_video_widget_common_get_vis_quality):

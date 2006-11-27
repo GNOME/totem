@@ -201,6 +201,7 @@ static void setup_vis (BaconVideoWidget * bvw);
 static GList * get_visualization_features (void);
 static gboolean bacon_video_widget_configure_event (GtkWidget *widget,
     GdkEventConfigure *event, BaconVideoWidget *bvw);
+static void size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw);
 static void bvw_process_pending_tag_messages (BaconVideoWidget * bvw);
 static void bvw_stop_play_pipeline (BaconVideoWidget * bvw);
 
@@ -414,6 +415,10 @@ bacon_video_widget_realize (GtkWidget * widget)
   g_signal_connect (G_OBJECT (gtk_widget_get_toplevel (widget)),
       "configure-event", G_CALLBACK (bacon_video_widget_configure_event), bvw);
 
+  /* get screen size changes */
+  g_signal_connect (G_OBJECT (gtk_widget_get_screen (widget)),
+      "size-changed", G_CALLBACK (size_changed_cb), bvw);
+
   /* nice hack to show the logo fullsize, while still being resizable */
   get_media_size (BACON_VIDEO_WIDGET (widget), &w, &h);
   totem_widget_set_preferred_size (widget, w, h);
@@ -489,6 +494,12 @@ bacon_video_widget_configure_event (GtkWidget *widget, GdkEventConfigure *event,
   }
   
   return FALSE;
+}
+
+static void
+size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw)
+{
+	//FIXME
 }
 
 static gboolean
@@ -2946,45 +2957,19 @@ static void
 get_visualization_size (BaconVideoWidget *bvw,
 			int *w, int *h, gint *fps_n, gint *fps_d)
 {
-  gint new_fps_n, new_fps_d;
+  GdkScreen *screen;
+  int new_fps_n;
 
-  /* now see how close we can go */
-  switch (bvw->priv->visq) {
-    case VISUAL_SMALL:
-      new_fps_n = 10;
-      new_fps_d = 1;
-      *w = 200;
-      *h = 150;
-      break;
-    case VISUAL_NORMAL:
-      new_fps_n = 20;
-      new_fps_d = 1;
-      *w = 320;
-      *h = 240;
-      break;
-    case VISUAL_LARGE:
-      new_fps_n = 25;
-      new_fps_d = 1;
-      *w = 640;
-      *h = 480;
-      break;
-    case VISUAL_EXTRA_LARGE:
-      new_fps_n = 30;
-      new_fps_d = 1;
-      *w = 800;
-      *h = 600;
-      break;
-    default:
-      /* shut up warnings */
-      *w = *h = 0;
-      new_fps_n = 0;
-      new_fps_d = 1;
-      g_assert_not_reached ();
-  }
+  if (bacon_video_widget_common_get_vis_quality (bvw->priv->visq, h, &new_fps_n) == FALSE)
+    return;
+
+  screen = gtk_widget_get_screen (GTK_WIDGET (bvw));
+  *w = *h * gdk_screen_get_width (screen) / gdk_screen_get_height (screen);
+
   if (fps_n) 
     *fps_n = new_fps_n;
   if (fps_d) 
-    *fps_d = new_fps_d;
+    *fps_d = 1;
 }
 
 static GstElementFactory *
