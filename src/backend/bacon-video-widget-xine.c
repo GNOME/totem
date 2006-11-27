@@ -1088,7 +1088,7 @@ size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw)
 	res_v = gdk_screen_get_height (screen) * 1000 /
 		gdk_screen_get_height_mm (screen);
 
-	if (bacon_video_widget_common_get_vis_quality (bvw->priv->quality, &h, &fps) == FALSE)
+	if (bacon_video_widget_common_get_vis_quality (bvw->priv->quality, &vis_height, &fps) == FALSE)
 		return;
 
 	vis_width = vis_height * gdk_screen_get_width (screen) /

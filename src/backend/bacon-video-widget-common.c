@@ -61,8 +61,8 @@ gboolean
 bacon_video_widget_common_get_vis_quality (VisualsQuality q,
 					   int *height, int *fps)
 {
-	g_return_val_if_fail (height == NULL, FALSE);
-	g_return_val_if_fail (fps == NULL, FALSE);
+	g_return_val_if_fail (height != NULL, FALSE);
+	g_return_val_if_fail (fps != NULL, FALSE);
 	g_return_val_if_fail (q < G_N_ELEMENTS (vis_qualities), FALSE);
 
 	*height = vis_qualities[q].height;

@@ -1,5 +1,14 @@
 2006-11-27  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-common.c:
+	(bacon_video_widget_common_get_vis_quality):
+	* src/backend/bacon-video-widget-xine.c: (size_changed_cb):
+	Really fix the xine-lib build, have
+	bacon_video_widget_common_get_vis_quality's sanity tests the right
+	way around
+
+2006-11-27  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bacon_video_widget_realize), (size_changed_cb),
 	(get_visualization_size):
