@@ -2019,6 +2019,12 @@ show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals)
 					&bvw->priv->ao_driver,
 					&bvw->priv->vo_driver);
 		}
+		if (bvw->priv->vis == NULL && strcmp (bvw->priv->vis_name, "goom") != 0) {
+			bvw->priv->vis = xine_post_init (bvw->priv->xine,
+					"goom", 0,
+					&bvw->priv->ao_driver,
+					&bvw->priv->vo_driver);
+		}
 		if (bvw->priv->vis != NULL) {
 			enable = TRUE;
 		}

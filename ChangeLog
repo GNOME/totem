@@ -1,5 +1,10 @@
 2006-11-27  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c: (show_vfx_update):
+	Fall-back to goom if we failed to setup another visual plugin
+
+2006-11-27  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-common.c:
 	(bacon_video_widget_common_get_vis_quality):
 	* src/backend/bacon-video-widget-xine.c: (size_changed_cb):
