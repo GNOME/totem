@@ -101,7 +101,8 @@ enum {
 	PROP_SEEKABLE,
 	PROP_SHOWCURSOR,
 	PROP_MEDIADEV,
-	PROP_SHOW_VISUALS
+	PROP_SHOW_VISUALS,
+	PROP_VOLUME
 };
 
 static int video_props[4] = {
@@ -315,6 +316,9 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 	g_object_class_install_property (object_class, PROP_SEEKABLE,
 			g_param_spec_boolean ("seekable", NULL, NULL,
 				FALSE, G_PARAM_READABLE));
+	g_object_class_install_property (object_class, PROP_VOLUME,
+			g_param_spec_int ("volume", NULL, NULL,
+				0, 100, 0, G_PARAM_READABLE));
 	g_object_class_install_property (object_class, PROP_SHOWCURSOR,
 			g_param_spec_boolean ("showcursor", NULL, NULL,
 				FALSE, G_PARAM_READWRITE));
@@ -415,7 +419,7 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
 	bvw->priv = g_new0 (BaconVideoWidgetPrivate, 1);
 	bvw->priv->xine = xine_new ();
 	bvw->priv->cursor_shown = TRUE;
-	bvw->priv->volume = -1;
+	bvw->priv->volume = 0;
 
 	bvw->priv->init_width = 0;
 	bvw->priv->init_height = 0;
@@ -2477,6 +2481,9 @@ bacon_video_widget_get_property (GObject *object, guint property_id,
 	case PROP_MEDIADEV:
 		g_value_set_string (value, bvw->priv->mediadev);
 		break;
+	case PROP_VOLUME:
+		g_value_set_int (value, bvw->priv->volume);
+		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 	}
@@ -2626,6 +2633,7 @@ bacon_video_widget_set_volume (BaconVideoWidget *bvw, int volume)
 		xine_set_param (bvw->priv->stream,
 				XINE_PARAM_AUDIO_AMP_LEVEL, volume);
 		bvw->priv->volume = volume;
+		g_object_notify (G_OBJECT (bvw), "volume");
 	}
 }
 
@@ -2843,12 +2851,12 @@ bacon_video_widget_get_deinterlacing (BaconVideoWidget *bvw)
 	return xine_get_param (bvw->priv->stream, XINE_PARAM_VO_DEINTERLACE);
 }
 
-gboolean
+void
 bacon_video_widget_set_tv_out (BaconVideoWidget *bvw, TvOutType tvout)
 {
-	g_return_val_if_fail (bvw != NULL, FALSE);
-	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
 
 #ifdef HAVE_NVTV
 	if (tvout == TV_OUT_NVTV_PAL) {
@@ -2859,8 +2867,6 @@ bacon_video_widget_set_tv_out (BaconVideoWidget *bvw, TvOutType tvout)
 #endif
 
 	bvw->priv->tvout = tvout;
-
-	return FALSE;
 }
 
 TvOutType

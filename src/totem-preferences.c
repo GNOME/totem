@@ -177,11 +177,8 @@ on_tvout_toggled (GtkToggleButton *togglebutton, Totem *totem)
 
 	type = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (togglebutton),
 				"tvout_type"));
-	value = bacon_video_widget_set_tv_out
+	bacon_video_widget_set_tv_out
 		(BACON_VIDEO_WIDGET (totem->bvw), type);
-
-	if (value != FALSE)
-		totem_action_info (_("Switching on or off this type of TV-Out requires a restart to take effect."), totem);
 }
 
 static void

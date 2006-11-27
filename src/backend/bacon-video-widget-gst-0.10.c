@@ -95,7 +95,8 @@ enum
   PROP_SEEKABLE,
   PROP_SHOWCURSOR,
   PROP_MEDIADEV,
-  PROP_SHOW_VISUALS
+  PROP_SHOW_VISUALS,
+  PROP_VOLUME
 };
 
 static const gchar *video_props_str[4] = {
@@ -825,6 +826,10 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 				   g_param_spec_boolean ("seekable", NULL,
 							 NULL, FALSE,
 							 G_PARAM_READABLE));
+  g_object_class_install_property (object_class, PROP_VOLUME,
+		  		   g_param_spec_int ("volume", NULL, NULL,
+						     0, 100, 0,
+						     G_PARAM_READABLE));
   g_object_class_install_property (object_class, PROP_SHOWCURSOR,
 				   g_param_spec_boolean ("showcursor", NULL,
 							 NULL, FALSE,
@@ -1704,6 +1709,9 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       case PROP_MEDIADEV:
 	g_value_set_string (value, bvw->priv->media_device);
 	break;
+      case PROP_VOLUME:
+	g_value_set_int (value, bacon_video_widget_get_volume (bvw));
+	break;
       default:
 	G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     }
@@ -2004,11 +2012,11 @@ bacon_video_widget_get_deinterlacing (BaconVideoWidget * bvw)
   return FALSE;
 }
 
-gboolean
+void
 bacon_video_widget_set_tv_out (BaconVideoWidget * bvw, TvOutType tvout)
 {
-  g_return_val_if_fail (bvw != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
   bvw->priv->tv_out_type = tvout;
   gconf_client_set_int (bvw->priv->gc,
@@ -2021,8 +2029,6 @@ bacon_video_widget_set_tv_out (BaconVideoWidget * bvw, TvOutType tvout)
     nvtv_simple_set_tvsystem(NVTV_SIMPLE_TVSYSTEM_NTSC);
   }
 #endif
-
-  return FALSE;
 }
 
 TvOutType
@@ -2815,6 +2821,11 @@ bacon_video_widget_can_set_volume (BaconVideoWidget * bvw)
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
+
+  //FIXME should detect we're using fakesink, and disable setting the
+  //volume if we can't change the volume
+  //
+  //We also can't change the volume for AC-3 passthru
   
   return TRUE;
 }
@@ -2831,6 +2842,7 @@ bacon_video_widget_set_volume (BaconVideoWidget * bvw, int volume)
     volume = CLAMP (volume, 0, 100);
     g_object_set (bvw->priv->play, "volume",
 	(gdouble) (1. * volume / 100), NULL);
+    g_object_notify (G_OBJECT (bvw), "volume");
   }
 }
 
@@ -3127,7 +3139,7 @@ bacon_video_widget_set_show_visuals (BaconVideoWidget * bvw,
   bvw->priv->show_vfx = show_visuals;
   bvw->priv->vis_changed = TRUE;
   
-  return FALSE;
+  return TRUE;
 }
 
 static gboolean

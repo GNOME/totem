@@ -1518,15 +1518,12 @@ update_volume_sliders (Totem *totem)
 	totem->prev_volume = volume;
 }
 
-static int
-gui_update_cb (Totem *totem)
+static void
+volume_notify_cb (BaconVideoWidget *bvw, GParamSpec *spec, Totem *totem)
 {
-	if (totem->bvw == NULL)
-		return TRUE;
-
+	if (strcmp ("volume", spec->name) != 0)
+		return;
 	update_volume_sliders (totem);
-
-	return TRUE;
 }
 
 static gboolean
@@ -3054,9 +3051,6 @@ totem_callback_connect (Totem *totem)
 	totem_action_set_sensitivity ("play", FALSE);
 	totem_action_set_sensitivity ("next-chapter", FALSE);
 	totem_action_set_sensitivity ("previous-chapter", FALSE);
-
-	/* Update the UI */
-	g_timeout_add (600, (GSourceFunc) gui_update_cb, totem);
 }
 
 static void
@@ -3190,6 +3184,8 @@ video_widget_create (Totem *totem)
 	bacon_video_widget_set_volume (totem->bvw,
 			gconf_client_get_int (totem->gc,
 				GCONF_PREFIX"/volume", NULL));
+	g_signal_connect (G_OBJECT (totem->bvw), "notify",
+			G_CALLBACK (volume_notify_cb), totem);
 	update_volume_sliders (totem);
 }
 

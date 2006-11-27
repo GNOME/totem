@@ -325,7 +325,7 @@ typedef enum {
 gboolean bacon_video_widget_fullscreen_mode_available (BaconVideoWidget *bvw,
 						       TvOutType tvout);
 
-gboolean bacon_video_widget_set_tv_out           (BaconVideoWidget *bvw,
+void bacon_video_widget_set_tv_out               (BaconVideoWidget *bvw,
 						  TvOutType tvout);
 TvOutType bacon_video_widget_get_tv_out          (BaconVideoWidget *bvw);
 

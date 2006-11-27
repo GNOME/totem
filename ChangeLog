@@ -1,5 +1,25 @@
 2006-11-27  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_class_init), (bacon_video_widget_get_property),
+	(bacon_video_widget_set_tv_out),
+	(bacon_video_widget_can_set_volume),
+	(bacon_video_widget_set_volume),
+	(bacon_video_widget_set_show_visuals):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_class_init), (bacon_video_widget_init),
+	(bacon_video_widget_get_property), (bacon_video_widget_set_volume),
+	(bacon_video_widget_set_tv_out):
+	* src/backend/bacon-video-widget.h:
+	* src/totem-preferences.c: (on_tvout_toggled):
+	* src/totem.c: (volume_notify_cb), (totem_callback_connect),
+	(video_widget_create): Remove the TV-Out restart dialogue bits, both
+	GStreamer and xine-lib can do without (Helps: 322226),
+	Remove the need for update_gui_cb polling so that we don't wake Totem
+	up when not playing anything (Helps: #363164)
+
+2006-11-27  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c: (show_vfx_update):
 	Fall-back to goom if we failed to setup another visual plugin
 
