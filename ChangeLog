@@ -1,5 +1,24 @@
 2006-11-29  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_get_option_group): Remove useless cast
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_option_group),
+	(bacon_video_widget_init_backend): Fix xine-lib build
+	* src/totem-options.c: (totem_options_process_for_server):
+	Return early if we don't have any filenames to pass
+	* src/totem-options.h: Put the "seek to" option in a gint64
+	* src/totem-session.c: (totem_save_yourself_cb): Fix thinko, and
+	properly set the playlist name to be a URI
+	* src/totem-video-indexer.c: (main): Finish porting to GOption
+	* src/totem.c: (main): Fix option parsing when using the GTK+ only
+	version
+
+	GOption-related fixes, with help from Christian Persch
+	<chpe@cvs.gnome.org>
+
+2006-11-29  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: upd the glib and libgnome requirements
 	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bacon_video_widget_get_option_group),

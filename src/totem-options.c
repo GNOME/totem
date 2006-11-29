@@ -182,6 +182,9 @@ totem_options_process_for_server (BaconMessageConnection *conn,
 		return;
 	}
 
+	if (options->filenames == NULL)
+		return;
+
 	for (i = 0; options->filenames[i] != NULL; i++)
 	{
 		full_path = totem_create_full_path (options->filenames[i]);

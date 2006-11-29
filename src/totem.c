@@ -3259,8 +3259,11 @@ main (int argc, char **argv)
 
 #ifdef HAVE_GTK_ONLY
 	gtk_init (&argc, &argv);
+	if (g_option_context_parse (context, &argc, argv, &error) == FALSE) {
+		totem_action_error_and_exit (_("Totem could not parse the command-line options"), error->message);
+	}
 #else
-	program = gnome_program_init (argv[0], VERSION,
+	program = gnome_program_init (PACKAGE, VERSION,
 			LIBGNOMEUI_MODULE,
 			argc, argv,
 			GNOME_PARAM_APP_DATADIR, DATADIR,

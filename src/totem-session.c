@@ -81,8 +81,7 @@ totem_save_yourself_cb (GnomeClient *client, int phase, GnomeSaveStyle style,
 	argv[i++] = seek;
 
 	uri = g_filename_to_uri (path_id, NULL, NULL);
-	argv[i++] = path_id;
-	g_free (uri);
+	argv[i++] = uri;
 
 	gnome_client_set_clone_command (client, i, argv);
 	gnome_client_set_restart_command (client, i, argv);
@@ -90,6 +89,7 @@ totem_save_yourself_cb (GnomeClient *client, int phase, GnomeSaveStyle style,
 	g_free (path_id);
 	g_free (current);
 	g_free (seek);
+	g_free (uri);
 
 	return TRUE;
 }

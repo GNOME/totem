@@ -4259,7 +4259,7 @@ static GOnce bvw_init_once = G_ONCE_INIT;
 inline GOptionGroup*
 bacon_video_widget_get_option_group (void)
 {
-  return (GOptionGroup*) gst_init_get_option_group ();
+  return gst_init_get_option_group ();
 }
 
 void

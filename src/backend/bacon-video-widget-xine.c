@@ -1665,21 +1665,20 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 		(*GTK_WIDGET_CLASS (parent_class)->unrealize) (widget);
 }
 
-static struct poptOption xine_options[] = {
-	POPT_TABLEEND
+static GOptionEntry entries[] = {
+	{ NULL }
 };
 
-struct poptOption *
-bacon_video_widget_get_popt_table (void)
+struct GOptionEntry *
+bacon_video_widget_get_option_group (void)
 {
-	/* Xine backend does not need any options */
-	return (struct poptOption *) xine_options;
+	return entries;
 }
 
 void
 bacon_video_widget_init_backend (int *argc, char ***argv)
 {
-  /* no-op */
+	/* no-op */
 }
 
 GQuark

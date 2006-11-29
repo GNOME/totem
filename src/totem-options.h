@@ -48,7 +48,7 @@ typedef struct
 	gboolean replace;
 	gboolean printplaying;
 	gdouble playlistidx;
-	gint seek;
+	gint64 seek;
 	gchar **filenames;
 } TotemCmdLineOptions;
 

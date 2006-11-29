@@ -35,7 +35,6 @@
 #include <gnome.h>
 #else
 #include <gtk/gtk.h>
-#include <glib/gi18n.h>
 #endif
 
 #include <bacon-video-widget.h>
@@ -46,12 +45,8 @@
 #include <libgnomevfs/gnome-vfs-utils.h>
 #include <libgnomevfs/gnome-vfs-init.h>
 
-static void
-print_usage (const char *arg)
-{
-	g_print ("incorrect number of arguments\n");
-	g_print ("Usage: %s <URI> | <--mimetype>\n", arg);
-}
+static gboolean show_mimetype = FALSE;
+static char **filenames = NULL;
 
 static void
 print_mimetypes (void)
@@ -141,9 +136,16 @@ on_got_metadata_event (BaconVideoWidget *bvw, gpointer data)
 	exit (0);
 }
 
+static const GOptionEntry entries[] = {
+	{"mimetype", 'm', 0, G_OPTION_ARG_NONE, &show_mimetype, "List the supported mime-types", NULL},
+	{G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &filenames, "Movies to index", NULL},
+	{NULL}
+};
+
 int main (int argc, char **argv)
 {
 	GOptionGroup *options;
+	GOptionContext *context;
 	GtkWidget *widget;
 	BaconVideoWidget *bvw;
 	GError *error = NULL;
@@ -153,17 +155,12 @@ int main (int argc, char **argv)
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
-	if (argc != 2) {
-		print_usage (argv[0]);
-		return 1;
-	} else if (strcmp (argv[1], "--mimetype") == 0) {
-		print_mimetypes ();
-		return 0;
-	}
-
 	g_thread_init (NULL);
 	gdk_threads_init ();
+	context = g_option_context_new ("Index movies or songs");
 	options = bacon_video_widget_get_option_group ();
+	g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
+	g_option_context_add_group (context, options);
 	g_type_init ();
 
 #ifndef HAVE_GTK_ONLY
@@ -171,7 +168,19 @@ int main (int argc, char **argv)
 #endif
 
 	gnome_vfs_init ();
-	bacon_video_widget_init_backend (&argc, &argv);
+	if (g_option_context_parse (context, &argc, &argv, &error) == FALSE) {
+		g_print ("couldn't parse command-line options: %s\n", error->message);
+		g_error_free (error);
+		return 1;
+	}
+
+	if (show_mimetype == TRUE) {
+		print_mimetypes ();
+		return 0;
+	} else if (filenames == NULL || filenames[0] == NULL) {
+		//FIXME we should be erroring out before
+		return 1;
+	}
 
 	widget = bacon_video_widget_new (-1, -1, BVW_USE_TYPE_METADATA, &error);
 	if (widget == NULL) {
@@ -184,7 +193,7 @@ int main (int argc, char **argv)
 			G_CALLBACK (on_got_metadata_event),
 			NULL);
 
-	path = argv[1];
+	path = filenames[0];
 	if (bacon_video_widget_open (bvw, path, &error) == FALSE) {
 		g_print ("Can't open %s: %s\n", path, error->message);
 		return 1;
