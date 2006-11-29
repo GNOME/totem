@@ -44,6 +44,7 @@
 #include <gconf/gconf-client.h>
 #include <glib/gi18n.h>
 /* xine */
+#define XINE_ENABLE_EXPERIMENTAL_FEATURES
 #include <xine.h>
 
 #include "debug.h"
@@ -124,7 +125,6 @@ struct BaconVideoWidgetPrivate {
 	xine_t *xine;
 	xine_stream_t *stream;
 	xine_video_port_t *vo_driver;
-	gboolean vo_driver_none;
 	xine_audio_port_t *ao_driver;
 	gboolean ao_driver_none;
 	xine_event_queue_t *ev_queue;
@@ -255,7 +255,7 @@ static void bacon_video_widget_size_request (GtkWidget *widget,
 static void bacon_video_widget_size_allocate (GtkWidget *widget,
 		GtkAllocation *allocation);
 static xine_video_port_t * load_video_out_driver (BaconVideoWidget *bvw,
-		gboolean null_out);
+		BvwUseType type);
 static xine_audio_port_t * load_audio_out_driver (BaconVideoWidget *bvw,
 		gboolean null_out, GError **error);
 static gboolean bacon_video_widget_tick_send (BaconVideoWidget *bvw);
@@ -586,7 +586,7 @@ frame_output_cb (void *bvw_gen,
 }
 
 static xine_video_port_t *
-load_video_out_driver (BaconVideoWidget *bvw, gboolean null_out)
+load_video_out_driver (BaconVideoWidget *bvw, BvwUseType type)
 {
 	double res_h, res_v;
 	x11_visual_t vis;
@@ -595,11 +595,11 @@ load_video_out_driver (BaconVideoWidget *bvw, gboolean null_out)
 	static char *drivers[] = { "xv", "xshm" };
 	guint i;
 
-	if (null_out != FALSE)
-	{
-		bvw->priv->vo_driver_none = TRUE;
+	if (type == BVW_USE_TYPE_METADATA) {
 		return xine_open_video_driver (bvw->priv->xine,
 				"none", XINE_VISUAL_TYPE_NONE, NULL);
+	} else if (type == BVW_USE_TYPE_CAPTURE) {
+		return xine_new_framegrab_video_port (bvw->priv->xine);
 	}
 
 	vis.display = bvw->priv->display;
@@ -1165,14 +1165,14 @@ bacon_video_widget_realize (GtkWidget *widget)
 			(gdk_display_get_default ()));
 	bvw->priv->screen = DefaultScreen (bvw->priv->display);
 
-	bvw->priv->vo_driver = load_video_out_driver
-		(bvw, FALSE);
+	bvw->priv->vo_driver = load_video_out_driver (bvw, bvw->priv->type);
 
 	if (bvw->priv->vo_driver == NULL)
 	{
 		signal_data *sigdata;
 
-		bvw->priv->vo_driver = load_video_out_driver (bvw, TRUE);
+		bvw->priv->vo_driver = load_video_out_driver
+			(bvw, BVW_USE_TYPE_METADATA);
 
 		/* We need to use an async signal, otherwise we try to
 		 * unrealize the widget before it's finished realizing */
@@ -1737,7 +1737,7 @@ bacon_video_widget_new (int width, int height,
 	 * load a video output with screen output, and capture is the
 	 * only one actually needing a video output */
 	if (type == BVW_USE_TYPE_CAPTURE || type == BVW_USE_TYPE_METADATA) {
-		bvw->priv->vo_driver = load_video_out_driver (bvw, TRUE);
+		bvw->priv->vo_driver = load_video_out_driver (bvw, type);
 	}
 
 	/* Be extra careful about exiting out nicely when a video output
@@ -3589,15 +3589,6 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget *bvw,
 			boolean = xine_get_stream_info (bvw->priv->stream,
 					XINE_STREAM_INFO_HAS_AUDIO);
 		break;
-	case BVW_INFO_STILL_IMAGE:
-		{
-			const char *layer;
-			layer = xine_get_meta_info (bvw->priv->stream,
-					XINE_META_INFO_SYSTEMLAYER);
-			if (strcmp (layer, "MNG") == 0 || strcmp (layer, "imagedmx") == 0)
-				boolean = TRUE;
-		}
-		break;
 	default:
 		g_assert_not_reached ();
 	}
@@ -3639,7 +3630,6 @@ bacon_video_widget_get_metadata (BaconVideoWidget *bvw,
 		break;
 	case BVW_INFO_HAS_VIDEO:
 	case BVW_INFO_HAS_AUDIO:
-	case BVW_INFO_STILL_IMAGE:
 		bacon_video_widget_get_metadata_bool (bvw, type, value);
 		break;
 	default:
@@ -3855,6 +3845,9 @@ bacon_video_widget_can_get_frames (BaconVideoWidget *bvw, GError **error)
 		return FALSE;
 	}
 
+	if (bvw->priv->type == BVW_USE_TYPE_CAPTURE)
+		return TRUE;
+
 	if (xine_get_status (bvw->priv->stream) != XINE_STATUS_PLAY
 			&& bvw->priv->logo_mode == FALSE)
 	{
@@ -3872,27 +3865,44 @@ bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 	GdkPixbuf *pixbuf = NULL;
 	uint8_t *yuv, *y, *u, *v, *rgb;
 	int width, height, ratio, format;
+	xine_video_frame_t *frame = NULL;
 
 	g_return_val_if_fail (bvw != NULL, NULL);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
 	g_return_val_if_fail (bvw->priv->xine != NULL, NULL);
 
-	if (xine_get_current_frame (bvw->priv->stream, &width, &height,
-			&ratio, &format, NULL) == 0)
-		return NULL;
+	if (bvw->priv->type != BVW_USE_TYPE_CAPTURE) {
 
-	if (width == 0 || height == 0)
-		return NULL;
+		if (xine_get_current_frame (bvw->priv->stream, &width, &height,
+			&ratio, &format, NULL) == 0) {
+			return NULL;
+		}
 
-	yuv = g_malloc ((width + 8) * (height + 1) * 2);
-	if (yuv == NULL)
-		return NULL;
+		if (width == 0 || height == 0)
+			return NULL;
 
-	if (xine_get_current_frame (bvw->priv->stream, &width, &height,
-			&ratio, &format, yuv) == 0)
-	{
-		g_free (yuv);
-		return NULL;
+		yuv = g_malloc ((width + 8) * (height + 1) * 2);
+		if (yuv == NULL)
+			return NULL;
+
+		if (xine_get_current_frame (bvw->priv->stream, &width, &height,
+					&ratio, &format, yuv) == 0)
+		{
+			g_message ("with malloced");
+			g_free (yuv);
+			return NULL;
+		}
+	} else {
+		frame = g_new0 (xine_video_frame_t, 1);
+		if (xine_get_next_video_frame (bvw->priv->vo_driver, frame) != 1) {
+			g_free (frame);
+			return NULL;
+		}
+		format = frame->colorspace;
+		width = frame->width;
+		height = frame->height;
+		yuv = frame->data;
+		ratio = frame->aspect_ratio;
 	}
 
 	/* Convert to yv12 */
@@ -3946,6 +3956,11 @@ bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 			GDK_COLORSPACE_RGB, FALSE,
 			8, width, height, 3 * width,
 			(GdkPixbufDestroyNotify) g_free, NULL);
+
+	if (frame != NULL) {
+		xine_free_video_frame (bvw->priv->vo_driver, frame);
+		g_free (frame);
+	}
 
 	if (ratio != 10000.0 && ratio != 0.0)
 	{

@@ -1,3 +1,13 @@
+2006-11-29  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c: (load_video_out_driver),
+	(bacon_video_widget_realize), (bacon_video_widget_new):
+	* src/backend/bacon-video-widget.h:
+	* src/totem-video-thumbnailer.c: (main):
+	Remove the useless "still image" metadata check,
+	Make the xine-lib backend use xine_get_current_frame, so that we don't
+	finish the playback before we could capture a frame (Closes: #325768)
+
 2006-11-27  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: up the soname

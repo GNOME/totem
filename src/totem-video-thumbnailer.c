@@ -338,15 +338,6 @@ usage (const char *cmd)
 	g_print ("Usage: %s [-s <size>] [-j] <input> <output> [backend options]\n", cmd);
 }
 
-static gboolean
-video_is_still_image (BaconVideoWidget *bvw)
-{
-	GValue value = { 0, };
-
-	bacon_video_widget_get_metadata (bvw, BVW_INFO_STILL_IMAGE, &value);
-	return g_value_get_boolean (&value);
-}
-
 int main (int argc, char *argv[])
 {
 	GError *err = NULL;
@@ -428,26 +419,11 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	if (video_is_still_image (bvw) != FALSE) {
-		pixbuf = gdk_pixbuf_new_from_file (input, &err);
-		if (pixbuf != NULL)
-		{
-			save_pixbuf (pixbuf, output, input, size, TRUE);
-			gdk_pixbuf_unref (pixbuf);
-			exit (0);
-		}
-		g_print ("totem-video-thumbnailer couln't open file '%s'\n"
-				"Reason: %s.\n", input, err->message);
-		g_error_free (err);
-		exit (1);
-	}
-
 	bacon_video_widget_play (bvw, &err);
 	if (err != NULL)
 	{
 		g_print ("totem-video-thumbnailer couln't play file: '%s'\n"
-				"Reason: %s.\n",
-				input, err->message);
+				"Reason: %s.\n", input, err->message);
 		g_error_free (err);
 		exit (1);
 	}
@@ -480,13 +456,15 @@ int main (int argc, char *argv[])
 
 		/* Pull the frame, if it's interesting we bail early */
 		pixbuf = bacon_video_widget_get_current_frame (bvw);
-		if (is_image_interesting (pixbuf) != FALSE)
+		if (pixbuf != NULL && is_image_interesting (pixbuf) != FALSE)
 			break;
 
-		/* If we get to the end of this loop, we'll end up using the last image
-		 * we pulled */
-		if(current + 1 < frame_locations_length)
-			gdk_pixbuf_unref (pixbuf);
+		/* If we get to the end of this loop, we'll end up using
+		 * the last image we pulled */
+		if(current + 1 < frame_locations_length) {
+			if (pixbuf != NULL)
+				gdk_pixbuf_unref (pixbuf);
+		}
 	}
 
 	/* Cleanup */
