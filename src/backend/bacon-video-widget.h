@@ -29,7 +29,6 @@
 #define HAVE_BACON_VIDEO_WIDGET_H
 
 #include <gtk/gtkbox.h>
-#include <popt.h>
 
 /* for optical disc enumeration type */
 #include "totem-disc.h"
@@ -98,7 +97,7 @@ typedef enum {
 
 GQuark bacon_video_widget_error_quark		 (void) G_GNUC_CONST;
 GType bacon_video_widget_get_type                (void);
-struct poptOption *bacon_video_widget_get_popt_table    (void);
+GOptionGroup* bacon_video_widget_get_option_group (void);
 /* This can be used if the app does not use popt */
 void bacon_video_widget_init_backend		 (int *argc, char ***argv);
 

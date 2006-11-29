@@ -160,6 +160,7 @@ struct Totem {
 	const char *argv0;
 	gint64 seek_to;
 	guint index;
+	gboolean session_restored;
 
 	/* Window State */
 	int window_w, window_h;

@@ -143,11 +143,7 @@ on_got_metadata_event (BaconVideoWidget *bvw, gpointer data)
 
 int main (int argc, char **argv)
 {
-	static struct poptOption options[] = {
-		{NULL, '\0', POPT_ARG_INCLUDE_TABLE, NULL, 0,
-			"Backend options", NULL},
-		{NULL, '\0', 0, NULL, 0} /* end the list */
-	};
+	GOptionGroup *options;
 	GtkWidget *widget;
 	BaconVideoWidget *bvw;
 	GError *error = NULL;
@@ -167,7 +163,7 @@ int main (int argc, char **argv)
 
 	g_thread_init (NULL);
 	gdk_threads_init ();
-	options[0].arg = bacon_video_widget_get_popt_table ();
+	options = bacon_video_widget_get_option_group ();
 	g_type_init ();
 
 #ifndef HAVE_GTK_ONLY

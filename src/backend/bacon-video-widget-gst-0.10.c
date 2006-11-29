@@ -4256,22 +4256,15 @@ bacon_video_widget_init_gst (gpointer notused)
 
 static GOnce bvw_init_once = G_ONCE_INIT;
 
-struct poptOption *
-bacon_video_widget_get_popt_table (void)
+inline GOptionGroup*
+bacon_video_widget_get_option_group (void)
 {
-  static struct poptOption gstreamer_options[] = {
-    POPT_TABLEEND
-  };
-
-  g_once (&bvw_init_once, (GThreadFunc) bacon_video_widget_init_gst, NULL);
-
-  return gstreamer_options;
+  return (GOptionGroup*) gst_init_get_option_group ();
 }
 
 void
 bacon_video_widget_init_backend (int *argc, char ***argv)
 {
-  /* FIXME: Is this ever called? what about the args? */
   g_once (&bvw_init_once, (GThreadFunc) bacon_video_widget_init_gst, NULL);
 }
 

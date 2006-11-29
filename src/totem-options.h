@@ -23,20 +23,44 @@
 #ifndef TOTEM_OPTIONS_H
 #define TOTEM_OPTIONS_H
 
-#include <popt.h>
-
 #include "totem.h"
 #include "bacon-message-connection.h"
 
 G_BEGIN_DECLS
 
-poptOption totem_options_get_options (void);
+/* Stores the state of the command line options */
+typedef struct 
+{
+	gboolean debug;
+	gboolean playpause;
+	gboolean play;
+	gboolean pause;
+	gboolean next;
+	gboolean previous;
+	gboolean seekfwd;
+	gboolean seekbwd;
+	gboolean volumeup;
+	gboolean volumedown;
+	gboolean fullscreen;
+	gboolean togglecontrols;
+	gboolean quit;
+	gboolean enqueue;
+	gboolean replace;
+	gboolean printplaying;
+	gdouble playlistidx;
+	gint seek;
+	gchar **filenames;
+} TotemCmdLineOptions;
 
-void totem_options_process_early (GConfClient *gc, int argc, char **argv);
-gboolean totem_options_process_late (Totem *totem, int *argc, char ***argv);
+extern const GOptionEntry options[];
+extern TotemCmdLineOptions optionstate;
 
-void totem_options_process_for_server (BaconMessageConnection *conn,
-		int argc, char **argv);
+void totem_options_process_early (GConfClient *gc, 
+	const TotemCmdLineOptions* options);
+void totem_options_process_late (Totem *totem, 
+	const TotemCmdLineOptions* options);
+void totem_options_process_for_server (BaconMessageConnection *conn, 
+	const TotemCmdLineOptions* options);
 
 G_END_DECLS
 

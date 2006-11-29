@@ -28,7 +28,7 @@
 G_BEGIN_DECLS
 
 void totem_session_setup (Totem *totem, char **argv);
-void totem_session_restore (Totem *totem, char **argv);
+void totem_session_restore (Totem *totem, char **filenames);
 
 G_END_DECLS
 

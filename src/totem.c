@@ -3230,6 +3230,11 @@ main (int argc, char **argv)
 {
 	Totem *totem;
 	GConfClient *gc;
+#ifndef HAVE_GTK_ONLY
+	GnomeProgram *program;
+#endif
+	GOptionContext *context;
+	GOptionGroup *baconoptiongroup;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -3246,14 +3251,20 @@ main (int argc, char **argv)
 
 	g_thread_init (NULL);
 
+	/* Handle command line arguments */
+	context = g_option_context_new (_("- Play movies and songs"));
+	baconoptiongroup = bacon_video_widget_get_option_group();
+	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
+	g_option_context_add_group (context, baconoptiongroup);
+
 #ifdef HAVE_GTK_ONLY
 	gtk_init (&argc, &argv);
 #else
-	gnome_program_init ("totem", VERSION,
+	program = gnome_program_init (argv[0], VERSION,
 			LIBGNOMEUI_MODULE,
 			argc, argv,
 			GNOME_PARAM_APP_DATADIR, DATADIR,
-			GNOME_PARAM_POPT_TABLE, totem_options_get_options (),
+			GNOME_PARAM_GOPTION_CONTEXT, context,
 			GNOME_PARAM_NONE);
 #endif /* HAVE_GTK_ONLY */
 
@@ -3278,13 +3289,13 @@ main (int argc, char **argv)
 	totem->conn = bacon_message_connection_new (GETTEXT_PACKAGE);
 	if (bacon_message_connection_get_is_server (totem->conn) == FALSE)
 	{
-		totem_options_process_for_server (totem->conn, argc, argv);
+		totem_options_process_for_server (totem->conn, &optionstate);
 		bacon_message_connection_free (totem->conn);
 		g_free (totem);
 		gdk_notify_startup_complete ();
 		exit (0);
 	} else {
-		totem_options_process_early (gc, argc, argv);
+		totem_options_process_early (gc, &optionstate);
 	}
 
 	/* Init totem itself */
@@ -3361,10 +3372,12 @@ main (int argc, char **argv)
 	totem_setup_preferences (totem);
 
 	/* Command-line handling */
-	if (totem_options_process_late (totem, &argc, &argv) != FALSE)
+	totem_options_process_late (totem, &optionstate);
+
+	if (totem->session_restored != FALSE)
 	{
-		totem_session_restore (totem, argv);
-	} else if (argc >= 1 && totem_action_open_files (totem, argv)) {
+		totem_session_restore (totem, optionstate.filenames);
+	} else if (optionstate.filenames != NULL && totem_action_open_files (totem, optionstate.filenames)) {
 		totem_action_play_pause (totem);
 	} else {
 		totem_action_set_mrl (totem, NULL);
@@ -3386,5 +3399,9 @@ main (int argc, char **argv)
 
 	gtk_main ();
 
+#ifndef HAVE_GTK_ONLY
+	/* Will destroy GOption allocated data automatically */
+	g_object_unref (program);
+#endif	
 	return 0;
 }

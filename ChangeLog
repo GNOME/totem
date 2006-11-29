@@ -1,5 +1,25 @@
 2006-11-29  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: upd the glib and libgnome requirements
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_get_option_group),
+	(bacon_video_widget_init_backend):
+	* src/backend/bacon-video-widget.h:
+	* src/totem-options.c: (totem_options_process_late),
+	(totem_options_process_early), (totem_options_process_for_server):
+	* src/totem-options.h:
+	* src/totem-private.h:
+	* src/totem-session.c: (totem_save_yourself_cb),
+	(totem_session_setup), (totem_session_restore):
+	* src/totem-session.h:
+	* src/totem-video-indexer.c: (main):
+	* src/totem-video-thumbnailer.c:
+	* src/totem.c: (main): Adapted patch from Luis Menina
+	<liberforce@fr.st> to port the main movie player, and the indexer
+	to GOption (Closes: #338954)
+
+2006-11-29  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c: (load_video_out_driver),
 	(bacon_video_widget_realize), (bacon_video_widget_new):
 	* src/backend/bacon-video-widget.h:

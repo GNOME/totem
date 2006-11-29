@@ -54,7 +54,7 @@ totem_save_yourself_cb (GnomeClient *client, int phase, GnomeSaveStyle style,
 {
 	char *argv[] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 	int i = 0;
-	char *path_id, *current, *seek;
+	char *path_id, *current, *seek, *uri;
 
 	if (style == GNOME_SAVE_GLOBAL)
 		return TRUE;
@@ -79,7 +79,10 @@ totem_save_yourself_cb (GnomeClient *client, int phase, GnomeSaveStyle style,
 	argv[i++] = current;
 	argv[i++] = "--seek";
 	argv[i++] = seek;
+
+	uri = g_filename_to_uri (path_id, NULL, NULL);
 	argv[i++] = path_id;
+	g_free (uri);
 
 	gnome_client_set_clone_command (client, i, argv);
 	gnome_client_set_restart_command (client, i, argv);
@@ -101,6 +104,7 @@ void
 totem_session_setup (Totem *totem, char **argv)
 {
 	GnomeClient *client;
+	GnomeClientFlags flags;
 
 	totem->argv0 = argv[0];
 
@@ -109,24 +113,19 @@ totem_session_setup (Totem *totem, char **argv)
 			G_CALLBACK (totem_save_yourself_cb), totem);
 	g_signal_connect (G_OBJECT (client), "die",
 			G_CALLBACK (totem_client_die_cb), totem);
+
+	flags = gnome_client_get_flags (client);
+	if (flags & GNOME_CLIENT_RESTORED)
+		totem->session_restored = TRUE;
 }
 
 void
-totem_session_restore (Totem *totem, char **argv)
+totem_session_restore (Totem *totem, char **filenames)
 {
-	char *path, *mrl, *uri;
+	char *mrl, *uri;
 
-	g_return_if_fail (argv[0] != NULL);
-	path = argv[0];
-
-	if (g_file_test (path, G_FILE_TEST_EXISTS) == FALSE)
-	{
-		totem_action_set_mrl (totem, NULL);
-		return;
-	}
-
-	uri = g_filename_to_uri (path, NULL, NULL);
-	g_return_if_fail (uri != NULL);
+	g_return_if_fail (filenames[0] != NULL);
+	uri = filenames[0];
 
 	totem_signal_block_by_data (totem->playlist, totem);
 
@@ -137,8 +136,6 @@ totem_session_restore (Totem *totem, char **argv)
 		g_free (uri);
 		return;
 	}
-
-	g_free (uri);
 
 	totem_signal_unblock_by_data (totem->playlist, totem);
 

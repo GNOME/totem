@@ -30,10 +30,11 @@ AC_PATH_PROG([GLIB_GENMARSHAL],[glib-genmarshal])
 AC_PATH_PROG([GLIB_MKENUMS],[glib-mkenums])
 
 # Requirements
-GLIB_REQS=2.8.0
+GLIB_REQS=2.12.0
 GTK_REQS=2.10.0
 GNOMEVFS_REQS=2.8.2
 GNOMEUI_REQS=2.3.3
+LIBGNOME_REQS=2.14.0
 GNOMEICON_REQS=2.15.90
 DBUS_REQS=0.61
 
@@ -221,7 +222,7 @@ dnl Seems that the order matters because libtool blows
 dnl Also check if we're going to be using GTK+ only
 if test x$ENABLE_GTK = "xno" ; then
 # FIXME: use gmodule-no-export instead!
-	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS libgnomeui-2.0 >= $GNOMEUI_REQS libglade-2.0 gnome-vfs-2.0 >= $GNOMEVFS_REQS gnome-vfs-module-2.0 >= $GNOMEVFS_REQS gnome-desktop-2.0 >= 2.1.5 gnome-icon-theme >= $GNOMEICON_REQS gmodule-2.0 iso-codes $MM)
+	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS libgnomeui-2.0 >= $GNOMEUI_REQS libglade-2.0 gnome-vfs-2.0 >= $GNOMEVFS_REQS gnome-vfs-module-2.0 >= $GNOMEVFS_REQS libgnome-2.0 >= $LIBGNOME_REQS  gnome-desktop-2.0 >= 2.1.5 gnome-icon-theme >= $GNOMEICON_REQS gmodule-2.0 iso-codes $MM)
 	HAVE_GNOME=yes
 else
 # FIXME: use gmodule-no-export instead!
