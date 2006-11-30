@@ -1,3 +1,14 @@
+2006-11-30  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_option_group): Fix xine-lib build
+	* src/totem-video-indexer.c: (main): error out if we don't have
+	exactly one filename
+	* src/totem.c: (main): kill gtk_init() by adding the gtk GOptionGroup
+	to the help context
+
+	Thanks again to Christian Persch
+
 2006-11-29  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:

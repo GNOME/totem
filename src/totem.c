@@ -3258,7 +3258,7 @@ main (int argc, char **argv)
 	g_option_context_add_group (context, baconoptiongroup);
 
 #ifdef HAVE_GTK_ONLY
-	gtk_init (&argc, &argv);
+	g_option_context_add_group (context, gtk_get_option_group (TRUE));
 	if (g_option_context_parse (context, &argc, argv, &error) == FALSE) {
 		totem_action_error_and_exit (_("Totem could not parse the command-line options"), error->message);
 	}

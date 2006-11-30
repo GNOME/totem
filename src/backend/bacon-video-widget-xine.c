@@ -1665,14 +1665,11 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 		(*GTK_WIDGET_CLASS (parent_class)->unrealize) (widget);
 }
 
-static GOptionEntry entries[] = {
-	{ NULL }
-};
-
-struct GOptionEntry *
+GOptionGroup *
 bacon_video_widget_get_option_group (void)
 {
-	return entries;
+	return g_option_group_new ("xine", "Show xine-lib Options",
+			"xine-lib Options", NULL, NULL);
 }
 
 void

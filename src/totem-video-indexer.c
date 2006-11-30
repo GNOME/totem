@@ -177,8 +177,8 @@ int main (int argc, char **argv)
 	if (show_mimetype == TRUE) {
 		print_mimetypes ();
 		return 0;
-	} else if (filenames == NULL || filenames[0] == NULL) {
-		//FIXME we should be erroring out before
+	} else if (filenames == NULL || g_strv_length (filenames) != 1) {
+		g_print ("Expects exactly one URI\n");
 		return 1;
 	}
 
