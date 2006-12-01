@@ -967,7 +967,8 @@ read_ini_line_int (char **lines, const char *key)
 }
 
 static char*
-read_ini_line_string (char **lines, const char *key, gboolean dos_mode)
+read_ini_line_string_with_sep (char **lines, const char *key,
+		gboolean dos_mode, const char *sep)
 {
 	char *retval = NULL;
 	int i;
@@ -985,7 +986,7 @@ read_ini_line_string (char **lines, const char *key, gboolean dos_mode)
 			char **bits;
 			ssize_t len;
 
-			bits = g_strsplit (line, "=", 2);
+			bits = g_strsplit (line, sep, 2);
 			if (bits[0] == NULL || bits [1] == NULL) {
 				g_strfreev (bits);
 				return NULL;
@@ -1003,6 +1004,12 @@ read_ini_line_string (char **lines, const char *key, gboolean dos_mode)
 	}
 
 	return retval;
+}
+
+static char*
+read_ini_line_string (char **lines, const char *key, gboolean dos_mode)
+{
+	return read_ini_line_string_with_sep (lines, key, dos_mode, "=");
 }
 
 static void
@@ -1785,6 +1792,53 @@ totem_pl_parser_add_smil (TotemPlParser *parser, const char *url, gpointer data)
 }
 
 static TotemPlParserResult
+totem_pl_parser_add_gvp (TotemPlParser *parser, const char *url, gpointer data)
+{
+	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
+	char *contents, **lines, *title, *link, *version;
+	int size;
+
+	contents = totem_pl_parser_read_entire_file (url, &size);
+	if (contents == NULL)
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+
+	if (g_str_has_prefix (contents, "#.download.the.free.Google.Video.Player") == FALSE && g_str_has_prefix (contents, "# download the free Google Video Player") == FALSE) {
+		g_free (contents);
+		return retval;
+	}
+
+	lines = g_strsplit (contents, "\n", 0);
+	g_free (contents);
+
+	/* We only handle GVP version 1.1 for now */
+	version = read_ini_line_string_with_sep (lines, "gvp_version", FALSE, ":");
+	if (version == NULL || strcmp (version, "1.1") != 0) {
+		g_free (version);
+		g_strfreev (lines);
+		return retval;
+	}
+	g_free (version);
+
+	link = read_ini_line_string_with_sep (lines, "url", FALSE, ":");
+	if (link == NULL) {
+		g_strfreev (lines);
+		return retval;
+	}
+
+	retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
+
+	title = read_ini_line_string_with_sep (lines, "title", FALSE, ":");
+
+	totem_pl_parser_add_one_url (parser, link, title);
+
+	g_free (link);
+	g_free (title);
+	g_strfreev (lines);
+
+	return retval;
+}
+
+static TotemPlParserResult
 totem_pl_parser_add_asf (TotemPlParser *parser, const char *url, gpointer data)
 {
 	if (data == NULL) {
@@ -2368,6 +2422,8 @@ static PlaylistTypes special_types[] = {
 	PLAYLIST_TYPE ("audio/x-ms-wax", totem_pl_parser_add_asx, NULL, FALSE),
 	PLAYLIST_TYPE ("application/xspf+xml", totem_pl_parser_add_xspf, NULL, FALSE),
 	PLAYLIST_TYPE ("text/uri-list", totem_pl_parser_add_ra, totem_pl_parser_is_uri_list, FALSE),
+	PLAYLIST_TYPE ("text/x-google-video-pointer", totem_pl_parser_add_gvp, NULL, FALSE),
+	PLAYLIST_TYPE ("text/google-video-pointer", totem_pl_parser_add_gvp, NULL, FALSE),
 #ifndef TOTEM_PL_PARSER_MINI
 	PLAYLIST_TYPE ("application/x-desktop", totem_pl_parser_add_desktop, NULL, TRUE),
 	PLAYLIST_TYPE ("application/x-gnome-app-info", totem_pl_parser_add_desktop, NULL, TRUE),

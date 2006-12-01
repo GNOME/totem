@@ -1,5 +1,13 @@
 2006-12-01  Bastien Nocera  <hadess@hadess.net>
 
+	* data/mime-type-list.txt:
+	* src/plparse/totem-pl-parser.c: (read_ini_line_string_with_sep),
+	(read_ini_line_string), (totem_pl_parser_add_gvp):
+	Add support for Google Video Pointers in the playlist parser, and
+	add them as supported to the mime-type list (Closes: #381108)
+
+2006-12-01  Bastien Nocera  <hadess@hadess.net>
+
 	* data/mime-type-list.txt: Add "video/flv" as supported, as used
 	on YouTube
 
