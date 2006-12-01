@@ -234,6 +234,11 @@ totem_setup_file_filters (void)
 	for (i = 0; i < G_N_ELEMENTS (mime_types); i++) {
 		gtk_file_filter_add_mime_type (filter_supported, mime_types[i]);
 	}
+
+	/* Add the special Disc-as-files formats */
+	gtk_file_filter_add_mime_type (filter_supported, "application/x-cd-image");
+	gtk_file_filter_add_mime_type (filter_supported, "application/x-cue");
+
 	g_object_ref (filter_supported);
 }
 
