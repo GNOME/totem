@@ -1,3 +1,11 @@
+2006-12-05  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_can_set_volume), (bacon_video_widget_new):
+	Have _can_set_volume behave properly, don't fail creating the
+	video widget if we can't create an audio sink and we're not in audio
+	mode (Closes: #170719)
+
 ============ Version 2.16.4
 
 2006-11-28  Bastien Nocera  <hadess@hadess.net>
