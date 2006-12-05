@@ -150,6 +150,7 @@ struct BaconVideoWidgetPrivate
   gboolean                     fullscreen_mode;
   gboolean                     auto_resize;
   gboolean                     have_xvidmode;
+  gboolean                     uses_fakesink;
   
   gint                         video_width; /* Movie width */
   gint                         video_height; /* Movie height */
@@ -2822,12 +2823,10 @@ bacon_video_widget_can_set_volume (BaconVideoWidget * bvw)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  //FIXME should detect we're using fakesink, and disable setting the
-  //volume if we can't change the volume
-  //
-  //We also can't change the volume for AC-3 passthru
-  
-  return TRUE;
+  if (bvw->priv->speakersetup == BVW_AUDIO_SOUND_AC3PASSTHRU)
+    return FALSE;
+
+  return !bvw->priv->uses_fakesink;
 }
 
 void
@@ -4587,16 +4586,25 @@ bacon_video_widget_new (int width, int height,
     gst_element_set_state (audio_sink, GST_STATE_READY);
     success = poll_for_state_change (bvw, audio_sink, GST_STATE_READY, err);
     if (!success) {
-      if (err && !*err) {
-	g_warning ("Should have gotten an error message, please file a bug.");
-	g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
-		     _("Failed to open audio output. You may not have "
-		       "permission to open the sound device, or the sound "
-		       "server may not be running. "
-		       "Please select another audio output in the Multimedia "
-		       "Systems Selector."));
+      /* Hopefully, fakesink should always work */
+      gst_element_set_state (audio_sink, GST_STATE_NULL);
+      gst_object_unref (audio_sink);
+      audio_sink = NULL;
+      if (type != BVW_USE_TYPE_AUDIO)
+        audio_sink = gst_element_factory_make ("fakesink", "audio-sink");
+      if (audio_sink == NULL) {
+        if (err && !*err) {
+	  g_warning ("Should have gotten an error message, please file a bug.");
+	  g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+		       _("Failed to open audio output. You may not have "
+		         "permission to open the sound device, or the sound "
+		         "server may not be running. "
+		         "Please select another audio output in the Multimedia "
+		         "Systems Selector."));
+	}
+	goto sink_error;
       }
-      goto sink_error;
+      bvw->priv->uses_fakesink = TRUE;
     }
   } else {
     g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
