@@ -360,7 +360,7 @@ totem_action_play (Totem *totem)
 	retval = bacon_video_widget_play (totem->bvw,  &err);
 	play_pause_set_label (totem, retval ? STATE_PLAYING : STATE_STOPPED);
 	if (totem_is_fullscreen (totem) != FALSE)
-		totem_scrsaver_disable (totem->scr);
+		totem_scrsaver_set_state (totem->scr, !retval);
 
 	if (retval == FALSE)
 	{

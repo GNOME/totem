@@ -648,7 +648,8 @@ add_device_to_menu (GObject *device, guint position, Totem *totem)
 		g_free (activation_uri);
 	} else {
 		if (GNOME_IS_VFS_DRIVE (device)) {
-			device_path = gnome_vfs_drive_get_device_path (device);
+			device_path = gnome_vfs_drive_get_device_path
+				(GNOME_VFS_DRIVE (device));
 			disabled = !totem_cd_has_medium (device_path);
 			g_free (device_path);
 		}
