@@ -1218,6 +1218,13 @@ totem_ui_manager_setup (Totem *totem)
 	gtk_action_group_add_action (totem->main_action_group, action);
 	g_object_unref (action);
 
+	/* Hide help if we're using GTK+ only */
+#ifdef HAVE_GTK_ONLY
+	action = gtk_action_group_get_action
+		(totem->main_action_group, "contents");
+	gtk_action_set_visible (action, FALSE);
+#endif /* HAVE_GTK_ONLY */
+
 	totem->zoom_action_group = gtk_action_group_new ("zoom-action-group");
 	gtk_action_group_set_translation_domain (totem->zoom_action_group,
 			GETTEXT_PACKAGE);

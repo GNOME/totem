@@ -81,6 +81,8 @@
 #define ZOOM_UPPER 200
 #define ZOOM_RESET 100
 #define ZOOM_LOWER 10
+#define ZOOM_DISABLE (ZOOM_LOWER - 1)
+#define ZOOM_ENABLE (ZOOM_UPPER + 1)
 
 #define FULLSCREEN_POPUP_TIMEOUT 5 * 1000
 
@@ -1075,23 +1077,33 @@ static void
 totem_action_zoom (Totem *totem, int zoom)
 {
 	GtkAction *action;
+	gboolean zoom_reset, zoom_in, zoom_out;
 
-	if (zoom < ZOOM_LOWER || zoom > ZOOM_UPPER)
+	if (zoom == ZOOM_ENABLE)
+		zoom = bacon_video_widget_get_zoom (totem->bvw);
+
+	if (zoom == ZOOM_DISABLE) {
+		zoom_reset = zoom_in = zoom_out = FALSE;
+	} else if (zoom < ZOOM_LOWER || zoom > ZOOM_UPPER) {
 		return;
-
-	bacon_video_widget_set_zoom (totem->bvw, zoom);
+	} else {
+		bacon_video_widget_set_zoom (totem->bvw, zoom);
+		zoom_reset = (zoom != ZOOM_RESET);
+		zoom_out = zoom != ZOOM_LOWER;
+		zoom_in = zoom != ZOOM_UPPER;
+	}
 
 	action = gtk_action_group_get_action (totem->zoom_action_group,
 			"zoom-in");
-	gtk_action_set_sensitive (action, zoom != ZOOM_UPPER);
+	gtk_action_set_sensitive (action, zoom_in);
 
 	action = gtk_action_group_get_action (totem->zoom_action_group,
 			"zoom-out");
-	gtk_action_set_sensitive (action, zoom != ZOOM_LOWER);
+	gtk_action_set_sensitive (action, zoom_out);
 
 	action = gtk_action_group_get_action (totem->zoom_action_group,
 			"zoom-reset");
-	gtk_action_set_sensitive (action, zoom != ZOOM_RESET);
+	gtk_action_set_sensitive (action, zoom_reset);
 }
 
 void
@@ -1541,11 +1553,16 @@ update_volume_sliders (Totem *totem)
 }
 
 static void
-volume_notify_cb (BaconVideoWidget *bvw, GParamSpec *spec, Totem *totem)
+property_notify_cb (BaconVideoWidget *bvw, GParamSpec *spec, Totem *totem)
 {
-	if (strcmp ("volume", spec->name) != 0)
-		return;
-	update_volume_sliders (totem);
+	if (strcmp ("volume", spec->name) == 0) {
+		update_volume_sliders (totem);
+	} else if (strcmp ("logo-mode", spec->name) == 0) {
+		gboolean enabled;
+		enabled = bacon_video_widget_get_logo_mode (totem->bvw);
+		totem_action_zoom (totem, enabled ? ZOOM_DISABLE : ZOOM_ENABLE);
+		g_message ("logo_mode changed");
+	}
 }
 
 static gboolean
@@ -2887,11 +2904,6 @@ totem_callback_connect (Totem *totem)
 	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
 		totem_playlist_get_shuffle (totem->playlist));
 
-#ifdef HAVE_GTK_ONLY
-	action = gtk_action_group_get_action (totem->main_action_group, "contents");
-	gtk_action_set_visible (action, FALSE);
-#endif /* HAVE_GTK_ONLY */
-
 	/* Controls */
 	box = glade_xml_get_widget (totem->xml, "tmw_buttons_hbox");
 
@@ -3176,7 +3188,7 @@ video_widget_create (Totem *totem)
 			gconf_client_get_int (totem->gc,
 				GCONF_PREFIX"/volume", NULL));
 	g_signal_connect (G_OBJECT (totem->bvw), "notify",
-			G_CALLBACK (volume_notify_cb), totem);
+			G_CALLBACK (property_notify_cb), totem);
 	update_volume_sliders (totem);
 }
 

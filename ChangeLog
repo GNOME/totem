@@ -1,5 +1,21 @@
 2006-12-06  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_set_logo_mode):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_set_logo_mode):
+
+	Send an Object Notify event when the logo mode changes
+
+	* src/totem-menu.c: (totem_ui_manager_setup):
+	* src/totem.c: (totem_action_zoom), (property_notify_cb),
+	(totem_callback_connect), (video_widget_create):
+
+	Disable the zoom menu entries when the logo mode is on
+	(Closes: #355506)
+
+2006-12-06  Bastien Nocera  <hadess@hadess.net>
+
 	* README: upd
 	* src/backend/bacon-video-widget-xine.c: (xine_try_error),
 	(bacon_video_widget_button_press),

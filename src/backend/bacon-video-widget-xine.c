@@ -2494,6 +2494,7 @@ bacon_video_widget_set_logo_mode (BaconVideoWidget *bvw, gboolean logo_mode)
 			bvw->priv->video_height = DEFAULT_HEIGHT;
 		}
 	}
+	g_object_notify (G_OBJECT (bvw), "logo_mode");
 }
 
 void

@@ -2767,6 +2767,8 @@ bacon_video_widget_set_logo_mode (BaconVideoWidget * bvw, gboolean logo_mode)
   
   /* Queue a redraw of the widget */
   gtk_widget_queue_draw (GTK_WIDGET (bvw));
+
+  g_object_notify (G_OBJECT (bvw), "logo_mode");
 }
 
 gboolean
