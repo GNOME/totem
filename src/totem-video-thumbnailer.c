@@ -46,7 +46,10 @@
 #define BORING_IMAGE_VARIANCE 256.0		/* Tweak this if necessary */
 
 gboolean finished = FALSE;
-static char *format = "png";
+static gboolean jpeg_output = FALSE;
+static gboolean output_size = 128;
+static gboolean time_limit = TRUE;
+static char **filenames = NULL;
 
 #ifdef THUMB_DEBUG
 static void
@@ -289,7 +292,8 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 	a_width = g_strdup_printf ("%d", width);
 	a_height = g_strdup_printf ("%d", height);
 
-	if (gdk_pixbuf_save (with_holes, path, format, &err,
+	if (gdk_pixbuf_save (with_holes, path,
+				jpeg_output ? "jpeg" : "png", &err,
 				"tEXt::Thumb::Image::Width", a_width,
 				"tEXt::Thumb::Image::Height", a_height,
 				NULL) == FALSE)
@@ -330,34 +334,36 @@ time_monitor (gpointer data)
 	exit (0);
 }
 
-static void
-usage (const char *cmd)
-{
-	g_print ("Usage: %s [-s <size>] [-j] <input> <output> [backend options]\n", cmd);
-}
+static const GOptionEntry entries[] = {
+	{ "jpeg", 'j',  0, G_OPTION_ARG_NONE, &jpeg_output, "Output the thumbnail as a JPEG instead of PNG", NULL },
+	{ "size", 's', 0, G_OPTION_ARG_INT, &output_size, "Size of the thumbnail in pixels", NULL },
+	{ "no-limit", 'l', G_OPTION_FLAG_REVERSE, G_OPTION_ARG_NONE, &time_limit, "Don't limit the thumbnailing time to 30 seconds", NULL },
+	{ G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &filenames, "Movies to index", NULL },
+	{ NULL }
+};
 
 int main (int argc, char *argv[])
 {
+	GOptionGroup *options;
+	GOptionContext *context;
 	GError *err = NULL;
 	BaconVideoWidget *bvw;
 	GdkPixbuf *pixbuf;
-	int i, length, size;
+	int length;
 	char *input, *output;
 
-	const float frame_locations[] =
-	{ 1.0 / 3.0, 2.0 / 3.0, 0.1,0.9, 0.5 };
+	const float frame_locations[] = { 1.0 / 3.0, 2.0 / 3.0, 0.1,0.9, 0.5 };
 	const int frame_locations_length = 5;
 	int current;
-
-	if (argc <= 2 || strcmp (argv[1], "-h") == 0 ||
-	    strcmp (argv[1], "--help") == 0) {
-		usage (argv[0]);
-		return -1;
-	}
 
 #ifdef G_OS_UNIX
 	nice (20);
 #endif
+
+	context = g_option_context_new ("Thumbnail movies");
+	options = bacon_video_widget_get_option_group ();
+	g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
+	g_option_context_add_group (context, options);
 
 	g_thread_init (NULL);
 #ifndef THUMB_DEBUG
@@ -370,32 +376,19 @@ int main (int argc, char *argv[])
 	gnome_authentication_manager_init ();
 #endif
 
-	bacon_video_widget_init_backend (&argc, &argv);
 	gnome_vfs_init ();
-
-	size = 128;
-	input = output = NULL;
-	i = 1;
-	while (i < argc) {
-		if (strcmp (argv[i], "-s") == 0) {
-			size = g_strtod (argv[++i], NULL);
-			i++;
-			continue;
-		}
-		if (strcmp (argv[i], "-j") == 0) {
-			format = "jpeg";
-			i++;
-			continue;
-		}
-		input = argv[i];
-		output = argv[++i];
-		break;
+	if (g_option_context_parse (context, &argc, &argv, &err) == FALSE) {
+		g_print ("couldn't parse command-line options: %s\n", err->message);
+		g_error_free (err);
+		return 1;
 	}
 
-	if (output == NULL || input == NULL) {
-		usage (argv[0]);
-		return -1;
+	if (filenames == NULL || g_strv_length (filenames) != 2) {
+		g_print ("Expects an input and an output file\n");
+		return 1;
 	}
+	input = filenames[0];
+	output = filenames[1];
 
 	bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (-1, -1, BVW_USE_TYPE_CAPTURE, &err));
 	if (err != NULL)
@@ -406,7 +399,8 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	g_thread_create (time_monitor, (gpointer) input, FALSE, NULL);
+	if (time_limit != FALSE)
+		g_thread_create (time_monitor, (gpointer) input, FALSE, NULL);
 
 	if (bacon_video_widget_open (bvw, input, &err) == FALSE)
 	{
@@ -477,7 +471,7 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	save_pixbuf (pixbuf, output, input, size, FALSE);
+	save_pixbuf (pixbuf, output, input, output_size, FALSE);
 	gdk_pixbuf_unref (pixbuf);
 
 	return 0;

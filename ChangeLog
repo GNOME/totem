@@ -1,5 +1,11 @@
 2006-12-06  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-video-thumbnailer.c: (save_pixbuf), (main): port to
+	GOption, add the ability to disable the time monitor thread
+	(Closes: #163036)
+
+2006-12-06  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-options.c: hide the 2 session related options from
 	being printed in --help, they're for internal use only
 	* src/totem.c: (property_notify_cb): remove debug
