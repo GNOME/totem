@@ -1561,7 +1561,6 @@ property_notify_cb (BaconVideoWidget *bvw, GParamSpec *spec, Totem *totem)
 		gboolean enabled;
 		enabled = bacon_video_widget_get_logo_mode (totem->bvw);
 		totem_action_zoom (totem, enabled ? ZOOM_DISABLE : ZOOM_ENABLE);
-		g_message ("logo_mode changed");
 	}
 }
 
