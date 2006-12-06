@@ -175,6 +175,8 @@ struct BaconVideoWidgetPrivate {
 	char *codecs_path;
 	gboolean got_redirect;
 	gboolean has_subtitle;
+	/* Whether the last button event was consumed internally */
+	gboolean bevent_consumed;
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
@@ -1480,28 +1482,6 @@ bacon_video_widget_sort_queue (gconstpointer a, gconstpointer b, gpointer data)
 	return 1;
 }
 
-#if (!(GLIB_CHECK_VERSION(2,9,1)))
-static void
-bacon_video_widget_queue_sort (GAsyncQueue *queue)
-{
-	GList *list = NULL, *l;
-	signal_data *data;
-
-	while ((data = g_async_queue_try_pop (queue)) != NULL) {
-		list = g_list_insert_sorted (list, data, (GCompareFunc) bacon_video_widget_sort_queue);
-	}
-
-	if (list == NULL)
-		return;
-
-	for (l = list; l != NULL; l = l->next) {
-		g_async_queue_push (queue, l->data);
-	}
-	g_list_free (list);
-}
-
-#endif /* ! GLIB_CHECK_VERSION 2.9.1 */
-
 static void
 xine_try_error (BaconVideoWidget *bvw, gboolean probe_error, GError **error)
 {
@@ -1513,11 +1493,7 @@ xine_try_error (BaconVideoWidget *bvw, gboolean probe_error, GError **error)
 	sched_yield ();
 
 	/* Sort the queue with the errors first */
-#if GLIB_CHECK_VERSION(2,9,1)
 	g_async_queue_sort (bvw->priv->queue, bacon_video_widget_sort_queue, NULL);
-#else
-	bacon_video_widget_queue_sort (bvw->priv->queue);
-#endif
 
 	/* Steal messages from the async queue, if there's an error,
 	 * to use as the error message rather than the crappy errors from
@@ -1862,7 +1838,18 @@ bacon_video_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 {
 	BaconVideoWidget *bvw = (BaconVideoWidget *) widget;
 
-	generate_mouse_event (bvw, (GdkEvent *)event, FALSE);
+	/* Don't propagate double-click events if we just had a button
+	 * event consumed internally */
+	if (event->type == GDK_2BUTTON_PRESS && bvw->priv->bevent_consumed != FALSE) {
+		bvw->priv->bevent_consumed = FALSE;
+		return TRUE;
+	}
+
+	/* If the event was consumed, mark it as such */
+	if (generate_mouse_event (bvw, (GdkEvent *)event, FALSE) != FALSE && bvw->priv->cursor != NULL) {
+		bvw->priv->bevent_consumed = TRUE;
+		return FALSE;
+	}
 
 	if (GTK_WIDGET_CLASS (parent_class)->button_press_event != NULL)
 		                (* GTK_WIDGET_CLASS (parent_class)->button_press_event) (widget, event);
@@ -3459,7 +3446,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetM
 
 			mode = xine_get_stream_info (bvw->priv->stream,
 					XINE_STREAM_INFO_AUDIO_MODE);
-			switch (mode) {
+			switch (mode)
 #endif
 		}
 		break;
@@ -3884,7 +3871,6 @@ bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 		if (xine_get_current_frame (bvw->priv->stream, &width, &height,
 					&ratio, &format, yuv) == 0)
 		{
-			g_message ("with malloced");
 			g_free (yuv);
 			return NULL;
 		}

@@ -1,5 +1,17 @@
 2006-12-06  Bastien Nocera  <hadess@hadess.net>
 
+	* README: upd
+	* src/backend/bacon-video-widget-xine.c: (xine_try_error),
+	(bacon_video_widget_button_press),
+	(bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_current_frame):
+	* src/totem.c: (on_video_button_press_event),
+	(video_widget_create): Remove old < 2.9.1 glib compat code in the
+	xine-lib backend, Make double-click toggle fullscreen, and a middle
+	click play/pause (Closes: #162814)
+
+2006-12-06  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: print out all the options enabled/disabled after the
 	configure checks, re-add the "unused" D-Bus checks, they were
 	used by the gnome-screensaver code, and broken since 2.17.2

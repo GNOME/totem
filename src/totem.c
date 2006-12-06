@@ -2298,8 +2298,13 @@ static gboolean
 on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 		Totem *totem)
 {
-	if (event->type == GDK_BUTTON_PRESS && event->button == 3)
-	{
+	if (event->type == GDK_2BUTTON_PRESS && event->button == 1) {
+		totem_action_fullscreen_toggle(totem);
+		return TRUE;
+	} else if (event->type == GDK_BUTTON_PRESS && event->button == 2) {
+		totem_action_play_pause(totem);
+		return TRUE;
+	} else if (event->type == GDK_BUTTON_PRESS && event->button == 3) {
 		totem_action_menu_popup (totem, event->button);
 		return TRUE;
 	}
@@ -3100,7 +3105,7 @@ video_widget_create (Totem *totem)
 			"motion-notify-event",
 			G_CALLBACK (on_video_motion_notify_event),
 			totem);
-	g_signal_connect (G_OBJECT (totem->bvw),
+	g_signal_connect_after (G_OBJECT (totem->bvw),
 			"button-press-event",
 			G_CALLBACK (on_video_button_press_event),
 			totem);
