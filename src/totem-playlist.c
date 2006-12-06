@@ -761,17 +761,11 @@ static void
 totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist)
 {
 	GSList *filenames, *l;
-	char *new_path;
 
 	filenames = totem_add_files (totem_playlist_get_toplevel (playlist),
-			playlist->_priv->path, &new_path);
+			NULL);
 	if (filenames == NULL)
 		return;
-
-	if (new_path != NULL) {
-		g_free (playlist->_priv->path);
-		playlist->_priv->path = new_path;
-	}
 
 	for (l = filenames; l != NULL; l = l->next) {
 		char *mrl;

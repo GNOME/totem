@@ -38,8 +38,7 @@ void		totem_destroy_file_filters (void);
 char*		totem_uri_get_subtitle_uri (const char *uri);
 char*		totem_uri_escape_for_display (const char *uri);
 GSList*		totem_add_files		(GtkWindow *parent,
-					 const char *path,
-					 char **new_path);
+					 const char *path);
 
 G_END_DECLS
 

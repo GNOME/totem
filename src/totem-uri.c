@@ -163,6 +163,12 @@ totem_uri_get_subtitle_uri (const char *uri)
 		return NULL;
 	}
 
+	/* Does gnome-vfs support that scheme? */
+	vfsuri = gnome_vfs_uri_new (uri);
+	if (vfsuri == NULL)
+		return NULL;
+	gnome_vfs_uri_unref (vfsuri);
+
 	if (strstr (uri, "#subtitle:") != NULL) {
 		return NULL;
 	}
@@ -183,7 +189,7 @@ totem_uri_get_subtitle_uri (const char *uri)
 				gnome_vfs_uri_unref (vfsuri);
 				return subtitle;
 			}
-		gnome_vfs_uri_unref (vfsuri);
+			gnome_vfs_uri_unref (vfsuri);
 		}
 	}
 	g_free (subtitle);
@@ -250,12 +256,13 @@ totem_destroy_file_filters (void)
 }
 
 GSList *
-totem_add_files (GtkWindow *parent, const char *path, char **new_path)
+totem_add_files (GtkWindow *parent, const char *path)
 {
 	GtkWidget *fs;
 	int response;
 	GSList *filenames;
-	char *mrl;
+	char *mrl, *new_path;
+	GConfClient *conf;
 
 	fs = gtk_file_chooser_dialog_new (_("Select Movies or Playlists"),
 			parent,
@@ -270,9 +277,17 @@ totem_add_files (GtkWindow *parent, const char *path, char **new_path)
 	gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (fs), TRUE);
 	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
 
+	conf = gconf_client_get_default ();
 	if (path != NULL) {
-		gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (fs),
-				path);
+		gtk_file_chooser_set_current_folder_uri
+			(GTK_FILE_CHOOSER (fs), path);
+	} else {
+		new_path = gconf_client_get_string (conf, "/apps/totem/open_path", NULL);
+		if (new_path != NULL && new_path != '\0') {
+			gtk_file_chooser_set_current_folder_uri
+				(GTK_FILE_CHOOSER (fs), new_path);
+		}
+		g_free (new_path);
 	}
 
 	response = gtk_dialog_run (GTK_DIALOG (fs));
@@ -282,21 +297,27 @@ totem_add_files (GtkWindow *parent, const char *path, char **new_path)
 
 	if (response != GTK_RESPONSE_ACCEPT) {
 		gtk_widget_destroy (fs);
+		g_object_unref (conf);
 		return NULL;
 	}
 
 	filenames = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (fs));
 	if (filenames == NULL) {
 		gtk_widget_destroy (fs);
+		g_object_unref (conf);
 		return NULL;
 	}
 
 	mrl = filenames->data;
-	if (mrl != NULL && new_path != NULL) {
-		*new_path = g_path_get_dirname (mrl);
+	if (mrl != NULL) {
+		new_path = g_path_get_dirname (mrl);
+		gconf_client_set_string (conf, "/apps/totem/open_path",
+				new_path, NULL);
+		g_free (new_path);
 	}
 
 	gtk_widget_destroy (fs);
+	g_object_unref (conf);
 
 	return filenames;
 }

@@ -413,6 +413,40 @@ totem_action_set_mrl_and_play (Totem *totem, const char *mrl)
 }
 
 static gboolean
+totem_action_open_dialog (Totem *totem, const char *path, gboolean play)
+{
+	GSList *filenames;
+	gboolean playlist_modified;
+
+	filenames = totem_add_files (GTK_WINDOW (totem->win), path);
+
+	if (filenames == NULL)
+		return FALSE;
+
+	playlist_modified = totem_action_open_files_list (totem,
+			filenames);
+
+	if (playlist_modified == FALSE) {
+		g_slist_foreach (filenames, (GFunc) g_free, NULL);
+		g_slist_free (filenames);
+		return FALSE;
+	}
+
+	g_slist_foreach (filenames, (GFunc) g_free, NULL);
+	g_slist_free (filenames);
+
+	if (play != FALSE) {
+		char *mrl;
+
+		mrl = totem_playlist_get_current_mrl (totem->playlist);
+		totem_action_set_mrl_and_play (totem, mrl);
+		g_free (mrl);
+	}
+
+	return TRUE;
+}
+
+static gboolean
 totem_action_load_media (Totem *totem, MediaType type)
 {
 	char **mrls;
@@ -467,12 +501,7 @@ totem_action_load_media_device (Totem *totem, const char *device)
 		case MEDIA_TYPE_DATA:
 			/* Set default location to the mountpoint of
 			 * this device */
-			{
-				char *s;
-				s = totem_action_open_dialog (totem, url, FALSE);
-				retval = (s != NULL);
-				g_free (s);
-			}
+			retval = totem_action_open_dialog (totem, url, FALSE);
 			break;
 		case MEDIA_TYPE_DVD:
 		case MEDIA_TYPE_VCD:
@@ -648,14 +677,7 @@ totem_action_fullscreen (Totem *totem, gboolean state)
 void
 totem_action_open (Totem *totem)
 {
-	static char *path = NULL;
-	char *new_path;
-
-	new_path = totem_action_open_dialog (totem, path, TRUE);
-	if (new_path != NULL) {
-		g_free (path);
-		path = new_path;
-	}
+	totem_action_open_dialog (totem, NULL, TRUE);
 }
 
 //FIXME move the URI to a separate widget
@@ -1697,42 +1719,6 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 	}
 
 	return cleared;
-}
-
-char *
-totem_action_open_dialog (Totem *totem, const char *path, gboolean play)
-{
-	GSList *filenames;
-	char *new_path;
-	gboolean playlist_modified;
-
-	filenames = totem_add_files (GTK_WINDOW (totem->win),
-			path, &new_path);
-
-	if (filenames == NULL)
-		return NULL;
-
-	playlist_modified = totem_action_open_files_list (totem,
-			filenames);
-
-	if (playlist_modified == FALSE) {
-		g_slist_foreach (filenames, (GFunc) g_free, NULL);
-		g_slist_free (filenames);
-		return NULL;
-	}
-
-	g_slist_foreach (filenames, (GFunc) g_free, NULL);
-	g_slist_free (filenames);
-
-	if (play != FALSE) {
-		char *mrl;
-
-		mrl = totem_playlist_get_current_mrl (totem->playlist);
-		totem_action_set_mrl_and_play (totem, mrl);
-		g_free (mrl);
-	}
-
-	return new_path;
 }
 
 static void
