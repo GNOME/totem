@@ -4018,7 +4018,7 @@ cb_gconf (GConfClient * client,
     g_object_set (bvw->priv->play, "queue-threshold",
         (guint64) (GST_SECOND * gconf_value_get_float (entry->value)), NULL);
   } else if (!strcmp (entry->key, "/apps/totem/buffer-size")) {
-    g_object_set (bvw->priv->play, "queue-threshold",
+    g_object_set (bvw->priv->play, "queue-size",
         (guint64) (GST_SECOND * gconf_value_get_float (entry->value)), NULL);
   }
 }
