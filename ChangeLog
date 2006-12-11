@@ -1,5 +1,11 @@
 2006-12-11  Tim-Philipp Müller  <tim at centricular dot net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c: (cb_gconf):
+	  Fix copy'n'pasto and update the buffer-size when the buffer-size key
+	  is changed, not the buffering threshold. (Closes: #382350)
+
+2006-12-11  Tim-Philipp Müller  <tim at centricular dot net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bacon_video_widget_new):
 	  Fix nonsensical code; don't overwrite speaker setup preferences
