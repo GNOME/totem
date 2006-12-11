@@ -50,6 +50,7 @@
 #define BLOCK_DEVICE_TYPE "x-special/device-block"
 #define EMPTY_FILE_TYPE "application/x-zerosize"
 #define TEXT_URI_TYPE "text/uri-list"
+#define AUDIO_MPEG_TYPE "audio/mpeg"
 #define EXTINF "#EXTINF:"
 #define DEBUG(x) { if (parser->priv->debug) x; }
 
@@ -2520,13 +2521,6 @@ totem_pl_parser_ignore (TotemPlParser *parser, const char *url)
 		if (strcmp (dual_types[i].mimetype, mimetype) == 0)
 			return FALSE;
 
-	/* It's a remote file that could be an m3u file */
-	if (strcmp (mimetype, "audio/x-mp3") == 0)
-	{
-		if (strstr (url, "m3u") != NULL)
-			return FALSE;
-	}
-
 	return TRUE;
 }
 
@@ -2604,6 +2598,15 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 		g_free (data);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
+
+	/* If we're at the top-level of the parsing, try to get more
+	 * data from the playlist parser */
+	if (strcmp (mimetype, AUDIO_MPEG_TYPE) == 0 && parser->priv->recurse_level == 0 && data == NULL) {
+		g_free (mimetype);
+		mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data, parser);
+		DEBUG(g_print ("_get_mime_type_with_data for '%s' returned '%s' (was %s)\n", url, mimetype ? mimetype : "NULL", AUDIO_MPEG_TYPE));
+	}
+
 
 	if (totem_pl_parser_mimetype_is_ignored (parser, mimetype) != FALSE) {
 		g_free (mimetype);

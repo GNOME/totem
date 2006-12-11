@@ -1,3 +1,11 @@
+2006-12-11  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_ignore),
+	(totem_pl_parser_parse_internal): Remove unneeded work-around for
+	Allofmp3, they've switched to using Flash, read the data off the files
+	passed if they look like MP3s in name, and are at the top-level.
+	Fixes parsing of the playlists from rozhlas.cz (Closes: #384656)
+
 2006-12-06  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-menu.c: (add_device_to_menu): fix warning
