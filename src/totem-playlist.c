@@ -1701,12 +1701,15 @@ totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl,
 	return TRUE;
 }
 
-void
+gboolean
 totem_playlist_clear (TotemPlaylist *playlist)
 {
 	GtkListStore *store;
 
 	g_return_if_fail (TOTEM_IS_PLAYLIST (playlist));
+
+	if (PL_LEN == 0)
+		return FALSE;
 
 	store = GTK_LIST_STORE (playlist->_priv->model);
 	gtk_list_store_clear (store);
@@ -1714,6 +1717,8 @@ totem_playlist_clear (TotemPlaylist *playlist)
 	if (playlist->_priv->current != NULL)
 		gtk_tree_path_free (playlist->_priv->current);
 	playlist->_priv->current = NULL;
+
+	return TRUE;
 }
 
 static void

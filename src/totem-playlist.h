@@ -79,7 +79,7 @@ void totem_playlist_save_current_playlist_ext (TotemPlaylist *playlist,
 
 /* totem_playlist_clear doesn't emit the current_removed signal, even if it does
  * because the caller should know what to do after it's done with clearing */
-void       totem_playlist_clear (TotemPlaylist *playlist);
+gboolean   totem_playlist_clear (TotemPlaylist *playlist);
 void       totem_playlist_clear_with_prefix (TotemPlaylist *playlist,
 					     const char *prefix);
 void       totem_playlist_clear_with_gnome_vfs_volume (TotemPlaylist *playlist,

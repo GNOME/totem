@@ -1672,10 +1672,14 @@ static gboolean
 totem_action_open_files_list (Totem *totem, GSList *list)
 {
 	GSList *l;
-	gboolean cleared = FALSE;
+	gboolean changed;
+	gboolean cleared;
+
+	changed = FALSE;
+	cleared = FALSE;
 
 	if (list == NULL)
-		return cleared;
+		return changed;
 
 	for (l = list ; l != NULL; l = l->next)
 	{
@@ -1708,18 +1712,21 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 				g_signal_handlers_disconnect_by_func
 					(G_OBJECT (totem->playlist),
 					 playlist_changed_cb, totem);
-				totem_playlist_clear (totem->playlist);
+				changed = totem_playlist_clear (totem->playlist);
 				bacon_video_widget_close (totem->bvw);
 				cleared = TRUE;
 			}
 
 			if (totem_is_block_device (filename) != FALSE) {
 				totem_action_load_media_device (totem, data);
-			} else if (strstr (filename, "cdda:/") != NULL) {
+				changed = TRUE;
+			} else if (g_str_has_prefix (filename, "cdda:/") != FALSE) {
 				totem_playlist_add_mrl (totem->playlist, data, NULL);
+				changed = TRUE;
 			} else if (totem_playlist_add_mrl (totem->playlist,
 						filename, NULL) != FALSE) {
 				totem_action_add_recent (totem, filename);
+				changed = TRUE;
 			}
 		}
 
@@ -1734,7 +1741,7 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 				totem);
 	}
 
-	return cleared;
+	return changed;
 }
 
 static void
@@ -2762,7 +2769,6 @@ update_media_menu_items (Totem *totem)
 	totem_action_set_sensitivity ("next-angle", playing);
 
 	playing = totem_is_media (totem->mrl);
-
 	totem_action_set_sensitivity ("eject", playing);
 }
 
