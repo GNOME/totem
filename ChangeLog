@@ -1,3 +1,11 @@
+2006-12-11  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_new):
+	  Fix nonsensical code; don't overwrite speaker setup preferences
+	  saved in gconf with default values when run in metadata or
+	  capture mode. (Closes: #379740)
+
 2006-12-11  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-playlist.c: (totem_playlist_clear):
