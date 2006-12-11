@@ -4478,9 +4478,11 @@ bacon_video_widget_new (int width, int height,
   if (confvalue != NULL &&
       (type != BVW_USE_TYPE_METADATA && type != BVW_USE_TYPE_CAPTURE)) {
     bvw->priv->speakersetup = gconf_value_get_int (confvalue);
-    bvw->priv->speakersetup = gconf_value_get_int (confvalue) - 1;
-    bacon_video_widget_set_audio_out_type (bvw, bvw->priv->speakersetup + 1);
+    bacon_video_widget_set_audio_out_type (bvw, bvw->priv->speakersetup);
     gconf_value_free (confvalue);
+  } else if (type == BVW_USE_TYPE_METADATA || type == BVW_USE_TYPE_CAPTURE) {
+    bvw->priv->speakersetup = -1;
+    /* don't set up a filter for the speaker setup, anything is fine */
   } else {
     bvw->priv->speakersetup = -1;
     bacon_video_widget_set_audio_out_type (bvw, BVW_AUDIO_SOUND_STEREO);
