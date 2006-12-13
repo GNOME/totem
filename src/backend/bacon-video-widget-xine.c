@@ -141,6 +141,9 @@ struct BaconVideoWidgetPrivate {
 	GdkWindow *video_window;
 	GdkCursor *cursor;
 
+	/* Opening thread for fd://0 */
+	GThread *open_thread;
+
 	/* Visual effects */
 	char *vis_name;
 	gboolean show_vfx;
@@ -2119,6 +2122,56 @@ bacon_video_widget_get_subtitled (const char *mrl, const char *subtitle_uri)
 	return g_strdup_printf ("%s#subtitle:%s", mrl, subtitle_uri + strlen ("file://"));
 }
 
+static void
+bacon_video_widget_open_async_error (BaconVideoWidget *bvw, GError *error)
+{
+	signal_data *sigdata;
+
+	sigdata = g_new0 (signal_data, 1); 
+	sigdata->signal = ERROR_ASYNC;
+	sigdata->msg = g_strdup (error->message);
+	sigdata->fatal = FALSE;
+	g_async_queue_push (bvw->priv->queue, sigdata);
+	g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
+}
+
+static gpointer
+bacon_video_widget_open_thread (gpointer data)
+{
+	BaconVideoWidget *bvw = (BaconVideoWidget *) data;
+	GError *error = NULL;
+	int err;
+
+	err = xine_open (bvw->priv->stream, bvw->com->mrl);
+	if (err == 0) {
+		xine_error (bvw, &error);
+		bacon_video_widget_open_async_error (bvw, error);
+		g_error_free (error);
+		bacon_video_widget_close (bvw);
+	} else {
+		xine_try_error (bvw, TRUE, &error);
+		if (error != NULL) {
+			bacon_video_widget_open_async_error (bvw, error);
+			g_error_free (error);
+			bacon_video_widget_close (bvw);
+		}
+	}
+
+	bvw->priv->open_thread = NULL;
+	return NULL;
+}
+
+static gboolean
+bacon_video_widget_open_async (BaconVideoWidget *bvw, const char *mrl,
+		GError **error)
+{
+	bvw->priv->open_thread = g_thread_create (bacon_video_widget_open_thread, bvw, TRUE, error);
+	if (bvw->priv->open_thread == NULL)
+		return FALSE;
+
+	return TRUE;
+}
+
 gboolean
 bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 		const char *subtitle_uri, GError **error)
@@ -2140,8 +2193,13 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 		bvw->com->mrl = g_strdup (mrl);
 	}
 
-	if (subtitle_uri != NULL)
-	{
+	if (g_str_has_prefix (mrl, "fd://") != FALSE) {
+		if (subtitle_uri != NULL)
+			g_warning ("%s passed along with a subtitle URI", mrl);
+		return bacon_video_widget_open_async (bvw, mrl, error);
+	}
+
+	if (subtitle_uri != NULL) {
 		char *subtitled;
 		subtitled = bacon_video_widget_get_subtitled (mrl, subtitle_uri);
 		if (subtitled != NULL) {
@@ -2157,8 +2215,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 
 	xine_plugins_garbage_collector (bvw->priv->xine);
 
-	if (err == 0)
-	{
+	if (err == 0) {
 		bacon_video_widget_close (bvw);
 		xine_error (bvw, error);
 		return FALSE;
@@ -2384,6 +2441,13 @@ bacon_video_widget_close (BaconVideoWidget *bvw)
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
+
+	if (bvw->priv->open_thread != NULL
+			&& g_thread_self () != bvw->priv->open_thread) {
+		/* Nicely wait for the timeout */
+		g_thread_join (bvw->priv->open_thread);
+		bvw->priv->open_thread = NULL;
+	}
 
 	xine_stop (bvw->priv->stream);
 	xine_close (bvw->priv->stream);

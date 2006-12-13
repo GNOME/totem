@@ -6,33 +6,45 @@
 #include <X11/Xlib.h>
 #endif
 
-GtkWidget *win;
-GtkWidget *xine;
-char *mrl, *argument;
+static GtkWidget *win;
+static GtkWidget *bvw;
+static char *mrl, *argument;
 
-static void test_xine_set_mrl(char *path)
+static void
+test_bvw_set_mrl (char *path)
 {
-	mrl=g_strdup(path);
-	bacon_video_widget_open (BACON_VIDEO_WIDGET (xine), mrl, NULL);
+	mrl = g_strdup (path);
+	bacon_video_widget_open (BACON_VIDEO_WIDGET (bvw), mrl, NULL);
 }
 
-static void on_redirect (GtkWidget *bvw, const char *mrl, gpointer data)
+static void
+on_redirect (GtkWidget *bvw, const char *mrl, gpointer data)
 {
 	g_message ("Redirect to: %s", mrl);
 }
 
-static void on_eos_event(GtkWidget *widget, gpointer user_data)
+static void
+on_eos_event (GtkWidget *widget, gpointer user_data)
 {
-	bacon_video_widget_stop (BACON_VIDEO_WIDGET (xine));
-	bacon_video_widget_close(BACON_VIDEO_WIDGET (xine));
-	g_free(mrl);
+	bacon_video_widget_stop (BACON_VIDEO_WIDGET (bvw));
+	bacon_video_widget_close (BACON_VIDEO_WIDGET (bvw));
+	g_free (mrl);
 
-	test_xine_set_mrl(argument);
+	test_bvw_set_mrl (argument);
 
-	bacon_video_widget_play (BACON_VIDEO_WIDGET (xine), NULL);
+	bacon_video_widget_play (BACON_VIDEO_WIDGET (bvw), NULL);
 }
 
-int main(int argc, char *argv[])
+static void
+error_cb (GtkWidget *bvw, const char *message,
+		gboolean playback_stopped, gboolean fatal)
+{
+	g_message ("Error: %s, playback stopped: %d, fatal: %d",
+			message, playback_stopped, fatal);
+}
+
+int main
+(int argc, char **argv)
 {
 	guint32 height = 500;
 	guint32 width = 500;
@@ -43,37 +55,38 @@ int main(int argc, char *argv[])
 	}
 
 #ifdef GDK_WINDOWING_X11
-	XInitThreads();
+	XInitThreads ();
 #endif
 	g_thread_init (NULL);
 	gtk_init (&argc, &argv);
 	bacon_video_widget_init_backend (NULL, NULL);
 	gdk_threads_init ();
 
-	win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_default_size (GTK_WINDOW (win), width, height);
 	g_signal_connect (G_OBJECT (win), "destroy",
 			G_CALLBACK (gtk_main_quit), NULL);
 
-	xine = bacon_video_widget_new (width, height,
+	bvw = bacon_video_widget_new (width, height,
 			BVW_USE_TYPE_VIDEO, NULL);
 
-	gtk_container_add(GTK_CONTAINER(win),xine);
+	g_signal_connect (G_OBJECT (bvw),"eos",G_CALLBACK (on_eos_event),NULL);
+	g_signal_connect (G_OBJECT (bvw), "got-redirect", G_CALLBACK (on_redirect), NULL);
+	g_signal_connect (G_OBJECT (bvw), "error", G_CALLBACK (error_cb), NULL);
 
-	gtk_widget_realize (GTK_WIDGET(win));
-	gtk_widget_realize (xine);
+	gtk_container_add (GTK_CONTAINER (win),bvw);
 
-	g_signal_connect(G_OBJECT (xine),"eos",G_CALLBACK (on_eos_event),NULL);
-	g_signal_connect (G_OBJECT(xine), "got-redirect", G_CALLBACK (on_redirect), NULL);
+	gtk_widget_realize (GTK_WIDGET (win));
+	gtk_widget_realize (bvw);
 
-	gtk_widget_show(win);
-	gtk_widget_show(xine);
+	gtk_widget_show (win);
+	gtk_widget_show (bvw);
 
 	mrl = NULL;
-	test_xine_set_mrl(argv[1] ? argv[1] : LOGO_PATH);
+	test_bvw_set_mrl (argv[1] ? argv[1] : LOGO_PATH);
 	argument = g_strdup (argv[1] ? argv[1] : LOGO_PATH);
-	bacon_video_widget_play (BACON_VIDEO_WIDGET (xine), NULL);
-	gtk_main();
+	bacon_video_widget_play (BACON_VIDEO_WIDGET (bvw), NULL);
+	gtk_main ();
 
 	return 0;
 }

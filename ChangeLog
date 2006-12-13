@@ -1,3 +1,16 @@
+2006-12-13  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_open_async_error),
+	(bacon_video_widget_open_thread), (bacon_video_widget_open_async),
+	(bacon_video_widget_open_with_subtitle),
+	(bacon_video_widget_close): open fd://0 async, so that it doesn't
+	block waiting for data to come in, fixes the browser plugin with
+	xine-lib (Closes: #375866)
+	* src/backend/bvw-test.c: (test_bvw_set_mrl), (on_redirect),
+	(on_eos_event), (error_cb), (main):
+	catch errors, fix up indent
+
 2006-12-11  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c: (cb_gconf):
