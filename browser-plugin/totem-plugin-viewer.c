@@ -429,7 +429,7 @@ totem_embedded_do_command (TotemEmbedded *embedded,
 	return FALSE;
 }
 
-static void
+static gboolean
 totem_embedded_set_href (TotemEmbedded *embedded,
 			 const char *href_uri,
 			 const char *target,
@@ -454,9 +454,11 @@ totem_embedded_set_href (TotemEmbedded *embedded,
 	} else {
 		embedded->target = NULL;
 	}
+
+	return TRUE;
 }
 
-static void
+static gboolean
 totem_embedded_launch_player (TotemEmbedded *embedded,
 			      const char *uri,
 			      GError *error)
@@ -464,7 +466,7 @@ totem_embedded_launch_player (TotemEmbedded *embedded,
 	GList *l = NULL;
 
 	//FIXME that errors out sometimes, because it's silly
-	g_return_if_fail (embedded->app != NULL);
+	g_return_val_if_fail (embedded->app != NULL, TRUE);
 
 	if (uri != NULL) {
 		l = g_list_prepend (l, (gpointer) uri);
@@ -481,6 +483,8 @@ totem_embedded_launch_player (TotemEmbedded *embedded,
 	}
 
 	g_list_free (l);
+
+	return TRUE;
 }
 
 static void
