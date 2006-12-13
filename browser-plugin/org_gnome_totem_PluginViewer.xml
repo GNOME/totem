@@ -34,6 +34,13 @@
       <arg type="s" name="URI" direction="in" />
       <arg type="s" name="BaseURI" direction="in" />
     </method>
+    <method name="SetHref">
+      <arg type="s" name="HrefURI" direction="in" />
+      <arg type="s" name="Target" direction="in" />
+    </method>
+    <method name="LaunchPlayer">
+       <arg type="s" name="URI" direction="in" />
+    </method>
 
     <signal name="ButtonPress" />
     <signal name="StartStream" />

@@ -1,5 +1,22 @@
 2006-12-13  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/org_gnome_totem_PluginViewer.xml:
+	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_set_error),
+	(totem_embedded_set_state), (totem_embedded_set_href),
+	(totem_embedded_launch_player), (on_open1_activate),
+	(on_copy_location1_activate), (on_video_button_press_event),
+	(totem_embedded_construct), (main):
+	Move launching the external player to the viewer, set the HREF
+	cursor correctly
+	* browser-plugin/totemPlugin.cpp: move the player launching to the
+	viewer, and set the "cursor" in the viewer when pushing the HREF
+	to the viewer
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_open_thread): Close the stream before propagating
+	the error through a signal
+
+2006-12-13  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c:
 	(bacon_video_widget_open_async_error),
 	(bacon_video_widget_open_thread), (bacon_video_widget_open_async),

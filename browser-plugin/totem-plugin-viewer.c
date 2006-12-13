@@ -97,7 +97,7 @@ typedef struct _TotemEmbedded {
 	const char *mimetype;
 	char *base_uri;
 	char *current_uri;
-	char *href;
+	char *href_uri;
 	char *target;
 	char *stream_uri;
 	BaconVideoWidget *bvw;
@@ -242,6 +242,7 @@ totem_embedded_set_error (TotemEmbedded *emb,
 			  char *secondary)
 {
 	/* FIXME */
+	g_message ("totem_embedded_set_error: '%s', '%s'", primary, secondary);
 }
 
 static void
@@ -267,9 +268,6 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 
 	switch (state) {
 	case STATE_STOPPED:
-		if (emb->href != NULL)
-			cursor = emb->cursor;
-
 		g_snprintf (id, sizeof (id), "gtk-media-play-%s",
 			    gtk_widget_get_direction (image) ? "ltr" : "rtl");
 		totem_statusbar_set_text (emb->statusbar, _("Stopped"));
@@ -289,9 +287,6 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 	}
 
 	gtk_image_set_from_icon_name (GTK_IMAGE (image), id, GTK_ICON_SIZE_MENU);
-
-	if (emb->hidden == FALSE && cursor != NULL)
-		gdk_window_set_cursor (GTK_WIDGET (emb->bvw)->window, cursor);
 
 	emb->state = state;
 }
@@ -432,6 +427,60 @@ totem_embedded_do_command (TotemEmbedded *embedded,
 		     TOTEM_EMBEDDED_UNKNOWN_COMMAND,
 		     "Unknown command '%s'", command);
 	return FALSE;
+}
+
+static void
+totem_embedded_set_href (TotemEmbedded *embedded,
+			 const char *href_uri,
+			 const char *target,
+			 GError *error)
+{
+	g_free (embedded->href_uri);
+	g_free (embedded->target);
+
+	if (href_uri != NULL) {
+		embedded->href_uri = g_strdup (href_uri);
+		gdk_window_set_cursor
+			(GTK_WIDGET (embedded->bvw)->window,
+			 embedded->cursor);
+	} else {
+		embedded->href_uri = NULL;
+		gdk_window_set_cursor
+			(GTK_WIDGET (embedded->bvw)->window, NULL);
+	}
+
+	if (target != NULL) {
+		embedded->target = g_strdup (target);
+	} else {
+		embedded->target = NULL;
+	}
+}
+
+static void
+totem_embedded_launch_player (TotemEmbedded *embedded,
+			      const char *uri,
+			      GError *error)
+{
+	GList *l = NULL;
+
+	//FIXME that errors out sometimes, because it's silly
+	g_return_if_fail (embedded->app != NULL);
+
+	if (uri != NULL) {
+		l = g_list_prepend (l, (gpointer) uri);
+	} else if (embedded->type == TOTEM_PLUGIN_TYPE_NARROWSPACE
+	    && embedded->href_uri != NULL) {
+		l = g_list_prepend (l, embedded->href_uri);
+	} else {
+		l = g_list_prepend (l, embedded->current_uri);
+	}
+
+	/* FIXME: launch with startup ID and startup notification! */
+	if (gnome_vfs_mime_application_launch (embedded->app, l) == GNOME_VFS_OK) {
+		totem_embedded_stop (embedded, NULL);
+	}
+
+	g_list_free (l);
 }
 
 static void
@@ -639,24 +688,7 @@ totem_embedded_set_menu (TotemEmbedded *emb,
 static void
 on_open1_activate (GtkButton *button, TotemEmbedded *emb)
 {
-	GList *l = NULL;
-
-	g_return_if_fail (emb->app != NULL);
-
-	/* FIXME  */
-	 if (emb->type == TOTEM_PLUGIN_TYPE_NARROWSPACE &&
-	     emb->href != NULL) {
-		l = g_list_prepend (l, emb->href);
-	} else {
-		l = g_list_prepend (l, emb->current_uri);
-	}
-
-	/* FIXME: launch with startup ID and startup notification! */
-	if (gnome_vfs_mime_application_launch (emb->app, l) == GNOME_VFS_OK) {
-		totem_embedded_stop (emb, NULL);
-	}
-
-	g_list_free (l);
+	totem_embedded_launch_player (emb, NULL, NULL);
 }
 
 static void
@@ -715,8 +747,8 @@ on_copy_location1_activate (GtkButton *button, TotemEmbedded *emb)
 
 	if (emb->is_browser_stream) {
 		uri = emb->base_uri; /* FIXME! */
-	} else if (emb->href != NULL) {
-		uri = emb->href;
+	} else if (emb->href_uri != NULL) {
+		uri = emb->href_uri;
 	} else {
 		uri = emb->current_uri;
 	}
@@ -793,39 +825,7 @@ on_video_button_press_event (BaconVideoWidget *bvw,
 		g_signal_emit (emb, signals[BUTTON_PRESS], 0,
 			       event->time,
 			       event->button);
-		handled = TRUE;
-	}
-
-#if 0
-		if (emb->state == STATE_STOPPED) {
-			g_signal_emit (emb, signals[START_PLAY], 0);
-		}
-#ifdef TOTEM_RUN_IN_SOURCE_TREE
-			if (g_file_test ("./totem",
-					 G_FILE_TEST_EXISTS) != FALSE) {
-				cmd = g_strdup_printf ("./totem %s",
-						       emb->href);
-			} else
-#endif
-			{
-				cmd = g_strdup_printf (BINDIR"/totem %s",
-						       emb->href);
-			}
-			/* FIXME Shouldn't this use gdk_spawn_on_screen? */
-			if (!g_spawn_command_line_async (cmd, &err)) {
-#ifdef NOTPORTED
-				/* FIXME this is unacceptable! */
-				totem_interface_error_blocking (
-					_("Failed to start stand-alone movie player"),
-					err->message,
-					GTK_WINDOW (emb->window));
-				g_error_free (err);
-#endif
-			}
-			g_free (cmd);
-#endif
-
-	else if (event->type == GDK_BUTTON_PRESS &&
+	} else if (event->type == GDK_BUTTON_PRESS &&
 		 event->button == 3 &&
 		 state == 0) {
 		GtkMenu *menu;
@@ -1149,10 +1149,10 @@ totem_embedded_construct (TotemEmbedded *emb,
 	gtk_widget_hide (child);
 
 	/* Create cursor */
-	/* FIXME: this looks hideous! */
 	if (!emb->hidden) {
-		emb->cursor = gdk_cursor_new_for_display (gtk_widget_get_display (emb->window),
-							  GDK_HAND1);
+		emb->cursor = gdk_cursor_new_for_display
+			(gtk_widget_get_display (emb->window),
+			 GDK_HAND2);
 	}
 
 	return TRUE;
@@ -1546,8 +1546,8 @@ int main (int argc, char **argv)
 	emb->type = arg_plugin_type;
 
 	/* FIXME: register this BEFORE requesting the service name? */
-	dbus_g_connection_register_g_object (conn, TOTEM_PLUGIN_VIEWER_DBUS_PATH,
-					     G_OBJECT (emb));
+	dbus_g_connection_register_g_object
+	(conn, TOTEM_PLUGIN_VIEWER_DBUS_PATH, G_OBJECT (emb));
 
 	/* If we're hidden, construct a hidden window;
 	 * else wait to be plugged in.

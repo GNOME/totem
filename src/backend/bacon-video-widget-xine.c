@@ -2145,15 +2145,15 @@ bacon_video_widget_open_thread (gpointer data)
 	err = xine_open (bvw->priv->stream, bvw->com->mrl);
 	if (err == 0) {
 		xine_error (bvw, &error);
+		bacon_video_widget_close (bvw);
 		bacon_video_widget_open_async_error (bvw, error);
 		g_error_free (error);
-		bacon_video_widget_close (bvw);
 	} else {
 		xine_try_error (bvw, TRUE, &error);
 		if (error != NULL) {
+			bacon_video_widget_close (bvw);
 			bacon_video_widget_open_async_error (bvw, error);
 			g_error_free (error);
-			bacon_video_widget_close (bvw);
 		}
 	}
 

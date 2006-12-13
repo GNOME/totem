@@ -531,6 +531,17 @@ totemPlugin::ViewerReady ()
 	} else {
 		mWaitingForButtonPress = PR_TRUE;
 	}
+
+#ifdef TOTEM_NARROWSPACE_PLUGIN
+	/* Tell the viewer it has an href */
+	if (!mHref.IsEmpty ()) {
+		dbus_g_proxy_call_no_reply (mViewerProxy,
+					    "SetHref",
+					    G_TYPE_STRING, mHref.get (),
+					    G_TYPE_STRING, mTarget.get (),
+					    G_TYPE_INVALID);
+	}
+#endif /* TOTEM_NARROWSPACE_PLUGIN */
 }
 
 void
@@ -543,14 +554,22 @@ totemPlugin::ViewerButtonPressed ()
 	if (!mHref.IsEmpty () &&
 	    !mTarget.IsEmpty ()) {
 		if (g_ascii_strcasecmp (mTarget.get (), "quicktimeplayer") == 0) {
-			D ("Launching totem with URL '%s'", mHref.get ());
-			LaunchTotem (mHref, 0 /* FIXME */);
+			D ("Opening movie '%s' in external player", mHref.get ());
+			dbus_g_proxy_call_no_reply (mViewerProxy,
+						    "LaunchPlayer",
+						    G_TYPE_STRING, mHref.get (),
+						    G_TYPE_INVALID);
 			return;
 		}
 		if (g_ascii_strcasecmp (mTarget.get (), "myself") == 0 ||
 		    mTarget.Equals (NS_LITERAL_CSTRING ("_current")) ||
 		    mTarget.Equals (NS_LITERAL_CSTRING ("_self"))) {
 			D ("Opening movie '%s'", mHref.get ());
+			dbus_g_proxy_call_no_reply (mViewerProxy,
+						    "SetHref",
+						    G_TYPE_STRING, NULL,
+						    G_TYPE_STRING, NULL,
+						    G_TYPE_INVALID);
 			/* FIXME this isn't right, we should just create a mHrefURI and instruct to load that one */
 			SetQtsrc (mHref);
 			RequestStream ();
@@ -1252,41 +1271,6 @@ totemPlugin::ParseURLExtensions (const nsACString &aString,
 	return PR_TRUE;
 }
 
-void
-totemPlugin::LaunchTotem (const nsCString &aURL,
-			  PRUint32 aTimestamp)
-{
-	const char *argv[3];
-
-#ifdef TOTEM_RUN_IN_SOURCE_TREE
-	if (g_file_test ("./totem", G_FILE_TEST_EXISTS)) {
-		argv[0] = "./totem";
-	} else
-#endif
-	{
-		/* FIXME: g_build_filename */
-		argv[0] = BINDIR "/totem";
-	}
-
-	argv[1] = aURL.get ();
-	argv[2] = NULL;
-
-	/* FIXME use startup notification and startup timestamp */
-	/* FIXME Shouldn't this use gdk_spawn_on_screen? */
-	GError *error = NULL;
-	if (!g_spawn_async (NULL /* FIXME working directory, $TMPDIR? */,
-			    (char **) argv,
-			    NULL /* env */,
-			    GSpawnFlags (0),
-			    NULL, NULL,
-			    NULL,
-			    &error)) {
-		/* FIXME: show an error dialogue? */
-		D ("Spawning totem failed: %s", error->message);
-		g_error_free (error);
-	}
-}
-
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 
 #if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
@@ -1945,7 +1929,7 @@ totemPlugin::NewStream (NPMIMEType type,
 	mViewerStream = fdopen (mViewerFD, "w");
 	if (!mViewerStream) {
 		int err = errno;
-		D ("Failed to fdopen the viewer fd, errno: %d", err);
+		D ("Failed to fdopen the viewer fd, errno: %d (%s)", err, g_strerror (err));
 
 		return CallNPN_DestroyStreamProc (sNPN.destroystream,
 						  mInstance,
