@@ -4240,24 +4240,10 @@ cb_gconf (GConfClient * client,
 
 G_DEFINE_TYPE(BaconVideoWidget, bacon_video_widget, GTK_TYPE_BOX)
 
-static void
-bacon_video_widget_init_gst (gpointer notused)
-{
-  gchar *version_str;
+/* applications must use exactly one of bacon_video_widget_get_option_group()
+ * OR bacon_video_widget_init_backend(), but not both */
 
-  gst_init (NULL, NULL);
-
-  GST_DEBUG_CATEGORY_INIT (_totem_gst_debug_cat, "totem", 0,
-      "Totem GStreamer Backend");
-
-  version_str = gst_version_string ();
-  GST_DEBUG ("Initialised %s", version_str);
-  g_free (version_str);
-}
-
-static GOnce bvw_init_once = G_ONCE_INIT;
-
-inline GOptionGroup*
+GOptionGroup*
 bacon_video_widget_get_option_group (void)
 {
   return gst_init_get_option_group ();
@@ -4266,7 +4252,7 @@ bacon_video_widget_get_option_group (void)
 void
 bacon_video_widget_init_backend (int *argc, char ***argv)
 {
-  g_once (&bvw_init_once, (GThreadFunc) bacon_video_widget_init_gst, NULL);
+  gst_init (argc, argv);
 }
 
 GQuark
@@ -4433,6 +4419,17 @@ bacon_video_widget_new (int width, int height,
   GConfValue *confvalue;
   BaconVideoWidget *bvw;
   GstElement *audio_sink = NULL, *video_sink = NULL;
+
+  if (_totem_gst_debug_cat == NULL) {
+    gchar *version_str;
+
+    GST_DEBUG_CATEGORY_INIT (_totem_gst_debug_cat, "totem", 0,
+        "Totem GStreamer Backend");
+
+    version_str = gst_version_string ();
+    GST_DEBUG ("Initialised %s", version_str);
+    g_free (version_str);
+  }
 
   bvw = BACON_VIDEO_WIDGET (g_object_new
                             (bacon_video_widget_get_type (), NULL));
