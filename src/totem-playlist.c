@@ -67,9 +67,6 @@ struct TotemPlaylistPrivate
 	GtkTreeSelection *selection;
 	TotemPlParser *parser;
 
-	/* This is the playing icon */
-	GdkPixbuf *icon;
-
 	GtkActionGroup *action_group;
 	GtkUIManager *ui_manager;
 
@@ -699,34 +696,6 @@ selection_changed (GtkTreeSelection *treeselection, TotemPlaylist *playlist)
 	gtk_widget_set_sensitive (down_button, sensitivity);
 }
 
-static void
-totem_playlist_style_set (GtkWidget *widget,
-			  GtkStyle *previous_style)
-{
-	TotemPlaylist *playlist = TOTEM_PLAYLIST (widget);
-	TotemPlaylistPrivate *priv = playlist->_priv;
-	gint w, h;
-	GError *error = NULL;
-	GtkIconTheme *theme;
-	const char icon_name[] = "audio-volume-medium";
-
-	GTK_WIDGET_CLASS (totem_playlist_parent_class)->style_set (widget, previous_style);
-
-	if (priv->icon != NULL) {
-		g_object_unref (priv->icon);
-	}
-
-	gtk_icon_size_lookup_for_settings (gtk_widget_get_settings (widget),
-					   GTK_ICON_SIZE_MENU, &w, &h);
-
-	theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (widget));
-	priv->icon = gtk_icon_theme_load_icon (theme, icon_name, w, 0, &error);
-	if (error) {
-		g_print ("Couldn't load themed icon '%s': %s\n", icon_name, error->message);
-		g_error_free (error);
-	}
-}
-
 /* This function checks if the current item is NULL, and try to update it
  * as the first item of the playlist if so. It returns TRUE if there is a
  * current item */
@@ -1196,15 +1165,8 @@ set_playing_icon (GtkTreeViewColumn *column, GtkCellRenderer *renderer,
 
 	gtk_tree_model_get (model, iter, PLAYING_COL, &playing, -1);
 
-	if (playing) {
-		g_object_set (G_OBJECT (renderer),
-				"pixbuf", playlist->_priv->icon,
-				NULL);
-	} else {
-		g_object_set (G_OBJECT (renderer),
-				"pixbuf", NULL,
-				NULL);
-	}
+	g_object_set (renderer, "icon-name",
+		      playing ? "audio-volume-medium" : NULL, NULL);
 }
 
 static void
@@ -1219,6 +1181,7 @@ init_columns (GtkTreeView *treeview, TotemPlaylist *playlist)
 	gtk_tree_view_column_pack_start (column, renderer, FALSE);
 	gtk_tree_view_column_set_cell_data_func (column, renderer,
 			(GtkTreeCellDataFunc) set_playing_icon, playlist, NULL);
+	g_object_set (renderer, "stock-size", GTK_ICON_SIZE_MENU, NULL);
 	gtk_tree_view_append_column (treeview, column);
 
 	/* Labels */
@@ -1516,14 +1479,8 @@ totem_playlist_finalize (GObject *object)
 {
 	TotemPlaylist *playlist = TOTEM_PLAYLIST (object);
 
-	g_return_if_fail (object != NULL);
-
 	if (playlist->_priv->current != NULL)
 		gtk_tree_path_free (playlist->_priv->current);
-	if (playlist->_priv->icon != NULL) {
-		g_object_unref (playlist->_priv->icon);
-		playlist->_priv->icon = NULL;
-	}
 	g_object_unref (playlist->_priv->parser);
 
 	if (playlist->_priv->ui_manager != NULL) {
@@ -1706,7 +1663,7 @@ totem_playlist_clear (TotemPlaylist *playlist)
 {
 	GtkListStore *store;
 
-	g_return_if_fail (TOTEM_IS_PLAYLIST (playlist));
+	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), FALSE);
 
 	if (PL_LEN == 0)
 		return FALSE;
@@ -2264,11 +2221,8 @@ static void
 totem_playlist_class_init (TotemPlaylistClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
 	object_class->finalize = totem_playlist_finalize;
-
-	widget_class->style_set = totem_playlist_style_set;
 
 	/* Signals */
 	totem_playlist_table_signals[CHANGED] =
