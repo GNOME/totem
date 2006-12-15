@@ -900,7 +900,8 @@ totem_embedded_set_playlist (TotemEmbedded *emb,
 {
 	char *file_uri;
 
-	g_message ("Setting the current playlist to %s", path);
+	g_message ("Setting the current playlist to %s (base: %s)",
+		   path, base_uri);
 
 	totem_embedded_clear_playlist (emb);
 
@@ -1572,7 +1573,8 @@ totem_embedded_push_parser (gpointer data)
 			      "disable-unsafe", TRUE,
 			       NULL);
 	g_signal_connect (parser, "entry", G_CALLBACK (entry_added), &list);
-	res = totem_pl_parser_parse (parser, emb->current_uri, FALSE); /* FIXME base_uri? */
+	res = totem_pl_parser_parse_with_base (parser, emb->current_uri,
+					       emb->base_uri, FALSE);
 	g_object_unref (parser);
 
 	if (res != TOTEM_PL_PARSER_RESULT_SUCCESS) {

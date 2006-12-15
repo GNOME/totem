@@ -12,6 +12,7 @@ static gboolean option_debug = FALSE;
 static gboolean option_data = FALSE;
 static gboolean option_force = FALSE;
 static gboolean option_disable_unsafe = FALSE;
+static char *option_base_uri = NULL;
 static char **files = NULL;
 
 static void
@@ -75,7 +76,7 @@ test_parsing_real (TotemPlParser *pl, const char *url)
 {
 	TotemPlParserResult res;
 
-	res = totem_pl_parser_parse (pl, url, FALSE);
+	res = totem_pl_parser_parse_with_base (pl, url, option_base_uri, FALSE);
 	if (res != TOTEM_PL_PARSER_RESULT_SUCCESS) {
 		switch (res) {
 		case TOTEM_PL_PARSER_RESULT_UNHANDLED:
@@ -260,6 +261,7 @@ int main (int argc, char **argv)
 		{ "data", 't', 0, G_OPTION_ARG_NONE, &option_data, "Use data instead of filename", NULL },
 		{ "force", 'f', 0, G_OPTION_ARG_NONE, &option_force, "Force parsing", NULL },
 		{ "disable-unsafe", 'u', 0, G_OPTION_ARG_NONE, &option_disable_unsafe, "Disabling unsafe playlist-types", NULL },
+		{ "base-uri", 'b', 0, G_OPTION_ARG_FILENAME, &option_base_uri, "Base URI to resolve relative items from", NULL },
 		{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &files, NULL, "[FILE...]" },
 		{ NULL }
 	};

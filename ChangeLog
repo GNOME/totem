@@ -1,5 +1,36 @@
 2006-12-15  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_set_playlist), (totem_embedded_push_parser):
+	* configure.in:
+	* src/plparse/test-parser.c: (test_parsing_real), (main):
+	* src/plparse/totem-pl-parser.c: (totem_pl_resolve_url),
+	(totem_pl_parser_add_ram),
+	(totem_pl_parser_add_asf_reference_parser),
+	(totem_pl_parser_add_asf_parser),
+	(totem_pl_parser_add_pls_with_contents), (totem_pl_parser_add_pls),
+	(totem_pl_parser_add_m3u), (parse_asx_entry),
+	(totem_pl_parser_add_asx), (totem_pl_parser_add_block),
+	(totem_pl_parser_add_ra), (totem_pl_parser_add_smil),
+	(totem_pl_parser_add_gvp), (totem_pl_parser_add_asf),
+	(totem_pl_parser_add_quicktime_rtsptextrtsp),
+	(totem_pl_parser_add_quicktime_metalink),
+	(totem_pl_parser_add_quicktime), (totem_pl_parser_add_desktop),
+	(totem_pl_parser_add_iso), (totem_pl_parser_add_cue),
+	(totem_pl_parser_add_xspf), (totem_pl_parser_add_directory),
+	(totem_pl_parser_parse_internal),
+	(totem_pl_parser_parse_with_base), (totem_pl_parser_parse):
+	* src/plparse/totem-pl-parser.h:
+
+	Add a totem_pl_parser_parse_with_base() and modify all the parser
+	functions to accept it as a parameter. Actually implement base parsing
+	in the ASX parser, add test code to test-parser, make the
+	plugin viewer pass the base URI when parsing playlists
+
+	Fixes playback on the Mix Megapol site (Closes: #378581)
+
+2006-12-15  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/.cvsignore:
 	* browser-plugin/Makefile.am:
 	* browser-plugin/org_gnome_totem_PluginViewer.xml:

@@ -57,7 +57,7 @@
 typedef gboolean (*PlaylistIdenCallback) (const char *data, gsize len);
 
 #ifndef TOTEM_PL_PARSER_MINI
-typedef TotemPlParserResult (*PlaylistCallback) (TotemPlParser *parser, const char *url, gpointer data);
+typedef TotemPlParserResult (*PlaylistCallback) (TotemPlParser *parser, const char *url, const char *base, gpointer data);
 #endif
 
 typedef struct {
@@ -79,8 +79,8 @@ static gboolean totem_pl_parser_is_quicktime (const char *data, gsize len);
 
 static gboolean totem_pl_parser_scheme_is_ignored (TotemPlParser *parser, const char *url);
 static gboolean totem_pl_parser_ignore (TotemPlParser *parser, const char *url);
-static TotemPlParserResult totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url);
-static TotemPlParserResult totem_pl_parser_add_asx (TotemPlParser *parser, const char *url, gpointer data);
+static TotemPlParserResult totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url, const char *base);
+static TotemPlParserResult totem_pl_parser_add_asx (TotemPlParser *parser, const char *url, const char *base, gpointer data);
 
 struct TotemPlParserPrivate
 {
@@ -1067,12 +1067,22 @@ totem_pl_parser_add_one_url_ext (TotemPlParser *parser, const char *url,
 static gchar*
 totem_pl_resolve_url (char *base, char *url)
 {
-	if (g_strrstr (url, "://") == NULL) {
-		if (url[0] != '/' || g_str_has_prefix (base, "file://") == FALSE) {
-			return g_strdup_printf ("%s/%s", base, url);
-		}
-	}
-	return g_strdup (url);
+	GnomeVFSURI *base_uri, *new;
+	char *resolved;
+
+	/* If the URI isn't relative, just leave */
+	if (strstr (url, "://") != NULL)
+		return g_strdup (url);
+
+	base_uri = gnome_vfs_uri_new (base);
+	g_return_val_if_fail (base_uri != NULL, g_strdup (url));
+	new = gnome_vfs_uri_resolve_relative (base_uri, url);
+	g_return_val_if_fail (new != NULL, g_strdup (url));
+	gnome_vfs_uri_unref (base_uri);
+	resolved = gnome_vfs_uri_to_string (new, GNOME_VFS_URI_HIDE_NONE);
+	gnome_vfs_uri_unref (new);
+
+	return resolved;
 }
 
 static TotemPlParserResult
@@ -1107,7 +1117,7 @@ totem_pl_parser_add_ram (TotemPlParser *parser, const char *url, gpointer data)
 		if (strstr(lines[i], "://") != NULL
 				|| lines[i][0] == G_DIR_SEPARATOR) {
 			/* .ram files can contain .smil entries */
-			if (totem_pl_parser_parse_internal (parser, lines[i]) != TOTEM_PL_PARSER_RESULT_SUCCESS)
+			if (totem_pl_parser_parse_internal (parser, lines[i], NULL) != TOTEM_PL_PARSER_RESULT_SUCCESS)
 			{
 				totem_pl_parser_add_one_url (parser,
 						lines[i], NULL);
@@ -1116,17 +1126,18 @@ totem_pl_parser_add_ram (TotemPlParser *parser, const char *url, gpointer data)
 			/* For Real Media playlists, handle the stop command */
 			break;
 		} else {
-			char *fullpath, *base;
+			char *base;
 
 			/* Try with a base */
 			base = totem_pl_parser_base_url (url);
 
-			fullpath = g_strdup_printf ("%s/%s", base, lines[i]);
-			if (totem_pl_parser_parse_internal (parser, fullpath) != TOTEM_PL_PARSER_RESULT_SUCCESS)
+			if (totem_pl_parser_parse_internal (parser, lines[i], base) != TOTEM_PL_PARSER_RESULT_SUCCESS)
 			{
+				char *fullpath;
+				fullpath = g_strdup_printf ("%s/%s", base, lines[i]);
 				totem_pl_parser_add_one_url (parser, fullpath, NULL);
+				g_free (fullpath);
 			}
-			g_free (fullpath);
 			g_free (base);
 		}
 	}
@@ -1138,7 +1149,8 @@ totem_pl_parser_add_ram (TotemPlParser *parser, const char *url, gpointer data)
 
 static TotemPlParserResult
 totem_pl_parser_add_asf_reference_parser (TotemPlParser *parser,
-		const char *url, gpointer data)
+					  const char *url, const char *base,
+					  gpointer data)
 {
 	char *contents, **lines, *ref, *split_char;
 	int size;
@@ -1160,7 +1172,7 @@ totem_pl_parser_add_asf_reference_parser (TotemPlParser *parser,
 	ref = read_ini_line_string (lines, "Ref1", FALSE);
 	if (ref == NULL) {
 		g_strfreev (lines);
-		return totem_pl_parser_add_asx (parser, url, data);
+		return totem_pl_parser_add_asx (parser, url, base, data);
 	}
 
 	/* change http to mmsh, thanks Microsoft */
@@ -1180,14 +1192,15 @@ totem_pl_parser_add_asf_reference_parser (TotemPlParser *parser,
 
 static TotemPlParserResult
 totem_pl_parser_add_asf_parser (TotemPlParser *parser,
-		const char *url, gpointer data)
+				const char *url, const char *base,
+				gpointer data)
 {
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 	char *contents, *ref;
 	int size;
 
 	if (g_str_has_prefix (data, "ASF ") == FALSE) {
-		return totem_pl_parser_add_asf_reference_parser (parser, url, data);
+		return totem_pl_parser_add_asf_reference_parser (parser, url, base, data);
 	}
 
 	contents = totem_pl_parser_read_entire_file (url, &size);
@@ -1212,7 +1225,8 @@ totem_pl_parser_add_asf_parser (TotemPlParser *parser,
 }
 
 static TotemPlParserResult
-totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url, const char *contents)
+totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url,
+				       const char *contents)
 {
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 	char **lines;
@@ -1293,24 +1307,25 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url, c
 			parser->priv->fallback = FALSE;
 
 		if (strstr (file, "://") != NULL || file[0] == G_DIR_SEPARATOR) {
-			if (totem_pl_parser_parse_internal (parser, file) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
+			if (totem_pl_parser_parse_internal (parser, file, NULL) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
 				totem_pl_parser_add_one_url_ext (parser, file, title, genre);
 			}
 		} else {
-			char *uri, *base, *escaped;
+			char *base;
 
 			/* Try with a base */
 			base = totem_pl_parser_base_url (url);
-			escaped = gnome_vfs_escape_path_string (file);
 
-			uri = g_strdup_printf ("%s/%s", base, escaped);
+			if (totem_pl_parser_parse_internal (parser, file, base) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
+				char *escaped, *uri;
 
-			if (totem_pl_parser_parse_internal (parser, uri) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
+				escaped = gnome_vfs_escape_path_string (file);
+				uri = g_strdup_printf ("%s/%s", base, escaped);
+				g_free (escaped);
 				totem_pl_parser_add_one_url_ext (parser, uri, title, genre);
+				g_free (uri);
 			}
 
-			g_free (escaped);
-			g_free (uri);
 			g_free (base);
 		}
 
@@ -1334,7 +1349,8 @@ bail:
 }
 
 static TotemPlParserResult
-totem_pl_parser_add_pls (TotemPlParser *parser, const char *url, gpointer data)
+totem_pl_parser_add_pls (TotemPlParser *parser, const char *url,
+			 const char *base, gpointer data)
 {
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 	char *contents;
@@ -1382,7 +1398,8 @@ totem_pl_parser_get_extinfo_title (gboolean extinfo, char **lines, int i)
 }
 
 static TotemPlParserResult
-totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
+totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url,
+			const char *_base, gpointer data)
 {
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 	char *contents, **lines;
@@ -1430,8 +1447,7 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url, gpointer data)
 		/* Either it's a URI, or it has a proper path ... */
 		if (strstr(lines[i], "://") != NULL
 				|| lines[i][0] == G_DIR_SEPARATOR) {
-			if (totem_pl_parser_parse_internal (parser, lines[i])
-					!= TOTEM_PL_PARSER_RESULT_SUCCESS) {
+			if (totem_pl_parser_parse_internal (parser, lines[i], NULL) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
 				totem_pl_parser_add_one_url (parser, lines[i],
 						totem_pl_parser_get_extinfo_title (extinfo, lines, i));
 			}
@@ -1524,7 +1540,7 @@ parse_asx_entry (TotemPlParser *parser, char *base, xmlDocPtr doc,
 	xmlFree (url);
 
 	/* .asx files can contain references to other .asx files */
-	retval = totem_pl_parser_parse_internal (parser, fullpath);
+	retval = totem_pl_parser_parse_internal (parser, fullpath, NULL);
 	if (retval != TOTEM_PL_PARSER_RESULT_SUCCESS) {
 		totem_pl_parser_add_one_url (parser, fullpath,
 				(char *)title ? (char *)title : pl_title);
@@ -1589,11 +1605,12 @@ parse_asx_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 }
 
 static TotemPlParserResult
-totem_pl_parser_add_asx (TotemPlParser *parser, const char *url, gpointer data)
+totem_pl_parser_add_asx (TotemPlParser *parser, const char *url,
+			 const char *base, gpointer data)
 {
 	xmlDocPtr doc;
 	xmlNodePtr node;
-	char *base;
+	char *_base;
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 
 	if (data != NULL && totem_pl_parser_is_uri_list (data, strlen (data)) != FALSE) {
@@ -1609,19 +1626,24 @@ totem_pl_parser_add_asx (TotemPlParser *parser, const char *url, gpointer data)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
-	base = totem_pl_parser_base_url (url);
+	if (base == NULL) {
+		_base = totem_pl_parser_base_url (url);
+	} else {
+		_base =  g_strdup (base);
+	}
 
 	for (node = doc->children; node != NULL; node = node->next)
-		if (parse_asx_entries (parser, base, doc, node) != FALSE)
+		if (parse_asx_entries (parser, _base, doc, node) != FALSE)
 			retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 
-	g_free (base);
+	g_free (_base);
 	xmlFreeDoc(doc);
 	return retval;
 }
 
 static TotemPlParserResult
-totem_pl_parser_add_block (TotemPlParser *parser, const char *url, gpointer data)
+totem_pl_parser_add_block (TotemPlParser *parser, const char *url,
+			   const char *base, gpointer data)
 {
 	MediaType type;
 	char *media_url;
@@ -1641,7 +1663,8 @@ totem_pl_parser_add_block (TotemPlParser *parser, const char *url, gpointer data
 }
 
 static TotemPlParserResult
-totem_pl_parser_add_ra (TotemPlParser *parser, const char *url, gpointer data)
+totem_pl_parser_add_ra (TotemPlParser *parser, const char *url,
+			const char *base, gpointer data)
 {
 	if (data == NULL || totem_pl_parser_is_uri_list (data, strlen (data)) == FALSE) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
@@ -1761,7 +1784,8 @@ parse_smil_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 }
 
 static TotemPlParserResult
-totem_pl_parser_add_smil (TotemPlParser *parser, const char *url, gpointer data)
+totem_pl_parser_add_smil (TotemPlParser *parser, const char *url,
+			  const char *_base, gpointer data)
 {
 	xmlDocPtr doc;
 	xmlNodePtr node;
@@ -1793,7 +1817,8 @@ totem_pl_parser_add_smil (TotemPlParser *parser, const char *url, gpointer data)
 }
 
 static TotemPlParserResult
-totem_pl_parser_add_gvp (TotemPlParser *parser, const char *url, gpointer data)
+totem_pl_parser_add_gvp (TotemPlParser *parser, const char *url,
+			 const char *base, gpointer data)
 {
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 	char *contents, **lines, *title, *link, *version;
@@ -1840,7 +1865,8 @@ totem_pl_parser_add_gvp (TotemPlParser *parser, const char *url, gpointer data)
 }
 
 static TotemPlParserResult
-totem_pl_parser_add_asf (TotemPlParser *parser, const char *url, gpointer data)
+totem_pl_parser_add_asf (TotemPlParser *parser, const char *url,
+			 const char *base, gpointer data)
 {
 	if (data == NULL) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
@@ -1852,11 +1878,14 @@ totem_pl_parser_add_asf (TotemPlParser *parser, const char *url, gpointer data)
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
 
-	return totem_pl_parser_add_asf_parser (parser, url, data);
+	return totem_pl_parser_add_asf_parser (parser, url, base, data);
 }
 
 static TotemPlParserResult
-totem_pl_parser_add_quicktime_rtsptextrtsp (TotemPlParser *parser, const char *url, gpointer data)
+totem_pl_parser_add_quicktime_rtsptextrtsp (TotemPlParser *parser,
+					    const char *url,
+					    const char *base,
+					    gpointer data)
 {
 	char *contents = NULL;
 	int size;
@@ -1876,7 +1905,8 @@ totem_pl_parser_add_quicktime_rtsptextrtsp (TotemPlParser *parser, const char *u
 }
 
 static TotemPlParserResult
-totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url, gpointer data)
+totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url,
+					const char *base, gpointer data)
 {
 	xmlDocPtr doc;
 	xmlNodePtr node;
@@ -1885,7 +1915,7 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url, 
 	if (g_str_has_prefix (data, "RTSPtextRTSP://") != FALSE
 			|| g_str_has_prefix (data, "rtsptextrtsp://") != FALSE
 			|| g_str_has_prefix (data, "RTSPtextrtsp://") != FALSE) {
-		return totem_pl_parser_add_quicktime_rtsptextrtsp (parser, url, data);
+		return totem_pl_parser_add_quicktime_rtsptextrtsp (parser, url, base, data);
 	}
 
 	doc = totem_pl_parser_parse_xml_file (url);
@@ -1928,18 +1958,20 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url, 
 }
 
 static TotemPlParserResult
-totem_pl_parser_add_quicktime (TotemPlParser *parser, const char *url, gpointer data)
+totem_pl_parser_add_quicktime (TotemPlParser *parser, const char *url,
+			       const char *base, gpointer data)
 {
 	if (data == NULL || totem_pl_parser_is_quicktime (data, strlen (data)) == FALSE) {
 		totem_pl_parser_add_one_url (parser, url, NULL);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
 
-	return totem_pl_parser_add_quicktime_metalink (parser, url, data);
+	return totem_pl_parser_add_quicktime_metalink (parser, url, base, data);
 }
 
 static TotemPlParserResult
-totem_pl_parser_add_desktop (TotemPlParser *parser, const char *url, gpointer data)
+totem_pl_parser_add_desktop (TotemPlParser *parser, const char *url,
+			     const char *base, gpointer data)
 {
 	char *contents, **lines;
 	const char *path, *display_name, *type;
@@ -1969,7 +2001,7 @@ totem_pl_parser_add_desktop (TotemPlParser *parser, const char *url, gpointer da
 	if (totem_pl_parser_ignore (parser, path) == FALSE) {
 		totem_pl_parser_add_one_url (parser, path, display_name);
 	} else {
-		if (totem_pl_parser_parse_internal (parser, path) != TOTEM_PL_PARSER_RESULT_SUCCESS)
+		if (totem_pl_parser_parse_internal (parser, path, NULL) != TOTEM_PL_PARSER_RESULT_SUCCESS)
 			totem_pl_parser_add_one_url (parser, path, display_name);
 	}
 
@@ -2066,7 +2098,7 @@ totem_pl_parser_iso_get_title (const char *url)
 
 static TotemPlParserResult
 totem_pl_parser_add_iso (TotemPlParser *parser, const char *url,
-		gpointer data)
+			 const char *base, gpointer data)
 {
 	GnomeVFSFileInfo *info;
 	char *item, *label;
@@ -2099,7 +2131,7 @@ totem_pl_parser_add_iso (TotemPlParser *parser, const char *url,
 
 static TotemPlParserResult
 totem_pl_parser_add_cue (TotemPlParser *parser, const char *url,
-		gpointer data)
+			 const char *base, gpointer data)
 {
 	char *vcdurl;
 
@@ -2188,7 +2220,7 @@ parse_xspf_entries (TotemPlParser *parser, char *base, xmlDocPtr doc,
 
 static TotemPlParserResult
 totem_pl_parser_add_xspf (TotemPlParser *parser, const char *url,
-		gpointer data)
+			  const char *_base, gpointer data)
 {
 	xmlDocPtr doc;
 	xmlNodePtr node;
@@ -2220,7 +2252,7 @@ totem_pl_parser_add_xspf (TotemPlParser *parser, const char *url,
 
 static TotemPlParserResult
 totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
-			   gpointer data)
+			       const char *base, gpointer data)
 {
 	MediaType type;
 	GList *list, *l;
@@ -2267,7 +2299,7 @@ totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 		fullpath = g_strconcat (url, "/", name, NULL);
 		g_free (name);
 
-		ret = totem_pl_parser_parse_internal (parser, fullpath);
+		ret = totem_pl_parser_parse_internal (parser, fullpath, NULL);
 		if (ret != TOTEM_PL_PARSER_RESULT_SUCCESS && ret != TOTEM_PL_PARSER_RESULT_IGNORED)
 			totem_pl_parser_add_one_url (parser, fullpath, NULL);
 
@@ -2553,7 +2585,8 @@ totem_pl_parser_ignore_from_mimetype (TotemPlParser *parser, const char *mimetyp
 }
 
 static TotemPlParserResult
-totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
+totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url,
+				const char *base)
 {
 	char *mimetype;
 	guint i;
@@ -2625,7 +2658,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 					g_free (data);
 					return TOTEM_PL_PARSER_RESULT_IGNORED;
 				}
-				ret = (* special_types[i].func) (parser, url, data);
+				ret = (* special_types[i].func) (parser, url, base, data);
 				found = TRUE;
 				break;
 			}
@@ -2638,7 +2671,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 					g_free (mimetype);
 					mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data, parser);
 				}
-				ret = (* dual_types[i].func) (parser, url, data);
+				ret = (* dual_types[i].func) (parser, url, base, data);
 				found = TRUE;
 				break;
 			}
@@ -2672,8 +2705,8 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url)
 }
 
 TotemPlParserResult
-totem_pl_parser_parse (TotemPlParser *parser, const char *url,
-		       gboolean fallback)
+totem_pl_parser_parse_with_base (TotemPlParser *parser, const char *url,
+				 const char *base, gboolean fallback)
 {
 	g_return_val_if_fail (TOTEM_IS_PL_PARSER (parser), TOTEM_PL_PARSER_RESULT_UNHANDLED);
 	g_return_val_if_fail (url != NULL, TOTEM_PL_PARSER_RESULT_UNHANDLED);
@@ -2686,7 +2719,14 @@ totem_pl_parser_parse (TotemPlParser *parser, const char *url,
 
 	parser->priv->recurse_level = 0;
 	parser->priv->fallback = fallback != FALSE;
-	return totem_pl_parser_parse_internal (parser, url);
+	return totem_pl_parser_parse_internal (parser, url, base);
+}
+
+TotemPlParserResult
+totem_pl_parser_parse (TotemPlParser *parser, const char *url,
+		       gboolean fallback)
+{
+	return totem_pl_parser_parse_with_base (parser, url, NULL, fallback);
 }
 
 void

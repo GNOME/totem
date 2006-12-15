@@ -108,7 +108,13 @@ void	   totem_pl_parser_add_ignored_scheme (TotemPlParser *parser,
 					       const char *scheme);
 void       totem_pl_parser_add_ignored_mimetype (TotemPlParser *parser,
 						 const char *mimetype);
-TotemPlParserResult totem_pl_parser_parse (TotemPlParser *parser, const char *url, gboolean fallback);
+
+TotemPlParserResult totem_pl_parser_parse (TotemPlParser *parser,
+					   const char *url, gboolean fallback);
+TotemPlParserResult totem_pl_parser_parse_with_base (TotemPlParser *parser,
+						     const char *url,
+						     const char *base,
+						     gboolean fallback);
 
 TotemPlParser *totem_pl_parser_new (void);
 
