@@ -34,6 +34,11 @@
 #include <glade/glade.h>
 #include <gconf/gconf-client.h>
 
+#define SN_API_NOT_YET_FROZEN
+#include <libsn/sn.h>
+#include <gdk/gdk.h>
+#include <gdk/gdkx.h>
+
 #include <totem-pl-parser.h>
 
 #include <dbus/dbus-glib.h>
@@ -49,6 +54,7 @@
 
 #include "totem-plugin-viewer-commands.h"
 #include "totem-plugin-viewer-options.h"
+#include "totempluginviewer-marshal.h"
 
 GtkWidget *totem_statusbar_create (void);
 GtkWidget *totem_volume_create (void);
@@ -156,7 +162,7 @@ static gboolean totem_embedded_play (TotemEmbedded *embedded, GError **error);
 
 static void totem_embedded_clear_playlist (TotemEmbedded *embedded);
 
-static void totem_embedded_set_menu (TotemEmbedded *emb, gboolean enable_copy);
+static void totem_embedded_update_menu (TotemEmbedded *emb);
 static void on_open1_activate (GtkButton *button, TotemEmbedded *emb);
 
 enum {
@@ -187,19 +193,20 @@ totem_embedded_finalize (GObject *object)
 
 static void totem_embedded_class_init (TotemEmbeddedClass *klass)
 {
+	GType param_types[2];
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
 	object_class->finalize = totem_embedded_finalize;
 
+	param_types[0] = param_types[1] = G_TYPE_UINT;
 	signals[BUTTON_PRESS] =
 		g_signal_newv ("button-press",
 				G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST,
 				NULL /* class closure */,
 				NULL /* accu */, NULL /* accu data */,
-				g_cclosure_marshal_VOID__VOID,
-				G_TYPE_NONE,
-				0, NULL);
+				totempluginviewer_marshal_VOID__UINT_UINT,
+				G_TYPE_NONE, 2, param_types);
 	signals[START_STREAM] =
 		g_signal_newv ("start-stream",
 				G_TYPE_FROM_CLASS (object_class),
@@ -366,11 +373,7 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 		totem_embedded_set_pp_state (emb, TRUE);
 	}
 
-	if (emb->is_browser_stream) {
-		totem_embedded_set_menu (emb, FALSE);
-	} else {
-		totem_embedded_set_menu (emb, TRUE);
-	}
+	totem_embedded_update_menu (emb);
 
 	return retval;
 }
@@ -458,33 +461,312 @@ totem_embedded_set_href (TotemEmbedded *embedded,
 	return TRUE;
 }
 
+/* Copied from nautilus-program-choosing.c */
+
+extern char **environ;
+
+/* Cut and paste from gdkspawn-x11.c */
+static gchar **
+my_gdk_spawn_make_environment_for_screen (GdkScreen  *screen,
+					  gchar     **envp)
+{
+  gchar **retval = NULL;
+  gchar  *display_name;
+  gint    display_index = -1;
+  gint    i, env_len;
+
+  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
+
+  if (envp == NULL)
+    envp = environ;
+
+  for (env_len = 0; envp[env_len]; env_len++)
+    if (strncmp (envp[env_len], "DISPLAY", strlen ("DISPLAY")) == 0)
+      display_index = env_len;
+
+  retval = g_new (char *, env_len + 1);
+  retval[env_len] = NULL;
+
+  display_name = gdk_screen_make_display_name (screen);
+
+  for (i = 0; i < env_len; i++)
+    if (i == display_index)
+      retval[i] = g_strconcat ("DISPLAY=", display_name, NULL);
+    else
+      retval[i] = g_strdup (envp[i]);
+
+  g_assert (i == env_len);
+
+  g_free (display_name);
+
+  return retval;
+}
+
+
+static void
+sn_error_trap_push (SnDisplay *display,
+		    Display   *xdisplay)
+{
+	gdk_error_trap_push ();
+}
+
+static void
+sn_error_trap_pop (SnDisplay *display,
+		   Display   *xdisplay)
+{
+	gdk_error_trap_pop ();
+}
+
+static char **
+make_spawn_environment_for_sn_context (SnLauncherContext *sn_context,
+				       char             **envp)
+{
+	char **retval;
+	int    i, j;
+
+	retval = NULL;
+	
+	if (envp == NULL) {
+		envp = environ;
+	}
+	
+	for (i = 0; envp[i]; i++) {
+		/* Count length */
+	}
+
+	retval = g_new (char *, i + 2);
+
+	for (i = 0, j = 0; envp[i]; i++) {
+		if (!g_str_has_prefix (envp[i], "DESKTOP_STARTUP_ID=")) {
+			retval[j] = g_strdup (envp[i]);
+			++j;
+	        }
+	}
+
+	retval[j] = g_strdup_printf ("DESKTOP_STARTUP_ID=%s",
+				     sn_launcher_context_get_startup_id (sn_context));
+	++j;
+	retval[j] = NULL;
+
+	return retval;
+}
+
+/* This should be fairly long, as it's confusing to users if a startup
+ * ends when it shouldn't (it appears that the startup failed, and
+ * they have to relaunch the app). Also the timeout only matters when
+ * there are bugs and apps don't end their own startup sequence.
+ *
+ * This timeout is a "last resort" timeout that ignores whether the
+ * startup sequence has shown activity or not.  Metacity and the
+ * tasklist have smarter, and correspondingly able-to-be-shorter
+ * timeouts. The reason our timeout is dumb is that we don't monitor
+ * the sequence (don't use an SnMonitorContext)
+ */
+#define STARTUP_TIMEOUT_LENGTH (30 /* seconds */ * 1000)
+
+typedef struct
+{
+	GdkScreen *screen;
+	GSList *contexts;
+	guint timeout_id;
+} StartupTimeoutData;
+
+static void
+free_startup_timeout (void *data)
+{
+	StartupTimeoutData *std;
+
+	std = data;
+
+	g_slist_foreach (std->contexts,
+			 (GFunc) sn_launcher_context_unref,
+			 NULL);
+	g_slist_free (std->contexts);
+
+	if (std->timeout_id != 0) {
+		g_source_remove (std->timeout_id);
+		std->timeout_id = 0;
+	}
+
+	g_free (std);
+}
+
+static gboolean
+startup_timeout (void *data)
+{
+	StartupTimeoutData *std;
+	GSList *tmp;
+	GTimeVal now;
+	int min_timeout;
+
+	std = data;
+
+	min_timeout = STARTUP_TIMEOUT_LENGTH;
+	
+	g_get_current_time (&now);
+	
+	tmp = std->contexts;
+	while (tmp != NULL) {
+		SnLauncherContext *sn_context;
+		GSList *next;
+		long tv_sec, tv_usec;
+		double elapsed;
+		
+		sn_context = tmp->data;
+		next = tmp->next;
+		
+		sn_launcher_context_get_last_active_time (sn_context,
+							  &tv_sec, &tv_usec);
+
+		elapsed =
+			((((double)now.tv_sec - tv_sec) * G_USEC_PER_SEC +
+			  (now.tv_usec - tv_usec))) / 1000.0;
+
+		if (elapsed >= STARTUP_TIMEOUT_LENGTH) {
+			std->contexts = g_slist_remove (std->contexts,
+							sn_context);
+			sn_launcher_context_complete (sn_context);
+			sn_launcher_context_unref (sn_context);
+		} else {
+			min_timeout = MIN (min_timeout, (STARTUP_TIMEOUT_LENGTH - elapsed));
+		}
+		
+		tmp = next;
+	}
+
+	if (std->contexts == NULL) {
+		std->timeout_id = 0;
+	} else {
+		std->timeout_id = g_timeout_add (min_timeout,
+						 startup_timeout,
+						 std);
+	}
+
+	/* always remove this one, but we may have reinstalled another one. */
+	return FALSE;
+}
+
+static void
+add_startup_timeout (GdkScreen         *screen,
+		     SnLauncherContext *sn_context)
+{
+	StartupTimeoutData *data;
+
+	data = g_object_get_data (G_OBJECT (screen), "nautilus-startup-data");
+	if (data == NULL) {
+		data = g_new (StartupTimeoutData, 1);
+		data->screen = screen;
+		data->contexts = NULL;
+		data->timeout_id = 0;
+		
+		g_object_set_data_full (G_OBJECT (screen),
+					"nautilus-startup-data",
+					data, free_startup_timeout);		
+	}
+
+	sn_launcher_context_ref (sn_context);
+	data->contexts = g_slist_prepend (data->contexts, sn_context);
+	
+	if (data->timeout_id == 0) {
+		data->timeout_id = g_timeout_add (STARTUP_TIMEOUT_LENGTH,
+						  startup_timeout,
+						  data);		
+	}
+}
+
 static gboolean
 totem_embedded_launch_player (TotemEmbedded *embedded,
 			      const char *uri,
+ 			      guint32 user_time,
 			      GError *error)
 {
-	GList *l = NULL;
+	GList *uris = NULL;
+	GdkScreen *screen;
+	GnomeVFSResult result;
+	SnLauncherContext *sn_context;
+	SnDisplay *sn_display;
+	char **envp;
 
-	//FIXME that errors out sometimes, because it's silly
-	g_return_val_if_fail (embedded->app != NULL, TRUE);
+	g_return_val_if_fail (embedded->app != NULL, FALSE);
 
 	if (uri != NULL) {
-		l = g_list_prepend (l, (gpointer) uri);
+		uris = g_list_prepend (uris, (gpointer) uri);
 	} else if (embedded->type == TOTEM_PLUGIN_TYPE_NARROWSPACE
-	    && embedded->href_uri != NULL) {
-		l = g_list_prepend (l, embedded->href_uri);
+		   && embedded->href_uri != NULL) {
+		uris = g_list_prepend (uris, embedded->href_uri);
 	} else {
-		l = g_list_prepend (l, embedded->current_uri);
+		uris = g_list_prepend (uris, embedded->current_uri);
 	}
 
-	/* FIXME: launch with startup ID and startup notification! */
-	if (gnome_vfs_mime_application_launch (embedded->app, l) == GNOME_VFS_OK) {
-		totem_embedded_stop (embedded, NULL);
+	screen = gtk_widget_get_screen (embedded->window);
+	g_return_val_if_fail (screen != NULL, FALSE);
+	envp = my_gdk_spawn_make_environment_for_screen (screen, NULL);
+
+	sn_display = sn_display_new (gdk_display,
+				     sn_error_trap_push,
+				     sn_error_trap_pop);
+
+	if (gnome_vfs_mime_application_supports_startup_notification (embedded->app)) {
+		char *name;
+
+		sn_context = sn_launcher_context_new (sn_display,
+						      gdk_screen_get_number (screen));
+
+		name = g_filename_display_basename (uri);
+		if (name != NULL) {
+			char *description;
+
+			sn_launcher_context_set_name (sn_context, name);
+			description = g_strdup_printf (_("Opening %s"), name);
+			sn_launcher_context_set_description (sn_context,
+							     description);
+			g_free (name);
+			g_free (description);
+		}
+
+		if (!sn_launcher_context_get_initiated (sn_context)) {
+			const char *binary_name;
+			char **old_envp;
+
+			binary_name = gnome_vfs_mime_application_get_binary_name
+				(embedded->app);
+
+			sn_launcher_context_set_binary_name (sn_context,
+							     binary_name);
+
+			sn_launcher_context_initiate (sn_context,
+						      g_get_prgname (),
+						      binary_name,
+						      (Time) user_time);
+
+			old_envp = envp;
+			envp = make_spawn_environment_for_sn_context
+				(sn_context, envp);
+			g_strfreev (old_envp);
+		}
+	} else {
+		sn_context = NULL;
+  	}
+  
+	result = gnome_vfs_mime_application_launch_with_env (embedded->app,
+							     uris, envp);
+
+	if (sn_context != NULL) {
+		if (result != GNOME_VFS_OK) {
+			/* end sequence */
+			sn_launcher_context_complete (sn_context);
+		} else {
+			add_startup_timeout (screen, sn_context);
+		}
+		sn_launcher_context_unref (sn_context);
 	}
 
-	g_list_free (l);
+	sn_display_unref (sn_display);
 
-	return TRUE;
+	g_list_free (uris);
+	g_strfreev (envp);
+
+	return (result == GNOME_VFS_OK);
 }
 
 static void
@@ -638,15 +920,10 @@ totem_embedded_set_playlist (TotemEmbedded *emb,
 }
 
 static void
-totem_embedded_set_menu (TotemEmbedded *emb,
-			 gboolean enable_copy)
+totem_embedded_update_menu (TotemEmbedded *emb)
 {
 	GtkWidget *menu, *item, *image;
-	GtkWidget *copy;
 	char *label;
-
-	copy = glade_xml_get_widget (emb->menuxml, "copy_location1");
-	gtk_widget_set_sensitive (copy, enable_copy);
 
 	if (emb->menu_item != NULL) {
 		gtk_widget_destroy (emb->menu_item);
@@ -656,9 +933,6 @@ totem_embedded_set_menu (TotemEmbedded *emb,
 		gnome_vfs_mime_application_free (emb->app);
 		emb->app = NULL;
 	}
-
-	if (enable_copy == FALSE)
-		return;
 
 	if (emb->mimetype) {
 		emb->app = gnome_vfs_mime_get_default_application_for_uri
@@ -681,7 +955,7 @@ totem_embedded_set_menu (TotemEmbedded *emb,
 	image = gtk_image_new_from_stock (GTK_STOCK_OPEN, GTK_ICON_SIZE_MENU);
 	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item), image);
 	g_signal_connect (G_OBJECT (item), "activate",
-			G_CALLBACK (on_open1_activate), emb);
+			  G_CALLBACK (on_open1_activate), emb);
 	gtk_widget_show (item);
 	emb->menu_item = item;
 
@@ -692,7 +966,10 @@ totem_embedded_set_menu (TotemEmbedded *emb,
 static void
 on_open1_activate (GtkButton *button, TotemEmbedded *emb)
 {
-	totem_embedded_launch_player (emb, NULL, NULL);
+	GTimeVal val;
+	g_get_current_time (&val);
+	totem_embedded_launch_player (emb, NULL, val.tv_sec, NULL);
+	totem_embedded_stop (emb, NULL);
 }
 
 static void
@@ -826,12 +1103,13 @@ on_video_button_press_event (BaconVideoWidget *bvw,
 	    event->button == 1 &&
 	    state == 0 &&
 	    emb->state == STATE_STOPPED) {
+		g_message ("emitting signal");
 		g_signal_emit (emb, signals[BUTTON_PRESS], 0,
 			       event->time,
 			       event->button);
 	} else if (event->type == GDK_BUTTON_PRESS &&
-		 event->button == 3 &&
-		 state == 0) {
+		   event->button == 3 &&
+		   state == 0) {
 		GtkMenu *menu;
 
 		menu = GTK_MENU (glade_xml_get_widget (emb->menuxml, "menu"));

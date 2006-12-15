@@ -40,9 +40,13 @@
     </method>
     <method name="LaunchPlayer">
        <arg type="s" name="URI" direction="in" />
+       <arg type="u" name="Time" direction="in" />
     </method>
 
-    <signal name="ButtonPress" />
+    <signal name="ButtonPress">
+      <arg type="u" name="Time" />
+      <arg type="u" name="Button" />
+    </signal>
     <signal name="StartStream" />
     <signal name="StopStream" />
   </interface>

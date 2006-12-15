@@ -3,11 +3,14 @@ SUBDIRS = idl
 plugindir = $(libdir)/mozilla/plugins
 plugin_LTLIBRARIES =
 
-BUILT_SOURCES =
+BUILT_SOURCES = $(VIEWERMARSHALFILES)
 
 EXTRA_DIST = \
 	plugin.symbols	\
-	TODO
+	TODO		\
+	totempluginviewer-marshal.list
+
+CLEANFILES = $(BUILT_SOURCES)
 
 gecko_include_subdirs = \
 	.		\
@@ -15,6 +18,23 @@ gecko_include_subdirs = \
 	dom		\
 	necko		\
 	xpcom
+
+# Marshaller
+VIEWERMARSHALFILES = totempluginviewer-marshal.c totempluginviewer-marshal.h
+GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
+
+totempluginviewer-marshal.h: totempluginviewer-marshal.list
+	( $(GLIB_GENMARSHAL) --prefix=totempluginviewer_marshal $(srcdir)/totempluginviewer-marshal.list --header > totempluginviewer-marshal.h )
+totempluginviewer-marshal.c: totempluginviewer-marshal.list
+	( $(GLIB_GENMARSHAL) --prefix=totempluginviewer_marshal $(srcdir)/totempluginviewer-marshal.list --body --header > totempluginviewer-marshal.c )
+
+noinst_LTLIBRARIES = libtotempluginviewer_marshal.la
+
+libtotempluginviewer_marshal_la_SOURCES =	\
+	totempluginviewer-marshal.h		\
+	totempluginviewer-marshal.c
+
+libtotempluginviewer_marshal_la_CFLAGS = $(AM_CFLAGS) $(EXTRA_GNOME_CFLAGS)
 
 # Totem Plugin Viewer
 
@@ -52,11 +72,12 @@ totem_plugin_viewer_CFLAGS = \
 	$(NVTV_CFLAGS)		\
 	$(AM_CFLAGS)
 
-totem_plugin_viewer_LDADD = \
-	$(top_builddir)/src/backend/libbaconvideowidget.la	\
-	$(top_builddir)/src/libbaconpropertiespage.la		\
-	$(top_builddir)/src/libtotem_player.la			\
-	$(top_builddir)/src/plparse/libtotem-plparser.la	\
+totem_plugin_viewer_LDADD =						\
+	$(top_builddir)/src/backend/libbaconvideowidget.la		\
+	$(top_builddir)/src/libbaconpropertiespage.la			\
+	$(top_builddir)/src/libtotem_player.la				\
+	$(top_builddir)/src/plparse/libtotem-plparser.la		\
+	$(top_builddir)/browser-plugin/libtotempluginviewer_marshal.la	\
 	$(EXTRA_GNOME_LIBS)	\
 	$(XVIDMODE_LIBS) 	\
 	$(DBUS_LIBS)		\
@@ -79,13 +100,13 @@ if ENABLE_BASIC_PLUGIN
 
 plugin_LTLIBRARIES += libtotem-basic-plugin.la
 
-libtotem_basic_plugin_la_SOURCES = \
-	totemPluginGlue.cpp	\
-	totemPluginGlue.h	\
-	totemPlugin.cpp		\
-	totemPlugin.h		\
-	totemBasicPlugin.cpp	\
-	totemBasicPlugin.h	\
+libtotem_basic_plugin_la_SOURCES =	\
+	totemPluginGlue.cpp		\
+	totemPluginGlue.h		\
+	totemPlugin.cpp			\
+	totemPlugin.h			\
+	totemBasicPlugin.cpp		\
+	totemBasicPlugin.h		\
 	totem-plugin-viewer-commands.h
 
 libtotem_basic_plugin_la_CPPFLAGS = \
@@ -116,8 +137,9 @@ libtotem_basic_plugin_la_CXXFLAGS = \
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CXXFLAGS)
 
-libtotem_basic_plugin_la_LIBADD = \
-	$(top_builddir)/src/plparse/libtotem-plparser-mini.la	\
+libtotem_basic_plugin_la_LIBADD =					\
+	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
+	$(top_builddir)/browser-plugin/libtotempluginviewer_marshal.la	\
 	$(DBUS_LIBS)	\
  	$(MOZILLA_LIBS)	\
 	$(LIBXPCOMGLUE_S)
@@ -136,13 +158,13 @@ if ENABLE_GMP_PLUGIN
 
 plugin_LTLIBRARIES += libtotem-gmp-plugin.la
 
-libtotem_gmp_plugin_la_SOURCES = \
-	totemPluginGlue.cpp	\
-	totemPluginGlue.h	\
-	totemPlugin.cpp		\
-	totemPlugin.h		\
-	totemGMPPlugin.cpp	\
-	totemGMPPlugin.h	\
+libtotem_gmp_plugin_la_SOURCES =	\
+	totemPluginGlue.cpp		\
+	totemPluginGlue.h		\
+	totemPlugin.cpp			\
+	totemPlugin.h			\
+	totemGMPPlugin.cpp		\
+	totemGMPPlugin.h		\
 	totem-plugin-viewer-commands.h
 
 libtotem_gmp_plugin_la_CPPFLAGS = \
@@ -173,8 +195,9 @@ libtotem_gmp_plugin_la_CXXFLAGS = \
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CXXFLAGS)
 
-libtotem_gmp_plugin_la_LIBADD = \
-	$(top_builddir)/src/plparse/libtotem-plparser-mini.la	\
+libtotem_gmp_plugin_la_LIBADD =						\
+	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
+	$(top_builddir)/browser-plugin/libtotempluginviewer_marshal.la	\
 	$(DBUS_LIBS)	\
  	$(MOZILLA_LIBS)	\
 	$(LIBXPCOMGLUE_S)
@@ -193,13 +216,13 @@ if ENABLE_COMPLEX_PLUGIN
 
 plugin_LTLIBRARIES += libtotem-complex-plugin.la
 
-libtotem_complex_plugin_la_SOURCES = \
-	totemPluginGlue.cpp	\
-	totemPluginGlue.h	\
-	totemPlugin.cpp		\
-	totemPlugin.h		\
-	totemComplexPlugin.cpp	\
-	totemComplexPlugin.h	\
+libtotem_complex_plugin_la_SOURCES =	\
+	totemPluginGlue.cpp		\
+	totemPluginGlue.h		\
+	totemPlugin.cpp			\
+	totemPlugin.h			\
+	totemComplexPlugin.cpp		\
+	totemComplexPlugin.h		\
 	totem-plugin-viewer-commands.h
 
 libtotem_complex_plugin_la_CPPFLAGS = \
@@ -230,8 +253,9 @@ libtotem_complex_plugin_la_CXXFLAGS = \
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CXXFLAGS)
 
-libtotem_complex_plugin_la_LIBADD = \
-	$(top_builddir)/src/plparse/libtotem-plparser-mini.la	\
+libtotem_complex_plugin_la_LIBADD =					\
+	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
+	$(top_builddir)/browser-plugin/libtotempluginviewer_marshal.la	\
 	$(DBUS_LIBS)	\
  	$(MOZILLA_LIBS)	\
 	$(LIBXPCOMGLUE_S)
@@ -287,8 +311,9 @@ libtotem_narrowspace_plugin_la_CXXFLAGS = \
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CXXFLAGS)
 
-libtotem_narrowspace_plugin_la_LIBADD = \
-	$(top_builddir)/src/plparse/libtotem-plparser-mini.la	\
+libtotem_narrowspace_plugin_la_LIBADD =					\
+	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
+	$(top_builddir)/browser-plugin/libtotempluginviewer_marshal.la	\
 	$(DBUS_LIBS)	\
  	$(MOZILLA_LIBS)	\
 	$(LIBXPCOMGLUE_S)
@@ -307,13 +332,13 @@ if ENABLE_MULLY_PLUGIN
 
 plugin_LTLIBRARIES += libtotem-mully-plugin.la
 
-libtotem_mully_plugin_la_SOURCES = \
-	totemPluginGlue.cpp	\
-	totemPluginGlue.h	\
-	totemPlugin.cpp		\
-	totemPlugin.h		\
-	totemMullYPlugin.cpp	\
-	totemMullYPlugin.h	\
+libtotem_mully_plugin_la_SOURCES =	\
+	totemPluginGlue.cpp		\
+	totemPluginGlue.h		\
+	totemPlugin.cpp			\
+	totemPlugin.h			\
+	totemMullYPlugin.cpp		\
+	totemMullYPlugin.h		\
 	totem-plugin-viewer-commands.h
 
 libtotem_mully_plugin_la_CPPFLAGS = \
@@ -344,8 +369,9 @@ libtotem_mully_plugin_la_CXXFLAGS = \
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CXXFLAGS)
 
-libtotem_mully_plugin_la_LIBADD = \
-	$(top_builddir)/src/plparse/libtotem-plparser-mini.la	\
+libtotem_mully_plugin_la_LIBADD =					\
+	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
+	$(top_builddir)/browser-plugin/libtotempluginviewer_marshal.la	\
 	$(DBUS_LIBS)	\
  	$(MOZILLA_LIBS)	\
 	$(LIBXPCOMGLUE_S)

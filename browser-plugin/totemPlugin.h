@@ -110,8 +110,8 @@ class totemPlugin {
 						       void *aData);
 
     static void PR_CALLBACK ButtonPressCallback (DBusGProxy  *proxy,
-		    				 //guint aButton,
-						 //guint aTimestamp,
+						 guint aTimestamp,
+		    				 guint aButton,
 					         void *aData);
 
     static void PR_CALLBACK StopStreamCallback (DBusGProxy  *proxy,
@@ -132,8 +132,9 @@ class totemPlugin {
     void ViewerSetWindow ();
     void ViewerReady ();
     void ViewerCleanup ();
-    void ViewerButtonPressed ();
 
+    void ViewerButtonPressed (guint aTimestamp,
+		    	      guint aButton);
     void NameOwnerChanged (const char *aName,
 			   const char *aOldOwner,
 			   const char *aNewOwner);

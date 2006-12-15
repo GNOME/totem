@@ -38,6 +38,7 @@
 
 #include "totem-pl-parser-mini.h"
 #include "totem-plugin-viewer-options.h"
+#include "totempluginviewer-marshal.h"
 
 #include "npapi.h"
 #include "npupp.h"
@@ -396,7 +397,12 @@ totemPlugin::ViewerSetup ()
 						  TOTEM_PLUGIN_VIEWER_DBUS_PATH,
 						  TOTEM_PLUGIN_VIEWER_INTERFACE_NAME);
 
+	dbus_g_object_register_marshaller
+		(totempluginviewer_marshal_VOID__UINT_UINT,
+		 G_TYPE_NONE, G_TYPE_UINT, G_TYPE_UINT, G_TYPE_INVALID);
 	dbus_g_proxy_add_signal (mViewerProxy, "ButtonPress",
+				 G_TYPE_UINT,
+				 G_TYPE_UINT,
 				 G_TYPE_INVALID);
 	dbus_g_proxy_connect_signal (mViewerProxy,
 				     "ButtonPress",
@@ -545,7 +551,7 @@ totemPlugin::ViewerReady ()
 }
 
 void
-totemPlugin::ViewerButtonPressed ()
+totemPlugin::ViewerButtonPressed (guint aTimestamp, guint aButton)
 {
 	D ("ButtonPress");
 
@@ -558,6 +564,7 @@ totemPlugin::ViewerButtonPressed ()
 			dbus_g_proxy_call_no_reply (mViewerProxy,
 						    "LaunchPlayer",
 						    G_TYPE_STRING, mHref.get (),
+						    G_TYPE_UINT, time,
 						    G_TYPE_INVALID);
 			return;
 		}
@@ -819,15 +826,15 @@ totemPlugin::ViewerForkTimeoutCallback (nsITimer *aTimer,
 
 /* static */ void PR_CALLBACK
 totemPlugin::ButtonPressCallback (DBusGProxy *proxy,
-				  //guint aButton,
-				  //guint aTimestamp,
+				  guint aTimestamp,
+				  guint aButton,
 			          void *aData)
 {
 	totemPlugin *plugin = NS_REINTERPRET_CAST (totemPlugin*, aData);
 
 	D ("ButtonPress signal received");
 
-	plugin->ViewerButtonPressed ();
+	plugin->ViewerButtonPressed (aTimestamp, aButton);
 }
 
 /* static */ void PR_CALLBACK

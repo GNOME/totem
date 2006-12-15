@@ -1,3 +1,24 @@
+2006-12-15  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/.cvsignore:
+	* browser-plugin/Makefile.am:
+	* browser-plugin/org_gnome_totem_PluginViewer.xml:
+	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_class_init), (totem_embedded_open_internal),
+	(my_gdk_spawn_make_environment_for_screen), (sn_error_trap_push),
+	(sn_error_trap_pop), (make_spawn_environment_for_sn_context),
+	(free_startup_timeout), (startup_timeout), (add_startup_timeout),
+	(totem_embedded_launch_player), (totem_embedded_update_menu),
+	(on_open1_activate), (on_video_button_press_event):
+	* browser-plugin/totemPlugin.cpp:
+	* browser-plugin/totemPlugin.h:
+	* browser-plugin/totempluginviewer-marshal.list:
+	Pass timestamps when launching the player from the plugin,
+	Add startup notification support when launching the stand-alone player,
+	only stop the playback when launching from the "Open" menu item,
+	otherwise we get black on-screen bits with GStreamer
+	(Closes: #375674)
+
 2006-12-14  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
