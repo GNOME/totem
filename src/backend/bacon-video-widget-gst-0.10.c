@@ -117,6 +117,7 @@ struct BaconVideoWidgetPrivate
 
   gboolean                     media_has_video;
   gboolean                     media_has_audio;
+  gint                         seekable; /* -1 = don't know, FALSE = no */
   gint64                       stream_length;
   gint64                       current_time_nanos;
   gint64                       current_time;
@@ -2401,6 +2402,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 		  "suburi", subtitle_uri, NULL);
   }
 
+  bvw->priv->seekable = -1;
   bvw->priv->target_state = GST_STATE_PAUSED;
 
   gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
@@ -3484,11 +3486,32 @@ bacon_video_widget_is_seekable (BaconVideoWidget * bvw)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
+  if (bvw->priv->seekable == -1) {
+    GstQuery *query;
+
+    query = gst_query_new_seeking (GST_FORMAT_TIME);
+    if (gst_element_query (bvw->priv->play, query)) {
+      gst_query_parse_seeking (query, NULL, &res, NULL, NULL);
+      bvw->priv->seekable = (res) ? 1 : 0;
+    } else {
+      GST_DEBUG ("seeking query failed");
+    }
+    gst_query_unref (query);
+  }
+
+  if (bvw->priv->seekable != -1) {
+    res = (bvw->priv->seekable != 0);
+    goto done;
+  }
+
+  /* try to guess from duration (this is very unreliable though) */
   if (bvw->priv->stream_length == 0) {
     res = (bacon_video_widget_get_stream_length (bvw) > 0);
   } else {
     res = (bvw->priv->stream_length > 0);
   }
+
+done:
 
   GST_DEBUG ("stream is%s seekable", (res) ? "" : " not");
   return res;
