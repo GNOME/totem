@@ -1977,6 +1977,12 @@ parse_xspf_track (TotemPlParser *parser, char *base, xmlDocPtr doc,
 			title = xmlNodeListGetString(doc, node->xmlChildrenNode, 1);
 	}
 
+	if (url == NULL) {
+		if (title)
+			xmlFree (title);
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+	}
+
 	fullpath = totem_pl_resolve_url (base, (char *)url);
 	totem_pl_parser_add_one_url (parser, fullpath, (char *)title);
 	retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
