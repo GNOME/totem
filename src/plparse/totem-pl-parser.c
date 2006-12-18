@@ -2160,10 +2160,16 @@ parse_xspf_track (TotemPlParser *parser, char *base, xmlDocPtr doc,
 			continue;
 
 		if (g_ascii_strcasecmp ((char *)node->name, "location") == 0)
-			url = xmlNodeListGetString(doc, node->xmlChildrenNode, 1);
+			url = xmlNodeListGetString (doc, node->xmlChildrenNode, 1);
 
 		if (g_ascii_strcasecmp ((char *)node->name, "title") == 0)
-			title = xmlNodeListGetString(doc, node->xmlChildrenNode, 1);
+			title = xmlNodeListGetString (doc, node->xmlChildrenNode, 1);
+	}
+
+	if (url == NULL) {
+		if (title)
+			xmlFree (title);
+		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
 	fullpath = totem_pl_resolve_url (base, (char *)url);

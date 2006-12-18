@@ -1,5 +1,10 @@
 2006-12-18  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser.c: (parse_xspf_track): Don't crash
+	if there's no URL found in the XSPF track entry (Closes: #386089)
+
+2006-12-18  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/tests/index.html: print the plugin list
 	* browser-plugin/tests/launch-web-server.sh: add some code to log
 	the user-agent used
