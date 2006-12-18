@@ -44,7 +44,7 @@ static const nsCID kClassID =
   { 0x97, 0x64, 0xf5, 0xab, 0x50, 0xa4, 0x0c, 0x06 } };
 
 static const char kClassDescription[] = "totemNarrowSpacePlugin";
-static const char kPluginDescription[] = "QuickTime Plug-in 7.0 (compatible; Totem)";
+static const char kPluginDescription[] = "QuickTime Plug-in 7.1.3";
 
 static const totemPluginMimeEntry kMimeTypes[] = {
 	{ "video/quicktime", "mov", NULL, FALSE },

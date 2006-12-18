@@ -1,9 +1,24 @@
+<script language="javascript">
+function print_plugins () {
+	document.write('<ul>');
+        for(var i=0; i<navigator.plugins.length; i++) {
+		var name = navigator.plugins[i].name;
+		document.write('<li> \'' + name + '\'<br>');
+	}
+	document.write('</ul>');
+}
+
+</script>
+
+
 <h1>
 Totem Browser Plugin main test page
 </h1><p>
 
 Useful links:<br>
-<ul>
-<li> <a href="about:plugins">Plugins list</a> (Doesn't work)
+<li> Plugin list:
+<script language="javascript">
+print_plugins ();
+</script>
 </ul>
 

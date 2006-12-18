@@ -277,7 +277,7 @@ totemPlugin::ViewerFork ()
 #else
 #error Unknown plugin type
 #endif
-	
+
 	if (userAgent) {
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_USER_AGENT));
 		g_ptr_array_add (arr, g_strdup (userAgent));
