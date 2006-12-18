@@ -1,3 +1,8 @@
+2006-12-18  Irene Huang  <irene.huang@sun.com>
+
+	* src/bacon-volume.c: (cb_dock_key_release): remove grab of
+	the dock button after escape key is released. Fixes bug 385391.
+
 2006-12-16  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c: (size_changed_cb),

@@ -576,6 +576,7 @@ cb_dock_key_release (GtkWidget      * widget,
     display = gtk_widget_get_display (widget);
     gdk_display_keyboard_ungrab (display, event->time);
     gdk_display_pointer_ungrab (display, event->time);
+    gtk_grab_remove (button->dock);
 
     /* hide again */
     gtk_widget_hide (button->dock);
