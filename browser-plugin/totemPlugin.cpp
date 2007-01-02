@@ -60,6 +60,7 @@
 #include <nsIComponentManager.h>
 #include <nsIServiceManager.h>
 #include <nsIProtocolHandler.h>
+#include <nsIExternalProtocolHandler.h>
 
 /* for NS_IOSERVICE_CONTRACTID */
 #include <nsNetCID.h>
@@ -1040,9 +1041,16 @@ totemPlugin::IsSchemeSupported (nsIURI *aURI)
 	nsIProtocolHandler *handler = nsnull;
 	rv = mIOService->GetProtocolHandler (scheme.get (), &handler);
 
-	PRBool isSupported = NS_SUCCEEDED (rv) && handler != nsnull;
+	/* Check that it's not the external protocol handler! */
+	nsIExternalProtocolHandler *extHandler = nsnull;
+	if (NS_SUCCEEDED (rv) && handler) {
+		CallQueryInterface (handler, &extHandler);
+	}
+
+	PRBool isSupported = NS_SUCCEEDED (rv) && handler && !extHandler;
 
 	NS_IF_RELEASE (handler); /* this nullifies |handler| */
+	NS_IF_RELEASE (extHandler);
 
 	D ("IsSchemeSupported scheme '%s': %s", scheme.get (), isSupported ? "yes" : "no");
 
