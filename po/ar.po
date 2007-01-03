@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.gnome-2-16.ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-27 16:33+0000\n"
-"PO-Revision-Date: 2006-11-27 19:34+0200\n"
-"Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
+"POT-Creation-Date: 2007-01-03 21:30+0000\n"
+"PO-Revision-Date: 2006-12-29 13:07+0200\n"
+"Last-Translator: Mohamed Magdy <alnokta@yahoo.com>\n"
 "Language-Team: Arabic <support@arabeyes.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -52,12 +52,12 @@ msgstr "احفظ..."
 #. Channels
 #: ../data/properties.glade.h:1 ../src/bacon-video-widget-properties.c:170
 msgid "0 Channels"
-msgstr ""
+msgstr "0 قنوات"
 
 #. Sample rate
 #: ../data/properties.glade.h:2 ../src/bacon-video-widget-properties.c:168
 msgid "0 Hz"
-msgstr ""
+msgstr "0 هرتز"
 
 #: ../data/properties.glade.h:3
 msgid "0 frames per second"
@@ -90,41 +90,63 @@ msgid "<b>Video</b>"
 msgstr "<b>فيديو</b>"
 
 #: ../data/properties.glade.h:10
-msgid "Album:"
+#, fuzzy
+msgid "<i>Album:</i>"
 msgstr "الألبوم:"
 
 #: ../data/properties.glade.h:11
-msgid "Artist:"
+#, fuzzy
+msgid "<i>Artist:</i>"
 msgstr "الفنان:"
 
 #: ../data/properties.glade.h:12
-msgid "Bitrate:"
+#, fuzzy
+msgid "<i>Bitrate:</i>"
 msgstr "معدّل البايتات:"
 
 #: ../data/properties.glade.h:13
-msgid "Channels:"
-msgstr ""
+#, fuzzy
+msgid "<i>Channels:</i>"
+msgstr "قنوات:"
 
 #: ../data/properties.glade.h:14
-msgid "Codec:"
+#, fuzzy
+msgid "<i>Codec:</i>"
 msgstr "الكودك:"
 
 #: ../data/properties.glade.h:15
-msgid "Dimensions:"
+#, fuzzy
+msgid "<i>Dimensions:</i>"
 msgstr "الأبعاد:"
 
 #: ../data/properties.glade.h:16
-msgid "Duration:"
+#, fuzzy
+msgid "<i>Duration:</i>"
 msgstr "المدة:"
 
 #: ../data/properties.glade.h:17
-msgid "Framerate:"
+#, fuzzy
+msgid "<i>Framerate:</i>"
 msgstr "تردد الاطارات:"
+
+#: ../data/properties.glade.h:18
+#, fuzzy
+msgid "<i>Sample rate:</i>"
+msgstr "معدل العينة:"
+
+#: ../data/properties.glade.h:19
+#, fuzzy
+msgid "<i>Title:</i>"
+msgstr "العنوان:"
+
+#: ../data/properties.glade.h:20
+msgid "<i>Year:</i>"
+msgstr ""
 
 #. Dimensions
 #. Video Codec
 #. Audio Codec
-#: ../data/properties.glade.h:18 ../src/bacon-video-widget-properties.c:153
+#: ../data/properties.glade.h:21 ../src/bacon-video-widget-properties.c:153
 #: ../src/bacon-video-widget-properties.c:155
 #: ../src/bacon-video-widget-properties.c:158
 #: ../src/bacon-video-widget-properties.c:161
@@ -137,33 +159,20 @@ msgstr "تردد الاطارات:"
 msgid "N/A"
 msgstr "غير متوفر"
 
-#: ../data/properties.glade.h:19 ../src/totem-sidebar.c:108
+#: ../data/properties.glade.h:22 ../src/totem-sidebar.c:108
 msgid "Properties"
 msgstr "خصائص"
-
-#: ../data/properties.glade.h:20
-#, fuzzy
-msgid "Sample rate:"
-msgstr "تردد الاطارات:"
-
-#: ../data/properties.glade.h:21
-msgid "Title:"
-msgstr "العنوان:"
 
 #. Title
 #. Artist
 #. Album
 #. Year
-#: ../data/properties.glade.h:22 ../src/bacon-video-widget-properties.c:142
+#: ../data/properties.glade.h:23 ../src/bacon-video-widget-properties.c:142
 #: ../src/bacon-video-widget-properties.c:144
 #: ../src/bacon-video-widget-properties.c:146
 #: ../src/bacon-video-widget-properties.c:148
 msgid "Unknown"
 msgstr "مجهول"
-
-#: ../data/properties.glade.h:23
-msgid "Year:"
-msgstr "السّنة:"
 
 #: ../data/screenshot.glade.h:1
 msgid "<b>Preview</b>"
@@ -283,7 +292,7 @@ msgstr "_سرعة الاتصال:"
 
 #: ../data/totem.glade.h:25
 msgid "Display"
-msgstr "الشاشة"
+msgstr "العرض"
 
 #: ../data/totem.glade.h:26
 msgid "General"
@@ -335,7 +344,7 @@ msgstr ""
 
 #: ../data/totem.glade.h:41
 msgid "Time seek bar"
-msgstr ""
+msgstr "شريط رنو الوقت"
 
 #: ../data/totem.glade.h:42
 msgid "Time:"
@@ -345,11 +354,11 @@ msgstr "الوقت:"
 #: ../data/totem.glade.h:43 ../src/totem.c:862 ../src/totem.c:3255
 #: ../src/totem.c:3282
 msgid "Totem Movie Player"
-msgstr "عارض الأفلام توتم"
+msgstr "مشغل الأفلام توتم"
 
 #: ../data/totem.glade.h:44
 msgid "Totem Preferences"
-msgstr "خيارات توتم"
+msgstr "تفضيلات توتم"
 
 #: ../data/totem.glade.h:45
 msgid "Tv-out in fullscreen by Nvidia (NTSC)"
@@ -399,17 +408,18 @@ msgstr "كمية البيانات التي سيتم تخزينها لتيّار�
 
 #: ../data/totem.schemas.in.h:2
 msgid "Buffer size"
-msgstr "حجم الذاكرة"
+msgstr "حجم البافر"
 
 #: ../data/totem.schemas.in.h:3
 msgid "Default location for the \"Open...\" dialogues"
-msgstr ""
+msgstr "الموقع الافتراضي ل \"افتح...\" صناديق حوار"
 
 #: ../data/totem.schemas.in.h:4
 msgid ""
 "Default location for the \"Open...\" dialogues, default is the current "
 "directory"
 msgstr ""
+"الموقع الافتراضي ل \"افتح...\" صناديق الحوار, الافتراضي هو الدليل الحالي"
 
 #: ../data/totem.schemas.in.h:5
 msgid "Enable deinterlacing"
@@ -597,18 +607,17 @@ msgid "%d kbps"
 msgstr "%d كيلوبت في الثانية"
 
 #: ../src/bacon-video-widget-properties.c:254
-#, fuzzy, c-format
+#, c-format
 msgid "%d Hz"
-msgstr "%d %%"
+msgstr "%d هرتز"
 
 #: ../src/bacon-video-widget-properties.c:294
 msgid "Properties dialog"
 msgstr "حوار الخصائص"
 
 #: ../src/bacon-volume.c:178
-#, fuzzy
 msgid "Volume"
-msgstr "ارفع الصوت"
+msgstr "مستوى الصوت"
 
 #. +
 #: ../src/bacon-volume.c:206
@@ -654,7 +663,7 @@ msgstr "شغّل القرص '%s'"
 #: ../src/totem-menu.c:671
 #, c-format
 msgid "device%d"
-msgstr ""
+msgstr "مشغل%d"
 
 #: ../src/totem-menu.c:986
 msgid "GTK+"
@@ -682,7 +691,8 @@ msgstr ""
 "فريق عربآيز للترجمة http://www.arabeyes.org :\n"
 "يوسف رفه\t<yousef@raffah.com>\n"
 "جهاد عفيفي\t<djihed@gmail.com>\n"
-"خالد حسني\t<khaledhosny@eglug.org>"
+"خالد حسني\t<khaledhosny@eglug.org>\n"
+"محمد مجدى\t<alnokta@yahoo.com>"
 
 #: ../src/totem-menu.c:1079
 msgid "_Movie"
@@ -693,9 +703,8 @@ msgid "_Open..."
 msgstr "ا_فتح..."
 
 #: ../src/totem-menu.c:1080
-#, fuzzy
 msgid "Open a file"
-msgstr "افتح ملف غير محلّي"
+msgstr "افتح ملف"
 
 #: ../src/totem-menu.c:1081
 msgid "Open _Location..."
@@ -710,9 +719,8 @@ msgid "_Eject"
 msgstr "ا_طرد"
 
 #: ../src/totem-menu.c:1083
-#, fuzzy
 msgid "_Properties"
-msgstr "خصائص"
+msgstr "_خواص"
 
 #: ../src/totem-menu.c:1084
 msgid "Play / Pa_use"
@@ -728,7 +736,7 @@ msgstr "إ_نهي"
 
 #: ../src/totem-menu.c:1085
 msgid "Quit the program"
-msgstr ""
+msgstr "اخرج من البرنامج"
 
 #: ../src/totem-menu.c:1087
 msgid "_Edit"
@@ -1037,9 +1045,8 @@ msgid "_Languages"
 msgstr "_لغات"
 
 #: ../src/totem-menu.c:1260
-#, fuzzy
 msgid "Couldn't load the 'ui description' file"
-msgstr "لم يمكن تحميل واجهة '%s'."
+msgstr "'ui description'عجز عن تحميل ملف ال"
 
 #: ../src/totem-options.c:38
 msgid "Enable debug"
@@ -1094,37 +1101,32 @@ msgid "Replace"
 msgstr "استبدِل"
 
 #: ../src/totem-options.c:53
-#, fuzzy
 msgid "Seek"
-msgstr "يونانيّ"
+msgstr "اطمح"
 
 #: ../src/totem-options.c:54
-#, fuzzy
 msgid "Playlist index"
-msgstr "قائمة التشغيل"
+msgstr "فهرس قائمة التشغيل"
 
 #: ../src/totem-options.c:55
-#, fuzzy
 msgid "Movies to play"
-msgstr "الفيلم غير مشتغل."
+msgstr "الأفلام التي ستشغل"
 
 #: ../src/totem-playlist.c:143
-#, fuzzy
 msgid "_Remove"
-msgstr "احذف"
+msgstr "_ازل"
 
 #: ../src/totem-playlist.c:143
 msgid "Remove file from playlist"
-msgstr ""
+msgstr "ازل الملف من قائمة التشغيل"
 
 #: ../src/totem-playlist.c:144
-#, fuzzy
 msgid "_Copy location"
 msgstr "ا_نسخ الموقع"
 
 #: ../src/totem-playlist.c:144
 msgid "Copy the location to the clipboard"
-msgstr ""
+msgstr "ا_نسخ العنوان إلى الحافظة"
 
 #: ../src/totem-playlist.c:362 ../src/totem-playlist.c:901
 msgid "Could not save the playlist"
@@ -1275,15 +1277,15 @@ msgstr "%d %%"
 
 #. eg: Paused, 0:32 / 1:05
 #: ../src/totem-statusbar.c:335
-#, fuzzy, c-format
+#, c-format
 msgid "%s, %s"
-msgstr "%s %s"
+msgstr "%s, %s"
 
 #. eg: Buffering, 75 %
 #: ../src/totem-statusbar.c:340
-#, fuzzy, c-format
+#, c-format
 msgid "%s, %d %%"
-msgstr "%d %%"
+msgstr "%s, %d %%"
 
 #: ../src/totem-subtitle-encoding.c:158
 msgid "Current Locale"
@@ -1529,19 +1531,16 @@ msgid "Totem could not seek in '%s'."
 msgstr "لم يتمكن توتم من البحث '%s'."
 
 #: ../src/totem.c:2919
-#, fuzzy
 msgid "Previous Chapter/Movie"
-msgstr "الفصل/الفيلم ال_سّابق"
+msgstr "الفصل السابق/الفيلم"
 
 #: ../src/totem.c:2925
-#, fuzzy
 msgid "Play / Pause"
 msgstr "شغّل / قِف مؤقتاً"
 
 #: ../src/totem.c:2932
-#, fuzzy
 msgid "Next Chapter/Movie"
-msgstr "الفصل/الفيلم ال_تالي"
+msgstr "الفصل التالي/الفيلم"
 
 #: ../src/totem.c:3112
 msgid "Totem could not startup."
@@ -1557,14 +1556,12 @@ msgstr "تحقق من تثبيت نظامك. سيخرج توتم الآن."
 
 #. Handle command line arguments
 #: ../src/totem.c:3263
-#, fuzzy
 msgid "- Play movies and songs"
-msgstr "اعرض الأفلام و الموسيقى"
+msgstr "- شغل الأفلام والأغاني"
 
 #: ../src/totem.c:3271
-#, fuzzy
 msgid "Totem could not parse the command-line options"
-msgstr "تعذّر عرض محتويات مساعدة توتم."
+msgstr "عجز توتم عن تحليل خيارات سطر الأوامر"
 
 #: ../src/totem.c:3290
 msgid "Totem could not initialize the configuration engine."
@@ -2036,29 +2033,28 @@ msgstr "لم يمكن فتح الملفّ '%s': %s"
 
 #: ../browser-plugin/totem-plugin-viewer.c:329
 msgid "No URI to play"
-msgstr ""
+msgstr "لا يوجدURI للتشغيل"
 
 #. FIXME disp = gnome_vfs_unescape_string_for_display (totem->mrl); ?
 #: ../browser-plugin/totem-plugin-viewer.c:356
 #: ../browser-plugin/totem-plugin-viewer.c:360
-#, fuzzy, c-format
+#, c-format
 msgid "Totem could not play '%s'"
-msgstr "لم يتمكن توتم من عزف '%s'."
+msgstr "توتم عجز عن تشغيل '%s'"
 
 #: ../browser-plugin/totem-plugin-viewer.c:720
-#, fuzzy, c-format
+#, c-format
 msgid "Opening %s"
-msgstr "افتح %s"
+msgstr "جاري الفتح %s"
 
 #: ../browser-plugin/totem-plugin-viewer.c:996
-#, fuzzy, c-format
+#, c-format
 msgid "Browser Plugin using %s"
-msgstr "عارض أفلام يستخدم %s"
+msgstr "ملحق المتصفح يستخدم %s"
 
 #: ../browser-plugin/totem-plugin-viewer.c:1000
-#, fuzzy
 msgid "Totem Browser Plugin"
-msgstr "ملحق توتم لموزيلا"
+msgstr "ملحق متصفح توتم"
 
 #: ../browser-plugin/totem-plugin-viewer.c:1290
 #: ../browser-plugin/totem-plugin-viewer.c:1300
@@ -2077,7 +2073,7 @@ msgstr "قائمة"
 
 #: ../browser-plugin/totem-plugin-viewer.c:1601
 msgid "No playlist or playlist empty"
-msgstr ""
+msgstr "لايوجد قائمة تشغيل أو قائمة التشغيل فارغة"
 
 #: ../browser-plugin/totem-plugin-viewer.c:1720
 msgid "Could not initialise the thread-safe libraries."
@@ -2086,6 +2082,9 @@ msgstr "لم يمكن تشغيل المكتبات النظامية السليم�
 #: ../browser-plugin/totem-plugin-viewer.c:1720
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "راجع تثبيت نظامك. سيخرج ملحق توتم الآن."
+
+#~ msgid "Year:"
+#~ msgstr "السّنة:"
 
 #~ msgid "    "
 #~ msgstr "    "
