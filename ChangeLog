@@ -1,5 +1,12 @@
 2007-01-04  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-menu.c: (escape_device_name_for_menu),
+	(add_device_to_menu): Escape the disc name before adding it
+	to the menu, so we don't have mnemonics when we don't mean
+	to (Closes: #391206)
+
+2007-01-04  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-volume.c: (bacon_volume_button_init),
 	(bacon_volume_button_update_tip),
 	(bacon_volume_scale_value_changed):

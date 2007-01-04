@@ -630,10 +630,23 @@ my_gnome_vfs_volume_get_mount_path (GnomeVFSVolume *volume)
 	return path;
 }
 
+static char *
+escape_device_name_for_menu (const char *name)
+{
+	char *new, **a;
+
+	a = g_strsplit (name, "_", -1);
+	new = g_strjoinv ("__", a);
+	g_strfreev (a);
+
+	return new;
+}
+
 static void
 add_device_to_menu (GObject *device, guint position, Totem *totem)
 {
-	char *name, *icon_name, *device_path, *label, *activation_uri;
+	char *name, *escaped_name, *icon_name, *device_path;
+	char *label, *activation_uri;
 	GtkAction *action;
 	gboolean disabled = FALSE;
 
@@ -664,9 +677,11 @@ add_device_to_menu (GObject *device, guint position, Totem *totem)
 		&my_gnome_vfs_volume_get_mount_path,
 		&gnome_vfs_drive_get_device_path);
 
-	g_strchomp (name);
-	label = g_strdup_printf (_("Play Disc '%s'"), name);
+	g_strstrip (name);
+	escaped_name = escape_device_name_for_menu (name);
 	g_free (name);
+	label = g_strdup_printf (_("Play Disc '%s'"), escaped_name);
+	g_free (escaped_name);
 
 	name = g_strdup_printf (_("device%d"), position);
 	action = gtk_action_new (name, label, NULL, NULL);
