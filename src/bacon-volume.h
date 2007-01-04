@@ -32,18 +32,7 @@ G_BEGIN_DECLS
   (G_TYPE_CHECK_INSTANCE_CAST ((obj), BACON_TYPE_VOLUME_BUTTON, \
 			       BaconVolumeButton))
 
-typedef struct _BaconVolumeButton {
-  GtkButton parent;
-
-  /* popup */
-  GtkWidget *dock, *scale, *image, *plus, *min;
-  GtkIconSize size;
-  gint click_id;
-  float direction;
-  guint32 pop_time;
-  GdkPixbuf *icon[4];
-  guint timeout : 1;
-} BaconVolumeButton;
+typedef struct BaconVolumeButton BaconVolumeButton;
 
 typedef struct _BaconVolumeButtonClass {
   GtkButtonClass parent_class;

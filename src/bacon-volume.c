@@ -38,6 +38,20 @@ enum {
   NUM_SIGNALS
 };
 
+struct BaconVolumeButton {
+  GtkButton parent;
+
+  /* popup */
+  GtkWidget *dock, *scale, *image, *plus, *min;
+  GtkIconSize size;
+  gint click_id;
+  float direction;
+  guint32 pop_time;
+  GdkPixbuf *icon[4];
+  GtkTooltips *tooltips;
+  guint timeout : 1;
+};
+
 static void	bacon_volume_button_class_init	(BaconVolumeButtonClass * klass);
 static void	bacon_volume_button_init	(BaconVolumeButton * button);
 static void	bacon_volume_button_dispose	(GObject        * object);
@@ -134,6 +148,7 @@ bacon_volume_button_init (BaconVolumeButton *button)
   button->timeout = FALSE;
   button->click_id = 0;
   button->dock = button->scale = NULL;
+  button->tooltips = gtk_tooltips_new ();
 }
 
 static void
@@ -749,12 +764,37 @@ bacon_volume_button_update_icon (BaconVolumeButton *button)
 }
 
 static void
+bacon_volume_button_update_tip (BaconVolumeButton *button)
+{
+  GtkRange *range = GTK_RANGE (button->scale);
+  float val = gtk_range_get_value (range);
+  GtkAdjustment *adj;
+  char *str;
+
+  adj = gtk_range_get_adjustment (range);
+
+  if (val == adj->lower) {
+    str = g_strdup (_("Muted"));
+  } else if (val == adj->upper) {
+    str = g_strdup (_("Full Volume"));
+  } else {
+    str = g_strdup_printf ("%d %%",
+			   (int) ((val - adj->lower) / (adj->upper - adj->lower) * 100));
+  }
+
+  gtk_tooltips_set_tip (button->tooltips, GTK_WIDGET (button),
+			str, NULL);
+  g_free (str);
+}
+
+static void
 bacon_volume_scale_value_changed (GtkRange * range)
 {
   BaconVolumeScale *scale = BACON_VOLUME_SCALE (range);
   BaconVolumeButton *button = scale->button;
 
   bacon_volume_button_update_icon (button);
+  bacon_volume_button_update_tip (button);
 
   /* signal */
   g_signal_emit (button, signals[SIGNAL_VALUE_CHANGED], 0);
