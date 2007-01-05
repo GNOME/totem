@@ -1001,8 +1001,7 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
   if (msg->structure)
     type_name = gst_structure_get_name (msg->structure);
 
-  GST_DEBUG ("Element message from element %s: %" GST_PTR_FORMAT, src_name,
-      msg->structure);
+  GST_DEBUG ("from %s: %" GST_PTR_FORMAT, src_name, msg->structure);
 
   if (type_name == NULL)
     goto unhandled;
@@ -1017,6 +1016,17 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
       g_signal_emit (bvw, bvw_signals[SIGNAL_REDIRECT], 0, new_location);
       goto done;
     }
+  } else if (strcmp (type_name, "progress") == 0) {
+    /* this is similar to buffering messages, but shouldn't affect pipeline
+     * state; qtdemux emits those when headers are after movie data and
+     * it is in streaming mode and has to receive all the movie data first */
+    if (!bvw->priv->buffering) {
+      gint percent = 0;
+
+      if (gst_structure_get_int (msg->structure, "percent", &percent))
+        g_signal_emit (bvw, bvw_signals[SIGNAL_BUFFERING], 0, percent);
+    }
+    goto done;
   } else if (strcmp (type_name, "prepare-xwindow-id") == 0 ||
       strcmp (type_name, "have-xwindow-id") == 0) {
     /* we handle these synchroneously or want to ignore them */
