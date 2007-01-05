@@ -2,8 +2,14 @@
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bvw_handle_element_message):
+	Use the right structure field to extract the percentage (#392898).
+
+2007-01-05  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_handle_element_message):
 	  Handle "progress" message that qtdemux >= 0.10.4 posts instead of
-	  a buffering message (Closes: 392898).
+	  a buffering message (Closes: #392898).
 
 2007-01-04  Bastien Nocera  <hadess@hadess.net>
 

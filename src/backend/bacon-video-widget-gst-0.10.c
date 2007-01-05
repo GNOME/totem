@@ -1034,7 +1034,7 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     if (!bvw->priv->buffering) {
       gint percent = 0;
 
-      if (gst_structure_get_int (msg->structure, "progress", &percent))
+      if (gst_structure_get_int (msg->structure, "percent", &percent))
         g_signal_emit (bvw, bvw_signals[SIGNAL_BUFFERING], 0, percent);
     }
     goto done;
