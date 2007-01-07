@@ -1,3 +1,9 @@
+2007-01-08  Christian Persch  <chpe@svn.gnome.org>
+
+	* src/plparse/test-parser.c: (main): Test-parser expects URIs not
+	filenames, so use STRING instead of FILENAME for goption argument
+	parsing. Bug #394009.
+
 2007-01-05  Bastien Nocera  <hadess@hadess.net>
 
 	* data/mime-type-list.txt: Add a bunch of missing

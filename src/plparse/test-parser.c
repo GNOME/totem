@@ -1,3 +1,6 @@
+#include "config.h"
+
+#include <locale.h>
 
 #include <glib.h>
 #include <libgnomevfs/gnome-vfs.h>
@@ -261,13 +264,15 @@ int main (int argc, char **argv)
 		{ "data", 't', 0, G_OPTION_ARG_NONE, &option_data, "Use data instead of filename", NULL },
 		{ "force", 'f', 0, G_OPTION_ARG_NONE, &option_force, "Force parsing", NULL },
 		{ "disable-unsafe", 'u', 0, G_OPTION_ARG_NONE, &option_disable_unsafe, "Disabling unsafe playlist-types", NULL },
-		{ "base-uri", 'b', 0, G_OPTION_ARG_FILENAME, &option_base_uri, "Base URI to resolve relative items from", NULL },
-		{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &files, NULL, "[FILE...]" },
+		{ "base-uri", 'b', 0, G_OPTION_ARG_STRING, &option_base_uri, "Base URI to resolve relative items from", NULL },
+		{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_STRING_ARRAY, &files, NULL, "[URI...]" },
 		{ NULL }
 	};
 	GOptionContext *context;
 	GError *error = NULL;
 	gboolean retval;
+
+	setlocale (LC_ALL, "");
 
 	context = g_option_context_new (NULL);
 	g_option_context_add_main_entries (context, option_entries, NULL);
