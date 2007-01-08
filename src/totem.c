@@ -108,6 +108,8 @@ static void playlist_changed_cb (GtkWidget *playlist, Totem *totem);
 static void play_pause_set_label (Totem *totem, TotemStates state);
 static gboolean on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event, Totem *totem);
 static void popup_timeout_remove (Totem *totem);
+static gint totem_compare_recent_stream_items (GtkRecentInfo *a, GtkRecentInfo *b);
+static void totem_action_add_recent_stream (Totem *totem, const char *uri);
 
 static void
 long_action (void)
@@ -682,13 +684,57 @@ totem_action_open (Totem *totem)
 	totem_action_open_dialog (totem, NULL, TRUE);
 }
 
+static gint
+totem_compare_recent_stream_items (GtkRecentInfo *a, GtkRecentInfo *b)
+{
+	gboolean has_totem_a, has_totem_b;
+
+	has_totem_a = gtk_recent_info_has_group (a, "TotemStreams");
+	has_totem_b = gtk_recent_info_has_group (b, "TotemStreams");
+
+	if (has_totem_a && has_totem_b) {
+		time_t time_a, time_b;
+
+		time_a = gtk_recent_info_get_modified (a);
+		time_b = gtk_recent_info_get_modified (b);
+
+		return (time_b - time_a);
+	} else if (has_totem_a) {
+		return -1;
+	} else if (has_totem_b) {
+		return 1;
+	}
+
+	return 0;
+}
+
+static void
+totem_action_add_recent_stream (Totem *totem, const char *uri)
+{
+	GtkRecentData data;
+	char *groups[] = { "Totem", "TotemStreams", NULL };
+
+	data.display_name = NULL;
+	data.description = NULL;
+	data.mime_type = gnome_vfs_get_mime_type (uri);
+	data.app_name = g_strdup (g_get_application_name ());
+	data.app_exec = g_strjoin (" ", g_get_prgname (), "%u", NULL);
+	data.groups = groups;
+	gtk_recent_manager_add_full (totem->recent_manager,
+			uri, &data);
+
+	g_free (data.mime_type);
+	g_free (data.app_name);
+	g_free (data.app_exec);
+}
+
 //FIXME move the URI to a separate widget
 void
 totem_action_open_location (Totem *totem)
 {
 	GladeXML *glade;
 	char *mrl;
-	GtkWidget *dialog, *entry, *gentry;
+	GtkWidget *dialog, *entry;
 	int response;
 	const char *filenames[2];
 
@@ -699,7 +745,37 @@ totem_action_open_location (Totem *totem)
 
 	dialog = glade_xml_get_widget (glade, "open_uri_dialog");
 	entry = glade_xml_get_widget (glade, "uri");
-	gentry = glade_xml_get_widget (glade, "uri_list");
+
+	GtkEntryCompletion *completion = gtk_entry_completion_new();
+	GtkTreeModel *model = GTK_TREE_MODEL (gtk_list_store_new (1, G_TYPE_STRING));
+
+	gtk_entry_set_completion (GTK_ENTRY (entry), completion);
+
+	/* Add items in Totem's GtkRecentManager to the uri_list GtkEntry's GtkEntryCompletion */
+	GList *recent_items = gtk_recent_manager_get_items (totem->recent_manager);
+
+	if (recent_items != NULL)
+	{
+		recent_items = g_list_sort (recent_items, (GCompareFunc) totem_compare_recent_stream_items);
+
+		GList *p;
+		GtkTreeIter iter;
+
+		for (p = recent_items; p != NULL; p = p->next)
+		{
+			if (!gtk_recent_info_has_group ((GtkRecentInfo *) p->data, "TotemStreams"))
+				continue;
+
+			gtk_list_store_append (GTK_LIST_STORE (model), &iter);
+			gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, gtk_recent_info_get_uri ((GtkRecentInfo *) p->data), -1);
+			gtk_recent_info_unref ((GtkRecentInfo *) p->data);
+		}
+	}
+
+	g_list_free (recent_items);
+
+	gtk_entry_completion_set_model (completion, model);
+	gtk_entry_completion_set_text_column (completion, 0);
 
 	response = gtk_dialog_run (GTK_DIALOG (dialog));
 
@@ -714,13 +790,12 @@ totem_action_open_location (Totem *totem)
 			filenames[1] = NULL;
 			totem_action_open_files (totem, (char **) filenames);
 
+			/* Make sure this stream is added to the TotemStreams recent list */
+			totem_action_add_recent_stream (totem, uri);
+
 			mrl = totem_playlist_get_current_mrl (totem->playlist);
 			totem_action_set_mrl_and_play (totem, mrl);
 			g_free (mrl);
-#ifndef HAVE_GTK_ONLY
-			gnome_entry_append_history (GNOME_ENTRY (gentry),
-					TRUE, uri);
-#endif /* !HAVE_GTK_ONLY */
 		}
 	}
 
