@@ -1,40 +1,51 @@
 SUBDIRS = backend plparse
 
-if TOTEM_VANITY
-VANITY=vanity
-else
-VANITY=
-endif
-
-if HAVE_NAUTILUS
-TOTEM_PROPERTIES_PAGE = libtotem-properties-page.la
-TOTEM_PROPERTIES_PAGE_TEST = test-properties-page
-else
-TOTEM_PROPERTIES_PAGE =
-TOTEM_PROPERTIES_PAGE_TEST =
-endif
-
-bin_PROGRAMS = totem totem-video-thumbnailer totem-video-indexer $(VANITY)
+bin_PROGRAMS = totem totem-video-thumbnailer totem-video-indexer
 libexec_PROGRAMS =
-noinst_PROGRAMS = list_v4l disc-test $(TOTEM_PROPERTIES_PAGE_TEST)
-
+noinst_PROGRAMS = list_v4l disc-test
 noinst_LTLIBRARIES = \
 	libbaconpropertiespage.la \
 	libbaconmessageconnection.la \
 	libtotem_player.la
-nautilus_LTLIBRARIES = $(TOTEM_PROPERTIES_PAGE)
+
+common_defines = \
+	-D_REENTRANT					\
+	-DDBUS_API_SUBJECT_TO_CHANGE			\
+	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
+	-DGCONF_PREFIX=\""/apps/totem"\"		\
+	-DDATADIR=\""$(datadir)"\"			\
+	-DLIBEXECDIR=\""$(libexecdir)"\"		\
+	-DBINDIR=\""$(bindir)"\"				\
+	-DLOGO_PATH=DATADIR\"\"G_DIR_SEPARATOR_S\"totem\"G_DIR_SEPARATOR_S\"totem_logo.png\"
 
 modules_flags = -export_dynamic -avoid-version -module
 
-BACON_VOLUME = \
-	bacon-volume.c			\
-	bacon-volume.h
+# Bacon message connection ltlibrary
 
 BACON_MESSAGE_CONNECTION = \
 	bacon-message-connection.c \
 	bacon-message-connection.h
 
-libbaconmessageconnection_la_SOURCES = $(BACON_MESSAGE_CONNECTION)
+libbaconmessageconnection_la_SOURCES =	\
+	$(BACON_MESSAGE_CONNECTION)
+
+libbaconmessageconnection_la_CPPFLAGS = \
+	$(common_defines)	\
+	$(AM_CPPFLAGS)
+
+libbaconmessageconnection_la_CFLAGS = \
+	$(EXTRA_GNOME_CFLAGS)	\
+	$(WARN_CFLAGS)		\
+	$(DBUS_CFLAGS)		\
+	$(AM_CFLAGS)
+
+libbaconmessageconnection_la_LDFLAGS = \
+	$(AM_LDFLAGS)
+
+
+BACON_VOLUME = \
+	bacon-volume.c			\
+	bacon-volume.h
 
 BACON_V4L_SELECTION =			\
 	video-dev.c			\
@@ -47,16 +58,49 @@ BACONDIR=$(srcdir)/../../libbacon/src
 regenerate-built-sources:
 	EGGFILES="$(BACON_MESSAGE_CONNECTION) $(BACON_VOLUME)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
 
+# Bacon properties page ltlibrary
+
 libbaconpropertiespage_la_SOURCES = \
 	bacon-video-widget-properties.c \
 	bacon-video-widget-properties.h \
 	totem-interface.c		\
 	totem-interface.h
 
+libbaconpropertiespage_la_CPPFLAGS = \
+	-I$(srcdir)/plparse	\
+	-I$(srcdir)/backend	\
+	$(common_defines)	\
+	$(AM_CPPFLAGS)
+
+libbaconpropertiespage_la_CFLAGS = \
+	$(EXTRA_GNOME_CFLAGS)	\
+	$(WARN_CFLAGS)		\
+	$(AM_CFLAGS)
+
+libbaconpropertiespage_la_LDFLAGS = \
+	$(AM_LDFLAGS)
+
+# Totem UI ltlibrary
+
 libtotem_player_la_SOURCES =		\
 	totem-statusbar.c		\
 	totem-statusbar.h		\
 	$(BACON_VOLUME)
+
+libtotem_player_la_CPPFLAGS = \
+	-I$(srcdir)/backend	\
+	$(common_defines)	\
+	$(AM_CPPFLAGS)
+
+libtotem_player_la_CFLAGS = \
+	$(EXTRA_GNOME_CFLAGS)	\
+	$(WARN_CFLAGS)		\
+	$(AM_CFLAGS)
+
+libtotem_player_la_LDFLAGS = \
+	$(AM_LDFLAGS)
+
+# Totem
 
 totem_SOURCES = 					\
 	totem.c totem.h					\
@@ -80,95 +124,266 @@ totem_SOURCES = 					\
 	totem-subtitle-encoding.c	\
 	totem-subtitle-encoding.h
 
-totem_LDADD = \
-	plparse/libtotem-plparser.la backend/libbaconvideowidget.la	\
-	libbaconpropertiespage.la libbaconmessageconnection.la		\
-	libtotem_player.la						\
-	$(EXTRA_GNOME_LIBS) $(REMOTE_LIBS)				\
-	$(XVIDMODE_LIBS) $(NVTV_LIBS)					\
-	$(DBUS_LIBS)							\
-	$(XTEST_LIBS) $(X_LIBS)
+totem_CPPFLAGS = \
+	-I$(srcdir)/plparse		\
+	-I$(srcdir)/backend		\
+	-I$(top_srcdir)/data		\
+	-I$(top_builddir)/data		\
+	-I$(top_builddir)/src/plparse	\
+	$(common_defines)		\
+	$(AM_CPPFLAGS)
 
-totem_video_thumbnailer_SOURCES = totem-video-thumbnailer.c
+totem_CFLAGS = \
+	$(WARN_CFLAGS)		\
+	$(EXTRA_GNOME_CFLAGS)	\
+	$(DBUS_CFLAGS)		\
+	$(NVTV_CFLAGS)		\
+	$(AM_CFLAGS)
+
+totem_LDFLAGS = \
+	$(AM_LDFLAGS)
+
+totem_LDADD = \
+	plparse/libtotem-plparser.la	\
+	backend/libbaconvideowidget.la	\
+	libbaconpropertiespage.la	\
+	libbaconmessageconnection.la	\
+	libtotem_player.la		\
+	$(EXTRA_GNOME_LIBS)		\
+	$(REMOTE_LIBS)			\
+	$(XVIDMODE_LIBS)		\
+	$(NVTV_LIBS)			\
+	$(DBUS_LIBS)			\
+	$(XTEST_LIBS)			\
+	$(X_LIBS)
+
+# Totem video thumbnailer
+
+totem_video_thumbnailer_SOURCES = \
+	totem-video-thumbnailer.c
+
+totem_video_thumbnailer_CPPFLAGS = \
+	-I$(srcdir)/plparse	\
+	-I$(srcdir)/backend	\
+	$(common_defines)	\
+	$(AM_CPPFLAGS)
+
+totem_video_thumbnailer_CFLAGS = \
+	$(EXTRA_GNOME_CFLAGS)	\
+	$(WARN_CFLAGS)		\
+	$(NVTV_CFLAGS)		\
+	$(AM_CFLAGS)
+
+totem_video_thumbnailer_LDFLAGS = \
+	$(AM_LDFLAGS)
+
 totem_video_thumbnailer_LDADD =			\
 	backend/libbaconvideowidget.la		\
-	$(GTK_LIBS) $(XVIDMODE_LIBS)		\
-	$(NVTV_LIBS) $(EXTRA_GNOME_LIBS)	\
-	$(XTEST_LIBS) $(X_LIBS) 
+	$(GTK_LIBS) 				\
+	$(EXTRA_GNOME_LIBS)			\
+	$(NVTV_LIBS)				\
+	$(XTEST_LIBS)				\
+	$(XVIDMODE_LIBS)			\
+	$(X_LIBS)
 
-nautilusdir = $(libdir)/nautilus/extensions-1.0/
-libtotem_properties_page_la_CFLAGS = -I$(top_srcdir) $(WARN_CFLAGS)
+# Nautilus Property Page
+
+if HAVE_NAUTILUS
+
+nautilusdir = $(libdir)/nautilus/extensions-1.0
+nautilus_LTLIBRARIES = libtotem-properties-page.la
+
 libtotem_properties_page_la_SOURCES = 	\
 	totem-properties-main.c		\
 	totem-properties-view.c		\
 	totem-properties-view.h
-libtotem_properties_page_la_LIBADD =					\
-	backend/libbaconvideowidget.la libbaconpropertiespage.la	\
-	$(EXTRA_GNOME_LIBS) $(XVIDMODE_LIBS)				\
-	$(NVTV_LIBS) $(NAUTILUS_LIBS)					\
-	$(XTEST_LIBS) $(X_LIBS)
-libtotem_properties_page_la_LDFLAGS = $(modules_flags)
 
-test_properties_page_CFLAGS = -I$(top_srcdir) $(WARN_CFLAGS)
+libtotem_properties_page_la_CPPFLAGS = \
+	-I$(srcdir)/backend	\
+	-I$(srcdir)/plparse	\
+	-I$(top_srcdir)/data	\
+	-I$(top_builddir)/data	\
+	$(common_defines)	\
+	$(AM_CPPFLAGS)
+
+libtotem_properties_page_la_CFLAGS = \
+	$(WARN_CFLAGS)		\
+	$(EXTRA_GNOME_CFLAGS)	\
+	$(NAUTILUS_CFLAGS)	\
+	$(NVTV_CFLAGS)		\
+	$(AM_CFLAGS)
+
+libtotem_properties_page_la_LDFLAGS = \
+	$(modules_flags)	\
+	$(AM_LDFLAGS)
+
+libtotem_properties_page_la_LIBADD = \
+	backend/libbaconvideowidget.la	\
+	libbaconpropertiespage.la	\
+	$(EXTRA_GNOME_LIBS)		\
+	$(NAUTILUS_LIBS)		\
+	$(NVTV_LIBS)			\
+	$(XTEST_LIBS)			\
+	$(XVIDMODE_LIBS)		\
+	$(X_LIBS)
+
+
+noinst_PROGRAMS += test-properties-page
+
 test_properties_page_SOURCES =		\
 	totem-properties-main.c		\
 	totem-properties-view.c		\
 	totem-properties-view.h		\
 	test-properties-page.c
-test_properties_page_LDADD =		\
-	backend/libbaconvideowidget.la libbaconpropertiespage.la	\
-	$(EXTRA_GNOME_LIBS) $(XVIDMODE_LIBS)				\
-	$(NVTV_LIBS) $(NAUTILUS_LIBS)					\
-	$(XTEST_LIBS) $(X_LIBS) 
 
+test_properties_page_CPPFLAGS = \
+	-I$(srcdir)/backend	\
+	-I$(srcdir)/plparse	\
+	-I$(top_srcdir)/data	\
+	-I$(top_builddir)/data	\
+	$(common_defines)	\
+	$(AM_CPPFLAGS)
 
-BUILT_SOURCES = 
+test_properties_page_CFLAGS = \
+	$(WARN_CFLAGS)		\
+	$(EXTRA_GNOME_CFLAGS)	\
+	$(NAUTILUS_CFLAGS)	\
+	$(NVTV_CFLAGS)		\
+	$(AM_CFLAGS)
 
-vanity_SOURCES =					\
-	$(BACON_V4L_SELECTION)				\
-	totem-screenshot.c totem-screenshot.h		\
+test_properties_page_LDFLAGS = \
+	$(AM_LDFLAGS)
+
+test_properties_page_LDADD = \
+	backend/libbaconvideowidget.la	\
+	libbaconpropertiespage.la	\
+	$(EXTRA_GNOME_LIBS)		\
+	$(NAUTILUS_LIBS)		\
+	$(NVTV_LIBS)			\
+	$(XTEST_LIBS)			\
+	$(XVIDMODE_LIBS)		\
+	$(X_LIBS)
+
+endif # HAVE_NAUTILUS
+
+# Vanity
+
+if TOTEM_VANITY
+
+bin_PROGRAMS += vanity
+
+vanity_SOURCES = \
+	$(BACON_V4L_SELECTION)	\
+	totem-screenshot.c	\
+	totem-screenshot.h	\
 	vanity.c
+
+vanity_CPPFLAGS = \
+	-I$(srcdir)/backend	\
+	-I$(srcdir)/plparse	\
+	$(common_defines)	\
+	$(AM_CPPFLAGS)
+
+vanity_CFLAGS = \
+	$(EXTRA_GNOME_CFLAGS)	\
+	$(WARN_CFLAGS)		\
+	$(NVTV_CFLAGS)		\
+	$(AM_CFLAGS)
+
+vanity_LDFLAGS = \
+	$(AM_LDFLAGS)
 
 vanity_LDADD = \
-	backend/libbaconvideowidget.la $(EXTRA_GNOME_LIBS) $(XVIDMODE_LIBS) \
-	$(NVTV_LIBS) \
-	$(XTEST_LIBS) $(X_LIBS) 
+	backend/libbaconvideowidget.la	\
+	$(EXTRA_GNOME_LIBS)		\
+	$(NVTV_LIBS)			\
+	$(XTEST_LIBS)			\
+	$(XVIDMODE_LIBS)		\
+	$(X_LIBS)
 
-totem_video_indexer_SOURCES = totem-video-indexer.c
-totem_video_indexer_LDADD =				\
-	backend/libbaconvideowidget.la			\
-	$(GTK_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS)	\
-	$(EXTRA_GNOME_LIBS)				\
-	$(XTEST_LIBS) $(X_LIBS) 
+endif # TOTEM_VANITY
 
-disc_test_SOURCES = disc-test.c
+# Totem Video Indexer
+
+totem_video_indexer_SOURCES = \
+	totem-video-indexer.c
+
+totem_video_indexer_CPPFLAGS = \
+	-I$(srcdir)/plparse	\
+	-I$(srcdir)/backend	\
+	-I$(top_srcdir)/data	\
+	-I$(top_builddir)/data	\
+	$(common_defines)	\
+	$(AM_CPPFLAGS)
+
+totem_video_indexer_CFLAGS = \
+	$(WARN_CFLAGS)		\
+	$(EXTRA_GNOME_CFLAGS)	\
+	$(NVTV_CFLAGS)		\
+	$(AM_CFLAGS)
+
+totem_video_indexer_LDFLAGS = \
+	$(AM_LDFLAGS)
+
+totem_video_indexer_LDADD = \
+	backend/libbaconvideowidget.la	\
+	$(EXTRA_GNOME_LIBS)		\
+	$(GTK_LIBS)			\
+	$(NVTV_LIBS)			\
+	$(XTEST_LIBS)			\
+	$(XVIDMODE_LIBS)		\
+	$(X_LIBS)
+
+# Tests
+
+disc_test_SOURCES = \
+	disc-test.c
+
+disc_test_CPPFLAGS = \
+	-I$(srcdir)/plparse	\
+	$(common_defines)	\
+	$(AM_CPPFLAGS)
+
+disc_test_CFLAGS = \
+	$(WARN_CFLAGS)		\
+	$(GTK_CFLAGS)		\
+	$(EXTRA_GNOME_CFLAGS)	\
+	$(AM_CFLAGS)
+
+disc_test_LDFLAGS = \
+	$(AM_LDFLAGS)
+
 disc_test_LDADD = \
-	plparse/libtotem-plparser.la $(GTK_LIBS) $(EXTRA_GNOME_LIBS)
+	plparse/libtotem-plparser.la	\
+	$(GTK_LIBS)			\
+	$(EXTRA_GNOME_LIBS)
 
-list_v4l_SOURCES = list_v4l.c $(BACON_V4L_SELECTION)
-list_v4l_LDADD = $(GTK_LIBS)
 
-INCLUDES = 						\
-	-D_REENTRANT					\
-	-I$(top_srcdir)					\
-	-I$(srcdir)/plparse				\
-	-I$(srcdir)/backend				\
-	-I$(top_builddir)/src/plparse			\
-	-I$(top_builddir)/src/backend			\
-	$(EXTRA_GNOME_CFLAGS)				\
-	$(WARN_CFLAGS)					\
-	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	$(DBUS_CFLAGS)					\
-	$(NVTV_CFLAGS)					\
-	$(NAUTILUS_CFLAGS)				\
-	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-DGCONF_PREFIX=\""/apps/totem"\"		\
-	-DDATADIR=\""$(datadir)"\"			\
-	-DLIBEXECDIR=\""$(libexecdir)"\"		\
-	-DBINDIR=\""$(bindir)"\"				\
-	-DLOGO_PATH=DATADIR\"\"G_DIR_SEPARATOR_S\"totem\"G_DIR_SEPARATOR_S\"totem_logo.png\"
+list_v4l_SOURCES = \
+	list_v4l.c		\
+	$(BACON_V4L_SELECTION)
 
-CLEANFILES = *.bak *.gladep core* *.orig *~ $(desktop_DATA) $(BUILT_SOURCES) 
-EXTRA_DIST = \
-	$(BACON_V4L_SELECTION) \
-	vanity.c
+list_v4l_CPPFLAGS = \
+	$(common_defines)	\
+	$(AM_CPPFLAGS)
+
+list_v4l_CFLAGS = \
+	$(WARN_CFLAGS)	\
+	$(GTK_CFLAGS)	\
+	$(AM_CFLAGS)
+
+list_v4l_LDFLAGS = \
+	$(AM_LDFLAGS)
+
+list_v4l_LDADD = \
+	$(GTK_LIBS)
+
+
+CLEANFILES = \
+	*.bak		\
+	core*		\
+	*.orig		\
+	*~		\
+	$(desktop_DATA)
+
+EXTRA_DIST =

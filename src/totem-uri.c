@@ -30,7 +30,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "data/totem-mime-types.h"
+#include "totem-mime-types.h"
 #include "totem-uri.h"
 #include "totem-private.h"
 

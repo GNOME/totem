@@ -35,7 +35,7 @@
 #include <libnautilus-extension/nautilus-extension-types.h>
 #include <libnautilus-extension/nautilus-property-page-provider.h>
 
-#include "data/totem-mime-types.h"
+#include "totem-mime-types.h"
 
 static GType tpp_type = 0;
 static gboolean backend_inited = FALSE;

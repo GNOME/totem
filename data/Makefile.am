@@ -2,7 +2,7 @@ SUBDIRS = icons
 
 man_MANS = totem.1 totem-video-thumbnailer.1
 
-stuffdir = $(datadir)/totem
+stuffdir = $(pkgdatadir)
 stuff_DATA =				\
 	filmholes.png			\
 	filmholes-big-left.png		\

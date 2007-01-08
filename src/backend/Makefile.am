@@ -2,26 +2,21 @@ noinst_PROGRAMS = bvw-test
 
 noinst_LTLIBRARIES = libbaconvideowidget.la
 
-INCLUDES = \
-	-I$(top_srcdir) \
-	-I$(srcdir)/../plparse \
-	$(EXTRA_GNOME_CFLAGS)
-
 bvw_test_SOURCES = bvw-test.c
-bvw_test_CFLAGS = \
-	-DDATADIR=\""$(datadir)"\" \
+
+bvw_test_CPPFLAGS = \
+ 	-I$(srcdir)/../plparse		\
+	-DDATADIR=\"$(pkgdatadir)\"	\
 	-DLOGO_PATH=DATADIR\"\"G_DIR_SEPARATOR_S\"totem\"G_DIR_SEPARATOR_S\"totem_logo.png\"
+	$(AM_CPPFLAGS)
+
+bvw_test_CFLAGS = \
+	$(EXTRA_GNOME_CFLAGS)	\
+	$(AM_CFLAGS)
+
 bvw_test_LDADD = \
 	libbaconvideowidget.la \
 	$(GTK_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS) $(XTEST_LIBS) $(X_LIBS)
-
-if TOTEM_GST
-MM = bacon-video-widget-gst-0.10.c \
-	gstscreenshot.c \
-	gstscreenshot.h
-else
-MM = bacon-video-widget-xine.c
-endif
 
 BVWMARSHALFILES = baconvideowidget-marshal.c baconvideowidget-marshal.h
 GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
@@ -33,20 +28,38 @@ baconvideowidget-marshal.c: baconvideowidget-marshal.h
 	( $(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal $(srcdir)/baconvideowidget-marshal.list --body --header > baconvideowidget-marshal.c )
 
 libbaconvideowidget_la_SOURCES = \
-	$(BVWMARSHALFILES) $(MM) bacon-video-widget.h \
+	$(BVWMARSHALFILES) 		\
+	bacon-video-widget.h		\
 	bacon-video-widget-common.h bacon-video-widget-common.c \
-	bacon-resize.h bacon-resize.c video-utils.c video-utils.h debug.h
+	bacon-resize.h bacon-resize.c 	\
+	video-utils.c video-utils.h 	\
+	debug.h
+
+if TOTEM_GST
+libbaconvideowidget_la_SOURCES += \
+	bacon-video-widget-gst-0.10.c \
+	gstscreenshot.c \
+	gstscreenshot.h
+else
+libbaconvideowidget_la_SOURCES += \
+	bacon-video-widget-xine.c
+endif
+
+libbaconvideowidget_la_CPPFLAGS = \
+ 	-I$(srcdir)/../plparse	\
+	-D_REENTRANT		\
+	-DGCONF_PREFIX=\""/apps/totem"\"	\
+	$(AM_CPPFLAGS)
+
 libbaconvideowidget_la_CFLAGS = \
-	-D_REENTRANT \
-	$(NVTV_CFLAGS) \
-	-DGCONF_PREFIX=\""/apps/totem"\"
-libbaconvideowidget_la_LIBADD = $(XVIDMODE_LIBS)
+	$(EXTRA_GNOME_CFLAGS)	\
+	$(NVTV_CFLAGS) 		\
+	$(AM_CFLAGS)
+
+libbaconvideowidget_la_LIBADD = \
+	$(XVIDMODE_LIBS)
 
 CLEANFILES = $(BUILT_SOURCES)
 
 EXTRA_DIST = \
-	bacon-video-widget-xine.c \
-	bacon-video-widget-gst-0.10.c \
-	gstscreenshot.c \
-	gstscreenshot.h \
 	baconvideowidget-marshal.list

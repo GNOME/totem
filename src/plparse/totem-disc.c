@@ -448,7 +448,7 @@ cb_mount_done (gboolean success, char * error,
                char * detail, CdCacheCallbackData * data)
 {
   data->called = TRUE;
-  data->cache->mounted = success;
+  data->cache->mounted = success != FALSE;
 }
 
 static gboolean

@@ -6,12 +6,14 @@ test_parser_CPPFLAGS = \
 	-I$(top_srcdir)			\
 	-I$(top_builddir)/src/plparser	\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"\
+	$(DISABLE_DEPRECATED)		\
 	$(AM_CPPFLAGS)
 
 test_parser_CFLAGS = \
 	$(EXTRA_GNOME_CFLAGS)	\
 	$(HAL_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
+	$(WARN_CFLAGS)		\
 	$(AM_CFLAGS)
 
 test_parser_LDADD = \
@@ -29,7 +31,7 @@ totemplparser-marshal.c: totemplparser-marshal.h
 totemplparser-marshal.h: totemplparser-marshal.list
 	( $(GLIB_GENMARSHAL) --prefix=totemplparser_marshal $(srcdir)/totemplparser-marshal.list --header > totemplparser-marshal.h )
 
-plparserincludedir = $(includedir)/totem/1/plparser
+plparserincludedir = $(pkgincludedir)/1/plparser
 plparserinclude_HEADERS =			\
 	totem-pl-parser-builtins.h		\
 	totem-pl-parser-features.h		\
@@ -37,27 +39,32 @@ plparserinclude_HEADERS =			\
 	totem-disc.h
 
 libtotem_plparser_la_SOURCES =			\
-	totem-pl-parser-builtins.c		\
-	totemplparser-marshal.c			\
-	totemplparser-marshal.h			\
 	totem-disc.c				\
+	totem-disc.h				\
+	totem-pl-parser-builtins.c		\
+	totem-pl-parser-builtins.h		\
 	totem-pl-parser.c			\
-	totem-pl-parser-wm.c			\
-	totem-pl-parser-wm.h			\
-	totem-pl-parser-qt.c			\
-	totem-pl-parser-qt.h			\
-	totem-pl-parser-pls.c			\
-	totem-pl-parser-pls.h			\
-	totem-pl-parser-xspf.c			\
-	totem-pl-parser-xspf.h			\
-	totem-pl-parser-media.c			\
-	totem-pl-parser-media.h			\
-	totem-pl-parser-smil.c			\
-	totem-pl-parser-smil.h			\
+	totem-pl-parser-features.h		\
+	totem-pl-parser.h			\
 	totem-pl-parser-lines.c			\
 	totem-pl-parser-lines.h			\
+	totemplparser-marshal.c			\
+	totemplparser-marshal.h			\
+	totem-pl-parser-media.c			\
+	totem-pl-parser-media.h			\
 	totem-pl-parser-misc.c			\
-	totem-pl-parser-misc.h
+	totem-pl-parser-misc.h			\
+	totem-pl-parser-pls.c			\
+	totem-pl-parser-pls.h			\
+	totem-pl-parser-private.h		\
+	totem-pl-parser-qt.c			\
+	totem-pl-parser-qt.h			\
+	totem-pl-parser-smil.c			\
+	totem-pl-parser-smil.h			\
+	totem-pl-parser-wm.c			\
+	totem-pl-parser-wm.h			\
+	totem-pl-parser-xspf.c			\
+	totem-pl-parser-xspf.h
 
 libtotem_plparser_la_CPPFLAGS = \
 	-I$(top_srcdir)				\
@@ -65,10 +72,11 @@ libtotem_plparser_la_CPPFLAGS = \
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"\
 	$(AM_CPPFLAGS)
 
-libtotem_plparser_la_CFLAGS =		\
+libtotem_plparser_la_CFLAGS = \
 	$(TOTEM_PLPARSER_CFLAGS)	\
 	$(HAL_CFLAGS)			\
 	$(DBUS_CFLAGS)			\
+	$(WARN_CFLAGS)			\
 	$(AM_CFLAGS)
 
 libtotem_plparser_la_LIBADD = \
@@ -92,6 +100,7 @@ libtotem_plparser_mini_la_CPPFLAGS = \
 
 libtotem_plparser_mini_la_CFLAGS = \
 	$(TOTEM_PLPARSER_MINI_CFLAGS)	\
+	$(WARN_CFLAGS)			\
 	$(AM_CFLAGS)
 
 libtotem_plparser_mini_la_LIBADD = \

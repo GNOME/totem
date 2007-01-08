@@ -29,7 +29,7 @@
 #include "config.h"
 #endif
 
-#include "data/totem-mime-types.h"
+#include "totem-mime-types.h"
 
 #ifndef HAVE_GTK_ONLY
 #include <gnome.h>

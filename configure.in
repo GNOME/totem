@@ -9,7 +9,7 @@ AC_INIT([totem],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=totem])
 
 AC_CONFIG_SRCDIR([src/totem.c])
-AM_CONFIG_HEADER([config.h])
+AC_CONFIG_HEADERS([config.h])
 
 AM_INIT_AUTOMAKE([1.9 dist-bzip2 no-dist-gzip check-news])
 
@@ -781,10 +781,10 @@ if test x$HAVE_GSTREAMER = xno ; then
 else
 	AC_MSG_NOTICE([** Using the GStreamer-$GST_MAJORMINOR backend])
 fi
-if test x$found_nvtv = xyes ; then
+	if test x$found_nvtv = xyes ; then
 	AC_MSG_NOTICE([** nvtv support enabled])
 else
-	AC_MSG_NOTICE([   nvtv support diabled])
+	AC_MSG_NOTICE([   nvtv support disabled])
 fi
 if test x$COMPILE_VANITY = xyes ; then
 	AC_MSG_NOTICE([** vanity compilation enabled])
