@@ -6,6 +6,7 @@
 #include <libgnomevfs/gnome-vfs.h>
 
 #include "totem-pl-parser.c"
+#include "totem-pl-parser-lines.c"
 
 #define USE_DATA
 

@@ -41,7 +41,23 @@ libtotem_plparser_la_SOURCES =			\
 	totemplparser-marshal.c			\
 	totemplparser-marshal.h			\
 	totem-disc.c				\
-	totem-pl-parser.c
+	totem-pl-parser.c			\
+	totem-pl-parser-wm.c			\
+	totem-pl-parser-wm.h			\
+	totem-pl-parser-qt.c			\
+	totem-pl-parser-qt.h			\
+	totem-pl-parser-pls.c			\
+	totem-pl-parser-pls.h			\
+	totem-pl-parser-xspf.c			\
+	totem-pl-parser-xspf.h			\
+	totem-pl-parser-media.c			\
+	totem-pl-parser-media.h			\
+	totem-pl-parser-smil.c			\
+	totem-pl-parser-smil.h			\
+	totem-pl-parser-lines.c			\
+	totem-pl-parser-lines.h			\
+	totem-pl-parser-misc.c			\
+	totem-pl-parser-misc.h
 
 libtotem_plparser_la_CPPFLAGS = \
 	-I$(top_srcdir)				\
