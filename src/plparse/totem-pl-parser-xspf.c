@@ -24,25 +24,21 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
+
+#ifndef TOTEM_PL_PARSER_MINI
 #include <string.h>
 #include <glib.h>
 #include <glib/gi18n-lib.h>
-#include <libgnomevfs/gnome-vfs-mime-utils.h>
-
-#ifndef TOTEM_PL_PARSER_MINI
 #include <libxml/tree.h>
 #include <libxml/parser.h>
 #include <gtk/gtk.h>
 #include <libgnomevfs/gnome-vfs.h>
-#include <libgnomevfs/gnome-vfs-mime.h>
-#include <libgnomevfs/gnome-vfs-utils.h>
 #include "totem-pl-parser.h"
 #include "totemplparser-marshal.h"
-#include "totem-disc.h"
 #endif /* !TOTEM_PL_PARSER_MINI */
 
 #include "totem-pl-parser-mini.h"
-#include "totem-pl-parser-pls.h"
+#include "totem-pl-parser-xspf.h"
 #include "totem-pl-parser-private.h"
 
 #ifndef TOTEM_PL_PARSER_MINI

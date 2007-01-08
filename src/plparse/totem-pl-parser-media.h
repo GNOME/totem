@@ -27,8 +27,6 @@ G_BEGIN_DECLS
 
 #ifndef TOTEM_PL_PARSER_MINI
 #include "totem-pl-parser.h"
-#else
-#include "totem-pl-parser-mini.h"
 #endif /* !TOTEM_PL_PARSER_MINI */
 
 #ifndef TOTEM_PL_PARSER_MINI
