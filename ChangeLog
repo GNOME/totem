@@ -1,3 +1,11 @@
+2007-01-09  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/totem-disc.c: (canonicalize_filename),
+	(totem_resolve_symlink), (cd_cache_get_dev_from_volumes),
+	(cd_cache_get_dev_from_drives), (cd_cache_new):
+	Don't use realpath(), to avoid crashes on NetBSD
+	(Closes: #394505)
+
 2007-01-05  Bastien Nocera  <hadess@hadess.net>
 
         * data/mime-type-list.txt: Add a bunch of missing

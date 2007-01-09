@@ -80,69 +80,106 @@ typedef struct _CdCache {
  * Resolve relative paths
  */
 
-static char *
-totem_disc_resolve_link (const char *dev, const char *buf)
+/* Copied from gtk+/gtk/gtkfilesystemunix.c */
+
+/* If this was a publically exported function, it should return
+ * a dup'ed result, but we make it modify-in-place for efficiency
+ * here, and because it works for us.
+ */
+static void
+canonicalize_filename (gchar *filename)
 {
-  char *parent, *new, *result;
+  gchar *p, *q;
+  gboolean last_was_slash = FALSE;
 
-  /* is it an absolute path? */
-  if (g_path_is_absolute (buf) != FALSE) {
-    result = realpath (buf, NULL);
-    if (result == NULL)
-      result = g_strdup (buf);
-  } else {
-    parent = g_path_get_dirname (dev);
-    new = g_build_filename (parent, buf, NULL);
-    result = realpath (new, NULL);
-    if (result == NULL)
-      result = g_strdup (new);
-    g_free (new);
-    g_free (parent);
-  }
+  p = filename;
+  q = filename;
 
-  return result;
+  while (*p)
+    {
+      if (*p == G_DIR_SEPARATOR)
+	{
+	  if (!last_was_slash)
+	    *q++ = G_DIR_SEPARATOR;
+
+	  last_was_slash = TRUE;
+	}
+      else
+	{
+	  if (last_was_slash && *p == '.')
+	    {
+	      if (*(p + 1) == G_DIR_SEPARATOR ||
+		  *(p + 1) == '\0')
+		{
+		  if (*(p + 1) == '\0')
+		    break;
+
+		  p += 1;
+		}
+	      else if (*(p + 1) == '.' &&
+		       (*(p + 2) == G_DIR_SEPARATOR ||
+			*(p + 2) == '\0'))
+		{
+		  if (q > filename + 1)
+		    {
+		      q--;
+		      while (q > filename + 1 &&
+			     *(q - 1) != G_DIR_SEPARATOR)
+			q--;
+		    }
+
+		  if (*(p + 2) == '\0')
+		    break;
+
+		  p += 2;
+		}
+	      else
+		{
+		  *q++ = *p;
+		  last_was_slash = FALSE;
+		}
+	    }
+	  else
+	    {
+	      *q++ = *p;
+	      last_was_slash = FALSE;
+	    }
+	}
+
+      p++;
+    }
+
+  if (q > filename + 1 && *(q - 1) == G_DIR_SEPARATOR)
+    q--;
+
+  *q = '\0';
 }
 
-/*
- * So, devices can be symlinks and that screws up.
- */
-
 static char *
-get_device (const char *device,
-	    GError     **error)
+totem_resolve_symlink (const char *device, GError **error)
 {
-  char *buf;
-  char *dev = g_strdup (device);
-  struct stat st;
+  char *dir, *link;
+  char *f;
+  char *f1;
 
-  while (1) {
-    char *new;
-
-    if (lstat (dev, &st) != 0) {
-      g_set_error (error, 0, 0,
-          _("Failed to find real device node for %s: %s"),
-          dev, g_strerror (errno));
-      g_free (dev);
+  f = g_strdup (device);
+  while (g_file_test (f, G_FILE_TEST_IS_SYMLINK)) {
+    link = g_file_read_link (f, error);
+    if(link == NULL) {
+      g_free (f);
       return NULL;
     }
 
-    if (!S_ISLNK (st.st_mode))
-      break;
-
-    if (!(buf = g_file_read_link (dev, NULL))) {
-      g_set_error (error, 0, 0,
-          _("Failed to read symbolic link %s: %s"),
-          dev, g_strerror (errno));
-      g_free (dev);
-      return NULL;
-    }
-    new = totem_disc_resolve_link (dev, buf);
-    g_free (dev);
-    g_free (buf);
-    dev = new;
+    dir = g_path_get_dirname (f);
+    f1 = g_build_filename (dir, link, NULL);
+    g_free (dir);
+    g_free (f);
+    f = f1;
   }
 
-  return dev;
+  if (f != NULL)
+    canonicalize_filename (f);
+  return f;
 }
 
 static gboolean
@@ -162,7 +199,7 @@ cd_cache_get_dev_from_volumes (GnomeVFSVolumeMonitor *mon, const char *device,
     volume = list->data;
     if (!(pdev = gnome_vfs_volume_get_device_path (volume)))
       continue;
-    pdev2 = get_device (pdev, NULL);
+    pdev2 = totem_resolve_symlink (pdev, NULL);
     if (!pdev2) {
       g_free (pdev);
       continue;
@@ -213,7 +250,7 @@ cd_cache_get_dev_from_drives (GnomeVFSVolumeMonitor *mon, const char *device,
     drive = list->data;
     if (!(pdev = gnome_vfs_drive_get_device_path (drive)))
       continue;
-    pdev2 = get_device (pdev, NULL);
+    pdev2 = totem_resolve_symlink (pdev, NULL);
     if (!pdev2) {
       g_free (pdev);
       continue;
@@ -325,7 +362,7 @@ cd_cache_new (const char *dev,
   }
 
   /* retrieve mountpoint from gnome-vfs volumes and drives */
-  device = get_device (local, error);
+  device = totem_resolve_symlink (local, error);
   g_free (local);
   if (!device)
     return NULL;
