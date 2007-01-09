@@ -27,6 +27,8 @@
 
 G_BEGIN_DECLS
 
+#define TOTEM_MAX_RECENT_ITEM_LEN 40
+
 void totem_ui_manager_setup (Totem *totem);
 
 void totem_sublang_update (Totem *totem);

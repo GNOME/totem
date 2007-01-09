@@ -475,6 +475,54 @@ totem_compare_recent_items (GtkRecentInfo *a, GtkRecentInfo *b)
 	return 0;
 }
 
+/* Copied from eel so we don't have a dependency on them.
+ * It's being consolidated into glib eventually anyway.
+ */
+static char *
+totem_str_middle_truncate (const char *string,
+			      guint truncate_length)
+{
+	char *truncated;
+	guint length;
+	guint num_left_chars;
+	guint num_right_chars;
+
+	const char delimter[] = "...";
+	const guint delimter_length = strlen (delimter);
+	const guint min_truncate_length = delimter_length + 2;
+
+	if (string == NULL) {
+		return NULL;
+	}
+
+	/* It doesnt make sense to truncate strings to less than
+	 * the size of the delimiter plus 2 characters (one on each
+	 * side)
+	 */
+	if (truncate_length < min_truncate_length) {
+		return g_strdup (string);
+	}
+
+	length = strlen (string);
+
+	/* Make sure the string is not already small enough. */
+	if (length <= truncate_length) {
+		return g_strdup (string);
+	}
+
+	/* Find the 'middle' where the truncation will occur. */
+	num_left_chars = (truncate_length - delimter_length) / 2;
+	num_right_chars = truncate_length - num_left_chars - delimter_length + 1;
+
+	truncated = g_new (char, truncate_length + 1);
+
+	strncpy (truncated, string, num_left_chars);
+	strncpy (truncated + num_left_chars, delimter, delimter_length);
+	strncpy (truncated + num_left_chars + delimter_length, string + length - num_right_chars + 1, num_right_chars);
+	
+	return truncated;
+}
+
 static void
 totem_recent_manager_changed_callback (GtkRecentManager *recent_manager, Totem *totem)
 {
@@ -493,15 +541,16 @@ totem_recent_manager_changed_callback (GtkRecentManager *recent_manager, Totem *
 	totem->recent_action_group = gtk_action_group_new ("recent-action-group");
 	gtk_ui_manager_insert_action_group (totem->ui_manager,
 			totem->recent_action_group, -1);
- 
+
 	items = gtk_recent_manager_get_items (recent_manager);
 	items = g_list_sort (items, (GCompareFunc) totem_compare_recent_items);
 
 	for (l = items; l && l->data; l = g_list_next (l)) {
 		GtkRecentInfo *info;
 		GtkAction     *action;
-		gchar         *action_name;
-		gchar         *label;
+		char          *action_name;
+		char          *label;
+		const char    *uri;
 
 		info = (GtkRecentInfo *) l->data;
 
@@ -509,12 +558,21 @@ totem_recent_manager_changed_callback (GtkRecentManager *recent_manager, Totem *
 			continue;
 
 		action_name = g_strdup_printf ("recent-file%u", i++);
-		label = g_strdup_printf ("_%d.  %s", n_items + 1,
+		uri = gtk_recent_info_get_uri (info);
+		if (strstr (uri, "file:///") == NULL)
+			label = g_strdup_printf ("_%d.  %s", n_items + 1, uri);
+		else {
+			label = g_strdup_printf ("_%d.  %s", n_items + 1,
 				gtk_recent_info_get_display_name (info));
+		}
+
+		/* Truncate the menu item if it's too long */
+		char *label_trunc = totem_str_middle_truncate (label, TOTEM_MAX_RECENT_ITEM_LEN);
+		g_free (label);
 
 		action = g_object_new (GTK_TYPE_ACTION,
 			       "name", action_name,
-			       "label", label,
+			       "label", label_trunc,
 			       NULL);
 
 		g_object_set_data_full (G_OBJECT (action), "recent-info",
@@ -530,11 +588,11 @@ totem_recent_manager_changed_callback (GtkRecentManager *recent_manager, Totem *
 
 		gtk_ui_manager_add_ui (totem->ui_manager, totem->recent_ui_id,
 			       "/tmw-menubar/movie/recent-placeholder",
-			       label, action_name, GTK_UI_MANAGER_MENUITEM,
+			       label_trunc, action_name, GTK_UI_MANAGER_MENUITEM,
 			       FALSE);
 
 		g_free (action_name);
-		g_free (label);
+		g_free (label_trunc);
 
 		if (++n_items == 5)
 			break;
@@ -564,17 +622,22 @@ void
 totem_action_add_recent (Totem *totem, const char *filename)
 {
 	GtkRecentData data;
-	char *groups[] = { "Totem", NULL };
-	char *display;
+	char *groups[] = { NULL, NULL };
 
-	if (strstr (filename, "file:///") == NULL)
-		return;
-
-	display = g_filename_from_uri (filename, NULL, NULL);
-	if (display) {
-		data.display_name = g_filename_display_basename (display);
-		g_free (display);
+	if (strstr (filename, "file:///") == NULL) {
+		/* It's a URI/stream */
+		groups[0] = "TotemStreams";
+		data.display_name = NULL;
+	} else {
+		/* It's a normal filename */
+		char *display = g_filename_from_uri (filename, NULL, NULL);
+		if (display) {
+			data.display_name = g_filename_display_basename (display);
+			g_free (display);
+		}
+		groups[0] = "Totem";
 	}
+
 	data.description = NULL;
 	data.mime_type = gnome_vfs_get_mime_type (filename);
 	data.app_name = g_strdup (g_get_application_name ());
@@ -583,7 +646,8 @@ totem_action_add_recent (Totem *totem, const char *filename)
 	gtk_recent_manager_add_full (totem->recent_manager,
 			filename, &data);
 
-	g_free (data.display_name);
+	if (data.display_name != NULL)
+		g_free (data.display_name);
 	g_free (data.mime_type);
 	g_free (data.app_name);
 	g_free (data.app_exec);

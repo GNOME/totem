@@ -109,7 +109,6 @@ static void play_pause_set_label (Totem *totem, TotemStates state);
 static gboolean on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event, Totem *totem);
 static void popup_timeout_remove (Totem *totem);
 static gint totem_compare_recent_stream_items (GtkRecentInfo *a, GtkRecentInfo *b);
-static void totem_action_add_recent_stream (Totem *totem, const char *uri);
 
 static void
 long_action (void)
@@ -708,26 +707,6 @@ totem_compare_recent_stream_items (GtkRecentInfo *a, GtkRecentInfo *b)
 	return 0;
 }
 
-static void
-totem_action_add_recent_stream (Totem *totem, const char *uri)
-{
-	GtkRecentData data;
-	char *groups[] = { "Totem", "TotemStreams", NULL };
-
-	data.display_name = NULL;
-	data.description = NULL;
-	data.mime_type = gnome_vfs_get_mime_type (uri);
-	data.app_name = g_strdup (g_get_application_name ());
-	data.app_exec = g_strjoin (" ", g_get_prgname (), "%u", NULL);
-	data.groups = groups;
-	gtk_recent_manager_add_full (totem->recent_manager,
-			uri, &data);
-
-	g_free (data.mime_type);
-	g_free (data.app_name);
-	g_free (data.app_exec);
-}
-
 //FIXME move the URI to a separate widget
 void
 totem_action_open_location (Totem *totem)
@@ -789,9 +768,6 @@ totem_action_open_location (Totem *totem)
 			filenames[0] = uri;
 			filenames[1] = NULL;
 			totem_action_open_files (totem, (char **) filenames);
-
-			/* Make sure this stream is added to the TotemStreams recent list */
-			totem_action_add_recent_stream (totem, uri);
 
 			mrl = totem_playlist_get_current_mrl (totem->playlist);
 			totem_action_set_mrl_and_play (totem, mrl);
