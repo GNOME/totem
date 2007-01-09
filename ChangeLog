@@ -1,5 +1,13 @@
 2007-01-09  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (totem_open_location_set_from_clipboard),
+	(totem_action_open_location): Patch from Harm Hilvers
+	<harm@tweakers.net> to copy the URL obtained from the clipboard into
+	the "Open URL" dialogue, and automatically prepend "http://" when
+	necessary (Closes: #320521)
+
+2007-01-09  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-menu.c: (totem_str_middle_truncate),
 	(totem_recent_manager_changed_callback), (totem_action_add_recent):
 	* src/totem-menu.h:

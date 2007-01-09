@@ -707,12 +707,33 @@ totem_compare_recent_stream_items (GtkRecentInfo *a, GtkRecentInfo *b)
 	return 0;
 }
 
+static char *
+totem_open_location_set_from_clipboard (Totem *totem)
+{
+	GtkClipboard *clipboard;
+	gchar *clipboard_content;
+
+	/* Initialize the clipboard and get its content */
+	clipboard = gtk_clipboard_get_for_display (gtk_widget_get_display (totem->win), GDK_SELECTION_CLIPBOARD);
+	clipboard_content = gtk_clipboard_wait_for_text (clipboard);
+
+	/* Check clipboard for "://". If it exists, return it */
+	if (clipboard_content != NULL && strcmp (clipboard_content, "") != 0)
+	{
+		if (g_strrstr (clipboard_content, "://") != NULL)
+			return clipboard_content;
+	}
+
+	g_free (clipboard_content);
+	return NULL;
+}
+
 //FIXME move the URI to a separate widget
 void
 totem_action_open_location (Totem *totem)
 {
 	GladeXML *glade;
-	char *mrl;
+	char *mrl, *clipboard_location;
 	GtkWidget *dialog, *entry;
 	int response;
 	const char *filenames[2];
@@ -721,6 +742,12 @@ totem_action_open_location (Totem *totem)
 			FALSE, GTK_WINDOW (totem->win));
 	if (glade == NULL)
 		return;
+
+	/* Get item from clipboard to fill entry in Open Location... dialog */
+	clipboard_location = totem_open_location_set_from_clipboard (totem);
+	if (clipboard_location != NULL && strcmp (clipboard_location, "") != 0)
+		gtk_entry_set_text (GTK_ENTRY (glade_xml_get_widget (glade, "uri")), clipboard_location);
+	g_free (clipboard_location);
 
 	dialog = glade_xml_get_widget (glade, "open_uri_dialog");
 	entry = glade_xml_get_widget (glade, "uri");
@@ -760,11 +787,20 @@ totem_action_open_location (Totem *totem)
 
 	if (response == GTK_RESPONSE_OK)
 	{
-		const char *uri;
+		gchar *uri;
 
-		uri = gtk_entry_get_text (GTK_ENTRY (entry));
+		uri = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
+
 		if (uri != NULL && strcmp (uri, "") != 0)
 		{
+			if (g_strrstr (uri, "://") == NULL)
+			{
+				char *tmp;
+				tmp = g_strconcat ("http://", uri, NULL);
+				g_free (uri);
+				uri = tmp;
+			}
+
 			filenames[0] = uri;
 			filenames[1] = NULL;
 			totem_action_open_files (totem, (char **) filenames);
@@ -773,6 +809,7 @@ totem_action_open_location (Totem *totem)
 			totem_action_set_mrl_and_play (totem, mrl);
 			g_free (mrl);
 		}
+		g_free (uri);
 	}
 
 	gtk_widget_destroy (dialog);
