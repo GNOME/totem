@@ -1,5 +1,5 @@
 /* 
- * Copyright (C) 2003-2006 the GStreamer project
+ * Copyright (C) 2003-2007 the GStreamer project
  *      Julien Moutte <julien@moutte.net>
  *      Ronald Bultje <rbultje@ronald.bitfreak.net>
  *      Tim-Philipp Müller <tim centricular net>
@@ -68,6 +68,10 @@
 
 #define DEFAULT_HEIGHT 420
 #define DEFAULT_WIDTH  315
+
+#define is_error(e, d, c) \
+  (e->domain == GST_##d##_ERROR && \
+   e->code == GST_##d##_ERROR_##c)
 
 /* Signals */
 enum
@@ -214,6 +218,29 @@ static int bvw_signals[LAST_SIGNAL] = { 0 };
 
 GST_DEBUG_CATEGORY (_totem_gst_debug_cat);
 #define GST_CAT_DEFAULT _totem_gst_debug_cat
+
+static void
+bvw_error_msg_print_dbg (GstMessage * msg)
+{
+  GError *err = NULL;
+  gchar *dbg = NULL;
+
+  gst_message_parse_error (msg, &err, &dbg);
+  if (err) {
+    GST_ERROR ("error message = %s", GST_STR_NULL (err->message));
+    GST_ERROR ("error domain  = %d (%s)", err->domain,
+        GST_STR_NULL (g_quark_to_string (err->domain)));
+    GST_ERROR ("error code    = %d", err->code);
+    GST_ERROR ("error debug   = %s", GST_STR_NULL (dbg));
+    GST_ERROR ("error source  = %" GST_PTR_FORMAT, msg->src);
+
+    g_message ("Error: %s\n%s\n", GST_STR_NULL (err->message),
+        GST_STR_NULL (dbg));
+
+    g_error_free (err);
+  }
+  g_free (dbg);
+}
 
 static void
 get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
@@ -1045,8 +1072,8 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
   }
 
 unhandled:
-  g_message ("Unhandled element message '%s' from element '%s'",
-             GST_STR_NULL (type_name), src_name);
+  GST_WARNING ("Unhandled element message %s from %s: %" GST_PTR_FORMAT,
+      GST_STR_NULL (type_name), GST_STR_NULL (src_name), msg);
 
 done:
   g_free (src_name);
@@ -1110,12 +1137,10 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
   switch (msg_type) {
     case GST_MESSAGE_ERROR: {
       GError *error = NULL;
-      gchar *debug = NULL;
 
-      gst_message_parse_error (message, &error, &debug);
+      bvw_error_msg_print_dbg (message);
 
-      GST_DEBUG ("Error message: %s [%s]", GST_STR_NULL (error->message),
-          GST_STR_NULL (debug));
+      gst_message_parse_error (message, &error, NULL);
 
       g_signal_emit (bvw, bvw_signals[SIGNAL_ERROR], 0,
                      error->message, TRUE, FALSE);
@@ -1126,23 +1151,10 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
       bvw->priv->target_state = GST_STATE_NULL;
       bvw->priv->buffering = FALSE;
-
-      g_free (debug);
       break;
     }
     case GST_MESSAGE_WARNING: {
-      GError *error = NULL;
-      gchar *debug = NULL;
-
-      gst_message_parse_warning (message, &error, &debug);
-
-      GST_DEBUG ("Warning message: %s [%s]", GST_STR_NULL (error->message),
-          GST_STR_NULL (debug));
-
-      g_warning ("%s [%s]", GST_STR_NULL (error->message), GST_STR_NULL (debug));
-
-      g_error_free (error);
-      g_free (debug);
+      GST_WARNING ("Warning message: %" GST_PTR_FORMAT, message);
       break;
     }
     case GST_MESSAGE_TAG: {
@@ -2177,26 +2189,12 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 /* =========================================== */
 
 static GError*
-bvw_error_from_gst_error (BaconVideoWidget *bvw, GstElement *src, GError *e,
-    char *debug)
+bvw_error_from_gst_error (BaconVideoWidget *bvw, GstElement *src, GError *e)
 {
   const gchar *src_typename;
   GError *ret = NULL;
 
   src_typename = (src) ? G_OBJECT_TYPE_NAME (src) : NULL;
-
-  GST_DEBUG ("e->message = '%s'", GST_STR_NULL (e->message));
-  GST_DEBUG ("e->domain  = %d", e->domain);
-  GST_DEBUG ("e->code    = %d", e->code);
-  GST_DEBUG ("debug      = %s", GST_STR_NULL (debug));
-  GST_DEBUG ("source     = %s (%s)", (src) ? GST_OBJECT_NAME (src) : "(null)",
-      GST_STR_NULL (src_typename));
-
-#define is_error(e, d, c) \
-  (e->domain == GST_##d##_ERROR && \
-   e->code == GST_##d##_ERROR_##c)
-
-  /* FIXME: we aren't doing anything with debug right now */
 
   if (is_error (e, RESOURCE, NOT_FOUND) ||
       is_error (e, RESOURCE, OPEN_READ)) {
@@ -2310,19 +2308,15 @@ poll_for_state_change_full (BaconVideoWidget *bvw, GstElement *element,
       break;
     }
     case GST_MESSAGE_ERROR: {
-      gchar *debug = NULL;
-      GError *gsterror = NULL;
-
-      gst_message_parse_error (message, &gsterror, &debug);
+      bvw_error_msg_print_dbg (message);
       if (error) {
-        *error = bvw_error_from_gst_error (bvw, src, gsterror, debug);
-      } else {
-        g_warning ("Error: %s (%s)", gsterror->message, debug);
-      }
+        GError *gsterror = NULL;
 
+        gst_message_parse_error (message, &gsterror, NULL);
+        *error = bvw_error_from_gst_error (bvw, src, gsterror);
+        g_error_free (gsterror);
+      }
       gst_message_unref (message);
-      g_error_free (gsterror);
-      g_free (debug);
       goto error;
       break;
     }

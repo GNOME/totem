@@ -1,5 +1,19 @@
 2007-01-09  Tim-Philipp Müller  <tim at centricular dot net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_error_msg_print_dbg):
+	(bvw_handle_element_message):
+	(bvw_bus_message_cb):
+	(bvw_error_from_gst_error):
+	(poll_for_state_change_full):
+	Minor error handling refactoring: show pretty error details in debug
+	log in both places where we process error messages (bus callback and
+	poll_for_state_change); don't flood the terminal if we encounter
+	unknown element messages; don't pass unused debug detail to
+	bvw_error_from_gst_error.
+
+2007-01-09  Tim-Philipp Müller  <tim at centricular dot net>
+
         * src/backend/bacon-video-widget-gst-0.10.c:
         (parse_stream_info):
         (bacon_video_widget_new):
