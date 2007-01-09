@@ -48,7 +48,6 @@ struct TotemPlParserPrivate
 	guint disable_unsafe : 1;
 };
 
-char *totem_pl_parser_read_entire_file		(const char *url, int *size);
 char *totem_pl_parser_read_ini_line_string	(char **lines, const char *key,
 						 gboolean dos_mode);
 int   totem_pl_parser_read_ini_line_int		(char **lines, const char *key);

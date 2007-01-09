@@ -272,8 +272,7 @@ totem_pl_parser_add_pls (TotemPlParser *parser, const char *url,
 	char *contents;
 	int size;
 
-	contents = totem_pl_parser_read_entire_file (url, &size);
-	if (contents == NULL)
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	if (size == 0) {

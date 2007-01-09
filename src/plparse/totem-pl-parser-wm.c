@@ -55,8 +55,7 @@ totem_pl_parser_add_asf_reference_parser (TotemPlParser *parser,
 	char *contents, **lines, *ref, *split_char;
 	int size;
 
-	contents = totem_pl_parser_read_entire_file (url, &size);
-	if (contents == NULL)
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	if (strstr(contents,"\x0d") == NULL) {
@@ -103,8 +102,7 @@ totem_pl_parser_add_asf_parser (TotemPlParser *parser,
 		return totem_pl_parser_add_asf_reference_parser (parser, url, base, data);
 	}
 
-	contents = totem_pl_parser_read_entire_file (url, &size);
-	if (contents == NULL)
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	if (size <= 4) {

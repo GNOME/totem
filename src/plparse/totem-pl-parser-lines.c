@@ -181,8 +181,7 @@ totem_pl_parser_add_ram (TotemPlParser *parser, const char *url, gpointer data)
 	int size, i;
 	const char *split_char;
 
-	contents = totem_pl_parser_read_entire_file (url, &size);
-	if (contents == NULL)
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	/* figure out whether we're a unix or dos RAM file */
@@ -270,8 +269,7 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url,
 	const char *split_char;
 	gboolean extinfo;
 
-	contents = totem_pl_parser_read_entire_file (url, &size);
-	if (contents == NULL)
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	/* .pls files with a .m3u extension, the nasties */

@@ -53,8 +53,7 @@ totem_pl_parser_add_gvp (TotemPlParser *parser, const char *url,
 	char *contents, **lines, *title, *link, *version;
 	int size;
 
-	contents = totem_pl_parser_read_entire_file (url, &size);
-	if (contents == NULL)
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	if (g_str_has_prefix (contents, "#.download.the.free.Google.Video.Player") == FALSE && g_str_has_prefix (contents, "# download the free Google Video Player") == FALSE) {
@@ -101,8 +100,7 @@ totem_pl_parser_add_desktop (TotemPlParser *parser, const char *url,
 	const char *path, *display_name, *type;
 	int size;
 
-	contents = totem_pl_parser_read_entire_file (url, &size);
-	if (contents == NULL)
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	lines = g_strsplit (contents, "\n", 0);

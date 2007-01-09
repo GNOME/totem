@@ -1,3 +1,22 @@
+2007-01-09  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in:
+	* src/plparse/totem-pl-parser-lines.c: (totem_pl_parser_add_ram),
+	(totem_pl_parser_add_m3u):
+	* src/plparse/totem-pl-parser-misc.c: (totem_pl_parser_add_gvp),
+	(totem_pl_parser_add_desktop):
+	* src/plparse/totem-pl-parser-pls.c: (totem_pl_parser_add_pls):
+	* src/plparse/totem-pl-parser-private.h:
+	* src/plparse/totem-pl-parser-qt.c:
+	(totem_pl_parser_add_quicktime_rtsptextrtsp):
+	* src/plparse/totem-pl-parser-wm.c:
+	(totem_pl_parser_add_asf_reference_parser),
+	(totem_pl_parser_add_asf_parser):
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_parse_xml_file):
+	Remove totem_pl_parser_read_entire_file() and use gnome-vfs directly,
+	require a newer version of gnome-vfs that will null-terminate
+	strings from gnome_vfs_read_entire_file()
+
 2007-01-08  Bastien Nocera  <hadess@hadess.net>
 
 	* autogen.sh:

@@ -375,20 +375,6 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data, TotemPlPa
 	return g_strdup (mimetype);
 }
 
-char *
-totem_pl_parser_read_entire_file (const char *url, int *size)
-{
-	char *contents;
-
-	if (gnome_vfs_read_entire_file (url, size, &contents) != GNOME_VFS_OK)
-		return NULL;
-
-	contents = g_realloc ((gpointer) contents, *size + 1);
-	contents[*size] = '\0';
-
-	return contents;
-}
-
 xmlDocPtr
 totem_pl_parser_parse_xml_file (const char *url)
 {
@@ -396,8 +382,7 @@ totem_pl_parser_parse_xml_file (const char *url)
 	char *contents;
 	int size;
 
-	contents = totem_pl_parser_read_entire_file (url, &size);
-	if (contents == NULL)
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return NULL;
 
 	/* Try to remove HTML style comments */
