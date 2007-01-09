@@ -1525,7 +1525,7 @@ parse_stream_info (BaconVideoWidget *bvw)
     pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
     val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
 
-    if (!g_strcasecmp (val->value_nick, "audio")) {
+    if (!g_ascii_strcasecmp (val->value_nick, "audio")) {
       bvw->priv->media_has_audio = TRUE;
       if (!bvw->priv->media_has_video && bvw->priv->video_window) {
         if (bvw->priv->show_vfx) {
@@ -1534,7 +1534,7 @@ parse_stream_info (BaconVideoWidget *bvw)
           gdk_window_hide (bvw->priv->video_window);
         }
       }
-    } else if (!g_strcasecmp (val->value_nick, "video")) {
+    } else if (!g_ascii_strcasecmp (val->value_nick, "video")) {
       bvw->priv->media_has_video = TRUE;
       if (bvw->priv->video_window)
         gdk_window_show (bvw->priv->video_window);
@@ -4784,7 +4784,7 @@ sink_error:
     }
 
     g_object_ref (bvw);
-    gtk_object_sink (GTK_OBJECT (bvw));
+    g_object_ref_sink (G_OBJECT (bvw));
     g_object_unref (bvw);
 
     return NULL;
