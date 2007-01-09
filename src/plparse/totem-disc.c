@@ -473,7 +473,7 @@ cd_cache_open_mountpoint (CdCache *cache,
     data.cache = cache;
     gnome_vfs_drive_mount (cache->drive,
 	(GnomeVFSVolumeOpCallback) cb_mount_done, &data);
-    while (!data.called) g_main_iteration (TRUE);
+    while (!data.called) g_main_context_iteration (NULL, TRUE);
 
     if (!cache->mounted) {
       g_set_error (error, 0, 0,
@@ -525,7 +525,7 @@ cd_cache_free (CdCache *cache)
 
     gnome_vfs_drive_unmount (cache->drive,
 	(GnomeVFSVolumeOpCallback) cb_umount_done, &called);
-    while (!called) g_main_iteration (TRUE);
+    while (!called) g_main_context_iteration (NULL, TRUE);
   }
 
 #ifdef HAVE_HAL

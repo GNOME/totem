@@ -3,12 +3,11 @@ SUBDIRS = idl
 plugindir = $(libdir)/mozilla/plugins
 plugin_LTLIBRARIES =
 
-BUILT_SOURCES = $(VIEWERMARSHALFILES)
+BUILT_SOURCES =
 
 EXTRA_DIST = \
 	plugin.symbols	\
-	TODO		\
-	totempluginviewer-marshal.list
+	TODO
 
 CLEANFILES = $(BUILT_SOURCES)
 
@@ -20,13 +19,11 @@ gecko_include_subdirs = \
 	xpcom
 
 # Marshaller
-VIEWERMARSHALFILES = totempluginviewer-marshal.c totempluginviewer-marshal.h
-GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
 
 totempluginviewer-marshal.h: totempluginviewer-marshal.list
-	( $(GLIB_GENMARSHAL) --prefix=totempluginviewer_marshal $(srcdir)/totempluginviewer-marshal.list --header > totempluginviewer-marshal.h )
+	$(GLIB_GENMARSHAL) --prefix=totempluginviewer_marshal --header $< > $@
 totempluginviewer-marshal.c: totempluginviewer-marshal.list
-	( $(GLIB_GENMARSHAL) --prefix=totempluginviewer_marshal $(srcdir)/totempluginviewer-marshal.list --body --header > totempluginviewer-marshal.c )
+	$(GLIB_GENMARSHAL) --prefix=totempluginviewer_marshal --body --header $< > $@
 
 noinst_LTLIBRARIES = libtotempluginviewer_marshal.la
 
@@ -34,7 +31,19 @@ libtotempluginviewer_marshal_la_SOURCES =	\
 	totempluginviewer-marshal.h		\
 	totempluginviewer-marshal.c
 
-libtotempluginviewer_marshal_la_CFLAGS = $(AM_CFLAGS) $(EXTRA_GNOME_CFLAGS)
+libtotempluginviewer_marshal_la_CPPFLAGS = \
+	$(DISABLE_DEPRECATED)	\
+	$(AM_CPPFLAGS)
+
+libtotempluginviewer_marshal_la_CFLAGS = \
+	$(BROWSER_PLUGIN_CFLAGS)	\
+	$(WARN_CFLAGS)			\
+	$(AM_CFLAGS)
+
+BUILT_SOURCES += $(libtotempluginviewer_marshal_la_SOURCES)
+
+EXTRA_DIST += \
+	totempluginviewer-marshal.list
 
 # Totem Plugin Viewer
 
@@ -63,6 +72,7 @@ totem_plugin_viewer_CPPFLAGS = \
 	-DBINDIR="\"$(bindir)\""			\
 	-DSHAREDIR="\"$(pkgdatadir)\""			\
 	-DLOGO_NAME="\"totem_logo.png\""		\
+	$(DISABLE_DEPRECATED)				\
 	$(AM_CPPFLAGS)
 
 totem_plugin_viewer_CFLAGS = \
@@ -127,6 +137,7 @@ libtotem_basic_plugin_la_CPPFLAGS = \
 	-DDATADIR="\"$(pkgdatadir)\""			\
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
 	-DBINDIR="\"$(bindir)\""			\
+	$(DISABLE_DEPRECATED)				\
 	$(AM_CPPFLAGS)
 
 libtotem_basic_plugin_la_CXXFLAGS = \
@@ -185,6 +196,7 @@ libtotem_gmp_plugin_la_CPPFLAGS = \
 	-DDATADIR="\"$(pkgdatadir)\""			\
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
 	-DBINDIR="\"$(bindir)\""			\
+	$(DISABLE_DEPRECATED)				\
 	$(AM_CPPFLAGS)
 
 libtotem_gmp_plugin_la_CXXFLAGS = \
@@ -243,6 +255,7 @@ libtotem_complex_plugin_la_CPPFLAGS = \
 	-DDATADIR="\"$(pkgdatadir)\""			\
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
 	-DBINDIR="\"$(bindir)\""			\
+	$(DISABLE_DEPRECATED)				\
 	$(AM_CPPFLAGS)
 
 libtotem_complex_plugin_la_CXXFLAGS = \
@@ -301,6 +314,7 @@ libtotem_narrowspace_plugin_la_CPPFLAGS = \
 	-DDATADIR="\"$(pkgdatadir)\""			\
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
 	-DBINDIR="\"$(bindir)\""			\
+	$(DISABLE_DEPRECATED)				\
 	$(AM_CPPFLAGS)
 
 libtotem_narrowspace_plugin_la_CXXFLAGS = \
@@ -359,6 +373,7 @@ libtotem_mully_plugin_la_CPPFLAGS = \
 	-DDATADIR="\"$(pkgdatadir)\""			\
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
 	-DBINDIR="\"$(bindir)\""			\
+	$(DISABLE_DEPRECATED)				\
 	$(AM_CPPFLAGS)
 
 libtotem_mully_plugin_la_CXXFLAGS = \

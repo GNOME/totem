@@ -16,7 +16,8 @@ common_defines = \
 	-DDATADIR=\""$(datadir)"\"			\
 	-DLIBEXECDIR=\""$(libexecdir)"\"		\
 	-DBINDIR=\""$(bindir)"\"				\
-	-DLOGO_PATH=DATADIR\"\"G_DIR_SEPARATOR_S\"totem\"G_DIR_SEPARATOR_S\"totem_logo.png\"
+	-DLOGO_PATH=DATADIR\"\"G_DIR_SEPARATOR_S\"totem\"G_DIR_SEPARATOR_S\"totem_logo.png\"	\
+	$(DISABLE_DEPRECATED)
 
 modules_flags = -export_dynamic -avoid-version -module
 
@@ -127,7 +128,6 @@ totem_SOURCES = 					\
 totem_CPPFLAGS = \
 	-I$(srcdir)/plparse		\
 	-I$(srcdir)/backend		\
-	-I$(top_srcdir)/data		\
 	-I$(top_builddir)/data		\
 	-I$(top_builddir)/src/plparse	\
 	$(common_defines)		\
@@ -201,7 +201,6 @@ libtotem_properties_page_la_SOURCES = 	\
 libtotem_properties_page_la_CPPFLAGS = \
 	-I$(srcdir)/backend	\
 	-I$(srcdir)/plparse	\
-	-I$(top_srcdir)/data	\
 	-I$(top_builddir)/data	\
 	$(common_defines)	\
 	$(AM_CPPFLAGS)
@@ -239,7 +238,6 @@ test_properties_page_SOURCES =		\
 test_properties_page_CPPFLAGS = \
 	-I$(srcdir)/backend	\
 	-I$(srcdir)/plparse	\
-	-I$(top_srcdir)/data	\
 	-I$(top_builddir)/data	\
 	$(common_defines)	\
 	$(AM_CPPFLAGS)
@@ -311,7 +309,6 @@ totem_video_indexer_SOURCES = \
 totem_video_indexer_CPPFLAGS = \
 	-I$(srcdir)/plparse	\
 	-I$(srcdir)/backend	\
-	-I$(top_srcdir)/data	\
 	-I$(top_builddir)/data	\
 	$(common_defines)	\
 	$(AM_CPPFLAGS)

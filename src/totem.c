@@ -28,14 +28,14 @@
 
 #include "config.h"
 
-#ifndef HAVE_GTK_ONLY
-#include <gnome.h>
-#include "totem-gromit.h"
-#else
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <stdlib.h>
+
+#ifndef HAVE_GTK_ONLY
+#include <gnome.h>
+#include "totem-gromit.h"
 #endif /* !HAVE_GTK_ONLY */
 
 #include <string.h>
@@ -838,7 +838,7 @@ totem_action_take_screenshot (Totem *totem)
 
 	gtk_dialog_run (GTK_DIALOG (dialog));
 	gtk_widget_destroy (dialog);
-	gdk_pixbuf_unref (pixbuf);
+	g_object_unref (pixbuf);
 }
 
 static char *
@@ -1856,6 +1856,7 @@ void
 totem_action_skip_to (Totem *totem)
 {
 	char *filename;
+	TotemSkipto **skipto;
 
 	if (totem->seekable == FALSE)
 		return;
@@ -1874,8 +1875,11 @@ totem_action_skip_to (Totem *totem)
 			G_CALLBACK (gtk_widget_destroy), NULL);
 	g_signal_connect (G_OBJECT (totem->skipto), "response",
 			G_CALLBACK (commit_hide_skip_to), totem);
+
+	skipto = &totem->skipto;
 	g_object_add_weak_pointer (G_OBJECT (totem->skipto),
-			(gpointer *)&totem->skipto);
+				   (gpointer *) skipto);
+
 	gtk_window_set_transient_for (GTK_WINDOW (totem->skipto),
 			GTK_WINDOW (totem->win));
 	gtk_widget_show (GTK_WIDGET (totem->skipto));
@@ -3172,6 +3176,7 @@ video_widget_create (Totem *totem)
 {
 	GError *err = NULL;
 	GtkWidget *container;
+	BaconVideoWidget **bvw;
 
 	totem->scr = totem_scrsaver_new ();
 
@@ -3259,8 +3264,9 @@ video_widget_create (Totem *totem)
 			source_table, G_N_ELEMENTS (source_table),
 			GDK_ACTION_LINK);
 
+	bvw = &(totem->bvw);
 	g_object_add_weak_pointer (G_OBJECT (totem->bvw),
-			(void**)&(totem->bvw));
+				   (gpointer *) bvw);
 
 	gtk_widget_show (GTK_WIDGET (totem->bvw));
 

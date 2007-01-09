@@ -8,6 +8,7 @@ bvw_test_CPPFLAGS = \
  	-I$(srcdir)/../plparse		\
 	-DDATADIR=\"$(pkgdatadir)\"	\
 	-DLOGO_PATH=DATADIR\"\"G_DIR_SEPARATOR_S\"totem\"G_DIR_SEPARATOR_S\"totem_logo.png\"
+	$(DISABLE_DEPRECATED)		\
 	$(AM_CPPFLAGS)
 
 bvw_test_CFLAGS = \
@@ -49,6 +50,7 @@ libbaconvideowidget_la_CPPFLAGS = \
  	-I$(srcdir)/../plparse	\
 	-D_REENTRANT		\
 	-DGCONF_PREFIX=\""/apps/totem"\"	\
+	$(DISABLE_DEPRECATED)	\
 	$(AM_CPPFLAGS)
 
 libbaconvideowidget_la_CFLAGS = \

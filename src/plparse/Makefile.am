@@ -70,6 +70,7 @@ libtotem_plparser_la_CPPFLAGS = \
 	-I$(top_srcdir)				\
 	-I$(top_builddir)/src/plparser		\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"\
+	$(DISABLE_DEPRECATED)			\
 	$(AM_CPPFLAGS)
 
 libtotem_plparser_la_CFLAGS = \
@@ -96,6 +97,7 @@ libtotem_plparser_mini_la_CPPFLAGS = \
 	-I$(top_srcdir)			\
 	-I$(top_builddir)/src/plparser	\
 	-DTOTEM_PL_PARSER_MINI		\
+	$(DISABLE_DEPRECATED)		\
 	$(AM_CPPFLAGS)
 
 libtotem_plparser_mini_la_CFLAGS = \

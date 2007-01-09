@@ -81,13 +81,13 @@ add_holes_to_pixbuf_small (GdkPixbuf *pixbuf, int width, int height)
 
 	if (holes == NULL)
 	{
-		gdk_pixbuf_ref (pixbuf);
+		g_object_ref (pixbuf);
 		return pixbuf;
 	}
 
 	g_assert (gdk_pixbuf_get_has_alpha (pixbuf) == FALSE);
 	g_assert (gdk_pixbuf_get_has_alpha (holes) != FALSE);
-	target = gdk_pixbuf_ref (pixbuf);
+	target = g_object_ref (pixbuf);
 
 	for (i = 0; i < height; i += gdk_pixbuf_get_height (holes))
 	{
@@ -98,7 +98,7 @@ add_holes_to_pixbuf_small (GdkPixbuf *pixbuf, int width, int height)
 	}
 
 	tmp = gdk_pixbuf_flip (holes, FALSE);
-	gdk_pixbuf_unref (holes);
+	g_object_unref (holes);
 	holes = tmp;
 
 	for (i = 0; i < height; i += gdk_pixbuf_get_height (holes))
@@ -111,7 +111,7 @@ add_holes_to_pixbuf_small (GdkPixbuf *pixbuf, int width, int height)
 				1, 1, GDK_INTERP_NEAREST, 255);
 	}
 
-	gdk_pixbuf_unref (holes);
+	g_object_unref (holes);
 
 	return target;
 }
@@ -133,7 +133,7 @@ add_holes_to_pixbuf_large (GdkPixbuf *pixbuf, int size)
 
 	if (left == NULL)
 	{
-		gdk_pixbuf_ref (pixbuf);
+		g_object_ref (pixbuf);
 		return pixbuf;
 	}
 
@@ -144,8 +144,8 @@ add_holes_to_pixbuf_large (GdkPixbuf *pixbuf, int size)
 
 	if (right == NULL)
 	{
-		gdk_pixbuf_unref (left);
-		gdk_pixbuf_ref (pixbuf);
+		g_object_unref (left);
+		g_object_ref (pixbuf);
 		return pixbuf;
 	}
 
@@ -280,7 +280,7 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 			with_holes = add_holes_to_pixbuf_small (small,
 					d_width, d_height);
 			g_return_if_fail (with_holes != NULL);
-			gdk_pixbuf_unref (small);
+			g_object_unref (small);
 		} else {
 			with_holes = small;
 		}
@@ -309,7 +309,7 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 			g_print ("totem-video-thumbnailer couln't write the thumbnail '%s' for video '%s'\n", path, video_path);
 		}
 
-		gdk_pixbuf_unref (with_holes);
+		g_object_unref (with_holes);
 		return;
 	}
 
@@ -317,7 +317,7 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 	show_pixbuf (with_holes);
 #endif
 
-	gdk_pixbuf_unref (with_holes);
+	g_object_unref (with_holes);
 }
 
 static gpointer
@@ -455,7 +455,7 @@ int main (int argc, char *argv[])
 		 * the last image we pulled */
 		if(current + 1 < frame_locations_length) {
 			if (pixbuf != NULL)
-				gdk_pixbuf_unref (pixbuf);
+				g_object_unref (pixbuf);
 		}
 	}
 
@@ -472,7 +472,7 @@ int main (int argc, char *argv[])
 	}
 
 	save_pixbuf (pixbuf, output, input, output_size, FALSE);
-	gdk_pixbuf_unref (pixbuf);
+	g_object_unref (pixbuf);
 
 	return 0;
 }

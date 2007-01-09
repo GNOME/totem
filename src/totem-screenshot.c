@@ -24,8 +24,9 @@
 #include "config.h"
 #include "totem-screenshot.h"
 
-#include <gtk/gtk.h>
 #include <glib/gi18n.h>
+#include <glib/gstdio.h>
+#include <gtk/gtk.h>
 #include <glade/glade.h>
 #include <gconf/gconf-client.h>
 #include <string.h>
@@ -50,9 +51,6 @@ static const GtkTargetEntry target_table[] = {
 static GtkTargetEntry source_table[] = {
 	{ "text/uri-list", 0, 0 },
 };
-
-
-static GtkWidgetClass *parent_class = NULL;
 
 static void totem_screenshot_class_init (TotemScreenshotClass *class);
 static void totem_screenshot_init       (TotemScreenshot      *screenshot);
@@ -273,13 +271,11 @@ totem_screenshot_finalize (GObject *object)
 	totem_screenshot_temp_file (screenshot, FALSE);
 
 	if (screenshot->_priv->pixbuf != NULL)
-		gdk_pixbuf_unref (screenshot->_priv->pixbuf);
+		g_object_unref (screenshot->_priv->pixbuf);
 	if (screenshot->_priv->scaled != NULL)
-		gdk_pixbuf_unref (screenshot->_priv->scaled);
+		g_object_unref (screenshot->_priv->scaled);
 
-	if (G_OBJECT_CLASS (parent_class)->finalize != NULL) {
-		(* G_OBJECT_CLASS (parent_class)->finalize) (object);
-	}
+	G_OBJECT_CLASS (totem_screenshot_parent_class)->finalize (object);
 }
 
 static void
@@ -423,9 +419,6 @@ totem_screenshot_new (const char *glade_filename, GdkPixbuf *screen_image)
 static void
 totem_screenshot_class_init (TotemScreenshotClass *klass)
 {
-	parent_class = gtk_type_class (gtk_dialog_get_type ());
-
 	G_OBJECT_CLASS (klass)->finalize = totem_screenshot_finalize;
 	//FIXME override response
 }
-

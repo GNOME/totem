@@ -977,6 +977,7 @@ static void
 on_about1_activate (GtkButton *button, TotemEmbedded *emb)
 {
 	char *backend_version, *description;
+	GtkWidget **about;
 
 	const char *authors[] =
 	{
@@ -1012,8 +1013,10 @@ on_about1_activate (GtkButton *button, TotemEmbedded *emb)
 	totem_interface_set_transient_for (GTK_WINDOW (emb->about),
 					   GTK_WINDOW (emb->window));
 
+	about = &emb->about;
 	g_object_add_weak_pointer (G_OBJECT (emb->about),
-				   (gpointer *)&emb->about);
+				   (gpointer *) about);
+
 	g_signal_connect (G_OBJECT (emb->about), "response",
 			  G_CALLBACK (gtk_widget_destroy), NULL);
 

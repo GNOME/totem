@@ -191,6 +191,7 @@ totem_gtk_plug_get_toplevel (GtkPlug *plug)
 
 	do
 	{
+		/* FIXME: multi-head */
 		if (XQueryTree (GDK_DISPLAY (), xid, &root,
 					&parent, &children, &nchildren) == 0)
 		{
@@ -220,7 +221,7 @@ totem_interface_set_transient_for (GtkWindow *window, GtkWindow *parent)
 		if (toplevel != NULL) {
 			gdk_window_set_transient_for
 				(GTK_WIDGET (window)->window, toplevel);
-			gdk_window_unref (toplevel);
+			g_object_unref (toplevel);
 		}
 	} else {
 		gtk_window_set_transient_for (GTK_WINDOW (window),

@@ -29,12 +29,11 @@
 #include "config.h"
 #endif
 
-#include "totem-mime-types.h"
+#include <glib/gi18n.h>
+#include <gtk/gtk.h>
 
 #ifndef HAVE_GTK_ONLY
 #include <gnome.h>
-#else
-#include <gtk/gtk.h>
 #endif
 
 #include <bacon-video-widget.h>
@@ -44,6 +43,8 @@
 #include <stdlib.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
 #include <libgnomevfs/gnome-vfs-init.h>
+
+#include "totem-mime-types.h"
 
 static gboolean show_mimetype = FALSE;
 static char **filenames = NULL;

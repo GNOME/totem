@@ -1,3 +1,27 @@
+2007-01-09  Christian Persch  <chpe@svn.gnome.org>
+
+	* browser-plugin/Makefile.am:
+	* browser-plugin/totem-plugin-viewer.c: (on_about1_activate):
+	* data/Makefile.am:
+	* src/Makefile.am:
+	* src/backend/Makefile.am:
+	* src/plparse/Makefile.am:
+	* src/plparse/totem-disc.c: (cd_cache_open_mountpoint),
+	(cd_cache_free):
+	* src/totem-interface.c: (totem_gtk_plug_get_toplevel),
+	(totem_interface_set_transient_for):
+	* src/totem-screenshot.c: (totem_screenshot_finalize),
+	(totem_screenshot_class_init):
+	* src/totem-video-indexer.c:
+	* src/totem-video-thumbnailer.c: (add_holes_to_pixbuf_small),
+	(add_holes_to_pixbuf_large), (save_pixbuf), (main):
+	* src/totem.c: (totem_action_take_screenshot),
+	(totem_action_skip_to), (video_widget_create):
+	Add $(DISABLE_DEPRECATED) to CPPFLAGS to catch deprecated API use.
+	Remove all uses or deprecated APIs, and fix all compiler warnings
+	except for some strict-aliasing warnings in the browser plugin.
+	Bug #394471.
+
 2007-01-09  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in:
