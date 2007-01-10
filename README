@@ -1,6 +1,6 @@
 
                          _|_ __|_ _ ._ _  
-			  |_(_)|_(/_| | | 
+                          |_(_)|_(/_| | | 
 
 Totem is movie player for the Gnome desktop based on xine or GStreamer.
 It features a playlist, a full-screen mode, seek and volume controls,
@@ -20,8 +20,8 @@ Dependencies
 xine-lib 1.0 rc7 or newer:
 	http://xinehq.de
 or
-GStreamer 0.10.1, and gstreamer-plugins-base 0.10.1
-	http://gstreamer.net
+GStreamer 0.10.6, and gstreamer-plugins-base 0.10.7
+	http://gstreamer.freedesktop.org
 
 GNOME 2.6 development platform
 	http://www.gnome.org
@@ -120,6 +120,18 @@ GStreamer backend TODO
 ======================
 - deinterlacing
 - network connection speed (mmsh://, http://, rtsp://...)
+
+Easy GStreamer plugin installation via libgimme-codec (optional)
+================================================================
+- requires GStreamer core and gst-plugins-base >= 0.10.12
+- libgimme-codec is a very thing wrapper library to call a predefined external
+  helper script with details of missing GStreamer plugins, it can be obtained
+  from http://desrt.mcmaster.ca/code/libgimme-codec/
+  The library on its own is not very useful, since it does not provide the
+  actual external helper that does the package installation or suggests what
+  to install.
+- for more information, see https://wiki.ubuntu.com/EasyCodecInstallation
+  and the links referenced there.
 
 BUGS
 ====
