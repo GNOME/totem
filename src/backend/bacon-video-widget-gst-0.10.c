@@ -84,6 +84,7 @@ enum
   SIGNAL_TICK,
   SIGNAL_GOT_METADATA,
   SIGNAL_BUFFERING,
+  SIGNAL_MISSING_PLUGINS,
   LAST_SIGNAL
 };
 
@@ -190,6 +191,10 @@ struct BaconVideoWidgetPrivate
    * which may change asynchronously or during buffering */
   GstState                     target_state;
   gboolean                     buffering;
+
+  /* for easy codec installation */
+  GList                       *missing_plugins;   /* GList of GstMessages */
+  gboolean                     plugin_install_in_progress;
 };
 
 static void bacon_video_widget_set_property (GObject * object,
@@ -218,6 +223,64 @@ static int bvw_signals[LAST_SIGNAL] = { 0 };
 
 GST_DEBUG_CATEGORY (_totem_gst_debug_cat);
 #define GST_CAT_DEFAULT _totem_gst_debug_cat
+
+/* FIXME: temporary utility functions so we don't have to up the GStreamer
+ * requirements to core/base CVS (0.10.11.1) before the next totem release */
+#define gst_base_utils_init() /* noop */
+#define gst_is_missing_plugin_message(msg) \
+	bvw_is_missing_plugin_message(msg)
+#define gst_missing_plugin_message_get_description(msg) \
+	bvw_missing_plugin_message_get_description(msg)
+#define gst_missing_plugin_message_get_installer_detail(msg) \
+    bvw_missing_plugin_message_get_installer_detail(msg)
+
+static gboolean
+bvw_is_missing_plugin_message (GstMessage * msg)
+{
+  g_return_val_if_fail (msg != NULL, FALSE);
+  g_return_val_if_fail (GST_IS_MESSAGE (msg), FALSE);
+
+  if (GST_MESSAGE_TYPE (msg) != GST_MESSAGE_ELEMENT || msg->structure == NULL)
+    return FALSE;
+
+  return gst_structure_has_name (msg->structure, "missing-plugin");
+}
+
+static gchar *
+bvw_missing_plugin_message_get_description (GstMessage * msg)
+{
+  g_return_val_if_fail (bvw_is_missing_plugin_message (msg), NULL);
+
+  return g_strdup (gst_structure_get_string (msg->structure, "name"));
+}
+
+static gchar *
+bvw_missing_plugin_message_get_installer_detail (GstMessage * msg)
+{
+  const GValue *val;
+  const gchar *type;
+  gchar *desc, *ret, *details;
+
+  g_return_val_if_fail (bvw_is_missing_plugin_message (msg), NULL);
+
+  type = gst_structure_get_string (msg->structure, "type");
+  g_return_val_if_fail (type != NULL, NULL);
+  val = gst_structure_get_value (msg->structure, "detail");
+  g_return_val_if_fail (val != NULL, NULL);
+  if (G_VALUE_HOLDS (val, GST_TYPE_CAPS)) {
+    details = gst_caps_to_string (gst_value_get_caps (val));
+  } else if (G_VALUE_HOLDS (val, G_TYPE_STRING)) {
+    details = g_value_dup_string (val);
+  } else {
+    g_return_val_if_reached (NULL);
+  }
+  desc = bvw_missing_plugin_message_get_description (msg);
+  ret = g_strdup_printf ("gstreamer.net|0.10|totem|%s|%s-%s",
+      (desc) ? desc : "", type, (details) ? details: "");
+  g_free (desc);
+  g_free (details);
+  return ret;
+}
 
 static void
 bvw_error_msg_print_dbg (GstMessage * msg)
@@ -801,6 +864,20 @@ bacon_video_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
   }
 }
 
+static gboolean
+bvw_boolean_handled_accumulator (GSignalInvocationHint * ihint,
+    GValue * return_accu, const GValue * handler_return, gpointer foobar)
+{
+  gboolean continue_emission;
+  gboolean signal_handled;
+  
+  signal_handled = g_value_get_boolean (handler_return);
+  g_value_set_boolean (return_accu, signal_handled);
+  continue_emission = !signal_handled;
+  
+  return continue_emission;
+}
+
 static void
 bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 {
@@ -933,6 +1010,22 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, buffering),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__INT, G_TYPE_NONE, 1, G_TYPE_INT);
+
+  /* missing plugins signal:
+   *  - string array: details of missing plugins for libgimme-codec
+   *  - string array: details of missing plugins (human-readable strings)
+   *  - bool: if we managed to start playing something even without those plugins
+   *  return value: callback must return TRUE to indicate that it took some
+   *                action, FALSE will be interpreted as no action taken
+   */
+  bvw_signals[SIGNAL_MISSING_PLUGINS] =
+    g_signal_new ("missing-plugins",
+                  G_TYPE_FROM_CLASS (object_class),
+                  G_SIGNAL_RUN_LAST,
+                  0, /* signal is enough, we don't need a vfunc */
+                  bvw_boolean_handled_accumulator, NULL,
+                  baconvideowidget_marshal_BOOLEAN__BOXED_BOXED_BOOLEAN,
+                  G_TYPE_BOOLEAN, 3, G_TYPE_STRV, G_TYPE_STRV, G_TYPE_BOOLEAN);
 }
 
 static void
@@ -954,6 +1047,9 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   bvw->priv->videotags = NULL;
 
   bvw->priv->lock = g_mutex_new ();
+
+  bvw->priv->missing_plugins = NULL;
+  bvw->priv->plugin_install_in_progress = FALSE;
 }
 
 static void
@@ -1069,6 +1165,10 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
       strcmp (type_name, "have-xwindow-id") == 0) {
     /* we handle these synchroneously or want to ignore them */
     goto done;
+  } else if (gst_is_missing_plugin_message (msg)) {
+    bvw->priv->missing_plugins =
+      g_list_prepend (bvw->priv->missing_plugins, gst_message_ref (msg));
+    goto done;
   }
 
 unhandled:
@@ -1106,6 +1206,60 @@ bvw_reconfigure_tick_timeout (BaconVideoWidget *bvw, guint msecs)
     bvw->priv->update_id =
       g_timeout_add (msecs, (GSourceFunc) bvw_query_timeout, bvw);
   }
+}
+
+/* returns TRUE if the error/signal has been handled and should be ignored */
+static gboolean
+bvw_emit_missing_plugins_signal (BaconVideoWidget * bvw, gboolean prerolled)
+{
+  gboolean handled = FALSE;
+  gchar **descriptions, **details;
+  guint num, i;
+
+  num = g_list_length (bvw->priv->missing_plugins);
+  g_return_val_if_fail (num > 0, FALSE);
+
+  details = g_new0 (gchar *, num + 1);
+  descriptions = g_new0 (gchar *, num + 1);
+
+  for (i = 0; i < num; ++i) {
+    GstMessage *msg = GST_MESSAGE (bvw->priv->missing_plugins->data);
+
+    details[i] = gst_missing_plugin_message_get_installer_detail (msg);
+    descriptions[i] = gst_missing_plugin_message_get_description (msg);
+
+    bvw->priv->missing_plugins = g_list_delete_link (bvw->priv->missing_plugins,
+        bvw->priv->missing_plugins);
+    gst_message_unref (msg);
+  }
+  g_assert (bvw->priv->missing_plugins == NULL);
+
+  GST_LOG ("emitting missing-plugins signal (prerolled=%d)", prerolled);
+
+  g_signal_emit (bvw, bvw_signals[SIGNAL_MISSING_PLUGINS], 0,
+      details, descriptions, prerolled, &handled);
+  GST_DEBUG ("missing-plugins signal was %shandled", (handled) ? "" : "not ");
+
+  g_strfreev (descriptions);
+  g_strfreev (details);
+
+  if (handled) {
+    bvw->priv->plugin_install_in_progress = TRUE;
+  }
+
+  return handled;
+}
+
+/* returns TRUE if a missing-plugins signal has been emitted and handled */
+static gboolean
+bvw_check_missing_plugins_on_preroll (BaconVideoWidget * bvw)
+{
+  if (bvw->priv->missing_plugins == NULL) {
+    GST_DEBUG ("no missing-plugin messages");
+    return FALSE;
+  }
+
+  return bvw_emit_missing_plugins_signal (bvw, TRUE); 
 }
 
 static void
@@ -1280,6 +1434,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
       if (old_state == GST_STATE_READY && new_state == GST_STATE_PAUSED) {
         bvw_update_stream_info (bvw);
+        bvw_check_missing_plugins_on_preroll (bvw);
       } else if (old_state == GST_STATE_PAUSED && new_state == GST_STATE_READY) {
         bvw->priv->media_has_video = FALSE;
         bvw->priv->media_has_audio = FALSE;
@@ -2632,6 +2787,11 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   gst_element_set_state (bvw->priv->play, GST_STATE_NULL);
   bvw->priv->target_state = GST_STATE_NULL;
   bvw->priv->buffering = FALSE;
+  g_list_foreach (bvw->priv->missing_plugins,
+                  (GFunc) gst_mini_object_unref, NULL);
+  bvw->priv->missing_plugins = NULL;
+  bvw->priv->plugin_install_in_progress = FALSE;
+  bvw->priv->ignore_messages_mask = 0;
   GST_DEBUG ("stopped");
 }
 
@@ -4445,6 +4605,8 @@ bacon_video_widget_new (int width, int height,
     version_str = gst_version_string ();
     GST_DEBUG ("Initialised %s", version_str);
     g_free (version_str);
+
+    gst_base_utils_init ();
   }
 
   bvw = BACON_VIDEO_WIDGET (g_object_new

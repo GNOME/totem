@@ -1,3 +1,28 @@
+2007-01-10  Tim-Philipp Müller  <tim at centricular dot net>
+
+        * src/backend/bacon-video-widget-gst-0.10.c:
+        (bvw_is_missing_plugin_message):
+        (bvw_missing_plugin_message_get_description):
+        (bvw_missing_plugin_message_get_installer_detail):
+        (bvw_boolean_handled_accumulator):
+        (bacon_video_widget_class_init):
+        (bacon_video_widget_init):
+        (bvw_handle_element_message):
+        (bvw_emit_missing_plugins_signal):
+        (bvw_check_missing_plugins_on_preroll):
+        (bvw_bus_message_cb):
+        (bvw_stop_play_pipeline):
+        (bacon_video_widget_new):
+        * src/backend/baconvideowidget-marshal.list:
+	  Add 'missing-plugins' signal to the GStreamer backend; collect
+	  missing-plugin messages from playbin (which will only be posted by
+	  playbin from gst-plugins-base CVS) and check them when we're
+	  prerolled to see if we're missing any decoders or demuxers to process
+	  the stream (need to also do this in the error case, but this is not
+	  implemented yet); add some utility functions for this stuff so we don't
+	  have to up the GStreamer requirements to cvs for the newly-added
+	  libgstbaseutils API before the upcoming totem release.
+
 2007-01-10  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-video-widget-properties.c:
