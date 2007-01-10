@@ -2573,8 +2573,11 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
     }
   }
 
-  /* this allows to play backups of dvds */
-  if (g_str_has_prefix (mrl, "dvd:///")) {
+  if (g_str_has_prefix (mrl, "icy:") != FALSE) {
+    /* Handle "icy://" URLs from QuickTime */
+    bvw->com->mrl = g_strdup_printf ("http:%s", mrl + 4);
+  } else if (g_str_has_prefix (mrl, "dvd:///")) {
+    /* this allows to play backups of dvds */
     g_free (bvw->com->mrl);
     bvw->com->mrl = g_strdup ("dvd://");
     bacon_video_widget_set_media_device (bvw, mrl + strlen ("dvd://"));

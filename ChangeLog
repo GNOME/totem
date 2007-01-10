@@ -1,3 +1,16 @@
+2007-01-10  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_open_with_subtitle):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_open_with_subtitle):
+	Handle "icy://" URLs in the backends
+
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_parse_internal):
+	Ignore "icy:" URLs just like we do for mms: and rtsp: ones
+
+	(Closes: #394207)
+
 2007-01-10  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:

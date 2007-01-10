@@ -2192,6 +2192,9 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 	if (g_str_has_prefix (mrl, "vcd:/") != FALSE
 			&& g_str_has_suffix (mrl, ".cue") != FALSE) {
 		bvw->com->mrl = g_strdup_printf ("%s@", mrl);
+	} else if (g_str_has_prefix (mrl, "icy:") != FALSE) {
+		/* Handle "icy://" URLs from QuickTime */
+		bvw->com->mrl = g_strdup_printf ("http:%s", mrl + 4);
 	} else {
 		bvw->com->mrl = g_strdup (mrl);
 	}
@@ -2210,10 +2213,10 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 			bvw->priv->has_subtitle = TRUE;
 			g_free (subtitled);
 		} else {
-			err = xine_open (bvw->priv->stream, mrl);
+			err = xine_open (bvw->priv->stream, bvw->com->mrl);
 		}
 	} else {
-		err = xine_open (bvw->priv->stream, mrl);
+		err = xine_open (bvw->priv->stream, bvw->com->mrl);
 	}
 
 	xine_plugins_garbage_collector (bvw->priv->xine);

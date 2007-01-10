@@ -897,10 +897,10 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url,
 
 	/* Shouldn't gnome-vfs have a list of schemes it supports? */
 	if (g_str_has_prefix (url, "mms") != FALSE
-			|| g_str_has_prefix (url, "rtsp") != FALSE) {
-		DEBUG(g_print ("URL '%s' is MMS or RTSP, ignoring\n", url));
-		totem_pl_parser_add_one_url (parser, url, NULL);
-		return TOTEM_PL_PARSER_RESULT_SUCCESS;
+			|| g_str_has_prefix (url, "rtsp") != FALSE
+			|| g_str_has_prefix (url, "icy") != FALSE) {
+		DEBUG(g_print ("URL '%s' is MMS, RTSP or ICY, ignoring\n", url));
+		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
 	}
 
 	if (!parser->priv->recurse && parser->priv->recurse_level > 0) {
