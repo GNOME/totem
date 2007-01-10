@@ -728,7 +728,21 @@ totem_open_location_set_from_clipboard (Totem *totem)
 	return NULL;
 }
 
-//FIXME move the URI to a separate widget
+static gboolean
+totem_open_location_match (GtkEntryCompletion *completion, const gchar *key, GtkTreeIter *iter, gpointer user_data)
+{
+	/* Substring-match key against uri */
+	char *uri, *match;
+
+	g_return_val_if_fail (key != NULL, FALSE);
+	gtk_tree_model_get (user_data, iter, 0, &uri, -1);
+	g_return_val_if_fail (uri != NULL, FALSE);
+	match = strstr (uri, key);
+	g_free (uri);
+
+	return (match != NULL);
+}
+
 void
 totem_action_open_location (Totem *totem)
 {
@@ -737,6 +751,9 @@ totem_action_open_location (Totem *totem)
 	GtkWidget *dialog, *entry;
 	int response;
 	const char *filenames[2];
+	GtkEntryCompletion *completion;
+	GtkTreeModel *model;
+	GList *recent_items;
 
 	glade = totem_interface_load ("uri.glade", _("Open Location..."),
 			FALSE, GTK_WINDOW (totem->win));
@@ -752,20 +769,19 @@ totem_action_open_location (Totem *totem)
 	dialog = glade_xml_get_widget (glade, "open_uri_dialog");
 	entry = glade_xml_get_widget (glade, "uri");
 
-	GtkEntryCompletion *completion = gtk_entry_completion_new();
-	GtkTreeModel *model = GTK_TREE_MODEL (gtk_list_store_new (1, G_TYPE_STRING));
-
+	completion = gtk_entry_completion_new();
+	model = GTK_TREE_MODEL (gtk_list_store_new (1, G_TYPE_STRING));
 	gtk_entry_set_completion (GTK_ENTRY (entry), completion);
 
 	/* Add items in Totem's GtkRecentManager to the uri_list GtkEntry's GtkEntryCompletion */
-	GList *recent_items = gtk_recent_manager_get_items (totem->recent_manager);
+	recent_items = gtk_recent_manager_get_items (totem->recent_manager);
 
 	if (recent_items != NULL)
 	{
-		recent_items = g_list_sort (recent_items, (GCompareFunc) totem_compare_recent_stream_items);
-
 		GList *p;
 		GtkTreeIter iter;
+
+		recent_items = g_list_sort (recent_items, (GCompareFunc) totem_compare_recent_stream_items);
 
 		for (p = recent_items; p != NULL; p = p->next)
 		{
@@ -782,12 +798,13 @@ totem_action_open_location (Totem *totem)
 
 	gtk_entry_completion_set_model (completion, model);
 	gtk_entry_completion_set_text_column (completion, 0);
+	gtk_entry_completion_set_match_func (completion, (GtkEntryCompletionMatchFunc) totem_open_location_match, model, NULL);
 
 	response = gtk_dialog_run (GTK_DIALOG (dialog));
 
 	if (response == GTK_RESPONSE_OK)
 	{
-		gchar *uri;
+		char *uri;
 
 		uri = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
 
