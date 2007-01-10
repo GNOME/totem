@@ -306,6 +306,10 @@ totemPlugin::ViewerFork ()
  		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_REPEAT));
  	}
 
+	if (mAudioOnly) {
+		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_AUDIOONLY));
+	}
+
 	if (!mAutostart) {
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_NOAUTOSTART));
 	}
@@ -1650,18 +1654,28 @@ totemPlugin::Init (NPMIMEType mimetype,
 	if (value != NULL) {
 		height = strtol (value, NULL, 0);
 	}
-	
+
 	/* Are we hidden? */
 	/* Treat hidden without a value as TRUE */
 	mHidden = g_hash_table_lookup (args, "hidden") != NULL &&
 		  GetBooleanValue (args, "hidden", PR_TRUE);
 
+#ifdef TOTEM_GMP_PLUGIN
+	if (height == 40) {
+		mAudioOnly = PR_TRUE;
+	}
+#endif /* TOTEM_GMP_PLUGIN */
+#ifdef TOTEM_NARROWSPACE_PLUGIN
+	if (height <= 16) {
+		mAudioOnly = PR_TRUE;
+	}
+#endif /* TOTEM_NARROWSPACE_PLUGIN */
+
 	/* Most for RealAudio streams, but also used as a replacement for
 	 * HIDDEN=TRUE attribute.
 	 */
-	if (width == 0 && height == 0) {
+	if (width == 0 && height == 0)
 		mHidden = PR_TRUE;
-	}
 
 	/* Whether to automatically stream and play the content */
 	mAutostart = GetBooleanValue (args, "autoplay",
@@ -1822,6 +1836,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 	D ("mControllerHidden: %d", mControllerHidden);
 	D ("mShowStatusbar: %d", mShowStatusbar);
 	D ("mHidden: %d", mHidden);
+	D ("mAudioOnly: %s", mAudioOnly);
 	D ("mAutostart: %d, mRepeat: %d", mAutostart, mRepeat);
 #ifdef TOTEM_NARROWSPACE_PLUGIN
 	D ("mHref: %s", mHref.get ());

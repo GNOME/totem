@@ -50,8 +50,7 @@ static const totemPluginMimeEntry kMimeTypes[] = {
 	{ "video/quicktime", "mov", NULL, FALSE },
 	{ "video/mp4", "mp4", NULL, FALSE },
 	{ "image/x-macpaint", "pntg", NULL, FALSE },
-	{ "image/x-quicktime", "pict, pict1, pict2", "image/x-pict", FALSE },
-	{ "audio/x-mpegurl", "m3u", NULL, TRUE }
+	{ "image/x-quicktime", "pict, pict1, pict2", "image/x-pict", FALSE }
 };
 
 totemScriptablePlugin::totemScriptablePlugin (totemPlugin *aPlugin)

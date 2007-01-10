@@ -136,6 +136,7 @@ typedef struct _TotemEmbedded {
 	guint seeking : 1;
 	guint noautostart : 1;
 	guint autostart : 1;
+	guint audioonly : 1;
 } TotemEmbedded;
 
 GType totem_embedded_get_type (void);
@@ -1311,7 +1312,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 		emb->window = glade_xml_get_widget (emb->xml, "window");
 	}
 
-	if (emb->hidden)
+	if (emb->hidden || emb->audioonly != FALSE)
 		type = BVW_USE_TYPE_AUDIO;
 	else
 		type = BVW_USE_TYPE_VIDEO;
@@ -1653,6 +1654,7 @@ static gboolean arg_hidden = FALSE;
 static gboolean arg_is_playlist = FALSE;
 static gboolean arg_repeat = FALSE;
 static gboolean arg_no_autostart = FALSE;
+static gboolean arg_audioonly = FALSE;
 static TotemPluginType arg_plugin_type = TOTEM_PLUGIN_TYPE_LAST;
 
 static gboolean
@@ -1692,6 +1694,7 @@ static GOptionEntry option_entries [] =
 	{ TOTEM_OPTION_PLAYLIST, 0, 0, G_OPTION_ARG_NONE, &arg_is_playlist, NULL, NULL },
 	{ TOTEM_OPTION_REPEAT, 0, 0, G_OPTION_ARG_NONE, &arg_repeat, NULL, NULL },
 	{ TOTEM_OPTION_NOAUTOSTART, 0, 0, G_OPTION_ARG_NONE, &arg_no_autostart, NULL, NULL },
+	{ TOTEM_OPTION_AUDIOONLY, 0, 0, G_OPTION_ARG_NONE, &arg_audioonly, NULL, NULL },
 	{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY /* STRING? */, &arg_remaining, NULL },
 	{ NULL }
 };
@@ -1834,6 +1837,7 @@ int main (int argc, char **argv)
 	emb->is_playlist = arg_is_playlist;
 	emb->repeat = arg_repeat;
 	emb->autostart = !arg_no_autostart;
+	emb->audioonly = arg_audioonly;
 	emb->type = arg_plugin_type;
 
 	/* FIXME: register this BEFORE requesting the service name? */

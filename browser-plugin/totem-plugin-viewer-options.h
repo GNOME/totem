@@ -35,5 +35,6 @@
 #define TOTEM_OPTION_REPEAT		"repeat"
 #define TOTEM_OPTION_USER_AGENT		"user-agent"
 #define TOTEM_OPTION_STATUSBAR		"statusbar"
+#define TOTEM_OPTION_AUDIOONLY		"audio-only"
 
 #endif /* !__TOTEM_PLUGIN_VIEWER_OPTIONS_H__ */

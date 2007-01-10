@@ -272,6 +272,7 @@ class totemPlugin {
     PRUint32 mViewerSetUp : 1;
     PRUint32 mWaitingForButtonPress : 1;
     PRUint32 mWindowSet : 1;
+    PRUint32 mAudioOnly : 1;
 };
 
 typedef struct {
