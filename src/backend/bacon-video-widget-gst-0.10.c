@@ -4422,20 +4422,20 @@ bacon_video_widget_new (int width, int height,
         audio_sink = gst_element_factory_make ("fakesink", "audio-sink");
       if (audio_sink == NULL) {
         if (err && !*err) {
-	  g_warning ("Should have gotten an error message, please file a bug.");
-	  g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
-		       _("Failed to open audio output. You may not have "
-		         "permission to open the sound device, or the sound "
-		         "server may not be running. "
-		         "Please select another audio output in the Multimedia "
-		         "Systems Selector."));
-	}
-	goto sink_error;
+          g_warning ("Should have gotten an error message, please file a bug.");
+          g_set_error (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
+                       _("Failed to open audio output. You may not have "
+                         "permission to open the sound device, or the sound "
+                         "server may not be running. "
+                         "Please select another audio output in the Multimedia "
+                         "Systems Selector."));
+        }
+        goto sink_error;
       }
       bvw->priv->uses_fakesink = TRUE;
     }
   } else {
-    g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+    g_set_error (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
 		 _("Could not find the audio output. "
 		   "You may need to install additional GStreamer plugins, or "
 		   "select another audio output in the Multimedia Systems "
