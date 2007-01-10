@@ -1,5 +1,19 @@
 2007-01-10  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemNarrowSpacePlugin.cpp:
+	Allow the QuickTime plugin to handle audio/x-mpegurl
+	as at http://www.catradio.cat/pilotcatradio/
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_expose_event):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_expose): Avoid crashes or eating
+	gobbles of RAM when the size allocated to the plugin
+	is smaller than the height it'd fit in
+	(Closes: #376770)
+
+2007-01-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/Makefile.am: fix browser plugin linking,
 	we need the parser backends as well
 

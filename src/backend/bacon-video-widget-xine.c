@@ -1771,7 +1771,7 @@ bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 		XExposeEvent *expose;
 
 		if (event->count != 0)
-			return FALSE;
+			return TRUE;
 
 		expose = g_new0 (XExposeEvent, 1);
 		expose->count = event->count;
@@ -1808,6 +1808,9 @@ bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 		s_width *= ratio;
 		s_height *= ratio;
 
+		if (s_width <= 1 || s_height <= 1)
+			return FALSE;
+
 		logo = gdk_pixbuf_scale_simple (bvw->priv->logo_pixbuf,
 				s_width, s_height, GDK_INTERP_BILINEAR);
 
@@ -1820,7 +1823,7 @@ bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 		gdk_pixbuf_unref (logo);
 	}
 
-	return FALSE;
+	return TRUE;
 }
 
 static gboolean

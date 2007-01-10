@@ -636,21 +636,27 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
       GdkPixbuf *logo = NULL;
       gint s_width, s_height, w_width, w_height;
       gfloat ratio;
-      
+
       s_width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
       s_height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
       w_width = widget->allocation.width;
       w_height = widget->allocation.height;
-      
+
       if ((gfloat) w_width / s_width > (gfloat) w_height / s_height) {
         ratio = (gfloat) w_height / s_height;
       } else {
         ratio = (gfloat) w_width / s_width;
       }
-      
+
       s_width *= ratio;
       s_height *= ratio;
-      
+
+      if (s_width <= 1 || s_height <= 1) {
+        if (xoverlay != NULL)
+	  gst_object_unref (xoverlay);
+	return TRUE;
+      }
+
       logo = gdk_pixbuf_scale_simple (bvw->priv->logo_pixbuf,
           s_width, s_height, GDK_INTERP_BILINEAR);
 
