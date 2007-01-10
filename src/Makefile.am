@@ -118,6 +118,7 @@ totem_SOURCES = 					\
 	totem-sidebar.c totem-sidebar.h \
 	totem-skipto.c totem-skipto.h	\
 	totem-menu.c totem-menu.h	\
+	totem-missing-plugins.c totem-missing-plugins.h \
 	totem-time-label.c totem-time-label.h \
 	totem-uri.c totem-uri.h		\
 	totem-gromit.c totem-gromit.h	\
@@ -155,7 +156,8 @@ totem_LDADD = \
 	$(NVTV_LIBS)			\
 	$(DBUS_LIBS)			\
 	$(XTEST_LIBS)			\
-	$(X_LIBS)
+	$(X_LIBS)				\
+	$(GIMME_CODEC_LIBS)
 
 # Totem video thumbnailer
 

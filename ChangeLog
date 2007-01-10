@@ -1,5 +1,27 @@
 2007-01-10  Tim-Philipp Müller  <tim at centricular dot net>
 
+	* configure.in:
+	* src/Makefile.am:
+	* src/totem-missing-plugins.c: Added.
+	(totem_codec_install_plugin_is_blacklisted):
+	(totem_codec_install_blacklist_plugin):
+	(totem_codec_install_context_free):
+	(on_gimme_codec_installation_done):
+	(totem_on_missing_plugins_event):
+	(totem_missing_plugins_setup):
+	* src/totem-missing-plugins.h: Added.
+	* src/totem.c:
+	(video_widget_create):
+	 Add optional support for automatic/easy missing codec installation via
+	 libgimme-codec. If libgimme-codec is available and the GStreamer backend
+	 is used (and a recent-enough gst-plugins-base used), totem will use the
+	 library to call an external installer program with information about
+	 the plugins missing. If anything was installed, the GStreamer plugin
+	 registry will be updated and playback tried again (without the need to
+	 restart totem). (Closes: #394697)
+
+2007-01-10  Tim-Philipp Müller  <tim at centricular dot net>
+
         * src/backend/bacon-video-widget-gst-0.10.c:
         (bvw_is_missing_plugin_message):
         (bvw_missing_plugin_message_get_description):
