@@ -1,5 +1,16 @@
 2007-01-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/bacon-video-widget-properties.c:
+	(bacon_video_widget_properties_new): fix compile warning
+	* src/totem-interface.c: (totem_interface_get_license):
+	* src/totem-interface.h: add totem_interface_get_license(),
+	which shows and translates the license
+	* src/totem-menu.c: (about_action_callback):
+	* browser-plugin/totem-plugin-viewer.c: (on_about1_activate):
+	Use totem_interface_get_license() (Closes: #330871)
+
+2007-01-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_open_location_match),
 	(totem_action_open_location): Patch from Philip Withnall
 	<bugzilla@tecnocode.co.uk> to also complete on substrings in

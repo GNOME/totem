@@ -1060,6 +1060,7 @@ about_action_callback (GtkAction *action, Totem *totem)
 		"Chee Bin Hoh <cbhoh@gnome.org>",
 		NULL
 	};
+	char *license = totem_interface_get_license ();
 
 #ifdef HAVE_GTK_ONLY
 	frontend_type = N_("GTK+");
@@ -1082,10 +1083,13 @@ about_action_callback (GtkAction *action, Totem *totem)
 				     "artists", artists,
 				     "translator-credits", _("translator-credits"),
 				     "logo-icon-name", "totem",
+				     "license", license,
+				     "wrap-license", TRUE,
 				     NULL);
 
 	g_free (backend_version);
 	g_free (description);
+	g_free (license);
 }
 
 static void

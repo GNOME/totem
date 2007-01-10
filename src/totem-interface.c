@@ -229,3 +229,28 @@ totem_interface_set_transient_for (GtkWindow *window, GtkWindow *parent)
 	}
 }
 
+char *
+totem_interface_get_license (void)
+{
+	const char const *license[] = {
+		N_("Totem is free software; you can redistribute it and/or modify "
+		   "it under the terms of the GNU General Public License as published by "
+		   "the Free Software Foundation; either version 2 of the License, or "
+		   "(at your option) any later version."),
+		N_("Sound Juicer is distributed in the hope that it will be useful, "
+		   "but WITHOUT ANY WARRANTY; without even the implied warranty of "
+		   "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the "
+		   "GNU General Public License for more details."),
+		N_("You should have received a copy of the GNU General Public License "
+		   "along with Sound Juicer; if not, write to the Free Software Foundation, Inc., "
+		   "59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"),
+		N_("Totem contains an exception to allow the use of proprietary "
+		   "GStreamer plugins.")
+	};
+	return g_strconcat (_(license[0]), "\n\n",
+			    _(license[1]), "\n\n",
+			    _(license[2]), "\n\n",
+			    _(license[3]), "\n",
+			    NULL);
+}
+

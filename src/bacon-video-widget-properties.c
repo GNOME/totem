@@ -288,7 +288,7 @@ bacon_video_widget_properties_new (void)
 			"year_label", "duration_label", "dimensions_label", "vcodec_label",
 			"framerate_label", "vbitrate_label", "abitrate_label",
 			"acodec_label", "samplerate_label", "channels_label" };
-	int i;
+	guint i;
 
 	xml = totem_interface_load_with_root ("properties.glade",
 			"vbox1", _("Properties dialog"), TRUE, NULL);

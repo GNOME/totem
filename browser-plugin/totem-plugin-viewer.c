@@ -976,7 +976,7 @@ on_open1_activate (GtkButton *button, TotemEmbedded *emb)
 static void
 on_about1_activate (GtkButton *button, TotemEmbedded *emb)
 {
-	char *backend_version, *description;
+	char *backend_version, *description, *license;
 	GtkWidget **about;
 
 	const char *authors[] =
@@ -996,6 +996,7 @@ on_about1_activate (GtkButton *button, TotemEmbedded *emb)
 	backend_version = bacon_video_widget_get_backend_name (emb->bvw);
 	description = g_strdup_printf (_("Browser Plugin using %s"),
 				       backend_version);
+	license = totem_interface_get_license ();
 
 	emb->about = g_object_new (GTK_TYPE_ABOUT_DIALOG,
 				   "name", _("Totem Browser Plugin"),
@@ -1005,10 +1006,13 @@ on_about1_activate (GtkButton *button, TotemEmbedded *emb)
 				   "authors", authors,
 				   "translator-credits", _("translator-credits"),
 				   "logo-icon-name", "totem",
+				   "license", license,
+				   "wrap-license", TRUE,
 				   NULL);
 
 	g_free (backend_version);
 	g_free (description);
+	g_free (license);
 
 	totem_interface_set_transient_for (GTK_WINDOW (emb->about),
 					   GTK_WINDOW (emb->window));
