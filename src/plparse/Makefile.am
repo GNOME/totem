@@ -89,9 +89,24 @@ libtotem_plparser_la_LDFLAGS =			\
 	-no-undefined				\
 	$(AM_LDFLAGS)
 
-libtotem_plparser_mini_la_SOURCES = \
-	totem-pl-parser-mini.h	\
-	totem-pl-parser.c
+libtotem_plparser_mini_la_SOURCES =		\
+	totem-pl-parser-mini.h			\
+	totem-pl-parser.c			\
+	totem-pl-parser-lines.c			\
+	totem-pl-parser-lines.h			\
+	totem-pl-parser-misc.c			\
+	totem-pl-parser-misc.h			\
+	totem-pl-parser-pls.c			\
+	totem-pl-parser-pls.h			\
+	totem-pl-parser-private.h		\
+	totem-pl-parser-qt.c			\
+	totem-pl-parser-qt.h			\
+	totem-pl-parser-smil.c			\
+	totem-pl-parser-smil.h			\
+	totem-pl-parser-wm.c			\
+	totem-pl-parser-wm.h			\
+	totem-pl-parser-xspf.c			\
+	totem-pl-parser-xspf.h
 
 libtotem_plparser_mini_la_CPPFLAGS = \
 	-I$(top_srcdir)			\

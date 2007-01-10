@@ -1,3 +1,17 @@
+2007-01-10  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/Makefile.am: fix browser plugin linking,
+	we need the parser backends as well
+
+	* src/plparse/totem-pl-parser-lines.c:
+	(totem_pl_parser_get_extinfo_title): Handle both ":" and ","
+	as a field separator as seen used at
+	http://www.catradio.cat/pilotcatradio/
+
+	* src/totem-menu.c: (totem_action_add_recent): only add local files
+	to the recently used list if there's a mime-type, otherwise it
+	means the file isn't there, or not readable
+
 2007-01-10  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* configure.in:

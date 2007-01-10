@@ -624,13 +624,21 @@ totem_action_add_recent (Totem *totem, const char *filename)
 	GtkRecentData data;
 	char *groups[] = { NULL, NULL };
 
+	data.mime_type = gnome_vfs_get_mime_type (filename);
+
 	if (strstr (filename, "file:///") == NULL) {
 		/* It's a URI/stream */
 		groups[0] = "TotemStreams";
 		data.display_name = NULL;
 	} else {
-		/* It's a normal filename */
-		char *display = g_filename_from_uri (filename, NULL, NULL);
+		char *display;
+
+		/* Local files with no mime-type probably don't exist */
+		if (data.mime_type == NULL)
+			return;
+
+		/* It's a local file */
+		display = g_filename_from_uri (filename, NULL, NULL);
 		if (display) {
 			data.display_name = g_filename_display_basename (display);
 			g_free (display);
@@ -639,7 +647,6 @@ totem_action_add_recent (Totem *totem, const char *filename)
 	}
 
 	data.description = NULL;
-	data.mime_type = gnome_vfs_get_mime_type (filename);
 	data.app_name = g_strdup (g_get_application_name ());
 	data.app_exec = g_strjoin (" ", g_get_prgname (), "%u", NULL);
 	data.groups = groups;

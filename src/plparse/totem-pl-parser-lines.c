@@ -237,7 +237,7 @@ totem_pl_parser_add_ram (TotemPlParser *parser, const char *url, gpointer data)
 static const char *
 totem_pl_parser_get_extinfo_title (gboolean extinfo, char **lines, int i)
 {
-	const char *extinf, *comma;
+	const char *extinf, *sep;
 
 	if (extinfo == FALSE || lines == NULL || i <= 0)
 		return NULL;
@@ -246,17 +246,24 @@ totem_pl_parser_get_extinfo_title (gboolean extinfo, char **lines, int i)
 	extinf = lines[i-1] + strlen(EXTINF);
 	if (extinf[0] == '\0')
 		return NULL;
-	comma = strstr (extinf, ",");
 
-	if (comma == NULL || comma[1] == '\0') {
+	/* Handle ':' as a field separator */
+	sep = strstr (extinf, ":");
+	if (sep != NULL && sep[1] != '\0') {
+		sep++;
+		return sep;
+	}
+
+	/* Handle ',' as a field separator */
+	sep = strstr (extinf, ",");
+	if (sep == NULL || sep[1] == '\0') {
 		if (extinf[1] == '\0')
 			return NULL;
 		return extinf;
 	}
 
-	comma++;
-
-	return comma;
+	sep++;
+	return sep;
 }
 
 TotemPlParserResult
