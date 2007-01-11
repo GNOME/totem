@@ -191,8 +191,21 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url,
 
 	/* numberofentries=? */
 	num_entries = totem_pl_parser_read_ini_line_int (lines, "numberofentries");
-	if (num_entries == -1)
-		goto bail;
+
+	if (num_entries == -1) {
+		num_entries = 0;
+
+		for (i = 0; lines[i] != NULL; i++) {
+			if (totem_pl_parser_line_is_empty (lines[i]))
+				continue;
+
+			if (g_ascii_strncasecmp (g_strchug (lines[i]), "file", (gsize)strlen ("file")) == 0)
+				num_entries++;
+		}
+
+		if (num_entries == 0)
+			goto bail;
+	}
 
 	retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 
