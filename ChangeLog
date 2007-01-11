@@ -1,5 +1,10 @@
 2007-01-11  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c: (main):
+	Call g_thread_init() as soon as possible (Closes: #391263)
+
+2007-01-11  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/tests/3.html: add a simple test for
 	http://bugzilla.gnome.org/show_bug.cgi?id=387332
 

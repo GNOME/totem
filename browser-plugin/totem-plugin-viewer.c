@@ -1721,6 +1721,8 @@ int main (int argc, char **argv)
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
+	g_thread_init (NULL);
+
 #ifdef GNOME_ENABLE_DEBUG
 	{
 		int i;
@@ -1737,7 +1739,6 @@ int main (int argc, char **argv)
 		totem_embedded_error_and_exit (_("Could not initialise the thread-safe libraries."), _("Verify your system installation. The Totem plugin will now exit."), NULL);
 	}
 
-	g_thread_init (NULL);
 	dbus_g_thread_init ();
 
 #ifdef GNOME_ENABLE_DEBUG
