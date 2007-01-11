@@ -538,7 +538,7 @@ totemPlugin::ViewerReady ()
 	mViewerReady = PR_TRUE;
 
 	if (mAutostart) {
-		RequestStream ();
+		RequestStream (PR_FALSE);
 	} else {
 		mWaitingForButtonPress = PR_TRUE;
 	}
@@ -562,8 +562,7 @@ totemPlugin::ViewerButtonPressed (guint aTimestamp, guint aButton)
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
 	/* FIXME set href="" afterwards, so we don't try to launch again when the user clicks again? */
-	if (!mHref.IsEmpty () &&
-	    !mTarget.IsEmpty ()) {
+	if (!mHref.IsEmpty ()) {
 		if (g_ascii_strcasecmp (mTarget.get (), "quicktimeplayer") == 0) {
 			D ("Opening movie '%s' in external player", mHref.get ());
 			dbus_g_proxy_call_no_reply (mViewerProxy,
@@ -575,7 +574,8 @@ totemPlugin::ViewerButtonPressed (guint aTimestamp, guint aButton)
 		}
 		if (g_ascii_strcasecmp (mTarget.get (), "myself") == 0 ||
 		    mTarget.Equals (NS_LITERAL_CSTRING ("_current")) ||
-		    mTarget.Equals (NS_LITERAL_CSTRING ("_self"))) {
+		    mTarget.Equals (NS_LITERAL_CSTRING ("_self")) ||
+		    mTarget.Equals (NS_LITERAL_CSTRING (""))) {
 			D ("Opening movie '%s'", mHref.get ());
 			dbus_g_proxy_call_no_reply (mViewerProxy,
 						    "SetHref",
@@ -584,7 +584,7 @@ totemPlugin::ViewerButtonPressed (guint aTimestamp, guint aButton)
 						    G_TYPE_INVALID);
 			/* FIXME this isn't right, we should just create a mHrefURI and instruct to load that one */
 			SetQtsrc (mHref);
-			RequestStream ();
+			RequestStream (PR_TRUE);
 			return;
 		}
 
@@ -617,7 +617,7 @@ totemPlugin::ViewerButtonPressed (guint aTimestamp, guint aButton)
 	/* Now is the time to start the stream */
 	if (!mAutostart &&
 	    !mStream) {
-		RequestStream ();
+		RequestStream (PR_FALSE);
 	}
 }
 
@@ -690,7 +690,7 @@ totemPlugin::ClearRequest ()
 }
 
 void
-totemPlugin::RequestStream ()
+totemPlugin::RequestStream (PRBool aForceViewer)
 {
 	NS_ASSERTION (mViewerReady, "Viewer not ready");
 
@@ -751,10 +751,12 @@ totemPlugin::RequestStream ()
 	if (spec.IsEmpty ())
 		return;
 
-	/* If the URL is supported  we call OpenStream, and otherwise OpenURI. */
-	if (IsSchemeSupported (requestURI)) {
-		/* FIXME: Purge any buffered output from mViewerFD */
-		// __fpurge (mViewerFD);
+	/* If the URL is supported and the caller isn't asking us to make
+	 * the viewer open the stream, we call OpenStream, and
+	 * otherwise OpenURI. */
+	if (!aForceViewer && IsSchemeSupported (requestURI)) {
+		/* This will fail for the 2nd stream, but we shouldn't
+		 * ever come to using it for the 2nd stream... */
 
 		mViewerPendingCall =
 			dbus_g_proxy_begin_call (mViewerProxy,

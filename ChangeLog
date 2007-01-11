@@ -1,5 +1,18 @@
 2007-01-11  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/tests/3.html: add a simple test for
+	http://bugzilla.gnome.org/show_bug.cgi?id=387332
+
+	* browser-plugin/totemPlugin.cpp: handle empty targets
+	when using HREFs (Closes: #395452)
+
+	Modify RequestStream() so it allows the caller to force
+	opening the stream via the viewer (Closes: #376752)
+
+	* browser-plugin/totemPlugin.h: update for above changes
+
+2007-01-11  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totem-plugin-viewer.c: (on_play_pause),
 	(totem_embedded_construct): when there's no stream to be
 	played, and play is pressed, request a stream from the

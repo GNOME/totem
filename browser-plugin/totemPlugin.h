@@ -141,7 +141,7 @@ class totemPlugin {
 
     void ComputeRequest ();
     void ClearRequest ();
-    void RequestStream ();
+    void RequestStream (PRBool aForceViewer);
     void UnsetStream ();
 
     PRBool IsMimeTypeSupported (const char *aMimeType,
