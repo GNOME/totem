@@ -1665,7 +1665,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 		mAudioOnly = PR_TRUE;
 	}
 #endif /* TOTEM_GMP_PLUGIN */
-#ifdef TOTEM_NARROWSPACE_PLUGIN
+#if defined(TOTEM_NARROWSPACE_PLUGIN) || defined (TOTEM_BASIC_PLUGIN)
 	if (height <= 16) {
 		mAudioOnly = PR_TRUE;
 	}
@@ -1818,9 +1818,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 					      GetBooleanValue (args, "showcontrols", PR_TRUE));
 
 	mShowStatusbar = GetBooleanValue (args, "showstatusbar", mShowStatusbar);
-
-	//FIXME add showdisplay
-	// see http://msdn.microsoft.com/library/default.asp?url=/library/en-us/wmp6sdk/htm/userinterfaceelements.asp
+	mAudioOnly = !GetBooleanValue (args, "showdisplay", !mAudioOnly);
 #endif /* TOTEM_GMP_PLUGIN */
 
 	/* Whether to NOT autostart */
@@ -1836,7 +1834,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 	D ("mControllerHidden: %d", mControllerHidden);
 	D ("mShowStatusbar: %d", mShowStatusbar);
 	D ("mHidden: %d", mHidden);
-	D ("mAudioOnly: %s", mAudioOnly);
+	D ("mAudioOnly: %d", mAudioOnly);
 	D ("mAutostart: %d, mRepeat: %d", mAutostart, mRepeat);
 #ifdef TOTEM_NARROWSPACE_PLUGIN
 	D ("mHref: %s", mHref.get ());

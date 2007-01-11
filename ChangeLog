@@ -1,5 +1,17 @@
 2007-01-11  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c: (on_play_pause),
+	(totem_embedded_construct): when there's no stream to be
+	played, and play is pressed, request a stream from the
+	plugin (Closes: #386319)
+	Hide the video display when handling audio-only setups
+
+	* browser-plugin/totemPlugin.cpp: make 16 the minimum size
+	for the Basic plugin as well as the QuickTime one,
+	make showdisplay=0 work as expected, fix warning
+
+2007-01-11  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser-pls.c:
 	(totem_pl_parser_add_pls_with_contents): 
 	Patch from <evan@evanbriones.com> to handle .pls playlists

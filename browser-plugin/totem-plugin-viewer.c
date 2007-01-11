@@ -1061,7 +1061,12 @@ on_play_pause (GtkWidget *widget, TotemEmbedded *emb)
 	if (emb->state == STATE_PLAYING) {
 		totem_embedded_pause (emb, NULL);
 	} else {
-		totem_embedded_play (emb, NULL);
+		if (emb->current_uri == NULL) {
+			g_signal_emit (emb, signals[BUTTON_PRESS], 0,
+				       GDK_CURRENT_TIME, 0);
+		} else {
+			totem_embedded_play (emb, NULL);
+		}
 	}
 }
 
@@ -1349,11 +1354,13 @@ totem_embedded_construct (TotemEmbedded *emb,
 			G_CALLBACK (on_tick), emb);
 
 	container = glade_xml_get_widget (emb->xml, "video_box");
-	gtk_container_add (GTK_CONTAINER (container), GTK_WIDGET (emb->bvw));
 	if (type == BVW_USE_TYPE_VIDEO) {
+		gtk_container_add (GTK_CONTAINER (container), GTK_WIDGET (emb->bvw));
 		/* FIXME: why can't this wait until the whole window is realised? */
 		gtk_widget_realize (GTK_WIDGET (emb->bvw));
 		gtk_widget_show (GTK_WIDGET (emb->bvw));
+	} else if (emb->audioonly != FALSE) {
+		gtk_widget_hide (container);
 	}
 
 	emb->seek = glade_xml_get_widget (emb->xml, "time_hscale");
