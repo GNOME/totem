@@ -1,3 +1,21 @@
+2007-01-11  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_check_missing_plugins_error):
+	(bvw_bus_message_cb):
+	(bvw_error_from_gst_error):
+	(poll_for_state_change_full):
+	(poll_for_state_change):
+	(bacon_video_widget_open_with_subtitle):
+	(bacon_video_widget_play):
+	(bacon_video_widget_new):
+	  Also emit the missing-plugin signal in the case where we get an
+	  error because we're missing a required source plugin or one or more
+	  required demuxers/decoders/depayloaders. (Needed to refactor our
+	  error handling a bit for that because bvw_error_from_gst_error()
+	  would munge the error code and then we wouldn't know what type of
+	  error it really was at the right place.)
+
 2007-01-11  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totem-plugin-viewer.c: (main):
