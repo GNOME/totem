@@ -2191,7 +2191,13 @@ totemPlugin::URLNotify (const char *url,
 	 * it means that the stream failed.
 	 */
 	if (mExpectingStream) {
-		if (reason != NPRES_DONE) {
+		if (reason == NPRES_NETWORK_ERR) {
+			dbus_g_proxy_call (mViewerProxy,
+					   "SetErrorLogo",
+					   NULL,
+					   G_TYPE_INVALID,
+					   G_TYPE_INVALID);
+		} else if (reason != NPRES_DONE) {
 			D ("Failed to get stream");
 			/* FIXME: show error to user? */
 		}

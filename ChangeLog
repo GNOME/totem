@@ -1,3 +1,26 @@
+2007-01-12  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/org_gnome_totem_PluginViewer.xml:
+	add the SetErrorLogo method
+
+	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_pad_pixbuf_for_size),
+	(totem_embedded_set_error_logo):
+	Implement the SetErrorLogo method and show a centred
+	"image-missing" image when a file isn't available which should be
+
+	* browser-plugin/totemPlugin.cpp:
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_set_logo),
+	(bacon_video_widget_set_logo_pixbuf):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_set_logo),
+	(bacon_video_widget_set_logo_pixbuf):
+	* src/backend/bacon-video-widget.h:
+
+	Implement bacon_video_widget_set_logo_pixbuf()
+	(Closes: #387332)
+
 2007-01-11  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totemNarrowSpacePlugin.cpp: support

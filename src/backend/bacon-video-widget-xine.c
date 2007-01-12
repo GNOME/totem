@@ -2576,7 +2576,9 @@ bacon_video_widget_set_logo (BaconVideoWidget *bvw, char *filename)
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
 	g_return_if_fail (filename != NULL);
-	g_return_if_fail (bvw->priv->logo_pixbuf == NULL);
+
+	if (bvw->priv->logo_pixbuf != NULL)
+		g_object_unref (bvw->priv->logo_pixbuf);
 
 	bvw->priv->logo_pixbuf = gdk_pixbuf_new_from_file (filename, &err);
 	if (err) {
@@ -2584,6 +2586,21 @@ bacon_video_widget_set_logo (BaconVideoWidget *bvw, char *filename)
 				err->message ? err->message : "No reason");
 		g_error_free (err);
 	}
+}
+
+void
+bacon_video_widget_set_logo_pixbuf (BaconVideoWidget *bvw, GdkPixbuf *logo)
+{
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET(bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
+	g_return_if_fail (logo != NULL);
+
+	if (bvw->priv->logo_pixbuf != NULL)
+		g_object_unref (bvw->priv->logo_pixbuf);
+
+	g_object_ref (logo);
+	bvw->priv->logo_pixbuf = logo;
 }
 
 gboolean

@@ -2970,7 +2970,10 @@ bacon_video_widget_set_logo (BaconVideoWidget * bvw, gchar * filename)
   
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  g_return_if_fail (bvw->priv->logo_pixbuf == NULL);
+  g_return_if_fail (filename != NULL);
+
+  if (bvw->priv->logo_pixbuf != NULL)
+    g_object_unref (bvw->priv->logo_pixbuf);
 
   bvw->priv->logo_pixbuf = gdk_pixbuf_new_from_file (filename, &error);
 
@@ -2979,6 +2982,20 @@ bacon_video_widget_set_logo (BaconVideoWidget * bvw, gchar * filename)
                filename, error->message);
     g_error_free (error);
   }
+}
+
+void
+bacon_video_widget_set_logo_pixbuf (BaconVideoWidget * bvw, GdkPixbuf *logo)
+{
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (logo != NULL);
+
+  if (bvw->priv->logo_pixbuf != NULL)
+    g_object_unref (bvw->priv->logo_pixbuf);
+
+  g_object_ref (logo);
+  bvw->priv->logo_pixbuf = logo;
 }
 
 void
