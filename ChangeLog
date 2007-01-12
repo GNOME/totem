@@ -1,3 +1,19 @@
+2007-01-12  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_get_missing_plugins_foo):
+	(bvw_get_missing_plugins_details):
+	(bvw_get_missing_plugins_descriptions):
+	(bvw_clear_missing_plugins_messages):
+	(bvw_emit_missing_plugins_signal):
+	(bvw_error_from_gst_error):
+	(bacon_video_widget_open_with_subtitle):
+	(bvw_stop_play_pipeline):
+	  Only clear the list of missing plugins when we know that we won't
+	  need them any longer (_stop() might be called from _open_with_uri()
+	  before we assemble our proper error message, so don't clear list
+	  there).
+
 2007-01-12  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totem-plugin-viewer.c:

@@ -221,6 +221,7 @@ static gboolean bacon_video_widget_configure_event (GtkWidget *widget,
 static void size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw);
 static void bvw_process_pending_tag_messages (BaconVideoWidget * bvw);
 static void bvw_stop_play_pipeline (BaconVideoWidget * bvw);
+static GError* bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage *m);
 
 static GtkWidgetClass *parent_class = NULL;
 
@@ -234,10 +235,10 @@ GST_DEBUG_CATEGORY (_totem_gst_debug_cat);
 #define gst_base_utils_init() /* noop */
 #define gst_is_missing_plugin_message(msg) \
 	bvw_is_missing_plugin_message(msg)
-#define gst_missing_plugin_message_get_description(msg) \
-	bvw_missing_plugin_message_get_description(msg)
-#define gst_missing_plugin_message_get_installer_detail(msg) \
-    bvw_missing_plugin_message_get_installer_detail(msg)
+#define gst_missing_plugin_message_get_description \
+	bvw_missing_plugin_message_get_description
+#define gst_missing_plugin_message_get_installer_detail \
+    bvw_missing_plugin_message_get_installer_detail
 
 static gboolean
 bvw_is_missing_plugin_message (GstMessage * msg)
@@ -285,6 +286,44 @@ bvw_missing_plugin_message_get_installer_detail (GstMessage * msg)
   g_free (desc);
   g_free (details);
   return ret;
+}
+
+typedef gchar * (* MsgToStrFunc) (GstMessage * msg);
+
+static gchar **
+bvw_get_missing_plugins_foo (const GList * missing_plugins, MsgToStrFunc func)
+{
+  GPtrArray *arr = g_ptr_array_new ();
+
+  while (missing_plugins != NULL) {
+    g_ptr_array_add (arr, func (GST_MESSAGE (missing_plugins->data)));
+    missing_plugins = missing_plugins->next;
+  }
+  g_ptr_array_add (arr, NULL);
+  return (gchar **) g_ptr_array_free (arr, FALSE);
+}
+
+static gchar **
+bvw_get_missing_plugins_details (const GList * missing_plugins)
+{
+  return bvw_get_missing_plugins_foo (missing_plugins,
+      gst_missing_plugin_message_get_installer_detail);
+}
+
+static gchar **
+bvw_get_missing_plugins_descriptions (const GList * missing_plugins)
+{
+  return bvw_get_missing_plugins_foo (missing_plugins,
+      gst_missing_plugin_message_get_description);
+}
+
+static void
+bvw_clear_missing_plugins_messages (BaconVideoWidget * bvw)
+{
+  g_list_foreach (bvw->priv->missing_plugins,
+                  (GFunc) gst_mini_object_unref, NULL);
+  g_list_free (bvw->priv->missing_plugins);
+  bvw->priv->missing_plugins = NULL;
 }
 
 static void
@@ -1225,25 +1264,9 @@ bvw_emit_missing_plugins_signal (BaconVideoWidget * bvw, gboolean prerolled)
 {
   gboolean handled = FALSE;
   gchar **descriptions, **details;
-  guint num, i;
 
-  num = g_list_length (bvw->priv->missing_plugins);
-  g_return_val_if_fail (num > 0, FALSE);
-
-  details = g_new0 (gchar *, num + 1);
-  descriptions = g_new0 (gchar *, num + 1);
-
-  for (i = 0; i < num; ++i) {
-    GstMessage *msg = GST_MESSAGE (bvw->priv->missing_plugins->data);
-
-    details[i] = gst_missing_plugin_message_get_installer_detail (msg);
-    descriptions[i] = gst_missing_plugin_message_get_description (msg);
-
-    bvw->priv->missing_plugins = g_list_delete_link (bvw->priv->missing_plugins,
-        bvw->priv->missing_plugins);
-    gst_message_unref (msg);
-  }
-  g_assert (bvw->priv->missing_plugins == NULL);
+  details = bvw_get_missing_plugins_details (bvw->priv->missing_plugins);
+  descriptions = bvw_get_missing_plugins_descriptions (bvw->priv->missing_plugins);
 
   GST_LOG ("emitting missing-plugins signal (prerolled=%d)", prerolled);
 
@@ -1256,7 +1279,11 @@ bvw_emit_missing_plugins_signal (BaconVideoWidget * bvw, gboolean prerolled)
 
   if (handled) {
     bvw->priv->plugin_install_in_progress = TRUE;
+    bvw_clear_missing_plugins_messages (bvw);
   }
+
+  /* if it wasn't handled, we might need the list of missing messages again
+   * later to create a proper error message with details of what's missing */
 
   return handled;
 }
@@ -2455,6 +2482,7 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
                                e->message);
   }
   g_error_free (e);
+  bvw_clear_missing_plugins_messages (bvw);
 
   return ret;
 }
@@ -2674,6 +2702,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 
   bvw->priv->seekable = -1;
   bvw->priv->target_state = GST_STATE_PAUSED;
+  bvw_clear_missing_plugins_messages (bvw);
 
   gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
 
@@ -2863,9 +2892,6 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   gst_element_set_state (bvw->priv->play, GST_STATE_NULL);
   bvw->priv->target_state = GST_STATE_NULL;
   bvw->priv->buffering = FALSE;
-  g_list_foreach (bvw->priv->missing_plugins,
-                  (GFunc) gst_mini_object_unref, NULL);
-  bvw->priv->missing_plugins = NULL;
   bvw->priv->plugin_install_in_progress = FALSE;
   bvw->priv->ignore_messages_mask = 0;
   GST_DEBUG ("stopped");
