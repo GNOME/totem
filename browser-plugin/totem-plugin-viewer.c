@@ -253,6 +253,59 @@ totem_embedded_set_error (TotemEmbedded *emb,
 	g_message ("totem_embedded_set_error: '%s', '%s'", primary, secondary);
 }
 
+static GdkPixbuf *
+totem_embedded_pad_pixbuf_for_size (GdkPixbuf *pixbuf,
+				    int width, int height)
+{
+	GdkPixbuf *logo;
+	guchar *pixels;
+	int rowstride, i;
+
+	logo = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
+			       TRUE, 8, width, height);
+	pixels = gdk_pixbuf_get_pixels (logo);
+	rowstride = gdk_pixbuf_get_rowstride (logo);
+
+	/* Clear it */
+	for (i = 0; i < height; i++) {
+		memset (pixels + i * rowstride, 0, width * 4);
+	}
+
+	gdk_pixbuf_copy_area (pixbuf,
+			      0, 0,
+			      gdk_pixbuf_get_width (pixbuf),
+			      gdk_pixbuf_get_height (pixbuf),
+			      logo,
+			      (width - gdk_pixbuf_get_width (pixbuf)) / 2,
+			      (height - gdk_pixbuf_get_height (pixbuf)) / 2);
+
+	return logo;
+}
+
+static void
+totem_embedded_set_logo_by_name (TotemEmbedded *embedded,
+				 const char *name)
+{
+	GtkIconTheme *theme;
+	GdkPixbuf *logo, *padded;
+	int size, width, height;
+
+	theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (embedded->window));
+
+	width = GTK_WIDGET (embedded->bvw)->allocation.width;
+	height = GTK_WIDGET (embedded->bvw)->allocation.height;
+	size = MAX (width, height);
+
+	logo = gtk_icon_theme_load_icon (theme, name,
+					 size, 0, NULL);
+	padded = totem_embedded_pad_pixbuf_for_size (logo, width, height);
+	g_object_unref (logo);
+	if (padded != NULL) {
+		bacon_video_widget_set_logo_pixbuf (embedded->bvw, padded);
+		bacon_video_widget_set_logo_mode (embedded->bvw, TRUE);
+	}
+}
+
 static void
 totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 {
@@ -350,6 +403,7 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 		//g_signal_emit (emb, signals[STOP_STREAM], 0);
 
 		totem_embedded_set_state (emb, STATE_STOPPED);
+		totem_embedded_set_logo_by_name (emb, "image-missing");
 		bacon_video_widget_set_logo_mode (emb->bvw, TRUE);
 
 		errint = g_error_new (TOTEM_EMBEDDED_ERROR_QUARK,
@@ -462,59 +516,11 @@ totem_embedded_set_href (TotemEmbedded *embedded,
 	return TRUE;
 }
 
-static GdkPixbuf *
-totem_embedded_pad_pixbuf_for_size (GdkPixbuf *pixbuf,
-				    int width, int height)
-{
-	GdkPixbuf *logo;
-	guchar *pixels;
-	int rowstride, i;
-
-	logo = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-			       TRUE, 8, width, height);
-	pixels = gdk_pixbuf_get_pixels (logo);
-	rowstride = gdk_pixbuf_get_rowstride (logo);
-
-	/* Clear it */
-	for (i = 0; i < height; i++) {
-		memset (pixels + i * rowstride, 0, width * 4);
-	}
-
-	gdk_pixbuf_copy_area (pixbuf,
-			      0, 0,
-			      gdk_pixbuf_get_width (pixbuf),
-			      gdk_pixbuf_get_height (pixbuf),
-			      logo,
-			      (width - gdk_pixbuf_get_width (pixbuf)) / 2,
-			      (height - gdk_pixbuf_get_height (pixbuf)) / 2);
-
-	return logo;
-}
-
 static gboolean
 totem_embedded_set_error_logo (TotemEmbedded *embedded,
 			       GError *error)
 {
-	GtkIconTheme *theme;
-	GdkPixbuf *logo, *padded;
-	int size, width, height;
-
-	theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (embedded->window));
-
-	width = GTK_WIDGET (embedded->bvw)->allocation.width;
-	height = GTK_WIDGET (embedded->bvw)->allocation.height;
-	size = MAX (width, height);
-
-	logo = gtk_icon_theme_load_icon (theme, "image-missing",
-					 size, 0, NULL);
-	padded = totem_embedded_pad_pixbuf_for_size (logo, width, height);
-	g_object_unref (logo);
-	//FIXME fill the logo up to the size
-	if (padded != NULL) {
-		bacon_video_widget_set_logo_pixbuf (embedded->bvw, padded);
-		bacon_video_widget_set_logo_mode (embedded->bvw, TRUE);
-	}
-
+	totem_embedded_set_logo_by_name (embedded, "image-missing");
 	return TRUE;
 }
 
@@ -1344,7 +1350,6 @@ totem_embedded_construct (TotemEmbedded *emb,
 	BvwUseType type;
 	GError *err = NULL;
 	GConfClient *gc;
-	char *logo_path;
 	int volume;
 
 	if (xid != 0) {
@@ -1391,12 +1396,6 @@ totem_embedded_construct (TotemEmbedded *emb,
 		if (err != NULL)
 			g_error_free (err);
 	}
-
-	logo_path = g_build_filename (SHAREDIR, LOGO_NAME, NULL);
-	bacon_video_widget_set_logo (emb->bvw, logo_path);
-	g_free (logo_path);
-
-	bacon_video_widget_set_logo_mode (emb->bvw, TRUE);
 
 	g_signal_connect (G_OBJECT(emb->bvw), "got-redirect",
 			G_CALLBACK (on_got_redirect), emb);
@@ -1502,11 +1501,14 @@ totem_embedded_construct (TotemEmbedded *emb,
 	child = glade_xml_get_widget (emb->menuxml, "preferences1");
 	gtk_widget_hide (child);
 
-	/* Create cursor */
+	/* Create cursor and set the logo */
 	if (!emb->hidden) {
 		emb->cursor = gdk_cursor_new_for_display
 			(gtk_widget_get_display (emb->window),
 			 GDK_HAND2);
+
+		totem_embedded_set_logo_by_name (emb, "totem");
+		bacon_video_widget_set_logo_mode (emb->bvw, TRUE);
 	}
 
 	return TRUE;

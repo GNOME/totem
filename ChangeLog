@@ -1,5 +1,23 @@
 2007-01-12  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_pad_pixbuf_for_size),
+	(totem_embedded_set_logo_by_name), (totem_embedded_open_internal),
+	(totem_embedded_set_error_logo), (totem_embedded_construct):
+	Use the "totem" icon as the logo by default, set the error logo
+	whenever we can't open a file
+
+2007-01-12  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_pad_pixbuf_for_size),
+	(totem_embedded_set_logo_by_name), (totem_embedded_open_internal),
+	(totem_embedded_set_error_logo), (totem_embedded_construct):
+	Set the error logo for any stream that we can't open, use the
+	default totem logo
+
+2007-01-12  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/org_gnome_totem_PluginViewer.xml:
 	add the SetErrorLogo method
 
