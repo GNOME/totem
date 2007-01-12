@@ -1830,6 +1830,15 @@ totemPlugin::Init (NPMIMEType mimetype,
 	//FIXME handle starttime and endtime
 	// http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_STARTTIME.html
 
+#ifdef TOTEM_NARROWSPACE_PLUGIN
+	/* We need to autostart if we're using an HREF
+	 * otherwise the start image isn't shown */
+	if (!mHref.Equals (NS_LITERAL_CSTRING (""))) {
+		mExpectingStream = PR_TRUE;
+		mAutostart = PR_TRUE;
+	}
+#endif /* TOTEM_NARROWSPACE_PLUGIN */
+
 	/* Dump some disagnostics */
 	D ("mSrc: %s", mSrc.get ());
 	D ("mCache: %d", mCache);

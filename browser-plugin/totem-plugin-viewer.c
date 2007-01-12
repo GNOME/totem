@@ -1006,8 +1006,17 @@ totem_embedded_update_menu (TotemEmbedded *emb)
 				 gnome_vfs_get_mime_type_for_name (emb->current_uri));
 	}
 
-	if (emb->app == NULL)
+	if (emb->app == NULL) {
+
+		if (emb->mimetype != NULL) {
+			g_warning ("Mimetype '%s' doesn't have a handler", emb->mimetype);
+		} else {
+			g_warning ("No handler for URI '%s' (guessed mime-type '%s')",
+				   emb->current_uri,
+				   gnome_vfs_get_mime_type_for_name (emb->current_uri));
+		}
 		return;
+	}
 
 	/* translators: this is:
 	 * Open With ApplicationName

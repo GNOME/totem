@@ -1,6 +1,15 @@
 2007-01-12  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_update_menu):
+	Add some debug in case there's no app found to launch the stream
+	* browser-plugin/totemPlugin.cpp: when using an HREF, *do*
+	autostart, otherwise we won't see the static image before the stream
+	(Closes: #386531)
+
+2007-01-12  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer.c:
 	(totem_embedded_set_logo_by_name): Avoid errors when the icon is
 	bigger than the destination area
 
