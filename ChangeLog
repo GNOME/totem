@@ -1,5 +1,14 @@
 2007-01-12  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_open_internal), (totem_embedded_play),
+	(totem_embedded_set_error_logo),
+	(totem_embedded_open_playlist_item), (totem_embedded_construct),
+	(totem_embedded_push_parser): Some cleanups, start playing the
+	playlist when the browser set it for us
+
+2007-01-12  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bacon_video_widget_play), (bacon_video_widget_pause):
 	Refuse play/pause if we don't have an MRL loaded

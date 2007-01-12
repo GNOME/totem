@@ -392,7 +392,7 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 	/* FIXME: remove |err| and rely on async on_error? */
 	g_message ("BEFORE _open");
 	retval = bacon_video_widget_open (emb->bvw, uri, &err);
-	g_message ("AFTER _open");
+	g_message ("AFTER _open (ret: %d)", retval);
 	if (retval == FALSE)
 	{
 		GError *errint;
@@ -403,13 +403,12 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 
 		totem_embedded_set_state (emb, STATE_STOPPED);
 		totem_embedded_set_logo_by_name (emb, "image-missing");
-		bacon_video_widget_set_logo_mode (emb->bvw, TRUE);
 
 		errint = g_error_new (TOTEM_EMBEDDED_ERROR_QUARK,
 				      TOTEM_EMBEDDED_OPEN_FAILED,
 				      _("Totem could not play '%s'"),
 				     emb->current_uri);
-		
+
 		//FIXME disp = gnome_vfs_unescape_string_for_display (totem->mrl); ?
 		primary = g_strdup_printf(_("Totem could not play '%s'"), emb->current_uri);
 		totem_embedded_set_error (emb, primary, err->message);;
@@ -419,11 +418,9 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 
 		totem_embedded_set_pp_state (emb, FALSE);
 	} else {
-		/* FIXME this doesn't deal correctly with playlists */
-		//if (emb->autostart)
-			totem_embedded_play (emb, NULL);
-
-		//totem_embedded_set_state (emb, STATE_PAUSED);
+		if (emb->playlist == NULL && totem_embedded_play (emb, NULL) != FALSE) {
+			totem_embedded_set_state (emb, STATE_PLAYING);
+		}
 		totem_embedded_set_pp_state (emb, TRUE);
 	}
 
@@ -436,8 +433,14 @@ static gboolean
 totem_embedded_play (TotemEmbedded *emb,
 		     GError **error)
 {
-	if (bacon_video_widget_play (emb->bvw, NULL))
+	GError *err = NULL;
+
+	if (bacon_video_widget_play (emb->bvw, &err) != FALSE) {
 		totem_embedded_set_state (emb, STATE_PLAYING);
+	} else {
+		g_warning ("Error in bacon_video_widget_play: %s", err->message);
+		g_error_free (err);
+	}
 
 	return TRUE;
 }
@@ -519,6 +522,7 @@ static gboolean
 totem_embedded_set_error_logo (TotemEmbedded *embedded,
 			       GError *error)
 {
+	g_message ("totem_embedded_set_error_logo called by browser plugin");
 	totem_embedded_set_logo_by_name (embedded, "image-missing");
 	return TRUE;
 }
@@ -904,7 +908,7 @@ totem_embedded_open_playlist_item (TotemEmbedded *emb,
 	if (!emb->playlist)
 		return FALSE;
 
-	eop = item == NULL;
+	eop = (item == NULL);
 
 	/* Start at the head */
 	if (item == NULL)
@@ -1514,9 +1518,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 		emb->cursor = gdk_cursor_new_for_display
 			(gtk_widget_get_display (emb->window),
 			 GDK_HAND2);
-
 		totem_embedded_set_logo_by_name (emb, "totem");
-		bacon_video_widget_set_logo_mode (emb->bvw, TRUE);
 	}
 
 	return TRUE;
@@ -1687,7 +1689,8 @@ totem_embedded_push_parser (gpointer data)
 	emb->playlist = g_list_reverse (list);
 	emb->num_items = g_list_length (emb->playlist);
 
-	totem_embedded_open_playlist_item (emb, NULL /* first */);
+	/* Launch the first item */
+	totem_embedded_open_playlist_item (emb, emb->playlist);
 
 	/* don't run again */
 	return FALSE;
