@@ -2747,6 +2747,7 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
+  g_return_val_if_fail (bvw->com->mrl != NULL, FALSE);
 
   bvw->priv->target_state = GST_STATE_PLAYING;
 
@@ -3035,6 +3036,7 @@ bacon_video_widget_pause (BaconVideoWidget * bvw)
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
+  g_return_if_fail (bvw->com->mrl != NULL);
 
   GST_LOG ("Pausing");
   gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_PAUSED);

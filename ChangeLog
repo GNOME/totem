@@ -1,5 +1,11 @@
 2007-01-12  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_play), (bacon_video_widget_pause):
+	Refuse play/pause if we don't have an MRL loaded
+
+2007-01-12  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/tests/2.html: use another video so we can see
 	movement
 
