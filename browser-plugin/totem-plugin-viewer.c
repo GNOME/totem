@@ -294,10 +294,9 @@ totem_embedded_set_logo_by_name (TotemEmbedded *embedded,
 
 	width = GTK_WIDGET (embedded->bvw)->allocation.width;
 	height = GTK_WIDGET (embedded->bvw)->allocation.height;
-	size = MAX (width, height);
+	size = MIN (width, height);
 
-	logo = gtk_icon_theme_load_icon (theme, name,
-					 size, 0, NULL);
+	logo = gtk_icon_theme_load_icon (theme, name, size, 0, NULL);
 	padded = totem_embedded_pad_pixbuf_for_size (logo, width, height);
 	g_object_unref (logo);
 	if (padded != NULL) {

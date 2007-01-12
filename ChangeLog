@@ -1,6 +1,12 @@
 2007-01-12  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_set_logo_by_name): Avoid errors when the icon is
+	bigger than the destination area
+
+2007-01-12  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer.c:
 	(totem_embedded_pad_pixbuf_for_size),
 	(totem_embedded_set_logo_by_name), (totem_embedded_open_internal),
 	(totem_embedded_set_error_logo), (totem_embedded_construct):
