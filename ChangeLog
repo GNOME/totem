@@ -2,6 +2,14 @@
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bvw_error_from_gst_error):
+	  If an element throws a 'can't handle this stream' error (which
+	  usually indicates a bug already), say which element it was.
+	  (Closes: #374735)
+
+2007-01-13  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_error_from_gst_error):
 	  When playback files because a required source or decoder plugin is
 	  missing, tell the user exactly what it is that they are missing in
 	  the error message (Closes: #380198). This will only work with

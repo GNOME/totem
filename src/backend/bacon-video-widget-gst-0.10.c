@@ -2506,8 +2506,13 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
     }
   } else if (is_error (e, STREAM, WRONG_TYPE) ||
              is_error (e, STREAM, NOT_IMPLEMENTED)) {
-    ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED,
-                               e->message);
+    if (src_typename) {
+      ret = g_error_new (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED, "%s: %s",
+          src_typename, e->message);
+    } else {
+      ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED,
+          e->message);
+    }
   } else if (is_error (e, STREAM, FAILED) &&
              src_typename && strncmp (src_typename, "GstTypeFind", 11) == 0) {
     ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_READ_ERROR,
