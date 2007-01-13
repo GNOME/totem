@@ -10,7 +10,7 @@
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bvw_error_from_gst_error):
-	  When playback files because a required source or decoder plugin is
+	  When playback fails because a required source or decoder plugin is
 	  missing, tell the user exactly what it is that they are missing in
 	  the error message (Closes: #380198). This will only work with
 	  current gst-plugins-base CVS (ie the future -base 0.10.12 release).
