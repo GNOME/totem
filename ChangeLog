@@ -4,7 +4,8 @@
 	(bvw_error_from_gst_error):
 	  When playback files because a required source or decoder plugin is
 	  missing, tell the user exactly what it is that they are missing in
-	  the error message (Closes: #380198).
+	  the error message (Closes: #380198). This will only work with
+	  current gst-plugins-base CVS (ie the future -base 0.10.12 release).
 
 2007-01-13  Tim-Philipp Müller  <tim at centricular dot net>
 
