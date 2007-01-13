@@ -1,5 +1,12 @@
 2007-01-13  Tim-Philipp Müller  <tim at centricular dot net>
 
+	* src/totem-missing-plugins.c:
+	(totem_on_missing_plugins_event):
+	  Print and use correct string arrays here (ie. the filtered ones,
+	  and not the original one including items already blacklisted).
+
+2007-01-13  Tim-Philipp Müller  <tim at centricular dot net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bvw_check_missing_plugins_error):
 	(bvw_bus_message_cb):

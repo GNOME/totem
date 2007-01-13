@@ -196,7 +196,7 @@ totem_on_missing_plugins_event (BaconVideoWidget *bvw, char **details,
 	{
 		if (totem_codec_install_plugin_is_blacklisted (ctx->details[i]))
 		{
-			g_message ("Missing plugin: %s (ignoring)", details[i]);
+			g_message ("Missing plugin: %s (ignoring)", ctx->details[i]);
 			g_free (ctx->details[i]);
 			g_free (ctx->descriptions[i]);
 			ctx->details[i] = ctx->details[num-1];
@@ -206,7 +206,7 @@ totem_on_missing_plugins_event (BaconVideoWidget *bvw, char **details,
 			--num;
 			--i;
 		} else {
-			g_message ("Missing plugin: %s (%s)", details[i], descriptions[i]);
+			g_message ("Missing plugin: %s (%s)", ctx->details[i], ctx->descriptions[i]);
 		}
 	}
 
@@ -222,7 +222,8 @@ totem_on_missing_plugins_event (BaconVideoWidget *bvw, char **details,
 		xid = GDK_WINDOW_XWINDOW (GTK_WIDGET (totem->win)->window);
 #endif
 
-	status = gimme_codec_async (details, xid, on_gimme_codec_installation_done,
+	status = gimme_codec_async (ctx->details, xid,
+	                            on_gimme_codec_installation_done,
 	                            ctx);
 
 	GST_INFO ("gimme_codec_async() status = %d", status);
