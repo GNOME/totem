@@ -2420,6 +2420,8 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
   GError *ret = NULL;
   GError *e = NULL;
 
+  GST_LOG ("resolving error message %" GST_PTR_FORMAT, err_msg);
+
   src_typename = (err_msg->src) ? G_OBJECT_TYPE_NAME (err_msg->src) : NULL;
 
   gst_message_parse_error (err_msg, &e, NULL);
@@ -2471,8 +2473,38 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
   } else if (e->domain == GST_RESOURCE_ERROR) {
     ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_GENERIC,
                                e->message);
+  } else if (is_error (e, CORE, MISSING_PLUGIN) ||
+             is_error (e, STREAM, CODEC_NOT_FOUND)) {
+    if (bvw->priv->missing_plugins != NULL) {
+      gchar **descs, **d, *msg = NULL;
+      guint num;
+
+      descs = bvw_get_missing_plugins_descriptions (bvw->priv->missing_plugins);
+      num = g_list_length (bvw->priv->missing_plugins);
+
+      if (is_error (e, CORE, MISSING_PLUGIN)) {
+        /* should be exactly one missing thing (source or converter) */
+        msg = g_strdup_printf (_("The playback of this movie requires a '%s' "
+          "plugin, which his not installed."), descs[0]);
+      } else {
+        gchar *desc_list;
+
+        desc_list = g_strjoinv ("\n", descs);
+        msg = g_strdup_printf (ngettext (_("The playback of this movie "
+            "requires a %s plugin which is not installed."), _("The playback "
+            "of this movie requires the following decoders which are not "
+            "installed:\n\n%s"), num), (num == 1) ? descs[0] : desc_list);
+        g_free (desc_list);
+      }
+      ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED, msg);
+      g_free (msg);
+      g_strfreev (descs);
+    } else {
+      GST_LOG ("no missing plugin messages, posting generic error");
+      ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED,
+          e->message);
+    }
   } else if (is_error (e, STREAM, WRONG_TYPE) ||
-             is_error (e, STREAM, CODEC_NOT_FOUND) ||
              is_error (e, STREAM, NOT_IMPLEMENTED)) {
     ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED,
                                e->message);
