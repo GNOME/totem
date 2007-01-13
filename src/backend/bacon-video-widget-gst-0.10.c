@@ -1307,6 +1307,11 @@ bvw_check_missing_plugins_error (BaconVideoWidget * bvw, GstMessage * err_msg)
     GST_DEBUG ("neither CORE/MISSING_PLUGIN nor STREAM/CODEC_NOT_FOUND error");
   } else {
     ret = bvw_emit_missing_plugins_signal (bvw, FALSE);
+    if (ret) {
+      /* If it was handled, stop playback to make sure we're not processing any
+       * other error messages that might also be on the bus */
+      bacon_video_widget_stop (bvw);
+    }
   }
 
   g_error_free (err);
@@ -1356,9 +1361,9 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       bvw_error_msg_print_dbg (message);
 
       if (!bvw_check_missing_plugins_error (bvw, message)) {
-        GError *error = NULL;
+        GError *error;
 
-        gst_message_parse_error (message, &error, NULL);
+        error = bvw_error_from_gst_error (bvw, message);
 
         g_signal_emit (bvw, bvw_signals[SIGNAL_ERROR], 0,
                        error->message, TRUE, FALSE);
