@@ -470,12 +470,6 @@ totemPlugin::ViewerCleanup ()
 		mViewerProxy = NULL;
 	}
 
-	/* FIXME: we shouldn't get this! */
-	if (mViewerStream) {
-		fclose (mViewerStream);
-		mViewerStream = NULL;
-	}
-
 	if (mViewerFD >= 0) {
 		close (mViewerFD);
 		mViewerFD = -1;
@@ -1964,18 +1958,6 @@ totemPlugin::NewStream (NPMIMEType type,
 
 	/* FIXME: assign the stream URL to mRequestURI ? */
 
-	/* Open a FILE* for our FD */
-	mViewerStream = fdopen (mViewerFD, "w");
-	if (!mViewerStream) {
-		int err = errno;
-		D ("Failed to fdopen the viewer fd, errno: %d (%s)", err, g_strerror (err));
-
-		return CallNPN_DestroyStreamProc (sNPN.destroystream,
-						  mInstance,
-						  stream,
-						  NPRES_DONE);
-	}
-
 	if (g_str_has_prefix (stream->url, "file://")) {
 		*stype = NP_ASFILEONLY;
 		mStreamType = NP_ASFILEONLY;
@@ -2006,23 +1988,13 @@ totemPlugin::DestroyStream (NPStream* stream,
 
 	mStream = nsnull;
 
-	NS_ASSERTION (mViewerStream, "No viewer stream?");
-
-	int ret = fclose (mViewerStream);
+	int ret = close (mViewerFD);
 	if (ret < 0) {
 		int err = errno;
 		D ("Failed to close viewer stream with errno %d: %s", err, g_strerror (err));
 	}
 
-	mViewerStream = NULL;
-		
-#if 0
-	/* Close the viewer */
-	dbus_g_proxy_call_no_reply (mViewerProxy,
-				    "CloseStream",
-				    G_TYPE_INVALID,
-				    G_TYPE_INVALID);
-#endif
+	mViewerFD = -1;
 
 	return NPERR_NO_ERROR;
 }
@@ -2042,7 +2014,6 @@ totemPlugin::WriteReady (NPStream *stream)
 
 	DD ("WriteReady");
 
-	/* FIXME: does this mix well with using mViewerStream ? */
 	struct pollfd fds;
 	fds.events = POLLOUT;
 	fds.fd = mViewerFD;
@@ -2085,11 +2056,17 @@ totemPlugin::Write (NPStream *stream,
 			D ("Is playlist; need to wait for the file to be downloaded completely");
 			mIsPlaylist = PR_TRUE;
 
+			/* Close the viewer */
+			dbus_g_proxy_call_no_reply (mViewerProxy,
+						    "CloseStream",
+						    G_TYPE_INVALID,
+						    G_TYPE_INVALID);
+
 			return len;
 		}
 	}
 
-	int ret = fwrite (buffer, 1, len, mViewerStream);
+	int ret = write (mViewerFD, buffer, len);
 	/* FIXME shouldn't we retry if errno is EINTR ? */
 
 	if (NS_UNLIKELY (ret < 0)) {

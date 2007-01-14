@@ -195,7 +195,6 @@ class totemPlugin {
     nsCString mViewerServiceName;
     int mViewerPID;
     int mViewerFD;
-    FILE *mViewerStream;
 
 #ifdef TOTEM_GMP_PLUGIN
   public:
