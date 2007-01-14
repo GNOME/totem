@@ -1011,6 +1011,9 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		/* Take a screenshot */
 		totem_action_set_sensitivity ("take-screenshot", FALSE);
 
+		/* Clear the playlist */
+		totem_action_set_sensitivity ("clear-playlist", FALSE);
+
 		/* Set the logo */
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
 		gtk_widget_set_sensitive (GTK_WIDGET (totem->properties),
@@ -1047,6 +1050,10 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 
 		/* Take a screenshot */
 		totem_action_set_sensitivity ("take-screenshot", retval);
+
+		/* Clear the playlist */
+		totem_action_set_sensitivity ("clear-playlist", retval);
+
 		gtk_widget_set_sensitive
 			(GTK_WIDGET (totem->properties), retval);
 

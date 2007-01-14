@@ -1675,6 +1675,8 @@ totem_playlist_clear (TotemPlaylist *playlist)
 		gtk_tree_path_free (playlist->_priv->current);
 	playlist->_priv->current = NULL;
 
+	totem_playlist_update_save_button (playlist);
+
 	return TRUE;
 }
 

@@ -1165,6 +1165,13 @@ aspect_ratio_changed_callback (GtkRadioAction *action, GtkRadioAction *current, 
 	totem_action_set_aspect_ratio (totem, gtk_radio_action_get_current_value (current));
 }
 
+static void
+clear_playlist_action_callback (GtkAction *action, Totem *totem)
+{
+	totem_playlist_clear (totem->playlist);
+	totem_action_set_mrl (totem, NULL);
+}
+
 static const GtkActionEntry entries[] = {
 	{ "movie-menu", NULL, N_("_Movie") },
 	{ "open", GTK_STOCK_OPEN, N_("_Open..."), "<control>O", N_("Open a file"), G_CALLBACK (open_action_callback) },
@@ -1176,6 +1183,7 @@ static const GtkActionEntry entries[] = {
 
 	{ "edit-menu", NULL, N_("_Edit") },
 	{ "take-screenshot", "camera-photo", N_("Take _Screenshot..."), "<control>S", N_("Take a screenshot"), G_CALLBACK (take_screenshot_action_callback) },
+	{ "clear-playlist", NULL, N_("Clear Playlist"), NULL, N_("Clear Playlist"), G_CALLBACK (clear_playlist_action_callback) },
 	{ "preferences", GTK_STOCK_PREFERENCES, N_("Prefere_nces"), NULL, NULL, G_CALLBACK (preferences_action_callback) },
 
 	{ "view-menu", NULL, N_("_View") },
