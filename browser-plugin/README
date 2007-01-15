@@ -1,5 +1,19 @@
-Notes on the plugin's internas
-==============================
+Notes on the plugin's internals
+===============================
+
+
+Envars of interest
+===================
+
+export TOTEM_EMBEDDED_DEBUG_SYNC=1
+- Pass --sync to the totem-plugin-viewer
+
+export TOTEM_EMBEDDED_DEBUG_FATAL=1
+- Pass --g-fatal-warnings to the totem-plugin-viewer
+
+export TOTEM_EMBEDDED_GDB=1
+- Launch a gdb session inside an xterm to capture crashes and errors
+  from the totem-plugin-viewer
 
 
 Special topics: Complex plugin

@@ -264,6 +264,13 @@ totemPlugin::ViewerFork ()
 		g_ptr_array_add (arr, g_strdup ("--sync"));
 	}
 
+#ifdef GNOME_ENABLE_DEBUG
+	const char *fatal = g_getenv ("TOTEM_EMBEDDED_DEBUG_FATAL");
+	if (fatal && fatal[0] == '1') {
+		g_ptr_array_add (arr, g_strdup ("--g-fatal-warnings"));
+	}
+#endif
+
 	g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_PLUGIN_TYPE));
 #if defined(TOTEM_BASIC_PLUGIN)
 	g_ptr_array_add (arr, g_strdup ("basic"));
