@@ -33,6 +33,9 @@
 
 G_BEGIN_DECLS
 
+#define SMALL_STREAM_WIDTH 200
+#define SMALL_STREAM_HEIGHT 120
+
 struct BaconVideoWidgetCommon {
 	char *mrl;
 };

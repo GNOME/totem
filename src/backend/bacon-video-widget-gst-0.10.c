@@ -4832,11 +4832,17 @@ bacon_video_widget_new (int width, int height,
   }
 
   if (type == BVW_USE_TYPE_VIDEO) {
-    video_sink = gst_element_factory_make ("gconfvideosink", "video-sink");
-    if (video_sink == NULL) {
-      g_warning ("Could not create element 'gconfvideosink'");
-      /* Try to fallback on ximagesink */
+    if (width < SMALL_STREAM_WIDTH && height < SMALL_STREAM_HEIGHT) {
+      bvw->priv->init_height = height;
+      bvw->priv->init_width = width;
       video_sink = gst_element_factory_make ("ximagesink", "video-sink");
+    } else {
+      video_sink = gst_element_factory_make ("gconfvideosink", "video-sink");
+      if (video_sink == NULL) {
+        g_warning ("Could not create element 'gconfvideosink'");
+        /* Try to fallback on ximagesink */
+        video_sink = gst_element_factory_make ("ximagesink", "video-sink");
+      }
     }
 /* FIXME: April fool's day puzzle */
 #if 0

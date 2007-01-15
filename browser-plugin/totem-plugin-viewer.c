@@ -1742,6 +1742,7 @@ static gboolean arg_is_playlist = FALSE;
 static gboolean arg_repeat = FALSE;
 static gboolean arg_no_autostart = FALSE;
 static gboolean arg_audioonly = FALSE;
+static int arg_width = -1, arg_height = -1;
 static TotemPluginType arg_plugin_type = TOTEM_PLUGIN_TYPE_LAST;
 
 static gboolean
@@ -1782,6 +1783,8 @@ static GOptionEntry option_entries [] =
 	{ TOTEM_OPTION_REPEAT, 0, 0, G_OPTION_ARG_NONE, &arg_repeat, NULL, NULL },
 	{ TOTEM_OPTION_NOAUTOSTART, 0, 0, G_OPTION_ARG_NONE, &arg_no_autostart, NULL, NULL },
 	{ TOTEM_OPTION_AUDIOONLY, 0, 0, G_OPTION_ARG_NONE, &arg_audioonly, NULL, NULL },
+	{ TOTEM_OPTION_HEIGHT, 0, 0, G_OPTION_ARG_INT, &arg_height, NULL, NULL },
+	{ TOTEM_OPTION_WIDTH, 0, 0, G_OPTION_ARG_INT, &arg_width, NULL, NULL },
 	{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY /* STRING? */, &arg_remaining, NULL },
 	{ NULL }
 };
@@ -1915,8 +1918,8 @@ int main (int argc, char **argv)
 	emb = g_object_new (TOTEM_TYPE_EMBEDDED, NULL);
 
 	emb->state = LAST_STATE;
-	emb->width = -1;
-	emb->height = -1;
+	emb->width = arg_width;
+	emb->height = arg_height;
 	emb->controller_hidden = arg_no_controls;
 	emb->show_statusbar = arg_statusbar;
 	emb->current_uri = arg_remaining ? arg_remaining[0] : NULL;
