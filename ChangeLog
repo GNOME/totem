@@ -1,5 +1,11 @@
 2007-01-15  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_set_logo_by_name): Avoid warnings when in
+	audio only mode, and trying to set an error/logo image
+
+2007-01-15  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser-media.c:
 	(totem_pl_parser_iso_get_title), (totem_pl_parser_add_iso):
 	* src/plparse/totem-pl-parser.c: Add support for ISO files

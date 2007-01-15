@@ -290,6 +290,9 @@ totem_embedded_set_logo_by_name (TotemEmbedded *embedded,
 	GdkPixbuf *logo, *padded;
 	int size, width, height;
 
+	if (embedded->audioonly != FALSE)
+		return;
+
 	theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (embedded->window));
 
 	width = GTK_WIDGET (embedded->bvw)->allocation.width;
