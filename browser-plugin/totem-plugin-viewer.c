@@ -1431,6 +1431,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 		/* FIXME: why can't this wait until the whole window is realised? */
 		gtk_widget_realize (GTK_WIDGET (emb->bvw));
 		gtk_widget_show (GTK_WIDGET (emb->bvw));
+		bacon_video_widget_set_show_visuals (emb->bvw, TRUE);
 	} else if (emb->audioonly != FALSE) {
 		gtk_widget_hide (container);
 	}

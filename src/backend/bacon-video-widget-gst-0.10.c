@@ -4802,7 +4802,7 @@ bacon_video_widget_new (int width, int height,
   bvw->priv->init_height = 180;
   bvw->priv->visq = VISUAL_SMALL;
   bvw->priv->show_vfx = FALSE;
-  bvw->priv->vis_element_name = NULL;
+  bvw->priv->vis_element_name = g_strdup ("goom");
   bvw->priv->tv_out_type = TV_OUT_NONE;
   bvw->priv->connection_speed = 0;
   bvw->priv->ratio_type = BVW_RATIO_AUTO;

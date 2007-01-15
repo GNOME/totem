@@ -1,5 +1,13 @@
 2007-01-15  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_construct):
+	Turn on visualisations by default (Closes: #395409)
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_new): add a default visuals plugin (goom), as
+	with the xine-lib backend
+
+2007-01-15  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totem-plugin-viewer.c: (entry_added),
 	(totem_embedded_push_parser): Before adding a local file entry
 	from a playlist, verify that the base uri for that playlist
