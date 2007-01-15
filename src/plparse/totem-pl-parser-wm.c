@@ -98,6 +98,11 @@ totem_pl_parser_add_asf_parser (TotemPlParser *parser,
 	char *contents, *ref;
 	int size;
 
+	if (g_str_has_prefix (data, "[Address]") != FALSE) {
+		g_warning ("Implement NSC parsing: http://bugzilla.gnome.org/show_bug.cgi?id=350595");
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+	}
+
 	if (g_str_has_prefix (data, "ASF ") == FALSE) {
 		return totem_pl_parser_add_asf_reference_parser (parser, url, base, data);
 	}
@@ -331,7 +336,8 @@ totem_pl_parser_is_asf (const char *data, gsize len)
 		return FALSE;
 
 	if (g_str_has_prefix (data, "[Reference]") != FALSE
-			|| g_str_has_prefix (data, "ASF ") != FALSE) {
+			|| g_str_has_prefix (data, "ASF ") != FALSE
+			|| g_str_has_prefix (data, "[Address]") != FALSE) {
 		return TRUE;
 	}
 
