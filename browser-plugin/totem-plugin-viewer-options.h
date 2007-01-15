@@ -36,7 +36,5 @@
 #define TOTEM_OPTION_USER_AGENT		"user-agent"
 #define TOTEM_OPTION_STATUSBAR		"statusbar"
 #define TOTEM_OPTION_AUDIOONLY		"audio-only"
-#define TOTEM_OPTION_HEIGHT		"height"
-#define TOTEM_OPTION_WIDTH		"width"
 
 #endif /* !__TOTEM_PLUGIN_VIEWER_OPTIONS_H__ */

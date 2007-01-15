@@ -321,13 +321,6 @@ totemPlugin::ViewerFork ()
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_NOAUTOSTART));
 	}
 
-	if (!mHidden && !mAudioOnly && mControllerHidden && mWidth > 0 && mHeight > 0) {
-		g_ptr_array_add (arr, g_strdup_printf ("%s %d",
-						       DASHES TOTEM_OPTION_WIDTH, mWidth));
-		g_ptr_array_add (arr, g_strdup_printf ("%s %d",
-						       DASHES TOTEM_OPTION_HEIGHT, mHeight));
-	}
-
 	g_ptr_array_add (arr, NULL);
 	char **argv = (char **) g_ptr_array_free (arr, FALSE);
 
@@ -1652,16 +1645,17 @@ totemPlugin::Init (NPMIMEType mimetype,
 	const char *value;
 
 	/* We only use the size attributes to detect whether we're hidden;
-	 * and whether to hint for a small stream.
-	 * But we'll get our real size from SetWindow.
+	 * we'll get our real size from SetWindow.
 	 */
+	PRInt32 width = -1, height = -1;
+
 	value = (const char *) g_hash_table_lookup (args, "width");
 	if (value != NULL) {
-		mWidth = strtol (value, NULL, 0);
+		width = strtol (value, NULL, 0);
 	}
 	value = (const char *) g_hash_table_lookup (args, "height");
 	if (value != NULL) {
-		mHeight = strtol (value, NULL, 0);
+		height = strtol (value, NULL, 0);
 	}
 
 	/* Are we hidden? */
@@ -1670,12 +1664,12 @@ totemPlugin::Init (NPMIMEType mimetype,
 		  GetBooleanValue (args, "hidden", PR_TRUE);
 
 #ifdef TOTEM_GMP_PLUGIN
-	if (mHeight == 40) {
+	if (height == 40) {
 		mAudioOnly = PR_TRUE;
 	}
 #endif /* TOTEM_GMP_PLUGIN */
 #if defined(TOTEM_NARROWSPACE_PLUGIN) || defined (TOTEM_BASIC_PLUGIN)
-	if (mHeight <= 16) {
+	if (height <= 16) {
 		mAudioOnly = PR_TRUE;
 	}
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
@@ -1683,7 +1677,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 	/* Most for RealAudio streams, but also used as a replacement for
 	 * HIDDEN=TRUE attribute.
 	 */
-	if (mWidth == 0 && mHeight == 0)
+	if (width == 0 && height == 0)
 		mHidden = PR_TRUE;
 
 	/* Whether to automatically stream and play the content */
@@ -1847,7 +1841,6 @@ totemPlugin::Init (NPMIMEType mimetype,
 
 	/* Dump some disagnostics */
 	D ("mSrc: %s", mSrc.get ());
-	D ("mHeight: %d mWidth: %d", mHeight, mWidth);
 	D ("mCache: %d", mCache);
 	D ("mControllerHidden: %d", mControllerHidden);
 	D ("mShowStatusbar: %d", mShowStatusbar);

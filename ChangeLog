@@ -1,3 +1,30 @@
+2007-01-15 Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer-options.h:
+	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_construct),
+	(main):
+	* browser-plugin/totemPlugin.cpp: revert the browser plugin parts of the
+	previous commit, and simply pass on the *real* width and height from
+	the SetWindow call (Closes: #364572)
+
+2007-01-15  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer-options.h:
+	* browser-plugin/totem-plugin-viewer.c: (main):
+	* browser-plugin/totemPlugin.cpp:
+	Pass the width and height of the video display to the backend
+	when showing only the video (controllers are hidden)
+
+	* src/backend/bacon-video-widget-common.h:
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_new):
+	* src/backend/bacon-video-widget-xine.c: (load_video_out_driver):
+	When the requested video widget is smaller than 200x120, use the
+	non-Xv video output, useful so that small QuickTime "image" streams
+	don't hog the Xv port
+
+	(Closes: #364572)
+
 2007-01-15  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_construct):
