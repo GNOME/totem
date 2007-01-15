@@ -32,6 +32,7 @@
 #ifndef TOTEM_PL_PARSER_MINI
 #include <libxml/tree.h>
 #include <libxml/parser.h>
+#include <gobject/gvaluecollector.h>
 #include <gtk/gtk.h>
 #include <libgnomevfs/gnome-vfs.h>
 #include <libgnomevfs/gnome-vfs-mime.h>
@@ -661,7 +662,26 @@ totem_pl_parser_read_ini_line_string (char **lines, const char *key, gboolean do
 static void
 totem_pl_parser_init (TotemPlParser *parser)
 {
+	GParamSpec *pspec;
 	parser->priv = g_new0 (TotemPlParserPrivate, 1);
+
+	parser->priv->pspec_pool = g_param_spec_pool_new (FALSE);
+	pspec = g_param_spec_string ("url", "url",
+				     "URL to be added", NULL,
+				     G_PARAM_READABLE & G_PARAM_WRITABLE);
+	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
+	pspec = g_param_spec_string ("title", "title",
+				     "Title of the item to be added", NULL,
+				     G_PARAM_READABLE & G_PARAM_WRITABLE);
+	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
+	pspec = g_param_spec_string ("genre", "genre",
+				     "Genre of the item to be added", NULL,
+				     G_PARAM_READABLE & G_PARAM_WRITABLE);
+	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
+	pspec = g_param_spec_string ("base", "base",
+				     "Base URL of the item to be added", NULL,
+				     G_PARAM_READABLE & G_PARAM_WRITABLE);
+	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
 }
 
 static void
@@ -690,6 +710,84 @@ totem_pl_parser_check_utf8 (const char *title)
 	return title ? g_utf8_validate (title, -1, NULL) : FALSE;
 }
 
+static void
+totem_pl_parser_add_url_valist (TotemPlParser *parser,
+				const gchar *first_property_name,
+				va_list      var_args)
+{
+	const char *name;
+	char *title, *url, *genre, *base;
+
+	title = url = genre = base = NULL;
+
+	g_object_ref (G_OBJECT (parser));
+
+	name = first_property_name;
+
+	while (name) {
+		GValue value = { 0, };
+		GParamSpec *pspec;
+		char *error = NULL;
+
+		pspec = g_param_spec_pool_lookup (parser->priv->pspec_pool,
+						  name,
+						  G_OBJECT_TYPE (parser),
+						  FALSE);
+
+		if (!pspec) {
+			g_warning ("Unknown property '%s'", name);
+			break;
+		}
+
+		g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (pspec));
+		G_VALUE_COLLECT (&value, var_args, 0, &error);
+		if (error != NULL) {
+			g_warning ("Error getting the value for property '%s'", name);
+			break;
+		}
+
+		if (strcmp (name, "url") == 0) {
+			url = g_value_dup_string (&value);
+		} else if (strcmp (name, "title") == 0) {
+			title = g_value_dup_string (&value);
+		} else if (strcmp (name, "genre") == 0) {
+			genre = g_value_dup_string (&value);
+		} else if (strcmp (name, "base") == 0) {
+			base = g_value_dup_string (&value);
+		}
+
+		g_value_unset (&value);
+		name = va_arg (var_args, char*);
+	}
+
+	if (url == NULL) {
+		g_warning ("No URL passed");
+		g_object_unref (G_OBJECT (parser));
+		return;
+	}
+
+	g_signal_emit (G_OBJECT (parser), totem_pl_parser_table_signals[ENTRY],
+		       0, url, title, genre);
+
+	g_free (url);
+	g_free (title);
+	g_free (genre);
+	g_free (base);
+
+	g_object_unref (G_OBJECT (parser));
+}
+
+void
+totem_pl_parser_add_url (TotemPlParser *parser,
+			 const char *first_property_name,
+			 ...)
+{
+	va_list var_args;
+	va_start (var_args, first_property_name);
+	totem_pl_parser_add_url_valist (parser, first_property_name, var_args);
+	va_end (var_args);
+}
+
 void
 totem_pl_parser_add_one_url (TotemPlParser *parser, const char *url, const char *title)
 {
@@ -697,16 +795,6 @@ totem_pl_parser_add_one_url (TotemPlParser *parser, const char *url, const char 
 		       0, url,
 		       totem_pl_parser_check_utf8 (title) ? title : NULL,
 		       NULL);
-}
-
-void
-totem_pl_parser_add_one_url_ext (TotemPlParser *parser, const char *url,
-		const char *title, const char *genre)
-{
-	g_signal_emit (G_OBJECT (parser), totem_pl_parser_table_signals[ENTRY],
-		       0, url,
-		       totem_pl_parser_check_utf8 (title) ? title : NULL,
-		       genre);
 }
 
 char *

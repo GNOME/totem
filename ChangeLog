@@ -1,5 +1,18 @@
 2007-01-15  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser-lines.c: (totem_pl_parser_add_m3u):
+	* src/plparse/totem-pl-parser-pls.c:
+	(totem_pl_parser_add_pls_with_contents), (totem_pl_parser_add_pls):
+	* src/plparse/totem-pl-parser-pls.h:
+	* src/plparse/totem-pl-parser-private.h:
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_init),
+	(totem_pl_parser_add_url_valist), (totem_pl_parser_add_url),
+	(totem_pl_parser_add_one_url): Add support for "arbitrary"
+	properties being passed along to the signal emitter (although
+	we don't emit signals with the extra info yet)
+
+2007-01-15  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemPlugin.cpp: ShowDisplay=FALSE hides a
 	property bar with WMP, not the main video display!
 

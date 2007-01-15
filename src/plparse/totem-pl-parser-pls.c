@@ -151,7 +151,7 @@ totem_pl_parser_write_pls (TotemPlParser *parser, GtkTreeModel *model,
 
 TotemPlParserResult
 totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url,
-				       const char *contents)
+				       const char *base, const char *contents)
 {
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 	char **lines;
@@ -240,7 +240,11 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url,
 
 		if (strstr (file, "://") != NULL || file[0] == G_DIR_SEPARATOR) {
 			if (totem_pl_parser_parse_internal (parser, file, NULL) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
-				totem_pl_parser_add_one_url_ext (parser, file, title, genre);
+				totem_pl_parser_add_url (parser,
+							 "url", file,
+							 "title", title,
+							 "genre", genre,
+							 "base", base, NULL);
 			}
 		} else {
 			char *base;
@@ -254,7 +258,11 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url,
 				escaped = gnome_vfs_escape_path_string (file);
 				uri = g_strdup_printf ("%s/%s", base, escaped);
 				g_free (escaped);
-				totem_pl_parser_add_one_url_ext (parser, uri, title, genre);
+				totem_pl_parser_add_url (parser,
+							 "url", uri,
+							 "title", title,
+							 "genre", genre,
+							 "base", base, NULL);
 				g_free (uri);
 			}
 
@@ -293,7 +301,7 @@ totem_pl_parser_add_pls (TotemPlParser *parser, const char *url,
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
 
-	retval = totem_pl_parser_add_pls_with_contents (parser, url, contents);
+	retval = totem_pl_parser_add_pls_with_contents (parser, url, base, contents);
 	g_free (contents);
 
 	return retval;

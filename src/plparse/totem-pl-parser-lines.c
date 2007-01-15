@@ -283,7 +283,7 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url,
 	if (g_str_has_prefix (contents, "[playlist]") != FALSE
 			|| g_str_has_prefix (contents, "[Playlist]") != FALSE
 			|| g_str_has_prefix (contents, "[PLAYLIST]") != FALSE) {
-		retval = totem_pl_parser_add_pls_with_contents (parser, url, contents);
+		retval = totem_pl_parser_add_pls_with_contents (parser, url, _base, contents);
 		g_free (contents);
 		return retval;
 	}

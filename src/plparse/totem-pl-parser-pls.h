@@ -39,6 +39,7 @@ gboolean totem_pl_parser_write_pls				(TotemPlParser *parser,
 								 GError **error);
 TotemPlParserResult totem_pl_parser_add_pls_with_contents	(TotemPlParser *parser,
 								 const char *url,
+								 const char *base,
 								 const char *contents);
 TotemPlParserResult totem_pl_parser_add_pls			(TotemPlParser *parser,
 								 const char *url,

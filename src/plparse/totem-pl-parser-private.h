@@ -29,6 +29,7 @@
 #include "totem-pl-parser.h"
 #include <libxml/tree.h>
 #include <libxml/parser.h>
+#include <glib-object.h>
 #else
 #include "totem-pl-parser-mini.h"
 #endif /* !TOTEM_PL_PARSER_MINI */
@@ -40,6 +41,9 @@ struct TotemPlParserPrivate
 {
 	GList *ignore_schemes;
 	GList *ignore_mimetypes;
+#ifndef TOTEM_PL_PARSER_MINI
+	GParamSpecPool *pspec_pool;
+#endif
 	guint recurse_level;
 	guint fallback : 1;
 	guint recurse : 1;
@@ -80,10 +84,9 @@ TotemPlParserResult totem_pl_parser_parse_internal (TotemPlParser *parser,
 void totem_pl_parser_add_one_url		(TotemPlParser *parser,
 						 const char *url,
 						 const char *title);
-void totem_pl_parser_add_one_url_ext		(TotemPlParser *parser,
-						 const char *url,
-						 const char *title,
-						 const char *genre);
+void totem_pl_parser_add_url			(TotemPlParser *parser,
+						 const char *first_property_name,
+						 ...);
 gboolean totem_pl_parser_ignore (TotemPlParser *parser, const char *url);
 #endif /* !TOTEM_PL_PARSER_MINI */
 
