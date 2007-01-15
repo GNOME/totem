@@ -1634,14 +1634,20 @@ entry_added (TotemPlParser *parser,
 	     const char *genre,
 	     gpointer data)
 {
-	GList **list = (GList **) data;
+	TotemEmbedded *emb = (TotemEmbedded *) data;
+
+	if (g_str_has_prefix (uri, "file://") != FALSE
+	    && g_str_has_prefix (emb->base_uri, "file://") == FALSE) {
+		g_print ("not adding URI '%s' (local file referenced from remote location)\n", uri);
+		return;
+	}
 
 	g_print ("added URI '%s' with title '%s' genre '%s'\n", uri,
 			title ? title : "empty", genre);
 
 	//FIXMEchpe
 	//FIXME need new struct to hold that
-	*list = g_list_prepend (*list, g_strdup (uri));
+	emb->playlist = g_list_prepend (emb->playlist, g_strdup (uri));
 }
 
 static gboolean
@@ -1650,17 +1656,15 @@ totem_embedded_push_parser (gpointer data)
 	TotemEmbedded *emb = (TotemEmbedded *) data;
 	TotemPlParser *parser;
 	TotemPlParserResult res;
-	GList *list = NULL;
 
 	emb->parser_id = 0;
-
 	totem_embedded_clear_playlist (emb);
 
 	parser = totem_pl_parser_new ();
 	g_object_set (parser, "force", TRUE,
 		      "disable-unsafe", TRUE,
 		      NULL);
-	g_signal_connect (parser, "entry", G_CALLBACK (entry_added), &list);
+	g_signal_connect (parser, "entry", G_CALLBACK (entry_added), emb);
 	res = totem_pl_parser_parse_with_base (parser, emb->current_uri,
 					       emb->base_uri, FALSE);
 	g_object_unref (parser);
@@ -1684,14 +1688,15 @@ totem_embedded_push_parser (gpointer data)
 	}
 
 	/* Check if we have anything in the playlist now */
-	if (list == NULL) {
+	if (emb->playlist == NULL) {
 		g_message ("No playlist or playlist empty");
 		totem_embedded_set_error (emb, _("No playlist or playlist empty") /* FIXME */,
 					  NULL);
+		totem_embedded_set_logo_by_name (emb, "image-missing");
 		return FALSE;
 	}
 
-	emb->playlist = g_list_reverse (list);
+	emb->playlist = g_list_reverse (emb->playlist);
 	emb->num_items = g_list_length (emb->playlist);
 
 	/* Launch the first item */

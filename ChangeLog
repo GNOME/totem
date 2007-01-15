@@ -1,5 +1,12 @@
 2007-01-15  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c: (entry_added),
+	(totem_embedded_push_parser): Before adding a local file entry
+	from a playlist, verify that the base uri for that playlist
+	is local as well, or ignore the entry (Closes: #396710)
+
+2007-01-15  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totem-plugin-viewer.c:
 	(totem_embedded_set_logo_by_name), (totem_embedded_push_parser):
 	Avoid gdk-pixbuf warnings when we can't find a named icon in
