@@ -40,6 +40,8 @@
 #include "totem-pl-parser-private.h"
 
 #ifndef TOTEM_PL_PARSER_MINI
+/* Returns NULL if we don't have an ISO image,
+ * or an empty string if it's non-UTF-8 data */
 static char *
 totem_pl_parser_iso_get_title (const char *url)
 {
@@ -104,7 +106,7 @@ totem_pl_parser_iso_get_title (const char *url)
 	str = g_strdup (g_strstrip (buf));
 	if (!g_utf8_validate (str, -1, NULL)) {
 		g_free (str);
-		return NULL;
+		return g_strdup ("");
 	}
 
 	return str;
@@ -120,6 +122,17 @@ totem_pl_parser_add_iso (TotemPlParser *parser, const char *url,
 	/* This is a hack, it could be a VCD or DVD */
 	if (g_str_has_prefix (url, "file://") == FALSE)
 		return TOTEM_PL_PARSER_RESULT_IGNORED;
+
+	label = totem_pl_parser_iso_get_title (url);
+	if (label == NULL) {
+		/* Not an ISO image */
+		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
+	}
+	if (label[0] == '\0') {
+		g_free (label);
+		label = NULL;
+	}
+
 	info = gnome_vfs_file_info_new ();
 	if (gnome_vfs_get_file_info (url, info, GNOME_VFS_FILE_INFO_FOLLOW_LINKS) != GNOME_VFS_OK) {
 		gnome_vfs_file_info_unref (info);
@@ -135,7 +148,6 @@ totem_pl_parser_add_iso (TotemPlParser *parser, const char *url,
 
 	gnome_vfs_file_info_unref (info);
 
-	label = totem_pl_parser_iso_get_title (url);
 	totem_pl_parser_add_one_url (parser, item, label);
 	g_free (label);
 	g_free (item);
