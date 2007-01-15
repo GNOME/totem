@@ -2476,7 +2476,7 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
   } else if (is_error (e, CORE, MISSING_PLUGIN) ||
              is_error (e, STREAM, CODEC_NOT_FOUND)) {
     if (bvw->priv->missing_plugins != NULL) {
-      gchar **descs, **d, *msg = NULL;
+      gchar **descs, *msg = NULL;
       guint num;
 
       descs = bvw_get_missing_plugins_descriptions (bvw->priv->missing_plugins);
