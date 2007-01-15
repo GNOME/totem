@@ -1814,7 +1814,6 @@ totemPlugin::Init (NPMIMEType mimetype,
 					      GetBooleanValue (args, "showcontrols", PR_TRUE));
 
 	mShowStatusbar = GetBooleanValue (args, "showstatusbar", mShowStatusbar);
-	mAudioOnly = !GetBooleanValue (args, "showdisplay", !mAudioOnly);
 #endif /* TOTEM_GMP_PLUGIN */
 
 	/* Whether to NOT autostart */
