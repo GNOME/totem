@@ -300,6 +300,10 @@ totem_embedded_set_logo_by_name (TotemEmbedded *embedded,
 	size = MIN (width, height);
 
 	logo = gtk_icon_theme_load_icon (theme, name, size, 0, NULL);
+	if (logo == NULL) {
+		g_warning ("Couldn't load '%s' icon from theme", name);
+		return;
+	}
 	padded = totem_embedded_pad_pixbuf_for_size (logo, width, height);
 	g_object_unref (logo);
 	if (padded != NULL) {
@@ -1654,8 +1658,8 @@ totem_embedded_push_parser (gpointer data)
 
 	parser = totem_pl_parser_new ();
 	g_object_set (parser, "force", TRUE,
-			      "disable-unsafe", TRUE,
-			       NULL);
+		      "disable-unsafe", TRUE,
+		      NULL);
 	g_signal_connect (parser, "entry", G_CALLBACK (entry_added), &list);
 	res = totem_pl_parser_parse_with_base (parser, emb->current_uri,
 					       emb->base_uri, FALSE);
