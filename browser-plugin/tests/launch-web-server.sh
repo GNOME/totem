@@ -2,10 +2,16 @@
 
 # Port to listen on
 PORT=12345
-# Address to listen on to
-# Use the former to allow everyone to access it
-# ADDRESS=
-ADDRESS=127.0.0.1
+
+
+function usage ()
+{
+	echo "Usage: ./`basename $0` <--remote> [stop | start]"
+	echo " --remote: allow for connections from remote machines"
+	exit 1
+}
+
+
 # Find Apache first
 
 for i in /usr/sbin/httpd ; do
@@ -23,7 +29,8 @@ fi
 
 if [ ! -f `basename $0` ] ; then
 	echo "You need to launch `basename $0` from within its directory"
-	echo "eg: ./`basename $0` [stop | start]"
+	echo "eg: ./`basename $0` <--remote> [stop | start]"
+	echo " --remote: allow for connections from remote machines"
 	exit 1
 fi
 
@@ -32,16 +39,24 @@ ROOTDIR=`dirname $0`/root
 # See if we shoud stop the web server
 
 if [ -z $1 ] ; then
-	echo "Usage: ./`basename $0` [stop | start]"
-	exit 1
+	usage $0
 fi
 
-if [ $1 = stop ] ; then
+if [ x$1 = x"--remote" ] ; then
+	ADDRESS=
+	shift
+else
+	ADDRESS=127.0.0.1
+fi
+
+if [ x$1 = xstop ] ; then
 	echo "Trying to stop $HTTPD(`cat root/pid`)"
 	pushd root/ > /dev/null
 	$HTTPD -f `pwd`/conf -k stop
 	popd > /dev/null
 	exit
+elif [ x$1 != xstart ] ; then
+	usage $0
 fi
 
 # Setup the ServerRoot

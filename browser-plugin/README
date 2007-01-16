@@ -15,6 +15,9 @@ export TOTEM_EMBEDDED_GDB=1
 - Launch a gdb session inside an xterm to capture crashes and errors
   from the totem-plugin-viewer
 
+export MOZ_PLUGIN_PATH=`pwd`
+- Mozilla/Gecko/Firefox envar to lookup the browser plugins in the current
+  directory
 
 Special topics: Complex plugin
 ==============================
