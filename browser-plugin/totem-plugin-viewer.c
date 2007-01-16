@@ -253,65 +253,6 @@ totem_embedded_set_error (TotemEmbedded *emb,
 	g_message ("totem_embedded_set_error: '%s', '%s'", primary, secondary);
 }
 
-static GdkPixbuf *
-totem_embedded_pad_pixbuf_for_size (GdkPixbuf *pixbuf,
-				    int width, int height)
-{
-	GdkPixbuf *logo;
-	guchar *pixels;
-	int rowstride, i;
-
-	logo = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-			       TRUE, 8, width, height);
-	pixels = gdk_pixbuf_get_pixels (logo);
-	rowstride = gdk_pixbuf_get_rowstride (logo);
-
-	/* Clear it */
-	for (i = 0; i < height; i++) {
-		memset (pixels + i * rowstride, 0, width * 4);
-	}
-
-	gdk_pixbuf_copy_area (pixbuf,
-			      0, 0,
-			      gdk_pixbuf_get_width (pixbuf),
-			      gdk_pixbuf_get_height (pixbuf),
-			      logo,
-			      (width - gdk_pixbuf_get_width (pixbuf)) / 2,
-			      (height - gdk_pixbuf_get_height (pixbuf)) / 2);
-
-	return logo;
-}
-
-static void
-totem_embedded_set_logo_by_name (TotemEmbedded *embedded,
-				 const char *name)
-{
-	GtkIconTheme *theme;
-	GdkPixbuf *logo, *padded;
-	int size, width, height;
-
-	if (embedded->audioonly != FALSE)
-		return;
-
-	theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (embedded->window));
-
-	width = GTK_WIDGET (embedded->bvw)->allocation.width;
-	height = GTK_WIDGET (embedded->bvw)->allocation.height;
-	size = MIN (width, height);
-
-	logo = gtk_icon_theme_load_icon (theme, name, size, 0, NULL);
-	if (logo == NULL) {
-		g_warning ("Couldn't load '%s' icon from theme", name);
-		return;
-	}
-	padded = totem_embedded_pad_pixbuf_for_size (logo, width, height);
-	g_object_unref (logo);
-	if (padded != NULL) {
-		bacon_video_widget_set_logo_pixbuf (embedded->bvw, padded);
-		bacon_video_widget_set_logo_mode (embedded->bvw, TRUE);
-	}
-}
-
 static void
 totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 {
@@ -356,6 +297,67 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 	gtk_image_set_from_icon_name (GTK_IMAGE (image), id, GTK_ICON_SIZE_MENU);
 
 	emb->state = state;
+}
+
+static GdkPixbuf *
+totem_embedded_pad_pixbuf_for_size (GdkPixbuf *pixbuf,
+				    int width, int height)
+{
+	GdkPixbuf *logo;
+	guchar *pixels;
+	int rowstride, i;
+
+	logo = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
+			       TRUE, 8, width, height);
+	pixels = gdk_pixbuf_get_pixels (logo);
+	rowstride = gdk_pixbuf_get_rowstride (logo);
+
+	/* Clear it */
+	for (i = 0; i < height; i++) {
+		memset (pixels + i * rowstride, 0, width * 4);
+	}
+
+	gdk_pixbuf_copy_area (pixbuf,
+			      0, 0,
+			      gdk_pixbuf_get_width (pixbuf),
+			      gdk_pixbuf_get_height (pixbuf),
+			      logo,
+			      (width - gdk_pixbuf_get_width (pixbuf)) / 2,
+			      (height - gdk_pixbuf_get_height (pixbuf)) / 2);
+
+	return logo;
+}
+
+static void
+totem_embedded_set_logo_by_name (TotemEmbedded *embedded,
+				 const char *name)
+{
+	GtkIconTheme *theme;
+	GdkPixbuf *logo, *padded;
+	int size, width, height;
+
+	totem_embedded_set_state (embedded, STATE_STOPPED);
+
+	if (embedded->audioonly != FALSE)
+		return;
+
+	theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (embedded->window));
+
+	width = GTK_WIDGET (embedded->bvw)->allocation.width;
+	height = GTK_WIDGET (embedded->bvw)->allocation.height;
+	size = MIN (width, height);
+
+	logo = gtk_icon_theme_load_icon (theme, name, size, 0, NULL);
+	if (logo == NULL) {
+		g_warning ("Couldn't load '%s' icon from theme", name);
+		return;
+	}
+	padded = totem_embedded_pad_pixbuf_for_size (logo, width, height);
+	g_object_unref (logo);
+	if (padded != NULL) {
+		bacon_video_widget_set_logo_pixbuf (embedded->bvw, padded);
+		bacon_video_widget_set_logo_mode (embedded->bvw, TRUE);
+	}
 }
 
 static void
@@ -1694,11 +1696,15 @@ totem_embedded_push_parser (gpointer data)
 	}
 
 	/* Check if we have anything in the playlist now */
-	if (emb->playlist == NULL) {
-		g_message ("No playlist or playlist empty");
+	if (emb->playlist == NULL && res != TOTEM_PL_PARSER_RESULT_SUCCESS) {
+		g_message ("Couldn't parse playlist '%s'", emb->current_uri);
 		totem_embedded_set_error (emb, _("No playlist or playlist empty") /* FIXME */,
 					  NULL);
 		totem_embedded_set_logo_by_name (emb, "image-missing");
+		return FALSE;
+	} else if (emb->playlist == NULL) {
+		g_message ("Playlist empty");
+		totem_embedded_set_logo_by_name (emb, "totem");
 		return FALSE;
 	}
 
