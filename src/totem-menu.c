@@ -550,6 +550,7 @@ totem_recent_manager_changed_callback (GtkRecentManager *recent_manager, Totem *
 		GtkAction     *action;
 		char          *action_name;
 		char          *label;
+		char          *label_trunc;
 		const char    *uri;
 
 		info = (GtkRecentInfo *) l->data;
@@ -567,7 +568,7 @@ totem_recent_manager_changed_callback (GtkRecentManager *recent_manager, Totem *
 		}
 
 		/* Truncate the menu item if it's too long */
-		char *label_trunc = totem_str_middle_truncate (label, TOTEM_MAX_RECENT_ITEM_LEN);
+		label_trunc = totem_str_middle_truncate (label, TOTEM_MAX_RECENT_ITEM_LEN);
 		g_free (label);
 
 		action = g_object_new (GTK_TYPE_ACTION,

@@ -1,5 +1,10 @@
 2007-01-16  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-menu.c: (totem_recent_manager_changed_callback):
+	C89 fix by Jens Granseuer <jensgr@gmx.net> (Closes: #397350)
+
+2007-01-16  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totem-plugin-viewer.c:
 	(totem_embedded_launch_player): Avoid warning when
 	no URI is passed directly when launching the stand-alone player
