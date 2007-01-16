@@ -1,5 +1,72 @@
 New features and significant updates in version...
 
+2.17.5
+* Make GStreamer the default media backend
+* Implement icy:// playback
+* Browser plugin:
+  - New D-Bus-based architecture
+  - Test suite (unpackaged)
+  - Support audio/x-mpegurl and audio/mpeg in the GMP plugin
+  - Support image/gif, image/jpeg and application/x-quicktime-media-link
+    in the QuickTime plugin
+  - Use Gecko API to determine whether a protocol is support
+  - Fix "hidden" parameter used without a value
+  - Support Mozilla 1.7.x
+  - Launch the external movie player with startup notification
+  - Use QuickTime's real name in the NarrowSpace plugin
+  - Fix crashes and memory eating when the reserved space is smaller
+    than the minimum possible size of the plugin
+  - Add support for "audio only" outputs
+  - Show an error image when a file isn't readable/available
+  - Don't allow remote web pages to reference local files
+  - Use visualisation if there's a video canvas, and playing an audio only file
+  - Only use accelerated video for the main movie when loading small "QuickTime"
+    redirect movies from apple.com
+  - Only show errors after having parsed a playlist if the parsing failed, show
+    the totem logo if the playlist was empty
+* Playlist parser:
+  - Use less memory when checking whether a file can be parsed as a playlist
+  - Support "Google Video Pointer" playlists
+  - Add support for the BASE element in ASX playlists
+  - Don't crash when there's no URL in an XSPF entry
+  - Don't crash trying to playback CD/DVDs on non-glibc systems
+  - Handle ":" and "," as field separators in m3u files
+  - Support .pls files without a "NumberOfEntries" line
+  - Handle .img files that really are ISO images
+* Movie player:
+  - Support optional automatic/easy codec installation
+  - Make the sidebar's Close button work as expected
+  - Disable the drive's menu entry if there's no medium inside it
+  - Fix restoring the session
+  - Don't poll for volume when not playing anything
+  - Add video/flv as a supported video type
+  - Show .cue and .iso files in the "Open" dialogue
+  - Remember where the "Open" dialogues were opened
+  - Make gnome-screensaver support work again
+  - Make double-click on the video canvas toggle fullscreen, and middle-
+    click play/pause
+  - Disable the zoom menu entries when the logo mode is on
+  - Only disable the screensaver if we manage to play the movie
+  - Make keyboard work on the Image Settings sliders
+  - Remember the URLs opened in the "Open Location" dialogue
+  - Automatically add the clipboard content to the "Open Location"
+    dialogue if there was a URL
+  - Add a "Clear Playlist" menu item
+* Volume button:
+  - Don't stop working when "Esc" is pressed to dismiss the popup
+  - Add a tooltip with the volume percentage
+* GStreamer:
+  - Use the soundcard set in the GNOME sound preferences to playback sound
+  - Respect widescreen output for visualisations
+  - Don't show errors if we can't create an audio output, simply disable sound
+  - Don't change the global speaker setup values when running in metadata
+    or capture mode
+  - Report a more accurate "seeking" capability
+  - Show better error messages when a demuxer or decoder is missing
+* xine-lib:
+  - Fallback to Goom if we can't load another visualisation plugin
+  - Avoid the thumbnailer exiting before we captured a frame for short movies
+
 2.17.3
 * Trap errors when calling XRandR to avoid possible crashes when switching
   to fullscreen
