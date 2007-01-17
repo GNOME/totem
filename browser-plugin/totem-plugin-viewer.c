@@ -257,7 +257,6 @@ static void
 totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 {
 	GtkWidget *image;
-	GdkCursor *cursor;
 	char id[32];
 	static const char *states[] = {
 		"PLAYING",
@@ -271,7 +270,6 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 
 	g_message ("Viewer state: %s", states[state]);
 
-	cursor = NULL;
 	image = glade_xml_get_widget (emb->xml, "emb_pp_button_image");
 
 	switch (state) {
@@ -280,6 +278,11 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 			    gtk_widget_get_direction (image) ? "ltr" : "rtl");
 		totem_statusbar_set_text (emb->statusbar, _("Stopped"));
 		totem_statusbar_set_time_and_length (emb->statusbar, 0, 0);
+		if (emb->href_uri != NULL) {
+			gdk_window_set_cursor
+				(GTK_WIDGET (emb->bvw)->window,
+				 emb->cursor);
+		}
 		break;
 	case STATE_PAUSED:
 		g_snprintf (id, sizeof (id), "gtk-media-play-%s",
@@ -289,13 +292,17 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 	case STATE_PLAYING:
 		g_snprintf (id, sizeof (id), "gtk-media-pause");
 		totem_statusbar_set_text (emb->statusbar, _("Playing"));
+		if (emb->href_uri == NULL) {
+			gdk_window_set_cursor
+				(GTK_WIDGET (emb->bvw)->window,
+				 NULL);
+		}
 		break;
 	default:
 		break;
 	}
 
 	gtk_image_set_from_icon_name (GTK_IMAGE (image), id, GTK_ICON_SIZE_MENU);
-
 	emb->state = state;
 }
 
@@ -509,10 +516,8 @@ totem_embedded_set_href (TotemEmbedded *embedded,
 
 	if (href_uri != NULL) {
 		embedded->href_uri = g_strdup (href_uri);
-		gdk_window_set_cursor
-			(GTK_WIDGET (embedded->bvw)->window,
-			 embedded->cursor);
 	} else {
+		g_free (embedded->href_uri);
 		embedded->href_uri = NULL;
 		gdk_window_set_cursor
 			(GTK_WIDGET (embedded->bvw)->window, NULL);
@@ -852,17 +857,20 @@ totem_embedded_set_uri (TotemEmbedded *emb,
 		        const char *base_uri,
 		        gboolean is_browser_stream)
 {
-	char *old_uri, *old_base;
+	char *old_uri, *old_base, *old_href;
 
 	old_uri = emb->current_uri;
 	old_base = emb->base_uri;
+	old_href = emb->href_uri;
 
 	emb->current_uri = g_strdup (uri);
 	emb->base_uri = g_strdup (base_uri);
 	emb->is_browser_stream = (is_browser_stream != FALSE);
+	emb->href_uri = NULL;
 
 	g_free (old_uri);
 	g_free (old_base);
+	g_free (old_href);
 }
 
 static gboolean

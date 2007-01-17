@@ -1,5 +1,15 @@
 2007-01-17  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/tests/3.html: add a "myself" target, so we can test for those
+	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_set_state),
+	(totem_embedded_set_href), (totem_embedded_set_uri): avoid leaking href_uri
+	when setting it to NULL, set and reset the hand cursor for HREF uris when
+	changing the playback state (Closes: #395799)
+	* browser-plugin/totemPlugin.cpp: empty targets mean opening in "fullscreen"
+	mode, as tested with QuickTime on MacOS X with 2.html
+
+2007-01-17  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bacon_video_widget_button_press): Don't eat the mouse events
 	for now, as there's nothing on the end of the gst navigation

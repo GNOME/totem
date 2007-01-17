@@ -575,8 +575,7 @@ totemPlugin::ViewerButtonPressed (guint aTimestamp, guint aButton)
 		}
 		if (g_ascii_strcasecmp (mTarget.get (), "myself") == 0 ||
 		    mTarget.Equals (NS_LITERAL_CSTRING ("_current")) ||
-		    mTarget.Equals (NS_LITERAL_CSTRING ("_self")) ||
-		    mTarget.Equals (NS_LITERAL_CSTRING (""))) {
+		    mTarget.Equals (NS_LITERAL_CSTRING ("_self"))) {
 			D ("Opening movie '%s'", mHref.get ());
 			dbus_g_proxy_call_no_reply (mViewerProxy,
 						    "SetHref",
