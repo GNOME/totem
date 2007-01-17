@@ -1,5 +1,10 @@
 2007-01-17  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/Makefile.am: Fix build when "make -j2" and above
+	(spotted by Matthias Clasen), fix tarball build with Mozilla < 1.7.x
+
+2007-01-17  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/tests/3.html: add a "myself" target, so we can test for those
 	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_set_state),
 	(totem_embedded_set_href), (totem_embedded_set_uri): avoid leaking href_uri

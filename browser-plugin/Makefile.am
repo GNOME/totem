@@ -7,7 +7,8 @@ BUILT_SOURCES =
 
 EXTRA_DIST = \
 	plugin.symbols	\
-	TODO
+	TODO		\
+	totemStringGlue.h
 
 CLEANFILES = $(BUILT_SOURCES)
 
@@ -87,7 +88,7 @@ totem_plugin_viewer_LDADD =						\
 	$(top_builddir)/src/libbaconpropertiespage.la			\
 	$(top_builddir)/src/libtotem_player.la				\
 	$(top_builddir)/src/plparse/libtotem-plparser.la		\
-	$(top_builddir)/browser-plugin/libtotempluginviewer_marshal.la	\
+	libtotempluginviewer_marshal.la					\
 	$(EXTRA_GNOME_LIBS)	\
 	$(XVIDMODE_LIBS) 	\
 	$(DBUS_LIBS)		\
@@ -150,7 +151,7 @@ libtotem_basic_plugin_la_CXXFLAGS = \
 
 libtotem_basic_plugin_la_LIBADD =					\
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
-	$(top_builddir)/browser-plugin/libtotempluginviewer_marshal.la	\
+	libtotempluginviewer_marshal.la					\
 	$(DBUS_LIBS)	\
  	$(MOZILLA_LIBS)	\
 	$(LIBXPCOMGLUE_S)
@@ -209,7 +210,7 @@ libtotem_gmp_plugin_la_CXXFLAGS = \
 
 libtotem_gmp_plugin_la_LIBADD =						\
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
-	$(top_builddir)/browser-plugin/libtotempluginviewer_marshal.la	\
+	libtotempluginviewer_marshal.la	\
 	$(DBUS_LIBS)	\
  	$(MOZILLA_LIBS)	\
 	$(LIBXPCOMGLUE_S)
@@ -268,7 +269,7 @@ libtotem_complex_plugin_la_CXXFLAGS = \
 
 libtotem_complex_plugin_la_LIBADD =					\
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
-	$(top_builddir)/browser-plugin/libtotempluginviewer_marshal.la	\
+	libtotempluginviewer_marshal.la					\
 	$(DBUS_LIBS)	\
  	$(MOZILLA_LIBS)	\
 	$(LIBXPCOMGLUE_S)
@@ -327,7 +328,7 @@ libtotem_narrowspace_plugin_la_CXXFLAGS = \
 
 libtotem_narrowspace_plugin_la_LIBADD =					\
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
-	$(top_builddir)/browser-plugin/libtotempluginviewer_marshal.la	\
+	libtotempluginviewer_marshal.la					\
 	$(DBUS_LIBS)	\
  	$(MOZILLA_LIBS)	\
 	$(LIBXPCOMGLUE_S)
@@ -386,7 +387,7 @@ libtotem_mully_plugin_la_CXXFLAGS = \
 
 libtotem_mully_plugin_la_LIBADD =					\
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
-	$(top_builddir)/browser-plugin/libtotempluginviewer_marshal.la	\
+	libtotempluginviewer_marshal.la					\
 	$(DBUS_LIBS)	\
  	$(MOZILLA_LIBS)	\
 	$(LIBXPCOMGLUE_S)
