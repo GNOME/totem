@@ -804,7 +804,9 @@ bacon_video_widget_button_press (GtkWidget *widget, GdkEventButton *event)
       gst_navigation_send_mouse_event (nav,
           "mouse-button-press", event->button, event->x, event->y);
 
-      res = TRUE;
+      /* FIXME need to check whether the backend will have handled
+       * the button press
+      res = TRUE; */
     }
 
     if (videosink)
