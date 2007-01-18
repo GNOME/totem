@@ -141,7 +141,7 @@ static void playlist_copy_location_action_activated (GtkAction *action, TotemPla
 
 static const GtkActionEntry entries[] = {
 	{ "remove", GTK_STOCK_REMOVE, N_("_Remove"), NULL, N_("Remove file from playlist"), G_CALLBACK (playlist_remove_action_activated) },
-	{ "copy-location", GTK_STOCK_COPY, N_("_Copy location"), NULL, N_("Copy the location to the clipboard"), G_CALLBACK (playlist_copy_location_action_activated) }
+	{ "copy-location", GTK_STOCK_COPY, N_("_Copy Location"), NULL, N_("Copy the location to the clipboard"), G_CALLBACK (playlist_copy_location_action_activated) }
 };
 
 static void totem_playlist_class_init (TotemPlaylistClass *class);

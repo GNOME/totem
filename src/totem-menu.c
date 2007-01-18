@@ -1184,7 +1184,7 @@ static const GtkActionEntry entries[] = {
 
 	{ "edit-menu", NULL, N_("_Edit") },
 	{ "take-screenshot", "camera-photo", N_("Take _Screenshot..."), "<control>S", N_("Take a screenshot"), G_CALLBACK (take_screenshot_action_callback) },
-	{ "clear-playlist", NULL, N_("Clear Playlist"), NULL, N_("Clear Playlist"), G_CALLBACK (clear_playlist_action_callback) },
+	{ "clear-playlist", NULL, N_("_Clear Playlist"), NULL, N_("Clear playlist"), G_CALLBACK (clear_playlist_action_callback) },
 	{ "preferences", GTK_STOCK_PREFERENCES, N_("Prefere_nces"), NULL, NULL, G_CALLBACK (preferences_action_callback) },
 
 	{ "view-menu", NULL, N_("_View") },
