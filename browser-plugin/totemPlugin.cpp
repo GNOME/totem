@@ -73,7 +73,8 @@
 // really noisy debug
 #ifdef G_HAVE_ISO_VARARGS
 #define DD(...)
-#elifdef G_HAVE_GNUC_VARARGS
+#endif
+#ifdef G_HAVE_GNUC_VARARGS
 #define DD(args...)
 #endif
 
