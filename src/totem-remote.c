@@ -35,6 +35,13 @@
 
 #ifdef HAVE_REMOTE
 
+/* Media player keys support */
+#ifdef HAVE_MEDIA_PLAYER_KEYS
+#include <gnome-settings-daemon/gnome-settings-client.h>
+#include "totem-marshal.h"
+#endif /*HAVE_MEDIA_PLAYER_KEYS */
+
+#ifdef HAVE_LIRC
 #include <stdio.h>
 #include <lirc/lirc_client.h>
 #include <gconf/gconf-client.h>
@@ -63,9 +70,15 @@
 #define TOTEM_IR_COMMAND_EJECT "eject"
 #define TOTEM_IR_COMMAND_PLAY_DVD "play_dvd"
 #define TOTEM_IR_COMMAND_MUTE "mute"
+#endif /* HAVE_LIRC */
 
 struct _TotemRemote {
 	GObject parent;
+
+	/* Media player keys suppport */
+#ifdef HAVE_MEDIA_PLAYER_KEYS
+	DBusGProxy *media_player_keys_proxy;
+#endif
 };
 
 enum
@@ -75,11 +88,15 @@ enum
 };
 
 static guint totem_remote_signals[LAST_SIGNAL] = { 0 };
+#ifdef HAVE_LIRC
 static GIOChannel *lirc_channel = NULL;
 static GList *listeners = NULL;
+#endif /* HAVE_LIRC */
+
 
 G_DEFINE_TYPE(TotemRemote, totem_remote, G_TYPE_OBJECT)
 
+#ifdef HAVE_LIRC
 static TotemRemoteCommand
 totem_lirc_to_command (const gchar *str)
 {
@@ -183,6 +200,22 @@ totem_remote_read_code (GIOChannel *source, GIOCondition condition,
 
 	return TRUE;
 }
+#endif /* HAVE_LIRC */
+
+#ifdef HAVE_MEDIA_PLAYER_KEYS
+static void
+on_media_player_key_pressed (DBusGProxy *proxy, const gchar *application, const gchar *key, TotemRemote *remote)
+{
+	if (strcmp ("Totem", application) == 0) {
+		if (strcmp ("Play", key) == 0)
+			g_signal_emit (remote, totem_remote_signals[BUTTON_PRESSED], 0, TOTEM_REMOTE_COMMAND_PLAYPAUSE);
+		else if (strcmp ("Previous", key) == 0)
+			g_signal_emit (remote, totem_remote_signals[BUTTON_PRESSED], 0, TOTEM_REMOTE_COMMAND_PREVIOUS);
+		else if (strcmp ("Next", key) == 0)
+			g_signal_emit (remote, totem_remote_signals[BUTTON_PRESSED], 0, TOTEM_REMOTE_COMMAND_NEXT);
+	}
+}
+#endif /* HAVE_MEDIA_PLAYER_KEYS */
 
 static void
 totem_remote_finalize (GObject *object)
@@ -195,12 +228,13 @@ totem_remote_finalize (GObject *object)
 
 	remote = TOTEM_REMOTE (object);
 
+#ifdef HAVE_LIRC
 	lirc_freeconfig (config);
 	g_free(config);
 
 	listeners = g_list_remove (listeners, remote);
 
-	if (listeners == NULL) {
+	if (listeners == NULL && lirc_channel != NULL) {
 		g_io_channel_shutdown (lirc_channel, FALSE, &error);
 		if (error != NULL) {
 			g_warning ("Couldn't destroy lirc connection: %s",
@@ -210,6 +244,12 @@ totem_remote_finalize (GObject *object)
 
 		lirc_deinit ();
 	}
+#endif /* HAVE_LIRC */
+
+#ifdef HAVE_MEDIA_PLAYER_KEYS
+	if (remote->media_player_keys_proxy != NULL)
+		org_gnome_SettingsDaemon_release_media_player_keys (remote->media_player_keys_proxy, "Totem", NULL);
+#endif /* HAVE_MEDIA_PLAYER_KEYS */
 }
 
 static void
@@ -235,8 +275,38 @@ totem_remote_class_init (TotemRemoteClass *klass)
 static void
 totem_remote_init (TotemRemote *remote)
 {
+#ifdef HAVE_MEDIA_PLAYER_KEYS
+	DBusGConnection *bus;
+	GError *error = NULL;
+#endif /* HAVE_MEDIA_PLAYER_KEYS */
+#ifdef HAVE_LIRC
 	int fd;
+#endif /* HAVE_LIRC */
 
+#ifdef HAVE_MEDIA_PLAYER_KEYS
+	bus = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
+	if (bus == NULL) {
+		g_warning ("Error connecting to DBus: %s", error->message);
+	} else {
+		remote->media_player_keys_proxy = dbus_g_proxy_new_for_name (bus,
+				"org.gnome.SettingsDaemon", "/org/gnome/SettingsDaemon",
+				"org.gnome.SettingsDaemon");
+
+		org_gnome_SettingsDaemon_grab_media_player_keys (remote->media_player_keys_proxy,
+				"Totem", 0, NULL);
+
+		dbus_g_object_register_marshaller (totem_marshal_VOID__STRING_STRING,
+				G_TYPE_NONE, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INVALID);
+
+		dbus_g_proxy_add_signal (remote->media_player_keys_proxy, "MediaPlayerKeyPressed",
+				G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INVALID);
+
+		dbus_g_proxy_connect_signal (remote->media_player_keys_proxy, "MediaPlayerKeyPressed",
+				G_CALLBACK (on_media_player_key_pressed), remote, NULL);
+	}
+#endif
+
+#ifdef HAVE_LIRC
 	if (lirc_channel == NULL) {
 		fd = lirc_init ("Totem", 0);
 
@@ -267,6 +337,8 @@ totem_remote_init (TotemRemote *remote)
 	}
 
 	listeners = g_list_prepend (listeners, remote);
+#endif /* HAVE_LIRC */
+
 }
 
 TotemRemote *
@@ -274,5 +346,19 @@ totem_remote_new (void)
 {
 	return g_object_new (TOTEM_TYPE_REMOTE, NULL);
 }
+
+
+#ifdef HAVE_MEDIA_PLAYER_KEYS
+void
+totem_remote_window_activated (TotemRemote *remote)
+{
+
+	g_return_if_fail (TOTEM_IS_REMOTE (remote));
+	g_return_if_fail (DBUS_IS_G_PROXY (remote->media_player_keys_proxy));
+
+	org_gnome_SettingsDaemon_grab_media_player_keys (remote->media_player_keys_proxy,
+			"Totem", 0, NULL);
+}
+#endif /* HAVE_MEDIA_PLAYER_KEYS */
 
 #endif /* HAVE_REMOTE */

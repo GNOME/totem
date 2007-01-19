@@ -615,11 +615,36 @@ if test x$HAVE_NAUTILUS = "xyes"; then
 fi
 AM_CONDITIONAL(HAVE_NAUTILUS, test x$HAVE_NAUTILUS = "xyes")
 
+dnl *****************
+dnl Media player keys
+dnl *****************
+
+AC_ARG_ENABLE([media-player-keys],
+	AC_HELP_STRING([--enable-media-player-keys],[add media player keys support]),
+	[case "${enableval}" in
+	yes) ENABLE_MEDIA_PLAYER_KEYS=yes ;;
+	no) ENABLE_MEDIA_PLAYER_KEYS=no ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-media-player-keys) ;;
+	esac],
+	[ENABLE_MEDIA_PLAYER_KEYS=yes])
+
+if test x$ENABLE_MEDIA_PLAYER_KEYS = "xyes" ; then
+	PKG_CHECK_MODULES(MEDIA_PLAYER_KEYS, gnome-settings-daemon >= 2.17.4 dbus-1 dbus-glib-1,
+			[HAVE_MEDIA_PLAYER_KEYS=yes], [HAVE_MEDIA_PLAYER_KEYS=no])
+fi
+
+AC_SUBST(MEDIA_PLAYER_KEYS_CFLAGS)
+AC_SUBST(MEDIA_PLAYER_KEYS_LIBS)
+
+if test x$HAVE_MEDIA_PLAYER_KEYS = "xyes"; then
+	AC_DEFINE(HAVE_MEDIA_PLAYER_KEYS, 1, [defined if you build the media player keys support])
+fi
+
 dnl ****
 dnl LIRC
 dnl ****
 
-AC_ARG_ENABLE(lirc,
+AC_ARG_ENABLE([lirc],
 	AC_HELP_STRING([--enable-lirc],[enable lirc support]),
 	[case "${enableval}" in
 	yes) ENABLE_LIRC=yes ;;
@@ -628,18 +653,27 @@ AC_ARG_ENABLE(lirc,
 	esac],
         [ENABLE_LIRC=yes]) dnl Default value
 
+HAVE_LIRC=no
 if test x$ENABLE_LIRC = xyes ; then
 AC_CHECK_HEADER(irman.h,,)
 REMOTE_LIBS=""
 AC_CHECK_LIB(lirc_client, lirc_init, [
 	AC_CHECK_HEADER(lirc/lirc_client.h, [
 	REMOTE_LIBS="-llirc_client"
-	AC_DEFINE(HAVE_REMOTE, 1, [defined if you have lirc library])
+	HAVE_LIRC=yes
 	])
 ])
 fi
 
 AC_SUBST(REMOTE_LIBS)
+
+if test x$HAVE_LIRC = "xyes"; then
+	AC_DEFINE(HAVE_LIRC, 1, [defined if you have lirc library])
+fi
+
+if test x$HAVE_MEDIA_PLAYER_KEYS = "xyes" || test x$HAVE_LIRC = "xyes"; then
+	AC_DEFINE(HAVE_REMOTE, 1, [defined if you build remote support])
+fi
 
 dnl ***
 dnl HAL
@@ -880,7 +914,12 @@ if test x$ENABLE_NAUTILUS = xyes ; then
 else
 	AC_MSG_NOTICE([   Nautilus properties page disabled])
 fi
-if test x$HAVE_REMOTE = xyes ; then
+if test x$HAVE_MEDIA_PLAYER_KEYS = xyes ; then
+	AC_MSG_NOTICE([** Media player keys support enabled])
+else
+	AC_MSG_NOTICE([   Media player keys support disabled])
+fi
+if test x$HAVE_LIRC = xyes ; then
 	AC_MSG_NOTICE([** LIRC support enabled])
 else
 	AC_MSG_NOTICE([   LIRC support disabled])

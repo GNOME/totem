@@ -124,7 +124,8 @@ totem_SOURCES = 					\
 	totem-gromit.c totem-gromit.h	\
 	ev-sidebar.c ev-sidebar.h	\
 	totem-subtitle-encoding.c	\
-	totem-subtitle-encoding.h
+	totem-subtitle-encoding.h	\
+	$(totem_BUILT_SOURCES)
 
 totem_CPPFLAGS = \
 	-I$(srcdir)/plparse		\
@@ -135,10 +136,11 @@ totem_CPPFLAGS = \
 	$(AM_CPPFLAGS)
 
 totem_CFLAGS = \
-	$(WARN_CFLAGS)		\
-	$(EXTRA_GNOME_CFLAGS)	\
-	$(DBUS_CFLAGS)		\
-	$(NVTV_CFLAGS)		\
+	$(WARN_CFLAGS)			\
+	$(EXTRA_GNOME_CFLAGS)		\
+	$(DBUS_CFLAGS)			\
+	$(MEDIA_PLAYER_KEYS_CFLAGS)	\
+	$(NVTV_CFLAGS)			\
 	$(AM_CFLAGS)
 
 totem_LDFLAGS = \
@@ -155,9 +157,21 @@ totem_LDADD = \
 	$(XVIDMODE_LIBS)		\
 	$(NVTV_LIBS)			\
 	$(DBUS_LIBS)			\
+	$(MEDIA_PLAYER_KEYS_LIBS)       \
 	$(XTEST_LIBS)			\
-	$(X_LIBS)				\
+	$(X_LIBS)			\
 	$(GIMME_CODEC_LIBS)
+
+totem_BUILT_SOURCES =			\
+	totem-marshal.h			\
+	totem-marshal.c
+
+#Rule to generate the marshal files
+totem-marshal.c: totem-marshal.list
+	@GLIB_GENMARSHAL@ --prefix=totem_marshal $< --header --body > $@
+
+totem-marshal.h: totem-marshal.list
+	@GLIB_GENMARSHAL@ --prefix=totem_marshal $< --header > $@
 
 # Totem video thumbnailer
 
@@ -379,10 +393,12 @@ list_v4l_LDADD = \
 
 
 CLEANFILES = \
-	*.bak		\
-	core*		\
-	*.orig		\
-	*~		\
-	$(desktop_DATA)
+	*.bak			\
+	core*			\
+	*.orig			\
+	*~			\
+	$(desktop_DATA)		\
+	$(totem_BUILT_SOURCES)
 
-EXTRA_DIST =
+EXTRA_DIST = \
+	totem-marshal.list

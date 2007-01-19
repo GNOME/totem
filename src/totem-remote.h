@@ -87,6 +87,10 @@ GType		 totem_remote_get_type   (void);
 
 TotemRemote	*totem_remote_new (void);
 
+#ifdef HAVE_MEDIA_PLAYER_KEYS
+void             totem_remote_window_activated (TotemRemote *remote);
+#endif /* HAVE_MEDIA_PLAYER_KEYS */
+
 G_END_DECLS
 
 #endif /* __TOTEM_REMOTE_H */

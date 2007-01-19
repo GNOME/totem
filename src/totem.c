@@ -199,6 +199,12 @@ totem_action_exit (Totem *totem)
 	if (totem == NULL)
 		exit (0);
 
+#ifdef HAVE_REMOTE
+	if (totem->remote != NULL) {
+		g_object_unref (G_OBJECT (totem->remote));
+	}
+#endif /* HAVE_REMOTE */
+
 	if (totem->win != NULL) {
 		gtk_widget_hide (totem->win);
 		display = gtk_widget_get_display (totem->win);
@@ -2870,6 +2876,18 @@ on_volume_scroll_event (GtkWidget *win, GdkEventScroll *event, Totem *totem)
 	return totem_action_handle_volume_scroll (totem, event->direction);
 }
 
+#ifdef HAVE_MEDIA_PLAYER_KEYS
+static gboolean
+on_window_focus_in_event (GtkWidget *win, GdkEventFocus *event, Totem *totem)
+{
+	if (totem->remote != NULL) {
+		totem_remote_window_activated (totem->remote);
+	}
+
+	return FALSE;
+}
+#endif
+
 static void
 update_media_menu_items (Totem *totem)
 {
@@ -3176,6 +3194,11 @@ totem_callback_connect (Totem *totem)
 	totem_action_set_sensitivity ("play", FALSE);
 	totem_action_set_sensitivity ("next-chapter", FALSE);
 	totem_action_set_sensitivity ("previous-chapter", FALSE);
+
+#ifdef HAVE_MEDIA_PLAYER_KEYS
+	g_signal_connect (G_OBJECT(totem->win), "focus-in-event",
+			G_CALLBACK (on_window_focus_in_event), totem);
+#endif
 }
 
 static void
