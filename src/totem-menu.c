@@ -261,9 +261,11 @@ create_lang_actions (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 		gboolean is_lang)
 {
 	GtkAction *action = NULL;
-	int i;
+	unsigned int i, *hash_value;
 	GList *l;
 	GSList *group = NULL;
+	GHashTable *lookup;
+	char *action_data;
 
 	if (is_lang == FALSE) {
 		add_lang_action (totem, action_group, ui_id, path, prefix,
@@ -274,13 +276,25 @@ create_lang_actions (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 			_("Auto"), -1, &group);
 
 	i = 0;
+	lookup = g_hash_table_new (g_str_hash, g_str_equal);
 
 	for (l = list; l != NULL; l = l->next)
 	{
+		hash_value = g_hash_table_lookup (lookup, l->data);
+		if (hash_value == NULL) {
+			action_data = g_strdup (l->data);
+			g_hash_table_insert (lookup, l->data, (unsigned int *)1);
+		} else {
+			action_data = g_strdup_printf ("%s #%u", (char *)l->data, (unsigned int)hash_value+1);
+			g_hash_table_replace (lookup, l->data, (unsigned int *)((unsigned int)hash_value+1));
+		}
+
 		add_lang_action (totem, action_group, ui_id, path, prefix,
-				l->data, i, &group);
-		i++;
+				action_data, i, &group);
+ 		i++;
 	}
+
+	g_hash_table_destroy (lookup);
 
 	return action;
 }
