@@ -21,9 +21,145 @@
 
 #include "nsISupports.idl"
 
-[scriptable, uuid(8e4f5790-23bc-4597-a083-2ec1cc2d72ab)]
+[scriptable, uuid(e2f9b616-3ea9-4487-b8b2-561892009f95)]
+
+/* Original documentation at:
+ * http://developer.apple.com/documentation/QuickTime/REF/QT41_HTML/QT41WhatsNew-72.html */
+
 interface totemINarrowSpacePlayer : nsISupports {
+  /* Movie Commands */
   void Play ();
-  void Rewind ();
   void Stop ();
+  void Rewind ();
+  void Step (in long count);
+  void ShowDefaultView ();
+  void GoPreviousNode ();
+
+  /* Movie Properties */
+  void SetRate (in float rate);
+  float GetRate ();
+
+  void SetTime (in unsigned long time);
+  unsigned long GetTime ();
+
+  void SetVolume (in unsigned long volume);
+  unsigned long GetVolume ();
+
+  void SetMovieName (in AUTF8String movieName);
+  AUTF8String GetMovieName ();
+
+  void SetMovieID (in unsigned long movieID);
+  unsigned long GetMovieID ();
+
+  void SetStartTime (in unsigned long time);
+  unsigned long GetStartTime ();
+
+  void SetEndTime (in unsigned long time);
+  unsigned long GetEndTime ();
+
+  void SetBgColor (in ACString color);
+  ACString GetBgColor ();
+
+  void SetIsLooping (in boolean loop);
+  boolean GetIsLooping ();
+
+  void SetLoopIsPalindrome (in boolean loop);
+  boolean GetLoopIsPalindrome ();
+
+  boolean GetMute ();
+  void SetMute (in boolean mute);
+
+  void SetPlayEveryFrame (in boolean playAll);
+  boolean GetPlayEveryFrame ();
+
+  void SetAutoPlay (in boolean autoPlay);
+  boolean GetAutoPlay ();
+
+  void SetControllerVisible (in boolean visible);
+  boolean GetControllerVisible ();
+
+  void SetHREF (in AUTF8String url);
+  AUTF8String GetHREF ();
+
+  void SetTarget (in AUTF8String target);
+  AUTF8String GetTarget ();
+
+  void SetQTNEXTUrl (in unsigned long index, in AUTF8String url);
+  AUTF8String GetQTNEXTUrl (in unsigned long index);
+
+  void SetHotspotUrl (in unsigned long hotspotID, in AUTF8String url);
+  AUTF8String GetHotspotUrl (in unsigned long hotspotID);
+
+  void SetHotspotTarget (in unsigned long hotspotID, in AUTF8String target);
+  AUTF8String GetHotspotTarget (in unsigned long hotspotID);
+
+  void SetURL (in AUTF8String url);
+  AUTF8String GetURL ();
+
+  void SetKioskMode (in boolean kioskMode);
+  boolean GetKioskMode ();
+
+  unsigned long GetDuration ();
+  unsigned long GetMaxTimeLoaded ();
+  unsigned long GetTimeScale ();
+  unsigned long GetMovieSize ();
+  unsigned long GetMaxBytesLoaded ();
+
+  void SetMatrix (in ACString matrix);
+  ACString GetMatrix ();
+  
+  void SetRectangle (in ACString rect);
+  ACString GetRectangle ();
+
+  void SetLanguage (in ACString language);
+  ACString GetLanguage ();
+
+  ACString GetMIMEType ();
+  AUTF8String GetUserData (in ACString type);
+
+  /* Track Properties */
+  unsigned long GetTrackCount ();
+  AUTF8String GetTrackName (in unsigned long index);
+  ACString GetTrackType (in unsigned long index);
+  boolean GetTrackEnabled (in unsigned long index);
+  void SetTrackEnabled (in unsigned long index, in boolean enabled);
+
+  /* Sprite Track Properties */
+  void SetSpriteTrackVariable (in unsigned long trackIndex,
+			       in unsigned long variableIndex,
+			       in ACString value);
+  ACString GetSpriteTrackVariable (in unsigned long trackIndex,
+				   in unsigned long variableIndex);
+
+  /* QuickTime VR Movie Properties */
+  boolean GetIsVRMovie ();
+
+  void SetPanAngle (in float angle);
+  float GetPanAngle ();
+
+  void SetTiltAngle (in float angle);
+  float GetTiltAngle ();
+
+  void SetFieldOfView (in float fov);
+  float GetFieldOfView ();
+
+  unsigned long GetNodeCount ();
+  unsigned long GetNodeID ();
+  void SetNodeID (in unsigned long id);
+
+  /* Plugin Properties */
+  ACString GetPluginVersion ();
+  ACString GetPluginStatus ();
+
+  boolean GetResetPropertiesOnReload ();
+  void SetResetPropertiesOnReload (in boolean reset);
+
+  /* QuickTime Properties */
+  ACString GetQuickTimeVersion ();
+  ACString GetQuickTimeLanguage ();
+  unsigned long GetQuickTimeConnectionSpeed ();
+  boolean GetIsQuickTimeRegistered ();
+  ACString GetComponentVersion (in ACString type,
+				in ACString subType,
+				in ACString manufacturer);
 };

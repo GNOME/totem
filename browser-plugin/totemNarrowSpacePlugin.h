@@ -37,6 +37,8 @@ class totemScriptablePlugin : public totemINarrowSpacePlayer,
     NS_DECL_TOTEMINARROWSPACEPLAYER
     NS_DECL_NSICLASSINFO
 
+    void* operator new (size_t aSize) CPP_THROW_NEW;
+
     totemScriptablePlugin (totemPlugin *aPlugin);
 
     PRBool IsValid () { return mPlugin != nsnull; }
@@ -48,6 +50,34 @@ class totemScriptablePlugin : public totemINarrowSpacePlayer,
     ~totemScriptablePlugin ();
 
     totemPlugin *mPlugin;
+
+    enum PluginState {
+      eState_Complete,
+      eState_Error,
+      eState_Loading,
+      eState_Playable,
+      eState_Waiting
+    };
+
+    nsCString mBackgroundColour;
+    nsCString mMatrix;
+    nsCString mRectangle;
+    nsCString mMovieName;
+
+    float mRate;
+
+    PRInt32 mVolume;
+
+    PRUint32 mPluginState : 3; /* enough bits for PluginState enum values */
+
+    PRUint32 mAutoPlay : 1;
+    PRUint32 mControllerVisible : 1;
+    PRUint32 mIsLooping : 1;
+    PRUint32 mKioskMode : 1;
+    PRUint32 mLoopIsPalindrome : 1;
+    PRUint32 mMute : 1;
+    PRUint32 mPlayEveryFrame : 1;
+    PRUint32 mResetPropertiesOnReload : 1;
 };
 
 #endif /* __GMP_PLAYER_H__ */

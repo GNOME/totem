@@ -73,10 +73,13 @@
 // really noisy debug
 #ifdef G_HAVE_ISO_VARARGS
 #define DD(...)
-#endif
+#else
 #ifdef G_HAVE_GNUC_VARARGS
 #define DD(args...)
-#endif
+#else
+#warn "DD macro not supported"
+#endif /* G_HAVE_GNUC_VARARGS */
+#endif /* G_HAVE_ISO_VARARGS */
 
 #include "totemPluginGlue.h"
 #include "totemPlugin.h"
