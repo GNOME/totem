@@ -360,12 +360,12 @@ int main (int argc, char *argv[])
 	nice (20);
 #endif
 
+	g_thread_init (NULL);
+
 	context = g_option_context_new ("Thumbnail movies");
 	options = bacon_video_widget_get_option_group ();
 	g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
 	g_option_context_add_group (context, options);
-
-	g_thread_init (NULL);
 #ifndef THUMB_DEBUG
 	g_type_init ();
 #else

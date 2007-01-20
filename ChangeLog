@@ -1,3 +1,9 @@
+2007-01-20  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-video-thumbnailer.c: (main): Patch from
+	Filip Palm <bugzilla@helmut.se> to call g_thread_init ASAP,
+	avoid fatal warnings with glib trunk (Closes: #398223)
+
 2007-01-19  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-menu.c: (create_lang_actions): Number duplicate
