@@ -125,7 +125,7 @@ totem_SOURCES = 					\
 	ev-sidebar.c ev-sidebar.h	\
 	totem-subtitle-encoding.c	\
 	totem-subtitle-encoding.h	\
-	$(totem_BUILT_SOURCES)
+	$(BUILT_SOURCES)
 
 totem_CPPFLAGS = \
 	-I$(srcdir)/plparse		\
@@ -162,7 +162,7 @@ totem_LDADD = \
 	$(X_LIBS)			\
 	$(GIMME_CODEC_LIBS)
 
-totem_BUILT_SOURCES =			\
+BUILT_SOURCES =			\
 	totem-marshal.h			\
 	totem-marshal.c
 
@@ -398,7 +398,7 @@ CLEANFILES = \
 	*.orig			\
 	*~			\
 	$(desktop_DATA)		\
-	$(totem_BUILT_SOURCES)
+	$(BUILT_SOURCES)
 
 EXTRA_DIST = \
 	totem-marshal.list
