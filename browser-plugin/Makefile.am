@@ -118,6 +118,7 @@ libtotem_basic_plugin_la_SOURCES =	\
 	totemPlugin.h			\
 	totemBasicPlugin.cpp		\
 	totemBasicPlugin.h		\
+	totemClassInfo.h		\
 	totem-plugin-viewer-commands.h
 
 libtotem_basic_plugin_la_CPPFLAGS = \
@@ -177,6 +178,7 @@ libtotem_gmp_plugin_la_SOURCES =	\
 	totemPlugin.h			\
 	totemGMPPlugin.cpp		\
 	totemGMPPlugin.h		\
+	totemClassInfo.h		\
 	totem-plugin-viewer-commands.h
 
 libtotem_gmp_plugin_la_CPPFLAGS = \
@@ -236,6 +238,7 @@ libtotem_complex_plugin_la_SOURCES =	\
 	totemPlugin.h			\
 	totemComplexPlugin.cpp		\
 	totemComplexPlugin.h		\
+	totemClassInfo.h		\
 	totem-plugin-viewer-commands.h
 
 libtotem_complex_plugin_la_CPPFLAGS = \
@@ -295,6 +298,7 @@ libtotem_narrowspace_plugin_la_SOURCES = \
 	totemPlugin.h			\
 	totemNarrowSpacePlugin.cpp	\
 	totemNarrowSpacePlugin.h	\
+	totemClassInfo.h		\
 	totem-plugin-viewer-commands.h
 
 libtotem_narrowspace_plugin_la_CPPFLAGS = \
@@ -354,6 +358,7 @@ libtotem_mully_plugin_la_SOURCES =	\
 	totemPlugin.h			\
 	totemMullYPlugin.cpp		\
 	totemMullYPlugin.h		\
+	totemClassInfo.h		\
 	totem-plugin-viewer-commands.h
 
 libtotem_mully_plugin_la_CPPFLAGS = \

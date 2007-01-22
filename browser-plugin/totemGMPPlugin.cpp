@@ -39,6 +39,8 @@
 #include "totemIGMPPlayer.h"
 #include "totemIGMPControls.h"
 
+#include "totemClassInfo.h"
+
 #include "totemGMPPlugin.h"
 
 /* 89cf81a7-1156-456f-b060-c2187df9a27c */
@@ -101,98 +103,13 @@ NS_IMPL_ISUPPORTS3 (totemScriptablePlugin,
 
 /* nsIClassInfo */
 
-NS_IMETHODIMP
-totemScriptablePlugin::GetFlags (PRUint32 *aFlags)
-{
-  *aFlags = nsIClassInfo::PLUGIN_OBJECT | nsIClassInfo::DOM_OBJECT;
-  return NS_OK;
-}
-
-NS_IMETHODIMP
-totemScriptablePlugin::GetImplementationLanguage (PRUint32 *aImplementationLanguage)
-{
-  *aImplementationLanguage = nsIProgrammingLanguage::CPLUSPLUS;
-  return NS_OK;
-}
-
-NS_IMETHODIMP
-totemScriptablePlugin::GetInterfaces (PRUint32 *count,
-				      nsIID * **array)
-{
-  *array = NS_STATIC_CAST (nsIID**, nsMemory::Alloc (2 * sizeof (nsIID)));
-  if (!*array)
-    return NS_ERROR_OUT_OF_MEMORY;
-
-  *count = 2;
-
-  (*array)[0] = NS_STATIC_CAST (nsIID*,
-  				nsMemory::Clone (&NS_GET_IID (totemIGMPPlayer),
-						 sizeof(nsIID)));
-  if (!(*array)[0]) {
-    NS_FREE_XPCOM_ALLOCATED_POINTER_ARRAY (0, *array);
-    return NS_ERROR_OUT_OF_MEMORY;
-  }
-  (*array)[1] = NS_STATIC_CAST (nsIID*,
-  				nsMemory::Clone (&NS_GET_IID (totemIGMPControls),
-						 sizeof(nsIID)));
-  if (!(*array)[1]) {
-    NS_FREE_XPCOM_ALLOCATED_POINTER_ARRAY (1, *array);
-    return NS_ERROR_OUT_OF_MEMORY;
-  }
-
-  g_message ("GetInterfaces");
-  return NS_OK;
-}
-     
-NS_IMETHODIMP
-totemScriptablePlugin::GetHelperForLanguage (PRUint32 language,
-					     nsISupports **_retval)
-{
-  *_retval = nsnull;
-  g_message ("GetHelperForLanguage %d", language);
-  return NS_OK;
-}
-     
-NS_IMETHODIMP
-totemScriptablePlugin::GetContractID (char * *aContractID)
-{
-  *aContractID = nsnull;
-  return NS_OK;
-}
-
-NS_IMETHODIMP
-totemScriptablePlugin::GetClassDescription (char * *aClassDescription)
-{
-  *aClassDescription = NS_STATIC_CAST (char*,
-				       nsMemory::Clone (kClassDescription,
-						        sizeof (kClassDescription)));
-  if (!*aClassDescription)
-    return NS_ERROR_OUT_OF_MEMORY;
-
-  g_message ("GetClassDescription: %s", *aClassDescription);
-  return NS_OK;
-}
-
-NS_IMETHODIMP
-totemScriptablePlugin::GetClassID (nsCID * *aClassID)
-{
-  *aClassID = NS_STATIC_CAST (nsCID*,
-			      nsMemory::Clone (&kClassID,
-					       sizeof (nsCID*)));
-  if (!*aClassID)
-    return NS_ERROR_OUT_OF_MEMORY;
-
-  g_message ("GetClassID");
-  return NS_OK;
-}
-     
-NS_IMETHODIMP
-totemScriptablePlugin::GetClassIDNoAlloc (nsCID *aClassIDNoAlloc)
-{
-  *aClassIDNoAlloc = kClassID;
-  g_message ("GetClassIDNoAlloc");
-  return NS_OK;
-}
+TOTEM_CLASSINFO_BEGIN (totemScriptablePlugin,
+		       2,
+		       kClassID,
+		       kClassDescription)
+  TOTEM_CLASSINFO_ENTRY (0, totemIGMPPlayer)
+  TOTEM_CLASSINFO_ENTRY (1, totemIGMPControls)
+TOTEM_CLASSINFO_END
 
 /* totemIGMPPlayer */
 

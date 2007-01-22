@@ -1,4 +1,4 @@
-/* Totem Basic Plugin
+/* Totem NarrowSpace plugin scriptable
  *
  * Copyright (C) 2004 Bastien Nocera <hadess@hadess.net>
  * Copyright (C) 2002 David A. Schleef <ds@schleef.org>
@@ -21,8 +21,8 @@
  * $Id$
  */
 
-#ifndef __GMP_PLAYER_H__
-#define __GMP_PLAYER_H__
+#ifndef __NARROWSPACE_PLAYER_H__
+#define __NARROWSPACE_PLAYER_H__
 
 #include <nsIClassInfo.h>
 
@@ -80,4 +80,4 @@ class totemScriptablePlugin : public totemINarrowSpacePlayer,
     PRUint32 mResetPropertiesOnReload : 1;
 };
 
-#endif /* __GMP_PLAYER_H__ */
+#endif /* __NARROWSPACE_PLAYER_H__ */

@@ -36,6 +36,7 @@
 /* define GNOME_ENABLE_DEBUG for more debug spew */
 #include "debug.h"
 
+#include "totemClassInfo.h"
 #include "totemNarrowSpacePlugin.h"
 
 
@@ -122,87 +123,12 @@ NS_IMPL_ISUPPORTS2 (totemScriptablePlugin,
 
 /* nsIClassInfo */
 
-NS_IMETHODIMP
-totemScriptablePlugin::GetFlags (PRUint32 *aFlags)
-{
-  *aFlags = nsIClassInfo::PLUGIN_OBJECT | nsIClassInfo::DOM_OBJECT;
-  return NS_OK;
-}
-
-NS_IMETHODIMP
-totemScriptablePlugin::GetImplementationLanguage (PRUint32 *aImplementationLanguage)
-{
-  *aImplementationLanguage = nsIProgrammingLanguage::CPLUSPLUS;
-  return NS_OK;
-}
-
-NS_IMETHODIMP
-totemScriptablePlugin::GetInterfaces (PRUint32 *count,
-				      nsIID * **array)
-{
-  *array = NS_STATIC_CAST (nsIID**, nsMemory::Alloc (sizeof (nsIID)));
-  if (!*array)
-    return NS_ERROR_OUT_OF_MEMORY;
-
-  *count = 1;
-
-  (*array)[0] = NS_STATIC_CAST (nsIID*,
-  				nsMemory::Clone (&NS_GET_IID (totemINarrowSpacePlayer),
-						 sizeof(nsIID)));
-  if (!(*array)[0]) {
-    NS_FREE_XPCOM_ALLOCATED_POINTER_ARRAY (0, *array);
-    return NS_ERROR_OUT_OF_MEMORY;
-  }
-
-  return NS_OK;
-}
-     
-NS_IMETHODIMP
-totemScriptablePlugin::GetHelperForLanguage (PRUint32 language,
-					     nsISupports **_retval)
-{
-  *_retval = nsnull;
-  return NS_OK;
-}
-     
-NS_IMETHODIMP
-totemScriptablePlugin::GetContractID (char * *aContractID)
-{
-  *aContractID = nsnull;
-  return NS_OK;
-}
-
-NS_IMETHODIMP
-totemScriptablePlugin::GetClassDescription (char * *aClassDescription)
-{
-  *aClassDescription = NS_STATIC_CAST (char*,
-				       nsMemory::Clone (kClassDescription,
-						        sizeof (kClassDescription)));
-  if (!*aClassDescription)
-    return NS_ERROR_OUT_OF_MEMORY;
-
-  return NS_OK;
-}
-
-NS_IMETHODIMP
-totemScriptablePlugin::GetClassID (nsCID * *aClassID)
-{
-  *aClassID = NS_STATIC_CAST (nsCID*,
-			      nsMemory::Clone (&kClassID,
-					       sizeof (nsCID*)));
-  if (!*aClassID)
-    return NS_ERROR_OUT_OF_MEMORY;
-
-  return NS_OK;
-}
-     
-NS_IMETHODIMP
-totemScriptablePlugin::GetClassIDNoAlloc (nsCID *aClassIDNoAlloc)
-{
-  /* We don't need to implement this since we're not implementing nsISerializable */
-  *aClassIDNoAlloc = kClassID;
-  return NS_OK;
-}
+TOTEM_CLASSINFO_BEGIN (totemScriptablePlugin,
+		       1,
+		       kClassID,
+		       kClassDescription)
+  TOTEM_CLASSINFO_ENTRY (0, totemINarrowSpacePlayer)
+TOTEM_CLASSINFO_END
 
 /* totemINarrowSpacePlayer */
 
