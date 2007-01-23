@@ -4842,9 +4842,11 @@ bacon_video_widget_new (int width, int height,
   }
 
   if (type == BVW_USE_TYPE_VIDEO) {
-    if (width < SMALL_STREAM_WIDTH && height < SMALL_STREAM_HEIGHT) {
+    if (width > 0 && width < SMALL_STREAM_WIDTH &&
+        height > 0 && height < SMALL_STREAM_HEIGHT) {
       bvw->priv->init_height = height;
       bvw->priv->init_width = width;
+      GST_INFO ("forcing ximagesink, image size only %dx%d", width, height);
       video_sink = gst_element_factory_make ("ximagesink", "video-sink");
     } else {
       video_sink = gst_element_factory_make ("gconfvideosink", "video-sink");

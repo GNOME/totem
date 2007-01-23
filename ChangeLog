@@ -1,3 +1,10 @@
+2007-01-23  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_new):
+	  Only force ximagesink for output if we actually KNOW the size, not
+	  always.
+
 2007-01-23  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
