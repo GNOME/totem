@@ -1,6 +1,6 @@
 # Swedish messages for totem.
-# Copyright (C) 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
-# Daniel Nylander <po@danielnylander.se>, 2006.
+# Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+# Daniel Nylander <po@danielnylander.se>, 2006, 2007.
 # Christian Rose <menthos@menthos.com>, 2002, 2003, 2004, 2005.
 #
 # $Id: sv.po,v 1.95 2006/12/25 13:08:10 dnylande Exp $
@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-17 09:12+0000\n"
-"PO-Revision-Date: 2007-01-17 17:35+0100\n"
+"POT-Creation-Date: 2007-01-19 03:16+0000\n"
+"PO-Revision-Date: 2007-01-23 12:15+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -357,9 +357,9 @@ msgstr "Tid:"
 
 #. Title
 #: ../data/totem.glade.h:45
-#: ../src/totem.c:968
-#: ../src/totem.c:3376
-#: ../src/totem.c:3403
+#: ../src/totem.c:974
+#: ../src/totem.c:3399
+#: ../src/totem.c:3426
 msgid "Totem Movie Player"
 msgstr "Filmuppspelaren Totem"
 
@@ -700,13 +700,13 @@ msgid "Movie Player using %s and %s"
 msgstr "Filmuppspelare som använder %s och %s"
 
 #: ../src/totem-menu.c:1087
-#: ../browser-plugin/totem-plugin-viewer.c:1090
+#: ../browser-plugin/totem-plugin-viewer.c:1098
 msgid "Copyright © 2002-2006 Bastien Nocera"
 msgstr "Copyright © 2002-2006 Bastien Nocera"
 
 #: ../src/totem-menu.c:1092
 #: ../src/vanity.c:267
-#: ../browser-plugin/totem-plugin-viewer.c:1093
+#: ../browser-plugin/totem-plugin-viewer.c:1101
 msgid "translator-credits"
 msgstr ""
 "Daniel Nylander\n"
@@ -772,7 +772,11 @@ msgid "Take a screenshot"
 msgstr "Ta en skärmdump"
 
 #: ../src/totem-menu.c:1187
-msgid "Clear Playlist"
+msgid "_Clear Playlist"
+msgstr "_Töm spellista"
+
+#: ../src/totem-menu.c:1187
+msgid "Clear playlist"
 msgstr "Töm spellista"
 
 #: ../src/totem-menu.c:1188
@@ -1091,13 +1095,13 @@ msgid "Play/Pause"
 msgstr "Spela upp/Gör paus"
 
 #: ../src/totem-options.c:40
-#: ../src/totem.c:288
-#: ../src/totem.c:296
+#: ../src/totem.c:294
+#: ../src/totem.c:302
 msgid "Play"
 msgstr "Spela upp"
 
 #: ../src/totem-options.c:41
-#: ../src/totem.c:282
+#: ../src/totem.c:288
 msgid "Pause"
 msgstr "Gör paus"
 
@@ -1158,7 +1162,7 @@ msgid "Remove file from playlist"
 msgstr "Ta bort fil från spellista"
 
 #: ../src/totem-playlist.c:144
-msgid "_Copy location"
+msgid "_Copy Location"
 msgstr "_Kopiera plats"
 
 #: ../src/totem-playlist.c:144
@@ -1274,9 +1278,9 @@ msgid "Style of bevel around the statusbar text"
 msgstr "Stil på kanten runt statusradstexten"
 
 #: ../src/totem-statusbar.c:126
-#: ../src/totem.c:292
-#: ../src/totem.c:954
-#: ../browser-plugin/totem-plugin-viewer.c:281
+#: ../src/totem.c:298
+#: ../src/totem.c:960
+#: ../browser-plugin/totem-plugin-viewer.c:279
 msgid "Stopped"
 msgstr "Stoppad"
 
@@ -1504,138 +1508,138 @@ msgstr "Filer som stöds"
 msgid "Select Movies or Playlists"
 msgstr "Välj filmer eller spellistor"
 
-#: ../src/totem.c:280
-#: ../browser-plugin/totem-plugin-viewer.c:291
+#: ../src/totem.c:286
+#: ../browser-plugin/totem-plugin-viewer.c:294
 msgid "Playing"
 msgstr "Spelar upp"
 
-#: ../src/totem.c:286
-#: ../browser-plugin/totem-plugin-viewer.c:287
+#: ../src/totem.c:292
+#: ../browser-plugin/totem-plugin-viewer.c:290
 msgid "Paused"
 msgstr "Gör paus"
 
-#: ../src/totem.c:338
+#: ../src/totem.c:344
 msgid "Totem could not eject the optical media."
 msgstr "Totem kunde inte mata ut det optiska mediumet."
 
-#: ../src/totem.c:372
-#: ../src/totem.c:401
-#: ../src/totem.c:1068
-#: ../src/totem.c:1178
+#: ../src/totem.c:378
+#: ../src/totem.c:407
+#: ../src/totem.c:1074
+#: ../src/totem.c:1184
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem kunde inte spela upp \"%s\"."
 
-#: ../src/totem.c:462
+#: ../src/totem.c:468
 #, c-format
 msgid "Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."
 msgstr "Totem kan inte spela upp denna typ av media (%s) eftersom du saknar lämpliga insticksmoduler för att hantera den."
 
-#: ../src/totem.c:463
+#: ../src/totem.c:469
 msgid "Please install the necessary plugins and restart Totem to be able to play this media."
 msgstr "Installera de insticksmoduler som krävs och starta om Totem för att kunna spela upp denna typ av media."
 
-#: ../src/totem.c:471
+#: ../src/totem.c:477
 #, c-format
 msgid "Totem could not play this media (%s) although a plugin is present to handle it."
 msgstr "Totem kunde inte spela upp detta media (%s) trots att en insticksmodul som hanterar den är installerad."
 
-#: ../src/totem.c:472
+#: ../src/totem.c:478
 msgid "You might want to check that a disc is present in the drive and that it is correctly configured."
 msgstr "Du bör kontrollera om det finns en skiva i enheten och att den är korrekt konfigurerad."
 
-#: ../src/totem.c:500
+#: ../src/totem.c:506
 msgid "Totem was not able to play this disc."
 msgstr "Totem kunde inte spela upp den här skivan."
 
-#: ../src/totem.c:501
-#: ../src/totem.c:3230
-#: ../browser-plugin/totem-plugin-viewer.c:1420
+#: ../src/totem.c:507
+#: ../src/totem.c:3253
+#: ../browser-plugin/totem-plugin-viewer.c:1428
 msgid "No reason."
 msgstr "Ingen orsak."
 
-#: ../src/totem.c:759
+#: ../src/totem.c:765
 msgid "Open Location..."
 msgstr "Öppna plats..."
 
-#: ../src/totem.c:853
-#: ../src/totem.c:861
+#: ../src/totem.c:859
+#: ../src/totem.c:867
 #: ../src/vanity.c:300
 #: ../src/vanity.c:308
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem kunde inte ta en skärmdump från den filmen."
 
-#: ../src/totem.c:861
+#: ../src/totem.c:867
 #: ../src/vanity.c:308
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Detta ska inte hända; skicka en felrapport."
 
-#: ../src/totem.c:961
+#: ../src/totem.c:967
 msgid "No File"
 msgstr "Ingen fil"
 
-#: ../src/totem.c:1074
+#: ../src/totem.c:1080
 msgid "No error message"
 msgstr "Inget felmeddelande"
 
-#: ../src/totem.c:1290
+#: ../src/totem.c:1296
 msgid "Totem could not display the help contents."
 msgstr "Totem kunde inte visa hjälpinnehållet."
 
-#: ../src/totem.c:1553
-#: ../src/totem.c:1555
-#: ../browser-plugin/totem-plugin-viewer.c:1276
+#: ../src/totem.c:1559
+#: ../src/totem.c:1561
+#: ../browser-plugin/totem-plugin-viewer.c:1284
 msgid "An error occurred"
 msgstr "Ett fel inträffade"
 
-#: ../src/totem.c:1883
+#: ../src/totem.c:1889
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Totem kunde inte spola i \"%s\"."
 
-#: ../src/totem.c:3036
+#: ../src/totem.c:3054
 msgid "Previous Chapter/Movie"
 msgstr "Föregående kapitel/film"
 
-#: ../src/totem.c:3042
+#: ../src/totem.c:3060
 msgid "Play / Pause"
 msgstr "Spela upp / Gör paus"
 
-#: ../src/totem.c:3049
+#: ../src/totem.c:3067
 msgid "Next Chapter/Movie"
 msgstr "Nästa kapitel/film"
 
-#: ../src/totem.c:3230
+#: ../src/totem.c:3253
 msgid "Totem could not startup."
 msgstr "Totem kunde inte starta."
 
-#: ../src/totem.c:3377
+#: ../src/totem.c:3400
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Kunde inte initiera de trådsäkra biblioteken."
 
-#: ../src/totem.c:3377
+#: ../src/totem.c:3400
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Kontrollera din systeminstallation. Totem kommer nu att avslutas."
 
 #. Handle command line arguments
-#: ../src/totem.c:3384
+#: ../src/totem.c:3407
 msgid "- Play movies and songs"
 msgstr "- Spela upp filmer och låtar"
 
-#: ../src/totem.c:3392
+#: ../src/totem.c:3415
 msgid "Totem could not parse the command-line options"
 msgstr "Totem kunde inte tolka kommandoradsflaggorna"
 
-#: ../src/totem.c:3411
+#: ../src/totem.c:3434
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem kunde inte initiera konfigurationsmotorn."
 
-#: ../src/totem.c:3411
+#: ../src/totem.c:3434
 msgid "Make sure that GNOME is properly installed."
 msgstr "Försäkra dig om att GNOME är korrekt installerat."
 
 #. Main window
-#: ../src/totem.c:3439
+#: ../src/totem.c:3462
 msgid "main window"
 msgstr "huvudfönster"
 
@@ -1722,38 +1726,38 @@ msgstr ""
 # FIXME: Bör ha punkt på slutet.
 # http://bugzilla.gnome.org/show_bug.cgi?id=318817
 #
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2443
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2445
 msgid "The requested audio output was not found. Please select another audio output in the Multimedia Systems Selector."
 msgstr "Den begärda ljudutgången hittades inte. Välj en annan ljudutgång i väljaren för multimediasystem."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2448
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2450
 msgid "Location not found."
 msgstr "Platsen hittades inte."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2452
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2454
 msgid "Could not open location; You may not have permission to open the file."
 msgstr "Kunde inte öppna platsen; Du kanske inte har rättighet att öppna filen."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2463
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2465
 msgid "The video output is in use by another application. Please close other video applications, or select another video output in the Multimedia Systems Selector."
 msgstr "Videoutgången används av ett annat program. Stäng andra videoprogram eller välj en annan videoutgång i väljaren för multimediasystem."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2469
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2471
 msgid "The audio output is in use by another application. Please select another audio output in the Multimedia Systems Selector. You may want to consider using a sound server."
 msgstr "Ljudutgången används av ett annat program. Välj en annan ljudutgång i väljaren för multimediasystem. Du kanske bör överväga att använda en ljudserver."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2487
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2489
 #, c-format
 msgid "The playback of this movie requires a '%s' plugin, which is not installed."
 msgstr "Uppspelningen av den här filmen kräver en \"%s\"-insticksmodul som inte är installerad."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2493
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2495
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr "Uppspelningen av den här filmen kräver en %s-insticksmodul som inte är installerad."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2494
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2496
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not installed:\n"
@@ -1764,48 +1768,48 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2519
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2521
 msgid "Cannot play this file over the network. Try downloading it to disk first."
 msgstr "Kan inte spela upp den här filen över nätverket. Försök hämta ner den till disk först."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2591
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2593
 msgid "Media file could not be played."
 msgstr "Mediafilen kunde inte spelas upp."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2675
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2729
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2677
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2731
 msgid "Failed to retrieve working directory"
 msgstr "Misslyckades med att hämta arbetskatalogen"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4441
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4443
 msgid "Too old version of GStreamer installed."
 msgstr "En för gammal version av GStreamer är installerad."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4448
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4450
 msgid "Media contains no supported video streams."
 msgstr "Mediumet innehåller inga videoflöden som stöds."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4783
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4785
 msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
 msgstr "Misslyckades med att skapa ett GStreamer-spelobjekt. Kontrollera din installation av GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4911
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5015
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4913
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5017
 msgid "Failed to open video output. It may not be available. Please select another video output in the Multimedia Systems Selector."
 msgstr "Misslyckades med att öppna videoutgången. Den kanske inte är tillgänglig. Välj en annan videoutgång i väljaren för multimediasystem."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4923
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4925
 msgid "Could not find the video output. You may need to install additional GStreamer plugins, or select another video output in the Multimedia Systems Selector."
 msgstr "Kunde inte hitta videoutgången. Du kanske behöver installera ytterligare insticksmoduler för GStreamer eller välja en annan videoutgång i väljaren för multimediasystem."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4954
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4956
 msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
 msgstr "Misslyckades med att öppna ljudutgången. Du kanske inte har rättigheter att öppna ljudutgången, eller så kanske inte ljudservern körs. Välj en annan ljudutgång i väljaren för multimediasystem."
 
 # FIXME: Bör ha punkt på slutet.
 # http://bugzilla.gnome.org/show_bug.cgi?id=318817
 #
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4969
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4971
 msgid "Could not find the audio output. You may need to install additional GStreamer plugins, or select another audio output in the Multimedia Systems Selector."
 msgstr "Kunde inte hitta ljudutgången. Du kanske behöver installera ytterligare insticksmoduler för GStreamer eller välja en annan ljudutgång i väljaren för multimediasystem."
 
@@ -2052,55 +2056,55 @@ msgstr "Kunde inte skriva tolk: %s"
 msgid "Couldn't open file '%s': %s"
 msgstr "Kunde inte öppna filen \"%s\": %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:391
+#: ../browser-plugin/totem-plugin-viewer.c:398
 msgid "No URI to play"
 msgstr "Ingen uri att spela upp"
 
 #. FIXME disp = gnome_vfs_unescape_string_for_display (totem->mrl); ?
-#: ../browser-plugin/totem-plugin-viewer.c:418
-#: ../browser-plugin/totem-plugin-viewer.c:422
+#: ../browser-plugin/totem-plugin-viewer.c:425
+#: ../browser-plugin/totem-plugin-viewer.c:429
 #, c-format
 msgid "Totem could not play '%s'"
 msgstr "Totem kunde inte spela upp \"%s\""
 
-#: ../browser-plugin/totem-plugin-viewer.c:797
+#: ../browser-plugin/totem-plugin-viewer.c:802
 #, c-format
 msgid "Opening %s"
 msgstr "Öppnar %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1083
+#: ../browser-plugin/totem-plugin-viewer.c:1091
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "Webbläsarinstick som använder %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1088
+#: ../browser-plugin/totem-plugin-viewer.c:1096
 msgid "Totem Browser Plugin"
 msgstr "Totem-insticksmodul för webbläsare"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1385
-#: ../browser-plugin/totem-plugin-viewer.c:1395
+#: ../browser-plugin/totem-plugin-viewer.c:1393
+#: ../browser-plugin/totem-plugin-viewer.c:1403
 msgid "Plugin"
 msgstr "Insticksmodul"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1420
+#: ../browser-plugin/totem-plugin-viewer.c:1428
 msgid "The Totem plugin could not startup."
 msgstr "Totem-insticksmodulen kunde inte starta."
 
-#: ../browser-plugin/totem-plugin-viewer.c:1518
+#: ../browser-plugin/totem-plugin-viewer.c:1526
 msgid "Menu"
 msgstr "Meny"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1703
+#: ../browser-plugin/totem-plugin-viewer.c:1711
 msgid "No playlist or playlist empty"
 msgstr "Ingen spellist eller att spellistan är tom"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1832
+#: ../browser-plugin/totem-plugin-viewer.c:1840
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Kunde inte initiera de trådsäkra biblioteken."
 
-#: ../browser-plugin/totem-plugin-viewer.c:1832
+#: ../browser-plugin/totem-plugin-viewer.c:1840
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Kontrollera din systeminstallation. Totem-insticksmodulen kommer nu att avslutas."
 
