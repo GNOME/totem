@@ -2878,6 +2878,14 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **gerro
 
   GST_LOG ("Seeking to %" GST_TIME_FORMAT, GST_TIME_ARGS (time * GST_MSECOND));
 
+  if (time > bvw->priv->stream_length
+      && !g_str_has_prefix (bvw->com->mrl, "dvd:")
+      && !g_str_has_prefix (bvw->com->mrl, "vcd:")) {
+    if (bvw->priv->eos_id == 0)
+      bvw->priv->eos_id = g_idle_add (bvw_signal_eos_delayed, bvw);
+    return TRUE;
+  }
+
   /* Emit a time tick of where we are going, we are paused */
   got_time_tick (bvw->priv->play, time * GST_MSECOND, bvw);
   

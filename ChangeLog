@@ -1,5 +1,12 @@
 2007-01-23  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_seek_time): When seeking destination is
+	past the end of the stream, send an EOS, just like the xine-lib
+	backend does
+
+2007-01-23  Bastien Nocera  <hadess@hadess.net>
+
 	* data/mime-type-list.txt: Add audio/x-tta to the list
 	of supported mime-types
 
