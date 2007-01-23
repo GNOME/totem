@@ -1,6 +1,15 @@
 2007-01-23  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_check_if_video_decoder_is_missing):
+	(bvw_bus_message_cb):
+	  If we can play a stream but are missing a video decoder,
+	  pop up an error saying that a decoder is missing and which
+	  one it is. (Closes: #171111)
+
+2007-01-23  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bacon_video_widget_new):
 	  Only force ximagesink for output if we actually KNOW the size, not
 	  always.

@@ -327,6 +327,38 @@ bvw_clear_missing_plugins_messages (BaconVideoWidget * bvw)
 }
 
 static void
+bvw_check_if_video_decoder_is_missing (BaconVideoWidget * bvw)
+{
+  GList *l;
+
+  if (bvw->priv->media_has_video || bvw->priv->missing_plugins == NULL)
+    return;
+
+  for (l = bvw->priv->missing_plugins; l != NULL; l = l->next) {
+    GstMessage *msg = GST_MESSAGE (l->data);
+    gchar *d, *f;
+
+    if ((d = gst_missing_plugin_message_get_installer_detail (msg))) {
+      if ((f = strstr (d, "|decoder-")) && strstr (f, "video")) {
+        GError *err;
+
+        /* create a fake GStreamer error so we get a nice warning message */
+        err = g_error_new (GST_CORE_ERROR, GST_CORE_ERROR_MISSING_PLUGIN, "x");
+        msg = gst_message_new_error (GST_OBJECT (bvw->priv->play), err, NULL);
+        g_error_free (err);
+        err = bvw_error_from_gst_error (bvw, msg);
+        gst_message_unref (msg);
+        g_signal_emit (bvw, bvw_signals[SIGNAL_ERROR], 0, err->message, FALSE, FALSE);
+        g_error_free (err);
+        g_free (d);
+        break;
+      }
+      g_free (d);
+    }
+  }
+}
+
+static void
 bvw_error_msg_print_dbg (GstMessage * msg)
 {
   GError *err = NULL;
@@ -1506,7 +1538,10 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
       if (old_state == GST_STATE_READY && new_state == GST_STATE_PAUSED) {
         bvw_update_stream_info (bvw);
-        bvw_check_missing_plugins_on_preroll (bvw);
+        if (!bvw_check_missing_plugins_on_preroll (bvw)) {
+          /* show a non-fatal warning message if we can't decode the video */
+          bvw_check_if_video_decoder_is_missing (bvw);
+        }
       } else if (old_state == GST_STATE_PAUSED && new_state == GST_STATE_READY) {
         bvw->priv->media_has_video = FALSE;
         bvw->priv->media_has_audio = FALSE;
