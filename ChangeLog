@@ -1,5 +1,11 @@
 2007-01-24  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c: (load_video_out_driver):
+	Only force xshm for output if we actually KNOW the size, not
+	always.
+
+2007-01-24  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in:
 	* totem-plparser-uninstalled.pc.in: Patch from Brian Cameron
 	<brian.cameron@sun.com> to add a .pc file for the uninstalled
