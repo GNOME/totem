@@ -41,6 +41,12 @@
 
 /* #define THUMB_DEBUG */
 
+#ifdef G_HAVE_ISO_VARARGS
+#define PROGRESS_DEBUG(...) { if (verbose != FALSE) g_message (__VA_ARGS__); }
+#elif defined(G_HAVE_GNUC_VARARGS)
+#define PROGRESS_DEBUG(format...) { if (verbose != FALSE) g_message (format); }
+#endif
+
 #define MIN_LEN_FOR_SEEK 25000
 #define HALF_SECOND G_USEC_PER_SEC * .5
 #define BORING_IMAGE_VARIANCE 256.0		/* Tweak this if necessary */
@@ -49,6 +55,7 @@ gboolean finished = FALSE;
 static gboolean jpeg_output = FALSE;
 static gboolean output_size = 128;
 static gboolean time_limit = TRUE;
+static gboolean verbose = FALSE;
 static char **filenames = NULL;
 
 #ifdef THUMB_DEBUG
@@ -338,6 +345,7 @@ static const GOptionEntry entries[] = {
 	{ "jpeg", 'j',  0, G_OPTION_ARG_NONE, &jpeg_output, "Output the thumbnail as a JPEG instead of PNG", NULL },
 	{ "size", 's', 0, G_OPTION_ARG_INT, &output_size, "Size of the thumbnail in pixels", NULL },
 	{ "no-limit", 'l', G_OPTION_FLAG_REVERSE, G_OPTION_ARG_NONE, &time_limit, "Don't limit the thumbnailing time to 30 seconds", NULL },
+	{ "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose, "Output debug information", NULL },
 	{ G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &filenames, "Movies to index", NULL },
 	{ NULL }
 };
@@ -352,9 +360,14 @@ int main (int argc, char *argv[])
 	int length;
 	char *input, *output;
 
-	const float frame_locations[] = { 1.0 / 3.0, 2.0 / 3.0, 0.1,0.9, 0.5 };
-	const int frame_locations_length = 5;
-	int current;
+	const float frame_locations[] = {
+		1.0 / 3.0,
+		2.0 / 3.0,
+		0.1,
+		0.9,
+		0.5
+	};
+	guint current;
 
 #ifdef G_OS_UNIX
 	nice (20);
@@ -390,6 +403,8 @@ int main (int argc, char *argv[])
 	input = filenames[0];
 	output = filenames[1];
 
+	PROGRESS_DEBUG("Initialised libraries, about to create video widget\n");
+
 	bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (-1, -1, BVW_USE_TYPE_CAPTURE, &err));
 	if (err != NULL)
 	{
@@ -399,8 +414,12 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
+	PROGRESS_DEBUG("Video widget created\n");
+
 	if (time_limit != FALSE)
 		g_thread_create (time_monitor, (gpointer) input, FALSE, NULL);
+
+	PROGRESS_DEBUG("About to open video file\n");
 
 	if (bacon_video_widget_open (bvw, input, &err) == FALSE)
 	{
@@ -411,6 +430,9 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
+	PROGRESS_DEBUG("Opened video file: '%s'\n", input);
+	PROGRESS_DEBUG("About to play file\n");
+
 	bacon_video_widget_play (bvw, &err);
 	if (err != NULL)
 	{
@@ -420,13 +442,16 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
+	PROGRESS_DEBUG("Started playing file\n");
+
 	/* Test at multiple points in the file to see if we can get an 
 	 * interesting frame */
-	for (current = 0; current < frame_locations_length; current++)
+	for (current = 0; current < G_N_ELEMENTS(frame_locations); current++)
 	{
 		length = bacon_video_widget_get_stream_length (bvw);
 		if (length > MIN_LEN_FOR_SEEK)
 		{
+			PROGRESS_DEBUG("About to seek to %f\n", frame_locations[current]);
 			if (bacon_video_widget_seek
 					(bvw, frame_locations[current], NULL) == FALSE)
 			{
@@ -447,16 +472,20 @@ int main (int argc, char *argv[])
 		}
 
 		/* Pull the frame, if it's interesting we bail early */
+		PROGRESS_DEBUG("About to get frame for iter %d\n", current);
 		pixbuf = bacon_video_widget_get_current_frame (bvw);
-		if (pixbuf != NULL && is_image_interesting (pixbuf) != FALSE)
+		if (pixbuf != NULL && is_image_interesting (pixbuf) != FALSE) {
+			PROGRESS_DEBUG("Frame for iter %d is interesting\n", current);
 			break;
+		}
 
 		/* If we get to the end of this loop, we'll end up using
 		 * the last image we pulled */
-		if(current + 1 < frame_locations_length) {
+		if(current + 1 < G_N_ELEMENTS(frame_locations)) {
 			if (pixbuf != NULL)
 				g_object_unref (pixbuf);
 		}
+		PROGRESS_DEBUG("Frame for iter %d was not interesting\n", current);
 	}
 
 	/* Cleanup */
@@ -471,6 +500,7 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
+	PROGRESS_DEBUG("Saving captured screenshot\n");
 	save_pixbuf (pixbuf, output, input, output_size, FALSE);
 	g_object_unref (pixbuf);
 
