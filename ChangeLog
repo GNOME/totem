@@ -1,3 +1,11 @@
+2007-01-26  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-options.c: (totem_option_create_line),
+	(totem_options_process_for_server): Handle remote options
+	properly, add the ability to pass multiple commands in one go
+	(Closes: #380617)
+	* src/totem.c: (playlist_changed_cb): add mention of bug #364311
+
 2007-01-26  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:

@@ -2215,6 +2215,8 @@ playlist_changed_cb (GtkWidget *playlist, Totem *totem)
 	if (mrl == NULL)
 		return;
 
+	//FIXME we shouldn't compare the 2 URLs
+	// http://bugzilla.gnome.org/show_bug.cgi?id=364311
 	if (totem->mrl == NULL
 			|| (totem->mrl != NULL && mrl != NULL
 			&& strcmp (totem->mrl, mrl) != 0))

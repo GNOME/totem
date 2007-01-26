@@ -50,6 +50,7 @@ const GOptionEntry options[] = {
 	{"quit", '\0', 0, G_OPTION_ARG_NONE, &optionstate.quit, N_("Quit"), NULL},
 	{"enqueue", '\0', 0, G_OPTION_ARG_NONE, &optionstate.enqueue, N_("Enqueue"), NULL},
 	{"replace", '\0', 0, G_OPTION_ARG_NONE, &optionstate.replace, N_("Replace"), NULL},
+	{"printplaying", '\0', 0, G_OPTION_ARG_NONE, &optionstate.printplaying, "Print playing movie", NULL}, //FIXME translate
 	{"seek", '\0', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_INT64, &optionstate.seek, N_("Seek"), NULL},
 	{"playlist-idx", '\0', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_DOUBLE, &optionstate.playlistidx, N_("Playlist index"), NULL},
 	{G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &optionstate.filenames, N_("Movies to play"), NULL},
@@ -95,73 +96,29 @@ totem_print_playing_cb (const gchar *msg, gpointer user_data)
 	exit (0);
 }
 
+static char *
+totem_option_create_line (int command)
+{
+	return g_strdup_printf ("%03d ", command);
+}
+
 void
 totem_options_process_for_server (BaconMessageConnection *conn,
 		const TotemCmdLineOptions* options)
 {
-	int i, command;
-	char *line, *full_path;
+	GList *commands, *l;
+	int default_action, i;
 
-#if 0 	/* FIXME: Handle TOTEM_REMOTE_COMMAND_SHOW */
-	/* Just show totem if there aren't any arguments */
-	line = g_strdup_printf ("%03d ", TOTEM_REMOTE_COMMAND_SHOW);
-	bacon_message_connection_send (conn, line);
-	g_free (line);
-	return;
-#endif
+	commands = NULL;
+	default_action = TOTEM_REMOTE_COMMAND_REPLACE;
 
-#if 0 	/* FIXME: Handle TOTEM_REMOTE_COMMAND_REPLACE */
-	if (strlen (argv[1]) > 3 && g_str_has_prefix (argv[1], "--") == FALSE)
-		command = TOTEM_REMOTE_COMMAND_REPLACE;
-#endif
-	if (options->playpause) 
-		command = TOTEM_REMOTE_COMMAND_PLAYPAUSE;
-
-	if (options->play)
-		command = TOTEM_REMOTE_COMMAND_PLAY;
-
-	if (options->pause)
-		command = TOTEM_REMOTE_COMMAND_PAUSE;
-
-	if (options->next)
-		command = TOTEM_REMOTE_COMMAND_NEXT;
-
-	if (options->previous)
-		command = TOTEM_REMOTE_COMMAND_PREVIOUS;
-
-	if (options->seekfwd)
-		command = TOTEM_REMOTE_COMMAND_SEEK_FORWARD;
-
-	if (options->seekbwd)
-		command = TOTEM_REMOTE_COMMAND_SEEK_BACKWARD;
-
-	if (options->volumeup)
-		command = TOTEM_REMOTE_COMMAND_VOLUME_UP;
-
-	if (options->volumedown)
-		command = TOTEM_REMOTE_COMMAND_VOLUME_DOWN;
-
-	if (options->fullscreen)
-		command = TOTEM_REMOTE_COMMAND_FULLSCREEN;
-
-	if (options->quit)
-		command = TOTEM_REMOTE_COMMAND_QUIT;
-
-	if (options->enqueue)
-		command = TOTEM_REMOTE_COMMAND_ENQUEUE;
-
-	if (options->replace)
-		command = TOTEM_REMOTE_COMMAND_REPLACE;
-
-	if (options->togglecontrols)
-		command = TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS;
-
+	/* We can only handle "printplaying" on its own */
 	if (options->printplaying)
 	{
+		char *line;
 		GMainLoop *loop = g_main_loop_new (NULL, FALSE);
 
-		command = TOTEM_REMOTE_COMMAND_SHOW_PLAYING;
-		line = g_strdup_printf ("%03d ", command);
+		line = totem_option_create_line (TOTEM_REMOTE_COMMAND_SHOW_PLAYING);
 		bacon_message_connection_set_callback (conn,
 				totem_print_playing_cb, loop);
 		bacon_message_connection_send (conn, line);
@@ -169,30 +126,105 @@ totem_options_process_for_server (BaconMessageConnection *conn,
 
 		g_main_loop_run (loop);
 		return;
-	} else {
-		return;
 	}
 
-	if (command != TOTEM_REMOTE_COMMAND_ENQUEUE
-				&& command != TOTEM_REMOTE_COMMAND_REPLACE)
-	{
-		line = g_strdup_printf ("%03d ", command);
+	/* Are we quitting ? */
+	if (options->quit) {
+		char *line;
+		line = totem_option_create_line (TOTEM_REMOTE_COMMAND_QUIT);
 		bacon_message_connection_send (conn, line);
 		g_free (line);
 		return;
 	}
 
-	if (options->filenames == NULL)
-		return;
+	/* Then handle the things that modify the playlist */
+	if (options->replace && options->enqueue) {
+		/* FIXME translate that */
+		g_warning ("Can't enqueue and replace at the same time");
+	} else if (options->replace) {
+		default_action = TOTEM_REMOTE_COMMAND_REPLACE;
+	} else if (options->enqueue) {
+		default_action = TOTEM_REMOTE_COMMAND_ENQUEUE;
+	}
 
+	/* Send the files to enqueue */
 	for (i = 0; options->filenames[i] != NULL; i++)
 	{
+		char *line, *full_path;
 		full_path = totem_create_full_path (options->filenames[i]);
-		line = g_strdup_printf ("%03d %s", command, full_path);
+		line = g_strdup_printf ("%03d %s", default_action, full_path);
 		bacon_message_connection_send (conn, line);
 		g_free (line);
 		g_free (full_path);
-		command = TOTEM_REMOTE_COMMAND_ENQUEUE;
+	}
+
+	if (options->playpause) {
+		commands = g_list_append (commands, totem_option_create_line
+					  (TOTEM_REMOTE_COMMAND_PLAYPAUSE));
+	}
+
+	if (options->play) {
+		commands = g_list_append (commands, totem_option_create_line
+					  (TOTEM_REMOTE_COMMAND_PLAY));
+	}
+
+	if (options->pause) {
+		commands = g_list_append (commands, totem_option_create_line
+					  (TOTEM_REMOTE_COMMAND_PAUSE));
+	}
+
+	if (options->next) {
+		commands = g_list_append (commands, totem_option_create_line
+					  (TOTEM_REMOTE_COMMAND_NEXT));
+	}
+
+	if (options->previous) {
+		commands = g_list_append (commands, totem_option_create_line
+					  (TOTEM_REMOTE_COMMAND_PREVIOUS));
+	}
+
+	if (options->seekfwd) {
+		commands = g_list_append (commands, totem_option_create_line
+					  (TOTEM_REMOTE_COMMAND_SEEK_FORWARD));
+	}
+
+	if (options->seekbwd) {
+		commands = g_list_append (commands, totem_option_create_line
+					  (TOTEM_REMOTE_COMMAND_SEEK_BACKWARD));
+	}
+
+	if (options->volumeup) {
+		commands = g_list_append (commands, totem_option_create_line
+					  (TOTEM_REMOTE_COMMAND_VOLUME_UP));
+	}
+
+	if (options->volumedown) {
+		commands = g_list_append (commands, totem_option_create_line
+					  (TOTEM_REMOTE_COMMAND_VOLUME_DOWN));
+	}
+
+	if (options->fullscreen) {
+		commands = g_list_append (commands, totem_option_create_line
+					  (TOTEM_REMOTE_COMMAND_FULLSCREEN));
+	}
+
+	if (options->togglecontrols) {
+		commands = g_list_append (commands, totem_option_create_line
+					  (TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS));
+	}
+
+	/* No commands, no files, show ourselves */
+	if (commands == NULL && options->filenames == NULL) {
+		char *line;
+		line = totem_option_create_line (TOTEM_REMOTE_COMMAND_SHOW);
+		bacon_message_connection_send (conn, line);
+		return;
+	}
+
+	/* Send commands */
+	for (l = commands; l != NULL; l = l->next) {
+		bacon_message_connection_send (conn, l->data);
+		g_free (l->data);
 	}
 }
 
