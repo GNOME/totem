@@ -1,5 +1,11 @@
 2007-01-26  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c: (got_time_tick),
+	(bacon_video_widget_seek_time): Avoid EOSing if we don't have
+	a stream length yet
+
+2007-01-26  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-options.c: (totem_option_create_line),
 	(totem_options_process_for_server): Handle remote options
 	properly, add the ability to pass multiple commands in one go

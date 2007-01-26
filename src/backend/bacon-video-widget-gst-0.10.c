@@ -1658,7 +1658,6 @@ got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * bvw)
       (gfloat) bvw->priv->current_time / bvw->priv->stream_length;
   }
 
-
   if (bvw->priv->stream_length == 0) {
     seekable = bacon_video_widget_is_seekable (bvw);
   } else {
@@ -2887,6 +2886,7 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **gerro
   GST_LOG ("Seeking to %" GST_TIME_FORMAT, GST_TIME_ARGS (time * GST_MSECOND));
 
   if (time > bvw->priv->stream_length
+      && bvw->priv->stream_length > 0
       && !g_str_has_prefix (bvw->com->mrl, "dvd:")
       && !g_str_has_prefix (bvw->com->mrl, "vcd:")) {
     if (bvw->priv->eos_id == 0)
