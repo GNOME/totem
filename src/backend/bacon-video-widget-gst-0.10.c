@@ -2663,13 +2663,6 @@ error:
   return FALSE;
 }
 
-static gboolean
-poll_for_state_change (BaconVideoWidget *bvw, GstElement *element,
-    GstState state, GstMessage **err_msg)
-{
-  return poll_for_state_change_full (bvw,element, state, err_msg, GST_SECOND/4);
-}
-
 gboolean
 bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
     const gchar * mrl, const gchar *subtitle_uri, GError ** error)
@@ -2787,14 +2780,8 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 
   if (bvw->priv->use_type == BVW_USE_TYPE_AUDIO ||
       bvw->priv->use_type == BVW_USE_TYPE_VIDEO) {
-    /* normal interactive usage */
-    if (error) {
-      ret = poll_for_state_change (bvw, bvw->priv->play,
-          GST_STATE_PAUSED, &err_msg);
-    } else {
-      GST_WARNING ("caller not checking error, handling errors asynchroneously");
-      ret = TRUE;
-    }
+    GST_DEBUG ("normal playback, handling all errors asynchroneously");
+    ret = TRUE;
   } else {
     /* used as thumbnailer or metadata extractor for properties dialog. In
      * this case, wait for any state change to really finish and process any
@@ -2850,7 +2837,6 @@ gboolean
 bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
 {
   GstState cur_state;
-  gboolean ret;
 
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
@@ -2877,21 +2863,8 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
   GST_DEBUG ("play");
   gst_element_set_state (bvw->priv->play, GST_STATE_PLAYING);
 
-  if (error) {
-    GstMessage *msg = NULL;
-
-    ret = poll_for_state_change (bvw, bvw->priv->play, GST_STATE_PLAYING, &msg);
-    if (msg != NULL) {
-      *error = bvw_error_from_gst_error (bvw, msg);
-      gst_message_unref (msg);
-    }
-  } else {
-    GST_WARNING ("caller not checking error details, handling errors asynchroneously");
-    ret = TRUE;
-  }
-
-  GST_DEBUG ("returning %s", (ret) ? "TRUE" : "FALSE");
-  return ret;
+  /* will handle all errors asynchroneously */
+  return TRUE;
 }
 
 gboolean

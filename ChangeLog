@@ -1,3 +1,12 @@
+2007-01-26  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_open_with_subtitle):
+	(bacon_video_widget_play):
+	  Handle all errors asynchronously in the playback case instead of
+	  running a main loop for a quarter of a second to check for errors.
+	  This prevents recursivity/reentrancy issues.
+
 2007-01-24  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totemPlugin.cpp: Fix varargs #ifdef mess
