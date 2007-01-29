@@ -1,5 +1,13 @@
 2007-01-29  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-menu.c: (escape_label_for_menu),
+	(totem_recent_manager_changed_callback), (add_device_to_menu):
+	Truncate the URI before escaping it for use in the menu items,
+	avoids mnemonics showing up in the menu if we have underscores in
+	filenames (Closes: #401872)
+
+2007-01-29  Bastien Nocera  <hadess@hadess.net>
+
 	* data/Makefile.am: Patch from Christian Persch <chpe@svn.gnome.org>
 	to fix redirection of the gconftool-2 command (Closes: #401758)
 

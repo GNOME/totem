@@ -36,6 +36,20 @@
 
 #include "debug.h"
 
+/* Helper function to escape underscores in labels
+ * before putting them in menu items */
+static char *
+escape_label_for_menu (const char *name)
+{
+	char *new, **a;
+
+	a = g_strsplit (name, "_", -1);
+	new = g_strjoinv ("__", a);
+	g_strfreev (a);
+
+	return new;
+}
+
 /* ISO-639 helpers */
 static GHashTable *lang_table;
 
@@ -564,6 +578,7 @@ totem_recent_manager_changed_callback (GtkRecentManager *recent_manager, Totem *
 		GtkAction     *action;
 		char          *action_name;
 		char          *label;
+		char          *escaped_label;
 		char          *label_trunc;
 		const char    *uri;
 
@@ -574,40 +589,43 @@ totem_recent_manager_changed_callback (GtkRecentManager *recent_manager, Totem *
 
 		action_name = g_strdup_printf ("recent-file%u", i++);
 		uri = gtk_recent_info_get_uri (info);
-		if (strstr (uri, "file:///") == NULL)
-			label = g_strdup_printf ("_%d.  %s", n_items + 1, uri);
-		else {
-			label = g_strdup_printf ("_%d.  %s", n_items + 1,
-				gtk_recent_info_get_display_name (info));
-		}
 
-		/* Truncate the menu item if it's too long */
-		label_trunc = totem_str_middle_truncate (label, TOTEM_MAX_RECENT_ITEM_LEN);
-		g_free (label);
+		/* Munge the URI for display */
+		if (g_str_has_prefix (uri, "file:///") == FALSE) {
+			label_trunc = totem_str_middle_truncate (uri, TOTEM_MAX_RECENT_ITEM_LEN);
+		} else {
+			label_trunc = totem_str_middle_truncate
+				(gtk_recent_info_get_display_name (info),
+				 TOTEM_MAX_RECENT_ITEM_LEN);
+		}
+		escaped_label = escape_label_for_menu (label_trunc);
+		g_free (label_trunc);
+		label = g_strdup_printf ("_%d.  %s", n_items + 1, escaped_label);
+		g_free (escaped_label);
 
 		action = g_object_new (GTK_TYPE_ACTION,
-			       "name", action_name,
-			       "label", label_trunc,
-			       NULL);
+				       "name", action_name,
+				       "label", label,
+				       NULL);
 
 		g_object_set_data_full (G_OBJECT (action), "recent-info",
-				gtk_recent_info_ref (info),
-				(GDestroyNotify) gtk_recent_info_unref);
+					gtk_recent_info_ref (info),
+					(GDestroyNotify) gtk_recent_info_unref);
 		g_signal_connect (G_OBJECT (action), "activate",
-			  	G_CALLBACK (on_recent_file_item_activated),
-				totem);
+				  G_CALLBACK (on_recent_file_item_activated),
+				  totem);
 
 		gtk_action_group_add_action (totem->recent_action_group,
-				action);
+					     action);
 		g_object_unref (action);
 
 		gtk_ui_manager_add_ui (totem->ui_manager, totem->recent_ui_id,
-			       "/tmw-menubar/movie/recent-placeholder",
-			       label_trunc, action_name, GTK_UI_MANAGER_MENUITEM,
-			       FALSE);
+				       "/tmw-menubar/movie/recent-placeholder",
+				       label, action_name, GTK_UI_MANAGER_MENUITEM,
+				       FALSE);
 
 		g_free (action_name);
-		g_free (label_trunc);
+		g_free (label);
 
 		if (++n_items == 5)
 			break;
@@ -716,18 +734,6 @@ my_gnome_vfs_volume_get_mount_path (GnomeVFSVolume *volume)
 	return path;
 }
 
-static char *
-escape_device_name_for_menu (const char *name)
-{
-	char *new, **a;
-
-	a = g_strsplit (name, "_", -1);
-	new = g_strjoinv ("__", a);
-	g_strfreev (a);
-
-	return new;
-}
-
 static void
 add_device_to_menu (GObject *device, guint position, Totem *totem)
 {
@@ -764,7 +770,7 @@ add_device_to_menu (GObject *device, guint position, Totem *totem)
 		&gnome_vfs_drive_get_device_path);
 
 	g_strstrip (name);
-	escaped_name = escape_device_name_for_menu (name);
+	escaped_name = escape_label_for_menu (name);
 	g_free (name);
 	label = g_strdup_printf (_("Play Disc '%s'"), escaped_name);
 	g_free (escaped_name);
