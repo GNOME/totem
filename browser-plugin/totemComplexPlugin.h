@@ -1,4 +1,4 @@
-/* Totem Basic Plugin
+/* Totem Complex Plugin scriptable
  *
  * Copyright (C) 2004 Bastien Nocera <hadess@hadess.net>
  * Copyright (C) 2002 David A. Schleef <ds@schleef.org>
@@ -37,6 +37,8 @@ class totemScriptablePlugin : public totemIComplexPlayer,
     NS_DECL_TOTEMICOMPLEXPLAYER
     NS_DECL_NSICLASSINFO
 
+    void* operator new (size_t aSize) CPP_THROW_NEW;
+
     totemScriptablePlugin (totemPlugin *aPlugin);
 
     PRBool IsValid () { return mPlugin != nsnull; }
@@ -48,6 +50,62 @@ class totemScriptablePlugin : public totemIComplexPlayer,
     ~totemScriptablePlugin ();
 
     totemPlugin *mPlugin;
+
+    PRInt32 mNumLoops;
+    PRInt32 mVolume;
+
+    nsCString mAuthor;
+    nsCString mBackgroundColour;
+    nsCString mCopywrong;
+    nsCString mSource;
+    nsCString mTitle;
+
+    enum PlayState {
+      eState_Stopped,
+      eState_Contacting,
+      eState_Buffering,
+      eState_Playing,
+      eState_Paused,
+      eState_Seeking
+    };
+
+    enum ErrorSeverity {
+      eErrorSeverity_Panic,
+      eErrorSeverity_Severe,
+      eErrorSeverity_Critical,
+      eErrorSeverity_General,
+      eErrorSeverity_Warning,
+      eErrorSeverity_Notice,
+      eErrorSeverity_Informational,
+      eErrorSeverity_Debug
+    };
+
+    PRUint32 mPlayState : 3; /* PlayState enum values have to fit */
+
+    PRUint32 mAutoGoToURL : 1;
+    PRUint32 mAutoStart : 1;
+    PRUint32 mCentred : 1;
+    PRUint32 mConsoleEvents : 1;
+    PRUint32 mContextMenu : 1;
+    PRUint32 mDoubleSize : 1;
+    PRUint32 mFullscreen : 1;
+    PRUint32 mMessageBox : 1;
+    PRUint32 mOriginalSize : 1;
+    PRUint32 mImageStatus : 1;
+    PRUint32 mLoop : 1;
+    PRUint32 mMaintainAspect : 1;
+    PRUint32 mMute : 1;
+    PRUint32 mNoLabels : 1;
+    PRUint32 mNoLogo : 1;
+    PRUint32 mPrefetch : 1;
+    PRUint32 mShowAbout : 1;
+    PRUint32 mShowPrefs : 1;
+    PRUint32 mShowStats : 1;
+    PRUint32 mShuffle : 1;
+    PRUint32 mWantErrors : 1;
+    PRUint32 mWantKeyEvents : 1;
+    PRUint32 mWantMouseEvents : 1;
+    PRUint32 mZoomed : 1;
 };
 
 #endif /* __GMP_PLAYER_H__ */
