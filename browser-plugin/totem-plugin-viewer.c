@@ -278,7 +278,7 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 			    gtk_widget_get_direction (image) ? "ltr" : "rtl");
 		totem_statusbar_set_text (emb->statusbar, _("Stopped"));
 		totem_statusbar_set_time_and_length (emb->statusbar, 0, 0);
-		if (emb->href_uri != NULL) {
+		if (emb->href_uri != NULL && emb->hidden == FALSE) {
 			gdk_window_set_cursor
 				(GTK_WIDGET (emb->bvw)->window,
 				 emb->cursor);
@@ -292,7 +292,7 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 	case STATE_PLAYING:
 		g_snprintf (id, sizeof (id), "gtk-media-pause");
 		totem_statusbar_set_text (emb->statusbar, _("Playing"));
-		if (emb->href_uri == NULL) {
+		if (emb->href_uri == NULL && emb->hidden == FALSE) {
 			gdk_window_set_cursor
 				(GTK_WIDGET (emb->bvw)->window,
 				 NULL);

@@ -1,5 +1,10 @@
 2007-01-29  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_set_state):
+	Avoid warnings when changing playstate and hidden (again!)
+
+2007-01-29  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser-qt.c:
 	(totem_pl_parser_add_quicktime_rtsptextrtsp): Handle DOS QuickTime
 	link files (Closes: #402040)
