@@ -303,11 +303,11 @@ AC_SUBST(GTK_LIBS)
 AC_MSG_CHECKING([whether to compile the browser plugins])
 
 AC_ARG_ENABLE([browser-plugins],
-	AS_HELP_STRING([--enable-mozilla],[compile the mozilla plugin]),
+	[AS_HELP_STRING([--enable-browser-plugins],[compile the totem browser plugins])],
 	[],[enable_browser_plugins=autodetect])
 
 # Backward compatibility
-AC_ARG_ENABLE([mozilla],[],[enable_browser_plugins=$enableval],[enable_browser_plugins=autodetect])
+AC_ARG_ENABLE([mozilla],[],[enable_browser_plugins=$enableval],[])
 
 AC_MSG_RESULT([$enable_browser_plugins])
 
