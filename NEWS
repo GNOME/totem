@@ -1,5 +1,16 @@
 New features and significant updates in version...
 
+2.16.5:
+ * Still startup properly if there's no soundcards on the machine
+ * Make the "Eject" menu item default to unsensitive
+ * GStreamer backend:
+   - Report an "end of file" when seeking past the end of a stream
+   - Report whether a stream is seekable properly, instead of guessing
+   - Handle "progress" messages from the QuickTime demuxer in newer GStreamer
+ * Playlist parser:
+   - Don't crash when an XSPF playlist doesn't have URLs
+   - Avoid using realpath(), to avoid crashes on NetBSD
+
 2.16.4:
  * Make Totem remember the width of the sidebar when Totem was maximised on exit
  * Fix session restore
