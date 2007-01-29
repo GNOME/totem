@@ -49,13 +49,19 @@ totem_pl_parser_add_quicktime_rtsptextrtsp (TotemPlParser *parser,
 					    gpointer data)
 {
 	char *contents = NULL;
+	const char *split_char;
 	int size;
 	char **lines;
 
 	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
-	lines = g_strsplit (contents, "\n", 0);
+	if (strstr(contents,"\x0d") == NULL)
+		split_char = "\n"; 
+	else
+		split_char = "\x0d\n";
+
+	lines = g_strsplit (contents, split_char, 0);
 	g_free (contents);
 
 	totem_pl_parser_add_one_url (parser, lines[0] + strlen ("RTSPtext"), NULL);

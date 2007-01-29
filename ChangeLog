@@ -1,5 +1,11 @@
 2007-01-29  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser-qt.c:
+	(totem_pl_parser_add_quicktime_rtsptextrtsp): Handle DOS QuickTime
+	link files (Closes: #402040)
+
+2007-01-29  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-menu.c: (add_lang_action), (create_lang_actions):
 	Avoid leaking data from the language hash-table, escape languages
 	before putting them in the subtitles or languages menu
