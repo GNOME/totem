@@ -47,7 +47,7 @@ for i in $MIMETYPES ; do
 	schema;
 done
 
-MIMETYPES=`cat $1 | grep -v | grep "\/" | grep audio | grep -v "audio/x-pn-realaudio"`
+MIMETYPES=`cat $1 | grep "\/" | grep audio | grep -v "audio/x-pn-realaudio"`
 
 for i in $MIMETYPES ; do
 	DIR=`echo $i | sed 's,/,@,'`
