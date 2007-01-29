@@ -1,5 +1,19 @@
 2007-01-29  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/Makefile.am:
+	* src/plparse/plparser.symbols:
+	* src/plparse/test-parser.c: (main):
+	* src/plparse/totem-pl-parser-private.h:
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_add_url_valist),
+	(totem_pl_parser_add_one_url), (totem_pl_resolve_url),
+	(totem_pl_parser_parse_internal): Only export public symbols in the
+	library to avoid the symbol-snatchers, const a few functions as
+	required, return an error when there was an error parsing,
+	Avoid crashes when the filename tells us it's an MP3, but we can't
+	verify it (Closes: #400702)
+
+2007-01-29  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: Patch from Christian Persch <chpe@svn.gnome.org>
 	to disable the browser plugin correctly (Closes: #401561)
 

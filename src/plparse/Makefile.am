@@ -86,6 +86,7 @@ libtotem_plparser_la_LIBADD = \
 
 libtotem_plparser_la_LDFLAGS =			\
 	-version-info $(PLPARSER_LT_VERSION)	\
+	-export-symbols $(srcdir)/plparser.symbols \
 	-no-undefined				\
 	$(AM_LDFLAGS)
 
@@ -157,6 +158,7 @@ CLEANFILES = \
 	stamp-totem-pl-parser-builtins.h \
 	$(BUILT_SOURCES)
 
-EXTRA_DIST = \
-	totemplparser-marshal.list \
-	totem-pl-parser-features.h.in
+EXTRA_DIST =				\
+	totemplparser-marshal.list	\
+	totem-pl-parser-features.h.in	\
+	plparser.symbols

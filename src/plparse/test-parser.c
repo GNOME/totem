@@ -3,10 +3,12 @@
 #include <locale.h>
 
 #include <glib.h>
+#include <unistd.h>
+#include <stdlib.h>
 #include <libgnomevfs/gnome-vfs.h>
 
-#include "totem-pl-parser.c"
-#include "totem-pl-parser-lines.c"
+#include "totem-pl-parser.h"
+#include "totem-pl-parser-mini.h"
 
 #define USE_DATA
 
@@ -27,6 +29,7 @@ header (const char *message)
 	g_print ("\n");
 }
 
+#if 0
 static void
 test_relative_real (const char *url, const char *output)
 {
@@ -66,7 +69,7 @@ test_relative (void)
 	test_relative_real ("http://foobar.com/test.avi",
 			"/home/hadess/test/file.m3u");
 }
-
+#endif
 static void
 entry_added (TotemPlParser *parser, const char *uri, const char *title,
 		const char *genre, gpointer data)
@@ -297,7 +300,9 @@ int main (int argc, char **argv)
 	}
 
 	if (files == NULL) {
+#if 0
 		test_relative ();
+#endif
 		test_parsing ();
 	} else {
 		if (option_data) {

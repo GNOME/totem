@@ -704,6 +704,7 @@ totem_pl_parser_finalize (GObject *object)
 	G_OBJECT_CLASS (totem_pl_parser_parent_class)->finalize (object);
 }
 
+//FIXME remove ?
 static gboolean
 totem_pl_parser_check_utf8 (const char *title)
 {
@@ -760,10 +761,10 @@ totem_pl_parser_add_url_valist (TotemPlParser *parser,
 		name = va_arg (var_args, char*);
 	}
 
-	if (url == NULL) {
-		g_warning ("No URL passed");
-		g_object_unref (G_OBJECT (parser));
-		return;
+	g_assert (url != NULL);
+
+	if (parser->priv->disable_unsafe != FALSE) {
+		//FIXME fix this! 396710
 	}
 
 	g_signal_emit (G_OBJECT (parser), totem_pl_parser_table_signals[ENTRY],
@@ -791,14 +792,11 @@ totem_pl_parser_add_url (TotemPlParser *parser,
 void
 totem_pl_parser_add_one_url (TotemPlParser *parser, const char *url, const char *title)
 {
-	g_signal_emit (G_OBJECT (parser), totem_pl_parser_table_signals[ENTRY],
-		       0, url,
-		       totem_pl_parser_check_utf8 (title) ? title : NULL,
-		       NULL);
+	totem_pl_parser_add_url (parser, "url", url, "title", title, NULL);
 }
 
 char *
-totem_pl_resolve_url (char *base, char *url)
+totem_pl_resolve_url (const char *base, const char *url)
 {
 	GnomeVFSURI *base_uri, *new;
 	char *resolved;
@@ -1022,11 +1020,14 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url,
 	/* If we're at the top-level of the parsing, try to get more
 	 * data from the playlist parser */
 	if (strcmp (mimetype, AUDIO_MPEG_TYPE) == 0 && parser->priv->recurse_level == 0 && data == NULL) {
-		g_free (mimetype);
-		mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data, parser);
-		DEBUG(g_print ("_get_mime_type_with_data for '%s' returned '%s' (was %s)\n", url, mimetype ? mimetype : "NULL", AUDIO_MPEG_TYPE));
+		char *tmp;
+		tmp = my_gnome_vfs_get_mime_type_with_data (url, &data, parser);
+		if (tmp != NULL) {
+			g_free (mimetype);
+			mimetype = tmp;
+		}
+		DEBUG(g_print ("_get_mime_type_with_data for '%s' returned '%s' (was %s)\n", url, mimetype, AUDIO_MPEG_TYPE));
 	}
-
 
 	if (totem_pl_parser_mimetype_is_ignored (parser, mimetype) != FALSE) {
 		g_free (mimetype);
@@ -1085,10 +1086,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url,
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
 
-	if (ret == TOTEM_PL_PARSER_RESULT_SUCCESS)
-		return TOTEM_PL_PARSER_RESULT_SUCCESS;
-	else
-		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
+	return ret;
 }
 
 TotemPlParserResult

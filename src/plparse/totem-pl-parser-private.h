@@ -57,7 +57,7 @@ char *totem_pl_parser_read_ini_line_string	(char **lines, const char *key,
 int   totem_pl_parser_read_ini_line_int		(char **lines, const char *key);
 char *totem_pl_parser_read_ini_line_string_with_sep (char **lines, const char *key,
 						     gboolean dos_mode, const char *sep);
-char *totem_pl_resolve_url			(char *base, char *url);
+char *totem_pl_resolve_url			(const char *base, const char *url);
 char *totem_pl_parser_base_url			(const char *url);
 
 #ifndef TOTEM_PL_PARSER_MINI
