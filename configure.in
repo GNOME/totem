@@ -2,7 +2,7 @@ AC_PREREQ(2.52)
 
 m4_define(totem_version_major, 2)
 m4_define(totem_version_minor, 17)
-m4_define(totem_version_micro, 5)
+m4_define(totem_version_micro, 90)
 
 AC_INIT([totem],
         [totem_version_major.totem_version_minor.totem_version_micro],
@@ -45,7 +45,7 @@ DBUS_REQS=0.61
 # - If binary compatibility has been broken (eg removed or changed interfaces)
 #   change to C+1:0:0
 # - If the interface is the same as the previous version, change to C:R+1:A
-PLPARSER_LT_VERSION=6:2:5
+PLPARSER_LT_VERSION=6:3:5
 AC_SUBST(PLPARSER_LT_VERSION)
 
 TOTEM_VERSION_MAJOR=totem_version_major

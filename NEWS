@@ -1,5 +1,34 @@
 New features and significant updates in version...
 
+2.17.90
+* Fix build with older GCCs, older Mozillas, "-j2", and Solaris
+* Add support for the new "Media Player keys" infrastructure in
+  GNOME 2.18
+* Append "#X" number to duplicate languages in the menu entries
+* Add "TrueAudio" as a supported file type
+* Add an uninstalled pkgconfig file for the playlist parser
+* Fix launching Totem remotely (broken by GOption work earlier in 2.17.x)
+* Make GTK+-only version compile again
+* Fix disabling the browser plugin using configure
+* Playlist parser:
+  - Only export public symbols from the library
+  - Avoid crashing when an MP3 that we can't get info about is being parsed
+* Browser plugin:
+  - Add stubs of Javascript support for the NarrowSpace (Quicktime-
+    compatible) and Complex (Real/Helix-compatible) plugins
+  - Only set the "hand" cursor when we're ready to be clicked
+  - Only stop using video acceleration when the video size is given
+* Thumbnailer:
+  - Avoid crashes with newer version of GLib
+  - Add a --verbose output
+* GStreamer:
+  - Make mouse events work properly while playing
+  - When reaching the end of a file while seeking, go to the next
+    item in the list, instead of getting closer and closer to the end
+  - Show an error when we're missing the video decoder for a file
+  - Avoid reentrancy errors by handling errors asynchronously (avoids
+    bad state when clicking too fast)
+
 2.17.5
 * Make GStreamer the default media backend
 * Implement icy:// playback
