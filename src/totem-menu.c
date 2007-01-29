@@ -241,29 +241,27 @@ add_lang_action (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 		int lang_id, GSList **group)
 {
 	const char *full_lang;
+	char *label;
 	char *name;
 	GtkAction *action;
 
 	full_lang = totem_lang_get_full (lang);
-
+	label = escape_label_for_menu (full_lang ? full_lang : lang);
 	name = g_strdup_printf ("%s-%d", prefix, lang_id);
 
 	action = g_object_new (GTK_TYPE_RADIO_ACTION,
-			"name", name,
-			"label", full_lang ? full_lang : lang,
-			"value", lang_id,
-			NULL);
+			       "name", name,
+			       "label", label,
+			       "value", lang_id,
+			       NULL);
+	g_free (label);
 
-	gtk_radio_action_set_group (GTK_RADIO_ACTION (action),
-			*group);
-
+	gtk_radio_action_set_group (GTK_RADIO_ACTION (action), *group);
 	*group = gtk_radio_action_get_group (GTK_RADIO_ACTION (action));
-
 	gtk_action_group_add_action (action_group, action);
 	g_object_unref (action);
-
 	gtk_ui_manager_add_ui (totem->ui_manager, ui_id,
-			path, name, name, GTK_UI_MANAGER_MENUITEM, FALSE);
+			       path, name, name, GTK_UI_MANAGER_MENUITEM, FALSE);
 	g_free (name);
 
 	return action;
@@ -290,7 +288,7 @@ create_lang_actions (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 			_("Auto"), -1, &group);
 
 	i = 0;
-	lookup = g_hash_table_new (g_str_hash, g_str_equal);
+	lookup = g_hash_table_new_full (g_str_hash, g_int_equal, g_free, NULL);
 
 	for (l = list; l != NULL; l = l->next)
 	{
@@ -304,7 +302,7 @@ create_lang_actions (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 		}
 
 		add_lang_action (totem, action_group, ui_id, path, prefix,
-				action_data, i, &group);
+				 action_data, i, &group);
  		i++;
 	}
 
