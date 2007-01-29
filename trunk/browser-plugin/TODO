@@ -1,0 +1,28 @@
+Plugin:
+- get info about play state, URL etc back from viewer to the plugin
+- support all <embed> and <object> attributes that the legacy plugins support
+- there still seem to be some unnecessary symbols exported in the plugin .so's
+- use peer-2-peer DBUS instead of session bus
+- (maybe) use libdbus directly instead of dbus-glib
+- unify playlist handling into the viewer (is it possible to write a gstreamer element
+  that handles the playlist internally?)
+- make StreamAsFile use async calls; need to keep a link to the file around!!
+- put back narrowspace URL extension parsing
+- use nsCOMPtr<> once the linking has been figured out (libxpcomglue_s)
+- invert DBUS-OpenStream/NPN_GetURL order: this is necessary so we can push the real stream URI
+  to the viewer (for use as base uri for redirects)
+
+Viewer:
+- show totem logo image when waiting for click to start?
+
+GMP plugin:
+- write IDL files (where [_not_ MSDN !] to find documentation?)
+
+Complex plugin:
+- write IDL file (nsIHXPlayer.idl available, but incompatible with totem's
+  licence exception; is the exception needed for the *plugin* itself?)
+- implement the various 'controls' types in the viewer
+- in the viewer, cope with the 'main' window being removed? (maybe reparent to a hidden window)
+
+NarrowSpace plugin:
+- write IDL file (where to find documentation?)

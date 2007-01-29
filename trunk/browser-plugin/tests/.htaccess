@@ -1,0 +1,12 @@
+Options Indexes FollowSymLinks
+RewriteEngine on
+
+#AddType video/x-msvideo .avi
+
+# For test #1
+AddType video/divx .avi
+# FIXME this should be video/x-msvideo instead
+
+# For test #2
+RewriteRule mjpeg-totem-logo.mov mjpeg-totem-logo.avi
+Addtype video/quicktime mjpeg-totem-logo.mov
