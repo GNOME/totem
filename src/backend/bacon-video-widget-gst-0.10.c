@@ -2521,7 +2521,7 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
       if (is_error (e, CORE, MISSING_PLUGIN)) {
         /* should be exactly one missing thing (source or converter) */
         msg = g_strdup_printf (_("The playback of this movie requires a '%s' "
-          "plugin, which is not installed."), descs[0]);
+          "plugin which is not installed."), descs[0]);
       } else {
         gchar *desc_list;
 
