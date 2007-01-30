@@ -1,5 +1,14 @@
 2007-01-30  Tim-Philipp Müller  <tim at centricular dot net>
 
+	* src/totem-menu.c: (create_lang_actions):
+	  Don't let hash table take ownership of and free strings that it
+	  doesn't own (causes crashes in totem_sublang_update() when accessing
+	  already freed memory or trying to free it again); also fix up hash
+	  table usage so that it really detects equal language strings.
+	  (Closes: #402512)
+
+2007-01-30  Tim-Philipp Müller  <tim at centricular dot net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c:
 	(parse_stream_info), (has_subp), (get_stream_info_objects_for_type),
 	(get_lang_list_for_type), (bacon_video_widget_get_subtitles),
