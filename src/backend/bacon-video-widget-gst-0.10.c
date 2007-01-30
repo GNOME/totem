@@ -222,6 +222,8 @@ static void size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw);
 static void bvw_process_pending_tag_messages (BaconVideoWidget * bvw);
 static void bvw_stop_play_pipeline (BaconVideoWidget * bvw);
 static GError* bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage *m);
+static GList * get_stream_info_objects_for_type (BaconVideoWidget * bvw,
+    const gchar * typestr);
 
 static GtkWidgetClass *parent_class = NULL;
 
@@ -1780,39 +1782,30 @@ static void get_visualization_size (BaconVideoWidget *bvw,
 static void
 parse_stream_info (BaconVideoWidget *bvw)
 {
-  GList *streaminfo = NULL;
+  GList *audio_streams, *video_streams, *l;
   GstPad *videopad = NULL;
 
-  g_object_get (bvw->priv->play, "stream-info", &streaminfo, NULL);
-  streaminfo = g_list_copy (streaminfo);
-  g_list_foreach (streaminfo, (GFunc) g_object_ref, NULL);
-  for ( ; streaminfo != NULL; streaminfo = streaminfo->next) {
-    GObject *info = streaminfo->data;
-    gint type;
-    GParamSpec *pspec;
-    GEnumValue *val;
+  audio_streams = get_stream_info_objects_for_type (bvw, "audio");
+  video_streams = get_stream_info_objects_for_type (bvw, "video");
 
-    if (!info)
-      continue;
-    g_object_get (info, "type", &type, NULL);
-    pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
-    val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
+  bvw->priv->media_has_video = FALSE;
+  if (video_streams) {
+    bvw->priv->media_has_video = TRUE;
+    if (bvw->priv->video_window)
+      gdk_window_show (bvw->priv->video_window);
+    for (l = video_streams; videopad == NULL && l != NULL; l = l->next) {
+      g_object_get (l->data, "object", &videopad, NULL);
+    }
+  }
 
-    if (!g_ascii_strcasecmp (val->value_nick, "audio")) {
-      bvw->priv->media_has_audio = TRUE;
-      if (!bvw->priv->media_has_video && bvw->priv->video_window) {
-        if (bvw->priv->show_vfx) {
-          gdk_window_show (bvw->priv->video_window);
-        } else {
-          gdk_window_hide (bvw->priv->video_window);
-        }
-      }
-    } else if (!g_ascii_strcasecmp (val->value_nick, "video")) {
-      bvw->priv->media_has_video = TRUE;
-      if (bvw->priv->video_window)
+  bvw->priv->media_has_audio = FALSE;
+  if (audio_streams) {
+    bvw->priv->media_has_audio = TRUE;
+    if (!bvw->priv->media_has_video && bvw->priv->video_window) {
+      if (bvw->priv->show_vfx) {
         gdk_window_show (bvw->priv->video_window);
-      if (!videopad) {
-        g_object_get (info, "object", &videopad, NULL);
+      } else {
+        gdk_window_hide (bvw->priv->video_window);
       }
     }
   }
@@ -1826,14 +1819,16 @@ parse_stream_info (BaconVideoWidget *bvw)
     }
     g_signal_connect (videopad, "notify::caps",
         G_CALLBACK (caps_set), bvw);
-    /* FIXME: don't we need to unref the video pad? (tpm) */
+    gst_object_unref (videopad);
   } else if (bvw->priv->show_vfx) {
     get_visualization_size (bvw, &bvw->priv->video_width,
         &bvw->priv->video_height, NULL, NULL);
   }
 
-  g_list_foreach (streaminfo, (GFunc) g_object_unref, NULL);
-  g_list_free (streaminfo);
+  g_list_foreach (audio_streams, (GFunc) g_object_unref, NULL);
+  g_list_free (audio_streams);
+  g_list_foreach (video_streams, (GFunc) g_object_unref, NULL);
+  g_list_free (video_streams);
 }
 
 static void
@@ -2012,36 +2007,15 @@ bacon_video_widget_get_backend_name (BaconVideoWidget * bvw)
 static gboolean
 has_subp (BaconVideoWidget * bvw)
 {
-  GList *streaminfo = NULL;
-  gboolean res = FALSE;
+  GList *list;
 
-  if (bvw->priv->play == NULL || bvw->com->mrl == NULL)
+  list = get_stream_info_objects_for_type (bvw, "subpicture");
+  if (list == NULL)
     return FALSE;
 
-  g_object_get (G_OBJECT (bvw->priv->play), "stream-info", &streaminfo, NULL);
-  streaminfo = g_list_copy (streaminfo);
-  g_list_foreach (streaminfo, (GFunc) g_object_ref, NULL);
-  for ( ; streaminfo != NULL; streaminfo = streaminfo->next) {
-    GObject *info = streaminfo->data;
-    gint type;
-    GParamSpec *pspec;
-    GEnumValue *val;
-
-    if (!info)
-      continue;
-    g_object_get (info, "type", &type, NULL);
-    pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
-    val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
-
-    if (strstr (val->value_name, "SUBPICTURE")) {
-      res = TRUE;
-      break;
-    }
-  }
-  g_list_foreach (streaminfo, (GFunc) g_object_unref, NULL);
-  g_list_free (streaminfo);
-
-  return res;
+  g_list_foreach (list, (GFunc) g_object_unref, NULL);
+  g_list_free (list);
+  return TRUE;
 }
 
 int
@@ -2099,80 +2073,77 @@ bacon_video_widget_has_previous_track (BaconVideoWidget *bvw)
 static GList *
 get_stream_info_objects_for_type (BaconVideoWidget * bvw, const gchar * typestr)
 {
-  GList *streaminfo = NULL, *ret = NULL;
+  GValueArray *info_arr = NULL;
+  GList *ret = NULL;
+  guint i;
 
   if (bvw->priv->play == NULL || bvw->com->mrl == NULL)
     return NULL;
 
-  g_object_get (G_OBJECT (bvw->priv->play), "stream-info", &streaminfo, NULL);
-  streaminfo = g_list_copy (streaminfo);
-  g_list_foreach (streaminfo, (GFunc) g_object_ref, NULL);
-  for ( ; streaminfo != NULL; streaminfo = streaminfo->next) {
-    GObject *info;
+  g_object_get (bvw->priv->play, "stream-info-value-array", &info_arr, NULL);
+  if (info_arr == NULL)
+    return NULL;
 
-    info = streaminfo->data;
-    if (info) {
+  for (i = 0; i < info_arr->n_values; ++i) {
+    GObject *info_obj;
+    GValue *val;
+
+    val = g_value_array_get_nth (info_arr, i);
+    info_obj = g_value_get_object (val);
+    if (info_obj) {
       GParamSpec *pspec;
       GEnumValue *val;
-      gint type;
+      gint type = -1;
 
-      g_object_get (info, "type", &type, NULL);
-      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
+      g_object_get (info_obj, "type", &type, NULL);
+      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info_obj), "type");
       val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
-      if (val && g_ascii_strcasecmp (val->value_nick, typestr) == 0) {
-        ret = g_list_prepend (ret, g_object_ref (info));
+      if (val) {
+        if (g_ascii_strcasecmp (val->value_nick, typestr) == 0 ||
+            g_ascii_strcasecmp (val->value_name, typestr) == 0) {
+          ret = g_list_prepend (ret, g_object_ref (info_obj));
+        }
       }
     }
   }
-  g_list_foreach (streaminfo, (GFunc) g_object_unref, NULL);
-  g_list_free (streaminfo);
+  g_value_array_free (info_arr);
+
   return g_list_reverse (ret);
 }
 
 static GList *
-get_list_of_type (BaconVideoWidget * bvw, const gchar * type_name)
+get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
 {
-  GList *streaminfo = NULL, *ret = NULL;
+  GList *list, *l;
+  GList *ret = NULL;
   gint num = 0;
 
-  if (bvw->priv->play == NULL || bvw->com->mrl == NULL)
+  list = get_stream_info_objects_for_type (bvw, type_name);
+
+  if (list == NULL)
     return NULL;
 
-  g_object_get (G_OBJECT (bvw->priv->play), "stream-info", &streaminfo, NULL);
-  streaminfo = g_list_copy (streaminfo);
-  g_list_foreach (streaminfo, (GFunc) g_object_ref, NULL);
-  for ( ; streaminfo != NULL; streaminfo = streaminfo->next) {
-    GObject *info = streaminfo->data;
-    gint type;
-    GParamSpec *pspec;
-    GEnumValue *val;
+  for (l = list; l != NULL; l = l->next) {
     gchar *lc = NULL, *cd = NULL;
 
-    if (!info)
-      continue;
-    g_object_get (info, "type", &type, NULL);
-    pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info), "type");
-    val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
-    if (g_ascii_strcasecmp (val->value_nick, type_name) == 0) {
-      g_object_get (info, "codec", &cd, "language-code", &lc, NULL);
-
-      if (lc) {
-        ret = g_list_prepend (ret, lc);
-        g_free (cd);
-      } else if (cd) {
-        ret = g_list_prepend (ret, cd);
-      } else {
-        ret = g_list_prepend (ret, g_strdup_printf ("%s %d", type_name, num++));
-      }
+    g_object_get (l->data, "codec", &cd, "language-code", &lc, NULL);
+    if (lc) {
+      ret = g_list_prepend (ret, lc);
+      g_free (cd);
+    } else if (cd) {
+      ret = g_list_prepend (ret, cd);
+    } else {
+      ret = g_list_prepend (ret, g_strdup_printf ("%s %d", type_name, num++));
     }
   }
-  g_list_foreach (streaminfo, (GFunc) g_object_unref, NULL);
-  g_list_free (streaminfo);
+  g_list_foreach (list, (GFunc) g_object_unref, NULL);
+  g_list_free (list);
 
   return g_list_reverse (ret);
 }
 
-GList * bacon_video_widget_get_subtitles (BaconVideoWidget * bvw)
+GList *
+bacon_video_widget_get_subtitles (BaconVideoWidget * bvw)
 {
   GList *list;
 
@@ -2180,19 +2151,20 @@ GList * bacon_video_widget_get_subtitles (BaconVideoWidget * bvw)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
   g_return_val_if_fail (bvw->priv->play != NULL, NULL);
 
-  if (!(list =  get_list_of_type (bvw, "SUBPICTURE")))
-    list = get_list_of_type (bvw, "TEXT");
+  if (!(list =  get_lang_list_for_type (bvw, "SUBPICTURE")))
+    list = get_lang_list_for_type (bvw, "TEXT");
 
   return list;
 }
 
-GList * bacon_video_widget_get_languages (BaconVideoWidget * bvw)
+GList *
+bacon_video_widget_get_languages (BaconVideoWidget * bvw)
 {
   g_return_val_if_fail (bvw != NULL, NULL);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
   g_return_val_if_fail (bvw->priv->play != NULL, NULL);
 
-  return get_list_of_type (bvw, "AUDIO");
+  return get_lang_list_for_type (bvw, "AUDIO");
 }
 
 int
@@ -2835,6 +2807,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 gboolean
 bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
 {
+  GstStateChangeReturn ret;
   GstState cur_state;
 
   g_return_val_if_fail (bvw != NULL, FALSE);
