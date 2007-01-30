@@ -43,7 +43,7 @@
 #define WARN_UNIMPLEMENTED()\
 static PRBool warned = PR_FALSE;\
 if (!warned) {\
-	D ("WARNING! Use of unimplemented function 'totemIComplexPlayer::%s'", __FUNCTION__);\
+	D ("WARNING! Use of unimplemented function 'totemIComplexPlayer::%s'", G_GNUC_FUNCTION);\
 	warned = PR_TRUE;\
 }
 
@@ -53,7 +53,7 @@ if (!warned) {\
 #define SHOW_CALL()\
 static PRBool called = PR_FALSE;\
 if (!called) {\
-	D ("NOTE! Use of function 'totemIComplexPlayer::%s'", __FUNCTION__);\
+	D ("NOTE! Use of function 'totemIComplexPlayer::%s'", G_GNUC_FUNCTION);\
 	called = PR_TRUE;\
 }
 #else

@@ -43,7 +43,7 @@
 #define WARN_UNIMPLEMENTED()\
 static PRBool warned = PR_FALSE;\
 if (!warned) {\
-	D ("NarrowSpace scriptable: use of unimplemented function '%s'", __FUNCTION__);\
+	D ("NarrowSpace scriptable: use of unimplemented function '%s'", G_GNUC_FUNCTION);\
 	warned = PR_TRUE;\
 }
 
@@ -53,7 +53,7 @@ if (!warned) {\
 #define SHOW_CALL()\
 static PRBool called = PR_FALSE;\
 if (!called) {\
-	D ("NOTE! Use of function 'totemINarrowSpace::%s'", __FUNCTION__);\
+	D ("NOTE! Use of function 'totemINarrowSpace::%s'", G_GNUC_FUNCTION);\
 	called = PR_TRUE;\
 }
 #else

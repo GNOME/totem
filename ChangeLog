@@ -1,5 +1,11 @@
 2007-01-30  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemComplexPlugin.cpp:
+	* browser-plugin/totemNarrowSpacePlugin.cpp: Remove use of __FUNCTION__
+	as it's not portable, patch by Damien Carbery (Closes: #402163)
+
+2007-01-30  Bastien Nocera  <hadess@hadess.net>
+
 	* data/mime-type-list.txt: Add video/x-theora+ogg to the list of supported
 	mime-types
 
