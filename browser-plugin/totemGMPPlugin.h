@@ -1,7 +1,8 @@
-/* Totem Basic Plugin
+/* Totem GMP plugin
  *
- * Copyright (C) 2004 Bastien Nocera <hadess@hadess.net>
- * Copyright (C) 2002 David A. Schleef <ds@schleef.org>
+ * Copyright © 2004 Bastien Nocera <hadess@hadess.net>
+ * Copyright © 2002 David A. Schleef <ds@schleef.org>
+ * Copyright © 2006, 2007 Christian Persch
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -28,8 +29,11 @@
 
 #include "totemIGMPPlayer.h"
 #include "totemIGMPControls.h"
+#include "totemIGMPSettings.h"
 
 #include "totemPlugin.h"
+
+class totemGMPSettings;
 
 class totemScriptablePlugin : public totemIGMPPlayer,
 			      public totemIGMPControls,
@@ -49,9 +53,12 @@ class totemScriptablePlugin : public totemIGMPPlayer,
     static char *PluginDescription ();
     static void PluginMimeTypes (const totemPluginMimeEntry **, PRUint32 *);
   private:
+    friend class totemGMPSettings;
+
     ~totemScriptablePlugin ();
 
     totemPlugin *mPlugin;
+    totemGMPSettings *mSettingsTearOff;
 };
 
 #endif /* __GMP_PLAYER_H__ */

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2006
+ *  Copyright © 2006-2007, Bastien Nocera <hadess@hadess.net
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -16,32 +16,38 @@
  *  Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  *  Boston, MA 02111-1307, USA.
  *
- *  $Id$
+ *  $Id: totemIGMPControls.idl,v 1.1 2006/08/11 13:25:44 chpe Exp $
  */
 
 #include "nsISupports.idl"
 
-/**
- * totemIGMPControls interface
- * 
- * @status: EXTERNAL
- * XXX incomplete
- */
+interface totemIGMPMedia;
+
 [scriptable, uuid(07f100ba-1149-40b4-8086-849f346cd6fb)]
 interface totemIGMPControls : nsISupports
 {
-  /**
-   * Pause playing.
-   */
+  /* Documentation at
+   * http://msdn.microsoft.com/library/en-us/wmpsdk11/mmp_sdk/controlsobject.asp */
+  readonly attribute long audioLanguageCount;
+  attribute long currentAudioLanguage;
+  attribute long currentAudioLanguageIndex;
+  attribute totemIGMPMedia currentItem;
+  attribute long currentMarker;
+  attribute double currentPosition;
+  readonly attribute ACString currentPositionString;
+  attribute ACString currentPositionTimecode;
+  void fastForward();
+  void fastReverse();
+  AUTF8String getAudioLanguageDescription (in long index);
+  long getAudioLanguageID (in long index);
+  AUTF8String getLanguageName (in long LCID);
+  boolean isAvailable (in ACString name);
+  void next ();
   void pause ();
-  
-  /**
-   * Start playing.
-   */
   void play ();
-  
-  /**
-   * Stop playing.
-   */
+  void playItem (in totemIGMPMedia theMediaItem);
+  void previous ();
+  void step (in long frameCount);
   void stop ();
 };
+

@@ -7,8 +7,7 @@ BUILT_SOURCES =
 
 EXTRA_DIST = \
 	plugin.symbols	\
-	TODO		\
-	totemStringGlue.h
+	TODO
 
 CLEANFILES = $(BUILT_SOURCES)
 
@@ -116,6 +115,7 @@ libtotem_basic_plugin_la_SOURCES =	\
 	totemPluginGlue.h		\
 	totemPlugin.cpp			\
 	totemPlugin.h			\
+	totemStringGlue.h		\
 	totemBasicPlugin.cpp		\
 	totemBasicPlugin.h		\
 	totemClassInfo.h		\
@@ -172,10 +172,17 @@ if ENABLE_GMP_PLUGIN
 plugin_LTLIBRARIES += libtotem-gmp-plugin.la
 
 libtotem_gmp_plugin_la_SOURCES =	\
+	totemGMPError.cpp		\
+	totemGMPError.h			\
+	totemGMPPlaylist.cpp		\
+	totemGMPPlaylist.h		\
+	totemGMPSettings.cpp		\
+	totemGMPSettings.h		\
 	totemPluginGlue.cpp		\
 	totemPluginGlue.h		\
 	totemPlugin.cpp			\
 	totemPlugin.h			\
+	totemStringGlue.h		\
 	totemGMPPlugin.cpp		\
 	totemGMPPlugin.h		\
 	totemClassInfo.h		\
@@ -236,6 +243,7 @@ libtotem_complex_plugin_la_SOURCES =	\
 	totemPluginGlue.h		\
 	totemPlugin.cpp			\
 	totemPlugin.h			\
+	totemStringGlue.h		\
 	totemComplexPlugin.cpp		\
 	totemComplexPlugin.h		\
 	totemClassInfo.h		\
@@ -296,6 +304,7 @@ libtotem_narrowspace_plugin_la_SOURCES = \
 	totemPluginGlue.h		\
 	totemPlugin.cpp			\
 	totemPlugin.h			\
+	totemStringGlue.h		\
 	totemNarrowSpacePlugin.cpp	\
 	totemNarrowSpacePlugin.h	\
 	totemClassInfo.h		\
@@ -356,6 +365,7 @@ libtotem_mully_plugin_la_SOURCES =	\
 	totemPluginGlue.h		\
 	totemPlugin.cpp			\
 	totemPlugin.h			\
+	totemStringGlue.h		\
 	totemMullYPlugin.cpp		\
 	totemMullYPlugin.h		\
 	totemClassInfo.h		\
