@@ -143,10 +143,10 @@ if test x$ENABLE_XINE = xno || test x$ENABLE_XINE = xauto; then
 	fi
 	AC_SUBST(GIMME_CODEC_LIBS)
 
-	MM="gstreamer-0.10 >= $GST_REQS gstreamer-plugins-base-0.10 >= $GSTPLUG_REQS gconf-2.0"
+	MM="gstreamer-0.10 >= $GST_REQS gstreamer-base-0.10 >= $GST_REQS gstreamer-plugins-base-0.10 >= $GSTPLUG_REQS gconf-2.0"
 	PKG_CHECK_MODULES(GST, $MM,
 			HAVE_GSTREAMER=yes, HAVE_GSTREAMER=no)
-	GST_LIBS="$GST_LIBS -lgstinterfaces-$GST_MAJORMINOR -lgstvideo-$GST_MAJORMINOR -lgstaudio-$GST_MAJORMINOR"
+	GST_LIBS="$GST_LIBS -lgstbase-$GST_MAJORMINOR -lgstinterfaces-$GST_MAJORMINOR -lgstvideo-$GST_MAJORMINOR -lgstaudio-$GST_MAJORMINOR"
 	AC_SUBST(GST_LIBS)
 	EXTRA_BACKEND_LIBS="-lgstinterfaces-$GST_MAJORMINOR -lgstvideo-$GST_MAJORMINOR -lgstaudio-$GST_MAJORMINOR"
 
