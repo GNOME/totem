@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-22 11:37+0100\n"
-"PO-Revision-Date: 2006-12-22 14:38+0300\n"
+"POT-Creation-Date: 2007-01-31 23:26+0200\n"
+"PO-Revision-Date: 2007-01-31 23:30+0300\n"
 "Last-Translator: Ihar Hrachyshka <ihar.hrachyshka@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "MIME-Version: 1.0\n"
@@ -89,41 +89,53 @@ msgid "<b>Video</b>"
 msgstr "<b>Відэа</b>"
 
 #: ../data/properties.glade.h:10
-msgid "Album:"
-msgstr "Альбом:"
+msgid "<i>Album:</i>"
+msgstr "<i>Альбом:</i>"
 
 #: ../data/properties.glade.h:11
-msgid "Artist:"
-msgstr "Выканавец:"
+msgid "<i>Artist:</i>"
+msgstr "<i>Выканаўца:</i>"
 
 #: ../data/properties.glade.h:12
-msgid "Bitrate:"
-msgstr "Бітрэйт:"
+msgid "<i>Bitrate:</i>"
+msgstr "<i>Бітрэйт:</i>"
 
 #: ../data/properties.glade.h:13
-msgid "Channels:"
-msgstr "Каналы:"
+msgid "<i>Channels:</i>"
+msgstr "<i>Каналы:</i>"
 
 #: ../data/properties.glade.h:14
-msgid "Codec:"
-msgstr "Кодак:"
+msgid "<i>Codec:</i>"
+msgstr "<i>Кодэк:</i>"
 
 #: ../data/properties.glade.h:15
-msgid "Dimensions:"
-msgstr "Памеры:"
+msgid "<i>Dimensions:</i>"
+msgstr "<i>Памеры:</i>"
 
 #: ../data/properties.glade.h:16
-msgid "Duration:"
-msgstr "Працягласьць:"
+msgid "<i>Duration:</i>"
+msgstr "<i>Працягласьць:</i>"
 
 #: ../data/properties.glade.h:17
-msgid "Framerate:"
-msgstr "Частасьць кадраў:"
+msgid "<i>Framerate:</i>"
+msgstr "<i>Частасьць кадраў:</i>"
+
+#: ../data/properties.glade.h:18
+msgid "<i>Sample rate:</i>"
+msgstr "<i>Частасьць сэмплаў:</i>"
+
+#: ../data/properties.glade.h:19
+msgid "<i>Title:</i>"
+msgstr "<i>Назва:</i>"
+
+#: ../data/properties.glade.h:20
+msgid "<i>Year:</i>"
+msgstr "<i>Год:</i>"
 
 #. Dimensions
 #. Video Codec
 #. Audio Codec
-#: ../data/properties.glade.h:18
+#: ../data/properties.glade.h:21
 #: ../src/bacon-video-widget-properties.c:153
 #: ../src/bacon-video-widget-properties.c:155
 #: ../src/bacon-video-widget-properties.c:158
@@ -137,24 +149,16 @@ msgstr "Частасьць кадраў:"
 msgid "N/A"
 msgstr "Невядома"
 
-#: ../data/properties.glade.h:19
+#: ../data/properties.glade.h:22
 #: ../src/totem-sidebar.c:108
 msgid "Properties"
 msgstr "Уласьцівасьці"
-
-#: ../data/properties.glade.h:20
-msgid "Sample rate:"
-msgstr "Частасьць сэмплаў:"
-
-#: ../data/properties.glade.h:21
-msgid "Title:"
-msgstr "Назва:"
 
 #. Title
 #. Artist
 #. Album
 #. Year
-#: ../data/properties.glade.h:22
+#: ../data/properties.glade.h:23
 #: ../src/bacon-video-widget-properties.c:142
 #: ../src/bacon-video-widget-properties.c:144
 #: ../src/bacon-video-widget-properties.c:146
@@ -162,16 +166,12 @@ msgstr "Назва:"
 msgid "Unknown"
 msgstr "Невядома"
 
-#: ../data/properties.glade.h:23
-msgid "Year:"
-msgstr "Год:"
-
 #: ../data/screenshot.glade.h:1
 msgid "<b>Preview</b>"
 msgstr "<b>Перадпрагляд</b>"
 
 #: ../data/screenshot.glade.h:2
-#: ../src/totem-screenshot.c:346
+#: ../src/totem-screenshot.c:342
 msgid "Save Screenshot"
 msgstr "Захаваць здымак экрану"
 
@@ -338,32 +338,32 @@ msgstr ""
 "Транзытны AC3"
 
 #: ../data/totem.glade.h:41
+msgid "TV-out in fullscreen by Nvidia (NTSC)"
+msgstr "TV-выхад на поўны экран праз NVidia (NTSC)"
+
+#: ../data/totem.glade.h:42
+msgid "TV-out in fullscreen by Nvidia (PAL)"
+msgstr "TV-выхад на поўны экран праз NVidia (PAL)"
+
+#: ../data/totem.glade.h:43
 msgid "Time seek bar"
 msgstr "Панэль пракруткі"
 
-#: ../data/totem.glade.h:42
+#: ../data/totem.glade.h:44
 msgid "Time:"
 msgstr "Час:"
 
 #. Title
-#: ../data/totem.glade.h:43
-#: ../src/totem.c:862
-#: ../src/totem.c:3255
-#: ../src/totem.c:3282
+#: ../data/totem.glade.h:45
+#: ../src/totem.c:974
+#: ../src/totem.c:3403
+#: ../src/totem.c:3430
 msgid "Totem Movie Player"
 msgstr "Прайгравальнік фільмаў Татэм"
 
-#: ../data/totem.glade.h:44
+#: ../data/totem.glade.h:46
 msgid "Totem Preferences"
 msgstr "Настаўленьні Татэма"
-
-#: ../data/totem.glade.h:45
-msgid "Tv-out in fullscreen by Nvidia (NTSC)"
-msgstr "TV-выхад на поўны экран праз NVidia (NTSC)"
-
-#: ../data/totem.glade.h:46
-msgid "Tv-out in fullscreen by Nvidia (PAL)"
-msgstr "TV-выхад на поўны экран праз NVidia (PAL)"
 
 #: ../data/totem.glade.h:47
 msgid "Visualisation _size:"
@@ -603,29 +603,37 @@ msgstr "%d Гц"
 msgid "Properties dialog"
 msgstr "Уласьцівасьці"
 
-#: ../src/bacon-volume.c:178
+#: ../src/bacon-volume.c:193
 msgid "Volume"
 msgstr "Гучнасьць"
 
 #. +
-#: ../src/bacon-volume.c:206
+#: ../src/bacon-volume.c:221
 msgid "+"
 msgstr "+"
 
-#: ../src/bacon-volume.c:208
+#: ../src/bacon-volume.c:223
 #: ../src/totem-options.c:47
 msgid "Volume Down"
 msgstr "Паменшыць гучнасьць"
 
 #. -
-#: ../src/bacon-volume.c:224
+#: ../src/bacon-volume.c:239
 msgid "-"
 msgstr "-"
 
-#: ../src/bacon-volume.c:226
+#: ../src/bacon-volume.c:241
 #: ../src/totem-options.c:46
 msgid "Volume Up"
 msgstr "Павялічыць гучнасьць"
+
+#: ../src/bacon-volume.c:777
+msgid "Muted"
+msgstr "Сьцішана"
+
+#: ../src/bacon-volume.c:779
+msgid "Full Volume"
+msgstr "Поўная гучнасьць"
 
 #: ../src/totem-interface.c:117
 #, c-format
@@ -634,413 +642,437 @@ msgstr "Немагчыма адкрыць інтэрфэйс \"%s\"."
 
 #: ../src/totem-interface.c:119
 #: ../src/totem-interface.c:121
-#: ../src/totem-menu.c:1261
+#: ../src/totem-menu.c:1379
 msgid "Make sure that Totem is properly installed."
 msgstr "Праверце правільнасьць усталёўкі Татэма."
 
-#: ../src/totem-menu.c:270
+#: ../src/totem-interface.c:236
+msgid "Totem is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version."
+msgstr ""
+
+#: ../src/totem-interface.c:240
+msgid "Totem is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
+msgstr ""
+
+#: ../src/totem-interface.c:244
+msgid "You should have received a copy of the GNU General Public License along with Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
+msgstr ""
+
+#: ../src/totem-interface.c:247
+msgid "Totem contains an exception to allow the use of proprietary GStreamer plugins."
+msgstr "Totem дазваляе выкарыстоўваць прапрыетарныя плагіны GStreamer."
+
+#: ../src/totem-menu.c:284
 msgid "None"
 msgstr "Няма"
 
-#: ../src/totem-menu.c:274
-#: ../src/totem-menu.c:1147
+#: ../src/totem-menu.c:288
+#: ../src/totem-menu.c:1265
 msgid "Auto"
 msgstr "Аўтаматычна"
 
-#: ../src/totem-menu.c:668
+#: ../src/totem-menu.c:774
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "Прайграць дыск \"%s\""
 
-#: ../src/totem-menu.c:671
+#: ../src/totem-menu.c:777
 #, c-format
 msgid "device%d"
 msgstr "прылада%d"
 
-#: ../src/totem-menu.c:986
+#: ../src/totem-menu.c:1093
 msgid "GTK+"
 msgstr "GTK+"
 
-#: ../src/totem-menu.c:988
+#: ../src/totem-menu.c:1095
 msgid "GNOME"
 msgstr "GNOME"
 
 #. This lists the back-end and front-end types and versions, such as
 #. * Movie Player using GStreamer 0.10.1 and GNOME
-#: ../src/totem-menu.c:994
+#: ../src/totem-menu.c:1101
 #, c-format
 msgid "Movie Player using %s and %s"
 msgstr "Прайгравальнік фільмаў, ужывае %s і %s"
 
-#: ../src/totem-menu.c:999
-#: ../browser-plugin/totem-plugin-viewer.c:1002
+#: ../src/totem-menu.c:1106
+#: ../browser-plugin/totem-plugin-viewer.c:1098
 msgid "Copyright © 2002-2006 Bastien Nocera"
 msgstr "Copyright © 2002-2005 Bastien Nocera"
 
-#: ../src/totem-menu.c:1004
+#: ../src/totem-menu.c:1111
 #: ../src/vanity.c:267
-#: ../browser-plugin/totem-plugin-viewer.c:1005
+#: ../browser-plugin/totem-plugin-viewer.c:1101
 msgid "translator-credits"
 msgstr ""
 "Віталь Хілько <dojlid@mova.org>\n"
 "Ігар Грачышка <ihar.hrachyshka@gmail.com>\n"
 "Алесь Няхайчык <nab@mail.by>"
 
-#: ../src/totem-menu.c:1079
+#: ../src/totem-menu.c:1196
 msgid "_Movie"
 msgstr "_Фільм"
 
-#: ../src/totem-menu.c:1080
+#: ../src/totem-menu.c:1197
 msgid "_Open..."
 msgstr "_Адкрыць..."
 
-#: ../src/totem-menu.c:1080
+#: ../src/totem-menu.c:1197
 msgid "Open a file"
 msgstr "Адкрыць файл"
 
-#: ../src/totem-menu.c:1081
+#: ../src/totem-menu.c:1198
 msgid "Open _Location..."
 msgstr "Адкрыць _знаходжаньне..."
 
-#: ../src/totem-menu.c:1081
+#: ../src/totem-menu.c:1198
 msgid "Open a non-local file"
 msgstr "Адкрыць немясцовы файл"
 
-#: ../src/totem-menu.c:1082
+#: ../src/totem-menu.c:1199
 msgid "_Eject"
 msgstr "Вызва_ліць"
 
-#: ../src/totem-menu.c:1083
+#: ../src/totem-menu.c:1200
 msgid "_Properties"
 msgstr "_Уласьцівасьці"
 
-#: ../src/totem-menu.c:1084
+#: ../src/totem-menu.c:1201
 msgid "Play / Pa_use"
 msgstr "_Граць / Прыпыніць"
 
-#: ../src/totem-menu.c:1084
+#: ../src/totem-menu.c:1201
 msgid "Play or pause the movie"
 msgstr "Граць / прыпыніць фільм"
 
-#: ../src/totem-menu.c:1085
+#: ../src/totem-menu.c:1202
 msgid "_Quit"
 msgstr "_Выйсьці"
 
-#: ../src/totem-menu.c:1085
+#: ../src/totem-menu.c:1202
 msgid "Quit the program"
 msgstr "Выйсьці з праграмы"
 
-#: ../src/totem-menu.c:1087
+#: ../src/totem-menu.c:1204
 msgid "_Edit"
 msgstr "_Зьмяніць"
 
-#: ../src/totem-menu.c:1088
+#: ../src/totem-menu.c:1205
 msgid "Take _Screenshot..."
 msgstr "Зрабіць _здымак экрана..."
 
-#: ../src/totem-menu.c:1088
+#: ../src/totem-menu.c:1205
 msgid "Take a screenshot"
 msgstr "Зрабіць здымак экрана"
 
-#: ../src/totem-menu.c:1089
+#: ../src/totem-menu.c:1206
+msgid "_Clear Playlist"
+msgstr "А_чысьціць сьпіс прайграваньня"
+
+#: ../src/totem-menu.c:1206
+msgid "Clear playlist"
+msgstr "Ачысьціць сьпіс прайграваньня"
+
+#: ../src/totem-menu.c:1207
 msgid "Prefere_nces"
 msgstr "_Настаўленьні"
 
-#: ../src/totem-menu.c:1091
+#: ../src/totem-menu.c:1209
 msgid "_View"
 msgstr "_Выгляд"
 
-#: ../src/totem-menu.c:1092
+#: ../src/totem-menu.c:1210
 msgid "_Fullscreen"
 msgstr "_Поўны экран"
 
-#: ../src/totem-menu.c:1092
+#: ../src/totem-menu.c:1210
 msgid "Switch to fullscreen"
 msgstr "Перайсьці ў поўнаэкранны рэжым"
 
-#: ../src/totem-menu.c:1093
+#: ../src/totem-menu.c:1211
 msgid "Fit Window to Movie"
 msgstr "Падагнаць вакно пад памеры фільма"
 
-#: ../src/totem-menu.c:1094
+#: ../src/totem-menu.c:1212
 msgid "_Resize 1:2"
 msgstr "_Маштаб 1:2"
 
-#: ../src/totem-menu.c:1094
+#: ../src/totem-menu.c:1212
 msgid "Resize to half the video size"
 msgstr "Зьменшыць памер да паловы відэа"
 
-#: ../src/totem-menu.c:1095
+#: ../src/totem-menu.c:1213
 msgid "Resize _1:1"
 msgstr "Памер _1:1"
 
-#: ../src/totem-menu.c:1095
+#: ../src/totem-menu.c:1213
 msgid "Resize to video size"
 msgstr "Звычайны маштаб"
 
-#: ../src/totem-menu.c:1096
+#: ../src/totem-menu.c:1214
 msgid "Resize _2:1"
 msgstr "Памер _2:1"
 
-#: ../src/totem-menu.c:1096
+#: ../src/totem-menu.c:1214
 msgid "Resize to twice the video size"
 msgstr "Павялічыць памер да падвойнага выдэа"
 
-#: ../src/totem-menu.c:1097
+#: ../src/totem-menu.c:1215
 msgid "_Aspect Ratio"
 msgstr "_Суадносіны экрана"
 
-#: ../src/totem-menu.c:1098
+#: ../src/totem-menu.c:1216
 msgid "Switch An_gles"
 msgstr "Зьмяніць _куты"
 
-#: ../src/totem-menu.c:1098
+#: ../src/totem-menu.c:1216
 msgid "Switch angles"
 msgstr "Зьмяніць куты"
 
 #. { "subtitles-menu", NULL, N_("S_ubtitles") },
-#: ../src/totem-menu.c:1101
+#: ../src/totem-menu.c:1219
 msgid "_Go"
 msgstr "_Ісьці"
 
-#: ../src/totem-menu.c:1102
+#: ../src/totem-menu.c:1220
 msgid "_DVD Menu"
 msgstr "Мэню _DVD"
 
-#: ../src/totem-menu.c:1102
+#: ../src/totem-menu.c:1220
 msgid "Go to the DVD menu"
 msgstr "Адкрыць мэню DVD"
 
-#: ../src/totem-menu.c:1103
+#: ../src/totem-menu.c:1221
 msgid "_Title Menu"
 msgstr "Мэню _назвы"
 
-#: ../src/totem-menu.c:1103
+#: ../src/totem-menu.c:1221
 msgid "Go to the title menu"
 msgstr "Паказаць мэню назвы"
 
-#: ../src/totem-menu.c:1104
+#: ../src/totem-menu.c:1222
 msgid "A_udio Menu"
 msgstr "Мэню а_ўдыё"
 
-#: ../src/totem-menu.c:1104
+#: ../src/totem-menu.c:1222
 msgid "Go to the audio menu"
 msgstr "Паказаць мэню аўдыё"
 
-#: ../src/totem-menu.c:1105
+#: ../src/totem-menu.c:1223
 msgid "_Angle Menu"
 msgstr "_Кутнае мэню"
 
-#: ../src/totem-menu.c:1105
+#: ../src/totem-menu.c:1223
 msgid "Go to the angle menu"
 msgstr "Паказаць кутнае мэню"
 
-#: ../src/totem-menu.c:1106
+#: ../src/totem-menu.c:1224
 msgid "_Chapter Menu"
 msgstr "Мэню _разьдзелаў"
 
-#: ../src/totem-menu.c:1106
+#: ../src/totem-menu.c:1224
 msgid "Go to the chapter menu"
 msgstr "Паказаць мэню разьдзелаў"
 
-#: ../src/totem-menu.c:1107
+#: ../src/totem-menu.c:1225
 msgid "_Next Chapter/Movie"
 msgstr "Нас_тупны разьдзел / фільм"
 
-#: ../src/totem-menu.c:1107
+#: ../src/totem-menu.c:1225
 msgid "Next chapter or movie"
 msgstr "Наступны разьдзел / фільм"
 
-#: ../src/totem-menu.c:1108
+#: ../src/totem-menu.c:1226
 msgid "_Previous Chapter/Movie"
 msgstr "Папя_рэдні разьдзел / фільм"
 
-#: ../src/totem-menu.c:1108
+#: ../src/totem-menu.c:1226
 msgid "Previous chapter or movie"
 msgstr "Папярэдні разьдзел / фільм"
 
-#: ../src/totem-menu.c:1109
+#: ../src/totem-menu.c:1227
 msgid "_Skip to..."
 msgstr "Пера_скочыць да..."
 
-#: ../src/totem-menu.c:1109
+#: ../src/totem-menu.c:1227
 msgid "Skip to a specific time"
 msgstr "Пераскочыць да пэўнага часу"
 
-#: ../src/totem-menu.c:1111
+#: ../src/totem-menu.c:1229
 msgid "_Sound"
 msgstr "_Гук"
 
 #. { "languages-menu", NULL, N_("_Languages") },
-#: ../src/totem-menu.c:1113
+#: ../src/totem-menu.c:1231
 msgid "Volume _Up"
 msgstr "Па_вялічыць гучнасьць"
 
-#: ../src/totem-menu.c:1113
+#: ../src/totem-menu.c:1231
 msgid "Volume up"
 msgstr "Павялічыць гучнасьць"
 
-#: ../src/totem-menu.c:1114
+#: ../src/totem-menu.c:1232
 msgid "Volume _Down"
 msgstr "Па_меншыць гучнасьць"
 
-#: ../src/totem-menu.c:1114
+#: ../src/totem-menu.c:1232
 msgid "Volume down"
 msgstr "Паменшыць гучнасьць"
 
-#: ../src/totem-menu.c:1116
+#: ../src/totem-menu.c:1234
 msgid "_Help"
 msgstr "_Даведка"
 
-#: ../src/totem-menu.c:1117
+#: ../src/totem-menu.c:1235
 msgid "_Contents"
 msgstr "_Зьмест"
 
-#: ../src/totem-menu.c:1117
+#: ../src/totem-menu.c:1235
 msgid "Help contents"
 msgstr "Зьмест даведкі"
 
-#: ../src/totem-menu.c:1118
+#: ../src/totem-menu.c:1236
 msgid "_About"
 msgstr "_Аб праграме"
 
-#: ../src/totem-menu.c:1122
+#: ../src/totem-menu.c:1240
 msgid "Zoom In"
 msgstr "Наблізіць"
 
-#: ../src/totem-menu.c:1122
+#: ../src/totem-menu.c:1240
 msgid "Zoom in"
 msgstr "Наблізіць"
 
-#: ../src/totem-menu.c:1123
+#: ../src/totem-menu.c:1241
 msgid "Zoom Reset"
 msgstr "Звычайны памер"
 
-#: ../src/totem-menu.c:1123
+#: ../src/totem-menu.c:1241
 msgid "Zoom reset"
 msgstr "Звычайны памер"
 
-#: ../src/totem-menu.c:1124
+#: ../src/totem-menu.c:1242
 msgid "Zoom Out"
 msgstr "Аддаліць"
 
-#: ../src/totem-menu.c:1124
+#: ../src/totem-menu.c:1242
 msgid "Zoom out"
 msgstr "Аддаліць"
 
-#: ../src/totem-menu.c:1128
-#: ../src/totem-menu.c:1133
+#: ../src/totem-menu.c:1246
+#: ../src/totem-menu.c:1251
 msgid "Skip _Forward"
 msgstr "Пераскочыць на_перад"
 
-#: ../src/totem-menu.c:1128
-#: ../src/totem-menu.c:1133
+#: ../src/totem-menu.c:1246
+#: ../src/totem-menu.c:1251
 msgid "Skip forward"
 msgstr "Пераскочыць у часе наперад"
 
-#: ../src/totem-menu.c:1129
-#: ../src/totem-menu.c:1134
+#: ../src/totem-menu.c:1247
+#: ../src/totem-menu.c:1252
 msgid "Skip _Backwards"
 msgstr "Пераскочыць на_зад"
 
-#: ../src/totem-menu.c:1129
-#: ../src/totem-menu.c:1134
+#: ../src/totem-menu.c:1247
+#: ../src/totem-menu.c:1252
 msgid "Skip backwards"
 msgstr "Пераскочыць у часе назад"
 
-#: ../src/totem-menu.c:1138
+#: ../src/totem-menu.c:1256
 msgid "_Repeat Mode"
 msgstr "_Рэжым паўтору"
 
-#: ../src/totem-menu.c:1138
+#: ../src/totem-menu.c:1256
 msgid "Set the repeat mode"
 msgstr "Выставіць рэжым паўтору"
 
-#: ../src/totem-menu.c:1139
+#: ../src/totem-menu.c:1257
 msgid "Shuff_le Mode"
 msgstr "За_блытаны рэжым"
 
-#: ../src/totem-menu.c:1139
+#: ../src/totem-menu.c:1257
 msgid "Set the shuffle mode"
 msgstr "Выставіць заблытаны рэжым"
 
-#: ../src/totem-menu.c:1140
+#: ../src/totem-menu.c:1258
 msgid "_Deinterlace"
 msgstr "_Дэінтэрлэйсінг"
 
-#: ../src/totem-menu.c:1140
+#: ../src/totem-menu.c:1258
 msgid "Deinterlace"
 msgstr "Дэінтэрлэйсінг"
 
-#: ../src/totem-menu.c:1141
+#: ../src/totem-menu.c:1259
 msgid "Always on _Top"
 msgstr "Заўсёды на_версе"
 
-#: ../src/totem-menu.c:1141
+#: ../src/totem-menu.c:1259
 msgid "Always on top"
 msgstr "Заўсёды наверсе"
 
-#: ../src/totem-menu.c:1142
+#: ../src/totem-menu.c:1260
 msgid "Show _Controls"
 msgstr "Паказаць _элемэнты кіраваньня"
 
-#: ../src/totem-menu.c:1142
+#: ../src/totem-menu.c:1260
 msgid "Show controls"
 msgstr "Паказаць элемэнты кіраваньня"
 
-#: ../src/totem-menu.c:1143
+#: ../src/totem-menu.c:1261
 msgid "_Sidebar"
 msgstr "_Бакавая панэль"
 
-#: ../src/totem-menu.c:1143
+#: ../src/totem-menu.c:1261
 msgid "Show or hide the sidebar"
 msgstr "Паказаць / схаваць бакавую панэль"
 
-#: ../src/totem-menu.c:1147
+#: ../src/totem-menu.c:1265
 msgid "Sets automatic aspect ratio"
 msgstr "Выстаўляць суадносіны экрана аўтаматычна"
 
-#: ../src/totem-menu.c:1148
+#: ../src/totem-menu.c:1266
 msgid "Square"
 msgstr "Квадратны"
 
-#: ../src/totem-menu.c:1148
+#: ../src/totem-menu.c:1266
 msgid "Sets square aspect ratio"
 msgstr "Выставіць квадратныя суадносіны экрана"
 
-#: ../src/totem-menu.c:1149
+#: ../src/totem-menu.c:1267
 msgid "4:3 (TV)"
 msgstr "4:3 (TV)"
 
-#: ../src/totem-menu.c:1149
+#: ../src/totem-menu.c:1267
 msgid "Sets 4:3 (TV) aspect ratio"
 msgstr "Выставіць суадносіны экрана як 4:3 (TV)"
 
-#: ../src/totem-menu.c:1150
+#: ../src/totem-menu.c:1268
 msgid "16:9 (Widescreen)"
 msgstr "16:9 (шырокі экран)"
 
-#: ../src/totem-menu.c:1150
+#: ../src/totem-menu.c:1268
 msgid "Sets 16:9 (Anamorphic) aspect ratio"
 msgstr "Выставіць суадносіны экрана як 16:9"
 
-#: ../src/totem-menu.c:1151
+#: ../src/totem-menu.c:1269
 msgid "2.11:1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: ../src/totem-menu.c:1151
+#: ../src/totem-menu.c:1269
 msgid "Sets 2.11:1 (DVB) aspect ratio"
 msgstr "Выставіць суадносіны экрана як 2.11:1 (DVB)"
 
-#: ../src/totem-menu.c:1211
+#: ../src/totem-menu.c:1329
 msgid "S_ubtitles"
 msgstr "С_убтытры"
 
-#: ../src/totem-menu.c:1217
+#: ../src/totem-menu.c:1335
 msgid "_Languages"
 msgstr "_Мовы"
 
-#: ../src/totem-menu.c:1260
+#: ../src/totem-menu.c:1378
 msgid "Couldn't load the 'ui description' file"
 msgstr "Немагчыма адкрыць файл інтэрфэйсу"
 
@@ -1053,13 +1085,13 @@ msgid "Play/Pause"
 msgstr "Граць / Прыпыніць"
 
 #: ../src/totem-options.c:40
-#: ../src/totem.c:286
 #: ../src/totem.c:294
+#: ../src/totem.c:302
 msgid "Play"
 msgstr "Прайграць"
 
 #: ../src/totem-options.c:41
-#: ../src/totem.c:280
+#: ../src/totem.c:288
 msgid "Pause"
 msgstr "Прыпыніць"
 
@@ -1099,15 +1131,16 @@ msgstr "Дадаць"
 msgid "Replace"
 msgstr "Замяніць"
 
-#: ../src/totem-options.c:53
+#. FIXME translate
+#: ../src/totem-options.c:54
 msgid "Seek"
 msgstr "Пракруціць"
 
-#: ../src/totem-options.c:54
+#: ../src/totem-options.c:55
 msgid "Playlist index"
 msgstr "Зьмест сьпіса прайграваньня"
 
-#: ../src/totem-options.c:55
+#: ../src/totem-options.c:56
 msgid "Movies to play"
 msgstr "Граць фільмы"
 
@@ -1120,7 +1153,7 @@ msgid "Remove file from playlist"
 msgstr "Выдаліць файл зь сьпіса прайграваньня"
 
 #: ../src/totem-playlist.c:144
-msgid "_Copy location"
+msgid "_Copy Location"
 msgstr "С_капіяваць знаходжаньне"
 
 #: ../src/totem-playlist.c:144
@@ -1200,26 +1233,26 @@ msgstr "Аўдыё/Відэа"
 msgid "Video"
 msgstr "Відэа"
 
-#: ../src/totem-screenshot.c:151
-#: ../src/totem-screenshot.c:162
+#: ../src/totem-screenshot.c:149
+#: ../src/totem-screenshot.c:160
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Здымак%d.png"
 
-#: ../src/totem-screenshot.c:204
+#: ../src/totem-screenshot.c:202
 #, c-format
 msgid "File '%s' already exists."
 msgstr "Файл \"%s\" ужо існуе."
 
-#: ../src/totem-screenshot.c:206
+#: ../src/totem-screenshot.c:204
 msgid "The screenshot was not saved"
 msgstr "Здымак экрана не запісаны"
 
-#: ../src/totem-screenshot.c:217
+#: ../src/totem-screenshot.c:215
 msgid "There was an error saving the screenshot."
 msgstr "Адбылася памылка запісу здымка экрана."
 
-#: ../src/totem-screenshot.c:250
+#: ../src/totem-screenshot.c:248
 msgid "Screenshot.png"
 msgstr "Здымак.png"
 
@@ -1236,9 +1269,9 @@ msgid "Style of bevel around the statusbar text"
 msgstr "Стыль скосаў вакол тэксту радка стану"
 
 #: ../src/totem-statusbar.c:126
-#: ../src/totem.c:290
-#: ../src/totem.c:848
-#: ../browser-plugin/totem-plugin-viewer.c:280
+#: ../src/totem.c:298
+#: ../src/totem.c:960
+#: ../browser-plugin/totem-plugin-viewer.c:279
 msgid "Stopped"
 msgstr "Спынена"
 
@@ -1466,138 +1499,138 @@ msgstr "Падтрымліваемыя файлы"
 msgid "Select Movies or Playlists"
 msgstr "Выберыце фільмы / сьпісы прайграваньня"
 
-#: ../src/totem.c:278
-#: ../browser-plugin/totem-plugin-viewer.c:290
+#: ../src/totem.c:286
+#: ../browser-plugin/totem-plugin-viewer.c:294
 msgid "Playing"
 msgstr "Прайграецца"
 
-#: ../src/totem.c:284
-#: ../browser-plugin/totem-plugin-viewer.c:286
+#: ../src/totem.c:292
+#: ../browser-plugin/totem-plugin-viewer.c:290
 msgid "Paused"
 msgstr "Прыпынена"
 
-#: ../src/totem.c:336
+#: ../src/totem.c:344
 msgid "Totem could not eject the optical media."
 msgstr "Татэм ня можа вызваліць аптычны дыск."
 
-#: ../src/totem.c:370
-#: ../src/totem.c:399
-#: ../src/totem.c:955
-#: ../src/totem.c:1065
+#: ../src/totem.c:378
+#: ../src/totem.c:407
+#: ../src/totem.c:1074
+#: ../src/totem.c:1184
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Татэм ня можа прайграць \"%s\"."
 
-#: ../src/totem.c:460
+#: ../src/totem.c:468
 #, c-format
 msgid "Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."
 msgstr "Татэм ня можа прайграць гэты мэдыяфайл (%s), бо ў Вас няма неабходных плагінаў для адкрыцьця такіх файлаў."
 
-#: ../src/totem.c:461
+#: ../src/totem.c:469
 msgid "Please install the necessary plugins and restart Totem to be able to play this media."
 msgstr "Усталюйце неабходныя плагіны і перазапусьціце Татэм, каб ён змог прайграць гэтыя мэдыяфайлы."
 
-#: ../src/totem.c:469
+#: ../src/totem.c:477
 #, c-format
 msgid "Totem could not play this media (%s) although a plugin is present to handle it."
 msgstr "Татэм ня можа прайграць гэты мэдыфайл (%s), хаця плагін для адкрыцця гэтага файла ўсталяваны."
 
-#: ../src/totem.c:470
+#: ../src/totem.c:478
 msgid "You might want to check that a disc is present in the drive and that it is correctly configured."
 msgstr "Праверце наяўнасьць дыска ў прыстасаваньні і правільнасьць настаўленьняў прыстасаваньня."
 
-#: ../src/totem.c:498
+#: ../src/totem.c:506
 msgid "Totem was not able to play this disc."
 msgstr "Татэм ня можа прайграць гэты дыск."
 
-#: ../src/totem.c:499
-#: ../src/totem.c:3112
-#: ../browser-plugin/totem-plugin-viewer.c:1320
+#: ../src/totem.c:507
+#: ../src/totem.c:3255
+#: ../browser-plugin/totem-plugin-viewer.c:1428
 msgid "No reason."
 msgstr "Няма прычыны."
 
-#: ../src/totem.c:695
+#: ../src/totem.c:765
 msgid "Open Location..."
 msgstr "Адкрыць знаходжаньне..."
 
-#: ../src/totem.c:747
-#: ../src/totem.c:755
+#: ../src/totem.c:859
+#: ../src/totem.c:867
 #: ../src/vanity.c:300
 #: ../src/vanity.c:308
 msgid "Totem could not get a screenshot of that film."
 msgstr "Татэм ня можа зрабіць здымак экрана гэтага фільма."
 
-#: ../src/totem.c:755
+#: ../src/totem.c:867
 #: ../src/vanity.c:308
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Гэта не павінна было адбыцца; паведаміце пра гэтую хібу распрацоўнікам."
 
-#: ../src/totem.c:855
+#: ../src/totem.c:967
 msgid "No File"
 msgstr "Няма файла"
 
-#: ../src/totem.c:961
+#: ../src/totem.c:1080
 msgid "No error message"
 msgstr "Не паказваць паведамленні пра памылкі"
 
-#: ../src/totem.c:1177
+#: ../src/totem.c:1296
 msgid "Totem could not display the help contents."
 msgstr "Татэм ня можа паказаць зьмест даведкі."
 
-#: ../src/totem.c:1440
-#: ../src/totem.c:1442
-#: ../browser-plugin/totem-plugin-viewer.c:1180
+#: ../src/totem.c:1559
+#: ../src/totem.c:1561
+#: ../browser-plugin/totem-plugin-viewer.c:1284
 msgid "An error occurred"
 msgstr "Узьнікла памылка"
 
-#: ../src/totem.c:1770
+#: ../src/totem.c:1889
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Татэм ня можа пракруціць на \"%s\"."
 
-#: ../src/totem.c:2919
+#: ../src/totem.c:3056
 msgid "Previous Chapter/Movie"
 msgstr "Папярэдні разьдзел / фільм"
 
-#: ../src/totem.c:2925
+#: ../src/totem.c:3062
 msgid "Play / Pause"
 msgstr "Граць / Прыпыніць"
 
-#: ../src/totem.c:2932
+#: ../src/totem.c:3069
 msgid "Next Chapter/Movie"
 msgstr "Наступны разьдзел / фільм"
 
-#: ../src/totem.c:3112
+#: ../src/totem.c:3255
 msgid "Totem could not startup."
 msgstr "Немагчыма запусьціць Татэм."
 
-#: ../src/totem.c:3256
+#: ../src/totem.c:3404
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Немагчыма ініцыялізаваць ніцевыя бібліятэкі."
 
-#: ../src/totem.c:3256
+#: ../src/totem.c:3404
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Праверце правільнасьць усталёўкі. Татэм сканчвае работу."
 
 #. Handle command line arguments
-#: ../src/totem.c:3263
+#: ../src/totem.c:3411
 msgid "- Play movies and songs"
 msgstr "- Грае фільмы і песьні"
 
-#: ../src/totem.c:3271
+#: ../src/totem.c:3419
 msgid "Totem could not parse the command-line options"
 msgstr "Татэм ня можа разабраць парамэтры загаднага радка"
 
-#: ../src/totem.c:3290
+#: ../src/totem.c:3438
 msgid "Totem could not initialize the configuration engine."
 msgstr "Татэм ня можа ініцыялізаваць рухавік настаўленьня."
 
-#: ../src/totem.c:3290
+#: ../src/totem.c:3438
 msgid "Make sure that GNOME is properly installed."
 msgstr "Праверце правільнасьць усталёўкі GNOME."
 
 #. Main window
-#: ../src/totem.c:3318
+#: ../src/totem.c:3466
 msgid "main window"
 msgstr "галоўнае вакно"
 
@@ -1681,69 +1714,91 @@ msgstr ""
 "Немагчыма загрузіць галоўны інтэрфэйс (vanity.glade).\n"
 "Праверце правільнасьць усталёўкі Vanity."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2205
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2451
 msgid "The requested audio output was not found. Please select another audio output in the Multimedia Systems Selector."
 msgstr "Запатрабаваны аўдыёвывад ня знойдзены. Калі ласка, выберыце іншы тып аўдыёвываду ў вылучальніку мультымэдыйных сыстэмаў."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2210
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2456
 msgid "Location not found."
 msgstr "Знаходжаньне ня знойдзена."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2214
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2460
 msgid "Could not open location; You may not have permission to open the file."
 msgstr "Немагчыма адкрыць знаходжаньне; бракуе правоў, каб адкрыць файл."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2225
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2471
 msgid "The video output is in use by another application. Please close other video applications, or select another video output in the Multimedia Systems Selector."
 msgstr "Відэавывад ужо заняты іншай праграмай. Закрыйце іншыя відэапраграмы альбо выберыце іншы тып відэавываду ў вылучальніку мультымэдыйных сыстэмаў."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2231
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2477
 msgid "The audio output is in use by another application. Please select another audio output in the Multimedia Systems Selector. You may want to consider using a sound server."
 msgstr "Аўдыёвывад ужо заняты іншай праграмай. Выберыце іншы тып аўдыёвываду ў вылучальніку мультымэдыйных сыстэмаў. Магчыма, спатрэбіцца ўжыць гукавы сэрвэр."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2246
+#. should be exactly one missing thing (source or converter)
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2495
+#, c-format
+msgid "The playback of this movie requires a '%s' plugin which is not installed."
+msgstr "Каб прайграць гэты фільм, патрэбны плагін '%s', які не ўсталяваны ў сыстэме."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2501
+#, c-format
+msgid "The playback of this movie requires a %s plugin which is not installed."
+msgstr "Каб прайграць гэты фільм, патрэбны плагін %s, які не ўсталяваны ў сыстэме."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2502
+#, c-format
+msgid ""
+"The playback of this movie requires the following decoders which are not installed:\n"
+"\n"
+"%s"
+msgstr ""
+"Каб прайграць гэты фільм, патрэбныя наступныя дэкодэры, якіх няма ў сыстэме:\n"
+"\n"
+"%s"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2527
 msgid "Cannot play this file over the network. Try downloading it to disk first."
 msgstr "Немагчыма прайграць гэты файл празь сетку. Паспрабуйце спачатку сцягнуць яго на свой дыск."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2321
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2599
 msgid "Media file could not be played."
 msgstr "Немагчыма прайграць мэдыяфайл."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2403
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2454
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2676
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2730
 msgid "Failed to retrieve working directory"
 msgstr "Немагчыма знайсьці працоўную дырэкторыю"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4115
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4435
 msgid "Too old version of GStreamer installed."
 msgstr "Надта старая вэрсія GStreamer"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4122
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4442
 msgid "Media contains no supported video streams."
 msgstr "Носьбіт не зьмяшчае падтрымліваемых відэаплыняў."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4455
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4777
 msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
 msgstr "Немагчыма стварыць аб'ект GStreamer. Праверце правільнасьць усталёўкі GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4575
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4668
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4907
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5011
 msgid "Failed to open video output. It may not be available. Please select another video output in the Multimedia Systems Selector."
 msgstr "Немагчыма адкрыць відэавывад. Ён можа быць занятым. Выберыце іншы тып відэавываду ў вылучальніку мультымэдыйных сыстэмаў."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4584
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4919
 msgid "Could not find the video output. You may need to install additional GStreamer plugins, or select another video output in the Multimedia Systems Selector."
 msgstr "Немагчыма знайсьці відэавывад. Магчыма, трэба ўсталяваць дадатковыя плагіны GStreamer ці выбраць іншы тып відэавываду ў вылучальніку мультымэдыйных сыстэмаў."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4610
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4950
 msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
 msgstr "Немагчыма адкрыць аўдыёвывад. Магчыма, Вам бракуе правоў на адкрыцьцё гукавога прыстасаваньня, альбо гукавы сэрвэр не выконваецца. Выберыце іншы тып аўдыёвываду ў вылучальніку мультымэдыйных сыстэмаў."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4622
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4965
 msgid "Could not find the audio output. You may need to install additional GStreamer plugins, or select another audio output in the Multimedia Systems Selector."
 msgstr "Немагчыма знайсьці аўдыёвывад. Магчыма, трэба ўсталяваць дадатковыя плагіны GStreamer альбо выбраць іншы тып аўдыёвываду ў вылучальніку мультымэдыйных сыстэмаў."
 
-#: ../src/backend/bacon-video-widget-xine.c:708
+#: ../src/backend/bacon-video-widget-xine.c:712
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1752,125 +1807,125 @@ msgstr ""
 "Немагчыма загрузіць аўдыёдрайвэр '%s'\n"
 "Праверце, ці не занятае прыстасаваньне."
 
-#: ../src/backend/bacon-video-widget-xine.c:1186
-#: ../src/backend/bacon-video-widget-xine.c:1740
+#: ../src/backend/bacon-video-widget-xine.c:1190
+#: ../src/backend/bacon-video-widget-xine.c:1744
 msgid "No video output is available. Make sure that the program is correctly installed."
 msgstr "Відэавывад недаступны. Праверце правільнасьць усталёўкі Татэма."
 
-#: ../src/backend/bacon-video-widget-xine.c:1308
+#: ../src/backend/bacon-video-widget-xine.c:1312
 msgid "The server you are trying to connect to is not known."
 msgstr "Сэрвэр, зь якім вы спрабуеце злучыцца, невядомы."
 
-#: ../src/backend/bacon-video-widget-xine.c:1312
+#: ../src/backend/bacon-video-widget-xine.c:1316
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "Назва прыстасаваньня, якую Вы вызначылі (%s), няправільная."
 
-#: ../src/backend/bacon-video-widget-xine.c:1316
+#: ../src/backend/bacon-video-widget-xine.c:1320
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "Сэрвэр, зь якім вы спрабуеце злучыцца (%s), недасягальны."
 
-#: ../src/backend/bacon-video-widget-xine.c:1320
+#: ../src/backend/bacon-video-widget-xine.c:1324
 msgid "The connection to this server was refused."
 msgstr "Адмоўлена ў злучэньні з гэтым сэрвэрам."
 
-#: ../src/backend/bacon-video-widget-xine.c:1324
+#: ../src/backend/bacon-video-widget-xine.c:1328
 msgid "The specified movie could not be found."
 msgstr "Гэты фільм ня знойдзены."
 
-#: ../src/backend/bacon-video-widget-xine.c:1330
-#: ../src/backend/bacon-video-widget-xine.c:1348
+#: ../src/backend/bacon-video-widget-xine.c:1334
+#: ../src/backend/bacon-video-widget-xine.c:1352
 msgid "The source seems encrypted, and can't be read. Are you trying to play an encrypted DVD without libdvdcss?"
 msgstr "Крыніца зашыфраваная, яе немагчыма прачытаць. Можа, Вы спрабуеце прайграць зашыфраваны DVD без libdvdcss?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1333
+#: ../src/backend/bacon-video-widget-xine.c:1337
 msgid "The movie could not be read."
 msgstr "Немагчыма прачытаць фільм."
 
-#: ../src/backend/bacon-video-widget-xine.c:1342
+#: ../src/backend/bacon-video-widget-xine.c:1346
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "Памылка загрузкі бібліятэкі ці дэкодара (%s)."
 
-#: ../src/backend/bacon-video-widget-xine.c:1351
+#: ../src/backend/bacon-video-widget-xine.c:1355
 msgid "This file is encrypted and cannot be played back."
 msgstr "Файл зашыфраваны. Яго немагчыма прайграць."
 
-#: ../src/backend/bacon-video-widget-xine.c:1356
+#: ../src/backend/bacon-video-widget-xine.c:1360
 msgid "For security reasons, this movie can not be played back."
 msgstr "З мэтаў бясьпекі гэты фільм нельга прайграць."
 
-#: ../src/backend/bacon-video-widget-xine.c:1361
+#: ../src/backend/bacon-video-widget-xine.c:1365
 msgid "The audio device is busy. Is another application using it?"
 msgstr "Аўдыёпрыстасаваньне занятае. Можа, яго выкарыстоўвае іншая праграма?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1366
+#: ../src/backend/bacon-video-widget-xine.c:1370
 msgid "You are not allowed to open this file."
 msgstr "Вам нельга адкрываць гэты файл."
 
-#: ../src/backend/bacon-video-widget-xine.c:1368
+#: ../src/backend/bacon-video-widget-xine.c:1372
 msgid "The server refused access to this file or stream."
 msgstr "Сэрвэр забараніў доступ да гэтага файла ці плыні."
 
-#: ../src/backend/bacon-video-widget-xine.c:1377
+#: ../src/backend/bacon-video-widget-xine.c:1381
 msgid "The file you tried to play is an empty file."
 msgstr "Файл, які вы спрабуеце прайграць, пусты."
 
-#: ../src/backend/bacon-video-widget-xine.c:1541
+#: ../src/backend/bacon-video-widget-xine.c:1545
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "Адсутнічае плагін работы з знаходжаньнем гэтага фільма"
 
-#: ../src/backend/bacon-video-widget-xine.c:1545
+#: ../src/backend/bacon-video-widget-xine.c:1549
 msgid "There is no plugin to handle this movie."
 msgstr "Няма плагіна работы з гэтым тыпам фільма."
 
-#: ../src/backend/bacon-video-widget-xine.c:1549
+#: ../src/backend/bacon-video-widget-xine.c:1553
 msgid "This movie is broken and can not be played further."
 msgstr "Фільм пашкоджаны, яго немагчыма граць далей."
 
-#: ../src/backend/bacon-video-widget-xine.c:1553
+#: ../src/backend/bacon-video-widget-xine.c:1557
 msgid "This location is not a valid one."
 msgstr "Няправільнае знаходжаньне."
 
-#: ../src/backend/bacon-video-widget-xine.c:1557
+#: ../src/backend/bacon-video-widget-xine.c:1561
 msgid "This movie could not be opened."
 msgstr "Немагчыма адкрыць фільм."
 
-#: ../src/backend/bacon-video-widget-xine.c:1561
+#: ../src/backend/bacon-video-widget-xine.c:1565
 msgid "Generic Error."
 msgstr "Звычайная памылка."
 
-#: ../src/backend/bacon-video-widget-xine.c:2250
+#: ../src/backend/bacon-video-widget-xine.c:2260
 #, c-format
 msgid "Video codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"
 msgstr "Немагчыма апрацаваць відэакадаваньне '%s'. Трэба ўсталяваць дадатковыя плагіны для прайграваньня некаторых тыпаў фільмаў"
 
-#: ../src/backend/bacon-video-widget-xine.c:2254
+#: ../src/backend/bacon-video-widget-xine.c:2264
 #, c-format
 msgid "Audio codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"
 msgstr "Немагчыма апрацаваць аўдыёкадаваньне '%s'. Трэба ўсталяваць дадатковыя плагіны для прайграваньня некаторых тыпаў фільмаў"
 
-#: ../src/backend/bacon-video-widget-xine.c:2270
+#: ../src/backend/bacon-video-widget-xine.c:2280
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Гэта аўдыёфайл, але ўсе аўдыёвывады недаступныя."
 
-#: ../src/backend/bacon-video-widget-xine.c:3726
-#: ../src/backend/bacon-video-widget-xine.c:3773
-#: ../src/backend/bacon-video-widget-xine.c:3795
+#: ../src/backend/bacon-video-widget-xine.c:3753
+#: ../src/backend/bacon-video-widget-xine.c:3800
+#: ../src/backend/bacon-video-widget-xine.c:3822
 #, c-format
 msgid "Language %d"
 msgstr "Мова %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3884
+#: ../src/backend/bacon-video-widget-xine.c:3911
 msgid "No video to capture."
 msgstr "Няма карцінкі, якую можна захапіць."
 
-#: ../src/backend/bacon-video-widget-xine.c:3892
+#: ../src/backend/bacon-video-widget-xine.c:3919
 msgid "Video codec is not handled."
 msgstr "Відэакадаваньне не падтрымліваецца."
 
-#: ../src/backend/bacon-video-widget-xine.c:3903
+#: ../src/backend/bacon-video-widget-xine.c:3930
 msgid "Movie is not playing."
 msgstr "Фільм не прайграецца."
 
@@ -1942,115 +1997,111 @@ msgstr "%s %s"
 msgid "%s"
 msgstr "%s"
 
-#: ../src/plparse/totem-disc.c:121
-#, c-format
-msgid "Failed to find real device node for %s: %s"
-msgstr "Немагчыма знайсьці сапраўдны файл прыстасаваньня для %s: %s"
-
-#: ../src/plparse/totem-disc.c:132
-#, c-format
-msgid "Failed to read symbolic link %s: %s"
-msgstr "Немагчыма прачытаць сымбалічную спасылку %s: %s"
-
-#: ../src/plparse/totem-disc.c:325
+#: ../src/plparse/totem-disc.c:362
 #, c-format
 msgid "Failed to find mountpoint for device %s"
 msgstr "Немагчыма знайсьці пункт мацаваньня для прылады %s"
 
-#: ../src/plparse/totem-disc.c:334
+#: ../src/plparse/totem-disc.c:371
 msgid "Could not connect to the HAL daemon"
 msgstr "Немагчыма злучыцца з дэманам HAL daemon"
 
-#: ../src/plparse/totem-disc.c:433
+#: ../src/plparse/totem-disc.c:470
 msgid "Please check that a disc is present in the drive."
 msgstr "Праверце наяўнасьць дыска ў прыстасаваньні."
 
-#: ../src/plparse/totem-disc.c:480
+#: ../src/plparse/totem-disc.c:517
 #, c-format
 msgid "Failed to mount %s"
 msgstr "Немагчыма прымацаваць %s"
 
-#: ../src/plparse/totem-disc.c:504
+#: ../src/plparse/totem-disc.c:541
 #, c-format
 msgid "Failed to find mountpoint for %s"
 msgstr "Немагчыма знайсьці пункт мацаваньня для %s"
 
-#: ../src/plparse/totem-disc.c:874
+#: ../src/plparse/totem-disc.c:911
 msgid "Audio CD"
 msgstr "Аўдыёдыск"
 
-#: ../src/plparse/totem-disc.c:876
+#: ../src/plparse/totem-disc.c:913
 msgid "Video CD"
 msgstr "Відэадыск"
 
-#: ../src/plparse/totem-disc.c:878
+#: ../src/plparse/totem-disc.c:915
 msgid "DVD"
 msgstr "DVD"
 
-#: ../src/plparse/totem-pl-parser.c:477
+#: ../src/plparse/totem-pl-parser.c:464
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "Немагчыма запісаць разборнік: %s"
 
-#: ../src/plparse/totem-pl-parser.c:585
-#: ../src/plparse/totem-pl-parser.c:725
-#: ../src/plparse/totem-pl-parser.c:824
+#: ../src/plparse/totem-pl-parser-lines.c:105
+#: ../src/plparse/totem-pl-parser-pls.c:70
+#: ../src/plparse/totem-pl-parser-xspf.c:73
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "Немагчыма адкрыць файл '%s': %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:329
+#: ../browser-plugin/totem-plugin-viewer.c:398
 msgid "No URI to play"
 msgstr "Няма адраса для граньня"
 
 #. FIXME disp = gnome_vfs_unescape_string_for_display (totem->mrl); ?
-#: ../browser-plugin/totem-plugin-viewer.c:356
-#: ../browser-plugin/totem-plugin-viewer.c:360
+#: ../browser-plugin/totem-plugin-viewer.c:425
+#: ../browser-plugin/totem-plugin-viewer.c:429
 #, c-format
 msgid "Totem could not play '%s'"
 msgstr "Татэм ня можа прайграць \"%s\""
 
-#: ../browser-plugin/totem-plugin-viewer.c:720
+#: ../browser-plugin/totem-plugin-viewer.c:802
 #, c-format
 msgid "Opening %s"
 msgstr "Адкрыцьцё \"%s\""
 
-#: ../browser-plugin/totem-plugin-viewer.c:996
+#: ../browser-plugin/totem-plugin-viewer.c:1091
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "Плагін для праглядальніка, ужывае %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1000
+#: ../browser-plugin/totem-plugin-viewer.c:1096
 msgid "Totem Browser Plugin"
 msgstr "Плагін для праглядальніка"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1290
-#: ../browser-plugin/totem-plugin-viewer.c:1300
+#: ../browser-plugin/totem-plugin-viewer.c:1393
+#: ../browser-plugin/totem-plugin-viewer.c:1403
 msgid "Plugin"
 msgstr "Плагін"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1320
+#: ../browser-plugin/totem-plugin-viewer.c:1428
 msgid "The Totem plugin could not startup."
 msgstr "Немагчыма стартаваць плагін."
 
-#: ../browser-plugin/totem-plugin-viewer.c:1421
+#: ../browser-plugin/totem-plugin-viewer.c:1526
 msgid "Menu"
 msgstr "Мэню"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1601
+#: ../browser-plugin/totem-plugin-viewer.c:1711
 msgid "No playlist or playlist empty"
 msgstr "Няма сьпіса прайграваньня альбо ён пусты"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1720
+#: ../browser-plugin/totem-plugin-viewer.c:1840
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Немагчыма ініцыялізаваць ніцевыя бібліятэкі."
 
-#: ../browser-plugin/totem-plugin-viewer.c:1720
+#: ../browser-plugin/totem-plugin-viewer.c:1840
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Праверце правільнасьць усталяваньня праграмы. Плагін Татэма сканчвае работу."
 
+#~ msgid "Year:"
+#~ msgstr "Год:"
+#~ msgid "Failed to find real device node for %s: %s"
+#~ msgstr "Немагчыма знайсьці сапраўдны файл прыстасаваньня для %s: %s"
+#~ msgid "Failed to read symbolic link %s: %s"
+#~ msgstr "Немагчыма прачытаць сымбалічную спасылку %s: %s"
 #~ msgid "    "
 #~ msgstr "    "
 #~ msgid "*"
