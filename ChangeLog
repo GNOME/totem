@@ -1,3 +1,21 @@
+2007-01-31  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(get_visualization_size): avoid getting criticals when we're not
+	in video playback mode, and we check for the vis. qualities,
+	spotted by <did447@gmail.com> (Closes: #402847)
+
+2007-01-31  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/Makefile.am:
+	* browser-plugin/idl/Makefile.am:
+	* browser-plugin/idl/totemIBasicPlayer.idl:
+	* browser-plugin/idl/totemIGMPControls.idl:
+	* browser-plugin/idl/totemIGMPPlayer.idl:
+	* browser-plugin/totemGMPPlugin.cpp:
+	* browser-plugin/totemGMPPlugin.h: Add Javascript stubs for the GMP
+	(Windows Media Player-compatible) plugin
+
 2007-01-30  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/totem-menu.c: (create_lang_actions):

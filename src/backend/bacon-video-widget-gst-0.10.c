@@ -3283,6 +3283,9 @@ get_visualization_size (BaconVideoWidget *bvw,
   GdkScreen *screen;
   int new_fps_n;
 
+  if (!bvw->priv->video_window)
+    return;
+
   if (bacon_video_widget_common_get_vis_quality (bvw->priv->visq, h, &new_fps_n) == FALSE)
     return;
 
