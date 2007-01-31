@@ -1,0 +1,45 @@
+/*
+ *  Copyright © 2007, Bastien Nocera <hadess@hadess.net
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ *  Boston, MA 02111-1307, USA.
+ */
+
+#include "nsISupports.idl"
+
+interface totemIGMPMedia;
+
+[scriptable, uuid(81490ff4-5e64-433a-aee1-28dcf0a09d39)]
+interface totemIGMPPlaylist : nsISupports
+{
+  /* Documentation at
+   * http://msdn.microsoft.com/library/default.asp?url=/library/en-us/wmpsdk11/mmp_sdk/playlistobject.asp */
+  void appendItem (in totemIGMPMedia item);
+  readonly attribute long attributeCount;
+  /* Those should match
+   * readonly attribute attributeName (in long index) */
+  AUTF8String attributeName (in long index);
+  AUTF8String getAttributeName (in long index);
+  readonly attribute long count;
+  AUTF8String getItemInfo (in AUTF8String name);
+  void insertItem (in long index, in totemIGMPMedia item);
+  boolean isIdentical (in totemIGMPPlaylist playlist);
+  totemIGMPMedia item (in long index);
+  void moveItem (in long oldIndex, in long newIndex);
+  attribute AUTF8String name;
+  void removeItem (in totemIGMPMedia item);
+  void setItemInfo (in AUTF8String name, in AUTF8String value);
+};
+
