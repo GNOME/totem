@@ -65,17 +65,7 @@ struct Vanity {
 	gboolean debug;
 };
 
-static const GtkTargetEntry source_table[] = {
-	{ "text/uri-list", 0, 0 },
-};
-
 static void vanity_action_exit (Vanity *vanity);
-
-static struct poptOption options[] = {
-	{NULL, '\0', POPT_ARG_INCLUDE_TABLE, NULL, 0, N_("Backend options"), NULL},
-	{"debug", '\0', POPT_ARG_NONE, NULL, 0, N_("Debug mode on"), NULL},
-	{NULL, '\0', 0, NULL, 0} /* end the list */
-};
 
 static void
 long_action (void)
@@ -231,6 +221,7 @@ static void
 on_about1_activate (GtkButton *button, Vanity *vanity)
 {
 	GdkPixbuf *pixbuf = NULL;
+	GtkAboutDialog **about;
 	const char *authors[] =
 	{
 		"Bastien Nocera <hadess@hadess.net>",
@@ -272,10 +263,11 @@ on_about1_activate (GtkButton *button, Vanity *vanity)
 	g_free (description);
 
 	if (pixbuf != NULL)
-		gdk_pixbuf_unref (pixbuf);
+		g_object_unref (pixbuf);
 
+	about = &vanity->about;
 	g_object_add_weak_pointer (G_OBJECT (vanity->about),
-			(gpointer *)&vanity->about);
+			(gpointer *) about);
 	gtk_window_set_transient_for (GTK_WINDOW (vanity->about),
 			GTK_WINDOW (vanity->win));
 	g_signal_connect (G_OBJECT (vanity->about), "response",
@@ -316,7 +308,7 @@ on_save1_activate (GtkButton *button, Vanity *vanity)
 	g_free (filename);
 	gtk_dialog_run (GTK_DIALOG (dialog));
 	gtk_widget_destroy (dialog);
-	gdk_pixbuf_unref (pixbuf);
+	g_object_unref (pixbuf);
 }
 
 static void
@@ -540,6 +532,7 @@ video_widget_create (Vanity *vanity)
 {
 	GError *err = NULL;
 	GtkWidget *container;
+	BaconVideoWidget **bvw;
 
 	vanity->bvw = BACON_VIDEO_WIDGET
 		(bacon_video_widget_new (-1, -1, FALSE, &err));
@@ -571,11 +564,13 @@ video_widget_create (Vanity *vanity)
 			G_CALLBACK (drag_video_cb), vanity);
 	gtk_drag_source_set (GTK_WIDGET (vanity->bvw),
 			GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
-			source_table, G_N_ELEMENTS (source_table),
+			NULL, 0,
 			GDK_ACTION_LINK);
+	gtk_drag_source_add_uri_targets (GTK_WIDGET (vanity->bvw));
 
+	bvw = &vanity->bvw;
 	g_object_add_weak_pointer (G_OBJECT (vanity->bvw),
-			(void**)&(vanity->bvw));
+			(gpointer *) bvw);
 
 	gtk_widget_show (GTK_WIDGET (vanity->bvw));
 
@@ -612,34 +607,30 @@ video_widget_create (Vanity *vanity)
 	gtk_widget_set_size_request (container, -1, -1);
 }
 
-static void
-process_command_line (Vanity *vanity, int argc, char **argv)
-{
-	int i;
-
-	if (argc == 1)
-		return;
-
-	for (i = 0; i < argc; i++)
-	{
-		if (strcmp (argv[i], "--debug") == 0)
-			vanity->debug = TRUE;
-	}
-}
-
 int
 main (int argc, char **argv)
 {
+#ifndef HAVE_GTK_ONLY
+	GnomeProgram *program;
+#else
+	GError *err = NULL;
+#endif
+
 	Vanity *vanity;
 	char *filename;
 	GConfClient *gc;
-	GError *err = NULL;
+	GOptionContext *context;
+	gboolean enable_debug = FALSE;
+	const GOptionEntry options[] = {
+		{ "debug", '\0', 0, G_OPTION_ARG_NONE, &enable_debug, N_("Debug mode on"), NULL},
+		{ NULL }
+	};
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
-	g_set_application_name (_("Vanity Webcam Utility"));
+	g_thread_init (NULL);
 
 	if (XInitThreads () == 0)
 	{
@@ -650,31 +641,47 @@ main (int argc, char **argv)
 					"Vanity will now exit."), NULL);
 	}
 
-	g_thread_init (NULL);
 	gdk_threads_init ();
 
-	gtk_init (&argc, &argv);
+	context = g_option_context_new (NULL);
+	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
+
+	g_option_context_add_group (context, bacon_video_widget_get_option_group ());
+
 #ifndef HAVE_GTK_ONLY
-	gnome_program_init ("vanity", VERSION,
-			LIBGNOMEUI_MODULE,
-			argc, argv,
-			GNOME_PARAM_APP_DATADIR, DATADIR,
-			GNOME_PARAM_POPT_TABLE, options,
-			GNOME_PARAM_NONE);
-	options[0].arg = bacon_video_widget_get_popt_table ();
+
+	program = gnome_program_init ("vanity", VERSION,
+				      LIBGNOMEUI_MODULE,
+				      argc, argv,
+				      GNOME_PARAM_APP_DATADIR, DATADIR,
+				      GNOME_PARAM_GOPTION_CONTEXT, context,
+				      GNOME_PARAM_NONE);
+
+#else
+
+	g_option_context_add_group (context, gtk_get_option_group (TRUE));
+
+	if (!g_option_context_parse (context, &argc, &argv, &err))
+	{
+		g_option_context_free (context);
+		g_printerr ("Error parsing arguments: %s\n", err->message);
+		g_error_free (err);
+		exit (1);
+	}
+	g_option_context_free (context);
+
 #endif /* !HAVE_GTK_ONLY */
 
-	glade_init ();
-	gnome_vfs_init ();
+	g_set_application_name (_("Vanity Webcam Utility"));
+
 	if ((gc = gconf_client_get_default ()) == NULL)
 	{
 		char *str;
 
 		str = g_strdup_printf (_("Vanity could not initialize the \n"
 					"configuration engine:\n%s"),
-				err->message);
+				"-");
 		vanity_action_error_and_exit (str, NULL);
-		g_error_free (err);
 		g_free (str);
 	}
 
@@ -699,20 +706,18 @@ main (int argc, char **argv)
 	}
 
 	vanity = g_new0 (Vanity, 1);
-
-	process_command_line (vanity, argc, argv);
+	vanity->debug = enable_debug;
 
 	/* Main window */
 	vanity->xml = glade_xml_new (filename, NULL, NULL);
+	g_free (filename);
 	if (vanity->xml == NULL)
 	{
-		g_free (filename);
 		vanity_action_error_and_exit (_("Couldn't load the main "
 					"interface (vanity.glade).\n"
 					"Make sure that Vanity"
 					" is properly installed."), NULL);
 	}
-	g_free (filename);
 
 	vanity->win = glade_xml_get_widget (vanity->xml, "window1");
 	filename = g_build_filename (DATADIR, "totem", "vanity.png", NULL);
@@ -736,6 +741,9 @@ main (int argc, char **argv)
 
 	gtk_main ();
 
+#ifndef HAVE_GTK_ONLY
+	g_object_unref (program);
+#endif
+
 	return 0;
 }
-
