@@ -2683,7 +2683,12 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 
   if (g_str_has_prefix (mrl, "icy:") != FALSE) {
     /* Handle "icy://" URLs from QuickTime */
+    g_free (bvw->com->mrl);
     bvw->com->mrl = g_strdup_printf ("http:%s", mrl + 4);
+  } else if (g_str_has_prefix (mrl, "icy:") != FALSE) {
+    /* Handle "icyx://" URLs from Orban/Coding Technologies AAC/aacPlus Player */
+    g_free (bvw->com->mrl);
+    bvw->com->mrl = g_strdup_printf ("http:%s", mrl + 5);
   } else if (g_str_has_prefix (mrl, "dvd:///")) {
     /* this allows to play backups of dvds */
     g_free (bvw->com->mrl);

@@ -1,3 +1,12 @@
+2007-02-01  Bastien Nocera  <hadess@hadess.net>
+
+	* data/handlers.sh: add missing "icy" to the list
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_open_with_subtitle):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_open_with_subtitle): Handle "icyx" URLs as well
+	(Closes: #403285)
+
 2007-02-01  Christian Persch  <chpe@svn.gnome.org>
 
 	* browser-plugin/idl/totemIGMPPlayer.idl: Fix "isOnline" attribute to
