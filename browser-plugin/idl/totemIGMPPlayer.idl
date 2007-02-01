@@ -48,7 +48,7 @@ interface totemIGMPPlayer : nsISupports
   attribute boolean enabled;
   readonly attribute totemIGMPError error;
   attribute boolean fullScreen;
-  attribute boolean isOnline;
+  readonly attribute boolean isOnline;
   readonly attribute boolean isRemote;
   void launchURL (in AUTF8String URL);
   readonly attribute totemIGMPMediaCollection mediaCollection;
