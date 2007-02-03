@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-31 23:26+0200\n"
-"PO-Revision-Date: 2007-01-31 23:30+0300\n"
+"POT-Creation-Date: 2007-02-03 14:07+0200\n"
+"PO-Revision-Date: 2007-02-03 14:11+0300\n"
 "Last-Translator: Ihar Hrachyshka <ihar.hrachyshka@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "MIME-Version: 1.0\n"
@@ -538,7 +538,7 @@ msgid "Save File"
 msgstr "Захаваць файл"
 
 #: ../data/vanity.glade.h:2
-#: ../src/vanity.c:260
+#: ../src/vanity.c:251
 msgid "Vanity"
 msgstr "Vanity"
 
@@ -648,15 +648,15 @@ msgstr "Праверце правільнасьць усталёўкі Татэ�
 
 #: ../src/totem-interface.c:236
 msgid "Totem is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version."
-msgstr ""
+msgstr "Totem - гэта свабодная праграма; Вы можаце распаўсюджваць яе і/ці зьмяняць згодна з умовамі Ліцэнзіі GPL, апублікаванай Фондам Свабодных Праграмаў вэрсіі 2 альбо пазьнейшай."
 
 #: ../src/totem-interface.c:240
 msgid "Totem is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
-msgstr ""
+msgstr "Праграма Totem распаўсюджваецца з надзеяй, што яна будзе карыснай для людзей, але мы НІЧОГА НЕ АБЯЦАЕМ, нават не гарантуем магчымасьць яе прыдатнасьці для пэўных мэтаў.  Глядзіце тэкст Ліцэнзіі GPL для падрабязнасьцей."
 
 #: ../src/totem-interface.c:244
 msgid "You should have received a copy of the GNU General Public License along with Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
-msgstr ""
+msgstr "Вы павінны былі атрымаць копію Ліцэнзіі GPL разам з праграмай Totem. Калі Вы не атрымалі яе, паведамце пра гэта ў Фонд Свабодных Праграмаў: Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
 
 #: ../src/totem-interface.c:247
 msgid "Totem contains an exception to allow the use of proprietary GStreamer plugins."
@@ -702,7 +702,7 @@ msgid "Copyright © 2002-2006 Bastien Nocera"
 msgstr "Copyright © 2002-2005 Bastien Nocera"
 
 #: ../src/totem-menu.c:1111
-#: ../src/vanity.c:267
+#: ../src/vanity.c:258
 #: ../browser-plugin/totem-plugin-viewer.c:1101
 msgid "translator-credits"
 msgstr ""
@@ -1555,13 +1555,13 @@ msgstr "Адкрыць знаходжаньне..."
 
 #: ../src/totem.c:859
 #: ../src/totem.c:867
+#: ../src/vanity.c:292
 #: ../src/vanity.c:300
-#: ../src/vanity.c:308
 msgid "Totem could not get a screenshot of that film."
 msgstr "Татэм ня можа зрабіць здымак экрана гэтага фільма."
 
 #: ../src/totem.c:867
-#: ../src/vanity.c:308
+#: ../src/vanity.c:300
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Гэта не павінна было адбыцца; паведаміце пра гэтую хібу распрацоўнікам."
 
@@ -1634,24 +1634,16 @@ msgstr "Праверце правільнасьць усталёўкі GNOME."
 msgid "main window"
 msgstr "галоўнае вакно"
 
-#: ../src/vanity.c:75
-msgid "Backend options"
-msgstr "Настаўленьні модуля"
-
-#: ../src/vanity.c:76
-msgid "Debug mode on"
-msgstr "Уключаны рэжым адладкі"
-
-#: ../src/vanity.c:256
+#: ../src/vanity.c:247
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "Плагін работы з ўэб-камэрай ужывае %s"
 
-#: ../src/vanity.c:262
+#: ../src/vanity.c:253
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Copyright © 2002-2005 Bastien Nocera"
 
-#: ../src/vanity.c:551
+#: ../src/vanity.c:544
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1660,11 +1652,11 @@ msgstr ""
 "Немагчыма запусьціць Vanity:\n"
 "%s"
 
-#: ../src/vanity.c:552
+#: ../src/vanity.c:545
 msgid "No reason"
 msgstr "Няма прычыны"
 
-#: ../src/vanity.c:590
+#: ../src/vanity.c:585
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1673,7 +1665,7 @@ msgstr ""
 "Vanity ня можа злучыцца з ўэб-камэрай.\n"
 "Прычына: %s"
 
-#: ../src/vanity.c:606
+#: ../src/vanity.c:601
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1682,11 +1674,11 @@ msgstr ""
 "Vanity ня можа прайграць відэаплынь з ўэб-камэры.\n"
 "Прычына: %s"
 
-#: ../src/vanity.c:642
-msgid "Vanity Webcam Utility"
-msgstr "Vanity - плагін работы з ўэб-камэрай"
+#: ../src/vanity.c:625
+msgid "Debug mode on"
+msgstr "Уключаны рэжым адладкі"
 
-#: ../src/vanity.c:647
+#: ../src/vanity.c:638
 msgid ""
 "Could not initialize the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1694,7 +1686,11 @@ msgstr ""
 "Немагчыма ініцыялізаваць ніцевыя бібліятэкі.\n"
 "Праверце правільнасьць усталёўкі Вашай сыстэмы. Vanity сканчвае работу."
 
-#: ../src/vanity.c:673
+#: ../src/vanity.c:675
+msgid "Vanity Webcam Utility"
+msgstr "Vanity - плагін работы з ўэб-камэрай"
+
+#: ../src/vanity.c:681
 #, c-format
 msgid ""
 "Vanity could not initialize the \n"
@@ -1705,8 +1701,8 @@ msgstr ""
 "рухавік настаўленьня:\n"
 "%s"
 
-#: ../src/vanity.c:695
-#: ../src/vanity.c:710
+#: ../src/vanity.c:702
+#: ../src/vanity.c:716
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
@@ -1736,10 +1732,6 @@ msgstr "Аўдыёвывад ужо заняты іншай праграмай. 
 
 #. should be exactly one missing thing (source or converter)
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2495
-#, c-format
-msgid "The playback of this movie requires a '%s' plugin which is not installed."
-msgstr "Каб прайграць гэты фільм, патрэбны плагін '%s', які не ўсталяваны ў сыстэме."
-
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2501
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
@@ -1765,36 +1757,36 @@ msgid "Media file could not be played."
 msgstr "Немагчыма прайграць мэдыяфайл."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2676
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2730
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2735
 msgid "Failed to retrieve working directory"
 msgstr "Немагчыма знайсьці працоўную дырэкторыю"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4435
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4440
 msgid "Too old version of GStreamer installed."
 msgstr "Надта старая вэрсія GStreamer"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4442
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4447
 msgid "Media contains no supported video streams."
 msgstr "Носьбіт не зьмяшчае падтрымліваемых відэаплыняў."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4777
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4782
 msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
 msgstr "Немагчыма стварыць аб'ект GStreamer. Праверце правільнасьць усталёўкі GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4907
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5011
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4912
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5016
 msgid "Failed to open video output. It may not be available. Please select another video output in the Multimedia Systems Selector."
 msgstr "Немагчыма адкрыць відэавывад. Ён можа быць занятым. Выберыце іншы тып відэавываду ў вылучальніку мультымэдыйных сыстэмаў."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4919
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4924
 msgid "Could not find the video output. You may need to install additional GStreamer plugins, or select another video output in the Multimedia Systems Selector."
 msgstr "Немагчыма знайсьці відэавывад. Магчыма, трэба ўсталяваць дадатковыя плагіны GStreamer ці выбраць іншы тып відэавываду ў вылучальніку мультымэдыйных сыстэмаў."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4950
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4955
 msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
 msgstr "Немагчыма адкрыць аўдыёвывад. Магчыма, Вам бракуе правоў на адкрыцьцё гукавога прыстасаваньня, альбо гукавы сэрвэр не выконваецца. Выберыце іншы тып аўдыёвываду ў вылучальніку мультымэдыйных сыстэмаў."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4965
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4970
 msgid "Could not find the audio output. You may need to install additional GStreamer plugins, or select another audio output in the Multimedia Systems Selector."
 msgstr "Немагчыма знайсьці аўдыёвывад. Магчыма, трэба ўсталяваць дадатковыя плагіны GStreamer альбо выбраць іншы тып аўдыёвываду ў вылучальніку мультымэдыйных сыстэмаў."
 
@@ -1896,36 +1888,36 @@ msgstr "Немагчыма адкрыць фільм."
 msgid "Generic Error."
 msgstr "Звычайная памылка."
 
-#: ../src/backend/bacon-video-widget-xine.c:2260
+#: ../src/backend/bacon-video-widget-xine.c:2263
 #, c-format
 msgid "Video codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"
 msgstr "Немагчыма апрацаваць відэакадаваньне '%s'. Трэба ўсталяваць дадатковыя плагіны для прайграваньня некаторых тыпаў фільмаў"
 
-#: ../src/backend/bacon-video-widget-xine.c:2264
+#: ../src/backend/bacon-video-widget-xine.c:2267
 #, c-format
 msgid "Audio codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"
 msgstr "Немагчыма апрацаваць аўдыёкадаваньне '%s'. Трэба ўсталяваць дадатковыя плагіны для прайграваньня некаторых тыпаў фільмаў"
 
-#: ../src/backend/bacon-video-widget-xine.c:2280
+#: ../src/backend/bacon-video-widget-xine.c:2283
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Гэта аўдыёфайл, але ўсе аўдыёвывады недаступныя."
 
-#: ../src/backend/bacon-video-widget-xine.c:3753
-#: ../src/backend/bacon-video-widget-xine.c:3800
-#: ../src/backend/bacon-video-widget-xine.c:3822
+#: ../src/backend/bacon-video-widget-xine.c:3756
+#: ../src/backend/bacon-video-widget-xine.c:3803
+#: ../src/backend/bacon-video-widget-xine.c:3825
 #, c-format
 msgid "Language %d"
 msgstr "Мова %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3911
+#: ../src/backend/bacon-video-widget-xine.c:3914
 msgid "No video to capture."
 msgstr "Няма карцінкі, якую можна захапіць."
 
-#: ../src/backend/bacon-video-widget-xine.c:3919
+#: ../src/backend/bacon-video-widget-xine.c:3922
 msgid "Video codec is not handled."
 msgstr "Відэакадаваньне не падтрымліваецца."
 
-#: ../src/backend/bacon-video-widget-xine.c:3930
+#: ../src/backend/bacon-video-widget-xine.c:3933
 msgid "Movie is not playing."
 msgstr "Фільм не прайграецца."
 
@@ -2096,6 +2088,13 @@ msgstr "Немагчыма ініцыялізаваць ніцевыя бібл�
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Праверце правільнасьць усталяваньня праграмы. Плагін Татэма сканчвае работу."
 
+#~ msgid "Backend options"
+#~ msgstr "Настаўленьні модуля"
+#~ msgid ""
+#~ "The playback of this movie requires a '%s' plugin which is not installed."
+#~ msgstr ""
+#~ "Каб прайграць гэты фільм, патрэбны плагін '%s', які не ўсталяваны ў "
+#~ "сыстэме."
 #~ msgid "Year:"
 #~ msgstr "Год:"
 #~ msgid "Failed to find real device node for %s: %s"
