@@ -74,7 +74,6 @@ static const nsCID kClassID =
 static const char kClassDescription[] = "totemGMPPlaylist";
 
 totemGMPPlaylist::totemGMPPlaylist (totemScriptablePlugin *aScriptable)
-  : mName("Playlist") /* FIXME */
 {
   D ("%s ctor [%p]", kClassDescription, (void*) this);
 
