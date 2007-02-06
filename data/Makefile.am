@@ -55,13 +55,13 @@ totem.desktop.in: totem.desktop.in.in mime-type-list.txt desktop.sh
 	>> $@
 
 nodist_noinst_HEADERS = totem-mime-types.h
-totem-mime-types.h: mime-type-include.sh mime-type-list.txt
+totem-mime-types.h: mime-type-include.sh mime-type-list.txt mime-functions.sh
 	$(srcdir)/mime-type-include.sh $(srcdir)/mime-type-list.txt	\
 	> $@
 
 update-gconf.sh: totem-video-thumbnail.schemas.in
 
-totem-video-thumbnail.schemas.in: schemas.sh mime-type-list.txt
+totem-video-thumbnail.schemas.in: schemas.sh mime-type-list.txt mime-functions.sh
 	$(srcdir)/schemas.sh $(srcdir)/mime-type-list.txt $(bindir)	\
 	> $@								\
 	2> update-gconf.sh

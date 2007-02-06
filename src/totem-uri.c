@@ -36,6 +36,7 @@
 
 static GtkFileFilter *filter_all;
 static GtkFileFilter *filter_supported;
+static GtkFileFilter *filter_audio, *filter_video;
 
 gboolean
 totem_playing_dvd (const char *uri)
@@ -235,8 +236,7 @@ totem_setup_file_filters (void)
 	g_object_ref (filter_all);
 
 	filter_supported = gtk_file_filter_new ();
-	gtk_file_filter_set_name (filter_supported,
-			_("Supported files"));
+	gtk_file_filter_set_name (filter_supported, _("Supported files"));
 	for (i = 0; i < G_N_ELEMENTS (mime_types); i++) {
 		gtk_file_filter_add_mime_type (filter_supported, mime_types[i]);
 	}
@@ -244,8 +244,25 @@ totem_setup_file_filters (void)
 	/* Add the special Disc-as-files formats */
 	gtk_file_filter_add_mime_type (filter_supported, "application/x-cd-image");
 	gtk_file_filter_add_mime_type (filter_supported, "application/x-cue");
-
 	g_object_ref (filter_supported);
+
+	/* Audio files */
+	filter_audio = gtk_file_filter_new ();
+	gtk_file_filter_set_name (filter_audio, _("Audio files"));
+	for (i = 0; i < G_N_ELEMENTS (audio_mime_types); i++) {
+		gtk_file_filter_add_mime_type (filter_audio, audio_mime_types[i]);
+	}
+	g_object_ref (filter_audio);
+
+	/* Video files */
+	filter_video = gtk_file_filter_new ();
+	gtk_file_filter_set_name (filter_video, _("Video files"));
+	for (i = 0; i < G_N_ELEMENTS (video_mime_types); i++) {
+		gtk_file_filter_add_mime_type (filter_video, video_mime_types[i]);
+	}
+	gtk_file_filter_add_mime_type (filter_video, "application/x-cd-image");
+	gtk_file_filter_add_mime_type (filter_video, "application/x-cue");
+	g_object_ref (filter_video);
 }
 
 void
@@ -253,6 +270,8 @@ totem_destroy_file_filters (void)
 {
 	g_object_unref (filter_all);
 	g_object_unref (filter_supported);
+	g_object_unref (filter_audio);
+	g_object_unref (filter_video);
 }
 
 GSList *
@@ -272,6 +291,8 @@ totem_add_files (GtkWindow *parent, const char *path)
 			NULL);
 	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_all);
 	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_supported);
+	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_audio);
+	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_video);
 	gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (fs), filter_supported);
 	gtk_dialog_set_default_response (GTK_DIALOG (fs), GTK_RESPONSE_ACCEPT);
 	gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (fs), TRUE);

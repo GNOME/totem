@@ -1,5 +1,18 @@
 2007-02-06  Bastien Nocera  <hadess@hadess.net>
 
+	* data/Makefile.am:
+	* data/mime-functions.sh:
+	* data/mime-type-include.sh:
+	* data/mime-type-list.txt:
+	* data/schemas.sh:
+	* src/totem-uri.c: (totem_setup_file_filters),
+	(totem_destroy_file_filters), (totem_add_files):
+	Move functions to split the mime-types in video/audio types to
+	mime-functions.sh, add "Audio files" and "Video files" filters
+	to the Open dialogues (Closes: #390991)
+
+2007-02-06  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/plparser.symbols: Patch from Gustavo Carneiro
 	<gjc@inescporto.pt> to export missing symbols (Closes: #404304)
 

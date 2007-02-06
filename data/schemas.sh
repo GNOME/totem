@@ -3,6 +3,8 @@
 OWNER=totem
 COMMAND="$2/totem-video-thumbnailer -s %s %u %o"
 
+. mime-functions.sh
+
 upd_schema()
 {
 	echo "gconftool-2 --set --type $TYPE /desktop/gnome/thumbnailers/$NAME \"$DEFAULT\"" 1>&2
@@ -27,14 +29,14 @@ schema()
 	upd_schema;
 }
 
-MIMETYPES=`cat $1 | grep -v audio | grep -v "application/x-flac" | sed 's,+,@,'`
-MIMETYPES="$MIMETYPES audio/x-pn-realaudio"
+
+get_video_mimetypes $1;
 
 echo "<gconfschemafile>";
 echo "    <schemalist>";
 
 for i in $MIMETYPES ; do
-	DIR=`echo $i | sed 's,/,@,'`
+	DIR=`echo $i | sed 's,/,@,' | sed 's,+,@,'`
 
 	NAME="$DIR/enable";
 	TYPE="bool";
@@ -47,10 +49,10 @@ for i in $MIMETYPES ; do
 	schema;
 done
 
-MIMETYPES=`cat $1 | grep "\/" | grep audio | grep -v "audio/x-pn-realaudio"`
+get_audio_mimetypes $1;
 
 for i in $MIMETYPES ; do
-	DIR=`echo $i | sed 's,/,@,'`
+	DIR=`echo $i | sed 's,/,@,' sed 's,+,@,'`
 	NAME="$DIR/enable";
 	TYPE="bool";
 	DEFAULT="false";
