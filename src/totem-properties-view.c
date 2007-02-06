@@ -192,7 +192,8 @@ totem_properties_view_set_location (TotemPropertiesView *props,
 
 		bacon_video_widget_close (props->priv->bvw);
 	} else {
-		bacon_video_widget_close (props->priv->bvw);
+		if (props->priv->bvw != NULL)
+			bacon_video_widget_close (props->priv->bvw);
 		bacon_video_widget_properties_reset (props->priv->props);
 	}
 }
