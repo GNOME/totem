@@ -1,19 +1,18 @@
-# translation of el.po to 
-# translation of el.po to Greek
-# This file is distributed under the same license as the PACKAGE package.
+# translation of totem.HEAD.po to Greek
+# This file is distributed under the same license as the totem.HEAD package.
 # Copyright (C) Free Software Foundation Inc, 2003
-# kostas:19Nov2003, updated translation
+#
 # Kostas Papadimas <pkst@gnome.org>, 2003, 2005.
 # Nikos Charonitakis <charosn@her.forthnet.gr>, 2005.
-#
+# Athanasios Lefteris <alefteris@gmail.com>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: el\n"
+"Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-21 09:57+0300\n"
-"PO-Revision-Date: 2006-07-21 09:57+0300\n"
-"Last-Translator: Nikos Charonitakis <charosn@her.forthnet.gr>\n"
-"Language-Team:  <team@gnome.gr>\n"
+"POT-Creation-Date: 2007-02-06 11:11+0200\n"
+"PO-Revision-Date: 2007-02-06 11:11+0200\n"
+"Last-Translator: Athanasios Lefteris <alefteris@gmail.com>\n"
+"Language-Team: Greek <team@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,8 +32,8 @@ msgstr "Μετακίνηση επάνω"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../data/playlist.glade.h:4 ../src/totem-playlist.c:890
-#: ../src/totem-sidebar.c:117
+#: ../data/playlist.glade.h:4 ../src/totem-playlist.c:960
+#: ../src/totem-sidebar.c:105
 msgid "Playlist"
 msgstr "Λίστα αναπαραγωγής"
 
@@ -46,196 +45,142 @@ msgstr "Απομάκρυνση"
 msgid "Save..."
 msgstr "Αποθήκευση..."
 
-#: ../data/playlist.glade.h:7
-msgid "_Copy Location"
-msgstr "Αντι_γραφή Τοποθεσίας"
+#. Channels
+#: ../data/properties.glade.h:1 ../src/bacon-video-widget-properties.c:170
+msgid "0 Channels"
+msgstr "0 Κανάλια"
 
-#: ../data/popup.glade.h:1 ../data/totem.glade.h:46
-msgid "Next chapter or movie"
-msgstr "Επόμενο κεφάλαιο ή ταινία"
+#. Sample rate
+#: ../data/properties.glade.h:2 ../src/bacon-video-widget-properties.c:168
+msgid "0 Hz"
+msgstr "0 Hz"
 
-#: ../data/popup.glade.h:2 ../data/totem.glade.h:51
-msgid "Play / Pa_use"
-msgstr "Αναπαραγ_ωγή / Παύση"
-
-#: ../data/popup.glade.h:3 ../data/totem.glade.h:52
-msgid "Play or pause the movie"
-msgstr "Αναπαραγωγή ή παύση της ταινίας"
-
-#: ../data/popup.glade.h:4 ../data/totem.glade.h:56
-msgid "Previous chapter or movie"
-msgstr "Προηγούμενο κεφάλαιο ή ταινία"
-
-#: ../data/popup.glade.h:5 ../data/totem.glade.h:73
-msgid "Show _Controls"
-msgstr "Εμφάνιση ε_λέγχων"
-
-#: ../data/popup.glade.h:6 ../data/totem.glade.h:75
-msgid "Show controls"
-msgstr "Εμφάνιση ελέγχων"
-
-#: ../data/popup.glade.h:7 ../data/totem.glade.h:79
-msgid "Skip _Backwards"
-msgstr "Παράκαμψη προς τα _πίσω"
-
-#: ../data/popup.glade.h:8 ../data/totem.glade.h:80
-msgid "Skip _Forward"
-msgstr "Παράκαμψη προς τα _μπροστά"
-
-#: ../data/popup.glade.h:9 ../data/totem.glade.h:81
-msgid "Skip backwards"
-msgstr "Παράκαμψη προς τα πίσω"
-
-#: ../data/popup.glade.h:10 ../data/totem.glade.h:82
-msgid "Skip forward"
-msgstr "Παράκαμψη προς τα μπροστά"
-
-#: ../data/popup.glade.h:11 ../src/totem-options.c:46
-msgid "Volume Down"
-msgstr "Μείωση έντασης"
-
-#: ../data/popup.glade.h:12 ../src/totem-options.c:45
-msgid "Volume Up"
-msgstr "Αύξηση έντασης"
-
-#: ../data/popup.glade.h:13 ../data/totem.glade.h:110
-msgid "Volume up"
-msgstr "Αύξηση έντασης"
-
-#: ../data/popup.glade.h:14 ../data/totem.glade.h:136
-msgid "_Next Chapter/Movie"
-msgstr "Επόμε_νο κεφάλαιο/ταινία"
-
-#: ../data/popup.glade.h:15 ../data/totem.glade.h:139
-msgid "_Previous Chapter/Movie"
-msgstr "_Προηγούμενο κεφάλαιο/ταινία"
-
-#: ../data/properties.glade.h:1 ../data/screenshot.glade.h:1
-#: ../data/totem.glade.h:1
-msgid "    "
-msgstr "    "
-
-#: ../data/properties.glade.h:2
+#: ../data/properties.glade.h:3
 msgid "0 frames per second"
 msgstr "0 καρέ ανά δευτερόλεπτο"
 
-#: ../data/properties.glade.h:3
+#: ../data/properties.glade.h:4
 msgid "0 kbps"
 msgstr "0 kbps"
 
 #. 0 seconds
-#: ../data/properties.glade.h:4 ../data/skip_to.glade.h:1
-#: ../src/backend/video-utils.c:272
+#: ../data/properties.glade.h:5 ../data/skip_to.glade.h:1
+#: ../src/backend/video-utils.c:270
 msgid "0 seconds"
 msgstr "0 δευτερόλεπτα"
 
-#: ../data/properties.glade.h:5
+#: ../data/properties.glade.h:6
 msgid "0 x 0"
 msgstr "0 x 0"
 
-#: ../data/properties.glade.h:6
+#: ../data/properties.glade.h:7
 msgid "<b>Audio</b>"
 msgstr "<b>Ήχος</b>"
 
-#: ../data/properties.glade.h:7
+#: ../data/properties.glade.h:8
 msgid "<b>General</b>"
 msgstr "<b>Γενικά</b>"
 
-#: ../data/properties.glade.h:8
+#: ../data/properties.glade.h:9
 msgid "<b>Video</b>"
 msgstr "<b>Βίντεο</b>"
 
-#: ../data/properties.glade.h:9
-msgid "Album:"
-msgstr "Άλμπουμ:"
-
 #: ../data/properties.glade.h:10
-msgid "Artist:"
-msgstr "Καλλιτέχνης:"
+msgid "<i>Album:</i>"
+msgstr "<i>Άλμπουμ:</i>"
 
 #: ../data/properties.glade.h:11
-msgid "Bitrate:"
-msgstr "Bitrate:"
+msgid "<i>Artist:</i>"
+msgstr "<i>Καλλιτέχνης:</i>"
 
 #: ../data/properties.glade.h:12
-msgid "Codec:"
-msgstr "Codec:"
+msgid "<i>Bitrate:</i>"
+msgstr "<i>Bitrate:</i>"
 
 #: ../data/properties.glade.h:13
-msgid "Dimensions:"
-msgstr "Διαστάσεις:"
+msgid "<i>Channels:</i>"
+msgstr "<i>Κανάλια:</i>"
 
 #: ../data/properties.glade.h:14
-msgid "Duration:"
-msgstr "Διάρκεια:"
+msgid "<i>Codec:</i>"
+msgstr "<i>(Απο)Κωδικοποιητής:</i>"
 
 #: ../data/properties.glade.h:15
-msgid "Framerate:"
-msgstr "Ρυθμός καρέ:"
+msgid "<i>Dimensions:</i>"
+msgstr "<i>Διαστάσεις:</i>"
+
+#: ../data/properties.glade.h:16
+msgid "<i>Duration:</i>"
+msgstr "<i>Διάρκεια:</i>"
+
+#: ../data/properties.glade.h:17
+msgid "<i>Framerate:</i>"
+msgstr "<i>Ρυθμός καρέ:</i>"
+
+#: ../data/properties.glade.h:18
+msgid "<i>Sample rate:</i>"
+msgstr "<i>Ρυθμός δείγματος:</i>"
+
+#: ../data/properties.glade.h:19
+msgid "<i>Title:</i>"
+msgstr "<i>Τίτλος:</i>"
+
+#: ../data/properties.glade.h:20
+msgid "<i>Year:</i>"
+msgstr "<i>Έτος:</i>"
 
 #. Dimensions
 #. Video Codec
 #. Audio Codec
-#: ../data/properties.glade.h:16 ../src/bacon-video-widget-properties.c:153
+#: ../data/properties.glade.h:21 ../src/bacon-video-widget-properties.c:153
 #: ../src/bacon-video-widget-properties.c:155
 #: ../src/bacon-video-widget-properties.c:158
 #: ../src/bacon-video-widget-properties.c:161
 #: ../src/bacon-video-widget-properties.c:164
 #: ../src/bacon-video-widget-properties.c:166
-#: ../src/bacon-video-widget-properties.c:228
-#: ../src/bacon-video-widget-properties.c:230
-#: ../src/bacon-video-widget-properties.c:247
+#: ../src/bacon-video-widget-properties.c:232
+#: ../src/bacon-video-widget-properties.c:234
+#: ../src/bacon-video-widget-properties.c:251
+#: ../src/bacon-video-widget-properties.c:254
 msgid "N/A"
 msgstr "N/A"
 
-#: ../data/properties.glade.h:17 ../src/totem-sidebar.c:120
+#: ../data/properties.glade.h:22 ../src/totem-sidebar.c:108
 msgid "Properties"
 msgstr "Ιδιότητες"
-
-#: ../data/properties.glade.h:18
-msgid "Title:"
-msgstr "Τίτλος:"
 
 #. Title
 #. Artist
 #. Album
 #. Year
-#: ../data/properties.glade.h:19 ../src/bacon-video-widget-properties.c:142
+#: ../data/properties.glade.h:23 ../src/bacon-video-widget-properties.c:142
 #: ../src/bacon-video-widget-properties.c:144
 #: ../src/bacon-video-widget-properties.c:146
 #: ../src/bacon-video-widget-properties.c:148
 msgid "Unknown"
 msgstr "Άγνωστο"
 
-#: ../data/properties.glade.h:20
-msgid "Year:"
-msgstr "Έτος:"
-
-#: ../data/screenshot.glade.h:2
-msgid "*"
-msgstr "*"
-
-#: ../data/screenshot.glade.h:3
+#: ../data/screenshot.glade.h:1
 msgid "<b>Preview</b>"
 msgstr "<b>Προεπισκόπηση</b>"
 
-#: ../data/screenshot.glade.h:4 ../src/totem-screenshot.c:346
+#: ../data/screenshot.glade.h:2 ../src/totem-screenshot.c:342
 msgid "Save Screenshot"
 msgstr "Αποθήκευση στιγμιότυπου οθόνης"
 
-#: ../data/screenshot.glade.h:5
+#: ../data/screenshot.glade.h:3
 msgid "Save screenshot"
 msgstr "Αποθήκευση στιγμιότυπου οθόνης"
 
-#: ../data/screenshot.glade.h:6
+#: ../data/screenshot.glade.h:4
 msgid "Save screenshot to _desktop"
 msgstr "Αποθήκευση στιγμιότυπου οθόνης στην επι_φάνεια εργασίας"
 
-#: ../data/screenshot.glade.h:7
+#: ../data/screenshot.glade.h:5
 msgid "Save screenshot to _file:"
 msgstr "Αποθήκευση στιγμιότυπου οθόνης σε αρ_χείο:"
 
-#: ../data/skip_to.glade.h:2 ../src/totem-skipto.c:154
+#: ../data/skip_to.glade.h:2 ../src/totem-skipto.c:163
 msgid "Skip to"
 msgstr "Παράκαμψη σε"
 
@@ -249,13 +194,13 @@ msgstr "δευτερόλεπτα"
 
 #: ../data/totem.desktop.in.in.in.h:1
 msgid "Movie Player"
-msgstr "Movie Player"
+msgstr "Αναπαραγωγή ταινιών"
 
 #: ../data/totem.desktop.in.in.in.h:2
 msgid "Play movies and songs"
 msgstr "Αναπαραγωγή τραγουδιών και ταινιών"
 
-#: ../data/totem.glade.h:2
+#: ../data/totem.glade.h:1
 msgid ""
 "14.4 Kbps Modem\n"
 "19.2 Kbps Modem\n"
@@ -283,247 +228,79 @@ msgstr ""
 "1.5 Mbps T1/Intranet/LAN\n"
 "Intranet/LAN"
 
-#: ../data/totem.glade.h:14
-msgid "16:9 (Widescreen)"
-msgstr "16:9 (Widescreen)"
-
-#: ../data/totem.glade.h:15
-msgid "2.11:1 (DVB)"
-msgstr "2.11:1 (DVB)"
-
-#: ../data/totem.glade.h:16
-msgid "4:3 (TV)"
-msgstr "4:3 (TV)"
-
-#: ../data/totem.glade.h:17
+#: ../data/totem.glade.h:13
 msgid "<b>Audio Output</b>"
 msgstr "<b>Έξοδος Ήχου</b>"
 
-#: ../data/totem.glade.h:18
+#: ../data/totem.glade.h:14
 msgid "<b>Color balance</b>"
 msgstr "<b>Ισορροπία χρώματος</b>"
 
-#: ../data/totem.glade.h:19
+#: ../data/totem.glade.h:15
 msgid "<b>Display</b>"
 msgstr "<b>Εμφάνιση</b>"
 
-#: ../data/totem.glade.h:20
+#: ../data/totem.glade.h:16
 msgid "<b>Networking</b>"
 msgstr "<b>Δικτύωση</b>"
 
-#: ../data/totem.glade.h:21
+#: ../data/totem.glade.h:17
 msgid "<b>TV-Out</b>"
 msgstr "<b>TV-Out</b>"
 
-#: ../data/totem.glade.h:22
+#: ../data/totem.glade.h:18
 msgid "<b>Text Subtitles</b>"
 msgstr "<b>Υπότιτλοι κειμένου</b>"
 
-#: ../data/totem.glade.h:23
+#: ../data/totem.glade.h:19
 msgid "<b>Visual Effects</b>"
 msgstr "<b>Οπτικά Εφέ</b>"
 
-#: ../data/totem.glade.h:24
+#: ../data/totem.glade.h:20
 msgid "<span size=\"medium\"><b>No file</b></span>"
 msgstr "<span size=\"medium\"><b>Χωρίς Αρχείο</b></span>"
 
-#: ../data/totem.glade.h:25
-msgid "A_udio Menu"
-msgstr "Μενού ή_χου"
-
-#: ../data/totem.glade.h:26
-msgid "Always on _Top"
-msgstr "Πάντα σε επικά_λυψη"
-
-#: ../data/totem.glade.h:27
-msgid "Always on top"
-msgstr "Πάντα σε επικάλυψη"
-
-#: ../data/totem.glade.h:28 ../src/totem-properties-view.c:92
+#: ../data/totem.glade.h:21 ../src/totem-properties-view.c:90
 msgid "Audio"
 msgstr "Ήχος"
 
-#: ../data/totem.glade.h:29 ../src/totem-menu.c:271 ../src/totem-menu.c:292
-msgid "Auto"
-msgstr "Αυτόματο"
-
-#: ../data/totem.glade.h:30
+#: ../data/totem.glade.h:22
 msgid "Automatically _resize the window when a new video is loaded"
 msgstr "Αυτόματη αλλαγή μεγέ_θους του παραθύρου όταν φορτώνεται ένα βίντεο"
 
-#: ../data/totem.glade.h:31
+#: ../data/totem.glade.h:23
 msgid "Co_ntrast:"
 msgstr "Α_ντίθεση:"
 
-#: ../data/totem.glade.h:32
+#: ../data/totem.glade.h:24
 msgid "Connection _speed:"
 msgstr "Ταχύτητα _σύνδεσης:"
 
-#: ../data/totem.glade.h:33
-msgid "Deinterlace"
-msgstr "Deinterlace"
-
-#: ../data/totem.glade.h:34
+#: ../data/totem.glade.h:25
 msgid "Display"
 msgstr "Εμφάνιση"
 
-#: ../data/totem.glade.h:35
-msgid "Fit Window to Movie"
-msgstr "Ταίριασμα παραθύρου στην ταινία"
-
-#: ../data/totem.glade.h:36
+#: ../data/totem.glade.h:26
 msgid "General"
 msgstr "Γενικά"
 
-#: ../data/totem.glade.h:37
-msgid "Go to the DVD menu"
-msgstr "Μετάβαση στο μενού DVD"
-
-#: ../data/totem.glade.h:38
-msgid "Go to the angle menu"
-msgstr "Μετάβαση στο μενού οπτικής γωνίας"
-
-#: ../data/totem.glade.h:39
-msgid "Go to the audio menu"
-msgstr "Μετάβαση στο μενού ήχου"
-
-#: ../data/totem.glade.h:40
-msgid "Go to the chapter menu"
-msgstr "Μετάβαση στο μενού κεφαλαίων"
-
-#: ../data/totem.glade.h:41
-msgid "Go to the title menu"
-msgstr "Μετάβαση στο μενού τίτλων"
-
-#: ../data/totem.glade.h:42
-msgid "Help contents"
-msgstr "Περιεχόμενα βοήθειας"
-
-#: ../data/totem.glade.h:43
-msgid "Languages"
-msgstr "Γλώσσες"
-
-#: ../data/totem.glade.h:44
+#: ../data/totem.glade.h:27
 msgid "Leave Fullscreen"
 msgstr "Έξοδος από πλήρη οθόνη"
 
-#: ../data/totem.glade.h:45 ../src/totem-options.c:41
-msgid "Next"
-msgstr "Επόμενο"
-
-#: ../data/totem.glade.h:47
-msgid "No Language Selection Available"
-msgstr "Δεν υπάρχει διαθέσιμη επιλογή γλώσσας"
-
-#: ../data/totem.glade.h:48
-msgid "No subtitles selection available"
-msgstr "Δεν υπάρχει διαθέσιμη επιλογή υποτίτλων"
-
-#: ../data/totem.glade.h:49
-msgid "Open _Location..."
-msgstr "Άνοιγμα _τοποθεσίας..."
-
-#: ../data/totem.glade.h:50
-msgid "Open a non-local file"
-msgstr "Άνοιγμα ενός μη τοπικού αρχείου"
-
-#: ../data/totem.glade.h:53 ../src/totem-options.c:38
-msgid "Play/Pause"
-msgstr "Αναπαραγωγή/Παύση"
-
-#: ../data/totem.glade.h:54
-msgid "Prefere_nces"
-msgstr "Προτι_μήσεις"
-
-#: ../data/totem.glade.h:55 ../src/totem-options.c:42
-msgid "Previous"
-msgstr "Προηγούμενο"
-
-#: ../data/totem.glade.h:57
+#: ../data/totem.glade.h:28
 msgid "Reset To _Defaults"
 msgstr "Επανα_φορά προεπιλογών"
 
-#: ../data/totem.glade.h:58
-msgid "Resize _1:1"
-msgstr "Αλλαγή μεγέθους _1:1"
-
-#: ../data/totem.glade.h:59
-msgid "Resize _2:1"
-msgstr "Αλλαγή μεγέθους _2:1"
-
-#: ../data/totem.glade.h:60
-msgid "Resize to half the video size"
-msgstr "Αλλαγή μεγέθους στο μισό του μεγέθους του video"
-
-#: ../data/totem.glade.h:61
-msgid "Resize to twice the video size"
-msgstr "Αλλαγή μεγέθους στο διπλάσιο του μεγέθους του video"
-
-#: ../data/totem.glade.h:62
-msgid "Resize to video size"
-msgstr "Αλλαγή μεγέθους στο μέγεθος του βίντεο"
-
-#: ../data/totem.glade.h:63
-msgid "S_ubtitles"
-msgstr "Υ_πότιτλοι"
-
-#: ../data/totem.glade.h:64
+#: ../data/totem.glade.h:29
 msgid "Sat_uration:"
 msgstr "Κορεσμός:"
 
-#: ../data/totem.glade.h:65
-msgid "Set the aspect ratio"
-msgstr "Ορισμός του συντελεστή αναλογίας"
-
-#: ../data/totem.glade.h:66
-msgid "Set the repeat mode"
-msgstr "Ορισμός της λειτουργίας επανάληψης"
-
-#: ../data/totem.glade.h:67
-msgid "Set the shuffle mode"
-msgstr "Ορισμός της λειτουργίας τυχαίας αναπαραγωγής"
-
-#: ../data/totem.glade.h:68
-msgid "Sets 16:9 (Anamorphic) aspect ratio"
-msgstr "Ορίζει 16:9 (Anamorphic) συντελεστή αναλογίας"
-
-#: ../data/totem.glade.h:69
-msgid "Sets 2.11:1 (DVB) aspect ratio"
-msgstr "Ορίζει συντελεστή αναλογίας 2.11:1 (DVB)"
-
-#: ../data/totem.glade.h:70
-msgid "Sets 4:3 (TV) aspect ratio"
-msgstr "Ορίζει συντελεστή αναλογίας 4:3 (TV) "
-
-#: ../data/totem.glade.h:71
-msgid "Sets automatic aspect ratio"
-msgstr "Ορίζει αυτόματο συντελεστή αναλογίας"
-
-#: ../data/totem.glade.h:72
-msgid "Sets square aspect ratio"
-msgstr "Ορίζει τετράγωνο συντελεστή αναλογίας"
-
-#: ../data/totem.glade.h:74
+#: ../data/totem.glade.h:30
 msgid "Show _visual effects when an audio file is played"
 msgstr "Εμφάνιση οπτικών ε_φέ κατά την αναπαραγωγή αρχείου ήχου"
 
-#: ../data/totem.glade.h:76
-msgid "Show or hide the sidebar"
-msgstr "Εμφάνιση ή απόκρυψη της πλευρικής στήλης"
-
-#: ../data/totem.glade.h:77
-msgid "Shuff_le Mode"
-msgstr "Λειτουργία τυ_χαίας αναπαραγωγής"
-
-#: ../data/totem.glade.h:78
-msgid "Side_bar"
-msgstr "_Πλευρική στήλη"
-
-#: ../data/totem.glade.h:83
-msgid "Skip to a specific time"
-msgstr "Παράκαμψη σε συγκεκριμένο χρονικό διάστημα"
-
-#: ../data/totem.glade.h:84
+#: ../data/totem.glade.h:31
 msgid ""
 "Small\n"
 "Normal\n"
@@ -535,11 +312,7 @@ msgstr ""
 "Μεγάλο\n"
 "Πολύ μεγάλο"
 
-#: ../data/totem.glade.h:88
-msgid "Square"
-msgstr "Square"
-
-#: ../data/totem.glade.h:89
+#: ../data/totem.glade.h:35
 msgid ""
 "Stereo\n"
 "4-channel\n"
@@ -555,211 +328,63 @@ msgstr ""
 "5.1-κανάλια\n"
 "AC3 Passthrough"
 
-#: ../data/totem.glade.h:95
-msgid "Subtitles"
-msgstr "Υπότιτλοι"
+#: ../data/totem.glade.h:41
+msgid "TV-out in fullscreen by Nvidia (NTSC)"
+msgstr "TV-out σε πλήρη οθόνη από Nvidia (NTSC)"
 
-#: ../data/totem.glade.h:96
-msgid "Switch An_gles"
-msgstr "Αλλαγή _γωνίας"
+#: ../data/totem.glade.h:42
+msgid "TV-out in fullscreen by Nvidia (PAL)"
+msgstr "TV-out σε πλήρη οθόνη από Nvidia (PAL)"
 
-#: ../data/totem.glade.h:97
-msgid "Switch angles"
-msgstr "Αλλαγή γωνίας"
+#: ../data/totem.glade.h:43
+msgid "Time seek bar"
+msgstr "Γραμμή χρονικής αναζήτησης"
 
-#: ../data/totem.glade.h:98
-msgid "Switch to fullscreen"
-msgstr "Αλλαγή σε πλήρη οθόνη"
-
-#: ../data/totem.glade.h:99
-msgid "Take _Screenshot..."
-msgstr "Λήψη _στιγμιότυπου οθόνης..."
-
-#: ../data/totem.glade.h:100
-msgid "Take a screenshot"
-msgstr "Λήψη ενός στιγμιότυπου οθόνης"
-
-#: ../data/totem.glade.h:101
+#: ../data/totem.glade.h:44
 msgid "Time:"
 msgstr "Χρόνος:"
 
 #. Title
-#: ../data/totem.glade.h:102 ../src/totem.c:706 ../src/totem.c:3513
-#: ../src/totem.c:3530
+#: ../data/totem.glade.h:45 ../src/totem.c:974 ../src/totem.c:3403
+#: ../src/totem.c:3430
 msgid "Totem Movie Player"
-msgstr "Totem Movie Player"
+msgstr "Totem αναπαραγωγή ταινιών"
 
-#: ../data/totem.glade.h:103
+#: ../data/totem.glade.h:46
 msgid "Totem Preferences"
 msgstr "Προτιμήσεις του Totem"
 
-#: ../data/totem.glade.h:104
-msgid "Tv-out in fullscreen by Nvidia (NTSC)"
-msgstr "Tv-out σε πλήρη οθόνη από Nvidia (NTSC)"
-
-#: ../data/totem.glade.h:105
-msgid "Tv-out in fullscreen by Nvidia (PAL)"
-msgstr "Tv-out σε πλήρη οθόνη από Nvidia (PAL)"
-
-#: ../data/totem.glade.h:106
+#: ../data/totem.glade.h:47
 msgid "Visualisation _size:"
 msgstr "Μέγε_θος οπτικοποίησης:"
 
-#: ../data/totem.glade.h:107
-msgid "Volume _Down"
-msgstr "_Μείωση έντασης"
-
-#: ../data/totem.glade.h:108
-msgid "Volume _Up"
-msgstr "Αύ_ξηση έντασης"
-
-#: ../data/totem.glade.h:109
-msgid "Volume down"
-msgstr "Μείωση έντασης"
-
-#: ../data/totem.glade.h:111
-msgid "Zoom In"
-msgstr "Μεγέθυνση"
-
-#: ../data/totem.glade.h:112
-msgid "Zoom Out"
-msgstr "Σμίκρυνση"
-
-#: ../data/totem.glade.h:113
-msgid "Zoom Reset"
-msgstr "Επαναφορά μεγέθυνσης"
-
-#: ../data/totem.glade.h:114
-msgid "Zoom in"
-msgstr "Μεγέθυνση"
-
-#: ../data/totem.glade.h:115
-msgid "Zoom out"
-msgstr "Σμίκρυνση"
-
-#: ../data/totem.glade.h:116
-msgid "Zoom reset"
-msgstr "Επαναφορά μεγέθυνσης"
-
-#: ../data/totem.glade.h:117
-msgid "_About"
-msgstr "_Περί"
-
-#: ../data/totem.glade.h:118
-msgid "_Angle Menu"
-msgstr "Μενού οπτικής _γωνίας"
-
-#: ../data/totem.glade.h:119
-msgid "_Aspect Ratio"
-msgstr " _Συντελεστής αναλογίας"
-
-#: ../data/totem.glade.h:120
+#: ../data/totem.glade.h:48
 msgid "_Audio output type:"
 msgstr "Τύπος εξόδου ήχ_ου:"
 
-#: ../data/totem.glade.h:121
+#: ../data/totem.glade.h:49
 msgid "_Brightness:"
 msgstr "_Φωτεινότητα:"
 
-#: ../data/totem.glade.h:122
-msgid "_Chapter Menu"
-msgstr "Μενού κε_φαλαίων"
-
-#: ../data/totem.glade.h:123
-msgid "_Contents"
-msgstr "Περιε_χόμενα"
-
-#: ../data/totem.glade.h:124
-msgid "_DVD Menu"
-msgstr "Μενού _DVD "
-
-#: ../data/totem.glade.h:125
-msgid "_Deinterlace"
-msgstr "_Deinterlace"
-
-#: ../data/totem.glade.h:126
-msgid "_Edit"
-msgstr "_Επεξεργασία"
-
-#: ../data/totem.glade.h:127
-msgid "_Eject"
-msgstr "Ε_ξαγωγή"
-
-#: ../data/totem.glade.h:128
+#: ../data/totem.glade.h:50
 msgid "_Encoding:"
 msgstr "Κ_ωδικοποίηση χαρακτήρων:"
 
-#: ../data/totem.glade.h:129
+#: ../data/totem.glade.h:51
 msgid "_Font:"
 msgstr "_Γραμματοσειρά:"
 
-#: ../data/totem.glade.h:130
-msgid "_Fullscreen"
-msgstr "_Πλήρης οθόνη"
-
-#: ../data/totem.glade.h:131
-msgid "_Go"
-msgstr "_Μετάβαση"
-
-#: ../data/totem.glade.h:132
-msgid "_Help"
-msgstr "_Βοήθεια"
-
-#: ../data/totem.glade.h:133
+#: ../data/totem.glade.h:52
 msgid "_Hue:"
 msgstr "_Απόχρωση:"
 
-#: ../data/totem.glade.h:134
-msgid "_Languages"
-msgstr "Γ_λώσσες"
-
-#: ../data/totem.glade.h:135
-msgid "_Movie"
-msgstr "_Ταινία"
-
-#: ../data/totem.glade.h:137
+#: ../data/totem.glade.h:53
 msgid "_No TV-out"
 msgstr "_Χωρίς TV-out"
 
-#: ../data/totem.glade.h:138
-msgid "_Open..."
-msgstr "Άν_οιγμα...."
-
-#: ../data/totem.glade.h:140
-msgid "_Quit"
-msgstr "'Ε_ξοδος"
-
-#: ../data/totem.glade.h:141
-msgid "_Repeat Mode"
-msgstr "Λειτουργία επανάλη_ψης"
-
-#: ../data/totem.glade.h:142
-msgid "_Resize 1:2"
-msgstr "Α_λλαγή μεγέθους 1:2"
-
-#: ../data/totem.glade.h:143
-msgid "_Sidebar"
-msgstr "_Πλευρική στήλη"
-
-#: ../data/totem.glade.h:144
-msgid "_Skip to..."
-msgstr "Παρά_καμψη σε..."
-
-#: ../data/totem.glade.h:145
-msgid "_Sound"
-msgstr "_Ήχος"
-
-#: ../data/totem.glade.h:146
-msgid "_Title Menu"
-msgstr "Μενού _τίτλων"
-
-#: ../data/totem.glade.h:147
+#: ../data/totem.glade.h:54
 msgid "_Type of visualisation:"
 msgstr "_Τύπος οπτικοποίησης:"
-
-#: ../data/totem.glade.h:148
-msgid "_View"
-msgstr "Πρ_οβολή"
 
 #: ../data/totem.schemas.in.h:1
 msgid ""
@@ -774,92 +399,100 @@ msgid "Buffer size"
 msgstr "Μέγεθος buffer"
 
 #: ../data/totem.schemas.in.h:3
+msgid "Default location for the \"Open...\" dialogues"
+msgstr "Προεπιλεγμένη τοποθεσία για τους διαλόγους \"Άνοιγμα...\""
+
+#: ../data/totem.schemas.in.h:4
+msgid ""
+"Default location for the \"Open...\" dialogues, default is the current "
+"directory"
+msgstr ""
+"Προεπιλεγμένη τοποθεσία για τους διαλόγους \"Άνοιγμα...\", προεπιλογή είναι "
+"ο τρέχων κατάλογος"
+
+#: ../data/totem.schemas.in.h:5
 msgid "Enable deinterlacing"
 msgstr "Ενεργοποίηση deinterlacing"
 
-#: ../data/totem.schemas.in.h:4
+#: ../data/totem.schemas.in.h:6
 msgid "Encoding charset for subtitle"
 msgstr "Κωδικοποίηση χαρακτήρων για υπότιλους"
 
-#: ../data/totem.schemas.in.h:5
-msgid "Height of the video widget"
-msgstr "Ύψος του γραφικού συστατικού video"
-
-#: ../data/totem.schemas.in.h:6
+#: ../data/totem.schemas.in.h:7
 msgid "Maximum amount of data to decode ahead of display (in seconds)"
 msgstr ""
 "Μέγιστη ποσότητα δεδομένων για αποκωδικοποίηση πριν την εμφάνιση τους (σε "
 "δευτερόλεπτα) "
 
-#: ../data/totem.schemas.in.h:7
+#: ../data/totem.schemas.in.h:8
 msgid "Name of the visual effects plugins"
 msgstr "Όνομα των προσθέτων λειτουργιών οπτικών εφέ"
 
-#: ../data/totem.schemas.in.h:8
+#: ../data/totem.schemas.in.h:9
 msgid "Network buffering threshold"
 msgstr "Network buffering threshold"
 
-#: ../data/totem.schemas.in.h:9
+#: ../data/totem.schemas.in.h:10
 msgid "Pango font description for subtitle rendering"
 msgstr "Περιγραφή γραμματοσειράς pango για την εμφάνιση υποτίτλων"
 
-#: ../data/totem.schemas.in.h:10
+#: ../data/totem.schemas.in.h:11
 msgid "Repeat mode"
 msgstr "Λειτουργία επανάληψης"
 
-#: ../data/totem.schemas.in.h:11
+#: ../data/totem.schemas.in.h:12
 msgid "Resize the canvas automatically on file load"
 msgstr "Αυτόματη αλλαγή του μεγέθους του canvaς κατά τη φόρτωση αρχείου"
 
-#: ../data/totem.schemas.in.h:12
+#: ../data/totem.schemas.in.h:13
 msgid "Show visual effects when no video is displayed"
 msgstr "Εμφάνιση οπτικών εφέ όταν δεν αναπαράγεται βίντεο"
 
-#: ../data/totem.schemas.in.h:13
+#: ../data/totem.schemas.in.h:14
 msgid "Show visual effects when playing an audio only file."
 msgstr "Εμφάνιση οπτικών εφέ μόνο κατά την αναπαραγωγή αρχείου ήχου."
 
-#: ../data/totem.schemas.in.h:14
+#: ../data/totem.schemas.in.h:15
 msgid "Shuffle mode"
 msgstr "Λειτουργία τυχαίας αναπαραγωγής"
 
-#: ../data/totem.schemas.in.h:15
+#: ../data/totem.schemas.in.h:16
 msgid "Sound volume"
 msgstr "Ένταση ήχου"
 
-#: ../data/totem.schemas.in.h:16
+#: ../data/totem.schemas.in.h:17
 msgid "Sound volume, in percent, between 0 and 100"
 msgstr "Ένταση ήχου, σε ποσοστό, μεταξύ 0 και 100"
 
-#: ../data/totem.schemas.in.h:17
+#: ../data/totem.schemas.in.h:18
 msgid "Subtitle encoding"
 msgstr "Κωδικοποίηση υπότιτλων"
 
-#: ../data/totem.schemas.in.h:18
+#: ../data/totem.schemas.in.h:19
 msgid "Subtitle font"
 msgstr "Γραμματοσειρά υπότιτλων"
 
-#: ../data/totem.schemas.in.h:19
+#: ../data/totem.schemas.in.h:20
 msgid "The brightness of the video"
 msgstr "Η φωτεινότητα του βίντεο"
 
-#: ../data/totem.schemas.in.h:20
+#: ../data/totem.schemas.in.h:21
 msgid "The contrast of the video"
 msgstr "Η αντίθεση του βίντεο"
 
-#: ../data/totem.schemas.in.h:21
+#: ../data/totem.schemas.in.h:22
 msgid "The hue of the video"
 msgstr "Η απόχρωση του βίντεο"
 
-#: ../data/totem.schemas.in.h:22
+#: ../data/totem.schemas.in.h:23
 msgid "The saturation of the video"
 msgstr "Ο κορεσμός του βίντεο"
 
-#: ../data/totem.schemas.in.h:23
+#: ../data/totem.schemas.in.h:24
 msgid "Type of audio output to use"
 msgstr "Τύπος εξόδου ήχου για χρήση"
 
-#: ../data/totem.schemas.in.h:24
+#: ../data/totem.schemas.in.h:25
 msgid ""
 "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
 "\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
@@ -872,29 +505,21 @@ msgstr ""
 #. character set. You can change this to be the most common
 #. encoding for fansub subtitles in your language. File a bug
 #. against Totem, and leave UTF-8 as the default if in doubt.
-#: ../data/totem.schemas.in.h:29
+#: ../data/totem.schemas.in.h:30
 msgid "UTF-8"
 msgstr "UTF-8"
 
-#: ../data/totem.schemas.in.h:30
+#: ../data/totem.schemas.in.h:31
 msgid "Whether the main window should stay on top"
 msgstr "Αν το κύριο παράθυρο θα παραμένει πάντα σε πρώτο πλάνο"
 
-#: ../data/totem.schemas.in.h:31
+#: ../data/totem.schemas.in.h:32
 msgid "Whether the main window should stay on top of the other ones"
 msgstr "Αν το κύριο παράθυρο θα παραμένει πάντα πάνω από τα άλλα"
-
-#: ../data/totem.schemas.in.h:32
-msgid "Whether the sidebar is shown"
-msgstr "Αν θα εμφανίζεται η πλευρική στήλη"
 
 #: ../data/totem.schemas.in.h:33
 msgid "Whether to enable debug for the playback engine"
 msgstr "Αν θα ενεργοποιηθεί η εκσφαλμάτωση για τη μηχανή αναπαραγωγής"
-
-#: ../data/totem.schemas.in.h:34
-msgid "Width of the video widget"
-msgstr "Πλάτος του γραφικού συστατικού βίντεο"
 
 #: ../data/uri.glade.h:1
 msgid "Enter the _address of the file you would like to open:"
@@ -916,7 +541,7 @@ msgstr "Εμφάνιση ζωντανής webcam και φόρτωση εικό�
 msgid "Save File"
 msgstr "Αποθήκευση αρχείου"
 
-#: ../data/vanity.glade.h:2 ../src/vanity.c:260
+#: ../data/vanity.glade.h:2 ../src/vanity.c:251
 msgid "Vanity"
 msgstr "Vanity"
 
@@ -956,44 +581,60 @@ msgstr "Μεγέ_θυνση  1:2"
 msgid "Unnamed CDROM"
 msgstr "Ανώνυμο CDROM"
 
-#: ../src/bacon-video-widget-properties.c:225
+#: ../src/bacon-video-widget-properties.c:229
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: ../src/bacon-video-widget-properties.c:228
+#: ../src/bacon-video-widget-properties.c:232
 #, c-format
 msgid "%d frames per second"
 msgstr "%d καρέ ανά δευτερόλεπτο"
 
-#: ../src/bacon-video-widget-properties.c:230
-#: ../src/bacon-video-widget-properties.c:247
+#: ../src/bacon-video-widget-properties.c:234
+#: ../src/bacon-video-widget-properties.c:251
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: ../src/bacon-video-widget-properties.c:281
+#: ../src/bacon-video-widget-properties.c:254
+#, c-format
+msgid "%d Hz"
+msgstr "%d Hz"
+
+#: ../src/bacon-video-widget-properties.c:294
 msgid "Properties dialog"
 msgstr "Διάλογος ιδιοτήτων"
 
+#: ../src/bacon-volume.c:193
+msgid "Volume"
+msgstr "Ένταση"
+
 #. +
-#: ../src/bacon-volume.c:187
+#: ../src/bacon-volume.c:221
 msgid "+"
 msgstr "+"
 
+#: ../src/bacon-volume.c:223 ../src/totem-options.c:47
+msgid "Volume Down"
+msgstr "Μείωση έντασης"
+
 #. -
-#: ../src/bacon-volume.c:203
+#: ../src/bacon-volume.c:239
 msgid "-"
 msgstr "-"
 
-#: ../src/egg-recent-view-gtk.c:346
-#, c-format
-msgid "Open '%s'"
-msgstr "Άνοιγμα '%s'"
+#: ../src/bacon-volume.c:241 ../src/totem-options.c:46
+msgid "Volume Up"
+msgstr "Αύξηση έντασης"
 
-#: ../src/egg-recent-view-gtk.c:446
-msgid "Empty"
-msgstr "Κενό"
+#: ../src/bacon-volume.c:777
+msgid "Muted"
+msgstr "Σίγαση"
+
+#: ../src/bacon-volume.c:779
+msgid "Full Volume"
+msgstr "Πλήρης ένταση"
 
 #: ../src/totem-interface.c:117
 #, c-format
@@ -1001,166 +642,567 @@ msgid "Couldn't load the '%s' interface."
 msgstr "Αδυναμία φόρτωσης του περιβάλλοντος χρήστη '%s'."
 
 #: ../src/totem-interface.c:119 ../src/totem-interface.c:121
+#: ../src/totem-menu.c:1379
 msgid "Make sure that Totem is properly installed."
 msgstr "Βεβαιωθείτε ότι το Totem έχει εγκατασταθεί σωστά."
 
-#: ../src/totem-menu.c:267 ../src/totem-menu.c:289
+#: ../src/totem-interface.c:236
+msgid ""
+"Totem is free software; you can redistribute it and/or modify it under the "
+"terms of the GNU General Public License as published by the Free Software "
+"Foundation; either version 2 of the License, or (at your option) any later "
+"version."
+msgstr ""
+"Το Totem είναι ελεύθερο λογισμικό: Μπορείτε να το διανείμετε εκ νέου και/ή "
+"να το τροποποιήσετε κάτω από τους όρους της GNU Γενικής Δημόσιας Άδειας "
+"Χρήσης (GPL) όπως είναι δημοσιευμένη από το Free Software Foundation: είτε "
+"με την έκδοση 2 της Άδειας, είτε (κατά την επιλογή σας) με οποιαδήποτε "
+"νεότερη έκδοση."
+
+#: ../src/totem-interface.c:240
+msgid ""
+"Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
+"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
+"FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
+"details."
+msgstr ""
+"Το Totem διανέμεται με την ελπίδα οτι θα είναι χρήσιμο αλλά ΧΩΡΙΣ ΚΑΜΜΙΑ "
+"ΑΠΟΛΥΤΩΣ ΕΓΓΥΗΣΗ για συγκεκριμένο σκοπό. Δείτε για περισσότερες λεπτομέρειες "
+"την GNU General Public License."
+
+#: ../src/totem-interface.c:244
+msgid ""
+"You should have received a copy of the GNU General Public License along with "
+"Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
+"Suite 330, Boston, MA  02111-1307  USA"
+msgstr ""
+"Θα·πρέπει·να·έχετε·λάβει·ένα·αντίγραφο·της·GNU·General·Public·License·μαζί·με·το "
+"Totem.·Αν·όχι·γράψτε·στο·Free·Software·Foundation,·Inc.,·59·Temple·Place,"
+"·Suite·330,·Boston,·MA··02111-1307··USA"
+
+#: ../src/totem-interface.c:247
+msgid ""
+"Totem contains an exception to allow the use of proprietary GStreamer "
+"plugins."
+msgstr ""
+"Το Totem περιέχει μια εξαίρεση για να επιτραπεί η χρήση ιδιωτικών πρόσθετων "
+"λειτουργιών GStreamer."
+
+#: ../src/totem-menu.c:284
 msgid "None"
 msgstr "Κανένα"
 
-#: ../src/totem-menu.c:605
+#: ../src/totem-menu.c:288 ../src/totem-menu.c:1265
+msgid "Auto"
+msgstr "Αυτόματο"
+
+#: ../src/totem-menu.c:774
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "Αναπαραγωγή δίσκου '%s'"
 
-#. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
-#: ../src/totem-mozilla-viewer.c:186 ../src/totem.c:338 ../src/totem.c:367
-#: ../src/totem.c:811 ../src/totem.c:921
+#: ../src/totem-menu.c:777
 #, c-format
-msgid "Totem could not play '%s'."
-msgstr "Το Totem δε μπορεί να αναπαράγει '%s'."
+msgid "device%d"
+msgstr "συσκευή%d"
 
-#: ../src/totem-mozilla-viewer.c:325
+#: ../src/totem-menu.c:1093
+msgid "GTK+"
+msgstr "GTK+"
+
+#: ../src/totem-menu.c:1095
+msgid "GNOME"
+msgstr "GNOME"
+
+#. This lists the back-end and front-end types and versions, such as
+#. * Movie Player using GStreamer 0.10.1 and GNOME
+#: ../src/totem-menu.c:1101
 #, c-format
-msgid "Movie Player using %s"
-msgstr "Movie Player με χρήση %s"
+msgid "Movie Player using %s and %s"
+msgstr "Movie Player με χρήση %s και %s"
 
-#: ../src/totem-mozilla-viewer.c:329
-msgid "Totem Mozilla Plugin"
-msgstr "Totem Mozilla Plugin"
-
-#: ../src/totem-mozilla-viewer.c:331 ../src/totem.c:1971
+#: ../src/totem-menu.c:1106 ../browser-plugin/totem-plugin-viewer.c:1098
 msgid "Copyright © 2002-2006 Bastien Nocera"
 msgstr "Πνευματικά δικαιώματα © 2002-2006 Bastien Nocera"
 
-#: ../src/totem-mozilla-viewer.c:334 ../src/totem.c:1976 ../src/vanity.c:267
+#: ../src/totem-menu.c:1111 ../src/vanity.c:258
+#: ../browser-plugin/totem-plugin-viewer.c:1101
 msgid "translator-credits"
-msgstr "Κώστας Παπαδήμας <pkst@gnome.org>"
-
-#: ../src/totem-mozilla-viewer.c:422
-msgid "Failed to start stand-alone movie player"
-msgstr "Αποτυχία εκκίνησης μεμονωμένου movie player"
-
-#: ../src/totem-mozilla-viewer.c:423
-msgid "Unknown reason"
-msgstr "Άγνωστος λόγος"
-
-#: ../src/totem-mozilla-viewer.c:523
-msgid "Plugin"
-msgstr "Πρόσθετη λειτουργία"
-
-#: ../src/totem-mozilla-viewer.c:526
-msgid "Menu"
-msgstr "Μενού"
-
-#: ../src/totem-mozilla-viewer.c:543
-msgid "The Totem plugin could not startup."
-msgstr "Η πρόσθετη λειτουργία του Totem δεν μπορεί να ξεκινήσει."
-
-#: ../src/totem-mozilla-viewer.c:543 ../src/totem.c:433 ../src/totem.c:3372
-msgid "No reason."
-msgstr "Χωρίς λόγο."
-
-#: ../src/totem-mozilla-viewer.c:654
-msgid "Could not initialise the thread-safe libraries."
-msgstr "Αδυναμία αρχικοποίησης των βιβλιοθηκών thread-safe."
-
-#: ../src/totem-mozilla-viewer.c:654
-msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr ""
-"Επιβεβαιώστε την εγκατάσταση του συστήματος σας. Το Totem τώρα θα "
-"τερματιστεί."
+"Κώστας Παπαδήμας <pkst@gnome.org>Αθανάσιος Λευτέρης <alefteris@gmail.com>"
 
-#: ../src/totem-options.c:36 ../src/vanity.c:75
-msgid "Backend options"
-msgstr "Επιλογές backend"
+#: ../src/totem-menu.c:1196
+msgid "_Movie"
+msgstr "_Ταινία"
 
-#: ../src/totem-options.c:37
+#: ../src/totem-menu.c:1197
+msgid "_Open..."
+msgstr "Άν_οιγμα..."
+
+#: ../src/totem-menu.c:1197
+msgid "Open a file"
+msgstr "Άνοιγμα ενός αρχείου"
+
+#: ../src/totem-menu.c:1198
+msgid "Open _Location..."
+msgstr "Άνοιγμα _τοποθεσίας..."
+
+#: ../src/totem-menu.c:1198
+msgid "Open a non-local file"
+msgstr "Άνοιγμα ενός μη τοπικού αρχείου"
+
+#: ../src/totem-menu.c:1199
+msgid "_Eject"
+msgstr "Ε_ξαγωγή"
+
+#: ../src/totem-menu.c:1200
+msgid "_Properties"
+msgstr "_Ιδιότητες"
+
+#: ../src/totem-menu.c:1201
+msgid "Play / Pa_use"
+msgstr "Αναπαραγ_ωγή / Παύση"
+
+#: ../src/totem-menu.c:1201
+msgid "Play or pause the movie"
+msgstr "Αναπαραγωγή ή παύση της ταινίας"
+
+#: ../src/totem-menu.c:1202
+msgid "_Quit"
+msgstr "'Ε_ξοδος"
+
+#: ../src/totem-menu.c:1202
+msgid "Quit the program"
+msgstr "Έξοδος από το πρόγραμμα"
+
+#: ../src/totem-menu.c:1204
+msgid "_Edit"
+msgstr "_Επεξεργασία"
+
+#: ../src/totem-menu.c:1205
+msgid "Take _Screenshot..."
+msgstr "Λήψη _στιγμιότυπου οθόνης..."
+
+#: ../src/totem-menu.c:1205
+msgid "Take a screenshot"
+msgstr "Λήψη ενός στιγμιότυπου οθόνης"
+
+#: ../src/totem-menu.c:1206
+msgid "_Clear Playlist"
+msgstr "_Καθαρισμός λίστας αναπαραγωγής"
+
+#: ../src/totem-menu.c:1206
+msgid "Clear playlist"
+msgstr "Καθαρισμός λίστας αναπαραγωγής"
+
+#: ../src/totem-menu.c:1207
+msgid "Prefere_nces"
+msgstr "Προτι_μήσεις"
+
+#: ../src/totem-menu.c:1209
+msgid "_View"
+msgstr "Πρ_οβολή"
+
+#: ../src/totem-menu.c:1210
+msgid "_Fullscreen"
+msgstr "_Πλήρης οθόνη"
+
+#: ../src/totem-menu.c:1210
+msgid "Switch to fullscreen"
+msgstr "Αλλαγή σε πλήρη οθόνη"
+
+#: ../src/totem-menu.c:1211
+msgid "Fit Window to Movie"
+msgstr "Ταίριασμα παραθύρου στην ταινία"
+
+#: ../src/totem-menu.c:1212
+msgid "_Resize 1:2"
+msgstr "Α_λλαγή μεγέθους 1:2"
+
+#: ../src/totem-menu.c:1212
+msgid "Resize to half the video size"
+msgstr "Αλλαγή μεγέθους στο μισό του μεγέθους του video"
+
+#: ../src/totem-menu.c:1213
+msgid "Resize _1:1"
+msgstr "Αλλαγή μεγέθους _1:1"
+
+#: ../src/totem-menu.c:1213
+msgid "Resize to video size"
+msgstr "Αλλαγή μεγέθους στο μέγεθος του βίντεο"
+
+#: ../src/totem-menu.c:1214
+msgid "Resize _2:1"
+msgstr "Αλλαγή μεγέθους _2:1"
+
+#: ../src/totem-menu.c:1214
+msgid "Resize to twice the video size"
+msgstr "Αλλαγή μεγέθους στο διπλάσιο του μεγέθους του video"
+
+#: ../src/totem-menu.c:1215
+msgid "_Aspect Ratio"
+msgstr " _Συντελεστής αναλογίας"
+
+#: ../src/totem-menu.c:1216
+msgid "Switch An_gles"
+msgstr "Αλλαγή _γωνίας"
+
+#: ../src/totem-menu.c:1216
+msgid "Switch angles"
+msgstr "Αλλαγή γωνίας"
+
+#. { "subtitles-menu", NULL, N_("S_ubtitles") },
+#: ../src/totem-menu.c:1219
+msgid "_Go"
+msgstr "_Μετάβαση"
+
+#: ../src/totem-menu.c:1220
+msgid "_DVD Menu"
+msgstr "Μενού _DVD "
+
+#: ../src/totem-menu.c:1220
+msgid "Go to the DVD menu"
+msgstr "Μετάβαση στο μενού DVD"
+
+#: ../src/totem-menu.c:1221
+msgid "_Title Menu"
+msgstr "Μενού _τίτλων"
+
+#: ../src/totem-menu.c:1221
+msgid "Go to the title menu"
+msgstr "Μετάβαση στο μενού τίτλων"
+
+#: ../src/totem-menu.c:1222
+msgid "A_udio Menu"
+msgstr "Μενού ή_χου"
+
+#: ../src/totem-menu.c:1222
+msgid "Go to the audio menu"
+msgstr "Μετάβαση στο μενού ήχου"
+
+#: ../src/totem-menu.c:1223
+msgid "_Angle Menu"
+msgstr "Μενού οπτικής _γωνίας"
+
+#: ../src/totem-menu.c:1223
+msgid "Go to the angle menu"
+msgstr "Μετάβαση στο μενού οπτικής γωνίας"
+
+#: ../src/totem-menu.c:1224
+msgid "_Chapter Menu"
+msgstr "Μενού κε_φαλαίων"
+
+#: ../src/totem-menu.c:1224
+msgid "Go to the chapter menu"
+msgstr "Μετάβαση στο μενού κεφαλαίων"
+
+#: ../src/totem-menu.c:1225
+msgid "_Next Chapter/Movie"
+msgstr "Επόμε_νο κεφάλαιο/ταινία"
+
+#: ../src/totem-menu.c:1225
+msgid "Next chapter or movie"
+msgstr "Επόμενο κεφάλαιο ή ταινία"
+
+#: ../src/totem-menu.c:1226
+msgid "_Previous Chapter/Movie"
+msgstr "_Προηγούμενο κεφάλαιο/ταινία"
+
+#: ../src/totem-menu.c:1226
+msgid "Previous chapter or movie"
+msgstr "Προηγούμενο κεφάλαιο ή ταινία"
+
+#: ../src/totem-menu.c:1227
+msgid "_Skip to..."
+msgstr "Παρά_καμψη σε..."
+
+#: ../src/totem-menu.c:1227
+msgid "Skip to a specific time"
+msgstr "Παράκαμψη σε συγκεκριμένο χρονικό διάστημα"
+
+#: ../src/totem-menu.c:1229
+msgid "_Sound"
+msgstr "_Ήχος"
+
+#. { "languages-menu", NULL, N_("_Languages") },
+#: ../src/totem-menu.c:1231
+msgid "Volume _Up"
+msgstr "Αύ_ξηση έντασης"
+
+#: ../src/totem-menu.c:1231
+msgid "Volume up"
+msgstr "Αύξηση έντασης"
+
+#: ../src/totem-menu.c:1232
+msgid "Volume _Down"
+msgstr "_Μείωση έντασης"
+
+#: ../src/totem-menu.c:1232
+msgid "Volume down"
+msgstr "Μείωση έντασης"
+
+#: ../src/totem-menu.c:1234
+msgid "_Help"
+msgstr "_Βοήθεια"
+
+#: ../src/totem-menu.c:1235
+msgid "_Contents"
+msgstr "Περιε_χόμενα"
+
+#: ../src/totem-menu.c:1235
+msgid "Help contents"
+msgstr "Περιεχόμενα βοήθειας"
+
+#: ../src/totem-menu.c:1236
+msgid "_About"
+msgstr "_Περί"
+
+#: ../src/totem-menu.c:1240
+msgid "Zoom In"
+msgstr "Μεγέθυνση"
+
+#: ../src/totem-menu.c:1240
+msgid "Zoom in"
+msgstr "Μεγέθυνση"
+
+#: ../src/totem-menu.c:1241
+msgid "Zoom Reset"
+msgstr "Επαναφορά μεγέθυνσης"
+
+#: ../src/totem-menu.c:1241
+msgid "Zoom reset"
+msgstr "Επαναφορά μεγέθυνσης"
+
+#: ../src/totem-menu.c:1242
+msgid "Zoom Out"
+msgstr "Σμίκρυνση"
+
+#: ../src/totem-menu.c:1242
+msgid "Zoom out"
+msgstr "Σμίκρυνση"
+
+#: ../src/totem-menu.c:1246 ../src/totem-menu.c:1251
+msgid "Skip _Forward"
+msgstr "Παράκαμψη προς τα _μπροστά"
+
+#: ../src/totem-menu.c:1246 ../src/totem-menu.c:1251
+msgid "Skip forward"
+msgstr "Παράκαμψη προς τα μπροστά"
+
+#: ../src/totem-menu.c:1247 ../src/totem-menu.c:1252
+msgid "Skip _Backwards"
+msgstr "Παράκαμψη προς τα _πίσω"
+
+#: ../src/totem-menu.c:1247 ../src/totem-menu.c:1252
+msgid "Skip backwards"
+msgstr "Παράκαμψη προς τα πίσω"
+
+#: ../src/totem-menu.c:1256
+msgid "_Repeat Mode"
+msgstr "Λειτουργία επανάλη_ψης"
+
+#: ../src/totem-menu.c:1256
+msgid "Set the repeat mode"
+msgstr "Ορισμός της λειτουργίας επανάληψης"
+
+#: ../src/totem-menu.c:1257
+msgid "Shuff_le Mode"
+msgstr "Λειτουργία τυ_χαίας αναπαραγωγής"
+
+#: ../src/totem-menu.c:1257
+msgid "Set the shuffle mode"
+msgstr "Ορισμός της λειτουργίας τυχαίας αναπαραγωγής"
+
+#: ../src/totem-menu.c:1258
+msgid "_Deinterlace"
+msgstr "Απε_διεμπλοκή (deinterlace)"
+
+#: ../src/totem-menu.c:1258
+msgid "Deinterlace"
+msgstr "Απεδιεμπλοκή (deinterlace)"
+
+#: ../src/totem-menu.c:1259
+msgid "Always on _Top"
+msgstr "Πάντα σε επικά_λυψη"
+
+#: ../src/totem-menu.c:1259
+msgid "Always on top"
+msgstr "Πάντα σε επικάλυψη"
+
+#: ../src/totem-menu.c:1260
+msgid "Show _Controls"
+msgstr "Εμφάνιση ε_λέγχων"
+
+#: ../src/totem-menu.c:1260
+msgid "Show controls"
+msgstr "Εμφάνιση ελέγχων"
+
+#: ../src/totem-menu.c:1261
+msgid "_Sidebar"
+msgstr "_Πλευρική στήλη"
+
+#: ../src/totem-menu.c:1261
+msgid "Show or hide the sidebar"
+msgstr "Εμφάνιση ή απόκρυψη της πλευρικής στήλης"
+
+#: ../src/totem-menu.c:1265
+msgid "Sets automatic aspect ratio"
+msgstr "Ορίζει αυτόματο συντελεστή αναλογίας"
+
+#: ../src/totem-menu.c:1266
+msgid "Square"
+msgstr "Τετράγωνο"
+
+#: ../src/totem-menu.c:1266
+msgid "Sets square aspect ratio"
+msgstr "Ορίζει τετράγωνο συντελεστή αναλογίας"
+
+#: ../src/totem-menu.c:1267
+msgid "4:3 (TV)"
+msgstr "4:3 (TV)"
+
+#: ../src/totem-menu.c:1267
+msgid "Sets 4:3 (TV) aspect ratio"
+msgstr "Ορίζει συντελεστή αναλογίας 4:3 (TV) "
+
+#: ../src/totem-menu.c:1268
+msgid "16:9 (Widescreen)"
+msgstr "16:9 (Ευρεία οθόνη)"
+
+#: ../src/totem-menu.c:1268
+msgid "Sets 16:9 (Anamorphic) aspect ratio"
+msgstr "Ορίζει 16:9 (Anamorphic) συντελεστή αναλογίας"
+
+#: ../src/totem-menu.c:1269
+msgid "2.11:1 (DVB)"
+msgstr "2.11:1 (DVB)"
+
+#: ../src/totem-menu.c:1269
+msgid "Sets 2.11:1 (DVB) aspect ratio"
+msgstr "Ορίζει συντελεστή αναλογίας 2.11:1 (DVB)"
+
+#: ../src/totem-menu.c:1329
+msgid "S_ubtitles"
+msgstr "Υ_πότιτλοι"
+
+#: ../src/totem-menu.c:1335
+msgid "_Languages"
+msgstr "Γ_λώσσες"
+
+#: ../src/totem-menu.c:1378
+msgid "Couldn't load the 'ui description' file"
+msgstr "Αδυναμία φόρτωσης του αρχείου περιγραφής του περιβάλλοντος χρήστη"
+
+#: ../src/totem-options.c:38
 msgid "Enable debug"
-msgstr "Ενεργοποίηση debug"
+msgstr "Ενεργοποίηση αποσφαλμάτωσης"
 
-#: ../src/totem-options.c:39 ../src/totem.c:260 ../src/totem.c:268
+#: ../src/totem-options.c:39
+msgid "Play/Pause"
+msgstr "Αναπαραγωγή/Παύση"
+
+#: ../src/totem-options.c:40 ../src/totem.c:294 ../src/totem.c:302
 msgid "Play"
 msgstr "Αναπαραγωγή"
 
-#: ../src/totem-options.c:40 ../src/totem.c:254
+#: ../src/totem-options.c:41 ../src/totem.c:288
 msgid "Pause"
 msgstr "Παύση"
 
+#: ../src/totem-options.c:42
+msgid "Next"
+msgstr "Επόμενο"
+
 #: ../src/totem-options.c:43
+msgid "Previous"
+msgstr "Προηγούμενο"
+
+#: ../src/totem-options.c:44
 msgid "Seek Forwards"
 msgstr "Εύρεση προς τα μπροστά"
 
-#: ../src/totem-options.c:44
+#: ../src/totem-options.c:45
 msgid "Seek Backwards"
 msgstr "Εύρεση προς τα πίσω"
 
-#: ../src/totem-options.c:47
+#: ../src/totem-options.c:48
 msgid "Toggle Fullscreen"
 msgstr "Εναλλαγή πλήρους οθόνης"
 
-#: ../src/totem-options.c:48
+#: ../src/totem-options.c:49
 msgid "Show/Hide Controls"
 msgstr "Απόκρυψη/Εμφάνιση Ελέγχων"
 
-#: ../src/totem-options.c:49
+#: ../src/totem-options.c:50
 msgid "Quit"
 msgstr "Τερματισμός"
 
-#: ../src/totem-options.c:50
+#: ../src/totem-options.c:51
 msgid "Enqueue"
 msgstr "Enqueue"
 
-#: ../src/totem-options.c:51
+#: ../src/totem-options.c:52
 msgid "Replace"
 msgstr "Αντικατάσταση"
 
-#: ../src/totem-options.c:112
-#, c-format
-msgid "Option '%s' is unknown and was ignored\n"
-msgstr "Η επιλογή '%s' είναι άγνωστη και αγνοήθηκε\n"
+#. FIXME translate
+#: ../src/totem-options.c:54
+msgid "Seek"
+msgstr "Αναζήτηση"
 
-#: ../src/totem-playlist.c:347 ../src/totem-playlist.c:841
+#: ../src/totem-options.c:55
+msgid "Playlist index"
+msgstr "Λίστα αναπαραγωγής"
+
+#: ../src/totem-options.c:56
+msgid "Movies to play"
+msgstr "Ταινίες προς αναπαραγωγή"
+
+#: ../src/totem-playlist.c:143
+msgid "_Remove"
+msgstr "Απομάκ_ρυνση"
+
+#: ../src/totem-playlist.c:143
+msgid "Remove file from playlist"
+msgstr "Αφαίρεση αρχείου από την λίστα αναπαραγωγής"
+
+#: ../src/totem-playlist.c:144
+msgid "_Copy Location"
+msgstr "Αντι_γραφή Τοποθεσίας"
+
+#: ../src/totem-playlist.c:144
+msgid "Copy the location to the clipboard"
+msgstr "Αντιγραφή της τοποθεσίας στο πρόχειρο"
+
+#: ../src/totem-playlist.c:362 ../src/totem-playlist.c:901
 msgid "Could not save the playlist"
 msgstr "Αδυναμία αποθήκευσης της λίστας αναπαραγωγής"
 
-#: ../src/totem-playlist.c:841
+#: ../src/totem-playlist.c:901
 msgid "Unknown file extension."
 msgstr "Άγνωστη επέκταση αρχείου."
 
-#: ../src/totem-playlist.c:854
+#: ../src/totem-playlist.c:914
 msgid "Select playlist format:"
 msgstr "Επιλογή μορφής λίστας αναπαραγωγής:"
 
-#: ../src/totem-playlist.c:858
+#: ../src/totem-playlist.c:919
 msgid "By extension"
 msgstr "Κατά επέκταση"
 
-#: ../src/totem-playlist.c:880
+#: ../src/totem-playlist.c:949
 msgid "Save Playlist"
 msgstr "Αποθήκευση λίστας αναπαραγωγής"
 
-#: ../src/totem-playlist.c:934
-msgid "Overwrite file?"
-msgstr "Αντικατάσταση αρχείου;"
-
-#: ../src/totem-playlist.c:936
-#, c-format
-msgid ""
-"A file named '%s' already exists.  Are you sure you want to overwrite it?"
-msgstr ""
-"Ένα αρχείο που ονομάζεται '%s'  υπάρχει ήδη. Είστε σίγουροι ότι θέλετε να το "
-"αντικαταστήσετε;"
-
-#: ../src/totem-playlist.c:1480
+#: ../src/totem-playlist.c:1507
 msgid "playlist"
 msgstr "λίστα αναπαραγωγής"
 
-#: ../src/totem-playlist.c:1613
+#: ../src/totem-playlist.c:1652
 msgid "Playlist error"
 msgstr "Σφάλμα λίστας αναπαραγωγής"
 
-#: ../src/totem-playlist.c:1613
+#: ../src/totem-playlist.c:1652
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr ""
@@ -1186,20 +1228,13 @@ msgstr ""
 "Η αλλαγή σε αυτή τη ρύθμιση θα πραγματοποιηθεί στην επόμενη ταινία, ή όταν "
 "γίνει επανεκκίνηση του Totem."
 
-#: ../src/totem-preferences.c:184
-msgid ""
-"Switching on or off this type of TV-Out requires a restart to take effect."
-msgstr ""
-"Η ενεργοποίηση ή η απενεργοποίηση αυτού του τύπου του TV-Out απαιτεί "
-"επανεκκίνηση για να πραγματοποιηθεί."
-
-#: ../src/totem-preferences.c:296
+#: ../src/totem-preferences.c:284
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr ""
 "Η αλλαγή στον τύπο των οπτικών εφέ απαιτεί επανεκκίνηση για να "
 "πραγματοποιηθεί."
 
-#: ../src/totem-preferences.c:380
+#: ../src/totem-preferences.c:368
 msgid ""
 "The change of audio output type will only take effect when Totem is "
 "restarted."
@@ -1207,88 +1242,101 @@ msgstr ""
 "Η αλλαγή σε αυτή τη ρύθμιση θα πραγματοποιηθεί στην επόμενη ταινία, ή όταν "
 "γίνει επανεκκίνηση του Totem."
 
-#: ../src/totem-preferences.c:633
+#: ../src/totem-preferences.c:622
 msgid "Select Subtitle Font"
 msgstr "Επιλογή γραμματοσειράς υπότιτλων"
 
 #. FIXME this should be setting an error?
-#: ../src/totem-properties-main.c:117 ../src/totem-properties-view.c:86
-#: ../src/totem-properties-view.c:94
+#: ../src/totem-properties-main.c:117 ../src/totem-properties-view.c:84
+#: ../src/totem-properties-view.c:92
 msgid "Audio/Video"
 msgstr "Ήχος/Βίντεο"
 
-#: ../src/totem-properties-view.c:88
+#: ../src/totem-properties-view.c:86
 msgid "Video"
 msgstr "Βίντεο"
 
-#: ../src/totem-screenshot.c:151 ../src/totem-screenshot.c:162
+#: ../src/totem-screenshot.c:149 ../src/totem-screenshot.c:160
 #, c-format
 msgid "Screenshot%d.png"
-msgstr "Screenshot%d.png"
+msgstr "ΑρπαγήΟθόνης%d.png"
 
-#: ../src/totem-screenshot.c:204
+#: ../src/totem-screenshot.c:202
 #, c-format
 msgid "File '%s' already exists."
 msgstr "Το αρχείο '%s' υπάρχει ήδη."
 
-#: ../src/totem-screenshot.c:206
+#: ../src/totem-screenshot.c:204
 msgid "The screenshot was not saved"
 msgstr "Το στιγμιότυπο οθόνης δεν αποθηκεύτηκε"
 
-#: ../src/totem-screenshot.c:217
+#: ../src/totem-screenshot.c:215
 msgid "There was an error saving the screenshot."
 msgstr "Σφάλμα κατά την αποθήκευση του στιγμιότυπου οθόνης."
 
-#: ../src/totem-screenshot.c:250
+#: ../src/totem-screenshot.c:248
 msgid "Screenshot.png"
-msgstr "Screenshot.png"
+msgstr "ΑρπαγήΟθόνης.png"
 
-#: ../src/totem-scrsaver.c:116
+#: ../src/totem-scrsaver.c:117
 msgid "Playing a movie"
 msgstr "Αναπαραγωγή μιας ταινίας"
 
-#: ../src/totem-statusbar.c:91
+#: ../src/totem-statusbar.c:92
 msgid "Shadow type"
 msgstr "Είδος σκίασης"
 
-#: ../src/totem-statusbar.c:92
+#: ../src/totem-statusbar.c:93
 msgid "Style of bevel around the statusbar text"
 msgstr "Στυλό γωνίας γύρω από το κείμενο της μπάρας κατάστασης"
 
-#: ../src/totem-statusbar.c:124 ../src/totem.c:264 ../src/totem.c:692
+#: ../src/totem-statusbar.c:126 ../src/totem.c:298 ../src/totem.c:960
+#: ../browser-plugin/totem-plugin-viewer.c:279
 msgid "Stopped"
 msgstr "Διακόπηκε"
 
-#: ../src/totem-statusbar.c:142
+#: ../src/totem-statusbar.c:144
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:180
+#: ../src/totem-statusbar.c:187
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (Streaming)"
 
 #. Elapsed / Total Length
-#: ../src/totem-statusbar.c:187 ../src/totem-time-label.c:85
+#: ../src/totem-statusbar.c:194 ../src/totem-time-label.c:85
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:190 ../src/totem-time-label.c:88
+#: ../src/totem-statusbar.c:197 ../src/totem-time-label.c:88
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "Αναζήτηση σε  %s / %s"
 
-#: ../src/totem-statusbar.c:248
+#: ../src/totem-statusbar.c:271
 msgid "Buffering"
 msgstr "Buffering"
 
 #. eg: 75 %
-#: ../src/totem-statusbar.c:251
+#: ../src/totem-statusbar.c:274
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
+
+#. eg: Paused, 0:32 / 1:05
+#: ../src/totem-statusbar.c:335
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
+
+#. eg: Buffering, 75 %
+#: ../src/totem-statusbar.c:340
+#, c-format
+msgid "%s, %d %%"
+msgstr "%s, %d %%"
 
 #: ../src/totem-subtitle-encoding.c:158
 msgid "Current Locale"
@@ -1431,31 +1479,37 @@ msgstr "Δυτική"
 msgid "Vietnamese"
 msgstr "Βιετναμέζικα"
 
-#: ../src/totem-uri.c:227
+#: ../src/totem-uri.c:233
 msgid "All files"
 msgstr "Όλα τα αρχεία"
 
-#: ../src/totem-uri.c:233
+#: ../src/totem-uri.c:239
 msgid "Supported files"
 msgstr "Υποστηριζόμενα αρχεία"
 
-#: ../src/totem-uri.c:255
+#: ../src/totem-uri.c:267
 msgid "Select Movies or Playlists"
 msgstr "Επιλογή ταινιών ή λιστών αναπαραγωγής"
 
-#: ../src/totem.c:252
+#: ../src/totem.c:286 ../browser-plugin/totem-plugin-viewer.c:294
 msgid "Playing"
 msgstr "Αναπαραγωγή"
 
-#: ../src/totem.c:258
+#: ../src/totem.c:292 ../browser-plugin/totem-plugin-viewer.c:290
 msgid "Paused"
 msgstr "Παύση"
 
-#: ../src/totem.c:310
+#: ../src/totem.c:344
 msgid "Totem could not eject the optical media."
 msgstr "Το Totem δεν μπορεί να εξαγάγει το οπτικό μέσο."
 
-#: ../src/totem.c:394
+#: ../src/totem.c:378 ../src/totem.c:407 ../src/totem.c:1074
+#: ../src/totem.c:1184
+#, c-format
+msgid "Totem could not play '%s'."
+msgstr "Το Totem δε μπορεί να αναπαράγει '%s'."
+
+#: ../src/totem.c:468
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1465,7 +1519,7 @@ msgstr ""
 "δεν έχετε εγκατεστημένες τις απαραίτητες πρόσθετες λειτουργίες για τον "
 "χειρισμό τους."
 
-#: ../src/totem.c:395
+#: ../src/totem.c:469
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1473,7 +1527,7 @@ msgstr ""
 "Εγκαταστήστε τις απαραίτητες πρόσθετες λειτουργίες και επανεκκινήστε το "
 "Totem για να μπορέσετε να αναπαραγάγετε αυτού του είδους αρχεία."
 
-#: ../src/totem.c:403
+#: ../src/totem.c:477
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1482,111 +1536,115 @@ msgstr ""
 "Το Totem δεν μπορεί να αναπαράγει αυτό το μέσο  (%s) αν και υπάρχει μια "
 "πρόσθετη λειτουργία για το χειρισμό του."
 
-#: ../src/totem.c:404
+#: ../src/totem.c:478
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr "Ελέγξτε ότι υπάρχει ο δίσκος στον οδηγό και ότι έχει ρυθμιστεί σωστά."
 
-#: ../src/totem.c:432
+#: ../src/totem.c:506
 msgid "Totem was not able to play this disc."
 msgstr "Το Totem δεν μπόρεσε να αναπαράγει αυτόν το δίσκο."
 
-#: ../src/totem.c:699
-msgid "No File"
-msgstr "Δεν υπάρχει αρχείο"
+#: ../src/totem.c:507 ../src/totem.c:3255
+#: ../browser-plugin/totem-plugin-viewer.c:1428
+msgid "No reason."
+msgstr "Χωρίς λόγο."
 
-#: ../src/totem.c:817
-msgid "No error message"
-msgstr "Δεν υπάρχει μήνυμα σφάλματος"
-
-#: ../src/totem.c:1279 ../src/totem.c:1281
-msgid "An error occurred"
-msgstr "Προέκυψε ένα σφάλμα"
-
-#: ../src/totem.c:1652
+#: ../src/totem.c:765
 msgid "Open Location..."
 msgstr "Άνοιγμα τοποθεσίας..."
 
-#: ../src/totem.c:1925
-msgid "Totem could not display the help contents."
-msgstr "Το Totem δεν μπορεί να εμφανίσει τα περιεχόμενα βοήθειας."
-
-#: ../src/totem.c:1958
-msgid "GTK+"
-msgstr "GTK+"
-
-#: ../src/totem.c:1960
-msgid "GNOME"
-msgstr "GNOME"
-
-#. This lists the back-end and front-end types and versions, such as
-#. * Movie Player using GStreamer 0.10.1 and GNOME
-#: ../src/totem.c:1966
-#, c-format
-msgid "Movie Player using %s and %s"
-msgstr "Movie Player με χρήση %s και %s"
-
-#: ../src/totem.c:2009 ../src/totem.c:2017 ../src/vanity.c:300
-#: ../src/vanity.c:308
+#: ../src/totem.c:859 ../src/totem.c:867 ../src/vanity.c:292
+#: ../src/vanity.c:300
 msgid "Totem could not get a screenshot of that film."
 msgstr "Το Totem δε μπορεί λάβει στιγμιότυπο οθόνης από αυτό το φιλμ."
 
-#: ../src/totem.c:2017 ../src/vanity.c:308
+#: ../src/totem.c:867 ../src/vanity.c:300
 msgid "This is not supposed to happen; please file a bug report."
 msgstr ""
 "Αυτό δεν προβλεπόταν να συμβεί, παρακαλώ στείλτε μια αναφορά σφάλματος."
 
-#: ../src/totem.c:2090
+#: ../src/totem.c:967
+msgid "No File"
+msgstr "Δεν υπάρχει αρχείο"
+
+#: ../src/totem.c:1080
+msgid "No error message"
+msgstr "Δεν υπάρχει μήνυμα σφάλματος"
+
+#: ../src/totem.c:1296
+msgid "Totem could not display the help contents."
+msgstr "Το Totem δεν μπορεί να εμφανίσει τα περιεχόμενα βοήθειας."
+
+#: ../src/totem.c:1559 ../src/totem.c:1561
+#: ../browser-plugin/totem-plugin-viewer.c:1284
+msgid "An error occurred"
+msgstr "Προέκυψε ένα σφάλμα"
+
+#: ../src/totem.c:1889
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "Το Totem δε μπορεί να αναζητήσει στο '%s'."
 
-#: ../src/totem.c:3372
+#: ../src/totem.c:3056
+msgid "Previous Chapter/Movie"
+msgstr "Προηγούμενο κεφάλαιο/ταινία"
+
+#: ../src/totem.c:3062
+msgid "Play / Pause"
+msgstr "Αναπαραγωγή / Παύση"
+
+#: ../src/totem.c:3069
+msgid "Next Chapter/Movie"
+msgstr "Επόμενο κεφάλαιο/ταινία"
+
+#: ../src/totem.c:3255
 msgid "Totem could not startup."
 msgstr "Το Totem δε μπορεί να ξεκινήσει."
 
-#: ../src/totem.c:3514
+#: ../src/totem.c:3404
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Αδυναμία αρχικοποίησης των βιβλιοθηκών thread-safe."
 
-#: ../src/totem.c:3514
+#: ../src/totem.c:3404
 msgid "Verify your system installation. Totem will now exit."
 msgstr ""
 "Επιβεβαιώστε την εγκατάσταση του συστήματος σας. Το Totem τώρα θα "
 "τερματιστεί."
 
-#: ../src/totem.c:3538
+#. Handle command line arguments
+#: ../src/totem.c:3411
+msgid "- Play movies and songs"
+msgstr "- Αναπαραγωγή ταινιών και τραγουδιών"
+
+#: ../src/totem.c:3419
+msgid "Totem could not parse the command-line options"
+msgstr "Το Totem δεν μπορεί να αναλύσει τις επιλογές από την γραμμή εντολών"
+
+#: ../src/totem.c:3438
 msgid "Totem could not initialize the configuration engine."
 msgstr "Δεν είναι δυνατή η εκκίνηση της μηχανής ρυθμίσεων από το Totem."
 
-#: ../src/totem.c:3538
+#: ../src/totem.c:3438
 msgid "Make sure that GNOME is properly installed."
 msgstr "Βεβαιωθείτε ότι το GNOME έχει εγκατασταθεί σωστά."
 
 #. Main window
-#: ../src/totem.c:3566
+#: ../src/totem.c:3466
 msgid "main window"
 msgstr "κυρίως παράθυρο"
 
-#: ../src/totem.c:3571
-msgid "video popup menu"
-msgstr "αναδυόμενο μενού βίντεο"
-
-#: ../src/vanity.c:76
-msgid "Debug mode on"
-msgstr "Λειτουργία εκσφαλμάτωσης ενεργή"
-
-#: ../src/vanity.c:256
+#: ../src/vanity.c:247
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "Εργαλείο Webcam με χρήση %s"
 
-#: ../src/vanity.c:262
+#: ../src/vanity.c:253
 msgid "Copyright © 2002-2005 Bastien Nocera"
-msgstr "Copyright © 2002-2005 Bastien Nocera"
+msgstr "Πνευματικά δικαιώματα © 2002-2005 Bastien Nocera"
 
-#: ../src/vanity.c:551
+#: ../src/vanity.c:544
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1595,11 +1653,11 @@ msgstr ""
 "Δεν είναι δυνατή η εκκίνηση του Vanity:\n"
 "%s"
 
-#: ../src/vanity.c:552
+#: ../src/vanity.c:545
 msgid "No reason"
 msgstr "Χωρίς λόγο"
 
-#: ../src/vanity.c:590
+#: ../src/vanity.c:585
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1608,7 +1666,7 @@ msgstr ""
 "Το Vanity δεν μπορεί να επικοινωνήσει με την webcam.\n"
 "Αιτία: %s"
 
-#: ../src/vanity.c:606
+#: ../src/vanity.c:601
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1617,11 +1675,11 @@ msgstr ""
 "Το Vanity δεν μπορεί να αναπαράγει βίντεο από την webcam.\n"
 "Αιτία: %s"
 
-#: ../src/vanity.c:642
-msgid "Vanity Webcam Utility"
-msgstr "Εργαλείο Vanity Webcam"
+#: ../src/vanity.c:625
+msgid "Debug mode on"
+msgstr "Λειτουργία εκσφαλμάτωσης ενεργή"
 
-#: ../src/vanity.c:647
+#: ../src/vanity.c:638
 msgid ""
 "Could not initialize the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1630,7 +1688,11 @@ msgstr ""
 "Επιβεβαιώστε την εγκατάσταση του συστήματος σας. Το Vanity τώρα θα "
 "τερματιστεί."
 
-#: ../src/vanity.c:673
+#: ../src/vanity.c:675
+msgid "Vanity Webcam Utility"
+msgstr "Εργαλείο Vanity Webcam"
+
+#: ../src/vanity.c:681
 #, c-format
 msgid ""
 "Vanity could not initialize the \n"
@@ -1641,7 +1703,7 @@ msgstr ""
 "της μηχανής ρυθμίσεων:\n"
 "%s"
 
-#: ../src/vanity.c:693 ../src/vanity.c:708
+#: ../src/vanity.c:702 ../src/vanity.c:716
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
@@ -1649,7 +1711,7 @@ msgstr ""
 "Αδυναμία φόρτωσης της κύριας διεπαφής (vanity.glade).\n"
 "Βεβαιωθείτε ότι έχει εγκατασταθεί σωστά."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2069
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2451
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1657,17 +1719,17 @@ msgstr ""
 "Η απαιτούμενη έξοδος ήχου δεν βρέθηκε. Παρακαλώ επιλέξτε μια άλλη έξοδο ήχου "
 "από τον Επιλογέα συστημάτων πολυμέσων."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2074
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2456
 msgid "Location not found."
 msgstr "Δε βρέθηκε η τοποθεσία."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2078
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2460
 msgid "Could not open location; You may not have permission to open the file."
 msgstr ""
 "Αδυναμία ανοίγματος τοποθεσίας. Δεν έχετε τα δικαιώματα για να ανοίξετε αυτή "
 "την τοποθεσία."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2089
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2471
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1675,9 +1737,9 @@ msgid ""
 msgstr ""
 "Η έξοδος βίντεο χρησιμοποιείται από άλλη εφαρμογή. Παρακαλώ κλείστε τις "
 "άλλες εφαρμογές βίντεο, ή επιλέξτε μια άλλη έξοδο βίντεο από τον Επιλογέα "
-"συστημάτων πολυμέσων"
+"συστημάτων πολυμέσων."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2095
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2477
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1687,31 +1749,53 @@ msgstr ""
 "εφαρμογές ήχου, ή επιλέξτε μια άλλη έξοδο ήχου από τον Επιλογέα συστημάτων "
 "πολυμέσων. Ίσως να πρέπει να χρησιμοποιήσετε ένα εξυπηρετητή ήχου."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2110
+#. should be exactly one missing thing (source or converter)
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2495
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2501
+#, c-format
+msgid "The playback of this movie requires a %s plugin which is not installed."
+msgstr ""
+"Η αναπαραγωγή αυτής της ταινίας απαιτεί την πρόσθετη λειτουργία %s, η οποία "
+"δεν είναι εγκατεστημένη."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2502
+#, c-format
+msgid ""
+"The playback of this movie requires the following decoders which are not "
+"installed:\n"
+"\n"
+"%s"
+msgstr ""
+"Για την αναπαραγωγή αυτής της ταινίας απαιτούνται οι ακόλουθοι "
+"αποκωδικοποιητές, οι οποίοι δεν είναι εγκατεστιμένοι:\n"
+"\n"
+"%s"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2527
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "Αδυναμία αναπαραγωγής αυτού του αρχείου μέσω δικτύου. Μεταφορτώστε το στο "
 "δίσκο πρώτα."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2188
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2599
 msgid "Media file could not be played."
 msgstr "Το αρχείο πολυμέσων δεν είναι αναγνώσιμο."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2270
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2321
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2676
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2735
 msgid "Failed to retrieve working directory"
 msgstr "Αποτυχία ανάκτησης τρέχοντος καταλόγου"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3808
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4440
 msgid "Too old version of GStreamer installed."
 msgstr "Η εγκατεστημένη έκδοση του GStreamer είναι πολύ παλιά."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3815
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4447
 msgid "Media contains no supported video streams."
 msgstr "Το αρχείο δεν περιέχει υποστηριζόμενα video streams."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4160
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4782
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1719,8 +1803,8 @@ msgstr ""
 "Αδυναμία δημιουργίας αντικειμένου αναπαραγωγής GStreamer. Παρακαλώ ελέγξτε "
 "την εγκατάσταση του GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4275
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4359
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4912
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5016
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1728,7 +1812,7 @@ msgstr ""
 "Αποτυχία ανοίγματος εξόδου βίντεο. Μπορεί να μην είναι διαθέσιμη. Παρακαλώ "
 "επιλέξτε μια άλλη έξοδο βίντεο από τον Επιλογέα συστημάτων πολυμέσων."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4284
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4924
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1738,7 +1822,7 @@ msgstr ""
 "επιπρόσθετες λειτουργίες GStreamer (plugins) ή να επιλέξετε μια άλλη έξοδο "
 "βίντεο από τον Επιλογέα συστημάτων πολυμέσων."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4303
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4955
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1749,7 +1833,7 @@ msgstr ""
 "εξυπηρετητής ήχου. Παρακαλώ επιλέξτε μια άλλη έξοδο βίντεο από τον Επιλογέα "
 "συστημάτων πολυμέσων."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4313
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4970
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -1759,7 +1843,7 @@ msgstr ""
 "επιπρόσθετες λειτουργίες GStreamer (plugins) ή να επιλέξετε μια άλλη έξοδο "
 "ήχου από τον Επιλογέα συστημάτων πολυμέσων."
 
-#: ../src/backend/bacon-video-widget-xine.c:687
+#: ../src/backend/bacon-video-widget-xine.c:712
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1768,8 +1852,8 @@ msgstr ""
 "Αδυναμία φόρτωσης του οδηγού ήχου '%s'\n"
 "Ελέγξτε ότι η συσκευή δεν είναι ενεργοποιημένη."
 
-#: ../src/backend/bacon-video-widget-xine.c:1164
-#: ../src/backend/bacon-video-widget-xine.c:1757
+#: ../src/backend/bacon-video-widget-xine.c:1190
+#: ../src/backend/bacon-video-widget-xine.c:1744
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -1777,33 +1861,33 @@ msgstr ""
 "Δεν υπάρχει διαθέσιμη έξοδος βίντεο. Βεβαιωθείτε ότι έχει εγκατασταθεί σωστά "
 "το Totem."
 
-#: ../src/backend/bacon-video-widget-xine.c:1291
+#: ../src/backend/bacon-video-widget-xine.c:1312
 msgid "The server you are trying to connect to is not known."
 msgstr ""
 "Ο εξυπηρετητής με τον οποίο προσπαθείτε να συνδεθείτε δεν είναι γνωστός."
 
-#: ../src/backend/bacon-video-widget-xine.c:1295
+#: ../src/backend/bacon-video-widget-xine.c:1316
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "Το όνομα συσκευής (%s) που καθορίσατε δεν είναι έγκυρο."
 
-#: ../src/backend/bacon-video-widget-xine.c:1299
+#: ../src/backend/bacon-video-widget-xine.c:1320
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr ""
 "Ο εξυπηρετητής με τον οποίο προσπαθείτε να συνδεθείτε (%s) δεν είναι "
 "διαθέσιμος."
 
-#: ../src/backend/bacon-video-widget-xine.c:1303
+#: ../src/backend/bacon-video-widget-xine.c:1324
 msgid "The connection to this server was refused."
 msgstr "Άρνηση σύνδεσης στον εξυπηρετητή."
 
-#: ../src/backend/bacon-video-widget-xine.c:1307
+#: ../src/backend/bacon-video-widget-xine.c:1328
 msgid "The specified movie could not be found."
 msgstr "Η καθορισμένη ταινία  δε μπορεί να βρεθεί."
 
-#: ../src/backend/bacon-video-widget-xine.c:1313
-#: ../src/backend/bacon-video-widget-xine.c:1331
+#: ../src/backend/bacon-video-widget-xine.c:1334
+#: ../src/backend/bacon-video-widget-xine.c:1352
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -1811,80 +1895,74 @@ msgstr ""
 "Η πηγή φαίνεται κρυπτογραφημένη και δεν είναι αναγνώσιμη. Μήπως προσπαθείτε "
 "να αναπαραγάγετε ένα κρυπτογραφημένο DVD χωρίς libdvdcss;"
 
-#: ../src/backend/bacon-video-widget-xine.c:1316
+#: ../src/backend/bacon-video-widget-xine.c:1337
 msgid "The movie could not be read."
 msgstr "Η ταινία  δεν είναι αναγνώσιμη."
 
-#: ../src/backend/bacon-video-widget-xine.c:1325
+#: ../src/backend/bacon-video-widget-xine.c:1346
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr ""
 "Δημιουργήθηκε πρόβλημα κατά τη φόρτωση μιας βιβλιοθήκης ή αποκωδικοποιητή (%"
 "s)."
 
-#: ../src/backend/bacon-video-widget-xine.c:1334
+#: ../src/backend/bacon-video-widget-xine.c:1355
 msgid "This file is encrypted and cannot be played back."
 msgstr ""
 "Αυτό το αρχείο είναι κρυπτογραφημένο και δεν είναι δυνατή η συνέχιση της "
 "αναπαραγωγής του."
 
-#: ../src/backend/bacon-video-widget-xine.c:1339
+#: ../src/backend/bacon-video-widget-xine.c:1360
 msgid "For security reasons, this movie can not be played back."
 msgstr ""
 "Για λόγους ασφαλείας, δεν είναι δυνατή η αναπαραγωγή αυτής της ταινίας."
 
-#: ../src/backend/bacon-video-widget-xine.c:1344
+#: ../src/backend/bacon-video-widget-xine.c:1365
 msgid "The audio device is busy. Is another application using it?"
 msgstr ""
 "Η συσκευή ήχου είναι απασχολημένη. Χρησιμοποιείται κάποια άλλη εφαρμογή;"
 
-#: ../src/backend/bacon-video-widget-xine.c:1349
+#: ../src/backend/bacon-video-widget-xine.c:1370
 msgid "You are not allowed to open this file."
 msgstr "Δεν επιτρέπεται να ανοίξετε αυτό το αρχείο."
 
-#: ../src/backend/bacon-video-widget-xine.c:1351
+#: ../src/backend/bacon-video-widget-xine.c:1372
 msgid "The server refused access to this file or stream."
 msgstr ""
 "Ο εξυπηρετητής δεν επέτρεψε την πρόσβαση σε αυτό το αρχείο ή το stream."
 
-#: ../src/backend/bacon-video-widget-xine.c:1360
+#: ../src/backend/bacon-video-widget-xine.c:1381
 msgid "The file you tried to play is an empty file."
 msgstr "Το αρχείο που προσπαθήσατε να αναπαραγάγετε είναι κενό."
 
-#: ../src/backend/bacon-video-widget-xine.c:1554
+#: ../src/backend/bacon-video-widget-xine.c:1545
 msgid "There is no input plugin to handle the location of this movie"
 msgstr ""
 "Δεν υπάρχει πρόσθετη λειτουργία εισόδου για το χειρισμό αυτής της ταινίας"
 
-#: ../src/backend/bacon-video-widget-xine.c:1558
+#: ../src/backend/bacon-video-widget-xine.c:1549
 msgid "There is no plugin to handle this movie."
 msgstr "Δεν υπάρχει πρόσθετη λειτουργία για το χειρισμό αυτής της ταινίας."
 
-#: ../src/backend/bacon-video-widget-xine.c:1562
+#: ../src/backend/bacon-video-widget-xine.c:1553
 msgid "This movie is broken and can not be played further."
 msgstr ""
 "Αυτή η ταινία είναι κατεστραμμένη και δεν είναι δυνατή η συνέχιση της "
 "αναπαραγωγής της."
 
-#: ../src/backend/bacon-video-widget-xine.c:1566
+#: ../src/backend/bacon-video-widget-xine.c:1557
 msgid "This location is not a valid one."
 msgstr "Η τοποθεσία δεν είναι έγκυρη."
 
-#: ../src/backend/bacon-video-widget-xine.c:1570
+#: ../src/backend/bacon-video-widget-xine.c:1561
 msgid "This movie could not be opened."
 msgstr "Η ταινία δε μπορεί να ανοιχθεί."
 
-#: ../src/backend/bacon-video-widget-xine.c:1574
+#: ../src/backend/bacon-video-widget-xine.c:1565
 msgid "Generic Error."
 msgstr "Γενικό σφάλμα."
 
-#: ../src/backend/bacon-video-widget-xine.c:2183
-msgid "This movie is a still image. You can open it with an image viewer."
-msgstr ""
-"Αυτή η ταινία είναι μια εικόνα. Μπορείτε να την ανοίξετε με μια εφαρμογή "
-"προβολής εικόνων."
-
-#: ../src/backend/bacon-video-widget-xine.c:2207
+#: ../src/backend/bacon-video-widget-xine.c:2263
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1894,7 +1972,7 @@ msgstr ""
 "εγκαταστήσετε κάποιες πρόσθετες λειτουργίες για να μπορέσετε να "
 "αναπαραγάγετε κάποιους τύπους ταινιών"
 
-#: ../src/backend/bacon-video-widget-xine.c:2211
+#: ../src/backend/bacon-video-widget-xine.c:2267
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1904,27 +1982,27 @@ msgstr ""
 "εγκαταστήσετε κάποιες πρόσθετες λειτουργίες για να μπορέσετε να "
 "αναπαραγάγετε κάποιους τύπους ταινιών"
 
-#: ../src/backend/bacon-video-widget-xine.c:2227
+#: ../src/backend/bacon-video-widget-xine.c:2283
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr ""
 "Αυτό είναι ένα αρχείου audio-only και δεν υπάρχει έξοδος ήχου διαθέσιμη."
 
-#: ../src/backend/bacon-video-widget-xine.c:3642
-#: ../src/backend/bacon-video-widget-xine.c:3689
-#: ../src/backend/bacon-video-widget-xine.c:3711
+#: ../src/backend/bacon-video-widget-xine.c:3756
+#: ../src/backend/bacon-video-widget-xine.c:3803
+#: ../src/backend/bacon-video-widget-xine.c:3825
 #, c-format
 msgid "Language %d"
 msgstr "Γλώσσα %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3748
+#: ../src/backend/bacon-video-widget-xine.c:3914
 msgid "No video to capture."
 msgstr "Δεν υπάρχει βίντεο για σύλληψη."
 
-#: ../src/backend/bacon-video-widget-xine.c:3756
+#: ../src/backend/bacon-video-widget-xine.c:3922
 msgid "Video codec is not handled."
 msgstr "Δεν υπάρχει τρόπος χειρισμού για τον Video codec."
 
-#: ../src/backend/bacon-video-widget-xine.c:3764
+#: ../src/backend/bacon-video-widget-xine.c:3933
 msgid "Movie is not playing."
 msgstr "Δεν αναπαράγεται ταινία."
 
@@ -1936,7 +2014,7 @@ msgstr "Δεν αναπαράγεται ταινία."
 #. * translate the "long time format|" part. Remove it from
 #. * the translation.
 #.
-#: ../src/backend/video-utils.c:223
+#: ../src/backend/video-utils.c:221
 #, c-format
 msgid "long time format|%d:%02d:%02d"
 msgstr "%d:%02d:%02d"
@@ -1949,26 +2027,26 @@ msgstr "%d:%02d:%02d"
 #. * translate the "short time format|" part. Remove it from
 #. * the translation.
 #.
-#: ../src/backend/video-utils.c:233
+#: ../src/backend/video-utils.c:231
 #, c-format
 msgid "short time format|%d:%02d"
 msgstr "%d:%02d"
 
-#: ../src/backend/video-utils.c:252
+#: ../src/backend/video-utils.c:250
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d ώρα"
 msgstr[1] "%d ώρες"
 
-#: ../src/backend/video-utils.c:254
+#: ../src/backend/video-utils.c:252
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d λεπτό"
 msgstr[1] "%d λεπτά"
 
-#: ../src/backend/video-utils.c:257
+#: ../src/backend/video-utils.c:255
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1976,243 +2054,120 @@ msgstr[0] "%d δευτερόλεπτο"
 msgstr[1] "%d δευτερόλεπτα"
 
 #. hour:minutes:seconds
-#: ../src/backend/video-utils.c:263
+#: ../src/backend/video-utils.c:261
 #, c-format
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. minutes:seconds
-#: ../src/backend/video-utils.c:266
+#: ../src/backend/video-utils.c:264
 #, c-format
 msgid "%s %s"
 msgstr "%s %s"
 
 #. seconds
-#: ../src/backend/video-utils.c:269
+#: ../src/backend/video-utils.c:267
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: ../src/plparse/totem-disc.c:117
-#, c-format
-msgid "Failed to find real device node for %s: %s"
-msgstr "Αποτυχία εύρεσης real device node για %s: %s"
-
-#: ../src/plparse/totem-disc.c:128
-#, c-format
-msgid "Failed to read symbolic link %s: %s"
-msgstr "Αποτυχία ανάγνωσης συμβολικού δεσμού %s: %s"
-
-#: ../src/plparse/totem-disc.c:332
+#: ../src/plparse/totem-disc.c:362
 #, c-format
 msgid "Failed to find mountpoint for device %s"
 msgstr "Αποτυχία εύρεσης σημείου προσάρτησης για τη συσκευή %s"
 
-#: ../src/plparse/totem-disc.c:341
+#: ../src/plparse/totem-disc.c:371
 msgid "Could not connect to the HAL daemon"
 msgstr "Αδυναμία σύνδεσης με το HAL daemon"
 
-#: ../src/plparse/totem-disc.c:458
+#: ../src/plparse/totem-disc.c:470
 msgid "Please check that a disc is present in the drive."
 msgstr "Ελέγξτε ότι υπάρχει ο δίσκος στον οδηγό."
 
-#: ../src/plparse/totem-disc.c:504
+#: ../src/plparse/totem-disc.c:517
 #, c-format
 msgid "Failed to mount %s"
 msgstr "Αποτυχία προσάρτησης %s"
 
-#: ../src/plparse/totem-disc.c:528
+#: ../src/plparse/totem-disc.c:541
 #, c-format
 msgid "Failed to find mountpoint for %s"
 msgstr "Αποτυχία εύρεσης σημείου προσάρτησης για %s"
 
-#: ../src/plparse/totem-disc.c:806
+#: ../src/plparse/totem-disc.c:911
 msgid "Audio CD"
 msgstr "CD ήχου"
 
-#: ../src/plparse/totem-disc.c:808
+#: ../src/plparse/totem-disc.c:913
 msgid "Video CD"
 msgstr "Video CD"
 
-#: ../src/plparse/totem-disc.c:810
+#: ../src/plparse/totem-disc.c:915
 msgid "DVD"
 msgstr "DVD"
 
-#: ../src/plparse/totem-pl-parser.c:355
+#: ../src/plparse/totem-pl-parser.c:464
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "Αδυναμία εγγραφής parser: %s "
 
-#: ../src/plparse/totem-pl-parser.c:463 ../src/plparse/totem-pl-parser.c:604
-#: ../src/plparse/totem-pl-parser.c:704
+#: ../src/plparse/totem-pl-parser-lines.c:105
+#: ../src/plparse/totem-pl-parser-pls.c:70
+#: ../src/plparse/totem-pl-parser-xspf.c:73
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "Αδυναμία ανοίγματος αρχείου  '%s': %s"
 
-#~ msgid "_DXR3 TV-out"
-#~ msgstr "_DXR3 TV-out"
+#: ../browser-plugin/totem-plugin-viewer.c:398
+msgid "No URI to play"
+msgstr "Δεν υπάρχει URI προς αναπαραγωγή"
 
-#~ msgid "Totem"
-#~ msgstr "Totem"
+#. FIXME disp = gnome_vfs_unescape_string_for_display (totem->mrl); ?
+#: ../browser-plugin/totem-plugin-viewer.c:425
+#: ../browser-plugin/totem-plugin-viewer.c:429
+#, c-format
+msgid "Totem could not play '%s'"
+msgstr "Το Totem δε μπορεί να αναπαράγει '%s'"
 
-#~ msgid "Totem couldn't show the movie properties window."
-#~ msgstr "Το Totem δε μπορεί να εμφανίσει το παράθυρο ιδιοτήτων της ταινίας."
+#: ../browser-plugin/totem-plugin-viewer.c:802
+#, c-format
+msgid "Opening %s"
+msgstr "Άνοιγμα %s"
 
-#~ msgid "Make sure that Totem is correctly installed."
-#~ msgstr "Βεβαιωθείτε ότι έχει εγκατασταθεί σωστά το Totem."
+#: ../browser-plugin/totem-plugin-viewer.c:1091
+#, c-format
+msgid "Browser Plugin using %s"
+msgstr "Η πρόσθετη λειτουργία του προγράμματος πλοήγησης χρησιμοποιεί %s"
 
-#~ msgid "Totem Video Window"
-#~ msgstr "Παράθυρο βίντεο του Totem "
+#: ../browser-plugin/totem-plugin-viewer.c:1096
+msgid "Totem Browser Plugin"
+msgstr "Πρόσθετη λειτουργία του προγράμματος πλοήγησης για το Totem"
 
-#~ msgid "Failed to open media file; unknown error"
-#~ msgstr "Αποτυχία ανοίγματος αρχείου, άγνωστο σφάλμα"
+#: ../browser-plugin/totem-plugin-viewer.c:1393
+#: ../browser-plugin/totem-plugin-viewer.c:1403
+msgid "Plugin"
+msgstr "Πρόσθετη λειτουργία"
 
-#~ msgid "Failed to play: %s"
-#~ msgstr "Αποτυχία αναπαραγωγής: %s"
+#. FIXME!
+#. FIXME construct and show error message
+#: ../browser-plugin/totem-plugin-viewer.c:1428
+msgid "The Totem plugin could not startup."
+msgstr "Η πρόσθετη λειτουργία του Totem δεν μπορεί να ξεκινήσει."
 
-#~ msgid "unknown error"
-#~ msgstr "άγνωστο σφάλμα"
+#: ../browser-plugin/totem-plugin-viewer.c:1526
+msgid "Menu"
+msgstr "Μενού"
 
-#~ msgid "Failed to find mountpoint for device %s in /etc/fstab"
-#~ msgstr ""
-#~ "Αποτυχία εύρεσης σημείου προσάρτησης για τη συσκευή %s στο /etc/fstab"
+#: ../browser-plugin/totem-plugin-viewer.c:1711
+msgid "No playlist or playlist empty"
+msgstr "Δεν υπάρχει λίστα αναπαραγωγής ή η λίστα αναπαραγωγής είναι άδεια"
 
-#~ msgid "Failed to open device %s for reading: %s"
-#~ msgstr "Αποτυχία ανοίγματος της συσκευής %s για ανάγνωση: %s"
+#: ../browser-plugin/totem-plugin-viewer.c:1840
+msgid "Could not initialise the thread-safe libraries."
+msgstr "Αδυναμία αρχικοποίησης των βιβλιοθηκών thread-safe."
 
-#~ msgid "Failed to retrieve capabilities of device %s: %s"
-#~ msgstr "Αποτυχία ανάκτησης δυνατοτήτων της συσκευής %s: %s"
-
-#~ msgid "Drive status 0x%x (%s) - check disc"
-#~ msgstr "Κατάσταση οδηγού 0x%x (%s) - ελέγξτε δίσκο"
-
-#~ msgid "Error getting %s disc status: %s"
-#~ msgstr "Σφάλμα λήψης %s κατάστασης δίσκου: %s"
-
-#~ msgid "Unexpected/unknown cd type 0x%x (%s)"
-#~ msgstr "Απρόσμενος/άγνωστος τύπος cd 0x%x (%s)"
-
-#~ msgid "Select CD"
-#~ msgstr "Επιλογή CD"
-
-#~ msgid "Please select the currently playing CD:"
-#~ msgstr "Παρακαλώ επιλέξτε το CD που αναπαράγεται αυτή τη στιγμή."
-
-#~ msgid "Failed to play Audio/Video Disc"
-#~ msgstr "Αποτυχία αναπαραγωγής δίσκου ήχου/βίντεο"
-
-#~ msgid "Reason unknown"
-#~ msgstr "Άγνωστος λόγος"
-
-#~ msgid "Select Files"
-#~ msgstr "Επιλογή αρχείων"
-
-#~ msgid "Unexpected error status %d while mounting %s"
-#~ msgstr "Απρόσμενο σφάλμα κατάστασης %d κατά την προσάρτηση %s"
-
-#, fuzzy
-#~ msgid "_Show/Hide Sidebar"
-#~ msgstr "Εμ_φάνιση/Απόκρυψη λίστας αναπαραγωγής"
-
-#~ msgid "Repeat _mode"
-#~ msgstr "Λειτουρ_γία επανάληψης"
-
-#~ msgid "Shuf_fle mode"
-#~ msgstr "Λειτουργία ανακα_τέματος"
-
-#~ msgid "<b>Optical Device</b>"
-#~ msgstr "<b>Οπτική Συσκευή</b>"
-
-#~ msgid "<b>Proprietary Plugins</b>"
-#~ msgstr "<b>Εμπορικές Πρόσθετες Λειτουργίες</b>"
-
-#~ msgid "<span size=\"medium\"><b>No File</b></span>"
-#~ msgstr "<span size=\"medium\"><b>Χωρίς Αρχείο</b></span>"
-
-#~ msgid "Exit Fullscreen"
-#~ msgstr "Έξοδος από πλήρη οθόνη"
-
-#~ msgid "Play a Video or Audio Disc"
-#~ msgstr "Αναπαραγωγή ενός Βίντεο ή CD Ήχου"
-
-#~ msgid "Show/Hide Playlist"
-#~ msgstr "Εμφάνιση/Απόκρυψη λίστας αναπαραγωγής"
-
-#~ msgid "_Add Proprietary Plugins..."
-#~ msgstr "_Προσθήκη εμπορικών πρόσθετων λειτουργιών..."
-
-#~ msgid "_Optical device path:"
-#~ msgstr "Διαδρομή ο_πτικής συσκευής:"
-
-#~ msgid "Enable deinterlacing."
-#~ msgstr "Ενεργοποίηση deinterlacing."
-
-#~ msgid "Name of the visual effects plugins."
-#~ msgstr "Όνομα των προσθέτων λειτουργιών οπτικών εφέ."
-
-#~ msgid "Path to the optical media device"
-#~ msgstr "Διαδρομή στη συσκευή οπτικών μέσων"
-
-#~ msgid "Path to the optical media device."
-#~ msgstr "Διαδρομή στη συσκευή οπτικών μέσων."
-
-#~ msgid "Repeat mode."
-#~ msgstr "Λειτουργία επανάληψης."
-
-#~ msgid "Resize the canvas automatically on file load."
-#~ msgstr "Αυτόματη αλλαγή του μεγέθους του canvas κατά τη φόρτωση αρχείου."
-
-#~ msgid "Shuffle mode."
-#~ msgstr "Λειτουργία ανακατέματος."
-
-#~ msgid "The brightness of the video."
-#~ msgstr "Η φωτεινότητα του βίντεο."
-
-#~ msgid "The contrast of the video."
-#~ msgstr "Η αντίθεση του βίντεο."
-
-#~ msgid "The hue of the video."
-#~ msgstr "Η απόχρωση του βίντεο."
-
-#~ msgid "The saturation of the video."
-#~ msgstr "Ο κορεσμός του βίντεο."
-
-#~ msgid "Whether to enable debug for the playback engine."
-#~ msgstr "Αν θα ενεργοποιηθεί η εκσφαλμάτωση για τη μηχανή αναπαραγωγής."
-
-#~ msgid "X coordinate for the Playlist"
-#~ msgstr "Συντεταγμένη X για τη λίστα αναπαραγωγής"
-
-#~ msgid "X coordinate for the Playlist."
-#~ msgstr "Συντεταγμένη X για τη λίστα αναπαραγωγής."
-
-#~ msgid "Y coordinate for the Playlist"
-#~ msgstr "Συντεταγμένη Υ για τη λίστα αναπαραγωγής"
-
-#~ msgid "Y coordinate for the Playlist."
-#~ msgstr "Συντεταγμένη Υ για τη λίστα αναπαραγωγής."
-
-#~ msgid "Open from URI"
-#~ msgstr "Άνοιγμα από URI"
-
-#~ msgid "0 second"
-#~ msgstr "0 δευτερόλεπτο"
-
-#~ msgid "Couldn't load the main interface (mozilla-viewer.glade)."
-#~ msgstr "Αδυναμία φόρτωσης της κύριας διεπαφής (mozilla-viewer.glade)."
-
-#~ msgid "Make sure that the Totem plugin is properly installed."
-#~ msgstr "Βεβαιωθείτε ότι το Totem έχει εγκατασταθεί σωστά."
-
-#~ msgid "Totem could not start the file manager."
-#~ msgstr "Το Totem δε μπορεί εκκινήσει το διαχειριστή αρχείου."
-
-#~ msgid "%s - Totem Movie Player"
-#~ msgstr "%s - Totem Movie Player"
-
-#~ msgid "Please file a bug, this isn't supposed to happen."
-#~ msgstr ""
-#~ "Παρακαλώ στείλτε μια αναφορά σφάλματος, αυτό δεν θα έπρεπε να συμβεί."
-
-#~ msgid "Please file a bug, this isn't supposed to happen"
-#~ msgstr "Παρακαλώ στείλτε μια αναφορά σφάλματος, αυτό δε θα έπρεπε να συμβεί"
+#: ../browser-plugin/totem-plugin-viewer.c:1840
+msgid "Verify your system installation. The Totem plugin will now exit."
+msgstr ""
+"Επιβεβαιώστε την εγκατάσταση του συστήματος σας. Το Totem τώρα θα "
+"τερματιστεί."
