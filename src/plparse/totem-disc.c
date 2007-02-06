@@ -310,8 +310,10 @@ cd_cache_new_hal_ctx (void)
   }
 
   libhal_ctx_free (ctx);
-  if (conn != NULL)
+  if (conn != NULL) {
+    dbus_connection_close (conn);
     dbus_connection_unref (conn);
+  }
 
   return NULL;
 }

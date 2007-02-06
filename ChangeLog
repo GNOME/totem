@@ -1,5 +1,10 @@
 2007-02-06  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-disc.c: (cd_cache_new_hal_ctx): Check that
+	conn != NULL before trying to unref it (Closes: #394055)
+
+2007-02-06  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-properties-view.c:
 	(totem_properties_view_set_location): Check that the widget exists
 	before trying to close it (Closes: #378180)
