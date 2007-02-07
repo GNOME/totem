@@ -1425,9 +1425,10 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
       GST_DEBUG ("Tags: %" GST_PTR_FORMAT, tag_list);
 
-      /* all tags */
+      /* all tags (replace previous tags, title/artist/etc. might change
+       * in the middle of a stream, e.g. with radio streams) */
       result = gst_tag_list_merge (bvw->priv->tagcache, tag_list,
-                                   GST_TAG_MERGE_KEEP);
+                                   GST_TAG_MERGE_REPLACE);
       if (bvw->priv->tagcache)
         gst_tag_list_free (bvw->priv->tagcache);
       bvw->priv->tagcache = result;
@@ -1445,7 +1446,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
         }
 
         if (cache) {
-          result = gst_tag_list_merge (*cache, tag_list, GST_TAG_MERGE_KEEP);
+          result = gst_tag_list_merge (*cache, tag_list, GST_TAG_MERGE_REPLACE);
           if (*cache)
             gst_tag_list_free (*cache);
           *cache = result;

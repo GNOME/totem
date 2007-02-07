@@ -1,3 +1,11 @@
+2007-02-07  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_bus_message_cb):
+	  Merge tags in REPLACE mode rather than KEEP mode, so that tags are
+	  updated properly when they change mid-stream, like they do with
+	  internet radio streams (Closes: #405307)
+
 2007-02-06  Bastien Nocera  <hadess@hadess.net>
 
 	* data/Makefile.am:
