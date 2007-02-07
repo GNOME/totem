@@ -96,6 +96,7 @@ EXTRA_DIST = \
 	mime-type-include.sh		\
 	mime-type-list.txt		\
 	schemas.sh			\
+	mime-functions.sh		\
 	totem.schemas.in		\
 	totem-video-thumbnailer.1	\
 	totem-video-thumbnailer.pod

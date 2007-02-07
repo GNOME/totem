@@ -742,7 +742,7 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
           0, 0, (w_width - s_width) / 2, (w_height - s_height) / 2,
           s_width, s_height, GDK_RGB_DITHER_NONE, 0, 0);
 
-      gdk_pixbuf_unref (logo);
+      g_object_unref (logo);
     } else if (widget->window) {
       /* No pixbuf, just draw a black background then */
       gdk_draw_rectangle (widget->window, widget->style->black_gc, 
@@ -2813,7 +2813,6 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 gboolean
 bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
 {
-  GstStateChangeReturn ret;
   GstState cur_state;
 
   g_return_val_if_fail (bvw != NULL, FALSE);

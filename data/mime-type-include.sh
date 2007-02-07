@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. mime-functions.sh
+. `dirname $0`/mime-functions.sh
 
 echo_mime () {
 	echo "\"$i\","

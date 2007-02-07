@@ -3,7 +3,7 @@
 OWNER=totem
 COMMAND="$2/totem-video-thumbnailer -s %s %u %o"
 
-. mime-functions.sh
+. `dirname $0`/mime-functions.sh
 
 upd_schema()
 {

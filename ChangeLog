@@ -1,3 +1,14 @@
+2007-02-07  Bastien Nocera  <hadess@hadess.net>
+
+	* data/Makefile.am:
+	* data/mime-type-include.sh:
+	* data/schemas.sh: Fix makedistcheck with newly added mime-functions.sh
+	(Closes: #405342)
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_expose_event), (bacon_video_widget_play):
+	Fix compilation warnings
+
 2007-02-07  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
