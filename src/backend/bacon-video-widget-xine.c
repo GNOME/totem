@@ -474,7 +474,7 @@ bacon_video_widget_finalize (GObject *object)
 		bvw->priv->cursor = NULL;
 	}
 	if (bvw->priv->logo_pixbuf != NULL) {
-		gdk_pixbuf_unref (bvw->priv->logo_pixbuf);
+		g_object_unref (bvw->priv->logo_pixbuf);
 		bvw->priv->logo_pixbuf = NULL;
 	}
 	g_free (bvw->priv->vis_name);
@@ -1824,7 +1824,7 @@ bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 				(w_height - s_height) / 2,
 				s_width, s_height, GDK_RGB_DITHER_NONE, 0, 0);
 
-		gdk_pixbuf_unref (logo);
+		g_object_unref (logo);
 	}
 
 	return TRUE;
@@ -4000,8 +4000,15 @@ bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 		break;
 	case XINE_IMGFMT_YV12:
 		y = yuv;
-		u = yuv + width * height;
-		v = yuv + width * height * 5 / 4;
+		/* XXX Work-around xine-lib bug, u and v channels are swapped
+		 * when using xine_get_current_frame */
+		if (bvw->priv->type != BVW_USE_TYPE_CAPTURE) {
+			u = yuv + width * height;
+			v = yuv + width * height * 5 / 4;
+		} else {
+			v = yuv + width * height;
+			u = yuv + width * height * 5 / 4;
+		}
 		break;
 	default:
 		g_warning ("Format '%.4s' unsupported", (char *) &format);
@@ -4052,7 +4059,7 @@ bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 					width, (int) (width * ratio / 10000),
 					GDK_INTERP_BILINEAR);
 
-		gdk_pixbuf_unref (pixbuf);
+		g_object_unref (pixbuf);
 
 		return tmp;
 	}
