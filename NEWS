@@ -1,5 +1,23 @@
 New features and significant updates in version...
 
+2.17.91
+* Fix crasher when getting the listed of subtitles/languages
+* Handle the icyx:// protocol
+* Add video/x-theora+ogg, application/ram, video/x-matroska,
+  audio/x-matroska and audio/x-wavpack to the supported mime-types
+* Solaris compilation fixes
+* Fix vanity compilation
+* Fix using the playlist parser from Python
+* Have "Audio files" and "Video files" filters in the Open dialogues
+* Browser plugin:
+  - Add stubs of Javascript support for the GMP (Windows Media compatible)
+  browser plugin
+* GStreamer backend:
+  - More robust code to check for stream metadata
+  - Fix title streaming in internet radios
+* xine-lib backend:
+  - Fix blue-ish pictures created by the thumbnailer
+
 2.17.90
 * Fix build with older GCCs, older Mozillas, "-j2", and Solaris
 * Add support for the new "Media Player keys" infrastructure in
