@@ -1,5 +1,11 @@
 2007-02-08  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemPlugin.cpp: Patch from Damien Carbery
+	<damien.carbery@sun.com> to add signal.h for the kill()
+	definition (Closes: #405683)
+
+2007-02-08  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c:
 	(bacon_video_widget_finalize), (bacon_video_widget_expose),
 	(bacon_video_widget_get_current_frame): Fix compile-time warnings,

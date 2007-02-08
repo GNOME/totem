@@ -31,6 +31,7 @@
 #include <sys/wait.h>
 #include <sys/poll.h>
 #include <string.h>
+#include <signal.h>
 
 #include <glib.h>
 
