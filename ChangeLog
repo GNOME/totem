@@ -1,3 +1,12 @@
+2007-02-12  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_get_metadata_string):
+	(bacon_video_widget_get_metadata_int):
+	  Don't use gst_tag_list_get_*() with NULL taglists (Closes: #407117);
+	  don't bail out too early on a NULL tagcache, we might be able to get
+	  the requested information otherwise.
+
 2007-02-12  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-video-indexer.c: (main):

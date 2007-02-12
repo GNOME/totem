@@ -4132,34 +4132,40 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
 
   g_value_init (value, G_TYPE_STRING);
 
-  if (bvw->priv->play == NULL || bvw->priv->tagcache == NULL)
-    {
-      g_value_set_string (value, NULL);
-      return;
-    }
+  if (bvw->priv->play == NULL) {
+    g_value_set_string (value, NULL);
+    return;
+  }
 
-  switch (type)
-    {
+  switch (type) {
     case BVW_INFO_TITLE:
-      res = gst_tag_list_get_string_index (bvw->priv->tagcache,
-                                           GST_TAG_TITLE, 0, &string);
-      break;
-    case BVW_INFO_ARTIST:
-      res = gst_tag_list_get_string_index (bvw->priv->tagcache,
-                                           GST_TAG_ARTIST, 0, &string);
-      break;
-    case BVW_INFO_YEAR: {
-      GDate *date;
-      if ((res = gst_tag_list_get_date (bvw->priv->tagcache,
-                                        GST_TAG_DATE, &date))) {
-        string = g_strdup_printf ("%d", g_date_get_year (date));
-        g_date_free (date);
+      if (bvw->priv->tagcache != NULL) {
+        res = gst_tag_list_get_string_index (bvw->priv->tagcache,
+                                             GST_TAG_TITLE, 0, &string);
       }
       break;
-    }
+    case BVW_INFO_ARTIST:
+      if (bvw->priv->tagcache != NULL) {
+        res = gst_tag_list_get_string_index (bvw->priv->tagcache,
+                                             GST_TAG_ARTIST, 0, &string);
+      }
+      break;
+    case BVW_INFO_YEAR:
+      if (bvw->priv->tagcache != NULL) {
+        GDate *date;
+
+        if ((res = gst_tag_list_get_date (bvw->priv->tagcache,
+                                          GST_TAG_DATE, &date))) {
+          string = g_strdup_printf ("%d", g_date_get_year (date));
+          g_date_free (date);
+        }
+      }
+      break;
     case BVW_INFO_ALBUM:
-      res = gst_tag_list_get_string_index (bvw->priv->tagcache,
-                                           GST_TAG_ALBUM, 0, &string);
+      if (bvw->priv->tagcache != NULL) {
+        res = gst_tag_list_get_string_index (bvw->priv->tagcache,
+                                             GST_TAG_ALBUM, 0, &string);
+      }
       break;
     case BVW_INFO_VIDEO_CODEC: {
       GObject *info;
@@ -4172,7 +4178,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
       }
 
       /* if that didn't work, try the aggregated tags */
-      if (!res) {
+      if (!res && bvw->priv->tagcache != NULL) {
         res = gst_tag_list_get_string (bvw->priv->tagcache,
             GST_TAG_VIDEO_CODEC, &string);
       }
@@ -4189,7 +4195,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
       }
 
       /* if that didn't work, try the aggregated tags */
-      if (!res) {
+      if (!res && bvw->priv->tagcache != NULL) {
         res = gst_tag_list_get_string (bvw->priv->tagcache,
             GST_TAG_AUDIO_CODEC, &string);
       }
@@ -4240,20 +4246,20 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
 
   g_value_init (value, G_TYPE_INT);
 
-  if (bvw->priv->play == NULL)
-    {
-      g_value_set_int (value, 0);
-      return;
-    }
+  if (bvw->priv->play == NULL) {
+    g_value_set_int (value, 0);
+    return;
+  }
 
-  switch (type)
-    {
+  switch (type) {
     case BVW_INFO_DURATION:
       integer = bacon_video_widget_get_stream_length (bvw) / 1000;
       break;
     case BVW_INFO_TRACK_NUMBER:
+      if (bvw->priv->tagcache == NULL)
+        break;
       if (!gst_tag_list_get_uint (bvw->priv->tagcache,
-              GST_TAG_TRACK_NUMBER, (guint *) &integer))
+                                  GST_TAG_TRACK_NUMBER, (guint *) &integer))
         integer = 0;
       break;
     case BVW_INFO_DIMENSION_X:
