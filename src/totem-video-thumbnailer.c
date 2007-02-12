@@ -56,6 +56,7 @@ static gboolean jpeg_output = FALSE;
 static gboolean output_size = 128;
 static gboolean time_limit = TRUE;
 static gboolean verbose = FALSE;
+static gboolean g_fatal_warnings = FALSE;
 static char **filenames = NULL;
 
 #ifdef THUMB_DEBUG
@@ -346,6 +347,9 @@ static const GOptionEntry entries[] = {
 	{ "size", 's', 0, G_OPTION_ARG_INT, &output_size, "Size of the thumbnail in pixels", NULL },
 	{ "no-limit", 'l', G_OPTION_FLAG_REVERSE, G_OPTION_ARG_NONE, &time_limit, "Don't limit the thumbnailing time to 30 seconds", NULL },
 	{ "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose, "Output debug information", NULL },
+#ifndef THUMB_DEBUG
+	{"g-fatal-warnings", 0, 0, G_OPTION_ARG_NONE, &g_fatal_warnings, "Make all warnings fatal", NULL},
+#endif /* THUMB_DEBUG */
 	{ G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &filenames, "Movies to index", NULL },
 	{ NULL }
 };
@@ -395,6 +399,16 @@ int main (int argc, char *argv[])
 		g_error_free (err);
 		return 1;
 	}
+
+#ifndef THUMB_DEBUG
+	if (g_fatal_warnings) {
+		GLogLevelFlags fatal_mask;
+
+		fatal_mask = g_log_set_always_fatal (G_LOG_FATAL_MASK);
+		fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
+		g_log_set_always_fatal (fatal_mask);
+	}
+#endif /* THUMB_DEBUG */
 
 	if (filenames == NULL || g_strv_length (filenames) != 2) {
 		g_print ("Expects an input and an output file\n");

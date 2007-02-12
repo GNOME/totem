@@ -47,6 +47,7 @@
 #include "totem-mime-types.h"
 
 static gboolean show_mimetype = FALSE;
+static gboolean g_fatal_warnings = FALSE;
 static char **filenames = NULL;
 
 static void
@@ -139,6 +140,7 @@ on_got_metadata_event (BaconVideoWidget *bvw, gpointer data)
 
 static const GOptionEntry entries[] = {
 	{"mimetype", 'm', 0, G_OPTION_ARG_NONE, &show_mimetype, "List the supported mime-types", NULL},
+	{"g-fatal-warnings", 0, 0, G_OPTION_ARG_NONE, &g_fatal_warnings, "Make all warnings fatal", NULL},
 	{G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &filenames, "Movies to index", NULL},
 	{NULL}
 };
@@ -173,6 +175,14 @@ int main (int argc, char **argv)
 		g_print ("couldn't parse command-line options: %s\n", error->message);
 		g_error_free (error);
 		return 1;
+	}
+
+	if (g_fatal_warnings) {
+		GLogLevelFlags fatal_mask;
+
+		fatal_mask = g_log_set_always_fatal (G_LOG_FATAL_MASK);
+		fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
+		g_log_set_always_fatal (fatal_mask);
 	}
 
 	if (show_mimetype == TRUE) {
