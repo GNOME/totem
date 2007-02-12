@@ -50,14 +50,14 @@
 #define WARN_ACCESS()\
 static PRBool warned = PR_FALSE;\
 if (!warned) {\
-	D ("GMP scriptable: use of forbidden function '" CURRENT_INTERFACE "::%s'", __FUNCTION__);\
+	D ("GMP scriptable: use of forbidden function '" CURRENT_INTERFACE "::%s'", G_GNUC_FUNCTION);\
 	warned = PR_TRUE;\
 }
 
 #define WARN_NOT_IMPLEMENTED()\
 static PRBool warned = PR_FALSE;\
 if (!warned) {\
-	D ("GMP scriptable: use of unimplemented function '" CURRENT_INTERFACE "::%s'", __FUNCTION__);\
+	D ("GMP scriptable: use of unimplemented function '" CURRENT_INTERFACE "::%s'", G_GNUC_FUNCTION);\
 	warned = PR_TRUE;\
 }
 

@@ -1,5 +1,14 @@
 2007-02-12  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemGMPError.cpp:
+	* browser-plugin/totemGMPPlaylist.cpp:
+	* browser-plugin/totemGMPPlugin.cpp:
+	* browser-plugin/totemGMPSettings.cpp: Patch from Damien Carbery
+	<damien.carbery@sun.com> to not use the non-portable __FUNCTION__
+	pragma, fixes build on Solaris (Closes: #405850)
+
+2007-02-12  Bastien Nocera  <hadess@hadess.net>
+
 	* data/playlist.glade: Patch from Harm Hilvers to change the
 	"Save" tooltip of the playlist save button to "Save Playlist..."
 	(Closes: #406806)
