@@ -1,5 +1,12 @@
 2007-02-12  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/debug.h: Patch from Damien Carbery
+	<damien.carbery@sun.com> to not use __PRETTY_FUNCTION__, again.
+	Check for G_HAVE_ISO_VARARGS or G_HAVE_GNUC_VARARGS being defined
+	instead of a simple if else (Closes: #405880)
+
+2007-02-12  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemGMPError.cpp:
 	* browser-plugin/totemGMPPlaylist.cpp:
 	* browser-plugin/totemGMPPlugin.cpp:
