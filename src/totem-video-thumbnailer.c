@@ -47,7 +47,6 @@
 #define PROGRESS_DEBUG(format...) { if (verbose != FALSE) g_message (format); }
 #endif
 
-#define MIN_LEN_FOR_SEEK 25000
 #define HALF_SECOND G_USEC_PER_SEC * .5
 #define BORING_IMAGE_VARIANCE 256.0		/* Tweak this if necessary */
 
@@ -360,7 +359,6 @@ int main (int argc, char *argv[])
 	GError *err = NULL;
 	BaconVideoWidget *bvw;
 	GdkPixbuf *pixbuf;
-	int length;
 	char *input, *output;
 
 	const float frame_locations[] = {
@@ -461,15 +459,9 @@ int main (int argc, char *argv[])
 	 * interesting frame */
 	for (current = 0; current < G_N_ELEMENTS(frame_locations); current++)
 	{
-		length = bacon_video_widget_get_stream_length (bvw);
-		if (length > MIN_LEN_FOR_SEEK)
-		{
-			PROGRESS_DEBUG("About to seek to %f\n", frame_locations[current]);
-			if (bacon_video_widget_seek
-					(bvw, frame_locations[current], NULL) == FALSE)
-			{
-				bacon_video_widget_play (bvw, NULL);
-			}
+		PROGRESS_DEBUG("About to seek to %f\n", frame_locations[current]);
+		if (bacon_video_widget_seek (bvw, frame_locations[current], NULL) == FALSE) {
+			bacon_video_widget_play (bvw, NULL);
 		}
 
 		if (bacon_video_widget_can_get_frames (bvw, &err) == FALSE)

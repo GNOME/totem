@@ -1,5 +1,11 @@
 2007-02-13  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-video-thumbnailer.c: (main): We're not actually "playing"
+	files anymore, so don't take the length into account, and seek harder
+	(Closes: #374470)
+
+2007-02-13  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-video-thumbnailer.c: (main): Avoid accessing the pixbuf
 	when we can't get an interesting picture at the end of the loop
 
