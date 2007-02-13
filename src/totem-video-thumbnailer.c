@@ -495,8 +495,10 @@ int main (int argc, char *argv[])
 		/* If we get to the end of this loop, we'll end up using
 		 * the last image we pulled */
 		if (current + 1 < G_N_ELEMENTS(frame_locations)) {
-			if (pixbuf != NULL)
+			if (pixbuf != NULL) {
 				g_object_unref (pixbuf);
+				pixbuf = NULL;
+			}
 		}
 		PROGRESS_DEBUG("Frame for iter %d was not interesting\n", current);
 	}
