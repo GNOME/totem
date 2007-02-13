@@ -45,6 +45,8 @@ class totemScriptablePlugin : public totemIGMPPlayer,
     NS_DECL_TOTEMIGMPCONTROLS
     NS_DECL_NSICLASSINFO
 
+    void* operator new (size_t aSize) CPP_THROW_NEW;
+
     totemScriptablePlugin (totemPlugin *aPlugin);
 
     PRBool IsValid () { return mPlugin != nsnull; }

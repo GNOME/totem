@@ -87,6 +87,17 @@ static const totemPluginMimeEntry kMimeTypes[] = {
 	{ "audio/x-mpegurl", "m3u", NULL, TRUE }
 };
 
+void*
+totemScriptablePlugin::operator new (size_t aSize) CPP_THROW_NEW
+{
+  void *object = ::operator new (aSize);
+  if (object) {
+    memset (object, 0, aSize);
+  }
+
+  return object;
+}
+
 totemScriptablePlugin::totemScriptablePlugin (totemPlugin *aPlugin)
   : mPlugin(aPlugin)
 {
