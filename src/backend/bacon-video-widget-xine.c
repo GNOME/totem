@@ -35,6 +35,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sched.h>
+#include <pthread.h>
 /* X11 */
 #include <X11/X.h>
 #include <X11/Xlib.h>
@@ -142,7 +143,8 @@ struct BaconVideoWidgetPrivate {
 	GdkCursor *cursor;
 
 	/* Opening thread for fd://0 */
-	GThread *open_thread;
+	pthread_mutex_t mutex;
+	pthread_t open_thread;
 
 	/* Visual effects */
 	char *vis_name;
@@ -460,6 +462,9 @@ static void
 bacon_video_widget_finalize (GObject *object)
 {
 	BaconVideoWidget *bvw = (BaconVideoWidget *) object;
+
+	if (&bvw->priv->mutex != NULL)
+		pthread_mutex_destroy (&bvw->priv->mutex);
 
 	if (bvw->priv->gc)
 		g_object_unref (G_OBJECT (bvw->priv->gc));
@@ -1685,6 +1690,9 @@ bacon_video_widget_new (int width, int height,
 	bvw->priv->type = type;
 	bvw->priv->audio_out_type = -1;
 
+	if (type == BVW_USE_TYPE_AUDIO || type == BVW_USE_TYPE_VIDEO)
+		pthread_mutex_init (&bvw->priv->mutex, NULL);
+
 	/* Don't load anything yet if we're looking for proper video
 	 * output */
 	if (type == BVW_USE_TYPE_VIDEO)
@@ -2149,7 +2157,13 @@ bacon_video_widget_open_thread (gpointer data)
 	GError *error = NULL;
 	int err;
 
+	pthread_mutex_lock (&bvw->priv->mutex);
+	pthread_setcancelstate (PTHREAD_CANCEL_ENABLE, NULL);
+	g_message ("opening %s", bvw->com->mrl);
 	err = xine_open (bvw->priv->stream, bvw->com->mrl);
+	g_message ("done opening %s", bvw->com->mrl);
+	pthread_setcancelstate (PTHREAD_CANCEL_DISABLE, NULL);
+	pthread_mutex_unlock (&bvw->priv->mutex);
 	if (err == 0) {
 		xine_error (bvw, &error);
 		bacon_video_widget_close (bvw);
@@ -2164,7 +2178,7 @@ bacon_video_widget_open_thread (gpointer data)
 		}
 	}
 
-	bvw->priv->open_thread = NULL;
+	bvw->priv->open_thread = 0;
 	return NULL;
 }
 
@@ -2172,9 +2186,10 @@ static gboolean
 bacon_video_widget_open_async (BaconVideoWidget *bvw, const char *mrl,
 		GError **error)
 {
-	bvw->priv->open_thread = g_thread_create (bacon_video_widget_open_thread, bvw, TRUE, error);
-	if (bvw->priv->open_thread == NULL)
+	if (pthread_create (&bvw->priv->open_thread, NULL, bacon_video_widget_open_thread, bvw) != 0) {
+		g_assert_not_reached ();
 		return FALSE;
+	}
 
 	return TRUE;
 }
@@ -2304,6 +2319,8 @@ bacon_video_widget_play (BaconVideoWidget *bvw, GError **gerror)
 
 	error = 1;
 
+	pthread_mutex_lock (&bvw->priv->mutex);
+
 	if (bvw->priv->seeking == 1)
 	{
 		error = xine_play (bvw->priv->stream,
@@ -2328,6 +2345,8 @@ bacon_video_widget_play (BaconVideoWidget *bvw, GError **gerror)
 
 		bvw->priv->seeking = 0;
 	}
+
+	pthread_mutex_unlock (&bvw->priv->mutex);
 
 	if (error == 0)
 	{
@@ -2455,11 +2474,12 @@ bacon_video_widget_close (BaconVideoWidget *bvw)
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
 
-	if (bvw->priv->open_thread != NULL
-			&& g_thread_self () != bvw->priv->open_thread) {
+	if (bvw->priv->open_thread != 0
+			&& pthread_self () != bvw->priv->open_thread) {
 		/* Nicely wait for the timeout */
-		g_thread_join (bvw->priv->open_thread);
-		bvw->priv->open_thread = NULL;
+		pthread_cancel (bvw->priv->open_thread);
+		pthread_join (bvw->priv->open_thread, NULL);
+		bvw->priv->open_thread = 0;
 	}
 
 	xine_stop (bvw->priv->stream);
