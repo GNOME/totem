@@ -87,8 +87,7 @@ add_holes_to_pixbuf_small (GdkPixbuf *pixbuf, int width, int height)
 	holes = gdk_pixbuf_new_from_file (filename, NULL);
 	g_free (filename);
 
-	if (holes == NULL)
-	{
+	if (holes == NULL) {
 		g_object_ref (pixbuf);
 		return pixbuf;
 	}
@@ -100,9 +99,9 @@ add_holes_to_pixbuf_small (GdkPixbuf *pixbuf, int width, int height)
 	for (i = 0; i < height; i += gdk_pixbuf_get_height (holes))
 	{
 		gdk_pixbuf_composite (holes, target, 0, i,
-				MIN (width, gdk_pixbuf_get_width (holes)),
-				MIN (height-i, gdk_pixbuf_get_height (holes)),
-				0, i, 1, 1, GDK_INTERP_NEAREST, 255);
+				      MIN (width, gdk_pixbuf_get_width (holes)),
+				      MIN (height - i, gdk_pixbuf_get_height (holes)),
+				      0, i, 1, 1, GDK_INTERP_NEAREST, 255);
 	}
 
 	tmp = gdk_pixbuf_flip (holes, FALSE);
@@ -112,11 +111,11 @@ add_holes_to_pixbuf_small (GdkPixbuf *pixbuf, int width, int height)
 	for (i = 0; i < height; i += gdk_pixbuf_get_height (holes))
 	{
 		gdk_pixbuf_composite (holes, target,
-				width - gdk_pixbuf_get_width (holes), i,
-				MIN (width, gdk_pixbuf_get_width (holes)),
-				MIN (height-i, gdk_pixbuf_get_height (holes)),
-				width - gdk_pixbuf_get_width (holes), i,
-				1, 1, GDK_INTERP_NEAREST, 255);
+				      width - gdk_pixbuf_get_width (holes), i,
+				      MIN (width, gdk_pixbuf_get_width (holes)),
+				      MIN (height - i, gdk_pixbuf_get_height (holes)),
+				      width - gdk_pixbuf_get_width (holes), i,
+				      1, 1, GDK_INTERP_NEAREST, 255);
 	}
 
 	g_object_unref (holes);
@@ -239,16 +238,16 @@ is_image_interesting (GdkPixbuf *pixbuf)
 
 	/* Iterate through the image to calculate x-bar */
 	for (i = 0; i < num_samples; i++) {
-		x_bar += (float)buffer[i];
+		x_bar += (float) buffer[i];
 	}
-	x_bar /= ((float)num_samples);
+	x_bar /= ((float) num_samples);
 
 	/* Calculate the variance */
 	for (i = 0; i < num_samples; i++) {
-		float tmp = ((float)buffer[i] - x_bar);
+		float tmp = ((float) buffer[i] - x_bar);
 		variance += tmp * tmp;
 	}
-	variance /= ((float)(num_samples - 1));
+	variance /= ((float) (num_samples - 1));
 
 	return (variance > BORING_IMAGE_VARIANCE);
 }
@@ -495,7 +494,7 @@ int main (int argc, char *argv[])
 
 		/* If we get to the end of this loop, we'll end up using
 		 * the last image we pulled */
-		if(current + 1 < G_N_ELEMENTS(frame_locations)) {
+		if (current + 1 < G_N_ELEMENTS(frame_locations)) {
 			if (pixbuf != NULL)
 				g_object_unref (pixbuf);
 		}
