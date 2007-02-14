@@ -148,7 +148,7 @@ totem_options_process_for_server (BaconMessageConnection *conn,
 	}
 
 	/* Send the files to enqueue */
-	for (i = 0; options->filenames[i] != NULL; i++)
+	for (i = 0; options->filenames && options->filenames[i] != NULL; i++)
 	{
 		char *line, *full_path;
 		full_path = totem_create_full_path (options->filenames[i]);

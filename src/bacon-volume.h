@@ -32,7 +32,7 @@ G_BEGIN_DECLS
   (G_TYPE_CHECK_INSTANCE_CAST ((obj), BACON_TYPE_VOLUME_BUTTON, \
 			       BaconVolumeButton))
 
-typedef struct _BaconVolumeButton BaconVolumeButton;
+typedef struct BaconVolumeButton BaconVolumeButton;
 
 typedef struct _BaconVolumeButtonClass {
   GtkButtonClass parent_class;

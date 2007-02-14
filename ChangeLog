@@ -1,3 +1,9 @@
+2007-02-14  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-volume.h: revert a change that cause build to fail
+	* src/totem-options.c: (totem_options_process_for_server):
+	Don't crash if no filenames were passed in "server mode"
+
 2007-02-14  Christian Persch  <chpe@svn.gnome.org>
 
 	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_construct):
