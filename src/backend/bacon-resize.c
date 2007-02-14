@@ -50,6 +50,7 @@ bacon_resize_init (void)
 #ifdef HAVE_XVIDMODE
 	int event_basep, error_basep, res;
 
+	/* FIXME multihead */
 	XLockDisplay (GDK_DISPLAY());
 
 	res = XF86VidModeQueryExtension (GDK_DISPLAY(), &event_basep, &error_basep) || !XRRQueryExtension (GDK_DISPLAY(), &event_basep, &error_basep);
@@ -79,6 +80,7 @@ bacon_resize (void)
 	XRRScreenSize *xr_sizes;
 	gboolean found = FALSE;
 
+	/* FIXME multihead */
 	XLockDisplay (GDK_DISPLAY());
 
 	/* Check if there's a viewport */
@@ -131,6 +133,7 @@ bacon_restore (void)
 #ifdef HAVE_XVIDMODE
 	int width, height;
 
+	/* FIXME multihead */
 	XLockDisplay (GDK_DISPLAY());
 
 	/* Check if there's a viewport */

@@ -94,10 +94,6 @@ static const GtkTargetEntry target_table[] = {
 	{ "_NETSCAPE_URL", 0, 1 },
 };
 
-static const GtkTargetEntry source_table[] = {
-	{ "text/uri-list", 0, 0 },
-};
-
 static gboolean totem_action_open_files (Totem *totem, char **list);
 static gboolean totem_action_open_files_list (Totem *totem, GSList *list);
 static void update_fullscreen_size (Totem *totem);
@@ -2368,6 +2364,19 @@ window_realize_cb (GtkWidget *widget, Totem *totem)
 }
 
 static void
+window_unrealize_cb (GtkWidget *widget, Totem *totem)
+{
+	GdkScreen *screen;
+
+	screen = gtk_widget_get_screen (widget);
+	g_signal_handlers_disconnect_by_func
+		(screen, G_CALLBACK (size_changed_cb), totem);
+	g_signal_handlers_disconnect_by_func
+		(gtk_icon_theme_get_for_screen (screen),
+		 G_CALLBACK (theme_changed_cb), totem);
+}
+
+static void
 popup_timeout_add(Totem* totem)
 {
 	totem->popup_timeout = g_timeout_add (FULLSCREEN_POPUP_TIMEOUT,
@@ -3096,6 +3105,8 @@ totem_callback_connect (Totem *totem)
 	/* Screen size and Theme changes */
 	g_signal_connect (totem->win, "realize",
 			G_CALLBACK (window_realize_cb), totem);
+	g_signal_connect (totem->win, "unrealize",
+			G_CALLBACK (window_unrealize_cb), totem);
 
 	/* Motion notify for the Popups */
 	item = glade_xml_get_widget (totem->xml,
@@ -3240,6 +3251,9 @@ video_widget_create (Totem *totem)
 	GError *err = NULL;
 	GtkWidget *container;
 	BaconVideoWidget **bvw;
+	const GtkTargetEntry source_table[] = {
+		{ "text/uri-list", 0, 0 },
+	};
 
 	totem->scr = totem_scrsaver_new ();
 

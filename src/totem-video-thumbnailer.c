@@ -348,7 +348,7 @@ static const GOptionEntry entries[] = {
 #ifndef THUMB_DEBUG
 	{"g-fatal-warnings", 0, 0, G_OPTION_ARG_NONE, &g_fatal_warnings, "Make all warnings fatal", NULL},
 #endif /* THUMB_DEBUG */
-	{ G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &filenames, "Movies to index", NULL },
+ 	{ G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &filenames, NULL, "[FILE...]" },
 	{ NULL }
 };
 
@@ -383,14 +383,9 @@ int main (int argc, char *argv[])
 #ifndef THUMB_DEBUG
 	g_type_init ();
 #else
-	gtk_init (&argc, &argv);
+ 	g_option_context_add_group (context, gtk_get_option_group (FALSE));
 #endif
 
-#ifndef HAVE_GTK_ONLY
-	gnome_authentication_manager_init ();
-#endif
-
-	gnome_vfs_init ();
 	if (g_option_context_parse (context, &argc, &argv, &err) == FALSE) {
 		g_print ("couldn't parse command-line options: %s\n", err->message);
 		g_error_free (err);
@@ -406,6 +401,12 @@ int main (int argc, char *argv[])
 		g_log_set_always_fatal (fatal_mask);
 	}
 #endif /* THUMB_DEBUG */
+
+	gnome_vfs_init ();
+
+#ifndef HAVE_GTK_ONLY
+	gnome_authentication_manager_init ();
+#endif
 
 	if (filenames == NULL || g_strv_length (filenames) != 2) {
 		g_print ("Expects an input and an output file\n");

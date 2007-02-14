@@ -247,10 +247,11 @@ totem_interface_get_license (void)
 		N_("Totem contains an exception to allow the use of proprietary "
 		   "GStreamer plugins.")
 	};
-	return g_strconcat (_(license[0]), "\n\n",
-			    _(license[1]), "\n\n",
-			    _(license[2]), "\n\n",
-			    _(license[3]), "\n",
-			    NULL);
+	return g_strjoin ("\n\n",
+			  _(license[0]),
+			  _(license[1]),
+			  _(license[2]),
+			  _(license[3]),
+			  NULL);
 }
 

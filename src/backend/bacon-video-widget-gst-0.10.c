@@ -617,8 +617,7 @@ bacon_video_widget_unrealize (GtkWidget *widget)
   gdk_window_destroy (bvw->priv->video_window);
   bvw->priv->video_window = NULL;
 
-  if (GTK_WIDGET_CLASS (parent_class)->unrealize)
-    GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
+  GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
 static void
@@ -973,7 +972,9 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   object_class = (GObjectClass *) klass;
   widget_class = (GtkWidgetClass *) klass;
 
-  parent_class = gtk_type_class (gtk_box_get_type ());
+  parent_class = g_type_class_peek_parent (klass);
+
+  g_type_class_add_private (object_class, sizeof (BaconVideoWidgetPrivate));
 
   /* GtkWidget */
   widget_class->size_request = bacon_video_widget_size_request;
@@ -1117,22 +1118,21 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 static void
 bacon_video_widget_init (BaconVideoWidget * bvw)
 {
-  g_return_if_fail (bvw != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  BaconVideoWidgetPrivate *priv;
 
   GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_CAN_FOCUS);
   GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_NO_WINDOW);
   GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
 
-  bvw->priv = g_new0 (BaconVideoWidgetPrivate, 1);
+  bvw->priv = priv = G_TYPE_INSTANCE_GET_PRIVATE (bvw, BACON_TYPE_VIDEO_WIDGET, BaconVideoWidgetPrivate);
   bvw->com = g_new0 (BaconVideoWidgetCommon, 1);
   
-  bvw->priv->update_id = 0;
-  bvw->priv->tagcache = NULL;
-  bvw->priv->audiotags = NULL;
-  bvw->priv->videotags = NULL;
+  priv->update_id = 0;
+  priv->tagcache = NULL;
+  priv->audiotags = NULL;
+  priv->videotags = NULL;
 
-  bvw->priv->lock = g_mutex_new ();
+  priv->lock = g_mutex_new ();
 
   bvw->priv->missing_plugins = NULL;
   bvw->priv->plugin_install_in_progress = FALSE;
@@ -1249,7 +1249,7 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     goto done;
   } else if (strcmp (type_name, "prepare-xwindow-id") == 0 ||
       strcmp (type_name, "have-xwindow-id") == 0) {
-    /* we handle these synchroneously or want to ignore them */
+    /* we handle these synchronously or want to ignore them */
     goto done;
   } else if (gst_is_missing_plugin_message (msg)) {
     bvw->priv->missing_plugins =
@@ -1912,7 +1912,6 @@ bacon_video_widget_finalize (GObject * object)
 
   g_mutex_free (bvw->priv->lock);
 
-  g_free (bvw->priv);
   g_free (bvw->com);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -2623,7 +2622,7 @@ timed_out:
   /* it's taking a long time to open -- just tell totem it was ok, this allows
    * the user to stop the loading process with the normal stop button */
   GST_DEBUG ("state change to %s timed out, returning success and handling "
-      "errors asynchroneously", gst_element_state_get_name (state));
+      "errors asynchronously", gst_element_state_get_name (state));
   bvw->priv->ignore_messages_mask = saved_events;
   return TRUE;
 
@@ -3032,8 +3031,7 @@ void
 bacon_video_widget_set_logo (BaconVideoWidget * bvw, gchar * filename)
 {
   GError *error = NULL;
-  
-  g_return_if_fail (bvw != NULL);
+
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (filename != NULL);
 
@@ -3066,29 +3064,34 @@ bacon_video_widget_set_logo_pixbuf (BaconVideoWidget * bvw, GdkPixbuf *logo)
 void
 bacon_video_widget_set_logo_mode (BaconVideoWidget * bvw, gboolean logo_mode)
 {
-  g_return_if_fail (bvw != NULL);
+  BaconVideoWidgetPrivate *priv;
+
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  priv = bvw->priv;
 
-  bvw->priv->logo_mode = logo_mode;
+  logo_mode = logo_mode != FALSE;
 
-  if (bvw->priv->video_window) {
-    if (logo_mode) {
-      gdk_window_hide (bvw->priv->video_window);
-    } else {
-      gdk_window_show (bvw->priv->video_window);
+  if (priv->logo_mode != logo_mode) {
+    priv->logo_mode = logo_mode;
+
+    if (priv->video_window) {
+      if (logo_mode) {
+        gdk_window_hide (priv->video_window);
+      } else {
+        gdk_window_show (priv->video_window);
+      }
     }
-  }
-  
-  /* Queue a redraw of the widget */
-  gtk_widget_queue_draw (GTK_WIDGET (bvw));
 
-  g_object_notify (G_OBJECT (bvw), "logo_mode");
+    g_object_notify (G_OBJECT (bvw), "logo_mode");
+
+    /* Queue a redraw of the widget */
+    gtk_widget_queue_draw (GTK_WIDGET (bvw));
+  }
 }
 
 gboolean
 bacon_video_widget_get_logo_mode (BaconVideoWidget * bvw)
 {
-  g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 
   return bvw->priv->logo_mode;
@@ -4603,7 +4606,7 @@ bacon_video_widget_error_quark (void)
 {
   static GQuark q; /* 0 */
 
-  if (q == 0) {
+  if (G_UNLIKELY (q == 0)) {
     q = g_quark_from_static_string ("bvw-error-quark");
   }
   return q;
@@ -4645,7 +4648,7 @@ bvw_update_interface_implementations (BaconVideoWidget *bvw)
   GstElement *element = NULL;
   GstIteratorResult ires;
   GstIterator *iter;
-  gint i;
+  guint i;
 
   g_object_get (bvw->priv->play, "video-sink", &video_sink, NULL);
   g_assert (video_sink != NULL);
@@ -4696,7 +4699,7 @@ bvw_update_interface_implementations (BaconVideoWidget *bvw)
   }
 
   /* Setup brightness and contrast */
-  for (i = 0; i < 4; i++) {
+  for (i = 0; i < G_N_ELEMENTS (video_props_str); i++) {
     confvalue = gconf_client_get_without_default (bvw->priv->gc,
         video_props_str[i], NULL);
     if (confvalue != NULL) {
@@ -5026,7 +5029,7 @@ bacon_video_widget_new (int width, int height,
     bvw_update_interface_implementations (bvw);
   }
 
-  /* we want to catch "prepare-xwindow-id" element messages synchroneously */
+  /* we want to catch "prepare-xwindow-id" element messages synchronously */
   gst_bus_set_sync_handler (bvw->priv->bus, gst_bus_sync_signal_handler, bvw);
 
   bvw->priv->sig_bus_sync = 

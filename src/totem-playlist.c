@@ -129,7 +129,7 @@ static PlaylistSaveType save_types [] = {
 	{".XSPF", ".xspf", TOTEM_PL_PARSER_XSPF},
 };
 
-static int totem_playlist_table_signals[LAST_SIGNAL] = { 0 };
+static int totem_playlist_table_signals[LAST_SIGNAL];
 
 static const GtkTargetEntry target_table[] = {
 	{ "text/uri-list", 0, 0 },

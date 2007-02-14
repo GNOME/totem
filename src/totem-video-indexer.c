@@ -43,6 +43,7 @@
 #include <stdlib.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
 #include <libgnomevfs/gnome-vfs-init.h>
+#include <glib/gi18n.h>
 
 #include "totem-mime-types.h"
 

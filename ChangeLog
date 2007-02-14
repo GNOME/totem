@@ -1,5 +1,33 @@
 2007-02-14  Christian Persch  <chpe@svn.gnome.org>
 
+	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_construct):
+	* src/backend/bacon-resize.c: (bacon_resize_init), (bacon_resize),
+	(bacon_restore):
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_unrealize), (bacon_video_widget_class_init),
+	(bacon_video_widget_init), (bvw_handle_element_message),
+	(bacon_video_widget_finalize), (poll_for_state_change_full),
+	(bacon_video_widget_set_logo), (bacon_video_widget_set_logo_mode),
+	(bacon_video_widget_get_logo_mode),
+	(bacon_video_widget_error_quark),
+	(bvw_update_interface_implementations), (bacon_video_widget_new):
+	* src/backend/bacon-video-widget.h:
+	* src/bacon-volume.h:
+	* src/plparse/totem-pl-parser.c:
+	* src/totem-interface.c: (totem_interface_get_license):
+	* src/totem-playlist.c:
+	* src/totem-properties-main.c:
+	(totem_properties_plugin_register_type):
+	* src/totem-screenshot.c: (totem_screenshot_new):
+	* src/totem-uri.c:
+	* src/totem-video-indexer.c:
+	* src/totem-video-thumbnailer.c: (main):
+	* src/totem.c: (window_unrealize_cb), (totem_callback_connect),
+	(video_widget_create): Fix compiler warnings, and various cleanups.
+	Bug #402920.
+
+2007-02-14  Christian Persch  <chpe@svn.gnome.org>
+
 	* browser-plugin/totemGMPPlugin.cpp:
 	* browser-plugin/totemGMPPlugin.h: Implement zeroing operator new.
 	Fixes crash from bug #407679.

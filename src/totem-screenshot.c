@@ -44,14 +44,6 @@ struct TotemScreenshotPrivate
 	char *temp_file;
 };
 
-static const GtkTargetEntry target_table[] = {
-	{ "text/uri-list", 0, 0 },
-};
-
-static GtkTargetEntry source_table[] = {
-	{ "text/uri-list", 0, 0 },
-};
-
 static void totem_screenshot_class_init (TotemScreenshotClass *class);
 static void totem_screenshot_init       (TotemScreenshot      *screenshot);
 
@@ -386,8 +378,9 @@ totem_screenshot_new (const char *glade_filename, GdkPixbuf *screen_image)
 			G_CALLBACK (drag_data_get), screenshot);
 	gtk_drag_source_set (GTK_WIDGET (screenshot),
 			GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
-			source_table, G_N_ELEMENTS (source_table),
+			NULL, 0,
 			GDK_ACTION_COPY);
+	gtk_drag_source_add_uri_targets (GTK_WIDGET (screenshot));
 
 	entry = glade_xml_get_widget (screenshot->_priv->xml,
 			"tsw_save2file_combo_entry");

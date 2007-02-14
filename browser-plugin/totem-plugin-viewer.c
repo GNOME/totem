@@ -1512,7 +1512,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 		child = glade_xml_get_widget (emb->xml, "volume_button");
 		gtk_widget_modify_style (child, rcstyle);
 
-		gtk_rc_style_unref (rcstyle);
+		g_object_unref (rcstyle);
 	}
 
 	totem_embedded_set_state (emb, STATE_STOPPED);

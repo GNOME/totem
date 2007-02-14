@@ -704,13 +704,6 @@ totem_pl_parser_finalize (GObject *object)
 	G_OBJECT_CLASS (totem_pl_parser_parent_class)->finalize (object);
 }
 
-//FIXME remove ?
-static gboolean
-totem_pl_parser_check_utf8 (const char *title)
-{
-	return title ? g_utf8_validate (title, -1, NULL) : FALSE;
-}
-
 static void
 totem_pl_parser_add_url_valist (TotemPlParser *parser,
 				const gchar *first_property_name,
