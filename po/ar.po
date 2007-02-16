@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.gnome-2-16.ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-07 12:24+0000\n"
-"PO-Revision-Date: 2007-02-08 17:25+0200\n"
-"Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
+"POT-Creation-Date: 2007-02-14 09:28-0800\n"
+"PO-Revision-Date: 2007-02-16 11:38-0000\n"
+"Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,7 +35,8 @@ msgstr "تحرّك لأعلى"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../data/playlist.glade.h:4 ../src/totem-playlist.c:960
+#: ../data/playlist.glade.h:4
+#: ../src/totem-playlist.c:960
 #: ../src/totem-sidebar.c:105
 msgid "Playlist"
 msgstr "قائمة التشغيل"
@@ -45,16 +46,18 @@ msgid "Remove"
 msgstr "احذف"
 
 #: ../data/playlist.glade.h:6
-msgid "Save..."
-msgstr "احفظ..."
+msgid "Save Playlist..."
+msgstr "احفظ قائمة التّشغيل..."
 
 #. Channels
-#: ../data/properties.glade.h:1 ../src/bacon-video-widget-properties.c:170
+#: ../data/properties.glade.h:1
+#: ../src/bacon-video-widget-properties.c:170
 msgid "0 Channels"
 msgstr "0 قنوات"
 
 #. Sample rate
-#: ../data/properties.glade.h:2 ../src/bacon-video-widget-properties.c:168
+#: ../data/properties.glade.h:2
+#: ../src/bacon-video-widget-properties.c:168
 msgid "0 Hz"
 msgstr "0 هرتز"
 
@@ -67,7 +70,8 @@ msgid "0 kbps"
 msgstr "0 كيلوبت في الثانية"
 
 #. 0 seconds
-#: ../data/properties.glade.h:5 ../data/skip_to.glade.h:1
+#: ../data/properties.glade.h:5
+#: ../data/skip_to.glade.h:1
 #: ../src/backend/video-utils.c:270
 msgid "0 seconds"
 msgstr "0 ثوان"
@@ -135,7 +139,8 @@ msgstr "<i>السنة:</i>"
 #. Dimensions
 #. Video Codec
 #. Audio Codec
-#: ../data/properties.glade.h:21 ../src/bacon-video-widget-properties.c:153
+#: ../data/properties.glade.h:21
+#: ../src/bacon-video-widget-properties.c:153
 #: ../src/bacon-video-widget-properties.c:155
 #: ../src/bacon-video-widget-properties.c:158
 #: ../src/bacon-video-widget-properties.c:161
@@ -148,7 +153,8 @@ msgstr "<i>السنة:</i>"
 msgid "N/A"
 msgstr "غير متوفر"
 
-#: ../data/properties.glade.h:22 ../src/totem-sidebar.c:108
+#: ../data/properties.glade.h:22
+#: ../src/totem-sidebar.c:108
 msgid "Properties"
 msgstr "خصائص"
 
@@ -156,7 +162,8 @@ msgstr "خصائص"
 #. Artist
 #. Album
 #. Year
-#: ../data/properties.glade.h:23 ../src/bacon-video-widget-properties.c:142
+#: ../data/properties.glade.h:23
+#: ../src/bacon-video-widget-properties.c:142
 #: ../src/bacon-video-widget-properties.c:144
 #: ../src/bacon-video-widget-properties.c:146
 #: ../src/bacon-video-widget-properties.c:148
@@ -167,7 +174,8 @@ msgstr "مجهول"
 msgid "<b>Preview</b>"
 msgstr "<b>استعراض</b>"
 
-#: ../data/screenshot.glade.h:2 ../src/totem-screenshot.c:342
+#: ../data/screenshot.glade.h:2
+#: ../src/totem-screenshot.c:334
 msgid "Save Screenshot"
 msgstr "احفظ لقطة الشاشة"
 
@@ -183,7 +191,8 @@ msgstr "احفظ لقطة الشاشة في ال_مكتب"
 msgid "Save screenshot to _file:"
 msgstr "احفظ لقطة الشاشة في م_لف:"
 
-#: ../data/skip_to.glade.h:2 ../src/totem-skipto.c:163
+#: ../data/skip_to.glade.h:2
+#: ../src/totem-skipto.c:163
 msgid "Skip to"
 msgstr "تخطّي إلى"
 
@@ -263,7 +272,8 @@ msgstr "<b>مؤثّرات بصرية</b>"
 msgid "<span size=\"medium\"><b>No file</b></span>"
 msgstr "<span size=\"medium\"><b>لا ملفّ</b></span>"
 
-#: ../data/totem.glade.h:21 ../src/totem-properties-view.c:90
+#: ../data/totem.glade.h:21
+#: ../src/totem-properties-view.c:90
 msgid "Audio"
 msgstr "صوت"
 
@@ -348,8 +358,10 @@ msgid "Time:"
 msgstr "الوقت:"
 
 #. Title
-#: ../data/totem.glade.h:45 ../src/totem.c:974 ../src/totem.c:3403
-#: ../src/totem.c:3430
+#: ../data/totem.glade.h:45
+#: ../src/totem.c:970
+#: ../src/totem.c:3417
+#: ../src/totem.c:3444
 msgid "Totem Movie Player"
 msgstr "مشغل الأفلام توتم"
 
@@ -390,9 +402,7 @@ msgid "_Type of visualisation:"
 msgstr "_نوع المؤثّرات البصرية:"
 
 #: ../data/totem.schemas.in.h:1
-msgid ""
-"Amount of data to buffer for network streams before starting to display the "
-"stream (in seconds)"
+msgid "Amount of data to buffer for network streams before starting to display the stream (in seconds)"
 msgstr "كمية البيانات التي سيتم تخزينها لتيّارات الشبكة قبل عرضها (بالثواني)"
 
 #: ../data/totem.schemas.in.h:2
@@ -404,9 +414,7 @@ msgid "Default location for the \"Open...\" dialogues"
 msgstr "الموقع الافتراضي ل \"افتح...\" صناديق حوار"
 
 #: ../data/totem.schemas.in.h:4
-msgid ""
-"Default location for the \"Open...\" dialogues, default is the current "
-"directory"
+msgid "Default location for the \"Open...\" dialogues, default is the current directory"
 msgstr "الموقع الافتراضي ل \"افتح...\" صناديق الحوار, الافتراضي هو الدليل الحالي"
 
 #: ../data/totem.schemas.in.h:5
@@ -490,13 +498,8 @@ msgid "Type of audio output to use"
 msgstr "نوع خرْج الصوت لاستخدامه"
 
 #: ../data/totem.schemas.in.h:25
-msgid ""
-"Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
-"\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
-"Passthrough."
-msgstr ""
-"نوع الخرْج الصوتي الذي سيستخدم: \"0\" لستيريو و \"1\" لخرْج قناة-4 و \"2\" "
-"لخرْج قناة 5.0 و \"3\" لخرْج قناة 5.1 و أخيرا \"4\" لخرْج AC3."
+msgid "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, \"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 Passthrough."
+msgstr "نوع الخرْج الصوتي الذي سيستخدم: \"0\" لستيريو و \"1\" لخرْج قناة-4 و \"2\" لخرْج قناة 5.0 و \"3\" لخرْج قناة 5.1 و أخيرا \"4\" لخرْج AC3."
 
 #. Translators: This is default subtitle encoding
 #. character set. You can change this to be the most common
@@ -538,7 +541,8 @@ msgstr "اعرض ويب كاميرا مباشرة و حمّل صور"
 msgid "Save File"
 msgstr "احفظ ملف"
 
-#: ../data/vanity.glade.h:2 ../src/vanity.c:251
+#: ../data/vanity.glade.h:2
+#: ../src/vanity.c:251
 msgid "Vanity"
 msgstr "فانيتي"
 
@@ -612,7 +616,8 @@ msgstr "مستوى الصوت"
 msgid "+"
 msgstr "+"
 
-#: ../src/bacon-volume.c:223 ../src/totem-options.c:47
+#: ../src/bacon-volume.c:223
+#: ../src/totem-options.c:47
 msgid "Volume Down"
 msgstr "اخفِض الصوت"
 
@@ -621,7 +626,8 @@ msgstr "اخفِض الصوت"
 msgid "-"
 msgstr "-"
 
-#: ../src/bacon-volume.c:241 ../src/totem-options.c:46
+#: ../src/bacon-volume.c:241
+#: ../src/totem-options.c:46
 msgid "Volume Up"
 msgstr "ارفع الصوت"
 
@@ -638,55 +644,36 @@ msgstr "أعلى مستوى"
 msgid "Couldn't load the '%s' interface."
 msgstr "لم يمكن تحميل واجهة '%s'."
 
-#: ../src/totem-interface.c:119 ../src/totem-interface.c:121
+#: ../src/totem-interface.c:119
+#: ../src/totem-interface.c:121
 #: ../src/totem-menu.c:1379
 msgid "Make sure that Totem is properly installed."
 msgstr "رجاء تأكد من أن توتم مثبت بنجاح"
 
 #: ../src/totem-interface.c:236
-msgid ""
-"Totem is free software; you can redistribute it and/or modify it under the "
-"terms of the GNU General Public License as published by the Free Software "
-"Foundation; either version 2 of the License, or (at your option) any later "
-"version."
-msgstr ""
-"توتم برنامج حر؛ بامكانك إعادة توزيعه و/أو تعديله تحت شروط الرخصة العمومية "
-"العامة لجنو والتي نشرتها منظمة البرمجيات الحرة؛ سواء الإصدارة 2 من الرخصة أو "
-"أي إصدارة بعدها (حسب رغبتك)."
+msgid "Totem is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version."
+msgstr "توتم برنامج حر؛ بامكانك إعادة توزيعه و/أو تعديله تحت شروط الرخصة العمومية العامة لجنو والتي نشرتها منظمة البرمجيات الحرة؛ سواء الإصدارة 2 من الرخصة أو أي إصدارة بعدها (حسب رغبتك)."
 
 #: ../src/totem-interface.c:240
-msgid ""
-"Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
-"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
-"FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
-"details."
-msgstr ""
-"يوزّع توتم على أمل أن يكون مفيدًا لمن يستخدمه دون أدنى مسؤولية؛ ولا حتى أيضمان "
-"يضمن صلاحية العرض في السوق أو توافقه مع أي استخدام محدد. يمكنك مراجعةالرخصة "
-"العمومية العامة لجنو لمزيد من التفاصيل."
+msgid "Totem is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
+msgstr "يوزّع توتم على أمل أن يكون مفيدًا لمن يستخدمه دون أدنى مسؤولية؛ ولا حتى أيضمان يضمن صلاحية العرض في السوق أو توافقه مع أي استخدام محدد. يمكنك مراجعةالرخصة العمومية العامة لجنو لمزيد من التفاصيل."
 
 #: ../src/totem-interface.c:244
-msgid ""
-"You should have received a copy of the GNU General Public License along with "
-"Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
-"Suite 330, Boston, MA  02111-1307  USA"
+msgid "You should have received a copy of the GNU General Public License along with Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
 msgstr ""
-"من المفترض أن تكون قد استلمت نسخة من رخصة جنو العامة مع مستخرج الصوتيات؛ في "
-"حال عدم استلامك لذلك، يمكنك مكاتبة:\n"
-"Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  "
-"02111-1307  USA"
+"من المفترض أن تكون قد استلمت نسخة من رخصة جنو العامة مع مستخرج الصوتيات؛ في حال عدم استلامك لذلك، يمكنك مكاتبة:\n"
+"Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
 
 #: ../src/totem-interface.c:247
-msgid ""
-"Totem contains an exception to allow the use of proprietary GStreamer "
-"plugins."
+msgid "Totem contains an exception to allow the use of proprietary GStreamer plugins."
 msgstr "يحتوي توتم على استثناء ليسمح باستخدام ملحقات GStreamer محتكرة (غير حرّة)."
 
 #: ../src/totem-menu.c:284
 msgid "None"
 msgstr "لا شيء"
 
-#: ../src/totem-menu.c:288 ../src/totem-menu.c:1265
+#: ../src/totem-menu.c:288
+#: ../src/totem-menu.c:1265
 msgid "Auto"
 msgstr "تلقائي"
 
@@ -715,11 +702,13 @@ msgstr "جنوم"
 msgid "Movie Player using %s and %s"
 msgstr "عارض أفلام يستخدم %s و %s"
 
-#: ../src/totem-menu.c:1106 ../browser-plugin/totem-plugin-viewer.c:1098
+#: ../src/totem-menu.c:1106
+#: ../browser-plugin/totem-plugin-viewer.c:1098
 msgid "Copyright © 2002-2006 Bastien Nocera"
 msgstr "حقوق النسخ © 2002-2005 Bastien Nocera"
 
-#: ../src/totem-menu.c:1111 ../src/vanity.c:258
+#: ../src/totem-menu.c:1111
+#: ../src/vanity.c:258
 #: ../browser-plugin/totem-plugin-viewer.c:1101
 msgid "translator-credits"
 msgstr ""
@@ -979,19 +968,23 @@ msgstr "تصغير"
 msgid "Zoom out"
 msgstr "تصغير"
 
-#: ../src/totem-menu.c:1246 ../src/totem-menu.c:1251
+#: ../src/totem-menu.c:1246
+#: ../src/totem-menu.c:1251
 msgid "Skip _Forward"
 msgstr "تخطّى إلى الأ_مام"
 
-#: ../src/totem-menu.c:1246 ../src/totem-menu.c:1251
+#: ../src/totem-menu.c:1246
+#: ../src/totem-menu.c:1251
 msgid "Skip forward"
 msgstr "تخطّى إلى الأمام"
 
-#: ../src/totem-menu.c:1247 ../src/totem-menu.c:1252
+#: ../src/totem-menu.c:1247
+#: ../src/totem-menu.c:1252
 msgid "Skip _Backwards"
 msgstr "تخطّى إلى ال_خلف"
 
-#: ../src/totem-menu.c:1247 ../src/totem-menu.c:1252
+#: ../src/totem-menu.c:1247
+#: ../src/totem-menu.c:1252
 msgid "Skip backwards"
 msgstr "تخطّى إلى الخلف"
 
@@ -1099,11 +1092,14 @@ msgstr "مكّن التّنقيح"
 msgid "Play/Pause"
 msgstr "شغّل/قِف مؤقتاً"
 
-#: ../src/totem-options.c:40 ../src/totem.c:294 ../src/totem.c:302
+#: ../src/totem-options.c:40
+#: ../src/totem.c:290
+#: ../src/totem.c:298
 msgid "Play"
 msgstr "العب"
 
-#: ../src/totem-options.c:41 ../src/totem.c:288
+#: ../src/totem-options.c:41
+#: ../src/totem.c:284
 msgid "Pause"
 msgstr "قِف مؤقّتا"
 
@@ -1172,7 +1168,8 @@ msgstr "ا_نسخ الموقع"
 msgid "Copy the location to the clipboard"
 msgstr "ا_نسخ العنوان إلى الحافظة"
 
-#: ../src/totem-playlist.c:362 ../src/totem-playlist.c:901
+#: ../src/totem-playlist.c:362
+#: ../src/totem-playlist.c:901
 msgid "Could not save the playlist"
 msgstr "لم يمكن حفظ القائمة"
 
@@ -1218,21 +1215,15 @@ msgstr ""
 "أمتأكد أنك تريد تفعيل المؤثرّات البصريّة؟"
 
 #: ../src/totem-preferences.c:140
-msgid ""
-"The change of this setting will only take effect for the next movie, or when "
-"Totem is restarted."
-msgstr ""
-"تغيير هذا التّعيين لن يكون له تأثير إلا على الفيلم التّالي أو عند إعادة تشغيل "
-"توتم."
+msgid "The change of this setting will only take effect for the next movie, or when Totem is restarted."
+msgstr "تغيير هذا التّعيين لن يكون له تأثير إلا على الفيلم التّالي أو عند إعادة تشغيل توتم."
 
 #: ../src/totem-preferences.c:284
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr "يتطلب تغيير نوع مؤثّرات الخرْج البصري إعادة تشغيل."
 
 #: ../src/totem-preferences.c:368
-msgid ""
-"The change of audio output type will only take effect when Totem is "
-"restarted."
+msgid "The change of audio output type will only take effect when Totem is restarted."
 msgstr "تغيير الخرْج الصّوتي لن يكون له تأثير إلا عند إعادة تشغيل توتم."
 
 #: ../src/totem-preferences.c:622
@@ -1240,7 +1231,8 @@ msgid "Select Subtitle Font"
 msgstr "اختر خط العناوين"
 
 #. FIXME this should be setting an error?
-#: ../src/totem-properties-main.c:117 ../src/totem-properties-view.c:84
+#: ../src/totem-properties-main.c:117
+#: ../src/totem-properties-view.c:84
 #: ../src/totem-properties-view.c:92
 msgid "Audio/Video"
 msgstr "صوت/فيديو"
@@ -1249,25 +1241,26 @@ msgstr "صوت/فيديو"
 msgid "Video"
 msgstr "فيديو"
 
-#: ../src/totem-screenshot.c:149 ../src/totem-screenshot.c:160
+#: ../src/totem-screenshot.c:141
+#: ../src/totem-screenshot.c:152
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Screenshot%d.png"
 
-#: ../src/totem-screenshot.c:202
+#: ../src/totem-screenshot.c:194
 #, c-format
 msgid "File '%s' already exists."
 msgstr "الملف '%s'  موجود."
 
-#: ../src/totem-screenshot.c:204
+#: ../src/totem-screenshot.c:196
 msgid "The screenshot was not saved"
 msgstr "لم تُحْفَظ لقطة الشّاشة"
 
-#: ../src/totem-screenshot.c:215
+#: ../src/totem-screenshot.c:207
 msgid "There was an error saving the screenshot."
 msgstr "حدث خطأ عند حفظ لقطة الشّاشة"
 
-#: ../src/totem-screenshot.c:248
+#: ../src/totem-screenshot.c:240
 msgid "Screenshot.png"
 msgstr "Screenshot.png"
 
@@ -1283,7 +1276,9 @@ msgstr "نوع الظل"
 msgid "Style of bevel around the statusbar text"
 msgstr "أسلوب الحافة حول نص شريط الحالة"
 
-#: ../src/totem-statusbar.c:126 ../src/totem.c:298 ../src/totem.c:960
+#: ../src/totem-statusbar.c:126
+#: ../src/totem.c:294
+#: ../src/totem.c:956
 #: ../browser-plugin/totem-plugin-viewer.c:279
 msgid "Stopped"
 msgstr "متوقّف"
@@ -1298,13 +1293,15 @@ msgid "%s (Streaming)"
 msgstr "(انسياب) %s"
 
 #. Elapsed / Total Length
-#: ../src/totem-statusbar.c:194 ../src/totem-time-label.c:85
+#: ../src/totem-statusbar.c:194
+#: ../src/totem-time-label.c:85
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:197 ../src/totem-time-label.c:88
+#: ../src/totem-statusbar.c:197
+#: ../src/totem-time-label.c:88
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "يحث حتّى %s / %s"
@@ -1335,8 +1332,10 @@ msgstr "%s, %d %%"
 msgid "Current Locale"
 msgstr "اللغة الحالية"
 
-#: ../src/totem-subtitle-encoding.c:161 ../src/totem-subtitle-encoding.c:163
-#: ../src/totem-subtitle-encoding.c:165 ../src/totem-subtitle-encoding.c:167
+#: ../src/totem-subtitle-encoding.c:161
+#: ../src/totem-subtitle-encoding.c:163
+#: ../src/totem-subtitle-encoding.c:165
+#: ../src/totem-subtitle-encoding.c:167
 msgid "Arabic"
 msgstr "عربي"
 
@@ -1344,7 +1343,8 @@ msgstr "عربي"
 msgid "Armenian"
 msgstr "أرمني"
 
-#: ../src/totem-subtitle-encoding.c:173 ../src/totem-subtitle-encoding.c:175
+#: ../src/totem-subtitle-encoding.c:173
+#: ../src/totem-subtitle-encoding.c:175
 #: ../src/totem-subtitle-encoding.c:177
 msgid "Baltic"
 msgstr "بلطيقي"
@@ -1353,17 +1353,22 @@ msgstr "بلطيقي"
 msgid "Celtic"
 msgstr "كلتي"
 
-#: ../src/totem-subtitle-encoding.c:183 ../src/totem-subtitle-encoding.c:185
-#: ../src/totem-subtitle-encoding.c:187 ../src/totem-subtitle-encoding.c:189
+#: ../src/totem-subtitle-encoding.c:183
+#: ../src/totem-subtitle-encoding.c:185
+#: ../src/totem-subtitle-encoding.c:187
+#: ../src/totem-subtitle-encoding.c:189
 msgid "Central European"
 msgstr "وسط أوروبي"
 
-#: ../src/totem-subtitle-encoding.c:192 ../src/totem-subtitle-encoding.c:194
-#: ../src/totem-subtitle-encoding.c:196 ../src/totem-subtitle-encoding.c:198
+#: ../src/totem-subtitle-encoding.c:192
+#: ../src/totem-subtitle-encoding.c:194
+#: ../src/totem-subtitle-encoding.c:196
+#: ../src/totem-subtitle-encoding.c:198
 msgid "Chinese Simplified"
 msgstr "صيني مبسّط"
 
-#: ../src/totem-subtitle-encoding.c:201 ../src/totem-subtitle-encoding.c:203
+#: ../src/totem-subtitle-encoding.c:201
+#: ../src/totem-subtitle-encoding.c:203
 #: ../src/totem-subtitle-encoding.c:205
 msgid "Chinese Traditional"
 msgstr "صيني تقليدي"
@@ -1372,9 +1377,12 @@ msgstr "صيني تقليدي"
 msgid "Croatian"
 msgstr "كرواتي"
 
-#: ../src/totem-subtitle-encoding.c:211 ../src/totem-subtitle-encoding.c:213
-#: ../src/totem-subtitle-encoding.c:215 ../src/totem-subtitle-encoding.c:217
-#: ../src/totem-subtitle-encoding.c:219 ../src/totem-subtitle-encoding.c:221
+#: ../src/totem-subtitle-encoding.c:211
+#: ../src/totem-subtitle-encoding.c:213
+#: ../src/totem-subtitle-encoding.c:215
+#: ../src/totem-subtitle-encoding.c:217
+#: ../src/totem-subtitle-encoding.c:219
+#: ../src/totem-subtitle-encoding.c:221
 msgid "Cyrillic"
 msgstr "سيرياني"
 
@@ -1382,7 +1390,8 @@ msgstr "سيرياني"
 msgid "Cyrillic/Russian"
 msgstr "سرياني/روسي"
 
-#: ../src/totem-subtitle-encoding.c:227 ../src/totem-subtitle-encoding.c:229
+#: ../src/totem-subtitle-encoding.c:227
+#: ../src/totem-subtitle-encoding.c:229
 msgid "Cyrillic/Ukrainian"
 msgstr "سرياني/اكراني"
 
@@ -1390,7 +1399,8 @@ msgstr "سرياني/اكراني"
 msgid "Georgian"
 msgstr "جورجي"
 
-#: ../src/totem-subtitle-encoding.c:235 ../src/totem-subtitle-encoding.c:237
+#: ../src/totem-subtitle-encoding.c:235
+#: ../src/totem-subtitle-encoding.c:237
 #: ../src/totem-subtitle-encoding.c:239
 msgid "Greek"
 msgstr "يونانيّ"
@@ -1403,8 +1413,10 @@ msgstr "كوجراتي"
 msgid "Gurmukhi"
 msgstr "غورموخي"
 
-#: ../src/totem-subtitle-encoding.c:248 ../src/totem-subtitle-encoding.c:250
-#: ../src/totem-subtitle-encoding.c:252 ../src/totem-subtitle-encoding.c:254
+#: ../src/totem-subtitle-encoding.c:248
+#: ../src/totem-subtitle-encoding.c:250
+#: ../src/totem-subtitle-encoding.c:252
+#: ../src/totem-subtitle-encoding.c:254
 msgid "Hebrew"
 msgstr "عبري"
 
@@ -1420,13 +1432,16 @@ msgstr "هندي"
 msgid "Icelandic"
 msgstr "آيسلاندي"
 
-#: ../src/totem-subtitle-encoding.c:266 ../src/totem-subtitle-encoding.c:268
+#: ../src/totem-subtitle-encoding.c:266
+#: ../src/totem-subtitle-encoding.c:268
 #: ../src/totem-subtitle-encoding.c:270
 msgid "Japanese"
 msgstr "ياباني"
 
-#: ../src/totem-subtitle-encoding.c:273 ../src/totem-subtitle-encoding.c:275
-#: ../src/totem-subtitle-encoding.c:277 ../src/totem-subtitle-encoding.c:279
+#: ../src/totem-subtitle-encoding.c:273
+#: ../src/totem-subtitle-encoding.c:275
+#: ../src/totem-subtitle-encoding.c:277
+#: ../src/totem-subtitle-encoding.c:279
 msgid "Korean"
 msgstr "كوري"
 
@@ -1438,7 +1453,8 @@ msgstr "شمالي"
 msgid "Persian"
 msgstr "فارسي"
 
-#: ../src/totem-subtitle-encoding.c:288 ../src/totem-subtitle-encoding.c:290
+#: ../src/totem-subtitle-encoding.c:288
+#: ../src/totem-subtitle-encoding.c:290
 msgid "Romanian"
 msgstr "روماني"
 
@@ -1450,24 +1466,31 @@ msgstr "جنوب اوروبي"
 msgid "Thai"
 msgstr "تايلندي"
 
-#: ../src/totem-subtitle-encoding.c:299 ../src/totem-subtitle-encoding.c:301
-#: ../src/totem-subtitle-encoding.c:303 ../src/totem-subtitle-encoding.c:305
+#: ../src/totem-subtitle-encoding.c:299
+#: ../src/totem-subtitle-encoding.c:301
+#: ../src/totem-subtitle-encoding.c:303
+#: ../src/totem-subtitle-encoding.c:305
 msgid "Turkish"
 msgstr "تركي"
 
-#: ../src/totem-subtitle-encoding.c:308 ../src/totem-subtitle-encoding.c:310
-#: ../src/totem-subtitle-encoding.c:312 ../src/totem-subtitle-encoding.c:314
+#: ../src/totem-subtitle-encoding.c:308
+#: ../src/totem-subtitle-encoding.c:310
+#: ../src/totem-subtitle-encoding.c:312
+#: ../src/totem-subtitle-encoding.c:314
 #: ../src/totem-subtitle-encoding.c:316
 msgid "Unicode"
 msgstr "يونيكود"
 
-#: ../src/totem-subtitle-encoding.c:319 ../src/totem-subtitle-encoding.c:321
-#: ../src/totem-subtitle-encoding.c:323 ../src/totem-subtitle-encoding.c:325
+#: ../src/totem-subtitle-encoding.c:319
+#: ../src/totem-subtitle-encoding.c:321
+#: ../src/totem-subtitle-encoding.c:323
+#: ../src/totem-subtitle-encoding.c:325
 #: ../src/totem-subtitle-encoding.c:327
 msgid "Western"
 msgstr "غربي"
 
-#: ../src/totem-subtitle-encoding.c:330 ../src/totem-subtitle-encoding.c:332
+#: ../src/totem-subtitle-encoding.c:330
+#: ../src/totem-subtitle-encoding.c:332
 #: ../src/totem-subtitle-encoding.c:334
 msgid "Vietnamese"
 msgstr "فيتنامي"
@@ -1492,139 +1515,138 @@ msgstr "ملفات الفيديو"
 msgid "Select Movies or Playlists"
 msgstr "اختر أفلام أو قوائم تشغيل"
 
-#: ../src/totem.c:286 ../browser-plugin/totem-plugin-viewer.c:294
+#: ../src/totem.c:282
+#: ../browser-plugin/totem-plugin-viewer.c:294
 msgid "Playing"
 msgstr "عزف"
 
-#: ../src/totem.c:292 ../browser-plugin/totem-plugin-viewer.c:290
+#: ../src/totem.c:288
+#: ../browser-plugin/totem-plugin-viewer.c:290
 msgid "Paused"
 msgstr "متوقّف مؤقتا"
 
-#: ../src/totem.c:344
+#: ../src/totem.c:340
 msgid "Totem could not eject the optical media."
 msgstr "لم يتمكن توتم من طرد الوسيط الضوئي."
 
-#: ../src/totem.c:378 ../src/totem.c:407 ../src/totem.c:1074
-#: ../src/totem.c:1184
+#: ../src/totem.c:374
+#: ../src/totem.c:403
+#: ../src/totem.c:1070
+#: ../src/totem.c:1180
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "لم يتمكن توتم من عزف '%s'."
 
-#: ../src/totem.c:468
+#: ../src/totem.c:464
 #, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because you do not have the "
-"appropriate plugins to handle it."
-msgstr ""
-"لا يستطيع توتم عرض هذا النوع من الوسائط (%s) لأنك لا تملك الملحقات الملائمة "
-"لمعالجتها."
+msgid "Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."
+msgstr "لا يستطيع توتم عرض هذا النوع من الوسائط (%s) لأنك لا تملك الملحقات الملائمة لمعالجتها."
 
-#: ../src/totem.c:469
-msgid ""
-"Please install the necessary plugins and restart Totem to be able to play "
-"this media."
+#: ../src/totem.c:465
+msgid "Please install the necessary plugins and restart Totem to be able to play this media."
 msgstr "رجاء ثبّت الملحقات المطلوبة و أعِد تشغيل توتم حتى يمكنه عرض هذا الوسيط."
 
-#: ../src/totem.c:477
+#: ../src/totem.c:473
 #, c-format
-msgid ""
-"Totem could not play this media (%s) although a plugin is present to handle "
-"it."
+msgid "Totem could not play this media (%s) although a plugin is present to handle it."
 msgstr "لم يتمكن توتم من عرض هذا الوسيط (%s) بالرغم من وجود ملحق لمعالجته."
 
-#: ../src/totem.c:478
-msgid ""
-"You might want to check that a disc is present in the drive and that it is "
-"correctly configured."
+#: ../src/totem.c:474
+msgid "You might want to check that a disc is present in the drive and that it is correctly configured."
 msgstr "رجاء تثبّت من وجود قرص في الجهاز و أنه معد بسلامة."
 
-#: ../src/totem.c:506
+#: ../src/totem.c:502
 msgid "Totem was not able to play this disc."
 msgstr "لم يتمكن توتم من تشغيل هذا القرص."
 
-#: ../src/totem.c:507 ../src/totem.c:3255
+#: ../src/totem.c:503
+#: ../src/totem.c:3269
 #: ../browser-plugin/totem-plugin-viewer.c:1428
 msgid "No reason."
 msgstr "لا سبب."
 
-#: ../src/totem.c:765
+#: ../src/totem.c:761
 msgid "Open Location..."
 msgstr "افتح موقع..."
 
-#: ../src/totem.c:859 ../src/totem.c:867 ../src/vanity.c:292
+#: ../src/totem.c:855
+#: ../src/totem.c:863
+#: ../src/vanity.c:292
 #: ../src/vanity.c:300
 msgid "Totem could not get a screenshot of that film."
 msgstr "لم يتمكن توتم من أخذ لقطة شاشة لذلك الفيلم."
 
-#: ../src/totem.c:867 ../src/vanity.c:300
+#: ../src/totem.c:863
+#: ../src/vanity.c:300
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "من المفترض ان لا يحدث هذا. رجاء ارسل تقرير عِلّة."
 
-#: ../src/totem.c:967
+#: ../src/totem.c:963
 msgid "No File"
 msgstr "لا ملف"
 
-#: ../src/totem.c:1080
+#: ../src/totem.c:1076
 msgid "No error message"
 msgstr "لا رسالة خطأ"
 
-#: ../src/totem.c:1296
+#: ../src/totem.c:1292
 msgid "Totem could not display the help contents."
 msgstr "تعذّر عرض محتويات مساعدة توتم."
 
-#: ../src/totem.c:1559 ../src/totem.c:1561
+#: ../src/totem.c:1555
+#: ../src/totem.c:1557
 #: ../browser-plugin/totem-plugin-viewer.c:1284
 msgid "An error occurred"
 msgstr "حدث خطأ"
 
-#: ../src/totem.c:1889
+#: ../src/totem.c:1885
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "لم يتمكن توتم من البحث '%s'."
 
-#: ../src/totem.c:3056
+#: ../src/totem.c:3065
 msgid "Previous Chapter/Movie"
 msgstr "الفصل السابق/الفيلم"
 
-#: ../src/totem.c:3062
+#: ../src/totem.c:3071
 msgid "Play / Pause"
 msgstr "شغّل / قِف مؤقتاً"
 
-#: ../src/totem.c:3069
+#: ../src/totem.c:3078
 msgid "Next Chapter/Movie"
 msgstr "الفصل التالي/الفيلم"
 
-#: ../src/totem.c:3255
+#: ../src/totem.c:3269
 msgid "Totem could not startup."
 msgstr "لم يتمكن توتم من بدأ التشغيل."
 
-#: ../src/totem.c:3404
+#: ../src/totem.c:3418
 msgid "Could not initialize the thread-safe libraries."
 msgstr "لم يمكن تشغيل المكتبات النظامية السليمة."
 
-#: ../src/totem.c:3404
+#: ../src/totem.c:3418
 msgid "Verify your system installation. Totem will now exit."
 msgstr "تحقق من تثبيت نظامك. سيخرج توتم الآن."
 
 #. Handle command line arguments
-#: ../src/totem.c:3411
+#: ../src/totem.c:3425
 msgid "- Play movies and songs"
 msgstr "- شغل الأفلام والأغاني"
 
-#: ../src/totem.c:3419
+#: ../src/totem.c:3433
 msgid "Totem could not parse the command-line options"
 msgstr "عجز توتم عن تحليل خيارات سطر الأوامر"
 
-#: ../src/totem.c:3438
+#: ../src/totem.c:3452
 msgid "Totem could not initialize the configuration engine."
 msgstr "لم يتمكن توتم من تشغيل محرّك الإعداد."
 
-#: ../src/totem.c:3438
+#: ../src/totem.c:3452
 msgid "Make sure that GNOME is properly installed."
 msgstr "رجاء تثبّت من أن جنوم مثبت بشكل صحيح."
 
 #. Main window
-#: ../src/totem.c:3466
+#: ../src/totem.c:3480
 msgid "main window"
 msgstr "النّافذة الرّئيسيّة"
 
@@ -1695,7 +1717,8 @@ msgstr ""
 "محرك الإعداد:\n"
 "%s"
 
-#: ../src/vanity.c:702 ../src/vanity.c:716
+#: ../src/vanity.c:702
+#: ../src/vanity.c:716
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
@@ -1705,12 +1728,8 @@ msgstr ""
 "تأكد من أن فانيتي مثبت بسلامة."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2451
-msgid ""
-"The requested audio output was not found. Please select another audio output "
-"in the Multimedia Systems Selector."
-msgstr ""
-"خرْج الصوت المطلوب غير موجود. رجاء اختر خرْج صوت اخر في مختار نظام تعدد "
-"الوسائط ( Multimedia systems Selector )"
+msgid "The requested audio output was not found. Please select another audio output in the Multimedia Systems Selector."
+msgstr "خرْج الصوت المطلوب غير موجود. رجاء اختر خرْج صوت اخر في مختار نظام تعدد الوسائط ( Multimedia systems Selector )"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2456
 msgid "Location not found."
@@ -1721,22 +1740,12 @@ msgid "Could not open location; You may not have permission to open the file."
 msgstr "لا يمكن فتح الموقع. ربما لا تملك الصلاحيات الكافية."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2471
-msgid ""
-"The video output is in use by another application. Please close other video "
-"applications, or select another video output in the Multimedia Systems "
-"Selector."
-msgstr ""
-"خرْج الفيديو مستخدم من قبل برنامخ اخر. رجاء أغلق برامج الفيديو او  اختر خرْج "
-"فيديو اخر من نظام تعدد الوسائط (Multimedia Systems Selector)."
+msgid "The video output is in use by another application. Please close other video applications, or select another video output in the Multimedia Systems Selector."
+msgstr "خرْج الفيديو مستخدم من قبل برنامخ اخر. رجاء أغلق برامج الفيديو او  اختر خرْج فيديو اخر من نظام تعدد الوسائط (Multimedia Systems Selector)."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2477
-msgid ""
-"The audio output is in use by another application. Please select another "
-"audio output in the Multimedia Systems Selector. You may want to consider "
-"using a sound server."
-msgstr ""
-"خرْج الصوت مستخدم من قبل برنامخ اخر. رجاء اختر خرْج صوت اخر من نظام تعدد "
-"الوسائط ( Multimedia systems Selector ). ربما تحتاج ان تستخدم خادم صوت."
+msgid "The audio output is in use by another application. Please select another audio output in the Multimedia Systems Selector. You may want to consider using a sound server."
+msgstr "خرْج الصوت مستخدم من قبل برنامخ اخر. رجاء اختر خرْج صوت اخر من نظام تعدد الوسائط ( Multimedia systems Selector ). ربما تحتاج ان تستخدم خادم صوت."
 
 #. should be exactly one missing thing (source or converter)
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2495
@@ -1748,8 +1757,7 @@ msgstr "يحتاج تشغيل هذا الفيلم للملحق %s ولكنه غ�
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2502
 #, c-format
 msgid ""
-"The playback of this movie requires the following decoders which are not "
-"installed:\n"
+"The playback of this movie requires the following decoders which are not installed:\n"
 "\n"
 "%s"
 msgstr ""
@@ -1759,9 +1767,7 @@ msgstr ""
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2527
 msgid "Cannot play this file over the network. Try downloading it to disk first."
-msgstr ""
-"لا يمكن تشغيل هذا الملف عن طريق الشبكة. حاول ان تحمل هذا الملف على القرص "
-"اولا."
+msgstr "لا يمكن تشغيل هذا الملف عن طريق الشبكة. حاول ان تحمل هذا الملف على القرص اولا."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2599
 msgid "Media file could not be played."
@@ -1772,60 +1778,36 @@ msgstr "تعذر تشغيل ملف الوسائط."
 msgid "Failed to retrieve working directory"
 msgstr "فشل العثور على الدليل المستخدم."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4440
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4449
 msgid "Too old version of GStreamer installed."
 msgstr "نسخة GStreamer المثبتة قديمة جدا."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4447
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4456
 msgid "Media contains no supported video streams."
 msgstr "لا تملك الوسائط أي مسارات فيديو مدعومة."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4782
-msgid ""
-"Failed to create a GStreamer play object. Please check your GStreamer "
-"installation."
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4791
+msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
 msgstr "فشل إنشاء كائن عرض GStreamer. رجاء راجِع تثبيت GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4912
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5016
-msgid ""
-"Failed to open video output. It may not be available. Please select another "
-"video output in the Multimedia Systems Selector."
-msgstr ""
-"فشل في فتح خرْج الفيديو. ربما غير متوفر. رجاء اختر خرْج فيديو اخر في نظام تعدد "
-"الوسائط ( Multimedia systems Selector )"
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4921
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5025
+msgid "Failed to open video output. It may not be available. Please select another video output in the Multimedia Systems Selector."
+msgstr "فشل في فتح خرْج الفيديو. ربما غير متوفر. رجاء اختر خرْج فيديو اخر في نظام تعدد الوسائط ( Multimedia systems Selector )"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4924
-msgid ""
-"Could not find the video output. You may need to install additional "
-"GStreamer plugins, or select another video output in the Multimedia Systems "
-"Selector."
-msgstr ""
-"لايمكن العثور علي خرْج الفيديو. يمكن أن تحتاج الي تركيب GStreamer plugins "
-"اضافية، او اختر خرْج فيديو آخر في نظام تعدد الوسائط ( Multimedia systems "
-"Selector )"
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4933
+msgid "Could not find the video output. You may need to install additional GStreamer plugins, or select another video output in the Multimedia Systems Selector."
+msgstr "لايمكن العثور علي خرْج الفيديو. يمكن أن تحتاج الي تركيب GStreamer plugins اضافية، او اختر خرْج فيديو آخر في نظام تعدد الوسائط ( Multimedia systems Selector )"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4955
-msgid ""
-"Failed to open audio output. You may not have permission to open the sound "
-"device, or the sound server may not be running. Please select another audio "
-"output in the Multimedia Systems Selector."
-msgstr ""
-"فشل في فتح خرْج الصوت. ربما انت لاتملك الصلاحيات لفتح اداة خرْج الصوت او خادم "
-"الصوت لا يعمل. رجاء اختر خرْج صوت اخر في  نظام تعدد الوسائط ( Multimedia "
-"systems Selector )"
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4964
+msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
+msgstr "فشل في فتح خرْج الصوت. ربما انت لاتملك الصلاحيات لفتح اداة خرْج الصوت او خادم الصوت لا يعمل. رجاء اختر خرْج صوت اخر في  نظام تعدد الوسائط ( Multimedia systems Selector )"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4970
-msgid ""
-"Could not find the audio output. You may need to install additional "
-"GStreamer plugins, or select another audio output in the Multimedia Systems "
-"Selector."
-msgstr ""
-"لايمكن العثور علي خرْج الصوت. يمكن أن تحتاج الي تركيب GStreamer plugins "
-"اضافية او اختر خرْج صوت اخر في نظام تعدد الوسائط ( Multimedia systems "
-"Selector )"
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4979
+msgid "Could not find the audio output. You may need to install additional GStreamer plugins, or select another audio output in the Multimedia Systems Selector."
+msgstr "لايمكن العثور علي خرْج الصوت. يمكن أن تحتاج الي تركيب GStreamer plugins اضافية او اختر خرْج صوت اخر في نظام تعدد الوسائط ( Multimedia systems Selector )"
 
-#: ../src/backend/bacon-video-widget-xine.c:712
+#: ../src/backend/bacon-video-widget-xine.c:717
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1834,139 +1816,125 @@ msgstr ""
 "لم يمكن تحميل المشغّل الصوتي '%s'\n"
 "تأكد من الجهاز ليس شاغلا."
 
-#: ../src/backend/bacon-video-widget-xine.c:1190
-#: ../src/backend/bacon-video-widget-xine.c:1744
-msgid ""
-"No video output is available. Make sure that the program is correctly "
-"installed."
+#: ../src/backend/bacon-video-widget-xine.c:1195
+#: ../src/backend/bacon-video-widget-xine.c:1752
+msgid "No video output is available. Make sure that the program is correctly installed."
 msgstr "لا خرْج فيديو متوفر. الرجاء التأكد من أن البرنامج مثبّت بسلامة."
 
-#: ../src/backend/bacon-video-widget-xine.c:1312
+#: ../src/backend/bacon-video-widget-xine.c:1317
 msgid "The server you are trying to connect to is not known."
 msgstr "الخادم الذي تحاول الإتصال به مجهول."
 
-#: ../src/backend/bacon-video-widget-xine.c:1316
+#: ../src/backend/bacon-video-widget-xine.c:1321
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "يبدو أن إسم الجهاز الذي حددته (%s) غير صالح."
 
-#: ../src/backend/bacon-video-widget-xine.c:1320
+#: ../src/backend/bacon-video-widget-xine.c:1325
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "لا يمكن الوصول للخادم (%s) الّذي تحاول الوصول إليه. "
 
-#: ../src/backend/bacon-video-widget-xine.c:1324
+#: ../src/backend/bacon-video-widget-xine.c:1329
 msgid "The connection to this server was refused."
 msgstr "رُفِض الإتصال بهذا الخادم."
 
-#: ../src/backend/bacon-video-widget-xine.c:1328
+#: ../src/backend/bacon-video-widget-xine.c:1333
 msgid "The specified movie could not be found."
 msgstr "لا يمكن إيجاد هذا الفيلم."
 
-#: ../src/backend/bacon-video-widget-xine.c:1334
-#: ../src/backend/bacon-video-widget-xine.c:1352
-msgid ""
-"The source seems encrypted, and can't be read. Are you trying to play an "
-"encrypted DVD without libdvdcss?"
-msgstr ""
-"يبدو المصدر مشفّرا، و لن يمكن قراءته. هل تحاول عرض دي في دي مشفّر بدون "
-"libdvdcss؟"
+#: ../src/backend/bacon-video-widget-xine.c:1339
+#: ../src/backend/bacon-video-widget-xine.c:1357
+msgid "The source seems encrypted, and can't be read. Are you trying to play an encrypted DVD without libdvdcss?"
+msgstr "يبدو المصدر مشفّرا، و لن يمكن قراءته. هل تحاول عرض دي في دي مشفّر بدون libdvdcss؟"
 
-#: ../src/backend/bacon-video-widget-xine.c:1337
+#: ../src/backend/bacon-video-widget-xine.c:1342
 msgid "The movie could not be read."
 msgstr "لم يمكن قراءة الفيلم."
 
-#: ../src/backend/bacon-video-widget-xine.c:1346
+#: ../src/backend/bacon-video-widget-xine.c:1351
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "حدث خطأ عند تحميل مكتبة أو فاكِك ترميز (%s)."
 
-#: ../src/backend/bacon-video-widget-xine.c:1355
+#: ../src/backend/bacon-video-widget-xine.c:1360
 msgid "This file is encrypted and cannot be played back."
 msgstr "هذا الملف مشفر و لن يمكن عرضه."
 
-#: ../src/backend/bacon-video-widget-xine.c:1360
+#: ../src/backend/bacon-video-widget-xine.c:1365
 msgid "For security reasons, this movie can not be played back."
 msgstr "لن يعرض هذا الفلم لأسباب أمنية."
 
-#: ../src/backend/bacon-video-widget-xine.c:1365
+#: ../src/backend/bacon-video-widget-xine.c:1370
 msgid "The audio device is busy. Is another application using it?"
 msgstr "الجهاز الصوتي شاغل. ربما يستخدمه برنامج آخر؟"
 
-#: ../src/backend/bacon-video-widget-xine.c:1370
+#: ../src/backend/bacon-video-widget-xine.c:1375
 msgid "You are not allowed to open this file."
 msgstr "ليس مسموحا لك بفتح هذا الملف."
 
-#: ../src/backend/bacon-video-widget-xine.c:1372
+#: ../src/backend/bacon-video-widget-xine.c:1377
 msgid "The server refused access to this file or stream."
 msgstr "رفض الخادم الوصول لهذا الملف."
 
-#: ../src/backend/bacon-video-widget-xine.c:1381
+#: ../src/backend/bacon-video-widget-xine.c:1386
 msgid "The file you tried to play is an empty file."
 msgstr "الملف الذي تحاول تشغيله فارغ."
 
-#: ../src/backend/bacon-video-widget-xine.c:1545
+#: ../src/backend/bacon-video-widget-xine.c:1550
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "لا يوجد ملحق لمعالجة مكان هذا الفيلم."
 
-#: ../src/backend/bacon-video-widget-xine.c:1549
+#: ../src/backend/bacon-video-widget-xine.c:1554
 msgid "There is no plugin to handle this movie."
 msgstr "لا يوجد ملحق لمعالجة هذا الفيلم."
 
-#: ../src/backend/bacon-video-widget-xine.c:1553
+#: ../src/backend/bacon-video-widget-xine.c:1558
 msgid "This movie is broken and can not be played further."
 msgstr "هذا الفيلم معطوب و لا يمكن عرضه."
 
-#: ../src/backend/bacon-video-widget-xine.c:1557
+#: ../src/backend/bacon-video-widget-xine.c:1562
 msgid "This location is not a valid one."
 msgstr "هذا ليس مكان صحيح."
 
-#: ../src/backend/bacon-video-widget-xine.c:1561
+#: ../src/backend/bacon-video-widget-xine.c:1566
 msgid "This movie could not be opened."
 msgstr "لم يمكن فتح الفيلم."
 
-#: ../src/backend/bacon-video-widget-xine.c:1565
+#: ../src/backend/bacon-video-widget-xine.c:1570
 msgid "Generic Error."
 msgstr "خطأ عام."
 
-#: ../src/backend/bacon-video-widget-xine.c:2263
+#: ../src/backend/bacon-video-widget-xine.c:2278
 #, c-format
-msgid ""
-"Video codec '%s' is not handled. You might need to install additional "
-"plugins to be able to play some types of movies"
-msgstr ""
-"لم يمكن معالجة كودِك الفيديو '%s'. قد يتطلب منك تثبيت ملحقات إضافية لعرض بعض "
-"أنواع الأفلام"
+msgid "Video codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"
+msgstr "لم يمكن معالجة كودِك الفيديو '%s'. قد يتطلب منك تثبيت ملحقات إضافية لعرض بعض أنواع الأفلام"
 
-#: ../src/backend/bacon-video-widget-xine.c:2267
+#: ../src/backend/bacon-video-widget-xine.c:2282
 #, c-format
-msgid ""
-"Audio codec '%s' is not handled. You might need to install additional "
-"plugins to be able to play some types of movies"
-msgstr ""
-"لم يمكن معالجة كودِك الصوت '%s'. قد يتطلّب منك تثبيت ملحقات إضافيّة لعرض بعض "
-"أنواع الأفلام"
+msgid "Audio codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"
+msgstr "لم يمكن معالجة كودِك الصوت '%s'. قد يتطلّب منك تثبيت ملحقات إضافيّة لعرض بعض أنواع الأفلام"
 
-#: ../src/backend/bacon-video-widget-xine.c:2283
+#: ../src/backend/bacon-video-widget-xine.c:2298
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "هذا ملف صوتي فقط لكن لا يتوفر خرْج صوتي منه."
 
-#: ../src/backend/bacon-video-widget-xine.c:3756
-#: ../src/backend/bacon-video-widget-xine.c:3803
-#: ../src/backend/bacon-video-widget-xine.c:3825
+#: ../src/backend/bacon-video-widget-xine.c:3776
+#: ../src/backend/bacon-video-widget-xine.c:3823
+#: ../src/backend/bacon-video-widget-xine.c:3845
 #, c-format
 msgid "Language %d"
 msgstr "اللّغة %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3914
+#: ../src/backend/bacon-video-widget-xine.c:3934
 msgid "No video to capture."
 msgstr "لا يوجد فيديو للتّسجيل."
 
-#: ../src/backend/bacon-video-widget-xine.c:3922
+#: ../src/backend/bacon-video-widget-xine.c:3942
 msgid "Video codec is not handled."
 msgstr "لا يمكن معالجة كودِك الفيديو."
 
-#: ../src/backend/bacon-video-widget-xine.c:3933
+#: ../src/backend/bacon-video-widget-xine.c:3953
 msgid "Movie is not playing."
 msgstr "الفيلم غير مشتغل."
 
@@ -2139,4 +2107,7 @@ msgstr "لم يمكن تشغيل المكتبات النظامية السليم�
 #: ../browser-plugin/totem-plugin-viewer.c:1840
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "راجع تثبيت نظامك. سيخرج ملحق توتم الآن."
+
+#~ msgid "Save..."
+#~ msgstr "احفظ..."
 
