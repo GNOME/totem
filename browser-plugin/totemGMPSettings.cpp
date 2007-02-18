@@ -37,26 +37,13 @@
 
 #include "totemIGMPControls.h"
 
+#include "totemDebug.h"
 #include "totemClassInfo.h"
 
 #include "totemGMPPlugin.h"
 #include "totemPlugin.h"
 
 #include "totemGMPSettings.h"
-
-#define WARN_ACCESS()\
-static PRBool warned = PR_FALSE;\
-if (!warned) {\
-	D ("GMP scriptable: use of forbidden function '" CURRENT_INTERFACE "::%s'", G_GNUC_FUNCTION);\
-	warned = PR_TRUE;\
-}
-
-#define WARN_NOT_IMPLEMENTED()\
-static PRBool warned = PR_FALSE;\
-if (!warned) {\
-	D ("GMP scriptable: use of unimplemented function '" CURRENT_INTERFACE "::%s'", G_GNUC_FUNCTION);\
-	warned = PR_TRUE;\
-}
 
 /* 693329d8-866e-469a-805c-718c4291be70 */
 static const nsCID kClassID =
@@ -93,21 +80,21 @@ TOTEM_CLASSINFO_END
 
 /* totemIGMPSettings */
 
-#undef CURRENT_INTERFACE
-#define CURRENT_INTERFACE "totemIGMPSettings"
+#undef TOTEM_SCRIPTABLE_INTERFACE
+#define TOTEM_SCRIPTABLE_INTERFACE "totemIGMPSettings"
 
 /* attribute boolean autoStart; */
 NS_IMETHODIMP 
 totemGMPSettings::GetAutoStart(PRBool *aAutoStart)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
 NS_IMETHODIMP 
 totemGMPSettings::SetAutoStart(PRBool aAutoStart)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -116,7 +103,7 @@ totemGMPSettings::SetAutoStart(PRBool aAutoStart)
 NS_IMETHODIMP 
 totemGMPSettings::GetBaseURL(nsACString & aBaseURL)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -124,7 +111,7 @@ totemGMPSettings::GetBaseURL(nsACString & aBaseURL)
 NS_IMETHODIMP 
 totemGMPSettings::SetBaseURL(const nsACString & aBaseURL)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -133,7 +120,7 @@ totemGMPSettings::SetBaseURL(const nsACString & aBaseURL)
 NS_IMETHODIMP 
 totemGMPSettings::GetDefaultAudioLanguage(PRInt32 *aDefaultAudioLanguage)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -142,14 +129,14 @@ totemGMPSettings::GetDefaultAudioLanguage(PRInt32 *aDefaultAudioLanguage)
 NS_IMETHODIMP 
 totemGMPSettings::GetDefaultFrame(nsACString & aDefaultFrame)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
 NS_IMETHODIMP 
 totemGMPSettings::SetDefaultFrame(const nsACString & aDefaultFrame)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -158,14 +145,14 @@ totemGMPSettings::SetDefaultFrame(const nsACString & aDefaultFrame)
 NS_IMETHODIMP 
 totemGMPSettings::GetEnableErrorDialogs(PRBool *aEnableErrorDialogs)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
 NS_IMETHODIMP 
 totemGMPSettings::SetEnableErrorDialogs(PRBool aEnableErrorDialogs)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -174,14 +161,14 @@ totemGMPSettings::SetEnableErrorDialogs(PRBool aEnableErrorDialogs)
 NS_IMETHODIMP 
 totemGMPSettings::GetInvokeURLs(PRBool *aInvokeURLs)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
 NS_IMETHODIMP 
 totemGMPSettings::SetInvokeURLs(PRBool aInvokeURLs)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -190,7 +177,7 @@ totemGMPSettings::SetInvokeURLs(PRBool aInvokeURLs)
 NS_IMETHODIMP 
 totemGMPSettings::GetMediaAccessRights(nsACString & aMediaAccessRights)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -199,7 +186,7 @@ totemGMPSettings::GetMediaAccessRights(nsACString & aMediaAccessRights)
 NS_IMETHODIMP 
 totemGMPSettings::GetMute(PRBool *aMute)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -207,7 +194,7 @@ totemGMPSettings::GetMute(PRBool *aMute)
 NS_IMETHODIMP 
 totemGMPSettings::SetMute(PRBool aMute)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -216,14 +203,14 @@ totemGMPSettings::SetMute(PRBool aMute)
 NS_IMETHODIMP 
 totemGMPSettings::GetPlayCount(PRInt32 *aPlayCount)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
 NS_IMETHODIMP 
 totemGMPSettings::SetPlayCount(PRInt32 aPlayCount)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -232,14 +219,14 @@ totemGMPSettings::SetPlayCount(PRInt32 aPlayCount)
 NS_IMETHODIMP 
 totemGMPSettings::GetRate(double *aRate)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
 NS_IMETHODIMP 
 totemGMPSettings::SetRate(double aRate)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -248,14 +235,14 @@ totemGMPSettings::SetRate(double aRate)
 NS_IMETHODIMP 
 totemGMPSettings::GetBalance(PRInt32 *aBalance)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
 NS_IMETHODIMP 
 totemGMPSettings::SetBalance(PRInt32 aBalance)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -264,14 +251,14 @@ totemGMPSettings::SetBalance(PRInt32 aBalance)
 NS_IMETHODIMP 
 totemGMPSettings::GetVolume(PRInt32 *aVolume)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_OK;
 }
 NS_IMETHODIMP 
 totemGMPSettings::SetVolume(PRInt32 aVolume)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_OK;
 }
@@ -280,7 +267,7 @@ totemGMPSettings::SetVolume(PRInt32 aVolume)
 NS_IMETHODIMP 
 totemGMPSettings::IsAvailable(const nsACString & setting, PRBool *_retval)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   *_retval = PR_FALSE;
   return NS_OK;
@@ -290,7 +277,7 @@ totemGMPSettings::IsAvailable(const nsACString & setting, PRBool *_retval)
 NS_IMETHODIMP 
 totemGMPSettings::GetMode(const nsACString & mode, PRBool *_retval)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   *_retval = PR_FALSE;
   return NS_OK;
@@ -300,7 +287,7 @@ totemGMPSettings::GetMode(const nsACString & mode, PRBool *_retval)
 NS_IMETHODIMP 
 totemGMPSettings::SetMode(const nsACString & mode, PRBool enabled)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_OK;
 }
@@ -309,7 +296,7 @@ totemGMPSettings::SetMode(const nsACString & mode, PRBool enabled)
 NS_IMETHODIMP 
 totemGMPSettings::RequestMediaAccessRights (const nsACString & mode, PRBool *_retval)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   *_retval = PR_FALSE;
   return NS_OK;

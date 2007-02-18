@@ -111,6 +111,7 @@ if ENABLE_BASIC_PLUGIN
 plugin_LTLIBRARIES += libtotem-basic-plugin.la
 
 libtotem_basic_plugin_la_SOURCES =	\
+	totemDebug.h			\
 	totemPluginGlue.cpp		\
 	totemPluginGlue.h		\
 	totemPlugin.cpp			\
@@ -172,6 +173,7 @@ if ENABLE_GMP_PLUGIN
 plugin_LTLIBRARIES += libtotem-gmp-plugin.la
 
 libtotem_gmp_plugin_la_SOURCES =	\
+	totemDebug.h			\
 	totemGMPError.cpp		\
 	totemGMPError.h			\
 	totemGMPPlaylist.cpp		\
@@ -239,6 +241,7 @@ if ENABLE_COMPLEX_PLUGIN
 plugin_LTLIBRARIES += libtotem-complex-plugin.la
 
 libtotem_complex_plugin_la_SOURCES =	\
+	totemDebug.h			\
 	totemPluginGlue.cpp		\
 	totemPluginGlue.h		\
 	totemPlugin.cpp			\
@@ -300,6 +303,7 @@ if ENABLE_NARROWSPACE_PLUGIN
 plugin_LTLIBRARIES += libtotem-narrowspace-plugin.la
 
 libtotem_narrowspace_plugin_la_SOURCES = \
+	totemDebug.h			\
 	totemPluginGlue.cpp		\
 	totemPluginGlue.h		\
 	totemPlugin.cpp			\
@@ -361,6 +365,7 @@ if ENABLE_MULLY_PLUGIN
 plugin_LTLIBRARIES += libtotem-mully-plugin.la
 
 libtotem_mully_plugin_la_SOURCES =	\
+	totemDebug.h			\
 	totemPluginGlue.cpp		\
 	totemPluginGlue.h		\
 	totemPlugin.cpp			\

@@ -7,21 +7,21 @@ COMPLEX_IDLS = \
 	totemIComplexPlayer.idl
 
 GMP_IDLS = \
-	totemIGMPControls.idl		\
-	totemIGMPSettings.idl		\
-	totemIGMPMedia.idl		\
-	totemIGMPPlayer.idl		\
-	totemIGMPPlaylist.idl		\
-	totemIGMPNetwork.idl		\
-	totemIGMPClosedCaption.idl	\
 	totemIGMPCdromCollection.idl	\
+	totemIGMPClosedCaption.idl	\
+	totemIGMPControls.idl		\
+	totemIGMPDVD.idl		\
 	totemIGMPError.idl		\
 	totemIGMPErrorItem.idl		\
-	totemIGMPDVD.idl		\
 	totemIGMPMediaCollection.idl	\
+	totemIGMPMedia.idl		\
+	totemIGMPNetwork.idl		\
 	totemIGMPPlayerApplication.idl	\
-	totemIGMPPlaylistCollection.idl	\
+	totemIGMPPlayer.idl		\
 	totemIGMPPlaylistArray.idl	\
+	totemIGMPPlaylistCollection.idl	\
+	totemIGMPPlaylist.idl		\
+	totemIGMPSettings.idl		\
 	$(NULL)
 
 NARROWSPACE_IDLS = \

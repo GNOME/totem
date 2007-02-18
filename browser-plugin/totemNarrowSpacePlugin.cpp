@@ -36,29 +36,10 @@
 /* define GNOME_ENABLE_DEBUG for more debug spew */
 #include "debug.h"
 
+#include "totemDebug.h"
 #include "totemClassInfo.h"
+
 #include "totemNarrowSpacePlugin.h"
-
-
-#define WARN_UNIMPLEMENTED()\
-static PRBool warned = PR_FALSE;\
-if (!warned) {\
-	D ("NarrowSpace scriptable: use of unimplemented function '%s'", G_GNUC_FUNCTION);\
-	warned = PR_TRUE;\
-}
-
-#define SHOW_CALLS
-
-#ifdef SHOW_CALLS
-#define SHOW_CALL()\
-static PRBool called = PR_FALSE;\
-if (!called) {\
-	D ("NOTE! Use of function 'totemINarrowSpace::%s'", G_GNUC_FUNCTION);\
-	called = PR_TRUE;\
-}
-#else
-#define SHOW_CALL()
-#endif
 
 /* 2e390ee1-f0e3-423c-9764-f5ab50a40c06 */
 static const nsCID kClassID = 
@@ -132,11 +113,13 @@ TOTEM_CLASSINFO_END
 
 /* totemINarrowSpacePlayer */
 
+#define TOTEM_SCRIPTABLE_INTERFACE "totemINarrowSpacePlayer"
+
 /* boolean GetAutoPlay (); */
 NS_IMETHODIMP
 totemScriptablePlugin::GetAutoPlay(PRBool *_retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   *_retval = mAutoPlay;
   return NS_OK;
@@ -146,7 +129,7 @@ totemScriptablePlugin::GetAutoPlay(PRBool *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetAutoPlay(PRBool enabled)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   mAutoPlay = enabled != PR_FALSE;
   return NS_OK;
@@ -156,7 +139,7 @@ totemScriptablePlugin::SetAutoPlay(PRBool enabled)
 NS_IMETHODIMP
 totemScriptablePlugin::GetBgColor(nsACString & _retval)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   _retval.Assign (mBackgroundColour);
   return NS_OK;
@@ -166,7 +149,7 @@ totemScriptablePlugin::GetBgColor(nsACString & _retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetBgColor(const nsACString & colour)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   mBackgroundColour = colour;
   return NS_OK;
@@ -179,7 +162,7 @@ totemScriptablePlugin::GetComponentVersion (const nsACString & type,
 					    const nsACString & vendor,
 					    nsACString & _retval)
 {
-  WARN_UNIMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
   D ("GetComponentVersion [%s, %s, %s]",
      nsCString(type).get(),
      nsCString(subtype).get(),
@@ -193,7 +176,7 @@ totemScriptablePlugin::GetComponentVersion (const nsACString & type,
 NS_IMETHODIMP
 totemScriptablePlugin::GetControllerVisible(PRBool *_retval)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
   *_retval = mControllerVisible;
   return NS_OK;
 }
@@ -202,7 +185,7 @@ totemScriptablePlugin::GetControllerVisible(PRBool *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetControllerVisible(PRBool enabled)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   mControllerVisible = enabled != PR_FALSE;
   return NS_OK;
@@ -212,7 +195,7 @@ totemScriptablePlugin::SetControllerVisible(PRBool enabled)
 NS_IMETHODIMP
 totemScriptablePlugin::GetDuration(PRUint32 *_retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   *_retval = 0;
   return NS_OK;
@@ -222,7 +205,7 @@ totemScriptablePlugin::GetDuration(PRUint32 *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::GetEndTime(PRUint32 *_retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   *_retval = 0;
   return NS_OK;
@@ -232,7 +215,7 @@ totemScriptablePlugin::GetEndTime(PRUint32 *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetEndTime(PRUint32 time)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -241,7 +224,7 @@ totemScriptablePlugin::SetEndTime(PRUint32 time)
 NS_IMETHODIMP
 totemScriptablePlugin::GetFieldOfView (float *_retval)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
   return NS_ERROR_NOT_AVAILABLE;
 }
 
@@ -249,7 +232,7 @@ totemScriptablePlugin::GetFieldOfView (float *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetFieldOfView(float angle)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
   return NS_ERROR_NOT_AVAILABLE;
 }
 
@@ -257,7 +240,7 @@ totemScriptablePlugin::SetFieldOfView(float angle)
 NS_IMETHODIMP
 totemScriptablePlugin::GoPreviousNode()
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
   return NS_ERROR_NOT_AVAILABLE;
 }
 
@@ -265,7 +248,7 @@ totemScriptablePlugin::GoPreviousNode()
 NS_IMETHODIMP
 totemScriptablePlugin::GetHotspotTarget(PRUint32 id, nsACString & _retval)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
   return NS_ERROR_NOT_AVAILABLE;
 }
 
@@ -273,7 +256,7 @@ totemScriptablePlugin::GetHotspotTarget(PRUint32 id, nsACString & _retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetHotspotTarget(PRUint32 id, const nsACString & target)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
   return NS_ERROR_NOT_AVAILABLE;
 }
 
@@ -281,7 +264,7 @@ totemScriptablePlugin::SetHotspotTarget(PRUint32 id, const nsACString & target)
 NS_IMETHODIMP
 totemScriptablePlugin::GetHotspotUrl(PRUint32 id, nsACString & _retval)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
   return NS_ERROR_NOT_AVAILABLE;
 }
 
@@ -289,7 +272,7 @@ totemScriptablePlugin::GetHotspotUrl(PRUint32 id, nsACString & _retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetHotspotUrl(PRUint32 id, const nsACString & url)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
   return NS_ERROR_NOT_AVAILABLE;
 }
 
@@ -297,7 +280,7 @@ totemScriptablePlugin::SetHotspotUrl(PRUint32 id, const nsACString & url)
 NS_IMETHODIMP
 totemScriptablePlugin::GetHREF(nsACString & _retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -306,7 +289,7 @@ totemScriptablePlugin::GetHREF(nsACString & _retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetHREF(const nsACString & href)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -315,7 +298,7 @@ totemScriptablePlugin::SetHREF(const nsACString & href)
 NS_IMETHODIMP
 totemScriptablePlugin::GetIsLooping(PRBool *_retval)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   *_retval = mIsLooping;
   return NS_OK;
@@ -325,7 +308,7 @@ totemScriptablePlugin::GetIsLooping(PRBool *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetIsLooping(PRBool enabled)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   mIsLooping = enabled != PR_FALSE;
   return NS_OK;
@@ -335,7 +318,7 @@ totemScriptablePlugin::SetIsLooping(PRBool enabled)
 NS_IMETHODIMP
 totemScriptablePlugin::GetIsQuickTimeRegistered(PRBool *_retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   *_retval = PR_FALSE;
   return NS_OK;
@@ -345,7 +328,7 @@ totemScriptablePlugin::GetIsQuickTimeRegistered(PRBool *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::GetIsVRMovie(PRBool *_retval)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   *_retval = PR_FALSE;
   return NS_OK;
@@ -355,7 +338,7 @@ totemScriptablePlugin::GetIsVRMovie(PRBool *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::GetKioskMode(PRBool *_retval)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   *_retval = mKioskMode;
   return NS_OK;
@@ -365,7 +348,7 @@ totemScriptablePlugin::GetKioskMode(PRBool *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetKioskMode(PRBool enabled)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   mKioskMode = enabled != PR_FALSE;
   return NS_OK;
@@ -375,7 +358,7 @@ totemScriptablePlugin::SetKioskMode(PRBool enabled)
 NS_IMETHODIMP
 totemScriptablePlugin::GetLanguage(nsACString & _retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   _retval.Assign ("English");
   return NS_OK;
@@ -385,7 +368,7 @@ totemScriptablePlugin::GetLanguage(nsACString & _retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetLanguage(const nsACString & language)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -394,7 +377,7 @@ totemScriptablePlugin::SetLanguage(const nsACString & language)
 NS_IMETHODIMP
 totemScriptablePlugin::GetLoopIsPalindrome(PRBool *_retval)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   *_retval = mLoopIsPalindrome;
   return NS_OK;
@@ -404,7 +387,7 @@ totemScriptablePlugin::GetLoopIsPalindrome(PRBool *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetLoopIsPalindrome(PRBool enabled)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   mLoopIsPalindrome = enabled != PR_FALSE;
   return NS_OK;
@@ -414,7 +397,7 @@ totemScriptablePlugin::SetLoopIsPalindrome(PRBool enabled)
 NS_IMETHODIMP
 totemScriptablePlugin::GetMatrix(nsACString & _retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   _retval.Assign (mMatrix);
   return NS_OK;
@@ -424,7 +407,7 @@ totemScriptablePlugin::GetMatrix(nsACString & _retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetMatrix(const nsACString & matrix)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   mMatrix = matrix;
   return NS_OK;
@@ -434,7 +417,7 @@ totemScriptablePlugin::SetMatrix(const nsACString & matrix)
 NS_IMETHODIMP
 totemScriptablePlugin::GetMaxBytesLoaded(PRUint32 *_retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -443,7 +426,7 @@ totemScriptablePlugin::GetMaxBytesLoaded(PRUint32 *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::GetMaxTimeLoaded(PRUint32 *_retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -452,7 +435,7 @@ totemScriptablePlugin::GetMaxTimeLoaded(PRUint32 *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::GetMIMEType(nsACString & _retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   _retval.Assign ("video/quicktime");
   return NS_OK;
@@ -462,7 +445,7 @@ totemScriptablePlugin::GetMIMEType(nsACString & _retval)
 NS_IMETHODIMP
 totemScriptablePlugin::GetMovieID(PRUint32 *_retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -471,7 +454,7 @@ totemScriptablePlugin::GetMovieID(PRUint32 *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetMovieID(PRUint32 id)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -480,7 +463,7 @@ totemScriptablePlugin::SetMovieID(PRUint32 id)
 NS_IMETHODIMP
 totemScriptablePlugin::GetMovieName(nsACString & _retval)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   _retval.Assign (mMovieName);
   return NS_OK;
@@ -490,7 +473,7 @@ totemScriptablePlugin::GetMovieName(nsACString & _retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetMovieName(const nsACString & name)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   mMovieName = name;
   return NS_OK;
@@ -500,7 +483,7 @@ totemScriptablePlugin::SetMovieName(const nsACString & name)
 NS_IMETHODIMP
 totemScriptablePlugin::GetMovieSize(PRUint32 *_retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   *_retval = 0;
   return NS_OK;
@@ -510,7 +493,7 @@ totemScriptablePlugin::GetMovieSize(PRUint32 *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::GetMute(PRBool *_retval)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   *_retval = mMute;
   return NS_OK;
@@ -520,7 +503,7 @@ totemScriptablePlugin::GetMute(PRBool *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetMute(PRBool enabled)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   mMute = enabled != PR_FALSE;
   return NS_OK;
@@ -530,7 +513,7 @@ totemScriptablePlugin::SetMute(PRBool enabled)
 NS_IMETHODIMP
 totemScriptablePlugin::GetNodeCount(PRUint32 *_retval)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   return NS_ERROR_NOT_AVAILABLE;
 }
@@ -539,7 +522,7 @@ totemScriptablePlugin::GetNodeCount(PRUint32 *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::GetNodeID(PRUint32 *_retval)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   return NS_ERROR_NOT_AVAILABLE;
 }
@@ -548,7 +531,7 @@ totemScriptablePlugin::GetNodeID(PRUint32 *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetNodeID(PRUint32 id)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   return NS_ERROR_NOT_AVAILABLE;
 }
@@ -557,7 +540,7 @@ totemScriptablePlugin::SetNodeID(PRUint32 id)
 NS_IMETHODIMP
 totemScriptablePlugin::GetPanAngle(float *_retval)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   return NS_ERROR_NOT_AVAILABLE;
 }
@@ -566,7 +549,7 @@ totemScriptablePlugin::GetPanAngle(float *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetPanAngle(float angle)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   return NS_ERROR_NOT_AVAILABLE;
 }
@@ -575,7 +558,7 @@ totemScriptablePlugin::SetPanAngle(float angle)
 NS_IMETHODIMP
 totemScriptablePlugin::Play ()
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   NS_ENSURE_STATE (IsValid ());
 
@@ -586,7 +569,7 @@ totemScriptablePlugin::Play ()
 NS_IMETHODIMP
 totemScriptablePlugin::GetPlayEveryFrame(PRBool *_retval)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   *_retval = mPlayEveryFrame;
   return NS_OK;
@@ -596,7 +579,7 @@ totemScriptablePlugin::GetPlayEveryFrame(PRBool *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetPlayEveryFrame(PRBool enabled)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   mPlayEveryFrame = enabled != PR_FALSE;
   return NS_OK;
@@ -606,7 +589,7 @@ totemScriptablePlugin::SetPlayEveryFrame(PRBool enabled)
 NS_IMETHODIMP
 totemScriptablePlugin::GetPluginStatus(nsACString & _retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   static const char *kState[] = {
     "Complete",
@@ -629,7 +612,7 @@ totemScriptablePlugin::GetPluginStatus(nsACString & _retval)
 NS_IMETHODIMP
 totemScriptablePlugin::GetPluginVersion(nsACString & _retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   _retval.Assign ("7.0"); /* FIXME */
   return NS_OK;
@@ -640,7 +623,7 @@ NS_IMETHODIMP
 totemScriptablePlugin::GetQTNEXTUrl (PRUint32 index,
 				     nsACString & _retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -650,7 +633,7 @@ NS_IMETHODIMP
 totemScriptablePlugin::SetQTNEXTUrl (PRUint32 index,
 				     const nsACString & url)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -659,7 +642,7 @@ totemScriptablePlugin::SetQTNEXTUrl (PRUint32 index,
 NS_IMETHODIMP
 totemScriptablePlugin::GetQuickTimeConnectionSpeed(PRUint32 *_retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   *_retval = 300000; /* FIXME */
   return NS_OK;
@@ -669,7 +652,7 @@ totemScriptablePlugin::GetQuickTimeConnectionSpeed(PRUint32 *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::GetQuickTimeLanguage(nsACString & _retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   _retval.Assign ("English"); /* FIXME */
   return NS_OK;
@@ -679,7 +662,7 @@ totemScriptablePlugin::GetQuickTimeLanguage(nsACString & _retval)
 NS_IMETHODIMP
 totemScriptablePlugin::GetQuickTimeVersion(nsACString & _retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   _retval.Assign ("7.0"); /* FIXME */
   return NS_OK;
@@ -689,7 +672,7 @@ totemScriptablePlugin::GetQuickTimeVersion(nsACString & _retval)
 NS_IMETHODIMP
 totemScriptablePlugin::GetRate(float *_retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   *_retval = mRate;
   return NS_OK;
@@ -699,7 +682,7 @@ totemScriptablePlugin::GetRate(float *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetRate(float rate)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   mRate = rate;
   return NS_OK;
@@ -709,7 +692,7 @@ totemScriptablePlugin::SetRate(float rate)
 NS_IMETHODIMP
 totemScriptablePlugin::SetRectangle(const nsACString & rectangle)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   mRectangle = rectangle;
   return NS_OK;
@@ -719,7 +702,7 @@ totemScriptablePlugin::SetRectangle(const nsACString & rectangle)
 NS_IMETHODIMP
 totemScriptablePlugin::GetRectangle(nsACString & _retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   _retval.Assign (mRectangle);
   return NS_OK;
@@ -729,7 +712,7 @@ totemScriptablePlugin::GetRectangle(nsACString & _retval)
 NS_IMETHODIMP
 totemScriptablePlugin::GetResetPropertiesOnReload(PRBool *_retval)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   *_retval = mResetPropertiesOnReload;
   return NS_OK;
@@ -739,7 +722,7 @@ totemScriptablePlugin::GetResetPropertiesOnReload(PRBool *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetResetPropertiesOnReload(PRBool enabled)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   mResetPropertiesOnReload = enabled != PR_FALSE;
   return NS_OK;
@@ -749,7 +732,7 @@ totemScriptablePlugin::SetResetPropertiesOnReload(PRBool enabled)
 NS_IMETHODIMP
 totemScriptablePlugin::Rewind ()
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   NS_ENSURE_STATE (IsValid ());
 
@@ -760,7 +743,7 @@ totemScriptablePlugin::Rewind ()
 NS_IMETHODIMP
 totemScriptablePlugin::ShowDefaultView()
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   return NS_OK;
 }
@@ -771,7 +754,7 @@ totemScriptablePlugin::GetSpriteTrackVariable (PRUint32 track,
 					       PRUint32 index,
 					       nsACString & _retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -782,7 +765,7 @@ totemScriptablePlugin::SetSpriteTrackVariable (PRUint32 track,
 					       PRUint32 index,
 					       const nsACString & value)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -791,7 +774,7 @@ totemScriptablePlugin::SetSpriteTrackVariable (PRUint32 track,
 NS_IMETHODIMP
 totemScriptablePlugin::SetStartTime(PRUint32 time)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -800,7 +783,7 @@ totemScriptablePlugin::SetStartTime(PRUint32 time)
 NS_IMETHODIMP
 totemScriptablePlugin::GetStartTime (PRUint32 *_retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   *_retval = 0; /* FIXME */
   return NS_OK;
@@ -810,7 +793,7 @@ totemScriptablePlugin::GetStartTime (PRUint32 *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::Step(PRInt32 steps)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -819,7 +802,7 @@ totemScriptablePlugin::Step(PRInt32 steps)
 NS_IMETHODIMP
 totemScriptablePlugin::Stop ()
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   NS_ENSURE_STATE (IsValid ());
 
@@ -830,7 +813,7 @@ totemScriptablePlugin::Stop ()
 NS_IMETHODIMP
 totemScriptablePlugin::GetTarget(nsACString & _retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -839,7 +822,7 @@ totemScriptablePlugin::GetTarget(nsACString & _retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetTarget(const nsACString & target)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -848,7 +831,7 @@ totemScriptablePlugin::SetTarget(const nsACString & target)
 NS_IMETHODIMP
 totemScriptablePlugin::GetTiltAngle(float *_retval)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   return NS_ERROR_NOT_AVAILABLE;
 }
@@ -857,7 +840,7 @@ totemScriptablePlugin::GetTiltAngle(float *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetTiltAngle(float angle)
 {
-  SHOW_CALL ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   return NS_ERROR_NOT_AVAILABLE;
 }
@@ -866,7 +849,7 @@ totemScriptablePlugin::SetTiltAngle(float angle)
 NS_IMETHODIMP
 totemScriptablePlugin::GetTime(PRUint32 *_retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   *_retval = 0;
   return NS_OK;
@@ -876,7 +859,7 @@ totemScriptablePlugin::GetTime(PRUint32 *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetTime(PRUint32 time)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -885,7 +868,7 @@ totemScriptablePlugin::SetTime(PRUint32 time)
 NS_IMETHODIMP
 totemScriptablePlugin::GetTimeScale(PRUint32 *_retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   *_retval = 0;
   return NS_OK;
@@ -895,7 +878,7 @@ totemScriptablePlugin::GetTimeScale(PRUint32 *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::GetTrackCount(PRUint32 *_retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   *_retval = 1;
   return NS_OK;
@@ -906,7 +889,7 @@ NS_IMETHODIMP
 totemScriptablePlugin::GetTrackEnabled (PRUint32 index,
 					PRBool *_retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   *_retval = PR_TRUE;
   return NS_OK;
@@ -917,7 +900,7 @@ NS_IMETHODIMP
 totemScriptablePlugin::SetTrackEnabled (PRUint32 index,
 					PRBool enabled)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -927,7 +910,7 @@ NS_IMETHODIMP
 totemScriptablePlugin::GetTrackName (PRUint32 index,
 				     nsACString & _retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -937,7 +920,7 @@ NS_IMETHODIMP
 totemScriptablePlugin::GetTrackType (PRUint32 index,
 				     nsACString & _retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -946,7 +929,7 @@ totemScriptablePlugin::GetTrackType (PRUint32 index,
 NS_IMETHODIMP
 totemScriptablePlugin::GetURL (nsACString & _retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -955,7 +938,7 @@ totemScriptablePlugin::GetURL (nsACString & _retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetURL (const nsACString & url)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -965,7 +948,7 @@ NS_IMETHODIMP
 totemScriptablePlugin::GetUserData  (const nsACString & identifier,
 				     nsACString & _retval)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   return NS_OK;
 }
@@ -982,7 +965,7 @@ totemScriptablePlugin::GetVolume(PRUint32 *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetVolume(PRUint32 volume)
 {
-  WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
   mVolume = volume;
   return NS_OK;

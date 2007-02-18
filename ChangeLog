@@ -1,3 +1,18 @@
+2007-02-18  Christian Persch  <chpe@svn.gnome.org>
+
+	* browser-plugin/Makefile.am:
+	* browser-plugin/idl/Makefile.am:
+	* browser-plugin/totemComplexPlugin.cpp:
+	* browser-plugin/totemDebug.h:
+	* browser-plugin/totemGMPError.cpp:
+	* browser-plugin/totemGMPPlaylist.cpp:
+	* browser-plugin/totemGMPPlugin.cpp:
+	* browser-plugin/totemGMPSettings.cpp:
+	* browser-plugin/totemNarrowSpacePlugin.cpp: Revert the patch from bug
+	#405850, since G_GNUC_FUNCTION is absolutely useless. Factor the debug
+	macros out into totemDebug.h so there's only one place to port to
+	__FUNCTION__-less compilers.
+
 2007-02-14  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-volume.h: revert a change that cause build to fail

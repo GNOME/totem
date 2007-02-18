@@ -35,26 +35,13 @@
 /* define GNOME_ENABLE_DEBUG for more debug spew */
 #include "debug.h"
 
+#include "totemDebug.h"
 #include "totemClassInfo.h"
 
 #include "totemGMPPlugin.h"
 #include "totemPlugin.h"
 
 #include "totemGMPError.h"
-
-#define WARN_ACCESS()\
-static PRBool warned = PR_FALSE;\
-if (!warned) {\
-	D ("GMP scriptable: use of forbidden function '" CURRENT_INTERFACE "::%s'", G_GNUC_FUNCTION);\
-	warned = PR_TRUE;\
-}
-
-#define WARN_NOT_IMPLEMENTED()\
-static PRBool warned = PR_FALSE;\
-if (!warned) {\
-	D ("GMP scriptable: use of unimplemented function '" CURRENT_INTERFACE "::%s'", G_GNUC_FUNCTION);\
-	warned = PR_TRUE;\
-}
 
 /* 2908e683-6162-45ed-8167-f555579d2411 */
 static const nsCID kClassID =
@@ -94,19 +81,19 @@ TOTEM_CLASSINFO_BEGIN (totemGMPError,
 		       kClassID,
 		       kClassDescription)
   TOTEM_CLASSINFO_ENTRY (0, totemIGMPError)
-  TOTEM_CLASSINFO_ENTRY (0, totemIGMPErrorItem)
+  TOTEM_CLASSINFO_ENTRY (1, totemIGMPErrorItem)
 TOTEM_CLASSINFO_END
 
 /* totemIGMPError */
 
-#undef CURRENT_INTERFACE
-#define CURRENT_INTERFACE "totemIGMPError"
+#undef TOTEM_SCRIPTABLE_INTERFACE
+#define TOTEM_SCRIPTABLE_INTERFACE "totemIGMPError"
 
 /* void clearErrorQueue (); */
 NS_IMETHODIMP 
 totemGMPError::ClearErrorQueue()
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   mCount = 0;
   return NS_OK;
@@ -116,7 +103,7 @@ totemGMPError::ClearErrorQueue()
 NS_IMETHODIMP 
 totemGMPError::GetErrorCount(PRInt32 *aErrorCount)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   *aErrorCount = mCount;
   return NS_OK;
@@ -126,7 +113,7 @@ totemGMPError::GetErrorCount(PRInt32 *aErrorCount)
 NS_IMETHODIMP 
 totemGMPError::Item(PRInt32 index, totemIGMPErrorItem **_retval)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   if (index < 0 || index >= mCount)
     return NS_ERROR_ILLEGAL_VALUE;
@@ -138,21 +125,21 @@ totemGMPError::Item(PRInt32 index, totemIGMPErrorItem **_retval)
 NS_IMETHODIMP 
 totemGMPError::WebHelp()
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_OK;
 }
 
 /* totemIGMPErrorItem */
 
-#undef CURRENT_INTERFACE
-#define CURRENT_INTERFACE "totemIGMPErrorItem"
+#undef TOTEM_SCRIPTABLE_INTERFACE
+#define TOTEM_SCRIPTABLE_INTERFACE "totemIGMPErrorItem"
 
 /* readonly attribute long condition; */
 NS_IMETHODIMP 
 totemGMPError::GetCondition(PRInt32 *aCondition)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   *aCondition = 0;
   return NS_OK;
@@ -162,7 +149,7 @@ totemGMPError::GetCondition(PRInt32 *aCondition)
 NS_IMETHODIMP 
 totemGMPError::GetCustomURL(nsACString & aCustomURL)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   aCustomURL.Assign ("http://www.gnome.org/projects/totem");
   return NS_OK;
@@ -172,7 +159,7 @@ totemGMPError::GetCustomURL(nsACString & aCustomURL)
 NS_IMETHODIMP 
 totemGMPError::GetErrorCode(PRInt32 *aErrorCode)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   *aErrorCode = 0;
   return NS_OK;
@@ -182,7 +169,7 @@ totemGMPError::GetErrorCode(PRInt32 *aErrorCode)
 NS_IMETHODIMP 
 totemGMPError::GetErrorContext(nsACString & aErrorContext)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   aErrorContext.Assign ("");
   return NS_OK;
@@ -192,7 +179,7 @@ totemGMPError::GetErrorContext(nsACString & aErrorContext)
 NS_IMETHODIMP
 totemGMPError::GetErrorDescription(nsACString & aErrorDescription)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   aErrorDescription.Assign ("");
   return NS_OK;

@@ -40,26 +40,13 @@
 #include "totemIGMPPlayer.h"
 #include "totemIGMPControls.h"
 
+#include "totemDebug.h"
 #include "totemClassInfo.h"
 
 #include "totemGMPPlaylist.h"
 #include "totemGMPSettings.h"
 
 #include "totemGMPPlugin.h"
-
-#define WARN_ACCESS()\
-static PRBool warned = PR_FALSE;\
-if (!warned) {\
-	D ("GMP scriptable: use of forbidden function '" CURRENT_INTERFACE "::%s'", G_GNUC_FUNCTION);\
-	warned = PR_TRUE;\
-}
-
-#define WARN_NOT_IMPLEMENTED()\
-static PRBool warned = PR_FALSE;\
-if (!warned) {\
-	D ("GMP scriptable: use of unimplemented function '" CURRENT_INTERFACE "::%s'", G_GNUC_FUNCTION);\
-	warned = PR_TRUE;\
-}
 
 /* 89cf81a7-1156-456f-b060-c2187df9a27c */
 static const nsCID kClassID = 
@@ -144,14 +131,14 @@ TOTEM_CLASSINFO_END
 
 /* totemIGMPPlayer */
 
-#undef CURRENT_INTERFACE
-#define CURRENT_INTERFACE "totemIGMPPlayer"
+#undef TOTEM_SCRIPTABLE_INTERFACE
+#define TOTEM_SCRIPTABLE_INTERFACE "totemIGMPPlayer"
 
 /* readonly attribute totemIGMPCdromCollection cdromCollection; */
 NS_IMETHODIMP 
 totemScriptablePlugin::GetCdromCollection(totemIGMPCdromCollection * *aCdromCollection)
 {
-  WARN_ACCESS ();
+  TOTEM_SCRIPTABLE_WARN_ACCESS ();
 
   return NS_ERROR_DOM_SECURITY_ERR;
 }
@@ -160,7 +147,7 @@ totemScriptablePlugin::GetCdromCollection(totemIGMPCdromCollection * *aCdromColl
 NS_IMETHODIMP 
 totemScriptablePlugin::GetClosedCaption(totemIGMPClosedCaption * *aClosedCaption)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -176,7 +163,7 @@ totemScriptablePlugin::GetControls(totemIGMPControls * *aControls)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetCurrentMedia(totemIGMPMedia * *aCurrentMedia)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -184,7 +171,7 @@ totemScriptablePlugin::GetCurrentMedia(totemIGMPMedia * *aCurrentMedia)
 NS_IMETHODIMP 
 totemScriptablePlugin::SetCurrentMedia(totemIGMPMedia * aCurrentMedia)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -193,7 +180,7 @@ totemScriptablePlugin::SetCurrentMedia(totemIGMPMedia * aCurrentMedia)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetCurrentPlaylist(totemIGMPPlaylist * *aCurrentPlaylist)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -201,7 +188,7 @@ totemScriptablePlugin::GetCurrentPlaylist(totemIGMPPlaylist * *aCurrentPlaylist)
 NS_IMETHODIMP 
 totemScriptablePlugin::SetCurrentPlaylist(totemIGMPPlaylist * aCurrentPlaylist)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -210,7 +197,7 @@ totemScriptablePlugin::SetCurrentPlaylist(totemIGMPPlaylist * aCurrentPlaylist)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetDvd(totemIGMPDVD * *aDvd)
 {
-  WARN_ACCESS ();
+  TOTEM_SCRIPTABLE_WARN_ACCESS ();
 
   return NS_ERROR_DOM_SECURITY_ERR;
 }
@@ -219,7 +206,7 @@ totemScriptablePlugin::GetDvd(totemIGMPDVD * *aDvd)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetEnableContextMenu(PRBool *aEnableContextMenu)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -227,7 +214,7 @@ totemScriptablePlugin::GetEnableContextMenu(PRBool *aEnableContextMenu)
 NS_IMETHODIMP 
 totemScriptablePlugin::SetEnableContextMenu(PRBool aEnableContextMenu)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -236,7 +223,7 @@ totemScriptablePlugin::SetEnableContextMenu(PRBool aEnableContextMenu)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetEnabled(PRBool *aEnabled)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -244,7 +231,7 @@ totemScriptablePlugin::GetEnabled(PRBool *aEnabled)
 NS_IMETHODIMP 
 totemScriptablePlugin::SetEnabled(PRBool aEnabled)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -253,7 +240,7 @@ totemScriptablePlugin::SetEnabled(PRBool aEnabled)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetError(totemIGMPError * *aError)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -262,7 +249,7 @@ totemScriptablePlugin::GetError(totemIGMPError * *aError)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetFullScreen(PRBool *aFullScreen)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -270,7 +257,7 @@ totemScriptablePlugin::GetFullScreen(PRBool *aFullScreen)
 NS_IMETHODIMP 
 totemScriptablePlugin::SetFullScreen(PRBool aFullScreen)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -279,7 +266,7 @@ totemScriptablePlugin::SetFullScreen(PRBool aFullScreen)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetIsOnline(PRBool *aIsOnline)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -288,7 +275,7 @@ totemScriptablePlugin::GetIsOnline(PRBool *aIsOnline)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetIsRemote(PRBool *aIsRemote)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_DOM_SECURITY_ERR;
 }
@@ -297,7 +284,7 @@ totemScriptablePlugin::GetIsRemote(PRBool *aIsRemote)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetMediaCollection(totemIGMPMediaCollection * *aMediaCollection)
 {
-  WARN_ACCESS ();
+  TOTEM_SCRIPTABLE_WARN_ACCESS ();
 
   return NS_ERROR_DOM_SECURITY_ERR;
 }
@@ -306,7 +293,7 @@ totemScriptablePlugin::GetMediaCollection(totemIGMPMediaCollection * *aMediaColl
 NS_IMETHODIMP 
 totemScriptablePlugin::GetNetwork(totemIGMPNetwork * *aNetwork)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -315,7 +302,7 @@ totemScriptablePlugin::GetNetwork(totemIGMPNetwork * *aNetwork)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetOpenState(PRInt32 *aOpenState)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -324,7 +311,7 @@ totemScriptablePlugin::GetOpenState(PRInt32 *aOpenState)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetPlayerApplication(totemIGMPPlayerApplication * *aPlayerApplication)
 {
-  WARN_ACCESS ();
+  TOTEM_SCRIPTABLE_WARN_ACCESS ();
 
   return NS_ERROR_DOM_SECURITY_ERR;
 }
@@ -333,7 +320,7 @@ totemScriptablePlugin::GetPlayerApplication(totemIGMPPlayerApplication * *aPlaye
 NS_IMETHODIMP 
 totemScriptablePlugin::GetPlaylistCollection(totemIGMPPlaylistCollection * *aPlaylistCollection)
 {
-  WARN_ACCESS ();
+  TOTEM_SCRIPTABLE_WARN_ACCESS ();
 
   return NS_ERROR_DOM_SECURITY_ERR;
 }
@@ -342,7 +329,7 @@ totemScriptablePlugin::GetPlaylistCollection(totemIGMPPlaylistCollection * *aPla
 NS_IMETHODIMP 
 totemScriptablePlugin::GetPlayState(PRInt32 *aPlayState)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -367,7 +354,7 @@ totemScriptablePlugin::GetSettings(totemIGMPSettings * *aSettings)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetStatus(nsACString & aStatus)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -376,7 +363,7 @@ totemScriptablePlugin::GetStatus(nsACString & aStatus)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetStretchToFit(PRBool *aStretchToFit)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -384,7 +371,7 @@ totemScriptablePlugin::GetStretchToFit(PRBool *aStretchToFit)
 NS_IMETHODIMP 
 totemScriptablePlugin::SetStretchToFit(PRBool aStretchToFit)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -393,7 +380,7 @@ totemScriptablePlugin::SetStretchToFit(PRBool aStretchToFit)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetUiMode(nsACString & aUiMode)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -401,7 +388,7 @@ totemScriptablePlugin::GetUiMode(nsACString & aUiMode)
 NS_IMETHODIMP 
 totemScriptablePlugin::SetUiMode(const nsACString & aUiMode)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -410,7 +397,7 @@ totemScriptablePlugin::SetUiMode(const nsACString & aUiMode)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetURL(nsACString & aURL)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -418,7 +405,7 @@ totemScriptablePlugin::GetURL(nsACString & aURL)
 NS_IMETHODIMP 
 totemScriptablePlugin::SetURL(const nsACString & aURL)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -427,7 +414,7 @@ totemScriptablePlugin::SetURL(const nsACString & aURL)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetVersionInfo(nsACString & aVersionInfo)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -436,7 +423,7 @@ totemScriptablePlugin::GetVersionInfo(nsACString & aVersionInfo)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetWindowlessVideo(PRBool *aWindowlessVideo)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -444,7 +431,7 @@ totemScriptablePlugin::GetWindowlessVideo(PRBool *aWindowlessVideo)
 NS_IMETHODIMP 
 totemScriptablePlugin::SetWindowlessVideo(PRBool aWindowlessVideo)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -453,7 +440,7 @@ totemScriptablePlugin::SetWindowlessVideo(PRBool aWindowlessVideo)
 NS_IMETHODIMP 
 totemScriptablePlugin::Close()
 {
-  WARN_ACCESS ();
+  TOTEM_SCRIPTABLE_WARN_ACCESS ();
 
   return NS_ERROR_DOM_SECURITY_ERR;
 }
@@ -462,7 +449,7 @@ totemScriptablePlugin::Close()
 NS_IMETHODIMP 
 totemScriptablePlugin::NewMedia(const nsACString & aURL, totemIGMPMedia **_retval)
 {
-  WARN_ACCESS ();
+  TOTEM_SCRIPTABLE_WARN_ACCESS ();
 
   return NS_ERROR_DOM_SECURITY_ERR;
 }
@@ -471,7 +458,7 @@ totemScriptablePlugin::NewMedia(const nsACString & aURL, totemIGMPMedia **_retva
 NS_IMETHODIMP 
 totemScriptablePlugin::OpenPlayer (const nsACString & aURL)
 {
-  WARN_ACCESS ();
+  TOTEM_SCRIPTABLE_WARN_ACCESS ();
 
   return NS_ERROR_DOM_SECURITY_ERR;
 }
@@ -482,7 +469,7 @@ totemScriptablePlugin::NewPlaylist (const nsACString & aName,
 				    const nsACString & aURL,
 				    totemIGMPPlaylist **_retval)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -491,21 +478,21 @@ totemScriptablePlugin::NewPlaylist (const nsACString & aName,
 NS_IMETHODIMP 
 totemScriptablePlugin::LaunchURL(const nsACString & aURL)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_DOM_SECURITY_ERR;
 }
 
 /* totemIGMPControls */
 
-#undef CURRENT_INTERFACE
-#define CURRENT_INTERFACE "totemIGMPControls"
+#undef TOTEM_SCRIPTABLE_INTERFACE
+#define TOTEM_SCRIPTABLE_INTERFACE "totemIGMPControls"
 
 /* readonly attribute long audioLanguageCount; */
 NS_IMETHODIMP 
 totemScriptablePlugin::GetAudioLanguageCount(PRInt32 *aAudioLanguageCount)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -514,7 +501,7 @@ totemScriptablePlugin::GetAudioLanguageCount(PRInt32 *aAudioLanguageCount)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetCurrentAudioLanguage(PRInt32 *aCurrentAudioLanguage)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -522,7 +509,7 @@ totemScriptablePlugin::GetCurrentAudioLanguage(PRInt32 *aCurrentAudioLanguage)
 NS_IMETHODIMP 
 totemScriptablePlugin::SetCurrentAudioLanguage(PRInt32 aCurrentAudioLanguage)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -531,14 +518,14 @@ totemScriptablePlugin::SetCurrentAudioLanguage(PRInt32 aCurrentAudioLanguage)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetCurrentAudioLanguageIndex(PRInt32 *aCurrentAudioLanguageIndex)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
 NS_IMETHODIMP 
 totemScriptablePlugin::SetCurrentAudioLanguageIndex(PRInt32 aCurrentAudioLanguageIndex)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -547,7 +534,7 @@ totemScriptablePlugin::SetCurrentAudioLanguageIndex(PRInt32 aCurrentAudioLanguag
 NS_IMETHODIMP 
 totemScriptablePlugin::GetCurrentItem(totemIGMPMedia * *aCurrentItem)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -555,7 +542,7 @@ totemScriptablePlugin::GetCurrentItem(totemIGMPMedia * *aCurrentItem)
 NS_IMETHODIMP 
 totemScriptablePlugin::SetCurrentItem(totemIGMPMedia * aCurrentItem)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -564,7 +551,7 @@ totemScriptablePlugin::SetCurrentItem(totemIGMPMedia * aCurrentItem)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetCurrentMarker(PRInt32 *aCurrentMarker)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -572,7 +559,7 @@ totemScriptablePlugin::GetCurrentMarker(PRInt32 *aCurrentMarker)
 NS_IMETHODIMP 
 totemScriptablePlugin::SetCurrentMarker(PRInt32 aCurrentMarker)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -581,7 +568,7 @@ totemScriptablePlugin::SetCurrentMarker(PRInt32 aCurrentMarker)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetCurrentPosition(double *aCurrentPosition)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -589,7 +576,7 @@ totemScriptablePlugin::GetCurrentPosition(double *aCurrentPosition)
 NS_IMETHODIMP 
 totemScriptablePlugin::SetCurrentPosition(double aCurrentPosition)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -598,7 +585,7 @@ totemScriptablePlugin::SetCurrentPosition(double aCurrentPosition)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetCurrentPositionString(nsACString & aCurrentPositionString)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -607,7 +594,7 @@ totemScriptablePlugin::GetCurrentPositionString(nsACString & aCurrentPositionStr
 NS_IMETHODIMP 
 totemScriptablePlugin::GetCurrentPositionTimecode(nsACString & aCurrentPositionTimecode)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -615,7 +602,7 @@ totemScriptablePlugin::GetCurrentPositionTimecode(nsACString & aCurrentPositionT
 NS_IMETHODIMP 
 totemScriptablePlugin::SetCurrentPositionTimecode(const nsACString & aCurrentPositionTimecode)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -624,7 +611,7 @@ totemScriptablePlugin::SetCurrentPositionTimecode(const nsACString & aCurrentPos
 NS_IMETHODIMP 
 totemScriptablePlugin::FastForward()
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -633,7 +620,7 @@ totemScriptablePlugin::FastForward()
 NS_IMETHODIMP 
 totemScriptablePlugin::FastReverse()
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -642,7 +629,7 @@ totemScriptablePlugin::FastReverse()
 NS_IMETHODIMP 
 totemScriptablePlugin::GetAudioLanguageDescription(PRInt32 index, nsACString & _retval)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -651,7 +638,7 @@ totemScriptablePlugin::GetAudioLanguageDescription(PRInt32 index, nsACString & _
 NS_IMETHODIMP 
 totemScriptablePlugin::GetAudioLanguageID(PRInt32 index, PRInt32 *_retval)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -660,7 +647,7 @@ totemScriptablePlugin::GetAudioLanguageID(PRInt32 index, PRInt32 *_retval)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetLanguageName(PRInt32 LCID, nsACString & _retval)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -669,7 +656,7 @@ totemScriptablePlugin::GetLanguageName(PRInt32 LCID, nsACString & _retval)
 NS_IMETHODIMP 
 totemScriptablePlugin::IsAvailable(const nsACString & name, PRBool *_retval)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -678,7 +665,7 @@ totemScriptablePlugin::IsAvailable(const nsACString & name, PRBool *_retval)
 NS_IMETHODIMP 
 totemScriptablePlugin::Next()
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -703,7 +690,7 @@ totemScriptablePlugin::Play ()
 NS_IMETHODIMP 
 totemScriptablePlugin::PlayItem(totemIGMPMedia *theMediaItem)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -712,7 +699,7 @@ totemScriptablePlugin::PlayItem(totemIGMPMedia *theMediaItem)
 NS_IMETHODIMP 
 totemScriptablePlugin::Previous()
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
@@ -721,7 +708,7 @@ totemScriptablePlugin::Previous()
 NS_IMETHODIMP 
 totemScriptablePlugin::Step(PRInt32 frameCount)
 {
-  WARN_NOT_IMPLEMENTED ();
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_ERROR_NOT_IMPLEMENTED;
 }
