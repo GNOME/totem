@@ -1,3 +1,18 @@
+2007-02-19  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/totem-missing-plugins.c:
+	(on_plugin_installation_done):
+	(totem_on_missing_plugins_event):
+	(totem_missing_plugins_setup):
+	  libgimme-codec has been merged into GStreamer with a similar API.
+	  Use the new API from libgstbaseutils rather than libgimme-codec for
+	  easy codec installation (Closes: #401074).
+	  This will require small adjustments on the vendor side (namely:
+	  setting the path to the install helper script in gst-plugins-base's
+	  configure script).
+
 2007-02-18  Christian Persch  <chpe@svn.gnome.org>
 
 	* browser-plugin/Makefile.am:

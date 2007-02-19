@@ -141,6 +141,7 @@ totem_CFLAGS = \
 	$(DBUS_CFLAGS)			\
 	$(MEDIA_PLAYER_KEYS_CFLAGS)	\
 	$(NVTV_CFLAGS)			\
+	$(MISSING_PLUGINS_CFLAGS) \
 	$(AM_CFLAGS)
 
 totem_LDFLAGS = \
@@ -160,7 +161,7 @@ totem_LDADD = \
 	$(MEDIA_PLAYER_KEYS_LIBS)       \
 	$(XTEST_LIBS)			\
 	$(X_LIBS)			\
-	$(GIMME_CODEC_LIBS)
+	$(MISSING_PLUGINS_LIBS)
 
 BUILT_SOURCES =			\
 	totem-marshal.h			\

@@ -24,12 +24,14 @@
 
 #include "totem-missing-plugins.h"
 
-#ifdef USE_GIMME_CODEC
+#ifdef ENABLE_MISSING_PLUGIN_INSTALLATION
 
 #include "totem-private.h"
 #include "bacon-video-widget.h"
 
-#include <gimme-codec.h>
+#include <gst/utils/base-utils.h>
+#include <gst/utils/install-plugins.h>
+
 #include <gst/gst.h> /* for gst_registry_update */
 
 #include <gtk/gtk.h>
@@ -86,21 +88,19 @@ totem_codec_install_context_free (TotemCodecInstallContext *ctx)
 }
 
 static void
-on_gimme_codec_installation_done (GimmeCodecStatus status, void *user_data)
+on_plugin_installation_done (GstInstallPluginsReturn res, gpointer user_data)
 {
 	TotemCodecInstallContext *ctx = (TotemCodecInstallContext *) user_data;
 	gchar **p;
 
-	GST_INFO ("status = %d", status);
+	GST_INFO ("res = %d (%s)", res, gst_install_plugins_return_get_name (res));
 
-	/* FIXME: codes for PARTIAL_SUCCESS and USER_ABORTED will be added to
-	 *        libgimme-codec in the future */
-	switch (status)
+	switch (res)
 	{
 		/* treat partial success the same as success; in the worst case we'll
 		 * just do another round and get NOT_FOUND as result that time */
-		/* case GIMME_CODEC_PARTIAL_SUCCESS: */
-		case GIMME_CODEC_SUCCESS:
+		case GST_INSTALL_PLUGINS_PARTIAL_SUCCESS:
+		case GST_INSTALL_PLUGINS_SUCCESS:
 			{
 				/* blacklist installed plugins too, so that we don't get
 				 * into endless installer loops in case of inconsistencies */
@@ -121,7 +121,7 @@ on_gimme_codec_installation_done (GimmeCodecStatus status, void *user_data)
 				}
 			}
 			break;
-		case GIMME_CODEC_NOT_FOUND:
+		case GST_INSTALL_PLUGINS_NOT_FOUND:
 			{
 				g_message ("No installation candidate for missing plugins found.");
 
@@ -143,8 +143,7 @@ on_gimme_codec_installation_done (GimmeCodecStatus status, void *user_data)
 				}
 			}
 			break;
-		/* yet-to-be-added to libgimme-codec:
-		case GIMME_CODEC_USER_ABORTED:
+		case GST_INSTALL_PLUGINS_USER_ABORT:
 			{
 				if (ctx->playing)
 					bacon_video_widget_play (ctx->totem->bvw, NULL);
@@ -152,13 +151,12 @@ on_gimme_codec_installation_done (GimmeCodecStatus status, void *user_data)
 					bacon_video_widget_stop (ctx->totem->bvw);
 			}
 			break;
-		*/
-		case GIMME_CODEC_INSTALLATION_ERROR:
-		case GIMME_CODEC_HELPER_CRASHED:
+		case GST_INSTALL_PLUGINS_ERROR:
+		case GST_INSTALL_PLUGINS_CRASHED:
 		default:
 			{
 				g_message ("Missing plugin installation failed: %s",
-				           gimme_codec_status_message (status));
+				           gst_install_plugins_return_get_name (res));
 
 				if (ctx->playing)
 					bacon_video_widget_play (ctx->totem->bvw, NULL);
@@ -176,12 +174,10 @@ totem_on_missing_plugins_event (BaconVideoWidget *bvw, char **details,
                                 char **descriptions, gboolean playing,
                                 Totem *totem)
 {
+	GstInstallPluginsContext *install_ctx;
 	TotemCodecInstallContext *ctx;
-	GimmeCodecStatus status;
+	GstInstallPluginsReturn status;
 	guint i, num;
-	gulong xid = 0;
-
-	gimme_codec_glib_init ();
 
 	num = g_strv_length (details);
 	g_return_val_if_fail (num > 0 && g_strv_length (descriptions) == num, FALSE);
@@ -217,26 +213,35 @@ totem_on_missing_plugins_event (BaconVideoWidget *bvw, char **details,
 		return FALSE;
 	}
 
+	install_ctx = gst_install_plugins_context_new ();
+
 #ifdef GDK_WINDOWING_X11
 	if (totem->win != NULL && GTK_WIDGET_REALIZED (totem->win))
+	{
+		gulong xid = 0;
+
 		xid = GDK_WINDOW_XWINDOW (GTK_WIDGET (totem->win)->window);
+		gst_install_plugins_context_set_xid (install_ctx, xid);
+	}
 #endif
 
-	status = gimme_codec_async (ctx->details, xid,
-	                            on_gimme_codec_installation_done,
-	                            ctx);
+	status = gst_install_plugins_async (ctx->details, install_ctx,
+	                                    on_plugin_installation_done,
+	                                    ctx);
 
-	GST_INFO ("gimme_codec_async() status = %d", status);
+	gst_install_plugins_context_free (install_ctx);
 
-	if (status != GIMME_CODEC_SUCCESS)
+	GST_INFO ("gst_install_plugins_async() result = %d", status);
+
+	if (status != GST_INSTALL_PLUGINS_STARTED_OK)
 	{
-		if (status == GIMME_CODEC_HELPER_MISSING)
+		if (status == GST_INSTALL_PLUGINS_HELPER_MISSING)
 		{
 			g_message ("Automatic missing codec installation not supported "
 			           "(helper script missing)");
 		} else {
 			g_warning ("Failed to start codec installation: %s",
-			           gimme_codec_status_message (status));
+			           gst_install_plugins_return_get_name (status));
 		}
 		totem_codec_install_context_free (ctx);
 		return FALSE;
@@ -251,17 +256,19 @@ totem_on_missing_plugins_event (BaconVideoWidget *bvw, char **details,
 	return TRUE;
 }
 
-#endif /* USE_GIMME_CODEC */
+#endif /* ENABLE_MISSING_PLUGIN_INSTALLATION */
 
 void
 totem_missing_plugins_setup (Totem *totem)
 {
-#ifdef USE_GIMME_CODEC
+#ifdef ENABLE_MISSING_PLUGIN_INSTALLATION
 	g_signal_connect (G_OBJECT (totem->bvw),
 			"missing-plugins",
 			G_CALLBACK (totem_on_missing_plugins_event),
 			totem);
 
-	GST_INFO ("Set up gimme-codec missing plugin support");
+	gst_base_utils_init ();
+
+	GST_INFO ("Set up support for automatic missing plugin installation");
 #endif
 }
