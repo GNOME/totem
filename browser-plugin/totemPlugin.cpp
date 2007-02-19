@@ -2,7 +2,7 @@
  * 
  * Copyright © 2004-2006 Bastien Nocera <hadess@hadess.net>
  * Copyright © 2002 David A. Schleef <ds@schleef.org>
- * Copyright © 2006 Christian Persch
+ * Copyright © 2006, 2007 Christian Persch
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -1075,13 +1075,18 @@ totemPlugin::ParseBoolean (const char *key,
 {
 	if (value == NULL || strcmp (value, "") == 0)
 		return default_val;
-	if (g_ascii_strcasecmp (value, "false") == 0
-			|| g_ascii_strcasecmp (value, "0") == 0)
+	if (g_ascii_strcasecmp (value, "false") == 0)
 		return PR_FALSE;
-	if (g_ascii_strcasecmp (value, "true") == 0
-			|| g_ascii_strcasecmp (value, "1") == 0)
+	if (g_ascii_strcasecmp (value, "true") == 0)
 		return PR_TRUE;
 
+        char *endptr = NULL;
+        errno = 0;
+        long num = g_ascii_strtoll (value, &endptr, 0);
+        if (!endptr && errno == 0) {
+                return num > 0;
+        }
+        
 	D ("Unknown value '%s' for parameter '%s'", value, key);
 
 	return default_val;
@@ -1636,14 +1641,19 @@ totemPlugin::Init (NPMIMEType mimetype,
 	D ("Real mimetype for '%s' is '%s'", mimetype, mMimeType.get());
 
 	/* Now parse the attributes */
+	/* Note: argv[i] is NULL for the "PARAM" arg which separates the attributes
+	 * of an <object> tag from the <param> values under it.
+	 */
 	GHashTable *args = g_hash_table_new_full (g_str_hash,
 		g_str_equal,
 		(GDestroyNotify) g_free,
 		(GDestroyNotify) g_free);
 	for (int16_t i = 0; i < argc; i++) {
-		printf ("argv[%d] %s %s\n", i, argn[i], argv[i]);
-		g_hash_table_insert (args, g_ascii_strdown (argn[i], -1),
-				     g_strdup (argv[i]));
+		printf ("argv[%d] %s %s\n", i, argn[i], argv[i] ? argv[i] : "");
+		if (argv[i]) {
+			g_hash_table_insert (args, g_ascii_strdown (argn[i], -1),
+					     g_strdup (argv[i]));
+		}
 	}
 
 	const char *value;
@@ -1763,6 +1773,8 @@ totemPlugin::Init (NPMIMEType mimetype,
 
 	mControllerHidden = !GetBooleanValue (args, "controller", PR_TRUE);
 
+	mAutoPlay = GetBooleanValue (args, "autoplay", PR_TRUE);
+
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 
 #if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
@@ -1837,7 +1849,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 #ifdef TOTEM_NARROWSPACE_PLUGIN
 	/* We need to autostart if we're using an HREF
 	 * otherwise the start image isn't shown */
-	if (!mHref.Equals (NS_LITERAL_CSTRING (""))) {
+	if (!mHref.IsEmpty ()) {
 		mExpectingStream = PR_TRUE;
 		mAutostart = PR_TRUE;
 	}

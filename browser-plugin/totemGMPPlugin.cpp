@@ -48,6 +48,9 @@
 
 #include "totemGMPPlugin.h"
 
+/* FIXME */
+#define TOTEM_GMP_VERSION_BUILD "11.0.0.1024"
+
 /* 89cf81a7-1156-456f-b060-c2187df9a27c */
 static const nsCID kClassID = 
   { 0x89cf81a7, 0x1156, 0x456f,
@@ -356,7 +359,9 @@ totemScriptablePlugin::GetStatus(nsACString & aStatus)
 {
   TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
-  return NS_ERROR_NOT_IMPLEMENTED;
+  /* FIXME */
+  aStatus.Assign ("OK");
+  return NS_OK;
 }
 
 /* attribute boolean stretchToFit; */
@@ -414,9 +419,8 @@ totemScriptablePlugin::SetURL(const nsACString & aURL)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetVersionInfo(nsACString & aVersionInfo)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  return NS_ERROR_NOT_IMPLEMENTED;
+  aVersionInfo.Assign (TOTEM_GMP_VERSION_BUILD);
+  return NS_OK;
 }
 
 /* attribute boolean windowlessVideo; */
@@ -425,7 +429,8 @@ totemScriptablePlugin::GetWindowlessVideo(PRBool *aWindowlessVideo)
 {
   TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
-  return NS_ERROR_NOT_IMPLEMENTED;
+  *aWindowlessVideo = mWindowlessVideo;
+  return NS_OK;
 }
 
 NS_IMETHODIMP 
@@ -433,7 +438,8 @@ totemScriptablePlugin::SetWindowlessVideo(PRBool aWindowlessVideo)
 {
   TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
-  return NS_ERROR_NOT_IMPLEMENTED;
+  mWindowlessVideo = aWindowlessVideo != PR_FALSE;
+  return NS_OK;
 }
 
 /* void close (); */
@@ -570,7 +576,8 @@ totemScriptablePlugin::GetCurrentPosition(double *aCurrentPosition)
 {
   TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
-  return NS_ERROR_NOT_IMPLEMENTED;
+  *aCurrentPosition = 0.0;
+  return NS_OK;
 }
 
 NS_IMETHODIMP 
@@ -578,7 +585,7 @@ totemScriptablePlugin::SetCurrentPosition(double aCurrentPosition)
 {
   TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
-  return NS_ERROR_NOT_IMPLEMENTED;
+  return NS_OK;
 }
 
 /* readonly attribute ACString currentPositionString; */

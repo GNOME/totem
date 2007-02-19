@@ -253,6 +253,7 @@ class totemPlugin {
   private:
 
     PRUint32 mAutostart : 1;
+    PRUint32 mAutoPlay : 1;
     PRUint32 mCache : 1;
     PRUint32 mCheckedForPlaylist : 1;
     PRUint32 mControllerHidden : 1;
