@@ -252,6 +252,18 @@ totem_plugin_get_value (NPP instance,
 		}
 		break;
 	}
+	case NPPVjavascriptPushCallerBool:
+		D ("Unhandled variable NPPVjavascriptPushCallerBool");
+		err = NPERR_INVALID_PARAM;
+		break;
+	case NPPVpluginKeepLibraryInMemory:
+		D ("Unhandled variable NPPVpluginKeepLibraryInMemory");
+		err = NPERR_INVALID_PARAM;
+		break;
+	case NPPVpluginScriptableNPObject:
+		D ("Unhandled variable NPPVpluginScriptableNPObject");
+		err = NPERR_INVALID_PARAM;
+		break;
 	default:
 		D ("Unhandled variable");
 		err = NPERR_INVALID_PARAM;

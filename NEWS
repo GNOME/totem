@@ -1,5 +1,21 @@
 New features and significant updates in version...
 
+2.17.92
+* Fix building when /bin/sh isn't Bash
+* Add better debugging support to the thumbnailer and indexer
+* Don't crash when launch Totem with no filenames, and Totem
+  is already started
+* Thumbnailer:
+  - Fix problems with the first frame being captured sometimes
+* Browser plugin:
+  - Implement a few Javascript calls in the Windows Media Player-
+  compatible plugin
+* GStreamer:
+  - Avoid warnings when we can't get tag lists
+  - Use GStreamer's missing plugins functionality
+* xine-lib:
+  - Allow cancelling an open, for use in the browser plugin
+
 2.17.91
 * Fix crasher when getting the listed of subtitles/languages
 * Handle the icyx:// protocol
