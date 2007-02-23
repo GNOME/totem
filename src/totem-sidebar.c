@@ -129,6 +129,7 @@ totem_sidebar_setup (Totem *totem, gboolean visible, const char *page_id)
 			G_CALLBACK (toggle_sidebar_from_sidebar), totem);
 
 	gtk_widget_show_all (totem->sidebar);
+	gtk_widget_realize (totem->sidebar);
 
 	if (!visible)
 		gtk_widget_hide (totem->sidebar);

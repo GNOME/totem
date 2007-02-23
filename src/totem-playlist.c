@@ -1458,23 +1458,6 @@ totem_playlist_entry_parsed (TotemPlParser *parser,
 }
 
 static void
-totem_playlist_init (TotemPlaylist *playlist)
-{
-	playlist->_priv = g_new0 (TotemPlaylistPrivate, 1);
-	playlist->_priv->parser = totem_pl_parser_new ();
-
-	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "dvd:");
-	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "cdda:");
-	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "vcd:");
-	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "cd:");
-
-	g_signal_connect (G_OBJECT (playlist->_priv->parser),
-			"entry",
-			G_CALLBACK (totem_playlist_entry_parsed),
-			playlist);
-}
-
-static void
 totem_playlist_finalize (GObject *object)
 {
 	TotemPlaylist *playlist = TOTEM_PLAYLIST (object);
@@ -1494,23 +1477,30 @@ totem_playlist_finalize (GObject *object)
 	G_OBJECT_CLASS (totem_playlist_parent_class)->finalize (object);
 }
 
-GtkWidget*
-totem_playlist_new (void)
+static void
+totem_playlist_init (TotemPlaylist *playlist)
 {
-	TotemPlaylist *playlist;
 	GtkWidget *container, *item;
 	char *filename;
 
-	playlist = TOTEM_PLAYLIST (g_object_new (TOTEM_TYPE_PLAYLIST, NULL));
+	playlist->_priv = g_new0 (TotemPlaylistPrivate, 1);
+	playlist->_priv->parser = totem_pl_parser_new ();
 
-	playlist->_priv->xml = totem_interface_load ("playlist.glade",
-			_("playlist"), TRUE, NULL);
+	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "dvd:");
+	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "cdda:");
+	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "vcd:");
+	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "cd:");
+
+	g_signal_connect (G_OBJECT (playlist->_priv->parser),
+			"entry",
+			G_CALLBACK (totem_playlist_entry_parsed),
+			playlist);
+
+	playlist->_priv->xml = totem_interface_load_with_root ("playlist.glade",
+			"vbox4", _("playlist"), TRUE, NULL);
 
 	if (playlist->_priv->xml == NULL)
-	{
-		totem_playlist_finalize (G_OBJECT (playlist));
-		return NULL;
-	}
+		return;
 
 	/* popup menu */
 	playlist->_priv->action_group = 
@@ -1527,7 +1517,7 @@ totem_playlist_new (void)
 	filename = totem_interface_get_full_path ("playlist-ui.xml");
 	if (!gtk_ui_manager_add_ui_from_file (playlist->_priv->ui_manager, filename, NULL)) {
 		totem_playlist_finalize (G_OBJECT (playlist));
-		return NULL;
+		return;
 	}
 	g_free (filename);
 
@@ -1558,10 +1548,8 @@ totem_playlist_new (void)
 			G_CALLBACK (totem_playlist_key_press), playlist);
 
 	/* Reparent the vbox */
-	item = glade_xml_get_widget (playlist->_priv->xml, "dialog-vbox1");
 	container = glade_xml_get_widget (playlist->_priv->xml, "vbox4");
 	g_object_ref (container);
-	gtk_container_remove (GTK_CONTAINER (item), container);
 	gtk_box_pack_start (GTK_BOX (playlist),
 			container,
 			TRUE,       /* expand */
@@ -1579,6 +1567,20 @@ totem_playlist_new (void)
 	init_config (playlist);
 
 	gtk_widget_show_all (GTK_WIDGET (playlist));
+
+
+}
+
+GtkWidget*
+totem_playlist_new (void)
+{
+	TotemPlaylist *playlist;
+
+	playlist = TOTEM_PLAYLIST (g_object_new (TOTEM_TYPE_PLAYLIST, NULL));
+	if (playlist->_priv->xml == NULL || playlist->_priv->ui_manager == NULL) {
+		totem_playlist_finalize (G_OBJECT (playlist));
+		return NULL;
+	}
 
 	return GTK_WIDGET (playlist);
 }
