@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-07 05:13+0900\n"
-"PO-Revision-Date: 2007-02-07 20:18+0900\n"
+"POT-Creation-Date: 2007-02-25 06:47+0900\n"
+"PO-Revision-Date: 2007-02-25 06:47+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
 "MIME-Version: 1.0\n"
@@ -40,8 +40,8 @@ msgid "Remove"
 msgstr "지우기"
 
 #: ../data/playlist.glade.h:6
-msgid "Save..."
-msgstr "저장..."
+msgid "Save Playlist..."
+msgstr "재생 목록 저장..."
 
 #. Channels
 #: ../data/properties.glade.h:1 ../src/bacon-video-widget-properties.c:170
@@ -162,7 +162,7 @@ msgstr "알 수 없음"
 msgid "<b>Preview</b>"
 msgstr "<b>미리 보기</b>"
 
-#: ../data/screenshot.glade.h:2 ../src/totem-screenshot.c:342
+#: ../data/screenshot.glade.h:2 ../src/totem-screenshot.c:334
 msgid "Save Screenshot"
 msgstr "스크린샷 저장"
 
@@ -343,8 +343,8 @@ msgid "Time:"
 msgstr "시간:"
 
 #. Title
-#: ../data/totem.glade.h:45 ../src/totem.c:974 ../src/totem.c:3403
-#: ../src/totem.c:3430
+#: ../data/totem.glade.h:45 ../src/totem.c:970 ../src/totem.c:3417
+#: ../src/totem.c:3444
 msgid "Totem Movie Player"
 msgstr "토템 동영상 플레이어"
 
@@ -644,7 +644,11 @@ msgid ""
 "terms of the GNU General Public License as published by the Free Software "
 "Foundation; either version 2 of the License, or (at your option) any later "
 "version."
-msgstr "Totem is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version."
+msgstr ""
+"Totem is free software; you can redistribute it and/or modify it under the "
+"terms of the GNU General Public License as published by the Free Software "
+"Foundation; either version 2 of the License, or (at your option) any later "
+"version."
 
 #: ../src/totem-interface.c:240
 msgid ""
@@ -652,20 +656,28 @@ msgid ""
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
 "FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
 "details."
-msgstr "Totem is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
+msgstr ""
+"Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
+"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
+"FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
+"details."
 
 #: ../src/totem-interface.c:244
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
 "Suite 330, Boston, MA  02111-1307  USA"
-msgstr "You should have received a copy of the GNU General Public License along with Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
+msgstr ""
+"You should have received a copy of the GNU General Public License along with "
+"Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
+"Suite 330, Boston, MA  02111-1307  USA"
 
 #: ../src/totem-interface.c:247
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
-msgstr "토템에는 독점적인 GStreamer 플러그인을 사용할 수 있는 예외 조항이 있습니다."
+msgstr ""
+"토템에는 독점적인 GStreamer 플러그인을 사용할 수 있는 예외 조항이 있습니다."
 
 #: ../src/totem-menu.c:284
 msgid "None"
@@ -1082,11 +1094,11 @@ msgstr "디버깅 사용"
 msgid "Play/Pause"
 msgstr "재생/일시 정지"
 
-#: ../src/totem-options.c:40 ../src/totem.c:294 ../src/totem.c:302
+#: ../src/totem-options.c:40 ../src/totem.c:290 ../src/totem.c:298
 msgid "Play"
 msgstr "재생"
 
-#: ../src/totem-options.c:41 ../src/totem.c:288
+#: ../src/totem-options.c:41 ../src/totem.c:284
 msgid "Pause"
 msgstr "일시 정지"
 
@@ -1175,15 +1187,15 @@ msgstr "확장자에 따라"
 msgid "Save Playlist"
 msgstr "재생 목록 저장"
 
-#: ../src/totem-playlist.c:1507
+#: ../src/totem-playlist.c:1500
 msgid "playlist"
 msgstr "재생 목록"
 
-#: ../src/totem-playlist.c:1652
+#: ../src/totem-playlist.c:1654
 msgid "Playlist error"
 msgstr "재생 목록 오류"
 
-#: ../src/totem-playlist.c:1652
+#: ../src/totem-playlist.c:1654
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "'%s' 재생 목록을 파싱할 수 없습니다. 손상된 것 같습니다."
@@ -1230,25 +1242,25 @@ msgstr "오디오/비디오"
 msgid "Video"
 msgstr "비디오"
 
-#: ../src/totem-screenshot.c:149 ../src/totem-screenshot.c:160
+#: ../src/totem-screenshot.c:141 ../src/totem-screenshot.c:152
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "스크린샷%d.png"
 
-#: ../src/totem-screenshot.c:202
+#: ../src/totem-screenshot.c:194
 #, c-format
 msgid "File '%s' already exists."
 msgstr "'%s' 파일은 이미 존재합니다."
 
-#: ../src/totem-screenshot.c:204
+#: ../src/totem-screenshot.c:196
 msgid "The screenshot was not saved"
 msgstr "스크린샷을 저장하지 않았습니다."
 
-#: ../src/totem-screenshot.c:215
+#: ../src/totem-screenshot.c:207
 msgid "There was an error saving the screenshot."
 msgstr "스크린샷을 저장하는 중에 오류가 발생했습니다."
 
-#: ../src/totem-screenshot.c:248
+#: ../src/totem-screenshot.c:240
 msgid "Screenshot.png"
 msgstr "스크린샷.png"
 
@@ -1264,7 +1276,7 @@ msgstr "그림자 형태"
 msgid "Style of bevel around the statusbar text"
 msgstr "상태 표시줄 텍스트 주위의 3D 효과 형태"
 
-#: ../src/totem-statusbar.c:126 ../src/totem.c:298 ../src/totem.c:960
+#: ../src/totem-statusbar.c:126 ../src/totem.c:294 ../src/totem.c:956
 #: ../browser-plugin/totem-plugin-viewer.c:279
 msgid "Stopped"
 msgstr "멈춤"
@@ -1473,25 +1485,25 @@ msgstr "비디오 파일"
 msgid "Select Movies or Playlists"
 msgstr "동영상 혹은 재생 목록 선택"
 
-#: ../src/totem.c:286 ../browser-plugin/totem-plugin-viewer.c:294
+#: ../src/totem.c:282 ../browser-plugin/totem-plugin-viewer.c:294
 msgid "Playing"
 msgstr "재생중"
 
-#: ../src/totem.c:292 ../browser-plugin/totem-plugin-viewer.c:290
+#: ../src/totem.c:288 ../browser-plugin/totem-plugin-viewer.c:290
 msgid "Paused"
 msgstr "일시 정지"
 
-#: ../src/totem.c:344
+#: ../src/totem.c:340
 msgid "Totem could not eject the optical media."
 msgstr "토템이 광 미디어를 꺼낼 수 없습니다."
 
-#: ../src/totem.c:378 ../src/totem.c:407 ../src/totem.c:1074
-#: ../src/totem.c:1184
+#: ../src/totem.c:374 ../src/totem.c:403 ../src/totem.c:1070
+#: ../src/totem.c:1180
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "토템이 '%s'을(를) 재생할 수 없습니다."
 
-#: ../src/totem.c:468
+#: ../src/totem.c:464
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1500,7 +1512,7 @@ msgstr ""
 "이 형태의 미디어를 (%s) 처리할 수 있는 적절한 플러그인이 없기 때문에 토템에"
 "서 이 형태의 미디어를 재생할 수 없습니다."
 
-#: ../src/totem.c:469
+#: ../src/totem.c:465
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1508,7 +1520,7 @@ msgstr ""
 "필요한 플러그인을 설치하고 토템을 다시 시작하면 이 미디어를 재생할 수 있습니"
 "다."
 
-#: ../src/totem.c:477
+#: ../src/totem.c:473
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1517,100 +1529,100 @@ msgstr ""
 "이 형태의 미디어를 처리할 수 있는 플러그인이 있지만 이 미디어를 (%s) 재생할 "
 "수 없습니다."
 
-#: ../src/totem.c:478
+#: ../src/totem.c:474
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr ""
 "디스크가 드라이브 안에 들어 있고 올바르게 설정되어 있는 지 확인하십시오."
 
-#: ../src/totem.c:506
+#: ../src/totem.c:502
 msgid "Totem was not able to play this disc."
 msgstr "이 디스크를 연주할 수 없습니다."
 
-#: ../src/totem.c:507 ../src/totem.c:3255
+#: ../src/totem.c:503 ../src/totem.c:3269
 #: ../browser-plugin/totem-plugin-viewer.c:1428
 msgid "No reason."
 msgstr "이유 없음."
 
-#: ../src/totem.c:765
+#: ../src/totem.c:761
 msgid "Open Location..."
 msgstr "위치 열기..."
 
-#: ../src/totem.c:859 ../src/totem.c:867 ../src/vanity.c:292
+#: ../src/totem.c:855 ../src/totem.c:863 ../src/vanity.c:292
 #: ../src/vanity.c:300
 msgid "Totem could not get a screenshot of that film."
 msgstr "토템이 이 필름의 스크린샷을 찍을 수 없습니다."
 
-#: ../src/totem.c:867 ../src/vanity.c:300
+#: ../src/totem.c:863 ../src/vanity.c:300
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "이런 일이 일어날 수 없습니다; 벌레 보고서를 제출하십시오."
 
-#: ../src/totem.c:967
+#: ../src/totem.c:963
 msgid "No File"
 msgstr "파일 없음"
 
-#: ../src/totem.c:1080
+#: ../src/totem.c:1076
 msgid "No error message"
 msgstr "오류 메세지가 없습니다"
 
-#: ../src/totem.c:1296
+#: ../src/totem.c:1292
 msgid "Totem could not display the help contents."
 msgstr "토템 도움말 차례를 표시할 수 없습니다."
 
-#: ../src/totem.c:1559 ../src/totem.c:1561
+#: ../src/totem.c:1555 ../src/totem.c:1557
 #: ../browser-plugin/totem-plugin-viewer.c:1284
 msgid "An error occurred"
 msgstr "오류가 발생했습니다"
 
-#: ../src/totem.c:1889
+#: ../src/totem.c:1885
 #, c-format
 msgid "Totem could not seek in '%s'."
 msgstr "%s에서 이동할 수 없습니다."
 
-#: ../src/totem.c:3056
+#: ../src/totem.c:3065
 msgid "Previous Chapter/Movie"
 msgstr "이전 장으로/동영상으로"
 
-#: ../src/totem.c:3062
+#: ../src/totem.c:3071
 msgid "Play / Pause"
 msgstr "재생 / 일시 정지"
 
-#: ../src/totem.c:3069
+#: ../src/totem.c:3078
 msgid "Next Chapter/Movie"
 msgstr "다음 장으로/동영상으로"
 
-#: ../src/totem.c:3255
+#: ../src/totem.c:3269
 msgid "Totem could not startup."
 msgstr "토템이 시작할 수 없습니다."
 
-#: ../src/totem.c:3404
+#: ../src/totem.c:3418
 msgid "Could not initialize the thread-safe libraries."
 msgstr "쓰레드에 안전한 라이브러리를 초기화할 수 없습니다."
 
-#: ../src/totem.c:3404
+#: ../src/totem.c:3418
 msgid "Verify your system installation. Totem will now exit."
 msgstr "시스템 설치가 올바른지 확인하십시오. 토템을 끝냅니다."
 
 #. Handle command line arguments
-#: ../src/totem.c:3411
+#: ../src/totem.c:3425
 msgid "- Play movies and songs"
 msgstr "- 동영상과 음악 재생"
 
-#: ../src/totem.c:3419
+#: ../src/totem.c:3433
 msgid "Totem could not parse the command-line options"
 msgstr "토템이 명령행 옵션을 파싱할 수 없습니다."
 
-#: ../src/totem.c:3438
+#: ../src/totem.c:3452
 msgid "Totem could not initialize the configuration engine."
 msgstr "토템이 설정 엔진을 초기화할 수 없습니다."
 
-#: ../src/totem.c:3438
+#: ../src/totem.c:3452
 msgid "Make sure that GNOME is properly installed."
 msgstr "그놈을 올바르게 설치했는 지 확인하십시오."
 
 #. Main window
-#: ../src/totem.c:3466
+#: ../src/totem.c:3480
 msgid "main window"
 msgstr "메인 창"
 
@@ -1757,15 +1769,15 @@ msgstr "미디어 파일을 연주할 수 없습니다."
 msgid "Failed to retrieve working directory"
 msgstr "작업 디렉토리를 얻어올 수 없습니다"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4440
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4449
 msgid "Too old version of GStreamer installed."
 msgstr "너무 오래된 GStreamer가 설치되어 있습니다."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4447
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4456
 msgid "Media contains no supported video streams."
 msgstr "지원하지 않는 비디오 스트림이 미디어에 포함되어 있습니다."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4782
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4791
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1773,8 +1785,8 @@ msgstr ""
 "GStreamer 재생 오브젝트를 만드는 데 실패했습니다. GStreamer 설치가 제대로 되"
 "었는지 확인하십시오."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4912
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5016
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4921
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5025
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1782,7 +1794,7 @@ msgstr ""
 "비디오 출력을 열 수 없습니다. 비디오 출력이 사용가능 하지 않습니다. 멀티미디"
 "어 시스템 선택기에서 다른 비디오 출력을 선택하십시오."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4924
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4933
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1791,7 +1803,7 @@ msgstr ""
 "비디오 출력을 찾을 수 없습니다. 다른 GStreamer 플러그인을 설치하거나, 멀티미"
 "디어 시스템 선택기에서 다른 비디오 출력을 선택하십시오."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4955
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4964
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1801,7 +1813,7 @@ msgstr ""
 "드 서버가 실행되고 있지 않는 것 같습니다. 멀티미디어 시스템 선택기에서 다른 "
 "오디오 출력을 선택하십시오."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4970
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4979
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -1810,7 +1822,7 @@ msgstr ""
 "오디오 출력을 찾을 수 없습니다. 다른 GStreamer 플러그인을 설치하거나, 멀티미"
 "디어 시스템 선택기에서 다른 비디오 출력을 선택하십시오."
 
-#: ../src/backend/bacon-video-widget-xine.c:712
+#: ../src/backend/bacon-video-widget-xine.c:717
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1819,8 +1831,8 @@ msgstr ""
 "'%s' 오디오 드라이버를 읽어들일 수 없습니다\n"
 "장치가 사용중인지 확인하십시오."
 
-#: ../src/backend/bacon-video-widget-xine.c:1190
-#: ../src/backend/bacon-video-widget-xine.c:1744
+#: ../src/backend/bacon-video-widget-xine.c:1195
+#: ../src/backend/bacon-video-widget-xine.c:1752
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -1828,30 +1840,30 @@ msgstr ""
 "비디오 출력을 사용할 수 없습니다. 프로그램을 올바르게 설치했는지 확인하십시"
 "오."
 
-#: ../src/backend/bacon-video-widget-xine.c:1312
+#: ../src/backend/bacon-video-widget-xine.c:1317
 msgid "The server you are trying to connect to is not known."
 msgstr "연결하려는 서버를 알 수 없습니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:1316
+#: ../src/backend/bacon-video-widget-xine.c:1321
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "지정한 장치 이름이 (%s) 잘못된 것으로 보입니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:1320
+#: ../src/backend/bacon-video-widget-xine.c:1325
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "연결하려는 서버에 (%s) 연결할 수 없습니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:1324
+#: ../src/backend/bacon-video-widget-xine.c:1329
 msgid "The connection to this server was refused."
 msgstr "이 서버에 대한 연결이 거부되었습니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:1328
+#: ../src/backend/bacon-video-widget-xine.c:1333
 msgid "The specified movie could not be found."
 msgstr "지정한 동영상을 찾을 수 없습니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:1334
-#: ../src/backend/bacon-video-widget-xine.c:1352
+#: ../src/backend/bacon-video-widget-xine.c:1339
+#: ../src/backend/bacon-video-widget-xine.c:1357
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -1859,65 +1871,65 @@ msgstr ""
 "소스가 암호화되어 있고 읽을 수 없습니다. libdvdcss 없이 암호화된 DVD를 재생하"
 "시나요?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1337
+#: ../src/backend/bacon-video-widget-xine.c:1342
 msgid "The movie could not be read."
 msgstr "동영상을 읽을 수 없습니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:1346
+#: ../src/backend/bacon-video-widget-xine.c:1351
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "라이브러리 혹은 디코더를 읽어들이는 데 문제가 발생했습니다 (%s)."
 
-#: ../src/backend/bacon-video-widget-xine.c:1355
+#: ../src/backend/bacon-video-widget-xine.c:1360
 msgid "This file is encrypted and cannot be played back."
 msgstr "이 파일은 암호화되어 있어서 재생할 수 없습니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:1360
+#: ../src/backend/bacon-video-widget-xine.c:1365
 msgid "For security reasons, this movie can not be played back."
 msgstr "보안 문제때문에, 동영상을 재생할 수 없습니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:1365
+#: ../src/backend/bacon-video-widget-xine.c:1370
 msgid "The audio device is busy. Is another application using it?"
 msgstr ""
 "오디오 장치를 사용하는 중입니다. 다른 프로그램이 사용하고 있지 않습니까?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1370
+#: ../src/backend/bacon-video-widget-xine.c:1375
 msgid "You are not allowed to open this file."
 msgstr "이 파일을 열 권한이 없습니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:1372
+#: ../src/backend/bacon-video-widget-xine.c:1377
 msgid "The server refused access to this file or stream."
 msgstr "서버에서 이 파일이나 스트림에 대한 접근을 거부했습니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:1381
+#: ../src/backend/bacon-video-widget-xine.c:1386
 msgid "The file you tried to play is an empty file."
 msgstr "빈 파일을 연주하려 합니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:1545
+#: ../src/backend/bacon-video-widget-xine.c:1550
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "이 동영상의 위치를 처리할 입력 플러그인이 없습니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:1549
+#: ../src/backend/bacon-video-widget-xine.c:1554
 msgid "There is no plugin to handle this movie."
 msgstr "이 동영상을 처리할 플러그인이 없습니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:1553
+#: ../src/backend/bacon-video-widget-xine.c:1558
 msgid "This movie is broken and can not be played further."
 msgstr "이 동영상은 깨졌습니다. 더이상 재생할 수 없습니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:1557
+#: ../src/backend/bacon-video-widget-xine.c:1562
 msgid "This location is not a valid one."
 msgstr "올바른 위치가 아닙니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:1561
+#: ../src/backend/bacon-video-widget-xine.c:1566
 msgid "This movie could not be opened."
 msgstr "이 동영상을 열 수 없습니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:1565
+#: ../src/backend/bacon-video-widget-xine.c:1570
 msgid "Generic Error."
 msgstr "일반 오류."
 
-#: ../src/backend/bacon-video-widget-xine.c:2263
+#: ../src/backend/bacon-video-widget-xine.c:2278
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1926,7 +1938,7 @@ msgstr ""
 "'%s' 비디오 코덱을 처리할 수 없습니다. 어떤 형식의 동영상은 재생하려면 플러그"
 "인을 따로 설치해야 합니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:2267
+#: ../src/backend/bacon-video-widget-xine.c:2282
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1935,26 +1947,26 @@ msgstr ""
 "'%s' 오디오 코덱을 처리할 수 없습니다. 어떤 형식의 동영상은 재생하려면 플러그"
 "인을 따로 설치해야 합니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:2283
+#: ../src/backend/bacon-video-widget-xine.c:2298
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "오디오만 들어 있는 파일이고, 오디오 출력을 사용할 수 없습니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:3756
-#: ../src/backend/bacon-video-widget-xine.c:3803
-#: ../src/backend/bacon-video-widget-xine.c:3825
+#: ../src/backend/bacon-video-widget-xine.c:3776
+#: ../src/backend/bacon-video-widget-xine.c:3823
+#: ../src/backend/bacon-video-widget-xine.c:3845
 #, c-format
 msgid "Language %d"
 msgstr "언어 %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3914
+#: ../src/backend/bacon-video-widget-xine.c:3934
 msgid "No video to capture."
 msgstr "캡처할 비디오가 없습니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:3922
+#: ../src/backend/bacon-video-widget-xine.c:3942
 msgid "Video codec is not handled."
 msgstr "비디오 코덱을 처리할 수 없습니다."
 
-#: ../src/backend/bacon-video-widget-xine.c:3933
+#: ../src/backend/bacon-video-widget-xine.c:3953
 msgid "Movie is not playing."
 msgstr "동영상 재생중이 아닙니다."
 
@@ -2118,3 +2130,6 @@ msgstr "쓰레드에 안전한 라이브러리를 초기화할 수 없습니다.
 #: ../browser-plugin/totem-plugin-viewer.c:1840
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "시스템 설치가 올바른지 확인하십시오. 토템 플러그인을 끝냅니다."
+
+#~ msgid "Save..."
+#~ msgstr "저장..."
