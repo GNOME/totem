@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Totem for Gnome HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-19 03:16+0000\n"
-"PO-Revision-Date: 2007-01-28 11:37+0700\n"
-"Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
+"POT-Creation-Date: 2007-02-12 03:17+0000\n"
+"PO-Revision-Date: 2007-02-24 16:50+0700\n"
+"Last-Translator: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: LocFactoryEditor 1.6fc1\n"
+"X-Generator: Emacs 21.4.1, po-mode 2.02+0.4\n"
 
 #: ../data/playlist.glade.h:1
 msgid "Add..."
@@ -41,8 +41,8 @@ msgid "Remove"
 msgstr "Gỡ bỏ"
 
 #: ../data/playlist.glade.h:6
-msgid "Save..."
-msgstr "Lưu..."
+msgid "Save Playlist..."
+msgstr "Lưu danh mục phát..."
 
 #. Channels
 #: ../data/properties.glade.h:1 ../src/bacon-video-widget-properties.c:170
@@ -352,8 +352,8 @@ msgid "Time:"
 msgstr "Thời gian:"
 
 #. Title
-#: ../data/totem.glade.h:45 ../src/totem.c:974 ../src/totem.c:3399
-#: ../src/totem.c:3426
+#: ../data/totem.glade.h:45 ../src/totem.c:974 ../src/totem.c:3403
+#: ../src/totem.c:3430
 msgid "Totem Movie Player"
 msgstr "Bộ phát phim Totem"
 
@@ -413,7 +413,8 @@ msgstr "Địa điểm mặc định cho hộp thoại \"Mở...\""
 msgid ""
 "Default location for the \"Open...\" dialogues, default is the current "
 "directory"
-msgstr "Địa điểm mặc định cho hộp thoại \"Mở...\", mặc định là thư mục hiện thời"
+msgstr ""
+"Địa điểm mặc định cho hộp thoại \"Mở...\", mặc định là thư mục hiện thời"
 
 #: ../data/totem.schemas.in.h:5
 msgid "Enable deinterlacing"
@@ -549,7 +550,7 @@ msgid "Save File"
 msgstr "Lưu tập tin"
 
 # Name: don't translate / Tên: đừng dịch
-#: ../data/vanity.glade.h:2 ../src/vanity.c:260
+#: ../data/vanity.glade.h:2 ../src/vanity.c:251
 msgid "Vanity"
 msgstr "Vanity"
 
@@ -652,7 +653,7 @@ msgid "Couldn't load the '%s' interface."
 msgstr "Không tải được giao diện « %s »."
 
 #: ../src/totem-interface.c:119 ../src/totem-interface.c:121
-#: ../src/totem-menu.c:1360
+#: ../src/totem-menu.c:1379
 msgid "Make sure that Totem is properly installed."
 msgstr "Hãy bảo đảm là trình Totem đã được cài đặt đúng."
 
@@ -662,7 +663,7 @@ msgid ""
 "terms of the GNU General Public License as published by the Free Software "
 "Foundation; either version 2 of the License, or (at your option) any later "
 "version."
-msgstr ""
+msgstr "Chương trình này là phần mềm tự do; bạn có thể phát hành lại nó và/hoặc sửa đổi nó với điều kiện của Giấy phép Công cộng GNU như được xuất bản bởi Tổ chức Phần mềm Tự do; hoặc phiên bản 2 của Giấy phép này, hoặc (tùy chọn) bất kỳ phiên bản sau nào."
 
 #: ../src/totem-interface.c:240
 msgid ""
@@ -670,7 +671,7 @@ msgid ""
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
 "FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
 "details."
-msgstr ""
+msgstr "Chương trình này được phát hành vì mong muốn nó có ích, nhưng KHÔNG CÓ BẢO HÀNH GÌ CẢ, THẬM CHÍ KHÔNG CÓ BẢO ĐẢM ĐƯỢC NGỤ Ý KHẢ NĂNG BÁN HAY KHẢ NĂNG LÀM ĐƯỢC VIỆC DỨT KHOÁT. Xem Giấy phép Công cộng GNU để biết thêm chi tiết."
 
 #: ../src/totem-interface.c:244
 msgid ""
@@ -678,414 +679,420 @@ msgid ""
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
 "Suite 330, Boston, MA  02111-1307  USA"
 msgstr ""
+"Bạn đã nhận một bản sao của Giấy phép Công cộng GNU cùng với chương trình này; nếu không, hãy viết thư cho Tổ chức Phần mềm Tự do,\n"
+"Free Software Foundation, Inc.,\n"
+"51 Franklin Street, Fifth Floor,\n"
+"Boston, MA  02110-1301, USA."
 
 #: ../src/totem-interface.c:247
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
-msgstr "Totem chứa một ngoại lệ để cho phép sử dụng các phần bổ sung độc quyền GStreamer."
+msgstr ""
+"Totem chứa một ngoại lệ để cho phép sử dụng các phần bổ sung độc quyền "
+"GStreamer."
 
-#: ../src/totem-menu.c:270
+#: ../src/totem-menu.c:284
 msgid "None"
 msgstr "Không"
 
-#: ../src/totem-menu.c:274 ../src/totem-menu.c:1246
+#: ../src/totem-menu.c:288 ../src/totem-menu.c:1265
 msgid "Auto"
 msgstr "Tự động"
 
-#: ../src/totem-menu.c:755
+#: ../src/totem-menu.c:774
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "Phát Đĩa « %s »"
 
-#: ../src/totem-menu.c:758
+#: ../src/totem-menu.c:777
 #, c-format
 msgid "device%d"
 msgstr "thiết-bị%d"
 
-#: ../src/totem-menu.c:1074
+#: ../src/totem-menu.c:1093
 msgid "GTK+"
 msgstr "GTK+"
 
-#: ../src/totem-menu.c:1076
+#: ../src/totem-menu.c:1095
 msgid "GNOME"
 msgstr "GNOME"
 
 #. This lists the back-end and front-end types and versions, such as
 #. * Movie Player using GStreamer 0.10.1 and GNOME
-#: ../src/totem-menu.c:1082
+#: ../src/totem-menu.c:1101
 #, c-format
 msgid "Movie Player using %s and %s"
 msgstr "Bộ phát phim dùng %s và %s"
 
-#: ../src/totem-menu.c:1087 ../browser-plugin/totem-plugin-viewer.c:1098
+#: ../src/totem-menu.c:1106 ../browser-plugin/totem-plugin-viewer.c:1098
 msgid "Copyright © 2002-2006 Bastien Nocera"
 msgstr "Tác quyền © năm 2002-2006 của Bastien Nocera"
 
-#: ../src/totem-menu.c:1092 ../src/vanity.c:267
+#: ../src/totem-menu.c:1111 ../src/vanity.c:258
 #: ../browser-plugin/totem-plugin-viewer.c:1101
 msgid "translator-credits"
 msgstr "Nhóm Việt hóa GNOME <http://gnomevi.sourceforge.net>"
 
-#: ../src/totem-menu.c:1177
+#: ../src/totem-menu.c:1196
 msgid "_Movie"
 msgstr "_Phim"
 
-#: ../src/totem-menu.c:1178
+#: ../src/totem-menu.c:1197
 msgid "_Open..."
 msgstr "_Mở..."
 
-#: ../src/totem-menu.c:1178
+#: ../src/totem-menu.c:1197
 msgid "Open a file"
 msgstr "Mở tập tin"
 
-#: ../src/totem-menu.c:1179
+#: ../src/totem-menu.c:1198
 msgid "Open _Location..."
 msgstr "Mở đị_a chỉ..."
 
-#: ../src/totem-menu.c:1179
+#: ../src/totem-menu.c:1198
 msgid "Open a non-local file"
 msgstr "Mở tập tin không phải cục bộ"
 
-#: ../src/totem-menu.c:1180
+#: ../src/totem-menu.c:1199
 msgid "_Eject"
 msgstr "Đẩy _ra"
 
-#: ../src/totem-menu.c:1181
+#: ../src/totem-menu.c:1200
 msgid "_Properties"
 msgstr "T_huộc tính"
 
-#: ../src/totem-menu.c:1182
+#: ../src/totem-menu.c:1201
 msgid "Play / Pa_use"
 msgstr "Phát / Tạm _dừng"
 
-#: ../src/totem-menu.c:1182
+#: ../src/totem-menu.c:1201
 msgid "Play or pause the movie"
 msgstr "Phát hoặc tạm dừng phim"
 
-#: ../src/totem-menu.c:1183
+#: ../src/totem-menu.c:1202
 msgid "_Quit"
 msgstr "T_hoát"
 
-#: ../src/totem-menu.c:1183
+#: ../src/totem-menu.c:1202
 msgid "Quit the program"
 msgstr "Thoát chương trình"
 
-#: ../src/totem-menu.c:1185
+#: ../src/totem-menu.c:1204
 msgid "_Edit"
 msgstr "_Sửa"
 
-#: ../src/totem-menu.c:1186
+#: ../src/totem-menu.c:1205
 msgid "Take _Screenshot..."
 msgstr "Chụp ảnh _màn hình..."
 
-#: ../src/totem-menu.c:1186
+#: ../src/totem-menu.c:1205
 msgid "Take a screenshot"
 msgstr "Chụp ảnh màn hình"
 
-#: ../src/totem-menu.c:1187
+#: ../src/totem-menu.c:1206
 msgid "_Clear Playlist"
 msgstr "_Xoá danh mục phát"
 
-#: ../src/totem-menu.c:1187
+#: ../src/totem-menu.c:1206
 msgid "Clear playlist"
 msgstr "Xoá danh mục phát"
 
-#: ../src/totem-menu.c:1188
+#: ../src/totem-menu.c:1207
 msgid "Prefere_nces"
 msgstr "Tù_y thích"
 
-#: ../src/totem-menu.c:1190
+#: ../src/totem-menu.c:1209
 msgid "_View"
 msgstr "_Xem"
 
-#: ../src/totem-menu.c:1191
+#: ../src/totem-menu.c:1210
 msgid "_Fullscreen"
 msgstr "T_oàn màn hình"
 
-#: ../src/totem-menu.c:1191
+#: ../src/totem-menu.c:1210
 msgid "Switch to fullscreen"
 msgstr "Chuyển thành toàn màn hình"
 
-#: ../src/totem-menu.c:1192
+#: ../src/totem-menu.c:1211
 msgid "Fit Window to Movie"
 msgstr "Khung cửa sổ vừa với phim"
 
-#: ../src/totem-menu.c:1193
+#: ../src/totem-menu.c:1212
 msgid "_Resize 1:2"
 msgstr "Đổ_i cỡ 1:2"
 
-#: ../src/totem-menu.c:1193
+#: ../src/totem-menu.c:1212
 msgid "Resize to half the video size"
 msgstr "Chuyển kích cỡ phim còn một nửa"
 
-#: ../src/totem-menu.c:1194
+#: ../src/totem-menu.c:1213
 msgid "Resize _1:1"
 msgstr "Đổi cỡ _1:1"
 
-#: ../src/totem-menu.c:1194
+#: ../src/totem-menu.c:1213
 msgid "Resize to video size"
 msgstr "Chuyển thành cỡ phim"
 
-#: ../src/totem-menu.c:1195
+#: ../src/totem-menu.c:1214
 msgid "Resize _2:1"
 msgstr "Đổi cỡ _2:1"
 
-#: ../src/totem-menu.c:1195
+#: ../src/totem-menu.c:1214
 msgid "Resize to twice the video size"
 msgstr "Chuyển kích cỡ phim lên gấp đôi"
 
-#: ../src/totem-menu.c:1196
+#: ../src/totem-menu.c:1215
 msgid "_Aspect Ratio"
 msgstr "_Tỷ lệ hình thể"
 
-#: ../src/totem-menu.c:1197
+#: ../src/totem-menu.c:1216
 msgid "Switch An_gles"
 msgstr "Chuyển đổi _góc"
 
-#: ../src/totem-menu.c:1197
+#: ../src/totem-menu.c:1216
 msgid "Switch angles"
 msgstr "Chuyển đổi góc"
 
 #. { "subtitles-menu", NULL, N_("S_ubtitles") },
-#: ../src/totem-menu.c:1200
+#: ../src/totem-menu.c:1219
 msgid "_Go"
 msgstr "_Tới"
 
-#: ../src/totem-menu.c:1201
+#: ../src/totem-menu.c:1220
 msgid "_DVD Menu"
 msgstr "Trình đơn đĩa _DVD"
 
-#: ../src/totem-menu.c:1201
+#: ../src/totem-menu.c:1220
 msgid "Go to the DVD menu"
 msgstr "Đến trình đơn đĩa DVD"
 
-#: ../src/totem-menu.c:1202
+#: ../src/totem-menu.c:1221
 msgid "_Title Menu"
 msgstr "Trình đơn _tựa"
 
-#: ../src/totem-menu.c:1202
+#: ../src/totem-menu.c:1221
 msgid "Go to the title menu"
 msgstr "Đến trình đơn tiêu đề"
 
-#: ../src/totem-menu.c:1203
+#: ../src/totem-menu.c:1222
 msgid "A_udio Menu"
 msgstr "Trình đơn â_m thanh"
 
-#: ../src/totem-menu.c:1203
+#: ../src/totem-menu.c:1222
 msgid "Go to the audio menu"
 msgstr "Đến trình đơn âm thanh"
 
-#: ../src/totem-menu.c:1204
+#: ../src/totem-menu.c:1223
 msgid "_Angle Menu"
 msgstr "Trình đơn gó_c"
 
-#: ../src/totem-menu.c:1204
+#: ../src/totem-menu.c:1223
 msgid "Go to the angle menu"
 msgstr "Đến trình đơn góc"
 
-#: ../src/totem-menu.c:1205
+#: ../src/totem-menu.c:1224
 msgid "_Chapter Menu"
 msgstr "Trình đơn _chương"
 
-#: ../src/totem-menu.c:1205
+#: ../src/totem-menu.c:1224
 msgid "Go to the chapter menu"
 msgstr "Đến trình đơn chương"
 
-#: ../src/totem-menu.c:1206
+#: ../src/totem-menu.c:1225
 msgid "_Next Chapter/Movie"
 msgstr "Chươ_ng/Phim kế"
 
-#: ../src/totem-menu.c:1206
+#: ../src/totem-menu.c:1225
 msgid "Next chapter or movie"
 msgstr "Chương hay Phim tiếp theo"
 
-#: ../src/totem-menu.c:1207
+#: ../src/totem-menu.c:1226
 msgid "_Previous Chapter/Movie"
 msgstr "Chương/_Phim trước"
 
-#: ../src/totem-menu.c:1207
+#: ../src/totem-menu.c:1226
 msgid "Previous chapter or movie"
 msgstr "Chương hay Phim trước"
 
-#: ../src/totem-menu.c:1208
+#: ../src/totem-menu.c:1227
 msgid "_Skip to..."
 msgstr "_Nhảy tới..."
 
-#: ../src/totem-menu.c:1208
+#: ../src/totem-menu.c:1227
 msgid "Skip to a specific time"
 msgstr "Nhảy đến thời điểm chỉ định"
 
-#: ../src/totem-menu.c:1210
+#: ../src/totem-menu.c:1229
 msgid "_Sound"
 msgstr "Â_m thanh"
 
 #. { "languages-menu", NULL, N_("_Languages") },
-#: ../src/totem-menu.c:1212
+#: ../src/totem-menu.c:1231
 msgid "Volume _Up"
 msgstr "_Tăng âm"
 
-#: ../src/totem-menu.c:1212
+#: ../src/totem-menu.c:1231
 msgid "Volume up"
 msgstr "Tăng âm"
 
-#: ../src/totem-menu.c:1213
+#: ../src/totem-menu.c:1232
 msgid "Volume _Down"
 msgstr "_Giảm âm"
 
-#: ../src/totem-menu.c:1213
+#: ../src/totem-menu.c:1232
 msgid "Volume down"
 msgstr "Giảm âm"
 
-#: ../src/totem-menu.c:1215
+#: ../src/totem-menu.c:1234
 msgid "_Help"
 msgstr "Trợ _giúp"
 
-#: ../src/totem-menu.c:1216
+#: ../src/totem-menu.c:1235
 msgid "_Contents"
 msgstr "Mục lụ_c"
 
-#: ../src/totem-menu.c:1216
+#: ../src/totem-menu.c:1235
 msgid "Help contents"
 msgstr "Nội dung trợ giúp"
 
-#: ../src/totem-menu.c:1217
+#: ../src/totem-menu.c:1236
 msgid "_About"
 msgstr "_Giới thiệu"
 
-#: ../src/totem-menu.c:1221
+#: ../src/totem-menu.c:1240
 msgid "Zoom In"
 msgstr "Phóng to"
 
-#: ../src/totem-menu.c:1221
+#: ../src/totem-menu.c:1240
 msgid "Zoom in"
 msgstr "Phóng to"
 
-#: ../src/totem-menu.c:1222
+#: ../src/totem-menu.c:1241
 msgid "Zoom Reset"
 msgstr "Đặt lại phóng to/thu nhỏ"
 
-#: ../src/totem-menu.c:1222
+#: ../src/totem-menu.c:1241
 msgid "Zoom reset"
 msgstr "Đặt lại phóng to/thu nhỏ"
 
-#: ../src/totem-menu.c:1223
+#: ../src/totem-menu.c:1242
 msgid "Zoom Out"
 msgstr "Thu nhỏ"
 
-#: ../src/totem-menu.c:1223
+#: ../src/totem-menu.c:1242
 msgid "Zoom out"
 msgstr "Thu nhỏ"
 
-#: ../src/totem-menu.c:1227 ../src/totem-menu.c:1232
+#: ../src/totem-menu.c:1246 ../src/totem-menu.c:1251
 msgid "Skip _Forward"
 msgstr "Nhảy _tới"
 
-#: ../src/totem-menu.c:1227 ../src/totem-menu.c:1232
+#: ../src/totem-menu.c:1246 ../src/totem-menu.c:1251
 msgid "Skip forward"
 msgstr "Nhảy qua tiến lên"
 
-#: ../src/totem-menu.c:1228 ../src/totem-menu.c:1233
+#: ../src/totem-menu.c:1247 ../src/totem-menu.c:1252
 msgid "Skip _Backwards"
 msgstr "Nhảy _lùi"
 
-#: ../src/totem-menu.c:1228 ../src/totem-menu.c:1233
+#: ../src/totem-menu.c:1247 ../src/totem-menu.c:1252
 msgid "Skip backwards"
 msgstr "Nhảy qua lùi lại"
 
-#: ../src/totem-menu.c:1237
+#: ../src/totem-menu.c:1256
 msgid "_Repeat Mode"
 msgstr "Chế độ phát _lại"
 
-#: ../src/totem-menu.c:1237
+#: ../src/totem-menu.c:1256
 msgid "Set the repeat mode"
 msgstr "Đặt chế độ phát lại"
 
-#: ../src/totem-menu.c:1238
+#: ../src/totem-menu.c:1257
 msgid "Shuff_le Mode"
 msgstr "Chế độ _xáo trộn"
 
-#: ../src/totem-menu.c:1238
+#: ../src/totem-menu.c:1257
 msgid "Set the shuffle mode"
 msgstr "Đặt chế độ xáo trộn"
 
-#: ../src/totem-menu.c:1239
+#: ../src/totem-menu.c:1258
 msgid "_Deinterlace"
 msgstr "_Bỏ kết hợp"
 
-#: ../src/totem-menu.c:1239
+#: ../src/totem-menu.c:1258
 msgid "Deinterlace"
 msgstr "Bỏ kết hợp"
 
-#: ../src/totem-menu.c:1240
+#: ../src/totem-menu.c:1259
 msgid "Always on _Top"
 msgstr "Luôn hiện phía _trước"
 
-#: ../src/totem-menu.c:1240
+#: ../src/totem-menu.c:1259
 msgid "Always on top"
 msgstr "Luôn hiện phía trước"
 
-#: ../src/totem-menu.c:1241
+#: ../src/totem-menu.c:1260
 msgid "Show _Controls"
 msgstr "Hiện điều _khiển"
 
-#: ../src/totem-menu.c:1241
+#: ../src/totem-menu.c:1260
 msgid "Show controls"
 msgstr "Hiện điều khiển"
 
-#: ../src/totem-menu.c:1242
+#: ../src/totem-menu.c:1261
 msgid "_Sidebar"
 msgstr "Ô _lề"
 
-#: ../src/totem-menu.c:1242
+#: ../src/totem-menu.c:1261
 msgid "Show or hide the sidebar"
 msgstr "Hiện/ẩn ô lề"
 
-#: ../src/totem-menu.c:1246
+#: ../src/totem-menu.c:1265
 msgid "Sets automatic aspect ratio"
 msgstr "Đặt tỷ lệ hình thể tự động"
 
-#: ../src/totem-menu.c:1247
+#: ../src/totem-menu.c:1266
 msgid "Square"
 msgstr "Vuông"
 
-#: ../src/totem-menu.c:1247
+#: ../src/totem-menu.c:1266
 msgid "Sets square aspect ratio"
 msgstr "Đặt tỷ lệ hình thể vuông"
 
-#: ../src/totem-menu.c:1248
+#: ../src/totem-menu.c:1267
 msgid "4:3 (TV)"
 msgstr "4:3 (TV)"
 
-#: ../src/totem-menu.c:1248
+#: ../src/totem-menu.c:1267
 msgid "Sets 4:3 (TV) aspect ratio"
 msgstr "Đặt tỷ lệ hình thể 4:3 (TV)"
 
-#: ../src/totem-menu.c:1249
+#: ../src/totem-menu.c:1268
 msgid "16:9 (Widescreen)"
 msgstr "16:9 (Màn hình rộng)"
 
-#: ../src/totem-menu.c:1249
+#: ../src/totem-menu.c:1268
 msgid "Sets 16:9 (Anamorphic) aspect ratio"
 msgstr "Đặt tỷ lệ hình thể 16:9 (méo mó)"
 
-#: ../src/totem-menu.c:1250
+#: ../src/totem-menu.c:1269
 msgid "2.11:1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: ../src/totem-menu.c:1250
+#: ../src/totem-menu.c:1269
 msgid "Sets 2.11:1 (DVB) aspect ratio"
 msgstr "Đặt tỷ lệ hình thể 2.11:1 (DVB)"
 
-#: ../src/totem-menu.c:1310
+#: ../src/totem-menu.c:1329
 msgid "S_ubtitles"
 msgstr "_Phụ đề"
 
-#: ../src/totem-menu.c:1316
+#: ../src/totem-menu.c:1335
 msgid "_Languages"
 msgstr "_Ngôn ngữ"
 
-#: ../src/totem-menu.c:1359
+#: ../src/totem-menu.c:1378
 msgid "Couldn't load the 'ui description' file"
 msgstr "Không nạp được tập tin'mô tả giao diện'"
 
@@ -1141,15 +1148,16 @@ msgstr "Thêm vào hàng"
 msgid "Replace"
 msgstr "Thay thế"
 
-#: ../src/totem-options.c:53
+#. FIXME translate
+#: ../src/totem-options.c:54
 msgid "Seek"
 msgstr "Tìm"
 
-#: ../src/totem-options.c:54
+#: ../src/totem-options.c:55
 msgid "Playlist index"
 msgstr "Danh mục phát"
 
-#: ../src/totem-options.c:55
+#: ../src/totem-options.c:56
 msgid "Movies to play"
 msgstr "Phim cần xem"
 
@@ -1477,7 +1485,7 @@ msgstr "Phương Tây"
 msgid "Vietnamese"
 msgstr "Việt"
 
-#: ../src/totem-uri.c:233
+#: ../src/totem-uri.c:234
 msgid "All files"
 msgstr "Mọi tập tin"
 
@@ -1485,7 +1493,15 @@ msgstr "Mọi tập tin"
 msgid "Supported files"
 msgstr "Các tập tin đã hỗ trợ"
 
-#: ../src/totem-uri.c:267
+#: ../src/totem-uri.c:251
+msgid "Audio files"
+msgstr "Tập tin âm thanh"
+
+#: ../src/totem-uri.c:259
+msgid "Video files"
+msgstr "Tập tin phim ảnh"
+
+#: ../src/totem-uri.c:286
 msgid "Select Movies or Playlists"
 msgstr "Chọn phim hoặc danh mục phát"
 
@@ -1544,7 +1560,7 @@ msgstr ""
 msgid "Totem was not able to play this disc."
 msgstr "Totem không thể phát đĩa này."
 
-#: ../src/totem.c:507 ../src/totem.c:3253
+#: ../src/totem.c:507 ../src/totem.c:3255
 #: ../browser-plugin/totem-plugin-viewer.c:1428
 msgid "No reason."
 msgstr "Không lý do."
@@ -1553,12 +1569,12 @@ msgstr "Không lý do."
 msgid "Open Location..."
 msgstr "Mở địa chỉ..."
 
-#: ../src/totem.c:859 ../src/totem.c:867 ../src/vanity.c:300
-#: ../src/vanity.c:308
+#: ../src/totem.c:859 ../src/totem.c:867 ../src/vanity.c:292
+#: ../src/vanity.c:300
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem đã không chụp được ảnh màn hình của phim đó."
 
-#: ../src/totem.c:867 ../src/vanity.c:308
+#: ../src/totem.c:867 ../src/vanity.c:300
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Không nên trở thành như vậy, vui lòng thông báo lỗi."
 
@@ -1584,70 +1600,62 @@ msgstr "Gặp lỗi"
 msgid "Totem could not seek in '%s'."
 msgstr "Totem không thể tìm trong « %s »."
 
-#: ../src/totem.c:3054
+#: ../src/totem.c:3056
 msgid "Previous Chapter/Movie"
 msgstr "Chương/Phim trước"
 
-#: ../src/totem.c:3060
+#: ../src/totem.c:3062
 msgid "Play / Pause"
 msgstr "Phát / Tạm dừng"
 
-#: ../src/totem.c:3067
+#: ../src/totem.c:3069
 msgid "Next Chapter/Movie"
 msgstr "Chương/Phim kế"
 
-#: ../src/totem.c:3253
+#: ../src/totem.c:3255
 msgid "Totem could not startup."
 msgstr "Totem không thể khởi chạy."
 
-#: ../src/totem.c:3400
+#: ../src/totem.c:3404
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Không thể sơ khởi thư viện « thread-safe » (mạch an toàn)."
 
-#: ../src/totem.c:3400
+#: ../src/totem.c:3404
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Hãy kiểm tra lại bản cài đặt hệ thống. Totem thoát ra ngay bây giờ."
 
 #. Handle command line arguments
-#: ../src/totem.c:3407
+#: ../src/totem.c:3411
 msgid "- Play movies and songs"
 msgstr "- Phát phim và nhạc"
 
-#: ../src/totem.c:3415
+#: ../src/totem.c:3419
 msgid "Totem could not parse the command-line options"
 msgstr "Totem không thể phân tích tuỳ chọn dòng lệnh"
 
-#: ../src/totem.c:3434
+#: ../src/totem.c:3438
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem không thể sơ khởi cơ chế cấu hình."
 
-#: ../src/totem.c:3434
+#: ../src/totem.c:3438
 msgid "Make sure that GNOME is properly installed."
 msgstr "Hãy bảo đảm là Gnome đã được cài đặt đúng."
 
 #. Main window
-#: ../src/totem.c:3462
+#: ../src/totem.c:3466
 msgid "main window"
 msgstr "cửa sổ chính"
 
-#: ../src/vanity.c:75
-msgid "Backend options"
-msgstr "Tùy chọn hậu phương"
-
-#: ../src/vanity.c:76
-msgid "Debug mode on"
-msgstr "Chế độ gỡ rối đã bật"
-
-#: ../src/vanity.c:256
+#: ../src/vanity.c:247
 #, c-format
 msgid "Webcam utility using %s"
 msgstr "Tiện ích Webcam dùng « %s »"
 
-#: ../src/vanity.c:262
+#: ../src/vanity.c:253
 msgid "Copyright © 2002-2005 Bastien Nocera"
 msgstr "Bản quyền © năm 2002-2005 Bastien Nocera"
 
-#: ../src/vanity.c:551
+#: ../src/vanity.c:544
 #, c-format
 msgid ""
 "Vanity could not startup:\n"
@@ -1656,11 +1664,11 @@ msgstr ""
 "Vanity không thể khởi chạy:\n"
 "%s"
 
-#: ../src/vanity.c:552
+#: ../src/vanity.c:545
 msgid "No reason"
 msgstr "Không lý do"
 
-#: ../src/vanity.c:590
+#: ../src/vanity.c:585
 #, c-format
 msgid ""
 "Vanity could not contact the webcam.\n"
@@ -1669,7 +1677,7 @@ msgstr ""
 "Vanity không thể liên lạc với Webcam.\n"
 "Lý do: %s."
 
-#: ../src/vanity.c:606
+#: ../src/vanity.c:601
 #, c-format
 msgid ""
 "Vanity could not play video from the webcam.\n"
@@ -1678,11 +1686,11 @@ msgstr ""
 "Vanity không thể phát ảnh động từ Webcam.\n"
 "Lý do: %s."
 
-#: ../src/vanity.c:642
-msgid "Vanity Webcam Utility"
-msgstr "Tiện ích Webcam Vanity"
+#: ../src/vanity.c:625
+msgid "Debug mode on"
+msgstr "Chế độ gỡ rối đã bật"
 
-#: ../src/vanity.c:647
+#: ../src/vanity.c:638
 msgid ""
 "Could not initialize the thread-safe libraries.\n"
 "Verify your system installation. Vanity will now exit."
@@ -1690,7 +1698,11 @@ msgstr ""
 "Không thể sơ khởi thư viện « thread-safe » (mạch an toàn).\n"
 "Hãy kiểm tra lại bản cài đặt hệ thống. Vanity thoát ra ngay bây giờ."
 
-#: ../src/vanity.c:673
+#: ../src/vanity.c:675
+msgid "Vanity Webcam Utility"
+msgstr "Tiện ích Webcam Vanity"
+
+#: ../src/vanity.c:681
 #, c-format
 msgid ""
 "Vanity could not initialize the \n"
@@ -1701,7 +1713,7 @@ msgstr ""
 "cơ chế cấu hình:\n"
 "%s"
 
-#: ../src/vanity.c:695 ../src/vanity.c:710
+#: ../src/vanity.c:702 ../src/vanity.c:716
 msgid ""
 "Couldn't load the main interface (vanity.glade).\n"
 "Make sure that Vanity is properly installed."
@@ -1709,7 +1721,7 @@ msgstr ""
 "Không tải được giao diện chính (« vanity.glade »).\n"
 "Kiểm tra xem Vanity được cài đặt đúng chưa."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2445
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2452
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1717,15 +1729,15 @@ msgstr ""
 "Không tìm thấy kết xuất âm thanh đã yêu cầu. Vui lòng chọn một kết xuất âm "
 "thanh khác trong Bộ chọn Hệ thống Đa phương tiên."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2450
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2457
 msgid "Location not found."
 msgstr "Không tìm thấy địa điểm"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2454
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2461
 msgid "Could not open location; You may not have permission to open the file."
 msgstr "Không thể mở địa điểm; có lẽ bạn không có quyền mở tập tin này."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2465
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2472
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1735,7 +1747,7 @@ msgstr ""
 "các ứng dụng ảnh động khác, hoặc chọn một kết xuất ảnh động khác trong Bộ "
 "chọn Hệ thống Đa phương tiên."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2471
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2478
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1746,49 +1758,47 @@ msgstr ""
 "cũng muốn suy tính dùng một trình phục vụ âm thanh."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2489
-#, c-format
-msgid ""
-"The playback of this movie requires a '%s' plugin, which is not installed."
-msgstr "Phát phim này cần có phần bổ sung '%s', chưa được cài đặt."
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2495
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2496
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2502
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr "Phát phim này cần có phần bổ sung '%s', chưa được cài đặt."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2496
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2503
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
 "installed:\n"
 "\n"
 "%s"
-msgstr "Phát phim này cần có những bộ giải mã sau (chưa được cài đặt):\n\n%s"
+msgstr ""
+"Phát phim này cần có những bộ giải mã sau (chưa được cài đặt):\n"
+"\n"
+"%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2521
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2528
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr "Không thể phát tập tin này trên mạng. Hãy cố tải nó về đĩa trước hết."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2593
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2600
 msgid "Media file could not be played."
 msgstr "Không thể phát tập tin trên vật chứa."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2677
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2731
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2736
 msgid "Failed to retrieve working directory"
 msgstr "Không gọi được thư mục làm việc"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4443
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4440
 msgid "Too old version of GStreamer installed."
 msgstr "Có phiên bản GStreamer quá cũ đã cài đặt."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4450
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4447
 msgid "Media contains no supported video streams."
 msgstr "Vật chứa không chứa dòng ảnh động được hỗ trợ."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4785
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4782
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1796,8 +1806,8 @@ msgstr ""
 "Không tạo được đối tượng phát GStreamer. Vui lòng kiểm tra bản cài đặt "
 "GStreamer là đúng."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4913
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5017
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4912
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5016
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1805,7 +1815,7 @@ msgstr ""
 "Không mở kết xuất ảnh động được. Có thể nó không sẵn sàng. Vui lòng chọn một "
 "kết xuất ảnh động khác trong Bộ chọn Hệ thống Đa phương tiên."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4925
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4924
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1815,7 +1825,7 @@ msgstr ""
 "GStreamer thêm, hoặc chọn một kết xuất ảnh động khác trong Bộ chọn Hệ thống "
 "Đa phương tiên."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4956
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4955
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1825,7 +1835,7 @@ msgstr ""
 "thanh, hoặc trình phục vụ âm thanh không đang chạy. Vui lòng chọn một kết "
 "xuất âm thanh khác trong Bộ chọn Hệ thống Đa phương tiên."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4971
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4970
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -1835,7 +1845,7 @@ msgstr ""
 "GStreamer thêm, hoặc chọn một kết xuất âm thanh khác trong Bộ chọn Hệ thống "
 "Đa Phương tiên."
 
-#: ../src/backend/bacon-video-widget-xine.c:710
+#: ../src/backend/bacon-video-widget-xine.c:712
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1844,8 +1854,8 @@ msgstr ""
 "Không thể tải trình điều khiển âm thanh « %s »\n"
 "Hãy kiểm tra xem thiết bị đó không bận."
 
-#: ../src/backend/bacon-video-widget-xine.c:1188
-#: ../src/backend/bacon-video-widget-xine.c:1742
+#: ../src/backend/bacon-video-widget-xine.c:1190
+#: ../src/backend/bacon-video-widget-xine.c:1744
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -1853,30 +1863,30 @@ msgstr ""
 "Không có kết xuất âm thanh nào sẵn sàng. Hãy kiểm tra xem chương trình được "
 "cài đặt đúng chưa."
 
-#: ../src/backend/bacon-video-widget-xine.c:1310
+#: ../src/backend/bacon-video-widget-xine.c:1312
 msgid "The server you are trying to connect to is not known."
 msgstr "Bạn đang cố kết nối đến một máy phục vụ lạ."
 
-#: ../src/backend/bacon-video-widget-xine.c:1314
+#: ../src/backend/bacon-video-widget-xine.c:1316
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "Bạn đã ghi rõ một tên thiết bị (%s) hình như không hợp lệ."
 
-#: ../src/backend/bacon-video-widget-xine.c:1318
+#: ../src/backend/bacon-video-widget-xine.c:1320
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "Bạn đang cố kết nối đến một máy phục vụ (%s) không thể tới được."
 
-#: ../src/backend/bacon-video-widget-xine.c:1322
+#: ../src/backend/bacon-video-widget-xine.c:1324
 msgid "The connection to this server was refused."
 msgstr "Kết nối đến máy phục vụ này bị từ chối."
 
-#: ../src/backend/bacon-video-widget-xine.c:1326
+#: ../src/backend/bacon-video-widget-xine.c:1328
 msgid "The specified movie could not be found."
 msgstr "Không tìm thấy phim đã ghi rõ."
 
-#: ../src/backend/bacon-video-widget-xine.c:1332
-#: ../src/backend/bacon-video-widget-xine.c:1350
+#: ../src/backend/bacon-video-widget-xine.c:1334
+#: ../src/backend/bacon-video-widget-xine.c:1352
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -1884,64 +1894,64 @@ msgstr ""
 "Nguồn có vẻ đã được mật mã nên không đọc được. Bạn đang cố gắng phát một đĩa "
 "DVD được mật mã khi không có tập tin thư viên « libdvdcss » không?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1335
+#: ../src/backend/bacon-video-widget-xine.c:1337
 msgid "The movie could not be read."
 msgstr "Không đọc được phim này."
 
-#: ../src/backend/bacon-video-widget-xine.c:1344
+#: ../src/backend/bacon-video-widget-xine.c:1346
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "Gặp lỗi khi tải một thư viện hoặc một bộ giải mã (%s)."
 
-#: ../src/backend/bacon-video-widget-xine.c:1353
+#: ../src/backend/bacon-video-widget-xine.c:1355
 msgid "This file is encrypted and cannot be played back."
 msgstr "Tập tin này được mật mã nên không thể phát lại nó."
 
-#: ../src/backend/bacon-video-widget-xine.c:1358
+#: ../src/backend/bacon-video-widget-xine.c:1360
 msgid "For security reasons, this movie can not be played back."
 msgstr "Không thể phát lại phim này vì lý do bảo mật."
 
-#: ../src/backend/bacon-video-widget-xine.c:1363
+#: ../src/backend/bacon-video-widget-xine.c:1365
 msgid "The audio device is busy. Is another application using it?"
 msgstr "Thiết bị âm thanh đang bận. Có chương trình khác đang dùng nó không?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1368
+#: ../src/backend/bacon-video-widget-xine.c:1370
 msgid "You are not allowed to open this file."
 msgstr "Bạn không có quyền mở tập tin này."
 
-#: ../src/backend/bacon-video-widget-xine.c:1370
+#: ../src/backend/bacon-video-widget-xine.c:1372
 msgid "The server refused access to this file or stream."
 msgstr "Máy phục vụ đã từ chối truy cập vào tập tin hay dòng này."
 
-#: ../src/backend/bacon-video-widget-xine.c:1379
+#: ../src/backend/bacon-video-widget-xine.c:1381
 msgid "The file you tried to play is an empty file."
 msgstr "Bạn đã cố phát một tập tin rỗng."
 
-#: ../src/backend/bacon-video-widget-xine.c:1543
+#: ../src/backend/bacon-video-widget-xine.c:1545
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "Không có bộ cầm phít nhập để xử lý địa điểm của phim này."
 
-#: ../src/backend/bacon-video-widget-xine.c:1547
+#: ../src/backend/bacon-video-widget-xine.c:1549
 msgid "There is no plugin to handle this movie."
 msgstr "Không có bộ cầm phít để xử lý phim này."
 
-#: ../src/backend/bacon-video-widget-xine.c:1551
+#: ../src/backend/bacon-video-widget-xine.c:1553
 msgid "This movie is broken and can not be played further."
 msgstr "Phim này bị hỏng, không thể phát tiếp."
 
-#: ../src/backend/bacon-video-widget-xine.c:1555
+#: ../src/backend/bacon-video-widget-xine.c:1557
 msgid "This location is not a valid one."
 msgstr "Địa điểm này không hợp lệ."
 
-#: ../src/backend/bacon-video-widget-xine.c:1559
+#: ../src/backend/bacon-video-widget-xine.c:1561
 msgid "This movie could not be opened."
 msgstr "Không mở được phim này."
 
-#: ../src/backend/bacon-video-widget-xine.c:1563
+#: ../src/backend/bacon-video-widget-xine.c:1565
 msgid "Generic Error."
 msgstr "Lỗi chung."
 
-#: ../src/backend/bacon-video-widget-xine.c:2258
+#: ../src/backend/bacon-video-widget-xine.c:2263
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1950,7 +1960,7 @@ msgstr ""
 "Codec ảnh động « %s » không được xử lý. Bạn cần cài đặt thêm bộ cầm phít để "
 "có thể phát một số kiểu phim."
 
-#: ../src/backend/bacon-video-widget-xine.c:2262
+#: ../src/backend/bacon-video-widget-xine.c:2267
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1959,26 +1969,26 @@ msgstr ""
 "Codec âm thanh « %s » không được xử lý. Bạn cần cài đặt thêm bộ cầm phít để "
 "có thể phát một số kiểu phim."
 
-#: ../src/backend/bacon-video-widget-xine.c:2278
+#: ../src/backend/bacon-video-widget-xine.c:2283
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Đây chỉ là tập tin âm thanh, và không có kết xuất âm thanh sẵn sàng."
 
-#: ../src/backend/bacon-video-widget-xine.c:3751
-#: ../src/backend/bacon-video-widget-xine.c:3798
-#: ../src/backend/bacon-video-widget-xine.c:3820
+#: ../src/backend/bacon-video-widget-xine.c:3756
+#: ../src/backend/bacon-video-widget-xine.c:3803
+#: ../src/backend/bacon-video-widget-xine.c:3825
 #, c-format
 msgid "Language %d"
 msgstr "Ngôn ngữ %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3909
+#: ../src/backend/bacon-video-widget-xine.c:3914
 msgid "No video to capture."
 msgstr "Không có ảnh động cần bắt."
 
-#: ../src/backend/bacon-video-widget-xine.c:3917
+#: ../src/backend/bacon-video-widget-xine.c:3922
 msgid "Video codec is not handled."
 msgstr "Codec ảnh động không được xử lý."
 
-#: ../src/backend/bacon-video-widget-xine.c:3928
+#: ../src/backend/bacon-video-widget-xine.c:3933
 msgid "Movie is not playing."
 msgstr "Phim không đang chạy."
 
@@ -2045,38 +2055,38 @@ msgstr "%s %s"
 msgid "%s"
 msgstr "%s"
 
-#: ../src/plparse/totem-disc.c:362
+#: ../src/plparse/totem-disc.c:364
 #, c-format
 msgid "Failed to find mountpoint for device %s"
 msgstr "Lỗi tìm điểm lắp cho thiết bị %s"
 
-#: ../src/plparse/totem-disc.c:371
+#: ../src/plparse/totem-disc.c:373
 msgid "Could not connect to the HAL daemon"
 msgstr "Không thể kết nối đến trình nền HAL"
 
-#: ../src/plparse/totem-disc.c:470
+#: ../src/plparse/totem-disc.c:472
 msgid "Please check that a disc is present in the drive."
 msgstr "Hãy kiểm tra xem đã có đĩa trong ổ chưa."
 
-#: ../src/plparse/totem-disc.c:517
+#: ../src/plparse/totem-disc.c:519
 #, c-format
 msgid "Failed to mount %s"
 msgstr "Lỗi gắn kết %s"
 
-#: ../src/plparse/totem-disc.c:541
+#: ../src/plparse/totem-disc.c:543
 #, c-format
 msgid "Failed to find mountpoint for %s"
 msgstr "Không tìm thấy điểm gắn kết cho %s"
 
-#: ../src/plparse/totem-disc.c:911
+#: ../src/plparse/totem-disc.c:913
 msgid "Audio CD"
 msgstr "Đĩa CD âm thanh"
 
-#: ../src/plparse/totem-disc.c:913
+#: ../src/plparse/totem-disc.c:915
 msgid "Video CD"
 msgstr "Đĩa CD ảnh động"
 
-#: ../src/plparse/totem-disc.c:915
+#: ../src/plparse/totem-disc.c:917
 msgid "DVD"
 msgstr "Đĩa DVD"
 
@@ -2144,6 +2154,16 @@ msgstr "Không thể sơ khởi thư viện « thread-safe » (mạch an toàn).
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr ""
 "Hãy kiểm tra lại bản cài đặt hệ thống. Bổ sung Totem thoát ra ngay bây giờ."
+
+#~ msgid "Save..."
+#~ msgstr "Lưu..."
+
+#~ msgid "Backend options"
+#~ msgstr "Tùy chọn hậu phương"
+
+#~ msgid ""
+#~ "The playback of this movie requires a '%s' plugin, which is not installed."
+#~ msgstr "Phát phim này cần có phần bổ sung '%s', chưa được cài đặt."
 
 #~ msgid "    "
 #~ msgstr "    "
