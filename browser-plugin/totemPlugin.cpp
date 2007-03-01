@@ -1083,7 +1083,7 @@ totemPlugin::ParseBoolean (const char *key,
         char *endptr = NULL;
         errno = 0;
         long num = g_ascii_strtoll (value, &endptr, 0);
-        if (!endptr && errno == 0) {
+        if (endptr != value && errno == 0) {
                 return num > 0;
         }
         
