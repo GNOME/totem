@@ -33,10 +33,6 @@
 #include <X11/extensions/Xrandr.h>
 #include <X11/extensions/Xrender.h>
 
-/* XVidMode */
-XF86VidModeModeInfo **modelines;
-int nr_modeline;
-
 /* XRandR */
 XRRScreenConfiguration *xr_screen_conf;
 XRRScreenSize *xr_sizes;
@@ -60,8 +56,6 @@ bacon_resize_init (void)
 		return FALSE;
 	}
 
-	res = XF86VidModeGetAllModeLines (GDK_DISPLAY(), XDefaultScreen (GDK_DISPLAY()), &nr_modeline, &modelines);
-
 	xr_screen_conf = XRRGetScreenInfo (GDK_DISPLAY(), GDK_ROOT_WINDOW());
 
 	XUnlockDisplay (GDK_DISPLAY());
@@ -76,18 +70,25 @@ void
 bacon_resize (void)
 {
 #ifdef HAVE_XVIDMODE
-	int width, height, i, xr_nsize;
+	int width, height, i, xr_nsize, res, dotclock;
+	XF86VidModeModeLine modeline;
 	XRRScreenSize *xr_sizes;
 	gboolean found = FALSE;
 
 	/* FIXME multihead */
 	XLockDisplay (GDK_DISPLAY());
 
+	res = XF86VidModeGetModeLine (GDK_DISPLAY(), XDefaultScreen (GDK_DISPLAY()), &dotclock, &modeline);
+	if (!res) {
+		XUnlockDisplay (GDK_DISPLAY());
+		return;
+	}
+
 	/* Check if there's a viewport */
 	width = gdk_screen_width ();
 	height = gdk_screen_height ();
-	if (width == modelines[0]->hdisplay
-			&& height == modelines[0]->vdisplay) {
+	if (width > modeline.hdisplay
+			&& height > modeline.vdisplay) {
 		XUnlockDisplay (GDK_DISPLAY());
 		return;
 	}
@@ -101,8 +102,8 @@ bacon_resize (void)
 		g_warning ("XRRConfigSizes or XRRConfigCurrentConfiguration failed");
 
 	for (i = 0; i < xr_nsize; i++) {
-		if (modelines[0]->hdisplay == xr_sizes[i].width
-		&& modelines[0]->vdisplay == xr_sizes[i].height) {
+		if (modeline.hdisplay == xr_sizes[i].width
+		&& modeline.vdisplay == xr_sizes[i].height) {
 			found = TRUE;
 			break;
 		}
@@ -131,16 +132,23 @@ void
 bacon_restore (void)
 {
 #ifdef HAVE_XVIDMODE
-	int width, height;
+	int width, height, res, dotclock;
+	XF86VidModeModeLine modeline;
 
 	/* FIXME multihead */
 	XLockDisplay (GDK_DISPLAY());
 
+	res = XF86VidModeGetModeLine (GDK_DISPLAY(), XDefaultScreen (GDK_DISPLAY()), &dotclock, &modeline);
+	if (!res) {
+		XUnlockDisplay (GDK_DISPLAY());
+		return;
+	}
+
 	/* Check if there's a viewport */
 	width = gdk_screen_width ();
 	height = gdk_screen_height ();
-	if (width == modelines[0]->hdisplay
-			&& height == modelines[0]->vdisplay) {
+	if (width > modeline.hdisplay
+			&& height > modeline.vdisplay) {
 		XUnlockDisplay (GDK_DISPLAY());
 		return;
 	}

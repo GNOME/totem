@@ -1,3 +1,10 @@
+2007-03-01  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-resize.c: (bacon_resize_init), (bacon_resize),
+	(bacon_restore): Don't assume the first modeline is the current one,
+	fixes the resolution changing when not using the highest resolution
+	(Closes: #411408)
+
 2007-02-27  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-preferences.c: (get_stock_label),
