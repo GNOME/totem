@@ -64,7 +64,9 @@ libtotem_plparser_la_SOURCES =			\
 	totem-pl-parser-wm.c			\
 	totem-pl-parser-wm.h			\
 	totem-pl-parser-xspf.c			\
-	totem-pl-parser-xspf.h
+	totem-pl-parser-xspf.h			\
+	xmlparser.h xmlparser.c			\
+	xmllexer.h xmllexer.c
 
 libtotem_plparser_la_CPPFLAGS = \
 	-I$(top_srcdir)				\

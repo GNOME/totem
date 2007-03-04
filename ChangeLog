@@ -1,3 +1,25 @@
+2007-03-04  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/test-parser.c: (main):
+	Call g_thread_init() very early to avoid the GSlice warning
+
+	* src/plparse/xmllexer.c:
+	* src/plparse/xmllexer.h:
+	* src/plparse/xmlparser.c:
+	* src/plparse/xmlparser.h: Add a copy of the xine-lib XML parser
+	under the LGPL
+
+	* src/plparse/Makefile.am:
+	* src/plparse/totem-pl-parser-wm.c: (parse_asx_entry),
+	(parse_asx_entries), (totem_pl_parser_add_asx):
+	* src/plparse/totem-pl-parser.c:
+	Use the xine-lib XML parser copy, to allow:
+	- case mismatches
+	- HTML comments
+	- broken escaping in URLs
+
+	(Closes: #386558)
+
 2007-03-01  Christian Persch  <chpe@svn.gnome.org>
 
 	* browser-plugin/totemPlugin.cpp: Fix parsing of boolean values. Bug

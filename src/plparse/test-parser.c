@@ -278,6 +278,8 @@ int main (int argc, char **argv)
 
 	setlocale (LC_ALL, "");
 
+	g_thread_init (NULL);
+
 	context = g_option_context_new (NULL);
 	g_option_context_add_main_entries (context, option_entries, NULL);
 

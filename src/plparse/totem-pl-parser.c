@@ -891,6 +891,7 @@ totem_pl_parser_scheme_is_ignored (TotemPlParser *parser, const char *url)
 	return FALSE;
 }
 
+//FIXME remove ?
 static gboolean
 totem_pl_parser_mimetype_is_ignored (TotemPlParser *parser,
 				     const char *mimetype)
