@@ -29,8 +29,8 @@
 #include "totem-private.h"
 #include "bacon-video-widget.h"
 
-#include <gst/utils/base-utils.h>
-#include <gst/utils/install-plugins.h>
+#include <gst/pbutils/pbutils.h>
+#include <gst/pbutils/install-plugins.h>
 
 #include <gst/gst.h> /* for gst_registry_update */
 
@@ -267,7 +267,7 @@ totem_missing_plugins_setup (Totem *totem)
 			G_CALLBACK (totem_on_missing_plugins_event),
 			totem);
 
-	gst_base_utils_init ();
+	gst_pb_utils_init ();
 
 	GST_INFO ("Set up support for automatic missing plugin installation");
 #endif
