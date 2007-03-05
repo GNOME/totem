@@ -272,7 +272,7 @@ else
 fi
 
 AC_MSG_CHECKING([whether iso-codes has iso-639 domain])
-if $PKG_CONFIG --variable=domains iso-codes | grep -q 639 ; then
+if $PKG_CONFIG --variable=domains iso-codes | grep 639 >/dev/null ; then
 	AC_MSG_RESULT([yes])
 else
 	AC_MSG_RESULT([no])

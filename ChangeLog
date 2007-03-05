@@ -1,5 +1,10 @@
 2007-03-05  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: Patch from Damien Carbery <damien.carbery@sun.com>
+	to not use the "-q" grep option (Closes: #414961)
+
+2007-03-05  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-resize.c: (bacon_resize_init):
 	Hopefully fix crashes on startup when XRandR isn't supported,
 	by checking the retval of the Extension query functions
