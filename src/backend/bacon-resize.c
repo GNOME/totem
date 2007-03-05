@@ -44,23 +44,26 @@ gboolean
 bacon_resize_init (void)
 {
 #ifdef HAVE_XVIDMODE
-	int event_basep, error_basep, res;
+	int event_basep, error_basep;
 
 	/* FIXME multihead */
 	XLockDisplay (GDK_DISPLAY());
 
-	res = XF86VidModeQueryExtension (GDK_DISPLAY(), &event_basep, &error_basep) || !XRRQueryExtension (GDK_DISPLAY(), &event_basep, &error_basep);
+	if (!XF86VidModeQueryExtension (GDK_DISPLAY(), &event_basep, &error_basep))
+		goto bail;
 
-	if (!res) {
-		XUnlockDisplay (GDK_DISPLAY());
-		return FALSE;
-	}
+	if (!XRRQueryExtension (GDK_DISPLAY(), &event_basep, &error_basep))
+		goto bail;
 
 	xr_screen_conf = XRRGetScreenInfo (GDK_DISPLAY(), GDK_ROOT_WINDOW());
 
 	XUnlockDisplay (GDK_DISPLAY());
 
 	return TRUE;
+
+bail:
+	XUnlockDisplay (GDK_DISPLAY());
+	return FALSE;
 
 #endif /* HAVE_XVIDMODE */
 	return FALSE;

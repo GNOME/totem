@@ -1,3 +1,10 @@
+2007-03-05  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-resize.c: (bacon_resize_init):
+	Hopefully fix crashes on startup when XRandR isn't supported,
+	by checking the retval of the Extension query functions
+	properly
+
 2007-03-05  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* configure.in:
