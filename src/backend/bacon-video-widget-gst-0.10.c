@@ -49,7 +49,7 @@
 
 #if 0
 /* for missing decoder/demuxer detection */
-#include <gst/utils/base-utils.h>
+#include <gst/pbutils/pbutils.h>
 #endif
 
 /* system */
@@ -234,7 +234,7 @@ GST_DEBUG_CATEGORY (_totem_gst_debug_cat);
 
 /* FIXME: temporary utility functions so we don't have to up the GStreamer
  * requirements to core/base CVS (0.10.11.1) before the next totem release */
-#define gst_base_utils_init() /* noop */
+#define gst_pb_utils_init() /* noop */
 #define gst_is_missing_plugin_message(msg) \
 	bvw_is_missing_plugin_message(msg)
 #define gst_missing_plugin_message_get_description \
@@ -4776,7 +4776,7 @@ bacon_video_widget_new (int width, int height,
     GST_DEBUG ("Initialised %s", version_str);
     g_free (version_str);
 
-    gst_base_utils_init ();
+    gst_pb_utils_init ();
   }
 
   bvw = BACON_VIDEO_WIDGET (g_object_new
