@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-27 12:57+0100\n"
-"PO-Revision-Date: 2007-02-27 13:00+0100\n"
-"Last-Translator: Christian Kintner <mail@christian-kintner.de>\n"
+"POT-Creation-Date: 2007-03-06 19:06+0100\n"
+"PO-Revision-Date: 2007-03-06 19:14+0100\n"
+"Last-Translator: Hendrik Richter <hendrikr@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -336,10 +336,10 @@ msgstr "TV-Ausgabe in Vollbild per Nvidia (NTSC)"
 msgid "TV-out in fullscreen by Nvidia (PAL)"
 msgstr "TV-Ausgabe in Vollbild per Nvidia (PAL)"
 
-#CHECK
+# CHECK ‒ Jemand 'ne bessere Idee?
 #: ../data/totem.glade.h:43
 msgid "Time seek bar"
-msgstr ""
+msgstr "Zeitleiste"
 
 #: ../data/totem.glade.h:44
 msgid "Time:"
@@ -408,8 +408,7 @@ msgid ""
 "Default location for the \"Open...\" dialogues, default is the current "
 "directory"
 msgstr ""
-"Standardmäßiger Ort des »Öffnen …«-Dialogs, Vorgabe ist der "
-"momentane Ort"
+"Standardmäßiger Ort des »Öffnen …«-Dialogs, Vorgabe ist der momentane Ort"
 
 #: ../data/totem.schemas.in.h:5
 msgid "Enable deinterlacing"
@@ -655,10 +654,10 @@ msgid ""
 "Foundation; either version 2 of the License, or (at your option) any later "
 "version."
 msgstr ""
-"Totem ist freie Software. Sie können das Programm weiter verteilen "
-"oder verändern unter Beachtung der GNU General Public License , so wie "
-"sie von der Free Software Foundation festgelegt wurde. Entweder in Version 2 "
-"der Lizenz oder (nach Ihrem Gutdünken) in jeder späteren Version."
+"Totem ist freie Software. Sie können das Programm weiter verteilen oder "
+"verändern unter Beachtung der GNU General Public License , so wie sie von "
+"der Free Software Foundation festgelegt wurde. Entweder in Version 2 der "
+"Lizenz oder (nach Ihrem Gutdünken) in jeder späteren Version."
 
 #: ../src/totem-interface.c:240
 msgid ""
@@ -667,12 +666,10 @@ msgid ""
 "FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
 "details."
 msgstr ""
-"Totem wurde in der Hoffnung veröffentlicht, dass Sie es "
-"als nützlich empfinden, jedoch OHNE JEGLICHE GARANTIE "
-"AUF FUNKTIONSFÄHIGKEIT UND OHNE RECHTSANSPRUCH "
-"BEI FEHLERHAFTEM VERHALTEN DER SOFTWARE. "
-"Lesen Sie die GNU General Public License für weiterführende Informationen."
-
+"Totem wurde in der Hoffnung veröffentlicht, dass Sie es als nützlich "
+"empfinden, jedoch OHNE JEGLICHE GARANTIE AUF FUNKTIONSFÄHIGKEIT UND OHNE "
+"RECHTSANSPRUCH BEI FEHLERHAFTEM VERHALTEN DER SOFTWARE. Lesen Sie die GNU "
+"General Public License für weiterführende Informationen."
 
 #: ../src/totem-interface.c:244
 msgid ""
@@ -680,18 +677,17 @@ msgid ""
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
 "Suite 330, Boston, MA  02111-1307  USA"
 msgstr ""
-"Im Paket mit Totem sollten Sie ebenfalls eine Kopie der "
-"GNU General Public License erhalten haben. Wenn nicht, schreiben "
-"Sie bitte an die Free Software Foundation, Inc., 51 Franklin St, "
-"Fifth Floor, Boston, MA  02110-1301  USA"
+"Im Paket mit Totem sollten Sie ebenfalls eine Kopie der GNU General Public "
+"License erhalten haben. Wenn nicht, schreiben Sie bitte an die Free Software "
+"Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA"
 
 #: ../src/totem-interface.c:247
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
 msgstr ""
-"Totem enthält eine Ausnahme um das Benutzen von proprietären "
-"GStreamer-Plugins zu erlauben."
+"Totem enthält eine Ausnahme um das Benutzen von proprietären GStreamer-"
+"Plugins zu erlauben."
 
 #: ../src/totem-menu.c:284
 msgid "None"
@@ -1096,7 +1092,7 @@ msgstr "_Untertitel"
 msgid "_Languages"
 msgstr "_Sprachen"
 
-#CHECK - lol
+# CHECK - lol
 #: ../src/totem-menu.c:1378
 msgid "Couldn't load the 'ui description' file"
 msgstr "Die »Benutzeroberflächen (UI)«-Datei konnte nicht geladen werden."
@@ -1218,11 +1214,11 @@ msgstr ""
 "Die Syntax der Wiedergabeliste »%s« konnte nicht analysiert werden, "
 "möglicherweise ist sie fehlerhaft."
 
-#: ../src/totem-preferences.c:85
+#: ../src/totem-preferences.c:102
 msgid "Enable visual effects?"
 msgstr "Visuelle Effekte aktivieren?"
 
-#: ../src/totem-preferences.c:87
+#: ../src/totem-preferences.c:104
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1230,7 +1226,7 @@ msgstr ""
 "Scheinbar führen Sie Totem entfernt aus.\n"
 "Sollen die visuellen Effekte dennoch aktiviert werden?"
 
-#: ../src/totem-preferences.c:140
+#: ../src/totem-preferences.c:157
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted."
@@ -1238,13 +1234,13 @@ msgstr ""
 "Das Ändern dieser Einstellung wird erst wirksam, sobald Sie einen anderen "
 "Film wiedergeben oder Totem neu starten."
 
-#: ../src/totem-preferences.c:284
+#: ../src/totem-preferences.c:301
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr ""
 "Das Ändern des visuellen Effektstyps macht einen Neustart erforderlich, um "
 "wirksam zu werden."
 
-#: ../src/totem-preferences.c:368
+#: ../src/totem-preferences.c:385
 msgid ""
 "The change of audio output type will only take effect when Totem is "
 "restarted."
@@ -1252,7 +1248,7 @@ msgstr ""
 "Die Änderung der Audioausgabeart wird erst wirksam nachdem Sie Totem neu "
 "gestartet haben."
 
-#: ../src/totem-preferences.c:622
+#: ../src/totem-preferences.c:641
 msgid "Select Subtitle Font"
 msgstr "Untertitelschrift auswählen"
 
@@ -1774,8 +1770,8 @@ msgstr ""
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
-"Für das Abspielen dieses Videos wird das nicht installierte Plugin %s "
-" benötigt."
+"Für das Abspielen dieses Videos wird das nicht installierte Plugin %s  "
+"benötigt."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2502
 #, c-format
@@ -1784,8 +1780,9 @@ msgid ""
 "installed:\n"
 "\n"
 "%s"
-msgstr "Für das Abspielen dieses Videos werden folgende, nicht installierte "
-"Dekoder benötigt:\n"
+msgstr ""
+"Für das Abspielen dieses Videos werden folgende, nicht installierte Dekoder "
+"benötigt:\n"
 "\n"
 "%s"
 
@@ -2068,14 +2065,14 @@ msgid_plural "%d seconds"
 msgstr[0] "%d Sekunde"
 msgstr[1] "%d Sekunden"
 
-#CHECK
+# CHECK
 #. hour:minutes:seconds
 #: ../src/backend/video-utils.c:261
 #, c-format
 msgid "%s %s %s"
 msgstr "%s, %s und %s"
 
-#CHECK
+# CHECK
 #. minutes:seconds
 #: ../src/backend/video-utils.c:264
 #, c-format
@@ -2152,7 +2149,7 @@ msgid "Opening %s"
 msgstr "»%s« wird geöffnet"
 
 #: ../browser-plugin/totem-plugin-viewer.c:1091
-#, -format
+#, c-format
 msgid "Browser Plugin using %s"
 msgstr "Browser-Plugin, das %s verwendet"
 
