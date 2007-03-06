@@ -323,10 +323,9 @@ totem_remote_init (TotemRemote *remote)
 			return;
 		}
 
-		config = g_new(struct lirc_config, 1);
-
 		if (lirc_readconfig (NULL, &config, NULL) != 0) {
 			g_message ("Couldn't read lirc config.");
+			config = NULL;
 			return;
 		}
 

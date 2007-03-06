@@ -1,3 +1,10 @@
+2007-03-06  Jan Schmidt  <thaytan@mad.scientist.com>
+
+	* src/totem-remote.c: (totem_remote_init):
+	Don't allocate a lirc_config structure - LIRC will do that on its own.
+	If lirc_readconfig fails, don't pass data to LIRC that it didn't
+	create in the first place. (Closes: #415326)
+
 2007-03-05  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: Patch from Damien Carbery <damien.carbery@sun.com>
