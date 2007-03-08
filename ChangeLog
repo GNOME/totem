@@ -1,3 +1,11 @@
+2007-03-08  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_open_with_subtitle): Fix playback
+	of Ogg Vorbis files by checking whether we have video
+	before checking if it's supported, patch by Frédéric Crozat
+	(Closes: #405883)
+
 2007-02-05  Bastien Nocera  <hadess@hadess.net>
 
 	* data/mime-type-list.txt: Add audio/x-wavpack to the supported

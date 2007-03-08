@@ -2206,8 +2206,10 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 		return FALSE;
 	}
 
-	if (xine_get_stream_info (bvw->priv->stream,
-				XINE_STREAM_INFO_VIDEO_HANDLED) == FALSE
+	if ((xine_get_stream_info (bvw->priv->stream,
+					XINE_STREAM_INFO_HAS_VIDEO) &&
+		xine_get_stream_info (bvw->priv->stream,
+				XINE_STREAM_INFO_VIDEO_HANDLED) == FALSE)
 			|| (xine_get_stream_info (bvw->priv->stream,
 					XINE_STREAM_INFO_HAS_VIDEO) == FALSE
 				&& xine_get_stream_info (bvw->priv->stream,
