@@ -30,6 +30,7 @@
 #include <sys/wait.h>
 #include <sys/poll.h>
 #include <string.h>
+#include <dlfcn.h>
 
 #include <glib.h>
 #include <libgnomevfs/gnome-vfs-mime-handlers.h>
@@ -398,11 +399,6 @@ totem_plugin_new_instance (NPMIMEType mimetype,
 
 	if (instance == NULL)
 		return NPERR_INVALID_INSTANCE_ERROR;
-
-	/* Make sure the plugin stays resident to avoid crashers when 
-	 * reloading the GObject types */
-	mozilla_functions.setvalue (instance,
-			NPPVpluginKeepLibraryInMemory, (void *)TRUE);
 
 	instance->pdata = mozilla_functions.memalloc(sizeof(totemPlugin));
 	plugin = (totemPlugin *) instance->pdata;
@@ -993,6 +989,17 @@ NP_Initialize (NPNetscapeFuncs * moz_funcs,
 		return NPERR_INVALID_FUNCTABLE_ERROR;
 	if (plugin_funcs->size < sizeof (NPPluginFuncs))
 		return NPERR_INVALID_FUNCTABLE_ERROR;
+
+	/* we want to open libdbus-glib-1.so.2 in such a way
+	 * in such a way that it becomes permanentely resident */
+	void *handle;
+	handle = dlopen ("libdbus-glib-1.so.2", RTLD_NOW | RTLD_NODELETE);
+	if (!handle) {
+		fprintf (stderr, "%s\n", dlerror()); 
+		return NPERR_MODULE_LOAD_FAILED_ERROR;
+	}
+	/* RTLD_NODELETE allows us to close right away ... */
+	dlclose(handle);
 
 	/*
 	 * Copy all of the fields of the Mozilla function table into our
