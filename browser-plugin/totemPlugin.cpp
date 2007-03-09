@@ -1506,14 +1506,6 @@ totemPlugin::Init (NPMIMEType mimetype,
 {
 	D ("Init mimetype '%s' mode %d", (const char *) mimetype, mode);
 
-	/* Make sure the plugin stays resident, to avoid
-	 * reloading the GObject types.
-	 */
-	CallNPN_SetValueProc (sNPN.setvalue,
-			      mInstance,
-			      NPPVpluginKeepLibraryInMemory,
-			      NS_INT32_TO_PTR (PR_TRUE));
-
 	/* mode is NP_EMBED, NP_FULL, or NP_BACKGROUND (see npapi.h) */
 	/* FIXME we should error out if we are in fullscreen mode
 	 * FIXME: This might be possible on gecko trunk by returning an
