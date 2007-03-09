@@ -1,5 +1,21 @@
 New features and significant updates in version...
 
+2.18.0
+* Fix resizing of the sidebar the first time it's opened
+* Fix using the playlist parser with the Python bindings
+* Translate the preferences dialogue title
+* Don't change the screen resolution when switching to fullscreen
+  and the resolution isn't the highest possible
+* Don't crash when the XRandR extension isn't available
+* Avoid crashes when Totem is compiled with LIRC support, and
+  no remoted are configured
+* Make the ASX playlist parser more robust
+* Browser:
+- Don't crash when the plugin has been unloaded, and the desktop
+  theme is changed
+- Fix parsing of boolean values
+* Fix playback of Ogg Vorbis files (xine-lib backend)
+
 2.17.92
 * Fix building when /bin/sh isn't Bash
 * Add better debugging support to the thumbnailer and indexer
