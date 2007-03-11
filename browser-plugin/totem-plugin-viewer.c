@@ -1734,7 +1734,7 @@ totem_volume_create (void)
 	GtkWidget *widget;
 
 	widget = bacon_volume_button_new (GTK_ICON_SIZE_MENU,
-					  0, 100, -1);
+					  0, 100, 1);
 	gtk_button_set_focus_on_click (GTK_BUTTON (widget), FALSE);
 	gtk_widget_show (widget);
 
