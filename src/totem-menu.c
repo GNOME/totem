@@ -1079,6 +1079,7 @@ about_action_callback (GtkAction *action, Totem *totem)
 		"Bastien Nocera <hadess@hadess.net>",
 		"Ronald Bultje <rbultje@ronald.bitfreak.net>",
 		"Julien Moutte <julien@moutte.net> (GStreamer backend)",
+		"Tim-Philipp M\303\274ller <tim\100centricular\056net> (GStreamer backend)",
 		NULL
 	};
 	const char *artists[] = { "Jakub Steiner <jimmac@ximian.com>", NULL };
