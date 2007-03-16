@@ -361,19 +361,20 @@ bvw_check_if_video_decoder_is_missing (BaconVideoWidget * bvw)
 }
 
 static void
-bvw_error_msg_print_dbg (GstMessage * msg)
+bvw_error_msg (BaconVideoWidget * bvw, GstMessage * msg)
 {
   GError *err = NULL;
   gchar *dbg = NULL;
 
   gst_message_parse_error (msg, &err, &dbg);
   if (err) {
-    GST_ERROR ("error message = %s", GST_STR_NULL (err->message));
-    GST_ERROR ("error domain  = %d (%s)", err->domain,
+    GST_ERROR ("message = %s", GST_STR_NULL (err->message));
+    GST_ERROR ("domain  = %d (%s)", err->domain,
         GST_STR_NULL (g_quark_to_string (err->domain)));
-    GST_ERROR ("error code    = %d", err->code);
-    GST_ERROR ("error debug   = %s", GST_STR_NULL (dbg));
-    GST_ERROR ("error source  = %" GST_PTR_FORMAT, msg->src);
+    GST_ERROR ("code    = %d", err->code);
+    GST_ERROR ("debug   = %s", GST_STR_NULL (dbg));
+    GST_ERROR ("source  = %" GST_PTR_FORMAT, msg->src);
+    GST_ERROR ("uri     = %s", GST_STR_NULL (bvw->com->mrl));
 
     g_message ("Error: %s\n%s\n", GST_STR_NULL (err->message),
         GST_STR_NULL (dbg));
@@ -1394,7 +1395,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
   switch (msg_type) {
     case GST_MESSAGE_ERROR: {
-      bvw_error_msg_print_dbg (message);
+      bvw_error_msg (bvw, message);
 
       if (!bvw_check_missing_plugins_error (bvw, message)) {
         GError *error;
@@ -2585,7 +2586,7 @@ poll_for_state_change_full (BaconVideoWidget *bvw, GstElement *element,
       break;
     }
     case GST_MESSAGE_ERROR: {
-      bvw_error_msg_print_dbg (message);
+      bvw_error_msg (bvw, message);
       *err_msg = message;
       message = NULL;
       goto error;

@@ -1,3 +1,11 @@
+2007-03-16  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_error_msg), (bvw_bus_message_cb):
+	(poll_for_state_change_full):
+	  Make debug output on errors a bit more terse; also mention URI
+	  that caused the error.
+
 2007-03-12  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/totem-menu.c: (about_action_callback):
