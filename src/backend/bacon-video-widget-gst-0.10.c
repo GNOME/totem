@@ -4766,19 +4766,20 @@ bacon_video_widget_new (int width, int height,
   GConfValue *confvalue;
   BaconVideoWidget *bvw;
   GstElement *audio_sink = NULL, *video_sink = NULL;
+  gchar *version_str;
 
+#ifndef GST_DISABLE_GST_DEBUG
   if (_totem_gst_debug_cat == NULL) {
-    gchar *version_str;
-
     GST_DEBUG_CATEGORY_INIT (_totem_gst_debug_cat, "totem", 0,
         "Totem GStreamer Backend");
-
-    version_str = gst_version_string ();
-    GST_DEBUG ("Initialised %s", version_str);
-    g_free (version_str);
-
-    gst_pb_utils_init ();
   }
+#endif
+
+  version_str = gst_version_string ();
+  GST_DEBUG ("Initialised %s", version_str);
+  g_free (version_str);
+
+  gst_pb_utils_init ();
 
   bvw = BACON_VIDEO_WIDGET (g_object_new
                             (bacon_video_widget_get_type (), NULL));
