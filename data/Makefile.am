@@ -102,7 +102,7 @@ EXTRA_DIST = \
 	totem-video-thumbnailer.pod
 
 CLEANFILES = \
- 	*.bak *.gladep core* *.orig *~ 	\
+	*.bak *.gladep core* *.orig *~ 	\
 	$(desktop_in_files)		\
 	$(desktop_DATA)			\
 	$(generated_schema_in_files)	\

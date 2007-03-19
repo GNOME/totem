@@ -155,7 +155,7 @@ libtotem_basic_plugin_la_LIBADD =					\
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
 	libtotempluginviewer_marshal.la					\
 	$(DBUS_LIBS)	\
- 	$(MOZILLA_LIBS)	\
+	$(MOZILLA_LIBS)	\
 	$(LIBXPCOMGLUE_S)
 
 libtotem_basic_plugin_la_LDFLAGS = \
@@ -223,7 +223,7 @@ libtotem_gmp_plugin_la_LIBADD =						\
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
 	libtotempluginviewer_marshal.la	\
 	$(DBUS_LIBS)	\
- 	$(MOZILLA_LIBS)	\
+	$(MOZILLA_LIBS)	\
 	$(LIBXPCOMGLUE_S)
 
 libtotem_gmp_plugin_la_LDFLAGS = \
@@ -285,7 +285,7 @@ libtotem_complex_plugin_la_LIBADD =					\
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
 	libtotempluginviewer_marshal.la					\
 	$(DBUS_LIBS)	\
- 	$(MOZILLA_LIBS)	\
+	$(MOZILLA_LIBS)	\
 	$(LIBXPCOMGLUE_S)
 
 libtotem_complex_plugin_la_LDFLAGS = \
@@ -347,7 +347,7 @@ libtotem_narrowspace_plugin_la_LIBADD =					\
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
 	libtotempluginviewer_marshal.la					\
 	$(DBUS_LIBS)	\
- 	$(MOZILLA_LIBS)	\
+	$(MOZILLA_LIBS)	\
 	$(LIBXPCOMGLUE_S)
 
 libtotem_narrowspace_plugin_la_LDFLAGS = \
@@ -409,7 +409,7 @@ libtotem_mully_plugin_la_LIBADD =					\
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
 	libtotempluginviewer_marshal.la					\
 	$(DBUS_LIBS)	\
- 	$(MOZILLA_LIBS)	\
+	$(MOZILLA_LIBS)	\
 	$(LIBXPCOMGLUE_S)
 
 libtotem_mully_plugin_la_LDFLAGS = \
