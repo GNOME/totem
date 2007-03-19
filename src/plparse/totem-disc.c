@@ -74,85 +74,6 @@ typedef struct _CdCache {
   guint mounted : 1;
 } CdCache;
 
-/* 
- * Resolve relative paths
- */
-
-/* Copied from gtk+/gtk/gtkfilesystemunix.c */
-
-/* If this was a publically exported function, it should return
- * a dup'ed result, but we make it modify-in-place for efficiency
- * here, and because it works for us.
- */
-static void
-canonicalize_filename (gchar *filename)
-{
-  gchar *p, *q;
-  gboolean last_was_slash = FALSE;
-
-  p = filename;
-  q = filename;
-
-  while (*p)
-    {
-      if (*p == G_DIR_SEPARATOR)
-	{
-	  if (!last_was_slash)
-	    *q++ = G_DIR_SEPARATOR;
-
-	  last_was_slash = TRUE;
-	}
-      else
-	{
-	  if (last_was_slash && *p == '.')
-	    {
-	      if (*(p + 1) == G_DIR_SEPARATOR ||
-		  *(p + 1) == '\0')
-		{
-		  if (*(p + 1) == '\0')
-		    break;
-
-		  p += 1;
-		}
-	      else if (*(p + 1) == '.' &&
-		       (*(p + 2) == G_DIR_SEPARATOR ||
-			*(p + 2) == '\0'))
-		{
-		  if (q > filename + 1)
-		    {
-		      q--;
-		      while (q > filename + 1 &&
-			     *(q - 1) != G_DIR_SEPARATOR)
-			q--;
-		    }
-
-		  if (*(p + 2) == '\0')
-		    break;
-
-		  p += 2;
-		}
-	      else
-		{
-		  *q++ = *p;
-		  last_was_slash = FALSE;
-		}
-	    }
-	  else
-	    {
-	      *q++ = *p;
-	      last_was_slash = FALSE;
-	    }
-	}
-
-      p++;
-    }
-
-  if (q > filename + 1 && *(q - 1) == G_DIR_SEPARATOR)
-    q--;
-
-  *q = '\0';
-}
-
 static char *
 totem_resolve_symlink (const char *device, GError **error)
 {
@@ -175,8 +96,11 @@ totem_resolve_symlink (const char *device, GError **error)
     f = f1;
   }
 
-  if (f != NULL)
-    canonicalize_filename (f);
+  if (f != NULL) {
+    f1 = gnome_vfs_make_path_name_canonical (f);
+    g_free (f);
+    f = f1;
+  }
   return f;
 }
 
