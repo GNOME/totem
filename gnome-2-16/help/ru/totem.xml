@@ -1,0 +1,996 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//RU" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appversion "0.997">
+  <!ENTITY manrevision "2.0">
+  <!ENTITY date "Ноябрь 2003">
+  <!ENTITY app "Видеопроигрыватель Totem">
+  <!-- Information about the entities
+       The legal.xml file contains legal information, there is no need to edit the file. 
+       Use the appversion entity to specify the version of the application.
+       Use the manrevision entity to specify the revision number of this manual.
+       Use the date entity to specify the release date of this manual.
+       Use the app entity to specify the name of the application. -->
+]>
+
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Apr 11, 2002
+-->
+
+<!-- =============Document Header ============================= -->
+<article id="index" lang="ru">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo> 
+    <title><application>&app;</application> Manual V&manrevision;</title>       
+    <copyright> 
+      <year>2003</year> 
+      <holder>Chee Bin HOH</holder> 
+    </copyright> 
+
+<!-- translators: uncomment this:-->
+    <copyright>
+      <year>2004</year>
+      <holder>Друца Павел</holder>
+    </copyright>
+<!-- -->
+
+<!-- An address can be added to the publisher information.  If a role is 
+     not specified, the publisher/author is the same for all versions of the 
+     document.  -->
+    <publisher> 
+      <publishername> GNOME Documentation Project </publishername> 
+    </publisher> 
+
+    &legal;
+    <!-- This file  contains link to license for the documentation (GNU FDL), and 
+         other legal stuff such as "NO WARRANTY" statement. Please do not change 
+	 any of this. -->
+
+    <authorgroup> 
+      <author> 
+	<firstname>Chee Bin</firstname> 
+	<surname>HOH</surname> 
+	<affiliation> 
+  	  <orgname>GNOME Documentation Project</orgname> 
+	  <address> <email>cbhoh@gnome.org</email> </address> 
+	</affiliation> 
+      </author> 
+
+<!-- This is appropriate place for other contributors: translators,
+     maintainers,  etc. Commented out by default.
+      <othercredit role="translator">
+	<firstname>Latin</firstname> 
+	<surname>Translator 1</surname> 
+	<affiliation> 
+          <orgname>Latin Translation Team</orgname> 
+  	  <address> <email>translator@gnome.org</email> </address> 
+        </affiliation>
+        <contrib>Latin translation</contrib>
+      </othercredit>
+-->
+    </authorgroup>
+
+<!-- According to GNU FDL, revision history is mandatory if you are -->
+<!-- modifying/reusing someone else's document.  If not, you can omit it. -->
+<!-- Remember to remove the &manrevision; entity from the revision entries other -->
+<!-- than the current revision. -->
+<!-- The revision numbering system for GNOME manuals is as follows: -->
+<!-- * the revision number consists of two components -->
+<!-- * the first component of the revision number reflects the release version of the GNOME desktop. -->
+<!-- * the second component of the revision number is a decimal unit that is incremented with each revision of the manual. -->
+<!-- For example, if the GNOME desktop release is V2.x, the first version of the manual that -->
+<!-- is written in that desktop timeframe is V2.0, the second version of the manual is V2.1, etc. -->
+<!-- When the desktop release version changes to V3.x, the revision number of the manual changes -->
+<!-- to V3.0, and so on. -->  
+    <revhistory>
+      <revision> 
+        <revnumber>&app; Manual V&manrevision;</revnumber> 
+	<date>&date;</date> 
+	<revdescription> 
+	  <para role="author">Chee Bin HOH
+	    <email>cbhoh@gnome.org</email>
+	  </para>
+	  <para role="publisher">GNOME Documentation Project</para>
+        </revdescription> 
+      </revision> 
+    </revhistory> 
+
+    <releaseinfo>Эта справка описывает приложение &app; &appversion;.
+    </releaseinfo> 
+    <legalnotice> 
+      <title>Feedback</title> 
+      <para>To report a bug or make a suggestion regarding the &app; application or
+        this manual, follow the directions in the 
+        <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. 
+      </para>
+<!-- Translators may also add here feedback address for translations -->
+    </legalnotice> 
+  </articleinfo> 
+
+  <indexterm zone="index"> 
+    <primary>&app;</primary> 
+  </indexterm> 
+  <indexterm zone="index"> 
+    <primary>totem</primary> 
+  </indexterm>
+
+
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+<!-- Use the Introduction section to give a brief overview of what
+     the application is and what it does. -->
+  <sect1 id="totem-introduction"> 
+    <title>Введение</title> 
+    <para>Приложение <application>&app;</application> это медиа плэйер (проигрыватель) для GNOME основанный на
+      библиотеке xine, он позволяет проигрывать звуковые и видео файлы.
+    </para>
+    <para><application>&app;</application> продоставляет следующие возможности:</para>
+    <itemizedlist> 
+      <listitem> 
+	<para>Поддержку большого количества видео и аудио форматов.</para>
+      </listitem> 
+      <listitem> 
+	<para>Возможность выбора соотношений сторон (3:4, 16:9 ...), масштабируемость и полноэкранный режим.
+        </para> 
+      </listitem>
+      <listitem>
+        <para>Прокрутка и уровень звука (вот ведь!).</para>
+      </listitem>
+      <listitem>
+        <para>Плэйлист (A playlist).</para>
+      </listitem>
+      <listitem>
+	<para>Полное управление клавиатурой.</para>
+      </listitem>
+    </itemizedlist> 
+    <note>
+      <para><application>&app;</application> в добавок предоставляет:
+      </para>
+      <itemizedlist>
+	<listitem>
+	  <para>Видео thumbnailer т.е. ( в Nautilus-е иконка файла создается из кадра фильма ).</para>
+        </listitem>
+	<listitem>
+	  <para>Утилиты Веб-камеры.</para>
+        </listitem>
+	<listitem>
+	  <para>В Nautilus-е в свойствах медиа-файлов вкладка с метаданными.</para>
+        </listitem>
+      </itemizedlist>
+    </note>
+  </sect1>
+<!-- =========== End of Introduction ========================= -->
+
+<!-- =========== Getting Started ============================= -->
+<!-- Use the Getting Started section to describe the steps required
+     to start the application and to describe the user interface components
+     of the application. If there is other information that it is important
+     for readers to know before they start using the application, you should
+     also include this information here. 
+     If the information about how to get started is very short, you can 
+     include it in the Introduction and omit this section. -->
+
+  <sect1 id="totem-getting-started"> 
+    <title>С чего начать</title> 
+
+    <sect2 id="totem-start">
+      <title>Запуск &app;</title>
+      <para>Вы можете запустить <application>&app;</application> следующими способами:
+      </para> 
+      <variablelist>
+	<varlistentry>
+	  <term><guimenu>Главное</guimenu> меню (кнопка Старт :-)</term>
+	  <listitem>
+	    <para>Выберите  
+              <menuchoice>
+		<guisubmenu>Мультимедия (Multimedia)</guisubmenu>
+		<guimenuitem>&app;</guimenuitem>
+	      </menuchoice>. 
+            </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>С командной строки</term>
+	  <listitem>
+	    <para>Для того чтобы запустить <application>&app;</application> с командной строки, наберите следующую команду,
+    	      и нажмите <keycap>Enter</keycap>:</para>
+	    <para> 
+            <command>totem</command> 
+            </para> 
+	    <tip>
+	      <para>Для того чтобы узнать доступные ключи команндной строки,
+                наберите <command>totem --help</command>, и нажмите <keycap>Enter</keycap>.
+              </para>
+	    </tip>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+    </sect2>
+
+    <sect2 id="totem-when-start">
+      <title>Когда вы запустите &app;</title>
+      <para>Когда вы запустите  <application>&app;</application>, должно появиться примерно такое окно.</para>
+
+      <!-- ==== Figure ==== -->
+      <figure id="totem-start-fig"> 
+	<title>Окно &app;</title> 
+	<screenshot> 
+	  <mediaobject> 
+	    <imageobject>
+	      <imagedata fileref="figures/totem_start_window.png" format="PNG"/> 
+	    </imageobject>
+	    <!-- EPS versions of the figures are not required at the moment. -->
+<!-- 
+	    <imageobject>
+      	      <imagedata fileref="figures/image.eps" format="EPS"/>
+            </imageobject>
+-->
+	    <textobject> 
+	      <phrase>Картинка <application>&app;</application> главное окно. содержит строку меню, 
+                полосу прокрутки, кнопки управления, уровень громкости и строку состояния.
+              </phrase>
+	    </textobject> 
+	  </mediaobject> 
+	</screenshot> 
+      </figure>
+      <!-- ==== End of Figure ==== -->
+
+      <!-- Include any descriptions of the GUI immediately after the screenshot of the main UI, -->
+      <!-- for example, the items on the menubar and on the toolbar. This section is optional. -->
+      <para>Окно <application>&app;</application> содержить следующие элементы:
+      </para>
+      <variablelist>
+	<varlistentry>
+	  <term>Строка меню.</term>
+  	  <listitem>
+  	    <para>Меню содержат все команды предоставляемые приложением 
+            <application>&app;</application>.</para>
+ 	  </listitem>
+   	</varlistentry>
+	<varlistentry>
+	  <term>Область видео-вывода.</term>
+	  <listitem>
+	    <para>Область видео-вывода отображает фильм или визуализацию звука.
+            </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Полоса прокрутки.</term>
+	  <listitem>
+	    <para>Полоса прокрутки показывает сколько времени уже идет воспроизведение.
+              К тому-же возможно установить воспроизведение на желаемую позицию ("потянуть" указателем мыши).
+			  Типа перемотки
+            </para>
+	  </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Кнопки управления.</term>
+          <listitem>
+            <para>Кнопки управления позволяют переходить на следующий или предыдущий файл, 
+				 начать - приостановить - продолжить воспроизведение.
+            </para>
+	  </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Регулятор громкости.</term>
+          <listitem>
+	    <para>;-).</para>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Строка состояния.</term>
+	  <listitem>
+	    <para>Строка состояния показывает информацию о воспроизведении.</para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+    </sect2>
+  </sect1>
+<!-- =========== End of Getting Started ====================== -->
+
+<!-- =========== Usage ======================================= -->
+<!-- Use this section to describe how to use the application to perform the tasks for 
+  which the application is designed. -->
+  <sect1 id="totem-usage"> 
+    <title>Как пользоватся</title> 
+
+    <!-- ================ Usage Subsection ================================ -->
+    <sect2 id="totem-open-file"> 
+      <title>Открытие файла</title> 
+      <para>Чтобы открыть видео или аудио файл, выберите
+        <menuchoice>
+	  <shortcut><keycombo><keycap>Ctrl</keycap><keycap>O</keycap></keycombo></shortcut>
+          <guimenu>Фильм</guimenu>
+	  <guisubmenu>Открыть</guisubmenu>
+        </menuchoice>.
+        Появится диалог <guilabel>Выбрать файлы</guilabel>. Выберите файл/файлы которые 
+		хотите открыть, и нажмите 
+	<guibutton>ОТКРЫТЬ</guibutton>.
+      </para>
+      <para>Вы можете "перетащить" файл из окна Nautilus-а в окно <application>&app;</application>.
+	    <application>&app;</application> откроет файл и начнет воспроизведение.
+		<application>&app;</application> показывает название фильма или песни под 
+		 областью видео-вывода  и в заголовке окна.
+      </para>
+      <para>Если вы попытаетесь открыть файл. формат которого <application>&app;</application> не 
+		распознает, появится диалог ошибки.
+      </para>
+      <tip>
+	<para>При правильной установке можно автоматически запускать воспроизведение фильмов
+		двойным щелчком из <application>Nautilus-а</application>.
+        </para>
+      </tip>
+    </sect2> 
+
+    <sect2 id="totem-usage-open-location">
+      <title>Чтобы открыть файл через URI</title>
+      <para>Чтобы открыть файл через URI , выберите
+        <menuchoice>
+	  <shortcut><keycombo><keycap>Ctrl</keycap><keycap>L</keycap></keycombo></shortcut>
+	  <guimenu>Фильм</guimenu>
+	  <guimenuitem>Открыть адрес</guimenuitem>
+        </menuchoice>.Появиться диалог <guilabel>Открыть URI</guilabel>.
+      </para>
+    </sect2>
+
+    <sect2 id="totem-usage-play">
+      <title>Просмотр DVD, VCD или CD</title>
+      <variablelist>
+        <varlistentry>
+  	  <term>Просмостр DVD фильмов</term>
+	  <listitem>
+            <para>Вставте DVD-диск в DVD-привод вашего компьютера, выберите
+              <menuchoice>
+		<guimenu>Фильм</guimenu>
+		<guimenuitem>Играть DVD</guimenuitem>
+              </menuchoice>.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+  	  <term>Просмотр VCD</term>
+	  <listitem>
+            <para>Вставьте VCD в VCD-привод вашего компьютера, выберите
+              <menuchoice>
+	        <guimenu>Фильм</guimenu>
+		<guimenuitem>Играть VCD</guimenuitem>
+              </menuchoice>.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+  	  <term>Проигрывание CD</term>
+	  <listitem>
+            <para>Вставьте CD в CD-привод вашего компьютера, выберите
+              <menuchoice>
+	        <guimenu>Фильм</guimenu>
+		<guimenuitem>Играть CD</guimenuitem>
+              </menuchoice>.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+	  <tip>
+	      <para>Привод может быть тот-же самый :-) 
+		  		DVD-привод подходит для CD-дисков ...
+          </para>
+	   </tip>
+    </sect2>
+
+    <sect2 id="totem-usage-eject">
+      <title>Извлечение DVD, VCD или CD</title>
+      <para>Чтобы извлечь DVD, VCD, or CD, выберите
+        <menuchoice>
+	  <shortcut><keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo></shortcut>
+	  <guimenu>Фильм</guimenu>
+	  <guimenuitem>Извлечь</guimenuitem>
+        </menuchoice>.
+      </para>
+    </sect2>
+
+    <sect2 id="totem-usage-pause">
+      <title>Пауза</title>
+      <para>Для того чтобы приостановить воспроизведение , нажмите кнопку
+        <inlinemediaobject>
+	  <imageobject><imagedata fileref="figures/totem_pause_button.png" format="PNG"/></imageobject>
+          <textobject><phrase>Кнопка паузы (||).</phrase></textobject>
+        </inlinemediaobject>, или выберите
+        <menuchoice>
+	  <shortcut><keycap>P</keycap></shortcut>
+	  <guimenu>Фильм</guimenu>
+          <guimenuitem>Воспроизведение / Пауза</guimenuitem>
+        </menuchoice>. Кагда вы останавливаете воспроизведение , в строке состояния написано <guilabel>Остановлено</guilabel>
+        и рядом прошедшее время воспроизведения.
+      </para>
+      <para>Для того чтобы продолжить, нажмите кнопку
+        <inlinemediaobject>
+	  <imageobject><imagedata fileref="figures/totem_play_button.png" format="PNG"/></imageobject>
+          <textobject><phrase>Кнопка играть( > ).</phrase></textobject>
+        </inlinemediaobject>, или выберите 
+        <menuchoice>
+	  <shortcut><keycap>P</keycap></shortcut>
+	  <guimenu>Фильм</guimenu>
+          <guimenuitem>Воспроизведение / Пауза </guimenuitem>
+        </menuchoice>.
+      </para>
+    </sect2>
+
+    <sect2 id="totem-usage-view-properties">
+      <title>Просмотр свойств файла</title>
+      <para>Для того чтобы просмотреть свойства файла, выберите
+        <menuchoice>
+	  <guimenu>фильм</guimenu>
+	  <guimenuitem>Свойства</guimenuitem>
+        </menuchoice>.Появится диалог <guilabel>Свойства</guilabel>. Диалог содержит
+        следующую информацию:
+        <variablelist>
+	  <varlistentry>
+            <term>Общие</term>
+            <listitem>
+	      <para>Эпизод, исполнитель, год и продолжительность.</para>
+            </listitem>
+          </varlistentry>
+	  <varlistentry>
+            <term>Видео</term>
+            <listitem>
+              <para>Размеры, Кодек и Частота кадров.</para>
+            </listitem>
+          </varlistentry>
+	  <varlistentry>
+            <term>Аудио</term>
+            <listitem>
+              <para>Скорость потока и Кодек.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </para>
+    </sect2>
+
+    <sect2 id="totem-usage-seek">
+      <title>Навигация (перемотка)</title>
+      <para>Для перемещения в песне/фильме, можно пользоваться следующими методами:
+      </para>
+      <variablelist>
+	<varlistentry>
+	  <term>Пропустить ( вперед) </term>
+	  <listitem>
+	    <para>Для того чтобы пропустить часть песни/фильма, выберите
+              <menuchoice>
+		<shortcut><keycap>Право</keycap></shortcut>
+                <guimenu>Переход</guimenu>
+		<guimenuitem>Пропустить вперед</guimenuitem>
+              </menuchoice>.
+            </para>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Вернуться назад</term>
+	  <listitem>
+	    <para>Для того чтобы вернуться немного назад в песне/фильме, выберите
+              <menuchoice>
+		<shortcut><keycap>Право</keycap></shortcut>
+                <guimenu>Переход</guimenu>
+		<guimenuitem>Пропустить назад</guimenuitem>
+              </menuchoice>.
+             </para>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Перейти к моменту</term>
+	  <listitem>
+	    <para>Для того чтобы перейти к определенному моменту, выберите
+              <menuchoice>
+		<shortcut><keycap>S</keycap></shortcut>
+                <guimenu>Переход</guimenu>
+		<guimenuitem>Перейти к...</guimenuitem>
+              </menuchoice>. Появися диалог <guilabel>Перейти к</guilabel>. 
+              выберите к какому моменту перейти и нажмите <guibutton>OK</guibutton>.
+            </para>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Для перехода к следующей песне/фильму</term>
+	  <listitem>
+	    <para>Для перехода к следующей песне/фильму, выберите 
+              <menuchoice>
+                <shortcut><keycap>N</keycap></shortcut>
+                <guimenu>Переход</guimenu>
+                <guimenuitem>Следующий фрагмент/фильм</guimenuitem>
+              </menuchoice> или нажмите кнопку 
+              <inlinemediaobject> 
+	        <imageobject><imagedata fileref="figures/totem_next_button.png" format="PNG"/></imageobject>
+	        <textobject><phrase>Кнопка следующий ( >| )</phrase></textobject>
+              </inlinemediaobject>.
+            </para>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Для перехода к предыдущей песне/фильму</term>
+	  <listitem>
+	    <para>Для перехода к предыдущей песне/фильму, выберите 
+              <menuchoice>
+                <shortcut><keycap>B</keycap></shortcut>
+                <guimenu>Переход</guimenu>
+                <guimenuitem>Предыдущий фрагмент/фильм</guimenuitem>
+              </menuchoice>,или нажмите кнопку
+              <inlinemediaobject> 
+	        <imageobject><imagedata fileref="figures/totem_previous_button.png" format="PNG"/></imageobject>
+	        <textobject><phrase>Кнопка предыдущий </phrase></textobject>
+              </inlinemediaobject>.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </sect2>
+
+    <sect2 id="totem-usage-change-zoom">
+      <title>Изменение масштаба</title>
+      <para>Для изменение масштаба, можно пользоваться следующими методами:
+      </para>
+      <itemizedlist>
+	<listitem>
+	  <para>Переход в полноэкранный режим,
+            выберите 
+            <menuchoice>
+	      <shortcut><keycap>F</keycap></shortcut>
+	      <guimenu>Вид</guimenu>
+              <guimenuitem>Во весь экран</guimenuitem>
+            </menuchoice>. Для выхода из полноэкранного режима нажните <guibutton>Выйти из полноэкранного режима</guibutton>
+            или на клавиатуре <keycap>Esc</keycap>.
+          </para>
+        </listitem>
+	<listitem>
+	  <para>Для показа в масштабе (50%) от оригинального размера ,
+            выберите
+            <menuchoice>
+	      <shortcut><keycap>0</keycap></shortcut>
+	      <guimenu>Вид</guimenu>
+              <guimenuitem>Масштаб 1:2</guimenuitem>
+            </menuchoice>.
+          </para>
+        </listitem>
+	<listitem>
+	  <para>Для показа в масштабе (100%) от оригинального размера ,
+            choose 
+            <menuchoice>
+	      <shortcut><keycap>1</keycap></shortcut>
+	      <guimenu>Вид</guimenu>
+              <guimenuitem>Масштаб 1:1</guimenuitem>
+            </menuchoice>.
+          </para>
+        </listitem>
+	<listitem>
+	  <para>Для показа в масштабе (200%) от оригинального размера, выберите
+            <menuchoice>
+	      <shortcut><keycap>2</keycap></shortcut>
+	      <guimenu>Вид</guimenu>
+              <guimenuitem>Масштаб 2:1</guimenuitem>
+            </menuchoice>.
+          </para>
+        </listitem>
+	<listitem>
+	  <para>Для изменения соотношения экрана, выберите
+            <menuchoice>
+	      <shortcut><keycap>A</keycap></shortcut>
+	      <guimenu>Вид</guimenu>
+	      <guimenuitem>Соотношение экрана</guimenuitem>
+            </menuchoice>. поддерживаемые соотношения:
+            <itemizedlist>
+              <listitem><para>Авто</para></listitem>
+	      <listitem><para>Квадрат (1:1)</para></listitem>
+              <listitem><para>4:3 TV</para></listitem>
+              <listitem><para>(16:9) Широкий экран</para></listitem>
+              <listitem><para>(2.11:1) DVB</para></listitem>
+            </itemizedlist>
+            <note>
+              <para>Значение по умолчанию Авто.</para>
+			  <para>Изменяя вручную размер окна изображение будет оптимально вписыватся в окно
+					не изменяя соотношения сторон.</para>
+              
+            </note>
+          </para>
+        </listitem>
+      </itemizedlist>
+    </sect2>
+
+    <sect2 id="totem-usage-adjust-volume">
+      <title>Изменение громкости</title>
+      <para>Для увеличения громкости, выберите
+        <menuchoice>
+	  <shortcut><keycap>стрелка вверх</keycap></shortcut>
+          <guimenu>Звук</guimenu>
+          <guimenuitem>Увеличить громкость</guimenuitem>
+        </menuchoice> или переместите ползунок громкости вправо.
+        Для уменьшения громкости, выберите
+        <menuchoice>
+	  <shortcut><keycap>стрелка вниз</keycap></shortcut>
+          <guimenu>Звук</guimenu>
+          <guimenuitem>Уменьшить громкость</guimenuitem>
+        </menuchoice> или переместите бегунок громкости влево.         
+      </para>
+      <para>Для уменьшения громкости до минимума, нажмите кнопку
+        <inlinemediaobject> 
+	  <imageobject><imagedata fileref="figures/totem_volume_mute_button.png" format="PNG"/></imageobject>
+	  <textobject><phrase>Кнопка MUTE</phrase></textobject>
+        </inlinemediaobject>.
+        Для увеличения громкости до максимума, нажмите кнопку
+        <inlinemediaobject> 
+	  <imageobject><imagedata fileref="figures/totem_volume_maximum_button.png" format="PNG"/></imageobject>
+	  <textobject><phrase>Shows a maximum volume button</phrase></textobject>
+        </inlinemediaobject>.
+      </para>
+    </sect2>
+
+    <sect2 id="totem-usage-on-top">
+      <title>Установить окно поверх всех</title>
+      <para>Для того чтобы окно <application>&app;</application> было всегда поверх остальных,
+        выберите
+        <menuchoice>
+          <guimenu>Вид</guimenu>
+          <guimenuitem>Всегда сверху</guimenuitem>
+        </menuchoice>.
+       </para>
+    </sect2>
+
+    <sect2 id="totem-usage-show-control">
+      <title>Скрыть или показать управление</title>
+      <para>Для того чтобы скрыть элементы управления <application>&app;</application>,
+		выберите
+        <menuchoice>
+	  <shortcut><keycap>H</keycap></shortcut>
+          <guimenu>Вид</guimenu>
+          <guimenuitem>Показать органы управления</guimenuitem>
+        </menuchoice> и 'снимите' галочку c меню <guilabel>Показать органы управления</guilabel> . 
+        Для того чтобы показать элементы управления <application>&app;</application>, 
+        кликните <guimenuitem>правой</guimenuitem> кнопкой на окне, и выберите
+        <menuchoice>
+	  <shortcut><keycap>H</keycap></shortcut>
+	  <guimenuitem>Показать органы управления</guimenuitem>
+        </menuchoice> из ниспадающего меню.
+      </para>
+      <para>Когда <guilabel>Показать органы управления</guilabel> снято,
+        видно только окно отображения фильма. 
+      </para>
+    </sect2>
+
+    <sect2 id="totem-usage-playlist">
+      <title>To Manage Playlist</title>
+      <para>
+        <itemizedlist>
+	  <listitem>
+	    <para><xref linkend="totem-usage-playlist-show-hide"/></para>
+	  </listitem>
+	  <listitem>
+	    <para><xref linkend="totem-usage-playlist-manage"/></para>
+	  </listitem>
+	  <listitem>
+	    <para><xref linkend="totem-usage-playlist-repeat"/></para>
+	  </listitem>
+	  <listitem>
+	    <para><xref linkend="totem-usage-playlist-shuffle"/></para>
+	  </listitem>
+        </itemizedlist>
+      </para>
+
+      <sect3 id="totem-usage-playlist-show-hide">
+	<title>To Show or Hide Playlist</title>
+	<para>To show playlist, choose 
+          <menuchoice>
+	    <guimenu>Вид</guimenu>
+	    <guimenuitem>Показать/Скрыть плейлист</guimenuitem>
+          </menuchoice>, или нажмите кнопку
+          <inlinemediaobject>
+	    <imageobject><imagedata fileref="figures/totem_show_playlist_button.png" format="PNG"/></imageobject>
+            <textobject><phrase>Shows a show/hide playlist button</phrase></textobject>
+          </inlinemediaobject>. Появится диалог <guilabel>Playlist</guilabel>. 
+	Чтобы скрыть плейлист, 
+          выберите
+          <menuchoice>
+	    <guimenu>Вид</guimenu>
+	    <guimenuitem>Показать/Скрыть плейлист</guimenuitem>
+          </menuchoice> или нажмите еще раз кнопку
+          <inlinemediaobject>
+	    <imageobject><imagedata fileref="figures/totem_show_playlist_button.png" format="PNG"/></imageobject>
+            <textobject><phrase>Shows a show/hide playlist button</phrase></textobject>
+          </inlinemediaobject>.
+        </para>
+      </sect3>
+
+      <sect3 id="totem-usage-playlist-manage">
+	<title>Управление Плейлистом (списком воспроизведения)</title>
+	<para>С помощью диалога <guilabel>Плейлиста</guilabel> можно делать следующие действия:
+          <variablelist>
+	    <varlistentry>
+	      <term>Добавлять в список песни или фильмы</term>
+	      <listitem>
+		<para>Чтобы добавить в плейлист файл  или адрес  для воспроизведение нажмите кнопку<guibutton>Добавить</guibutton>
+                  . Появится диалог <guilabel>Выбор файла</guilabel>. Выберите один или несколько файлов которые
+                  вы хотите добавить и нажмите кнопку <guibutton>OK</guibutton>.
+                </para>
+              </listitem>
+            </varlistentry>
+	    <varlistentry>
+	      <term>Для удаления песни или фильма</term>
+	      <listitem>
+		<para>Для удаления элемента списка, выберите названия из 
+                  списка, потом нажмите кнопку <guibutton>Удалить</guibutton>.
+                </para>
+              </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term>Сохранение списка песен в файл</term>
+	      <listitem>
+		<para>Для того чтобы сохранить  список в файл, нажмите кнопку <guibutton>Сохранить</guibutton>
+                  . Появится диалог <guilabel>Сохранить плейлист</guilabel>, укажите
+                  желаемое имя файла для сохранения списка и нажмите <guilabel>OK</guilabel>.
+                </para>
+              </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term>Перемещение песни по списку вверх</term>
+	      <listitem>
+		<para>Для перемещения песни по списку вверх, выбериет название из списка, и  нажмите кнопку <guibutton>Вверх</guibutton> .
+                </para>
+              </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term>Перемещение песни по списку вниз</term>
+	      <listitem>
+		<para>Для перемещения песни по списку вниз, выбериет название из списка, и  нажмите кнопку <guibutton>Вниз</guibutton>.
+                </para>
+              </listitem>
+	    </varlistentry>
+	    <varlistentry>
+              <term>Установка режима повтора</term>
+	      <listitem>
+		<para>Выберите опцию <guilabel>Режим повтора</guilabel> для  многократного повторения песен.
+                </para>
+              </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term>Режим случайного выбора</term>
+	      <listitem>
+		<para>Выберите опцию <guilabel>Воспроизведение в случайном порядке</guilabel>.
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </para>
+      </sect3>
+      <sect3 id="totem-usage-playlist-repeat">
+	<title>Выбор режима повторения</title>
+	<para>Для выбора режима повторения выберите
+          <menuchoice>
+            <guimenu>Вид</guimenu>
+	    <guimenuitem>Режим повтора</guimenuitem>
+	  </menuchoice>, или опцию <guilabel>Режим повтра</guilabel> из  диалога <guilabel>Плейлиста</guilabel>.
+	</para>
+      </sect3>
+    </sect2>
+
+    <sect2 id="totem-usage-take-screenshot">
+      <title>Снимок экрана</title>
+      <para>Для того чтобы сделать снимок экрана (сохранить кадр) выберите 
+        <menuchoice>
+          <guimenu>Правка</guimenu>
+          <guimenuitem>Снимок экрана</guimenuitem>
+        </menuchoice>. Появится диалог <guilabel>Снимок экрана</guilabel>, нажмите
+        кнопку <guibutton>Сохранить</guibutton> чтобы сохранить снимок.
+      </para>
+      <para>Вы можете сохранить в:
+        <itemizedlist>
+          <listitem>
+	    <para>Файл: выберите <guilabel>Сохранить снимок в файл</guilabel> нажмите кнопку <guibutton>Просмотреть</guibutton> для выбора файла.
+            </para>
+          </listitem>
+	  <listitem>
+	    <para>На рабочий стол: выберите <guilabel>Сохранить снимок на рабочий стол </guilabel>.
+            </para>
+	  </listitem>
+        </itemizedlist>		
+      </para>
+	<screenshot> 
+	  	<mediaobject>  
+		<imageobject><imagedata fileref="figures/totem_screenshot.png" format="PNG"/></imageobject>
+            <textobject><phrase>Screenshot</phrase></textobject>	  
+		</mediaobject>
+	</screenshot> 
+    </sect2>
+
+    <sect2 id="totem-usage-quit">
+      <title>Для выхода из программы &app;</title>
+      <para>Для выхода из программы <application>&app;</application>, выберите
+        <menuchoice>
+          <shortcut><keycombo><keycap>Ctrl</keycap><keycap>Q</keycap></keycombo></shortcut>
+          <guimenu>Фильм</guimenu>
+	  <guimenuitem>Выход</guimenuitem>
+        </menuchoice>.
+      </para>
+    </sect2>
+  </sect1>
+
+<!-- =========== Usage ======================================= -->
+<!-- Use this section to describe how to customize the 
+     application. -->
+  <sect1 id="totem-prefs">
+    <title>Настройки</title>
+    <para>Для изменения настроек программы <application>&app;</application>, выберите
+      <menuchoice>
+        <guimenu>Правка</guimenu>
+	<guimenuitem>Изменить настройки</guimenuitem>
+      </menuchoice>. Диалог
+      <guilabel>Настройки</guilabel> содержит следующие вкладки:
+      </para> 
+    <itemizedlist> 
+      <listitem> 
+	<para> Общие
+	<!-- <xref linkend="totem-prefs-general"/> -->
+    </para> 
+      </listitem> 
+      <listitem> 
+        <para> Дисплей
+		<!--   
+        <xref linkend="totem-prefs-display"/>
+		-->
+        </para> 
+      </listitem> 
+      <listitem> 
+  	<para> Звук
+	  <!-- <xref linkend="totem-prefs-audio"/> -->
+        </para> 
+      </listitem> 
+    </itemizedlist>
+
+    <sect2 id="totem-prefs-general">
+      <title>Общие</title>
+      <variablelist>
+	<varlistentry>
+	  <term>Оптическое устройство</term>
+	  <listitem>
+	    <para>Выберите <guilabel>оптическое устройство</guilabel> из списка.</para>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Сеть</term>
+	  <listitem>
+	    <para>Выберите <guilabel>скорость соединения</guilabel> из списка.
+            </para>
+          </listitem>
+        </varlistentry>	
+	<varlistentry>
+	  <term>TВ-Выход</term>
+	  <listitem>
+	    <itemizedlist>
+	      <listitem>
+                <para><guilabel>Нет TВ-Выхода</guilabel>: Выберите эту опцию если у вас нет ТВ-выхода.</para>
+              </listitem>
+	      <listitem>
+		<para><guilabel>TВ-выход mode</guilabel>: Выберите эту опцию если у вас ТВ-выход.</para>
+              </listitem>
+	      <listitem>
+		<para><guilabel>DXR3 ТВ-выход</guilabel>: Выберите эту опцию если у вас a DXR3 TВ-выход.</para>
+	      </listitem>
+            </itemizedlist>
+          </listitem>
+        </varlistentry>	
+	<varlistentry>
+	  <term>Проприетарные модули</term>
+	  <listitem>
+	    <para>Вы можете добавить проприетарные модули для воспроизведения других типов мультимедия файлов.
+              Для того чтобы добавить проприетарные модули в <application>&app;</application>, нажмите кнопку
+              <guibutton>Добавить проприетарные модули</guibutton>. (Их сначала надо найти ;-) ).
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </sect2>
+    <sect2 id="totem-prefs-display">
+      <title>Дисплей</title>
+      <variablelist>
+	<varlistentry>
+	  <term>Дисплей</term>
+	  <listitem>
+	    <para>Если хотите установите флажок  <guilabel>Автоматически изменять размер</guilabel>,
+             при запуске нового фильма окно должно измениться по размеру фильма.
+            </para>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Визуальные эффекты</term>
+	  <listitem>
+	    <itemizedlist>
+	      <listitem>
+                <para><guilabel>Визуализация воспроизведения звуковых файлов</guilabel>: выберите эту опцию эсли хотите чтобы при 
+                  проигрывании звуковых файлов использовались эффекты визуализации.
+                </para>
+              </listitem>
+	      <listitem>
+		<para><guilabel>Тип визуализации</guilabel>: Список доступных типов.                  
+                </para>
+              </listitem>
+	      <listitem>
+		<para><guilabel>Размер визуализации</guilabel>: Список.                  
+				Визуализацию можно масштабировать а размер влияет на первоначальную картинку,
+				при сложных эффектах и на загрузку процессора.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Яркость/Контраст</term>
+	  <listitem>
+	    <itemizedlist>
+	      <listitem>
+		<para><guilabel>Яркость</guilabel>: программная регулировка яркости изображения.</para>
+              </listitem>
+	      <listitem>
+		<para><guilabel>Контраст</guilabel>: программная регулировка контраста изображения.</para>
+              </listitem>
+	    </itemizedlist>
+          </listitem>
+	</varlistentry>
+      </variablelist>
+    </sect2>
+    <sect2 id="totem-prefs-audio">
+      <title>Аудио</title>
+      <variablelist>
+	<varlistentry>
+	  <term>Аудиовыход</term>
+	  <listitem>
+	    <para>Выберите подходящую вам систему <guilabel>Аудиовыхода</guilabel>
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </sect2>
+  </sect1>
+
+<!-- ============= Bugs ================================== -->
+<!-- This section is optional and is commented out by default. 
+     You can use it to describe known bugs and limitations of the 
+	  program if there are any - please be frank and list all
+     problems you know of. 
+  
+  <sect1 id="mayapp-bugs">
+  <title>Known Bugs and Limitations</title>
+  <para> </para>
+ </sect1>
+-->
+
+<!-- ============= About ================================== -->
+<!-- This section contains info about the program (not docs), such as
+      author's name(s), web page, license, feedback address. This
+      section is optional: primary place for this info is "About.." box of
+      the program. However, if you do wish to include this info in the
+      manual, this is the place to put it. Alternatively, you can put this information in the title page.-->
+  <sect1 id="totem-about"> 
+    <title>О программе <application>&app;</application></title> 
+    <para><application>&app;</application> Автором является
+      Bastien Nocera (<email>hadess@hadess.net</email>),
+      Julien Moutte (<email>julien@moutte.net</email>) поддержка GStreamer,
+      и Guenter Bartsch (<email>guenter@users.sourceforge.net</email>).
+      Допольнительные сведения о <application>&app;</application>, доступны по ссылке 
+      <ulink url="http://www.hadess.net/totem.php3" type="http"><application>&app;</application> 
+      Home Page</ulink>. 
+    </para>
+    <para>
+      Если вы хотите сообщить об ошибке или у вас есть предложения 
+      как это сделать можно прочитать 
+      <ulink url="ghelp:gnome-feedback" type="help">здесь</ulink>.
+    </para>
+    <para> 
+	  Программа распространяется на условиях GNU General Public License версии 2 или последующей (по желанию)
+	  ,публикуемой Фондом Свободного Программного Обеспечения (Free Software Foundation). 
+	  С условиями лицензии можно ознакомиться <ulink url="ghelp:gpl" type="help">здесь</ulink>,
+	  или прочтя текст в файле COPYING, прилагаемом к исходному коду данной программы.
+       </para>
+	  
+  </sect1> 
+</article>

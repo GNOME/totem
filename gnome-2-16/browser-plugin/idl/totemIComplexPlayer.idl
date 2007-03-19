@@ -1,0 +1,19 @@
+#include "nsISupports.idl"
+
+/**
+ * totemIComplexPlayer:
+ * 
+ * RealPlayer/HelixPlayer compatible scriptable interface
+ * 
+ * @status: EXTERNAL
+ * XXX incomplete
+ */
+[scriptable, uuid(782b38b2-b647-4cfa-a9fb-1ccf45bf8019)]
+interface totemIComplexPlayer: nsISupports
+{
+	boolean DoPause ();
+
+	boolean DoPlay ();
+
+	boolean DoStop ();
+};

@@ -1,0 +1,13 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+gconf_serverdir=@libexecdir@
+
+
+Name: totem-plparser
+Description: Totem Playlist Parser library
+Version: @VERSION@
+Requires: gtk+-2.0 libxml-2.0 gnome-vfs-2.0 gnome-vfs-module-2.0
+Libs: -L${libdir} -ltotem-plparser
+Cflags: -I${includedir}/totem/1/plparser
