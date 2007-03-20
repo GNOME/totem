@@ -1,5 +1,14 @@
 2007-03-20  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_set_subtitle_font): Set the font
+	and font size depending on the preferences, only works
+	if xine-lib is compiled with Freetype support (otherwise
+	you get no subtitles at all), based on patch by Robert
+	Krebbers <robbertkrebbers@xs4all.nl> (Closes: #314123)
+
+2007-03-20  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-menu.c: (totem_action_add_recent): Avoid
 	crashing on play when we can't get a display name
 	for the file we're trying to play

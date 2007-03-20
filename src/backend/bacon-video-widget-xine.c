@@ -3258,7 +3258,42 @@ char
 void
 bacon_video_widget_set_subtitle_font (BaconVideoWidget *bvw, const char *font)
 {
-	//FIXME
+	xine_cfg_entry_t entry;
+	int fontsize, size_index;
+	PangoFontDescription *desc;
+	const char *font_family;
+
+	desc = pango_font_description_from_string (font);
+	fontsize = pango_font_description_get_size (desc) / PANGO_SCALE;
+
+	if (fontsize <= 18) {
+		size_index = 0;
+	} else if (fontsize <= 22) {
+		size_index = 1;
+	} else if (fontsize <= 28) {
+		size_index = 2;
+	} else if (fontsize <= 40) {
+		size_index = 3;
+	} else if (fontsize <= 56) {
+		size_index = 4;
+	} else {
+		size_index = 5;
+	}
+
+	bvw_config_helper_num (bvw->priv->xine, "subtitles.separate.subtitle_size", size_index, &entry);
+	entry.num_value = size_index;
+	xine_config_update_entry (bvw->priv->xine, &entry);
+
+	font_family = pango_font_description_get_family (desc);
+	if (font_family == NULL)
+		font_family = "Sans";
+
+	bvw_config_helper_string (bvw->priv->xine,
+			"subtitles.separate.font", font_family, &entry);
+	entry.str_value = (char *) font_family;
+	xine_config_update_entry (bvw->priv->xine, &entry);
+
+	pango_font_description_free (desc);
 }
 
 void
