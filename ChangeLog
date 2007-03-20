@@ -1,5 +1,12 @@
 2007-03-20  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-video-thumbnailer.c: (set_resource_limits), (main):
+	Adapted patch from Federico Mena Quintero <federico@ximian.com>
+	to avoid eating more than 256 megs of RAM, and 15 seconds of CPU
+	time when thumbnailing a video (Closes: #396926)
+
+2007-03-20  Bastien Nocera  <hadess@hadess.net>
+
 	* data/properties.glade: Reorder the audio properties
 	so that they kinda match the video properties ordering
 	(Closes: #410880)

@@ -33,6 +33,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sys/resource.h>
 #ifndef HAVE_GTK_ONLY
 #include <libgnomeui/gnome-authentication-manager.h>
 #endif
@@ -326,6 +327,23 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 	g_object_unref (with_holes);
 }
 
+#define MAX_HELPER_MEMORY (256 * 1024 * 1024)	/* 256 MB */
+#define MAX_HELPER_SECONDS (15)			/* 15 seconds */
+
+static void
+set_resource_limits (void)
+{
+	struct rlimit limit;
+
+	limit.rlim_cur = MAX_HELPER_MEMORY;
+	limit.rlim_max = MAX_HELPER_MEMORY;
+	setrlimit (RLIMIT_AS, &limit);
+
+	limit.rlim_cur = MAX_HELPER_SECONDS;
+	limit.rlim_max = MAX_HELPER_SECONDS;
+	setrlimit (RLIMIT_CPU, &limit);
+}
+
 static gpointer
 time_monitor (gpointer data)
 {
@@ -428,8 +446,10 @@ int main (int argc, char *argv[])
 
 	PROGRESS_DEBUG("Video widget created\n");
 
-	if (time_limit != FALSE)
+	if (time_limit != FALSE) {
 		g_thread_create (time_monitor, (gpointer) input, FALSE, NULL);
+		set_resource_limits ();
+	}
 
 	PROGRESS_DEBUG("About to open video file\n");
 
