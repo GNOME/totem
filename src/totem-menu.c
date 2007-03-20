@@ -657,11 +657,11 @@ totem_action_add_recent (Totem *totem, const char *filename)
 	char *groups[] = { NULL, NULL };
 
 	data.mime_type = gnome_vfs_get_mime_type (filename);
+	data.display_name = NULL;
 
 	if (strstr (filename, "file:///") == NULL) {
 		/* It's a URI/stream */
 		groups[0] = "TotemStreams";
-		data.display_name = NULL;
 	} else {
 		char *display;
 
