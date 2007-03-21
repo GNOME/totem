@@ -1,5 +1,14 @@
 2007-03-21  Tim-Philipp Müller  <tim at centricular dot net>
 
+	* src/totem-missing-plugins.c:
+	(on_plugin_installation_done):
+	  Also add the missing plugins to the local blacklist if the user
+	  aborts the installer, so we either just play what we can the next
+	  time or show an error message (presumably the user doesn't want
+	  to see the installer, so let's honour that wish).
+
+2007-03-21  Tim-Philipp Müller  <tim at centricular dot net>
+
 	* src/Makefile.am:
 	* src/list_v4l.c: Removed.
 	* src/video-dev.c: Removed.
