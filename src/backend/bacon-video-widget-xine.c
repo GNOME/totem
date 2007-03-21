@@ -3317,17 +3317,6 @@ bacon_video_widget_set_subtitle_encoding (BaconVideoWidget *bvw, const char *enc
 }
 
 void
-bacon_video_widget_set_video_device (BaconVideoWidget *bvw, const char *path)
-{
-	xine_cfg_entry_t entry;
-
-	bvw_config_helper_string (bvw->priv->xine,
-			"media.video4linux.video_device", path, &entry);
-	entry.str_value = (char *) path;
-	xine_config_update_entry (bvw->priv->xine, &entry);
-}
-
-void
 bacon_video_widget_set_aspect_ratio (BaconVideoWidget *bvw,
 		BaconVideoWidgetAspectRatio ratio)
 {

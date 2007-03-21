@@ -281,43 +281,6 @@ test_properties_page_LDADD = \
 
 endif # HAVE_NAUTILUS
 
-# Vanity
-
-if TOTEM_VANITY
-
-bin_PROGRAMS += vanity
-
-vanity_SOURCES = \
-	$(BACON_V4L_SELECTION)	\
-	totem-screenshot.c	\
-	totem-screenshot.h	\
-	vanity.c
-
-vanity_CPPFLAGS = \
-	-I$(srcdir)/backend	\
-	-I$(srcdir)/plparse	\
-	$(common_defines)	\
-	$(AM_CPPFLAGS)
-
-vanity_CFLAGS = \
-	$(EXTRA_GNOME_CFLAGS)	\
-	$(WARN_CFLAGS)		\
-	$(NVTV_CFLAGS)		\
-	$(AM_CFLAGS)
-
-vanity_LDFLAGS = \
-	$(AM_LDFLAGS)
-
-vanity_LDADD = \
-	backend/libbaconvideowidget.la	\
-	$(EXTRA_GNOME_LIBS)		\
-	$(NVTV_LIBS)			\
-	$(XTEST_LIBS)			\
-	$(XVIDMODE_LIBS)		\
-	$(X_LIBS)
-
-endif # TOTEM_VANITY
-
 # Totem Video Indexer
 
 totem_video_indexer_SOURCES = \

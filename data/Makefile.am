@@ -17,12 +17,7 @@ stuff_DATA =				\
 	uri.glade			\
 	screenshot.glade		\
 	totem-ui.xml			\
-	totem_logo.png			\
-	vanity.glade			\
-	vanity.png
-
-pixmapdir = $(datadir)/pixmaps
-pixmap_DATA = vanity.png
+	totem_logo.png
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
 
@@ -41,10 +36,6 @@ install-data-hook:
 # totem.desktop = intltool-ised
 
 desktop_in_files = totem.desktop.in
-if TOTEM_VANITY
-desktop_in_files += vanity.desktop.in
-endif
-
 desktopdir = $(datadir)/applications
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@

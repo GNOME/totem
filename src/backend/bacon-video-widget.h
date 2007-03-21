@@ -183,10 +183,6 @@ void bacon_video_widget_set_subtitle_font	 (BaconVideoWidget *bvw,
 void bacon_video_widget_set_subtitle_encoding	 (BaconVideoWidget *bvw,
 						  const char *encoding);
 
-/* Video devices */
-void bacon_video_widget_set_video_device	 (BaconVideoWidget *bvw,
-						  const char *path);
-
 /* Metadata */
 typedef enum {
 	BVW_INFO_TITLE,
