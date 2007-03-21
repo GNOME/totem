@@ -2,7 +2,7 @@ SUBDIRS = backend plparse
 
 bin_PROGRAMS = totem totem-video-thumbnailer totem-video-indexer
 libexec_PROGRAMS =
-noinst_PROGRAMS = list_v4l disc-test
+noinst_PROGRAMS = disc-test
 noinst_LTLIBRARIES = \
 	libbaconpropertiespage.la \
 	libbaconmessageconnection.la \
@@ -47,12 +47,6 @@ libbaconmessageconnection_la_LDFLAGS = \
 BACON_VOLUME = \
 	bacon-volume.c			\
 	bacon-volume.h
-
-BACON_V4L_SELECTION =			\
-	video-dev.c			\
-	video-dev.h			\
-	bacon-v4l-selection.c		\
-	bacon-v4l-selection.h
 
 EGGDIR=$(srcdir)/../../libegg/libegg/recent-files/
 BACONDIR=$(srcdir)/../../libbacon/src
@@ -334,26 +328,6 @@ disc_test_LDADD = \
 	plparse/libtotem-plparser.la	\
 	$(GTK_LIBS)			\
 	$(EXTRA_GNOME_LIBS)
-
-
-list_v4l_SOURCES = \
-	list_v4l.c		\
-	$(BACON_V4L_SELECTION)
-
-list_v4l_CPPFLAGS = \
-	$(common_defines)	\
-	$(AM_CPPFLAGS)
-
-list_v4l_CFLAGS = \
-	$(WARN_CFLAGS)	\
-	$(GTK_CFLAGS)	\
-	$(AM_CFLAGS)
-
-list_v4l_LDFLAGS = \
-	$(AM_LDFLAGS)
-
-list_v4l_LDADD = \
-	$(GTK_LIBS)
 
 
 CLEANFILES = \
