@@ -1,3 +1,10 @@
+2007-03-22  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_set_subtitle_font): Disable
+	setting the font name, as Freetype isn't enabled by
+	default in xine-lib
+
 2007-03-21  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/totem-missing-plugins.c:

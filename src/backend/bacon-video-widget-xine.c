@@ -3284,6 +3284,8 @@ bacon_video_widget_set_subtitle_font (BaconVideoWidget *bvw, const char *font)
 	entry.num_value = size_index;
 	xine_config_update_entry (bvw->priv->xine, &entry);
 
+	//FIXME disabled, because Freetype isn't default in xine-lib yet
+#if 0
 	font_family = pango_font_description_get_family (desc);
 	if (font_family == NULL)
 		font_family = "Sans";
@@ -3292,7 +3294,7 @@ bacon_video_widget_set_subtitle_font (BaconVideoWidget *bvw, const char *font)
 			"subtitles.separate.font", font_family, &entry);
 	entry.str_value = (char *) font_family;
 	xine_config_update_entry (bvw->priv->xine, &entry);
-
+#endif
 	pango_font_description_free (desc);
 }
 
