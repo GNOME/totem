@@ -62,7 +62,7 @@ applications with Totem's plparser library.
 
 %build
 export MOZILLA_PLUGINDIR=%{_libdir}/mozilla 
-%configure --enable-gstreamer=yes --disable-vanity --enable-mozilla --enable-nvtv
+%configure --enable-gstreamer=yes --enable-mozilla --enable-nvtv
 
 #apparently someone forgot to autogen before disting 0.99.17 :)
 #perl -pi -e 's/gstvideowidget.h//g' src/Makefile
@@ -73,9 +73,6 @@ make %{?_smp_mflags}
 rm -rf $RPM_BUILD_ROOT
 export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 make install DESTDIR=$RPM_BUILD_ROOT
-
-#nor vanity
-rm -f $RPM_BUILD_ROOT%{_datadir}/pixmaps/vanity.png
 
 # no static libs and libtool archives either
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
@@ -120,7 +117,6 @@ done
 %{_mandir}/man1/%{name}.1*
 %{_mandir}/man1/totem-video-thumbnailer.1.gz
 %{_datadir}/locale
-%exclude %{_datadir}/%{name}/vanity.*
 %exclude /var/lib/scrollkeeper
 
 %files mozplugin
