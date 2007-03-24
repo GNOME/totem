@@ -211,13 +211,13 @@ parse_asx_entries (TotemPlParser *parser, const char *_base, xml_node_t *parent)
 
 		if (g_ascii_strcasecmp (node->name, "entry") == 0) {
 			/* Whee! found an entry here, find the REF and TITLE */
-			if (parse_asx_entry (parser, base, node, (char *)title) != FALSE)
+			if (parse_asx_entry (parser, base, node, title) != FALSE)
 				retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 		}
 		if (g_ascii_strcasecmp (node->name, "entryref") == 0) {
 			/* Found an entryref, give the parent instead of the
 			 * children to the parser */
-			if (parse_asx_entry (parser, base, parent, (char *)title) != FALSE)
+			if (parse_asx_entry (parser, base, parent, title) != FALSE)
 				retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 		}
 		if (g_ascii_strcasecmp (node->name, "repeat") == 0) {

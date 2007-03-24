@@ -1,3 +1,21 @@
+2007-03-24  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/totem-pl-parser-qt.c:
+	(totem_pl_parser_add_quicktime_metalink),
+	(totem_pl_parser_is_quicktime):
+	Add support for parsing SMILtext hacks (Closes: #402278)
+
+	* src/plparse/totem-pl-parser-smil.c: (parse_smil_video_entry),
+	(parse_smil_entry), (parse_smil_head), (parse_smil_entries),
+	(totem_pl_parser_add_smil_with_doc), (totem_pl_parser_add_smil),
+	(totem_pl_parser_add_smil_with_data):
+	* src/plparse/totem-pl-parser-smil.h:
+	Allow to parse SMIL files using data, use xine-lib's parser instead
+	of libxml2 (Closes: #407138), Fix return values of a bunch of functions
+
+	* src/plparse/totem-pl-parser-wm.c: (parse_asx_entries):
+	Remove unneeded casts
+
 2007-03-22  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-xine.c:

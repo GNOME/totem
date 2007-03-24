@@ -38,6 +38,7 @@
 
 #include "totem-pl-parser-mini.h"
 #include "totem-pl-parser-qt.h"
+#include "totem-pl-parser-smil.h"
 #include "totem-pl-parser-private.h"
 
 #ifndef TOTEM_PL_PARSER_MINI
@@ -82,6 +83,21 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url,
 			|| g_str_has_prefix (data, "rtsptextrtsp://") != FALSE
 			|| g_str_has_prefix (data, "RTSPtextrtsp://") != FALSE) {
 		return totem_pl_parser_add_quicktime_rtsptextrtsp (parser, url, base, data);
+	}
+	if (g_str_has_prefix (data, "SMILtext") != FALSE) {
+		char *contents;
+		int size;
+		TotemPlParserResult retval;
+
+		if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+			return TOTEM_PL_PARSER_RESULT_ERROR;
+
+		retval = totem_pl_parser_add_smil_with_data (parser,
+							     url, base,
+							     contents + strlen ("SMILtext"),
+							     size - strlen ("SMILtext"));
+		g_free (contents);
+		return retval;
 	}
 
 	doc = totem_pl_parser_parse_xml_file (url);
@@ -155,6 +171,8 @@ totem_pl_parser_is_quicktime (const char *data, gsize len)
 			|| g_str_has_prefix (data, "RTSPtextrtsp://") != FALSE) {
 		return TRUE;
 	}
+	if (g_str_has_prefix (data, "SMILtext") != FALSE)
+		return TRUE;
 
 	/* FIXME would be nicer to have an strnstr */
 	buffer = g_memdup (data, len);

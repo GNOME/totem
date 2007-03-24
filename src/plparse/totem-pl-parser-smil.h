@@ -36,6 +36,11 @@ TotemPlParserResult totem_pl_parser_add_smil (TotemPlParser *parser,
 					      const char *url,
 					      const char *base,
 					      gpointer data);
+TotemPlParserResult totem_pl_parser_add_smil_with_data (TotemPlParser *parser,
+							const char *url,
+							const char *base,
+							const char *contents,
+							int size);
 #endif /* !TOTEM_PL_PARSER_MINI */
 
 G_END_DECLS
