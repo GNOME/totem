@@ -57,7 +57,8 @@ gboolean totem_action_set_mrl_with_warning	(Totem *totem,
 						 gboolean warn);
 
 void	totem_action_play_media			(Totem *totem,
-						 MediaType type);
+						 MediaType type,
+						 const char *device);
 
 void	totem_action_toggle_aspect_ratio	(Totem *totem);
 void	totem_action_set_aspect_ratio		(Totem *totem, int ratio);

@@ -453,7 +453,7 @@ totem_action_open_dialog (Totem *totem, const char *path, gboolean play)
 }
 
 static gboolean
-totem_action_load_media (Totem *totem, MediaType type)
+totem_action_load_media (Totem *totem, MediaType type, const char *device)
 {
 	char **mrls;
 	char *msg;
@@ -467,7 +467,7 @@ totem_action_load_media (Totem *totem, MediaType type)
 		return FALSE;
 	}
 
-	mrls = bacon_video_widget_get_mrls (totem->bvw, type);
+	mrls = bacon_video_widget_get_mrls (totem->bvw, type, device);
 	if (mrls == NULL)
 	{
 		msg = g_strdup_printf (_("Totem could not play this media (%s) although a plugin is present to handle it."), _(totem_cd_get_human_readable_name (type)));
@@ -512,9 +512,7 @@ totem_action_load_media_device (Totem *totem, const char *device)
 		case MEDIA_TYPE_DVD:
 		case MEDIA_TYPE_VCD:
 		case MEDIA_TYPE_CDDA:
-			bacon_video_widget_set_media_device
-				(BACON_VIDEO_WIDGET (totem->bvw), device_path);
-			retval = totem_action_load_media (totem, type);
+			retval = totem_action_load_media (totem, type, device_path);
 			if (retval == FALSE) {
 				totem_action_set_mrl_and_play (totem, NULL);
 			}
@@ -542,11 +540,11 @@ totem_action_play_media_device (Totem *totem, const char *device)
 }
 
 void
-totem_action_play_media (Totem *totem, MediaType type)
+totem_action_play_media (Totem *totem, MediaType type, const char *device)
 {
 	char *mrl;
 
-	if (totem_action_load_media (totem, type) != FALSE) {
+	if (totem_action_load_media (totem, type, device) != FALSE) {
 		mrl = totem_playlist_get_current_mrl (totem->playlist);
 		totem_action_set_mrl_and_play (totem, mrl);
 		g_free (mrl);
@@ -1362,7 +1360,7 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 			}
 		}
 
-		totem_playlist_add_mrl (totem->playlist, filename, title);
+		totem_playlist_add_mrl (totem->playlist, filename ? filename : p->data, title);
 
 		g_free (filename);
 		g_free (p->data);
@@ -1810,6 +1808,8 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 
 		/* Get the subtitle part out for our tests */
 		filename = totem_create_full_path (data);
+		if (filename == NULL)
+			filename = g_strdup (data);
 
 		if (g_file_test (filename, G_FILE_TEST_IS_REGULAR)
 				|| strstr (filename, "#") != NULL
@@ -1839,8 +1839,11 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 			} else if (g_str_has_prefix (filename, "cdda:/") != FALSE) {
 				totem_playlist_add_mrl (totem->playlist, data, NULL);
 				changed = TRUE;
+			} else if (g_str_has_prefix (filename, "dvb:/") != FALSE) {
+				totem_playlist_add_mrl (totem->playlist, data, NULL);
+				changed = TRUE;
 			} else if (g_str_equal (filename, "dvb:") != FALSE) {
-				totem_action_load_media (totem, MEDIA_TYPE_DVB);
+				totem_action_load_media (totem, MEDIA_TYPE_DVB, NULL);
 			} else if (totem_playlist_add_mrl (totem->playlist,
 						filename, NULL) != FALSE) {
 				totem_action_add_recent (totem, filename);
@@ -2104,13 +2107,16 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		g_assert (url != NULL);
 		totem_playlist_clear (totem->playlist);
 		if (strcmp (url, "dvd:") == 0) {
-			totem_action_play_media (totem, MEDIA_TYPE_DVD);
+			//FIXME b0rked
+			totem_action_play_media (totem, MEDIA_TYPE_DVD, NULL);
 		} else if (strcmp (url, "vcd:") == 0) {
-			totem_action_play_media (totem, MEDIA_TYPE_VCD);
+			//FIXME b0rked
+			totem_action_play_media (totem, MEDIA_TYPE_VCD, NULL);
 		} else if (g_str_has_prefix (url, "cd:") != FALSE) {
-			totem_action_play_media (totem, MEDIA_TYPE_CDDA);
+			//FIXME b0rked
+			totem_action_play_media (totem, MEDIA_TYPE_CDDA, NULL);
 		} else if (g_str_has_prefix (url, "dvb:") != FALSE) {
-			totem_action_play_media (totem, MEDIA_TYPE_DVB);
+			totem_action_play_media (totem, MEDIA_TYPE_DVB, NULL);
 		} else if (g_str_has_prefix (url, "cdda:/") != FALSE) {
 			totem_playlist_add_mrl (totem->playlist, url, NULL);
 		} else if (totem_playlist_add_mrl (totem->playlist,

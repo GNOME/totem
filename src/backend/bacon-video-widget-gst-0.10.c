@@ -1935,10 +1935,6 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
       bacon_video_widget_set_show_cursor (bvw,
       g_value_get_boolean (value));
       break;
-    case PROP_MEDIADEV:
-      bacon_video_widget_set_media_device (bvw,
-      g_value_get_string (value));
-      break;
     case PROP_SHOW_VISUALS:
       bacon_video_widget_set_show_visuals (bvw,
       g_value_get_boolean (value));
@@ -1980,9 +1976,6 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
     case PROP_SHOWCURSOR:
       g_value_set_boolean (value,
       bacon_video_widget_get_show_cursor (bvw));
-      break;
-    case PROP_MEDIADEV:
-      g_value_set_string (value, bvw->priv->media_device);
       break;
     case PROP_VOLUME:
       g_value_set_int (value, bacon_video_widget_get_volume (bvw));
@@ -3273,7 +3266,7 @@ bacon_video_widget_get_show_cursor (BaconVideoWidget * bvw)
   return bvw->priv->cursor_shown;
 }
 
-void
+static void
 bacon_video_widget_set_media_device (BaconVideoWidget * bvw, const char *path)
 {
   g_return_if_fail (bvw != NULL);
@@ -3923,7 +3916,8 @@ bacon_video_widget_can_play (BaconVideoWidget * bvw, MediaType type)
 }
 
 gchar **
-bacon_video_widget_get_mrls (BaconVideoWidget * bvw, MediaType type)
+bacon_video_widget_get_mrls (BaconVideoWidget * bvw, MediaType type,
+			     const char *device)
 {
   gchar **mrls;
 
@@ -3932,6 +3926,10 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw, MediaType type)
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), NULL);
 
   GST_DEBUG ("type = %d", type);
+  GST_DEBUG ("device = %s", device);
+
+  if (device != NULL)
+    bacon_video_widget_set_media_device (bvw, path);
 
   switch (type) {
     case MEDIA_TYPE_CDDA: {

@@ -273,42 +273,6 @@ totem_playlist_update_save_button (TotemPlaylist *playlist)
 	gtk_widget_set_sensitive (button, state);
 }
 
-static char *
-totem_playlist_create_full_path (const char *path)
-{
-	char *retval, *curdir, *curdir_withslash, *escaped;
-
-	g_return_val_if_fail (path != NULL, NULL);
-
-	if (strstr (path, "://") != NULL)
-		return NULL;
-	if (totem_is_special_mrl (path) != FALSE)
-		return NULL;
-
-	if (path[0] == G_DIR_SEPARATOR) {
-		escaped = gnome_vfs_escape_path_string (path);
-
-		retval = g_strdup_printf ("file://%s", escaped);
-		g_free (escaped);
-		return retval;
-	}
-
-	curdir = g_get_current_dir ();
-	escaped = gnome_vfs_escape_path_string (curdir);
-	curdir_withslash = g_strdup_printf ("file://%s%c",
-					    escaped, G_DIR_SEPARATOR);
-	g_free (escaped);
-	g_free (curdir);
-
-	escaped = gnome_vfs_escape_path_string (path);
-	retval = gnome_vfs_uri_make_full_from_relative
-		(curdir_withslash, escaped);
-	g_free (curdir_withslash);
-	g_free (escaped);
-
-	return retval;
-}
-
 static void
 totem_playlist_save_get_iter_func (GtkTreeModel *model,
 		GtkTreeIter *iter, char **uri, char **title,
@@ -417,8 +381,7 @@ drop_cb (GtkWidget     *widget,
 		filename = totem_create_full_path (p->data);
 		title = NULL;
 
-		if (info == 1)
-		{
+		if (info == 1) {
 			g_free (p->data);
 			p = p->next;
 			if (p != NULL) {
@@ -429,7 +392,7 @@ drop_cb (GtkWidget     *widget,
 			}
 		}
 
-		totem_playlist_add_mrl (playlist, p->data, title);
+		totem_playlist_add_mrl (playlist, filename ? filename : p->data, title);
 
 		g_free (filename);
 		g_free (p->data);
@@ -1585,7 +1548,7 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 		filename_for_display = g_strdup (display_name);
 	}
 
-	uri = totem_playlist_create_full_path (mrl);
+	uri = totem_create_full_path (mrl);
 
 	D("totem_playlist_add_one_mrl (): %s %s %s\n",
 				filename_for_display, uri ? uri : "(null)", display_name);

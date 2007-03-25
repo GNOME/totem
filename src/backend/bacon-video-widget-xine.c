@@ -102,7 +102,6 @@ enum {
 	PROP_PLAYING,
 	PROP_SEEKABLE,
 	PROP_SHOWCURSOR,
-	PROP_MEDIADEV,
 	PROP_SHOW_VISUALS,
 	PROP_VOLUME
 };
@@ -133,7 +132,6 @@ struct BaconVideoWidgetPrivate {
 	/* Configuration */
 	GConfClient *gc;
 	BvwUseType type;
-	char *mediadev;
 
 	/* X stuff */
 	Display *display;
@@ -332,9 +330,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 	g_object_class_install_property (object_class, PROP_SHOWCURSOR,
 			g_param_spec_boolean ("showcursor", NULL, NULL,
 				FALSE, G_PARAM_READWRITE));
-	g_object_class_install_property (object_class, PROP_MEDIADEV,
-			g_param_spec_string ("mediadev", NULL, NULL,
-				FALSE, G_PARAM_READWRITE));
 	g_object_class_install_property (object_class, PROP_SHOW_VISUALS,
 			g_param_spec_boolean ("showvisuals", NULL, NULL,
 				FALSE, G_PARAM_WRITABLE));
@@ -495,7 +490,6 @@ bacon_video_widget_finalize (GObject *object)
 		bvw->priv->logo_pixbuf = NULL;
 	}
 	g_free (bvw->priv->vis_name);
-	g_free (bvw->priv->mediadev);
 	g_object_unref (G_OBJECT (bvw->priv->gc));
 
 	g_list_foreach (bvw->priv->visuals, (GFunc) g_free, NULL);
@@ -2511,10 +2505,6 @@ bacon_video_widget_set_property (GObject *object, guint property_id,
 		bacon_video_widget_set_show_cursor (bvw,
 				g_value_get_boolean (value));
 		break;
-	case PROP_MEDIADEV:
-		bacon_video_widget_set_media_device (bvw,
-				g_value_get_string (value));
-		break;
 	case PROP_SHOW_VISUALS:
 		bacon_video_widget_set_show_visuals (bvw,
 				g_value_get_boolean (value));
@@ -2556,9 +2546,6 @@ bacon_video_widget_get_property (GObject *object, guint property_id,
 	case PROP_SHOWCURSOR:
 		g_value_set_boolean (value,
 				bacon_video_widget_get_show_cursor (bvw));
-		break;
-	case PROP_MEDIADEV:
-		g_value_set_string (value, bvw->priv->mediadev);
 		break;
 	case PROP_VOLUME:
 		g_value_set_int (value, bvw->priv->volume);
@@ -2841,7 +2828,7 @@ bacon_video_widget_get_show_cursor (BaconVideoWidget *bvw)
 	return bvw->priv->cursor_shown;
 }
 
-void
+static void
 bacon_video_widget_set_media_device (BaconVideoWidget *bvw, const char *path)
 {
 	xine_cfg_entry_t entry;
@@ -2850,16 +2837,8 @@ bacon_video_widget_set_media_device (BaconVideoWidget *bvw, const char *path)
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (path != NULL);
 
-	g_free (bvw->priv->mediadev);
-
 	/* DVD device */
 	bvw_config_helper_string (bvw->priv->xine, "media.dvd.device",
-			path, &entry);
-	entry.str_value = (char *) path;
-	xine_config_update_entry (bvw->priv->xine, &entry);
-
-	/* VCD device */
-	bvw_config_helper_string (bvw->priv->xine, "media.vcd.device",
 			path, &entry);
 	entry.str_value = (char *) path;
 	xine_config_update_entry (bvw->priv->xine, &entry);
@@ -2875,8 +2854,6 @@ bacon_video_widget_set_media_device (BaconVideoWidget *bvw, const char *path)
 			path, &entry);
 	entry.str_value = (char *) path;
 	xine_config_update_entry (bvw->priv->xine, &entry);
-
-	bvw->priv->mediadev = g_strdup (path);
 }
 
 void
@@ -3231,8 +3208,9 @@ bacon_video_widget_can_play (BaconVideoWidget *bvw, MediaType type)
 	}
 }
 
-char
-**bacon_video_widget_get_mrls (BaconVideoWidget *bvw, MediaType type)
+char **
+bacon_video_widget_get_mrls (BaconVideoWidget *bvw, MediaType type,
+			     const char *device)
 {
 	const char *plugin_id;
 	int num_mrls;
@@ -3241,6 +3219,8 @@ char
 	g_return_val_if_fail (bvw != NULL, 0);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
 	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
+	//FIXME enable when we use devices for DVB
+	//g_return_val_if_fail (device != NULL, 0);
 
 	if (type == MEDIA_TYPE_DVD)
 		plugin_id = "DVD";
@@ -3252,6 +3232,9 @@ char
 		plugin_id = "DVB";
 	else
 		return NULL;
+
+	if (type != MEDIA_TYPE_DVB)
+		bacon_video_widget_set_media_device (bvw, device);
 
 	mrls = xine_get_autoplay_mrls (bvw->priv->xine, plugin_id, &num_mrls);
 	if (mrls == NULL)

@@ -50,7 +50,7 @@ const GOptionEntry options[] = {
 	{"quit", '\0', 0, G_OPTION_ARG_NONE, &optionstate.quit, N_("Quit"), NULL},
 	{"enqueue", '\0', 0, G_OPTION_ARG_NONE, &optionstate.enqueue, N_("Enqueue"), NULL},
 	{"replace", '\0', 0, G_OPTION_ARG_NONE, &optionstate.replace, N_("Replace"), NULL},
-	{"printplaying", '\0', 0, G_OPTION_ARG_NONE, &optionstate.printplaying, "Print playing movie", NULL}, //FIXME translate
+	{"printplaying", '\0', 0, G_OPTION_ARG_NONE, &optionstate.printplaying, N_("Print playing movie"), NULL},
 	{"seek", '\0', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_INT64, &optionstate.seek, N_("Seek"), NULL},
 	{"playlist-idx", '\0', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_DOUBLE, &optionstate.playlistidx, N_("Playlist index"), NULL},
 	{G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &optionstate.filenames, N_("Movies to play"), NULL},
@@ -76,16 +76,15 @@ totem_options_process_late (Totem *totem, const TotemCmdLineOptions* options)
 void
 totem_options_process_early (GConfClient *gc, const TotemCmdLineOptions* options)
 {
-	if (options->debug)
-	{
-		gconf_client_set_bool (gc, GCONF_PREFIX"/debug",
-				TRUE, NULL);
-	} else if (options->quit) 
+	if (options->quit) 
 	{
 		/* If --quit is one of the commands, just quit */
 		gdk_notify_startup_complete ();
 		exit (0);
 	}
+
+	gconf_client_set_bool (gc, GCONF_PREFIX"/debug",
+			       options->debug, NULL);
 }
 
 static void
@@ -152,7 +151,8 @@ totem_options_process_for_server (BaconMessageConnection *conn,
 	{
 		char *line, *full_path;
 		full_path = totem_create_full_path (options->filenames[i]);
-		line = g_strdup_printf ("%03d %s", default_action, full_path);
+		line = g_strdup_printf ("%03d %s", default_action,
+					full_path ? full_path : options->filenames[i]);
 		bacon_message_connection_send (conn, line);
 		g_free (line);
 		g_free (full_path);

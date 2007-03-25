@@ -1,3 +1,30 @@
+2007-03-26  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_set_property),
+	(bacon_video_widget_get_property), (bacon_video_widget_get_mrls):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_class_init), (bacon_video_widget_finalize),
+	(bacon_video_widget_set_property),
+	(bacon_video_widget_get_property),
+	(bacon_video_widget_set_media_device),
+	(bacon_video_widget_get_mrls):
+	* src/backend/bacon-video-widget.h:
+	* src/totem-options.c: (totem_options_process_early),
+	(totem_options_process_for_server):
+	* src/totem-playlist.c: (drop_cb), (totem_playlist_add_one_mrl):
+	* src/totem-uri.c: (totem_create_full_path):
+	* src/totem.c: (totem_action_load_media),
+	(totem_action_load_media_device), (totem_action_play_media),
+	(totem_action_drop_files), (totem_action_open_files_list),
+	(totem_action_remote):
+	* src/totem.h:
+
+	Clean up _create_full_path to avoid duplicate copies of the code,
+	and really make "totem dvb:" work (with xine-lib only for now),
+	Make the video widget take the media device to play as part
+	of _get_mrls ()
+
 2007-03-25  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-xine.c:

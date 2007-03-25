@@ -107,12 +107,11 @@ totem_create_full_path (const char *path)
 	g_return_val_if_fail (path != NULL, NULL);
 
 	if (strstr (path, "://") != NULL)
-		return g_strdup (path);
-	if (totem_is_media (path) != FALSE)
-		return g_strdup (path);
+		return NULL;
+	if (totem_is_special_mrl (path) != FALSE)
+		return NULL;
 
-	if (path[0] == '/')
-	{
+	if (path[0] == G_DIR_SEPARATOR) {
 		escaped = gnome_vfs_escape_path_string (path);
 
 		retval = g_strdup_printf ("file://%s", escaped);
@@ -122,8 +121,8 @@ totem_create_full_path (const char *path)
 
 	curdir = g_get_current_dir ();
 	escaped = gnome_vfs_escape_path_string (curdir);
-	curdir_withslash = g_strdup_printf ("file://%s%s",
-			escaped, G_DIR_SEPARATOR_S);
+	curdir_withslash = g_strdup_printf ("file://%s%c",
+					    escaped, G_DIR_SEPARATOR);
 	g_free (escaped);
 	g_free (curdir);
 
