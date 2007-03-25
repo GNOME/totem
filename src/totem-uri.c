@@ -66,6 +66,17 @@ totem_is_media (const char *uri)
 }
 
 gboolean
+totem_is_special_mrl (const char *uri)
+{
+	if (uri == NULL)
+		return FALSE;
+	if (g_str_has_prefix (uri, "dvb:") != FALSE)
+		return TRUE;
+
+	return totem_is_media (uri);
+}
+
+gboolean
 totem_is_block_device (const char *uri)
 {
 	struct stat buf;

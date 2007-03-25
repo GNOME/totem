@@ -1817,7 +1817,8 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 				|| g_str_has_prefix (filename, "dvd:") != FALSE
 				|| g_str_has_prefix (filename, "vcd:") != FALSE
 				|| g_str_has_prefix (filename, "cdda:") != FALSE
-				|| g_str_has_prefix (filename, "cd:") != FALSE)
+				|| g_str_has_prefix (filename, "cd:") != FALSE
+				|| g_str_has_prefix (filename, "dvb:") != FALSE)
 		{
 			if (cleared == FALSE)
 			{
@@ -1838,6 +1839,8 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 			} else if (g_str_has_prefix (filename, "cdda:/") != FALSE) {
 				totem_playlist_add_mrl (totem->playlist, data, NULL);
 				changed = TRUE;
+			} else if (g_str_equal (filename, "dvb:") != FALSE) {
+				totem_action_load_media (totem, MEDIA_TYPE_DVB);
 			} else if (totem_playlist_add_mrl (totem->playlist,
 						filename, NULL) != FALSE) {
 				totem_action_add_recent (totem, filename);
@@ -2106,6 +2109,8 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 			totem_action_play_media (totem, MEDIA_TYPE_VCD);
 		} else if (g_str_has_prefix (url, "cd:") != FALSE) {
 			totem_action_play_media (totem, MEDIA_TYPE_CDDA);
+		} else if (g_str_has_prefix (url, "dvb:") != FALSE) {
+			totem_action_play_media (totem, MEDIA_TYPE_DVB);
 		} else if (g_str_has_prefix (url, "cdda:/") != FALSE) {
 			totem_playlist_add_mrl (totem->playlist, url, NULL);
 		} else if (totem_playlist_add_mrl (totem->playlist,

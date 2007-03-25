@@ -262,24 +262,6 @@ totem_playlist_mrl_to_title (const gchar *mrl)
 	return filename_for_display;
 }
 
-static gboolean
-totem_playlist_is_media (const char *mrl)
-{
-	if (mrl == NULL)
-		return FALSE;
-
-	if (g_str_has_prefix (mrl, "cdda:") != FALSE)
-		return TRUE;
-	if (g_str_has_prefix (mrl, "dvd:") != FALSE)
-		return TRUE;
-	if (g_str_has_prefix (mrl, "vcd:") != FALSE)
-		return TRUE;
-	if (g_str_has_prefix (mrl, "cd:") != FALSE)
-		return TRUE;
-
-	return FALSE;
-}
-
 static void
 totem_playlist_update_save_button (TotemPlaylist *playlist)
 {
@@ -291,7 +273,7 @@ totem_playlist_update_save_button (TotemPlaylist *playlist)
 	gtk_widget_set_sensitive (button, state);
 }
 
-static char*
+static char *
 totem_playlist_create_full_path (const char *path)
 {
 	char *retval, *curdir, *curdir_withslash, *escaped;
@@ -299,12 +281,11 @@ totem_playlist_create_full_path (const char *path)
 	g_return_val_if_fail (path != NULL, NULL);
 
 	if (strstr (path, "://") != NULL)
-		return g_strdup (path);
-	if (totem_playlist_is_media (path) != FALSE)
-		return g_strdup (path);
+		return NULL;
+	if (totem_is_special_mrl (path) != FALSE)
+		return NULL;
 
-	if (path[0] == '/')
-	{
+	if (path[0] == G_DIR_SEPARATOR) {
 		escaped = gnome_vfs_escape_path_string (path);
 
 		retval = g_strdup_printf ("file://%s", escaped);
@@ -314,8 +295,8 @@ totem_playlist_create_full_path (const char *path)
 
 	curdir = g_get_current_dir ();
 	escaped = gnome_vfs_escape_path_string (curdir);
-	curdir_withslash = g_strdup_printf ("file://%s%s",
-			escaped, G_DIR_SEPARATOR_S);
+	curdir_withslash = g_strdup_printf ("file://%s%c",
+					    escaped, G_DIR_SEPARATOR);
 	g_free (escaped);
 	g_free (curdir);
 
@@ -1490,6 +1471,7 @@ totem_playlist_init (TotemPlaylist *playlist)
 	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "cdda:");
 	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "vcd:");
 	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "cd:");
+	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "dvb:");
 
 	g_signal_connect (G_OBJECT (playlist->_priv->parser),
 			"entry",
@@ -1606,13 +1588,13 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 	uri = totem_playlist_create_full_path (mrl);
 
 	D("totem_playlist_add_one_mrl (): %s %s %s\n",
-				filename_for_display, uri, display_name);
+				filename_for_display, uri ? uri : "(null)", display_name);
 
 	store = GTK_LIST_STORE (playlist->_priv->model);
 	gtk_list_store_insert_with_values (store, &iter, G_MAXINT32,
 			PLAYING_COL, FALSE,
 			FILENAME_COL, filename_for_display,
-			URI_COL, uri,
+			URI_COL, uri ? uri : mrl,
 			TITLE_CUSTOM_COL, display_name ? TRUE : FALSE,
 			-1);
 

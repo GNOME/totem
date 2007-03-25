@@ -127,7 +127,6 @@ struct BaconVideoWidgetPrivate {
 	xine_stream_t *stream;
 	xine_video_port_t *vo_driver;
 	xine_audio_port_t *ao_driver;
-	gboolean ao_driver_none;
 	xine_event_queue_t *ev_queue;
 	double display_ratio;
 
@@ -148,8 +147,6 @@ struct BaconVideoWidgetPrivate {
 
 	/* Visual effects */
 	char *vis_name;
-	gboolean show_vfx;
-	gboolean using_vfx;
 	xine_post_t *vis;
 	GList *visuals;
 	char *queued_vis;
@@ -161,7 +158,6 @@ struct BaconVideoWidgetPrivate {
 	gint64 seek_dest_time;
 
 	/* Logo */
-	gboolean logo_mode;
 	GdkPixbuf *logo_pixbuf;
 	/* Logo, save frame_output_cb members */
 	int dest_x, dest_y, dest_width, dest_height, win_x, win_y;
@@ -169,28 +165,36 @@ struct BaconVideoWidgetPrivate {
 
 	/* Other stuff */
 	int xpos, ypos;
-	gboolean can_dvd, can_vcd, can_cdda;
 	guint tick_id;
-	gboolean have_xvidmode;
-	gboolean auto_resize;
 	int volume;
 	BaconVideoWidgetAudioOutType audio_out_type;
 	TvOutType tvout;
-	gboolean is_live;
 	char *codecs_path;
-	gboolean got_redirect;
-	gboolean has_subtitle;
-	/* Whether the last button event was consumed internally */
-	gboolean bevent_consumed;
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
 	int init_width, init_height;
 
 	/* fullscreen stuff */
-	gboolean fullscreen_mode;
-	gboolean cursor_shown;
 	int screenid;
+
+	guint ao_driver_none : 1;
+	guint show_vfx : 1;
+	guint using_vfx : 1;
+	guint logo_mode : 1;
+	guint can_dvd : 1;
+	guint can_vcd : 1;
+	guint can_cdda : 1;
+	guint can_dvb : 1;
+	guint have_xvidmode : 1;
+	guint auto_resize : 1;
+	guint is_live : 1;
+	guint got_redirect : 1;
+	guint has_subtitle : 1;
+	/* Whether the last button event was consumed internally */
+	guint bevent_consumed : 1;
+	guint fullscreen_mode : 1;
+	guint cursor_shown : 1;
 };
 
 static const char *mms_bandwidth_strs[] = {
@@ -443,14 +447,23 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
 	autoplug_list = xine_get_autoplay_input_plugin_ids (bvw->priv->xine);
 	while (autoplug_list && autoplug_list[i])
 	{
-		if (g_ascii_strcasecmp (autoplug_list[i], "VCD") == 0)
+		if (g_ascii_strcasecmp (autoplug_list[i], "VCD") == 0) {
 			bvw->priv->can_vcd = TRUE;
-		else if (g_ascii_strcasecmp (autoplug_list[i], "VCDO") == 0)
+		} else if (g_ascii_strcasecmp (autoplug_list[i], "VCDO") == 0) {
 			bvw->priv->can_vcd = TRUE;
-		else if (g_ascii_strcasecmp (autoplug_list[i], "DVD") == 0)
+		} else if (g_ascii_strcasecmp (autoplug_list[i], "DVD") == 0) {
 			bvw->priv->can_dvd = TRUE;
-		else if (g_ascii_strcasecmp (autoplug_list[i], "CD") == 0)
+		} else if (g_ascii_strcasecmp (autoplug_list[i], "CD") == 0) {
 			bvw->priv->can_cdda = TRUE;
+		} else if (g_ascii_strcasecmp (autoplug_list[i], "DVB") == 0) {
+			char *path;
+
+			path = g_build_filename (g_get_home_dir (),
+						 ".xine", "channels.conf", NULL);
+			if (g_file_test (path, G_FILE_TEST_IS_REGULAR) != FALSE)
+				bvw->priv->can_dvb = TRUE;
+			g_free (path);
+		}
 		i++;
 	}
 
@@ -3227,6 +3240,8 @@ bacon_video_widget_can_play (BaconVideoWidget *bvw, MediaType type)
 		return bvw->priv->can_vcd;
 	case MEDIA_TYPE_CDDA:
 		return bvw->priv->can_cdda;
+	case MEDIA_TYPE_DVB:
+		return bvw->priv->can_dvb;
 	default:
 		return FALSE;
 	}
@@ -3235,8 +3250,9 @@ bacon_video_widget_can_play (BaconVideoWidget *bvw, MediaType type)
 char
 **bacon_video_widget_get_mrls (BaconVideoWidget *bvw, MediaType type)
 {
-	char *plugin_id;
+	const char *plugin_id;
 	int num_mrls;
+	char **mrls;
 
 	g_return_val_if_fail (bvw != NULL, 0);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
@@ -3248,11 +3264,24 @@ char
 		plugin_id = "VCD";
 	else if (type == MEDIA_TYPE_CDDA)
 		plugin_id = "CD";
+	else if (type == MEDIA_TYPE_DVB)
+		plugin_id = "DVB";
 	else
 		return NULL;
 
-	return g_strdupv (xine_get_autoplay_mrls
-		(bvw->priv->xine, plugin_id, &num_mrls));
+	mrls = xine_get_autoplay_mrls (bvw->priv->xine, plugin_id, &num_mrls);
+	if (mrls == NULL)
+		return NULL;
+	if (type == MEDIA_TYPE_DVB) {
+		/* No channels.conf, and we couldn't find it */
+		if (g_str_has_prefix (mrls[0], "Sorry") != FALSE)
+			return NULL;
+		/* The first channel can be the last channel played,
+		 * or a copy of the first one, ignore it */
+		return g_strdupv (mrls++);
+	}
+
+	return g_strdupv (mrls);
 }
 
 void
@@ -3261,8 +3290,9 @@ bacon_video_widget_set_subtitle_font (BaconVideoWidget *bvw, const char *font)
 	xine_cfg_entry_t entry;
 	int fontsize, size_index;
 	PangoFontDescription *desc;
+#if 0
 	const char *font_family;
-
+#endif
 	desc = pango_font_description_from_string (font);
 	fontsize = pango_font_description_get_size (desc) / PANGO_SCALE;
 
