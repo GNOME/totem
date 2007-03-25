@@ -169,7 +169,6 @@ struct BaconVideoWidgetPrivate {
 	int volume;
 	BaconVideoWidgetAudioOutType audio_out_type;
 	TvOutType tvout;
-	char *codecs_path;
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
@@ -498,7 +497,6 @@ bacon_video_widget_finalize (GObject *object)
 	g_free (bvw->priv->vis_name);
 	g_free (bvw->priv->mediadev);
 	g_object_unref (G_OBJECT (bvw->priv->gc));
-	g_free (bvw->priv->codecs_path);
 
 	g_list_foreach (bvw->priv->visuals, (GFunc) g_free, NULL);
 	g_list_free (bvw->priv->visuals);
@@ -906,18 +904,6 @@ setup_config_stream (BaconVideoWidget *bvw)
 					video_props[i], value);
 		}
 	}
-}
-
-static gboolean
-bacon_video_widget_plugin_exists (BaconVideoWidget *bvw, const char *filename)
-{
-	char *path;
-	gboolean res;
-
-	path = g_build_filename (bvw->priv->codecs_path, filename, NULL);
-	res = g_file_test (path, G_FILE_TEST_IS_REGULAR);
-	g_free (path);
-	return res;
 }
 
 static gboolean
@@ -1357,8 +1343,6 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		break;
 	case XINE_MSG_LIBRARY_LOAD_ERROR:
 		params = (char *) data + data->parameters;
-		if (bacon_video_widget_plugin_exists (bvw, params) == FALSE)
-			return;
 		/* Only if the file could really not be loaded */
 		num = BVW_ERROR_PLUGIN_LOAD;
 		message = g_strdup_printf (_("A problem occurred while loading a library or a decoder (%s)."), params);

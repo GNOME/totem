@@ -1,5 +1,13 @@
 2007-03-25  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_finalize), (xine_event_message): 
+	Remove bacon_video_widget_plugin_exists, as it's pretty useless. We
+	weren't setting our own proprietary codecs path anymore, and we don't
+	want to support them anyway (Closes: #421724)
+
+2007-03-25  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c: (bacon_video_widget_init),
 	(bacon_video_widget_can_play), (bacon_video_widget_get_mrls),
 	(bacon_video_widget_set_subtitle_font):
