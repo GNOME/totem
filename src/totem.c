@@ -3041,6 +3041,7 @@ totem_setup_window (Totem *totem)
 	g_signal_connect (G_OBJECT (main_pane), "size-allocate", G_CALLBACK (main_pane_size_allocated), totem);
 
 	totem_sidebar_setup (totem, show_sidebar, page_id);
+        g_free (page_id);
 }
 
 static void

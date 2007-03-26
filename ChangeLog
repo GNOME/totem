@@ -1,5 +1,10 @@
 2007-03-26  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (totem_setup_window): Patch from Christian Persch
+	<chpe@svn.gnome.org> to fix a memory leak (Closes: #423067)
+
+2007-03-26  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_action_handle_key_press): Make pause actually
 	pause, and stop pause as well (Closes: #422956)
 
