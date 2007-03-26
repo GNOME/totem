@@ -50,8 +50,8 @@ bacon_video_widget_common_can_direct_seek (BaconVideoWidgetCommon *com)
 	/* (instant seeking only make sense with video,
 	 * hence no cdda:// here) */
 	if (g_str_has_prefix (com->mrl, "file://") ||
-			g_str_has_prefix (com->mrl, "dvd://") ||
-			g_str_has_prefix (com->mrl, "vcd://"))
+			g_str_has_prefix (com->mrl, "dvd:/") ||
+			g_str_has_prefix (com->mrl, "vcd:/"))
 		return TRUE;
 
 	return FALSE;
