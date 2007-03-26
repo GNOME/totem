@@ -1590,8 +1590,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       break;
 
     default:
-      g_message ("Unhandled message of type '%s' (0x%x)", 
-          gst_message_type_get_name (msg_type), msg_type);
+      GST_LOG ("Unhandled message: %" GST_PTR_FORMAT, message);
       break;
   }
 }
