@@ -3078,17 +3078,17 @@ totem_callback_connect (Totem *totem)
 	/* Controls */
 	box = glade_xml_get_widget (totem->xml, "tmw_buttons_hbox");
 
+	action = gtk_action_group_get_action (totem->main_action_group, "play");
+	item = gtk_action_create_tool_item (action);
+	atk_object_set_name (gtk_widget_get_accessible (item),
+			_("Play / Pause"));
+	gtk_box_pack_start (GTK_BOX (box), item, FALSE, FALSE, 0);
+
 	action = gtk_action_group_get_action (totem->main_action_group,
 			"previous-chapter");
 	item = gtk_action_create_tool_item (action);
 	atk_object_set_name (gtk_widget_get_accessible (item),
 			_("Previous Chapter/Movie"));
-	gtk_box_pack_start (GTK_BOX (box), item, FALSE, FALSE, 0);
-
-	action = gtk_action_group_get_action (totem->main_action_group, "play");
-	item = gtk_action_create_tool_item (action);
-	atk_object_set_name (gtk_widget_get_accessible (item),
-			_("Play / Pause"));
 	gtk_box_pack_start (GTK_BOX (box), item, FALSE, FALSE, 0);
 
 	action = gtk_action_group_get_action (totem->main_action_group,
@@ -3149,13 +3149,13 @@ totem_callback_connect (Totem *totem)
 	/* Control Popup */
 	box = glade_xml_get_widget (totem->xml, "tcw_buttons_hbox");
 
-	action = gtk_action_group_get_action (totem->main_action_group, "previous-chapter");
+	action = gtk_action_group_get_action (totem->main_action_group, "play");
 	item = gtk_action_create_tool_item (action);
 	gtk_box_pack_start (GTK_BOX (box), item, FALSE, FALSE, 0);
 	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (on_mouse_click_fullscreen), totem);
 
-	action = gtk_action_group_get_action (totem->main_action_group, "play");
+	action = gtk_action_group_get_action (totem->main_action_group, "previous-chapter");
 	item = gtk_action_create_tool_item (action);
 	gtk_box_pack_start (GTK_BOX (box), item, FALSE, FALSE, 0);
 	g_signal_connect (G_OBJECT (item), "clicked",
@@ -3166,7 +3166,6 @@ totem_callback_connect (Totem *totem)
 	gtk_box_pack_start (GTK_BOX (box), item, FALSE, FALSE, 0);
 	g_signal_connect (G_OBJECT (item), "clicked",
 			G_CALLBACK (on_mouse_click_fullscreen), totem);
-
 
 	item = glade_xml_get_widget (totem->xml, "tcw_volume_mute_button");
 	g_signal_connect (G_OBJECT (item), "clicked",
