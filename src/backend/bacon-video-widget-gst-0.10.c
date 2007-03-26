@@ -2457,7 +2457,7 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
       } else {
         ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_PERMISSION,
             _("Could not open location; "
-              "You may not have permission to open the file."));
+              "you might not have permission to open the file."));
       }
 #if 0
     }

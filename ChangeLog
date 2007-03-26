@@ -1,6 +1,12 @@
 2007-03-26  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_error_from_gst_error):
+	  Fix ambiguous error message (#420937).
+
+2007-03-26  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bvw_set_device_on_element):
 	(playbin_source_notify_cb):
 	(bacon_video_widget_open_with_subtitle):
