@@ -2626,7 +2626,6 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		break;
 #ifdef HAVE_XFREE
 	case XF86XK_AudioPlay:
-	case XF86XK_AudioPause:
 #endif /* HAVE_XFREE */
 	case GDK_p:
 	case GDK_P:
@@ -2635,6 +2634,12 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		else 
 			totem_action_play_pause (totem);
 		break;
+#ifdef HAVE_XFREE
+	case XF86XK_AudioPause:
+	case XF86XK_AudioStop:
+		totem_action_pause (totem);
+		break;
+#endif /* HAVE_XFREE */
 	case GDK_q:
 	case GDK_Q:
 		totem_action_exit (totem);
