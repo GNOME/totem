@@ -638,7 +638,9 @@ totem_recent_manager_changed_callback (GtkRecentManager *recent_manager, Totem *
 void
 totem_setup_recent (Totem *totem)
 {
-	totem->recent_manager = gtk_recent_manager_get_default ();
+	GdkScreen *screen;
+	screen = gtk_widget_get_screen (totem->win);
+	totem->recent_manager = gtk_recent_manager_get_for_screen (screen);
 	totem->recent_action_group = NULL;
 	totem->recent_ui_id = gtk_ui_manager_new_merge_id
 			(totem->ui_manager);
