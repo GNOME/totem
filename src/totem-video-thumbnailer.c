@@ -27,12 +27,15 @@
 
 #include "config.h"
 
+#include <glib/gstdio.h>
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/resource.h>
 #ifndef HAVE_GTK_ONLY
 #include <libgnomeui/gnome-authentication-manager.h>
@@ -331,12 +334,21 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 #define MAX_HELPER_SECONDS (15)			/* 15 seconds */
 
 static void
-set_resource_limits (void)
+set_resource_limits (const char *input)
 {
 	struct rlimit limit;
+	struct stat buf;
 
-	limit.rlim_cur = MAX_HELPER_MEMORY;
-	limit.rlim_max = MAX_HELPER_MEMORY;
+	/* Set the maximum virtual size depending on the size
+	 * of the file to process, as we wouldn't be able to
+	 * mmap it otherwise */
+	if (g_stat (input, &buf) == 0) {
+		limit.rlim_cur = MAX_HELPER_MEMORY + buf.st_size;
+		limit.rlim_max = MAX_HELPER_MEMORY + buf.st_size;
+	} else {
+		limit.rlim_cur = MAX_HELPER_MEMORY;
+		limit.rlim_max = MAX_HELPER_MEMORY;
+	}
 	setrlimit (RLIMIT_AS, &limit);
 
 	limit.rlim_cur = MAX_HELPER_SECONDS;
@@ -448,7 +460,7 @@ int main (int argc, char *argv[])
 
 	if (time_limit != FALSE) {
 		g_thread_create (time_monitor, (gpointer) input, FALSE, NULL);
-		set_resource_limits ();
+		set_resource_limits (input);
 	}
 
 	PROGRESS_DEBUG("About to open video file\n");

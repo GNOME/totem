@@ -1,5 +1,11 @@
 2007-03-27  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-video-thumbnailer.c: (set_resource_limits), (main):
+	As mmap'ed files count towards the maximum memory size, take the
+	file size into account when setting the maximum memory consumption
+
+2007-03-27  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-common.c:
 	(bacon_video_widget_common_can_direct_seek): Make direct seeking
 	work on DVDs in xine-lib
