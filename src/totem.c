@@ -786,12 +786,15 @@ totem_action_open_location (Totem *totem)
 
 		for (p = recent_items; p != NULL; p = p->next)
 		{
-			if (!gtk_recent_info_has_group ((GtkRecentInfo *) p->data, "TotemStreams"))
+			GtkRecentInfo *info = (GtkRecentInfo *) p->data;
+			if (!gtk_recent_info_has_group (info, "TotemStreams")) {
+				gtk_recent_info_unref (info);
 				continue;
+			}
 
 			gtk_list_store_append (GTK_LIST_STORE (model), &iter);
-			gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, gtk_recent_info_get_uri ((GtkRecentInfo *) p->data), -1);
-			gtk_recent_info_unref ((GtkRecentInfo *) p->data);
+			gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, gtk_recent_info_get_uri (info), -1);
+			gtk_recent_info_unref (info);
 		}
 	}
 

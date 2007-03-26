@@ -1,5 +1,11 @@
 2007-03-26  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (totem_action_open_location): Fix leak when
+	stream is already in the recent files, spotted by Christian
+	Persch <chpe@svn.gnome.org> (Closes: #423079)
+
+2007-03-26  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_setup_window): Patch from Christian Persch
 	<chpe@svn.gnome.org> to fix a memory leak (Closes: #423067)
 
