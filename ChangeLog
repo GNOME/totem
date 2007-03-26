@@ -1,5 +1,11 @@
 2007-03-26  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-uri.c: (totem_add_default_dirs), (totem_add_files),
+	(xdg_user_dir_lookup): Use xdg-user-dirs to add some default
+	directories to the "Open" dialogues (Closes: #143404)
+
+2007-03-26  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bacon_video_widget_set_property),
 	(bacon_video_widget_get_property), (bacon_video_widget_get_mrls):
