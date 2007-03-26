@@ -1,3 +1,14 @@
+2007-03-26  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_set_device_on_element):
+	(playbin_source_notify_cb):
+	(bacon_video_widget_open_with_subtitle):
+	(bacon_video_widget_get_mrls):
+	  Remove bacon_video_widget_set_media_device() now that device is
+	  passed to _get_mrls(); also actually use the device for cdda URIs
+	  (Closes: #422838). Also fixes build with GStreamer backend.
+
 2007-03-26  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-uri.c: (totem_add_default_dirs), (totem_add_files),

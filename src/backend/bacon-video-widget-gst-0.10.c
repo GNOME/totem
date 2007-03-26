@@ -1682,6 +1682,18 @@ got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * bvw)
 }
 
 static void
+bvw_set_device_on_element (BaconVideoWidget * bvw, GstElement * element)
+{
+  if (bvw->priv->media_device == NULL)
+    return;
+
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (element), "device")) {
+    GST_DEBUG ("Setting device to '%s'", bvw->priv->media_device);
+    g_object_set (element, "device", bvw->priv->media_device, NULL);
+  }
+}
+
+static void
 playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *bvw)
 {
   GObject *source = NULL;
@@ -1701,19 +1713,12 @@ playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *bvw)
   }
 
   g_object_get (play, "source", &source, NULL);
-  if (!source)
-    return;
 
-  GST_DEBUG ("Got source of type %s", G_OBJECT_TYPE_NAME (source));
-
-  if (bvw->priv->media_device) {
-    if (g_object_class_find_property (G_OBJECT_GET_CLASS (source), "device")) {
-      GST_DEBUG ("Setting device to '%s'", bvw->priv->media_device);
-      g_object_set (source, "device", bvw->priv->media_device, NULL);
-    }
+  if (source) {
+    GST_DEBUG ("Got source of type %s", G_OBJECT_TYPE_NAME (source));
+    bvw_set_device_on_element (bvw, GST_ELEMENT (source));
+    g_object_unref (source);
   }
-
-  g_object_unref (source);
 }
 
 static gboolean
@@ -2687,7 +2692,8 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
     /* this allows to play backups of dvds */
     g_free (bvw->com->mrl);
     bvw->com->mrl = g_strdup ("dvd://");
-    bacon_video_widget_set_media_device (bvw, mrl + strlen ("dvd://"));
+    g_free (bvw->priv->media_device);
+    bvw->priv->media_device = g_strdup (mrl + strlen ("dvd://"));
   }
 
   bvw->priv->got_redirect = FALSE;
@@ -3264,18 +3270,6 @@ bacon_video_widget_get_show_cursor (BaconVideoWidget * bvw)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 
   return bvw->priv->cursor_shown;
-}
-
-static void
-bacon_video_widget_set_media_device (BaconVideoWidget * bvw, const char *path)
-{
-  g_return_if_fail (bvw != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
-
-  /* FIXME: totally not thread-safe, used in the notify::source callback */  
-  g_free (bvw->priv->media_device);
-  bvw->priv->media_device = g_strdup (path);
 }
 
 static void
@@ -3926,10 +3920,10 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw, MediaType type,
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), NULL);
 
   GST_DEBUG ("type = %d", type);
-  GST_DEBUG ("device = %s", device);
+  GST_DEBUG ("device = %s", GST_STR_NULL (device));
 
-  if (device != NULL)
-    bacon_video_widget_set_media_device (bvw, path);
+  g_free (bvw->priv->media_device);
+  bvw->priv->media_device = g_strdup (device);
 
   switch (type) {
     case MEDIA_TYPE_CDDA: {
@@ -3954,7 +3948,7 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw, MediaType type,
         return NULL;
       }
 
-      /* FIXME: what about setting the device? */
+      bvw_set_device_on_element (bvw, cddasrc);
 
       GST_DEBUG ("Opening CD and getting number of tracks ...");
 
