@@ -338,17 +338,28 @@ set_resource_limits (const char *input)
 {
 	struct rlimit limit;
 	struct stat buf;
+	rlim_t max;
+
+	g_return_if_fail (input != NULL);
+
+	max = MAX_HELPER_MEMORY;
 
 	/* Set the maximum virtual size depending on the size
 	 * of the file to process, as we wouldn't be able to
 	 * mmap it otherwise */
 	if (g_stat (input, &buf) == 0) {
-		limit.rlim_cur = MAX_HELPER_MEMORY + buf.st_size;
-		limit.rlim_max = MAX_HELPER_MEMORY + buf.st_size;
-	} else {
-		limit.rlim_cur = MAX_HELPER_MEMORY;
-		limit.rlim_max = MAX_HELPER_MEMORY;
+		max = MAX_HELPER_MEMORY + buf.st_size;
+	} else if (g_str_has_prefix (input, "file://") != FALSE) {
+		char *file;
+		file = g_filename_from_uri (input, NULL, NULL);
+		if (file != NULL && g_stat (file, &buf) == 0)
+			max = MAX_HELPER_MEMORY + buf.st_size;
+		g_free (file);
 	}
+
+	limit.rlim_cur = max;
+	limit.rlim_max = max;
+
 	setrlimit (RLIMIT_AS, &limit);
 
 	limit.rlim_cur = MAX_HELPER_SECONDS;
