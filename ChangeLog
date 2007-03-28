@@ -1,5 +1,10 @@
 2007-03-28  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-video-thumbnailer.c: (set_resource_limits):
+	switch to using RLIMIT_DATA instead of RLIMIT_AS
+
+2007-03-28  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-video-thumbnailer.c: (set_resource_limits): Handle the
 	input passed being a URI, when in conjuction with limits setting
 

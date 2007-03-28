@@ -360,7 +360,7 @@ set_resource_limits (const char *input)
 	limit.rlim_cur = max;
 	limit.rlim_max = max;
 
-	setrlimit (RLIMIT_AS, &limit);
+	setrlimit (RLIMIT_DATA, &limit);
 
 	limit.rlim_cur = MAX_HELPER_SECONDS;
 	limit.rlim_max = MAX_HELPER_SECONDS;
