@@ -216,6 +216,32 @@ fi
 
 AM_CONDITIONAL(TOTEM_GST, test "x$HAVE_GSTREAMER" = "xyes")
 
+AC_MSG_CHECKING([Whether not to check for iso-codes])
+AC_ARG_ENABLE([iso-codes],
+	AS_HELP_STRING([--disable-iso-codes],[Whether not to check for iso-codes at build-time]),
+	[],[disable_iso_codes_check=no])
+if test x$disable_iso_codes_check = xno ; then
+	AC_MSG_RESULT([no])
+else
+	AC_MSG_RESULT([yes])
+fi
+
+AC_MSG_RESULT([$disable_iso_codes_check])
+
+if test x$disable_iso_codes_check = "xno" ; then
+	AC_MSG_CHECKING([whether iso-codes has iso-639 domain])
+	if $PKG_CONFIG --variable=domains iso-codes | grep 639 >/dev/null ; then
+		AC_MSG_RESULT([yes])
+	else
+		AC_MSG_RESULT([no])
+	fi
+	AC_DEFINE_UNQUOTED([ISO_CODES_PREFIX],["`$PKG_CONFIG --variable=prefix iso-codes`"],[ISO codes prefix])
+	ISO_CODES=iso-codes
+else
+	AC_DEFINE_UNQUOTED([ISO_CODES_PREFIX],[$prefix],[ISO codes prefix])
+	ISO_CODES=""
+fi
+
 dnl Check for GTK+ only build
 AC_ARG_ENABLE(gtk,
 	AC_HELP_STRING([--enable-gtk],[compile a gtk+ only version]),
@@ -230,24 +256,15 @@ dnl Seems that the order matters because libtool blows
 dnl Also check if we're going to be using GTK+ only
 if test x$ENABLE_GTK = "xno" ; then
 # FIXME: use gmodule-no-export instead!
-	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS libgnomeui-2.0 >= $GNOMEUI_REQS libglade-2.0 gnome-vfs-2.0 >= $GNOMEVFS_REQS gnome-vfs-module-2.0 >= $GNOMEVFS_REQS libgnome-2.0 >= $LIBGNOME_REQS  gnome-desktop-2.0 >= 2.1.5 gnome-icon-theme >= $GNOMEICON_REQS gmodule-2.0 iso-codes $MM)
+	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS libgnomeui-2.0 >= $GNOMEUI_REQS libglade-2.0 gnome-vfs-2.0 >= $GNOMEVFS_REQS gnome-vfs-module-2.0 >= $GNOMEVFS_REQS libgnome-2.0 >= $LIBGNOME_REQS  gnome-desktop-2.0 >= 2.1.5 gnome-icon-theme >= $GNOMEICON_REQS gmodule-2.0 $ISO_CODES $MM)
 	HAVE_GNOME=yes
 else
 # FIXME: use gmodule-no-export instead!
-	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS libglade-2.0 gnome-vfs-2.0 >= $GNOMEVFS_REQS gnome-vfs-module-2.0 >= $GNOMEVFS_REQS gnome-icon-theme >= $GNOMEICON_REQS gmodule-2.0 iso-codes $MM)
+	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS libglade-2.0 gnome-vfs-2.0 >= $GNOMEVFS_REQS gnome-vfs-module-2.0 >= $GNOMEVFS_REQS gnome-icon-theme >= $GNOMEICON_REQS gmodule-2.0 $ISO_CODES $MM)
 	AC_DEFINE(USE_STABLE_LIBGNOMEUI, 1, [defined if we don't have GNOME])
 	AC_DEFINE(HAVE_GTK_ONLY, 1, [defined if GNOME isn't used])
 	HAVE_GNOME=no
 fi
-
-AC_MSG_CHECKING([whether iso-codes has iso-639 domain])
-if $PKG_CONFIG --variable=domains iso-codes | grep 639 >/dev/null ; then
-	AC_MSG_RESULT([yes])
-else
-	AC_MSG_RESULT([no])
-fi
-
-AC_DEFINE_UNQUOTED([ISO_CODES_PREFIX],["`$PKG_CONFIG --variable=prefix iso-codes`"],[ISO codes prefix])
 
 AM_CONDITIONAL(HAVE_GNOME, test x$HAVE_GNOME = "xyes")
 EXTRA_GNOME_CFLAGS="$EXTRA_GNOME_CFLAGS"
@@ -826,7 +843,7 @@ else
 		AC_MSG_NOTICE([   Easy codec installation support disabled])
 	fi
 fi
-	if test x$found_nvtv = xyes ; then
+if test x$found_nvtv = xyes ; then
 	AC_MSG_NOTICE([** nvtv support enabled])
 else
 	AC_MSG_NOTICE([   nvtv support disabled])
@@ -875,6 +892,11 @@ if test x$HAVE_MEDIA_PLAYER_KEYS = xyes ; then
 	AC_MSG_NOTICE([** Media player keys support enabled])
 else
 	AC_MSG_NOTICE([   Media player keys support disabled])
+fi
+if test x$disable_iso_codes_check = xno ; then
+	AC_MSG_NOTICE([** iso-codes support checked])
+else
+	AC_MSG_NOTICE([   iso-codes support checked at run-time])
 fi
 if test x$HAVE_LIRC = xyes ; then
 	AC_MSG_NOTICE([** LIRC support enabled])
