@@ -99,37 +99,43 @@ totem_pl_parser_add_desktop (TotemPlParser *parser, const char *url,
 	char *contents, **lines;
 	const char *path, *display_name, *type;
 	int size;
+	TotemPlParserResult res = TOTEM_PL_PARSER_RESULT_ERROR;
 
 	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
-		return TOTEM_PL_PARSER_RESULT_ERROR;
+		return res;
 
 	lines = g_strsplit (contents, "\n", 0);
 	g_free (contents);
 
 	type = totem_pl_parser_read_ini_line_string (lines, "Type", FALSE);
-	if (type == NULL || g_ascii_strcasecmp (type, "Link") != 0) {
-		g_strfreev (lines);
-		return TOTEM_PL_PARSER_RESULT_ERROR;
+	if (type == NULL)
+		goto bail;
+	
+	if (g_ascii_strcasecmp (type, "Link") != 0
+	    && g_ascii_strcasecmp (type, "FSDevice") != 0) {
+		goto bail;
 	}
 
 	path = totem_pl_parser_read_ini_line_string (lines, "URL", FALSE);
-	if (path == NULL) {
-		g_strfreev (lines);
-		return TOTEM_PL_PARSER_RESULT_ERROR;
-	}
+	if (path == NULL)
+		goto bail;
 
 	display_name = totem_pl_parser_read_ini_line_string (lines, "Name", FALSE);
 
-	if (totem_pl_parser_ignore (parser, path) == FALSE) {
+	if (totem_pl_parser_ignore (parser, path) == FALSE
+	    && g_ascii_strcasecmp (type, "FSDevice") != 0) {
 		totem_pl_parser_add_one_url (parser, path, display_name);
 	} else {
 		if (totem_pl_parser_parse_internal (parser, path, NULL) != TOTEM_PL_PARSER_RESULT_SUCCESS)
 			totem_pl_parser_add_one_url (parser, path, display_name);
 	}
 
+	res = TOTEM_PL_PARSER_RESULT_SUCCESS;
+
+bail:
 	g_strfreev (lines);
 
-	return TOTEM_PL_PARSER_RESULT_SUCCESS;
+	return res;
 }
 
 #endif /* !TOTEM_PL_PARSER_MINI */
