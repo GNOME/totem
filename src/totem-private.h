@@ -96,10 +96,11 @@ struct Totem {
 	GtkWidget *sidebar;
 	gboolean sidebar_shown;
 	int sidebar_w;
-
-	/* Separate Dialogs */
 	GtkWidget *properties;
+
+	/* Skip to dialogue */
 	TotemSkipto *skipto;
+	gint64 last_length;
 
 	/* Play/Pause */
 	GtkWidget *pp_button;

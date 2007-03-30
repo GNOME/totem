@@ -100,7 +100,6 @@ static void update_fullscreen_size (Totem *totem);
 static gboolean popup_hide (Totem *totem);
 static void update_buttons (Totem *totem);
 static void update_media_menu_items (Totem *totem);
-static void update_seekable (Totem *totem, gboolean force_false);
 static void playlist_changed_cb (GtkWidget *playlist, Totem *totem);
 static void play_pause_set_label (Totem *totem, TotemStates state);
 static gboolean on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event, Totem *totem);
@@ -915,6 +914,11 @@ totem_get_nice_name_for_stream (Totem *totem)
 static void
 update_skip_to (Totem *totem, gint64 time)
 {
+	if (time == totem->last_length)
+		return;
+
+	totem->last_length = time;
+
 	if (totem->skipto != NULL)
 		totem_skipto_update_range (totem->skipto, time);
 }
@@ -996,9 +1000,6 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		/* Play/Pause */
 		totem_action_set_sensitivity ("play", FALSE);
 
-		/* Seek bar and seek buttons */
-		update_seekable (totem, FALSE);
-
 		/* Volume */
 		totem_main_set_sensitivity ("tcw_volume_button", FALSE);
 		totem_action_set_sensitivity ("volume-up", FALSE);
@@ -1038,10 +1039,6 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 
 		/* Play/Pause */
 		totem_action_set_sensitivity ("play", TRUE);
-
-		/* Seek bar */
-		update_seekable (totem,
-				bacon_video_widget_is_seekable (totem->bvw));
 
 		/* Volume */
 		caps = bacon_video_widget_can_set_volume (totem->bvw);
@@ -1567,11 +1564,13 @@ on_buffering_event (BaconVideoWidget *bvw, int percentage, Totem *totem)
 }
 
 static void
-update_seekable (Totem *totem, gboolean seekable)
+update_seekable (Totem *totem)
 {
+	gboolean seekable;
+
+	seekable = bacon_video_widget_is_seekable (totem->bvw);
 	if (totem->seekable == seekable)
 		return;
-
 	totem->seekable = seekable;
 
 	/* Check if the stream is seekable */
@@ -1597,7 +1596,6 @@ update_current_time (BaconVideoWidget *bvw,
 		gboolean seekable, Totem *totem)
 {
 	update_skip_to (totem, stream_length);
-	update_seekable (totem, seekable);
 
 	if (totem->seek_lock == FALSE)
 	{
@@ -1677,6 +1675,8 @@ property_notify_cb (BaconVideoWidget *bvw, GParamSpec *spec, Totem *totem)
 		gboolean enabled;
 		enabled = bacon_video_widget_get_logo_mode (totem->bvw);
 		totem_action_zoom (totem, enabled ? ZOOM_DISABLE : ZOOM_ENABLE);
+	} else if (strcmp ("seekable", spec->name) == 0) {
+		update_seekable (totem);
 	}
 }
 
@@ -1910,8 +1910,7 @@ totem_action_skip_to (Totem *totem)
 	if (totem->seekable == FALSE)
 		return;
 
-	if (totem->skipto != NULL)
-	{
+	if (totem->skipto != NULL) {
 		gtk_window_present (GTK_WINDOW (totem->skipto));
 		return;
 	}
@@ -1919,6 +1918,7 @@ totem_action_skip_to (Totem *totem)
 	filename = totem_interface_get_full_path ("skip_to.glade");
 	totem->skipto = TOTEM_SKIPTO (totem_skipto_new (filename));
 	g_free (filename);
+	totem_skipto_update_range (totem->skipto, totem->last_length);
 
 	g_signal_connect (G_OBJECT (totem->skipto), "delete-event",
 			G_CALLBACK (gtk_widget_destroy), NULL);

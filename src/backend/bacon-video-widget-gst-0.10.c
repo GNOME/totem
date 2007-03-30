@@ -1530,12 +1530,9 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       g_free (src_name);
 
       /* now do stuff */
-      if (new_state < GST_STATE_PAUSED) {
+      if (new_state <= GST_STATE_PAUSED) {
+        bvw_query_timeout (bvw);
         bvw_reconfigure_tick_timeout (bvw, 0);
-      } else if (new_state == GST_STATE_PAUSED) {
-        /* yes, we need to keep the tick timeout running in PAUSED state
-         * as well, totem depends on that (use lower frequency though) */
-        bvw_reconfigure_tick_timeout (bvw, 500);
       } else if (new_state > GST_STATE_PAUSED) {
         bvw_reconfigure_tick_timeout (bvw, 200);
       }
@@ -1646,9 +1643,7 @@ got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * bvw)
 
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-
-  if (bvw->priv->logo_mode != FALSE)
-    return;
+  g_return_if_fail (bvw->priv->logo_mode == FALSE);
 
   bvw->priv->current_time_nanos = time_nanos;
 
@@ -1664,6 +1659,8 @@ got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * bvw)
   if (bvw->priv->stream_length == 0) {
     seekable = bacon_video_widget_is_seekable (bvw);
   } else {
+    if (bvw->priv->seekable == -1)
+      g_object_notify (G_OBJECT (bvw), "seekable");
     seekable = TRUE;
   }
 
@@ -2962,6 +2959,7 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
     bvw->com->mrl = NULL;
   }
 
+  g_object_notify (G_OBJECT (bvw), "seekable");
   g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
 }
 
@@ -3848,10 +3846,16 @@ gboolean
 bacon_video_widget_is_seekable (BaconVideoWidget * bvw)
 {
   gboolean res;
+  gint old_seekable;
 
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
+
+  if (bvw->com->mrl == NULL)
+    return FALSE;
+
+  old_seekable = bvw->priv->seekable;
 
   if (bvw->priv->seekable == -1) {
     GstQuery *query;
@@ -3879,6 +3883,9 @@ bacon_video_widget_is_seekable (BaconVideoWidget * bvw)
   }
 
 done:
+
+  if (old_seekable != bvw->priv->seekable)
+    g_object_notify (G_OBJECT (bvw), "seekable");
 
   GST_DEBUG ("stream is%s seekable", (res) ? "" : " not");
   return res;

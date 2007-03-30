@@ -1,5 +1,28 @@
 2007-03-30  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c: (bvw_bus_message_cb),
+	(got_time_tick), (bacon_video_widget_close),
+	(bacon_video_widget_is_seekable):
+	* src/backend/bacon-video-widget-xine.c: (bacon_video_widget_init),
+	(setup_config), (bacon_video_widget_idle_signal),
+	(bacon_video_widget_unrealize), (bacon_video_widget_new),
+	(bacon_video_widget_reconfigure_tick),
+	(bacon_video_widget_tick_send),
+	(bacon_video_widget_open_with_subtitle), (bacon_video_widget_play),
+	(bacon_video_widget_stop), (bacon_video_widget_close),
+	(bacon_video_widget_pause):
+	* src/totem-private.h:
+	* src/totem.c: (update_skip_to),
+	(totem_action_set_mrl_with_warning), (update_seekable),
+	(update_current_time), (property_notify_cb),
+	(totem_action_skip_to):
+
+	Don't run the ticks when paused or stopped,
+	Update seekable only when the value has changed in the backend, not
+	for every tick (Closes: #363164)
+
+2007-03-30  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser-misc.c:
 	(totem_pl_parser_add_desktop): Add support for "FSDevice" type
 	desktop file, allows to drag'n'drop from the Computer location

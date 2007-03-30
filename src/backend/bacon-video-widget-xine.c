@@ -167,6 +167,7 @@ struct BaconVideoWidgetPrivate {
 	int volume;
 	BaconVideoWidgetAudioOutType audio_out_type;
 	TvOutType tvout;
+	gint64 stream_length;
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
@@ -267,6 +268,7 @@ static xine_video_port_t * load_video_out_driver (BaconVideoWidget *bvw,
 static xine_audio_port_t * load_audio_out_driver (BaconVideoWidget *bvw,
 		gboolean null_out, GError **error);
 static gboolean bacon_video_widget_tick_send (BaconVideoWidget *bvw);
+static void bacon_video_widget_reconfigure_tick (BaconVideoWidget *bvw, gboolean enable);
 static void bacon_video_widget_set_visuals_quality_size (BaconVideoWidget *bvw,
 		int h, int w, int fps);
 
@@ -460,9 +462,6 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
 		}
 		i++;
 	}
-
-	bvw->priv->tick_id = g_timeout_add (140,
-			(GSourceFunc) bacon_video_widget_tick_send, bvw);
 }
 
 static void
@@ -783,9 +782,15 @@ setup_config (BaconVideoWidget *bvw)
 	if (bvw->priv->gc == NULL)
 		return;
 
-	/* Disable CDDB, we'll use Musicbrainz instead */
+	/* Disable CDDB */
 	bvw_config_helper_num (bvw->priv->xine,
 			"media.audio_cd.use_cddb", 1, &entry);
+	entry.num_value = 0;
+	xine_config_update_entry (bvw->priv->xine, &entry);
+
+	/* Disable the mixer polling for ALSA */
+	bvw_config_helper_num (bvw->priv->xine,
+			"audio.alsa_hw_mixer", 1, &entry);
 	entry.num_value = 0;
 	xine_config_update_entry (bvw->priv->xine, &entry);
 
@@ -1256,10 +1261,13 @@ bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 	case EOS_ASYNC:
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[EOS], 0, NULL);
+		g_object_notify (G_OBJECT (bvw), "seekable");
+		bacon_video_widget_reconfigure_tick (bvw, FALSE);
 		break;
 	case CHANNELS_CHANGE_ASYNC:
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[CHANNELS_CHANGE], 0, NULL);
+		g_object_notify (G_OBJECT (bvw), "seekable");
 		break;
 	case BUFFERING_ASYNC:
 		g_signal_emit (G_OBJECT (bvw),
@@ -1581,7 +1589,8 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 
 	bvw = BACON_VIDEO_WIDGET (widget);
 
-	g_source_remove (bvw->priv->tick_id);
+	if (bvw->priv->tick_id > 0)
+		g_source_remove (bvw->priv->tick_id);
 
 	speed = xine_get_param (bvw->priv->stream, XINE_PARAM_SPEED);
 	if (speed != XINE_SPEED_PAUSE)
@@ -1731,7 +1740,8 @@ bacon_video_widget_new (int width, int height,
 		bvw->priv->xine = NULL;
 
 		/* get rid of all our crappety crap */
-		g_source_remove (bvw->priv->tick_id);
+		if (bvw->priv->tick_id > 0)
+			g_source_remove (bvw->priv->tick_id);
 		g_idle_remove_by_data (bvw);
 		g_async_queue_unref (bvw->priv->queue);
 		g_free (bvw->priv->vis_name);
@@ -1928,6 +1938,25 @@ bacon_video_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	}
 }
 
+static void
+bacon_video_widget_reconfigure_tick (BaconVideoWidget *bvw, gboolean enable)
+{
+	if (bvw->priv->tick_id != 0 && enable != FALSE)
+		return;
+	if (bvw->priv->tick_id == 0 && enable == FALSE)
+		return;
+
+	if (enable == FALSE) {
+		g_source_remove (bvw->priv->tick_id);
+		bvw->priv->tick_id = 0;
+	} else {
+		bvw->priv->tick_id = g_timeout_add (140,
+						    (GSourceFunc) bacon_video_widget_tick_send,
+						    bvw);
+	}
+	bacon_video_widget_tick_send (bvw);
+}
+
 static gboolean
 bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 {
@@ -1935,8 +1964,8 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 	float current_position_f;
 	gboolean ret = TRUE, seekable;
 
-	if (bvw->priv->stream == NULL || bvw->priv->logo_mode != FALSE)
-		return TRUE;
+	g_return_val_if_fail (bvw->priv->stream != NULL, FALSE);
+	g_return_val_if_fail (bvw->priv->logo_mode == FALSE, FALSE);
 
 	if (bvw->com->mrl == NULL)
 	{
@@ -1972,9 +2001,13 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 	if (stream_length != 0 && bvw->com->mrl != NULL) {
 		seekable = xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_SEEKABLE);
+		if (stream_length != bvw->priv->stream_length)
+			g_object_notify (G_OBJECT (bvw), "seekable");
 	} else {
 		seekable = FALSE;
 	}
+
+	bvw->priv->stream_length = stream_length;
 
 	g_signal_emit (G_OBJECT (bvw),
 			bvw_table_signals[TICK], 0,
@@ -2295,8 +2328,11 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 
 	show_vfx_update (bvw, bvw->priv->show_vfx);
 
+	/* Update metadata in the UI */
 	g_signal_emit (G_OBJECT (bvw),
 			bvw_table_signals[GOT_METADATA], 0, NULL);
+	g_object_notify (G_OBJECT (bvw), "seekable");
+	bacon_video_widget_tick_send (bvw);
 
 	return TRUE;
 }
@@ -2367,6 +2403,9 @@ bacon_video_widget_play (BaconVideoWidget *bvw, GError **gerror)
 			xine_set_param(bvw->priv->stream,
 					XINE_PARAM_AUDIO_CHANNEL_LOGICAL, -1);
 	}
+
+	bacon_video_widget_reconfigure_tick (bvw, TRUE);
+	g_object_notify (G_OBJECT (bvw), "seekable");
 
 	return TRUE;
 }
@@ -2458,6 +2497,7 @@ bacon_video_widget_stop (BaconVideoWidget *bvw)
 	g_return_if_fail (bvw->priv->xine != NULL);
 
 	xine_stop (bvw->priv->stream);
+	bacon_video_widget_reconfigure_tick (bvw, FALSE);
 }
 
 void
@@ -2480,6 +2520,10 @@ bacon_video_widget_close (BaconVideoWidget *bvw)
 	bvw->priv->has_subtitle = FALSE;
 	g_free (bvw->com->mrl);
 	bvw->com->mrl = NULL;
+	bvw->priv->stream_length = 0;
+
+	g_object_notify (G_OBJECT (bvw), "seekable");
+	bacon_video_widget_reconfigure_tick (bvw, FALSE);
 
 	if (bvw->priv->logo_mode == FALSE)
 		g_signal_emit (G_OBJECT (bvw),
@@ -2641,6 +2685,8 @@ bacon_video_widget_pause (BaconVideoWidget *bvw)
 	/* Close the audio device when on pause */
 	xine_set_param (bvw->priv->stream,
 			XINE_PARAM_AUDIO_CLOSE_DEVICE, 1);
+
+	bacon_video_widget_reconfigure_tick (bvw, FALSE);
 }
 
 float
