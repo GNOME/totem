@@ -3216,6 +3216,9 @@ totem_callback_connect (Totem *totem)
 	totem_action_set_sensitivity ("play", FALSE);
 	totem_action_set_sensitivity ("next-chapter", FALSE);
 	totem_action_set_sensitivity ("previous-chapter", FALSE);
+	totem_action_set_sensitivity ("skip-forward", FALSE);
+	totem_action_set_sensitivity ("skip-backwards", FALSE);
+	totem_action_set_sensitivity ("skip-to", FALSE);
 
 #ifdef HAVE_MEDIA_PLAYER_KEYS
 	g_signal_connect (G_OBJECT(totem->win), "focus-in-event",
