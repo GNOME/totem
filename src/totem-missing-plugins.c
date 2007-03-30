@@ -138,8 +138,10 @@ on_plugin_installation_done (GstInstallPluginsReturn res, gpointer user_data)
 				{
 					bacon_video_widget_play (ctx->totem->bvw, NULL);
 				} else {
-					/* nothing we can do, user already saw error from wizard */
+					/* wizard has not shown error, do stop/play again,
+					 * so that an error message gets shown */
 					bacon_video_widget_stop (ctx->totem->bvw);
+					bacon_video_widget_play (ctx->totem->bvw, NULL);
 				}
 			}
 			break;
