@@ -1,5 +1,13 @@
 2007-03-30  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_set_logo_mode): Send seekable notifies when
+	changing the logo mode
+	* src/totem.c: (totem_callback_connect): Make the seek back/forth
+	and skipto menu items unsensitive on startup (Closes: #370021)
+
+2007-03-30  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c: (bvw_bus_message_cb),
 	(got_time_tick), (bacon_video_widget_close),
 	(bacon_video_widget_is_seekable):
