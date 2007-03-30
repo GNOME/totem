@@ -70,12 +70,23 @@ test_relative (void)
 			"/home/hadess/test/file.m3u");
 }
 #endif
+
 static void
-entry_added (TotemPlParser *parser, const char *uri, const char *title,
-		const char *genre, gpointer data)
+entry_metadata_foreach (const char *key,
+			const char *value,
+			gpointer data)
 {
-	g_print ("added URI '%s' with title '%s' genre '%s'\n", uri,
-			title ? title : "empty", genre ? genre : "empty");
+	if (g_ascii_strcasecmp (key, "url") == 0)
+		return;
+	g_print ("\t%s = '%s'\n", key, value);
+}
+
+static void
+entry_parsed (TotemPlParser *parser, const char *uri,
+	      GHashTable *metadata, gpointer data)
+{
+	g_print ("added URI '%s'\n", uri);
+	g_hash_table_foreach (metadata, (GHFunc) entry_metadata_foreach, NULL);
 }
 
 static void
@@ -249,7 +260,7 @@ test_parsing (void)
 			  "force", option_force,
 			  "disable-unsafe", option_disable_unsafe,
 			  NULL);
-	g_signal_connect (G_OBJECT (pl), "entry", G_CALLBACK (entry_added), NULL);
+	g_signal_connect (G_OBJECT (pl), "entry-parsed", G_CALLBACK (entry_parsed), NULL);
 	g_signal_connect (G_OBJECT (pl), "playlist-start", G_CALLBACK (playlist_started), NULL);
 	g_signal_connect (G_OBJECT (pl), "playlist-end", G_CALLBACK (playlist_ended), NULL);
 

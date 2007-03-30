@@ -1646,10 +1646,19 @@ totem_embedded_clear_playlist (TotemEmbedded *embedded)
 }
 
 static void
-entry_added (TotemPlParser *parser,
+entry_metadata_foreach (const char *key,
+			const char *value,
+			gpointer data)
+{
+	if (g_ascii_strcasecmp (key, "url") == 0)
+		return;
+	g_print ("\t%s = '%s'\n", key, value);
+}
+
+static void
+entry_parsed (TotemPlParser *parser,
 	     const char *uri,
-	     const char *title,
-	     const char *genre,
+	     GHashTable *metadata,
 	     gpointer data)
 {
 	TotemEmbedded *emb = (TotemEmbedded *) data;
@@ -1660,8 +1669,8 @@ entry_added (TotemPlParser *parser,
 		return;
 	}
 
-	g_print ("added URI '%s' with title '%s' genre '%s'\n", uri,
-			title ? title : "empty", genre);
+	g_print ("added URI '%s'\n", uri);
+	g_hash_table_foreach (metadata, (GHFunc) entry_metadata_foreach, NULL);
 
 	//FIXMEchpe
 	//FIXME need new struct to hold that
@@ -1682,7 +1691,7 @@ totem_embedded_push_parser (gpointer data)
 	g_object_set (parser, "force", TRUE,
 		      "disable-unsafe", TRUE,
 		      NULL);
-	g_signal_connect (parser, "entry", G_CALLBACK (entry_added), emb);
+	g_signal_connect (parser, "entry-parsed", G_CALLBACK (entry_parsed), emb);
 	res = totem_pl_parser_parse_with_base (parser, emb->current_uri,
 					       emb->base_uri, FALSE);
 	g_object_unref (parser);

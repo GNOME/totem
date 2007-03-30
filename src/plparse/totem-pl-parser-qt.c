@@ -50,22 +50,31 @@ totem_pl_parser_add_quicktime_rtsptextrtsp (TotemPlParser *parser,
 					    gpointer data)
 {
 	char *contents = NULL;
-	const char *split_char;
+	gboolean dos_mode = FALSE;
+	char *volume, *autoplay;
 	int size;
 	char **lines;
 
 	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
-	if (strstr(contents,"\x0d") == NULL)
-		split_char = "\n"; 
-	else
-		split_char = "\x0d\n";
+	if (strstr(contents,"\x0d") != NULL)
+		dos_mode = TRUE;
 
-	lines = g_strsplit (contents, split_char, 0);
-	g_free (contents);
+	lines = g_strsplit (contents, dos_mode ? "\x0d\n" : "\n", 0);
 
-	totem_pl_parser_add_one_url (parser, lines[0] + strlen ("RTSPtext"), NULL);
+	volume = totem_pl_parser_read_ini_line_string_with_sep
+		(lines, "volume", dos_mode, "=");
+	autoplay = totem_pl_parser_read_ini_line_string_with_sep
+		(lines, "autoplay", dos_mode, "=");
+
+	totem_pl_parser_add_url (parser,
+				 TOTEM_PL_PARSER_FIELD_URL, lines[0] + strlen ("RTSPtext"),
+				 TOTEM_PL_PARSER_FIELD_VOLUME, volume,
+				 TOTEM_PL_PARSER_FIELD_AUTOPLAY, autoplay,
+				 NULL);
+	g_free (volume);
+	g_free (autoplay);
 	g_strfreev (lines);
 
 	return TOTEM_PL_PARSER_RESULT_SUCCESS;

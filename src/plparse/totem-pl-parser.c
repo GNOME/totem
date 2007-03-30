@@ -99,7 +99,7 @@ enum {
 
 /* Signals */
 enum {
-	ENTRY,
+	ENTRY_PARSED,
 	PLAYLIST_START,
 	PLAYLIST_END,
 	LAST_SIGNAL
@@ -157,14 +157,14 @@ totem_pl_parser_class_init (TotemPlParserClass *klass)
 							       G_PARAM_READWRITE));
 
 	/* Signals */
-	totem_pl_parser_table_signals[ENTRY] =
-		g_signal_new ("entry",
+	totem_pl_parser_table_signals[ENTRY_PARSED] =
+		g_signal_new ("entry-parsed",
 			      G_TYPE_FROM_CLASS (klass),
 			      G_SIGNAL_RUN_LAST,
-			      G_STRUCT_OFFSET (TotemPlParserClass, entry),
+			      G_STRUCT_OFFSET (TotemPlParserClass, entry_parsed),
 			      NULL, NULL,
-			      totemplparser_marshal_VOID__STRING_STRING_STRING,
-			      G_TYPE_NONE, 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
+			      totemplparser_marshal_VOID__STRING_POINTER,
+			      G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_POINTER);
 	totem_pl_parser_table_signals[PLAYLIST_START] =
 		g_signal_new ("playlist-start",
 			      G_TYPE_FROM_CLASS (klass),
@@ -682,6 +682,22 @@ totem_pl_parser_init (TotemPlParser *parser)
 				     "Base URL of the item to be added", NULL,
 				     G_PARAM_READABLE & G_PARAM_WRITABLE);
 	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
+	pspec = g_param_spec_string ("volume", "volume",
+				     "Default playback volume (in percents)", NULL,
+				     G_PARAM_READABLE & G_PARAM_WRITABLE);
+	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
+	pspec = g_param_spec_string ("autoplay", "autoplay",
+				     "Whether or not to autoplay the stream", NULL,
+				     G_PARAM_READABLE & G_PARAM_WRITABLE);
+	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
+	pspec = g_param_spec_string ("duration", "duration",
+				     "String representing the duration of the entry, used for still images", NULL,
+				     G_PARAM_READABLE & G_PARAM_WRITABLE);
+	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
+	pspec = g_param_spec_string ("starttime", "starttime",
+				     "String representing the start time of the stream (initial seek)", NULL,
+				     G_PARAM_READABLE & G_PARAM_WRITABLE);
+	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
 }
 
 static void
@@ -711,10 +727,12 @@ totem_pl_parser_add_url_valist (TotemPlParser *parser,
 {
 	const char *name;
 	char *title, *url, *genre, *base;
+	GHashTable *metadata;
 
 	title = url = genre = base = NULL;
 
 	g_object_ref (G_OBJECT (parser));
+	metadata = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
 
 	name = first_property_name;
 
@@ -722,6 +740,7 @@ totem_pl_parser_add_url_valist (TotemPlParser *parser,
 		GValue value = { 0, };
 		GParamSpec *pspec;
 		char *error = NULL;
+		const char *string;
 
 		pspec = g_param_spec_pool_lookup (parser->priv->pspec_pool,
 						  name,
@@ -730,7 +749,8 @@ totem_pl_parser_add_url_valist (TotemPlParser *parser,
 
 		if (!pspec) {
 			g_warning ("Unknown property '%s'", name);
-			break;
+			name = va_arg (var_args, char*);
+			continue;
 		}
 
 		g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (pspec));
@@ -740,34 +760,35 @@ totem_pl_parser_add_url_valist (TotemPlParser *parser,
 			break;
 		}
 
-		if (strcmp (name, "url") == 0) {
+		if (strcmp (name, "url") == 0)
 			url = g_value_dup_string (&value);
-		} else if (strcmp (name, "title") == 0) {
-			title = g_value_dup_string (&value);
-		} else if (strcmp (name, "genre") == 0) {
-			genre = g_value_dup_string (&value);
-		} else if (strcmp (name, "base") == 0) {
-			base = g_value_dup_string (&value);
+
+		/* Ignore empty values */
+		string = g_value_get_string (&value);
+		if (string != NULL && string[0] != '\0') {
+			/* Add other values to the metadata hashtable */
+			g_hash_table_insert (metadata,
+					     g_strdup (name),
+					     g_value_dup_string (&value));
 		}
 
 		g_value_unset (&value);
 		name = va_arg (var_args, char*);
 	}
 
-	g_assert (url != NULL);
-
 	if (parser->priv->disable_unsafe != FALSE) {
 		//FIXME fix this! 396710
 	}
 
-	g_signal_emit (G_OBJECT (parser), totem_pl_parser_table_signals[ENTRY],
-		       0, url, title, genre);
+	if (g_hash_table_size (metadata) > 0 || url != NULL) {
+		g_signal_emit (G_OBJECT (parser),
+			       totem_pl_parser_table_signals[ENTRY_PARSED],
+			       0, url, metadata);
+	}
+
+	g_hash_table_destroy (metadata);
 
 	g_free (url);
-	g_free (title);
-	g_free (genre);
-	g_free (base);
-
 	g_object_unref (G_OBJECT (parser));
 }
 
@@ -785,7 +806,10 @@ totem_pl_parser_add_url (TotemPlParser *parser,
 void
 totem_pl_parser_add_one_url (TotemPlParser *parser, const char *url, const char *title)
 {
-	totem_pl_parser_add_url (parser, "url", url, "title", title, NULL);
+	totem_pl_parser_add_url (parser,
+				 TOTEM_PL_PARSER_FIELD_URL, url,
+				 TOTEM_PL_PARSER_FIELD_TITLE, title,
+				 NULL);
 }
 
 char *

@@ -54,12 +54,22 @@ struct TotemPlParser {
 	TotemPlParserPrivate *priv;
 };
 
+/* Known metadata fields */
+#define TOTEM_PL_PARSER_FIELD_URL		"url"
+#define TOTEM_PL_PARSER_FIELD_GENRE		"genre"
+#define TOTEM_PL_PARSER_FIELD_TITLE		"title"
+#define TOTEM_PL_PARSER_FIELD_BASE		"base"
+#define TOTEM_PL_PARSER_FIELD_VOLUME		"volume"
+#define TOTEM_PL_PARSER_FIELD_AUTOPLAY		"autoplay"
+#define TOTEM_PL_PARSER_FIELD_DURATION		"duration"
+#define TOTEM_PL_PARSER_FIELD_STARTTIME		"starttime"
+
 struct TotemPlParserClass {
 	GObjectClass parent_class;
 
 	/* signals */
-	void (*entry) (TotemPlParser *parser, const char *uri,
-		       const char *title, const char *genre);
+	void (*entry_parsed) (TotemPlParser *parser, const char *uri,
+			      GHashTable *metadata);
 	void (*playlist_start) (TotemPlParser *parser, const char *title);
 	void (*playlist_end) (TotemPlParser *parser, const char *title);
 };

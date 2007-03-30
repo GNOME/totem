@@ -132,11 +132,13 @@ parse_asx_entry (TotemPlParser *parser, const char *base, xml_node_t *parent, co
 	xml_node_t *node;
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 	const char *url;
-	char *title, *fullpath;
+	char *title, *fullpath, *duration, *starttime;
 
 	fullpath = NULL;
 	title = NULL;
 	url = NULL;
+	duration = NULL;
+	starttime = NULL;
 
 	for (node = parent->child; node != NULL; node = node->next) {
 		if (node->name == NULL)
@@ -149,8 +151,6 @@ parse_asx_entry (TotemPlParser *parser, const char *base, xml_node_t *parent, co
 
 			tmp = xml_parser_get_property (node, "href");
 			if (tmp == NULL)
-				tmp = xml_parser_get_property (node, "HREF");
-			if (tmp == NULL)
 				continue;
 			/* FIXME, should we prefer mms streams, or non-mms?
 			 * See bug #352559 */
@@ -160,8 +160,20 @@ parse_asx_entry (TotemPlParser *parser, const char *base, xml_node_t *parent, co
 			continue;
 		}
 
-		if (g_ascii_strcasecmp (node->name, "title") == 0)
+		if (g_ascii_strcasecmp (node->name, "title") == 0) {
+			g_free (title);
 			title = g_strdup (node->data);
+		}
+		if (g_ascii_strcasecmp (node->name, "duration") == 0) {
+			const char *tmp;
+
+			tmp = xml_parser_get_property (node, "value");
+			if (tmp == NULL)
+				continue;
+			g_free (duration);
+			duration = g_strdup (tmp);
+		}
+
 	}
 
 	if (url == NULL) {
@@ -174,10 +186,16 @@ parse_asx_entry (TotemPlParser *parser, const char *base, xml_node_t *parent, co
 	/* .asx files can contain references to other .asx files */
 	retval = totem_pl_parser_parse_internal (parser, fullpath, NULL);
 	if (retval != TOTEM_PL_PARSER_RESULT_SUCCESS) {
-		totem_pl_parser_add_one_url (parser, fullpath,
-				(char *)title ? (char *)title : pl_title);
+		totem_pl_parser_add_url (parser,
+					 TOTEM_PL_PARSER_FIELD_URL, fullpath,
+					 TOTEM_PL_PARSER_FIELD_TITLE, title ? title : pl_title,
+					 TOTEM_PL_PARSER_FIELD_STARTTIME, starttime,
+					 TOTEM_PL_PARSER_FIELD_DURATION, duration,
+					 NULL);
 	}
 
+	g_free (duration);
+	g_free (starttime);
 	g_free (fullpath);
 	g_free (title);
 

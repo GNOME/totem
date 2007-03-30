@@ -1395,9 +1395,13 @@ init_config (TotemPlaylist *playlist)
 
 static void
 totem_playlist_entry_parsed (TotemPlParser *parser,
-		const char *uri, const char *title,
-		const char *genre, TotemPlaylist *playlist)
+			     const char *uri,
+			     GHashTable *metadata,
+			     TotemPlaylist *playlist)
 {
+	const char *title;
+
+	title = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_TITLE);
 	totem_playlist_add_one_mrl (playlist, uri, title);
 }
 
@@ -1437,7 +1441,7 @@ totem_playlist_init (TotemPlaylist *playlist)
 	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "dvb:");
 
 	g_signal_connect (G_OBJECT (playlist->_priv->parser),
-			"entry",
+			"entry-parsed",
 			G_CALLBACK (totem_playlist_entry_parsed),
 			playlist);
 

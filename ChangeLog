@@ -1,3 +1,31 @@
+2007-03-30  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: up libtool version
+
+	* src/plparse/totem-pl-parser-pls.c:
+	(totem_pl_parser_add_pls_with_contents):
+	* src/plparse/totem-pl-parser-qt.c:
+	(totem_pl_parser_add_quicktime_rtsptextrtsp):
+	* src/plparse/totem-pl-parser-wm.c: (parse_asx_entry):
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_class_init),
+	(totem_pl_parser_init), (totem_pl_parser_add_url_valist),
+	(totem_pl_parser_add_one_url):
+	* src/plparse/totem-pl-parser.h:
+	* src/plparse/totemplparser-marshal.list:
+	Change the API to pass a metadata hashtable containing the
+	extra metadata some players might require, like stream start time
+	or still image duration
+
+	* src/totem-playlist.c: (totem_playlist_entry_parsed),
+	(totem_playlist_init):
+	* src/plparse/test-parser.c: (entry_metadata_foreach),
+	(entry_parsed), (test_parsing):
+	* browser-plugin/totem-plugin-viewer.c: (entry_metadata_foreach),
+	(entry_parsed), (totem_embedded_push_parser):
+	Changes to reflect the API change
+
+	(Closes: #361531)
+
 2007-03-30  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/totem-missing-plugins.c: (on_plugin_installation_done):
