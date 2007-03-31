@@ -4033,7 +4033,7 @@ bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 {
 	GdkPixbuf *pixbuf = NULL;
 	uint8_t *yuv, *y, *u, *v, *rgb;
-	int width, height, ratio, format;
+	int width, height, ratio, format, image_ratio, desired_ratio;
 	xine_video_frame_t *frame = NULL;
 
 	g_return_val_if_fail (bvw != NULL, NULL);
@@ -4107,21 +4107,24 @@ bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 		return NULL;
 	}
 
+	image_ratio = (double) width / (double) height * 10000.0;
+
 	switch (ratio) {
 	case XINE_VO_ASPECT_SQUARE:
-		ratio = 10000.0;
+	case XINE_VO_ASPECT_DONT_TOUCH:
+		desired_ratio = image_ratio;
 		break;
 	case XINE_VO_ASPECT_4_3:
-		ratio = 10000.0 * 4 / 3;
+		desired_ratio = 10000.0 * 4 / 3;
 		break;
 	case XINE_VO_ASPECT_ANAMORPHIC:
-		ratio = 10000.0 * 16 / 9;
+		desired_ratio = 10000.0 * 16 / 9;
 		break;
 	case XINE_VO_ASPECT_DVB:
-		ratio = 10000.0 * 2.11;
+		desired_ratio = 10000.0 * 2.11;
 		break;
 	default:
-		ratio = 0.0;
+		desired_ratio = 0.0;
 	}
 
 	/* Convert to rgb */
@@ -4137,17 +4140,19 @@ bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 		g_free (frame);
 	}
 
-	if (ratio != 10000.0 && ratio != 0.0)
+	if (desired_ratio != 0)
 	{
 		GdkPixbuf *tmp;
 
+		ratio = (double) desired_ratio / (double) image_ratio * 10000.0;
+
 		if (ratio > 10000.0)
 			tmp = gdk_pixbuf_scale_simple (pixbuf,
-					(int) (height * ratio / 10000), height,
+					(int) (width * ratio / 10000), height,
 					GDK_INTERP_BILINEAR);
 		else
 			tmp = gdk_pixbuf_scale_simple (pixbuf,
-					width, (int) (width * ratio / 10000),
+					width, (int) (height * ratio / 10000),
 					GDK_INTERP_BILINEAR);
 
 		g_object_unref (pixbuf);

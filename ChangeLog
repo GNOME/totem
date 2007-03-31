@@ -1,3 +1,10 @@
+2007-03-31  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_current_frame): Take into account
+	the original image ratio before scaling the captured frame,
+	Fixes 4:3 aspect with a very wide resolution
+
 2007-03-30  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: up libtool version
