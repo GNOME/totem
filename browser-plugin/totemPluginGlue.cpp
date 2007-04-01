@@ -308,9 +308,6 @@ NP_GetMIMEDescription (void)
 	for (PRUint32 i = 0; i < count; ++i) {
 		const char *desc;
 
-		if (mimetypes[i].ignore != FALSE)
-			continue;
-
 		desc = gnome_vfs_mime_get_description (mimetypes[i].mimetype);
 		if (desc == NULL && mimetypes[i].mime_alias != NULL) {
 			desc = gnome_vfs_mime_get_description

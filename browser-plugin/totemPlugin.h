@@ -279,7 +279,6 @@ typedef struct {
   const char *mimetype;
   const char *extensions;
   const char *mime_alias;
-  gboolean    ignore;
 } totemPluginMimeEntry;
 
 #endif /* __TOTEM_PLUGIN_H__ */

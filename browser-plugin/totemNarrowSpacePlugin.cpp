@@ -50,11 +50,10 @@ static const char kClassDescription[] = "totemNarrowSpacePlugin";
 static const char kPluginDescription[] = "QuickTime Plug-in 7.1.3";
 
 static const totemPluginMimeEntry kMimeTypes[] = {
-	{ "video/quicktime", "mov", NULL, FALSE },
-	{ "video/mp4", "mp4", NULL, FALSE },
-	{ "image/x-macpaint", "pntg", NULL, FALSE },
-	{ "image/x-quicktime", "pict, pict1, pict2", "image/x-pict", FALSE },
-	{ "application/x-quicktime-media-link", "qtl", NULL, TRUE }
+	{ "video/quicktime", "mov", NULL },
+	{ "video/mp4", "mp4", NULL },
+	{ "image/x-macpaint", "pntg", NULL },
+	{ "image/x-quicktime", "pict, pict1, pict2", "image/x-pict" },
 };
 
 void*

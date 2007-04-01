@@ -50,10 +50,7 @@ static const char kClassDescription[] = "totemComplexPlugin";
 static const char kPluginDescription[] = "Helix DNA Plugin: RealPlayer G2 Plug-In Compatible (compatible; Totem)";
 
 static const totemPluginMimeEntry kMimeTypes[] = {
-	{ "audio/x-pn-realaudio-plugin", "rpm", "audio/vnd.rn-realaudio", FALSE },
-	{ "audio/x-pn-realaudio", "rpm" , NULL, TRUE },
-	{ "application/vnd.rn-realmedia", "rpm", NULL, TRUE },
-	{ "application/smil", "smil", NULL, TRUE }
+	{ "audio/x-pn-realaudio-plugin", "rpm", "audio/vnd.rn-realaudio" },
 };
 
 void*

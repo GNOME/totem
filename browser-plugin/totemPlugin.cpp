@@ -984,61 +984,6 @@ totemPlugin::GetRealMimeType (const char *mimetype,
 }
 
 PRBool
-totemPlugin::IsMimeTypeSupported (const char *mimetype,
-				  const char *url)
-{
-	NS_ENSURE_TRUE (mimetype, PR_FALSE);
-
-#if defined(TOTEM_NARROWSPACE_PLUGIN) || defined(TOTEM_GMP_PLUGIN) || defined(TOTEM_MULLY_PLUGIN)
-	/* We can always play those image types */
-	if (strcmp (mimetype, "image/jpeg") == 0)
-		return PR_TRUE;
-	if (strcmp (mimetype, "image/gif") == 0)
-		return PR_TRUE;
-#endif /* TOTEM_NARROWSPACE_PLUGIN || TOTEM_GMP_PLUGIN || TOTEM_MULLY_PLUGIN */
-
-	/* Stupid web servers will do that */
-	if (strcmp (mimetype, GNOME_VFS_MIME_TYPE_UNKNOWN) == 0)
-		return PR_TRUE;
-
-	const totemPluginMimeEntry *mimetypes;
-	PRUint32 count;
-	totemScriptablePlugin::PluginMimeTypes (&mimetypes, &count);
-
-	for (PRUint32 i = 0; i < count; ++i) {
-		if (strcmp (mimetypes[i].mimetype, mimetype) == 0)
-			return PR_TRUE;
-	}
-
-	/* Not supported? Probably a broken webserver */
-	const char *guessed = gnome_vfs_get_mime_type_for_name (url);
-
-	D ("Guessed mime-type '%s' for '%s'", guessed, url);
-	for (PRUint32 i = 0; i < count; ++i) {
-		if (strcmp (mimetypes[i].mimetype, guessed) == 0)
-			return PR_TRUE;
-	}
-
-	/* Still unsupported? Try to get it without the arguments
-	 * passed to the script */
-	const char *s = strchr (url, '?');
-	if (s == NULL)
-		return PR_FALSE;
-
-	char *no_args = g_strndup (url, s - url);
-	guessed = gnome_vfs_get_mime_type_for_name (no_args);
-	D ("Guessed mime-type '%s' for '%s' without the arguments", guessed, url);
-	g_free (no_args);
-
-	for (PRUint32 i = 0; i < count; ++i) {
-		if (strcmp (mimetypes[i].mimetype, guessed) == 0)
-			return PR_TRUE;
-	}
-
-	return PR_FALSE;
-}
-
-PRBool
 totemPlugin::IsSchemeSupported (nsIURI *aURI)
 {
 	if (!aURI)
@@ -1960,15 +1905,6 @@ totemPlugin::NewStream (NPMIMEType type,
 						  NPRES_DONE);
 	}
 #endif
-
-	if (!IsMimeTypeSupported (type, stream->url)) {
-		D ("Unsupported mimetype, aborting stream");
-
-		return CallNPN_DestroyStreamProc (sNPN.destroystream,
-						  mInstance,
-						  stream,
-						  NPRES_DONE);
-	}
 
 	/* FIXME: assign the stream URL to mRequestURI ? */
 
