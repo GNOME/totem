@@ -989,6 +989,11 @@ totemPlugin::IsMimeTypeSupported (const char *mimetype,
 {
 	NS_ENSURE_TRUE (mimetype, PR_FALSE);
 
+	return PR_TRUE;
+
+	/* Disabled for the benefit of:
+	 * http://bugzilla.gnome.org/show_bug.cgi?id=418387 */
+#if 0
 #if defined(TOTEM_NARROWSPACE_PLUGIN) || defined(TOTEM_GMP_PLUGIN) || defined(TOTEM_MULLY_PLUGIN)
 	/* We can always play those image types */
 	if (strcmp (mimetype, "image/jpeg") == 0)
@@ -1036,6 +1041,7 @@ totemPlugin::IsMimeTypeSupported (const char *mimetype,
 	}
 
 	return PR_FALSE;
+#endif
 }
 
 PRBool
