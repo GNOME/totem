@@ -167,7 +167,7 @@ struct BaconVideoWidgetPrivate {
 	int volume;
 	BaconVideoWidgetAudioOutType audio_out_type;
 	TvOutType tvout;
-	gint64 stream_length;
+	int stream_length;
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
@@ -3200,8 +3200,13 @@ bacon_video_widget_get_stream_length (BaconVideoWidget *bvw)
 	if (bvw->com->mrl == NULL)
 		return 0;
 
-	xine_get_pos_length (bvw->priv->stream, &pos_stream,
-			&pos_time, &length_time);
+	if (xine_get_pos_length (bvw->priv->stream, &pos_stream,
+			&pos_time, &length_time) == FALSE) {
+		return (gint64) bvw->priv->stream_length;
+	}
+
+	if (length_time != bvw->priv->stream_length)
+		bvw->priv->stream_length = length_time;
 
 	return length_time;
 }
