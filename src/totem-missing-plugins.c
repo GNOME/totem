@@ -147,10 +147,19 @@ on_plugin_installation_done (GstInstallPluginsReturn res, gpointer user_data)
 			break;
 		case GST_INSTALL_PLUGINS_USER_ABORT:
 			{
-				if (ctx->playing)
+				/* blacklist on user abort, so we show an error next time (or
+				 * just play what we can) instead of calling the installer */
+				for (p = ctx->details; p != NULL && *p != NULL; ++p)
+					totem_codec_install_blacklist_plugin (*p);
+
+				if (ctx->playing) {
 					bacon_video_widget_play (ctx->totem->bvw, NULL);
-				else
+				} else {
+					/* if we couldn't play anything, do stop/play again,
+					 * so that an error message gets shown */
 					bacon_video_widget_stop (ctx->totem->bvw);
+					bacon_video_widget_play (ctx->totem->bvw, NULL);
+				}
 			}
 			break;
 		case GST_INSTALL_PLUGINS_ERROR:

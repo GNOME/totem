@@ -1,3 +1,12 @@
+2007-04-02  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/totem-missing-plugins.c:
+	(on_plugin_installation_done):
+	  Also add the missing plugins to the local blacklist if the user
+	  aborts the installer, so we either just play what we can or show
+	  an error message (presumably the user doesn't want to see the
+	  installer, so let's honour that wish).
+
 2007-04-02  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totemPlugin.cpp: Remove the rejection
