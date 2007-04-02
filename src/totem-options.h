@@ -1,6 +1,6 @@
 /* totem-options.h
 
-   Copyright (C) 2004 Bastien Nocera <hadess@hadess.net>
+   Copyright (C) 2004,2007 Bastien Nocera <hadess@hadess.net>
 
    The Gnome Library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public License as
@@ -22,6 +22,8 @@
 
 #ifndef TOTEM_OPTIONS_H
 #define TOTEM_OPTIONS_H
+
+#include <gconf/gconf-client.h>
 
 #include "totem.h"
 #include "bacon-message-connection.h"
@@ -64,4 +66,4 @@ void totem_options_process_for_server (BaconMessageConnection *conn,
 
 G_END_DECLS
 
-#endif /* TOTEM_SKIPTO_H */
+#endif /* TOTEM_OPTIONS_H */
