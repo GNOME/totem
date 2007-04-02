@@ -1,5 +1,16 @@
 2007-04-02  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am:
+	* src/totem-resources.c: (set_resource_limits), (time_monitor),
+	(totem_resources_monitor_start), (totem_resources_monitor_stop):
+	* src/totem-resources.h:
+	* src/totem-video-indexer.c: (main):
+	* src/totem-video-thumbnailer.c: (main): Move the resource
+	monitoring, and the wall-clock checking thread to a separate file,
+	add resource monitoring support to the video indexer
+
+2007-04-02  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemBasicPlugin.cpp:
 	* browser-plugin/totemComplexPlugin.cpp:
 	* browser-plugin/totemGMPPlugin.cpp:

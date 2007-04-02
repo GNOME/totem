@@ -170,8 +170,10 @@ totem-marshal.h: totem-marshal.list
 
 # Totem video thumbnailer
 
-totem_video_thumbnailer_SOURCES = \
-	totem-video-thumbnailer.c
+totem_video_thumbnailer_SOURCES =	\
+	totem-video-thumbnailer.c	\
+	totem-resources.c		\
+	totem-resources.h
 
 totem_video_thumbnailer_CPPFLAGS = \
 	-I$(srcdir)/plparse	\
@@ -277,8 +279,10 @@ endif # HAVE_NAUTILUS
 
 # Totem Video Indexer
 
-totem_video_indexer_SOURCES = \
-	totem-video-indexer.c
+totem_video_indexer_SOURCES =		\
+	totem-video-indexer.c		\
+	totem-resources.c		\
+	totem-resources.h
 
 totem_video_indexer_CPPFLAGS = \
 	-I$(srcdir)/plparse	\

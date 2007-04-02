@@ -45,6 +45,7 @@
 #include <libgnomevfs/gnome-vfs-init.h>
 #include <glib/gi18n.h>
 
+#include "totem-resources.h"
 #include "totem-mime-types.h"
 
 static gboolean show_mimetype = FALSE;
@@ -206,6 +207,7 @@ int main (int argc, char **argv)
 			NULL);
 
 	path = filenames[0];
+	totem_resources_monitor_start (path, 0);
 	if (bacon_video_widget_open (bvw, path, &error) == FALSE) {
 		g_print ("Can't open %s: %s\n", path, error->message);
 		return 1;
@@ -214,6 +216,7 @@ int main (int argc, char **argv)
 		g_print ("Can't play %s: %s\n", path, error->message);
 		return 1;
 	}
+	totem_resources_monitor_stop ();
 
 	gtk_main ();
 

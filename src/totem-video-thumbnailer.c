@@ -36,12 +36,12 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <sys/resource.h>
 #ifndef HAVE_GTK_ONLY
 #include <libgnomeui/gnome-authentication-manager.h>
 #endif
 #include <libgnomevfs/gnome-vfs-init.h>
 #include "bacon-video-widget.h"
+#include "totem-resources.h"
 
 /* #define THUMB_DEBUG */
 
@@ -54,7 +54,6 @@
 #define HALF_SECOND G_USEC_PER_SEC * .5
 #define BORING_IMAGE_VARIANCE 256.0		/* Tweak this if necessary */
 
-gboolean finished = FALSE;
 static gboolean jpeg_output = FALSE;
 static gboolean output_size = 128;
 static gboolean time_limit = TRUE;
@@ -330,57 +329,6 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 	g_object_unref (with_holes);
 }
 
-#define MAX_HELPER_MEMORY (256 * 1024 * 1024)	/* 256 MB */
-#define MAX_HELPER_SECONDS (15)			/* 15 seconds */
-
-static void
-set_resource_limits (const char *input)
-{
-	struct rlimit limit;
-	struct stat buf;
-	rlim_t max;
-
-	g_return_if_fail (input != NULL);
-
-	max = MAX_HELPER_MEMORY;
-
-	/* Set the maximum virtual size depending on the size
-	 * of the file to process, as we wouldn't be able to
-	 * mmap it otherwise */
-	if (g_stat (input, &buf) == 0) {
-		max = MAX_HELPER_MEMORY + buf.st_size;
-	} else if (g_str_has_prefix (input, "file://") != FALSE) {
-		char *file;
-		file = g_filename_from_uri (input, NULL, NULL);
-		if (file != NULL && g_stat (file, &buf) == 0)
-			max = MAX_HELPER_MEMORY + buf.st_size;
-		g_free (file);
-	}
-
-	limit.rlim_cur = max;
-	limit.rlim_max = max;
-
-	setrlimit (RLIMIT_DATA, &limit);
-
-	limit.rlim_cur = MAX_HELPER_SECONDS;
-	limit.rlim_max = MAX_HELPER_SECONDS;
-	setrlimit (RLIMIT_CPU, &limit);
-}
-
-static gpointer
-time_monitor (gpointer data)
-{
-	g_usleep (30 * G_USEC_PER_SEC);
-
-	if (finished != FALSE)
-		g_thread_exit (NULL);
-
-	g_print ("totem-video-thumbnailer couln't thumbnail file: '%s'\n"
-			"Reason: Took too much time to thumbnail.\n",
-			(const char *) data);
-	exit (0);
-}
-
 static const GOptionEntry entries[] = {
 	{ "jpeg", 'j',  0, G_OPTION_ARG_NONE, &jpeg_output, "Output the thumbnail as a JPEG instead of PNG", NULL },
 	{ "size", 's', 0, G_OPTION_ARG_INT, &output_size, "Size of the thumbnail in pixels", NULL },
@@ -469,10 +417,8 @@ int main (int argc, char *argv[])
 
 	PROGRESS_DEBUG("Video widget created\n");
 
-	if (time_limit != FALSE) {
-		g_thread_create (time_monitor, (gpointer) input, FALSE, NULL);
-		set_resource_limits (input);
-	}
+	if (time_limit != FALSE)
+		totem_resources_monitor_start (input, 0);
 
 	PROGRESS_DEBUG("About to open video file\n");
 
@@ -541,7 +487,7 @@ int main (int argc, char *argv[])
 
 	/* Cleanup */
 	bacon_video_widget_close (bvw);
-	finished = TRUE;
+	totem_resources_monitor_stop ();
 	gtk_widget_destroy (GTK_WIDGET (bvw));
 
 	if (pixbuf == NULL)
