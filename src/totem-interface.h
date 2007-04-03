@@ -48,6 +48,8 @@ void		 totem_interface_error_blocking	(const char *title,
 void		 totem_interface_set_transient_for (GtkWindow *window,
 						    GtkWindow *parent);
 char *		 totem_interface_get_license	(void);
+void		 totem_interface_boldify_label	(GladeXML *xml,
+						 const char *label);
 
 G_END_DECLS
 

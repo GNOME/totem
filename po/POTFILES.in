@@ -2,6 +2,7 @@
 # Please keep this file sorted alphabetically.
 [encoding: UTF-8]
 data/playlist.glade
+data/plugins.glade
 data/properties.glade
 data/screenshot.glade
 data/skip_to.glade
@@ -9,9 +10,7 @@ data/totem.desktop.in.in.in
 data/totem.glade
 data/totem.schemas.in
 data/uri.glade
-data/vanity.desktop.in.in
-data/vanity.glade
-src/bacon-v4l-selection.c
+lib/totem-scrsaver.c
 src/bacon-video-widget-properties.c
 src/bacon-volume.c
 src/totem-interface.c
@@ -22,7 +21,6 @@ src/totem-preferences.c
 src/totem-properties-main.c
 src/totem-properties-view.c
 src/totem-screenshot.c
-src/totem-scrsaver.c
 src/totem-sidebar.c
 src/totem-skipto.c
 src/totem-statusbar.c
@@ -30,7 +28,6 @@ src/totem-subtitle-encoding.c
 src/totem-time-label.c
 src/totem-uri.c
 src/totem.c
-src/vanity.c
 src/backend/bacon-video-widget-gst-0.10.c
 src/backend/bacon-video-widget-xine.c
 src/backend/video-utils.c
@@ -39,4 +36,7 @@ src/plparse/totem-pl-parser.c
 src/plparse/totem-pl-parser-lines.c
 src/plparse/totem-pl-parser-pls.c
 src/plparse/totem-pl-parser-xspf.c
+src/plugins/totem-plugin-manager.c
+src/plugins/totem-plugins-engine.c
+src/plugins/screensaver/screensaver.totem-plugin.desktop.in
 browser-plugin/totem-plugin-viewer.c

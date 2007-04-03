@@ -23,6 +23,7 @@ IT_PROG_INTLTOOL([0.35.0])
 GNOME_DOC_INIT
 
 AC_PROG_CXX
+AM_PROG_CC_C_O
 AC_PROG_LIBTOOL()
 PKG_PROG_PKG_CONFIG
 
@@ -60,6 +61,9 @@ TOTEM_PL_PARSER_VERSION_MICRO=totem_version_micro
 AC_SUBST(TOTEM_PL_PARSER_VERSION_MAJOR)
 AC_SUBST(TOTEM_PL_PARSER_VERSION_MINOR)
 AC_SUBST(TOTEM_PL_PARSER_VERSION_MICRO)
+
+PLUGINDIR='${libdir}/totem/plugins'
+AC_SUBST(PLUGINDIR)
 
 AC_ARG_ENABLE(nvtv, AC_HELP_STRING([--enable-nvtv],[Enable support for TV-output with nvtv]), enable_nvtv="$enableval", enable_nvtv=yes)
 
@@ -782,7 +786,7 @@ fi
 
 dnl run in source tree
 AC_ARG_ENABLE(run-in-source-tree,
-	      AC_HELP_STRING([--disable-run-in-source-tree],[disable search for UI file in local directory ]),
+	      AC_HELP_STRING([--disable-run-in-source-tree],[disable search for UI files and plugins in local directory ]),
 	[case "${enableval}" in
 	yes) ENABLE_RUN_IN_SOURCE_TREE=yes ;;
 	no)  ENABLE_RUN_IN_SOURCE_TREE=no ;;
@@ -790,7 +794,7 @@ AC_ARG_ENABLE(run-in-source-tree,
 	esac],
 [ENABLE_RUN_IN_SOURCE_TREE=yes]) dnl Default value
 if test x$ENABLE_RUN_IN_SOURCE_TREE = xyes; then
-	AC_DEFINE(TOTEM_RUN_IN_SOURCE_TREE, 1, [enable search for UI file in local directory])
+	AC_DEFINE(TOTEM_RUN_IN_SOURCE_TREE, 1, [enable search for UI files and plugins in local directory])
 fi
 
 if test "$GCC" = "yes" ; then
@@ -813,7 +817,10 @@ Makefile
 totem.spec
 totem-plparser.pc
 totem-plparser-uninstalled.pc
+lib/Makefile
 src/Makefile
+src/plugins/Makefile
+src/plugins/screensaver/Makefile
 src/backend/Makefile
 src/plparse/Makefile
 src/plparse/totem-pl-parser-features.h

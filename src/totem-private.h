@@ -34,7 +34,6 @@
 #include <libgnomevfs/gnome-vfs.h>
 
 #include "totem-remote.h"
-#include "totem-scrsaver.h"
 #include "totem-playlist.h"
 #include "bacon-message-connection.h"
 #include "bacon-video-widget.h"
@@ -70,7 +69,9 @@ typedef enum {
 	STATE_STOPPED
 } TotemStates;
 
-struct Totem {
+struct TotemObject {
+	GObject parent;
+
 	/* Control window */
 	GladeXML *xml;
 	GtkWidget *win;
@@ -91,6 +92,9 @@ struct Totem {
 
 	GtkActionGroup *subtitles_action_group;
 	guint subtitles_ui_id;
+
+	/* Plugins */
+	GtkWidget *plugins;
 
 	/* Sidebar */
 	GtkWidget *sidebar;
@@ -146,8 +150,6 @@ struct Totem {
 	gboolean popup_in_progress;
 	GdkRectangle fullscreen_rect;
 
-	TotemScrsaver *scr;
-
 	/* recent file stuff */
 	GtkRecentManager *recent_manager;
 	GtkActionGroup *recent_action_group;
@@ -199,9 +201,5 @@ void	totem_action_skip_to			(Totem *totem);
 void	totem_action_show_properties		(Totem *totem);
 
 void	show_controls				(Totem *totem, gboolean was_fullscreen);
-
-gboolean totem_is_fullscreen			(Totem *totem);
-
-
 
 #endif /* __TOTEM_PRIVATE_H__ */

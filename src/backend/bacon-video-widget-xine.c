@@ -272,7 +272,7 @@ static void bacon_video_widget_reconfigure_tick (BaconVideoWidget *bvw, gboolean
 static void bacon_video_widget_set_visuals_quality_size (BaconVideoWidget *bvw,
 		int h, int w, int fps);
 
-static GtkWidgetClass *parent_class = NULL;
+static GObjectClass *parent_class = NULL;
 
 static void xine_event (void *user_data, const xine_event_t *event);
 static gboolean bacon_video_widget_idle_signal (BaconVideoWidget *bvw);
@@ -285,14 +285,13 @@ G_DEFINE_TYPE(BaconVideoWidget, bacon_video_widget, GTK_TYPE_BOX)
 static void
 bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 {
-
 	GObjectClass *object_class;
 	GtkWidgetClass *widget_class;
 
 	object_class = (GObjectClass *) klass;
 	widget_class = (GtkWidgetClass *) klass;
 
-	parent_class = gtk_type_class (gtk_box_get_type ());
+	parent_class = g_type_class_peek_parent (klass);
 
 	/* GtkWidget */
 	widget_class->realize = bacon_video_widget_realize;

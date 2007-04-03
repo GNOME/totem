@@ -11,6 +11,7 @@ stuff_DATA =				\
 	totem.glade			\
 	playlist.glade			\
 	playlist-ui.xml			\
+	plugins.glade			\
 	mozilla-viewer.glade		\
 	properties.glade		\
 	skip_to.glade			\

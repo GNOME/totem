@@ -236,5 +236,17 @@
 	</locale>
       </schema>
 
+      <schema>
+        <key>/schemas/apps/disable_user_plugins</key>
+	<applyto>/apps/totem/disable_user_plugins</applyto>
+	<owner>totem</owner>
+	<type>boolean</type>
+	<default>false</default>
+	<locale name="C">
+	  <short>Whether to disable the plugins in the user's home directory</short>
+	  <long>Whether to disable the plugins in the user's home directory</long>
+	</locale>
+      </schema>
+
   </schemalist>
 </gconfschemafile>

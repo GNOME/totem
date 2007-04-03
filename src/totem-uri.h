@@ -28,6 +28,7 @@
 
 G_BEGIN_DECLS
 
+const char *	totem_dot_dir		(void);
 char*		totem_create_full_path	(const char *path);
 gboolean	totem_is_media		(const char *uri);
 gboolean	totem_is_special_mrl	(const char *uri);

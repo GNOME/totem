@@ -1,4 +1,4 @@
-SUBDIRS = backend plparse
+SUBDIRS = plugins backend plparse
 
 bin_PROGRAMS = totem totem-video-thumbnailer totem-video-indexer
 libexec_PROGRAMS =
@@ -15,7 +15,7 @@ common_defines = \
 	-DGCONF_PREFIX=\""/apps/totem"\"		\
 	-DDATADIR=\""$(datadir)"\"			\
 	-DLIBEXECDIR=\""$(libexecdir)"\"		\
-	-DBINDIR=\""$(bindir)"\"				\
+	-DBINDIR=\""$(bindir)"\"			\
 	-DLOGO_PATH=DATADIR\"\"G_DIR_SEPARATOR_S\"totem\"G_DIR_SEPARATOR_S\"totem_logo.png\"	\
 	$(DISABLE_DEPRECATED)
 
@@ -99,11 +99,10 @@ libtotem_player_la_LDFLAGS = \
 
 totem_SOURCES = 					\
 	totem.c totem.h					\
+	totem-object.c					\
+	totem-private.h					\
 	totem-remote.c totem-remote.h			\
 	totem-preferences.c totem-preferences.h		\
-	totem-private.h			\
-	totem-scrsaver.c		\
-	totem-scrsaver.h		\
 	totem-options.c totem-options.h	\
 	totem-playlist.c totem-playlist.h \
 	totem-screenshot.c		\
@@ -124,6 +123,7 @@ totem_SOURCES = 					\
 totem_CPPFLAGS = \
 	-I$(srcdir)/plparse		\
 	-I$(srcdir)/backend		\
+	-I$(srcdir)/plugins		\
 	-I$(top_builddir)/data		\
 	-I$(top_builddir)/src/plparse	\
 	$(common_defines)		\
@@ -144,6 +144,7 @@ totem_LDFLAGS = \
 totem_LDADD = \
 	plparse/libtotem-plparser.la	\
 	backend/libbaconvideowidget.la	\
+	plugins/libtotemmodule.la	\
 	libbaconpropertiespage.la	\
 	libbaconmessageconnection.la	\
 	libtotem_player.la		\

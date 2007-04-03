@@ -32,6 +32,7 @@
 #include "totem-interface.h"
 #include "totem-private.h"
 #include "totem-sidebar.h"
+#include "totem-plugin-manager.h"
 #include "bacon-video-widget.h"
 
 #include "debug.h"
@@ -1122,6 +1123,60 @@ about_action_callback (GtkAction *action, Totem *totem)
 	g_free (license);
 }
 
+static gboolean
+totem_plugins_window_delete_cb (GtkWidget *window,
+				   GdkEventAny *event,
+				   gpointer data)
+{
+	gtk_widget_hide (window);
+
+	return TRUE;
+}
+
+static void
+totem_plugins_response_cb (GtkDialog *dialog,
+			      int response_id,
+			      gpointer data)
+{
+	if (response_id == GTK_RESPONSE_CLOSE)
+		gtk_widget_hide (GTK_WIDGET (dialog));
+}
+
+
+static void
+plugins_action_callback (GtkAction *action, Totem *totem)
+{
+	if (totem->plugins == NULL) {
+		GtkWidget *manager;
+
+		totem->plugins = gtk_dialog_new_with_buttons (_("Configure Plugins"),
+							      GTK_WINDOW (totem->win),
+							      GTK_DIALOG_DESTROY_WITH_PARENT,
+							      GTK_STOCK_CLOSE,
+							      GTK_RESPONSE_CLOSE,
+							      NULL);
+		gtk_container_set_border_width (GTK_CONTAINER (totem->plugins), 5);
+		gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (totem->plugins)->vbox), 2);
+		gtk_dialog_set_has_separator (GTK_DIALOG (totem->plugins), FALSE);
+
+		g_signal_connect_object (G_OBJECT (totem->plugins),
+					 "delete_event",
+					 G_CALLBACK (totem_plugins_window_delete_cb),
+					 NULL, 0);
+		g_signal_connect_object (G_OBJECT (totem->plugins),
+					 "response",
+					 G_CALLBACK (totem_plugins_response_cb),
+					 NULL, 0);
+
+		manager = totem_plugin_manager_new ();
+		gtk_widget_show_all (GTK_WIDGET (manager));
+		gtk_container_add (GTK_CONTAINER (GTK_DIALOG (totem->plugins)->vbox),
+				   manager);
+	}
+
+	gtk_window_present (GTK_WINDOW (totem->plugins));
+}
+
 static void
 repeat_mode_action_callback (GtkToggleAction *action, Totem *totem)
 {
@@ -1208,6 +1263,7 @@ static const GtkActionEntry entries[] = {
 	{ "take-screenshot", "camera-photo", N_("Take _Screenshot..."), "<control>S", N_("Take a screenshot"), G_CALLBACK (take_screenshot_action_callback) },
 	{ "clear-playlist", NULL, N_("_Clear Playlist"), NULL, N_("Clear playlist"), G_CALLBACK (clear_playlist_action_callback) },
 	{ "preferences", GTK_STOCK_PREFERENCES, N_("Prefere_nces"), NULL, NULL, G_CALLBACK (preferences_action_callback) },
+	{ "plugins", NULL, N_("Plugins..."), NULL, NULL, G_CALLBACK (plugins_action_callback) },
 
 	{ "view-menu", NULL, N_("_View") },
 	{ "fullscreen", "view-fullscreen", N_("_Fullscreen"), "F", N_("Switch to fullscreen"), G_CALLBACK (fullscreen_action_callback) },

@@ -297,6 +297,7 @@ play_pause_set_label (Totem *totem, TotemStates state)
 		tip = N_("Play");
 		break;
 	default:
+		g_assert_not_reached ();
 		return;
 	}
 
@@ -312,6 +313,8 @@ play_pause_set_label (Totem *totem, TotemStates state)
 	}
 
 	totem->state = state;
+
+	g_object_notify (G_OBJECT (totem), "playing");
 }
 
 void
@@ -353,6 +356,7 @@ totem_action_play (Totem *totem)
 {
 	GError *err = NULL;
 	int retval;
+	char *msg, *disp;
 
 	if (totem->mrl == NULL)
 		return;
@@ -362,23 +366,20 @@ totem_action_play (Totem *totem)
 
 	retval = bacon_video_widget_play (totem->bvw,  &err);
 	play_pause_set_label (totem, retval ? STATE_PLAYING : STATE_STOPPED);
-	if (totem_is_fullscreen (totem) != FALSE)
-		totem_scrsaver_set_state (totem->scr, !retval);
 
-	if (retval == FALSE)
-	{
-		char *msg, *disp;
-
-		disp = totem_uri_escape_for_display (totem->mrl);
-		msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
-		g_free (disp);
-
-		totem_playlist_set_playing (totem->playlist, FALSE);
-		totem_action_error (msg, err->message, totem);
-		totem_action_stop (totem);
-		g_free (msg);
-		g_error_free (err);
+	if (retval != FALSE) {
+		play_pause_set_label (totem, STATE_PLAYING);
+		return;
 	}
+
+	disp = totem_uri_escape_for_display (totem->mrl);
+	msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
+	g_free (disp);
+
+	totem_action_error (msg, err->message, totem);
+	totem_action_stop (totem);
+	g_free (msg);
+	g_error_free (err);
 }
 
 static void
@@ -402,7 +403,6 @@ totem_action_seek (Totem *totem, double pos)
 		msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
 		g_free (disp);
 
-		totem_playlist_set_playing (totem->playlist, FALSE);
 		totem_action_error (msg, err->message, totem);
 		totem_action_stop (totem);
 		g_free (msg);
@@ -554,7 +554,8 @@ void
 totem_action_stop (Totem *totem)
 {
 	bacon_video_widget_stop (totem->bvw);
-	totem_scrsaver_enable (totem->scr);
+	totem_playlist_set_playing (totem->playlist, FALSE);
+	play_pause_set_label (totem, STATE_STOPPED);
 }
 
 void
@@ -581,12 +582,9 @@ totem_action_play_pause (Totem *totem)
 	{
 		bacon_video_widget_play (totem->bvw, NULL);
 		play_pause_set_label (totem, STATE_PLAYING);
-		if (totem_is_fullscreen (totem) != FALSE)
-			totem_scrsaver_disable (totem->scr);
 	} else {
 		bacon_video_widget_pause (totem->bvw);
 		play_pause_set_label (totem, STATE_PAUSED);
-		totem_scrsaver_enable (totem->scr);
 	}
 }
 
@@ -597,7 +595,6 @@ totem_action_pause (Totem *totem)
 	{
 		bacon_video_widget_pause (totem->bvw);
 		play_pause_set_label (totem, STATE_PAUSED);
-		totem_scrsaver_enable (totem->scr);
 	}
 }
 
@@ -628,9 +625,6 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 		bacon_video_widget_set_fullscreen (totem->bvw, TRUE);
 		totem_action_set_cursor (totem, FALSE);
 
-		if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
-			totem_scrsaver_disable (totem->scr);
-
 		totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
 		show_controls (totem, FALSE);
 		totem_action_set_sensitivity ("fullscreen", FALSE);
@@ -640,8 +634,6 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 		popup_hide (totem);
 		bacon_video_widget_set_fullscreen (totem->bvw, FALSE);
 		totem_action_set_cursor (totem, TRUE);
-
-		totem_scrsaver_enable (totem->scr);
 
 		action = gtk_action_group_get_action (totem->main_action_group,
 				"show-controls");
@@ -654,6 +646,8 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 		show_controls (totem, TRUE);
 		totem_action_set_sensitivity ("fullscreen", TRUE);
 	}
+
+	g_object_notify (G_OBJECT (totem), "fullscreen");
 
 	return FALSE;
 }
@@ -1178,7 +1172,6 @@ totem_action_seek_relative (Totem *totem, int off_sec)
 		msg = g_strdup_printf(_("Totem could not play '%s'."), totem->mrl);
 		g_free (disp);
 
-		totem_playlist_set_playing (totem->playlist, FALSE);
 		totem_action_stop (totem);
 		totem_action_error (msg, err->message, totem);
 		g_free (msg);
@@ -1894,7 +1887,6 @@ commit_hide_skip_to (GtkDialog *dialog, gint response, Totem *totem)
 		msg = g_strdup_printf(_("Totem could not seek in '%s'."), disp);
 		g_free (disp);
 		totem_action_stop (totem);
-		totem_playlist_set_playing (totem->playlist, FALSE);
 		totem_action_error (msg, err->message, totem);
 		g_free (msg);
 		g_error_free (err);
@@ -2317,6 +2309,12 @@ totem_is_fullscreen (Totem *totem)
 	return (totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN);
 }
 
+gboolean
+totem_is_playing (Totem *totem)
+{
+	return bacon_video_widget_is_playing (totem->bvw) != FALSE;
+}
+
 static void
 move_popups (Totem *totem)
 {
@@ -2495,11 +2493,10 @@ on_eos_event (GtkWidget *widget, Totem *totem)
 		char *mrl;
 
 		/* Set play button status */
-		play_pause_set_label (totem, STATE_PAUSED);
 		totem_playlist_set_at_start (totem->playlist);
 		update_buttons (totem);
-		mrl = totem_playlist_get_current_mrl (totem->playlist);
 		totem_action_stop (totem);
+		mrl = totem_playlist_get_current_mrl (totem->playlist);
 		totem_action_set_mrl_with_warning (totem, mrl, FALSE);
 		bacon_video_widget_pause (totem->bvw);
 		g_free (mrl);
@@ -3277,8 +3274,6 @@ video_widget_create (Totem *totem)
 		{ "text/uri-list", 0, 0 },
 	};
 
-	totem->scr = totem_scrsaver_new ();
-
 	totem->bvw = BACON_VIDEO_WIDGET
 		(bacon_video_widget_new (-1, -1, BVW_USE_TYPE_VIDEO, &err));
 
@@ -3478,7 +3473,7 @@ main (int argc, char **argv)
 	gnome_authentication_manager_init ();
 #endif /* !HAVE_GTK_ONLY */
 
-	totem = g_new0 (Totem, 1);
+	totem = g_object_new (TOTEM_TYPE_OBJECT, NULL);
 
 	/* IPC stuff */
 	totem->conn = bacon_message_connection_new (GETTEXT_PACKAGE);

@@ -1,3 +1,45 @@
+2007-04-04  Bastien Nocera  <hadess@hadess.net>
+
+	* Makefile.am:
+	* configure.in:
+	* data/Makefile.am:
+	* data/plugins.glade:
+	* data/totem-ui.xml:
+	* data/totem.schemas.in:
+	* src/Makefile.am:
+	* src/plugins/*:
+	* src/totem-menu.c: (totem_plugins_window_delete_cb),
+	(totem_plugins_response_cb), (plugins_action_callback):
+	* src/totem-object.c: (totem_object_class_init),
+	(totem_object_init), (totem_object_finalize),
+	(totem_object_set_property), (totem_object_get_property):
+	* src/totem-private.h:
+	* src/totem.c: (play_pause_set_label), (totem_action_play),
+	(totem_action_seek), (totem_action_stop),
+	(totem_action_play_pause), (totem_action_pause),
+	(window_state_event_cb), (totem_action_seek_relative),
+	(commit_hide_skip_to), (totem_is_playing), (on_eos_event),
+	(video_widget_create), (main):
+	* src/totem.h: Turn Totem into a TotemObject, remove calling
+	the screensaver directly, and emit property notifies when
+	switching to fullscreen, or playing/stopping playing,
+	Add a plugin system, Move the screensaver handling to a
+	builtin plugin.
+
+	* src/totem-scrsaver.c:
+	* src/totem-scrsaver.h: Move to...
+
+	* lib/*: ...here
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_class_init): Some cleanups
+
+	* src/totem-interface.c: (totem_interface_boldify_label):
+	* src/totem-interface.h: Add totem_interface_boldify_label()
+
+	* src/totem-uri.c: (totem_dot_dir):
+	* src/totem-uri.h: Add the totem_dot_dir
+
 2007-04-03  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:

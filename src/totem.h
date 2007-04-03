@@ -28,11 +28,31 @@
 #ifndef __TOTEM_H__
 #define __TOTEM_H__
 
+#include <glib-object.h>
+
 #include "plparse/totem-disc.h"
 
 #define TOTEM_GCONF_PREFIX "/apps/totem"
 
-typedef struct Totem Totem;
+G_BEGIN_DECLS
+
+#define TOTEM_TYPE_OBJECT              (totem_object_get_type ())
+#define TOTEM_OBJECT(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), totem_object_get_type (), TotemObject))
+#define TOTEM_OBJECT_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), totem_object_get_type (), TotemObjectClass))
+#define TOTEM_IS_OBJECT(obj)           (G_TYPE_CHECK_INSTANCE_TYPE (obj, totem_object_get_type ()))
+#define TOTEM_IS_OBJECT_CLASS(klass)   (G_CHECK_INSTANCE_GET_CLASS ((klass), totem_object_get_type ()))
+
+typedef struct TotemObject Totem;
+typedef struct TotemObject TotemObject;
+
+typedef struct {
+	GObjectClass parent_class;
+
+	void (*file_opened)			(Totem *totem, const char *mrl);
+	void (*file_closed)			(Totem *totem, const char *mrl);
+} TotemObjectClass;
+
+GType	totem_object_get_type			(void);
 
 void	totem_action_exit			(Totem *totem);
 void	totem_action_play			(Totem *totem);
@@ -69,5 +89,8 @@ void    totem_action_error                      (const char *title,
 						 Totem *totem);
 void    totem_action_play_media_device		(Totem *totem,
 						 const char *device);
+
+gboolean totem_is_fullscreen			(Totem *totem);
+gboolean totem_is_playing			(Totem *totem);
 
 #endif /* __TOTEM_H__ */
