@@ -4903,6 +4903,8 @@ bacon_video_widget_new (int width, int height,
 #endif
   } else {
     video_sink = gst_element_factory_make ("fakesink", "video-fake-sink");
+    if (video_sink)
+      g_object_set (video_sink, "sync", TRUE, NULL);
   }
 
   if (video_sink) {
@@ -4964,7 +4966,9 @@ bacon_video_widget_new (int width, int height,
       /* Hopefully, fakesink should always work */
       if (type != BVW_USE_TYPE_AUDIO)
         audio_sink = gst_element_factory_make ("fakesink", "audio-sink");
-      if (audio_sink == NULL) {
+      if (audio_sink) {
+        g_object_set (audio_sink, "sync", TRUE, NULL);
+      } else {
         GstMessage *err_msg;
 
         err_msg = gst_bus_poll (bvw->priv->bus, GST_MESSAGE_ERROR, 0);
