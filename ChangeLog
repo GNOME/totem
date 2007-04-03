@@ -1,6 +1,14 @@
 2007-04-03  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_get_metadata_string):
+	  In the audio tab report "Mono", "Stereo" and "Surround 5.1" for
+	  the 'Channels' field instead of "1", "2", and "5.1".
+	  (Closes: #403561)
+
+2007-04-03  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bacon_video_widget_new):
 	  If we are forced to fall back to using fakesinks instead of real
 	  output sinks, make sure they sync to the clock. Should fix current

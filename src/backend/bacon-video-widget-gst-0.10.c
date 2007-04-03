@@ -4225,7 +4225,11 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
         if ((res = gst_structure_get_int (s, "channels", &channels))) {
           /* FIXME: do something more sophisticated - but what? */
           if (channels > 2 && audio_caps_have_LFE (s)) {
-            string = g_strdup_printf ("%d.1", channels - 1);
+            string = g_strdup_printf ("%s %d.1", _("Surround"), channels - 1);
+          } else if (channels == 1) {
+            string = g_strdup (_("Mono"));
+          } else if (channels == 2) {
+            string = g_strdup (_("Stereo"));
           } else {
             string = g_strdup_printf ("%d", channels);
           }
