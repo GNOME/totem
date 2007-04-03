@@ -1,5 +1,15 @@
 2007-04-02  Tim-Philipp Müller  <tim at centricular dot net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_check_missing_plugins_error):
+	  Make the missing-plugins stuff work in the case where we have
+	  a subtitles streams but no video stream (presumably because we are
+	  missing the appropriate video decoder). This should probably be
+	  handled better in playbin itself, but for now we'll work around it.
+	  (Closes: #418383)
+
+2007-04-02  Tim-Philipp Müller  <tim at centricular dot net>
+
 	* src/totem-missing-plugins.c:
 	(on_plugin_installation_done):
 	  Also add the missing plugins to the local blacklist if the user

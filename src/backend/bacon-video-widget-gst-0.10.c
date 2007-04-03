@@ -1329,6 +1329,7 @@ bvw_emit_missing_plugins_signal (BaconVideoWidget * bvw, gboolean prerolled)
 static gboolean
 bvw_check_missing_plugins_error (BaconVideoWidget * bvw, GstMessage * err_msg)
 {
+  gboolean error_src_is_playbin;
   gboolean ret = FALSE;
   GError *err = NULL;
 
@@ -1339,16 +1340,24 @@ bvw_check_missing_plugins_error (BaconVideoWidget * bvw, GstMessage * err_msg)
 
   gst_message_parse_error (err_msg, &err, NULL);
 
-  if (!is_error (err, CORE, MISSING_PLUGIN) &&
-      !is_error (err, STREAM, CODEC_NOT_FOUND)) {
-    GST_DEBUG ("neither CORE/MISSING_PLUGIN nor STREAM/CODEC_NOT_FOUND error");
-  } else {
+  error_src_is_playbin = (err_msg->src == GST_OBJECT_CAST (bvw->priv->play));
+
+  /* If we get a WRONG_TYPE error from playbin itself it's most likely because
+   * there is a subtitle stream we can decode, but no video stream to overlay
+   * it on. Since there were missing-plugins messages, we'll assume this is
+   * because we cannot decode the video stream (this should probably be fixed
+   * in playbin, but for now we'll work around it here) */
+  if (is_error (err, CORE, MISSING_PLUGIN) ||
+      is_error (err, STREAM, CODEC_NOT_FOUND) ||
+      (is_error (err, STREAM, WRONG_TYPE) && error_src_is_playbin)) {
     ret = bvw_emit_missing_plugins_signal (bvw, FALSE);
     if (ret) {
       /* If it was handled, stop playback to make sure we're not processing any
        * other error messages that might also be on the bus */
       bacon_video_widget_stop (bvw);
     }
+  } else {
+    GST_DEBUG ("not an error code we are looking for, doing nothing");
   }
 
   g_error_free (err);
