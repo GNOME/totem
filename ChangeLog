@@ -1,3 +1,11 @@
+2007-04-03  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_new):
+	  If we are forced to fall back to using fakesinks instead of real
+	  output sinks, make sure they sync to the clock. Should fix current
+	  position reporting when there is no audio sink available (#425458).
+
 2007-04-02  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
