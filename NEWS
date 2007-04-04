@@ -1,5 +1,23 @@
 New features and significant updates in version...
 
+2.18.1
+* Add xdg-user-dirs support, show Movies and Music directories
+  in the file choosers
+* Avoid crashes when we can't figure out a file's display name
+  and we're adding it to the recent files list
+* Make adding multiple files to a running Totem work again
+* Misc build, bug and memory leak fixes
+* GStreamer:
+- Don't ask over and over when the user cancels a helper for a
+  missing plugin
+- Call the missing plugins helper when there's no video available
+  and a subtitle was used
+- Make the seek bar behaves properly when no soundcards are used
+* Browser plugin:
+- Remove rejection of streams based on mime-type, should allow
+  playback of many more broken servers
+- Make the wheel act properly on the volume button
+
 2.18.0
 * Fix resizing of the sidebar the first time it's opened
 * Fix using the playlist parser with the Python bindings
