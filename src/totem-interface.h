@@ -1,6 +1,6 @@
 /* totem-interface.h
 
-   Copyright (C) 2005 Bastien Nocera <hadess@hadess.net>
+   Copyright (C) 2005,2007 Bastien Nocera <hadess@hadess.net>
 
    The Gnome Library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public License as
@@ -49,6 +49,8 @@ void		 totem_interface_set_transient_for (GtkWindow *window,
 						    GtkWindow *parent);
 char *		 totem_interface_get_license	(void);
 void		 totem_interface_boldify_label	(GladeXML *xml,
+						 const char *label);
+void		 totem_interface_italicise_label(GladeXML *xml,
 						 const char *label);
 
 G_END_DECLS

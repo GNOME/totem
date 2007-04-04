@@ -36,6 +36,7 @@
 #include <sys/types.h>
 
 #include "debug.h"
+#include "totem-interface.h"
 
 struct TotemScreenshotPrivate
 {
@@ -330,6 +331,8 @@ totem_screenshot_new (const char *glade_filename, GdkPixbuf *screen_image)
 
 	screenshot->_priv->pixbuf = screen_image;
 	g_object_ref (screenshot->_priv->pixbuf);
+
+	totem_interface_boldify_label (screenshot->_priv->xml, "tsw_preview_label");
 
 	gtk_window_set_title (GTK_WINDOW (screenshot), _("Save Screenshot"));
 	gtk_dialog_set_has_separator (GTK_DIALOG (screenshot), FALSE);

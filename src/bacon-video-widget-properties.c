@@ -288,6 +288,11 @@ bacon_video_widget_properties_new (void)
 			"year_label", "duration_label", "dimensions_label", "vcodec_label",
 			"framerate_label", "vbitrate_label", "abitrate_label",
 			"acodec_label", "samplerate_label", "channels_label" };
+	const char *bold_labels[] = {
+		"bvwp_general_label",
+		"bvwp_video_label",
+		"bvwp_audio_label"
+	};
 	guint i;
 
 	xml = totem_interface_load_with_root ("properties.glade",
@@ -307,9 +312,13 @@ bacon_video_widget_properties_new (void)
 
 	group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
-	for (i = 0; i < G_N_ELEMENTS (labels); i++)
-		gtk_size_group_add_widget (group, glade_xml_get_widget (xml,
-				labels[i]));
+	for (i = 0; i < G_N_ELEMENTS (labels); i++) {
+		gtk_size_group_add_widget (group,
+					   glade_xml_get_widget (xml, labels[i]));
+		totem_interface_italicise_label (xml, labels[i]);
+	}
+	for (i = 0; i < G_N_ELEMENTS (bold_labels); i++)
+		totem_interface_boldify_label (xml, bold_labels[i]);
 
 	g_object_unref (group);
 

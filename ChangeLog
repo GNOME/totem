@@ -1,5 +1,21 @@
 2007-04-04  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-interface.c: (totem_interface_italicise_label):
+	* src/totem-interface.h: Add a way to italicise labels
+
+	* data/properties.glade:
+	* data/screenshot.glade:
+	* data/totem.glade:
+	* src/bacon-video-widget-properties.c:
+	(bacon_video_widget_properties_new):
+	* src/totem-preferences.c: (totem_setup_preferences):
+	* src/totem-screenshot.c: (totem_screenshot_new):
+	Use the newly added totem_interface_boldify_label, and
+	totem_interface_italicise_label to remove the markup
+	from the glade files (Closes: #100036)
+
+2007-04-04  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-options.c: (totem_options_process_for_server):
 	Patch from Michael Plump <plumpy@skylab.org> to avoid removing
 	just added files when in remote mode (Closes: #416253)

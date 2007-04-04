@@ -488,6 +488,15 @@ totem_setup_preferences (Totem *totem)
 	item = glade_xml_get_widget (totem->xml, "totem_preferences_window");
 	gtk_widget_destroy (item);
 
+	/* Boldify some labels */
+	totem_interface_boldify_label (totem->xml, "tpw_network_label");
+	totem_interface_boldify_label (totem->xml, "tpw_tvout_label");
+	totem_interface_boldify_label (totem->xml, "tpw_text_subtitles_label");
+	totem_interface_boldify_label (totem->xml, "tpw_display_label");
+	totem_interface_boldify_label (totem->xml, "tpw_visuals_label");
+	totem_interface_boldify_label (totem->xml, "tpw_color_balance_label");
+	totem_interface_boldify_label (totem->xml, "tpw_audio_output_label");
+
 	g_signal_connect (G_OBJECT (totem->prefs), "response",
 			G_CALLBACK (gtk_widget_hide), NULL);
 	g_signal_connect (G_OBJECT (totem->prefs), "delete-event",
