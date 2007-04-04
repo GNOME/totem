@@ -1,5 +1,11 @@
 2007-04-04  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-options.c: (totem_options_process_for_server):
+	Patch from Michael Plump <plumpy@skylab.org> to avoid removing
+	just added files when in remote mode (Closes: #416253)
+
+2007-04-04  Bastien Nocera  <hadess@hadess.net>
+
 	* Makefile.am:
 	* configure.in:
 	* data/Makefile.am:
