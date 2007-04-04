@@ -154,6 +154,9 @@ totem_options_process_for_server (BaconMessageConnection *conn,
 		full_path = totem_create_full_path (options->filenames[i]);
 		line = g_strdup_printf ("%03d %s", default_action, full_path);
 		bacon_message_connection_send (conn, line);
+		/* Even if the default action is replace, we only want to replace with the
+		   first file.  After that, we enqueue. */
+		default_action = TOTEM_REMOTE_COMMAND_ENQUEUE;
 		g_free (line);
 		g_free (full_path);
 	}
