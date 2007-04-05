@@ -213,6 +213,8 @@ on_media_player_key_pressed (DBusGProxy *proxy, const gchar *application, const 
 			g_signal_emit (remote, totem_remote_signals[BUTTON_PRESSED], 0, TOTEM_REMOTE_COMMAND_PREVIOUS);
 		else if (strcmp ("Next", key) == 0)
 			g_signal_emit (remote, totem_remote_signals[BUTTON_PRESSED], 0, TOTEM_REMOTE_COMMAND_NEXT);
+		else if (strcmp ("Stop", key) == 0)
+			g_signal_emit (remote, totem_remote_signals[BUTTON_PRESSED], 0, TOTEM_REMOTE_COMMAND_STOP);
 	}
 }
 #endif /* HAVE_MEDIA_PLAYER_KEYS */
