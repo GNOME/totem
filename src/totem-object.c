@@ -128,6 +128,8 @@ totem_get_main_window (Totem *totem)
 {
 	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), NULL);
 
+	g_object_ref (G_OBJECT (totem->win));
+
 	return GTK_WINDOW (totem->win);
 }
 

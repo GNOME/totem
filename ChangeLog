@@ -1,5 +1,17 @@
 2007-04-09  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* data/totem-ui.xml:
+	* src/plugins/Makefile.am:
+	* src/totem-menu.c:
+	* src/totem-object.c: (totem_get_main_window):
+	* src/totem-preferences.c: (totem_setup_preferences):
+	Add a plugin to replace the not-so-useful "Always On Top" menu item
+	which will make Totem "on top" if it's playing something
+	(Closes: #171691)
+
+2007-04-09  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem-ui.xml: Show the plugins menu entry above the Preferences
 	menu entry
 

@@ -38,6 +38,7 @@
 #include "totem.h"
 #include "totem-private.h"
 #include "totem-preferences.h"
+#include "totem-interface.h"
 #include "video-utils.h"
 #include "totem-subtitle-encoding.h"
 
@@ -627,13 +628,6 @@ totem_setup_preferences (Totem *totem)
 	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/deinterlace",
 			(GConfClientNotifyFunc) deinterlace_changed_cb,
 			totem, NULL, NULL);
-
-	/* Always On Top */
-	action = gtk_action_group_get_action (totem->main_action_group,
-			"always-on-top");
-	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
-			gconf_client_get_bool (totem->gc,
-				GCONF_PREFIX"/window_on_top", NULL));
 
 	/* Save to disk Lockdown */
 	action = gtk_action_group_get_action (totem->main_action_group,

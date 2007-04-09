@@ -1,4 +1,4 @@
-SUBDIRS = screensaver
+SUBDIRS = screensaver ontop
 
 noinst_LTLIBRARIES = libtotemmodule.la
 

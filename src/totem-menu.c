@@ -1203,16 +1203,6 @@ deinterlace_action_callback (GtkToggleAction *action, Totem *totem)
 }
 
 static void
-always_on_top_action_callback (GtkToggleAction *action, Totem *totem)
-{
-	gtk_window_set_keep_above (GTK_WINDOW (totem->win),
-			gtk_toggle_action_get_active (action));
-	gconf_client_set_bool (totem->gc,
-			GCONF_PREFIX"/window_on_top",
-			gtk_toggle_action_get_active (action), NULL);
-}
-
-static void
 show_controls_action_callback (GtkToggleAction *action, Totem *totem)
 {
 	gboolean show;
@@ -1315,7 +1305,6 @@ static const GtkToggleActionEntry toggle_entries[] = {
 	{ "repeat-mode", NULL, N_("_Repeat Mode"), NULL, N_("Set the repeat mode"), G_CALLBACK (repeat_mode_action_callback), FALSE },
 	{ "shuffle-mode", NULL, N_("Shuff_le Mode"), NULL, N_("Set the shuffle mode"), G_CALLBACK (shuffle_mode_action_callback), FALSE },
 	{ "deinterlace", NULL, N_("_Deinterlace"), "I", N_("Deinterlace"), G_CALLBACK (deinterlace_action_callback), FALSE },
-	{ "always-on-top", NULL, N_("Always on _Top"), NULL, N_("Always on top"), G_CALLBACK (always_on_top_action_callback), FALSE },
 	{ "show-controls", NULL, N_("Show _Controls"), "H", N_("Show controls"), G_CALLBACK (show_controls_action_callback), TRUE },
 	{ "sidebar", NULL, N_("_Sidebar"), "F9", N_("Show or hide the sidebar"), G_CALLBACK (show_sidebar_action_callback), TRUE }
 };
