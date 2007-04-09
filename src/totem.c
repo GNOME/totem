@@ -2312,6 +2312,9 @@ totem_is_fullscreen (Totem *totem)
 gboolean
 totem_is_playing (Totem *totem)
 {
+	if (totem->bvw == NULL)
+		return FALSE;
+
 	return bacon_video_widget_is_playing (totem->bvw) != FALSE;
 }
 

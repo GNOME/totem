@@ -29,6 +29,7 @@
 #include "config.h"
 
 #include <glib-object.h>
+#include <gtk/gtkwindow.h>
 
 #include "totem.h"
 #include "totem-private.h"
@@ -120,5 +121,13 @@ totem_object_get_property (GObject *object,
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 	}
+}
+
+GtkWindow *
+totem_get_main_window (Totem *totem)
+{
+	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), NULL);
+
+	return GTK_WINDOW (totem->win);
 }
 

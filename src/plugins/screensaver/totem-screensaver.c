@@ -99,6 +99,18 @@ totem_screensaver_plugin_finalize (GObject *object)
 }
 
 static void
+totem_screensaver_update_from_state (TotemObject *totem,
+				     TotemScreensaverPlugin *pi)
+{
+	if (totem_is_playing (totem) != FALSE
+	    && totem_is_fullscreen (totem) != FALSE) {
+		totem_scrsaver_disable (pi->scr);
+	} else {
+		totem_scrsaver_enable (pi->scr);
+	}
+}
+
+static void
 property_notify_cb (TotemObject *totem,
 		    GParamSpec *spec,
 		    TotemScreensaverPlugin *pi)
@@ -108,12 +120,7 @@ property_notify_cb (TotemObject *totem,
 		return;
 	}
 
-	if (totem_is_playing (totem) != FALSE
-	    && totem_is_fullscreen (totem) != FALSE) {
-		totem_scrsaver_disable (pi->scr);
-	} else {
-		totem_scrsaver_enable (pi->scr);
-	}
+	totem_screensaver_update_from_state (totem, pi);
 }
 
 static void
@@ -126,6 +133,9 @@ impl_activate (TotemPlugin *plugin,
 					   "notify",
 					   G_CALLBACK (property_notify_cb),
 					   pi);
+
+	/* Force setting the current status */
+	totem_screensaver_update_from_state (totem, pi);
 }
 
 static void

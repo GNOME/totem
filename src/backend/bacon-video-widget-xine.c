@@ -2443,6 +2443,8 @@ gboolean bacon_video_widget_seek (BaconVideoWidget *bvw, float position,
 		return FALSE;
 	}
 
+	bacon_video_widget_reconfigure_tick (bvw, TRUE);
+
 	return TRUE;
 }
 
@@ -2484,6 +2486,8 @@ gboolean bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time,
 		xine_error (bvw, gerror);
 		return FALSE;
 	}
+
+	bacon_video_widget_reconfigure_tick (bvw, TRUE);
 
 	return TRUE;
 }

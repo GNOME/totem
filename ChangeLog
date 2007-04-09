@@ -1,3 +1,24 @@
+2007-04-09  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem-ui.xml: Show the plugins menu entry above the Preferences
+	menu entry
+
+	* src/backend/bacon-video-widget-xine.c: (bacon_video_widget_seek),
+	(bacon_video_widget_seek_time): In some cases, when seeking, we might
+	not have reset the tick signal properly
+
+	* src/plugins/screensaver/totem-screensaver.c:
+	(totem_screensaver_update_from_state), (property_notify_cb),
+	(impl_activate): Make sure we're in the proper state when the
+	plugin is activated (ie. if it's not activated on startup, which
+	shouldn't happen)
+
+	* src/totem.c: (totem_is_playing): Don't print out an error if
+	there's no video widget yet
+
+	* src/totem-object.c: (totem_get_main_window):
+	* src/totem.h: Add a way to get the main window from a plugin
+
 2007-04-05  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-remote.c: (on_media_player_key_pressed):

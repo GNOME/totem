@@ -29,6 +29,7 @@
 #define __TOTEM_H__
 
 #include <glib-object.h>
+#include <gtk/gtkwindow.h>
 
 #include "plparse/totem-disc.h"
 
@@ -92,5 +93,6 @@ void    totem_action_play_media_device		(Totem *totem,
 
 gboolean totem_is_fullscreen			(Totem *totem);
 gboolean totem_is_playing			(Totem *totem);
+GtkWindow *totem_get_main_window		(Totem *totem);
 
 #endif /* __TOTEM_H__ */
