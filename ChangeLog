@@ -1,5 +1,11 @@
 2007-04-09  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-remote.c: (totem_remote_finalize): Patch from Philip Withnall
+	<bugzilla@tecnocode.co.uk> to avoid crashing on exit when LIRC is
+	being used (Closes: #427681)
+
+2007-04-09  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in:
 	* data/totem-ui.xml:
 	* src/plugins/Makefile.am:
