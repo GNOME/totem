@@ -232,7 +232,6 @@ totem_remote_finalize (GObject *object)
 
 #ifdef HAVE_LIRC
 	lirc_freeconfig (config);
-	g_free(config);
 
 	listeners = g_list_remove (listeners, remote);
 
