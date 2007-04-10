@@ -49,17 +49,32 @@ totem_playing_dvd (const char *uri)
 	return g_str_has_prefix (uri, "dvd:/");
 }
 
+static void
+totem_ensure_dot_dir (const char *path)
+{
+	if (g_file_test (path, G_FILE_TEST_IS_DIR) != FALSE)
+		return;
+
+	g_mkdir_with_parents (path, 0700);
+}
+
 const char *
 totem_dot_dir (void)
 {
 	static char *totem_dir = NULL;
-	if (totem_dir != NULL)
+
+	if (totem_dir != NULL) {
+		totem_ensure_dot_dir (totem_dir);
 		return totem_dir;
+	}
 
 	totem_dir = g_build_filename (g_get_home_dir (),
 				      ".gnome2",
 				      "Totem",
 				      NULL);
+
+	totem_ensure_dot_dir (totem_dir);
+
 	return (const char *)totem_dir;
 }
 

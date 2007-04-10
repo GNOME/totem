@@ -57,7 +57,7 @@
 
 #define DEFAULT_HEIGHT 180
 #define DEFAULT_WIDTH 240
-#define CONFIG_FILE ".gnome2"G_DIR_SEPARATOR_S"totem_config"
+#define CONFIG_FILE ".gnome2"G_DIR_SEPARATOR_S"Totem"G_DIR_SEPARATOR_S"xine_config"
 
 /* Signals */
 enum {

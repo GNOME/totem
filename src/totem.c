@@ -173,7 +173,7 @@ totem_action_save_state (Totem *totem)
 
 	contents = g_key_file_to_data (keyfile, NULL, NULL);
 	g_key_file_free (keyfile);
-	filename = g_build_filename (g_get_home_dir (), ".gnome2", "totem", NULL);
+	filename = g_build_filename (totem_dot_dir (), "state.ini", NULL);
 	g_file_set_contents (filename, contents, -1, NULL);
 
 	g_free (filename);
@@ -2985,7 +2985,7 @@ totem_setup_window (Totem *totem)
 	GError *err = NULL;
 	GtkWidget *main_pane;
 
-	filename = g_build_filename (g_get_home_dir (), ".gnome2", "totem", NULL);
+	filename = g_build_filename (totem_dot_dir (), "state.ini", NULL);
 	keyfile = g_key_file_new ();
 	if (g_key_file_load_from_file (keyfile, filename,
 			G_KEY_FILE_NONE, NULL) == FALSE) {

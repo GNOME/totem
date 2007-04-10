@@ -25,6 +25,7 @@
 #include "totem.h"
 #include "totem-private.h"
 #include "totem-session.h"
+#include "totem-uri.h"
 
 #ifndef HAVE_GTK_ONLY
 
@@ -36,12 +37,11 @@ totem_session_create_key (void)
 {
 	char *filename, *path;
 
-	filename = g_strdup_printf ("totem-%d-%d-%u.pls",
+	filename = g_strdup_printf ("playlist-%d-%d-%u.pls",
 			(int) getpid (),
 			(int) time (NULL),
 			g_random_int ());
-	path = g_build_filename (g_get_home_dir (),
-			".gnome2", filename, NULL);
+	path = g_build_filename (totem_dot_dir (), filename, NULL);
 	g_free (filename);
 
 	return path;
