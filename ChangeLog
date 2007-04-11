@@ -1,5 +1,13 @@
 2007-04-11  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plugins/galago/Makefile.am:
+	Rename the plugin from libgalago.so to lib tgp (totem
+	galago plugin) to avoid clashing with system-wide libraries
+	* src/plugins/galago/galago.totem-plugin.desktop.in:
+	Remove Galago from the name of the plugin
+
+2007-04-11  Bastien Nocera  <hadess@hadess.net>
+
 	* lib/totem-galago.c: (totem_galago_init),
 	(totem_galago_set_idleness), (totem_galago_finalize):
 	Don't print errors when we can't set the status as Galago

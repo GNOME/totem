@@ -1,7 +1,7 @@
 modules_flags = -export_dynamic -avoid-version -module
 
 plugindir = $(PLUGINDIR)/galago
-plugin_LTLIBRARIES = libgalago.la
+plugin_LTLIBRARIES = libtgp.la
 
 plugin_in_files = galago.totem-plugin.desktop.in
 
@@ -20,12 +20,12 @@ common_defines = \
 	-DTOTEM_PLUGIN_DIR=\""$(libdir)/totem/plugins"\"\
 	$(DISABLE_DEPRECATED)
 
-libgalago_la_SOURCES = totem-galago.c
-libgalago_la_LDFLAGS = $(modules_flags)
-libgalago_la_LIBADD = $(top_builddir)/lib/libtotemgalago.la
-libgalago_la_CPPFLAGS = $(common_defines)
+libtgp_la_SOURCES = totem-galago.c
+libtgp_la_LDFLAGS = $(modules_flags)
+libtgp_la_LIBADD = $(top_builddir)/lib/libtotemgalago.la
+libtgp_la_CPPFLAGS = $(common_defines)
 
-libgalago_la_CFLAGS = \
+libtgp_la_CFLAGS = \
 	$(EXTRA_GNOME_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
