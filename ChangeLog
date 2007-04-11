@@ -1,5 +1,12 @@
 2007-04-11  Bastien Nocera  <hadess@hadess.net>
 
+	* lib/totem-galago.c: (totem_galago_init),
+	(totem_galago_set_idleness), (totem_galago_finalize):
+	Don't print errors when we can't set the status as Galago
+	isn't available, we already printed out an error in _init()
+
+2007-04-11  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in:
 	* lib/Makefile.am:
 	* lib/totem-galago.[ch]:

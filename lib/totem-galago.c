@@ -64,7 +64,8 @@ totem_galago_init (TotemGalago *ggo)
 
 	ggo->priv = g_new0 (TotemGalagoPrivate, 1);
 
-	if (!galago_init (PACKAGE_NAME, GALAGO_INIT_FEED) || !galago_is_connected()) {
+	if (galago_init (PACKAGE_NAME, GALAGO_INIT_FEED) == FALSE
+	    || galago_is_connected () == FALSE) {
 		g_warning ("Failed to initialise libgalago.");
 		return;
 	}
@@ -93,7 +94,8 @@ totem_galago_set_idleness (TotemGalago *ggo, gboolean idle)
 	GList *account;
 	GalagoPresence *presence;
 
-	g_return_if_fail (galago_is_connected());
+	if (galago_is_connected () == FALSE)
+		return;
 
 	if (ggo->priv->idle == idle)
 		return;
@@ -111,7 +113,7 @@ totem_galago_finalize (GObject *object)
 {
 	TotemGalago *ggo = TOTEM_GALAGO (object);
 
-	if (galago_is_connected())
+	if (galago_is_connected ())
 		galago_uninit ();
 
 	g_list_free (ggo->priv->accounts);
