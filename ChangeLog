@@ -1,5 +1,18 @@
 2007-04-11  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* lib/Makefile.am:
+	* lib/totem-galago.[ch]:
+	* lib/totem-galago.h:
+	* src/plugins/Makefile.am:
+	* src/plugins/galago/*:
+
+	Patch from Philip Withnall <bugzilla@tecnocode.co.uk> to add a
+	Galago plugin that will set your IM status as away when playing
+	a film in fullscreen (Closes: #427580)
+
+2007-04-11  Bastien Nocera  <hadess@hadess.net>
+
 	* README: Remove outdated TODO items
 	* src/plparse/totem-pl-parser-wm.c: (parse_asx_entries):
 	Push playlist title out for ASX playlists that have one

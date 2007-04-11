@@ -1,4 +1,5 @@
-SUBDIRS = screensaver ontop
+SUBDIRS = $(PLUGINS)
+DIST_SUBDIRS = $(ALL_PLUGINS)
 
 noinst_LTLIBRARIES = libtotemmodule.la
 

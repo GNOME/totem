@@ -1,5 +1,6 @@
 noinst_LTLIBRARIES =					\
-	libtotemscrsaver.la
+	libtotemscrsaver.la				\
+	libtotemgalago.la
 
 common_defines = \
 	-D_REENTRANT					\
@@ -21,10 +22,23 @@ libtotemscrsaver_la_CFLAGS =				\
 	$(WARN_CFLAGS)					\
 	$(DBUS_CFLAGS)					\
 	$(AM_CFLAGS)
-
 libtotemscrsaver_la_LDFLAGS =				\
 	$(AM_LDFLAGS)
 libtotemscrsaver_la_LIBADD =				\
 	$(DBUS_LIBS)					\
 	$(XTEST_LIBS)
+
+libtotemgalago_la_SOURCES =				\
+	totem-galago.c					\
+	totem-galago.h
+libtotemgalago_la_CFLAGS =				\
+	$(common_defines)				\
+	$(EXTRA_GNOME_CFLAGS)				\
+	$(WARN_CFLAGS)					\
+	$(LIBGALAGO_CFLAGS)				\
+	$(AM_CFLAGS)
+libtotemgalago_la_LDFLAGS =				\
+	$(AM_LDFLAGS)
+libtotemgalago_la_LIBADD =				\
+	$(LIBGALAGO_LIBS)
 
