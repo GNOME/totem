@@ -218,6 +218,7 @@ parse_asx_entries (TotemPlParser *parser, const char *_base, xml_node_t *parent)
 
 		if (g_ascii_strcasecmp (node->name, "title") == 0) {
 			title = g_strdup (node->data);
+			totem_pl_parser_playlist_start (parser, title);
 		}
 		if (g_ascii_strcasecmp (node->name, "base") == 0) {
 			newbase = xml_parser_get_property (node, "href");
@@ -245,6 +246,8 @@ parse_asx_entries (TotemPlParser *parser, const char *_base, xml_node_t *parent)
 		}
 	}
 
+	if (title != NULL)
+		totem_pl_parser_playlist_end (parser, title);
 	g_free (title);
 
 	return retval;

@@ -94,33 +94,6 @@ Nifty media player icon by Jakub Steiner <jimmac@ximian.com>
 
 UI help by Seth Nickell <snickell@stanford.edu>
 
-FAQ
-===
-
-TODO
-====
-
-- write a widget more suitable for seeking in place of the current slider
-- broadcasting and network client
-- Play with OSD and stuff
-- ports to other windowing system/OSes?
-- OO.o plugin?
-  http://www.openoffice.org/issues/show_bug.cgi?id=41419
-- add equaliser support to the API
-- be able to choose the deinterlace method?
-http://article.gmane.org/gmane.comp.video.xine.devel/4304/match=tvtime
-- accessible subtitles?
-http://article.gmane.org/gmane.comp.video.xine.devel/3456/match=+api+addition+subtitles+accessibility
-- implement a subclass of the checkbox menu item that takes two strings as parameters and switche between the two depending on the state (eg. Lock/Unlock)
-- rtsp plugin for xine?
-http://www.live.com/liveMedia/#testProgs
-- finish vanity
-
-GStreamer backend TODO
-======================
-- deinterlacing
-- network connection speed (mmsh://, http://, rtsp://...)
-
 Easy GStreamer plugin installation via libgimme-codec (optional)
 ================================================================
 - requires GStreamer core and gst-plugins-base >= 0.10.12
@@ -136,11 +109,15 @@ Easy GStreamer plugin installation via libgimme-codec (optional)
 BUGS
 ====
 
-Bugs should be lodged in Gnome's Bugzilla:
+Bugs should be filed in Gnome's Bugzilla:
 http://bugzilla.gnome.org/enter_bug.cgi?product=totem
 
 To get a better debug output, run:
+# totem --debug
+
+Or for the stand-alone applications:
 gconftool-2 --set --type bool /apps/totem/debug true
+then run your application and capture its output
 
 Contact
 =======
