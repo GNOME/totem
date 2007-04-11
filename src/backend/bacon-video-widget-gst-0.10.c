@@ -4324,6 +4324,10 @@ bacon_video_widget_new (int width, int height,
       g_warning ("Could not create element 'gconfaudiosink'");
       /* Try to fallback on autoaudiosink */
       audio_sink = gst_element_factory_make ("autoaudiosink", "audio-sink");
+    } else {
+      /* set the profile property on the gconfaudiosink to "music and movies" */
+      if (g_object_class_find_property (G_OBJECT_GET_CLASS (audio_sink), "profile"))
+        g_object_set (G_OBJECT (audio_sink), "profile", 1, NULL);
     }
   } else {
     audio_sink = gst_element_factory_make ("fakesink", "audio-fake-sink");
