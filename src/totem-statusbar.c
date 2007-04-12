@@ -341,7 +341,7 @@ totem_statusbar_size_allocate (GtkWidget *widget,
   box = gtk_bin_get_child (GTK_BIN (gstatusbar->frame));
   gstatusbar->label = box;
 
-  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+  GTK_WIDGET_CLASS (totem_statusbar_parent_class)->size_allocate (widget, allocation);
 
   gstatusbar->label = label;
 }
