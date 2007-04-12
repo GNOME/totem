@@ -20,13 +20,17 @@ common_defines = \
 	-DTOTEM_PLUGIN_DIR=\""$(libdir)/totem/plugins"\"\
 	$(DISABLE_DEPRECATED)
 
-libtgp_la_SOURCES = totem-galago-plugin.c
+libtgp_la_SOURCES =					\
+	totem-galago-plugin.c				\
+	totem-galago.c totem-galago.h
+
 libtgp_la_LDFLAGS = $(modules_flags)
-libtgp_la_LIBADD = $(top_builddir)/lib/libtotemgalago.la
+libtgp_la_LIBADD = $(LIBGALAGO_LIBS)
 libtgp_la_CPPFLAGS = $(common_defines)
 
 libtgp_la_CFLAGS = \
 	$(EXTRA_GNOME_CFLAGS)	\
+	$(LIBGALAGO_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
 	$(AM_CFLAGS)		\

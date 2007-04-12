@@ -1,5 +1,17 @@
 2007-04-12  Bastien Nocera  <hadess@hadess.net>
 
+	* lib/totem-galago.c:
+	* lib/totem-galago.h:
+	Move those files to src/plugins/galago
+
+	* lib/Makefile.am:
+	* src/plugins/galago/Makefile.am:
+	Update for the file move above
+
+	Fixes build without galago available
+
+2007-04-12  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: Use "autodetect" in the plugins list
 	to only compile the plugins for which the deps are present,
 	error out when "all" is passed and a dep isn't present
