@@ -236,7 +236,7 @@ ev_sidebar_menu_item_activate_cb (GtkWidget *widget,
 				    PAGE_COLUMN_MENU_ITEM, &item,
 				    PAGE_COLUMN_NOTEBOOK_INDEX, &index,
 				    -1);
-			 
+
 		if (item == menu_item) {
 			gtk_notebook_set_current_page
 				(GTK_NOTEBOOK (ev_sidebar->priv->notebook), index);
@@ -312,7 +312,7 @@ ev_sidebar_init (EvSidebar *ev_sidebar)
 	g_signal_connect (close_button, "clicked",
 			  G_CALLBACK (ev_sidebar_close_clicked_cb),
 			  ev_sidebar);
-	   
+
 	image = gtk_image_new_from_stock (GTK_STOCK_CLOSE,
 					  GTK_ICON_SIZE_MENU);
 	gtk_container_add (GTK_CONTAINER (close_button), image);
@@ -359,20 +359,16 @@ ev_sidebar_get_current_page (EvSidebar *ev_sidebar)
 	return ev_sidebar->priv->current;
 }
 
-void
-ev_sidebar_set_current_page (EvSidebar *ev_sidebar, const char *new_page_id)
+static gint
+ev_sidebar_get_index_for_page_id (EvSidebar *ev_sidebar,
+				  const char *new_page_id,
+				  GtkWidget **menu_item_ret)
 {
-	GtkTreeIter iter;
 	GtkWidget *menu_item;
-	gchar *page_id;
 	gboolean valid;
+	GtkTreeIter iter;
+	gchar *page_id;
 	gint index;
-
-	g_return_if_fail (EV_IS_SIDEBAR (ev_sidebar));
-	g_return_if_fail (new_page_id != NULL);
-
-	if (strcmp (new_page_id, ev_sidebar->priv->current) == 0)
-		return;
 
 	valid = gtk_tree_model_get_iter_first (ev_sidebar->priv->page_model, &iter);
 
@@ -385,14 +381,36 @@ ev_sidebar_set_current_page (EvSidebar *ev_sidebar, const char *new_page_id)
 				    -1);
 
 		if (page_id != NULL && strcmp (new_page_id, page_id) == 0) {
-			gtk_menu_set_active (GTK_MENU (ev_sidebar->priv->menu), index);
-			gtk_menu_item_activate (GTK_MENU_ITEM (menu_item));
-			valid = FALSE;
+			if (menu_item_ret != NULL)
+				*menu_item_ret = menu_item;
+			g_free (page_id);
+			return index;
 		} else {
 			valid = gtk_tree_model_iter_next (ev_sidebar->priv->page_model, &iter);
 		}
 		g_object_unref (menu_item);
 		g_free (page_id);
+	}
+
+	return -1;
+}
+
+void
+ev_sidebar_set_current_page (EvSidebar *ev_sidebar, const char *new_page_id)
+{
+	GtkWidget *menu_item;
+	gint index;
+
+	g_return_if_fail (EV_IS_SIDEBAR (ev_sidebar));
+	g_return_if_fail (new_page_id != NULL);
+
+	if (strcmp (new_page_id, ev_sidebar->priv->current) == 0)
+		return;
+
+	index = ev_sidebar_get_index_for_page_id (ev_sidebar, new_page_id, &menu_item);
+	if (index >= 0) {
+		gtk_menu_set_active (GTK_MENU (ev_sidebar->priv->menu), index);
+		gtk_menu_item_activate (GTK_MENU_ITEM (menu_item));
 	}
 }
 
@@ -411,7 +429,9 @@ ev_sidebar_add_page (EvSidebar   *ev_sidebar,
 	g_return_if_fail (page_id != NULL);
 	g_return_if_fail (title != NULL);
 	g_return_if_fail (GTK_IS_WIDGET (main_widget));
-	   
+
+	gtk_widget_set_sensitive (GTK_WIDGET (ev_sidebar), TRUE);
+   
 	index = gtk_notebook_append_page (GTK_NOTEBOOK (ev_sidebar->priv->notebook),
 					  main_widget, NULL);
 	   
@@ -419,33 +439,81 @@ ev_sidebar_add_page (EvSidebar   *ev_sidebar,
 	g_signal_connect (menu_item, "activate",
 			  G_CALLBACK (ev_sidebar_menu_item_activate_cb),
 			  ev_sidebar);
+
 	gtk_widget_show (menu_item);
 	gtk_menu_shell_append (GTK_MENU_SHELL (ev_sidebar->priv->menu),
 			       menu_item);
 
-	gtk_list_store_insert_with_values (GTK_LIST_STORE (ev_sidebar->priv->page_model),
-					   &iter, 0,
-					   PAGE_COLUMN_ID, page_id,
-					   PAGE_COLUMN_TITLE, title,
-					   PAGE_COLUMN_MENU_ITEM, menu_item,
-					   PAGE_COLUMN_MAIN_WIDGET, main_widget,
-					   PAGE_COLUMN_NOTEBOOK_INDEX, index,
-					   -1);
-	   
-	/* Set the first item added as active */
-	gtk_tree_model_get_iter_first (ev_sidebar->priv->page_model, &iter);
+	gtk_list_store_append (GTK_LIST_STORE (ev_sidebar->priv->page_model), &iter);
+	gtk_list_store_set (GTK_LIST_STORE (ev_sidebar->priv->page_model), &iter,
+			    PAGE_COLUMN_ID, page_id,
+			    PAGE_COLUMN_TITLE, title,
+			    PAGE_COLUMN_MENU_ITEM, menu_item,
+			    PAGE_COLUMN_MAIN_WIDGET, main_widget,
+			    PAGE_COLUMN_NOTEBOOK_INDEX, index,
+			    -1);
+
+	if (ev_sidebar->priv->current == NULL) {
+		/* Set the first item added as active */
+		gtk_tree_model_get_iter_first (ev_sidebar->priv->page_model, &iter);
+		gtk_tree_model_get (ev_sidebar->priv->page_model,
+				    &iter,
+				    PAGE_COLUMN_ID, &new_page_id,
+				    PAGE_COLUMN_TITLE, &label_title,
+				    PAGE_COLUMN_NOTEBOOK_INDEX, &index,
+				    -1);
+
+		gtk_menu_set_active (GTK_MENU (ev_sidebar->priv->menu), index);
+		gtk_label_set_text (GTK_LABEL (ev_sidebar->priv->label), label_title);
+		gtk_notebook_set_current_page (GTK_NOTEBOOK (ev_sidebar->priv->notebook),
+					       index);
+		ev_sidebar->priv->current = new_page_id;
+		g_free (label_title);
+	}
+}
+
+void
+ev_sidebar_remove_page (EvSidebar   *ev_sidebar,
+			const gchar *page_id)
+{
+	GtkTreeIter iter;
+	int page_num;
+	char *tree_path, *new_page_id;
+	GtkWidget *menu_item;
+
+	page_num = ev_sidebar_get_index_for_page_id (ev_sidebar, page_id, &menu_item);
+	g_return_if_fail (page_num >= 0);
+
+	gtk_notebook_remove_page (GTK_NOTEBOOK (ev_sidebar->priv->notebook),
+				  page_num);
+	gtk_widget_destroy (menu_item);
+
+	tree_path = g_strdup_printf ("%d", page_num);
+	if (gtk_tree_model_get_iter_from_string (ev_sidebar->priv->page_model,
+						 &iter, tree_path) == FALSE) {
+		g_free (tree_path);
+		return;
+	}
+	g_free (tree_path);
+
+	gtk_list_store_remove (GTK_LIST_STORE (ev_sidebar->priv->page_model), &iter);
+
+	if (gtk_tree_model_iter_n_children (ev_sidebar->priv->page_model, NULL) == 0) {
+		gtk_widget_set_sensitive (GTK_WIDGET (ev_sidebar), FALSE);
+		g_free (ev_sidebar->priv->current);
+		ev_sidebar->priv->current = NULL;
+		return;
+	}
+
+	tree_path = g_strdup_printf ("%d", page_num - 1);
+	gtk_tree_model_get_iter_from_string (ev_sidebar->priv->page_model, &iter, tree_path);
+	g_free (tree_path);
+
 	gtk_tree_model_get (ev_sidebar->priv->page_model,
 			    &iter,
 			    PAGE_COLUMN_ID, &new_page_id,
-			    PAGE_COLUMN_TITLE, &label_title,
-			    PAGE_COLUMN_NOTEBOOK_INDEX, &index,
 			    -1);
-
-	gtk_menu_set_active (GTK_MENU (ev_sidebar->priv->menu), index);
-	gtk_label_set_text (GTK_LABEL (ev_sidebar->priv->label), label_title);
-	gtk_notebook_set_current_page (GTK_NOTEBOOK (ev_sidebar->priv->notebook),
-				       index);
-	ev_sidebar->priv->current = new_page_id;
-	g_free (label_title);
+	ev_sidebar_set_current_page (ev_sidebar, new_page_id);
+	g_free (new_page_id);
 }
 

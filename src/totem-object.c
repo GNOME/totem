@@ -34,6 +34,7 @@
 #include "totem.h"
 #include "totem-private.h"
 #include "totem-plugins-engine.h"
+#include "ev-sidebar.h"
 
 enum {
 	PROP_0,
@@ -81,8 +82,6 @@ static void
 totem_object_init (TotemObject *totem)
 {
 	//FIXME nothing yet
-
-	totem_plugins_engine_init (totem);
 }
 
 static void
@@ -123,6 +122,12 @@ totem_object_get_property (GObject *object,
 	}
 }
 
+void
+totem_object_plugins_init (TotemObject *totem)
+{
+	totem_plugins_engine_init (totem);
+}
+
 GtkWindow *
 totem_get_main_window (Totem *totem)
 {
@@ -131,5 +136,25 @@ totem_get_main_window (Totem *totem)
 	g_object_ref (G_OBJECT (totem->win));
 
 	return GTK_WINDOW (totem->win);
+}
+
+void
+totem_add_sidebar_page (Totem *totem,
+			const char *page_id,
+			const char *title,
+			GtkWidget *main_widget)
+{
+	ev_sidebar_add_page (EV_SIDEBAR (totem->sidebar),
+			     page_id,
+			     title,
+			     main_widget);
+}
+
+void
+totem_remove_sidebar_page (Totem *totem,
+			   const char *page_id)
+{
+	ev_sidebar_remove_page (EV_SIDEBAR (totem->sidebar),
+				page_id);
 }
 

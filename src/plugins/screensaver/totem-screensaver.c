@@ -49,7 +49,6 @@ typedef struct
 {
 	TotemPlugin   parent;
 
-	TotemObject   *totem;
 	TotemScrsaver *scr;
 	guint          handler_id;
 } TotemScreensaverPlugin;

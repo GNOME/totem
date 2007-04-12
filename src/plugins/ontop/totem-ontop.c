@@ -48,7 +48,6 @@ typedef struct
 {
 	TotemPlugin   parent;
 
-	TotemObject   *totem;
 	GtkWindow     *window;
 	guint          handler_id;
 } TotemOntopPlugin;

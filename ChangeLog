@@ -1,3 +1,39 @@
+2007-04-12  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: Move the allowed plugins list to the top
+
+	* src/ev-sidebar.h:
+	* src/ev-sidebar.c: (ev_sidebar_get_index_for_page_id),
+	(ev_sidebar_set_current_page), (ev_sidebar_add_page),
+	(ev_sidebar_remove_page): Add the ability to remove pages,
+	make the widget unsensitive when there's no pages added to it,
+	only set the current page to the newly added one when there's
+	no other pages
+
+	* src/plugins/galago/galago.totem-plugin.desktop.in:
+	Fix the plugin not loading because of the wrong Module name
+
+	* src/plugins/galago/totem-galago.c:
+	* src/plugins/ontop/totem-ontop.c:
+	* src/plugins/screensaver/totem-screensaver.c:
+	Remove unneeded TotemObject private struct member
+
+	* src/plugins/totem-module.c: (totem_module_load):
+	* src/plugins/totem-plugins-engine.c: (totem_plugins_engine_load):
+	More warnings
+
+	* src/totem-object.c: (totem_object_init),
+	(totem_object_plugins_init), (totem_add_sidebar_page),
+	(totem_remove_sidebar_page):
+	* src/totem.c: (main):
+	* src/totem.h: Load the plugins later on in the game, add the
+	ability for plugins to add and remove pages from the sidebar
+
+	* src/plugins/sidebar-test/*: Add a test plugin for the sidebar plugin
+	system, which shouldn't be installed
+
+	(Closes: #349070)
+
 2007-04-11  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plugins/galago/Makefile.am:

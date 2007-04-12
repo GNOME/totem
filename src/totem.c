@@ -3567,6 +3567,11 @@ main (int argc, char **argv)
 	/* Command-line handling */
 	totem_options_process_late (totem, &optionstate);
 
+	/* Initialise all the plugins */
+	totem_object_plugins_init (totem);
+	//FIXME we should set the current page again, in case a plugin was
+	// the default page
+
 	if (totem->session_restored != FALSE)
 	{
 		totem_session_restore (totem, optionstate.filenames);

@@ -49,7 +49,6 @@ typedef struct
 {
 	TotemPlugin   parent;
 
-	TotemObject   *totem;
 	TotemGalago   *ggo;
 	guint          handler_id;
 } TotemGalagoPlugin;

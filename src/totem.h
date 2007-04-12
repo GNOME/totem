@@ -54,6 +54,7 @@ typedef struct {
 } TotemObjectClass;
 
 GType	totem_object_get_type			(void);
+void    totem_object_plugins_init		(TotemObject *totem);
 
 void	totem_action_exit			(Totem *totem);
 void	totem_action_play			(Totem *totem);
@@ -94,5 +95,12 @@ void    totem_action_play_media_device		(Totem *totem,
 gboolean totem_is_fullscreen			(Totem *totem);
 gboolean totem_is_playing			(Totem *totem);
 GtkWindow *totem_get_main_window		(Totem *totem);
+
+void    totem_add_sidebar_page			(Totem *totem,
+						 const char *page_id,
+						 const char *title,
+						 GtkWidget *main_widget);
+void    totem_remove_sidebar_page		(Totem *totem,
+						 const char *page_id);
 
 #endif /* __TOTEM_H__ */

@@ -62,6 +62,9 @@ AC_SUBST(TOTEM_PL_PARSER_VERSION_MAJOR)
 AC_SUBST(TOTEM_PL_PARSER_VERSION_MINOR)
 AC_SUBST(TOTEM_PL_PARSER_VERSION_MICRO)
 
+# The full list of plugins
+allowed_plugins="screensaver ontop galago sidebar-test"
+
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
 
@@ -299,15 +302,9 @@ AC_MSG_CHECKING([which plugins to compile])
 AC_ARG_WITH([plugins],
 		[AS_HELP_STRING([--with-plugins],[Which Totem plugins to compile (default: all; "all" and "none" are valid)])])
 
-# *********************************************************************************
-# This is the canonical list of allowed plugins
-# *********************************************************************************
-
-allowed_plugins="screensaver ontop galago"
-
-# *********************************************************************************
-# Cherish it
-# *********************************************************************************
+# ********************
+# Movie player plugins
+# ********************
 
 used_plugins=""
 used_plugins2=""
@@ -909,6 +906,7 @@ src/plugins/Makefile
 src/plugins/screensaver/Makefile
 src/plugins/ontop/Makefile
 src/plugins/galago/Makefile
+src/plugins/sidebar-test/Makefile
 src/backend/Makefile
 src/plparse/Makefile
 src/plparse/totem-pl-parser-features.h

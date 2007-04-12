@@ -248,6 +248,7 @@ totem_plugins_engine_load (const gchar *file)
 	return info;
 
 error:
+	g_warning ("Failed to load plugin file: %s", file);
 	g_free (info->file);
 	g_free (info->location);
 	g_free (info->name);

@@ -62,7 +62,8 @@ void       ev_sidebar_set_current_page
 				    const char *page_id);
 const char *ev_sidebar_get_current_page
 				   (EvSidebar *ev_sidebar);
-
+void        ev_sidebar_remove_page (EvSidebar   *ev_sidebar,
+				    const gchar *page_id);
 
 G_END_DECLS
 
