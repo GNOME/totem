@@ -27,135 +27,88 @@
 
 #include "config.h"
 
-#include <gtk/gtkframe.h>
+#include <glib/gi18n.h>
+
 #include <gtk/gtklabel.h>
 #include <gtk/gtkvseparator.h>
-#include <gtk/gtkwindow.h>
-#include <glib/gi18n.h>
+#include <gtk/gtkversion.h>
 
 #include "totem-statusbar.h"
 #include "video-utils.h"
 
-static void     totem_statusbar_class_init     (TotemStatusbarClass *class);
-static void     totem_statusbar_init           (TotemStatusbar      *statusbar);
-static void     totem_statusbar_destroy        (GtkObject         *object);
-static void     totem_statusbar_size_allocate  (GtkWidget         *widget,
-					      GtkAllocation     *allocation);
-static void     totem_statusbar_realize        (GtkWidget         *widget);
-static void     totem_statusbar_unrealize      (GtkWidget         *widget);
-static void     totem_statusbar_map            (GtkWidget         *widget);
-static void     totem_statusbar_unmap          (GtkWidget         *widget);
-static gboolean totem_statusbar_button_press   (GtkWidget         *widget,
-					      GdkEventButton    *event);
-static gboolean totem_statusbar_expose_event   (GtkWidget         *widget,
-					      GdkEventExpose    *event);
-static void     totem_statusbar_size_request   (GtkWidget         *widget,
-                                              GtkRequisition    *requisition);
-static void     totem_statusbar_size_allocate  (GtkWidget         *widget,
-                                              GtkAllocation     *allocation);
-static void     totem_statusbar_create_window  (TotemStatusbar      *statusbar);
-static void     totem_statusbar_destroy_window (TotemStatusbar      *statusbar);
-static void	totem_statusbar_sync_description (TotemStatusbar *statusbar);
+#define SPACING 4
+#define NORMAL_CONTEXT "text"
+#define BUFFERING_CONTEXT "buffering"
 
-static GtkContainerClass *parent_class;
+static void totem_statusbar_class_init       (TotemStatusbarClass *class);
+static void totem_statusbar_init             (TotemStatusbar      *statusbar);
+static void totem_statusbar_dispose          (GObject             *object);
+static void totem_statusbar_sync_description (TotemStatusbar      *statusbar);
+#if !GTK_CHECK_VERSION (2, 11, 0)
+static void totem_statusbar_size_allocate    (GtkWidget           *widget,
+                                              GtkAllocation       *allocation);
+#endif
 
-G_DEFINE_TYPE(TotemStatusbar, totem_statusbar, GTK_TYPE_HBOX)
+G_DEFINE_TYPE(TotemStatusbar, totem_statusbar, GTK_TYPE_STATUSBAR)
 
 static void
-totem_statusbar_class_init (TotemStatusbarClass *class)
+totem_statusbar_class_init (TotemStatusbarClass *klass)
 {
-  GtkObjectClass *object_class;
-  GtkWidgetClass *widget_class;
-  GtkContainerClass *container_class;
+  GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+#if !GTK_CHECK_VERSION (2, 11, 0)
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class = (GtkObjectClass *) class;
-  widget_class = (GtkWidgetClass *) class;
-  container_class = (GtkContainerClass *) class;
-
-  parent_class = g_type_class_peek_parent (class);
-  
-  object_class->destroy = totem_statusbar_destroy;
-
-  widget_class->realize = totem_statusbar_realize;
-  widget_class->unrealize = totem_statusbar_unrealize;
-  widget_class->map = totem_statusbar_map;
-  widget_class->unmap = totem_statusbar_unmap;
-  
-  widget_class->button_press_event = totem_statusbar_button_press;
-  widget_class->expose_event = totem_statusbar_expose_event;
-
-  widget_class->size_request = totem_statusbar_size_request;
   widget_class->size_allocate = totem_statusbar_size_allocate;
+#endif
 
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_enum ("shadow_type",
-                                                              _("Shadow type"),
-                                                              _("Style of bevel around the statusbar text"),
-                                                              GTK_TYPE_SHADOW_TYPE,
-                                                              GTK_SHADOW_IN,
-                                                              G_PARAM_READABLE));
+  gobject_class->dispose = totem_statusbar_dispose;
 }
 
 static void
 totem_statusbar_init (TotemStatusbar *statusbar)
 {
-  GtkBox *box;
-  GtkShadowType shadow_type;
-  GtkWidget *packer, *hbox;
-  AtkObject *obj;
+  GtkStatusbar *gstatusbar = GTK_STATUSBAR (statusbar);
+  GtkWidget *packer, *hbox, *vbox;
 
-  box = GTK_BOX (statusbar);
-
-  box->spacing = 2;
-  box->homogeneous = FALSE;
-
-  statusbar->has_resize_grip = TRUE;
   statusbar->time = 0;
   statusbar->length = -1;
 
-  gtk_widget_style_get (GTK_WIDGET (statusbar), "shadow_type", &shadow_type, NULL);
- 
-  statusbar->frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (statusbar->frame), shadow_type);
-  gtk_box_pack_start (box, statusbar->frame, TRUE, TRUE, 0);
-  gtk_widget_show (statusbar->frame);
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
+  hbox = gtk_hbox_new (FALSE, SPACING);
+
+  /* Widget surgery */
+  g_object_ref (gstatusbar->label);
+  gtk_container_remove (GTK_CONTAINER (gstatusbar->frame), gstatusbar->label);
+  gtk_box_pack_start (GTK_BOX (hbox), gstatusbar->label, FALSE, FALSE, 0);
+  g_object_unref (gstatusbar->label);
+  gtk_container_add (GTK_CONTAINER (gstatusbar->frame), hbox);
   gtk_widget_show (hbox);
 
-  statusbar->label = gtk_label_new (_("Stopped"));
-  gtk_misc_set_alignment (GTK_MISC (statusbar->label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (hbox), statusbar->label, FALSE, FALSE, 0);
-  gtk_widget_show (statusbar->label);
+  gtk_label_set_ellipsize (GTK_LABEL (gstatusbar->label), FALSE);
 
   /* progressbar for network streams */
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, TRUE, 0);
+  gtk_widget_show (vbox);
+
   statusbar->progress = gtk_progress_bar_new ();
   gtk_progress_bar_set_orientation (GTK_PROGRESS_BAR (statusbar->progress),
 				    gtk_widget_get_direction (statusbar->progress) == GTK_TEXT_DIR_LTR ?
 				    GTK_PROGRESS_LEFT_TO_RIGHT : GTK_PROGRESS_RIGHT_TO_LEFT);
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (statusbar->progress), 0.);
-  gtk_box_pack_start (GTK_BOX (hbox), statusbar->progress, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), statusbar->progress, TRUE, TRUE, 1);
   gtk_widget_set_size_request (statusbar->progress, 150, 10);
-  gtk_widget_hide (statusbar->progress);
+  //gtk_widget_hide (statusbar->progress);
 
   packer = gtk_vseparator_new ();
   gtk_box_pack_start (GTK_BOX (hbox), packer, FALSE, FALSE, 0);
   gtk_widget_show (packer);
 
   statusbar->time_label = gtk_label_new (_("0:00 / 0:00"));
-  gtk_misc_set_alignment (GTK_MISC (statusbar->label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (statusbar->time_label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->time_label, FALSE, FALSE, 0);
   gtk_widget_show (statusbar->time_label);
 
-
-  obj = gtk_widget_get_accessible (GTK_WIDGET (box));
-  atk_object_set_role (obj, ATK_ROLE_STATUSBAR);
-  totem_statusbar_sync_description (statusbar);
-
-  /* don't expand the size request for the label; if we
-   * do that then toplevels weirdly resize
-   */
-  gtk_container_add (GTK_CONTAINER (statusbar->frame), hbox);
+  totem_statusbar_set_text (statusbar, _("Stopped"));
 }
 
 GtkWidget* 
@@ -210,9 +163,12 @@ totem_statusbar_update_time (TotemStatusbar *statusbar)
 void
 totem_statusbar_set_text (TotemStatusbar *statusbar, const char *label)
 {
-  gtk_label_set_text (GTK_LABEL (statusbar->label), label);
-  g_free (statusbar->saved_label);
-  statusbar->saved_label = g_strdup (label);
+  GtkStatusbar *gstatusbar = GTK_STATUSBAR (statusbar);
+  guint id;
+
+  id = gtk_statusbar_get_context_id (gstatusbar, NORMAL_CONTEXT);
+  gtk_statusbar_pop (gstatusbar, id);
+  gtk_statusbar_push (gstatusbar, id, label);
 
   totem_statusbar_sync_description (statusbar);
 }
@@ -232,15 +188,23 @@ totem_statusbar_set_time (TotemStatusbar *statusbar, gint time)
 static gboolean
 totem_statusbar_timeout_pop (TotemStatusbar *statusbar)
 {
-  gtk_label_set_text (GTK_LABEL (statusbar->label), statusbar->saved_label);
-  g_free (statusbar->saved_label);
-  statusbar->saved_label = NULL;
+  GtkStatusbar *gstatusbar = GTK_STATUSBAR (statusbar);
+
+  if (--statusbar->timeout_ticks > 0)
+    return TRUE;
+
   statusbar->pushed = FALSE;
+
+  gtk_statusbar_pop (gstatusbar,
+                     gtk_statusbar_get_context_id (gstatusbar, BUFFERING_CONTEXT));
+
   gtk_widget_hide (statusbar->progress);
 
   totem_statusbar_sync_description (statusbar);
 
   statusbar->percentage = 101;
+
+  statusbar->timeout = 0;
 
   return FALSE;
 }
@@ -248,41 +212,45 @@ totem_statusbar_timeout_pop (TotemStatusbar *statusbar)
 void
 totem_statusbar_push (TotemStatusbar *statusbar, guint percentage)
 {
+  GtkStatusbar *gstatusbar = GTK_STATUSBAR (statusbar);
   char *label;
-  statusbar->pushed = TRUE;
+  gboolean need_update = FALSE;
 
-  if (statusbar->timeout != 0)
+  if (statusbar->pushed == FALSE)
   {
-    g_source_remove (statusbar->timeout);
-    if (statusbar->percentage == percentage) {
-      statusbar->timeout = g_timeout_add (3000,
-	  (GSourceFunc) totem_statusbar_timeout_pop, statusbar);
-      return;
-    }
+    gtk_statusbar_push (gstatusbar,
+                        gtk_statusbar_get_context_id (gstatusbar, BUFFERING_CONTEXT),
+                        _("Buffering"));
+    statusbar->pushed = TRUE;
+
+    need_update = TRUE;
   }
 
-  statusbar->percentage = percentage;
-
-  if (statusbar->saved_label == NULL)
+  if (statusbar->percentage != percentage)
   {
-    statusbar->saved_label = g_strdup
-	    (gtk_label_get_text (GTK_LABEL (statusbar->label)));
+    statusbar->percentage = percentage;
+
+    /* eg: 75 % */
+    label = g_strdup_printf (_("%d %%"), percentage);
+    gtk_progress_bar_set_text (GTK_PROGRESS_BAR (statusbar->progress), label);
+    g_free (label);
+    gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (statusbar->progress),
+                                  percentage / 100.);
+    gtk_widget_show (statusbar->progress);
+
+    need_update = TRUE;
   }
 
-  gtk_label_set_text (GTK_LABEL (statusbar->label), _("Buffering"));
+  statusbar->timeout_ticks = 3;
 
-  /* eg: 75 % */
-  label = g_strdup_printf (_("%d %%"), percentage);
-  gtk_progress_bar_set_text (GTK_PROGRESS_BAR (statusbar->progress), label);
-  g_free (label);
-  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (statusbar->progress),
-				 percentage / 100.);
-  gtk_widget_show (statusbar->progress);
-
-  statusbar->timeout = g_timeout_add (3000,
-		  (GSourceFunc) totem_statusbar_timeout_pop, statusbar);
-
-  totem_statusbar_sync_description (statusbar);
+  if (statusbar->timeout == 0)
+  {
+    statusbar->timeout = g_timeout_add (1000,
+                    (GSourceFunc) totem_statusbar_timeout_pop, statusbar);
+  }
+  
+  if (need_update)
+    totem_statusbar_sync_description (statusbar);
 }
 
 void
@@ -334,12 +302,12 @@ totem_statusbar_sync_description (TotemStatusbar *statusbar)
   if (statusbar->pushed == FALSE) {
     /* eg: Paused, 0:32 / 1:05 */
     text = g_strdup_printf (_("%s, %s"),
-	gtk_label_get_text (GTK_LABEL (statusbar->label)),
+	gtk_label_get_text (GTK_LABEL (GTK_STATUSBAR (statusbar)->label)),
 	gtk_label_get_text (GTK_LABEL (statusbar->time_label)));
   } else {
     /* eg: Buffering, 75 % */
     text = g_strdup_printf (_("%s, %d %%"),
-	gtk_label_get_text (GTK_LABEL (statusbar->label)),
+	gtk_label_get_text (GTK_LABEL (GTK_STATUSBAR (statusbar)->label)),
 	statusbar->percentage);
   }
 
@@ -347,328 +315,37 @@ totem_statusbar_sync_description (TotemStatusbar *statusbar)
   g_free (text);
 }
 
-void
-totem_statusbar_set_has_resize_grip (TotemStatusbar *statusbar,
-				   gboolean      setting)
-{
-  g_return_if_fail (TOTEM_IS_STATUSBAR (statusbar));
-
-  setting = setting != FALSE;
-
-  if (setting != statusbar->has_resize_grip)
-    {
-      statusbar->has_resize_grip = setting;
-      gtk_widget_queue_draw (GTK_WIDGET (statusbar));
-
-      if (GTK_WIDGET_REALIZED (statusbar))
-        {
-          if (statusbar->has_resize_grip && statusbar->grip_window == NULL)
-            totem_statusbar_create_window (statusbar);
-          else if (!statusbar->has_resize_grip && statusbar->grip_window != NULL)
-            totem_statusbar_destroy_window (statusbar);
-        }
-    }
-}
-
-gboolean
-totem_statusbar_get_has_resize_grip (TotemStatusbar *statusbar)
-{
-  g_return_val_if_fail (TOTEM_IS_STATUSBAR (statusbar), FALSE);
-
-  return statusbar->has_resize_grip;
-}
-
 static void
-totem_statusbar_destroy (GtkObject *object)
+totem_statusbar_dispose (GObject *object)
 {
-  TotemStatusbar *statusbar;
-  TotemStatusbarClass *class;
+  TotemStatusbar *statusbar = TOTEM_STATUSBAR (object);
 
-  g_return_if_fail (TOTEM_IS_STATUSBAR (object));
+  if (statusbar->timeout != 0) {
+    g_source_remove (statusbar->timeout);
+    statusbar->timeout = 0;
+  }
 
-  statusbar = TOTEM_STATUSBAR (object);
-  class = TOTEM_STATUSBAR_GET_CLASS (statusbar);
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (totem_statusbar_parent_class)->dispose (object);
 }
 
-static GdkWindowEdge
-get_grip_edge (TotemStatusbar *statusbar)
-{
-  GtkWidget *widget = GTK_WIDGET (statusbar);
-
-  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_LTR) 
-    return GDK_WINDOW_EDGE_SOUTH_EAST; 
-  else
-    return GDK_WINDOW_EDGE_SOUTH_WEST; 
-}
-
+#if !GTK_CHECK_VERSION (2, 11, 0)
 static void
-get_grip_rect (TotemStatusbar *statusbar,
-               GdkRectangle *rect)
+totem_statusbar_size_allocate (GtkWidget *widget,
+                               GtkAllocation *allocation)
 {
-  GtkWidget *widget;
-  gint w, h;
-  
-  widget = GTK_WIDGET (statusbar);
+  GtkStatusbar *gstatusbar = GTK_STATUSBAR (widget);
+  GtkWidget *label, *box;
 
-  /* These are in effect the max/default size of the grip. */
-  w = 18;
-  h = 18;
+  /* HACK HACK HACK ! */
+  label = gstatusbar->label;
+  box = gtk_bin_get_child (GTK_BIN (gstatusbar->frame));
+  gstatusbar->label = box;
 
-  if (w > (widget->allocation.width))
-    w = widget->allocation.width;
+  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
-  if (h > (widget->allocation.height - widget->style->ythickness))
-    h = widget->allocation.height - widget->style->ythickness;
-  
-  rect->width = w;
-  rect->height = h;
-  rect->y = widget->allocation.y + widget->allocation.height - h;
-
-  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_LTR) 
-      rect->x = widget->allocation.x + widget->allocation.width - w;
-  else 
-      rect->x = widget->allocation.x + widget->style->xthickness;
+  gstatusbar->label = label;
 }
-
-static void
-totem_statusbar_create_window (TotemStatusbar *statusbar)
-{
-  GtkWidget *widget;
-  GdkWindowAttr attributes;
-  gint attributes_mask;
-  GdkRectangle rect;
-  
-  g_return_if_fail (GTK_WIDGET_REALIZED (statusbar));
-  g_return_if_fail (statusbar->has_resize_grip);
-  
-  widget = GTK_WIDGET (statusbar);
-
-  get_grip_rect (statusbar, &rect);
-
-  attributes.x = rect.x;
-  attributes.y = rect.y;
-  attributes.width = rect.width;
-  attributes.height = rect.height;
-  attributes.window_type = GDK_WINDOW_CHILD;
-  attributes.wclass = GDK_INPUT_ONLY;
-  attributes.event_mask = gtk_widget_get_events (widget) |
-    GDK_BUTTON_PRESS_MASK;
-
-  attributes_mask = GDK_WA_X | GDK_WA_Y;
-
-  statusbar->grip_window = gdk_window_new (widget->window,
-                                           &attributes, attributes_mask);
-  gdk_window_set_user_data (statusbar->grip_window, widget);
-
-  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
-    statusbar->cursor = gdk_cursor_new (GDK_BOTTOM_LEFT_CORNER);
-  else
-    statusbar->cursor = gdk_cursor_new (GDK_BOTTOM_RIGHT_CORNER);
-  gdk_window_set_cursor (statusbar->grip_window, statusbar->cursor);
-}
-
-static void
-totem_statusbar_destroy_window (TotemStatusbar *statusbar)
-{
-  gdk_window_set_user_data (statusbar->grip_window, NULL);
-  gdk_window_destroy (statusbar->grip_window);
-  gdk_cursor_unref (statusbar->cursor);
-  statusbar->cursor = NULL;
-  statusbar->grip_window = NULL;
-}
-
-static void
-totem_statusbar_realize (GtkWidget *widget)
-{
-  TotemStatusbar *statusbar;
-
-  statusbar = TOTEM_STATUSBAR (widget);
-  
-  (* GTK_WIDGET_CLASS (parent_class)->realize) (widget);
-
-  if (statusbar->has_resize_grip)
-    totem_statusbar_create_window (statusbar);
-}
-
-static void
-totem_statusbar_unrealize (GtkWidget *widget)
-{
-  TotemStatusbar *statusbar;
-
-  statusbar = TOTEM_STATUSBAR (widget);
-
-  if (statusbar->grip_window)
-    totem_statusbar_destroy_window (statusbar);
-  
-  (* GTK_WIDGET_CLASS (parent_class)->unrealize) (widget);
-}
-
-static void
-totem_statusbar_map (GtkWidget *widget)
-{
-  TotemStatusbar *statusbar;
-
-  statusbar = TOTEM_STATUSBAR (widget);
-  
-  (* GTK_WIDGET_CLASS (parent_class)->map) (widget);
-  
-  if (statusbar->grip_window)
-    gdk_window_show (statusbar->grip_window);
-}
-
-static void
-totem_statusbar_unmap (GtkWidget *widget)
-{
-  TotemStatusbar *statusbar;
-
-  statusbar = TOTEM_STATUSBAR (widget);
-
-  if (statusbar->grip_window)
-    gdk_window_hide (statusbar->grip_window);
-  
-  (* GTK_WIDGET_CLASS (parent_class)->unmap) (widget);
-}
-
-static gboolean
-totem_statusbar_button_press (GtkWidget      *widget,
-                            GdkEventButton *event)
-{
-  TotemStatusbar *statusbar;
-  GtkWidget *ancestor;
-  GdkWindowEdge edge;
-  
-  statusbar = TOTEM_STATUSBAR (widget);
-  
-  if (!statusbar->has_resize_grip ||
-    event->type != GDK_BUTTON_PRESS)
-    return FALSE;
-  
-  ancestor = gtk_widget_get_toplevel (widget);
-
-  if (!GTK_IS_WINDOW (ancestor))
-    return FALSE;
-
-  edge = get_grip_edge (statusbar);
-
-  if (event->button == 1)
-    gtk_window_begin_resize_drag (GTK_WINDOW (ancestor),
-                                  edge,
-                                  event->button,
-                                  event->x_root, event->y_root,
-                                  event->time);
-  else if (event->button == 2)
-    gtk_window_begin_move_drag (GTK_WINDOW (ancestor),
-                                event->button,
-                                event->x_root, event->y_root,
-                                event->time);
-  else
-    return FALSE;
-  
-  return TRUE;
-}
-
-static gboolean
-totem_statusbar_expose_event (GtkWidget      *widget,
-                            GdkEventExpose *event)
-{
-  TotemStatusbar *statusbar;
-  GdkRectangle rect;
-  
-  statusbar = TOTEM_STATUSBAR (widget);
-
-  GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
-
-  if (statusbar->has_resize_grip)
-    {
-      GdkWindowEdge edge;
-      
-      edge = get_grip_edge (statusbar);
-
-      get_grip_rect (statusbar, &rect);
-
-      gtk_paint_resize_grip (widget->style,
-                             widget->window,
-                             GTK_WIDGET_STATE (widget),
-                             NULL,
-                             widget,
-                             "statusbar",
-                             edge,
-                             rect.x, rect.y,
-                             /* don't draw grip over the frame, though you
-                              * can click on the frame.
-                              */
-                             rect.width - widget->style->xthickness,
-                             rect.height - widget->style->ythickness);
-    }
-
-  return FALSE;
-}
-
-static void
-totem_statusbar_size_request   (GtkWidget      *widget,
-                              GtkRequisition *requisition)
-{
-  TotemStatusbar *statusbar;
-  GtkShadowType shadow_type;
-  
-  statusbar = TOTEM_STATUSBAR (widget);
-
-  gtk_widget_style_get (GTK_WIDGET (statusbar), "shadow_type", &shadow_type, NULL);  
-  gtk_frame_set_shadow_type (GTK_FRAME (statusbar->frame), shadow_type);
-
-  GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
-
-  if (statusbar->has_resize_grip)
-    {
-      GdkRectangle rect;
-
-      /* x, y in the grip rect depend on size allocation, but
-       * w, h do not so this is OK
-       */
-      get_grip_rect (statusbar, &rect);
-      
-      requisition->width += rect.width;
-      requisition->height = MAX (requisition->height, rect.height);
-    }
-}
-
-static void
-totem_statusbar_size_allocate  (GtkWidget     *widget,
-                              GtkAllocation *allocation)
-{
-  TotemStatusbar *statusbar;
-  
-  statusbar = TOTEM_STATUSBAR (widget);
-
-  if (statusbar->has_resize_grip)
-    {
-      GdkRectangle rect;
-      GtkRequisition saved_req;
-      
-      widget->allocation = *allocation; /* get_grip_rect needs this info */
-      get_grip_rect (statusbar, &rect);
-  
-      if (statusbar->grip_window)
-        gdk_window_move_resize (statusbar->grip_window,
-                                rect.x, rect.y,
-                                rect.width, rect.height);
-      
-      /* enter the bad hack zone */      
-      saved_req = widget->requisition;
-      widget->requisition.width -= rect.width; /* HBox::size_allocate needs this */
-      if (widget->requisition.width < 0)
-        widget->requisition.width = 0;
-      GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
-      widget->requisition = saved_req;
-    }
-  else
-    {
-      /* chain up normally */
-      GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
-    }
-}
+#endif /* !GTK 2.11.0 */
 
 /*
  * vim: sw=2 ts=8 cindent noai bs=2

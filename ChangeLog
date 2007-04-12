@@ -1,3 +1,17 @@
+2007-04-12  Christian Persch  <chpe@gnome.org>
+
+	* src/totem-statusbar.c: (totem_statusbar_class_init),
+	(totem_statusbar_init), (totem_statusbar_set_text),
+	(totem_statusbar_timeout_pop), (totem_statusbar_push),
+	(totem_statusbar_sync_description), (totem_statusbar_dispose),
+	(totem_statusbar_size_allocate):
+	* src/totem-statusbar.h: Make TotemStatusbar subclass GtkStatusbar.
+	This fixes the visual inconsistence with other applications. Bug
+	#428988.
+
+	* src/totem.c: (window_state_event_cb): Hide the resize grip when the
+	window is maximised.
+
 2007-04-12  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_construct):

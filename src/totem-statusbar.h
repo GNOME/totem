@@ -28,12 +28,10 @@
 #ifndef __TOTEM_STATUSBAR_H__
 #define __TOTEM_STATUSBAR_H__
 
-#include <gtk/gtkhbox.h>
+#include <gtk/gtkwidget.h>
+#include <gtk/gtkstatusbar.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
+G_BEGIN_DECLS
 
 #define TOTEM_TYPE_STATUSBAR            (totem_statusbar_get_type ())
 #define TOTEM_STATUSBAR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_STATUSBAR, TotemStatusbar))
@@ -44,36 +42,25 @@ extern "C" {
 
 
 typedef struct _TotemStatusbar      TotemStatusbar;
-typedef struct _TotemStatusbarClass TotemStatusbarClass;
 
 struct _TotemStatusbar
 {
-  GtkHBox parent_widget;
+  GtkStatusbar parent_instance;
 
-  GtkWidget *frame;
-  GtkWidget *label;
   GtkWidget *progress;
   GtkWidget *time_label;
 
   gint time;
   gint length;
-  char *saved_label;
   guint timeout;
   guint percentage;
 
-  GdkWindow *grip_window;
-  GdkCursor *cursor;
-
-  guint has_resize_grip : 1;
   guint pushed : 1;
   guint seeking : 1;
+  guint timeout_ticks : 2;
 };
 
-struct _TotemStatusbarClass
-{
-  GtkHBoxClass parent_class;
-};
-
+typedef GtkStatusbarClass TotemStatusbarClass;
 
 GType      totem_statusbar_get_type     	(void) G_GNUC_CONST;
 GtkWidget* totem_statusbar_new          	(void);
@@ -91,15 +78,10 @@ void	   totem_statusbar_push			(TotemStatusbar *statusbar,
 						 guint percentage);
 void       totem_statusbar_pop			(TotemStatusbar *statusbar);
 
-void     totem_statusbar_set_has_resize_grip (TotemStatusbar *statusbar,
-					    gboolean      setting);
-gboolean totem_statusbar_get_has_resize_grip (TotemStatusbar *statusbar);
-
 GtkWidget *totem_statusbar_new_from_glade	(gchar *widget_name,
 						 gchar *string1, gchar *string2,
 						 gint int1, gint int2);
 
-#ifdef __cplusplus
-} 
-#endif /* __cplusplus */
+G_END_DECLS
+
 #endif /* __TOTEM_STATUSBAR_H__ */
