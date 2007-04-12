@@ -1,4 +1,6 @@
 
+#include "config.h"
+
 #include "totem-time-label.h"
 #include <glib/gi18n.h>
 #include "video-utils.h"

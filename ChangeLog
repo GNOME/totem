@@ -1,5 +1,34 @@
 2007-04-12  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_construct):
+	* src/backend/bacon-resize.c:
+	* src/backend/bacon-video-widget-common.c:
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_class_init), (bacon_video_widget_finalize),
+	(bacon_video_widget_close), (bacon_video_widget_get_current_frame):
+	* src/backend/bacon-video-widget-xine.c: (bacon_video_widget_play),
+	(bacon_video_widget_can_set_volume),
+	(bacon_video_widget_is_playing), (bacon_video_widget_is_seekable),
+	(bacon_video_widget_get_mrls):
+	* src/backend/bvw-test.c:
+	* src/bacon-message-connection.c:
+	* src/test-properties-page.c:
+	* src/totem-interface.c: (totem_gtk_plug_get_toplevel),
+	(totem_interface_get_license):
+	* src/totem-menu.c: (totem_action_add_recent):
+	* src/totem-playlist.c: (totem_playlist_get_current_mrl),
+	(totem_playlist_get_current_title):
+	* src/totem-screenshot.c:
+	* src/totem-skipto.c:
+	* src/totem-statusbar.c: (totem_statusbar_init):
+	* src/totem-subtitle-encoding.c: (subtitle_encoding_init):
+	* src/totem-time-label.c:
+	* src/totem-video-indexer.c:
+
+	Plenty of code cleanups by Kjartan Maraas <kmaraas@broadpark.no>
+
+2007-04-12  Bastien Nocera  <hadess@hadess.net>
+
 	* lib/totem-galago.c:
 	* lib/totem-galago.h:
 	Move those files to src/plugins/galago

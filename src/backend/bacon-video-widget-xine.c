@@ -2341,9 +2341,9 @@ bacon_video_widget_play (BaconVideoWidget *bvw, GError **gerror)
 {
 	int error;
 
-	g_return_val_if_fail (bvw != NULL, -1);
-	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -1);
-	g_return_val_if_fail (bvw->priv->xine != NULL, -1);
+	g_return_val_if_fail (bvw != NULL, FALSE);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
 
 	error = 1;
 
@@ -2736,9 +2736,9 @@ bacon_video_widget_get_position (BaconVideoWidget *bvw)
 gboolean
 bacon_video_widget_can_set_volume (BaconVideoWidget *bvw)
 {
-	g_return_val_if_fail (bvw != NULL, 0);
-	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
-	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
+	g_return_val_if_fail (bvw != NULL, FALSE);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
 
 	if (bvw->priv->ao_driver == NULL || bvw->priv->ao_driver_none != FALSE)
 		return FALSE;
@@ -3217,9 +3217,9 @@ bacon_video_widget_get_stream_length (BaconVideoWidget *bvw)
 gboolean
 bacon_video_widget_is_playing (BaconVideoWidget *bvw)
 {
-	g_return_val_if_fail (bvw != NULL, 0);
-	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
-	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
+	g_return_val_if_fail (bvw != NULL, FALSE);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
 
 	if (bvw->priv->stream == NULL)
 		return FALSE;
@@ -3230,9 +3230,9 @@ bacon_video_widget_is_playing (BaconVideoWidget *bvw)
 gboolean
 bacon_video_widget_is_seekable (BaconVideoWidget *bvw)
 {
-	g_return_val_if_fail (bvw != NULL, 0);
-	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
-	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
+	g_return_val_if_fail (bvw != NULL, FALSE);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
 
 	if (bvw->com->mrl == NULL)
 		return FALSE;
@@ -3270,11 +3270,11 @@ bacon_video_widget_get_mrls (BaconVideoWidget *bvw, MediaType type,
 	int num_mrls;
 	char **mrls;
 
-	g_return_val_if_fail (bvw != NULL, 0);
-	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
-	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
+	g_return_val_if_fail (bvw != NULL, NULL);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
+	g_return_val_if_fail (bvw->priv->xine != NULL, NULL);
 	//FIXME enable when we use devices for DVB
-	//g_return_val_if_fail (device != NULL, 0);
+	//g_return_val_if_fail (device != NULL, NULL);
 
 	if (type == MEDIA_TYPE_DVD)
 		plugin_id = "DVD";

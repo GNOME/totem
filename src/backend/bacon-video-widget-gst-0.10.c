@@ -104,7 +104,6 @@ enum
   PROP_PLAYING,
   PROP_SEEKABLE,
   PROP_SHOWCURSOR,
-  PROP_MEDIADEV,
   PROP_SHOW_VISUALS,
   PROP_VOLUME
 };
@@ -1023,10 +1022,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                                    g_param_spec_boolean ("showcursor", NULL,
                                                          NULL, FALSE,
                                                          G_PARAM_READWRITE));
-  g_object_class_install_property (object_class, PROP_MEDIADEV,
-                                   g_param_spec_string ("mediadev", NULL,
-                                                        NULL, FALSE,
-                                                        G_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_SHOW_VISUALS,
                                    g_param_spec_boolean ("showvisuals", NULL,
                                                          NULL, FALSE,
@@ -1884,10 +1879,8 @@ bacon_video_widget_finalize (GObject * object)
   g_free (bvw->com->mrl);
   bvw->com->mrl = NULL;
   
-  if (bvw->priv->vis_element_name) {
-    g_free (bvw->priv->vis_element_name);
-    bvw->priv->vis_element_name = NULL;
-  }
+  g_free (bvw->priv->vis_element_name);
+  bvw->priv->vis_element_name = NULL;
  
   if (bvw->priv->vis_plugins_list) {
     g_list_free (bvw->priv->vis_plugins_list);
@@ -2963,10 +2956,8 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   GST_LOG ("Closing");
   bvw_stop_play_pipeline (bvw);
 
-  if (bvw->com->mrl) {
-    g_free (bvw->com->mrl);
-    bvw->com->mrl = NULL;
-  }
+  g_free (bvw->com->mrl);
+  bvw->com->mrl = NULL;
 
   g_object_notify (G_OBJECT (bvw), "seekable");
   g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
@@ -4558,7 +4549,7 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
   s = gst_caps_get_structure (GST_BUFFER_CAPS (buf), 0);
   gst_structure_get_int (s, "width", &outwidth);
   gst_structure_get_int (s, "height", &outheight);
-  g_return_val_if_fail (outwidth > 0 && outheight > 0, FALSE);
+  g_return_val_if_fail (outwidth > 0 && outheight > 0, NULL);
 
   /* create pixbuf from that - use our own destroy function */
   pixbuf = gdk_pixbuf_new_from_data (GST_BUFFER_DATA (buf),

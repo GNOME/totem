@@ -1,4 +1,6 @@
 
+#include "config.h"
+
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include "bacon-video-widget.h"

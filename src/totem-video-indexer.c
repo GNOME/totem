@@ -29,7 +29,6 @@
 #include "config.h"
 #endif
 
-#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
 #ifndef HAVE_GTK_ONLY

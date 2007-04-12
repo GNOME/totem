@@ -32,7 +32,7 @@
 #include "bacon-video-widget.h"
 
 static int i;
-GtkWidget *window, *props, *label;
+static GtkWidget *window, *props, *label;
 
 static gboolean
 main_loop_exit (gpointer data)

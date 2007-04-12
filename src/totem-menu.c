@@ -688,8 +688,7 @@ totem_action_add_recent (Totem *totem, const char *filename)
 	gtk_recent_manager_add_full (totem->recent_manager,
 			filename, &data);
 
-	if (data.display_name != NULL)
-		g_free (data.display_name);
+	g_free (data.display_name);
 	g_free (data.mime_type);
 	g_free (data.app_name);
 	g_free (data.app_exec);

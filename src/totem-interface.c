@@ -196,7 +196,7 @@ totem_gtk_plug_get_toplevel (GtkPlug *plug)
 					&parent, &children, &nchildren) == 0)
 		{
 			g_warning ("Couldn't find window manager window");
-			return None;
+			return NULL;
 		}
 
 		if (root == parent) {
@@ -232,7 +232,7 @@ totem_interface_set_transient_for (GtkWindow *window, GtkWindow *parent)
 char *
 totem_interface_get_license (void)
 {
-	const char const *license[] = {
+	const char *license[] = {
 		N_("Totem is free software; you can redistribute it and/or modify "
 		   "it under the terms of the GNU General Public License as published by "
 		   "the Free Software Foundation; either version 2 of the License, or "

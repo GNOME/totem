@@ -1760,8 +1760,8 @@ totem_playlist_clear_with_gnome_vfs_volume (TotemPlaylist *playlist,
 			volume);
 }
 
-char
-*totem_playlist_get_current_mrl (TotemPlaylist *playlist)
+char *
+totem_playlist_get_current_mrl (TotemPlaylist *playlist)
 {
 	GtkTreeIter iter;
 	char *path;
@@ -1783,8 +1783,8 @@ char
 	return path;
 }
 
-char
-*totem_playlist_get_current_title (TotemPlaylist *playlist, gboolean *custom)
+char *
+totem_playlist_get_current_title (TotemPlaylist *playlist, gboolean *custom)
 {
 	GtkTreeIter iter;
 	char *path;

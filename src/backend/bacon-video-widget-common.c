@@ -29,10 +29,10 @@
 
 #include "bacon-video-widget-common.h"
 
-struct {
+static struct {
 	int height;
 	int fps;
-} vis_qualities[] = {
+} const vis_qualities[] = {
 	{ 240, 15 }, /* VISUAL_SMALL */
 	{ 320, 25 }, /* VISUAL_NORMAL */
 	{ 480, 25 }, /* VISUAL_LARGE */

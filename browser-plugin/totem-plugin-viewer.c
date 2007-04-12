@@ -37,7 +37,6 @@
 #define SN_API_NOT_YET_FROZEN
 #include <libsn/sn.h>
 #include <gdk/gdk.h>
-#include <gdk/gdkx.h>
 
 #include <totem-pl-parser.h>
 
@@ -1481,7 +1480,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 
 	gtk_widget_set_size_request (emb->window, width, height);
 
-#if GNOME_ENABLE_DEBUG
+#ifdef GNOME_ENABLE_DEBUG
 	child = glade_xml_get_widget (emb->xml, "controls");
 	g_signal_connect_after (child, "size-allocate", G_CALLBACK (controls_size_allocate_cb), NULL);
 #endif

@@ -410,8 +410,7 @@ subtitle_encoding_init (void)
 #endif
 
     /* Discard the converted string. */
-    if (converted != NULL)
-      g_free (converted);
+    g_free (converted);
 
     ++i;
   }

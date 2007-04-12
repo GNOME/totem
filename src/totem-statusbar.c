@@ -131,7 +131,8 @@ totem_statusbar_init (TotemStatusbar *statusbar)
   /* progressbar for network streams */
   statusbar->progress = gtk_progress_bar_new ();
   gtk_progress_bar_set_orientation (GTK_PROGRESS_BAR (statusbar->progress),
-				    GTK_ORIENTATION_HORIZONTAL);
+				    gtk_widget_get_direction (statusbar->progress) == GTK_TEXT_DIR_LTR ?
+				    GTK_PROGRESS_LEFT_TO_RIGHT : GTK_PROGRESS_RIGHT_TO_LEFT);
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (statusbar->progress), 0.);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->progress, FALSE, TRUE, 0);
   gtk_widget_set_size_request (statusbar->progress, 150, 10);
