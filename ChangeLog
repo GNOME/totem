@@ -1,5 +1,13 @@
 2007-04-12  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: Use "autodetect" in the plugins list
+	to only compile the plugins for which the deps are present,
+	error out when "all" is passed and a dep isn't present
+	* src/plugins/galago/totem-galago.c: moved to totem-galago-plugin.c
+	* src/plugins/galago/Makefile.am: upd for above
+
+2007-04-12  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: Move the allowed plugins list to the top
 
 	* src/ev-sidebar.h:
