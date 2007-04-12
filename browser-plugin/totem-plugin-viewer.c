@@ -1755,7 +1755,7 @@ totem_statusbar_create (void)
 	GtkWidget *widget;
 
 	widget = totem_statusbar_new ();
-	totem_statusbar_set_has_resize_grip (TOTEM_STATUSBAR (widget), FALSE);
+	gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (widget), FALSE);
 	gtk_widget_show (widget);
 
 	return widget;

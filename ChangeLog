@@ -1,5 +1,10 @@
 2007-04-12  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c: (totem_statusbar_create):
+	Use the GtkStatusbar's set_has_resize_grip, not the TotemStatusbar one
+
+2007-04-12  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-statusbar.c: (totem_statusbar_size_allocate):
 	Fix compilation with GTK+ < 2.11
 
