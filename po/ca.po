@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 2.14\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-12 22:37+0200\n"
-"PO-Revision-Date: 2007-04-12 22:56+0200\n"
+"POT-Creation-Date: 2007-04-13 23:40+0200\n"
+"PO-Revision-Date: 2007-04-13 23:43+0200\n"
 "Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -183,26 +183,6 @@ msgstr "Vídeo"
 #: ../data/properties.glade.h:23
 msgid "Year:"
 msgstr "Any:"
-
-#: ../data/screenshot.glade.h:1
-msgid "Preview"
-msgstr "Previsualització"
-
-#: ../data/screenshot.glade.h:2 ../src/totem-screenshot.c:336
-msgid "Save Screenshot"
-msgstr "Desa la captura de pantalla"
-
-#: ../data/screenshot.glade.h:3
-msgid "Save screenshot"
-msgstr "Desa la captura de pantalla"
-
-#: ../data/screenshot.glade.h:4
-msgid "Save screenshot to _desktop"
-msgstr "_Desa la captura de pantalla a l'escriptori"
-
-#: ../data/screenshot.glade.h:5
-msgid "Save screenshot to _file:"
-msgstr "Desa la captura de pantalla a un _fitxer:"
 
 #: ../data/skip_to.glade.h:2 ../src/totem-skipto.c:162
 msgid "Skip to"
@@ -419,90 +399,104 @@ msgstr ""
 "directori actual"
 
 #: ../data/totem.schemas.in.h:5
+#, fuzzy
+msgid "Default location for the \"Take Screenshot\" dialogues"
+msgstr "Ubicació predeterminada per als diàlegs «Obre...»"
+
+#: ../data/totem.schemas.in.h:6
+#, fuzzy
+msgid ""
+"Default location for the \"Take Screenshot\" dialogues, default is the "
+"Pictures directory"
+msgstr ""
+"Ubicació predeterminada per als diàlegs «Obre...», la predeterminada és el "
+"directori actual"
+
+#: ../data/totem.schemas.in.h:7
 msgid "Enable deinterlacing"
 msgstr "Habilita el desentrellaçat"
 
-#: ../data/totem.schemas.in.h:6
+#: ../data/totem.schemas.in.h:8
 msgid "Encoding charset for subtitle"
 msgstr "Codificació del joc de caràcters dels subtítols"
 
-#: ../data/totem.schemas.in.h:7
+#: ../data/totem.schemas.in.h:9
 msgid "Maximum amount of data to decode ahead of display (in seconds)"
 msgstr ""
 "Quantitat màxima de dades a descodificar abans de la visualització (en "
 "segons)"
 
-#: ../data/totem.schemas.in.h:8
+#: ../data/totem.schemas.in.h:10
 msgid "Name of the visual effects plugins"
 msgstr "Nom dels connectors d'efectes visuals"
 
-#: ../data/totem.schemas.in.h:9
+#: ../data/totem.schemas.in.h:11
 msgid "Network buffering threshold"
 msgstr "Llindar de la memòria intermèdia de xarxa"
 
-#: ../data/totem.schemas.in.h:10
+#: ../data/totem.schemas.in.h:12
 msgid "Pango font description for subtitle rendering"
 msgstr ""
 "Descripció del tipus de lletra Pango per a la representació dels subtítols"
 
-#: ../data/totem.schemas.in.h:11
+#: ../data/totem.schemas.in.h:13
 msgid "Repeat mode"
 msgstr "Mode de repetició"
 
 # FIXME: "canvas" (josep)
-#: ../data/totem.schemas.in.h:12
+#: ../data/totem.schemas.in.h:14
 msgid "Resize the canvas automatically on file load"
 msgstr "Redimensiona el llenç automàticament en carregar un fitxer"
 
-#: ../data/totem.schemas.in.h:13
+#: ../data/totem.schemas.in.h:15
 msgid "Show visual effects when no video is displayed"
 msgstr "Mostra efectes visuals quan no es mostri cap vídeo"
 
-#: ../data/totem.schemas.in.h:14
+#: ../data/totem.schemas.in.h:16
 msgid "Show visual effects when playing an audio only file."
 msgstr "Mostra efectes visuals quan es reprodueixi un fitxer amb només àudio."
 
-#: ../data/totem.schemas.in.h:15
+#: ../data/totem.schemas.in.h:17
 msgid "Shuffle mode"
 msgstr "Mode aleatori"
 
-#: ../data/totem.schemas.in.h:16
+#: ../data/totem.schemas.in.h:18
 msgid "Sound volume"
 msgstr "Volum del so"
 
-#: ../data/totem.schemas.in.h:17
+#: ../data/totem.schemas.in.h:19
 msgid "Sound volume, in percent, between 0 and 100"
 msgstr "Volum del so, en percentatge, entre 0 i 100"
 
-#: ../data/totem.schemas.in.h:18
+#: ../data/totem.schemas.in.h:20
 msgid "Subtitle encoding"
 msgstr "Codificació dels subtítols"
 
-#: ../data/totem.schemas.in.h:19
+#: ../data/totem.schemas.in.h:21
 msgid "Subtitle font"
 msgstr "Tipus de lletra dels subtítols"
 
-#: ../data/totem.schemas.in.h:20
+#: ../data/totem.schemas.in.h:22
 msgid "The brightness of the video"
 msgstr "La brillantor del vídeo"
 
-#: ../data/totem.schemas.in.h:21
+#: ../data/totem.schemas.in.h:23
 msgid "The contrast of the video"
 msgstr "El contrast del vídeo"
 
-#: ../data/totem.schemas.in.h:22
+#: ../data/totem.schemas.in.h:24
 msgid "The hue of the video"
 msgstr "El to del vídeo"
 
-#: ../data/totem.schemas.in.h:23
+#: ../data/totem.schemas.in.h:25
 msgid "The saturation of the video"
 msgstr "La saturació del vídeo"
 
-#: ../data/totem.schemas.in.h:24
+#: ../data/totem.schemas.in.h:26
 msgid "Type of audio output to use"
 msgstr "Tipus de sortida d'àudio a utilitzar"
 
-#: ../data/totem.schemas.in.h:25
+#: ../data/totem.schemas.in.h:27
 msgid ""
 "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
 "\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
@@ -516,24 +510,24 @@ msgstr ""
 #. character set. You can change this to be the most common
 #. encoding for fansub subtitles in your language. File a bug
 #. against Totem, and leave UTF-8 as the default if in doubt.
-#: ../data/totem.schemas.in.h:30
+#: ../data/totem.schemas.in.h:32
 msgid "UTF-8"
 msgstr "UTF-8"
 
-#: ../data/totem.schemas.in.h:31
+#: ../data/totem.schemas.in.h:33
 msgid "Whether the main window should stay on top"
 msgstr "Si la finestra principal ha d'estar per damunt"
 
-#: ../data/totem.schemas.in.h:32
+#: ../data/totem.schemas.in.h:34
 msgid "Whether the main window should stay on top of the other ones"
 msgstr "Si la finestra principal ha d'estar per damunt de les altres"
 
-#: ../data/totem.schemas.in.h:33
+#: ../data/totem.schemas.in.h:35
 msgid "Whether to disable the plugins in the user's home directory"
 msgstr ""
 "Si s'han d'inhabilitar els connectors del directori d'inici de l'usuari"
 
-#: ../data/totem.schemas.in.h:34
+#: ../data/totem.schemas.in.h:36
 msgid "Whether to enable debug for the playback engine"
 msgstr "Si s'ha d'habilitar la depuració per al motor de reproducció"
 
@@ -781,7 +775,7 @@ msgstr "_Visualitza"
 
 #: ../src/totem-menu.c:1258
 msgid "_Fullscreen"
-msgstr "Pantalla _sencera"
+msgstr "Pantalla _completa"
 
 #: ../src/totem-menu.c:1258
 msgid "Switch to fullscreen"
@@ -1224,27 +1218,22 @@ msgstr "Seleccioneu el tipus de lletra per als subtítols"
 msgid "Audio/Video"
 msgstr "Àudio/Vídeo"
 
-#: ../src/totem-screenshot.c:141 ../src/totem-screenshot.c:152
+#: ../src/totem-screenshot.c:60 ../src/totem-screenshot.c:70
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Captura%d.png"
 
-#: ../src/totem-screenshot.c:194
-#, c-format
-msgid "File '%s' already exists."
-msgstr "El fitxer «%s» ja existeix."
+#: ../src/totem-screenshot.c:93
+msgid "Screenshot.png"
+msgstr "Captura.png"
 
-#: ../src/totem-screenshot.c:196
-msgid "The screenshot was not saved"
-msgstr "La captura de pantalla no s'ha desat."
-
-#: ../src/totem-screenshot.c:207
+#: ../src/totem-screenshot.c:169
 msgid "There was an error saving the screenshot."
 msgstr "S'ha produït un error en desar la captura de pantalla."
 
-#: ../src/totem-screenshot.c:240
-msgid "Screenshot.png"
-msgstr "Captura.png"
+#: ../src/totem-screenshot.c:219
+msgid "Save Screenshot"
+msgstr "Desa la captura de pantalla"
 
 #: ../src/totem-statusbar.c:106
 msgid "0:00 / 0:00"
@@ -1436,23 +1425,23 @@ msgstr "Occidental"
 msgid "Vietnamese"
 msgstr "Vietnamita"
 
-#: ../src/totem-uri.c:275
+#: ../src/totem-uri.c:281
 msgid "All files"
 msgstr "Tots els fitxers"
 
-#: ../src/totem-uri.c:280
+#: ../src/totem-uri.c:286
 msgid "Supported files"
 msgstr "Fitxers permesos"
 
-#: ../src/totem-uri.c:292
+#: ../src/totem-uri.c:298
 msgid "Audio files"
 msgstr "Fitxers d'àudio"
 
-#: ../src/totem-uri.c:300
+#: ../src/totem-uri.c:306
 msgid "Video files"
 msgstr "Fitxers de vídeo"
 
-#: ../src/totem-uri.c:347
+#: ../src/totem-uri.c:367
 msgid "Select Movies or Playlists"
 msgstr "Seleccioneu pel·lícules o llistes de reproducció"
 
@@ -2109,6 +2098,24 @@ msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr ""
 "Verifiqueu la vostra instal·lació del sistema. El connector del Totem "
 "sortirà ara."
+
+#~ msgid "Preview"
+#~ msgstr "Previsualització"
+
+#~ msgid "Save screenshot"
+#~ msgstr "Desa la captura de pantalla"
+
+#~ msgid "Save screenshot to _desktop"
+#~ msgstr "_Desa la captura de pantalla a l'escriptori"
+
+#~ msgid "Save screenshot to _file:"
+#~ msgstr "Desa la captura de pantalla a un _fitxer:"
+
+#~ msgid "File '%s' already exists."
+#~ msgstr "El fitxer «%s» ja existeix."
+
+#~ msgid "The screenshot was not saved"
+#~ msgstr "La captura de pantalla no s'ha desat."
 
 #~ msgid "Shadow type"
 #~ msgstr "Tipus d'ombra"
