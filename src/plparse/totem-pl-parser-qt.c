@@ -43,13 +43,14 @@
 #ifndef TOTEM_PL_PARSER_MINI
 
 static TotemPlParserResult
-totem_pl_parser_add_quicktime_rtsptextrtsp (TotemPlParser *parser,
-					    const char *url,
-					    const char *base,
-					    gpointer data)
+totem_pl_parser_add_quicktime_rtsptext (TotemPlParser *parser,
+					const char *url,
+					const char *base,
+					gpointer data)
 {
 	char *contents = NULL;
 	const char *split_char;
+	char *rtspurl;
 	int size;
 	char **lines;
 
@@ -64,7 +65,12 @@ totem_pl_parser_add_quicktime_rtsptextrtsp (TotemPlParser *parser,
 	lines = g_strsplit (contents, split_char, 0);
 	g_free (contents);
 
-	totem_pl_parser_add_one_url (parser, lines[0] + strlen ("RTSPtext"), NULL);
+	rtspurl = g_strdup (lines[0] + strlen ("RTSPtext"));
+	g_strstrip (rtspurl);
+
+	totem_pl_parser_add_one_url (parser, rtspurl, NULL);
+
+	g_free (rtspurl);
 	g_strfreev (lines);
 
 	return TOTEM_PL_PARSER_RESULT_SUCCESS;
@@ -78,10 +84,9 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url,
 	xmlNodePtr node;
 	xmlChar *src;
 
-	if (g_str_has_prefix (data, "RTSPtextRTSP://") != FALSE
-			|| g_str_has_prefix (data, "rtsptextrtsp://") != FALSE
-			|| g_str_has_prefix (data, "RTSPtextrtsp://") != FALSE) {
-		return totem_pl_parser_add_quicktime_rtsptextrtsp (parser, url, base, data);
+	if (g_str_has_prefix (data, "RTSPtext") != FALSE
+			|| g_str_has_prefix (data, "rtsptext") != FALSE) {
+		return totem_pl_parser_add_quicktime_rtsptext (parser, url, base, data);
 	}
 
 	doc = totem_pl_parser_parse_xml_file (url);
@@ -150,9 +155,8 @@ totem_pl_parser_is_quicktime (const char *data, gsize len)
 	/* Check for RTSPtextRTSP Quicktime references */
 	if (len <= strlen ("RTSPtextRTSP://"))
 		return FALSE;
-	if (g_str_has_prefix (data, "RTSPtextRTSP://") != FALSE
-			|| g_str_has_prefix (data, "rtsptextrtsp://") != FALSE
-			|| g_str_has_prefix (data, "RTSPtextrtsp://") != FALSE) {
+	if (g_str_has_prefix (data, "RTSPtext") != FALSE
+			|| g_str_has_prefix (data, "rtsptext") != FALSE) {
 		return TRUE;
 	}
 
