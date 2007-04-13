@@ -16,7 +16,6 @@ stuff_DATA =				\
 	properties.glade		\
 	skip_to.glade			\
 	uri.glade			\
-	screenshot.glade		\
 	totem-ui.xml			\
 	totem_logo.png
 

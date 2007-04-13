@@ -237,6 +237,18 @@
       </schema>
 
       <schema>
+        <key>/schemas/apps/totem/screenshot_save_path</key>
+	<applyto>/apps/totem/screenshot_save_path</applyto>
+	<owner>totem</owner>
+	<type>string</type>
+	<default></default>
+	<locale name="C">
+	  <short>Default location for the "Take Screenshot" dialogues</short>
+	  <long>Default location for the "Take Screenshot" dialogues, default is the Pictures directory</long>
+	</locale>
+      </schema>
+
+      <schema>
         <key>/schemas/apps/disable_user_plugins</key>
 	<applyto>/apps/totem/disable_user_plugins</applyto>
 	<owner>totem</owner>

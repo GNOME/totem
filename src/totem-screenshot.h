@@ -28,14 +28,14 @@
 G_BEGIN_DECLS
 
 #define GTK_TYPE_SCREENSHOT            (totem_screenshot_get_type ())
-#define TOTEM_SCREENSHOT(obj)            (GTK_CHECK_CAST ((obj), GTK_TYPE_SCREENSHOT, TotemScreenshot))
-#define TOTEM_SCREENSHOT_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GTK_TYPE_SCREENSHOT, TotemScreenshotClass))
+#define TOTEM_SCREENSHOT(obj)          (GTK_CHECK_CAST ((obj), GTK_TYPE_SCREENSHOT, TotemScreenshot))
+#define TOTEM_SCREENSHOT_CLASS(klass)  (GTK_CHECK_CLASS_CAST ((klass), GTK_TYPE_SCREENSHOT, TotemScreenshotClass))
 #define GTK_IS_SCREENSHOT(obj)         (GTK_CHECK_TYPE ((obj), GTK_TYPE_SCREENSHOT))
 #define GTK_IS_SCREENSHOT_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GTK_TYPE_SCREENSHOT))
 
 typedef struct TotemScreenshot	       TotemScreenshot;
-typedef struct TotemScreenshotClass      TotemScreenshotClass;
-typedef struct TotemScreenshotPrivate    TotemScreenshotPrivate;
+typedef struct TotemScreenshotClass    TotemScreenshotClass;
+typedef struct TotemScreenshotPrivate  TotemScreenshotPrivate;
 
 struct TotemScreenshot {
 	GtkDialog parent;
@@ -47,8 +47,7 @@ struct TotemScreenshotClass {
 };
 
 GtkType    totem_screenshot_get_type (void);
-GtkWidget *totem_screenshot_new      (const char *glade_filename,
-				      GdkPixbuf *playing_pix);
+GtkWidget *totem_screenshot_new      (GdkPixbuf *playing_pix);
 
 G_END_DECLS
 

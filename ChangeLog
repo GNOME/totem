@@ -1,5 +1,25 @@
 2007-04-13  Bastien Nocera  <hadess@hadess.net>
 
+	* data/Makefile.am:
+	* data/screenshot.glade:
+	* data/totem.schemas.in:
+	* src/totem-screenshot.c: (totem_screenshot_make_filename_for_dir),
+	(totem_screenshot_temp_file_create),
+	(totem_screenshot_temp_file_remove), (drag_begin),
+	(totem_screenshot_response), (totem_screenshot_init),
+	(totem_screenshot_finalize), (totem_screenshot_new),
+	(totem_screenshot_class_init):
+	* src/totem-screenshot.h:
+	* src/totem-uri.c: (totem_pictures_dir), (totem_add_pictures_dir):
+	* src/totem-uri.h:
+	* src/totem.c: (totem_action_take_screenshot):
+	Kill the old screenshot dialogue, and use a simple file chooser widget
+	with a preview image instead. Remember the path of where the previous
+	screenshot was saved. Use the Pictures directory as the default save
+	directory (Closes: RH #232788)
+
+2007-04-13  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser-qt.c:
 	(totem_pl_parser_add_quicktime_rtsptext),
 	(totem_pl_parser_add_quicktime_metalink),

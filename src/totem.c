@@ -862,7 +862,7 @@ totem_action_take_screenshot (Totem *totem)
 
 	filename = g_build_filename (DATADIR,
 			"totem", "screenshot.glade", NULL);
-	dialog = totem_screenshot_new (filename, pixbuf);
+	dialog = totem_screenshot_new (pixbuf);
 	g_free (filename);
 
 	gtk_dialog_run (GTK_DIALOG (dialog));

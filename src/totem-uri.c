@@ -78,6 +78,12 @@ totem_dot_dir (void)
 	return (const char *)totem_dir;
 }
 
+char *
+totem_pictures_dir (void)
+{
+	return xdg_user_dir_lookup ("PICTURES");
+}
+
 gboolean
 totem_is_media (const char *uri)
 {
@@ -333,6 +339,20 @@ totem_add_default_dirs (GtkFileChooser *dialog)
 		gtk_file_chooser_add_shortcut_folder (dialog, dir, NULL);
 		g_free (dir);
 	}
+}
+
+void
+totem_add_pictures_dir (GtkWidget *chooser)
+{
+	char *dir;
+
+	g_return_if_fail (GTK_IS_FILE_CHOOSER (chooser) != FALSE);
+
+	dir = xdg_user_dir_lookup ("PICTURES");
+	if (dir == NULL)
+		return;
+	gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (chooser), dir, NULL);
+	g_free (dir);
 }
 
 GSList *
