@@ -44,14 +44,14 @@
 #ifndef TOTEM_PL_PARSER_MINI
 
 static TotemPlParserResult
-totem_pl_parser_add_quicktime_rtsptextrtsp (TotemPlParser *parser,
-					    const char *url,
-					    const char *base,
-					    gpointer data)
+totem_pl_parser_add_quicktime_rtsptext (TotemPlParser *parser,
+					const char *url,
+					const char *base,
+					gpointer data)
 {
 	char *contents = NULL;
 	gboolean dos_mode = FALSE;
-	char *volume, *autoplay;
+	char *volume, *autoplay, *rtspurl;
 	int size;
 	char **lines;
 
@@ -68,11 +68,15 @@ totem_pl_parser_add_quicktime_rtsptextrtsp (TotemPlParser *parser,
 	autoplay = totem_pl_parser_read_ini_line_string_with_sep
 		(lines, "autoplay", dos_mode, "=");
 
+	rtspurl = g_strdup (lines[0] + strlen ("RTSPtext"));
+	g_strstrip (rtspurl);
+
 	totem_pl_parser_add_url (parser,
-				 TOTEM_PL_PARSER_FIELD_URL, lines[0] + strlen ("RTSPtext"),
+				 TOTEM_PL_PARSER_FIELD_URL, rtspurl,
 				 TOTEM_PL_PARSER_FIELD_VOLUME, volume,
 				 TOTEM_PL_PARSER_FIELD_AUTOPLAY, autoplay,
 				 NULL);
+	g_free (rtspurl);
 	g_free (volume);
 	g_free (autoplay);
 	g_strfreev (lines);
@@ -88,10 +92,9 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url,
 	xmlNodePtr node;
 	xmlChar *src;
 
-	if (g_str_has_prefix (data, "RTSPtextRTSP://") != FALSE
-			|| g_str_has_prefix (data, "rtsptextrtsp://") != FALSE
-			|| g_str_has_prefix (data, "RTSPtextrtsp://") != FALSE) {
-		return totem_pl_parser_add_quicktime_rtsptextrtsp (parser, url, base, data);
+	if (g_str_has_prefix (data, "RTSPtext") != FALSE
+			|| g_str_has_prefix (data, "rtsptext") != FALSE) {
+		return totem_pl_parser_add_quicktime_rtsptext (parser, url, base, data);
 	}
 	if (g_str_has_prefix (data, "SMILtext") != FALSE) {
 		char *contents;
@@ -175,9 +178,8 @@ totem_pl_parser_is_quicktime (const char *data, gsize len)
 	/* Check for RTSPtextRTSP Quicktime references */
 	if (len <= strlen ("RTSPtextRTSP://"))
 		return FALSE;
-	if (g_str_has_prefix (data, "RTSPtextRTSP://") != FALSE
-			|| g_str_has_prefix (data, "rtsptextrtsp://") != FALSE
-			|| g_str_has_prefix (data, "RTSPtextrtsp://") != FALSE) {
+	if (g_str_has_prefix (data, "RTSPtext") != FALSE
+			|| g_str_has_prefix (data, "rtsptext") != FALSE) {
 		return TRUE;
 	}
 	if (g_str_has_prefix (data, "SMILtext") != FALSE)
