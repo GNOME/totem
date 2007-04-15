@@ -1,3 +1,11 @@
+2007-04-15  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plugins/galago/*: Patch from Philip Withnall
+	<bugzilla@tecnocode.co.uk> to merge the Galago calling code
+	and the rest of the plugin, fixes a crasher, and unsets
+	idleness properly if accounts have been added/removed
+	while playing in fullscreen (Closes: #428770)
+
 2007-04-13  Bastien Nocera  <hadess@hadess.net>
 
 	* data/Makefile.am:
