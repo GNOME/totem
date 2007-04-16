@@ -221,6 +221,7 @@ totem_options_process_for_server (BaconMessageConnection *conn,
 		char *line;
 		line = totem_option_create_line (TOTEM_REMOTE_COMMAND_SHOW);
 		bacon_message_connection_send (conn, line);
+		g_free (line);
 		return;
 	}
 
@@ -229,5 +230,6 @@ totem_options_process_for_server (BaconMessageConnection *conn,
 		bacon_message_connection_send (conn, l->data);
 		g_free (l->data);
 	}
+	g_list_free (commands);
 }
 
