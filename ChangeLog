@@ -1,3 +1,9 @@
+2007-04-17  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-menu.c: (add_lang_action), (create_lang_actions):
+	Fix language labels when we have multiple occurences of the
+	same languages (eg. was "en #2", is "English #2" now)
+
 2007-04-16  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-options.c: (totem_options_process_for_server):

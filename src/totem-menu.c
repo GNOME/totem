@@ -239,7 +239,7 @@ languages_changed_callback (GtkRadioAction *action, GtkRadioAction *current,
 static GtkAction *
 add_lang_action (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 		const char *path, const char *prefix, const char *lang, 
-		int lang_id, GSList **group)
+		int lang_id, int index, GSList **group)
 {
 	const char *full_lang;
 	char *label;
@@ -247,7 +247,19 @@ add_lang_action (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 	GtkAction *action;
 
 	full_lang = totem_lang_get_full (lang);
-	label = escape_label_for_menu (full_lang ? full_lang : lang);
+
+	if (index > 1) {
+		char *num_lang;
+
+		num_lang = g_strdup_printf ("%s #%u",
+					    full_lang ? full_lang : lang,
+					    index);
+		label = escape_label_for_menu (num_lang);
+		g_free (num_lang);
+	} else {
+		label = escape_label_for_menu (full_lang ? full_lang : lang);
+	}
+
 	name = g_strdup_printf ("%s-%d", prefix, lang_id);
 
 	action = g_object_new (GTK_TYPE_RADIO_ACTION,
@@ -282,29 +294,32 @@ create_lang_actions (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 
 	if (is_lang == FALSE) {
 		add_lang_action (totem, action_group, ui_id, path, prefix,
-				_("None"), -2, &group);
+				_("None"), -2, 0, &group);
 	}
 
 	action = add_lang_action (totem, action_group, ui_id, path, prefix,
-			_("Auto"), -1, &group);
+			_("Auto"), -1, 0, &group);
 
 	i = 0;
 	lookup = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, NULL);
 
 	for (l = list; l != NULL; l = l->next)
 	{
+		guint num;
+
 		hash_value = g_hash_table_lookup (lookup, l->data);
 		if (hash_value == NULL) {
+			num = 0;
 			action_data = g_strdup (l->data);
 			g_hash_table_insert (lookup, l->data, GINT_TO_POINTER (1));
 		} else {
-			guint num = GPOINTER_TO_INT (hash_value);
-			action_data = g_strdup_printf ("%s #%u", (char *)l->data, num + 1);
+			num = GPOINTER_TO_INT (hash_value);
+			action_data = g_strdup (l->data);
 			g_hash_table_replace (lookup, l->data, GINT_TO_POINTER (num + 1));
 		}
 
 		add_lang_action (totem, action_group, ui_id, path, prefix,
-				 action_data, i, &group);
+				 action_data, i, num + 1, &group);
  		i++;
 	}
 
