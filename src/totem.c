@@ -281,12 +281,14 @@ play_pause_set_label (Totem *totem, TotemStates state)
 				_("Playing"));
 		id = GTK_STOCK_MEDIA_PAUSE;
 		tip = N_("Pause");
+		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_PLAYING);
 		break;
 	case STATE_PAUSED:
 		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
 				_("Paused"));
 		id = GTK_STOCK_MEDIA_PLAY;
 		tip = N_("Play");
+		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_PAUSED);
 		break;
 	case STATE_STOPPED:
 		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
@@ -294,6 +296,7 @@ play_pause_set_label (Totem *totem, TotemStates state)
 		totem_statusbar_set_time_and_length
 			(TOTEM_STATUSBAR (totem->statusbar), 0, 0);
 		id = GTK_STOCK_MEDIA_PLAY;
+		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_NONE);
 		tip = N_("Play");
 		break;
 	default:
@@ -554,7 +557,6 @@ void
 totem_action_stop (Totem *totem)
 {
 	bacon_video_widget_stop (totem->bvw);
-	totem_playlist_set_playing (totem->playlist, FALSE);
 	play_pause_set_label (totem, STATE_STOPPED);
 }
 
@@ -1054,7 +1056,9 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 			(GTK_WIDGET (totem->properties), retval);
 
 		/* Set the playlist */
-		totem_playlist_set_playing (totem->playlist, retval);
+		totem_playlist_set_playing (totem->playlist,
+					    retval ? TOTEM_PLAYLIST_STATUS_PAUSED : 
+					    TOTEM_PLAYLIST_STATUS_NONE);
 
 		if (retval == FALSE && warn != FALSE)
 		{
@@ -2149,6 +2153,20 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 			g_free (title);
 		}
 		break;
+	case TOTEM_REMOTE_COMMAND_SHOW_VOLUME:
+		{
+			char *vol_str;
+			int vol;
+
+			if (bacon_video_widget_can_set_volume (totem->bvw) == FALSE)
+				vol = 0;
+			else
+				vol = bacon_video_widget_get_volume (totem->bvw);
+			vol_str = g_strdup_printf ("%d", vol);
+			bacon_message_connection_send (totem->conn, vol_str);
+			g_free (vol_str);
+		}
+		break;
 	case TOTEM_REMOTE_COMMAND_UP:
 		bacon_video_widget_dvd_event (totem->bvw,
 				BVW_DVD_ROOT_MENU_UP);
@@ -2227,7 +2245,7 @@ playlist_changed_cb (GtkWidget *playlist, Totem *totem)
 	{
 		totem_action_set_mrl_and_play (totem, mrl);
 	} else if (totem->mrl != NULL) {
-		totem_playlist_set_playing (totem->playlist, TRUE);
+		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_PLAYING);
 	}
 
 	g_free (mrl);
@@ -3284,10 +3302,7 @@ video_widget_create (Totem *totem)
 
 	if (totem->bvw == NULL)
 	{
-		totem_playlist_set_playing (totem->playlist, FALSE);
-
 		gtk_widget_hide (totem->win);
-
 		totem_action_error_and_exit (_("Totem could not startup."), err != NULL ? err->message : _("No reason."), totem);
 		if (err != NULL)
 			g_error_free (err);

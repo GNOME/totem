@@ -1,3 +1,20 @@
+2007-04-17  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-playlist.c: (totem_playlist_set_reorderable),
+	(set_playing_icon), (init_treeview), (totem_playlist_add_one_mrl),
+	(totem_playlist_set_playing):
+	* src/totem-playlist.h:
+	* src/totem-remote.c: (totem_lirc_to_command):
+	* src/totem-remote.h:
+	* src/totem.c: (play_pause_set_label), (totem_action_stop),
+	(totem_action_set_mrl_with_warning), (totem_action_remote),
+	(playlist_changed_cb), (video_widget_create):
+	Use the play and pause icons in the playlist to show the current
+	state, as in Rhythmbox, adapted from patch by <jgoday@gmail.com>
+	(Closes: #408402)
+
+	Add --printvolume to get the current volume on the command-line
+
 2007-04-17  Frederic Crozat  <fcrozat@mandriva.com>
 
 	* src/totem.c: (totem_action_open_location):

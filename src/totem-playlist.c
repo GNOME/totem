@@ -149,7 +149,7 @@ static void totem_playlist_init       (TotemPlaylist      *playlist);
 
 static void init_treeview (GtkWidget *treeview, TotemPlaylist *playlist);
 
-#define totem_playlist_unset_playing(x) totem_playlist_set_playing(x, FALSE)
+#define totem_playlist_unset_playing(x) totem_playlist_set_playing(x, TOTEM_PLAYLIST_STATUS_NONE)
 
 G_DEFINE_TYPE(TotemPlaylist, totem_playlist, GTK_TYPE_VBOX)
 
@@ -520,7 +520,7 @@ totem_playlist_set_reorderable (TotemPlaylist *playlist, gboolean set)
 		GtkTreeIter iter;
 		char *index;
 		GtkTreePath *path;
-		gboolean playing;
+		TotemPlaylistStatus playing;
 
 		index = g_strdup_printf ("%d", i);
 		if (gtk_tree_model_get_iter_from_string
@@ -533,9 +533,8 @@ totem_playlist_set_reorderable (TotemPlaylist *playlist, gboolean set)
 		g_free (index);
 
 		gtk_tree_model_get (playlist->_priv->model, &iter, PLAYING_COL, &playing, -1);
-		if (!playing) {
+		if (playing == TOTEM_PLAYLIST_STATUS_NONE)
 			continue;
-		}
 
 		/* Only emit the changed signal if we changed the ->current */
 		path = gtk_tree_path_new_from_indices (i, -1);
@@ -1103,14 +1102,25 @@ totem_playlist_key_press (GtkWidget *win, GdkEventKey *event, TotemPlaylist *pla
 
 static void
 set_playing_icon (GtkTreeViewColumn *column, GtkCellRenderer *renderer,
-		GtkTreeModel *model, GtkTreeIter *iter, TotemPlaylist *playlist)
+		  GtkTreeModel *model, GtkTreeIter *iter, TotemPlaylist *playlist)
 {
-	gboolean playing;
+	TotemPlaylistStatus playing;
+	const char *stock_id;
 
 	gtk_tree_model_get (model, iter, PLAYING_COL, &playing, -1);
 
-	g_object_set (renderer, "icon-name",
-		      playing ? "audio-volume-medium" : NULL, NULL);
+	switch (playing) {
+		case TOTEM_PLAYLIST_STATUS_PLAYING:
+			stock_id = GTK_STOCK_MEDIA_PLAY;
+			break;
+		case TOTEM_PLAYLIST_STATUS_PAUSED:
+			stock_id = GTK_STOCK_MEDIA_PAUSE;
+			break;
+		default:
+			stock_id = NULL;
+	}
+
+	g_object_set (renderer, "stock-id", stock_id, NULL);
 }
 
 static void
@@ -1196,7 +1206,7 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 
 	/* the model */
 	model = GTK_TREE_MODEL (gtk_list_store_new (NUM_COLS,
-				G_TYPE_BOOLEAN,
+				G_TYPE_INT,
 				G_TYPE_STRING,
 				G_TYPE_STRING,
 				G_TYPE_BOOLEAN,
@@ -1559,7 +1569,7 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 
 	store = GTK_LIST_STORE (playlist->_priv->model);
 	gtk_list_store_insert_with_values (store, &iter, G_MAXINT32,
-			PLAYING_COL, FALSE,
+			PLAYING_COL, TOTEM_PLAYLIST_STATUS_NONE,
 			FILENAME_COL, filename_for_display,
 			URI_COL, uri ? uri : mrl,
 			TITLE_CUSTOM_COL, display_name ? TRUE : FALSE,
@@ -1932,7 +1942,7 @@ totem_playlist_set_title (TotemPlaylist *playlist, const char *title, gboolean f
 }
 
 gboolean
-totem_playlist_set_playing (TotemPlaylist *playlist, gboolean state)
+totem_playlist_set_playing (TotemPlaylist *playlist, TotemPlaylistStatus state)
 {
 	GtkListStore *store;
 	GtkTreeIter iter;

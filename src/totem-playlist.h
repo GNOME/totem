@@ -37,6 +37,12 @@ G_BEGIN_DECLS
 #define TOTEM_IS_PLAYLIST_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), TOTEM_TYPE_PLAYLIST))
 
 typedef enum {
+	TOTEM_PLAYLIST_STATUS_NONE,
+	TOTEM_PLAYLIST_STATUS_PLAYING,
+	TOTEM_PLAYLIST_STATUS_PAUSED
+} TotemPlaylistStatus;
+
+typedef enum {
 	TOTEM_PLAYLIST_DIRECTION_NEXT,
 	TOTEM_PLAYLIST_DIRECTION_PREVIOUS
 } TotemPlaylistDirection;
@@ -110,7 +116,7 @@ gboolean   totem_playlist_get_shuffle (TotemPlaylist *playlist);
 void       totem_playlist_set_shuffle (TotemPlaylist *playlist,
 				       gboolean shuffle);
 
-gboolean   totem_playlist_set_playing (TotemPlaylist *playlist, gboolean state);
+gboolean   totem_playlist_set_playing (TotemPlaylist *playlist, TotemPlaylistStatus state);
 
 void       totem_playlist_set_at_start (TotemPlaylist *playlist);
 void       totem_playlist_set_at_end (TotemPlaylist *playlist);
