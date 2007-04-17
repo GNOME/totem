@@ -756,14 +756,14 @@ totem_action_open_location (Totem *totem)
 	if (glade == NULL)
 		return;
 
+	dialog = glade_xml_get_widget (glade, "open_uri_dialog");
+	entry = glade_xml_get_widget (glade, "uri");
+
 	/* Get item from clipboard to fill entry in Open Location... dialog */
 	clipboard_location = totem_open_location_set_from_clipboard (totem);
 	if (clipboard_location != NULL && strcmp (clipboard_location, "") != 0)
-		gtk_entry_set_text (GTK_ENTRY (glade_xml_get_widget (glade, "uri")), clipboard_location);
+		gtk_entry_set_text (GTK_ENTRY (entry), clipboard_location);
 	g_free (clipboard_location);
-
-	dialog = glade_xml_get_widget (glade, "open_uri_dialog");
-	entry = glade_xml_get_widget (glade, "uri");
 
 	completion = gtk_entry_completion_new();
 	model = GTK_TREE_MODEL (gtk_list_store_new (1, G_TYPE_STRING));
