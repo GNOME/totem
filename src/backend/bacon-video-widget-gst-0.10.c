@@ -4331,6 +4331,8 @@ bacon_video_widget_new (int width, int height,
     }
   } else {
     audio_sink = gst_element_factory_make ("fakesink", "audio-fake-sink");
+    if (audio_sink)
+      g_object_set (audio_sink, "sync", TRUE, NULL);
   }
 
   if (type == BVW_USE_TYPE_VIDEO) {
