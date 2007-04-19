@@ -124,7 +124,7 @@ static void     plugin_name##_class_intern_init (gpointer klass)		\
 G_MODULE_EXPORT GType								\
 register_totem_plugin (GTypeModule *module)					\
 {										\
-	static const GTypeInfo our_info =					\
+	const GTypeInfo our_info =					\
 	{									\
 		sizeof (PluginName##Class),					\
 		NULL, /* base_init */						\
@@ -179,26 +179,24 @@ GType 										\
 type_name##_register_type (GTypeModule *module) 				\
 { 										\
 										\
-	if ((type_name##_type_id == 0)) { 					\
-		static const GTypeInfo g_define_type_info = { 			\
-			sizeof (TypeName##Class), 				\
-			(GBaseInitFunc) ((void *)0), 				\
-			(GBaseFinalizeFunc) ((void *)0), 			\
-			(GClassInitFunc) type_name##_class_intern_init, 	\
-			(GClassFinalizeFunc) ((void *)0), 			\
-			((void *)0), 						\
-			sizeof (TypeName), 					\
-			0, 							\
-			(GInstanceInitFunc) type_name##_init,			\
-			((void *)0) 						\
-		}; 								\
-		type_name##_type_id = 						\
-			g_type_module_register_type (module, 			\
-						     TYPE_PARENT, 		\
-						     #TypeName,			\
-						     &g_define_type_info, 	\
-						     (GTypeFlags) 0); 		\
-	} 									\
+	const GTypeInfo g_define_type_info = { 					\
+		sizeof (TypeName##Class), 					\
+		(GBaseInitFunc) ((void *)0), 					\
+		(GBaseFinalizeFunc) ((void *)0), 				\
+		(GClassInitFunc) type_name##_class_intern_init, 		\
+		(GClassFinalizeFunc) ((void *)0), 				\
+		((void *)0), 							\
+		sizeof (TypeName), 						\
+		0, 								\
+		(GInstanceInitFunc) type_name##_init,				\
+		((void *)0) 							\
+	}; 									\
+	type_name##_type_id = 							\
+		g_type_module_register_type (module, 				\
+					     TYPE_PARENT, 			\
+					     #TypeName,				\
+					     &g_define_type_info, 		\
+					     (GTypeFlags) 0); 			\
 										\
 	return type_name##_type_id;						\
 }
