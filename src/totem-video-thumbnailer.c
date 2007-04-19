@@ -51,7 +51,6 @@
 #define PROGRESS_DEBUG(format...) { if (verbose != FALSE) g_message (format); }
 #endif
 
-#define HALF_SECOND G_USEC_PER_SEC * .5
 #define BORING_IMAGE_VARIANCE 256.0		/* Tweak this if necessary */
 
 static gboolean jpeg_output = FALSE;
