@@ -227,7 +227,6 @@ parse_asx_entries (TotemPlParser *parser, const char *_base, xml_node_t *parent)
 			if (newbase != NULL)
 				base = newbase;
 		}
-
 		if (g_ascii_strcasecmp (node->name, "entry") == 0) {
 			/* Whee! found an entry here, find the REF and TITLE */
 			if (parse_asx_entry (parser, base, node, title) != FALSE)
@@ -275,7 +274,8 @@ totem_pl_parser_add_asx (TotemPlParser *parser, const char *url,
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 	/* If the document has no name */
-	if (doc->name == NULL) {
+	if (doc->name == NULL
+	    || g_ascii_strcasecmp (doc->name , "asx") == 0) {
 		g_free (contents);
 		xml_parser_free_tree (doc);
 		return TOTEM_PL_PARSER_RESULT_ERROR;
