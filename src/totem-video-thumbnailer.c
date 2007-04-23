@@ -58,6 +58,7 @@ static gboolean output_size = 128;
 static gboolean time_limit = TRUE;
 static gboolean verbose = FALSE;
 static gboolean g_fatal_warnings = FALSE;
+static gint64 second_index = -1;
 static char **filenames = NULL;
 
 #ifdef THUMB_DEBUG
@@ -328,11 +329,98 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 	g_object_unref (with_holes);
 }
 
+static GdkPixbuf *
+capture_interesting_frame (BaconVideoWidget * bvw, char *input, char *output) 
+{
+	GdkPixbuf* pixbuf;
+	guint current;
+	GError *err = NULL;
+	const float frame_locations[] = {
+		1.0 / 3.0,
+		2.0 / 3.0,
+		0.1,
+		0.9,
+		0.5
+	};
+
+	/* Test at multiple points in the file to see if we can get an 
+	 * interesting frame */
+	for (current = 0; current < G_N_ELEMENTS(frame_locations); current++)
+	{
+		PROGRESS_DEBUG("About to seek to %f\n", frame_locations[current]);
+		if (bacon_video_widget_seek (bvw, frame_locations[current], NULL) == FALSE) {
+			bacon_video_widget_play (bvw, NULL);
+		}
+
+		if (bacon_video_widget_can_get_frames (bvw, &err) == FALSE)
+		{
+			g_print ("totem-video-thumbnailer: '%s' isn't thumbnailable\n"
+				 "Reason: %s\n",
+				 input, err ? err->message : "programming error");
+			bacon_video_widget_close (bvw);
+			gtk_widget_destroy (GTK_WIDGET (bvw));
+			g_error_free (err);
+
+			exit (1);
+		}
+
+		/* Pull the frame, if it's interesting we bail early */
+		PROGRESS_DEBUG("About to get frame for iter %d\n", current);
+		pixbuf = bacon_video_widget_get_current_frame (bvw);
+		if (pixbuf != NULL && is_image_interesting (pixbuf) != FALSE) {
+			PROGRESS_DEBUG("Frame for iter %d is interesting\n", current);
+			break;
+		}
+
+		/* If we get to the end of this loop, we'll end up using
+		 * the last image we pulled */
+		if (current + 1 < G_N_ELEMENTS(frame_locations)) {
+			if (pixbuf != NULL) {
+				g_object_unref (pixbuf);
+				pixbuf = NULL;
+			}
+		}
+		PROGRESS_DEBUG("Frame for iter %d was not interesting\n", current);
+	}
+	return pixbuf;
+}
+
+static GdkPixbuf *
+capture_frame_at_time(BaconVideoWidget *bvw, char *input, char *output,  gint64 seconds) 
+{
+	GError *err = NULL;
+
+	if (bacon_video_widget_seek_time (bvw, seconds * 1000, &err) == FALSE) {
+		g_print ("totem-video-thumbnailer: could not seek to %d seconds in '%s'\n"
+			 "Reason: %s\n",
+			 (int) seconds, input, err ? err->message : "programming error");
+		bacon_video_widget_close (bvw);
+		gtk_widget_destroy (GTK_WIDGET (bvw));
+		g_error_free (err);
+
+		exit (1);
+	}
+	if (bacon_video_widget_can_get_frames (bvw, &err) == FALSE)
+	{
+		g_print ("totem-video-thumbnailer: '%s' isn't thumbnailable\n"
+			 "Reason: %s\n",
+			 input, err ? err->message : "programming error");
+		bacon_video_widget_close (bvw);
+		gtk_widget_destroy (GTK_WIDGET (bvw));
+		g_error_free (err);
+
+		exit (1);
+	}
+
+	return bacon_video_widget_get_current_frame (bvw);
+}
+
 static const GOptionEntry entries[] = {
 	{ "jpeg", 'j',  0, G_OPTION_ARG_NONE, &jpeg_output, "Output the thumbnail as a JPEG instead of PNG", NULL },
 	{ "size", 's', 0, G_OPTION_ARG_INT, &output_size, "Size of the thumbnail in pixels", NULL },
 	{ "no-limit", 'l', G_OPTION_FLAG_REVERSE, G_OPTION_ARG_NONE, &time_limit, "Don't limit the thumbnailing time to 30 seconds", NULL },
 	{ "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose, "Output debug information", NULL },
+	{ "time", 't', 0, G_OPTION_ARG_INT64, &second_index, "Choose this time (in seconds) as the thumbnail", NULL },
 #ifndef THUMB_DEBUG
 	{"g-fatal-warnings", 0, 0, G_OPTION_ARG_NONE, &g_fatal_warnings, "Make all warnings fatal", NULL},
 #endif /* THUMB_DEBUG */
@@ -348,15 +436,6 @@ int main (int argc, char *argv[])
 	BaconVideoWidget *bvw;
 	GdkPixbuf *pixbuf;
 	char *input, *output;
-
-	const float frame_locations[] = {
-		1.0 / 3.0,
-		2.0 / 3.0,
-		0.1,
-		0.9,
-		0.5
-	};
-	guint current;
 
 #ifdef G_OS_UNIX
 	nice (20);
@@ -444,44 +523,13 @@ int main (int argc, char *argv[])
 
 	PROGRESS_DEBUG("Started playing file\n");
 
-	/* Test at multiple points in the file to see if we can get an 
-	 * interesting frame */
-	for (current = 0; current < G_N_ELEMENTS(frame_locations); current++)
-	{
-		PROGRESS_DEBUG("About to seek to %f\n", frame_locations[current]);
-		if (bacon_video_widget_seek (bvw, frame_locations[current], NULL) == FALSE) {
-			bacon_video_widget_play (bvw, NULL);
-		}
-
-		if (bacon_video_widget_can_get_frames (bvw, &err) == FALSE)
-		{
-			g_print ("totem-video-thumbnailer: '%s' isn't thumbnailable\n"
-					"Reason: %s\n",
-					input, err ? err->message : "programming error");
-			bacon_video_widget_close (bvw);
-			gtk_widget_destroy (GTK_WIDGET (bvw));
-			g_error_free (err);
-
-			exit (1);
-		}
-
-		/* Pull the frame, if it's interesting we bail early */
-		PROGRESS_DEBUG("About to get frame for iter %d\n", current);
-		pixbuf = bacon_video_widget_get_current_frame (bvw);
-		if (pixbuf != NULL && is_image_interesting (pixbuf) != FALSE) {
-			PROGRESS_DEBUG("Frame for iter %d is interesting\n", current);
-			break;
-		}
-
-		/* If we get to the end of this loop, we'll end up using
-		 * the last image we pulled */
-		if (current + 1 < G_N_ELEMENTS(frame_locations)) {
-			if (pixbuf != NULL) {
-				g_object_unref (pixbuf);
-				pixbuf = NULL;
-			}
-		}
-		PROGRESS_DEBUG("Frame for iter %d was not interesting\n", current);
+	/* If the user has told us to use a frame at a specific second 
+	 * into the video, just use that frame no matter how boring it
+	 * is */
+	if(-1 != second_index) {
+	  pixbuf = capture_frame_at_time(bvw, input, output, second_index);
+	} else {
+	  pixbuf = capture_interesting_frame(bvw, input, output);
 	}
 
 	/* Cleanup */
