@@ -133,7 +133,6 @@ totem_CFLAGS = \
 	$(WARN_CFLAGS)			\
 	$(EXTRA_GNOME_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
-	$(MEDIA_PLAYER_KEYS_CFLAGS)	\
 	$(NVTV_CFLAGS)			\
 	$(MISSING_PLUGINS_CFLAGS) \
 	$(AM_CFLAGS)
@@ -153,21 +152,11 @@ totem_LDADD = \
 	$(XVIDMODE_LIBS)		\
 	$(NVTV_LIBS)			\
 	$(DBUS_LIBS)			\
-	$(MEDIA_PLAYER_KEYS_LIBS)       \
 	$(XTEST_LIBS)			\
 	$(X_LIBS)			\
 	$(MISSING_PLUGINS_LIBS)
 
-BUILT_SOURCES =			\
-	totem-marshal.h			\
-	totem-marshal.c
-
-#Rule to generate the marshal files
-totem-marshal.c: totem-marshal.list
-	@GLIB_GENMARSHAL@ --prefix=totem_marshal $< --header --body > $@
-
-totem-marshal.h: totem-marshal.list
-	@GLIB_GENMARSHAL@ --prefix=totem_marshal $< --header > $@
+BUILT_SOURCES =
 
 # Totem video thumbnailer
 

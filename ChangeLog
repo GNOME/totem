@@ -1,3 +1,22 @@
+2007-04-23  Jan Arne Petersen  <jpetersen@jpetersen.org>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/plugins/media-player-keys/Makefile.am:
+	* src/plugins/media-player-keys/media-player-keys.totem-plugin.desk
+	top.in:
+	* src/plugins/media-player-keys/totem-marshal.list:
+	* src/plugins/media-player-keys/totem-media-player-keys.c:
+	(totem_media_player_keys_plugin_class_init),
+	(totem_media_player_keys_plugin_init),
+	(totem_media_player_keys_plugin_finalize),
+	(on_media_player_key_pressed), (on_window_focus_in_event),
+	(impl_activate), (impl_deactivate):
+	* src/totem-marshal.list:
+	* src/totem-remote.c: (totem_remote_finalize), (totem_remote_init):
+	* src/totem.c: (totem_callback_connect): Move media player keys
+	support to a plugin (Closes: #428295)
+
 2007-04-23  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-xine.c:

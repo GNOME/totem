@@ -2926,18 +2926,6 @@ on_volume_scroll_event (GtkWidget *win, GdkEventScroll *event, Totem *totem)
 	return totem_action_handle_volume_scroll (totem, event->direction);
 }
 
-#ifdef HAVE_MEDIA_PLAYER_KEYS
-static gboolean
-on_window_focus_in_event (GtkWidget *win, GdkEventFocus *event, Totem *totem)
-{
-	if (totem->remote != NULL) {
-		totem_remote_window_activated (totem->remote);
-	}
-
-	return FALSE;
-}
-#endif
-
 static void
 update_media_menu_items (Totem *totem)
 {
@@ -3249,11 +3237,6 @@ totem_callback_connect (Totem *totem)
 	totem_action_set_sensitivity ("skip-forward", FALSE);
 	totem_action_set_sensitivity ("skip-backwards", FALSE);
 	totem_action_set_sensitivity ("skip-to", FALSE);
-
-#ifdef HAVE_MEDIA_PLAYER_KEYS
-	g_signal_connect (G_OBJECT(totem->win), "focus-in-event",
-			G_CALLBACK (on_window_focus_in_event), totem);
-#endif
 }
 
 static void
