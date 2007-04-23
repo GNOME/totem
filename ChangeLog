@@ -1,5 +1,23 @@
 2007-04-23  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plugins/galago/Makefile.am:
+	* src/plugins/galago/galago.totem-plugin.desktop.in:
+	* src/plugins/media-player-keys/Makefile.am:
+	* src/plugins/media-player-keys/media-player-keys.totem-plugin.desk
+	top.in:
+	* src/plugins/media-player-keys/media-player-keys.totem-plugin.in:
+	* src/plugins/ontop/Makefile.am:
+	* src/plugins/ontop/ontop.totem-plugin.desktop.in:
+	* src/plugins/screensaver/Makefile.am:
+	* src/plugins/screensaver/screensaver.totem-plugin.desktop.in:
+	* src/plugins/sidebar-test/Makefile.am:
+	* src/plugins/sidebar-test/sidebar-test.totem-plugin.desktop.in:
+	Rename all .totem-plugin.desktop.in to totem-plugin.in, as
+	pointed out by Christian Persch <chpe@gnome.org>
+	(Closes: #430274)
+
+2007-04-23  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/xmllexer.c: (lexer_get_token):
 	* src/plparse/xmllexer.h:
 	* src/plparse/xmlparser.c: (xml_parser_get_node_internal),

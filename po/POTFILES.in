@@ -5,7 +5,7 @@ data/playlist.glade
 data/plugins.glade
 data/properties.glade
 data/skip_to.glade
-data/totem.desktop.in.in.in
+data/totem.in.in.in
 data/totem.glade
 data/totem.schemas.in
 data/uri.glade
@@ -37,7 +37,8 @@ src/plparse/totem-pl-parser-pls.c
 src/plparse/totem-pl-parser-xspf.c
 src/plugins/totem-plugin-manager.c
 src/plugins/totem-plugins-engine.c
-src/plugins/galago/galago.totem-plugin.desktop.in
-src/plugins/ontop/ontop.totem-plugin.desktop.in
-src/plugins/screensaver/screensaver.totem-plugin.desktop.in
+[type: gettext/ini]src/plugins/galago/galago.totem-plugin.in
+[type: gettext/ini]src/plugins/media-player-keys/media-player-keys.totem-plugin.in
+[type: gettext/ini]src/plugins/ontop/ontop.totem-plugin.in
+[type: gettext/ini]src/plugins/screensaver/screensaver.totem-plugin.in
 browser-plugin/totem-plugin-viewer.c

@@ -5,9 +5,9 @@ plugin_LTLIBRARIES = libsidebar-test.la
 # override to _not_ install the test plugins
 install-pluginLTLIBRARIES:
 
-plugin_in_files = sidebar-test.totem-plugin.desktop.in
+plugin_in_files = sidebar-test.totem-plugin.in
 
-%.totem-plugin: %.totem-plugin.desktop.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; $(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
+%.totem-plugin: %.totem-plugin.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; $(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
 
 noinst_DATA = $(plugin_in_files:.totem-plugin.desktop.in=.totem-plugin)
 
