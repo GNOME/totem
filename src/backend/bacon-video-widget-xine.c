@@ -2877,34 +2877,6 @@ bacon_video_widget_get_show_cursor (BaconVideoWidget *bvw)
 	return bvw->priv->cursor_shown;
 }
 
-static void
-bacon_video_widget_set_media_device (BaconVideoWidget *bvw, const char *path)
-{
-	xine_cfg_entry_t entry;
-
-	g_return_if_fail (bvw != NULL);
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-	g_return_if_fail (path != NULL);
-
-	/* DVD device */
-	bvw_config_helper_string (bvw->priv->xine, "media.dvd.device",
-			path, &entry);
-	entry.str_value = (char *) path;
-	xine_config_update_entry (bvw->priv->xine, &entry);
-
-	/* VCD device for the new input plugin */
-	bvw_config_helper_string (bvw->priv->xine, "media.vcd.device",
-			path, &entry);
-	entry.str_value = (char *) path;
-	xine_config_update_entry (bvw->priv->xine, &entry);
-
-	/* CDDA device */
-	bvw_config_helper_string (bvw->priv->xine, "media.audio_cd.device",
-			path, &entry);
-	entry.str_value = (char *) path;
-	xine_config_update_entry (bvw->priv->xine, &entry);
-}
-
 void
 bacon_video_widget_set_connection_speed (BaconVideoWidget *bvw, int speed)
 {
@@ -3266,7 +3238,7 @@ char **
 bacon_video_widget_get_mrls (BaconVideoWidget *bvw, MediaType type,
 			     const char *device)
 {
-	const char *plugin_id;
+	const char *plugin_id, *entry_name;
 	int num_mrls;
 	char **mrls;
 
@@ -3276,23 +3248,36 @@ bacon_video_widget_get_mrls (BaconVideoWidget *bvw, MediaType type,
 	//FIXME enable when we use devices for DVB
 	//g_return_val_if_fail (device != NULL, NULL);
 
-	if (type == MEDIA_TYPE_DVD)
-		plugin_id = "DVD";
-	else if (type == MEDIA_TYPE_VCD)
-		plugin_id = "VCD";
-	else if (type == MEDIA_TYPE_CDDA)
-		plugin_id = "CD";
-	else if (type == MEDIA_TYPE_DVB)
-		plugin_id = "DVB";
-	else
-		return NULL;
+	entry_name = plugin_id = NULL;
 
-	if (type != MEDIA_TYPE_DVB)
-		bacon_video_widget_set_media_device (bvw, device);
+	if (type == MEDIA_TYPE_DVD) {
+		plugin_id = "DVD";
+		entry_name = "media.dvd.device";
+	} else if (type == MEDIA_TYPE_VCD) {
+		plugin_id = "VCD";
+		entry_name = "media.vcd.device";
+	} else if (type == MEDIA_TYPE_CDDA) {
+		plugin_id = "CD";
+		entry_name = "media.audio_cd.device";
+	} else if (type == MEDIA_TYPE_DVB) {
+		plugin_id = "DVB";
+	} else {
+		g_assert_not_reached ();
+	}
+
+	if (entry_name != NULL) {
+		xine_cfg_entry_t entry;
+		bvw_config_helper_string (bvw->priv->xine,
+					  entry_name,
+					  device, &entry);
+		entry.str_value = (char *) device;
+		xine_config_update_entry (bvw->priv->xine, &entry);
+	}
 
 	mrls = xine_get_autoplay_mrls (bvw->priv->xine, plugin_id, &num_mrls);
 	if (mrls == NULL)
 		return NULL;
+
 	if (type == MEDIA_TYPE_DVB) {
 		/* No channels.conf, and we couldn't find it */
 		if (g_str_has_prefix (mrls[0], "Sorry") != FALSE)
