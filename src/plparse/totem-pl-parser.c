@@ -30,8 +30,6 @@
 #include <libgnomevfs/gnome-vfs-mime-utils.h>
 
 #ifndef TOTEM_PL_PARSER_MINI
-#include <libxml/tree.h>
-#include <libxml/parser.h>
 #include <gobject/gvaluecollector.h>
 #include <gtk/gtk.h>
 #include <libgnomevfs/gnome-vfs.h>

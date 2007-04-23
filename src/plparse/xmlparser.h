@@ -18,7 +18,7 @@
  * write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- *  $Id: xmlparser.h,v 1.5 2006/09/26 05:19:49 dgp85 Exp $
+ *  $Id: xmlparser.h,v 1.6 2007/03/04 16:19:12 hadess Exp $
  *
  */
 
@@ -57,6 +57,7 @@ typedef struct xml_node_s {
 void xml_parser_init(const char * buf, int size, int mode) XINE_PROTECTED;
 
 int xml_parser_build_tree(xml_node_t **root_node) XINE_PROTECTED;
+int xml_parser_build_tree_relaxed(xml_node_t **root_node, int relaxed) XINE_PROTECTED;
 
 void xml_parser_free_tree(xml_node_t *root_node) XINE_PROTECTED;
 

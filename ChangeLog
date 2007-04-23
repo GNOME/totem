@@ -1,3 +1,28 @@
+2007-04-23  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/xmllexer.c: (lexer_get_token):
+	* src/plparse/xmllexer.h:
+	* src/plparse/xmlparser.c: (xml_parser_get_node_internal),
+	(xml_parser_get_node), (xml_parser_build_tree_relaxed),
+	(xml_parser_build_tree), (xml_parser_dump_tree):
+	* src/plparse/xmlparser.h:
+	Update from xine-lib's xml-relaxation playground repository,
+	allows parsing of top-level entities, handle single-quoted
+	attributes, allow some elements with missing close tags
+
+	* src/plparse/totem-pl-parser.c: 
+	* src/plparse/totem-pl-parser-misc.c:
+	* src/plparse/totem-pl-parser-smil.c:
+	(totem_pl_parser_add_smil_with_data):
+	* src/plparse/totem-pl-parser-wm.c: (totem_pl_parser_add_asx):
+	Use the relaxed xml parsing by default (even more relaxed than
+	usual), remove some unneeded libxml includes
+
+	* src/plparse/totem-pl-parser-qt.c:
+	(totem_pl_parser_add_quicktime_metalink): Use xine-lib's XML
+	parser instead of libxml2, allows parsing of some QuickTime link
+	files with broken xml (Closes: #431663)
+
 2007-04-23  Jan Arne Petersen  <jpetersen@jpetersen.org>
 
 	* configure.in:

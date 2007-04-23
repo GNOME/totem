@@ -184,7 +184,7 @@ totem_pl_parser_add_smil_with_data (TotemPlParser *parser, const char *url,
 	TotemPlParserResult retval;
 
 	xml_parser_init (contents, size, XML_PARSER_CASE_INSENSITIVE);
-	if (xml_parser_build_tree (&doc) < 0)
+	if (xml_parser_build_tree_relaxed (&doc, TRUE) < 0)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	retval = totem_pl_parser_add_smil_with_doc (parser, url, _base, doc);

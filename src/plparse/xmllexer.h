@@ -18,7 +18,7 @@
  * write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: xmllexer.h,v 1.7 2006/09/26 05:19:49 dgp85 Exp $
+ * $Id: xmllexer.h,v 1.8 2007/03/04 16:19:12 hadess Exp $
  *
  */
 

@@ -28,8 +28,7 @@
 #include <glib.h>
 
 #ifndef TOTEM_PL_PARSER_MINI
-#include <libxml/tree.h>
-#include <libxml/parser.h>
+#include "xmlparser.h"
 #include <gtk/gtk.h>
 #include <libgnomevfs/gnome-vfs.h>
 #include "totem-pl-parser.h"
@@ -88,9 +87,11 @@ static TotemPlParserResult
 totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url,
 					const char *base, gpointer data)
 {
-	xmlDocPtr doc;
-	xmlNodePtr node;
-	xmlChar *src;
+	xml_node_t *doc, *node;
+	int size;
+	char *contents;
+	const char *tmp;
+	gboolean found;
 
 	if (g_str_has_prefix (data, "RTSPtext") != FALSE
 			|| g_str_has_prefix (data, "rtsptext") != FALSE) {
@@ -112,41 +113,49 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url,
 		return retval;
 	}
 
-	doc = totem_pl_parser_parse_xml_file (url);
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+		return TOTEM_PL_PARSER_RESULT_ERROR;
 
-	/* If the document has no root, or no name */
-	if(!doc || !doc->children
-			|| !doc->children->name
-			|| g_ascii_strcasecmp ((char *)doc->children->name,
-				"quicktime") != 0) {
-		if (doc != NULL)
-			xmlFreeDoc (doc);
+	xml_parser_init (contents, size, XML_PARSER_CASE_INSENSITIVE);
+	if (xml_parser_build_tree_relaxed (&doc, TRUE) < 0) {
+		g_free (contents);
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+	}
+	g_free (contents);
+
+	/* Check for quicktime type */
+	for (node = doc, found = FALSE; node != NULL; node = node->next) {
+		const char *type;
+
+		if (node->name == NULL)
+			continue;
+		if (g_ascii_strcasecmp (node->name , "?quicktime") != 0)
+			continue;
+		type = xml_parser_get_property (node, "type");
+		if (g_ascii_strcasecmp ("application/x-quicktime-media-link", type) != 0)
+			continue;
+		found = TRUE;
+	}
+
+	if (found == FALSE) {
+		xml_parser_free_tree (doc);
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
-	if (strstr ((char *) doc->children->content, "type=\"application/x-quicktime-media-link\"") == NULL) {
-		xmlFreeDoc (doc);
+	if (!doc || !doc->name
+	    || g_ascii_strcasecmp (doc->name, "embed") != 0) {
+		xml_parser_free_tree (doc);
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
-	node = doc->children->next;
-	if (!node || !node->name
-			|| g_ascii_strcasecmp ((char *) node->name,
-				"embed") != 0) {
-		xmlFreeDoc (doc);
+	tmp = xml_parser_get_property (doc, "src");
+	if (!tmp) {
+		xml_parser_free_tree (doc);
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
-	src = xmlGetProp (node, (const xmlChar *)"src");
-	if (!src) {
-		xmlFreeDoc (doc);
-		return TOTEM_PL_PARSER_RESULT_ERROR;
-	}
-
-	totem_pl_parser_add_one_url (parser, (char *) src, NULL);
-
-	xmlFree (src);
-	xmlFreeDoc (doc);
+	totem_pl_parser_add_one_url (parser, tmp, NULL);
+	xml_parser_free_tree (doc);
 
 	return TOTEM_PL_PARSER_RESULT_SUCCESS;
 }

@@ -18,7 +18,7 @@
  * write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- *  $Id: xmllexer.c,v 1.12 2006/06/20 00:35:08 dgp85 Exp $
+ *  $Id: xmllexer.c,v 1.13 2007/03/04 16:19:12 hadess Exp $
  *
  */
 
@@ -61,9 +61,27 @@ void lexer_init(const char * buf, int size) {
   lprintf("buffer length %d\n", size);
 }
 
+typedef enum {
+  STATE_UNKNOWN = -1,
+  STATE_IDLE,
+  STATE_EOL,
+  STATE_SEPAR,
+  STATE_T_M_START,
+  STATE_T_M_STOP_1,
+  STATE_T_M_STOP_2,
+  STATE_T_EQUAL,
+  STATE_T_STRING_SINGLE,
+  STATE_T_STRING_DOUBLE,
+  STATE_T_COMMENT,
+  STATE_T_TI_STOP,
+  STATE_T_DASHDASH,
+  STATE_T_C_STOP,
+  STATE_IDENT /* must be last */
+} lexer_state_t;
+
 int lexer_get_token(char * tok, int tok_size) {
   int tok_pos = 0;
-  int state = 0;
+  lexer_state_t state = STATE_IDLE;
   char c;
 
   if (tok) {
@@ -75,65 +93,70 @@ int lexer_get_token(char * tok, int tok_size) {
 				/* normal mode */
 	switch (state) {
 	  /* init state */
-	case 0:
+	case STATE_IDLE:
 	  switch (c) {
 	  case '\n':
 	  case '\r':
-	    state = 1;
+	    state = STATE_EOL;
 	    tok[tok_pos] = c;
 	    tok_pos++;
 	    break;
 
 	  case ' ':
 	  case '\t':
-	    state = 2;
+	    state = STATE_SEPAR;
 	    tok[tok_pos] = c;
 	    tok_pos++;
 	    break;
 
 	  case '<':
-	    state = 3;
+	    state = STATE_T_M_START;
 	    tok[tok_pos] = c;
 	    tok_pos++;
 	    break;
 
 	  case '>':
-	    state = 4;
+	    state = STATE_T_M_STOP_1;
 	    tok[tok_pos] = c;
 	    tok_pos++;
 	    break;
 
 	  case '/':
 	    if (!in_comment) 
-	      state = 5;
+	      state = STATE_T_M_STOP_2;
 	    tok[tok_pos] = c;
 	    tok_pos++;
 	    break;
 
 	  case '=':
-	    state = 6;
+	    state = STATE_T_EQUAL;
 	    tok[tok_pos] = c;
 	    tok_pos++;
 	    break;
 
 	  case '\"': /* " */
-	    state = 7;
+	    state = STATE_T_STRING_DOUBLE;
+	    break;
+
+	  case '\'': /* " */
+	    state = STATE_T_STRING_SINGLE;
 	    break;
 
 	  case '-':
-	    state = 10;
+	    state = STATE_T_DASHDASH;
 	    tok[tok_pos] = c;
 	    tok_pos++;
 	    break;
 
 	  case '?':
-	    state = 9;
+	    if (!in_comment)
+	      state = STATE_T_TI_STOP;
 	    tok[tok_pos] = c;
 	    tok_pos++;
 	    break;
 
 	  default:
-	    state = 100;
+	    state = STATE_IDENT;
 	    tok[tok_pos] = c;
 	    tok_pos++;
 	    break;
@@ -142,7 +165,7 @@ int lexer_get_token(char * tok, int tok_size) {
 	  break;
 
 	  /* end of line */
-	case 1:
+	case STATE_EOL:
 	  if (c == '\n' || (c == '\r')) {
 	    tok[tok_pos] = c;
 	    lexbuf_pos++;
@@ -154,7 +177,7 @@ int lexer_get_token(char * tok, int tok_size) {
 	  break;
 
 	  /* T_SEPAR */
-	case 2:
+	case STATE_SEPAR:
 	  if (c == ' ' || (c == '\t')) {
 	    tok[tok_pos] = c;
 	    lexbuf_pos++;
@@ -166,7 +189,7 @@ int lexer_get_token(char * tok, int tok_size) {
 	  break;
 
 	  /* T_M_START < or </ or <! or <? */
-	case 3:
+	case STATE_T_M_START:
 	  switch (c) {
 	  case '/':
 	    tok[tok_pos] = c;
@@ -179,7 +202,7 @@ int lexer_get_token(char * tok, int tok_size) {
 	    tok[tok_pos] = c;
 	    lexbuf_pos++;
 	    tok_pos++;
-	    state = 8;
+	    state = STATE_T_COMMENT;
 	    break;
 	  case '?':
 	    tok[tok_pos] = c;
@@ -195,7 +218,7 @@ int lexer_get_token(char * tok, int tok_size) {
 	  break;
 
 	  /* T_M_STOP_1 */
-	case 4:
+	case STATE_T_M_STOP_1:
 	  tok[tok_pos] = '\0';
 	  if (!in_comment)
 	    lex_mode = DATA;
@@ -203,7 +226,7 @@ int lexer_get_token(char * tok, int tok_size) {
 	  break;
 
 	  /* T_M_STOP_2 */
-	case 5:
+	case STATE_T_M_STOP_2:
 	  if (c == '>') {
 	    tok[tok_pos] = c;
 	    lexbuf_pos++;
@@ -219,13 +242,13 @@ int lexer_get_token(char * tok, int tok_size) {
 	  break;
 
 	  /* T_EQUAL */
-	case 6:
+	case STATE_T_EQUAL:
 	  tok[tok_pos] = '\0';
 	  return T_EQUAL;
 	  break;
 
 	  /* T_STRING */
-	case 7:
+	case STATE_T_STRING_DOUBLE:
 	  tok[tok_pos] = c;
 	  lexbuf_pos++;
 	  if (c == '\"') { /* " */
@@ -236,7 +259,7 @@ int lexer_get_token(char * tok, int tok_size) {
 	  break;
 
 	  /* T_C_START or T_DOCTYPE_START */
-	case 8:
+	case STATE_T_COMMENT:
 	  switch (c) {
 	  case '-':
 	    lexbuf_pos++;
@@ -267,12 +290,14 @@ int lexer_get_token(char * tok, int tok_size) {
 	  break;
 
 	  /* T_TI_STOP */
-	case 9:
+	case STATE_T_TI_STOP:
 	  if (c == '>') {
 	    tok[tok_pos] = c;
 	    lexbuf_pos++;
 	    tok_pos++; /* FIXME */
 	    tok[tok_pos] = '\0';
+	    if (!in_comment)
+	      lex_mode = DATA;
 	    return T_TI_STOP;
 	  } else {
 	    tok[tok_pos] = '\0';
@@ -281,24 +306,24 @@ int lexer_get_token(char * tok, int tok_size) {
 	  break;
 
 	  /* -- */
-	case 10:
+	case STATE_T_DASHDASH:
 	  switch (c) {
 	  case '-':
 	    tok[tok_pos] = c;
 	    tok_pos++;
 	    lexbuf_pos++;
-	    state = 11;
+	    state = STATE_T_C_STOP;
 	    break;
 	  default:
 	    tok[tok_pos] = c;
 	    tok_pos++;
 	    lexbuf_pos++;
-	    state = 100;
+	    state = STATE_IDENT;
 	  }
 	  break;
 
 	  /* --> */
-	case 11:
+	case STATE_T_C_STOP:
 	  switch (c) {
 	  case '>':
 	    tok[tok_pos] = c;
@@ -318,12 +343,23 @@ int lexer_get_token(char * tok, int tok_size) {
 	    tok[tok_pos] = c;
 	    tok_pos++;
 	    lexbuf_pos++;
-	    state = 100;
+	    state = STATE_IDENT;
 	  }
 	  break;
 
+	  /* T_STRING (single quotes) */
+	case STATE_T_STRING_SINGLE:
+	  tok[tok_pos] = c;
+	  lexbuf_pos++;
+	  if (c == '\'') { /* " */
+	    tok[tok_pos] = '\0'; /* FIXME */
+	    return T_STRING;
+	  }
+	  tok_pos++;
+	  break;
+
 	  /* IDENT */
-	case 100:
+	case STATE_IDENT:
 	  switch (c) {
 	  case '<':
 	  case '>':
@@ -340,13 +376,13 @@ int lexer_get_token(char * tok, int tok_size) {
 	    tok[tok_pos] = c;
 	    tok_pos++;
 	    lexbuf_pos++;
-	    state = 9;
+	    state = STATE_T_TI_STOP;
 	    break;
 	  case '-':
 	    tok[tok_pos] = c;
 	    tok_pos++;
 	    lexbuf_pos++;
-	    state = 10;
+	    state = STATE_T_DASHDASH;
 	    break;
 	  default:
 	    tok[tok_pos] = c;
