@@ -566,7 +566,7 @@ static int xml_parser_get_node (xml_node_t *current_node, int relaxed)
 }
 
 int xml_parser_build_tree_relaxed(xml_node_t **root_node, int relaxed) {
-  xml_node_t *tmp_node, *pri_node, *q_node;
+  xml_node_t *tmp_node, *pri_node, *q_node = NULL;
   int res;
 
   tmp_node = new_xml_node();
