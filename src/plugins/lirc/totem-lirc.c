@@ -1,5 +1,6 @@
 /* 
  *  Copyright (C) 2002 James Willcox  <jwillcox@gnome.org>
+ *            (C) 2007 Jan Arne Petersen <jpetersen@jpetersen.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,17 +29,40 @@
 
 
 #include <config.h>
+
 #include <glib.h>
+#include <glib-object.h>
+#include <glib/gi18n-lib.h>
+#include <gmodule.h>
 #include <string.h>
 
-#include "totem-remote.h"
-
-#ifdef HAVE_REMOTE
-
-#ifdef HAVE_LIRC
-#include <stdio.h>
+#include <unistd.h>
 #include <lirc/lirc_client.h>
-#include <gconf/gconf-client.h>
+
+#include "totem-plugin.h"
+#include "totem.h"
+
+#define TOTEM_TYPE_LIRC_PLUGIN		(totem_lirc_plugin_get_type ())
+#define TOTEM_LIRC_PLUGIN(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_LIRC_PLUGIN, TotemLircPlugin))
+#define TOTEM_LIRC_PLUGIN_CLASS(k)	(G_TYPE_CHECK_CLASS_CAST((k), TOTEM_TYPE_LIRC_PLUGIN, TotemLircPluginClass))
+#define TOTEM_IS_LIRC_PLUGIN(o)		(G_TYPE_CHECK_INSTANCE_TYPE ((o), TOTEM_TYPE_LIRC_PLUGIN))
+#define TOTEM_IS_LIRC_PLUGIN_CLASS(k)	(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_LIRC_PLUGIN))
+#define TOTEM_LIRC_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_LIRC_PLUGIN, TotemLircPluginClass))
+
+typedef struct
+{
+	TotemPlugin   parent;
+
+	GIOChannel *lirc_channel;
+	struct lirc_config *lirc_config;
+
+	TotemObject *totem;
+} TotemLircPlugin;
+
+typedef struct
+{
+	TotemPluginClass parent_class;
+} TotemLircPluginClass;
 
 /* strings that we recognize as commands from lirc */
 #define TOTEM_IR_COMMAND_PLAY "play"
@@ -65,28 +89,65 @@
 #define TOTEM_IR_COMMAND_EJECT "eject"
 #define TOTEM_IR_COMMAND_PLAY_DVD "play_dvd"
 #define TOTEM_IR_COMMAND_MUTE "mute"
-#endif /* HAVE_LIRC */
 
-struct _TotemRemote {
-	GObject parent;
-};
+G_MODULE_EXPORT GType register_totem_plugin	(GTypeModule *module);
+GType	totem_lirc_plugin_get_type		(void) G_GNUC_CONST;
 
-enum
+static void totem_lirc_plugin_init		(TotemLircPlugin *plugin);
+static void totem_lirc_plugin_finalize		(GObject *object);
+static void impl_activate			(TotemPlugin *plugin, TotemObject *totem);
+static void impl_deactivate			(TotemPlugin *plugin, TotemObject *totem);
+
+TOTEM_PLUGIN_REGISTER(TotemLircPlugin, totem_lirc_plugin)
+
+static void
+totem_lirc_plugin_class_init (TotemLircPluginClass *klass)
 {
-	BUTTON_PRESSED,
-	LAST_SIGNAL
-};
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
 
-static guint totem_remote_signals[LAST_SIGNAL] = { 0 };
-#ifdef HAVE_LIRC
-static GIOChannel *lirc_channel = NULL;
-static GList *listeners = NULL;
-#endif /* HAVE_LIRC */
+	object_class->finalize = totem_lirc_plugin_finalize;
 
+	plugin_class->activate = impl_activate;
+	plugin_class->deactivate = impl_deactivate;
+}
 
-G_DEFINE_TYPE(TotemRemote, totem_remote, G_TYPE_OBJECT)
+static void
+totem_lirc_plugin_init (TotemLircPlugin *plugin)
+{
+}
 
-#ifdef HAVE_LIRC
+static void
+totem_lirc_plugin_finalize (GObject *object)
+{
+	TotemLircPlugin *pi = TOTEM_LIRC_PLUGIN (object);
+	GError *error = NULL;
+
+	if (pi->lirc_channel) {
+		g_io_channel_shutdown (pi->lirc_channel, FALSE, &error);
+		if (error != NULL) {
+			g_warning ("Couldn't destroy lirc connection: %s",
+				   error->message);
+			g_error_free (error);
+		}
+		pi->lirc_channel = NULL;
+	}
+
+	if (pi->lirc_config) {
+		lirc_freeconfig (pi->lirc_config);
+		pi->lirc_config = NULL;
+
+		lirc_deinit ();
+	}
+
+	if (pi->totem) {
+		g_object_unref (pi->totem);
+		pi->totem = NULL;
+	}
+
+	G_OBJECT_CLASS (totem_lirc_plugin_parent_class)->finalize (object);
+}
+
 static TotemRemoteCommand
 totem_lirc_to_command (const gchar *str)
 {
@@ -142,16 +203,18 @@ totem_lirc_to_command (const gchar *str)
 		return TOTEM_REMOTE_COMMAND_UNKNOWN;
 }
 
-static struct lirc_config *config;
-
 static gboolean
-totem_remote_read_code (GIOChannel *source, GIOCondition condition,
-		   gpointer user_data)
+totem_lirc_read_code (GIOChannel *source, GIOCondition condition, TotemLircPlugin *pi)
 {
 	char *code;
 	char *str = NULL;
-	GList *tmp;
+	int ok;
 	TotemRemoteCommand cmd;
+
+	if (condition & (G_IO_ERR | G_IO_HUP)) {
+		/* LIRC connection broken. */
+		return FALSE;
+	}
 
 	/* this _could_ block, but it shouldn't */
 	lirc_nextcode (&code);
@@ -160,134 +223,83 @@ totem_remote_read_code (GIOChannel *source, GIOCondition condition,
 		/* the code was incomplete or something */
 		return TRUE;
 	}
-	
-	if (lirc_code2char (config, code, &str) != 0) {
-		g_message ("Couldn't convert lirc code to string.");
-		return TRUE;
-	}
 
-	if (str == NULL) {
-		/* there was no command associated with the code */
-		g_free (code);
-		return TRUE;
-	}
+	do {
+		ok = lirc_code2char (pi->lirc_config, code, &str);
 
-	cmd = totem_lirc_to_command (str);
+		if (ok != 0) {
+			/* Couldn't convert lirc code to string. */
+			break;
+		}
 
-	tmp = listeners;
-	while (tmp) {
-		TotemRemote *remote = tmp->data;
+		if (str == NULL) {
+			/* there was no command associated with the code */
+			break;
+		}
 
-		g_signal_emit (remote, totem_remote_signals[BUTTON_PRESSED], 0,
-		       cmd);
+		cmd = totem_lirc_to_command (str);
 
-		tmp = tmp->next;
-	}
+		totem_action_remote (pi->totem, cmd, NULL);
+	} while (TRUE);
 
 	g_free (code);
 
-	/* this causes a crash, so I guess I'm not supposed to free it?
-	 * g_free (str);
-	 */
-
 	return TRUE;
 }
-#endif /* HAVE_LIRC */
+static void
+impl_activate (TotemPlugin *plugin,
+	       TotemObject *totem)
+{
+	TotemLircPlugin *pi = TOTEM_LIRC_PLUGIN (plugin);
+	int fd;
+
+	pi->totem = g_object_ref (totem);
+
+	fd = lirc_init ("Totem", 0);
+	if (fd < 0) {
+		/* Couldn't initialize lirc */
+		return;
+	}
+
+	if (lirc_readconfig (NULL, &pi->lirc_config, NULL) == -1) {
+		close (fd);
+		/* Couldn't read lirc configuration */
+		return;
+	}
+
+	pi->lirc_channel = g_io_channel_unix_new (fd);
+	g_io_channel_set_encoding (pi->lirc_channel, NULL, NULL);
+	g_io_channel_set_buffered (pi->lirc_channel, FALSE);
+	g_io_add_watch (pi->lirc_channel, G_IO_IN | G_IO_ERR | G_IO_HUP,
+			(GIOFunc) totem_lirc_read_code, pi);
+}
 
 static void
-totem_remote_finalize (GObject *object)
+impl_deactivate	(TotemPlugin *plugin,
+		 TotemObject *totem)
 {
+	TotemLircPlugin *pi = TOTEM_LIRC_PLUGIN (plugin);
 	GError *error = NULL;
-	TotemRemote *remote;
 
-	g_return_if_fail (object != NULL);
-	g_return_if_fail (TOTEM_IS_REMOTE (object));
-
-	remote = TOTEM_REMOTE (object);
-
-#ifdef HAVE_LIRC
-	lirc_freeconfig (config);
-
-	listeners = g_list_remove (listeners, remote);
-
-	if (listeners == NULL && lirc_channel != NULL) {
-		g_io_channel_shutdown (lirc_channel, FALSE, &error);
+	if (pi->lirc_channel) {
+		g_io_channel_shutdown (pi->lirc_channel, FALSE, &error);
 		if (error != NULL) {
 			g_warning ("Couldn't destroy lirc connection: %s",
 				   error->message);
 			g_error_free (error);
 		}
+		pi->lirc_channel = NULL;
+	}
+
+	if (pi->lirc_config) {
+		lirc_freeconfig (pi->lirc_config);
+		pi->lirc_config = NULL;
 
 		lirc_deinit ();
 	}
-#endif /* HAVE_LIRC */
-}
 
-static void
-totem_remote_class_init (TotemRemoteClass *klass)
-{
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	object_class->finalize = totem_remote_finalize;
-
-	totem_remote_signals[BUTTON_PRESSED] =
-		g_signal_new ("button_pressed",
-			      G_OBJECT_CLASS_TYPE (object_class),
-			      G_SIGNAL_RUN_LAST,
-			      G_STRUCT_OFFSET (TotemRemoteClass, button_pressed),
-			      NULL, NULL,
-			      g_cclosure_marshal_VOID__INT,
-			      G_TYPE_NONE,
-			      1,
-			      G_TYPE_INT);
-}
-
-
-static void
-totem_remote_init (TotemRemote *remote)
-{
-#ifdef HAVE_LIRC
-	int fd;
-#endif /* HAVE_LIRC */
-
-#ifdef HAVE_LIRC
-	if (lirc_channel == NULL) {
-		fd = lirc_init ("Totem", 0);
-
-		if (fd < 0) {
-			GConfClient *gc;
-
-			gc = gconf_client_get_default ();
-			if (gc == NULL)
-				return;
-
-			if (gconf_client_get_bool (gc, GCONF_PREFIX"/debug", NULL) != FALSE)
-				g_message ("Couldn't initialize lirc.\n");
-			g_object_unref (gc);
-			return;
-		}
-
-		if (lirc_readconfig (NULL, &config, NULL) != 0) {
-			g_message ("Couldn't read lirc config.");
-			config = NULL;
-			return;
-		}
-
-		lirc_channel = g_io_channel_unix_new (fd);
-
-		g_io_add_watch (lirc_channel, G_IO_IN,
-				(GIOFunc) totem_remote_read_code, NULL);
+	if (pi->totem) {
+		g_object_unref (pi->totem);
+		pi->totem = NULL;
 	}
-
-	listeners = g_list_prepend (listeners, remote);
-#endif /* HAVE_LIRC */
-
 }
-
-TotemRemote *
-totem_remote_new (void)
-{
-	return g_object_new (TOTEM_TYPE_REMOTE, NULL);
-}
-
-#endif /* HAVE_REMOTE */

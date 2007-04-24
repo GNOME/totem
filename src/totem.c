@@ -194,12 +194,6 @@ totem_action_exit (Totem *totem)
 	if (totem == NULL)
 		exit (0);
 
-#ifdef HAVE_REMOTE
-	if (totem->remote != NULL) {
-		g_object_unref (G_OBJECT (totem->remote));
-	}
-#endif /* HAVE_REMOTE */
-
 	if (totem->win != NULL) {
 		gtk_widget_hide (totem->win);
 		display = gtk_widget_get_display (totem->win);
@@ -2064,7 +2058,7 @@ on_volume_max_button (GtkButton *button, Totem *totem)
 	totem_action_volume_relative (totem, 100);
 }
 
-static void
+void
 totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 {
 	gboolean handled = TRUE;
@@ -2222,15 +2216,6 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		on_video_motion_notify_event (NULL, NULL, totem);
 	}
 }
-
-#ifdef HAVE_REMOTE
-static void
-totem_button_pressed_remote_cb (TotemRemote *remote, TotemRemoteCommand cmd,
-		Totem *totem)
-{
-	totem_action_remote (totem, cmd, NULL);
-}
-#endif /* HAVE_REMOTE */
 
 static void
 playlist_changed_cb (GtkWidget *playlist, Totem *totem)
@@ -3598,12 +3583,6 @@ main (int argc, char **argv)
 				(BaconMessageReceivedFunc)
 				totem_message_connection_receive_cb, totem);
 	}
-
-#ifdef HAVE_REMOTE
-	totem->remote = totem_remote_new ();
-	g_signal_connect (totem->remote, "button_pressed",
-			  G_CALLBACK (totem_button_pressed_remote_cb), totem);
-#endif /* HAVE_REMOTE */
 
 	gtk_main ();
 

@@ -101,7 +101,6 @@ totem_SOURCES = 					\
 	totem.c totem.h					\
 	totem-object.c					\
 	totem-private.h					\
-	totem-remote.c totem-remote.h			\
 	totem-preferences.c totem-preferences.h		\
 	totem-options.c totem-options.h	\
 	totem-playlist.c totem-playlist.h \
@@ -148,7 +147,6 @@ totem_LDADD = \
 	libbaconmessageconnection.la	\
 	libtotem_player.la		\
 	$(EXTRA_GNOME_LIBS)		\
-	$(REMOTE_LIBS)			\
 	$(XVIDMODE_LIBS)		\
 	$(NVTV_LIBS)			\
 	$(DBUS_LIBS)			\

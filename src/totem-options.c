@@ -26,7 +26,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "totem-remote.h"
 #include "totem-options.h"
 #include "totem-uri.h"
 #include "bacon-video-widget.h"

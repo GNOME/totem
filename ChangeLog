@@ -1,3 +1,19 @@
+2007-04-24  Jan Arne Petersen  <jpetersen@jpetersen.org>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/plugins/lirc/Makefile.am:
+	* src/plugins/lirc/lirc.totem-plugin.in:
+	* src/plugins/lirc/totem-lirc.c: (totem_lirc_plugin_class_init),
+	(totem_lirc_plugin_init), (totem_lirc_plugin_finalize),
+	(totem_lirc_read_code), (impl_activate), (impl_deactivate):
+	* src/totem-options.c:
+	* src/totem-private.h:
+	* src/totem-remote.c:
+	* src/totem-remote.h:
+	* src/totem.c: (totem_action_exit), (main):
+	* src/totem.h: Move LIRC support to a plugin (Closes: #428294)
+
 2007-04-24  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plugins/galago/totem-galago.c: (property_notify_cb),

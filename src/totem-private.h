@@ -33,7 +33,6 @@
 #include <gtk/gtk.h>
 #include <libgnomevfs/gnome-vfs.h>
 
-#include "totem-remote.h"
 #include "totem-playlist.h"
 #include "bacon-message-connection.h"
 #include "bacon-video-widget.h"
@@ -173,7 +172,6 @@ struct TotemObject {
 	char *mrl;
 	TotemPlaylist *playlist;
 	GConfClient *gc;
-	TotemRemote *remote;
 	BaconMessageConnection *conn;
 	TotemStates state;
 	gboolean cursor_shown;
