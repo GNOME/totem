@@ -1666,17 +1666,23 @@ update_volume_sliders (Totem *totem)
 }
 
 static void
-property_notify_cb (BaconVideoWidget *bvw, GParamSpec *spec, Totem *totem)
+property_notify_cb_volume (BaconVideoWidget *bvw, GParamSpec *spec, Totem *totem)
 {
-	if (strcmp ("volume", spec->name) == 0) {
-		update_volume_sliders (totem);
-	} else if (strcmp ("logo-mode", spec->name) == 0) {
-		gboolean enabled;
-		enabled = bacon_video_widget_get_logo_mode (totem->bvw);
-		totem_action_zoom (totem, enabled ? ZOOM_DISABLE : ZOOM_ENABLE);
-	} else if (strcmp ("seekable", spec->name) == 0) {
-		update_seekable (totem);
-	}
+	update_volume_sliders (totem);
+}
+
+static void
+property_notify_cb_logo_mode (BaconVideoWidget *bvw, GParamSpec *spec, Totem *totem)
+{
+	gboolean enabled;
+	enabled = bacon_video_widget_get_logo_mode (totem->bvw);
+	totem_action_zoom (totem, enabled ? ZOOM_DISABLE : ZOOM_ENABLE);
+}
+
+static void
+property_notify_cb_seekable (BaconVideoWidget *bvw, GParamSpec *spec, Totem *totem)
+{
+	update_seekable (totem);
 }
 
 static gboolean
@@ -3372,8 +3378,12 @@ video_widget_create (Totem *totem)
 	bacon_video_widget_set_volume (totem->bvw,
 			gconf_client_get_int (totem->gc,
 				GCONF_PREFIX"/volume", NULL));
-	g_signal_connect (G_OBJECT (totem->bvw), "notify",
-			G_CALLBACK (property_notify_cb), totem);
+	g_signal_connect (G_OBJECT (totem->bvw), "notify::volume",
+			G_CALLBACK (property_notify_cb_volume), totem);
+	g_signal_connect (G_OBJECT (totem->bvw), "notify::logo-mode",
+			G_CALLBACK (property_notify_cb_logo_mode), totem);
+	g_signal_connect (G_OBJECT (totem->bvw), "notify::seekable",
+			G_CALLBACK (property_notify_cb_seekable), totem);
 	update_volume_sliders (totem);
 }
 

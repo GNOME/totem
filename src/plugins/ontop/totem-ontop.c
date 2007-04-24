@@ -111,10 +111,6 @@ property_notify_cb (TotemObject *totem,
 		    GParamSpec *spec,
 		    TotemOntopPlugin *pi)
 {
-	if (strcmp ("playing", spec->name) != 0) {
-		return;
-	}
-
 	totem_ontop_update_from_state (totem, pi);
 }
 
@@ -125,7 +121,7 @@ impl_activate (TotemPlugin *plugin,
 	TotemOntopPlugin *pi = TOTEM_ONTOP_PLUGIN (plugin);
 
 	pi->handler_id = g_signal_connect (G_OBJECT (totem),
-					   "notify",
+					   "notify::playing",
 					   G_CALLBACK (property_notify_cb),
 					   pi);
 

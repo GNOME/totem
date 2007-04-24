@@ -49,7 +49,8 @@ typedef struct
 {
 	TotemPlugin	parent;
 
-	guint		handler_id;
+	guint		handler_id_fullscreen;
+	guint		handler_id_playing;
 	gboolean	idle; /* Whether we're idle */
 	GalagoPerson	*me; /* Me! */
 } TotemGalagoPlugin;
@@ -147,11 +148,6 @@ property_notify_cb (TotemObject *totem,
 		    GParamSpec *spec,
 		    TotemGalagoPlugin *plugin)
 {
-	if (strcmp ("fullscreen", spec->name) != 0
-	    && strcmp ("playing", spec->name) != 0) {
-		return;
-	}
-
 	totem_galago_update_from_state (totem, plugin);
 }
 
@@ -161,10 +157,14 @@ impl_activate (TotemPlugin *plugin,
 {
 	TotemGalagoPlugin *pi = TOTEM_GALAGO_PLUGIN (plugin);
 
-	pi->handler_id = g_signal_connect (G_OBJECT (totem),
-					   "notify",
-					   G_CALLBACK (property_notify_cb),
-					   pi);
+	pi->handler_id_fullscreen = g_signal_connect (G_OBJECT (totem),
+				"notify::fullscreen",
+				G_CALLBACK (property_notify_cb),
+				pi);
+	pi->handler_id_playing = g_signal_connect (G_OBJECT (totem),
+				"notify::playing",
+				G_CALLBACK (property_notify_cb),
+				pi);
 
 	/* Force setting the current status */
 	totem_galago_update_from_state (totem, pi);
@@ -176,7 +176,9 @@ impl_deactivate	(TotemPlugin *plugin,
 {
 	TotemGalagoPlugin *pi = TOTEM_GALAGO_PLUGIN (plugin);
 
-	g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id);
+	g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_fullscreen);
+	g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_playing);
+
 	totem_galago_set_idleness (pi, FALSE);
 }
 

@@ -1,3 +1,18 @@
+2007-04-24  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plugins/galago/totem-galago.c: (property_notify_cb),
+	(impl_activate), (impl_deactivate):
+	* src/plugins/ontop/totem-ontop.c: (property_notify_cb),
+	(impl_activate):
+	* src/plugins/screensaver/totem-screensaver.c:
+	(property_notify_cb), (impl_activate), (impl_deactivate):
+	* src/totem.c: (property_notify_cb_volume),
+	(property_notify_cb_logo_mode), (property_notify_cb_seekable),
+	(video_widget_create):
+	Patches from Philip Withnall <bugzilla@tecnocode.co.uk> to avoid
+	connection to all the object property notifications, and only
+	to the ones we're interested in (Closes: #430738)
+
 2007-04-24  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
