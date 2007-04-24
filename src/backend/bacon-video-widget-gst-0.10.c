@@ -4946,13 +4946,17 @@ bacon_video_widget_new (int width, int height,
 
   if (audio_sink) {
     GstStateChangeReturn ret;
+    GstBus *bus;
 
     /* need to set bus explicitly as it's not in a bin yet and
-     * poll_for_state_change() needs one to catch error messages */
-    gst_element_set_bus (audio_sink, bvw->priv->bus);
+     * we need one to catch error messages */
+    bus = gst_bus_new ();
+    gst_element_set_bus (audio_sink, bus);
 
     /* state change NULL => READY should always be synchronous */
     ret = gst_element_set_state (audio_sink, GST_STATE_READY);
+    gst_element_set_bus (audio_sink, NULL);
+
     if (ret == GST_STATE_CHANGE_FAILURE) {
       /* doesn't work, drop this audio sink */
       gst_element_set_state (audio_sink, GST_STATE_NULL);
@@ -4961,12 +4965,10 @@ bacon_video_widget_new (int width, int height,
       /* Hopefully, fakesink should always work */
       if (type != BVW_USE_TYPE_AUDIO)
         audio_sink = gst_element_factory_make ("fakesink", "audio-sink");
-      if (audio_sink) {
-        g_object_set (audio_sink, "sync", TRUE, NULL);
-      } else {
+      if (audio_sink == NULL) {
         GstMessage *err_msg;
 
-        err_msg = gst_bus_poll (bvw->priv->bus, GST_MESSAGE_ERROR, 0);
+        err_msg = gst_bus_poll (bus, GST_MESSAGE_ERROR, 0);
         if (err_msg == NULL) {
           g_warning ("Should have gotten an error message, please file a bug.");
           g_set_error (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
@@ -4979,10 +4981,15 @@ bacon_video_widget_new (int width, int height,
           *err = bvw_error_from_gst_error (bvw, err_msg);
           gst_message_unref (err_msg);
         }
+        gst_object_unref (bus);
         goto sink_error;
       }
+      /* make fakesink sync to the clock like a real sink */
+      g_object_set (audio_sink, "sync", TRUE, NULL);
+      GST_DEBUG ("audio sink doesn't work, using fakesink instead");
       bvw->priv->uses_fakesink = TRUE;
     }
+    gst_object_unref (bus);
   } else {
     g_set_error (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
                  _("Could not find the audio output. "

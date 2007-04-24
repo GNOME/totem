@@ -1,3 +1,12 @@
+2007-04-24  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_new):
+	  Use separate bus to test whether the audiosink is working on
+	  startup, so that errors from testing the audiosink won't lead to
+	  an error dialog later on even if we've already plugged a fakesink
+	  as fallback instead. Should fix #432687.
+
 2007-04-24  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/xmlparser.c: (xml_parser_build_tree_relaxed):
