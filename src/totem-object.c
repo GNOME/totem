@@ -54,16 +54,12 @@ static void totem_object_finalize (GObject *totem);
 
 G_DEFINE_TYPE(TotemObject, totem_object, G_TYPE_OBJECT)
 
-static GObjectClass *parent_class = NULL;
-
 static void
 totem_object_class_init (TotemObjectClass *klass)
 {
 	GObjectClass *object_class;
 
 	object_class = (GObjectClass *) klass;
-
-	parent_class = g_type_class_peek_parent (klass);
 
 	object_class->set_property = totem_object_set_property;
 	object_class->get_property = totem_object_get_property;
@@ -85,9 +81,11 @@ totem_object_init (TotemObject *totem)
 }
 
 static void
-totem_object_finalize (GObject *totem)
+totem_object_finalize (GObject *object)
 {
 	totem_plugins_engine_shutdown ();
+
+	G_OBJECT_CLASS (totem_object_parent_class)->finalize (object);
 }
 
 static void
