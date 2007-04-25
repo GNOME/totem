@@ -203,6 +203,8 @@ totem_action_exit (Totem *totem)
 		gtk_widget_hide (totem->prefs);
 	}
 
+	totem_object_plugins_shutdown ();
+
 #ifndef HAVE_GTK_ONLY
 	totem_gromit_clear (TRUE);
 #endif /* !HAVE_GTK_ONLY */

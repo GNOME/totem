@@ -92,14 +92,6 @@ totem_media_player_keys_plugin_init (TotemMediaPlayerKeysPlugin *plugin)
 static void
 totem_media_player_keys_plugin_finalize (GObject *object)
 {
-	TotemMediaPlayerKeysPlugin *pi = TOTEM_MEDIA_PLAYER_KEYS_PLUGIN (object);
-
-	if (pi->media_player_keys_proxy != NULL) {
-		org_gnome_SettingsDaemon_release_media_player_keys (pi->media_player_keys_proxy, "Totem", NULL);
-		g_object_unref (pi->media_player_keys_proxy);
-		pi->media_player_keys_proxy = NULL;
-	}
-
 	G_OBJECT_CLASS (totem_media_player_keys_plugin_parent_class)->finalize (object);
 }
 

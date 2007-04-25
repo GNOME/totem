@@ -83,7 +83,6 @@ totem_object_init (TotemObject *totem)
 static void
 totem_object_finalize (GObject *object)
 {
-	totem_plugins_engine_shutdown ();
 
 	G_OBJECT_CLASS (totem_object_parent_class)->finalize (object);
 }
@@ -124,6 +123,12 @@ void
 totem_object_plugins_init (TotemObject *totem)
 {
 	totem_plugins_engine_init (totem);
+}
+
+void
+totem_object_plugins_shutdown (void)
+{
+	totem_plugins_engine_shutdown ();
 }
 
 GtkWindow *

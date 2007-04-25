@@ -120,31 +120,6 @@ totem_lirc_plugin_init (TotemLircPlugin *plugin)
 static void
 totem_lirc_plugin_finalize (GObject *object)
 {
-	TotemLircPlugin *pi = TOTEM_LIRC_PLUGIN (object);
-	GError *error = NULL;
-
-	if (pi->lirc_channel) {
-		g_io_channel_shutdown (pi->lirc_channel, FALSE, &error);
-		if (error != NULL) {
-			g_warning ("Couldn't destroy lirc connection: %s",
-				   error->message);
-			g_error_free (error);
-		}
-		pi->lirc_channel = NULL;
-	}
-
-	if (pi->lirc_config) {
-		lirc_freeconfig (pi->lirc_config);
-		pi->lirc_config = NULL;
-
-		lirc_deinit ();
-	}
-
-	if (pi->totem) {
-		g_object_unref (pi->totem);
-		pi->totem = NULL;
-	}
-
 	G_OBJECT_CLASS (totem_lirc_plugin_parent_class)->finalize (object);
 }
 

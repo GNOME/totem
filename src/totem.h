@@ -89,6 +89,7 @@ typedef struct {
 
 GType	totem_object_get_type			(void);
 void    totem_object_plugins_init		(TotemObject *totem);
+void    totem_object_plugins_shutdown		(void);
 
 void	totem_action_exit			(Totem *totem);
 void	totem_action_play			(Totem *totem);

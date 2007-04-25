@@ -1,3 +1,14 @@
+2007-04-25  Jan Arne Petersen  <jpetersen@jpetersen.org>
+
+	* src/plugins/lirc/totem-lirc.c: (totem_lirc_plugin_finalize):
+	* src/plugins/media-player-keys/totem-media-player-keys.c:
+	(totem_media_player_keys_plugin_finalize):
+	* src/totem-object.c: (totem_object_finalize),
+	(totem_object_plugins_shutdown):
+	* src/totem.c: (totem_action_exit):
+	* src/totem.h: Explicitly shutdown the plugins engine at the totem
+	exit. Remove workarounds. (Closes: #433064)
+
 2007-04-25  Christian Persch  <chpe@gnome.org>
 
 	* src/totem-object.c: (totem_object_class_init),
