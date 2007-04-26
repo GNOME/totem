@@ -113,7 +113,6 @@ totem_SOURCES = 					\
 	totem-missing-plugins.c totem-missing-plugins.h \
 	totem-time-label.c totem-time-label.h \
 	totem-uri.c totem-uri.h		\
-	totem-gromit.c totem-gromit.h	\
 	ev-sidebar.c ev-sidebar.h	\
 	totem-subtitle-encoding.c	\
 	totem-subtitle-encoding.h	\

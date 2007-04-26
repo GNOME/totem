@@ -35,7 +35,6 @@
 
 #ifndef HAVE_GTK_ONLY
 #include <gnome.h>
-#include "totem-gromit.h"
 #endif /* !HAVE_GTK_ONLY */
 
 #include <string.h>
@@ -205,10 +204,6 @@ totem_action_exit (Totem *totem)
 
 	totem_object_plugins_shutdown ();
 
-#ifndef HAVE_GTK_ONLY
-	totem_gromit_clear (TRUE);
-#endif /* !HAVE_GTK_ONLY */
-
 	if (display != NULL)
 		gdk_display_sync (display);
 
@@ -234,6 +229,8 @@ totem_action_exit (Totem *totem)
 
 	if (totem->win)
 		gtk_widget_destroy (GTK_WIDGET (totem->win));
+
+	g_object_unref (totem);
 
 	gnome_vfs_shutdown ();
 
@@ -2596,16 +2593,6 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		bacon_video_widget_dvd_event (totem->bvw,
 				BVW_DVD_CHAPTER_MENU);
 		break;
-#ifndef HAVE_GTK_ONLY
-	case GDK_D:
-	case GDK_d:
-		totem_gromit_toggle ();
-		break;
-	case GDK_E:
-	case GDK_e:
-		totem_gromit_clear (FALSE);
-		break;
-#endif /* !HAVE_GTK_ONLY */
 	case GDK_F11:
 	case GDK_f:
 	case GDK_F:

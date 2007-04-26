@@ -1,3 +1,21 @@
+2007-04-26  Jan Arne Petersen  <jpetersen@jpetersen.org>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/plugins/gromit/Makefile.am:
+	* src/plugins/gromit/gromit.totem-plugin.in:
+	* src/plugins/gromit/totem-gromit.c:
+	(totem_gromit_plugin_class_init), (totem_gromit_plugin_init),
+	(totem_gromit_plugin_finalize), (totem_gromit_available),
+	(totem_gromit_exit), (totem_gromit_timeout_cb),
+	(totem_gromit_toggle), (totem_gromit_clear),
+	(on_window_key_press_event), (impl_activate), (impl_deactivate):
+	* src/totem-gromit.c:
+	* src/totem-gromit.h:
+	* src/totem.c: (totem_action_exit),
+	(totem_action_handle_key_press): Move gromit annotation support into a
+	new plugin. (Closes #428290)
+
 2007-04-26  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.schemas.in: Fix typo in the schema

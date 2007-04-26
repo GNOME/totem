@@ -63,7 +63,7 @@ AC_SUBST(TOTEM_PL_PARSER_VERSION_MINOR)
 AC_SUBST(TOTEM_PL_PARSER_VERSION_MICRO)
 
 # The full list of plugins
-allowed_plugins="screensaver ontop galago lirc media-player-keys sidebar-test"
+allowed_plugins="screensaver ontop galago gromit lirc media-player-keys sidebar-test"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -869,6 +869,7 @@ src/plugins/Makefile
 src/plugins/screensaver/Makefile
 src/plugins/ontop/Makefile
 src/plugins/galago/Makefile
+src/plugins/gromit/Makefile
 src/plugins/lirc/Makefile
 src/plugins/media-player-keys/Makefile
 src/plugins/sidebar-test/Makefile
