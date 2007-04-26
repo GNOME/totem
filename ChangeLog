@@ -1,3 +1,20 @@
+2007-04-26  Jan Arne Petersen  <jpetersen@jpetersen.org>
+
+	* src/plugins/galago/totem-galago.c:
+	(totem_galago_plugin_finalize), (impl_activate):
+	* src/plugins/lirc/totem-lirc.c: (impl_activate):
+	* src/plugins/media-player-keys/totem-media-player-keys.c:
+	(impl_activate):
+	* src/plugins/ontop/totem-ontop.c: (impl_activate):
+	* src/plugins/screensaver/totem-screensaver.c: (impl_activate):
+	* src/plugins/totem-plugin.c: (totem_plugin_error_quark),
+	(totem_plugin_activate):
+	* src/plugins/totem-plugin.h:
+	* src/plugins/totem-plugins-engine.c:
+	(totem_plugins_engine_activate_plugin_real),
+	(totem_plugins_engine_activate_plugin): Add support for plugin
+	activation failure. Fix an uninitialized variable. (Closes #433371)
+
 2007-04-25  Jan Arne Petersen  <jpetersen@jpetersen.org>
 
 	* src/plugins/lirc/totem-lirc.c: (totem_lirc_plugin_finalize):

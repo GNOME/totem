@@ -64,10 +64,9 @@ typedef struct
 G_MODULE_EXPORT GType register_totem_plugin	(GTypeModule *module);
 GType totem_galago_plugin_get_type		(void) G_GNUC_CONST;
 
-static GObjectClass *parent_class = NULL;
 static void totem_galago_plugin_init		(TotemGalagoPlugin *plugin);
 static void totem_galago_plugin_finalize	(GObject *object);
-static void impl_activate			(TotemPlugin *plugin, TotemObject *totem);
+static gboolean impl_activate			(TotemPlugin *plugin, TotemObject *totem, GError **error);
 static void impl_deactivate			(TotemPlugin *plugin, TotemObject *totem);
 
 TOTEM_PLUGIN_REGISTER(TotemGalagoPlugin, totem_galago_plugin)
@@ -102,13 +101,15 @@ totem_galago_plugin_finalize (GObject *object)
 {
 	TotemGalagoPlugin *plugin = TOTEM_GALAGO_PLUGIN (object);
 
-	g_object_unref (plugin->me);
+	if (plugin->me != NULL) {
+		g_object_unref (plugin->me);
+		plugin->me = NULL;
+	}
+
 	if (galago_is_connected ())
 		galago_uninit ();
 
-	if (G_OBJECT_CLASS (parent_class)->finalize != NULL) {
-		(* G_OBJECT_CLASS (parent_class)->finalize) (object);
-	}
+	G_OBJECT_CLASS (totem_galago_plugin_parent_class)->finalize (object);
 }
 
 static void
@@ -151,11 +152,18 @@ property_notify_cb (TotemObject *totem,
 	totem_galago_update_from_state (totem, plugin);
 }
 
-static void
+static gboolean
 impl_activate (TotemPlugin *plugin,
-	       TotemObject *totem)
+	       TotemObject *totem,
+	       GError **error)
 {
 	TotemGalagoPlugin *pi = TOTEM_GALAGO_PLUGIN (plugin);
+
+	if (!galago_is_connected ()) {
+		g_set_error (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
+				_("Could not connect to the Galago daemon."));
+		return FALSE;
+	}
 
 	pi->handler_id_fullscreen = g_signal_connect (G_OBJECT (totem),
 				"notify::fullscreen",
@@ -168,6 +176,8 @@ impl_activate (TotemPlugin *plugin,
 
 	/* Force setting the current status */
 	totem_galago_update_from_state (totem, pi);
+
+	return TRUE;
 }
 
 static void

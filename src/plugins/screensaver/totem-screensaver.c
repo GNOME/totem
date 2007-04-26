@@ -65,7 +65,7 @@ GType	totem_screensaver_plugin_get_type		(void) G_GNUC_CONST;
 
 static void totem_screensaver_plugin_init		(TotemScreensaverPlugin *plugin);
 static void totem_screensaver_plugin_finalize		(GObject *object);
-static void impl_activate				(TotemPlugin *plugin, TotemObject *totem);
+static gboolean impl_activate				(TotemPlugin *plugin, TotemObject *totem, GError **error);
 static void impl_deactivate				(TotemPlugin *plugin, TotemObject *totem);
 
 TOTEM_PLUGIN_REGISTER(TotemScreensaverPlugin, totem_screensaver_plugin)
@@ -118,9 +118,10 @@ property_notify_cb (TotemObject *totem,
 	totem_screensaver_update_from_state (totem, pi);
 }
 
-static void
+static gboolean
 impl_activate (TotemPlugin *plugin,
-	       TotemObject *totem)
+	       TotemObject *totem,
+	       GError **error)
 {
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
 
@@ -135,6 +136,8 @@ impl_activate (TotemPlugin *plugin,
 
 	/* Force setting the current status */
 	totem_screensaver_update_from_state (totem, pi);
+
+	return TRUE;
 }
 
 static void

@@ -63,8 +63,8 @@ GType	totem_ontop_plugin_get_type		(void) G_GNUC_CONST;
 
 static void totem_ontop_plugin_init		(TotemOntopPlugin *plugin);
 static void totem_ontop_plugin_finalize		(GObject *object);
-static void impl_activate				(TotemPlugin *plugin, TotemObject *totem);
-static void impl_deactivate				(TotemPlugin *plugin, TotemObject *totem);
+static gboolean impl_activate			(TotemPlugin *plugin, TotemObject *totem, GError **error);
+static void impl_deactivate			(TotemPlugin *plugin, TotemObject *totem);
 
 TOTEM_PLUGIN_REGISTER(TotemOntopPlugin, totem_ontop_plugin)
 
@@ -114,9 +114,10 @@ property_notify_cb (TotemObject *totem,
 	totem_ontop_update_from_state (totem, pi);
 }
 
-static void
+static gboolean
 impl_activate (TotemPlugin *plugin,
-	       TotemObject *totem)
+	       TotemObject *totem,
+	       GError **error)
 {
 	TotemOntopPlugin *pi = TOTEM_ONTOP_PLUGIN (plugin);
 
@@ -126,6 +127,8 @@ impl_activate (TotemPlugin *plugin,
 					   pi);
 
 	totem_ontop_update_from_state (totem, pi);
+
+	return TRUE;
 }
 
 static void

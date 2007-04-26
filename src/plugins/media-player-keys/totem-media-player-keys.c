@@ -67,7 +67,7 @@ GType	totem_media_player_keys_plugin_get_type		(void) G_GNUC_CONST;
 
 static void totem_media_player_keys_plugin_init		(TotemMediaPlayerKeysPlugin *plugin);
 static void totem_media_player_keys_plugin_finalize		(GObject *object);
-static void impl_activate				(TotemPlugin *plugin, TotemObject *totem);
+static gboolean impl_activate				(TotemPlugin *plugin, TotemObject *totem, GError **error);
 static void impl_deactivate				(TotemPlugin *plugin, TotemObject *totem);
 
 TOTEM_PLUGIN_REGISTER(TotemMediaPlayerKeysPlugin, totem_media_player_keys_plugin)
@@ -121,19 +121,20 @@ on_window_focus_in_event (GtkWidget *window, GdkEventFocus *event, TotemMediaPla
 	return FALSE;
 }
 
-static void
+static gboolean
 impl_activate (TotemPlugin *plugin,
-	       TotemObject *totem)
+	       TotemObject *totem,
+	       GError **error)
 {
 	TotemMediaPlayerKeysPlugin *pi = TOTEM_MEDIA_PLAYER_KEYS_PLUGIN (plugin);
 	DBusGConnection *connection;
-	GError *error = NULL;
+	GError *err = NULL;
 	GtkWindow *window;
 
-	connection = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
+	connection = dbus_g_bus_get (DBUS_BUS_SESSION, &err);
 	if (connection == NULL) {
-		g_warning ("Error connecting to D-Bus: %s", error->message);
-		return;
+		g_warning ("Error connecting to D-Bus: %s", err->message);
+		return FALSE;
 	}
 
 	pi->media_player_keys_proxy = dbus_g_proxy_new_for_name (connection,
@@ -152,13 +153,12 @@ impl_activate (TotemPlugin *plugin,
 			G_CALLBACK (on_media_player_key_pressed), totem, NULL);
 
 	window = totem_get_main_window (totem);
-	if (window == NULL)
-		return;
-
 	pi->handler_id = g_signal_connect (G_OBJECT (window), "focus-in-event",
 			G_CALLBACK (on_window_focus_in_event), pi);
 
 	g_object_unref (G_OBJECT (window));
+
+	return TRUE;
 }
 
 static void

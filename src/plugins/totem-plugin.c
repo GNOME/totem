@@ -60,6 +60,17 @@ enum
 	PROP_NAME,
 };
 
+GQuark
+totem_plugin_error_quark (void)
+{
+	static GQuark quark;
+
+	if (!quark)
+		quark = g_quark_from_static_string ("totem_plugin_error");
+
+	return quark;
+}
+
 static gboolean
 is_configurable (TotemPlugin *plugin)
 {
@@ -147,15 +158,18 @@ totem_plugin_get_property (GObject *object,
 	}
 }
 
-void
+gboolean
 totem_plugin_activate (TotemPlugin *plugin,
-		       TotemObject *totem)
+		       TotemObject *totem,
+		       GError **error)
 {
-	g_return_if_fail (TOTEM_IS_PLUGIN (plugin));
-	g_return_if_fail (TOTEM_IS_OBJECT (totem));
+	g_return_val_if_fail (TOTEM_IS_PLUGIN (plugin), FALSE);
+	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), FALSE);
 
 	if (TOTEM_PLUGIN_GET_CLASS (plugin)->activate)
-		TOTEM_PLUGIN_GET_CLASS (plugin)->activate (plugin, totem);
+		return TOTEM_PLUGIN_GET_CLASS (plugin)->activate (plugin, totem, error);
+
+	return TRUE;
 }
 
 void

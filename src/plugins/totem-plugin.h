@@ -54,7 +54,9 @@ typedef struct
 	GObject parent;
 } TotemPlugin;
 
-typedef void		(*TotemPluginActivationFunc)		(TotemPlugin *plugin, TotemObject *totem);
+typedef gboolean	(*TotemPluginActivationFunc)		(TotemPlugin *plugin, TotemObject *totem,
+								 GError **error);
+typedef void		(*TotemPluginDeactivationFunc)		(TotemPlugin *plugin, TotemObject *totem);
 typedef GtkWidget *	(*TotemPluginWidgetFunc)		(TotemPlugin *plugin);
 typedef gboolean	(*TotemPluginBooleanFunc)		(TotemPlugin *plugin);
 
@@ -68,7 +70,7 @@ typedef struct
 	/* Virtual public methods */
 
 	TotemPluginActivationFunc	activate;
-	TotemPluginActivationFunc	deactivate;
+	TotemPluginDeactivationFunc	deactivate;
 	TotemPluginWidgetFunc		create_configure_dialog;
 
 	/* Plugins should not override this, it's handled automatically by
@@ -76,13 +78,23 @@ typedef struct
 	TotemPluginBooleanFunc		is_configurable;
 } TotemPluginClass;
 
+typedef enum
+{
+	TOTEM_PLUGIN_ERROR_ACTIVATION,
+} TotemPluginError;
+
+#define TOTEM_PLUGIN_ERROR (totem_plugin_error_quark ())
+
+GQuark totem_plugin_error_quark (void);
+
 /*
  * Public methods
  */
 GType 		 totem_plugin_get_type 		(void) G_GNUC_CONST;
 
-void 		 totem_plugin_activate		(TotemPlugin *plugin,
-						 TotemObject *shell);
+gboolean	 totem_plugin_activate		(TotemPlugin *plugin,
+						 TotemObject *totem,
+						 GError **error);
 void 		 totem_plugin_deactivate	(TotemPlugin *plugin,
 						 TotemObject *totem);
 

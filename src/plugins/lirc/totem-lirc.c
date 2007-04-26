@@ -95,7 +95,7 @@ GType	totem_lirc_plugin_get_type		(void) G_GNUC_CONST;
 
 static void totem_lirc_plugin_init		(TotemLircPlugin *plugin);
 static void totem_lirc_plugin_finalize		(GObject *object);
-static void impl_activate			(TotemPlugin *plugin, TotemObject *totem);
+static gboolean impl_activate			(TotemPlugin *plugin, TotemObject *totem, GError **error);
 static void impl_deactivate			(TotemPlugin *plugin, TotemObject *totem);
 
 TOTEM_PLUGIN_REGISTER(TotemLircPlugin, totem_lirc_plugin)
@@ -221,9 +221,11 @@ totem_lirc_read_code (GIOChannel *source, GIOCondition condition, TotemLircPlugi
 
 	return TRUE;
 }
-static void
+
+static gboolean
 impl_activate (TotemPlugin *plugin,
-	       TotemObject *totem)
+	       TotemObject *totem,
+	       GError **error)
 {
 	TotemLircPlugin *pi = TOTEM_LIRC_PLUGIN (plugin);
 	int fd;
@@ -232,14 +234,16 @@ impl_activate (TotemPlugin *plugin,
 
 	fd = lirc_init ("Totem", 0);
 	if (fd < 0) {
-		/* Couldn't initialize lirc */
-		return;
+		g_set_error (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
+				_("Couldn't initialize lirc."));
+		return FALSE;
 	}
 
 	if (lirc_readconfig (NULL, &pi->lirc_config, NULL) == -1) {
+		g_set_error (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
+				_("Couldn't read lirc configuration."));
 		close (fd);
-		/* Couldn't read lirc configuration */
-		return;
+		return FALSE;
 	}
 
 	pi->lirc_channel = g_io_channel_unix_new (fd);
@@ -247,6 +251,8 @@ impl_activate (TotemPlugin *plugin,
 	g_io_channel_set_buffered (pi->lirc_channel, FALSE);
 	g_io_add_watch (pi->lirc_channel, G_IO_IN | G_IO_ERR | G_IO_HUP,
 			(GIOFunc) totem_lirc_read_code, pi);
+
+	return TRUE;
 }
 
 static void

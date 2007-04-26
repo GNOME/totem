@@ -96,7 +96,8 @@ static void totem_plugins_engine_plugin_visible_cb (GConfClient *client,
 						 GConfEntry *entry,
 						 TotemPluginInfo *info);
 static gboolean totem_plugins_engine_activate_plugin_real (TotemPluginInfo *info,
-							TotemObject *totem);
+							TotemObject *totem,
+							GError **error);
 static void totem_plugins_engine_deactivate_plugin_real (TotemPluginInfo *info,
 						      TotemObject *totem);
 
@@ -531,7 +532,7 @@ load_plugin_module (TotemPluginInfo *info)
 }
 
 static gboolean
-totem_plugins_engine_activate_plugin_real (TotemPluginInfo *info, TotemObject *totem)
+totem_plugins_engine_activate_plugin_real (TotemPluginInfo *info, TotemObject *totem, GError **error)
 {
 	gboolean res = TRUE;
 
@@ -539,7 +540,7 @@ totem_plugins_engine_activate_plugin_real (TotemPluginInfo *info, TotemObject *t
 		res = load_plugin_module (info);
 
 	if (res)
-		totem_plugin_activate (info->plugin, totem);
+		res = totem_plugin_activate (info->plugin, totem, error);
 	else
 		g_warning ("Error, impossible to activate plugin '%s'", info->name);
 
@@ -550,13 +551,14 @@ gboolean
 totem_plugins_engine_activate_plugin (TotemPluginInfo *info)
 {
 	char *msg;
+	GError *error = NULL;
 
 	g_return_val_if_fail (info != NULL, FALSE);
 
 	if (info->active)
 		return TRUE;
 
-	if (totem_plugins_engine_activate_plugin_real (info, totem_plugins_object)) {
+	if (totem_plugins_engine_activate_plugin_real (info, totem_plugins_object, &error)) {
 		char *key_name;
 
 		key_name = g_strdup_printf (GCONF_PLUGIN_ACTIVE, info->location);
@@ -568,7 +570,12 @@ totem_plugins_engine_activate_plugin (TotemPluginInfo *info)
 		return TRUE;
 	}
 
-	msg = g_strdup_printf (_("Unable to activate plugin %s"), info->name);
+	if (error != NULL) {
+		msg = g_strdup_printf (_("Unable to activate plugin %s.\n%s"), info->name, error->message);
+		g_error_free (error);
+	} else {
+		msg = g_strdup_printf (_("Unable to activate plugin %s"), info->name);
+	}
 	totem_interface_error (_("Plugin Error"), msg, NULL);
 	g_free (msg);
 
