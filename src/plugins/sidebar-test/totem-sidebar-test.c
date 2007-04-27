@@ -60,7 +60,7 @@ GType	totem_sidebar_test_plugin_get_type		(void) G_GNUC_CONST;
 
 static void totem_sidebar_test_plugin_init		(TotemSidebarTestPlugin *plugin);
 static void totem_sidebar_test_plugin_finalize		(GObject *object);
-static void impl_activate				(TotemPlugin *plugin, TotemObject *totem);
+static gboolean impl_activate				(TotemPlugin *plugin, TotemObject *totem, GError **error);
 static void impl_deactivate				(TotemPlugin *plugin, TotemObject *totem);
 
 TOTEM_PLUGIN_REGISTER(TotemSidebarTestPlugin, totem_sidebar_test_plugin)
@@ -88,9 +88,10 @@ totem_sidebar_test_plugin_finalize (GObject *object)
 	G_OBJECT_CLASS (totem_sidebar_test_plugin_parent_class)->finalize (object);
 }
 
-static void
+static gboolean
 impl_activate (TotemPlugin *plugin,
-	       TotemObject *totem)
+	       TotemObject *totem,
+	       GError **error)
 {
 	GtkWidget *label;
 
@@ -101,6 +102,8 @@ impl_activate (TotemPlugin *plugin,
 				"Sidebar Test",
 				label);
 	g_message ("Just added a test sidebar");
+
+	return TRUE;
 }
 
 static void
