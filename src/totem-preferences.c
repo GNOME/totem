@@ -72,23 +72,6 @@ totem_action_info (char *reason, Totem *totem)
 	gtk_widget_show (error_dialog);
 }
 
-static char *
-get_stock_label (const char *stock_id)
-{
-	GtkStockItem stock_item;
-	char *label, **split;
-
-	if (gtk_stock_lookup (stock_id, &stock_item) == FALSE) {
-		g_warning ("Couldn't get stock item for '%s'", stock_id);
-		return NULL;
-	}
-	split = g_strsplit (dgettext(stock_item.translation_domain, stock_item.label),
-			      "_", 2);
-	label = g_strjoinv ("", split);
-	g_strfreev (split);
-	return label;
-}
-
 static gboolean
 ask_show_visuals (Totem *totem)
 {
@@ -445,7 +428,7 @@ totem_setup_preferences (Totem *totem)
 	GtkAction *action;
 	gboolean show_visuals, auto_resize, is_local, deinterlace;
 	int connection_speed, i;
-	char *label, *visual, *font, *encoding;
+	char *visual, *font, *encoding;
 	GList *list, *l;
 	BaconVideoWidgetAudioOutType audio_out;
 	GConfValue *value;
@@ -473,14 +456,12 @@ totem_setup_preferences (Totem *totem)
 	/* Work-around glade dialogue not parenting properly for
 	 * On top windows */
 	item = glade_xml_get_widget (totem->xml, "tpw_notebook");
-	label = get_stock_label (GTK_STOCK_PREFERENCES);
-	totem->prefs = gtk_dialog_new_with_buttons (label,
+	totem->prefs = gtk_dialog_new_with_buttons (_("Preferences"),
 			GTK_WINDOW (totem->win),
 			GTK_DIALOG_DESTROY_WITH_PARENT,
 			GTK_STOCK_CLOSE,
 			GTK_RESPONSE_ACCEPT,
 			NULL);
-	g_free (label);
 	gtk_dialog_set_has_separator (GTK_DIALOG (totem->prefs), FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (totem->prefs), 5);
 	gtk_box_set_spacing (GTK_BOX(GTK_DIALOG(totem->prefs)->vbox), 2);

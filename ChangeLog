@@ -1,3 +1,10 @@
+2007-05-02  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-preferences.c: (totem_setup_preferences):
+	Don't muck around with a stock translated string, as we'd get
+	extra bits we don't want for a window title, fixes "XXX(Y)" appearing
+	as a window title for non-latin languages (Closes: #412560)
+
 2007-04-27  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plugins/sidebar-test/totem-sidebar-test.c: (impl_activate):
