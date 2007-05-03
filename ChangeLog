@@ -1,5 +1,12 @@
 2007-05-03  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (totem_action_play),
+	(totem_action_set_mrl_with_warning), (playlist_changed_cb):
+	Fix the pause icon being shown in the playlist when playing
+	a file, and drag'n'dropping another one to play straight away
+
+2007-05-03  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plugins/totem-plugins-engine.c:
 	(totem_plugins_engine_shutdown):
 	* src/totem-uri.c: (totem_destroy_file_filters):

@@ -366,10 +366,8 @@ totem_action_play (Totem *totem)
 	retval = bacon_video_widget_play (totem->bvw,  &err);
 	play_pause_set_label (totem, retval ? STATE_PLAYING : STATE_STOPPED);
 
-	if (retval != FALSE) {
-		play_pause_set_label (totem, STATE_PLAYING);
+	if (retval != FALSE)
 		return;
-	}
 
 	disp = totem_uri_escape_for_display (totem->mrl);
 	msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
@@ -981,6 +979,7 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		g_free (totem->mrl);
 		totem->mrl = NULL;
 		bacon_video_widget_close (totem->bvw);
+		play_pause_set_label (totem, TOTEM_PLAYLIST_STATUS_NONE);
 	}
 
 	/* Reset the properties and wait for the signal*/
@@ -990,6 +989,8 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 	if (mrl == NULL)
 	{
 		retval = FALSE;
+
+		play_pause_set_label (totem, TOTEM_PLAYLIST_STATUS_NONE);
 
 		/* Play/Pause */
 		totem_action_set_sensitivity ("play", FALSE);
@@ -1052,9 +1053,7 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 			(GTK_WIDGET (totem->properties), retval);
 
 		/* Set the playlist */
-		totem_playlist_set_playing (totem->playlist,
-					    retval ? TOTEM_PLAYLIST_STATUS_PAUSED : 
-					    TOTEM_PLAYLIST_STATUS_NONE);
+		play_pause_set_label (totem, retval ? STATE_PAUSED : STATE_STOPPED);
 
 		if (retval == FALSE && warn != FALSE)
 		{
@@ -1074,12 +1073,10 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 
 		if (retval == FALSE)
 		{
-			if (err) {
+			if (err)
 				g_error_free (err);
-			}
 			g_free (totem->mrl);
 			totem->mrl = NULL;
-			play_pause_set_label (totem, STATE_STOPPED);
 			bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
 		}
 	}
@@ -2238,6 +2235,7 @@ playlist_changed_cb (GtkWidget *playlist, Totem *totem)
 	{
 		totem_action_set_mrl_and_play (totem, mrl);
 	} else if (totem->mrl != NULL) {
+		//FIXME that's busted
 		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_PLAYING);
 	}
 
