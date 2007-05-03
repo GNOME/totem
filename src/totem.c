@@ -154,6 +154,9 @@ totem_action_save_state (Totem *totem)
 	char *contents, *filename;
 	const char *page_id;
 
+	if (totem->win == NULL)
+		return;
+
 	keyfile = g_key_file_new ();
 	g_key_file_set_integer (keyfile, "State",
 			"window_w", totem->window_w);
@@ -3467,10 +3470,8 @@ main (int argc, char **argv)
 	if (bacon_message_connection_get_is_server (totem->conn) == FALSE)
 	{
 		totem_options_process_for_server (totem->conn, &optionstate);
-		bacon_message_connection_free (totem->conn);
-		g_free (totem);
 		gdk_notify_startup_complete ();
-		exit (0);
+		totem_action_exit (totem);
 	} else {
 		totem_options_process_early (gc, &optionstate);
 	}

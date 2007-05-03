@@ -1,3 +1,12 @@
+2007-05-03  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plugins/totem-plugins-engine.c:
+	(totem_plugins_engine_shutdown):
+	* src/totem-uri.c: (totem_destroy_file_filters):
+	* src/totem.c: (totem_action_save_state), (main):
+	Don't crash on exit when launching remote commands to an existing
+	instance of Totem
+
 2007-05-02  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-preferences.c: (totem_setup_preferences):

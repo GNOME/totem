@@ -425,16 +425,20 @@ totem_plugin_info_free (TotemPluginInfo *info)
 void
 totem_plugins_engine_shutdown (void)
 {
-	g_hash_table_destroy (totem_plugins);
+	if (totem_plugins != NULL)
+		g_hash_table_destroy (totem_plugins);
 	totem_plugins = NULL;
 
-	g_object_unref (totem_plugins_object);
+	if (totem_plugins_object != NULL)
+		g_object_unref (totem_plugins_object);
 	totem_plugins_object = NULL;
 
-	g_source_remove (garbage_collect_id);
+	if (garbage_collect_id > 0)
+		g_source_remove (garbage_collect_id);
 	totem_plugins_engine_garbage_collect ();
 
-	g_object_unref (client);
+	if (client != NULL)
+		g_object_unref (client);
 	client = NULL;
 
 #ifdef ENABLE_PYTHON

@@ -34,9 +34,10 @@
 #include "totem-uri.h"
 #include "totem-private.h"
 
-static GtkFileFilter *filter_all;
-static GtkFileFilter *filter_supported;
-static GtkFileFilter *filter_audio, *filter_video;
+static GtkFileFilter *filter_all = NULL;
+static GtkFileFilter *filter_supported = NULL;
+static GtkFileFilter *filter_audio = NULL;
+static GtkFileFilter *filter_video = NULL;
 
 static char *xdg_user_dir_lookup (const char *type);
 
@@ -315,10 +316,22 @@ totem_setup_file_filters (void)
 void
 totem_destroy_file_filters (void)
 {
-	g_object_unref (filter_all);
-	g_object_unref (filter_supported);
-	g_object_unref (filter_audio);
-	g_object_unref (filter_video);
+	if (filter_all != NULL) {
+		g_object_unref (filter_all);
+		filter_all = NULL;
+	}
+	if (filter_supported != NULL) {
+		g_object_unref (filter_supported);
+		filter_supported = NULL;
+	}
+	if (filter_audio != NULL) {
+		g_object_unref (filter_audio);
+		filter_audio = NULL;
+	}
+	if (filter_video != NULL) {
+		g_object_unref (filter_video);
+		filter_video = NULL;
+	}
 }
 
 static const char *dir_types[] = {
