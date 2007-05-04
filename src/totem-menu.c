@@ -675,6 +675,11 @@ totem_action_add_recent (Totem *totem, const char *filename)
 	char *groups[] = { NULL, NULL };
 
 	data.mime_type = gnome_vfs_get_mime_type (filename);
+	if (data.mime_type == NULL) {
+		/* No mime-type means warnings, and it breaks when adding
+		 * non-gnome-vfs supported URI schemes */
+		return;
+	}
 	data.display_name = NULL;
 
 	if (strstr (filename, "file:///") == NULL) {

@@ -1,5 +1,16 @@
 2007-05-04  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_open_async),
+	(bacon_video_widget_open_with_subtitle), (bacon_video_widget_play):
+	Yield to the newly created open() thread so that we can block on open
+	later, fix "cat foo | totem fd://0" not working, fix a comment about
+	the icyx protocol
+	* src/totem-menu.c: (totem_action_add_recent): don't try to add
+	movies without a mime-type to the recent files list
+
+2007-05-04  Bastien Nocera  <hadess@hadess.net>
+
 	* COPYING: another excemption/exemption/exception usage
 	* src/totem-properties-main.c: Remove exception from
 	totem-properties-main.c, as it is based on GPL code

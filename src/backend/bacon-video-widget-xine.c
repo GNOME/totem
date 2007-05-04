@@ -2214,6 +2214,10 @@ bacon_video_widget_open_async (BaconVideoWidget *bvw, const char *mrl,
 		return FALSE;
 	}
 
+	/* Make it so that the thread we just started is executed straight away,
+	 * otherwise other events can occur before we start the open */
+	sched_yield ();
+
 	return TRUE;
 }
 
@@ -2238,7 +2242,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 		/* Handle "icy://" URLs from QuickTime */
 		bvw->com->mrl = g_strdup_printf ("http:%s", mrl + 4);
 	} else if (g_str_has_prefix (mrl, "icyx:") != FALSE) {
-		/* Handle "icy://" URLs from Orban/Coding Technologies AAC/aacPlus Player */
+		/* Handle "icyx://" URLs from Orban/Coding Technologies AAC/aacPlus Player */
 		bvw->com->mrl = g_strdup_printf ("http:%s", mrl + 5);
 	} else {
 		bvw->com->mrl = g_strdup (mrl);
@@ -2349,8 +2353,7 @@ bacon_video_widget_play (BaconVideoWidget *bvw, GError **gerror)
 
 	pthread_mutex_lock (&bvw->priv->mutex);
 
-	if (bvw->priv->seeking == 1)
-	{
+	if (bvw->priv->seeking == 1) {
 		error = xine_play (bvw->priv->stream,
 				bvw->priv->seek_dest * 65535, 0);
 		bvw->priv->seeking = 0;
@@ -2376,14 +2379,12 @@ bacon_video_widget_play (BaconVideoWidget *bvw, GError **gerror)
 
 	pthread_mutex_unlock (&bvw->priv->mutex);
 
-	if (error == 0)
-	{
+	if (error == 0) {
 		xine_error (bvw, gerror);
 		return FALSE;
 	}
 
-	if (bvw->priv->queued_vis != NULL)
-	{
+	if (bvw->priv->queued_vis != NULL) {
 		bacon_video_widget_set_visuals (bvw, bvw->priv->queued_vis);
 		g_free (bvw->priv->queued_vis);
 		bvw->priv->queued_vis = NULL;
