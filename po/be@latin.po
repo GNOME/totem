@@ -7,14 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-28 21:26+0300\n"
+"POT-Creation-Date: 2007-05-06 00:45+0300\n"
 "PO-Revision-Date: 2007-04-28 21:31+0300\n"
 "Last-Translator: Ihar Hrachyshka <ihar.hrachyshka@gmail.com>\n"
 "Language-Team: Belarusian Latin <i18n@mova.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../data/playlist.glade.h:1
 msgid "Add..."
@@ -30,8 +31,7 @@ msgstr "Pierasuń vyšej"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../data/playlist.glade.h:4
-#: ../src/totem-playlist.c:903
+#: ../data/playlist.glade.h:4 ../src/totem-playlist.c:903
 #: ../src/totem-sidebar.c:105
 msgid "Playlist"
 msgstr "Śpis"
@@ -69,14 +69,12 @@ msgid "Site:"
 msgstr "Sajt:"
 
 #. Channels
-#: ../data/properties.glade.h:1
-#: ../src/bacon-video-widget-properties.c:170
+#: ../data/properties.glade.h:1 ../src/bacon-video-widget-properties.c:170
 msgid "0 Channels"
 msgstr "0 kanałaŭ"
 
 #. Sample rate
-#: ../data/properties.glade.h:2
-#: ../src/bacon-video-widget-properties.c:168
+#: ../data/properties.glade.h:2 ../src/bacon-video-widget-properties.c:168
 msgid "0 Hz"
 msgstr "0 Hz"
 
@@ -89,8 +87,7 @@ msgid "0 kbps"
 msgstr "0 kbps"
 
 #. 0 seconds
-#: ../data/properties.glade.h:5
-#: ../data/skip_to.glade.h:1
+#: ../data/properties.glade.h:5 ../data/skip_to.glade.h:1
 #: ../src/backend/video-utils.c:270
 msgid "0 seconds"
 msgstr "0 sekundaŭ"
@@ -107,8 +104,7 @@ msgstr "Albom:"
 msgid "Artist:"
 msgstr "Vykanaŭca:"
 
-#: ../data/properties.glade.h:9
-#: ../data/totem.glade.h:13
+#: ../data/properties.glade.h:9 ../data/totem.glade.h:13
 #: ../src/totem-properties-view.c:90
 msgid "Audio"
 msgstr "Aŭdyjo"
@@ -137,16 +133,14 @@ msgstr "Nasyčanaść:"
 msgid "Framerate:"
 msgstr "Častaść kadraŭ:"
 
-#: ../data/properties.glade.h:16
-#: ../data/totem.glade.h:20
+#: ../data/properties.glade.h:16 ../data/totem.glade.h:20
 msgid "General"
 msgstr "Ahulnaje"
 
 #. Dimensions
 #. Video Codec
 #. Audio Codec
-#: ../data/properties.glade.h:17
-#: ../src/bacon-video-widget-properties.c:153
+#: ../data/properties.glade.h:17 ../src/bacon-video-widget-properties.c:153
 #: ../src/bacon-video-widget-properties.c:155
 #: ../src/bacon-video-widget-properties.c:158
 #: ../src/bacon-video-widget-properties.c:161
@@ -159,8 +153,7 @@ msgstr "Ahulnaje"
 msgid "N/A"
 msgstr "Niama źviestak"
 
-#: ../data/properties.glade.h:18
-#: ../src/totem-sidebar.c:108
+#: ../data/properties.glade.h:18 ../src/totem-sidebar.c:108
 msgid "Properties"
 msgstr "Ułaścivaści"
 
@@ -176,16 +169,14 @@ msgstr "Zahałovak:"
 #. Artist
 #. Album
 #. Year
-#: ../data/properties.glade.h:21
-#: ../src/bacon-video-widget-properties.c:142
+#: ../data/properties.glade.h:21 ../src/bacon-video-widget-properties.c:142
 #: ../src/bacon-video-widget-properties.c:144
 #: ../src/bacon-video-widget-properties.c:146
 #: ../src/bacon-video-widget-properties.c:148
 msgid "Unknown"
 msgstr "Nieviadomy"
 
-#: ../data/properties.glade.h:22
-#: ../src/totem-properties-view.c:86
+#: ../data/properties.glade.h:22 ../src/totem-properties-view.c:86
 msgid "Video"
 msgstr "Videa"
 
@@ -193,8 +184,7 @@ msgstr "Videa"
 msgid "Year:"
 msgstr "Hod:"
 
-#: ../data/skip_to.glade.h:2
-#: ../src/totem-skipto.c:162
+#: ../data/skip_to.glade.h:2 ../src/totem-skipto.c:162
 msgid "Skip to"
 msgstr "Pieraskoč da"
 
@@ -339,10 +329,8 @@ msgid "Time:"
 msgstr "Čas:"
 
 #. Title
-#: ../data/totem.glade.h:42
-#: ../src/totem.c:966
-#: ../src/totem.c:3421
-#: ../src/totem.c:3448
+#: ../data/totem.glade.h:42 ../src/totem.c:967 ../src/totem.c:3422
+#: ../src/totem.c:3449
 msgid "Totem Movie Player"
 msgstr "Videaplayer Totem"
 
@@ -387,8 +375,12 @@ msgid "_Type of visualisation:"
 msgstr "_Typ vizualizacyi:"
 
 #: ../data/totem.schemas.in.h:1
-msgid "Amount of data to buffer for network streams before starting to display the stream (in seconds)"
-msgstr "Kolkaść buferavanych źviestak dla sietkavych płyniaŭ pierad pačatkam adlustravańnia płyni (u sekundach)"
+msgid ""
+"Amount of data to buffer for network streams before starting to display the "
+"stream (in seconds)"
+msgstr ""
+"Kolkaść buferavanych źviestak dla sietkavych płyniaŭ pierad pačatkam "
+"adlustravańnia płyni (u sekundach)"
 
 #: ../data/totem.schemas.in.h:2
 msgid "Buffer size"
@@ -399,16 +391,23 @@ msgid "Default location for the \"Open...\" dialogues"
 msgstr "Zmoŭčanaje pałažeńnie dla vakna \"Adčyni...\""
 
 #: ../data/totem.schemas.in.h:4
-msgid "Default location for the \"Open...\" dialogues, default is the current directory"
-msgstr "Zmoŭčanaje pałažeńnie dla vakna \"Adčyni...\", zmoŭčana heta dziejny kataloh"
+msgid ""
+"Default location for the \"Open...\" dialogues, default is the current "
+"directory"
+msgstr ""
+"Zmoŭčanaje pałažeńnie dla vakna \"Adčyni...\", zmoŭčana heta dziejny kataloh"
 
 #: ../data/totem.schemas.in.h:5
 msgid "Default location for the \"Take Screenshot\" dialogues"
 msgstr "Zmoŭčanaje pałažeńnie dla voknaŭ \"Zrabi zdymak ekranu...\""
 
 #: ../data/totem.schemas.in.h:6
-msgid "Default location for the \"Take Screenshot\" dialogues, default is the Pictures directory"
-msgstr "Zmoŭčanaje pałažeńnie dla voknaŭ \"Zrabi zdymak ekranu...\", zmoŭčana heta kataloh \"Malunki\""
+msgid ""
+"Default location for the \"Take Screenshot\" dialogues, default is the "
+"Pictures directory"
+msgstr ""
+"Zmoŭčanaje pałažeńnie dla voknaŭ \"Zrabi zdymak ekranu...\", zmoŭčana heta "
+"kataloh \"Malunki\""
 
 #: ../data/totem.schemas.in.h:7
 msgid "Enable deinterlacing"
@@ -420,7 +419,9 @@ msgstr "Kadavańnie dla subtytraŭ"
 
 #: ../data/totem.schemas.in.h:9
 msgid "Maximum amount of data to decode ahead of display (in seconds)"
-msgstr "Maksymalnaja kolkaść źviestak, jakija treba dekadavać napierad dziejnaha kadra (u sekundach)"
+msgstr ""
+"Maksymalnaja kolkaść źviestak, jakija treba dekadavać napierad dziejnaha "
+"kadra (u sekundach)"
 
 #: ../data/totem.schemas.in.h:10
 msgid "Name of the visual effects plugins"
@@ -492,8 +493,14 @@ msgid "Type of audio output to use"
 msgstr "Typ vyjścia huku"
 
 #: ../data/totem.schemas.in.h:27
-msgid "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, \"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 Passthrough."
-msgstr "Typ vyjścia huku: \"0\" dla stereahuku, \"1\" dla 4-kanalnaha vyjścia, \"2\" dla 5.0-kanalnaha vyjścia, \"3\" dla 5.1-kanalnaha vyjścia, \"4\" dla niedekadavanaha AC3."
+msgid ""
+"Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
+"\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
+"Passthrough."
+msgstr ""
+"Typ vyjścia huku: \"0\" dla stereahuku, \"1\" dla 4-kanalnaha vyjścia, \"2\" "
+"dla 5.0-kanalnaha vyjścia, \"3\" dla 5.1-kanalnaha vyjścia, \"4\" dla "
+"niedekadavanaha AC3."
 
 #. Translators: This is default subtitle encoding
 #. character set. You can change this to be the most common
@@ -565,8 +572,7 @@ msgstr "Hučnaść"
 msgid "+"
 msgstr "+"
 
-#: ../src/bacon-volume.c:223
-#: ../src/totem-options.c:46
+#: ../src/bacon-volume.c:223 ../src/totem-options.c:46
 msgid "Volume Down"
 msgstr "Cišej"
 
@@ -575,8 +581,7 @@ msgstr "Cišej"
 msgid "-"
 msgstr "-"
 
-#: ../src/bacon-volume.c:241
-#: ../src/totem-options.c:45
+#: ../src/bacon-volume.c:241 ../src/totem-options.c:45
 msgid "Volume Up"
 msgstr "Hučniej"
 
@@ -593,436 +598,453 @@ msgstr "Poŭnaja hučnaść"
 msgid "Couldn't load the '%s' interface."
 msgstr "Niemahčyma adčytać interfejs '%s'."
 
-#: ../src/totem-interface.c:119
-#: ../src/totem-interface.c:121
-#: ../src/totem-menu.c:1441
+#: ../src/totem-interface.c:119 ../src/totem-interface.c:121
+#: ../src/totem-menu.c:1446
 msgid "Make sure that Totem is properly installed."
 msgstr "Upeŭnisia ŭ pravilnaśći instalacyi Totema."
 
 #: ../src/totem-interface.c:236
-msgid "Totem is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version."
-msgstr "Totem heta svabodnaja prahrama; ty možaš raspaŭsiudžvać jaje i/albo madyfikavać zhodna z umovami Ahulnaj hramadzkaj licenzii GNU (GNU GPL), apublikavanaj Fundacyjaj svabodnych prahramaŭ (Free Software Foundation), u versii 2 albo (pry žadańni) luboj paźniejšaj."
+msgid ""
+"Totem is free software; you can redistribute it and/or modify it under the "
+"terms of the GNU General Public License as published by the Free Software "
+"Foundation; either version 2 of the License, or (at your option) any later "
+"version."
+msgstr ""
+"Totem heta svabodnaja prahrama; ty možaš raspaŭsiudžvać jaje i/albo "
+"madyfikavać zhodna z umovami Ahulnaj hramadzkaj licenzii GNU (GNU GPL), "
+"apublikavanaj Fundacyjaj svabodnych prahramaŭ (Free Software Foundation), u "
+"versii 2 albo (pry žadańni) luboj paźniejšaj."
 
 #: ../src/totem-interface.c:240
-msgid "Totem is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
-msgstr "Prahrama Totem raspaŭsiudžvajecca sa spadziavańniami, što jana budzie karysnaj, ale BIEŹ NIJAKICH HARANTYJAŬ; navat biez harantavańnia PRYDATNAŚCI DA KANKRETNAHA VYKARYSTAŃNIA. Padrabiaznaści možna pračytać u Ahulnaj hramadzkaj licenzii GNU (GNU GPL)."
+msgid ""
+"Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
+"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
+"FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
+"details."
+msgstr ""
+"Prahrama Totem raspaŭsiudžvajecca sa spadziavańniami, što jana budzie "
+"karysnaj, ale BIEŹ NIJAKICH HARANTYJAŬ; navat biez harantavańnia PRYDATNAŚCI "
+"DA KANKRETNAHA VYKARYSTAŃNIA. Padrabiaznaści možna pračytać u Ahulnaj "
+"hramadzkaj licenzii GNU (GNU GPL)."
 
 #: ../src/totem-interface.c:244
-msgid "You should have received a copy of the GNU General Public License along with Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
-msgstr "Ty musiŭ atrymać kopiju Ahulnaj hramadzkaj licenzii GNU (GNU GPL) razam z Totemam; kali ty nie atrymaŭ jaje, napišy pra heta (pa-anhielsku) pa adrasie: Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA"
+msgid ""
+"You should have received a copy of the GNU General Public License along with "
+"Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
+"Suite 330, Boston, MA  02111-1307  USA"
+msgstr ""
+"Ty musiŭ atrymać kopiju Ahulnaj hramadzkaj licenzii GNU (GNU GPL) razam z "
+"Totemam; kali ty nie atrymaŭ jaje, napišy pra heta (pa-anhielsku) pa "
+"adrasie: Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, "
+"MA  02111-1307 USA"
 
 #: ../src/totem-interface.c:247
-msgid "Totem contains an exception to allow the use of proprietary GStreamer plugins."
+msgid ""
+"Totem contains an exception to allow the use of proprietary GStreamer "
+"plugins."
 msgstr "Totem dazvalaje vykarystańnie ŭłaśnickich pluginaŭ GStreamer."
 
 #: ../src/totem-menu.c:297
 msgid "None"
 msgstr "Niama"
 
-#: ../src/totem-menu.c:301
-#: ../src/totem-menu.c:1327
+#: ../src/totem-menu.c:301 ../src/totem-menu.c:1332
 msgid "Auto"
 msgstr "Aŭtamatyčna"
 
-#: ../src/totem-menu.c:791
+#: ../src/totem-menu.c:796
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "Hraj dysk '%s'"
 
-#: ../src/totem-menu.c:794
+#: ../src/totem-menu.c:799
 #, c-format
 msgid "device%d"
 msgstr "pryłada%d"
 
-#: ../src/totem-menu.c:1111
+#: ../src/totem-menu.c:1116
 msgid "GTK+"
 msgstr "GTK+"
 
-#: ../src/totem-menu.c:1113
+#: ../src/totem-menu.c:1118
 msgid "GNOME"
 msgstr "GNOME"
 
 #. This lists the back-end and front-end types and versions, such as
 #. * Movie Player using GStreamer 0.10.1 and GNOME
-#: ../src/totem-menu.c:1119
+#: ../src/totem-menu.c:1124
 #, c-format
 msgid "Movie Player using %s and %s"
 msgstr "Videaplayer, na bazie %s i %s"
 
-#: ../src/totem-menu.c:1124
-#: ../browser-plugin/totem-plugin-viewer.c:1097
+#: ../src/totem-menu.c:1129 ../browser-plugin/totem-plugin-viewer.c:1097
 msgid "Copyright © 2002-2006 Bastien Nocera"
 msgstr "Copyright © 2002-2006 Bastien Nocera"
 
-#: ../src/totem-menu.c:1129
-#: ../browser-plugin/totem-plugin-viewer.c:1100
+#: ../src/totem-menu.c:1134 ../browser-plugin/totem-plugin-viewer.c:1100
 msgid "translator-credits"
 msgstr "Ihar Hračyška <ihar.hrachyshka@gmail.com>"
 
-#: ../src/totem-menu.c:1166
+#: ../src/totem-menu.c:1171
 msgid "Configure Plugins"
 msgstr "Kanfihuruj pluginy"
 
-#: ../src/totem-menu.c:1258
+#: ../src/totem-menu.c:1263
 msgid "_Movie"
 msgstr "_Film"
 
-#: ../src/totem-menu.c:1259
+#: ../src/totem-menu.c:1264
 msgid "_Open..."
 msgstr "_Adčyni..."
 
-#: ../src/totem-menu.c:1259
+#: ../src/totem-menu.c:1264
 msgid "Open a file"
 msgstr "Adčyni fajł"
 
-#: ../src/totem-menu.c:1260
+#: ../src/totem-menu.c:1265
 msgid "Open _Location..."
 msgstr "Adčyni _adras..."
 
-#: ../src/totem-menu.c:1260
+#: ../src/totem-menu.c:1265
 msgid "Open a non-local file"
 msgstr "Adčyni nielakalny fajł"
 
-#: ../src/totem-menu.c:1261
+#: ../src/totem-menu.c:1266
 msgid "_Eject"
 msgstr "_Vysuń"
 
-#: ../src/totem-menu.c:1262
+#: ../src/totem-menu.c:1267
 msgid "_Properties"
 msgstr "_Ułaścivaści"
 
-#: ../src/totem-menu.c:1263
+#: ../src/totem-menu.c:1268
 msgid "Play / Pa_use"
 msgstr "Hraj / _Prypyni"
 
-#: ../src/totem-menu.c:1263
+#: ../src/totem-menu.c:1268
 msgid "Play or pause the movie"
 msgstr "Hraj albo prypyni film"
 
-#: ../src/totem-menu.c:1264
+#: ../src/totem-menu.c:1269
 msgid "_Quit"
 msgstr "_Vyjście"
 
-#: ../src/totem-menu.c:1264
+#: ../src/totem-menu.c:1269
 msgid "Quit the program"
 msgstr "Vyjdzi z prahramy"
 
-#: ../src/totem-menu.c:1266
+#: ../src/totem-menu.c:1271
 msgid "_Edit"
 msgstr "_Źmiani"
 
 # Źniać ekran heta nieadnaznačny vyraz
-#: ../src/totem-menu.c:1267
+#: ../src/totem-menu.c:1272
 msgid "Take _Screenshot..."
 msgstr "Zrabi zdymak _ekranu..."
 
-#: ../src/totem-menu.c:1267
+#: ../src/totem-menu.c:1272
 msgid "Take a screenshot"
 msgstr "Zdymak _ekranu"
 
-#: ../src/totem-menu.c:1268
+#: ../src/totem-menu.c:1273
 msgid "_Clear Playlist"
 msgstr "_Ačyść śpis"
 
-#: ../src/totem-menu.c:1268
+#: ../src/totem-menu.c:1273
 msgid "Clear playlist"
 msgstr "Ačyść śpis"
 
-#: ../src/totem-menu.c:1269
+#: ../src/totem-menu.c:1274
 msgid "Prefere_nces"
 msgstr "_Nałady"
 
-#: ../src/totem-menu.c:1270
+#: ../src/totem-menu.c:1275
 msgid "Plugins..."
 msgstr "Pluginy..."
 
-#: ../src/totem-menu.c:1272
+#: ../src/totem-menu.c:1277
 msgid "_View"
 msgstr "_Vyhlad"
 
-#: ../src/totem-menu.c:1273
+#: ../src/totem-menu.c:1278
 msgid "_Fullscreen"
 msgstr "_Poŭny ekran"
 
-#: ../src/totem-menu.c:1273
+#: ../src/totem-menu.c:1278
 msgid "Switch to fullscreen"
 msgstr "Pierajdzi ŭ poŭnaekranny režym"
 
-#: ../src/totem-menu.c:1274
+#: ../src/totem-menu.c:1279
 msgid "Fit Window to Movie"
 msgstr "Dapasuj akno da filmu"
 
-#: ../src/totem-menu.c:1275
+#: ../src/totem-menu.c:1280
 msgid "_Resize 1:2"
 msgstr "_Źmiani pamiery na 1:2"
 
-#: ../src/totem-menu.c:1275
+#: ../src/totem-menu.c:1280
 msgid "Resize to half the video size"
 msgstr "Źmienš akno ŭdvaja, adnosna pamieraŭ videa"
 
-#: ../src/totem-menu.c:1276
+#: ../src/totem-menu.c:1281
 msgid "Resize _1:1"
 msgstr "Źmiani pamiery na _1:1"
 
-#: ../src/totem-menu.c:1276
+#: ../src/totem-menu.c:1281
 msgid "Resize to video size"
 msgstr "Dapasuj pamiery akna da panieraŭ videa"
 
-#: ../src/totem-menu.c:1277
+#: ../src/totem-menu.c:1282
 msgid "Resize _2:1"
 msgstr "Źmiani pamiery na _2:1"
 
-#: ../src/totem-menu.c:1277
+#: ../src/totem-menu.c:1282
 msgid "Resize to twice the video size"
 msgstr "Pavialič akno ŭdvaja, adnosna pamieraŭ videa"
 
-#: ../src/totem-menu.c:1278
+#: ../src/totem-menu.c:1283
 msgid "_Aspect Ratio"
 msgstr "_Praporcyi"
 
-#: ../src/totem-menu.c:1279
+#: ../src/totem-menu.c:1284
 msgid "Switch An_gles"
 msgstr "Źmiani _kut"
 
-#: ../src/totem-menu.c:1279
+#: ../src/totem-menu.c:1284
 msgid "Switch angles"
 msgstr "Źmiani kut"
 
 #. { "subtitles-menu", NULL, N_("S_ubtitles") },
-#: ../src/totem-menu.c:1282
+#: ../src/totem-menu.c:1287
 msgid "_Go"
 msgstr "_Pierajdzi"
 
-#: ../src/totem-menu.c:1283
+#: ../src/totem-menu.c:1288
 msgid "_DVD Menu"
 msgstr "Menu _DVD"
 
-#: ../src/totem-menu.c:1283
+#: ../src/totem-menu.c:1288
 msgid "Go to the DVD menu"
 msgstr "Pierajdzi da menu DVD"
 
-#: ../src/totem-menu.c:1284
+#: ../src/totem-menu.c:1289
 msgid "_Title Menu"
 msgstr "_Zahałoŭnaje menu"
 
-#: ../src/totem-menu.c:1284
+#: ../src/totem-menu.c:1289
 msgid "Go to the title menu"
 msgstr "Pierajdzi da menu zahałoŭkaŭ"
 
-#: ../src/totem-menu.c:1285
+#: ../src/totem-menu.c:1290
 msgid "A_udio Menu"
 msgstr "Menu _huku"
 
-#: ../src/totem-menu.c:1285
+#: ../src/totem-menu.c:1290
 msgid "Go to the audio menu"
 msgstr "Pierajdzi da menu huku"
 
-#: ../src/totem-menu.c:1286
+#: ../src/totem-menu.c:1291
 msgid "_Angle Menu"
 msgstr "_Menu kuta"
 
-#: ../src/totem-menu.c:1286
+#: ../src/totem-menu.c:1291
 msgid "Go to the angle menu"
 msgstr "Pierajdzi da menu kuta"
 
-#: ../src/totem-menu.c:1287
+#: ../src/totem-menu.c:1292
 msgid "_Chapter Menu"
 msgstr "Menu _raździełaŭ"
 
-#: ../src/totem-menu.c:1287
+#: ../src/totem-menu.c:1292
 msgid "Go to the chapter menu"
 msgstr "Pierajdzi da menu raździełaŭ"
 
-#: ../src/totem-menu.c:1288
+#: ../src/totem-menu.c:1293
 msgid "_Next Chapter/Movie"
 msgstr "_Nastupny raździeł/film"
 
-#: ../src/totem-menu.c:1288
+#: ../src/totem-menu.c:1293
 msgid "Next chapter or movie"
 msgstr "Nastupny raździeł albo film"
 
-#: ../src/totem-menu.c:1289
+#: ../src/totem-menu.c:1294
 msgid "_Previous Chapter/Movie"
 msgstr "_Papiaredni raździeł/film"
 
-#: ../src/totem-menu.c:1289
+#: ../src/totem-menu.c:1294
 msgid "Previous chapter or movie"
 msgstr "Papiaredni raździeł albo film"
 
-#: ../src/totem-menu.c:1290
+#: ../src/totem-menu.c:1295
 msgid "_Skip to..."
 msgstr "_Pieraskoč da..."
 
-#: ../src/totem-menu.c:1290
+#: ../src/totem-menu.c:1295
 msgid "Skip to a specific time"
 msgstr "Pieraskoč da akreślenaha času"
 
-#: ../src/totem-menu.c:1292
+#: ../src/totem-menu.c:1297
 msgid "_Sound"
 msgstr "_Huk"
 
 #. { "languages-menu", NULL, N_("_Languages") },
-#: ../src/totem-menu.c:1294
+#: ../src/totem-menu.c:1299
 msgid "Volume _Up"
 msgstr "_Hučniej"
 
-#: ../src/totem-menu.c:1294
+#: ../src/totem-menu.c:1299
 msgid "Volume up"
 msgstr "Hučniej"
 
-#: ../src/totem-menu.c:1295
+#: ../src/totem-menu.c:1300
 msgid "Volume _Down"
 msgstr "_Cišej"
 
-#: ../src/totem-menu.c:1295
+#: ../src/totem-menu.c:1300
 msgid "Volume down"
 msgstr "Cišej"
 
-#: ../src/totem-menu.c:1297
+#: ../src/totem-menu.c:1302
 msgid "_Help"
 msgstr "_Dapamoha"
 
-#: ../src/totem-menu.c:1298
+#: ../src/totem-menu.c:1303
 msgid "_Contents"
 msgstr "_Źmiest"
 
-#: ../src/totem-menu.c:1298
+#: ../src/totem-menu.c:1303
 msgid "Help contents"
 msgstr "Źmiest dapamohi"
 
-#: ../src/totem-menu.c:1299
+#: ../src/totem-menu.c:1304
 msgid "_About"
 msgstr "_Ab prahramie"
 
-#: ../src/totem-menu.c:1303
+#: ../src/totem-menu.c:1308
 msgid "Zoom In"
 msgstr "Pavialič"
 
-#: ../src/totem-menu.c:1303
+#: ../src/totem-menu.c:1308
 msgid "Zoom in"
 msgstr "Pavialič"
 
-#: ../src/totem-menu.c:1304
+#: ../src/totem-menu.c:1309
 msgid "Zoom Reset"
 msgstr "Zmoŭčanaje pavieličeńnie"
 
-#: ../src/totem-menu.c:1304
+#: ../src/totem-menu.c:1309
 msgid "Zoom reset"
 msgstr "Zmoŭčanaje pavieličeńnie"
 
-#: ../src/totem-menu.c:1305
+#: ../src/totem-menu.c:1310
 msgid "Zoom Out"
 msgstr "Źmienš"
 
-#: ../src/totem-menu.c:1305
+#: ../src/totem-menu.c:1310
 msgid "Zoom out"
 msgstr "Źmienš"
 
-#: ../src/totem-menu.c:1309
-#: ../src/totem-menu.c:1314
+#: ../src/totem-menu.c:1314 ../src/totem-menu.c:1319
 msgid "Skip _Forward"
 msgstr "Pieraskoč na_pierad"
 
-#: ../src/totem-menu.c:1309
-#: ../src/totem-menu.c:1314
+#: ../src/totem-menu.c:1314 ../src/totem-menu.c:1319
 msgid "Skip forward"
 msgstr "Pieraskoč napierad"
 
-#: ../src/totem-menu.c:1310
-#: ../src/totem-menu.c:1315
+#: ../src/totem-menu.c:1315 ../src/totem-menu.c:1320
 msgid "Skip _Backwards"
 msgstr "Pieraskoč na_zad"
 
-#: ../src/totem-menu.c:1310
-#: ../src/totem-menu.c:1315
+#: ../src/totem-menu.c:1315 ../src/totem-menu.c:1320
 msgid "Skip backwards"
 msgstr "Pieraskoč nazad"
 
-#: ../src/totem-menu.c:1319
+#: ../src/totem-menu.c:1324
 msgid "_Repeat Mode"
 msgstr "Režym _paŭtoru"
 
-#: ../src/totem-menu.c:1319
+#: ../src/totem-menu.c:1324
 msgid "Set the repeat mode"
 msgstr "Užyj režym paŭtoru"
 
-#: ../src/totem-menu.c:1320
+#: ../src/totem-menu.c:1325
 msgid "Shuff_le Mode"
 msgstr "_Vypadkovy režym"
 
-#: ../src/totem-menu.c:1320
+#: ../src/totem-menu.c:1325
 msgid "Set the shuffle mode"
 msgstr "Užyj vypadkovy režym"
 
-#: ../src/totem-menu.c:1321
+#: ../src/totem-menu.c:1326
 msgid "_Deinterlace"
 msgstr "Užyj _deinterlace"
 
-#: ../src/totem-menu.c:1321
+#: ../src/totem-menu.c:1326
 msgid "Deinterlace"
 msgstr "Užyj deinterlace"
 
-#: ../src/totem-menu.c:1322
+#: ../src/totem-menu.c:1327
 msgid "Show _Controls"
 msgstr "Pakažy _kiroŭnyja elementy"
 
-#: ../src/totem-menu.c:1322
+#: ../src/totem-menu.c:1327
 msgid "Show controls"
 msgstr "Pakažy kiroŭnyja elementy"
 
-#: ../src/totem-menu.c:1323
+#: ../src/totem-menu.c:1328
 msgid "_Sidebar"
 msgstr "_Bakavaja panel"
 
-#: ../src/totem-menu.c:1323
+#: ../src/totem-menu.c:1328
 msgid "Show or hide the sidebar"
 msgstr "Pakažy albo schavaj bakavuju panel"
 
-#: ../src/totem-menu.c:1327
+#: ../src/totem-menu.c:1332
 msgid "Sets automatic aspect ratio"
 msgstr "Akreślivaje aŭtamatyčnyja praporcyi"
 
-#: ../src/totem-menu.c:1328
+#: ../src/totem-menu.c:1333
 msgid "Square"
 msgstr "Kvadratny"
 
-#: ../src/totem-menu.c:1328
+#: ../src/totem-menu.c:1333
 msgid "Sets square aspect ratio"
 msgstr "Akreślivaje kvadratnyja praporcyi"
 
-#: ../src/totem-menu.c:1329
+#: ../src/totem-menu.c:1334
 msgid "4:3 (TV)"
 msgstr "4:3 (TV)"
 
-#: ../src/totem-menu.c:1329
+#: ../src/totem-menu.c:1334
 msgid "Sets 4:3 (TV) aspect ratio"
 msgstr "Akreślivaje praporcyi 4:3 (TV)"
 
-#: ../src/totem-menu.c:1330
+#: ../src/totem-menu.c:1335
 msgid "16:9 (Widescreen)"
 msgstr "16:9 (šyroki ekran)"
 
-#: ../src/totem-menu.c:1330
+#: ../src/totem-menu.c:1335
 msgid "Sets 16:9 (Anamorphic) aspect ratio"
 msgstr "Akreślivaje praporcyi 16:9 (anamarfičnyja)"
 
-#: ../src/totem-menu.c:1331
+#: ../src/totem-menu.c:1336
 msgid "2.11:1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: ../src/totem-menu.c:1331
+#: ../src/totem-menu.c:1336
 msgid "Sets 2.11:1 (DVB) aspect ratio"
 msgstr "Akreślivaje praporcyi 2.11:1 (DVB)"
 
-#: ../src/totem-menu.c:1391
+#: ../src/totem-menu.c:1396
 msgid "S_ubtitles"
 msgstr "S_ubtytry"
 
-#: ../src/totem-menu.c:1397
+#: ../src/totem-menu.c:1402
 msgid "_Languages"
 msgstr "_Movy"
 
-#: ../src/totem-menu.c:1440
+#: ../src/totem-menu.c:1445
 msgid "Couldn't load the 'ui description' file"
 msgstr "Niemahčyma adčytać fajł apisańnia interfejsu"
 
@@ -1034,14 +1056,11 @@ msgstr "Uklučy adładku"
 msgid "Play/Pause"
 msgstr "Hraj/Prypyni"
 
-#: ../src/totem-options.c:39
-#: ../src/totem.c:283
-#: ../src/totem.c:293
+#: ../src/totem-options.c:39 ../src/totem.c:286 ../src/totem.c:296
 msgid "Play"
 msgstr "Hraj"
 
-#: ../src/totem-options.c:40
-#: ../src/totem.c:276
+#: ../src/totem-options.c:40 ../src/totem.c:279
 msgid "Pause"
 msgstr "Prypyni"
 
@@ -1114,8 +1133,7 @@ msgstr "_Skapijuj pałažeńnie"
 msgid "Copy the location to the clipboard"
 msgstr "Skapijuj pałažeńnie ŭ bufer abmienu"
 
-#: ../src/totem-playlist.c:307
-#: ../src/totem-playlist.c:844
+#: ../src/totem-playlist.c:307 ../src/totem-playlist.c:844
 msgid "Could not save the playlist"
 msgstr "Niemahčyma zapisać śpis"
 
@@ -1148,11 +1166,11 @@ msgstr "Pamyłka ŭ śpisie"
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "Niemahčyma razabrać śpis '%s', jon moža być paškodžanym."
 
-#: ../src/totem-preferences.c:103
+#: ../src/totem-preferences.c:86
 msgid "Enable visual effects?"
 msgstr "Uklučyć vizualnyja efekty?"
 
-#: ../src/totem-preferences.c:105
+#: ../src/totem-preferences.c:88
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1160,31 +1178,39 @@ msgstr ""
 "Totem pracuje ŭ dystancyjnym režymie.\n"
 "Sapraŭdy ŭklučyć vizualnyja efekty?"
 
-#: ../src/totem-preferences.c:158
-msgid "The change of this setting will only take effect for the next movie, or when Totem is restarted."
-msgstr "Ty ŭbačyš źmieny hetaj nałady pry nastupnym filmie, albo kali ty ŭruchomiš Totema."
+#: ../src/totem-preferences.c:141
+msgid ""
+"The change of this setting will only take effect for the next movie, or when "
+"Totem is restarted."
+msgstr ""
+"Ty ŭbačyš źmieny hetaj nałady pry nastupnym filmie, albo kali ty ŭruchomiš "
+"Totema."
 
-#: ../src/totem-preferences.c:302
+#: ../src/totem-preferences.c:285
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr "Ty ŭbačyš źmieny typu vizualnych efektaŭ tolki paśla ŭruchamleńnia."
 
-#: ../src/totem-preferences.c:386
-msgid "The change of audio output type will only take effect when Totem is restarted."
+#: ../src/totem-preferences.c:369
+msgid ""
+"The change of audio output type will only take effect when Totem is "
+"restarted."
 msgstr "Ty ŭbačyš źmieny typu vyjścia huku tolki paśla ŭruchomieńnia."
 
-#: ../src/totem-preferences.c:644
+#: ../src/totem-preferences.c:459
+msgid "Preferences"
+msgstr "Nałady"
+
+#: ../src/totem-preferences.c:625
 msgid "Select Subtitle Font"
 msgstr "Abiary šryft dla subtytraŭ"
 
 #. FIXME this should be setting an error?
-#: ../src/totem-properties-main.c:117
-#: ../src/totem-properties-view.c:84
+#: ../src/totem-properties-main.c:114 ../src/totem-properties-view.c:84
 #: ../src/totem-properties-view.c:92
 msgid "Audio/Video"
 msgstr "Huk/Videa"
 
-#: ../src/totem-screenshot.c:60
-#: ../src/totem-screenshot.c:70
+#: ../src/totem-screenshot.c:60 ../src/totem-screenshot.c:70
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Zdymak%d.png"
@@ -1205,9 +1231,7 @@ msgstr "Zapišy zdymak ekranu"
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:111
-#: ../src/totem.c:288
-#: ../src/totem.c:952
+#: ../src/totem-statusbar.c:111 ../src/totem.c:291 ../src/totem.c:953
 #: ../browser-plugin/totem-plugin-viewer.c:278
 msgid "Stopped"
 msgstr "Spynieny"
@@ -1218,15 +1242,13 @@ msgid "%s (Streaming)"
 msgstr "%s (Płyń)"
 
 #. Elapsed / Total Length
-#: ../src/totem-statusbar.c:148
-#: ../src/totem-time-label.c:87
+#: ../src/totem-statusbar.c:148 ../src/totem-time-label.c:87
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:151
-#: ../src/totem-time-label.c:90
+#: ../src/totem-statusbar.c:151 ../src/totem-time-label.c:90
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "Pieraskoč da %s / %s"
@@ -1257,10 +1279,8 @@ msgstr "%s, %d %%"
 msgid "Current Locale"
 msgstr "Dziejnaje kadavańnie"
 
-#: ../src/totem-subtitle-encoding.c:161
-#: ../src/totem-subtitle-encoding.c:163
-#: ../src/totem-subtitle-encoding.c:165
-#: ../src/totem-subtitle-encoding.c:167
+#: ../src/totem-subtitle-encoding.c:161 ../src/totem-subtitle-encoding.c:163
+#: ../src/totem-subtitle-encoding.c:165 ../src/totem-subtitle-encoding.c:167
 msgid "Arabic"
 msgstr "Arabskaja"
 
@@ -1268,8 +1288,7 @@ msgstr "Arabskaja"
 msgid "Armenian"
 msgstr "Armianskaja"
 
-#: ../src/totem-subtitle-encoding.c:173
-#: ../src/totem-subtitle-encoding.c:175
+#: ../src/totem-subtitle-encoding.c:173 ../src/totem-subtitle-encoding.c:175
 #: ../src/totem-subtitle-encoding.c:177
 msgid "Baltic"
 msgstr "Bałtyjskaja"
@@ -1278,22 +1297,17 @@ msgstr "Bałtyjskaja"
 msgid "Celtic"
 msgstr "Kielckaja"
 
-#: ../src/totem-subtitle-encoding.c:183
-#: ../src/totem-subtitle-encoding.c:185
-#: ../src/totem-subtitle-encoding.c:187
-#: ../src/totem-subtitle-encoding.c:189
+#: ../src/totem-subtitle-encoding.c:183 ../src/totem-subtitle-encoding.c:185
+#: ../src/totem-subtitle-encoding.c:187 ../src/totem-subtitle-encoding.c:189
 msgid "Central European"
 msgstr "Centralna-Eŭrapieskaja"
 
-#: ../src/totem-subtitle-encoding.c:192
-#: ../src/totem-subtitle-encoding.c:194
-#: ../src/totem-subtitle-encoding.c:196
-#: ../src/totem-subtitle-encoding.c:198
+#: ../src/totem-subtitle-encoding.c:192 ../src/totem-subtitle-encoding.c:194
+#: ../src/totem-subtitle-encoding.c:196 ../src/totem-subtitle-encoding.c:198
 msgid "Chinese Simplified"
 msgstr "Kitajskaja sproščanaja"
 
-#: ../src/totem-subtitle-encoding.c:201
-#: ../src/totem-subtitle-encoding.c:203
+#: ../src/totem-subtitle-encoding.c:201 ../src/totem-subtitle-encoding.c:203
 #: ../src/totem-subtitle-encoding.c:205
 msgid "Chinese Traditional"
 msgstr "Kitajskaja tradycyjnaja"
@@ -1302,12 +1316,9 @@ msgstr "Kitajskaja tradycyjnaja"
 msgid "Croatian"
 msgstr "Charvackaja"
 
-#: ../src/totem-subtitle-encoding.c:211
-#: ../src/totem-subtitle-encoding.c:213
-#: ../src/totem-subtitle-encoding.c:215
-#: ../src/totem-subtitle-encoding.c:217
-#: ../src/totem-subtitle-encoding.c:219
-#: ../src/totem-subtitle-encoding.c:221
+#: ../src/totem-subtitle-encoding.c:211 ../src/totem-subtitle-encoding.c:213
+#: ../src/totem-subtitle-encoding.c:215 ../src/totem-subtitle-encoding.c:217
+#: ../src/totem-subtitle-encoding.c:219 ../src/totem-subtitle-encoding.c:221
 msgid "Cyrillic"
 msgstr "Kiryličnaja"
 
@@ -1315,8 +1326,7 @@ msgstr "Kiryličnaja"
 msgid "Cyrillic/Russian"
 msgstr "Kiryličnaja/Rasiejskaja"
 
-#: ../src/totem-subtitle-encoding.c:227
-#: ../src/totem-subtitle-encoding.c:229
+#: ../src/totem-subtitle-encoding.c:227 ../src/totem-subtitle-encoding.c:229
 msgid "Cyrillic/Ukrainian"
 msgstr "Kiryličnaja/Ukrajinskaja"
 
@@ -1324,8 +1334,7 @@ msgstr "Kiryličnaja/Ukrajinskaja"
 msgid "Georgian"
 msgstr "Hruzinskaja"
 
-#: ../src/totem-subtitle-encoding.c:235
-#: ../src/totem-subtitle-encoding.c:237
+#: ../src/totem-subtitle-encoding.c:235 ../src/totem-subtitle-encoding.c:237
 #: ../src/totem-subtitle-encoding.c:239
 msgid "Greek"
 msgstr "Hreckaja"
@@ -1338,10 +1347,8 @@ msgstr "Gujarati"
 msgid "Gurmukhi"
 msgstr "Gurmukhi"
 
-#: ../src/totem-subtitle-encoding.c:248
-#: ../src/totem-subtitle-encoding.c:250
-#: ../src/totem-subtitle-encoding.c:252
-#: ../src/totem-subtitle-encoding.c:254
+#: ../src/totem-subtitle-encoding.c:248 ../src/totem-subtitle-encoding.c:250
+#: ../src/totem-subtitle-encoding.c:252 ../src/totem-subtitle-encoding.c:254
 msgid "Hebrew"
 msgstr "Žydoŭskaja"
 
@@ -1357,16 +1364,13 @@ msgstr "Hindzi"
 msgid "Icelandic"
 msgstr "Iślandzkaja"
 
-#: ../src/totem-subtitle-encoding.c:266
-#: ../src/totem-subtitle-encoding.c:268
+#: ../src/totem-subtitle-encoding.c:266 ../src/totem-subtitle-encoding.c:268
 #: ../src/totem-subtitle-encoding.c:270
 msgid "Japanese"
 msgstr "Japonskaja"
 
-#: ../src/totem-subtitle-encoding.c:273
-#: ../src/totem-subtitle-encoding.c:275
-#: ../src/totem-subtitle-encoding.c:277
-#: ../src/totem-subtitle-encoding.c:279
+#: ../src/totem-subtitle-encoding.c:273 ../src/totem-subtitle-encoding.c:275
+#: ../src/totem-subtitle-encoding.c:277 ../src/totem-subtitle-encoding.c:279
 msgid "Korean"
 msgstr "Karejskaja"
 
@@ -1378,8 +1382,7 @@ msgstr "Nardyčnaja"
 msgid "Persian"
 msgstr "Persydzkaja"
 
-#: ../src/totem-subtitle-encoding.c:288
-#: ../src/totem-subtitle-encoding.c:290
+#: ../src/totem-subtitle-encoding.c:288 ../src/totem-subtitle-encoding.c:290
 msgid "Romanian"
 msgstr "Rumynskaja"
 
@@ -1391,124 +1394,126 @@ msgstr "Paŭdniova-Eŭrapiejskaja"
 msgid "Thai"
 msgstr "Tajskaja"
 
-#: ../src/totem-subtitle-encoding.c:299
-#: ../src/totem-subtitle-encoding.c:301
-#: ../src/totem-subtitle-encoding.c:303
-#: ../src/totem-subtitle-encoding.c:305
+#: ../src/totem-subtitle-encoding.c:299 ../src/totem-subtitle-encoding.c:301
+#: ../src/totem-subtitle-encoding.c:303 ../src/totem-subtitle-encoding.c:305
 msgid "Turkish"
 msgstr "Tureckaja"
 
-#: ../src/totem-subtitle-encoding.c:308
-#: ../src/totem-subtitle-encoding.c:310
-#: ../src/totem-subtitle-encoding.c:312
-#: ../src/totem-subtitle-encoding.c:314
+#: ../src/totem-subtitle-encoding.c:308 ../src/totem-subtitle-encoding.c:310
+#: ../src/totem-subtitle-encoding.c:312 ../src/totem-subtitle-encoding.c:314
 #: ../src/totem-subtitle-encoding.c:316
 msgid "Unicode"
 msgstr "Unikod"
 
-#: ../src/totem-subtitle-encoding.c:319
-#: ../src/totem-subtitle-encoding.c:321
-#: ../src/totem-subtitle-encoding.c:323
-#: ../src/totem-subtitle-encoding.c:325
+#: ../src/totem-subtitle-encoding.c:319 ../src/totem-subtitle-encoding.c:321
+#: ../src/totem-subtitle-encoding.c:323 ../src/totem-subtitle-encoding.c:325
 #: ../src/totem-subtitle-encoding.c:327
 msgid "Western"
 msgstr "Zachodniaja"
 
-#: ../src/totem-subtitle-encoding.c:330
-#: ../src/totem-subtitle-encoding.c:332
+#: ../src/totem-subtitle-encoding.c:330 ../src/totem-subtitle-encoding.c:332
 #: ../src/totem-subtitle-encoding.c:334
 msgid "Vietnamese"
 msgstr "Vijetnamskaja"
 
-#: ../src/totem-uri.c:281
+#: ../src/totem-uri.c:282
 msgid "All files"
 msgstr "Usie fajły"
 
-#: ../src/totem-uri.c:286
+#: ../src/totem-uri.c:287
 msgid "Supported files"
 msgstr "Padtrymanyja fajły"
 
-#: ../src/totem-uri.c:298
+#: ../src/totem-uri.c:299
 msgid "Audio files"
 msgstr "Hukavyja fajły"
 
-#: ../src/totem-uri.c:306
+#: ../src/totem-uri.c:307
 msgid "Video files"
 msgstr "Videafajły"
 
-#: ../src/totem-uri.c:367
+#: ../src/totem-uri.c:380
 msgid "Select Movies or Playlists"
 msgstr "Abiary filmy albo śpisy"
 
-#: ../src/totem.c:274
-#: ../browser-plugin/totem-plugin-viewer.c:293
+#: ../src/totem.c:277 ../browser-plugin/totem-plugin-viewer.c:293
 msgid "Playing"
 msgstr "Hrańnie"
 
-#: ../src/totem.c:281
-#: ../browser-plugin/totem-plugin-viewer.c:289
+#: ../src/totem.c:284 ../browser-plugin/totem-plugin-viewer.c:289
 msgid "Paused"
 msgstr "Prypynieny"
 
-#: ../src/totem.c:338
+#: ../src/totem.c:341
 msgid "Totem could not eject the optical media."
 msgstr "Totem nia zmoh vysunuć aptyčny nośbit."
 
-#: ../src/totem.c:372
-#: ../src/totem.c:399
-#: ../src/totem.c:1061
+#: ../src/totem.c:373 ../src/totem.c:400 ../src/totem.c:1063
 #: ../src/totem.c:1171
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem nia zmoh adčynić '%s'."
 
-#: ../src/totem.c:459
-#, c-format
-msgid "Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."
-msgstr "Totem nia moža hrać fajły takoha typu (%s), bo nie staje nieabchodnych pluginaŭ."
-
 #: ../src/totem.c:460
-msgid "Please install the necessary plugins and restart Totem to be able to play this media."
-msgstr "Zainstaluj nieabchodnyja pluginy i restartuj Totem, kab jon zmoh hrać takija fajły."
-
-#: ../src/totem.c:468
 #, c-format
-msgid "Totem could not play this media (%s) although a plugin is present to handle it."
-msgstr "Totem nia moža hrać taki fajł (%s), choć užo zainstalavany plugin, jaki dapamahaje jamu ŭ hetym."
+msgid ""
+"Totem cannot play this type of media (%s) because you do not have the "
+"appropriate plugins to handle it."
+msgstr ""
+"Totem nia moža hrać fajły takoha typu (%s), bo nie staje nieabchodnych "
+"pluginaŭ."
+
+#: ../src/totem.c:461
+msgid ""
+"Please install the necessary plugins and restart Totem to be able to play "
+"this media."
+msgstr ""
+"Zainstaluj nieabchodnyja pluginy i restartuj Totem, kab jon zmoh hrać takija "
+"fajły."
+
+#: ../src/totem.c:469
+#, c-format
+msgid ""
+"Totem could not play this media (%s) although a plugin is present to handle "
+"it."
+msgstr ""
+"Totem nia moža hrać taki fajł (%s), choć užo zainstalavany plugin, jaki "
+"dapamahaje jamu ŭ hetym."
 
 # FIXME: Z hetym drive treba niešta rabić... Zašmat pryładaŭ vychodzić.
-#: ../src/totem.c:469
-msgid "You might want to check that a disc is present in the drive and that it is correctly configured."
-msgstr "Pravier najaŭnaść dysku ŭ pryładzie i pravilnaść naładaŭ hetaj pryłady."
+#: ../src/totem.c:470
+msgid ""
+"You might want to check that a disc is present in the drive and that it is "
+"correctly configured."
+msgstr ""
+"Pravier najaŭnaść dysku ŭ pryładzie i pravilnaść naładaŭ hetaj pryłady."
 
-#: ../src/totem.c:497
+#: ../src/totem.c:498
 msgid "Totem was not able to play this disc."
 msgstr "Totem nia moža hrać taki dysk."
 
-#: ../src/totem.c:498
-#: ../src/totem.c:3269
+#: ../src/totem.c:499 ../src/totem.c:3270
 #: ../browser-plugin/totem-plugin-viewer.c:1427
 msgid "No reason."
 msgstr "Biez pryčyny."
 
-#: ../src/totem.c:749
+#: ../src/totem.c:750
 msgid "Open Location..."
 msgstr "Adčyni adras..."
 
-#: ../src/totem.c:846
-#: ../src/totem.c:854
+#: ../src/totem.c:847 ../src/totem.c:855
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem nia moža zrabić zdymak ekranu ŭ vypadku hetaha filmu."
 
-#: ../src/totem.c:854
+#: ../src/totem.c:855
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Heta nie pavinna było zdarycca; kali łaska, paviedam ab hetaj pamyłcy."
 
-#: ../src/totem.c:959
+#: ../src/totem.c:960
 msgid "No File"
 msgstr "Niama fajłu"
 
-#: ../src/totem.c:1067
+#: ../src/totem.c:1069
 msgid "No error message"
 msgstr "Niama tekstu pamyłki"
 
@@ -1516,8 +1521,7 @@ msgstr "Niama tekstu pamyłki"
 msgid "Totem could not display the help contents."
 msgstr "Totem nia moža pakazać źmiest dapamohi."
 
-#: ../src/totem.c:1545
-#: ../src/totem.c:1547
+#: ../src/totem.c:1545 ../src/totem.c:1547
 #: ../browser-plugin/totem-plugin-viewer.c:1283
 msgid "An error occurred"
 msgstr "Adbyłasia pamyłka"
@@ -1527,71 +1531,89 @@ msgstr "Adbyłasia pamyłka"
 msgid "Totem could not seek in '%s'."
 msgstr "Totem nia zmoh pieraskočyć da '%s'."
 
-#: ../src/totem.c:3072
+#: ../src/totem.c:3073
 msgid "Play / Pause"
 msgstr "Hraj / Prypyni"
 
-#: ../src/totem.c:3079
+#: ../src/totem.c:3080
 msgid "Previous Chapter/Movie"
 msgstr "Papiaredni raździeł/film"
 
-#: ../src/totem.c:3086
+#: ../src/totem.c:3087
 msgid "Next Chapter/Movie"
 msgstr "Nastupny raździeł/film"
 
-#: ../src/totem.c:3269
+#: ../src/totem.c:3270
 msgid "Totem could not startup."
 msgstr "Niemahčyma ŭruchomić Totem."
 
-#: ../src/totem.c:3422
+#: ../src/totem.c:3423
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Niemahčyma inicyjavać biblijateku, biaśpiečnuju dla niciaŭ."
 
-#: ../src/totem.c:3422
+#: ../src/totem.c:3423
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Pravier instalacyju systemy. Totem zakančvaje pracu."
 
 #. Handle command line arguments
-#: ../src/totem.c:3429
+#: ../src/totem.c:3430
 msgid "- Play movies and songs"
 msgstr "– Hraje filmy j pieśni"
 
-#: ../src/totem.c:3437
+#: ../src/totem.c:3438
 msgid "Totem could not parse the command-line options"
 msgstr "Totem nia zmoh razabrać opcyi zahadnaha radka"
 
-#: ../src/totem.c:3456
+#: ../src/totem.c:3457
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem nia zmoh inicyjavać kiravańnie naładami."
 
-#: ../src/totem.c:3456
+#: ../src/totem.c:3457
 msgid "Make sure that GNOME is properly installed."
 msgstr "Pravier pravilnaść instalacyi GNOME."
 
 #. Main window
-#: ../src/totem.c:3484
+#: ../src/totem.c:3483
 msgid "main window"
 msgstr "hałoŭnaje akno"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2448
-msgid "The requested audio output was not found. Please select another audio output in the Multimedia Systems Selector."
-msgstr "Žadanaje vyjście huku nia znojdzienaje. Abiary inšaje vyjście ŭ pryładzie Vybaru multymedyjnych systemaŭ."
+msgid ""
+"The requested audio output was not found. Please select another audio output "
+"in the Multimedia Systems Selector."
+msgstr ""
+"Žadanaje vyjście huku nia znojdzienaje. Abiary inšaje vyjście ŭ pryładzie "
+"Vybaru multymedyjnych systemaŭ."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2453
 msgid "Location not found."
 msgstr "Adras nia znojdzieny."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2457
-msgid "Could not open location; you might not have permission to open the file."
-msgstr "Niemahčyma adčynić adras; tabie nie staje pravoŭ, kab adčynić hety fajł."
+msgid ""
+"Could not open location; you might not have permission to open the file."
+msgstr ""
+"Niemahčyma adčynić adras; tabie nie staje pravoŭ, kab adčynić hety fajł."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2468
-msgid "The video output is in use by another application. Please close other video applications, or select another video output in the Multimedia Systems Selector."
-msgstr "Vyjście videa ŭžo vykarystoŭvajecca ŭ inšaj aplikacyi. Začyni inšyja videaprahramy, albo abiary inšaje vyjście videa ŭ pryładzie Vybaru multymedyjnych systemaŭ."
+msgid ""
+"The video output is in use by another application. Please close other video "
+"applications, or select another video output in the Multimedia Systems "
+"Selector."
+msgstr ""
+"Vyjście videa ŭžo vykarystoŭvajecca ŭ inšaj aplikacyi. Začyni inšyja "
+"videaprahramy, albo abiary inšaje vyjście videa ŭ pryładzie Vybaru "
+"multymedyjnych systemaŭ."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2474
-msgid "The audio output is in use by another application. Please select another audio output in the Multimedia Systems Selector. You may want to consider using a sound server."
-msgstr "Vyjście huku ŭžo vykarystoŭvajecca ŭ inšaj aplikacyi. Abiary inšaje vyjście huku ŭ pryładzie Vybaru multymedyjnych systemaŭ. Mahčyma, varta vykarystać hukavy server."
+msgid ""
+"The audio output is in use by another application. Please select another "
+"audio output in the Multimedia Systems Selector. You may want to consider "
+"using a sound server."
+msgstr ""
+"Vyjście huku ŭžo vykarystoŭvajecca ŭ inšaj aplikacyi. Abiary inšaje vyjście "
+"huku ŭ pryładzie Vybaru multymedyjnych systemaŭ. Mahčyma, varta vykarystać "
+"hukavy server."
 
 #. should be exactly one missing thing (source or converter)
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2492
@@ -1603,7 +1625,8 @@ msgstr "Kab hrać hety film, musiš zainstalavać plugin %s."
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2499
 #, c-format
 msgid ""
-"The playback of this movie requires the following decoders which are not installed:\n"
+"The playback of this movie requires the following decoders which are not "
+"installed:\n"
 "\n"
 "%s"
 msgstr ""
@@ -1612,8 +1635,11 @@ msgstr ""
 "%s"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2524
-msgid "Cannot play this file over the network. Try downloading it to disk first."
-msgstr "Niemahčyma hrać hety fajł praź sietku. Pasprabuj spačatku ściahnuć jaho na lakalny dysk."
+msgid ""
+"Cannot play this file over the network. Try downloading it to disk first."
+msgstr ""
+"Niemahčyma hrać hety fajł praź sietku. Pasprabuj spačatku ściahnuć jaho na "
+"lakalny dysk."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2596
 msgid "Media file could not be played."
@@ -1646,27 +1672,53 @@ msgid "Media contains no supported video streams."
 msgstr "Medyjafajł nia ŭtrymlivaje padtrymanych videapłyniaŭ."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4796
-msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
-msgstr "Niemahčyma stvaryć abjekt hrańnia dla GStreamer. Pravier pravilnaść instalacyi GStreamera."
+msgid ""
+"Failed to create a GStreamer play object. Please check your GStreamer "
+"installation."
+msgstr ""
+"Niemahčyma stvaryć abjekt hrańnia dla GStreamer. Pravier pravilnaść "
+"instalacyi GStreamera."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4928
 #: ../src/backend/bacon-video-widget-gst-0.10.c:5041
-msgid "Failed to open video output. It may not be available. Please select another video output in the Multimedia Systems Selector."
-msgstr "Niemahčyma adčynić vyjście videa. Dziejnaje vyście niedastupnaje. Abiary inšaje vyjście ŭ pryładzie Vybaru multymedyjnych systemaŭ."
+msgid ""
+"Failed to open video output. It may not be available. Please select another "
+"video output in the Multimedia Systems Selector."
+msgstr ""
+"Niemahčyma adčynić vyjście videa. Dziejnaje vyście niedastupnaje. Abiary "
+"inšaje vyjście ŭ pryładzie Vybaru multymedyjnych systemaŭ."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4940
-msgid "Could not find the video output. You may need to install additional GStreamer plugins, or select another video output in the Multimedia Systems Selector."
-msgstr "Niemahčyma znajści vyjścia videa. Vierahodna, varta zainstalavać dadatkovyja pluginy GStreamera albo abrać inšaje vyjście videa ŭ pryładzie Vybaru multymedyjnych systemaŭ."
+msgid ""
+"Could not find the video output. You may need to install additional "
+"GStreamer plugins, or select another video output in the Multimedia Systems "
+"Selector."
+msgstr ""
+"Niemahčyma znajści vyjścia videa. Vierahodna, varta zainstalavać dadatkovyja "
+"pluginy GStreamera albo abrać inšaje vyjście videa ŭ pryładzie Vybaru "
+"multymedyjnych systemaŭ."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4975
-msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
-msgstr "Niemahčyma adčynić vyjście huku. Vierahodna, nie staje pravoŭ, kab adčynić hukavuju pryładu, albo hukavy server nie vykonvajecca. Abiary inšaje vyjście huku ŭ pryładzie Vybaru multymedyjnych systemaŭ."
+msgid ""
+"Failed to open audio output. You may not have permission to open the sound "
+"device, or the sound server may not be running. Please select another audio "
+"output in the Multimedia Systems Selector."
+msgstr ""
+"Niemahčyma adčynić vyjście huku. Vierahodna, nie staje pravoŭ, kab adčynić "
+"hukavuju pryładu, albo hukavy server nie vykonvajecca. Abiary inšaje vyjście "
+"huku ŭ pryładzie Vybaru multymedyjnych systemaŭ."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4995
-msgid "Could not find the audio output. You may need to install additional GStreamer plugins, or select another audio output in the Multimedia Systems Selector."
-msgstr "Niemahčyma znajści vyjścia huku. Vierahodna, varta zainstalavać dadatkovyja pluginy GStreamera albo abrać inšaje vyjście huku ŭ pryładzie Vybaru multymedyjnych systemaŭ."
+msgid ""
+"Could not find the audio output. You may need to install additional "
+"GStreamer plugins, or select another audio output in the Multimedia Systems "
+"Selector."
+msgstr ""
+"Niemahčyma znajści vyjścia huku. Vierahodna, varta zainstalavać dadatkovyja "
+"pluginy GStreamera albo abrać inšaje vyjście huku ŭ pryładzie Vybaru "
+"multymedyjnych systemaŭ."
 
-#: ../src/backend/bacon-video-widget-xine.c:720
+#: ../src/backend/bacon-video-widget-xine.c:726
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1675,126 +1727,141 @@ msgstr ""
 "Niemahčyma zahruzić hukavy drajver '%s'\n"
 "Pravier, ci nie zaniataja hukavaja pryłada."
 
-#: ../src/backend/bacon-video-widget-xine.c:1192
-#: ../src/backend/bacon-video-widget-xine.c:1752
-msgid "No video output is available. Make sure that the program is correctly installed."
+#: ../src/backend/bacon-video-widget-xine.c:1198
+#: ../src/backend/bacon-video-widget-xine.c:1758
+msgid ""
+"No video output is available. Make sure that the program is correctly "
+"installed."
 msgstr "Nie staje vyjścia videa. Pravier pravilnaść instalacyi prahramy."
 
-#: ../src/backend/bacon-video-widget-xine.c:1317
+#: ../src/backend/bacon-video-widget-xine.c:1323
 msgid "The server you are trying to connect to is not known."
 msgstr "Server, ź jakim ty sprabuješ spałučycca, nieviadomy."
 
 # FIXME: Masła maślenaje
-#: ../src/backend/bacon-video-widget-xine.c:1321
+#: ../src/backend/bacon-video-widget-xine.c:1327
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "Nazvanaja nazva pryłady (%s) niapravilnaja."
 
-#: ../src/backend/bacon-video-widget-xine.c:1325
+#: ../src/backend/bacon-video-widget-xine.c:1331
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "Server, ź jakim ty sprabuješ spałučycca,(%s) niedasiahalny."
 
-#: ../src/backend/bacon-video-widget-xine.c:1329
+#: ../src/backend/bacon-video-widget-xine.c:1335
 msgid "The connection to this server was refused."
 msgstr "Hety server admoviŭ u spałučeńni."
 
-#: ../src/backend/bacon-video-widget-xine.c:1333
+#: ../src/backend/bacon-video-widget-xine.c:1339
 msgid "The specified movie could not be found."
 msgstr "Nazvany film nia znojdzieny."
 
-#: ../src/backend/bacon-video-widget-xine.c:1339
-#: ../src/backend/bacon-video-widget-xine.c:1355
-msgid "The source seems encrypted, and can't be read. Are you trying to play an encrypted DVD without libdvdcss?"
-msgstr "Krynica źviestak zašyfravanaja, i niama jak ź jaje čytać. Sprabuješ hrać zašyfravany DVD biez libdvdcss?"
+#: ../src/backend/bacon-video-widget-xine.c:1345
+#: ../src/backend/bacon-video-widget-xine.c:1361
+msgid ""
+"The source seems encrypted, and can't be read. Are you trying to play an "
+"encrypted DVD without libdvdcss?"
+msgstr ""
+"Krynica źviestak zašyfravanaja, i niama jak ź jaje čytać. Sprabuješ hrać "
+"zašyfravany DVD biez libdvdcss?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1342
+#: ../src/backend/bacon-video-widget-xine.c:1348
 msgid "The movie could not be read."
 msgstr "Niemahčyma adčytać film."
 
-#: ../src/backend/bacon-video-widget-xine.c:1349
+#: ../src/backend/bacon-video-widget-xine.c:1355
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "Uźnikła prablema padčas adčytańnia biblijateki albo dekodera (%s)."
 
-#: ../src/backend/bacon-video-widget-xine.c:1358
+#: ../src/backend/bacon-video-widget-xine.c:1364
 msgid "This file is encrypted and cannot be played back."
 msgstr "Hety fajł zašyfravany, i jaho niemahčyma hrać."
 
-#: ../src/backend/bacon-video-widget-xine.c:1363
+#: ../src/backend/bacon-video-widget-xine.c:1369
 msgid "For security reasons, this movie can not be played back."
 msgstr "Ź mierkavańniaŭ biaśpieki, hety film nia budzie hrany."
 
-#: ../src/backend/bacon-video-widget-xine.c:1368
+#: ../src/backend/bacon-video-widget-xine.c:1374
 msgid "The audio device is busy. Is another application using it?"
-msgstr "Hukavaja pryłada zaniataja. Ci nie vykarystoŭvaje jaje inšaja aplikacyja?"
+msgstr ""
+"Hukavaja pryłada zaniataja. Ci nie vykarystoŭvaje jaje inšaja aplikacyja?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1373
+#: ../src/backend/bacon-video-widget-xine.c:1379
 msgid "You are not allowed to open this file."
 msgstr "Tabie nie dazvolili adčyniać hety fajł."
 
-#: ../src/backend/bacon-video-widget-xine.c:1375
+#: ../src/backend/bacon-video-widget-xine.c:1381
 msgid "The server refused access to this file or stream."
 msgstr "Server admoviŭ u dostupie da hetaha fajłu albo płyni."
 
-#: ../src/backend/bacon-video-widget-xine.c:1384
+#: ../src/backend/bacon-video-widget-xine.c:1390
 msgid "The file you tried to play is an empty file."
 msgstr "Hrany fajł pusty."
 
-#: ../src/backend/bacon-video-widget-xine.c:1548
+#: ../src/backend/bacon-video-widget-xine.c:1554
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "Nie staje plugina ŭvachodu dla apracoŭvańnia pałažeńnia filmu"
 
-#: ../src/backend/bacon-video-widget-xine.c:1552
+#: ../src/backend/bacon-video-widget-xine.c:1558
 msgid "There is no plugin to handle this movie."
 msgstr "Nie staje plugina dla apracoŭvańnia filmu."
 
-#: ../src/backend/bacon-video-widget-xine.c:1556
+#: ../src/backend/bacon-video-widget-xine.c:1562
 msgid "This movie is broken and can not be played further."
 msgstr "Hety film paškodžany, i tamu niemahčyma hrać jaho dalej."
 
-#: ../src/backend/bacon-video-widget-xine.c:1560
+#: ../src/backend/bacon-video-widget-xine.c:1566
 msgid "This location is not a valid one."
 msgstr "Hety adras niapravilny."
 
-#: ../src/backend/bacon-video-widget-xine.c:1564
+#: ../src/backend/bacon-video-widget-xine.c:1570
 msgid "This movie could not be opened."
 msgstr "Niemahčyma adčynić hety film."
 
-#: ../src/backend/bacon-video-widget-xine.c:1568
+#: ../src/backend/bacon-video-widget-xine.c:1574
 msgid "Generic Error."
 msgstr "Zvyčajnaja pamyłka."
 
-#: ../src/backend/bacon-video-widget-xine.c:2303
+#: ../src/backend/bacon-video-widget-xine.c:2342
 #, c-format
-msgid "Video codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"
-msgstr "Videakodek '%s' nie padtrymvajecca. Varta zainstalavać dadatkovyja pluginy, kab mahčy hrać niekatoryja typy filmaŭ"
+msgid ""
+"Video codec '%s' is not handled. You might need to install additional "
+"plugins to be able to play some types of movies"
+msgstr ""
+"Videakodek '%s' nie padtrymvajecca. Varta zainstalavać dadatkovyja pluginy, "
+"kab mahčy hrać niekatoryja typy filmaŭ"
 
-#: ../src/backend/bacon-video-widget-xine.c:2307
+#: ../src/backend/bacon-video-widget-xine.c:2346
 #, c-format
-msgid "Audio codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"
-msgstr "Hukavy kodek '%s' nie padtrymvajecca. Varta zainstalavać dadatkovyja pluginy, kab mahčy hrać niekatoryja typy filmaŭ"
+msgid ""
+"Audio codec '%s' is not handled. You might need to install additional "
+"plugins to be able to play some types of movies"
+msgstr ""
+"Hukavy kodek '%s' nie padtrymvajecca. Varta zainstalavać dadatkovyja "
+"pluginy, kab mahčy hrać niekatoryja typy filmaŭ"
 
-#: ../src/backend/bacon-video-widget-xine.c:2323
+#: ../src/backend/bacon-video-widget-xine.c:2362
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Heta prosty hukavy fajł, ale vyjście huku niedastupnaje."
 
-#: ../src/backend/bacon-video-widget-xine.c:3840
-#: ../src/backend/bacon-video-widget-xine.c:3887
-#: ../src/backend/bacon-video-widget-xine.c:3909
+#: ../src/backend/bacon-video-widget-xine.c:3893
+#: ../src/backend/bacon-video-widget-xine.c:3940
+#: ../src/backend/bacon-video-widget-xine.c:3962
 #, c-format
 msgid "Language %d"
 msgstr "Mova %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3998
+#: ../src/backend/bacon-video-widget-xine.c:4051
 msgid "No video to capture."
 msgstr "Niama videa dla pierachopu."
 
-#: ../src/backend/bacon-video-widget-xine.c:4006
+#: ../src/backend/bacon-video-widget-xine.c:4059
 msgid "Video codec is not handled."
 msgstr "Videakodek nie padtrymvajecca."
 
-#: ../src/backend/bacon-video-widget-xine.c:4017
+#: ../src/backend/bacon-video-widget-xine.c:4070
 msgid "Movie is not playing."
 msgstr "Film nia hrajecca."
 
@@ -1927,7 +1994,7 @@ msgstr "Uklučana"
 msgid "Plugins Manager"
 msgstr "Kiraŭnik pluginaŭ"
 
-#: ../src/plugins/totem-plugins-engine.c:574
+#: ../src/plugins/totem-plugins-engine.c:578
 #, c-format
 msgid ""
 "Unable to activate plugin %s.\n"
@@ -1936,12 +2003,12 @@ msgstr ""
 "Niemahčyma aktyvizavać plugin %s.\n"
 "%s"
 
-#: ../src/plugins/totem-plugins-engine.c:577
+#: ../src/plugins/totem-plugins-engine.c:581
 #, c-format
 msgid "Unable to activate plugin %s"
 msgstr "Niemahčyma aktyvizavać plugin %s"
 
-#: ../src/plugins/totem-plugins-engine.c:579
+#: ../src/plugins/totem-plugins-engine.c:583
 msgid "Plugin Error"
 msgstr "Pamyłka plugina"
 
@@ -1951,7 +2018,9 @@ msgstr "Stan klijenta imhniennych paviedamleńniaŭ"
 
 #: ../src/plugins/galago/galago.totem-plugin.in.h:2
 msgid "Set your Instant Messenger status to away when a movie is playing"
-msgstr "Pieraklučaj stan klijenta imhniennych paviedamleńniaŭ na \"Adyjšoŭ\" pry prahladzie filmu"
+msgstr ""
+"Pieraklučaj stan klijenta imhniennych paviedamleńniaŭ na \"Adyjšoŭ\" pry "
+"prahladzie filmu"
 
 #: ../src/plugins/galago/totem-galago.c:164
 msgid "Could not connect to the Galago daemon."
@@ -2058,100 +2127,140 @@ msgstr "Pravier instalacyju systemy. Plugin Totema zakančvaje pracu."
 
 #~ msgid "<b>Audio</b>"
 #~ msgstr "<b>Aŭdyjo</b>"
+
 #~ msgid "<b>General</b>"
 #~ msgstr "<b>Ahulnaje</b>"
+
 #~ msgid "<b>Video</b>"
 #~ msgstr "<b>Videa</b>"
+
 #~ msgid "<i>Channels:</i>"
 #~ msgstr "<i>Kanały:</i>"
+
 #~ msgid "<i>Duration:</i>"
 #~ msgstr "<i>Praciahłaść:</i>"
+
 #~ msgid "<i>Title:</i>"
 #~ msgstr "<i>Zahałovak:</i>"
+
 #~ msgid "<i>Year:</i>"
 #~ msgstr "<i>Hod:</i>"
+
 #~ msgid "<b>Preview</b>"
 #~ msgstr "<b>Pieradahlad</b>"
+
 #~ msgid "Save screenshot"
 #~ msgstr "Zapišy zdymak ekranu"
+
 #~ msgid "Save screenshot to _desktop"
 #~ msgstr "Zapišy zdymak ekranu na _stale"
+
 #~ msgid "Save screenshot to _file:"
 #~ msgstr "Zapišy zdymak ekranu ŭ _fajle:"
+
 #~ msgid "<b>Display</b>"
 #~ msgstr "<b>Ekran</b>"
+
 #~ msgid "<span size=\"medium\"><b>No file</b></span>"
 #~ msgstr "<span size=\"medium\"><b>Niama fajłu</b></span>"
+
 #~ msgid "Vanity Webcam utility"
 #~ msgstr "Vanity – Web-kamera"
+
 #~ msgid "View live webcam and upload pictures"
 #~ msgstr "Padhlad Web-kamery i zapis malunkaŭ"
+
 #~ msgid "Save File"
 #~ msgstr "Zapišy fajł"
+
 #~ msgid "Vanity"
 #~ msgstr "Vanity"
+
 #~ msgid "Vanity Preferences"
 #~ msgstr "Nałady Vanity"
+
 #~ msgid "Zoom 1:1"
 #~ msgstr "Zoom 1:1"
+
 #~ msgid "Zoom 1:2"
 #~ msgstr "Zoom 1:2"
+
 #~ msgid "Zoom 2:1"
 #~ msgstr "Zoom 2:1"
+
 #~ msgid "Zoom _1:1"
 #~ msgstr "Zoom _1:1"
+
 #~ msgid "Zoom _2:1"
 #~ msgstr "Zoom _2:1"
+
 #~ msgid "_Picture"
 #~ msgstr "_Vyjava"
+
 #~ msgid "_Zoom 1:2"
 #~ msgstr "_Zoom 1:2"
+
 #~ msgid "Unnamed CDROM"
 #~ msgstr "CDROM biaz nazvy"
+
 #~ msgid "Always on top"
 #~ msgstr "Zaŭsiody ŭhary"
+
 #~ msgid "File '%s' already exists."
 #~ msgstr "Fajł '%s' užo isnuje."
+
 #~ msgid "The screenshot was not saved"
 #~ msgstr "Zdymak ekranu nie zapisany"
+
 #~ msgid "Shadow type"
 #~ msgstr "Typ cieniu"
+
 #~ msgid "Style of bevel around the statusbar text"
 #~ msgstr "Styl vyłučeńnia tekstu ŭ paneli statusu"
+
 #~ msgid "Webcam utility using %s"
 #~ msgstr "Pryłada dla web-kamery na bazie %s"
+
 #~ msgid "Copyright © 2002-2005 Bastien Nocera"
 #~ msgstr "Copyright © 2002-2005 Bastien Nocera"
+
 #~ msgid ""
 #~ "Vanity could not startup:\n"
 #~ "%s"
 #~ msgstr ""
 #~ "Niemahčyma ŭruchomić Vanity:\n"
 #~ "%s"
+
 #~ msgid "No reason"
 #~ msgstr "Biez pryčyny"
+
 #~ msgid ""
 #~ "Vanity could not contact the webcam.\n"
 #~ "Reason: %s"
 #~ msgstr ""
 #~ "Vanity nia zmoh źviazacca z web-kameraj.\n"
 #~ "Pryčyna: %s"
+
 #~ msgid ""
 #~ "Vanity could not play video from the webcam.\n"
 #~ "Reason: %s"
 #~ msgstr ""
 #~ "Vanity nia zmoh hrać videa z web-kamery.\n"
 #~ "Pryčyna: %s"
+
 #~ msgid "Debug mode on"
 #~ msgstr "Režym adładki ŭklučany"
+
 #~ msgid ""
 #~ "Could not initialize the thread-safe libraries.\n"
 #~ "Verify your system installation. Vanity will now exit."
 #~ msgstr ""
 #~ "Niemahčyma inicyjavać biblijateku, biaśpiečnuju dla niciaŭ.\n"
 #~ "Pravier instalacyju systemy. Vanity zakančvaje vykanańnie."
+
 #~ msgid "Vanity Webcam Utility"
 #~ msgstr "Pryłada dla web-kamery Vanity"
+
 #~ msgid ""
 #~ "Vanity could not initialize the \n"
 #~ "configuration engine:\n"
@@ -2160,10 +2269,10 @@ msgstr "Pravier instalacyju systemy. Plugin Totema zakančvaje pracu."
 #~ "Vanity nia zmoh inicyjavać \n"
 #~ "kiravańnie naładami:\n"
 #~ "%s"
+
 #~ msgid ""
 #~ "Couldn't load the main interface (vanity.glade).\n"
 #~ "Make sure that Vanity is properly installed."
 #~ msgstr ""
 #~ "Niemahčyma adčytać hałoŭny interfejs (vanity.glade).\n"
 #~ "Pravier pravilnaść instalacyi Vanity."
-
