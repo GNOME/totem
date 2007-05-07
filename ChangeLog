@@ -1,5 +1,11 @@
 2007-05-07  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (window_state_event_cb): When the window becomes
+	maximised, disable the fit window to movie menu entries, as we
+	can't fit to movie when we're maximised (Closes: #129580)
+
+2007-05-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c: (bacon_video_widget_seek),
 	(bacon_video_widget_seek_time):
 	Make sure the slider goes back to where it's supposed to be when
