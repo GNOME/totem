@@ -1,3 +1,14 @@
+2007-05-07  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c: (bacon_video_widget_seek),
+	(bacon_video_widget_seek_time):
+	Make sure the slider goes back to where it's supposed to be when
+	seeking back and the playback is paused or stopped (Closes: #431738)
+
+2007-05-07  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c: (bacon_video_widget_seek):
+
 2007-05-05  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: Up the required xine-lib version, to get the

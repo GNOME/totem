@@ -2472,6 +2472,7 @@ gboolean bacon_video_widget_seek (BaconVideoWidget *bvw, float position,
 	{
 		bvw->priv->seeking = 1;
 		bvw->priv->seek_dest = position;
+		bacon_video_widget_tick_send (bvw);
 		return TRUE;
 	}
 
@@ -2506,6 +2507,7 @@ gboolean bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time,
 	{
 		bvw->priv->seeking = 2;
 		bvw->priv->seek_dest_time = CLAMP (time, 0, length);
+		bacon_video_widget_tick_send (bvw);
 		return TRUE;
 	}
 
