@@ -121,6 +121,11 @@ static char *video_props_str[4] = {
 	GCONF_PREFIX"/hue"
 };
 
+enum {
+	BVW_XINE_PLAY,
+	BVW_XINE_PAUSE
+};
+
 struct BaconVideoWidgetPrivate {
 	/* Xine stuff */
 	xine_t *xine;
@@ -143,8 +148,9 @@ struct BaconVideoWidgetPrivate {
 	GdkCursor *cursor;
 
 	/* Opening thread for fd://0 */
-	pthread_mutex_t mutex;
 	pthread_t open_thread;
+	pthread_mutex_t queued_actions_mutex;
+	GList *queued_actions;
 
 	/* Visual effects */
 	char *vis_name;
@@ -463,8 +469,8 @@ bacon_video_widget_finalize (GObject *object)
 {
 	BaconVideoWidget *bvw = (BaconVideoWidget *) object;
 
-	if (&bvw->priv->mutex != NULL)
-		pthread_mutex_destroy (&bvw->priv->mutex);
+	if (&bvw->priv->queued_actions_mutex != NULL)
+		pthread_mutex_destroy (&bvw->priv->queued_actions_mutex);
 
 	if (bvw->priv->gc)
 		g_object_unref (G_OBJECT (bvw->priv->gc));
@@ -1691,7 +1697,7 @@ bacon_video_widget_new (int width, int height,
 	bvw->priv->audio_out_type = -1;
 
 	if (type == BVW_USE_TYPE_AUDIO || type == BVW_USE_TYPE_VIDEO)
-		pthread_mutex_init (&bvw->priv->mutex, NULL);
+		pthread_mutex_init (&bvw->priv->queued_actions_mutex, NULL);
 
 	/* Don't load anything yet if we're looking for proper video
 	 * output */
@@ -2157,13 +2163,9 @@ bacon_video_widget_open_thread (gpointer data)
 	GError *error = NULL;
 	int err;
 
-	pthread_mutex_lock (&bvw->priv->mutex);
 	pthread_setcancelstate (PTHREAD_CANCEL_ENABLE, NULL);
-	g_message ("opening %s", bvw->com->mrl);
 	err = xine_open (bvw->priv->stream, bvw->com->mrl);
-	g_message ("done opening %s", bvw->com->mrl);
 	pthread_setcancelstate (PTHREAD_CANCEL_DISABLE, NULL);
-	pthread_mutex_unlock (&bvw->priv->mutex);
 	if (err == 0) {
 		xine_error (bvw, &error);
 		bacon_video_widget_close (bvw);
@@ -2175,6 +2177,39 @@ bacon_video_widget_open_thread (gpointer data)
 			bacon_video_widget_close (bvw);
 			bacon_video_widget_open_async_error (bvw, error);
 			g_error_free (error);
+		} else {
+			GList *l;
+
+			pthread_mutex_lock (&bvw->priv->queued_actions_mutex);
+
+			/* This is so that we don't deadlock when calling the
+			 * real play() */
+			bvw->priv->open_thread = 0;
+
+			for (l = bvw->priv->queued_actions; l != NULL; l = l->next) {
+				int action;
+
+				action = GPOINTER_TO_INT (l->data);
+				switch (action) {
+				case BVW_XINE_PLAY:
+					bacon_video_widget_play (bvw, &error);
+					if (error != NULL) {
+						bacon_video_widget_close (bvw);
+						bacon_video_widget_open_async_error (bvw, error);
+						g_error_free (error);
+					}
+					break;
+				case BVW_XINE_PAUSE:
+					bacon_video_widget_pause (bvw);
+					break;
+				default:
+					g_assert_not_reached ();
+				}
+			}
+
+			g_list_free (bvw->priv->queued_actions);
+			bvw->priv->queued_actions = NULL;
+			pthread_mutex_unlock (&bvw->priv->queued_actions_mutex);
 		}
 	}
 
@@ -2190,6 +2225,10 @@ bacon_video_widget_open_async (BaconVideoWidget *bvw, const char *mrl,
 		g_assert_not_reached ();
 		return FALSE;
 	}
+
+	/* Make it so that the thread we just started is executed straight away,
+	 * otherwise other events can occur before we start the open */
+	sched_yield ();
 
 	return TRUE;
 }
@@ -2321,7 +2360,13 @@ bacon_video_widget_play (BaconVideoWidget *bvw, GError **gerror)
 
 	error = 1;
 
-	pthread_mutex_lock (&bvw->priv->mutex);
+	if (bvw->priv->open_thread != 0) {
+		pthread_mutex_lock (&bvw->priv->queued_actions_mutex);
+		bvw->priv->queued_actions = g_list_append (bvw->priv->queued_actions,
+							   GINT_TO_POINTER (BVW_XINE_PLAY));
+		pthread_mutex_unlock (&bvw->priv->queued_actions_mutex);
+		return TRUE;
+	}
 
 	if (bvw->priv->seeking == 1)
 	{
@@ -2347,8 +2392,6 @@ bacon_video_widget_play (BaconVideoWidget *bvw, GError **gerror)
 
 		bvw->priv->seeking = 0;
 	}
-
-	pthread_mutex_unlock (&bvw->priv->mutex);
 
 	if (error == 0)
 	{
@@ -2466,6 +2509,11 @@ bacon_video_widget_stop (BaconVideoWidget *bvw)
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
 
+	pthread_mutex_lock (&bvw->priv->queued_actions_mutex);
+	g_list_free (bvw->priv->queued_actions);
+	bvw->priv->queued_actions = NULL;
+	pthread_mutex_unlock (&bvw->priv->queued_actions_mutex);
+
 	xine_stop (bvw->priv->stream);
 }
 
@@ -2484,7 +2532,7 @@ bacon_video_widget_close (BaconVideoWidget *bvw)
 		bvw->priv->open_thread = 0;
 	}
 
-	xine_stop (bvw->priv->stream);
+	bacon_video_widget_stop (bvw);
 	xine_close (bvw->priv->stream);
 	bvw->priv->has_subtitle = FALSE;
 	g_free (bvw->com->mrl);
@@ -2648,6 +2696,14 @@ bacon_video_widget_pause (BaconVideoWidget *bvw)
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
+
+	if (bvw->priv->open_thread != 0) {
+		pthread_mutex_lock (&bvw->priv->queued_actions_mutex);
+		bvw->priv->queued_actions = g_list_append (bvw->priv->queued_actions,
+							   GINT_TO_POINTER (BVW_XINE_PAUSE));
+		pthread_mutex_unlock (&bvw->priv->queued_actions_mutex);
+		return;
+	}
 
 	xine_set_param (bvw->priv->stream, XINE_PARAM_SPEED, XINE_SPEED_PAUSE);
 

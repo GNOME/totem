@@ -1,3 +1,20 @@
+2007-05-09  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: Up the required xine-lib version, to get the
+	xine-lib fix at
+	http://hg.debian.org/hg/xine-lib/xine-lib?cmd=changeset;node=2b182beaba68;style=gitweb
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_finalize), (bacon_video_widget_new),
+	(bacon_video_widget_open_thread), (bacon_video_widget_open_async),
+	(bacon_video_widget_play), (bacon_video_widget_stop),
+	(bacon_video_widget_close), (bacon_video_widget_pause):
+	Yield to the newly created open() thread so that we can block on open
+	later, fix "cat foo | totem fd://0" not working;
+	Queue the actions that occur during the threaded open() so
+	that we can apply them when we really finished the open(),
+	Fixes the xine-lib backend for use in the browser plugin
+	(Closes: #375866)
+
 2007-04-24  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:

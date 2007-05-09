@@ -78,7 +78,7 @@ dnl xine or gst ?
 
 dnl the two versions here implicate the gstreamer core and gst-plugins
 dnl release versions.
-XINE_REQS=1.1.4
+XINE_REQS=1.1.7
 GST_MAJORMINOR=0.10
 GST_REQS=0.10.6
 GSTPLUG_REQS=0.10.7
@@ -710,7 +710,7 @@ if test "x$with_dbus" != "xno"; then
 	else
 		AC_MSG_RESULT([not found])
 	fi
-fi			  
+fi
 AM_CONDITIONAL(WITH_DBUS, test "x$enable_dbus" = "xyes")
 
 AC_PATH_X
