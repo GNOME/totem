@@ -48,7 +48,6 @@
 
 #include "totemGMPPlugin.h"
 
-/* FIXME */
 #define TOTEM_GMP_VERSION_BUILD "11.0.0.1024"
 
 /* 89cf81a7-1156-456f-b060-c2187df9a27c */
