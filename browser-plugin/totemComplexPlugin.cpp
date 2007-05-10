@@ -49,6 +49,8 @@ static const nsCID kClassID =
 static const char kClassDescription[] = "totemComplexPlugin";
 static const char kPluginDescription[] = "Helix DNA Plugin: RealPlayer G2 Plug-In Compatible (compatible; Totem)";
 
+#define TOTEM_COMPLEX_VERSION_BUILD "10.0"
+
 static const totemPluginMimeEntry kMimeTypes[] = {
 	{ "audio/x-pn-realaudio-plugin", "rpm", "audio/vnd.rn-realaudio" },
 };
@@ -1971,8 +1973,7 @@ totemScriptablePlugin::GetUserCountryID(PRInt32 *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::GetVersionInfo(nsACString & _retval)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-  _retval.Assign ("1.0");
+  _retval.Assign (TOTEM_COMPLEX_VERSION_BUILD);
   return NS_OK;
 }
 
