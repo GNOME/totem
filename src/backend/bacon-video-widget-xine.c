@@ -1380,11 +1380,6 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		else
 			message = g_strdup (_("The server refused access to this file or stream."));
 		break;
-
-/* FIXME missing stuff from libxine includes (<= 1.1.x) */
-#ifndef XINE_MSG_FILE_EMPTY
-#define XINE_MSG_FILE_EMPTY 13
-#endif
 	case XINE_MSG_FILE_EMPTY:
 		num = BVW_ERROR_EMPTY_FILE;
 		message  = g_strdup (_("The file you tried to play is an empty file."));
