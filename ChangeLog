@@ -1,3 +1,12 @@
+2007-05-11  Bastien Nocera  <hadess@hadess.net>
+
+	* src/bacon-volume.c: (bacon_volume_button_class_init),
+	(bacon_volume_button_init), (bacon_volume_button_dispose),
+	(bacon_volume_button_new), (bacon_volume_button_update_icon):
+	* src/bacon-volume.h: Merge Christian Persch <chpe@svn.gnome.org> 's
+	simplifications, set the tooltip on startup, otherwise we wouldn't
+	have any tooltip when the volume starts at 0 (Closes: #419571)
+
 2007-05-10  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totemComplexPlugin.cpp: make the Complex
