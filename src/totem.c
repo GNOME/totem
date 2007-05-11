@@ -3055,6 +3055,9 @@ totem_callback_connect (Totem *totem)
 {
 	GtkWidget *item, *box, *arrow;
 	GtkAction *action;
+	GtkTooltips *tooltips;
+
+	tooltips = gtk_tooltips_new ();
 
 	/* Menu items */
 	gtk_action_group_set_visible (totem->zoom_action_group,
@@ -3074,11 +3077,19 @@ totem_callback_connect (Totem *totem)
 	item = gtk_action_create_tool_item (action);
 	atk_object_set_name (gtk_widget_get_accessible (item),
 			_("Play / Pause"));
+ 	gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (item), 
+ 				   GTK_TOOLTIPS (tooltips),
+ 				   _("Play / Pause"), 
+ 				   NULL);
 	gtk_box_pack_start (GTK_BOX (box), item, FALSE, FALSE, 0);
 
 	action = gtk_action_group_get_action (totem->main_action_group,
 			"previous-chapter");
 	item = gtk_action_create_tool_item (action);
+	gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (item), 
+				   GTK_TOOLTIPS (tooltips),
+				   _("Previous Chapter/Movie"), 
+				   NULL);
 	atk_object_set_name (gtk_widget_get_accessible (item),
 			_("Previous Chapter/Movie"));
 	gtk_box_pack_start (GTK_BOX (box), item, FALSE, FALSE, 0);
@@ -3086,6 +3097,10 @@ totem_callback_connect (Totem *totem)
 	action = gtk_action_group_get_action (totem->main_action_group,
 			"next-chapter");
 	item = gtk_action_create_tool_item (action);
+	gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (item), 
+				   GTK_TOOLTIPS (tooltips),
+				   _("Next Chapter/Movie"), 
+				   NULL);
 	atk_object_set_name (gtk_widget_get_accessible (item),
 			_("Next Chapter/Movie"));
 	gtk_box_pack_start (GTK_BOX (box), item, FALSE, FALSE, 0);
@@ -3516,7 +3531,6 @@ main (int argc, char **argv)
 		(totem->xml, "tcw_volume_hscale");
 	totem->fs_voladj = gtk_range_get_adjustment
 		(GTK_RANGE (totem->fs_volume));
-	totem->tooltip = gtk_tooltips_new ();
 	g_object_set_data (G_OBJECT (totem->fs_volume), "fs", GINT_TO_POINTER (1));
 	totem->volume_first_time = 1;
 	totem->statusbar = glade_xml_get_widget (totem->xml, "tmw_statusbar");

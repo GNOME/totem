@@ -1,5 +1,12 @@
 2007-05-11  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-private.h: Remove tooltip struct member
+	* src/totem.c: (totem_callback_connect), (main): Patch from
+	Iván Frade <frade@asturlinux.org> to set tooltips for the
+	Play/Pause, Previous and Next buttons (Closes: #396077)
+
+2007-05-11  Bastien Nocera  <hadess@hadess.net>
+
 	* src/bacon-volume.c: (bacon_volume_button_class_init),
 	(bacon_volume_button_init), (bacon_volume_button_dispose),
 	(bacon_volume_button_new), (bacon_volume_button_update_icon):
