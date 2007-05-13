@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor,
  * Boston, MA 02110-1301  USA.
  *
- * Monday 7th February 2005: Christian Schaller: Add excemption clause.
+ * Sunday 13th May 2007: Bastien Nocera: Add exception clause.
  * See license_change file for details.
  *
  */

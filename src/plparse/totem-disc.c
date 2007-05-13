@@ -1,5 +1,6 @@
 /* Totem Disc Content Detection
- * (c) 2004 Ronald Bultje <rbultje@ronald.bitfreak.net>
+ * Copyright (C) 2004 Ronald Bultje <rbultje@ronald.bitfreak.net>
+ * Copyright (C) 2004-2007 Bastien Nocera <hadess@hadess.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -21,7 +22,7 @@
  * permission are above and beyond the permissions granted by the GPL license
  * Totem is covered by.
  *
- * Monday 7th February 2005: Christian Schaller: Add excemption clause.
+ * Monday 7th February 2005: Christian Schaller: Add exception clause.
  * See license_change file for details.
  *
  */
