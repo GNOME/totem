@@ -36,7 +36,6 @@
 #include "totem-playlist.h"
 #include "bacon-message-connection.h"
 #include "bacon-video-widget.h"
-#include "totem-skipto.h"
 
 #define totem_signal_block_by_data(obj, data) (g_signal_handlers_block_matched (obj, G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, data))
 #define totem_signal_unblock_by_data(obj, data) (g_signal_handlers_unblock_matched (obj, G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, data))
@@ -100,10 +99,6 @@ struct TotemObject {
 	gboolean sidebar_shown;
 	int sidebar_w;
 	GtkWidget *properties;
-
-	/* Skip to dialogue */
-	TotemSkipto *skipto;
-	gint64 last_length;
 
 	/* Play/Pause */
 	GtkWidget *pp_button;
@@ -194,7 +189,6 @@ void	totem_action_take_screenshot		(Totem *totem);
 void	totem_action_zoom_relative		(Totem *totem, int off_pct);
 void	totem_action_zoom_reset			(Totem *totem);
 void	totem_action_show_help			(Totem *totem);
-void	totem_action_skip_to			(Totem *totem);
 void	totem_action_show_properties		(Totem *totem);
 
 void	show_controls				(Totem *totem, gboolean was_fullscreen);

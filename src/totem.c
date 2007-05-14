@@ -907,18 +907,6 @@ totem_get_nice_name_for_stream (Totem *totem)
 }
 
 static void
-update_skip_to (Totem *totem, gint64 time)
-{
-	if (time == totem->last_length)
-		return;
-
-	totem->last_length = time;
-
-	if (totem->skipto != NULL)
-		totem_skipto_update_range (totem->skipto, time);
-}
-
-static void
 update_mrl_label (Totem *totem, const char *name)
 {
 	gint time;
@@ -934,7 +922,7 @@ update_mrl_label (Totem *totem, const char *name)
 		totem_statusbar_set_time_and_length (TOTEM_STATUSBAR
 				(totem->statusbar), 0, time / 1000);
 
-		update_skip_to (totem, time);
+		g_object_notify (G_OBJECT (totem), "stream-length");
 
 		/* Update the mrl label */
 		escaped = g_markup_escape_text (name, strlen (name));
@@ -955,7 +943,7 @@ update_mrl_label (Totem *totem, const char *name)
 		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
 				_("Stopped"));
 
-		update_skip_to (totem, 0);
+		g_object_notify (G_OBJECT (totem), "stream-length");
 
 		/* Update the mrl label */
 		text = g_strdup_printf
@@ -1171,7 +1159,34 @@ totem_action_seek_relative (Totem *totem, int off_sec)
 		char *msg, *disp;
 
 		disp = totem_uri_escape_for_display (totem->mrl);
-		msg = g_strdup_printf(_("Totem could not play '%s'."), totem->mrl);
+		msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
+		g_free (disp);
+
+		totem_action_stop (totem);
+		totem_action_error (msg, err->message, totem);
+		g_free (msg);
+		g_error_free (err);
+	}
+}
+
+void
+totem_action_seek_time (Totem *totem, gint64 sec)
+{
+	GError *err = NULL;
+
+	if (totem->mrl == NULL)
+		return;
+	if (bacon_video_widget_is_seekable (totem->bvw) == FALSE)
+		return;
+
+	bacon_video_widget_seek_time (totem->bvw, sec, &err);
+
+	if (err != NULL)
+	{
+		char *msg, *disp;
+
+		disp = totem_uri_escape_for_display (totem->mrl);
+		msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
 		g_free (disp);
 
 		totem_action_stop (totem);
@@ -1578,9 +1593,8 @@ update_seekable (Totem *totem)
 
 	totem_action_set_sensitivity ("skip-forward", seekable);
 	totem_action_set_sensitivity ("skip-backwards", seekable);
-	totem_action_set_sensitivity ("skip-to", seekable);
-	if (totem->skipto)
-		totem_skipto_set_seekable (totem->skipto, seekable);
+
+	g_object_notify (G_OBJECT (totem), "seekable");
 }
 
 static void
@@ -1590,7 +1604,7 @@ update_current_time (BaconVideoWidget *bvw,
 		float current_position,
 		gboolean seekable, Totem *totem)
 {
-	update_skip_to (totem, stream_length);
+	g_object_notify (G_OBJECT (totem), "stream-length");
 
 	if (totem->seek_lock == FALSE)
 	{
@@ -1867,71 +1881,6 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 	}
 
 	return changed;
-}
-
-static void
-commit_hide_skip_to (GtkDialog *dialog, gint response, Totem *totem)
-{
-	GError *err = NULL;
-
-	if (response != GTK_RESPONSE_OK)
-	{
-		gtk_widget_destroy (GTK_WIDGET (totem->skipto));
-		return;
-	}
-
-	gtk_widget_hide (GTK_WIDGET (dialog));
-
-	bacon_video_widget_seek_time (totem->bvw,
-			totem_skipto_get_range (totem->skipto), &err);
-
-	gtk_widget_destroy (GTK_WIDGET (totem->skipto));
-
-	if (err != NULL)
-	{
-		char *msg, *disp;
-
-		disp = totem_uri_escape_for_display (totem->mrl);
-		msg = g_strdup_printf(_("Totem could not seek in '%s'."), disp);
-		g_free (disp);
-		totem_action_stop (totem);
-		totem_action_error (msg, err->message, totem);
-		g_free (msg);
-		g_error_free (err);
-	}
-}
-
-void
-totem_action_skip_to (Totem *totem)
-{
-	char *filename;
-	TotemSkipto **skipto;
-
-	if (totem->seekable == FALSE)
-		return;
-
-	if (totem->skipto != NULL) {
-		gtk_window_present (GTK_WINDOW (totem->skipto));
-		return;
-	}
-
-	filename = totem_interface_get_full_path ("skip_to.glade");
-	totem->skipto = TOTEM_SKIPTO (totem_skipto_new (filename));
-	g_free (filename);
-	totem_skipto_update_range (totem->skipto, totem->last_length);
-
-	g_signal_connect (G_OBJECT (totem->skipto), "delete-event",
-			G_CALLBACK (gtk_widget_destroy), NULL);
-	g_signal_connect (G_OBJECT (totem->skipto), "response",
-			G_CALLBACK (commit_hide_skip_to), totem);
-
-	skipto = &totem->skipto;
-	g_object_add_weak_pointer (G_OBJECT (totem->skipto),
-				   (gpointer *) skipto);
-
-	gtk_window_set_transient_for (GTK_WINDOW (totem->skipto),
-			GTK_WINDOW (totem->win));
-	gtk_widget_show (GTK_WIDGET (totem->skipto));
 }
 
 static void
@@ -2320,16 +2269,31 @@ update_fullscreen_size (Totem *totem)
 gboolean
 totem_is_fullscreen (Totem *totem)
 {
+	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), FALSE);
+
 	return (totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN);
 }
 
 gboolean
 totem_is_playing (Totem *totem)
 {
+	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), FALSE);
+
 	if (totem->bvw == NULL)
 		return FALSE;
 
 	return bacon_video_widget_is_playing (totem->bvw) != FALSE;
+}
+
+gboolean
+totem_is_seekable (Totem *totem)
+{
+	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), FALSE);
+
+	if (totem->bvw == NULL)
+		return FALSE;
+
+	return bacon_video_widget_is_seekable (totem->bvw) != FALSE;
 }
 
 static void
@@ -2671,7 +2635,7 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		if (event->state & GDK_CONTROL_MASK) {
 			totem_action_take_screenshot (totem);
 		} else {
-			totem_action_skip_to (totem);
+			return FALSE;
 		}
 		break;
 	case GDK_t:
@@ -3235,7 +3199,6 @@ totem_callback_connect (Totem *totem)
 	totem_action_set_sensitivity ("previous-chapter", FALSE);
 	totem_action_set_sensitivity ("skip-forward", FALSE);
 	totem_action_set_sensitivity ("skip-backwards", FALSE);
-	totem_action_set_sensitivity ("skip-to", FALSE);
 }
 
 static void

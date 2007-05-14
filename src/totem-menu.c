@@ -1055,12 +1055,6 @@ previous_chapter_action_callback (GtkAction *action, Totem *totem)
 }
 
 static void
-skip_to_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_action_skip_to (totem);
-}
-
-static void
 skip_forward_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET);
@@ -1292,7 +1286,6 @@ static const GtkActionEntry entries[] = {
 	{ "dvd-chapter-menu", GTK_STOCK_INDEX, N_("_Chapter Menu"), "c", N_("Go to the chapter menu"), G_CALLBACK (dvd_chapter_menu_action_callback) },
 	{ "next-chapter", GTK_STOCK_MEDIA_NEXT, N_("_Next Chapter/Movie"), "n", N_("Next chapter or movie"), G_CALLBACK (next_chapter_action_callback) },
 	{ "previous-chapter", GTK_STOCK_MEDIA_PREVIOUS, N_("_Previous Chapter/Movie"), "b", N_("Previous chapter or movie"), G_CALLBACK (previous_chapter_action_callback) },
-	{ "skip-to", GTK_STOCK_JUMP_TO, N_("_Skip to..."), "S", N_("Skip to a specific time"), G_CALLBACK (skip_to_action_callback) },
 
 	{ "sound-menu", NULL, N_("_Sound") },
 /*	{ "languages-menu", NULL, N_("_Languages") }, */

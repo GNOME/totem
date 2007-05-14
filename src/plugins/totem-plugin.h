@@ -114,9 +114,15 @@ GList *          totem_get_plugin_paths            (void);
  */
 
 #define TOTEM_PLUGIN_REGISTER(PluginName, plugin_name)				\
+	TOTEM_PLUGIN_REGISTER_EXTENDED(PluginName, plugin_name, {})
+
+#define TOTEM_PLUGIN_REGISTER_EXTENDED(PluginName, plugin_name, _C_)		\
+	_TOTEM_PLUGIN_REGISTER_EXTENDED_BEGIN (PluginName, plugin_name) {_C_;} _TOTEM_PLUGIN_REGISTER_EXTENDED_END(plugin_name)
+
+#define _TOTEM_PLUGIN_REGISTER_EXTENDED_BEGIN(PluginName, plugin_name)		\
 										\
 static GType plugin_name##_type = 0;						\
-static GTypeModule *plugin_module_type = 0;		                \
+static GTypeModule *plugin_module_type = 0;		                	\
 										\
 GType										\
 plugin_name##_get_type (void)							\
@@ -136,7 +142,7 @@ static void     plugin_name##_class_intern_init (gpointer klass)		\
 G_MODULE_EXPORT GType								\
 register_totem_plugin (GTypeModule *module)					\
 {										\
-	const GTypeInfo our_info =					\
+	const GTypeInfo our_info =						\
 	{									\
 		sizeof (PluginName##Class),					\
 		NULL, /* base_init */						\
@@ -159,6 +165,11 @@ register_totem_plugin (GTypeModule *module)					\
 					    #PluginName,			\
 					    &our_info,				\
 					    0);					\
+	{ /* custom code follows */
+
+#define _TOTEM_PLUGIN_REGISTER_EXTENDED_END(plugin_name)			\
+		/* following custom code */					\
+	}									\
 	return plugin_name##_type;						\
 }
 

@@ -1,3 +1,42 @@
+2007-05-14  Philip Withnall  <pwithnall@svn.gnome.org>
+
+	* configure.in:
+	* data/Makefile.am:
+	* data/skip_to.glade:
+	* data/totem-ui.xml:
+	* src/Makefile.am:
+	* src/plugins/skipto/Makefile.am:
+	* src/plugins/skipto/skip_to.glade:
+	* src/plugins/skipto/skipto.totem-plugin.in:
+	* src/plugins/skipto/totem-skipto-plugin.c:
+	(totem_skipto_plugin_class_init), (totem_skipto_plugin_init),
+	(destroy_dialog), (totem_skipto_plugin_finalize),
+	(totem_skipto_update_from_state), (property_notify_cb),
+	(skip_to_response_callback), (run_skip_to_dialog),
+	(skip_to_action_callback), (on_window_key_press_event),
+	(impl_activate), (impl_deactivate):
+	* src/plugins/skipto/totem-skipto.c: (totem_skipto_class_init),
+	(totem_skipto_response_cb), (totem_skipto_init),
+	(totem_skipto_finalize), (totem_skipto_update_range),
+	(totem_skipto_get_range), (totem_skipto_set_seekable),
+	(totem_skipto_set_current), (spin_button_activate_cb),
+	(spin_button_value_changed_cb), (totem_skipto_new):
+	* src/plugins/skipto/totem-skipto.h:
+	* src/plugins/totem-plugin.h:
+	* src/totem-menu.c:
+	* src/totem-object.c: (totem_object_class_init),
+	(totem_object_get_property), (totem_get_ui_manager),
+	(totem_get_current_time), (totem_remove_sidebar_page):
+	* src/totem-private.h:
+	* src/totem-skipto.c:
+	* src/totem-skipto.h:
+	* src/totem.c: (update_mrl_label), (totem_action_seek_relative),
+	(totem_action_seek_time), (update_seekable), (update_current_time),
+	(totem_is_fullscreen), (totem_is_playing), (totem_is_seekable),
+	(totem_action_handle_key_press), (totem_callback_connect):
+	* src/totem.h: Move the skipto dialog into a
+	new plugin. (Closes #428293)
+
 2007-05-14  Bastien Nocera  <hadess@hadess.net>
 
 	* src/bacon-volume.c: (bacon_volume_button_new): Fix the ATK

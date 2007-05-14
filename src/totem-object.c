@@ -39,7 +39,9 @@
 enum {
 	PROP_0,
 	PROP_FULLSCREEN,
-	PROP_PLAYING
+	PROP_PLAYING,
+	PROP_STREAM_LENGTH,
+	PROP_SEEKABLE
 };
 
 static void totem_object_set_property		(GObject *object,
@@ -71,6 +73,14 @@ totem_object_class_init (TotemObjectClass *klass)
 	g_object_class_install_property (object_class, PROP_PLAYING,
 					 g_param_spec_boolean ("playing", NULL, NULL,
 							       FALSE, G_PARAM_READABLE));
+	g_object_class_install_property (object_class, PROP_STREAM_LENGTH,
+					 g_param_spec_int64 ("stream-length", NULL, NULL,
+							     G_MININT64, G_MAXINT64, 0,
+							     G_PARAM_READABLE));
+	g_object_class_install_property (object_class, PROP_SEEKABLE,
+					 g_param_spec_boolean ("seekable", NULL, NULL,
+							       FALSE, G_PARAM_READABLE));
+
 	//FIXME properties and signals
 }
 
@@ -114,6 +124,12 @@ totem_object_get_property (GObject *object,
 	case PROP_PLAYING:
 		g_value_set_boolean (value, totem_is_playing (totem));
 		break;
+	case PROP_STREAM_LENGTH:
+		g_value_set_int64 (value, bacon_video_widget_get_stream_length (totem->bvw));
+		break;
+	case PROP_SEEKABLE:
+		g_value_set_boolean (value, totem_is_seekable (totem));
+		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 	}
@@ -141,6 +157,22 @@ totem_get_main_window (Totem *totem)
 	return GTK_WINDOW (totem->win);
 }
 
+GtkUIManager *
+totem_get_ui_manager (Totem *totem)
+{
+	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), NULL);
+
+	return totem->ui_manager;
+}
+
+gint64
+totem_get_current_time (Totem *totem)
+{
+	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), 0);
+
+	return bacon_video_widget_get_current_time (totem->bvw);
+}
+
 void
 totem_add_sidebar_page (Totem *totem,
 			const char *page_id,
@@ -160,4 +192,3 @@ totem_remove_sidebar_page (Totem *totem,
 	ev_sidebar_remove_page (EV_SIDEBAR (totem->sidebar),
 				page_id);
 }
-

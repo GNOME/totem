@@ -14,7 +14,6 @@ stuff_DATA =				\
 	plugins.glade			\
 	mozilla-viewer.glade		\
 	properties.glade		\
-	skip_to.glade			\
 	uri.glade			\
 	totem-ui.xml			\
 	totem_logo.png

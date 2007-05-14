@@ -29,7 +29,7 @@
 #define __TOTEM_H__
 
 #include <glib-object.h>
-#include <gtk/gtkwindow.h>
+#include <gtk/gtk.h>
 
 #include "plparse/totem-disc.h"
 
@@ -100,6 +100,7 @@ void	totem_action_fullscreen_toggle		(Totem *totem);
 void	totem_action_fullscreen			(Totem *totem, gboolean state);
 void	totem_action_next			(Totem *totem);
 void	totem_action_previous			(Totem *totem);
+void	totem_action_seek_time			(Totem *totem, gint64 sec);
 void	totem_action_seek_relative		(Totem *totem, int off_sec);
 void	totem_action_volume_relative		(Totem *totem, int off_pct);
 gboolean totem_action_set_mrl			(Totem *totem,
@@ -129,7 +130,10 @@ void    totem_action_play_media_device		(Totem *totem,
 
 gboolean totem_is_fullscreen			(Totem *totem);
 gboolean totem_is_playing			(Totem *totem);
+gboolean totem_is_seekable			(Totem *totem);
 GtkWindow *totem_get_main_window		(Totem *totem);
+GtkUIManager *totem_get_ui_manager		(Totem *totem);
+gint64 totem_get_current_time			(Totem *totem);
 
 void    totem_add_sidebar_page			(Totem *totem,
 						 const char *page_id,
