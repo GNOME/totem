@@ -329,5 +329,3 @@ CLEANFILES = \
 	$(desktop_DATA)		\
 	$(BUILT_SOURCES)
 
-EXTRA_DIST = \
-	totem-marshal.list

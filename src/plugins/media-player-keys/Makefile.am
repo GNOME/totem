@@ -3,7 +3,7 @@ modules_flags = -export_dynamic -avoid-version -module
 plugindir = $(PLUGINDIR)/media-player-keys
 plugin_LTLIBRARIES = libmedia_player_keys.la
 
-plugin_in_files = media-player-keys.totem-plugin.desktop.in
+plugin_in_files = media-player-keys.totem-plugin.in
 
 %.totem-plugin: %.totem-plugin.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; $(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
 
@@ -46,7 +46,7 @@ totem-marshal.c: totem-marshal.list
 totem-marshal.h: totem-marshal.list
 	@GLIB_GENMARSHAL@ --prefix=totem_marshal $< --header > $@
 
-EXTRA_DIST = $(plugin_in_files)
+EXTRA_DIST = totem-marshal.list $(plugin_in_files)
 
 CLEANFILES = $(plugin_DATA) $(BUILT_SOURCES)
 DISTCLEANFILES = $(plugin_DATA)

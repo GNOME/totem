@@ -7,7 +7,8 @@ BUILT_SOURCES =
 
 EXTRA_DIST = \
 	plugin.symbols	\
-	TODO
+	TODO		\
+	README.browser-plugin
 
 CLEANFILES = $(BUILT_SOURCES)
 

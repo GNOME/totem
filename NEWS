@@ -1,5 +1,72 @@
 New features and significant updates in version...
 
+2.19.2
+* Features:
+  - Add basic DVB support
+  - Add a plugin system
+  - Add the "On Top" plugin, to make Totem stay on top when playing a video
+  - Add the "Galago" plugin, to set your IM status when playing videos
+  in fullscreen
+  - Move LIRC support, Media Players key support, and Telestrator to plugins
+  - Use xdg-user-dirs to add the Movies and Music shortcuts to the file choosers
+  - Make "Enter" dismiss the "Open Location" dialogue
+  - Move the play/pause button to the leftmost of the UI
+  - Make Totem only send ticks when playing, not when paused or stopped
+  - Use play/pause icons in the playlist to show the current state,
+  as in Rhythmbox
+  - Allow capture a specific time in a movie using the thumbnailer
+
+* Don't crash when we can't get a display name for the file we're trying to play
+* Don't crash on exit when LIRC is used
+* Some multi-head fixes
+* Move all the configuration files to ~/.gnome2/Totem
+* Remove the webcam application Vanity
+* Curb the resources used by the video thumbnailer and indexer
+* Make the pause remote key actually pause
+* Allow disabling the iso-codes checks in configure
+* Avoid removing just added files when passing multiple files to enqueue
+* Handle the Stop button from remotes
+* Hide the resize grip when the window is maximised
+* Remember the last directory used to save the screenshots, and set the
+  Pictures directory as the default save directory
+* Fix the language labels so that they show "English #2" instead of "en #2"
+  when a specific language appears more than once
+* When seeking back and paused, make sure the slider goes back to 0:00
+* Disable "Fit Movie to Window" when the window is maximised
+* Re-add tooltips for the Play/Pause, Previous, Next buttons, and the volume
+  button when the volume is 0 on startup
+
+* Browser plugin:
+  - Allow disabling Totem for specific mime-types user-wide, and system-wide
+  - Make the volume button scroll in the right direction
+  - Remove rejection of streams based on mime-type, too many false positives
+  - Make the Complex plugin report version "10.0", as is current for the Helix
+  plugin
+* Playlist parser:
+  - Support extra metadata being passed from the parser
+  - Remove home-made canonicalise function, fixes Win32 build
+  - Add SMILtext parsing support
+  - Add devices drag'n'dropped from nautilus to the playlist
+  - Fix RTSPtext parsing for one-line URLs
+* Properties:
+  - Reorder the audio properties so they match the order of the video ones
+* GStreamer backend:
+  - Fix compilation against GStreamer with debugging disabled
+  - Add missing plugins to the local blacklist, if the user cancels
+  the installation
+  - Remove some unneeded debug output
+  - Make sure an error dialogue shows up if the missing plugins
+  installer returns an error
+  - Make the missing plugins code work when a subtitle stream was passed as well
+  - Fix elapsed time accuracy when no audio output is present
+  - Show proper names for the number of channels, instead of just a number
+  - Fix errors on startup if a soundcard isn't available
+* xine-lib backend:
+  - Fix browser plugin support
+  - Set the font size according to the preferences
+  - Take into account the original image ratio before scaling it
+  - Return a cached stream length if we couldn't get one accurately
+
 2.18.0
 * Fix resizing of the sidebar the first time it's opened
 * Fix using the playlist parser with the Python bindings
