@@ -292,6 +292,42 @@ NP_GetValue (void *future,
 	return totem_plugin_get_value (NULL, variable, value);
 }
 
+static gboolean
+totem_plugin_mimetype_is_disabled (const char *mimetype,
+				   GKeyFile *system,
+				   GKeyFile *user)
+{
+	GError *error = NULL;
+	gboolean retval;
+	char *key;
+
+	retval = FALSE;
+	key = g_strdup_printf ("%s.disabled", mimetype);
+
+	/* If the plugin is listed as enabled or disabled explicitely,
+	 * in the system-wide config file, then that's it */
+	if (system != NULL) {
+		retval = g_key_file_get_boolean (system, "Plugins", key, &error);
+		if (error == NULL) {
+			g_free (key);
+			return retval;
+		}
+		g_error_free (error);
+		error = NULL;
+	}
+
+	if (user != NULL) {
+		retval = g_key_file_get_boolean (user, "Plugins", key, &error);
+		if (error != NULL) {
+			g_error_free (error);
+			g_free (key);
+			return FALSE;
+		}
+	}
+
+	return retval;
+}
+
 char *
 NP_GetMIMEDescription (void)
 {
@@ -302,11 +338,43 @@ NP_GetMIMEDescription (void)
 
 	list = g_string_new (NULL);
 
+	/* Load the configuration files for the enabled plugins */
+	GKeyFile *system, *user;
+
+	system = g_key_file_new ();
+	user = g_key_file_new ();
+
+	if (g_key_file_load_from_file (system,
+				       SYSCONFDIR"/totem/browser-plugins.ini",
+				       G_KEY_FILE_NONE,
+				       NULL) == FALSE) {
+		g_key_file_free (system);
+		system = NULL;
+	}
+
+	char *user_ini_file;
+	user_ini_file = g_build_filename (g_get_home_dir (),
+					  ".gnome2",
+					  "Totem",
+					  "browser-plugins.ini",
+					  NULL);
+	if (g_key_file_load_from_file (user,
+				       user_ini_file,
+				       G_KEY_FILE_NONE,
+				       NULL) == FALSE) {
+		g_key_file_free (user);
+		user = NULL;
+	}
+	g_free (user_ini_file);
+
 	const totemPluginMimeEntry *mimetypes;
 	PRUint32 count;
 	totemScriptablePlugin::PluginMimeTypes (&mimetypes, &count);
 	for (PRUint32 i = 0; i < count; ++i) {
 		const char *desc;
+
+		if (totem_plugin_mimetype_is_disabled (mimetypes[i].mimetype, system, user))
+			continue;
 
 		desc = gnome_vfs_mime_get_description (mimetypes[i].mimetype);
 		if (desc == NULL && mimetypes[i].mime_alias != NULL) {
@@ -324,6 +392,11 @@ NP_GetMIMEDescription (void)
 	}
 
 	mime_list = g_string_free (list, FALSE);
+
+	if (user != NULL)
+		g_key_file_free (user);
+	if (system != NULL)
+		g_key_file_free (system);
 
 	return mime_list;
 }

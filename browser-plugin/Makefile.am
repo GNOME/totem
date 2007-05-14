@@ -137,6 +137,7 @@ libtotem_basic_plugin_la_CPPFLAGS = \
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
 	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
 	-DGCONF_PREFIX="\"/apps/totem\""		\
+	-DSYSCONFDIR="\"$(sysconfdir)\""		\
 	-DDATADIR="\"$(pkgdatadir)\""			\
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
 	-DBINDIR="\"$(bindir)\""			\
@@ -205,6 +206,7 @@ libtotem_gmp_plugin_la_CPPFLAGS = \
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
 	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
 	-DGCONF_PREFIX="\"/apps/totem\""		\
+	-DSYSCONFDIR="\"$(sysconfdir)\""		\
 	-DDATADIR="\"$(pkgdatadir)\""			\
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
 	-DBINDIR="\"$(bindir)\""			\
@@ -267,6 +269,7 @@ libtotem_complex_plugin_la_CPPFLAGS = \
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
 	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
 	-DGCONF_PREFIX="\"/apps/totem\""		\
+	-DSYSCONFDIR="\"$(sysconfdir)\""		\
 	-DDATADIR="\"$(pkgdatadir)\""			\
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
 	-DBINDIR="\"$(bindir)\""			\
@@ -329,6 +332,7 @@ libtotem_narrowspace_plugin_la_CPPFLAGS = \
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
 	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
 	-DGCONF_PREFIX="\"/apps/totem\""		\
+	-DSYSCONFDIR="\"$(sysconfdir)\""		\
 	-DDATADIR="\"$(pkgdatadir)\""			\
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
 	-DBINDIR="\"$(bindir)\""			\
@@ -391,6 +395,7 @@ libtotem_mully_plugin_la_CPPFLAGS = \
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
 	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
 	-DGCONF_PREFIX="\"/apps/totem\""		\
+	-DSYSCONFDIR="\"$(sysconfdir)\""		\
 	-DDATADIR="\"$(pkgdatadir)\""			\
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
 	-DBINDIR="\"$(bindir)\""			\

@@ -19,6 +19,27 @@ export MOZ_PLUGIN_PATH=`pwd`
 - Mozilla/Gecko/Firefox envar to lookup the browser plugins in the current
   directory
 
+Disabling specific mime-types
+=============================
+
+This can be achieved using 2 files. They are:
+/etc/totem/browser-plugins.ini ($(sysconfdir)/totem/browser-plugins.ini)
+and
+~/.gnome2/Totem/browser-plugins.ini
+
+The format is:
+[Plugins]
+[mimetype].disable=true/false
+
+For example, to disable all the mime-types in the Complex plugin:
+[Plugins]
+audio/x-pn-realaudio-plugin.disable=true
+
+The system-wide file will take precedence over any settings in the user-wide
+setting. Bear in mind that Firefox/Seamonkey might not re-read the plugin list
+once it's been cached. You might have to remove the pluginreg.dat from the Mozilla
+profile directory.
+
 Special topics: Complex plugin
 ==============================
 
