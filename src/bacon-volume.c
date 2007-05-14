@@ -212,7 +212,7 @@ bacon_volume_button_new (GtkIconSize size,
   /* + */
   button->plus = gtk_button_new_with_label (_("+"));
   atk_object_set_name (gtk_widget_get_accessible (button->plus),
-		       _("Volume Down"));
+		       _("Volume Up"));
   gtk_button_set_relief (GTK_BUTTON (button->plus), GTK_RELIEF_NONE);
   g_signal_connect (button->plus, "button-press-event",
 		    G_CALLBACK (cb_button_press), button);
@@ -230,7 +230,7 @@ bacon_volume_button_new (GtkIconSize size,
   /* - */
   button->min = gtk_button_new_with_label (_("-"));
   atk_object_set_name (gtk_widget_get_accessible (button->min),
-		       _("Volume Up"));
+		       _("Volume Down"));
   gtk_button_set_relief (GTK_BUTTON (button->min), GTK_RELIEF_NONE);
   g_signal_connect (button->min, "button-press-event",
 		   G_CALLBACK (cb_button_press), button);
