@@ -38,18 +38,18 @@ enum {
   NUM_SIGNALS
 };
 
-struct BaconVolumeButton {
+struct _BaconVolumeButton {
   GtkButton parent;
 
   /* popup */
   GtkWidget *dock, *scale, *image, *plus, *min;
+  GtkTooltips *tooltips;
   GtkIconSize size;
   gint click_id;
   float direction;
   guint32 pop_time;
-  GdkPixbuf *icon[4];
-  GtkTooltips *tooltips;
   guint timeout : 1;
+  guint icon : 3;
 };
 
 static void	bacon_volume_button_class_init	(BaconVolumeButtonClass * klass);
@@ -62,8 +62,6 @@ static gboolean	bacon_volume_button_press	(GtkWidget      * widget,
 						 GdkEventButton * event);
 static gboolean bacon_volume_key_release	(GtkWidget      * widget,
     						 GdkEventKey    * event);
-static void bacon_volume_button_style_set	(GtkWidget *widget,
-						 GtkStyle *previous_style);
 static gboolean cb_dock_button_press		(GtkWidget      * widget,
 						 GdkEventButton * event,
 						 gpointer         data);
@@ -81,16 +79,16 @@ static gboolean cb_button_release		(GtkWidget      * widget,
 						 GdkEventButton * event,
 						 gpointer         data);
 static void     bacon_volume_button_update_icon (BaconVolumeButton *button);
+static void	bacon_volume_button_update_tip	(BaconVolumeButton *button);
 static void	bacon_volume_scale_value_changed(GtkRange       * range);
-static void	bacon_volume_button_load_icons	(GtkWidget      * widget);
 
 /* see below for scale definitions */
 static GtkWidget *bacon_volume_scale_new	(BaconVolumeButton * button,
 						 float min, float max,
 						 float step);
 
-static GtkButtonClass *parent_class = NULL;
-static guint signals[NUM_SIGNALS] = { 0 };
+static GtkButtonClass *parent_class;
+static guint signals[NUM_SIGNALS];
 
 GType
 bacon_volume_button_get_type (void)
@@ -133,7 +131,6 @@ bacon_volume_button_class_init (BaconVolumeButtonClass *klass)
   gtkwidget_class->button_press_event = bacon_volume_button_press;
   gtkwidget_class->key_release_event = bacon_volume_key_release;
   gtkwidget_class->scroll_event = bacon_volume_button_scroll;
-  gtkwidget_class->style_set = bacon_volume_button_style_set;
 
   /* signals */
   signals[SIGNAL_VALUE_CHANGED] = g_signal_new ("value-changed",
@@ -148,6 +145,8 @@ bacon_volume_button_init (BaconVolumeButton *button)
   button->timeout = FALSE;
   button->click_id = 0;
   button->dock = button->scale = NULL;
+  button->icon = 7; /* to force update */
+  /* FIXME: there really is no need for a complete tooltips object here! just use one in a parent window! */
   button->tooltips = gtk_tooltips_new ();
 }
 
@@ -155,7 +154,6 @@ static void
 bacon_volume_button_dispose (GObject *object)
 {
   BaconVolumeButton *button = BACON_VOLUME_BUTTON (object);
-  guint i;
 
   if (button->dock) {
     gtk_widget_destroy (button->dock);
@@ -165,12 +163,6 @@ bacon_volume_button_dispose (GObject *object)
   if (button->click_id != 0) {
     g_source_remove (button->click_id);
     button->click_id = 0;
-  }
-  for (i = 0; i < 4; i++) {
-    if (button->icon[i] != NULL) {
-      g_object_unref (button->icon[i]);
-      button->icon[i] = NULL;
-    }
   }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -220,7 +212,7 @@ bacon_volume_button_new (GtkIconSize size,
   /* + */
   button->plus = gtk_button_new_with_label (_("+"));
   atk_object_set_name (gtk_widget_get_accessible (button->plus),
-		       _("Volume Down"));
+		       _("Volume Up"));
   gtk_button_set_relief (GTK_BUTTON (button->plus), GTK_RELIEF_NONE);
   g_signal_connect (button->plus, "button-press-event",
 		    G_CALLBACK (cb_button_press), button);
@@ -238,7 +230,7 @@ bacon_volume_button_new (GtkIconSize size,
   /* - */
   button->min = gtk_button_new_with_label (_("-"));
   atk_object_set_name (gtk_widget_get_accessible (button->min),
-		       _("Volume Up"));
+		       _("Volume Down"));
   gtk_button_set_relief (GTK_BUTTON (button->min), GTK_RELIEF_NONE);
   g_signal_connect (button->min, "button-press-event",
 		   G_CALLBACK (cb_button_press), button);
@@ -246,8 +238,9 @@ bacon_volume_button_new (GtkIconSize size,
 		    G_CALLBACK (cb_button_release), button);
   gtk_box_pack_start (GTK_BOX (box), button->min, TRUE, FALSE, 0);
 
-  /* set button text */
+  /* initially set icon and tooltip */
   bacon_volume_button_update_icon (button);
+  bacon_volume_button_update_tip (button);
 
   return GTK_WIDGET (button);
 }
@@ -272,15 +265,6 @@ bacon_volume_button_set_value (BaconVolumeButton * button,
 /*
  * button callbacks.
  */
-
-static void
-bacon_volume_button_style_set (GtkWidget *widget,
-			       GtkStyle *previous_style)
-{
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, previous_style);
-
-  bacon_volume_button_load_icons (widget);
-}
 
 static gboolean
 bacon_volume_button_scroll (GtkWidget      * widget,
@@ -742,25 +726,37 @@ bacon_volume_scale_release (GtkWidget      * widget,
 static void
 bacon_volume_button_update_icon (BaconVolumeButton *button)
 {
+  static const char icon_name[][21] = {
+    "audio-volume-muted",
+    "audio-volume-low",
+    "audio-volume-medium",
+    "audio-volume-high"
+  };
   GtkRange *range = GTK_RANGE (button->scale);
   float val = gtk_range_get_value (range);
   GtkAdjustment *adj;
-  GdkPixbuf *pixbuf;
   float step;
+  guint icon;
 
   adj = gtk_range_get_adjustment (range);
   step = (adj->upper - adj->lower) / 4;
 
   if (val == adj->lower)
-    pixbuf = button->icon[0];
+    icon = 0;
   else if (val > adj->lower && val <= adj->lower + step)
-    pixbuf = button->icon[1];
+    icon = 1;
   else if (val > adj->lower + step && val <= adj->lower + step * 2)
-    pixbuf = button->icon[2];
+    icon = 2;
   else
-    pixbuf = button->icon[3];
+    icon = 3;
 
-  gtk_image_set_from_pixbuf (GTK_IMAGE (button->image), pixbuf);
+  if (button->icon == icon)
+    return;
+
+  button->icon = icon;
+  gtk_image_set_from_icon_name (GTK_IMAGE (button->image),
+			        icon_name[icon],
+			        button->size);
 }
 
 static void
@@ -798,47 +794,6 @@ bacon_volume_scale_value_changed (GtkRange * range)
 
   /* signal */
   g_signal_emit (button, signals[SIGNAL_VALUE_CHANGED], 0);
-}
- 
-static void
-bacon_volume_button_load_icons (GtkWidget *widget)
-{
-  BaconVolumeButton *button = BACON_VOLUME_BUTTON (widget);
-  guint i;
-  gint w, h;
-  GdkScreen *screen;
-  GtkIconTheme *theme;
-  const char *icon_name[] = {"audio-volume-muted", "audio-volume-low",
-    "audio-volume-medium", "audio-volume-high"};
-  const char *fallback_icon_name[] = {"stock_volume-0", "stock_volume-min",
-    "stock_volume-med", "stock_volume-max"};
-
-  screen = gtk_widget_get_screen (widget);
-  theme = gtk_icon_theme_get_for_screen (screen);
-
-  gtk_icon_size_lookup (button->size, &w, &h);
-
-  for (i = 0; i < 4; i++) {
-    GError *error = NULL;
-    if (button->icon[i] != NULL) {
-      g_object_unref (button->icon[i]);
-      button->icon[i] = NULL;
-    }
-    button->icon[i] = gtk_icon_theme_load_icon (theme, icon_name[i], w, 0, &error);
-    if (error) {
-      g_print ("Couldn't load themed icon '%s': %s\n", icon_name[i], error->message);
-      g_clear_error (&error);
-
-      button->icon[i] = gtk_icon_theme_load_icon (theme, fallback_icon_name[i], w, 0, &error);
-      if (error) {
-	g_print ("Couldn't load themed icon '%s': %s\n", icon_name[i], error->message);
-	g_clear_error (&error);
-      }
-    }
-  }
-
-  /* Apply the new icons */
-  bacon_volume_button_update_icon (button);
 }
 
 /*
