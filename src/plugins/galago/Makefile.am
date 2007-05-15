@@ -7,7 +7,7 @@ plugin_in_files = galago.totem-plugin.in
 
 %.totem-plugin: %.totem-plugin.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; $(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
 
-plugin_DATA = $(plugin_in_files:.totem-plugin.desktop.in=.totem-plugin)
+plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
 
 common_defines = \
 	-D_REENTRANT					\
