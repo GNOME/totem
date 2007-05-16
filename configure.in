@@ -71,11 +71,7 @@ AC_SUBST(PLUGINDIR)
 AC_ARG_ENABLE(nvtv, AC_HELP_STRING([--enable-nvtv],[Enable support for TV-output with nvtv]), enable_nvtv="$enableval", enable_nvtv=yes)
 
 if test x$enable_nvtv = xyes; then
-PKG_CHECK_MODULES(NVTV, nvtvsimple >= 0.4.5, found_nvtv=yes,
-	[
-		found_nvtv=no
-		AC_MSG_RESULT(no)
-	])
+PKG_CHECK_MODULES(NVTV, nvtvsimple >= 0.4.5, found_nvtv=yes, found_nvtv=no)
 	if test x"$found_nvtv" = "xyes" ; then
 		AC_DEFINE(HAVE_NVTV,1,[Define to 1 if nvtv is available and used.])
 	fi
@@ -233,8 +229,6 @@ else
 	AC_MSG_RESULT([yes])
 fi
 
-AC_MSG_RESULT([$disable_iso_codes_check])
-
 if test x$disable_iso_codes_check = "xno" ; then
 	AC_MSG_CHECKING([whether iso-codes has iso-639 domain])
 	if $PKG_CONFIG --variable=domains iso-codes | grep 639 >/dev/null ; then
@@ -296,8 +290,6 @@ plugin_error_or_ignore()
 		AC_MSG_WARN([$1 (disabling plugin)])
 	fi
 }
-
-AC_MSG_CHECKING([which plugins to compile])
 
 AC_ARG_WITH([plugins],
 	[AS_HELP_STRING([--with-plugins],[Which Totem plugins to compile (default: auto; "all", "none" and "autodetect" are valid)])],
@@ -381,6 +373,7 @@ done
 ALL_PLUGINS=$allowed_plugins
 PLUGINS=$used_plugins2
 
+AC_MSG_CHECKING([which plugins to compile])
 AC_MSG_RESULT([$PLUGINS])
 
 AC_SUBST([ALL_PLUGINS])
@@ -730,7 +723,6 @@ AM_CONDITIONAL(HAVE_HAL, test x"$enable_hal" = xyes)
 dnl ***************************
 dnl D-Bus for gnome-screensaver
 dnl ***************************
-AC_MSG_CHECKING([for D-BUS])
 AC_ARG_WITH(dbus,
 		AC_HELP_STRING([--with-dbus],
 			[Enable D-BUS support]),,
@@ -742,11 +734,8 @@ if test "x$with_dbus" != "xno"; then
 	fi
         if test "x$enable_dbus" = xyes; then
 		AC_DEFINE(WITH_DBUS, 1, [Define if D-BUS is enabled])
-		AC_MSG_RESULT([we're getting on D-BUS])
-	else
-		AC_MSG_RESULT([not found])
 	fi
-fi			  
+fi
 AM_CONDITIONAL(WITH_DBUS, test "x$enable_dbus" = "xyes")
 
 AC_PATH_X
