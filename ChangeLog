@@ -1,3 +1,13 @@
+2007-05-17  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/totem-pl-parser-lines.c:
+	(totem_pl_parser_parse_ram_url), (totem_pl_parser_add_ram):
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_init):
+	* src/plparse/totem-pl-parser.h: Remove known
+	arguments from pnm and rtsp lines found in RAM files, so
+	that servers aren't confused by arguments they don't know about,
+	Adds RAM parameters support (Closes: #439160)
+
 2007-05-16  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: Clean up the configure output

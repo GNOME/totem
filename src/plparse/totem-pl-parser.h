@@ -58,11 +58,16 @@ struct TotemPlParser {
 #define TOTEM_PL_PARSER_FIELD_URL		"url"
 #define TOTEM_PL_PARSER_FIELD_GENRE		"genre"
 #define TOTEM_PL_PARSER_FIELD_TITLE		"title"
+#define TOTEM_PL_PARSER_FIELD_AUTHOR		"author"
 #define TOTEM_PL_PARSER_FIELD_BASE		"base"
 #define TOTEM_PL_PARSER_FIELD_VOLUME		"volume"
 #define TOTEM_PL_PARSER_FIELD_AUTOPLAY		"autoplay"
 #define TOTEM_PL_PARSER_FIELD_DURATION		"duration"
 #define TOTEM_PL_PARSER_FIELD_STARTTIME		"starttime"
+#define TOTEM_PL_PARSER_FIELD_COPYRIGHT		"copyright"
+#define TOTEM_PL_PARSER_FIELD_ABSTRACT		"abstract"
+#define TOTEM_PL_PARSER_FIELD_SCREENSIZE	"screensize"
+#define TOTEM_PL_PARSER_FIELD_UI_MODE		"ui-mode"
 
 struct TotemPlParserClass {
 	GObjectClass parent_class;

@@ -173,6 +173,78 @@ totem_pl_parser_write_m3u (TotemPlParser *parser, GtkTreeModel *model,
 	return TRUE;
 }
 
+static void
+totem_pl_parser_parse_ram_url (TotemPlParser *parser, const char *url)
+{
+	char *mark, **params;
+	GString *str;
+	guint i, num_params;
+	char *title, *author, *copyright, *abstract, *screensize, *mode;
+
+	if (g_str_has_prefix (url, "rtsp://") == FALSE
+	    && g_str_has_prefix (url, "pnm://") == FALSE) {
+		totem_pl_parser_add_one_url (parser, url, NULL);
+		return;
+	}
+
+	/* Look for "?" */
+	mark = strstr (url, "?");
+	if (mark == NULL) {
+		totem_pl_parser_add_one_url (parser, url, NULL);
+		return;
+	}
+
+	if (mark[1] == '\0') {
+		char *new_url;
+
+		new_url = g_strndup (url, mark + 1 - url);
+		totem_pl_parser_add_one_url (parser, new_url, NULL);
+		g_free (new_url);
+		return;
+	}
+
+	title = author = copyright = abstract = screensize = mode = NULL;
+	num_params = 0;
+
+	str = g_string_new_len (url, mark - url);
+	params = g_strsplit (mark + 1, "&", -1);
+	for (i = 0; params[i] != NULL; i++) {
+		if (g_str_has_prefix (params[i], "title=") != FALSE) {
+			title = params[i] + strlen ("title=");
+		} else if (g_str_has_prefix (params[i], "author=") != FALSE) {
+			author = params[i] + strlen ("author=");
+		} else if (g_str_has_prefix (params[i], "copyright=") != FALSE) {
+			copyright = params[i] + strlen ("copyright=");
+		} else if (g_str_has_prefix (params[i], "abstract=") != FALSE) {
+			abstract = params[i] + strlen ("abstract=");
+		} else if (g_str_has_prefix (params[i], "screensize=") != FALSE) {
+			screensize = params[i] + strlen ("screensize=");
+		} else if (g_str_has_prefix (params[i], "mode=") != FALSE) {
+			mode = params[i] + strlen ("mode=");
+		} else {
+			if (num_params == 0)
+				g_string_append_c (str, '?');
+			else
+				g_string_append_c (str, '&');
+			g_string_append (str, params[i]);
+			num_params++;
+		}
+	}
+
+	totem_pl_parser_add_url (parser,
+				 TOTEM_PL_PARSER_FIELD_URL, str->str,
+				 TOTEM_PL_PARSER_FIELD_TITLE, title,
+				 TOTEM_PL_PARSER_FIELD_AUTHOR, author,
+				 TOTEM_PL_PARSER_FIELD_COPYRIGHT, copyright,
+				 TOTEM_PL_PARSER_FIELD_ABSTRACT, abstract,
+				 TOTEM_PL_PARSER_FIELD_SCREENSIZE, screensize,
+				 TOTEM_PL_PARSER_FIELD_UI_MODE, mode,
+				 NULL);
+
+	g_string_free (str, TRUE);
+	g_strfreev (params);
+}
+
 TotemPlParserResult
 totem_pl_parser_add_ram (TotemPlParser *parser, const char *url, gpointer data)
 {
@@ -204,10 +276,8 @@ totem_pl_parser_add_ram (TotemPlParser *parser, const char *url, gpointer data)
 		if (strstr(lines[i], "://") != NULL
 				|| lines[i][0] == G_DIR_SEPARATOR) {
 			/* .ram files can contain .smil entries */
-			if (totem_pl_parser_parse_internal (parser, lines[i], NULL) != TOTEM_PL_PARSER_RESULT_SUCCESS)
-			{
-				totem_pl_parser_add_one_url (parser,
-						lines[i], NULL);
+			if (totem_pl_parser_parse_internal (parser, lines[i], NULL) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
+				totem_pl_parser_parse_ram_url (parser, lines[i]);
 			}
 		} else if (strcmp (lines[i], "--stop--") == 0) {
 			/* For Real Media playlists, handle the stop command */
@@ -222,7 +292,7 @@ totem_pl_parser_add_ram (TotemPlParser *parser, const char *url, gpointer data)
 			{
 				char *fullpath;
 				fullpath = g_strdup_printf ("%s/%s", base, lines[i]);
-				totem_pl_parser_add_one_url (parser, fullpath, NULL);
+				totem_pl_parser_parse_ram_url (parser, fullpath);
 				g_free (fullpath);
 			}
 			g_free (base);
