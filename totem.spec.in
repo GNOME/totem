@@ -81,6 +81,14 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-1.0/*.a
 rm -f $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-1.0/*.la
 rm -f $RPM_BUILD_ROOT%{_libdir}/mozilla/plugins/*.a
 rm -f $RPM_BUILD_ROOT%{_libdir}/mozilla/plugins/*.la
+rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/gromit/libgromit.a
+rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/gromit/libgromit.la
+rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/ontop/libontop.a
+rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/ontop/libontop.la
+rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/screensaver/libscreensaver.a
+rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/screensaver/libscreensaver.la
+rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/skipto/libskipto.a
+rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/skipto/libskipto.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -117,6 +125,15 @@ done
 %{_mandir}/man1/%{name}.1*
 %{_mandir}/man1/totem-video-thumbnailer.1.gz
 %{_datadir}/locale
+%{_libdir}/totem/plugins/gromit/gromit.totem-plugin
+%{_libdir}/totem/plugins/gromit/libgromit.so
+%{_libdir}/totem/plugins/ontop/libontop.so
+%{_libdir}/totem/plugins/ontop/ontop.totem-plugin
+%{_libdir}/totem/plugins/screensaver/libscreensaver.so
+%{_libdir}/totem/plugins/screensaver/screensaver.totem-plugin
+%{_libdir}/totem/plugins/skipto/libskipto.so
+%{_libdir}/totem/plugins/skipto/skip_to.glade
+%{_libdir}/totem/plugins/skipto/skipto.totem-plugin
 %exclude /var/lib/scrollkeeper
 
 %files mozplugin
@@ -131,6 +148,9 @@ done
 %{_libdir}/*so
 
 %changelog
+* Fri May 18 2007 Christian Schaller <christian@fluendo.com>
+- Update for plugins system
+
 * Mon Feb 13 2006 Matthias Clasen <mclasen@redhat.com> - 1.3.91-1
 - Update to 1.3.91
 
