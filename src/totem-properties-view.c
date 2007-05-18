@@ -31,6 +31,7 @@
 #include "totem-properties-view.h"
 
 #include "bacon-video-widget-properties.h"
+#include "bacon-video-widget.h"
 #include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
 
@@ -96,7 +97,7 @@ on_got_metadata_event (BaconVideoWidget *bvw, TotemPropertiesView *props)
 	gtk_label_set_text (GTK_LABEL (props->priv->label), _(label));
 
 	bacon_video_widget_properties_update
-		(props->priv->props, props->priv->bvw);
+		(props->priv->props, GTK_WIDGET (props->priv->bvw));
 }
 
 static void

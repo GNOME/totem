@@ -49,7 +49,6 @@
 #endif
 
 #include "bacon-video-widget.h"
-#include "bacon-video-widget-properties.h"
 #include "totem-statusbar.h"
 #include "totem-time-label.h"
 #include "totem-session.h"
@@ -970,12 +969,9 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		g_free (totem->mrl);
 		totem->mrl = NULL;
 		bacon_video_widget_close (totem->bvw);
+		totem_file_closed (totem);
 		play_pause_set_label (totem, TOTEM_PLAYLIST_STATUS_NONE);
 	}
-
-	/* Reset the properties and wait for the signal*/
-	bacon_video_widget_properties_reset
-		(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties));
 
 	if (mrl == NULL)
 	{
@@ -1006,8 +1002,6 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 
 		/* Set the logo */
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
-		gtk_widget_set_sensitive (GTK_WIDGET (totem->properties),
-				FALSE);
 		update_mrl_label (totem, NULL);
 	} else {
 		gboolean caps;
@@ -1040,9 +1034,6 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		/* Clear the playlist */
 		totem_action_set_sensitivity ("clear-playlist", retval);
 
-		gtk_widget_set_sensitive
-			(GTK_WIDGET (totem->properties), retval);
-
 		/* Set the playlist */
 		play_pause_set_label (totem, retval ? STATE_PAUSED : STATE_STOPPED);
 
@@ -1069,6 +1060,8 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 			g_free (totem->mrl);
 			totem->mrl = NULL;
 			bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
+		} else {
+			totem_file_opened (totem, totem->mrl);
 		}
 	}
 	update_buttons (totem);
@@ -1469,8 +1462,10 @@ on_got_redirect (BaconVideoWidget *bvw, const char *mrl, Totem *totem)
 	g_free (old_mrl);
 
 	bacon_video_widget_close (totem->bvw);
+	totem_file_closed (totem);
 	totem_gdk_window_set_waiting_cursor (totem->win->window);
 	bacon_video_widget_open (totem->bvw, new_mrl, NULL);
+	totem_file_opened (totem, new_mrl);
 	gdk_window_set_cursor (totem->win->window, NULL);
 	bacon_video_widget_play (bvw, NULL);
 	g_free (new_mrl);
@@ -1496,9 +1491,7 @@ on_channels_change_event (BaconVideoWidget *bvw, Totem *totem)
 	/* updated stream info (new song) */
 	name = totem_get_nice_name_for_stream (totem);
 
-	bacon_video_widget_properties_update
-		(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
-		 totem->bvw);
+	totem_metadata_updated (totem, NULL, NULL, NULL);
 
 	if (name != NULL) {
 		update_mrl_label (totem, name);
@@ -1522,9 +1515,7 @@ on_playlist_change_name (TotemPlaylist *playlist, Totem *totem)
 
 	if (totem_playlist_get_current_metadata (playlist, &artist,
 						 &title, &album) != FALSE) {
-		bacon_video_widget_properties_from_metadata (
-			BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
-			artist, title, album);
+		totem_metadata_updated (totem, artist, title, album);
 
 		g_free (artist);
 		g_free (album);
@@ -1537,9 +1528,7 @@ on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 {
         char *name = NULL;
 
-	bacon_video_widget_properties_update
-		(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
-		 totem->bvw);
+	totem_metadata_updated (totem, NULL, NULL, NULL);
 
 	name = totem_get_nice_name_for_stream (totem);
 
@@ -1604,8 +1593,6 @@ update_current_time (BaconVideoWidget *bvw,
 		float current_position,
 		gboolean seekable, Totem *totem)
 {
-	g_object_notify (G_OBJECT (totem), "stream-length");
-
 	if (totem->seek_lock == FALSE)
 	{
 		gtk_adjustment_set_value (totem->seekadj,
@@ -1628,9 +1615,11 @@ update_current_time (BaconVideoWidget *bvw,
 		totem_time_label_set_time
 			(TOTEM_TIME_LABEL (totem->tcw_time_label),
 			 current_time, stream_length);
-		bacon_video_widget_properties_from_time
-			(BACON_VIDEO_WIDGET_PROPERTIES (totem->properties),
-			 stream_length);
+	}
+
+	if (totem->stream_length != stream_length) {
+		g_object_notify (G_OBJECT (totem), "stream-length");
+		totem->stream_length = stream_length;
 	}
 }
 
@@ -1848,6 +1837,7 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 					 playlist_changed_cb, totem);
 				changed = totem_playlist_clear (totem->playlist);
 				bacon_video_widget_close (totem->bvw);
+				totem_file_closed (totem);
 				cleared = TRUE;
 			}
 
@@ -3473,7 +3463,6 @@ main (int argc, char **argv)
 
 	/* The sidebar */
 	playlist_widget_setup (totem);
-	totem->properties = bacon_video_widget_properties_new ();
 
 	/* The rest of the widgets */
 	totem->state = STATE_STOPPED;

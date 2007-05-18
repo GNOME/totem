@@ -32,6 +32,7 @@
 #include <gtk/gtkwindow.h>
 
 #include "totem.h"
+#include "totemobject-marshal.h"
 #include "totem-private.h"
 #include "totem-plugins-engine.h"
 #include "ev-sidebar.h"
@@ -41,7 +42,15 @@ enum {
 	PROP_FULLSCREEN,
 	PROP_PLAYING,
 	PROP_STREAM_LENGTH,
-	PROP_SEEKABLE
+	PROP_SEEKABLE,
+	PROP_ERROR_SHOWN
+};
+
+enum {
+	FILE_OPENED,
+	FILE_CLOSED,
+	METADATA_UPDATED,
+	LAST_SIGNAL
 };
 
 static void totem_object_set_property		(GObject *object,
@@ -53,6 +62,8 @@ static void totem_object_get_property		(GObject *object,
 						 GValue *value,
 						 GParamSpec *pspec);
 static void totem_object_finalize (GObject *totem);
+
+static int totem_table_signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE(TotemObject, totem_object, G_TYPE_OBJECT)
 
@@ -80,8 +91,36 @@ totem_object_class_init (TotemObjectClass *klass)
 	g_object_class_install_property (object_class, PROP_SEEKABLE,
 					 g_param_spec_boolean ("seekable", NULL, NULL,
 							       FALSE, G_PARAM_READABLE));
+	g_object_class_install_property (object_class, PROP_ERROR_SHOWN,
+					 g_param_spec_boolean ("error-shown", NULL, NULL,
+							       FALSE, G_PARAM_READABLE));
 
-	//FIXME properties and signals
+	totem_table_signals[FILE_OPENED] =
+		g_signal_new ("file-opened",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (TotemObjectClass, file_opened),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__STRING,
+				G_TYPE_NONE, 1, G_TYPE_STRING);
+
+	totem_table_signals[FILE_CLOSED] =
+		g_signal_new ("file-closed",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (TotemObjectClass, file_closed),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__VOID,
+				G_TYPE_NONE, 0, G_TYPE_NONE);
+
+	totem_table_signals[METADATA_UPDATED] =
+		g_signal_new ("metadata-updated",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (TotemObjectClass, metadata_updated),
+				NULL, NULL,
+				totemobject_marshal_VOID__STRING_STRING_STRING,
+				G_TYPE_NONE, 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
 }
 
 static void
@@ -130,6 +169,9 @@ totem_object_get_property (GObject *object,
 	case PROP_SEEKABLE:
 		g_value_set_boolean (value, totem_is_seekable (totem));
 		break;
+	case PROP_ERROR_SHOWN:
+		//g_value_set_boolean (value, XXX);
+		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 	}
@@ -165,12 +207,22 @@ totem_get_ui_manager (Totem *totem)
 	return totem->ui_manager;
 }
 
+GtkWidget *
+totem_get_video_widget (Totem *totem)
+{
+	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), NULL);
+
+	g_object_ref (G_OBJECT (totem->bvw));
+
+	return GTK_WIDGET (totem->bvw);
+}
+
 gint64
 totem_get_current_time (Totem *totem)
 {
 	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), 0);
 
-	return bacon_video_widget_get_current_time (totem->bvw);
+	return totem->stream_length;
 }
 
 void
@@ -192,3 +244,36 @@ totem_remove_sidebar_page (Totem *totem,
 	ev_sidebar_remove_page (EV_SIDEBAR (totem->sidebar),
 				page_id);
 }
+
+void
+totem_file_opened (TotemObject *totem,
+		   const char *mrl)
+{
+	g_signal_emit (G_OBJECT (totem),
+		       totem_table_signals[FILE_OPENED],
+		       0, mrl);
+}
+
+void
+totem_file_closed (TotemObject *totem)
+{
+	g_signal_emit (G_OBJECT (totem),
+		       totem_table_signals[FILE_CLOSED],
+		       0);
+
+}
+
+void
+totem_metadata_updated (TotemObject *totem,
+			const char *artist,
+			const char *title,
+			const char *album)
+{
+	g_signal_emit (G_OBJECT (totem),
+		       totem_table_signals[METADATA_UPDATED],
+		       0,
+		       artist,
+		       title,
+		       album);
+}
+

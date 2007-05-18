@@ -172,8 +172,7 @@ totem_skipto_new (const char *glade_filename, Totem *totem)
 	skipto->priv->totem = totem;
 	skipto->priv->xml = glade_xml_new (glade_filename,
 				"tstw_skip_vbox", NULL);
-	if (skipto->priv->xml == NULL)
-	{
+	if (skipto->priv->xml == NULL) {
 		g_object_unref (skipto);
 		return NULL;
 	}

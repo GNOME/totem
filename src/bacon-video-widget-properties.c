@@ -22,6 +22,7 @@
 
 #include "config.h"
 #include "bacon-video-widget-properties.h"
+#include "bacon-video-widget.h"
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
@@ -191,15 +192,17 @@ bacon_video_widget_properties_from_time (BaconVideoWidgetProperties *props,
 
 void
 bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
-				      BaconVideoWidget *bvw)
+				      GtkWidget *widget)
 {
 	GtkWidget *item;
 	GValue value = { 0, };
 	gboolean has_type;
+	BaconVideoWidget *bvw;
 
-	g_return_if_fail (props != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
-	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (widget));
+
+	bvw = BACON_VIDEO_WIDGET (widget);
 
 	/* General */
 	UPDATE_FROM_STRING (BVW_INFO_TITLE, "title");

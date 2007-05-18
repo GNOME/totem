@@ -98,7 +98,6 @@ struct TotemObject {
 	GtkWidget *sidebar;
 	gboolean sidebar_shown;
 	int sidebar_w;
-	GtkWidget *properties;
 
 	/* Play/Pause */
 	GtkWidget *pp_button;
@@ -142,6 +141,9 @@ struct TotemObject {
 	guint popup_timeout;
 	gboolean popup_in_progress;
 	GdkRectangle fullscreen_rect;
+
+	/* Stream info */
+	gint64 stream_length;
 
 	/* recent file stuff */
 	GtkRecentManager *recent_manager;

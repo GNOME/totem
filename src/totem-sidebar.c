@@ -104,9 +104,6 @@ totem_sidebar_setup (Totem *totem, gboolean visible, const char *page_id)
 	ev_sidebar_add_page (EV_SIDEBAR (totem->sidebar),
 			"playlist", _("Playlist"),
 			GTK_WIDGET (totem->playlist));
-	ev_sidebar_add_page (EV_SIDEBAR (totem->sidebar),
-			"properties", _("Properties"),
-			GTK_WIDGET (totem->properties));
 	if (page_id != NULL) {
 		ev_sidebar_set_current_page (EV_SIDEBAR (totem->sidebar),
 				page_id);
@@ -114,7 +111,6 @@ totem_sidebar_setup (Totem *totem, gboolean visible, const char *page_id)
 		ev_sidebar_set_current_page (EV_SIDEBAR (totem->sidebar),
 				"playlist");
 	}
-	gtk_widget_set_sensitive (GTK_WIDGET (totem->properties), FALSE);
 	gtk_paned_pack2 (GTK_PANED (item), totem->sidebar, FALSE, FALSE);
 
 	totem->sidebar_shown = visible;

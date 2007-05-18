@@ -1,3 +1,37 @@
+2007-05-18  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/bacon-video-widget-properties.c:
+	(bacon_video_widget_properties_update):
+	* src/bacon-video-widget-properties.h:
+	* src/plugins/properties/Makefile.am:
+	* src/plugins/properties/movie-properties.totem-plugin.in:
+	* src/plugins/properties/totem-movie-properties.c:
+	(totem_movie_properties_plugin_class_init),
+	(totem_movie_properties_plugin_init),
+	(totem_movie_properties_plugin_finalize),
+	(stream_length_notify_cb),
+	(totem_movie_properties_plugin_file_opened),
+	(totem_movie_properties_plugin_file_closed),
+	(totem_movie_properties_plugin_metadata_updated), (impl_activate),
+	(impl_deactivate):
+	* src/plugins/skipto/totem-skipto.c: (totem_skipto_new):
+	* src/totem-object.c: (totem_object_class_init),
+	(totem_object_get_property), (totem_get_video_widget),
+	(totem_get_current_time), (totem_file_opened), (totem_file_closed),
+	(totem_metadata_updated):
+	* src/totem-private.h:
+	* src/totem-properties-view.c: (on_got_metadata_event):
+	* src/totem-sidebar.c: (totem_sidebar_setup):
+	* src/totem.c: (totem_action_set_mrl_with_warning),
+	(on_got_redirect), (on_channels_change_event),
+	(on_playlist_change_name), (on_got_metadata_event),
+	(update_current_time), (totem_action_open_files_list), (main):
+	* src/totem.h:
+	* src/totemobject-marshal.list:
+	Add a properties plugin (Closes: #428291)
+
 2007-05-17  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/totem-pl-parser-lines.c:

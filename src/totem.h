@@ -84,12 +84,23 @@ typedef struct {
 	GObjectClass parent_class;
 
 	void (*file_opened)			(Totem *totem, const char *mrl);
-	void (*file_closed)			(Totem *totem, const char *mrl);
+	void (*file_closed)			(Totem *totem);
+	void (*metadata_updated)		(Totem *totem,
+						 const char *artist,
+						 const char *title,
+						 const char *album);
 } TotemObjectClass;
 
 GType	totem_object_get_type			(void);
 void    totem_object_plugins_init		(TotemObject *totem);
 void    totem_object_plugins_shutdown		(void);
+void	totem_file_opened			(TotemObject *totem,
+						 const char *mrl);
+void	totem_file_closed			(TotemObject *totem);
+void	totem_metadata_updated			(TotemObject *totem,
+						 const char *artist,
+						 const char *title,
+						 const char *album);
 
 void	totem_action_exit			(Totem *totem);
 void	totem_action_play			(Totem *totem);
@@ -133,6 +144,8 @@ gboolean totem_is_playing			(Totem *totem);
 gboolean totem_is_seekable			(Totem *totem);
 GtkWindow *totem_get_main_window		(Totem *totem);
 GtkUIManager *totem_get_ui_manager		(Totem *totem);
+GtkWidget *totem_get_video_widget		(Totem *totem);
+
 gint64 totem_get_current_time			(Totem *totem);
 
 void    totem_add_sidebar_page			(Totem *totem,

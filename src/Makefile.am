@@ -97,9 +97,19 @@ libtotem_player_la_LDFLAGS = \
 
 # Totem
 
+TOTEMMARSHALFILES = totemobject-marshal.c totemobject-marshal.h
+GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
+BUILT_SOURCES = $(TOTEMMARSHALFILES)
+
+totemobject-marshal.h: totemobject-marshal.list
+	( $(GLIB_GENMARSHAL) --prefix=totemobject_marshal $(srcdir)/totemobject-marshal.list --header > totemobject-marshal.h )
+totemobject-marshal.c: totemobject-marshal.h
+	( $(GLIB_GENMARSHAL) --prefix=totemobject_marshal $(srcdir)/totemobject-marshal.list --body > totemobject-marshal.c )
+
 totem_SOURCES = 					\
 	totem.c totem.h					\
 	totem-object.c					\
+	$(TOTEMMARSHALFILES)				\
 	totem-private.h					\
 	totem-preferences.c totem-preferences.h		\
 	totem-options.c totem-options.h	\
@@ -114,8 +124,7 @@ totem_SOURCES = 					\
 	totem-uri.c totem-uri.h		\
 	ev-sidebar.c ev-sidebar.h	\
 	totem-subtitle-encoding.c	\
-	totem-subtitle-encoding.h	\
-	$(BUILT_SOURCES)
+	totem-subtitle-encoding.h
 
 totem_CPPFLAGS = \
 	-I$(srcdir)/plparse		\
@@ -151,8 +160,6 @@ totem_LDADD = \
 	$(XTEST_LIBS)			\
 	$(X_LIBS)			\
 	$(MISSING_PLUGINS_LIBS)
-
-BUILT_SOURCES =
 
 # Totem video thumbnailer
 
@@ -320,7 +327,7 @@ disc_test_LDADD = \
 	$(EXTRA_GNOME_LIBS)
 
 
-CLEANFILES = \
+CLEANFILES =			\
 	*.bak			\
 	core*			\
 	*.orig			\
@@ -328,3 +335,4 @@ CLEANFILES = \
 	$(desktop_DATA)		\
 	$(BUILT_SOURCES)
 
+EXTRA_DIST = totemobject-marshal.list

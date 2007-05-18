@@ -24,7 +24,6 @@
 #define BACON_VIDEO_WIDGET_PROPERTIES_H
 
 #include <gtk/gtkvbox.h>
-#include "bacon-video-widget.h"
 
 #define BACON_TYPE_VIDEO_WIDGET_PROPERTIES            (bacon_video_widget_properties_get_type ())
 #define BACON_VIDEO_WIDGET_PROPERTIES(obj)            (GTK_CHECK_CAST ((obj), BACON_TYPE_VIDEO_WIDGET_PROPERTIES, BaconVideoWidgetProperties))
@@ -34,7 +33,7 @@
 
 typedef struct BaconVideoWidgetProperties		BaconVideoWidgetProperties;
 typedef struct BaconVideoWidgetPropertiesClass		BaconVideoWidgetPropertiesClass;
-typedef struct BaconVideoWidgetPropertiesPrivate		BaconVideoWidgetPropertiesPrivate;
+typedef struct BaconVideoWidgetPropertiesPrivate	BaconVideoWidgetPropertiesPrivate;
 
 struct BaconVideoWidgetProperties {
 	GtkVBox parent;
@@ -50,7 +49,7 @@ GtkWidget *bacon_video_widget_properties_new		(void);
 
 void bacon_video_widget_properties_reset		(BaconVideoWidgetProperties *props);
 void bacon_video_widget_properties_update		(BaconVideoWidgetProperties *props,
-							 BaconVideoWidget *bvw);
+							 GtkWidget *bvw);
 void bacon_video_widget_properties_from_metadata	(BaconVideoWidgetProperties *props,
 							 const char *title,
 							 const char *artist,
