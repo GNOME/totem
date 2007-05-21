@@ -1,3 +1,21 @@
+============ Version 2.19.3
+
+2007-05-21  Bastien Nocera  <hadess@hadess.net>
+
+	* NEWS: upd
+	* configure.in: 2.19.3
+
+	* browser-plugin/Makefile.am:
+	* src/Makefile.am:
+	* src/bacon-video-widget-properties.c:
+	* src/bacon-video-widget-properties.h:
+	* src/plugins/properties/Makefile.am: Move the
+	bacon-video-widget-properties.[ch] to the properties
+	plugin directory to avoid cyclic builds, and fix make distcheck
+
+	* src/plugins/sidebar-test/Makefile.am:
+	* src/plugins/properties/Makefile.am: Fix distclean
+
 2007-05-18  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in:

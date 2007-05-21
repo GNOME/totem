@@ -85,7 +85,6 @@ totem_plugin_viewer_CFLAGS = \
 
 totem_plugin_viewer_LDADD =						\
 	$(top_builddir)/src/backend/libbaconvideowidget.la		\
-	$(top_builddir)/src/libbaconpropertiespage.la			\
 	$(top_builddir)/src/libtotem_player.la				\
 	$(top_builddir)/src/plparse/libtotem-plparser.la		\
 	libtotempluginviewer_marshal.la					\

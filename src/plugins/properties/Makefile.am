@@ -3,11 +3,13 @@ modules_flags = -export_dynamic -avoid-version -module
 plugindir = $(PLUGINDIR)/properties
 plugin_LTLIBRARIES = libmovie-properties.la
 
+noinst_LTLIBRARIES = libbaconvideowidgetproperties.la
+
 plugin_in_files = movie-properties.totem-plugin.in
 
 %.totem-plugin: %.totem-plugin.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; $(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
 
-noinst_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
+plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
 
 common_defines = \
 	-D_REENTRANT					\
@@ -22,7 +24,7 @@ common_defines = \
 
 libmovie_properties_la_SOURCES = totem-movie-properties.c
 libmovie_properties_la_LDFLAGS = $(modules_flags)
-libmovie_properties_la_LIBADD = $(top_builddir)/src/libbaconpropertiespage.la
+libmovie_properties_la_LIBADD = libbaconvideowidgetproperties.la
 libmovie_properties_la_CPPFLAGS = $(common_defines)
 
 libmovie_properties_la_CFLAGS = \
@@ -31,6 +33,20 @@ libmovie_properties_la_CFLAGS = \
 	$(DBUS_CFLAGS)		\
 	$(AM_CFLAGS)		\
 	-I$(top_srcdir)/src	\
+	-I$(top_srcdir)/src/plugins
+
+libbaconvideowidgetproperties_la_SOURCES =		\
+	bacon-video-widget-properties.c			\
+	bacon-video-widget-properties.h
+
+libbaconvideowidgetproperties_la_CFLAGS =	\
+	$(EXTRA_GNOME_CFLAGS)			\
+	$(WARN_CFLAGS)				\
+	$(DBUS_CFLAGS)				\
+	$(AM_CFLAGS)				\
+	-I$(top_srcdir)/src			\
+	-I$(top_srcdir)/src/backend		\
+	-I$(top_srcdir)/src/plparse		\
 	-I$(top_srcdir)/src/plugins
 
 EXTRA_DIST = $(plugin_in_files)

@@ -3,9 +3,8 @@ SUBDIRS = plugins backend plparse
 bin_PROGRAMS = totem totem-video-thumbnailer totem-video-indexer
 libexec_PROGRAMS =
 noinst_PROGRAMS = disc-test
-noinst_LTLIBRARIES = \
-	libbaconpropertiespage.la \
-	libbaconmessageconnection.la \
+noinst_LTLIBRARIES =				\
+	libbaconmessageconnection.la		\
 	libtotem_player.la
 
 common_defines = \
@@ -53,33 +52,13 @@ BACONDIR=$(srcdir)/../../libbacon/src
 regenerate-built-sources:
 	EGGFILES="$(BACON_MESSAGE_CONNECTION) $(BACON_VOLUME)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
 
-# Bacon properties page ltlibrary
-
-libbaconpropertiespage_la_SOURCES = \
-	bacon-video-widget-properties.c \
-	bacon-video-widget-properties.h \
-	totem-interface.c		\
-	totem-interface.h
-
-libbaconpropertiespage_la_CPPFLAGS = \
-	-I$(srcdir)/plparse	\
-	-I$(srcdir)/backend	\
-	$(common_defines)	\
-	$(AM_CPPFLAGS)
-
-libbaconpropertiespage_la_CFLAGS = \
-	$(EXTRA_GNOME_CFLAGS)	\
-	$(WARN_CFLAGS)		\
-	$(AM_CFLAGS)
-
-libbaconpropertiespage_la_LDFLAGS = \
-	$(AM_LDFLAGS)
-
 # Totem UI ltlibrary
 
 libtotem_player_la_SOURCES =		\
 	totem-statusbar.c		\
 	totem-statusbar.h		\
+	totem-interface.c		\
+	totem-interface.h		\
 	$(BACON_VOLUME)
 
 libtotem_player_la_CPPFLAGS = \
@@ -150,7 +129,6 @@ totem_LDADD = \
 	plparse/libtotem-plparser.la	\
 	backend/libbaconvideowidget.la	\
 	plugins/libtotemmodule.la	\
-	libbaconpropertiespage.la	\
 	libbaconmessageconnection.la	\
 	libtotem_player.la		\
 	$(EXTRA_GNOME_LIBS)		\
@@ -204,11 +182,12 @@ libtotem_properties_page_la_SOURCES = 	\
 	totem-properties-view.c		\
 	totem-properties-view.h
 
-libtotem_properties_page_la_CPPFLAGS = \
-	-I$(srcdir)/backend	\
-	-I$(srcdir)/plparse	\
-	-I$(top_builddir)/data	\
-	$(common_defines)	\
+libtotem_properties_page_la_CPPFLAGS =		\
+	-I$(srcdir)/backend			\
+	-I$(srcdir)/plparse			\
+	-I$(srcdir)/plugins/properties		\
+	-I$(top_builddir)/data			\
+	$(common_defines)			\
 	$(AM_CPPFLAGS)
 
 libtotem_properties_page_la_CFLAGS = \
@@ -222,16 +201,15 @@ libtotem_properties_page_la_LDFLAGS = \
 	$(modules_flags)	\
 	$(AM_LDFLAGS)
 
-libtotem_properties_page_la_LIBADD = \
-	backend/libbaconvideowidget.la	\
-	libbaconpropertiespage.la	\
-	$(EXTRA_GNOME_LIBS)		\
-	$(NAUTILUS_LIBS)		\
-	$(NVTV_LIBS)			\
-	$(XTEST_LIBS)			\
-	$(XVIDMODE_LIBS)		\
+libtotem_properties_page_la_LIBADD =				\
+	backend/libbaconvideowidget.la				\
+	plugins/properties/libbaconvideowidgetproperties.la	\
+	$(EXTRA_GNOME_LIBS)					\
+	$(NAUTILUS_LIBS)					\
+	$(NVTV_LIBS)						\
+	$(XTEST_LIBS)						\
+	$(XVIDMODE_LIBS)					\
 	$(X_LIBS)
-
 
 noinst_PROGRAMS += test-properties-page
 
@@ -241,11 +219,12 @@ test_properties_page_SOURCES =		\
 	totem-properties-view.h		\
 	test-properties-page.c
 
-test_properties_page_CPPFLAGS = \
-	-I$(srcdir)/backend	\
-	-I$(srcdir)/plparse	\
-	-I$(top_builddir)/data	\
-	$(common_defines)	\
+test_properties_page_CPPFLAGS = 		\
+	-I$(srcdir)/backend			\
+	-I$(srcdir)/plparse			\
+	-I$(top_builddir)/data			\
+	-I$(srcdir)/plugins/properties		\
+	$(common_defines)			\
 	$(AM_CPPFLAGS)
 
 test_properties_page_CFLAGS = \
@@ -258,14 +237,15 @@ test_properties_page_CFLAGS = \
 test_properties_page_LDFLAGS = \
 	$(AM_LDFLAGS)
 
-test_properties_page_LDADD = \
-	backend/libbaconvideowidget.la	\
-	libbaconpropertiespage.la	\
-	$(EXTRA_GNOME_LIBS)		\
-	$(NAUTILUS_LIBS)		\
-	$(NVTV_LIBS)			\
-	$(XTEST_LIBS)			\
-	$(XVIDMODE_LIBS)		\
+test_properties_page_LDADD = 					\
+	backend/libbaconvideowidget.la				\
+	plugins/properties/libbaconvideowidgetproperties.la	\
+	libtotem_player.la					\
+	$(EXTRA_GNOME_LIBS)					\
+	$(NAUTILUS_LIBS)					\
+	$(NVTV_LIBS)						\
+	$(XTEST_LIBS)						\
+	$(XVIDMODE_LIBS)					\
 	$(X_LIBS)
 
 endif # HAVE_NAUTILUS

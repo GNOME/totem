@@ -36,6 +36,6 @@ libsidebar_test_la_CFLAGS = \
 
 EXTRA_DIST = $(plugin_in_files)
 
-CLEANFILES = $(plugin_DATA) $(BUILT_SOURCES)
+CLEANFILES = $(noinst_DATA) $(BUILT_SOURCES)
 DISTCLEANFILES = $(plugin_DATA)
 
