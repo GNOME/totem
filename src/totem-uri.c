@@ -204,8 +204,8 @@ static const char subtitle_ext[][4] = {
 char *
 totem_uri_get_subtitle_uri (const char *uri)
 {
-	char *suffix, *subtitle;
-	guint len, i;
+	char *subtitle;
+	guint len, i, suffix;
 	GnomeVFSURI *vfsuri;
 
 	if (g_str_has_prefix (uri, "http") != FALSE) {
@@ -218,19 +218,37 @@ totem_uri_get_subtitle_uri (const char *uri)
 		return NULL;
 	gnome_vfs_uri_unref (vfsuri);
 
+	/* Has the user specified a subtitle file manually? */
 	if (strstr (uri, "#subtitle:") != NULL) {
 		return NULL;
 	}
 
+        /* Find the filename suffix delimiter */
 	len = strlen (uri);
-	if (uri[len-4] != '.') {
+	for (suffix = len-1; suffix > 0; suffix--) {
+		if (uri[suffix] == G_DIR_SEPARATOR ||
+                    (uri[suffix] == '/')) {
+			/* This filename has no extension, we'll need to 
+			 * add one */
+			suffix = len;
+			break;
+		}
+		if (uri[suffix] == '.') {
+			/* Found our extension marker */
+			break;
+		}
+	}
+        if (suffix < 0) {
 		return NULL;
 	}
 
-	subtitle = g_strdup (uri);
-	suffix = subtitle + len - 4;
+	/* Generate a subtitle string with room at the end to store the
+	 * 3 character extensions we want to search for */
+	subtitle = g_strdup_printf ("%.*s.???", suffix, uri);
+	
+	/* Search for any files with one of our known subtitle extensions */
 	for (i = 0; i < G_N_ELEMENTS(subtitle_ext) ; i++) {
-		memcpy (suffix + 1, subtitle_ext[i], 3);
+		memcpy (subtitle + suffix + 1, subtitle_ext[i], 3);
 
 		vfsuri = gnome_vfs_uri_new (subtitle);
 		if (vfsuri != NULL) {

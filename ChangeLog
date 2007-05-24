@@ -1,3 +1,11 @@
+2007-05-24  Jan Schmidt  <thaytan@mad.scientist.com>
+
+	* src/totem-uri.c: (totem_uri_get_subtitle_uri):
+	When checking whether a subtitle file exists alongside
+	the media file, properly handle media files that have extensions
+	which aren't 3 characters long, or no extension at all.
+	(Closes: #440911)
+
 ============ Version 2.19.3
 
 2007-05-21  Bastien Nocera  <hadess@hadess.net>
