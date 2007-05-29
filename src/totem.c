@@ -3664,6 +3664,7 @@ main (int argc, char **argv)
 
 #ifdef HAVE_GTK_ONLY
 	gtk_init (&argc, &argv);
+	bacon_video_widget_init_backend (&argc, &argv);
 #else
 	gnome_program_init ("totem", VERSION,
 			LIBGNOMEUI_MODULE,

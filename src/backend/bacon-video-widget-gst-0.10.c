@@ -4285,6 +4285,7 @@ bacon_video_widget_new (int width, int height,
     g_set_error (err, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
 		 _("Failed to create a GStreamer play object. "
 		   "Please check your GStreamer installation."));
+    g_object_ref_sink (bvw);
     g_object_unref (bvw);
     return NULL;
   }
