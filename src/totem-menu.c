@@ -448,6 +448,23 @@ totem_sublang_exit (Totem *totem)
 
 /* Recent files */
 static void
+connect_proxy_cb (GtkActionGroup *action_group,
+                  GtkAction *action,
+                  GtkWidget *proxy,
+                  gpointer data)
+{
+        GtkLabel *label;
+
+        if (!GTK_IS_MENU_ITEM (proxy))
+                return;
+
+        label = GTK_LABEL (GTK_BIN (proxy)->child);
+
+        gtk_label_set_ellipsize (label, PANGO_ELLIPSIZE_MIDDLE);
+        gtk_label_set_max_width_chars (label,TOTEM_MAX_RECENT_ITEM_LEN);
+}
+
+static void
 on_recent_file_item_activated (GtkAction *action,
                                Totem *totem)
 {
@@ -502,137 +519,78 @@ totem_compare_recent_items (GtkRecentInfo *a, GtkRecentInfo *b)
 	return 0;
 }
 
-/* Copied from eel so we don't have a dependency on them.
- * It's being consolidated into glib eventually anyway.
- */
-static char *
-totem_str_middle_truncate (const char *string,
-			      guint truncate_length)
-{
-	char *truncated;
-	guint length;
-	guint num_left_chars;
-	guint num_right_chars;
-
-	const char delimter[] = "...";
-	const guint delimter_length = strlen (delimter);
-	const guint min_truncate_length = delimter_length + 2;
-
-	if (string == NULL) {
-		return NULL;
-	}
-
-	/* It doesnt make sense to truncate strings to less than
-	 * the size of the delimiter plus 2 characters (one on each
-	 * side)
-	 */
-	if (truncate_length < min_truncate_length) {
-		return g_strdup (string);
-	}
-
-	length = strlen (string);
-
-	/* Make sure the string is not already small enough. */
-	if (length <= truncate_length) {
-		return g_strdup (string);
-	}
-
-	/* Find the 'middle' where the truncation will occur. */
-	num_left_chars = (truncate_length - delimter_length) / 2;
-	num_right_chars = truncate_length - num_left_chars - delimter_length + 1;
-
-	truncated = g_new (char, truncate_length + 1);
-
-	strncpy (truncated, string, num_left_chars);
-	strncpy (truncated + num_left_chars, delimter, delimter_length);
-	strncpy (truncated + num_left_chars + delimter_length, string + length - num_right_chars + 1, num_right_chars);
-	
-	return truncated;
-}
-
 static void
 totem_recent_manager_changed_callback (GtkRecentManager *recent_manager, Totem *totem)
 {
-	GList *items, *l;
-	guint n_items = 0;
-	static guint i = 0;
+        GList *items, *l;
+        guint n_items = 0;
 
-	gtk_ui_manager_remove_ui (totem->ui_manager, totem->recent_ui_id);
-	gtk_ui_manager_ensure_update (totem->ui_manager);
+        if (totem->recent_ui_id != 0) {
+                gtk_ui_manager_remove_ui (totem->ui_manager, totem->recent_ui_id);
+                gtk_ui_manager_ensure_update (totem->ui_manager);
+        }
 
-	if (totem->recent_action_group) {
-		gtk_ui_manager_remove_action_group (totem->ui_manager,
-				totem->recent_action_group);
-		g_object_unref (totem->recent_action_group);
-	}
-	totem->recent_action_group = gtk_action_group_new ("recent-action-group");
-	gtk_ui_manager_insert_action_group (totem->ui_manager,
-			totem->recent_action_group, -1);
+        if (totem->recent_action_group) {
+                gtk_ui_manager_remove_action_group (totem->ui_manager,
+                                totem->recent_action_group);
+        }
 
-	items = gtk_recent_manager_get_items (recent_manager);
-	items = g_list_sort (items, (GCompareFunc) totem_compare_recent_items);
+        totem->recent_action_group = gtk_action_group_new ("recent-action-group");
+        g_signal_connect (totem->recent_action_group, "connect-proxy",
+                          G_CALLBACK (connect_proxy_cb), NULL);
+        gtk_ui_manager_insert_action_group (totem->ui_manager,
+                        totem->recent_action_group, -1);
+        g_object_unref (totem->recent_action_group);
 
-	for (l = items; l && l->data; l = g_list_next (l)) {
-		GtkRecentInfo *info;
-		GtkAction     *action;
-		char          *action_name;
-		char          *label;
-		char          *escaped_label;
-		char          *label_trunc;
-		const char    *uri;
+        totem->recent_ui_id = gtk_ui_manager_new_merge_id (totem->ui_manager);
+        items = gtk_recent_manager_get_items (recent_manager);
+        items = g_list_sort (items, (GCompareFunc) totem_compare_recent_items);
 
-		info = (GtkRecentInfo *) l->data;
+        for (l = items; l && l->data; l = l->next) {
+                GtkRecentInfo *info;
+                GtkAction     *action;
+                char           action_name[32];
+                const char    *display_name;
+                char          *label;
+                char          *escaped_label;
 
-		if (!gtk_recent_info_has_group (info, "Totem"))
-			continue;
+                info = (GtkRecentInfo *) l->data;
 
-		action_name = g_strdup_printf ("recent-file%u", i++);
-		uri = gtk_recent_info_get_uri (info);
+                if (!gtk_recent_info_has_group (info, "Totem"))
+                        continue;
 
-		/* Munge the URI for display */
-		if (g_str_has_prefix (uri, "file:///") == FALSE) {
-			label_trunc = totem_str_middle_truncate (uri, TOTEM_MAX_RECENT_ITEM_LEN);
-		} else {
-			label_trunc = totem_str_middle_truncate
-				(gtk_recent_info_get_display_name (info),
-				 TOTEM_MAX_RECENT_ITEM_LEN);
-		}
-		escaped_label = escape_label_for_menu (label_trunc);
-		g_free (label_trunc);
-		label = g_strdup_printf ("_%d.  %s", n_items + 1, escaped_label);
-		g_free (escaped_label);
+                g_snprintf (action_name, sizeof (action_name), "RecentFile%u", n_items);
 
-		action = g_object_new (GTK_TYPE_ACTION,
-				       "name", action_name,
-				       "label", label,
-				       NULL);
+                display_name = gtk_recent_info_get_display_name (info);
+                escaped_label = escape_label_for_menu (display_name);
 
-		g_object_set_data_full (G_OBJECT (action), "recent-info",
-					gtk_recent_info_ref (info),
-					(GDestroyNotify) gtk_recent_info_unref);
-		g_signal_connect (G_OBJECT (action), "activate",
-				  G_CALLBACK (on_recent_file_item_activated),
-				  totem);
+                label = g_strdup_printf ("_%d.  %s", n_items + 1, escaped_label);
+                g_free (escaped_label);
 
-		gtk_action_group_add_action (totem->recent_action_group,
-					     action);
-		g_object_unref (action);
+                action = gtk_action_new (action_name, label, NULL, NULL);
+                g_object_set_data_full (G_OBJECT (action), "recent-info",
+                                        gtk_recent_info_ref (info),
+                                        (GDestroyNotify) gtk_recent_info_unref);
+                g_signal_connect (G_OBJECT (action), "activate",
+                                  G_CALLBACK (on_recent_file_item_activated),
+                                  totem);
 
-		gtk_ui_manager_add_ui (totem->ui_manager, totem->recent_ui_id,
-				       "/tmw-menubar/movie/recent-placeholder",
-				       label, action_name, GTK_UI_MANAGER_MENUITEM,
-				       FALSE);
+                gtk_action_group_add_action (totem->recent_action_group,
+                                            action);
+                g_object_unref (action);
 
-		g_free (action_name);
-		g_free (label);
+                gtk_ui_manager_add_ui (totem->ui_manager, totem->recent_ui_id,
+                                      "/tmw-menubar/movie/recent-placeholder",
+                                      label, action_name, GTK_UI_MANAGER_MENUITEM,
+                                      FALSE);
+                g_free (label);
 
-		if (++n_items == 5)
-			break;
-	}
-	gtk_ui_manager_ensure_update (totem->ui_manager);
+                if (++n_items == 5)
+                        break;
+        }
 
-	g_list_foreach (items, (GFunc) gtk_recent_info_unref, NULL);
-	g_list_free (items);
+        g_list_foreach (items, (GFunc) gtk_recent_info_unref, NULL);
+        g_list_free (items);
 }
 
 void
@@ -642,8 +600,7 @@ totem_setup_recent (Totem *totem)
 	screen = gtk_widget_get_screen (totem->win);
 	totem->recent_manager = gtk_recent_manager_get_for_screen (screen);
 	totem->recent_action_group = NULL;
-	totem->recent_ui_id = gtk_ui_manager_new_merge_id
-			(totem->ui_manager);
+	totem->recent_ui_id = 0;
 
 	g_signal_connect (G_OBJECT (totem->recent_manager), "changed",
 			G_CALLBACK (totem_recent_manager_changed_callback),
