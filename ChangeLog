@@ -1,5 +1,13 @@
 2007-06-01  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plugins/skipto/totem-skipto-plugin.c: (run_skip_to_dialog),
+	(impl_activate):
+	* src/plugins/skipto/totem-skipto.c: (totem_skipto_new):
+	Show an error when activating the plugin if skip_to.glade can't be
+	found (Closes: #438934)
+
+2007-06-01  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-menu.c: (next_angle_action_callback):
 	* src/totem.c: (totem_action_next_angle),
 	(totem_action_handle_key_press):

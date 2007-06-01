@@ -168,10 +168,10 @@ totem_skipto_new (const char *glade_filename, Totem *totem)
 
 	skipto = TOTEM_SKIPTO (g_object_new (TOTEM_TYPE_SKIPTO, NULL));
 
-	/* TODO: Since we're only loading part of the thing from Glade, why have the dialog stuff in the Glade file? */
 	skipto->priv->totem = totem;
 	skipto->priv->xml = glade_xml_new (glade_filename,
-				"tstw_skip_vbox", NULL);
+					   "tstw_skip_vbox", NULL);
+
 	if (skipto->priv->xml == NULL) {
 		g_object_unref (skipto);
 		return NULL;
