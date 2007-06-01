@@ -1,3 +1,10 @@
+2007-06-01  Christian Persch  <chpe@gnome.org>
+
+	* src/totem-menu.c: (connect_proxy_cb),
+	(totem_recent_manager_changed_callback), (totem_setup_recent):
+	Don't use UTF-8 unsafe string manipulations to ellipsise but simply
+	ellipsise the label itself. Bug #442371.
+
 2007-06-01  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c: (totem_action_show_properties):
