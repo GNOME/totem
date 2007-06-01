@@ -346,7 +346,8 @@ totem_action_eject (Totem *totem)
 void
 totem_action_show_properties (Totem *totem)
 {
-	totem_sidebar_set_current_page (totem, "properties");
+	if (totem_is_fullscreen (totem) == FALSE)
+		totem_sidebar_set_current_page (totem, "properties");
 }
 
 void
