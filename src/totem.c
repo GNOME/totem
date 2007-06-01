@@ -1988,6 +1988,13 @@ totem_action_toggle_controls (Totem *totem)
  	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), !state);
 }
 
+void
+totem_action_next_angle (Totem *totem)
+{
+	if (totem_playing_dvd (totem->mrl) != FALSE)
+		bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_NEXT_ANGLE);
+}
+
 static void
 on_volume_mute_button (GtkButton *button, Totem *totem)
 {
@@ -2559,10 +2566,7 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		break;
 	case GDK_g:
 	case GDK_G:
-		if (totem_playing_dvd (totem->mrl) != FALSE) {
-				bacon_video_widget_dvd_event (totem->bvw,
-					BVW_DVD_NEXT_ANGLE);
-		}
+		totem_action_next_angle (totem);
 		break;
 	case GDK_h:
 	case GDK_H:

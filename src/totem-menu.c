@@ -967,6 +967,7 @@ zoom_out_action_callback (GtkAction *action, Totem *totem)
 static void
 next_angle_action_callback (GtkAction *action, Totem *totem)
 {
+	totem_action_next_angle (totem);
 }
 
 static void
