@@ -1,3 +1,9 @@
+2007-06-04  Philip Withnall  <pwithnall@svn.gnome.org>
+
+	* src/plugins/totem-plugin-manager.c: (cursor_changed_cb),
+	(plugin_manager_construct_tree): Prevent crash when using find on
+	the plugins list (Closes: #441901)
+
 2007-06-04  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/totem-pl-parser.c: (totem_pl_resolve_url):
