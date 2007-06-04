@@ -720,6 +720,25 @@ totem_cd_mrl_from_type (const char *scheme, const char *dir)
   return retval;
 }
 
+static char *
+totem_cd_dir_get_parent (const char *dir)
+{
+    GnomeVFSURI *uri, *parent_uri;
+    char *parent;
+
+    uri = gnome_vfs_uri_new (dir);
+    if (uri == NULL)
+      return NULL;
+    parent_uri = gnome_vfs_uri_get_parent (uri);
+    gnome_vfs_uri_unref (uri);
+    if (parent_uri == NULL)
+      return NULL;
+    parent = gnome_vfs_uri_to_string (parent_uri, GNOME_VFS_URI_HIDE_NONE);
+    gnome_vfs_uri_unref (parent_uri);
+
+    return parent;
+}
+
 MediaType
 totem_cd_detect_type_from_dir (const char *dir, char **url, GError **error)
 {
@@ -735,21 +754,38 @@ totem_cd_detect_type_from_dir (const char *dir, char **url, GError **error)
     return MEDIA_TYPE_ERROR;
   if ((type = cd_cache_disc_is_vcd (cache, error)) == MEDIA_TYPE_DATA &&
       (type = cd_cache_disc_is_dvd (cache, error)) == MEDIA_TYPE_DATA) {
-    /* crap, nothing found */
+    /* is it the directory itself? */
+    char *parent;
+
     cd_cache_free (cache);
-    return type;
+    parent = totem_cd_dir_get_parent (dir);
+    if (!parent)
+      return type;
+
+    cache = cd_cache_new (parent, error);
+    g_free (parent);
+    if (!cache)
+      return MEDIA_TYPE_ERROR;
+    if ((type = cd_cache_disc_is_vcd (cache, error)) == MEDIA_TYPE_DATA &&
+	(type = cd_cache_disc_is_dvd (cache, error)) == MEDIA_TYPE_DATA) {
+      /* crap, nothing found */
+      cd_cache_free (cache);
+      return type;
+    }
   }
-  cd_cache_free (cache);
 
   if (url == NULL) {
+    cd_cache_free (cache);
     return type;
   }
 
   if (type == MEDIA_TYPE_DVD) {
-    *url = totem_cd_mrl_from_type ("dvd", dir);
+    *url = totem_cd_mrl_from_type ("dvd", cache->mountpoint);
   } else if (type == MEDIA_TYPE_VCD) {
-    *url = totem_cd_mrl_from_type ("vcd", dir);
+    *url = totem_cd_mrl_from_type ("vcd", cache->mountpoint);
   }
+
+  cd_cache_free (cache);
 
   return type;
 }
