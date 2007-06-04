@@ -1,5 +1,13 @@
 2007-06-04  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser.c: (totem_pl_resolve_url):
+	Use gnome_vfs_uri_append_file_name instead
+	of gnome_vfs_uri_resolve_relative to "resolve" relative paths,
+	otherwise, we get a broken path if the base doesn't finish with a '/'
+	(Closes: #439041)
+
+2007-06-04  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-disc.c: (totem_cd_dir_get_parent),
 	(totem_cd_detect_type_from_dir): Make totem_cd_detect_type_from_dir
 	detect if we have a DVD or VCD sub-directory passed, such as

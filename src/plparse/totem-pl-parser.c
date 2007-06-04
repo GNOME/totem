@@ -842,7 +842,7 @@ totem_pl_resolve_url (const char *base, const char *url)
 
 	base_uri = gnome_vfs_uri_new (base);
 	g_return_val_if_fail (base_uri != NULL, g_strdup (url));
-	new = gnome_vfs_uri_resolve_relative (base_uri, url);
+	new = gnome_vfs_uri_append_file_name (base_uri, url);
 	g_return_val_if_fail (new != NULL, g_strdup (url));
 	gnome_vfs_uri_unref (base_uri);
 	resolved = gnome_vfs_uri_to_string (new, GNOME_VFS_URI_HIDE_NONE);
