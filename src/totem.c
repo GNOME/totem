@@ -2549,6 +2549,7 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		break;
 #ifdef HAVE_XFREE
 	case XF86XK_AudioPrev:
+	case XF86XK_Back:
 #endif /* HAVE_XFREE */
 	case GDK_B:
 	case GDK_b:
@@ -2591,13 +2592,23 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		break;
 #ifdef HAVE_XFREE
 	case XF86XK_AudioNext:
+	case XF86XK_Forward:
 #endif /* HAVE_XFREE */
 	case GDK_N:
 	case GDK_n:
 		totem_action_next (totem);
 		break;
+#ifdef HAVE_XFREE
+	case XF86XK_OpenURL:
+		totem_action_fullscreen (totem, FALSE);
+		totem_action_open_location (totem);
+		break;
+#endif /* HAVE_XFREE */
 	case GDK_O:
 	case GDK_o:
+#ifdef HAVE_XFREE
+	case XF86XK_Open:
+#endif /* HAVE_XFREE */
 		totem_action_fullscreen (totem, FALSE);
 		totem_action_open (totem);
 		break;
@@ -2623,8 +2634,16 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		break;
 	case GDK_r:
 	case GDK_R:
+#ifdef HAVE_XFREE
+	case XF86XK_ZoomIn:
+#endif /* HAVE_XFREE */
 		totem_action_zoom_relative (totem, ZOOM_IN_OFFSET);
 		break;
+#ifdef HAVE_XFREE
+	case XF86XK_Save:
+		totem_action_take_screenshot (totem);
+		break;
+#endif /* HAVE_XFREE */
 	case GDK_s:
 	case GDK_S:
 		if (event->state & GDK_CONTROL_MASK) {
@@ -2635,8 +2654,16 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		break;
 	case GDK_t:
 	case GDK_T:
+#ifdef HAVE_XFREE
+	case XF86XK_ZoomOut:
+#endif /* HAVE_XFREE */
 		totem_action_zoom_relative (totem, ZOOM_OUT_OFFSET);
 		break;
+#ifdef HAVE_XFREE
+	case XF86XK_Eject:
+		totem_action_eject (totem);
+		break;
+#endif /* HAVE_XFREE */
 	case GDK_Escape:
 		if (event->state & GDK_SUPER_MASK)
 			bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU);
