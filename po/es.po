@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-02 03:17+0100\n"
-"PO-Revision-Date: 2007-06-02 22:20+0200\n"
+"POT-Creation-Date: 2007-06-05 03:17+0100\n"
+"PO-Revision-Date: 2007-06-05 15:20+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -325,8 +325,8 @@ msgid "Time:"
 msgstr "Tiempo:"
 
 #. Title
-#: ../data/totem.glade.h:42 ../src/totem.c:958 ../src/totem.c:3398
-#: ../src/totem.c:3425
+#: ../data/totem.glade.h:42 ../src/totem.c:958 ../src/totem.c:3425
+#: ../src/totem.c:3452
 msgid "Totem Movie Player"
 msgstr "Reproductor de películas Totem"
 
@@ -1466,7 +1466,7 @@ msgstr ""
 msgid "Totem was not able to play this disc."
 msgstr "No no fue capaz de reproducir este disco."
 
-#: ../src/totem.c:499 ../src/totem.c:3246
+#: ../src/totem.c:499 ../src/totem.c:3273
 #: ../browser-plugin/totem-plugin-viewer.c:1427
 msgid "No reason."
 msgstr "No hay razón."
@@ -1500,49 +1500,49 @@ msgstr "Totem no pudo mostrar el contenido de la ayuda."
 msgid "An error occurred"
 msgstr "Ha ocurrido un error"
 
-#: ../src/totem.c:3038 ../src/totem.c:3041
+#: ../src/totem.c:3065 ../src/totem.c:3068
 msgid "Play / Pause"
 msgstr "Reproducir / Pausar"
 
-#: ../src/totem.c:3050 ../src/totem.c:3053
+#: ../src/totem.c:3077 ../src/totem.c:3080
 msgid "Previous Chapter/Movie"
 msgstr "Capítulo/película anterior"
 
-#: ../src/totem.c:3061 ../src/totem.c:3064
+#: ../src/totem.c:3088 ../src/totem.c:3091
 msgid "Next Chapter/Movie"
 msgstr "Capítulo/película siguiente"
 
-#: ../src/totem.c:3246
+#: ../src/totem.c:3273
 msgid "Totem could not startup."
 msgstr "No se ha podido iniciar Totem."
 
-#: ../src/totem.c:3399
+#: ../src/totem.c:3426
 msgid "Could not initialize the thread-safe libraries."
 msgstr "No se pudo inicializar el soporte de hilos seguro."
 
-#: ../src/totem.c:3399
+#: ../src/totem.c:3426
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verifique la instalación de su sistema. Totem ahora terminará."
 
 #. Handle command line arguments
-#: ../src/totem.c:3406
+#: ../src/totem.c:3433
 msgid "- Play movies and songs"
 msgstr "- Reproduzca películas y canciones"
 
-#: ../src/totem.c:3414
+#: ../src/totem.c:3441
 msgid "Totem could not parse the command-line options"
 msgstr "Totem no pudo analizar las opciones de línea de comandos"
 
-#: ../src/totem.c:3433
+#: ../src/totem.c:3460
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem no pudo inicializar el motor de configuración."
 
-#: ../src/totem.c:3433
+#: ../src/totem.c:3460
 msgid "Make sure that GNOME is properly installed."
 msgstr "Asegúrese de que GNOME está instalado correctamente."
 
 #. Main window
-#: ../src/totem.c:3459
+#: ../src/totem.c:3486
 msgid "main window"
 msgstr "ventana principal"
 
@@ -1927,15 +1927,15 @@ msgstr "Falló al montar %s"
 msgid "Failed to find mountpoint for %s"
 msgstr "Falló al encontrar el punto de montaje para %s"
 
-#: ../src/plparse/totem-disc.c:838
+#: ../src/plparse/totem-disc.c:874
 msgid "Audio CD"
 msgstr "Audio CD"
 
-#: ../src/plparse/totem-disc.c:840
+#: ../src/plparse/totem-disc.c:876
 msgid "Video CD"
 msgstr "Vídeo CD"
 
-#: ../src/plparse/totem-disc.c:842
+#: ../src/plparse/totem-disc.c:878
 msgid "DVD"
 msgstr "DVD"
 
@@ -1961,7 +1961,7 @@ msgstr "Complemento"
 msgid "Enabled"
 msgstr "Activado"
 
-#: ../src/plugins/totem-plugin-manager.c:484
+#: ../src/plugins/totem-plugin-manager.c:491
 msgid "Plugins Manager"
 msgstr "Administrador de complementos"
 
@@ -2132,6 +2132,15 @@ msgstr "Totem no pudo reproducir «%s»"
 #, c-format
 msgid "Opening %s"
 msgstr "Abriendo %s"
+
+#. translators: this is:
+#. * Open With ApplicationName
+#. * as in nautilus' right-click menu
+#: ../browser-plugin/totem-plugin-viewer.c:1046
+#, c-format
+#, fuzzy
+msgid "_Open with \"%s\""
+msgstr "_Abrir con «%s»"
 
 #: ../browser-plugin/totem-plugin-viewer.c:1090
 #, c-format
