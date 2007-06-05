@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-04 17:44+0200\n"
-"PO-Revision-Date: 2007-06-04 17:44+0200\n"
+"POT-Creation-Date: 2007-06-05 14:16+0200\n"
+"PO-Revision-Date: 2007-06-05 14:15+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -71,7 +71,7 @@ msgstr "Popis:"
 
 #: ../data/plugins.glade.h:5
 msgid "Rhythmbox Plugins"
-msgstr ""
+msgstr "Moduly Rhythmbox"
 
 #: ../data/plugins.glade.h:6
 #, fuzzy
@@ -334,8 +334,8 @@ msgid "Time:"
 msgstr "Čas:"
 
 #. Title
-#: ../data/totem.glade.h:42 ../src/totem.c:958 ../src/totem.c:3398
-#: ../src/totem.c:3425
+#: ../data/totem.glade.h:42 ../src/totem.c:958 ../src/totem.c:3425
+#: ../src/totem.c:3452
 msgid "Totem Movie Player"
 msgstr "Přehrávač filmů Totem"
 
@@ -561,7 +561,7 @@ msgstr "Snížit hlasitost"
 
 #: ../src/bacon-volume.c:773
 msgid "Muted"
-msgstr ""
+msgstr "Ztišeno"
 
 #: ../src/bacon-volume.c:775
 msgid "Full Volume"
@@ -605,6 +605,7 @@ msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
 msgstr ""
+"Totem obsahuje výjimku umožňující použít proprietární moduly GStreamer."
 
 #: ../src/totem-menu.c:297
 msgid "None"
@@ -1001,9 +1002,8 @@ msgid "_Languages"
 msgstr "_Jazyky"
 
 #: ../src/totem-menu.c:1396
-#, fuzzy
 msgid "Couldn't load the 'ui description' file"
-msgstr "Nemohu načíst rozhraní '%s'."
+msgstr "Nelze načíst soubor 'ui description'"
 
 #: ../src/totem-options.c:37
 msgid "Enable debug"
@@ -1452,7 +1452,7 @@ msgid "Totem was not able to play this disc."
 msgstr "Totem nemohl přehrát tento disk."
 
 # :-)
-#: ../src/totem.c:499 ../src/totem.c:3246
+#: ../src/totem.c:499 ../src/totem.c:3273
 #: ../browser-plugin/totem-plugin-viewer.c:1427
 msgid "No reason."
 msgstr "Žádný důvod."
@@ -1486,49 +1486,49 @@ msgstr "Totem nemohl zobrazit obsah nápovědy."
 msgid "An error occurred"
 msgstr "Došlo k chybě"
 
-#: ../src/totem.c:3038 ../src/totem.c:3041
+#: ../src/totem.c:3065 ../src/totem.c:3068
 msgid "Play / Pause"
 msgstr "Hrát / Pozastavit"
 
-#: ../src/totem.c:3050 ../src/totem.c:3053
+#: ../src/totem.c:3077 ../src/totem.c:3080
 msgid "Previous Chapter/Movie"
 msgstr "Předchozí kapitola/film"
 
-#: ../src/totem.c:3061 ../src/totem.c:3064
+#: ../src/totem.c:3088 ../src/totem.c:3091
 msgid "Next Chapter/Movie"
 msgstr "Následující kapitola/film"
 
-#: ../src/totem.c:3246
+#: ../src/totem.c:3273
 msgid "Totem could not startup."
 msgstr "Totem se nemohl spustit."
 
-#: ../src/totem.c:3399
+#: ../src/totem.c:3426
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Nemohu inicializovat knihovny podporující thready."
 
-#: ../src/totem.c:3399
+#: ../src/totem.c:3426
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Zkontrolujte svou instalaci systému. Totem nyní skončí."
 
 #. Handle command line arguments
-#: ../src/totem.c:3406
+#: ../src/totem.c:3433
 msgid "- Play movies and songs"
 msgstr "- Přehrávání filmů a písniček"
 
-#: ../src/totem.c:3414
+#: ../src/totem.c:3441
 msgid "Totem could not parse the command-line options"
 msgstr "Totem nemohl analyzovat volby z příkazové řádky"
 
-#: ../src/totem.c:3433
+#: ../src/totem.c:3460
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem nemohl inicializovat rozhraní pro nastavení."
 
-#: ../src/totem.c:3433
+#: ../src/totem.c:3460
 msgid "Make sure that GNOME is properly installed."
 msgstr "Ujistěte se, že je GNOME správně nainstalováno."
 
 #. Main window
-#: ../src/totem.c:3459
+#: ../src/totem.c:3486
 msgid "main window"
 msgstr "hlavní okno"
 
@@ -1936,7 +1936,7 @@ msgstr "Zásuvný modul"
 msgid "Enabled"
 msgstr "Povoleno"
 
-#: ../src/plugins/totem-plugin-manager.c:484
+#: ../src/plugins/totem-plugin-manager.c:491
 msgid "Plugins Manager"
 msgstr "Správce zásuvných modulů"
 
@@ -1946,16 +1946,17 @@ msgid ""
 "Unable to activate plugin %s.\n"
 "%s"
 msgstr ""
+"Nelze aktivovat modul %s.\n"
+"%s"
 
 #: ../src/plugins/totem-plugins-engine.c:581
 #, c-format
 msgid "Unable to activate plugin %s"
-msgstr ""
+msgstr "Nelze aktivovat modul %s"
 
 #: ../src/plugins/totem-plugins-engine.c:583
-#, fuzzy
 msgid "Plugin Error"
-msgstr "Zásuvný modul"
+msgstr "Chyba modulu"
 
 #: ../src/plugins/galago/galago.totem-plugin.in.h:1
 msgid "Instant Messenger status"
@@ -1966,9 +1967,8 @@ msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr ""
 
 #: ../src/plugins/galago/totem-galago.c:163
-#, fuzzy
 msgid "Could not connect to the Galago daemon."
-msgstr "Nemohu se spojit s démonem HAL"
+msgstr "Nelze se spojit s démonem Galago."
 
 #: ../src/plugins/gromit/gromit.totem-plugin.in.h:1
 msgid "Gromit Annotations"
@@ -1991,13 +1991,12 @@ msgid "Support infrared remote control"
 msgstr "Podporovat infračervené dálkové ovládání"
 
 #: ../src/plugins/lirc/totem-lirc.c:238
-#, fuzzy
 msgid "Couldn't initialize lirc."
-msgstr "Nemohu inicializovat knihovny podporující thready."
+msgstr "Nelze inicializovat lirc."
 
 #: ../src/plugins/lirc/totem-lirc.c:244
 msgid "Couldn't read lirc configuration."
-msgstr ""
+msgstr "Nelze načíst konfiguraci lirc."
 
 #: ../src/plugins/media-player-keys/media-player-keys.totem-plugin.in.h:1
 #, fuzzy
@@ -2010,12 +2009,11 @@ msgstr ""
 
 #: ../src/plugins/ontop/ontop.totem-plugin.in.h:1
 msgid "Always On Top"
-msgstr ""
+msgstr "Vždy nahoře"
 
 #: ../src/plugins/ontop/ontop.totem-plugin.in.h:2
-#, fuzzy
 msgid "Keep the main window on top when playing a movie"
-msgstr "Jestli má hlavní okno zůstat navrchu"
+msgstr "Během přehrávání videa udržovat hlavní okno nahoře"
 
 #: ../src/plugins/properties/bacon-video-widget-properties.c:232
 #, c-format
@@ -2109,6 +2107,14 @@ msgstr "Totem nemohl přehrát '%s'."
 #: ../browser-plugin/totem-plugin-viewer.c:801
 #, c-format
 msgid "Opening %s"
+msgstr ""
+
+#. translators: this is:
+#. * Open With ApplicationName
+#. * as in nautilus' right-click menu
+#: ../browser-plugin/totem-plugin-viewer.c:1046
+#, c-format
+msgid "_Open with \"%s\""
 msgstr ""
 
 #: ../browser-plugin/totem-plugin-viewer.c:1090
