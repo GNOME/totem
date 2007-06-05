@@ -8,10 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-12 12:40+0700\n"
-"PO-Revision-Date: 2007-02-12 12:41+0700\n"
+"POT-Creation-Date: 2007-06-05 08:09+0700\n"
+"PO-Revision-Date: 2007-06-05 08:11+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
-"Language-Team: Thai <L10n@opentle.org>\n"
+"Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -163,7 +163,7 @@ msgstr "ไม่มีข้อมูล"
 msgid "<b>Preview</b>"
 msgstr "<b>ตัวอย่าง</b>"
 
-#: ../data/screenshot.glade.h:2 ../src/totem-screenshot.c:342
+#: ../data/screenshot.glade.h:2 ../src/totem-screenshot.c:334
 msgid "Save Screenshot"
 msgstr "บันทึกภาพหน้าจอ"
 
@@ -344,8 +344,8 @@ msgid "Time:"
 msgstr "เวลา:"
 
 #. Title
-#: ../data/totem.glade.h:45 ../src/totem.c:974 ../src/totem.c:3403
-#: ../src/totem.c:3430
+#: ../data/totem.glade.h:45 ../src/totem.c:974 ../src/totem.c:3430
+#: ../src/totem.c:3457
 msgid "Totem Movie Player"
 msgstr "Totem: โปรแกรมเล่นภาพยนตร์"
 
@@ -600,33 +600,33 @@ msgstr "%d Hz"
 msgid "Properties dialog"
 msgstr "ไดอะล็อกคุณสมบัติ"
 
-#: ../src/bacon-volume.c:193
+#: ../src/bacon-volume.c:185
 msgid "Volume"
 msgstr "ความดัง"
 
 #. +
-#: ../src/bacon-volume.c:221
+#: ../src/bacon-volume.c:213
 msgid "+"
 msgstr "+"
 
-#: ../src/bacon-volume.c:223 ../src/totem-options.c:47
-msgid "Volume Down"
-msgstr "ลดเสียง"
-
-#. -
-#: ../src/bacon-volume.c:239
-msgid "-"
-msgstr "-"
-
-#: ../src/bacon-volume.c:241 ../src/totem-options.c:46
+#: ../src/bacon-volume.c:215 ../src/totem-options.c:46
 msgid "Volume Up"
 msgstr "เพิ่มเสียง"
 
-#: ../src/bacon-volume.c:777
+#. -
+#: ../src/bacon-volume.c:231
+msgid "-"
+msgstr "-"
+
+#: ../src/bacon-volume.c:233 ../src/totem-options.c:47
+msgid "Volume Down"
+msgstr "ลดเสียง"
+
+#: ../src/bacon-volume.c:773
 msgid "Muted"
 msgstr "ไม่ใช้เสียง"
 
-#: ../src/bacon-volume.c:779
+#: ../src/bacon-volume.c:775
 msgid "Full Volume"
 msgstr "ความดังเต็มที่"
 
@@ -636,7 +636,7 @@ msgid "Couldn't load the '%s' interface."
 msgstr "ไม่สามารถโหลดอินเทอร์เฟซ '%s'"
 
 #: ../src/totem-interface.c:119 ../src/totem-interface.c:121
-#: ../src/totem-menu.c:1379
+#: ../src/totem-menu.c:1339
 msgid "Make sure that Totem is properly installed."
 msgstr "กรุณาตรวจสอบติดตั้ง Totem ว่าเรียบร้อยดีหรือไม่"
 
@@ -683,405 +683,405 @@ msgstr "Totem มีข้อยกเว้นเพื่อให้สาม
 msgid "None"
 msgstr "ไม่มี"
 
-#: ../src/totem-menu.c:288 ../src/totem-menu.c:1265
+#: ../src/totem-menu.c:288 ../src/totem-menu.c:1225
 msgid "Auto"
 msgstr "อัตโนมัติ"
 
-#: ../src/totem-menu.c:774
+#: ../src/totem-menu.c:733
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "เล่นแผ่น '%s'"
 
-#: ../src/totem-menu.c:777
+#: ../src/totem-menu.c:736
 #, c-format
 msgid "device%d"
 msgstr "อุปกรณ์%d"
 
-#: ../src/totem-menu.c:1093
+#: ../src/totem-menu.c:1053
 msgid "GTK+"
 msgstr "GTK+"
 
-#: ../src/totem-menu.c:1095
+#: ../src/totem-menu.c:1055
 msgid "GNOME"
 msgstr "GNOME"
 
 #. This lists the back-end and front-end types and versions, such as
 #. * Movie Player using GStreamer 0.10.1 and GNOME
-#: ../src/totem-menu.c:1101
+#: ../src/totem-menu.c:1061
 #, c-format
 msgid "Movie Player using %s and %s"
 msgstr "โปรแกรมเล่นภาพยนตร์โดยใช้ %s และ %s"
 
-#: ../src/totem-menu.c:1106 ../browser-plugin/totem-plugin-viewer.c:1098
+#: ../src/totem-menu.c:1066 ../browser-plugin/totem-plugin-viewer.c:1098
 msgid "Copyright © 2002-2006 Bastien Nocera"
 msgstr "Copyright © 2002-2006 Bastien Nocera"
 
-#: ../src/totem-menu.c:1111 ../src/vanity.c:258
+#: ../src/totem-menu.c:1071 ../src/vanity.c:258
 #: ../browser-plugin/totem-plugin-viewer.c:1101
 msgid "translator-credits"
 msgstr ""
 "อิสริยะ ไพรีพ่ายฤทธิ์ <markpeak@gmail.com>\n"
 "เทพพิทักษ์ การุญบุญญานันท์ <thep@linux.thai.net>"
 
-#: ../src/totem-menu.c:1196
+#: ../src/totem-menu.c:1156
 msgid "_Movie"
 msgstr "_ภาพยนตร์"
 
-#: ../src/totem-menu.c:1197
+#: ../src/totem-menu.c:1157
 msgid "_Open..."
 msgstr "_เปิด..."
 
-#: ../src/totem-menu.c:1197
+#: ../src/totem-menu.c:1157
 msgid "Open a file"
 msgstr "เปิดแฟ้ม"
 
-#: ../src/totem-menu.c:1198
+#: ../src/totem-menu.c:1158
 msgid "Open _Location..."
 msgstr "เปิด_ตำแหน่ง..."
 
-#: ../src/totem-menu.c:1198
+#: ../src/totem-menu.c:1158
 msgid "Open a non-local file"
 msgstr "เปิดแฟ้มจากเครื่องอื่น"
 
-#: ../src/totem-menu.c:1199
+#: ../src/totem-menu.c:1159
 msgid "_Eject"
 msgstr "_ดันแผ่นออก"
 
-#: ../src/totem-menu.c:1200
+#: ../src/totem-menu.c:1160
 msgid "_Properties"
 msgstr "คุณ_สมบัติ"
 
-#: ../src/totem-menu.c:1201
+#: ../src/totem-menu.c:1161
 msgid "Play / Pa_use"
 msgstr "เ_ล่น / พัก"
 
-#: ../src/totem-menu.c:1201
+#: ../src/totem-menu.c:1161
 msgid "Play or pause the movie"
 msgstr "เล่นหรือพักภาพยนตร์"
 
-#: ../src/totem-menu.c:1202
+#: ../src/totem-menu.c:1162
 msgid "_Quit"
 msgstr "_ออก"
 
-#: ../src/totem-menu.c:1202
+#: ../src/totem-menu.c:1162
 msgid "Quit the program"
 msgstr "ออกจากโปรแกรม"
 
-#: ../src/totem-menu.c:1204
+#: ../src/totem-menu.c:1164
 msgid "_Edit"
 msgstr "แ_ก้ไข"
 
-#: ../src/totem-menu.c:1205
+#: ../src/totem-menu.c:1165
 msgid "Take _Screenshot..."
 msgstr "เก็บภาพหน้า_จอ..."
 
-#: ../src/totem-menu.c:1205
+#: ../src/totem-menu.c:1165
 msgid "Take a screenshot"
 msgstr "เก็บภาพหน้าจอ"
 
-#: ../src/totem-menu.c:1206
+#: ../src/totem-menu.c:1166
 msgid "_Clear Playlist"
 msgstr "_ล้างรายการการเล่น"
 
-#: ../src/totem-menu.c:1206
+#: ../src/totem-menu.c:1166
 msgid "Clear playlist"
 msgstr "ล้างรายการการเล่น"
 
-#: ../src/totem-menu.c:1207
+#: ../src/totem-menu.c:1167
 msgid "Prefere_nces"
 msgstr "_ปรับแต่ง"
 
-#: ../src/totem-menu.c:1209
+#: ../src/totem-menu.c:1169
 msgid "_View"
 msgstr "_มุมมอง"
 
-#: ../src/totem-menu.c:1210
+#: ../src/totem-menu.c:1170
 msgid "_Fullscreen"
 msgstr "เต็ม_จอ"
 
-#: ../src/totem-menu.c:1210
+#: ../src/totem-menu.c:1170
 msgid "Switch to fullscreen"
 msgstr "ดูแบบเต็มจอ"
 
-#: ../src/totem-menu.c:1211
+#: ../src/totem-menu.c:1171
 msgid "Fit Window to Movie"
 msgstr "ปรับขนาดตามภาพยนตร์"
 
-#: ../src/totem-menu.c:1212
+#: ../src/totem-menu.c:1172
 msgid "_Resize 1:2"
 msgstr "_ปรับขนาด 1:2"
 
-#: ../src/totem-menu.c:1212
+#: ../src/totem-menu.c:1172
 msgid "Resize to half the video size"
 msgstr "ปรับขนาดให้เหลือครึ่งเดียว"
 
-#: ../src/totem-menu.c:1213
+#: ../src/totem-menu.c:1173
 msgid "Resize _1:1"
 msgstr "ปรับขนาด _1:1"
 
-#: ../src/totem-menu.c:1213
+#: ../src/totem-menu.c:1173
 msgid "Resize to video size"
 msgstr "ปรับเป็นขนาดจริง"
 
-#: ../src/totem-menu.c:1214
+#: ../src/totem-menu.c:1174
 msgid "Resize _2:1"
 msgstr "ปรับขนาด _2:1"
 
-#: ../src/totem-menu.c:1214
+#: ../src/totem-menu.c:1174
 msgid "Resize to twice the video size"
 msgstr "ปรับขนาดเป็นสองเท่า"
 
-#: ../src/totem-menu.c:1215
+#: ../src/totem-menu.c:1175
 msgid "_Aspect Ratio"
 msgstr "_สัดส่วนภาพ"
 
-#: ../src/totem-menu.c:1216
+#: ../src/totem-menu.c:1176
 msgid "Switch An_gles"
 msgstr "เปลี่ยน_มุม"
 
-#: ../src/totem-menu.c:1216
+#: ../src/totem-menu.c:1176
 msgid "Switch angles"
 msgstr "เปลี่ยนมุม"
 
 #. { "subtitles-menu", NULL, N_("S_ubtitles") },
-#: ../src/totem-menu.c:1219
+#: ../src/totem-menu.c:1179
 msgid "_Go"
 msgstr "ไ_ป"
 
-#: ../src/totem-menu.c:1220
+#: ../src/totem-menu.c:1180
 msgid "_DVD Menu"
 msgstr "เมนู_ดีวีดี"
 
-#: ../src/totem-menu.c:1220
+#: ../src/totem-menu.c:1180
 msgid "Go to the DVD menu"
 msgstr "ไปยังเมนูดีวีดี"
 
-#: ../src/totem-menu.c:1221
+#: ../src/totem-menu.c:1181
 msgid "_Title Menu"
 msgstr "เมนู_หลัก"
 
-#: ../src/totem-menu.c:1221
+#: ../src/totem-menu.c:1181
 msgid "Go to the title menu"
 msgstr "ไปยังเมนูหลัก"
 
-#: ../src/totem-menu.c:1222
+#: ../src/totem-menu.c:1182
 msgid "A_udio Menu"
 msgstr "เมนูเ_สียง"
 
-#: ../src/totem-menu.c:1222
+#: ../src/totem-menu.c:1182
 msgid "Go to the audio menu"
 msgstr "ไปยังเมนูเสียง"
 
-#: ../src/totem-menu.c:1223
+#: ../src/totem-menu.c:1183
 msgid "_Angle Menu"
 msgstr "เมนู_มุมมอง"
 
-#: ../src/totem-menu.c:1223
+#: ../src/totem-menu.c:1183
 msgid "Go to the angle menu"
 msgstr "ไปยังเมนูมุมมอง"
 
-#: ../src/totem-menu.c:1224
+#: ../src/totem-menu.c:1184
 msgid "_Chapter Menu"
 msgstr "เมนู_ตอน"
 
-#: ../src/totem-menu.c:1224
+#: ../src/totem-menu.c:1184
 msgid "Go to the chapter menu"
 msgstr "ไปยังเมนูตอน"
 
-#: ../src/totem-menu.c:1225
+#: ../src/totem-menu.c:1185
 msgid "_Next Chapter/Movie"
 msgstr "ตอน/เรื่อง_ถัดไป"
 
-#: ../src/totem-menu.c:1225
+#: ../src/totem-menu.c:1185
 msgid "Next chapter or movie"
 msgstr "ไปยังตอนหรือเรื่องถัดไป"
 
-#: ../src/totem-menu.c:1226
+#: ../src/totem-menu.c:1186
 msgid "_Previous Chapter/Movie"
 msgstr "ตอน/เรื่อง_ก่อนหน้า"
 
-#: ../src/totem-menu.c:1226
+#: ../src/totem-menu.c:1186
 msgid "Previous chapter or movie"
 msgstr "ตอนหรือเรื่องก่อนหน้า"
 
-#: ../src/totem-menu.c:1227
+#: ../src/totem-menu.c:1187
 msgid "_Skip to..."
 msgstr "_ข้ามไปยัง..."
 
-#: ../src/totem-menu.c:1227
+#: ../src/totem-menu.c:1187
 msgid "Skip to a specific time"
 msgstr "ข้ามแบบระบุเวลา"
 
-#: ../src/totem-menu.c:1229
+#: ../src/totem-menu.c:1189
 msgid "_Sound"
 msgstr "เสีย_ง"
 
 #. { "languages-menu", NULL, N_("_Languages") },
-#: ../src/totem-menu.c:1231
+#: ../src/totem-menu.c:1191
 msgid "Volume _Up"
 msgstr "เ_พิ่มเสียง"
 
-#: ../src/totem-menu.c:1231
+#: ../src/totem-menu.c:1191
 msgid "Volume up"
 msgstr "เพิ่มเสียง"
 
-#: ../src/totem-menu.c:1232
+#: ../src/totem-menu.c:1192
 msgid "Volume _Down"
 msgstr "_ลดเสียง"
 
-#: ../src/totem-menu.c:1232
+#: ../src/totem-menu.c:1192
 msgid "Volume down"
 msgstr "ลดเสียง"
 
-#: ../src/totem-menu.c:1234
+#: ../src/totem-menu.c:1194
 msgid "_Help"
 msgstr "_วิธีใช้"
 
-#: ../src/totem-menu.c:1235
+#: ../src/totem-menu.c:1195
 msgid "_Contents"
 msgstr "วิธีใ_ช้"
 
-#: ../src/totem-menu.c:1235
+#: ../src/totem-menu.c:1195
 msgid "Help contents"
 msgstr "เนื้อหาวิธีใช้"
 
-#: ../src/totem-menu.c:1236
+#: ../src/totem-menu.c:1196
 msgid "_About"
 msgstr "เ_กี่ยวกับ"
 
-#: ../src/totem-menu.c:1240
+#: ../src/totem-menu.c:1200
 msgid "Zoom In"
 msgstr "ขยายเข้า"
 
-#: ../src/totem-menu.c:1240
+#: ../src/totem-menu.c:1200
 msgid "Zoom in"
 msgstr "ขยายเข้า"
 
-#: ../src/totem-menu.c:1241
+#: ../src/totem-menu.c:1201
 msgid "Zoom Reset"
 msgstr "ขนาดปกติ"
 
-#: ../src/totem-menu.c:1241
+#: ../src/totem-menu.c:1201
 msgid "Zoom reset"
 msgstr "ขนาดปกติ"
 
-#: ../src/totem-menu.c:1242
+#: ../src/totem-menu.c:1202
 msgid "Zoom Out"
 msgstr "ขยายออก"
 
-#: ../src/totem-menu.c:1242
+#: ../src/totem-menu.c:1202
 msgid "Zoom out"
 msgstr "ขยายออก"
 
-#: ../src/totem-menu.c:1246 ../src/totem-menu.c:1251
+#: ../src/totem-menu.c:1206 ../src/totem-menu.c:1211
 msgid "Skip _Forward"
 msgstr "เดิน_หน้า"
 
-#: ../src/totem-menu.c:1246 ../src/totem-menu.c:1251
+#: ../src/totem-menu.c:1206 ../src/totem-menu.c:1211
 msgid "Skip forward"
 msgstr "ข้ามไปข้างหน้า"
 
-#: ../src/totem-menu.c:1247 ../src/totem-menu.c:1252
+#: ../src/totem-menu.c:1207 ../src/totem-menu.c:1212
 msgid "Skip _Backwards"
 msgstr "_ถอยหลัง"
 
-#: ../src/totem-menu.c:1247 ../src/totem-menu.c:1252
+#: ../src/totem-menu.c:1207 ../src/totem-menu.c:1212
 msgid "Skip backwards"
 msgstr "ข้ามไปข้างหลัง"
 
-#: ../src/totem-menu.c:1256
+#: ../src/totem-menu.c:1216
 msgid "_Repeat Mode"
 msgstr "เล่น_ซ้ำ"
 
-#: ../src/totem-menu.c:1256
+#: ../src/totem-menu.c:1216
 msgid "Set the repeat mode"
 msgstr "ตั้งให้เล่นซ้ำ"
 
-#: ../src/totem-menu.c:1257
+#: ../src/totem-menu.c:1217
 msgid "Shuff_le Mode"
 msgstr "เล่น_สุ่ม"
 
-#: ../src/totem-menu.c:1257
+#: ../src/totem-menu.c:1217
 msgid "Set the shuffle mode"
 msgstr "ตั้งให้เล่นแบบสุ่ม"
 
-#: ../src/totem-menu.c:1258
+#: ../src/totem-menu.c:1218
 msgid "_Deinterlace"
 msgstr "_Deinterlace"
 
-#: ../src/totem-menu.c:1258
+#: ../src/totem-menu.c:1218
 msgid "Deinterlace"
 msgstr "Deinterlace"
 
-#: ../src/totem-menu.c:1259
+#: ../src/totem-menu.c:1219
 msgid "Always on _Top"
 msgstr "อยู่_บนสุด"
 
-#: ../src/totem-menu.c:1259
+#: ../src/totem-menu.c:1219
 msgid "Always on top"
 msgstr "อยู่ข้างบนตลอด"
 
-#: ../src/totem-menu.c:1260
+#: ../src/totem-menu.c:1220
 msgid "Show _Controls"
 msgstr "แสดง_ปุ่มควบคุม"
 
-#: ../src/totem-menu.c:1260
+#: ../src/totem-menu.c:1220
 msgid "Show controls"
 msgstr "แสดงปุ่มควบคุม"
 
-#: ../src/totem-menu.c:1261
+#: ../src/totem-menu.c:1221
 msgid "_Sidebar"
 msgstr "แ_ถบข้าง"
 
-#: ../src/totem-menu.c:1261
+#: ../src/totem-menu.c:1221
 msgid "Show or hide the sidebar"
 msgstr "แสดงหรือซ่อนแถบข้าง"
 
-#: ../src/totem-menu.c:1265
+#: ../src/totem-menu.c:1225
 msgid "Sets automatic aspect ratio"
 msgstr "ปรับอัตราส่วนอัตโนมัติ"
 
-#: ../src/totem-menu.c:1266
+#: ../src/totem-menu.c:1226
 msgid "Square"
 msgstr "จัตุรัส"
 
-#: ../src/totem-menu.c:1266
+#: ../src/totem-menu.c:1226
 msgid "Sets square aspect ratio"
 msgstr "ปรับอัตราส่วนแบบจัตุรัส"
 
-#: ../src/totem-menu.c:1267
+#: ../src/totem-menu.c:1227
 msgid "4:3 (TV)"
 msgstr "4:3 (TV)"
 
-#: ../src/totem-menu.c:1267
+#: ../src/totem-menu.c:1227
 msgid "Sets 4:3 (TV) aspect ratio"
 msgstr "ปรับอัตราส่วนเป็น 4:3 (TV)"
 
-#: ../src/totem-menu.c:1268
+#: ../src/totem-menu.c:1228
 msgid "16:9 (Widescreen)"
 msgstr "16:9 (จอกว้าง)"
 
-#: ../src/totem-menu.c:1268
+#: ../src/totem-menu.c:1228
 msgid "Sets 16:9 (Anamorphic) aspect ratio"
 msgstr "ปรับอัตราส่วนเป็น 16:9 (Anamorphic)"
 
-#: ../src/totem-menu.c:1269
+#: ../src/totem-menu.c:1229
 msgid "2.11:1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: ../src/totem-menu.c:1269
+#: ../src/totem-menu.c:1229
 msgid "Sets 2.11:1 (DVB) aspect ratio"
 msgstr "ปรับอัตราส่วนเป็น 2.11:1 (DVB)"
 
-#: ../src/totem-menu.c:1329
+#: ../src/totem-menu.c:1289
 msgid "S_ubtitles"
 msgstr "คำบ_รรยาย"
 
-#: ../src/totem-menu.c:1335
+#: ../src/totem-menu.c:1295
 msgid "_Languages"
 msgstr "_ภาษา"
 
-#: ../src/totem-menu.c:1378
+#: ../src/totem-menu.c:1338
 msgid "Couldn't load the 'ui description' file"
 msgstr "ไม่สามารถโหลดแฟ้ม 'บรรยาย ui'"
 
@@ -1093,11 +1093,11 @@ msgstr "เปิดการดีบั๊ก"
 msgid "Play/Pause"
 msgstr "เล่น / พัก"
 
-#: ../src/totem-options.c:40 ../src/totem.c:294 ../src/totem.c:302
+#: ../src/totem-options.c:40 ../src/totem.c:290 ../src/totem.c:298
 msgid "Play"
 msgstr "เล่น"
 
-#: ../src/totem-options.c:41 ../src/totem.c:288
+#: ../src/totem-options.c:41 ../src/totem.c:284
 msgid "Pause"
 msgstr "พัก"
 
@@ -1186,24 +1186,24 @@ msgstr "ตามนามสกุล"
 msgid "Save Playlist"
 msgstr "บันทึกรายการการเล่น"
 
-#: ../src/totem-playlist.c:1507
+#: ../src/totem-playlist.c:1500
 msgid "playlist"
 msgstr "รายการการเล่น"
 
-#: ../src/totem-playlist.c:1652
+#: ../src/totem-playlist.c:1654
 msgid "Playlist error"
 msgstr "รายการการเล่นมีปัญหา"
 
-#: ../src/totem-playlist.c:1652
+#: ../src/totem-playlist.c:1654
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "รายการการเล่น '%s' ไม่สามารถแจงได้ ข้อมูลอาจเสียอยู่"
 
-#: ../src/totem-preferences.c:85
+#: ../src/totem-preferences.c:102
 msgid "Enable visual effects?"
 msgstr "ใช้งานเอ็ฟเฟ็กต์ภาพหรือไม่?"
 
-#: ../src/totem-preferences.c:87
+#: ../src/totem-preferences.c:104
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1211,17 +1211,17 @@ msgstr ""
 "คุณใช้งาน Totem จากระยะไกล\n"
 "ต้องการใช้งานเอ็ฟเฟ็กต์ภาพหรือไม่?"
 
-#: ../src/totem-preferences.c:140
+#: ../src/totem-preferences.c:157
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted."
 msgstr "การเปลี่ยนค่านี้จะเริ่มมีผลสำหรับภาพยนตร์เรื่องถัดไป หรือเมื่อเริ่มการทำงาน totem ใหม่"
 
-#: ../src/totem-preferences.c:284
+#: ../src/totem-preferences.c:301
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr "การเปลี่ยนค่าเอ็ฟเฟ็กต์ภาพจำเป็นต้องเริ่มการทำงานใหม่จึงจะมีผล"
 
-#: ../src/totem-preferences.c:368
+#: ../src/totem-preferences.c:385
 msgid ""
 "The change of audio output type will only take effect when Totem is "
 "restarted."
@@ -1229,7 +1229,7 @@ msgstr ""
 "การเปลี่ยนชนิดของเอาต์พุตเสียง จะเริ่มมีผลสำหรับภาพยนตร์เรื่องถัดไป หรือเมื่อเริ่มการทำงาน "
 "totem ใหม่"
 
-#: ../src/totem-preferences.c:622
+#: ../src/totem-preferences.c:641
 msgid "Select Subtitle Font"
 msgstr "เลือกแบบอักษรสำหรับคำบรรยาย"
 
@@ -1243,25 +1243,25 @@ msgstr "ภาพ/เสียง"
 msgid "Video"
 msgstr "วิดีโอ"
 
-#: ../src/totem-screenshot.c:149 ../src/totem-screenshot.c:160
+#: ../src/totem-screenshot.c:141 ../src/totem-screenshot.c:152
 #, c-format
 msgid "Screenshot%d.png"
 msgstr "Screenshot%d.png"
 
-#: ../src/totem-screenshot.c:202
+#: ../src/totem-screenshot.c:194
 #, c-format
 msgid "File '%s' already exists."
 msgstr "แฟ้ม '%s' มีอยู่แล้ว"
 
-#: ../src/totem-screenshot.c:204
+#: ../src/totem-screenshot.c:196
 msgid "The screenshot was not saved"
 msgstr "ภาพหน้าจอไม่ถูกบันทึก"
 
-#: ../src/totem-screenshot.c:215
+#: ../src/totem-screenshot.c:207
 msgid "There was an error saving the screenshot."
 msgstr "เกิดข้อผิดพลาดขณะบันทึกภาพหน้าจอ"
 
-#: ../src/totem-screenshot.c:248
+#: ../src/totem-screenshot.c:240
 msgid "Screenshot.png"
 msgstr "Screenshot.png"
 
@@ -1277,7 +1277,7 @@ msgstr "ชนิดของแสงเงา"
 msgid "Style of bevel around the statusbar text"
 msgstr "รูปแบบการบุ๋มหรือนูนของแถบแสดงสถานะ"
 
-#: ../src/totem-statusbar.c:126 ../src/totem.c:298 ../src/totem.c:960
+#: ../src/totem-statusbar.c:126 ../src/totem.c:294 ../src/totem.c:960
 #: ../browser-plugin/totem-plugin-viewer.c:279
 msgid "Stopped"
 msgstr "หยุด"
@@ -1466,80 +1466,80 @@ msgstr "ตะวันตก"
 msgid "Vietnamese"
 msgstr "เวียดนาม"
 
-#: ../src/totem-uri.c:234
+#: ../src/totem-uri.c:236
 msgid "All files"
 msgstr "ทุกแฟ้ม"
 
-#: ../src/totem-uri.c:239
+#: ../src/totem-uri.c:241
 msgid "Supported files"
 msgstr "แฟ้มที่สนับสนุน"
 
-#: ../src/totem-uri.c:251
+#: ../src/totem-uri.c:253
 msgid "Audio files"
 msgstr "แฟ้มเสียงทั้งหมด"
 
-#: ../src/totem-uri.c:259
+#: ../src/totem-uri.c:261
 msgid "Video files"
 msgstr "แฟ้มวิดีโอทั้งหมด"
 
-#: ../src/totem-uri.c:286
+#: ../src/totem-uri.c:308
 msgid "Select Movies or Playlists"
 msgstr "เลือกภาพยนตร์หรือรายการเล่น"
 
-#: ../src/totem.c:286 ../browser-plugin/totem-plugin-viewer.c:294
+#: ../src/totem.c:282 ../browser-plugin/totem-plugin-viewer.c:294
 msgid "Playing"
 msgstr "กำลังเล่น"
 
-#: ../src/totem.c:292 ../browser-plugin/totem-plugin-viewer.c:290
+#: ../src/totem.c:288 ../browser-plugin/totem-plugin-viewer.c:290
 msgid "Paused"
 msgstr "กำลังพัก"
 
-#: ../src/totem.c:344
+#: ../src/totem.c:340
 msgid "Totem could not eject the optical media."
 msgstr "Totem ไม่สามารถดันแผ่นออกได้"
 
-#: ../src/totem.c:378 ../src/totem.c:407 ../src/totem.c:1074
+#: ../src/totem.c:375 ../src/totem.c:404 ../src/totem.c:1074
 #: ../src/totem.c:1184
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem ไม่สามารถเล่น '%s'"
 
-#: ../src/totem.c:468
+#: ../src/totem.c:465
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
 "appropriate plugins to handle it."
 msgstr "Totem ไม่สามารถเล่นสื่อชนิดนี้ (%s) เพราะไม่มีปลั๊กอินที่เหมาะสม"
 
-#: ../src/totem.c:469
+#: ../src/totem.c:466
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
 msgstr "กรุณาติดตั้งปลั๊กอินที่จำเป็น และเริ่มการทำงาน Totem ใหม่ เพื่อเล่นสื่อนี้"
 
-#: ../src/totem.c:477
+#: ../src/totem.c:474
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
 "it."
 msgstr "Totem ไม่สามารถเล่นสื่อนี้ (%s) ถึงแม้จะมีปลั๊กอินสำหรับเล่น"
 
-#: ../src/totem.c:478
+#: ../src/totem.c:475
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr "คุณอาจตรวจสอบว่าได้ใส่แผ่นในไดรว์หรือไม่ และได้ตั้งค่าไดรว์ไว้ถูกต้องหรือไม่"
 
-#: ../src/totem.c:506
+#: ../src/totem.c:503
 msgid "Totem was not able to play this disc."
 msgstr "Totem ไม่สามารถเล่นแผ่นนี้ได้"
 
-#: ../src/totem.c:507 ../src/totem.c:3255
+#: ../src/totem.c:504 ../src/totem.c:3282
 #: ../browser-plugin/totem-plugin-viewer.c:1428
 msgid "No reason."
 msgstr "ไม่ทราบสาเหตุ"
 
-#: ../src/totem.c:765
+#: ../src/totem.c:762
 msgid "Open Location..."
 msgstr "เปิดตำแหน่ง..."
 
@@ -1574,49 +1574,49 @@ msgstr "เกิดปัญหา"
 msgid "Totem could not seek in '%s'."
 msgstr "Totem ไม่สามารถเลื่อนตำแหน่งใน '%s' ได้"
 
-#: ../src/totem.c:3056
+#: ../src/totem.c:3075
 msgid "Previous Chapter/Movie"
 msgstr "ตอน/เรื่องก่อนหน้า"
 
-#: ../src/totem.c:3062
+#: ../src/totem.c:3081
 msgid "Play / Pause"
 msgstr "เล่น / พัก"
 
-#: ../src/totem.c:3069
+#: ../src/totem.c:3088
 msgid "Next Chapter/Movie"
 msgstr "ตอน/เรื่องถัดไป"
 
-#: ../src/totem.c:3255
+#: ../src/totem.c:3282
 msgid "Totem could not startup."
 msgstr "ไม่สามารถเริ่มทำงาน Totem"
 
-#: ../src/totem.c:3404
+#: ../src/totem.c:3431
 msgid "Could not initialize the thread-safe libraries."
 msgstr "ไม่สามารถเริ่มใช้ไลบรารีสำหรับการใช้งานเธรดอย่างปลอดภัย"
 
-#: ../src/totem.c:3404
+#: ../src/totem.c:3431
 msgid "Verify your system installation. Totem will now exit."
 msgstr "กรุณาตรวจสอบการติดตั้งของระบบ Totem จะเลิกทำงาน"
 
 #. Handle command line arguments
-#: ../src/totem.c:3411
+#: ../src/totem.c:3438
 msgid "- Play movies and songs"
 msgstr "- เล่นภาพยนตร์และเพลง"
 
-#: ../src/totem.c:3419
+#: ../src/totem.c:3446
 msgid "Totem could not parse the command-line options"
 msgstr "Totem ไม่สามารถแจงตัวเลือกบรรทัดคำสั่ง"
 
-#: ../src/totem.c:3438
+#: ../src/totem.c:3465
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem ไม่สามารถเริ่มใช้ระบบจัดการค่าตั้ง"
 
-#: ../src/totem.c:3438
+#: ../src/totem.c:3465
 msgid "Make sure that GNOME is properly installed."
 msgstr "กรุณาตรวจสอบว่าติดตั้ง GNOME ถูกต้องหรือไม่"
 
 #. Main window
-#: ../src/totem.c:3466
+#: ../src/totem.c:3493
 msgid "main window"
 msgstr "หน้าต่างหลัก"
 
@@ -1695,21 +1695,21 @@ msgstr ""
 "ไม่สามารถโหลดส่วนติดต่อหลัก (vanity.glade)\n"
 "กรุณาตรวจสอบการติดตั้ง Vanity ว่าเรียบร้อยดีหรือไม่"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2452
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2460
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
 msgstr "ไม่พบเอาต์พุตเสียงที่ร้องขอ กรุณาเลือกเอาต์พุตเสียงช่องอื่นในตัวเลือกระบบสื่อผสม"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2457
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2465
 msgid "Location not found."
 msgstr "หาตำแหน่งที่กำหนดไม่พบ"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2461
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2469
 msgid "Could not open location; You may not have permission to open the file."
 msgstr "ไม่สามารถเปิดตำแหน่งได้ คุณอาจไม่ได้รับอนุญาตให้เปิดแฟ้มดังกล่าว"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2472
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2480
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1718,7 +1718,7 @@ msgstr ""
 "มีโปรแกรมอื่นใช้เอาต์พุตภาพอยู่ กรุณาปิดโปรแกรมวิดีโออื่น "
 "หรือเลือกเอาต์พุตภาพช่องอื่นในตัวเลือกระบบสื่อผสม"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2478
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2486
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1728,13 +1728,13 @@ msgstr ""
 "และคุณอาจพิจารณาใช้เซิร์ฟเวอร์เสียง"
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2496
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2502
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2504
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2510
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr "การเล่นภาพยนตร์นี้ต้องใช้ปลั๊กอิน '%s' ซึ่งไม่ได้ติดตั้งไว้"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2503
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2511
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1746,44 +1746,44 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2528
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2536
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr "ไม่สามารถเล่นแฟ้มนี้ผ่านเครือข่ายได้ ลองดาวน์โหลดลงดิสก์ก่อนสิ"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2600
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2608
 msgid "Media file could not be played."
 msgstr "ไม่สามารถเล่นภาพยนตร์ได้"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2677
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2736
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2685
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2744
 msgid "Failed to retrieve working directory"
 msgstr "ไม่สามารถอ่านไดเรกทอรีใช้งานปัจจุบัน"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4440
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4458
 msgid "Too old version of GStreamer installed."
 msgstr "รุ่นของ GStreamer ที่ติดตั้งไว้เก่าเกินไป"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4447
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4465
 msgid "Media contains no supported video streams."
 msgstr "สื่อไม่มีสตรีมวิดีโอที่สนับสนุน"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4782
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4801
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr ""
 "ไม่สามารถสร้างอ็อบเจกต์สำหรับเล่นสื่อของ GStreamer กรุณาตรวจสอบการติดตั้ง GStreamer ของคุณ"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4912
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5016
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4933
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5046
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
 msgstr ""
 "ไม่สามารถเปิดเอาต์พุตภาพได้ อาจไม่มีอุปกรณ์อยู่ กรุณาเลือกเอาต์พุตภาพช่องอื่นในตัวเลือกระบบสื่อผสม"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4924
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4945
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1792,7 +1792,7 @@ msgstr ""
 "ไม่พบเอาต์พุตภาพที่ร้องขอ คุณอาจต้องติดตั้งปลั๊กอิน GStreamer เพิ่มเติม "
 "หรือเลือกเอาต์พุตภาพช่องอื่นในตัวเลือกระบบสื่อผสม"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4955
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4980
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1801,7 +1801,7 @@ msgstr ""
 "ไม่สามารถเปิดเอาต์พุตเสียงได้ คุณอาจไม่ได้รับอนุญาตให้เปิดอุปกรณ์เสียง "
 "หรือเซิร์ฟเวอร์เสียงอาจไม่ได้ทำงานอยู่ กรุณาเลือกเอาต์พุตเสียงช่องอื่นในตัวเลือกระบบสื่อผสม"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4970
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5000
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -1810,7 +1810,7 @@ msgstr ""
 "ไม่พบเอาต์พุตเสียงที่ร้องขอ คุณอาจต้องติดตั้งปลั๊กอิน GStreamer เพิ่มเติม "
 "หรือเลือกเอาต์พุตเสียงช่องอื่นในตัวเลือกระบบสื่อผสม"
 
-#: ../src/backend/bacon-video-widget-xine.c:712
+#: ../src/backend/bacon-video-widget-xine.c:723
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1819,133 +1819,133 @@ msgstr ""
 "ไม่สามารถโหลดไดรเวอร์เสียง '%s'\n"
 "กรุณาตรวจสอบดูว่าไดรเวอร์ไม่ได้ถูกใช้งานอยู่"
 
-#: ../src/backend/bacon-video-widget-xine.c:1190
-#: ../src/backend/bacon-video-widget-xine.c:1744
+#: ../src/backend/bacon-video-widget-xine.c:1201
+#: ../src/backend/bacon-video-widget-xine.c:1753
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
 msgstr "ไม่มีเอาต์พุตภาพ ตรวจสอบว่าเอาต์พุตภาพถูกติดตั้งแล้ว"
 
-#: ../src/backend/bacon-video-widget-xine.c:1312
+#: ../src/backend/bacon-video-widget-xine.c:1323
 msgid "The server you are trying to connect to is not known."
 msgstr "ไม่รู้จักเซิร์ฟเวอร์ที่เรียก"
 
-#: ../src/backend/bacon-video-widget-xine.c:1316
+#: ../src/backend/bacon-video-widget-xine.c:1327
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "อุปกรณ์ (%s) ที่เรียกไม่ถูกต้อง"
 
-#: ../src/backend/bacon-video-widget-xine.c:1320
+#: ../src/backend/bacon-video-widget-xine.c:1331
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "ไม่สามารถติดต่อกับเซิร์ฟเวอร์ (%s) ได้"
 
-#: ../src/backend/bacon-video-widget-xine.c:1324
+#: ../src/backend/bacon-video-widget-xine.c:1335
 msgid "The connection to this server was refused."
 msgstr "การติดต่อถูกปฎิเสธ"
 
-#: ../src/backend/bacon-video-widget-xine.c:1328
+#: ../src/backend/bacon-video-widget-xine.c:1339
 msgid "The specified movie could not be found."
 msgstr "ไม่พบภาพยนตร์ที่เรียก"
 
-#: ../src/backend/bacon-video-widget-xine.c:1334
-#: ../src/backend/bacon-video-widget-xine.c:1352
+#: ../src/backend/bacon-video-widget-xine.c:1345
+#: ../src/backend/bacon-video-widget-xine.c:1363
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
 msgstr "ไม่สามารถอ่านข้อมูลที่ถูกเข้ารหัสได้ คุณกำลังเล่นดีวีดีโดยไม่มี libdvdcss หรือไม่?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1337
+#: ../src/backend/bacon-video-widget-xine.c:1348
 msgid "The movie could not be read."
 msgstr "ไม่สามารถอ่านภาพยนตร์ได้"
 
-#: ../src/backend/bacon-video-widget-xine.c:1346
+#: ../src/backend/bacon-video-widget-xine.c:1357
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "เกิดปัญหาเมื่อโหลดไลบรารีหรือตัวถอดรหัส (%s)"
 
-#: ../src/backend/bacon-video-widget-xine.c:1355
+#: ../src/backend/bacon-video-widget-xine.c:1366
 msgid "This file is encrypted and cannot be played back."
 msgstr "แฟ้มถูกเข้ารหัสและไม่สามารถเล่นได้"
 
-#: ../src/backend/bacon-video-widget-xine.c:1360
+#: ../src/backend/bacon-video-widget-xine.c:1371
 msgid "For security reasons, this movie can not be played back."
 msgstr "ด้วยเหตุผลด้านความปลอดภัย ไม่สามารถเล่นภาพยนตร์นี้ได้"
 
-#: ../src/backend/bacon-video-widget-xine.c:1365
+#: ../src/backend/bacon-video-widget-xine.c:1376
 msgid "The audio device is busy. Is another application using it?"
 msgstr "อุปกรณ์เสียงถูกใช้งานอยู่"
 
-#: ../src/backend/bacon-video-widget-xine.c:1370
+#: ../src/backend/bacon-video-widget-xine.c:1381
 msgid "You are not allowed to open this file."
 msgstr "คุณไม่มีสิทธิ์เปิดแฟ้มนี้"
 
-#: ../src/backend/bacon-video-widget-xine.c:1372
+#: ../src/backend/bacon-video-widget-xine.c:1383
 msgid "The server refused access to this file or stream."
 msgstr "เซิร์ฟเวอร์ปฎิเสธการเข้าถึงแฟ้มหรือสตรีมนี้"
 
-#: ../src/backend/bacon-video-widget-xine.c:1381
+#: ../src/backend/bacon-video-widget-xine.c:1387
 msgid "The file you tried to play is an empty file."
 msgstr "แฟ้มที่คุณพยายามจะเล่นเป็นแฟ้มเปล่า"
 
-#: ../src/backend/bacon-video-widget-xine.c:1545
+#: ../src/backend/bacon-video-widget-xine.c:1551
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "ไม่มีปลั๊กอินสำหรับดำเนินการกับตำแหน่งที่ตั้งของภาพยนตร์นี้"
 
-#: ../src/backend/bacon-video-widget-xine.c:1549
+#: ../src/backend/bacon-video-widget-xine.c:1555
 msgid "There is no plugin to handle this movie."
 msgstr "ไม่มีปลั๊กอินสำหรับภาพยนตร์นี้"
 
-#: ../src/backend/bacon-video-widget-xine.c:1553
+#: ../src/backend/bacon-video-widget-xine.c:1559
 msgid "This movie is broken and can not be played further."
 msgstr "ภาพยนตร์นี้มีปัญหาและไม่สามารถเล่นต่อได้"
 
-#: ../src/backend/bacon-video-widget-xine.c:1557
+#: ../src/backend/bacon-video-widget-xine.c:1563
 msgid "This location is not a valid one."
 msgstr "ตำแหน่งไม่ถูกต้อง"
 
-#: ../src/backend/bacon-video-widget-xine.c:1561
+#: ../src/backend/bacon-video-widget-xine.c:1567
 msgid "This movie could not be opened."
 msgstr "ไม่สามารถเปิดภาพยนตร์ได้"
 
-#: ../src/backend/bacon-video-widget-xine.c:1565
+#: ../src/backend/bacon-video-widget-xine.c:1571
 msgid "Generic Error."
 msgstr "ผิดพลาด"
 
-#: ../src/backend/bacon-video-widget-xine.c:2263
+#: ../src/backend/bacon-video-widget-xine.c:2314
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr "ไม่สนับสนุนการอ่านรหัส '%s' คุณอาจต้องติดตั้งปลั๊กอินเพิ่มเติม เพื่อจะเล่นภาพยนตร์บางชนิดได้"
 
-#: ../src/backend/bacon-video-widget-xine.c:2267
+#: ../src/backend/bacon-video-widget-xine.c:2318
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr "ไม่มีตัวถอดรหัสเสียง '%s' คุณต้องติดตั้งเองต่างหาก"
 
-#: ../src/backend/bacon-video-widget-xine.c:2283
+#: ../src/backend/bacon-video-widget-xine.c:2334
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "แฟ้มนี้เป็นแฟ้มเสียง และไม่มีเอาต์พุตสำหรับเสียงออก"
 
-#: ../src/backend/bacon-video-widget-xine.c:3756
-#: ../src/backend/bacon-video-widget-xine.c:3803
-#: ../src/backend/bacon-video-widget-xine.c:3825
+#: ../src/backend/bacon-video-widget-xine.c:3829
+#: ../src/backend/bacon-video-widget-xine.c:3876
+#: ../src/backend/bacon-video-widget-xine.c:3898
 #, c-format
 msgid "Language %d"
 msgstr "ภาษา %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3914
+#: ../src/backend/bacon-video-widget-xine.c:3987
 msgid "No video to capture."
 msgstr "ไม่มีภาพยนตร์สำหรับจับหน้าจอ"
 
-#: ../src/backend/bacon-video-widget-xine.c:3922
+#: ../src/backend/bacon-video-widget-xine.c:3995
 msgid "Video codec is not handled."
 msgstr "ตัวถอดรหัสภาพยนตร์ไม่ถูกต้อง"
 
-#: ../src/backend/bacon-video-widget-xine.c:3933
+#: ../src/backend/bacon-video-widget-xine.c:4006
 msgid "Movie is not playing."
 msgstr "ภาพยนตร์ไม่ได้เล่นอยู่"
 
@@ -2073,6 +2073,14 @@ msgstr "Totem ไม่สามารถเล่น '%s'"
 #, c-format
 msgid "Opening %s"
 msgstr "กำลังเปิด %s"
+
+#. translators: this is:
+#. * Open With ApplicationName
+#. * as in nautilus' right-click menu
+#: ../browser-plugin/totem-plugin-viewer.c:1047
+#, c-format
+msgid "_Open with \"%s\""
+msgstr "เ_ปิดด้วย \"%s\""
 
 #: ../browser-plugin/totem-plugin-viewer.c:1091
 #, c-format
