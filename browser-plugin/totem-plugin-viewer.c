@@ -1044,7 +1044,7 @@ totem_embedded_update_menu (TotemEmbedded *emb)
 	/* translators: this is:
 	 * Open With ApplicationName
 	 * as in nautilus' right-click menu */
-	label = g_strdup_printf ("_Open with \"%s\"", emb->app->name);
+	label = g_strdup_printf (_("_Open with \"%s\""), emb->app->name);
 	item = gtk_image_menu_item_new_with_mnemonic (label);
 	g_free (label);
 	image = gtk_image_new_from_stock (GTK_STOCK_OPEN, GTK_ICON_SIZE_MENU);
