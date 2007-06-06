@@ -67,6 +67,7 @@ static const totemPluginMimeEntry kMimeTypes[] = {
 	{ "video/x-wmv", "wmv", "video/x-ms-wmv" },
 	{ "video/x-ms-wvx", "wmv", "video/x-ms-wmv" },
 	{ "video/x-ms-wm", "wmv", "video/x-ms-wmv" },
+	{ "application/x-ms-wms", "wms", "video/x-ms-wmv" }
 };
 
 void*
