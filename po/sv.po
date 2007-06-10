@@ -1,5 +1,5 @@
 # Swedish messages for totem.
-# Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+# Copyright (C) 2002-2007 Free Software Foundation, Inc.
 # Daniel Nylander <po@danielnylander.se>, 2006, 2007.
 # Christian Rose <menthos@menthos.com>, 2002, 2003, 2004, 2005.
 #
@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-03 23:21+0200\n"
-"PO-Revision-Date: 2007-05-27 10:45+0100\n"
+"POT-Creation-Date: 2007-06-10 15:07+0200\n"
+"PO-Revision-Date: 2007-06-10 15:07+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -323,8 +323,8 @@ msgid "Time:"
 msgstr "Tid:"
 
 #. Title
-#: ../data/totem.glade.h:42 ../src/totem.c:958 ../src/totem.c:3398
-#: ../src/totem.c:3425
+#: ../data/totem.glade.h:42 ../src/totem.c:958 ../src/totem.c:3425
+#: ../src/totem.c:3452
 msgid "Totem Movie Player"
 msgstr "Filmuppspelaren Totem"
 
@@ -1461,7 +1461,7 @@ msgstr ""
 msgid "Totem was not able to play this disc."
 msgstr "Totem kunde inte spela upp den här skivan."
 
-#: ../src/totem.c:499 ../src/totem.c:3246
+#: ../src/totem.c:499 ../src/totem.c:3273
 #: ../browser-plugin/totem-plugin-viewer.c:1427
 msgid "No reason."
 msgstr "Ingen orsak."
@@ -1495,49 +1495,49 @@ msgstr "Totem kunde inte visa hjälpinnehållet."
 msgid "An error occurred"
 msgstr "Ett fel inträffade"
 
-#: ../src/totem.c:3038 ../src/totem.c:3041
+#: ../src/totem.c:3065 ../src/totem.c:3068
 msgid "Play / Pause"
 msgstr "Spela upp / Gör paus"
 
-#: ../src/totem.c:3050 ../src/totem.c:3053
+#: ../src/totem.c:3077 ../src/totem.c:3080
 msgid "Previous Chapter/Movie"
 msgstr "Föregående kapitel/film"
 
-#: ../src/totem.c:3061 ../src/totem.c:3064
+#: ../src/totem.c:3088 ../src/totem.c:3091
 msgid "Next Chapter/Movie"
 msgstr "Nästa kapitel/film"
 
-#: ../src/totem.c:3246
+#: ../src/totem.c:3273
 msgid "Totem could not startup."
 msgstr "Totem kunde inte starta."
 
-#: ../src/totem.c:3399
+#: ../src/totem.c:3426
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Kunde inte initiera de trådsäkra biblioteken."
 
-#: ../src/totem.c:3399
+#: ../src/totem.c:3426
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Kontrollera din systeminstallation. Totem kommer nu att avslutas."
 
 #. Handle command line arguments
-#: ../src/totem.c:3406
+#: ../src/totem.c:3433
 msgid "- Play movies and songs"
 msgstr "- Spela upp filmer och låtar"
 
-#: ../src/totem.c:3414
+#: ../src/totem.c:3441
 msgid "Totem could not parse the command-line options"
 msgstr "Totem kunde inte tolka kommandoradsflaggorna"
 
-#: ../src/totem.c:3433
+#: ../src/totem.c:3460
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem kunde inte initiera konfigurationsmotorn."
 
-#: ../src/totem.c:3433
+#: ../src/totem.c:3460
 msgid "Make sure that GNOME is properly installed."
 msgstr "Försäkra dig om att GNOME är korrekt installerat."
 
 #. Main window
-#: ../src/totem.c:3459
+#: ../src/totem.c:3486
 msgid "main window"
 msgstr "huvudfönster"
 
@@ -1928,15 +1928,15 @@ msgstr "Misslyckades med att montera %s"
 msgid "Failed to find mountpoint for %s"
 msgstr "Misslyckades med att hitta monteringspunkten för %s"
 
-#: ../src/plparse/totem-disc.c:838
+#: ../src/plparse/totem-disc.c:874
 msgid "Audio CD"
 msgstr "Ljud-cd"
 
-#: ../src/plparse/totem-disc.c:840
+#: ../src/plparse/totem-disc.c:876
 msgid "Video CD"
 msgstr "Video-cd"
 
-#: ../src/plparse/totem-disc.c:842
+#: ../src/plparse/totem-disc.c:878
 msgid "DVD"
 msgstr "DVD"
 
@@ -1962,7 +1962,7 @@ msgstr "Insticksmodul"
 msgid "Enabled"
 msgstr "Aktiverad"
 
-#: ../src/plugins/totem-plugin-manager.c:484
+#: ../src/plugins/totem-plugin-manager.c:491
 msgid "Plugins Manager"
 msgstr "Hantera insticksmoduler"
 
@@ -2131,6 +2131,14 @@ msgstr "Totem kunde inte spela upp \"%s\""
 #, c-format
 msgid "Opening %s"
 msgstr "Öppnar %s"
+
+#. translators: this is:
+#. * Open With ApplicationName
+#. * as in nautilus' right-click menu
+#: ../browser-plugin/totem-plugin-viewer.c:1046
+#, c-format
+msgid "_Open with \"%s\""
+msgstr "_Öppna med \"%s\""
 
 #: ../browser-plugin/totem-plugin-viewer.c:1090
 #, c-format
