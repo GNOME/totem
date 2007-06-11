@@ -36,6 +36,7 @@
 #include "totem-playlist.h"
 #include "bacon-message-connection.h"
 #include "bacon-video-widget.h"
+#include "totem-open-location.h"
 
 #define totem_signal_block_by_data(obj, data) (g_signal_handlers_block_matched (obj, G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, data))
 #define totem_signal_unblock_by_data(obj, data) (g_signal_handlers_unblock_matched (obj, G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, data))
@@ -171,6 +172,7 @@ struct TotemObject {
 	BaconMessageConnection *conn;
 	TotemStates state;
 	gboolean cursor_shown;
+	TotemOpenLocation *open_location;
 };
 
 GtkWidget *totem_volume_create (void);

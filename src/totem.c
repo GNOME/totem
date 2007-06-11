@@ -102,7 +102,6 @@ static void playlist_changed_cb (GtkWidget *playlist, Totem *totem);
 static void play_pause_set_label (Totem *totem, TotemStates state);
 static gboolean on_video_motion_notify_event (GtkWidget *widget, GdkEventMotion *event, Totem *totem);
 static void popup_timeout_remove (Totem *totem);
-static gint totem_compare_recent_stream_items (GtkRecentInfo *a, GtkRecentInfo *b);
 
 static void
 long_action (void)
@@ -464,8 +463,7 @@ totem_action_load_media (Totem *totem, TotemDiscMediaType type, const char *devi
 	}
 
 	mrls = bacon_video_widget_get_mrls (totem->bvw, type, device);
-	if (mrls == NULL)
-	{
+	if (mrls == NULL) {
 		msg = g_strdup_printf (_("Totem could not play this media (%s) although a plugin is present to handle it."), _(totem_cd_get_human_readable_name (type)));
 		totem_action_error (msg, _("You might want to check that a disc is present in the drive and that it is correctly configured."), totem);
 		g_free (msg);
@@ -678,157 +676,68 @@ totem_action_open (Totem *totem)
 	totem_action_open_dialog (totem, NULL, TRUE);
 }
 
-static gint
-totem_compare_recent_stream_items (GtkRecentInfo *a, GtkRecentInfo *b)
+static void
+totem_open_location_destroy (Totem *totem)
 {
-	gboolean has_totem_a, has_totem_b;
-
-	has_totem_a = gtk_recent_info_has_group (a, "TotemStreams");
-	has_totem_b = gtk_recent_info_has_group (b, "TotemStreams");
-
-	if (has_totem_a && has_totem_b) {
-		time_t time_a, time_b;
-
-		time_a = gtk_recent_info_get_modified (a);
-		time_b = gtk_recent_info_get_modified (b);
-
-		return (time_b - time_a);
-	} else if (has_totem_a) {
-		return -1;
-	} else if (has_totem_b) {
-		return 1;
+	if (totem->open_location != NULL) {
+		g_object_remove_weak_pointer (G_OBJECT (totem->open_location), (gpointer *)&(totem->open_location));
+		gtk_widget_destroy (GTK_WIDGET (totem->open_location));
+		totem->open_location = NULL;
 	}
-
-	return 0;
 }
 
-static char *
-totem_open_location_set_from_clipboard (Totem *totem)
+static void
+totem_open_location_response_cb (GtkDialog *dialog, gint response, Totem *totem)
 {
-	GtkClipboard *clipboard;
-	gchar *clipboard_content;
+	char *uri;
 
-	/* Initialize the clipboard and get its content */
-	clipboard = gtk_clipboard_get_for_display (gtk_widget_get_display (totem->win), GDK_SELECTION_CLIPBOARD);
-	clipboard_content = gtk_clipboard_wait_for_text (clipboard);
+	if (response != GTK_RESPONSE_OK) {
+		totem_open_location_destroy (totem);
+		return;
+	}
 
-	/* Check clipboard for "://". If it exists, return it */
-	if (clipboard_content != NULL && strcmp (clipboard_content, "") != 0)
+	gtk_widget_hide (GTK_WIDGET (dialog));
+
+	/* Open the specified URI */
+	uri = totem_open_location_get_uri (totem->open_location);
+
+	if (uri != NULL)
 	{
-		if (g_strrstr (clipboard_content, "://") != NULL)
-			return clipboard_content;
+		char *mrl;
+		const char *filenames[2];
+
+		filenames[0] = uri;
+		filenames[1] = NULL;
+		totem_action_open_files (totem, (char **) filenames);
+
+		mrl = totem_playlist_get_current_mrl (totem->playlist);
+		totem_action_set_mrl_and_play (totem, mrl);
+		g_free (mrl);
 	}
+ 	g_free (uri);
 
-	g_free (clipboard_content);
-	return NULL;
-}
-
-static gboolean
-totem_open_location_match (GtkEntryCompletion *completion, const gchar *key, GtkTreeIter *iter, gpointer user_data)
-{
-	/* Substring-match key against uri */
-	char *uri, *match;
-
-	g_return_val_if_fail (key != NULL, FALSE);
-	gtk_tree_model_get (user_data, iter, 0, &uri, -1);
-	g_return_val_if_fail (uri != NULL, FALSE);
-	match = strstr (uri, key);
-	g_free (uri);
-
-	return (match != NULL);
+	totem_open_location_destroy (totem);
 }
 
 void
 totem_action_open_location (Totem *totem)
 {
-	GladeXML *glade;
-	char *mrl, *clipboard_location;
-	GtkWidget *dialog, *entry;
-	int response;
-	const char *filenames[2];
-	GtkEntryCompletion *completion;
-	GtkTreeModel *model;
-	GList *recent_items;
-
-	glade = totem_interface_load ("uri.glade", _("Open Location..."),
-			FALSE, GTK_WINDOW (totem->win));
-	if (glade == NULL)
+	if (totem->open_location != NULL) {
+		gtk_window_present (GTK_WINDOW (totem->open_location));
 		return;
-
-	dialog = glade_xml_get_widget (glade, "open_uri_dialog");
-	entry = glade_xml_get_widget (glade, "uri");
-
-	/* Get item from clipboard to fill entry in Open Location... dialog */
-	clipboard_location = totem_open_location_set_from_clipboard (totem);
-	if (clipboard_location != NULL && strcmp (clipboard_location, "") != 0)
-		gtk_entry_set_text (GTK_ENTRY (entry), clipboard_location);
-	g_free (clipboard_location);
-
-	completion = gtk_entry_completion_new();
-	model = GTK_TREE_MODEL (gtk_list_store_new (1, G_TYPE_STRING));
-	gtk_entry_set_completion (GTK_ENTRY (entry), completion);
-
-	/* Add items in Totem's GtkRecentManager to the uri_list GtkEntry's GtkEntryCompletion */
-	recent_items = gtk_recent_manager_get_items (totem->recent_manager);
-
-	if (recent_items != NULL)
-	{
-		GList *p;
-		GtkTreeIter iter;
-
-		recent_items = g_list_sort (recent_items, (GCompareFunc) totem_compare_recent_stream_items);
-
-		for (p = recent_items; p != NULL; p = p->next)
-		{
-			GtkRecentInfo *info = (GtkRecentInfo *) p->data;
-			if (!gtk_recent_info_has_group (info, "TotemStreams")) {
-				gtk_recent_info_unref (info);
-				continue;
-			}
-
-			gtk_list_store_append (GTK_LIST_STORE (model), &iter);
-			gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, gtk_recent_info_get_uri (info), -1);
-			gtk_recent_info_unref (info);
-		}
 	}
 
-	g_list_free (recent_items);
+	totem->open_location = TOTEM_OPEN_LOCATION (totem_open_location_new (totem));
 
-	gtk_entry_completion_set_model (completion, model);
-	gtk_entry_completion_set_text_column (completion, 0);
-	gtk_entry_completion_set_match_func (completion, (GtkEntryCompletionMatchFunc) totem_open_location_match, model, NULL);
+	g_signal_connect (G_OBJECT (totem->open_location), "delete-event",
+			G_CALLBACK (gtk_widget_destroy), NULL);
+	g_signal_connect (G_OBJECT (totem->open_location), "response",
+			G_CALLBACK (totem_open_location_response_cb), totem);
+	g_object_add_weak_pointer (G_OBJECT (totem->open_location), (gpointer *)&(totem->open_location));
 
-	response = gtk_dialog_run (GTK_DIALOG (dialog));
-
-	if (response == GTK_RESPONSE_OK)
-	{
-		char *uri;
-
-		uri = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
-
-		if (uri != NULL && strcmp (uri, "") != 0)
-		{
-			if (g_strrstr (uri, "://") == NULL)
-			{
-				char *tmp;
-				tmp = g_strconcat ("http://", uri, NULL);
-				g_free (uri);
-				uri = tmp;
-			}
-
-			filenames[0] = uri;
-			filenames[1] = NULL;
-			totem_action_open_files (totem, (char **) filenames);
-
-			mrl = totem_playlist_get_current_mrl (totem->playlist);
-			totem_action_set_mrl_and_play (totem, mrl);
-			g_free (mrl);
-		}
-		g_free (uri);
-	}
-
-	gtk_widget_destroy (dialog);
-	g_object_unref (glade);
+	gtk_window_set_transient_for (GTK_WINDOW (totem->open_location),
+			GTK_WINDOW (totem->win));
+	gtk_widget_show (GTK_WIDGET (totem->open_location));
 }
 
 void

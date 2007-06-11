@@ -1,5 +1,25 @@
 2007-06-11  Philip Withnall  <pwithnall@svn.gnome.org>
 
+	* bindings/python/totem.defs:
+	* bindings/python/totem.override:
+	* data/uri.glade:
+	* src/Makefile.am:
+	* src/totem-open-location.c: (totem_open_location_class_init),
+	(totem_open_location_init), (totem_open_location_finalize),
+	(totem_open_location_match), (totem_compare_recent_stream_items),
+	(totem_open_location_get_uri),
+	(totem_open_location_set_from_clipboard),
+	(totem_open_location_new):
+	* src/totem-open-location.h:
+	* src/totem-private.h:
+	* src/totem.c: (totem_action_load_media),
+	(totem_open_location_destroy), (totem_open_location_response_cb),
+	(totem_action_open_location): Move "Open Location" dialog to a
+	separate widget and fix a Python binding compilation error
+	(Closes: #394966, #446412)
+
+2007-06-11  Philip Withnall  <pwithnall@svn.gnome.org>
+
 	* src/Makefile.am: Fix compilation error due to Python bindings
 
 2007-06-11  Philip Withnall  <pwithnall@svn.gnome.org>

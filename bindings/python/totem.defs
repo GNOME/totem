@@ -299,15 +299,6 @@
   )
 )
 
-(define-method action_open_files
-  (of-object "TotemObject")
-  (c-name "totem_action_open_files")
-  (return-type "gboolean")
-  (parameters
-    '("char**" "list")
-  )
-)
-
 (define-method action_toggle_aspect_ratio
   (of-object "TotemObject")
   (c-name "totem_action_toggle_aspect_ratio")

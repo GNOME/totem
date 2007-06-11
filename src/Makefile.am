@@ -97,6 +97,7 @@ totem_SOURCES = 					\
 	totem-screenshot.h		\
 	totem-session.c totem-session.h	\
 	totem-sidebar.c totem-sidebar.h \
+	totem-open-location.c totem-open-location.h \
 	totem-menu.c totem-menu.h	\
 	totem-missing-plugins.c totem-missing-plugins.h \
 	totem-time-label.c totem-time-label.h \

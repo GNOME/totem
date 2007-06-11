@@ -4,8 +4,7 @@
 <glade-interface>
   <widget class="GtkDialog" id="open_uri_dialog">
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Open Location</property>
-    <property name="resizable">False</property>
+    <property name="title" translatable="yes">Open Location...</property>
     <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
@@ -61,11 +60,10 @@
               </widget>
             </child>
             <child>
-              <widget class="GtkButton" id="button1">
+              <widget class="GtkButton" id="open_button">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
-                <property name="has_default">True</property>
                 <property name="label">gtk-open</property>
                 <property name="use_stock">True</property>
                 <property name="response_id">-5</property>

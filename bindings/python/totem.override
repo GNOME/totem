@@ -38,39 +38,6 @@ ignore-glob
   *_get_type
   *_quark
 %%
-override totem_action_open_files kwargs
-static PyObject *
-_wrap_totem_action_open_files (PyGObject *self, PyObject *args, PyObject *kwargs)
-{
-	static char *kwlist[] = { "list", NULL };
-	PyObject *py_list = NULL;
-	char **list;
-	int length, i;
-	gboolean ret = FALSE;
-
-	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O:TotemObject.action_open_files", kwlist,
-				&py_list))
-		return NULL;
-
-	/* Build the string list */
-	length = PySequence_Length (py_list);
-	if (length < 0)
-		return NULL;
-	list = g_new0(char*, length+1);
-	for (i = 0; i < length; i++) {
-		PyObject *o;
-
-		o = PySequence_GetItem (py_list, i);
-		list[i] = PyString_AsString (o);
-		Py_DECREF (o);
-	}
-
-	ret = totem_action_open_files (TOTEM_OBJECT (self->obj), list);
-	g_free (list);
-
-	return PyBool_FromLong((long) ret);
-}
-%%
 override totem_object_plugins_shutdown noargs
 static PyObject *
 _wrap_totem_object_plugins_shutdown (PyGObject *self)
