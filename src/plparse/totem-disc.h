@@ -33,17 +33,19 @@ typedef enum {
   MEDIA_TYPE_VCD,
   MEDIA_TYPE_DVD,
   MEDIA_TYPE_NUM_TYPES
-} MediaType;
+} TotemDiscMediaType;
 
-MediaType	totem_cd_detect_type	(const char *device,
+#define MediaType TotemDiscMediaType
+
+TotemDiscMediaType	totem_cd_detect_type	(const char *device,
 					 GError     **error);
-MediaType	totem_cd_detect_type_with_url (const char  *device,
+TotemDiscMediaType	totem_cd_detect_type_with_url (const char  *device,
 					       char       **url,
 					       GError     **error);
-MediaType	totem_cd_detect_type_from_dir (const char *dir,
+TotemDiscMediaType	totem_cd_detect_type_from_dir (const char *dir,
 					       char      **url, 
 					       GError    **error);
-const char *	totem_cd_get_human_readable_name (MediaType type);
+const char *	totem_cd_get_human_readable_name (TotemDiscMediaType type);
 char *		totem_cd_mrl_from_type (const char *scheme, const char *dir);
 gboolean	totem_cd_has_medium (const char  *device);
 

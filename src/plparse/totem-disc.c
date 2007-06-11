@@ -515,11 +515,11 @@ cd_cache_free (CdCache *cache)
   g_free (cache);
 }
 
-static MediaType
+static TotemDiscMediaType
 cd_cache_disc_is_cdda (CdCache *cache,
 		       GError **error)
 {
-  MediaType type;
+  TotemDiscMediaType type;
 
   /* We can't have audio CDs on disc, yet */
   if (cache->is_media == FALSE)
@@ -619,7 +619,7 @@ cd_cache_file_exists (CdCache *cache, const char *subdir, const char *filename)
   return ret;
 }
 
-static MediaType
+static TotemDiscMediaType
 cd_cache_disc_is_vcd (CdCache *cache,
                       GError **error)
 {
@@ -668,7 +668,7 @@ cd_cache_disc_is_vcd (CdCache *cache,
   return MEDIA_TYPE_DATA;
 }
 
-static MediaType
+static TotemDiscMediaType
 cd_cache_disc_is_dvd (CdCache *cache,
 		      GError **error)
 {
@@ -739,11 +739,11 @@ totem_cd_dir_get_parent (const char *dir)
     return parent;
 }
 
-MediaType
+TotemDiscMediaType
 totem_cd_detect_type_from_dir (const char *dir, char **url, GError **error)
 {
   CdCache *cache;
-  MediaType type;
+  TotemDiscMediaType type;
 
   g_return_val_if_fail (dir != NULL, MEDIA_TYPE_ERROR);
 
@@ -790,13 +790,13 @@ totem_cd_detect_type_from_dir (const char *dir, char **url, GError **error)
   return type;
 }
 
-MediaType
+TotemDiscMediaType
 totem_cd_detect_type_with_url (const char *device,
     			       char      **url,
 			       GError     **error)
 {
   CdCache *cache;
-  MediaType type;
+  TotemDiscMediaType type;
 
   if (url != NULL)
     *url = NULL;
@@ -843,7 +843,7 @@ totem_cd_detect_type_with_url (const char *device,
   return type;
 }
 
-MediaType
+TotemDiscMediaType
 totem_cd_detect_type (const char  *device,
 		      GError     **error)
 {
@@ -866,7 +866,7 @@ totem_cd_has_medium (const char  *device)
 }
 
 const char *
-totem_cd_get_human_readable_name (MediaType type)
+totem_cd_get_human_readable_name (TotemDiscMediaType type)
 {
   switch (type)
   {

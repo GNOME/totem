@@ -43,7 +43,7 @@
 #include "totem-interface.h"
 
 #ifdef ENABLE_PYTHON
-#include "rb-python-module.h"
+#include "totem-python-module.h"
 #endif
 
 #include "totem-plugins-engine.h"
@@ -159,12 +159,10 @@ totem_plugins_engine_load (const gchar *file)
 				     NULL);
 	if (str && strcmp(str, "python") == 0) {
 		info->lang = TOTEM_PLUGIN_LOADER_PY;
-#if 0
 #ifndef ENABLE_PYTHON
-		rb_debug ("Cannot load python extension '%s', Rhythmbox was not "
-					"compiled with python support", file);
+		g_debug ("Cannot load Python extension '%s', Totem was not "
+					"compiled with Python support", file);
 		goto error;
-#endif
 #endif
 	} else {
 		info->lang = TOTEM_PLUGIN_LOADER_C;
@@ -364,7 +362,7 @@ totem_plugins_engine_init (TotemObject *totem)
 
 	if (!g_module_supported ())
 	{
-		g_warning ("rb is not able to initialize the plugins engine.");
+		g_warning ("Totem is not able to initialize the plugins engine.");
 		return FALSE;
 	}
 	totem_plugins = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, (GDestroyNotify)totem_plugin_info_free);
@@ -385,7 +383,7 @@ void
 totem_plugins_engine_garbage_collect (void)
 {
 #ifdef ENABLE_PYTHON
-	rb_python_garbage_collect ();
+	totem_python_garbage_collect ();
 #endif
 }
 
@@ -442,7 +440,7 @@ totem_plugins_engine_shutdown (void)
 	client = NULL;
 
 #ifdef ENABLE_PYTHON
-	rb_python_shutdown ();
+	totem_python_shutdown ();
 #endif
 }
 
@@ -502,12 +500,10 @@ load_plugin_module (TotemPluginInfo *info)
 			g_free (path);
 			break;
 		case TOTEM_PLUGIN_LOADER_PY:
-#if 0
 #ifdef ENABLE_PYTHON
-			info->module = G_TYPE_MODULE (rb_python_module_new (info->file, info->location));
+			info->module = G_TYPE_MODULE (totem_python_module_new (info->file, info->location));
 #else
-			rb_debug ("cannot load plugin %s, python plugin support is disabled", info->location);
-#endif
+			g_debug ("Cannot load plugin %s, Python plugin support is disabled", info->location);
 #endif
 			break;
 	}
@@ -527,7 +523,7 @@ load_plugin_module (TotemPluginInfo *info)
 			break;
 		case TOTEM_PLUGIN_LOADER_PY:
 #ifdef ENABLE_PYTHON
-			info->plugin = TOTEM_PLUGIN (rb_python_module_new_object (TOTEM_PYTHON_MODULE (info->module)));
+			info->plugin = TOTEM_PLUGIN (totem_python_module_new_object (TOTEM_PYTHON_MODULE (info->module)));
 #endif
 			break;
 	}

@@ -139,6 +139,12 @@ totem_LDADD = \
 	$(X_LIBS)			\
 	$(MISSING_PLUGINS_LIBS)
 
+if ENABLE_PYTHON
+totem_LDADD += \
+	$(PYTHON_LIBS)			\
+	$(top_builddir)/bindings/python/totem.la
+endif
+
 # Totem video thumbnailer
 
 totem_video_thumbnailer_SOURCES =	\

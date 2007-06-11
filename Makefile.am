@@ -1,4 +1,4 @@
-SUBDIRS = po data lib src help
+SUBDIRS = bindings po data lib src help
 
 if ENABLE_BROWSER_PLUGINS
 SUBDIRS += browser-plugin

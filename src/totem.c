@@ -449,7 +449,7 @@ totem_action_open_dialog (Totem *totem, const char *path, gboolean play)
 }
 
 static gboolean
-totem_action_load_media (Totem *totem, MediaType type, const char *device)
+totem_action_load_media (Totem *totem, TotemDiscMediaType type, const char *device)
 {
 	char **mrls;
 	char *msg;
@@ -481,7 +481,7 @@ totem_action_load_media (Totem *totem, MediaType type, const char *device)
 static gboolean
 totem_action_load_media_device (Totem *totem, const char *device)
 {
-	MediaType type;
+	TotemDiscMediaType type;
 	GError *error = NULL;
 	char *device_path, *url;
 	gboolean retval;
@@ -536,7 +536,7 @@ totem_action_play_media_device (Totem *totem, const char *device)
 }
 
 void
-totem_action_play_media (Totem *totem, MediaType type, const char *device)
+totem_action_play_media (Totem *totem, TotemDiscMediaType type, const char *device)
 {
 	char *mrl;
 

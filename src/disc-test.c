@@ -30,7 +30,7 @@ gint
 main (gint   argc,
       gchar *argv[])
 {
-  MediaType type;
+  TotemDiscMediaType type;
   GError *error = NULL;
   const char *type_s = NULL;
   char *url = NULL;

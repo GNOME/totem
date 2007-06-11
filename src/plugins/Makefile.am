@@ -35,8 +35,32 @@ libtotemmodule_la_CFLAGS = \
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
 	$(AM_CFLAGS)		\
-	-I$(top_srcdir)/src
+	-I$(top_srcdir) 				\
+	-I$(top_srcdir)/lib 				\
+	-I$(top_builddir)/lib 				\
+	-I$(top_srcdir)/src				\
+	-I$(top_srcdir)/src/backend			\
+	-I$(top_srcdir)/src/plparse			\
+	-I$(top_srcdir)/src/plugins
 
 libtotemmodule_la_LDFLAGS = \
 	$(AM_LDFLAGS)			
 
+if ENABLE_PYTHON
+libtotemmodule_la_LIBADD = \
+	$(EXTRA_GNOME_LIBS)	\
+	$(PYTHON_LIBS)		\
+	$(PYTHON_EXTRA_LIBS)	\
+	$(PYGTK_LIBS)
+
+libtotemmodule_la_SOURCES += \
+	totem-python-module.c		\
+	totem-python-module.h		\
+	totem-python-plugin.c		\
+	totem-python-plugin.h
+
+libtotemmodule_la_CFLAGS += \
+	$(NO_STRICT_ALIASING_CFLAGS)	\
+	$(PYGTK_CFLAGS)			\
+	$(PYTHON_CFLAGS)
+endif

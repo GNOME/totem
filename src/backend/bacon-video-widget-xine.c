@@ -3267,7 +3267,7 @@ bacon_video_widget_is_seekable (BaconVideoWidget *bvw)
 }
 
 gboolean
-bacon_video_widget_can_play (BaconVideoWidget *bvw, MediaType type)
+bacon_video_widget_can_play (BaconVideoWidget *bvw, TotemDiscMediaType type)
 {
 	switch (type)
 	{
@@ -3285,7 +3285,7 @@ bacon_video_widget_can_play (BaconVideoWidget *bvw, MediaType type)
 }
 
 char **
-bacon_video_widget_get_mrls (BaconVideoWidget *bvw, MediaType type,
+bacon_video_widget_get_mrls (BaconVideoWidget *bvw, TotemDiscMediaType type,
 			     const char *device)
 {
 	const char *plugin_id, *entry_name;

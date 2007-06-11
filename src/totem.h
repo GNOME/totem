@@ -30,7 +30,6 @@
 
 #include <glib-object.h>
 #include <gtk/gtk.h>
-
 #include "plparse/totem-disc.h"
 
 #define TOTEM_GCONF_PREFIX "/apps/totem"
@@ -68,6 +67,16 @@ typedef enum {
 	TOTEM_REMOTE_COMMAND_PLAY_DVD,
 	TOTEM_REMOTE_COMMAND_MUTE
 } TotemRemoteCommand;
+
+GType totem_remote_command_get_type	(void);
+GQuark totem_remote_command_quark	(void);
+#define TOTEM_TYPE_REMOTE_COMMAND	(totem_remote_command_get_type())
+#define TOTEM_REMOTE_COMMAND		totem_remote_command_quark ()
+
+GType totem_disc_media_type_get_type	(void);
+GQuark totem_disc_media_type_quark	(void);
+#define TOTEM_TYPE_DISC_MEDIA_TYPE	(totem_disc_media_type_get_type())
+#define TOTEM_DISC_MEDIA_TYPE		totem_disc_media_type_quark ()
 
 #define SHOW_PLAYING_NO_TRACKS "NONE"
 
@@ -124,7 +133,7 @@ gboolean totem_action_set_mrl_with_warning	(Totem *totem,
 						 gboolean warn);
 
 void	totem_action_play_media			(Totem *totem,
-						 MediaType type,
+						 TotemDiscMediaType type,
 						 const char *device);
 
 void	totem_action_toggle_aspect_ratio	(Totem *totem);

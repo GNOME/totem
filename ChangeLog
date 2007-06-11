@@ -1,3 +1,70 @@
+2007-06-11  Philip Withnall  <pwithnall@svn.gnome.org>
+
+	* Makefile.am:
+	* bindings/Makefile.am:
+	* bindings/python/Makefile.am:
+	* bindings/python/override_common.c: (_helper_wrap_gobject_glist),
+	(_helper_wrap_pointer_glist), (_helper_wrap_boxed_glist),
+	(_helper_wrap_string_glist), (_helper_wrap_boxed_gptrarray),
+	(_helper_unwrap_pointer_pylist), (_helper_unwrap_string_pylist):
+	* bindings/python/override_common.h:
+	* bindings/python/totem.defs:
+	* bindings/python/totem.override:
+	* bindings/vala/Makefile.am:
+	* bindings/vala/totem.deps:
+	* bindings/vala/totem.vala:
+	* configure.in:
+	* py-compile:
+	* src/Makefile.am:
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_can_play), (bacon_video_widget_get_mrls):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_can_play), (bacon_video_widget_get_mrls):
+	* src/backend/bacon-video-widget.h:
+	* src/disc-test.c: (main):
+	* src/plparse/totem-disc.c: (cd_cache_disc_is_cdda),
+	(totem_cd_detect_type_from_dir), (totem_cd_detect_type_with_url),
+	(totem_cd_get_human_readable_name):
+	* src/plparse/totem-disc.h:
+	* src/plparse/totem-pl-parser-media.c:
+	(totem_pl_parser_add_directory), (totem_pl_parser_add_block):
+	* src/plugins/Makefile.am:
+	* src/plugins/sample-python/Makefile.am:
+	* src/plugins/sample-python/sample-python.py:
+	* src/plugins/sample-python/sample-python.totem-plugin.in:
+	* src/plugins/sample-vala/Makefile.am:
+	* src/plugins/sample-vala/sample-vala.totem-plugin.in:
+	* src/plugins/sample-vala/totem-sample-vala-plugin.vala:
+	* src/plugins/totem-plugin.h:
+	* src/plugins/totem-plugins-engine.c: (totem_plugins_engine_load),
+	(totem_plugins_engine_init),
+	(totem_plugins_engine_garbage_collect),
+	(totem_plugins_engine_shutdown), (load_plugin_module):
+	* src/plugins/totem-python-module.c:
+	(pyg_value_g_value_as_pyobject), (pyg_value_g_value_from_pyobject),
+	(totem_python_module_init_python), (totem_python_module_load),
+	(totem_python_module_unload), (totem_python_module_new_object),
+	(totem_python_module_init), (totem_python_module_finalize),
+	(totem_python_module_get_property),
+	(totem_python_module_set_property),
+	(totem_python_module_class_init), (totem_python_module_new),
+	(run_gc), (totem_python_garbage_collect), (finalise_collect_cb),
+	(totem_python_shutdown):
+	* src/plugins/totem-python-module.h:
+	* src/plugins/totem-python-plugin.c: (call_python_method),
+	(check_py_object_is_gtk_widget), (impl_deactivate),
+	(impl_activate), (impl_create_configure_dialog),
+	(impl_is_configurable), (totem_python_object_init),
+	(totem_python_object_finalize), (totem_python_object_class_init),
+	(totem_python_object_get_type):
+	* src/plugins/totem-python-plugin.h:
+	* src/totem-object.c: (totem_remote_command_quark),
+	(totem_remote_command_get_type), (totem_disc_media_type_quark),
+	(totem_disc_media_type_get_type):
+	* src/totem.c: (totem_action_load_media),
+	(totem_action_load_media_device), (totem_action_play_media):
+	* src/totem.h: Add support for Python and Vala plugins (Closes: #439557)
+
 2007-06-11  Bastien Nocera  <hadess@hadess.net>
 
 	* src/Makefile.am: Patch from <fta+bugzilla@sofaraway.org> to fix

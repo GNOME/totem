@@ -277,3 +277,91 @@ totem_metadata_updated (TotemObject *totem,
 		       album);
 }
 
+GQuark
+totem_remote_command_quark (void)
+{
+	static GQuark quark = 0;
+	if (!quark)
+		quark = g_quark_from_static_string ("totem_remote_command");
+
+	return quark;
+}
+
+/* This should really be standard. */
+#define ENUM_ENTRY(NAME, DESC) { NAME, "" #NAME "", DESC }
+
+GType
+totem_remote_command_get_type (void)
+{
+	static GType etype = 0;
+
+	if (etype == 0)	{
+		static const GEnumValue values[] = {
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_UNKNOWN, "Unknown command"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_PLAY, "Play"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_PAUSE, "Pause"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_PLAYPAUSE, "Play or pause"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_NEXT, "Next file"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_PREVIOUS, "Previous file"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_SEEK_FORWARD, "Seek forward"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_SEEK_BACKWARD, "Seek backward"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_VOLUME_UP, "Volume up"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_VOLUME_DOWN, "Volume down"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_FULLSCREEN, "Fullscreen"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_QUIT, "Quit"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_ENQUEUE, "Enqueue"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_REPLACE, "Replace"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_SHOW, "Show"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS, "Toggle controls"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_SHOW_PLAYING, "Show playing"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_SHOW_VOLUME, "Show volume"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_UP, "Up"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_DOWN, "Down"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_LEFT, "Left"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_RIGHT, "Right"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_SELECT, "Select"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_DVD_MENU, "DVD menu"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_ZOOM_UP, "Zoom up"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_ZOOM_DOWN, "Zoom down"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_EJECT, "Eject"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_PLAY_DVD, "Play DVD"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_MUTE, "Mute"),
+			{ 0, 0, 0 }
+		};
+
+		etype = g_enum_register_static ("TotemRemoteCommand", values);
+	}
+
+	return etype;
+}
+
+GQuark
+totem_disc_media_type_quark (void)
+{
+	static GQuark quark = 0;
+	if (!quark)
+		quark = g_quark_from_static_string ("totem_disc_media_type");
+
+	return quark;
+}
+
+GType
+totem_disc_media_type_get_type (void)
+{
+	static GType etype = 0;
+
+	if (etype == 0)	{
+		static const GEnumValue values[] = {
+			ENUM_ENTRY (MEDIA_TYPE_ERROR, "Media type error"),
+			ENUM_ENTRY (MEDIA_TYPE_DATA, "Data disc"),
+			ENUM_ENTRY (MEDIA_TYPE_CDDA, "CDDA disc"),
+			ENUM_ENTRY (MEDIA_TYPE_VCD, "VCD"),
+			ENUM_ENTRY (MEDIA_TYPE_DVD, "DVD"),
+			{ 0, 0, 0 }
+		};
+
+		etype = g_enum_register_static ("TotemDiscMediaType", values);
+	}
+
+	return etype;
+}

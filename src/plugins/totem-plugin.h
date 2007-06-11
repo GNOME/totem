@@ -83,9 +83,10 @@ typedef enum
 	TOTEM_PLUGIN_ERROR_ACTIVATION,
 } TotemPluginError;
 
-#define TOTEM_PLUGIN_ERROR (totem_plugin_error_quark ())
-
-GQuark totem_plugin_error_quark (void);
+GType totem_plugin_error_get_type	(void);
+GQuark totem_plugin_error_quark 	(void);
+#define TOTEM_TYPE_PLUGIN_ERROR		(totem_remote_command_get_type())
+#define TOTEM_PLUGIN_ERROR		(totem_plugin_error_quark ())
 
 /*
  * Public methods

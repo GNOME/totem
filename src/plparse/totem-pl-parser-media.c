@@ -188,7 +188,7 @@ TotemPlParserResult
 totem_pl_parser_add_directory (TotemPlParser *parser, const char *url,
 			       const char *base, gpointer data)
 {
-	MediaType type;
+	TotemDiscMediaType type;
 	GList *list, *l;
 	GnomeVFSResult res;
 	char *media_url;
@@ -250,7 +250,7 @@ TotemPlParserResult
 totem_pl_parser_add_block (TotemPlParser *parser, const char *url,
 			   const char *base, gpointer data)
 {
-	MediaType type;
+	TotemDiscMediaType type;
 	char *media_url;
 	GError *err = NULL;
 

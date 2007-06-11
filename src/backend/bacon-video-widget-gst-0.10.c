@@ -3893,7 +3893,7 @@ done:
 }
 
 gboolean
-bacon_video_widget_can_play (BaconVideoWidget * bvw, MediaType type)
+bacon_video_widget_can_play (BaconVideoWidget * bvw, TotemDiscMediaType type)
 {
   gboolean res;
 
@@ -3917,7 +3917,7 @@ bacon_video_widget_can_play (BaconVideoWidget * bvw, MediaType type)
 }
 
 gchar **
-bacon_video_widget_get_mrls (BaconVideoWidget * bvw, MediaType type,
+bacon_video_widget_get_mrls (BaconVideoWidget * bvw, TotemDiscMediaType type,
 			     const char *device)
 {
   gchar **mrls;
