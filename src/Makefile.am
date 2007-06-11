@@ -142,7 +142,7 @@ totem_LDADD = \
 if ENABLE_PYTHON
 totem_LDADD += \
 	$(PYTHON_LIBS)			\
-	$(top_builddir)/bindings/python/totem.la
+	$(top_builddir)/bindings/python/totem-python.la
 endif
 
 # Totem video thumbnailer
