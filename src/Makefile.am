@@ -204,6 +204,7 @@ libtotem_properties_page_la_LDFLAGS = \
 libtotem_properties_page_la_LIBADD =				\
 	backend/libbaconvideowidget.la				\
 	plugins/properties/libbaconvideowidgetproperties.la	\
+	libtotem_player.la					\
 	$(EXTRA_GNOME_LIBS)					\
 	$(NAUTILUS_LIBS)					\
 	$(NVTV_LIBS)						\
