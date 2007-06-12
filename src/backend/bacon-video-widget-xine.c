@@ -1264,10 +1264,10 @@ bacon_video_widget_idle_signal (BaconVideoWidget *bvw)
 				0, data->msg);
 		break;
 	case EOS_ASYNC:
+		bacon_video_widget_reconfigure_tick (bvw, FALSE);
 		g_signal_emit (G_OBJECT (bvw),
 				bvw_table_signals[EOS], 0, NULL);
 		g_object_notify (G_OBJECT (bvw), "seekable");
-		bacon_video_widget_reconfigure_tick (bvw, FALSE);
 		break;
 	case CHANNELS_CHANGE_ASYNC:
 		g_signal_emit (G_OBJECT (bvw),

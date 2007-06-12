@@ -1,3 +1,12 @@
+2007-06-12  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: Fix distcheck by adding the test python and vala
+	plugins to the allowed plugins
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_idle_signal): Fix the second file played in
+	a playlist not having any ticks (current time not updated)
+	(Closes: #445577)
+
 2007-06-12  Philip Withnall  <pwithnall@svn.gnome.org>
 
 	* src/totem-open-location.c: (totem_compare_recent_stream_items),
