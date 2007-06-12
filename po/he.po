@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.he\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-13 22:42+0100\n"
+"POT-Creation-Date: 2007-06-12 03:17+0100\n"
 "PO-Revision-Date: 2005-08-05 01:20+0300\n"
 "Last-Translator: Reuven Gonen <linxspider@yahoo.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -31,7 +31,7 @@ msgstr "הזז למעלה"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../data/playlist.glade.h:4 ../src/totem-playlist.c:904
+#: ../data/playlist.glade.h:4 ../src/totem-playlist.c:903
 #: ../src/totem-sidebar.c:105
 msgid "Playlist"
 msgstr "רשימת שמע"
@@ -69,12 +69,14 @@ msgid "Site:"
 msgstr "אתר:"
 
 #. Channels
-#: ../data/properties.glade.h:1 ../src/bacon-video-widget-properties.c:170
+#: ../data/properties.glade.h:1
+#: ../src/plugins/properties/bacon-video-widget-properties.c:171
 msgid "0 Channels"
 msgstr "0 ערוצים"
 
 #. Sample rate
-#: ../data/properties.glade.h:2 ../src/bacon-video-widget-properties.c:168
+#: ../data/properties.glade.h:2
+#: ../src/plugins/properties/bacon-video-widget-properties.c:169
 msgid "0 Hz"
 msgstr "0 Hz"
 
@@ -87,8 +89,8 @@ msgid "0 kbps"
 msgstr "0 ק\"ב לשנייה"
 
 #. 0 seconds
-#: ../data/properties.glade.h:5 ../data/skip_to.glade.h:1
-#: ../src/backend/video-utils.c:270
+#: ../data/properties.glade.h:5 ../src/backend/video-utils.c:270
+#: ../src/plugins/skipto/skip_to.glade.h:1
 msgid "0 seconds"
 msgstr "0 שניות"
 
@@ -105,7 +107,7 @@ msgid "Artist:"
 msgstr "אמן:"
 
 #: ../data/properties.glade.h:9 ../data/totem.glade.h:13
-#: ../src/totem-properties-view.c:90
+#: ../src/totem-properties-view.c:91
 msgid "Audio"
 msgstr "שמע"
 
@@ -140,20 +142,22 @@ msgstr "כללי"
 #. Dimensions
 #. Video Codec
 #. Audio Codec
-#: ../data/properties.glade.h:17 ../src/bacon-video-widget-properties.c:153
-#: ../src/bacon-video-widget-properties.c:155
-#: ../src/bacon-video-widget-properties.c:158
-#: ../src/bacon-video-widget-properties.c:161
-#: ../src/bacon-video-widget-properties.c:164
-#: ../src/bacon-video-widget-properties.c:166
-#: ../src/bacon-video-widget-properties.c:232
-#: ../src/bacon-video-widget-properties.c:234
-#: ../src/bacon-video-widget-properties.c:251
-#: ../src/bacon-video-widget-properties.c:254
+#: ../data/properties.glade.h:17
+#: ../src/plugins/properties/bacon-video-widget-properties.c:154
+#: ../src/plugins/properties/bacon-video-widget-properties.c:156
+#: ../src/plugins/properties/bacon-video-widget-properties.c:159
+#: ../src/plugins/properties/bacon-video-widget-properties.c:162
+#: ../src/plugins/properties/bacon-video-widget-properties.c:165
+#: ../src/plugins/properties/bacon-video-widget-properties.c:167
+#: ../src/plugins/properties/bacon-video-widget-properties.c:235
+#: ../src/plugins/properties/bacon-video-widget-properties.c:237
+#: ../src/plugins/properties/bacon-video-widget-properties.c:254
+#: ../src/plugins/properties/bacon-video-widget-properties.c:257
 msgid "N/A"
 msgstr "לא זמין"
 
-#: ../data/properties.glade.h:18 ../src/totem-sidebar.c:108
+#: ../data/properties.glade.h:18
+#: ../src/plugins/properties/totem-movie-properties.c:169
 msgid "Properties"
 msgstr "מאפיינים"
 
@@ -169,32 +173,21 @@ msgstr "כותרת:"
 #. Artist
 #. Album
 #. Year
-#: ../data/properties.glade.h:21 ../src/bacon-video-widget-properties.c:142
-#: ../src/bacon-video-widget-properties.c:144
-#: ../src/bacon-video-widget-properties.c:146
-#: ../src/bacon-video-widget-properties.c:148
+#: ../data/properties.glade.h:21
+#: ../src/plugins/properties/bacon-video-widget-properties.c:143
+#: ../src/plugins/properties/bacon-video-widget-properties.c:145
+#: ../src/plugins/properties/bacon-video-widget-properties.c:147
+#: ../src/plugins/properties/bacon-video-widget-properties.c:149
 msgid "Unknown"
 msgstr "לא ידוע"
 
-#: ../data/properties.glade.h:22 ../src/totem-properties-view.c:86
+#: ../data/properties.glade.h:22 ../src/totem-properties-view.c:87
 msgid "Video"
 msgstr "וידאו"
 
 #: ../data/properties.glade.h:23
 msgid "Year:"
 msgstr "שנה:"
-
-#: ../data/skip_to.glade.h:2 ../src/totem-skipto.c:162
-msgid "Skip to"
-msgstr "דלג אל"
-
-#: ../data/skip_to.glade.h:3
-msgid "_Skip to:"
-msgstr "_דלג אל:"
-
-#: ../data/skip_to.glade.h:4
-msgid "seconds"
-msgstr "שניות"
 
 #: ../data/totem.desktop.in.in.in.h:1
 msgid "Movie Player"
@@ -329,8 +322,8 @@ msgid "Time:"
 msgstr "זמן:"
 
 #. Title
-#: ../data/totem.glade.h:42 ../src/totem.c:971 ../src/totem.c:3439
-#: ../src/totem.c:3466
+#: ../data/totem.glade.h:42 ../src/totem.c:867 ../src/totem.c:3334
+#: ../src/totem.c:3361
 msgid "Totem Movie Player"
 msgstr "נגן הסרטים Totem"
 
@@ -529,65 +522,40 @@ msgid "Enter the _address of the file you would like to open:"
 msgstr "הכנס את _מיקום הקובץ שברצונך לפתוח:"
 
 #: ../data/uri.glade.h:2
-msgid "Open Location"
-msgstr "פתח מיקום"
+msgid "Open Location..."
+msgstr "פתח מיקום..."
 
 #: ../lib/totem-scrsaver.c:117
 msgid "Playing a movie"
 msgstr "מנגן סרט"
 
-#: ../src/bacon-video-widget-properties.c:229
-#, c-format
-msgid "%d x %d"
-msgstr "%d x %d"
-
-#: ../src/bacon-video-widget-properties.c:232
-#, c-format
-msgid "%d frames per second"
-msgstr "%d פריימים לשנייה"
-
-#: ../src/bacon-video-widget-properties.c:234
-#: ../src/bacon-video-widget-properties.c:251
-#, c-format
-msgid "%d kbps"
-msgstr "%d ק\"ב לשנייה"
-
-#: ../src/bacon-video-widget-properties.c:254
-#, c-format
-msgid "%d Hz"
-msgstr "%d Hz"
-
-#: ../src/bacon-video-widget-properties.c:299
-msgid "Properties dialog"
-msgstr "דו-שיח מאפיינים"
-
-#: ../src/bacon-volume.c:193
+#: ../src/bacon-volume.c:185
 msgid "Volume"
 msgstr "עוצמה"
 
 #. +
-#: ../src/bacon-volume.c:221
+#: ../src/bacon-volume.c:213
 msgid "+"
 msgstr "+"
 
-#: ../src/bacon-volume.c:223 ../src/totem-options.c:47
-msgid "Volume Down"
-msgstr "הנמך עוצמה"
-
-#. -
-#: ../src/bacon-volume.c:239
-msgid "-"
-msgstr "-"
-
-#: ../src/bacon-volume.c:241 ../src/totem-options.c:46
+#: ../src/bacon-volume.c:215 ../src/totem-options.c:45
 msgid "Volume Up"
 msgstr "הגבר עוצמה"
 
-#: ../src/bacon-volume.c:777
+#. -
+#: ../src/bacon-volume.c:231
+msgid "-"
+msgstr "-"
+
+#: ../src/bacon-volume.c:233 ../src/totem-options.c:46
+msgid "Volume Down"
+msgstr "הנמך עוצמה"
+
+#: ../src/bacon-volume.c:773
 msgid "Muted"
 msgstr "מושתק"
 
-#: ../src/bacon-volume.c:779
+#: ../src/bacon-volume.c:775
 msgid "Full Volume"
 msgstr "עוצמה מלאה"
 
@@ -597,7 +565,7 @@ msgid "Couldn't load the '%s' interface."
 msgstr "לא ניתן לטעון את ממשק '%s'."
 
 #: ../src/totem-interface.c:119 ../src/totem-interface.c:121
-#: ../src/totem-menu.c:1426
+#: ../src/totem-menu.c:1397
 msgid "Make sure that Totem is properly installed."
 msgstr "וודא ש- Totem מותקן כראוי."
 
@@ -643,478 +611,473 @@ msgstr ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
 
-#: ../src/totem-menu.c:285
+#: ../src/totem-menu.c:297
 msgid "None"
 msgstr "ללא"
 
-#: ../src/totem-menu.c:289 ../src/totem-menu.c:1312
+#: ../src/totem-menu.c:301 ../src/totem-menu.c:1283
 msgid "Auto"
 msgstr "אוטומטי"
 
-#: ../src/totem-menu.c:776
+#: ../src/totem-menu.c:753
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "נגן דיסק  '%s'"
 
-#: ../src/totem-menu.c:779
+#: ../src/totem-menu.c:756
 #, c-format
 msgid "device%d"
 msgstr "התקן%d"
 
-#: ../src/totem-menu.c:1096
+#: ../src/totem-menu.c:1068
 msgid "GTK+"
 msgstr "GTK+"
 
-#: ../src/totem-menu.c:1098
+#: ../src/totem-menu.c:1070
 msgid "GNOME"
 msgstr "GNOME"
 
 #. This lists the back-end and front-end types and versions, such as
 #. * Movie Player using GStreamer 0.10.1 and GNOME
-#: ../src/totem-menu.c:1104
+#: ../src/totem-menu.c:1076
 #, c-format
 msgid "Movie Player using %s and %s"
 msgstr "נגן סרטים בשימוש %s ו-%s"
 
-#: ../src/totem-menu.c:1109 ../browser-plugin/totem-plugin-viewer.c:1097
+#: ../src/totem-menu.c:1081 ../browser-plugin/totem-plugin-viewer.c:1097
 msgid "Copyright © 2002-2006 Bastien Nocera"
 msgstr "Copyright © 2002-2006 Bastien Nocera"
 
-#: ../src/totem-menu.c:1114 ../browser-plugin/totem-plugin-viewer.c:1100
+#: ../src/totem-menu.c:1086 ../browser-plugin/totem-plugin-viewer.c:1100
 msgid "translator-credits"
 msgstr ""
 "גיל אשר <dolfin@rpg.org.il>\n"
 "יובל פלדל <yuvalfl@gmail.com>\n"
 "יאיר הרשקוביץ <yairhr@gmail.com>\n"
-"ראובן גונן <linxspider@yahoo.com>"
+"ראובן גונן <linxspider@yahoo.com>\n"
+"\n"
+"פרוייקט תרגום GNOME לעברית:\n"
+"‏http://gnome-il.berlios.de"
 
-#: ../src/totem-menu.c:1151
+#: ../src/totem-menu.c:1123
 msgid "Configure Plugins"
 msgstr "הגדרות תוספים"
 
-#: ../src/totem-menu.c:1243
+#: ../src/totem-menu.c:1215
 msgid "_Movie"
 msgstr "_סרט"
 
-#: ../src/totem-menu.c:1244
+#: ../src/totem-menu.c:1216
 msgid "_Open..."
 msgstr "_פתח..."
 
-#: ../src/totem-menu.c:1244
+#: ../src/totem-menu.c:1216
 msgid "Open a file"
 msgstr "פתח קובץ"
 
-#: ../src/totem-menu.c:1245
+#: ../src/totem-menu.c:1217
 msgid "Open _Location..."
 msgstr "פתח _מיקום..."
 
-#: ../src/totem-menu.c:1245
+#: ../src/totem-menu.c:1217
 msgid "Open a non-local file"
 msgstr "פתח קובץ לא מקומי"
 
-#: ../src/totem-menu.c:1246
+#: ../src/totem-menu.c:1218
 msgid "_Eject"
 msgstr "_הוצא"
 
-#: ../src/totem-menu.c:1247
+#: ../src/totem-menu.c:1219
 msgid "_Properties"
 msgstr "מ_אפיינים"
 
-#: ../src/totem-menu.c:1248
+#: ../src/totem-menu.c:1220
 msgid "Play / Pa_use"
 msgstr "נגן / ה_שהה"
 
-#: ../src/totem-menu.c:1248
+#: ../src/totem-menu.c:1220
 msgid "Play or pause the movie"
 msgstr "נגן או השהה את הסרט"
 
-#: ../src/totem-menu.c:1249
+#: ../src/totem-menu.c:1221
 msgid "_Quit"
 msgstr "_יציאה"
 
-#: ../src/totem-menu.c:1249
+#: ../src/totem-menu.c:1221
 msgid "Quit the program"
 msgstr "צא מהתוכנית"
 
-#: ../src/totem-menu.c:1251
+#: ../src/totem-menu.c:1223
 msgid "_Edit"
 msgstr "_עריכה"
 
-#: ../src/totem-menu.c:1252
+#: ../src/totem-menu.c:1224
 msgid "Take _Screenshot..."
 msgstr "צלם _תמונת מסך..."
 
-#: ../src/totem-menu.c:1252
+#: ../src/totem-menu.c:1224
 msgid "Take a screenshot"
 msgstr "צלם תמונת מסך"
 
-#: ../src/totem-menu.c:1253
+#: ../src/totem-menu.c:1225
 msgid "_Clear Playlist"
 msgstr "_נקה רשימת השמעה"
 
-#: ../src/totem-menu.c:1253
+#: ../src/totem-menu.c:1225
 msgid "Clear playlist"
 msgstr "נקה את רשימת ההשמעה"
 
-#: ../src/totem-menu.c:1254
+#: ../src/totem-menu.c:1226
 msgid "Prefere_nces"
 msgstr "_העדפות"
 
-#: ../src/totem-menu.c:1255
+#: ../src/totem-menu.c:1227
 msgid "Plugins..."
 msgstr "תוספים..."
 
-#: ../src/totem-menu.c:1257
+#: ../src/totem-menu.c:1229
 msgid "_View"
 msgstr "_תצוגה"
 
-#: ../src/totem-menu.c:1258
+#: ../src/totem-menu.c:1230
 msgid "_Fullscreen"
 msgstr "_מסך מלא"
 
-#: ../src/totem-menu.c:1258
+#: ../src/totem-menu.c:1230
 msgid "Switch to fullscreen"
 msgstr "החלף למסך מלא"
 
-#: ../src/totem-menu.c:1259
+#: ../src/totem-menu.c:1231
 msgid "Fit Window to Movie"
 msgstr "התאם חלון לסרט"
 
-#: ../src/totem-menu.c:1260
+#: ../src/totem-menu.c:1232
 msgid "_Resize 1:2"
 msgstr "_שנה גודל 1:2"
 
-#: ../src/totem-menu.c:1260
+#: ../src/totem-menu.c:1232
 msgid "Resize to half the video size"
 msgstr "שנה לחצי מגודל הוידאו"
 
-#: ../src/totem-menu.c:1261
+#: ../src/totem-menu.c:1233
 msgid "Resize _1:1"
 msgstr "שנה גודל _1:1"
 
-#: ../src/totem-menu.c:1261
+#: ../src/totem-menu.c:1233
 msgid "Resize to video size"
 msgstr "התאם לגודל הוידאו"
 
-#: ../src/totem-menu.c:1262
+#: ../src/totem-menu.c:1234
 msgid "Resize _2:1"
 msgstr "שנה גודל _2:1"
 
-#: ../src/totem-menu.c:1262
+#: ../src/totem-menu.c:1234
 msgid "Resize to twice the video size"
 msgstr "שנה לפעמיים מגודל הוידאו"
 
-#: ../src/totem-menu.c:1263
+#: ../src/totem-menu.c:1235
 msgid "_Aspect Ratio"
 msgstr "יחס _חזות"
 
-#: ../src/totem-menu.c:1264
+#: ../src/totem-menu.c:1236
 msgid "Switch An_gles"
 msgstr "ה_חלף זויות"
 
-#: ../src/totem-menu.c:1264
+#: ../src/totem-menu.c:1236
 msgid "Switch angles"
 msgstr "החלף זויות"
 
 #. { "subtitles-menu", NULL, N_("S_ubtitles") },
-#: ../src/totem-menu.c:1267
+#: ../src/totem-menu.c:1239
 msgid "_Go"
 msgstr "_עבור"
 
-#: ../src/totem-menu.c:1268
+#: ../src/totem-menu.c:1240
 msgid "_DVD Menu"
 msgstr "תפריט _DVD"
 
-#: ../src/totem-menu.c:1268
+#: ../src/totem-menu.c:1240
 msgid "Go to the DVD menu"
 msgstr "עבור אל תפריט DVD"
 
-#: ../src/totem-menu.c:1269
+#: ../src/totem-menu.c:1241
 msgid "_Title Menu"
 msgstr "תפריט _כותרת"
 
-#: ../src/totem-menu.c:1269
+#: ../src/totem-menu.c:1241
 msgid "Go to the title menu"
 msgstr "עבור אל תפריט כותרת"
 
-#: ../src/totem-menu.c:1270
+#: ../src/totem-menu.c:1242
 msgid "A_udio Menu"
 msgstr "תפריט _שמע"
 
-#: ../src/totem-menu.c:1270
+#: ../src/totem-menu.c:1242
 msgid "Go to the audio menu"
 msgstr "עבור אל תפריט שמע"
 
-#: ../src/totem-menu.c:1271
+#: ../src/totem-menu.c:1243
 msgid "_Angle Menu"
 msgstr "תפריט _זווית"
 
-#: ../src/totem-menu.c:1271
+#: ../src/totem-menu.c:1243
 msgid "Go to the angle menu"
 msgstr "עבור אל תפריט זווית"
 
-#: ../src/totem-menu.c:1272
+#: ../src/totem-menu.c:1244
 msgid "_Chapter Menu"
 msgstr "תפריט _פרקים"
 
-#: ../src/totem-menu.c:1272
+#: ../src/totem-menu.c:1244
 msgid "Go to the chapter menu"
 msgstr "עבור אל תפריט פרקים"
 
-#: ../src/totem-menu.c:1273
+#: ../src/totem-menu.c:1245
 msgid "_Next Chapter/Movie"
 msgstr "הפרק/סרט ה_בא"
 
-#: ../src/totem-menu.c:1273
+#: ../src/totem-menu.c:1245
 msgid "Next chapter or movie"
 msgstr "הפרק או הסרט הבא"
 
-#: ../src/totem-menu.c:1274
+#: ../src/totem-menu.c:1246
 msgid "_Previous Chapter/Movie"
 msgstr "הפרק/סרט ה_קודם"
 
-#: ../src/totem-menu.c:1274
+#: ../src/totem-menu.c:1246
 msgid "Previous chapter or movie"
 msgstr "הפרק או הסרט הקודם"
 
-#: ../src/totem-menu.c:1275
-msgid "_Skip to..."
-msgstr "_דלג ל..."
-
-#: ../src/totem-menu.c:1275
-msgid "Skip to a specific time"
-msgstr "דלג לזמן מסוים"
-
-#: ../src/totem-menu.c:1277
+#: ../src/totem-menu.c:1248
 msgid "_Sound"
 msgstr "_צליל"
 
 #. { "languages-menu", NULL, N_("_Languages") },
-#: ../src/totem-menu.c:1279
+#: ../src/totem-menu.c:1250
 msgid "Volume _Up"
 msgstr "ה_גבר עוצמה"
 
-#: ../src/totem-menu.c:1279
+#: ../src/totem-menu.c:1250
 msgid "Volume up"
 msgstr "הגבר עוצמה"
 
-#: ../src/totem-menu.c:1280
+#: ../src/totem-menu.c:1251
 msgid "Volume _Down"
 msgstr "ה_נמך עוצמה"
 
-#: ../src/totem-menu.c:1280
+#: ../src/totem-menu.c:1251
 msgid "Volume down"
 msgstr "הנמך עוצמה"
 
-#: ../src/totem-menu.c:1282
+#: ../src/totem-menu.c:1253
 msgid "_Help"
 msgstr "_עזרה"
 
-#: ../src/totem-menu.c:1283
+#: ../src/totem-menu.c:1254
 msgid "_Contents"
 msgstr "_תוכן"
 
-#: ../src/totem-menu.c:1283
+#: ../src/totem-menu.c:1254
 msgid "Help contents"
 msgstr "תוכן עזרה"
 
-#: ../src/totem-menu.c:1284
+#: ../src/totem-menu.c:1255
 msgid "_About"
 msgstr "_אודות"
 
-#: ../src/totem-menu.c:1288
+#: ../src/totem-menu.c:1259
 msgid "Zoom In"
 msgstr "התקרב"
 
-#: ../src/totem-menu.c:1288
+#: ../src/totem-menu.c:1259
 msgid "Zoom in"
 msgstr "התקרב"
 
-#: ../src/totem-menu.c:1289
+#: ../src/totem-menu.c:1260
 msgid "Zoom Reset"
 msgstr "אפס קירוב"
 
-#: ../src/totem-menu.c:1289
+#: ../src/totem-menu.c:1260
 msgid "Zoom reset"
 msgstr "אפס קירוב"
 
-#: ../src/totem-menu.c:1290
+#: ../src/totem-menu.c:1261
 msgid "Zoom Out"
 msgstr "התרחק"
 
-#: ../src/totem-menu.c:1290
+#: ../src/totem-menu.c:1261
 msgid "Zoom out"
 msgstr "התרחק"
 
-#: ../src/totem-menu.c:1294 ../src/totem-menu.c:1299
+#: ../src/totem-menu.c:1265 ../src/totem-menu.c:1270
 msgid "Skip _Forward"
 msgstr "דלג _קדימה"
 
-#: ../src/totem-menu.c:1294 ../src/totem-menu.c:1299
+#: ../src/totem-menu.c:1265 ../src/totem-menu.c:1270
 msgid "Skip forward"
 msgstr "דלג קדימה"
 
-#: ../src/totem-menu.c:1295 ../src/totem-menu.c:1300
+#: ../src/totem-menu.c:1266 ../src/totem-menu.c:1271
 msgid "Skip _Backwards"
 msgstr "דלג _אחורה"
 
-#: ../src/totem-menu.c:1295 ../src/totem-menu.c:1300
+#: ../src/totem-menu.c:1266 ../src/totem-menu.c:1271
 msgid "Skip backwards"
 msgstr "דלג אחורה"
 
-#: ../src/totem-menu.c:1304
+#: ../src/totem-menu.c:1275
 msgid "_Repeat Mode"
 msgstr "מצב _חזרה"
 
-#: ../src/totem-menu.c:1304
+#: ../src/totem-menu.c:1275
 msgid "Set the repeat mode"
 msgstr "קבע את מצב החזרה"
 
-#: ../src/totem-menu.c:1305
+#: ../src/totem-menu.c:1276
 msgid "Shuff_le Mode"
 msgstr "מצב ע_רבוב"
 
-#: ../src/totem-menu.c:1305
+#: ../src/totem-menu.c:1276
 msgid "Set the shuffle mode"
 msgstr "קבע את מצב הערבוב"
 
-#: ../src/totem-menu.c:1306
+#: ../src/totem-menu.c:1277
 msgid "_Deinterlace"
 msgstr "_פירוק"
 
-#: ../src/totem-menu.c:1306
+#: ../src/totem-menu.c:1277
 msgid "Deinterlace"
 msgstr "פירוק"
 
-#: ../src/totem-menu.c:1307
+#: ../src/totem-menu.c:1278
 msgid "Show _Controls"
 msgstr "הצג _פקדים"
 
-#: ../src/totem-menu.c:1307
+#: ../src/totem-menu.c:1278
 msgid "Show controls"
 msgstr "הצג פקדים"
 
-#: ../src/totem-menu.c:1308
+#: ../src/totem-menu.c:1279
 msgid "_Sidebar"
 msgstr "_סרגל צד"
 
-#: ../src/totem-menu.c:1308
+#: ../src/totem-menu.c:1279
 msgid "Show or hide the sidebar"
 msgstr "הצג או הסתר את סרגל הצד"
 
-#: ../src/totem-menu.c:1312
+#: ../src/totem-menu.c:1283
 msgid "Sets automatic aspect ratio"
 msgstr "קבע מצב חזות אוטומטית"
 
-#: ../src/totem-menu.c:1313
+#: ../src/totem-menu.c:1284
 msgid "Square"
 msgstr "ריבוע"
 
-#: ../src/totem-menu.c:1313
+#: ../src/totem-menu.c:1284
 msgid "Sets square aspect ratio"
 msgstr "קבע מצב חזות ריבועי"
 
-#: ../src/totem-menu.c:1314
+#: ../src/totem-menu.c:1285
 msgid "4:3 (TV)"
 msgstr "4:3 (טלוויזיה)"
 
-#: ../src/totem-menu.c:1314
+#: ../src/totem-menu.c:1285
 msgid "Sets 4:3 (TV) aspect ratio"
 msgstr "קבע מצב חזות 4:3 (טלוויזיה)"
 
-#: ../src/totem-menu.c:1315
+#: ../src/totem-menu.c:1286
 msgid "16:9 (Widescreen)"
 msgstr "16:9 (מסך רחב)"
 
-#: ../src/totem-menu.c:1315
+#: ../src/totem-menu.c:1286
 msgid "Sets 16:9 (Anamorphic) aspect ratio"
 msgstr "קבע מצב חזות 16:9 (אנאמורפי)"
 
-#: ../src/totem-menu.c:1316
+#: ../src/totem-menu.c:1287
 msgid "2.11:1 (DVB)"
 msgstr "‏2.11:1 (DVB)"
 
-#: ../src/totem-menu.c:1316
+#: ../src/totem-menu.c:1287
 msgid "Sets 2.11:1 (DVB) aspect ratio"
 msgstr "קבע מצב חזות 2.11:1 (DVB("
 
-#: ../src/totem-menu.c:1376
+#: ../src/totem-menu.c:1347
 msgid "S_ubtitles"
 msgstr "_כתוביות"
 
-#: ../src/totem-menu.c:1382
+#: ../src/totem-menu.c:1353
 msgid "_Languages"
 msgstr "_שפות"
 
-#: ../src/totem-menu.c:1425
+#: ../src/totem-menu.c:1396
 msgid "Couldn't load the 'ui description' file"
 msgstr "לא ניתן לטעון את קובץ תאור הממשק"
 
-#: ../src/totem-options.c:38
+#: ../src/totem-options.c:37
 msgid "Enable debug"
 msgstr "Enable debug"
 
-#: ../src/totem-options.c:39
+#: ../src/totem-options.c:38
 msgid "Play/Pause"
 msgstr "Play/Pause"
 
-#: ../src/totem-options.c:40 ../src/totem.c:289 ../src/totem.c:297
+#: ../src/totem-options.c:39 ../src/totem.c:284 ../src/totem.c:294
 msgid "Play"
 msgstr "נגן"
 
-#: ../src/totem-options.c:41 ../src/totem.c:283
+#: ../src/totem-options.c:40 ../src/totem.c:277
 msgid "Pause"
 msgstr "השהה"
 
-#: ../src/totem-options.c:42
+#: ../src/totem-options.c:41
 msgid "Next"
 msgstr "Next"
 
-#: ../src/totem-options.c:43
+#: ../src/totem-options.c:42
 msgid "Previous"
 msgstr "Previous"
 
-#: ../src/totem-options.c:44
+#: ../src/totem-options.c:43
 msgid "Seek Forwards"
 msgstr "Seek Forwards"
 
-#: ../src/totem-options.c:45
+#: ../src/totem-options.c:44
 msgid "Seek Backwards"
 msgstr "Seek Backwards"
 
-#: ../src/totem-options.c:48
+#: ../src/totem-options.c:47
 msgid "Toggle Fullscreen"
 msgstr "Toggle Fullscreen"
 
-#: ../src/totem-options.c:49
+#: ../src/totem-options.c:48
 msgid "Show/Hide Controls"
 msgstr "Show/Hide Controls"
 
-#: ../src/totem-options.c:50
+#: ../src/totem-options.c:49
 msgid "Quit"
 msgstr "Quit"
 
-#: ../src/totem-options.c:51
+#: ../src/totem-options.c:50
 msgid "Enqueue"
 msgstr "Enqueue"
 
-#: ../src/totem-options.c:52
+#: ../src/totem-options.c:51
 msgid "Replace"
 msgstr "Replace"
 
-#: ../src/totem-options.c:53
+#: ../src/totem-options.c:52
 msgid "Print playing movie"
 msgstr "Print playing movie"
 
-#: ../src/totem-options.c:54
+#: ../src/totem-options.c:53
 msgid "Seek"
 msgstr "Seek"
 
-#: ../src/totem-options.c:55
+#: ../src/totem-options.c:54
 msgid "Playlist index"
 msgstr "Playlist index"
 
-#: ../src/totem-options.c:56
+#: ../src/totem-options.c:55
 msgid "Movies to play"
 msgstr "Movies to play"
 
@@ -1134,44 +1097,44 @@ msgstr "ה_עתק מיקום"
 msgid "Copy the location to the clipboard"
 msgstr "העתק מיקום ללוח"
 
-#: ../src/totem-playlist.c:307 ../src/totem-playlist.c:845
+#: ../src/totem-playlist.c:307 ../src/totem-playlist.c:844
 msgid "Could not save the playlist"
 msgstr "לא ניתן לשמור את רשימת ההשמעה"
 
-#: ../src/totem-playlist.c:845
+#: ../src/totem-playlist.c:844
 msgid "Unknown file extension."
 msgstr "סיומת קובץ לא ידועה"
 
-#: ../src/totem-playlist.c:858
+#: ../src/totem-playlist.c:857
 msgid "Select playlist format:"
 msgstr "בחר תצורת רשימת ההשמעה:"
 
-#: ../src/totem-playlist.c:863
+#: ../src/totem-playlist.c:862
 msgid "By extension"
 msgstr "לפי סיומת"
 
-#: ../src/totem-playlist.c:893
+#: ../src/totem-playlist.c:892
 msgid "Save Playlist"
 msgstr "שמור רשימת השמעה"
 
-#: ../src/totem-playlist.c:1449
+#: ../src/totem-playlist.c:1459
 msgid "playlist"
 msgstr "רשימת השמעה"
 
-#: ../src/totem-playlist.c:1603
+#: ../src/totem-playlist.c:1613
 msgid "Playlist error"
 msgstr "שגיאה ברשימת השמעה"
 
-#: ../src/totem-playlist.c:1603
+#: ../src/totem-playlist.c:1613
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "לא ניתן לנתח את רשימת ההשמעה '%s', יתכן שהוא פגום."
 
-#: ../src/totem-preferences.c:103
+#: ../src/totem-preferences.c:86
 msgid "Enable visual effects?"
 msgstr "לאפשר אפקטים חזותיים?"
 
-#: ../src/totem-preferences.c:105
+#: ../src/totem-preferences.c:88
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1179,29 +1142,34 @@ msgstr ""
 "נראה שאתה מפעיל את Totem מרחוק.\n"
 "אתה בטוח שברצונך להפעיל את האפקטים החזותיים?"
 
-#: ../src/totem-preferences.c:158
+#: ../src/totem-preferences.c:141
 msgid ""
 "The change of this setting will only take effect for the next movie, or when "
 "Totem is restarted."
 msgstr "שינוי הגדרה זו יכנס לתוקף עבור הסרט הבא, או כאשר Totem יופעל מחדש"
 
-#: ../src/totem-preferences.c:302
+#: ../src/totem-preferences.c:285
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr "שינוי סוג האפקטים החזותיים ידרוש הפעלה מחדש כדי להכנס לתוקף."
 
-#: ../src/totem-preferences.c:386
+#: ../src/totem-preferences.c:369
 msgid ""
 "The change of audio output type will only take effect when Totem is "
 "restarted."
 msgstr "שינוי סוג פלט השמע יכנס לתוקף רק כאשר Totem יופעל מחדש."
 
-#: ../src/totem-preferences.c:644
+#: ../src/totem-preferences.c:459
+#, fuzzy
+msgid "Preferences"
+msgstr "_העדפות"
+
+#: ../src/totem-preferences.c:625
 msgid "Select Subtitle Font"
 msgstr "בחר גופן כתובית"
 
 #. FIXME this should be setting an error?
-#: ../src/totem-properties-main.c:117 ../src/totem-properties-view.c:84
-#: ../src/totem-properties-view.c:92
+#: ../src/totem-properties-main.c:114 ../src/totem-properties-view.c:85
+#: ../src/totem-properties-view.c:93
 msgid "Audio/Video"
 msgstr "שמע/וידאו"
 
@@ -1226,7 +1194,7 @@ msgstr "שמור תצלום מסך"
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:111 ../src/totem.c:293 ../src/totem.c:957
+#: ../src/totem-statusbar.c:111 ../src/totem.c:289 ../src/totem.c:853
 #: ../browser-plugin/totem-plugin-viewer.c:278
 msgid "Stopped"
 msgstr "נעצר"
@@ -1411,45 +1379,45 @@ msgstr "מערבי"
 msgid "Vietnamese"
 msgstr "ויאטנמי"
 
-#: ../src/totem-uri.c:281
+#: ../src/totem-uri.c:300
 msgid "All files"
 msgstr "כל הקבצים"
 
-#: ../src/totem-uri.c:286
+#: ../src/totem-uri.c:305
 msgid "Supported files"
 msgstr "קבצים נתמכים"
 
-#: ../src/totem-uri.c:298
+#: ../src/totem-uri.c:317
 msgid "Audio files"
 msgstr "קבצי אודיו"
 
-#: ../src/totem-uri.c:306
+#: ../src/totem-uri.c:325
 msgid "Video files"
 msgstr "קבצי וידאו"
 
-#: ../src/totem-uri.c:367
+#: ../src/totem-uri.c:398
 msgid "Select Movies or Playlists"
 msgstr "בחר סרטים או רשימות השמעה"
 
-#: ../src/totem.c:281 ../browser-plugin/totem-plugin-viewer.c:293
+#: ../src/totem.c:275 ../browser-plugin/totem-plugin-viewer.c:293
 msgid "Playing"
 msgstr "מנגן"
 
-#: ../src/totem.c:287 ../browser-plugin/totem-plugin-viewer.c:289
+#: ../src/totem.c:282 ../browser-plugin/totem-plugin-viewer.c:289
 msgid "Paused"
 msgstr "מושהה"
 
-#: ../src/totem.c:342
+#: ../src/totem.c:339
 msgid "Totem could not eject the optical media."
 msgstr "Totem אינו יכול להוציא את המדיה האופטית."
 
-#: ../src/totem.c:376 ../src/totem.c:403 ../src/totem.c:1064
-#: ../src/totem.c:1174
+#: ../src/totem.c:372 ../src/totem.c:399 ../src/totem.c:955
+#: ../src/totem.c:1065 ../src/totem.c:1092
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem אינו יכול לנגן את '%s'."
 
-#: ../src/totem.c:463
+#: ../src/totem.c:459
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1458,112 +1426,103 @@ msgstr ""
 "Totem אינו יכול לנגן סוג מדיה זה (%s) מכיוון שאין לך את התוספים המתאימים "
 "בכדי לטפל בו."
 
-#: ../src/totem.c:464
+#: ../src/totem.c:460
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
 msgstr ""
 "אנא התקן את התוספים הדרושים והפעל מחדש את Totem בכדי שתוכל לנגן מדיה זו."
 
-#: ../src/totem.c:472
+#: ../src/totem.c:467
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
 "it."
 msgstr "Totem לא יכול לנגן מדיה זו (%s) למרות שקיים תוסף לטפל בו."
 
-#: ../src/totem.c:473
+#: ../src/totem.c:468
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr "ייתכן ותרצה לבדוק אם קיים דיסק בכונן ושהוא מוגדר כראוי."
 
-#: ../src/totem.c:501
+#: ../src/totem.c:496
 msgid "Totem was not able to play this disc."
 msgstr "‏Totem לא הצליח לנגן את דיסק זה."
 
-#: ../src/totem.c:502 ../src/totem.c:3291
+#: ../src/totem.c:497 ../src/totem.c:3182
 #: ../browser-plugin/totem-plugin-viewer.c:1427
 msgid "No reason."
 msgstr "אין סיבה."
 
-#: ../src/totem.c:754
-msgid "Open Location..."
-msgstr "פתח מיקום..."
-
-#: ../src/totem.c:851 ../src/totem.c:859
+#: ../src/totem.c:759 ../src/totem.c:767
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem לא הצליח לקחת תצלום מסך מסרט זה."
 
-#: ../src/totem.c:859
+#: ../src/totem.c:767
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "זה לא אמור לקרות, אנא שלח דיווח על באג."
 
-#: ../src/totem.c:964
+#: ../src/totem.c:860
 msgid "No File"
 msgstr "אין קובץ"
 
-#: ../src/totem.c:1070
+#: ../src/totem.c:961
 msgid "No error message"
 msgstr "אין הודעת שגיה"
 
-#: ../src/totem.c:1285
+#: ../src/totem.c:1203
 msgid "Totem could not display the help contents."
 msgstr "Totem אינו יכול להציג את תוכן העזרה."
 
-#: ../src/totem.c:1548 ../src/totem.c:1550
+#: ../src/totem.c:1462 ../src/totem.c:1464
 #: ../browser-plugin/totem-plugin-viewer.c:1283
 msgid "An error occurred"
 msgstr "אירעה שגיאה"
 
-#: ../src/totem.c:1889
-#, c-format
-msgid "Totem could not seek in '%s'."
-msgstr "Totem לא יכול לדלג בתוך '%s'."
-
-#: ../src/totem.c:3086
+#: ../src/totem.c:2974 ../src/totem.c:2977
 msgid "Play / Pause"
 msgstr "נגן / השהה"
 
-#: ../src/totem.c:3093
+#: ../src/totem.c:2986 ../src/totem.c:2989
 msgid "Previous Chapter/Movie"
 msgstr "הפרק/סרט הקודם"
 
-#: ../src/totem.c:3100
+#: ../src/totem.c:2997 ../src/totem.c:3000
 msgid "Next Chapter/Movie"
 msgstr "הפרק/סרט הבא"
 
-#: ../src/totem.c:3291
+#: ../src/totem.c:3182
 msgid "Totem could not startup."
 msgstr "Totem לא יכול לאתחל."
 
-#: ../src/totem.c:3440
+#: ../src/totem.c:3335
 msgid "Could not initialize the thread-safe libraries."
 msgstr "לא ניתן לאתחל את ספריות thread-safe."
 
-#: ../src/totem.c:3440
+#: ../src/totem.c:3335
 msgid "Verify your system installation. Totem will now exit."
 msgstr "וודא את התקנת המערכת שלך. Totem ייצא עכשיו."
 
 #. Handle command line arguments
-#: ../src/totem.c:3447
+#: ../src/totem.c:3342
 msgid "- Play movies and songs"
 msgstr "- Play movies and songs"
 
-#: ../src/totem.c:3455
+#: ../src/totem.c:3350
 msgid "Totem could not parse the command-line options"
 msgstr "‏Totem נכשל בניתוח אפשרויות שורת הפקודה."
 
-#: ../src/totem.c:3474
+#: ../src/totem.c:3369
 msgid "Totem could not initialize the configuration engine."
 msgstr "‏Totem אינו יכול לאתחל את מנוע ההגדרות."
 
-#: ../src/totem.c:3474
+#: ../src/totem.c:3369
 msgid "Make sure that GNOME is properly installed."
 msgstr "וודא ש- GNOME מותקן כראוי."
 
 #. Main window
-#: ../src/totem.c:3502
+#: ../src/totem.c:3395
 msgid "main window"
 msgstr "חלון ראשי"
 
@@ -1660,7 +1619,7 @@ msgid ""
 msgstr "נכשל ביצירת עצם GStreamer. אנא בדוק את התקנת ה-GStreamer שלך."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4928
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5034
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5041
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1675,7 +1634,7 @@ msgstr ""
 "פלט הוידאו לא נימצא. יש להתקין תוספי GStreamer נוספים, או לבחור פלט וידאו "
 "אחר בבורר מערכות המולטימדיה."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4973
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4975
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1684,7 +1643,7 @@ msgstr ""
 "נכשל בפתיחת פלט השמע. אולי אין לך הרשאות לפתוח את התקן השמע, או אולי שרת "
 "הקול לא מופעל. אנא בחר פלט שמע אחר בבורר מערכות המולטימדיה"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4988
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4995
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -1693,7 +1652,7 @@ msgstr ""
 "פלט האודיו לא נימצא. יש להתקין תוספי GStreamer נוספים, או לבחור פלט אודיו "
 "אחר בבורר מערכות המולטימדיה."
 
-#: ../src/backend/bacon-video-widget-xine.c:720
+#: ../src/backend/bacon-video-widget-xine.c:726
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1702,101 +1661,101 @@ msgstr ""
 "לא ניתן לטעון את מנהל התקן השמע '%s'\n"
 "בדוק אם ההתקן לא עסוק."
 
-#: ../src/backend/bacon-video-widget-xine.c:1192
-#: ../src/backend/bacon-video-widget-xine.c:1752
+#: ../src/backend/bacon-video-widget-xine.c:1198
+#: ../src/backend/bacon-video-widget-xine.c:1753
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
 msgstr "אין יציאת ווידאו זמינה. וודא שהתוכנה מותקנת כראוי."
 
-#: ../src/backend/bacon-video-widget-xine.c:1317
+#: ../src/backend/bacon-video-widget-xine.c:1323
 msgid "The server you are trying to connect to is not known."
 msgstr "השרת אליו אתה מנסה להתחבר אינו ידוע."
 
-#: ../src/backend/bacon-video-widget-xine.c:1321
+#: ../src/backend/bacon-video-widget-xine.c:1327
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "שם ההתקן שציינת (%s) נראה לא תקני."
 
-#: ../src/backend/bacon-video-widget-xine.c:1325
+#: ../src/backend/bacon-video-widget-xine.c:1331
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "השרת אליו אתה מנסה להתחבר (%s) אינו נגיש."
 
-#: ../src/backend/bacon-video-widget-xine.c:1329
+#: ../src/backend/bacon-video-widget-xine.c:1335
 msgid "The connection to this server was refused."
 msgstr "החיבור לשרת זה נדחה."
 
-#: ../src/backend/bacon-video-widget-xine.c:1333
+#: ../src/backend/bacon-video-widget-xine.c:1339
 msgid "The specified movie could not be found."
 msgstr "לא ניתן למצוא את הסרט שצוין."
 
-#: ../src/backend/bacon-video-widget-xine.c:1339
-#: ../src/backend/bacon-video-widget-xine.c:1355
+#: ../src/backend/bacon-video-widget-xine.c:1345
+#: ../src/backend/bacon-video-widget-xine.c:1361
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
 msgstr ""
 "המקור נראה מוצפן, ולא ניתן לקריאה. האם אתה מנסה לנגן DVD מוצפן ללא libdvdcss?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1342
+#: ../src/backend/bacon-video-widget-xine.c:1348
 msgid "The movie could not be read."
 msgstr "לא ניתן לקרוא את הסרט"
 
-#: ../src/backend/bacon-video-widget-xine.c:1349
+#: ../src/backend/bacon-video-widget-xine.c:1355
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "ארעה שגיאה בזמן טעינת ספרייה או מקודד (%s)."
 
-#: ../src/backend/bacon-video-widget-xine.c:1358
+#: ../src/backend/bacon-video-widget-xine.c:1364
 msgid "This file is encrypted and cannot be played back."
 msgstr "קובץ זה מוצפן ולא יכול להתנגן אחורה."
 
-#: ../src/backend/bacon-video-widget-xine.c:1363
+#: ../src/backend/bacon-video-widget-xine.c:1369
 msgid "For security reasons, this movie can not be played back."
 msgstr "מטעמי ביטחון, סרט זה לא יכול להתנגן אחורה."
 
-#: ../src/backend/bacon-video-widget-xine.c:1368
+#: ../src/backend/bacon-video-widget-xine.c:1374
 msgid "The audio device is busy. Is another application using it?"
 msgstr "התקן השמע עסוק. האם יישום אחר משתמש בו?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1373
+#: ../src/backend/bacon-video-widget-xine.c:1379
 msgid "You are not allowed to open this file."
 msgstr "אינך מורשה לפתוח קובץ זה."
 
-#: ../src/backend/bacon-video-widget-xine.c:1375
+#: ../src/backend/bacon-video-widget-xine.c:1381
 msgid "The server refused access to this file or stream."
 msgstr "השרת מונע גישה לקובץ או שידור זה."
 
-#: ../src/backend/bacon-video-widget-xine.c:1384
+#: ../src/backend/bacon-video-widget-xine.c:1385
 msgid "The file you tried to play is an empty file."
 msgstr "הקובץ שניסית לפתוח הוא קובץ ריק."
 
-#: ../src/backend/bacon-video-widget-xine.c:1548
+#: ../src/backend/bacon-video-widget-xine.c:1549
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "אין תוסף קלט לטיפול במיקום של סרט זה"
 
-#: ../src/backend/bacon-video-widget-xine.c:1552
+#: ../src/backend/bacon-video-widget-xine.c:1553
 msgid "There is no plugin to handle this movie."
 msgstr "אין תוסף לטיפול בסרט זה."
 
-#: ../src/backend/bacon-video-widget-xine.c:1556
+#: ../src/backend/bacon-video-widget-xine.c:1557
 msgid "This movie is broken and can not be played further."
 msgstr "סרט זה שבור ואינו יכול להתנגן הלאה."
 
-#: ../src/backend/bacon-video-widget-xine.c:1560
+#: ../src/backend/bacon-video-widget-xine.c:1561
 msgid "This location is not a valid one."
 msgstr "מיקום זה אינו תקני."
 
-#: ../src/backend/bacon-video-widget-xine.c:1564
+#: ../src/backend/bacon-video-widget-xine.c:1565
 msgid "This movie could not be opened."
 msgstr "לא ניתן לפתוח סרט זה."
 
-#: ../src/backend/bacon-video-widget-xine.c:1568
+#: ../src/backend/bacon-video-widget-xine.c:1569
 msgid "Generic Error."
 msgstr "שגיאה כללית."
 
-#: ../src/backend/bacon-video-widget-xine.c:2303
+#: ../src/backend/bacon-video-widget-xine.c:2337
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1805,7 +1764,7 @@ msgstr ""
 "מקודד הווידאו '%s' לא מטופל. ייתכן ותרצה להתקין מקודדים נוספים כדי שתוכל "
 "לנגן סוגים מסוימים של סרטים"
 
-#: ../src/backend/bacon-video-widget-xine.c:2307
+#: ../src/backend/bacon-video-widget-xine.c:2341
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1814,26 +1773,26 @@ msgstr ""
 "מקודד השמע '%s' לא מטופל. ייתכן ותרצה להתקין מקודדים נוספים כדי שתוכל לנגן "
 "סוגים מסוימים של סרטים"
 
-#: ../src/backend/bacon-video-widget-xine.c:2323
+#: ../src/backend/bacon-video-widget-xine.c:2357
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "זהו קובץ שמע בלבד, ואין פלט שמע זמין."
 
-#: ../src/backend/bacon-video-widget-xine.c:3855
-#: ../src/backend/bacon-video-widget-xine.c:3902
-#: ../src/backend/bacon-video-widget-xine.c:3924
+#: ../src/backend/bacon-video-widget-xine.c:3890
+#: ../src/backend/bacon-video-widget-xine.c:3937
+#: ../src/backend/bacon-video-widget-xine.c:3959
 #, c-format
 msgid "Language %d"
 msgstr "שפה %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:4013
+#: ../src/backend/bacon-video-widget-xine.c:4048
 msgid "No video to capture."
 msgstr "אין וידאו ללכידה."
 
-#: ../src/backend/bacon-video-widget-xine.c:4021
+#: ../src/backend/bacon-video-widget-xine.c:4056
 msgid "Video codec is not handled."
 msgstr "מקודד הווידאו לא מטופל."
 
-#: ../src/backend/bacon-video-widget-xine.c:4032
+#: ../src/backend/bacon-video-widget-xine.c:4067
 msgid "Movie is not playing."
 msgstr "הסרט אינו מתנגן."
 
@@ -1902,42 +1861,42 @@ msgstr "%s %s"
 msgid "%s"
 msgstr "%s"
 
-#: ../src/plparse/totem-disc.c:288
+#: ../src/plparse/totem-disc.c:289
 #, c-format
 msgid "Failed to find mountpoint for device %s"
 msgstr "נכשל במציאת נקודת עיגון עבור ההתקן: %s"
 
-#: ../src/plparse/totem-disc.c:297
+#: ../src/plparse/totem-disc.c:298
 msgid "Could not connect to the HAL daemon"
 msgstr "נכשל להתחברות אל HAL daemon"
 
-#: ../src/plparse/totem-disc.c:396
+#: ../src/plparse/totem-disc.c:397
 msgid "Please check that a disc is present in the drive."
 msgstr "אנא בדוק שקיים דיסק בכונן"
 
-#: ../src/plparse/totem-disc.c:443
+#: ../src/plparse/totem-disc.c:444
 #, c-format
 msgid "Failed to mount %s"
 msgstr "נכשל בעיגון: %s"
 
-#: ../src/plparse/totem-disc.c:467
+#: ../src/plparse/totem-disc.c:468
 #, c-format
 msgid "Failed to find mountpoint for %s"
 msgstr "נכשל במציאת נקודת עיגון עבור: %s"
 
-#: ../src/plparse/totem-disc.c:837
+#: ../src/plparse/totem-disc.c:874
 msgid "Audio CD"
 msgstr "תקליטור שמע"
 
-#: ../src/plparse/totem-disc.c:839
+#: ../src/plparse/totem-disc.c:876
 msgid "Video CD"
 msgstr "תקליטור וידאו"
 
-#: ../src/plparse/totem-disc.c:841
+#: ../src/plparse/totem-disc.c:878
 msgid "DVD"
 msgstr "DVD"
 
-#: ../src/plparse/totem-pl-parser.c:464
+#: ../src/plparse/totem-pl-parser.c:462
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "לא ניתן לכתוב מפענח: %s"
@@ -1959,42 +1918,161 @@ msgstr "תוסף"
 msgid "Enabled"
 msgstr "מופעל"
 
-#: ../src/plugins/totem-plugin-manager.c:484
+#: ../src/plugins/totem-plugin-manager.c:491
 msgid "Plugins Manager"
 msgstr "מנהל תוספים"
 
-#: ../src/plugins/totem-plugins-engine.c:571
+#: ../src/plugins/totem-plugins-engine.c:574
+#, fuzzy, c-format
+msgid ""
+"Unable to activate plugin %s.\n"
+"%s"
+msgstr "לא ניתן להפעיל את התוסף %s"
+
+#: ../src/plugins/totem-plugins-engine.c:577
 #, c-format
 msgid "Unable to activate plugin %s"
 msgstr "לא ניתן להפעיל את התוסף %s"
 
-#: ../src/plugins/totem-plugins-engine.c:572
+#: ../src/plugins/totem-plugins-engine.c:579
 msgid "Plugin Error"
 msgstr "שגיאת תוסף"
 
-#: ../src/plugins/galago/galago.totem-plugin.desktop.in.h:1
+#: ../src/plugins/galago/galago.totem-plugin.in.h:1
 msgid "Instant Messenger status"
 msgstr "מצב תוכנת מסרים מידיים"
 
-#: ../src/plugins/galago/galago.totem-plugin.desktop.in.h:2
+#: ../src/plugins/galago/galago.totem-plugin.in.h:2
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr "קבע את מצב תוכנת המסרים המידיים למרוחק כאשר מנגן"
 
-#: ../src/plugins/ontop/ontop.totem-plugin.desktop.in.h:1
+#: ../src/plugins/galago/totem-galago.c:163
+#, fuzzy
+msgid "Could not connect to the Galago daemon."
+msgstr "נכשל להתחברות אל HAL daemon"
+
+#: ../src/plugins/gromit/gromit.totem-plugin.in.h:1
+msgid "Gromit Annotations"
+msgstr ""
+
+#: ../src/plugins/gromit/gromit.totem-plugin.in.h:2
+msgid "Presentation helper to make annotations on screen"
+msgstr ""
+
+#: ../src/plugins/gromit/totem-gromit.c:283
+msgid "The gromit binary was not found."
+msgstr ""
+
+#: ../src/plugins/lirc/lirc.totem-plugin.in.h:1
+msgid "Infrared Remote Control"
+msgstr ""
+
+#: ../src/plugins/lirc/lirc.totem-plugin.in.h:2
+msgid "Support infrared remote control"
+msgstr ""
+
+#: ../src/plugins/lirc/totem-lirc.c:238
+#, fuzzy
+msgid "Couldn't initialize lirc."
+msgstr "לא ניתן לאתחל את ספריות thread-safe."
+
+#: ../src/plugins/lirc/totem-lirc.c:244
+msgid "Couldn't read lirc configuration."
+msgstr ""
+
+#: ../src/plugins/media-player-keys/media-player-keys.totem-plugin.in.h:1
+#, fuzzy
+msgid "Media Player Keys"
+msgstr "נגן סרטים"
+
+#: ../src/plugins/media-player-keys/media-player-keys.totem-plugin.in.h:2
+msgid "Support additional media player keys"
+msgstr ""
+
+#: ../src/plugins/ontop/ontop.totem-plugin.in.h:1
 msgid "Always On Top"
 msgstr "תמיד _עליון"
 
-#: ../src/plugins/ontop/ontop.totem-plugin.desktop.in.h:2
+#: ../src/plugins/ontop/ontop.totem-plugin.in.h:2
 msgid "Keep the main window on top when playing a movie"
 msgstr "קבע את החלון הראשי מעל חלונות אחרים בזמן ניגון סרט"
 
-#: ../src/plugins/screensaver/screensaver.totem-plugin.desktop.in.h:1
+#: ../src/plugins/properties/bacon-video-widget-properties.c:232
+#, c-format
+msgid "%d x %d"
+msgstr "%d x %d"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:235
+#, c-format
+msgid "%d frames per second"
+msgstr "%d פריימים לשנייה"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:237
+#: ../src/plugins/properties/bacon-video-widget-properties.c:254
+#, c-format
+msgid "%d kbps"
+msgstr "%d ק\"ב לשנייה"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:257
+#, c-format
+msgid "%d Hz"
+msgstr "%d Hz"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:302
+msgid "Properties dialog"
+msgstr "דו-שיח מאפיינים"
+
+#: ../src/plugins/properties/movie-properties.totem-plugin.in.h:1
+msgid "Adds movie properties to the sidebar"
+msgstr ""
+
+#: ../src/plugins/properties/movie-properties.totem-plugin.in.h:2
+#, fuzzy
+msgid "Movie Properties"
+msgstr "מאפיינים"
+
+#: ../src/plugins/screensaver/screensaver.totem-plugin.in.h:1
 msgid "Deactivates the screensaver when a movie is playing"
 msgstr "בטל פעולת שומר המסך בזמן ניגון סרט"
 
-#: ../src/plugins/screensaver/screensaver.totem-plugin.desktop.in.h:2
+#: ../src/plugins/screensaver/screensaver.totem-plugin.in.h:2
 msgid "Screensaver"
 msgstr "שומר מסך"
+
+#: ../src/plugins/skipto/skipto.totem-plugin.in.h:1
+msgid "Provides the \"Skip to\" dialog."
+msgstr ""
+
+#: ../src/plugins/skipto/skipto.totem-plugin.in.h:2
+#, fuzzy
+msgid "Skipto"
+msgstr "דלג אל"
+
+#: ../src/plugins/skipto/totem-skipto.c:184
+#: ../src/plugins/skipto/skip_to.glade.h:2
+msgid "Skip to"
+msgstr "דלג אל"
+
+#: ../src/plugins/skipto/totem-skipto-plugin.c:228
+msgid "_Skip to..."
+msgstr "_דלג ל..."
+
+#: ../src/plugins/skipto/totem-skipto-plugin.c:228
+msgid "Skip to a specific time"
+msgstr "דלג לזמן מסוים"
+
+#: ../src/plugins/skipto/totem-skipto-plugin.c:234
+#, fuzzy
+msgid "Could not load the \"Skip to\" dialogue interface."
+msgstr "לא ניתן לטעון את ממשק '%s'."
+
+#: ../src/plugins/skipto/skip_to.glade.h:3
+msgid "_Skip to:"
+msgstr "_דלג אל:"
+
+#: ../src/plugins/skipto/skip_to.glade.h:4
+msgid "seconds"
+msgstr "שניות"
 
 #: ../browser-plugin/totem-plugin-viewer.c:397
 msgid "No URI to play"
@@ -2010,6 +2088,14 @@ msgstr "‏Totem אינו יכול לנגן את '%s'"
 #: ../browser-plugin/totem-plugin-viewer.c:801
 #, c-format
 msgid "Opening %s"
+msgstr "פותח %s"
+
+#. translators: this is:
+#. * Open With ApplicationName
+#. * as in nautilus' right-click menu
+#: ../browser-plugin/totem-plugin-viewer.c:1046
+#, fuzzy, c-format
+msgid "_Open with \"%s\""
 msgstr "פותח %s"
 
 #: ../browser-plugin/totem-plugin-viewer.c:1090
@@ -2042,6 +2128,12 @@ msgstr "לא ניתן לאתחל את ספריות thread-safe."
 #: ../browser-plugin/totem-plugin-viewer.c:1848
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "וודא את התקנת המערכת שלך. תוסף טוטם ייצא עכשיו."
+
+#~ msgid "Open Location"
+#~ msgstr "פתח מיקום"
+
+#~ msgid "Totem could not seek in '%s'."
+#~ msgstr "Totem לא יכול לדלג בתוך '%s'."
 
 #~ msgid "<b>Audio</b>"
 #~ msgstr "<b>שמע</b>"
