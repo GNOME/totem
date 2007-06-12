@@ -96,25 +96,12 @@ totem_open_location_match (GtkEntryCompletion *completion, const gchar *key, Gtk
 static gint
 totem_compare_recent_stream_items (GtkRecentInfo *a, GtkRecentInfo *b)
 {
-	gboolean has_totem_a, has_totem_b;
+	time_t time_a, time_b;
 
-	has_totem_a = gtk_recent_info_has_group (a, "TotemStreams");
-	has_totem_b = gtk_recent_info_has_group (b, "TotemStreams");
+	time_a = gtk_recent_info_get_modified (a);
+	time_b = gtk_recent_info_get_modified (b);
 
-	if (has_totem_a && has_totem_b) {
-		time_t time_a, time_b;
-
-		time_a = gtk_recent_info_get_modified (a);
-		time_b = gtk_recent_info_get_modified (b);
-
-		return (time_b - time_a);
-	} else if (has_totem_a) {
-		return -1;
-	} else if (has_totem_b) {
-		return 1;
-	}
-
-	return 0;
+	return (time_b - time_a);
 }
 
 char *
@@ -166,7 +153,7 @@ totem_open_location_new (Totem *totem)
 	char *clipboard_location;
 	GtkEntryCompletion *completion;
 	GtkTreeModel *model;
-	GList *recent_items;
+	GList *recent_items, *streams_recent_items = NULL;
 	GtkWidget *container;
 
 	open_location = TOTEM_OPEN_LOCATION (g_object_new (TOTEM_TYPE_OPEN_LOCATION, NULL));
@@ -210,8 +197,7 @@ totem_open_location_new (Totem *totem)
 		GList *p;
 		GtkTreeIter iter;
 
-		recent_items = g_list_sort (recent_items, (GCompareFunc) totem_compare_recent_stream_items);
-
+		/* Filter out non-Totem items */
 		for (p = recent_items; p != NULL; p = p->next)
 		{
 			GtkRecentInfo *info = (GtkRecentInfo *) p->data;
@@ -219,11 +205,21 @@ totem_open_location_new (Totem *totem)
 				gtk_recent_info_unref (info);
 				continue;
 			}
+			streams_recent_items = g_list_prepend (streams_recent_items, info);
+		}
 
+		streams_recent_items = g_list_sort (streams_recent_items, (GCompareFunc) totem_compare_recent_stream_items);
+
+		/* Populate the list store for the combobox */
+		for (p = streams_recent_items; p != NULL; p = p->next)
+		{
+			GtkRecentInfo *info = (GtkRecentInfo *) p->data;
 			gtk_list_store_append (GTK_LIST_STORE (model), &iter);
 			gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, gtk_recent_info_get_uri (info), -1);
 			gtk_recent_info_unref (info);
 		}
+
+		g_list_free (streams_recent_items);
 	}
 
 	g_list_free (recent_items);
