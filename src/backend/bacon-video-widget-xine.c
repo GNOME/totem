@@ -3658,6 +3658,10 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetM
 		string = xine_get_meta_info (bvw->priv->stream,
 				XINE_META_INFO_YEAR);
 		break;
+	case BVW_INFO_COMMENT:
+		string = xine_get_meta_info (bvw->priv->stream,
+				XINE_META_INFO_COMMENT);
+		break;
 	case BVW_INFO_VIDEO_CODEC:
 		string = xine_get_meta_info (bvw->priv->stream,
 				XINE_META_INFO_VIDEOCODEC);
@@ -3825,6 +3829,7 @@ bacon_video_widget_get_metadata (BaconVideoWidget *bvw,
 	case BVW_INFO_ARTIST:
 	case BVW_INFO_ALBUM:
 	case BVW_INFO_YEAR:
+	case BVW_INFO_COMMENT:
 	case BVW_INFO_VIDEO_CODEC:
 	case BVW_INFO_AUDIO_CODEC:
 	case BVW_INFO_AUDIO_CHANNELS:

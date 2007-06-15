@@ -4013,6 +4013,7 @@ static struct _metadata_map_info {
   { BVW_INFO_TITLE, "title" },
   { BVW_INFO_ARTIST, "artist" },
   { BVW_INFO_YEAR, "year" },
+  { BVW_INFO_COMMENT, "comment" },
   { BVW_INFO_ALBUM, "album" },
   { BVW_INFO_DURATION, "duration" },
   { BVW_INFO_TRACK_NUMBER, "track-number" },
@@ -4162,6 +4163,12 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
           string = g_strdup_printf ("%d", g_date_get_year (date));
           g_date_free (date);
         }
+      }
+      break;
+    case BVW_INFO_COMMENT:
+      if (bvw->priv->tagcache != NULL) {
+        res = gst_tag_list_get_string_index (bvw->priv->tagcache,
+                                             GST_TAG_COMMENT, 0, &string);
       }
       break;
     case BVW_INFO_ALBUM:
@@ -4411,6 +4418,7 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
     case BVW_INFO_TITLE:
     case BVW_INFO_ARTIST:
     case BVW_INFO_YEAR:
+    case BVW_INFO_COMMENT:
     case BVW_INFO_ALBUM:
     case BVW_INFO_VIDEO_CODEC:
     case BVW_INFO_AUDIO_CODEC:

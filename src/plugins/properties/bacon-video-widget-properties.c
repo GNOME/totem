@@ -149,6 +149,8 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 	bacon_video_widget_properties_set_label (props, "year", _("Unknown"));
 	/* Duration */
 	bacon_video_widget_properties_from_time (props, 0);
+	/* Comment */
+	bacon_video_widget_properties_set_label (props, "comment", _("Unknown"));
 
 	/* Dimensions */
 	bacon_video_widget_properties_set_label (props, "dimensions", _("N/A"));
@@ -209,6 +211,7 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 	UPDATE_FROM_STRING (BVW_INFO_ARTIST, "artist");
 	UPDATE_FROM_STRING (BVW_INFO_ALBUM, "album");
 	UPDATE_FROM_STRING (BVW_INFO_YEAR, "year");
+	UPDATE_FROM_STRING (BVW_INFO_COMMENT, "comment");
 
 	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
 			BVW_INFO_DURATION, &value);
@@ -288,9 +291,10 @@ bacon_video_widget_properties_new (void)
 	GtkWidget *vbox;
 	GtkSizeGroup *group;
 	const char *labels[] = { "title_label", "artist_label", "album_label",
-			"year_label", "duration_label", "dimensions_label", "vcodec_label",
-			"framerate_label", "vbitrate_label", "abitrate_label",
-			"acodec_label", "samplerate_label", "channels_label" };
+			"year_label", "duration_label", "comment_label",
+			"dimensions_label", "vcodec_label", "framerate_label",
+			"vbitrate_label", "abitrate_label", "acodec_label",
+			"samplerate_label", "channels_label" };
 	const char *bold_labels[] = {
 		"bvwp_general_label",
 		"bvwp_video_label",

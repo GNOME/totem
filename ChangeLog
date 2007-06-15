@@ -1,3 +1,20 @@
+2007-06-15  Philip Withnall  <pwithnall@svn.gnome.org>
+
+	* data/properties.glade:
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_metadata):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_metadata):
+	* src/backend/bacon-video-widget.h:
+	* src/plugins/properties/bacon-video-widget-properties.c:
+	(bacon_video_widget_properties_reset),
+	(bacon_video_widget_properties_update),
+	(bacon_video_widget_properties_new): Patch from Przemysław Grzegorczyk
+	<pgrzegorczyk@gmail.com> to add support for displaying MP3/Vorbis
+	comment tags in the properties view. (Closes: #430984)
+
 2007-06-12  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: Fix distcheck by adding the test python and vala
