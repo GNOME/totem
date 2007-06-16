@@ -8,10 +8,10 @@
 # Jorge González <jorgegonz@svn.gnome.org>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: es\n"
+"Project-Id-Version: totem.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-05 03:17+0100\n"
-"PO-Revision-Date: 2007-06-06 09:16+0200\n"
+"POT-Creation-Date: 2007-06-16 03:22+0100\n"
+"PO-Revision-Date: 2007-06-16 21:57+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -73,13 +73,13 @@ msgstr "Sitio:"
 
 #. Channels
 #: ../data/properties.glade.h:1
-#: ../src/plugins/properties/bacon-video-widget-properties.c:171
+#: ../src/plugins/properties/bacon-video-widget-properties.c:173
 msgid "0 Channels"
 msgstr "0 canales"
 
 #. Sample rate
 #: ../data/properties.glade.h:2
-#: ../src/plugins/properties/bacon-video-widget-properties.c:169
+#: ../src/plugins/properties/bacon-video-widget-properties.c:171
 msgid "0 Hz"
 msgstr "0 Hz"
 
@@ -127,48 +127,52 @@ msgid "Codec:"
 msgstr "Códec:"
 
 #: ../data/properties.glade.h:13
+msgid "Comment:"
+msgstr "Comentario:"
+
+#: ../data/properties.glade.h:14
 msgid "Dimensions:"
 msgstr "Dimensiones:"
 
-#: ../data/properties.glade.h:14
+#: ../data/properties.glade.h:15
 msgid "Duration:"
 msgstr "Duración:"
 
-#: ../data/properties.glade.h:15
+#: ../data/properties.glade.h:16
 msgid "Framerate:"
 msgstr "Tasa de fotogramas:"
 
-#: ../data/properties.glade.h:16 ../data/totem.glade.h:20
+#: ../data/properties.glade.h:17 ../data/totem.glade.h:20
 msgid "General"
 msgstr "General"
 
 #. Dimensions
 #. Video Codec
 #. Audio Codec
-#: ../data/properties.glade.h:17
-#: ../src/plugins/properties/bacon-video-widget-properties.c:154
+#: ../data/properties.glade.h:18
 #: ../src/plugins/properties/bacon-video-widget-properties.c:156
-#: ../src/plugins/properties/bacon-video-widget-properties.c:159
-#: ../src/plugins/properties/bacon-video-widget-properties.c:162
-#: ../src/plugins/properties/bacon-video-widget-properties.c:165
+#: ../src/plugins/properties/bacon-video-widget-properties.c:158
+#: ../src/plugins/properties/bacon-video-widget-properties.c:161
+#: ../src/plugins/properties/bacon-video-widget-properties.c:164
 #: ../src/plugins/properties/bacon-video-widget-properties.c:167
-#: ../src/plugins/properties/bacon-video-widget-properties.c:235
-#: ../src/plugins/properties/bacon-video-widget-properties.c:237
-#: ../src/plugins/properties/bacon-video-widget-properties.c:254
+#: ../src/plugins/properties/bacon-video-widget-properties.c:169
+#: ../src/plugins/properties/bacon-video-widget-properties.c:238
+#: ../src/plugins/properties/bacon-video-widget-properties.c:240
 #: ../src/plugins/properties/bacon-video-widget-properties.c:257
+#: ../src/plugins/properties/bacon-video-widget-properties.c:260
 msgid "N/A"
 msgstr "N/D"
 
-#: ../data/properties.glade.h:18
+#: ../data/properties.glade.h:19
 #: ../src/plugins/properties/totem-movie-properties.c:169
 msgid "Properties"
 msgstr "Propiedades"
 
-#: ../data/properties.glade.h:19
+#: ../data/properties.glade.h:20
 msgid "Sample rate:"
 msgstr "Frec. de muestreo:"
 
-#: ../data/properties.glade.h:20
+#: ../data/properties.glade.h:21
 msgid "Title:"
 msgstr "Título:"
 
@@ -176,19 +180,21 @@ msgstr "Título:"
 #. Artist
 #. Album
 #. Year
-#: ../data/properties.glade.h:21
+#. Comment
+#: ../data/properties.glade.h:22
 #: ../src/plugins/properties/bacon-video-widget-properties.c:143
 #: ../src/plugins/properties/bacon-video-widget-properties.c:145
 #: ../src/plugins/properties/bacon-video-widget-properties.c:147
 #: ../src/plugins/properties/bacon-video-widget-properties.c:149
+#: ../src/plugins/properties/bacon-video-widget-properties.c:153
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: ../data/properties.glade.h:22 ../src/totem-properties-view.c:87
+#: ../data/properties.glade.h:23 ../src/totem-properties-view.c:87
 msgid "Video"
 msgstr "Vídeo"
 
-#: ../data/properties.glade.h:23
+#: ../data/properties.glade.h:24
 msgid "Year:"
 msgstr "Año:"
 
@@ -325,8 +331,8 @@ msgid "Time:"
 msgstr "Tiempo:"
 
 #. Title
-#: ../data/totem.glade.h:42 ../src/totem.c:958 ../src/totem.c:3425
-#: ../src/totem.c:3452
+#: ../data/totem.glade.h:42 ../src/totem.c:867 ../src/totem.c:3334
+#: ../src/totem.c:3361
 msgid "Totem Movie Player"
 msgstr "Reproductor de películas Totem"
 
@@ -532,8 +538,8 @@ msgid "Enter the _address of the file you would like to open:"
 msgstr "Introduzca la _dirección del archivo que quiere abrir:"
 
 #: ../data/uri.glade.h:2
-msgid "Open Location"
-msgstr "Abrir dirección"
+msgid "Open Location..."
+msgstr "Abrir dirección…"
 
 #: ../lib/totem-scrsaver.c:117
 msgid "Playing a movie"
@@ -1029,11 +1035,11 @@ msgstr "Activar depuración"
 msgid "Play/Pause"
 msgstr "Reproducir/Pausar"
 
-#: ../src/totem-options.c:39 ../src/totem.c:285 ../src/totem.c:295
+#: ../src/totem-options.c:39 ../src/totem.c:284 ../src/totem.c:294
 msgid "Play"
 msgstr "Reproducir"
 
-#: ../src/totem-options.c:40 ../src/totem.c:278
+#: ../src/totem-options.c:40 ../src/totem.c:277
 msgid "Pause"
 msgstr "Pausa"
 
@@ -1205,7 +1211,7 @@ msgstr "Guardar la captura de pantalla"
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:111 ../src/totem.c:290 ../src/totem.c:944
+#: ../src/totem-statusbar.c:111 ../src/totem.c:289 ../src/totem.c:853
 #: ../browser-plugin/totem-plugin-viewer.c:278
 msgid "Stopped"
 msgstr "Detenido"
@@ -1410,25 +1416,25 @@ msgstr "Archivos de vídeo"
 msgid "Select Movies or Playlists"
 msgstr "Seleccione películas o listas de reproducción"
 
-#: ../src/totem.c:276 ../browser-plugin/totem-plugin-viewer.c:293
+#: ../src/totem.c:275 ../browser-plugin/totem-plugin-viewer.c:293
 msgid "Playing"
 msgstr "Reproduciendo"
 
-#: ../src/totem.c:283 ../browser-plugin/totem-plugin-viewer.c:289
+#: ../src/totem.c:282 ../browser-plugin/totem-plugin-viewer.c:289
 msgid "Paused"
 msgstr "Pausa"
 
-#: ../src/totem.c:340
+#: ../src/totem.c:339
 msgid "Totem could not eject the optical media."
 msgstr "Totem no pudo expulsar el soporte óptico."
 
-#: ../src/totem.c:373 ../src/totem.c:400 ../src/totem.c:1046
-#: ../src/totem.c:1156 ../src/totem.c:1183
+#: ../src/totem.c:372 ../src/totem.c:399 ../src/totem.c:955
+#: ../src/totem.c:1065 ../src/totem.c:1092
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem no pudo reproducir «%s»."
 
-#: ../src/totem.c:460
+#: ../src/totem.c:459
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1437,7 +1443,7 @@ msgstr ""
 "Totem no puede reproducir este tipo de soporte (%s) porque no tiene los "
 "complementos adecuados para manejarlo."
 
-#: ../src/totem.c:461
+#: ../src/totem.c:460
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1445,7 +1451,7 @@ msgstr ""
 "Por favor, instale los complementos necesarios y reinicie Totem para poder "
 "reproducir este soporte."
 
-#: ../src/totem.c:469
+#: ../src/totem.c:467
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1454,7 +1460,7 @@ msgstr ""
 "Totem no pudo reproducir este soporte (%s) aunque hay un complemento "
 "instalado que puede manipularlo."
 
-#: ../src/totem.c:470
+#: ../src/totem.c:468
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1462,87 +1468,83 @@ msgstr ""
 "Compruebe que haya un disco en la unidad y que esté correctamente "
 "configurada."
 
-#: ../src/totem.c:498
+#: ../src/totem.c:496
 msgid "Totem was not able to play this disc."
 msgstr "No no fue capaz de reproducir este disco."
 
-#: ../src/totem.c:499 ../src/totem.c:3273
+#: ../src/totem.c:497 ../src/totem.c:3182
 #: ../browser-plugin/totem-plugin-viewer.c:1427
 msgid "No reason."
 msgstr "No hay razón."
 
-#: ../src/totem.c:753
-msgid "Open Location..."
-msgstr "Abrir dirección…"
-
-#: ../src/totem.c:850 ../src/totem.c:858
+#: ../src/totem.c:759 ../src/totem.c:767
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem no puede obtener una captura de pantalla de esa película."
 
-#: ../src/totem.c:858
+#: ../src/totem.c:767
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Esto no se supone que debe ocurrir; rellene un informe de errores."
 
-#: ../src/totem.c:951
+#: ../src/totem.c:860
 msgid "No File"
 msgstr "Ningún archivo"
 
-#: ../src/totem.c:1052
+#: ../src/totem.c:961
 msgid "No error message"
 msgstr "Sin mensaje de error"
 
-#: ../src/totem.c:1294
+#: ../src/totem.c:1203
 msgid "Totem could not display the help contents."
 msgstr "Totem no pudo mostrar el contenido de la ayuda."
 
-#: ../src/totem.c:1553 ../src/totem.c:1555
+#: ../src/totem.c:1462 ../src/totem.c:1464
 #: ../browser-plugin/totem-plugin-viewer.c:1283
 msgid "An error occurred"
 msgstr "Ha ocurrido un error"
 
-#: ../src/totem.c:3065 ../src/totem.c:3068
+#: ../src/totem.c:2974 ../src/totem.c:2977
 msgid "Play / Pause"
 msgstr "Reproducir / Pausar"
 
-#: ../src/totem.c:3077 ../src/totem.c:3080
+#: ../src/totem.c:2986 ../src/totem.c:2989
 msgid "Previous Chapter/Movie"
 msgstr "Capítulo/película anterior"
 
-#: ../src/totem.c:3088 ../src/totem.c:3091
+#: ../src/totem.c:2997 ../src/totem.c:3000
 msgid "Next Chapter/Movie"
 msgstr "Capítulo/película siguiente"
 
-#: ../src/totem.c:3273
+#: ../src/totem.c:3182
 msgid "Totem could not startup."
 msgstr "No se ha podido iniciar Totem."
 
-#: ../src/totem.c:3426
+#: ../src/totem.c:3335
 msgid "Could not initialize the thread-safe libraries."
 msgstr "No se pudo inicializar el soporte de hilos seguro."
 
-#: ../src/totem.c:3426
+#: ../src/totem.c:3335
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verifique la instalación de su sistema. Totem ahora terminará."
 
 #. Handle command line arguments
-#: ../src/totem.c:3433
+#: ../src/totem.c:3342
 msgid "- Play movies and songs"
 msgstr "- Reproduzca películas y canciones"
 
-#: ../src/totem.c:3441
+#: ../src/totem.c:3350
 msgid "Totem could not parse the command-line options"
 msgstr "Totem no pudo analizar las opciones de línea de comandos"
 
-#: ../src/totem.c:3460
+#: ../src/totem.c:3369
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem no pudo inicializar el motor de configuración."
 
-#: ../src/totem.c:3460
+#: ../src/totem.c:3369
 msgid "Make sure that GNOME is properly installed."
 msgstr "Asegúrese de que GNOME está instalado correctamente."
 
 #. Main window
-#: ../src/totem.c:3486
+#: ../src/totem.c:3395
 msgid "main window"
 msgstr "ventana principal"
 
@@ -1619,27 +1621,27 @@ msgstr "El archivo del medio no se pudo reproducir."
 msgid "Failed to retrieve working directory"
 msgstr "Falló al obtener un directorio de trabajo"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4219
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4226
 msgid "Surround"
 msgstr "Envolvente"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4221
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4228
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4223
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4230
 msgid "Stereo"
 msgstr "Estéreo"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4453
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4461
 msgid "Too old version of GStreamer installed."
 msgstr "La versión de GStreamer que está instalada es demasiado antigua."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4460
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4468
 msgid "Media contains no supported video streams."
 msgstr "El medio no contiene ningún flujo de vídeo soportado."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4796
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4804
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1647,8 +1649,8 @@ msgstr ""
 "Falló al crear el objeto de reproducción GStreamer. Compruebe su instalación "
 "de GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4928
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5041
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4936
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5049
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1656,7 +1658,7 @@ msgstr ""
 "Falló al abrir la salida de vídeo. Quizá no esté disponible. Seleccione otra "
 "salida de vídeo en el «Selector de sistemas multimedia»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4940
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4948
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1666,7 +1668,7 @@ msgstr ""
 "complementos adicionales de GStreamer, o seleccionar otra salida de vídeo en "
 "el «Selector de sistemas multimedia»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4975
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4983
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1676,7 +1678,7 @@ msgstr ""
 "dispositivo de sonido, o el servidor de sonido quizá no esté funcionando. "
 "Seleccione otra salida de sonido en el «Selector de Sistemas Multimedia»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4995
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5003
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -1820,22 +1822,22 @@ msgstr ""
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Este es un archivo que sólo tiene sonido, no hay salida de vídeo disponible."
 
-#: ../src/backend/bacon-video-widget-xine.c:3890
-#: ../src/backend/bacon-video-widget-xine.c:3937
-#: ../src/backend/bacon-video-widget-xine.c:3959
+#: ../src/backend/bacon-video-widget-xine.c:3895
+#: ../src/backend/bacon-video-widget-xine.c:3942
+#: ../src/backend/bacon-video-widget-xine.c:3964
 #, c-format
 msgid "Language %d"
 msgstr "Idioma %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:4048
+#: ../src/backend/bacon-video-widget-xine.c:4053
 msgid "No video to capture."
 msgstr "No hay vídeo para capturar."
 
-#: ../src/backend/bacon-video-widget-xine.c:4056
+#: ../src/backend/bacon-video-widget-xine.c:4061
 msgid "Video codec is not handled."
 msgstr "No es posible manejar el códec de vídeo."
 
-#: ../src/backend/bacon-video-widget-xine.c:4067
+#: ../src/backend/bacon-video-widget-xine.c:4072
 msgid "Movie is not playing."
 msgstr "La película no se está reproduciendo."
 
@@ -1965,7 +1967,7 @@ msgstr "Activado"
 msgid "Plugins Manager"
 msgstr "Administrador de complementos"
 
-#: ../src/plugins/totem-plugins-engine.c:578
+#: ../src/plugins/totem-plugins-engine.c:574
 #, c-format
 msgid ""
 "Unable to activate plugin %s.\n"
@@ -1974,12 +1976,12 @@ msgstr ""
 "No se pudo activar el complemento %s.\n"
 "%s"
 
-#: ../src/plugins/totem-plugins-engine.c:581
+#: ../src/plugins/totem-plugins-engine.c:577
 #, c-format
 msgid "Unable to activate plugin %s"
 msgstr "No se pudo activar el complemento %s"
 
-#: ../src/plugins/totem-plugins-engine.c:583
+#: ../src/plugins/totem-plugins-engine.c:579
 msgid "Plugin Error"
 msgstr "Error del complemento"
 
@@ -2043,28 +2045,28 @@ msgstr ""
 "Mantener la ventana principal encima cuando se está reproduciendo una "
 "película"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:232
+#: ../src/plugins/properties/bacon-video-widget-properties.c:235
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:235
+#: ../src/plugins/properties/bacon-video-widget-properties.c:238
 #, c-format
 msgid "%d frames per second"
 msgstr "%d fotogramas por segundo"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:237
-#: ../src/plugins/properties/bacon-video-widget-properties.c:254
+#: ../src/plugins/properties/bacon-video-widget-properties.c:240
+#: ../src/plugins/properties/bacon-video-widget-properties.c:257
 #, c-format
 msgid "%d kbps"
 msgstr "%d Kbps"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:257
+#: ../src/plugins/properties/bacon-video-widget-properties.c:260
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:302
+#: ../src/plugins/properties/bacon-video-widget-properties.c:306
 msgid "Properties dialog"
 msgstr "Diálogo de propiedades"
 
