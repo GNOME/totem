@@ -52,6 +52,8 @@ libexec_PROGRAMS = totem-plugin-viewer
 
 totem_plugin_viewer_SOURCES = \
 	totem-plugin-viewer.c		\
+	totem-glow-button.c		\
+	totem-glow-button.h		\
 	totem-plugin-viewer-interface.h	\
 	totem-plugin-viewer-commands.h	\
 	totem-plugin-viewer-options.h

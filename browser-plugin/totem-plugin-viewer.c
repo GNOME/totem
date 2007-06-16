@@ -49,6 +49,7 @@
 #include "totem-interface.h"
 #include "totem-statusbar.h"
 #include "bacon-volume.h"
+#include "totem-glow-button.h"
 #include "video-utils.h"
 
 #include "totem-plugin-viewer-commands.h"
@@ -57,6 +58,7 @@
 
 GtkWidget *totem_statusbar_create (void);
 GtkWidget *totem_volume_create (void);
+GtkWidget *totem_pp_create (void);
 
 #define VOLUME_DOWN_OFFSET -8
 #define VOLUME_UP_OFFSET 8
@@ -97,6 +99,7 @@ typedef struct _TotemEmbedded {
 	GtkWidget *window;
 	GladeXML *menuxml, *xml;
 	GtkWidget *about;
+	GtkWidget *pp_button;
 	TotemStatusbar *statusbar;
 	int width, height;
 	const char *mimetype;
@@ -133,7 +136,6 @@ typedef struct _TotemEmbedded {
 	guint hidden : 1;
 	guint repeat : 1;
 	guint seeking : 1;
-	guint noautostart : 1;
 	guint autostart : 1;
 	guint audioonly : 1;
 } TotemEmbedded;
@@ -269,7 +271,7 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 
 	g_message ("Viewer state: %s", states[state]);
 
-	image = glade_xml_get_widget (emb->xml, "emb_pp_button_image");
+	image = gtk_button_get_image (GTK_BUTTON (emb->pp_button));
 
 	switch (state) {
 	case STATE_STOPPED:
@@ -369,10 +371,7 @@ totem_embedded_set_logo_by_name (TotemEmbedded *embedded,
 static void
 totem_embedded_set_pp_state (TotemEmbedded *emb, gboolean state)
 {
-	GtkWidget *item;
-
-	item = glade_xml_get_widget (emb->xml, "pp_button");
-	gtk_widget_set_sensitive (item, state);
+	gtk_widget_set_sensitive (emb->pp_button, state);
 }
 
 static gboolean
@@ -1151,6 +1150,8 @@ on_play_pause (GtkWidget *widget, TotemEmbedded *emb)
 	if (emb->state == STATE_PLAYING) {
 		totem_embedded_pause (emb, NULL);
 	} else {
+		totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (emb->pp_button), FALSE);
+
 		if (emb->current_uri == NULL) {
 			g_signal_emit (emb, signals[BUTTON_PRESS], 0,
 				       GDK_CURRENT_TIME, 0);
@@ -1374,7 +1375,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 			  int width,
 			  int height)
 {
-	GtkWidget *child, *container, *pp_button, *vbut;
+	GtkWidget *child, *container, *vbut;
 	BvwUseType type;
 	GError *err = NULL;
 	GConfClient *gc;
@@ -1459,8 +1460,8 @@ totem_embedded_construct (TotemEmbedded *emb,
 	g_signal_connect (emb->seek, "button-release-event",
 			  G_CALLBACK (cb_on_seek), emb);
 
-	pp_button = glade_xml_get_widget (emb->xml, "pp_button");
-	g_signal_connect (G_OBJECT (pp_button), "clicked",
+	emb->pp_button = glade_xml_get_widget (emb->xml, "pp_button");
+	g_signal_connect (G_OBJECT (emb->pp_button), "clicked",
 			  G_CALLBACK (on_play_pause), emb);
 
 	gc = gconf_client_get_default ();
@@ -1502,8 +1503,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 		rcstyle = gtk_rc_style_new ();
 		rcstyle->xthickness = rcstyle->ythickness = 0;
 
-		child = glade_xml_get_widget (emb->xml, "pp_button");
-		gtk_widget_modify_style (child, rcstyle);
+		gtk_widget_modify_style (emb->pp_button, rcstyle);
 		
 		child = glade_xml_get_widget (emb->xml, "time_hscale");
 		gtk_widget_modify_style (child, rcstyle);
@@ -1542,6 +1542,9 @@ totem_embedded_construct (TotemEmbedded *emb,
 			 GDK_HAND2);
 		totem_embedded_set_logo_by_name (emb, "totem");
 	}
+
+	if (!emb->hidden && emb->autostart == FALSE)
+		totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (emb->pp_button), TRUE);
 
 	return TRUE;
 }
@@ -1756,6 +1759,19 @@ totem_statusbar_create (void)
 
 	widget = totem_statusbar_new ();
 	gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (widget), FALSE);
+	gtk_widget_show (widget);
+
+	return widget;
+}
+
+G_MODULE_EXPORT GtkWidget *
+totem_pp_create (void)
+{
+	GtkWidget *widget, *image;
+
+	widget = totem_glow_button_new ();
+	image = gtk_image_new_from_stock (GTK_STOCK_MEDIA_PLAY, GTK_ICON_SIZE_MENU);
+	gtk_button_set_image (GTK_BUTTON (widget), image);
 	gtk_widget_show (widget);
 
 	return widget;

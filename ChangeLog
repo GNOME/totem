@@ -1,3 +1,15 @@
+2007-06-16  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/Makefile.am:
+	* browser-plugin/totem-glow-button.[ch]:
+	Add a "glow button" that will glow like the tasklist with urgency hint
+	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_set_state),
+	(totem_embedded_set_pp_state), (on_play_pause),
+	(totem_embedded_construct), (totem_pp_create):
+	* data/mozilla-viewer.glade: Make the play button glow when autostart
+	is off so that users know that they need to click play to see something
+	(Closes: #447363)
+
 2007-06-15  Philip Withnall  <pwithnall@svn.gnome.org>
 
 	* data/properties.glade:
