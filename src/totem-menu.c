@@ -1087,6 +1087,8 @@ about_action_callback (GtkAction *action, Totem *totem)
 				     "logo-icon-name", "totem",
 				     "license", license,
 				     "wrap-license", TRUE,
+				     "website-label", _("Totem Website"),
+				     "website", "http://www.gnome.org/projects/totem/",
 				     NULL);
 
 	g_free (backend_version);
