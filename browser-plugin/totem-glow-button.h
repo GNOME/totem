@@ -29,11 +29,9 @@
 
 G_BEGIN_DECLS
 
-#define TOTEM_TYPE_GLOW_BUTTON \
-  (totem_glow_button_get_type ())
-#define TOTEM_GLOW_BUTTON(obj) \
-  (G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_GLOW_BUTTON, \
-			       TotemGlowButton))
+#define TOTEM_TYPE_GLOW_BUTTON     (totem_glow_button_get_type ())
+#define TOTEM_GLOW_BUTTON(obj)     (G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_GLOW_BUTTON, TotemGlowButton))
+#define TOTEM_IS_GLOW_BUTTON(obj)  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TOTEM_TYPE_GLOW_BUTTON))
 
 typedef struct _TotemGlowButton TotemGlowButton;
 

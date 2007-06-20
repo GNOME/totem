@@ -1,5 +1,18 @@
 2007-06-20  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-glow-button.c:
+	(totem_glow_button_do_expose), (totem_glow_button_glow),
+	(take_screenshot), (totem_glow_button_expose),
+	(totem_glow_button_map), (totem_glow_button_unmap),
+	(totem_glow_button_class_init), (totem_glow_button_init),
+	(totem_glow_button_set_glow), (totem_glow_button_get_glow):
+	* browser-plugin/totem-glow-button.h:
+	When the animations are disabled, only draw the button in the highest
+	glowing state and stop. Stop drawing anything when the button is unmapped.
+	(comments on #447363)
+
+2007-06-20  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/Makefile.am:
 	* browser-plugin/idl/Makefile.am:
 	* configure.in: Patch from Andreas Hanke <andreas.hanke@gmx-topmail.de>
