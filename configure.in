@@ -501,7 +501,7 @@ if test "$enable_browser_plugins" = "yes" ; then
 	MOZILLA_LIBDIR="`$PKG_CONFIG $MOZILLA-xpcom --variable=libdir`"
 	MOZILLA_INCLUDE_ROOT="`$PKG_CONFIG --variable=includedir $MOZILLA-xpcom`"
 	MOZILLA_XPCOM_CFLAGS="-I`$PKG_CONFIG --variable=includedir $MOZILLA-xpcom`"
-	MOZILLA_PLUGINDIR="${MOZILLA_PLUGINDIR:-$MOZILLA_LIBDIR}"
+	MOZILLA_PLUGINDIR="${MOZILLA_PLUGINDIR:-"\${libdir}/mozilla/plugins"}"
 
 	AC_PATH_PROG([MOZILLA_XPIDL], [xpidl], [no], [$MOZILLA_LIBDIR:$PATH])
 	if test "x$MOZILLA_XPIDL" = "xno"; then

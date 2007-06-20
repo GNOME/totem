@@ -30,7 +30,7 @@ NARROWSPACE_IDLS = \
 MULLY_IDLS = \
 	totemIMullYPlayer.idl
 
-xptdir = $(libdir)/mozilla/plugins
+xptdir = $(MOZILLA_PLUGINDIR)
 xpt_DATA =
 
 ALL_IDLS =

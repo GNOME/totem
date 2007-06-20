@@ -1,6 +1,6 @@
 SUBDIRS = idl
 
-plugindir = $(libdir)/mozilla/plugins
+plugindir = $(MOZILLA_PLUGINDIR)
 plugin_LTLIBRARIES =
 
 BUILT_SOURCES =
