@@ -1,5 +1,15 @@
 2007-06-20  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/plparser.symbols: export totem_pl_resolve_url for
+	use in the test parser
+	* src/plparse/test-parser.c: (test_resolve_real), (test_resolve),
+	(main): add tests for totem_pl_resolve_url, to make sure we don't
+	regress bug #439041
+	* src/plparse/totem-pl-parser.c: (totem_pl_resolve_url): Fix parsing
+	of absolute URIs (Closes: #447598)
+
+2007-06-20  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totem-glow-button.c:
 	(totem_glow_button_do_expose), (totem_glow_button_glow),
 	(take_screenshot), (totem_glow_button_expose),

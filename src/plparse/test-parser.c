@@ -3,12 +3,14 @@
 #include <locale.h>
 
 #include <glib.h>
+#include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <libgnomevfs/gnome-vfs.h>
 
 #include "totem-pl-parser.h"
 #include "totem-pl-parser-mini.h"
+#include "totem-pl-parser-private.h"
 
 #define USE_DATA
 
@@ -28,6 +30,8 @@ header (const char *message)
 	g_print ("###################### %s ################\n", message);
 	g_print ("\n");
 }
+
+#define error(x...) { g_warning (x); exit(1); }
 
 #if 0
 static void
@@ -70,6 +74,30 @@ test_relative (void)
 			"/home/hadess/test/file.m3u");
 }
 #endif
+
+static void
+test_resolve_real (const char *base, const char *url, const char *expected)
+{
+	char *result;
+
+	result = totem_pl_resolve_url (base, url);
+	if (result == NULL)
+		error ("NULL output resolving '%s' with base '%s'", url, base);
+	if (strcmp (result, expected) != 0)
+		error ("Resolving '%s' with base '%s', different results than expected:\n'%s' instead of '%s'",
+		       url, base, result, expected);
+	g_print ("Resolved: '%s' with base '%s' to '%s'\n", url, base, result);
+	g_free (result);
+}
+
+static void
+test_resolve (void)
+{
+	header ("Resolve URL");
+
+	test_resolve_real ("http://localhost:12345/foobar", "/leopard.mov", "http://localhost:12345/leopard.mov");
+	test_resolve_real ("file:///home/hadess/Movies", "Movies/mymovie.mov", "file:///home/hadess/Movies/Movies/mymovie.mov");
+}
 
 static void
 entry_metadata_foreach (const char *key,
@@ -313,6 +341,7 @@ int main (int argc, char **argv)
 	}
 
 	if (files == NULL) {
+		test_resolve ();
 #if 0
 		test_relative ();
 #endif

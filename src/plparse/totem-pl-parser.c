@@ -836,13 +836,30 @@ totem_pl_resolve_url (const char *base, const char *url)
 	GnomeVFSURI *base_uri, *new;
 	char *resolved;
 
+	g_return_val_if_fail (url != NULL, NULL);
+	g_return_val_if_fail (base != NULL, g_strdup (url));
+
 	/* If the URI isn't relative, just leave */
 	if (strstr (url, "://") != NULL)
 		return g_strdup (url);
 
-	base_uri = gnome_vfs_uri_new (base);
+	/* gnome_vfs_uri_append_path is trying to be clever and
+	 * merges paths that look like they're the same */
+	if (url[0] != '/') {
+		char *newbase = g_strdup_printf ("%s/", base);
+		base_uri = gnome_vfs_uri_new (newbase);
+		g_free (newbase);
+	} else {
+		base_uri = gnome_vfs_uri_new (base);
+	}
+
 	g_return_val_if_fail (base_uri != NULL, g_strdup (url));
-	new = gnome_vfs_uri_append_file_name (base_uri, url);
+
+	if (url[0] == '/')
+		new = gnome_vfs_uri_resolve_symbolic_link (base_uri, url);
+	else
+		new = gnome_vfs_uri_append_path (base_uri, url);
+
 	g_return_val_if_fail (new != NULL, g_strdup (url));
 	gnome_vfs_uri_unref (base_uri);
 	resolved = gnome_vfs_uri_to_string (new, GNOME_VFS_URI_HIDE_NONE);
