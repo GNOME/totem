@@ -154,10 +154,13 @@ totem_action_save_state (Totem *totem)
 
 	if (totem->win == NULL)
 		return;
+	if (totem->window_w == 0
+	    || totem->window_h == 0)
+		return;
 
 	keyfile = g_key_file_new ();
 	g_key_file_set_integer (keyfile, "State",
-			"window_w", totem->window_w);
+				"window_w", totem->window_w);
 	g_key_file_set_integer (keyfile, "State",
 			"window_h", totem->window_h);
 	g_key_file_set_boolean (keyfile, "State",
@@ -199,9 +202,8 @@ totem_action_exit (Totem *totem)
 		display = gtk_widget_get_display (totem->win);
 	}
 
-	if (totem->prefs != NULL) {
+	if (totem->prefs != NULL)
 		gtk_widget_hide (totem->prefs);
-	}
 
 	totem_object_plugins_shutdown ();
 
@@ -219,8 +221,6 @@ totem_action_exit (Totem *totem)
 
 	bacon_message_connection_free (totem->conn);
 	totem_action_save_state (totem);
-
-	totem_action_fullscreen (totem, FALSE);
 
 	totem_sublang_exit (totem);
 	totem_destroy_file_filters ();
@@ -454,8 +454,7 @@ totem_action_load_media (Totem *totem, TotemDiscMediaType type, const char *devi
 	char *msg;
 	gboolean retval;
 
-	if (bacon_video_widget_can_play (totem->bvw, type) == FALSE)
-	{
+	if (bacon_video_widget_can_play (totem->bvw, type) == FALSE) {
 		msg = g_strdup_printf (_("Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."), _(totem_cd_get_human_readable_name (type)));
 		totem_action_error (msg, _("Please install the necessary plugins and restart Totem to be able to play this media."), totem);
 		g_free (msg);
@@ -561,8 +560,7 @@ totem_action_play_pause (Totem *totem)
 
 		/* Try to pull an mrl from the playlist */
 		mrl = totem_playlist_get_current_mrl (totem->playlist);
-		if (mrl == NULL)
-		{
+		if (mrl == NULL) {
 			play_pause_set_label (totem, STATE_STOPPED);
 			return;
 		} else {
@@ -585,8 +583,7 @@ totem_action_play_pause (Totem *totem)
 void
 totem_action_pause (Totem *totem)
 {
-	if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
-	{
+	if (bacon_video_widget_is_playing (totem->bvw) != FALSE) {
 		bacon_video_widget_pause (totem->bvw);
 		play_pause_set_label (totem, STATE_PAUSED);
 	}
@@ -601,11 +598,10 @@ totem_action_set_cursor (Totem *totem, gboolean state)
 
 static gboolean
 window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
-		Totem *totem)
+		       Totem *totem)
 {
 	if (event->changed_mask == GDK_WINDOW_STATE_MAXIMIZED) {
-		totem->maximised = (event->new_window_state
-				& GDK_WINDOW_STATE_MAXIMIZED) != 0;
+		totem->maximised = (event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED) != 0;
                 gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (totem->statusbar),
                                                    !totem->maximised);
 		totem_action_set_sensitivity ("zoom-1-2", !totem->maximised);
@@ -614,12 +610,12 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 		return FALSE;
 	}
 
-	if (event->changed_mask != GDK_WINDOW_STATE_FULLSCREEN) {
+	if (event->changed_mask != GDK_WINDOW_STATE_FULLSCREEN)
 		return FALSE;
-	}
 
 	if (event->new_window_state & GDK_WINDOW_STATE_FULLSCREEN) {
-		totem_action_save_size (totem);
+		if (totem->controls_visibility != TOTEM_CONTROLS_UNDEFINED)
+			totem_action_save_size (totem);
 		update_fullscreen_size (totem);
 		bacon_video_widget_set_fullscreen (totem->bvw, TRUE);
 		totem_action_set_cursor (totem, FALSE);
@@ -654,11 +650,10 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 void
 totem_action_fullscreen_toggle (Totem *totem)
 {
-	if (totem_is_fullscreen (totem) != FALSE) {
+	if (totem_is_fullscreen (totem) != FALSE)
 		gtk_window_unfullscreen (GTK_WINDOW (totem->win));
-	} else {
+	else
 		gtk_window_fullscreen (GTK_WINDOW (totem->win));
-	}
 }
 
 void
@@ -1808,10 +1803,8 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 	action = gtk_action_group_get_action (totem->main_action_group, "show-controls");
 	gtk_action_set_sensitive (action, !totem_is_fullscreen (totem));
 
-	if (totem->controls_visibility == TOTEM_CONTROLS_VISIBLE)
-	{
-		if (was_fullscreen == FALSE)
-		{
+	if (totem->controls_visibility == TOTEM_CONTROLS_VISIBLE) {
+		if (was_fullscreen == FALSE) {
 			height = widget->allocation.height;
 			width =	widget->allocation.width;
 		}
@@ -1846,8 +1839,7 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 		gtk_container_set_border_width (GTK_CONTAINER (bvw_box),
 				BVW_VBOX_BORDER_WIDTH);
 
-		if (was_fullscreen == FALSE)
-		{
+		if (was_fullscreen == FALSE) {
 			height += menubar->allocation.height
 				+ controlbar->allocation.height
 				+ statusbar->allocation.height
@@ -1857,8 +1849,7 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 					width, height);
 		}
 	} else {
-		if (totem->controls_visibility == TOTEM_CONTROLS_HIDDEN)
-		{
+		if (totem->controls_visibility == TOTEM_CONTROLS_HIDDEN) {
 			width = widget->allocation.width;
 			height = widget->allocation.height;
 		}
@@ -1874,8 +1865,7 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 		 /* We won't show controls in fullscreen */
 		gtk_container_set_border_width (GTK_CONTAINER (bvw_box), 0);
 
-		if (totem->controls_visibility == TOTEM_CONTROLS_HIDDEN)
-		{
+		if (totem->controls_visibility == TOTEM_CONTROLS_HIDDEN) {
 			gtk_window_resize (GTK_WINDOW(totem->win),
 					width, height);
 		}
@@ -2938,7 +2928,7 @@ totem_setup_window (Totem *totem)
 	} else if (totem->maximised != FALSE) {
 		gtk_window_maximize (GTK_WINDOW (totem->win));
 	}
-	
+
 	main_pane = glade_xml_get_widget (totem->xml, "tmw_main_pane");
 	g_signal_connect (G_OBJECT (main_pane), "size-allocate", G_CALLBACK (main_pane_size_allocated), totem);
 
@@ -3182,9 +3172,7 @@ video_widget_create (Totem *totem)
 	totem->bvw = BACON_VIDEO_WIDGET
 		(bacon_video_widget_new (-1, -1, BVW_USE_TYPE_VIDEO, &err));
 
-	if (totem->bvw == NULL)
-	{
-		gtk_widget_hide (totem->win);
+	if (totem->bvw == NULL) {
 		totem_action_error_and_exit (_("Totem could not startup."), err != NULL ? err->message : _("No reason."), totem);
 		if (err != NULL)
 			g_error_free (err);
@@ -3266,6 +3254,7 @@ video_widget_create (Totem *totem)
 	g_object_add_weak_pointer (G_OBJECT (totem->bvw),
 				   (gpointer *) bvw);
 
+	gtk_widget_realize (GTK_WIDGET (totem->bvw));
 	gtk_widget_show (GTK_WIDGET (totem->bvw));
 
 	bacon_video_widget_set_volume (totem->bvw,
@@ -3383,18 +3372,17 @@ main (int argc, char **argv)
 
 	/* IPC stuff */
 	totem->conn = bacon_message_connection_new (GETTEXT_PACKAGE);
-	if (bacon_message_connection_get_is_server (totem->conn) == FALSE)
-	{
+	totem->gc = gc;
+	if (bacon_message_connection_get_is_server (totem->conn) == FALSE) {
 		totem_options_process_for_server (totem->conn, &optionstate);
 		gdk_notify_startup_complete ();
 		totem_action_exit (totem);
 	} else {
-		totem_options_process_early (gc, &optionstate);
+		totem_options_process_early (totem, &optionstate);
 	}
 
 	/* Init totem itself */
 	totem->prev_volume = -1;
-	totem->gc = gc;
 	totem->cursor_shown = TRUE;
 
 	/* Main window */
@@ -3447,18 +3435,28 @@ main (int argc, char **argv)
 
 	/* Show ! gtk_main_iteration trickery to show all the widgets
 	 * we have so far */
-	gtk_widget_show (totem->win);
-	totem_gdk_window_set_waiting_cursor (totem->win->window);
-	update_fullscreen_size (totem);
-	long_action ();
+	if (optionstate.fullscreen == FALSE) {
+		gtk_widget_show (totem->win);
+		totem_gdk_window_set_waiting_cursor (totem->win->window);
+		update_fullscreen_size (totem);
+		long_action ();
+	} else {
+		gtk_widget_realize (totem->win);
+	}
 
-	totem->controls_visibility = TOTEM_CONTROLS_VISIBLE;
+	totem->controls_visibility = TOTEM_CONTROLS_UNDEFINED;
 
 	/* Show ! (again) the video widget this time. */
 	video_widget_create (totem);
-	long_action ();
 	gtk_widget_grab_focus (GTK_WIDGET (totem->bvw));
-	bacon_video_widget_set_logo (totem->bvw, LOGO_PATH);
+
+	if (optionstate.fullscreen != FALSE) {
+		totem_action_fullscreen (totem, TRUE);
+		long_action ();
+		gtk_widget_show (totem->win);
+		gdk_flush ();
+	}
+	long_action ();
 
 	/* The prefs after the video widget is connected */
 	totem_setup_preferences (totem);
@@ -3471,15 +3469,19 @@ main (int argc, char **argv)
 	//FIXME we should set the current page again, in case a plugin was
 	// the default page
 
-	if (totem->session_restored != FALSE)
-	{
+	if (totem->session_restored != FALSE) {
 		totem_session_restore (totem, optionstate.filenames);
 	} else if (optionstate.filenames != NULL && totem_action_open_files (totem, optionstate.filenames)) {
 		totem_action_play_pause (totem);
 	} else {
 		totem_action_set_mrl (totem, NULL);
 	}
-	gdk_window_set_cursor (totem->win->window, NULL);
+
+	/* Set the logo at the last minute so we won't try to show it before a video */
+	bacon_video_widget_set_logo (totem->bvw, LOGO_PATH);
+
+	if (optionstate.fullscreen == FALSE)
+		gdk_window_set_cursor (totem->win->window, NULL);
 
 	if (bacon_message_connection_get_is_server (totem->conn) != FALSE)
 	{

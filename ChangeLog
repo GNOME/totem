@@ -1,5 +1,30 @@
 2007-06-21  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.glade:
+	* src/totem-menu.c: (show_controls_action_callback):
+	* src/totem-options.c: (totem_options_process_late),
+	(totem_options_process_early):
+	* src/totem-options.h:
+	* src/totem-private.h:
+	* src/totem.c: (totem_action_save_state), (totem_action_exit),
+	(totem_action_load_media), (totem_action_play_pause),
+	(totem_action_pause), (window_state_event_cb),
+	(totem_action_fullscreen_toggle), (show_controls),
+	(video_widget_create), (main): Handle better having --fullscreen
+	passed to the master program (Helps: #376149)
+
+	* src/backend/bacon-video-widget-xine.c: (load_video_out_driver),
+	(bacon_video_widget_realize), (xine_event),
+	(bacon_video_widget_unrealize), (bacon_video_widget_show),
+	(bacon_video_widget_hide), (show_vfx_update),
+	(bacon_video_widget_open_with_subtitle),
+	(bacon_video_widget_set_show_cursor),
+	(bacon_video_widget_set_scale_ratio): Remove the video_window
+	struct member, it was barely used. Fix the double-buffering on the
+	widget being set/unset wrongly
+
+2007-06-21  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bacon_video_widget_realize), (bacon_video_widget_expose_event),
 	(parse_stream_info), (bacon_video_widget_set_logo_mode):

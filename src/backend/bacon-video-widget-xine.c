@@ -141,7 +141,6 @@ struct BaconVideoWidgetPrivate {
 	/* X stuff */
 	Display *display;
 	int screen;
-	GdkWindow *video_window;
 	GdkCursor *cursor;
 
 	/* Opening thread for fd://0 */
@@ -648,7 +647,7 @@ load_video_out_driver (BaconVideoWidget *bvw, BvwUseType type)
 
 	vis.display = bvw->priv->display;
 	vis.screen = bvw->priv->screen;
-	vis.d = GDK_WINDOW_XID (bvw->priv->video_window);
+	vis.d = GDK_WINDOW_XID (GTK_WIDGET(bvw)->window);
 	res_h = (DisplayWidth (bvw->priv->display, bvw->priv->screen) * 1000 /
 			DisplayWidthMM (bvw->priv->display,
 				bvw->priv->screen));
@@ -1185,8 +1184,6 @@ bacon_video_widget_realize (GtkWidget *widget)
 	gdk_flush ();
 	gdk_window_set_user_data (widget->window, bvw);
 
-	bvw->priv->video_window = widget->window;
-
 	gdk_color_parse ("Black", &black);
 	gdk_colormap_alloc_color (gtk_widget_get_colormap (widget),
 				  &black, TRUE, TRUE);
@@ -1447,8 +1444,8 @@ xine_event (void *user_data, const xine_event_t *event)
 				bvw->priv->cursor = NULL;
 			}
 		}
-		gdk_window_set_cursor (bvw->priv->video_window,
-				bvw->priv->cursor);
+		gdk_window_set_cursor (GTK_WIDGET(bvw)->window,
+				       bvw->priv->cursor);
 		break;
 	case XINE_EVENT_UI_PLAYBACK_FINISHED:
 		if (bvw->priv->got_redirect != FALSE)
@@ -1639,7 +1636,7 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 
 	xine_port_send_gui_data (bvw->priv->vo_driver,
 			XINE_GUI_SEND_WILL_DESTROY_DRAWABLE,
-			(void*)bvw->priv->video_window);
+			(void*)widget->window);
 
 	/* Hide all windows */
 	if (GTK_WIDGET_MAPPED (widget))
@@ -1913,9 +1910,8 @@ bacon_video_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 static void
 bacon_video_widget_show (GtkWidget *widget)
 {
-	BaconVideoWidget *bvw = (BaconVideoWidget *) widget;
-
-	gdk_window_show (bvw->priv->video_window);
+	if (widget->window != NULL)
+		gdk_window_show (widget->window);
 
 	if (GTK_WIDGET_CLASS (parent_class)->show != NULL)
 		(* GTK_WIDGET_CLASS (parent_class)->show) (widget);
@@ -1924,9 +1920,8 @@ bacon_video_widget_show (GtkWidget *widget)
 static void
 bacon_video_widget_hide (GtkWidget *widget)
 {
-	BaconVideoWidget *bvw = (BaconVideoWidget *) widget;
-
-	gdk_window_hide (bvw->priv->video_window);
+	if (widget->window != NULL)
+		gdk_window_hide (widget->window);
 
 	if (GTK_WIDGET_CLASS (parent_class)->hide != NULL)
 		(* GTK_WIDGET_CLASS (parent_class)->hide) (widget);
@@ -2068,14 +2063,13 @@ show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals)
 
 	/* Already has video, and we were showing visual effects */
 	if (has_video != FALSE && show_visuals != FALSE
-			&& bvw->priv->using_vfx != FALSE)
-	{
+			&& bvw->priv->using_vfx != FALSE) {
 		enable = FALSE;
+		GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
 	/* Doesn't have video, should show visual effects, and wasn't doing
 	 * so before */
 	} else if (has_video == FALSE && show_visuals != FALSE
-			&& bvw->priv->using_vfx == FALSE)
-	{
+			&& bvw->priv->using_vfx == FALSE) {
 		if (bvw->priv->vis == NULL) {
 			bvw->priv->vis = xine_post_init (bvw->priv->xine,
 					bvw->priv->vis_name, 0,
@@ -2090,12 +2084,19 @@ show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals)
 		}
 		if (bvw->priv->vis != NULL) {
 			enable = TRUE;
+			GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
 		}
 	/* Doesn't have video, but visual effects are disabled */
 	} else if (has_video == FALSE && show_visuals == FALSE) {
 		enable = FALSE;
-	/* No changes */
+		GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
+	/* No changes, but has video */
+	} else if (has_video != FALSE) {
+		GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
+		return;
+	/* No changes but doesn't have video */
 	} else {
+		GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
 		return;
 	}
 
@@ -2106,7 +2107,6 @@ show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals)
 			bvw->priv->using_vfx = FALSE;
 
 			/* Queue a redraw of the widget */
-			GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
 			gtk_widget_queue_draw (GTK_WIDGET (bvw));
 		}
 		if (bvw->priv->vis != NULL) {
@@ -2121,7 +2121,6 @@ show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals)
 			bvw->priv->using_vfx = TRUE;
 
 			/* Queue a redraw of the widget */
-			GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
 			gtk_widget_queue_draw (GTK_WIDGET (bvw));
 		}
 	}
@@ -2382,11 +2381,9 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 		return FALSE;
 	}
 
-	if (xine_get_stream_info (bvw->priv->stream,
-				XINE_STREAM_INFO_HAS_VIDEO) == FALSE
-		&& bvw->priv->type != BVW_USE_TYPE_METADATA
-		&& bvw->priv->ao_driver == NULL)
-	{
+	if (xine_get_stream_info (bvw->priv->stream, XINE_STREAM_INFO_HAS_VIDEO) == FALSE
+	    && bvw->priv->type != BVW_USE_TYPE_METADATA
+	    && bvw->priv->ao_driver == NULL) {
 		bacon_video_widget_close (bvw);
 
 		g_set_error (error, BVW_ERROR, BVW_ERROR_AUDIO_ONLY,
@@ -2942,17 +2939,17 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 
 void
 bacon_video_widget_set_show_cursor (BaconVideoWidget *bvw,
-		gboolean show_cursor)
+				    gboolean show_cursor)
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
 	if (show_cursor == FALSE)
 	{
-		totem_gdk_window_set_invisible_cursor (bvw->priv->video_window);
+		totem_gdk_window_set_invisible_cursor (GTK_WIDGET(bvw)->window);
 	} else {
-		gdk_window_set_cursor (bvw->priv->video_window,
-				bvw->priv->cursor);
+		gdk_window_set_cursor (GTK_WIDGET(bvw)->window,
+				       bvw->priv->cursor);
 	}
 
 	bvw->priv->cursor_shown = show_cursor;
@@ -3481,17 +3478,16 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 			|| bvw->priv->logo_mode != FALSE)
 		return;
 
+	widget = GTK_WIDGET (bvw);
+
 	/* Try best fit for the screen */
 	if (ratio == 0)
 	{
-		if (totem_ratio_fits_screen (bvw->priv->video_window, bvw->priv->video_width, bvw->priv->video_height, 2) != FALSE)
-		{
+		if (totem_ratio_fits_screen (widget->window, bvw->priv->video_width, bvw->priv->video_height, 2) != FALSE) {
 			ratio = 2;
-		} else if (totem_ratio_fits_screen (bvw->priv->video_window, bvw->priv->video_width, bvw->priv->video_height, 1)
-				!= FALSE) {
+		} else if (totem_ratio_fits_screen (widget->window, bvw->priv->video_width, bvw->priv->video_height, 1) != FALSE) {
 			ratio = 1;
-		} else if (totem_ratio_fits_screen (bvw->priv->video_window, bvw->priv->video_width, bvw->priv->video_height, 0.5)
-				!= FALSE) {
+		} else if (totem_ratio_fits_screen (widget->window, bvw->priv->video_width, bvw->priv->video_height, 0.5) != FALSE) {
 			ratio = 0.5;
 		} else {
 			return;
@@ -3499,11 +3495,9 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 	} else {
 		/* don't scale to something bigger than the screen, and leave
 		 * us some room */
-		if (totem_ratio_fits_screen (bvw->priv->video_window, bvw->priv->video_width, bvw->priv->video_height, ratio) == FALSE)
+		if (totem_ratio_fits_screen (widget->window, bvw->priv->video_width, bvw->priv->video_height, ratio) == FALSE)
 			return;
 	}
-
-	widget = GTK_WIDGET (bvw);
 
 	toplevel = gtk_widget_get_toplevel (widget);
 

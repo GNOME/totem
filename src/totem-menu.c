@@ -1182,6 +1182,8 @@ show_controls_action_callback (GtkToggleAction *action, Totem *totem)
 
 	show = gtk_toggle_action_get_active (action);
 
+	g_message ("show_controls_action_callback %d", show);
+
 	/* Let's update our controls visibility */
 	if (show)
 		totem->controls_visibility = TOTEM_CONTROLS_VISIBLE;

@@ -59,9 +59,6 @@ const GOptionEntry options[] = {
 void
 totem_options_process_late (Totem *totem, const TotemCmdLineOptions* options)
 {
-	if (options->fullscreen) 
-		totem_action_fullscreen_toggle (totem);
-
 	if (options->togglecontrols) 
 		totem_action_toggle_controls (totem);
 
@@ -73,16 +70,15 @@ totem_options_process_late (Totem *totem, const TotemCmdLineOptions* options)
 }
 
 void
-totem_options_process_early (GConfClient *gc, const TotemCmdLineOptions* options)
+totem_options_process_early (Totem *totem, const TotemCmdLineOptions* options)
 {
-	if (options->quit) 
-	{
+	if (options->quit) {
 		/* If --quit is one of the commands, just quit */
 		gdk_notify_startup_complete ();
 		exit (0);
 	}
 
-	gconf_client_set_bool (gc, GCONF_PREFIX"/debug",
+	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/debug",
 			       options->debug, NULL);
 }
 

@@ -57,7 +57,7 @@ typedef struct
 extern const GOptionEntry options[];
 extern TotemCmdLineOptions optionstate;
 
-void totem_options_process_early (GConfClient *gc, 
+void totem_options_process_early (Totem *totem,
 	const TotemCmdLineOptions* options);
 void totem_options_process_late (Totem *totem, 
 	const TotemCmdLineOptions* options);
