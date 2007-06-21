@@ -28,7 +28,7 @@
 #ifndef HAVE_BACON_VIDEO_WIDGET_H
 #define HAVE_BACON_VIDEO_WIDGET_H
 
-#include <gtk/gtkbox.h>
+#include <gtk/gtkeventbox.h>
 
 /* for optical disc enumeration type */
 #include "totem-disc.h"
@@ -46,13 +46,13 @@ typedef struct BaconVideoWidgetPrivate BaconVideoWidgetPrivate;
 typedef struct BaconVideoWidgetCommon BaconVideoWidgetCommon;
 
 typedef struct {
-	GtkBox parent;
+	GtkEventBox parent;
 	BaconVideoWidgetCommon *com;
 	BaconVideoWidgetPrivate *priv;
 } BaconVideoWidget;
 
 typedef struct {
-	GtkBoxClass parent_class;
+	GtkEventBoxClass parent_class;
 
 	void (*error) (GtkWidget *bvw, const char *message,
                        gboolean playback_stopped, gboolean fatal);

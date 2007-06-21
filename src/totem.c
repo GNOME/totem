@@ -1793,7 +1793,7 @@ void
 show_controls (Totem *totem, gboolean was_fullscreen)
 {
 	GtkAction *action;
-	GtkWidget *menubar, *controlbar, *statusbar, *bvw_vbox, *widget;
+	GtkWidget *menubar, *controlbar, *statusbar, *bvw_box, *widget;
 	int width = 0, height = 0;
 
 	if (totem->bvw == NULL)
@@ -1802,7 +1802,7 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 	menubar = glade_xml_get_widget (totem->xml, "tmw_menubar_box");
 	controlbar = glade_xml_get_widget (totem->xml, "tmw_controls_vbox");
 	statusbar = glade_xml_get_widget (totem->xml, "tmw_statusbar");
-	bvw_vbox = glade_xml_get_widget (totem->xml, "tmw_bvw_vbox");
+	bvw_box = glade_xml_get_widget (totem->xml, "tmw_bvw_box");
 	widget = GTK_WIDGET (totem->bvw);
 
 	action = gtk_action_group_get_action (totem->main_action_group, "show-controls");
@@ -1843,7 +1843,7 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 			gtk_widget_hide (totem->sidebar);
 		}
 
-		gtk_container_set_border_width (GTK_CONTAINER (bvw_vbox),
+		gtk_container_set_border_width (GTK_CONTAINER (bvw_box),
 				BVW_VBOX_BORDER_WIDTH);
 
 		if (was_fullscreen == FALSE)
@@ -1872,7 +1872,7 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 		gtk_widget_hide (totem->sidebar);
 
 		 /* We won't show controls in fullscreen */
-		gtk_container_set_border_width (GTK_CONTAINER (bvw_vbox), 0);
+		gtk_container_set_border_width (GTK_CONTAINER (bvw_box), 0);
 
 		if (totem->controls_visibility == TOTEM_CONTROLS_HIDDEN)
 		{
@@ -2866,11 +2866,12 @@ static void
 totem_setup_window (Totem *totem)
 {
 	GKeyFile *keyfile;
-	int w, h;
+	int w, h, i;
 	gboolean show_sidebar;
 	char *filename, *page_id;
 	GError *err = NULL;
-	GtkWidget *main_pane;
+	GtkWidget *main_pane, *vbox;
+	GdkColor black;
 
 	filename = g_build_filename (totem_dot_dir (), "state.ini", NULL);
 	keyfile = g_key_file_new ();
@@ -2940,6 +2941,12 @@ totem_setup_window (Totem *totem)
 	
 	main_pane = glade_xml_get_widget (totem->xml, "tmw_main_pane");
 	g_signal_connect (G_OBJECT (main_pane), "size-allocate", G_CALLBACK (main_pane_size_allocated), totem);
+
+	/* Set the vbox to be completely black */
+	vbox = glade_xml_get_widget (totem->xml, "tmw_bvw_box");
+	gdk_color_parse ("Black", &black);
+	for (i = 0; i <= GTK_STATE_INSENSITIVE; i++)
+		gtk_widget_modify_bg (vbox, i, &black);
 
 	totem_sidebar_setup (totem, show_sidebar, page_id);
         g_free (page_id);
@@ -3160,7 +3167,6 @@ playlist_widget_setup (Totem *totem)
 			"shuffle-toggled",
 			G_CALLBACK (playlist_shuffle_toggle_cb),
 			totem);
-
 }
 
 static void
@@ -3231,7 +3237,7 @@ video_widget_create (Totem *totem)
 
 	totem_missing_plugins_setup (totem);
 
-	container = glade_xml_get_widget (totem->xml, "tmw_bvw_vbox");
+	container = glade_xml_get_widget (totem->xml, "tmw_bvw_box");
 	gtk_container_add (GTK_CONTAINER (container),
 			GTK_WIDGET (totem->bvw));
 
@@ -3398,7 +3404,7 @@ main (int argc, char **argv)
 		totem_action_exit (NULL);
 
 	totem->win = glade_xml_get_widget (totem->xml, "totem_main_window");
-	
+
 	/* Menubar */
 	totem_ui_manager_setup (totem);
 

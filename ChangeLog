@@ -1,3 +1,44 @@
+2007-06-21  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_realize), (bacon_video_widget_expose_event),
+	(parse_stream_info), (bacon_video_widget_set_logo_mode):
+	Default to having a black background on the window, faster to clear,
+	use double-buffering when in logo mode, or drawing the logo for
+	audio-only files
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_draw_logo), (frame_output_cb),
+	(bacon_video_widget_realize), (bacon_video_widget_expose),
+	(show_vfx_update), (bacon_video_widget_set_logo_mode):
+	same as for the GStreamer backend, but also tell xine-lib to draw
+	where the sun doesn't shine (not in the visible area), so that
+	it doesn't try to overwrite our logo when having played a video
+
+	* src/backend/bacon-video-widget.h: make it a child of an eventbox
+	so it has a backing window by default
+
+	* data/totem.glade: Make the video vbox an event box, so it has
+	a backing window
+	* src/totem.c: (show_controls), (totem_setup_window),
+	(playlist_widget_setup), (video_widget_create): Draw a nice black
+	background, so that the video area appears black before the
+	video widget is ready
+
+2007-06-21  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem.glade: Make the video vbox an event box, so it has
+	a backing window
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_realize), (bacon_video_widget_expose_event),
+	(bacon_video_widget_set_logo_mode):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_realize), (bacon_video_widget_expose),
+	(bacon_video_widget_set_logo_mode):
+	* src/backend/bacon-video-widget.h:
+	* src/totem.c: (show_controls), (totem_setup_window),
+	(video_widget_create):
+
 2007-06-20  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/plparser.symbols: export totem_pl_resolve_url for

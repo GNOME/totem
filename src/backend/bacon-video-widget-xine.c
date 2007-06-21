@@ -286,7 +286,7 @@ static void show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals);
 
 static int bvw_table_signals[LAST_SIGNAL] = { 0 };
 
-G_DEFINE_TYPE(BaconVideoWidget, bacon_video_widget, GTK_TYPE_BOX)
+G_DEFINE_TYPE(BaconVideoWidget, bacon_video_widget, GTK_TYPE_EVENT_BOX)
 
 static void
 bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
@@ -507,6 +507,27 @@ bacon_video_widget_finalize (GObject *object)
 	g_free (bvw->com);
 }
 
+static gboolean
+bacon_video_widget_draw_logo (BaconVideoWidget *bvw)
+{
+	gboolean draw_logo, has_video;
+
+	/* draw the logo in logo mode */
+	if (bvw->priv->logo_mode != FALSE)
+		return TRUE;
+
+	/* We're probably shutting down when this happens */
+	if (bvw->priv->stream == NULL)
+		return TRUE;
+
+	/* if there's only audio and no visualisation, draw the logo as well */
+	has_video = xine_get_stream_info(bvw->priv->stream,
+					 XINE_STREAM_INFO_HAS_VIDEO);
+	draw_logo = !has_video && !bvw->priv->using_vfx;
+
+	return draw_logo;
+}
+
 static void
 dest_size_cb (void *data,
 	      int video_width, int video_height,
@@ -542,9 +563,13 @@ frame_output_cb (void *bvw_gen,
 
 	if (bvw == NULL || bvw->priv == NULL)
 		return;
-	if (bvw->priv->logo_mode != FALSE) {
-		*dest_x = bvw->priv->dest_x;
-		*dest_y = bvw->priv->dest_y;
+
+	if (bacon_video_widget_draw_logo (bvw) != FALSE) {
+		/* display the video outside the window,
+		 * otherwise xine-lib will show stuff on top
+		 * of our logo */
+		*dest_x = - bvw->priv->dest_width;
+		*dest_y = - bvw->priv->dest_height;
 		*dest_width = bvw->priv->dest_width;
 		*dest_height = bvw->priv->dest_height;
 		*win_x = bvw->priv->win_x;
@@ -1129,6 +1154,7 @@ static void
 bacon_video_widget_realize (GtkWidget *widget)
 {
 	GdkWindowAttr attr;
+	GdkColor black;
 	BaconVideoWidget *bvw;
 
 	bvw = BACON_VIDEO_WIDGET (widget);
@@ -1161,12 +1187,11 @@ bacon_video_widget_realize (GtkWidget *widget)
 
 	bvw->priv->video_window = widget->window;
 
+	gdk_color_parse ("Black", &black);
+	gdk_colormap_alloc_color (gtk_widget_get_colormap (widget),
+				  &black, TRUE, TRUE);
+	gdk_window_set_background (widget->window, &black);
 	widget->style = gtk_style_attach (widget->style, widget->window);
-
-	/* Set a black background */
-	gdk_draw_rectangle (widget->window, widget->style->black_gc, TRUE,
-			attr.x, attr.y,
-			attr.width, attr.height);
 
 	/* track configure events of toplevel window */
 	g_signal_connect (G_OBJECT (gtk_widget_get_toplevel (widget)),
@@ -1773,14 +1798,8 @@ static gboolean
 bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 {
 	BaconVideoWidget *bvw = (BaconVideoWidget *) widget;
-	gboolean draw_logo, has_video;
 
-	/* if there's only audio and no visualisation, draw the logo as well */
-	has_video = xine_get_stream_info(bvw->priv->stream,
-			XINE_STREAM_INFO_HAS_VIDEO);
-	draw_logo = !has_video && !bvw->priv->using_vfx;
-
-	if (bvw->priv->logo_mode == FALSE && draw_logo == FALSE) {
+	if (bacon_video_widget_draw_logo (bvw) == FALSE) {
 		XExposeEvent *expose;
 
 		if (event->count != 0)
@@ -1797,15 +1816,27 @@ bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 		int s_width, s_height, w_width, w_height;
 		GdkPixbuf *logo = NULL;
 		gfloat ratio;
+		GdkRegion *region;
+		GdkRectangle rect;
 
-		/* Start with a nice black canvas */
-		gdk_draw_rectangle (widget->window, widget->style->black_gc,
-				TRUE, 0, 0,
-				widget->allocation.width,
-				widget->allocation.height);
+		rect.x = rect.y = 0;
+		rect.width = widget->allocation.width;
+		rect.height = widget->allocation.height;
+		region = gdk_region_rectangle (&rect);
 
-		if (bvw->priv->logo_pixbuf == NULL)
+		gdk_window_begin_paint_region (widget->window,
+					       region);
+		gdk_region_destroy (region);
+
+		gdk_window_clear_area (widget->window,
+				       0, 0,
+				       widget->allocation.width,
+				       widget->allocation.height);
+
+		if (bvw->priv->logo_pixbuf == NULL) {
+			gdk_window_end_paint (widget->window);
 			return FALSE;
+		}
 
 		s_width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
 		s_height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
@@ -1821,8 +1852,10 @@ bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 		s_width *= ratio;
 		s_height *= ratio;
 
-		if (s_width <= 1 || s_height <= 1)
+		if (s_width <= 1 || s_height <= 1) {
+			gdk_window_end_paint (widget->window);
 			return FALSE;
+		}
 
 		logo = gdk_pixbuf_scale_simple (bvw->priv->logo_pixbuf,
 				s_width, s_height, GDK_INTERP_BILINEAR);
@@ -1833,6 +1866,7 @@ bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 				(w_height - s_height) / 2,
 				s_width, s_height, GDK_RGB_DITHER_NONE, 0, 0);
 
+		gdk_window_end_paint (widget->window);
 		g_object_unref (logo);
 	}
 
@@ -2072,6 +2106,7 @@ show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals)
 			bvw->priv->using_vfx = FALSE;
 
 			/* Queue a redraw of the widget */
+			GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
 			gtk_widget_queue_draw (GTK_WIDGET (bvw));
 		}
 		if (bvw->priv->vis != NULL) {
@@ -2086,6 +2121,7 @@ show_vfx_update (BaconVideoWidget *bvw, gboolean show_visuals)
 			bvw->priv->using_vfx = TRUE;
 
 			/* Queue a redraw of the widget */
+			GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
 			gtk_widget_queue_draw (GTK_WIDGET (bvw));
 		}
 	}
@@ -2656,6 +2692,11 @@ bacon_video_widget_set_logo_mode (BaconVideoWidget *bvw, gboolean logo_mode)
 
 		/* Queue a redraw of the widget */
 		gtk_widget_queue_draw (GTK_WIDGET (bvw));
+
+		if (logo_mode == FALSE)
+			GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
+		else
+			GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
 
 		/* And set a decent size for the video output */
 		if (logo_mode != FALSE && bvw->priv->logo_pixbuf != NULL) {

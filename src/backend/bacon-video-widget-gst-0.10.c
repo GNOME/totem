@@ -575,11 +575,11 @@ bacon_video_widget_realize (GtkWidget * widget)
   gdk_window_set_user_data (bvw->priv->video_window, widget);
 
   gdk_color_parse ("black", &colour);
-  gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, &colour);
+  gdk_colormap_alloc_color (gtk_widget_get_colormap (widget),
+			    &colour, TRUE, TRUE);
+  gdk_window_set_background (widget->window, &colour);
   widget->style = gtk_style_attach (widget->style, widget->window);
-  gtk_style_set_background (widget->style, widget->window, GTK_STATE_NORMAL);
 
-  gdk_window_set_background (bvw->priv->video_window, &colour);
   GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
   
   /* Connect to configure event on the top level window */
@@ -713,6 +713,22 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
       GdkPixbuf *logo = NULL;
       gint s_width, s_height, w_width, w_height;
       gfloat ratio;
+      GdkRegion *region;
+      GdkRectangle rect;
+
+      rect.x = rect.y = 0;
+      rect.width = widget->allocation.width;
+      rect.height = widget->allocation.height;
+      region = gdk_region_rectangle (&rect);
+
+      gdk_window_begin_paint_region (widget->window,
+				     region);
+      gdk_region_destroy (region);
+
+      gdk_window_clear_area (widget->window,
+			     0, 0,
+			     widget->allocation.width,
+			     widget->allocation.height);
 
       s_width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
       s_height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
@@ -731,6 +747,7 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
       if (s_width <= 1 || s_height <= 1) {
         if (xoverlay != NULL)
 	  gst_object_unref (xoverlay);
+	gdk_window_end_paint (widget->window);
 	return TRUE;
       }
 
@@ -741,13 +758,14 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
           0, 0, (w_width - s_width) / 2, (w_height - s_height) / 2,
           s_width, s_height, GDK_RGB_DITHER_NONE, 0, 0);
 
+      gdk_window_end_paint (widget->window);
       g_object_unref (logo);
     } else if (widget->window) {
       /* No pixbuf, just draw a black background then */
-      gdk_draw_rectangle (widget->window, widget->style->black_gc, 
-                         TRUE, 0, 0,
-                         widget->allocation.width,
-                         widget->allocation.height);
+      gdk_window_clear_area (widget->window,
+			     0, 0,
+			     widget->allocation.width,
+			     widget->allocation.height);
     }
   } else {
     /* no logo, pass the expose to gst */
@@ -755,10 +773,10 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
       gst_x_overlay_expose (xoverlay);
     else {
       /* No xoverlay to expose yet */
-      gdk_draw_rectangle (bvw->priv->video_window, widget->style->black_gc, 
-                         TRUE, 0, 0,
-                         bvw->priv->video_window_allocation.width,
-                         bvw->priv->video_window_allocation.height);
+      gdk_window_clear_area (widget->window,
+			     0, 0,
+			     widget->allocation.width,
+			     widget->allocation.height);
     }
   }
   if (xoverlay != NULL)
@@ -1811,8 +1829,10 @@ parse_stream_info (BaconVideoWidget *bvw)
     if (!bvw->priv->media_has_video && bvw->priv->video_window) {
       if (bvw->priv->show_vfx) {
         gdk_window_show (bvw->priv->video_window);
+	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
       } else {
         gdk_window_hide (bvw->priv->video_window);
+	GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
       }
     }
   }
@@ -3074,8 +3094,10 @@ bacon_video_widget_set_logo_mode (BaconVideoWidget * bvw, gboolean logo_mode)
     if (priv->video_window) {
       if (logo_mode) {
         gdk_window_hide (priv->video_window);
+	GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
       } else {
         gdk_window_show (priv->video_window);
+	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
       }
     }
 
@@ -4596,7 +4618,7 @@ cb_gconf (GConfClient * client,
 /*                                             */
 /* =========================================== */
 
-G_DEFINE_TYPE(BaconVideoWidget, bacon_video_widget, GTK_TYPE_BOX)
+G_DEFINE_TYPE(BaconVideoWidget, bacon_video_widget, GTK_TYPE_EVENT_BOX)
 
 /* applications must use exactly one of bacon_video_widget_get_option_group()
  * OR bacon_video_widget_init_backend(), but not both */
