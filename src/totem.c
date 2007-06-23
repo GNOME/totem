@@ -3334,9 +3334,10 @@ main (int argc, char **argv)
 	g_thread_init (NULL);
 
 	/* Handle command line arguments */
-	context = g_option_context_new (_("- Play movies and songs"));
+	context = g_option_context_new (N_("- Play movies and songs"));
 	baconoptiongroup = bacon_video_widget_get_option_group();
 	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
+	g_option_context_set_translation_domain(context, GETTEXT_PACKAGE);
 	g_option_context_add_group (context, baconoptiongroup);
 
 #ifdef HAVE_GTK_ONLY
