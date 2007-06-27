@@ -1,3 +1,10 @@
+2007-06-27  Philip Withnall  <pwithnall@svn.gnome.org>
+
+	* src/totem-menu.c: (totem_setup_recent):
+	* src/totem-open-location.c: (totem_open_location_new): Convert to
+	using gtk_recent_manager_get_default, as the per-screen constructor
+	is now deprecated. (Closes: #449225)
+
 2007-06-23  Gabor Kelemen  <kelemeng@gnome.hu>
 
 	* src/totem.c: Use g_option_context_set_translation_domain to translate 

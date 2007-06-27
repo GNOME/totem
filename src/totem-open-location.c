@@ -189,8 +189,7 @@ totem_open_location_new (Totem *totem)
 	model = GTK_TREE_MODEL (gtk_list_store_new (1, G_TYPE_STRING));
 	gtk_entry_set_completion (GTK_ENTRY (open_location->priv->uri_entry), completion);
 
-	recent_items = gtk_recent_manager_get_items (gtk_recent_manager_get_for_screen (
-				gtk_widget_get_screen (GTK_WIDGET (open_location))));
+	recent_items = gtk_recent_manager_get_items (gtk_recent_manager_get_default ());
 
 	if (recent_items != NULL)
 	{
