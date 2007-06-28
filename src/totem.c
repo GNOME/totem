@@ -600,7 +600,7 @@ static gboolean
 window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 		       Totem *totem)
 {
-	if (event->changed_mask == GDK_WINDOW_STATE_MAXIMIZED) {
+	if (event->changed_mask & GDK_WINDOW_STATE_MAXIMIZED) {
 		totem->maximised = (event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED) != 0;
                 gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (totem->statusbar),
                                                    !totem->maximised);
@@ -610,7 +610,7 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 		return FALSE;
 	}
 
-	if (event->changed_mask != GDK_WINDOW_STATE_FULLSCREEN)
+	if ((event->changed_mask & GDK_WINDOW_STATE_FULLSCREEN) == 0)
 		return FALSE;
 
 	if (event->new_window_state & GDK_WINDOW_STATE_FULLSCREEN) {

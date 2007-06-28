@@ -1,3 +1,10 @@
+2007-06-28  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-menu.c: (totem_action_add_recent): fix valgrind error
+	with a not-fully initialised GtkRecentData
+	* src/totem.c: (window_state_event_cb): fix tests when more than
+	one flag has changed
+
 2007-06-27  Philip Withnall  <pwithnall@svn.gnome.org>
 
 	* src/totem-menu.c: (totem_setup_recent):
@@ -61,20 +68,6 @@
 	(playlist_widget_setup), (video_widget_create): Draw a nice black
 	background, so that the video area appears black before the
 	video widget is ready
-
-2007-06-21  Bastien Nocera  <hadess@hadess.net>
-
-	* data/totem.glade: Make the video vbox an event box, so it has
-	a backing window
-	* src/backend/bacon-video-widget-gst-0.10.c:
-	(bacon_video_widget_realize), (bacon_video_widget_expose_event),
-	(bacon_video_widget_set_logo_mode):
-	* src/backend/bacon-video-widget-xine.c:
-	(bacon_video_widget_realize), (bacon_video_widget_expose),
-	(bacon_video_widget_set_logo_mode):
-	* src/backend/bacon-video-widget.h:
-	* src/totem.c: (show_controls), (totem_setup_window),
-	(video_widget_create):
 
 2007-06-20  Bastien Nocera  <hadess@hadess.net>
 

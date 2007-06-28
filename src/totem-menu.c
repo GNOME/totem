@@ -629,6 +629,8 @@ totem_action_add_recent (Totem *totem, const char *filename)
 	GtkRecentData data;
 	char *groups[] = { NULL, NULL };
 
+	memset (&data, 0, sizeof (data));
+
 	data.mime_type = gnome_vfs_get_mime_type (filename);
 	if (data.mime_type == NULL) {
 		/* No mime-type means warnings, and it breaks when adding
@@ -656,12 +658,11 @@ totem_action_add_recent (Totem *totem, const char *filename)
 		groups[0] = "Totem";
 	}
 
-	data.description = NULL;
 	data.app_name = g_strdup (g_get_application_name ());
 	data.app_exec = g_strjoin (" ", g_get_prgname (), "%u", NULL);
 	data.groups = groups;
 	gtk_recent_manager_add_full (totem->recent_manager,
-			filename, &data);
+				     filename, &data);
 
 	g_free (data.display_name);
 	g_free (data.mime_type);
