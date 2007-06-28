@@ -1,3 +1,13 @@
+2007-06-29  Jan Arne Petersen  <jpetersen@jpetersen.org>
+
+	* data/playlist.glade:
+	* src/ev-sidebar.c: (ev_sidebar_destroy),
+	(ev_sidebar_combobox_changed_cb), (ev_sidebar_init),
+	(ev_sidebar_get_current_page), (ev_sidebar_get_iter_for_page_id),
+	(ev_sidebar_set_current_page), (ev_sidebar_add_page),
+	(ev_sidebar_remove_page): Use a default GtkComboBox instead of the
+	custom button menu combination (Closes #397776)
+
 2007-06-28  Christian Persch  <chpe@gnome.org>
 
         * src/totem.c:
