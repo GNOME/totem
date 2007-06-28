@@ -1,5 +1,14 @@
 2007-06-28  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_init): patch from Sunil Mohan Adapa
+	<sunilmohan@gnu.org.in> to not mark the video widget as having
+	no backing window (Helps: #354181)
+	* src/totem-private.h:
+	* src/totem.c: (main): Remove unused ->fsvolume widget
+
+2007-06-28  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totem-plugin-viewer.c: (cb_vol),
 	(totem_embedded_construct), (totem_volume_create):
 	* configure.in:

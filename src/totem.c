@@ -3312,9 +3312,7 @@ main (int argc, char **argv)
 	totem->fs_seek = glade_xml_get_widget (totem->xml, "tcw_seek_hscale");
 	totem->fs_seekadj = gtk_range_get_adjustment
 		(GTK_RANGE (totem->fs_seek));
-	totem->fs_volume = glade_xml_get_widget
-		(totem->xml, "tcw_volume_button");
-	gtk_scale_button_set_adjustment (GTK_SCALE_BUTTON (totem->fs_volume),
+	gtk_scale_button_set_adjustment (GTK_SCALE_BUTTON (glade_xml_get_widget (totem->xml, "tcw_volume_button")),
 					 gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (totem->volume)));
 	totem->volume_first_time = 1;
 	totem->statusbar = glade_xml_get_widget (totem->xml, "tmw_statusbar");

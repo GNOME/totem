@@ -134,7 +134,6 @@ struct TotemObject {
 	GtkWidget *control_popup;
 	GtkWidget *fs_seek;
 	GtkAdjustment *fs_seekadj;
-	GtkWidget *fs_volume;
 	GtkWidget *tcw_time_label;
 
 	guint popup_timeout;
