@@ -75,10 +75,10 @@ TOTEMMARSHALFILES = totemobject-marshal.c totemobject-marshal.h
 GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
 BUILT_SOURCES = $(TOTEMMARSHALFILES)
 
-totemobject-marshal.h: totemobject-marshal.list
+totemobject-marshal.h: totemobject-marshal.list Makefile
 	( $(GLIB_GENMARSHAL) --prefix=totemobject_marshal $(srcdir)/totemobject-marshal.list --header > totemobject-marshal.h )
-totemobject-marshal.c: totemobject-marshal.h
-	( $(GLIB_GENMARSHAL) --prefix=totemobject_marshal $(srcdir)/totemobject-marshal.list --body > totemobject-marshal.c )
+totemobject-marshal.c: totemobject-marshal.h Makefile
+	( $(GLIB_GENMARSHAL) --prefix=totemobject_marshal $(srcdir)/totemobject-marshal.list --header --body > totemobject-marshal.c )
 
 totem_SOURCES = 					\
 	totem.c totem.h					\
