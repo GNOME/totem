@@ -1,5 +1,12 @@
 2007-06-28  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser-wm.c: (parse_asx_entry),
+	(parse_asx_entryref), (parse_asx_entries): Patch from
+	Karel Kolman <kolmis@gmail.com> to handle ASX files with
+	entryrefs without a parent entry (Closes: #450457)
+
+2007-06-28  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bacon_video_widget_init): patch from Sunil Mohan Adapa
 	<sunilmohan@gnu.org.in> to not mark the video widget as having
