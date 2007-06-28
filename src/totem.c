@@ -214,9 +214,9 @@ totem_action_exit (Totem *totem)
 		gdk_display_sync (display);
 
 	if (totem->bvw) {
-                int vol;
+	        int vol;
 
-                vol = bacon_video_widget_get_volume (totem->bvw) * 100.0 + 0.5;
+	        vol = bacon_video_widget_get_volume (totem->bvw) * 100.0 + 0.5;
 		//FIXME move the volume to the static file?
 		gconf_client_set_int (totem->gc,
 				GCONF_PREFIX"/volume",
@@ -935,8 +935,8 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		caps = bacon_video_widget_can_set_volume (totem->bvw);
 		totem_main_set_sensitivity ("tmw_volume_button", caps);
 		totem_main_set_sensitivity ("tcw_volume_button", caps);
-                totem_action_set_sensitivity ("volume-up", caps && totem->prev_volume < (1.0 - VOLUME_EPSILON));
-                totem_action_set_sensitivity ("volume-down", caps && totem->prev_volume > VOLUME_EPSILON);
+	        totem_action_set_sensitivity ("volume-up", caps && totem->prev_volume < (1.0 - VOLUME_EPSILON));
+	        totem_action_set_sensitivity ("volume-down", caps && totem->prev_volume > VOLUME_EPSILON);
 		totem->volume_sensitive = caps;
 
 		/* Take a screenshot */
@@ -1537,14 +1537,14 @@ update_current_time (BaconVideoWidget *bvw,
 static void
 update_volume_sliders (Totem *totem)
 {
-        double volume;
+	double volume;
 	GtkAction *action;
 
-        volume = bacon_video_widget_get_volume (totem->bvw);
+	volume = bacon_video_widget_get_volume (totem->bvw);
 
 	if (totem->volume_first_time ||
-            totem->prev_volume >= 0. &&
-            abs (totem->prev_volume - volume) > VOLUME_EPSILON)
+	    totem->prev_volume >= 0. &&
+	    abs (totem->prev_volume - volume) > VOLUME_EPSILON)
 	{
 		totem->volume_first_time = 0;
 

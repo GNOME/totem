@@ -1021,7 +1021,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                                                      0, G_MAXINT, 0,
                                                      G_PARAM_READABLE));
   g_object_class_install_property (object_class, PROP_STREAM_LENGTH,
-                                   g_param_spec_int64 ("stream-length", NULL,
+	                           g_param_spec_int64 ("stream-length", NULL,
                                                      NULL, 0, G_MAXINT64, 0,
                                                      G_PARAM_READABLE));
   g_object_class_install_property (object_class, PROP_PLAYING,
@@ -1033,9 +1033,9 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                                                          NULL, FALSE,
                                                          G_PARAM_READABLE));
   g_object_class_install_property (object_class, PROP_VOLUME,
-                                   g_param_spec_double ("volume", NULL, NULL,
-                                                        0.0, 1.0, 0.0,
-                                                        G_PARAM_READWRITE));
+	                           g_param_spec_double ("volume", NULL, NULL,
+	                                                0.0, 1.0, 0.0,
+	                                                G_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_SHOWCURSOR,
                                    g_param_spec_boolean ("showcursor", NULL,
                                                          NULL, FALSE,
@@ -3181,7 +3181,7 @@ bacon_video_widget_set_volume (BaconVideoWidget * bvw, double volume)
   {
     volume = CLAMP (volume, 0.0, 1.0);
     g_object_set (bvw->priv->play, "volume",
-                  (gdouble) volume, NULL);
+	          (gdouble) volume, NULL);
     g_object_notify (G_OBJECT (bvw), "volume");
   }
 }

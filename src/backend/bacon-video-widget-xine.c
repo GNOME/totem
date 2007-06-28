@@ -330,10 +330,10 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 	g_object_class_install_property (object_class, PROP_SEEKABLE,
 			g_param_spec_boolean ("seekable", NULL, NULL,
 				FALSE, G_PARAM_READABLE));
-        g_object_class_install_property (object_class, PROP_VOLUME,
-                        g_param_spec_double ("volume", NULL, NULL,
-                                0.0, 1.0, 0.0,
-                                G_PARAM_READWRITE));
+	g_object_class_install_property (object_class, PROP_VOLUME,
+	                g_param_spec_double ("volume", NULL, NULL,
+	                        0.0, 1.0, 0.0,
+	                        G_PARAM_READWRITE));
 	g_object_class_install_property (object_class, PROP_SHOWCURSOR,
 			g_param_spec_boolean ("showcursor", NULL, NULL,
 				FALSE, G_PARAM_READWRITE));
@@ -1626,9 +1626,9 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	/* Save the current volume */
 	if (bacon_video_widget_can_set_volume (bvw) != FALSE)
 	{
-                int vol;
+	        int vol;
 
-                vol = (bvw->priv->volume * 100.0 + 0.5);
+	        vol = (bvw->priv->volume * 100.0 + 0.5);
 		gconf_client_set_int (bvw->priv->gc, GCONF_PREFIX"/volume",
 				CLAMP (vol, 0, 100), NULL);
 	}
@@ -2635,9 +2635,9 @@ bacon_video_widget_set_property (GObject *object, guint property_id,
 		bacon_video_widget_set_show_visuals (bvw,
 				g_value_get_boolean (value));
 		break;
-        case PROP_VOLUME:
-                bacon_video_widget_set_volume (bvw, g_value_get_double (value));
-                break;
+	case PROP_VOLUME:
+	        bacon_video_widget_set_volume (bvw, g_value_get_double (value));
+	        break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 	}
@@ -2858,7 +2858,7 @@ bacon_video_widget_set_volume (BaconVideoWidget *bvw, double volume)
 	{
 		bvw->priv->volume = volume;
 
-                volume = volume * 100 + 0.5;
+	        volume = volume * 100 + 0.5;
 		volume = CLAMP (volume, 0, 100);
 		xine_set_param (bvw->priv->stream,
 				XINE_PARAM_AUDIO_AMP_LEVEL, volume);
