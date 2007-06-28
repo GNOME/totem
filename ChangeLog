@@ -1,7 +1,12 @@
-2007-06-28  Bastien Nocera  <hadess@hadess.net>
+2007-06-28  Christian Persch  <chpe@gnome.org>
 
-	* data/mime-type-list.txt: Remove SWF files as supported, they're not
-	(Closes: #450967)
+        * src/totem.c:
+        * src/totem.h:
+        * src/totem-private.h:
+        * src/backend/bacon-video-widget.h:
+        * src/backend/bacon-video-widget-xine.c:
+        * src/backend/bacon-video-widget-gst-0.10.c: Use double for the volume
+        instead of integer. Bug #451856.
 
 2007-06-28  Christian Persch  <chpe@gnome.org>
 
