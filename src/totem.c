@@ -1543,13 +1543,12 @@ update_volume_sliders (Totem *totem)
 	volume = bacon_video_widget_get_volume (totem->bvw);
 
 	if (totem->volume_first_time ||
-	    totem->prev_volume >= 0. &&
-	    abs (totem->prev_volume - volume) > VOLUME_EPSILON)
+	    (totem->prev_volume >= 0. &&
+	     abs (totem->prev_volume - volume) > VOLUME_EPSILON))
 	{
 		totem->volume_first_time = 0;
 
 		gtk_scale_button_set_value (GTK_SCALE_BUTTON (totem->volume), volume);
-		gtk_adjustment_set_value (totem->fs_voladj, volume);
 
 		action = gtk_action_group_get_action (totem->main_action_group, "volume-down");
 		gtk_action_set_sensitive (action, volume > VOLUME_EPSILON && totem->volume_sensitive);
