@@ -28,10 +28,12 @@
 
 #include "config.h"
 
+#include <stdlib.h>
+#include <math.h>
+
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
-#include <stdlib.h>
 
 #ifndef HAVE_GTK_ONLY
 #include <gnome.h>
@@ -85,6 +87,8 @@
 #define FULLSCREEN_POPUP_TIMEOUT 5 * 1000
 
 #define BVW_VBOX_BORDER_WIDTH 1
+
+#define VOLUME_EPSILON (1e-10)
 
 static const GtkTargetEntry target_table[] = {
 	{ "text/uri-list", 0, 0 },
@@ -210,10 +214,13 @@ totem_action_exit (Totem *totem)
 		gdk_display_sync (display);
 
 	if (totem->bvw) {
+                int vol;
+
+                vol = bacon_video_widget_get_volume (totem->bvw) * 100.0 + 0.5;
 		//FIXME move the volume to the static file?
 		gconf_client_set_int (totem->gc,
 				GCONF_PREFIX"/volume",
-				bacon_video_widget_get_volume (totem->bvw),
+				CLAMP (vol, 0, 100),
 				NULL);
 		totem_action_save_size (totem);
 	}
@@ -928,8 +935,8 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		caps = bacon_video_widget_can_set_volume (totem->bvw);
 		totem_main_set_sensitivity ("tmw_volume_button", caps);
 		totem_main_set_sensitivity ("tcw_volume_button", caps);
-		totem_action_set_sensitivity ("volume-up", caps && totem->prev_volume < 100);
-		totem_action_set_sensitivity ("volume-down", caps && totem->prev_volume > 0);
+                totem_action_set_sensitivity ("volume-up", caps && totem->prev_volume < (1.0 - VOLUME_EPSILON));
+                totem_action_set_sensitivity ("volume-down", caps && totem->prev_volume > VOLUME_EPSILON);
 		totem->volume_sensitive = caps;
 
 		/* Take a screenshot */
@@ -1142,9 +1149,9 @@ totem_action_zoom_reset (Totem *totem)
 }
 
 void
-totem_action_volume_relative (Totem *totem, int off_pct)
+totem_action_volume_relative (Totem *totem, double off_pct)
 {
-	int vol;
+	double vol;
 
 	if (bacon_video_widget_can_set_volume (totem->bvw) == FALSE)
 		return;
@@ -1530,22 +1537,25 @@ update_current_time (BaconVideoWidget *bvw,
 static void
 update_volume_sliders (Totem *totem)
 {
-	int volume;
+        double volume;
 	GtkAction *action;
 
-	volume = bacon_video_widget_get_volume (totem->bvw);
+        volume = bacon_video_widget_get_volume (totem->bvw);
 
-	if (totem->volume_first_time || (totem->prev_volume != volume &&
-				totem->prev_volume != -1 && volume != -1))
+	if (totem->volume_first_time ||
+            totem->prev_volume >= 0. &&
+            abs (totem->prev_volume - volume) > VOLUME_EPSILON)
 	{
 		totem->volume_first_time = 0;
+
 		gtk_scale_button_set_value (GTK_SCALE_BUTTON (totem->volume), volume);
+		gtk_adjustment_set_value (totem->fs_voladj, volume);
 
 		action = gtk_action_group_get_action (totem->main_action_group, "volume-down");
-		gtk_action_set_sensitive (action, volume > 0 && totem->volume_sensitive);
-
+		gtk_action_set_sensitive (action, volume > VOLUME_EPSILON && totem->volume_sensitive);
+		
 		action = gtk_action_group_get_action (totem->main_action_group, "volume-up");
-		gtk_action_set_sensitive (action, volume < 100 && totem->volume_sensitive);
+		gtk_action_set_sensitive (action, volume < (1.0 - VOLUME_EPSILON) && totem->volume_sensitive);
 	}
 
 	totem->prev_volume = volume;
@@ -1999,7 +2009,7 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		// TODO - how to see if can, and play the DVD (like the menu item)
 		break;
 	case TOTEM_REMOTE_COMMAND_MUTE:
-		totem_action_volume_relative (totem, -100);
+		totem_action_volume_relative (totem, -1.0);
 		break;
 	default:
 		handled = FALSE;
@@ -3159,8 +3169,8 @@ video_widget_create (Totem *totem)
 	gtk_widget_show (GTK_WIDGET (totem->bvw));
 
 	bacon_video_widget_set_volume (totem->bvw,
-			gconf_client_get_int (totem->gc,
-				GCONF_PREFIX"/volume", NULL));
+			((double) gconf_client_get_int (totem->gc,
+				GCONF_PREFIX"/volume", NULL)) / 100.0);
 	g_signal_connect (G_OBJECT (totem->bvw), "notify::volume",
 			G_CALLBACK (property_notify_cb_volume), totem);
 	g_signal_connect (G_OBJECT (totem->bvw), "notify::logo-mode",
@@ -3283,7 +3293,7 @@ main (int argc, char **argv)
 	}
 
 	/* Init totem itself */
-	totem->prev_volume = -1;
+	totem->prev_volume = -1.;
 	totem->cursor_shown = TRUE;
 
 	/* Main window */

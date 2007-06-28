@@ -59,8 +59,8 @@ GtkWidget *totem_statusbar_create (void);
 GtkWidget *totem_volume_create (void);
 GtkWidget *totem_pp_create (void);
 
-#define VOLUME_DOWN_OFFSET -8
-#define VOLUME_UP_OFFSET 8
+#define VOLUME_DOWN_OFFSET (-0.08)
+#define VOLUME_UP_OFFSET (0.08)
 
 /* For newer D-Bus version */
 #ifndef DBUS_NAME_FLAG_PROHIBIT_REPLACEMENT
@@ -1352,7 +1352,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 	BvwUseType type;
 	GError *err = NULL;
 	GConfClient *gc;
-	int volume;
+	double volume;
 
 	if (xid != 0) {
 		g_assert (!emb->hidden);
@@ -1438,7 +1438,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 			  G_CALLBACK (on_play_pause), emb);
 
 	gc = gconf_client_get_default ();
-	volume = gconf_client_get_int (gc, GCONF_PREFIX"/volume", NULL);
+	volume = ((double) gconf_client_get_int (gc, GCONF_PREFIX"/volume", NULL)) / 100.0;
 	g_object_unref (G_OBJECT (gc));
 
 	bacon_video_widget_set_volume (emb->bvw, volume);

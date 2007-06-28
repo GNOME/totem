@@ -145,8 +145,8 @@ void bacon_video_widget_close                    (BaconVideoWidget *bvw);
 /* Audio volume */
 gboolean bacon_video_widget_can_set_volume       (BaconVideoWidget *bvw);
 void bacon_video_widget_set_volume               (BaconVideoWidget *bvw,
-						  int volume);
-int bacon_video_widget_get_volume                (BaconVideoWidget *bvw);
+						  double volume);
+double bacon_video_widget_get_volume             (BaconVideoWidget *bvw);
 
 /* Properties */
 void bacon_video_widget_set_logo		 (BaconVideoWidget *bvw,

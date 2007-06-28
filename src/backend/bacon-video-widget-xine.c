@@ -169,7 +169,7 @@ struct BaconVideoWidgetPrivate {
 	/* Other stuff */
 	int xpos, ypos;
 	guint tick_id;
-	int volume;
+	double volume;
 	BaconVideoWidgetAudioOutType audio_out_type;
 	TvOutType tvout;
 	int stream_length;
@@ -330,9 +330,10 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 	g_object_class_install_property (object_class, PROP_SEEKABLE,
 			g_param_spec_boolean ("seekable", NULL, NULL,
 				FALSE, G_PARAM_READABLE));
-	g_object_class_install_property (object_class, PROP_VOLUME,
-			g_param_spec_int ("volume", NULL, NULL,
-				0, 100, 0, G_PARAM_READABLE));
+        g_object_class_install_property (object_class, PROP_VOLUME,
+                        g_param_spec_double ("volume", NULL, NULL,
+                                0.0, 1.0, 0.0,
+                                G_PARAM_READWRITE));
 	g_object_class_install_property (object_class, PROP_SHOWCURSOR,
 			g_param_spec_boolean ("showcursor", NULL, NULL,
 				FALSE, G_PARAM_READWRITE));
@@ -430,7 +431,7 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
 	bvw->priv = g_new0 (BaconVideoWidgetPrivate, 1);
 	bvw->priv->xine = xine_new ();
 	bvw->priv->cursor_shown = TRUE;
-	bvw->priv->volume = 0;
+	bvw->priv->volume = 0.0;
 
 	bvw->priv->init_width = 0;
 	bvw->priv->init_height = 0;
@@ -1625,8 +1626,11 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	/* Save the current volume */
 	if (bacon_video_widget_can_set_volume (bvw) != FALSE)
 	{
+                int vol;
+
+                vol = (bvw->priv->volume * 100.0 + 0.5);
 		gconf_client_set_int (bvw->priv->gc, GCONF_PREFIX"/volume",
-				bvw->priv->volume, NULL);
+				CLAMP (vol, 0, 100), NULL);
 	}
 
 	/* Kill the TV out */
@@ -2631,6 +2635,9 @@ bacon_video_widget_set_property (GObject *object, guint property_id,
 		bacon_video_widget_set_show_visuals (bvw,
 				g_value_get_boolean (value));
 		break;
+        case PROP_VOLUME:
+                bacon_video_widget_set_volume (bvw, g_value_get_double (value));
+                break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 	}
@@ -2670,7 +2677,7 @@ bacon_video_widget_get_property (GObject *object, guint property_id,
 				bacon_video_widget_get_show_cursor (bvw));
 		break;
 	case PROP_VOLUME:
-		g_value_set_int (value, bvw->priv->volume);
+		g_value_set_double (value, bvw->priv->volume);
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -2842,31 +2849,31 @@ bacon_video_widget_can_set_volume (BaconVideoWidget *bvw)
 }
 
 void
-bacon_video_widget_set_volume (BaconVideoWidget *bvw, int volume)
+bacon_video_widget_set_volume (BaconVideoWidget *bvw, double volume)
 {
-	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
 
 	if (bacon_video_widget_can_set_volume (bvw) != FALSE)
 	{
+		bvw->priv->volume = volume;
+
+                volume = volume * 100 + 0.5;
 		volume = CLAMP (volume, 0, 100);
 		xine_set_param (bvw->priv->stream,
 				XINE_PARAM_AUDIO_AMP_LEVEL, volume);
-		bvw->priv->volume = volume;
 		g_object_notify (G_OBJECT (bvw), "volume");
 	}
 }
 
-int
+double
 bacon_video_widget_get_volume (BaconVideoWidget *bvw)
 {
-	g_return_val_if_fail (bvw != NULL, 0);
-	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
-	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0.0);
+	g_return_val_if_fail (bvw->priv->xine != NULL, 0.0);
 
 	if (bacon_video_widget_can_set_volume (bvw) == FALSE)
-		return 0;
+		return 0.0;
 
 	return bvw->priv->volume;
 }
