@@ -1560,83 +1560,12 @@ AC3 Passthrough</property>
       </child>
 
       <child>
-	<widget class="GtkHBox" id="tcw_volume_hbox">
-	  <property name="width_request">250</property>
+	<widget class="Custom" id="tcw_volume_button">
 	  <property name="visible">True</property>
-	  <property name="sensitive">False</property>
-	  <property name="homogeneous">False</property>
-	  <property name="spacing">0</property>
-
-	  <child>
-	    <widget class="GtkButton" id="tcw_volume_mute_button">
-	      <property name="visible">True</property>
-	      <property name="can_focus">True</property>
-	      <property name="relief">GTK_RELIEF_NONE</property>
-	      <property name="focus_on_click">True</property>
-
-	      <child>
-		<widget class="GtkImage" id="tcw_volume_mute_image">
-		  <property name="visible">True</property>
-		  <property name="icon_size">4</property>
-		  <property name="icon_name">audio-volume-muted</property>
-		  <property name="xalign">0.5</property>
-		  <property name="yalign">0.5</property>
-		  <property name="xpad">0</property>
-		  <property name="ypad">0</property>
-		</widget>
-	      </child>
-	    </widget>
-	    <packing>
-	      <property name="padding">0</property>
-	      <property name="expand">False</property>
-	      <property name="fill">False</property>
-	    </packing>
-	  </child>
-
-	  <child>
-	    <widget class="GtkHScale" id="tcw_volume_hscale">
-	      <property name="width_request">100</property>
-	      <property name="visible">True</property>
-	      <property name="can_focus">True</property>
-	      <property name="draw_value">False</property>
-	      <property name="value_pos">GTK_POS_TOP</property>
-	      <property name="digits">1</property>
-	      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
-	      <property name="inverted">False</property>
-	      <property name="adjustment">0 0 100 1 10 0</property>
-	    </widget>
-	    <packing>
-	      <property name="padding">0</property>
-	      <property name="expand">True</property>
-	      <property name="fill">True</property>
-	    </packing>
-	  </child>
-
-	  <child>
-	    <widget class="GtkButton" id="tcw_volume_max_button">
-	      <property name="visible">True</property>
-	      <property name="can_focus">True</property>
-	      <property name="relief">GTK_RELIEF_NONE</property>
-	      <property name="focus_on_click">True</property>
-
-	      <child>
-		<widget class="GtkImage" id="tcw_volume_max_image">
-		  <property name="visible">True</property>
-		  <property name="icon_size">4</property>
-		  <property name="icon_name">audio-volume-high</property>
-		  <property name="xalign">0.5</property>
-		  <property name="yalign">0.5</property>
-		  <property name="xpad">0</property>
-		  <property name="ypad">0</property>
-		</widget>
-	      </child>
-	    </widget>
-	    <packing>
-	      <property name="padding">0</property>
-	      <property name="expand">False</property>
-	      <property name="fill">False</property>
-	    </packing>
-	  </child>
+	  <property name="creation_function">totem_volume_create</property>
+	  <property name="int1">0</property>
+	  <property name="int2">0</property>
+	  <property name="last_modification_time">Fri, 06 May 2005 09:19:48 GMT</property>
 	</widget>
 	<packing>
 	  <property name="padding">0</property>
@@ -1806,7 +1735,7 @@ AC3 Passthrough</property>
 		      </child>
 
 		      <child>
-			<widget class="Custom" id="tcw_volume_button">
+			<widget class="Custom" id="tmw_volume_button">
 			  <property name="visible">True</property>
 			  <property name="creation_function">totem_volume_create</property>
 			  <property name="int1">0</property>

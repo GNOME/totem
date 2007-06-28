@@ -43,14 +43,10 @@ libbaconmessageconnection_la_LDFLAGS = \
 	$(AM_LDFLAGS)
 
 
-BACON_VOLUME = \
-	bacon-volume.c			\
-	bacon-volume.h
-
 EGGDIR=$(srcdir)/../../libegg/libegg/recent-files/
 BACONDIR=$(srcdir)/../../libbacon/src
 regenerate-built-sources:
-	EGGFILES="$(BACON_MESSAGE_CONNECTION) $(BACON_VOLUME)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
+	EGGFILES="$(BACON_MESSAGE_CONNECTION)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
 
 # Totem UI ltlibrary
 
@@ -58,8 +54,7 @@ libtotem_player_la_SOURCES =		\
 	totem-statusbar.c		\
 	totem-statusbar.h		\
 	totem-interface.c		\
-	totem-interface.h		\
-	$(BACON_VOLUME)
+	totem-interface.h
 
 libtotem_player_la_CPPFLAGS = \
 	-I$(srcdir)/backend	\

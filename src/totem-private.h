@@ -114,8 +114,6 @@ struct TotemObject {
 
 	/* Volume */
 	GtkWidget *volume;
-	gboolean vol_lock;
-	gboolean vol_fs_lock;
 	gfloat prev_volume;
 	int volume_first_time;
 	gboolean volume_sensitive;
@@ -137,7 +135,6 @@ struct TotemObject {
 	GtkWidget *fs_seek;
 	GtkAdjustment *fs_seekadj;
 	GtkWidget *fs_volume;
-	GtkAdjustment *fs_voladj;
 	GtkWidget *tcw_time_label;
 
 	guint popup_timeout;

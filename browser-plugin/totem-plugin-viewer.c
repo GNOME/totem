@@ -48,7 +48,6 @@
 #include "bacon-video-widget.h"
 #include "totem-interface.h"
 #include "totem-statusbar.h"
-#include "bacon-volume.h"
 #include "totem-glow-button.h"
 #include "video-utils.h"
 
@@ -1285,35 +1284,9 @@ on_error_event (BaconVideoWidget *bvw,
 }
 
 static void
-cb_vol (GtkWidget *val, TotemEmbedded *emb)
+cb_vol (GtkWidget *val, gdouble value, TotemEmbedded *emb)
 {
-	bacon_video_widget_set_volume (emb->bvw,
-		bacon_volume_button_get_value (BACON_VOLUME_BUTTON (val)));
-}
-
-static gboolean
-on_volume_scroll_event (GtkWidget *win, GdkEventScroll *event, TotemEmbedded *emb)
-{
-	GtkWidget *vbut;
-	int vol, offset;
-
-	switch (event->direction) {
-	case GDK_SCROLL_UP:
-		offset = VOLUME_UP_OFFSET;
-		break;
-	case GDK_SCROLL_DOWN:
-		offset = VOLUME_DOWN_OFFSET;
-		break;
-	default:
-		return FALSE;
-	}
-
-	vbut = glade_xml_get_widget (emb->xml, "volume_button");
-	vol = bacon_volume_button_get_value (BACON_VOLUME_BUTTON (vbut));
-	bacon_volume_button_set_value (BACON_VOLUME_BUTTON (vbut),
-			vol + offset);
-
-	return FALSE;
+	bacon_video_widget_set_volume (emb->bvw, value);
 }
 
 static void
@@ -1470,12 +1443,9 @@ totem_embedded_construct (TotemEmbedded *emb,
 
 	bacon_video_widget_set_volume (emb->bvw, volume);
 	vbut = glade_xml_get_widget (emb->xml, "volume_button");
-	bacon_volume_button_set_value (BACON_VOLUME_BUTTON (vbut), volume);
+	gtk_scale_button_set_value (GTK_SCALE_BUTTON (vbut), volume);
 	g_signal_connect (G_OBJECT (vbut), "value-changed",
 			  G_CALLBACK (cb_vol), emb);
-	gtk_widget_add_events (vbut, GDK_SCROLL_MASK);
-	g_signal_connect (G_OBJECT (vbut), "scroll_event",
-			G_CALLBACK (on_volume_scroll_event), emb);
 
 	emb->statusbar = TOTEM_STATUSBAR (glade_xml_get_widget (emb->xml, "statusbar"));
 
@@ -1744,8 +1714,7 @@ totem_volume_create (void)
 {
 	GtkWidget *widget;
 
-	widget = bacon_volume_button_new (GTK_ICON_SIZE_MENU,
-					  0, 100, 1);
+	widget = gtk_volume_button_new ();
 	gtk_button_set_focus_on_click (GTK_BUTTON (widget), FALSE);
 	gtk_widget_show (widget);
 

@@ -1,5 +1,24 @@
 2007-06-28  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c: (cb_vol),
+	(totem_embedded_construct), (totem_volume_create):
+	* configure.in:
+	* data/totem.glade:
+	* src/Makefile.am:
+	* src/bacon-volume.c:
+	* src/bacon-volume.h:
+	* src/totem-private.h:
+	* src/totem.c: (totem_action_set_mrl_with_warning),
+	(update_volume_sliders), (volume_button_value_changed),
+	(popup_hide), (totem_callback_connect), (totem_volume_create),
+	(main): Remove the BaconVolume widget, and use the GtkVolumeButton
+	in the new GTK+ instead, use the scale button in fullscreen mode as
+	well, make both volume buttons share the same GtkAdjustment,
+	modified version of patch from Jan Arne Petersen <jpetersen@jpetersen.org>
+	(Helps: #450635)
+
+2007-06-28  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-menu.c: (totem_action_add_recent): fix valgrind error
 	with a not-fully initialised GtkRecentData
 	* src/totem.c: (window_state_event_cb): fix tests when more than
