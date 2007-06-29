@@ -1,3 +1,23 @@
+2007-06-29  Bastien Nocera  <hadess@hadess.net>
+
+	* data/Makefile.am:
+	* data/fullscreen.glade:
+	* data/totem.glade:
+	* src/Makefile.am:
+	* src/totem-fullscreen.*:
+	* src/totem-private.h:
+	* src/totem.c: (totem_action_exit), (window_state_event_cb),
+	(update_mrl_label), (totem_action_set_mrl_with_warning),
+	(update_seekable), (update_current_time), (update_volume_sliders),
+	(seek_slider_pressed_cb), (seek_slider_changed_cb),
+	(seek_slider_released_cb), (totem_action_remote),
+	(on_mouse_click_fullscreen), (totem_action_handle_scroll),
+	(totem_callback_connect), (video_widget_create), (main):
+	Patch from Sunil Mohan Adapa <sunilmohan@gnu.org.in> to split
+	the fullscreen popup code into a separate widget (Helps: #354181),
+	Patch from Jan Arne Petersen <jpetersen@jpetersen.org> to share
+	adjustments between fullscreen and windowed seekbars (Closes: #451912)
+
 2007-06-28  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/tests/8.html: fix syntax error

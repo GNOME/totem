@@ -34,6 +34,7 @@
 #include <libgnomevfs/gnome-vfs.h>
 
 #include "totem-playlist.h"
+#include "totem-fullscreen.h"
 #include "bacon-message-connection.h"
 #include "bacon-video-widget.h"
 #include "totem-open-location.h"
@@ -124,21 +125,11 @@ struct TotemObject {
 	GList *subtitles_list;
 	GList *language_list;
 
-	/* exit fullscreen Popup */
-	GtkWidget *exit_popup;
+	/* Fullscreen */
+	TotemFullscreen *fs;
 
 	/* controls management */
 	ControlsVisibility controls_visibility;
-
-	/* control fullscreen Popup */
-	GtkWidget *control_popup;
-	GtkWidget *fs_seek;
-	GtkAdjustment *fs_seekadj;
-	GtkWidget *tcw_time_label;
-
-	guint popup_timeout;
-	gboolean popup_in_progress;
-	GdkRectangle fullscreen_rect;
 
 	/* Stream info */
 	gint64 stream_length;
@@ -168,7 +159,6 @@ struct TotemObject {
 	GConfClient *gc;
 	BaconMessageConnection *conn;
 	TotemStates state;
-	gboolean cursor_shown;
 	TotemOpenLocation *open_location;
 };
 

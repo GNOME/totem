@@ -9,6 +9,7 @@ stuff_DATA =				\
 	filmholes-big-right.png		\
 	stock-tool-brightness-contrast-22.png	\
 	totem.glade			\
+	fullscreen.glade		\
 	playlist.glade			\
 	playlist-ui.xml			\
 	plugins.glade			\
