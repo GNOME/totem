@@ -881,6 +881,7 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		update_mrl_label (totem, NULL);
 	} else {
 		gboolean caps;
+		gdouble volume;
 		char *subtitle_uri;
 		GError *err = NULL;
 
@@ -900,8 +901,9 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 		caps = bacon_video_widget_can_set_volume (totem->bvw);
 		totem_main_set_sensitivity ("tmw_volume_button", caps);
 		totem_fullscreen_set_can_set_volume (totem->fs, caps);
-	        totem_action_set_sensitivity ("volume-up", caps && totem->prev_volume < (1.0 - VOLUME_EPSILON));
-	        totem_action_set_sensitivity ("volume-down", caps && totem->prev_volume > VOLUME_EPSILON);
+		volume = bacon_video_widget_get_volume (totem->bvw);
+	        totem_action_set_sensitivity ("volume-up", caps && volume < (1.0 - VOLUME_EPSILON));
+	        totem_action_set_sensitivity ("volume-down", caps && volume > VOLUME_EPSILON);
 		totem->volume_sensitive = caps;
 
 		/* Take a screenshot */
@@ -1497,6 +1499,12 @@ update_current_time (BaconVideoWidget *bvw,
 }
 
 static void
+volume_button_value_changed (GtkScaleButton *button, gdouble value, Totem *totem)
+{
+	bacon_video_widget_set_volume (totem->bvw, value);
+}
+
+static void
 update_volume_sliders (Totem *totem)
 {
 	double volume;
@@ -1504,21 +1512,15 @@ update_volume_sliders (Totem *totem)
 
 	volume = bacon_video_widget_get_volume (totem->bvw);
 
-	if (totem->volume_first_time ||
-	    (totem->prev_volume >= 0. &&
-	     abs (totem->prev_volume - volume) > VOLUME_EPSILON))
-	{
-		totem->volume_first_time = 0;
-		gtk_scale_button_set_value (GTK_SCALE_BUTTON (totem->volume), volume);
+	g_signal_handlers_block_by_func (totem->volume, volume_button_value_changed, totem);
+	gtk_scale_button_set_value (GTK_SCALE_BUTTON (totem->volume), volume);
+	g_signal_handlers_unblock_by_func (totem->volume, volume_button_value_changed, totem);
 
-		action = gtk_action_group_get_action (totem->main_action_group, "volume-down");
-		gtk_action_set_sensitive (action, volume > VOLUME_EPSILON && totem->volume_sensitive);
-		
-		action = gtk_action_group_get_action (totem->main_action_group, "volume-up");
-		gtk_action_set_sensitive (action, volume < (1.0 - VOLUME_EPSILON) && totem->volume_sensitive);
-	}
+	action = gtk_action_group_get_action (totem->main_action_group, "volume-down");
+	gtk_action_set_sensitive (action, volume > VOLUME_EPSILON && totem->volume_sensitive);
 
-	totem->prev_volume = volume;
+	action = gtk_action_group_get_action (totem->main_action_group, "volume-up");
+	gtk_action_set_sensitive (action, volume < (1.0 - VOLUME_EPSILON) && totem->volume_sensitive);
 }
 
 static void
@@ -1597,12 +1599,6 @@ seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 				      FALSE);
 
 	return FALSE;
-}
-
-static void
-volume_button_value_changed (GtkScaleButton *button, gdouble value, Totem *totem)
-{
-	bacon_video_widget_set_volume (totem->bvw, value);
 }
 
 static gboolean
@@ -3065,9 +3061,6 @@ main (int argc, char **argv)
 		totem_options_process_early (totem, &optionstate);
 	}
 
-	/* Init totem itself */
-	totem->prev_volume = -1.;
-
 	/* Main window */
 	totem->xml = totem_interface_load ("totem.glade", _("main window"),
 			TRUE, NULL);
@@ -3087,12 +3080,11 @@ main (int argc, char **argv)
 	totem->seek = glade_xml_get_widget (totem->xml, "tmw_seek_hscale");
 	totem->seekadj = gtk_range_get_adjustment (GTK_RANGE (totem->seek));
 	totem->volume = glade_xml_get_widget (totem->xml, "tmw_volume_button");
-	totem->volume_first_time = 1;
 	totem->statusbar = glade_xml_get_widget (totem->xml, "tmw_statusbar");
 	totem->seek_lock = FALSE;
 	totem->fs = totem_fullscreen_new ();
-	gtk_scale_button_set_adjustment (totem->fs->volume,
-					 gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (totem->volume)));
+	gtk_scale_button_set_adjustment (GTK_SCALE_BUTTON (totem->fs->volume),
+			gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (totem->volume)));
 	gtk_range_set_adjustment (GTK_RANGE (totem->fs->seek), totem->seekadj);
 
 	totem_session_setup (totem, argv);

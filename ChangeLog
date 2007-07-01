@@ -1,3 +1,11 @@
+2007-07-02  Jan Arne Petersen  <jpetersen@jpetersen.org>
+
+	* src/totem-private.h:
+	* src/totem.c: (totem_action_set_mrl_with_warning),
+	(volume_button_value_changed), (update_volume_sliders), (main): Use
+	g_signal_handlers_block_by_func/g_signal_handlers_unblock_by_func
+	instead of a custom lock (Closes #452616)
+
 2007-06-29  Bastien Nocera  <hadess@hadess.net>
 
 	* data/Makefile.am:
