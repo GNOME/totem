@@ -1,3 +1,18 @@
+2007-07-03  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in:
+	* src/totem-uri.c: (totem_pictures_dir), (totem_add_default_dirs),
+	(totem_add_pictures_dir): Use g_get_user_special_dir() instead of
+	our copy of xdg_user_dir_lookup
+
+2007-07-03  Bastien Nocera  <hadess@hadess.net>
+
+	reviewed by: <delete if not using a buddy>
+
+	* configure.in:
+	* src/totem-uri.c: (totem_pictures_dir), (totem_add_default_dirs),
+	(totem_add_pictures_dir):
+
 2007-07-02  Jan Arne Petersen  <jpetersen@jpetersen.org>
 
 	* src/totem-private.h:
