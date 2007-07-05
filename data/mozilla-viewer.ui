@@ -1,10 +1,10 @@
-<?xml version="1.0" standalone="no"?> <!--*- mode: xml -*-->
-<!DOCTYPE glade-interface SYSTEM "http://glade.gnome.org/glade-2.0.dtd">
+<?xml version="1.0" ?>
+<!--*- mode: xml -*--><!DOCTYPE glade-interface
+  SYSTEM 'http://glade.gnome.org/glade-2.0.dtd'>
+<interface>
 
-<glade-interface>
-
-<widget class="GtkWindow" id="window">
-  <property name="title"></property>
+<object class="GtkWindow" id="window">
+  <property name="title"/>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
   <property name="modal">False</property>
@@ -19,13 +19,13 @@
   <property name="urgency_hint">False</property>
 
   <child>
-    <widget class="GtkVBox" id="content_box">
+    <object class="GtkVBox" id="content_box">
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
       <property name="spacing">0</property>
 
       <child>
-	<widget class="GtkHBox" id="video_box">
+	<object class="GtkHBox" id="video_box">
 	  <property name="visible">True</property>
 	  <property name="homogeneous">False</property>
 	  <property name="spacing">0</property>
@@ -33,7 +33,7 @@
 	  <child>
 	    <placeholder/>
 	  </child>
-	</widget>
+	</object>
 	<packing>
 	  <property name="padding">0</property>
 	  <property name="expand">True</property>
@@ -42,19 +42,19 @@
       </child>
 
       <child>
-	<widget class="GtkHBox" id="controls">
+	<object class="GtkHBox" id="controls">
 	  <property name="visible">True</property>
 	  <property name="homogeneous">False</property>
 	  <property name="spacing">0</property>
 
 	  <child>
-	    <widget class="Custom" id="pp_button">
+	    <object class="Custom" id="pp_button">
 	      <property name="visible">True</property>
 	      <property name="creation_function">totem_pp_create</property>
 	      <property name="int1">0</property>
 	      <property name="int2">0</property>
 	      <property name="last_modification_time">Sat, 16 Jun 2007 18:48:33 GMT</property>
-	    </widget>
+	    </object>
 	    <packing>
 	      <property name="padding">0</property>
 	      <property name="expand">False</property>
@@ -63,7 +63,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkHScale" id="time_hscale">
+	    <object class="GtkHScale" id="time_hscale">
 	      <property name="visible">True</property>
 	      <property name="can_focus">True</property>
 	      <property name="draw_value">False</property>
@@ -72,7 +72,7 @@
 	      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 	      <property name="inverted">False</property>
 	      <property name="adjustment">5 0 65535 1 10 0</property>
-	    </widget>
+	    </object>
 	    <packing>
 	      <property name="padding">0</property>
 	      <property name="expand">True</property>
@@ -81,20 +81,20 @@
 	  </child>
 
 	  <child>
-	    <widget class="Custom" id="volume_button">
+	    <object class="Custom" id="volume_button">
 	      <property name="visible">True</property>
 	      <property name="creation_function">totem_volume_create</property>
 	      <property name="int1">0</property>
 	      <property name="int2">0</property>
 	      <property name="last_modification_time">Tue, 12 Jul 2005 20:30:15 GMT</property>
-	    </widget>
+	    </object>
 	    <packing>
 	      <property name="padding">0</property>
 	      <property name="expand">False</property>
 	      <property name="fill">False</property>
 	    </packing>
 	  </child>
-	</widget>
+	</object>
 	<packing>
 	  <property name="padding">0</property>
 	  <property name="expand">False</property>
@@ -103,34 +103,34 @@
       </child>
 
       <child>
-	<widget class="Custom" id="statusbar">
+	<object class="Custom" id="statusbar">
 	  <property name="visible">True</property>
 	  <property name="creation_function">totem_statusbar_create</property>
 	  <property name="int1">0</property>
 	  <property name="int2">0</property>
 	  <property name="last_modification_time">Mon, 30 Oct 2006 17:29:57 GMT</property>
-	</widget>
+	</object>
 	<packing>
 	  <property name="padding">0</property>
 	  <property name="expand">False</property>
 	  <property name="fill">True</property>
 	</packing>
       </child>
-    </widget>
+    </object>
   </child>
-</widget>
+</object>
 
-<widget class="GtkMenu" id="menu">
+<object class="GtkMenu" id="menu">
 
   <child>
-    <widget class="GtkImageMenuItem" id="copy_location1">
+    <object class="GtkImageMenuItem" id="copy_location1">
       <property name="visible">True</property>
       <property name="label" translatable="yes">_Copy Location</property>
       <property name="use_underline">True</property>
-      <signal name="activate" handler="on_copy_location1_activate" last_modification_time="Tue, 20 Jun 2006 14:58:42 GMT"/>
+      <signal handler="on_copy_location1_activate" last_modification_time="Tue, 20 Jun 2006 14:58:42 GMT" name="activate"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image1">
+	<object class="GtkImage" id="image1">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-copy</property>
 	  <property name="icon_size">1</property>
@@ -138,34 +138,34 @@
 	  <property name="yalign">0.5</property>
 	  <property name="xpad">0</property>
 	  <property name="ypad">0</property>
-	</widget>
+	</object>
       </child>
-    </widget>
+    </object>
   </child>
 
   <child>
-    <widget class="GtkImageMenuItem" id="preferences1">
+    <object class="GtkImageMenuItem" id="preferences1">
       <property name="visible">True</property>
       <property name="label">gtk-preferences</property>
       <property name="use_stock">True</property>
-      <signal name="activate" handler="on_preferences1_activate" last_modification_time="Tue, 12 Jul 2005 20:29:35 GMT"/>
-    </widget>
+      <signal handler="on_preferences1_activate" last_modification_time="Tue, 12 Jul 2005 20:29:35 GMT" name="activate"/>
+    </object>
   </child>
 
   <child>
-    <widget class="GtkSeparatorMenuItem" id="separator1">
+    <object class="GtkSeparatorMenuItem" id="separator1">
       <property name="visible">True</property>
-    </widget>
+    </object>
   </child>
 
   <child>
-    <widget class="GtkImageMenuItem" id="about1">
+    <object class="GtkImageMenuItem" id="about1">
       <property name="visible">True</property>
       <property name="label">gtk-about</property>
       <property name="use_stock">True</property>
-      <signal name="activate" handler="on_about1_activate" last_modification_time="Tue, 12 Jul 2005 20:29:35 GMT"/>
-    </widget>
+      <signal handler="on_about1_activate" last_modification_time="Tue, 12 Jul 2005 20:29:35 GMT" name="activate"/>
+    </object>
   </child>
-</widget>
+</object>
 
-</glade-interface>
+</interface>

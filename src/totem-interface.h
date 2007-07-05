@@ -23,22 +23,16 @@
 #ifndef TOTEM_INTERFACE_H
 #define TOTEM_INTERFACE_H
 
-#include <glade/glade.h>
-#include <gtk/gtkwindow.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
 GdkPixbuf	*totem_interface_load_pixbuf	(const char *name);
 char		*totem_interface_get_full_path	(const char *name);
-GladeXML	*totem_interface_load		(const char *name,
-						 const char *display_name,
+GtkBuilder	*totem_interface_load		(const char *name,
 						 gboolean fatal,
-						 GtkWindow *parent);
-GladeXML	*totem_interface_load_with_root (const char *name,
-						 const char *root_widget,
-						 const char *display_name,
-						 gboolean fatal,
-						 GtkWindow *parent);
+						 GtkWindow *parent,
+						 gpointer user_data);
 void		 totem_interface_error		(const char *title,
 						 const char *reason,
 						 GtkWindow *parent);
@@ -48,9 +42,9 @@ void		 totem_interface_error_blocking	(const char *title,
 void		 totem_interface_set_transient_for (GtkWindow *window,
 						    GtkWindow *parent);
 char *		 totem_interface_get_license	(void);
-void		 totem_interface_boldify_label	(GladeXML *xml,
+void		 totem_interface_boldify_label	(GtkBuilder *xml,
 						 const char *label);
-void		 totem_interface_italicise_label(GladeXML *xml,
+void		 totem_interface_italicise_label(GtkBuilder *xml,
 						 const char *label);
 
 G_END_DECLS

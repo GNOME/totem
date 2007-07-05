@@ -59,8 +59,8 @@ libtotem_player_la_SOURCES =		\
 	totem-fullscreen.h
 
 libtotem_player_la_CPPFLAGS = \
-	-I$(srcdir)/plparse	\
 	-I$(srcdir)/backend	\
+	-I$(srcdir)/plparse	\
 	$(common_defines)	\
 	$(AM_CPPFLAGS)
 

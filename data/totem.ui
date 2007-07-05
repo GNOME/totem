@@ -1,9 +1,9 @@
-<?xml version="1.0" standalone="no"?> <!--*- mode: xml -*-->
-<!DOCTYPE glade-interface SYSTEM "http://glade.gnome.org/glade-2.0.dtd">
+<?xml version="1.0" ?>
+<!--*- mode: xml -*--><!DOCTYPE glade-interface
+  SYSTEM 'http://glade.gnome.org/glade-2.0.dtd'>
+<interface>
 
-<glade-interface>
-
-<widget class="GtkDialog" id="totem_preferences_window">
+<object class="GtkDialog" id="totem_preferences_window">
   <property name="border_width">5</property>
   <property name="title" translatable="yes">Totem Preferences</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
@@ -21,18 +21,18 @@
   <property name="has_separator">False</property>
 
   <child internal-child="vbox">
-    <widget class="GtkVBox" id="tpw_dialog_vbox">
+    <object class="GtkVBox" id="tpw_dialog_vbox">
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
       <property name="spacing">2</property>
 
       <child internal-child="action_area">
-	<widget class="GtkHButtonBox" id="tpw_dialog_action_area">
+	<object class="GtkHButtonBox" id="tpw_dialog_action_area">
 	  <property name="visible">True</property>
 	  <property name="layout_style">GTK_BUTTONBOX_END</property>
 
 	  <child>
-	    <widget class="GtkButton" id="tpw_close_button">
+	    <object class="GtkButton" id="tpw_close_button">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
@@ -40,10 +40,10 @@
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
-	      <property name="response_id">-7</property>
-	    </widget>
+	      
+	    </object>
 	  </child>
-	</widget>
+	</object>
 	<packing>
 	  <property name="padding">0</property>
 	  <property name="expand">False</property>
@@ -53,7 +53,7 @@
       </child>
 
       <child>
-	<widget class="GtkNotebook" id="tpw_notebook">
+	<object class="GtkNotebook" id="tpw_notebook">
 	  <property name="border_width">5</property>
 	  <property name="visible">True</property>
 	  <property name="can_focus">True</property>
@@ -64,20 +64,20 @@
 	  <property name="enable_popup">False</property>
 
 	  <child>
-	    <widget class="GtkVBox" id="tpw_general_vbox">
+	    <object class="GtkVBox" id="tpw_general_vbox">
 	      <property name="border_width">12</property>
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">18</property>
 
 	      <child>
-		<widget class="GtkVBox" id="vbox3">
+		<object class="GtkVBox" id="vbox3">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">6</property>
 
 		  <child>
-		    <widget class="GtkLabel" id="tpw_network_label">
+		    <object class="GtkLabel" id="tpw_network_label">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">Networking</property>
 		      <property name="use_underline">False</property>
@@ -93,7 +93,7 @@
 		      <property name="width_chars">-1</property>
 		      <property name="single_line_mode">False</property>
 		      <property name="angle">0</property>
-		    </widget>
+		    </object>
 		    <packing>
 		      <property name="padding">0</property>
 		      <property name="expand">False</property>
@@ -102,7 +102,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkAlignment" id="alignment1">
+		    <object class="GtkAlignment" id="alignment1">
 		      <property name="visible">True</property>
 		      <property name="xalign">0.5</property>
 		      <property name="yalign">0.5</property>
@@ -114,13 +114,13 @@
 		      <property name="right_padding">0</property>
 
 		      <child>
-			<widget class="GtkHBox" id="hbox6">
+			<object class="GtkHBox" id="hbox6">
 			  <property name="visible">True</property>
 			  <property name="homogeneous">False</property>
 			  <property name="spacing">12</property>
 
 			  <child>
-			    <widget class="GtkLabel" id="tpw_speed_label">
+			    <object class="GtkLabel" id="tpw_speed_label">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">Connection _speed:</property>
 			      <property name="use_underline">True</property>
@@ -137,7 +137,7 @@
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
 			      <property name="angle">0</property>
-			    </widget>
+			    </object>
 			    <packing>
 			      <property name="padding">0</property>
 			      <property name="expand">False</property>
@@ -146,39 +146,78 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkComboBox" id="tpw_speed_combobox">
+			    <object class="GtkListStore" id="tpw_speed_liststore">
+                              <columns>
+                                <column type="gchararray"/>
+                              </columns>
+                              <data>
+                                <row>
+                                  <col id="0" translatable="yes">14.4 Kbps Modem</col>
+                                </row>
+                                <row>
+                                  <col id="0" translatable="yes">19.2 Kbps Modem</col>
+                                </row>
+                                <row>
+                                  <col id="0" translatable="yes">28.8 Kbps Modem</col>
+                                </row>
+                                <row>
+                                  <col id="0" translatable="yes">33.6 Kbps Modem</col>
+                                </row>
+                                <row>
+                                  <col id="0" translatable="yes">34.4 Kbps Modem</col>
+                                </row>
+                                <row>
+                                  <col id="0" translatable="yes">56 Kbps Modem/ISDN</col>
+                                </row>
+                                <row>
+                                  <col id="0" translatable="yes">112 Kbps Dual ISDN/DSL</col>
+                                </row>
+                                <row>
+                                  <col id="0" translatable="yes">256 Kbps DSL/Cable</col>
+                                </row>
+                                <row>
+                                  <col id="0" translatable="yes">384 Kbps DSL/Cable</col>
+                                </row>
+                                <row>
+                                  <col id="0" translatable="yes">512 Kbps DSL/Cable</col>
+                                </row>
+                                <row>
+                                  <col id="0" translatable="yes">1.5 Mbps T1/Intranet/LAN</col>
+                                </row>
+                                <row>
+                                  <col id="0" translatable="yes">Intranet/LAN</col>
+                                </row>
+                              </data>
+                            </object>
+			    <object class="GtkComboBox" id="tpw_speed_combobox">
 			      <property name="visible">True</property>
-			      <property name="items" translatable="yes">14.4 Kbps Modem
-19.2 Kbps Modem
-28.8 Kbps Modem
-33.6 Kbps Modem
-34.4 Kbps Modem
-56 Kbps Modem/ISDN
-112 Kbps Dual ISDN/DSL
-256 Kbps DSL/Cable
-384 Kbps DSL/Cable
-512 Kbps DSL/Cable
-1.5 Mbps T1/Intranet/LAN
-Intranet/LAN</property>
+			      <property name="model">tpw_speed_liststore</property>
 			      <property name="add_tearoffs">False</property>
 			      <property name="focus_on_click">True</property>
-			    </widget>
+			      <signal name="changed" handler="connection_combobox_changed"/>
+			      <child>
+			        <object class="GtkCellRendererText" id="tpw_speed_cell"/>
+			        <attributes>
+			          <attribute name="text">0</attribute>
+			        </attributes>
+			      </child>
+			    </object>
 			    <packing>
 			      <property name="padding">0</property>
 			      <property name="expand">True</property>
 			      <property name="fill">True</property>
 			    </packing>
 			  </child>
-			</widget>
+			</object>
 		      </child>
-		    </widget>
+		    </object>
 		    <packing>
 		      <property name="padding">0</property>
 		      <property name="expand">True</property>
 		      <property name="fill">True</property>
 		    </packing>
 		  </child>
-		</widget>
+		</object>
 		<packing>
 		  <property name="padding">0</property>
 		  <property name="expand">False</property>
@@ -187,13 +226,13 @@ Intranet/LAN</property>
 	      </child>
 
 	      <child>
-		<widget class="GtkVBox" id="vbox4">
+		<object class="GtkVBox" id="vbox4">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">6</property>
 
 		  <child>
-		    <widget class="GtkLabel" id="tpw_tvout_label">
+		    <object class="GtkLabel" id="tpw_tvout_label">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">TV-Out</property>
 		      <property name="use_underline">False</property>
@@ -209,7 +248,7 @@ Intranet/LAN</property>
 		      <property name="width_chars">-1</property>
 		      <property name="single_line_mode">False</property>
 		      <property name="angle">0</property>
-		    </widget>
+		    </object>
 		    <packing>
 		      <property name="padding">0</property>
 		      <property name="expand">False</property>
@@ -218,7 +257,7 @@ Intranet/LAN</property>
 		  </child>
 
 		  <child>
-		    <widget class="GtkAlignment" id="alignment2">
+		    <object class="GtkAlignment" id="alignment2">
 		      <property name="visible">True</property>
 		      <property name="xalign">0.5</property>
 		      <property name="yalign">0.5</property>
@@ -230,13 +269,13 @@ Intranet/LAN</property>
 		      <property name="right_padding">0</property>
 
 		      <child>
-			<widget class="GtkVBox" id="vbox5">
+			<object class="GtkVBox" id="vbox5">
 			  <property name="visible">True</property>
 			  <property name="homogeneous">False</property>
 			  <property name="spacing">6</property>
 
 			  <child>
-			    <widget class="GtkRadioButton" id="tpw_notvout_radio_button">
+			    <object class="GtkRadioButton" id="tpw_notvout_radio_button">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="label" translatable="yes">_No TV-out</property>
@@ -246,7 +285,8 @@ Intranet/LAN</property>
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
-			    </widget>
+			      <signal name="toggled" handler="tvout_toggled_cb"/>
+			    </object>
 			    <packing>
 			      <property name="padding">0</property>
 			      <property name="expand">False</property>
@@ -255,7 +295,7 @@ Intranet/LAN</property>
 			  </child>
 
 			  <child>
-			    <widget class="GtkRadioButton" id="tpw_nvtvntscmode_radio_button">
+			    <object class="GtkRadioButton" id="tpw_nvtvntscmode_radio_button">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="label" translatable="yes">TV-out in fullscreen by Nvidia (NTSC)</property>
@@ -266,7 +306,8 @@ Intranet/LAN</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
 			      <property name="group">tpw_notvout_radio_button</property>
-			    </widget>
+			      <signal name="toggled" handler="tvout_toggled_cb"/>
+			    </object>
 			    <packing>
 			      <property name="padding">0</property>
 			      <property name="expand">False</property>
@@ -275,7 +316,7 @@ Intranet/LAN</property>
 			  </child>
 
 			  <child>
-			    <widget class="GtkRadioButton" id="tpw_nvtvpalmode_radio_button">
+			    <object class="GtkRadioButton" id="tpw_nvtvpalmode_radio_button">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="label" translatable="yes">TV-out in fullscreen by Nvidia (PAL)</property>
@@ -286,23 +327,24 @@ Intranet/LAN</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
 			      <property name="group">tpw_notvout_radio_button</property>
-			    </widget>
+			      <signal name="toggled" handler="tvout_toggled_cb"/>
+			    </object>
 			    <packing>
 			      <property name="padding">0</property>
 			      <property name="expand">False</property>
 			      <property name="fill">False</property>
 			    </packing>
 			  </child>
-			</widget>
+			</object>
 		      </child>
-		    </widget>
+		    </object>
 		    <packing>
 		      <property name="padding">0</property>
 		      <property name="expand">True</property>
 		      <property name="fill">True</property>
 		    </packing>
 		  </child>
-		</widget>
+		</object>
 		<packing>
 		  <property name="padding">0</property>
 		  <property name="expand">False</property>
@@ -311,13 +353,13 @@ Intranet/LAN</property>
 	      </child>
 
 	      <child>
-		<widget class="GtkVBox" id="vbox6">
+		<object class="GtkVBox" id="vbox6">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">6</property>
 
 		  <child>
-		    <widget class="GtkLabel" id="tpw_text_subtitles_label">
+		    <object class="GtkLabel" id="tpw_text_subtitles_label">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">Text Subtitles</property>
 		      <property name="use_underline">False</property>
@@ -333,7 +375,7 @@ Intranet/LAN</property>
 		      <property name="width_chars">-1</property>
 		      <property name="single_line_mode">False</property>
 		      <property name="angle">0</property>
-		    </widget>
+		    </object>
 		    <packing>
 		      <property name="padding">0</property>
 		      <property name="expand">False</property>
@@ -342,7 +384,7 @@ Intranet/LAN</property>
 		  </child>
 
 		  <child>
-		    <widget class="GtkAlignment" id="alignment3">
+		    <object class="GtkAlignment" id="alignment3">
 		      <property name="visible">True</property>
 		      <property name="xalign">0.5</property>
 		      <property name="yalign">0.5</property>
@@ -354,7 +396,7 @@ Intranet/LAN</property>
 		      <property name="right_padding">0</property>
 
 		      <child>
-			<widget class="GtkTable" id="table3">
+			<object class="GtkTable" id="table3">
 			  <property name="visible">True</property>
 			  <property name="n_rows">2</property>
 			  <property name="n_columns">2</property>
@@ -363,7 +405,7 @@ Intranet/LAN</property>
 			  <property name="column_spacing">12</property>
 
 			  <child>
-			    <widget class="GtkLabel" id="label32">
+			    <object class="GtkLabel" id="label32">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">_Font:</property>
 			      <property name="use_underline">True</property>
@@ -380,19 +422,19 @@ Intranet/LAN</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
 			      <property name="angle">0</property>
-			    </widget>
+			    </object>
 			    <packing>
 			      <property name="left_attach">0</property>
 			      <property name="right_attach">1</property>
 			      <property name="top_attach">0</property>
 			      <property name="bottom_attach">1</property>
 			      <property name="x_options">fill</property>
-			      <property name="y_options"></property>
+			      <property name="y_options"/>
 			    </packing>
 			  </child>
 
 			  <child>
-			    <widget class="GtkLabel" id="label35">
+			    <object class="GtkLabel" id="label35">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">_Encoding:</property>
 			      <property name="use_underline">True</property>
@@ -409,23 +451,24 @@ Intranet/LAN</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
 			      <property name="angle">0</property>
-			    </widget>
+			    </object>
 			    <packing>
 			      <property name="left_attach">0</property>
 			      <property name="right_attach">1</property>
 			      <property name="top_attach">1</property>
 			      <property name="bottom_attach">2</property>
 			      <property name="x_options">fill</property>
-			      <property name="y_options"></property>
+			      <property name="y_options"/>
 			    </packing>
 			  </child>
 
 			  <child>
-			    <widget class="GtkComboBox" id="subtitle_encoding_combo">
+			    <object class="GtkComboBox" id="subtitle_encoding_combo">
 			      <property name="visible">True</property>
 			      <property name="add_tearoffs">False</property>
 			      <property name="focus_on_click">True</property>
-			    </widget>
+			      <signal name="changed" handler="encoding_set_cb"/>
+			    </object>
 			    <packing>
 			      <property name="left_attach">1</property>
 			      <property name="right_attach">2</property>
@@ -437,7 +480,7 @@ Intranet/LAN</property>
 			  </child>
 
 			  <child>
-			    <widget class="GtkFontButton" id="font_sel_button">
+			    <object class="GtkFontButton" id="font_sel_button">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="show_style">True</property>
@@ -445,40 +488,41 @@ Intranet/LAN</property>
 			      <property name="use_font">False</property>
 			      <property name="use_size">False</property>
 			      <property name="focus_on_click">True</property>
-			    </widget>
+			      <signal name="font-set" handler="font_set_cb"/>
+			    </object>
 			    <packing>
 			      <property name="left_attach">1</property>
 			      <property name="right_attach">2</property>
 			      <property name="top_attach">0</property>
 			      <property name="bottom_attach">1</property>
-			      <property name="y_options"></property>
+			      <property name="y_options"/>
 			    </packing>
 			  </child>
-			</widget>
+			</object>
 		      </child>
-		    </widget>
+		    </object>
 		    <packing>
 		      <property name="padding">0</property>
 		      <property name="expand">True</property>
 		      <property name="fill">True</property>
 		    </packing>
 		  </child>
-		</widget>
+		</object>
 		<packing>
 		  <property name="padding">0</property>
 		  <property name="expand">False</property>
 		  <property name="fill">True</property>
 		</packing>
 	      </child>
-	    </widget>
+	    </object>
 	    <packing>
 	      <property name="tab_expand">False</property>
 	      <property name="tab_fill">True</property>
 	    </packing>
 	  </child>
 
-	  <child>
-	    <widget class="GtkLabel" id="tpw_general_notebook_label">
+	  <child type="tab">
+	    <object class="GtkLabel" id="tpw_general_notebook_label">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">General</property>
 	      <property name="use_underline">True</property>
@@ -494,27 +538,25 @@ Intranet/LAN</property>
 	      <property name="width_chars">-1</property>
 	      <property name="single_line_mode">False</property>
 	      <property name="angle">0</property>
-	    </widget>
-	    <packing>
-	      <property name="type">tab</property>
-	    </packing>
+	    </object>
+	    
 	  </child>
 
 	  <child>
-	    <widget class="GtkVBox" id="vbox1">
+	    <object class="GtkVBox" id="vbox1">
 	      <property name="border_width">12</property>
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">18</property>
 
 	      <child>
-		<widget class="GtkVBox" id="tpw_visuals_display_vbox">
+		<object class="GtkVBox" id="tpw_visuals_display_vbox">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">6</property>
 
 		  <child>
-		    <widget class="GtkLabel" id="tpw_display_label">
+		    <object class="GtkLabel" id="tpw_display_label">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">Display</property>
 		      <property name="use_underline">False</property>
@@ -530,7 +572,7 @@ Intranet/LAN</property>
 		      <property name="width_chars">-1</property>
 		      <property name="single_line_mode">False</property>
 		      <property name="angle">0</property>
-		    </widget>
+		    </object>
 		    <packing>
 		      <property name="padding">0</property>
 		      <property name="expand">False</property>
@@ -539,7 +581,7 @@ Intranet/LAN</property>
 		  </child>
 
 		  <child>
-		    <widget class="GtkAlignment" id="alignment4">
+		    <object class="GtkAlignment" id="alignment4">
 		      <property name="visible">True</property>
 		      <property name="xalign">0.5</property>
 		      <property name="yalign">0.5</property>
@@ -551,7 +593,7 @@ Intranet/LAN</property>
 		      <property name="right_padding">0</property>
 
 		      <child>
-			<widget class="GtkCheckButton" id="tpw_display_checkbutton">
+			<object class="GtkCheckButton" id="tpw_display_checkbutton">
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
 			  <property name="label" translatable="yes">Automatically _resize the window when a new video is loaded</property>
@@ -561,16 +603,17 @@ Intranet/LAN</property>
 			  <property name="active">False</property>
 			  <property name="inconsistent">False</property>
 			  <property name="draw_indicator">True</property>
-			</widget>
+			  <signal name="toggled" handler="checkbutton1_toggled_cb"/>
+			</object>
 		      </child>
-		    </widget>
+		    </object>
 		    <packing>
 		      <property name="padding">0</property>
 		      <property name="expand">False</property>
 		      <property name="fill">False</property>
 		    </packing>
 		  </child>
-		</widget>
+		</object>
 		<packing>
 		  <property name="padding">0</property>
 		  <property name="expand">False</property>
@@ -579,13 +622,13 @@ Intranet/LAN</property>
 	      </child>
 
 	      <child>
-		<widget class="GtkVBox" id="tpw_visuals_effects_vbox">
+		<object class="GtkVBox" id="tpw_visuals_effects_vbox">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">6</property>
 
 		  <child>
-		    <widget class="GtkLabel" id="tpw_visuals_label">
+		    <object class="GtkLabel" id="tpw_visuals_label">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">Visual Effects</property>
 		      <property name="use_underline">False</property>
@@ -601,7 +644,7 @@ Intranet/LAN</property>
 		      <property name="width_chars">-1</property>
 		      <property name="single_line_mode">False</property>
 		      <property name="angle">0</property>
-		    </widget>
+		    </object>
 		    <packing>
 		      <property name="padding">0</property>
 		      <property name="expand">False</property>
@@ -610,7 +653,7 @@ Intranet/LAN</property>
 		  </child>
 
 		  <child>
-		    <widget class="GtkAlignment" id="alignment5">
+		    <object class="GtkAlignment" id="alignment5">
 		      <property name="visible">True</property>
 		      <property name="xalign">0.5</property>
 		      <property name="yalign">0.5</property>
@@ -622,13 +665,13 @@ Intranet/LAN</property>
 		      <property name="right_padding">0</property>
 
 		      <child>
-			<widget class="GtkVBox" id="vbox9">
+			<object class="GtkVBox" id="vbox9">
 			  <property name="visible">True</property>
 			  <property name="homogeneous">False</property>
 			  <property name="spacing">6</property>
 
 			  <child>
-			    <widget class="GtkCheckButton" id="tpw_visuals_checkbutton">
+			    <object class="GtkCheckButton" id="tpw_visuals_checkbutton">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="label" translatable="yes">Show _visual effects when an audio file is played</property>
@@ -638,7 +681,8 @@ Intranet/LAN</property>
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
-			    </widget>
+			      <signal name="toggled" handler="checkbutton2_toggled_cb"/>
+			    </object>
 			    <packing>
 			      <property name="padding">0</property>
 			      <property name="expand">False</property>
@@ -647,7 +691,7 @@ Intranet/LAN</property>
 			  </child>
 
 			  <child>
-			    <widget class="GtkTable" id="table1">
+			    <object class="GtkTable" id="table1">
 			      <property name="visible">True</property>
 			      <property name="n_rows">2</property>
 			      <property name="n_columns">2</property>
@@ -656,7 +700,7 @@ Intranet/LAN</property>
 			      <property name="column_spacing">12</property>
 
 			      <child>
-				<widget class="GtkLabel" id="tpw_visuals_type_label">
+				<object class="GtkLabel" id="tpw_visuals_type_label">
 				  <property name="visible">True</property>
 				  <property name="label" translatable="yes">_Type of visualisation:</property>
 				  <property name="use_underline">True</property>
@@ -673,19 +717,19 @@ Intranet/LAN</property>
 				  <property name="width_chars">-1</property>
 				  <property name="single_line_mode">False</property>
 				  <property name="angle">0</property>
-				</widget>
+				</object>
 				<packing>
 				  <property name="left_attach">0</property>
 				  <property name="right_attach">1</property>
 				  <property name="top_attach">0</property>
 				  <property name="bottom_attach">1</property>
 				  <property name="x_options">fill</property>
-				  <property name="y_options"></property>
+				  <property name="y_options"/>
 				</packing>
 			      </child>
 
 			      <child>
-				<widget class="GtkLabel" id="tpw_visuals_size_label">
+				<object class="GtkLabel" id="tpw_visuals_size_label">
 				  <property name="visible">True</property>
 				  <property name="label" translatable="yes">Visualisation _size:</property>
 				  <property name="use_underline">True</property>
@@ -702,27 +746,47 @@ Intranet/LAN</property>
 				  <property name="width_chars">-1</property>
 				  <property name="single_line_mode">False</property>
 				  <property name="angle">0</property>
-				</widget>
+				</object>
 				<packing>
 				  <property name="left_attach">0</property>
 				  <property name="right_attach">1</property>
 				  <property name="top_attach">1</property>
 				  <property name="bottom_attach">2</property>
 				  <property name="x_options">fill</property>
-				  <property name="y_options"></property>
+				  <property name="y_options"/>
 				</packing>
 			      </child>
 
 			      <child>
-				<widget class="GtkComboBox" id="tpw_visuals_size_combobox">
+			        <object class="GtkListStore" id="tpw_visuals_size_liststore">
+                                  <columns>
+                                    <column type="gchararray"/>
+                                  </columns>
+                                  <data>
+                                    <row>
+                                      <col id="0" translatable="yes">Normal</col>
+                                    </row>
+                                    <row>
+                                      <col id="0" translatable="yes">Large</col>
+                                    </row>
+                                    <row>
+                                      <col id="0" translatable="yes">Extra Large</col>
+                                    </row>
+                                  </data>
+                                </object>
+				<object class="GtkComboBox" id="tpw_visuals_size_combobox">
 				  <property name="visible">True</property>
-				  <property name="items" translatable="yes">Small
-Normal
-Large
-Extra Large</property>
+				  <property name="model">tpw_visuals_size_liststore</property>
 				  <property name="add_tearoffs">False</property>
 				  <property name="focus_on_click">True</property>
-				</widget>
+				  <signal name="changed" handler="visual_quality_menu_changed"/>
+				  <child>
+				    <object class="GtkCellRendererText" id="tpw_visuals_size_cell"/>
+				    <attributes>
+				      <attribute name="text">0</attribute>
+				    </attributes>
+				  </child>
+				</object>
 				<packing>
 				  <property name="left_attach">1</property>
 				  <property name="right_attach">2</property>
@@ -734,12 +798,20 @@ Extra Large</property>
 			      </child>
 
 			      <child>
-				<widget class="GtkComboBox" id="tpw_visuals_type_combobox">
+			        <object class="GtkListStore" id="tpw_visuals_type_liststore">
+                                  <columns>
+                                    <column type="gchararray"/>
+                                  </columns>
+                                  <data>
+                                  </data>
+                                </object>
+				<object class="GtkComboBox" id="tpw_visuals_type_combobox">
 				  <property name="visible">True</property>
-				  <property name="items" translatable="yes"></property>
 				  <property name="add_tearoffs">False</property>
 				  <property name="focus_on_click">True</property>
-				</widget>
+				  <property name="model">tpw_visuals_type_liststore</property>
+				  <signal name="changed" handler="visual_menu_changed"/>
+				</object>
 				<packing>
 				  <property name="left_attach">1</property>
 				  <property name="right_attach">2</property>
@@ -748,23 +820,23 @@ Extra Large</property>
 				  <property name="y_options">fill</property>
 				</packing>
 			      </child>
-			    </widget>
+			    </object>
 			    <packing>
 			      <property name="padding">0</property>
 			      <property name="expand">True</property>
 			      <property name="fill">True</property>
 			    </packing>
 			  </child>
-			</widget>
+			</object>
 		      </child>
-		    </widget>
+		    </object>
 		    <packing>
 		      <property name="padding">0</property>
 		      <property name="expand">True</property>
 		      <property name="fill">True</property>
 		    </packing>
 		  </child>
-		</widget>
+		</object>
 		<packing>
 		  <property name="padding">0</property>
 		  <property name="expand">False</property>
@@ -773,26 +845,26 @@ Extra Large</property>
 	      </child>
 
 	      <child>
-		<widget class="GtkVBox" id="tpw_bright_contr_vbox">
+		<object class="GtkVBox" id="tpw_bright_contr_vbox">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">6</property>
 
 		  <child>
-		    <widget class="GtkHBox" id="hbox14">
+		    <object class="GtkHBox" id="hbox14">
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
 		      <property name="spacing">6</property>
 
 		      <child>
-			<widget class="GtkImage" id="image7">
+			<object class="GtkImage" id="image7">
 			  <property name="visible">True</property>
-			  <property name="pixbuf">stock-tool-brightness-contrast-22.png</property>
+			  <property name="file">stock-tool-brightness-contrast-22.png</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
 			  <property name="ypad">0</property>
-			</widget>
+			</object>
 			<packing>
 			  <property name="padding">0</property>
 			  <property name="expand">False</property>
@@ -801,9 +873,9 @@ Extra Large</property>
 		      </child>
 
 		      <child>
-			<widget class="GtkLabel" id="tpw_color_balance_label">
+			<object class="GtkLabel" id="tpw_color_balance_label">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Color balance</property>
+			  <property name="label" translatable="yes">Color Balance</property>
 			  <property name="use_underline">False</property>
 			  <property name="use_markup">True</property>
 			  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -817,14 +889,14 @@ Extra Large</property>
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
-			</widget>
+			</object>
 			<packing>
 			  <property name="padding">0</property>
 			  <property name="expand">False</property>
 			  <property name="fill">False</property>
 			</packing>
 		      </child>
-		    </widget>
+		    </object>
 		    <packing>
 		      <property name="padding">0</property>
 		      <property name="expand">False</property>
@@ -833,7 +905,7 @@ Extra Large</property>
 		  </child>
 
 		  <child>
-		    <widget class="GtkAlignment" id="alignment6">
+		    <object class="GtkAlignment" id="alignment6">
 		      <property name="visible">True</property>
 		      <property name="xalign">0.5</property>
 		      <property name="yalign">0.5</property>
@@ -845,7 +917,7 @@ Extra Large</property>
 		      <property name="right_padding">0</property>
 
 		      <child>
-			<widget class="GtkTable" id="table2">
+			<object class="GtkTable" id="table2">
 			  <property name="visible">True</property>
 			  <property name="n_rows">5</property>
 			  <property name="n_columns">2</property>
@@ -854,7 +926,7 @@ Extra Large</property>
 			  <property name="column_spacing">12</property>
 
 			  <child>
-			    <widget class="GtkLabel" id="tpw_brightness_label">
+			    <object class="GtkLabel" id="tpw_brightness_label">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">_Brightness:</property>
 			      <property name="use_underline">True</property>
@@ -871,19 +943,19 @@ Extra Large</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
 			      <property name="angle">0</property>
-			    </widget>
+			    </object>
 			    <packing>
 			      <property name="left_attach">0</property>
 			      <property name="right_attach">1</property>
 			      <property name="top_attach">0</property>
 			      <property name="bottom_attach">1</property>
 			      <property name="x_options">fill</property>
-			      <property name="y_options"></property>
+			      <property name="y_options"/>
 			    </packing>
 			  </child>
 
 			  <child>
-			    <widget class="GtkLabel" id="tpw_contrast_label">
+			    <object class="GtkLabel" id="tpw_contrast_label">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">Co_ntrast:</property>
 			      <property name="use_underline">True</property>
@@ -900,19 +972,27 @@ Extra Large</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
 			      <property name="angle">0</property>
-			    </widget>
+			    </object>
 			    <packing>
 			      <property name="left_attach">0</property>
 			      <property name="right_attach">1</property>
 			      <property name="top_attach">1</property>
 			      <property name="bottom_attach">2</property>
 			      <property name="x_options">fill</property>
-			      <property name="y_options"></property>
+			      <property name="y_options"/>
 			    </packing>
 			  </child>
 
 			  <child>
-			    <widget class="GtkHScale" id="tpw_bright_scale">
+			    <object class="GtkAdjustment" id="tpw_bright_adjustment">
+		              <property name="lower">0</property>
+		              <property name="upper">65535</property>
+		              <property name="step-increment">1000</property>
+		              <property name="page-increment">2000</property>
+		              <property name="page-size">250</property>
+		              <property name="value">32767</property>
+		            </object>
+			    <object class="GtkHScale" id="tpw_bright_scale">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="draw_value">False</property>
@@ -920,19 +1000,28 @@ Extra Large</property>
 			      <property name="digits">1</property>
 			      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 			      <property name="inverted">False</property>
-			      <property name="adjustment">32767 0 65535 1000 2000 250</property>
-			    </widget>
+			      <property name="adjustment">tpw_bright_adjustment</property>
+			      <signal name="value-changed" handler="brightness_changed"/>
+			    </object>
 			    <packing>
 			      <property name="left_attach">1</property>
 			      <property name="right_attach">2</property>
 			      <property name="top_attach">0</property>
 			      <property name="bottom_attach">1</property>
-			      <property name="y_options"></property>
+			      <property name="y_options"/>
 			    </packing>
 			  </child>
 
 			  <child>
-			    <widget class="GtkHScale" id="tpw_contrast_scale">
+			    <object class="GtkAdjustment" id="tpw_contrast_adjustment">
+		              <property name="lower">0</property>
+		              <property name="upper">65535</property>
+		              <property name="step-increment">1000</property>
+		              <property name="page-increment">2000</property>
+		              <property name="page-size">250</property>
+		              <property name="value">32767</property>
+		            </object>
+			    <object class="GtkHScale" id="tpw_contrast_scale">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="draw_value">False</property>
@@ -940,8 +1029,9 @@ Extra Large</property>
 			      <property name="digits">1</property>
 			      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 			      <property name="inverted">False</property>
-			      <property name="adjustment">32767 0 65535 1000 2000 250</property>
-			    </widget>
+			      <property name="adjustment">tpw_contrast_adjustment</property>
+			      <signal name="value-changed" handler="contrast_changed"/>
+			    </object>
 			    <packing>
 			      <property name="left_attach">1</property>
 			      <property name="right_attach">2</property>
@@ -953,7 +1043,7 @@ Extra Large</property>
 			  </child>
 
 			  <child>
-			    <widget class="GtkLabel" id="tpw_saturation_label">
+			    <object class="GtkLabel" id="tpw_saturation_label">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">Sat_uration:</property>
 			      <property name="use_underline">True</property>
@@ -970,19 +1060,19 @@ Extra Large</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
 			      <property name="angle">0</property>
-			    </widget>
+			    </object>
 			    <packing>
 			      <property name="left_attach">0</property>
 			      <property name="right_attach">1</property>
 			      <property name="top_attach">2</property>
 			      <property name="bottom_attach">3</property>
 			      <property name="x_options">fill</property>
-			      <property name="y_options"></property>
+			      <property name="y_options"/>
 			    </packing>
 			  </child>
 
 			  <child>
-			    <widget class="GtkLabel" id="tpw_hue_label">
+			    <object class="GtkLabel" id="tpw_hue_label">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">_Hue:</property>
 			      <property name="use_underline">True</property>
@@ -999,19 +1089,27 @@ Extra Large</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
 			      <property name="angle">0</property>
-			    </widget>
+			    </object>
 			    <packing>
 			      <property name="left_attach">0</property>
 			      <property name="right_attach">1</property>
 			      <property name="top_attach">3</property>
 			      <property name="bottom_attach">4</property>
 			      <property name="x_options">fill</property>
-			      <property name="y_options"></property>
+			      <property name="y_options"/>
 			    </packing>
 			  </child>
 
 			  <child>
-			    <widget class="GtkHScale" id="tpw_saturation_scale">
+			    <object class="GtkAdjustment" id="tpw_saturation_adjustment">
+		              <property name="lower">0</property>
+		              <property name="upper">65535</property>
+		              <property name="step-increment">1000</property>
+		              <property name="page-increment">2000</property>
+		              <property name="page-size">250</property>
+		              <property name="value">32767</property>
+		            </object>
+			    <object class="GtkHScale" id="tpw_saturation_scale">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="draw_value">False</property>
@@ -1019,8 +1117,9 @@ Extra Large</property>
 			      <property name="digits">1</property>
 			      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 			      <property name="inverted">False</property>
-			      <property name="adjustment">32767 0 65535 1000 2000 250</property>
-			    </widget>
+			      <property name="adjustment">tpw_saturation_adjustment</property>
+			      <signal name="value-changed" handler="saturation_changed"/>
+			    </object>
 			    <packing>
 			      <property name="left_attach">1</property>
 			      <property name="right_attach">2</property>
@@ -1032,7 +1131,15 @@ Extra Large</property>
 			  </child>
 
 			  <child>
-			    <widget class="GtkHScale" id="tpw_hue_scale">
+			    <object class="GtkAdjustment" id="tpw_hue_adjustment">
+		              <property name="lower">0</property>
+		              <property name="upper">65535</property>
+		              <property name="step-increment">1000</property>
+		              <property name="page-increment">2000</property>
+		              <property name="page-size">250</property>
+		              <property name="value">32767</property>
+		            </object>
+			    <object class="GtkHScale" id="tpw_hue_scale">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="draw_value">False</property>
@@ -1040,8 +1147,9 @@ Extra Large</property>
 			      <property name="digits">1</property>
 			      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 			      <property name="inverted">False</property>
-			      <property name="adjustment">32767 0 65535 1000 2000 250</property>
-			    </widget>
+			      <property name="adjustment">tpw_hue_adjustment</property>
+			      <signal name="value-changed" handler="hue_changed"/>
+			    </object>
 			    <packing>
 			      <property name="left_attach">1</property>
 			      <property name="right_attach">2</property>
@@ -1053,52 +1161,29 @@ Extra Large</property>
 			  </child>
 
 			  <child>
-			    <widget class="GtkHBox" id="hbox23">
+			    <object class="GtkHButtonBox" id="hbox23">
 			      <property name="visible">True</property>
 			      <property name="homogeneous">False</property>
 			      <property name="spacing">0</property>
+			      <property name="layout_style">GTK_BUTTONBOX_END</property>
 
 			      <child>
-				<widget class="GtkLabel" id="label31">
-				  <property name="visible">True</property>
-				  <property name="label" translatable="yes"></property>
-				  <property name="use_underline">False</property>
-				  <property name="use_markup">False</property>
-				  <property name="justify">GTK_JUSTIFY_LEFT</property>
-				  <property name="wrap">False</property>
-				  <property name="selectable">False</property>
-				  <property name="xalign">0.5</property>
-				  <property name="yalign">0.5</property>
-				  <property name="xpad">0</property>
-				  <property name="ypad">0</property>
-				  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-				  <property name="width_chars">-1</property>
-				  <property name="single_line_mode">False</property>
-				  <property name="angle">0</property>
-				</widget>
-				<packing>
-				  <property name="padding">0</property>
-				  <property name="expand">True</property>
-				  <property name="fill">True</property>
-				</packing>
-			      </child>
-
-			      <child>
-				<widget class="GtkButton" id="tpw_color_reset">
+				<object class="GtkButton" id="tpw_color_reset">
 				  <property name="visible">True</property>
 				  <property name="can_focus">True</property>
 				  <property name="label" translatable="yes">Reset To _Defaults</property>
 				  <property name="use_underline">True</property>
 				  <property name="relief">GTK_RELIEF_NORMAL</property>
 				  <property name="focus_on_click">True</property>
-				</widget>
+				  <signal name="clicked" handler="tpw_color_reset_clicked_cb"/>
+				</object>
 				<packing>
 				  <property name="padding">0</property>
 				  <property name="expand">False</property>
 				  <property name="fill">False</property>
 				</packing>
 			      </child>
-			    </widget>
+			    </object>
 			    <packing>
 			      <property name="left_attach">1</property>
 			      <property name="right_attach">2</property>
@@ -1107,31 +1192,31 @@ Extra Large</property>
 			      <property name="x_options">shrink|fill</property>
 			    </packing>
 			  </child>
-			</widget>
+			</object>
 		      </child>
-		    </widget>
+		    </object>
 		    <packing>
 		      <property name="padding">0</property>
 		      <property name="expand">True</property>
 		      <property name="fill">True</property>
 		    </packing>
 		  </child>
-		</widget>
+		</object>
 		<packing>
 		  <property name="padding">0</property>
 		  <property name="expand">False</property>
 		  <property name="fill">True</property>
 		</packing>
 	      </child>
-	    </widget>
+	    </object>
 	    <packing>
 	      <property name="tab_expand">False</property>
 	      <property name="tab_fill">True</property>
 	    </packing>
 	  </child>
 
-	  <child>
-	    <widget class="GtkLabel" id="tpw_visuals_notebook_label">
+	  <child type="tab">
+	    <object class="GtkLabel" id="tpw_visuals_notebook_label">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">Display</property>
 	      <property name="use_underline">True</property>
@@ -1147,33 +1232,31 @@ Extra Large</property>
 	      <property name="width_chars">-1</property>
 	      <property name="single_line_mode">False</property>
 	      <property name="angle">0</property>
-	    </widget>
-	    <packing>
-	      <property name="type">tab</property>
-	    </packing>
+	    </object>
+	    
 	  </child>
 
 	  <child>
-	    <widget class="GtkVBox" id="vbox12">
+	    <object class="GtkVBox" id="vbox12">
 	      <property name="border_width">12</property>
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">18</property>
 
 	      <child>
-		<widget class="GtkVBox" id="vbox13">
+		<object class="GtkVBox" id="vbox13">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">0</property>
 
 		  <child>
-		    <widget class="GtkVBox" id="vbox22">
+		    <object class="GtkVBox" id="vbox22">
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
 		      <property name="spacing">6</property>
 
 		      <child>
-			<widget class="GtkLabel" id="tpw_audio_output_label">
+			<object class="GtkLabel" id="tpw_audio_output_label">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes">Audio Output</property>
 			  <property name="use_underline">False</property>
@@ -1189,7 +1272,7 @@ Extra Large</property>
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
-			</widget>
+			</object>
 			<packing>
 			  <property name="padding">0</property>
 			  <property name="expand">False</property>
@@ -1198,7 +1281,7 @@ Extra Large</property>
 		      </child>
 
 		      <child>
-			<widget class="GtkAlignment" id="alignment7">
+			<object class="GtkAlignment" id="alignment7">
 			  <property name="visible">True</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
@@ -1210,13 +1293,13 @@ Extra Large</property>
 			  <property name="right_padding">0</property>
 
 			  <child>
-			    <widget class="GtkHBox" id="hbox22">
+			    <object class="GtkHBox" id="hbox22">
 			      <property name="visible">True</property>
 			      <property name="homogeneous">False</property>
 			      <property name="spacing">12</property>
 
 			      <child>
-				<widget class="GtkLabel" id="tpw_audio_output_type_label">
+				<object class="GtkLabel" id="tpw_audio_output_type_label">
 				  <property name="visible">True</property>
 				  <property name="label" translatable="yes">_Audio output type:</property>
 				  <property name="use_underline">True</property>
@@ -1233,7 +1316,7 @@ Extra Large</property>
 				  <property name="width_chars">-1</property>
 				  <property name="single_line_mode">False</property>
 				  <property name="angle">0</property>
-				</widget>
+				</object>
 				<packing>
 				  <property name="padding">0</property>
 				  <property name="expand">False</property>
@@ -1242,33 +1325,60 @@ Extra Large</property>
 			      </child>
 
 			      <child>
-				<widget class="GtkComboBox" id="tpw_sound_output_combobox">
+			        <object class="GtkListStore" id="tpw_sound_output_liststore">
+                                  <columns>
+                                    <column type="gchararray"/>
+                                  </columns>
+                                  <data>
+                                    <row>
+                                      <col id="0" translatable="yes">Stereo</col>
+                                    </row>
+                                    <row>
+                                      <col id="0" translatable="yes">4-channel</col>
+                                    </row>
+                                    <row>
+                                      <col id="0" translatable="yes">4.1-channel</col>
+                                    </row>
+                                    <row>
+                                      <col id="0" translatable="yes">5.0-channel</col>
+                                    </row>
+                                    <row>
+                                      <col id="0" translatable="yes">5.1-channel</col>
+                                    </row>
+                                    <row>
+                                      <col id="0" translatable="yes">AC3 Passthrough</col>
+                                    </row>
+                                  </data>
+                                </object>
+				<object class="GtkComboBox" id="tpw_sound_output_combobox">
 				  <property name="visible">True</property>
-				  <property name="items" translatable="yes">Stereo
-4-channel
-4.1-channel
-5.0-channel
-5.1-channel
-AC3 Passthrough</property>
+				  <property name="model">tpw_sound_output_liststore</property>
 				  <property name="add_tearoffs">False</property>
 				  <property name="focus_on_click">True</property>
-				</widget>
+				  <signal name="changed" handler="audio_out_menu_changed"/>
+				  <child>
+				    <object class="GtkCellRendererText" id="tpw_sound_output_cell"/>
+				    <attributes>
+				      <attribute name="text">0</attribute>
+				    </attributes>
+				  </child>
+				</object>
 				<packing>
 				  <property name="padding">0</property>
 				  <property name="expand">True</property>
 				  <property name="fill">True</property>
 				</packing>
 			      </child>
-			    </widget>
+			    </object>
 			  </child>
-			</widget>
+			</object>
 			<packing>
 			  <property name="padding">0</property>
 			  <property name="expand">True</property>
 			  <property name="fill">True</property>
 			</packing>
 		      </child>
-		    </widget>
+		    </object>
 		    <packing>
 		      <property name="padding">0</property>
 		      <property name="expand">False</property>
@@ -1279,22 +1389,22 @@ AC3 Passthrough</property>
 		  <child>
 		    <placeholder/>
 		  </child>
-		</widget>
+		</object>
 		<packing>
 		  <property name="padding">0</property>
 		  <property name="expand">True</property>
 		  <property name="fill">True</property>
 		</packing>
 	      </child>
-	    </widget>
+	    </object>
 	    <packing>
 	      <property name="tab_expand">False</property>
 	      <property name="tab_fill">True</property>
 	    </packing>
 	  </child>
 
-	  <child>
-	    <widget class="GtkLabel" id="label11">
+	  <child type="tab">
+	    <object class="GtkLabel" id="label11">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">Audio</property>
 	      <property name="use_underline">True</property>
@@ -1310,23 +1420,21 @@ AC3 Passthrough</property>
 	      <property name="width_chars">-1</property>
 	      <property name="single_line_mode">False</property>
 	      <property name="angle">0</property>
-	    </widget>
-	    <packing>
-	      <property name="type">tab</property>
-	    </packing>
+	    </object>
+	    
 	  </child>
-	</widget>
+	</object>
 	<packing>
 	  <property name="padding">0</property>
 	  <property name="expand">True</property>
 	  <property name="fill">True</property>
 	</packing>
       </child>
-    </widget>
+    </object>
   </child>
-</widget>
+<action-widgets><action-widget response="-7">tpw_close_button</action-widget></action-widgets></object>
 
-<widget class="GtkWindow" id="totem_main_window">
+<object class="GtkWindow" id="totem_main_window">
   <property name="title" translatable="yes">Totem Movie Player</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
@@ -1340,15 +1448,20 @@ AC3 Passthrough</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
   <property name="urgency_hint">False</property>
+  <signal name="delete-event" handler="main_window_destroy_cb"/>
+  <signal name="window-state-event" handler="window_state_event_cb"/>
+  <signal name="key-press-event" handler="window_key_press_event_cb"/>
+  <signal name="key-release-event" handler="window_key_press_event_cb"/>
+  <signal name="scroll-event" handler="window_scroll_event_cb"/>
 
   <child>
-    <widget class="GtkVBox" id="totem_main_vbox">
+    <object class="GtkVBox" id="totem_main_vbox">
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
       <property name="spacing">0</property>
 
       <child>
-	<widget class="GtkVBox" id="tmw_menubar_box">
+	<object class="GtkVBox" id="tmw_menubar_box">
 	  <property name="visible">True</property>
 	  <property name="homogeneous">False</property>
 	  <property name="spacing">0</property>
@@ -1356,7 +1469,7 @@ AC3 Passthrough</property>
 	  <child>
 	    <placeholder/>
 	  </child>
-	</widget>
+	</object>
 	<packing>
 	  <property name="padding">0</property>
 	  <property name="expand">False</property>
@@ -1365,18 +1478,19 @@ AC3 Passthrough</property>
       </child>
 
       <child>
-	<widget class="GtkHPaned" id="tmw_main_pane">
+	<object class="GtkHPaned" id="tmw_main_pane">
 	  <property name="visible">True</property>
 	  <property name="can_focus">True</property>
+	  <signal name="size-allocate" handler="main_pane_size_allocated"/>
 
 	  <child>
-	    <widget class="GtkVBox" id="tmw_main_vbox">
+	    <object class="GtkVBox" id="tmw_main_vbox">
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">0</property>
 
 	      <child>
-		<widget class="GtkEventBox" id="tmw_bvw_box">
+		<object class="GtkEventBox" id="tmw_bvw_box">
 		  <property name="visible">True</property>
 		  <property name="visible_window">True</property>
 		  <property name="above_child">False</property>
@@ -1384,7 +1498,7 @@ AC3 Passthrough</property>
 		  <child>
 		    <placeholder/>
 		  </child>
-		</widget>
+		</object>
 		<packing>
 		  <property name="padding">0</property>
 		  <property name="expand">True</property>
@@ -1393,20 +1507,20 @@ AC3 Passthrough</property>
 	      </child>
 
 	      <child>
-		<widget class="GtkVBox" id="tmw_controls_vbox">
+		<object class="GtkVBox" id="tmw_controls_vbox">
 		  <property name="border_width">6</property>
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">6</property>
 
 		  <child>
-		    <widget class="GtkHBox" id="tmw_seek_hbox">
+		    <object class="GtkHBox" id="tmw_seek_hbox">
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
 		      <property name="spacing">6</property>
 
 		      <child>
-			<widget class="GtkLabel" id="tmw_time_label">
+			<object class="GtkLabel" id="tmw_time_label">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes">Time:</property>
 			  <property name="use_underline">False</property>
@@ -1422,10 +1536,8 @@ AC3 Passthrough</property>
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
-			  <accessibility>
-			    <atkrelation target="tmw_seek_hscale" type="label-for"/>
-			  </accessibility>
-			</widget>
+			  
+			</object>
 			<packing>
 			  <property name="padding">0</property>
 			  <property name="expand">False</property>
@@ -1434,7 +1546,16 @@ AC3 Passthrough</property>
 		      </child>
 
 		      <child>
-			<widget class="GtkHScale" id="tmw_seek_hscale">
+		        <object class="GtkAdjustment" id="tmw_seek_adjustment">
+		          <property name="lower">0</property>
+		          <property name="upper">65535</property>
+		          <property name="step-increment">1</property>
+		          <property name="page-increment">10</property>
+		          <property name="page-size">0</property>
+		          <property name="value">10</property>
+		          <signal name="value-changed" handler="seek_slider_changed_cb"/>
+		        </object>
+			<object class="GtkHScale" id="tmw_seek_hscale">
 			  <property name="visible">True</property>
 			  <property name="sensitive">False</property>
 			  <property name="can_focus">True</property>
@@ -1443,19 +1564,19 @@ AC3 Passthrough</property>
 			  <property name="digits">1</property>
 			  <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 			  <property name="inverted">False</property>
-			  <property name="adjustment">10 0 65536 1 10 0</property>
-			  <accessibility>
-			    <atkproperty name="AtkObject::accessible_name" translatable="yes">Time seek bar</atkproperty>
-			    <atkrelation target="tmw_time_label" type="labelled-by"/>
-			  </accessibility>
-			</widget>
+			  <property name="adjustment">tmw_seek_adjustment</property>
+			  <signal name="button-press-event" handler="seek_slider_pressed_cb"/>
+			  <signal name="button-release-event" handler="seek_slider_released_cb"/>
+			  <signal name="scroll-event" handler="window_scroll_event_cb"/>
+			  
+			</object>
 			<packing>
 			  <property name="padding">0</property>
 			  <property name="expand">True</property>
 			  <property name="fill">True</property>
 			</packing>
 		      </child>
-		    </widget>
+		    </object>
 		    <packing>
 		      <property name="padding">0</property>
 		      <property name="expand">True</property>
@@ -1464,17 +1585,17 @@ AC3 Passthrough</property>
 		  </child>
 
 		  <child>
-		    <widget class="GtkHBox" id="tmw_buttons_hbox">
+		    <object class="GtkHBox" id="tmw_buttons_hbox">
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
 		      <property name="spacing">6</property>
 
 		      <child>
-			<widget class="GtkHBox" id="tmw_sidebar_button_hbox">
+			<object class="GtkHBox" id="tmw_sidebar_button_hbox">
 			  <property name="visible">True</property>
 			  <property name="homogeneous">False</property>
 			  <property name="spacing">0</property>
-			</widget>
+			</object>
 			<packing>
 			  <property name="padding">0</property>
 			  <property name="expand">False</property>
@@ -1484,13 +1605,10 @@ AC3 Passthrough</property>
 		      </child>
 
 		      <child>
-			<widget class="Custom" id="tmw_volume_button">
+			<object class="GtkVolumeButton" id="tmw_volume_button">
 			  <property name="visible">True</property>
-			  <property name="creation_function">totem_volume_create</property>
-			  <property name="int1">0</property>
-			  <property name="int2">0</property>
-			  <property name="last_modification_time">Fri, 06 May 2005 09:19:48 GMT</property>
-			</widget>
+			  <signal name="value-changed" handler="volume_button_value_changed_cb"/>
+			</object>
 			<packing>
 			  <property name="padding">0</property>
 			  <property name="expand">False</property>
@@ -1498,21 +1616,21 @@ AC3 Passthrough</property>
 			  <property name="pack_type">GTK_PACK_END</property>
 			</packing>
 		      </child>
-		    </widget>
+		    </object>
 		    <packing>
 		      <property name="padding">0</property>
 		      <property name="expand">True</property>
 		      <property name="fill">True</property>
 		    </packing>
 		  </child>
-		</widget>
+		</object>
 		<packing>
 		  <property name="padding">0</property>
 		  <property name="expand">False</property>
 		  <property name="fill">True</property>
 		</packing>
 	      </child>
-	    </widget>
+	    </object>
 	    <packing>
 	      <property name="shrink">False</property>
 	      <property name="resize">True</property>
@@ -1522,7 +1640,7 @@ AC3 Passthrough</property>
 	  <child>
 	    <placeholder/>
 	  </child>
-	</widget>
+	</object>
 	<packing>
 	  <property name="padding">0</property>
 	  <property name="expand">True</property>
@@ -1531,21 +1649,17 @@ AC3 Passthrough</property>
       </child>
 
       <child>
-	<widget class="Custom" id="tmw_statusbar">
+	<object class="TotemStatusbar" id="tmw_statusbar">
 	  <property name="visible">True</property>
-	  <property name="creation_function">totem_statusbar_new_from_glade</property>
-	  <property name="int1">0</property>
-	  <property name="int2">0</property>
-	  <property name="last_modification_time">Sat, 18 Jan 2003 09:28:29 GMT</property>
-	</widget>
+	</object>
 	<packing>
 	  <property name="padding">0</property>
 	  <property name="expand">False</property>
 	  <property name="fill">True</property>
 	</packing>
       </child>
-    </widget>
+    </object>
   </child>
-</widget>
+</object>
 
-</glade-interface>
+</interface>

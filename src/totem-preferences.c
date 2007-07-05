@@ -44,6 +44,24 @@
 
 #include "debug.h"
 
+/* Callback functions for GtkBuilder */
+void checkbutton1_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
+void checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
+void tvout_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
+void connection_combobox_changed (GtkComboBox *combobox, Totem *totem);
+void visual_menu_changed (GtkComboBox *combobox, Totem *totem);
+void visual_quality_menu_changed (GtkComboBox *combobox, Totem *totem);
+void brightness_changed (GtkRange *range, Totem *totem);
+void contrast_changed (GtkRange *range, Totem *totem);
+void saturation_changed (GtkRange *range, Totem *totem);
+void hue_changed (GtkRange *range, Totem *totem);
+void tpw_color_reset_clicked_cb (GtkButton *button, Totem *totem);
+void audio_out_menu_changed (GtkComboBox *combobox, Totem *totem);
+void font_set_cb (GtkFontButton * fb, Totem * totem);
+void encoding_set_cb (GtkComboBox *cb, Totem *totem);
+void font_changed_cb (GConfClient *client, guint cnxn_id, GConfEntry *entry, Totem *totem);
+void encoding_changed_cb (GConfClient *client, guint cnxn_id, GConfEntry *entry, Totem *totem);
+
 static void
 totem_action_info (char *reason, Totem *totem)
 {
@@ -97,8 +115,8 @@ ask_show_visuals (Totem *totem)
 	return (answer == GTK_RESPONSE_YES ? TRUE : FALSE);
 }
 
-static void
-on_checkbutton1_toggled (GtkToggleButton *togglebutton, Totem *totem)
+void
+checkbutton1_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 {
 	gboolean value;
 
@@ -117,15 +135,15 @@ totem_prefs_set_show_visuals (Totem *totem, gboolean value, gboolean warn)
 	gconf_client_set_bool (totem->gc,
 			GCONF_PREFIX"/show_vfx", value, NULL);
 
-	item = glade_xml_get_widget (totem->xml, "tpw_visuals_type_label");
+	item = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tpw_visuals_type_label"));
 	gtk_widget_set_sensitive (item, value);
-	item = glade_xml_get_widget (totem->xml,
-			"tpw_visuals_type_combobox");
+	item = GTK_WIDGET (gtk_builder_get_object (totem->xml,
+			"tpw_visuals_type_combobox"));
 	gtk_widget_set_sensitive (item, value);
-	item = glade_xml_get_widget (totem->xml, "tpw_visuals_size_label");
+	item = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tpw_visuals_size_label"));
 	gtk_widget_set_sensitive (item, value);
-	item = glade_xml_get_widget (totem->xml,
-			"tpw_visuals_size_combobox");
+	item = GTK_WIDGET (gtk_builder_get_object (totem->xml,
+			"tpw_visuals_size_combobox"));
 	gtk_widget_set_sensitive (item, value);
 
 	if (warn == FALSE)
@@ -145,8 +163,8 @@ totem_prefs_set_show_visuals (Totem *totem, gboolean value, gboolean warn)
 	}
 }
 
-static void
-on_checkbutton2_toggled (GtkToggleButton *togglebutton, Totem *totem)
+void
+checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 {
 	gboolean value;
 
@@ -166,8 +184,8 @@ on_checkbutton2_toggled (GtkToggleButton *togglebutton, Totem *totem)
 	totem_prefs_set_show_visuals (totem, value, TRUE);
 }
 
-static void
-on_tvout_toggled (GtkToggleButton *togglebutton, Totem *totem)
+void
+tvout_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 {
 	TvOutType type;
 	gboolean value;
@@ -206,36 +224,36 @@ static void
 auto_resize_changed_cb (GConfClient *client, guint cnxn_id,
 		GConfEntry *entry, Totem *totem)
 {
-	GtkWidget *item;
+	GObject *item;
 
-	item = glade_xml_get_widget (totem->xml, "tpw_display_checkbutton");
-	g_signal_handlers_disconnect_by_func (G_OBJECT (item),
-			on_checkbutton1_toggled, totem);
+	item = gtk_builder_get_object (totem->xml, "tpw_display_checkbutton");
+	g_signal_handlers_disconnect_by_func (item,
+			checkbutton1_toggled_cb, totem);
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
 			gconf_client_get_bool (totem->gc,
 				GCONF_PREFIX"/auto_resize", NULL));
 
-	g_signal_connect (G_OBJECT (item), "toggled",
-			G_CALLBACK (on_checkbutton1_toggled), totem);
+	g_signal_connect (item, "toggled",
+			G_CALLBACK (checkbutton1_toggled_cb), totem);
 }
 
 static void
 show_vfx_changed_cb (GConfClient *client, guint cnxn_id,
 		GConfEntry *entry, Totem *totem)
 {
-	GtkWidget *item;
+	GObject *item;
 
-	item = glade_xml_get_widget (totem->xml, "tpw_visuals_checkbutton");
-	g_signal_handlers_disconnect_by_func (G_OBJECT (item),
-			on_checkbutton2_toggled, totem);
+	item = gtk_builder_get_object (totem->xml, "tpw_visuals_checkbutton");
+	g_signal_handlers_disconnect_by_func (item,
+			checkbutton2_toggled_cb, totem);
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
 			gconf_client_get_bool (totem->gc,
 				GCONF_PREFIX"/show_vfx", NULL));
 
-	g_signal_connect (G_OBJECT (item), "toggled",
-			G_CALLBACK (on_checkbutton2_toggled), totem);
+	g_signal_connect (item, "toggled",
+			G_CALLBACK (checkbutton2_toggled_cb), totem);
 }
 
 static void
@@ -247,12 +265,12 @@ disable_save_to_disk_changed_cb (GConfClient *client, guint cnxn_id,
 
 	locked = gconf_client_get_bool (totem->gc,
 			"/desktop/gnome/lockdown/disable_save_to_disk", NULL);
-	item = glade_xml_get_widget (totem->xml,
-			"tmw_take_screenshot_menu_item");
+	item = GTK_WIDGET (gtk_builder_get_object (totem->xml,
+			"tmw_take_screenshot_menu_item"));
 	gtk_widget_set_sensitive (item, !locked);
 }
 
-static void
+void
 connection_combobox_changed (GtkComboBox *combobox, Totem *totem)
 {
 	int i;
@@ -262,7 +280,7 @@ connection_combobox_changed (GtkComboBox *combobox, Totem *totem)
 		(BACON_VIDEO_WIDGET (totem->bvw), i);
 }
 
-static void
+void
 visual_menu_changed (GtkComboBox *combobox, Totem *totem)
 {
 	GList *list;
@@ -288,7 +306,7 @@ visual_menu_changed (GtkComboBox *combobox, Totem *totem)
 	g_free (old_name);
 }
 
-static void
+void
 visual_quality_menu_changed (GtkComboBox *combobox, Totem *totem)
 {
 	int i;
@@ -299,7 +317,7 @@ visual_quality_menu_changed (GtkComboBox *combobox, Totem *totem)
 	bacon_video_widget_set_visuals_quality (totem->bvw, i);
 }
 
-static void
+void
 brightness_changed (GtkRange *range, Totem *totem)
 {
 	gdouble i;
@@ -309,7 +327,7 @@ brightness_changed (GtkRange *range, Totem *totem)
 			BVW_VIDEO_BRIGHTNESS, (int) i);
 }
 
-static void
+void
 contrast_changed (GtkRange *range, Totem *totem)
 {
 	gdouble i;
@@ -319,7 +337,7 @@ contrast_changed (GtkRange *range, Totem *totem)
 			BVW_VIDEO_CONTRAST, (int) i);
 }
 
-static void
+void
 saturation_changed (GtkRange *range, Totem *totem)
 {
 	gdouble i;
@@ -329,7 +347,7 @@ saturation_changed (GtkRange *range, Totem *totem)
 			BVW_VIDEO_SATURATION, (int) i);
 }
 
-static void
+void
 hue_changed (GtkRange *range, Totem *totem)
 {
 	gdouble i;
@@ -339,8 +357,8 @@ hue_changed (GtkRange *range, Totem *totem)
 			BVW_VIDEO_HUE, (int) i);
 }
 
-static void
-on_tpw_color_reset_clicked (GtkButton *button, Totem *totem)
+void
+tpw_color_reset_clicked_cb (GtkButton *button, Totem *totem)
 {
 	guint i;
 	char *scales[] = {
@@ -351,13 +369,13 @@ on_tpw_color_reset_clicked (GtkButton *button, Totem *totem)
 	};
 
 	for (i = 0; i < G_N_ELEMENTS (scales); i++) {
-		GtkWidget *item;
-		item = glade_xml_get_widget (totem->xml, scales[i]);
-		gtk_range_set_value (GTK_RANGE (item), 65535/2);
+		GtkRange *item;
+		item = GTK_RANGE (gtk_builder_get_object (totem->xml, scales[i]));
+		gtk_range_set_value (item, 65535/2);
 	}
 }
 
-static void
+void
 audio_out_menu_changed (GtkComboBox *combobox, Totem *totem)
 {
 	BaconVideoWidgetAudioOutType audio_out;
@@ -373,8 +391,8 @@ audio_out_menu_changed (GtkComboBox *combobox, Totem *totem)
 	}
 }
 
-static void
-on_font_set (GtkFontButton * fb, Totem * totem)
+void
+font_set_cb (GtkFontButton * fb, Totem * totem)
 {
 	const gchar *font;
 
@@ -383,8 +401,8 @@ on_font_set (GtkFontButton * fb, Totem * totem)
 				 font, NULL);
 }
 
-static void
-on_encoding_set (GtkComboBox *cb, Totem *totem)
+void
+encoding_set_cb (GtkComboBox *cb, Totem *totem)
 {
 	const gchar *encoding;
 
@@ -395,36 +413,36 @@ on_encoding_set (GtkComboBox *cb, Totem *totem)
 				encoding, NULL);
 }
 
-static void
+void
 font_changed_cb (GConfClient *client, guint cnxn_id,
 		 GConfEntry *entry, Totem *totem)
 {
 	const gchar *font;
-	GtkWidget *item;
+	GtkFontButton *item;
 
-	item = glade_xml_get_widget (totem->xml, "font_sel_button");
+	item = GTK_FONT_BUTTON (gtk_builder_get_object (totem->xml, "font_sel_button"));
 	font = gconf_value_get_string (entry->value);
-	gtk_font_button_set_font_name (GTK_FONT_BUTTON (item), font);
+	gtk_font_button_set_font_name (item, font);
 	bacon_video_widget_set_subtitle_font (totem->bvw, font);
 }
 
-static void
+void
 encoding_changed_cb (GConfClient *client, guint cnxn_id,
 		 GConfEntry *entry, Totem *totem)
 {
 	const gchar *encoding;
-	GtkWidget *item;
+	GtkComboBox *item;
 
-	item = glade_xml_get_widget (totem->xml, "subtitle_encoding_combo");
+	item = GTK_COMBO_BOX (gtk_builder_get_object (totem->xml, "subtitle_encoding_combo"));
 	encoding = gconf_value_get_string (entry->value);
-	totem_subtitle_encoding_set (GTK_COMBO_BOX(item), encoding);
+	totem_subtitle_encoding_set (item, encoding);
 	bacon_video_widget_set_subtitle_encoding (totem->bvw, encoding);
 }
 
 void
 totem_setup_preferences (Totem *totem)
 {
-	GtkWidget *item, *menu;
+	GtkWidget *menu;
 	GtkAction *action;
 	gboolean show_visuals, auto_resize, is_local, deinterlace;
 	int connection_speed, i;
@@ -432,6 +450,7 @@ totem_setup_preferences (Totem *totem)
 	GList *list, *l;
 	BaconVideoWidgetAudioOutType audio_out;
 	GConfValue *value;
+	GObject *item;
 
 	g_return_if_fail (totem->gc != NULL);
 
@@ -453,9 +472,9 @@ totem_setup_preferences (Totem *totem)
 			disable_save_to_disk_changed_cb,
 			totem, NULL, NULL);
 
-	/* Work-around glade dialogue not parenting properly for
+	/* Work-around builder dialogue not parenting properly for
 	 * On top windows */
-	item = glade_xml_get_widget (totem->xml, "tpw_notebook");
+	item = gtk_builder_get_object (totem->xml, "tpw_notebook");
 	totem->prefs = gtk_dialog_new_with_buttons (_("Preferences"),
 			GTK_WINDOW (totem->win),
 			GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -464,11 +483,11 @@ totem_setup_preferences (Totem *totem)
 			NULL);
 	gtk_dialog_set_has_separator (GTK_DIALOG (totem->prefs), FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (totem->prefs), 5);
-	gtk_box_set_spacing (GTK_BOX(GTK_DIALOG(totem->prefs)->vbox), 2);
-	gtk_widget_reparent (item, GTK_DIALOG (totem->prefs)->vbox);
+	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (totem->prefs)->vbox), 2);
+	gtk_widget_reparent (GTK_WIDGET (item), GTK_DIALOG (totem->prefs)->vbox);
 	gtk_widget_show_all (GTK_DIALOG (totem->prefs)->vbox);
-	item = glade_xml_get_widget (totem->xml, "totem_preferences_window");
-	gtk_widget_destroy (item);
+	item = gtk_builder_get_object (totem->xml, "totem_preferences_window");
+	gtk_widget_destroy (GTK_WIDGET (item));
 
 	/* Boldify some labels */
 	totem_interface_boldify_label (totem->xml, "tpw_network_label");
@@ -487,22 +506,18 @@ totem_setup_preferences (Totem *totem)
 	/* Auto-resize */
 	auto_resize = gconf_client_get_bool (totem->gc,
 			GCONF_PREFIX"/auto_resize", NULL);
-	item = glade_xml_get_widget (totem->xml, "tpw_display_checkbutton");
+	item = gtk_builder_get_object (totem->xml, "tpw_display_checkbutton");
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), auto_resize);
-	g_signal_connect (G_OBJECT (item), "toggled",
-			G_CALLBACK (on_checkbutton1_toggled), totem);
 	bacon_video_widget_set_auto_resize
 		(BACON_VIDEO_WIDGET (totem->bvw), auto_resize);
 
 	/* Connection Speed */
 	connection_speed = bacon_video_widget_get_connection_speed (totem->bvw);
-	item = glade_xml_get_widget (totem->xml, "tpw_speed_combobox");
+	item = gtk_builder_get_object (totem->xml, "tpw_speed_combobox");
 	gtk_combo_box_set_active (GTK_COMBO_BOX (item), connection_speed);
-	g_signal_connect (item, "changed",
-			G_CALLBACK (connection_combobox_changed), totem);
 
 	/* Enable visuals */
-	item = glade_xml_get_widget (totem->xml, "tpw_visuals_checkbutton");
+	item = gtk_builder_get_object (totem->xml, "tpw_visuals_checkbutton");
 	show_visuals = gconf_client_get_bool (totem->gc,
 			GCONF_PREFIX"/show_vfx", NULL);
 	if (is_local == FALSE && show_visuals != FALSE)
@@ -511,8 +526,6 @@ totem_setup_preferences (Totem *totem)
 	gtk_toggle_button_set_active
 		(GTK_TOGGLE_BUTTON (item), show_visuals);
 	totem_prefs_set_show_visuals (totem, show_visuals, FALSE);
-	g_signal_connect (G_OBJECT (item), "toggled",
-			G_CALLBACK (on_checkbutton2_toggled), totem);
 
 	/* Visuals list */
 	list = bacon_video_widget_get_visuals_list (totem->bvw);
@@ -526,9 +539,7 @@ totem_setup_preferences (Totem *totem)
 		visual = g_strdup ("goom");
 	}
 
-	item = glade_xml_get_widget (totem->xml, "tpw_visuals_type_combobox");
-	g_signal_connect (G_OBJECT (item), "changed",
-			G_CALLBACK (visual_menu_changed), totem);
+	item = gtk_builder_get_object (totem->xml, "tpw_visuals_type_combobox");
 
 	i = 0;
 	for (l = list; l != NULL; l = l->next)
@@ -548,54 +559,37 @@ totem_setup_preferences (Totem *totem)
 	i = gconf_client_get_int (totem->gc,
 			GCONF_PREFIX"/visual_quality", NULL);
 	bacon_video_widget_set_visuals_quality (totem->bvw, i);
-	item = glade_xml_get_widget (totem->xml, "tpw_visuals_size_combobox");
+	item = gtk_builder_get_object (totem->xml, "tpw_visuals_size_combobox");
 	gtk_combo_box_set_active (GTK_COMBO_BOX (item), i);
-	g_signal_connect (G_OBJECT (item), "changed",
-			G_CALLBACK (visual_quality_menu_changed), totem);
 
 	/* Brightness */
-	item = glade_xml_get_widget (totem->xml, "tpw_bright_scale");
+	item = gtk_builder_get_object (totem->xml, "tpw_bright_scale");
 	i = bacon_video_widget_get_video_property (totem->bvw,
 			BVW_VIDEO_BRIGHTNESS);
 	gtk_range_set_value (GTK_RANGE (item), (gdouble) i);
-	g_signal_connect (G_OBJECT (item), "value-changed",
-			G_CALLBACK (brightness_changed), totem);
 
 	/* Contrast */
-	item = glade_xml_get_widget (totem->xml, "tpw_contrast_scale");
+	item = gtk_builder_get_object (totem->xml, "tpw_contrast_scale");
 	i = bacon_video_widget_get_video_property (totem->bvw,
 			BVW_VIDEO_CONTRAST);
 	gtk_range_set_value (GTK_RANGE (item), (gdouble) i);
-	g_signal_connect (G_OBJECT (item), "value-changed",
-			G_CALLBACK (contrast_changed), totem);
 
 	/* Saturation */
-	item = glade_xml_get_widget (totem->xml, "tpw_saturation_scale");
+	item = gtk_builder_get_object (totem->xml, "tpw_saturation_scale");
 	i = bacon_video_widget_get_video_property (totem->bvw,
 			BVW_VIDEO_SATURATION);
 	gtk_range_set_value (GTK_RANGE (item), (gdouble) i);
-	g_signal_connect (G_OBJECT (item), "value-changed",
-			G_CALLBACK (saturation_changed), totem);
 
 	/* Hue */
-	item = glade_xml_get_widget (totem->xml, "tpw_hue_scale");
+	item = gtk_builder_get_object (totem->xml, "tpw_hue_scale");
 	i = bacon_video_widget_get_video_property (totem->bvw,
 			BVW_VIDEO_HUE);
 	gtk_range_set_value (GTK_RANGE (item), (gdouble) i);
-	g_signal_connect (G_OBJECT (item), "value-changed",
-			G_CALLBACK (hue_changed), totem);
-
-	/* Reset colour balance */
-	item = glade_xml_get_widget (totem->xml, "tpw_color_reset");
-	g_signal_connect (G_OBJECT (item), "clicked",
-			G_CALLBACK (on_tpw_color_reset_clicked), totem);
 
 	/* Sound output type */
-	item = glade_xml_get_widget (totem->xml, "tpw_sound_output_combobox");
+	item = gtk_builder_get_object (totem->xml, "tpw_sound_output_combobox");
 	audio_out = bacon_video_widget_get_audio_out_type (totem->bvw);
 	gtk_combo_box_set_active (GTK_COMBO_BOX (item), audio_out);
-	g_signal_connect (G_OBJECT (item), "changed",
-			G_CALLBACK (audio_out_menu_changed), totem);
 
 	/* This one is for the deinterlacing menu, not really our dialog
 	 * but we do it anyway */
@@ -619,8 +613,7 @@ totem_setup_preferences (Totem *totem)
 				NULL));
 
 	/* Subtitle font selection */
-	item = glade_xml_get_widget (totem->xml, "font_sel_button");
-	g_signal_connect (item, "font-set", G_CALLBACK (on_font_set), totem);
+	item = gtk_builder_get_object (totem->xml, "font_sel_button");
 	gtk_font_button_set_title (GTK_FONT_BUTTON (item),
 				   _("Select Subtitle Font"));
 	font = gconf_client_get_string (totem->gc,
@@ -635,9 +628,8 @@ totem_setup_preferences (Totem *totem)
 			totem, NULL, NULL);
 
 	/* Subtitle encoding selection */
-	item = glade_xml_get_widget (totem->xml, "subtitle_encoding_combo");
+	item = gtk_builder_get_object (totem->xml, "subtitle_encoding_combo");
 	totem_subtitle_encoding_init (GTK_COMBO_BOX (item));
-	g_signal_connect (item, "changed", G_CALLBACK (on_encoding_set), totem);
 	value = gconf_client_get_without_default (totem->gc,
 			GCONF_PREFIX"/subtitle_encoding", NULL);
 	/* Make sure the default is UTF-8 */
@@ -669,7 +661,7 @@ totem_setup_preferences (Totem *totem)
 void
 totem_preferences_tvout_setup (Totem *totem)
 {
-	GtkWidget *item;
+	GObject *item;
 	TvOutType type;
 	const char *name;
 
@@ -690,31 +682,25 @@ totem_preferences_tvout_setup (Totem *totem)
 		name = NULL;
 	}
 
-	item = glade_xml_get_widget (totem->xml, name);
+	item = gtk_builder_get_object (totem->xml, name);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), TRUE);
 
-	item = glade_xml_get_widget (totem->xml, "tpw_notvout_radio_button");
-	g_signal_connect (G_OBJECT (item), "toggled",
-			G_CALLBACK (on_tvout_toggled), totem);
-	g_object_set_data (G_OBJECT (item), "tvout_type",
+	item = gtk_builder_get_object (totem->xml, "tpw_notvout_radio_button");
+	g_object_set_data (item, "tvout_type",
 			GINT_TO_POINTER (TV_OUT_NONE));
-	gtk_widget_set_sensitive(item, 
+	gtk_widget_set_sensitive (GTK_WIDGET (item), 
 			bacon_video_widget_fullscreen_mode_available (totem->bvw, TV_OUT_NONE));
 
-	item = glade_xml_get_widget (totem->xml, "tpw_nvtvpalmode_radio_button");
-        g_signal_connect (G_OBJECT (item), "toggled",
-                G_CALLBACK (on_tvout_toggled), totem);
-        g_object_set_data (G_OBJECT (item), "tvout_type",
+	item = gtk_builder_get_object (totem->xml, "tpw_nvtvpalmode_radio_button");
+        g_object_set_data (item, "tvout_type",
                 GINT_TO_POINTER (TV_OUT_NVTV_PAL));
-	gtk_widget_set_sensitive(item, 
+	gtk_widget_set_sensitive (GTK_WIDGET (item), 
 			bacon_video_widget_fullscreen_mode_available (totem->bvw, TV_OUT_NVTV_PAL));
 
-	item = glade_xml_get_widget (totem->xml, "tpw_nvtvntscmode_radio_button");
-	g_signal_connect (G_OBJECT (item), "toggled",
-			G_CALLBACK (on_tvout_toggled), totem);
-	g_object_set_data (G_OBJECT (item), "tvout_type",
+	item = gtk_builder_get_object (totem->xml, "tpw_nvtvntscmode_radio_button");
+	g_object_set_data (item, "tvout_type",
                 GINT_TO_POINTER (TV_OUT_NVTV_NTSC));
-	gtk_widget_set_sensitive(item, 
+	gtk_widget_set_sensitive (GTK_WIDGET (item), 
 			bacon_video_widget_fullscreen_mode_available (totem->bvw, TV_OUT_NVTV_NTSC));
 }
 

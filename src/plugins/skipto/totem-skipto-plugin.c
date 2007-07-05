@@ -162,7 +162,7 @@ skip_to_response_callback (GtkDialog *dialog, gint response, TotemSkiptoPlugin *
 static void
 run_skip_to_dialog (TotemSkiptoPlugin *plugin)
 {
-	char *glade_path;
+	char *builder_path;
 
 	if (totem_is_seekable (plugin->totem) == FALSE)
 		return;
@@ -173,9 +173,9 @@ run_skip_to_dialog (TotemSkiptoPlugin *plugin)
 		return;
 	}
 
-	glade_path = totem_plugin_find_file (TOTEM_PLUGIN (plugin), "skip_to.glade");
-	plugin->st = TOTEM_SKIPTO (totem_skipto_new (glade_path, plugin->totem));
-	g_free (glade_path);
+	builder_path = totem_plugin_find_file (TOTEM_PLUGIN (plugin), "skipto.ui");
+	plugin->st = TOTEM_SKIPTO (totem_skipto_new (builder_path, plugin->totem));
+	g_free (builder_path);
 	g_signal_connect (G_OBJECT (plugin->st), "delete-event",
 				G_CALLBACK (gtk_widget_destroy), NULL);
 	g_signal_connect (G_OBJECT (plugin->st), "response",
@@ -223,18 +223,18 @@ impl_activate (TotemPlugin *plugin,
 	GtkWindow *window;
 	GtkUIManager *manager;
 	TotemSkiptoPlugin *pi = TOTEM_SKIPTO_PLUGIN (plugin);
-	char *glade_path;
+	char *builder_path;
 	const GtkActionEntry menu_entries[] = {
 		{ "skip-to", GTK_STOCK_JUMP_TO, N_("_Skip to..."), "s", N_("Skip to a specific time"), G_CALLBACK (skip_to_action_callback) }
 	};
 
-	glade_path = totem_plugin_find_file (TOTEM_PLUGIN (plugin), "skip_to.glade");
-	if (glade_path == NULL) {
+	builder_path = totem_plugin_find_file (TOTEM_PLUGIN (plugin), "skip_to.glade");
+	if (builder_path == NULL) {
 		g_set_error (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
 				_("Could not load the \"Skip to\" dialogue interface."));
 		return FALSE;
 	}
-	g_free (glade_path);
+	g_free (builder_path);
 
 	pi->totem = totem;
 	pi->handler_id_stream_length = g_signal_connect (G_OBJECT (totem),

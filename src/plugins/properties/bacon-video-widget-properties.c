@@ -26,7 +26,6 @@
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
-#include <glade/glade.h>
 #include <string.h>
 #include "video-utils.h"
 #include "totem-interface.h"
@@ -80,7 +79,7 @@
 
 struct BaconVideoWidgetPropertiesPrivate
 {
-	GladeXML *xml;
+	GtkBuilder *xml;
 	int time;
 };
 
@@ -118,10 +117,10 @@ static void
 bacon_video_widget_properties_set_label (BaconVideoWidgetProperties *props,
 			       const char *name, const char *text)
 {
-	GtkWidget *item;
+	GtkLabel *item;
 
-	item = glade_xml_get_widget (props->priv->xml, name);
-	gtk_label_set_text (GTK_LABEL (item), text);
+	item = GTK_LABEL (gtk_builder_get_object (props->priv->xml, name));
+	gtk_label_set_text (item, text);
 }
 
 void
@@ -132,11 +131,11 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 	g_return_if_fail (props != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
 
-	item = glade_xml_get_widget (props->priv->xml, "video_vbox");
+	item = GTK_WIDGET (gtk_builder_get_object (props->priv->xml, "video_vbox"));
 	gtk_widget_show (item);
-	item = glade_xml_get_widget (props->priv->xml, "video");
+	item = GTK_WIDGET (gtk_builder_get_object (props->priv->xml, "video"));
 	gtk_widget_set_sensitive (item, FALSE);
-	item = glade_xml_get_widget (props->priv->xml, "audio");
+	item = GTK_WIDGET (gtk_builder_get_object (props->priv->xml, "audio"));
 	gtk_widget_set_sensitive (item, FALSE);
 
 	/* Title */
@@ -220,14 +219,14 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 	g_value_unset (&value);
 
 	/* Video */
-	item = glade_xml_get_widget (props->priv->xml, "video");
+	item = GTK_WIDGET (gtk_builder_get_object (props->priv->xml, "video"));
 	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
 			BVW_INFO_HAS_VIDEO, &value);
 	has_type = g_value_get_boolean (&value);
 	gtk_widget_set_sensitive (item, has_type);
 	g_value_unset (&value);
 
-	item = glade_xml_get_widget (props->priv->xml, "video_vbox");
+	item = GTK_WIDGET (gtk_builder_get_object (props->priv->xml, "video_vbox"));
 
 	if (has_type != FALSE)
 	{
@@ -244,7 +243,7 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 	}
 
 	/* Audio */
-	item = glade_xml_get_widget (props->priv->xml, "audio");
+	item = GTK_WIDGET (gtk_builder_get_object (props->priv->xml, "audio"));
 	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
 			BVW_INFO_HAS_AUDIO, &value);
 	has_type = g_value_get_boolean (&value);
@@ -287,7 +286,7 @@ GtkWidget*
 bacon_video_widget_properties_new (void)
 {
 	BaconVideoWidgetProperties *props;
-	GladeXML *xml;
+	GtkBuilder *xml;
 	GtkWidget *vbox;
 	GtkSizeGroup *group;
 	const char *labels[] = { "title_label", "artist_label", "album_label",
@@ -302,8 +301,7 @@ bacon_video_widget_properties_new (void)
 	};
 	guint i;
 
-	xml = totem_interface_load_with_root ("properties.glade",
-			"vbox1", _("Properties dialog"), TRUE, NULL);
+	xml = totem_interface_load ("properties.ui", TRUE, NULL, NULL);
 
 	if (xml == NULL)
 		return NULL;
@@ -312,7 +310,7 @@ bacon_video_widget_properties_new (void)
 			(BACON_TYPE_VIDEO_WIDGET_PROPERTIES, NULL));
 
 	props->priv->xml = xml;
-	vbox = glade_xml_get_widget (props->priv->xml, "vbox1");
+	vbox = GTK_WIDGET (gtk_builder_get_object (props->priv->xml, "vbox1"));
 	gtk_box_pack_start (GTK_BOX (props), vbox, FALSE, FALSE, 0);
 
 	bacon_video_widget_properties_reset (props);
@@ -321,7 +319,7 @@ bacon_video_widget_properties_new (void)
 
 	for (i = 0; i < G_N_ELEMENTS (labels); i++) {
 		gtk_size_group_add_widget (group,
-					   glade_xml_get_widget (xml, labels[i]));
+					   GTK_WIDGET (gtk_builder_get_object (xml, labels[i])));
 		totem_interface_italicise_label (xml, labels[i]);
 	}
 	for (i = 0; i < G_N_ELEMENTS (bold_labels); i++)

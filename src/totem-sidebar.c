@@ -41,8 +41,8 @@ cb_resize (Totem * totem)
 	h = totem->win->allocation.height;
 
 	g_value_init (&gvalue_size, G_TYPE_INT);
-	pane = glade_xml_get_widget (totem->xml, "tmw_main_pane");
-	gtk_widget_style_get_property(pane, "handle-size", &gvalue_size);
+	pane = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_main_pane"));
+	gtk_widget_style_get_property (pane, "handle-size", &gvalue_size);
 	handle_size = g_value_get_int (&gvalue_size);
 	
 	if (totem->sidebar_shown) {
@@ -96,10 +96,10 @@ totem_sidebar_is_visible (Totem *totem)
 void
 totem_sidebar_setup (Totem *totem, gboolean visible, const char *page_id)
 {
-	GtkWidget *item;
+	GtkPaned *item;
 	GtkAction *action;
 
-	item = glade_xml_get_widget (totem->xml, "tmw_main_pane");
+	item = GTK_PANED (gtk_builder_get_object (totem->xml, "tmw_main_pane"));
 	totem->sidebar = ev_sidebar_new ();
 	ev_sidebar_add_page (EV_SIDEBAR (totem->sidebar),
 			"playlist", _("Playlist"),
@@ -111,7 +111,7 @@ totem_sidebar_setup (Totem *totem, gboolean visible, const char *page_id)
 		ev_sidebar_set_current_page (EV_SIDEBAR (totem->sidebar),
 				"playlist");
 	}
-	gtk_paned_pack2 (GTK_PANED (item), totem->sidebar, FALSE, FALSE);
+	gtk_paned_pack2 (item, totem->sidebar, FALSE, FALSE);
 
 	totem->sidebar_shown = visible;
 

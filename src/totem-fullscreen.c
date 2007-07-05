@@ -27,7 +27,6 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include <glade/glade.h>
 
 #include "totem-fullscreen.h"
 #include "totem-interface.h"
@@ -42,6 +41,12 @@ static void     totem_fullscreen_class_init (TotemFullscreenClass *class);
 static void     totem_fullscreen_init       (TotemFullscreen      *parser);
 static void     totem_fullscreen_finalize   (GObject              *object);
 static gboolean totem_fullscreen_popup_hide (TotemFullscreen      *fs);
+
+/* Callback functions for GtkBuilder */
+gboolean totem_fullscreen_vol_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemFullscreen *fs);
+gboolean totem_fullscreen_vol_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemFullscreen *fs);
+gboolean totem_fullscreen_seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemFullscreen *fs);
+gboolean totem_fullscreen_seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemFullscreen *fs);
 
 struct TotemFullscreenPrivate {
 	BaconVideoWidget *bvw;
@@ -58,7 +63,7 @@ struct TotemFullscreenPrivate {
 	guint             popup_timeout;
 	gboolean          popup_in_progress;
 
-	GladeXML         *xml;
+	GtkBuilder       *xml;
 };
 
 G_DEFINE_TYPE(TotemFullscreen, totem_fullscreen, G_TYPE_OBJECT)
@@ -154,7 +159,7 @@ totem_fullscreen_window_unrealize_cb (GtkWidget *widget, TotemFullscreen *fs)
 					      G_CALLBACK (totem_fullscreen_theme_changed_cb), fs);
 }
 
-static gboolean
+gboolean
 totem_fullscreen_vol_slider_pressed_cb (GtkWidget *widget,
 					GdkEventButton *event,
 					TotemFullscreen *fs)
@@ -163,7 +168,7 @@ totem_fullscreen_vol_slider_pressed_cb (GtkWidget *widget,
 	return FALSE;
 }
 
-static gboolean
+gboolean
 totem_fullscreen_vol_slider_released_cb (GtkWidget *widget,
 					 GdkEventButton *event,
 					 TotemFullscreen *fs)
@@ -172,7 +177,7 @@ totem_fullscreen_vol_slider_released_cb (GtkWidget *widget,
 	return FALSE;
 }
 
-static gboolean
+gboolean
 totem_fullscreen_seek_slider_pressed_cb (GtkWidget *widget,
 					 GdkEventButton *event,
 					 TotemFullscreen *fs)
@@ -181,7 +186,7 @@ totem_fullscreen_seek_slider_pressed_cb (GtkWidget *widget,
 	return FALSE;
 }
 
-static gboolean
+gboolean
 totem_fullscreen_seek_slider_released_cb (GtkWidget *widget,
 					  GdkEventButton *event,
 					  TotemFullscreen *fs)
@@ -249,7 +254,7 @@ totem_fullscreen_motion_notify (GtkWidget *widget, GdkEventMotion *event,
 
 	/* FIXME: is this really required while we are anyway going 
 	   to do a show_all on its parent control_popup? */
-	item = glade_xml_get_widget (fs->priv->xml, "tcw_hbox");
+	item = GTK_WIDGET (gtk_builder_get_object (fs->priv->xml, "tcw_hbox"));
 	gtk_widget_show_all (item);
 	gdk_flush ();
 
@@ -294,49 +299,30 @@ totem_fullscreen_new (void)
 
 	priv = fs->priv;
 	priv->vol_lock = priv->seek_lock = FALSE;
-	priv->xml = totem_interface_load ("fullscreen.glade",
-					  _("fullscreen widgets"),
-					  TRUE, NULL);
+	priv->xml = totem_interface_load ("fullscreen.ui", TRUE, NULL, fs);
 
-	priv->exit_popup = glade_xml_get_widget (priv->xml,
-						 "totem_exit_fullscreen_window");
-	priv->control_popup = glade_xml_get_widget (priv->xml,
-						    "totem_controls_window");
-	fs->time_label = glade_xml_get_widget (priv->xml,
-					       "tcw_time_display_label");
-	fs->buttons_box = glade_xml_get_widget (fs->priv->xml,
-						"tcw_buttons_hbox");
-	fs->exit_button = glade_xml_get_widget (priv->xml,
-						"tefw_fs_exit_button");
+	priv->exit_popup = GTK_WIDGET (gtk_builder_get_object (priv->xml,
+				"totem_exit_fullscreen_window"));
+	priv->control_popup = GTK_WIDGET (gtk_builder_get_object (priv->xml,
+				"totem_controls_window"));
+	fs->time_label = GTK_WIDGET (gtk_builder_get_object (priv->xml,
+				"tcw_time_display_label"));
+	fs->buttons_box = GTK_WIDGET (gtk_builder_get_object (fs->priv->xml,
+				"tcw_buttons_hbox"));
+	fs->exit_button = GTK_WIDGET (gtk_builder_get_object (priv->xml,
+				"tefw_fs_exit_button"));
 
 	/* Volume */
-	fs->volume = glade_xml_get_widget (priv->xml, "tcw_volume_button");
-	g_signal_connect (G_OBJECT(fs->volume), "button_press_event",
-			  G_CALLBACK (totem_fullscreen_vol_slider_pressed_cb), fs);
-	g_signal_connect (G_OBJECT(fs->volume), "button_release_event",
-			  G_CALLBACK (totem_fullscreen_vol_slider_released_cb), fs);
+	fs->volume = GTK_WIDGET (gtk_builder_get_object (priv->xml, "tcw_volume_button"));
 	
 	/* Seek */
-	fs->seek = glade_xml_get_widget (priv->xml, "tcw_seek_hscale");
-	g_signal_connect (G_OBJECT(fs->seek), "button_press_event",
-			  G_CALLBACK (totem_fullscreen_seek_slider_pressed_cb), fs);
-	g_signal_connect (G_OBJECT(fs->seek), "button_release_event",
-			  G_CALLBACK (totem_fullscreen_seek_slider_released_cb), fs);
+	fs->seek = GTK_WIDGET (gtk_builder_get_object (priv->xml, "tcw_seek_hscale"));
 
 	/* Motion notify */
 	gtk_widget_add_events (priv->exit_popup, GDK_POINTER_MOTION_MASK);
-	g_signal_connect (G_OBJECT (priv->exit_popup), "motion-notify-event",
-			  G_CALLBACK (totem_fullscreen_motion_notify), fs);
 	gtk_widget_add_events (priv->control_popup, GDK_POINTER_MOTION_MASK);
-	g_signal_connect (G_OBJECT (priv->control_popup),
-			  "motion-notify-event",
-			  G_CALLBACK (totem_fullscreen_motion_notify), fs);
 	gtk_widget_add_events (fs->seek, GDK_POINTER_MOTION_MASK);
-	g_signal_connect (G_OBJECT (fs->seek), "motion-notify-event",
-			  G_CALLBACK (totem_fullscreen_motion_notify), fs);
 	gtk_widget_add_events (fs->exit_button, GDK_POINTER_MOTION_MASK);
-	g_signal_connect (G_OBJECT (fs->exit_button), "motion-notify-event",
-			  G_CALLBACK (totem_fullscreen_motion_notify), fs);
 
 	return fs;
 }
@@ -395,12 +381,12 @@ totem_fullscreen_class_init (TotemFullscreenClass *klass)
 void
 totem_fullscreen_set_title (TotemFullscreen *fs, const char *title)
 {
-	GtkWidget *widget;
+	GtkLabel *widget;
 	char *text;
 
 	g_return_if_fail (TOTEM_IS_FULLSCREEN (fs));
 
-	widget = glade_xml_get_widget (fs->priv->xml, "tcw_title_label");
+	widget = GTK_LABEL (gtk_builder_get_object (fs->priv->xml, "tcw_title_label"));
 
 	if (title != NULL) {
 		char *escaped;
@@ -415,7 +401,7 @@ totem_fullscreen_set_title (TotemFullscreen *fs, const char *title)
 			 _("No File"));
 	}
 
-	gtk_label_set_markup (GTK_LABEL (widget), text);
+	gtk_label_set_markup (widget, text);
 	g_free (text);
 }
 
@@ -426,7 +412,7 @@ totem_fullscreen_set_seekable (TotemFullscreen *fs, gboolean seekable)
 
 	g_return_if_fail (TOTEM_IS_FULLSCREEN (fs));
 
-	item = glade_xml_get_widget (fs->priv->xml, "tcw_time_hbox");
+	item = GTK_WIDGET (gtk_builder_get_object (fs->priv->xml, "tcw_time_hbox"));
 	gtk_widget_set_sensitive (item, seekable);
 
 	gtk_widget_set_sensitive (fs->seek, seekable);
@@ -439,4 +425,3 @@ totem_fullscreen_set_can_set_volume (TotemFullscreen *fs, gboolean can_set_volum
 
 	gtk_widget_set_sensitive (fs->volume, can_set_volume);
 }
-

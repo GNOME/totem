@@ -28,25 +28,24 @@
 #ifndef __TOTEM_PRIVATE_H__
 #define __TOTEM_PRIVATE_H__
 
-#include <glade/glade.h>
 #include <gconf/gconf-client.h>
 #include <gtk/gtk.h>
 #include <libgnomevfs/gnome-vfs.h>
 
 #include "totem-playlist.h"
-#include "totem-fullscreen.h"
 #include "bacon-message-connection.h"
 #include "bacon-video-widget.h"
 #include "totem-open-location.h"
+#include "totem-fullscreen.h"
 
 #define totem_signal_block_by_data(obj, data) (g_signal_handlers_block_matched (obj, G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, data))
 #define totem_signal_unblock_by_data(obj, data) (g_signal_handlers_unblock_matched (obj, G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, data))
 
-#define totem_set_sensitivity(xml, name, state)		\
-	{							\
-		GtkWidget *widget;				\
-		widget = glade_xml_get_widget (xml, name);	\
-		gtk_widget_set_sensitive (widget, state);	\
+#define totem_set_sensitivity(xml, name, state)					\
+	{									\
+		GtkWidget *widget;						\
+		widget = GTK_WIDGET (gtk_builder_get_object (xml, name));	\
+		gtk_widget_set_sensitive (widget, state);			\
 	}
 #define totem_main_set_sensitivity(name, state) totem_set_sensitivity (totem->xml, name, state)
 
@@ -74,7 +73,7 @@ struct TotemObject {
 	GObject parent;
 
 	/* Control window */
-	GladeXML *xml;
+	GtkBuilder *xml;
 	GtkWidget *win;
 	BaconVideoWidget *bvw;
 	GtkWidget *prefs;

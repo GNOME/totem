@@ -31,7 +31,6 @@
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
-#include <glade/glade.h>
 #include <gconf/gconf-client.h>
 #include <string.h>
 #include <sys/types.h>
@@ -50,8 +49,12 @@ static void totem_skipto_class_init	(TotemSkiptoClass *class);
 static void totem_skipto_init		(TotemSkipto *ggo);
 static void totem_skipto_finalize	(GObject *object);
 
+/* Callback functions for GtkBuilder */
+void spin_button_activate_cb (GtkEntry *entry, TotemSkipto *skipto);
+void spin_button_value_changed_cb (GtkSpinButton *spinbutton, TotemSkipto *skipto);
+
 struct TotemSkiptoPrivate {
-	GladeXML *xml;
+	GtkBuilder *xml;
 	GtkWidget *label;
 	GtkWidget *spinbutton;
 	gint64 time;
@@ -140,13 +143,13 @@ totem_skipto_set_current (TotemSkipto *skipto, gint64 time)
 			(gdouble) (time / 1000));
 }
 
-static void
+void
 spin_button_activate_cb (GtkEntry *entry, TotemSkipto *skipto)
 {
 	gtk_dialog_response (GTK_DIALOG (skipto), GTK_RESPONSE_OK);
 }
 
-static void
+void
 spin_button_value_changed_cb (GtkSpinButton *spinbutton, TotemSkipto *skipto)
 {
 	int sec;
@@ -159,27 +162,28 @@ spin_button_value_changed_cb (GtkSpinButton *spinbutton, TotemSkipto *skipto)
 }
 
 GtkWidget*
-totem_skipto_new (const char *glade_filename, Totem *totem)
+totem_skipto_new (const char *builder_filename, Totem *totem)
 {
 	TotemSkipto *skipto;
 	GtkWidget *container;
+	GError *error = NULL;
 
-	g_return_val_if_fail (glade_filename != NULL, NULL);
+	g_return_val_if_fail (builder_filename != NULL, NULL);
 
 	skipto = TOTEM_SKIPTO (g_object_new (TOTEM_TYPE_SKIPTO, NULL));
 
 	skipto->priv->totem = totem;
-	skipto->priv->xml = glade_xml_new (glade_filename,
-					   "tstw_skip_vbox", NULL);
+	skipto->priv->xml = gtk_builder_new ();
+	gtk_builder_add_from_file (skipto->priv->xml, builder_filename, &error);
 
 	if (skipto->priv->xml == NULL) {
 		g_object_unref (skipto);
 		return NULL;
 	}
-	skipto->priv->label = glade_xml_get_widget
-		(skipto->priv->xml, "tstw_position_label");
-	skipto->priv->spinbutton = glade_xml_get_widget
-		(skipto->priv->xml, "tstw_skip_spinbutton");
+	skipto->priv->label = GTK_WIDGET (gtk_builder_get_object
+		(skipto->priv->xml, "tstw_position_label"));
+	skipto->priv->spinbutton = GTK_WIDGET (gtk_builder_get_object
+		(skipto->priv->xml, "tstw_skip_spinbutton"));
 
 	gtk_window_set_title (GTK_WINDOW (skipto), _("Skip to"));
 	gtk_dialog_set_has_separator (GTK_DIALOG (skipto), FALSE);
@@ -189,15 +193,11 @@ totem_skipto_new (const char *glade_filename, Totem *totem)
 			NULL);
 
 	/* Skipto dialog */
-	g_signal_connect (G_OBJECT (skipto->priv->spinbutton), "value-changed",
-			G_CALLBACK (spin_button_value_changed_cb), skipto);
-	g_signal_connect_after (G_OBJECT (skipto->priv->spinbutton), "activate",
-			G_CALLBACK (spin_button_activate_cb), skipto);
 	g_signal_connect (G_OBJECT (skipto), "delete-event",
 			G_CALLBACK (gtk_widget_destroy), skipto);
 
-	container = glade_xml_get_widget (skipto->priv->xml,
-			"tstw_skip_vbox");
+	container = GTK_WIDGET (gtk_builder_get_object (skipto->priv->xml,
+			"tstw_skip_vbox"));
 	gtk_container_set_border_width (GTK_CONTAINER (skipto), 5);
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (skipto)->vbox),
 			container,

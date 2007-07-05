@@ -33,7 +33,7 @@
 #include <string.h>
 
 #include <glib/gi18n.h>
-#include <glade/glade-xml.h>
+#include <gtk/gtk.h>
 
 #include "totem-interface.h"
 #include "totem-plugin-manager.h"
@@ -80,6 +80,9 @@ static TotemPluginInfo *plugin_manager_get_selected_plugin (TotemPluginManager *
 static void plugin_manager_toggle_active (GtkTreeIter *iter, GtkTreeModel *model, TotemPluginManager *pm);
 static void plugin_manager_toggle_all (TotemPluginManager *pm);
 
+/* Callback functions for GtkBuilder */
+void configure_button_cb (GtkWidget *button, TotemPluginManager *pm);
+
 static void
 totem_plugin_manager_class_init (TotemPluginManagerClass *klass)
 {
@@ -90,7 +93,7 @@ totem_plugin_manager_class_init (TotemPluginManagerClass *klass)
 	g_type_class_add_private (object_class, sizeof (TotemPluginManagerPrivate));
 }
 
-static void
+void
 configure_button_cb (GtkWidget          *button,
 		     TotemPluginManager *pm)
 {
@@ -481,49 +484,39 @@ plugin_name_cmp (gconstpointer a, gconstpointer b)
 static void
 totem_plugin_manager_init (TotemPluginManager *pm)
 {
-	GladeXML *xml;
+	GtkBuilder *xml;
 	GtkWidget *plugins_window;
 
 	pm->priv = TOTEM_PLUGIN_MANAGER_GET_PRIVATE (pm);
 
-	xml = totem_interface_load_with_root ("plugins.glade",
-					      "plugins_vbox",
-					      _("Plugins Manager"),
-					      TRUE,
-					      NULL);
+	xml = totem_interface_load ("plugins.ui", TRUE, NULL, pm);
 
-	gtk_container_add (GTK_CONTAINER (pm), glade_xml_get_widget (xml, "plugins_vbox"));
+	gtk_container_add (GTK_CONTAINER (pm), GTK_WIDGET (gtk_builder_get_object (xml, "plugins_vbox")));
 
 	gtk_box_set_spacing (GTK_BOX (pm), 6);
 
 	pm->priv->tree = gtk_tree_view_new ();
-	plugins_window = glade_xml_get_widget (xml, "plugins_list_window");
+	plugins_window = GTK_WIDGET (gtk_builder_get_object (xml, "plugins_list_window"));
 	gtk_container_add (GTK_CONTAINER (plugins_window), pm->priv->tree);
 
-	pm->priv->configure_button = glade_xml_get_widget (xml, "configure_button");
-	g_signal_connect (pm->priv->configure_button,
-			  "clicked",
-			  G_CALLBACK (configure_button_cb),
-			  pm);
-	
-	pm->priv->header_hbox = glade_xml_get_widget (xml, "header_hbox");
+	pm->priv->configure_button = GTK_WIDGET (gtk_builder_get_object (xml, "configure_button"));
+	pm->priv->header_hbox = GTK_WIDGET (gtk_builder_get_object (xml, "header_hbox"));
+	pm->priv->plugin_title = GTK_WIDGET (gtk_builder_get_object (xml, "plugin_title"));
 
-	pm->priv->plugin_title = glade_xml_get_widget (xml, "plugin_title");
-
-	pm->priv->site_label = glade_xml_get_widget (xml, "site_label");
+	pm->priv->site_label = GTK_WIDGET (gtk_builder_get_object (xml, "site_label"));
 	totem_interface_boldify_label (xml, "site_label");
-	pm->priv->copyright_label = glade_xml_get_widget (xml, "copyright_label");
+	pm->priv->copyright_label = GTK_WIDGET (gtk_builder_get_object (xml, "copyright_label"));
 	totem_interface_boldify_label (xml, "copyright_label");
-	pm->priv->authors_label = glade_xml_get_widget (xml, "authors_label");
+	pm->priv->authors_label = GTK_WIDGET (gtk_builder_get_object (xml, "authors_label"));
 	totem_interface_boldify_label (xml, "authors_label");
-	pm->priv->description_label = glade_xml_get_widget (xml, "description_label");
+	pm->priv->description_label = GTK_WIDGET (gtk_builder_get_object (xml, "description_label"));
 	totem_interface_boldify_label (xml, "description_label");
 
-	pm->priv->plugin_icon = glade_xml_get_widget (xml, "plugin_icon");
-	pm->priv->site_text = glade_xml_get_widget (xml, "site_text");
-	pm->priv->copyright_text = glade_xml_get_widget (xml, "copyright_text");
-	pm->priv->authors_text = glade_xml_get_widget (xml, "authors_text");
-	pm->priv->description_text = glade_xml_get_widget (xml, "description_text");
+	pm->priv->plugin_icon = GTK_WIDGET (gtk_builder_get_object (xml, "plugin_icon"));
+	pm->priv->site_text = GTK_WIDGET (gtk_builder_get_object (xml, "site_text"));
+	pm->priv->copyright_text = GTK_WIDGET (gtk_builder_get_object (xml, "copyright_text"));
+	pm->priv->authors_text = GTK_WIDGET (gtk_builder_get_object (xml, "authors_text"));
+	pm->priv->description_text = GTK_WIDGET (gtk_builder_get_object (xml, "description_text"));
 
 	plugin_manager_construct_tree (pm);
 
@@ -547,5 +540,5 @@ totem_plugin_manager_finalize (GObject *o)
 
 	g_list_free (pm->priv->plugins);
 
-	G_OBJECT_CLASS(totem_plugin_manager_parent_class)->finalize (o);
+	G_OBJECT_CLASS (totem_plugin_manager_parent_class)->finalize (o);
 }

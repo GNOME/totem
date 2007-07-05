@@ -31,7 +31,6 @@
 #include <glib/gi18n.h>
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
-#include <glade/glade.h>
 #include <gconf/gconf-client.h>
 
 #define SN_API_NOT_YET_FROZEN
@@ -96,7 +95,7 @@ typedef struct _TotemEmbedded {
 	GObject parent;
 
 	GtkWidget *window;
-	GladeXML *menuxml, *xml;
+	GtkBuilder *menuxml, *xml;
 	GtkWidget *about;
 	GtkWidget *pp_button;
 	TotemStatusbar *statusbar;
@@ -1005,7 +1004,8 @@ totem_embedded_set_playlist (TotemEmbedded *emb,
 static void
 totem_embedded_update_menu (TotemEmbedded *emb)
 {
-	GtkWidget *menu, *item, *image;
+	GtkWidget *item, *image;
+	GtkMenuShell *menu;
 	char *label;
 
 	if (emb->menu_item != NULL) {
@@ -1051,8 +1051,8 @@ totem_embedded_update_menu (TotemEmbedded *emb)
 	gtk_widget_show (item);
 	emb->menu_item = item;
 
-	menu = glade_xml_get_widget (emb->menuxml, "menu");
-	gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), item);
+	menu = GTK_MENU_SHELL (gtk_builder_get_object (emb->menuxml, "menu"));
+	gtk_menu_shell_prepend (menu, item);
 }
 
 static void
@@ -1216,7 +1216,7 @@ on_video_button_press_event (BaconVideoWidget *bvw,
 		   state == 0) {
 		GtkMenu *menu;
 
-		menu = GTK_MENU (glade_xml_get_widget (emb->menuxml, "menu"));
+		menu = GTK_MENU (gtk_builder_get_object (emb->menuxml, "menu"));
 		gtk_menu_popup (menu, NULL, NULL, NULL, NULL,
 				event->button, event->time);
 
@@ -1362,22 +1362,20 @@ totem_embedded_construct (TotemEmbedded *emb,
 		/* Can't do anything before it's realized */
 		gtk_widget_realize (emb->window);
 
-		emb->xml = totem_interface_load_with_root ("mozilla-viewer.glade",
-				"content_box", _("Plugin") /* FIXME! */, TRUE,
-				GTK_WINDOW (emb->window));
+		emb->xml = totem_interface_load ("mozilla-viewer.glade", TRUE,
+				GTK_WINDOW (emb->window), emb);
 		g_assert (emb->xml);
 
-		child = glade_xml_get_widget (emb->xml, "content_box");
+		child = GTK_WIDGET (gtk_builder_get_object (emb->xml, "content_box"));
 		gtk_container_add (GTK_CONTAINER (emb->window), child);
 	} else {
 		g_assert (emb->hidden);
 
-		emb->xml = totem_interface_load_with_root ("mozilla-viewer.glade",
-				"window", _("Plugin") /* FIXME! */, TRUE,
-				GTK_WINDOW (emb->window));
+		emb->xml = totem_interface_load ("mozilla-viewer.glade", TRUE,
+				GTK_WINDOW (emb->window), emb);
 		g_assert (emb->xml);
 
-		emb->window = glade_xml_get_widget (emb->xml, "window");
+		emb->window = GTK_WIDGET (gtk_builder_get_object (emb->xml, "window"));
 	}
 
 	if (emb->hidden || emb->audioonly != FALSE)
@@ -1415,7 +1413,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 	g_signal_connect (G_OBJECT(emb->bvw), "tick",
 			G_CALLBACK (on_tick), emb);
 
-	container = glade_xml_get_widget (emb->xml, "video_box");
+	container = GTK_WIDGET (gtk_builder_get_object (emb->xml, "video_box"));
 	if (type == BVW_USE_TYPE_VIDEO) {
 		gtk_container_add (GTK_CONTAINER (container), GTK_WIDGET (emb->bvw));
 		/* FIXME: why can't this wait until the whole window is realised? */
@@ -1426,14 +1424,14 @@ totem_embedded_construct (TotemEmbedded *emb,
 		gtk_widget_hide (container);
 	}
 
-	emb->seek = glade_xml_get_widget (emb->xml, "time_hscale");
+	emb->seek = GTK_WIDGET (gtk_builder_get_object (emb->xml, "time_hscale"));
 	emb->seekadj = gtk_range_get_adjustment (GTK_RANGE (emb->seek));
 	g_signal_connect (emb->seek, "button-press-event",
 			  G_CALLBACK (on_seek_start), emb);
 	g_signal_connect (emb->seek, "button-release-event",
 			  G_CALLBACK (cb_on_seek), emb);
 
-	emb->pp_button = glade_xml_get_widget (emb->xml, "pp_button");
+	emb->pp_button = GTK_WIDGET (gtk_builder_get_object (emb->xml, "pp_button"));
 	g_signal_connect (G_OBJECT (emb->pp_button), "clicked",
 			  G_CALLBACK (on_play_pause), emb);
 
@@ -1442,27 +1440,27 @@ totem_embedded_construct (TotemEmbedded *emb,
 	g_object_unref (G_OBJECT (gc));
 
 	bacon_video_widget_set_volume (emb->bvw, volume);
-	vbut = glade_xml_get_widget (emb->xml, "volume_button");
+	vbut = GTK_WIDGET (gtk_builder_get_object (emb->xml, "volume_button"));
 	gtk_scale_button_set_value (GTK_SCALE_BUTTON (vbut), volume);
 	g_signal_connect (G_OBJECT (vbut), "value-changed",
 			  G_CALLBACK (cb_vol), emb);
 
-	emb->statusbar = TOTEM_STATUSBAR (glade_xml_get_widget (emb->xml, "statusbar"));
+	emb->statusbar = TOTEM_STATUSBAR (gtk_builder_get_object (emb->xml, "statusbar"));
 
 	gtk_widget_set_size_request (emb->window, width, height);
 
 #ifdef GNOME_ENABLE_DEBUG
-	child = glade_xml_get_widget (emb->xml, "controls");
-	g_signal_connect_after (child, "size-allocate", G_CALLBACK (controls_size_allocate_cb), NULL);
+	child = GTK_WIDGET (gtk_builder_get_object (emb->xml, "controls"));
+	g_signal_connect_after (G_OBJECT (child), "size-allocate", G_CALLBACK (controls_size_allocate_cb), NULL);
 #endif
 
 	if (emb->controller_hidden != FALSE) {
-		child = glade_xml_get_widget (emb->xml, "controls");
+		child = GTK_WIDGET (gtk_builder_get_object (emb->xml, "controls"));
 		gtk_widget_hide (child);
 	}
 
 	if (!emb->show_statusbar) {
-		child = glade_xml_get_widget (emb->xml, "statusbar");
+		child = GTK_WIDGET (gtk_builder_get_object (emb->xml, "statusbar"));
 		gtk_widget_hide (child);
 	}
 
@@ -1475,10 +1473,10 @@ totem_embedded_construct (TotemEmbedded *emb,
 
 		gtk_widget_modify_style (emb->pp_button, rcstyle);
 		
-		child = glade_xml_get_widget (emb->xml, "time_hscale");
+		child = GTK_WIDGET (gtk_builder_get_object (emb->xml, "time_hscale"));
 		gtk_widget_modify_style (child, rcstyle);
 
-		child = glade_xml_get_widget (emb->xml, "volume_button");
+		child = GTK_WIDGET (gtk_builder_get_object (emb->xml, "volume_button"));
 		gtk_widget_modify_style (child, rcstyle);
 
 		g_object_unref (rcstyle);
@@ -1491,18 +1489,17 @@ totem_embedded_construct (TotemEmbedded *emb,
 	}
 
 	/* popup */
-	emb->menuxml = totem_interface_load_with_root ("mozilla-viewer.glade",
-			"menu", _("Menu"), TRUE,
-			GTK_WINDOW (emb->window));
+	emb->menuxml = totem_interface_load ("mozilla-viewer.glade", TRUE,
+				GTK_WINDOW (emb->window), emb);
 	g_assert (emb->menuxml);
 
-	child = glade_xml_get_widget (emb->menuxml, "about1");
+	child = GTK_WIDGET (gtk_builder_get_object (emb->menuxml, "about1"));
 	g_signal_connect (G_OBJECT (child), "activate",
 			  G_CALLBACK (on_about1_activate), emb);
-	child = glade_xml_get_widget (emb->menuxml, "copy_location1");
+	child = GTK_WIDGET (gtk_builder_get_object (emb->menuxml, "copy_location1"));
 	g_signal_connect (G_OBJECT (child), "activate",
 			G_CALLBACK (on_copy_location1_activate), emb);
-	child = glade_xml_get_widget (emb->menuxml, "preferences1");
+	child = GTK_WIDGET (gtk_builder_get_object (emb->menuxml, "preferences1"));
 	gtk_widget_hide (child);
 
 	/* Create cursor and set the logo */

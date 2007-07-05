@@ -96,43 +96,41 @@ totem_interface_error_blocking (const char *title, const char *reason,
 	gtk_widget_destroy (error_dialog);
 }
 
-GladeXML *
-totem_interface_load_with_root (const char *name, const char *root_widget,
-		const char *display_name, gboolean fatal, GtkWindow *parent)
+GtkBuilder *
+totem_interface_load (const char *name, gboolean fatal, GtkWindow *parent, gpointer user_data)
 {
-	GladeXML *glade;
+	GtkBuilder *builder = NULL;
 	char *filename;
+	GError *error = NULL;
 
-	glade = NULL;
 	filename = totem_interface_get_full_path (name);
 
-	if (filename != NULL)
-		glade = glade_xml_new (filename, root_widget, GETTEXT_PACKAGE);
-	g_free (filename);
+	if (filename != NULL) {
+		builder = gtk_builder_new ();
+		gtk_builder_set_translation_domain (builder, GETTEXT_PACKAGE);
+	}
 
-	if (glade == NULL)
+	if (builder == NULL || gtk_builder_add_from_file (builder, filename, &error) == FALSE)
 	{
 		char *msg;
 
-		msg = g_strdup_printf (_("Couldn't load the '%s' interface."), display_name);
+		msg = g_strdup_printf (_("Couldn't load the '%s' interface. %s"), name, error->message);
 		if (fatal == FALSE)
 			totem_interface_error (msg, _("Make sure that Totem is properly installed."), parent);
 		else
 			totem_interface_error_blocking (msg, _("Make sure that Totem is properly installed."), parent);
 
 		g_free (msg);
+		g_free (filename);
+		g_error_free (error);
+
 		return NULL;
 	}
+	g_free (filename);
 
-	return glade;
-}
+	gtk_builder_connect_signals (builder, user_data);
 
-GladeXML *
-totem_interface_load (const char *name, const char *display_name,
-		gboolean fatal, GtkWindow *parent)
-{
-	return totem_interface_load_with_root (name, NULL, display_name,
-			fatal, parent);
+	return builder;
 }
 
 GdkPixbuf*
@@ -155,7 +153,7 @@ totem_interface_get_full_path (const char *name)
 	char *filename;
 
 #ifdef TOTEM_RUN_IN_SOURCE_TREE
-	/* Try the glade file in the source tree first */
+	/* Try the GtkBuilder file in the source tree first */
 	filename = g_build_filename ("..", "data", name, NULL);
 	if (g_file_test (filename, G_FILE_TEST_EXISTS) == FALSE)
 	{
@@ -256,11 +254,11 @@ totem_interface_get_license (void)
 }
 
 void
-totem_interface_boldify_label (GladeXML *xml, const char *name)
+totem_interface_boldify_label (GtkBuilder *builder, const char *name)
 {
-	GtkWidget *widget;
+	GtkLabel *widget;
 
-	widget = glade_xml_get_widget (xml, name);
+	widget = GTK_LABEL (gtk_builder_get_object (builder, name));
 
 	if (widget == NULL) {
 		g_warning ("widget '%s' not found", name);
@@ -281,20 +279,20 @@ totem_interface_boldify_label (GladeXML *xml, const char *name)
 		attr->end_index = G_MAXINT;
 		pango_attr_list_insert (pattrlist, attr);
 	}
-	gtk_label_set_attributes (GTK_LABEL (widget), pattrlist);*/
+	gtk_label_set_attributes (widget, pattrlist);*/
 
 	gchar *str_final;
-	str_final = g_strdup_printf ("<b>%s</b>", gtk_label_get_label (GTK_LABEL (widget)));
-	gtk_label_set_markup_with_mnemonic (GTK_LABEL (widget), str_final);
+	str_final = g_strdup_printf ("<b>%s</b>", gtk_label_get_label (widget));
+	gtk_label_set_markup_with_mnemonic (widget, str_final);
 	g_free (str_final);
 }
 
 void
-totem_interface_italicise_label (GladeXML *xml, const char *name)
+totem_interface_italicise_label (GtkBuilder *builder, const char *name)
 {
-	GtkWidget *widget;
+	GtkLabel *widget;
 
-	widget = glade_xml_get_widget (xml, name);
+	widget = GTK_LABEL (gtk_builder_get_object (builder, name));
 
 	if (widget == NULL) {
 		g_warning ("widget '%s' not found", name);
@@ -315,11 +313,11 @@ totem_interface_italicise_label (GladeXML *xml, const char *name)
 		attr->end_index = G_MAXINT;
 		pango_attr_list_insert (pattrlist, attr);
 	}
-	gtk_label_set_attributes (GTK_LABEL (widget), pattrlist);*/
+	gtk_label_set_attributes (widget, pattrlist);*/
 
 	gchar *str_final;
-	str_final = g_strdup_printf ("<i>%s</i>", gtk_label_get_label (GTK_LABEL (widget)));
-	gtk_label_set_markup_with_mnemonic (GTK_LABEL (widget), str_final);
+	str_final = g_strdup_printf ("<i>%s</i>", gtk_label_get_label (widget));
+	gtk_label_set_markup_with_mnemonic (widget, str_final);
 	g_free (str_final);
 }
 

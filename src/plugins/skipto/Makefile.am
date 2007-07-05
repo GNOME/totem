@@ -1,7 +1,7 @@
 modules_flags = -export_dynamic -avoid-version -module
 
 plugindir = $(PLUGINDIR)/skipto
-gladedir = $(plugindir)
+uidir = $(plugindir)
 plugin_LTLIBRARIES = libskipto.la
 
 plugin_in_files = skipto.totem-plugin.in
@@ -9,7 +9,7 @@ plugin_in_files = skipto.totem-plugin.in
 %.totem-plugin: %.totem-plugin.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; $(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
 
 plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
-glade_DATA = skip_to.glade
+ui_DATA = skipto.ui
 
 common_defines = \
 	-D_REENTRANT					\
@@ -41,7 +41,7 @@ libskipto_la_CFLAGS = \
 	-I$(top_srcdir)/src	\
 	-I$(top_srcdir)/src/plugins
 
-EXTRA_DIST = $(plugin_in_files) $(glade_DATA)
+EXTRA_DIST = $(plugin_in_files) $(ui_DATA)
 
 CLEANFILES = $(plugin_DATA) $(BUILT_SOURCES)
 DISTCLEANFILES = $(plugin_DATA)

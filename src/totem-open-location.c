@@ -47,8 +47,8 @@ static void totem_open_location_finalize	(GObject *object);
 
 struct TotemOpenLocationPrivate
 {
-	GladeXML *xml;
-	GtkWidget *uri_entry;
+	GtkBuilder *xml;
+	GtkEntry *uri_entry;
 };
 
 G_DEFINE_TYPE (TotemOpenLocation, totem_open_location, GTK_TYPE_DIALOG)
@@ -109,7 +109,7 @@ totem_open_location_get_uri (TotemOpenLocation *open_location)
 {
 	char *uri;
 
-	uri = g_strdup (gtk_entry_get_text (GTK_ENTRY (open_location->priv->uri_entry)));
+	uri = g_strdup (gtk_entry_get_text (open_location->priv->uri_entry));
 
 	if (strcmp (uri, "") == 0)
 		uri = NULL;
@@ -158,14 +158,14 @@ totem_open_location_new (Totem *totem)
 
 	open_location = TOTEM_OPEN_LOCATION (g_object_new (TOTEM_TYPE_OPEN_LOCATION, NULL));
 
-	open_location->priv->xml = totem_interface_load_with_root ("uri.glade", "open_uri_dialog_content",
-				_("Open Location..."), FALSE, totem_get_main_window (totem));
+	open_location->priv->xml = totem_interface_load ("uri.ui", FALSE, totem_get_main_window (totem),
+				open_location);
 	if (open_location->priv->xml == NULL)
 	{
 		totem_open_location_finalize (G_OBJECT (open_location));
 		return NULL;
 	}
-	open_location->priv->uri_entry = glade_xml_get_widget (open_location->priv->xml, "uri");
+	open_location->priv->uri_entry = GTK_ENTRY (gtk_builder_get_object (open_location->priv->xml, "uri"));
 
 	gtk_window_set_title (GTK_WINDOW (open_location), _("Open Location..."));
 	gtk_dialog_set_has_separator (GTK_DIALOG (open_location), FALSE);
@@ -181,13 +181,13 @@ totem_open_location_new (Totem *totem)
 	/* Get item from clipboard to fill GtkEntry */
 	clipboard_location = totem_open_location_set_from_clipboard (open_location);
 	if (clipboard_location != NULL && strcmp (clipboard_location, "") != 0)
-		gtk_entry_set_text (GTK_ENTRY (open_location->priv->uri_entry), clipboard_location);
+		gtk_entry_set_text (open_location->priv->uri_entry, clipboard_location);
 	g_free (clipboard_location);
 
 	/* Add items in Totem's GtkRecentManager to the URI GtkEntry's GtkEntryCompletion */
 	completion = gtk_entry_completion_new();
 	model = GTK_TREE_MODEL (gtk_list_store_new (1, G_TYPE_STRING));
-	gtk_entry_set_completion (GTK_ENTRY (open_location->priv->uri_entry), completion);
+	gtk_entry_set_completion (open_location->priv->uri_entry, completion);
 
 	recent_items = gtk_recent_manager_get_items (gtk_recent_manager_get_default ());
 
@@ -227,8 +227,8 @@ totem_open_location_new (Totem *totem)
 	gtk_entry_completion_set_text_column (completion, 0);
 	gtk_entry_completion_set_match_func (completion, (GtkEntryCompletionMatchFunc) totem_open_location_match, model, NULL);
 
-	container = glade_xml_get_widget (open_location->priv->xml,
-				"open_uri_dialog_content");
+	container = GTK_WIDGET (gtk_builder_get_object (open_location->priv->xml,
+				"open_uri_dialog_content"));
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (open_location)->vbox),
 				container,
 				TRUE,       /* expand */

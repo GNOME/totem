@@ -27,7 +27,6 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
-#include <glade/glade.h>
 #include <gconf/gconf-client.h>
 #include <libgnomevfs/gnome-vfs.h>
 #include <libgnomevfs/gnome-vfs-mime-utils.h>
@@ -42,6 +41,13 @@
 
 static void ensure_shuffled (TotemPlaylist *playlist, gboolean shuffle);
 static gboolean totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl, const char *display_name);
+
+/* Callback function for GtkBuilder */
+void totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist);
+void totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist);
+void playlist_remove_button_clicked (GtkWidget *button, TotemPlaylist *playlist);
+void totem_playlist_up_files (GtkWidget *widget, TotemPlaylist *playlist);
+void totem_playlist_down_files (GtkWidget *widget, TotemPlaylist *playlist);
 
 typedef gboolean (*PlaylistCallback) (TotemPlaylist *playlist, const char *mrl,
 		gpointer data);
@@ -59,7 +65,7 @@ typedef struct {
 
 struct TotemPlaylistPrivate
 {
-	GladeXML *xml;
+	GtkBuilder *xml;
 
 	GtkWidget *treeview;
 	GtkTreeModel *model;
@@ -268,7 +274,7 @@ totem_playlist_update_save_button (TotemPlaylist *playlist)
 	GtkWidget *button;
 	gboolean state;
 
-	button = glade_xml_get_widget (playlist->_priv->xml, "save_button");
+	button = GTK_WIDGET (gtk_builder_get_object (playlist->_priv->xml, "save_button"));
 	state = (!playlist->_priv->disable_save_to_disk) && (PL_LEN != 0);
 	gtk_widget_set_sensitive (button, state);
 }
@@ -623,11 +629,11 @@ selection_changed (GtkTreeSelection *treeselection, TotemPlaylist *playlist)
 	GtkWidget *remove_button, *up_button, *down_button;
 	gboolean sensitivity;
 
-	remove_button = glade_xml_get_widget (playlist->_priv->xml,
-			"remove_button");
-	up_button = glade_xml_get_widget (playlist->_priv->xml, "up_button");
-	down_button = glade_xml_get_widget (playlist->_priv->xml,
-			"down_button");
+	remove_button = GTK_WIDGET (gtk_builder_get_object (playlist->_priv->xml,
+			"remove_button"));
+	up_button = GTK_WIDGET (gtk_builder_get_object (playlist->_priv->xml, "up_button"));
+	down_button = GTK_WIDGET (gtk_builder_get_object (playlist->_priv->xml,
+			"down_button"));
 
 	if (gtk_tree_selection_has_selected (treeselection))
 		sensitivity = TRUE;
@@ -669,7 +675,7 @@ update_current_from_playlist (TotemPlaylist *playlist)
 	return TRUE;
 }
 
-static void
+void
 totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist)
 {
 	GSList *filenames, *l;
@@ -812,7 +818,7 @@ playlist_remove_files (TotemPlaylist *playlist)
 	gtk_tree_view_columns_autosize (GTK_TREE_VIEW (playlist->_priv->treeview));
 }
 
-static void
+void
 playlist_remove_button_clicked (GtkWidget *button, TotemPlaylist *playlist)
 {
 	playlist_remove_files (playlist);
@@ -882,7 +888,7 @@ totem_playlist_save_add_format_combo_box (GtkFileChooser *fc)
 	return combo_box;
 }
 
-static void
+void
 totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 {
 	GtkWidget *fs, *combo_box;
@@ -1055,13 +1061,13 @@ totem_playlist_move_files (TotemPlaylist *playlist, gboolean direction_up)
 			NULL);
 }
 
-static void
+void
 totem_playlist_up_files (GtkWidget *widget, TotemPlaylist *playlist)
 {
 	totem_playlist_move_files (playlist, TRUE);
 }
 
-static void
+void
 totem_playlist_down_files (GtkWidget *widget, TotemPlaylist *playlist)
 {
 	totem_playlist_move_files (playlist, FALSE);
@@ -1438,7 +1444,7 @@ totem_playlist_finalize (GObject *object)
 static void
 totem_playlist_init (TotemPlaylist *playlist)
 {
-	GtkWidget *container, *item;
+	GtkWidget *container;
 	char *filename;
 
 	playlist->_priv = g_new0 (TotemPlaylistPrivate, 1);
@@ -1455,8 +1461,7 @@ totem_playlist_init (TotemPlaylist *playlist)
 			G_CALLBACK (totem_playlist_entry_parsed),
 			playlist);
 
-	playlist->_priv->xml = totem_interface_load_with_root ("playlist.glade",
-			"vbox4", _("playlist"), TRUE, NULL);
+	playlist->_priv->xml = totem_interface_load ("playlist.ui", TRUE, NULL, playlist);
 
 	if (playlist->_priv->xml == NULL)
 		return;
@@ -1480,34 +1485,12 @@ totem_playlist_init (TotemPlaylist *playlist)
 	}
 	g_free (filename);
 
-	/* Connect the buttons */
-	item = glade_xml_get_widget (playlist->_priv->xml, "add_button");
-	g_signal_connect (G_OBJECT (item), "clicked",
-			G_CALLBACK (totem_playlist_add_files),
-			playlist);
-	item = glade_xml_get_widget (playlist->_priv->xml, "remove_button");
-	g_signal_connect (G_OBJECT (item), "clicked",
-			G_CALLBACK (playlist_remove_button_clicked),
-			playlist);
-	item = glade_xml_get_widget (playlist->_priv->xml, "save_button");
-	g_signal_connect (G_OBJECT (item), "clicked",
-			G_CALLBACK (totem_playlist_save_files),
-			playlist);
-	item = glade_xml_get_widget (playlist->_priv->xml, "up_button");
-	g_signal_connect (G_OBJECT (item), "clicked",
-			G_CALLBACK (totem_playlist_up_files),
-			playlist);
-	item = glade_xml_get_widget (playlist->_priv->xml, "down_button");
-	g_signal_connect (G_OBJECT (item), "clicked",
-			G_CALLBACK (totem_playlist_down_files),
-			playlist);
-
 	gtk_widget_add_events (GTK_WIDGET (playlist), GDK_KEY_PRESS_MASK);
 	g_signal_connect (G_OBJECT (playlist), "key_press_event",
 			G_CALLBACK (totem_playlist_key_press), playlist);
 
 	/* Reparent the vbox */
-	container = glade_xml_get_widget (playlist->_priv->xml, "vbox4");
+	container = GTK_WIDGET (gtk_builder_get_object (playlist->_priv->xml, "vbox4"));
 	g_object_ref (container);
 	gtk_box_pack_start (GTK_BOX (playlist),
 			container,
@@ -1516,8 +1499,8 @@ totem_playlist_init (TotemPlaylist *playlist)
 			0);         /* padding */
 	g_object_unref (container);
 
-	playlist->_priv->treeview = glade_xml_get_widget
-		(playlist->_priv->xml, "treeview1");
+	playlist->_priv->treeview = GTK_WIDGET (gtk_builder_get_object
+		(playlist->_priv->xml, "treeview1"));
 	init_treeview (playlist->_priv->treeview, playlist);
 	playlist->_priv->model = gtk_tree_view_get_model
 		(GTK_TREE_VIEW (playlist->_priv->treeview));

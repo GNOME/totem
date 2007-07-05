@@ -24,7 +24,6 @@
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
-#include <glade/glade.h>
 #include <string.h>
 
 #include "totem-menu.h"
@@ -1322,7 +1321,7 @@ totem_ui_manager_setup (Totem *totem)
 {
 	char *filename;
 	GtkWidget *menubar;
-	GtkWidget *menubar_box;
+	GtkBox *menubar_box;
 	GtkAction *action;
 
 	totem->main_action_group = gtk_action_group_new ("main-action-group");
@@ -1404,7 +1403,7 @@ totem_ui_manager_setup (Totem *totem)
 	g_free (filename);
 
 	menubar = gtk_ui_manager_get_widget (totem->ui_manager, "/tmw-menubar");
-	menubar_box = glade_xml_get_widget (totem->xml, "tmw_menubar_box");
-	gtk_box_pack_start (GTK_BOX (menubar_box), menubar, FALSE, FALSE, 0);
+	menubar_box = GTK_BOX (gtk_builder_get_object (totem->xml, "tmw_menubar_box"));
+	gtk_box_pack_start (menubar_box, menubar, FALSE, FALSE, 0);
 }
 

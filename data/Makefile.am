@@ -8,14 +8,14 @@ stuff_DATA =				\
 	filmholes-big-left.png		\
 	filmholes-big-right.png		\
 	stock-tool-brightness-contrast-22.png	\
-	totem.glade			\
-	fullscreen.glade		\
-	playlist.glade			\
+	totem.ui			\
+	fullscreen.ui			\
+	playlist.ui			\
 	playlist-ui.xml			\
-	plugins.glade			\
-	mozilla-viewer.glade		\
-	properties.glade		\
-	uri.glade			\
+	plugins.ui			\
+	mozilla-viewer.ui		\
+	properties.ui			\
+	uri.ui				\
 	totem-ui.xml			\
 	totem_logo.png
 
@@ -95,7 +95,7 @@ EXTRA_DIST = \
 	totem-video-thumbnailer.pod
 
 CLEANFILES = \
-	*.bak *.gladep core* *.orig *~ 	\
+	*.bak *.uip core* *.orig *~ 	\
 	$(desktop_in_files)		\
 	$(desktop_DATA)			\
 	$(generated_schema_in_files)	\
