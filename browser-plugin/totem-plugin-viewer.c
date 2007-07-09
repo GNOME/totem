@@ -165,6 +165,10 @@ static void totem_embedded_clear_playlist (TotemEmbedded *embedded);
 static void totem_embedded_update_menu (TotemEmbedded *emb);
 static void on_open1_activate (GtkButton *button, TotemEmbedded *emb);
 
+void on_about1_activate (GtkButton *button, TotemEmbedded *emb);
+void on_preferences1_activate (GtkButton *button, TotemEmbedded *emb);
+void on_copy_location1_activate (GtkButton *button, TotemEmbedded *emb);
+
 enum {
 	BUTTON_PRESS,
 	START_STREAM,
@@ -1064,7 +1068,7 @@ on_open1_activate (GtkButton *button, TotemEmbedded *emb)
 	totem_embedded_stop (emb, NULL);
 }
 
-static void
+void
 on_about1_activate (GtkButton *button, TotemEmbedded *emb)
 {
 	char *backend_version, *description, *license;
@@ -1118,7 +1122,7 @@ on_about1_activate (GtkButton *button, TotemEmbedded *emb)
 	gtk_widget_show (emb->about);
 }
 
-static void
+void
 on_copy_location1_activate (GtkButton *button, TotemEmbedded *emb)
 {
 	GdkDisplay *display;
@@ -1141,6 +1145,12 @@ on_copy_location1_activate (GtkButton *button, TotemEmbedded *emb)
 	clip = gtk_clipboard_get_for_display (display,
 					      GDK_SELECTION_PRIMARY);
 	gtk_clipboard_set_text (clip, uri, -1);
+}
+
+void
+on_preferences1_activate (GtkButton *button, TotemEmbedded *emb)
+{
+	/* TODO: */
 }
 
 static void
@@ -1348,11 +1358,16 @@ totem_embedded_construct (TotemEmbedded *emb,
 			  int width,
 			  int height)
 {
-	GtkWidget *child, *container, *vbut;
+	GtkWidget *child, *container, *vbut, *image;
 	BvwUseType type;
 	GError *err = NULL;
 	GConfClient *gc;
 	double volume;
+
+	emb->xml = totem_interface_load ("mozilla-viewer.ui", TRUE,
+					 GTK_WINDOW (emb->window), emb);
+	g_assert (emb->xml);
+
 
 	if (xid != 0) {
 		g_assert (!emb->hidden);
@@ -1362,18 +1377,10 @@ totem_embedded_construct (TotemEmbedded *emb,
 		/* Can't do anything before it's realized */
 		gtk_widget_realize (emb->window);
 
-		emb->xml = totem_interface_load ("mozilla-viewer.glade", TRUE,
-				GTK_WINDOW (emb->window), emb);
-		g_assert (emb->xml);
-
 		child = GTK_WIDGET (gtk_builder_get_object (emb->xml, "content_box"));
 		gtk_container_add (GTK_CONTAINER (emb->window), child);
 	} else {
 		g_assert (emb->hidden);
-
-		emb->xml = totem_interface_load ("mozilla-viewer.glade", TRUE,
-				GTK_WINDOW (emb->window), emb);
-		g_assert (emb->xml);
 
 		emb->window = GTK_WIDGET (gtk_builder_get_object (emb->xml, "window"));
 	}
@@ -1432,6 +1439,8 @@ totem_embedded_construct (TotemEmbedded *emb,
 			  G_CALLBACK (cb_on_seek), emb);
 
 	emb->pp_button = GTK_WIDGET (gtk_builder_get_object (emb->xml, "pp_button"));
+	image = gtk_image_new_from_stock (GTK_STOCK_MEDIA_PLAY, GTK_ICON_SIZE_MENU);
+	gtk_button_set_image (GTK_BUTTON (emb->pp_button), image);
 	g_signal_connect (G_OBJECT (emb->pp_button), "clicked",
 			  G_CALLBACK (on_play_pause), emb);
 
@@ -1441,11 +1450,13 @@ totem_embedded_construct (TotemEmbedded *emb,
 
 	bacon_video_widget_set_volume (emb->bvw, volume);
 	vbut = GTK_WIDGET (gtk_builder_get_object (emb->xml, "volume_button"));
+	gtk_button_set_focus_on_click (GTK_BUTTON (vbut), FALSE);
 	gtk_scale_button_set_value (GTK_SCALE_BUTTON (vbut), volume);
 	g_signal_connect (G_OBJECT (vbut), "value-changed",
 			  G_CALLBACK (cb_vol), emb);
 
 	emb->statusbar = TOTEM_STATUSBAR (gtk_builder_get_object (emb->xml, "statusbar"));
+	gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (emb->statusbar), FALSE);
 
 	gtk_widget_set_size_request (emb->window, width, height);
 
@@ -1460,8 +1471,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 	}
 
 	if (!emb->show_statusbar) {
-		child = GTK_WIDGET (gtk_builder_get_object (emb->xml, "statusbar"));
-		gtk_widget_hide (child);
+		gtk_widget_hide (GTK_WIDGET (emb->statusbar));
 	}
 
 	/* Try to make controls smaller */
@@ -1476,8 +1486,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 		child = GTK_WIDGET (gtk_builder_get_object (emb->xml, "time_hscale"));
 		gtk_widget_modify_style (child, rcstyle);
 
-		child = GTK_WIDGET (gtk_builder_get_object (emb->xml, "volume_button"));
-		gtk_widget_modify_style (child, rcstyle);
+		gtk_widget_modify_style (vbut, rcstyle);
 
 		g_object_unref (rcstyle);
 	}
@@ -1489,18 +1498,9 @@ totem_embedded_construct (TotemEmbedded *emb,
 	}
 
 	/* popup */
-	emb->menuxml = totem_interface_load ("mozilla-viewer.glade", TRUE,
-				GTK_WINDOW (emb->window), emb);
+	emb->menuxml = totem_interface_load ("mozilla-viewer.ui", TRUE,
+					     GTK_WINDOW (emb->window), emb);
 	g_assert (emb->menuxml);
-
-	child = GTK_WIDGET (gtk_builder_get_object (emb->menuxml, "about1"));
-	g_signal_connect (G_OBJECT (child), "activate",
-			  G_CALLBACK (on_about1_activate), emb);
-	child = GTK_WIDGET (gtk_builder_get_object (emb->menuxml, "copy_location1"));
-	g_signal_connect (G_OBJECT (child), "activate",
-			G_CALLBACK (on_copy_location1_activate), emb);
-	child = GTK_WIDGET (gtk_builder_get_object (emb->menuxml, "preferences1"));
-	gtk_widget_hide (child);
 
 	/* Create cursor and set the logo */
 	if (!emb->hidden) {
@@ -1704,43 +1704,6 @@ totem_embedded_push_parser (gpointer data)
 
 	/* don't run again */
 	return FALSE;
-}
-
-G_MODULE_EXPORT GtkWidget *
-totem_volume_create (void)
-{
-	GtkWidget *widget;
-
-	widget = gtk_volume_button_new ();
-	gtk_button_set_focus_on_click (GTK_BUTTON (widget), FALSE);
-	gtk_widget_show (widget);
-
-	return widget;
-}
-
-G_MODULE_EXPORT GtkWidget *
-totem_statusbar_create (void)
-{
-	GtkWidget *widget;
-
-	widget = totem_statusbar_new ();
-	gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (widget), FALSE);
-	gtk_widget_show (widget);
-
-	return widget;
-}
-
-G_MODULE_EXPORT GtkWidget *
-totem_pp_create (void)
-{
-	GtkWidget *widget, *image;
-
-	widget = totem_glow_button_new ();
-	image = gtk_image_new_from_stock (GTK_STOCK_MEDIA_PLAY, GTK_ICON_SIZE_MENU);
-	gtk_button_set_image (GTK_BUTTON (widget), image);
-	gtk_widget_show (widget);
-
-	return widget;
 }
 
 static char *arg_user_agent = NULL;
