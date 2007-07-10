@@ -68,6 +68,11 @@ typedef enum {
 	TOTEM_REMOTE_COMMAND_MUTE
 } TotemRemoteCommand;
 
+typedef enum {
+	TOTEM_REMOTE_SETTING_SHUFFLE,
+	TOTEM_REMOTE_SETTING_REPEAT
+} TotemRemoteSetting;
+
 GType totem_remote_command_get_type	(void);
 GQuark totem_remote_command_quark	(void);
 #define TOTEM_TYPE_REMOTE_COMMAND	(totem_remote_command_get_type())
@@ -151,12 +156,20 @@ void    totem_action_play_media_device		(Totem *totem,
 
 gboolean totem_is_fullscreen			(Totem *totem);
 gboolean totem_is_playing			(Totem *totem);
+gboolean totem_is_paused			(Totem *totem);
 gboolean totem_is_seekable			(Totem *totem);
 GtkWindow *totem_get_main_window		(Totem *totem);
 GtkUIManager *totem_get_ui_manager		(Totem *totem);
 GtkWidget *totem_get_video_widget		(Totem *totem);
+char *	totem_get_short_title			(Totem *totem);
 
-gint64 totem_get_current_time			(Totem *totem);
+gint64	totem_get_current_time			(Totem *totem);
+guint	totem_get_playlist_length		(Totem *totem);
+void	totem_action_set_playlist_index		(Totem *totem,
+						 guint index);
+guint	totem_get_playlist_pos			(Totem *totem);
+char *	totem_get_title_at_playlist_pos		(Totem *totem,
+						 guint index);
 
 void    totem_add_sidebar_page			(Totem *totem,
 						 const char *page_id,
@@ -168,5 +181,10 @@ void    totem_remove_sidebar_page		(Totem *totem,
 void    totem_action_remote			(Totem *totem,
 						 TotemRemoteCommand cmd,
 						 const char *url);
+void	totem_action_remote_set_setting		(Totem *totem,
+						 TotemRemoteSetting setting,
+						 gboolean value);
+gboolean totem_action_remote_get_setting	(Totem *totem,
+						 TotemRemoteSetting setting);
 
 #endif /* __TOTEM_H__ */

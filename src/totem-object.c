@@ -225,6 +225,31 @@ totem_get_current_time (Totem *totem)
 	return totem->stream_length;
 }
 
+guint
+totem_get_playlist_length (Totem *totem)
+{
+	return totem_playlist_get_last (totem->playlist) + 1;
+}
+
+guint
+totem_get_playlist_pos (Totem *totem)
+{
+	return totem_playlist_get_current (totem->playlist);
+}
+
+char *
+totem_get_title_at_playlist_pos (Totem *totem, guint index)
+{
+	return totem_playlist_get_title (totem->playlist, index);
+}
+
+char *
+totem_get_short_title (Totem *totem)
+{
+	gboolean custom;
+	return totem_playlist_get_current_title (totem->playlist, &custom);
+}
+
 void
 totem_add_sidebar_page (Totem *totem,
 			const char *page_id,

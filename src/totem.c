@@ -800,8 +800,9 @@ totem_get_nice_name_for_stream (Totem *totem)
 	if (artist == NULL)
 		return title;
 
-	bacon_video_widget_get_metadata (totem->bvw, BVW_INFO_TRACK_NUMBER,
-			&value);
+	bacon_video_widget_get_metadata (totem->bvw,
+					 BVW_INFO_TRACK_NUMBER,
+					 &value);
 	tracknum = g_value_get_int (&value);
 
 	if (tracknum != 0) {
@@ -1828,6 +1829,17 @@ totem_action_next_angle (Totem *totem)
 }
 
 void
+totem_action_set_playlist_index (Totem *totem, guint index)
+{
+	char *mrl;
+
+	totem_playlist_set_current (totem->playlist, index);
+	mrl = totem_playlist_get_current_mrl (totem->playlist);
+	totem_action_set_mrl_and_play (totem, mrl);
+	g_free (mrl);
+}
+
+void
 totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 {
 	gboolean handled = TRUE;
@@ -1874,8 +1886,13 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		}
 		break;
 	case TOTEM_REMOTE_COMMAND_REPLACE:
-		g_assert (url != NULL);
 		totem_playlist_clear (totem->playlist);
+		if (url == NULL) {
+			bacon_video_widget_close (totem->bvw);
+			totem_file_closed (totem);
+			totem_action_set_mrl_and_play (totem, NULL);
+			break;
+		}
 		if (strcmp (url, "dvd:") == 0) {
 			//FIXME b0rked
 			totem_action_play_media (totem, MEDIA_TYPE_DVD, NULL);
@@ -1986,6 +2003,49 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 	}
 }
 
+void totem_action_remote_set_setting (Totem *totem,
+				      TotemRemoteSetting setting,
+				      gboolean value)
+{
+	GtkAction *action;
+
+	action = NULL;
+
+	switch (setting) {
+	case TOTEM_REMOTE_SETTING_SHUFFLE:
+		action = gtk_action_group_get_action (totem->main_action_group, "shuffle-mode");
+		break;
+	case TOTEM_REMOTE_SETTING_REPEAT:
+		action = gtk_action_group_get_action (totem->main_action_group, "repeat-mode");
+		break;
+	default:
+		g_assert_not_reached ();
+	}
+
+	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), value);
+}
+
+gboolean totem_action_remote_get_setting (Totem *totem,
+					  TotemRemoteSetting setting)
+{
+	GtkAction *action;
+
+	action = NULL;
+
+	switch (setting) {
+	case TOTEM_REMOTE_SETTING_SHUFFLE:
+		action = gtk_action_group_get_action (totem->main_action_group, "shuffle-mode");
+		break;
+	case TOTEM_REMOTE_SETTING_REPEAT:
+		action = gtk_action_group_get_action (totem->main_action_group, "repeat-mode");
+		break;
+	default:
+		g_assert_not_reached ();
+	}
+
+	return gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+}
+
 static void
 playlist_changed_cb (GtkWidget *playlist, Totem *totem)
 {
@@ -2089,6 +2149,14 @@ totem_is_playing (Totem *totem)
 		return FALSE;
 
 	return bacon_video_widget_is_playing (totem->bvw) != FALSE;
+}
+
+gboolean
+totem_is_paused (Totem *totem)
+{
+	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), FALSE);
+
+	return totem->state == STATE_PAUSED;
 }
 
 gboolean

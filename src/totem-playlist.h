@@ -93,6 +93,9 @@ void       totem_playlist_clear_with_gnome_vfs_volume (TotemPlaylist *playlist,
 char      *totem_playlist_get_current_mrl (TotemPlaylist *playlist);
 char      *totem_playlist_get_current_title (TotemPlaylist *playlist,
 					     gboolean *custom);
+char      *totem_playlist_get_title (TotemPlaylist *playlist,
+				     guint index);
+
 gboolean   totem_playlist_get_current_metadata (TotemPlaylist *playlist,
 						char         **artist,
 						char         **title,

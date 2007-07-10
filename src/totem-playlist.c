@@ -1800,6 +1800,30 @@ totem_playlist_get_current_title (TotemPlaylist *playlist, gboolean *custom)
 	return path;
 }
 
+char *
+totem_playlist_get_title (TotemPlaylist *playlist, guint index)
+{
+	GtkTreeIter iter;
+	GtkTreePath *path;
+	char *title;
+
+	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), NULL);
+
+	path = gtk_tree_path_new_from_indices (index, -1);
+
+	gtk_tree_model_get_iter (playlist->_priv->model,
+				 &iter, path);
+
+	gtk_tree_path_free (path);
+
+	gtk_tree_model_get (playlist->_priv->model,
+			    &iter,
+			    FILENAME_COL, &title,
+			    -1);
+
+	return title;
+}
+
 gboolean
 totem_playlist_get_current_metadata (TotemPlaylist *playlist,
 				     char         **artist,
@@ -2131,9 +2155,11 @@ totem_playlist_get_current (TotemPlaylist *playlist)
 
 	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), 0);
 
+	if (playlist->_priv->current == NULL)
+		return 0;
 	path = gtk_tree_path_to_string (playlist->_priv->current);
 	if (path == NULL)
-		return -1;
+		return 0;
 
 	index = g_ascii_strtod (path, NULL);
 	g_free (path);

@@ -64,7 +64,7 @@ AC_SUBST(TOTEM_PL_PARSER_VERSION_MINOR)
 AC_SUBST(TOTEM_PL_PARSER_VERSION_MICRO)
 
 # The full list of plugins
-allowed_plugins="screensaver ontop galago gromit lirc media-player-keys properties sidebar-test skipto sample-python sample-vala"
+allowed_plugins="screensaver ontop galago gromit lirc media-player-keys properties sidebar-test skipto sample-python sample-vala bemused"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -360,6 +360,13 @@ for plugin in ${used_plugins}; do
 			AC_SUBST(LIRC_LIBS)
 			if test "${HAVE_LIRC}" != "yes" ; then
 				plugin_error_or_ignore "you need lirc_client installed for the lirc plugin"
+				add_plugin="0"
+			fi
+		;;
+		bemused)
+			PKG_CHECK_MODULES(BEMUSED, bluez, [HAVE_BLUEZ=yes], [HAVE_BLUEZ=no])
+			if test "${HAVE_BLUEZ}" != "yes" ; then
+				plugin_error_or_ignore "you need the bluez libraries installed for the Bemused plugin"
 				add_plugin="0"
 			fi
 		;;
@@ -997,6 +1004,7 @@ totem-plparser-uninstalled.pc
 lib/Makefile
 src/Makefile
 src/plugins/Makefile
+src/plugins/bemused/Makefile
 src/plugins/screensaver/Makefile
 src/plugins/ontop/Makefile
 src/plugins/galago/Makefile

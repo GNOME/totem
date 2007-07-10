@@ -1,3 +1,21 @@
+2007-07-10  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-object.c: (totem_get_playlist_length),
+	(totem_get_playlist_pos), (totem_get_title_at_playlist_pos),
+	(totem_get_short_title):
+	* src/totem-playlist.c: (totem_playlist_get_title),
+	(totem_playlist_get_current):
+	* src/totem-playlist.h:
+	* src/totem.c: (totem_get_nice_name_for_stream),
+	(totem_action_set_playlist_index), (totem_action_remote),
+	(totem_action_remote_set_setting),
+	(totem_action_remote_get_setting), (totem_is_paused):
+	* src/totem.h: Add a number of externally callable functions to
+	allow the Bemused plugin to call
+
+	* configure.in:
+	* src/plugins/bemused/*: Add a Bemused Server plugin
+
 2007-07-09  Bastien Nocera  <hadess@hadess.net>
 
 	* data/fullscreen.glade:
