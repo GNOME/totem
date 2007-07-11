@@ -2752,10 +2752,7 @@ totem_callback_connect (Totem *totem)
 {
 	GtkWidget *item, *arrow;
 	GtkAction *action;
-	GtkTooltips *tooltips;
 	GtkBox *box;
-
-	tooltips = gtk_tooltips_new ();
 
 	/* Menu items */
 	gtk_action_group_set_visible (totem->zoom_action_group,
@@ -2775,19 +2772,15 @@ totem_callback_connect (Totem *totem)
 	item = gtk_action_create_tool_item (action);
 	atk_object_set_name (gtk_widget_get_accessible (item),
 			_("Play / Pause"));
- 	gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (item), 
- 				   GTK_TOOLTIPS (tooltips),
- 				   _("Play / Pause"), 
- 				   NULL);
+	gtk_tool_item_set_tooltip_text (GTK_TOOL_ITEM (item),
+ 					_("Play / Pause"));
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 
 	action = gtk_action_group_get_action (totem->main_action_group,
 			"previous-chapter");
 	item = gtk_action_create_tool_item (action);
-	gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (item), 
-				   GTK_TOOLTIPS (tooltips),
-				   _("Previous Chapter/Movie"), 
-				   NULL);
+	gtk_tool_item_set_tooltip_text (GTK_TOOL_ITEM (item), 
+					_("Previous Chapter/Movie"));
 	atk_object_set_name (gtk_widget_get_accessible (item),
 			_("Previous Chapter/Movie"));
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
@@ -2795,10 +2788,8 @@ totem_callback_connect (Totem *totem)
 	action = gtk_action_group_get_action (totem->main_action_group,
 			"next-chapter");
 	item = gtk_action_create_tool_item (action);
-	gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (item), 
-				   GTK_TOOLTIPS (tooltips),
-				   _("Next Chapter/Movie"), 
-				   NULL);
+	gtk_tool_item_set_tooltip_text (GTK_TOOL_ITEM (item), 
+					_("Next Chapter/Movie"));
 	atk_object_set_name (gtk_widget_get_accessible (item),
 			_("Next Chapter/Movie"));
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
