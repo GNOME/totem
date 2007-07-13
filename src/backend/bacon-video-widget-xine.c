@@ -2175,6 +2175,14 @@ bacon_video_widget_open_thread (gpointer data)
 		} else {
 			GList *l;
 
+			/* A few known commands before we crack on */
+			xine_plugins_garbage_collector (bvw->priv->xine);
+			show_vfx_update (bvw, bvw->priv->show_vfx); 
+			g_signal_emit (G_OBJECT (bvw),
+				       bvw_table_signals[GOT_METADATA], 0, NULL);
+			g_object_notify (G_OBJECT (bvw), "seekable");
+			bacon_video_widget_tick_send (bvw); 
+
 			pthread_mutex_lock (&bvw->priv->queued_actions_mutex);
 
 			/* This is so that we don't deadlock when calling the
