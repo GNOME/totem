@@ -1,3 +1,10 @@
+2007-07-13  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_open_thread): Don't forget to update the VFX
+	state after opening it, fixes the visual effects showing up in the
+	middle of video when using the browser plugin
+
 2007-07-11  Christian Persch  <chpe@gnome.org>
 
 	* configure.in: Bump gtk req. to 2.11.6.
