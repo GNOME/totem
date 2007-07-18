@@ -437,6 +437,8 @@ write_directory_listing (TotemBemusedPlugin *tp, GIOChannel *source, gboolean at
 	g_free (root);
 #endif
 
+	g_free (filename);
+
 endoflist:
 	/* Send end of list */
 	buf[0] = 0xFF;
