@@ -46,7 +46,7 @@ NS_IMETHODIMP _class::GetContractID(char * *aContractID)\
 /* readonly attribute string classDescription; */\
 NS_IMETHODIMP _class::GetClassDescription(char * *aClassDescription)\
 {\
-  *aClassDescription = NS_STATIC_CAST (char*,\
+  *aClassDescription = static_cast<char*>(\
 				       nsMemory::Clone (_description,\
 						        sizeof (_description)));\
   if (!*aClassDescription)\
@@ -58,7 +58,7 @@ NS_IMETHODIMP _class::GetClassDescription(char * *aClassDescription)\
 /* readonly attribute nsCIDPtr classID; */\
 NS_IMETHODIMP _class::GetClassID(nsCID * *aClassID)\
 {\
-  *aClassID = NS_STATIC_CAST (nsCID*,\
+  *aClassID = static_cast<nsCID*>(\
 			      nsMemory::Clone (&_cid,\
 					       sizeof (nsCID*)));\
   if (!*aClassID)\
@@ -91,14 +91,14 @@ NS_IMETHODIMP _class::GetClassIDNoAlloc(nsCID *aClassIDNoAlloc)\
 \
 NS_IMETHODIMP _class::GetInterfaces (PRUint32 *count, nsIID * **array)\
 {\
-  *array = NS_STATIC_CAST (nsIID**, nsMemory::Alloc (sizeof (nsIID) * _count));\
+  *array = static_cast<nsIID**>(nsMemory::Alloc (sizeof (nsIID) * _count));\
   if (!*array)\
     return NS_ERROR_OUT_OF_MEMORY;\
 \
   *count = _count;
 
 #define TOTEM_CLASSINFO_ENTRY(_i, _interface)\
-  (*array)[_i] = NS_STATIC_CAST (nsIID*,\
+  (*array)[_i] = static_cast<nsIID*>(\
                                  nsMemory::Clone(&NS_GET_IID(_interface),\
                                                  sizeof(nsIID)));\
   if (!(*array)[_i]) {\

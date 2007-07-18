@@ -170,7 +170,7 @@ totemPlugin::~totemPlugin ()
 		dbus_g_proxy_disconnect_signal (mBusProxy,
 						"NameOwnerChanged",
 						G_CALLBACK (NameOwnerChangedCallback),
-						NS_REINTERPRET_CAST (void*, this));
+						reinterpret_cast<void*>(this));
 		g_object_unref (mBusProxy);
 		mBusProxy = NULL;
 	}
@@ -349,7 +349,7 @@ totemPlugin::ViewerFork ()
 	/* Don't wait forever! */
 	const PRUint32 kViewerTimeout = 30 * 1000; /* ms */
 	nsresult rv = mTimer->InitWithFuncCallback (ViewerForkTimeoutCallback,
-						    NS_REINTERPRET_CAST (void*, this),
+						    reinterpret_cast<void*>(this),
 						    kViewerTimeout,
 						    nsITimer::TYPE_ONE_SHOT);
 	if (NS_FAILED (rv)) {
@@ -424,7 +424,7 @@ totemPlugin::ViewerSetup ()
 	dbus_g_proxy_connect_signal (mViewerProxy,
 				     "ButtonPress",
 				     G_CALLBACK (ButtonPressCallback),
-				     NS_REINTERPRET_CAST (void*, this),
+				     reinterpret_cast<void*>(this),
 				     NULL);
 
 	dbus_g_proxy_add_signal (mViewerProxy,
@@ -433,7 +433,7 @@ totemPlugin::ViewerSetup ()
 	dbus_g_proxy_connect_signal (mViewerProxy,
 				     "StopStream",
 				     G_CALLBACK (StopStreamCallback),
-				     NS_REINTERPRET_CAST (void*, this),
+				     reinterpret_cast<void*>(this),
 				     NULL);
 
 	if (mHidden) {
@@ -472,11 +472,11 @@ totemPlugin::ViewerCleanup ()
 		dbus_g_proxy_disconnect_signal (mViewerProxy,
 						"ButtonPress",
 						G_CALLBACK (ButtonPressCallback),
-						NS_REINTERPRET_CAST (void*, this));
+						reinterpret_cast<void*>(this));
 		dbus_g_proxy_disconnect_signal (mViewerProxy,
 						"StopStream",
 						G_CALLBACK (StopStreamCallback),
-						NS_REINTERPRET_CAST (void*, this));
+						reinterpret_cast<void*>(this));
 
 		g_object_unref (mViewerProxy);
 		mViewerProxy = NULL;
@@ -519,7 +519,7 @@ totemPlugin::ViewerSetWindow ()
 		dbus_g_proxy_begin_call (mViewerProxy,
 					 "SetWindow",
 					 ViewerSetWindowCallback,
-					 NS_REINTERPRET_CAST (void*, this),
+					 reinterpret_cast<void*>(this),
 					 NULL,
 #if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
 					 G_TYPE_STRING, mControls.get (),
@@ -767,7 +767,7 @@ totemPlugin::RequestStream (PRBool aForceViewer)
 			dbus_g_proxy_begin_call (mViewerProxy,
 						 "OpenStream",
 						 ViewerOpenStreamCallback,
-						 NS_REINTERPRET_CAST (void*, this),
+						 reinterpret_cast<void*>(this),
 						 NULL,
 						 G_TYPE_STRING, spec.get (),
 						 G_TYPE_STRING, baseSpec.get (),
@@ -777,7 +777,7 @@ totemPlugin::RequestStream (PRBool aForceViewer)
 			dbus_g_proxy_begin_call (mViewerProxy,
 						 "OpenURI",
 						 ViewerOpenURICallback,
-						 NS_REINTERPRET_CAST (void*, this),
+						 reinterpret_cast<void*>(this),
 						 NULL,
 						 G_TYPE_STRING, spec.get (),
 						 G_TYPE_STRING, baseSpec.get (),
@@ -816,7 +816,7 @@ totemPlugin::NameOwnerChangedCallback (DBusGProxy *proxy,
 				       const char *aNewOwner,
 				       void *aData)
 {
-	totemPlugin *plugin = NS_REINTERPRET_CAST (totemPlugin*, aData);
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
 
 	plugin->NameOwnerChanged (aName, aOldOwner, aNewOwner);
 }
@@ -825,7 +825,7 @@ totemPlugin::NameOwnerChangedCallback (DBusGProxy *proxy,
 totemPlugin::ViewerForkTimeoutCallback (nsITimer *aTimer,
 				        void *aData)
 {
-	totemPlugin *plugin = NS_REINTERPRET_CAST (totemPlugin*, aData);
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
 
 	D ("ViewerForkTimeoutCallback");
 
@@ -842,7 +842,7 @@ totemPlugin::ButtonPressCallback (DBusGProxy *proxy,
 				  guint aButton,
 			          void *aData)
 {
-	totemPlugin *plugin = NS_REINTERPRET_CAST (totemPlugin*, aData);
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
 
 	D ("ButtonPress signal received");
 
@@ -853,7 +853,7 @@ totemPlugin::ButtonPressCallback (DBusGProxy *proxy,
 totemPlugin::StopStreamCallback (DBusGProxy *proxy,
 			         void *aData)
 {
-	totemPlugin *plugin = NS_REINTERPRET_CAST (totemPlugin*, aData);
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
 
 	D ("StopStream signal received");
 
@@ -865,7 +865,7 @@ totemPlugin::ViewerSetWindowCallback (DBusGProxy *aProxy,
 				      DBusGProxyCall *aCall,
 				      void *aData)
 {
-	totemPlugin *plugin = NS_REINTERPRET_CAST (totemPlugin*, aData);
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
 
 	D ("SetWindow reply");
 
@@ -889,7 +889,7 @@ totemPlugin::ViewerOpenStreamCallback (DBusGProxy *aProxy,
 				       DBusGProxyCall *aCall,
 				       void *aData)
 {
-	totemPlugin *plugin = NS_REINTERPRET_CAST (totemPlugin*, aData);
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
 
 	D ("OpenStream reply");
 
@@ -936,7 +936,7 @@ totemPlugin::ViewerOpenURICallback (DBusGProxy *aProxy,
 				    DBusGProxyCall *aCall,
 				    void *aData)
 {
-	totemPlugin *plugin = NS_REINTERPRET_CAST (totemPlugin*, aData);
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
 
 	D ("OpenURI reply");
 
@@ -1460,8 +1460,8 @@ totemPlugin::Init (NPMIMEType mimetype,
 	NPError err;
 	err = CallNPN_GetValueProc (sNPN.getvalue,
 				    mInstance, NPNVserviceManager,
-				    NS_REINTERPRET_CAST (void *,
-							 NS_REINTERPRET_CAST (void **, &mServiceManager)));
+				    reinterpret_cast<void *>
+                        (reinterpret_cast<void **>(&mServiceManager)));
 	if (err != NPERR_NO_ERROR || !mServiceManager) {
 		D ("Failed to get the service manager");
 		return NPERR_GENERIC_ERROR;
@@ -1470,7 +1470,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 	nsresult rv;
 	rv = mServiceManager->GetServiceByContractID (NS_IOSERVICE_CONTRACTID,
 						      NS_GET_IID (nsIIOService),
-						      NS_REINTERPRET_CAST (void **, &mIOService));
+						      reinterpret_cast<void **>(&mIOService));
 	if (NS_FAILED (rv) || !mIOService) {
 		D ("Failed to get IO service");
 		return NPERR_GENERIC_ERROR;
@@ -1478,8 +1478,8 @@ totemPlugin::Init (NPMIMEType mimetype,
 
 	err = CallNPN_GetValueProc (sNPN.getvalue,
 				    mInstance, NPNVDOMElement,
-				    NS_REINTERPRET_CAST (void *,
-						         NS_REINTERPRET_CAST (void **, &mPluginDOMElement)));
+				    reinterpret_cast<void *>
+                        (reinterpret_cast<void **>(&mPluginDOMElement)));
 	if (err != NPERR_NO_ERROR || !mPluginDOMElement) {
 		D ("Failed to get our DOM Element");
 		return NPERR_GENERIC_ERROR;
@@ -1537,7 +1537,7 @@ totemPlugin::Init (NPMIMEType mimetype,
         rv = compMan->CreateInstanceByContractID (NS_TIMER_CONTRACTID,
                                                   nsnull,
                                                   NS_GET_IID (nsITimer),
-                                                  NS_REINTERPRET_CAST (void **, &mTimer));
+                                                  reinterpret_cast<void **>(&mTimer));
         if (NS_FAILED (rv) || !mTimer) {
                 D ("Failed to create timer: rv=%x", rv);
                 return NPERR_GENERIC_ERROR;
@@ -1569,7 +1569,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 	dbus_g_proxy_connect_signal (mBusProxy,
 				     "NameOwnerChanged",
 				     G_CALLBACK (NameOwnerChangedCallback),
-				     NS_REINTERPRET_CAST (void*, this),
+				     reinterpret_cast<void*>(this),
 				     NULL);
 
 	/* Find the "real" mime-type */
@@ -2162,7 +2162,7 @@ totemPlugin::GetScriptable (void *_retval)
 	}
 
 	nsresult rv = mScriptable->QueryInterface (NS_GET_IID (nsISupports),
-						   NS_REINTERPRET_CAST (void **, _retval));
+						   reinterpret_cast<void **>(_retval));
 
 	return NS_SUCCEEDED (rv) ? NPERR_NO_ERROR : NPERR_GENERIC_ERROR;
 }

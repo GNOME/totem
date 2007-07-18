@@ -155,8 +155,8 @@ totemGMPPlaylist::InsertItem(PRInt32 index, totemIGMPMedia *item)
 NS_IMETHODIMP 
 totemGMPPlaylist::IsIdentical(totemIGMPPlaylist *playlist, PRBool *_retval)
 {
-  nsISupports *thisPlaylist = NS_STATIC_CAST (nsISupports*,
-					      NS_STATIC_CAST (totemIGMPPlaylist*, this));
+  nsISupports *thisPlaylist = static_cast<nsISupports*>
+                                         (static_cast<totemIGMPPlaylist*>(this));
 
   *_retval = thisPlaylist == playlist;
   return NS_OK;

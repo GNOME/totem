@@ -235,10 +235,10 @@ totem_plugin_get_value (NPP instance,
 		*((NPBool *)value) = TRUE;
 		break;
 	case NPPVpluginScriptableIID: {
-		nsIID* ptr = NS_STATIC_CAST (nsIID *, totemPlugin::sNPN.memalloc (sizeof (nsIID)));
+		nsIID* ptr = static_cast<nsIID *>(totemPlugin::sNPN.memalloc (sizeof (nsIID)));
 		if (ptr) {
 			*ptr = NS_GET_IID (nsISupports);
-			*NS_STATIC_CAST (nsIID **, value) = ptr;
+			*static_cast<nsIID **>(value) = ptr;
 		} else {
 			err = NPERR_OUT_OF_MEMORY_ERROR;
 		}
