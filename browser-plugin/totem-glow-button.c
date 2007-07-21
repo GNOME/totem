@@ -238,24 +238,19 @@ totem_glow_button_expose (GtkWidget        *buttonw,
 
 	(* GTK_WIDGET_CLASS (parent_class)->expose_event) (buttonw, event);
 
-	if ((event->area.x <= buttonw->allocation.x) &&
-	    (event->area.y <= buttonw->allocation.y) &&
-	    (event->area.width >= buttonw->allocation.width) &&
-	    (event->area.height >= buttonw->allocation.height)) {
-		if (button->glow != FALSE && button->screenshot == NULL) {
-			button->screenshot = gdk_pixbuf_get_from_drawable (NULL,
-									   buttonw->window,
-									   NULL,
-									   buttonw->allocation.x,
-									   buttonw->allocation.y,
-									   0, 0,
-									   buttonw->allocation.width,
-									   buttonw->allocation.height);
+	if (button->glow != FALSE && button->screenshot == NULL) {
+		button->screenshot = gdk_pixbuf_get_from_drawable (NULL,
+								   buttonw->window,
+								   NULL,
+								   buttonw->allocation.x,
+								   buttonw->allocation.y,
+								   0, 0,
+								   buttonw->allocation.width,
+								   buttonw->allocation.height);
 
-			/* we also need to take a screenshot for the faded state */
-			button->screenshot_faded = take_screenshot (button);
-			return FALSE;
-		}
+		/* we also need to take a screenshot for the faded state */
+		button->screenshot_faded = take_screenshot (button);
+		return FALSE;
 	}
 
 	return FALSE;
