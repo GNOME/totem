@@ -7,7 +7,6 @@ stuff_DATA =				\
 	filmholes.png			\
 	filmholes-big-left.png		\
 	filmholes-big-right.png		\
-	stock-tool-brightness-contrast-22.png	\
 	totem.ui			\
 	fullscreen.ui			\
 	playlist.ui			\
