@@ -43,6 +43,7 @@ enum {
 	PROP_PLAYING,
 	PROP_STREAM_LENGTH,
 	PROP_SEEKABLE,
+	PROP_CURRENT_TIME,
 	PROP_ERROR_SHOWN
 };
 
@@ -86,6 +87,10 @@ totem_object_class_init (TotemObjectClass *klass)
 							       FALSE, G_PARAM_READABLE));
 	g_object_class_install_property (object_class, PROP_STREAM_LENGTH,
 					 g_param_spec_int64 ("stream-length", NULL, NULL,
+							     G_MININT64, G_MAXINT64, 0,
+							     G_PARAM_READABLE));
+	g_object_class_install_property (object_class, PROP_CURRENT_TIME,
+					 g_param_spec_int64 ("current-time", NULL, NULL,
 							     G_MININT64, G_MAXINT64, 0,
 							     G_PARAM_READABLE));
 	g_object_class_install_property (object_class, PROP_SEEKABLE,
@@ -166,6 +171,9 @@ totem_object_get_property (GObject *object,
 	case PROP_STREAM_LENGTH:
 		g_value_set_int64 (value, bacon_video_widget_get_stream_length (totem->bvw));
 		break;
+	case PROP_CURRENT_TIME:
+		g_value_set_int64 (value, bacon_video_widget_get_current_time (totem->bvw));
+		break;
 	case PROP_SEEKABLE:
 		g_value_set_boolean (value, totem_is_seekable (totem));
 		break;
@@ -222,7 +230,7 @@ totem_get_current_time (Totem *totem)
 {
 	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), 0);
 
-	return totem->stream_length;
+	return bacon_video_widget_get_current_time (totem->bvw);
 }
 
 guint
