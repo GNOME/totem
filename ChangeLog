@@ -1,3 +1,27 @@
+2007-07-23  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plugins/skipto/*: upd for the changed below
+
+	* src/plugins/totem-plugin.c: (totem_plugin_load_interface):
+	* src/plugins/totem-plugin.h: Add totem_plugin_load_interface
+	to allow plugins to load their interfaces from their own directory
+
+	* src/totem-interface.c: (totem_interface_load),
+	(totem_interface_load_with_full_path):
+	* src/totem-interface.h: Implement helper functions to load GtkBuilder
+	UI files
+
+	* src/totem-statusbar.h:
+	* src/totem-time-label.h: Remove unnecessary glade helper functions
+
+	This change and above from a patch by Sunil Mohan Adapa
+	<sunilmohan@gnu.org.in>
+
+	* src/totem-object.c: (totem_object_class_init),
+	(totem_object_get_property), (totem_get_current_time): Fix
+	totem_get_current_time to return the current time, and not the length
+	of the stream, add a "current-time" property as well
+
 2007-07-21  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totem-glow-button.c: (totem_glow_button_expose):

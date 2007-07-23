@@ -275,3 +275,19 @@ totem_plugin_find_file (TotemPlugin *plugin,
 	}
 	return ret;
 }
+
+GtkBuilder *
+totem_plugin_load_interface (TotemPlugin *plugin, const char *name,
+			     gboolean fatal, GtkWindow *parent,
+			     gpointer user_data)
+{
+	GtkBuilder *builder = NULL;
+	char *filename;
+
+	filename = totem_plugin_find_file (plugin, name);
+	builder = totem_interface_load_with_full_path (filename, fatal, parent,
+						       user_data);
+	g_free (filename);
+
+	return builder;
+}

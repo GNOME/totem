@@ -101,9 +101,21 @@ totem_interface_load (const char *name, gboolean fatal, GtkWindow *parent, gpoin
 {
 	GtkBuilder *builder = NULL;
 	char *filename;
-	GError *error = NULL;
 
 	filename = totem_interface_get_full_path (name);
+	builder = totem_interface_load_with_full_path (filename, fatal, parent,
+						       user_data);
+	g_free (filename);
+
+	return builder;
+}
+
+GtkBuilder *
+totem_interface_load_with_full_path (const char *filename, gboolean fatal, 
+				     GtkWindow *parent, gpointer user_data)
+{
+	GtkBuilder *builder = NULL;
+	GError *error = NULL;
 
 	if (filename != NULL) {
 		builder = gtk_builder_new ();
@@ -114,19 +126,17 @@ totem_interface_load (const char *name, gboolean fatal, GtkWindow *parent, gpoin
 	{
 		char *msg;
 
-		msg = g_strdup_printf (_("Couldn't load the '%s' interface. %s"), name, error->message);
+		msg = g_strdup_printf (_("Couldn't load the '%s' interface. %s"), filename, error->message);
 		if (fatal == FALSE)
 			totem_interface_error (msg, _("Make sure that Totem is properly installed."), parent);
 		else
 			totem_interface_error_blocking (msg, _("Make sure that Totem is properly installed."), parent);
 
 		g_free (msg);
-		g_free (filename);
 		g_error_free (error);
 
 		return NULL;
 	}
-	g_free (filename);
 
 	gtk_builder_connect_signals (builder, user_data);
 

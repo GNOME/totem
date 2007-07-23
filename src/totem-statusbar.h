@@ -78,10 +78,6 @@ void	   totem_statusbar_push			(TotemStatusbar *statusbar,
 						 guint percentage);
 void       totem_statusbar_pop			(TotemStatusbar *statusbar);
 
-GtkWidget *totem_statusbar_new_from_glade	(gchar *widget_name,
-						 gchar *string1, gchar *string2,
-						 gint int1, gint int2);
-
 G_END_DECLS
 
 #endif /* __TOTEM_STATUSBAR_H__ */

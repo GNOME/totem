@@ -106,6 +106,12 @@ GtkWidget	*totem_plugin_create_configure_dialog
 char *		 totem_plugin_find_file		(TotemPlugin *plugin,
 						 const char *file);
 
+GtkBuilder *     totem_plugin_load_interface    (TotemPlugin *plugin,
+						 const char *name,
+						 gboolean fatal,
+						 GtkWindow *parent,
+						 gpointer user_data);
+
 GList *          totem_get_plugin_paths            (void);
 
 /*

@@ -38,8 +38,7 @@
 #include <sys/stat.h>
 
 #include "totem-skipto.h"
-#include "totem.h"
-#include "totem-plugin.h"
+#include "totem-skipto-plugin.h"
 #include "totem-uri.h"
 #include "video-utils.h"
 #include "bacon-video-widget.h"
@@ -162,19 +161,17 @@ spin_button_value_changed_cb (GtkSpinButton *spinbutton, TotemSkipto *skipto)
 }
 
 GtkWidget*
-totem_skipto_new (const char *builder_filename, Totem *totem)
+totem_skipto_new (TotemSkiptoPlugin *plugin)
 {
 	TotemSkipto *skipto;
 	GtkWidget *container;
-	GError *error = NULL;
-
-	g_return_val_if_fail (builder_filename != NULL, NULL);
 
 	skipto = TOTEM_SKIPTO (g_object_new (TOTEM_TYPE_SKIPTO, NULL));
 
-	skipto->priv->totem = totem;
-	skipto->priv->xml = gtk_builder_new ();
-	gtk_builder_add_from_file (skipto->priv->xml, builder_filename, &error);
+	skipto->priv->totem = plugin->totem;
+	skipto->priv->xml = totem_plugin_load_interface (TOTEM_PLUGIN (plugin),
+							 "skipto.ui", TRUE,
+							 NULL, skipto);
 
 	if (skipto->priv->xml == NULL) {
 		g_object_unref (skipto);
@@ -206,7 +203,7 @@ totem_skipto_new (const char *builder_filename, Totem *totem)
 			0);         /* padding */
 
 	gtk_window_set_transient_for (GTK_WINDOW (skipto),
-			totem_get_main_window (totem));
+				      totem_get_main_window (plugin->totem));
 
 	gtk_widget_show_all (GTK_WIDGET (skipto));
 

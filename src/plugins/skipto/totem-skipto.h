@@ -33,6 +33,7 @@
 #include <gtk/gtkdialog.h>
 
 #include "totem.h"
+#include "totem-skipto-plugin.h"
 
 G_BEGIN_DECLS
 
@@ -58,7 +59,7 @@ struct TotemSkiptoClass {
 };
 
 GtkType totem_skipto_get_type	(void);
-GtkWidget *totem_skipto_new	(const char *glade_filename, Totem *totem);
+GtkWidget *totem_skipto_new	(TotemSkiptoPlugin *plugin);
 gint64 totem_skipto_get_range	(TotemSkipto *skipto);
 void totem_skipto_update_range	(TotemSkipto *skipto, gint64 time);
 void totem_skipto_set_seekable	(TotemSkipto *skipto, gboolean seekable);
