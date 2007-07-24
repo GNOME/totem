@@ -47,6 +47,7 @@
 #include "totem-pl-parser-xspf.h"
 #include "totem-pl-parser-media.h"
 #include "totem-pl-parser-smil.h"
+#include "totem-pl-parser-pla.h"
 #include "totem-pl-parser-lines.h"
 #include "totem-pl-parser-misc.h"
 #include "totem-pl-parser-private.h"
@@ -893,6 +894,7 @@ static PlaylistTypes special_types[] = {
 	PLAYLIST_TYPE ("text/uri-list", totem_pl_parser_add_ra, totem_pl_parser_is_uri_list, FALSE),
 	PLAYLIST_TYPE ("text/x-google-video-pointer", totem_pl_parser_add_gvp, NULL, FALSE),
 	PLAYLIST_TYPE ("text/google-video-pointer", totem_pl_parser_add_gvp, NULL, FALSE),
+	PLAYLIST_TYPE ("audio/x-iriver-pla", totem_pl_parser_add_pla, NULL, FALSE),
 #ifndef TOTEM_PL_PARSER_MINI
 	PLAYLIST_TYPE ("application/x-desktop", totem_pl_parser_add_desktop, NULL, TRUE),
 	PLAYLIST_TYPE ("application/x-gnome-app-info", totem_pl_parser_add_desktop, NULL, TRUE),

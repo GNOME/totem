@@ -54,6 +54,8 @@ libtotem_plparser_la_SOURCES =			\
 	totem-pl-parser-media.h			\
 	totem-pl-parser-misc.c			\
 	totem-pl-parser-misc.h			\
+	totem-pl-parser-pla.c			\
+	totem-pl-parser-pla.h			\
 	totem-pl-parser-pls.c			\
 	totem-pl-parser-pls.h			\
 	totem-pl-parser-private.h		\
