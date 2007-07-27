@@ -483,11 +483,11 @@ if test "$enable_browser_plugins" = "yes" ; then
 	AC_SUBST([BROWSER_PLUGIN_LIBS])
 
 	# Earlier versions misdetect playlists
-	PKG_CHECK_EXISTS([shared-mime-info >= 0.17],
+	PKG_CHECK_EXISTS([shared-mime-info >= 0.22],
 			[],
 			[AC_MSG_ERROR([
 				The Browser plugin requires shared-mime-info
-				>= 0.17 to function.])])
+				>= 0.22 to function.])])
 fi
 
 if test "$enable_browser_plugins" = "yes" ; then
