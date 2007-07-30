@@ -24,6 +24,7 @@ common_defines = \
 
 libskipto_la_SOURCES = \
 	totem-skipto-plugin.c	\
+	totem-skipto-plugin.h	\
 	totem-skipto.c		\
 	totem-skipto.h
 libskipto_la_LDFLAGS = $(modules_flags)
@@ -32,14 +33,15 @@ libskipto_la_CPPFLAGS = \
 	-I$(top_srcdir)/src/backend	\
 	-I$(top_srcdir)/src/plparse
 
-libskipto_la_CFLAGS = \
-	$(EXTRA_GNOME_CFLAGS)	\
-	$(WARN_CFLAGS)		\
-	$(DBUS_CFLAGS)		\
-	$(AM_CFLAGS)		\
-	-I$(top_srcdir)/lib	\
-	-I$(top_srcdir)/src	\
-	-I$(top_srcdir)/src/plugins
+libskipto_la_CFLAGS = 			\
+	$(EXTRA_GNOME_CFLAGS)		\
+	$(WARN_CFLAGS)			\
+	$(DBUS_CFLAGS)			\
+	$(AM_CFLAGS)			\
+	-I$(top_srcdir)/lib		\
+	-I$(top_srcdir)/src		\
+	-I$(top_srcdir)/src/plugins	\
+	-I$(top_srcdir)/src/plugins/skipto
 
 EXTRA_DIST = $(plugin_in_files) $(ui_DATA)
 

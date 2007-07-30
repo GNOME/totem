@@ -1,5 +1,36 @@
 New features and significant updates in version...
 
+2.19.6
+* Features:
+- Detect DVD rips even if the VIDEO_TS directory is passed, and not the
+  top-level directory
+- Add support for the Back, Forward, Open, Open URL, Eject, Save,
+  Zoom In, Zoom out multimedia keys
+- Add support for Python and Vala plugins
+- Move the "Open Location" dialogue to a plugin
+- Also show comments in the properties tab and sidebar
+- Make the play button glow when autostart is off, to avoid not seeing anything
+- Use the GTK+ volume widget
+- Add a Bemused server plugin
+- Add FLV and NSV support to the browser plugin
+- Add PLA playlist read support
+- Add fullscreen support to the browser plugin
+
+Bug fixes:
+- Fix parsing of some playlists when the base ended with a '/'
+- Don't crash when searching in plugins list
+- Fix the properties page missing some symbols
+- Make recent streams parsing faster in the "Open Location" dialogue
+- Fix the second file in a playlist not updating the seekbar
+- Use double-buffering in logo mode, or when showing the logo in audio-only mode
+- Draw a nice black background on the video widget's place
+- Fix parsing of ASX playlists when an entryref doesn't have a parent
+- Use a combobox for the sidebar drop-down
+- Use Glib's function for xdg-user-dirs support
+- Use GtkBuilder in loads of place
+- Fix visual effects showing up in the middle of a video in the browser plugin
+  (xine-lib)
+
 2.19.4
 * Check for subtitles even if the file we're playing uses an extension
   longer than 3 characters

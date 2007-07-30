@@ -2,7 +2,7 @@ AC_PREREQ(2.52)
 
 m4_define(totem_version_major, 2)
 m4_define(totem_version_minor, 19)
-m4_define(totem_version_micro, 4)
+m4_define(totem_version_micro, 6)
 
 AC_INIT([totem],
         [totem_version_major.totem_version_minor.totem_version_micro],
@@ -47,7 +47,7 @@ VALA_REQS=0.0.8
 # - If binary compatibility has been broken (eg removed or changed interfaces)
 #   change to C+1:0:0
 # - If the interface is the same as the previous version, change to C:R+1:A
-PLPARSER_LT_VERSION=7:1:0
+PLPARSER_LT_VERSION=8:1:1
 AC_SUBST(PLPARSER_LT_VERSION)
 
 TOTEM_VERSION_MAJOR=totem_version_major
