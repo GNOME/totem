@@ -56,7 +56,9 @@ libtotem_player_la_SOURCES =		\
 	totem-interface.c		\
 	totem-interface.h		\
 	totem-fullscreen.c		\
-	totem-fullscreen.h
+	totem-fullscreen.h		\
+	totem-time-label.c		\
+	totem-time-label.h
 
 libtotem_player_la_CPPFLAGS = \
 	-I$(srcdir)/backend	\
@@ -98,7 +100,6 @@ totem_SOURCES = 					\
 	totem-open-location.c totem-open-location.h \
 	totem-menu.c totem-menu.h	\
 	totem-missing-plugins.c totem-missing-plugins.h \
-	totem-time-label.c totem-time-label.h \
 	totem-uri.c totem-uri.h		\
 	ev-sidebar.c ev-sidebar.h	\
 	totem-subtitle-encoding.c	\

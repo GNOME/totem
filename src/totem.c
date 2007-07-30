@@ -3115,7 +3115,7 @@ main (int argc, char **argv)
 	totem->volume = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_volume_button"));
 	totem->statusbar = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_statusbar"));
 	totem->seek_lock = FALSE;
-	totem->fs = totem_fullscreen_new ();
+	totem->fs = totem_fullscreen_new (GTK_WINDOW (totem->win));
 	gtk_scale_button_set_adjustment (GTK_SCALE_BUTTON (totem->fs->volume),
 					 gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (totem->volume)));
 	gtk_range_set_adjustment (GTK_RANGE (totem->fs->seek), totem->seekadj);

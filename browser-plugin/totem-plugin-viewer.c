@@ -36,6 +36,7 @@
 #define SN_API_NOT_YET_FROZEN
 #include <libsn/sn.h>
 #include <gdk/gdk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include <totem-pl-parser.h>
 
@@ -47,6 +48,8 @@
 #include "bacon-video-widget.h"
 #include "totem-interface.h"
 #include "totem-statusbar.h"
+#include "totem-time-label.h"
+#include "totem-fullscreen.h"
 #include "totem-glow-button.h"
 #include "video-utils.h"
 
@@ -98,6 +101,7 @@ typedef struct _TotemEmbedded {
 	GtkBuilder *menuxml, *xml;
 	GtkWidget *about;
 	GtkWidget *pp_button;
+	GtkWidget *pp_fs_button;
 	TotemStatusbar *statusbar;
 	int width, height;
 	const char *mimetype;
@@ -122,6 +126,13 @@ typedef struct _TotemEmbedded {
 	/* Seek bits */
 	GtkAdjustment *seekadj;
 	GtkWidget *seek;
+
+	/* Volume */
+	GtkWidget *volume;
+
+	/* Fullscreen */
+	TotemFullscreen *fs;
+	GtkWidget * fs_window;
 
 	/* Error */
 
@@ -164,10 +175,12 @@ static void totem_embedded_clear_playlist (TotemEmbedded *embedded);
 
 static void totem_embedded_update_menu (TotemEmbedded *emb);
 static void on_open1_activate (GtkButton *button, TotemEmbedded *emb);
+static void totem_embedded_toggle_fullscreen (TotemEmbedded *emb);
 
 void on_about1_activate (GtkButton *button, TotemEmbedded *emb);
 void on_preferences1_activate (GtkButton *button, TotemEmbedded *emb);
 void on_copy_location1_activate (GtkButton *button, TotemEmbedded *emb);
+void on_fullscreen1_activate (GtkMenuItem *menuitem, TotemEmbedded *emb);
 
 enum {
 	BUTTON_PRESS,
@@ -189,6 +202,8 @@ totem_embedded_finalize (GObject *object)
 		g_object_unref (embedded->xml);
 	if (embedded->menuxml)
 		g_object_unref (embedded->menuxml);
+	if (embedded->fs)
+		g_object_unref (embedded->fs);
 
 	/* FIXME etc */
 
@@ -260,7 +275,7 @@ static void
 totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 {
 	GtkWidget *image;
-	char id[32];
+	gchar *id;
 	static const char *states[] = {
 		"PLAYING",
 		"PAUSED",
@@ -277,10 +292,11 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 
 	switch (state) {
 	case STATE_STOPPED:
-		g_snprintf (id, sizeof (id), "gtk-media-play-%s",
-			    gtk_widget_get_direction (image) ? "ltr" : "rtl");
+		id = GTK_STOCK_MEDIA_PLAY;
 		totem_statusbar_set_text (emb->statusbar, _("Stopped"));
 		totem_statusbar_set_time_and_length (emb->statusbar, 0, 0);
+		totem_time_label_set_time 
+			(TOTEM_TIME_LABEL (emb->fs->time_label), 0, 0);
 		if (emb->href_uri != NULL && emb->hidden == FALSE) {
 			gdk_window_set_cursor
 				(GTK_WIDGET (emb->bvw)->window,
@@ -288,12 +304,11 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 		}
 		break;
 	case STATE_PAUSED:
-		g_snprintf (id, sizeof (id), "gtk-media-play-%s",
-				gtk_widget_get_direction (image) ? "ltr" : "rtl");
+		id = GTK_STOCK_MEDIA_PLAY;
 		totem_statusbar_set_text (emb->statusbar, _("Paused"));
 		break;
 	case STATE_PLAYING:
-		g_snprintf (id, sizeof (id), "gtk-media-pause");
+		id = GTK_STOCK_MEDIA_PAUSE;
 		totem_statusbar_set_text (emb->statusbar, _("Playing"));
 		if (emb->href_uri == NULL && emb->hidden == FALSE) {
 			gdk_window_set_cursor
@@ -302,10 +317,13 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 		}
 		break;
 	default:
+		g_assert_not_reached ();
 		break;
 	}
 
-	gtk_image_set_from_icon_name (GTK_IMAGE (image), id, GTK_ICON_SIZE_MENU);
+	gtk_image_set_from_stock (GTK_IMAGE (image), id, GTK_ICON_SIZE_MENU);
+	gtk_tool_button_set_stock_id (GTK_TOOL_BUTTON (emb->pp_fs_button), id);
+
 	emb->state = state;
 }
 
@@ -374,6 +392,7 @@ static void
 totem_embedded_set_pp_state (TotemEmbedded *emb, gboolean state)
 {
 	gtk_widget_set_sensitive (emb->pp_button, state);
+	gtk_widget_set_sensitive (emb->pp_fs_button, state);
 }
 
 static gboolean
@@ -441,6 +460,10 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 	}
 
 	totem_embedded_update_menu (emb);
+	if (emb->href_uri != NULL)
+		totem_fullscreen_set_title (emb->fs, emb->href_uri);
+	else
+		totem_fullscreen_set_title (emb->fs, emb->current_uri);
 
 	return retval;
 }
@@ -1069,6 +1092,13 @@ on_open1_activate (GtkButton *button, TotemEmbedded *emb)
 }
 
 void
+on_fullscreen1_activate (GtkMenuItem *menuitem, TotemEmbedded *emb)
+{
+	if (totem_fullscreen_is_fullscreen (emb->fs) == FALSE)
+		totem_embedded_toggle_fullscreen (emb);
+}
+
+void
 on_about1_activate (GtkButton *button, TotemEmbedded *emb)
 {
 	char *backend_version, *description, *license;
@@ -1202,6 +1232,41 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 		totem_embedded_play (emb, NULL);
 }
 
+static void
+totem_embedded_toggle_fullscreen (TotemEmbedded *emb)
+{
+	GtkAction * fs_action = GTK_ACTION (gtk_builder_get_object 
+					    (emb->menuxml, "fullscreen1"));
+
+	if (totem_fullscreen_is_fullscreen (emb->fs) != FALSE)
+	{
+		GtkWidget * container;
+		container = GTK_WIDGET (gtk_builder_get_object (emb->xml,
+								"video_box"));
+
+		totem_fullscreen_set_fullscreen (emb->fs, FALSE);
+		gtk_widget_reparent (GTK_WIDGET (emb->bvw), container);
+		gtk_widget_hide_all (emb->fs_window);
+		
+		gtk_action_set_sensitive (fs_action, TRUE);
+	} else {
+		gtk_widget_reparent (GTK_WIDGET (emb->bvw), emb->fs_window);
+		bacon_video_widget_set_fullscreen (emb->bvw, TRUE);
+		gtk_window_fullscreen (GTK_WINDOW (emb->fs_window));
+		totem_fullscreen_set_fullscreen (emb->fs, TRUE);
+		gtk_widget_show_all (emb->fs_window);
+
+		gtk_action_set_sensitive (fs_action, FALSE);
+	}
+}
+
+static void
+totem_embedded_on_fullscreen_exit (GtkWidget *widget, TotemEmbedded *emb)
+{
+	if (totem_fullscreen_is_fullscreen (emb->fs) != FALSE)
+		totem_embedded_toggle_fullscreen (emb);
+}
+
 static gboolean
 on_video_button_press_event (BaconVideoWidget *bvw,
 			     GdkEventButton *event,
@@ -1309,6 +1374,7 @@ on_tick (GtkWidget *bvw,
 {
 	if (emb->state != STATE_STOPPED) {
 		gtk_widget_set_sensitive (emb->seek, seekable);
+		gtk_widget_set_sensitive (emb->fs->seek, seekable);
 		if (emb->seeking == FALSE)
 			gtk_adjustment_set_value (emb->seekadj,
 					current_position * 65535);
@@ -1320,13 +1386,32 @@ on_tick (GtkWidget *bvw,
 					(int) (current_time / 1000),
 					(int) (stream_length / 1000));
 		}
+
+		totem_time_label_set_time 
+			(TOTEM_TIME_LABEL (emb->fs->time_label),
+			 current_time, stream_length);
 	}
+}
+
+static void
+property_notify_cb_volume (BaconVideoWidget *bvw, GParamSpec *spec,
+			   TotemEmbedded *emb)
+{
+	double volume;
+	
+	volume = bacon_video_widget_get_volume (emb->bvw);
+	
+	g_signal_handlers_block_by_func (emb->volume, cb_vol, emb);
+	gtk_scale_button_set_value (GTK_SCALE_BUTTON (emb->volume), volume);
+	g_signal_handlers_unblock_by_func (emb->volume, cb_vol, emb);
 }
 
 static gboolean
 on_seek_start (GtkWidget *widget, GdkEventButton *event, TotemEmbedded *emb)
 {
 	emb->seeking = TRUE;
+	totem_time_label_set_seeking (TOTEM_TIME_LABEL (emb->fs->time_label),
+				      TRUE);
 
 	return FALSE;
 }
@@ -1336,6 +1421,8 @@ cb_on_seek (GtkWidget *widget, GdkEventButton *event, TotemEmbedded *emb)
 {
 	bacon_video_widget_seek (emb->bvw,
 		gtk_range_get_value (GTK_RANGE (widget)) / 65535, NULL);
+	totem_time_label_set_seeking (TOTEM_TIME_LABEL (emb->fs->time_label),
+				      FALSE);
 	emb->seeking = FALSE;
 
 	return FALSE;
@@ -1352,13 +1439,82 @@ controls_size_allocate_cb (GtkWidget *controls,
 }
 #endif
 
+static void
+totem_embedded_action_volume_relative (TotemEmbedded *emb, double off_pct)
+{
+	double vol;
+	
+	if (bacon_video_widget_can_set_volume (emb->bvw) == FALSE)
+		return;
+	
+	vol = bacon_video_widget_get_volume (emb->bvw);
+	bacon_video_widget_set_volume (emb->bvw, vol + off_pct);
+}
+
+static gboolean
+totem_embedded_handle_key_press (TotemEmbedded *emb, GdkEventKey *event)
+{
+	switch (event->keyval) {
+	case GDK_Escape:
+		if (totem_fullscreen_is_fullscreen (emb->fs) != FALSE)
+			totem_embedded_toggle_fullscreen (emb);
+		return TRUE;
+	case GDK_F11:
+	case GDK_f:
+	case GDK_F:
+		totem_embedded_toggle_fullscreen (emb);
+		return TRUE;
+	case GDK_space:
+		on_play_pause (NULL, emb);
+		return TRUE;
+	case GDK_Up:
+		totem_embedded_action_volume_relative (emb, VOLUME_UP_OFFSET);
+		return TRUE;
+	case GDK_Down:
+		totem_embedded_action_volume_relative (emb, VOLUME_DOWN_OFFSET);
+		return TRUE;
+	case GDK_Left:
+	case GDK_Right:
+		/* FIXME: */
+		break;
+	}
+
+	return FALSE;
+}
+
+static gboolean
+totem_embedded_key_press_event (GtkWidget *widget, GdkEventKey *event,
+				TotemEmbedded *emb)
+{
+	if (event->type != GDK_KEY_PRESS)
+		return FALSE;
+	
+	if (event->state & GDK_CONTROL_MASK)
+	{
+		switch (event->keyval) {
+		case GDK_Left:
+		case GDK_Right:
+			return totem_embedded_handle_key_press (emb, event);
+		}
+	}
+
+	if (event->state & GDK_CONTROL_MASK ||
+	    event->state & GDK_MOD1_MASK ||
+	    event->state & GDK_MOD3_MASK ||
+	    event->state & GDK_MOD4_MASK ||
+	    event->state & GDK_MOD5_MASK)
+		return FALSE;
+
+	return totem_embedded_handle_key_press (emb, event);
+}
+
 static gboolean
 totem_embedded_construct (TotemEmbedded *emb,
 			  GdkNativeWindow xid,
 			  int width,
 			  int height)
 {
-	GtkWidget *child, *container, *vbut, *image;
+	GtkWidget *child, *container, *image;
 	BvwUseType type;
 	GError *err = NULL;
 	GConfClient *gc;
@@ -1409,6 +1565,36 @@ totem_embedded_construct (TotemEmbedded *emb,
 			g_error_free (err);
 	}
 
+	/* Fullscreen setup */
+	emb->fs_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+	gtk_widget_realize (emb->fs_window);
+	gtk_window_set_title (GTK_WINDOW (emb->fs_window), _("Totem Movie Player"));
+
+	emb->fs = totem_fullscreen_new (GTK_WINDOW (emb->fs_window));
+	totem_fullscreen_set_video_widget (emb->fs, emb->bvw);
+	g_signal_connect (G_OBJECT (emb->fs->exit_button), "clicked",
+			  G_CALLBACK (totem_embedded_on_fullscreen_exit), emb);
+
+	emb->pp_fs_button = GTK_WIDGET (gtk_tool_button_new_from_stock 
+					(GTK_STOCK_MEDIA_PLAY));
+	g_signal_connect (G_OBJECT (emb->pp_fs_button), "clicked",
+			  G_CALLBACK (on_play_pause), emb);
+	gtk_container_add (GTK_CONTAINER (emb->fs->buttons_box), emb->pp_fs_button);
+
+	/* Connect the keys */
+	gtk_widget_add_events (emb->fs_window, GDK_KEY_PRESS_MASK |
+			       GDK_KEY_RELEASE_MASK);
+	g_signal_connect (G_OBJECT(emb->fs_window), "key_press_event",
+			G_CALLBACK (totem_embedded_key_press_event), emb);
+	g_signal_connect (G_OBJECT(emb->fs_window), "key_release_event",
+			G_CALLBACK (totem_embedded_key_press_event), emb);
+	gtk_widget_add_events (GTK_WIDGET (emb->bvw), GDK_KEY_PRESS_MASK | 
+			       GDK_KEY_RELEASE_MASK);
+	g_signal_connect (G_OBJECT(emb->bvw), "key_press_event",
+			G_CALLBACK (totem_embedded_key_press_event), emb);
+	g_signal_connect (G_OBJECT(emb->bvw), "key_release_event",
+			G_CALLBACK (totem_embedded_key_press_event), emb);
+
 	g_signal_connect (G_OBJECT(emb->bvw), "got-redirect",
 			G_CALLBACK (on_got_redirect), emb);
 	g_signal_connect (G_OBJECT (emb->bvw), "eos",
@@ -1419,6 +1605,9 @@ totem_embedded_construct (TotemEmbedded *emb,
 			G_CALLBACK (on_video_button_press_event), emb);
 	g_signal_connect (G_OBJECT(emb->bvw), "tick",
 			G_CALLBACK (on_tick), emb);
+
+	g_signal_connect (G_OBJECT (emb->bvw), "notify::volume",
+			  G_CALLBACK (property_notify_cb_volume), emb);
 
 	container = GTK_WIDGET (gtk_builder_get_object (emb->xml, "video_box"));
 	if (type == BVW_USE_TYPE_VIDEO) {
@@ -1433,9 +1622,14 @@ totem_embedded_construct (TotemEmbedded *emb,
 
 	emb->seek = GTK_WIDGET (gtk_builder_get_object (emb->xml, "time_hscale"));
 	emb->seekadj = gtk_range_get_adjustment (GTK_RANGE (emb->seek));
+	gtk_range_set_adjustment (GTK_RANGE (emb->fs->seek), emb->seekadj);
 	g_signal_connect (emb->seek, "button-press-event",
 			  G_CALLBACK (on_seek_start), emb);
 	g_signal_connect (emb->seek, "button-release-event",
+			  G_CALLBACK (cb_on_seek), emb);
+	g_signal_connect (emb->fs->seek, "button-press-event",
+			  G_CALLBACK (on_seek_start), emb);
+	g_signal_connect (emb->fs->seek, "button-release-event",
 			  G_CALLBACK (cb_on_seek), emb);
 
 	emb->pp_button = GTK_WIDGET (gtk_builder_get_object (emb->xml, "pp_button"));
@@ -1448,12 +1642,15 @@ totem_embedded_construct (TotemEmbedded *emb,
 	volume = ((double) gconf_client_get_int (gc, GCONF_PREFIX"/volume", NULL)) / 100.0;
 	g_object_unref (G_OBJECT (gc));
 
-	bacon_video_widget_set_volume (emb->bvw, volume);
-	vbut = GTK_WIDGET (gtk_builder_get_object (emb->xml, "volume_button"));
-	gtk_button_set_focus_on_click (GTK_BUTTON (vbut), FALSE);
-	gtk_scale_button_set_value (GTK_SCALE_BUTTON (vbut), volume);
-	g_signal_connect (G_OBJECT (vbut), "value-changed",
+	emb->volume = GTK_WIDGET (gtk_builder_get_object (emb->xml, "volume_button"));
+	gtk_scale_button_set_adjustment (GTK_SCALE_BUTTON (emb->fs->volume),
+					 gtk_scale_button_get_adjustment 
+					 (GTK_SCALE_BUTTON (emb->volume)));
+	gtk_button_set_focus_on_click (GTK_BUTTON (emb->volume), FALSE);
+	gtk_scale_button_set_value (GTK_SCALE_BUTTON (emb->volume), volume);
+	g_signal_connect (G_OBJECT (emb->volume), "value-changed",
 			  G_CALLBACK (cb_vol), emb);
+	bacon_video_widget_set_volume (emb->bvw, volume);
 
 	emb->statusbar = TOTEM_STATUSBAR (gtk_builder_get_object (emb->xml, "statusbar"));
 	gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (emb->statusbar), FALSE);
@@ -1486,7 +1683,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 		child = GTK_WIDGET (gtk_builder_get_object (emb->xml, "time_hscale"));
 		gtk_widget_modify_style (child, rcstyle);
 
-		gtk_widget_modify_style (vbut, rcstyle);
+		gtk_widget_modify_style (emb->volume, rcstyle);
 
 		g_object_unref (rcstyle);
 	}

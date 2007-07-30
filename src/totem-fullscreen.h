@@ -67,7 +67,7 @@ struct TotemFullscreenClass {
 };
 
 GType    totem_fullscreen_get_type           (void);
-TotemFullscreen * totem_fullscreen_new       (void);
+TotemFullscreen * totem_fullscreen_new       (GtkWindow *toplevel_window);
 void     totem_fullscreen_set_video_widget   (TotemFullscreen *fs,
 					      BaconVideoWidget *bvw);
 gboolean totem_fullscreen_motion_notify      (GtkWidget *widget,

@@ -1,3 +1,23 @@
+2007-07-30  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_finalize),
+	(totem_embedded_set_state), (totem_embedded_set_pp_state),
+	(totem_embedded_open_internal), (on_fullscreen1_activate),
+	(totem_embedded_toggle_fullscreen),
+	(totem_embedded_on_fullscreen_exit), (on_tick),
+	(property_notify_cb_volume), (on_seek_start), (cb_on_seek),
+	(totem_embedded_action_volume_relative),
+	(totem_embedded_handle_key_press),
+	(totem_embedded_key_press_event), (totem_embedded_construct):
+	* data/mozilla-viewer.ui:
+	* src/Makefile.am:
+	* src/totem-fullscreen.c: (totem_fullscreen_new),
+	(totem_fullscreen_set_video_widget):
+	* src/totem-fullscreen.h:
+	* src/totem.c: (main): Patch from Sunil Mohan Adapa
+	<sunilmohan@gnu.org.in> to add a fullscreen option to the
+	browser plugin (Closes: #354181)
+
 2007-07-27  Frederic Crozat  <fcrozat@mandriva.com>
 
 	* configure.in: Bump shared-mime-info required version.

@@ -24,6 +24,8 @@
  *
  */
 
+#include <string.h>
+
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
@@ -289,7 +291,7 @@ totem_fullscreen_set_fullscreen (TotemFullscreen *fs,
 }
 
 TotemFullscreen *
-totem_fullscreen_new (void)
+totem_fullscreen_new (GtkWindow *toplevel_window)
 {
 	TotemFullscreenPrivate * priv;
 
@@ -311,6 +313,17 @@ totem_fullscreen_new (void)
 				"tcw_buttons_hbox"));
 	fs->exit_button = GTK_WIDGET (gtk_builder_get_object (priv->xml,
 				"tefw_fs_exit_button"));
+
+	fs->priv->parent_window = GTK_WIDGET (toplevel_window);
+
+	/* Screen size and Theme changes */
+	g_signal_connect (fs->priv->parent_window, "realize",
+			  G_CALLBACK (totem_fullscreen_window_realize_cb), fs);
+	g_signal_connect (fs->priv->parent_window, "unrealize",
+			  G_CALLBACK (totem_fullscreen_window_unrealize_cb), fs);
+	g_object_notify (G_OBJECT (fs->priv->parent_window), "is-active");
+	g_signal_connect_swapped (G_OBJECT (fs->priv->parent_window), "notify",
+				  G_CALLBACK (totem_fullscreen_popup_hide), fs);
 
 	/* Volume */
 	fs->volume = GTK_WIDGET (gtk_builder_get_object (priv->xml, "tcw_volume_button"));
@@ -335,19 +348,9 @@ totem_fullscreen_set_video_widget (TotemFullscreen *fs,
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
 	fs->priv->bvw = bvw;
-	fs->priv->parent_window = gtk_widget_get_toplevel (GTK_WIDGET (bvw));
 
-	/* Screen size and Theme changes */
-	g_signal_connect (fs->priv->parent_window, "realize",
-			  G_CALLBACK (totem_fullscreen_window_realize_cb), fs);
-	g_signal_connect (fs->priv->parent_window, "unrealize",
-			  G_CALLBACK (totem_fullscreen_window_unrealize_cb), fs);
 	g_signal_connect (G_OBJECT (fs->priv->bvw), "motion-notify-event",
 			  G_CALLBACK (totem_fullscreen_motion_notify), fs);
-	g_object_notify (G_OBJECT (fs->priv->parent_window), "is-active");
-	g_signal_connect_swapped (G_OBJECT (fs->priv->parent_window), "notify",
-				  G_CALLBACK (totem_fullscreen_popup_hide), fs);
-
 }
 
 static void
