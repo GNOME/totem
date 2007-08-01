@@ -83,6 +83,9 @@
 #define ZOOM_DISABLE (ZOOM_LOWER - 1)
 #define ZOOM_ENABLE (ZOOM_UPPER + 1)
 
+#define DEFAULT_WINDOW_W 650
+#define DEFAULT_WINDOW_H 500
+
 #define VOLUME_EPSILON (1e-10)
 
 #define BVW_VBOX_BORDER_WIDTH 1
@@ -2675,7 +2678,9 @@ totem_setup_window (Totem *totem)
 	keyfile = g_key_file_new ();
 	if (g_key_file_load_from_file (keyfile, filename,
 			G_KEY_FILE_NONE, NULL) == FALSE) {
-		totem->sidebar_w = w = h = 0;
+		totem->sidebar_w = 0;
+		w = DEFAULT_WINDOW_W;
+		h = DEFAULT_WINDOW_H;
 		show_sidebar = TRUE;
 		page_id = NULL;
 		g_free (filename);
