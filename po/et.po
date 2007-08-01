@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-13 11:26+0100\n"
-"PO-Revision-Date: 2007-07-14 20:12+0300\n"
+"POT-Creation-Date: 2007-07-30 20:17+0100\n"
+"PO-Revision-Date: 2007-07-31 21:12+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -184,21 +184,21 @@ msgstr "Kas lubada silumisteabe väljastamist esitusmootori poolt"
 msgid "Playing a movie"
 msgstr "Filmi esitamine"
 
-#: ../src/totem-fullscreen.c:401
+#: ../src/totem-fullscreen.c:404
 msgid "No File"
 msgstr "Fail puudub"
 
-#: ../src/totem-interface.c:117
+#: ../src/totem-interface.c:129
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "'%s' liidest pole võimalik laadida. %s"
 
-#: ../src/totem-interface.c:119 ../src/totem-interface.c:121
+#: ../src/totem-interface.c:131 ../src/totem-interface.c:133
 #: ../src/totem-menu.c:1399
 msgid "Make sure that Totem is properly installed."
 msgstr "Veendu, et Totem on õigesti paigaldatud."
 
-#: ../src/totem-interface.c:234
+#: ../src/totem-interface.c:244
 msgid ""
 "Totem is free software; you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -210,7 +210,7 @@ msgstr ""
 "poolt avaldatud; kas Litsentsi versioon number 2 või (vastavalt Teie "
 "valikule) ükskõik milline hilisem versioon."
 
-#: ../src/totem-interface.c:238
+#: ../src/totem-interface.c:248
 msgid ""
 "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
@@ -222,7 +222,7 @@ msgstr ""
 "TEATUD KINDLAKS EESMÄRGIKS. Üksikasjade suhtes vaata GNU Üldist Avalikku "
 "Litsentsi."
 
-#: ../src/totem-interface.c:242
+#: ../src/totem-interface.c:252
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
@@ -232,7 +232,7 @@ msgstr ""
 "kui ei, siis võtke ühendust Free Software Foundation'iga, 59 Temple Place, "
 "Suite 330, Boston, MA 02111-1307 USA"
 
-#: ../src/totem-interface.c:245
+#: ../src/totem-interface.c:255
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
@@ -273,11 +273,11 @@ msgstr "GNOME"
 msgid "Movie Player using %s and %s"
 msgstr "Filmiesitaja (%s ja %s)"
 
-#: ../src/totem-menu.c:1079 ../browser-plugin/totem-plugin-viewer.c:1099
+#: ../src/totem-menu.c:1079 ../browser-plugin/totem-plugin-viewer.c:1129
 msgid "Copyright © 2002-2006 Bastien Nocera"
 msgstr "Autoriõigused © 2002-2006 Bastien Nocera"
 
-#: ../src/totem-menu.c:1084 ../browser-plugin/totem-plugin-viewer.c:1102
+#: ../src/totem-menu.c:1084 ../browser-plugin/totem-plugin-viewer.c:1132
 msgid "translator-credits"
 msgstr ""
 "Ilmar Kerm <ikerm@hot.ee>, 2002.\n"
@@ -849,7 +849,7 @@ msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
 #: ../src/totem-statusbar.c:111 ../src/totem.c:300 ../src/totem.c:843
-#: ../browser-plugin/totem-plugin-viewer.c:282
+#: ../browser-plugin/totem-plugin-viewer.c:296
 msgid "Stopped"
 msgstr "Seisatud"
 
@@ -1053,11 +1053,11 @@ msgstr "Videofailid"
 msgid "Select Movies or Playlists"
 msgstr "Filmide või esitusloendite valimine"
 
-#: ../src/totem.c:286 ../browser-plugin/totem-plugin-viewer.c:297
+#: ../src/totem.c:286 ../browser-plugin/totem-plugin-viewer.c:312
 msgid "Playing"
 msgstr "Esitamine"
 
-#: ../src/totem.c:293 ../browser-plugin/totem-plugin-viewer.c:293
+#: ../src/totem.c:293 ../browser-plugin/totem-plugin-viewer.c:308
 msgid "Paused"
 msgstr "Pausitud"
 
@@ -1110,7 +1110,7 @@ msgid "Totem was not able to play this disc."
 msgstr "Totem ei suutnud seda plaati mängida."
 
 #: ../src/totem.c:507 ../src/totem.c:2894
-#: ../browser-plugin/totem-plugin-viewer.c:1406
+#: ../browser-plugin/totem-plugin-viewer.c:1562
 msgid "No reason."
 msgstr "Põhjendus puudub."
 
@@ -1124,6 +1124,7 @@ msgstr "Seda ei oleks tohtinud juhtuda; palun saada veateade."
 
 #. Title
 #: ../src/totem.c:851 ../src/totem.c:3042 ../src/totem.c:3070
+#: ../browser-plugin/totem-plugin-viewer.c:1571
 msgid "Totem Movie Player"
 msgstr "Totem filmiesitaja"
 
@@ -1136,7 +1137,7 @@ msgid "Totem could not display the help contents."
 msgstr "Totemil pole võimalik abiteabe sisu näidata."
 
 #: ../src/totem.c:1448 ../src/totem.c:1450
-#: ../browser-plugin/totem-plugin-viewer.c:1293
+#: ../browser-plugin/totem-plugin-viewer.c:1358
 msgid "An error occurred"
 msgstr "Tekkis veaolukord"
 
@@ -1574,7 +1575,7 @@ msgstr "Video VCD"
 msgid "DVD"
 msgstr "DVD"
 
-#: ../src/plparse/totem-pl-parser.c:462
+#: ../src/plparse/totem-pl-parser.c:463
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "Parserit pole võimalik kirjutada: %s"
@@ -1611,6 +1612,28 @@ msgstr "%s pluginat pole võimalik aktiveerida"
 #: ../src/plugins/totem-plugins-engine.c:579
 msgid "Plugin Error"
 msgstr "Plugina viga"
+
+#: ../src/plugins/bemused/bemused.totem-plugin.in.h:1
+msgid "Bemused"
+msgstr "Bemused"
+
+#: ../src/plugins/bemused/bemused.totem-plugin.in.h:2
+msgid "Control Totem through a mobile phone with a Bemused client"
+msgstr "Totemi juhtimine mobiiltelefoni kaudu Bemused kliendi abil"
+
+#: ../src/plugins/bemused/totem-bemused.c:185
+#, c-format
+msgid "Untitled %d"
+msgstr "Pealkirjata %d"
+
+#: ../src/plugins/bemused/totem-bemused.c:608
+msgid "Totem Bemused Server"
+msgstr "Totemi Bemused Server"
+
+#. FIXME version
+#: ../src/plugins/bemused/totem-bemused.c:610
+msgid "Totem Bemused Server version 1.0"
+msgstr "Totemi Bemused Server versioon 1.0"
 
 #: ../src/plugins/galago/galago.totem-plugin.in.h:1
 msgid "Instant Messenger status"
@@ -1756,34 +1779,34 @@ msgstr "\"Hüppa asukohale\" dialoogi tagamine."
 msgid "Skipto"
 msgstr "Hüppa asukohale"
 
-#: ../src/plugins/skipto/totem-skipto.c:188
+#: ../src/plugins/skipto/totem-skipto.c:185
 msgid "Skip to"
 msgstr "Asukoha vahetamine"
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:228
+#: ../src/plugins/skipto/totem-skipto-plugin.c:221
 msgid "_Skip to..."
 msgstr "_Hüppa asukohale..."
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:228
+#: ../src/plugins/skipto/totem-skipto-plugin.c:221
 msgid "Skip to a specific time"
 msgstr "Liikumine määratud ajahetkele"
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:234
+#: ../src/plugins/skipto/totem-skipto-plugin.c:227
 msgid "Could not load the \"Skip to\" dialogue interface."
 msgstr "\"Asukoha vahetamise\" dialoogi liidest pole võimalik laadida."
 
-#: ../browser-plugin/totem-plugin-viewer.c:398
+#: ../browser-plugin/totem-plugin-viewer.c:417
 msgid "No URI to play"
 msgstr "Esitamiseks puudub URI"
 
 #. FIXME disp = gnome_vfs_unescape_string_for_display (totem->mrl); ?
-#: ../browser-plugin/totem-plugin-viewer.c:425
-#: ../browser-plugin/totem-plugin-viewer.c:429
+#: ../browser-plugin/totem-plugin-viewer.c:444
+#: ../browser-plugin/totem-plugin-viewer.c:448
 #, c-format
 msgid "Totem could not play '%s'"
 msgstr "Totem ei saa '%s' esitada"
 
-#: ../browser-plugin/totem-plugin-viewer.c:802
+#: ../browser-plugin/totem-plugin-viewer.c:825
 #, c-format
 msgid "Opening %s"
 msgstr "'%s' avamine"
@@ -1791,130 +1814,40 @@ msgstr "'%s' avamine"
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1048
+#: ../browser-plugin/totem-plugin-viewer.c:1071
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "_Ava programmiga \"%s\""
 
-#: ../browser-plugin/totem-plugin-viewer.c:1092
+#: ../browser-plugin/totem-plugin-viewer.c:1122
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "Veebisirvija plugin, kasutab abiprogrammi %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1097
+#: ../browser-plugin/totem-plugin-viewer.c:1127
 msgid "Totem Browser Plugin"
 msgstr "Totemi plugin veebisirvijale"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1406
+#: ../browser-plugin/totem-plugin-viewer.c:1562
 msgid "The Totem plugin could not startup."
 msgstr "Totem pluginat pole võimalik käivituda."
 
-#: ../browser-plugin/totem-plugin-viewer.c:1689
+#: ../browser-plugin/totem-plugin-viewer.c:1886
 msgid "No playlist or playlist empty"
 msgstr "Esitusloend on puudu või tühi"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1793
+#: ../browser-plugin/totem-plugin-viewer.c:1990
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Thread-safe teeke pole võimalik lähtestada."
 
-#: ../browser-plugin/totem-plugin-viewer.c:1793
+#: ../browser-plugin/totem-plugin-viewer.c:1990
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Kontrolli oma süsteemi paigaldust. Totemi plugin lõpetab oma töö."
 
 #~ msgid "Leave Fullscreen"
 #~ msgstr "Välju täisekraanvaatest"
-
-#~ msgid "Time:"
-#~ msgstr "Aeg:"
-
-#~ msgid "Add..."
-#~ msgstr "Lisamine..."
-
-#~ msgid "Move Down"
-#~ msgstr "Liigutamine alla"
-
-#~ msgid "Move Up"
-#~ msgstr "Liigutamine üles"
-
-#~ msgid "Remove"
-#~ msgstr "Eemaldamine"
-
-#~ msgid "Save Playlist..."
-#~ msgstr "Esitusloendi salvestamine..."
-
-#~ msgid "Author:"
-#~ msgstr "Autor:"
-
-#~ msgid "C_onfigure..."
-#~ msgstr "_Seadista..."
-
-#~ msgid "Copyright:"
-#~ msgstr "Autoriõigused:"
-
-#~ msgid "Description:"
-#~ msgstr "Kirjeldus:"
-
-#~ msgid "Rhythmbox Plugins"
-#~ msgstr "Rhythmboxi pluginad"
-
-#~ msgid "Site:"
-#~ msgstr "Sait:"
-
-#~ msgid "0 frames per second"
-#~ msgstr "0 kaadrit sekundis"
-
-#~ msgid "0 kbps"
-#~ msgstr "0 kb/s"
-
-#~ msgid "0 x 0"
-#~ msgstr "0 x 0"
-
-#~ msgid "Album:"
-#~ msgstr "Album:"
-
-#~ msgid "Artist:"
-#~ msgstr "Esitaja:"
-
-#~ msgid "Bitrate:"
-#~ msgstr "Bitisagedus:"
-
-#~ msgid "Channels:"
-#~ msgstr "Kanaleid:"
-
-#~ msgid "Codec:"
-#~ msgstr "Koodek:"
-
-#~ msgid "Comment:"
-#~ msgstr "Kommentaar:"
-
-#~ msgid "Dimensions:"
-#~ msgstr "Mõõtmed:"
-
-#~ msgid "Duration:"
-#~ msgstr "Kestus:"
-
-#~ msgid "Framerate:"
-#~ msgstr "Kaadrisagedus:"
-
-#~ msgid "General"
-#~ msgstr "Üldine"
-
-#~ msgid "Sample rate:"
-#~ msgstr "Sämplimissagedus:"
-
-#~ msgid "Title:"
-#~ msgstr "Pealkiri:"
-
-#~ msgid "Year:"
-#~ msgstr "Aasta:"
-
-#~ msgid "Audio Output"
-#~ msgstr "Heliväljund"
-
-#~ msgid "Automatically _resize the window when a new video is loaded"
-#~ msgstr "Akna suu_ruse automaatne muutmine uue video laadimisel"
 
 #~ msgid "Co_ntrast:"
 #~ msgstr "_Kontrast:"
@@ -1936,9 +1869,6 @@ msgstr "Kontrolli oma süsteemi paigaldust. Totemi plugin lõpetab oma töö."
 
 #~ msgid "Sat_uration:"
 #~ msgstr "Kü_llastus:"
-
-#~ msgid "Show _visual effects when an audio file is played"
-#~ msgstr "Visuaale_fektide näitamine audiofaili esitamise ajal"
 
 #~ msgid ""
 #~ "Small\n"
