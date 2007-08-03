@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-03 16:44+0300\n"
-"PO-Revision-Date: 2006-08-03 12:51+0700\n"
-"Last-Translator: Ahmad Riza H Nst <rizahnst@gnome.org>\n"
+"POT-Creation-Date: 2007-08-04 02:57+0300\n"
+"PO-Revision-Date: 2007-08-04 02:00+0700\n"
+"Last-Translator: Andy Apdhani <imtheface@ubuntu.com>\n"
 "Language-Team: Indonesian <kontak@id.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,23 +40,25 @@ msgstr "Ukuran buffer"
 
 #: ../data/totem.schemas.in.h:3
 msgid "Default location for the \"Open...\" dialogues"
-msgstr ""
+msgstr "Lokasi baku untuk dialog \"Buka...\""
 
 #: ../data/totem.schemas.in.h:4
 msgid ""
 "Default location for the \"Open...\" dialogues, default is the current "
 "directory"
-msgstr ""
+msgstr "Lokasi baku untuk dialog \"Buka...\", bakunya adalah direktori kini"
 
 #: ../data/totem.schemas.in.h:5
 msgid "Default location for the \"Take Screenshot\" dialogues"
-msgstr ""
+msgstr "Lokasi baku untuk dialog \"Ambil Cuplikan Layar\""
 
 #: ../data/totem.schemas.in.h:6
 msgid ""
 "Default location for the \"Take Screenshot\" dialogues, default is the "
 "Pictures directory"
 msgstr ""
+"Lokasi baku untuk dialog \"Ambil Cuplikan Layar\", bakunya adalah direktori "
+"Pictures"
 
 #: ../data/totem.schemas.in.h:7
 msgid "Enable deinterlacing"
@@ -166,7 +168,7 @@ msgstr "Menentukan apakah jendela utama sebaiknya di atas yang satunya."
 
 #: ../data/totem.schemas.in.h:35
 msgid "Whether to disable the plugins in the user's home directory"
-msgstr ""
+msgstr "Apakah akan menonaktifkan plugin dalam direktori pangkal pengguna"
 
 #: ../data/totem.schemas.in.h:36
 msgid "Whether to enable debug for the playback engine"
@@ -181,9 +183,9 @@ msgid "No File"
 msgstr "Film Belum Dibuka"
 
 #: ../src/totem-interface.c:129
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't load the '%s' interface. %s"
-msgstr "Tidak dapat membuka antar muka '%s'."
+msgstr "Tidak dapat membuka antar muka '%s'. %s"
 
 #: ../src/totem-interface.c:131 ../src/totem-interface.c:133
 #: ../src/totem-menu.c:1399
@@ -197,6 +199,10 @@ msgid ""
 "Foundation; either version 2 of the License, or (at your option) any later "
 "version."
 msgstr ""
+"Totem adalah perangkat lunak bebas; anda dapat mendistribusikan ulang dan/"
+"atau mengubahnya dibawah syarat-syarat GNU General Public License "
+"sebagaimana dipublikasikan oleh Free Software Foundation; Lisensi versi 2, "
+"atau (sesuai pilihan anda) menggunakan versi berikutnya."
 
 #: ../src/totem-interface.c:248
 msgid ""
@@ -205,6 +211,10 @@ msgid ""
 "FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
 "details."
 msgstr ""
+"Totem didistribusikan dengan harapan akan berguna, tapi TANPA JAMINAN "
+"APAPUN; bahkan tanpa jaminan tak langsung atas MERKANTABILITAS atau "
+"KECOCOKAN BAGI KEPERLUAN KHUSUS. Lihat GNU General Public License untuk "
+"lebih detil."
 
 #: ../src/totem-interface.c:252
 msgid ""
@@ -212,12 +222,17 @@ msgid ""
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
 "Suite 330, Boston, MA  02111-1307  USA"
 msgstr ""
+"Anda seharusnya menerima sebuah salinan GNU General Public License beserta "
+"Totem; jika tidak, tulis ke Free Software Foundation, Inc., 59 Temple Place, "
+"Suite 330, Boston, MA  02111-1307  USA"
 
 #: ../src/totem-interface.c:255
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
 msgstr ""
+"Ada pengecualian pada Totem yang mengizinkan Anda menggunakan plugin "
+"proprietary GStreamer.\""
 
 #: ../src/totem-menu.c:296
 msgid "None"
@@ -235,7 +250,7 @@ msgstr "Putar Disc '%s'"
 #: ../src/totem-menu.c:754
 #, c-format
 msgid "device%d"
-msgstr ""
+msgstr "peranti%d"
 
 #: ../src/totem-menu.c:1066
 msgid "GTK+"
@@ -265,11 +280,11 @@ msgstr ""
 
 #: ../src/totem-menu.c:1088
 msgid "Totem Website"
-msgstr ""
+msgstr "Situs web Totem"
 
 #: ../src/totem-menu.c:1123
 msgid "Configure Plugins"
-msgstr ""
+msgstr "Mengatur Plugin"
 
 #: ../src/totem-menu.c:1217
 msgid "_Movie"
@@ -280,9 +295,8 @@ msgid "_Open..."
 msgstr "_Buka..."
 
 #: ../src/totem-menu.c:1218
-#, fuzzy
 msgid "Open a file"
-msgstr "Buka file non-lokal"
+msgstr "Buka berkas"
 
 #: ../src/totem-menu.c:1219
 msgid "Open _Location..."
@@ -297,9 +311,8 @@ msgid "_Eject"
 msgstr "K_eluarkan"
 
 #: ../src/totem-menu.c:1221
-#, fuzzy
 msgid "_Properties"
-msgstr "Properti"
+msgstr "_Properti"
 
 #: ../src/totem-menu.c:1222
 msgid "Play / Pa_use"
@@ -315,7 +328,7 @@ msgstr "_Keluar"
 
 #: ../src/totem-menu.c:1223
 msgid "Quit the program"
-msgstr ""
+msgstr "Keluar dari program"
 
 #: ../src/totem-menu.c:1225
 msgid "_Edit"
@@ -330,23 +343,20 @@ msgid "Take a screenshot"
 msgstr "Ambil gambar cuplikan layar"
 
 #: ../src/totem-menu.c:1227
-#, fuzzy
 msgid "_Clear Playlist"
-msgstr "Simpan Daftar Main"
+msgstr "_Bersihkan Daftar Main"
 
 #: ../src/totem-menu.c:1227
-#, fuzzy
 msgid "Clear playlist"
-msgstr "daftar main"
+msgstr "Bersihkan daftar main"
 
 #: ../src/totem-menu.c:1228
 msgid "Prefere_nces"
 msgstr "Pe_ngaturan"
 
 #: ../src/totem-menu.c:1229
-#, fuzzy
 msgid "Plugins..."
-msgstr "Plugin"
+msgstr "Plugin..."
 
 #: ../src/totem-menu.c:1231
 msgid "_View"
@@ -623,9 +633,8 @@ msgid "_Languages"
 msgstr "_Bahasa"
 
 #: ../src/totem-menu.c:1398
-#, fuzzy
 msgid "Couldn't load the 'ui description' file"
-msgstr "Tidak dapat membuka antar muka '%s'."
+msgstr "Tidak dapat membuka berkas 'deskripsi ui'"
 
 #: ../src/totem-open-location.c:170
 msgid "Open Location..."
@@ -692,33 +701,28 @@ msgid "Replace"
 msgstr "Ganti"
 
 #: ../src/totem-options.c:52
-#, fuzzy
 msgid "Print playing movie"
-msgstr "Memutar Film"
+msgstr "Cetak film yang sedang diputar"
 
 #: ../src/totem-options.c:53
-#, fuzzy
 msgid "Seek"
-msgstr "Yunani"
+msgstr "Cari"
 
 #: ../src/totem-options.c:54
-#, fuzzy
 msgid "Playlist index"
-msgstr "Daftar Main"
+msgstr "Indeks daftar main"
 
 #: ../src/totem-options.c:55
-#, fuzzy
 msgid "Movies to play"
-msgstr "Film tidak diputar."
+msgstr "Film untuk diputar"
 
 #: ../src/totem-playlist.c:149
-#, fuzzy
 msgid "_Remove"
-msgstr "Hapus"
+msgstr "_Hapus"
 
 #: ../src/totem-playlist.c:149
 msgid "Remove file from playlist"
-msgstr ""
+msgstr "Hapus berkas dari daftar main"
 
 #: ../src/totem-playlist.c:150
 msgid "_Copy Location"
@@ -726,7 +730,7 @@ msgstr "_Salin Lokasi"
 
 #: ../src/totem-playlist.c:150
 msgid "Copy the location to the clipboard"
-msgstr ""
+msgstr "Salin lokasi ke clipboard"
 
 #: ../src/totem-playlist.c:313 ../src/totem-playlist.c:850
 msgid "Could not save the playlist"
@@ -797,9 +801,8 @@ msgstr ""
 "jalankan ulang."
 
 #: ../src/totem-preferences.c:478
-#, fuzzy
 msgid "Preferences"
-msgstr "Pe_ngaturan"
+msgstr "Pengaturan"
 
 #: ../src/totem-preferences.c:618
 msgid "Select Subtitle Font"
@@ -874,15 +877,15 @@ msgstr "%d %%"
 
 #. eg: Paused, 0:32 / 1:05
 #: ../src/totem-statusbar.c:291
-#, fuzzy, c-format
+#, c-format
 msgid "%s, %s"
-msgstr "%s %s"
+msgstr "%s, %s"
 
 #. eg: Buffering, 75 %
 #: ../src/totem-statusbar.c:296
-#, fuzzy, c-format
+#, c-format
 msgid "%s, %d %%"
-msgstr "%d %%"
+msgstr "%s, %d %%"
 
 #: ../src/totem-subtitle-encoding.c:158
 msgid "Current Locale"
@@ -1034,14 +1037,12 @@ msgid "Supported files"
 msgstr "Berkas didukung"
 
 #: ../src/totem-uri.c:320
-#, fuzzy
 msgid "Audio files"
-msgstr "Semua berkas"
+msgstr "Berkas audio"
 
 #: ../src/totem-uri.c:328
-#, fuzzy
 msgid "Video files"
-msgstr "Video CD"
+msgstr "Berkas video"
 
 #: ../src/totem-uri.c:399
 msgid "Select Movies or Playlists"
@@ -1135,19 +1136,16 @@ msgid "An error occurred"
 msgstr "Terjadi masalah"
 
 #: ../src/totem.c:2779 ../src/totem.c:2781
-#, fuzzy
 msgid "Play / Pause"
-msgstr "Putar / Ta_han"
+msgstr "Putar / Jeda"
 
 #: ../src/totem.c:2788 ../src/totem.c:2790
-#, fuzzy
 msgid "Previous Chapter/Movie"
-msgstr "Bab/Film _Sebelumnya"
+msgstr "Bab/Film Sebelumnya"
 
 #: ../src/totem.c:2797 ../src/totem.c:2799
-#, fuzzy
 msgid "Next Chapter/Movie"
-msgstr "Bab/Film_Berikutnya"
+msgstr "Bab/Film Berikutnya"
 
 #: ../src/totem.c:2899
 msgid "Totem could not startup."
@@ -1163,14 +1161,12 @@ msgstr "Periksa instalasi sistem Anda. Totem akan segera keluar."
 
 #. Handle command line arguments
 #: ../src/totem.c:3055
-#, fuzzy
 msgid "- Play movies and songs"
-msgstr "Mainkan film dan lagu"
+msgstr "- Mainkan film dan lagu"
 
 #: ../src/totem.c:3064
-#, fuzzy
 msgid "Totem could not parse the command-line options"
-msgstr "Totem tidak dapat menampilkan isi bantuan."
+msgstr "Totem tidak dapat menampilkan opsi baris perintah"
 
 #: ../src/totem.c:3083
 msgid "Totem could not initialize the configuration engine."
@@ -1193,11 +1189,10 @@ msgid "Location not found."
 msgstr "Lokasi tidak ditemukan."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2479
-#, fuzzy
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr ""
-"Tidak dapat membuka lokasi, Anda mungkin tidak memiliki hak membukanya."
+"Tidak dapat membuka lokasi; Anda mungkin tidak memiliki hak membukanya."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2490
 msgid ""
@@ -1225,6 +1220,8 @@ msgstr ""
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
+"Untuk memutar film ini Anda membutuhkan plugin %s yang saat ini belum "
+"diinstal."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2521
 #, c-format
@@ -1234,6 +1231,10 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"Untuk memutar film ini Anda membuatkan decoder berikut yang saat ini belum "
+"diinstal:\n"
+"\n"
+"%s"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2546
 msgid ""
@@ -1251,13 +1252,12 @@ msgid "Failed to retrieve working directory"
 msgstr "DIrektori aktif tidak diketahui"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4248
-#, fuzzy
 msgid "Surround"
-msgstr "_Suara"
+msgstr "Surround"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4250
 msgid "Mono"
-msgstr ""
+msgstr "Mono"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4252
 msgid "Stereo"
@@ -1584,9 +1584,8 @@ msgid "Plugin"
 msgstr "Plugin"
 
 #: ../src/plugins/totem-plugin-manager.c:52
-#, fuzzy
 msgid "Enabled"
-msgstr "Aktifkan debug"
+msgstr "Diaktifkan"
 
 #: ../src/plugins/totem-plugins-engine.c:574
 #, c-format
@@ -1594,100 +1593,95 @@ msgid ""
 "Unable to activate plugin %s.\n"
 "%s"
 msgstr ""
+"Tidak dapat mengaktifkan plugin %s.\n"
+"%s"
 
 #: ../src/plugins/totem-plugins-engine.c:577
 #, c-format
 msgid "Unable to activate plugin %s"
-msgstr ""
+msgstr "Tidak dapat mengaktifkan plugin %s"
 
 #: ../src/plugins/totem-plugins-engine.c:579
-#, fuzzy
 msgid "Plugin Error"
-msgstr "Plugin"
+msgstr "Plugin Rusak"
 
 #: ../src/plugins/bemused/bemused.totem-plugin.in.h:1
-#, fuzzy
 msgid "Bemused"
-msgstr "Istirahat"
+msgstr "Bemused"
 
 #: ../src/plugins/bemused/bemused.totem-plugin.in.h:2
 msgid "Control Totem through a mobile phone with a Bemused client"
-msgstr ""
+msgstr "Mengendalikan Totem melalui ponsel dengan klien Bemused"
 
 #: ../src/plugins/bemused/totem-bemused.c:185
 #, c-format
 msgid "Untitled %d"
-msgstr ""
+msgstr "Tidak ada judul %d"
 
 #: ../src/plugins/bemused/totem-bemused.c:608
 msgid "Totem Bemused Server"
-msgstr ""
+msgstr "Server Bemused Totem"
 
 #. FIXME version
 #: ../src/plugins/bemused/totem-bemused.c:610
 msgid "Totem Bemused Server version 1.0"
-msgstr ""
+msgstr "Server Bemused Totem versi 1.0"
 
 #: ../src/plugins/galago/galago.totem-plugin.in.h:1
 msgid "Instant Messenger status"
-msgstr ""
+msgstr "Status Pesan Instan"
 
 #: ../src/plugins/galago/galago.totem-plugin.in.h:2
 msgid "Set your Instant Messenger status to away when a movie is playing"
-msgstr ""
+msgstr "Atur status Pesan Instan Anda menjadi pergi ketika sedang memutar film"
 
 #: ../src/plugins/galago/totem-galago.c:163
-#, fuzzy
 msgid "Could not connect to the Galago daemon."
-msgstr "Tidak bisa tersambung ke daemon HAL"
+msgstr "Tidak bisa tersambung ke daemon Galago."
 
 #: ../src/plugins/gromit/gromit.totem-plugin.in.h:1
 msgid "Gromit Annotations"
-msgstr ""
+msgstr "Anotasi Gromit"
 
 #: ../src/plugins/gromit/gromit.totem-plugin.in.h:2
 msgid "Presentation helper to make annotations on screen"
-msgstr ""
+msgstr "Alat bantu presentasi untuk membuat anotasi pada layar"
 
 #: ../src/plugins/gromit/totem-gromit.c:283
 msgid "The gromit binary was not found."
-msgstr ""
+msgstr "Binari gromit tidak ditemukan."
 
 #: ../src/plugins/lirc/lirc.totem-plugin.in.h:1
 msgid "Infrared Remote Control"
-msgstr ""
+msgstr "Pengendali Jarak Jauh Infra Merah"
 
 #: ../src/plugins/lirc/lirc.totem-plugin.in.h:2
 msgid "Support infrared remote control"
-msgstr ""
+msgstr "Dukungan pengendali jarak jauh infra merah"
 
 #: ../src/plugins/lirc/totem-lirc.c:238
-#, fuzzy
 msgid "Couldn't initialize lirc."
-msgstr "Tidak dapat menjalankan thread-safe libraries."
+msgstr "Tidak dapat menjalankan lirc."
 
 #: ../src/plugins/lirc/totem-lirc.c:244
 msgid "Couldn't read lirc configuration."
-msgstr ""
+msgstr "Tidak dapat menjalankan lirc."
 
 #: ../src/plugins/media-player-keys/media-player-keys.totem-plugin.in.h:1
-#, fuzzy
 msgid "Media Player Keys"
-msgstr "Pemutar Film"
+msgstr "Tombol-tombol Pemutar Media"
 
 #: ../src/plugins/media-player-keys/media-player-keys.totem-plugin.in.h:2
 msgid "Support additional media player keys"
-msgstr ""
+msgstr "Dukungan tombol-tombol pemutar media tambahan"
 
 #: ../src/plugins/ontop/ontop.totem-plugin.in.h:1
-#, fuzzy
 msgid "Always On Top"
-msgstr "Selalu di A_tas"
+msgstr "Selalu Di Atas"
 
 #: ../src/plugins/ontop/ontop.totem-plugin.in.h:2
-#, fuzzy
 msgid "Keep the main window on top when playing a movie"
-msgstr "Menentukan apakah jendela utama sebaiknya tetap di atas"
+msgstr "Biarkan jendela utama tetap di atas ketika sedang memutar film"
 
 #: ../src/plugins/properties/totem-movie-properties.c:169
 msgid "Properties"
@@ -1725,13 +1719,12 @@ msgstr "Tidak Tersedia"
 #. Sample rate
 #: ../src/plugins/properties/bacon-video-widget-properties.c:170
 msgid "0 Hz"
-msgstr ""
+msgstr "0 Hz"
 
 #. Channels
 #: ../src/plugins/properties/bacon-video-widget-properties.c:172
-#, fuzzy
 msgid "0 Channels"
-msgstr "kanal 5.0"
+msgstr "0 Kanal"
 
 #: ../src/plugins/properties/bacon-video-widget-properties.c:234
 #, c-format
@@ -1750,34 +1743,31 @@ msgid "%d kbps"
 msgstr "%d kbps"
 
 #: ../src/plugins/properties/bacon-video-widget-properties.c:259
-#, fuzzy, c-format
+#, c-format
 msgid "%d Hz"
-msgstr "%d %%"
+msgstr "%d Hz"
 
 #: ../src/plugins/properties/movie-properties.totem-plugin.in.h:1
-#, fuzzy
 msgid "Adds movie properties to the sidebar"
-msgstr "Tampilkan atau sembunyikan daftar main"
+msgstr "Tambah properti film ke sidebar"
 
 #: ../src/plugins/properties/movie-properties.totem-plugin.in.h:2
-#, fuzzy
 msgid "Movie Properties"
-msgstr "Properti"
+msgstr "Properti Film"
 
 #: ../src/plugins/screensaver/screensaver.totem-plugin.in.h:1
 msgid "Deactivates the screensaver when a movie is playing"
-msgstr ""
+msgstr "Menonaktifkan screensaver saat film sedang diputar"
 
 #: ../src/plugins/screensaver/screensaver.totem-plugin.in.h:2
 msgid "Screensaver"
-msgstr ""
+msgstr "Screensaver"
 
 #: ../src/plugins/skipto/skipto.totem-plugin.in.h:1
 msgid "Provides the \"Skip to\" dialog."
-msgstr ""
+msgstr "Menyajikan dialog \"Langsung ke\" dialog."
 
 #: ../src/plugins/skipto/skipto.totem-plugin.in.h:2
-#, fuzzy
 msgid "Skipto"
 msgstr "Langsung ke"
 
@@ -1794,25 +1784,24 @@ msgid "Skip to a specific time"
 msgstr "Langsung ke waktu yang ditentukan"
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:227
-#, fuzzy
 msgid "Could not load the \"Skip to\" dialogue interface."
-msgstr "Tidak dapat membuka antar muka '%s'."
+msgstr "Tidak dapat membuka antar muka dialog \"Langsung ke\""
 
 #: ../browser-plugin/totem-plugin-viewer.c:417
 msgid "No URI to play"
-msgstr ""
+msgstr "Tidak ada URI untuk dimainkan"
 
 #. FIXME disp = gnome_vfs_unescape_string_for_display (totem->mrl); ?
 #: ../browser-plugin/totem-plugin-viewer.c:444
 #: ../browser-plugin/totem-plugin-viewer.c:448
-#, fuzzy, c-format
+#, c-format
 msgid "Totem could not play '%s'"
-msgstr "Totem tidak dapat memutar '%s'."
+msgstr "Totem tidak dapat memutar '%s'"
 
 #: ../browser-plugin/totem-plugin-viewer.c:825
-#, fuzzy, c-format
+#, c-format
 msgid "Opening %s"
-msgstr "Buka '%s'"
+msgstr "Membuka %s"
 
 #. translators: this is:
 #. * Open With ApplicationName
@@ -1820,17 +1809,16 @@ msgstr "Buka '%s'"
 #: ../browser-plugin/totem-plugin-viewer.c:1071
 #, c-format
 msgid "_Open with \"%s\""
-msgstr ""
+msgstr "_Buka dengan \"%s\""
 
 #: ../browser-plugin/totem-plugin-viewer.c:1122
-#, fuzzy, c-format
+#, c-format
 msgid "Browser Plugin using %s"
-msgstr "Pemutar Film menggunakan %s"
+msgstr "Plugin Peramban menggunakan %s"
 
 #: ../browser-plugin/totem-plugin-viewer.c:1127
-#, fuzzy
 msgid "Totem Browser Plugin"
-msgstr "Plugin Totem Mozilla"
+msgstr "Plugin Peramban Totem"
 
 #. FIXME!
 #. FIXME construct and show error message
@@ -1840,7 +1828,7 @@ msgstr "Tambahan (plugin) Totem tidak dapat dijalankan."
 
 #: ../browser-plugin/totem-plugin-viewer.c:1886
 msgid "No playlist or playlist empty"
-msgstr ""
+msgstr "Tidak ada daftar main atau daftar main kosong"
 
 #: ../browser-plugin/totem-plugin-viewer.c:1990
 msgid "Could not initialise the thread-safe libraries."
