@@ -47,10 +47,8 @@
 /* for pretty multichannel strings */
 #include <gst/audio/multichannel.h>
 
-#if 0
 /* for missing decoder/demuxer detection */
 #include <gst/pbutils/pbutils.h>
-#endif
 
 /* system */
 #include <unistd.h>
@@ -230,64 +228,6 @@ static int bvw_signals[LAST_SIGNAL] = { 0 };
 
 GST_DEBUG_CATEGORY (_totem_gst_debug_cat);
 #define GST_CAT_DEFAULT _totem_gst_debug_cat
-
-/* FIXME: temporary utility functions so we don't have to up the GStreamer
- * requirements to core/base CVS (0.10.11.1) before the next totem release */
-#define gst_pb_utils_init() /* noop */
-#define gst_is_missing_plugin_message(msg) \
-	bvw_is_missing_plugin_message(msg)
-#define gst_missing_plugin_message_get_description \
-	bvw_missing_plugin_message_get_description
-#define gst_missing_plugin_message_get_installer_detail \
-    bvw_missing_plugin_message_get_installer_detail
-
-static gboolean
-bvw_is_missing_plugin_message (GstMessage * msg)
-{
-  g_return_val_if_fail (msg != NULL, FALSE);
-  g_return_val_if_fail (GST_IS_MESSAGE (msg), FALSE);
-
-  if (GST_MESSAGE_TYPE (msg) != GST_MESSAGE_ELEMENT || msg->structure == NULL)
-    return FALSE;
-
-  return gst_structure_has_name (msg->structure, "missing-plugin");
-}
-
-static gchar *
-bvw_missing_plugin_message_get_description (GstMessage * msg)
-{
-  g_return_val_if_fail (bvw_is_missing_plugin_message (msg), NULL);
-
-  return g_strdup (gst_structure_get_string (msg->structure, "name"));
-}
-
-static gchar *
-bvw_missing_plugin_message_get_installer_detail (GstMessage * msg)
-{
-  const GValue *val;
-  const gchar *type;
-  gchar *desc, *ret, *details;
-
-  g_return_val_if_fail (bvw_is_missing_plugin_message (msg), NULL);
-
-  type = gst_structure_get_string (msg->structure, "type");
-  g_return_val_if_fail (type != NULL, NULL);
-  val = gst_structure_get_value (msg->structure, "detail");
-  g_return_val_if_fail (val != NULL, NULL);
-  if (G_VALUE_HOLDS (val, GST_TYPE_CAPS)) {
-    details = gst_caps_to_string (gst_value_get_caps (val));
-  } else if (G_VALUE_HOLDS (val, G_TYPE_STRING)) {
-    details = g_value_dup_string (val);
-  } else {
-    g_return_val_if_reached (NULL);
-  }
-  desc = bvw_missing_plugin_message_get_description (msg);
-  ret = g_strdup_printf ("gstreamer.net|0.10|totem|%s|%s-%s",
-      (desc) ? desc : "", type, (details) ? details: "");
-  g_free (desc);
-  g_free (details);
-  return ret;
-}
 
 typedef gchar * (* MsgToStrFunc) (GstMessage * msg);
 

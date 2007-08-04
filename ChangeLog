@@ -1,3 +1,14 @@
+2007-08-04  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* configure.in:
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	  Bump GStreamer core and -base requirements to 0.10.12 and remove
+	  a bunch of hacks that were added in 2.17.x to avoid a requirement
+	  on the new API back then (note: the marker prefix of the codec
+	  install detail string was also wrong in that code, we wrongly set it
+	  to 'gstreamer.net' instead of 'gstreamer', which shouldn't matter
+	  though since no one ever checked that anyway).
+
 2007-08-01  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c: (totem_setup_window): Make the default
