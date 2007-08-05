@@ -30,6 +30,13 @@ G_BEGIN_DECLS
 #endif /* TOTEM_PL_PARSER_MINI */
 
 #ifndef TOTEM_PL_PARSER_MINI
+gboolean totem_pl_parser_write_pla				(TotemPlParser *parser,
+								 GtkTreeModel *model,
+								 TotemPlParserIterFunc func, 
+								 const char *output,
+								 const char *title,
+								 gpointer user_data,
+								 GError **error);
 TotemPlParserResult totem_pl_parser_add_pla			(TotemPlParser *parser,
 								 const char *url,
 								 const char *base,

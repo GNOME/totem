@@ -85,6 +85,7 @@ typedef enum
 	TOTEM_PL_PARSER_M3U,
 	TOTEM_PL_PARSER_M3U_DOS,
 	TOTEM_PL_PARSER_XSPF,
+	TOTEM_PL_PARSER_IRIVER_PLA,
 } TotemPlParserType;
 
 typedef enum

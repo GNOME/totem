@@ -1,3 +1,21 @@
+2007-08-05  Jonathan Matthew  <jonathan@kaolin.wh9.net>
+
+	* src/plparse/totem-pl-parser-private.h:
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_write_string),
+	(totem_pl_parser_write_buffer):
+	Add a function to write a sized buffer, use it to implement
+	totem_pl_parser_write_string.
+
+	* src/plparse/totem-pl-parser-pla.c: (totem_pl_parser_write_pla),
+	(totem_pl_parser_add_pla):
+	* src/plparse/totem-pl-parser-pla.h:
+	Implement playlist writer for iRiver PLA format.  Fix a few issues in
+	the reading code too.
+	
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_write_with_title):
+	* src/plparse/totem-pl-parser.h:
+	Use iRiver PLA format writer.  (Closes: #347584)
+
 2007-08-04  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* configure.in:

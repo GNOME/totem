@@ -450,11 +450,18 @@ totem_pl_parser_line_is_empty (const char *line)
 gboolean
 totem_pl_parser_write_string (GnomeVFSHandle *handle, const char *buf, GError **error)
 {
-	GnomeVFSResult res;
-	GnomeVFSFileSize written;
 	guint len;
 
 	len = strlen (buf);
+	return totem_pl_parser_write_buffer (handle, buf, len, error);
+}
+
+gboolean
+totem_pl_parser_write_buffer (GnomeVFSHandle *handle, const char *buf, guint len, GError **error)
+{
+	GnomeVFSResult res;
+	GnomeVFSFileSize written;
+
 	res = gnome_vfs_write (handle, buf, len, &written);
 	if (res != GNOME_VFS_OK || written < len) {
 		g_set_error (error,
@@ -559,6 +566,9 @@ totem_pl_parser_write_with_title (TotemPlParser *parser, GtkTreeModel *model,
                                 user_data, error);
 	case TOTEM_PL_PARSER_XSPF:
 		return totem_pl_parser_write_xspf (parser, model, func,
+				output, title, user_data, error);
+	case TOTEM_PL_PARSER_IRIVER_PLA:
+		return totem_pl_parser_write_pla (parser, model, func,
 				output, title, user_data, error);
 	default:
 		g_assert_not_reached ();

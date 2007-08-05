@@ -75,6 +75,10 @@ gboolean totem_pl_parser_line_is_empty		(const char *line);
 gboolean totem_pl_parser_write_string		(GnomeVFSHandle *handle,
 						 const char *buf,
 						 GError **error);
+gboolean totem_pl_parser_write_buffer		(GnomeVFSHandle *handle,
+						 const char *buf,
+						 guint size,
+						 GError **error);
 char * totem_pl_parser_relative			(const char *url,
 						 const char *output);
 xmlDocPtr totem_pl_parser_parse_xml_file	(const char *url);
