@@ -1559,7 +1559,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 	{
 		/* FIXME! */
 		/* FIXME construct and show error message */
-		totem_embedded_error_and_exit (_("The Totem plugin could not startup."), err != NULL ? err->message : _("No reason."), emb);
+		totem_embedded_error_and_exit (_("The Totem plugin could not be started."), err != NULL ? err->message : _("No reason."), emb);
 
 		if (err != NULL)
 			g_error_free (err);

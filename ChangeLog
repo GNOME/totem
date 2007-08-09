@@ -1,3 +1,19 @@
+2007-08-09  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_construct):
+	Rephrase slightly so as to remove "startup" from the string
+
+	* src/plugins/media-player-keys/media-player-keys.totem-plugin.in:
+	* src/plugins/properties/movie-properties.totem-plugin.in:
+	* src/plugins/screensaver/screensaver.totem-plugin.in:
+	* src/plugins/skipto/skipto.totem-plugin.in:
+	Remove translations from the builtin plugins, as they're not
+	visible in the UI anyway
+
+	* src/totem-options.c: Add a hint for translators
+
+	(Closes: #464453)
+
 2007-08-07  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totemNarrowSpacePlugin.cpp: Update version of
@@ -46,13 +62,6 @@
 	* NEWS: upd
 	* configure.in: 2.19.6
 	* src/plugins/skipto/Makefile.am: Fix distchecking
-
-2007-07-30  Bastien Nocera  <hadess@hadess.net>
-
-	reviewed by: <delete if not using a buddy>
-
-	* NEWS:
-	* configure.in:
 
 2007-07-30  Bastien Nocera  <hadess@hadess.net>
 
