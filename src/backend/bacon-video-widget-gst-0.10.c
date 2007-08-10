@@ -4969,6 +4969,10 @@ bacon_video_widget_new (int width, int height,
     goto sink_error;
   }
 
+  /* set back to NULL to close device again in order to avoid interrupts
+   * being generated after startup while there's nothing to play yet */
+  gst_element_set_state (audio_sink, GST_STATE_NULL);
+
   do {
     GstElement *bin;
     GstPad *pad;

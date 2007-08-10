@@ -1,3 +1,9 @@
+2007-08-10  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	  Close audio device again after initial probing. Playbin will open it
+	  again later if and when needed. Closes: #465095. Saves: kittens. 
+
 2007-08-10  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-uri.c: (totem_uri_get_subtitle_uri): Add a check
