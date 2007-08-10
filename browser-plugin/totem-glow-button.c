@@ -32,6 +32,7 @@
 #include "totem-glow-button.h"
 
 #define FADE_OPACITY_DEFAULT 0.6
+#define ENTER_SPEEDUP_RATIO 0.3
 
 struct _TotemGlowButton {
 	GtkButton parent;
@@ -45,10 +46,16 @@ struct _TotemGlowButton {
 
 	guint glow : 1;
 	guint anim_enabled : 1;
+	guint pointer_entered : 1;
+	/* Set when we don't want to play animation
+	 * anymore in pointer entered mode */
+	guint anim_finished :1;
 };
 
 static void	totem_glow_button_class_init	(TotemGlowButtonClass * klass);
 static void	totem_glow_button_init		(TotemGlowButton      * button);
+static void	totem_glow_button_set_timeout	(TotemGlowButton *button,
+						 gboolean set_timeout);
 
 static GtkButtonClass *parent_class;
 
@@ -119,12 +126,31 @@ totem_glow_button_glow (TotemGlowButton *button)
 		now = (tv.tv_sec * (1.0 * G_USEC_PER_SEC) +
 		       tv.tv_usec) / G_USEC_PER_SEC;
 
-		if (button->glow_start_time <= G_MINDOUBLE)
-			button->glow_start_time = now;
-
 		/* Hard-coded values */
 		fade_opacity = FADE_OPACITY_DEFAULT;
 		loop_time = 3.0;
+
+		if (button->glow_start_time <= G_MINDOUBLE) {
+			button->glow_start_time = now;
+			/* If the pointer entered, we want to start with 'dark' */
+			if (button->pointer_entered != FALSE) {
+				button->glow_start_time -= loop_time / 4.0;
+			}
+		}
+
+		/* Timing for mouse hover animation
+		   [light]......[dark]......[light]......[dark]...
+		   {mouse hover event}
+		   [dark]..[light]..[dark]..[light]
+		   {mouse leave event}
+		   [light]......[dark]......[light]......[dark]
+		*/
+		if (button->pointer_entered != FALSE) {
+			/* pointer entered animation should be twice as fast */
+			loop_time /= ENTER_SPEEDUP_RATIO;
+			if ((now - button->glow_start_time) > loop_time * ENTER_SPEEDUP_RATIO)
+				button->anim_finished = TRUE;
+		}
 
 		glow_factor = fade_opacity * (0.5 - 0.5 * cos ((now - button->glow_start_time) * M_PI * 2.0 / loop_time));
 	} else {
@@ -145,6 +171,11 @@ totem_glow_button_glow (TotemGlowButton *button)
 			 gdk_pixbuf_get_height (glowing_screenshot),
 			 GDK_RGB_DITHER_NORMAL, 0, 0);
 	g_object_unref (glowing_screenshot);
+
+	if (button->pointer_entered != FALSE &&
+	    button->anim_finished != FALSE) {
+	       	totem_glow_button_set_timeout (button, FALSE);
+	}
 
 	return button->anim_enabled;
 }
@@ -238,7 +269,11 @@ totem_glow_button_expose (GtkWidget        *buttonw,
 
 	(* GTK_WIDGET_CLASS (parent_class)->expose_event) (buttonw, event);
 
-	if (button->glow != FALSE && button->screenshot == NULL) {
+	if (button->glow != FALSE && button->screenshot == NULL &&
+	    /* Don't take screenshots if we finished playing animation after
+	       pointer entered */
+	    (button->pointer_entered != FALSE && 
+	     button->anim_finished != FALSE) == FALSE) {
 		button->screenshot = gdk_pixbuf_get_from_drawable (NULL,
 								   buttonw->window,
 								   NULL,
@@ -288,6 +323,36 @@ totem_glow_button_unmap (GtkWidget *buttonw)
 }
 
 static void
+totem_glow_button_enter (GtkButton *buttonw)
+{
+	TotemGlowButton *button;
+
+	button = TOTEM_GLOW_BUTTON (buttonw);
+
+	(* GTK_BUTTON_CLASS (parent_class)->enter) (buttonw);
+	
+	button->pointer_entered = TRUE;
+	button->anim_finished = FALSE;
+	button->glow_start_time = 0.0;
+}
+
+static void
+totem_glow_button_leave (GtkButton *buttonw)
+{
+	TotemGlowButton *button;
+
+	button = TOTEM_GLOW_BUTTON (buttonw);
+
+	(* GTK_BUTTON_CLASS (parent_class)->leave) (buttonw);
+
+	button->pointer_entered = FALSE;
+	button->glow_start_time = 0.0;
+	button->anim_finished = FALSE;
+	if (button->glow != FALSE)
+		totem_glow_button_set_timeout (button, TRUE);
+}
+
+static void
 totem_glow_button_finalize (GObject *object)
 {
 	TotemGlowButton *button = TOTEM_GLOW_BUTTON (object);
@@ -303,6 +368,7 @@ totem_glow_button_class_init (TotemGlowButtonClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+	GtkButtonClass *button_class = GTK_BUTTON_CLASS (klass);
 
 	parent_class = g_type_class_peek_parent (klass);
 
@@ -310,6 +376,8 @@ totem_glow_button_class_init (TotemGlowButtonClass *klass)
 	widget_class->expose_event = totem_glow_button_expose;
 	widget_class->map = totem_glow_button_map;
 	widget_class->unmap = totem_glow_button_unmap;
+	button_class->enter = totem_glow_button_enter;
+	button_class->leave = totem_glow_button_leave;
 }
 
 static void
@@ -325,6 +393,31 @@ GtkWidget *
 totem_glow_button_new (void)
 {
 	return g_object_new (TOTEM_TYPE_GLOW_BUTTON, NULL);
+}
+
+static void
+totem_glow_button_set_timeout (TotemGlowButton *button, gboolean set_timeout)
+{
+	if (set_timeout != FALSE) {
+		button->glow_start_time = 0.0;
+
+		/* The animation doesn't speed up or slow down based on the
+		 * timeout value, but instead will just appear smoother or 
+		 * choppier.
+		 */
+		button->button_glow =
+			g_timeout_add_full (G_PRIORITY_DEFAULT_IDLE,
+					    100,
+					    (GSourceFunc) totem_glow_button_glow, button,
+					    (GDestroyNotify) totem_glow_button_clear_glow_start_timeout_id);
+	} else {
+		if (button->button_glow > 0) {
+			g_source_remove (button->button_glow);
+			button->button_glow = 0;
+		}
+		cleanup_screenshots (button);
+		totem_glow_button_do_expose (button);
+	}
 }
 
 void
@@ -355,26 +448,7 @@ totem_glow_button_set_glow (TotemGlowButton *button, gboolean glow)
 
 	button->glow = glow;
 
-	if (glow != FALSE) {
-		button->glow_start_time = 0.0;
-
-		/* The animation doesn't speed up or slow down based on the
-		 * timeout value, but instead will just appear smoother or 
-		 * choppier.
-		 */
-		button->button_glow =
-			g_timeout_add_full (G_PRIORITY_DEFAULT_IDLE,
-					    100,
-					    (GSourceFunc) totem_glow_button_glow, button,
-					    (GDestroyNotify) totem_glow_button_clear_glow_start_timeout_id);
-	} else {
-		if (button->button_glow > 0) {
-			g_source_remove (button->button_glow);
-			button->button_glow = 0;
-		}
-		cleanup_screenshots (button);
-		totem_glow_button_do_expose (button);
-	}
+	totem_glow_button_set_timeout (button, glow);
 }
 
 gboolean
