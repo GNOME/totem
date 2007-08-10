@@ -5,7 +5,7 @@ plugin_LTLIBRARIES =
 
 BUILT_SOURCES =
 
-EXTRA_DIST = \
+EXTRA_DIST =		\
 	plugin.symbols	\
 	TODO		\
 	README.browser-plugin
@@ -26,25 +26,51 @@ totempluginviewer-marshal.h: totempluginviewer-marshal.list
 totempluginviewer-marshal.c: totempluginviewer-marshal.list
 	$(GLIB_GENMARSHAL) --prefix=totempluginviewer_marshal --body --header $< > $@
 
-noinst_LTLIBRARIES = libtotempluginviewer_marshal.la
+noinst_LTLIBRARIES = libtotempluginviewer_helper.la
 
-libtotempluginviewer_marshal_la_SOURCES =	\
+libtotempluginviewer_helper_la_SOURCES =	\
 	totempluginviewer-marshal.h		\
-	totempluginviewer-marshal.c
+	totempluginviewer-marshal.c		\
+	totem-glow-button.c			\
+	totem-glow-button.h
 
-libtotempluginviewer_marshal_la_CPPFLAGS = \
-	$(DISABLE_DEPRECATED)	\
+libtotempluginviewer_helper_la_CPPFLAGS =	\
+	$(DISABLE_DEPRECATED)			\
 	$(AM_CPPFLAGS)
 
-libtotempluginviewer_marshal_la_CFLAGS = \
-	$(BROWSER_PLUGIN_CFLAGS)	\
+libtotempluginviewer_helper_la_CFLAGS =	\
+	$(EXTRA_GNOME_CFLAGS)		\
 	$(WARN_CFLAGS)			\
 	$(AM_CFLAGS)
 
-BUILT_SOURCES += $(libtotempluginviewer_marshal_la_SOURCES)
+libtotempluginviewer_helper_la_LIBADD = 	\
+	$(EXTRA_GNOME_CFLAGS)			\
+	$(WARN_CFLAGS)				\
+	$(AM_CFLAGS)
+
+BUILT_SOURCES += $(libtotempluginviewer_helper_la_SOURCES)
 
 EXTRA_DIST += \
 	totempluginviewer-marshal.list
+
+# The Glow button test program
+
+noinst_PROGRAMS = test-glow-button
+
+test_glow_button_SOURCES = test-glow-button.c
+
+test_glow_button_LDADD =			\
+	libtotempluginviewer_helper.la		\
+	$(EXTRA_GNOME_LIBS)
+
+test_glow_button_CFLAGS =	\
+	$(EXTRA_GNOME_CFLAGS)	\
+	$(WARN_CFLAGS)		\
+	$(AM_CFLAGS)
+
+test_glow_button_CPPFLAGS =	\
+	$(DISABLE_DEPRECATED)	\
+	$(AM_CPPFLAGS)
 
 # Totem Plugin Viewer
 
@@ -52,8 +78,6 @@ libexec_PROGRAMS = totem-plugin-viewer
 
 totem_plugin_viewer_SOURCES = \
 	totem-plugin-viewer.c		\
-	totem-glow-button.c		\
-	totem-glow-button.h		\
 	totem-plugin-viewer-interface.h	\
 	totem-plugin-viewer-commands.h	\
 	totem-plugin-viewer-options.h
@@ -89,7 +113,7 @@ totem_plugin_viewer_LDADD =						\
 	$(top_builddir)/src/backend/libbaconvideowidget.la		\
 	$(top_builddir)/src/libtotem_player.la				\
 	$(top_builddir)/src/plparse/libtotem-plparser.la		\
-	libtotempluginviewer_marshal.la					\
+	libtotempluginviewer_helper.la					\
 	$(EXTRA_GNOME_LIBS)	\
 	$(XVIDMODE_LIBS) 	\
 	$(DBUS_LIBS)		\
@@ -156,7 +180,7 @@ libtotem_basic_plugin_la_CXXFLAGS = \
 
 libtotem_basic_plugin_la_LIBADD =					\
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
-	libtotempluginviewer_marshal.la					\
+	libtotempluginviewer_helper.la					\
 	$(DBUS_LIBS)	\
 	$(MOZILLA_LIBS)	\
 	$(LIBXPCOMGLUE_S)
@@ -225,7 +249,7 @@ libtotem_gmp_plugin_la_CXXFLAGS = \
 
 libtotem_gmp_plugin_la_LIBADD =						\
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
-	libtotempluginviewer_marshal.la	\
+	libtotempluginviewer_helper.la	\
 	$(DBUS_LIBS)	\
 	$(MOZILLA_LIBS)	\
 	$(LIBXPCOMGLUE_S)
@@ -288,7 +312,7 @@ libtotem_complex_plugin_la_CXXFLAGS = \
 
 libtotem_complex_plugin_la_LIBADD =					\
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
-	libtotempluginviewer_marshal.la					\
+	libtotempluginviewer_helper.la					\
 	$(DBUS_LIBS)	\
 	$(MOZILLA_LIBS)	\
 	$(LIBXPCOMGLUE_S)
@@ -351,7 +375,7 @@ libtotem_narrowspace_plugin_la_CXXFLAGS = \
 
 libtotem_narrowspace_plugin_la_LIBADD =					\
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
-	libtotempluginviewer_marshal.la					\
+	libtotempluginviewer_helper.la					\
 	$(DBUS_LIBS)	\
 	$(MOZILLA_LIBS)	\
 	$(LIBXPCOMGLUE_S)
@@ -414,7 +438,7 @@ libtotem_mully_plugin_la_CXXFLAGS = \
 
 libtotem_mully_plugin_la_LIBADD =					\
 	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
-	libtotempluginviewer_marshal.la					\
+	libtotempluginviewer_helper.la					\
 	$(DBUS_LIBS)	\
 	$(MOZILLA_LIBS)	\
 	$(LIBXPCOMGLUE_S)
