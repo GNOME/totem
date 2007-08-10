@@ -21,6 +21,9 @@ gecko_include_subdirs = \
 
 # Marshaller
 
+MARSHALFILES = totempluginviewer-marshal.h totempluginviewer-marshal.c
+BUILT_SOURCES += $(MARSHALFILES)
+
 totempluginviewer-marshal.h: totempluginviewer-marshal.list
 	$(GLIB_GENMARSHAL) --prefix=totempluginviewer_marshal --header $< > $@
 totempluginviewer-marshal.c: totempluginviewer-marshal.list
@@ -47,8 +50,6 @@ libtotempluginviewer_helper_la_LIBADD = 	\
 	$(EXTRA_GNOME_CFLAGS)			\
 	$(WARN_CFLAGS)				\
 	$(AM_CFLAGS)
-
-BUILT_SOURCES += $(libtotempluginviewer_helper_la_SOURCES)
 
 EXTRA_DIST += \
 	totempluginviewer-marshal.list
