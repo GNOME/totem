@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-21 20:04+0100\n"
-"PO-Revision-Date: 2007-08-08 18:57+0530\n"
+"POT-Creation-Date: 2007-08-09 17:59+0100\n"
+"PO-Revision-Date: 2007-08-10 14:14+0530\n"
 "Last-Translator: Ankit Patel <ankit@redhat.com>\n"
 "Language-Team: Gujarati <fedora-trans-gu@redhat.com>\n"
 "MIME-Version: 1.0\n"
@@ -14,6 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n!=1);\n\n"
+"\n"
 "\n"
 "\n"
 "\n"
@@ -188,21 +189,21 @@ msgstr "વગાડતા એંજિન માટે શું ડિબગ �
 msgid "Playing a movie"
 msgstr "ચિત્રપટ વગાડી રહ્યા છીએ"
 
-#: ../src/totem-fullscreen.c:401
+#: ../src/totem-fullscreen.c:404
 msgid "No File"
 msgstr "કોઈ ફાઈલ નથી"
 
-#: ../src/totem-interface.c:117
+#: ../src/totem-interface.c:129
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "'%s' ઈન્ટરફેસ લાવી શક્યા નહિં. %s"
 
-#: ../src/totem-interface.c:119 ../src/totem-interface.c:121
+#: ../src/totem-interface.c:131 ../src/totem-interface.c:133
 #: ../src/totem-menu.c:1399
 msgid "Make sure that Totem is properly installed."
 msgstr "ખાતરી કરો કે ટોટેમ યોગ્ય રીતે સ્થાપિત થયેલ છે."
 
-#: ../src/totem-interface.c:234
+#: ../src/totem-interface.c:244
 msgid ""
 "Totem is free software; you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -214,7 +215,7 @@ msgstr ""
 "Foundation; either version 2 of the License, or (at your option) any later "
 "version."
 
-#: ../src/totem-interface.c:238
+#: ../src/totem-interface.c:248
 msgid ""
 "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
@@ -226,7 +227,7 @@ msgstr ""
 "FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
 "details."
 
-#: ../src/totem-interface.c:242
+#: ../src/totem-interface.c:252
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
@@ -236,7 +237,7 @@ msgstr ""
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
 "Suite 330, Boston, MA  02111-1307  USA"
 
-#: ../src/totem-interface.c:245
+#: ../src/totem-interface.c:255
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
@@ -277,11 +278,11 @@ msgstr "GNOME"
 msgid "Movie Player using %s and %s"
 msgstr "%s અને %s ની મદદથી મુવી પ્લેયર"
 
-#: ../src/totem-menu.c:1079 ../browser-plugin/totem-plugin-viewer.c:1099
+#: ../src/totem-menu.c:1079 ../browser-plugin/totem-plugin-viewer.c:1129
 msgid "Copyright © 2002-2006 Bastien Nocera"
 msgstr "Copyright © 2002-2006 Bastien Nocera"
 
-#: ../src/totem-menu.c:1084 ../browser-plugin/totem-plugin-viewer.c:1102
+#: ../src/totem-menu.c:1084 ../browser-plugin/totem-plugin-viewer.c:1132
 msgid "translator-credits"
 msgstr "અંકિત પટેલ <ankit644@yahoo.com>"
 
@@ -588,8 +589,8 @@ msgid "Show controls"
 msgstr "નિયંત્રકો બતાવો"
 
 #: ../src/totem-menu.c:1281
-msgid "_Sidebar"
-msgstr "બાજુપટ્ટી (_S)"
+msgid "S_idebar"
+msgstr "બાજુપટ્ટી (_i)"
 
 #: ../src/totem-menu.c:1281
 msgid "Show or hide the sidebar"
@@ -655,11 +656,11 @@ msgstr "ભૂલ શોધવાનું સક્રિય કરો"
 msgid "Play/Pause"
 msgstr "વગાડો/અટકાવો"
 
-#: ../src/totem-options.c:39 ../src/totem.c:295 ../src/totem.c:305
+#: ../src/totem-options.c:39 ../src/totem.c:298 ../src/totem.c:308
 msgid "Play"
 msgstr "વગાડો"
 
-#: ../src/totem-options.c:40 ../src/totem.c:288
+#: ../src/totem-options.c:40 ../src/totem.c:291
 msgid "Pause"
 msgstr "અટકાવો"
 
@@ -707,19 +708,20 @@ msgstr "એનક્યુ"
 msgid "Replace"
 msgstr "બદલો"
 
-#: ../src/totem-options.c:52
+#. translators: this option prints the current movie's title on the command-line
+#: ../src/totem-options.c:53
 msgid "Print playing movie"
 msgstr "મુવી વગાડવાનું છાપો"
 
-#: ../src/totem-options.c:53
+#: ../src/totem-options.c:54
 msgid "Seek"
 msgstr "ખેંચો"
 
-#: ../src/totem-options.c:54
+#: ../src/totem-options.c:55
 msgid "Playlist index"
 msgstr "વગાડવાની યાદી અનુક્રમણિકા"
 
-#: ../src/totem-options.c:55
+#: ../src/totem-options.c:56
 msgid "Movies to play"
 msgstr "વગાડવા માટેની ફિલ્મો"
 
@@ -847,8 +849,8 @@ msgstr "સ્ક્રીનની છબી સંગ્રહો"
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:111 ../src/totem.c:300 ../src/totem.c:843
-#: ../browser-plugin/totem-plugin-viewer.c:282
+#: ../src/totem-statusbar.c:111 ../src/totem.c:303 ../src/totem.c:846
+#: ../browser-plugin/totem-plugin-viewer.c:296
 msgid "Stopped"
 msgstr "બંધ થયેલ છે"
 
@@ -1052,25 +1054,25 @@ msgstr "વિડીયો ફાઈલો"
 msgid "Select Movies or Playlists"
 msgstr "ફિલ્મો અને વગાડવાની યાદીઓ પસંદ કરો"
 
-#: ../src/totem.c:286 ../browser-plugin/totem-plugin-viewer.c:297
+#: ../src/totem.c:289 ../browser-plugin/totem-plugin-viewer.c:312
 msgid "Playing"
 msgstr "વગાડી રહ્યા છીએ"
 
-#: ../src/totem.c:293 ../browser-plugin/totem-plugin-viewer.c:293
+#: ../src/totem.c:296 ../browser-plugin/totem-plugin-viewer.c:308
 msgid "Paused"
 msgstr "અટકાવાયેલ છે"
 
-#: ../src/totem.c:350
+#: ../src/totem.c:353
 msgid "Totem could not eject the optical media."
 msgstr "ટોટેમ ઓપ્ટીકલ માધ્યમને બહાર કાઢી શક્યું નહિં."
 
-#: ../src/totem.c:383 ../src/totem.c:410 ../src/totem.c:941
-#: ../src/totem.c:1051 ../src/totem.c:1078
+#: ../src/totem.c:386 ../src/totem.c:413 ../src/totem.c:944
+#: ../src/totem.c:1054 ../src/totem.c:1081
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "ટોટેમ '%s' વગાડી શક્યું નહિં."
 
-#: ../src/totem.c:469
+#: ../src/totem.c:472
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1079,7 +1081,7 @@ msgstr ""
 "ટોટેમ આ પ્રકારની મીડિયા (%s) વગાડી શકતી નથી કારણ કે તમારી પાસે તેને નિયંત્રિત કરવા "
 "માટે યોગ્ય પ્લગઈનો નથી."
 
-#: ../src/totem.c:470
+#: ../src/totem.c:473
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1087,7 +1089,7 @@ msgstr ""
 "મહેરબાની કરીને જરૂરી પ્લગઈનો સ્થાપિત કરો અને આ મીડિયાને વગાડી શકે એના માટે ટોટેમને "
 "ફરીથી શરૂ કરો."
 
-#: ../src/totem.c:477
+#: ../src/totem.c:480
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1096,89 +1098,90 @@ msgstr ""
 "ટોટેમ આ મીડિયા (%s) ને વગાડી શકી નહિં તેને નિયંત્રિત કરવા માટે તેના પ્લગઈન હાજર હોવા "
 "છતાં."
 
-#: ../src/totem.c:478
+#: ../src/totem.c:481
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr "તમારે ચકાસવાની જરૂર છે કે ડિસ્ક તેની ડ્રાઈવમાં હાજર છે ને અને તે યોગ્ય રીતે રૂપરેખાંકિત છે."
 
-#: ../src/totem.c:506
+#: ../src/totem.c:509
 msgid "Totem was not able to play this disc."
 msgstr "ટોટેમ આ ડિસ્ક વગાડવા માટે સમર્થ હતું નહિં."
 
-#: ../src/totem.c:507 ../src/totem.c:2894
-#: ../browser-plugin/totem-plugin-viewer.c:1406
+#: ../src/totem.c:510 ../src/totem.c:2899
+#: ../browser-plugin/totem-plugin-viewer.c:1562
 msgid "No reason."
 msgstr "કોઈ કારણ નથી."
 
-#: ../src/totem.c:760 ../src/totem.c:768
+#: ../src/totem.c:763 ../src/totem.c:771
 msgid "Totem could not get a screenshot of that film."
 msgstr "ટોટેમ તે ફિલ્મની છબી લઈ શક્યું નહિં."
 
-#: ../src/totem.c:768
+#: ../src/totem.c:771
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "આ બનવાનું હતું નહિં; મહેરબાની કરીને ભૂલનો અહેવાલ જમા કરો."
 
 #. Title
-#: ../src/totem.c:851 ../src/totem.c:3042 ../src/totem.c:3070
+#: ../src/totem.c:854 ../src/totem.c:3047 ../src/totem.c:3075
+#: ../browser-plugin/totem-plugin-viewer.c:1571
 msgid "Totem Movie Player"
 msgstr "ટોટેમ ચિત્રપટ પ્લેયર"
 
-#: ../src/totem.c:947
+#: ../src/totem.c:950
 msgid "No error message"
 msgstr "કોઈ ભૂલ સંદેશો નથી"
 
-#: ../src/totem.c:1189
+#: ../src/totem.c:1192
 msgid "Totem could not display the help contents."
 msgstr "ટોટેમ મદદ સમાવિષ્ટો પ્રદર્શિત કરી શક્યું નહિં."
 
-#: ../src/totem.c:1448 ../src/totem.c:1450
-#: ../browser-plugin/totem-plugin-viewer.c:1293
+#: ../src/totem.c:1451 ../src/totem.c:1453
+#: ../browser-plugin/totem-plugin-viewer.c:1358
 msgid "An error occurred"
 msgstr "ભૂલ ઉદ્દભવી"
 
-#: ../src/totem.c:2774 ../src/totem.c:2776
+#: ../src/totem.c:2779 ../src/totem.c:2781
 msgid "Play / Pause"
 msgstr "વગાડો / અટકાવો"
 
-#: ../src/totem.c:2783 ../src/totem.c:2785
+#: ../src/totem.c:2788 ../src/totem.c:2790
 msgid "Previous Chapter/Movie"
 msgstr "પહેલાનું પ્રકરણ/ફિલ્મ"
 
-#: ../src/totem.c:2792 ../src/totem.c:2794
+#: ../src/totem.c:2797 ../src/totem.c:2799
 msgid "Next Chapter/Movie"
 msgstr "આગળનું પ્રકરણ/ફિલ્મ"
 
-#: ../src/totem.c:2894
+#: ../src/totem.c:2899
 msgid "Totem could not startup."
 msgstr "ટોટેમ શરુ થઈ શક્યું નહિં."
 
-#: ../src/totem.c:3043
+#: ../src/totem.c:3048
 msgid "Could not initialize the thread-safe libraries."
 msgstr "થ્રેડ-સુરક્ષા લાઈબ્રેરીઓનો પ્રારંભ કરી શક્યા નહિં."
 
-#: ../src/totem.c:3043
+#: ../src/totem.c:3048
 msgid "Verify your system installation. Totem will now exit."
 msgstr "તમારું સિસ્ટમ સ્થાપન ચકાસો. ટોટેમ હમણાં બંધ થઈ જશે."
 
 #. Handle command line arguments
-#: ../src/totem.c:3050
+#: ../src/totem.c:3055
 msgid "- Play movies and songs"
 msgstr "- ફિલ્મો અને ગીતો વગાડો"
 
-#: ../src/totem.c:3059
+#: ../src/totem.c:3064
 msgid "Totem could not parse the command-line options"
 msgstr "ટોટેમ આદેશ-વાક્ય વિકલ્પો પદચ્છિદ કરી શક્યું નહિં"
 
-#: ../src/totem.c:3078
+#: ../src/totem.c:3083
 msgid "Totem could not initialize the configuration engine."
 msgstr "ટોટેમ રૂપરેખાંકન એંજીનનો પ્રારંભ કરી શક્યું નહિં."
 
-#: ../src/totem.c:3078
+#: ../src/totem.c:3083
 msgid "Make sure that GNOME is properly installed."
 msgstr "ખાતરી કરો કે જીનોમ યોગ્ય રીતે સ્થાપિત નથી."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2470
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2410
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1186,15 +1189,15 @@ msgstr ""
 "માંગણી થયેલ ઓડિયો આઉટપુટ મળ્યું નહિં. મહેરબાની કરીને મલ્ટીમીડિયા સિસ્ટમો પસંદગીકારકમાં "
 "અન્ય ઓડિયો આઉટપુટ પસંદ કરો."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2475
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2415
 msgid "Location not found."
 msgstr "સ્થાન મળ્યું નથી."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2479
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2419
 msgid "Could not open location; you might not have permission to open the file."
 msgstr "સ્થાન ખોલી શક્યા નહિં; કદાચ તમારી પાસે ફાઈલ ખોલવા માટે પરવાનગી નહિં હોય."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2490
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2430
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1203,7 +1206,7 @@ msgstr ""
 "વીડિયો આઉટપુટ એ અન્ય કાર્યક્રમ દ્વારા વપરાશમાં છે. મહેરબાની કરીને અન્ય વીડિયો કાર્યક્રમ "
 "બંધ કરો, અથવા મલ્ટીમીડિયા સિસ્ટમ પસંદગીકારકમાં અન્ય વીડિયો આઉટપુટ પસંદ કરો."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2496
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2436
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1214,13 +1217,13 @@ msgstr ""
 "જોઈએ."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2514
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2520
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2454
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2460
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr "આ ફિલ્મના પ્લેબેકને %s પ્લગઈન જરૂરી છે કે જે સ્થાપિત થયેલ નથી."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2521
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2461
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1232,40 +1235,40 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2546
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2486
 msgid "Cannot play this file over the network. Try downloading it to disk first."
 msgstr "આ ફાઈલને નેટવર્ક ઉપર વગાડી શકતા નથી. તેને ડિસ્કમાં પ્રથમ ચલાવવાનો પ્રયત્ન કરો."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2618
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2558
 msgid "Media file could not be played."
 msgstr "મીડિયા ફાઈલો વગાડી શકાઈ નહિં."
 
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2635
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2695
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2755
 msgid "Failed to retrieve working directory"
 msgstr "કાર્યરત ડિરેક્ટરી પુનઃપ્રાપ્ત કરવામાં નિષ્ફળ"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4248
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4188
 msgid "Surround"
 msgstr "આસપાસ"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4250
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4190
 msgid "Mono"
 msgstr "મોનો"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4252
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4192
 msgid "Stereo"
 msgstr "સ્ટીરીયો"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4483
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4423
 msgid "Too old version of GStreamer installed."
 msgstr "સ્થાપિત GStreamer ની આવૃત્તિ ખૂબ જૂની છે."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4490
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4430
 msgid "Media contains no supported video streams."
 msgstr "મીડિયા કોઈ આધારભૂત વીડિયો બંધારણો સમાવતું નથી."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4826
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4766
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1273,8 +1276,8 @@ msgstr ""
 "GStreamer વગાડો ઓબ્જેક્ટ બનાવવામાં નિષ્ફળ. મહેરબાની કીરને તમારું GStreamer સ્થાપન "
 "ચકાસો."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4958
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5071
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4898
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5011
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1282,7 +1285,7 @@ msgstr ""
 "વીડિયો આઉટપુટ ખોલવામાં નિષ્ફળ. તે ઉપલબ્ધ હશે નહિં. મહેરબાની કરીને અન્ય મલ્ટીમીડિયા "
 "સિસ્ટમ પસંદગીકારકમાં અન્ય વીડિયો આઉટપુટ પસંદ કરો."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4970
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4910
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1291,7 +1294,7 @@ msgstr ""
 "વીડિયો આઉટપુટ શોધી શક્યા નહિં. તમારે વધારાના GStreamer પ્લગઈનો સ્થાપિત કરવાની જરૂર "
 "રહેશે, અથવા મલ્ટીમીડિયા સિસ્ટમો પસંદગીકારકમાં અન્ય વીડિયો આઉટપુટ પસંદ કરો."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5005
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4945
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1301,7 +1304,7 @@ msgstr ""
 "સાઉન્ડ સર્વર ચાલી રહ્યું નથી. મહેરબાની કરીને મલ્ટીમીડિયા સિસ્ટમ પસંદગીકારકમાં અન્ય ઓડિયો "
 "આઉટપુટ પસંદ કરો."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5025
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4965
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -1560,12 +1563,13 @@ msgstr "વિડીયો CD"
 msgid "DVD"
 msgstr "DVD"
 
-#: ../src/plparse/totem-pl-parser.c:462
+#: ../src/plparse/totem-pl-parser.c:470
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "પદચ્છેદ કરનાર લખી શક્યા નહિં: %s"
 
 #: ../src/plparse/totem-pl-parser-lines.c:105
+#: ../src/plparse/totem-pl-parser-pla.c:78
 #: ../src/plparse/totem-pl-parser-pls.c:70
 #: ../src/plparse/totem-pl-parser-xspf.c:73
 #, c-format
@@ -1660,14 +1664,6 @@ msgstr "lirc આરંભ કરી શક્યા નહિં."
 msgid "Couldn't read lirc configuration."
 msgstr "lirc રૂપરેખાંકન વાંચી શક્યા નહિં."
 
-#: ../src/plugins/media-player-keys/media-player-keys.totem-plugin.in.h:1
-msgid "Media Player Keys"
-msgstr "ચિત્રપટ પ્લેયર કીઓ"
-
-#: ../src/plugins/media-player-keys/media-player-keys.totem-plugin.in.h:2
-msgid "Support additional media player keys"
-msgstr "વધારાની ચિત્રપટ પ્લેયર કીઓનો આધાર"
-
 #: ../src/plugins/ontop/ontop.totem-plugin.in.h:1
 msgid "Always On Top"
 msgstr "હંમેશા ટોચ ઉપર"
@@ -1740,58 +1736,34 @@ msgstr "%d kbps"
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: ../src/plugins/properties/movie-properties.totem-plugin.in.h:1
-msgid "Adds movie properties to the sidebar"
-msgstr "મુવી ગુણધર્મોને બાજુ પટ્ટીમાં ઉમેરે છે"
-
-#: ../src/plugins/properties/movie-properties.totem-plugin.in.h:2
-msgid "Movie Properties"
-msgstr "મુવી ગુણધર્મો"
-
-#: ../src/plugins/screensaver/screensaver.totem-plugin.in.h:1
-msgid "Deactivates the screensaver when a movie is playing"
-msgstr "જ્યારે મુવી વાગી રહ્યું હોય ત્યારે સ્ક્રીનસેવર અસક્રિય કરે છે"
-
-#: ../src/plugins/screensaver/screensaver.totem-plugin.in.h:2
-msgid "Screensaver"
-msgstr "સ્ક્રીનસેવર"
-
-#: ../src/plugins/skipto/skipto.totem-plugin.in.h:1
-msgid "Provides the \"Skip to\" dialog."
-msgstr "\"સુધી અવગણો\" સંવાદ પૂરો પાડે છે."
-
-#: ../src/plugins/skipto/skipto.totem-plugin.in.h:2
-msgid "Skipto"
-msgstr "સુધી અવગણો"
-
-#: ../src/plugins/skipto/totem-skipto.c:188
+#: ../src/plugins/skipto/totem-skipto.c:185
 msgid "Skip to"
 msgstr "સુધી અવગણો"
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:228
+#: ../src/plugins/skipto/totem-skipto-plugin.c:221
 msgid "_Skip to..."
 msgstr "ને રદ કરો (_S)..."
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:228
+#: ../src/plugins/skipto/totem-skipto-plugin.c:221
 msgid "Skip to a specific time"
 msgstr "ચોક્કસ સમયે રદ કરો"
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:234
+#: ../src/plugins/skipto/totem-skipto-plugin.c:227
 msgid "Could not load the \"Skip to\" dialogue interface."
 msgstr "\"સુધી અવગણો\" સંવાદ ઈન્ટરફેસ લાવી શક્યા નહિં."
 
-#: ../browser-plugin/totem-plugin-viewer.c:398
+#: ../browser-plugin/totem-plugin-viewer.c:417
 msgid "No URI to play"
 msgstr "વગાડવા માટે કોઈ URI નથી"
 
 #. FIXME disp = gnome_vfs_unescape_string_for_display (totem->mrl); ?
-#: ../browser-plugin/totem-plugin-viewer.c:425
-#: ../browser-plugin/totem-plugin-viewer.c:429
+#: ../browser-plugin/totem-plugin-viewer.c:444
+#: ../browser-plugin/totem-plugin-viewer.c:448
 #, c-format
 msgid "Totem could not play '%s'"
 msgstr "ટોટેમ '%s' વગાડી શક્યું નહિં"
 
-#: ../browser-plugin/totem-plugin-viewer.c:802
+#: ../browser-plugin/totem-plugin-viewer.c:825
 #, c-format
 msgid "Opening %s"
 msgstr "%s ખોલી રહ્યા છીએ"
@@ -1799,35 +1771,35 @@ msgstr "%s ખોલી રહ્યા છીએ"
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1048
+#: ../browser-plugin/totem-plugin-viewer.c:1071
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "\"%s\" સાથે ખોલો (_O)"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1092
+#: ../browser-plugin/totem-plugin-viewer.c:1122
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "બ્રાઉઝર પ્લગઈન %s વાપરી રહ્યું છે"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1097
+#: ../browser-plugin/totem-plugin-viewer.c:1127
 msgid "Totem Browser Plugin"
 msgstr "ટોટેમ બ્રાઉઝર પ્લગઈન"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1406
-msgid "The Totem plugin could not startup."
+#: ../browser-plugin/totem-plugin-viewer.c:1562
+msgid "The Totem plugin could not be started."
 msgstr "ટોટેમ પ્લગઈન શરૂ કરી શક્યા નહિં."
 
-#: ../browser-plugin/totem-plugin-viewer.c:1689
+#: ../browser-plugin/totem-plugin-viewer.c:1886
 msgid "No playlist or playlist empty"
 msgstr "વગાડવાની યાદી નથી અથવા વગાડવાની યાદી ખાલી છે"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1793
+#: ../browser-plugin/totem-plugin-viewer.c:1990
 msgid "Could not initialise the thread-safe libraries."
 msgstr "થ્રેડ-સુરક્ષિત લાઈબ્રેરીઓનો આરંભ કરી શક્યા નહિં."
 
-#: ../browser-plugin/totem-plugin-viewer.c:1793
+#: ../browser-plugin/totem-plugin-viewer.c:1990
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "તમારા સિસ્ટમ સ્થાપનની ખાતરી કરો. ટોટેમ પ્લગઈન હવે બંધ થઈ જશે."
 
