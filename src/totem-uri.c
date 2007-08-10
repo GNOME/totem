@@ -248,6 +248,7 @@ totem_uri_get_subtitle_uri (const char *uri)
 	/* Generate a subtitle string with room at the end to store the
 	 * 3 character extensions we want to search for */
 	subtitle = g_strdup_printf ("%.*s.???", suffix, uri);
+	g_return_val_if_fail (subtitle != NULL, NULL);
 	
 	/* Search for any files with one of our known subtitle extensions */
 	for (i = 0; i < G_N_ELEMENTS(subtitle_ext) ; i++) {
