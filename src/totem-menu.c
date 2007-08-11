@@ -494,7 +494,7 @@ on_recent_file_item_activated (GtkAction *action,
 	totem_signal_block_by_data (totem->playlist, totem);
 
 	end = totem_playlist_get_last (totem->playlist);
-	playlist_changed = totem_playlist_add_mrl (totem->playlist, uri, NULL);
+	playlist_changed = totem_playlist_add_mrl_with_cursor (totem->playlist, uri, NULL);
 	gtk_recent_manager_add_item (totem->recent_manager, uri);
 
 	totem_signal_unblock_by_data (totem->playlist, totem);

@@ -1,3 +1,18 @@
+2007-08-11  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-menu.c: (on_recent_file_item_activated):
+	* src/totem-playlist.c: (totem_playlist_set_waiting_cursor),
+	(totem_playlist_unset_waiting_cursor), (drop_cb),
+	(totem_playlist_add_files), (totem_playlist_add_mrl_with_cursor),
+	(totem_playlist_add_mrl):
+	* src/totem-playlist.h:
+	* src/totem-session.c: (totem_session_restore):
+	* src/totem.c: (totem_action_drop_files),
+	(totem_action_open_files_list), (totem_action_remote):
+	When adding items to the playlist, set the cursor waiting on the
+	outermost loop, so that we don't set it once per file added to
+	the playlist (and get flicker when doing "totem ~/Movies/*")
+
 2007-08-10  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/Makefile.am: Don't delete the glow button when

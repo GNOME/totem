@@ -1222,6 +1222,8 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 	if (file_list == NULL)
 		return FALSE;
 
+	totem_gdk_window_set_waiting_cursor (totem->win->window);
+
 	if (drop_type != 1)
 		file_list = g_list_sort (file_list, (GCompareFunc) strcmp);
 	else
@@ -1269,6 +1271,7 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 	}
 
 	g_list_free (file_list);
+	gdk_window_set_cursor (totem->win->window, NULL);
 
 	/* ... and reconnect because we're nice people */
 	if (cleared != FALSE)
@@ -1649,6 +1652,8 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 	if (list == NULL)
 		return changed;
 
+	totem_gdk_window_set_waiting_cursor (totem->win->window);
+
 	for (l = list ; l != NULL; l = l->next)
 	{
 		char *filename;
@@ -1700,8 +1705,7 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 				changed = TRUE;
 			} else if (g_str_equal (filename, "dvb:") != FALSE) {
 				totem_action_load_media (totem, MEDIA_TYPE_DVB, NULL);
-			} else if (totem_playlist_add_mrl (totem->playlist,
-						filename, NULL) != FALSE) {
+			} else if (totem_playlist_add_mrl (totem->playlist, filename, NULL) != FALSE) {
 				totem_action_add_recent (totem, filename);
 				changed = TRUE;
 			}
@@ -1709,6 +1713,8 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 
 		g_free (filename);
 	}
+
+	gdk_window_set_cursor (totem->win->window, NULL);
 
 	/* ... and reconnect because we're nice people */
 	if (cleared != FALSE)
@@ -1884,7 +1890,7 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		break;
 	case TOTEM_REMOTE_COMMAND_ENQUEUE:
 		g_assert (url != NULL);
-		if (totem_playlist_add_mrl (totem->playlist, url, NULL) != FALSE) {
+		if (totem_playlist_add_mrl_with_cursor (totem->playlist, url, NULL) != FALSE) {
 			totem_action_add_recent (totem, url);
 		}
 		break;
@@ -1908,9 +1914,8 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		} else if (g_str_has_prefix (url, "dvb:") != FALSE) {
 			totem_action_play_media (totem, MEDIA_TYPE_DVB, NULL);
 		} else if (g_str_has_prefix (url, "cdda:/") != FALSE) {
-			totem_playlist_add_mrl (totem->playlist, url, NULL);
-		} else if (totem_playlist_add_mrl (totem->playlist,
-					url, NULL) != FALSE) {
+			totem_playlist_add_mrl_with_cursor (totem->playlist, url, NULL);
+		} else if (totem_playlist_add_mrl_with_cursor (totem->playlist, url, NULL) != FALSE) {
 			totem_action_add_recent (totem, url);
 		}
 		break;

@@ -208,6 +208,24 @@ totem_playlist_get_toplevel (TotemPlaylist *playlist)
 }
 
 static void
+totem_playlist_set_waiting_cursor (TotemPlaylist *playlist)
+{
+	GtkWidget *parent;
+
+	parent = GTK_WIDGET (totem_playlist_get_toplevel (playlist));
+	totem_gdk_window_set_waiting_cursor (parent->window);
+}
+
+static void
+totem_playlist_unset_waiting_cursor (TotemPlaylist *playlist)
+{
+	GtkWidget *parent;
+
+	parent = GTK_WIDGET (totem_playlist_get_toplevel (playlist));
+	gdk_window_set_cursor (parent->window, NULL);
+}
+
+static void
 totem_playlist_error (char *title, char *reason, TotemPlaylist *playlist)
 {
 	GtkWidget *error_dialog;
@@ -377,6 +395,8 @@ drop_cb (GtkWidget     *widget,
 		return;
 	}
 
+	totem_playlist_set_waiting_cursor (playlist);
+
 	for (p = file_list; p != NULL; p = p->next)
 	{
 		char *filename, *title;
@@ -406,6 +426,8 @@ drop_cb (GtkWidget     *widget,
 
 	g_list_free (file_list);
 	gtk_drag_finish (context, TRUE, FALSE, time);
+
+	totem_playlist_unset_waiting_cursor (playlist);
 
 	g_signal_emit (G_OBJECT (playlist),
 			totem_playlist_table_signals[CHANGED], 0,
@@ -685,6 +707,8 @@ totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist)
 	if (filenames == NULL)
 		return;
 
+	totem_playlist_set_waiting_cursor (playlist);
+
 	for (l = filenames; l != NULL; l = l->next) {
 		char *mrl;
 
@@ -693,6 +717,7 @@ totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist)
 		g_free (mrl);
 	}
 
+	totem_playlist_unset_waiting_cursor (playlist);
 	g_slist_free (filenames);
 }
 
@@ -1576,18 +1601,27 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 }
 
 gboolean
+totem_playlist_add_mrl_with_cursor (TotemPlaylist *playlist, const char *mrl,
+				    const char *display_name)
+{
+	gboolean retval;
+
+	totem_playlist_set_waiting_cursor (playlist);
+	retval = totem_playlist_add_mrl (playlist, mrl, display_name);
+	totem_playlist_unset_waiting_cursor (playlist);
+
+	return retval;
+}
+
+gboolean
 totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl,
-		const char *display_name)
+			const char *display_name)
 {
 	TotemPlParserResult res;
-	GtkWidget *parent;
 
 	g_return_val_if_fail (mrl != NULL, FALSE);
 
-	parent = GTK_WIDGET (totem_playlist_get_toplevel (playlist));
-	totem_gdk_window_set_waiting_cursor (parent->window);
 	res = totem_pl_parser_parse (playlist->_priv->parser, mrl, TRUE);
-	gdk_window_set_cursor (parent->window, NULL);
 
 	if (res == TOTEM_PL_PARSER_RESULT_UNHANDLED)
 		return totem_playlist_add_one_mrl (playlist, mrl, display_name);
